@@ -35,7 +35,7 @@ class RichColorRenderTest {
         var blue = 0
         ImageComposeScene(width = 520, height = 170) {
             Box(Modifier.fillMaxSize().background(Color.White).padding(16.dp)) {
-                CjkParagraph(
+                CjkText(
                     buildAnnotatedString {
                         append("普通的黑字，")
                         withStyle(SpanStyle(color = Color.Red)) { append("红色强调") }
