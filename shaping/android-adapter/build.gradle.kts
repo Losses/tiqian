@@ -7,8 +7,10 @@ android {
     compileSdk = 36
 
     defaultConfig {
-        // TextRunShaper (per-glyph ids/positions) requires API 31.
-        minSdk = 31
+        // The artifact remains loadable on the Compose API 23 floor. The
+        // TextRunShaper implementation itself is guarded as an API 31-only
+        // optional comparison/optimization backend.
+        minSdk = 23
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
