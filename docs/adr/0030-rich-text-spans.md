@@ -9,6 +9,20 @@
 - Amendment 2026-08-11：行内参考角标以 `InlineAttachment.Previous` 明确附着前文；
   判断边界间距时暂时忽略角标，以角标两侧正文原本是否存在间距为准，结果由角标尾侧承载；
   若正文直接相邻时没有间距，角标也不会凭空生成间距，落在行末时不保留空白。
+- Amendment 2026-08-17：CJK 斜体的 **synthetic-oblique（合成倾斜）由「否决」改为「务实退路」**
+  （放宽正文第 48–49、114 行的「CJK 不合成倾斜」）。理想是转**楷体**，但除桌面外无可靠楷体；
+  **着重号语义为「强调」，与斜体的「弱化/换嗓」（整段斜体作引文、旁白）语义相反，不能替代**
+  ——故 CJK 斜体退合成倾斜。oblique 是 **advance-preserving 切变**（不改水平步进）：measure
+  按正体、draw 叠加切变，`measure==draw` 不破，原正文（改墨不改 advance）的顾虑不适用于纯
+  切变的一档。角度 `tan⁻¹(0.105) ≈ 6°`
+  （取得意黑 / Smiley Sans 的设计斜度），仅在**自绘平台统一**：Android `textSkewX` /
+  Apple CoreText `OBLIQUE_SHEAR` / Skia `Font.skewX`。**web 经浏览器 DOM 渲染（非自绘），
+  角度不可控**：Chrome 对 CJK 纯合成 oblique 忽略请求角度，`font-style: oblique 6deg` 退成
+  与 `italic` 相同的固定 ~14°（CJK 系统字体也无 `slnt` 变量轴）；唯一能拿到真 6° 的
+  `transform: skewX(-6deg)` 需要 `display: inline-block`，而 `DomParagraphRenderer` 刻意让 run
+  叶子保持 `display: inline`（避免原子选区岛 + 引擎自持零行高下的零高盒伪影，保选区/复制保真），
+  二者冲突、无无副作用的第三条路。故 **web CJK 斜体保持浏览器默认 `italic`（~14°），暂不与自绘
+  平台的 6° 统一**，留待系统字体普及 `slnt` 轴或 renderer 重构。着重号仍只承载「强调」。
 
 ## Context
 

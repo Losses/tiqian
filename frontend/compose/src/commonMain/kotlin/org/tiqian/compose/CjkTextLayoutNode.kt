@@ -468,9 +468,18 @@ internal class CjkTextLayoutNode(
                 }
             }
         }
-        result = laidOut
-        replayIndex = laidOut.toReplayIndex(richTextSpans)
-        drawCache?.invalidateGeometry()
+        // `UnchangedLayoutKeepsDisplayList`: SubcomposeLayout hosts re-measure every composed
+        // block each pass; when the (cached or precomputed) result is the SAME instance the
+        // geometry cannot have changed, so keep the replay index, the recorded display list AND
+        // the NaturalRunCoalescedDraw plan (ADR 0050) — invalidating here rebuilt the plan with
+        // its per-cluster advance validation on every draw (P50 3.9→8.2ms, worst record 256ms).
+        if (result !== laidOut) {
+            result = laidOut
+            replayIndex = laidOut.toReplayIndex(richTextSpans)
+            drawCache?.invalidateGeometry()
+        }
+        // Placement objects and the callback may be fresh instances after recomposition even
+        // when the layout result is unchanged, so these always re-wire.
         updateInlineObjectPlacements(laidOut, replayIndex, inlineObjects, inlineObjectPlacements)
         onTextLayout(laidOut)
         // The drawn content (incl. 行间装饰 overhang) paints from draw(); the empty inner
