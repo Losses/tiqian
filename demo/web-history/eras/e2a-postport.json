@@ -1,8 +1,8 @@
 {
-  "label": "E2a-postport",
-  "commit": "e8752ae4",
-  "range": "e8752ae4 .. before 4ca49e71 core rename",
-  "entry": "@tiqian/prose api.js verbs over @tiqian/prose-core TS modules (Kotlin engine export removed)",
+  "label": "E2a-tsport",
+  "commit": "73449b70",
+  "range": "73449b70 (TS runtime install, first renderable commit after the TS host port) .. before 4ca49e71 core rename",
+  "entry": "@tiqian/prose api.js verbs over @tiqian/prose-core TS modules; engine installed by ts-runtime.js from @tiqian/ffi (Kotlin bundle retired in the 3-commit window e8752ae4..11067981, browser-unrenderable)",
   "adapter": "adapters/api-verbs.js",
   "stylesheet": "frontend/web/npm-core/styles.css",
   "importMap": {
@@ -17,6 +17,8 @@
     "/corepkg": "frontend/web/npm-core",
     "/ffi": "ffi/js/npm"
   },
-  "build": [],
-  "engineNote": "TS engine modules committed as compiled .js inside frontend/web/npm-core; layout-worker.js consumes @tiqian/ffi runtime built by ./gradlew :ffi:js:assembleNpmPackage when the worker lane is exercised"
+  "build": [
+    "./gradlew :ffi:js:assembleNpmPackage"
+  ],
+  "engineNote": "TS host engine scripts in frontend/web/npm-core; layout engine from ffi/js/npm/runtime built by :ffi:js:assembleNpmPackage"
 }
