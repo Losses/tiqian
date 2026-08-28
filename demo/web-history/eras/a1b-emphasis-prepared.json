@@ -1,0 +1,20 @@
+{
+  "label": "A1b-emphasis-prepared",
+  "commit": "0835074e",
+  "range": "0835074e (cjk strong metadata into prepared bridges) .. before bf506b34 prose-core split",
+  "entry": "@tiqian/prose api.js verbs (enhanceProgressively/enhance), Kotlin/JS engine",
+  "adapter": "adapters/api-verbs.js",
+  "stylesheet": "frontend/web/npm/styles.css",
+  "importMap": {
+    "imports": {
+      "@tiqian/prose": "/pkg/api.js"
+    }
+  },
+  "static": {
+    "/pkg": "frontend/web/npm"
+  },
+  "build": [
+    "./gradlew :frontend:web:assembleNpmPackage"
+  ],
+  "engineNote": "Kotlin/JS engine via Gradle jsBrowserProductionWebpack into frontend/web/npm/runtime/tiqian-web.js"
+}
