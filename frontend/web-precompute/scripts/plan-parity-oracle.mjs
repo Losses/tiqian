@@ -15,7 +15,7 @@
 // it the derived default would diverge from the native lane on every
 // span-carrying case.
 //
-// Node only: node scripts/plan-parity-oracle.mjs (from frontend/web-precompute).
+// Node only: node scripts/plan-parity-oracle.ts (from frontend/web-precompute).
 
 import { mkdirSync, writeFileSync } from "node:fs";
 import { dirname, resolve } from "node:path";
