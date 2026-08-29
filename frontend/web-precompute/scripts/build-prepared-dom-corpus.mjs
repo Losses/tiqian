@@ -5,7 +5,7 @@
 // the js test `frontend/web/npm/tests/prepared-dom-corpus.test.mjs`. The js module
 // `prepared-dom.js` is the oracle; regenerating the fixture is deliberate:
 //
-//   node scripts/build-prepared-dom-corpus.mjs   (from frontend/web-precompute)
+//   node scripts/build-prepared-dom-corpus.ts   (from frontend/web-precompute)
 
 import { writeFileSync } from "node:fs";
 import { dirname, resolve } from "node:path";
