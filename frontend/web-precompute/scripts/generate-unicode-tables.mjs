@@ -5,7 +5,7 @@
 // Rust port on the same data as the js oracle. Regenerate after a Node Unicode
 // upgrade and review the diff.
 //
-// node scripts/generate-unicode-tables.mjs (from frontend/web-precompute)
+// node scripts/generate-unicode-tables.ts (from frontend/web-precompute)
 
 import { writeFileSync } from "node:fs";
 import { dirname, resolve } from "node:path";
@@ -48,7 +48,7 @@ function emit(name, source, ranges) {
 
 const body = [
   "//! Generated Unicode range tables for the plain-text issue checks. DO NOT",
-  "//! EDIT: regenerate with scripts/generate-unicode-tables.mjs, which reads",
+  "//! EDIT: regenerate with scripts/generate-unicode-tables.ts, which reads",
   "//! the property classes of the Node build that runs it.",
   "",
   emit(
