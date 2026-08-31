@@ -1,5 +1,10 @@
 package org.tiqian.core;
 
+import org.tiqian.core.RichTextLinePattern.Solid;
+import org.tiqian.core.RichTextLinePattern.Dashed;
+import org.tiqian.core.RichTextLinePattern.Dotted;
+import org.tiqian.core.RichTextBackgroundDrawStyle.Fill;
+
 @:dataClass
 class RichTextPaint {
     public final argb:Null<Int>;
@@ -9,7 +14,7 @@ class RichTextPaint {
 
     public function new(
         ?argb:Null<Int>,
-        // Kotlin declares linePattern = RichTextLinePattern.Solid (a static
+        // Kotlin declares linePattern = Solid.instance (a static
         // field of a class, boring gap 4) and background =
         // RichTextBackgroundPaint() (a constructor call, outside the
         // sanctioned grammar). Both parameters stay mandatory.
@@ -27,26 +32,42 @@ class RichTextPaint {
     }
 
     public static function withBackground(background:RichTextBackgroundPaint):RichTextPaint {
-        return new RichTextPaint(null, RichTextLinePattern.Solid, background, 0.0);
+        return new RichTextPaint(null, Solid.instance, background, 0.0);
     }
 
     public static function withClearance(clearance:Float):RichTextPaint {
-        return new RichTextPaint(null, RichTextLinePattern.Solid, new RichTextBackgroundPaint(0.0, 0.0, 0.0, 0.0, RichTextBackgroundMetricPolicy.MarkedFaces, RichTextBackgroundDrawStyle.Fill), clearance);
+        return new RichTextPaint(null, Solid.instance, new RichTextBackgroundPaint(0.0, 0.0, 0.0, 0.0, RichTextBackgroundMetricPolicy.MarkedFaces, Fill.instance), clearance);
     }
 
     public static function withArgb(value:Int):RichTextPaint {
-        return new RichTextPaint(value, RichTextLinePattern.Solid, new RichTextBackgroundPaint(0.0, 0.0, 0.0, 0.0, RichTextBackgroundMetricPolicy.MarkedFaces, RichTextBackgroundDrawStyle.Fill), 0.0);
+        return new RichTextPaint(value, Solid.instance, new RichTextBackgroundPaint(0.0, 0.0, 0.0, 0.0, RichTextBackgroundMetricPolicy.MarkedFaces, Fill.instance), 0.0);
     }
 
     public function sameVisibleStyle(other:RichTextPaint):Bool {
         final a = argb;
         final b = other.argb;
         if (a != b) return false;
-        if (!RichTextLinePattern.sameValues(linePattern, other.linePattern)) return false;
+        if (!sameLinePattern(linePattern, other.linePattern)) return false;
         return RichTextBackgroundPaint.sameValues(background, other.background);
     }
 
 
+    private static function sameLinePattern(a:RichTextLinePattern, b:RichTextLinePattern):Bool {
+        if (Std.isOfType(a, Solid) || Std.isOfType(b, Solid)) {
+            return Std.isOfType(a, Solid) && Std.isOfType(b, Solid) && Solid.instance == a && Solid.instance == b;
+        }
+        if (Std.isOfType(a, Dashed) && Std.isOfType(b, Dashed)) {
+            final aa:Dashed = cast(a, Dashed);
+            final bb:Dashed = cast(b, Dashed);
+            return aa.strokeWidth == bb.strokeWidth && aa.dashLength == bb.dashLength && aa.gapLength == bb.gapLength;
+        }
+        if (Std.isOfType(a, Dotted) && Std.isOfType(b, Dotted)) {
+            final aa:Dotted = cast(a, Dotted);
+            final bb:Dotted = cast(b, Dotted);
+            return aa.dotDiameter == bb.dotDiameter && aa.gapLength == bb.gapLength;
+        }
+        return false;
+    }
 
     private static function isFinite(value:Float):Bool {
         return value == value && value != Math.POSITIVE_INFINITY && value != Math.NEGATIVE_INFINITY;
