@@ -307,6 +307,7 @@ class Main {
         run("emitGoldenTrace", FontPolicyCoverageTest.emitGoldenTrace);
         TestTraceRecorder.flushClass("FontPolicyCoverageTest");
 
+        run("supplementarySymbolIsUnknownBecauseItHasNoBmpCategory", FontRoleTailCoverageTest.supplementarySymbolIsUnknownBecauseItHasNoBmpCategory);
         run("bmpMathAndCurrencySymbolsResolveToSymbolRole", FontRoleTailCoverageTest.bmpMathAndCurrencySymbolsResolveToSymbolRole);
         TestTraceRecorder.flushClass("FontRoleTailCoverageTest");
         run("reportsFirstPropertyWhenItDiverges", InlineShapingStylePolicyTest.reportsFirstPropertyWhenItDiverges);
