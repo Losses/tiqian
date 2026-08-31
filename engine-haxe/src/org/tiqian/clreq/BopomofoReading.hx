@@ -1,7 +1,6 @@
 package org.tiqian.clreq;
 
 import std.ReadOnlyArray;
-import std.StringBuf;
 
 @:dataClass
 class BopomofoReading {
@@ -11,26 +10,6 @@ class BopomofoReading {
     public function new(symbols:Array<String>, tone:BopomofoTone) {
         this.symbols = symbols;
         this.tone = tone;
-    }
-
-    // Kotlin's List.toString joins with ", " while Std.string over the array
-    // joins with ","; generic synthesis cannot reproduce the Kotlin text, so
-    // this explicit member stays.
-    public function toString():String {
-        final output = new StringBuf();
-        output.add("BopomofoReading(symbols=[");
-        var index:Int = 0;
-        while (index < symbols.length) {
-            if (index > 0) {
-                output.add(", ");
-            }
-            output.add(symbols[index]);
-            index += 1;
-        }
-        output.add("], tone=");
-        output.add(Std.string(tone));
-        output.add(")");
-        return output.toString();
     }
 
     public function copy():BopomofoReading {

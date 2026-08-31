@@ -31,16 +31,4 @@ class TextStyle {
         this.baselineShift = baselineShift == null ? 0.0 : baselineShift;
         this.inlineAttachment = inlineAttachment == null ? InlineAttachment.None : inlineAttachment;
     }
-
-    // ReadOnlyArray rendering uses "," instead of Kotlin List's ", ",
-    // so this explicit member stays.
-    public function toString():String {
-        return "TextStyle(fontFamilies=" + Std.string(fontFamilies)
-            + ", fontSize=" + fontSize
-            + ", locale=" + locale
-            + ", fontWeight=" + fontWeight
-            + ", italic=" + italic
-            + ", baselineShift=" + baselineShift
-            + ", inlineAttachment=" + Std.string(inlineAttachment) + ")";
-    }
 }
