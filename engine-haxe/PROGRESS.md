@@ -381,3 +381,30 @@ assertEqualsBopomofoReading 三个入口。clreq 文件在隔离 hxml 下做 Kot
 直接写原字面量（从 Kotlin 原文机械复制）。验证链通过：compile.hxml 零错误、
 serial-test rc=0、17 类 tolerance 比对 17/17、exception-alias=73、
 core-kotlin 仍止于 RubySpan.hx:46 首错。
+
+2026-08-31 clreq 波 slice 2：ClreqProfile.kt 及其伴生枚举与策略类全量移植完成。
+新增 12 个枚举（ClreqStrictness、ClreqRegion、CjkPunctuationGlyphPolicy、
+PunctuationGluePlacement、GlueSide、AutoSpaceMode、LineAdjustmentStrategy、
+LineEndPunctuationStyle、KinsokuLevel、HangingPunctuationStyle、
+InteriorPunctuationStyle、PunctuationClass），策略与数据类 AutoSpacePolicy、
+AdjustmentStylePolicy、PunctuationWidthPolicy、PunctuationPolicy、
+CjkPunctuationGlyphSubstitution、ResolvedKinsoku、ClreqProfile、
+ClreqProfileResolver（interface 与 BuiltInClreqProfileResolver 同文件双类型）、
+PunctuationGluePlacements、ClreqPunctuationPolicies、
+ClreqPunctuationAdvancePolicy、ClreqPunctuationGlyphSubstitutor，加 layout 侧
+KinsokuRule（interface 与 ClreqKinsokuRule 同文件）。KinsokuMode 按裁定移植为
+带参枚举，Kotlin 默认参数（Fixed 的 Disabled；MeasureAdaptive 的 14/24/32）
+在 Haxe 构造点逐一显式书写；BopomofoReading 增 copy 与 hashCode。
+五个测试 KinsokuLevelTest、PunctuationGluePlacementTest、
+ClreqPunctuationGlyphSubstitutorTest、ClreqProfileCoverageTest、
+ClreqPolicyTailCoverageTest 移植完成，辅助逻辑按 spec 27 入同文件
+XxxTestHelpers。两个可降级裁定：其一，Kotlin when 表达式在 Haxe 侧必须写成
+return switch 值臂形式（KotlinExpr 只降 when 表达式，switch 臂内 return 语句
+不在子集内），多语句臂拆私有辅助函数；其二，非模块主类型跨文件引用用
+模块名.类型名导入（ClreqProfileResolver.BuiltInClreqProfileResolver、
+KinsokuRule.ClreqKinsokuRule）。跨文件类引用处 Int 入 StringBuf 用 "" + v 沿
+TiqianTextContent 先例。ClreqProfile toString 经 TestTraceRender.cap 截断，
+golden 的 240 字符 FNV 行逐字节一致；1f/3f 一律写 0.33333334 字面量保 f32
+渲染一致。验证链通过：compile.hxml 零错误、serial-test rc=0、22 类 tolerance
+比对 22/22、exception-alias=73、隔离 clreq 检查止于 TestTraceRecorder.hx:10
+（缺口 10 范畴，无新增违规）、core-kotlin 仍止于 RubySpan.hx:46 首错。
