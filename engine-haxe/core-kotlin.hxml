@@ -11,8 +11,10 @@
 -D kotlin-test-output=engine-haxe/out/kotlin-gen-tests
 -D runtime-import=org.tiqian.boring.runtime
 -D runtime-emit=runtime
--D float-precision=f32
+-D float-precision=f64
 org.tiqian.core.TextRange
+org.tiqian.core.TextRangeError
+org.tiqian.core.TiqianIllegalArgumentException
 org.tiqian.core.TextRangeTest
 org.tiqian.core.Size
 org.tiqian.core.Rect
@@ -44,7 +46,7 @@ org.tiqian.core.SourceInteractionBoundaries
 org.tiqian.core.LayoutQueries
 org.tiqian.core.CoreLayoutQueriesGapsTest
 org.tiqian.core.LayoutQueriesTest
-org.tiqian.core.NoSuchElementException
+org.tiqian.core.TiqianNoSuchElementException
 org.tiqian.core.LayoutQueriesResidualCoverageTest
 org.tiqian.core.CoreBoundaryTest
 org.tiqian.core.LinkAddressDisplayTest
