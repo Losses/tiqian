@@ -8,14 +8,14 @@ class InlineBoxSpan {
 
     public function new(
         range:TextRange,
-        inlineStart:Float = 0.0,
-        inlineEnd:Float = 0.0,
-        outerSpacing:InlineBoxOuterSpacing = InlineBoxOuterSpacing.Narrow
+        ?inlineStart:Null<Float>,
+        ?inlineEnd:Null<Float>,
+        ?outerSpacing:Null<InlineBoxOuterSpacing>
     ) {
         this.range = range;
-        this.inlineStart = inlineStart;
-        this.inlineEnd = inlineEnd;
-        this.outerSpacing = outerSpacing;
+        this.inlineStart = inlineStart == null ? 0.0 : inlineStart;
+        this.inlineEnd = inlineEnd == null ? 0.0 : inlineEnd;
+        this.outerSpacing = outerSpacing == null ? InlineBoxOuterSpacing.Narrow : outerSpacing;
     }
 
     public function toString():String {
