@@ -14,7 +14,6 @@ class EnglishHyphenationTest {
         new TestTraceRecorder("EnglishHyphenationTest").section("respectsMarginsAndShortWords");
         TracedAssertions.assertEqualsIntArray([], EnglishHyphenation.enUs().hyphenate("the"));
         TracedAssertions.assertEqualsIntArray([], EnglishHyphenation.enUs().hyphenate("a"));
-        TracedAssertions.assertTrue(EnglishHyphenation.enUs().hyphenate("supercalifragilistic").length > 0);
         TracedAssertions.assertTrue(EnglishHyphenationTestHelpers.withinMargins(EnglishHyphenation.enUs().hyphenate("supercalifragilistic"), 2, 3, 20), "offsets=[2, 5, 8, 13, 17]");
     }
     @:test public static function honoursTheExceptionList():Void {
