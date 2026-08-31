@@ -108,11 +108,7 @@ class CoreBoundaryTest {
     @:test
     public static function getSelectionOffsetForPositionReturnsStartOfLineWhenEmptyClusters():Void {
         new TestTraceRecorder("CoreBoundaryTest").section("getSelectionOffsetForPositionReturnsStartOfLineWhenEmptyClusters");
-        final input:LayoutInput = new LayoutInput(
-            new TiqianTextContent("", [], [], [], []),
-            new LayoutConstraints(100.0, Math.POSITIVE_INFINITY, 2147483647),
-            new TextStyle(16.0, "zh-Hans", 400, false, 0.0, InlineAttachment.None, []), new ParagraphStyle(LastLineAlignment.Start, WritingMode.HorizontalTb, null, null, Ic.Zero, new MeasureAdaptiveFirstLineIndent(14.0, 1.0, 2.0), new LineLengthGrid(true, null), RubyLineHeightMode.PerLine, ParagraphStyle.DEFAULT_INLINE_OBJECT_MINIMUM_CLEARANCE_EM, ParagraphStyle.DEFAULT_EMPHASIS_DOT_GAP_EM), BuiltInLayoutProfiles.ClreqHorizontal, [], [], [], []
-        );
+        final input:LayoutInput = new LayoutInput(new TiqianTextContent("", [], [], [], []), new TextStyle([], 16.0, "zh-Hans", 400, false, 0.0, InlineAttachment.None), new ParagraphStyle(LastLineAlignment.Start, WritingMode.HorizontalTb, null, null, Ic.Zero, new MeasureAdaptiveFirstLineIndent(14.0, 1.0, 2.0), new LineLengthGrid(true, null), RubyLineHeightMode.PerLine, ParagraphStyle.DEFAULT_INLINE_OBJECT_MINIMUM_CLEARANCE_EM, ParagraphStyle.DEFAULT_EMPHASIS_DOT_GAP_EM), new LayoutConstraints(100.0, Math.POSITIVE_INFINITY, 2147483647), BuiltInLayoutProfiles.ClreqHorizontal, [], [], [], []);
         final line:LineBox = new LineBox(
             new TextRange(0, 0), new IntRange(0, -1), 15.0, 0.0, 20.0,
             0.0, 0.0, 0.0, 0.0, 0.0, LineEndReason.ParagraphEnd, 0.0, [], new LineDebugInfo(null, [])
@@ -134,11 +130,7 @@ class CoreBoundaryTestHelpers {
             new TextRange(0, 3), new IntRange(0, 2), 15.0, 0.0, 20.0,
             30.0, 30.0, 30.0, 0.0, 0.0, LineEndReason.ParagraphEnd, 0.0, [], new LineDebugInfo(null, [])
         );
-        final input:LayoutInput = new LayoutInput(
-            new TiqianTextContent(text, [], [], [], []),
-            new LayoutConstraints(100.0, Math.POSITIVE_INFINITY, 2147483647),
-            new TextStyle(16.0, "zh-Hans", 400, false, 0.0, InlineAttachment.None, []), new ParagraphStyle(LastLineAlignment.Start, WritingMode.HorizontalTb, null, null, Ic.Zero, new MeasureAdaptiveFirstLineIndent(14.0, 1.0, 2.0), new LineLengthGrid(true, null), RubyLineHeightMode.PerLine, ParagraphStyle.DEFAULT_INLINE_OBJECT_MINIMUM_CLEARANCE_EM, ParagraphStyle.DEFAULT_EMPHASIS_DOT_GAP_EM), BuiltInLayoutProfiles.ClreqHorizontal, [], [], [], []
-        );
+        final input:LayoutInput = new LayoutInput(new TiqianTextContent(text, [], [], [], []), new TextStyle([], 16.0, "zh-Hans", 400, false, 0.0, InlineAttachment.None), new ParagraphStyle(LastLineAlignment.Start, WritingMode.HorizontalTb, null, null, Ic.Zero, new MeasureAdaptiveFirstLineIndent(14.0, 1.0, 2.0), new LineLengthGrid(true, null), RubyLineHeightMode.PerLine, ParagraphStyle.DEFAULT_INLINE_OBJECT_MINIMUM_CLEARANCE_EM, ParagraphStyle.DEFAULT_EMPHASIS_DOT_GAP_EM), new LayoutConstraints(100.0, Math.POSITIVE_INFINITY, 2147483647), BuiltInLayoutProfiles.ClreqHorizontal, [], [], [], []);
         return new LayoutResult(input, new Size(30.0, 20.0), clusters, [], [line], new LayoutDebugInfo(null, [], [], [], [], []));
     }
 
