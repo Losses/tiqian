@@ -297,8 +297,13 @@ def apply_swap(stem, engine_types, visibility):
 
 def gradle_test():
     log = MANIFEST_DIR / "gradle.log"
-    result = run(["nix", "develop", "-c", "bash", "-c", "./gradlew :engine:jvmTest"],
-                 cwd=WORKTREE, timeout=900)
+    # The engine is KMP: every swap must also hold on the Android compile
+    # and the JS target, not just jvmTest alone.
+    result = run(["nix", "develop", "-c", "bash", "-c",
+                  "./gradlew :engine:jvmTest"
+                  " :platforms:compose:compose:compileAndroidMain"
+                  " :ffi:js:jsNodeTest --continue"],
+                 cwd=WORKTREE, timeout=1800)
     log.write_text(result.stdout + result.stderr)
     return result.returncode == 0, log
 
