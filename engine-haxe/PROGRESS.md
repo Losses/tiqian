@@ -316,3 +316,35 @@ shrinkCapacity 与 lineEndDiscardableAdvance 就是 `Float = 0f` 常量默认，
 改经它写 golden。验证：tests/compile.hxml 零错误、测试 rc=0、15 类比对 15/15、
 exception-alias=73。剩余 Kotlin 拦截两处：RubySpan.hx:46（缺口 4）、
 TestTraceRecorder.hx:10 静态赋值（缺口 10）。
+
+2026-08-31 LayoutModel 剩余 28 个 DecisionInfo 记录全部入库（fd9d9e44）：
+BreakOpportunity/EmergencyTrackingEligibility/InlineBox/InlineObject/
+ZeroWidthBreak/MandatoryBreak/FirstLineIndent/LineLengthGrid/Kinsoku/
+ContextualKinsoku/InlineObjectPunctuationAttachment/LineSpacing/
+RubyLineHeight/InlineObjectLineHeight/DecorationSegment/Decoration/
+LineEdgeTrim/Font/Shaping/Punctuation/Spacing/RoleOverride/LineDecision/
+LineRepairDecision/LineRepairAllocation/LineRepairCandidate/Justification
+Decision 与 Allocation，一律 @:dataClass（生成 Kotlin data class）。
+LayoutDebugInfo 扩到 Kotlin 全字段集（24 列表 + 6 可空），构造器保留
+maxLinesDecision 首位的既有形态，端口测试全部位置传参不动；六参之后的新参数
+全部 ?param 加 null 合并，生成的 Kotlin 保留原生默认。
+
+同轮确立默认保真形（d392dca3）：boring 对 Haxe 原生常量默认与可空直assign
+都会从生成签名剥掉默认值，只有三元合并式保留：`?p:Null<T>` 加
+`this.p = p == null ? E : p` 生成 `p: T = E`（E 为常量）或 `p: T? = null`；
+`?p:Array<T>` 加 `p == null ? [] : p` 生成 `= mutableListOf()`。RubyDecisionInfo、
+BopomofoDecisionInfo、MaxLinesDecisionInfo、InlineObjectBoundaryAdjustment
+四处既有常量默认已改入该形态；InlineObjectBoundaryAdjustment 同时补
+@:dataClass 并改校验读 this 字段，生成 data class + init 校验块，与
+TextModel.kt:142 形态一致。Kotlin 允许带默认参数后跟必选参数，policyBodyFloor 过渡形态经
+kotlinc 最小样例实证通过。
+
+两个待办随记：PunctuationDecisionInfo.policyBodyFloor 的 Kotlin 原默认读
+bodyWidth 参数（缺口 4 范畴），过渡为必选参数，缺口 4 实现合并后改
+?Null<Float> 合并式；PunctuationDecisionInfo.char 与 SpacingDecisionInfo
+leftChar/rightChar 的 Kotlin Char 以单 UTF-16 单元 String 移植，手写消费方
+在 layout 波移植时同步换字面量形态。既有文件（Cluster/GlyphRun/LineBox/
+LayoutInput/TextSpan 等）仍有原生常量默认未转合并式，Layout 波换装前需要
+一轮统一转换。验证链：compile.hxml 零错误、测试 rc=0、15 类比对 15/15、
+exception-alias=73；两处已知拦截中和后 core-kotlin 生成零错误、恢复后仍止于
+RubySpan.hx:46 首错。
