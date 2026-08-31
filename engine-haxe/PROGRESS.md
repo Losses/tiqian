@@ -343,8 +343,26 @@ kotlinc 最小样例实证通过。
 bodyWidth 参数（缺口 4 范畴），过渡为必选参数，缺口 4 实现合并后改
 ?Null<Float> 合并式；PunctuationDecisionInfo.char 与 SpacingDecisionInfo
 leftChar/rightChar 的 Kotlin Char 以单 UTF-16 单元 String 移植，手写消费方
-在 layout 波移植时同步换字面量形态。既有文件（Cluster/GlyphRun/LineBox/
-LayoutInput/TextSpan 等）仍有原生常量默认未转合并式，Layout 波换装前需要
-一轮统一转换。验证链：compile.hxml 零错误、测试 rc=0、15 类比对 15/15、
+在 layout 波移植时同步换字面量形态。既有文件的原生常量默认统一转换见下一条。
+验证链：compile.hxml 零错误、测试 rc=0、15 类比对 15/15、
 exception-alias=73；两处已知拦截中和后 core-kotlin 生成零错误、恢复后仍止于
 RubySpan.hx:46 首错。
+
+2026-08-31 既有文件原生常量默认全部转合并式：Cluster、Glyph、LineBox、
+TextStyle、ParagraphStyle、InlineBoxSpan、RichTextPaint、
+RichTextBackgroundPaint、ClusterGeometryDecisionInfo、LineLengthGrid、
+MeasureAdaptiveFirstLineIndent、BopomofoDecisionInfo、RubyDecisionInfo 十三处
+文件按 Kotlin 原版默认逐参数核对后改 `?p:Null<T>` 加常量合并；Kotlin 原版
+`= null` 的可空参数（Glyph 四个、RichTextPaint.argb、
+ClusterGeometryDecisionInfo.glyphPlacementReason、ParagraphStyle.lineHeight
+与 firstLineIndent、LineLengthGrid.bodyAlignment）改 null 合并臂。读参数或
+静态字段的默认保持必选并就近注释：Cluster.displayText、
+RichTextBackgroundPaint.continuationCornerRadius 与 drawStyle、
+RichTextPaint.linePattern 与 background、ParagraphStyle.blockIndent、
+firstLineIndentPolicy、lineLengthGrid 与两个 em 常量默认、LayoutInput 三个
+样式默认、InlineObjectSpan 两个边界、BopomofoGlyphPlacement 三个几何默认、
+LineBox.debug（构造调用默认不在缺口 4 扩展文法内，长期必选）。
+TiqianTextContent.sourceBoundaries 的 Kotlin 类型是 Set<Int>，移植持有
+Array<Int>，类型偏差留待 layout 波移植时裁定。验证链通过：compile.hxml 零错误、
+serial-test rc=0、15 类 tolerance 比对 15/15、exception-alias=73、
+core-kotlin 仍止于 RubySpan.hx:46 首错。

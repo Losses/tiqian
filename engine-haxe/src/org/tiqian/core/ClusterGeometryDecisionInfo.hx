@@ -32,9 +32,9 @@ class ClusterGeometryDecisionInfo {
         resolvedAdvance:Float,
         source:String,
         reason:String,
-        rubySpread:Float = 0.0,
-        glyphInlineShift:Float = 0.0,
-        glyphPlacementReason:Null<String>
+        ?rubySpread:Null<Float>,
+        ?glyphInlineShift:Null<Float>,
+        ?glyphPlacementReason:Null<String>
     ) {
         this.range = range;
         this.sourceText = sourceText;
@@ -46,9 +46,9 @@ class ClusterGeometryDecisionInfo {
         this.trailingGlueNatural = trailingGlueNatural;
         this.trailingGlueConsumed = trailingGlueConsumed;
         this.justificationDelta = justificationDelta;
-        this.rubySpread = rubySpread;
-        this.glyphInlineShift = glyphInlineShift;
-        this.glyphPlacementReason = glyphPlacementReason;
+        this.rubySpread = rubySpread == null ? 0.0 : rubySpread;
+        this.glyphInlineShift = glyphInlineShift == null ? 0.0 : glyphInlineShift;
+        this.glyphPlacementReason = glyphPlacementReason == null ? null : glyphPlacementReason;
         this.resolvedAdvance = resolvedAdvance;
         this.source = source;
         this.reason = reason;
