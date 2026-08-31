@@ -1,4 +1,8 @@
 package org.tiqian.font;
+import org.tiqian.font.FontPolicy.FallbackResolver;
+import org.tiqian.font.FontPolicy.FontRequest;
+import org.tiqian.font.FontPolicy.FontCandidate;
+import org.tiqian.font.FontPolicy.FontDecision;
 
 class PreferCjkForAmbiguousPunctuationResolver implements FallbackResolver {
  final cjkFontKey:String;final latinFontKey:String;final symbolFontKey:String;
