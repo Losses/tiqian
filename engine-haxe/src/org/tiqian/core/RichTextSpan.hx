@@ -12,7 +12,7 @@ class RichTextSpan {
     }
 
     public function toString():String {
-        return "RichTextSpan(range=" + range + ", role=" + roleToString(role) + ", paint=" + paint + ")";
+        return "RichTextSpan(range=" + range.toString() + ", role=" + roleToString(role) + ", paint=" + paint.toString() + ")";
     }
 
     private static function roleToString(role:RichTextRole):String {

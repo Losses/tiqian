@@ -10,6 +10,6 @@ class DecorationSpan {
     }
 
     public function toString():String {
-        return "DecorationSpan(range=" + range + ", kind=" + Std.string(kind) + ")";
+        return "DecorationSpan(range=" + range.toString() + ", kind=" + Std.string(kind) + ")";
     }
 }

@@ -56,8 +56,8 @@ class RichTextLineSegment {
     }
 
     public function toString():String {
-        return "RichTextLineSegment(span=" + span + ", lineIndex=" + lineIndex
-            + ", range=" + range + ", left=" + left + ", top=" + top
+        return "RichTextLineSegment(span=" + span.toString() + ", lineIndex=" + lineIndex
+            + ", range=" + range.toString() + ", left=" + left + ", top=" + top
             + ", right=" + right + ", bottom=" + bottom + ", baseline=" + baseline + ")";
     }
 }

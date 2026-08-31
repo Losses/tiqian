@@ -19,7 +19,7 @@ class InlineBoxSpan {
     }
 
     public function toString():String {
-        return "InlineBoxSpan(range=" + range
+        return "InlineBoxSpan(range=" + range.toString()
             + ", inlineStart=" + inlineStart
             + ", inlineEnd=" + inlineEnd
             + ", outerSpacing=" + Std.string(outerSpacing) + ")";
