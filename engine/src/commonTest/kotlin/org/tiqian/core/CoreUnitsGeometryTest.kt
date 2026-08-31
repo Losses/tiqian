@@ -60,7 +60,7 @@ class CoreUnitsGeometryTest {
     @Test
     fun textRangeRejectsStartGreaterThanEnd() {
         testTrace.section("textRangeRejectsStartGreaterThanEnd")
-        assertFailsWith<IllegalArgumentException> {
+        assertFailsWith<TiqianIllegalArgumentException> {
             TextRange(5, 2)
         }
     }
@@ -68,7 +68,7 @@ class CoreUnitsGeometryTest {
     @Test
     fun textRangeRejectsNegativeStart() {
         testTrace.section("textRangeRejectsNegativeStart")
-        assertFailsWith<IllegalArgumentException> {
+        assertFailsWith<TiqianIllegalArgumentException> {
             TextRange(-1, 1)
         }
     }
