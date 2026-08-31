@@ -16,6 +16,8 @@ import org.tiqian.core.TextRangeTest;
 import org.tiqian.core.UnicodeNumberTest;
 import org.tiqian.core.UnicodeScriptEvidenceTest;
 import org.tiqian.core.UnicodeWordCharacterTest;
+import org.tiqian.clreq.BopomofoParserTest;
+import org.tiqian.clreq.NumberSymbolCohesionTest;
 import org.tiqian.test.trace.TestTraceRecorder;
 import org.tiqian.test.trace.TraceAssertionException;
 import std.Console;
@@ -229,6 +231,15 @@ class Main {
         run("testRichTextSpansAndPatterns", TextModelCoverageTest.testRichTextSpansAndPatterns);
         run("testRubyAndParagraphModels", TextModelCoverageTest.testRubyAndParagraphModels);
         TestTraceRecorder.flushClass("TextModelCoverageTest");
+        run("yinpingHasNoMark", BopomofoParserTest.yinpingHasNoMark);
+        run("suffixMarksAreToneAndStripped", BopomofoParserTest.suffixMarksAreToneAndStripped);
+        run("neutralToneIsPrefixed", BopomofoParserTest.neutralToneIsPrefixed);
+        run("singleSymbol", BopomofoParserTest.singleSymbol);
+        TestTraceRecorder.flushClass("BopomofoParserTest");
+        run("bareNumberIsItsOwnGroup", NumberSymbolCohesionTest.bareNumberIsItsOwnGroup);
+        run("bindsDigitsWithSuffixUnitPrefixSignAndCurrency", NumberSymbolCohesionTest.bindsDigitsWithSuffixUnitPrefixSignAndCurrency);
+        run("keepsInteriorDecimalAndThousandsSeparators", NumberSymbolCohesionTest.keepsInteriorDecimalAndThousandsSeparators);
+        TestTraceRecorder.flushClass("NumberSymbolCohesionTest");
 
         if (failures > 0) {
             Process.exit(1);
