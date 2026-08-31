@@ -46,15 +46,4 @@ class RubySpan {
         this.kind = kind;
         this.locale = locale == null ? (kind == RubyKind.Bopomofo ? "zh-TW" : null) : locale;
     }
-
-    // Kotlin's List.toString joins with ", " while Std.string over the array
-    // joins with ","; generic synthesis cannot reproduce the Kotlin text, so
-    // this explicit member stays.
-    public function toString():String {
-        return "RubySpan(baseRange=" + baseRange.toString()
-            + ", text=" + text
-            + ", fontFamilies=" + Std.string(fontFamilies)
-            + ", kind=" + Std.string(kind)
-            + ", locale=" + (locale == null ? "null" : locale) + ")";
-    }
 }
