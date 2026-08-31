@@ -13,6 +13,10 @@ class BreakOpportunity {
         this.penalty = penalty == null ? 0 : penalty;
         this.reason = reason;
     }
+
+    public function toString():String {
+        return "BreakOpportunity(index=" + index + ", kind=" + kind + ", penalty=" + penalty + ", reason=" + reason + ")";
+    }
 }
 
 @:dataClass
@@ -20,4 +24,8 @@ class ForbiddenBreak {
     public final range:TextRange;
     public final reason:String;
     public function new(range:TextRange, reason:String) { this.range = range; this.reason = reason; }
+
+    public function toString():String {
+        return "ForbiddenBreak(range=" + range + ", reason=" + reason + ")";
+    }
 }

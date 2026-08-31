@@ -94,25 +94,27 @@ class TestTraceRender {
 
     private static function expandScientific(value:String):String {
         final output = new StringBuf();
+        var copied = 0;
         var index = 0;
         while (index < value.length) {
             final codeUnit = value.charCodeAt(index);
             if (codeUnit != 69 && codeUnit != 101) {
-                output.add(value.substring(index, index + 1));
                 index += 1;
                 continue;
             }
 
-            final match = scientificMatch(value, index);
+            final match = scientificMatch(value, index, copied);
             if (match == null) {
-                output.add(value.substring(index, index + 1));
                 index += 1;
                 continue;
             }
 
-            output.add(expandMantissa(match.mantissa, match.exponent));
+            output.add(value.substring(copied, match.start));
+            output.add(expandMantissa(value.substring(match.start, match.mantissaEnd), match.exponent));
+            copied = match.end;
             index = match.end;
         }
+        output.add(value.substring(copied, value.length));
         return output.toString();
     }
 
@@ -136,58 +138,66 @@ class TestTraceRender {
         return output.toString();
     }
 
-    private static function scientificMatch(value:String, exponentMarker:Int):Null<ScientificMatch> {
-        var exponentIndex = exponentMarker + 1;
-        var exponentNegative = false;
-        if (exponentIndex < value.length && (value.charCodeAt(exponentIndex) == 43 || value.charCodeAt(exponentIndex) == 45)) {
-            exponentNegative = value.charCodeAt(exponentIndex) == 45;
-            exponentIndex += 1;
+    private static function scientificMatch(s:String, eIndex:Int, floor:Int):Null<ScientificMatch> {
+        var i = eIndex + 1;
+        if (i < s.length && (s.charCodeAt(i) == 43 || s.charCodeAt(i) == 45)) {
+            i += 1;
         }
-        final exponentStart = exponentIndex;
-        var exponent = 0;
-        while (exponentIndex < value.length && isDigit(value.charCodeAt(exponentIndex))) {
-            exponent = exponent * 10 + value.charCodeAt(exponentIndex) - 48;
-            exponentIndex += 1;
+        final digitsStart = i;
+        while (i < s.length && isDigit(s.charCodeAt(i))) {
+            i += 1;
         }
-        if (exponentIndex == exponentStart) {
+        if (i == digitsStart) {
             return null;
         }
-        if (exponentNegative) {
-            exponent = -exponent;
-        }
+        final end = i;
+        final exponent = parseExponent(s, eIndex + 1, end);
 
-        var cursor = exponentMarker - 1;
-        while (cursor >= 0 && isDigit(value.charCodeAt(cursor))) {
-            cursor -= 1;
+        final last = eIndex - 1;
+        if (last < floor || !isDigit(s.charCodeAt(last))) {
+            return null;
         }
-        final fractionEnd = exponentMarker;
-        var dotIndex = -1;
-        if (cursor >= 0 && value.charCodeAt(cursor) == 46) {
-            dotIndex = cursor;
-            cursor -= 1;
-            final integerEnd = cursor;
-            while (cursor >= 0 && isDigit(value.charCodeAt(cursor))) {
-                cursor -= 1;
-            }
-            if (integerEnd == cursor) {
+        var runStart = last;
+        while (runStart > floor && isDigit(s.charCodeAt(runStart - 1))) {
+            runStart -= 1;
+        }
+        var lead = -1;
+        if (runStart > floor + 1 && s.charCodeAt(runStart - 1) == 46 && isDigit(s.charCodeAt(runStart - 2))) {
+            lead = runStart - 2;
+        } else {
+            if (runStart != last) {
                 return null;
             }
-            if (integerEnd - cursor != 1) {
-                return null;
-            }
-        } else if (fractionEnd - (cursor + 1) != 1) {
-            return null;
+            lead = last;
         }
 
-        var mantissaStart = cursor + 1;
-        if (mantissaStart > 0 && value.charCodeAt(mantissaStart - 1) == 45) {
-            mantissaStart -= 1;
+        if (lead > 0 && s.charCodeAt(lead - 1) == 45 && lead - 1 >= floor) {
+            final beforeMinus = lead >= 2 && (isDigit(s.charCodeAt(lead - 2)) || s.charCodeAt(lead - 2) == 46);
+            if (!beforeMinus) {
+                return new ScientificMatch(lead - 1, eIndex, end, exponent);
+            }
+            return new ScientificMatch(lead, eIndex, end, exponent);
         }
-        if (mantissaStart > 0 && (isDigit(value.charCodeAt(mantissaStart - 1)) || value.charCodeAt(mantissaStart - 1) == 46)) {
-            return null;
+        final beforeDigit = lead > 0 && (isDigit(s.charCodeAt(lead - 1)) || s.charCodeAt(lead - 1) == 46);
+        if (!beforeDigit) {
+            return new ScientificMatch(lead, eIndex, end, exponent);
         }
-        final mantissa = value.substring(mantissaStart, exponentMarker);
-        return new ScientificMatch(mantissa, exponent, exponentIndex);
+        return null;
+    }
+
+    static function parseExponent(s:String, from:Int, to:Int):Int {
+        var index = from;
+        var negative = false;
+        if (index < to && (s.charCodeAt(index) == 43 || s.charCodeAt(index) == 45)) {
+            negative = s.charCodeAt(index) == 45;
+            index += 1;
+        }
+        var value = 0;
+        while (index < to) {
+            value = value * 10 + s.charCodeAt(index) - 48;
+            index += 1;
+        }
+        return negative ? -value : value;
     }
 
     private static function expandMantissa(mantissa:String, exponent:Int):String {
@@ -272,13 +282,15 @@ class TestTraceRender {
 }
 
 private class ScientificMatch {
-    public final mantissa:String;
-    public final exponent:Int;
+    public final start:Int;
+    public final mantissaEnd:Int;
     public final end:Int;
+    public final exponent:Int;
 
-    public function new(mantissa:String, exponent:Int, end:Int) {
-        this.mantissa = mantissa;
-        this.exponent = exponent;
+    public function new(start:Int, mantissaEnd:Int, end:Int, exponent:Int) {
+        this.start = start;
+        this.mantissaEnd = mantissaEnd;
         this.end = end;
+        this.exponent = exponent;
     }
 }
