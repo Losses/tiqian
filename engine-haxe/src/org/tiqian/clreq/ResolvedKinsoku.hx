@@ -1,6 +1,7 @@
 package org.tiqian.clreq;
 
 /** Resolved kinsoku level + hanging style for a given measure. */
+@:dataClass
 class ResolvedKinsoku {
     public final level:KinsokuLevel;
     public final hanging:HangingPunctuationStyle;
@@ -12,9 +13,5 @@ class ResolvedKinsoku {
         this.reason = reason;
     }
 
-    public function toString():String {
-        return "ResolvedKinsoku(level=" + level
-            + ", hanging=" + hanging
-            + ", reason=" + reason + ")";
-    }
+
 }

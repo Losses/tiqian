@@ -1,5 +1,6 @@
 package org.tiqian.core;
 
+@:dataClass
 class LineLengthGrid {
     public final enabled:Bool;
     public final bodyAlignment:Null<LastLineAlignment>;
@@ -9,9 +10,5 @@ class LineLengthGrid {
         this.bodyAlignment = bodyAlignment == null ? null : bodyAlignment;
     }
 
-    public function toString():String {
-        final alignment = bodyAlignment;
-        return "LineLengthGrid(enabled=" + enabled
-            + ", bodyAlignment=" + (alignment == null ? "null" : Std.string(alignment)) + ")";
-    }
+
 }

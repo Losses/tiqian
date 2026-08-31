@@ -1,5 +1,6 @@
 package org.tiqian.core;
 
+@:dataClass
 class RichTextBackgroundDrawStyle {
     public final strokeWidth:Float;
     private final kind:String;
@@ -18,6 +19,9 @@ class RichTextBackgroundDrawStyle {
         return new RichTextBackgroundDrawStyle("Border", strokeWidth);
     }
 
+    // Kotlin models this as a sealed interface with a data object Fill, so the
+    // printed form collapses each variant to its own shape instead of listing
+    // every field. Generic synthesis cannot reproduce that; keep this explicit.
     public function toString():String {
         return kind == "Fill" ? "Fill" : "Border(strokeWidth=" + strokeWidth + ")";
     }

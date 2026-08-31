@@ -6,6 +6,7 @@
 -cp .haxelib/boring/git/samples
 -cp engine-haxe/src
 --macro Intercept.run(['engine-haxe/src'], [])
+--macro haxe.macro.Compiler.addGlobalMetadata('org.tiqian', '@:build(std.RecordMember.build())')
 --macro kotlincompiler.Compiler.use()
 -D kotlin-output=engine-haxe/out/kotlin-gen
 -D kotlin-test-output=engine-haxe/out/kotlin-gen-tests
