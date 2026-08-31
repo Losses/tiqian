@@ -1,5 +1,6 @@
 package org.tiqian.core;
 
+@:dataClass
 class MaxLinesDecisionInfo {
     public final laidOutLines:Int;
     public final visibleLines:Int;
@@ -11,8 +12,5 @@ class MaxLinesDecisionInfo {
         this.reason = reason == null ? "MaxLinesLineTruncation" : reason;
     }
 
-    public function toString():String {
-        return "MaxLinesDecisionInfo(laidOutLines=" + laidOutLines
-            + ", visibleLines=" + visibleLines + ", reason=" + reason + ")";
-    }
+
 }

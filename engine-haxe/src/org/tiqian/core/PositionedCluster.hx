@@ -2,6 +2,7 @@ package org.tiqian.core;
 
 import std.ReadOnlyArray;
 
+@:dataClass
 class PositionedCluster {
     public final lineIndex:Int;
     public final clusterIndex:Int;
@@ -45,17 +46,5 @@ class PositionedCluster {
         return new Rect(left, top, right, bottom);
     }
 
-    public function toString():String {
-        final stops = sourceStops;
-        return "PositionedCluster(lineIndex=" + lineIndex
-            + ", clusterIndex=" + clusterIndex
-            + ", range=" + range.toString()
-            + ", left=" + left
-            + ", top=" + top
-            + ", right=" + right
-            + ", bottom=" + bottom
-            + ", baseline=" + baseline
-            + ", drawX=" + drawX
-            + ", sourceStops=" + (stops == null ? "null" : Std.string(stops)) + ")";
-    }
+
 }

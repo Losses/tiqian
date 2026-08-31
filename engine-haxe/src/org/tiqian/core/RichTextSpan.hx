@@ -1,5 +1,6 @@
 package org.tiqian.core;
 
+@:dataClass
 class RichTextSpan {
     public final range:TextRange;
     public final role:RichTextRole;
@@ -11,9 +12,6 @@ class RichTextSpan {
         this.paint = paint;
     }
 
-    public function toString():String {
-        return "RichTextSpan(range=" + range.toString() + ", role=" + roleToString(role) + ", paint=" + paint.toString() + ")";
-    }
 
     private static function roleToString(role:RichTextRole):String {
         return switch (role) {

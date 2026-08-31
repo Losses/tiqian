@@ -1,5 +1,6 @@
 package org.tiqian.core;
 
+@:dataClass
 class RichTextBackgroundDrawStyle {
     public final strokeWidth:Float;
     private final kind:String;
@@ -18,9 +19,6 @@ class RichTextBackgroundDrawStyle {
         return new RichTextBackgroundDrawStyle("Border", strokeWidth);
     }
 
-    public function toString():String {
-        return kind == "Fill" ? "Fill" : "Border(strokeWidth=" + strokeWidth + ")";
-    }
 
     @:allow(org.tiqian.core.RichTextBackgroundPaint)
     private static function sameValues(a:RichTextBackgroundDrawStyle, b:RichTextBackgroundDrawStyle):Bool {

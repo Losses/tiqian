@@ -1,5 +1,6 @@
 package org.tiqian.core;
 
+@:dataClass
 class RichTextBackgroundPaint {
     public final horizontalPadding:Float;
     public final verticalPadding:Float;
@@ -46,14 +47,7 @@ class RichTextBackgroundPaint {
         return new RichTextBackgroundPaint(0.0, 0.0, corner, continuation, RichTextBackgroundMetricPolicy.MarkedFaces, RichTextBackgroundDrawStyle.Fill);
     }
 
-    public function toString():String {
-        return "RichTextBackgroundPaint(horizontalPadding=" + horizontalPadding
-            + ", verticalPadding=" + verticalPadding
-            + ", cornerRadius=" + cornerRadius
-            + ", continuationCornerRadius=" + continuationCornerRadius
-            + ", metricPolicy=" + Std.string(metricPolicy)
-            + ", drawStyle=" + drawStyle.toString() + ")";
-    }
+
 
     @:allow(org.tiqian.core.RichTextPaint)
     private static function sameValues(a:RichTextBackgroundPaint, b:RichTextBackgroundPaint):Bool {

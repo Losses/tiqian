@@ -1,5 +1,6 @@
 package org.tiqian.core;
 
+@:dataClass
 class RichTextLinePattern {
     public final strokeWidth:Float;
     public final dashLength:Float;
@@ -34,15 +35,6 @@ class RichTextLinePattern {
         return new RichTextLinePattern("Dotted", 0.0, 0.0, gapLength, dotDiameter);
     }
 
-    public function toString():String {
-        if (kind == "Solid") {
-            return "Solid";
-        }
-        if (kind == "Dashed") {
-            return "Dashed(strokeWidth=" + strokeWidth + ", dashLength=" + dashLength + ", gapLength=" + gapLength + ")";
-        }
-        return "Dotted(dotDiameter=" + dotDiameter + ", gapLength=" + gapLength + ")";
-    }
 
     @:allow(org.tiqian.core.RichTextPaint)
     private static function sameValues(a:RichTextLinePattern, b:RichTextLinePattern):Bool {
