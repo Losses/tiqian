@@ -1,5 +1,6 @@
 package org.tiqian.clreq;
 
+@:dataClass
 class PunctuationPolicy {
     public final punctuationClass:PunctuationClass;
     public final allowAtLineStart:Bool;
@@ -21,11 +22,5 @@ class PunctuationPolicy {
         this.defaultAdvanceEm = defaultAdvanceEm == null ? 1.0 : defaultAdvanceEm;
     }
 
-    public function toString():String {
-        return "PunctuationPolicy(punctuationClass=" + punctuationClass
-            + ", allowAtLineStart=" + allowAtLineStart
-            + ", allowAtLineEnd=" + allowAtLineEnd
-            + ", defaultBodyEm=" + defaultBodyEm
-            + ", defaultAdvanceEm=" + defaultAdvanceEm + ")";
-    }
+
 }

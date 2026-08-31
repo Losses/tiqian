@@ -1,5 +1,6 @@
 package org.tiqian.core;
 
+@:dataClass
 class InlineBoxSpan {
     public final range:TextRange;
     public final inlineStart:Float;
@@ -18,10 +19,5 @@ class InlineBoxSpan {
         this.outerSpacing = outerSpacing == null ? InlineBoxOuterSpacing.Narrow : outerSpacing;
     }
 
-    public function toString():String {
-        return "InlineBoxSpan(range=" + range.toString()
-            + ", inlineStart=" + inlineStart
-            + ", inlineEnd=" + inlineEnd
-            + ", outerSpacing=" + Std.string(outerSpacing) + ")";
-    }
+
 }

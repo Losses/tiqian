@@ -4,6 +4,7 @@ import std.ReadOnlyArray;
 
 // Slant axis: italic/oblique typeface when the family offers one (ADR 0030 B 档).
 // Per-span text color (ARGB) over a SOURCE range — rich-text 颜色 (ADR 0030 A 档).
+@:dataClass
 class TextStyle {
     public final fontFamilies:ReadOnlyArray<String>;
     public final fontSize:Float;
@@ -35,6 +36,8 @@ class TextStyle {
         return new TextStyle(fontSize, locale, fontWeight, italic, baselineShift, inlineAttachment, fontFamilies);
     }
 
+    // fontFamilies leads the Kotlin constructor but trails the field list here,
+    // and synthesis prints declaration order, so this explicit member stays.
     public function toString():String {
         return "TextStyle(fontFamilies=" + Std.string(fontFamilies)
             + ", fontSize=" + fontSize

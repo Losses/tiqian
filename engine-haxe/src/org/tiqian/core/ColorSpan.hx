@@ -1,5 +1,6 @@
 package org.tiqian.core;
 
+@:dataClass
 class ColorSpan {
     public final start:Int;
     public final end:Int;
@@ -11,7 +12,5 @@ class ColorSpan {
         this.argb = argb;
     }
 
-    public function toString():String {
-        return "ColorSpan(start=" + start + ", end=" + end + ", argb=" + argb + ")";
-    }
+
 }

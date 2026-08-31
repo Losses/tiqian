@@ -1,5 +1,6 @@
 package org.tiqian.core;
 
+@:dataClass
 class RichTextSpan {
     public final range:TextRange;
     public final role:RichTextRole;
@@ -11,6 +12,8 @@ class RichTextSpan {
         this.paint = paint;
     }
 
+    // The role is a Kotlin sealed interface; the enum Std.string form drops
+    // the "target=" label on Link, so this explicit member stays.
     public function toString():String {
         return "RichTextSpan(range=" + range.toString() + ", role=" + roleToString(role) + ", paint=" + paint.toString() + ")";
     }

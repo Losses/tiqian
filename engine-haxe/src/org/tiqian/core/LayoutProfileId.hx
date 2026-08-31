@@ -1,5 +1,6 @@
 package org.tiqian.core;
 
+@:dataClass
 class LayoutProfileId {
     public final value:String;
 
@@ -7,7 +8,5 @@ class LayoutProfileId {
         this.value = value;
     }
 
-    public function toString():String {
-        return "LayoutProfileId(value=" + value + ")";
-    }
+
 }

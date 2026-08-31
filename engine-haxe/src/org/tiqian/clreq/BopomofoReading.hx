@@ -13,6 +13,9 @@ class BopomofoReading {
         this.tone = tone;
     }
 
+    // Kotlin's List.toString joins with ", " while Std.string over the array
+    // joins with ","; generic synthesis cannot reproduce the Kotlin text, so
+    // this explicit member stays.
     public function toString():String {
         final output = new StringBuf();
         output.add("BopomofoReading(symbols=[");
