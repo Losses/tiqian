@@ -9,6 +9,7 @@ class Fill implements RichTextBackgroundDrawStyle {
 }
 
 @:dataClass
+// Physical layout-unit stroke kept inside the resolved box by the frontend.
 class Border implements RichTextBackgroundDrawStyle {
     public final strokeWidth:Float;
 
