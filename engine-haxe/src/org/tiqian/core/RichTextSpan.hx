@@ -29,12 +29,23 @@ class RichTextSpan {
     @:allow(org.tiqian.core.LayoutQueries)
     private static function sameRole(a:RichTextRole, b:RichTextRole):Bool {
         return switch (a) {
-            case Background: switch (b) { case Background: true; case _: false; };
-            case Underline: switch (b) { case Underline: true; case _: false; };
-            case LineThrough: switch (b) { case LineThrough: true; case _: false; };
-            case Link(target): switch (b) { case Link(otherTarget): target == otherTarget; case _: false; };
-            case TechnicalInline: switch (b) { case TechnicalInline: true; case _: false; };
-            case InlineCode: switch (b) { case InlineCode: true; case _: false; };
+            case Background: b == RichTextRole.Background;
+            case Underline: b == RichTextRole.Underline;
+            case LineThrough: b == RichTextRole.LineThrough;
+            case Link(target): sameLinkTarget(target, b);
+            case TechnicalInline: b == RichTextRole.TechnicalInline;
+            case InlineCode: b == RichTextRole.InlineCode;
+        };
+    }
+
+    private static function sameLinkTarget(target:String, b:RichTextRole):Bool {
+        return switch (b) {
+            case Background: false;
+            case Underline: false;
+            case LineThrough: false;
+            case Link(otherTarget): target == otherTarget;
+            case TechnicalInline: false;
+            case InlineCode: false;
         };
     }
 }
