@@ -15,6 +15,10 @@ class InlineObjectSpan {
         advance:Float,
         ascent:Float,
         descent:Float,
+        // Kotlin declares both boundaries = InlineObjectBoundaryAdjustment.Fixed,
+        // a companion-field default. The port exposes Fixed as the fixed()
+        // static call, which the boring gap 4 extension grammar accepts; the
+        // parameters stay mandatory until that lowering lands.
         leadingBoundary:InlineObjectBoundaryAdjustment,
         trailingBoundary:InlineObjectBoundaryAdjustment
     ) {
@@ -27,11 +31,11 @@ class InlineObjectSpan {
     }
 
     public function toString():String {
-        return "InlineObjectSpan(range=" + range
+        return "InlineObjectSpan(range=" + range.toString()
             + ", advance=" + advance
             + ", ascent=" + ascent
             + ", descent=" + descent
-            + ", leadingBoundary=" + leadingBoundary
-            + ", trailingBoundary=" + trailingBoundary + ")";
+            + ", leadingBoundary=" + leadingBoundary.toString()
+            + ", trailingBoundary=" + trailingBoundary.toString() + ")";
     }
 }

@@ -4,6 +4,15 @@ import org.tiqian.core.TiqianIllegalArgumentException;
 import org.tiqian.core.TiqianNoSuchElementException;
 import org.tiqian.core.Ic;
 import org.tiqian.core.EastAsianSpacingEdges;
+import org.tiqian.clreq.BopomofoTone;
+import org.tiqian.clreq.BopomofoReading;
+import org.tiqian.clreq.ClreqProfile;
+import org.tiqian.clreq.GlueSide;
+import org.tiqian.clreq.HangingPunctuationStyle;
+import org.tiqian.clreq.KinsokuLevel;
+import org.tiqian.clreq.PunctuationClass;
+import org.tiqian.clreq.PunctuationGluePlacement;
+import std.ReadOnlyArray;
 import org.tiqian.test.TestHelpers;
 import std.StringBuf;
 
@@ -12,17 +21,6 @@ class TracedAssertions {
         recordEvent("eq", [
             field("expected", TestTraceRender.renderInt(expected)),
             field("actual", TestTraceRender.renderInt(actual)),
-            msgField(message)
-        ]);
-        if (expected != actual) {
-            fail(message == null ? "Expected values to be equal." : message);
-        }
-    }
-
-    public static function assertEqualsGeneric<T>(expected:T, actual:T, ?message:String):Void {
-        recordEvent("eq", [
-            field("expected", TestTraceRender.renderGeneric(expected)),
-            field("actual", TestTraceRender.renderGeneric(actual)),
             msgField(message)
         ]);
         if (expected != actual) {
@@ -61,6 +59,119 @@ class TracedAssertions {
         if (expected.leading != actual.leading || expected.trailing != actual.trailing || expected.containsWide != actual.containsWide) {
             fail(message == null ? "Expected values to be equal." : message);
         }
+    }
+
+    public static function assertEqualsStringArray(expected:ReadOnlyArray<String>, actual:ReadOnlyArray<String>, ?message:String):Void {
+        recordEvent("eq", [
+            field("expected", TestTraceRender.renderStringArray(expected)),
+            field("actual", TestTraceRender.renderStringArray(actual)),
+            msgField(message)
+        ]);
+        if (!sameStringArray(expected, actual)) {
+            fail(message == null ? "Expected values to be equal." : message);
+        }
+    }
+
+    public static function assertEqualsBopomofoTone(expected:BopomofoTone, actual:BopomofoTone, ?message:String):Void {
+        recordEvent("eq", [
+            field("expected", Std.string(expected)),
+            field("actual", Std.string(actual)),
+            msgField(message)
+        ]);
+        if (expected != actual) {
+            fail(message == null ? "Expected values to be equal." : message);
+        }
+    }
+
+    public static function assertEqualsBopomofoReading(expected:BopomofoReading, actual:BopomofoReading, ?message:String):Void {
+        recordEvent("eq", [
+            field("expected", expected.toString()),
+            field("actual", actual.toString()),
+            msgField(message)
+        ]);
+        if (!sameStringArray(expected.symbols, actual.symbols) || expected.tone != actual.tone) {
+            fail(message == null ? "Expected values to be equal." : message);
+        }
+    }
+
+    public static function assertEqualsPunctuationClass(expected:PunctuationClass, actual:PunctuationClass, ?message:String):Void {
+        recordEvent("eq", [
+            field("expected", Std.string(expected)),
+            field("actual", Std.string(actual)),
+            msgField(message)
+        ]);
+        if (expected != actual) {
+            fail(message == null ? "Expected values to be equal." : message);
+        }
+    }
+
+    public static function assertEqualsGlueSide(expected:GlueSide, actual:GlueSide, ?message:String):Void {
+        recordEvent("eq", [
+            field("expected", Std.string(expected)),
+            field("actual", Std.string(actual)),
+            msgField(message)
+        ]);
+        if (expected != actual) {
+            fail(message == null ? "Expected values to be equal." : message);
+        }
+    }
+
+    public static function assertEqualsPunctuationGluePlacement(expected:PunctuationGluePlacement, actual:PunctuationGluePlacement, ?message:String):Void {
+        recordEvent("eq", [
+            field("expected", Std.string(expected)),
+            field("actual", Std.string(actual)),
+            msgField(message)
+        ]);
+        if (expected != actual) {
+            fail(message == null ? "Expected values to be equal." : message);
+        }
+    }
+
+    public static function assertEqualsKinsokuLevel(expected:KinsokuLevel, actual:KinsokuLevel, ?message:String):Void {
+        recordEvent("eq", [
+            field("expected", Std.string(expected)),
+            field("actual", Std.string(actual)),
+            msgField(message)
+        ]);
+        if (expected != actual) {
+            fail(message == null ? "Expected values to be equal." : message);
+        }
+    }
+
+    public static function assertEqualsHangingPunctuationStyle(expected:HangingPunctuationStyle, actual:HangingPunctuationStyle, ?message:String):Void {
+        recordEvent("eq", [
+            field("expected", Std.string(expected)),
+            field("actual", Std.string(actual)),
+            msgField(message)
+        ]);
+        if (expected != actual) {
+            fail(message == null ? "Expected values to be equal." : message);
+        }
+    }
+
+    public static function assertEqualsClreqProfile(expected:ClreqProfile, actual:ClreqProfile, ?message:String):Void {
+        recordEvent("eq", [
+            field("expected", TestTraceRender.cap(expected.toString())),
+            field("actual", TestTraceRender.cap(actual.toString())),
+            msgField(message)
+        ]);
+        if (!ClreqProfile.sameProfile(expected, actual)) {
+            fail(message == null ? "Expected values to be equal." : message);
+        }
+    }
+
+    private static function sameStringArray(first:ReadOnlyArray<String>, second:ReadOnlyArray<String>):Bool {
+        if (first.length != second.length) {
+            return false;
+        }
+        var index:Int = 0;
+        while (index < first.length) {
+            if (first[index] != second[index]) {
+                return false;
+            }
+            index += 1;
+        }
+        return true;
     }
 
     public static function f32Literal(value:Float):Float {
@@ -126,19 +237,18 @@ class TracedAssertions {
         }
     }
 
-    public static function assertNull<T>(actual:Null<T>, ?message:String):Void {
-        recordEvent("null", [field("actual", actual == null ? "-" : TestTraceRender.renderGeneric(actual)), msgField(message)]);
-        if (actual != null) {
+    public static function assertNullRendered(wasNull:Bool, renderedActual:String, ?message:String):Void {
+        recordEvent("null", [field("actual", renderedActual), msgField(message)]);
+        if (!wasNull) {
             fail(message == null ? "Expected value to be null." : message);
         }
     }
 
-    public static function assertNotNull<T>(actual:Null<T>, ?message:String):T {
-        recordEvent("not-null", [field("actual", actual == null ? "-" : TestTraceRender.renderGeneric(actual)), msgField(message)]);
-        if (actual == null) {
+    public static function assertNotNullRendered(wasNotNull:Bool, renderedActual:String, ?message:String):Void {
+        recordEvent("not-null", [field("actual", renderedActual), msgField(message)]);
+        if (!wasNotNull) {
             fail(message == null ? "Expected value to be non-null." : message);
         }
-        return actual;
     }
 
     public static function assertFailsWith(?message:String, block:()->Void):TiqianIllegalArgumentException {
