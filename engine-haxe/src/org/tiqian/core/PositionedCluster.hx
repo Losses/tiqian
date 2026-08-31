@@ -49,7 +49,7 @@ class PositionedCluster {
         final stops = sourceStops;
         return "PositionedCluster(lineIndex=" + lineIndex
             + ", clusterIndex=" + clusterIndex
-            + ", range=" + range
+            + ", range=" + range.toString()
             + ", left=" + left
             + ", top=" + top
             + ", right=" + right
