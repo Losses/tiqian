@@ -105,10 +105,10 @@ class TextModelCoverageTest {
         TracedAssertions.assertTrue(customAdj.preventsLineBreak);
         TextModelCoverageTestHelpers.assertRendered(customAdj.toString());
 
-        TextModelCoverageTestHelpers.expectArgumentFailure(() -> new InlineObjectBoundaryAdjustment(false, null, -0.5, null, false));
-        TextModelCoverageTestHelpers.expectArgumentFailure(() -> new InlineObjectBoundaryAdjustment(false, null, 0.0 / 0.0, null, false));
-        TextModelCoverageTestHelpers.expectArgumentFailure(() -> new InlineObjectBoundaryAdjustment(false, null, null, -0.5, false));
-        TextModelCoverageTestHelpers.expectArgumentFailure(() -> new InlineObjectBoundaryAdjustment(false, null, null, 0.0 / 0.0, false));
+        TextModelCoverageTestHelpers.expectArgumentFailure(() -> new InlineObjectBoundaryAdjustment(false, null, -0.5));
+        TextModelCoverageTestHelpers.expectArgumentFailure(() -> new InlineObjectBoundaryAdjustment(false, null, 0.0 / 0.0));
+        TextModelCoverageTestHelpers.expectArgumentFailure(() -> new InlineObjectBoundaryAdjustment(false, null, 0.0, -0.5));
+        TextModelCoverageTestHelpers.expectArgumentFailure(() -> new InlineObjectBoundaryAdjustment(false, null, 0.0, 0.0 / 0.0));
 
         final inlineObject:InlineObjectSpan = new InlineObjectSpan(new TextRange(0, 1), 16.0, 12.0, 4.0, fixed, customAdj);
         TracedAssertions.assertEqualsRendered(new TextRange(0, 1).toString(), inlineObject.range.toString());
