@@ -27,11 +27,11 @@ class InlineObjectSpan {
     }
 
     public function toString():String {
-        return "InlineObjectSpan(range=" + range
+        return "InlineObjectSpan(range=" + range.toString()
             + ", advance=" + advance
             + ", ascent=" + ascent
             + ", descent=" + descent
-            + ", leadingBoundary=" + leadingBoundary
-            + ", trailingBoundary=" + trailingBoundary + ")";
+            + ", leadingBoundary=" + leadingBoundary.toString()
+            + ", trailingBoundary=" + trailingBoundary.toString() + ")";
     }
 }
