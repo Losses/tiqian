@@ -1,0 +1,191 @@
+package org.tiqian.core;
+
+import org.tiqian.test.TestHelpers;
+import org.tiqian.test.trace.TestTraceRecorder;
+import org.tiqian.test.trace.TracedAssertions;
+
+class EastAsianSpacingCoverageTest {
+    private static var testTrace:TestTraceRecorder = null;
+
+    private static function currentTrace():TestTraceRecorder {
+        if (testTrace == null) {
+            testTrace = new TestTraceRecorder("EastAsianSpacingCoverageTest");
+        }
+        return testTrace;
+    }
+
+    private static function expectArgumentFailure(block:()->Void):Void {
+        TracedAssertions.assertFailsWith(null, block);
+    }
+
+    @:test
+    public static function testUnicodeWordCharacter():Void {
+        currentTrace().section("testUnicodeWordCharacter");
+        TracedAssertions.assertEqualsString("17.0.0", UnicodeWordCharacter.DATA_REVISION);
+        TracedAssertions.assertTrue(UnicodeWordCharacter.DATA_SOURCE.length > 0);
+        TracedAssertions.assertTrue(UnicodeWordCharacter.DATA_SHA256.length > 0);
+
+        expectArgumentFailure(() -> UnicodeWordCharacter.contains(-1));
+        expectArgumentFailure(() -> UnicodeWordCharacter.contains(0x110000));
+        expectArgumentFailure(() -> UnicodeWordCharacter.contains(0xD800));
+        expectArgumentFailure(() -> UnicodeWordCharacter.contains(0xDFFF));
+
+        TracedAssertions.assertTrue(UnicodeWordCharacter.contains(0x41));
+        TracedAssertions.assertTrue(UnicodeWordCharacter.contains(0x4E2D));
+        TracedAssertions.assertFalse(UnicodeWordCharacter.contains(0x20));
+        TracedAssertions.assertFalse(UnicodeWordCharacter.contains(0x21));
+    }
+
+    @:test
+    public static function testUnicodeScriptEvidence():Void {
+        currentTrace().section("testUnicodeScriptEvidence");
+        final values:Array<UnicodeScriptEvidence> = [
+            UnicodeScriptEvidence.Neutral,
+            UnicodeScriptEvidence.EastAsian,
+            UnicodeScriptEvidence.Other
+        ];
+        var index:Int = 0;
+        while (index < values.length) {
+            TracedAssertions.assertNotNull(values[index]);
+            index += 1;
+        }
+
+        TracedAssertions.assertEqualsString("17.0.0", UnicodeScriptEvidenceClassifier.DATA_REVISION);
+        TracedAssertions.assertTrue(UnicodeScriptEvidenceClassifier.DATA_SOURCE.length > 0);
+        TracedAssertions.assertTrue(UnicodeScriptEvidenceClassifier.DATA_SHA256.length > 0);
+
+        expectArgumentFailure(() -> UnicodeScriptEvidenceClassifier.classify(-1));
+        expectArgumentFailure(() -> UnicodeScriptEvidenceClassifier.classify(0x110000));
+        expectArgumentFailure(() -> UnicodeScriptEvidenceClassifier.classify(0xD800));
+        expectArgumentFailure(() -> UnicodeScriptEvidenceClassifier.classify(0xDFFF));
+
+        TracedAssertions.assertEqualsGeneric(
+            UnicodeScriptEvidence.EastAsian,
+            UnicodeScriptEvidenceClassifier.classify(0x4E00)
+        );
+        TracedAssertions.assertEqualsGeneric(
+            UnicodeScriptEvidence.Other,
+            UnicodeScriptEvidenceClassifier.classify(0x0041)
+        );
+        TracedAssertions.assertEqualsGeneric(
+            UnicodeScriptEvidence.Neutral,
+            UnicodeScriptEvidenceClassifier.classify(0x0020)
+        );
+    }
+
+    @:test
+    public static function testEastAsianSpacingDataAndValues():Void {
+        currentTrace().section("testEastAsianSpacingDataAndValues");
+        final values:Array<EastAsianSpacingValue> = [
+            EastAsianSpacingValue.Wide,
+            EastAsianSpacingValue.Narrow,
+            EastAsianSpacingValue.Other,
+            EastAsianSpacingValue.Conditional
+        ];
+        var index:Int = 0;
+        while (index < values.length) {
+            TracedAssertions.assertNotNull(values[index]);
+            index += 1;
+        }
+
+        TracedAssertions.assertEqualsGeneric(EastAsianSpacingValue.Wide, EastAsianSpacingData.lookup(0x02C7));
+        TracedAssertions.assertEqualsGeneric(EastAsianSpacingValue.Narrow, EastAsianSpacingData.lookup(0x0030));
+        TracedAssertions.assertEqualsGeneric(EastAsianSpacingValue.Conditional, EastAsianSpacingData.lookup(0x0021));
+        TracedAssertions.assertEqualsGeneric(EastAsianSpacingValue.Other, EastAsianSpacingData.lookup(0x0000));
+        TracedAssertions.assertEqualsGeneric(EastAsianSpacingValue.Other, EastAsianSpacingData.lookup(0x10FFFF));
+    }
+
+    @:test
+    public static function testEastAsianSpacingEdgesModel():Void {
+        currentTrace().section("testEastAsianSpacingEdgesModel");
+        final edges:EastAsianSpacingEdges = new EastAsianSpacingEdges(
+            EastAsianSpacingValue.Wide,
+            EastAsianSpacingValue.Narrow,
+            true
+        );
+        TracedAssertions.assertEqualsGeneric(EastAsianSpacingValue.Wide, edges.leading);
+        TracedAssertions.assertEqualsGeneric(EastAsianSpacingValue.Narrow, edges.trailing);
+        TracedAssertions.assertTrue(edges.containsWide);
+        TracedAssertions.assertEqualsEastAsianSpacingEdges(
+            new EastAsianSpacingEdges(EastAsianSpacingValue.Wide, EastAsianSpacingValue.Narrow, true),
+            edges
+        );
+        TracedAssertions.assertTrue(
+            edges.leading == new EastAsianSpacingEdges(EastAsianSpacingValue.Wide, EastAsianSpacingValue.Narrow, true).leading
+        );
+        TracedAssertions.assertTrue(edges.toString().indexOf("EastAsianSpacingEdges") >= 0);
+    }
+
+    @:test
+    public static function testUnicodeEastAsianSpacing():Void {
+        currentTrace().section("testUnicodeEastAsianSpacing");
+        TracedAssertions.assertEqualsString("draft-2024-12-16", UnicodeEastAsianSpacing.DATA_REVISION);
+        TracedAssertions.assertTrue(UnicodeEastAsianSpacing.DATA_SOURCE.length > 0);
+        TracedAssertions.assertTrue(UnicodeEastAsianSpacing.DATA_SHA256.length > 0);
+        TracedAssertions.assertEqualsString("2026-06-14", UnicodeEastAsianSpacing.LANGUAGE_REGISTRY_REVISION);
+        TracedAssertions.assertTrue(UnicodeEastAsianSpacing.LANGUAGE_REGISTRY_SOURCE.length > 0);
+
+        final chineseLocales:Array<String> = [
+            "zh", "zh-Hans", "zh-Hant", "zh-CN", "zh_TW", "cdo", "cjy", "cmn", "cnp", "cpx",
+            "csp", "czh", "czo", "gan", "hak", "hnm", "hsn", "luh", "lzh", "mnp", "nan",
+            "sjc", "wuu", "yue", "yue-HK", "cmn-Hans-CN"
+        ];
+        var index:Int = 0;
+        while (index < chineseLocales.length) {
+            final locale:String = chineseLocales[index];
+            TracedAssertions.assertTrue(
+                UnicodeEastAsianSpacing.isChineseLanguageContext(locale),
+                "Locale " + locale + " should be Chinese"
+            );
+            index += 1;
+        }
+
+        final nonChineseLocales:Array<String> = ["en", "en-US", "ja", "ko", "fr", "de", "es"];
+        index = 0;
+        while (index < nonChineseLocales.length) {
+            final locale:String = nonChineseLocales[index];
+            TracedAssertions.assertFalse(
+                UnicodeEastAsianSpacing.isChineseLanguageContext(locale),
+                "Locale " + locale + " should not be Chinese"
+            );
+            index += 1;
+        }
+
+        expectArgumentFailure(() -> UnicodeEastAsianSpacing.propertyOf(-1));
+        expectArgumentFailure(() -> UnicodeEastAsianSpacing.propertyOf(0x110000));
+        expectArgumentFailure(() -> UnicodeEastAsianSpacing.propertyOf(0xD800));
+        expectArgumentFailure(() -> UnicodeEastAsianSpacing.propertyOf(0xDFFF));
+
+        TracedAssertions.assertEqualsGeneric(EastAsianSpacingValue.Other, UnicodeEastAsianSpacing.resolvedForGraphemeCluster("", "zh"));
+        TracedAssertions.assertEqualsGeneric(EastAsianSpacingValue.Other, UnicodeEastAsianSpacing.resolvedForGraphemeCluster("A\u20DD", "zh"));
+        TracedAssertions.assertEqualsGeneric(EastAsianSpacingValue.Narrow, UnicodeEastAsianSpacing.resolvedForGraphemeCluster("!", "zh-CN"));
+        TracedAssertions.assertEqualsGeneric(EastAsianSpacingValue.Other, UnicodeEastAsianSpacing.resolvedForGraphemeCluster("!", "en-US"));
+        TracedAssertions.assertEqualsGeneric(EastAsianSpacingValue.Wide, UnicodeEastAsianSpacing.resolvedForGraphemeCluster("\u4E2D", "zh"));
+        TracedAssertions.assertEqualsGeneric(EastAsianSpacingValue.Narrow, UnicodeEastAsianSpacing.resolvedForGraphemeCluster("A", "zh"));
+        TracedAssertions.assertEqualsGeneric(EastAsianSpacingValue.Other, UnicodeEastAsianSpacing.resolvedForGraphemeCluster("\u0000", "zh"));
+
+        final emptyEdges:EastAsianSpacingEdges = UnicodeEastAsianSpacing.resolvedEdges("", "zh");
+        TracedAssertions.assertEqualsGeneric(EastAsianSpacingValue.Other, emptyEdges.leading);
+        TracedAssertions.assertEqualsGeneric(EastAsianSpacingValue.Other, emptyEdges.trailing);
+        TracedAssertions.assertFalse(emptyEdges.containsWide);
+
+        final mixedEdges:EastAsianSpacingEdges = UnicodeEastAsianSpacing.resolvedEdges("\u4E2Da\u6587", "zh");
+        TracedAssertions.assertEqualsGeneric(EastAsianSpacingValue.Wide, mixedEdges.leading);
+        TracedAssertions.assertEqualsGeneric(EastAsianSpacingValue.Wide, mixedEdges.trailing);
+        TracedAssertions.assertTrue(mixedEdges.containsWide);
+
+        final westernEdges:EastAsianSpacingEdges = UnicodeEastAsianSpacing.resolvedEdges("hello", "en");
+        TracedAssertions.assertEqualsGeneric(EastAsianSpacingValue.Narrow, westernEdges.leading);
+        TracedAssertions.assertEqualsGeneric(EastAsianSpacingValue.Narrow, westernEdges.trailing);
+        TracedAssertions.assertFalse(westernEdges.containsWide);
+
+        TracedAssertions.assertEqualsGeneric(EastAsianSpacingValue.Other, UnicodeEastAsianSpacing.resolvedForGraphemeCluster(TestHelpers.surrogateText([0xD83D, 0xDE00]), "zh"));
+        expectArgumentFailure(() -> UnicodeEastAsianSpacing.resolvedForGraphemeCluster(TestHelpers.surrogateText([0xD800]), "zh"));
+        expectArgumentFailure(() -> UnicodeEastAsianSpacing.resolvedForGraphemeCluster(TestHelpers.surrogateText([0xD800, 0x41]), "zh"));
+        expectArgumentFailure(() -> UnicodeEastAsianSpacing.resolvedForGraphemeCluster(TestHelpers.surrogateText([0xD800, 0xE000]), "zh"));
+    }
+
+    public static function flushTestTrace():Void {
+        currentTrace().flush();
+    }
+}

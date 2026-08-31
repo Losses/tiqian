@@ -39,6 +39,11 @@ demo/web-history/*.tsbuildinfo
 /porting/
 .haxelib
 
+# Haxe engine module: generated outputs and local baselines, never committed
+/engine-haxe/out/
+/engine-haxe/baseline-goldens/
+/engine-haxe/smoke/
+
 # Locally generated trace goldens (Haxe port contract); regenerate with
 # TIQIAN_UPDATE_GOLDEN=1 ./gradlew :engine:jvmTest
 engine/src/jvmTest/resources/golden/test-traces/
