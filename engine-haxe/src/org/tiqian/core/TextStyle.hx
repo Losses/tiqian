@@ -14,21 +14,21 @@ class TextStyle {
     public final inlineAttachment:InlineAttachment;
 
     public function new(
-        fontSize:Float = 16.0,
-        locale:String = "zh-Hans",
-        fontWeight:Int = 400,
-        italic:Bool = false,
-        baselineShift:Float = 0.0,
-        inlineAttachment:InlineAttachment = InlineAttachment.None,
+        ?fontSize:Null<Float>,
+        ?locale:Null<String>,
+        ?fontWeight:Null<Int>,
+        ?italic:Null<Bool>,
+        ?baselineShift:Null<Float>,
+        ?inlineAttachment:Null<InlineAttachment>,
         ?fontFamilies:Array<String>
     ) {
         this.fontFamilies = fontFamilies == null ? [] : fontFamilies;
-        this.fontSize = fontSize;
-        this.locale = locale;
-        this.fontWeight = fontWeight;
-        this.italic = italic;
-        this.baselineShift = baselineShift;
-        this.inlineAttachment = inlineAttachment;
+        this.fontSize = fontSize == null ? 16.0 : fontSize;
+        this.locale = locale == null ? "zh-Hans" : locale;
+        this.fontWeight = fontWeight == null ? 400 : fontWeight;
+        this.italic = italic == null ? false : italic;
+        this.baselineShift = baselineShift == null ? 0.0 : baselineShift;
+        this.inlineAttachment = inlineAttachment == null ? InlineAttachment.None : inlineAttachment;
     }
 
     public static function withFontFamilies(fontFamilies:Array<String>, fontSize:Float, locale:String, fontWeight:Int, italic:Bool, baselineShift:Float, inlineAttachment:InlineAttachment):TextStyle {

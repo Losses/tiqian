@@ -60,37 +60,45 @@ class ParagraphStyle {
     public final emphasisDotGapEm:Float;
 
     public function new(
-        lastLineAlignment:LastLineAlignment = LastLineAlignment.Start,
-        writingMode:WritingMode = WritingMode.HorizontalTb,
-        lineHeight:Null<Float>,
-        firstLineIndent:Null<Ic>,
+        ?lastLineAlignment:Null<LastLineAlignment>,
+        ?writingMode:Null<WritingMode>,
+        ?lineHeight:Null<Float>,
+        ?firstLineIndent:Null<Ic>,
+        // Kotlin declares blockIndent: Ic = Ic.Zero (static field),
+        // inlineObjectMinimumClearanceEm = DEFAULT_INLINE_OBJECT_MINIMUM_CLEARANCE_EM
+        // and emphasisDotGapEm = DEFAULT_EMPHASIS_DOT_GAP_EM (static fields).
+        // Static-field-reading defaults are boring gap 4; the parameters stay
+        // mandatory until that lowering lands. firstLineIndentPolicy and
+        // lineLengthGrid use constructor-call defaults, which are outside the
+        // sanctioned grammar; callers pass the defaults explicitly.
         blockIndent:Ic,
         firstLineIndentPolicy:MeasureAdaptiveFirstLineIndent,
         lineLengthGrid:LineLengthGrid,
-        rubyLineHeightMode:RubyLineHeightMode = RubyLineHeightMode.PerLine,
+        ?rubyLineHeightMode:Null<RubyLineHeightMode>,
         inlineObjectMinimumClearanceEm:Float,
         emphasisDotGapEm:Float
     ) {
-        this.lastLineAlignment = lastLineAlignment;
-        this.writingMode = writingMode;
-        this.lineHeight = lineHeight;
-        this.firstLineIndent = firstLineIndent;
+        this.lastLineAlignment = lastLineAlignment == null ? LastLineAlignment.Start : lastLineAlignment;
+        this.writingMode = writingMode == null ? WritingMode.HorizontalTb : writingMode;
+        this.lineHeight = lineHeight == null ? null : lineHeight;
+        this.firstLineIndent = firstLineIndent == null ? null : firstLineIndent;
         this.blockIndent = blockIndent;
         this.firstLineIndentPolicy = firstLineIndentPolicy;
         this.lineLengthGrid = lineLengthGrid;
-        this.rubyLineHeightMode = rubyLineHeightMode;
+        this.rubyLineHeightMode = rubyLineHeightMode == null ? RubyLineHeightMode.PerLine : rubyLineHeightMode;
         this.inlineObjectMinimumClearanceEm = inlineObjectMinimumClearanceEm;
         this.emphasisDotGapEm = emphasisDotGapEm;
     }
 
     public function toString():String {
+        final height = lineHeight;
         return "ParagraphStyle(lastLineAlignment=" + Std.string(lastLineAlignment)
             + ", writingMode=" + Std.string(writingMode)
-            + ", lineHeight=" + (lineHeight == null ? "null" : Std.string(lineHeight))
+            + ", lineHeight=" + (height == null ? "null" : "" + height)
             + ", firstLineIndent=" + (firstLineIndent == null ? "null" : firstLineIndent.toString())
-            + ", blockIndent=" + blockIndent
-            + ", firstLineIndentPolicy=" + firstLineIndentPolicy
-            + ", lineLengthGrid=" + lineLengthGrid
+            + ", blockIndent=" + blockIndent.toString()
+            + ", firstLineIndentPolicy=" + firstLineIndentPolicy.toString()
+            + ", lineLengthGrid=" + lineLengthGrid.toString()
             + ", rubyLineHeightMode=" + Std.string(rubyLineHeightMode)
             + ", inlineObjectMinimumClearanceEm=" + inlineObjectMinimumClearanceEm
             + ", emphasisDotGapEm=" + emphasisDotGapEm + ")";

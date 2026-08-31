@@ -15,21 +15,21 @@ class Glyph {
         id:Int,
         clusterRange:TextRange,
         advance:Float,
-        x:Float = 0.0,
-        y:Float = 0.0,
-        renderFontKey:Null<String>,
-        bounds:Null<Rect>,
-        haltAdvance:Null<Float>,
-        haltPlacementX:Null<Float>
+        ?x:Null<Float>,
+        ?y:Null<Float>,
+        ?renderFontKey:Null<String>,
+        ?bounds:Null<Rect>,
+        ?haltAdvance:Null<Float>,
+        ?haltPlacementX:Null<Float>
     ) {
         this.id = id;
         this.clusterRange = clusterRange;
         this.advance = advance;
-        this.x = x;
-        this.y = y;
-        this.renderFontKey = renderFontKey;
-        this.bounds = bounds;
-        this.haltAdvance = haltAdvance;
-        this.haltPlacementX = haltPlacementX;
+        this.x = x == null ? 0.0 : x;
+        this.y = y == null ? 0.0 : y;
+        this.renderFontKey = renderFontKey == null ? null : renderFontKey;
+        this.bounds = bounds == null ? null : bounds;
+        this.haltAdvance = haltAdvance == null ? null : haltAdvance;
+        this.haltPlacementX = haltPlacementX == null ? null : haltPlacementX;
     }
 }
