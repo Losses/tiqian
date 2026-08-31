@@ -1,5 +1,6 @@
 package org.tiqian.font;
 import org.tiqian.font.FontPolicy.FontRequest;
+import org.tiqian.font.FontPolicy.FontRoleFns;
 import org.tiqian.core.TextRange;
 import org.tiqian.test.trace.TestTraceRecorder;
 import org.tiqian.test.trace.TracedAssertions;
