@@ -2,6 +2,7 @@ package org.tiqian.clreq;
 
 import std.ReadOnlyArray;
 
+@:dataClass
 class AutoSpacePolicy {
     public final cjkLatin:AutoSpaceMode;
     public final cjkDigit:AutoSpaceMode;
@@ -24,12 +25,7 @@ class AutoSpacePolicy {
         this.stretchMaxEm = stretchMaxEm;
     }
 
-    public function toString():String {
-        return "AutoSpacePolicy(cjkLatin=" + cjkLatin
-            + ", cjkDigit=" + cjkDigit
-            + ", gapEm=" + gapEm
-            + ", stretchMaxEm=" + stretchMaxEm + ")";
-    }
+
 
     public static function samePolicy(a:AutoSpacePolicy, b:AutoSpacePolicy):Bool {
         return a.cjkLatin == b.cjkLatin

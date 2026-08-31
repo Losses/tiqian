@@ -1,5 +1,6 @@
 package org.tiqian.clreq;
 
+@:dataClass
 class PunctuationWidthPolicy {
     public final interior:InteriorPunctuationStyle;
     public final gbFixedSeparators:Bool;
@@ -12,10 +13,7 @@ class PunctuationWidthPolicy {
         this.gbFixedSeparators = gbFixedSeparators == null ? false : gbFixedSeparators;
     }
 
-    public function toString():String {
-        return "PunctuationWidthPolicy(interior=" + interior
-            + ", gbFixedSeparators=" + gbFixedSeparators + ")";
-    }
+
 
     public static function samePolicy(a:PunctuationWidthPolicy, b:PunctuationWidthPolicy):Bool {
         return a.interior == b.interior

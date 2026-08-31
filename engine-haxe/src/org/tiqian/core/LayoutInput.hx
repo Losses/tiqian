@@ -2,6 +2,7 @@ package org.tiqian.core;
 
 import std.ReadOnlyArray;
 
+@:dataClass
 class LayoutInput {
     public final content:TiqianTextContent;
     public final textStyle:TextStyle;
@@ -41,6 +42,9 @@ class LayoutInput {
         this.inlineObjects = inlineObjects == null ? [] : inlineObjects;
     }
 
+    // The constructor parameter order diverges from the Kotlin primary
+    // constructor (constraints moved ahead of the gap-4-mandatory trio), and
+    // synthesis prints parameter order, so this explicit member stays.
     public function toString():String {
         return "LayoutInput(content=" + content.toString()
             + ", textStyle=" + textStyle.toString()

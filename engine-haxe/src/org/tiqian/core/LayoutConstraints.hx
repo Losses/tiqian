@@ -1,5 +1,6 @@
 package org.tiqian.core;
 
+@:dataClass
 class LayoutConstraints {
     public final maxWidth:Float;
     public final maxHeight:Float;
@@ -20,9 +21,5 @@ class LayoutConstraints {
         }
     }
 
-    public function toString():String {
-        return "LayoutConstraints(maxWidth=" + maxWidth
-            + ", maxHeight=" + maxHeight
-            + ", maxLines=" + maxLines + ")";
-    }
+
 }

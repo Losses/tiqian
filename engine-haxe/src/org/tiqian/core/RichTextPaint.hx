@@ -1,5 +1,6 @@
 package org.tiqian.core;
 
+@:dataClass
 class RichTextPaint {
     public final argb:Null<Int>;
     public final linePattern:RichTextLinePattern;
@@ -45,13 +46,7 @@ class RichTextPaint {
         return RichTextBackgroundPaint.sameValues(background, other.background);
     }
 
-    public function toString():String {
-        final value = argb;
-        return "RichTextPaint(argb=" + (value == null ? "null" : "" + value)
-            + ", linePattern=" + linePattern.toString()
-            + ", background=" + background.toString()
-            + ", adjacentSameStyleClearance=" + adjacentSameStyleClearance + ")";
-    }
+
 
     private static function isFinite(value:Float):Bool {
         return value == value && value != Math.POSITIVE_INFINITY && value != Math.NEGATIVE_INFINITY;

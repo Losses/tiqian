@@ -1,5 +1,6 @@
 package org.tiqian.clreq;
 
+@:dataClass
 class CjkPunctuationGlyphSubstitution {
     public final sourceText:String;
     public final displayText:String;
@@ -11,9 +12,5 @@ class CjkPunctuationGlyphSubstitution {
         this.reason = reason;
     }
 
-    public function toString():String {
-        return "CjkPunctuationGlyphSubstitution(sourceText=" + sourceText
-            + ", displayText=" + displayText
-            + ", reason=" + reason + ")";
-    }
+
 }

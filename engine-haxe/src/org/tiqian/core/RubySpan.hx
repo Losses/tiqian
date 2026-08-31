@@ -25,6 +25,7 @@ import std.ReadOnlyArray;
 // ㄅㄆㄇ — fill the 9×9 box at the box font size (字身框).
 // 平上去/入声调号 — share the 注音字号; the 5×5 slot positions ink but never changes size.
 // 轻声 ˙ — its vert-alt is FULL-WIDTH (verified). Draw at the box-WIDTH font
+@:dataClass
 class RubySpan {
     public final baseRange:TextRange;
     public final text:String;
@@ -46,6 +47,9 @@ class RubySpan {
         this.locale = locale == null && this.kind == RubyKind.Bopomofo ? "zh-TW" : locale;
     }
 
+    // Kotlin's List.toString joins with ", " while Std.string over the array
+    // joins with ","; generic synthesis cannot reproduce the Kotlin text, so
+    // this explicit member stays.
     public function toString():String {
         return "RubySpan(baseRange=" + baseRange.toString()
             + ", text=" + text

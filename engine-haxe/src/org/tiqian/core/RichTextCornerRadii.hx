@@ -1,5 +1,6 @@
 package org.tiqian.core;
 
+@:dataClass
 class RichTextCornerRadii {
     public final topLeft:Float;
     public final topRight:Float;
@@ -25,8 +26,5 @@ class RichTextCornerRadii {
         return topLeft == topRight && topRight == bottomRight && bottomRight == bottomLeft;
     }
 
-    public function toString():String {
-        return "RichTextCornerRadii(topLeft=" + topLeft + ", topRight=" + topRight
-            + ", bottomRight=" + bottomRight + ", bottomLeft=" + bottomLeft + ")";
-    }
+
 }

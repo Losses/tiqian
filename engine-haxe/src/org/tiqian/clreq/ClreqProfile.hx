@@ -3,6 +3,7 @@ package org.tiqian.clreq;
 import std.ReadOnlyArray;
 import std.StringBuf;
 
+@:dataClass
 class ClreqProfile {
     public final id:String;
     public final strictness:ClreqStrictness;
@@ -50,6 +51,9 @@ class ClreqProfile {
         this.punctuationWidth = punctuationWidth;
     }
 
+    // Kotlin's List.toString joins with ", " while Std.string over the array
+    // joins with ","; generic synthesis cannot reproduce the Kotlin text, so
+    // this explicit member stays.
     public function toString():String {
         final coalesce = new StringBuf();
         coalesce.add("[");
