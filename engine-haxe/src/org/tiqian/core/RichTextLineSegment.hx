@@ -4,6 +4,7 @@ package org.tiqian.core;
 // Vertical bounds hug the CJK character face (字面) on the real baseline —
 // `openStart`/`openEnd` mark segments that continue from/onto another line —
 // 着重号 dot diameter (px), for the renderer to draw a filled circle of the
+@:dataClass
 class RichTextLineSegment {
     public final span:RichTextSpan;
     public final lineIndex:Int;
@@ -55,9 +56,5 @@ class RichTextLineSegment {
         return range.end < span.range.end;
     }
 
-    public function toString():String {
-        return "RichTextLineSegment(span=" + span.toString() + ", lineIndex=" + lineIndex
-            + ", range=" + range.toString() + ", left=" + left + ", top=" + top
-            + ", right=" + right + ", bottom=" + bottom + ", baseline=" + baseline + ")";
-    }
+
 }

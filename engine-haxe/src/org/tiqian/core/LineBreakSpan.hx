@@ -1,5 +1,6 @@
 package org.tiqian.core;
 
+@:dataClass
 class LineBreakSpan {
     public final range:TextRange;
     public final policy:LineBreakPolicy;
@@ -9,7 +10,5 @@ class LineBreakSpan {
         this.policy = policy;
     }
 
-    public function toString():String {
-        return "LineBreakSpan(range=" + range.toString() + ", policy=" + Std.string(policy) + ")";
-    }
+
 }
