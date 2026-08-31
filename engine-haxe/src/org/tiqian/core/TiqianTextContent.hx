@@ -2,6 +2,7 @@ package org.tiqian.core;
 
 import std.ReadOnlyArray;
 
+@:dataClass
 class TiqianTextContent {
     public final text:String;
     public final spans:ReadOnlyArray<TextSpan>;
@@ -23,13 +24,7 @@ class TiqianTextContent {
         this.autoSpaceSuppressedRanges = autoSpaceSuppressedRanges == null ? [] : autoSpaceSuppressedRanges;
     }
 
-    public function toString():String {
-        return "TiqianTextContent(text=" + text
-            + ", spans=" + renderSpans(spans)
-            + ", sourceBoundaries=" + renderSourceBoundaries(sourceBoundaries)
-            + ", lineBreakSpans=" + renderLineBreakSpans(lineBreakSpans)
-            + ", autoSpaceSuppressedRanges=" + renderRanges(autoSpaceSuppressedRanges) + ")";
-    }
+
 
     private static function renderSpans(values:ReadOnlyArray<TextSpan>):String {
         var output:String = "[";

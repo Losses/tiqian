@@ -1,5 +1,6 @@
 package org.tiqian.core;
 
+@:dataClass
 class EastAsianSpacingEdges {
     public final leading:EastAsianSpacingValue;
     public final trailing:EastAsianSpacingValue;
@@ -11,9 +12,5 @@ class EastAsianSpacingEdges {
         this.containsWide = containsWide;
     }
 
-    public function toString():String {
-        return "EastAsianSpacingEdges(leading=" + Std.string(leading)
-            + ", trailing=" + Std.string(trailing)
-            + ", containsWide=" + Std.string(containsWide) + ")";
-    }
+
 }

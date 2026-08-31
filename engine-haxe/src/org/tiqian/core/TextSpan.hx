@@ -1,5 +1,6 @@
 package org.tiqian.core;
 
+@:dataClass
 class TextSpan {
     public final range:TextRange;
     public final style:TextStyle;
@@ -9,7 +10,5 @@ class TextSpan {
         this.style = style;
     }
 
-    public function toString():String {
-        return "TextSpan(range=" + range.toString() + ", style=" + style.toString() + ")";
-    }
+
 }

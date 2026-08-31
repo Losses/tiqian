@@ -1,5 +1,6 @@
 package org.tiqian.core;
 
+@:dataClass
 class InlineObjectSpan {
     public static final INLINE_OBJECT_REPLACEMENT_CHAR:String = "\uFFFC";
 
@@ -30,12 +31,5 @@ class InlineObjectSpan {
         this.trailingBoundary = trailingBoundary;
     }
 
-    public function toString():String {
-        return "InlineObjectSpan(range=" + range.toString()
-            + ", advance=" + advance
-            + ", ascent=" + ascent
-            + ", descent=" + descent
-            + ", leadingBoundary=" + leadingBoundary.toString()
-            + ", trailingBoundary=" + trailingBoundary.toString() + ")";
-    }
+
 }

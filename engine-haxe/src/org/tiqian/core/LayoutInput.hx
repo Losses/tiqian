@@ -2,6 +2,7 @@ package org.tiqian.core;
 
 import std.ReadOnlyArray;
 
+@:dataClass
 class LayoutInput {
     public final content:TiqianTextContent;
     public final textStyle:TextStyle;
@@ -41,17 +42,7 @@ class LayoutInput {
         this.inlineObjects = inlineObjects == null ? [] : inlineObjects;
     }
 
-    public function toString():String {
-        return "LayoutInput(content=" + content.toString()
-            + ", textStyle=" + textStyle.toString()
-            + ", paragraphStyle=" + paragraphStyle.toString()
-            + ", constraints=" + constraints.toString()
-            + ", profileId=" + profileId.toString()
-            + ", decorations=" + renderDecorations(decorations)
-            + ", rubySpans=" + renderRubySpans(rubySpans)
-            + ", inlineBoxes=" + renderInlineBoxes(inlineBoxes)
-            + ", inlineObjects=" + renderInlineObjects(inlineObjects) + ")";
-    }
+
 
     private static function renderDecorations(values:ReadOnlyArray<DecorationSpan>):String {
         var output:String = "[";
