@@ -9,18 +9,22 @@ class RichTextBackgroundPaint {
     public final drawStyle:RichTextBackgroundDrawStyle;
 
     public function new(
-        horizontalPadding:Float = 0.0,
-        verticalPadding:Float = 0.0,
-        cornerRadius:Float = 0.0,
+        ?horizontalPadding:Null<Float>,
+        ?verticalPadding:Null<Float>,
+        ?cornerRadius:Null<Float>,
+        // Kotlin declares continuationCornerRadius = cornerRadius, a
+        // parameter-reading default (boring gap 4), and drawStyle =
+        // RichTextBackgroundDrawStyle.Fill (a static field, also gap 4).
+        // Both parameters stay mandatory until that lowering lands.
         continuationCornerRadius:Float,
-        metricPolicy:RichTextBackgroundMetricPolicy = RichTextBackgroundMetricPolicy.MarkedFaces,
+        ?metricPolicy:Null<RichTextBackgroundMetricPolicy>,
         drawStyle:RichTextBackgroundDrawStyle
     ) {
-        this.horizontalPadding = horizontalPadding;
-        this.verticalPadding = verticalPadding;
-        this.cornerRadius = cornerRadius;
+        this.horizontalPadding = horizontalPadding == null ? 0.0 : horizontalPadding;
+        this.verticalPadding = verticalPadding == null ? 0.0 : verticalPadding;
+        this.cornerRadius = cornerRadius == null ? 0.0 : cornerRadius;
         this.continuationCornerRadius = continuationCornerRadius;
-        this.metricPolicy = metricPolicy;
+        this.metricPolicy = metricPolicy == null ? RichTextBackgroundMetricPolicy.MarkedFaces : metricPolicy;
         this.drawStyle = drawStyle;
         if (!isFinite(this.horizontalPadding) || this.horizontalPadding < 0.0
             || !isFinite(this.verticalPadding) || this.verticalPadding < 0.0
@@ -48,7 +52,17 @@ class RichTextBackgroundPaint {
             + ", cornerRadius=" + cornerRadius
             + ", continuationCornerRadius=" + continuationCornerRadius
             + ", metricPolicy=" + Std.string(metricPolicy)
-            + ", drawStyle=" + Std.string(drawStyle) + ")";
+            + ", drawStyle=" + drawStyle.toString() + ")";
+    }
+
+    @:allow(org.tiqian.core.RichTextPaint)
+    private static function sameValues(a:RichTextBackgroundPaint, b:RichTextBackgroundPaint):Bool {
+        return a.horizontalPadding == b.horizontalPadding
+            && a.verticalPadding == b.verticalPadding
+            && a.cornerRadius == b.cornerRadius
+            && a.continuationCornerRadius == b.continuationCornerRadius
+            && a.metricPolicy == b.metricPolicy
+            && RichTextBackgroundDrawStyle.sameValues(a.drawStyle, b.drawStyle);
     }
 
     private static function isFinite(value:Float):Bool {

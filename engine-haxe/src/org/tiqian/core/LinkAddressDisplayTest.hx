@@ -4,25 +4,16 @@ import org.tiqian.test.trace.TestTraceRecorder;
 import org.tiqian.test.trace.TracedAssertions;
 
 class LinkAddressDisplayTest {
-    private static var testTrace:Null<TestTraceRecorder> = null;
-
-    private static function currentTrace():TestTraceRecorder {
-        if (testTrace == null) {
-            testTrace = new TestTraceRecorder("LinkAddressDisplayTest");
-        }
-        return testTrace;
-    }
-
     @:test
     public static function identicalDisplayAndTargetIsAnAddress():Void {
-        currentTrace().section("identicalDisplayAndTargetIsAnAddress");
+        new TestTraceRecorder("LinkAddressDisplayTest").section("identicalDisplayAndTargetIsAnAddress");
         TracedAssertions.assertTrue(LinkAddressDisplay.displaysAddress("https://example.com/a", "https://example.com/a"));
         TracedAssertions.assertTrue(LinkAddressDisplay.displaysAddress("footnote-1", "footnote-1"));
     }
 
     @:test
     public static function schemeLessDisplayOfTheTargetIsAnAddress():Void {
-        currentTrace().section("schemeLessDisplayOfTheTargetIsAnAddress");
+        new TestTraceRecorder("LinkAddressDisplayTest").section("schemeLessDisplayOfTheTargetIsAnAddress");
         TracedAssertions.assertTrue(LinkAddressDisplay.displaysAddress("example.com/b", "https://example.com/b"));
         TracedAssertions.assertTrue(LinkAddressDisplay.displaysAddress("example.com", "http://example.com"));
         TracedAssertions.assertTrue(LinkAddressDisplay.displaysAddress("a@example.com", "mailto:a@example.com"));
@@ -30,7 +21,7 @@ class LinkAddressDisplayTest {
 
     @:test
     public static function proseDisplayTextIsNotAnAddress():Void {
-        currentTrace().section("proseDisplayTextIsNotAnAddress");
+        new TestTraceRecorder("LinkAddressDisplayTest").section("proseDisplayTextIsNotAnAddress");
         TracedAssertions.assertFalse(LinkAddressDisplay.displaysAddress("Example", "https://example.com"));
         TracedAssertions.assertFalse(LinkAddressDisplay.displaysAddress("示例站", "https://example.com"));
         TracedAssertions.assertFalse(LinkAddressDisplay.displaysAddress("action", "generic"));
@@ -38,7 +29,4 @@ class LinkAddressDisplayTest {
         TracedAssertions.assertFalse(LinkAddressDisplay.displaysAddress("Example", ""));
     }
 
-    public static function flushTestTrace():Void {
-        currentTrace().flush();
-    }
 }

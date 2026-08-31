@@ -29,4 +29,11 @@ class TestTraceRecorder {
         }
         TestTracePlatform.writeGolden(className, TestTraceStore.classText(className));
     }
+
+    public static function flushClass(className:String):Void {
+        if (!TestTracePlatform.updateMode) {
+            return;
+        }
+        TestTracePlatform.writeGolden(className, TestTraceStore.classText(className));
+    }
 }

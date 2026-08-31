@@ -12,7 +12,7 @@ class RichTextSpan {
     }
 
     public function toString():String {
-        return "RichTextSpan(range=" + range + ", role=" + roleToString(role) + ", paint=" + paint + ")";
+        return "RichTextSpan(range=" + range.toString() + ", role=" + roleToString(role) + ", paint=" + paint.toString() + ")";
     }
 
     private static function roleToString(role:RichTextRole):String {
@@ -23,6 +23,29 @@ class RichTextSpan {
             case Link(target): "Link(target=" + target + ")";
             case TechnicalInline: "TechnicalInline";
             case InlineCode: "InlineCode";
+        };
+    }
+
+    @:allow(org.tiqian.core.LayoutQueries)
+    private static function sameRole(a:RichTextRole, b:RichTextRole):Bool {
+        return switch (a) {
+            case Background: b == RichTextRole.Background;
+            case Underline: b == RichTextRole.Underline;
+            case LineThrough: b == RichTextRole.LineThrough;
+            case Link(target): sameLinkTarget(target, b);
+            case TechnicalInline: b == RichTextRole.TechnicalInline;
+            case InlineCode: b == RichTextRole.InlineCode;
+        };
+    }
+
+    private static function sameLinkTarget(target:String, b:RichTextRole):Bool {
+        return switch (b) {
+            case Background: false;
+            case Underline: false;
+            case LineThrough: false;
+            case Link(otherTarget): target == otherTarget;
+            case TechnicalInline: false;
+            case InlineCode: false;
         };
     }
 }

@@ -18,7 +18,7 @@ class RubyDecisionInfo {
     public final locale:String;
     public final glyphs:ReadOnlyArray<Glyph>;
 
-    public function new(baseRange:TextRange, text:String, lineIndex:Int, centerX:Float, baselineY:Float, fontSize:Float, overhang:Float, ascent:Float = 0.0, descent:Float = 0.0, width:Float = 0.0, ?fontFamilies:Array<String>, fontWeight:Int = 400, locale:String = "zh-Hans", ?glyphs:Array<Glyph>) {
+    public function new(baseRange:TextRange, text:String, lineIndex:Int, centerX:Float, baselineY:Float, fontSize:Float, overhang:Float, ?ascent:Null<Float>, ?descent:Null<Float>, ?width:Null<Float>, ?fontFamilies:Array<String>, ?fontWeight:Null<Int>, ?locale:Null<String>, ?glyphs:Array<Glyph>) {
         this.baseRange = baseRange;
         this.text = text;
         this.lineIndex = lineIndex;
@@ -26,12 +26,12 @@ class RubyDecisionInfo {
         this.baselineY = baselineY;
         this.fontSize = fontSize;
         this.overhang = overhang;
-        this.ascent = ascent;
-        this.descent = descent;
-        this.width = width;
+        this.ascent = ascent == null ? 0.0 : ascent;
+        this.descent = descent == null ? 0.0 : descent;
+        this.width = width == null ? 0.0 : width;
         this.fontFamilies = fontFamilies == null ? [] : fontFamilies;
-        this.fontWeight = fontWeight;
-        this.locale = locale;
+        this.fontWeight = fontWeight == null ? 400 : fontWeight;
+        this.locale = locale == null ? "zh-Hans" : locale;
         this.glyphs = glyphs == null ? [] : glyphs;
     }
 }

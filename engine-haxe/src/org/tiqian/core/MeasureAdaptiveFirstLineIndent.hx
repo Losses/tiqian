@@ -5,10 +5,10 @@ class MeasureAdaptiveFirstLineIndent {
     public final shortEm:Float;
     public final longEm:Float;
 
-    public function new(shortBelowEm:Float = 14.0, shortEm:Float = 1.0, longEm:Float = 2.0) {
-        this.shortBelowEm = shortBelowEm;
-        this.shortEm = shortEm;
-        this.longEm = longEm;
+    public function new(?shortBelowEm:Null<Float>, ?shortEm:Null<Float>, ?longEm:Null<Float>) {
+        this.shortBelowEm = shortBelowEm == null ? 14.0 : shortBelowEm;
+        this.shortEm = shortEm == null ? 1.0 : shortEm;
+        this.longEm = longEm == null ? 2.0 : longEm;
     }
 
     public function resolveEm(measureEm:Float):Float {

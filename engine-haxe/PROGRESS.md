@@ -257,6 +257,24 @@ porting/haxe/patches/boring-tnew-precise-lookup.patch：DefaultArgExpander
 无法确定声明类的访问路径。该缺陷在 Codex defaults 分支的在飞实现中
 同样存在（line 698 一带），中央审查时并入修复。
 
+2026-08-31 核销：0383591（coalescing default 回收合并）重写了 completeNew
+序段——先取构造器参数表，args.length >= params.length 直接返回，默认值
+查找移到其后。历史触发形态（StringBuf 零参 TNew、IntRange 全参 TNew）在
+到达按名回退之前就被前置返回截断，缺陷在 boring main 不再可达。port 树对
+9cfc006 干净 vendored（补丁未应用）编译，仅剩 RubySpan.hx:46 条件构造赋值
+报错（缺口 4 已知拦截），无任何 TNew 歧义。补丁文件已删；流程裁定：
+boring 的修复一律进 boring main 后推进 vendored 指针，不再留本地补丁。
+
+2026-08-31 指针推进 ce28a3a（枚举无参值形态 + 值查询 + Std.string 标量行
+合并后）：port 树编译拦截点更新为 `TextStyle.hx:39 Std.string accepts
+scalars and parameterless enum values only`——Std.string 的数组域当时尚未
+降级。已按 boring-first 裁定在 boring main 落规格修订 997828d（数组渲染
+`[a, b]` 五端统一、Haxe 原生 `[a,b]` 分隔符分歧走 boring_oracle 条件），
+实现派发 lane/std-string-arrays。数组域落地后 port 侧 TextStyle、
+RubySpan、CoreLayoutQueriesGapsTest 三处 `Std.string(<数组>)` 保持原样即
+可编译；RichTextPaint 对 `RichTextLinePattern`/`RichTextBackgroundPaint`
+类实例的 Std.string 仍需 port 侧改写（对象不在域内）。
+
 ## 中央条目（2026-08-30）：目录定为 engine-haxe
 
 用户裁定：porting/ 不进 git；Haxe 源码树移到仓库根目录 engine-haxe/
@@ -265,3 +283,128 @@ engine-haxe/tools/compare-traces.py；TASK.md 与 codex 日志留在不跟踪的
 porting/；out/、baseline-goldens/、smoke/ 加入忽略清单。移动与路径修正
 后验证链重新通过：compile.hxml 零错误、测试 rc=0 无 FAIL、15 类比对
 15/15 通过、exception-alias=73。
+
+2026-08-31 指针推进 405857f（Std.string 数组单遍降级合并后）+ 全量拦截点
+普查：以丢弃 worktree 逐个中和迭代编译，摸清到零错误的完整清单并已全部
+处置。已修复入库：裸类拼接 toString 全批（InlineBoxSpan/LineBreakSpan/
+DecorationSpan/TextSpan/RichTextSpan/RichTextLineSegment/RubySpan/
+PositionedCluster/InlineObjectSpan 的 range/style/paint/span/baseRange/
+boundary 字段，ParagraphStyle 的 blockIndent/lineLengthGrid/
+firstLineIndentPolicy，LayoutInput 的 content/textStyle/paragraphStyle/
+constraints/profileId 头部五行——Std.string 域检查同样作用于字符串拼接
+操作数，早期 census 只 grep Std.string 漏了这一类）；sameRole 嵌套
+variant switch 改平（switch 子集三规则：arm 必须是表达式、绑定载荷的
+switch 必须全构造器覆盖、arm 内嵌套 switch 无降级——Link 载荷比较拆到
+sameLinkTarget 助手，parameterless 构造器用 == 比较 data object 单例）。
+剩余拦截分三类，均登记 boring 缺口队列：缺口 4 构造器纪律（RubySpan.hx:46
+locale 跨参数条件默认、InlineObjectBoundaryAdjustment.hx:27 Null 解析+
+校验+赋值）；缺口 10 可变静态字段赋值（TestTrace.recorder 全局记录器、
+普通类自身静态 var 赋值同样无降级，已探针实锤）；测试类成员纪律波
+（15 个测试类携带非测试成员 testTrace/currentTrace/flushTestTrace/
+lowerHex 及各类 helper，boring 裁定共享逻辑入普通类，重构波待派发）。
+flushTestTrace 十四处定义零调用者，属死代码随波删除。首错即停教训：
+haxe 编译器本配置下报首个错误即止，lane 判据不能用「恰好 N 个已知错误」，
+必须迭代到零或以丢弃树中和验证。
+
+2026-08-31 InlineObjectBoundaryAdjustment 改常量默认：Kotlin 原版
+shrinkCapacity 与 lineEndDiscardableAdvance 就是 `Float = 0f` 常量默认，port
+侧原以 Null 解析加校验加赋值建模并无必要。改为 `shrinkCapacity:Float = 0.0`
+等常量默认后构造器通过全部检查，TextModelCoverageTest 四处拒绝用例同步改为
+省略或显式 0.0 形态，fixed() 改全默认构造。该文件退出缺口 4 拦截清单。同一轮
+修复 74c92c12 的遗漏：Main.hx 仍调用已删除的 flushTestTrace，测试入口在该
+提交上编译失败；TestTraceRecorder 增 flushClass(className) 静态，Main 十五处
+改经它写 golden。验证：tests/compile.hxml 零错误、测试 rc=0、15 类比对 15/15、
+exception-alias=73。剩余 Kotlin 拦截两处：RubySpan.hx:46（缺口 4）、
+TestTraceRecorder.hx:10 静态赋值（缺口 10）。
+
+2026-08-31 LayoutModel 剩余 28 个 DecisionInfo 记录全部入库（fd9d9e44）：
+BreakOpportunity/EmergencyTrackingEligibility/InlineBox/InlineObject/
+ZeroWidthBreak/MandatoryBreak/FirstLineIndent/LineLengthGrid/Kinsoku/
+ContextualKinsoku/InlineObjectPunctuationAttachment/LineSpacing/
+RubyLineHeight/InlineObjectLineHeight/DecorationSegment/Decoration/
+LineEdgeTrim/Font/Shaping/Punctuation/Spacing/RoleOverride/LineDecision/
+LineRepairDecision/LineRepairAllocation/LineRepairCandidate/Justification
+Decision 与 Allocation，一律 @:dataClass（生成 Kotlin data class）。
+LayoutDebugInfo 扩到 Kotlin 全字段集（24 列表 + 6 可空），构造器保留
+maxLinesDecision 首位的既有形态，端口测试全部位置传参不动；六参之后的新参数
+全部 ?param 加 null 合并，生成的 Kotlin 保留原生默认。
+
+同轮确立默认保真形（d392dca3）：boring 对 Haxe 原生常量默认与可空直assign
+都会从生成签名剥掉默认值，只有三元合并式保留：`?p:Null<T>` 加
+`this.p = p == null ? E : p` 生成 `p: T = E`（E 为常量）或 `p: T? = null`；
+`?p:Array<T>` 加 `p == null ? [] : p` 生成 `= mutableListOf()`。RubyDecisionInfo、
+BopomofoDecisionInfo、MaxLinesDecisionInfo、InlineObjectBoundaryAdjustment
+四处既有常量默认已改入该形态；InlineObjectBoundaryAdjustment 同时补
+@:dataClass 并改校验读 this 字段，生成 data class + init 校验块，与
+TextModel.kt:142 形态一致。Kotlin 允许带默认参数后跟必选参数，policyBodyFloor 过渡形态经
+kotlinc 最小样例实证通过。
+
+两个待办随记：PunctuationDecisionInfo.policyBodyFloor 的 Kotlin 原默认读
+bodyWidth 参数（缺口 4 范畴），过渡为必选参数，缺口 4 实现合并后改
+?Null<Float> 合并式；PunctuationDecisionInfo.char 与 SpacingDecisionInfo
+leftChar/rightChar 的 Kotlin Char 以单 UTF-16 单元 String 移植，手写消费方
+在 layout 波移植时同步换字面量形态。既有文件的原生常量默认统一转换见下一条。
+验证链：compile.hxml 零错误、测试 rc=0、15 类比对 15/15、
+exception-alias=73；两处已知拦截中和后 core-kotlin 生成零错误、恢复后仍止于
+RubySpan.hx:46 首错。
+
+2026-08-31 既有文件原生常量默认全部转合并式：Cluster、Glyph、LineBox、
+TextStyle、ParagraphStyle、InlineBoxSpan、RichTextPaint、
+RichTextBackgroundPaint、ClusterGeometryDecisionInfo、LineLengthGrid、
+MeasureAdaptiveFirstLineIndent、BopomofoDecisionInfo、RubyDecisionInfo 十三处
+文件按 Kotlin 原版默认逐参数核对后改 `?p:Null<T>` 加常量合并；Kotlin 原版
+`= null` 的可空参数（Glyph 四个、RichTextPaint.argb、
+ClusterGeometryDecisionInfo.glyphPlacementReason、ParagraphStyle.lineHeight
+与 firstLineIndent、LineLengthGrid.bodyAlignment）改 null 合并臂。读参数或
+静态字段的默认保持必选并就近注释：Cluster.displayText、
+RichTextBackgroundPaint.continuationCornerRadius 与 drawStyle、
+RichTextPaint.linePattern 与 background、ParagraphStyle.blockIndent、
+firstLineIndentPolicy、lineLengthGrid 与两个 em 常量默认、LayoutInput 三个
+样式默认、InlineObjectSpan 两个边界、BopomofoGlyphPlacement 三个几何默认、
+LineBox.debug（构造调用默认不在缺口 4 扩展文法内，长期必选）。
+TiqianTextContent.sourceBoundaries 的 Kotlin 类型是 Set<Int>，移植持有
+Array<Int>，类型偏差留待 layout 波移植时裁定。验证链通过：compile.hxml 零错误、
+serial-test rc=0、15 类 tolerance 比对 15/15、exception-alias=73、
+core-kotlin 仍止于 RubySpan.hx:46 首错。
+
+2026-08-31 clreq 波 slice 1：BopomofoTone、BopomofoReading、BopomofoParser、
+NumberSymbolCohesion 四个类与 BopomofoParserTest、NumberSymbolCohesionTest
+两个测试移植完成。BopomofoParser 的声调分派在 Kotlin 原版是带 else 的
+when；boring Kotlin 侧当前只支持枚举 switch 的降级，按 features/15 对判别
+式的链式分支许可改为 if/else 链，行为不变。测试类的 groups 辅助按 spec 27
+移入同文件普通类 NumberSymbolCohesionTestHelpers（沿
+TextModelCoverageTestHelpers 先例）。TestTraceRender 增 renderStringArray，
+TracedAssertions 增 assertEqualsStringArray、assertEqualsBopomofoTone、
+assertEqualsBopomofoReading 三个入口。clreq 文件在隔离 hxml 下做 Kotlin
+降级检查：修掉 BopomofoParser 的 V15 与测试类非测试成员两处后，止于已登记
+的 TestTraceRecorder.hx:10（缺口 10 范畴）。中文字面量沿移植树既有约定
+直接写原字面量（从 Kotlin 原文机械复制）。验证链通过：compile.hxml 零错误、
+serial-test rc=0、17 类 tolerance 比对 17/17、exception-alias=73、
+core-kotlin 仍止于 RubySpan.hx:46 首错。
+
+2026-08-31 clreq 波 slice 2：ClreqProfile.kt 及其伴生枚举与策略类全量移植完成。
+新增 12 个枚举（ClreqStrictness、ClreqRegion、CjkPunctuationGlyphPolicy、
+PunctuationGluePlacement、GlueSide、AutoSpaceMode、LineAdjustmentStrategy、
+LineEndPunctuationStyle、KinsokuLevel、HangingPunctuationStyle、
+InteriorPunctuationStyle、PunctuationClass），策略与数据类 AutoSpacePolicy、
+AdjustmentStylePolicy、PunctuationWidthPolicy、PunctuationPolicy、
+CjkPunctuationGlyphSubstitution、ResolvedKinsoku、ClreqProfile、
+ClreqProfileResolver（interface 与 BuiltInClreqProfileResolver 同文件双类型）、
+PunctuationGluePlacements、ClreqPunctuationPolicies、
+ClreqPunctuationAdvancePolicy、ClreqPunctuationGlyphSubstitutor，加 layout 侧
+KinsokuRule（interface 与 ClreqKinsokuRule 同文件）。KinsokuMode 按裁定移植为
+带参枚举，Kotlin 默认参数（Fixed 的 Disabled；MeasureAdaptive 的 14/24/32）
+在 Haxe 构造点逐一显式书写；BopomofoReading 增 copy 与 hashCode。
+五个测试 KinsokuLevelTest、PunctuationGluePlacementTest、
+ClreqPunctuationGlyphSubstitutorTest、ClreqProfileCoverageTest、
+ClreqPolicyTailCoverageTest 移植完成，辅助逻辑按 spec 27 入同文件
+XxxTestHelpers。两个可降级裁定：其一，Kotlin when 表达式在 Haxe 侧必须写成
+return switch 值臂形式（KotlinExpr 只降 when 表达式，switch 臂内 return 语句
+不在子集内），多语句臂拆私有辅助函数；其二，非模块主类型跨文件引用用
+模块名.类型名导入（ClreqProfileResolver.BuiltInClreqProfileResolver、
+KinsokuRule.ClreqKinsokuRule）。跨文件类引用处 Int 入 StringBuf 用 "" + v 沿
+TiqianTextContent 先例。ClreqProfile toString 经 TestTraceRender.cap 截断，
+golden 的 240 字符 FNV 行逐字节一致；1f/3f 一律写 0.33333334 字面量保 f32
+渲染一致。验证链通过：compile.hxml 零错误、serial-test rc=0、22 类 tolerance
+比对 22/22、exception-alias=73、隔离 clreq 检查止于 TestTraceRecorder.hx:10
+（缺口 10 范畴，无新增违规）、core-kotlin 仍止于 RubySpan.hx:46 首错。
