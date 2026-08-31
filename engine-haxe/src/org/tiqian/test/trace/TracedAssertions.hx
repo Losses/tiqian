@@ -19,17 +19,6 @@ class TracedAssertions {
         }
     }
 
-    public static function assertEqualsGeneric<T>(expected:T, actual:T, ?message:String):Void {
-        recordEvent("eq", [
-            field("expected", TestTraceRender.renderGeneric(expected)),
-            field("actual", TestTraceRender.renderGeneric(actual)),
-            msgField(message)
-        ]);
-        if (expected != actual) {
-            fail(message == null ? "Expected values to be equal." : message);
-        }
-    }
-
     public static function assertEqualsString(expected:String, actual:String, ?message:String):Void {
         recordEvent("eq", [
             field("expected", TestTraceRender.renderString(expected)),
@@ -126,19 +115,18 @@ class TracedAssertions {
         }
     }
 
-    public static function assertNull<T>(actual:Null<T>, ?message:String):Void {
-        recordEvent("null", [field("actual", actual == null ? "-" : TestTraceRender.renderGeneric(actual)), msgField(message)]);
-        if (actual != null) {
+    public static function assertNullRendered(wasNull:Bool, renderedActual:String, ?message:String):Void {
+        recordEvent("null", [field("actual", renderedActual), msgField(message)]);
+        if (!wasNull) {
             fail(message == null ? "Expected value to be null." : message);
         }
     }
 
-    public static function assertNotNull<T>(actual:Null<T>, ?message:String):T {
-        recordEvent("not-null", [field("actual", actual == null ? "-" : TestTraceRender.renderGeneric(actual)), msgField(message)]);
-        if (actual == null) {
+    public static function assertNotNullRendered(wasNotNull:Bool, renderedActual:String, ?message:String):Void {
+        recordEvent("not-null", [field("actual", renderedActual), msgField(message)]);
+        if (!wasNotNull) {
             fail(message == null ? "Expected value to be non-null." : message);
         }
-        return actual;
     }
 
     public static function assertFailsWith(?message:String, block:()->Void):TiqianIllegalArgumentException {

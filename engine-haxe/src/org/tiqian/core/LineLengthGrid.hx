@@ -10,7 +10,8 @@ class LineLengthGrid {
     }
 
     public function toString():String {
+        final alignment = bodyAlignment;
         return "LineLengthGrid(enabled=" + enabled
-            + ", bodyAlignment=" + (bodyAlignment == null ? "null" : Std.string(bodyAlignment)) + ")";
+            + ", bodyAlignment=" + (alignment == null ? "null" : Std.string(alignment)) + ")";
     }
 }
