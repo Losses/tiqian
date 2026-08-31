@@ -9,28 +9,26 @@ class InlineObjectBoundaryAdjustment {
 
     public function new(
         participatesInUniformStretch:Bool = false,
-        preferredStretch:Null<InlineObjectPreferredStretch>,
-        shrinkCapacity:Null<Float>,
-        lineEndDiscardableAdvance:Null<Float>,
+        preferredStretch:Null<InlineObjectPreferredStretch> = null,
+        shrinkCapacity:Float = 0.0,
+        lineEndDiscardableAdvance:Float = 0.0,
         preventsLineBreak:Bool = false
     ) {
-        final resolvedShrink:Float = shrinkCapacity == null ? 0.0 : shrinkCapacity;
-        final resolvedDiscard:Float = lineEndDiscardableAdvance == null ? 0.0 : lineEndDiscardableAdvance;
-        if (!isFinite(resolvedShrink) || resolvedShrink < 0.0) {
+        if (!isFinite(shrinkCapacity) || shrinkCapacity < 0.0) {
             throw new TiqianIllegalArgumentException(Message("Inline-object boundary shrink capacity must be finite and non-negative"));
         }
-        if (!isFinite(resolvedDiscard) || resolvedDiscard < 0.0) {
+        if (!isFinite(lineEndDiscardableAdvance) || lineEndDiscardableAdvance < 0.0) {
             throw new TiqianIllegalArgumentException(Message("Inline-object line-end discardable advance must be finite and non-negative"));
         }
         this.participatesInUniformStretch = participatesInUniformStretch;
         this.preferredStretch = preferredStretch;
-        this.shrinkCapacity = resolvedShrink;
-        this.lineEndDiscardableAdvance = resolvedDiscard;
+        this.shrinkCapacity = shrinkCapacity;
+        this.lineEndDiscardableAdvance = lineEndDiscardableAdvance;
         this.preventsLineBreak = preventsLineBreak;
     }
 
     public static function fixed():InlineObjectBoundaryAdjustment {
-        return new InlineObjectBoundaryAdjustment(false, null, null, null, false);
+        return new InlineObjectBoundaryAdjustment();
     }
 
     public function toString():String {
