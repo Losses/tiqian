@@ -10,6 +10,6 @@ class TextSpan {
     }
 
     public function toString():String {
-        return "TextSpan(range=" + range + ", style=" + style + ")";
+        return "TextSpan(range=" + range.toString() + ", style=" + style.toString() + ")";
     }
 }
