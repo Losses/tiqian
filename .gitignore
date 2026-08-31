@@ -51,3 +51,6 @@ engine/src/jvmTest/resources/golden/process-traces/
 
 # Regenerated into the source tree by porting/instrument_tests.py
 engine/src/commonTest/kotlin/org/tiqian/test/trace/TracedTestManifest.kt
+
+# Central deviation ledger (agent working artifact; kept on disk, never committed)
+/DEVIATION-LEDGER.md
