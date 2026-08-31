@@ -11,7 +11,7 @@
 -D kotlin-test-output=engine-haxe/out/kotlin-gen-tests
 -D runtime-import=org.tiqian.boring.runtime
 -D runtime-emit=runtime
--D float-precision=f64
+-D float-precision=f32
 org.tiqian.core.TextRange
 org.tiqian.core.TextRangeError
 org.tiqian.core.TiqianIllegalArgumentException

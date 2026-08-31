@@ -100,6 +100,11 @@ def parse_kotlin_toplevel(text):
             continue
         if stripped.startswith(("//", "/*", "*", "@", "import ", "package ")):
             continue
+        # A bare brace is a class-body delimiter, never a declaration;
+        # treating one as a declaration leaks the closing braces of
+        # removed classes into the leftover segment.
+        if stripped in ("}", "{"):
+            continue
         tokens = stripped.split()
         j = 0
         vis = "default"
@@ -120,6 +125,12 @@ def parse_kotlin_toplevel(text):
         while k >= 0 and lines[k].strip().startswith(("/**", "*", "*/", "//", "@")):
             doc = k
             k -= 1
+        # A line that names no declaration (a bare `)` or `) {`
+        # continuing a parameter list at column zero) only occurs
+        # inside another declaration's span; emitting it as a decl
+        # leaks the enclosing class body into the leftover segment.
+        if name is None and kind == "member":
+            continue
         decls.append(Decl(name, i, doc, vis, kind, value))
     return decls
 
@@ -305,19 +316,27 @@ EXPECTED_ACTUAL = re.compile(
 def retype_exceptions(log_text):
     """Point failing assertion lines at the exception actually thrown.
 
-    AssertionError stack frames name the line of the failed assertion;
-    the caused-by line names the exception that actually propagated.
+    The caused-by frame names the line of the throwing call inside the
+    test; the failed assertion sits a few lines above it (an inline
+    assertion wrapper reports the AssertionError through a stale line
+    table, so its own frame cannot be trusted for line-precise edits).
     Cross-package test files gain the missing import."""
     test_root = ENGINE_SRC
     blame = {}  # relative path -> {line no: target exception}
-    blocks = log_text.split(" FAILED")[0:0]  # unused; parse by frames
-    actual_by_frame = {}
     lines = log_text.splitlines()
     current_actual = None
     for line in lines:
         m = CAUSED_BY_TIQIAN.search(line)
         if m:
             current_actual = m.group(1)
+            # The caused-by frame itself is the throwing call site.
+            fm = re.search(r" at ([\w.]+)\.kt:(\d+)$", line)
+            if fm:
+                cls, no = fm.group(1), int(fm.group(2))
+                candidates = list(test_root.rglob(f"{cls.split('.')[-1]}.kt"))
+                if candidates:
+                    rel = candidates[0].relative_to(WORKTREE)
+                    blame.setdefault(str(rel), {})[no] = current_actual
             continue
         m = EXPECTED_ACTUAL.search(line)
         if m:
@@ -336,15 +355,30 @@ def retype_exceptions(log_text):
         text_lines = path.read_text().splitlines()
         count = 0
         for no, target in flips.items():
-            if no - 1 >= len(text_lines):
-                continue
-            old = text_lines[no - 1]
-            new = old
-            for name in EXCEPTION_NAMES:
-                new = re.sub(rf"\b{name}\b", target, new)
-            if new != old:
-                text_lines[no - 1] = new
-                count += 1
+            # Direct hit: the frame line itself names an exception type.
+            if no - 1 < len(text_lines):
+                old = text_lines[no - 1]
+                new = old
+                for name in EXCEPTION_NAMES:
+                    new = re.sub(rf"\b{name}\b", target, new)
+                if new != old:
+                    text_lines[no - 1] = new
+                    count += 1
+                    continue
+            # Otherwise search upward for the assertion expecting the
+            # builtin type; the throwing call sits inside its block.
+            for up in range(no - 1, max(no - 25, -1), -1):
+                if up >= len(text_lines):
+                    continue
+                old = text_lines[up]
+                m = re.search(r"assertFailsWith<(\w+)>", old)
+                if not m or m.group(1) == target:
+                    continue
+                if m.group(1) in EXCEPTION_NAMES:
+                    text_lines[up] = re.sub(
+                        rf"\b{m.group(1)}\b", target, old, count=1)
+                    count += 1
+                    break
         if count:
             text = "\n".join(text_lines)
             if "import org.tiqian.core." + "Tiqian" not in text \
