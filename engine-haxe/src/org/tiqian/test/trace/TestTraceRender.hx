@@ -1,5 +1,6 @@
 package org.tiqian.test.trace;
 
+import std.ReadOnlyArray;
 import std.StringBuf;
 
 class TestTraceRender {
@@ -43,6 +44,21 @@ class TestTraceRender {
                 output.add(", ");
             }
             output.add(renderInt(values[index]));
+            index += 1;
+        }
+        output.add("]");
+        return cap(output.toString());
+    }
+
+    public static function renderStringArray(values:ReadOnlyArray<String>):String {
+        final output = new StringBuf();
+        output.add("[");
+        var index = 0;
+        while (index < values.length) {
+            if (index > 0) {
+                output.add(", ");
+            }
+            output.add(renderString(values[index]));
             index += 1;
         }
         output.add("]");
