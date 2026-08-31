@@ -229,12 +229,12 @@ class LayoutQueriesResidualCoverageTest {
         new TestTraceRecorder("LayoutQueriesResidualCoverageTest").section("uniformTextStyleFallsBackWhenEveryMetricFieldDiffers");
         final base:TextStyle = LayoutQueriesResidualCoverageTestHelpers.style(10.0);
         final variants:Array<TextStyle> = [
-            new TextStyle(10.0, "zh-Hans", 400, false, 0.0, InlineAttachment.None, ["other"]),
-            new TextStyle(11.0, "zh-Hans", 400, false, 0.0, InlineAttachment.None, []),
-            new TextStyle(10.0, "ja-JP", 400, false, 0.0, InlineAttachment.None, []),
-            new TextStyle(10.0, "zh-Hans", 700, false, 0.0, InlineAttachment.None, []),
-            new TextStyle(10.0, "zh-Hans", 400, true, 0.0, InlineAttachment.None, []),
-            new TextStyle(10.0, "zh-Hans", 400, false, 2.0, InlineAttachment.None, [])
+            new TextStyle(["other"], 10.0, "zh-Hans", 400, false, 0.0, InlineAttachment.None),
+            new TextStyle([], 11.0, "zh-Hans", 400, false, 0.0, InlineAttachment.None),
+            new TextStyle([], 10.0, "ja-JP", 400, false, 0.0, InlineAttachment.None),
+            new TextStyle([], 10.0, "zh-Hans", 700, false, 0.0, InlineAttachment.None),
+            new TextStyle([], 10.0, "zh-Hans", 400, true, 0.0, InlineAttachment.None),
+            new TextStyle([], 10.0, "zh-Hans", 400, false, 2.0, InlineAttachment.None)
         ];
         final clusters:Array<Cluster> = [LayoutQueriesResidualCoverageTestHelpers.cluster(new TextRange(0, 1), "a", 10.0), LayoutQueriesResidualCoverageTestHelpers.cluster(new TextRange(1, 2), "b", 10.0)];
         final decision:MetricDecisionInfo = LayoutQueriesResidualCoverageTestHelpers.metric(new TextRange(1, 2), "LatinBox", 9.0, 1.0, "latin");
@@ -1010,7 +1010,7 @@ class LayoutQueriesResidualCoverageTestHelpers {
     }
 
     public static function style(fontSize:Float):TextStyle {
-        return new TextStyle(fontSize, "zh-Hans", 400, false, 0.0, InlineAttachment.None, []);
+        return new TextStyle([], fontSize, "zh-Hans", 400, false, 0.0, InlineAttachment.None);
     }
 
     public static function emptyDebug():LayoutDebugInfo {
