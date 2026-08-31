@@ -366,3 +366,18 @@ TiqianTextContent.sourceBoundaries 的 Kotlin 类型是 Set<Int>，移植持有
 Array<Int>，类型偏差留待 layout 波移植时裁定。验证链通过：compile.hxml 零错误、
 serial-test rc=0、15 类 tolerance 比对 15/15、exception-alias=73、
 core-kotlin 仍止于 RubySpan.hx:46 首错。
+
+2026-08-31 clreq 波 slice 1：BopomofoTone、BopomofoReading、BopomofoParser、
+NumberSymbolCohesion 四个类与 BopomofoParserTest、NumberSymbolCohesionTest
+两个测试移植完成。BopomofoParser 的声调分派在 Kotlin 原版是带 else 的
+when；boring Kotlin 侧当前只支持枚举 switch 的降级，按 features/15 对判别
+式的链式分支许可改为 if/else 链，行为不变。测试类的 groups 辅助按 spec 27
+移入同文件普通类 NumberSymbolCohesionTestHelpers（沿
+TextModelCoverageTestHelpers 先例）。TestTraceRender 增 renderStringArray，
+TracedAssertions 增 assertEqualsStringArray、assertEqualsBopomofoTone、
+assertEqualsBopomofoReading 三个入口。clreq 文件在隔离 hxml 下做 Kotlin
+降级检查：修掉 BopomofoParser 的 V15 与测试类非测试成员两处后，止于已登记
+的 TestTraceRecorder.hx:10（缺口 10 范畴）。中文字面量沿移植树既有约定
+直接写原字面量（从 Kotlin 原文机械复制）。验证链通过：compile.hxml 零错误、
+serial-test rc=0、17 类 tolerance 比对 17/17、exception-alias=73、
+core-kotlin 仍止于 RubySpan.hx:46 首错。
