@@ -1,0 +1,51 @@
+diff --git a/src/DefaultArgExpander.hx b/src/DefaultArgExpander.hx
+index 73fd6bd..793c4df 100644
+--- a/src/DefaultArgExpander.hx
++++ b/src/DefaultArgExpander.hx
+@@ -453,6 +453,22 @@ class DefaultArgExpander {
+ 	}
+ 
+ 	static function lookupFieldDefaults(cls:ClassType, fieldName:String):Null<Array<Null<DefaultArgValue>>> {
++		if (cls == null) return null;
++		final precise = lookupFieldDefaultsPrecise(cls, fieldName);
++		if (precise != null) {
++			return precise;
++		}
++		return uniqueByName(fieldNameCounts, fieldDefaultsByName, fieldName, "method", cls.pos);
++	}
++
++	/**
++	 * The exact-key chain without the by-name fallback: the declaring class,
++	 * then its interfaces, then its superclasses. A constructor call always
++	 * knows its declaring class, so it resolves through this chain only; a
++	 * class with no registered defaults holds nothing to complete and the
++	 * by-name fallback must not fire for it.
++	 */
++	static function lookupFieldDefaultsPrecise(cls:ClassType, fieldName:String):Null<Array<Null<DefaultArgValue>>> {
+ 		if (cls == null) return null;
+ 		final classKey = getClassKey(cls);
+ 		final key = classKey + ":" + fieldName;
+@@ -461,19 +477,19 @@ class DefaultArgExpander {
+ 		}
+ 		for (iface in cls.interfaces) {
+ 			final ifaceCls = iface.t.get();
+-			final ifaceRes = lookupFieldDefaults(ifaceCls, fieldName);
++			final ifaceRes = lookupFieldDefaultsPrecise(ifaceCls, fieldName);
+ 			if (ifaceRes != null) return ifaceRes;
+ 		}
+ 		if (cls.superClass != null) {
+ 			final superCls = cls.superClass.t.get();
+-			final superRes = lookupFieldDefaults(superCls, fieldName);
++			final superRes = lookupFieldDefaultsPrecise(superCls, fieldName);
+ 			if (superRes != null) return superRes;
+ 		}
+-		return uniqueByName(fieldNameCounts, fieldDefaultsByName, fieldName, "method", cls.pos);
++		return null;
+ 	}
+ 
+ 	static function completeNew(newExpr:TypedExpr, cls:ClassType, args:Array<TypedExpr>):Void {
+-		final defaults = lookupFieldDefaults(cls, "new");
++		final defaults = lookupFieldDefaultsPrecise(cls, "new");
+ 		if (defaults == null) return;
+ 
+ 		var params:Null<Array<{name:String, opt:Bool, t:Type}>> = null;
