@@ -24,7 +24,16 @@ class TiqianTextContent {
         this.autoSpaceSuppressedRanges = autoSpaceSuppressedRanges == null ? [] : autoSpaceSuppressedRanges;
     }
 
-
+    // Kotlin's List.toString joins with ", " while Std.string over the array
+    // joins with ","; generic synthesis cannot reproduce the Kotlin text, so
+    // this explicit member stays.
+    public function toString():String {
+        return "TiqianTextContent(text=" + text
+            + ", spans=" + renderSpans(spans)
+            + ", sourceBoundaries=" + renderSourceBoundaries(sourceBoundaries)
+            + ", lineBreakSpans=" + renderLineBreakSpans(lineBreakSpans)
+            + ", autoSpaceSuppressedRanges=" + renderRanges(autoSpaceSuppressedRanges) + ")";
+    }
 
     private static function renderSpans(values:ReadOnlyArray<TextSpan>):String {
         var output:String = "[";
