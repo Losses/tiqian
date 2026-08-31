@@ -38,13 +38,13 @@ class RubySpan {
         text:String,
         ?fontFamilies:Array<String>,
         kind:RubyKind = RubyKind.Pinyin,
-        locale:Null<String>
+        ?locale:Null<String>
     ) {
         this.baseRange = baseRange;
         this.text = text;
         this.fontFamilies = fontFamilies == null ? [] : fontFamilies;
         this.kind = kind;
-        this.locale = locale == null && this.kind == RubyKind.Bopomofo ? "zh-TW" : locale;
+        this.locale = locale == null ? (kind == RubyKind.Bopomofo ? "zh-TW" : null) : locale;
     }
 
     // Kotlin's List.toString joins with ", " while Std.string over the array
