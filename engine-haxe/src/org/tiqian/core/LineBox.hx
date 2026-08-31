@@ -27,11 +27,14 @@ class LineBox {
         naturalWidth:Float,
         adjustedWidth:Float,
         visualWidth:Float,
-        hangingPunctuationAdvance:Float = 0.0,
-        indent:Float = 0.0,
-        endReason:LineEndReason = LineEndReason.ParagraphEnd,
-        hyphenAdvance:Float = 0.0,
+        ?hangingPunctuationAdvance:Null<Float>,
+        ?indent:Null<Float>,
+        ?endReason:Null<LineEndReason>,
+        ?hyphenAdvance:Null<Float>,
         ?hyphenGlyphs:Array<Glyph>,
+        // Kotlin declares debug: LineDebugInfo = LineDebugInfo(), a
+        // constructor-call default outside the sanctioned coalescing grammar.
+        // The parameter stays mandatory; callers pass LineDebugInfo defaults.
         debug:LineDebugInfo
     ) {
         this.range = range;
@@ -42,10 +45,10 @@ class LineBox {
         this.naturalWidth = naturalWidth;
         this.adjustedWidth = adjustedWidth;
         this.visualWidth = visualWidth;
-        this.hangingPunctuationAdvance = hangingPunctuationAdvance;
-        this.indent = indent;
-        this.endReason = endReason;
-        this.hyphenAdvance = hyphenAdvance;
+        this.hangingPunctuationAdvance = hangingPunctuationAdvance == null ? 0.0 : hangingPunctuationAdvance;
+        this.indent = indent == null ? 0.0 : indent;
+        this.endReason = endReason == null ? LineEndReason.ParagraphEnd : endReason;
+        this.hyphenAdvance = hyphenAdvance == null ? 0.0 : hyphenAdvance;
         this.hyphenGlyphs = hyphenGlyphs == null ? [] : hyphenGlyphs;
         this.debug = debug;
     }
