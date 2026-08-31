@@ -496,12 +496,10 @@ def main():
               + (f" :: {detail[:200]}" if detail else ""), flush=True)
         if args.swap and result["status"] != "pass":
             break
-
-    if args.commit:
-        if results and results[-1]["status"] == "pass":
-            print(commit_and_merge(results[-1]["stem"]))
-        else:
-            print("no commit: last swap did not pass")
+        # Commit each green swap at once: a later batch run must not
+        # sweep earlier swaps into the first commit.
+        if args.commit and result["status"] == "pass":
+            print(commit_and_merge(stem), flush=True)
 
     return 0 if all(r["status"] == "pass" for r in results) else 1
 
