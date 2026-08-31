@@ -89,9 +89,9 @@ class ParagraphStyle {
             + ", writingMode=" + Std.string(writingMode)
             + ", lineHeight=" + (height == null ? "null" : "" + height)
             + ", firstLineIndent=" + (firstLineIndent == null ? "null" : firstLineIndent.toString())
-            + ", blockIndent=" + blockIndent
-            + ", firstLineIndentPolicy=" + firstLineIndentPolicy
-            + ", lineLengthGrid=" + lineLengthGrid
+            + ", blockIndent=" + blockIndent.toString()
+            + ", firstLineIndentPolicy=" + firstLineIndentPolicy.toString()
+            + ", lineLengthGrid=" + lineLengthGrid.toString()
             + ", rubyLineHeightMode=" + Std.string(rubyLineHeightMode)
             + ", inlineObjectMinimumClearanceEm=" + inlineObjectMinimumClearanceEm
             + ", emphasisDotGapEm=" + emphasisDotGapEm + ")";

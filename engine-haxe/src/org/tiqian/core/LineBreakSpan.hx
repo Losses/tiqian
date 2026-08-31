@@ -10,6 +10,6 @@ class LineBreakSpan {
     }
 
     public function toString():String {
-        return "LineBreakSpan(range=" + range + ", policy=" + Std.string(policy) + ")";
+        return "LineBreakSpan(range=" + range.toString() + ", policy=" + Std.string(policy) + ")";
     }
 }
