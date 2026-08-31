@@ -4,6 +4,9 @@ import org.tiqian.core.TiqianIllegalArgumentException;
 import org.tiqian.core.TiqianNoSuchElementException;
 import org.tiqian.core.Ic;
 import org.tiqian.core.EastAsianSpacingEdges;
+import org.tiqian.clreq.BopomofoTone;
+import org.tiqian.clreq.BopomofoReading;
+import std.ReadOnlyArray;
 import org.tiqian.test.TestHelpers;
 import std.StringBuf;
 
@@ -50,6 +53,53 @@ class TracedAssertions {
         if (expected.leading != actual.leading || expected.trailing != actual.trailing || expected.containsWide != actual.containsWide) {
             fail(message == null ? "Expected values to be equal." : message);
         }
+    }
+
+    public static function assertEqualsStringArray(expected:ReadOnlyArray<String>, actual:ReadOnlyArray<String>, ?message:String):Void {
+        recordEvent("eq", [
+            field("expected", TestTraceRender.renderStringArray(expected)),
+            field("actual", TestTraceRender.renderStringArray(actual)),
+            msgField(message)
+        ]);
+        if (!sameStringArray(expected, actual)) {
+            fail(message == null ? "Expected values to be equal." : message);
+        }
+    }
+
+    public static function assertEqualsBopomofoTone(expected:BopomofoTone, actual:BopomofoTone, ?message:String):Void {
+        recordEvent("eq", [
+            field("expected", Std.string(expected)),
+            field("actual", Std.string(actual)),
+            msgField(message)
+        ]);
+        if (expected != actual) {
+            fail(message == null ? "Expected values to be equal." : message);
+        }
+    }
+
+    public static function assertEqualsBopomofoReading(expected:BopomofoReading, actual:BopomofoReading, ?message:String):Void {
+        recordEvent("eq", [
+            field("expected", expected.toString()),
+            field("actual", actual.toString()),
+            msgField(message)
+        ]);
+        if (!sameStringArray(expected.symbols, actual.symbols) || expected.tone != actual.tone) {
+            fail(message == null ? "Expected values to be equal." : message);
+        }
+    }
+
+    private static function sameStringArray(first:ReadOnlyArray<String>, second:ReadOnlyArray<String>):Bool {
+        if (first.length != second.length) {
+            return false;
+        }
+        var index:Int = 0;
+        while (index < first.length) {
+            if (first[index] != second[index]) {
+                return false;
+            }
+            index += 1;
+        }
+        return true;
     }
 
     public static function f32Literal(value:Float):Float {
