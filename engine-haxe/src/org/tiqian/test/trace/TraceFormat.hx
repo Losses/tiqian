@@ -74,13 +74,6 @@ class TraceFormat {
         return value ? "true" : "false";
     }
 
-    public static function value<T>(value:T):String {
-        if (value == null) {
-            return valueNull();
-        }
-        return Std.string(value);
-    }
-
     public static function valueNull():String {
         return "-";
     }

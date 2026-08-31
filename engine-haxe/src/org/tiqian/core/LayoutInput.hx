@@ -16,6 +16,12 @@ class LayoutInput {
     public function new(
         content:TiqianTextContent,
         constraints:LayoutConstraints,
+        // Kotlin declares textStyle = TextStyle() and paragraphStyle =
+        // ParagraphStyle() (constructor-call defaults, outside the sanctioned
+        // grammar) and profileId = BuiltInLayoutProfiles.ClreqHorizontal (a
+        // static-field default, boring gap 4). All three parameters stay
+        // mandatory until gap 4 lands for profileId; the constructor-call
+        // pair stays mandatory permanently.
         textStyle:TextStyle,
         paragraphStyle:ParagraphStyle,
         profileId:LayoutProfileId,
@@ -36,25 +42,58 @@ class LayoutInput {
     }
 
     public function toString():String {
-        return "LayoutInput(content=" + content
-            + ", textStyle=" + textStyle
-            + ", paragraphStyle=" + paragraphStyle
-            + ", constraints=" + constraints
-            + ", profileId=" + profileId
-            + ", decorations=" + renderArray(decorations)
-            + ", rubySpans=" + renderArray(rubySpans)
-            + ", inlineBoxes=" + renderArray(inlineBoxes)
-            + ", inlineObjects=" + renderArray(inlineObjects) + ")";
+        return "LayoutInput(content=" + content.toString()
+            + ", textStyle=" + textStyle.toString()
+            + ", paragraphStyle=" + paragraphStyle.toString()
+            + ", constraints=" + constraints.toString()
+            + ", profileId=" + profileId.toString()
+            + ", decorations=" + renderDecorations(decorations)
+            + ", rubySpans=" + renderRubySpans(rubySpans)
+            + ", inlineBoxes=" + renderInlineBoxes(inlineBoxes)
+            + ", inlineObjects=" + renderInlineObjects(inlineObjects) + ")";
     }
 
-    private static function renderArray<T>(values:ReadOnlyArray<T>):String {
+    private static function renderDecorations(values:ReadOnlyArray<DecorationSpan>):String {
         var output:String = "[";
         var index:Int = 0;
         while (index < values.length) {
             if (index > 0) {
                 output += ", ";
             }
-            output += Std.string(values[index]);
+            output += values[index].toString();
+            index += 1;
+        }
+        return output + "]";
+    }
+
+    private static function renderRubySpans(values:ReadOnlyArray<RubySpan>):String {
+        var output:String = "[";
+        var index:Int = 0;
+        while (index < values.length) {
+            if (index > 0) output += ", ";
+            output += values[index].toString();
+            index += 1;
+        }
+        return output + "]";
+    }
+
+    private static function renderInlineBoxes(values:ReadOnlyArray<InlineBoxSpan>):String {
+        var output:String = "[";
+        var index:Int = 0;
+        while (index < values.length) {
+            if (index > 0) output += ", ";
+            output += values[index].toString();
+            index += 1;
+        }
+        return output + "]";
+    }
+
+    private static function renderInlineObjects(values:ReadOnlyArray<InlineObjectSpan>):String {
+        var output:String = "[";
+        var index:Int = 0;
+        while (index < values.length) {
+            if (index > 0) output += ", ";
+            output += values[index].toString();
             index += 1;
         }
         return output + "]";

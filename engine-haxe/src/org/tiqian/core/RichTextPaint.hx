@@ -7,15 +7,19 @@ class RichTextPaint {
     public final adjacentSameStyleClearance:Float;
 
     public function new(
-        argb:Null<Int>,
+        ?argb:Null<Int>,
+        // Kotlin declares linePattern = RichTextLinePattern.Solid (a static
+        // field of a class, boring gap 4) and background =
+        // RichTextBackgroundPaint() (a constructor call, outside the
+        // sanctioned grammar). Both parameters stay mandatory.
         linePattern:RichTextLinePattern,
         background:RichTextBackgroundPaint,
-        adjacentSameStyleClearance:Float = 0.0
+        ?adjacentSameStyleClearance:Null<Float>
     ) {
-        this.argb = argb;
+        this.argb = argb == null ? null : argb;
         this.linePattern = linePattern;
         this.background = background;
-        this.adjacentSameStyleClearance = adjacentSameStyleClearance;
+        this.adjacentSameStyleClearance = adjacentSameStyleClearance == null ? 0.0 : adjacentSameStyleClearance;
         if (!isFinite(this.adjacentSameStyleClearance) || this.adjacentSameStyleClearance < 0.0) {
             throw new TiqianIllegalArgumentException(Message("Failed requirement."));
         }
@@ -34,15 +38,18 @@ class RichTextPaint {
     }
 
     public function sameVisibleStyle(other:RichTextPaint):Bool {
-        return argb == other.argb
-            && Std.string(linePattern) == Std.string(other.linePattern)
-            && Std.string(background) == Std.string(other.background);
+        final a = argb;
+        final b = other.argb;
+        if (a != b) return false;
+        if (!RichTextLinePattern.sameValues(linePattern, other.linePattern)) return false;
+        return RichTextBackgroundPaint.sameValues(background, other.background);
     }
 
     public function toString():String {
-        return "RichTextPaint(argb=" + (argb == null ? "null" : Std.string(argb))
-            + ", linePattern=" + Std.string(linePattern)
-            + ", background=" + Std.string(background)
+        final value = argb;
+        return "RichTextPaint(argb=" + (value == null ? "null" : "" + value)
+            + ", linePattern=" + linePattern.toString()
+            + ", background=" + background.toString()
             + ", adjacentSameStyleClearance=" + adjacentSameStyleClearance + ")";
     }
 

@@ -46,15 +46,16 @@ class PositionedCluster {
     }
 
     public function toString():String {
+        final stops = sourceStops;
         return "PositionedCluster(lineIndex=" + lineIndex
             + ", clusterIndex=" + clusterIndex
-            + ", range=" + range
+            + ", range=" + range.toString()
             + ", left=" + left
             + ", top=" + top
             + ", right=" + right
             + ", bottom=" + bottom
             + ", baseline=" + baseline
             + ", drawX=" + drawX
-            + ", sourceStops=" + (sourceStops == null ? "null" : Std.string(sourceStops)) + ")";
+            + ", sourceStops=" + (stops == null ? "null" : Std.string(stops)) + ")";
     }
 }
