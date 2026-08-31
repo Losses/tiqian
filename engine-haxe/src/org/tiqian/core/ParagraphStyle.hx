@@ -1,5 +1,6 @@
 package org.tiqian.core;
 
+@:dataClass
 class ParagraphStyle {
     // Alignment of the paragraph's LAST line only. CLREQ:「与西文排版不同，
     // 中文排版特别是书籍正文排版极少使用左齐右不齐，原则上应该进行两端
@@ -90,17 +91,4 @@ class ParagraphStyle {
         this.emphasisDotGapEm = emphasisDotGapEm;
     }
 
-    public function toString():String {
-        final height = lineHeight;
-        return "ParagraphStyle(lastLineAlignment=" + Std.string(lastLineAlignment)
-            + ", writingMode=" + Std.string(writingMode)
-            + ", lineHeight=" + (height == null ? "null" : "" + height)
-            + ", firstLineIndent=" + (firstLineIndent == null ? "null" : firstLineIndent.toString())
-            + ", blockIndent=" + blockIndent.toString()
-            + ", firstLineIndentPolicy=" + firstLineIndentPolicy.toString()
-            + ", lineLengthGrid=" + lineLengthGrid.toString()
-            + ", rubyLineHeightMode=" + Std.string(rubyLineHeightMode)
-            + ", inlineObjectMinimumClearanceEm=" + inlineObjectMinimumClearanceEm
-            + ", emphasisDotGapEm=" + emphasisDotGapEm + ")";
-    }
 }
