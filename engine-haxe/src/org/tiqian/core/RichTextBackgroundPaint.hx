@@ -1,5 +1,8 @@
 package org.tiqian.core;
 
+import org.tiqian.core.RichTextBackgroundDrawStyle.Fill;
+import org.tiqian.core.RichTextBackgroundDrawStyle.Border;
+
 @:dataClass
 class RichTextBackgroundPaint {
     public final horizontalPadding:Float;
@@ -15,7 +18,7 @@ class RichTextBackgroundPaint {
         ?cornerRadius:Null<Float>,
         // Kotlin declares continuationCornerRadius = cornerRadius, a
         // parameter-reading default (boring gap 4), and drawStyle =
-        // RichTextBackgroundDrawStyle.Fill (a static field, also gap 4).
+        // Fill.instance (a static field, also gap 4).
         // Both parameters stay mandatory until that lowering lands.
         continuationCornerRadius:Float,
         ?metricPolicy:Null<RichTextBackgroundMetricPolicy>,
@@ -36,15 +39,15 @@ class RichTextBackgroundPaint {
     }
 
     public static function withHorizontalPadding(value:Float):RichTextBackgroundPaint {
-        return new RichTextBackgroundPaint(value, 0.0, 0.0, 0.0, RichTextBackgroundMetricPolicy.MarkedFaces, RichTextBackgroundDrawStyle.Fill);
+        return new RichTextBackgroundPaint(value, 0.0, 0.0, 0.0, RichTextBackgroundMetricPolicy.MarkedFaces, Fill.instance);
     }
 
     public static function withMetricPolicy(value:RichTextBackgroundMetricPolicy):RichTextBackgroundPaint {
-        return new RichTextBackgroundPaint(0.0, 0.0, 0.0, 0.0, value, RichTextBackgroundDrawStyle.Fill);
+        return new RichTextBackgroundPaint(0.0, 0.0, 0.0, 0.0, value, Fill.instance);
     }
 
     public static function withCornerRadius(corner:Float, continuation:Null<Float>):RichTextBackgroundPaint {
-        return new RichTextBackgroundPaint(0.0, 0.0, corner, continuation, RichTextBackgroundMetricPolicy.MarkedFaces, RichTextBackgroundDrawStyle.Fill);
+        return new RichTextBackgroundPaint(0.0, 0.0, corner, continuation, RichTextBackgroundMetricPolicy.MarkedFaces, Fill.instance);
     }
 
 
@@ -56,7 +59,17 @@ class RichTextBackgroundPaint {
             && a.cornerRadius == b.cornerRadius
             && a.continuationCornerRadius == b.continuationCornerRadius
             && a.metricPolicy == b.metricPolicy
-            && RichTextBackgroundDrawStyle.sameValues(a.drawStyle, b.drawStyle);
+            && sameDrawStyle(a.drawStyle, b.drawStyle);
+    }
+
+    private static function sameDrawStyle(a:RichTextBackgroundDrawStyle, b:RichTextBackgroundDrawStyle):Bool {
+        if (Std.isOfType(a, Fill) || Std.isOfType(b, Fill)) {
+            return Std.isOfType(a, Fill) && Std.isOfType(b, Fill) && Fill.instance == a && Fill.instance == b;
+        }
+        if (Std.isOfType(a, Border) && Std.isOfType(b, Border)) {
+            return (cast(a, Border)).strokeWidth == (cast(b, Border)).strokeWidth;
+        }
+        return false;
     }
 
     private static function isFinite(value:Float):Bool {

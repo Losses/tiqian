@@ -1,5 +1,15 @@
 package org.tiqian.core;
 
+import org.tiqian.core.RichTextRole.Background;
+import org.tiqian.core.RichTextRole.Underline;
+import org.tiqian.core.RichTextRole.LineThrough;
+import org.tiqian.core.RichTextRole.Link;
+import org.tiqian.core.RichTextRole.TechnicalInline;
+import org.tiqian.core.RichTextRole.InlineCode;
+
+import org.tiqian.core.RichTextLinePattern.Solid;
+import org.tiqian.core.RichTextBackgroundDrawStyle.Fill;
+
 import org.tiqian.test.TestHelpers;
 import org.tiqian.test.trace.TestTraceRecorder;
 import org.tiqian.test.trace.TracedAssertions;
@@ -125,7 +135,7 @@ class LayoutQueriesTest {
         new TestTraceRecorder("LayoutQueriesTest").section("richTextSegmentsReusePositionedClusterGeometryAndSplitLines");
         final result:LayoutResult = LayoutQueriesTestHelpers.sampleResult();
         final paint:RichTextPaint = RichTextPaint.withArgb(0x33FF0000);
-        final span:RichTextSpan = new RichTextSpan(new TextRange(1, 4), RichTextRole.Background, paint);
+        final span:RichTextSpan = new RichTextSpan(new TextRange(1, 4), Background.instance, paint);
         final segments:Array<RichTextLineSegment> = LayoutQueries.positionedRichTextSegments(result, [span]);
         TracedAssertions.assertEqualsInt(2, segments.length);
         TracedAssertions.assertEqualsRendered(new TextRange(1, 3).toString(), segments[0].range.toString());
@@ -139,7 +149,7 @@ class LayoutQueriesTest {
     public static function richTextDecorationTrimsOnlyOuterPunctuationGlue():Void {
         new TestTraceRecorder("LayoutQueriesTest").section("richTextDecorationTrimsOnlyOuterPunctuationGlue");
         final result:LayoutResult = LayoutQueriesTestHelpers.punctuationGlueResult();
-        final underline:RichTextSpan = new RichTextSpan(new TextRange(0, 4), RichTextRole.Underline, new RichTextPaint(null, RichTextLinePattern.Solid, new RichTextBackgroundPaint(0.0, 0.0, 0.0, 0.0, RichTextBackgroundMetricPolicy.MarkedFaces, RichTextBackgroundDrawStyle.Fill), 0.0));
+        final underline:RichTextSpan = new RichTextSpan(new TextRange(0, 4), Underline.instance, new RichTextPaint(null, Solid.instance, new RichTextBackgroundPaint(0.0, 0.0, 0.0, 0.0, RichTextBackgroundMetricPolicy.MarkedFaces, Fill.instance), 0.0));
         final occupied:Array<RichTextLineSegment> = LayoutQueries.positionedRichTextSegments(result, [underline]);
         final decorations:Array<RichTextLineSegment> = LayoutQueries.trimmedRichTextDecorationSegments(result, occupied);
         TracedAssertions.assertEqualsRendered(new Rect(0.0, 0.0, 40.0, 20.0).toString(), occupied[0].rect.toString());
@@ -151,7 +161,7 @@ class LayoutQueriesTest {
     public static function richTextDecorationKeepsPunctuationGlueInsideItsRange():Void {
         new TestTraceRecorder("LayoutQueriesTest").section("richTextDecorationKeepsPunctuationGlueInsideItsRange");
         final result:LayoutResult = LayoutQueriesTestHelpers.punctuationGlueResult();
-        final underline:RichTextSpan = new RichTextSpan(new TextRange(1, 4), RichTextRole.Underline, new RichTextPaint(null, RichTextLinePattern.Solid, new RichTextBackgroundPaint(0.0, 0.0, 0.0, 0.0, RichTextBackgroundMetricPolicy.MarkedFaces, RichTextBackgroundDrawStyle.Fill), 0.0));
+        final underline:RichTextSpan = new RichTextSpan(new TextRange(1, 4), Underline.instance, new RichTextPaint(null, Solid.instance, new RichTextBackgroundPaint(0.0, 0.0, 0.0, 0.0, RichTextBackgroundMetricPolicy.MarkedFaces, Fill.instance), 0.0));
         final occupied:Array<RichTextLineSegment> = LayoutQueries.positionedRichTextSegments(result, [underline]);
         final decorations:Array<RichTextLineSegment> = LayoutQueries.trimmedRichTextDecorationSegments(result, occupied);
         TracedAssertions.assertEqualsRendered(new Rect(10.0, 0.0, 35.0, 20.0).toString(), decorations[0].rect.toString());
@@ -179,7 +189,7 @@ class LayoutQueriesTest {
             index += 1;
         }
         final result:LayoutResult = LayoutQueriesTestHelpers.copyResultWithDebug(original, new LayoutDebugInfo(null, [], geometry, [], [], []));
-        final underline:RichTextSpan = new RichTextSpan(new TextRange(0, 1), RichTextRole.Underline, new RichTextPaint(null, RichTextLinePattern.Solid, new RichTextBackgroundPaint(0.0, 0.0, 0.0, 0.0, RichTextBackgroundMetricPolicy.MarkedFaces, RichTextBackgroundDrawStyle.Fill), 0.0));
+        final underline:RichTextSpan = new RichTextSpan(new TextRange(0, 1), Underline.instance, new RichTextPaint(null, Solid.instance, new RichTextBackgroundPaint(0.0, 0.0, 0.0, 0.0, RichTextBackgroundMetricPolicy.MarkedFaces, Fill.instance), 0.0));
         final occupied:Array<RichTextLineSegment> = LayoutQueries.positionedRichTextSegments(result, [underline]);
         final decorations:Array<RichTextLineSegment> = LayoutQueries.trimmedRichTextDecorationSegments(result, occupied);
         TracedAssertions.assertEqualsFloat(0.0, decorations[0].left);
@@ -189,7 +199,7 @@ class LayoutQueriesTest {
     public static function customLineStylesReuseTheRendererUnderlineHeight():Void {
         new TestTraceRecorder("LayoutQueriesTest").section("customLineStylesReuseTheRendererUnderlineHeight");
         final result:LayoutResult = LayoutQueriesTestHelpers.punctuationGlueResult();
-        final underline:RichTextSpan = new RichTextSpan(new TextRange(0, 4), RichTextRole.Underline, new RichTextPaint(null, RichTextLinePattern.Solid, new RichTextBackgroundPaint(0.0, 0.0, 0.0, 0.0, RichTextBackgroundMetricPolicy.MarkedFaces, RichTextBackgroundDrawStyle.Fill), 0.0));
+        final underline:RichTextSpan = new RichTextSpan(new TextRange(0, 4), Underline.instance, new RichTextPaint(null, Solid.instance, new RichTextBackgroundPaint(0.0, 0.0, 0.0, 0.0, RichTextBackgroundMetricPolicy.MarkedFaces, Fill.instance), 0.0));
         final occupied:Array<RichTextLineSegment> = LayoutQueries.positionedRichTextSegments(result, [underline]);
         final segment:Array<RichTextLineSegment> = LayoutQueries.trimmedRichTextDecorationSegments(result, occupied);
         final expected:Float = segment[0].baseline + result.input.textStyle.fontSize * 0.18;
@@ -202,7 +212,7 @@ class LayoutQueriesTest {
         final original:LayoutResult = LayoutQueriesTestHelpers.backgroundGeometryResult();
         final metric:MetricDecisionInfo = LayoutQueriesTestHelpers.backgroundMetric(new TextRange(0, 3), "IdeographicEmBox", 8.0, 2.0);
         final result:LayoutResult = LayoutQueriesTestHelpers.copyResultWithDebug(original, new LayoutDebugInfo(null, [metric], [], [], [], []));
-        final lineThrough:RichTextSpan = new RichTextSpan(new TextRange(0, 3), RichTextRole.LineThrough, new RichTextPaint(null, RichTextLinePattern.Solid, new RichTextBackgroundPaint(0.0, 0.0, 0.0, 0.0, RichTextBackgroundMetricPolicy.MarkedFaces, RichTextBackgroundDrawStyle.Fill), 0.0));
+        final lineThrough:RichTextSpan = new RichTextSpan(new TextRange(0, 3), LineThrough.instance, new RichTextPaint(null, Solid.instance, new RichTextBackgroundPaint(0.0, 0.0, 0.0, 0.0, RichTextBackgroundMetricPolicy.MarkedFaces, Fill.instance), 0.0));
         final occupied:Array<RichTextLineSegment> = LayoutQueries.positionedRichTextSegments(result, [lineThrough]);
         final segment:Array<RichTextLineSegment> = LayoutQueries.trimmedRichTextDecorationSegments(result, occupied);
         TracedAssertions.assertEqualsFloatTolerance(17.0, LayoutQueries.richTextDecorationLineY(result, segment[0], 1.0), 0.001);
@@ -212,8 +222,8 @@ class LayoutQueriesTest {
     public static function richTextBackgroundKeepsInternalGapsButTrimsItsOuterLayoutSpace():Void {
         new TestTraceRecorder("LayoutQueriesTest").section("richTextBackgroundKeepsInternalGapsButTrimsItsOuterLayoutSpace");
         final result:LayoutResult = LayoutQueriesTestHelpers.backgroundGeometryResult();
-        final full:RichTextSpan = new RichTextSpan(new TextRange(0, 3), RichTextRole.Background, new RichTextPaint(null, RichTextLinePattern.Solid, new RichTextBackgroundPaint(0.0, 0.0, 0.0, 0.0, RichTextBackgroundMetricPolicy.MarkedFaces, RichTextBackgroundDrawStyle.Fill), 0.0));
-        final finalCharacter:RichTextSpan = new RichTextSpan(new TextRange(2, 3), RichTextRole.Background, new RichTextPaint(null, RichTextLinePattern.Solid, new RichTextBackgroundPaint(0.0, 0.0, 0.0, 0.0, RichTextBackgroundMetricPolicy.MarkedFaces, RichTextBackgroundDrawStyle.Fill), 0.0));
+        final full:RichTextSpan = new RichTextSpan(new TextRange(0, 3), Background.instance, new RichTextPaint(null, Solid.instance, new RichTextBackgroundPaint(0.0, 0.0, 0.0, 0.0, RichTextBackgroundMetricPolicy.MarkedFaces, Fill.instance), 0.0));
+        final finalCharacter:RichTextSpan = new RichTextSpan(new TextRange(2, 3), Background.instance, new RichTextPaint(null, Solid.instance, new RichTextBackgroundPaint(0.0, 0.0, 0.0, 0.0, RichTextBackgroundMetricPolicy.MarkedFaces, Fill.instance), 0.0));
         final fullOccupied:Array<RichTextLineSegment> = LayoutQueries.positionedRichTextSegments(result, [full]);
         final finalOccupied:Array<RichTextLineSegment> = LayoutQueries.positionedRichTextSegments(result, [finalCharacter]);
         final fullSegment:Array<RichTextLineSegment> = LayoutQueries.richTextBackgroundSegments(result, fullOccupied);
@@ -231,10 +241,10 @@ class LayoutQueriesTest {
             LayoutQueriesTestHelpers.backgroundMetric(new TextRange(1, 3), "RawFontBox", 12.0, 4.0)
         ];
         final result:LayoutResult = LayoutQueriesTestHelpers.copyResultWithDebug(original, new LayoutDebugInfo(null, metrics, [], [], [], []));
-        final background:RichTextBackgroundPaint = new RichTextBackgroundPaint(0.0, 1.0, 2.0, 2.0, RichTextBackgroundMetricPolicy.UniformTextStyle, RichTextBackgroundDrawStyle.Fill);
+        final background:RichTextBackgroundPaint = new RichTextBackgroundPaint(0.0, 1.0, 2.0, 2.0, RichTextBackgroundMetricPolicy.UniformTextStyle, Fill.instance);
         final paint:RichTextPaint = RichTextPaint.withBackground(background);
-        final first:RichTextSpan = new RichTextSpan(new TextRange(0, 1), RichTextRole.Background, paint);
-        final mixed:RichTextSpan = new RichTextSpan(new TextRange(0, 3), RichTextRole.Background, paint);
+        final first:RichTextSpan = new RichTextSpan(new TextRange(0, 1), Background.instance, paint);
+        final mixed:RichTextSpan = new RichTextSpan(new TextRange(0, 3), Background.instance, paint);
         final occupied:Array<RichTextLineSegment> = LayoutQueries.positionedRichTextSegments(result, [first, mixed]);
         final segments:Array<RichTextLineSegment> = LayoutQueries.richTextBackgroundSegments(result, occupied);
         TracedAssertions.assertEqualsInt(2, segments.length);
@@ -248,8 +258,8 @@ class LayoutQueriesTest {
     @:test
     public static function backgroundContinuationCornersKeepOnlyTrueSourceEndsFullyRounded():Void {
         new TestTraceRecorder("LayoutQueriesTest").section("backgroundContinuationCornersKeepOnlyTrueSourceEndsFullyRounded");
-        final background:RichTextBackgroundPaint = new RichTextBackgroundPaint(0.0, 0.0, 3.0, 1.0, RichTextBackgroundMetricPolicy.MarkedFaces, RichTextBackgroundDrawStyle.Fill);
-        final span:RichTextSpan = new RichTextSpan(new TextRange(0, 12), RichTextRole.InlineCode, RichTextPaint.withBackground(background));
+        final background:RichTextBackgroundPaint = new RichTextBackgroundPaint(0.0, 0.0, 3.0, 1.0, RichTextBackgroundMetricPolicy.MarkedFaces, Fill.instance);
+        final span:RichTextSpan = new RichTextSpan(new TextRange(0, 12), InlineCode.instance, RichTextPaint.withBackground(background));
         final first:RichTextLineSegment = LayoutQueriesTestHelpers.segmentFor(span, 0, 4);
         final middle:RichTextLineSegment = LayoutQueriesTestHelpers.segmentFor(span, 4, 8);
         final last:RichTextLineSegment = LayoutQueriesTestHelpers.segmentFor(span, 8, 12);
@@ -263,7 +273,7 @@ class LayoutQueriesTest {
     @:test
     public static function backgroundContinuationRadiusDefaultsToTheAuthoredCornerRadius():Void {
         new TestTraceRecorder("LayoutQueriesTest").section("backgroundContinuationRadiusDefaultsToTheAuthoredCornerRadius");
-        final background:RichTextBackgroundPaint = new RichTextBackgroundPaint(0.0, 0.0, 5.0, 5.0, RichTextBackgroundMetricPolicy.MarkedFaces, RichTextBackgroundDrawStyle.Fill);
+        final background:RichTextBackgroundPaint = new RichTextBackgroundPaint(0.0, 0.0, 5.0, 5.0, RichTextBackgroundMetricPolicy.MarkedFaces, Fill.instance);
         TracedAssertions.assertEqualsFloat(5.0, background.continuationCornerRadius);
     }
 
@@ -271,10 +281,10 @@ class LayoutQueriesTest {
     public static function adjacentBackgroundsWithTheSameStyleShareOneClearance():Void {
         new TestTraceRecorder("LayoutQueriesTest").section("adjacentBackgroundsWithTheSameStyleShareOneClearance");
         final result:LayoutResult = LayoutQueriesTestHelpers.sampleResult();
-        final paint:RichTextPaint = new RichTextPaint(null, RichTextLinePattern.Solid, new RichTextBackgroundPaint(0.0, 0.0, 0.0, 0.0, RichTextBackgroundMetricPolicy.MarkedFaces, RichTextBackgroundDrawStyle.Fill), 2.0);
+        final paint:RichTextPaint = new RichTextPaint(null, Solid.instance, new RichTextBackgroundPaint(0.0, 0.0, 0.0, 0.0, RichTextBackgroundMetricPolicy.MarkedFaces, Fill.instance), 2.0);
         final spans:Array<RichTextSpan> = [
-            new RichTextSpan(new TextRange(0, 1), RichTextRole.Background, paint),
-            new RichTextSpan(new TextRange(1, 3), RichTextRole.Background, paint)
+            new RichTextSpan(new TextRange(0, 1), Background.instance, paint),
+            new RichTextSpan(new TextRange(1, 3), Background.instance, paint)
         ];
         final occupied:Array<RichTextLineSegment> = LayoutQueries.positionedRichTextSegments(result, spans);
         final segments:Array<RichTextLineSegment> = LayoutQueries.richTextBackgroundSegments(result, occupied);
@@ -288,10 +298,10 @@ class LayoutQueriesTest {
     public static function adjacentLineDecorationsWithTheSameStyleShareOneClearance():Void {
         new TestTraceRecorder("LayoutQueriesTest").section("adjacentLineDecorationsWithTheSameStyleShareOneClearance");
         final result:LayoutResult = LayoutQueriesTestHelpers.sampleResult();
-        final paint:RichTextPaint = new RichTextPaint(null, RichTextLinePattern.Solid, new RichTextBackgroundPaint(0.0, 0.0, 0.0, 0.0, RichTextBackgroundMetricPolicy.MarkedFaces, RichTextBackgroundDrawStyle.Fill), 2.0);
+        final paint:RichTextPaint = new RichTextPaint(null, Solid.instance, new RichTextBackgroundPaint(0.0, 0.0, 0.0, 0.0, RichTextBackgroundMetricPolicy.MarkedFaces, Fill.instance), 2.0);
         final spans:Array<RichTextSpan> = [
-            new RichTextSpan(new TextRange(0, 1), RichTextRole.Underline, paint),
-            new RichTextSpan(new TextRange(1, 3), RichTextRole.Underline, paint)
+            new RichTextSpan(new TextRange(0, 1), Underline.instance, paint),
+            new RichTextSpan(new TextRange(1, 3), Underline.instance, paint)
         ];
         final occupied:Array<RichTextLineSegment> = LayoutQueries.positionedRichTextSegments(result, spans);
         final segments:Array<RichTextLineSegment> = LayoutQueries.trimmedRichTextDecorationSegments(result, occupied);
@@ -305,9 +315,9 @@ class LayoutQueriesTest {
     public static function adjacentBackgroundAndUnderlineDoNotAvoidAcrossStyles():Void {
         new TestTraceRecorder("LayoutQueriesTest").section("adjacentBackgroundAndUnderlineDoNotAvoidAcrossStyles");
         final result:LayoutResult = LayoutQueriesTestHelpers.sampleResult();
-        final paint:RichTextPaint = new RichTextPaint(null, RichTextLinePattern.Solid, new RichTextBackgroundPaint(0.0, 0.0, 0.0, 0.0, RichTextBackgroundMetricPolicy.MarkedFaces, RichTextBackgroundDrawStyle.Fill), 2.0);
-        final background:RichTextSpan = new RichTextSpan(new TextRange(0, 1), RichTextRole.Background, paint);
-        final underline:RichTextSpan = new RichTextSpan(new TextRange(1, 3), RichTextRole.Underline, paint);
+        final paint:RichTextPaint = new RichTextPaint(null, Solid.instance, new RichTextBackgroundPaint(0.0, 0.0, 0.0, 0.0, RichTextBackgroundMetricPolicy.MarkedFaces, Fill.instance), 2.0);
+        final background:RichTextSpan = new RichTextSpan(new TextRange(0, 1), Background.instance, paint);
+        final underline:RichTextSpan = new RichTextSpan(new TextRange(1, 3), Underline.instance, paint);
         final occupied:Array<RichTextLineSegment> = LayoutQueries.positionedRichTextSegments(result, [background, underline]);
         final fill:Array<RichTextLineSegment> = LayoutQueries.richTextBackgroundSegments(result, occupied);
         final lineSegments:Array<RichTextLineSegment> = LayoutQueries.trimmedRichTextDecorationSegments(result, occupied);

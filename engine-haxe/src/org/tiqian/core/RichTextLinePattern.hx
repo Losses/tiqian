@@ -1,64 +1,34 @@
 package org.tiqian.core;
 
+@:sealed
+interface RichTextLinePattern {}
+
+class Solid implements RichTextLinePattern {
+    public static final instance:Solid = new Solid();
+    private function new() {}
+}
+
 @:dataClass
-class RichTextLinePattern {
+// Physical layout-unit dash geometry supplied by the frontend.
+class Dashed implements RichTextLinePattern {
     public final strokeWidth:Float;
     public final dashLength:Float;
     public final gapLength:Float;
+    public function new(strokeWidth:Float, dashLength:Float, gapLength:Float) {
+        if (!isFinite(strokeWidth) || strokeWidth <= 0.0 || !isFinite(dashLength) || dashLength <= 0.0 || !isFinite(gapLength) || gapLength <= 0.0) throw new TiqianIllegalArgumentException(Message("Failed requirement."));
+        this.strokeWidth = strokeWidth; this.dashLength = dashLength; this.gapLength = gapLength;
+    }
+    private static function isFinite(value:Float):Bool return value == value && value != Math.POSITIVE_INFINITY && value != Math.NEGATIVE_INFINITY;
+}
+
+@:dataClass
+// Round dots with frontend-supplied diameter and visible edge-to-edge gap.
+class Dotted implements RichTextLinePattern {
     public final dotDiameter:Float;
-    private final kind:String;
-
-    private function new(kind:String, strokeWidth:Float, dashLength:Float, gapLength:Float, dotDiameter:Float) {
-        this.kind = kind;
-        this.strokeWidth = strokeWidth;
-        this.dashLength = dashLength;
-        this.gapLength = gapLength;
-        this.dotDiameter = dotDiameter;
+    public final gapLength:Float;
+    public function new(dotDiameter:Float, gapLength:Float) {
+        if (!isFinite(dotDiameter) || dotDiameter <= 0.0 || !isFinite(gapLength) || gapLength <= 0.0) throw new TiqianIllegalArgumentException(Message("Failed requirement."));
+        this.dotDiameter = dotDiameter; this.gapLength = gapLength;
     }
-
-    public static final Solid:RichTextLinePattern = new RichTextLinePattern("Solid", 0.0, 0.0, 0.0, 0.0);
-
-    public static function Dashed(strokeWidth:Float, dashLength:Float, gapLength:Float):RichTextLinePattern {
-        if (!isFinite(strokeWidth) || strokeWidth <= 0.0
-            || !isFinite(dashLength) || dashLength <= 0.0
-            || !isFinite(gapLength) || gapLength <= 0.0) {
-            throw new TiqianIllegalArgumentException(Message("Failed requirement."));
-        }
-        return new RichTextLinePattern("Dashed", strokeWidth, dashLength, gapLength, 0.0);
-    }
-
-    public static function Dotted(dotDiameter:Float, gapLength:Float):RichTextLinePattern {
-        if (!isFinite(dotDiameter) || dotDiameter <= 0.0
-            || !isFinite(gapLength) || gapLength <= 0.0) {
-            throw new TiqianIllegalArgumentException(Message("Failed requirement."));
-        }
-        return new RichTextLinePattern("Dotted", 0.0, 0.0, gapLength, dotDiameter);
-    }
-
-    // Kotlin models this as a sealed interface with a data object Solid, so the
-    // printed form collapses each variant to its own shape instead of listing
-    // every field. Generic synthesis cannot reproduce that; keep this explicit.
-    public function toString():String {
-        if (kind == "Solid") {
-            return "Solid";
-        }
-        if (kind == "Dashed") {
-            return "Dashed(strokeWidth=" + strokeWidth + ", dashLength=" + dashLength + ", gapLength=" + gapLength + ")";
-        }
-        return "Dotted(dotDiameter=" + dotDiameter + ", gapLength=" + gapLength + ")";
-    }
-
-    @:allow(org.tiqian.core.RichTextPaint)
-    private static function sameValues(a:RichTextLinePattern, b:RichTextLinePattern):Bool {
-        if (a.kind != b.kind) return false;
-        if (a.kind == "Dashed") {
-            return a.strokeWidth == b.strokeWidth && a.dashLength == b.dashLength && a.gapLength == b.gapLength;
-        }
-        if (a.kind == "Dotted") return a.dotDiameter == b.dotDiameter && a.gapLength == b.gapLength;
-        return true;
-    }
-
-    private static function isFinite(value:Float):Bool {
-        return value == value && value != Math.POSITIVE_INFINITY && value != Math.NEGATIVE_INFINITY;
-    }
+    private static function isFinite(value:Float):Bool return value == value && value != Math.POSITIVE_INFINITY && value != Math.NEGATIVE_INFINITY;
 }
