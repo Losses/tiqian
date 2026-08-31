@@ -34,17 +34,6 @@ class TestTraceRender {
         return "-";
     }
 
-    public static function renderGeneric<T>(value:T):String {
-        if (value == null) {
-            return renderNull();
-        }
-        return cap(Std.string(value));
-    }
-
-    public static function render<T>(value:T):String {
-        return renderGeneric(value);
-    }
-
     public static function renderIntArray(values:Array<Int>):String {
         final output = new StringBuf();
         output.add("[");

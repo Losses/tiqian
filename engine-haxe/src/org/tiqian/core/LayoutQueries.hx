@@ -1274,7 +1274,7 @@ class LayoutQueries {
     }
 
     private static function sameVisibleStyle(first:RichTextLineSegment, second:RichTextLineSegment):Bool {
-        return Std.string(first.span.role) == Std.string(second.span.role)
+        return RichTextSpan.sameRole(first.span.role, second.span.role)
             && first.span.paint.sameVisibleStyle(second.span.paint);
     }
 

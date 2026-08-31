@@ -231,7 +231,8 @@ class LayoutQueriesResidualCoverageTest {
         final content:LayoutResult = result("ab", clusters, [line(new TextRange(0, 2), 0, 1, 0.0, 20.0, 15.0, 0.0, 20.0)], runs, [], [], emptyDebug(), style(10.0));
         TracedAssertions.assertEqualsRendered(new Rect(0.0, 17.0, 8.0, 27.0).toString(), LayoutQueries.glyphInkBounds(content).toString());
         final noInk:LayoutResult = result("ab", clusters, [line(new TextRange(0, 2), 0, 1, 0.0, 20.0, 15.0, 0.0, 20.0)], [], [], [], emptyDebug(), style(10.0));
-        TracedAssertions.assertNull(LayoutQueries.glyphInkBounds(noInk));
+        final noInkBounds = LayoutQueries.glyphInkBounds(noInk);
+        TracedAssertions.assertNullRendered(noInkBounds == null, noInkBounds == null ? "-" : noInkBounds.toString());
     }
 
     @:test
@@ -244,7 +245,8 @@ class LayoutQueriesResidualCoverageTest {
         TracedAssertions.assertEqualsInt(0, LayoutQueries.getOffsetForPosition(content, 5.0, 5.0));
         TracedAssertions.assertEqualsInt(0, LayoutQueries.getSelectionOffsetForPosition(content, 5.0, 5.0));
         TracedAssertions.assertEqualsRendered("[]", renderRects(LayoutQueries.getBoundingBoxes(content, new TextRange(0, 2))));
-        TracedAssertions.assertNull(LayoutQueries.getSelectionWordBoundaryForPosition(content, 5.0, 5.0));
+        final noWordBoundary = LayoutQueries.getSelectionWordBoundaryForPosition(content, 5.0, 5.0);
+        TracedAssertions.assertNullRendered(noWordBoundary == null, noWordBoundary == null ? "-" : noWordBoundary.toString());
         TracedAssertions.assertEqualsRendered("[]", renderSegments(LayoutQueries.positionedRichTextSegments(content, [new RichTextSpan(new TextRange(0, 1), RichTextRole.Background, new RichTextPaint(null, RichTextLinePattern.Solid, new RichTextBackgroundPaint(0.0, 0.0, 0.0, 0.0, RichTextBackgroundMetricPolicy.MarkedFaces, RichTextBackgroundDrawStyle.Fill), 0.0))])));
         TracedAssertions.assertEqualsRendered("[]", renderSegments(LayoutQueries.trimmedRichTextDecorationSegments(content, [])));
         TracedAssertions.assertEqualsRendered("[]", renderSegments(LayoutQueries.richTextBackgroundSegments(content, [])));
@@ -508,19 +510,22 @@ class LayoutQueriesResidualCoverageTest {
     public static function selectionWordBoundaryForPositionRejectsDegenerateContent():Void {
         currentTrace().section("selectionWordBoundaryForPositionRejectsDegenerateContent");
         final emptyText:LayoutResult = result("", [], [line(new TextRange(0, 0), 0, -1, 0.0, 20.0, 15.0, 0.0, 0.0)], [], [], [], emptyDebug(), style(10.0));
-        TracedAssertions.assertNull(LayoutQueries.getSelectionWordBoundaryForPosition(emptyText, 0.0, 0.0));
+        final emptyTextBoundary = LayoutQueries.getSelectionWordBoundaryForPosition(emptyText, 0.0, 0.0);
+        TracedAssertions.assertNullRendered(emptyTextBoundary == null, emptyTextBoundary == null ? "-" : emptyTextBoundary.toString());
         final emptyLine:LayoutResult = result(
             "a", [cluster(new TextRange(0, 1), "a", 10.0)],
             [line(new TextRange(0, 1), 0, 0, 0.0, 20.0, 15.0, 0.0, 10.0), line(new TextRange(1, 1), 1, -1, 20.0, 40.0, 35.0, 0.0, 0.0)],
             [], [], [], emptyDebug(), style(10.0)
         );
-        TracedAssertions.assertNull(LayoutQueries.getSelectionWordBoundaryForPosition(emptyLine, 5.0, 30.0));
+        final emptyLineBoundary = LayoutQueries.getSelectionWordBoundaryForPosition(emptyLine, 5.0, 30.0);
+        TracedAssertions.assertNullRendered(emptyLineBoundary == null, emptyLineBoundary == null ? "-" : emptyLineBoundary.toString());
         final leadingEmpty:LayoutResult = result(
             "a", [cluster(new TextRange(0, 0), "", 0.0), cluster(new TextRange(0, 1), "a", 10.0)],
             [line(new TextRange(0, 1), 0, 1, 0.0, 20.0, 15.0, 0.0, 10.0)],
             [], [], [], emptyDebug(), style(10.0)
         );
-        TracedAssertions.assertNull(LayoutQueries.getSelectionWordBoundaryForPosition(leadingEmpty, 0.0, 5.0));
+        final leadingEmptyBoundary = LayoutQueries.getSelectionWordBoundaryForPosition(leadingEmpty, 0.0, 5.0);
+        TracedAssertions.assertNullRendered(leadingEmptyBoundary == null, leadingEmptyBoundary == null ? "-" : leadingEmptyBoundary.toString());
         TracedAssertions.assertEqualsRendered(new TextRange(0, 1).toString(), LayoutQueries.getSelectionWordBoundaryForPosition(leadingEmpty, 5.0, 5.0).toString());
     }
 
@@ -603,8 +608,10 @@ class LayoutQueriesResidualCoverageTest {
         final content:LayoutResult = result("abc", clusters, [line(new TextRange(0, 3), 0, 1, 0.0, 20.0, 15.0, 0.0, 30.0)], runs, [], [], new LayoutDebugInfo(null, [], [], [], [matching, stray], []), style(10.0));
         final positioned:Array<PositionedCluster> = LayoutQueries.positionedClusters(content);
         TracedAssertions.assertEqualsInt(2, positioned.length);
-        TracedAssertions.assertNull(positioned[0].sourceStops);
-        TracedAssertions.assertNull(positioned[1].sourceStops);
+        final firstStops = positioned[0].sourceStops;
+        TracedAssertions.assertNullRendered(firstStops == null, firstStops == null ? "-" : Std.string(firstStops));
+        final secondStops = positioned[1].sourceStops;
+        TracedAssertions.assertNullRendered(secondStops == null, secondStops == null ? "-" : Std.string(secondStops));
         TracedAssertions.assertEqualsFloat(0.0, positioned[0].left);
         TracedAssertions.assertEqualsFloat(17.5, positioned[0].right);
         TracedAssertions.assertEqualsFloat(17.5, positioned[1].left);
@@ -657,9 +664,11 @@ class LayoutQueriesResidualCoverageTest {
         final clusters:Array<Cluster> = [cluster(new TextRange(0, 1), "a", 10.0), cluster(new TextRange(1, 2), "b", 10.0)];
         final lines:Array<LineBox> = [line(new TextRange(0, 2), 0, 1, 0.0, 20.0, 15.0, 0.0, 20.0)];
         final noBounds:LayoutResult = result("ab", clusters, lines, [new GlyphRun(new TextRange(0, 2), "test", [new Glyph(1, new TextRange(0, 1), 10.0, 0.0, 0.0, null, null, null, null)], 20.0, [])], [], [], emptyDebug(), style(10.0));
-        TracedAssertions.assertNull(LayoutQueries.glyphInkBounds(noBounds));
+        final absentBounds = LayoutQueries.glyphInkBounds(noBounds);
+        TracedAssertions.assertNullRendered(absentBounds == null, absentBounds == null ? "-" : absentBounds.toString());
         final nanPlaced:LayoutResult = result("ab", clusters, lines, [new GlyphRun(new TextRange(1, 2), "test", [new Glyph(9, new TextRange(1, 2), 9.0, nan(), 0.0, null, new Rect(1.0, 2.0, 8.0, 4.0), null, null)], 10.0, [])], [], [], emptyDebug(), style(10.0));
-        TracedAssertions.assertNull(LayoutQueries.glyphInkBounds(nanPlaced));
+        final nanPlacedBounds = LayoutQueries.glyphInkBounds(nanPlaced);
+        TracedAssertions.assertNullRendered(nanPlacedBounds == null, nanPlacedBounds == null ? "-" : nanPlacedBounds.toString());
         final usable:LayoutResult = result(
             "ab", clusters, lines,
             [new GlyphRun(new TextRange(0, 2), "test", [
@@ -904,10 +913,14 @@ class LayoutQueriesResidualCoverageTest {
     @:test
     public static function glyphInkBoundsRejectsEachNonFiniteEdgeIndependently():Void {
         currentTrace().section("glyphInkBoundsRejectsEachNonFiniteEdgeIndependently");
-        TracedAssertions.assertNull(inkWithBounds(new Rect(nan(), 2.0, 8.0, 4.0)));
-        TracedAssertions.assertNull(inkWithBounds(new Rect(1.0, nan(), 8.0, 4.0)));
-        TracedAssertions.assertNull(inkWithBounds(new Rect(1.0, 2.0, nan(), 4.0)));
-        TracedAssertions.assertNull(inkWithBounds(new Rect(1.0, 2.0, 8.0, nan())));
+        final nonFiniteLeft = inkWithBounds(new Rect(nan(), 2.0, 8.0, 4.0));
+        TracedAssertions.assertNullRendered(nonFiniteLeft == null, nonFiniteLeft == null ? "-" : nonFiniteLeft.toString());
+        final nonFiniteTop = inkWithBounds(new Rect(1.0, nan(), 8.0, 4.0));
+        TracedAssertions.assertNullRendered(nonFiniteTop == null, nonFiniteTop == null ? "-" : nonFiniteTop.toString());
+        final nonFiniteRight = inkWithBounds(new Rect(1.0, 2.0, nan(), 4.0));
+        TracedAssertions.assertNullRendered(nonFiniteRight == null, nonFiniteRight == null ? "-" : nonFiniteRight.toString());
+        final nonFiniteBottom = inkWithBounds(new Rect(1.0, 2.0, 8.0, nan()));
+        TracedAssertions.assertNullRendered(nonFiniteBottom == null, nonFiniteBottom == null ? "-" : nonFiniteBottom.toString());
     }
 
     @:test

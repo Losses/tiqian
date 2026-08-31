@@ -48,7 +48,17 @@ class RichTextBackgroundPaint {
             + ", cornerRadius=" + cornerRadius
             + ", continuationCornerRadius=" + continuationCornerRadius
             + ", metricPolicy=" + Std.string(metricPolicy)
-            + ", drawStyle=" + Std.string(drawStyle) + ")";
+            + ", drawStyle=" + drawStyle.toString() + ")";
+    }
+
+    @:allow(org.tiqian.core.RichTextPaint)
+    private static function sameValues(a:RichTextBackgroundPaint, b:RichTextBackgroundPaint):Bool {
+        return a.horizontalPadding == b.horizontalPadding
+            && a.verticalPadding == b.verticalPadding
+            && a.cornerRadius == b.cornerRadius
+            && a.continuationCornerRadius == b.continuationCornerRadius
+            && a.metricPolicy == b.metricPolicy
+            && RichTextBackgroundDrawStyle.sameValues(a.drawStyle, b.drawStyle);
     }
 
     private static function isFinite(value:Float):Bool {

@@ -22,6 +22,11 @@ class RichTextBackgroundDrawStyle {
         return kind == "Fill" ? "Fill" : "Border(strokeWidth=" + strokeWidth + ")";
     }
 
+    @:allow(org.tiqian.core.RichTextBackgroundPaint)
+    private static function sameValues(a:RichTextBackgroundDrawStyle, b:RichTextBackgroundDrawStyle):Bool {
+        return a.kind == b.kind && (a.kind == "Fill" || a.strokeWidth == b.strokeWidth);
+    }
+
     private static function isFinite(value:Float):Bool {
         return value == value && value != Math.POSITIVE_INFINITY && value != Math.NEGATIVE_INFINITY;
     }

@@ -34,15 +34,18 @@ class RichTextPaint {
     }
 
     public function sameVisibleStyle(other:RichTextPaint):Bool {
-        return argb == other.argb
-            && Std.string(linePattern) == Std.string(other.linePattern)
-            && Std.string(background) == Std.string(other.background);
+        final a = argb;
+        final b = other.argb;
+        if (a != b) return false;
+        if (!RichTextLinePattern.sameValues(linePattern, other.linePattern)) return false;
+        return RichTextBackgroundPaint.sameValues(background, other.background);
     }
 
     public function toString():String {
-        return "RichTextPaint(argb=" + (argb == null ? "null" : Std.string(argb))
-            + ", linePattern=" + Std.string(linePattern)
-            + ", background=" + Std.string(background)
+        final value = argb;
+        return "RichTextPaint(argb=" + (value == null ? "null" : "" + value)
+            + ", linePattern=" + linePattern.toString()
+            + ", background=" + background.toString()
             + ", adjacentSameStyleClearance=" + adjacentSameStyleClearance + ")";
     }
 
