@@ -47,7 +47,7 @@ class RubySpan {
     }
 
     public function toString():String {
-        return "RubySpan(baseRange=" + baseRange
+        return "RubySpan(baseRange=" + baseRange.toString()
             + ", text=" + text
             + ", fontFamilies=" + Std.string(fontFamilies)
             + ", kind=" + Std.string(kind)
