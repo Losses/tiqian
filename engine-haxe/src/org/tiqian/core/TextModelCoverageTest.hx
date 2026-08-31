@@ -337,17 +337,7 @@ class TextModelCoverageTest {
         TracedAssertions.assertEqualsString("clreq-horizontal", BuiltInLayoutProfiles.ClreqHorizontal.value);
         TextModelCoverageTestHelpers.assertRendered(profileId.toString());
 
-        final layoutInput:LayoutInput = new LayoutInput(
-            new TiqianTextContent("Test", [], [], [], []),
-            new LayoutConstraints(300.0, Math.POSITIVE_INFINITY, 2147483647),
-            new TextStyle([], 16.0, "zh-Hans", 400, false, 0.0, InlineAttachment.None),
-            paraStyle,
-            profileId,
-            [new DecorationSpan(new TextRange(0, 2), DecorationKind.Emphasis)],
-            [pinyinRuby],
-            [new InlineBoxSpan(new TextRange(0, 1), 0.0, 0.0, InlineBoxOuterSpacing.Narrow)],
-            [new InlineObjectSpan(new TextRange(0, 1), 10.0, 8.0, 2.0, InlineObjectBoundaryAdjustment.fixed(), InlineObjectBoundaryAdjustment.fixed())]
-        );
+        final layoutInput:LayoutInput = new LayoutInput(new TiqianTextContent("Test", [], [], [], []), new TextStyle([], 16.0, "zh-Hans", 400, false, 0.0, InlineAttachment.None), paraStyle, new LayoutConstraints(300.0, Math.POSITIVE_INFINITY, 2147483647), profileId, [new DecorationSpan(new TextRange(0, 2), DecorationKind.Emphasis)], [pinyinRuby], [new InlineBoxSpan(new TextRange(0, 1), 0.0, 0.0, InlineBoxOuterSpacing.Narrow)], [new InlineObjectSpan(new TextRange(0, 1), 10.0, 8.0, 2.0, InlineObjectBoundaryAdjustment.fixed(), InlineObjectBoundaryAdjustment.fixed())]);
         TracedAssertions.assertEqualsRendered(profileId.toString(), layoutInput.profileId.toString());
         TextModelCoverageTestHelpers.assertRendered(layoutInput.toString());
     }
