@@ -1,5 +1,12 @@
 package org.tiqian.core;
 
+import org.tiqian.core.RichTextRole.Background;
+import org.tiqian.core.RichTextRole.Underline;
+import org.tiqian.core.RichTextRole.LineThrough;
+import org.tiqian.core.RichTextRole.Link;
+import org.tiqian.core.RichTextRole.TechnicalInline;
+import org.tiqian.core.RichTextRole.InlineCode;
+
 import std.ReadOnlyArray;
 import std.StringBuf;
 
@@ -426,14 +433,13 @@ class LayoutQueries {
         }
         final style:TextStyle = resolvedTextStyleAt(result, segment.range.start);
         var rawLineY:Float = segment.baseline;
-        switch (segment.span.role) {
-            case Underline:
+        if (Std.isOfType(segment.span.role, Underline)) {
                 rawLineY = segment.baseline + style.fontSize * INTERLINEAR_UNDERLINE_OFFSET_EM;
-            case LineThrough:
+        } else if (Std.isOfType(segment.span.role, LineThrough)) {
                 final face:Array<Float> = uniformTextStyleVerticalBounds(result, segment, style);
                 rawLineY = (face[0] + face[1]) / 2.0;
-            case Background | TechnicalInline | InlineCode | Link(_):
-                rawLineY = segment.baseline;
+        } else {
+            rawLineY = segment.baseline;
         }
         return clampFloat(rawLineY, segment.top + strokeWidth / 2.0, segment.bottom - strokeWidth / 2.0);
     }
@@ -1289,17 +1295,13 @@ class LayoutQueries {
     }
 
     private static function isDecorationRole(role:RichTextRole):Bool {
-        return switch (role) {
-            case Underline | LineThrough: true;
-            case Background | TechnicalInline | InlineCode | Link(_): false;
-        };
+        if (Std.isOfType(role, Underline) || Std.isOfType(role, LineThrough)) return true;
+        return false;
     }
 
     private static function isBackgroundRole(role:RichTextRole):Bool {
-        return switch (role) {
-            case Background | InlineCode: true;
-            case Underline | LineThrough | TechnicalInline | Link(_): false;
-        };
+        if (Std.isOfType(role, Background) || Std.isOfType(role, InlineCode)) return true;
+        return false;
     }
 
     private static function resolveRadius(radius:Float, inset:Float, maximum:Float):Float {

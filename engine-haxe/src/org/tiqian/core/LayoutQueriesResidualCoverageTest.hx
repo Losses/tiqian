@@ -1,5 +1,15 @@
 package org.tiqian.core;
 
+import org.tiqian.core.RichTextRole.Background;
+import org.tiqian.core.RichTextRole.Underline;
+import org.tiqian.core.RichTextRole.LineThrough;
+import org.tiqian.core.RichTextRole.Link;
+import org.tiqian.core.RichTextRole.TechnicalInline;
+import org.tiqian.core.RichTextRole.InlineCode;
+
+import org.tiqian.core.RichTextLinePattern.Solid;
+import org.tiqian.core.RichTextBackgroundDrawStyle.Fill;
+
 import org.tiqian.test.TestHelpers;
 import org.tiqian.test.trace.TestTraceRecorder;
 import org.tiqian.test.trace.TracedAssertions;
@@ -26,8 +36,8 @@ class LayoutQueriesResidualCoverageTest {
     public static function resolvedCornerRadiiRejectsInvalidInsetsAndResolvesContinuations():Void {
         new TestTraceRecorder("LayoutQueriesResidualCoverageTest").section("resolvedCornerRadiiRejectsInvalidInsetsAndResolvesContinuations");
         final continuing:RichTextLineSegment = LayoutQueriesResidualCoverageTestHelpers.segment(
-            new TextRange(1, 2), RichTextRole.Background,
-            new RichTextPaint(null, RichTextLinePattern.Solid, new RichTextBackgroundPaint(0.0, 0.0, 6.0, 2.0, RichTextBackgroundMetricPolicy.MarkedFaces, RichTextBackgroundDrawStyle.Fill), 0.0),
+            new TextRange(1, 2), Background.instance,
+            new RichTextPaint(null, Solid.instance, new RichTextBackgroundPaint(0.0, 0.0, 6.0, 2.0, RichTextBackgroundMetricPolicy.MarkedFaces, Fill.instance), 0.0),
             0, new TextRange(0, 3), 0.0, 0.0, 30.0, 10.0, 15.0
         );
         TracedAssertions.assertFailsWith(null, function():Void {
@@ -102,7 +112,7 @@ class LayoutQueriesResidualCoverageTest {
         TracedAssertions.assertEqualsRendered("[]", LayoutQueriesResidualCoverageTestHelpers.renderRects(LayoutQueries.getBoundingBoxes(content, new TextRange(0, 2))));
         final noWordBoundary = LayoutQueries.getSelectionWordBoundaryForPosition(content, 5.0, 5.0);
         TracedAssertions.assertNullRendered(noWordBoundary == null, noWordBoundary == null ? "-" : noWordBoundary.toString());
-        TracedAssertions.assertEqualsRendered("[]", LayoutQueriesResidualCoverageTestHelpers.renderSegments(LayoutQueries.positionedRichTextSegments(content, [new RichTextSpan(new TextRange(0, 1), RichTextRole.Background, new RichTextPaint(null, RichTextLinePattern.Solid, new RichTextBackgroundPaint(0.0, 0.0, 0.0, 0.0, RichTextBackgroundMetricPolicy.MarkedFaces, RichTextBackgroundDrawStyle.Fill), 0.0))])));
+        TracedAssertions.assertEqualsRendered("[]", LayoutQueriesResidualCoverageTestHelpers.renderSegments(LayoutQueries.positionedRichTextSegments(content, [new RichTextSpan(new TextRange(0, 1), Background.instance, new RichTextPaint(null, Solid.instance, new RichTextBackgroundPaint(0.0, 0.0, 0.0, 0.0, RichTextBackgroundMetricPolicy.MarkedFaces, Fill.instance), 0.0))])));
         TracedAssertions.assertEqualsRendered("[]", LayoutQueriesResidualCoverageTestHelpers.renderSegments(LayoutQueries.trimmedRichTextDecorationSegments(content, [])));
         TracedAssertions.assertEqualsRendered("[]", LayoutQueriesResidualCoverageTestHelpers.renderSegments(LayoutQueries.richTextBackgroundSegments(content, [])));
     }
@@ -132,7 +142,7 @@ class LayoutQueriesResidualCoverageTest {
                 LayoutQueriesResidualCoverageTestHelpers.line(new TextRange(3, 4), 2, 2, 20.0, 40.0, 35.0, 0.0, 10.0)
             ], [], [], [], LayoutQueriesResidualCoverageTestHelpers.emptyDebug(), LayoutQueriesResidualCoverageTestHelpers.style(10.0)
         );
-        final span:RichTextSpan = new RichTextSpan(new TextRange(0, 4), RichTextRole.Underline, new RichTextPaint(null, RichTextLinePattern.Solid, new RichTextBackgroundPaint(0.0, 0.0, 0.0, 0.0, RichTextBackgroundMetricPolicy.MarkedFaces, RichTextBackgroundDrawStyle.Fill), 0.0));
+        final span:RichTextSpan = new RichTextSpan(new TextRange(0, 4), Underline.instance, new RichTextPaint(null, Solid.instance, new RichTextBackgroundPaint(0.0, 0.0, 0.0, 0.0, RichTextBackgroundMetricPolicy.MarkedFaces, Fill.instance), 0.0));
         final split:Array<RichTextLineSegment> = LayoutQueries.positionedRichTextSegments(content, [span]);
         TracedAssertions.assertEqualsInt(3, split.length);
         TracedAssertions.assertEqualsRendered(new TextRange(0, 1).toString(), split[0].range.toString());
@@ -141,7 +151,7 @@ class LayoutQueriesResidualCoverageTest {
         TracedAssertions.assertEqualsInt(0, split[0].lineIndex);
         TracedAssertions.assertEqualsInt(0, split[1].lineIndex);
         TracedAssertions.assertEqualsInt(1, split[2].lineIndex);
-        TracedAssertions.assertTrue(LayoutQueries.positionedRichTextSegments(content, [new RichTextSpan(new TextRange(5, 8), RichTextRole.Underline, new RichTextPaint(null, RichTextLinePattern.Solid, new RichTextBackgroundPaint(0.0, 0.0, 0.0, 0.0, RichTextBackgroundMetricPolicy.MarkedFaces, RichTextBackgroundDrawStyle.Fill), 0.0))]).length == 0);
+        TracedAssertions.assertTrue(LayoutQueries.positionedRichTextSegments(content, [new RichTextSpan(new TextRange(5, 8), Underline.instance, new RichTextPaint(null, Solid.instance, new RichTextBackgroundPaint(0.0, 0.0, 0.0, 0.0, RichTextBackgroundMetricPolicy.MarkedFaces, Fill.instance), 0.0))]).length == 0);
     }
 
     @:test
@@ -153,7 +163,7 @@ class LayoutQueriesResidualCoverageTest {
             [LayoutQueriesResidualCoverageTestHelpers.line(new TextRange(0, 2), 0, 2, 0.0, 20.0, 15.0, 0.0, 20.0)],
             [], [], [], LayoutQueriesResidualCoverageTestHelpers.emptyDebug(), LayoutQueriesResidualCoverageTestHelpers.style(10.0)
         );
-        final segments:Array<RichTextLineSegment> = LayoutQueries.positionedRichTextSegments(content, [new RichTextSpan(new TextRange(0, 2), RichTextRole.Underline, new RichTextPaint(null, RichTextLinePattern.Solid, new RichTextBackgroundPaint(0.0, 0.0, 0.0, 0.0, RichTextBackgroundMetricPolicy.MarkedFaces, RichTextBackgroundDrawStyle.Fill), 0.0))]);
+        final segments:Array<RichTextLineSegment> = LayoutQueries.positionedRichTextSegments(content, [new RichTextSpan(new TextRange(0, 2), Underline.instance, new RichTextPaint(null, Solid.instance, new RichTextBackgroundPaint(0.0, 0.0, 0.0, 0.0, RichTextBackgroundMetricPolicy.MarkedFaces, Fill.instance), 0.0))]);
         TracedAssertions.assertEqualsInt(1, segments.length);
         TracedAssertions.assertEqualsRendered(new TextRange(0, 2).toString(), segments[0].range.toString());
         TracedAssertions.assertEqualsFloat(0.0, segments[0].left);
@@ -164,7 +174,7 @@ class LayoutQueriesResidualCoverageTest {
     public static function trimmedDecorationSegmentsKeepOnlyDecorationRoles():Void {
         new TestTraceRecorder("LayoutQueriesResidualCoverageTest").section("trimmedDecorationSegmentsKeepOnlyDecorationRoles");
         final content:LayoutResult = LayoutQueriesResidualCoverageTestHelpers.result("ab", [], [], [], [], [], LayoutQueriesResidualCoverageTestHelpers.emptyDebug(), LayoutQueriesResidualCoverageTestHelpers.style(10.0));
-        final decoration:RichTextLineSegment = LayoutQueriesResidualCoverageTestHelpers.segment(new TextRange(0, 2), RichTextRole.Underline, new RichTextPaint(null, RichTextLinePattern.Solid, new RichTextBackgroundPaint(0.0, 0.0, 0.0, 0.0, RichTextBackgroundMetricPolicy.MarkedFaces, RichTextBackgroundDrawStyle.Fill), 0.0), 0, new TextRange(0, 2), 0.0, 0.0, 20.0, 20.0, 15.0);
+        final decoration:RichTextLineSegment = LayoutQueriesResidualCoverageTestHelpers.segment(new TextRange(0, 2), Underline.instance, new RichTextPaint(null, Solid.instance, new RichTextBackgroundPaint(0.0, 0.0, 0.0, 0.0, RichTextBackgroundMetricPolicy.MarkedFaces, Fill.instance), 0.0), 0, new TextRange(0, 2), 0.0, 0.0, 20.0, 20.0, 15.0);
         TracedAssertions.assertEqualsRendered(LayoutQueriesResidualCoverageTestHelpers.renderSegments([decoration]), LayoutQueriesResidualCoverageTestHelpers.renderSegments(LayoutQueries.trimmedRichTextDecorationSegments(content, [decoration])));
         TracedAssertions.assertTrue(LayoutQueries.trimmedRichTextDecorationSegments(content, [LayoutQueriesResidualCoverageTestHelpers.plainSegment(new TextRange(0, 2))]).length == 0);
     }
@@ -175,9 +185,9 @@ class LayoutQueriesResidualCoverageTest {
         final content:LayoutResult = LayoutQueriesResidualCoverageTestHelpers.result("ab", [LayoutQueriesResidualCoverageTestHelpers.cluster(new TextRange(0, 1), "a", 10.0)], [LayoutQueriesResidualCoverageTestHelpers.line(new TextRange(0, 2), 0, 0, 0.0, 20.0, 15.0, 0.0, 10.0)], [], [], [], LayoutQueriesResidualCoverageTestHelpers.emptyDebug(), LayoutQueriesResidualCoverageTestHelpers.style(10.0));
         final far:RichTextLineSegment = LayoutQueriesResidualCoverageTestHelpers.plainSegment(new TextRange(10, 12));
         TracedAssertions.assertEqualsRendered(LayoutQueriesResidualCoverageTestHelpers.renderSegments([far]), LayoutQueriesResidualCoverageTestHelpers.renderSegments(LayoutQueries.richTextBackgroundSegments(content, [far])));
-        final orphan:RichTextLineSegment = LayoutQueriesResidualCoverageTestHelpers.segment(new TextRange(0, 1), RichTextRole.Background, new RichTextPaint(null, RichTextLinePattern.Solid, new RichTextBackgroundPaint(0.0, 0.0, 0.0, 0.0, RichTextBackgroundMetricPolicy.MarkedFaces, RichTextBackgroundDrawStyle.Fill), 0.0), 5, new TextRange(0, 1), 0.0, 0.0, 20.0, 20.0, 15.0);
+        final orphan:RichTextLineSegment = LayoutQueriesResidualCoverageTestHelpers.segment(new TextRange(0, 1), Background.instance, new RichTextPaint(null, Solid.instance, new RichTextBackgroundPaint(0.0, 0.0, 0.0, 0.0, RichTextBackgroundMetricPolicy.MarkedFaces, Fill.instance), 0.0), 5, new TextRange(0, 1), 0.0, 0.0, 20.0, 20.0, 15.0);
         TracedAssertions.assertEqualsRendered(LayoutQueriesResidualCoverageTestHelpers.renderSegments([orphan]), LayoutQueriesResidualCoverageTestHelpers.renderSegments(LayoutQueries.richTextBackgroundSegments(content, [orphan])));
-        final underline:RichTextLineSegment = LayoutQueriesResidualCoverageTestHelpers.segment(new TextRange(0, 1), RichTextRole.Underline, new RichTextPaint(null, RichTextLinePattern.Solid, new RichTextBackgroundPaint(0.0, 0.0, 0.0, 0.0, RichTextBackgroundMetricPolicy.MarkedFaces, RichTextBackgroundDrawStyle.Fill), 0.0), 0, new TextRange(0, 1), 0.0, 0.0, 20.0, 20.0, 15.0);
+        final underline:RichTextLineSegment = LayoutQueriesResidualCoverageTestHelpers.segment(new TextRange(0, 1), Underline.instance, new RichTextPaint(null, Solid.instance, new RichTextBackgroundPaint(0.0, 0.0, 0.0, 0.0, RichTextBackgroundMetricPolicy.MarkedFaces, Fill.instance), 0.0), 0, new TextRange(0, 1), 0.0, 0.0, 20.0, 20.0, 15.0);
         TracedAssertions.assertTrue(LayoutQueries.richTextBackgroundSegments(content, [underline]).length == 0);
     }
 
@@ -190,16 +200,16 @@ class LayoutQueriesResidualCoverageTest {
         );
         final runs:Array<GlyphRun> = [new GlyphRun(new TextRange(1, 2), "test", [new Glyph(9, new TextRange(1, 2), 9.0, 1.0, 0.0, null, null, null, null)], 10.0, [])];
         final content:LayoutResult = LayoutQueriesResidualCoverageTestHelpers.result("，字", clusters, [LayoutQueriesResidualCoverageTestHelpers.line(new TextRange(0, 2), 0, 1, 0.0, 20.0, 15.0, 0.0, 20.0)], runs, [], [], new LayoutDebugInfo(null, [], [glue], [], [], []), LayoutQueriesResidualCoverageTestHelpers.style(10.0));
-        final full:Array<RichTextLineSegment> = LayoutQueries.richTextBackgroundSegments(content, [LayoutQueriesResidualCoverageTestHelpers.segment(new TextRange(0, 2), RichTextRole.Background, new RichTextPaint(null, RichTextLinePattern.Solid, new RichTextBackgroundPaint(0.0, 0.0, 0.0, 0.0, RichTextBackgroundMetricPolicy.MarkedFaces, RichTextBackgroundDrawStyle.Fill), 0.0), 0, new TextRange(0, 2), 0.0, 0.0, 20.0, 20.0, 15.0)]);
+        final full:Array<RichTextLineSegment> = LayoutQueries.richTextBackgroundSegments(content, [LayoutQueriesResidualCoverageTestHelpers.segment(new TextRange(0, 2), Background.instance, new RichTextPaint(null, Solid.instance, new RichTextBackgroundPaint(0.0, 0.0, 0.0, 0.0, RichTextBackgroundMetricPolicy.MarkedFaces, Fill.instance), 0.0), 0, new TextRange(0, 2), 0.0, 0.0, 20.0, 20.0, 15.0)]);
         TracedAssertions.assertEqualsFloat(3.0, full[0].left);
         TracedAssertions.assertEqualsFloat(20.0, full[0].right);
         TracedAssertions.assertEqualsFloat(15.0 - 10.0 * 0.88, full[0].top);
         TracedAssertions.assertEqualsFloat(15.0 + 10.0 * 0.12, full[0].bottom);
-        final headPaint:RichTextPaint = new RichTextPaint(null, RichTextLinePattern.Solid, new RichTextBackgroundPaint(5.0, 0.0, 0.0, 0.0, RichTextBackgroundMetricPolicy.MarkedFaces, RichTextBackgroundDrawStyle.Fill), 0.0);
-        final head:Array<RichTextLineSegment> = LayoutQueries.richTextBackgroundSegments(content, [LayoutQueriesResidualCoverageTestHelpers.segment(new TextRange(0, 2), RichTextRole.Background, headPaint, 0, new TextRange(0, 3), 0.0, 0.0, 20.0, 20.0, 15.0)]);
+        final headPaint:RichTextPaint = new RichTextPaint(null, Solid.instance, new RichTextBackgroundPaint(5.0, 0.0, 0.0, 0.0, RichTextBackgroundMetricPolicy.MarkedFaces, Fill.instance), 0.0);
+        final head:Array<RichTextLineSegment> = LayoutQueries.richTextBackgroundSegments(content, [LayoutQueriesResidualCoverageTestHelpers.segment(new TextRange(0, 2), Background.instance, headPaint, 0, new TextRange(0, 3), 0.0, 0.0, 20.0, 20.0, 15.0)]);
         TracedAssertions.assertEqualsFloat(3.0, head[0].left);
         TracedAssertions.assertEqualsFloat(20.0, head[0].right);
-        final continuation:Array<RichTextLineSegment> = LayoutQueries.richTextBackgroundSegments(content, [LayoutQueriesResidualCoverageTestHelpers.segment(new TextRange(1, 2), RichTextRole.Background, headPaint, 0, new TextRange(0, 3), 10.0, 0.0, 20.0, 20.0, 15.0)]);
+        final continuation:Array<RichTextLineSegment> = LayoutQueries.richTextBackgroundSegments(content, [LayoutQueriesResidualCoverageTestHelpers.segment(new TextRange(1, 2), Background.instance, headPaint, 0, new TextRange(0, 3), 10.0, 0.0, 20.0, 20.0, 15.0)]);
         TracedAssertions.assertEqualsFloat(10.0, continuation[0].left);
         TracedAssertions.assertEqualsFloat(20.0, continuation[0].right);
     }
@@ -209,7 +219,7 @@ class LayoutQueriesResidualCoverageTest {
         new TestTraceRecorder("LayoutQueriesResidualCoverageTest").section("markedFacesUseMetricDecisionsWhenTheyCoverTheCluster");
         final decision:MetricDecisionInfo = LayoutQueriesResidualCoverageTestHelpers.metric(new TextRange(0, 2), "IdeographicEmBox", 7.0, 3.0, "ideographic");
         final content:LayoutResult = LayoutQueriesResidualCoverageTestHelpers.result("ab", [LayoutQueriesResidualCoverageTestHelpers.cluster(new TextRange(0, 1), "a", 10.0), LayoutQueriesResidualCoverageTestHelpers.cluster(new TextRange(1, 2), "b", 10.0)], [LayoutQueriesResidualCoverageTestHelpers.line(new TextRange(0, 2), 0, 1, 0.0, 20.0, 15.0, 0.0, 20.0)], [], [], [], new LayoutDebugInfo(null, [decision], [], [], [], []), LayoutQueriesResidualCoverageTestHelpers.style(10.0));
-        final box:Array<RichTextLineSegment> = LayoutQueries.richTextBackgroundSegments(content, [LayoutQueriesResidualCoverageTestHelpers.segment(new TextRange(0, 2), RichTextRole.Background, new RichTextPaint(null, RichTextLinePattern.Solid, new RichTextBackgroundPaint(0.0, 0.0, 0.0, 0.0, RichTextBackgroundMetricPolicy.MarkedFaces, RichTextBackgroundDrawStyle.Fill), 0.0), 0, new TextRange(0, 2), 0.0, 0.0, 20.0, 20.0, 15.0)]);
+        final box:Array<RichTextLineSegment> = LayoutQueries.richTextBackgroundSegments(content, [LayoutQueriesResidualCoverageTestHelpers.segment(new TextRange(0, 2), Background.instance, new RichTextPaint(null, Solid.instance, new RichTextBackgroundPaint(0.0, 0.0, 0.0, 0.0, RichTextBackgroundMetricPolicy.MarkedFaces, Fill.instance), 0.0), 0, new TextRange(0, 2), 0.0, 0.0, 20.0, 20.0, 15.0)]);
         TracedAssertions.assertEqualsFloat(8.0, box[0].top);
         TracedAssertions.assertEqualsFloat(18.0, box[0].bottom);
     }
@@ -228,12 +238,12 @@ class LayoutQueriesResidualCoverageTest {
         ];
         final clusters:Array<Cluster> = [LayoutQueriesResidualCoverageTestHelpers.cluster(new TextRange(0, 1), "a", 10.0), LayoutQueriesResidualCoverageTestHelpers.cluster(new TextRange(1, 2), "b", 10.0)];
         final decision:MetricDecisionInfo = LayoutQueriesResidualCoverageTestHelpers.metric(new TextRange(1, 2), "LatinBox", 9.0, 1.0, "latin");
-        final paint:RichTextPaint = new RichTextPaint(null, RichTextLinePattern.Solid, new RichTextBackgroundPaint(0.0, 0.0, 0.0, 0.0, RichTextBackgroundMetricPolicy.UniformTextStyle, RichTextBackgroundDrawStyle.Fill), 0.0);
+        final paint:RichTextPaint = new RichTextPaint(null, Solid.instance, new RichTextBackgroundPaint(0.0, 0.0, 0.0, 0.0, RichTextBackgroundMetricPolicy.UniformTextStyle, Fill.instance), 0.0);
         var index:Int = 0;
         while (index < variants.length) {
             final variant:TextStyle = variants[index];
             final content:LayoutResult = LayoutQueriesResidualCoverageTestHelpers.result("ab", clusters, [LayoutQueriesResidualCoverageTestHelpers.line(new TextRange(0, 2), 0, 1, 0.0, 20.0, 15.0, 0.0, 20.0)], [], [new TextSpan(new TextRange(0, 1), variant)], [], new LayoutDebugInfo(null, [decision], [], [], [], []), base);
-            final box:Array<RichTextLineSegment> = LayoutQueries.richTextBackgroundSegments(content, [LayoutQueriesResidualCoverageTestHelpers.segment(new TextRange(0, 2), RichTextRole.Background, paint, 0, new TextRange(0, 2), 0.0, 0.0, 20.0, 20.0, 15.0)]);
+            final box:Array<RichTextLineSegment> = LayoutQueries.richTextBackgroundSegments(content, [LayoutQueriesResidualCoverageTestHelpers.segment(new TextRange(0, 2), Background.instance, paint, 0, new TextRange(0, 2), 0.0, 0.0, 20.0, 20.0, 15.0)]);
             final message:String = "variant=" + variant.toString();
             TracedAssertions.assertEqualsFloat(15.0 - variant.fontSize * 0.88, box[0].top, message);
             TracedAssertions.assertEqualsFloat(15.0 + variant.fontSize * 0.12, box[0].bottom, message);
@@ -244,11 +254,11 @@ class LayoutQueriesResidualCoverageTest {
     @:test
     public static function uniformTextStylePrefersIdeographicMetricsThenAnyMatchingFace():Void {
         new TestTraceRecorder("LayoutQueriesResidualCoverageTest").section("uniformTextStylePrefersIdeographicMetricsThenAnyMatchingFace");
-        final paint:RichTextPaint = new RichTextPaint(null, RichTextLinePattern.Solid, new RichTextBackgroundPaint(0.0, 0.0, 0.0, 0.0, RichTextBackgroundMetricPolicy.UniformTextStyle, RichTextBackgroundDrawStyle.Fill), 0.0);
+        final paint:RichTextPaint = new RichTextPaint(null, Solid.instance, new RichTextBackgroundPaint(0.0, 0.0, 0.0, 0.0, RichTextBackgroundMetricPolicy.UniformTextStyle, Fill.instance), 0.0);
         final clusters:Array<Cluster> = [LayoutQueriesResidualCoverageTestHelpers.cluster(new TextRange(0, 1), "a", 10.0), LayoutQueriesResidualCoverageTestHelpers.cluster(new TextRange(1, 2), "b", 10.0)];
         final lineValue:LineBox = LayoutQueriesResidualCoverageTestHelpers.line(new TextRange(0, 2), 0, 1, 0.0, 20.0, 15.0, 0.0, 20.0);
         final latin:LayoutResult = LayoutQueriesResidualCoverageTestHelpers.result("ab", clusters, [lineValue], [], [], [], new LayoutDebugInfo(null, [LayoutQueriesResidualCoverageTestHelpers.metric(new TextRange(0, 2), "LatinBox", 9.0, 1.0, "latin")], [], [], [], []), LayoutQueriesResidualCoverageTestHelpers.style(10.0));
-        final latinBox:Array<RichTextLineSegment> = LayoutQueries.richTextBackgroundSegments(latin, [LayoutQueriesResidualCoverageTestHelpers.segment(new TextRange(0, 2), RichTextRole.Background, paint, 0, new TextRange(0, 2), 0.0, 0.0, 20.0, 20.0, 15.0)]);
+        final latinBox:Array<RichTextLineSegment> = LayoutQueries.richTextBackgroundSegments(latin, [LayoutQueriesResidualCoverageTestHelpers.segment(new TextRange(0, 2), Background.instance, paint, 0, new TextRange(0, 2), 0.0, 0.0, 20.0, 20.0, 15.0)]);
         TracedAssertions.assertEqualsFloat(6.0, latinBox[0].top);
         TracedAssertions.assertEqualsFloat(16.0, latinBox[0].bottom);
         final bothMetrics:Array<MetricDecisionInfo> = [
@@ -256,7 +266,7 @@ class LayoutQueriesResidualCoverageTest {
             LayoutQueriesResidualCoverageTestHelpers.metric(new TextRange(0, 2), "IdeographicEmBox", 8.0, 2.0, "ideographic")
         ];
         final both:LayoutResult = LayoutQueriesResidualCoverageTestHelpers.result("ab", clusters, [lineValue], [], [], [], new LayoutDebugInfo(null, bothMetrics, [], [], [], []), LayoutQueriesResidualCoverageTestHelpers.style(10.0));
-        final ideographicBox:Array<RichTextLineSegment> = LayoutQueries.richTextBackgroundSegments(both, [LayoutQueriesResidualCoverageTestHelpers.segment(new TextRange(0, 2), RichTextRole.Background, paint, 0, new TextRange(0, 2), 0.0, 0.0, 20.0, 20.0, 15.0)]);
+        final ideographicBox:Array<RichTextLineSegment> = LayoutQueries.richTextBackgroundSegments(both, [LayoutQueriesResidualCoverageTestHelpers.segment(new TextRange(0, 2), Background.instance, paint, 0, new TextRange(0, 2), 0.0, 0.0, 20.0, 20.0, 15.0)]);
         TracedAssertions.assertEqualsFloat(7.0, ideographicBox[0].top);
         TracedAssertions.assertEqualsFloat(17.0, ideographicBox[0].bottom);
     }
@@ -265,14 +275,14 @@ class LayoutQueriesResidualCoverageTest {
     public static function adjacentSameStyleSegmentsShareClearance():Void {
         new TestTraceRecorder("LayoutQueriesResidualCoverageTest").section("adjacentSameStyleSegmentsShareClearance");
         final content:LayoutResult = LayoutQueriesResidualCoverageTestHelpers.result("ab", [LayoutQueriesResidualCoverageTestHelpers.cluster(new TextRange(0, 1), "a", 10.0), LayoutQueriesResidualCoverageTestHelpers.cluster(new TextRange(1, 2), "b", 10.0)], [LayoutQueriesResidualCoverageTestHelpers.line(new TextRange(0, 2), 0, 1, 0.0, 20.0, 15.0, 0.0, 20.0)], [], [], [], LayoutQueriesResidualCoverageTestHelpers.emptyDebug(), LayoutQueriesResidualCoverageTestHelpers.style(10.0));
-        final paint:RichTextPaint = new RichTextPaint(null, RichTextLinePattern.Solid, new RichTextBackgroundPaint(0.0, 0.0, 0.0, 0.0, RichTextBackgroundMetricPolicy.MarkedFaces, RichTextBackgroundDrawStyle.Fill), 4.0);
-        final first:RichTextLineSegment = LayoutQueriesResidualCoverageTestHelpers.segment(new TextRange(0, 1), RichTextRole.Background, paint, 0, new TextRange(0, 1), 0.0, 0.0, 10.0, 20.0, 15.0);
-        final second:RichTextLineSegment = LayoutQueriesResidualCoverageTestHelpers.segment(new TextRange(1, 2), RichTextRole.Background, paint, 0, new TextRange(1, 2), 10.0, 0.0, 20.0, 20.0, 15.0);
+        final paint:RichTextPaint = new RichTextPaint(null, Solid.instance, new RichTextBackgroundPaint(0.0, 0.0, 0.0, 0.0, RichTextBackgroundMetricPolicy.MarkedFaces, Fill.instance), 4.0);
+        final first:RichTextLineSegment = LayoutQueriesResidualCoverageTestHelpers.segment(new TextRange(0, 1), Background.instance, paint, 0, new TextRange(0, 1), 0.0, 0.0, 10.0, 20.0, 15.0);
+        final second:RichTextLineSegment = LayoutQueriesResidualCoverageTestHelpers.segment(new TextRange(1, 2), Background.instance, paint, 0, new TextRange(1, 2), 10.0, 0.0, 20.0, 20.0, 15.0);
         final cleared:Array<RichTextLineSegment> = LayoutQueries.richTextBackgroundSegments(content, [first, second]);
         TracedAssertions.assertEqualsInt(2, cleared.length);
         TracedAssertions.assertEqualsFloat(8.0, cleared[0].right);
         TracedAssertions.assertEqualsFloat(12.0, cleared[1].left);
-        final other:RichTextLineSegment = LayoutQueriesResidualCoverageTestHelpers.segment(new TextRange(1, 2), RichTextRole.Background, new RichTextPaint(null, RichTextLinePattern.Solid, new RichTextBackgroundPaint(0.0, 0.0, 3.0, 3.0, RichTextBackgroundMetricPolicy.MarkedFaces, RichTextBackgroundDrawStyle.Fill),  0.0), 0, new TextRange(1, 2), 10.0, 0.0, 20.0, 20.0, 15.0);
+        final other:RichTextLineSegment = LayoutQueriesResidualCoverageTestHelpers.segment(new TextRange(1, 2), Background.instance, new RichTextPaint(null, Solid.instance, new RichTextBackgroundPaint(0.0, 0.0, 3.0, 3.0, RichTextBackgroundMetricPolicy.MarkedFaces, Fill.instance),  0.0), 0, new TextRange(1, 2), 10.0, 0.0, 20.0, 20.0, 15.0);
         final untouched:Array<RichTextLineSegment> = LayoutQueries.richTextBackgroundSegments(content, [first, other]);
         TracedAssertions.assertEqualsInt(2, untouched.length);
         TracedAssertions.assertEqualsFloat(10.0, untouched[0].right);
@@ -283,7 +293,7 @@ class LayoutQueriesResidualCoverageTest {
     public static function decorationLineYRequiresValidStrokeAndDecorationRoles():Void {
         new TestTraceRecorder("LayoutQueriesResidualCoverageTest").section("decorationLineYRequiresValidStrokeAndDecorationRoles");
         final content:LayoutResult = LayoutQueriesResidualCoverageTestHelpers.result("ab", [], [LayoutQueriesResidualCoverageTestHelpers.line(new TextRange(0, 2), 0, 0, 0.0, 20.0, 15.0, 0.0, 10.0)], [], [], [], LayoutQueriesResidualCoverageTestHelpers.emptyDebug(), LayoutQueriesResidualCoverageTestHelpers.style(10.0));
-        final underline:RichTextLineSegment = LayoutQueriesResidualCoverageTestHelpers.segment(new TextRange(0, 1), RichTextRole.Underline, new RichTextPaint(null, RichTextLinePattern.Solid, new RichTextBackgroundPaint(0.0, 0.0, 0.0, 0.0, RichTextBackgroundMetricPolicy.MarkedFaces, RichTextBackgroundDrawStyle.Fill), 0.0), 0, new TextRange(0, 1), 0.0, 0.0, 20.0, 20.0, 15.0);
+        final underline:RichTextLineSegment = LayoutQueriesResidualCoverageTestHelpers.segment(new TextRange(0, 1), Underline.instance, new RichTextPaint(null, Solid.instance, new RichTextBackgroundPaint(0.0, 0.0, 0.0, 0.0, RichTextBackgroundMetricPolicy.MarkedFaces, Fill.instance), 0.0), 0, new TextRange(0, 1), 0.0, 0.0, 20.0, 20.0, 15.0);
         TracedAssertions.assertFailsWith(null, function():Void {
             LayoutQueries.richTextDecorationLineY(content, underline, -1.0);
         });
@@ -301,7 +311,7 @@ class LayoutQueriesResidualCoverageTest {
         );
         final y:Float = LayoutQueries.richTextDecorationLineY(withSpanStyle, underline, 1.0);
         TracedAssertions.assertTrue(y >= underline.top && y <= underline.bottom, Std.string(y));
-        final lineThrough:RichTextLineSegment = LayoutQueriesResidualCoverageTestHelpers.segment(new TextRange(0, 1), RichTextRole.LineThrough, new RichTextPaint(null, RichTextLinePattern.Solid, new RichTextBackgroundPaint(0.0, 0.0, 0.0, 0.0, RichTextBackgroundMetricPolicy.MarkedFaces, RichTextBackgroundDrawStyle.Fill), 0.0), 0, new TextRange(0, 1), 0.0, 0.0, 20.0, 20.0, 15.0);
+        final lineThrough:RichTextLineSegment = LayoutQueriesResidualCoverageTestHelpers.segment(new TextRange(0, 1), LineThrough.instance, new RichTextPaint(null, Solid.instance, new RichTextBackgroundPaint(0.0, 0.0, 0.0, 0.0, RichTextBackgroundMetricPolicy.MarkedFaces, Fill.instance), 0.0), 0, new TextRange(0, 1), 0.0, 0.0, 20.0, 20.0, 15.0);
         final strike:Float = LayoutQueries.richTextDecorationLineY(withSpanStyle, lineThrough, 1.0);
         TracedAssertions.assertEqualsFloatTolerance(11.2, strike, 0.001);
     }
@@ -491,7 +501,7 @@ class LayoutQueriesResidualCoverageTest {
         new TestTraceRecorder("LayoutQueriesResidualCoverageTest").section("positionedClustersAndSegmentsReturnEmptyWithoutLines");
         final noLines:LayoutResult = LayoutQueriesResidualCoverageTestHelpers.result("ab", [LayoutQueriesResidualCoverageTestHelpers.cluster(new TextRange(0, 1), "a", 10.0)], [], [], [], [], LayoutQueriesResidualCoverageTestHelpers.emptyDebug(), LayoutQueriesResidualCoverageTestHelpers.style(10.0));
         TracedAssertions.assertTrue(LayoutQueries.positionedClusters(noLines).length == 0);
-        TracedAssertions.assertTrue(LayoutQueries.positionedRichTextSegments(noLines, [new RichTextSpan(new TextRange(0, 2), RichTextRole.Background, new RichTextPaint(null, RichTextLinePattern.Solid, new RichTextBackgroundPaint(0.0, 0.0, 0.0, 0.0, RichTextBackgroundMetricPolicy.MarkedFaces, RichTextBackgroundDrawStyle.Fill), 0.0))]).length == 0);
+        TracedAssertions.assertTrue(LayoutQueries.positionedRichTextSegments(noLines, [new RichTextSpan(new TextRange(0, 2), Background.instance, new RichTextPaint(null, Solid.instance, new RichTextBackgroundPaint(0.0, 0.0, 0.0, 0.0, RichTextBackgroundMetricPolicy.MarkedFaces, Fill.instance), 0.0))]).length == 0);
         final noSpans:LayoutResult = LayoutQueriesResidualCoverageTestHelpers.result("ab", [LayoutQueriesResidualCoverageTestHelpers.cluster(new TextRange(0, 1), "a", 10.0)], [LayoutQueriesResidualCoverageTestHelpers.line(new TextRange(0, 1), 0, 0, 0.0, 20.0, 15.0, 0.0, 10.0)], [], [], [], LayoutQueriesResidualCoverageTestHelpers.emptyDebug(), LayoutQueriesResidualCoverageTestHelpers.style(10.0));
         TracedAssertions.assertTrue(LayoutQueries.positionedRichTextSegments(noSpans, []).length == 0);
     }
@@ -506,7 +516,7 @@ class LayoutQueriesResidualCoverageTest {
             [LayoutQueriesResidualCoverageTestHelpers.cluster(new TextRange(0, 1), "a", 10.0), LayoutQueriesResidualCoverageTestHelpers.cluster(new TextRange(1, 2), "b", 10.0)], [],
             [LayoutQueriesResidualCoverageTestHelpers.line(new TextRange(0, 2), 0, 1, 0.0, 20.0, 15.0, 0.0, 20.0)], LayoutQueriesResidualCoverageTestHelpers.emptyDebug()
         );
-        final segments:Array<RichTextLineSegment> = LayoutQueries.positionedRichTextSegments(content, [new RichTextSpan(new TextRange(0, 2), RichTextRole.Background, new RichTextPaint(null, RichTextLinePattern.Solid, new RichTextBackgroundPaint(0.0, 0.0, 0.0, 0.0, RichTextBackgroundMetricPolicy.MarkedFaces, RichTextBackgroundDrawStyle.Fill), 0.0))]);
+        final segments:Array<RichTextLineSegment> = LayoutQueries.positionedRichTextSegments(content, [new RichTextSpan(new TextRange(0, 2), Background.instance, new RichTextPaint(null, Solid.instance, new RichTextBackgroundPaint(0.0, 0.0, 0.0, 0.0, RichTextBackgroundMetricPolicy.MarkedFaces, Fill.instance), 0.0))]);
         TracedAssertions.assertEqualsInt(1, segments.length);
         TracedAssertions.assertEqualsRendered(new TextRange(0, 2).toString(), segments[0].range.toString());
         TracedAssertions.assertEqualsFloat(0.0, segments[0].left);
@@ -544,10 +554,10 @@ class LayoutQueriesResidualCoverageTest {
         final clusters:Array<Cluster> = [LayoutQueriesResidualCoverageTestHelpers.cluster(new TextRange(0, 1), "a", 10.0), LayoutQueriesResidualCoverageTestHelpers.cluster(new TextRange(1, 2), "b", 10.0)];
         final lines:Array<LineBox> = [LayoutQueriesResidualCoverageTestHelpers.line(new TextRange(0, 2), 0, 1, 0.0, 20.0, 15.0, 0.0, 20.0)];
         final shortGlyph:LayoutResult = LayoutQueriesResidualCoverageTestHelpers.result("ab", clusters, lines, [new GlyphRun(new TextRange(1, 2), "test", [new Glyph(2, new TextRange(1, 2), 5.0, 0.0, 0.0, null, null, null, null)], 10.0, [])], [], [], LayoutQueriesResidualCoverageTestHelpers.emptyDebug(), LayoutQueriesResidualCoverageTestHelpers.style(10.0));
-        final shortSegments:Array<RichTextLineSegment> = LayoutQueries.richTextBackgroundSegments(shortGlyph, [LayoutQueriesResidualCoverageTestHelpers.segment(new TextRange(0, 2), RichTextRole.Background, new RichTextPaint(null, RichTextLinePattern.Solid, new RichTextBackgroundPaint(0.0, 0.0, 0.0, 0.0, RichTextBackgroundMetricPolicy.MarkedFaces, RichTextBackgroundDrawStyle.Fill), 0.0), 0, new TextRange(0, 2), 0.0, 0.0, 20.0, 20.0, 15.0)]);
+        final shortSegments:Array<RichTextLineSegment> = LayoutQueries.richTextBackgroundSegments(shortGlyph, [LayoutQueriesResidualCoverageTestHelpers.segment(new TextRange(0, 2), Background.instance, new RichTextPaint(null, Solid.instance, new RichTextBackgroundPaint(0.0, 0.0, 0.0, 0.0, RichTextBackgroundMetricPolicy.MarkedFaces, Fill.instance), 0.0), 0, new TextRange(0, 2), 0.0, 0.0, 20.0, 20.0, 15.0)]);
         TracedAssertions.assertEqualsFloat(15.0, shortSegments[0].right);
         final emptyGlyphRun:LayoutResult = LayoutQueriesResidualCoverageTestHelpers.result("ab", clusters, lines, [new GlyphRun(new TextRange(1, 2), "test", [], 10.0, [])], [], [], LayoutQueriesResidualCoverageTestHelpers.emptyDebug(), LayoutQueriesResidualCoverageTestHelpers.style(10.0));
-        final emptySegments:Array<RichTextLineSegment> = LayoutQueries.richTextBackgroundSegments(emptyGlyphRun, [LayoutQueriesResidualCoverageTestHelpers.segment(new TextRange(0, 2), RichTextRole.Background, new RichTextPaint(null, RichTextLinePattern.Solid, new RichTextBackgroundPaint(0.0, 0.0, 0.0, 0.0, RichTextBackgroundMetricPolicy.MarkedFaces, RichTextBackgroundDrawStyle.Fill), 0.0), 0, new TextRange(0, 2), 0.0, 0.0, 20.0, 20.0, 15.0)]);
+        final emptySegments:Array<RichTextLineSegment> = LayoutQueries.richTextBackgroundSegments(emptyGlyphRun, [LayoutQueriesResidualCoverageTestHelpers.segment(new TextRange(0, 2), Background.instance, new RichTextPaint(null, Solid.instance, new RichTextBackgroundPaint(0.0, 0.0, 0.0, 0.0, RichTextBackgroundMetricPolicy.MarkedFaces, Fill.instance), 0.0), 0, new TextRange(0, 2), 0.0, 0.0, 20.0, 20.0, 15.0)]);
         TracedAssertions.assertEqualsFloat(20.0, emptySegments[0].right);
     }
 
@@ -555,13 +565,13 @@ class LayoutQueriesResidualCoverageTest {
     public static function clearanceNeedsSameRoleAndUsesTheSmallerSide():Void {
         new TestTraceRecorder("LayoutQueriesResidualCoverageTest").section("clearanceNeedsSameRoleAndUsesTheSmallerSide");
         final content:LayoutResult = LayoutQueriesResidualCoverageTestHelpers.result("ab", [LayoutQueriesResidualCoverageTestHelpers.cluster(new TextRange(0, 1), "a", 10.0), LayoutQueriesResidualCoverageTestHelpers.cluster(new TextRange(1, 2), "b", 10.0)], [LayoutQueriesResidualCoverageTestHelpers.line(new TextRange(0, 2), 0, 1, 0.0, 20.0, 15.0, 0.0, 20.0)], [], [], [], LayoutQueriesResidualCoverageTestHelpers.emptyDebug(), LayoutQueriesResidualCoverageTestHelpers.style(10.0));
-        final background:RichTextLineSegment = LayoutQueriesResidualCoverageTestHelpers.segment(new TextRange(0, 1), RichTextRole.Background, new RichTextPaint(null, RichTextLinePattern.Solid, new RichTextBackgroundPaint(0.0, 0.0, 0.0, 0.0, RichTextBackgroundMetricPolicy.MarkedFaces, RichTextBackgroundDrawStyle.Fill), 4.0), 0, new TextRange(0, 1), 0.0, 0.0, 10.0, 20.0, 15.0);
-        final inlineCode:RichTextLineSegment = LayoutQueriesResidualCoverageTestHelpers.segment(new TextRange(1, 2), RichTextRole.InlineCode, new RichTextPaint(null, RichTextLinePattern.Solid, new RichTextBackgroundPaint(0.0, 0.0, 0.0, 0.0, RichTextBackgroundMetricPolicy.MarkedFaces, RichTextBackgroundDrawStyle.Fill), 4.0), 0, new TextRange(1, 2), 10.0, 0.0, 20.0, 20.0, 15.0);
+        final background:RichTextLineSegment = LayoutQueriesResidualCoverageTestHelpers.segment(new TextRange(0, 1), Background.instance, new RichTextPaint(null, Solid.instance, new RichTextBackgroundPaint(0.0, 0.0, 0.0, 0.0, RichTextBackgroundMetricPolicy.MarkedFaces, Fill.instance), 4.0), 0, new TextRange(0, 1), 0.0, 0.0, 10.0, 20.0, 15.0);
+        final inlineCode:RichTextLineSegment = LayoutQueriesResidualCoverageTestHelpers.segment(new TextRange(1, 2), InlineCode.instance, new RichTextPaint(null, Solid.instance, new RichTextBackgroundPaint(0.0, 0.0, 0.0, 0.0, RichTextBackgroundMetricPolicy.MarkedFaces, Fill.instance), 4.0), 0, new TextRange(1, 2), 10.0, 0.0, 20.0, 20.0, 15.0);
         final byRole:Array<RichTextLineSegment> = LayoutQueries.richTextBackgroundSegments(content, [background, inlineCode]);
         TracedAssertions.assertEqualsFloat(10.0, byRole[0].right);
         TracedAssertions.assertEqualsFloat(10.0, byRole[1].left);
-        final weak:RichTextLineSegment = LayoutQueriesResidualCoverageTestHelpers.segment(new TextRange(0, 1), RichTextRole.Background, new RichTextPaint(null, RichTextLinePattern.Solid, new RichTextBackgroundPaint(0.0, 0.0, 0.0, 0.0, RichTextBackgroundMetricPolicy.MarkedFaces, RichTextBackgroundDrawStyle.Fill), 2.0), 0, new TextRange(0, 1), 0.0, 0.0, 10.0, 20.0, 15.0);
-        final strong:RichTextLineSegment = LayoutQueriesResidualCoverageTestHelpers.segment(new TextRange(1, 2), RichTextRole.Background, new RichTextPaint(null, RichTextLinePattern.Solid, new RichTextBackgroundPaint(0.0, 0.0, 0.0, 0.0, RichTextBackgroundMetricPolicy.MarkedFaces, RichTextBackgroundDrawStyle.Fill), 6.0), 0, new TextRange(1, 2), 10.0, 0.0, 20.0, 20.0, 15.0);
+        final weak:RichTextLineSegment = LayoutQueriesResidualCoverageTestHelpers.segment(new TextRange(0, 1), Background.instance, new RichTextPaint(null, Solid.instance, new RichTextBackgroundPaint(0.0, 0.0, 0.0, 0.0, RichTextBackgroundMetricPolicy.MarkedFaces, Fill.instance), 2.0), 0, new TextRange(0, 1), 0.0, 0.0, 10.0, 20.0, 15.0);
+        final strong:RichTextLineSegment = LayoutQueriesResidualCoverageTestHelpers.segment(new TextRange(1, 2), Background.instance, new RichTextPaint(null, Solid.instance, new RichTextBackgroundPaint(0.0, 0.0, 0.0, 0.0, RichTextBackgroundMetricPolicy.MarkedFaces, Fill.instance), 6.0), 0, new TextRange(1, 2), 10.0, 0.0, 20.0, 20.0, 15.0);
         final cleared:Array<RichTextLineSegment> = LayoutQueries.richTextBackgroundSegments(content, [weak, strong]);
         TracedAssertions.assertEqualsFloat(9.0, cleared[0].right);
         TracedAssertions.assertEqualsFloat(11.0, cleared[1].left);
@@ -587,8 +597,8 @@ class LayoutQueriesResidualCoverageTest {
             [new TextSpan(new TextRange(0, 1), LayoutQueriesResidualCoverageTestHelpers.style(10.0)), new TextSpan(new TextRange(2, 3), LayoutQueriesResidualCoverageTestHelpers.style(20.0))],
             [], LayoutQueriesResidualCoverageTestHelpers.emptyDebug(), LayoutQueriesResidualCoverageTestHelpers.style(10.0)
         );
-        final between:Float = LayoutQueries.richTextDecorationLineY(content, LayoutQueriesResidualCoverageTestHelpers.segment(new TextRange(1, 2), RichTextRole.Underline, new RichTextPaint(null, RichTextLinePattern.Solid, new RichTextBackgroundPaint(0.0, 0.0, 0.0, 0.0, RichTextBackgroundMetricPolicy.MarkedFaces, RichTextBackgroundDrawStyle.Fill), 0.0), 0, new TextRange(1, 2), 10.0, 0.0, 20.0, 20.0, 15.0), 1.0);
-        final inside:Float = LayoutQueries.richTextDecorationLineY(content, LayoutQueriesResidualCoverageTestHelpers.segment(new TextRange(2, 3), RichTextRole.Underline, new RichTextPaint(null, RichTextLinePattern.Solid, new RichTextBackgroundPaint(0.0, 0.0, 0.0, 0.0, RichTextBackgroundMetricPolicy.MarkedFaces, RichTextBackgroundDrawStyle.Fill), 0.0), 0, new TextRange(2, 3), 20.0, 0.0, 30.0, 20.0, 15.0), 1.0);
+        final between:Float = LayoutQueries.richTextDecorationLineY(content, LayoutQueriesResidualCoverageTestHelpers.segment(new TextRange(1, 2), Underline.instance, new RichTextPaint(null, Solid.instance, new RichTextBackgroundPaint(0.0, 0.0, 0.0, 0.0, RichTextBackgroundMetricPolicy.MarkedFaces, Fill.instance), 0.0), 0, new TextRange(1, 2), 10.0, 0.0, 20.0, 20.0, 15.0), 1.0);
+        final inside:Float = LayoutQueries.richTextDecorationLineY(content, LayoutQueriesResidualCoverageTestHelpers.segment(new TextRange(2, 3), Underline.instance, new RichTextPaint(null, Solid.instance, new RichTextBackgroundPaint(0.0, 0.0, 0.0, 0.0, RichTextBackgroundMetricPolicy.MarkedFaces, Fill.instance), 0.0), 0, new TextRange(2, 3), 20.0, 0.0, 30.0, 20.0, 15.0), 1.0);
         TracedAssertions.assertEqualsFloat(15.0 + 10.0 * 0.18, between);
         TracedAssertions.assertEqualsFloat(15.0 + 20.0 * 0.18, inside);
     }
@@ -600,9 +610,9 @@ class LayoutQueriesResidualCoverageTest {
             new TextRange(0, 2), "ab", "ab", 20.0, 10.0, 4.0, 1.0, 4.0, 1.0, 0.0, 20.0, "test", "test", 0.0, 0.0, null
         );
         final content:LayoutResult = LayoutQueriesResidualCoverageTestHelpers.result("ab", [LayoutQueriesResidualCoverageTestHelpers.cluster(new TextRange(0, 2), "ab", 20.0)], [LayoutQueriesResidualCoverageTestHelpers.line(new TextRange(0, 2), 0, 0, 0.0, 20.0, 15.0, 0.0, 20.0)], [], [], [], new LayoutDebugInfo(null, [], [glue], [], [], []), LayoutQueriesResidualCoverageTestHelpers.style(10.0));
-        final interiorStart:Array<RichTextLineSegment> = LayoutQueries.richTextBackgroundSegments(content, [LayoutQueriesResidualCoverageTestHelpers.segment(new TextRange(1, 2), RichTextRole.Background, new RichTextPaint(null, RichTextLinePattern.Solid, new RichTextBackgroundPaint(0.0, 0.0, 0.0, 0.0, RichTextBackgroundMetricPolicy.MarkedFaces, RichTextBackgroundDrawStyle.Fill), 0.0), 0, new TextRange(1, 2), 10.0, 0.0, 20.0, 20.0, 15.0)]);
+        final interiorStart:Array<RichTextLineSegment> = LayoutQueries.richTextBackgroundSegments(content, [LayoutQueriesResidualCoverageTestHelpers.segment(new TextRange(1, 2), Background.instance, new RichTextPaint(null, Solid.instance, new RichTextBackgroundPaint(0.0, 0.0, 0.0, 0.0, RichTextBackgroundMetricPolicy.MarkedFaces, Fill.instance), 0.0), 0, new TextRange(1, 2), 10.0, 0.0, 20.0, 20.0, 15.0)]);
         TracedAssertions.assertEqualsFloat(10.0, interiorStart[0].left);
-        final interiorEnd:Array<RichTextLineSegment> = LayoutQueries.richTextBackgroundSegments(content, [LayoutQueriesResidualCoverageTestHelpers.segment(new TextRange(0, 1), RichTextRole.Background, new RichTextPaint(null, RichTextLinePattern.Solid, new RichTextBackgroundPaint(0.0, 0.0, 0.0, 0.0, RichTextBackgroundMetricPolicy.MarkedFaces, RichTextBackgroundDrawStyle.Fill), 0.0), 0, new TextRange(0, 1), 0.0, 0.0, 10.0, 20.0, 15.0)]);
+        final interiorEnd:Array<RichTextLineSegment> = LayoutQueries.richTextBackgroundSegments(content, [LayoutQueriesResidualCoverageTestHelpers.segment(new TextRange(0, 1), Background.instance, new RichTextPaint(null, Solid.instance, new RichTextBackgroundPaint(0.0, 0.0, 0.0, 0.0, RichTextBackgroundMetricPolicy.MarkedFaces, Fill.instance), 0.0), 0, new TextRange(0, 1), 0.0, 0.0, 10.0, 20.0, 15.0)]);
         TracedAssertions.assertEqualsFloat(10.0, interiorEnd[0].right);
     }
 
@@ -615,9 +625,9 @@ class LayoutQueriesResidualCoverageTest {
             [LayoutQueriesResidualCoverageTestHelpers.line(new TextRange(0, 3), 0, 2, 0.0, 20.0, 15.0, 0.0, 30.0)], [],
             [new TextSpan(new TextRange(1, 2), LayoutQueriesResidualCoverageTestHelpers.style(40.0))], [], LayoutQueriesResidualCoverageTestHelpers.emptyDebug(), LayoutQueriesResidualCoverageTestHelpers.style(10.0)
         );
-        final before:Array<RichTextLineSegment> = LayoutQueries.richTextBackgroundSegments(content, [LayoutQueriesResidualCoverageTestHelpers.segment(new TextRange(0, 1), RichTextRole.Background, new RichTextPaint(null, RichTextLinePattern.Solid, new RichTextBackgroundPaint(0.0, 0.0, 0.0, 0.0, RichTextBackgroundMetricPolicy.MarkedFaces, RichTextBackgroundDrawStyle.Fill), 0.0), 0, new TextRange(0, 1), 0.0, 0.0, 10.0, 20.0, 15.0)]);
+        final before:Array<RichTextLineSegment> = LayoutQueries.richTextBackgroundSegments(content, [LayoutQueriesResidualCoverageTestHelpers.segment(new TextRange(0, 1), Background.instance, new RichTextPaint(null, Solid.instance, new RichTextBackgroundPaint(0.0, 0.0, 0.0, 0.0, RichTextBackgroundMetricPolicy.MarkedFaces, Fill.instance), 0.0), 0, new TextRange(0, 1), 0.0, 0.0, 10.0, 20.0, 15.0)]);
         TracedAssertions.assertEqualsFloat(15.0 - 10.0 * 0.88, before[0].top);
-        final atEnd:Array<RichTextLineSegment> = LayoutQueries.richTextBackgroundSegments(content, [LayoutQueriesResidualCoverageTestHelpers.segment(new TextRange(2, 3), RichTextRole.Background, new RichTextPaint(null, RichTextLinePattern.Solid, new RichTextBackgroundPaint(0.0, 0.0, 0.0, 0.0, RichTextBackgroundMetricPolicy.MarkedFaces, RichTextBackgroundDrawStyle.Fill), 0.0), 0, new TextRange(2, 3), 20.0, 0.0, 30.0, 20.0, 15.0)]);
+        final atEnd:Array<RichTextLineSegment> = LayoutQueries.richTextBackgroundSegments(content, [LayoutQueriesResidualCoverageTestHelpers.segment(new TextRange(2, 3), Background.instance, new RichTextPaint(null, Solid.instance, new RichTextBackgroundPaint(0.0, 0.0, 0.0, 0.0, RichTextBackgroundMetricPolicy.MarkedFaces, Fill.instance), 0.0), 0, new TextRange(2, 3), 20.0, 0.0, 30.0, 20.0, 15.0)]);
         TracedAssertions.assertEqualsFloat(15.0 - 10.0 * 0.88, atEnd[0].top);
     }
 
@@ -782,15 +792,15 @@ class LayoutQueriesResidualCoverageTest {
     public static function clearanceTakesTheSmallerSideWhicheverSegmentOwnsIt():Void {
         new TestTraceRecorder("LayoutQueriesResidualCoverageTest").section("clearanceTakesTheSmallerSideWhicheverSegmentOwnsIt");
         final content:LayoutResult = LayoutQueriesResidualCoverageTestHelpers.result("ab", [LayoutQueriesResidualCoverageTestHelpers.cluster(new TextRange(0, 1), "a", 10.0), LayoutQueriesResidualCoverageTestHelpers.cluster(new TextRange(1, 2), "b", 10.0)], [LayoutQueriesResidualCoverageTestHelpers.line(new TextRange(0, 2), 0, 1, 0.0, 20.0, 15.0, 0.0, 20.0)], [], [], [], LayoutQueriesResidualCoverageTestHelpers.emptyDebug(), LayoutQueriesResidualCoverageTestHelpers.style(10.0));
-        final weakFirst:RichTextLineSegment = LayoutQueriesResidualCoverageTestHelpers.segment(new TextRange(0, 1), RichTextRole.Background, new RichTextPaint(null, RichTextLinePattern.Solid, new RichTextBackgroundPaint(0.0, 0.0, 0.0, 0.0, RichTextBackgroundMetricPolicy.MarkedFaces, RichTextBackgroundDrawStyle.Fill), 6.0), 0, new TextRange(0, 1), 0.0, 0.0, 10.0, 20.0, 15.0);
-        final strongSecond:RichTextLineSegment = LayoutQueriesResidualCoverageTestHelpers.segment(new TextRange(1, 2), RichTextRole.Background, new RichTextPaint(null, RichTextLinePattern.Solid, new RichTextBackgroundPaint(0.0, 0.0, 0.0, 0.0, RichTextBackgroundMetricPolicy.MarkedFaces, RichTextBackgroundDrawStyle.Fill), 2.0), 0, new TextRange(1, 2), 10.0, 0.0, 20.0, 20.0, 15.0);
+        final weakFirst:RichTextLineSegment = LayoutQueriesResidualCoverageTestHelpers.segment(new TextRange(0, 1), Background.instance, new RichTextPaint(null, Solid.instance, new RichTextBackgroundPaint(0.0, 0.0, 0.0, 0.0, RichTextBackgroundMetricPolicy.MarkedFaces, Fill.instance), 6.0), 0, new TextRange(0, 1), 0.0, 0.0, 10.0, 20.0, 15.0);
+        final strongSecond:RichTextLineSegment = LayoutQueriesResidualCoverageTestHelpers.segment(new TextRange(1, 2), Background.instance, new RichTextPaint(null, Solid.instance, new RichTextBackgroundPaint(0.0, 0.0, 0.0, 0.0, RichTextBackgroundMetricPolicy.MarkedFaces, Fill.instance), 2.0), 0, new TextRange(1, 2), 10.0, 0.0, 20.0, 20.0, 15.0);
         final cleared:Array<RichTextLineSegment> = LayoutQueries.richTextBackgroundSegments(content, [weakFirst, strongSecond]);
         TracedAssertions.assertEqualsFloat(9.0, cleared[0].right);
         TracedAssertions.assertEqualsFloat(11.0, cleared[1].left);
-        final styledA:RichTextLineSegment = LayoutQueriesResidualCoverageTestHelpers.segment(new TextRange(1, 2), RichTextRole.Background, new RichTextPaint(null, RichTextLinePattern.Solid, new RichTextBackgroundPaint(0.0, 0.0, 0.0, 0.0, RichTextBackgroundMetricPolicy.MarkedFaces, RichTextBackgroundDrawStyle.Fill), 4.0), 0, new TextRange(1, 2), 10.0, 0.0, 20.0, 20.0, 15.0);
+        final styledA:RichTextLineSegment = LayoutQueriesResidualCoverageTestHelpers.segment(new TextRange(1, 2), Background.instance, new RichTextPaint(null, Solid.instance, new RichTextBackgroundPaint(0.0, 0.0, 0.0, 0.0, RichTextBackgroundMetricPolicy.MarkedFaces, Fill.instance), 4.0), 0, new TextRange(1, 2), 10.0, 0.0, 20.0, 20.0, 15.0);
         final scanPast:Array<RichTextLineSegment> = LayoutQueries.richTextBackgroundSegments(content, [
-            LayoutQueriesResidualCoverageTestHelpers.segment(new TextRange(1, 2), RichTextRole.InlineCode, new RichTextPaint(null, RichTextLinePattern.Solid, new RichTextBackgroundPaint(0.0, 0.0, 0.0, 0.0, RichTextBackgroundMetricPolicy.MarkedFaces, RichTextBackgroundDrawStyle.Fill), 4.0), 0, new TextRange(1, 2), 10.0, 0.0, 20.0, 20.0, 15.0),
-            LayoutQueriesResidualCoverageTestHelpers.segment(new TextRange(0, 1), RichTextRole.Background, new RichTextPaint(null, RichTextLinePattern.Solid, new RichTextBackgroundPaint(0.0, 0.0, 0.0, 0.0, RichTextBackgroundMetricPolicy.MarkedFaces, RichTextBackgroundDrawStyle.Fill), 4.0), 0, new TextRange(0, 1), 0.0, 0.0, 10.0, 20.0, 15.0),
+            LayoutQueriesResidualCoverageTestHelpers.segment(new TextRange(1, 2), InlineCode.instance, new RichTextPaint(null, Solid.instance, new RichTextBackgroundPaint(0.0, 0.0, 0.0, 0.0, RichTextBackgroundMetricPolicy.MarkedFaces, Fill.instance), 4.0), 0, new TextRange(1, 2), 10.0, 0.0, 20.0, 20.0, 15.0),
+            LayoutQueriesResidualCoverageTestHelpers.segment(new TextRange(0, 1), Background.instance, new RichTextPaint(null, Solid.instance, new RichTextBackgroundPaint(0.0, 0.0, 0.0, 0.0, RichTextBackgroundMetricPolicy.MarkedFaces, Fill.instance), 4.0), 0, new TextRange(0, 1), 0.0, 0.0, 10.0, 20.0, 15.0),
             styledA
         ]);
         TracedAssertions.assertEqualsInt(3, scanPast.length);
@@ -801,14 +811,14 @@ class LayoutQueriesResidualCoverageTest {
     @:test
     public static function uniformTextStylePolicyResolvesSpanStyleOrParagraphStyle():Void {
         new TestTraceRecorder("LayoutQueriesResidualCoverageTest").section("uniformTextStylePolicyResolvesSpanStyleOrParagraphStyle");
-        final uniform:RichTextPaint = new RichTextPaint(null, RichTextLinePattern.Solid, new RichTextBackgroundPaint(0.0, 0.0, 0.0, 0.0, RichTextBackgroundMetricPolicy.UniformTextStyle, RichTextBackgroundDrawStyle.Fill), 0.0);
+        final uniform:RichTextPaint = new RichTextPaint(null, Solid.instance, new RichTextBackgroundPaint(0.0, 0.0, 0.0, 0.0, RichTextBackgroundMetricPolicy.UniformTextStyle, Fill.instance), 0.0);
         final content:LayoutResult = LayoutQueriesResidualCoverageTestHelpers.result(
             "abc", [LayoutQueriesResidualCoverageTestHelpers.cluster(new TextRange(0, 1), "a", 10.0), LayoutQueriesResidualCoverageTestHelpers.cluster(new TextRange(1, 2), "b", 10.0), LayoutQueriesResidualCoverageTestHelpers.cluster(new TextRange(2, 3), "c", 10.0)],
             [LayoutQueriesResidualCoverageTestHelpers.line(new TextRange(0, 3), 0, 2, 0.0, 20.0, 15.0, 0.0, 30.0)], [], [new TextSpan(new TextRange(1, 2), LayoutQueriesResidualCoverageTestHelpers.style(40.0))], [], LayoutQueriesResidualCoverageTestHelpers.emptyDebug(), LayoutQueriesResidualCoverageTestHelpers.style(10.0)
         );
-        final outside:Array<RichTextLineSegment> = LayoutQueries.richTextBackgroundSegments(content, [LayoutQueriesResidualCoverageTestHelpers.segment(new TextRange(0, 1), RichTextRole.Background, uniform, 0, new TextRange(0, 1), 0.0, 0.0, 10.0, 20.0, 15.0)]);
+        final outside:Array<RichTextLineSegment> = LayoutQueries.richTextBackgroundSegments(content, [LayoutQueriesResidualCoverageTestHelpers.segment(new TextRange(0, 1), Background.instance, uniform, 0, new TextRange(0, 1), 0.0, 0.0, 10.0, 20.0, 15.0)]);
         TracedAssertions.assertEqualsFloat(15.0 - 10.0 * 0.88, outside[0].top);
-        final inside:Array<RichTextLineSegment> = LayoutQueries.richTextBackgroundSegments(content, [LayoutQueriesResidualCoverageTestHelpers.segment(new TextRange(1, 2), RichTextRole.Background, uniform, 0, new TextRange(1, 2), 10.0, 0.0, 20.0, 20.0, 15.0)]);
+        final inside:Array<RichTextLineSegment> = LayoutQueries.richTextBackgroundSegments(content, [LayoutQueriesResidualCoverageTestHelpers.segment(new TextRange(1, 2), Background.instance, uniform, 0, new TextRange(1, 2), 10.0, 0.0, 20.0, 20.0, 15.0)]);
         TracedAssertions.assertEqualsFloat(0.0, inside[0].top);
     }
 
@@ -816,7 +826,7 @@ class LayoutQueriesResidualCoverageTest {
     public static function trailingGlueIsSkippedWhenNoClusterEndsBeforeTheSegmentEnd():Void {
         new TestTraceRecorder("LayoutQueriesResidualCoverageTest").section("trailingGlueIsSkippedWhenNoClusterEndsBeforeTheSegmentEnd");
         final content:LayoutResult = LayoutQueriesResidualCoverageTestHelpers.result("ab", [LayoutQueriesResidualCoverageTestHelpers.cluster(new TextRange(1, 2), "b", 10.0)], [LayoutQueriesResidualCoverageTestHelpers.line(new TextRange(0, 2), 0, 0, 0.0, 20.0, 15.0, 0.0, 10.0)], [], [], [], LayoutQueriesResidualCoverageTestHelpers.emptyDebug(), LayoutQueriesResidualCoverageTestHelpers.style(10.0));
-        final out:Array<RichTextLineSegment> = LayoutQueries.richTextBackgroundSegments(content, [LayoutQueriesResidualCoverageTestHelpers.segment(new TextRange(0, 1), RichTextRole.Background, new RichTextPaint(null, RichTextLinePattern.Solid, new RichTextBackgroundPaint(0.0, 0.0, 0.0, 0.0, RichTextBackgroundMetricPolicy.MarkedFaces, RichTextBackgroundDrawStyle.Fill), 0.0), 0, new TextRange(0, 1), 0.0, 0.0, 10.0, 20.0, 15.0)]);
+        final out:Array<RichTextLineSegment> = LayoutQueries.richTextBackgroundSegments(content, [LayoutQueriesResidualCoverageTestHelpers.segment(new TextRange(0, 1), Background.instance, new RichTextPaint(null, Solid.instance, new RichTextBackgroundPaint(0.0, 0.0, 0.0, 0.0, RichTextBackgroundMetricPolicy.MarkedFaces, Fill.instance), 0.0), 0, new TextRange(0, 1), 0.0, 0.0, 10.0, 20.0, 15.0)]);
         TracedAssertions.assertEqualsFloat(10.0, out[0].right);
     }
 
@@ -824,7 +834,7 @@ class LayoutQueriesResidualCoverageTest {
     public static function decorationLineYWithoutSpansUsesTheParagraphStyle():Void {
         new TestTraceRecorder("LayoutQueriesResidualCoverageTest").section("decorationLineYWithoutSpansUsesTheParagraphStyle");
         final content:LayoutResult = LayoutQueriesResidualCoverageTestHelpers.result("ab", [LayoutQueriesResidualCoverageTestHelpers.cluster(new TextRange(0, 2), "ab", 20.0)], [LayoutQueriesResidualCoverageTestHelpers.line(new TextRange(0, 2), 0, 0, 0.0, 20.0, 15.0, 0.0, 20.0)], [], [], [], LayoutQueriesResidualCoverageTestHelpers.emptyDebug(), LayoutQueriesResidualCoverageTestHelpers.style(10.0));
-        final value:Float = LayoutQueries.richTextDecorationLineY(content, LayoutQueriesResidualCoverageTestHelpers.segment(new TextRange(0, 2), RichTextRole.Underline, new RichTextPaint(null, RichTextLinePattern.Solid, new RichTextBackgroundPaint(0.0, 0.0, 0.0, 0.0, RichTextBackgroundMetricPolicy.MarkedFaces, RichTextBackgroundDrawStyle.Fill), 0.0), 0, new TextRange(0, 2), 0.0, 0.0, 20.0, 20.0, 15.0), 1.0);
+        final value:Float = LayoutQueries.richTextDecorationLineY(content, LayoutQueriesResidualCoverageTestHelpers.segment(new TextRange(0, 2), Underline.instance, new RichTextPaint(null, Solid.instance, new RichTextBackgroundPaint(0.0, 0.0, 0.0, 0.0, RichTextBackgroundMetricPolicy.MarkedFaces, Fill.instance), 0.0), 0, new TextRange(0, 2), 0.0, 0.0, 20.0, 20.0, 15.0), 1.0);
         TracedAssertions.assertEqualsFloat(15.0 + 10.0 * 0.18, value);
     }
 
@@ -883,7 +893,7 @@ class LayoutQueriesResidualCoverageTest {
         final clusters:Array<Cluster> = [LayoutQueriesResidualCoverageTestHelpers.cluster(new TextRange(0, 1), "a", 10.0), LayoutQueriesResidualCoverageTestHelpers.cluster(new TextRange(1, 2), "b", 10.0)];
         final runs:Array<GlyphRun> = [new GlyphRun(new TextRange(1, 2), "test", [new Glyph(1, new TextRange(1, 2), 5.0, 0.0, 0.0, null, null, null, null), new Glyph(2, new TextRange(1, 2), 6.0, 0.0, 0.0, null, null, null, null)], 10.0, [])];
         final content:LayoutResult = LayoutQueriesResidualCoverageTestHelpers.result("ab", clusters, [LayoutQueriesResidualCoverageTestHelpers.line(new TextRange(0, 2), 0, 1, 0.0, 20.0, 15.0, 0.0, 20.0)], runs, [], [], LayoutQueriesResidualCoverageTestHelpers.emptyDebug(), LayoutQueriesResidualCoverageTestHelpers.style(10.0));
-        final output:Array<RichTextLineSegment> = LayoutQueries.richTextBackgroundSegments(content, [LayoutQueriesResidualCoverageTestHelpers.segment(new TextRange(0, 2), RichTextRole.Background, new RichTextPaint(null, RichTextLinePattern.Solid, new RichTextBackgroundPaint(0.0, 0.0, 0.0, 0.0, RichTextBackgroundMetricPolicy.MarkedFaces, RichTextBackgroundDrawStyle.Fill), 0.0), 0, new TextRange(0, 2), 0.0, 0.0, 20.0, 20.0, 15.0)]);
+        final output:Array<RichTextLineSegment> = LayoutQueries.richTextBackgroundSegments(content, [LayoutQueriesResidualCoverageTestHelpers.segment(new TextRange(0, 2), Background.instance, new RichTextPaint(null, Solid.instance, new RichTextBackgroundPaint(0.0, 0.0, 0.0, 0.0, RichTextBackgroundMetricPolicy.MarkedFaces, Fill.instance), 0.0), 0, new TextRange(0, 2), 0.0, 0.0, 20.0, 20.0, 15.0)]);
         TracedAssertions.assertEqualsFloat(16.0, output[0].right);
     }
 
@@ -893,7 +903,7 @@ class LayoutQueriesResidualCoverageTest {
         final clusters:Array<Cluster> = [LayoutQueriesResidualCoverageTestHelpers.cluster(new TextRange(0, 1), "a", 10.0), LayoutQueriesResidualCoverageTestHelpers.cluster(new TextRange(1, 2), "b", 10.0)];
         final runs:Array<GlyphRun> = [new GlyphRun(new TextRange(1, 2), "test", [new Glyph(1, new TextRange(1, 2), 6.0, 0.0, 0.0, null, null, null, null), new Glyph(2, new TextRange(1, 2), 5.0, 0.0, 0.0, null, null, null, null)], 10.0, [])];
         final content:LayoutResult = LayoutQueriesResidualCoverageTestHelpers.result("ab", clusters, [LayoutQueriesResidualCoverageTestHelpers.line(new TextRange(0, 2), 0, 1, 0.0, 20.0, 15.0, 0.0, 20.0)], runs, [], [], LayoutQueriesResidualCoverageTestHelpers.emptyDebug(), LayoutQueriesResidualCoverageTestHelpers.style(10.0));
-        final output:Array<RichTextLineSegment> = LayoutQueries.richTextBackgroundSegments(content, [LayoutQueriesResidualCoverageTestHelpers.segment(new TextRange(0, 2), RichTextRole.Background, new RichTextPaint(null, RichTextLinePattern.Solid, new RichTextBackgroundPaint(0.0, 0.0, 0.0, 0.0, RichTextBackgroundMetricPolicy.MarkedFaces, RichTextBackgroundDrawStyle.Fill), 0.0), 0, new TextRange(0, 2), 0.0, 0.0, 20.0, 20.0, 15.0)]);
+        final output:Array<RichTextLineSegment> = LayoutQueries.richTextBackgroundSegments(content, [LayoutQueriesResidualCoverageTestHelpers.segment(new TextRange(0, 2), Background.instance, new RichTextPaint(null, Solid.instance, new RichTextBackgroundPaint(0.0, 0.0, 0.0, 0.0, RichTextBackgroundMetricPolicy.MarkedFaces, Fill.instance), 0.0), 0, new TextRange(0, 2), 0.0, 0.0, 20.0, 20.0, 15.0)]);
         TracedAssertions.assertEqualsFloat(16.0, output[0].right);
     }
 
@@ -938,13 +948,13 @@ class LayoutQueriesResidualCoverageTest {
     @:test
     public static function uniformTextStylePolicyPicksTheLastMatchingSpan():Void {
         new TestTraceRecorder("LayoutQueriesResidualCoverageTest").section("uniformTextStylePolicyPicksTheLastMatchingSpan");
-        final uniform:RichTextPaint = new RichTextPaint(null, RichTextLinePattern.Solid, new RichTextBackgroundPaint(0.0, 0.0, 0.0, 0.0, RichTextBackgroundMetricPolicy.UniformTextStyle, RichTextBackgroundDrawStyle.Fill), 0.0);
+        final uniform:RichTextPaint = new RichTextPaint(null, Solid.instance, new RichTextBackgroundPaint(0.0, 0.0, 0.0, 0.0, RichTextBackgroundMetricPolicy.UniformTextStyle, Fill.instance), 0.0);
         final content:LayoutResult = LayoutQueriesResidualCoverageTestHelpers.result(
             "abc", [LayoutQueriesResidualCoverageTestHelpers.cluster(new TextRange(0, 1), "a", 10.0), LayoutQueriesResidualCoverageTestHelpers.cluster(new TextRange(1, 2), "b", 10.0), LayoutQueriesResidualCoverageTestHelpers.cluster(new TextRange(2, 3), "c", 10.0)],
             [LayoutQueriesResidualCoverageTestHelpers.line(new TextRange(0, 3), 0, 2, 0.0, 20.0, 15.0, 0.0, 30.0)], [],
             [new TextSpan(new TextRange(0, 2), LayoutQueriesResidualCoverageTestHelpers.style(10.0)), new TextSpan(new TextRange(1, 3), LayoutQueriesResidualCoverageTestHelpers.style(40.0))], [], LayoutQueriesResidualCoverageTestHelpers.emptyDebug(), LayoutQueriesResidualCoverageTestHelpers.style(10.0)
         );
-        final inside:Array<RichTextLineSegment> = LayoutQueries.richTextBackgroundSegments(content, [LayoutQueriesResidualCoverageTestHelpers.segment(new TextRange(2, 3), RichTextRole.Background, uniform, 0, new TextRange(2, 3), 20.0, 0.0, 30.0, 20.0, 15.0)]);
+        final inside:Array<RichTextLineSegment> = LayoutQueries.richTextBackgroundSegments(content, [LayoutQueriesResidualCoverageTestHelpers.segment(new TextRange(2, 3), Background.instance, uniform, 0, new TextRange(2, 3), 20.0, 0.0, 30.0, 20.0, 15.0)]);
         TracedAssertions.assertEqualsFloat(0.0, inside[0].top);
     }
 
@@ -956,20 +966,20 @@ class LayoutQueriesResidualCoverageTest {
             [LayoutQueriesResidualCoverageTestHelpers.line(new TextRange(0, 3), 0, 2, 0.0, 20.0, 15.0, 0.0, 30.0)], [],
             [new TextSpan(new TextRange(0, 2), LayoutQueriesResidualCoverageTestHelpers.style(10.0)), new TextSpan(new TextRange(1, 3), LayoutQueriesResidualCoverageTestHelpers.style(20.0))], [], LayoutQueriesResidualCoverageTestHelpers.emptyDebug(), LayoutQueriesResidualCoverageTestHelpers.style(10.0)
         );
-        final value:Float = LayoutQueries.richTextDecorationLineY(content, LayoutQueriesResidualCoverageTestHelpers.segment(new TextRange(2, 3), RichTextRole.Underline, new RichTextPaint(null, RichTextLinePattern.Solid, new RichTextBackgroundPaint(0.0, 0.0, 0.0, 0.0, RichTextBackgroundMetricPolicy.MarkedFaces, RichTextBackgroundDrawStyle.Fill), 0.0), 0, new TextRange(2, 3), 20.0, 0.0, 30.0, 20.0, 15.0), 1.0);
+        final value:Float = LayoutQueries.richTextDecorationLineY(content, LayoutQueriesResidualCoverageTestHelpers.segment(new TextRange(2, 3), Underline.instance, new RichTextPaint(null, Solid.instance, new RichTextBackgroundPaint(0.0, 0.0, 0.0, 0.0, RichTextBackgroundMetricPolicy.MarkedFaces, Fill.instance), 0.0), 0, new TextRange(2, 3), 20.0, 0.0, 30.0, 20.0, 15.0), 1.0);
         TracedAssertions.assertEqualsFloat(15.0 + 20.0 * 0.18, value);
     }
 
     @:test
     public static function uniformTextStylePolicyKeepsTheEarlierSpanWhenALaterOneMisses():Void {
         new TestTraceRecorder("LayoutQueriesResidualCoverageTest").section("uniformTextStylePolicyKeepsTheEarlierSpanWhenALaterOneMisses");
-        final uniform:RichTextPaint = new RichTextPaint(null, RichTextLinePattern.Solid, new RichTextBackgroundPaint(0.0, 0.0, 0.0, 0.0, RichTextBackgroundMetricPolicy.UniformTextStyle, RichTextBackgroundDrawStyle.Fill), 0.0);
+        final uniform:RichTextPaint = new RichTextPaint(null, Solid.instance, new RichTextBackgroundPaint(0.0, 0.0, 0.0, 0.0, RichTextBackgroundMetricPolicy.UniformTextStyle, Fill.instance), 0.0);
         final content:LayoutResult = LayoutQueriesResidualCoverageTestHelpers.result(
             "abc", [LayoutQueriesResidualCoverageTestHelpers.cluster(new TextRange(0, 1), "a", 10.0), LayoutQueriesResidualCoverageTestHelpers.cluster(new TextRange(1, 2), "b", 10.0), LayoutQueriesResidualCoverageTestHelpers.cluster(new TextRange(2, 3), "c", 10.0)],
             [LayoutQueriesResidualCoverageTestHelpers.line(new TextRange(0, 3), 0, 2, 0.0, 20.0, 15.0, 0.0, 30.0)], [],
             [new TextSpan(new TextRange(0, 3), LayoutQueriesResidualCoverageTestHelpers.style(40.0)), new TextSpan(new TextRange(1, 2), LayoutQueriesResidualCoverageTestHelpers.style(10.0))], [], LayoutQueriesResidualCoverageTestHelpers.emptyDebug(), LayoutQueriesResidualCoverageTestHelpers.style(10.0)
         );
-        final output:Array<RichTextLineSegment> = LayoutQueries.richTextBackgroundSegments(content, [LayoutQueriesResidualCoverageTestHelpers.segment(new TextRange(0, 1), RichTextRole.Background, uniform, 0, new TextRange(0, 1), 0.0, 0.0, 10.0, 20.0, 15.0)]);
+        final output:Array<RichTextLineSegment> = LayoutQueries.richTextBackgroundSegments(content, [LayoutQueriesResidualCoverageTestHelpers.segment(new TextRange(0, 1), Background.instance, uniform, 0, new TextRange(0, 1), 0.0, 0.0, 10.0, 20.0, 15.0)]);
         TracedAssertions.assertEqualsFloat(0.0, output[0].top);
     }
 
@@ -981,7 +991,7 @@ class LayoutQueriesResidualCoverageTest {
             [LayoutQueriesResidualCoverageTestHelpers.line(new TextRange(0, 3), 0, 2, 0.0, 20.0, 15.0, 0.0, 30.0)], [],
             [new TextSpan(new TextRange(0, 3), LayoutQueriesResidualCoverageTestHelpers.style(20.0)), new TextSpan(new TextRange(1, 2), LayoutQueriesResidualCoverageTestHelpers.style(10.0))], [], LayoutQueriesResidualCoverageTestHelpers.emptyDebug(), LayoutQueriesResidualCoverageTestHelpers.style(10.0)
         );
-        final value:Float = LayoutQueries.richTextDecorationLineY(content, LayoutQueriesResidualCoverageTestHelpers.segment(new TextRange(0, 1), RichTextRole.Underline, new RichTextPaint(null, RichTextLinePattern.Solid, new RichTextBackgroundPaint(0.0, 0.0, 0.0, 0.0, RichTextBackgroundMetricPolicy.MarkedFaces, RichTextBackgroundDrawStyle.Fill), 0.0), 0, new TextRange(0, 1), 0.0, 0.0, 10.0, 20.0, 15.0), 1.0);
+        final value:Float = LayoutQueries.richTextDecorationLineY(content, LayoutQueriesResidualCoverageTestHelpers.segment(new TextRange(0, 1), Underline.instance, new RichTextPaint(null, Solid.instance, new RichTextBackgroundPaint(0.0, 0.0, 0.0, 0.0, RichTextBackgroundMetricPolicy.MarkedFaces, Fill.instance), 0.0), 0, new TextRange(0, 1), 0.0, 0.0, 10.0, 20.0, 15.0), 1.0);
         TracedAssertions.assertEqualsFloat(15.0 + 20.0 * 0.18, value);
     }
 
@@ -1046,7 +1056,7 @@ class LayoutQueriesResidualCoverageTestHelpers {
     }
 
     public static function plainSegment(range:TextRange):RichTextLineSegment {
-        return LayoutQueriesResidualCoverageTestHelpers.segment(range, RichTextRole.Background, new RichTextPaint(null, RichTextLinePattern.Solid, new RichTextBackgroundPaint(0.0, 0.0, 0.0, 0.0, RichTextBackgroundMetricPolicy.MarkedFaces, RichTextBackgroundDrawStyle.Fill), 0.0), 0, range, 0.0, 0.0, 20.0, 20.0, 15.0);
+        return LayoutQueriesResidualCoverageTestHelpers.segment(range, Background.instance, new RichTextPaint(null, Solid.instance, new RichTextBackgroundPaint(0.0, 0.0, 0.0, 0.0, RichTextBackgroundMetricPolicy.MarkedFaces, Fill.instance), 0.0), 0, range, 0.0, 0.0, 20.0, 20.0, 15.0);
     }
 
     public static function renderSegments(values:Array<RichTextLineSegment>):String {
@@ -1108,7 +1118,7 @@ class LayoutQueriesResidualCoverageTestHelpers {
         );
         final box:Array<RichTextLineSegment> = LayoutQueries.richTextBackgroundSegments(
             content,
-            [LayoutQueriesResidualCoverageTestHelpers.segment(new TextRange(0, 2), RichTextRole.Background, new RichTextPaint(null, RichTextLinePattern.Solid, new RichTextBackgroundPaint(0.0, 0.0, 0.0, 0.0, RichTextBackgroundMetricPolicy.MarkedFaces, RichTextBackgroundDrawStyle.Fill), 0.0), 0, new TextRange(0, 2), 0.0, 0.0, 20.0, 20.0, 15.0)]
+            [LayoutQueriesResidualCoverageTestHelpers.segment(new TextRange(0, 2), Background.instance, new RichTextPaint(null, Solid.instance, new RichTextBackgroundPaint(0.0, 0.0, 0.0, 0.0, RichTextBackgroundMetricPolicy.MarkedFaces, Fill.instance), 0.0), 0, new TextRange(0, 2), 0.0, 0.0, 20.0, 20.0, 15.0)]
         );
         return [box[0].top, box[0].bottom];
     }
