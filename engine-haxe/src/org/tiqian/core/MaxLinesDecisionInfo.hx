@@ -5,10 +5,10 @@ class MaxLinesDecisionInfo {
     public final visibleLines:Int;
     public final reason:String;
 
-    public function new(laidOutLines:Int, visibleLines:Int, reason:String) {
+    public function new(laidOutLines:Int, visibleLines:Int, ?reason:Null<String>) {
         this.laidOutLines = laidOutLines;
         this.visibleLines = visibleLines;
-        this.reason = reason;
+        this.reason = reason == null ? "MaxLinesLineTruncation" : reason;
     }
 
     public function toString():String {
