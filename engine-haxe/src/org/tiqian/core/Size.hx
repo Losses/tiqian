@@ -10,8 +10,5 @@ class Size {
         this.height = height;
     }
 
-    public function toString():String {
-        return "Size(width=" + width + ", height=" + height + ")";
-    }
 
 }
