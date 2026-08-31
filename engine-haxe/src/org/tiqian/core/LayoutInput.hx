@@ -42,7 +42,20 @@ class LayoutInput {
         this.inlineObjects = inlineObjects == null ? [] : inlineObjects;
     }
 
-
+    // The constructor parameter order diverges from the Kotlin primary
+    // constructor (constraints moved ahead of the gap-4-mandatory trio), and
+    // synthesis prints parameter order, so this explicit member stays.
+    public function toString():String {
+        return "LayoutInput(content=" + content.toString()
+            + ", textStyle=" + textStyle.toString()
+            + ", paragraphStyle=" + paragraphStyle.toString()
+            + ", constraints=" + constraints.toString()
+            + ", profileId=" + profileId.toString()
+            + ", decorations=" + renderDecorations(decorations)
+            + ", rubySpans=" + renderRubySpans(rubySpans)
+            + ", inlineBoxes=" + renderInlineBoxes(inlineBoxes)
+            + ", inlineObjects=" + renderInlineObjects(inlineObjects) + ")";
+    }
 
     private static function renderDecorations(values:ReadOnlyArray<DecorationSpan>):String {
         var output:String = "[";

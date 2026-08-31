@@ -12,6 +12,11 @@ class RichTextSpan {
         this.paint = paint;
     }
 
+    // The role is a Kotlin sealed interface; the enum Std.string form drops
+    // the "target=" label on Link, so this explicit member stays.
+    public function toString():String {
+        return "RichTextSpan(range=" + range.toString() + ", role=" + roleToString(role) + ", paint=" + paint.toString() + ")";
+    }
 
     private static function roleToString(role:RichTextRole):String {
         return switch (role) {
