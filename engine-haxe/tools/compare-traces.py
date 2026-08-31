@@ -64,7 +64,34 @@ def normalize_exception_names(line: str) -> str:
     return m.group(1) + EXCEPTION_NAME_ALIASES.get(m.group(2), m.group(2)) + m.group(3)
 
 # Longest-match tokenizer: marker, then number, else one text char.
-_TOKEN_RE = re.compile(r"(~\d+#\d+)|(-?\d+(?:\.\d+)?)")
+# The truncation stamp's hash is eight lowercase hex digits; a hash whose
+# digits happen to be all decimal still matches, so the hex class is
+# required for every stamp to tokenize as a marker.
+_TOKEN_RE = re.compile(r"(~\d+#[0-9a-f]+)|(-?\d+(?:\.\d+)?)")
+
+# Kotlin List joins printed elements with ", " while the stage-1 Haxe array
+# print joins with ",". Synthesized record members match the Kotlin field
+# order and names, so the only difference is the separator; collapse it on
+# both sides before tokenizing (tolerance mode only).
+_COLLECTION_JOIN_RE = re.compile(r", ")
+
+
+def normalize_collection_joins(line: str) -> str:
+    """Treat the ", " list join and the "," array join as equal."""
+    return _COLLECTION_JOIN_RE.sub(",", line)
+
+
+# The render cap cuts operand text at a fixed character count, so two
+# separator-differing renders of the same value cut at different fields and
+# leave different partial tokens before the truncation stamp. The stamp
+# already compares by marker kind only, so the partial token is cap-position
+# noise; drop it back to the last separator (tolerance mode only).
+_PARTIAL_TOKEN_STAMP_RE = re.compile(r",[^,\[\]()]*~\d+#[0-9a-f]+")
+
+
+def normalize_truncation_stamps(line: str) -> str:
+    """Replace each partial-token-plus-stamp region with a bare marker."""
+    return _PARTIAL_TOKEN_STAMP_RE.sub(",~", line)
 
 MAX_REPORTED_LINES = 12
 
@@ -192,8 +219,8 @@ def compare_class(golden_path: Path, actual_path: Path, mode: str, tol: Decimal)
     failures = []
     alias_count = 0
     for i, (g_raw, a_raw) in enumerate(zip(g_lines, a_lines)):
-        g = normalize_exception_names(g_raw)
-        a = normalize_exception_names(a_raw)
+        g = normalize_truncation_stamps(normalize_collection_joins(normalize_exception_names(g_raw)))
+        a = normalize_truncation_stamps(normalize_collection_joins(normalize_exception_names(a_raw)))
         reason = compare_lines(g, a, tol)
         if reason is None:
             if g != g_raw or a != a_raw:
