@@ -36,11 +36,11 @@ class LayoutInput {
     }
 
     public function toString():String {
-        return "LayoutInput(content=" + content
-            + ", textStyle=" + textStyle
-            + ", paragraphStyle=" + paragraphStyle
-            + ", constraints=" + constraints
-            + ", profileId=" + profileId
+        return "LayoutInput(content=" + content.toString()
+            + ", textStyle=" + textStyle.toString()
+            + ", paragraphStyle=" + paragraphStyle.toString()
+            + ", constraints=" + constraints.toString()
+            + ", profileId=" + profileId.toString()
             + ", decorations=" + renderDecorations(decorations)
             + ", rubySpans=" + renderRubySpans(rubySpans)
             + ", inlineBoxes=" + renderInlineBoxes(inlineBoxes)
