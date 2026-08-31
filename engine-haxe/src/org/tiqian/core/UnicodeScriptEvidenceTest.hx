@@ -20,7 +20,7 @@ class UnicodeScriptEvidenceTest {
         var index:Int = 0;
         while (index < codePoints.length) {
             final codePoint:Int = codePoints[index];
-            TracedAssertions.assertEqualsGeneric(UnicodeScriptEvidence.Neutral, UnicodeScriptEvidenceClassifier.classify(codePoint), "U+" + lowerHex(codePoint));
+            TracedAssertions.assertEqualsRendered(Std.string(UnicodeScriptEvidence.Neutral), Std.string(UnicodeScriptEvidenceClassifier.classify(codePoint)), "U+" + lowerHex(codePoint));
             index += 1;
         }
     }
@@ -32,14 +32,14 @@ class UnicodeScriptEvidenceTest {
         var index:Int = 0;
         while (index < eastAsianCodePoints.length) {
             final codePoint:Int = eastAsianCodePoints[index];
-            TracedAssertions.assertEqualsGeneric(UnicodeScriptEvidence.EastAsian, UnicodeScriptEvidenceClassifier.classify(codePoint), "U+" + lowerHex(codePoint));
+            TracedAssertions.assertEqualsRendered(Std.string(UnicodeScriptEvidence.EastAsian), Std.string(UnicodeScriptEvidenceClassifier.classify(codePoint)), "U+" + lowerHex(codePoint));
             index += 1;
         }
         final otherCodePoints:Array<Int> = [0x41, 0x03C0, 0x0416, 0x0627];
         index = 0;
         while (index < otherCodePoints.length) {
             final codePoint:Int = otherCodePoints[index];
-            TracedAssertions.assertEqualsGeneric(UnicodeScriptEvidence.Other, UnicodeScriptEvidenceClassifier.classify(codePoint), "U+" + lowerHex(codePoint));
+            TracedAssertions.assertEqualsRendered(Std.string(UnicodeScriptEvidence.Other), Std.string(UnicodeScriptEvidenceClassifier.classify(codePoint)), "U+" + lowerHex(codePoint));
             index += 1;
         }
     }
