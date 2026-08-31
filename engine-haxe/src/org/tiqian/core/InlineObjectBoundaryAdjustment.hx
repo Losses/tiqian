@@ -32,13 +32,7 @@ class InlineObjectBoundaryAdjustment {
         return new InlineObjectBoundaryAdjustment();
     }
 
-    public function toString():String {
-        return "InlineObjectBoundaryAdjustment(participatesInUniformStretch=" + participatesInUniformStretch
-            + ", preferredStretch=" + (preferredStretch == null ? "null" : preferredStretch.toString())
-            + ", shrinkCapacity=" + shrinkCapacity
-            + ", lineEndDiscardableAdvance=" + lineEndDiscardableAdvance
-            + ", preventsLineBreak=" + preventsLineBreak + ")";
-    }
+
 
     private static function isFinite(value:Float):Bool {
         return value == value && value != Math.POSITIVE_INFINITY && value != Math.NEGATIVE_INFINITY;

@@ -1,5 +1,6 @@
 package org.tiqian.core;
 
+@:dataClass
 class InlineObjectPreferredStretch {
     public final kind:InlineObjectPreferredStretchKind;
     public final naturalWidth:Float;
@@ -23,11 +24,7 @@ class InlineObjectPreferredStretch {
         return targetWidth - naturalWidth;
     }
 
-    public function toString():String {
-        return "InlineObjectPreferredStretch(kind=" + Std.string(kind)
-            + ", naturalWidth=" + naturalWidth
-            + ", targetWidth=" + targetWidth + ")";
-    }
+
 
     private static function isFinite(value:Float):Bool {
         return value == value && value != Math.POSITIVE_INFINITY && value != Math.NEGATIVE_INFINITY;

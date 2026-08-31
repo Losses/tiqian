@@ -1,5 +1,6 @@
 package org.tiqian.core;
 
+@:dataClass
 class RichTextLinePattern {
     public final strokeWidth:Float;
     public final dashLength:Float;
@@ -34,6 +35,9 @@ class RichTextLinePattern {
         return new RichTextLinePattern("Dotted", 0.0, 0.0, gapLength, dotDiameter);
     }
 
+    // Kotlin models this as a sealed interface with a data object Solid, so the
+    // printed form collapses each variant to its own shape instead of listing
+    // every field. Generic synthesis cannot reproduce that; keep this explicit.
     public function toString():String {
         if (kind == "Solid") {
             return "Solid";

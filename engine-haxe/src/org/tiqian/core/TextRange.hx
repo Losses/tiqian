@@ -28,7 +28,4 @@ class TextRange {
         return length == 0;
     }
 
-    public function toString():String {
-        return "TextRange(start=" + start + ", end=" + end + ")";
-    }
 }

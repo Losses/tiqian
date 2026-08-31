@@ -2,6 +2,7 @@ package org.tiqian.core;
 
 import std.ReadOnlyArray;
 
+@:dataClass
 class TiqianTextContent {
     public final text:String;
     public final spans:ReadOnlyArray<TextSpan>;
@@ -23,6 +24,9 @@ class TiqianTextContent {
         this.autoSpaceSuppressedRanges = autoSpaceSuppressedRanges == null ? [] : autoSpaceSuppressedRanges;
     }
 
+    // Kotlin's List.toString joins with ", " while Std.string over the array
+    // joins with ","; generic synthesis cannot reproduce the Kotlin text, so
+    // this explicit member stays.
     public function toString():String {
         return "TiqianTextContent(text=" + text
             + ", spans=" + renderSpans(spans)
