@@ -1,5 +1,12 @@
 package org.tiqian.core;
 
+import org.tiqian.core.RichTextRole.Background;
+import org.tiqian.core.RichTextRole.Underline;
+import org.tiqian.core.RichTextRole.LineThrough;
+import org.tiqian.core.RichTextRole.Link;
+import org.tiqian.core.RichTextRole.TechnicalInline;
+import org.tiqian.core.RichTextRole.InlineCode;
+
 import org.tiqian.core.RichTextLinePattern.Solid;
 import org.tiqian.core.RichTextLinePattern.Dashed;
 import org.tiqian.core.RichTextLinePattern.Dotted;
@@ -236,18 +243,18 @@ class TextModelCoverageTest {
         TextModelCoverageTestHelpers.expectArgumentFailure(() -> new Dotted(2.0, 0.0 / 0.0));
         TextModelCoverageTestHelpers.expectArgumentFailure(() -> new Dotted(2.0, Math.POSITIVE_INFINITY));
 
-        final linkRole:RichTextRole = RichTextRole.Link("https://tiqian.org");
+        final linkRole:RichTextRole = new Link("https://tiqian.org");
         TracedAssertions.assertEqualsString("https://tiqian.org", TextModelCoverageTestHelpers.linkTarget(linkRole));
         TracedAssertions.assertEqualsRendered("Link(target=https://tiqian.org)", TextModelCoverageTestHelpers.roleName(linkRole));
         TracedAssertions.assertTrue(true);
 
         final roles:Array<RichTextRole> = [
-            RichTextRole.Background,
-            RichTextRole.Underline,
-            RichTextRole.LineThrough,
+            Background.instance,
+            Underline.instance,
+            LineThrough.instance,
             linkRole,
-            RichTextRole.TechnicalInline,
-            RichTextRole.InlineCode
+            TechnicalInline.instance,
+            InlineCode.instance
         ];
         var roleIndex:Int = 0;
         while (roleIndex < roles.length) {
@@ -371,24 +378,16 @@ class TextModelCoverageTestHelpers {
     }
 
     public static function roleName(role:RichTextRole):String {
-        return switch (role) {
-            case Background: "Background";
-            case Underline: "Underline";
-            case LineThrough: "LineThrough";
-            case Link(target): "Link(target=" + target + ")";
-            case TechnicalInline: "TechnicalInline";
-            case InlineCode: "InlineCode";
-        };
+        if (Std.isOfType(role, Background)) return "Background";
+        if (Std.isOfType(role, Underline)) return "Underline";
+        if (Std.isOfType(role, LineThrough)) return "LineThrough";
+        if (Std.isOfType(role, Link)) return "Link(target=" + (cast(role, Link)).target + ")";
+        if (Std.isOfType(role, TechnicalInline)) return "TechnicalInline";
+        return "InlineCode";
     }
 
     public static function linkTarget(role:RichTextRole):String {
-        return switch (role) {
-            case Background: "";
-            case Underline: "";
-            case LineThrough: "";
-            case Link(target): target;
-            case TechnicalInline: "";
-            case InlineCode: "";
-        };
+        if (Std.isOfType(role, Link)) return (cast(role, Link)).target;
+        return "";
     }
 }
