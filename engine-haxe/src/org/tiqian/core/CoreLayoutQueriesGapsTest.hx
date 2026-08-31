@@ -1,5 +1,8 @@
 package org.tiqian.core;
 
+import org.tiqian.core.RichTextLinePattern.Solid;
+import org.tiqian.core.RichTextBackgroundDrawStyle.Fill;
+
 import org.tiqian.test.trace.TestTraceRecorder;
 import org.tiqian.test.trace.TracedAssertions;
 import org.tiqian.test.TestHelpers;
@@ -117,7 +120,7 @@ class CoreLayoutQueriesGapsTest {
             new LayoutDebugInfo(null, [], [], [])
         );
         final paint:RichTextPaint = RichTextPaint.withBackground(
-            new RichTextBackgroundPaint(0.0, 0.0, 0.0, 0.0, RichTextBackgroundMetricPolicy.UniformParagraphStyle, RichTextBackgroundDrawStyle.Fill)
+            new RichTextBackgroundPaint(0.0, 0.0, 0.0, 0.0, RichTextBackgroundMetricPolicy.UniformParagraphStyle, Fill.instance)
         );
         final span:RichTextSpan = new RichTextSpan(new TextRange(0, 2), RichTextRole.Background, paint);
         final occupied:Array<RichTextLineSegment> = LayoutQueries.positionedRichTextSegments(result, [span]);
@@ -154,7 +157,7 @@ class CoreLayoutQueriesGapsTest {
             [CoreLayoutQueriesGapsTestHelpers.line(new TextRange(0, 2), 0, 0, 15.0, 0.0, 20.0, 20.0, null)],
             new LayoutDebugInfo(null, [metric], [], [])
         );
-        final span:RichTextSpan = new RichTextSpan(new TextRange(0, 2), RichTextRole.Background, new RichTextPaint(null, RichTextLinePattern.Solid, new RichTextBackgroundPaint(0.0, 0.0, 0.0, 0.0, RichTextBackgroundMetricPolicy.MarkedFaces, RichTextBackgroundDrawStyle.Fill), 0.0));
+        final span:RichTextSpan = new RichTextSpan(new TextRange(0, 2), RichTextRole.Background, new RichTextPaint(null, Solid.instance, new RichTextBackgroundPaint(0.0, 0.0, 0.0, 0.0, RichTextBackgroundMetricPolicy.MarkedFaces, Fill.instance), 0.0));
         final occupied:Array<RichTextLineSegment> = LayoutQueries.positionedRichTextSegments(result, [span]);
         final segments:Array<RichTextLineSegment> = LayoutQueries.richTextBackgroundSegments(result, occupied);
         TracedAssertions.assertEqualsInt(1, segments.length);

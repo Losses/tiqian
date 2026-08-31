@@ -1,34 +1,22 @@
 package org.tiqian.core;
 
+@:sealed
+interface RichTextBackgroundDrawStyle {}
+
+class Fill implements RichTextBackgroundDrawStyle {
+    public static final instance:Fill = new Fill();
+    private function new() {}
+}
+
 @:dataClass
-class RichTextBackgroundDrawStyle {
+class Border implements RichTextBackgroundDrawStyle {
     public final strokeWidth:Float;
-    private final kind:String;
 
-    private function new(kind:String, strokeWidth:Float) {
-        this.kind = kind;
-        this.strokeWidth = strokeWidth;
-    }
-
-    public static final Fill:RichTextBackgroundDrawStyle = new RichTextBackgroundDrawStyle("Fill", 0.0);
-
-    public static function Border(strokeWidth:Float):RichTextBackgroundDrawStyle {
+    public function new(strokeWidth:Float) {
         if (!isFinite(strokeWidth) || strokeWidth <= 0.0) {
             throw new TiqianIllegalArgumentException(Message("Failed requirement."));
         }
-        return new RichTextBackgroundDrawStyle("Border", strokeWidth);
-    }
-
-    // Kotlin models this as a sealed interface with a data object Fill, so the
-    // printed form collapses each variant to its own shape instead of listing
-    // every field. Generic synthesis cannot reproduce that; keep this explicit.
-    public function toString():String {
-        return kind == "Fill" ? "Fill" : "Border(strokeWidth=" + strokeWidth + ")";
-    }
-
-    @:allow(org.tiqian.core.RichTextBackgroundPaint)
-    private static function sameValues(a:RichTextBackgroundDrawStyle, b:RichTextBackgroundDrawStyle):Bool {
-        return a.kind == b.kind && (a.kind == "Fill" || a.strokeWidth == b.strokeWidth);
+        this.strokeWidth = strokeWidth;
     }
 
     private static function isFinite(value:Float):Bool {
