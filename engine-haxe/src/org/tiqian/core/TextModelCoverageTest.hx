@@ -1,5 +1,18 @@
 package org.tiqian.core;
 
+import org.tiqian.core.RichTextRole.Background;
+import org.tiqian.core.RichTextRole.Underline;
+import org.tiqian.core.RichTextRole.LineThrough;
+import org.tiqian.core.RichTextRole.Link;
+import org.tiqian.core.RichTextRole.TechnicalInline;
+import org.tiqian.core.RichTextRole.InlineCode;
+
+import org.tiqian.core.RichTextLinePattern.Solid;
+import org.tiqian.core.RichTextLinePattern.Dashed;
+import org.tiqian.core.RichTextLinePattern.Dotted;
+import org.tiqian.core.RichTextBackgroundDrawStyle.Fill;
+import org.tiqian.core.RichTextBackgroundDrawStyle.Border;
+
 import org.tiqian.test.trace.TestTraceRecorder;
 import org.tiqian.test.trace.TestTraceRender;
 import org.tiqian.test.trace.TracedAssertions;
@@ -156,16 +169,16 @@ class TextModelCoverageTest {
     @:test
     public static function testRichTextSpansAndPatterns():Void {
         new TestTraceRecorder("TextModelCoverageTest").section("testRichTextSpansAndPatterns");
-        final paint:RichTextPaint = new RichTextPaint(-16777216, RichTextLinePattern.Solid, new RichTextBackgroundPaint(0.0, 0.0, 0.0, 0.0, RichTextBackgroundMetricPolicy.MarkedFaces, RichTextBackgroundDrawStyle.Fill), 1.5);
+        final paint:RichTextPaint = new RichTextPaint(-16777216, Solid.instance, new RichTextBackgroundPaint(0.0, 0.0, 0.0, 0.0, RichTextBackgroundMetricPolicy.MarkedFaces, Fill.instance), 1.5);
         TracedAssertions.assertEqualsInt(-16777216, paint.argb);
         TracedAssertions.assertEqualsFloat(1.5, paint.adjacentSameStyleClearance);
         TextModelCoverageTestHelpers.assertRendered(paint.toString());
 
-        TextModelCoverageTestHelpers.expectArgumentFailure(() -> new RichTextPaint(null, RichTextLinePattern.Solid, new RichTextBackgroundPaint(0.0, 0.0, 0.0, 0.0, RichTextBackgroundMetricPolicy.MarkedFaces, RichTextBackgroundDrawStyle.Fill), -0.1));
-        TextModelCoverageTestHelpers.expectArgumentFailure(() -> new RichTextPaint(null, RichTextLinePattern.Solid, new RichTextBackgroundPaint(0.0, 0.0, 0.0, 0.0, RichTextBackgroundMetricPolicy.MarkedFaces, RichTextBackgroundDrawStyle.Fill), 0.0 / 0.0));
-        TextModelCoverageTestHelpers.expectArgumentFailure(() -> new RichTextPaint(null, RichTextLinePattern.Solid, new RichTextBackgroundPaint(0.0, 0.0, 0.0, 0.0, RichTextBackgroundMetricPolicy.MarkedFaces, RichTextBackgroundDrawStyle.Fill), Math.POSITIVE_INFINITY));
+        TextModelCoverageTestHelpers.expectArgumentFailure(() -> new RichTextPaint(null, Solid.instance, new RichTextBackgroundPaint(0.0, 0.0, 0.0, 0.0, RichTextBackgroundMetricPolicy.MarkedFaces, Fill.instance), -0.1));
+        TextModelCoverageTestHelpers.expectArgumentFailure(() -> new RichTextPaint(null, Solid.instance, new RichTextBackgroundPaint(0.0, 0.0, 0.0, 0.0, RichTextBackgroundMetricPolicy.MarkedFaces, Fill.instance), 0.0 / 0.0));
+        TextModelCoverageTestHelpers.expectArgumentFailure(() -> new RichTextPaint(null, Solid.instance, new RichTextBackgroundPaint(0.0, 0.0, 0.0, 0.0, RichTextBackgroundMetricPolicy.MarkedFaces, Fill.instance), Math.POSITIVE_INFINITY));
 
-        final bgPaint:RichTextBackgroundPaint = new RichTextBackgroundPaint(2.0, 3.0, 4.0, 1.0, RichTextBackgroundMetricPolicy.UniformTextStyle, RichTextBackgroundDrawStyle.Border(1.5));
+        final bgPaint:RichTextBackgroundPaint = new RichTextBackgroundPaint(2.0, 3.0, 4.0, 1.0, RichTextBackgroundMetricPolicy.UniformTextStyle, new Border(1.5));
         TracedAssertions.assertEqualsFloat(2.0, bgPaint.horizontalPadding);
         TracedAssertions.assertEqualsFloat(3.0, bgPaint.verticalPadding);
         TracedAssertions.assertEqualsFloat(4.0, bgPaint.cornerRadius);
@@ -173,22 +186,22 @@ class TextModelCoverageTest {
         TracedAssertions.assertEqualsRendered(Std.string(RichTextBackgroundMetricPolicy.UniformTextStyle), Std.string(bgPaint.metricPolicy));
         TextModelCoverageTestHelpers.assertRendered(bgPaint.toString());
 
-        TextModelCoverageTestHelpers.expectArgumentFailure(() -> new RichTextBackgroundPaint(-1.0, 0.0, 0.0, 0.0, RichTextBackgroundMetricPolicy.MarkedFaces, RichTextBackgroundDrawStyle.Fill));
-        TextModelCoverageTestHelpers.expectArgumentFailure(() -> new RichTextBackgroundPaint(0.0 / 0.0, 0.0, 0.0, 0.0, RichTextBackgroundMetricPolicy.MarkedFaces, RichTextBackgroundDrawStyle.Fill));
-        TextModelCoverageTestHelpers.expectArgumentFailure(() -> new RichTextBackgroundPaint(0.0, -1.0, 0.0, 0.0, RichTextBackgroundMetricPolicy.MarkedFaces, RichTextBackgroundDrawStyle.Fill));
-        TextModelCoverageTestHelpers.expectArgumentFailure(() -> new RichTextBackgroundPaint(0.0, 0.0 / 0.0, 0.0, 0.0, RichTextBackgroundMetricPolicy.MarkedFaces, RichTextBackgroundDrawStyle.Fill));
-        TextModelCoverageTestHelpers.expectArgumentFailure(() -> new RichTextBackgroundPaint(0.0, 0.0, -1.0, -1.0, RichTextBackgroundMetricPolicy.MarkedFaces, RichTextBackgroundDrawStyle.Fill));
-        TextModelCoverageTestHelpers.expectArgumentFailure(() -> new RichTextBackgroundPaint(0.0, 0.0, 0.0 / 0.0, 0.0 / 0.0, RichTextBackgroundMetricPolicy.MarkedFaces, RichTextBackgroundDrawStyle.Fill));
-        TextModelCoverageTestHelpers.expectArgumentFailure(() -> new RichTextBackgroundPaint(0.0, 0.0, 0.0, -1.0, RichTextBackgroundMetricPolicy.MarkedFaces, RichTextBackgroundDrawStyle.Fill));
-        TextModelCoverageTestHelpers.expectArgumentFailure(() -> new RichTextBackgroundPaint(0.0, 0.0, 0.0, 0.0 / 0.0, RichTextBackgroundMetricPolicy.MarkedFaces, RichTextBackgroundDrawStyle.Fill));
+        TextModelCoverageTestHelpers.expectArgumentFailure(() -> new RichTextBackgroundPaint(-1.0, 0.0, 0.0, 0.0, RichTextBackgroundMetricPolicy.MarkedFaces, Fill.instance));
+        TextModelCoverageTestHelpers.expectArgumentFailure(() -> new RichTextBackgroundPaint(0.0 / 0.0, 0.0, 0.0, 0.0, RichTextBackgroundMetricPolicy.MarkedFaces, Fill.instance));
+        TextModelCoverageTestHelpers.expectArgumentFailure(() -> new RichTextBackgroundPaint(0.0, -1.0, 0.0, 0.0, RichTextBackgroundMetricPolicy.MarkedFaces, Fill.instance));
+        TextModelCoverageTestHelpers.expectArgumentFailure(() -> new RichTextBackgroundPaint(0.0, 0.0 / 0.0, 0.0, 0.0, RichTextBackgroundMetricPolicy.MarkedFaces, Fill.instance));
+        TextModelCoverageTestHelpers.expectArgumentFailure(() -> new RichTextBackgroundPaint(0.0, 0.0, -1.0, -1.0, RichTextBackgroundMetricPolicy.MarkedFaces, Fill.instance));
+        TextModelCoverageTestHelpers.expectArgumentFailure(() -> new RichTextBackgroundPaint(0.0, 0.0, 0.0 / 0.0, 0.0 / 0.0, RichTextBackgroundMetricPolicy.MarkedFaces, Fill.instance));
+        TextModelCoverageTestHelpers.expectArgumentFailure(() -> new RichTextBackgroundPaint(0.0, 0.0, 0.0, -1.0, RichTextBackgroundMetricPolicy.MarkedFaces, Fill.instance));
+        TextModelCoverageTestHelpers.expectArgumentFailure(() -> new RichTextBackgroundPaint(0.0, 0.0, 0.0, 0.0 / 0.0, RichTextBackgroundMetricPolicy.MarkedFaces, Fill.instance));
 
-        TracedAssertions.assertEqualsRendered(RichTextBackgroundDrawStyle.Fill.toString(), RichTextBackgroundDrawStyle.Fill.toString());
-        final border:RichTextBackgroundDrawStyle = RichTextBackgroundDrawStyle.Border(2.0);
+        TracedAssertions.assertEqualsRendered(Fill.instance.toString(), Fill.instance.toString());
+        final border:Border = new Border(2.0);
         TracedAssertions.assertEqualsFloat(2.0, border.strokeWidth);
         TextModelCoverageTestHelpers.assertRendered(border.toString());
-        TextModelCoverageTestHelpers.expectArgumentFailure(() -> RichTextBackgroundDrawStyle.Border(0.0));
-        TextModelCoverageTestHelpers.expectArgumentFailure(() -> RichTextBackgroundDrawStyle.Border(-1.0));
-        TextModelCoverageTestHelpers.expectArgumentFailure(() -> RichTextBackgroundDrawStyle.Border(0.0 / 0.0));
+        TextModelCoverageTestHelpers.expectArgumentFailure(() -> new Border(0.0));
+        TextModelCoverageTestHelpers.expectArgumentFailure(() -> new Border(-1.0));
+        TextModelCoverageTestHelpers.expectArgumentFailure(() -> new Border(0.0 / 0.0));
 
         final markedFaces = RichTextBackgroundMetricPolicy.MarkedFaces;
         TracedAssertions.assertNotNullRendered(markedFaces != null, markedFaces == null ? "-" : Std.string(markedFaces));
@@ -197,51 +210,51 @@ class TextModelCoverageTest {
         final uniformParagraphStyle = RichTextBackgroundMetricPolicy.UniformParagraphStyle;
         TracedAssertions.assertNotNullRendered(uniformParagraphStyle != null, uniformParagraphStyle == null ? "-" : Std.string(uniformParagraphStyle));
 
-        TracedAssertions.assertEqualsRendered(RichTextLinePattern.Solid.toString(), RichTextLinePattern.Solid.toString());
-        final dashed:RichTextLinePattern = RichTextLinePattern.Dashed(1.0, 4.0, 2.0);
+        TracedAssertions.assertEqualsRendered(Solid.instance.toString(), Solid.instance.toString());
+        final dashed:Dashed = new Dashed(1.0, 4.0, 2.0);
         TracedAssertions.assertEqualsFloat(1.0, dashed.strokeWidth);
         TracedAssertions.assertEqualsFloat(4.0, dashed.dashLength);
         TracedAssertions.assertEqualsFloat(2.0, dashed.gapLength);
         TextModelCoverageTestHelpers.assertRendered(dashed.toString());
 
-        TextModelCoverageTestHelpers.expectArgumentFailure(() -> RichTextLinePattern.Dashed(0.0, 4.0, 2.0));
-        TextModelCoverageTestHelpers.expectArgumentFailure(() -> RichTextLinePattern.Dashed(-1.0, 4.0, 2.0));
-        TextModelCoverageTestHelpers.expectArgumentFailure(() -> RichTextLinePattern.Dashed(0.0 / 0.0, 4.0, 2.0));
-        TextModelCoverageTestHelpers.expectArgumentFailure(() -> RichTextLinePattern.Dashed(Math.POSITIVE_INFINITY, 4.0, 2.0));
-        TextModelCoverageTestHelpers.expectArgumentFailure(() -> RichTextLinePattern.Dashed(1.0, 0.0, 2.0));
-        TextModelCoverageTestHelpers.expectArgumentFailure(() -> RichTextLinePattern.Dashed(1.0, -1.0, 2.0));
-        TextModelCoverageTestHelpers.expectArgumentFailure(() -> RichTextLinePattern.Dashed(1.0, 0.0 / 0.0, 2.0));
-        TextModelCoverageTestHelpers.expectArgumentFailure(() -> RichTextLinePattern.Dashed(1.0, Math.POSITIVE_INFINITY, 2.0));
-        TextModelCoverageTestHelpers.expectArgumentFailure(() -> RichTextLinePattern.Dashed(1.0, 4.0, 0.0));
-        TextModelCoverageTestHelpers.expectArgumentFailure(() -> RichTextLinePattern.Dashed(1.0, 4.0, -1.0));
-        TextModelCoverageTestHelpers.expectArgumentFailure(() -> RichTextLinePattern.Dashed(1.0, 4.0, 0.0 / 0.0));
-        TextModelCoverageTestHelpers.expectArgumentFailure(() -> RichTextLinePattern.Dashed(1.0, 4.0, Math.POSITIVE_INFINITY));
+        TextModelCoverageTestHelpers.expectArgumentFailure(() -> new Dashed(0.0, 4.0, 2.0));
+        TextModelCoverageTestHelpers.expectArgumentFailure(() -> new Dashed(-1.0, 4.0, 2.0));
+        TextModelCoverageTestHelpers.expectArgumentFailure(() -> new Dashed(0.0 / 0.0, 4.0, 2.0));
+        TextModelCoverageTestHelpers.expectArgumentFailure(() -> new Dashed(Math.POSITIVE_INFINITY, 4.0, 2.0));
+        TextModelCoverageTestHelpers.expectArgumentFailure(() -> new Dashed(1.0, 0.0, 2.0));
+        TextModelCoverageTestHelpers.expectArgumentFailure(() -> new Dashed(1.0, -1.0, 2.0));
+        TextModelCoverageTestHelpers.expectArgumentFailure(() -> new Dashed(1.0, 0.0 / 0.0, 2.0));
+        TextModelCoverageTestHelpers.expectArgumentFailure(() -> new Dashed(1.0, Math.POSITIVE_INFINITY, 2.0));
+        TextModelCoverageTestHelpers.expectArgumentFailure(() -> new Dashed(1.0, 4.0, 0.0));
+        TextModelCoverageTestHelpers.expectArgumentFailure(() -> new Dashed(1.0, 4.0, -1.0));
+        TextModelCoverageTestHelpers.expectArgumentFailure(() -> new Dashed(1.0, 4.0, 0.0 / 0.0));
+        TextModelCoverageTestHelpers.expectArgumentFailure(() -> new Dashed(1.0, 4.0, Math.POSITIVE_INFINITY));
 
-        final dotted:RichTextLinePattern = RichTextLinePattern.Dotted(2.0, 3.0);
+        final dotted:Dotted = new Dotted(2.0, 3.0);
         TracedAssertions.assertEqualsFloat(2.0, dotted.dotDiameter);
         TracedAssertions.assertEqualsFloat(3.0, dotted.gapLength);
         TextModelCoverageTestHelpers.assertRendered(dotted.toString());
-        TextModelCoverageTestHelpers.expectArgumentFailure(() -> RichTextLinePattern.Dotted(0.0, 3.0));
-        TextModelCoverageTestHelpers.expectArgumentFailure(() -> RichTextLinePattern.Dotted(-1.0, 3.0));
-        TextModelCoverageTestHelpers.expectArgumentFailure(() -> RichTextLinePattern.Dotted(0.0 / 0.0, 3.0));
-        TextModelCoverageTestHelpers.expectArgumentFailure(() -> RichTextLinePattern.Dotted(Math.POSITIVE_INFINITY, 3.0));
-        TextModelCoverageTestHelpers.expectArgumentFailure(() -> RichTextLinePattern.Dotted(2.0, 0.0));
-        TextModelCoverageTestHelpers.expectArgumentFailure(() -> RichTextLinePattern.Dotted(2.0, -1.0));
-        TextModelCoverageTestHelpers.expectArgumentFailure(() -> RichTextLinePattern.Dotted(2.0, 0.0 / 0.0));
-        TextModelCoverageTestHelpers.expectArgumentFailure(() -> RichTextLinePattern.Dotted(2.0, Math.POSITIVE_INFINITY));
+        TextModelCoverageTestHelpers.expectArgumentFailure(() -> new Dotted(0.0, 3.0));
+        TextModelCoverageTestHelpers.expectArgumentFailure(() -> new Dotted(-1.0, 3.0));
+        TextModelCoverageTestHelpers.expectArgumentFailure(() -> new Dotted(0.0 / 0.0, 3.0));
+        TextModelCoverageTestHelpers.expectArgumentFailure(() -> new Dotted(Math.POSITIVE_INFINITY, 3.0));
+        TextModelCoverageTestHelpers.expectArgumentFailure(() -> new Dotted(2.0, 0.0));
+        TextModelCoverageTestHelpers.expectArgumentFailure(() -> new Dotted(2.0, -1.0));
+        TextModelCoverageTestHelpers.expectArgumentFailure(() -> new Dotted(2.0, 0.0 / 0.0));
+        TextModelCoverageTestHelpers.expectArgumentFailure(() -> new Dotted(2.0, Math.POSITIVE_INFINITY));
 
-        final linkRole:RichTextRole = RichTextRole.Link("https://tiqian.org");
+        final linkRole:RichTextRole = new Link("https://tiqian.org");
         TracedAssertions.assertEqualsString("https://tiqian.org", TextModelCoverageTestHelpers.linkTarget(linkRole));
         TracedAssertions.assertEqualsRendered("Link(target=https://tiqian.org)", TextModelCoverageTestHelpers.roleName(linkRole));
         TracedAssertions.assertTrue(true);
 
         final roles:Array<RichTextRole> = [
-            RichTextRole.Background,
-            RichTextRole.Underline,
-            RichTextRole.LineThrough,
+            Background.instance,
+            Underline.instance,
+            LineThrough.instance,
             linkRole,
-            RichTextRole.TechnicalInline,
-            RichTextRole.InlineCode
+            TechnicalInline.instance,
+            InlineCode.instance
         ];
         var roleIndex:Int = 0;
         while (roleIndex < roles.length) {
@@ -365,24 +378,16 @@ class TextModelCoverageTestHelpers {
     }
 
     public static function roleName(role:RichTextRole):String {
-        return switch (role) {
-            case Background: "Background";
-            case Underline: "Underline";
-            case LineThrough: "LineThrough";
-            case Link(target): "Link(target=" + target + ")";
-            case TechnicalInline: "TechnicalInline";
-            case InlineCode: "InlineCode";
-        };
+        if (Std.isOfType(role, Background)) return "Background";
+        if (Std.isOfType(role, Underline)) return "Underline";
+        if (Std.isOfType(role, LineThrough)) return "LineThrough";
+        if (Std.isOfType(role, Link)) return "Link(target=" + (cast(role, Link)).target + ")";
+        if (Std.isOfType(role, TechnicalInline)) return "TechnicalInline";
+        return "InlineCode";
     }
 
     public static function linkTarget(role:RichTextRole):String {
-        return switch (role) {
-            case Background: "";
-            case Underline: "";
-            case LineThrough: "";
-            case Link(target): target;
-            case TechnicalInline: "";
-            case InlineCode: "";
-        };
+        if (Std.isOfType(role, Link)) return (cast(role, Link)).target;
+        return "";
     }
 }
