@@ -7,3 +7,4 @@
 -js engine-haxe/out/haxe-tests.js
 -D analyzer-optimize
 --macro Intercept.run(['engine-haxe/src'], [])
+--macro haxe.macro.Compiler.addGlobalMetadata('org.tiqian', '@:build(std.RecordMember.build())')
