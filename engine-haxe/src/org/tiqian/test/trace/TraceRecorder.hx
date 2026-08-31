@@ -33,8 +33,4 @@ class TraceRecorder {
     public function text():String {
         return buffer.toString();
     }
-
-    public function toString():String {
-        return text();
-    }
 }
