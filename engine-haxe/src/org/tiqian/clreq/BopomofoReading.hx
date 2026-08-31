@@ -60,7 +60,11 @@ class BopomofoReading {
     }
 
     private function toneIndex():Int {
-        return switch (tone) {
+        // The typer hoists a field subject into a temp block the Kotlin
+        // target cannot lower; reading it into a local first keeps the
+        // switch a plain variant switch.
+        final value:BopomofoTone = tone;
+        return switch (value) {
             case BopomofoTone.Yinping:
                 0;
             case BopomofoTone.Yangping:
