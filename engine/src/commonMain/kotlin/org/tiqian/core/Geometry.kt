@@ -1,18 +1,5 @@
 package org.tiqian.core
 
-data class TextRange(
-    val start: Int,
-    val end: Int,
-) {
-    init {
-        require(start <= end) { "TextRange start must not be greater than end." }
-        require(start >= 0) { "TextRange start must be non-negative." }
-    }
-
-    val length: Int get() = end - start
-    val isEmpty: Boolean get() = length == 0
-}
-
 data class Size(
     val width: Float,
     val height: Float,
