@@ -305,3 +305,14 @@ lowerHex 及各类 helper，boring 裁定共享逻辑入普通类，重构波待
 flushTestTrace 十四处定义零调用者，属死代码随波删除。首错即停教训：
 haxe 编译器本配置下报首个错误即止，lane 判据不能用「恰好 N 个已知错误」，
 必须迭代到零或以丢弃树中和验证。
+
+2026-08-31 InlineObjectBoundaryAdjustment 改常量默认：Kotlin 原版
+shrinkCapacity 与 lineEndDiscardableAdvance 就是 `Float = 0f` 常量默认，port
+侧原以 Null 解析加校验加赋值建模并无必要。改为 `shrinkCapacity:Float = 0.0`
+等常量默认后构造器通过全部检查，TextModelCoverageTest 四处拒绝用例同步改为
+省略或显式 0.0 形态，fixed() 改全默认构造。该文件退出缺口 4 拦截清单。同一轮
+修复 74c92c12 的遗漏：Main.hx 仍调用已删除的 flushTestTrace，测试入口在该
+提交上编译失败；TestTraceRecorder 增 flushClass(className) 静态，Main 十五处
+改经它写 golden。验证：tests/compile.hxml 零错误、测试 rc=0、15 类比对 15/15、
+exception-alias=73。剩余 Kotlin 拦截两处：RubySpan.hx:46（缺口 4）、
+TestTraceRecorder.hx:10 静态赋值（缺口 10）。
