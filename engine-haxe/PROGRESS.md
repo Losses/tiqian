@@ -283,3 +283,25 @@ engine-haxe/tools/compare-traces.py；TASK.md 与 codex 日志留在不跟踪的
 porting/；out/、baseline-goldens/、smoke/ 加入忽略清单。移动与路径修正
 后验证链重新通过：compile.hxml 零错误、测试 rc=0 无 FAIL、15 类比对
 15/15 通过、exception-alias=73。
+
+2026-08-31 指针推进 405857f（Std.string 数组单遍降级合并后）+ 全量拦截点
+普查：以丢弃 worktree 逐个中和迭代编译，摸清到零错误的完整清单并已全部
+处置。已修复入库：裸类拼接 toString 全批（InlineBoxSpan/LineBreakSpan/
+DecorationSpan/TextSpan/RichTextSpan/RichTextLineSegment/RubySpan/
+PositionedCluster/InlineObjectSpan 的 range/style/paint/span/baseRange/
+boundary 字段，ParagraphStyle 的 blockIndent/lineLengthGrid/
+firstLineIndentPolicy，LayoutInput 的 content/textStyle/paragraphStyle/
+constraints/profileId 头部五行——Std.string 域检查同样作用于字符串拼接
+操作数，早期 census 只 grep Std.string 漏了这一类）；sameRole 嵌套
+variant switch 改平（switch 子集三规则：arm 必须是表达式、绑定载荷的
+switch 必须全构造器覆盖、arm 内嵌套 switch 无降级——Link 载荷比较拆到
+sameLinkTarget 助手，parameterless 构造器用 == 比较 data object 单例）。
+剩余拦截分三类，均登记 boring 缺口队列：缺口 4 构造器纪律（RubySpan.hx:46
+locale 跨参数条件默认、InlineObjectBoundaryAdjustment.hx:27 Null 解析+
+校验+赋值）；缺口 10 可变静态字段赋值（TestTrace.recorder 全局记录器、
+普通类自身静态 var 赋值同样无降级，已探针实锤）；测试类成员纪律波
+（15 个测试类携带非测试成员 testTrace/currentTrace/flushTestTrace/
+lowerHex 及各类 helper，boring 裁定共享逻辑入普通类，重构波待派发）。
+flushTestTrace 十四处定义零调用者，属死代码随波删除。首错即停教训：
+haxe 编译器本配置下报首个错误即止，lane 判据不能用「恰好 N 个已知错误」，
+必须迭代到零或以丢弃树中和验证。
