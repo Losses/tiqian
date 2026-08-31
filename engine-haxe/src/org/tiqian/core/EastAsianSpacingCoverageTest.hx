@@ -5,30 +5,17 @@ import org.tiqian.test.trace.TestTraceRecorder;
 import org.tiqian.test.trace.TracedAssertions;
 
 class EastAsianSpacingCoverageTest {
-    private static var testTrace:TestTraceRecorder = null;
-
-    private static function currentTrace():TestTraceRecorder {
-        if (testTrace == null) {
-            testTrace = new TestTraceRecorder("EastAsianSpacingCoverageTest");
-        }
-        return testTrace;
-    }
-
-    private static function expectArgumentFailure(block:()->Void):Void {
-        TracedAssertions.assertFailsWith(null, block);
-    }
-
     @:test
     public static function testUnicodeWordCharacter():Void {
-        currentTrace().section("testUnicodeWordCharacter");
+        new TestTraceRecorder("EastAsianSpacingCoverageTest").section("testUnicodeWordCharacter");
         TracedAssertions.assertEqualsString("17.0.0", UnicodeWordCharacter.DATA_REVISION);
         TracedAssertions.assertTrue(UnicodeWordCharacter.DATA_SOURCE.length > 0);
         TracedAssertions.assertTrue(UnicodeWordCharacter.DATA_SHA256.length > 0);
 
-        expectArgumentFailure(() -> UnicodeWordCharacter.contains(-1));
-        expectArgumentFailure(() -> UnicodeWordCharacter.contains(0x110000));
-        expectArgumentFailure(() -> UnicodeWordCharacter.contains(0xD800));
-        expectArgumentFailure(() -> UnicodeWordCharacter.contains(0xDFFF));
+        EastAsianSpacingCoverageTestHelpers.expectArgumentFailure(() -> UnicodeWordCharacter.contains(-1));
+        EastAsianSpacingCoverageTestHelpers.expectArgumentFailure(() -> UnicodeWordCharacter.contains(0x110000));
+        EastAsianSpacingCoverageTestHelpers.expectArgumentFailure(() -> UnicodeWordCharacter.contains(0xD800));
+        EastAsianSpacingCoverageTestHelpers.expectArgumentFailure(() -> UnicodeWordCharacter.contains(0xDFFF));
 
         TracedAssertions.assertTrue(UnicodeWordCharacter.contains(0x41));
         TracedAssertions.assertTrue(UnicodeWordCharacter.contains(0x4E2D));
@@ -38,7 +25,7 @@ class EastAsianSpacingCoverageTest {
 
     @:test
     public static function testUnicodeScriptEvidence():Void {
-        currentTrace().section("testUnicodeScriptEvidence");
+        new TestTraceRecorder("EastAsianSpacingCoverageTest").section("testUnicodeScriptEvidence");
         final values:Array<UnicodeScriptEvidence> = [
             UnicodeScriptEvidence.Neutral,
             UnicodeScriptEvidence.EastAsian,
@@ -55,10 +42,10 @@ class EastAsianSpacingCoverageTest {
         TracedAssertions.assertTrue(UnicodeScriptEvidenceClassifier.DATA_SOURCE.length > 0);
         TracedAssertions.assertTrue(UnicodeScriptEvidenceClassifier.DATA_SHA256.length > 0);
 
-        expectArgumentFailure(() -> UnicodeScriptEvidenceClassifier.classify(-1));
-        expectArgumentFailure(() -> UnicodeScriptEvidenceClassifier.classify(0x110000));
-        expectArgumentFailure(() -> UnicodeScriptEvidenceClassifier.classify(0xD800));
-        expectArgumentFailure(() -> UnicodeScriptEvidenceClassifier.classify(0xDFFF));
+        EastAsianSpacingCoverageTestHelpers.expectArgumentFailure(() -> UnicodeScriptEvidenceClassifier.classify(-1));
+        EastAsianSpacingCoverageTestHelpers.expectArgumentFailure(() -> UnicodeScriptEvidenceClassifier.classify(0x110000));
+        EastAsianSpacingCoverageTestHelpers.expectArgumentFailure(() -> UnicodeScriptEvidenceClassifier.classify(0xD800));
+        EastAsianSpacingCoverageTestHelpers.expectArgumentFailure(() -> UnicodeScriptEvidenceClassifier.classify(0xDFFF));
 
         TracedAssertions.assertEqualsRendered(Std.string(UnicodeScriptEvidence.EastAsian), Std.string(UnicodeScriptEvidenceClassifier.classify(0x4E00)));
         TracedAssertions.assertEqualsRendered(Std.string(UnicodeScriptEvidence.Other), Std.string(UnicodeScriptEvidenceClassifier.classify(0x0041)));
@@ -67,7 +54,7 @@ class EastAsianSpacingCoverageTest {
 
     @:test
     public static function testEastAsianSpacingDataAndValues():Void {
-        currentTrace().section("testEastAsianSpacingDataAndValues");
+        new TestTraceRecorder("EastAsianSpacingCoverageTest").section("testEastAsianSpacingDataAndValues");
         final values:Array<EastAsianSpacingValue> = [
             EastAsianSpacingValue.Wide,
             EastAsianSpacingValue.Narrow,
@@ -90,7 +77,7 @@ class EastAsianSpacingCoverageTest {
 
     @:test
     public static function testEastAsianSpacingEdgesModel():Void {
-        currentTrace().section("testEastAsianSpacingEdgesModel");
+        new TestTraceRecorder("EastAsianSpacingCoverageTest").section("testEastAsianSpacingEdgesModel");
         final edges:EastAsianSpacingEdges = new EastAsianSpacingEdges(
             EastAsianSpacingValue.Wide,
             EastAsianSpacingValue.Narrow,
@@ -111,7 +98,7 @@ class EastAsianSpacingCoverageTest {
 
     @:test
     public static function testUnicodeEastAsianSpacing():Void {
-        currentTrace().section("testUnicodeEastAsianSpacing");
+        new TestTraceRecorder("EastAsianSpacingCoverageTest").section("testUnicodeEastAsianSpacing");
         TracedAssertions.assertEqualsString("draft-2024-12-16", UnicodeEastAsianSpacing.DATA_REVISION);
         TracedAssertions.assertTrue(UnicodeEastAsianSpacing.DATA_SOURCE.length > 0);
         TracedAssertions.assertTrue(UnicodeEastAsianSpacing.DATA_SHA256.length > 0);
@@ -144,10 +131,10 @@ class EastAsianSpacingCoverageTest {
             index += 1;
         }
 
-        expectArgumentFailure(() -> UnicodeEastAsianSpacing.propertyOf(-1));
-        expectArgumentFailure(() -> UnicodeEastAsianSpacing.propertyOf(0x110000));
-        expectArgumentFailure(() -> UnicodeEastAsianSpacing.propertyOf(0xD800));
-        expectArgumentFailure(() -> UnicodeEastAsianSpacing.propertyOf(0xDFFF));
+        EastAsianSpacingCoverageTestHelpers.expectArgumentFailure(() -> UnicodeEastAsianSpacing.propertyOf(-1));
+        EastAsianSpacingCoverageTestHelpers.expectArgumentFailure(() -> UnicodeEastAsianSpacing.propertyOf(0x110000));
+        EastAsianSpacingCoverageTestHelpers.expectArgumentFailure(() -> UnicodeEastAsianSpacing.propertyOf(0xD800));
+        EastAsianSpacingCoverageTestHelpers.expectArgumentFailure(() -> UnicodeEastAsianSpacing.propertyOf(0xDFFF));
 
         TracedAssertions.assertEqualsRendered(Std.string(EastAsianSpacingValue.Other), Std.string(UnicodeEastAsianSpacing.resolvedForGraphemeCluster("", "zh")));
         TracedAssertions.assertEqualsRendered(Std.string(EastAsianSpacingValue.Other), Std.string(UnicodeEastAsianSpacing.resolvedForGraphemeCluster("A\u20DD", "zh")));
@@ -173,12 +160,15 @@ class EastAsianSpacingCoverageTest {
         TracedAssertions.assertFalse(westernEdges.containsWide);
 
         TracedAssertions.assertEqualsRendered(Std.string(EastAsianSpacingValue.Other), Std.string(UnicodeEastAsianSpacing.resolvedForGraphemeCluster(TestHelpers.surrogateText([0xD83D, 0xDE00]), "zh")));
-        expectArgumentFailure(() -> UnicodeEastAsianSpacing.resolvedForGraphemeCluster(TestHelpers.surrogateText([0xD800]), "zh"));
-        expectArgumentFailure(() -> UnicodeEastAsianSpacing.resolvedForGraphemeCluster(TestHelpers.surrogateText([0xD800, 0x41]), "zh"));
-        expectArgumentFailure(() -> UnicodeEastAsianSpacing.resolvedForGraphemeCluster(TestHelpers.surrogateText([0xD800, 0xE000]), "zh"));
+        EastAsianSpacingCoverageTestHelpers.expectArgumentFailure(() -> UnicodeEastAsianSpacing.resolvedForGraphemeCluster(TestHelpers.surrogateText([0xD800]), "zh"));
+        EastAsianSpacingCoverageTestHelpers.expectArgumentFailure(() -> UnicodeEastAsianSpacing.resolvedForGraphemeCluster(TestHelpers.surrogateText([0xD800, 0x41]), "zh"));
+        EastAsianSpacingCoverageTestHelpers.expectArgumentFailure(() -> UnicodeEastAsianSpacing.resolvedForGraphemeCluster(TestHelpers.surrogateText([0xD800, 0xE000]), "zh"));
     }
 
-    public static function flushTestTrace():Void {
-        currentTrace().flush();
+}
+
+class EastAsianSpacingCoverageTestHelpers {
+    public static function expectArgumentFailure(block:()->Void):Void {
+        TracedAssertions.assertFailsWith(null, block);
     }
 }
