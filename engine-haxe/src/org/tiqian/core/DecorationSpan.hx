@@ -1,5 +1,6 @@
 package org.tiqian.core;
 
+@:dataClass
 class DecorationSpan {
     public final range:TextRange;
     public final kind:DecorationKind;
@@ -9,7 +10,5 @@ class DecorationSpan {
         this.kind = kind;
     }
 
-    public function toString():String {
-        return "DecorationSpan(range=" + range.toString() + ", kind=" + Std.string(kind) + ")";
-    }
+
 }

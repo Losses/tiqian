@@ -3,6 +3,7 @@ package org.tiqian.clreq;
 import std.ReadOnlyArray;
 import std.StringBuf;
 
+@:dataClass
 class ClreqProfile {
     public final id:String;
     public final strictness:ClreqStrictness;
@@ -50,30 +51,7 @@ class ClreqProfile {
         this.punctuationWidth = punctuationWidth;
     }
 
-    public function toString():String {
-        final coalesce = new StringBuf();
-        coalesce.add("[");
-        var index:Int = 0;
-        while (index < coalesceRepeatablePunctuation.length) {
-            if (index > 0) {
-                coalesce.add(", ");
-            }
-            coalesce.add("" + coalesceRepeatablePunctuation[index]);
-            index += 1;
-        }
-        coalesce.add("]");
-        return "ClreqProfile(id=" + id
-            + ", strictness=" + strictness
-            + ", region=" + region
-            + ", punctuationGlyphPolicy=" + punctuationGlyphPolicy
-            + ", coalesceRepeatablePunctuation=" + coalesce.toString()
-            + ", autoSpace=" + autoSpace.toString()
-            + ", gluePlacement=" + gluePlacement
-            + ", adjustment=" + adjustment.toString()
-            + ", kinsokuMode=" + KinsokuModes.render(kinsokuMode)
-            + ", punctuationWidth=" + punctuationWidth.toString()
-            + ")";
-    }
+
 
     public static function sameProfile(a:ClreqProfile, b:ClreqProfile):Bool {
         if (a.id != b.id
