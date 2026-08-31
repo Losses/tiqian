@@ -61,6 +61,17 @@ class TracedAssertions {
         }
     }
 
+    public static function assertEqualsIntArray(expected:ReadOnlyArray<Int>, actual:ReadOnlyArray<Int>, ?message:String):Void {
+        recordEvent("eq", [field("expected", renderInts(expected)), field("actual", renderInts(actual)), msgField(message)]);
+        if (expected.length != actual.length) fail(message == null ? "Expected arrays to be equal." : message);
+        var i = 0; while (i < expected.length) { if (expected[i] != actual[i]) fail(message == null ? "Expected arrays to be equal." : message); i++; }
+    }
+
+    private static function renderInts(values:ReadOnlyArray<Int>):String {
+        final buf = new StringBuf(); buf.add("["); var i = 0;
+        while (i < values.length) { if (i > 0) buf.add(", "); buf.add("" + values[i]); i++; }
+        buf.add("]"); return buf.toString();
+    }
     public static function assertEqualsStringArray(expected:ReadOnlyArray<String>, actual:ReadOnlyArray<String>, ?message:String):Void {
         recordEvent("eq", [
             field("expected", TestTraceRender.renderStringArray(expected)),
