@@ -16,6 +16,12 @@ class LayoutInput {
     public function new(
         content:TiqianTextContent,
         constraints:LayoutConstraints,
+        // Kotlin declares textStyle = TextStyle() and paragraphStyle =
+        // ParagraphStyle() (constructor-call defaults, outside the sanctioned
+        // grammar) and profileId = BuiltInLayoutProfiles.ClreqHorizontal (a
+        // static-field default, boring gap 4). All three parameters stay
+        // mandatory until gap 4 lands for profileId; the constructor-call
+        // pair stays mandatory permanently.
         textStyle:TextStyle,
         paragraphStyle:ParagraphStyle,
         profileId:LayoutProfileId,
