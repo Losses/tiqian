@@ -1,5 +1,6 @@
 package org.tiqian.font;
 import org.tiqian.font.FontRole.*;
+import org.tiqian.font.FontPolicy.FontRoleFns;
 import org.tiqian.test.trace.TestTraceRecorder;
 import org.tiqian.test.trace.TracedAssertions;
 class UsesLatinFaceTest {
