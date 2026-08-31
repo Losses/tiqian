@@ -1,5 +1,6 @@
 package org.tiqian.core;
 
+@:dataClass
 class MeasureAdaptiveFirstLineIndent {
     public final shortBelowEm:Float;
     public final shortEm:Float;
@@ -15,9 +16,5 @@ class MeasureAdaptiveFirstLineIndent {
         return measureEm < shortBelowEm ? shortEm : longEm;
     }
 
-    public function toString():String {
-        return "MeasureAdaptiveFirstLineIndent(shortBelowEm=" + shortBelowEm
-            + ", shortEm=" + shortEm
-            + ", longEm=" + longEm + ")";
-    }
+
 }
