@@ -23,6 +23,8 @@ import org.tiqian.clreq.PunctuationGluePlacementTest;
 import org.tiqian.clreq.ClreqPunctuationGlyphSubstitutorTest;
 import org.tiqian.clreq.ClreqProfileCoverageTest;
 import org.tiqian.clreq.ClreqPolicyTailCoverageTest;
+import org.tiqian.linebreak.LinebreakTests.EnglishHyphenationTest;
+import org.tiqian.linebreak.LinebreakTests.LiangHyphenatorTest;
 import org.tiqian.test.trace.TestTraceRecorder;
 import org.tiqian.test.trace.TraceAssertionException;
 import std.Console;
@@ -44,7 +46,17 @@ class Main {
     }
 
     public static function main():Void {
-        StringBufOracle.install();
+        js.Syntax.code("globalThis.std = globalThis.std || {}; globalThis.std.UStringPlatform = {0};", UStringPlatform);
+        run("hyphenatesCommonWordsAtSyllablePoints", EnglishHyphenationTest.hyphenatesCommonWordsAtSyllablePoints);
+        run("respectsMarginsAndShortWords", EnglishHyphenationTest.respectsMarginsAndShortWords);
+        run("honoursTheExceptionList", EnglishHyphenationTest.honoursTheExceptionList);
+        run("noHyphenatorYieldsNoOpportunities", LiangHyphenatorTest.noHyphenatorYieldsNoOpportunities);
+        run("oddLevelGapBecomesABreakOutsideTheMargins", LiangHyphenatorTest.oddLevelGapBecomesABreakOutsideTheMargins);
+        run("maxLevelWinsAndEvenForbidsTheBreak", LiangHyphenatorTest.maxLevelWinsAndEvenForbidsTheBreak);
+        run("marginsAndShortWordsAreRespected", LiangHyphenatorTest.marginsAndShortWordsAreRespected);
+        run("exceptionsOverridePatternsAndAreCaseInsensitive", LiangHyphenatorTest.exceptionsOverridePatternsAndAreCaseInsensitive);
+        run("parsesPatternsAndExceptionBlocksStrippingComments", LiangHyphenatorTest.parsesPatternsAndExceptionBlocksStrippingComments);
+
         run("exposesLength", TextRangeTest.exposesLength);
         run("rejectsNegativeStart", TextRangeTest.rejectsNegativeStart);
         TestTraceRecorder.flushClass("TextRangeTest");
