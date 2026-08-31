@@ -16,7 +16,6 @@ class LayoutInput {
 
     public function new(
         content:TiqianTextContent,
-        constraints:LayoutConstraints,
         // Kotlin declares textStyle = TextStyle() and paragraphStyle =
         // ParagraphStyle() (constructor-call defaults, outside the sanctioned
         // grammar) and profileId = BuiltInLayoutProfiles.ClreqHorizontal (a
@@ -25,6 +24,7 @@ class LayoutInput {
         // pair stays mandatory permanently.
         textStyle:TextStyle,
         paragraphStyle:ParagraphStyle,
+        constraints:LayoutConstraints,
         profileId:LayoutProfileId,
         ?decorations:Array<DecorationSpan>,
         ?rubySpans:Array<RubySpan>,
@@ -42,9 +42,8 @@ class LayoutInput {
         this.inlineObjects = inlineObjects == null ? [] : inlineObjects;
     }
 
-    // The constructor parameter order diverges from the Kotlin primary
-    // constructor (constraints moved ahead of the gap-4-mandatory trio), and
-    // synthesis prints parameter order, so this explicit member stays.
+    // ReadOnlyArray fields render with "," instead of Kotlin List's ", "
+    // in stage 1, so this explicit member stays.
     public function toString():String {
         return "LayoutInput(content=" + content.toString()
             + ", textStyle=" + textStyle.toString()

@@ -368,12 +368,12 @@ class CoreLayoutQueriesGapsTestHelpers {
     }
 
     public static function style(fontSize:Float):TextStyle {
-        return new TextStyle(fontSize, "zh-Hans", 400, false, 0.0, InlineAttachment.None, []);
+        return new TextStyle([], fontSize, "zh-Hans", 400, false, 0.0, InlineAttachment.None);
     }
 
     public static function input(text:String, maxWidth:Float, textStyle:Null<TextStyle>):LayoutInput {
-        final style:TextStyle = textStyle == null ? new TextStyle(16.0, "zh-Hans", 400, false, 0.0, InlineAttachment.None, []) : textStyle;
-        return new LayoutInput(CoreLayoutQueriesGapsTestHelpers.content(text), CoreLayoutQueriesGapsTestHelpers.constraints(maxWidth), style, new ParagraphStyle(LastLineAlignment.Start, WritingMode.HorizontalTb, null, null, Ic.Zero, new MeasureAdaptiveFirstLineIndent(14.0, 1.0, 2.0), new LineLengthGrid(true, null), RubyLineHeightMode.PerLine, ParagraphStyle.DEFAULT_INLINE_OBJECT_MINIMUM_CLEARANCE_EM, ParagraphStyle.DEFAULT_EMPHASIS_DOT_GAP_EM), BuiltInLayoutProfiles.ClreqHorizontal, [], [], [], []);
+        final style:TextStyle = textStyle == null ? new TextStyle([], 16.0, "zh-Hans", 400, false, 0.0, InlineAttachment.None) : textStyle;
+        return new LayoutInput(CoreLayoutQueriesGapsTestHelpers.content(text), style, new ParagraphStyle(LastLineAlignment.Start, WritingMode.HorizontalTb, null, null, Ic.Zero, new MeasureAdaptiveFirstLineIndent(14.0, 1.0, 2.0), new LineLengthGrid(true, null), RubyLineHeightMode.PerLine, ParagraphStyle.DEFAULT_INLINE_OBJECT_MINIMUM_CLEARANCE_EM, ParagraphStyle.DEFAULT_EMPHASIS_DOT_GAP_EM), CoreLayoutQueriesGapsTestHelpers.constraints(maxWidth), BuiltInLayoutProfiles.ClreqHorizontal, [], [], [], []);
     }
 
     public static function cluster(range:TextRange, text:String, fontKey:String, advance:Float):Cluster {
