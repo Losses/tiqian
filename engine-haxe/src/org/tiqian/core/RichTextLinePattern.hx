@@ -35,6 +35,18 @@ class RichTextLinePattern {
         return new RichTextLinePattern("Dotted", 0.0, 0.0, gapLength, dotDiameter);
     }
 
+    // Kotlin models this as a sealed interface with a data object Solid, so the
+    // printed form collapses each variant to its own shape instead of listing
+    // every field. Generic synthesis cannot reproduce that; keep this explicit.
+    public function toString():String {
+        if (kind == "Solid") {
+            return "Solid";
+        }
+        if (kind == "Dashed") {
+            return "Dashed(strokeWidth=" + strokeWidth + ", dashLength=" + dashLength + ", gapLength=" + gapLength + ")";
+        }
+        return "Dotted(dotDiameter=" + dotDiameter + ", gapLength=" + gapLength + ")";
+    }
 
     @:allow(org.tiqian.core.RichTextPaint)
     private static function sameValues(a:RichTextLinePattern, b:RichTextLinePattern):Bool {

@@ -36,5 +36,15 @@ class TextStyle {
         return new TextStyle(fontSize, locale, fontWeight, italic, baselineShift, inlineAttachment, fontFamilies);
     }
 
-
+    // fontFamilies leads the Kotlin constructor but trails the field list here,
+    // and synthesis prints declaration order, so this explicit member stays.
+    public function toString():String {
+        return "TextStyle(fontFamilies=" + Std.string(fontFamilies)
+            + ", fontSize=" + fontSize
+            + ", locale=" + locale
+            + ", fontWeight=" + fontWeight
+            + ", italic=" + italic
+            + ", baselineShift=" + baselineShift
+            + ", inlineAttachment=" + Std.string(inlineAttachment) + ")";
+    }
 }
