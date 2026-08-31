@@ -257,6 +257,24 @@ porting/haxe/patches/boring-tnew-precise-lookup.patch：DefaultArgExpander
 无法确定声明类的访问路径。该缺陷在 Codex defaults 分支的在飞实现中
 同样存在（line 698 一带），中央审查时并入修复。
 
+2026-08-31 核销：0383591（coalescing default 回收合并）重写了 completeNew
+序段——先取构造器参数表，args.length >= params.length 直接返回，默认值
+查找移到其后。历史触发形态（StringBuf 零参 TNew、IntRange 全参 TNew）在
+到达按名回退之前就被前置返回截断，缺陷在 boring main 不再可达。port 树对
+9cfc006 干净 vendored（补丁未应用）编译，仅剩 RubySpan.hx:46 条件构造赋值
+报错（缺口 4 已知拦截），无任何 TNew 歧义。补丁文件已删；流程裁定：
+boring 的修复一律进 boring main 后推进 vendored 指针，不再留本地补丁。
+
+2026-08-31 指针推进 ce28a3a（枚举无参值形态 + 值查询 + Std.string 标量行
+合并后）：port 树编译拦截点更新为 `TextStyle.hx:39 Std.string accepts
+scalars and parameterless enum values only`——Std.string 的数组域当时尚未
+降级。已按 boring-first 裁定在 boring main 落规格修订 997828d（数组渲染
+`[a, b]` 五端统一、Haxe 原生 `[a,b]` 分隔符分歧走 boring_oracle 条件），
+实现派发 lane/std-string-arrays。数组域落地后 port 侧 TextStyle、
+RubySpan、CoreLayoutQueriesGapsTest 三处 `Std.string(<数组>)` 保持原样即
+可编译；RichTextPaint 对 `RichTextLinePattern`/`RichTextBackgroundPaint`
+类实例的 Std.string 仍需 port 侧改写（对象不在域内）。
+
 ## 中央条目（2026-08-30）：目录定为 engine-haxe
 
 用户裁定：porting/ 不进 git；Haxe 源码树移到仓库根目录 engine-haxe/
