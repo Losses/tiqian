@@ -367,7 +367,15 @@ class CoreLayoutQueriesGapsTest {
         currentTrace().section("getBoundingBoxesEmptyRangeReturnsEmptyList");
         final result:LayoutResult = sampleResult();
         final boxes:Array<Rect> = LayoutQueries.getBoundingBoxes(result, new TextRange(2, 2));
-        TracedAssertions.assertEqualsRendered("[]", Std.string(boxes));
+        var renderedBoxes:String = "[";
+        var boxIndex:Int = 0;
+        while (boxIndex < boxes.length) {
+            if (boxIndex > 0) renderedBoxes += ", ";
+            renderedBoxes += boxes[boxIndex].toString();
+            boxIndex += 1;
+        }
+        renderedBoxes += "]";
+        TracedAssertions.assertEqualsRendered("[]", renderedBoxes);
     }
 
     @:test

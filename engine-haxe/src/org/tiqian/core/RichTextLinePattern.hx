@@ -44,6 +44,16 @@ class RichTextLinePattern {
         return "Dotted(dotDiameter=" + dotDiameter + ", gapLength=" + gapLength + ")";
     }
 
+    @:allow(org.tiqian.core.RichTextPaint)
+    private static function sameValues(a:RichTextLinePattern, b:RichTextLinePattern):Bool {
+        if (a.kind != b.kind) return false;
+        if (a.kind == "Dashed") {
+            return a.strokeWidth == b.strokeWidth && a.dashLength == b.dashLength && a.gapLength == b.gapLength;
+        }
+        if (a.kind == "Dotted") return a.dotDiameter == b.dotDiameter && a.gapLength == b.gapLength;
+        return true;
+    }
+
     private static function isFinite(value:Float):Bool {
         return value == value && value != Math.POSITIVE_INFINITY && value != Math.NEGATIVE_INFINITY;
     }

@@ -41,20 +41,53 @@ class LayoutInput {
             + ", paragraphStyle=" + paragraphStyle
             + ", constraints=" + constraints
             + ", profileId=" + profileId
-            + ", decorations=" + renderArray(decorations)
-            + ", rubySpans=" + renderArray(rubySpans)
-            + ", inlineBoxes=" + renderArray(inlineBoxes)
-            + ", inlineObjects=" + renderArray(inlineObjects) + ")";
+            + ", decorations=" + renderDecorations(decorations)
+            + ", rubySpans=" + renderRubySpans(rubySpans)
+            + ", inlineBoxes=" + renderInlineBoxes(inlineBoxes)
+            + ", inlineObjects=" + renderInlineObjects(inlineObjects) + ")";
     }
 
-    private static function renderArray<T>(values:ReadOnlyArray<T>):String {
+    private static function renderDecorations(values:ReadOnlyArray<DecorationSpan>):String {
         var output:String = "[";
         var index:Int = 0;
         while (index < values.length) {
             if (index > 0) {
                 output += ", ";
             }
-            output += Std.string(values[index]);
+            output += values[index].toString();
+            index += 1;
+        }
+        return output + "]";
+    }
+
+    private static function renderRubySpans(values:ReadOnlyArray<RubySpan>):String {
+        var output:String = "[";
+        var index:Int = 0;
+        while (index < values.length) {
+            if (index > 0) output += ", ";
+            output += values[index].toString();
+            index += 1;
+        }
+        return output + "]";
+    }
+
+    private static function renderInlineBoxes(values:ReadOnlyArray<InlineBoxSpan>):String {
+        var output:String = "[";
+        var index:Int = 0;
+        while (index < values.length) {
+            if (index > 0) output += ", ";
+            output += values[index].toString();
+            index += 1;
+        }
+        return output + "]";
+    }
+
+    private static function renderInlineObjects(values:ReadOnlyArray<InlineObjectSpan>):String {
+        var output:String = "[";
+        var index:Int = 0;
+        while (index < values.length) {
+            if (index > 0) output += ", ";
+            output += values[index].toString();
             index += 1;
         }
         return output + "]";

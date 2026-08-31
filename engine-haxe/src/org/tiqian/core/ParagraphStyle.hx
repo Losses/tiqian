@@ -84,9 +84,10 @@ class ParagraphStyle {
     }
 
     public function toString():String {
+        final height = lineHeight;
         return "ParagraphStyle(lastLineAlignment=" + Std.string(lastLineAlignment)
             + ", writingMode=" + Std.string(writingMode)
-            + ", lineHeight=" + (lineHeight == null ? "null" : Std.string(lineHeight))
+            + ", lineHeight=" + (height == null ? "null" : "" + height)
             + ", firstLineIndent=" + (firstLineIndent == null ? "null" : firstLineIndent.toString())
             + ", blockIndent=" + blockIndent
             + ", firstLineIndentPolicy=" + firstLineIndentPolicy

@@ -46,7 +46,8 @@ class EastAsianSpacingCoverageTest {
         ];
         var index:Int = 0;
         while (index < values.length) {
-            TracedAssertions.assertNotNull(values[index]);
+            final value = values[index];
+            TracedAssertions.assertNotNullRendered(value != null, value == null ? "-" : Std.string(value));
             index += 1;
         }
 
@@ -59,18 +60,9 @@ class EastAsianSpacingCoverageTest {
         expectArgumentFailure(() -> UnicodeScriptEvidenceClassifier.classify(0xD800));
         expectArgumentFailure(() -> UnicodeScriptEvidenceClassifier.classify(0xDFFF));
 
-        TracedAssertions.assertEqualsGeneric(
-            UnicodeScriptEvidence.EastAsian,
-            UnicodeScriptEvidenceClassifier.classify(0x4E00)
-        );
-        TracedAssertions.assertEqualsGeneric(
-            UnicodeScriptEvidence.Other,
-            UnicodeScriptEvidenceClassifier.classify(0x0041)
-        );
-        TracedAssertions.assertEqualsGeneric(
-            UnicodeScriptEvidence.Neutral,
-            UnicodeScriptEvidenceClassifier.classify(0x0020)
-        );
+        TracedAssertions.assertEqualsRendered(Std.string(UnicodeScriptEvidence.EastAsian), Std.string(UnicodeScriptEvidenceClassifier.classify(0x4E00)));
+        TracedAssertions.assertEqualsRendered(Std.string(UnicodeScriptEvidence.Other), Std.string(UnicodeScriptEvidenceClassifier.classify(0x0041)));
+        TracedAssertions.assertEqualsRendered(Std.string(UnicodeScriptEvidence.Neutral), Std.string(UnicodeScriptEvidenceClassifier.classify(0x0020)));
     }
 
     @:test
@@ -84,15 +76,16 @@ class EastAsianSpacingCoverageTest {
         ];
         var index:Int = 0;
         while (index < values.length) {
-            TracedAssertions.assertNotNull(values[index]);
+            final value = values[index];
+            TracedAssertions.assertNotNullRendered(value != null, value == null ? "-" : Std.string(value));
             index += 1;
         }
 
-        TracedAssertions.assertEqualsGeneric(EastAsianSpacingValue.Wide, EastAsianSpacingData.lookup(0x02C7));
-        TracedAssertions.assertEqualsGeneric(EastAsianSpacingValue.Narrow, EastAsianSpacingData.lookup(0x0030));
-        TracedAssertions.assertEqualsGeneric(EastAsianSpacingValue.Conditional, EastAsianSpacingData.lookup(0x0021));
-        TracedAssertions.assertEqualsGeneric(EastAsianSpacingValue.Other, EastAsianSpacingData.lookup(0x0000));
-        TracedAssertions.assertEqualsGeneric(EastAsianSpacingValue.Other, EastAsianSpacingData.lookup(0x10FFFF));
+        TracedAssertions.assertEqualsRendered(Std.string(EastAsianSpacingValue.Wide), Std.string(EastAsianSpacingData.lookup(0x02C7)));
+        TracedAssertions.assertEqualsRendered(Std.string(EastAsianSpacingValue.Narrow), Std.string(EastAsianSpacingData.lookup(0x0030)));
+        TracedAssertions.assertEqualsRendered(Std.string(EastAsianSpacingValue.Conditional), Std.string(EastAsianSpacingData.lookup(0x0021)));
+        TracedAssertions.assertEqualsRendered(Std.string(EastAsianSpacingValue.Other), Std.string(EastAsianSpacingData.lookup(0x0000)));
+        TracedAssertions.assertEqualsRendered(Std.string(EastAsianSpacingValue.Other), Std.string(EastAsianSpacingData.lookup(0x10FFFF)));
     }
 
     @:test
@@ -103,8 +96,8 @@ class EastAsianSpacingCoverageTest {
             EastAsianSpacingValue.Narrow,
             true
         );
-        TracedAssertions.assertEqualsGeneric(EastAsianSpacingValue.Wide, edges.leading);
-        TracedAssertions.assertEqualsGeneric(EastAsianSpacingValue.Narrow, edges.trailing);
+        TracedAssertions.assertEqualsRendered(Std.string(EastAsianSpacingValue.Wide), Std.string(edges.leading));
+        TracedAssertions.assertEqualsRendered(Std.string(EastAsianSpacingValue.Narrow), Std.string(edges.trailing));
         TracedAssertions.assertTrue(edges.containsWide);
         TracedAssertions.assertEqualsEastAsianSpacingEdges(
             new EastAsianSpacingEdges(EastAsianSpacingValue.Wide, EastAsianSpacingValue.Narrow, true),
@@ -156,30 +149,30 @@ class EastAsianSpacingCoverageTest {
         expectArgumentFailure(() -> UnicodeEastAsianSpacing.propertyOf(0xD800));
         expectArgumentFailure(() -> UnicodeEastAsianSpacing.propertyOf(0xDFFF));
 
-        TracedAssertions.assertEqualsGeneric(EastAsianSpacingValue.Other, UnicodeEastAsianSpacing.resolvedForGraphemeCluster("", "zh"));
-        TracedAssertions.assertEqualsGeneric(EastAsianSpacingValue.Other, UnicodeEastAsianSpacing.resolvedForGraphemeCluster("A\u20DD", "zh"));
-        TracedAssertions.assertEqualsGeneric(EastAsianSpacingValue.Narrow, UnicodeEastAsianSpacing.resolvedForGraphemeCluster("!", "zh-CN"));
-        TracedAssertions.assertEqualsGeneric(EastAsianSpacingValue.Other, UnicodeEastAsianSpacing.resolvedForGraphemeCluster("!", "en-US"));
-        TracedAssertions.assertEqualsGeneric(EastAsianSpacingValue.Wide, UnicodeEastAsianSpacing.resolvedForGraphemeCluster("\u4E2D", "zh"));
-        TracedAssertions.assertEqualsGeneric(EastAsianSpacingValue.Narrow, UnicodeEastAsianSpacing.resolvedForGraphemeCluster("A", "zh"));
-        TracedAssertions.assertEqualsGeneric(EastAsianSpacingValue.Other, UnicodeEastAsianSpacing.resolvedForGraphemeCluster("\u0000", "zh"));
+        TracedAssertions.assertEqualsRendered(Std.string(EastAsianSpacingValue.Other), Std.string(UnicodeEastAsianSpacing.resolvedForGraphemeCluster("", "zh")));
+        TracedAssertions.assertEqualsRendered(Std.string(EastAsianSpacingValue.Other), Std.string(UnicodeEastAsianSpacing.resolvedForGraphemeCluster("A\u20DD", "zh")));
+        TracedAssertions.assertEqualsRendered(Std.string(EastAsianSpacingValue.Narrow), Std.string(UnicodeEastAsianSpacing.resolvedForGraphemeCluster("!", "zh-CN")));
+        TracedAssertions.assertEqualsRendered(Std.string(EastAsianSpacingValue.Other), Std.string(UnicodeEastAsianSpacing.resolvedForGraphemeCluster("!", "en-US")));
+        TracedAssertions.assertEqualsRendered(Std.string(EastAsianSpacingValue.Wide), Std.string(UnicodeEastAsianSpacing.resolvedForGraphemeCluster("\u4E2D", "zh")));
+        TracedAssertions.assertEqualsRendered(Std.string(EastAsianSpacingValue.Narrow), Std.string(UnicodeEastAsianSpacing.resolvedForGraphemeCluster("A", "zh")));
+        TracedAssertions.assertEqualsRendered(Std.string(EastAsianSpacingValue.Other), Std.string(UnicodeEastAsianSpacing.resolvedForGraphemeCluster("\u0000", "zh")));
 
         final emptyEdges:EastAsianSpacingEdges = UnicodeEastAsianSpacing.resolvedEdges("", "zh");
-        TracedAssertions.assertEqualsGeneric(EastAsianSpacingValue.Other, emptyEdges.leading);
-        TracedAssertions.assertEqualsGeneric(EastAsianSpacingValue.Other, emptyEdges.trailing);
+        TracedAssertions.assertEqualsRendered(Std.string(EastAsianSpacingValue.Other), Std.string(emptyEdges.leading));
+        TracedAssertions.assertEqualsRendered(Std.string(EastAsianSpacingValue.Other), Std.string(emptyEdges.trailing));
         TracedAssertions.assertFalse(emptyEdges.containsWide);
 
         final mixedEdges:EastAsianSpacingEdges = UnicodeEastAsianSpacing.resolvedEdges("\u4E2Da\u6587", "zh");
-        TracedAssertions.assertEqualsGeneric(EastAsianSpacingValue.Wide, mixedEdges.leading);
-        TracedAssertions.assertEqualsGeneric(EastAsianSpacingValue.Wide, mixedEdges.trailing);
+        TracedAssertions.assertEqualsRendered(Std.string(EastAsianSpacingValue.Wide), Std.string(mixedEdges.leading));
+        TracedAssertions.assertEqualsRendered(Std.string(EastAsianSpacingValue.Wide), Std.string(mixedEdges.trailing));
         TracedAssertions.assertTrue(mixedEdges.containsWide);
 
         final westernEdges:EastAsianSpacingEdges = UnicodeEastAsianSpacing.resolvedEdges("hello", "en");
-        TracedAssertions.assertEqualsGeneric(EastAsianSpacingValue.Narrow, westernEdges.leading);
-        TracedAssertions.assertEqualsGeneric(EastAsianSpacingValue.Narrow, westernEdges.trailing);
+        TracedAssertions.assertEqualsRendered(Std.string(EastAsianSpacingValue.Narrow), Std.string(westernEdges.leading));
+        TracedAssertions.assertEqualsRendered(Std.string(EastAsianSpacingValue.Narrow), Std.string(westernEdges.trailing));
         TracedAssertions.assertFalse(westernEdges.containsWide);
 
-        TracedAssertions.assertEqualsGeneric(EastAsianSpacingValue.Other, UnicodeEastAsianSpacing.resolvedForGraphemeCluster(TestHelpers.surrogateText([0xD83D, 0xDE00]), "zh"));
+        TracedAssertions.assertEqualsRendered(Std.string(EastAsianSpacingValue.Other), Std.string(UnicodeEastAsianSpacing.resolvedForGraphemeCluster(TestHelpers.surrogateText([0xD83D, 0xDE00]), "zh")));
         expectArgumentFailure(() -> UnicodeEastAsianSpacing.resolvedForGraphemeCluster(TestHelpers.surrogateText([0xD800]), "zh"));
         expectArgumentFailure(() -> UnicodeEastAsianSpacing.resolvedForGraphemeCluster(TestHelpers.surrogateText([0xD800, 0x41]), "zh"));
         expectArgumentFailure(() -> UnicodeEastAsianSpacing.resolvedForGraphemeCluster(TestHelpers.surrogateText([0xD800, 0xE000]), "zh"));
