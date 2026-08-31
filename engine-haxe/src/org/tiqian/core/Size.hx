@@ -1,5 +1,6 @@
 package org.tiqian.core;
 
+@:dataClass
 class Size {
     public final width:Float;
     public final height:Float;

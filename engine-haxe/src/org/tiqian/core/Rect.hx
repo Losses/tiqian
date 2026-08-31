@@ -1,5 +1,6 @@
 package org.tiqian.core;
 
+@:dataClass
 class Rect {
     public final left:Float;
     public final top:Float;
