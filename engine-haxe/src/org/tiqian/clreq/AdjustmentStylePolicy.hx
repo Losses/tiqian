@@ -1,5 +1,6 @@
 package org.tiqian.clreq;
 
+@:dataClass
 class AdjustmentStylePolicy {
     public final lineEndPunctuation:LineEndPunctuationStyle;
     public final allowInlineStopCompression:Bool;
@@ -18,12 +19,7 @@ class AdjustmentStylePolicy {
         this.lineAdjustment = lineAdjustment == null ? LineAdjustmentStrategy.PushInFirst : lineAdjustment;
     }
 
-    public function toString():String {
-        return "AdjustmentStylePolicy(lineEndPunctuation=" + lineEndPunctuation
-            + ", allowInlineStopCompression=" + allowInlineStopCompression
-            + ", allowSinoWesternGapAdjustment=" + allowSinoWesternGapAdjustment
-            + ", lineAdjustment=" + lineAdjustment + ")";
-    }
+
 
     public static function samePolicy(a:AdjustmentStylePolicy, b:AdjustmentStylePolicy):Bool {
         return a.lineEndPunctuation == b.lineEndPunctuation
