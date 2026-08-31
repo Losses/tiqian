@@ -428,7 +428,7 @@ class LayoutQueriesTestHelpers {
     }
 
     public static function style(fontSize:Float):TextStyle {
-        return new TextStyle(fontSize, "zh-Hans", 400, false, 0.0, InlineAttachment.None, []);
+        return new TextStyle([], fontSize, "zh-Hans", 400, false, 0.0, InlineAttachment.None);
     }
 
     public static function constraints(maxWidth:Float):LayoutConstraints {
