@@ -9,6 +9,7 @@ class Solid implements RichTextLinePattern {
 }
 
 @:dataClass
+// Physical layout-unit dash geometry supplied by the frontend.
 class Dashed implements RichTextLinePattern {
     public final strokeWidth:Float;
     public final dashLength:Float;
@@ -21,6 +22,7 @@ class Dashed implements RichTextLinePattern {
 }
 
 @:dataClass
+// Round dots with frontend-supplied diameter and visible edge-to-edge gap.
 class Dotted implements RichTextLinePattern {
     public final dotDiameter:Float;
     public final gapLength:Float;
