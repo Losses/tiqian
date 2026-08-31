@@ -436,7 +436,7 @@ class LayoutQueriesTestHelpers {
     }
 
     public static function input(text:String, maxWidth:Float, textStyle:Null<TextStyle>, inlineObjects:Null<Array<InlineObjectSpan>>):LayoutInput {
-        return new LayoutInput(LayoutQueriesTestHelpers.content(text), LayoutQueriesTestHelpers.constraints(maxWidth), textStyle, new ParagraphStyle(LastLineAlignment.Start, WritingMode.HorizontalTb, null, null, Ic.Zero, new MeasureAdaptiveFirstLineIndent(14.0, 1.0, 2.0), new LineLengthGrid(true, null), RubyLineHeightMode.PerLine, ParagraphStyle.DEFAULT_INLINE_OBJECT_MINIMUM_CLEARANCE_EM, ParagraphStyle.DEFAULT_EMPHASIS_DOT_GAP_EM), BuiltInLayoutProfiles.ClreqHorizontal, [], [], [], inlineObjects);
+        return new LayoutInput(LayoutQueriesTestHelpers.content(text), textStyle, new ParagraphStyle(LastLineAlignment.Start, WritingMode.HorizontalTb, null, null, Ic.Zero, new MeasureAdaptiveFirstLineIndent(14.0, 1.0, 2.0), new LineLengthGrid(true, null), RubyLineHeightMode.PerLine, ParagraphStyle.DEFAULT_INLINE_OBJECT_MINIMUM_CLEARANCE_EM, ParagraphStyle.DEFAULT_EMPHASIS_DOT_GAP_EM), LayoutQueriesTestHelpers.constraints(maxWidth), BuiltInLayoutProfiles.ClreqHorizontal, [], [], [], inlineObjects);
     }
 
     public static function cluster(range:TextRange, text:String, fontKey:String, advance:Float):Cluster {
