@@ -15,13 +15,13 @@ class TextStyle {
     public final inlineAttachment:InlineAttachment;
 
     public function new(
+        ?fontFamilies:Array<String>,
         ?fontSize:Null<Float>,
         ?locale:Null<String>,
         ?fontWeight:Null<Int>,
         ?italic:Null<Bool>,
         ?baselineShift:Null<Float>,
-        ?inlineAttachment:Null<InlineAttachment>,
-        ?fontFamilies:Array<String>
+        ?inlineAttachment:Null<InlineAttachment>
     ) {
         this.fontFamilies = fontFamilies == null ? [] : fontFamilies;
         this.fontSize = fontSize == null ? 16.0 : fontSize;
@@ -32,12 +32,8 @@ class TextStyle {
         this.inlineAttachment = inlineAttachment == null ? InlineAttachment.None : inlineAttachment;
     }
 
-    public static function withFontFamilies(fontFamilies:Array<String>, fontSize:Float, locale:String, fontWeight:Int, italic:Bool, baselineShift:Float, inlineAttachment:InlineAttachment):TextStyle {
-        return new TextStyle(fontSize, locale, fontWeight, italic, baselineShift, inlineAttachment, fontFamilies);
-    }
-
-    // fontFamilies leads the Kotlin constructor but trails the field list here,
-    // and synthesis prints declaration order, so this explicit member stays.
+    // ReadOnlyArray rendering uses "," instead of Kotlin List's ", ",
+    // so this explicit member stays.
     public function toString():String {
         return "TextStyle(fontFamilies=" + Std.string(fontFamilies)
             + ", fontSize=" + fontSize
