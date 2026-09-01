@@ -5,8 +5,11 @@ import org.tiqian.core.IllegalStateException;
 import org.tiqian.core.TiqianNoSuchElementException;
 import org.tiqian.core.Ic;
 import org.tiqian.core.EastAsianSpacingEdges;
+import org.tiqian.core.IntRange;
 import org.tiqian.clreq.BopomofoTone;
 import org.tiqian.font.FontRole;
+import org.tiqian.layout.LineOptimization.RepairOption;
+import org.tiqian.layout.LineOptimization.RepairOptions;
 import org.tiqian.layout.QuotePairAnalyzer.QuotePair;
 import org.tiqian.layout.QuotePairAnalyzer.QuoteType;
 import org.tiqian.clreq.BopomofoReading;
@@ -17,6 +20,7 @@ import org.tiqian.clreq.KinsokuLevel;
 import org.tiqian.clreq.PunctuationClass;
 import org.tiqian.clreq.PunctuationGluePlacement;
 import std.ReadOnlyArray;
+import std.SortedSet;
 import org.tiqian.test.TestHelpers;
 import std.StringBuf;
 
@@ -126,6 +130,66 @@ class TracedAssertions {
         while (i < expected.length) {
             if (expected[i].openIndex != actual[i].openIndex || expected[i].closeIndex != actual[i].closeIndex || expected[i].quoteType != actual[i].quoteType) fail(message == null ? "Expected arrays to be equal." : message);
             i++;
+        }
+    }
+
+    public static function assertEqualsNullableInt(expected:Null<Int>, actual:Null<Int>, ?message:String):Void {
+        recordEvent("eq", [
+            field("expected", expected == null ? "-" : TestTraceRender.renderInt(expected)),
+            field("actual", actual == null ? "-" : TestTraceRender.renderInt(actual)),
+            msgField(message)
+        ]);
+        if (expected != actual) {
+            fail(message == null ? "Expected values to be equal." : message);
+        }
+    }
+
+    public static function assertEqualsIntRange(expected:IntRange, actual:IntRange, ?message:String):Void {
+        recordEvent("eq", [
+            field("expected", renderIntRange(expected)),
+            field("actual", renderIntRange(actual)),
+            msgField(message)
+        ]);
+        if (expected.start != actual.start || expected.end != actual.end) {
+            fail(message == null ? "Expected values to be equal." : message);
+        }
+    }
+
+    private static function renderIntRange(r:IntRange):String {
+        final buf = new StringBuf(); buf.add("[");
+        var i = r.start;
+        while (i <= r.end) { if (i > r.start) buf.add(", "); buf.add(TestTraceRender.renderInt(i)); i++; }
+        buf.add("]"); return buf.toString();
+    }
+
+    public static function assertEqualsIntSet(expected:SortedSet<Int>, actual:SortedSet<Int>, ?message:String):Void {
+        recordEvent("eq", [
+            field("expected", renderIntSet(expected)),
+            field("actual", renderIntSet(actual)),
+            msgField(message)
+        ]);
+        if (expected.size() != actual.size()) {
+            fail(message == null ? "Expected values to be equal." : message);
+        }
+        var i = 0;
+        while (i < expected.size()) {
+            if (expected.at(i) != actual.at(i)) fail(message == null ? "Expected values to be equal." : message);
+            i++;
+        }
+    }
+
+    private static function renderIntSet(values:SortedSet<Int>):String {
+        final buf = new StringBuf(); buf.add("["); var i = 0;
+        while (i < values.size()) { if (i > 0) buf.add(", "); buf.add(TestTraceRender.renderInt(values.at(i))); i++; }
+        buf.add("]"); return buf.toString();
+    }
+
+    public static function assertEqualsRepairOptionArray(expected:Array<RepairOption>, actual:Array<RepairOption>, ?message:String):Void {
+        final expectedText = RepairOptions.renderList(expected);
+        final actualText = RepairOptions.renderList(actual);
+        recordEvent("eq", [field("expected", expectedText), field("actual", actualText), msgField(message)]);
+        if (expectedText != actualText) {
+            fail(message == null ? "Expected arrays to be equal." : message);
         }
     }
 
