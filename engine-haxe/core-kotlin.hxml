@@ -64,3 +64,8 @@ org.tiqian.layout.ContextualQuoteRoleResolverCoverageTest
 org.tiqian.layout.ContextualQuoteRoleResolverNestedAndSurrogateTest
 org.tiqian.layout.ContextualDashEllipsisRoleResolverCoverageTest
 org.tiqian.layout.ContextualRoleExtensionCoverageTest
+org.tiqian.layout.Justifier
+org.tiqian.layout.JustifierTest
+org.tiqian.layout.JustifierCoverageTest
+org.tiqian.layout.JustifierCompressionTest
+org.tiqian.layout.JustifierJfTest
