@@ -442,3 +442,12 @@ ClreqProfile.DefaultCoalesceRepeatablePunctuation，阶段 B 静态字段根，�
 生成 ClreqProfile.kt 携带三个原生默认表达式，与手写 Kotlin 原件
 ClreqProfile.kt:17-19 同形（容器名 PunctuationGluePlacements 与
 MutableList/Set 集合映射除外）。
+
+2026-08-31 spec 37 落地收尾：BreakOpportunity 手写 toString 删除，偏离记录
+类别 1 全部还原。boring c8cccc8（spec 37 record 打印与相等比较按字段声明
+位置排序；Kotlin 在构造参数序与字段声明序不一致时显式发射合成成员覆盖
+原生 data class 打印）合并推送后推进 vendored 指针，port 侧删除
+BreakOpportunity.hx 的手写 toString 与登记注释，字段声明序 index、kind、
+penalty、reason 即打印序，合成输出与手写体逐字节一致。验证链通过：
+compile.hxml 零错误、serial-test rc=0、35 类 tolerance 比对 35/35、
+exception-alias=300、core-kotlin 生成零错误。
