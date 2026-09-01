@@ -30,6 +30,8 @@ import org.tiqian.font.FontRoleTailCoverageTest;
 import org.tiqian.font.InlineShapingStylePolicyTest;
 import org.tiqian.font.ScriptAwareFontMetricsNormalizerTest;
 import org.tiqian.font.UsesLatinFaceTest;
+import org.tiqian.shaping.TextShaperCoverageTest;
+import org.tiqian.shaping.ExplainableStubTextShaperTest;
 import org.tiqian.linebreak.EnglishHyphenationTest;
 import org.tiqian.linebreak.LiangHyphenatorTest;
 import org.tiqian.linebreak.LineBreakCoverageTest;
@@ -361,6 +363,16 @@ class Main {
         run("onlyLatinTextUsesLatinFace", UsesLatinFaceTest.onlyLatinTextUsesLatinFace);
         run("nameOverloadAgreesWithEnum", UsesLatinFaceTest.nameOverloadAgreesWithEnum);
         TestTraceRecorder.flushClass("UsesLatinFaceTest");
+        run("coversAllShapingSourceEnumEntries", TextShaperCoverageTest.coversAllShapingSourceEnumEntries);
+        run("unimplementedTextShaperThrowsOnShape", TextShaperCoverageTest.unimplementedTextShaperThrowsOnShape);
+        run("explainableStubNominalAdvanceBranches", TextShaperCoverageTest.explainableStubNominalAdvanceBranches);
+        run("surrogatePairHandlingInCodePointCount", TextShaperCoverageTest.surrogatePairHandlingInCodePointCount);
+        run("shapingInputWithFeaturesAndConstants", TextShaperCoverageTest.shapingInputWithFeaturesAndConstants);
+        TestTraceRecorder.flushClass("TextShaperCoverageTest");
+        run("shapesSingleCjkClusterWithOneEmAdvance", ExplainableStubTextShaperTest.shapesSingleCjkClusterWithOneEmAdvance);
+        run("keepsLatinRunAsSingleShapedClusterWithNominalGlyphs", ExplainableStubTextShaperTest.keepsLatinRunAsSingleShapedClusterWithNominalGlyphs);
+        run("shapesClreqDashSubstitutionAsTwoEmDisplayCluster", ExplainableStubTextShaperTest.shapesClreqDashSubstitutionAsTwoEmDisplayCluster);
+        TestTraceRecorder.flushClass("ExplainableStubTextShaperTest");
 
         if (failures > 0) {
             Process.exit(1);
