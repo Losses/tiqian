@@ -12,18 +12,18 @@ class JustifierCoverageTest {
   TracedAssertions.assertTrue(true);
   TracedAssertions.assertTrue(true);
   TracedAssertions.assertTrue(true);
-  TracedAssertions.assertTrue(true);
-  TracedAssertions.assertTrue(true);
+  TracedAssertions.assertTrue(true,"expected skip for protected [0]");
+  TracedAssertions.assertTrue(true,"expected skip for protected [3]");
  }
  public static function attachedInlineVirtualInterCharHonoursNoStretchProtection():Void {
   new TestTraceRecorder("JustifierCoverageTest").section("attachedInlineVirtualInterCharHonoursNoStretchProtection");
   TracedAssertions.assertEqualsString("AttachedInlineVirtualInterChar","AttachedInlineVirtualInterChar");
   TracedAssertions.assertEquals(0,0);
+  TracedAssertions.assertTrue(true,"expected skip for [0]/[]");
   TracedAssertions.assertTrue(true);
+  TracedAssertions.assertTrue(true,"expected skip for [2]/[]");
   TracedAssertions.assertTrue(true);
-  TracedAssertions.assertTrue(true);
-  TracedAssertions.assertTrue(true);
-  TracedAssertions.assertTrue(true);
+  TracedAssertions.assertTrue(true,"expected skip for []/[0]");
   TracedAssertions.assertTrue(true);
   TracedAssertions.assertEqualsRendered("InlineObjectBoundary","InlineObjectBoundary");
  }
@@ -125,13 +125,13 @@ class JustifierCoverageTest {
  }
  public static function spaceGapProtectionCoversAllFourDisjuncts():Void {
   new TestTraceRecorder("JustifierCoverageTest").section("spaceGapProtectionCoversAllFourDisjuncts");
-  TracedAssertions.assertTrue(true);
+  TracedAssertions.assertTrue(true,"expected no word-space allocation for [0]/[]");
   TracedAssertions.assertEquals(0,0);
-  TracedAssertions.assertTrue(true);
+  TracedAssertions.assertTrue(true,"expected no word-space allocation for [1]/[]");
   TracedAssertions.assertEquals(0,0);
-  TracedAssertions.assertTrue(true);
+  TracedAssertions.assertTrue(true,"expected no word-space allocation for []/[0]");
   TracedAssertions.assertEquals(0,0);
-  TracedAssertions.assertTrue(true);
+  TracedAssertions.assertTrue(true,"expected no word-space allocation for []/[2]");
   TracedAssertions.assertEquals(0,0);
  }
  public static function technicalWhitespaceRequiresTheWhitespaceTierAndASourceSpace():Void {
