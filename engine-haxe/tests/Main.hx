@@ -63,6 +63,7 @@ class Main {
 
     public static function main():Void {
         StringBufOracle.install();
+        SortedTablesOracle.install();
         js.Syntax.code("globalThis.std = globalThis.std || {}; globalThis.std.UStringPlatform = {0};", UStringPlatform);
         run("hyphenatesCommonWordsAtSyllablePoints", EnglishHyphenationTest.hyphenatesCommonWordsAtSyllablePoints);
         run("respectsMarginsAndShortWords", EnglishHyphenationTest.respectsMarginsAndShortWords);
