@@ -64,3 +64,6 @@ org.tiqian.layout.ContextualQuoteRoleResolverCoverageTest
 org.tiqian.layout.ContextualQuoteRoleResolverNestedAndSurrogateTest
 org.tiqian.layout.ContextualDashEllipsisRoleResolverCoverageTest
 org.tiqian.layout.ContextualRoleExtensionCoverageTest
+org.tiqian.layout.UnicodePunctuationBoundaryResolver
+org.tiqian.layout.PunctuationGeometryStage
+org.tiqian.layout.PunctuationGeometryStageCoverageTest
