@@ -31,6 +31,10 @@ class JustifierCompressionTest {
   TracedAssertions.assertEqualsFloatTolerance(1.0, JustifierCompressionTestSupport.shrinkOf(plan, 1), 0.0001);
   TracedAssertions.assertNullRendered(JustifierCompressionTestSupport.shrinkOf(plan, 2) == null, "-", "tier 3 must stay untouched while tier 2 has room");
  }
+ @:test public static function sharesEqualFractionWithinATier():Void {new TestTraceRecorder("JustifierCompressionTest").section("sharesEqualFractionWithinATier");var p=new Justifier().compress(4,[new ShrinkOpportunity(0,2,2,ShrinkChannel.TrailingGlue),new ShrinkOpportunity(1,2,6,ShrinkChannel.TrailingGlue)]);TracedAssertions.assertEqualsFloatTolerance(1,JustifierCompressionTestSupport.shrinkOf(p,0),.0001);TracedAssertions.assertEqualsFloatTolerance(3,JustifierCompressionTestSupport.shrinkOf(p,1),.0001);TracedAssertions.assertEqualsFloatTolerance(0,p.unfilledSurplus,.0001);}
+ @:test public static function reportsUnfilledWhenCapacityExhausted():Void {new TestTraceRecorder("JustifierCompressionTest").section("reportsUnfilledWhenCapacityExhausted");var p=new Justifier().compress(5,[new ShrinkOpportunity(0,1,1,ShrinkChannel.TrailingGlue),new ShrinkOpportunity(1,2,1,ShrinkChannel.TrailingGlue)]);TracedAssertions.assertEqualsFloatTolerance(3,p.unfilledSurplus,.0001);TracedAssertions.assertEquals(2,p.allocations.length);}
+ @:test public static function zeroSurplusIsNoOp():Void {new TestTraceRecorder("JustifierCompressionTest").section("zeroSurplusIsNoOp");var p=new Justifier().compress(0,[new ShrinkOpportunity(0,1,5,ShrinkChannel.TrailingGlue)]);TracedAssertions.assertTrue(p.allocations.length==0);TracedAssertions.assertEqualsFloatTolerance(0,p.unfilledSurplus,.0001);}
+
  @:test public static function nanSurplusEmitsNoAllocations():Void {
   new TestTraceRecorder("JustifierCompressionTest").section("nanSurplusEmitsNoAllocations");
   final justifier = new Justifier();
