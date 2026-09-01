@@ -65,30 +65,23 @@ class ParagraphStyle {
         ?writingMode:Null<WritingMode>,
         ?lineHeight:Null<Float>,
         ?firstLineIndent:Null<Ic>,
-        // Kotlin declares blockIndent: Ic = Ic.Zero (static field),
-        // inlineObjectMinimumClearanceEm = DEFAULT_INLINE_OBJECT_MINIMUM_CLEARANCE_EM
-        // and emphasisDotGapEm = DEFAULT_EMPHASIS_DOT_GAP_EM (static fields).
-        // Static-field-reading defaults are boring gap 4; the parameters stay
-        // mandatory until that lowering lands. firstLineIndentPolicy and
-        // lineLengthGrid use constructor-call defaults, which are outside the
-        // sanctioned grammar; callers pass the defaults explicitly.
-        blockIndent:Ic,
+        ?blockIndent:Null<Ic>,
         firstLineIndentPolicy:MeasureAdaptiveFirstLineIndent,
         lineLengthGrid:LineLengthGrid,
         ?rubyLineHeightMode:Null<RubyLineHeightMode>,
-        inlineObjectMinimumClearanceEm:Float,
-        emphasisDotGapEm:Float
+        ?inlineObjectMinimumClearanceEm:Null<Float>,
+        ?emphasisDotGapEm:Null<Float>
     ) {
         this.lastLineAlignment = lastLineAlignment == null ? LastLineAlignment.Start : lastLineAlignment;
         this.writingMode = writingMode == null ? WritingMode.HorizontalTb : writingMode;
         this.lineHeight = lineHeight == null ? null : lineHeight;
         this.firstLineIndent = firstLineIndent == null ? null : firstLineIndent;
-        this.blockIndent = blockIndent;
+        this.blockIndent = blockIndent == null ? Ic.Zero : blockIndent;
         this.firstLineIndentPolicy = firstLineIndentPolicy;
         this.lineLengthGrid = lineLengthGrid;
         this.rubyLineHeightMode = rubyLineHeightMode == null ? RubyLineHeightMode.PerLine : rubyLineHeightMode;
-        this.inlineObjectMinimumClearanceEm = inlineObjectMinimumClearanceEm;
-        this.emphasisDotGapEm = emphasisDotGapEm;
+        this.inlineObjectMinimumClearanceEm = inlineObjectMinimumClearanceEm == null ? ParagraphStyle.DEFAULT_INLINE_OBJECT_MINIMUM_CLEARANCE_EM : inlineObjectMinimumClearanceEm;
+        this.emphasisDotGapEm = emphasisDotGapEm == null ? ParagraphStyle.DEFAULT_EMPHASIS_DOT_GAP_EM : emphasisDotGapEm;
     }
 
 }
