@@ -53,7 +53,7 @@ class TracedAssertions {
             field("actual", actual.toString()),
             msgField(message)
         ]);
-        if (expected.count != actual.count) {
+        if (expected.count() != actual.count()) {
             fail(message == null ? "Expected values to be equal." : message);
         }
     }
