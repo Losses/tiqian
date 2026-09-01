@@ -8,6 +8,7 @@ import org.tiqian.core.UnicodeWordCharacter;
 import org.tiqian.font.FontRole;
 import org.tiqian.font.FontRoleContext;
 import org.tiqian.font.FontRoleContext.FontRoleClassifier;
+import std.SortedMap;
 
 @:dataClass class QuotePair {
     public final openIndex:Int; public final closeIndex:Int; public final quoteType:QuoteType;
@@ -40,15 +41,13 @@ class QuotePairAnalyzer {
         }
         return pairs;
     }
-    @:overload(function(text:String, pairs:Array<QuotePair>, fontRoleClassifier:FontRoleClassifier, ?context:Null<FontRoleContext>):Map<Int,FontRole> { return null; })
-    public function classifyPairs(text:String, pairs:Array<QuotePair>, ?context:Null<FontRoleContext>):Map<Int,FontRole> {
+    public function classifyPairs(text:String, pairs:Array<QuotePair>, ?context:Null<FontRoleContext>):SortedMap<Int,FontRole> {
         return mapDecisions(classifyQuoteRoles(text,pairs,context));
     }
     /** Source-compatible entry point retained for callers of the first alpha. */
-    public function classifyPairsWithClassifier(text:String, pairs:Array<QuotePair>, fontRoleClassifier:FontRoleClassifier, ?context:Null<FontRoleContext>):Map<Int,FontRole> {
+    public function classifyPairsWithClassifier(text:String, pairs:Array<QuotePair>, fontRoleClassifier:FontRoleClassifier, ?context:Null<FontRoleContext>):SortedMap<Int,FontRole> {
         return classifyPairs(text,pairs,context);
     }
-    @:overload(function(text:String, pairs:Array<QuotePair>, fontRoleClassifier:FontRoleClassifier, ?context:Null<FontRoleContext>):Array<QuoteRoleDecision> { return null; })
     public function classifyQuoteRoles(text:String, pairs:Array<QuotePair>, ?context:Null<FontRoleContext>):Array<QuoteRoleDecision> {
         return new ContextualQuoteRoleResolver(text, pairs, context == null ? new FontRoleContext() : context).resolve();
     }
@@ -56,7 +55,7 @@ class QuotePairAnalyzer {
     public function classifyQuoteRolesWithClassifier(text:String, pairs:Array<QuotePair>, fontRoleClassifier:FontRoleClassifier, ?context:Null<FontRoleContext>):Array<QuoteRoleDecision> {
         return classifyQuoteRoles(text,pairs,context);
     }
-    static function mapDecisions(decisions:Array<QuoteRoleDecision>):Map<Int,FontRole> { final out=new Map<Int,FontRole>(); for(d in decisions) out.set(d.index,d.role); return out; }
+    static function mapDecisions(decisions:Array<QuoteRoleDecision>):SortedMap<Int,FontRole> { final out=SortedMap.builder(); for(d in decisions) out.put(d.index,d.role); return out.build(); }
 
     public static function isNonCjkInWordApostrophe(text:String,index:Int):Bool {
         final before=codePointBefore(text,index); if(before==null)return false;
@@ -77,16 +76,17 @@ class QuotePairAnalyzer {
 }
 
 class QuotePairAwareFontRoleClassifier implements FontRoleClassifier {
-    private final delegate:FontRoleClassifier; private final quoteRoles:Map<Int,FontRole>;
-    public function new(delegate:FontRoleClassifier,quoteRoles:Map<Int,FontRole>){this.delegate=delegate;this.quoteRoles=quoteRoles;}
+    private final delegate:FontRoleClassifier; private final quoteRoles:SortedMap<Int,FontRole>;
+    public function new(delegate:FontRoleClassifier,quoteRoles:SortedMap<Int,FontRole>){this.delegate=delegate;this.quoteRoles=quoteRoles;}
     public function classify(text:String,range:TextRange,?context:Null<FontRoleContext>):FontRole { final role=quoteRoles.get(range.start); return role==null?delegate.classify(text,range,context):role; }
     /** Resolves contextual curly-quote roles for callers classifying ranges from one paragraph. */
     public static function withContextualQuoteRoles(base:FontRoleClassifier,text:String,?context:Null<FontRoleContext>):FontRoleClassifier {
         final analyzer = new QuotePairAnalyzer();
         final decisions = analyzer.classifyQuoteRoles(text, analyzer.analyze(text), context);
         if (decisions.length == 0) return base;
-        final roles = new Map<Int,FontRole>();
-        for (decision in decisions) roles.set(decision.index, decision.role);
-        return new QuotePairAwareFontRoleClassifier(base, roles);
+        final roles = SortedMap.builder();
+        var i = 0;
+        while (i < decisions.length) { final decision = decisions[i]; roles.put(decision.index, decision.role); i++; }
+        return new QuotePairAwareFontRoleClassifier(base, roles.build());
     }
 }
