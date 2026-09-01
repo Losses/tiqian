@@ -1,29 +1,24 @@
 package org.tiqian.core;
 
 /** Unit value used for a count of CJK 字身框 cells. */
-class Ic {
-    public final count:Float;
+@:valueType
+abstract Ic(Float) from Float {
+    public inline function new(count:Float) this = count;
 
-    public function new(count:Float) {
-        this.count = count;
-    }
+    public inline function count():Float return this;
 
-    public function toPx(emPx:Float):Float {
-        return count * emPx;
-    }
+    public function toPx(emPx:Float):Float return this * emPx;
 
-    public static function plus(left:Ic, right:Ic):Ic {
-        return new Ic(left.count + right.count);
-    }
+    @:op(A + B)
+    public static inline function plus(a:Ic, b:Ic):Ic
+        return new Ic(a.count() + b.count());
 
-    public static function unaryMinus(value:Ic):Ic {
-        return new Ic(-value.count);
-    }
+    @:op(-A)
+    public static inline function unaryMinus(a:Ic):Ic
+        return new Ic(-a.count());
 
-    public static final Zero:Ic = new Ic(0.0);
+    public static var Zero:Ic = new Ic(0.0);
 
-    public function toString():String {
-        return "Ic(count=" + Std.string(count) + ")";
-    }
-
+    public function toString():String
+        return "Ic(count=" + Std.string(count()) + ")";
 }
