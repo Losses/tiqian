@@ -73,3 +73,6 @@ org.tiqian.layout.UnicodePunctuationBoundaryResolver
 org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest
 org.tiqian.layout.PunctuationGeometryStage
 org.tiqian.layout.PunctuationGeometryStageCoverageTest
+org.tiqian.layout.LineBreaker
+org.tiqian.layout.LineRepair
+org.tiqian.layout.GreedyLineBreakerTest
