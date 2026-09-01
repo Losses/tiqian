@@ -52,6 +52,7 @@ import org.tiqian.layout.JustifierCoverageTest;
 import org.tiqian.layout.JustifierCompressionTest;
 import org.tiqian.layout.JustifierJfTest;
 import org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest;
+import org.tiqian.layout.PunctuationGeometryStageCoverageTest;
 import org.tiqian.linebreak.LineBreakCoverageTest;
 import org.tiqian.linebreak.MandatoryBreakTest;
 import org.tiqian.linebreak.UnicodePunctuationLineBreakCoverageTest;
@@ -780,6 +781,28 @@ class Main {
         run("resolveUnicodePunctuationBoundariesApostropheRightNeighbourSupplementaryPair", UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesApostropheRightNeighbourSupplementaryPair);
         TestTraceRecorder.flushClass("UnicodePunctuationBoundaryResolverCoverageTest");
 
+        run("attachedAsciiPointMarkKinsokuProtectsRuns", PunctuationGeometryStageCoverageTest.attachedAsciiPointMarkKinsokuProtectsRuns);
+run("attachedAsciiPointMarkKinsokuRejectsDetachedRuns", PunctuationGeometryStageCoverageTest.attachedAsciiPointMarkKinsokuRejectsDetachedRuns);
+run("attachedAsciiPointMarksNeedAContiguousNonSpaceBase", PunctuationGeometryStageCoverageTest.attachedAsciiPointMarksNeedAContiguousNonSpaceBase);
+run("attachedMarksAcceptAsciiPointMarksAfterObjects", PunctuationGeometryStageCoverageTest.attachedMarksAcceptAsciiPointMarksAfterObjects);
+run("attachedMarksCollapseSeparatorSpaceBeforeTheMark", PunctuationGeometryStageCoverageTest.attachedMarksCollapseSeparatorSpaceBeforeTheMark);
+run("attachedMarksRejectMissingObjectsAndGappedRanges", PunctuationGeometryStageCoverageTest.attachedMarksRejectMissingObjectsAndGappedRanges);
+run("attachedRunsOwnOneVirtualGapAtTheirTrailingEdge", PunctuationGeometryStageCoverageTest.attachedRunsOwnOneVirtualGapAtTheirTrailingEdge);
+run("emptyDisplayTextProducesNoAtoms", PunctuationGeometryStageCoverageTest.emptyDisplayTextProducesNoAtoms);
+run("glyphlessClustersUseThePurePolicyPath", PunctuationGeometryStageCoverageTest.glyphlessClustersUseThePurePolicyPath);
+run("inlineBoxSpansAddStructuralEdgesAndSkipDegenerateRanges", PunctuationGeometryStageCoverageTest.inlineBoxSpansAddStructuralEdgesAndSkipDegenerateRanges);
+run("inlineObjectKinsokuProtectsOrHangsAttachedMarks", PunctuationGeometryStageCoverageTest.inlineObjectKinsokuProtectsOrHangsAttachedMarks);
+run("multipleGlyphsForOneCharacterUnionIntoASingleInkBox", PunctuationGeometryStageCoverageTest.multipleGlyphsForOneCharacterUnionIntoASingleInkBox);
+run("narrowInlineBoxesOwnTheirOuterAutoSpace", PunctuationGeometryStageCoverageTest.narrowInlineBoxesOwnTheirOuterAutoSpace);
+run("perCharacterInkSubtractsPrecedingGlyphPens", PunctuationGeometryStageCoverageTest.perCharacterInkSubtractsPrecedingGlyphPens);
+run("spaceReplacementSkipsDisabledModeNullBoundariesAndExactWidths", PunctuationGeometryStageCoverageTest.spaceReplacementSkipsDisabledModeNullBoundariesAndExactWidths);
+run("spacingBoundariesCountEachWideNarrowGapOnce", PunctuationGeometryStageCoverageTest.spacingBoundariesCountEachWideNarrowGapOnce);
+run("typedSpaceBetweenWideAndNarrowIsReplacedByTheGap", PunctuationGeometryStageCoverageTest.typedSpaceBetweenWideAndNarrowIsReplacedByTheGap);
+run("unionWithoutBoundsFallsBackToTheFirstGlyph", PunctuationGeometryStageCoverageTest.unionWithoutBoundsFallsBackToTheFirstGlyph);
+run("unmatchedGlyphCountsRecordTheAmbiguousFallback", PunctuationGeometryStageCoverageTest.unmatchedGlyphCountsRecordTheAmbiguousFallback);
+run("virtualGapsRespectNarrowToWideEdgesAndTheirNeighbours", PunctuationGeometryStageCoverageTest.virtualGapsRespectNarrowToWideEdgesAndTheirNeighbours);
+run("wideToNarrowBoundariesInsertLeadingAndTrailingGaps", PunctuationGeometryStageCoverageTest.wideToNarrowBoundariesInsertLeadingAndTrailingGaps);
+        TestTraceRecorder.flushClass("PunctuationGeometryStageCoverageTest");
         if (failures > 0) {
             Process.exit(1);
         }

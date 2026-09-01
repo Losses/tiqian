@@ -71,3 +71,5 @@ org.tiqian.layout.JustifierCompressionTest
 org.tiqian.layout.JustifierJfTest
 org.tiqian.layout.UnicodePunctuationBoundaryResolver
 org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest
+org.tiqian.layout.PunctuationGeometryStage
+org.tiqian.layout.PunctuationGeometryStageCoverageTest
