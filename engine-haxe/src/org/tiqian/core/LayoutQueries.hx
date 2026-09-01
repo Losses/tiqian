@@ -1190,7 +1190,6 @@ class LayoutQueries {
     private static function isWhitespace(codePoint:Int):Bool {
         return (codePoint >= 0x0009 && codePoint <= 0x000D)
             || (codePoint >= 0x001C && codePoint <= 0x0020)
-            || codePoint == 0x0085
             || codePoint == 0x00A0
             || codePoint == 0x1680
             || (codePoint >= 0x2000 && codePoint <= 0x200A)
