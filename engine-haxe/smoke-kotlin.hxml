@@ -6,7 +6,7 @@
 -cp .haxelib/boring/git/src/reflaxe/kotlin/std-shadow
 -cp .haxelib/boring/git/src/reflaxe/kotlin
 -cp .haxelib/boring/git/samples
---macro Intercept.run(['samples'], ['samples/boring/BinaryReader.hx', 'samples/boring/BinaryWriter.hx', 'samples/boring/Fp32.hx'])
+--macro Intercept.run(['samples'])
 --macro kotlincompiler.Compiler.use()
 -D kotlin-output=engine-haxe/smoke/gen
 -D kotlin-test-output=engine-haxe/smoke/gen-tests
