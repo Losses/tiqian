@@ -47,6 +47,7 @@ import org.tiqian.layout.ContextualDashEllipsisRoleResolverCoverageTest;
 import org.tiqian.layout.ContextualRoleExtensionCoverageTest;
 import org.tiqian.layout.ContextualQuoteRoleResolverCoverageTest;
 import org.tiqian.layout.ContextualQuoteRoleResolverNestedAndSurrogateTest;
+import org.tiqian.layout.GreedyLineBreakerTest;
 import org.tiqian.linebreak.LineBreakCoverageTest;
 import org.tiqian.linebreak.MandatoryBreakTest;
 import org.tiqian.linebreak.UnicodePunctuationLineBreakCoverageTest;
@@ -585,6 +586,26 @@ class Main {
         run("plainFollowerOfAHighSurrogateCountsAsOneUnit", ContextualQuoteRoleResolverNestedAndSurrogateTest.plainFollowerOfAHighSurrogateCountsAsOneUnit);
         run("privateUseFollowerOfAHighSurrogateCountsAsOneUnit", ContextualQuoteRoleResolverNestedAndSurrogateTest.privateUseFollowerOfAHighSurrogateCountsAsOneUnit);
         TestTraceRecorder.flushClass("ContextualQuoteRoleResolverNestedAndSurrogateTest");
+        run("clusterWiderThanMaxWidthGetsOwnLineRatherThanInfiniteLoop", GreedyLineBreakerTest.clusterWiderThanMaxWidthGetsOwnLineRatherThanInfiniteLoop);
+        run("customKinsokuRuleOverridesDefault", GreedyLineBreakerTest.customKinsokuRuleOverridesDefault);
+        run("doesNotHangWhenDisabled", GreedyLineBreakerTest.doesNotHangWhenDisabled);
+        run("emptyInputProducesNoLines", GreedyLineBreakerTest.emptyInputProducesNoLines);
+        run("fillsLineUntilOverflowThenStartsNewLine", GreedyLineBreakerTest.fillsLineUntilOverflowThenStartsNewLine);
+        run("hangsPauseStopPastMeasureWhenEnabledAndPushInCannotFit", GreedyLineBreakerTest.hangsPauseStopPastMeasureWhenEnabledAndPushInCannotFit);
+        run("keepsOpenerAtLineEndWhenItIsTheLineSoleCluster", GreedyLineBreakerTest.keepsOpenerAtLineEndWhenItIsTheLineSoleCluster);
+        run("kinsokuCarriesPreviousWhenPushInCapacityCannotCoverOverflow", GreedyLineBreakerTest.kinsokuCarriesPreviousWhenPushInCapacityCannotCoverOverflow);
+        run("kinsokuCarryPreviousMovesPrevClusterToNextLine", GreedyLineBreakerTest.kinsokuCarryPreviousMovesPrevClusterToNextLine);
+        run("kinsokuLeaveRaggedWhenPrevLineIsSingleCluster", GreedyLineBreakerTest.kinsokuLeaveRaggedWhenPrevLineIsSingleCluster);
+        run("kinsokuPushesForbiddenPunctuationIntoPreviousLineWhenGlueCapacityCoversOverflow", GreedyLineBreakerTest.kinsokuPushesForbiddenPunctuationIntoPreviousLineWhenGlueCapacityCoversOverflow);
+        run("kinsokuRejectsCarryPreviousWhenCarriedLineWouldOverflow", GreedyLineBreakerTest.kinsokuRejectsCarryPreviousWhenCarriedLineWouldOverflow);
+        run("mandatoryBreakBlocksKinsokuRepairAcrossBoundary", GreedyLineBreakerTest.mandatoryBreakBlocksKinsokuRepairAcrossBoundary);
+        run("mandatoryBreakClosesLineAndPreservesTrailingEmptyLine", GreedyLineBreakerTest.mandatoryBreakClosesLineAndPreservesTrailingEmptyLine);
+        run("misalignedClusterListsThrow", GreedyLineBreakerTest.misalignedClusterListsThrow);
+        run("naturalAndAdjustedWidthsTrackIndependently", GreedyLineBreakerTest.naturalAndAdjustedWidthsTrackIndependently);
+        run("pushInStillPreferredOverHangWhenGlueCovers", GreedyLineBreakerTest.pushInStillPreferredOverHangWhenGlueCovers);
+        run("retreatsBreakSoLineDoesNotEndOnOpeningMark", GreedyLineBreakerTest.retreatsBreakSoLineDoesNotEndOnOpeningMark);
+        run("singleClusterFitsOnOneLine", GreedyLineBreakerTest.singleClusterFitsOnOneLine);
+        TestTraceRecorder.flushClass("GreedyLineBreakerTest");
 
         if (failures > 0) {
             Process.exit(1);
