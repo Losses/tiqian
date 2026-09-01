@@ -14,16 +14,12 @@ class RichTextPaint {
 
     public function new(
         ?argb:Null<Int>,
-        // Kotlin declares linePattern = Solid.instance (a static
-        // field of a class, boring gap 4) and background =
-        // RichTextBackgroundPaint() (a constructor call, outside the
-        // sanctioned grammar). Both parameters stay mandatory.
-        linePattern:RichTextLinePattern,
+        ?linePattern:Null<RichTextLinePattern>,
         background:RichTextBackgroundPaint,
         ?adjacentSameStyleClearance:Null<Float>
     ) {
         this.argb = argb == null ? null : argb;
-        this.linePattern = linePattern;
+        this.linePattern = linePattern == null ? Solid.instance : linePattern;
         this.background = background;
         this.adjacentSameStyleClearance = adjacentSameStyleClearance == null ? 0.0 : adjacentSameStyleClearance;
         if (!isFinite(this.adjacentSameStyleClearance) || this.adjacentSameStyleClearance < 0.0) {
