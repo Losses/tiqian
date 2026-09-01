@@ -62,3 +62,5 @@ org.tiqian.layout.LineOptimization
 org.tiqian.layout.LineOptimizationCoverageTest
 org.tiqian.layout.ContextualQuoteRoleResolverCoverageTest
 org.tiqian.layout.ContextualQuoteRoleResolverNestedAndSurrogateTest
+org.tiqian.layout.ContextualDashEllipsisRoleResolverCoverageTest
+org.tiqian.layout.ContextualRoleExtensionCoverageTest
