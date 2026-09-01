@@ -13,14 +13,6 @@ class BreakOpportunity {
         this.penalty = penalty == null ? 0 : penalty;
         this.reason = reason;
     }
-
-    // Kotlin puts the defaulted penalty third in the primary constructor;
-    // Haxe optionals must trail, so the synthesized member prints reason
-    // before penalty. Registered as boring gap 37 (dataClass synthesis
-    // should follow field declaration order); delete when it lands.
-    public function toString():String {
-        return "BreakOpportunity(index=" + index + ", kind=" + kind + ", penalty=" + penalty + ", reason=" + reason + ")";
-    }
 }
 
 @:dataClass
