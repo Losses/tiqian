@@ -69,3 +69,5 @@ org.tiqian.layout.JustifierTest
 org.tiqian.layout.JustifierCoverageTest
 org.tiqian.layout.JustifierCompressionTest
 org.tiqian.layout.JustifierJfTest
+org.tiqian.layout.UnicodePunctuationBoundaryResolver
+org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest
