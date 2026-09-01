@@ -6,6 +6,9 @@ import org.tiqian.core.TiqianNoSuchElementException;
 import org.tiqian.core.Ic;
 import org.tiqian.core.EastAsianSpacingEdges;
 import org.tiqian.clreq.BopomofoTone;
+import org.tiqian.font.FontRole;
+import org.tiqian.layout.QuotePairAnalyzer.QuotePair;
+import org.tiqian.layout.QuotePairAnalyzer.QuoteType;
 import org.tiqian.clreq.BopomofoReading;
 import org.tiqian.clreq.ClreqProfile;
 import org.tiqian.clreq.GlueSide;
@@ -92,6 +95,37 @@ class TracedAssertions {
         ]);
         if (expected != actual) {
             fail(message == null ? "Expected values to be equal." : message);
+        }
+    }
+
+    public static function assertEqualsFontRole(expected:FontRole, actual:Null<FontRole>, ?message:String):Void {
+        recordEvent("eq", [field("expected", Std.string(expected)), field("actual", actual == null ? "null" : Std.string(actual)), msgField(message)]);
+        if (actual == null || expected != actual) fail(message == null ? "Expected values to be equal." : message);
+    }
+
+    public static function assertEqualsQuoteType(expected:QuoteType, actual:QuoteType, ?message:String):Void {
+        recordEvent("eq", [field("expected", Std.string(expected)), field("actual", Std.string(actual)), msgField(message)]);
+        if (expected != actual) fail(message == null ? "Expected values to be equal." : message);
+    }
+
+    public static function assertEqualsQuotePair(expected:QuotePair, actual:QuotePair, ?message:String):Void {
+        recordEvent("eq", [field("expected", expected.toString()), field("actual", actual.toString()), msgField(message)]);
+        if (expected.openIndex != actual.openIndex || expected.closeIndex != actual.closeIndex || expected.quoteType != actual.quoteType) fail(message == null ? "Expected values to be equal." : message);
+    }
+
+    private static function renderQuotePairs(values:Array<QuotePair>):String {
+        final buf = new StringBuf(); buf.add("["); var i = 0;
+        while (i < values.length) { if (i > 0) buf.add(", "); buf.add(values[i].toString()); i++; }
+        buf.add("]"); return buf.toString();
+    }
+
+    public static function assertEqualsQuotePairArray(expected:Array<QuotePair>, actual:Array<QuotePair>, ?message:String):Void {
+        recordEvent("eq", [field("expected", renderQuotePairs(expected)), field("actual", renderQuotePairs(actual)), msgField(message)]);
+        if (expected.length != actual.length) fail(message == null ? "Expected arrays to be equal." : message);
+        var i = 0;
+        while (i < expected.length) {
+            if (expected[i].openIndex != actual[i].openIndex || expected[i].closeIndex != actual[i].closeIndex || expected[i].quoteType != actual[i].quoteType) fail(message == null ? "Expected arrays to be equal." : message);
+            i++;
         }
     }
 
