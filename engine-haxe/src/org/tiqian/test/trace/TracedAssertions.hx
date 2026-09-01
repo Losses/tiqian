@@ -1,6 +1,7 @@
 package org.tiqian.test.trace;
 
 import org.tiqian.core.TiqianIllegalArgumentException;
+import org.tiqian.core.IllegalStateException;
 import org.tiqian.core.TiqianNoSuchElementException;
 import org.tiqian.core.Ic;
 import org.tiqian.core.EastAsianSpacingEdges;
@@ -267,7 +268,7 @@ class TracedAssertions {
             block();
         } catch (error:TiqianIllegalArgumentException) {
             recordEvent("raises", [
-                field("exception", "TiqianIllegalArgumentException"),
+                field("exception", Std.isOfType(error, IllegalStateException) ? "IllegalStateException" : "TiqianIllegalArgumentException"),
                 field("thrown", TestTraceRender.renderString(error.message)),
                 msgField(message)
             ]);
