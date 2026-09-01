@@ -20,14 +20,9 @@ class ClreqProfile {
         strictness:ClreqStrictness,
         region:ClreqRegion,
         ?punctuationGlyphPolicy:Null<CjkPunctuationGlyphPolicy>,
-        // Kotlin default reads the static field DefaultCoalesceRepeatablePunctuation
-        // (boring gap 4); the parameter stays mandatory until that lowering lands.
-        coalesceRepeatablePunctuation:Array<Int>,
-        // Kotlin default reads the static field AutoSpacePolicy.Default (gap 4).
-        autoSpace:AutoSpacePolicy,
-        // Kotlin default calls PunctuationGluePlacement.forRegion(region), a call
-        // on an earlier parameter (gap 4).
-        gluePlacement:PunctuationGluePlacement,
+        ?coalesceRepeatablePunctuation:Null<Array<Int>>,
+        ?autoSpace:Null<AutoSpacePolicy>,
+        ?gluePlacement:Null<PunctuationGluePlacement>,
         // Kotlin default constructs AdjustmentStylePolicy(); constructor calls
         // stay outside the sanctioned default grammar permanently.
         adjustment:AdjustmentStylePolicy,
@@ -42,9 +37,13 @@ class ClreqProfile {
         this.punctuationGlyphPolicy = punctuationGlyphPolicy == null
             ? CjkPunctuationGlyphPolicy.PreferClreqRecommendedCodepoints
             : punctuationGlyphPolicy;
-        this.coalesceRepeatablePunctuation = coalesceRepeatablePunctuation;
-        this.autoSpace = autoSpace;
-        this.gluePlacement = gluePlacement;
+        this.coalesceRepeatablePunctuation = coalesceRepeatablePunctuation == null
+            ? ClreqProfile.DefaultCoalesceRepeatablePunctuation
+            : coalesceRepeatablePunctuation;
+        this.autoSpace = autoSpace == null ? AutoSpacePolicy.Default : autoSpace;
+        this.gluePlacement = gluePlacement == null
+            ? PunctuationGluePlacements.forRegion(region)
+            : gluePlacement;
         this.adjustment = adjustment;
         this.kinsokuMode = kinsokuMode;
         this.punctuationWidth = punctuationWidth;
@@ -85,9 +84,9 @@ class ClreqProfile {
         ClreqStrictness.Normal,
         ClreqRegion.Mainland,
         null,
-        [0x2014, 0x2026, 0x22EF],
-        AutoSpacePolicy.Default,
-        PunctuationGluePlacements.forRegion(ClreqRegion.Mainland),
+        null,
+        null,
+        null,
         new AdjustmentStylePolicy(),
         KinsokuMode.MeasureAdaptive(14.0, 24.0, 32.0),
         new PunctuationWidthPolicy()
@@ -98,9 +97,9 @@ class ClreqProfile {
         ClreqStrictness.Normal,
         ClreqRegion.Taiwan,
         null,
-        [0x2014, 0x2026, 0x22EF],
-        AutoSpacePolicy.Default,
-        PunctuationGluePlacements.forRegion(ClreqRegion.Taiwan),
+        null,
+        null,
+        null,
         new AdjustmentStylePolicy(),
         KinsokuMode.MeasureAdaptive(14.0, 24.0, 32.0),
         new PunctuationWidthPolicy()
@@ -111,9 +110,9 @@ class ClreqProfile {
         ClreqStrictness.Normal,
         ClreqRegion.HongKong,
         null,
-        [0x2014, 0x2026, 0x22EF],
-        AutoSpacePolicy.Default,
-        PunctuationGluePlacements.forRegion(ClreqRegion.HongKong),
+        null,
+        null,
+        null,
         new AdjustmentStylePolicy(),
         KinsokuMode.MeasureAdaptive(14.0, 24.0, 32.0),
         new PunctuationWidthPolicy()
