@@ -184,6 +184,27 @@ class TracedAssertions {
         buf.add("]"); return buf.toString();
     }
 
+    public static function assertEqualsIntSetUnordered(expected:Array<Int>, actual:Array<Int>, ?message:String):Void {
+        recordEvent("eq", [
+            field("expected", renderIntListInGivenOrder(expected)),
+            field("actual", renderIntListInGivenOrder(actual)),
+            msgField(message)
+        ]);
+        final expectedSet = std.SortedSet.builder();
+        var i = 0; while (i < expected.length) { expectedSet.put(expected[i]); i++; }
+        final actualSet = std.SortedSet.builder();
+        i = 0; while (i < actual.length) { actualSet.put(actual[i]); i++; }
+        final e = expectedSet.build(); final a = actualSet.build();
+        if (e.size() != a.size()) { fail(message == null ? "Expected values to be equal." : message); }
+        i = 0; while (i < e.size()) { if (e.at(i) != a.at(i)) { fail(message == null ? "Expected values to be equal." : message); } i++; }
+    }
+
+    private static function renderIntListInGivenOrder(values:Array<Int>):String {
+        final buf = new StringBuf(); buf.add("["); var i = 0;
+        while (i < values.length) { if (i > 0) buf.add(", "); buf.add(TestTraceRender.renderInt(values[i])); i++; }
+        buf.add("]"); return buf.toString();
+    }
+
     public static function assertEqualsRepairOptionArray(expected:Array<RepairOption>, actual:Array<RepairOption>, ?message:String):Void {
         final expectedText = RepairOptions.renderList(expected);
         final actualText = RepairOptions.renderList(actual);
