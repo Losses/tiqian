@@ -16,20 +16,16 @@ class RichTextBackgroundPaint {
         ?horizontalPadding:Null<Float>,
         ?verticalPadding:Null<Float>,
         ?cornerRadius:Null<Float>,
-        // Kotlin declares continuationCornerRadius = cornerRadius, a
-        // parameter-reading default (boring gap 4), and drawStyle =
-        // Fill.instance (a static field, also gap 4).
-        // Both parameters stay mandatory until that lowering lands.
-        continuationCornerRadius:Float,
+        ?continuationCornerRadius:Null<Float>,
         ?metricPolicy:Null<RichTextBackgroundMetricPolicy>,
-        drawStyle:RichTextBackgroundDrawStyle
+        ?drawStyle:Null<RichTextBackgroundDrawStyle>
     ) {
         this.horizontalPadding = horizontalPadding == null ? 0.0 : horizontalPadding;
         this.verticalPadding = verticalPadding == null ? 0.0 : verticalPadding;
         this.cornerRadius = cornerRadius == null ? 0.0 : cornerRadius;
-        this.continuationCornerRadius = continuationCornerRadius;
+        this.continuationCornerRadius = continuationCornerRadius == null ? cornerRadius : continuationCornerRadius;
         this.metricPolicy = metricPolicy == null ? RichTextBackgroundMetricPolicy.MarkedFaces : metricPolicy;
-        this.drawStyle = drawStyle;
+        this.drawStyle = drawStyle == null ? Fill.instance : drawStyle;
         if (!isFinite(this.horizontalPadding) || this.horizontalPadding < 0.0
             || !isFinite(this.verticalPadding) || this.verticalPadding < 0.0
             || !isFinite(this.cornerRadius) || this.cornerRadius < 0.0
