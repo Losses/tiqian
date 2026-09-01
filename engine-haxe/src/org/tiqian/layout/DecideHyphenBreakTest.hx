@@ -1,0 +1,9 @@
+package org.tiqian.layout;
+import org.tiqian.core.Cluster; import org.tiqian.core.TextRange; import org.tiqian.test.trace.TestTraceRecorder; import org.tiqian.test.trace.TracedAssertions;
+class DecideHyphenBreakTest {
+ static function c(i:Int,a:Float):Cluster return new Cluster(new TextRange(i,i+1),"x","k",a);
+ static var cs=[c(0,16),c(1,16),c(2,32),c(3,32),c(4,32)]; static function m(a:Array<Int>):Map<Int,Bool>{var x=new Map<Int,Bool>();for(i in a)x.set(i,true);return x;}
+ public static function chargesAllDeficitToCjkWhenNoSinoWesternCapacityIsKnown():Void {new TestTraceRecorder("DecideHyphenBreakTest").section("chargesAllDeficitToCjkWhenNoSinoWesternCapacityIsKnown");TracedAssertions.assertEqualsInt(4,ProgressiveBreakDecisions.decideHyphenBreak(0,4,cs,74,m([4]),m([1]),8));}
+ public static function discountsSinoWesternCapacityBeforeChargingCjkLooseness():Void {new TestTraceRecorder("DecideHyphenBreakTest").section("discountsSinoWesternCapacityBeforeChargingCjkLooseness");TracedAssertions.assertEqualsInt(3,ProgressiveBreakDecisions.decideHyphenBreak(0,4,cs,74,m([4]),m([1]),8,m([2]),4));}
+ public static function flush():Void new TestTraceRecorder("DecideHyphenBreakTest").flush();
+}
