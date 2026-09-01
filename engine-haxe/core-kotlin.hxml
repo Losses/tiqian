@@ -55,3 +55,6 @@ org.tiqian.core.SourceInteractionBoundariesCoverageTest
 org.tiqian.core.TextModelCoverageTest
 org.tiqian.core.UnicodeEmojiModifierBaseData
 org.tiqian.core.UnicodeExtendedPictographicData
+org.tiqian.layout.PunctuationModel
+org.tiqian.layout.PunctuationModelCoverageTest
+org.tiqian.layout.PunctuationAtomBuilderHaltTest

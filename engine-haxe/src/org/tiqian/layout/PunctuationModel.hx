@@ -64,17 +64,24 @@ class PunctuationSpacingCompressor {
     public function compressCjkClosingBeforeAsciiPointMark(atoms:Array<PunctuationAtom>,text:String,em:Float):PunctuationSpacingCompressionResult { final out:Array<PunctuationSpacingAdjustment>=[]; var half=em/2; var li=0; while(li<atoms.length){ final left=atoms[li]; li++;if(left.punctuationClass!=PunctuationClass.Closing||left.range.end>=text.length)continue;final r=text.charAt(left.range.end);if(!ClreqPunctuationPolicies.isAsciiPointMark(r))continue;final natural=Math.max(0,left.trailingGlue.natural-left.trailingGlueInitiallyConsumed);if(natural<=0)continue;final adjusted=Math.max(0,natural-half);if(natural-adjusted>0)out.push(new PunctuationSpacingAdjustment(new TextRange(left.range.start,left.range.end+1),left.range,left.char,r,natural,adjusted,natural-adjusted,"collapse-cjk-closing-before-ascii-point-mark"));}return new PunctuationSpacingCompressionResult(out); }
 }
 
+/** Named shape for the class-based glue split that Kotlin models as Pair<Float, Float>. */
+private typedef ClassGluePair = { leading:Float, trailing:Float };
+
 class PunctuationAtomBuilder {
     private final defaultGluePlacement:PunctuationGluePlacement; private final defaultWidthPolicy:PunctuationWidthPolicy;
     public function new(?gluePlacement:Null<PunctuationGluePlacement>,?widthPolicy:Null<PunctuationWidthPolicy>){this.defaultGluePlacement=gluePlacement==null?PunctuationGluePlacement.MainlandSimplified:gluePlacement;this.defaultWidthPolicy=widthPolicy==null?new PunctuationWidthPolicy():widthPolicy;}
-    @:overload(function(text:String,index:Int,em:Float):Null<PunctuationAtom> { if(index<0||index>=text.length)return null; return build(text.charAt(index),new TextRange(index,index+1),em,null,null,null); })
+    /** Kotlin declares this overload as build(text, index, em); Haxe cannot give two methods one name with different bodies, so the text+index form is buildAtIndex. */
+    public function buildAtIndex(text:String,index:Int,em:Float):Null<PunctuationAtom> {
+        if(index<0||index>=text.length)return null;
+        return build(text.charAt(index),new TextRange(index,index+1),em,null,null,null);
+    }
     public function build(char:String,range:TextRange,em:Float,?inkInput:Null<PunctuationInkInput>,?gluePlacement:Null<PunctuationGluePlacement>,?widthPolicy:Null<PunctuationWidthPolicy>):Null<PunctuationAtom> {
         final placement=gluePlacement==null?defaultGluePlacement:gluePlacement; final wp=widthPolicy==null?defaultWidthPolicy:widthPolicy; final policy=ClreqPunctuationPolicies.policyFor(char);if(policy.punctuationClass==PunctuationClass.Other)return null;
         final policyAdvance=policy.defaultAdvanceEm*em;final shaped=inkInput==null?null:(inkInput.advance>0?inkInput.advance:null);final raw=shaped==null?policyAdvance:shaped;final expansion=Math.max(0,policyAdvance-raw);
-        final shift=shaped!=null&&expansion>0?switch(PunctuationGluePlacements.glueSideFor(placement,policy.punctuationClass)){case LeadingOnly:expansion;case BothSides:expansion/2;case TrailingOnly:0;}:0;
+        final glueSide=PunctuationGluePlacements.glueSideFor(placement,policy.punctuationClass);final shift=shaped!=null&&expansion>0?switch(glueSide){case LeadingOnly:expansion;case BothSides:expansion/2;case TrailingOnly:0;}:0;
         final ink=inkInput==null||inkInput.inkBounds==null?null:shiftRect(inkInput.inkBounds,shift);final inkWidth=ink==null?null:Math.max(0,ink.width);final center=ink==null?null:(ink.left+ink.right)/2;final advance=Math.max(Math.max(raw,policyAdvance),ink==null?0:ink.right);
         final policyFloor=policy.defaultBodyEm*em;final halt=inkInput==null?null:(expansion<=PLACEMENT_EPSILON&&inkInput.haltAdvance!=null&&inkInput.haltAdvance>0&&inkInput.haltAdvance<advance?inkInput.haltAdvance:null);final forced=ClreqPunctuationPolicies.forcedHalfWidth(char,wp);
-        final geo=compressionGeometry(advance,raw,halt==null?(forced?Math.min(policyFloor,.5*em):policyFloor):halt,ink,halt,inkInput==null?null:inkInput.haltPlacementX,policy.punctuationClass,placement);
+        final forcedFloor=forced?Math.min(policyFloor,.5*em):policyFloor;final target=halt==null?forcedFloor:halt;final geo=compressionGeometry(advance,raw,target,ink,halt,inkInput==null?null:inkInput.haltPlacementX,policy.punctuationClass,placement);
         return new PunctuationAtom(range,char,policy.punctuationClass,advance,ink,geo.bodyWidth,halt,geo.haltValidation,new Glue(PunctuationLeading,0,geo.leadingTrim,geo.leadingTrim,0,0),new Glue(PunctuationTrailing,0,geo.trailingTrim,geo.trailingTrim,0,0),geo.anchor,(forced?geo.source+"FixedHalfWidth":geo.source),policyFloor,inkWidth,center,geo.inkBodyFloor,geo.inkContainmentApplied,ink==null&&inkInput!=null?inkInput.boundsFallbackReason:null,Math.max(0,advance-raw),shift,shift!=0?"UnderwidthPunctuationFullWidthBoxPlacement":null,forced?geo.leadingTrim:0,forced?geo.trailingTrim:0);
     }
     private function shiftRect(r:Rect,a:Float):Rect{return a==0?r:new Rect(r.left+a,r.top,r.right+a,r.bottom);}
@@ -85,7 +92,7 @@ class PunctuationAtomBuilder {
     }
     private function fittedBodyFrame(advance:Float,target:Float,ink:Rect):BodyFrame {final lw=Math.max(target,Math.min(ink.right,advance));final tw=Math.max(target,Math.min(advance-ink.left,advance));final cw=Math.max(target,Math.min(Math.max(advance-2*ink.left,2*ink.right-advance),advance));final a=[new BodyFrame(Leading,0,lw),new BodyFrame(Center,(advance-cw)/2,cw),new BodyFrame(Trailing,advance-tw,tw)];final ic=(ink.left+ink.right)/2;var best=a[0];for(i in 1...a.length)if(a[i].width<best.width||a[i].width==best.width&&Math.abs(a[i].start+a[i].width/2-ic)<Math.abs(best.start+best.width/2-ic))best=a[i];return best;}
     private function anchorFor(l:Float,t:Float):PunctuationAnchor{return l>PLACEMENT_EPSILON&&t>PLACEMENT_EPSILON?Center:l>PLACEMENT_EPSILON?Trailing:t>PLACEMENT_EPSILON?Leading:Center;}
-    private function classBasedGlue(cls:PunctuationClass,total:Float,placement:PunctuationGluePlacement):{leading:Float,trailing:Float}{return switch(PunctuationGluePlacements.glueSideFor(placement,cls)){case LeadingOnly:{leading:total,trailing:0};case TrailingOnly:{leading:0,trailing:total};case BothSides:{leading:total/2,trailing:total/2};};}
+    private function classBasedGlue(cls:PunctuationClass,total:Float,placement:PunctuationGluePlacement):ClassGluePair{final side=PunctuationGluePlacements.glueSideFor(placement,cls);return switch(side){case LeadingOnly:{leading:total,trailing:0};case TrailingOnly:{leading:0,trailing:total};case BothSides:{leading:total/2,trailing:total/2};};}
     private static final PLACEMENT_EPSILON:Float=.001;
 }
 @:dataClass class BodyFrame { public final anchor:PunctuationAnchor;public final start:Float;public final width:Float;public function new(anchor:PunctuationAnchor,start:Float,width:Float){this.anchor=anchor;this.start=start;this.width=width;} }
