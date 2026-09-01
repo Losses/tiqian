@@ -20,22 +20,27 @@ enum QuoteType { Double; Single; }
     public function new(index:Int, role:FontRole, source:String, reason:String) { this.index=index; this.role=role; this.source=source; this.reason=reason; }
 }
 
+private typedef OpenQuoteEntry = {
+    var index:Int;
+    var type:QuoteType;
+};
+
 /** Finds structurally paired curly quotes and delegates their script role to ContextualQuoteRoleResolver. */
 class QuotePairAnalyzer {
     public function new() {}
     public function analyze(text:String):Array<QuotePair> {
-        final stack:Array<{index:Int, type:QuoteType}> = [];
+        final stack:Array<OpenQuoteEntry> = [];
         final pairs:Array<QuotePair> = [];
         var index = 0;
         while (index < text.length) {
-            switch (text.charCodeAt(index)) {
-                case 0x201C: stack.push({index:index, type:QuoteType.Double});
-                case 0x2018: stack.push({index:index, type:QuoteType.Single});
-                case 0x201D:
-                    if (stack.length > 0 && stack[stack.length-1].type == QuoteType.Double) { final match=stack.pop(); pairs.push(new QuotePair(match.index,index,QuoteType.Double)); }
-                case 0x2019:
-                    if (!QuotePairAnalyzer.isNonCjkInWordApostrophe(text,index) && stack.length > 0 && stack[stack.length-1].type == QuoteType.Single) { final match=stack.pop(); pairs.push(new QuotePair(match.index,index,QuoteType.Single)); }
-                default:
+            final c = text.charCodeAt(index);
+            if (c == 0x201C) { stack.push({index:index, type:QuoteType.Double}); }
+            else if (c == 0x2018) { stack.push({index:index, type:QuoteType.Single}); }
+            else if (c == 0x201D) {
+                if (stack.length > 0 && stack[stack.length-1].type == QuoteType.Double) { final match=stack.pop(); pairs.push(new QuotePair(match.index,index,QuoteType.Double)); }
+            }
+            else if (c == 0x2019) {
+                if (!QuotePairAnalyzer.isNonCjkInWordApostrophe(text,index) && stack.length > 0 && stack[stack.length-1].type == QuoteType.Single) { final match=stack.pop(); pairs.push(new QuotePair(match.index,index,QuoteType.Single)); }
             }
             index++;
         }
@@ -55,7 +60,7 @@ class QuotePairAnalyzer {
     public function classifyQuoteRolesWithClassifier(text:String, pairs:Array<QuotePair>, fontRoleClassifier:FontRoleClassifier, ?context:Null<FontRoleContext>):Array<QuoteRoleDecision> {
         return classifyQuoteRoles(text,pairs,context);
     }
-    static function mapDecisions(decisions:Array<QuoteRoleDecision>):SortedMap<Int,FontRole> { final out=SortedMap.builder(); for(d in decisions) out.put(d.index,d.role); return out.build(); }
+    static function mapDecisions(decisions:Array<QuoteRoleDecision>):SortedMap<Int,FontRole> { final out=SortedMap.builder(); var di:Int=0; while(di<decisions.length){ final d=decisions[di]; di++; out.put(d.index,d.role); } return out.build(); }
 
     public static function isNonCjkInWordApostrophe(text:String,index:Int):Bool {
         final before=codePointBefore(text,index); if(before==null)return false;

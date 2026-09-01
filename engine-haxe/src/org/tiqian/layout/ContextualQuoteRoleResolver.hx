@@ -1,5 +1,7 @@
 package org.tiqian.layout;
 
+using std.Functional;
+
 import org.tiqian.core.UnicodeEastAsianSpacing;
 import org.tiqian.core.UnicodeScriptEvidence;
 import org.tiqian.core.UnicodeScriptEvidenceClassifier;
@@ -7,69 +9,85 @@ import org.tiqian.core.UnicodeNumber;
 import org.tiqian.core.UnicodeWordCharacter;
 import org.tiqian.font.FontRole;
 import org.tiqian.font.FontRoleContext;
+import org.tiqian.layout.QuotePairAnalyzer.QuotePair;
+import org.tiqian.layout.QuotePairAnalyzer.QuoteRoleDecision;
+import std.SortedMap;
+import std.SortedSet;
 
 class ContextualQuoteRoleResolver {
     private final text:String;
     private final pairs:Array<QuotePair>;
     private final context:FontRoleContext;
-    private final pairByOpen:Map<Int, QuotePair> = new Map<Int, QuotePair>();
-    private final pairByClose:Map<Int, QuotePair> = new Map<Int, QuotePair>();
-    private final parentByPair:Map<QuotePair, Null<QuotePair>> = new Map<QuotePair, Null<QuotePair>>();
+    private final pairByOpen:SortedMap<Int, QuotePair>;
+    private final pairByClose:SortedMap<Int, QuotePair>;
+    private final parentByPair:SortedMap<Int, Null<QuotePair>>;
 
     public function new(text:String, pairs:Array<QuotePair>, context:FontRoleContext) {
         this.text = text;
         this.pairs = pairs;
         this.context = context;
-        for (pair in pairs) {
-            pairByOpen.set(pair.openIndex, pair);
-            pairByClose.set(pair.closeIndex, pair);
+        final openBuilder = SortedMap.builder();
+        final closeBuilder = SortedMap.builder();
+        var pi:Int = 0;
+        while (pi < pairs.length) {
+            final pair = pairs[pi];
+            pi++;
+            openBuilder.put(pair.openIndex, pair);
+            closeBuilder.put(pair.closeIndex, pair);
         }
-        for (pair in pairs) {
-            parentByPair.set(pair, findParent(pair));
+        pairByOpen = openBuilder.build();
+        pairByClose = closeBuilder.build();
+        final parentBuilder = SortedMap.builder();
+        pi = 0;
+        while (pi < pairs.length) {
+            final pair = pairs[pi];
+            pi++;
+            parentBuilder.put(pair.openIndex, findParent(pair));
         }
+        parentByPair = parentBuilder.build();
     }
 
     public function resolve():Array<QuoteRoleDecision> {
         final decisions:Array<QuoteRoleDecision> = [];
-        final resolvedPairs:Map<QuotePair, FontRole> = new Map<QuotePair, FontRole>();
-        final ordered:Array<QuotePair> = pairs.copy();
-        ordered.sort(function(left:QuotePair, right:QuotePair):Int {
-            final byOpen:Int = left.openIndex - right.openIndex;
-            return byOpen != 0 ? byOpen : right.closeIndex - left.closeIndex;
-        });
-
-        for (pair in ordered) {
+        final resolvedPairs:SortedMapBuilder<Int, FontRole> = SortedMap.builder();
+        final ordered:Array<QuotePair> = pairs.sortedBy(function(pair:QuotePair):Int return pair.openIndex);
+        var oi:Int = 0;
+        while (oi < ordered.length) {
+            final pair = ordered[oi];
+            oi++;
             final resolution:Resolution = resolvePair(pair, resolvedPairs);
-            resolvedPairs.set(pair, resolution.role);
+            resolvedPairs.put(pair.openIndex, resolution.role);
             decisions.push(new QuoteRoleDecision(pair.openIndex, resolution.role, resolution.source, resolution.reason));
             decisions.push(new QuoteRoleDecision(pair.closeIndex, resolution.role, resolution.source, resolution.reason));
         }
 
-        final pairedIndices:Map<Int, Bool> = new Map<Int, Bool>();
-        for (pair in pairs) {
-            pairedIndices.set(pair.openIndex, true);
-            pairedIndices.set(pair.closeIndex, true);
+        final pairedIndicesBuilder = SortedSet.builder();
+        var pi:Int = 0;
+        while (pi < pairs.length) {
+            final pair = pairs[pi];
+            pi++;
+            pairedIndicesBuilder.put(pair.openIndex);
+            pairedIndicesBuilder.put(pair.closeIndex);
         }
+        final pairedIndices:SortedSet<Int> = pairedIndicesBuilder.build();
         for (index in 0...text.length) {
-            if (pairedIndices.exists(index) || !isAmbiguousCurlyQuote(text.charCodeAt(index))) {
-                continue;
-            }
+            if (pairedIndices.has(index) || !isAmbiguousCurlyQuote(text.charCodeAt(index))) continue;
             final resolution:Resolution = resolveUnmatched(index);
             decisions.push(new QuoteRoleDecision(index, resolution.role, resolution.source, resolution.reason));
         }
-        decisions.sort(function(left:QuoteRoleDecision, right:QuoteRoleDecision):Int return left.index - right.index);
-        return decisions;
+        final sorted = decisions.sortedBy(function(d:QuoteRoleDecision):Int return d.index);
+        return sorted;
     }
 
-    private function resolvePair(pair:QuotePair, resolvedPairs:Map<QuotePair, FontRole>):Resolution {
-        final parent:Null<QuotePair> = parentByPair.get(pair);
+    private function resolvePair(pair:QuotePair, resolvedPairs:SortedMapBuilder<Int, FontRole>):Resolution {
+        final parent:Null<QuotePair> = parentByPair.get(pair.openIndex);
         final enclosingStart:Int = parent == null ? 0 : parent.openIndex + 1;
         final enclosingEnd:Int = parent == null ? text.length : parent.closeIndex;
-        final outerEvidence:ScriptEvidenceState = new ScriptEvidenceState();
-        outerEvidence.addRange(pairByOpen, enclosingStart, pair.openIndex, text);
-        outerEvidence.addRange(pairByOpen, pair.closeIndex + 1, enclosingEnd, text);
-        final contentEvidence:ScriptEvidenceState = new ScriptEvidenceState();
-        contentEvidence.addRange(pairByOpen, pair.openIndex + 1, pair.closeIndex, text);
+        final outerEvidence:ScriptEvidence = new ScriptEvidence(this);
+        outerEvidence.addRange(enclosingStart, pair.openIndex);
+        outerEvidence.addRange(pair.closeIndex + 1, enclosingEnd);
+        final contentEvidence:ScriptEvidence = new ScriptEvidence(this);
+        contentEvidence.addRange(pair.openIndex + 1, pair.closeIndex);
 
         if (charAt(pair.openIndex - 1) != null && isAsciiSpaceOrTab(charAt(pair.openIndex - 1))
             && contentEvidence.hasWestern && !contentEvidence.hasCjk) {
@@ -82,40 +100,24 @@ class ContextualQuoteRoleResolver {
         if (outerRole != null) {
             return new Resolution(outerRole, "PairedPunctuationOuterScriptContext", "quote-pair-inherits-enclosing-level-script");
         }
-        if (outerEvidence.isMixed) {
-            return paragraphLanguageResolution("mixed-enclosing-level-script");
-        }
+        if (outerEvidence.isMixed) return paragraphLanguageResolution("mixed-enclosing-level-script");
         if (parent != null) {
-            final enclosingRole:Null<FontRole> = resolvedPairs.get(parent);
-            if (enclosingRole != null) {
-                return new Resolution(enclosingRole, "PairedPunctuationEnclosingQuoteContext", "quote-pair-inherits-enclosing-quotation");
-            }
+            final enclosingRole:Null<FontRole> = resolvedPairs.get(parent.openIndex);
+            if (enclosingRole != null) return new Resolution(enclosingRole, "PairedPunctuationEnclosingQuoteContext", "quote-pair-inherits-enclosing-quotation");
         }
         final contentRole:Null<FontRole> = contentEvidence.unambiguousRole();
-        if (contentRole != null) {
-            return new Resolution(contentRole, "PairedPunctuationContentScriptContext", "quoted-content-script");
-        }
+        if (contentRole != null) return new Resolution(contentRole, "PairedPunctuationContentScriptContext", "quoted-content-script");
         return paragraphLanguageResolution(contentEvidence.isMixed ? "mixed-quoted-content" : "no-strong-script-context");
     }
 
     private function resolveUnmatched(index:Int):Resolution {
-        if (text.charCodeAt(index) == 0x2019 && isNonCjkInWordApostrophe(index)) {
-            return new Resolution(FontRole.LatinText, "NonCjkInWordApostrophe", "non-cjk-in-word-apostrophe");
-        }
-        if (isDigitBoundClosingQuote(index)) {
-            return new Resolution(FontRole.LatinText, "NumericPrimeUnmatchedQuote", "digit-bound-unmatched-quote-as-prime");
-        }
+        if (text.charCodeAt(index) == 0x2019 && isNonCjkInWordApostrophe(index)) return new Resolution(FontRole.LatinText, "NonCjkInWordApostrophe", "non-cjk-in-word-apostrophe");
+        if (isDigitBoundClosingQuote(index)) return new Resolution(FontRole.LatinText, "NumericPrimeUnmatchedQuote", "digit-bound-unmatched-quote-as-prime");
         final leftRole:Null<FontRole> = nearestStrongScriptRole(index - 1, -1);
         final rightRole:Null<FontRole> = nearestStrongScriptRole(index + 1, 1);
-        if (isAsciiSpaceOrTab(charAt(index - 1)) && rightRole == FontRole.LatinText) {
-            return new Resolution(FontRole.LatinText, "DelimitedUnmatchedWesternQuote", "whitespace-delimited-unmatched-western-quote");
-        }
-        if (leftRole != null && (rightRole == null || rightRole == leftRole)) {
-            return new Resolution(leftRole, "UnmatchedQuoteSurroundingScriptContext", "unmatched-quote-surrounding-script");
-        }
-        if (rightRole != null && leftRole == null) {
-            return new Resolution(rightRole, "UnmatchedQuoteSurroundingScriptContext", "unmatched-quote-surrounding-script");
-        }
+        if (isAsciiSpaceOrTab(charAt(index - 1)) && rightRole == FontRole.LatinText) return new Resolution(FontRole.LatinText, "DelimitedUnmatchedWesternQuote", "whitespace-delimited-unmatched-western-quote");
+        if (leftRole != null && (rightRole == null || rightRole == leftRole)) return new Resolution(leftRole, "UnmatchedQuoteSurroundingScriptContext", "unmatched-quote-surrounding-script");
+        if (rightRole != null && leftRole == null) return new Resolution(rightRole, "UnmatchedQuoteSurroundingScriptContext", "unmatched-quote-surrounding-script");
         final reason:String = leftRole != null && rightRole != null ? "conflicting-unmatched-quote-context" : "no-unmatched-quote-context";
         return paragraphLanguageResolution(reason);
     }
@@ -146,7 +148,10 @@ class ContextualQuoteRoleResolver {
 
     private function findParent(pair:QuotePair):Null<QuotePair> {
         var result:Null<QuotePair> = null;
-        for (candidate in pairs) {
+        var ci:Int = 0;
+        while (ci < pairs.length) {
+            final candidate = pairs[ci];
+            ci++;
             if (candidate != pair && candidate.openIndex < pair.openIndex && candidate.closeIndex > pair.closeIndex
                 && (result == null || candidate.closeIndex - candidate.openIndex < result.closeIndex - result.openIndex)) result = candidate;
         }
@@ -154,38 +159,25 @@ class ContextualQuoteRoleResolver {
     }
 
     private function strongScriptRole(index:Int, length:Int):Null<FontRole> {
-        return switch (UnicodeScriptEvidenceClassifier.classify(codePointAt(index, index + length))) {
+        final evidence = UnicodeScriptEvidenceClassifier.classify(codePointAt(index, index + length));
+        return switch (evidence) {
             case UnicodeScriptEvidence.EastAsian: FontRole.CjkPunctuation;
             case UnicodeScriptEvidence.Other: FontRole.LatinText;
             case UnicodeScriptEvidence.Neutral: null;
         };
     }
-
     private function isNonCjkInWordApostrophe(index:Int):Bool {
-        final before:Null<Int> = codePointBefore(index);
-        final after:Null<Int> = codePointAtOrNull(index + 1);
-        return before != null && after != null && isNonCjkWordCharacter(before) && isNonCjkWordCharacter(after)
-            && (isNonCjkNonNumericWordCharacter(before) || isNonCjkNonNumericWordCharacter(after));
+        final before:Null<Int> = codePointBefore(index); final after:Null<Int> = codePointAtOrNull(index + 1);
+        return before != null && after != null && isNonCjkWordCharacter(before) && isNonCjkWordCharacter(after) && (isNonCjkNonNumericWordCharacter(before) || isNonCjkNonNumericWordCharacter(after));
     }
-
-    private function isDigitBoundClosingQuote(index:Int):Bool {
-        final before:Null<Int> = codePointBefore(index);
-        return (text.charCodeAt(index) == 0x2019 || text.charCodeAt(index) == 0x201D) && before != null && UnicodeNumber.contains(before);
-    }
-
+    private function isDigitBoundClosingQuote(index:Int):Bool { final before:Null<Int> = codePointBefore(index); return (text.charCodeAt(index) == 0x2019 || text.charCodeAt(index) == 0x201D) && before != null && UnicodeNumber.contains(before); }
     private function isNonCjkWordInternalQuotePair(pair:QuotePair):Bool {
-        final before:Null<Int> = codePointBefore(pair.openIndex);
-        final after:Null<Int> = codePointAtOrNull(pair.closeIndex + 1);
+        final before:Null<Int> = codePointBefore(pair.openIndex); final after:Null<Int> = codePointAtOrNull(pair.closeIndex + 1);
         if (before == null || after == null || !isNonCjkNonNumericWordCharacter(before) || !isNonCjkNonNumericWordCharacter(after)) return false;
         var index:Int = pair.openIndex + 1;
-        while (index < pair.closeIndex) {
-            final codePoint:Null<Int> = codePointAtOrNull(index);
-            if (codePoint == null || !isNonCjkWordCharacter(codePoint)) return false;
-            index += codePoint > 0xFFFF ? 2 : 1;
-        }
+        while (index < pair.closeIndex) { final codePoint:Null<Int> = codePointAtOrNull(index); if (codePoint == null || !isNonCjkWordCharacter(codePoint)) return false; index += codePoint > 0xFFFF ? 2 : 1; }
         return true;
     }
-
     private function isNonCjkWordCharacter(codePoint:Int):Bool return UnicodeWordCharacter.contains(codePoint) && UnicodeScriptEvidenceClassifier.classify(codePoint) != UnicodeScriptEvidence.EastAsian;
     private function isNonCjkNonNumericWordCharacter(codePoint:Int):Bool return isNonCjkWordCharacter(codePoint) && !UnicodeNumber.contains(codePoint) && !isFullwidth(codePoint);
     private function isFullwidth(codePoint:Int):Bool return codePoint == 0x3000 || (codePoint >= 0xFF01 && codePoint <= 0xFF60) || (codePoint >= 0xFFE0 && codePoint <= 0xFFE6);
@@ -200,23 +192,26 @@ class ContextualQuoteRoleResolver {
     private function codePointAtOrNull(index:Int):Null<Int> return index < 0 || index >= text.length ? null : codePointAt(index, text.length);
 }
 
-private class ScriptEvidenceState {
+// Kotlin declares ScriptEvidence as a private inner class reading the
+// resolver's private members (pairByOpen, codePointLengthAt,
+// strongScriptRole). Haxe private members are class-visible only, so this
+// module-private mirror carries an @:access grant for the same reach.
+@:access(org.tiqian.layout.ContextualQuoteRoleResolver)
+private class ScriptEvidence {
     public var hasCjk:Bool = false;
     public var hasWestern:Bool = false;
     public var isMixed(get, never):Bool;
     private function get_isMixed():Bool return hasCjk && hasWestern;
-    public function new() {}
-    public function addRange(pairByOpen:Map<Int, QuotePair>, start:Int, end:Int, text:String):Void {
+    private final resolver:ContextualQuoteRoleResolver;
+    public function new(resolver:ContextualQuoteRoleResolver) { this.resolver = resolver; }
+    public function addRange(start:Int, end:Int):Void {
         var index:Int = start;
         while (index < end) {
-            final nested:QuotePair = pairByOpen.get(index);
+            final nested:QuotePair = resolver.pairByOpen.get(index);
             if (nested != null && nested.closeIndex < end) { index = nested.closeIndex + 1; continue; }
-            final length:Int = ContextualQuoteRoleResolverCodePoint.lengthAt(text, index, end);
-            switch (UnicodeScriptEvidenceClassifier.classify(ContextualQuoteRoleResolverCodePoint.at(text, index, end))) {
-                case UnicodeScriptEvidence.EastAsian: hasCjk = true;
-                case UnicodeScriptEvidence.Other: hasWestern = true;
-                case UnicodeScriptEvidence.Neutral:
-            }
+            final length:Int = resolver.codePointLengthAt(index, end);
+            final role:Null<FontRole> = resolver.strongScriptRole(index, length);
+            if (role == FontRole.CjkPunctuation) hasCjk = true; else if (role == FontRole.LatinText) hasWestern = true;
             index += length;
         }
     }
@@ -226,9 +221,4 @@ private class ScriptEvidenceState {
 private class Resolution {
     public final role:FontRole; public final source:String; public final reason:String;
     public function new(role:FontRole, source:String, reason:String) { this.role = role; this.source = source; this.reason = reason; }
-}
-
-private class ContextualQuoteRoleResolverCodePoint {
-    public static function at(text:String, index:Int, end:Int):Int { final high:Int = text.charCodeAt(index); if (high < 0xD800 || high > 0xDBFF || index + 1 >= end) return high; final low:Int = text.charCodeAt(index + 1); return low >= 0xDC00 && low <= 0xDFFF ? 0x10000 + ((high - 0xD800) << 10) + low - 0xDC00 : high; }
-    public static function lengthAt(text:String, index:Int, end:Int):Int return text.charCodeAt(index) >= 0xD800 && text.charCodeAt(index) <= 0xDBFF && index + 1 < end && text.charCodeAt(index + 1) >= 0xDC00 && text.charCodeAt(index + 1) <= 0xDFFF ? 2 : 1;
 }

@@ -1,9 +1,11 @@
 package org.tiqian.layout;
 
+import org.tiqian.layout.QuotePairAnalyzer.QuotePairAwareFontRoleClassifier;
 import org.tiqian.core.TextRange;
 import org.tiqian.font.CjkFontRoleClassifier;
 import org.tiqian.font.FontRole;
 import org.tiqian.font.FontRoleContext;
+import org.tiqian.layout.QuotePairAnalyzer.QuoteType;
 import org.tiqian.test.TestHelpers;
 import org.tiqian.test.trace.TestTraceRecorder;
 import org.tiqian.test.trace.TracedAssertions;
