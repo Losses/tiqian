@@ -1,34 +1,41 @@
 package org.tiqian.layout;
+import org.tiqian.layout.Justifier.CompressionPlan;
+import org.tiqian.layout.ProgressiveBreakDecisions.ShrinkOpportunity;
+import org.tiqian.layout.ProgressiveBreakDecisions.ShrinkChannel;
 import org.tiqian.test.trace.TestTraceRecorder;
 import org.tiqian.test.trace.TracedAssertions;
 
+class JustifierCompressionTestSupport {
+ public static function shrinkOf(plan:CompressionPlan, clusterIndex:Int):Null<Float> {
+  var i = 0;
+  while (i < plan.allocations.length) {
+   if (plan.allocations[i].clusterIndex == clusterIndex) return plan.allocations[i].shrink;
+   i++;
+  }
+  return null;
+ }
+}
+
 class JustifierCompressionTest {
- public static function consumesTiersInAscendingOrder():Void {
+ @:test public static function consumesTiersInAscendingOrder():Void {
   new TestTraceRecorder("JustifierCompressionTest").section("consumesTiersInAscendingOrder");
-  TracedAssertions.assertEqualsFloatTolerance(0,0,0.000100);
-  TracedAssertions.assertEqualsFloatTolerance(2,2,0.000100);
-  TracedAssertions.assertEqualsFloatTolerance(1,1,0.000100);
-  TracedAssertions.assertNullRendered(true,"-");
+  final justifier = new Justifier();
+  final opps:Array<ShrinkOpportunity> = [
+   new ShrinkOpportunity(0, 1, 2.0, ShrinkChannel.TrailingGlue),
+   new ShrinkOpportunity(1, 2, 5.0, ShrinkChannel.TrailingGlue),
+   new ShrinkOpportunity(2, 3, 5.0, ShrinkChannel.TrailingGlue),
+  ];
+  final plan = justifier.compress(3.0, opps);
+  TracedAssertions.assertEqualsFloatTolerance(0.0, plan.unfilledSurplus, 0.0001);
+  TracedAssertions.assertEqualsFloatTolerance(2.0, JustifierCompressionTestSupport.shrinkOf(plan, 0), 0.0001);
+  TracedAssertions.assertEqualsFloatTolerance(1.0, JustifierCompressionTestSupport.shrinkOf(plan, 1), 0.0001);
+  TracedAssertions.assertNullRendered(JustifierCompressionTestSupport.shrinkOf(plan, 2) == null, "-", "tier 3 must stay untouched while tier 2 has room");
  }
- public static function nanSurplusEmitsNoAllocations():Void {
+ @:test public static function nanSurplusEmitsNoAllocations():Void {
   new TestTraceRecorder("JustifierCompressionTest").section("nanSurplusEmitsNoAllocations");
-  TracedAssertions.assertTrue(true);
-  TracedAssertions.assertTrue(true);
- }
- public static function reportsUnfilledWhenCapacityExhausted():Void {
-  new TestTraceRecorder("JustifierCompressionTest").section("reportsUnfilledWhenCapacityExhausted");
-  TracedAssertions.assertEqualsFloatTolerance(3,3,0.000100);
-  TracedAssertions.assertEquals(2,2);
- }
- public static function sharesEqualFractionWithinATier():Void {
-  new TestTraceRecorder("JustifierCompressionTest").section("sharesEqualFractionWithinATier");
-  TracedAssertions.assertEqualsFloatTolerance(1,1,0.000100);
-  TracedAssertions.assertEqualsFloatTolerance(3,3,0.000100);
-  TracedAssertions.assertEqualsFloatTolerance(0,0,0.000100);
- }
- public static function zeroSurplusIsNoOp():Void {
-  new TestTraceRecorder("JustifierCompressionTest").section("zeroSurplusIsNoOp");
-  TracedAssertions.assertTrue(true);
-  TracedAssertions.assertEqualsFloatTolerance(0,0,0.000100);
+  final justifier = new Justifier();
+  final plan = justifier.compress(Math.NaN, [new ShrinkOpportunity(0, 1, 5.0, ShrinkChannel.TrailingGlue)]);
+  TracedAssertions.assertTrue(plan.allocations.length == 0);
+  TracedAssertions.assertTrue(Math.isNaN(plan.unfilledSurplus));
  }
 }
