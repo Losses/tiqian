@@ -18,12 +18,20 @@ class UnicodePunctuationLineBreak {
             throw new TiqianIllegalArgumentException(Message("Not a Unicode scalar value: " + codePoint));
         if (codePoint >= 0xD800 && codePoint <= 0xDFFF)
             throw new TiqianIllegalArgumentException(Message("Surrogate is not a Unicode scalar value: " + codePoint));
-        return switch (UnicodePunctuationLineBreakData.lookup(codePoint)) {
-            case 0: BreakAfter; case 1: BreakBoth; case 2: ClosePunctuation;
-            case 3: CloseParenthesis; case 4: Exclamation; case 5: HyphenHH;
-            case 6: Hyphen; case 7: Inseparable; case 8: InfixNumericSeparator;
-            case 9: Nonstarter; case 10: OpenPunctuation; case 11: Quotation;
-            case 12: SymbolsAllowingBreakAfter; default: Other;
-        };
+        final kind:Int = UnicodePunctuationLineBreakData.lookup(codePoint);
+        if (kind == 0) return BreakAfter;
+        if (kind == 1) return BreakBoth;
+        if (kind == 2) return ClosePunctuation;
+        if (kind == 3) return CloseParenthesis;
+        if (kind == 4) return Exclamation;
+        if (kind == 5) return HyphenHH;
+        if (kind == 6) return Hyphen;
+        if (kind == 7) return Inseparable;
+        if (kind == 8) return InfixNumericSeparator;
+        if (kind == 9) return Nonstarter;
+        if (kind == 10) return OpenPunctuation;
+        if (kind == 11) return Quotation;
+        if (kind == 12) return SymbolsAllowingBreakAfter;
+        return Other;
     }
 }
