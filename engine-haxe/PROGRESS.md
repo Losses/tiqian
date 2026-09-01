@@ -408,3 +408,23 @@ golden 的 240 字符 FNV 行逐字节一致；1f/3f 一律写 0.33333334 字面
 渲染一致。验证链通过：compile.hxml 零错误、serial-test rc=0、22 类 tolerance
 比对 22/22、exception-alias=73、隔离 clreq 检查止于 TestTraceRecorder.hx:10
 （缺口 10 范畴，无新增违规）、core-kotlin 仍止于 RubySpan.hx:46 首错。
+
+2026-08-31 cat3 波：七处构造默认值还原。AutoSpacePolicy（cjkLatin、cjkDigit、
+gapEm、stretchMaxEm 四参全默认，Default 静态 preset 改零参构造）、Cluster
+（displayText = text，读参数默认）、InlineObjectSpan（leadingBoundary 与
+trailingBoundary = InlineObjectBoundaryAdjustment.fixed()，静态调用默认）、
+LayoutInput（profileId = BuiltInLayoutProfiles.ClreqHorizontal，静态字段默认）、
+ParagraphStyle（blockIndent = Ic.Zero，inlineObjectMinimumClearanceEm 与
+emphasisDotGapEm = 类内静态字段默认）、RichTextBackgroundPaint
+（continuationCornerRadius = cornerRadius，读参数默认；drawStyle =
+Fill.instance，静态字段默认）、RichTextPaint（linePattern = Solid.instance，
+静态字段默认）从强制参数改回 ?p:Null<T> 加合并默认。构造调用默认
+（TextStyle()、ParagraphStyle()、RichTextBackgroundPaint()、
+firstLineIndentPolicy、lineLengthGrid）在合并默认许可语法之外，保持强制参数。
+前置修复：boring fc4f19f（spec 22 跨站点参数读取与阶段一改写）、7aa133b
+（单例判定加声明类无实例字段要求，字段类零参自构造按 spec 35 构造初始化
+ lowering，Rust 静态初始化补 None 补全）、d17734a（spec 22 阶段 B 状态改为
+已实现）。验证链通过：compile.hxml 零错误、serial-test rc=0、35 类 tolerance
+比对 35/35、exception-alias=300、core-kotlin 生成零错误（138 个 Kotlin 文件，
+org.tiqian 下 137 个），此前登记的 ClreqProfile.hx:81 首错停点消除，当前无
+首错停点。
