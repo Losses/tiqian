@@ -34,6 +34,9 @@ import org.tiqian.shaping.TextShaperCoverageTest;
 import org.tiqian.shaping.ExplainableStubTextShaperTest;
 import org.tiqian.linebreak.EnglishHyphenationTest;
 import org.tiqian.linebreak.LiangHyphenatorTest;
+import org.tiqian.layout.ProgressiveBreakDecisionsCoverageTest;
+import org.tiqian.layout.ProgressiveBreakDecisionsTailTest;
+import org.tiqian.layout.DecideHyphenBreakTest;
 import org.tiqian.linebreak.LineBreakCoverageTest;
 import org.tiqian.linebreak.MandatoryBreakTest;
 import org.tiqian.linebreak.UnicodePunctuationLineBreakCoverageTest;
@@ -60,6 +63,7 @@ class Main {
 
     public static function main():Void {
         StringBufOracle.install();
+        SortedTablesOracle.install();
         js.Syntax.code("globalThis.std = globalThis.std || {}; globalThis.std.UStringPlatform = {0};", UStringPlatform);
         run("hyphenatesCommonWordsAtSyllablePoints", EnglishHyphenationTest.hyphenatesCommonWordsAtSyllablePoints);
         run("respectsMarginsAndShortWords", EnglishHyphenationTest.respectsMarginsAndShortWords);
@@ -72,6 +76,30 @@ class Main {
         run("parsesPatternsAndExceptionBlocksStrippingComments", LiangHyphenatorTest.parsesPatternsAndExceptionBlocksStrippingComments);
         TestTraceRecorder.flushClass("EnglishHyphenationTest");
         TestTraceRecorder.flushClass("LiangHyphenatorTest");
+        run("defaultsAdmitTheCleanTierWithoutGeometryInputs", ProgressiveBreakDecisionsCoverageTest.defaultsAdmitTheCleanTierWithoutGeometryInputs);
+        run("lineStartAtTheOverflowBoundaryScansAnEmptyRange", ProgressiveBreakDecisionsCoverageTest.lineStartAtTheOverflowBoundaryScansAnEmptyRange);
+        run("twoSameTierBoundariesPickTheRightmost", ProgressiveBreakDecisionsCoverageTest.twoSameTierBoundariesPickTheRightmost);
+        run("visiblyLooseCleanTiersFallThroughToEmergency", ProgressiveBreakDecisionsCoverageTest.visiblyLooseCleanTiersFallThroughToEmergency);
+        run("aLeftwardEmergencyBoundaryKeepsTheBestCleanTier", ProgressiveBreakDecisionsCoverageTest.aLeftwardEmergencyBoundaryKeepsTheBestCleanTier);
+        run("spanEdgeAndWhitespaceClustersDoNotCountAsTechnicalUnits", ProgressiveBreakDecisionsCoverageTest.spanEdgeAndWhitespaceClustersDoNotCountAsTechnicalUnits);
+        run("singleTechnicalUnitFallsBackToTheCjkGapDensity", ProgressiveBreakDecisionsCoverageTest.singleTechnicalUnitFallsBackToTheCjkGapDensity);
+        run("candidateOutsideTheClusterListIsAllowed", ProgressiveBreakDecisionsCoverageTest.candidateOutsideTheClusterListIsAllowed);
+        run("candidatesOutsideTheActiveSpanAreAllowed", ProgressiveBreakDecisionsCoverageTest.candidatesOutsideTheActiveSpanAreAllowed);
+        run("candidatesOfADifferentSpanAreAllowed", ProgressiveBreakDecisionsCoverageTest.candidatesOfADifferentSpanAreAllowed);
+        run("sameTierPastTheRawGreedyIsAllowedAndWorseTiersAreNot", ProgressiveBreakDecisionsCoverageTest.sameTierPastTheRawGreedyIsAllowedAndWorseTiersAreNot);
+        run("candidatesBeforeTheRawGreedyMustMatchTheSelectedBoundary", ProgressiveBreakDecisionsCoverageTest.candidatesBeforeTheRawGreedyMustMatchTheSelectedBoundary);
+        run("hyphenBreakReturnsOverflowAtPlainWordBoundaries", ProgressiveBreakDecisionsCoverageTest.hyphenBreakReturnsOverflowAtPlainWordBoundaries);
+        run("overLongWordsMustHyphenateFromTheLineStart", ProgressiveBreakDecisionsCoverageTest.overLongWordsMustHyphenateFromTheLineStart);
+        run("aFittingWholeWordBreaksThere", ProgressiveBreakDecisionsCoverageTest.aFittingWholeWordBreaksThere);
+        run("sinoWesternGapsAbsorbingTheDeficitKeepTheWholeWord", ProgressiveBreakDecisionsCoverageTest.sinoWesternGapsAbsorbingTheDeficitKeepTheWholeWord);
+        run("gaplessOrTooLooseLinesHyphenateInstead", ProgressiveBreakDecisionsCoverageTest.gaplessOrTooLooseLinesHyphenateInstead);
+        TestTraceRecorder.flushClass("ProgressiveBreakDecisionsCoverageTest");
+        run("infiniteLineLimitWithClustersAdmitsTheCleanestTier", ProgressiveBreakDecisionsTailTest.infiniteLineLimitWithClustersAdmitsTheCleanestTier);
+        run("infiniteStretchCeilingWithFiniteLineLimitAdmitsTheCleanestTier", ProgressiveBreakDecisionsTailTest.infiniteStretchCeilingWithFiniteLineLimitAdmitsTheCleanestTier);
+        TestTraceRecorder.flushClass("ProgressiveBreakDecisionsTailTest");
+        run("chargesAllDeficitToCjkWhenNoSinoWesternCapacityIsKnown", DecideHyphenBreakTest.chargesAllDeficitToCjkWhenNoSinoWesternCapacityIsKnown);
+        run("discountsSinoWesternCapacityBeforeChargingCjkLooseness", DecideHyphenBreakTest.discountsSinoWesternCapacityBeforeChargingCjkLooseness);
+        TestTraceRecorder.flushClass("DecideHyphenBreakTest");
         run("testBundledHyphenationResource", LineBreakCoverageTest.testBundledHyphenationResource);
         run("testLineBreakModelsAndEnums", LineBreakCoverageTest.testLineBreakModelsAndEnums);
         run("testMandatoryBreakAndZeroWidthSpaceCodePoints", LineBreakCoverageTest.testMandatoryBreakAndZeroWidthSpaceCodePoints);
