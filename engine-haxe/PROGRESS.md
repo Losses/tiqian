@@ -428,3 +428,17 @@ firstLineIndentPolicy、lineLengthGrid）在合并默认许可语法之外，保
 比对 35/35、exception-alias=300、core-kotlin 生成零错误（138 个 Kotlin 文件，
 org.tiqian 下 137 个），此前登记的 ClreqProfile.hx:81 首错停点消除，当前无
 首错停点。
+
+2026-08-31 cat3 收尾：ClreqProfile 三处签名默认还原，偏离记录类别 3 全部还原。
+coalesceRepeatablePunctuation（读同类静态
+ClreqProfile.DefaultCoalesceRepeatablePunctuation，阶段 B 静态字段根，须写
+全限定名，非限定名被识别器拒绝）、autoSpace（读 AutoSpacePolicy.Default，spec 35
+构造初始化静态）、gluePlacement（PunctuationGluePlacements.forRegion(region)，
+读前参数的静态调用）从强制参数改回 ?p:Null<T> 加合并默认；三个 preset 对
+四个默认参数（含 punctuationGlyphPolicy）传 null，对应 Kotlin 原件的省略
+实参；三个构造调用默认（adjustment、kinsokuMode、punctuationWidth）在许可
+语法之外，保持强制参数。验证链通过：compile.hxml 零错误、serial-test rc=0、
+35 类 tolerance 比对 35/35、exception-alias=300、core-kotlin 生成零错误，
+生成 ClreqProfile.kt 携带三个原生默认表达式，与手写 Kotlin 原件
+ClreqProfile.kt:17-19 同形（容器名 PunctuationGluePlacements 与
+MutableList/Set 集合映射除外）。
