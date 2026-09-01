@@ -42,6 +42,7 @@ import org.tiqian.layout.QuotePairAnalyzerCoverageTest;
 import org.tiqian.layout.QuotePairAnalyzerSurrogateAdjacencyTest;
 import org.tiqian.layout.PunctuationModelCoverageTest;
 import org.tiqian.layout.PunctuationAtomBuilderHaltTest;
+import org.tiqian.layout.LineOptimizationCoverageTest;
 import org.tiqian.linebreak.LineBreakCoverageTest;
 import org.tiqian.linebreak.MandatoryBreakTest;
 import org.tiqian.linebreak.UnicodePunctuationLineBreakCoverageTest;
@@ -507,6 +508,18 @@ class Main {
         run("fixedHalfConsumesMeasuredSidebearingsInsteadOfApplyingAProfileShift", PunctuationAtomBuilderHaltTest.fixedHalfConsumesMeasuredSidebearingsInsteadOfApplyingAProfileShift);
         run("overhangReducesCompressionCapacityWithoutMovingInk", PunctuationAtomBuilderHaltTest.overhangReducesCompressionCapacityWithoutMovingInk);
         TestTraceRecorder.flushClass("PunctuationAtomBuilderHaltTest");
+        run("breakCandidateDefaultsAreUsable", LineOptimizationCoverageTest.breakCandidateDefaultsAreUsable);
+        run("breakCandidateCarriesExplicitForbiddenReasonAndRepairs", LineOptimizationCoverageTest.breakCandidateCarriesExplicitForbiddenReasonAndRepairs);
+        run("lineCandidateRejectsHangingThatIsNotATrailingSuffix", LineOptimizationCoverageTest.lineCandidateRejectsHangingThatIsNotATrailingSuffix);
+        run("lineCandidateRejectsDiscontiguousHanging", LineOptimizationCoverageTest.lineCandidateRejectsDiscontiguousHanging);
+        run("lineCandidateAcceptsAContiguousTrailingHangingSuffix", LineOptimizationCoverageTest.lineCandidateAcceptsAContiguousTrailingHangingSuffix);
+        run("hangingClusterIndexPrefersTheHangOffenderOverTheSuffixEnd", LineOptimizationCoverageTest.hangingClusterIndexPrefersTheHangOffenderOverTheSuffixEnd);
+        run("inMeasureClusterRangeExcludesTheHangingSuffix", LineOptimizationCoverageTest.inMeasureClusterRangeExcludesTheHangingSuffix);
+        run("carryNextRecordsTheMovedMark", LineOptimizationCoverageTest.carryNextRecordsTheMovedMark);
+        run("repairCandidateDefaultsAreUsable", LineOptimizationCoverageTest.repairCandidateDefaultsAreUsable);
+        run("lineSolutionDefaultsToZeroBadness", LineOptimizationCoverageTest.lineSolutionDefaultsToZeroBadness);
+        run("optimizationStrategyEnumeratesAllThreeStrategies", LineOptimizationCoverageTest.optimizationStrategyEnumeratesAllThreeStrategies);
+        TestTraceRecorder.flushClass("LineOptimizationCoverageTest");
 
         if (failures > 0) {
             Process.exit(1);

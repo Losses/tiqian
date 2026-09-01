@@ -58,3 +58,5 @@ org.tiqian.core.UnicodeExtendedPictographicData
 org.tiqian.layout.PunctuationModel
 org.tiqian.layout.PunctuationModelCoverageTest
 org.tiqian.layout.PunctuationAtomBuilderHaltTest
+org.tiqian.layout.LineOptimization
+org.tiqian.layout.LineOptimizationCoverageTest
