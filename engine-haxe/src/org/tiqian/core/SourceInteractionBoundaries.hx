@@ -159,31 +159,9 @@ class SourceInteractionBoundaries {
     }
 
     private static function isCombiningMark(codePoint:Int):Bool {
-        return (codePoint >= 0x0300 && codePoint <= 0x036F)
-            || (codePoint >= 0x0483 && codePoint <= 0x0489)
-            || (codePoint >= 0x0591 && codePoint <= 0x05BD)
-            || (codePoint >= 0x0610 && codePoint <= 0x061A)
-            || (codePoint >= 0x064B && codePoint <= 0x065F)
-            || (codePoint >= 0x0670 && codePoint <= 0x0670)
-            || (codePoint >= 0x06D6 && codePoint <= 0x06ED)
-            || (codePoint >= 0x0900 && codePoint <= 0x0903)
-            || (codePoint >= 0x093A && codePoint <= 0x094D)
-            || (codePoint >= 0x0981 && codePoint <= 0x0983)
-            || (codePoint >= 0x09BC && codePoint <= 0x09CD)
-            || (codePoint >= 0x0A01 && codePoint <= 0x0A4D)
-            || (codePoint >= 0x0B01 && codePoint <= 0x0B4D)
-            || (codePoint >= 0x0C00 && codePoint <= 0x0C4D)
-            || (codePoint >= 0x0D00 && codePoint <= 0x0D4D)
-            || (codePoint >= 0x0E31 && codePoint <= 0x0E4E)
-            || (codePoint >= 0x0F18 && codePoint <= 0x0FBC)
-            || (codePoint >= 0x102B && codePoint <= 0x103E)
-            || (codePoint >= 0x1AB0 && codePoint <= 0x1AFF)
-            || (codePoint >= 0x1DC0 && codePoint <= 0x1DFF)
-            || (codePoint >= 0x20D0 && codePoint <= 0x20FF)
-            || (codePoint >= 0xFE20 && codePoint <= 0xFE2F)
-            || (codePoint >= 0xA66F && codePoint <= 0xA67F)
-            || (codePoint >= 0x1D165 && codePoint <= 0x1D1FF)
-            || (codePoint >= 0x1E000 && codePoint <= 0x1E02F);
+        // Mirrors the Kotlin `this <= 0xFFFF && toChar().category in EXTENDING_CATEGORIES`
+        // check over the generated Mn/Mc/Me range table (Unicode 17.0.0).
+        return codePoint <= 0xFFFF && UnicodeCombiningMarkData.contains(codePoint);
     }
 
     private static function isEmojiModifier(codePoint:Int):Bool {
