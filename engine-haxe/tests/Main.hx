@@ -1,5 +1,5 @@
-package;
-
+import org.tiqian.layout.LineGeometryDirectTailTest;
+import org.tiqian.layout.PunctuationGeometryLedgerCoverageTest;
 import org.tiqian.core.TiqianIllegalArgumentException;
 import org.tiqian.core.CoreUnitsGeometryTest;
 import org.tiqian.core.CoreLayoutQueriesGapsTest;
@@ -1144,6 +1144,32 @@ class Main {
         if (failures > 0) {
             Process.exit(1);
         }
+        run("rubyBaseRangeCrossingClusterBoundariesDropsOutOfPerLineExtents", org.tiqian.layout.LineGeometryDirectTailTest.rubyBaseRangeCrossingClusterBoundariesDropsOutOfPerLineExtents);
+        run("rubiesOnBothLinesExerciseBothSidesOfTheOverlapTest", org.tiqian.layout.LineGeometryDirectTailTest.rubiesOnBothLinesExerciseBothSidesOfTheOverlapTest);
+        run("emptyLineSolutionYieldsZeroArraysAndZeroMaxExtra", org.tiqian.layout.LineGeometryDirectTailTest.emptyLineSolutionYieldsZeroArraysAndZeroMaxExtra);
+        run("objectTopIntrusionBelowRubyDemandKeepsBoundaryClearanceZero", org.tiqian.layout.LineGeometryDirectTailTest.objectTopIntrusionBelowRubyDemandKeepsBoundaryClearanceZero);
+        run("objectTopIntrusionDominatingRubyDemandAddsBoundaryClearance", org.tiqian.layout.LineGeometryDirectTailTest.objectTopIntrusionDominatingRubyDemandAddsBoundaryClearance);
+        run("objectFlushWithBaseTopSkipsIntrusionConjunctionEarly", org.tiqian.layout.LineGeometryDirectTailTest.objectFlushWithBaseTopSkipsIntrusionConjunctionEarly);
+        run("metricListWithoutIdeographicEmBoxFallsBackToAllClusters", org.tiqian.layout.LineGeometryDirectTailTest.metricListWithoutIdeographicEmBoxFallsBackToAllClusters);
+        run("emptyMetricListTakesEmptyParagraphBaselineFallback", org.tiqian.layout.LineGeometryDirectTailTest.emptyMetricListTakesEmptyParagraphBaselineFallback);
+        TestTraceRecorder.flushClass("LineGeometryDirectTailTest");
+        run("budgetsResolveAdvancesThroughRemainingGlue", PunctuationGeometryLedgerCoverageTest.budgetsResolveAdvancesThroughRemainingGlue);
+        run("glueCapacitiesReportSidesAndPairing", PunctuationGeometryLedgerCoverageTest.glueCapacitiesReportSidesAndPairing);
+        run("sideConsumptionIsCappedAndSkipsNonPositiveAmounts", PunctuationGeometryLedgerCoverageTest.sideConsumptionIsCappedAndSkipsNonPositiveAmounts);
+        run("justificationDeltasAndStructuralChannelsFeedResolvedAdvance", PunctuationGeometryLedgerCoverageTest.justificationDeltasAndStructuralChannelsFeedResolvedAdvance);
+        run("geometryWithoutBudgetFallsBackToBodyWidth", PunctuationGeometryLedgerCoverageTest.geometryWithoutBudgetFallsBackToBodyWidth);
+        run("decisionInfoListsEveryGeometryWithBudgets", PunctuationGeometryLedgerCoverageTest.decisionInfoListsEveryGeometryWithBudgets);
+        run("spacingPlanAdjustmentsConsumeByTargetAndAnchor", PunctuationGeometryLedgerCoverageTest.spacingPlanAdjustmentsConsumeByTargetAndAnchor);
+        run("attachedInlineBoundariesRequireAlignmentAndRunOnlyWithAttachments", PunctuationGeometryLedgerCoverageTest.attachedInlineBoundariesRequireAlignmentAndRunOnlyWithAttachments);
+        run("attachedInlineBoundaryAtLineEndConsumesTrailingGlue", PunctuationGeometryLedgerCoverageTest.attachedInlineBoundaryAtLineEndConsumesTrailingGlue);
+        run("attachedInlineBoundaryAdjacentPunctuationHalvesTheVirtualGlue", PunctuationGeometryLedgerCoverageTest.attachedInlineBoundaryAdjacentPunctuationHalvesTheVirtualGlue);
+        run("attachedInlineBoundaryBeforeAsciiPointMarkCollapsesLikeAdjacent", PunctuationGeometryLedgerCoverageTest.attachedInlineBoundaryBeforeAsciiPointMarkCollapsesLikeAdjacent);
+        run("attachedInlineBoundarySkipsMandatoryBreakNeighbour", PunctuationGeometryLedgerCoverageTest.attachedInlineBoundarySkipsMandatoryBreakNeighbour);
+        run("attachedInlineBoundaryWithoutGlueEmitsNoDecision", PunctuationGeometryLedgerCoverageTest.attachedInlineBoundaryWithoutGlueEmitsNoDecision);
+        run("lineEdgeTrimConsumesHalfWidthAtEdgesAndSkipsEmptyInputs", PunctuationGeometryLedgerCoverageTest.lineEdgeTrimConsumesHalfWidthAtEdgesAndSkipsEmptyInputs);
+        run("lineEdgeTrimConsumesCentredPunctuationOncePerLine", PunctuationGeometryLedgerCoverageTest.lineEdgeTrimConsumesCentredPunctuationOncePerLine);
+        run("clusterIndexRangeFindCoveredClusters", PunctuationGeometryLedgerCoverageTest.clusterIndexRangeFindCoveredClusters);
+        TestTraceRecorder.flushClass("PunctuationGeometryLedgerCoverageTest");
         Console.log("all CoreUnitsGeometryTest checks passed");
     }
 }
