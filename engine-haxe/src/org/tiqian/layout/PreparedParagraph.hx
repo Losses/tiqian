@@ -5,7 +5,8 @@ import std.SortedMap;
 import org.tiqian.core.LayoutResult;
 
 typedef PreparedParagraphDigitsAndExponent = { digits:String, exponent:Int };
-typedef PreparedParagraphDecomposed = { mant24:Int, exp2:Int };
+typedef PreparedParagraphDecomposed = { mantissa:String, exp2:Int };
+typedef PreparedParagraphF32Decomposed = { mant24:Int, exp2:Int };
 
 /** Prepared paragraph JSON serialization functions. */
 class PreparedParagraphFns {
@@ -47,15 +48,22 @@ class PreparedParagraphFns {
     public static function shortestRoundTripDigits(magnitude:Float):PreparedParagraphDigitsAndExponent {
         final d = decompose(magnitude);
         final f = d.exp2;
-        final expansion = dyadicDecimal(d.mant24, f);
+        final expansion = dyadicDecimal(d.mantissa, f);
         final exact = trimZeros(expansion.digits);
         final n = expansion.exponent;
-        final halfExponent = d.mant24 < 0x800000 ? d.exp2 - 53 : d.exp2 - 30;
-        final scale = d.mant24 < 0x800000 ? 52 : 30;
-        final base = timesLong(twoToThe(scale), d.mant24);
-        final hi = dyadicDecimalString(addDecimal(base, "1"), halfExponent);
-        final lo = dyadicDecimalString(decrementDecimal(base), halfExponent);
-        final inclusive = true;
+        // The Haxe Float is an f32 value widened to the runtime double. Build
+        // that exact 53-bit (or normalized subnormal) mantissa as decimal
+        // digits; it cannot be held in a signed Int.
+        final base = d.mantissa;
+        final doubled = timesSmall(base, 2);
+        final hi = dyadicDecimalString(addDecimal(doubled, "1"), d.exp2 - 1);
+        var lo:PreparedParagraphDigitsAndExponent;
+        if (base == "4503599627370496") {
+            lo = dyadicDecimalString(decrementDecimal(timesSmall(base, 4)), d.exp2 - 2);
+        } else {
+            lo = dyadicDecimalString(decrementDecimal(doubled), d.exp2 - 1);
+        }
+        final inclusive = (base.charCodeAt(base.length - 1) - 48) % 2 == 0;
         var length = 1;
         while (length <= 17) {
             final keep = exact.substr(0, length);
@@ -78,7 +86,7 @@ class PreparedParagraphFns {
     }
 
     private static function canonicalFloatDigits(magnitude:Float, doubleDigits:String):String {
-        final d = decompose(magnitude);
+        final d = decomposeF32(magnitude);
         final exact = d.mant24 == 0 ? "0" : (d.exp2 >= 0
             ? timesLong(twoToThe(d.exp2), d.mant24)
             : timesLong(fiveToThe(-d.exp2), d.mant24));
@@ -88,8 +96,8 @@ class PreparedParagraphFns {
         return rounded.digits.length == doubleDigits.length ? rounded.digits : doubleDigits;
     }
 
-    private static function dyadicDecimal(p:Int, f:Int):PreparedParagraphDigitsAndExponent {
-        return dyadicDecimalString(Std.string(p), f);
+    private static function dyadicDecimal(p:String, f:Int):PreparedParagraphDigitsAndExponent {
+        return dyadicDecimalString(p, f);
     }
 
     private static function dyadicDecimalString(p:String, f:Int):PreparedParagraphDigitsAndExponent {
@@ -179,7 +187,7 @@ class PreparedParagraphFns {
         final aa = eA >= eB ? a + zeros(eA-eB) : a;
         final bb = eB >= eA ? b + zeros(eB-eA) : b;
         if (aa.length != bb.length) return aa.length - bb.length;
-        return aa < bb ? -1 : (aa > bb ? 1 : 0);
+        return compareDigitStrings(aa, bb);
     }
     private static function timesSmall(digits:String,factor:Int):String {
         final out=new StringBuf(); var carry=0; var i=digits.length-1;
@@ -199,11 +207,37 @@ class PreparedParagraphFns {
         return out.substr(start);
     }
     private static function decompose(v:Float):PreparedParagraphDecomposed {
+        final f = decomposeF32(v);
+        var mantissa = Std.string(f.mant24);
+        var exponent = f.exp2;
+        if (f.mant24 >= 0x800000) {
+            mantissa = timesLong(mantissa, 536870912);
+            exponent -= 29;
+        }
+        // Normalize to the exact 53-bit significand used by the widened f64.
+        while (mantissa.length < 16 || (mantissa.length == 16 && compareDigitStrings(mantissa, "4503599627370496") < 0)) {
+            mantissa = timesSmall(mantissa, 2);
+            exponent--;
+        }
+        return {mantissa:mantissa, exp2:exponent};
+    }
+    private static function decomposeF32(v:Float):PreparedParagraphF32Decomposed {
         final bits = haxe.io.FPHelper.floatToI32(v);
         final rawExponent = (bits >>> 23) & 0xff;
         final rawMantissa = bits & 0x7fffff;
         if (rawExponent == 0) return {mant24:rawMantissa, exp2: -149};
         return {mant24:rawMantissa | 0x800000, exp2:rawExponent - 150};
+    }
+    private static function compareDigitStrings(a:String, b:String):Int {
+        if (a.length != b.length) return a.length - b.length;
+        var i = 0;
+        while (i < a.length) {
+            final da = a.charCodeAt(i);
+            final db = b.charCodeAt(i);
+            if (da != db) return da - db;
+            i++;
+        }
+        return 0;
     }
     private static function zeros(n:Int):String { var s=""; var i=0; while(i<n){s+="0";i++;} return s; }
     private static function trimZeros(s:String):String { var e=s.length; while(e>1 && s.charCodeAt(e-1)==48)e--; return s.substr(0,e); }
