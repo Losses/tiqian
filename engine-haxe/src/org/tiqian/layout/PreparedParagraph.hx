@@ -3,10 +3,22 @@ package org.tiqian.layout;
 import std.StringBuf;
 import std.SortedMap;
 import org.tiqian.core.LayoutResult;
+import org.tiqian.core.*;
+import org.tiqian.font.FontRole;
+
 
 typedef PreparedParagraphDigitsAndExponent = { digits:String, exponent:Int };
 typedef PreparedParagraphDecomposed = { mantissa:String, exp2:Int };
 typedef PreparedParagraphF32Decomposed = { mant24:Int, exp2:Int };
+
+private class PreparedParagraphMap<T> {
+    final keys:Array<String> = []; final values:Array<T> = [];
+    public function new() {}
+    public function exists(k:String):Bool return keys.indexOf(k) >= 0;
+    public function get(k:String):T { final i=keys.indexOf(k); return i<0 ? null : values[i]; }
+    public function set(k:String,v:T):Void { final i=keys.indexOf(k); if(i<0){keys.push(k);values.push(v);}else values[i]=v; }
+    public function allKeys():Array<String> return keys;
+}
 
 /** Prepared paragraph JSON serialization functions. */
 class PreparedParagraphFns {
@@ -17,11 +29,77 @@ class PreparedParagraphFns {
     private static var twoPowers:std.SortedMap<Int,String> = null;
 
     public static function toPreparedParagraphJson(result:LayoutResult, renderEvidence:Bool = false):String {
-        throw new org.tiqian.core.IllegalStateException("TODO r4: toPreparedParagraphJson");
+        final natural = new PreparedParagraphMap<Float>();
+        final features = new PreparedParagraphMap<Array<String>>();
+        final fonts = new PreparedParagraphMap<String>();
+        final glyphIds = new PreparedParagraphMap<Array<String>>();
+        for (ri in 0...result.glyphRuns.length) { final run=result.glyphRuns[ri]; for (gi in 0...run.glyphs.length) { final glyph=run.glyphs[gi];
+            final k = rangeKey(glyph.clusterRange);
+            natural.set(k, (natural.exists(k) ? natural.get(k) : 0.0) + glyph.advance);
+            if (run.openTypeFeatures.length > 0) {
+                var fs = features.get(k); if (fs == null) fs = [];
+                for (f in run.openTypeFeatures) if (fs.indexOf(f) < 0) fs.push(f); features.set(k, fs);
+            }
+            if (glyph.renderFontKey != null) fonts.set(k, glyph.renderFontKey);
+            var ids = glyphIds.get(k); if (ids == null) ids = []; ids.push(Std.string(glyph.id)); glyphIds.set(k, ids); } }
+        final zero = new PreparedParagraphMap<Bool>();
+        for (d in result.debug.zeroWidthBreakDecisions) zero.set(rangeKey(d.range), true);
+        final shaping = new PreparedParagraphMap<ShapingDecisionInfo>(); for (d in result.debug.shapingDecisions) shaping.set(rangeKey(d.range), d);
+        final punct = new PreparedParagraphMap<PunctuationDecisionInfo>(); for (d in result.debug.punctuationDecisions) punct.set(rangeKey(d.range), d);
+        final inlineAdvance = new PreparedParagraphMap<Float>(); for (o in result.input.inlineObjects) inlineAdvance.set(rangeKey(o.range), o.advance);
+        final edgeStart = new PreparedParagraphMap<Float>(); final edgeEnd = new PreparedParagraphMap<Float>();
+        for (b in result.input.inlineBoxes) {
+            if (b.inlineStart != 0) edgeStart.set(Std.string(b.range.start), (edgeStart.exists(Std.string(b.range.start)) ? edgeStart.get(Std.string(b.range.start)) : 0) + b.inlineStart);
+            if (b.inlineEnd != 0) edgeEnd.set(Std.string(b.range.end), (edgeEnd.exists(Std.string(b.range.end)) ? edgeEnd.get(Std.string(b.range.end)) : 0) + b.inlineEnd);
+        }
+        final out = new StringBuf(); out.add("{");
+        out.add("\"schema\":1,\"layoutRevision\":\"tiqian-layout-v2\",\"width\":"); out.add(ecmaJsonNumber(result.input.constraints.maxWidth)); out.add(",\"height\":"); out.add(ecmaJsonNumber(result.size.height)); out.add(",\"lines\":[");
+        for (li in 0...result.lines.length) { if (li > 0) out.add(","); final line=result.lines[li]; out.add("{\"rangeStart\":"); out.add(Std.string(line.range.start)); out.add(",\"rangeEnd\":"); out.add(Std.string(line.range.end)); out.add(",\"top\":"); out.add(ecmaJsonNumber(line.top)); out.add(",\"bottom\":"); out.add(ecmaJsonNumber(line.bottom)); out.add(",\"baseline\":"); out.add(ecmaJsonNumber(line.baseline)); out.add(",\"indent\":"); out.add(ecmaJsonNumber(line.indent)); out.add(",\"visualWidth\":"); out.add(ecmaJsonNumber(line.visualWidth)); out.add(",\"hyphenAdvance\":"); out.add(ecmaJsonNumber(line.hyphenAdvance)); out.add(",\"endReason\":"); appendJsonString(out, line.endReason.getName()); out.add(",\"cells\":[");
+            var ci=0; for (p in LayoutQueries.positionedClustersForLine(result,line)) { final c=result.clusters[p.clusterIndex]; final ck=rangeKey(c.range); if (!(c.displayText.length>0 || zero.exists(ck) || (renderEvidence && inlineAdvance.exists(ck)))) continue; if(ci++>0)out.add(","); out.add("{\"rangeStart\":");out.add(Std.string(c.range.start));out.add(",\"rangeEnd\":");out.add(Std.string(c.range.end));out.add(",\"source\":");appendJsonString(out,c.text);out.add(",\"display\":");appendJsonString(out,c.displayText);out.add(",\"drawX\":");out.add(ecmaJsonNumber(p.drawX));out.add(",\"naturalWidth\":");out.add(ecmaJsonNumber(natural.exists(ck)?natural.get(ck):c.advance));out.add(",\"leadingLayoutAdvance\":");out.add(ecmaJsonNumber(c.leadingLayoutAdvance)); if(c.range.end-c.range.start>1)out.add(",\"shapingBoundary\":true"); if(features.exists(ck)){out.add(",\"openTypeFeatures\":[");var fi=0;for(f in features.get(ck)){if(fi++>0)out.add(",");appendJsonString(out,f);}out.add("]");} if(renderEvidence)appendCellEvidence(out,result,c,natural,fonts,glyphIds,shaping,punct,inlineAdvance);out.add("}"); }
+            out.add("]}"); }
+        out.add("]"); if(renderEvidence) appendParagraphEvidence(out,result,edgeStart,edgeEnd); out.add("}"); return out.toString();
     }
 
     public static function toPlanWithDiagnosticsJson(result:LayoutResult, renderEvidence:Bool, zeroAdvanceEpsilonPx:Float):String {
-        throw new org.tiqian.core.IllegalStateException("TODO r4: toPlanWithDiagnosticsJson");
+        final out=new StringBuf(); out.add("{\"plan\":"); appendJsonString(out,toPreparedParagraphJson(result,renderEvidence)); out.add(",\"diagnostics\":{\"capabilityIssues\":["); var first=true;
+        for(d in result.debug.shapingDecisions) if(d.capabilityIssue!=null){if(!first)out.add(",");first=false;out.add("{\"name\":");appendJsonString(out,d.capabilityIssue);out.add(",\"reason\":");appendJsonString(out,d.reason);out.add(",\"rangeStart\":");out.add(Std.string(d.range.start));out.add(",\"rangeEnd\":");out.add(Std.string(d.range.end));out.add("}");}
+        out.add("],\"advanceSuspects\":[");first=true;for(d in result.debug.shapingDecisions)if(!(Math.isFinite(d.advance)&&d.advance>zeroAdvanceEpsilonPx)){if(!first)out.add(",");first=false;out.add("{\"displayText\":");appendJsonString(out,d.displayText);out.add(",\"advance\":\"");out.add(Math.isFinite(d.advance)?ecmaJsonNumber(d.advance):Std.string(d.advance));out.add("\",\"reason\":");appendJsonString(out,d.reason);out.add(",\"rangeStart\":");out.add(Std.string(d.range.start));out.add(",\"rangeEnd\":");out.add(Std.string(d.range.end));out.add("}");} out.add("]}}"); return out.toString();
+    }
+
+    private static function rangeKey(r:TextRange):String return Std.string(r.start)+":"+Std.string(r.end);
+
+    private static function appendJsonString(out:StringBuf, value:String):Void {
+        out.add("\"");
+        for (i in 0...value.length) { final c=value.charCodeAt(i); switch(c) {
+            case 34: out.add("\\\""); case 92: out.add("\\\\"); case 8: out.add("\\b"); case 12: out.add("\\f"); case 10: out.add("\\n"); case 13: out.add("\\r"); case 9: out.add("\\t");
+            default: if(c<32) out.add("\\u"+StringTools.hex(c,4).toLowerCase()); else out.addChar(c);
+        }} out.add("\"");
+    }
+
+    private static function appendCellEvidence(out:StringBuf, result:LayoutResult, c:Cluster, natural:PreparedParagraphMap<Float>, fonts:PreparedParagraphMap<String>, ids:PreparedParagraphMap<Array<String>>, shaping:PreparedParagraphMap<ShapingDecisionInfo>, punct:PreparedParagraphMap<PunctuationDecisionInfo>, inlineAdvance:PreparedParagraphMap<Float>):Void {
+        final k=rangeKey(c.range); if(inlineAdvance.exists(k)){out.add(",\"inlineObject\":");out.add(ecmaJsonNumber(inlineAdvance.get(k)));}
+        final width=inlineAdvance.exists(k)?inlineAdvance.get(k):(natural.exists(k)?natural.get(k):c.advance); if(c.advance!=width){out.add(",\"advance\":");out.add(ecmaJsonNumber(c.advance));}
+        if(fonts.exists(k)){out.add(",\"renderFontFamily\":");appendJsonString(out,fonts.get(k));}
+        final sd=shaping.get(k); if(sd!=null && sd.strategy!=null){out.add(",\"dashStrategy\":");appendJsonString(out,sd.strategy);if(sd.language!=null){out.add(",\"shapingLanguage\":");appendJsonString(out,sd.language);}if(sd.resolvedFace!=null){out.add(",\"resolvedFace\":");appendJsonString(out,sd.resolvedFace);}if(ids.exists(k)&&ids.get(k).length>0){out.add(",\"glyphIds\":");appendJsonString(out,ids.get(k).join(","));}out.add(",\"shapingEvidence\":");appendJsonString(out,sd.reason);}
+        final pd=punct.get(k); if(pd!=null&&pd.inkContainmentApplied&&pd.inkContainmentBodyFloor!=null){out.add(",\"punctuationInkFloor\":");out.add(ecmaJsonNumber(pd.inkContainmentBodyFloor));out.add(",\"punctuationBodyWidth\":");out.add(ecmaJsonNumber(pd.bodyWidth));}
+        var latin=false; for(fd in result.debug.fontDecisions) if(c.range.start>=fd.range.start&&c.range.end<=fd.range.end&&fd.role==FontRole.LatinText.getName())latin=true; if(latin)out.add(",\"latin\":true");
+        final style=styleAt(result,c.range.start); if(style != result.input.textStyle){out.add(",\"style\":{");var n=0;if(style.fontSize!=result.input.textStyle.fontSize){out.add("\"fontSize\":");out.add(ecmaJsonNumber(style.fontSize));n++;}if(style.fontWeight!=result.input.textStyle.fontWeight){if(n++>0)out.add(",");out.add("\"fontWeight\":");out.add(Std.string(style.fontWeight));}if(style.italic!=result.input.textStyle.italic){if(n++>0)out.add(",");out.add("\"italic\":");out.add(style.italic ? "true" : "false");}out.add("}");}
+    }
+
+    private static function styleAt(result:LayoutResult, offset:Int):TextStyle { var found:TextStyle=null; for(span in result.input.content.spans) if(offset>=span.range.start&&offset<span.range.end)found=span.style; return found==null?result.input.textStyle:found; }
+
+    private static function appendParagraphEvidence(out:StringBuf, result:LayoutResult, starts:PreparedParagraphMap<Float>, ends:PreparedParagraphMap<Float>):Void {
+        out.add(",\"fontSize\":");out.add(ecmaJsonNumber(result.input.textStyle.fontSize));out.add(",\"overlayWidth\":");out.add(ecmaJsonNumber(result.size.width));
+        var emph:Array<DecorationSpan>=[];for(d in result.input.decorations)if(d.kind==DecorationKind.Emphasis)emph.push(d);if(emph.length>0){out.add(",\"emphasisRanges\":[");for(i in 0...emph.length){if(i>0)out.add(",");out.add("[");out.add(Std.string(emph[i].range.start));out.add(",");out.add(Std.string(emph[i].range.end));out.add("]");}out.add("]");}
+        var offsets:Array<Int>=[];for(k in starts.allKeys())offsets.push(Std.parseInt(k));for(k in ends.allKeys())if(offsets.indexOf(Std.parseInt(k))<0)offsets.push(Std.parseInt(k));var oi=1; while(oi<offsets.length){var ov=offsets[oi];var oj=oi-1;while(oj>=0&&offsets[oj]>ov){offsets[oj+1]=offsets[oj];oj--;}offsets[oj+1]=ov;oi++;}if(offsets.length>0){out.add(",\"inlineEdges\":[");for(i in 0...offsets.length){if(i>0)out.add(",");var k=Std.string(offsets[i]);out.add("{\"offset\":");out.add(Std.string(offsets[i]));if(starts.exists(k)){out.add(",\"inlineStart\":");out.add(ecmaJsonNumber(starts.get(k)));}if(ends.exists(k)){out.add(",\"inlineEnd\":");out.add(ecmaJsonNumber(ends.get(k)));}out.add("}");}out.add("]");}
+        if(result.debug.rubyDecisions.length>0){out.add(",\"rubyDecisions\":[");for(i in 0...result.debug.rubyDecisions.length){if(i>0)out.add(",");var r=result.debug.rubyDecisions[i];out.add("{\"baseRangeStart\":");out.add(Std.string(r.baseRange.start));out.add(",\"baseRangeEnd\":");out.add(Std.string(r.baseRange.end));out.add(",\"text\":");appendJsonString(out,r.text);out.add(",\"centerX\":");out.add(ecmaJsonNumber(r.centerX));out.add(",\"baselineY\":");out.add(ecmaJsonNumber(r.baselineY));out.add(",\"fontSize\":");out.add(ecmaJsonNumber(r.fontSize));out.add(",\"ascent\":");out.add(ecmaJsonNumber(r.ascent));out.add(",\"fontWeight\":");out.add(Std.string(r.fontWeight));if(r.fontFamilies.length>0){out.add(",\"fontFamilies\":[");for(j in 0...r.fontFamilies.length){if(j>0)out.add(",");appendJsonString(out,r.fontFamilies[j]);}out.add("]");}out.add("}");}out.add("]");}
+        appendRemainingParagraphEvidence(out,result);
+    }
+
+    private static function appendRemainingParagraphEvidence(out:StringBuf,result:LayoutResult):Void {
+        if(result.debug.bopomofoDecisions.length>0){out.add(",\"bopomofoDecisions\":[");for(i in 0...result.debug.bopomofoDecisions.length){if(i>0)out.add(",");var z=result.debug.bopomofoDecisions[i];out.add("{\"baseRangeStart\":");out.add(Std.string(z.baseRange.start));out.add(",\"baseRangeEnd\":");out.add(Std.string(z.baseRange.end));out.add(",\"text\":");appendJsonString(out,z.text);out.add(",\"fontWeight\":");out.add(Std.string(z.fontWeight));if(z.fontFamilies.length>0){out.add(",\"fontFamilies\":[");for(j in 0...z.fontFamilies.length){if(j>0)out.add(",");appendJsonString(out,z.fontFamilies[j]);}out.add("]");}out.add(",\"placements\":[");for(j in 0...z.placements.length){if(j>0)out.add(",");var p=z.placements[j];out.add("{\"text\":");appendJsonString(out,p.text);out.add(",\"left\":");out.add(ecmaJsonNumber(p.left));out.add(",\"top\":");out.add(ecmaJsonNumber(p.top));out.add(",\"width\":");out.add(ecmaJsonNumber(p.width));out.add(",\"height\":");out.add(ecmaJsonNumber(p.height));out.add(",\"role\":");appendJsonString(out,p.role.getName());out.add("}");}out.add("]}");}out.add("]");}
+        var segs:Array<DecorationSegmentInfo>=[];for(s in result.debug.decorationSegments)if(s.kind==DecorationKind.ProperNoun.getName()||s.kind==DecorationKind.BookTitle.getName())segs.push(s);if(segs.length>0){out.add(",\"decorationSegments\":[");for(i in 0...segs.length){if(i>0)out.add(",");var s=segs[i];out.add("{\"kind\":");appendJsonString(out,s.kind);out.add(",\"left\":");out.add(ecmaJsonNumber(s.left));out.add(",\"top\":");out.add(ecmaJsonNumber(s.top));out.add(",\"right\":");out.add(ecmaJsonNumber(s.right));out.add(",\"sourceRangeStart\":");out.add(Std.string(s.sourceRange.start));out.add(",\"sourceRangeEnd\":");out.add(Std.string(s.sourceRange.end));out.add("}");}out.add("]");}
+        var dots:Array<DecorationDecisionInfo>=[];for(d in result.debug.decorationDecisions)if(d.applied&&d.kind==DecorationKind.Emphasis.getName()&&d.dotDiameter>0)dots.push(d);if(dots.length>0){out.add(",\"emphasisDots\":[");for(i in 0...dots.length){if(i>0)out.add(",");var d=dots[i];out.add("{\"clusterRangeStart\":");out.add(Std.string(d.clusterRange.start));out.add(",\"anchorX\":");out.add(ecmaJsonNumber(d.anchorX));out.add(",\"anchorY\":");out.add(ecmaJsonNumber(d.anchorY));out.add(",\"dotDiameter\":");out.add(ecmaJsonNumber(d.dotDiameter));out.add("}");}out.add("]");}
     }
 
     public static function ecmaJsonNumber(floatValue:Float):String {
