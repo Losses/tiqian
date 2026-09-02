@@ -90,3 +90,5 @@ org.tiqian.layout.ParagraphLayoutEngine
 org.tiqian.layout.LineGeometryStage
 org.tiqian.layout.PunctuationGeometryLedger
 org.tiqian.layout.ContextualPunctuationDisplaySubstitution
+org.tiqian.layout.LineGeometryDirectTailTest
+org.tiqian.layout.PunctuationGeometryLedgerCoverageTest
