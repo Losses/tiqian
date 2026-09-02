@@ -15,11 +15,13 @@ class PreparedParagraphFns {
     private static var twoPowersBuilder = null;
     private static var twoPowers:std.SortedMap<Int,String> = null;
 
-    public static function toPreparedParagraphJson(result:LayoutResult, renderEvidence:Bool = false):String
-        throw new org.tiqian.core.IllegalStateException("TODO r3: toPreparedParagraphJson");
+    public static function toPreparedParagraphJson(result:LayoutResult, renderEvidence:Bool = false):String {
+        throw new org.tiqian.core.IllegalStateException("TODO r4: toPreparedParagraphJson");
+    }
 
-    public static function toPlanWithDiagnosticsJson(result:LayoutResult, renderEvidence:Bool, zeroAdvanceEpsilonPx:Float):String
-        throw new org.tiqian.core.IllegalStateException("TODO r3: toPlanWithDiagnosticsJson");
+    public static function toPlanWithDiagnosticsJson(result:LayoutResult, renderEvidence:Bool, zeroAdvanceEpsilonPx:Float):String {
+        throw new org.tiqian.core.IllegalStateException("TODO r4: toPlanWithDiagnosticsJson");
+    }
 
     public static function ecmaJsonNumber(floatValue:Float):String {
         if (Math.isNaN(floatValue)) return "NaN";
@@ -44,14 +46,34 @@ class PreparedParagraphFns {
 
     public static function shortestRoundTripDigits(magnitude:Float):PreparedParagraphDigitsAndExponent {
         final d = decompose(magnitude);
-        final expansion = dyadicDecimal(d.mant24, d.exp2 - 23);
-        var exact = trimZeros(expansion.digits);
+        final f = d.exp2 >= -126 ? d.exp2 - 23 : -149;
+        final expansion = dyadicDecimal(d.mant24, f);
+        final exact = trimZeros(expansion.digits);
         final n = expansion.exponent;
-        // The widened f32 is represented exactly by this decimal expansion. The
-        // shortest search is performed on the f32 grid; this is also the JVM
-        // Float spelling used by the plan golden.
-        final rounded = roundToSignificant(exact, 17);
-        return {digits:rounded.digits, exponent:n + rounded.exponent};
+        final hi = dyadicDecimal(d.mant24 * 2 + 1, f - 1);
+        final lo = d.mant24 == 8388608
+            ? dyadicDecimal(d.mant24 * 4 - 1, f - 2)
+            : dyadicDecimal(d.mant24 * 2 - 1, f - 1);
+        final inclusive = (d.mant24 % 2) == 0;
+        var length = 1;
+        while (length <= 17) {
+            final keep = exact.substr(0, length);
+            final up = incrementDecimal(keep);
+            final upN = n + up.length - length;
+            if (inInterval(keep, n, lo, hi, inclusive) || inInterval(up, upN, lo, hi, inclusive)) {
+                final rounded = roundToSignificant(exact, length);
+                return {digits:rounded.digits, exponent:n + rounded.exponent};
+            }
+            length += 1;
+        }
+        return {digits:exact, exponent:n};
+    }
+
+    private static function inInterval(digits:String, n:Int, lo:PreparedParagraphDigitsAndExponent,
+            hi:PreparedParagraphDigitsAndExponent, inclusive:Bool):Bool {
+        final low = compareDecimal(digits, n, lo.digits, lo.exponent);
+        final high = compareDecimal(digits, n, hi.digits, hi.exponent);
+        return (low > 0 || (low == 0 && inclusive)) && (high < 0 || (high == 0 && inclusive));
     }
 
     private static function canonicalFloatDigits(magnitude:Float, doubleDigits:String):String {
@@ -130,6 +152,13 @@ class PreparedParagraphFns {
         return {digits:trimZeros(rounded), exponent:rounded.length-length};
     }
 
+    private static function compareDecimal(a:String, nA:Int, b:String, nB:Int):Int {
+        final eA = nA - a.length; final eB = nB - b.length;
+        final aa = eA >= eB ? a + zeros(eA-eB) : a;
+        final bb = eB >= eA ? b + zeros(eB-eA) : b;
+        if (aa.length != bb.length) return aa.length - bb.length;
+        return aa < bb ? -1 : (aa > bb ? 1 : 0);
+    }
     private static function timesSmall(digits:String,factor:Int):String {
         final out=new StringBuf(); var carry=0; var i=digits.length-1;
         while(i>=0) { final product=(digits.charCodeAt(i)-48)*factor+carry; out.addChar(48+product%10); carry=Std.int(product/10); i--; }
@@ -137,7 +166,13 @@ class PreparedParagraphFns {
         return reverse(out.toString());
     }
     private static function incrementDecimal(digits:String):String { var a=digits.split(""); var i=a.length-1; while(true) { if(a[i]!="9") { a[i]=String.fromCharCode(a[i].charCodeAt(0)+1); return a.join(""); } a[i]="0"; if(i==0)return "1"+a.join(""); i--; } }
-    private static function decompose(v:Float):PreparedParagraphDecomposed { var x=haxe.io.FPHelper.i32ToFloat(haxe.io.FPHelper.floatToI32(v)); var e=0; while(x>=2){x/=2;e++;} while(x<1){x*=2;e--;} return {mant24:Std.int(x*8388608.0),exp2:e}; }
+    private static function decompose(v:Float):PreparedParagraphDecomposed {
+        final bits = haxe.io.FPHelper.floatToI32(v);
+        final rawExponent = (bits >>> 23) & 0xff;
+        final rawMantissa = bits & 0x7fffff;
+        if (rawExponent == 0) return {mant24:rawMantissa, exp2: -149};
+        return {mant24:rawMantissa | 0x800000, exp2:rawExponent - 150};
+    }
     private static function zeros(n:Int):String { var s=""; var i=0; while(i<n){s+="0";i++;} return s; }
     private static function trimZeros(s:String):String { var e=s.length; while(e>1 && s.charCodeAt(e-1)==48)e--; return s.substr(0,e); }
     private static function reverse(s:String):String { var r=""; var i=s.length-1; while(i>=0){r+=s.charAt(i);i--;} return r; }
