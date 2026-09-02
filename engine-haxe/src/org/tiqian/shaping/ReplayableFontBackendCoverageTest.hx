@@ -36,7 +36,7 @@ class ReplayableFontBackendCoverageTest {
         TracedAssertions.assertEqualsString("noto-cjk-1", id.value);
         TracedAssertions.assertEqualsString("noto-cjk-1", id.toString());
         var blank = TracedAssertions.assertFailsWith(null, function() FontFaceId.of(" "));
-        TracedAssertions.assertTrue(blank.message.indexOf("blank") >= 0);
+        TracedAssertions.assertTrue(blank.message.indexOf("blank") >= 0, blank.message);
         TracedAssertions.assertFailsWith(null, function() FontFaceId.of(""));
     }
 
@@ -48,7 +48,7 @@ class ReplayableFontBackendCoverageTest {
         TracedAssertions.assertFalse(descriptor.italic);
         TracedAssertions.assertEquals(0, descriptor.collectionIndex);
         TracedAssertions.assertTrue(descriptor.variationAxes.size() == 0);
-        TracedAssertions.assertEqualsString("face-a", descriptor.id.toString());
+        TracedAssertions.assertEqualsRendered("face-a", descriptor.id.toString());
         var varied = new ReplayableFontFaceDescriptor(descriptor.id, descriptor.familyAliases, descriptor.roles,
             descriptor.sourceLabel, 700, true, 2, axes("wght", 700.0));
         TracedAssertions.assertEquals(700, varied.weight);
@@ -63,7 +63,7 @@ class ReplayableFontBackendCoverageTest {
         TracedAssertions.assertEqualsFontRole(FontRole.LatinText, request.role);
         TracedAssertions.assertEqualsFloat(15.0, request.fontSize);
         var error = TracedAssertions.assertFailsWith(null, function() new ReplayableFontFaceRequest(FontRole.LatinText, [], 0.0, 400, false, "", "A"));
-        TracedAssertions.assertTrue(error.message.indexOf("positive and finite") >= 0);
+        TracedAssertions.assertTrue(error.message.indexOf("positive and finite") >= 0, error.message);
         TracedAssertions.assertFailsWith(null, function() new ReplayableFontFaceRequest(FontRole.LatinText, [], -1.0, 400, false, "", "A"));
         TracedAssertions.assertFailsWith(null, function() new ReplayableFontFaceRequest(FontRole.LatinText, [], Math.NaN, 400, false, "", "A"));
         TracedAssertions.assertFailsWith(null, function() new ReplayableFontFaceRequest(FontRole.LatinText, [], Math.POSITIVE_INFINITY, 400, false, "", "A"));
@@ -85,9 +85,9 @@ class ReplayableFontBackendCoverageTest {
         var catalog:ReplayableFontCatalog = new CatalogImpl([cjkFace, latinFace]);
         TracedAssertions.assertTrue(catalog.capabilityReport.canReplayFromControlledBytes);
         var hit = catalog.resolve(new ReplayableFontFaceRequest(FontRole.LatinText, ["Plex"], 12.0, 400, false, "zh-CN", "A"));
-        TracedAssertions.assertTrue(hit == latinFace);
+        TracedAssertions.assertEqualsRendered("face-latin", hit == null ? "-" : hit.id.toString());
         var miss = catalog.resolve(new ReplayableFontFaceRequest(FontRole.LatinText, ["Missing"], 12.0, 400, false, "zh-CN", "A"));
-        TracedAssertions.assertTrue(miss == null);
+        TracedAssertions.assertNullRendered(miss == null, "-");
     }
 }
 
