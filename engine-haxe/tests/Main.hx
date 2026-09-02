@@ -58,6 +58,7 @@ import org.tiqian.layout.JustifierJfTest;
 import org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest;
 import org.tiqian.layout.PunctuationGeometryStageCoverageTest;
 import org.tiqian.layout.PreparedParagraphJsonNumberTest;
+import org.tiqian.layout.PreparedParagraphInlineEdgesTest;
 import org.tiqian.layout.GreedyLineBreakerTest;
 import org.tiqian.linebreak.LineBreakCoverageTest;
 import org.tiqian.linebreak.MandatoryBreakTest;
@@ -1154,6 +1155,9 @@ class Main {
         run("decimalAlignedMantissaSkipsZeroChunk", PreparedParagraphJsonNumberTest.decimalAlignedMantissaSkipsZeroChunk);
         run("subnormalExpansionsSerialize", PreparedParagraphJsonNumberTest.subnormalExpansionsSerialize);
         TestTraceRecorder.flushClass("PreparedParagraphJsonNumberTest");
+        run("endOnlyInlineBoxEmitsEdgeWithoutInlineStartField", PreparedParagraphInlineEdgesTest.endOnlyInlineBoxEmitsEdgeWithoutInlineStartField);
+        run("contentWithoutInlineBoxesOmitsInlineEdgesArray", PreparedParagraphInlineEdgesTest.contentWithoutInlineBoxesOmitsInlineEdgesArray);
+        TestTraceRecorder.flushClass("PreparedParagraphInlineEdgesTest");
         if (failures > 0) {
             Process.exit(1);
         }
