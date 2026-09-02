@@ -31,5 +31,4 @@ class UnicodeNumberTest {
             UnicodeNumber.contains(0x110000);
         });
     }
-
 }

@@ -17,7 +17,8 @@ class BopomofoGlyphPlacement {
     // Kotlin declares drawX: Float = left, baselineY: Float = top + height
     // and fontSize: Float = height, parameter-reading defaults (boring gap 4).
     // The three parameters stay mandatory until that lowering lands.
-    public function new(text:String, left:Float, top:Float, width:Float, height:Float, role:BopomofoGlyphRole, ?glyphs:Array<Glyph>, drawX:Float, baselineY:Float, fontSize:Float) {
+    public function new(text:String, left:Float, top:Float, width:Float, height:Float, role:BopomofoGlyphRole, ?glyphs:Array<Glyph>, drawX:Float,
+            baselineY:Float, fontSize:Float) {
         this.text = text;
         this.left = left;
         this.top = top;

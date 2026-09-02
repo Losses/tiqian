@@ -11,7 +11,8 @@ class SpacingDecisionInfo {
     public final reductionTargetRange:TextRange;
     public final reason:String;
 
-    public function new(range:TextRange, leftChar:String, rightChar:String, naturalInnerGlue:Float, adjustedInnerGlue:Float, reduction:Float, reductionTargetRange:TextRange, reason:String) {
+    public function new(range:TextRange, leftChar:String, rightChar:String, naturalInnerGlue:Float, adjustedInnerGlue:Float, reduction:Float,
+            reductionTargetRange:TextRange, reason:String) {
         this.range = range;
         this.leftChar = leftChar;
         this.rightChar = rightChar;

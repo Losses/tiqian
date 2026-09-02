@@ -15,6 +15,4 @@ class MeasureAdaptiveFirstLineIndent {
     public function resolveEm(measureEm:Float):Float {
         return measureEm < shortBelowEm ? shortEm : longEm;
     }
-
-
 }

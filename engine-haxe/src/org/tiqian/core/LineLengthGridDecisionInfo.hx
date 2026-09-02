@@ -12,7 +12,8 @@ class LineLengthGridDecisionInfo {
     public final bodyOffset:Float;
     public final reason:String;
 
-    public function new(enabled:Bool, containerWidth:Float, fontSize:Float, cells:Int, measure:Float, slack:Float, bodyAlignment:String, bodyOffset:Float, reason:String) {
+    public function new(enabled:Bool, containerWidth:Float, fontSize:Float, cells:Int, measure:Float, slack:Float, bodyAlignment:String, bodyOffset:Float,
+            reason:String) {
         this.enabled = enabled;
         this.containerWidth = containerWidth;
         this.fontSize = fontSize;

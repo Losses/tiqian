@@ -7,6 +7,4 @@ class LayoutProfileId {
     public function new(value:String) {
         this.value = value;
     }
-
-
 }

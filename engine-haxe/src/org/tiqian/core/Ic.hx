@@ -3,11 +3,14 @@ package org.tiqian.core;
 /** Unit value used for a count of CJK 字身框 cells. */
 @:valueType
 abstract Ic(Float) from Float {
-    public inline function new(count:Float) this = count;
+    public inline function new(count:Float)
+        this = count;
 
-    public inline function count():Float return this;
+    public inline function count():Float
+        return this;
 
-    public function toPx(emPx:Float):Float return this * emPx;
+    public function toPx(emPx:Float):Float
+        return this * emPx;
 
     @:op(A + B)
     public static inline function plus(a:Ic, b:Ic):Ic

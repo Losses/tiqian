@@ -9,6 +9,4 @@ class LineBreakSpan {
         this.range = range;
         this.policy = policy;
     }
-
-
 }

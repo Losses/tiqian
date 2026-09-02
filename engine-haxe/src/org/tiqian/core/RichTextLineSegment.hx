@@ -55,6 +55,4 @@ class RichTextLineSegment {
     public function get_continuesOnNextLine():Bool {
         return range.end < span.range.end;
     }
-
-
 }

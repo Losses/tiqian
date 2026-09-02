@@ -10,7 +10,8 @@ class InlineObjectPunctuationAttachmentDecisionInfo {
     public final collapsedAdvance:Float;
     public final reason:String;
 
-    public function new(objectRange:TextRange, separatorRange:TextRange, punctuationRange:TextRange, punctuationText:String, protectedRange:TextRange, collapsedAdvance:Float, ?reason:Null<String>) {
+    public function new(objectRange:TextRange, separatorRange:TextRange, punctuationRange:TextRange, punctuationText:String, protectedRange:TextRange,
+            collapsedAdvance:Float, ?reason:Null<String>) {
         this.objectRange = objectRange;
         this.separatorRange = separatorRange;
         this.punctuationRange = punctuationRange;

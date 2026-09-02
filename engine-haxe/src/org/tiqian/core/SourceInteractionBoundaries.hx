@@ -1,6 +1,7 @@
 package org.tiqian.core;
 
 // CJK↔Western boundaries receive no automatic spacing. A boundary strictly inside a range
+
 /** Source UTF-16 interaction boundaries for selection, hit testing, and spacing. */
 class SourceInteractionBoundaries {
     private static final HIGH_SURROGATE_START:Int = 0xD800;
@@ -194,18 +195,15 @@ class SourceInteractionBoundaries {
     }
 
     private static function isHangulL(codePoint:Int):Bool {
-        return (codePoint >= 0x1100 && codePoint <= 0x115F)
-            || (codePoint >= 0xA960 && codePoint <= 0xA97C);
+        return (codePoint >= 0x1100 && codePoint <= 0x115F) || (codePoint >= 0xA960 && codePoint <= 0xA97C);
     }
 
     private static function isHangulV(codePoint:Int):Bool {
-        return (codePoint >= 0x1160 && codePoint <= 0x11A7)
-            || (codePoint >= 0xD7B0 && codePoint <= 0xD7C6);
+        return (codePoint >= 0x1160 && codePoint <= 0x11A7) || (codePoint >= 0xD7B0 && codePoint <= 0xD7C6);
     }
 
     private static function isHangulT(codePoint:Int):Bool {
-        return (codePoint >= 0x11A8 && codePoint <= 0x11FF)
-            || (codePoint >= 0xD7CB && codePoint <= 0xD7FB);
+        return (codePoint >= 0x11A8 && codePoint <= 0x11FF) || (codePoint >= 0xD7CB && codePoint <= 0xD7FB);
     }
 
     private static function isHangulLvOrLvt(codePoint:Int):Bool {

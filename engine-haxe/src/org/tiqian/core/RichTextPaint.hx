@@ -12,12 +12,7 @@ class RichTextPaint {
     public final background:RichTextBackgroundPaint;
     public final adjacentSameStyleClearance:Float;
 
-    public function new(
-        ?argb:Null<Int>,
-        ?linePattern:Null<RichTextLinePattern>,
-        background:RichTextBackgroundPaint,
-        ?adjacentSameStyleClearance:Null<Float>
-    ) {
+    public function new(?argb:Null<Int>, ?linePattern:Null<RichTextLinePattern>, background:RichTextBackgroundPaint, ?adjacentSameStyleClearance:Null<Float>) {
         this.argb = argb == null ? null : argb;
         this.linePattern = linePattern == null ? Solid.instance : linePattern;
         this.background = background;
@@ -32,21 +27,24 @@ class RichTextPaint {
     }
 
     public static function withClearance(clearance:Float):RichTextPaint {
-        return new RichTextPaint(null, Solid.instance, new RichTextBackgroundPaint(0.0, 0.0, 0.0, 0.0, RichTextBackgroundMetricPolicy.MarkedFaces, Fill.instance), clearance);
+        return new RichTextPaint(null, Solid.instance,
+            new RichTextBackgroundPaint(0.0, 0.0, 0.0, 0.0, RichTextBackgroundMetricPolicy.MarkedFaces, Fill.instance), clearance);
     }
 
     public static function withArgb(value:Int):RichTextPaint {
-        return new RichTextPaint(value, Solid.instance, new RichTextBackgroundPaint(0.0, 0.0, 0.0, 0.0, RichTextBackgroundMetricPolicy.MarkedFaces, Fill.instance), 0.0);
+        return new RichTextPaint(value, Solid.instance,
+            new RichTextBackgroundPaint(0.0, 0.0, 0.0, 0.0, RichTextBackgroundMetricPolicy.MarkedFaces, Fill.instance), 0.0);
     }
 
     public function sameVisibleStyle(other:RichTextPaint):Bool {
         final a = argb;
         final b = other.argb;
-        if (a != b) return false;
-        if (!sameLinePattern(linePattern, other.linePattern)) return false;
+        if (a != b)
+            return false;
+        if (!sameLinePattern(linePattern, other.linePattern))
+            return false;
         return RichTextBackgroundPaint.sameValues(background, other.background);
     }
-
 
     private static function sameLinePattern(a:RichTextLinePattern, b:RichTextLinePattern):Bool {
         if (Std.isOfType(a, Solid) || Std.isOfType(b, Solid)) {

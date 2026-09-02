@@ -9,13 +9,7 @@ class GlyphRun {
     public final advance:Float;
     public final openTypeFeatures:ReadOnlyArray<String>;
 
-    public function new(
-        range:TextRange,
-        fontKey:String,
-        glyphs:Array<Glyph>,
-        advance:Float,
-        ?openTypeFeatures:Array<String>
-    ) {
+    public function new(range:TextRange, fontKey:String, glyphs:Array<Glyph>, advance:Float, ?openTypeFeatures:Array<String>) {
         this.range = range;
         this.fontKey = fontKey;
         this.glyphs = glyphs;

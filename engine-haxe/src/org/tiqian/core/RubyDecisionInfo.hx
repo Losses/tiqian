@@ -18,7 +18,8 @@ class RubyDecisionInfo {
     public final locale:String;
     public final glyphs:ReadOnlyArray<Glyph>;
 
-    public function new(baseRange:TextRange, text:String, lineIndex:Int, centerX:Float, baselineY:Float, fontSize:Float, overhang:Float, ?ascent:Null<Float>, ?descent:Null<Float>, ?width:Null<Float>, ?fontFamilies:Array<String>, ?fontWeight:Null<Int>, ?locale:Null<String>, ?glyphs:Array<Glyph>) {
+    public function new(baseRange:TextRange, text:String, lineIndex:Int, centerX:Float, baselineY:Float, fontSize:Float, overhang:Float, ?ascent:Null<Float>,
+            ?descent:Null<Float>, ?width:Null<Float>, ?fontFamilies:Array<String>, ?fontWeight:Null<Int>, ?locale:Null<String>, ?glyphs:Array<Glyph>) {
         this.baseRange = baseRange;
         this.text = text;
         this.lineIndex = lineIndex;
