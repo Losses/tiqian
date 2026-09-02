@@ -434,7 +434,8 @@ class LayoutQueries {
         if (x >= positioned[positioned.length - 1].right) {
             return coerceSelectionOffset(result, positioned[positioned.length - 1].range.end, SourceBoundaryBias.Nearest);
         }
-        final cluster:PositionedCluster = nearestCluster(positioned, x);
+        final candidate:Null<PositionedCluster> = positioned.firstOrNull(cluster -> x >= cluster.left && x <= cluster.right);
+        final cluster:PositionedCluster = candidate != null ? candidate : nearestCluster(positioned, x);
         final rawOffset:Int = offsetForX(cluster, x);
         final backward:Int = coerceSelectionOffset(result, rawOffset, SourceBoundaryBias.Backward);
         final forward:Int = coerceSelectionOffset(result, rawOffset, SourceBoundaryBias.Forward);
@@ -517,7 +518,8 @@ class LayoutQueries {
         if (positioned.length == 0) {
             return null;
         }
-        final cluster:PositionedCluster = nearestCluster(positioned, x);
+        final candidate:Null<PositionedCluster> = positioned.firstOrNull(cluster -> x >= cluster.left && x <= cluster.right);
+        final cluster:PositionedCluster = candidate != null ? candidate : nearestCluster(positioned, x);
         if (cluster.range.isEmpty) {
             return null;
         }
@@ -591,15 +593,11 @@ class LayoutQueries {
             return new SelectionBounds(cluster.left, maxFloat(cluster.right - spread, cluster.left));
         });
         var rubyIndex:Int = 0;
+        var index:Int = 0;
         while (rubyIndex < rubies.length) {
             final ruby = rubies[rubyIndex];
-            final baseIndices:Array<Int> = [];
-            var index:Int = 0;
-            while (index < positioned.length) {
-                final range = positioned[index].range;
-                if (range.start >= ruby.baseRange.start && range.end <= ruby.baseRange.end) baseIndices.push(index);
-                index++;
-            }
+            final baseIndices:Array<Int> = [for (index in 0...positioned.length)
+                if (positioned[index].range.start >= ruby.baseRange.start && positioned[index].range.end <= ruby.baseRange.end) index];
             if (baseIndices.length > 0) {
                 final centers:Array<Float> = baseIndices.map(i -> centerOfCluster(result, positioned[i]));
                 final rubyLeft = ruby.centerX - ruby.width / 2.0;
@@ -722,9 +720,7 @@ class LayoutQueries {
     private static function markedFaceVerticalBounds(result:LayoutResult, covered:Array<PositionedCluster>):Array<Float> {
         var top:Float = Math.POSITIVE_INFINITY;
         var bottom:Float = Math.NEGATIVE_INFINITY;
-        var index:Int = 0;
-        while (index < covered.length) {
-            final cluster:PositionedCluster = covered[index];
+        covered.forEach(cluster -> {
             final metric:Null<MetricDecisionInfo> = lastMetricContaining(result, cluster.range);
             if (metric != null) {
                 top = minFloat(top, cluster.baseline - metric.layoutAscent);
@@ -734,8 +730,7 @@ class LayoutQueries {
                 top = minFloat(top, cluster.baseline - style.fontSize * BACKGROUND_FALLBACK_ASCENT_EM);
                 bottom = maxFloat(bottom, cluster.baseline + style.fontSize * BACKGROUND_FALLBACK_DESCENT_EM);
             }
-            index += 1;
-        }
+        });
         return [top, bottom];
     }
 
@@ -746,18 +741,12 @@ class LayoutQueries {
         while (index < result.debug.metricDecisions.length) {
             final decision:MetricDecisionInfo = result.debug.metricDecisions[index];
             if (sameFontMetricStyle(resolvedTextStyleAt(result, decision.range.start), style)) {
-                if (firstMatch == null) {
-                    firstMatch = decision;
-                }
-                if (decision.metricBox == IDEOGRAPHIC_EM_BOX_NAME) {
-                    reference = decision;
-                }
+                if (firstMatch == null) firstMatch = decision;
+                if (decision.metricBox == IDEOGRAPHIC_EM_BOX_NAME) reference = decision;
             }
             index += 1;
         }
-        if (reference == null) {
-            reference = firstMatch;
-        }
+        if (reference == null) reference = firstMatch;
         final ascent:Float = reference == null ? style.fontSize * BACKGROUND_FALLBACK_ASCENT_EM : reference.layoutAscent;
         final descent:Float = reference == null ? style.fontSize * BACKGROUND_FALLBACK_DESCENT_EM : reference.layoutDescent;
         return [segment.baseline - ascent, segment.baseline + descent];
