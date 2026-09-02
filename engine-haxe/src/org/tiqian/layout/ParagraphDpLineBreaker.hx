@@ -33,6 +33,8 @@ class ParagraphDpLineBreaker implements LineBreaker {
             ?leaveRaggedPenalty:Int, ?syntheticHyphenBreakPenalty:Float, ?consecutiveSyntheticHyphenPenalty:Float,
             ?consecutiveStretchPenalty:Float, ?compressionVisibility:Float) {
         this.candidateWindow = candidateWindow == null ? 8 : candidateWindow;
+        if (this.candidateWindow < 0)
+            throw new org.tiqian.core.TiqianIllegalArgumentException(org.tiqian.core.TextRangeError.Message("candidateWindow must be non-negative"));
         this.raggednessWeight = raggednessWeight == null ? 0.5 : raggednessWeight;
         this.kinsoku = kinsoku == null ? new ClreqKinsokuRule() : kinsoku;
         this.pushInPenalty = pushInPenalty == null ? 2 : pushInPenalty;
