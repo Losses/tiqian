@@ -57,6 +57,8 @@ import org.tiqian.layout.JustifierCompressionTest;
 import org.tiqian.layout.JustifierJfTest;
 import org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest;
 import org.tiqian.layout.PunctuationGeometryStageCoverageTest;
+import org.tiqian.layout.PreparedParagraphJsonNumberTest;
+import org.tiqian.layout.PreparedParagraphInlineEdgesTest;
 import org.tiqian.layout.GreedyLineBreakerTest;
 import org.tiqian.linebreak.LineBreakCoverageTest;
 import org.tiqian.linebreak.MandatoryBreakTest;
@@ -1141,6 +1143,21 @@ class Main {
             PunctuationGeometryStageCoverageTest.virtualGapsRespectNarrowToWideEdgesAndTheirNeighbours);
         run("wideToNarrowBoundariesInsertLeadingAndTrailingGaps", PunctuationGeometryStageCoverageTest.wideToNarrowBoundariesInsertLeadingAndTrailingGaps);
         TestTraceRecorder.flushClass("PunctuationGeometryStageCoverageTest");
+        run("zeroValuesSerializeWithoutSign", PreparedParagraphJsonNumberTest.zeroValuesSerializeWithoutSign);
+        run("integerFormsPadToDecimalExponent", PreparedParagraphJsonNumberTest.integerFormsPadToDecimalExponent);
+        run("fractionFormsInsertDecimalPoint", PreparedParagraphJsonNumberTest.fractionFormsInsertDecimalPoint);
+        run("smallFractionsUseLeadingZeros", PreparedParagraphJsonNumberTest.smallFractionsUseLeadingZeros);
+        run("exponentFormsCarryExplicitSign", PreparedParagraphJsonNumberTest.exponentFormsCarryExplicitSign);
+        run("negativeValuesKeepOnlyMagnitudeSign", PreparedParagraphJsonNumberTest.negativeValuesKeepOnlyMagnitudeSign);
+        run("exactTiesRoundToEvenDigit", PreparedParagraphJsonNumberTest.exactTiesRoundToEvenDigit);
+        run("exactExpansionRoundsPlatformDigits", PreparedParagraphJsonNumberTest.exactExpansionRoundsPlatformDigits);
+        run("boundaryMidpointsAcceptOnlyAtEvenMantissa", PreparedParagraphJsonNumberTest.boundaryMidpointsAcceptOnlyAtEvenMantissa);
+        run("decimalAlignedMantissaSkipsZeroChunk", PreparedParagraphJsonNumberTest.decimalAlignedMantissaSkipsZeroChunk);
+        run("subnormalExpansionsSerialize", PreparedParagraphJsonNumberTest.subnormalExpansionsSerialize);
+        TestTraceRecorder.flushClass("PreparedParagraphJsonNumberTest");
+        run("endOnlyInlineBoxEmitsEdgeWithoutInlineStartField", PreparedParagraphInlineEdgesTest.endOnlyInlineBoxEmitsEdgeWithoutInlineStartField);
+        run("contentWithoutInlineBoxesOmitsInlineEdgesArray", PreparedParagraphInlineEdgesTest.contentWithoutInlineBoxesOmitsInlineEdgesArray);
+        TestTraceRecorder.flushClass("PreparedParagraphInlineEdgesTest");
         if (failures > 0) {
             Process.exit(1);
         }
