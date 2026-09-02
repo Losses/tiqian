@@ -9,6 +9,4 @@ class Size {
         this.width = width;
         this.height = height;
     }
-
-
 }

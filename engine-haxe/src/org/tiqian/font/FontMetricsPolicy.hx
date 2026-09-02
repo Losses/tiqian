@@ -1,3 +1,8 @@
 package org.tiqian.font;
 
-enum FontMetricsPolicy { Raw; IdeographicBox; GlyphBoundsSampled; ManualOverride; }
+enum FontMetricsPolicy {
+    Raw;
+    IdeographicBox;
+    GlyphBoundsSampled;
+    ManualOverride;
+}

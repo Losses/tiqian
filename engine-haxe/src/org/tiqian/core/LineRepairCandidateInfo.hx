@@ -14,7 +14,8 @@ class LineRepairCandidateInfo {
     public final requiredShrink:Float;
     public final availableCapacity:Float;
 
-    public function new(kind:String, reasonCode:String, offenderRange:TextRange, penalty:Int, accepted:Bool, ?rejectionReason:Null<String>, ?targetClusterIndex:Null<Int>, ?carriedClusterIndex:Null<Int>, ?shrink:Null<Float>, ?requiredShrink:Null<Float>, ?availableCapacity:Null<Float>) {
+    public function new(kind:String, reasonCode:String, offenderRange:TextRange, penalty:Int, accepted:Bool, ?rejectionReason:Null<String>,
+            ?targetClusterIndex:Null<Int>, ?carriedClusterIndex:Null<Int>, ?shrink:Null<Float>, ?requiredShrink:Null<Float>, ?availableCapacity:Null<Float>) {
         this.kind = kind;
         this.reasonCode = reasonCode;
         this.offenderRange = offenderRange;

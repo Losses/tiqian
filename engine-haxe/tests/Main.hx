@@ -66,7 +66,7 @@ import std.Process;
 class Main {
     private static var failures:Int = 0;
 
-    private static function run(name:String, test:()->Void):Void {
+    private static function run(name:String, test:() -> Void):Void {
         try {
             test();
         } catch (error:TraceAssertionException) {
@@ -107,7 +107,8 @@ class Main {
         run("classifiesBothQuotesAsCjkForCjkQuotedLatinContent", QuotePairAnalyzerTest.classifiesBothQuotesAsCjkForCjkQuotedLatinContent);
         run("whitespaceDelimitedLatinQuotePairOverridesCjkOuterContext", QuotePairAnalyzerTest.whitespaceDelimitedLatinQuotePairOverridesCjkOuterContext);
         run("unspacedCjkQuotationOfLatinTextRemainsCjk", QuotePairAnalyzerTest.unspacedCjkQuotationOfLatinTextRemainsCjk);
-        run("adjacentQuotedListItemsDoNotUsePreviousItemContentAsOuterContext", QuotePairAnalyzerTest.adjacentQuotedListItemsDoNotUsePreviousItemContentAsOuterContext);
+        run("adjacentQuotedListItemsDoNotUsePreviousItemContentAsOuterContext",
+            QuotePairAnalyzerTest.adjacentQuotedListItemsDoNotUsePreviousItemContentAsOuterContext);
         run("spacedCjkQuotedContentRemainsCjk", QuotePairAnalyzerTest.spacedCjkQuotedContentRemainsCjk);
         run("classifiesPairAsCjkAtTextBoundary", QuotePairAnalyzerTest.classifiesPairAsCjkAtTextBoundary);
         run("classifiesTextStartLatinPairFromQuotedContent", QuotePairAnalyzerTest.classifiesTextStartLatinPairFromQuotedContent);
@@ -126,7 +127,8 @@ class Main {
         run("roleDecisionSourcesStayExplainableAcrossFallbackPaths", QuotePairAnalyzerTest.roleDecisionSourcesStayExplainableAcrossFallbackPaths);
         TestTraceRecorder.flushClass("QuotePairAnalyzerTest");
         run("deprecatedClassifyPairsWithFontRoleClassifierDelegates", QuotePairAnalyzerCoverageTest.deprecatedClassifyPairsWithFontRoleClassifierDelegates);
-        run("deprecatedClassifyQuoteRolesWithFontRoleClassifierDelegates", QuotePairAnalyzerCoverageTest.deprecatedClassifyQuoteRolesWithFontRoleClassifierDelegates);
+        run("deprecatedClassifyQuoteRolesWithFontRoleClassifierDelegates",
+            QuotePairAnalyzerCoverageTest.deprecatedClassifyQuoteRolesWithFontRoleClassifierDelegates);
         run("codePointBeforeSurrogatePairReturnsSupplementary", QuotePairAnalyzerCoverageTest.codePointBeforeSurrogatePairReturnsSupplementary);
         run("codePointAtOrNullSurrogatePairReturnsSupplementary", QuotePairAnalyzerCoverageTest.codePointAtOrNullSurrogatePairReturnsSupplementary);
         run("codePointAtOrNullNonSurrogateReturnsSelf", QuotePairAnalyzerCoverageTest.codePointAtOrNullNonSurrogateReturnsSelf);
@@ -143,7 +145,8 @@ class Main {
         run("codePointBeforeWithLowSurrogateAfterNonHighSurrogate", QuotePairAnalyzerCoverageTest.codePointBeforeWithLowSurrogateAfterNonHighSurrogate);
         run("codePointAtOrNullWithIndexOutOfRange", QuotePairAnalyzerCoverageTest.codePointAtOrNullWithIndexOutOfRange);
         run("codePointAtOrNullWithHighSurrogateAtEnd", QuotePairAnalyzerCoverageTest.codePointAtOrNullWithHighSurrogateAtEnd);
-        run("codePointAtOrNullWithHighSurrogateFollowedByNonLowSurrogate", QuotePairAnalyzerCoverageTest.codePointAtOrNullWithHighSurrogateFollowedByNonLowSurrogate);
+        run("codePointAtOrNullWithHighSurrogateFollowedByNonLowSurrogate",
+            QuotePairAnalyzerCoverageTest.codePointAtOrNullWithHighSurrogateFollowedByNonLowSurrogate);
         run("analyzeWithDoubleQuoteOpen", QuotePairAnalyzerCoverageTest.analyzeWithDoubleQuoteOpen);
         run("codePointAtOrNullHighSurrogateNotInRangeReturnsHigh", QuotePairAnalyzerCoverageTest.codePointAtOrNullHighSurrogateNotInRangeReturnsHigh);
         run("codePointBeforeLowInRangeIndexGe2HighNotInRange", QuotePairAnalyzerCoverageTest.codePointBeforeLowInRangeIndexGe2HighNotInRange);
@@ -153,8 +156,10 @@ class Main {
         run("analyzeWithAllQuoteTypes", QuotePairAnalyzerCoverageTest.analyzeWithAllQuoteTypes);
         run("codePointBeforeNonSurrogateBmpChar", QuotePairAnalyzerCoverageTest.codePointBeforeNonSurrogateBmpChar);
         TestTraceRecorder.flushClass("QuotePairAnalyzerCoverageTest");
-        run("lowQuoteCodePointsTakeTheSwitchDefaultWithoutPairing", QuotePairAnalyzerSurrogateAdjacencyTest.lowQuoteCodePointsTakeTheSwitchDefaultWithoutPairing);
-        run("apostropheAfterASurrogatePairWalksTheCombineArmBefore", QuotePairAnalyzerSurrogateAdjacencyTest.apostropheAfterASurrogatePairWalksTheCombineArmBefore);
+        run("lowQuoteCodePointsTakeTheSwitchDefaultWithoutPairing",
+            QuotePairAnalyzerSurrogateAdjacencyTest.lowQuoteCodePointsTakeTheSwitchDefaultWithoutPairing);
+        run("apostropheAfterASurrogatePairWalksTheCombineArmBefore",
+            QuotePairAnalyzerSurrogateAdjacencyTest.apostropheAfterASurrogatePairWalksTheCombineArmBefore);
         run("apostropheBeforeASurrogateWalksBothLowCheckArms", QuotePairAnalyzerSurrogateAdjacencyTest.apostropheBeforeASurrogateWalksBothLowCheckArms);
         run("plainAndBoundaryNeighboursWalkTheNonSurrogateArms", QuotePairAnalyzerSurrogateAdjacencyTest.plainAndBoundaryNeighboursWalkTheNonSurrogateArms);
         TestTraceRecorder.flushClass("QuotePairAnalyzerSurrogateAdjacencyTest");
@@ -165,13 +170,15 @@ class Main {
         run("twoSameTierBoundariesPickTheRightmost", ProgressiveBreakDecisionsCoverageTest.twoSameTierBoundariesPickTheRightmost);
         run("visiblyLooseCleanTiersFallThroughToEmergency", ProgressiveBreakDecisionsCoverageTest.visiblyLooseCleanTiersFallThroughToEmergency);
         run("aLeftwardEmergencyBoundaryKeepsTheBestCleanTier", ProgressiveBreakDecisionsCoverageTest.aLeftwardEmergencyBoundaryKeepsTheBestCleanTier);
-        run("spanEdgeAndWhitespaceClustersDoNotCountAsTechnicalUnits", ProgressiveBreakDecisionsCoverageTest.spanEdgeAndWhitespaceClustersDoNotCountAsTechnicalUnits);
+        run("spanEdgeAndWhitespaceClustersDoNotCountAsTechnicalUnits",
+            ProgressiveBreakDecisionsCoverageTest.spanEdgeAndWhitespaceClustersDoNotCountAsTechnicalUnits);
         run("singleTechnicalUnitFallsBackToTheCjkGapDensity", ProgressiveBreakDecisionsCoverageTest.singleTechnicalUnitFallsBackToTheCjkGapDensity);
         run("candidateOutsideTheClusterListIsAllowed", ProgressiveBreakDecisionsCoverageTest.candidateOutsideTheClusterListIsAllowed);
         run("candidatesOutsideTheActiveSpanAreAllowed", ProgressiveBreakDecisionsCoverageTest.candidatesOutsideTheActiveSpanAreAllowed);
         run("candidatesOfADifferentSpanAreAllowed", ProgressiveBreakDecisionsCoverageTest.candidatesOfADifferentSpanAreAllowed);
         run("sameTierPastTheRawGreedyIsAllowedAndWorseTiersAreNot", ProgressiveBreakDecisionsCoverageTest.sameTierPastTheRawGreedyIsAllowedAndWorseTiersAreNot);
-        run("candidatesBeforeTheRawGreedyMustMatchTheSelectedBoundary", ProgressiveBreakDecisionsCoverageTest.candidatesBeforeTheRawGreedyMustMatchTheSelectedBoundary);
+        run("candidatesBeforeTheRawGreedyMustMatchTheSelectedBoundary",
+            ProgressiveBreakDecisionsCoverageTest.candidatesBeforeTheRawGreedyMustMatchTheSelectedBoundary);
         run("hyphenBreakReturnsOverflowAtPlainWordBoundaries", ProgressiveBreakDecisionsCoverageTest.hyphenBreakReturnsOverflowAtPlainWordBoundaries);
         run("overLongWordsMustHyphenateFromTheLineStart", ProgressiveBreakDecisionsCoverageTest.overLongWordsMustHyphenateFromTheLineStart);
         run("aFittingWholeWordBreaksThere", ProgressiveBreakDecisionsCoverageTest.aFittingWholeWordBreaksThere);
@@ -179,7 +186,8 @@ class Main {
         run("gaplessOrTooLooseLinesHyphenateInstead", ProgressiveBreakDecisionsCoverageTest.gaplessOrTooLooseLinesHyphenateInstead);
         TestTraceRecorder.flushClass("ProgressiveBreakDecisionsCoverageTest");
         run("infiniteLineLimitWithClustersAdmitsTheCleanestTier", ProgressiveBreakDecisionsTailTest.infiniteLineLimitWithClustersAdmitsTheCleanestTier);
-        run("infiniteStretchCeilingWithFiniteLineLimitAdmitsTheCleanestTier", ProgressiveBreakDecisionsTailTest.infiniteStretchCeilingWithFiniteLineLimitAdmitsTheCleanestTier);
+        run("infiniteStretchCeilingWithFiniteLineLimitAdmitsTheCleanestTier",
+            ProgressiveBreakDecisionsTailTest.infiniteStretchCeilingWithFiniteLineLimitAdmitsTheCleanestTier);
         TestTraceRecorder.flushClass("ProgressiveBreakDecisionsTailTest");
         run("chargesAllDeficitToCjkWhenNoSinoWesternCapacityIsKnown", DecideHyphenBreakTest.chargesAllDeficitToCjkWhenNoSinoWesternCapacityIsKnown);
         run("discountsSinoWesternCapacityBeforeChargingCjkLooseness", DecideHyphenBreakTest.discountsSinoWesternCapacityBeforeChargingCjkLooseness);
@@ -197,7 +205,8 @@ class Main {
         run("collapsesCrlfToASingleBreakAfterLf", MandatoryBreakTest.collapsesCrlfToASingleBreakAfterLf);
         run("preservesEachBlankLineBreak", MandatoryBreakTest.preservesEachBlankLineBreak);
         TestTraceRecorder.flushClass("MandatoryBreakTest");
-        run("lookupClassesCoverTheUaxTailorablePunctuationClasses", UnicodePunctuationLineBreakCoverageTest.lookupClassesCoverTheUaxTailorablePunctuationClasses);
+        run("lookupClassesCoverTheUaxTailorablePunctuationClasses",
+            UnicodePunctuationLineBreakCoverageTest.lookupClassesCoverTheUaxTailorablePunctuationClasses);
         run("nonScalarCodePointsAreRejected", UnicodePunctuationLineBreakCoverageTest.nonScalarCodePointsAreRejected);
         TestTraceRecorder.flushClass("UnicodePunctuationLineBreakCoverageTest");
         run("exposesPinnedWesternAndCjkPunctuationClasses", UnicodePunctuationLineBreakTest.exposesPinnedWesternAndCjkPunctuationClasses);
@@ -229,9 +238,12 @@ class Main {
         run("richTextBackgroundTrailingPaddingWhenSpanEndsAtSegmentEnd", CoreLayoutQueriesGapsTest.richTextBackgroundTrailingPaddingWhenSpanEndsAtSegmentEnd);
         run("richTextBackgroundUniformParagraphStyleUsesParagraphStyle", CoreLayoutQueriesGapsTest.richTextBackgroundUniformParagraphStyleUsesParagraphStyle);
         run("markedFaceVerticalBoundsUsesFallbackWhenNoMetricMatches", CoreLayoutQueriesGapsTest.markedFaceVerticalBoundsUsesFallbackWhenNoMetricMatches);
-        run("getSelectionOffsetForPositionReturnsNearestWhenBeforeFirstCluster", CoreLayoutQueriesGapsTest.getSelectionOffsetForPositionReturnsNearestWhenBeforeFirstCluster);
-        run("getSelectionOffsetForPositionReturnsNearestWhenAfterLastCluster", CoreLayoutQueriesGapsTest.getSelectionOffsetForPositionReturnsNearestWhenAfterLastCluster);
-        run("getSelectionOffsetForPositionReturnsStartOfLineWhenClustersEmpty", CoreLayoutQueriesGapsTest.getSelectionOffsetForPositionReturnsStartOfLineWhenClustersEmpty);
+        run("getSelectionOffsetForPositionReturnsNearestWhenBeforeFirstCluster",
+            CoreLayoutQueriesGapsTest.getSelectionOffsetForPositionReturnsNearestWhenBeforeFirstCluster);
+        run("getSelectionOffsetForPositionReturnsNearestWhenAfterLastCluster",
+            CoreLayoutQueriesGapsTest.getSelectionOffsetForPositionReturnsNearestWhenAfterLastCluster);
+        run("getSelectionOffsetForPositionReturnsStartOfLineWhenClustersEmpty",
+            CoreLayoutQueriesGapsTest.getSelectionOffsetForPositionReturnsStartOfLineWhenClustersEmpty);
         run("getSelectionWordBoundaryForEmojiZwjSequence", CoreLayoutQueriesGapsTest.getSelectionWordBoundaryForEmojiZwjSequence);
         run("getSelectionWordBoundaryForPunctuationReturnsSingle", CoreLayoutQueriesGapsTest.getSelectionWordBoundaryForPunctuationReturnsSingle);
         run("positionedClustersProducesSourceStopsForLatinRun", CoreLayoutQueriesGapsTest.positionedClustersProducesSourceStopsForLatinRun);
@@ -242,10 +254,12 @@ class Main {
         run("getOffsetForPositionUsesMinByWhenOutsideClusters", CoreLayoutQueriesGapsTest.getOffsetForPositionUsesMinByWhenOutsideClusters);
         run("getSelectionWordBoundaryReturnsEmptyForEmptyText", CoreLayoutQueriesGapsTest.getSelectionWordBoundaryReturnsEmptyForEmptyText);
         TestTraceRecorder.flushClass("CoreLayoutQueriesGapsTest");
-        run("clipboardProjectionRestoresSourceAndAddsFullySelectedAnnotations", LayoutQueriesTest.clipboardProjectionRestoresSourceAndAddsFullySelectedAnnotations);
+        run("clipboardProjectionRestoresSourceAndAddsFullySelectedAnnotations",
+            LayoutQueriesTest.clipboardProjectionRestoresSourceAndAddsFullySelectedAnnotations);
         run("positionedClustersFollowLineIndentAndAdvance", LayoutQueriesTest.positionedClustersFollowLineIndentAndAdvance);
         run("positionedClustersSeparateOccupiedBoxFromAutoSpaceDrawOrigin", LayoutQueriesTest.positionedClustersSeparateOccupiedBoxFromAutoSpaceDrawOrigin);
-        run("positionedClustersSeparateOccupiedBoxFromConsumedLeadingGlueDrawOrigin", LayoutQueriesTest.positionedClustersSeparateOccupiedBoxFromConsumedLeadingGlueDrawOrigin);
+        run("positionedClustersSeparateOccupiedBoxFromConsumedLeadingGlueDrawOrigin",
+            LayoutQueriesTest.positionedClustersSeparateOccupiedBoxFromConsumedLeadingGlueDrawOrigin);
         run("glyphInkBoundsKeepItalicOverhangSeparateFromOccupiedGeometry", LayoutQueriesTest.glyphInkBoundsKeepItalicOverhangSeparateFromOccupiedGeometry);
         run("lineAndBoxQueriesUseTiqianLineGeometry", LayoutQueriesTest.lineAndBoxQueriesUseTiqianLineGeometry);
         run("rangeBoxesSplitMultiUnitClustersBySourceRange", LayoutQueriesTest.rangeBoxesSplitMultiUnitClustersBySourceRange);
@@ -256,8 +270,10 @@ class Main {
         run("customLineStylesReuseTheRendererUnderlineHeight", LayoutQueriesTest.customLineStylesReuseTheRendererUnderlineHeight);
         run("lineThroughBisectsTheIdeographicMetricBox", LayoutQueriesTest.lineThroughBisectsTheIdeographicMetricBox);
         run("richTextBackgroundKeepsInternalGapsButTrimsItsOuterLayoutSpace", LayoutQueriesTest.richTextBackgroundKeepsInternalGapsButTrimsItsOuterLayoutSpace);
-        run("uniformTextStyleBackgroundIgnoresFallbackFaceHeightAndAddsPadding", LayoutQueriesTest.uniformTextStyleBackgroundIgnoresFallbackFaceHeightAndAddsPadding);
-        run("backgroundContinuationCornersKeepOnlyTrueSourceEndsFullyRounded", LayoutQueriesTest.backgroundContinuationCornersKeepOnlyTrueSourceEndsFullyRounded);
+        run("uniformTextStyleBackgroundIgnoresFallbackFaceHeightAndAddsPadding",
+            LayoutQueriesTest.uniformTextStyleBackgroundIgnoresFallbackFaceHeightAndAddsPadding);
+        run("backgroundContinuationCornersKeepOnlyTrueSourceEndsFullyRounded",
+            LayoutQueriesTest.backgroundContinuationCornersKeepOnlyTrueSourceEndsFullyRounded);
         run("backgroundContinuationRadiusDefaultsToTheAuthoredCornerRadius", LayoutQueriesTest.backgroundContinuationRadiusDefaultsToTheAuthoredCornerRadius);
         run("adjacentBackgroundsWithTheSameStyleShareOneClearance", LayoutQueriesTest.adjacentBackgroundsWithTheSameStyleShareOneClearance);
         run("adjacentLineDecorationsWithTheSameStyleShareOneClearance", LayoutQueriesTest.adjacentLineDecorationsWithTheSameStyleShareOneClearance);
@@ -265,38 +281,48 @@ class Main {
         run("hitTestingChoosesOffsetFromTiqianClusterAdvances", LayoutQueriesTest.hitTestingChoosesOffsetFromTiqianClusterAdvances);
         run("selectionHitTestingKeepsSupportedSourceSequencesAtomic", LayoutQueriesTest.selectionHitTestingKeepsSupportedSourceSequencesAtomic);
         run("externalSelectionOffsetsRespectDirectionalBoundaryBias", LayoutQueriesTest.externalSelectionOffsetsRespectDirectionalBoundaryBias);
-        run("supportedSourceSequenceRemainsAtomicAcrossEngineClusterBoundaries", LayoutQueriesTest.supportedSourceSequenceRemainsAtomicAcrossEngineClusterBoundaries);
+        run("supportedSourceSequenceRemainsAtomicAcrossEngineClusterBoundaries",
+            LayoutQueriesTest.supportedSourceSequenceRemainsAtomicAcrossEngineClusterBoundaries);
         run("inlineObjectSourceRangeIsOneSelectionUnit", LayoutQueriesTest.inlineObjectSourceRangeIsOneSelectionUnit);
         run("selectionWordBoundaryExpandsLatinButKeepsHanAtomic", LayoutQueriesTest.selectionWordBoundaryExpandsLatinButKeepsHanAtomic);
-        run("rubySelectionGeometryRedistributesAvoidanceSpreadWithoutOverlap", LayoutQueriesTest.rubySelectionGeometryRedistributesAvoidanceSpreadWithoutOverlap);
+        run("rubySelectionGeometryRedistributesAvoidanceSpreadWithoutOverlap",
+            LayoutQueriesTest.rubySelectionGeometryRedistributesAvoidanceSpreadWithoutOverlap);
         TestTraceRecorder.flushClass("LayoutQueriesTest");
         run("cornerRadiiPredicatesCoverEveryComparison", LayoutQueriesResidualCoverageTest.cornerRadiiPredicatesCoverEveryComparison);
-        run("resolvedCornerRadiiRejectsInvalidInsetsAndResolvesContinuations", LayoutQueriesResidualCoverageTest.resolvedCornerRadiiRejectsInvalidInsetsAndResolvesContinuations);
+        run("resolvedCornerRadiiRejectsInvalidInsetsAndResolvesContinuations",
+            LayoutQueriesResidualCoverageTest.resolvedCornerRadiiRejectsInvalidInsetsAndResolvesContinuations);
         run("copyProjectionAppendsFullySelectedAnnotationsOnly", LayoutQueriesResidualCoverageTest.copyProjectionAppendsFullySelectedAnnotationsOnly);
         run("positionedClustersByLineRejectsForeignLines", LayoutQueriesResidualCoverageTest.positionedClustersByLineRejectsForeignLines);
-        run("glyphInkBoundsSkipsUnmatchedGlyphsAndReturnsNullWithoutInk", LayoutQueriesResidualCoverageTest.glyphInkBoundsSkipsUnmatchedGlyphsAndReturnsNullWithoutInk);
+        run("glyphInkBoundsSkipsUnmatchedGlyphsAndReturnsNullWithoutInk",
+            LayoutQueriesResidualCoverageTest.glyphInkBoundsSkipsUnmatchedGlyphsAndReturnsNullWithoutInk);
         run("emptyLineResultsShortCircuitEveryQuery", LayoutQueriesResidualCoverageTest.emptyLineResultsShortCircuitEveryQuery);
         run("boundingBoxFallsBackToTheCursorRectAtClusterGaps", LayoutQueriesResidualCoverageTest.boundingBoxFallsBackToTheCursorRectAtClusterGaps);
         run("richTextSegmentsSplitOnLineBreaksAndClusterGaps", LayoutQueriesResidualCoverageTest.richTextSegmentsSplitOnLineBreaksAndClusterGaps);
         run("richTextSegmentsSkipZeroLengthClustersBetweenSlices", LayoutQueriesResidualCoverageTest.richTextSegmentsSkipZeroLengthClustersBetweenSlices);
         run("trimmedDecorationSegmentsKeepOnlyDecorationRoles", LayoutQueriesResidualCoverageTest.trimmedDecorationSegmentsKeepOnlyDecorationRoles);
         run("backgroundSegmentsPassThroughUnmatchableSegments", LayoutQueriesResidualCoverageTest.backgroundSegmentsPassThroughUnmatchableSegments);
-        run("backgroundSegmentsTrimGlueApplyPaddingAndUseGlyphAdvances", LayoutQueriesResidualCoverageTest.backgroundSegmentsTrimGlueApplyPaddingAndUseGlyphAdvances);
+        run("backgroundSegmentsTrimGlueApplyPaddingAndUseGlyphAdvances",
+            LayoutQueriesResidualCoverageTest.backgroundSegmentsTrimGlueApplyPaddingAndUseGlyphAdvances);
         run("markedFacesUseMetricDecisionsWhenTheyCoverTheCluster", LayoutQueriesResidualCoverageTest.markedFacesUseMetricDecisionsWhenTheyCoverTheCluster);
         run("uniformTextStyleFallsBackWhenEveryMetricFieldDiffers", LayoutQueriesResidualCoverageTest.uniformTextStyleFallsBackWhenEveryMetricFieldDiffers);
-        run("uniformTextStylePrefersIdeographicMetricsThenAnyMatchingFace", LayoutQueriesResidualCoverageTest.uniformTextStylePrefersIdeographicMetricsThenAnyMatchingFace);
+        run("uniformTextStylePrefersIdeographicMetricsThenAnyMatchingFace",
+            LayoutQueriesResidualCoverageTest.uniformTextStylePrefersIdeographicMetricsThenAnyMatchingFace);
         run("adjacentSameStyleSegmentsShareClearance", LayoutQueriesResidualCoverageTest.adjacentSameStyleSegmentsShareClearance);
         run("decorationLineYRequiresValidStrokeAndDecorationRoles", LayoutQueriesResidualCoverageTest.decorationLineYRequiresValidStrokeAndDecorationRoles);
-        run("cursorRectCoversEmptyLinesEmptyClustersAndMultiUnitClusters", LayoutQueriesResidualCoverageTest.cursorRectCoversEmptyLinesEmptyClustersAndMultiUnitClusters);
+        run("cursorRectCoversEmptyLinesEmptyClustersAndMultiUnitClusters",
+            LayoutQueriesResidualCoverageTest.cursorRectCoversEmptyLinesEmptyClustersAndMultiUnitClusters);
         run("offsetForPositionCoversVerticalDistancesAndNaNPoints", LayoutQueriesResidualCoverageTest.offsetForPositionCoversVerticalDistancesAndNaNPoints);
         run("selectionSnapPrefersTheCloserInlineObjectBoundary", LayoutQueriesResidualCoverageTest.selectionSnapPrefersTheCloserInlineObjectBoundary);
-        run("selectionWordBoundaryForPositionRejectsDegenerateContent", LayoutQueriesResidualCoverageTest.selectionWordBoundaryForPositionRejectsDegenerateContent);
+        run("selectionWordBoundaryForPositionRejectsDegenerateContent",
+            LayoutQueriesResidualCoverageTest.selectionWordBoundaryForPositionRejectsDegenerateContent);
         run("zeroWidthClustersReturnTheirStartInHitTests", LayoutQueriesResidualCoverageTest.zeroWidthClustersReturnTheirStartInHitTests);
         run("coerceSelectionOffsetHonoursInlineObjectBoundaries", LayoutQueriesResidualCoverageTest.coerceSelectionOffsetHonoursInlineObjectBoundaries);
-        run("selectionWordBoundaryExpandsWordsAndHonoursInlineObjects", LayoutQueriesResidualCoverageTest.selectionWordBoundaryExpandsWordsAndHonoursInlineObjects);
+        run("selectionWordBoundaryExpandsWordsAndHonoursInlineObjects",
+            LayoutQueriesResidualCoverageTest.selectionWordBoundaryExpandsWordsAndHonoursInlineObjects);
         run("selectionWordKindCoversEveryHanBlock", LayoutQueriesResidualCoverageTest.selectionWordKindCoversEveryHanBlock);
         run("nearestLineFallsBackToTheOnlyLineAtItsEndOffset", LayoutQueriesResidualCoverageTest.nearestLineFallsBackToTheOnlyLineAtItsEndOffset);
-        run("rubyGeometryRedistributesSelectionBoxesAndDropsSourceStops", LayoutQueriesResidualCoverageTest.rubyGeometryRedistributesSelectionBoxesAndDropsSourceStops);
+        run("rubyGeometryRedistributesSelectionBoxesAndDropsSourceStops",
+            LayoutQueriesResidualCoverageTest.rubyGeometryRedistributesSelectionBoxesAndDropsSourceStops);
         run("boundingBoxesSliceZeroWidthAndEmptyClusters", LayoutQueriesResidualCoverageTest.boundingBoxesSliceZeroWidthAndEmptyClusters);
         run("positionedClustersAndSegmentsReturnEmptyWithoutLines", LayoutQueriesResidualCoverageTest.positionedClustersAndSegmentsReturnEmptyWithoutLines);
         run("sameSpanSlicesAcrossASourceBoundaryMergeIntoOneSegment", LayoutQueriesResidualCoverageTest.sameSpanSlicesAcrossASourceBoundaryMergeIntoOneSegment);
@@ -308,17 +334,23 @@ class Main {
         run("glueTrimSkipsInteriorSegmentEdges", LayoutQueriesResidualCoverageTest.glueTrimSkipsInteriorSegmentEdges);
         run("backgroundSegmentOutsideEverySpanUsesTheParagraphStyle", LayoutQueriesResidualCoverageTest.backgroundSegmentOutsideEverySpanUsesTheParagraphStyle);
         run("cursorRectFindsLaterClustersAndRejectsGappedRanges", LayoutQueriesResidualCoverageTest.cursorRectFindsLaterClustersAndRejectsGappedRanges);
-        run("emptyMidClusterHoldsTheCaretAndSlicesKeepDegenerateRects", LayoutQueriesResidualCoverageTest.emptyMidClusterHoldsTheCaretAndSlicesKeepDegenerateRects);
-        run("selectionWordBoundarySkipsInlineObjectsItDoesNotContain", LayoutQueriesResidualCoverageTest.selectionWordBoundarySkipsInlineObjectsItDoesNotContain);
-        run("selectionWordBoundaryForPositionCoversDistancesAndFallbacks", LayoutQueriesResidualCoverageTest.selectionWordBoundaryForPositionCoversDistancesAndFallbacks);
+        run("emptyMidClusterHoldsTheCaretAndSlicesKeepDegenerateRects",
+            LayoutQueriesResidualCoverageTest.emptyMidClusterHoldsTheCaretAndSlicesKeepDegenerateRects);
+        run("selectionWordBoundarySkipsInlineObjectsItDoesNotContain",
+            LayoutQueriesResidualCoverageTest.selectionWordBoundarySkipsInlineObjectsItDoesNotContain);
+        run("selectionWordBoundaryForPositionCoversDistancesAndFallbacks",
+            LayoutQueriesResidualCoverageTest.selectionWordBoundaryForPositionCoversDistancesAndFallbacks);
         run("lineForOffsetInsideARangeTakesTheZeroDistanceArm", LayoutQueriesResidualCoverageTest.lineForOffsetInsideARangeTakesTheZeroDistanceArm);
         run("compatibilityIdeographsFormIndividualWordUnits", LayoutQueriesResidualCoverageTest.compatibilityIdeographsFormIndividualWordUnits);
-        run("rubySpreadShiftsSelectionBoxesAndZeroWidthRubiesAreIgnored", LayoutQueriesResidualCoverageTest.rubySpreadShiftsSelectionBoxesAndZeroWidthRubiesAreIgnored);
+        run("rubySpreadShiftsSelectionBoxesAndZeroWidthRubiesAreIgnored",
+            LayoutQueriesResidualCoverageTest.rubySpreadShiftsSelectionBoxesAndZeroWidthRubiesAreIgnored);
         run("noArgPositionedClustersWalksEveryLine", LayoutQueriesResidualCoverageTest.noArgPositionedClustersWalksEveryLine);
         run("glyphInkBoundsRejectsEachNonFiniteEdgeIndependently", LayoutQueriesResidualCoverageTest.glyphInkBoundsRejectsEachNonFiniteEdgeIndependently);
         run("clearanceTakesTheSmallerSideWhicheverSegmentOwnsIt", LayoutQueriesResidualCoverageTest.clearanceTakesTheSmallerSideWhicheverSegmentOwnsIt);
-        run("uniformTextStylePolicyResolvesSpanStyleOrParagraphStyle", LayoutQueriesResidualCoverageTest.uniformTextStylePolicyResolvesSpanStyleOrParagraphStyle);
-        run("trailingGlueIsSkippedWhenNoClusterEndsBeforeTheSegmentEnd", LayoutQueriesResidualCoverageTest.trailingGlueIsSkippedWhenNoClusterEndsBeforeTheSegmentEnd);
+        run("uniformTextStylePolicyResolvesSpanStyleOrParagraphStyle",
+            LayoutQueriesResidualCoverageTest.uniformTextStylePolicyResolvesSpanStyleOrParagraphStyle);
+        run("trailingGlueIsSkippedWhenNoClusterEndsBeforeTheSegmentEnd",
+            LayoutQueriesResidualCoverageTest.trailingGlueIsSkippedWhenNoClusterEndsBeforeTheSegmentEnd);
         run("decorationLineYWithoutSpansUsesTheParagraphStyle", LayoutQueriesResidualCoverageTest.decorationLineYWithoutSpansUsesTheParagraphStyle);
         run("wordBoundaryForPositionHandlesANonFiniteY", LayoutQueriesResidualCoverageTest.wordBoundaryForPositionHandlesANonFiniteY);
         run("supplementaryIdeographBeyondTheHanRangesIsItsOwnUnit", LayoutQueriesResidualCoverageTest.supplementaryIdeographBeyondTheHanRangesIsItsOwnUnit);
@@ -326,13 +358,16 @@ class Main {
         run("nearestLineSearchCoversAllThreeDistanceArms", LayoutQueriesResidualCoverageTest.nearestLineSearchCoversAllThreeDistanceArms);
         run("rubiesOnOtherLinesDoNotAffectThisLineGeometry", LayoutQueriesResidualCoverageTest.rubiesOnOtherLinesDoNotAffectThisLineGeometry);
         run("backgroundTrailingEdgePicksTheLargestGlyphAdvance", LayoutQueriesResidualCoverageTest.backgroundTrailingEdgePicksTheLargestGlyphAdvance);
-        run("backgroundTrailingEdgeKeepsTheFirstGlyphWhenItIsLargest", LayoutQueriesResidualCoverageTest.backgroundTrailingEdgeKeepsTheFirstGlyphWhenItIsLargest);
-        run("selectionWordBoundaryForPositionPrefersTheCloserLaterLine", LayoutQueriesResidualCoverageTest.selectionWordBoundaryForPositionPrefersTheCloserLaterLine);
+        run("backgroundTrailingEdgeKeepsTheFirstGlyphWhenItIsLargest",
+            LayoutQueriesResidualCoverageTest.backgroundTrailingEdgeKeepsTheFirstGlyphWhenItIsLargest);
+        run("selectionWordBoundaryForPositionPrefersTheCloserLaterLine",
+            LayoutQueriesResidualCoverageTest.selectionWordBoundaryForPositionPrefersTheCloserLaterLine);
         run("nearestLineSearchUpdatesToAStrictlyCloserLaterLine", LayoutQueriesResidualCoverageTest.nearestLineSearchUpdatesToAStrictlyCloserLaterLine);
         run("nearestLineSearchCoversBothLambdaCopiesOfEachArm", LayoutQueriesResidualCoverageTest.nearestLineSearchCoversBothLambdaCopiesOfEachArm);
         run("uniformTextStylePolicyPicksTheLastMatchingSpan", LayoutQueriesResidualCoverageTest.uniformTextStylePolicyPicksTheLastMatchingSpan);
         run("decorationLineYPicksTheLastMatchingSpan", LayoutQueriesResidualCoverageTest.decorationLineYPicksTheLastMatchingSpan);
-        run("uniformTextStylePolicyKeepsTheEarlierSpanWhenALaterOneMisses", LayoutQueriesResidualCoverageTest.uniformTextStylePolicyKeepsTheEarlierSpanWhenALaterOneMisses);
+        run("uniformTextStylePolicyKeepsTheEarlierSpanWhenALaterOneMisses",
+            LayoutQueriesResidualCoverageTest.uniformTextStylePolicyKeepsTheEarlierSpanWhenALaterOneMisses);
         run("decorationLineYKeepsTheEarlierSpanWhenALaterOneMisses", LayoutQueriesResidualCoverageTest.decorationLineYKeepsTheEarlierSpanWhenALaterOneMisses);
         TestTraceRecorder.flushClass("LayoutQueriesResidualCoverageTest");
         run("coerceToInteractionBoundaryBackwardReturnsBoundaryWhenAtEnd", CoreBoundaryTest.coerceToInteractionBoundaryBackwardReturnsBoundaryWhenAtEnd);
@@ -348,7 +383,8 @@ class Main {
         run("sourceGraphemeBoundariesReturnsSingleBoundaryForEmptyText", CoreBoundaryTest.sourceGraphemeBoundariesReturnsSingleBoundaryForEmptyText);
         run("interactionBoundariesWithTextRange", CoreBoundaryTest.interactionBoundariesWithTextRange);
         run("getSelectionOffsetForPositionReturnsStartOfFirstCluster", CoreBoundaryTest.getSelectionOffsetForPositionReturnsStartOfFirstCluster);
-        run("getSelectionOffsetForPositionReturnsStartOfLineWhenEmptyClusters", CoreBoundaryTest.getSelectionOffsetForPositionReturnsStartOfLineWhenEmptyClusters);
+        run("getSelectionOffsetForPositionReturnsStartOfLineWhenEmptyClusters",
+            CoreBoundaryTest.getSelectionOffsetForPositionReturnsStartOfLineWhenEmptyClusters);
         TestTraceRecorder.flushClass("CoreBoundaryTest");
         run("identicalDisplayAndTargetIsAnAddress", LinkAddressDisplayTest.identicalDisplayAndTargetIsAnAddress);
         run("proseDisplayTextIsNotAnAddress", LinkAddressDisplayTest.proseDisplayTextIsNotAnAddress);
@@ -410,7 +446,8 @@ class Main {
         run("strictAddsDashAndEllipsisAtLineStart", KinsokuLevelTest.strictAddsDashAndEllipsisAtLineStart);
         run("profileDefaultsToMeasureAdaptive", KinsokuLevelTest.profileDefaultsToMeasureAdaptive);
         run("cjkBracketVariantsClassifyAsOpeningAndClosing", KinsokuLevelTest.cjkBracketVariantsClassifyAsOpeningAndClosing);
-        run("exposesUnambiguousAsciiPointMarksWithoutGuessingQuotesOrConnectors", KinsokuLevelTest.exposesUnambiguousAsciiPointMarksWithoutGuessingQuotesOrConnectors);
+        run("exposesUnambiguousAsciiPointMarksWithoutGuessingQuotesOrConnectors",
+            KinsokuLevelTest.exposesUnambiguousAsciiPointMarksWithoutGuessingQuotesOrConnectors);
         run("measureAdaptiveResolvesPerLineWidth", KinsokuLevelTest.measureAdaptiveResolvesPerLineWidth);
         TestTraceRecorder.flushClass("KinsokuLevelTest");
         run("mainlandAnchorsClosingAndPauseStopToTrailing", PunctuationGluePlacementTest.mainlandAnchorsClosingAndPauseStopToTrailing);
@@ -423,7 +460,8 @@ class Main {
         TestTraceRecorder.flushClass("PunctuationGluePlacementTest");
         run("preferPolicyUsesClreqRecommendedDisplayCodepoints", ClreqPunctuationGlyphSubstitutorTest.preferPolicyUsesClreqRecommendedDisplayCodepoints);
         run("preservePolicyKeepsInputDisplayCodepoints", ClreqPunctuationGlyphSubstitutorTest.preservePolicyKeepsInputDisplayCodepoints);
-        run("preferPolicyDoesNotRewriteAmbiguousConnectorOrSolidusForms", ClreqPunctuationGlyphSubstitutorTest.preferPolicyDoesNotRewriteAmbiguousConnectorOrSolidusForms);
+        run("preferPolicyDoesNotRewriteAmbiguousConnectorOrSolidusForms",
+            ClreqPunctuationGlyphSubstitutorTest.preferPolicyDoesNotRewriteAmbiguousConnectorOrSolidusForms);
         run("recommendedDashCodepointOccupiesTwoEm", ClreqPunctuationGlyphSubstitutorTest.recommendedDashCodepointOccupiesTwoEm);
         TestTraceRecorder.flushClass("ClreqPunctuationGlyphSubstitutorTest");
         run("testBopomofoModelsAndParser", ClreqProfileCoverageTest.testBopomofoModelsAndParser);
@@ -441,7 +479,8 @@ class Main {
         run("nullStatusNamesMissingConformingGlyphAndUnpreparedDetail", CjkDashCapabilityPolicyTest.nullStatusNamesMissingConformingGlyphAndUnpreparedDetail);
         run("conformingStatusWithBlankDetailNamesTheMissingSession", CjkDashCapabilityPolicyTest.conformingStatusWithBlankDetailNamesTheMissingSession);
         run("conformingStatusWithDetailAppendsHostEvidence", CjkDashCapabilityPolicyTest.conformingStatusWithDetailAppendsHostEvidence);
-        run("nonConformingStatusWithDetailNamesMissingGlyphAndAppendsEvidence", CjkDashCapabilityPolicyTest.nonConformingStatusWithDetailNamesMissingGlyphAndAppendsEvidence);
+        run("nonConformingStatusWithDetailNamesMissingGlyphAndAppendsEvidence",
+            CjkDashCapabilityPolicyTest.nonConformingStatusWithDetailNamesMissingGlyphAndAppendsEvidence);
         run("nonConformingStatusWithBlankDetailKeepsOnlyStatusPrefix", CjkDashCapabilityPolicyTest.nonConformingStatusWithBlankDetailKeepsOnlyStatusPrefix);
         TestTraceRecorder.flushClass("CjkDashCapabilityPolicyTest");
         run("classifiesAsciiBracketsAsLatin", CjkFontRoleClassifierTest.classifiesAsciiBracketsAsLatin);
@@ -454,7 +493,8 @@ class Main {
         run("classifiesCurlyQuotesAsCjkWhenSurroundedByCjk", CjkFontRoleClassifierTest.classifiesCurlyQuotesAsCjkWhenSurroundedByCjk);
         run("classifiesCurlyQuotesAsLatinWhenSurroundedByLatin", CjkFontRoleClassifierTest.classifiesCurlyQuotesAsLatinWhenSurroundedByLatin);
         run("classifiesLatinText", CjkFontRoleClassifierTest.classifiesLatinText);
-        run("classifiesUnicodeEmojiPresentationWithoutReclassifyingPlainKeycapBases", CjkFontRoleClassifierTest.classifiesUnicodeEmojiPresentationWithoutReclassifyingPlainKeycapBases);
+        run("classifiesUnicodeEmojiPresentationWithoutReclassifyingPlainKeycapBases",
+            CjkFontRoleClassifierTest.classifiesUnicodeEmojiPresentationWithoutReclassifyingPlainKeycapBases);
         TestTraceRecorder.flushClass("CjkFontRoleClassifierTest");
         run("testCjkFontRoleClassifierAllRanges", FontPolicyCoverageTest.testCjkFontRoleClassifierAllRanges);
         run("testFontEnumsAndModels", FontPolicyCoverageTest.testFontEnumsAndModels);
@@ -473,7 +513,8 @@ class Main {
         run("returnsNullForEmptyLists", InlineShapingStylePolicyTest.returnsNullForEmptyLists);
         run("longerValueListsStopAtThePropertyListBoundary", InlineShapingStylePolicyTest.longerValueListsStopAtThePropertyListBoundary);
         TestTraceRecorder.flushClass("InlineShapingStylePolicyTest");
-        run("cjkTextUsesFontDeclaredTypoBoxInsteadOfSynthesizedSquare", ScriptAwareFontMetricsNormalizerTest.cjkTextUsesFontDeclaredTypoBoxInsteadOfSynthesizedSquare);
+        run("cjkTextUsesFontDeclaredTypoBoxInsteadOfSynthesizedSquare",
+            ScriptAwareFontMetricsNormalizerTest.cjkTextUsesFontDeclaredTypoBoxInsteadOfSynthesizedSquare);
         run("cjkTextFallsBackToHheaWhenFontHasNoTypoMetrics", ScriptAwareFontMetricsNormalizerTest.cjkTextFallsBackToHheaWhenFontHasNoTypoMetrics);
         run("latinTextKeepsRomanRawMetrics", ScriptAwareFontMetricsNormalizerTest.latinTextKeepsRomanRawMetrics);
         TestTraceRecorder.flushClass("ScriptAwareFontMetricsNormalizerTest");
@@ -520,8 +561,10 @@ class Main {
         run("microsoftYaheiCentredCommaCompressesFromBothSides", PunctuationAtomBuilderHaltTest.microsoftYaheiCentredCommaCompressesFromBothSides);
         run("microsoftYaheiBottomLeftStopKeepsItsLeadingSafetyMargin", PunctuationAtomBuilderHaltTest.microsoftYaheiBottomLeftStopKeepsItsLeadingSafetyMargin);
         run("founderHeitiCentredParenthesesStayMirrorImages", PunctuationAtomBuilderHaltTest.founderHeitiCentredParenthesesStayMirrorImages);
-        run("underwidthOpeningQuoteCompletesTheLeadingSideOfItsFullWidthCell", PunctuationAtomBuilderHaltTest.underwidthOpeningQuoteCompletesTheLeadingSideOfItsFullWidthCell);
-        run("fixedHalfConsumesMeasuredSidebearingsInsteadOfApplyingAProfileShift", PunctuationAtomBuilderHaltTest.fixedHalfConsumesMeasuredSidebearingsInsteadOfApplyingAProfileShift);
+        run("underwidthOpeningQuoteCompletesTheLeadingSideOfItsFullWidthCell",
+            PunctuationAtomBuilderHaltTest.underwidthOpeningQuoteCompletesTheLeadingSideOfItsFullWidthCell);
+        run("fixedHalfConsumesMeasuredSidebearingsInsteadOfApplyingAProfileShift",
+            PunctuationAtomBuilderHaltTest.fixedHalfConsumesMeasuredSidebearingsInsteadOfApplyingAProfileShift);
         run("overhangReducesCompressionCapacityWithoutMovingInk", PunctuationAtomBuilderHaltTest.overhangReducesCompressionCapacityWithoutMovingInk);
         TestTraceRecorder.flushClass("PunctuationAtomBuilderHaltTest");
         run("breakCandidateDefaultsAreUsable", LineOptimizationCoverageTest.breakCandidateDefaultsAreUsable);
@@ -529,17 +572,22 @@ class Main {
         run("lineCandidateRejectsHangingThatIsNotATrailingSuffix", LineOptimizationCoverageTest.lineCandidateRejectsHangingThatIsNotATrailingSuffix);
         run("lineCandidateRejectsDiscontiguousHanging", LineOptimizationCoverageTest.lineCandidateRejectsDiscontiguousHanging);
         run("lineCandidateAcceptsAContiguousTrailingHangingSuffix", LineOptimizationCoverageTest.lineCandidateAcceptsAContiguousTrailingHangingSuffix);
-        run("hangingClusterIndexPrefersTheHangOffenderOverTheSuffixEnd", LineOptimizationCoverageTest.hangingClusterIndexPrefersTheHangOffenderOverTheSuffixEnd);
+        run("hangingClusterIndexPrefersTheHangOffenderOverTheSuffixEnd",
+            LineOptimizationCoverageTest.hangingClusterIndexPrefersTheHangOffenderOverTheSuffixEnd);
         run("inMeasureClusterRangeExcludesTheHangingSuffix", LineOptimizationCoverageTest.inMeasureClusterRangeExcludesTheHangingSuffix);
         run("carryNextRecordsTheMovedMark", LineOptimizationCoverageTest.carryNextRecordsTheMovedMark);
         run("repairCandidateDefaultsAreUsable", LineOptimizationCoverageTest.repairCandidateDefaultsAreUsable);
         run("lineSolutionDefaultsToZeroBadness", LineOptimizationCoverageTest.lineSolutionDefaultsToZeroBadness);
         run("optimizationStrategyEnumeratesAllThreeStrategies", LineOptimizationCoverageTest.optimizationStrategyEnumeratesAllThreeStrategies);
         TestTraceRecorder.flushClass("LineOptimizationCoverageTest");
-        run("parentheticalPairWithOnlyLeftOuterScriptTakesTheLeftRole", ContextualDashEllipsisRoleResolverCoverageTest.parentheticalPairWithOnlyLeftOuterScriptTakesTheLeftRole);
-        run("parentheticalPairWithOnlyRightOuterScriptTakesTheRightRole", ContextualDashEllipsisRoleResolverCoverageTest.parentheticalPairWithOnlyRightOuterScriptTakesTheRightRole);
-        run("parentheticalPairWithoutOuterScriptFallsBackToParagraphLanguage", ContextualDashEllipsisRoleResolverCoverageTest.parentheticalPairWithoutOuterScriptFallsBackToParagraphLanguage);
-        run("forwardPassWalkerArmsRunBeforeTheClassifierRejectsLoneSurrogates", ContextualDashEllipsisRoleResolverCoverageTest.forwardPassWalkerArmsRunBeforeTheClassifierRejectsLoneSurrogates);
+        run("parentheticalPairWithOnlyLeftOuterScriptTakesTheLeftRole",
+            ContextualDashEllipsisRoleResolverCoverageTest.parentheticalPairWithOnlyLeftOuterScriptTakesTheLeftRole);
+        run("parentheticalPairWithOnlyRightOuterScriptTakesTheRightRole",
+            ContextualDashEllipsisRoleResolverCoverageTest.parentheticalPairWithOnlyRightOuterScriptTakesTheRightRole);
+        run("parentheticalPairWithoutOuterScriptFallsBackToParagraphLanguage",
+            ContextualDashEllipsisRoleResolverCoverageTest.parentheticalPairWithoutOuterScriptFallsBackToParagraphLanguage);
+        run("forwardPassWalkerArmsRunBeforeTheClassifierRejectsLoneSurrogates",
+            ContextualDashEllipsisRoleResolverCoverageTest.forwardPassWalkerArmsRunBeforeTheClassifierRejectsLoneSurrogates);
         TestTraceRecorder.flushClass("ContextualDashEllipsisRoleResolverCoverageTest");
         run("contextualRoleExtensionsWrapOutsideThePipeline", ContextualRoleExtensionCoverageTest.contextualRoleExtensionsWrapOutsideThePipeline);
         TestTraceRecorder.flushClass("ContextualRoleExtensionCoverageTest");
@@ -560,7 +608,8 @@ class Main {
         run("pairByOpenSkipInNearestStrongScript", ContextualQuoteRoleResolverCoverageTest.pairByOpenSkipInNearestStrongScript);
         run("ambiguousCurlyQuoteUnmatchedInText", ContextualQuoteRoleResolverCoverageTest.ambiguousCurlyQuoteUnmatchedInText);
         run("resolveUnmatchedWithBothSurroundingRolesNull", ContextualQuoteRoleResolverCoverageTest.resolveUnmatchedWithBothSurroundingRolesNull);
-        run("nearestStrongScriptRoleBackwardSkipsPairedCloseQuote", ContextualQuoteRoleResolverCoverageTest.nearestStrongScriptRoleBackwardSkipsPairedCloseQuote);
+        run("nearestStrongScriptRoleBackwardSkipsPairedCloseQuote",
+            ContextualQuoteRoleResolverCoverageTest.nearestStrongScriptRoleBackwardSkipsPairedCloseQuote);
         run("nearestStrongScriptRoleForwardSkipsPairedOpenQuote", ContextualQuoteRoleResolverCoverageTest.nearestStrongScriptRoleForwardSkipsPairedOpenQuote);
         run("enclosingPairResolvedBeforeInnerPair", ContextualQuoteRoleResolverCoverageTest.enclosingPairResolvedBeforeInnerPair);
         run("whitespaceDelimitedWesternQuotePaired", ContextualQuoteRoleResolverCoverageTest.whitespaceDelimitedWesternQuotePaired);
@@ -583,23 +632,35 @@ class Main {
         run("enclosingPairUnresolvedFallsThroughToContent", ContextualQuoteRoleResolverCoverageTest.enclosingPairUnresolvedFallsThroughToContent);
         run("unmatchedQuoteAtStartWithRightRole", ContextualQuoteRoleResolverCoverageTest.unmatchedQuoteAtStartWithRightRole);
         TestTraceRecorder.flushClass("ContextualQuoteRoleResolverCoverageTest");
-        run("nestedPairInsideNeutralEnclosingInheritsTheOuterQuotation", ContextualQuoteRoleResolverNestedAndSurrogateTest.nestedPairInsideNeutralEnclosingInheritsTheOuterQuotation);
-        run("spaceBeforeUnmatchedQuoteWithCjkRightSkipsTheDelimitedRule", ContextualQuoteRoleResolverNestedAndSurrogateTest.spaceBeforeUnmatchedQuoteWithCjkRightSkipsTheDelimitedRule);
-        run("leftwardScanFromALowSurrogateWalksEveryBacktrackArm", ContextualQuoteRoleResolverNestedAndSurrogateTest.leftwardScanFromALowSurrogateWalksEveryBacktrackArm);
+        run("nestedPairInsideNeutralEnclosingInheritsTheOuterQuotation",
+            ContextualQuoteRoleResolverNestedAndSurrogateTest.nestedPairInsideNeutralEnclosingInheritsTheOuterQuotation);
+        run("spaceBeforeUnmatchedQuoteWithCjkRightSkipsTheDelimitedRule",
+            ContextualQuoteRoleResolverNestedAndSurrogateTest.spaceBeforeUnmatchedQuoteWithCjkRightSkipsTheDelimitedRule);
+        run("leftwardScanFromALowSurrogateWalksEveryBacktrackArm",
+            ContextualQuoteRoleResolverNestedAndSurrogateTest.leftwardScanFromALowSurrogateWalksEveryBacktrackArm);
         run("tabBeforeAWhollyWesternPairDelimitsLikeASpace", ContextualQuoteRoleResolverNestedAndSurrogateTest.tabBeforeAWhollyWesternPairDelimitsLikeASpace);
-        run("spaceBeforeAPairWithNonWesternContentSkipsTheDelimitedRule", ContextualQuoteRoleResolverNestedAndSurrogateTest.spaceBeforeAPairWithNonWesternContentSkipsTheDelimitedRule);
-        run("spaceBeforeAMixedContentPairReportsMixedContent", ContextualQuoteRoleResolverNestedAndSurrogateTest.spaceBeforeAMixedContentPairReportsMixedContent);
-        run("mixedEnclosingLevelFallsBackToParagraphLanguage", ContextualQuoteRoleResolverNestedAndSurrogateTest.mixedEnclosingLevelFallsBackToParagraphLanguage);
-        run("nonChineseLocaleResolvesNeutralContextToLatinText", ContextualQuoteRoleResolverNestedAndSurrogateTest.nonChineseLocaleResolvesNeutralContextToLatinText);
-        run("privateUseCharBeforeAQuoteFailsTheLowSurrogateRangeAbove", ContextualQuoteRoleResolverNestedAndSurrogateTest.privateUseCharBeforeAQuoteFailsTheLowSurrogateRangeAbove);
+        run("spaceBeforeAPairWithNonWesternContentSkipsTheDelimitedRule",
+            ContextualQuoteRoleResolverNestedAndSurrogateTest.spaceBeforeAPairWithNonWesternContentSkipsTheDelimitedRule);
+        run("spaceBeforeAMixedContentPairReportsMixedContent",
+            ContextualQuoteRoleResolverNestedAndSurrogateTest.spaceBeforeAMixedContentPairReportsMixedContent);
+        run("mixedEnclosingLevelFallsBackToParagraphLanguage",
+            ContextualQuoteRoleResolverNestedAndSurrogateTest.mixedEnclosingLevelFallsBackToParagraphLanguage);
+        run("nonChineseLocaleResolvesNeutralContextToLatinText",
+            ContextualQuoteRoleResolverNestedAndSurrogateTest.nonChineseLocaleResolvesNeutralContextToLatinText);
+        run("privateUseCharBeforeAQuoteFailsTheLowSurrogateRangeAbove",
+            ContextualQuoteRoleResolverNestedAndSurrogateTest.privateUseCharBeforeAQuoteFailsTheLowSurrogateRangeAbove);
         run("highSurrogateAtTheContentEndHasNoRoomAndThrows", ContextualQuoteRoleResolverNestedAndSurrogateTest.highSurrogateAtTheContentEndHasNoRoomAndThrows);
-        run("siblingPairsInsideOneQuotationEachInheritTheOuterRole", ContextualQuoteRoleResolverNestedAndSurrogateTest.siblingPairsInsideOneQuotationEachInheritTheOuterRole);
+        run("siblingPairsInsideOneQuotationEachInheritTheOuterRole",
+            ContextualQuoteRoleResolverNestedAndSurrogateTest.siblingPairsInsideOneQuotationEachInheritTheOuterRole);
         run("plainFollowerOfAHighSurrogateCountsAsOneUnit", ContextualQuoteRoleResolverNestedAndSurrogateTest.plainFollowerOfAHighSurrogateCountsAsOneUnit);
-        run("privateUseFollowerOfAHighSurrogateCountsAsOneUnit", ContextualQuoteRoleResolverNestedAndSurrogateTest.privateUseFollowerOfAHighSurrogateCountsAsOneUnit);
+        run("privateUseFollowerOfAHighSurrogateCountsAsOneUnit",
+            ContextualQuoteRoleResolverNestedAndSurrogateTest.privateUseFollowerOfAHighSurrogateCountsAsOneUnit);
         TestTraceRecorder.flushClass("ContextualQuoteRoleResolverNestedAndSurrogateTest");
         run("westernDominantLineDoesNotStretchAroundCjkPunctuation", JustifierTest.westernDominantLineDoesNotStretchAroundCjkPunctuation);
-        run("explicitInlineObjectBoundariesShareUniformStretchOnFormulaOnlyLine", JustifierTest.explicitInlineObjectBoundariesShareUniformStretchOnFormulaOnlyLine);
-        run("formulaBoundariesStretchPunctuationThenRelationsThenBinaryOperators", JustifierTest.formulaBoundariesStretchPunctuationThenRelationsThenBinaryOperators);
+        run("explicitInlineObjectBoundariesShareUniformStretchOnFormulaOnlyLine",
+            JustifierTest.explicitInlineObjectBoundariesShareUniformStretchOnFormulaOnlyLine);
+        run("formulaBoundariesStretchPunctuationThenRelationsThenBinaryOperators",
+            JustifierTest.formulaBoundariesStretchPunctuationThenRelationsThenBinaryOperators);
         run("mixedCjkLineStillStretchesPunctuationWesternBoundary", JustifierTest.mixedCjkLineStillStretchesPunctuationWesternBoundary);
         run("typedSinoWesternSpaceStretchesInTierTwo", JustifierTest.typedSinoWesternSpaceStretchesInTierTwo);
         run("typedSinoWesternSpaceIsCappedAtHalfEm", JustifierTest.typedSinoWesternSpaceIsCappedAtHalfEm);
@@ -659,132 +720,254 @@ class Main {
         run("preferredInlineObjectBoundaryOutOfBounds", JustifierJfTest.preferredInlineObjectBoundaryOutOfBounds);
         run("singleClusterRangeProducesNoOpportunities", JustifierJfTest.singleClusterRangeProducesNoOpportunities);
         run("typedSpaceAndWordSpacePredicateEdgeConditions", JustifierJfTest.typedSpaceAndWordSpacePredicateEdgeConditions);
-        run("virtualNonSinoWesternBoundaryWhenAllowSinoWesternGapStretchIsFalse", JustifierJfTest.virtualNonSinoWesternBoundaryWhenAllowSinoWesternGapStretchIsFalse);
+        run("virtualNonSinoWesternBoundaryWhenAllowSinoWesternGapStretchIsFalse",
+            JustifierJfTest.virtualNonSinoWesternBoundaryWhenAllowSinoWesternGapStretchIsFalse);
         run("virtualSinoWesternGapWhenAllowSinoWesternGapStretchIsFalse", JustifierJfTest.virtualSinoWesternGapWhenAllowSinoWesternGapStretchIsFalse);
         run("zeroCjkLatinHeadroomProducesNoOpportunities", JustifierJfTest.zeroCjkLatinHeadroomProducesNoOpportunities);
         TestTraceRecorder.flushClass("JustifierJfTest");
-        run("resolveAttachedInlineVirtualBoundariesWithMultiplePrevious", UnicodePunctuationBoundaryResolverCoverageTest.resolveAttachedInlineVirtualBoundariesWithMultiplePrevious);
-        run("resolveAttachedInlineVirtualBoundariesWithNoPrevious", UnicodePunctuationBoundaryResolverCoverageTest.resolveAttachedInlineVirtualBoundariesWithNoPrevious);
-        run("resolveUnicodePunctuationBoundariesWithOpenPunctuation", UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesWithOpenPunctuation);
-        run("resolveUnicodePunctuationBoundariesWithPairedQuotes", UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesWithPairedQuotes);
-        run("resolveUnicodePunctuationBoundariesWithUnmatchedClosingPunctuation", UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesWithUnmatchedClosingPunctuation);
-        run("resolveUnicodePunctuationBoundariesWithCjkClosingAtLineStart", UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesWithCjkClosingAtLineStart);
-        run("resolveUnicodePunctuationBoundariesWithExclamationMark", UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesWithExclamationMark);
-        run("resolveUnicodePunctuationBoundariesWithInitialQuoteForbidLineEnd", UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesWithInitialQuoteForbidLineEnd);
-        run("resolveUnicodePunctuationBoundariesWithUnresolvedQuote", UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesWithUnresolvedQuote);
-        run("resolveUnicodePunctuationBoundariesWithMultipleClusters", UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesWithMultipleClusters);
-        run("resolveUnicodePunctuationBoundariesWithEmptyClusters", UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesWithEmptyClusters);
-        run("resolveUnicodePunctuationBoundariesWithAllCjkText", UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesWithAllCjkText);
-        run("resolveUnicodePunctuationBoundariesWithWesternClosingForbidLineStart", UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesWithWesternClosingForbidLineStart);
-        run("resolveUnicodePunctuationBoundariesWithCjkClosingForbidLineStart", UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesWithCjkClosingForbidLineStart);
-        run("resolveUnicodePunctuationBoundariesWithOpenPunctuationForbidLineEnd", UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesWithOpenPunctuationForbidLineEnd);
-        run("resolveUnicodePunctuationBoundariesWithPunctuationAndSpace", UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesWithPunctuationAndSpace);
-        run("resolveUnicodePunctuationBoundariesWithFollowsAuthoredBoundary", UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesWithFollowsAuthoredBoundary);
-        run("resolveUnicodePunctuationBoundariesWithClosePunctuationClass", UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesWithClosePunctuationClass);
-        run("resolveUnicodePunctuationBoundariesWithInfixNumericSeparator", UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesWithInfixNumericSeparator);
-        run("resolveUnicodePunctuationBoundariesWithDecimalMarkAfterSpace", UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesWithDecimalMarkAfterSpace);
-        run("resolveUnicodePunctuationBoundariesWithRuleForLineStartInfix", UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesWithRuleForLineStartInfix);
-        run("resolveAttachedInlineInterCharBoundariesWithCjkBothCjk", UnicodePunctuationBoundaryResolverCoverageTest.resolveAttachedInlineInterCharBoundariesWithCjkBothCjk);
-        run("resolveAttachedInlineInterCharBoundariesWithWesternBracket", UnicodePunctuationBoundaryResolverCoverageTest.resolveAttachedInlineInterCharBoundariesWithWesternBracket);
-        run("resolveAttachedInlineInterCharBoundariesWithCjkBodyWesternBracket", UnicodePunctuationBoundaryResolverCoverageTest.resolveAttachedInlineInterCharBoundariesWithCjkBodyWesternBracket);
-        run("resolveAttachedInlineInterCharBoundariesRequiresMatchingClusterRoleEdgeSizes", UnicodePunctuationBoundaryResolverCoverageTest.resolveAttachedInlineInterCharBoundariesRequiresMatchingClusterRoleEdgeSizes);
-        run("resolveAttachedInlineInterCharBoundariesRequiresMatchingAttachmentSize", UnicodePunctuationBoundaryResolverCoverageTest.resolveAttachedInlineInterCharBoundariesRequiresMatchingAttachmentSize);
-        run("resolveAttachedInlineInterCharBoundariesPunctuationWesternNarrowTrailing", UnicodePunctuationBoundaryResolverCoverageTest.resolveAttachedInlineInterCharBoundariesPunctuationWesternNarrowTrailing);
-        run("resolveUnicodePunctuationBoundariesPreviousContentClusterReturnsNull", UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesPreviousContentClusterReturnsNull);
-        run("resolveAttachedInlineInterCharBoundariesPunctuationWesternTrailingNotNarrow", UnicodePunctuationBoundaryResolverCoverageTest.resolveAttachedInlineInterCharBoundariesPunctuationWesternTrailingNotNarrow);
-        run("resolveAttachedInlineInterCharBoundariesPunctuationWesternTrailingNarrowNotCjkPunct", UnicodePunctuationBoundaryResolverCoverageTest.resolveAttachedInlineInterCharBoundariesPunctuationWesternTrailingNarrowNotCjkPunct);
-        run("resolveUnicodePunctuationBoundariesWithInfixNumericSeparatorNotDecimalMark", UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesWithInfixNumericSeparatorNotDecimalMark);
-        run("resolveUnicodePunctuationBoundariesWithDecimalMarkAfterNonSpace", UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesWithDecimalMarkAfterNonSpace);
-        run("resolveUnicodePunctuationBoundariesWithQuoteDirectionFinal", UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesWithQuoteDirectionFinal);
-        run("resolveUnicodePunctuationBoundariesWithQuoteDirectionInitial", UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesWithQuoteDirectionInitial);
-        run("resolveUnicodePunctuationBoundariesWithQuoteDirectionUnresolved", UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesWithQuoteDirectionUnresolved);
-        run("resolveUnicodePunctuationBoundariesWithWordApostrophe2019", UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesWithWordApostrophe2019);
-        run("resolveUnicodePunctuationBoundariesWithLatinWordCodePoint", UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesWithLatinWordCodePoint);
-        run("resolveUnicodePunctuationBoundariesWithFirstSignificantCodePoint", UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesWithFirstSignificantCodePoint);
-        run("resolveUnicodePunctuationBoundariesWithLastSignificantCodePoint", UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesWithLastSignificantCodePoint);
-        run("resolveUnicodePunctuationBoundariesWithHasAuthoredBreak", UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesWithHasAuthoredBreak);
-        run("resolveUnicodePunctuationBoundariesWithNextContentCluster", UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesWithNextContentCluster);
-        run("resolveUnicodePunctuationBoundariesWithPreviousContentClusterHasContent", UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesWithPreviousContentClusterHasContent);
-        run("resolveUnicodePunctuationBoundariesWithClosePunctuation", UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesWithClosePunctuation);
-        run("resolveUnicodePunctuationBoundariesWithExclamationClass", UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesWithExclamationClass);
-        run("resolveUnicodePunctuationBoundariesWithCloseParenthesisClass", UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesWithCloseParenthesisClass);
-        run("resolveUnicodePunctuationBoundariesWithInfixNumericSeparatorRule", UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesWithInfixNumericSeparatorRule);
-        run("resolveUnicodePunctuationBoundariesWithRuleForLineStartElse", UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesWithRuleForLineStartElse);
-        run("resolveAttachedInlineInterCharBoundariesWithSinoWesternPair", UnicodePunctuationBoundaryResolverCoverageTest.resolveAttachedInlineInterCharBoundariesWithSinoWesternPair);
-        run("resolveUnicodePunctuationBoundariesWithCodePointBeforeSupplementary", UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesWithCodePointBeforeSupplementary);
-        run("resolveUnicodePunctuationBoundariesWithEmptyRange", UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesWithEmptyRange);
-        run("resolveUnicodePunctuationBoundariesWithFirstCodePointLength", UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesWithFirstCodePointLength);
-        run("resolveUnicodePunctuationBoundariesWithIsWhitespaceCodePoint", UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesWithIsWhitespaceCodePoint);
-        run("resolveUnicodePunctuationBoundariesWithFollowsAuthoredBoundaryMandatory", UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesWithFollowsAuthoredBoundaryMandatory);
-        run("resolveUnicodePunctuationBoundariesWithFollowsAuthoredBoundaryZWSP", UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesWithFollowsAuthoredBoundaryZWSP);
-        run("resolveUnicodePunctuationBoundariesWithDecimalMarkFollowingInsideDigit", UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesWithDecimalMarkFollowingInsideDigit);
-        run("resolveUnicodePunctuationBoundariesWithDecimalMarkFollowingOutsideDigit", UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesWithDecimalMarkFollowingOutsideDigit);
-        run("resolveUnicodePunctuationBoundariesWithPreviousContentClusterHasAuthoredBreak", UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesWithPreviousContentClusterHasAuthoredBreak);
-        run("resolveUnicodePunctuationBoundariesWithNextContentClusterHasAuthoredBreak", UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesWithNextContentClusterHasAuthoredBreak);
-        run("resolveUnicodePunctuationBoundariesWithIsWhitespaceCodePointNonBmp", UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesWithIsWhitespaceCodePointNonBmp);
-        run("resolveUnicodePunctuationBoundariesWithHasAuthoredBreakBoth", UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesWithHasAuthoredBreakBoth);
-        run("resolveAttachedInlineInterCharBoundariesWithBothCjkPunctuation", UnicodePunctuationBoundaryResolverCoverageTest.resolveAttachedInlineInterCharBoundariesWithBothCjkPunctuation);
-        run("resolveUnicodePunctuationBoundariesWithFollowsAuthoredBoundaryWhitespace", UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesWithFollowsAuthoredBoundaryWhitespace);
-        run("resolveUnicodePunctuationBoundariesWithFollowsAuthoredBoundaryWhitespaceThenNonWhitespace", UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesWithFollowsAuthoredBoundaryWhitespaceThenNonWhitespace);
-        run("resolveUnicodePunctuationBoundariesWithPreviousContentClusterEmpty", UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesWithPreviousContentClusterEmpty);
-        run("resolveUnicodePunctuationBoundariesWithNextContentClusterEmpty", UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesWithNextContentClusterEmpty);
-        run("resolveUnicodePunctuationBoundariesWithCodePointAtOrNullSurrogate", UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesWithCodePointAtOrNullSurrogate);
-        run("resolveUnicodePunctuationBoundariesWithHasAuthoredBreakMandatoryOnly", UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesWithHasAuthoredBreakMandatoryOnly);
-        run("resolveUnicodePunctuationBoundariesWithCodePointBeforeSurrogatePair", UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesWithCodePointBeforeSurrogatePair);
-        run("resolveUnicodePunctuationBoundariesWithCodePointAtOrNullSupplementary", UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesWithCodePointAtOrNullSupplementary);
+        run("resolveAttachedInlineVirtualBoundariesWithMultiplePrevious",
+            UnicodePunctuationBoundaryResolverCoverageTest.resolveAttachedInlineVirtualBoundariesWithMultiplePrevious);
+        run("resolveAttachedInlineVirtualBoundariesWithNoPrevious",
+            UnicodePunctuationBoundaryResolverCoverageTest.resolveAttachedInlineVirtualBoundariesWithNoPrevious);
+        run("resolveUnicodePunctuationBoundariesWithOpenPunctuation",
+            UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesWithOpenPunctuation);
+        run("resolveUnicodePunctuationBoundariesWithPairedQuotes",
+            UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesWithPairedQuotes);
+        run("resolveUnicodePunctuationBoundariesWithUnmatchedClosingPunctuation",
+            UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesWithUnmatchedClosingPunctuation);
+        run("resolveUnicodePunctuationBoundariesWithCjkClosingAtLineStart",
+            UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesWithCjkClosingAtLineStart);
+        run("resolveUnicodePunctuationBoundariesWithExclamationMark",
+            UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesWithExclamationMark);
+        run("resolveUnicodePunctuationBoundariesWithInitialQuoteForbidLineEnd",
+            UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesWithInitialQuoteForbidLineEnd);
+        run("resolveUnicodePunctuationBoundariesWithUnresolvedQuote",
+            UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesWithUnresolvedQuote);
+        run("resolveUnicodePunctuationBoundariesWithMultipleClusters",
+            UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesWithMultipleClusters);
+        run("resolveUnicodePunctuationBoundariesWithEmptyClusters",
+            UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesWithEmptyClusters);
+        run("resolveUnicodePunctuationBoundariesWithAllCjkText",
+            UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesWithAllCjkText);
+        run("resolveUnicodePunctuationBoundariesWithWesternClosingForbidLineStart",
+            UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesWithWesternClosingForbidLineStart);
+        run("resolveUnicodePunctuationBoundariesWithCjkClosingForbidLineStart",
+            UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesWithCjkClosingForbidLineStart);
+        run("resolveUnicodePunctuationBoundariesWithOpenPunctuationForbidLineEnd",
+            UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesWithOpenPunctuationForbidLineEnd);
+        run("resolveUnicodePunctuationBoundariesWithPunctuationAndSpace",
+            UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesWithPunctuationAndSpace);
+        run("resolveUnicodePunctuationBoundariesWithFollowsAuthoredBoundary",
+            UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesWithFollowsAuthoredBoundary);
+        run("resolveUnicodePunctuationBoundariesWithClosePunctuationClass",
+            UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesWithClosePunctuationClass);
+        run("resolveUnicodePunctuationBoundariesWithInfixNumericSeparator",
+            UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesWithInfixNumericSeparator);
+        run("resolveUnicodePunctuationBoundariesWithDecimalMarkAfterSpace",
+            UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesWithDecimalMarkAfterSpace);
+        run("resolveUnicodePunctuationBoundariesWithRuleForLineStartInfix",
+            UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesWithRuleForLineStartInfix);
+        run("resolveAttachedInlineInterCharBoundariesWithCjkBothCjk",
+            UnicodePunctuationBoundaryResolverCoverageTest.resolveAttachedInlineInterCharBoundariesWithCjkBothCjk);
+        run("resolveAttachedInlineInterCharBoundariesWithWesternBracket",
+            UnicodePunctuationBoundaryResolverCoverageTest.resolveAttachedInlineInterCharBoundariesWithWesternBracket);
+        run("resolveAttachedInlineInterCharBoundariesWithCjkBodyWesternBracket",
+            UnicodePunctuationBoundaryResolverCoverageTest.resolveAttachedInlineInterCharBoundariesWithCjkBodyWesternBracket);
+        run("resolveAttachedInlineInterCharBoundariesRequiresMatchingClusterRoleEdgeSizes",
+            UnicodePunctuationBoundaryResolverCoverageTest.resolveAttachedInlineInterCharBoundariesRequiresMatchingClusterRoleEdgeSizes);
+        run("resolveAttachedInlineInterCharBoundariesRequiresMatchingAttachmentSize",
+            UnicodePunctuationBoundaryResolverCoverageTest.resolveAttachedInlineInterCharBoundariesRequiresMatchingAttachmentSize);
+        run("resolveAttachedInlineInterCharBoundariesPunctuationWesternNarrowTrailing",
+            UnicodePunctuationBoundaryResolverCoverageTest.resolveAttachedInlineInterCharBoundariesPunctuationWesternNarrowTrailing);
+        run("resolveUnicodePunctuationBoundariesPreviousContentClusterReturnsNull",
+            UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesPreviousContentClusterReturnsNull);
+        run("resolveAttachedInlineInterCharBoundariesPunctuationWesternTrailingNotNarrow",
+            UnicodePunctuationBoundaryResolverCoverageTest.resolveAttachedInlineInterCharBoundariesPunctuationWesternTrailingNotNarrow);
+        run("resolveAttachedInlineInterCharBoundariesPunctuationWesternTrailingNarrowNotCjkPunct",
+            UnicodePunctuationBoundaryResolverCoverageTest.resolveAttachedInlineInterCharBoundariesPunctuationWesternTrailingNarrowNotCjkPunct);
+        run("resolveUnicodePunctuationBoundariesWithInfixNumericSeparatorNotDecimalMark",
+            UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesWithInfixNumericSeparatorNotDecimalMark);
+        run("resolveUnicodePunctuationBoundariesWithDecimalMarkAfterNonSpace",
+            UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesWithDecimalMarkAfterNonSpace);
+        run("resolveUnicodePunctuationBoundariesWithQuoteDirectionFinal",
+            UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesWithQuoteDirectionFinal);
+        run("resolveUnicodePunctuationBoundariesWithQuoteDirectionInitial",
+            UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesWithQuoteDirectionInitial);
+        run("resolveUnicodePunctuationBoundariesWithQuoteDirectionUnresolved",
+            UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesWithQuoteDirectionUnresolved);
+        run("resolveUnicodePunctuationBoundariesWithWordApostrophe2019",
+            UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesWithWordApostrophe2019);
+        run("resolveUnicodePunctuationBoundariesWithLatinWordCodePoint",
+            UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesWithLatinWordCodePoint);
+        run("resolveUnicodePunctuationBoundariesWithFirstSignificantCodePoint",
+            UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesWithFirstSignificantCodePoint);
+        run("resolveUnicodePunctuationBoundariesWithLastSignificantCodePoint",
+            UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesWithLastSignificantCodePoint);
+        run("resolveUnicodePunctuationBoundariesWithHasAuthoredBreak",
+            UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesWithHasAuthoredBreak);
+        run("resolveUnicodePunctuationBoundariesWithNextContentCluster",
+            UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesWithNextContentCluster);
+        run("resolveUnicodePunctuationBoundariesWithPreviousContentClusterHasContent",
+            UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesWithPreviousContentClusterHasContent);
+        run("resolveUnicodePunctuationBoundariesWithClosePunctuation",
+            UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesWithClosePunctuation);
+        run("resolveUnicodePunctuationBoundariesWithExclamationClass",
+            UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesWithExclamationClass);
+        run("resolveUnicodePunctuationBoundariesWithCloseParenthesisClass",
+            UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesWithCloseParenthesisClass);
+        run("resolveUnicodePunctuationBoundariesWithInfixNumericSeparatorRule",
+            UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesWithInfixNumericSeparatorRule);
+        run("resolveUnicodePunctuationBoundariesWithRuleForLineStartElse",
+            UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesWithRuleForLineStartElse);
+        run("resolveAttachedInlineInterCharBoundariesWithSinoWesternPair",
+            UnicodePunctuationBoundaryResolverCoverageTest.resolveAttachedInlineInterCharBoundariesWithSinoWesternPair);
+        run("resolveUnicodePunctuationBoundariesWithCodePointBeforeSupplementary",
+            UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesWithCodePointBeforeSupplementary);
+        run("resolveUnicodePunctuationBoundariesWithEmptyRange",
+            UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesWithEmptyRange);
+        run("resolveUnicodePunctuationBoundariesWithFirstCodePointLength",
+            UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesWithFirstCodePointLength);
+        run("resolveUnicodePunctuationBoundariesWithIsWhitespaceCodePoint",
+            UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesWithIsWhitespaceCodePoint);
+        run("resolveUnicodePunctuationBoundariesWithFollowsAuthoredBoundaryMandatory",
+            UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesWithFollowsAuthoredBoundaryMandatory);
+        run("resolveUnicodePunctuationBoundariesWithFollowsAuthoredBoundaryZWSP",
+            UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesWithFollowsAuthoredBoundaryZWSP);
+        run("resolveUnicodePunctuationBoundariesWithDecimalMarkFollowingInsideDigit",
+            UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesWithDecimalMarkFollowingInsideDigit);
+        run("resolveUnicodePunctuationBoundariesWithDecimalMarkFollowingOutsideDigit",
+            UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesWithDecimalMarkFollowingOutsideDigit);
+        run("resolveUnicodePunctuationBoundariesWithPreviousContentClusterHasAuthoredBreak",
+            UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesWithPreviousContentClusterHasAuthoredBreak);
+        run("resolveUnicodePunctuationBoundariesWithNextContentClusterHasAuthoredBreak",
+            UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesWithNextContentClusterHasAuthoredBreak);
+        run("resolveUnicodePunctuationBoundariesWithIsWhitespaceCodePointNonBmp",
+            UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesWithIsWhitespaceCodePointNonBmp);
+        run("resolveUnicodePunctuationBoundariesWithHasAuthoredBreakBoth",
+            UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesWithHasAuthoredBreakBoth);
+        run("resolveAttachedInlineInterCharBoundariesWithBothCjkPunctuation",
+            UnicodePunctuationBoundaryResolverCoverageTest.resolveAttachedInlineInterCharBoundariesWithBothCjkPunctuation);
+        run("resolveUnicodePunctuationBoundariesWithFollowsAuthoredBoundaryWhitespace",
+            UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesWithFollowsAuthoredBoundaryWhitespace);
+        run("resolveUnicodePunctuationBoundariesWithFollowsAuthoredBoundaryWhitespaceThenNonWhitespace",
+            UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesWithFollowsAuthoredBoundaryWhitespaceThenNonWhitespace);
+        run("resolveUnicodePunctuationBoundariesWithPreviousContentClusterEmpty",
+            UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesWithPreviousContentClusterEmpty);
+        run("resolveUnicodePunctuationBoundariesWithNextContentClusterEmpty",
+            UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesWithNextContentClusterEmpty);
+        run("resolveUnicodePunctuationBoundariesWithCodePointAtOrNullSurrogate",
+            UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesWithCodePointAtOrNullSurrogate);
+        run("resolveUnicodePunctuationBoundariesWithHasAuthoredBreakMandatoryOnly",
+            UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesWithHasAuthoredBreakMandatoryOnly);
+        run("resolveUnicodePunctuationBoundariesWithCodePointBeforeSurrogatePair",
+            UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesWithCodePointBeforeSurrogatePair);
+        run("resolveUnicodePunctuationBoundariesWithCodePointAtOrNullSupplementary",
+            UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesWithCodePointAtOrNullSupplementary);
         run("resolveAttachedInlineVirtualBoundariesAtStart", UnicodePunctuationBoundaryResolverCoverageTest.resolveAttachedInlineVirtualBoundariesAtStart);
-        run("resolveAttachedInlineInterCharBoundariesRequiresMatchingEdgesSize", UnicodePunctuationBoundaryResolverCoverageTest.resolveAttachedInlineInterCharBoundariesRequiresMatchingEdgesSize);
-        run("resolveAttachedInlineInterCharBoundariesPunctuationWesternLeadingNotNarrow", UnicodePunctuationBoundaryResolverCoverageTest.resolveAttachedInlineInterCharBoundariesPunctuationWesternLeadingNotNarrow);
-        run("resolveAttachedInlineInterCharBoundariesAllConditionsFalse", UnicodePunctuationBoundaryResolverCoverageTest.resolveAttachedInlineInterCharBoundariesAllConditionsFalse);
-        run("resolveAttachedInlineInterCharBoundariesNarrowNarrowPair", UnicodePunctuationBoundaryResolverCoverageTest.resolveAttachedInlineInterCharBoundariesNarrowNarrowPair);
-        run("resolveUnicodePunctuationBoundariesInfixNumericSeparatorWithSpaceAndNoSpace", UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesInfixNumericSeparatorWithSpaceAndNoSpace);
-        run("resolveUnicodePunctuationBoundariesDecimalMarkFollowingVariations", UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesDecimalMarkFollowingVariations);
-        run("resolveUnicodePunctuationBoundariesApostropheAndLatinWordBranches", UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesApostropheAndLatinWordBranches);
-        run("resolveUnicodePunctuationBoundariesSurrogateScanningVariations", UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesSurrogateScanningVariations);
-        run("resolveUnicodePunctuationBoundariesIsDecimalMarkAfterSpaceIndexZero", UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesIsDecimalMarkAfterSpaceIndexZero);
-        run("resolveUnicodePunctuationBoundariesIsDecimalMarkAfterSpaceNonWhitespacePrev", UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesIsDecimalMarkAfterSpaceNonWhitespacePrev);
-        run("resolveUnicodePunctuationBoundariesIsDecimalMarkAfterSpaceEmptyPrev", UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesIsDecimalMarkAfterSpaceEmptyPrev);
-        run("resolveUnicodePunctuationBoundariesFollowsAuthoredBoundaryNonWhitespace", UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesFollowsAuthoredBoundaryNonWhitespace);
-        run("resolveUnicodePunctuationBoundariesPreviousContentClusterReturnsContent", UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesPreviousContentClusterReturnsContent);
-        run("resolveUnicodePunctuationBoundariesPreviousContentClusterEmptyOnly", UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesPreviousContentClusterEmptyOnly);
-        run("resolveUnicodePunctuationBoundariesNextContentClusterReturnsContent", UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesNextContentClusterReturnsContent);
-        run("resolveUnicodePunctuationBoundariesHasAuthoredBreakWithCodePoint", UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesHasAuthoredBreakWithCodePoint);
-        run("resolveUnicodePunctuationBoundariesHasAuthoredBreakNullCodePoint", UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesHasAuthoredBreakNullCodePoint);
-        run("resolveUnicodePunctuationBoundariesFirstCodePointLengthBmp", UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesFirstCodePointLengthBmp);
-        run("resolveUnicodePunctuationBoundariesFirstCodePointLengthSurrogate", UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesFirstCodePointLengthSurrogate);
-        run("resolveUnicodePunctuationBoundariesCodePointAtOrNullSurrogatePair", UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesCodePointAtOrNullSurrogatePair);
-        run("resolveUnicodePunctuationBoundariesCodePointBeforeSurrogatePair", UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesCodePointBeforeSurrogatePair);
-        run("resolveUnicodePunctuationBoundariesCodePointBeforeLowSurrogate", UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesCodePointBeforeLowSurrogate);
-        run("resolveUnicodePunctuationBoundariesQuoteDirection2019SurrogateLeft", UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesQuoteDirection2019SurrogateLeft);
-        run("resolveUnicodePunctuationBoundariesPreviousContentClusterMultipleEmpty", UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesPreviousContentClusterMultipleEmpty);
-        run("resolveUnicodePunctuationBoundariesFollowsAuthoredBoundaryZWSPInMiddle", UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesFollowsAuthoredBoundaryZWSPInMiddle);
-        run("resolveUnicodePunctuationBoundariesLastSignificantCodePointSurrogateEnding", UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesLastSignificantCodePointSurrogateEnding);
-        run("resolveUnicodePunctuationBoundariesIsDecimalMarkAfterSpaceFollowingInside", UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesIsDecimalMarkAfterSpaceFollowingInside);
-        run("resolveUnicodePunctuationBoundaryFullWidthCommaAfterSpaceStaysForbidden", UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundaryFullWidthCommaAfterSpaceStaysForbidden);
-        run("resolveUnicodePunctuationBoundariesIsDecimalMarkAfterSpaceFollowingOutside", UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesIsDecimalMarkAfterSpaceFollowingOutside);
-        run("resolveUnicodePunctuationBoundariesQuoteDirection2019BmpLeft", UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesQuoteDirection2019BmpLeft);
-        run("resolveUnicodePunctuationBoundariesQuoteDirection2019RightWordOnly", UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesQuoteDirection2019RightWordOnly);
-        run("resolveUnicodePunctuationBoundariesQuoteDirection2019LeftWordOnly", UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesQuoteDirection2019LeftWordOnly);
-        run("resolveUnicodePunctuationBoundariesQuoteDirection2019NeitherWord", UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesQuoteDirection2019NeitherWord);
-        run("resolveUnicodePunctuationBoundariesCodePointBeforeLowSurrogateSingle", UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesCodePointBeforeLowSurrogateSingle);
-        run("resolveUnicodePunctuationBoundariesCodePointAtOrNullSupplementary", UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesCodePointAtOrNullSupplementary);
-        run("resolveUnicodePunctuationBoundariesHasAuthoredBreakEmptyString", UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesHasAuthoredBreakEmptyString);
-        run("resolveAttachedInlineInterCharBoundariesVirtualFromCjkPunctuationLeft", UnicodePunctuationBoundaryResolverCoverageTest.resolveAttachedInlineInterCharBoundariesVirtualFromCjkPunctuationLeft);
-        run("resolveUnicodePunctuationBoundariesDecimalMarkAtClusterZeroForbidden", UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesDecimalMarkAtClusterZeroForbidden);
-        run("resolveUnicodePunctuationBoundariesDecimalMarkAfterLetterClusterForbidden", UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesDecimalMarkAfterLetterClusterForbidden);
-        run("resolveUnicodePunctuationBoundariesDecimalMarkFollowedByLetterForbidden", UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesDecimalMarkFollowedByLetterForbidden);
-        run("resolveUnicodePunctuationBoundariesDecimalMarkAloneAfterSpaceForbidden", UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesDecimalMarkAloneAfterSpaceForbidden);
-        run("resolveUnicodePunctuationBoundariesAstralTailKeepsPairAsLastSignificant", UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesAstralTailKeepsPairAsLastSignificant);
-        run("resolveUnicodePunctuationBoundariesAuthoredBreakInsidePreviousClusterDropsUnbreakable", UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesAuthoredBreakInsidePreviousClusterDropsUnbreakable);
-        run("resolveUnicodePunctuationBoundariesApostropheAtTextStartNoLeftContext", UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesApostropheAtTextStartNoLeftContext);
-        run("resolveUnicodePunctuationBoundariesApostropheRightNeighbourUnpairedHighSurrogate", UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesApostropheRightNeighbourUnpairedHighSurrogate);
-        run("resolveUnicodePunctuationBoundariesApostropheLeftNeighbourSupplementaryPair", UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesApostropheLeftNeighbourSupplementaryPair);
-        run("resolveAttachedInlineInterCharBoundariesPunctuationWesternLeadingNarrowOnly", UnicodePunctuationBoundaryResolverCoverageTest.resolveAttachedInlineInterCharBoundariesPunctuationWesternLeadingNarrowOnly);
-        run("resolveAttachedInlineInterCharBoundariesPunctuationWesternTrailingNarrowOnly", UnicodePunctuationBoundaryResolverCoverageTest.resolveAttachedInlineInterCharBoundariesPunctuationWesternTrailingNarrowOnly);
-        run("resolveAttachedInlineInterCharBoundariesSinoWesternOnly", UnicodePunctuationBoundaryResolverCoverageTest.resolveAttachedInlineInterCharBoundariesSinoWesternOnly);
-        run("resolveAttachedInlineInterCharBoundariesWesternBracketOnly", UnicodePunctuationBoundaryResolverCoverageTest.resolveAttachedInlineInterCharBoundariesWesternBracketOnly);
-        run("resolveUnicodePunctuationBoundariesDecimalMarkAfterEmptyClusterForbidden", UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesDecimalMarkAfterEmptyClusterForbidden);
-        run("resolveUnicodePunctuationBoundariesApostropheRightNeighbourSupplementaryPair", UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesApostropheRightNeighbourSupplementaryPair);
+        run("resolveAttachedInlineInterCharBoundariesRequiresMatchingEdgesSize",
+            UnicodePunctuationBoundaryResolverCoverageTest.resolveAttachedInlineInterCharBoundariesRequiresMatchingEdgesSize);
+        run("resolveAttachedInlineInterCharBoundariesPunctuationWesternLeadingNotNarrow",
+            UnicodePunctuationBoundaryResolverCoverageTest.resolveAttachedInlineInterCharBoundariesPunctuationWesternLeadingNotNarrow);
+        run("resolveAttachedInlineInterCharBoundariesAllConditionsFalse",
+            UnicodePunctuationBoundaryResolverCoverageTest.resolveAttachedInlineInterCharBoundariesAllConditionsFalse);
+        run("resolveAttachedInlineInterCharBoundariesNarrowNarrowPair",
+            UnicodePunctuationBoundaryResolverCoverageTest.resolveAttachedInlineInterCharBoundariesNarrowNarrowPair);
+        run("resolveUnicodePunctuationBoundariesInfixNumericSeparatorWithSpaceAndNoSpace",
+            UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesInfixNumericSeparatorWithSpaceAndNoSpace);
+        run("resolveUnicodePunctuationBoundariesDecimalMarkFollowingVariations",
+            UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesDecimalMarkFollowingVariations);
+        run("resolveUnicodePunctuationBoundariesApostropheAndLatinWordBranches",
+            UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesApostropheAndLatinWordBranches);
+        run("resolveUnicodePunctuationBoundariesSurrogateScanningVariations",
+            UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesSurrogateScanningVariations);
+        run("resolveUnicodePunctuationBoundariesIsDecimalMarkAfterSpaceIndexZero",
+            UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesIsDecimalMarkAfterSpaceIndexZero);
+        run("resolveUnicodePunctuationBoundariesIsDecimalMarkAfterSpaceNonWhitespacePrev",
+            UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesIsDecimalMarkAfterSpaceNonWhitespacePrev);
+        run("resolveUnicodePunctuationBoundariesIsDecimalMarkAfterSpaceEmptyPrev",
+            UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesIsDecimalMarkAfterSpaceEmptyPrev);
+        run("resolveUnicodePunctuationBoundariesFollowsAuthoredBoundaryNonWhitespace",
+            UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesFollowsAuthoredBoundaryNonWhitespace);
+        run("resolveUnicodePunctuationBoundariesPreviousContentClusterReturnsContent",
+            UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesPreviousContentClusterReturnsContent);
+        run("resolveUnicodePunctuationBoundariesPreviousContentClusterEmptyOnly",
+            UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesPreviousContentClusterEmptyOnly);
+        run("resolveUnicodePunctuationBoundariesNextContentClusterReturnsContent",
+            UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesNextContentClusterReturnsContent);
+        run("resolveUnicodePunctuationBoundariesHasAuthoredBreakWithCodePoint",
+            UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesHasAuthoredBreakWithCodePoint);
+        run("resolveUnicodePunctuationBoundariesHasAuthoredBreakNullCodePoint",
+            UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesHasAuthoredBreakNullCodePoint);
+        run("resolveUnicodePunctuationBoundariesFirstCodePointLengthBmp",
+            UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesFirstCodePointLengthBmp);
+        run("resolveUnicodePunctuationBoundariesFirstCodePointLengthSurrogate",
+            UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesFirstCodePointLengthSurrogate);
+        run("resolveUnicodePunctuationBoundariesCodePointAtOrNullSurrogatePair",
+            UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesCodePointAtOrNullSurrogatePair);
+        run("resolveUnicodePunctuationBoundariesCodePointBeforeSurrogatePair",
+            UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesCodePointBeforeSurrogatePair);
+        run("resolveUnicodePunctuationBoundariesCodePointBeforeLowSurrogate",
+            UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesCodePointBeforeLowSurrogate);
+        run("resolveUnicodePunctuationBoundariesQuoteDirection2019SurrogateLeft",
+            UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesQuoteDirection2019SurrogateLeft);
+        run("resolveUnicodePunctuationBoundariesPreviousContentClusterMultipleEmpty",
+            UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesPreviousContentClusterMultipleEmpty);
+        run("resolveUnicodePunctuationBoundariesFollowsAuthoredBoundaryZWSPInMiddle",
+            UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesFollowsAuthoredBoundaryZWSPInMiddle);
+        run("resolveUnicodePunctuationBoundariesLastSignificantCodePointSurrogateEnding",
+            UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesLastSignificantCodePointSurrogateEnding);
+        run("resolveUnicodePunctuationBoundariesIsDecimalMarkAfterSpaceFollowingInside",
+            UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesIsDecimalMarkAfterSpaceFollowingInside);
+        run("resolveUnicodePunctuationBoundaryFullWidthCommaAfterSpaceStaysForbidden",
+            UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundaryFullWidthCommaAfterSpaceStaysForbidden);
+        run("resolveUnicodePunctuationBoundariesIsDecimalMarkAfterSpaceFollowingOutside",
+            UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesIsDecimalMarkAfterSpaceFollowingOutside);
+        run("resolveUnicodePunctuationBoundariesQuoteDirection2019BmpLeft",
+            UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesQuoteDirection2019BmpLeft);
+        run("resolveUnicodePunctuationBoundariesQuoteDirection2019RightWordOnly",
+            UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesQuoteDirection2019RightWordOnly);
+        run("resolveUnicodePunctuationBoundariesQuoteDirection2019LeftWordOnly",
+            UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesQuoteDirection2019LeftWordOnly);
+        run("resolveUnicodePunctuationBoundariesQuoteDirection2019NeitherWord",
+            UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesQuoteDirection2019NeitherWord);
+        run("resolveUnicodePunctuationBoundariesCodePointBeforeLowSurrogateSingle",
+            UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesCodePointBeforeLowSurrogateSingle);
+        run("resolveUnicodePunctuationBoundariesCodePointAtOrNullSupplementary",
+            UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesCodePointAtOrNullSupplementary);
+        run("resolveUnicodePunctuationBoundariesHasAuthoredBreakEmptyString",
+            UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesHasAuthoredBreakEmptyString);
+        run("resolveAttachedInlineInterCharBoundariesVirtualFromCjkPunctuationLeft",
+            UnicodePunctuationBoundaryResolverCoverageTest.resolveAttachedInlineInterCharBoundariesVirtualFromCjkPunctuationLeft);
+        run("resolveUnicodePunctuationBoundariesDecimalMarkAtClusterZeroForbidden",
+            UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesDecimalMarkAtClusterZeroForbidden);
+        run("resolveUnicodePunctuationBoundariesDecimalMarkAfterLetterClusterForbidden",
+            UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesDecimalMarkAfterLetterClusterForbidden);
+        run("resolveUnicodePunctuationBoundariesDecimalMarkFollowedByLetterForbidden",
+            UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesDecimalMarkFollowedByLetterForbidden);
+        run("resolveUnicodePunctuationBoundariesDecimalMarkAloneAfterSpaceForbidden",
+            UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesDecimalMarkAloneAfterSpaceForbidden);
+        run("resolveUnicodePunctuationBoundariesAstralTailKeepsPairAsLastSignificant",
+            UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesAstralTailKeepsPairAsLastSignificant);
+        run("resolveUnicodePunctuationBoundariesAuthoredBreakInsidePreviousClusterDropsUnbreakable",
+            UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesAuthoredBreakInsidePreviousClusterDropsUnbreakable);
+        run("resolveUnicodePunctuationBoundariesApostropheAtTextStartNoLeftContext",
+            UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesApostropheAtTextStartNoLeftContext);
+        run("resolveUnicodePunctuationBoundariesApostropheRightNeighbourUnpairedHighSurrogate",
+            UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesApostropheRightNeighbourUnpairedHighSurrogate);
+        run("resolveUnicodePunctuationBoundariesApostropheLeftNeighbourSupplementaryPair",
+            UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesApostropheLeftNeighbourSupplementaryPair);
+        run("resolveAttachedInlineInterCharBoundariesPunctuationWesternLeadingNarrowOnly",
+            UnicodePunctuationBoundaryResolverCoverageTest.resolveAttachedInlineInterCharBoundariesPunctuationWesternLeadingNarrowOnly);
+        run("resolveAttachedInlineInterCharBoundariesPunctuationWesternTrailingNarrowOnly",
+            UnicodePunctuationBoundaryResolverCoverageTest.resolveAttachedInlineInterCharBoundariesPunctuationWesternTrailingNarrowOnly);
+        run("resolveAttachedInlineInterCharBoundariesSinoWesternOnly",
+            UnicodePunctuationBoundaryResolverCoverageTest.resolveAttachedInlineInterCharBoundariesSinoWesternOnly);
+        run("resolveAttachedInlineInterCharBoundariesWesternBracketOnly",
+            UnicodePunctuationBoundaryResolverCoverageTest.resolveAttachedInlineInterCharBoundariesWesternBracketOnly);
+        run("resolveUnicodePunctuationBoundariesDecimalMarkAfterEmptyClusterForbidden",
+            UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesDecimalMarkAfterEmptyClusterForbidden);
+        run("resolveUnicodePunctuationBoundariesApostropheRightNeighbourSupplementaryPair",
+            UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesApostropheRightNeighbourSupplementaryPair);
         TestTraceRecorder.flushClass("UnicodePunctuationBoundaryResolverCoverageTest");
         run("clusterWiderThanMaxWidthGetsOwnLineRatherThanInfiniteLoop", GreedyLineBreakerTest.clusterWiderThanMaxWidthGetsOwnLineRatherThanInfiniteLoop);
         run("customKinsokuRuleOverridesDefault", GreedyLineBreakerTest.customKinsokuRuleOverridesDefault);
@@ -796,7 +979,8 @@ class Main {
         run("kinsokuCarriesPreviousWhenPushInCapacityCannotCoverOverflow", GreedyLineBreakerTest.kinsokuCarriesPreviousWhenPushInCapacityCannotCoverOverflow);
         run("kinsokuCarryPreviousMovesPrevClusterToNextLine", GreedyLineBreakerTest.kinsokuCarryPreviousMovesPrevClusterToNextLine);
         run("kinsokuLeaveRaggedWhenPrevLineIsSingleCluster", GreedyLineBreakerTest.kinsokuLeaveRaggedWhenPrevLineIsSingleCluster);
-        run("kinsokuPushesForbiddenPunctuationIntoPreviousLineWhenGlueCapacityCoversOverflow", GreedyLineBreakerTest.kinsokuPushesForbiddenPunctuationIntoPreviousLineWhenGlueCapacityCoversOverflow);
+        run("kinsokuPushesForbiddenPunctuationIntoPreviousLineWhenGlueCapacityCoversOverflow",
+            GreedyLineBreakerTest.kinsokuPushesForbiddenPunctuationIntoPreviousLineWhenGlueCapacityCoversOverflow);
         run("kinsokuRejectsCarryPreviousWhenCarriedLineWouldOverflow", GreedyLineBreakerTest.kinsokuRejectsCarryPreviousWhenCarriedLineWouldOverflow);
         run("mandatoryBreakBlocksKinsokuRepairAcrossBoundary", GreedyLineBreakerTest.mandatoryBreakBlocksKinsokuRepairAcrossBoundary);
         run("mandatoryBreakClosesLineAndPreservesTrailingEmptyLine", GreedyLineBreakerTest.mandatoryBreakClosesLineAndPreservesTrailingEmptyLine);
@@ -808,26 +992,29 @@ class Main {
         TestTraceRecorder.flushClass("GreedyLineBreakerTest");
 
         run("attachedAsciiPointMarkKinsokuProtectsRuns", PunctuationGeometryStageCoverageTest.attachedAsciiPointMarkKinsokuProtectsRuns);
-run("attachedAsciiPointMarkKinsokuRejectsDetachedRuns", PunctuationGeometryStageCoverageTest.attachedAsciiPointMarkKinsokuRejectsDetachedRuns);
-run("attachedAsciiPointMarksNeedAContiguousNonSpaceBase", PunctuationGeometryStageCoverageTest.attachedAsciiPointMarksNeedAContiguousNonSpaceBase);
-run("attachedMarksAcceptAsciiPointMarksAfterObjects", PunctuationGeometryStageCoverageTest.attachedMarksAcceptAsciiPointMarksAfterObjects);
-run("attachedMarksCollapseSeparatorSpaceBeforeTheMark", PunctuationGeometryStageCoverageTest.attachedMarksCollapseSeparatorSpaceBeforeTheMark);
-run("attachedMarksRejectMissingObjectsAndGappedRanges", PunctuationGeometryStageCoverageTest.attachedMarksRejectMissingObjectsAndGappedRanges);
-run("attachedRunsOwnOneVirtualGapAtTheirTrailingEdge", PunctuationGeometryStageCoverageTest.attachedRunsOwnOneVirtualGapAtTheirTrailingEdge);
-run("emptyDisplayTextProducesNoAtoms", PunctuationGeometryStageCoverageTest.emptyDisplayTextProducesNoAtoms);
-run("glyphlessClustersUseThePurePolicyPath", PunctuationGeometryStageCoverageTest.glyphlessClustersUseThePurePolicyPath);
-run("inlineBoxSpansAddStructuralEdgesAndSkipDegenerateRanges", PunctuationGeometryStageCoverageTest.inlineBoxSpansAddStructuralEdgesAndSkipDegenerateRanges);
-run("inlineObjectKinsokuProtectsOrHangsAttachedMarks", PunctuationGeometryStageCoverageTest.inlineObjectKinsokuProtectsOrHangsAttachedMarks);
-run("multipleGlyphsForOneCharacterUnionIntoASingleInkBox", PunctuationGeometryStageCoverageTest.multipleGlyphsForOneCharacterUnionIntoASingleInkBox);
-run("narrowInlineBoxesOwnTheirOuterAutoSpace", PunctuationGeometryStageCoverageTest.narrowInlineBoxesOwnTheirOuterAutoSpace);
-run("perCharacterInkSubtractsPrecedingGlyphPens", PunctuationGeometryStageCoverageTest.perCharacterInkSubtractsPrecedingGlyphPens);
-run("spaceReplacementSkipsDisabledModeNullBoundariesAndExactWidths", PunctuationGeometryStageCoverageTest.spaceReplacementSkipsDisabledModeNullBoundariesAndExactWidths);
-run("spacingBoundariesCountEachWideNarrowGapOnce", PunctuationGeometryStageCoverageTest.spacingBoundariesCountEachWideNarrowGapOnce);
-run("typedSpaceBetweenWideAndNarrowIsReplacedByTheGap", PunctuationGeometryStageCoverageTest.typedSpaceBetweenWideAndNarrowIsReplacedByTheGap);
-run("unionWithoutBoundsFallsBackToTheFirstGlyph", PunctuationGeometryStageCoverageTest.unionWithoutBoundsFallsBackToTheFirstGlyph);
-run("unmatchedGlyphCountsRecordTheAmbiguousFallback", PunctuationGeometryStageCoverageTest.unmatchedGlyphCountsRecordTheAmbiguousFallback);
-run("virtualGapsRespectNarrowToWideEdgesAndTheirNeighbours", PunctuationGeometryStageCoverageTest.virtualGapsRespectNarrowToWideEdgesAndTheirNeighbours);
-run("wideToNarrowBoundariesInsertLeadingAndTrailingGaps", PunctuationGeometryStageCoverageTest.wideToNarrowBoundariesInsertLeadingAndTrailingGaps);
+        run("attachedAsciiPointMarkKinsokuRejectsDetachedRuns", PunctuationGeometryStageCoverageTest.attachedAsciiPointMarkKinsokuRejectsDetachedRuns);
+        run("attachedAsciiPointMarksNeedAContiguousNonSpaceBase", PunctuationGeometryStageCoverageTest.attachedAsciiPointMarksNeedAContiguousNonSpaceBase);
+        run("attachedMarksAcceptAsciiPointMarksAfterObjects", PunctuationGeometryStageCoverageTest.attachedMarksAcceptAsciiPointMarksAfterObjects);
+        run("attachedMarksCollapseSeparatorSpaceBeforeTheMark", PunctuationGeometryStageCoverageTest.attachedMarksCollapseSeparatorSpaceBeforeTheMark);
+        run("attachedMarksRejectMissingObjectsAndGappedRanges", PunctuationGeometryStageCoverageTest.attachedMarksRejectMissingObjectsAndGappedRanges);
+        run("attachedRunsOwnOneVirtualGapAtTheirTrailingEdge", PunctuationGeometryStageCoverageTest.attachedRunsOwnOneVirtualGapAtTheirTrailingEdge);
+        run("emptyDisplayTextProducesNoAtoms", PunctuationGeometryStageCoverageTest.emptyDisplayTextProducesNoAtoms);
+        run("glyphlessClustersUseThePurePolicyPath", PunctuationGeometryStageCoverageTest.glyphlessClustersUseThePurePolicyPath);
+        run("inlineBoxSpansAddStructuralEdgesAndSkipDegenerateRanges",
+            PunctuationGeometryStageCoverageTest.inlineBoxSpansAddStructuralEdgesAndSkipDegenerateRanges);
+        run("inlineObjectKinsokuProtectsOrHangsAttachedMarks", PunctuationGeometryStageCoverageTest.inlineObjectKinsokuProtectsOrHangsAttachedMarks);
+        run("multipleGlyphsForOneCharacterUnionIntoASingleInkBox", PunctuationGeometryStageCoverageTest.multipleGlyphsForOneCharacterUnionIntoASingleInkBox);
+        run("narrowInlineBoxesOwnTheirOuterAutoSpace", PunctuationGeometryStageCoverageTest.narrowInlineBoxesOwnTheirOuterAutoSpace);
+        run("perCharacterInkSubtractsPrecedingGlyphPens", PunctuationGeometryStageCoverageTest.perCharacterInkSubtractsPrecedingGlyphPens);
+        run("spaceReplacementSkipsDisabledModeNullBoundariesAndExactWidths",
+            PunctuationGeometryStageCoverageTest.spaceReplacementSkipsDisabledModeNullBoundariesAndExactWidths);
+        run("spacingBoundariesCountEachWideNarrowGapOnce", PunctuationGeometryStageCoverageTest.spacingBoundariesCountEachWideNarrowGapOnce);
+        run("typedSpaceBetweenWideAndNarrowIsReplacedByTheGap", PunctuationGeometryStageCoverageTest.typedSpaceBetweenWideAndNarrowIsReplacedByTheGap);
+        run("unionWithoutBoundsFallsBackToTheFirstGlyph", PunctuationGeometryStageCoverageTest.unionWithoutBoundsFallsBackToTheFirstGlyph);
+        run("unmatchedGlyphCountsRecordTheAmbiguousFallback", PunctuationGeometryStageCoverageTest.unmatchedGlyphCountsRecordTheAmbiguousFallback);
+        run("virtualGapsRespectNarrowToWideEdgesAndTheirNeighbours",
+            PunctuationGeometryStageCoverageTest.virtualGapsRespectNarrowToWideEdgesAndTheirNeighbours);
+        run("wideToNarrowBoundariesInsertLeadingAndTrailingGaps", PunctuationGeometryStageCoverageTest.wideToNarrowBoundariesInsertLeadingAndTrailingGaps);
         TestTraceRecorder.flushClass("PunctuationGeometryStageCoverageTest");
         if (failures > 0) {
             Process.exit(1);

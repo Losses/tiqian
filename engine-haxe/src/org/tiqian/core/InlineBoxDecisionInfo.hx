@@ -10,7 +10,8 @@ class InlineBoxDecisionInfo {
     public final lastClusterIndex:Int;
     public final reason:String;
 
-    public function new(range:TextRange, inlineStart:Float, inlineEnd:Float, outerSpacing:String, firstClusterIndex:Int, lastClusterIndex:Int, ?reason:Null<String>) {
+    public function new(range:TextRange, inlineStart:Float, inlineEnd:Float, outerSpacing:String, firstClusterIndex:Int, lastClusterIndex:Int,
+            ?reason:Null<String>) {
         this.range = range;
         this.inlineStart = inlineStart;
         this.inlineEnd = inlineEnd;

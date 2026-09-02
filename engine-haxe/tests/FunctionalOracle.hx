@@ -17,8 +17,10 @@ class FunctionalOracle {
             i++;
         }
         decorated.sort(function(a:{item:Dynamic, key:Int, idx:Int}, b:{item:Dynamic, key:Int, idx:Int}):Int {
-            if (a.key < b.key) return -1;
-            if (a.key > b.key) return 1;
+            if (a.key < b.key)
+                return -1;
+            if (a.key > b.key)
+                return 1;
             return a.idx - b.idx;
         });
         final out:Array<Dynamic> = [];

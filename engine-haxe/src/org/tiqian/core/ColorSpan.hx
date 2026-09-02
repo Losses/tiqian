@@ -11,6 +11,4 @@ class ColorSpan {
         this.end = end;
         this.argb = argb;
     }
-
-
 }

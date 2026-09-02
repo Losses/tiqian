@@ -13,7 +13,8 @@ class DecorationSegmentInfo {
     public final openEnd:Bool;
     public final reason:String;
 
-    public function new(sourceRange:TextRange, kind:String, lineIndex:Int, left:Float, top:Float, right:Float, bottom:Float, openStart:Bool, openEnd:Bool, reason:String) {
+    public function new(sourceRange:TextRange, kind:String, lineIndex:Int, left:Float, top:Float, right:Float, bottom:Float, openStart:Bool, openEnd:Bool,
+            reason:String) {
         this.sourceRange = sourceRange;
         this.kind = kind;
         this.lineIndex = lineIndex;

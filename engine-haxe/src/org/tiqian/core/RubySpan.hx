@@ -33,13 +33,7 @@ class RubySpan {
     public final kind:RubyKind;
     public final locale:Null<String>;
 
-    public function new(
-        baseRange:TextRange,
-        text:String,
-        ?fontFamilies:Array<String>,
-        kind:RubyKind = RubyKind.Pinyin,
-        ?locale:Null<String>
-    ) {
+    public function new(baseRange:TextRange, text:String, ?fontFamilies:Array<String>, kind:RubyKind = RubyKind.Pinyin, ?locale:Null<String>) {
         this.baseRange = baseRange;
         this.text = text;
         this.fontFamilies = fontFamilies == null ? [] : fontFamilies;

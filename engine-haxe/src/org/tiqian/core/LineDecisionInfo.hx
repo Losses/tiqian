@@ -12,7 +12,8 @@ class LineDecisionInfo {
     public final repairCandidates:ReadOnlyArray<LineRepairCandidateInfo>;
     public final notes:ReadOnlyArray<String>;
 
-    public function new(range:TextRange, kind:String, ?repair:Null<String>, ?repairPenalty:Null<Int>, ?repairDecision:Null<LineRepairDecisionInfo>, ?repairCandidates:Array<LineRepairCandidateInfo>, ?notes:Array<String>) {
+    public function new(range:TextRange, kind:String, ?repair:Null<String>, ?repairPenalty:Null<Int>, ?repairDecision:Null<LineRepairDecisionInfo>,
+            ?repairCandidates:Array<LineRepairCandidateInfo>, ?notes:Array<String>) {
         this.range = range;
         this.kind = kind;
         this.repair = repair == null ? null : repair;

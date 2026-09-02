@@ -9,6 +9,4 @@ class LineLengthGrid {
         this.enabled = enabled == null ? true : enabled;
         this.bodyAlignment = bodyAlignment == null ? null : bodyAlignment;
     }
-
-
 }

@@ -26,7 +26,13 @@ class InlineObjectDecisionInfo {
     public final trailingLineEndDiscardableAdvance:Float;
     public final reason:String;
 
-    public function new(range:TextRange, advance:Float, ascent:Float, descent:Float, clusterIndex:Int, lineIndex:Int, ?leadingUniformStretch:Null<Bool>, ?leadingPreferredStretchKind:Null<String>, ?leadingPreferredStretchNaturalWidth:Null<Float>, ?leadingPreferredStretchTargetWidth:Null<Float>, ?leadingPreferredStretchCapacity:Null<Float>, ?leadingPreventsLineBreak:Null<Bool>, ?leadingShrinkCapacity:Null<Float>, ?leadingLineEndDiscardableAdvance:Null<Float>, ?trailingUniformStretch:Null<Bool>, ?trailingPreferredStretchKind:Null<String>, ?trailingPreferredStretchNaturalWidth:Null<Float>, ?trailingPreferredStretchTargetWidth:Null<Float>, ?trailingPreferredStretchCapacity:Null<Float>, ?trailingPreventsLineBreak:Null<Bool>, ?trailingShrinkCapacity:Null<Float>, ?trailingLineEndDiscardableAdvance:Null<Float>, ?reason:Null<String>) {
+    public function new(range:TextRange, advance:Float, ascent:Float, descent:Float, clusterIndex:Int, lineIndex:Int, ?leadingUniformStretch:Null<Bool>,
+            ?leadingPreferredStretchKind:Null<String>, ?leadingPreferredStretchNaturalWidth:Null<Float>, ?leadingPreferredStretchTargetWidth:Null<Float>,
+            ?leadingPreferredStretchCapacity:Null<Float>, ?leadingPreventsLineBreak:Null<Bool>, ?leadingShrinkCapacity:Null<Float>,
+            ?leadingLineEndDiscardableAdvance:Null<Float>, ?trailingUniformStretch:Null<Bool>, ?trailingPreferredStretchKind:Null<String>,
+            ?trailingPreferredStretchNaturalWidth:Null<Float>, ?trailingPreferredStretchTargetWidth:Null<Float>,
+            ?trailingPreferredStretchCapacity:Null<Float>, ?trailingPreventsLineBreak:Null<Bool>, ?trailingShrinkCapacity:Null<Float>,
+            ?trailingLineEndDiscardableAdvance:Null<Float>, ?reason:Null<String>) {
         this.range = range;
         this.advance = advance;
         this.ascent = ascent;

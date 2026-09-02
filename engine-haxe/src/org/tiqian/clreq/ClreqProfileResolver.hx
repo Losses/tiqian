@@ -8,12 +8,10 @@ interface ClreqProfileResolver {
 }
 
 class BuiltInClreqProfileResolver implements ClreqProfileResolver {
-    public function new() {
-    }
+    public function new() {}
 
     public function resolve(profileId:LayoutProfileId):ClreqProfile {
-        if (profileId.value == BuiltInLayoutProfiles.ClreqHorizontal.value
-            || profileId.value == ClreqProfile.MainlandHorizontal.id) {
+        if (profileId.value == BuiltInLayoutProfiles.ClreqHorizontal.value || profileId.value == ClreqProfile.MainlandHorizontal.id) {
             return ClreqProfile.MainlandHorizontal;
         }
         return ClreqProfile.MainlandHorizontal;

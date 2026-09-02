@@ -8,13 +8,8 @@ class InlineObjectBoundaryAdjustment {
     public final lineEndDiscardableAdvance:Float;
     public final preventsLineBreak:Bool;
 
-    public function new(
-        ?participatesInUniformStretch:Null<Bool>,
-        ?preferredStretch:Null<InlineObjectPreferredStretch>,
-        ?shrinkCapacity:Null<Float>,
-        ?lineEndDiscardableAdvance:Null<Float>,
-        ?preventsLineBreak:Null<Bool>
-    ) {
+    public function new(?participatesInUniformStretch:Null<Bool>, ?preferredStretch:Null<InlineObjectPreferredStretch>, ?shrinkCapacity:Null<Float>,
+            ?lineEndDiscardableAdvance:Null<Float>, ?preventsLineBreak:Null<Bool>) {
         this.participatesInUniformStretch = participatesInUniformStretch == null ? false : participatesInUniformStretch;
         this.preferredStretch = preferredStretch == null ? null : preferredStretch;
         this.shrinkCapacity = shrinkCapacity == null ? 0.0 : shrinkCapacity;
@@ -31,8 +26,6 @@ class InlineObjectBoundaryAdjustment {
     public static function fixed():InlineObjectBoundaryAdjustment {
         return new InlineObjectBoundaryAdjustment();
     }
-
-
 
     private static function isFinite(value:Float):Bool {
         return value == value && value != Math.POSITIVE_INFINITY && value != Math.NEGATIVE_INFINITY;

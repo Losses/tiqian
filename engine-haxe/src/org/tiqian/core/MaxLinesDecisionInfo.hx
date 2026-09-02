@@ -11,6 +11,4 @@ class MaxLinesDecisionInfo {
         this.visibleLines = visibleLines;
         this.reason = reason == null ? "MaxLinesLineTruncation" : reason;
     }
-
-
 }

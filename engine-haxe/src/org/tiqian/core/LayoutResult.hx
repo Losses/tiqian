@@ -10,7 +10,8 @@ class LayoutResult {
     public final lines:ReadOnlyArray<LineBox>;
     public final debug:LayoutDebugInfo;
 
-    public function new(input:LayoutInput, size:Size, clusters:ReadOnlyArray<Cluster>, glyphRuns:ReadOnlyArray<GlyphRun>, lines:ReadOnlyArray<LineBox>, debug:LayoutDebugInfo) {
+    public function new(input:LayoutInput, size:Size, clusters:ReadOnlyArray<Cluster>, glyphRuns:ReadOnlyArray<GlyphRun>, lines:ReadOnlyArray<LineBox>,
+            debug:LayoutDebugInfo) {
         this.input = input;
         this.size = size;
         this.clusters = clusters;

@@ -19,7 +19,9 @@ class ShapingDecisionInfo {
     public final featureEvidence:Null<String>;
     public final capabilityIssue:Null<String>;
 
-    public function new(range:TextRange, sourceText:String, displayText:String, fontKey:String, glyphCount:Int, advance:Float, source:String, reason:String, ?glyphsWithoutInkBounds:Null<Int>, ?missingGlyphs:Null<Int>, ?resolvedFace:Null<String>, ?script:Null<String>, ?language:Null<String>, ?strategy:Null<String>, ?featureEvidence:Null<String>, ?capabilityIssue:Null<String>) {
+    public function new(range:TextRange, sourceText:String, displayText:String, fontKey:String, glyphCount:Int, advance:Float, source:String, reason:String,
+            ?glyphsWithoutInkBounds:Null<Int>, ?missingGlyphs:Null<Int>, ?resolvedFace:Null<String>, ?script:Null<String>, ?language:Null<String>,
+            ?strategy:Null<String>, ?featureEvidence:Null<String>, ?capabilityIssue:Null<String>) {
         this.range = range;
         this.sourceText = sourceText;
         this.displayText = displayText;

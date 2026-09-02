@@ -21,9 +21,13 @@ class KinsokuModes {
             case KinsokuMode.Fixed(level, hanging):
                 "Fixed(level=" + level + ", hanging=" + hanging + ")";
             case KinsokuMode.MeasureAdaptive(hangBelowEm, gbAboveEm, strictAboveEm):
-                "MeasureAdaptive(hangBelowEm=" + hangBelowEm
-                    + ", gbAboveEm=" + gbAboveEm
-                    + ", strictAboveEm=" + strictAboveEm + ")";
+                "MeasureAdaptive(hangBelowEm="
+                + hangBelowEm
+                + ", gbAboveEm="
+                + gbAboveEm
+                + ", strictAboveEm="
+                + strictAboveEm
+                + ")";
         };
     }
 
@@ -41,21 +45,19 @@ class KinsokuModes {
     }
 
     private static function resolveMeasureAdaptive(measureEm:Float, hangBelowEm:Float, gbAboveEm:Float, strictAboveEm:Float):ResolvedKinsoku {
-        final level:KinsokuLevel = measureEm > strictAboveEm
-            ? KinsokuLevel.Strict
-            : (measureEm > gbAboveEm ? KinsokuLevel.GbStyle : KinsokuLevel.Basic);
-        final hanging:HangingPunctuationStyle = measureEm < hangBelowEm
-            ? HangingPunctuationStyle.PauseStops
-            : HangingPunctuationStyle.Disabled;
-        final tag = "MeasureAdaptiveKinsoku:" + Std.int(measureEm) + "字→" + level
+        final level:KinsokuLevel = measureEm > strictAboveEm ? KinsokuLevel.Strict : (measureEm > gbAboveEm ? KinsokuLevel.GbStyle : KinsokuLevel.Basic);
+        final hanging:HangingPunctuationStyle = measureEm < hangBelowEm ? HangingPunctuationStyle.PauseStops : HangingPunctuationStyle.Disabled;
+        final tag = "MeasureAdaptiveKinsoku:"
+            + Std.int(measureEm)
+            + "字→"
+            + level
             + (hanging != HangingPunctuationStyle.Disabled ? "+Hang" : "");
         return new ResolvedKinsoku(level, hanging, tag);
     }
 
     private static function sameFixed(level:KinsokuLevel, hanging:HangingPunctuationStyle, b:KinsokuMode):Bool {
         return switch (b) {
-            case KinsokuMode.Fixed(otherLevel, otherHanging):
-                level == otherLevel && hanging == otherHanging;
+            case KinsokuMode.Fixed(otherLevel, otherHanging): level == otherLevel && hanging == otherHanging;
             case KinsokuMode.MeasureAdaptive(_, _, _):
                 false;
         };
@@ -63,8 +65,7 @@ class KinsokuModes {
 
     private static function sameMeasureAdaptive(hangBelowEm:Float, gbAboveEm:Float, strictAboveEm:Float, b:KinsokuMode):Bool {
         return switch (b) {
-            case KinsokuMode.MeasureAdaptive(otherHangBelow, otherGbAbove, otherStrictAbove):
-                hangBelowEm == otherHangBelow && gbAboveEm == otherGbAbove && strictAboveEm == otherStrictAbove;
+            case KinsokuMode.MeasureAdaptive(otherHangBelow, otherGbAbove, otherStrictAbove): hangBelowEm == otherHangBelow && gbAboveEm == otherGbAbove && strictAboveEm == otherStrictAbove;
             case KinsokuMode.Fixed(_, _):
                 false;
         };

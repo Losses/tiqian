@@ -29,28 +29,27 @@ class EastAsianSpacingTest {
     @:test
     public static function resolvesConditionalValuesFromChineseLanguageContext():Void {
         new TestTraceRecorder("EastAsianSpacingTest").section("resolvesConditionalValuesFromChineseLanguageContext");
-        TracedAssertions.assertEqualsRendered(Std.string(EastAsianSpacingValue.Narrow), Std.string(UnicodeEastAsianSpacing.resolvedForGraphemeCluster("%", "zh-Hans")));
-        TracedAssertions.assertEqualsRendered(Std.string(EastAsianSpacingValue.Narrow), Std.string(UnicodeEastAsianSpacing.resolvedForGraphemeCluster("%", "yue-Hant-HK")));
-        TracedAssertions.assertEqualsRendered(Std.string(EastAsianSpacingValue.Other), Std.string(UnicodeEastAsianSpacing.resolvedForGraphemeCluster("%", "en")));
+        TracedAssertions.assertEqualsRendered(Std.string(EastAsianSpacingValue.Narrow),
+            Std.string(UnicodeEastAsianSpacing.resolvedForGraphemeCluster("%", "zh-Hans")));
+        TracedAssertions.assertEqualsRendered(Std.string(EastAsianSpacingValue.Narrow),
+            Std.string(UnicodeEastAsianSpacing.resolvedForGraphemeCluster("%", "yue-Hant-HK")));
+        TracedAssertions.assertEqualsRendered(Std.string(EastAsianSpacingValue.Other),
+            Std.string(UnicodeEastAsianSpacing.resolvedForGraphemeCluster("%", "en")));
     }
 
     @:test
     public static function enclosingMarkMakesTheWholeGraphemeClusterOther():Void {
         new TestTraceRecorder("EastAsianSpacingTest").section("enclosingMarkMakesTheWholeGraphemeClusterOther");
-        TracedAssertions.assertEqualsRendered(Std.string(EastAsianSpacingValue.Other), Std.string(UnicodeEastAsianSpacing.resolvedForGraphemeCluster("A\u20DD", "zh-Hans")));
+        TracedAssertions.assertEqualsRendered(Std.string(EastAsianSpacingValue.Other),
+            Std.string(UnicodeEastAsianSpacing.resolvedForGraphemeCluster("A\u20DD", "zh-Hans")));
     }
 
     @:test
     public static function resolvesTheActualSourceUnitAtEachShapingClusterEdge():Void {
         new TestTraceRecorder("EastAsianSpacingTest").section("resolvesTheActualSourceUnitAtEachShapingClusterEdge");
-        TracedAssertions.assertEqualsEastAsianSpacingEdges(
-            new EastAsianSpacingEdges(EastAsianSpacingValue.Other, EastAsianSpacingValue.Narrow, false),
-            UnicodeEastAsianSpacing.resolvedEdges("/Hi", "zh-Hans")
-        );
-        TracedAssertions.assertEqualsEastAsianSpacingEdges(
-            new EastAsianSpacingEdges(EastAsianSpacingValue.Other, EastAsianSpacingValue.Other, false),
-            UnicodeEastAsianSpacing.resolvedEdges("A\u20DD", "zh-Hans")
-        );
+        TracedAssertions.assertEqualsEastAsianSpacingEdges(new EastAsianSpacingEdges(EastAsianSpacingValue.Other, EastAsianSpacingValue.Narrow, false),
+            UnicodeEastAsianSpacing.resolvedEdges("/Hi", "zh-Hans"));
+        TracedAssertions.assertEqualsEastAsianSpacingEdges(new EastAsianSpacingEdges(EastAsianSpacingValue.Other, EastAsianSpacingValue.Other, false),
+            UnicodeEastAsianSpacing.resolvedEdges("A\u20DD", "zh-Hans"));
     }
-
 }

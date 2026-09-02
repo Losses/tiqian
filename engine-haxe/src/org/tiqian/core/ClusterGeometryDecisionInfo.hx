@@ -18,24 +18,9 @@ class ClusterGeometryDecisionInfo {
     public final source:String;
     public final reason:String;
 
-    public function new(
-        range:TextRange,
-        sourceText:String,
-        displayText:String,
-        baseAdvance:Float,
-        bodyWidth:Float,
-        leadingGlueNatural:Float,
-        leadingGlueConsumed:Float,
-        trailingGlueNatural:Float,
-        trailingGlueConsumed:Float,
-        justificationDelta:Float,
-        resolvedAdvance:Float,
-        source:String,
-        reason:String,
-        ?rubySpread:Null<Float>,
-        ?glyphInlineShift:Null<Float>,
-        ?glyphPlacementReason:Null<String>
-    ) {
+    public function new(range:TextRange, sourceText:String, displayText:String, baseAdvance:Float, bodyWidth:Float, leadingGlueNatural:Float,
+            leadingGlueConsumed:Float, trailingGlueNatural:Float, trailingGlueConsumed:Float, justificationDelta:Float, resolvedAdvance:Float, source:String,
+            reason:String, ?rubySpread:Null<Float>, ?glyphInlineShift:Null<Float>, ?glyphPlacementReason:Null<String>) {
         this.range = range;
         this.sourceText = sourceText;
         this.displayText = displayText;

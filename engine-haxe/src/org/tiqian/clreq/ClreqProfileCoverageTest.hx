@@ -67,11 +67,7 @@ class ClreqProfileCoverageTest {
     @:test
     public static function testClreqProfileAndResolver():Void {
         new TestTraceRecorder("ClreqProfileCoverageTest").section("testClreqProfileAndResolver");
-        final strictnesses:Array<ClreqStrictness> = [
-            ClreqStrictness.Loose,
-            ClreqStrictness.Normal,
-            ClreqStrictness.Strict
-        ];
+        final strictnesses:Array<ClreqStrictness> = [ClreqStrictness.Loose, ClreqStrictness.Normal, ClreqStrictness.Strict];
         var strictnessIndex:Int = 0;
         while (strictnessIndex < strictnesses.length) {
             final strictness = strictnesses[strictnessIndex];
@@ -125,10 +121,12 @@ class ClreqProfileCoverageTest {
         TracedAssertions.assertEqualsString("clreq-taiwan-horizontal", ClreqProfile.TaiwanHorizontal.id);
         TracedAssertions.assertEqualsString("clreq-hongkong-horizontal", ClreqProfile.HongKongHorizontal.id);
 
-        TracedAssertions.assertEqualsPunctuationGluePlacement(PunctuationGluePlacement.MainlandSimplified, PunctuationGluePlacements.forRegion(ClreqRegion.Mainland));
+        TracedAssertions.assertEqualsPunctuationGluePlacement(PunctuationGluePlacement.MainlandSimplified,
+            PunctuationGluePlacements.forRegion(ClreqRegion.Mainland));
         TracedAssertions.assertEqualsPunctuationGluePlacement(PunctuationGluePlacement.Traditional, PunctuationGluePlacements.forRegion(ClreqRegion.Taiwan));
         TracedAssertions.assertEqualsPunctuationGluePlacement(PunctuationGluePlacement.Traditional, PunctuationGluePlacements.forRegion(ClreqRegion.HongKong));
-        TracedAssertions.assertEqualsPunctuationGluePlacement(PunctuationGluePlacement.MainlandSimplified, PunctuationGluePlacements.forRegion(ClreqRegion.Custom));
+        TracedAssertions.assertEqualsPunctuationGluePlacement(PunctuationGluePlacement.MainlandSimplified,
+            PunctuationGluePlacements.forRegion(ClreqRegion.Custom));
 
         final resolver = new BuiltInClreqProfileResolver();
         final resolvedBuiltIn = resolver.resolve(BuiltInLayoutProfiles.ClreqHorizontal);
@@ -309,8 +307,10 @@ class ClreqProfileCoverageTest {
         // test bundle re-serializes its sources, so these inputs are built
         // from code units at runtime to keep each unit intact everywhere.
         TracedAssertions.assertEqualsFloat(1.0, ClreqPunctuationAdvancePolicy.advanceEm(ClreqProfileCoverageTestHelpers.surrogateText([0xD800]), "dummy"));
-        TracedAssertions.assertEqualsFloat(2.0, ClreqPunctuationAdvancePolicy.advanceEm(ClreqProfileCoverageTestHelpers.surrogateText([0xD800, 0x41]), "dummy")); // low < 0xDC00
-        TracedAssertions.assertEqualsFloat(2.0, ClreqPunctuationAdvancePolicy.advanceEm(ClreqProfileCoverageTestHelpers.surrogateText([0xD800, 0xE000]), "dummy")); // low > 0xDFFF
+        TracedAssertions.assertEqualsFloat(2.0,
+            ClreqPunctuationAdvancePolicy.advanceEm(ClreqProfileCoverageTestHelpers.surrogateText([0xD800, 0x41]), "dummy")); // low < 0xDC00
+        TracedAssertions.assertEqualsFloat(2.0,
+            ClreqPunctuationAdvancePolicy.advanceEm(ClreqProfileCoverageTestHelpers.surrogateText([0xD800, 0xE000]), "dummy")); // low > 0xDFFF
 
         // Substitutors
         final preserveSubstitutor = new ClreqPunctuationGlyphSubstitutor(CjkPunctuationGlyphPolicy.PreserveInput);

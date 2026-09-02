@@ -11,17 +11,8 @@ class Glyph {
     public final haltAdvance:Null<Float>;
     public final haltPlacementX:Null<Float>;
 
-    public function new(
-        id:Int,
-        clusterRange:TextRange,
-        advance:Float,
-        ?x:Null<Float>,
-        ?y:Null<Float>,
-        ?renderFontKey:Null<String>,
-        ?bounds:Null<Rect>,
-        ?haltAdvance:Null<Float>,
-        ?haltPlacementX:Null<Float>
-    ) {
+    public function new(id:Int, clusterRange:TextRange, advance:Float, ?x:Null<Float>, ?y:Null<Float>, ?renderFontKey:Null<String>, ?bounds:Null<Rect>,
+            ?haltAdvance:Null<Float>, ?haltPlacementX:Null<Float>) {
         this.id = id;
         this.clusterRange = clusterRange;
         this.advance = advance;
