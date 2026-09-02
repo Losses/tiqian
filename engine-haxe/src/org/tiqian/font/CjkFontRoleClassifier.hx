@@ -24,15 +24,21 @@ class CjkFontRoleClassifier implements FontRoleClassifier {
         if (c >= 0x20 && c <= 0x7E || (c >= 0xC0 && c <= 0x24F))
             return LatinText;
         if (c >= 0x3000 && c <= 0x303F || c == 0x2014 || c == 0x2013 || c == 0x203C || c == 0x2047 || c == 0x2026 || c == 0x2027 || c == 0x22EF
-            || c == 0x30FB || c == 0x2E3A || c == 0x00B7 || c == 0x2022 || c >= 0xFF01 && c <= 0xFF5E)
+            || c == 0x30FB || c == 0x2E3A || c == 0x00B7 || c == 0x2022 || c == 0xFF01 || c == 0xFF1F || c == 0xFF0C || c == 0xFF0E || c == 0xFF0F
+            || c == 0xFF1A || c == 0xFF1B || c == 0xFF08 || c == 0xFF09 || c == 0xFF5E)
             return CjkPunctuation;
         if (UnicodeEmojiPresentationData.contains(c))
             return Emoji;
-        if (c == 0x00B1 || c == 0x20AC || c == 0x2764 || c == 0x02D8 || c == 0x00A9 || c == 0x2260)
+        // Mirrors Kotlin isSymbolCodePoint: toCharOrNull()?.category in {Sm, Sc, Sk, So},
+        // so only the BMP classifies as Symbol; supplementary code points stay Unknown.
+        if (c <= 0xFFFF && UnicodeSymbolData.contains(c))
             return Symbol;
         return Unknown;
     }
 
+    // Mirrors Kotlin isLatinRunCodePoint: typed ASCII, Latin letters, plus the four
+    // ambiguous curly quotes (a neighboring curly quote joins the Latin run too).
     static function isLatin(c:Null<Int>):Bool
-        return c != null && (c >= 0x20 && c <= 0x7E || c >= 0xC0 && c <= 0x24F);
+        return c != null
+            && (c >= 0x20 && c <= 0x7E || c >= 0xC0 && c <= 0x24F || c == 0x2018 || c == 0x2019 || c == 0x201C || c == 0x201D);
 }
