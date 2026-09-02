@@ -660,11 +660,13 @@ class Main {
         run("privateUseFollowerOfAHighSurrogateCountsAsOneUnit",
             ContextualQuoteRoleResolverNestedAndSurrogateTest.privateUseFollowerOfAHighSurrogateCountsAsOneUnit);
         TestTraceRecorder.flushClass("ContextualQuoteRoleResolverNestedAndSurrogateTest");
-        run("clusterRoleRangesModifierBaseWithVariationSelectorAndModifier", ClusterRoleResolutionCoverageTest.clusterRoleRangesModifierBaseWithVariationSelectorAndModifier);
+        run("clusterRoleRangesModifierBaseWithVariationSelectorAndModifier",
+            ClusterRoleResolutionCoverageTest.clusterRoleRangesModifierBaseWithVariationSelectorAndModifier);
         run("clusterRoleRangesWithAsciiPointMark", ClusterRoleResolutionCoverageTest.clusterRoleRangesWithAsciiPointMark);
         run("clusterRoleRangesWithAsciiPointMarkAttached", ClusterRoleResolutionCoverageTest.clusterRoleRangesWithAsciiPointMarkAttached);
         run("clusterRoleRangesWithAttachedAsciiPointMarkAtStart", ClusterRoleResolutionCoverageTest.clusterRoleRangesWithAttachedAsciiPointMarkAtStart);
-        run("clusterRoleRangesWithAttachedAsciiPointMarkFollowedByLatin", ClusterRoleResolutionCoverageTest.clusterRoleRangesWithAttachedAsciiPointMarkFollowedByLatin);
+        run("clusterRoleRangesWithAttachedAsciiPointMarkFollowedByLatin",
+            ClusterRoleResolutionCoverageTest.clusterRoleRangesWithAttachedAsciiPointMarkFollowedByLatin);
         run("clusterRoleRangesWithAttachedAsciiPointMarkNotAdjacent", ClusterRoleResolutionCoverageTest.clusterRoleRangesWithAttachedAsciiPointMarkNotAdjacent);
         run("clusterRoleRangesWithCjkPunctuationAndCoalesce", ClusterRoleResolutionCoverageTest.clusterRoleRangesWithCjkPunctuationAndCoalesce);
         run("clusterRoleRangesWithCjkPunctuationCoalesce", ClusterRoleResolutionCoverageTest.clusterRoleRangesWithCjkPunctuationCoalesce);
@@ -682,7 +684,8 @@ class Main {
         run("clusterRoleRangesWithEmojiShapingBoundaries", ClusterRoleResolutionCoverageTest.clusterRoleRangesWithEmojiShapingBoundaries);
         run("clusterRoleRangesWithEmojiShapingBoundaryAtGraphemeEnd", ClusterRoleResolutionCoverageTest.clusterRoleRangesWithEmojiShapingBoundaryAtGraphemeEnd);
         run("clusterRoleRangesWithEmojiShapingBoundaryInside", ClusterRoleResolutionCoverageTest.clusterRoleRangesWithEmojiShapingBoundaryInside);
-        run("clusterRoleRangesWithEmojiShapingBoundaryInsideAndOutsideRange", ClusterRoleResolutionCoverageTest.clusterRoleRangesWithEmojiShapingBoundaryInsideAndOutsideRange);
+        run("clusterRoleRangesWithEmojiShapingBoundaryInsideAndOutsideRange",
+            ClusterRoleResolutionCoverageTest.clusterRoleRangesWithEmojiShapingBoundaryInsideAndOutsideRange);
         run("clusterRoleRangesWithEmojiStyleVariation", ClusterRoleResolutionCoverageTest.clusterRoleRangesWithEmojiStyleVariation);
         run("clusterRoleRangesWithEmojiStyleVariationNoFE0F", ClusterRoleResolutionCoverageTest.clusterRoleRangesWithEmojiStyleVariationNoFE0F);
         run("clusterRoleRangesWithEmojiVariationAndModifier", ClusterRoleResolutionCoverageTest.clusterRoleRangesWithEmojiVariationAndModifier);
@@ -726,17 +729,24 @@ class Main {
         run("requireCoveredByWithOverlappingDecisions", ClusterRoleResolutionCoverageTest.requireCoveredByWithOverlappingDecisions);
         run("requireCoveredByWithSingleCluster", ClusterRoleResolutionCoverageTest.requireCoveredByWithSingleCluster);
         TestTraceRecorder.flushClass("ClusterRoleResolutionCoverageTest");
-        run("astralVariationSelectorAfterAnAttachedPointMarkEndsTheRun", ClusterRoleResolutionSurrogateAndExtenderEdgeTest.astralVariationSelectorAfterAnAttachedPointMarkEndsTheRun);
-        run("astralVariationSelectorBetweenBaseAndModifierKeepsTheSequence", ClusterRoleResolutionSurrogateAndExtenderEdgeTest.astralVariationSelectorBetweenBaseAndModifierKeepsTheSequence);
+        run("astralVariationSelectorAfterAnAttachedPointMarkEndsTheRun",
+            ClusterRoleResolutionSurrogateAndExtenderEdgeTest.astralVariationSelectorAfterAnAttachedPointMarkEndsTheRun);
+        run("astralVariationSelectorBetweenBaseAndModifierKeepsTheSequence",
+            ClusterRoleResolutionSurrogateAndExtenderEdgeTest.astralVariationSelectorBetweenBaseAndModifierKeepsTheSequence);
         run("astralVariationSelectorExtendsTheRunBeforeIt", ClusterRoleResolutionSurrogateAndExtenderEdgeTest.astralVariationSelectorExtendsTheRunBeforeIt);
-        run("codePointAboveTheSupplementarySelectorRangeStandsAlone", ClusterRoleResolutionSurrogateAndExtenderEdgeTest.codePointAboveTheSupplementarySelectorRangeStandsAlone);
+        run("codePointAboveTheSupplementarySelectorRangeStandsAlone",
+            ClusterRoleResolutionSurrogateAndExtenderEdgeTest.codePointAboveTheSupplementarySelectorRangeStandsAlone);
         run("highSurrogateBeforePlainBmpKeepsTheLoneHalf", ClusterRoleResolutionSurrogateAndExtenderEdgeTest.highSurrogateBeforePlainBmpKeepsTheLoneHalf);
         run("highSurrogateBeforePrivateUseKeepsTheLoneHalf", ClusterRoleResolutionSurrogateAndExtenderEdgeTest.highSurrogateBeforePrivateUseKeepsTheLoneHalf);
         run("inlineObjectOverTheCrWalksTheLfWithACrBehindIt", ClusterRoleResolutionSurrogateAndExtenderEdgeTest.inlineObjectOverTheCrWalksTheLfWithACrBehindIt);
-        run("modifierBaseWithABmpSelectorWalksTheSelectorTrueArm", ClusterRoleResolutionSurrogateAndExtenderEdgeTest.modifierBaseWithABmpSelectorWalksTheSelectorTrueArm);
-        run("modifierBaseWithOnlyASelectorEndsTheWalkAtTheClusterEnd", ClusterRoleResolutionSurrogateAndExtenderEdgeTest.modifierBaseWithOnlyASelectorEndsTheWalkAtTheClusterEnd);
-        run("spanBoundaryAfterASpaceLetThePointMarkSeeItsWhitespaceNeighbour", ClusterRoleResolutionSurrogateAndExtenderEdgeTest.spanBoundaryAfterASpaceLetThePointMarkSeeItsWhitespaceNeighbour);
-        run("zwjMemberInsideAModifierBaseClusterBreaksTheWalkBelowTheRange", ClusterRoleResolutionSurrogateAndExtenderEdgeTest.zwjMemberInsideAModifierBaseClusterBreaksTheWalkBelowTheRange);
+        run("modifierBaseWithABmpSelectorWalksTheSelectorTrueArm",
+            ClusterRoleResolutionSurrogateAndExtenderEdgeTest.modifierBaseWithABmpSelectorWalksTheSelectorTrueArm);
+        run("modifierBaseWithOnlyASelectorEndsTheWalkAtTheClusterEnd",
+            ClusterRoleResolutionSurrogateAndExtenderEdgeTest.modifierBaseWithOnlyASelectorEndsTheWalkAtTheClusterEnd);
+        run("spanBoundaryAfterASpaceLetThePointMarkSeeItsWhitespaceNeighbour",
+            ClusterRoleResolutionSurrogateAndExtenderEdgeTest.spanBoundaryAfterASpaceLetThePointMarkSeeItsWhitespaceNeighbour);
+        run("zwjMemberInsideAModifierBaseClusterBreaksTheWalkBelowTheRange",
+            ClusterRoleResolutionSurrogateAndExtenderEdgeTest.zwjMemberInsideAModifierBaseClusterBreaksTheWalkBelowTheRange);
         TestTraceRecorder.flushClass("ClusterRoleResolutionSurrogateAndExtenderEdgeTest");
         run("carryPreviousMovesThePreviousTailDownWhenItFits", LineRepairCoverageTest.carryPreviousMovesThePreviousTailDownWhenItFits);
         run("contextualHangExtendsOnlyInsideItsProtectedGroup", LineRepairCoverageTest.contextualHangExtendsOnlyInsideItsProtectedGroup);
@@ -758,7 +768,8 @@ class Main {
         run("leaveRaggedRefusesCarriesThatWouldSplitAnUnbreakableSpan", LineRepairCoverageTest.leaveRaggedRefusesCarriesThatWouldSplitAnUnbreakableSpan);
         run("mandatoryBreakAndEmptyLinesSkipTheRepairLoop", LineRepairCoverageTest.mandatoryBreakAndEmptyLinesSkipTheRepairLoop);
         run("mandatoryBreakTailEndReturnsTheMergeThroughAtTheLineEnd", LineRepairCoverageTest.mandatoryBreakTailEndReturnsTheMergeThroughAtTheLineEnd);
-        run("pushInFiltersOutOfRangeZeroCapacityAndForeignLineEndOnlyOpportunities", LineRepairCoverageTest.pushInFiltersOutOfRangeZeroCapacityAndForeignLineEndOnlyOpportunities);
+        run("pushInFiltersOutOfRangeZeroCapacityAndForeignLineEndOnlyOpportunities",
+            LineRepairCoverageTest.pushInFiltersOutOfRangeZeroCapacityAndForeignLineEndOnlyOpportunities);
         run("pushInFitsWithoutShrinkWhenTheMergedLineAlreadyMatches", LineRepairCoverageTest.pushInFitsWithoutShrinkWhenTheMergedLineAlreadyMatches);
         run("pushInPromotesTheOffendersOwnTrailingGlueToTierOne", LineRepairCoverageTest.pushInPromotesTheOffendersOwnTrailingGlueToTierOne);
         run("pushInRejectsAMergeThroughClusterOutsideTheCurrentLine", LineRepairCoverageTest.pushInRejectsAMergeThroughClusterOutsideTheCurrentLine);
