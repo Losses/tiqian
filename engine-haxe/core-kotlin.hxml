@@ -84,3 +84,4 @@ org.tiqian.layout.ClusterRoleResolutionSurrogateAndExtenderEdgeTest
 org.tiqian.layout.DefaultHyphenator
 org.tiqian.layout.LineRepairCoverageTest
 org.tiqian.layout.LineRepairTailCoverageTest
+org.tiqian.font.UnicodeSymbolData
