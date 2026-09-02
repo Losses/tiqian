@@ -24,8 +24,6 @@ class InlineObjectPreferredStretch {
         return targetWidth - naturalWidth;
     }
 
-
-
     private static function isFinite(value:Float):Bool {
         return value == value && value != Math.POSITIVE_INFINITY && value != Math.NEGATIVE_INFINITY;
     }

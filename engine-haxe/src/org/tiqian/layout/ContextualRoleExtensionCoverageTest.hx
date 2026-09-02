@@ -1,4 +1,5 @@
 package org.tiqian.layout;
+
 import org.tiqian.core.TextRange;
 import org.tiqian.layout.ContextualDashEllipsisRoleResolver.ContextualDashEllipsisRoles;
 import org.tiqian.layout.QuotePairAnalyzer.QuotePairAwareFontRoleClassifier;

@@ -14,7 +14,8 @@ class LineRepairDecisionInfo {
     public final availableCapacity:Float;
     public final pushInAllocations:ReadOnlyArray<LineRepairAllocationInfo>;
 
-    public function new(kind:String, reasonCode:String, offenderRange:TextRange, penalty:Int, ?targetClusterIndex:Null<Int>, ?carriedClusterIndex:Null<Int>, ?shrink:Null<Float>, ?availableCapacity:Null<Float>, ?pushInAllocations:Array<LineRepairAllocationInfo>) {
+    public function new(kind:String, reasonCode:String, offenderRange:TextRange, penalty:Int, ?targetClusterIndex:Null<Int>, ?carriedClusterIndex:Null<Int>,
+            ?shrink:Null<Float>, ?availableCapacity:Null<Float>, ?pushInAllocations:Array<LineRepairAllocationInfo>) {
         this.kind = kind;
         this.reasonCode = reasonCode;
         this.offenderRange = offenderRange;

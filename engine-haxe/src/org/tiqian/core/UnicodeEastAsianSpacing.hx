@@ -12,13 +12,9 @@ class UnicodeEastAsianSpacing {
         if (language == "zh") {
             return true;
         }
-        return language == "cdo" || language == "cjy" || language == "cmn"
-            || language == "cnp" || language == "cpx" || language == "csp"
-            || language == "czh" || language == "czo" || language == "gan"
-            || language == "hak" || language == "hnm" || language == "hsn"
-            || language == "luh" || language == "lzh" || language == "mnp"
-            || language == "nan" || language == "sjc" || language == "wuu"
-            || language == "yue";
+        return language == "cdo" || language == "cjy" || language == "cmn" || language == "cnp" || language == "cpx" || language == "csp"
+            || language == "czh" || language == "czo" || language == "gan" || language == "hak" || language == "hnm" || language == "hsn"
+            || language == "luh" || language == "lzh" || language == "mnp" || language == "nan" || language == "sjc" || language == "wuu" || language == "yue";
     }
 
     public static function propertyOf(codePoint:Int):EastAsianSpacingValue {
@@ -39,9 +35,7 @@ class UnicodeEastAsianSpacing {
             final advance:Int = codePoint > 0xFFFF ? 2 : 1;
             index += advance;
         }
-        final property:EastAsianSpacingValue = propertyOf(
-            SourceInteractionBoundaries.codePointAtCompat(graphemeCluster, 0, graphemeCluster.length)
-        );
+        final property:EastAsianSpacingValue = propertyOf(SourceInteractionBoundaries.codePointAtCompat(graphemeCluster, 0, graphemeCluster.length));
         if (property == EastAsianSpacingValue.Conditional) {
             return isChineseLanguageContext(locale) ? EastAsianSpacingValue.Narrow : EastAsianSpacingValue.Other;
         }
@@ -58,9 +52,7 @@ class UnicodeEastAsianSpacing {
         var trailing:EastAsianSpacingValue = EastAsianSpacingValue.Other;
         var containsWide:Bool = false;
         while (index + 1 < boundaries.length) {
-            final value:EastAsianSpacingValue = resolvedForGraphemeCluster(
-                text.substring(boundaries[index], boundaries[index + 1]), locale
-            );
+            final value:EastAsianSpacingValue = resolvedForGraphemeCluster(text.substring(boundaries[index], boundaries[index + 1]), locale);
             if (index == 0) {
                 leading = value;
             }
@@ -95,7 +87,8 @@ class UnicodeEastAsianSpacing {
     }
 
     private static function isEnclosingMark(codePoint:Int):Bool {
-        return codePoint == 0x0488 || codePoint == 0x0489
+        return codePoint == 0x0488
+            || codePoint == 0x0489
             || codePoint == 0x1ABE
             || (codePoint >= 0x20DD && codePoint <= 0x20E0)
             || (codePoint >= 0xA670 && codePoint <= 0xA672)

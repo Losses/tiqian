@@ -27,5 +27,4 @@ class TextRange {
     public function get_isEmpty():Bool {
         return length == 0;
     }
-
 }

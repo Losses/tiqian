@@ -8,8 +8,10 @@ class BreakOpportunity {
     public final kind:BreakKind;
     public final penalty:Int;
     public final reason:String;
+
     public function new(index:Int, kind:BreakKind, reason:String, ?penalty:Null<Int>) {
-        this.index = index; this.kind = kind;
+        this.index = index;
+        this.kind = kind;
         this.penalty = penalty == null ? 0 : penalty;
         this.reason = reason;
     }
@@ -19,5 +21,9 @@ class BreakOpportunity {
 class ForbiddenBreak {
     public final range:TextRange;
     public final reason:String;
-    public function new(range:TextRange, reason:String) { this.range = range; this.reason = reason; }
+
+    public function new(range:TextRange, reason:String) {
+        this.range = range;
+        this.reason = reason;
+    }
 }

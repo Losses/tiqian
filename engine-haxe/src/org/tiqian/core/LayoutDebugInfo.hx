@@ -41,38 +41,21 @@ class LayoutDebugInfo {
     public final breakOpportunityDecisions:ReadOnlyArray<BreakOpportunityDecisionInfo>;
     public final emergencyTrackingEligibilityDecisions:ReadOnlyArray<EmergencyTrackingEligibilityDecisionInfo>;
 
-    public function new(
-        maxLinesDecision:Null<MaxLinesDecisionInfo>,
-        ?metricDecisions:Array<MetricDecisionInfo>,
-        ?geometryDecisions:Array<ClusterGeometryDecisionInfo>,
-        ?autoSpaceDecisions:Array<AutoSpaceDecisionInfo>,
-        ?rubyDecisions:Array<RubyDecisionInfo>,
-        ?bopomofoDecisions:Array<BopomofoDecisionInfo>,
-        ?fontDecisions:Array<FontDecisionInfo>,
-        ?shapingDecisions:Array<ShapingDecisionInfo>,
-        ?punctuationDecisions:Array<PunctuationDecisionInfo>,
-        ?spacingDecisions:Array<SpacingDecisionInfo>,
-        ?roleOverrides:Array<RoleOverrideInfo>,
-        ?lineDecisions:Array<LineDecisionInfo>,
-        ?justificationDecisions:Array<JustificationDecisionInfo>,
-        ?lineEdgeTrimDecisions:Array<LineEdgeTrimDecisionInfo>,
-        ?decorationDecisions:Array<DecorationDecisionInfo>,
-        ?decorationSegments:Array<DecorationSegmentInfo>,
-        ?mandatoryBreakDecisions:Array<MandatoryBreakDecisionInfo>,
-        ?lineSpacingDecision:Null<LineSpacingDecisionInfo>,
-        ?rubyLineHeightDecision:Null<RubyLineHeightDecisionInfo>,
-        ?inlineObjectLineHeightDecision:Null<InlineObjectLineHeightDecisionInfo>,
-        ?kinsokuDecision:Null<KinsokuDecisionInfo>,
-        ?contextualKinsokuDecisions:Array<ContextualKinsokuDecisionInfo>,
-        ?lineLengthGridDecision:Null<LineLengthGridDecisionInfo>,
-        ?firstLineIndentDecision:Null<FirstLineIndentDecisionInfo>,
-        ?inlineBoxDecisions:Array<InlineBoxDecisionInfo>,
-        ?inlineObjectDecisions:Array<InlineObjectDecisionInfo>,
-        ?inlineObjectPunctuationAttachmentDecisions:Array<InlineObjectPunctuationAttachmentDecisionInfo>,
-        ?zeroWidthBreakDecisions:Array<ZeroWidthBreakDecisionInfo>,
-        ?breakOpportunityDecisions:Array<BreakOpportunityDecisionInfo>,
-        ?emergencyTrackingEligibilityDecisions:Array<EmergencyTrackingEligibilityDecisionInfo>
-    ) {
+    public function new(maxLinesDecision:Null<MaxLinesDecisionInfo>, ?metricDecisions:Array<MetricDecisionInfo>,
+            ?geometryDecisions:Array<ClusterGeometryDecisionInfo>, ?autoSpaceDecisions:Array<AutoSpaceDecisionInfo>, ?rubyDecisions:Array<RubyDecisionInfo>,
+            ?bopomofoDecisions:Array<BopomofoDecisionInfo>, ?fontDecisions:Array<FontDecisionInfo>, ?shapingDecisions:Array<ShapingDecisionInfo>,
+            ?punctuationDecisions:Array<PunctuationDecisionInfo>, ?spacingDecisions:Array<SpacingDecisionInfo>, ?roleOverrides:Array<RoleOverrideInfo>,
+            ?lineDecisions:Array<LineDecisionInfo>, ?justificationDecisions:Array<JustificationDecisionInfo>,
+            ?lineEdgeTrimDecisions:Array<LineEdgeTrimDecisionInfo>, ?decorationDecisions:Array<DecorationDecisionInfo>,
+            ?decorationSegments:Array<DecorationSegmentInfo>, ?mandatoryBreakDecisions:Array<MandatoryBreakDecisionInfo>,
+            ?lineSpacingDecision:Null<LineSpacingDecisionInfo>, ?rubyLineHeightDecision:Null<RubyLineHeightDecisionInfo>,
+            ?inlineObjectLineHeightDecision:Null<InlineObjectLineHeightDecisionInfo>, ?kinsokuDecision:Null<KinsokuDecisionInfo>,
+            ?contextualKinsokuDecisions:Array<ContextualKinsokuDecisionInfo>, ?lineLengthGridDecision:Null<LineLengthGridDecisionInfo>,
+            ?firstLineIndentDecision:Null<FirstLineIndentDecisionInfo>, ?inlineBoxDecisions:Array<InlineBoxDecisionInfo>,
+            ?inlineObjectDecisions:Array<InlineObjectDecisionInfo>,
+            ?inlineObjectPunctuationAttachmentDecisions:Array<InlineObjectPunctuationAttachmentDecisionInfo>,
+            ?zeroWidthBreakDecisions:Array<ZeroWidthBreakDecisionInfo>, ?breakOpportunityDecisions:Array<BreakOpportunityDecisionInfo>,
+            ?emergencyTrackingEligibilityDecisions:Array<EmergencyTrackingEligibilityDecisionInfo>) {
         this.maxLinesDecision = maxLinesDecision;
         this.metricDecisions = metricDecisions == null ? [] : metricDecisions;
         this.geometryDecisions = geometryDecisions == null ? [] : geometryDecisions;

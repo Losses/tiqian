@@ -1,6 +1,5 @@
 package org.tiqian.core;
 
-
 @:dataClass
 class PunctuationDecisionInfo {
     public final range:TextRange;
@@ -32,7 +31,11 @@ class PunctuationDecisionInfo {
     public final leadingGlueInitiallyConsumed:Float;
     public final trailingGlueInitiallyConsumed:Float;
 
-    public function new(range:TextRange, char:String, punctuationClass:String, advance:Float, bodyWidth:Float, leadingGlueNatural:Float, trailingGlueNatural:Float, anchor:String, ?inkBounds:Null<Rect>, ?geometrySource:Null<String>, policyBodyFloor:Float, ?inkWidth:Null<Float>, ?inkCenter:Null<Float>, ?inkContainmentBodyFloor:Null<Float>, ?inkContainmentApplied:Null<Bool>, ?inkBoundsFallback:Null<String>, ?haltAdvance:Null<Float>, ?haltValidation:Null<String>, ?advanceExpansion:Null<Float>, ?glyphInlineShift:Null<Float>, ?glyphPlacementReason:Null<String>, ?leadingGlueInitiallyConsumed:Null<Float>, ?trailingGlueInitiallyConsumed:Null<Float>) {
+    public function new(range:TextRange, char:String, punctuationClass:String, advance:Float, bodyWidth:Float, leadingGlueNatural:Float,
+            trailingGlueNatural:Float, anchor:String, ?inkBounds:Null<Rect>, ?geometrySource:Null<String>, policyBodyFloor:Float, ?inkWidth:Null<Float>,
+            ?inkCenter:Null<Float>, ?inkContainmentBodyFloor:Null<Float>, ?inkContainmentApplied:Null<Bool>, ?inkBoundsFallback:Null<String>,
+            ?haltAdvance:Null<Float>, ?haltValidation:Null<String>, ?advanceExpansion:Null<Float>, ?glyphInlineShift:Null<Float>,
+            ?glyphPlacementReason:Null<String>, ?leadingGlueInitiallyConsumed:Null<Float>, ?trailingGlueInitiallyConsumed:Null<Float>) {
         this.range = range;
         this.char = char;
         this.punctuationClass = punctuationClass;
