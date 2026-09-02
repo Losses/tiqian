@@ -1,5 +1,7 @@
 package org.tiqian.layout;
 
+
+using std.Functional;
 import org.tiqian.core.Cluster;
 import org.tiqian.core.IntRange;
 import org.tiqian.core.LineEndReason;
@@ -38,6 +40,8 @@ import std.SortedSet;
         this.candidate = candidate;
     }
 }
+
+typedef ShrinkTierEntry = {final key:Int; final value:ShrinkOpportunity;};
 
 class LineRepair {
     public static function applyKinsokuRepairs(initial:Array<LineCandidate>, naturalClusters:Array<Cluster>, adjustedClusters:Array<Cluster>, maxWidth:Float,
@@ -198,14 +202,7 @@ class LineRepair {
             i++;
         }
 
-        var totalBadness = 0.0;
-        var li = 0;
-        while (li < mutable.length) {
-            final line = mutable[li];
-            if (line.repair != null)
-                totalBadness += RepairOptions.penalty(line.repair);
-            li++;
-        }
+        final totalBadness = mutable.sumOfFloat(line -> line.repair == null ? 0.0 : RepairOptions.penalty(line.repair) * 1.0);
         return new LineSolution(mutable, totalBadness);
     }
 
@@ -220,29 +217,18 @@ class LineRepair {
         final expanded = LineBreakerLines.rebuildLine(expandedRange, naturalClusters, adjustedClusters);
         final overflow = expanded.adjustedWidth - maxWidth;
 
-        final inLine:Array<ShrinkOpportunity> = [];
-        var oi = 0;
-        while (oi < shrinkOpportunities.length) {
-            final opp = shrinkOpportunities[oi];
-            if (opp.clusterIndex >= expandedRange.start
+        final inLine:Array<ShrinkOpportunity> = shrinkOpportunities
+            .filter(opp -> opp.clusterIndex >= expandedRange.start
                 && opp.clusterIndex <= expandedRange.end
                 && opp.capacity > 0
-                && (!opp.lineEndOnly || opp.clusterIndex == offenderIndex)) {
+                && (!opp.lineEndOnly || opp.clusterIndex == offenderIndex))
+            .map(opp -> {
                 if (opp.clusterIndex == offenderIndex
-                    && (opp.channel == ShrinkChannel.TrailingGlue || opp.channel == ShrinkChannel.LeadingAndTrailingGlue)) {
-                    inLine.push(new ShrinkOpportunity(opp.clusterIndex, 1, opp.capacity, opp.channel, opp.lineEndOnly));
-                } else {
-                    inLine.push(opp);
-                }
-            }
-            oi++;
-        }
-        var totalCapacity = 0.0;
-        var ii = 0;
-        while (ii < inLine.length) {
-            totalCapacity += inLine[ii].capacity;
-            ii++;
-        }
+                    && (opp.channel == ShrinkChannel.TrailingGlue || opp.channel == ShrinkChannel.LeadingAndTrailingGlue))
+                    return new ShrinkOpportunity(opp.clusterIndex, 1, opp.capacity, opp.channel, opp.lineEndOnly);
+                return opp;
+            });
+        final totalCapacity = inLine.sumOfFloat(opp -> opp.capacity);
 
         if (overflow > totalCapacity) {
             final required = overflow > 0 ? overflow : 0;
@@ -297,69 +283,18 @@ class LineRepair {
             return [];
         final allocations:Array<PushInAllocation> = [];
         var remaining = totalShrink;
-        final tiers:Array<Int> = [];
-        var ti = 0;
-        while (ti < opportunities.length) {
-            final tier = opportunities[ti].tier;
-            var found = false;
-            var x = 0;
-            while (x < tiers.length) {
-                if (tiers[x] == tier) {
-                    found = true;
-                    break;
-                }
-                x++;
-            }
-            if (!found)
-                tiers.push(tier);
-            ti++;
-        }
-        var s0 = 1;
-        while (s0 < tiers.length) {
-            final key = tiers[s0];
-            var s1 = s0;
-            while (s1 > 0 && tiers[s1 - 1] > key) {
-                tiers[s1] = tiers[s1 - 1];
-                s1--;
-            }
-            tiers[s1] = key;
-            s0++;
-        }
+        final byTier = opportunities.groupBy(function(opp:ShrinkOpportunity):ShrinkTierEntry return {key: opp.tier, value: opp});
         var tierIdx = 0;
-        while (tierIdx < tiers.length) {
-            final tier = tiers[tierIdx];
-            if (remaining <= 0)
-                break;
-            final tierOpps:Array<ShrinkOpportunity> = [];
-            var oi = 0;
-            while (oi < opportunities.length) {
-                if (opportunities[oi].tier == tier)
-                    tierOpps.push(opportunities[oi]);
-                oi++;
-            }
-            var k0 = 1;
-            while (k0 < tierOpps.length) {
-                final key = tierOpps[k0];
-                var k1 = k0;
-                while (k1 > 0 && tierOpps[k1 - 1].clusterIndex > key.clusterIndex) {
-                    tierOpps[k1] = tierOpps[k1 - 1];
-                    k1--;
-                }
-                tierOpps[k1] = key;
-                k0++;
-            }
-            var tierCapacity = 0.0;
-            var ci = 0;
-            while (ci < tierOpps.length) {
-                tierCapacity += tierOpps[ci].capacity;
-                ci++;
-            }
+        while (tierIdx < byTier.size()) {
+            final tierOpps:Array<ShrinkOpportunity> = byTier.valueAt(tierIdx);
+            final tierCapacity = tierOpps.sumOfFloat(opp -> opp.capacity);
             if (tierCapacity > 0) {
                 final tierShrink = remaining < tierCapacity ? remaining : tierCapacity;
                 var tierRemaining = tierShrink;
+                final ordered = sortByClusterIndex(tierOpps);
                 var i2 = 0;
-                while (i2 < tierOpps.length) {
-                    final opp = tierOpps[i2];
+                while (i2 < ordered.length) {
+                    final opp = ordered[i2];
                     final isLast = i2 == tierOpps.length - 1;
                     var share = 0.0;
                     if (isLast) {
@@ -380,6 +315,9 @@ class LineRepair {
         }
         return allocations;
     }
+
+    static function sortByClusterIndex(opportunities:Array<ShrinkOpportunity>):Array<ShrinkOpportunity>
+        return opportunities.sortedBy(opp -> opp.clusterIndex);
 
     static function toPortableDebugString(value:Float):String {
         final text = "" + value;
