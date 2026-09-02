@@ -1,5 +1,7 @@
 package org.tiqian.font;
 
+
+using std.Functional;
 @:dataClass class FontRequest {
     public final preferredFamilies:std.ReadOnlyArray<String>;
     public final locale:String;
@@ -58,13 +60,6 @@ class FontRoleFns {
         if (roleName == null)
             return false;
         final values:Array<FontRole> = Type.allEnums(FontRole);
-        var index:Int = 0;
-        while (index < values.length) {
-            if (Type.enumConstructor(values[index]) == roleName) {
-                return usesLatinFace(values[index]);
-            }
-            index += 1;
-        }
-        return false;
+        return values.any(value -> Type.enumConstructor(value) == roleName && usesLatinFace(value));
     }
 }
