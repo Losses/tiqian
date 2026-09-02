@@ -2,7 +2,6 @@ package org.tiqian.layout;
 
 import org.tiqian.core.Cluster;
 import org.tiqian.core.IntRange;
-import org.tiqian.core.IllegalStateException;
 import org.tiqian.core.LineEndReason;
 import org.tiqian.core.TextRange;
 import org.tiqian.layout.KinsokuRule;
@@ -34,7 +33,7 @@ class ParagraphDpLineBreaker implements LineBreaker {
             ?consecutiveStretchPenalty:Float, ?compressionVisibility:Float) {
         this.candidateWindow = candidateWindow == null ? 8 : candidateWindow;
         if (this.candidateWindow < 0)
-            throw new org.tiqian.core.TiqianIllegalArgumentException(org.tiqian.core.TextRangeError.Message("candidateWindow must be non-negative"));
+            throw new org.tiqian.core.TiqianIllegalArgumentException(org.tiqian.core.TextRangeError.Message("candidateWindow must be non-negative."));
         this.raggednessWeight = raggednessWeight == null ? 0.5 : raggednessWeight;
         this.kinsoku = kinsoku == null ? new ClreqKinsokuRule() : kinsoku;
         this.pushInPenalty = pushInPenalty == null ? 2 : pushInPenalty;
@@ -56,7 +55,7 @@ class ParagraphDpLineBreaker implements LineBreaker {
             ?lineAdjustmentPushIn:Bool, ?lineAdjustmentCompressBias:Float, ?hardBreakAfterClusters:SortedSet<Int>, ?nonRenderingControlClusters:SortedSet<Int>,
             ?progressiveBreakOpportunities:SortedMap<Int, ProgressiveBreakOpportunity>):LineSolution {
         if (adjustedClusters.length == 0) return new LineSolution([]);
-        if (naturalClusters.length != adjustedClusters.length) throw new IllegalStateException("naturalClusters and adjustedClusters must align cluster-for-cluster.");
+        if (naturalClusters.length != adjustedClusters.length) throw new org.tiqian.core.TiqianIllegalArgumentException(org.tiqian.core.TextRangeError.Message("naturalClusters and adjustedClusters must align cluster-for-cluster."));
         final shrink = shrinkOpportunities == null ? [] : shrinkOpportunities;
         final ranges = unbreakableRanges == null ? new UnbreakableRanges([]) : unbreakableRanges;
         final indent = firstLineIndent == null ? 0.0 : firstLineIndent;
@@ -178,15 +177,16 @@ class ParagraphDpLineBreaker implements LineBreaker {
             Math.max(dSino, dCjk) > VISIBLE_STRETCH_FLOOR_PX);
     }
     private function solveSegment(context:DpContext, segmentStart:Int, segmentEndExclusive:Int, endsWithMandatory:Bool):Array<Int> {
-        final statesBuilder = SortedMap.builder();
+        // SortedMap is an immutable extern: build() snapshots, so late builder
+        // puts never reach the built map. Keep the builders as the live stores
+        // and read through builder.get for the whole segment.
+        final statesBuilder:SortedMapBuilder<Int, Array<EdgeState>> = SortedMap.builder();
         statesBuilder.put(segmentStart, []);
-        final statesByStart:SortedMap<Int, Array<EdgeState>> = statesBuilder.build();
-        final bestBuilder = SortedMap.builder();
-        final bestByKey:SortedMap<String, EdgeState> = bestBuilder.build();
+        final bestBuilder:SortedMapBuilder<String, EdgeState> = SortedMap.builder();
         var terminalBest:Null<EdgeState> = null;
         var start = segmentStart;
         while (start < segmentEndExclusive) {
-            final bucket = statesByStart.get(start);
+            final bucket = statesBuilder.get(start);
             final incoming:Array<Null<EdgeState>> = [];
             if (start == segmentStart) incoming.push(null);
             else if (bucket != null) for (state in bucket) incoming.push(state);
@@ -209,14 +209,14 @@ class ParagraphDpLineBreaker implements LineBreaker {
                     var sr:Int = 0;
                     if (geometry.visibleStretch) sr = ps + 1 > STRETCH_RUN_STATE_CAP ? STRETCH_RUN_STATE_CAP : ps + 1;
                     final key = start + ":" + e + ":" + hr + ":" + sr;
-                    final existing = bestByKey.get(key);
+                    final existing = bestBuilder.get(key);
                     if (existing != null && existing.cost <= cost) continue;
                     final state = new EdgeState(start, e, hr, sr, cost, prev);
                     bestBuilder.put(key, state);
                     if (last) {
                         if (terminalBest == null || cost < terminalBest.cost) terminalBest = state;
                     } else {
-                        var next = statesByStart.get(e); if (next == null) next = [];
+                        var next = statesBuilder.get(e); if (next == null) next = [];
                         final kept:Array<EdgeState> = [];
                         for (old in next) if (!(old.start == start && old.hyphenRun == hr && old.stretchRun == sr)) kept.push(old);
                         kept.push(state); statesBuilder.put(e, kept);
@@ -254,10 +254,21 @@ class ParagraphDpLineBreaker implements LineBreaker {
             final limit = ProgressiveBreakDecisions.lineLimit(context.maxWidth, context.firstLineIndent, lineStart);
             final naturalLine = LineBreakerLines.rebuildLine(new IntRange(lineStart, lastIndex), context.naturalClusters, context.adjustedClusters, reason);
             var compressed:Null<LineCandidate> = null;
-            if (naturalLine.adjustedWidth > limit && lastIndex > lineStart && context.allowCompressionEdges) {
+            if (naturalLine.adjustedWidth > limit && lastIndex > lineStart) {
+                final resultingBreak = context.progressiveBreakOpportunities.get(chosenEnd);
+                final rawGreedy = findGreedyEnd(context.adjustedClusters, lineStart, limit, ends[ends.length - 1], context.nonRenderingControlClusters);
+                final originalBreak = context.progressiveBreakOpportunities.get(ProgressiveBreakDecisions.decideProgressiveBreak(lineStart, rawGreedy,
+                    context.progressiveBreakOpportunities, context.adjustedClusters, limit, context.cjkInterCharBoundaries, context.maxCjkStretchPerGap,
+                    context.sinoWesternBoundaries, context.sinoWesternStretchCap));
+                final promotesProgressiveTier = originalBreak != null && resultingBreak != null &&
+                    originalBreak.spanRange.start == resultingBreak.spanRange.start && originalBreak.spanRange.end == resultingBreak.spanRange.end &&
+                    resultingBreak.tier.priority < originalBreak.tier.priority;
+                // CompressionAsDpEdge realization: identical repair records to
+                // the fill pass. Same tiered capacity, same promotion reason.
                 final result = LineRepair.tryPushIn(LineBreakerLines.rebuildLine(new IntRange(lineStart, lineStart), context.naturalClusters, context.adjustedClusters),
                     LineBreakerLines.rebuildLine(new IntRange(lineStart + 1, lastIndex), context.naturalClusters, context.adjustedClusters, reason),
-                    context.naturalClusters, context.adjustedClusters, limit, context.shrinkOpportunities, pushInPenalty, lastIndex, "LineAdjustmentPushIn");
+                    context.naturalClusters, context.adjustedClusters, limit, context.shrinkOpportunities, pushInPenalty, lastIndex,
+                    promotesProgressiveTier ? "ProgressiveTechnicalTierPromotion" : "LineAdjustmentPushIn");
                 if (result.candidate.accepted && result.current == null) compressed = result.previous;
             }
             if (finalLine) {

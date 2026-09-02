@@ -88,3 +88,7 @@ org.tiqian.font.UnicodeSymbolData
 org.tiqian.layout.ParagraphDpLineBreaker
 org.tiqian.layout.PreparedParagraph
 org.tiqian.layout.PreparedParagraphJsonNumberTest
+
+org.tiqian.layout.ParagraphDpLineBreakerTest
+org.tiqian.layout.ParagraphDpLineBreakerCoverageTest
+org.tiqian.layout.ParagraphDpLineBreakerCoverage2Test

@@ -94,6 +94,15 @@ class RepairOptions {
             case LeaveRagged(_, _, _): null;
         };
 
+    public static function pushInReasonOf(o:RepairOption):Null<String>
+        return switch (o) {
+            case PushIn(_, reason, _, _, _, _): reason;
+            case Hang(_, _, _): null;
+            case CarryPrevious(_, _, _, _): null;
+            case CarryNext(_, _, _): null;
+            case LeaveRagged(_, _, _): null;
+        };
+
     public static function render(o:RepairOption):String
         return switch (o) {
             case PushIn(penalty, reason, offenderClusterIndex, allocations, totalShrink, totalAvailableCapacity):
