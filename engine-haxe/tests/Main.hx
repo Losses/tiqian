@@ -32,6 +32,7 @@ import org.tiqian.font.ScriptAwareFontMetricsNormalizerTest;
 import org.tiqian.font.UsesLatinFaceTest;
 import org.tiqian.shaping.TextShaperCoverageTest;
 import org.tiqian.shaping.ExplainableStubTextShaperTest;
+import org.tiqian.shaping.ReplayableFontBackendCoverageTest;
 import org.tiqian.linebreak.EnglishHyphenationTest;
 import org.tiqian.linebreak.LiangHyphenatorTest;
 import org.tiqian.layout.ProgressiveBreakDecisionsCoverageTest;
@@ -537,6 +538,12 @@ class Main {
         run("keepsLatinRunAsSingleShapedClusterWithNominalGlyphs", ExplainableStubTextShaperTest.keepsLatinRunAsSingleShapedClusterWithNominalGlyphs);
         run("shapesClreqDashSubstitutionAsTwoEmDisplayCluster", ExplainableStubTextShaperTest.shapesClreqDashSubstitutionAsTwoEmDisplayCluster);
         TestTraceRecorder.flushClass("ExplainableStubTextShaperTest");
+        run("fontFaceIdRejectsBlankAndKeepsValue", ReplayableFontBackendCoverageTest.fontFaceIdRejectsBlankAndKeepsValue);
+        run("faceDescriptorDefaultsAreStable", ReplayableFontBackendCoverageTest.faceDescriptorDefaultsAreStable);
+        run("faceRequestRejectsNonPositiveAndNonFiniteFontSize", ReplayableFontBackendCoverageTest.faceRequestRejectsNonPositiveAndNonFiniteFontSize);
+        run("capabilityReportReplayFlagRequiresFacesAndNoMissingFaceIssue", ReplayableFontBackendCoverageTest.capabilityReportReplayFlagRequiresFacesAndNoMissingFaceIssue);
+        run("catalogContractResolvesByRequest", ReplayableFontBackendCoverageTest.catalogContractResolvesByRequest);
+        TestTraceRecorder.flushClass("ReplayableFontBackendCoverageTest");
 
         run("glueRejectsInvertedBounds", PunctuationModelCoverageTest.glueRejectsInvertedBounds);
         run("adjustmentOpportunityCarriesRangeAndGlue", PunctuationModelCoverageTest.adjustmentOpportunityCarriesRangeAndGlue);
