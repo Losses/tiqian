@@ -213,15 +213,8 @@ class LayoutQueries {
             return getCursorRect(result, clamped);
         }
         final positioned:Array<PositionedCluster> = positionedClusters(result);
-        var index:Int = 0;
-        while (index < positioned.length) {
-            final cluster:PositionedCluster = positioned[index];
-            if (clamped >= cluster.range.start && clamped < cluster.range.end) {
-                return cluster.rect;
-            }
-            index += 1;
-        }
-        return getCursorRect(result, clamped);
+        final match:Null<PositionedCluster> = positioned.firstOrNull(cluster -> clamped >= cluster.range.start && clamped < cluster.range.end);
+        return match == null ? getCursorRect(result, clamped) : match.rect;
     }
 
     public static function getBoundingBoxes(result:LayoutResult, range:TextRange):Array<Rect> {
@@ -233,19 +226,8 @@ class LayoutQueries {
         if (start == end) {
             return [];
         }
-        final output:Array<Rect> = [];
         final positioned:Array<PositionedCluster> = positionedClusters(result);
-        var index:Int = 0;
-        while (index < positioned.length) {
-            final cluster:PositionedCluster = positioned[index];
-            final sliceStart:Int = maxInt(start, cluster.range.start);
-            final sliceEnd:Int = minInt(end, cluster.range.end);
-            if (sliceStart < sliceEnd) {
-                output.push(sliceRect(cluster, sliceStart, sliceEnd));
-            }
-            index += 1;
-        }
-        return output;
+        return positioned.mapNotNull(cluster -> sliceRectIfCovered(cluster, start, end));
     }
 
     public static function getBoundingBoxesInt(result:LayoutResult, start:Int, end:Int):Array<Rect> {
@@ -306,15 +288,7 @@ class LayoutQueries {
         if (occupiedSegments.length == 0) {
             return [];
         }
-        final decorations:Array<RichTextLineSegment> = [];
-        var index:Int = 0;
-        while (index < occupiedSegments.length) {
-            final segment:RichTextLineSegment = occupiedSegments[index];
-            if (isDecorationRole(segment.span.role)) {
-                decorations.push(segment);
-            }
-            index += 1;
-        }
+        final decorations:Array<RichTextLineSegment> = occupiedSegments.filter(segment -> isDecorationRole(segment.span.role));
         if (decorations.length == 0) {
             return [];
         }
@@ -325,15 +299,7 @@ class LayoutQueries {
         if (occupiedSegments.length == 0) {
             return [];
         }
-        final backgrounds:Array<RichTextLineSegment> = [];
-        var index:Int = 0;
-        while (index < occupiedSegments.length) {
-            final segment:RichTextLineSegment = occupiedSegments[index];
-            if (isBackgroundRole(segment.span.role)) {
-                backgrounds.push(segment);
-            }
-            index += 1;
-        }
+        final backgrounds:Array<RichTextLineSegment> = occupiedSegments.filter(segment -> isBackgroundRole(segment.span.role));
         if (backgrounds.length == 0) {
             return [];
         }
@@ -341,7 +307,7 @@ class LayoutQueries {
         final positioned:Array<PositionedCluster> = positionedClusters(result);
         final trimmed:Array<RichTextLineSegment> = trimOuterPunctuationGlue(result, backgrounds);
         final output:Array<RichTextLineSegment> = [];
-        index = 0;
+        var index:Int = 0;
         while (index < trimmed.length) {
             final segment:RichTextLineSegment = trimmed[index];
             final covered:Array<PositionedCluster> = clustersOnSegmentLine(positioned, segment);
@@ -616,79 +582,58 @@ class LayoutQueries {
         var rubyIndex:Int = 0;
         while (rubyIndex < result.debug.rubyDecisions.length) {
             final ruby:RubyDecisionInfo = result.debug.rubyDecisions[rubyIndex];
-            if (ruby.lineIndex == lineIndex && ruby.width > 0.0) {
-                rubies.push(ruby);
-            }
-            rubyIndex += 1;
+            if (ruby.lineIndex == lineIndex && ruby.width > 0.0) rubies.push(ruby);
+            rubyIndex++;
         }
-        if (rubies.length == 0) {
-            return positioned;
-        }
-
-        final bounds:Array<SelectionBounds> = [];
-        var index:Int = 0;
-        while (index < positioned.length) {
-            final cluster:PositionedCluster = positioned[index];
+        if (rubies.length == 0) return positioned;
+        final bounds:Array<SelectionBounds> = positioned.map(cluster -> {
             final spread:Float = floatByRangeFromGeometry(result, cluster.range);
-            bounds.push(new SelectionBounds(cluster.left, maxFloat(cluster.right - spread, cluster.left)));
-            index += 1;
-        }
-
-        rubyIndex = 0;
+            return new SelectionBounds(cluster.left, maxFloat(cluster.right - spread, cluster.left));
+        });
+        var rubyIndex:Int = 0;
         while (rubyIndex < rubies.length) {
-            final ruby:RubyDecisionInfo = rubies[rubyIndex];
+            final ruby = rubies[rubyIndex];
             final baseIndices:Array<Int> = [];
-            index = 0;
+            var index:Int = 0;
             while (index < positioned.length) {
-                final range:TextRange = positioned[index].range;
-                if (range.start >= ruby.baseRange.start && range.end <= ruby.baseRange.end) {
-                    baseIndices.push(index);
-                }
-                index += 1;
+                final range = positioned[index].range;
+                if (range.start >= ruby.baseRange.start && range.end <= ruby.baseRange.end) baseIndices.push(index);
+                index++;
             }
             if (baseIndices.length > 0) {
-                final centers:Array<Float> = [];
+                final centers:Array<Float> = baseIndices.map(i -> centerOfCluster(result, positioned[i]));
+                final rubyLeft = ruby.centerX - ruby.width / 2.0;
+                final rubyRight = ruby.centerX + ruby.width / 2.0;
                 index = 0;
                 while (index < baseIndices.length) {
-                    centers.push(centerOfCluster(result, positioned[baseIndices[index]]));
-                    index += 1;
-                }
-                final rubyLeft:Float = ruby.centerX - ruby.width / 2.0;
-                final rubyRight:Float = ruby.centerX + ruby.width / 2.0;
-                index = 0;
-                while (index < baseIndices.length) {
-                    final segmentLeft:Float = index == 0 ? rubyLeft : maxFloat(rubyLeft, (centers[index - 1] + centers[index]) / 2.0);
-                    final segmentRight:Float = index == baseIndices.length - 1 ? rubyRight : minFloat(rubyRight, (centers[index] + centers[index + 1]) / 2.0);
-                    final bound:SelectionBounds = bounds[baseIndices[index]];
-                    bound.left = minFloat(bound.left, segmentLeft);
-                    bound.right = maxFloat(bound.right, segmentRight);
-                    index += 1;
+                    final bound = bounds[baseIndices[index]];
+                    bound.left = minFloat(bound.left, index == 0 ? rubyLeft : maxFloat(rubyLeft, (centers[index - 1] + centers[index]) / 2.0));
+                    bound.right = maxFloat(bound.right, index == baseIndices.length - 1 ? rubyRight : minFloat(rubyRight, (centers[index] + centers[index + 1]) / 2.0));
+                    index++;
                 }
             }
-            rubyIndex += 1;
+            rubyIndex++;
         }
-
-        index = 0;
+        var index:Int = 0;
         while (index + 1 < bounds.length) {
-            final left:SelectionBounds = bounds[index];
-            final right:SelectionBounds = bounds[index + 1];
+            final left = bounds[index];
+            final right = bounds[index + 1];
             if (left.right > right.left) {
-                final center:Float = clampFloat((centerOfCluster(result, positioned[index]) + centerOfCluster(result, positioned[index + 1])) / 2.0,
+                final center = clampFloat((centerOfCluster(result, positioned[index]) + centerOfCluster(result, positioned[index + 1])) / 2.0,
                     minFloat(left.left, right.left), maxFloat(left.right, right.right));
                 left.right = maxFloat(minFloat(left.right, center), left.left);
                 right.left = minFloat(maxFloat(right.left, center), right.right);
             }
-            index += 1;
+            index++;
         }
-
         final output:Array<PositionedCluster> = [];
         index = 0;
         while (index < positioned.length) {
-            final cluster:PositionedCluster = positioned[index];
-            final bound:SelectionBounds = bounds[index];
+            final cluster = positioned[index];
+            final bound = bounds[index];
             output.push(new PositionedCluster(cluster.lineIndex, cluster.clusterIndex, cluster.range, bound.left, cluster.top, bound.right, cluster.bottom,
                 cluster.baseline, cluster.drawX, null));
-            index += 1;
+            index++;
         }
         return output;
     }
@@ -940,6 +885,11 @@ class LayoutQueries {
         return new Rect(xForOffset(cluster, start), cluster.top, xForOffset(cluster, end), cluster.bottom);
     }
 
+    private static function sliceRectIfCovered(cluster:PositionedCluster, start:Int, end:Int):Null<Rect> {
+        final sliceStart:Int = maxInt(start, cluster.range.start);
+        final sliceEnd:Int = minInt(end, cluster.range.end);
+        return sliceStart < sliceEnd ? sliceRect(cluster, sliceStart, sliceEnd) : null;
+    }
     private static function glyphsForCluster(result:LayoutResult, range:TextRange):Array<Glyph> {
         final output:Array<Glyph> = [];
         var runIndex:Int = 0;
