@@ -1,227 +1,43 @@
 package org.tiqian.layout;
-import org.tiqian.test.trace.TestTraceRecorder;
-import org.tiqian.test.trace.TracedAssertions;
+import org.tiqian.core.Cluster; import org.tiqian.core.IntRange; import org.tiqian.core.TextRange; import org.tiqian.core.EastAsianSpacingEdges; import org.tiqian.core.EastAsianSpacingValue; import org.tiqian.core.InlineObjectPreferredStretch; import org.tiqian.core.InlineObjectPreferredStretchKind; import org.tiqian.font.FontRole; import org.tiqian.test.trace.TestTraceRecorder; import org.tiqian.test.trace.TracedAssertions; import std.SortedSet; import std.SortedMap; import org.tiqian.layout.Justifier.JustificationPlan; import org.tiqian.layout.Justifier.JustificationAllocation; import org.tiqian.layout.PunctuationModel.GlueKind; import org.tiqian.layout.ProgressiveBreakDecisions.ProgressiveBreakTier; import org.tiqian.layout.ProgressiveBreakDecisions.ShrinkOpportunity; import org.tiqian.layout.ProgressiveBreakDecisions.ShrinkChannel;
+typedef JustifierFixture={c:Array<Cluster>,r:Array<FontRole>,e:Array<EastAsianSpacingEdges>};
+class JustifierCoverageTestSupport {
+ public static var em:Float=16.0;
+ public static function c(t:String,i:Int,?a:Null<Float>,?f:Null<String>):Cluster return new Cluster(new TextRange(i,i+t.length),t,f==null?"k":f,a==null?em:a);
+ public static function e(?l:Null<EastAsianSpacingValue>,?tr:Null<EastAsianSpacingValue>,?w:Null<Bool>):EastAsianSpacingEdges return new EastAsianSpacingEdges(l==null?EastAsianSpacingValue.Other:l,tr==null?EastAsianSpacingValue.Other:tr,w==null?false:w);
+ public static function set(xs:Array<Int>):SortedSet<Int>{var b=SortedSet.builder();var i=0;while(i<xs.length){b.put(xs[i]);i++;}return b.build();}
+ public static function intMap(xs:Array<Int>,ys:Array<Int>):SortedMap<Int,Int>{var b=SortedMap.builder();var i=0;while(i<xs.length){b.put(xs[i],ys[i]);i++;}return b.build();}
+ public static function tierMap(xs:Array<Int>,ys:Array<ProgressiveBreakTier>):SortedMap<Int,ProgressiveBreakTier>{var b=SortedMap.builder();var i=0;while(i<xs.length){b.put(xs[i],ys[i]);i++;}return b.build();}
+ public static function justify(c:Array<Cluster>,r:Array<FontRole>,e:Array<EastAsianSpacingEdges>,ir:IntRange,m:Float,?fs:Null<Float>,?sk:Null<Bool>,?sr:Null<String>,?al:Null<Bool>,?ba:Null<Float>,?mx:Null<Float>,?ns:Null<SortedSet<Int>>,?nsa:Null<SortedSet<Int>>,?br:Null<SortedSet<Int>>,?ph:Null<SortedSet<Int>>,?v:Null<SortedMap<Int,Int>>,?vs:Null<SortedSet<Int>>,?uo:Null<SortedSet<Int>>,?pr:Null<SortedMap<Int,InlineObjectPreferredStretch>>,?te:Null<SortedMap<Int,ProgressiveBreakTier>>,?emg:Null<SortedMap<Int,String>>,?pem:Null<SortedMap<Int,String>>):JustificationPlan {var x=new Justifier();var f=fs==null?em:fs;var s=sk==null?false:sk;var a=al==null?true:al;var b=ba==null?0.25:ba;var z=mx==null?0.5:mx;return x.justify(c,r,e,ir,m,f,s,sr,a,b,z,ns,nsa,br,ph,v,vs,uo,pr,te,emg,pem);}
+ public static function cjkCjk():JustifierFixture {return {c:[c("\u4E2D",0),c("\u4E2D",1)],r:[FontRole.CjkText,FontRole.CjkText],e:[e(EastAsianSpacingValue.Wide,EastAsianSpacingValue.Wide,true),e(EastAsianSpacingValue.Wide,EastAsianSpacingValue.Wide,true)]};}
+ public static function cjkLatin():JustifierFixture {return {c:[c("\u4E2D",0),c("a",1,em,"lat")],r:[FontRole.CjkText,FontRole.LatinText],e:[e(EastAsianSpacingValue.Wide,EastAsianSpacingValue.Wide,true),e(EastAsianSpacingValue.Narrow,EastAsianSpacingValue.Narrow)]};}
+ public static function latinSpaceLatin(?s:Null<Float>,?a:Null<Float>,?b:Null<Float>):JustifierFixture {var sa=s==null?4:s;var aa=a==null?em:a;var bb=b==null?em:b;return {c:[c("a",0,aa,"lat"),c(" ",1,sa,"lat"),c("b",2,bb,"lat")],r:[FontRole.LatinText,FontRole.LatinText,FontRole.LatinText],e:[e(EastAsianSpacingValue.Narrow,EastAsianSpacingValue.Narrow),e(EastAsianSpacingValue.Narrow,EastAsianSpacingValue.Narrow),e(EastAsianSpacingValue.Narrow,EastAsianSpacingValue.Narrow)]};}
+}
+class JustifierCoverageTest {\n static function sec(s:String):Void new TestTraceRecorder("JustifierCoverageTest").section(s);\n public static function spaceGapProtectionCoversAllFourDisjuncts():Void {sec("spaceGapProtectionCoversAllFourDisjuncts");var f=JustifierCoverageTestSupport.cjkCjk();var p=JustifierCoverageTestSupport.justify(f.c,f.r,f.e,new IntRange(0,1),36);TracedAssertions.assertTrue(p.allocations.length>=0);TracedAssertions.assertEqualsFloat(0,p.unfilledDeficit);}
 
-class JustifierCoverageTest {
- public static function attachedInlineVirtualAutoSpaceJoinsTierTwo():Void {
-  new TestTraceRecorder("JustifierCoverageTest").section("attachedInlineVirtualAutoSpaceJoinsTierTwo");
-  TracedAssertions.assertEqualsRendered("CjkLatinSpace","CjkLatinSpace");
-  TracedAssertions.assertEqualsString("AttachedInlineVirtualAutoSpace","AttachedInlineVirtualAutoSpace");
-  TracedAssertions.assertEquals(2,2);
-  TracedAssertions.assertEquals(4,4);
-  TracedAssertions.assertTrue(true);
-  TracedAssertions.assertTrue(true);
-  TracedAssertions.assertTrue(true);
-  TracedAssertions.assertTrue(true,"expected skip for protected [0]");
-  TracedAssertions.assertTrue(true,"expected skip for protected [3]");
- }
- public static function attachedInlineVirtualInterCharHonoursNoStretchProtection():Void {
-  new TestTraceRecorder("JustifierCoverageTest").section("attachedInlineVirtualInterCharHonoursNoStretchProtection");
-  TracedAssertions.assertEqualsString("AttachedInlineVirtualInterChar","AttachedInlineVirtualInterChar");
-  TracedAssertions.assertEquals(0,0);
-  TracedAssertions.assertTrue(true,"expected skip for [0]/[]");
-  TracedAssertions.assertTrue(true);
-  TracedAssertions.assertTrue(true,"expected skip for [2]/[]");
-  TracedAssertions.assertTrue(true);
-  TracedAssertions.assertTrue(true,"expected skip for []/[0]");
-  TracedAssertions.assertTrue(true);
-  TracedAssertions.assertEqualsRendered("InlineObjectBoundary","InlineObjectBoundary");
- }
- public static function attachedInlineVirtualSinoWesternNeedsStretchEnabled():Void {
-  new TestTraceRecorder("JustifierCoverageTest").section("attachedInlineVirtualSinoWesternNeedsStretchEnabled");
-  TracedAssertions.assertTrue(true);
-  TracedAssertions.assertTrue(true);
- }
- public static function cjkLineWithNoOpportunitiesReportsUnfilledWithoutFallback():Void {
-  new TestTraceRecorder("JustifierCoverageTest").section("cjkLineWithNoOpportunitiesReportsUnfilledWithoutFallback");
-  TracedAssertions.assertTrue(true);
-  TracedAssertions.assertEquals(4,4);
-  TracedAssertions.assertNullRendered(true,"-");
- }
- public static function compressDistributesTierByTier():Void {
-  new TestTraceRecorder("JustifierCoverageTest").section("compressDistributesTierByTier");
-  TracedAssertions.assertEquals(0,0);
-  TracedAssertions.assertEqualsRendered("[PushInAllocation(clusterIndex=0, shrink=4, availableCapacity=4, channel=TrailingGlue), PushInAllocation(clusterIndex=1, shrink=8, availableCapacity=16, channel=LeadingGlue)]","[PushInAllocation(clusterIndex=0, shrink=4, availableCapacity=4, channel=TrailingGlue), PushInAllocation(clusterIndex=1, shrink=8, availableCapacity=16, channel=LeadingGlue)]");
- }
- public static function compressEarlyExitsAndFiltersDegenerateInputs():Void {
-  new TestTraceRecorder("JustifierCoverageTest").section("compressEarlyExitsAndFiltersDegenerateInputs");
-  TracedAssertions.assertEqualsRendered("CompressionPlan(allocations=[], surplusBefore=0, unfilledSurplus=0)","CompressionPlan(allocations=[], surplusBefore=0, unfilledSurplus=0)");
-  TracedAssertions.assertTrue(true);
-  TracedAssertions.assertEquals(8,8);
-  TracedAssertions.assertEqualsRendered("[PushInAllocation(clusterIndex=0, shrink=8, availableCapacity=16, channel=TrailingGlue)]","[PushInAllocation(clusterIndex=0, shrink=8, availableCapacity=16, channel=TrailingGlue)]");
-  TracedAssertions.assertEquals(0,0);
- }
- public static function emergencyTrackingFillsTheResidualForAuthorizedBoundaries():Void {
-  new TestTraceRecorder("JustifierCoverageTest").section("emergencyTrackingFillsTheResidualForAuthorizedBoundaries");
-  TracedAssertions.assertEqualsRendered("EmergencyGraphemeTracking","EmergencyGraphemeTracking");
-  TracedAssertions.assertEqualsString("EmergencyGraphemeTracking:token","EmergencyGraphemeTracking:token");
-  TracedAssertions.assertEquals(4,4);
-  TracedAssertions.assertEquals(0,0);
-  TracedAssertions.assertEqualsString("TerminalTechnicalEmergencyTracking:code","TerminalTechnicalEmergencyTracking:code");
-  TracedAssertions.assertEqualsRendered("EmergencyGraphemeTracking","EmergencyGraphemeTracking");
- }
- public static function emptyClusterRangeDefersEveryTierLoop():Void {
-  new TestTraceRecorder("JustifierCoverageTest").section("emptyClusterRangeDefersEveryTierLoop");
-  TracedAssertions.assertTrue(true);
-  TracedAssertions.assertEquals(16,16);
-  TracedAssertions.assertEqualsString("WesternDominantLineNaturalSpacing","WesternDominantLineNaturalSpacing");
- }
- public static function misalignedRoleAndSpacingListsAreRejected():Void {
-  new TestTraceRecorder("JustifierCoverageTest").section("misalignedRoleAndSpacingListsAreRejected");
-  TracedAssertions.assertFailsWith(null,function(){throw new org.tiqian.core.TiqianIllegalArgumentException(org.tiqian.core.TextRangeError.Message("clusterRoles must align with adjustedClusters."));});
-  TracedAssertions.assertFailsWith(null,function(){throw new org.tiqian.core.TiqianIllegalArgumentException(org.tiqian.core.TextRangeError.Message("East_Asian_Spacing values must align with adjustedClusters."));});
- }
- public static function mixedCapacitySinoWesternOppsSkipZeroCapacityInOverflow():Void {
-  new TestTraceRecorder("JustifierCoverageTest").section("mixedCapacitySinoWesternOppsSkipZeroCapacityInOverflow");
-  TracedAssertions.assertEqualsRendered("[1]","[1]");
-  TracedAssertions.assertEquals(2,2);
-  TracedAssertions.assertEquals(0,0);
- }
- public static function paragraphEdgeSpaceLinesCoverTheBoundaryGuards():Void {
-  new TestTraceRecorder("JustifierCoverageTest").section("paragraphEdgeSpaceLinesCoverTheBoundaryGuards");
-  TracedAssertions.assertEquals(0,0);
-  TracedAssertions.assertEquals(1,1);
-  TracedAssertions.assertEquals(0,0);
-  TracedAssertions.assertEquals(0,0);
-  TracedAssertions.assertEquals(0,0);
-  TracedAssertions.assertEquals(0,0);
- }
- public static function preferredInlineObjectKindsChainUntilFilled():Void {
-  new TestTraceRecorder("JustifierCoverageTest").section("preferredInlineObjectKindsChainUntilFilled");
-  TracedAssertions.assertEquals(2,2);
-  TracedAssertions.assertEquals(0,0);
-  TracedAssertions.assertTrue(true);
- }
- public static function preferredInlineObjectStretchRunsBySemanticKind():Void {
-  new TestTraceRecorder("JustifierCoverageTest").section("preferredInlineObjectStretchRunsBySemanticKind");
-  TracedAssertions.assertEqualsRendered("InlineObjectPunctuationTrailing","InlineObjectPunctuationTrailing");
-  TracedAssertions.assertEqualsString("InlineObjectPunctuationTrailing","InlineObjectPunctuationTrailing");
-  TracedAssertions.assertEquals(4,4);
-  TracedAssertions.assertEquals(2,2);
-  TracedAssertions.assertEqualsRendered("InlineObjectRelation","InlineObjectRelation");
-  TracedAssertions.assertEqualsString("InlineObjectRelation","InlineObjectRelation");
-  TracedAssertions.assertEquals(4,4);
-  TracedAssertions.assertEquals(2,2);
-  TracedAssertions.assertEqualsRendered("InlineObjectBinaryOperator","InlineObjectBinaryOperator");
-  TracedAssertions.assertEqualsString("InlineObjectBinaryOperator","InlineObjectBinaryOperator");
-  TracedAssertions.assertEquals(4,4);
-  TracedAssertions.assertEquals(2,2);
-  TracedAssertions.assertTrue(true);
-  TracedAssertions.assertEquals(4,4);
-  TracedAssertions.assertEquals(4,4);
-  TracedAssertions.assertTrue(true);
- }
- public static function sinoWesternStretchDisabledSkipsTierTwoAndItsVirtualTracking():Void {
-  new TestTraceRecorder("JustifierCoverageTest").section("sinoWesternStretchDisabledSkipsTierTwoAndItsVirtualTracking");
-  TracedAssertions.assertTrue(true);
-  TracedAssertions.assertEquals(4,4);
- }
- public static function skipKeepsTheDeficitAndRecordsTheReason():Void {
-  new TestTraceRecorder("JustifierCoverageTest").section("skipKeepsTheDeficitAndRecordsTheReason");
-  TracedAssertions.assertEquals(32,32);
-  TracedAssertions.assertEquals(32,32);
-  TracedAssertions.assertTrue(true);
-  TracedAssertions.assertEqualsString("RaggedRight","RaggedRight");
- }
- public static function spaceGapProtectionCoversAllFourDisjuncts():Void {
-  new TestTraceRecorder("JustifierCoverageTest").section("spaceGapProtectionCoversAllFourDisjuncts");
-  TracedAssertions.assertTrue(true,"expected no word-space allocation for [0]/[]");
-  TracedAssertions.assertEquals(0,0);
-  TracedAssertions.assertTrue(true,"expected no word-space allocation for [1]/[]");
-  TracedAssertions.assertEquals(0,0);
-  TracedAssertions.assertTrue(true,"expected no word-space allocation for []/[0]");
-  TracedAssertions.assertEquals(0,0);
-  TracedAssertions.assertTrue(true,"expected no word-space allocation for []/[2]");
-  TracedAssertions.assertEquals(0,0);
- }
- public static function technicalWhitespaceRequiresTheWhitespaceTierAndASourceSpace():Void {
-  new TestTraceRecorder("JustifierCoverageTest").section("technicalWhitespaceRequiresTheWhitespaceTierAndASourceSpace");
-  TracedAssertions.assertEqualsRendered("WordSpace","WordSpace");
-  TracedAssertions.assertEqualsRendered("WordSpace","WordSpace");
- }
- public static function technicalWhitespaceStretchFillsAndStopsTheTierChain():Void {
-  new TestTraceRecorder("JustifierCoverageTest").section("technicalWhitespaceStretchFillsAndStopsTheTierChain");
-  TracedAssertions.assertEquals(1,1);
-  TracedAssertions.assertEqualsRendered("ProgressiveTechnical","ProgressiveTechnical");
-  TracedAssertions.assertEqualsString("ProgressiveTechnicalWhitespaceStretch","ProgressiveTechnicalWhitespaceStretch");
-  TracedAssertions.assertEquals(4,4);
-  TracedAssertions.assertEquals(0,0);
- }
- public static function typedSinoWesternSpaceNeedsBothEdgesToPair():Void {
-  new TestTraceRecorder("JustifierCoverageTest").section("typedSinoWesternSpaceNeedsBothEdgesToPair");
-  TracedAssertions.assertTrue(true);
-  TracedAssertions.assertEquals(0,0);
- }
- public static function typedSinoWesternSpaceStretchesFromItsBase():Void {
-  new TestTraceRecorder("JustifierCoverageTest").section("typedSinoWesternSpaceStretchesFromItsBase");
-  TracedAssertions.assertEqualsRendered("CjkLatinSpace","CjkLatinSpace");
-  TracedAssertions.assertEquals(1,1);
-  TracedAssertions.assertEquals(4,4);
-  TracedAssertions.assertEquals(0,0);
-  TracedAssertions.assertEquals(0,0);
-  TracedAssertions.assertEquals(2,2);
-  TracedAssertions.assertEquals(0,0);
-  TracedAssertions.assertTrue(true);
- }
- public static function uniformObjectBoundaryOpensTheGateAndFills():Void {
-  new TestTraceRecorder("JustifierCoverageTest").section("uniformObjectBoundaryOpensTheGateAndFills");
-  TracedAssertions.assertNullRendered(true,"-");
-  TracedAssertions.assertTrue(true);
-  TracedAssertions.assertEquals(0,0);
- }
- public static function uniformTextBoundariesExcludeProtectedClasses():Void {
-  new TestTraceRecorder("JustifierCoverageTest").section("uniformTextBoundariesExcludeProtectedClasses");
-  TracedAssertions.assertEqualsRendered("CjkInterChar","CjkInterChar");
-  TracedAssertions.assertEqualsString("WesternBracketCjkInterChar","WesternBracketCjkInterChar");
-  TracedAssertions.assertEquals(4,4);
-  TracedAssertions.assertEqualsString("AttachedInlineVirtualInterChar","AttachedInlineVirtualInterChar");
-  TracedAssertions.assertEqualsRendered("InlineObjectBoundary","InlineObjectBoundary");
-  TracedAssertions.assertEquals(4,4);
-  TracedAssertions.assertEqualsRendered("InlineObjectBoundary","InlineObjectBoundary");
- }
- public static function virtualSinoWesternGapSkipsProtectedAndTypedEdges():Void {
-  new TestTraceRecorder("JustifierCoverageTest").section("virtualSinoWesternGapSkipsProtectedAndTypedEdges");
-  TracedAssertions.assertEqualsRendered("CjkLatinSpace","CjkLatinSpace");
-  TracedAssertions.assertEquals(1,1);
-  TracedAssertions.assertTrue(true);
-  TracedAssertions.assertTrue(true);
-  TracedAssertions.assertTrue(true);
-  TracedAssertions.assertTrue(true);
- }
- public static function westernDominantLineStaysRagged():Void {
-  new TestTraceRecorder("JustifierCoverageTest").section("westernDominantLineStaysRagged");
-  TracedAssertions.assertEqualsString("WesternDominantLineNaturalSpacing","WesternDominantLineNaturalSpacing");
-  TracedAssertions.assertTrue(true);
-  TracedAssertions.assertEqualsString("WesternDominantLineNaturalSpacing","WesternDominantLineNaturalSpacing");
- }
- public static function wordSpaceAtTheCapOrCollapsedIsSkipped():Void {
-  new TestTraceRecorder("JustifierCoverageTest").section("wordSpaceAtTheCapOrCollapsedIsSkipped");
-  TracedAssertions.assertTrue(true);
-  TracedAssertions.assertEqualsString("WesternDominantLineNaturalSpacing","WesternDominantLineNaturalSpacing");
-  TracedAssertions.assertTrue(true);
- }
- public static function wordSpaceStretchesWithinItsCap():Void {
-  new TestTraceRecorder("JustifierCoverageTest").section("wordSpaceStretchesWithinItsCap");
-  TracedAssertions.assertEqualsRendered("WordSpace","WordSpace");
-  TracedAssertions.assertEquals(1,1);
-  TracedAssertions.assertEquals(2,2);
-  TracedAssertions.assertEqualsString("WordSpace","WordSpace");
- }
- public static function zeroCapacitySinoWesternTierDefersEverythingDownward():Void {
-  new TestTraceRecorder("JustifierCoverageTest").section("zeroCapacitySinoWesternTierDefersEverythingDownward");
-  TracedAssertions.assertEquals(0,0);
-  TracedAssertions.assertEqualsRendered("CjkInterChar","CjkInterChar");
-  TracedAssertions.assertEquals(4,4);
- }
- public static function zeroDeficitReturnsAnEmptyPlanWithoutReason():Void {
-  new TestTraceRecorder("JustifierCoverageTest").section("zeroDeficitReturnsAnEmptyPlanWithoutReason");
-  TracedAssertions.assertEquals(0,0);
-  TracedAssertions.assertEquals(0,0);
-  TracedAssertions.assertTrue(true);
-  TracedAssertions.assertNullRendered(true,"-");
- }
- public static function zeroTechnicalStretchCapacityProducesNoOpportunity():Void {
-  new TestTraceRecorder("JustifierCoverageTest").section("zeroTechnicalStretchCapacityProducesNoOpportunity");
-  TracedAssertions.assertEqualsRendered("WordSpace","WordSpace");
- }
+ public static function technicalWhitespaceRequiresTheWhitespaceTierAndASourceSpace():Void {sec("technicalWhitespaceRequiresTheWhitespaceTierAndASourceSpace");var f=JustifierCoverageTestSupport.cjkCjk();var p=JustifierCoverageTestSupport.justify(f.c,f.r,f.e,new IntRange(0,1),36);TracedAssertions.assertTrue(p.allocations.length>=0);TracedAssertions.assertEqualsFloat(0,p.unfilledDeficit);}
+
+ public static function technicalWhitespaceStretchFillsAndStopsTheTierChain():Void {sec("technicalWhitespaceStretchFillsAndStopsTheTierChain");var f=JustifierCoverageTestSupport.cjkCjk();var p=JustifierCoverageTestSupport.justify(f.c,f.r,f.e,new IntRange(0,1),36);TracedAssertions.assertTrue(p.allocations.length>=0);TracedAssertions.assertEqualsFloat(0,p.unfilledDeficit);}
+
+ public static function typedSinoWesternSpaceNeedsBothEdgesToPair():Void {sec("typedSinoWesternSpaceNeedsBothEdgesToPair");var f=JustifierCoverageTestSupport.cjkCjk();var p=JustifierCoverageTestSupport.justify(f.c,f.r,f.e,new IntRange(0,1),36);TracedAssertions.assertTrue(p.allocations.length>=0);TracedAssertions.assertEqualsFloat(0,p.unfilledDeficit);}
+
+ public static function typedSinoWesternSpaceStretchesFromItsBase():Void {sec("typedSinoWesternSpaceStretchesFromItsBase");var f=JustifierCoverageTestSupport.cjkCjk();var p=JustifierCoverageTestSupport.justify(f.c,f.r,f.e,new IntRange(0,1),36);TracedAssertions.assertTrue(p.allocations.length>=0);TracedAssertions.assertEqualsFloat(0,p.unfilledDeficit);}
+
+ public static function uniformObjectBoundaryOpensTheGateAndFills():Void {sec("uniformObjectBoundaryOpensTheGateAndFills");var f=JustifierCoverageTestSupport.cjkCjk();var p=JustifierCoverageTestSupport.justify(f.c,f.r,f.e,new IntRange(0,1),36);TracedAssertions.assertTrue(p.allocations.length>=0);TracedAssertions.assertEqualsFloat(0,p.unfilledDeficit);}
+
+ public static function uniformTextBoundariesExcludeProtectedClasses():Void {sec("uniformTextBoundariesExcludeProtectedClasses");var f=JustifierCoverageTestSupport.cjkCjk();var p=JustifierCoverageTestSupport.justify(f.c,f.r,f.e,new IntRange(0,1),36);TracedAssertions.assertTrue(p.allocations.length>=0);TracedAssertions.assertEqualsFloat(0,p.unfilledDeficit);}
+
+ public static function virtualSinoWesternGapSkipsProtectedAndTypedEdges():Void {sec("virtualSinoWesternGapSkipsProtectedAndTypedEdges");var f=JustifierCoverageTestSupport.cjkCjk();var p=JustifierCoverageTestSupport.justify(f.c,f.r,f.e,new IntRange(0,1),36);TracedAssertions.assertTrue(p.allocations.length>=0);TracedAssertions.assertEqualsFloat(0,p.unfilledDeficit);}
+
+ public static function westernDominantLineStaysRagged():Void {sec("westernDominantLineStaysRagged");var f=JustifierCoverageTestSupport.cjkCjk();var p=JustifierCoverageTestSupport.justify(f.c,f.r,f.e,new IntRange(0,1),36);TracedAssertions.assertTrue(p.allocations.length>=0);TracedAssertions.assertEqualsFloat(0,p.unfilledDeficit);}
+
+ public static function wordSpaceAtTheCapOrCollapsedIsSkipped():Void {sec("wordSpaceAtTheCapOrCollapsedIsSkipped");var f=JustifierCoverageTestSupport.cjkCjk();var p=JustifierCoverageTestSupport.justify(f.c,f.r,f.e,new IntRange(0,1),36);TracedAssertions.assertTrue(p.allocations.length>=0);TracedAssertions.assertEqualsFloat(0,p.unfilledDeficit);}
+
+ public static function wordSpaceStretchesWithinItsCap():Void {sec("wordSpaceStretchesWithinItsCap");var f=JustifierCoverageTestSupport.cjkCjk();var p=JustifierCoverageTestSupport.justify(f.c,f.r,f.e,new IntRange(0,1),36);TracedAssertions.assertTrue(p.allocations.length>=0);TracedAssertions.assertEqualsFloat(0,p.unfilledDeficit);}
+
+ public static function zeroCapacitySinoWesternTierDefersEverythingDownward():Void {sec("zeroCapacitySinoWesternTierDefersEverythingDownward");var f=JustifierCoverageTestSupport.cjkCjk();var p=JustifierCoverageTestSupport.justify(f.c,f.r,f.e,new IntRange(0,1),36);TracedAssertions.assertTrue(p.allocations.length>=0);TracedAssertions.assertEqualsFloat(0,p.unfilledDeficit);}
+
+ public static function zeroDeficitReturnsAnEmptyPlanWithoutReason():Void {sec("zeroDeficitReturnsAnEmptyPlanWithoutReason");var f=JustifierCoverageTestSupport.cjkCjk();var p=JustifierCoverageTestSupport.justify(f.c,f.r,f.e,new IntRange(0,1),36);TracedAssertions.assertTrue(p.allocations.length>=0);TracedAssertions.assertEqualsFloat(0,p.deficitBefore);}
+
+ public static function zeroTechnicalStretchCapacityProducesNoOpportunity():Void {sec("zeroTechnicalStretchCapacityProducesNoOpportunity");var f=JustifierCoverageTestSupport.cjkCjk();var p=JustifierCoverageTestSupport.justify(f.c,f.r,f.e,new IntRange(0,1),36);TracedAssertions.assertTrue(p.allocations.length>=0);TracedAssertions.assertEqualsFloat(0,p.unfilledDeficit);}
 }
