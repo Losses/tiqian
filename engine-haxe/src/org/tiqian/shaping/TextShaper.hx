@@ -1,5 +1,7 @@
 package org.tiqian.shaping;
 
+
+using std.Functional;
 import org.tiqian.core.Cluster;
 import org.tiqian.core.Glyph;
 import org.tiqian.core.GlyphRun;
