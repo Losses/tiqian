@@ -46,15 +46,16 @@ class PreparedParagraphFns {
 
     public static function shortestRoundTripDigits(magnitude:Float):PreparedParagraphDigitsAndExponent {
         final d = decompose(magnitude);
-        final f = d.exp2 >= -126 ? d.exp2 - 23 : -149;
+        final f = d.exp2;
         final expansion = dyadicDecimal(d.mant24, f);
         final exact = trimZeros(expansion.digits);
         final n = expansion.exponent;
-        final hi = dyadicDecimal(d.mant24 * 2 + 1, f - 1);
-        final lo = d.mant24 == 8388608
-            ? dyadicDecimal(d.mant24 * 4 - 1, f - 2)
-            : dyadicDecimal(d.mant24 * 2 - 1, f - 1);
-        final inclusive = (d.mant24 % 2) == 0;
+        final halfExponent = d.mant24 < 0x800000 ? d.exp2 - 53 : d.exp2 - 30;
+        final scale = d.mant24 < 0x800000 ? 52 : 30;
+        final base = timesLong(twoToThe(scale), d.mant24);
+        final hi = dyadicDecimalString(addDecimal(base, "1"), halfExponent);
+        final lo = dyadicDecimalString(decrementDecimal(base), halfExponent);
+        final inclusive = true;
         var length = 1;
         while (length <= 17) {
             final keep = exact.substr(0, length);
@@ -78,9 +79,9 @@ class PreparedParagraphFns {
 
     private static function canonicalFloatDigits(magnitude:Float, doubleDigits:String):String {
         final d = decompose(magnitude);
-        final exact = d.mant24 == 0 ? "0" : (d.exp2 - 23 >= 0
-            ? timesLong(twoToThe(d.exp2 - 23), d.mant24)
-            : timesLong(fiveToThe(23 - d.exp2), d.mant24));
+        final exact = d.mant24 == 0 ? "0" : (d.exp2 >= 0
+            ? timesLong(twoToThe(d.exp2), d.mant24)
+            : timesLong(fiveToThe(-d.exp2), d.mant24));
         final stripped = trimZeros(exact);
         if (stripped.length <= doubleDigits.length) return doubleDigits;
         final rounded = roundToSignificant(stripped, doubleDigits.length);
@@ -88,8 +89,29 @@ class PreparedParagraphFns {
     }
 
     private static function dyadicDecimal(p:Int, f:Int):PreparedParagraphDigitsAndExponent {
-        final digits = f < 0 ? timesLong(fiveToThe(-f), p) : timesLong(twoToThe(f), p);
+        return dyadicDecimalString(Std.string(p), f);
+    }
+
+    private static function dyadicDecimalString(p:String, f:Int):PreparedParagraphDigitsAndExponent {
+        final digits = f < 0 ? multiplyDecimal(fiveToThe(-f), p) : multiplyDecimal(twoToThe(f), p);
         return {digits:digits, exponent:f < 0 ? digits.length + f : digits.length};
+    }
+
+    private static function multiplyDecimal(a:String, b:String):String {
+        var result = "0";
+        var shift = 0;
+        var i = b.length - 1;
+        while (i >= 0) {
+            final digit = b.charCodeAt(i) - 48;
+            if (digit != 0) {
+                var part = timesSmall(a, digit);
+                if (shift > 0) part += zeros(shift);
+                result = addDecimal(result, part);
+            }
+            shift++;
+            i--;
+        }
+        return result;
     }
 
     private static function fiveToThe(k:Int):String {
@@ -166,6 +188,16 @@ class PreparedParagraphFns {
         return reverse(out.toString());
     }
     private static function incrementDecimal(digits:String):String { var a=digits.split(""); var i=a.length-1; while(true) { if(a[i]!="9") { a[i]=String.fromCharCode(a[i].charCodeAt(0)+1); return a.join(""); } a[i]="0"; if(i==0)return "1"+a.join(""); i--; } }
+    private static function decrementDecimal(digits:String):String {
+        var a = digits.split("");
+        var i = a.length - 1;
+        while (i >= 0 && a[i] == "0") { a[i] = "9"; i--; }
+        if (i >= 0) a[i] = String.fromCharCode(a[i].charCodeAt(0) - 1);
+        var out = a.join("");
+        var start = 0;
+        while (start < out.length - 1 && out.charCodeAt(start) == 48) start++;
+        return out.substr(start);
+    }
     private static function decompose(v:Float):PreparedParagraphDecomposed {
         final bits = haxe.io.FPHelper.floatToI32(v);
         final rawExponent = (bits >>> 23) & 0xff;
