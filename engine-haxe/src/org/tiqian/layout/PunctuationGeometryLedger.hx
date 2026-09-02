@@ -1,7 +1,6 @@
 package org.tiqian.layout;
 
 import org.tiqian.core.Cluster;
-import org.tiqian.core.IllegalStateException;
 import org.tiqian.core.ClusterGeometryDecisionInfo;
 import org.tiqian.core.InlineAttachment;
 import org.tiqian.core.IntRange;
@@ -40,16 +39,8 @@ import std.SortedMap;
   if(lines.length==0||budgets.size()==0)return new LineEdgeTrimResult(this,[]);
   var lead:SortedMap<Int,Float>=emptyF(); var trail:SortedMap<Int,Float>=emptyF(); final ds:Array<LineEdgeTrimDecisionInfo>=[];
   final forceEnd=force==null?true:force;
-  for(line in lines) {
-   if(line.clusterRange.start>line.clusterRange.end)continue;
-   final end=line.clusterRange.end;
-   if(forceEnd) { final r=consumeAtEdge(line,end,"End",trail,lead,ds); trail=r.trail; lead=r.lead; }
-   { final r=consumeAtEdge(line,line.clusterRange.start,"Start",trail,lead,ds); trail=r.trail; lead=r.lead; }
-  }
-  return new LineEdgeTrimResult(consumeLeadingByCluster(lead).consumeTrailingByCluster(trail),ds);
- }
- function consumeAtEdge(line:LineCandidate,index:Int,edge:String,trail:SortedMap<Int,Float>,lead:SortedMap<Int,Float>,ds:Array<LineEdgeTrimDecisionInfo>):{trail:SortedMap<Int,Float>,lead:SortedMap<Int,Float>} {
-  if(!budgets.has(index))return {trail:trail,lead:lead};
+  function consumeAtEdge(line:LineCandidate,index:Int,edge:String):Void {
+  if(!budgets.has(index))return;
   final q=budgets.get(index);
   final alreadyLead:Float=lead.get(index)==null?0:lead.get(index);
   final alreadyTrail:Float=trail.get(index)==null?0:trail.get(index);
@@ -57,13 +48,24 @@ import std.SortedMap;
   final paired=geometries.has(index)&&geometries.get(index).anchor==PunctuationAnchor.Center;
   final lp=paired?Math.min(lr,tr):(edge=="Start"?lr:0);
   final tp=paired?Math.min(lr,tr):(edge=="End"?tr:0);
-  final total=lp+tp; if(total<=0)return {trail:trail,lead:lead};
+  final total=lp+tp; if(total<=0)return;
   if(lp>0)lead=putF(lead,index,alreadyLead+lp); if(tp>0)trail=putF(trail,index,alreadyTrail+tp);
-  ds.push(new LineEdgeTrimDecisionInfo(line.sourceRange,naturalClusters[index].range,paired?"both":(edge=="Start"?"leading":"trailing"),total,paired?q.leadingConsumed+q.trailingConsumed:(edge=="Start"?q.leadingConsumed:q.trailingConsumed),paired?q.leadingNatural+q.trailingNatural:(edge=="Start"?q.leadingNatural:q.trailingNatural),paired?(edge=="Start"?"LineStartCenteredPunctuationPairedCompression":"LineEndCenteredPunctuationPairedCompression"):(edge=="Start"?"LineStartHalfWidthPunctuation":"LineEndHalfWidthPunctuation")));
-  return {trail:trail,lead:lead};
+  var side=""; var consumed=0.0; var natural=0.0; var reason="";
+  if(paired){side="both";consumed=q.leadingConsumed+q.trailingConsumed;natural=q.leadingNatural+q.trailingNatural;reason=edge=="Start"?"LineStartCenteredPunctuationPairedCompression":"LineEndCenteredPunctuationPairedCompression";}
+  else if(edge=="Start"){side="leading";consumed=q.leadingConsumed;natural=q.leadingNatural;reason="LineStartHalfWidthPunctuation";}
+  else{side="trailing";consumed=q.trailingConsumed;natural=q.trailingNatural;reason="LineEndHalfWidthPunctuation";}
+  ds.push(new LineEdgeTrimDecisionInfo(line.sourceRange,naturalClusters[index].range,side,total,consumed,natural,reason));
+ }
+ for(line in lines) {
+  if(line.clusterRange.start>line.clusterRange.end)continue;
+  final end=line.clusterRange.end;
+  if(forceEnd) consumeAtEdge(line,end,"End");
+  consumeAtEdge(line,line.clusterRange.start,"Start");
+ }
+  return new LineEdgeTrimResult(consumeLeadingByCluster(lead).consumeTrailingByCluster(trail),ds);
  }
  public function resolveAttachedInlinePunctuationBoundaries(a:Array<InlineAttachment>,atoms:Array<PunctuationAtom>,em:Float):AttachedInlinePunctuationBoundaryResult {
-  if(a.length!=naturalClusters.length)throw new IllegalStateException("Inline attachments must align with punctuation geometry clusters.");
+  if(a.length!=naturalClusters.length)throw new org.tiqian.core.TiqianIllegalArgumentException(org.tiqian.core.TextRangeError.Message("Inline attachments must align with punctuation geometry clusters."));
   if(budgets.size()==0)return new AttachedInlinePunctuationBoundaryResult(this,emptyF(),[]);
   var hasPrevious=false; for(x in a)if(x==InlineAttachment.Previous)hasPrevious=true;
   if(!hasPrevious)return new AttachedInlinePunctuationBoundaryResult(this,emptyF(),[]);
