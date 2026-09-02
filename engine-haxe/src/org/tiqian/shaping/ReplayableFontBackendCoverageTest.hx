@@ -89,9 +89,6 @@ class ReplayableFontBackendCoverageTest {
         var miss = catalog.resolve(new ReplayableFontFaceRequest(FontRole.LatinText, ["Missing"], 12.0, 400, false, "zh-CN", "A"));
         TracedAssertions.assertTrue(miss == null);
     }
-
-    public static function flush():Void
-        new TestTraceRecorder("ReplayableFontBackendCoverageTest").flush();
 }
 
 private class CatalogImpl implements ReplayableFontCatalog {
