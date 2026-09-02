@@ -1,5 +1,7 @@
 package org.tiqian.layout;
 
+
+using std.Functional;
 import org.tiqian.core.TextRange;
 import org.tiqian.core.UnicodeScriptEvidence;
 import org.tiqian.core.UnicodeScriptEvidenceClassifier;
@@ -100,12 +102,7 @@ class QuotePairAnalyzer {
 
     static function mapDecisions(decisions:Array<QuoteRoleDecision>):SortedMap<Int, FontRole> {
         final out = SortedMap.builder();
-        var di:Int = 0;
-        while (di < decisions.length) {
-            final d = decisions[di];
-            di++;
-            out.put(d.index, d.role);
-        }
+        decisions.forEach(d -> out.put(d.index, d.role));
         return out.build();
     }
 
@@ -196,12 +193,7 @@ class QuotePairAwareFontRoleClassifier implements FontRoleClassifier {
         if (decisions.length == 0)
             return base;
         final roles = SortedMap.builder();
-        var i = 0;
-        while (i < decisions.length) {
-            final decision = decisions[i];
-            roles.put(decision.index, decision.role);
-            i++;
-        }
+        decisions.forEach(decision -> roles.put(decision.index, decision.role));
         return new QuotePairAwareFontRoleClassifier(base, roles.build());
     }
 }
