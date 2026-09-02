@@ -63,6 +63,10 @@ class ParagraphDpLineBreaker implements LineBreaker {
         final hyphens = hyphenBreakClusters == null ? SortedSet.builder().build() : hyphenBreakClusters;
         final cjk = cjkInterCharBoundaries == null ? SortedSet.builder().build() : cjkInterCharBoundaries;
         final sino = sinoWesternBoundaries == null ? SortedSet.builder().build() : sinoWesternBoundaries;
+        final gapBoundariesBuilder = SortedSet.builder();
+        for (i in 0...cjk.size()) gapBoundariesBuilder.put(cjk.at(i));
+        for (i in 0...sino.size()) gapBoundariesBuilder.put(sino.at(i));
+        final gapBoundaries = gapBoundariesBuilder.build();
         final controls = nonRenderingControlClusters == null ? SortedSet.builder().build() : nonRenderingControlClusters;
         final progressive = progressiveBreakOpportunities == null ? SortedMap.builder().build() : progressiveBreakOpportunities;
         final hard = hardBreakAfterClusters == null ? SortedSet.builder().build() : hardBreakAfterClusters;
@@ -70,7 +74,7 @@ class ParagraphDpLineBreaker implements LineBreaker {
         final maxStretch = maxCjkStretchPerGap == null ? Math.POSITIVE_INFINITY : maxCjkStretchPerGap;
         final sinoCap = sinoWesternStretchCap == null ? 0.0 : sinoWesternStretchCap;
         final context = new DpContext(naturalClusters, adjustedClusters, maxWidth, shrink, ranges, indent, forbiddenLineStartClusters, forbidEnd, hyphens, cjk,
-            maxStretch, sino, sinoCap, controls, cjk, maxStretch,
+            maxStretch, sino, sinoCap, controls, gapBoundaries, maxStretch,
             lineAdjustmentPushIn == true, progressive);
         final committed:Array<LineCandidate> = [];
         final sortedBreaks:Array<Int> = [];
@@ -97,28 +101,57 @@ class ParagraphDpLineBreaker implements LineBreaker {
             context.cjkInterCharBoundaries, context.maxCjkStretchPerGap, context.sinoWesternBoundaries, context.sinoWesternStretchCap);
         final baseline = ProgressiveBreakDecisions.adjustBreakForUnbreakables(ProgressiveBreakDecisions.decideHyphenBreak(start, progressive, context.adjustedClusters, limit,
             context.hyphenBreakClusters, context.cjkInterCharBoundaries, context.maxCjkStretchPerGap, context.sinoWesternBoundaries, context.sinoWesternStretchCap), start, context.unbreakableRanges);
-        final pool:Array<Int> = [];
-        var i = start + 1; while (i <= raw) { if (!context.unbreakableRanges.containsBoundary(i) && (!endsWithMandatory || i != segmentEndExclusive - 1) &&
-            ProgressiveBreakDecisions.progressiveCandidateAllowed(start, raw, i, context.progressiveBreakOpportunities, context.adjustedClusters, limit, context.cjkInterCharBoundaries,
-                context.maxCjkStretchPerGap, context.sinoWesternBoundaries, context.sinoWesternStretchCap) && rangeHasOnlyNonControlClusters(start, i, context.nonRenderingControlClusters)) pool.push(i); i++; }
+        // CompressionAsDpEdge: collect lookahead ends before applying legality filters.
+        final compressed:Array<Int> = [];
         if (context.allowCompressionEdges) {
-            var width = 0.0; i = start; while (i < raw) { width += context.adjustedClusters[i].advance; i++; }
+            var width = 0.0; var i = start; while (i < raw) { width += context.adjustedClusters[i].advance; i++; }
             var e = raw + 1;
-            while (e <= segmentEndExclusive && e - raw <= candidateWindow) {
+            while (e <= segmentEndExclusive && compressed.length < candidateWindow) {
                 width += context.adjustedClusters[e - 1].advance;
                 if (width - limit > context.shrinkCapacity(new IntRange(start, e - 1))) break;
-                if (!context.unbreakableRanges.containsBoundary(e) && (!endsWithMandatory || e != segmentEndExclusive - 1)) pool.push(e);
-                e++;
+                compressed.push(e); e++;
             }
         }
-        final clean:Array<Int> = []; for (e in pool) if (e == segmentEndExclusive || (context.forbiddenLineStartClusters == null || !context.forbiddenLineStartClusters.has(e)) && !context.forbiddenLineEndClusters.has(e - 1)) clean.push(e);
-        final result = clean.length > 0 ? clean : pool;
-        if (baseline >= start + 1 && baseline <= segmentEndExclusive) result.push(baseline);
-        final unique:Array<Int> = []; for (e in result) { var seen = false; for (v in unique) if (v == e) seen = true; if (!seen) unique.push(e); }
+        final isPromotion = function(e:Int):Bool {
+            if (e <= raw) return false;
+            final current = context.progressiveBreakOpportunities.get(progressive);
+            final resulting = context.progressiveBreakOpportunities.get(e);
+            return current != null && resulting != null && current.spanRange.start == resulting.spanRange.start &&
+                current.spanRange.end == resulting.spanRange.end && resulting.tier.priority < current.tier.priority;
+        };
+        final filtered:Array<Int> = [];
+        var i = raw - candidateWindow; if (i < start + 1) i = start + 1;
+        while (i <= raw) {
+            if ((!endsWithMandatory || i != segmentEndExclusive - 1) && !context.unbreakableRanges.containsBoundary(i) &&
+                (isPromotion(i) || ProgressiveBreakDecisions.progressiveCandidateAllowed(start, raw, i, context.progressiveBreakOpportunities,
+                    context.adjustedClusters, limit, context.cjkInterCharBoundaries, context.maxCjkStretchPerGap,
+                    context.sinoWesternBoundaries, context.sinoWesternStretchCap)) &&
+                (i == segmentEndExclusive || rangeHasOnlyNonControlClusters(start, i, context.nonRenderingControlClusters))) filtered.push(i);
+            i++;
+        }
+        for (e in compressed) if ((!endsWithMandatory || e != segmentEndExclusive - 1) && !context.unbreakableRanges.containsBoundary(e) &&
+            (isPromotion(e) || ProgressiveBreakDecisions.progressiveCandidateAllowed(start, raw, e, context.progressiveBreakOpportunities,
+                context.adjustedClusters, limit, context.cjkInterCharBoundaries, context.maxCjkStretchPerGap,
+                context.sinoWesternBoundaries, context.sinoWesternStretchCap)) &&
+            (e == segmentEndExclusive || rangeHasOnlyNonControlClusters(start, e, context.nonRenderingControlClusters))) filtered.push(e);
+        // KinsokuAvoidanceOverRepair: preserve conflicted ends only if necessary.
+        final clean:Array<Int> = []; for (e in filtered) if (e == segmentEndExclusive ||
+            (context.forbiddenLineStartClusters == null || !context.forbiddenLineStartClusters.has(e)) && !context.forbiddenLineEndClusters.has(e - 1)) clean.push(e);
+        var pool = clean.length == 0 ? filtered : clean;
+        final promotions:Array<Int> = []; for (e in pool) if (isPromotion(e)) promotions.push(e);
+        if (promotions.length > 0) {
+            // ProgressiveTechnicalTierPromotion: prefer the best reachable technical tier.
+            var best = 999999; final promoted = context.progressiveBreakOpportunities.get(promotions[0]).spanRange;
+            for (e in promotions) { final o = context.progressiveBreakOpportunities.get(e); if (o.tier.priority < best) best = o.tier.priority; }
+            final preferred:Array<Int> = []; for (e in pool) { final o = context.progressiveBreakOpportunities.get(e);
+                if (o == null || o.spanRange.start != promoted.start || o.spanRange.end != promoted.end || o.tier.priority <= best) preferred.push(e); }
+            pool = preferred;
+        }
+        if (baseline >= start + 1 && baseline <= segmentEndExclusive && promotions.length == 0) pool.push(baseline);
+        final unique:Array<Int> = []; for (e in pool) { var seen = false; for (v in unique) if (v == e) seen = true; if (!seen) unique.push(e); }
         return unique.length > 0 ? unique : [baseline < start + 1 ? start + 1 : baseline];
     }
 
-    private function ParagraphDpLineBreakerCandidateWindow(context:DpContext, start:Int):Int return 8;
     private function edgeGeometry(context:DpContext, line:LineCandidate, isSegmentLast:Bool, hyphenEnd:Bool):EdgeGeometry {
         final limit = ProgressiveBreakDecisions.lineLimit(context.maxWidth, context.firstLineIndent, line.clusterRange.start);
         final inMeasure = line.clusterRange;
@@ -142,7 +175,58 @@ class ParagraphDpLineBreaker implements LineBreaker {
         return new EdgeGeometry(residual * raggednessWeight + orphan + hyphen + (dSino * dSino + dCjk * dCjk) / ref * raggednessWeight,
             Math.max(dSino, dCjk) > VISIBLE_STRETCH_FLOOR_PX);
     }
-    private function solveSegment(context:DpContext, segmentStart:Int, segmentEndExclusive:Int, endsWithMandatory:Bool):Array<Int> { throw new IllegalStateException("TODO r5: solveSegment"); }
+    private function solveSegment(context:DpContext, segmentStart:Int, segmentEndExclusive:Int, endsWithMandatory:Bool):Array<Int> {
+        final statesBuilder = SortedMap.builder();
+        statesBuilder.put(segmentStart, []);
+        final statesByStart:SortedMap<Int, Array<EdgeState>> = statesBuilder.build();
+        final bestBuilder = SortedMap.builder();
+        final bestByKey:SortedMap<String, EdgeState> = bestBuilder.build();
+        var terminalBest:Null<EdgeState> = null;
+        var start = segmentStart;
+        while (start < segmentEndExclusive) {
+            final bucket = statesByStart.get(start);
+            final incoming:Array<Null<EdgeState>> = [];
+            if (start == segmentStart) incoming.push(null);
+            else if (bucket != null) for (state in bucket) incoming.push(state);
+            if (incoming.length == 0) { start++; continue; }
+            for (e in candidateEnds(context, start, segmentEndExclusive, endsWithMandatory)) {
+                final last = e >= segmentEndExclusive;
+                final reason = !last ? LineEndReason.AutoWrap : (endsWithMandatory ? LineEndReason.MandatoryBreak : LineEndReason.ParagraphEnd);
+                final lineEnd = e - 1 < segmentEndExclusive - 1 ? e - 1 : segmentEndExclusive - 1;
+                final line = context.buildLine(new IntRange(start, lineEnd), reason);
+                final hyphenEnd = !last && context.hyphenBreakClusters.has(e);
+                final geometry = edgeGeometry(context, line, last, hyphenEnd);
+                for (prev in incoming) {
+                    final ph = prev == null ? 0 : prev.hyphenRun;
+                    final ps = prev == null ? 0 : prev.stretchRun;
+                    final cost = (prev == null ? 0.0 : prev.cost) + geometry.baseCost +
+                        (hyphenEnd ? consecutiveSyntheticHyphenPenalty * ph : 0.0) +
+                        (geometry.visibleStretch ? consecutiveStretchPenalty * ps : 0.0);
+                    final hr:Int = hyphenEnd ? (ph + 1 > HYPHEN_RUN_STATE_CAP ? HYPHEN_RUN_STATE_CAP : ph + 1) : 0;
+                    var sr:Int = 0;
+                    if (geometry.visibleStretch) sr = ps + 1 > STRETCH_RUN_STATE_CAP ? STRETCH_RUN_STATE_CAP : ps + 1;
+                    final key = start + ":" + e + ":" + hr + ":" + sr;
+                    final existing = bestByKey.get(key);
+                    if (existing != null && existing.cost <= cost) continue;
+                    final state = new EdgeState(start, e, hr, sr, cost, prev);
+                    bestBuilder.put(key, state);
+                    if (last) {
+                        if (terminalBest == null || cost < terminalBest.cost) terminalBest = state;
+                    } else {
+                        var next = statesByStart.get(e); if (next == null) next = [];
+                        final kept:Array<EdgeState> = [];
+                        for (old in next) if (!(old.start == start && old.hyphenRun == hr && old.stretchRun == sr)) kept.push(old);
+                        kept.push(state); statesBuilder.put(e, kept);
+                    }
+                }
+            }
+            start++;
+        }
+        if (terminalBest == null) return greedyFallbackEnds(context, segmentStart, segmentEndExclusive);
+        final result:Array<Int> = []; var cursor:Null<EdgeState> = terminalBest;
+        while (cursor != null) { result.push(cursor.end); cursor = cursor.parent; }
+        result.reverse(); return result;
+    }
     private function greedyFallbackEnds(context:DpContext, segmentStart:Int, segmentEndExclusive:Int):Array<Int> {
         final ends:Array<Int> = []; var start = segmentStart;
         while (start < segmentEndExclusive) {
@@ -157,7 +241,41 @@ class ParagraphDpLineBreaker implements LineBreaker {
         return ends;
     }
     private function commitSegment(committed:Array<LineCandidate>, ends:Array<Int>, segmentStart:Int, mandatoryEnd:Null<Int>, context:DpContext,
-            hardBreakAfterClusters:SortedSet<Int>):Void { throw new IllegalStateException("TODO r5: commitSegment"); }
+            hardBreakAfterClusters:SortedSet<Int>):Void {
+        var lineStart = segmentStart;
+        for (chosenEnd in ends) {
+            if (lineStart >= chosenEnd) continue;
+            final finalLine = chosenEnd == ends[ends.length - 1];
+            final reason = finalLine && mandatoryEnd != null ? LineEndReason.MandatoryBreak : (finalLine ? LineEndReason.ParagraphEnd : LineEndReason.AutoWrap);
+            final lastIndex = finalLine && mandatoryEnd != null ? mandatoryEnd : chosenEnd - 1;
+            final limit = ProgressiveBreakDecisions.lineLimit(context.maxWidth, context.firstLineIndent, lineStart);
+            final naturalLine = LineBreakerLines.rebuildLine(new IntRange(lineStart, lastIndex), context.naturalClusters, context.adjustedClusters, reason);
+            var compressed:Null<LineCandidate> = null;
+            if (naturalLine.adjustedWidth > limit && lastIndex > lineStart && context.allowCompressionEdges) {
+                final result = LineRepair.tryPushIn(LineBreakerLines.rebuildLine(new IntRange(lineStart, lineStart), context.naturalClusters, context.adjustedClusters),
+                    LineBreakerLines.rebuildLine(new IntRange(lineStart + 1, lastIndex), context.naturalClusters, context.adjustedClusters, reason),
+                    context.naturalClusters, context.adjustedClusters, limit, context.shrinkOpportunities, pushInPenalty, lastIndex, "LineAdjustmentPushIn");
+                if (result.candidate.accepted && result.current == null) compressed = result.previous;
+            }
+            if (finalLine) {
+                committed.push(compressed == null ? naturalLine : compressed);
+                lineStart = chosenEnd;
+                if (mandatoryEnd != null && lineStart == context.adjustedClusters.length)
+                    committed.push(LineBreakerLines.emptyLineCandidate(context.adjustedClusters[context.adjustedClusters.length - 1].range.end, LineEndReason.ParagraphEnd));
+            } else if (compressed != null) {
+                committed.push(compressed); lineStart = chosenEnd;
+            } else {
+                final committedEnd = ProgressiveBreakDecisions.adjustBreakForLineEnd(chosenEnd, lineStart, context.forbiddenLineEndClusters);
+                if (hardBreakAfterClusters.has(committedEnd) && lineStart < committedEnd) {
+                    committed.push(LineBreakerLines.rebuildLine(new IntRange(lineStart, committedEnd), context.naturalClusters, context.adjustedClusters, LineEndReason.MandatoryBreak));
+                    lineStart = committedEnd + 1;
+                } else {
+                    committed.push(LineBreakerLines.closeFilledLine(new IntRange(lineStart, committedEnd - 1), chosenEnd, context.naturalClusters, context.adjustedClusters));
+                    lineStart = committedEnd;
+                }
+            }
+        }
+    }
     private static function findGreedyEnd(clusters:Array<Cluster>, start:Int, limit:Float, endExclusive:Int, controls:SortedSet<Int>):Int {
         var width = 0.0; var i = start; var hasContent = false;
         while (i < endExclusive) { final next = width + clusters[i].advance; if (next > limit && hasContent) return i; width = next; if (!controls.has(i)) hasContent = true; i++; }
