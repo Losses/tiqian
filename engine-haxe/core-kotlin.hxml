@@ -34,6 +34,7 @@ org.tiqian.core.UnicodeScriptEvidenceTest
 org.tiqian.core.UnicodeWordCharacter
 org.tiqian.core.UnicodeWordCharacterData
 org.tiqian.core.UnicodeWordCharacterTest
+org.tiqian.core.UnicodeCombiningMarkData
 org.tiqian.core.EastAsianSpacing
 org.tiqian.core.EastAsianSpacingValue
 org.tiqian.core.EastAsianSpacingEdges
