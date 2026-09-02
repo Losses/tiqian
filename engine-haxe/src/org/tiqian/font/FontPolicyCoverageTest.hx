@@ -1,6 +1,9 @@
 package org.tiqian.font;
+
 import org.tiqian.font.FontPolicy.FontRequest;
 import org.tiqian.font.FontPolicy.FontRoleFns;
+import org.tiqian.font.FontPolicy.FontCandidate;
+import org.tiqian.font.FontPolicy.FontDecision;
 import org.tiqian.core.TextRange;
 import org.tiqian.test.trace.TestTraceRecorder;
 import org.tiqian.test.trace.TracedAssertions;
@@ -8,185 +11,125 @@ import org.tiqian.font.FontMetrics.FontMetricsRequest;
 import org.tiqian.font.FontMetrics.StubFontMetricsResolver;
 import org.tiqian.font.FontMetrics.ScriptAwareFontMetricsNormalizer;
 import org.tiqian.font.FontMetrics.FontMetricsNormalizationInput;
+
 class FontPolicyCoverageTest {
- @:test public static function testFontRequestAndRoles():Void { new TestTraceRecorder("FontPolicyCoverageTest").section("testFontRequestAndRoles");var r=new FontRequest(["Source Han Sans"],"zh-Hans",CjkText);TracedAssertions.assertEqualsString("zh-Hans",r.locale);TracedAssertions.assertTrue(FontRoleFns.usesLatinFace(LatinText)); }
- @:test public static function testCjkFontRoleClassifierAllRanges():Void { new TestTraceRecorder("FontPolicyCoverageTest").section("testCjkFontRoleClassifierAllRanges");var c=new CjkFontRoleClassifier();TracedAssertions.assertEqualsRendered("CjkText",Std.string(c.classify("提",new TextRange(0,1))));TracedAssertions.assertEqualsRendered("Emoji",Std.string(c.classify("😀",new TextRange(0,2)))); }
- @:test public static function testPreferCjkForAmbiguousPunctuationResolver():Void { new TestTraceRecorder("FontPolicyCoverageTest").section("testPreferCjkForAmbiguousPunctuationResolver");var d=new PreferCjkForAmbiguousPunctuationResolver("cjk-key","latin-key","symbol-key").resolve("中",new TextRange(0,1),new FontRequest([],"zh-Hans",CjkText));TracedAssertions.assertEqualsString("cjk-key",d.candidate.key); }
- @:test public static function testFontEnumsAndModels():Void { new TestTraceRecorder("FontPolicyCoverageTest").section("testFontEnumsAndModels");var r=new RawFontMetrics(16,4,2,RawTables,14,2);TracedAssertions.assertEqualsFloat(16,r.ascent);var l=new LayoutFontMetrics(14,2,0,IdeographicBox,Ideographic,IdeographicLow,IdeographicEmBox,RawTables,"test");TracedAssertions.assertEqualsFloat(14,l.ascent); }
- @:test public static function testFontMetricsRequestAndResolvers():Void { new TestTraceRecorder("FontPolicyCoverageTest").section("testFontMetricsRequestAndResolvers");var r=new FontMetricsRequest("key1",16,CjkText,"zh-Hans");var m=new StubFontMetricsResolver().resolve(r);TracedAssertions.assertEqualsFloat(16*1.16,m.ascent); }
- @:test public static function testScriptAwareFontMetricsNormalizerBranches():Void { new TestTraceRecorder("FontPolicyCoverageTest").section("testScriptAwareFontMetricsNormalizerBranches");var r=new FontMetricsRequest("key",16,CjkText,"zh-Hans");var l=new ScriptAwareFontMetricsNormalizer().normalize(new FontMetricsNormalizationInput(r,new RawFontMetrics(18,5,0,RawTables,14,2)));TracedAssertions.assertEqualsFloat(14,l.ascent); }
- @:test public static function emitGoldenTrace():Void { var r=new TestTraceRecorder("FontPolicyCoverageTest");
- r.section("testCjkFontRoleClassifierAllRanges");
- r.record("eq expected=CjkText actual=CjkText");
- r.record("eq expected=CjkText actual=CjkText");
- r.record("eq expected=CjkText actual=CjkText");
- r.record("eq expected=CjkText actual=CjkText");
- r.record("eq expected=CjkText actual=CjkText");
- r.record("eq expected=CjkText actual=CjkText");
- r.record("eq expected=CjkText actual=CjkText");
- r.record("eq expected=CjkText actual=CjkText");
- r.record("eq expected=CjkText actual=CjkText");
- r.record("eq expected=CjkText actual=CjkText");
- r.record("eq expected=Unknown actual=Unknown");
- r.record("eq expected=CjkPunctuation actual=CjkPunctuation msg='Expected CjkPunctuation for 　'");
- r.record("eq expected=CjkPunctuation actual=CjkPunctuation msg='Expected CjkPunctuation for —'");
- r.record("eq expected=CjkPunctuation actual=CjkPunctuation msg='Expected CjkPunctuation for –'");
- r.record("eq expected=CjkPunctuation actual=CjkPunctuation msg='Expected CjkPunctuation for ‼'");
- r.record("eq expected=CjkPunctuation actual=CjkPunctuation msg='Expected CjkPunctuation for ⁇'");
- r.record("eq expected=CjkPunctuation actual=CjkPunctuation msg='Expected CjkPunctuation for …'");
- r.record("eq expected=CjkPunctuation actual=CjkPunctuation msg='Expected CjkPunctuation for ‧'");
- r.record("eq expected=CjkPunctuation actual=CjkPunctuation msg='Expected CjkPunctuation for ⋯'");
- r.record("eq expected=CjkPunctuation actual=CjkPunctuation msg='Expected CjkPunctuation for ・'");
- r.record("eq expected=CjkPunctuation actual=CjkPunctuation msg='Expected CjkPunctuation for ⸺'");
- r.record("eq expected=CjkPunctuation actual=CjkPunctuation msg='Expected CjkPunctuation for ·'");
- r.record("eq expected=CjkPunctuation actual=CjkPunctuation msg='Expected CjkPunctuation for •'");
- r.record("eq expected=CjkPunctuation actual=CjkPunctuation msg='Expected CjkPunctuation for ！'");
- r.record("eq expected=CjkPunctuation actual=CjkPunctuation msg='Expected CjkPunctuation for ？'");
- r.record("eq expected=CjkPunctuation actual=CjkPunctuation msg='Expected CjkPunctuation for ，'");
- r.record("eq expected=CjkPunctuation actual=CjkPunctuation msg='Expected CjkPunctuation for ．'");
- r.record("eq expected=CjkPunctuation actual=CjkPunctuation msg='Expected CjkPunctuation for ／'");
- r.record("eq expected=CjkPunctuation actual=CjkPunctuation msg='Expected CjkPunctuation for ：'");
- r.record("eq expected=CjkPunctuation actual=CjkPunctuation msg='Expected CjkPunctuation for ；'");
- r.record("eq expected=CjkPunctuation actual=CjkPunctuation msg='Expected CjkPunctuation for （'");
- r.record("eq expected=CjkPunctuation actual=CjkPunctuation msg='Expected CjkPunctuation for ）'");
- r.record("eq expected=CjkPunctuation actual=CjkPunctuation msg='Expected CjkPunctuation for ～'");
- r.record("eq expected=LatinText actual=LatinText");
- r.record("eq expected=LatinText actual=LatinText");
- r.record("eq expected=CjkPunctuation actual=CjkPunctuation");
- r.record("eq expected=CjkPunctuation actual=CjkPunctuation");
- r.record("eq expected=CjkPunctuation actual=CjkPunctuation");
- r.record("eq expected=CjkPunctuation actual=CjkPunctuation");
- r.record("eq expected=CjkPunctuation actual=CjkPunctuation");
- r.record("eq expected=CjkPunctuation actual=CjkPunctuation");
- r.record("eq expected=CjkPunctuation actual=CjkPunctuation");
- r.record("eq expected=CjkPunctuation actual=CjkPunctuation");
- r.record("eq expected=CjkPunctuation actual=CjkPunctuation");
- r.record("eq expected=Unknown actual=Unknown");
- r.record("eq expected=Unknown actual=Unknown");
- r.record("eq expected=Unknown actual=Unknown");
- r.record("eq expected=Unknown actual=Unknown");
- r.record("eq expected=Unknown actual=Unknown");
- r.record("eq expected=LatinText actual=LatinText");
- r.record("eq expected=LatinText actual=LatinText");
- r.record("eq expected=LatinText actual=LatinText");
- r.record("eq expected=LatinText actual=LatinText");
- r.record("eq expected=LatinText actual=LatinText");
- r.record("eq expected=LatinText actual=LatinText");
- r.record("eq expected=LatinText actual=LatinText");
- r.record("eq expected=Emoji actual=Emoji");
- r.record("eq expected=Symbol actual=Symbol");
- r.record("eq expected=Symbol actual=Symbol");
- r.record("eq expected=Symbol actual=Symbol");
- r.record("eq expected=Symbol actual=Symbol");
- r.record("eq expected=Unknown actual=Unknown");
- r.section("testFontEnumsAndModels");
- r.record("not-null actual=Raw");
- r.record("not-null actual=IdeographicBox");
- r.record("not-null actual=GlyphBoundsSampled");
- r.record("not-null actual=ManualOverride");
- r.record("not-null actual=Alphabetic");
- r.record("not-null actual=Ideographic");
- r.record("not-null actual=CenteredCjkVisual");
- r.record("not-null actual=PreferCjkForAmbiguousPunctuation");
- r.record("not-null actual=PreferLatinForAscii");
- r.record("not-null actual=PreserveRunFont");
- r.record("not-null actual=CustomMap");
- r.record("eq expected=16 actual=16");
- r.record("eq expected=4 actual=4");
- r.record("eq expected=2 actual=2");
- r.record("eq expected=14 actual=14");
- r.record("eq expected=2 actual=2");
- r.record("eq expected=RawFontMetrics(ascent=16, descent=4, leading=2, source=RawTables, typoAscent=14, typoDescent=2) actual=RawFontMetrics(ascent=16, descent=4, leading=2, source=RawTables, typoAscent=14, typoDescent=2)");
- r.record("is-true actual=true");
- r.record("eq expected=14 actual=14");
- r.record("eq expected=LayoutFontMetrics(ascent=14, descent=2, baselineOffset=0, policy=IdeographicBox, baselinePolicy=Ideographic, baselineClass=IdeographicLow, metricBox=IdeographicEmBox, source=RawTables, reason=test) actual=LayoutFontMetrics(ascent=14, descent=2, baselineOffset=0, policy=IdeographicBox, baselinePolicy=Ideographic, baselineClass=IdeographicLow, metricBox=IdeographicEmBox, source=RawTables, reason=test)");
- r.record("is-true actual=true");
- r.section("testFontMetricsRequestAndResolvers");
- r.record("eq expected='key1' actual='key1'");
- r.record("eq expected=16 actual=16");
- r.record("eq expected=CjkText actual=CjkText");
- r.record("eq expected='zh-Hans' actual='zh-Hans'");
- r.record("eq expected=['FontA'] actual=['FontA']");
- r.record("eq expected=700 actual=700");
- r.record("is-true actual=true");
- r.record("eq expected='测试' actual='测试'");
- r.record("eq expected=FontMetricsRequest(fontKey=key1, fontSize=16, role=CjkText, locale=zh-Hans, fontFamilies=[FontA], fontWeight=700, italic=true, faceSelectionText=测试) actual=FontMetricsRequest(fontKey=key1, fontSize=16, role=CjkText, locale=zh-Hans, fontFamilies=[FontA], fontWeight=700, italic=true, faceSelectionText=测试)");
- r.record("is-true actual=true");
- r.record("eq expected=18.559999 actual=18.559999");
- r.record("eq expected=14.080000 actual=14.080000");
- r.record("eq expected=18.559999 actual=18.559999");
- r.record("eq expected=12.800000 actual=12.800000");
- r.record("eq expected=14.400000 actual=14.400000");
- r.record("eq expected=14.400000 actual=14.400000");
- r.record("eq expected=14.400000 actual=14.400000");
- r.section("testFontRequestAndRoles");
- r.record("eq expected=['Source Han Sans'] actual=['Source Han Sans']");
- r.record("eq expected='zh-Hans' actual='zh-Hans'");
- r.record("eq expected=CjkText actual=CjkText");
- r.record("eq expected=FontRequest(preferredFamilies=[Source Han Sans], locale=zh-Hans, role=CjkText) actual=FontRequest(preferredFamilies=[Source Han Sans], locale=zh-Hans, role=CjkText)");
- r.record("is-true actual=true");
- r.record("not-null actual=CjkText");
- r.record("not-null actual=CjkPunctuation");
- r.record("not-null actual=LatinText");
- r.record("not-null actual=Symbol");
- r.record("not-null actual=Emoji");
- r.record("not-null actual=Unknown");
- r.record("is-true actual=true");
- r.record("is-false actual=false");
- r.record("is-false actual=false");
- r.record("is-false actual=false");
- r.record("is-false actual=false");
- r.record("is-false actual=false");
- r.record("is-true actual=true");
- r.record("is-false actual=false");
- r.record("is-false actual=false");
- r.record("is-false actual=false");
- r.record("is-false actual=false");
- r.record("eq expected='cjk-key' actual='cjk-key'");
- r.record("eq expected='Source Han Sans' actual='Source Han Sans'");
- r.record("eq expected=CjkText actual=CjkText");
- r.record("eq expected=FontCandidate(key=cjk-key, family=Source Han Sans, role=CjkText) actual=FontCandidate(key=cjk-key, family=Source Han Sans, role=CjkText)");
- r.record("is-true actual=true");
- r.record("eq expected=TextRange(start=0, end=1) actual=TextRange(start=0, end=1)");
- r.record("eq expected=FontCandidate(key=cjk-key, family=Source Han Sans, role=CjkText) actual=FontCandidate(key=cjk-key, family=Source Han Sans, role=CjkText)");
- r.record("eq expected=CjkText actual=CjkText");
- r.record("eq expected='reason' actual='reason'");
- r.record("eq expected=FontDecision(range=TextRange(start=0, end=1), candidate=FontCandidate(key=cjk-key, family=Source Han Sans, role=CjkText), role=CjkText, reason=reason) actual=FontDecision(range=TextRange(start=0, end=1), candidate=FontCandidate(key=cjk-key, family=Source Han Sans, role=CjkText), role=CjkText, reason=reason)");
- r.record("is-true actual=true");
- r.record("eq expected='zh-TW' actual='zh-TW'");
- r.record("eq expected='TW' actual='TW'");
- r.record("eq expected=FontRoleContext(locale=zh-TW, regionHint=TW) actual=FontRoleContext(locale=zh-TW, regionHint=TW)");
- r.record("is-true actual=true");
- r.section("testPreferCjkForAmbiguousPunctuationResolver");
- r.record("eq expected='cjk-key' actual='cjk-key'");
- r.record("eq expected='CustomCjk' actual='CustomCjk'");
- r.record("eq expected='cjk-key' actual='cjk-key'");
- r.record("eq expected='latin-key' actual='latin-key'");
- r.record("eq expected='symbol-key' actual='symbol-key'");
- r.record("eq expected='symbol-key' actual='symbol-key'");
- r.record("eq expected='symbol-key' actual='symbol-key'");
- r.section("testScriptAwareFontMetricsNormalizerBranches");
- r.record("eq expected=14 actual=14");
- r.record("eq expected=2 actual=2");
- r.record("eq expected=IdeographicBox actual=IdeographicBox");
- r.record("is-true actual=true");
- r.record("eq expected=14 actual=14");
- r.record("eq expected=5 actual=5");
- r.record("eq expected=Raw actual=Raw");
- r.record("is-true actual=true");
- r.record("eq expected=18 actual=18");
- r.record("eq expected=2 actual=2");
- r.record("eq expected=Raw actual=Raw");
- r.record("eq expected=18 actual=18");
- r.record("eq expected=5 actual=5");
- r.record("eq expected=Raw actual=Raw");
- r.record("eq expected=13 actual=13");
- r.record("eq expected=3 actual=3");
- r.record("eq expected=Raw actual=Raw");
- r.record("eq expected=Alphabetic actual=Alphabetic");
- r.record("eq expected=14 actual=14");
- r.record("eq expected=Raw actual=Raw");
- r.record("eq expected=FontMetricsNormalizationInput(request=FontMetricsRequest(fontKey=key, fontSize=16, role=CjkText, locale=zh-Hans, fontFamilies=[], fontWeight=400, italic=false, faceSelectionText=), rawMetrics=RawFontMetrics(ascent=18, descent=5, leading=0, ~288#9d03b84e actual=FontMetricsNormalizationInput(request=FontMetricsRequest(fontKey=key, fontSize=16, role=CjkText, locale=zh-Hans, fontFamilies=[], fontWeight=400, italic=false, faceSelectionText=), rawMetrics=RawFontMetrics(ascent=18, descent=5, leading=0, ~288#9d03b84e");
- r.record("is-true actual=true");
+ private static function surrogateText(codes:Array<Int>):String {
+  var result=""; var i=0;
+  while(i<codes.length){result+=String.fromCharCode(codes[i]);i++;}
+  return result;
+ }
+
+ private static function copyStrings(values:std.ReadOnlyArray<String>):Array<String> {
+  final result:Array<String>=[]; var i=0;
+  while(i<values.length){result.push(values[i]);i++;}
+  return result;
+ }
+
+ @:test public static function testCjkFontRoleClassifierAllRanges():Void {
+  final t=new TestTraceRecorder("FontPolicyCoverageTest"); t.section("testCjkFontRoleClassifierAllRanges");
+  final classifier=new CjkFontRoleClassifier();
+  TracedAssertions.assertEqualsFontRole(CjkText,classifier.classify("\u3105",new TextRange(0,1)));
+  TracedAssertions.assertEqualsFontRole(CjkText,classifier.classify("\u31A0",new TextRange(0,1)));
+  TracedAssertions.assertEqualsFontRole(CjkText,classifier.classify("\u3400",new TextRange(0,1)));
+  TracedAssertions.assertEqualsFontRole(CjkText,classifier.classify("\u4E00",new TextRange(0,1)));
+  TracedAssertions.assertEqualsFontRole(CjkText,classifier.classify("\uF900",new TextRange(0,1)));
+  TracedAssertions.assertEqualsFontRole(CjkText,classifier.classify(surrogateText([0xD840,0xDC00]),new TextRange(0,2)));
+  TracedAssertions.assertEqualsFontRole(CjkText,classifier.classify(surrogateText([0xD869,0xDF00]),new TextRange(0,2)));
+  TracedAssertions.assertEqualsFontRole(CjkText,classifier.classify(surrogateText([0xD86D,0xDF40]),new TextRange(0,2)));
+  TracedAssertions.assertEqualsFontRole(CjkText,classifier.classify(surrogateText([0xD86E,0xDC20]),new TextRange(0,2)));
+  TracedAssertions.assertEqualsFontRole(CjkText,classifier.classify(surrogateText([0xD880,0xDC00]),new TextRange(0,2)));
+  TracedAssertions.assertEqualsFontRole(Unknown,classifier.classify(surrogateText([0xD888,0xDC00]),new TextRange(0,2)));
+  final punct=["\u3000","\u2014","\u2013","\u203C","\u2047","\u2026","\u2027","\u22EF","\u30FB","\u2E3A","\u00B7","\u2022","\uFF01","\uFF1F","\uFF0C","\uFF0E","\uFF0F","\uFF1A","\uFF1B","\uFF08","\uFF09","\uFF5E"];
+  var i=0; while(i<punct.length){var ch=punct[i];TracedAssertions.assertEqualsFontRole(CjkPunctuation,classifier.classify(ch,new TextRange(0,ch.length)),"Expected CjkPunctuation for "+ch);i++;}
+  TracedAssertions.assertEqualsFontRole(LatinText,classifier.classify("a\u2019b",new TextRange(1,2)));
+  TracedAssertions.assertEqualsFontRole(LatinText,classifier.classify("a\u201Db",new TextRange(1,2)));
+  TracedAssertions.assertEqualsFontRole(CjkPunctuation,classifier.classify("\u2019b",new TextRange(0,1)));
+  TracedAssertions.assertEqualsFontRole(CjkPunctuation,classifier.classify("a\u2019",new TextRange(1,2)));
+  TracedAssertions.assertEqualsFontRole(CjkPunctuation,classifier.classify("\u4E2D\u2019\u6587",new TextRange(1,2)));
+  TracedAssertions.assertEqualsFontRole(CjkPunctuation,classifier.classify(surrogateText([0xD83D,0xDE00,0x2019,'b'.code]),new TextRange(2,3)));
+  TracedAssertions.assertEqualsFontRole(CjkPunctuation,classifier.classify(surrogateText(['A'.code,0xDC00,0x2019,'b'.code]),new TextRange(2,3)));
+  TracedAssertions.assertEqualsFontRole(CjkPunctuation,classifier.classify(surrogateText([0xE000,0xDC00,0x2019,'b'.code]),new TextRange(2,3)));
+  TracedAssertions.assertEqualsFontRole(CjkPunctuation,classifier.classify(surrogateText([0xDC00,0x2019,'b'.code]),new TextRange(1,2)));
+  TracedAssertions.assertEqualsFontRole(CjkPunctuation,classifier.classify("\uE000\u2019b",new TextRange(1,2)));
+  TracedAssertions.assertEqualsFontRole(CjkPunctuation,classifier.classify(surrogateText(['a'.code,0x2019,0xD83D,0xDE00]),new TextRange(1,2)));
+  TracedAssertions.assertEqualsFontRole(Unknown,classifier.classify("\uE000",new TextRange(0,1)));
+  TracedAssertions.assertEqualsFontRole(Unknown,classifier.classify(surrogateText([0xD800]),new TextRange(0,1)));
+  TracedAssertions.assertEqualsFontRole(Unknown,classifier.classify(surrogateText([0xD800,'A'.code]),new TextRange(0,2)));
+  TracedAssertions.assertEqualsFontRole(Unknown,classifier.classify(surrogateText([0xD800,0xE000]),new TextRange(0,2)));
+  TracedAssertions.assertEqualsFontRole(Unknown,classifier.classify(surrogateText([0xD804,0xDC00]),new TextRange(0,2)));
+  TracedAssertions.assertEqualsFontRole(LatinText,classifier.classify("A",new TextRange(0,1)));
+  TracedAssertions.assertEqualsFontRole(LatinText,classifier.classify("z",new TextRange(0,1)));
+  TracedAssertions.assertEqualsFontRole(LatinText,classifier.classify("0",new TextRange(0,1)));
+  TracedAssertions.assertEqualsFontRole(LatinText,classifier.classify(" ",new TextRange(0,1)));
+  TracedAssertions.assertEqualsFontRole(LatinText,classifier.classify("+",new TextRange(0,1)));
+  TracedAssertions.assertEqualsFontRole(LatinText,classifier.classify("\u00C0",new TextRange(0,1)));
+  TracedAssertions.assertEqualsFontRole(LatinText,classifier.classify("\u0150",new TextRange(0,1)));
+  TracedAssertions.assertEqualsFontRole(Emoji,classifier.classify(surrogateText([0xD83D,0xDE00]),new TextRange(0,2)));
+  TracedAssertions.assertEqualsFontRole(Symbol,classifier.classify("\u2260",new TextRange(0,1)));
+  TracedAssertions.assertEqualsFontRole(Symbol,classifier.classify("\u20AC",new TextRange(0,1)));
+  TracedAssertions.assertEqualsFontRole(Symbol,classifier.classify("\u02D8",new TextRange(0,1)));
+  TracedAssertions.assertEqualsFontRole(Symbol,classifier.classify("\u00A9",new TextRange(0,1)));
+  TracedAssertions.assertEqualsFontRole(Unknown,classifier.classify("\u0001",new TextRange(0,1)));
+ }
+
+ @:test public static function testFontEnumsAndModels():Void {
+  final t=new TestTraceRecorder("FontPolicyCoverageTest"); t.section("testFontEnumsAndModels");
+  final metricsPolicies=Type.allEnums(FontMetricsPolicy); var i=0; while(i<metricsPolicies.length){TracedAssertions.assertNotNullRendered(true,Std.string(metricsPolicies[i]));i++;}
+  final baselinePolicies=Type.allEnums(BaselinePolicy); i=0; while(i<baselinePolicies.length){TracedAssertions.assertNotNullRendered(true,Std.string(baselinePolicies[i]));i++;}
+  final punctuationPolicies=Type.allEnums(PunctuationFontPolicy); i=0; while(i<punctuationPolicies.length){TracedAssertions.assertNotNullRendered(true,Std.string(punctuationPolicies[i]));i++;}
+  final raw=new RawFontMetrics(16,4,2,RawTables,14,2);
+  TracedAssertions.assertEqualsFloat(16,raw.ascent); TracedAssertions.assertEqualsFloat(4,raw.descent); TracedAssertions.assertEqualsFloat(2,raw.leading); TracedAssertions.assertEqualsFloat(14,raw.typoAscent); TracedAssertions.assertEqualsFloat(2,raw.typoDescent);
+  final rawCopy=new RawFontMetrics(raw.ascent,raw.descent,raw.leading,raw.source,raw.typoAscent,raw.typoDescent); TracedAssertions.assertEqualsRendered(Std.string(raw),Std.string(rawCopy)); TracedAssertions.assertTrue(Std.string(raw)==Std.string(rawCopy));
+  final layout=new LayoutFontMetrics(14,2,0,IdeographicBox,Ideographic,IdeographicLow,IdeographicEmBox,RawTables,"test");
+  TracedAssertions.assertEqualsFloat(14,layout.ascent); final layoutCopy=new LayoutFontMetrics(layout.ascent,layout.descent,layout.baselineOffset,layout.policy,layout.baselinePolicy,layout.baselineClass,layout.metricBox,layout.source,layout.reason); TracedAssertions.assertEqualsRendered(Std.string(layout),Std.string(layoutCopy)); TracedAssertions.assertTrue(Std.string(layout)==Std.string(layoutCopy));
+ }
+
+ @:test public static function testFontMetricsRequestAndResolvers():Void {
+  final t=new TestTraceRecorder("FontPolicyCoverageTest"); t.section("testFontMetricsRequestAndResolvers");
+  final request=new FontMetricsRequest("key1",16,CjkText,"zh-Hans",["FontA"],700,true,"\u6D4B\u8BD5");
+  TracedAssertions.assertEqualsString("key1",request.fontKey); TracedAssertions.assertEqualsFloat(16,request.fontSize); TracedAssertions.assertEqualsFontRole(CjkText,request.role); TracedAssertions.assertEqualsString("zh-Hans",request.locale); TracedAssertions.assertEqualsStringArray(["FontA"],request.fontFamilies); TracedAssertions.assertEqualsInt(700,request.fontWeight); TracedAssertions.assertTrue(request.italic); TracedAssertions.assertEqualsString("\u6D4B\u8BD5",request.faceSelectionText);
+  final requestCopy=new FontMetricsRequest(request.fontKey,request.fontSize,request.role,request.locale,copyStrings(request.fontFamilies),request.fontWeight,request.italic,request.faceSelectionText); TracedAssertions.assertEqualsRendered(Std.string(request),Std.string(requestCopy)); TracedAssertions.assertTrue(Std.string(request)==Std.string(requestCopy));
+  final resolver=new StubFontMetricsResolver();
+  final cjk=resolver.resolve(request); TracedAssertions.assertEqualsFloat(16*1.16,cjk.ascent); TracedAssertions.assertEqualsFloat(16*0.88,cjk.typoAscent == null ? 0 : cjk.typoAscent);
+  final punct=resolver.resolve(new FontMetricsRequest(request.fontKey,request.fontSize,CjkPunctuation,request.locale,copyStrings(request.fontFamilies),request.fontWeight,request.italic,request.faceSelectionText)); TracedAssertions.assertEqualsFloat(16*1.16,punct.ascent);
+  final latin=resolver.resolve(new FontMetricsRequest(request.fontKey,request.fontSize,LatinText,request.locale,copyStrings(request.fontFamilies),request.fontWeight,request.italic,request.faceSelectionText)); TracedAssertions.assertEqualsFloat(16*0.8,latin.ascent);
+  final symbol=resolver.resolve(new FontMetricsRequest(request.fontKey,request.fontSize,Symbol,request.locale,copyStrings(request.fontFamilies),request.fontWeight,request.italic,request.faceSelectionText)); TracedAssertions.assertEqualsFloat(16*0.9,symbol.ascent);
+  final emoji=resolver.resolve(new FontMetricsRequest(request.fontKey,request.fontSize,Emoji,request.locale,copyStrings(request.fontFamilies),request.fontWeight,request.italic,request.faceSelectionText)); TracedAssertions.assertEqualsFloat(16*0.9,emoji.ascent);
+  final unknown=resolver.resolve(new FontMetricsRequest(request.fontKey,request.fontSize,Unknown,request.locale,copyStrings(request.fontFamilies),request.fontWeight,request.italic,request.faceSelectionText)); TracedAssertions.assertEqualsFloat(16*0.9,unknown.ascent);
+ }
+
+ @:test public static function testFontRequestAndRoles():Void {
+  final t=new TestTraceRecorder("FontPolicyCoverageTest"); t.section("testFontRequestAndRoles");
+  final request=new FontRequest(["Source Han Sans"],"zh-Hans",CjkText); TracedAssertions.assertEqualsStringArray(["Source Han Sans"],request.preferredFamilies); TracedAssertions.assertEqualsString("zh-Hans",request.locale); TracedAssertions.assertEqualsFontRole(CjkText,request.role);
+  final requestCopy=new FontRequest(request.preferredFamilies,request.locale,request.role); TracedAssertions.assertEqualsRendered(Std.string(request),Std.string(requestCopy)); TracedAssertions.assertTrue(Std.string(request)==Std.string(requestCopy));
+  final roles=Type.allEnums(FontRole); var i=0; while(i<roles.length){TracedAssertions.assertNotNullRendered(true,Std.string(roles[i]));i++;}
+  TracedAssertions.assertTrue(FontRoleFns.usesLatinFace(LatinText)); TracedAssertions.assertFalse(FontRoleFns.usesLatinFace(CjkText)); TracedAssertions.assertFalse(FontRoleFns.usesLatinFace(CjkPunctuation)); TracedAssertions.assertFalse(FontRoleFns.usesLatinFace(Symbol)); TracedAssertions.assertFalse(FontRoleFns.usesLatinFace(Emoji)); TracedAssertions.assertFalse(FontRoleFns.usesLatinFace(Unknown));
+  TracedAssertions.assertTrue(FontRoleFns.fontRoleNameUsesLatinFace("LatinText")); TracedAssertions.assertFalse(FontRoleFns.fontRoleNameUsesLatinFace("CjkText")); TracedAssertions.assertFalse(FontRoleFns.fontRoleNameUsesLatinFace("Unknown")); TracedAssertions.assertFalse(FontRoleFns.fontRoleNameUsesLatinFace(null)); TracedAssertions.assertFalse(FontRoleFns.fontRoleNameUsesLatinFace("NotARole"));
+  final candidate=new FontCandidate("cjk-key","Source Han Sans",CjkText); TracedAssertions.assertEqualsString("cjk-key",candidate.key); TracedAssertions.assertEqualsString("Source Han Sans",candidate.family); TracedAssertions.assertEqualsFontRole(CjkText,candidate.role); final candidateCopy=new FontCandidate(candidate.key,candidate.family,candidate.role); TracedAssertions.assertEqualsRendered(Std.string(candidate),Std.string(candidateCopy)); TracedAssertions.assertTrue(Std.string(candidate)==Std.string(candidateCopy));
+  final decision=new FontDecision(new TextRange(0,1),candidate,CjkText,"reason"); TracedAssertions.assertEqualsRendered("TextRange(start=0, end=1)",Std.string(decision.range)); TracedAssertions.assertEqualsRendered(Std.string(candidate),Std.string(decision.candidate)); TracedAssertions.assertEqualsFontRole(CjkText,decision.role); TracedAssertions.assertEqualsString("reason",decision.reason); final decisionCopy=new FontDecision(decision.range,decision.candidate,decision.role,decision.reason); TracedAssertions.assertEqualsRendered(Std.string(decision),Std.string(decisionCopy)); TracedAssertions.assertTrue(Std.string(decision)==Std.string(decisionCopy));
+  final context=new FontRoleContext("zh-TW","TW"); TracedAssertions.assertEqualsString("zh-TW",context.locale); TracedAssertions.assertEqualsString("TW",context.regionHint); final contextCopy=new FontRoleContext(context.locale,context.regionHint); TracedAssertions.assertEqualsRendered(Std.string(context),Std.string(contextCopy)); TracedAssertions.assertTrue(Std.string(context)==Std.string(contextCopy));
+ }
+
+ @:test public static function testPreferCjkForAmbiguousPunctuationResolver():Void {
+  final t=new TestTraceRecorder("FontPolicyCoverageTest"); t.section("testPreferCjkForAmbiguousPunctuationResolver");
+  final resolver=new PreferCjkForAmbiguousPunctuationResolver("cjk-key","latin-key","symbol-key");
+  var d=resolver.resolve("\u4E2D",new TextRange(0,1),new FontRequest(["CustomCjk"],"zh-Hans",CjkText)); TracedAssertions.assertEqualsString("cjk-key",d.candidate.key); TracedAssertions.assertEqualsString("CustomCjk",d.candidate.family);
+  d=resolver.resolve("\u4E2D",new TextRange(0,1),new FontRequest([],"zh-Hans",CjkPunctuation)); TracedAssertions.assertEqualsString("cjk-key",d.candidate.family);
+  d=resolver.resolve("A",new TextRange(0,1),new FontRequest([],"en",LatinText)); TracedAssertions.assertEqualsString("latin-key",d.candidate.key);
+  d=resolver.resolve("\u00A9",new TextRange(0,1),new FontRequest([],"en",Symbol)); TracedAssertions.assertEqualsString("symbol-key",d.candidate.key);
+  d=resolver.resolve(surrogateText([0xD83D,0xDE00]),new TextRange(0,2),new FontRequest([],"en",Emoji)); TracedAssertions.assertEqualsString("symbol-key",d.candidate.key);
+  d=resolver.resolve("\u0001",new TextRange(0,1),new FontRequest([],"en",Unknown)); TracedAssertions.assertEqualsString("symbol-key",d.candidate.key);
+ }
+
+ @:test public static function testScriptAwareFontMetricsNormalizerBranches():Void {
+  final t=new TestTraceRecorder("FontPolicyCoverageTest"); t.section("testScriptAwareFontMetricsNormalizerBranches");
+  final normalizer=new ScriptAwareFontMetricsNormalizer(); final base=new FontMetricsRequest("key",16,CjkText,"zh-Hans");
+  final inputWithTypo=new FontMetricsNormalizationInput(base,new RawFontMetrics(18,5,0,RawTables,14,2)); final typo=normalizer.normalize(inputWithTypo); TracedAssertions.assertEqualsFloat(14,typo.ascent); TracedAssertions.assertEqualsFloat(2,typo.descent); TracedAssertions.assertEqualsRendered("IdeographicBox",Std.string(typo.policy)); TracedAssertions.assertTrue(typo.reason.indexOf("font-typo-box")>=0);
+  final inputPartialTypo1=new FontMetricsNormalizationInput(base,new RawFontMetrics(18,5,0,RawTables,14,null)); final partial1=normalizer.normalize(inputPartialTypo1); TracedAssertions.assertEqualsFloat(14,partial1.ascent); TracedAssertions.assertEqualsFloat(5,partial1.descent); TracedAssertions.assertEqualsRendered("Raw",Std.string(partial1.policy)); TracedAssertions.assertTrue(partial1.reason.indexOf("hhea-fallback-no-os2")>=0);
+  final inputPartialTypo2=new FontMetricsNormalizationInput(base,new RawFontMetrics(18,5,0,RawTables,null,2)); final partial2=normalizer.normalize(inputPartialTypo2); TracedAssertions.assertEqualsFloat(18,partial2.ascent); TracedAssertions.assertEqualsFloat(2,partial2.descent); TracedAssertions.assertEqualsRendered("Raw",Std.string(partial2.policy));
+  final inputNoTypo=new FontMetricsNormalizationInput(base,new RawFontMetrics(18,5,0,RawTables,null,null)); final noTypo=normalizer.normalize(inputNoTypo); TracedAssertions.assertEqualsFloat(18,noTypo.ascent); TracedAssertions.assertEqualsFloat(5,noTypo.descent); TracedAssertions.assertEqualsRendered("Raw",Std.string(noTypo.policy));
+  final inputLatin=new FontMetricsNormalizationInput(new FontMetricsRequest("key",16,LatinText,"zh-Hans"),new RawFontMetrics(13,3)); final latin=normalizer.normalize(inputLatin); TracedAssertions.assertEqualsFloat(13,latin.ascent); TracedAssertions.assertEqualsFloat(3,latin.descent); TracedAssertions.assertEqualsRendered("Raw",Std.string(latin.policy)); TracedAssertions.assertEqualsRendered("Alphabetic",Std.string(latin.baselinePolicy));
+  final inputSymbol=new FontMetricsNormalizationInput(new FontMetricsRequest("key",16,Symbol,"zh-Hans"),new RawFontMetrics(14,4)); final symbol=normalizer.normalize(inputSymbol); TracedAssertions.assertEqualsFloat(14,symbol.ascent); TracedAssertions.assertEqualsRendered("Raw",Std.string(symbol.policy));
+  final inputCopy=new FontMetricsNormalizationInput(inputWithTypo.request,inputWithTypo.rawMetrics); TracedAssertions.assertEqualsRendered(Std.string(inputWithTypo),Std.string(inputCopy)); TracedAssertions.assertTrue(Std.string(inputWithTypo)==Std.string(inputCopy));
  }
 }
