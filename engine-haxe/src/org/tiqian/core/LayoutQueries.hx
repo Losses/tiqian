@@ -1,5 +1,7 @@
 package org.tiqian.core;
 
+using std.Functional;
+
 import org.tiqian.core.RichTextRole.Background;
 import org.tiqian.core.RichTextRole.Underline;
 import org.tiqian.core.RichTextRole.LineThrough;
