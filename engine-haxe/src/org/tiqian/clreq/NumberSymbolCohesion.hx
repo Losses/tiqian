@@ -17,7 +17,9 @@ class NumberSymbolCohesion {
                 final unit:Int = text.charCodeAt(end + 1);
                 if (UnicodeNumberData.contains(unit)) {
                     end += 1;
-                } else if ((unit == 0x2E || unit == 0x2C) && end + 2 < text.length && UnicodeNumberData.contains(text.charCodeAt(end + 2))) {
+                } else if ((unit == 0x2E || unit == 0x2C)
+                    && end + 2 < text.length
+                    && UnicodeNumberData.contains(text.charCodeAt(end + 2))) {
                     end += 2;
                 } else {
                     break;
@@ -45,13 +47,11 @@ class NumberSymbolCohesion {
     }
 
     private static function isSuffixUnit(unit:Int):Bool {
-        return unit == 0x25 || unit == 0x2030 || unit == 0x00B0 || unit == 0x2103
-            || unit == 0x2109 || unit == 0x2032 || unit == 0x2033;
+        return unit == 0x25 || unit == 0x2030 || unit == 0x00B0 || unit == 0x2103 || unit == 0x2109 || unit == 0x2032 || unit == 0x2033;
     }
 
     private static function isFrontCurrency(unit:Int):Bool {
-        return unit == 0x00A5 || unit == 0xFFE5 || unit == 0x24 || unit == 0xFF04
-            || unit == 0x20AC || unit == 0x00A3 || unit == 0x20A9 || unit == 0x20BD
+        return unit == 0x00A5 || unit == 0xFFE5 || unit == 0x24 || unit == 0xFF04 || unit == 0x20AC || unit == 0x00A3 || unit == 0x20A9 || unit == 0x20BD
             || unit == 0x20B9 || unit == 0x0E3F;
     }
 

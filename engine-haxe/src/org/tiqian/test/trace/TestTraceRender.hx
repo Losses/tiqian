@@ -127,7 +127,8 @@ class TestTraceRender {
                 while (cursor < value.length && value.charCodeAt(cursor) == 48) {
                     cursor += 1;
                 }
-                if (cursor > index + 1 && (cursor == value.length || (!isDigit(value.charCodeAt(cursor)) && value.charCodeAt(cursor) != 46))) {
+                if (cursor > index + 1
+                    && (cursor == value.length || (!isDigit(value.charCodeAt(cursor)) && value.charCodeAt(cursor) != 46))) {
                     index = cursor;
                     continue;
                 }

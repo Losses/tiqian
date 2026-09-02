@@ -17,5 +17,4 @@ class TextRangeTest {
             new TextRange(-1, 1);
         });
     }
-
 }

@@ -6,13 +6,11 @@ import org.tiqian.core.RichTextRole.LineThrough;
 import org.tiqian.core.RichTextRole.Link;
 import org.tiqian.core.RichTextRole.TechnicalInline;
 import org.tiqian.core.RichTextRole.InlineCode;
-
 import org.tiqian.core.RichTextLinePattern.Solid;
 import org.tiqian.core.RichTextLinePattern.Dashed;
 import org.tiqian.core.RichTextLinePattern.Dotted;
 import org.tiqian.core.RichTextBackgroundDrawStyle.Fill;
 import org.tiqian.core.RichTextBackgroundDrawStyle.Border;
-
 import org.tiqian.test.trace.TestTraceRecorder;
 import org.tiqian.test.trace.TestTraceRender;
 import org.tiqian.test.trace.TracedAssertions;
@@ -22,13 +20,10 @@ class TextModelCoverageTest {
     @:test
     public static function testTiqianTextContentAndLinkAddressDisplay():Void {
         new TestTraceRecorder("TextModelCoverageTest").section("testTiqianTextContentAndLinkAddressDisplay");
-        final content:TiqianTextContent = new TiqianTextContent(
-            "Hello Tiqian",
-            [new TextSpan(new TextRange(0, 5), new TextStyle([], 16.0, "zh-Hans", 400, false, 0.0, InlineAttachment.None))],
-            [0, 5, 12],
-            [new LineBreakSpan(new TextRange(0, 5), LineBreakPolicy.ProgressiveTechnical)],
-            [new TextRange(6, 12)]
-        );
+        final content:TiqianTextContent = new TiqianTextContent("Hello Tiqian", [
+            new TextSpan(new TextRange(0, 5), new TextStyle([], 16.0, "zh-Hans", 400, false, 0.0, InlineAttachment.None))
+        ], [0, 5, 12],
+            [new LineBreakSpan(new TextRange(0, 5), LineBreakPolicy.ProgressiveTechnical)], [new TextRange(6, 12)]);
         TracedAssertions.assertEqualsString("Hello Tiqian", content.text);
         TracedAssertions.assertEqualsInt(1, content.spans.length);
         TracedAssertions.assertEqualsInt(3, content.sourceBoundaries.length);
@@ -94,13 +89,20 @@ class TextModelCoverageTest {
         TracedAssertions.assertEqualsFloat(5.0, stretch.capacity);
         TextModelCoverageTestHelpers.assertRendered(stretch.toString());
 
-        TextModelCoverageTestHelpers.expectArgumentFailure(() -> new InlineObjectPreferredStretch(InlineObjectPreferredStretchKind.PunctuationTrailing, -1.0, 10.0));
-        TextModelCoverageTestHelpers.expectArgumentFailure(() -> new InlineObjectPreferredStretch(InlineObjectPreferredStretchKind.PunctuationTrailing, 0.0 / 0.0, 10.0));
-        TextModelCoverageTestHelpers.expectArgumentFailure(() -> new InlineObjectPreferredStretch(InlineObjectPreferredStretchKind.PunctuationTrailing, Math.POSITIVE_INFINITY, 10.0));
-        TextModelCoverageTestHelpers.expectArgumentFailure(() -> new InlineObjectPreferredStretch(InlineObjectPreferredStretchKind.PunctuationTrailing, 10.0, 10.0));
-        TextModelCoverageTestHelpers.expectArgumentFailure(() -> new InlineObjectPreferredStretch(InlineObjectPreferredStretchKind.PunctuationTrailing, 10.0, 8.0));
-        TextModelCoverageTestHelpers.expectArgumentFailure(() -> new InlineObjectPreferredStretch(InlineObjectPreferredStretchKind.PunctuationTrailing, 10.0, 0.0 / 0.0));
-        TextModelCoverageTestHelpers.expectArgumentFailure(() -> new InlineObjectPreferredStretch(InlineObjectPreferredStretchKind.PunctuationTrailing, 10.0, Math.POSITIVE_INFINITY));
+        TextModelCoverageTestHelpers.expectArgumentFailure(() -> new InlineObjectPreferredStretch(InlineObjectPreferredStretchKind.PunctuationTrailing, -1.0,
+            10.0));
+        TextModelCoverageTestHelpers.expectArgumentFailure(() -> new InlineObjectPreferredStretch(InlineObjectPreferredStretchKind.PunctuationTrailing,
+            0.0 / 0.0, 10.0));
+        TextModelCoverageTestHelpers.expectArgumentFailure(() -> new InlineObjectPreferredStretch(InlineObjectPreferredStretchKind.PunctuationTrailing,
+            Math.POSITIVE_INFINITY, 10.0));
+        TextModelCoverageTestHelpers.expectArgumentFailure(() -> new InlineObjectPreferredStretch(InlineObjectPreferredStretchKind.PunctuationTrailing, 10.0,
+            10.0));
+        TextModelCoverageTestHelpers.expectArgumentFailure(() -> new InlineObjectPreferredStretch(InlineObjectPreferredStretchKind.PunctuationTrailing, 10.0,
+            8.0));
+        TextModelCoverageTestHelpers.expectArgumentFailure(() -> new InlineObjectPreferredStretch(InlineObjectPreferredStretchKind.PunctuationTrailing, 10.0,
+            0.0 / 0.0));
+        TextModelCoverageTestHelpers.expectArgumentFailure(() -> new InlineObjectPreferredStretch(InlineObjectPreferredStretchKind.PunctuationTrailing, 10.0,
+            Math.POSITIVE_INFINITY));
 
         final fixed:InlineObjectBoundaryAdjustment = InlineObjectBoundaryAdjustment.fixed();
         TracedAssertions.assertFalse(fixed.participatesInUniformStretch);
@@ -135,7 +137,8 @@ class TextModelCoverageTest {
     public static function testTextStyleAndDecorations():Void {
         new TestTraceRecorder("TextModelCoverageTest").section("testTextStyleAndDecorations");
         final style:TextStyle = new TextStyle(["Noto Serif CJK SC"], 18.0, "zh-CN", 700, true, -2.0, InlineAttachment.Previous);
-        TracedAssertions.assertEqualsRendered(TextModelCoverageTestHelpers.renderStrings(["Noto Serif CJK SC"]), TextModelCoverageTestHelpers.renderStrings(style.fontFamilies));
+        TracedAssertions.assertEqualsRendered(TextModelCoverageTestHelpers.renderStrings(["Noto Serif CJK SC"]),
+            TextModelCoverageTestHelpers.renderStrings(style.fontFamilies));
         TracedAssertions.assertEqualsFloat(18.0, style.fontSize);
         TracedAssertions.assertEqualsString("zh-CN", style.locale);
         TracedAssertions.assertEqualsInt(700, style.fontWeight);
@@ -169,16 +172,21 @@ class TextModelCoverageTest {
     @:test
     public static function testRichTextSpansAndPatterns():Void {
         new TestTraceRecorder("TextModelCoverageTest").section("testRichTextSpansAndPatterns");
-        final paint:RichTextPaint = new RichTextPaint(-16777216, Solid.instance, new RichTextBackgroundPaint(0.0, 0.0, 0.0, 0.0, RichTextBackgroundMetricPolicy.MarkedFaces, Fill.instance), 1.5);
+        final paint:RichTextPaint = new RichTextPaint(-16777216, Solid.instance,
+            new RichTextBackgroundPaint(0.0, 0.0, 0.0, 0.0, RichTextBackgroundMetricPolicy.MarkedFaces, Fill.instance), 1.5);
         TracedAssertions.assertEqualsInt(-16777216, paint.argb);
         TracedAssertions.assertEqualsFloat(1.5, paint.adjacentSameStyleClearance);
         TextModelCoverageTestHelpers.assertRendered(paint.toString());
 
-        TextModelCoverageTestHelpers.expectArgumentFailure(() -> new RichTextPaint(null, Solid.instance, new RichTextBackgroundPaint(0.0, 0.0, 0.0, 0.0, RichTextBackgroundMetricPolicy.MarkedFaces, Fill.instance), -0.1));
-        TextModelCoverageTestHelpers.expectArgumentFailure(() -> new RichTextPaint(null, Solid.instance, new RichTextBackgroundPaint(0.0, 0.0, 0.0, 0.0, RichTextBackgroundMetricPolicy.MarkedFaces, Fill.instance), 0.0 / 0.0));
-        TextModelCoverageTestHelpers.expectArgumentFailure(() -> new RichTextPaint(null, Solid.instance, new RichTextBackgroundPaint(0.0, 0.0, 0.0, 0.0, RichTextBackgroundMetricPolicy.MarkedFaces, Fill.instance), Math.POSITIVE_INFINITY));
+        TextModelCoverageTestHelpers.expectArgumentFailure(() -> new RichTextPaint(null, Solid.instance,
+            new RichTextBackgroundPaint(0.0, 0.0, 0.0, 0.0, RichTextBackgroundMetricPolicy.MarkedFaces, Fill.instance), -0.1));
+        TextModelCoverageTestHelpers.expectArgumentFailure(() -> new RichTextPaint(null, Solid.instance,
+            new RichTextBackgroundPaint(0.0, 0.0, 0.0, 0.0, RichTextBackgroundMetricPolicy.MarkedFaces, Fill.instance), 0.0 / 0.0));
+        TextModelCoverageTestHelpers.expectArgumentFailure(() -> new RichTextPaint(null, Solid.instance,
+            new RichTextBackgroundPaint(0.0, 0.0, 0.0, 0.0, RichTextBackgroundMetricPolicy.MarkedFaces, Fill.instance), Math.POSITIVE_INFINITY));
 
-        final bgPaint:RichTextBackgroundPaint = new RichTextBackgroundPaint(2.0, 3.0, 4.0, 1.0, RichTextBackgroundMetricPolicy.UniformTextStyle, new Border(1.5));
+        final bgPaint:RichTextBackgroundPaint = new RichTextBackgroundPaint(2.0, 3.0, 4.0, 1.0, RichTextBackgroundMetricPolicy.UniformTextStyle,
+            new Border(1.5));
         TracedAssertions.assertEqualsFloat(2.0, bgPaint.horizontalPadding);
         TracedAssertions.assertEqualsFloat(3.0, bgPaint.verticalPadding);
         TracedAssertions.assertEqualsFloat(4.0, bgPaint.cornerRadius);
@@ -186,14 +194,22 @@ class TextModelCoverageTest {
         TracedAssertions.assertEqualsRendered(Std.string(RichTextBackgroundMetricPolicy.UniformTextStyle), Std.string(bgPaint.metricPolicy));
         TextModelCoverageTestHelpers.assertRendered(bgPaint.toString());
 
-        TextModelCoverageTestHelpers.expectArgumentFailure(() -> new RichTextBackgroundPaint(-1.0, 0.0, 0.0, 0.0, RichTextBackgroundMetricPolicy.MarkedFaces, Fill.instance));
-        TextModelCoverageTestHelpers.expectArgumentFailure(() -> new RichTextBackgroundPaint(0.0 / 0.0, 0.0, 0.0, 0.0, RichTextBackgroundMetricPolicy.MarkedFaces, Fill.instance));
-        TextModelCoverageTestHelpers.expectArgumentFailure(() -> new RichTextBackgroundPaint(0.0, -1.0, 0.0, 0.0, RichTextBackgroundMetricPolicy.MarkedFaces, Fill.instance));
-        TextModelCoverageTestHelpers.expectArgumentFailure(() -> new RichTextBackgroundPaint(0.0, 0.0 / 0.0, 0.0, 0.0, RichTextBackgroundMetricPolicy.MarkedFaces, Fill.instance));
-        TextModelCoverageTestHelpers.expectArgumentFailure(() -> new RichTextBackgroundPaint(0.0, 0.0, -1.0, -1.0, RichTextBackgroundMetricPolicy.MarkedFaces, Fill.instance));
-        TextModelCoverageTestHelpers.expectArgumentFailure(() -> new RichTextBackgroundPaint(0.0, 0.0, 0.0 / 0.0, 0.0 / 0.0, RichTextBackgroundMetricPolicy.MarkedFaces, Fill.instance));
-        TextModelCoverageTestHelpers.expectArgumentFailure(() -> new RichTextBackgroundPaint(0.0, 0.0, 0.0, -1.0, RichTextBackgroundMetricPolicy.MarkedFaces, Fill.instance));
-        TextModelCoverageTestHelpers.expectArgumentFailure(() -> new RichTextBackgroundPaint(0.0, 0.0, 0.0, 0.0 / 0.0, RichTextBackgroundMetricPolicy.MarkedFaces, Fill.instance));
+        TextModelCoverageTestHelpers.expectArgumentFailure(() -> new RichTextBackgroundPaint(-1.0, 0.0, 0.0, 0.0, RichTextBackgroundMetricPolicy.MarkedFaces,
+            Fill.instance));
+        TextModelCoverageTestHelpers.expectArgumentFailure(() -> new RichTextBackgroundPaint(0.0 / 0.0, 0.0, 0.0, 0.0,
+            RichTextBackgroundMetricPolicy.MarkedFaces, Fill.instance));
+        TextModelCoverageTestHelpers.expectArgumentFailure(() -> new RichTextBackgroundPaint(0.0, -1.0, 0.0, 0.0, RichTextBackgroundMetricPolicy.MarkedFaces,
+            Fill.instance));
+        TextModelCoverageTestHelpers.expectArgumentFailure(() -> new RichTextBackgroundPaint(0.0, 0.0 / 0.0, 0.0, 0.0,
+            RichTextBackgroundMetricPolicy.MarkedFaces, Fill.instance));
+        TextModelCoverageTestHelpers.expectArgumentFailure(() -> new RichTextBackgroundPaint(0.0, 0.0, -1.0, -1.0, RichTextBackgroundMetricPolicy.MarkedFaces,
+            Fill.instance));
+        TextModelCoverageTestHelpers.expectArgumentFailure(() -> new RichTextBackgroundPaint(0.0, 0.0, 0.0 / 0.0, 0.0 / 0.0,
+            RichTextBackgroundMetricPolicy.MarkedFaces, Fill.instance));
+        TextModelCoverageTestHelpers.expectArgumentFailure(() -> new RichTextBackgroundPaint(0.0, 0.0, 0.0, -1.0, RichTextBackgroundMetricPolicy.MarkedFaces,
+            Fill.instance));
+        TextModelCoverageTestHelpers.expectArgumentFailure(() -> new RichTextBackgroundPaint(0.0, 0.0, 0.0, 0.0 / 0.0,
+            RichTextBackgroundMetricPolicy.MarkedFaces, Fill.instance));
 
         TracedAssertions.assertEqualsRendered(Fill.instance.toString(), Fill.instance.toString());
         final border:Border = new Border(2.0);
@@ -314,18 +330,8 @@ class TextModelCoverageTest {
         TracedAssertions.assertEqualsRendered(Std.string(LastLineAlignment.Center), gridAlignment == null ? "null" : Std.string(gridAlignment));
         TextModelCoverageTestHelpers.assertRendered(grid.toString());
 
-        final paraStyle:ParagraphStyle = new ParagraphStyle(
-            LastLineAlignment.End,
-            WritingMode.VerticalRl,
-            32.0,
-            null,
-            Ic.Zero,
-            adaptiveIndent,
-            grid,
-            RubyLineHeightMode.UniformParagraph,
-            0.2,
-            0.15
-        );
+        final paraStyle:ParagraphStyle = new ParagraphStyle(LastLineAlignment.End, WritingMode.VerticalRl, 32.0, null, Ic.Zero, adaptiveIndent, grid,
+            RubyLineHeightMode.UniformParagraph, 0.2, 0.15);
         TracedAssertions.assertEqualsRendered(Std.string(LastLineAlignment.End), Std.string(paraStyle.lastLineAlignment));
         TracedAssertions.assertEqualsRendered(Std.string(WritingMode.VerticalRl), Std.string(paraStyle.writingMode));
         TracedAssertions.assertEqualsFloat(32.0, paraStyle.lineHeight);
@@ -337,15 +343,19 @@ class TextModelCoverageTest {
         TracedAssertions.assertEqualsString("clreq-horizontal", BuiltInLayoutProfiles.ClreqHorizontal.value);
         TextModelCoverageTestHelpers.assertRendered(profileId.toString());
 
-        final layoutInput:LayoutInput = new LayoutInput(new TiqianTextContent("Test", [], [], [], []), new TextStyle([], 16.0, "zh-Hans", 400, false, 0.0, InlineAttachment.None), paraStyle, new LayoutConstraints(300.0, Math.POSITIVE_INFINITY, 2147483647), profileId, [new DecorationSpan(new TextRange(0, 2), DecorationKind.Emphasis)], [pinyinRuby], [new InlineBoxSpan(new TextRange(0, 1), 0.0, 0.0, InlineBoxOuterSpacing.Narrow)], [new InlineObjectSpan(new TextRange(0, 1), 10.0, 8.0, 2.0, InlineObjectBoundaryAdjustment.fixed(), InlineObjectBoundaryAdjustment.fixed())]);
+        final layoutInput:LayoutInput = new LayoutInput(new TiqianTextContent("Test", [], [], [], []),
+            new TextStyle([], 16.0, "zh-Hans", 400, false, 0.0, InlineAttachment.None), paraStyle,
+            new LayoutConstraints(300.0, Math.POSITIVE_INFINITY, 2147483647), profileId, [new DecorationSpan(new TextRange(0, 2), DecorationKind.Emphasis)],
+            [pinyinRuby], [new InlineBoxSpan(new TextRange(0, 1), 0.0, 0.0, InlineBoxOuterSpacing.Narrow)], [
+                new InlineObjectSpan(new TextRange(0, 1), 10.0, 8.0, 2.0, InlineObjectBoundaryAdjustment.fixed(), InlineObjectBoundaryAdjustment.fixed())
+            ]);
         TracedAssertions.assertEqualsRendered(profileId.toString(), layoutInput.profileId.toString());
         TextModelCoverageTestHelpers.assertRendered(layoutInput.toString());
     }
-
 }
 
 class TextModelCoverageTestHelpers {
-    public static function expectArgumentFailure(block:()->Void):Void {
+    public static function expectArgumentFailure(block:() -> Void):Void {
         TracedAssertions.assertFailsWith(null, block);
     }
 
@@ -368,16 +378,22 @@ class TextModelCoverageTestHelpers {
     }
 
     public static function roleName(role:RichTextRole):String {
-        if (Std.isOfType(role, Background)) return "Background";
-        if (Std.isOfType(role, Underline)) return "Underline";
-        if (Std.isOfType(role, LineThrough)) return "LineThrough";
-        if (Std.isOfType(role, Link)) return "Link(target=" + (cast(role, Link)).target + ")";
-        if (Std.isOfType(role, TechnicalInline)) return "TechnicalInline";
+        if (Std.isOfType(role, Background))
+            return "Background";
+        if (Std.isOfType(role, Underline))
+            return "Underline";
+        if (Std.isOfType(role, LineThrough))
+            return "LineThrough";
+        if (Std.isOfType(role, Link))
+            return "Link(target=" + (cast(role, Link)).target + ")";
+        if (Std.isOfType(role, TechnicalInline))
+            return "TechnicalInline";
         return "InlineCode";
     }
 
     public static function linkTarget(role:RichTextRole):String {
-        if (Std.isOfType(role, Link)) return (cast(role, Link)).target;
+        if (Std.isOfType(role, Link))
+            return (cast(role, Link)).target;
         return "";
     }
 }

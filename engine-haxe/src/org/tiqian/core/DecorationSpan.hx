@@ -9,6 +9,4 @@ class DecorationSpan {
         this.range = range;
         this.kind = kind;
     }
-
-
 }

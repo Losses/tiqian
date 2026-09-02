@@ -10,13 +10,14 @@ class ClreqPunctuationGlyphSubstitutor {
     }
 
     public function substitute(sourceText:String):CjkPunctuationGlyphSubstitution {
-        final displayText:String = policy == CjkPunctuationGlyphPolicy.PreserveInput
-            ? sourceText
-            : toClreqRecommendedDisplayText(sourceText);
+        final displayText:String = policy == CjkPunctuationGlyphPolicy.PreserveInput ? sourceText : toClreqRecommendedDisplayText(sourceText);
 
-        final reason:String = displayText == sourceText
-            ? "CjkPunctuationGlyphPolicy:" + policy + ":preserve"
-            : "CjkPunctuationGlyphPolicy:" + policy + ":" + toCodePointLabels(sourceText) + "->" + toCodePointLabels(displayText);
+        final reason:String = displayText == sourceText ? "CjkPunctuationGlyphPolicy:" + policy + ":preserve" : "CjkPunctuationGlyphPolicy:"
+            + policy
+            + ":"
+            + toCodePointLabels(sourceText)
+            + "->"
+            + toCodePointLabels(displayText);
 
         return new CjkPunctuationGlyphSubstitution(sourceText, displayText, reason);
     }

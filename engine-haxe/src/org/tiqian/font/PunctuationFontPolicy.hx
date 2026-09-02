@@ -1,3 +1,8 @@
 package org.tiqian.font;
 
-enum PunctuationFontPolicy { PreferCjkForAmbiguousPunctuation; PreferLatinForAscii; PreserveRunFont; CustomMap; }
+enum PunctuationFontPolicy {
+    PreferCjkForAmbiguousPunctuation;
+    PreferLatinForAscii;
+    PreserveRunFont;
+    CustomMap;
+}

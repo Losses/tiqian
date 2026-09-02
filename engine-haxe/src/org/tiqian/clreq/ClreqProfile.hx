@@ -15,35 +15,20 @@ class ClreqProfile {
     public final kinsokuMode:KinsokuMode;
     public final punctuationWidth:PunctuationWidthPolicy;
 
-    public function new(
-        id:String,
-        strictness:ClreqStrictness,
-        region:ClreqRegion,
-        ?punctuationGlyphPolicy:Null<CjkPunctuationGlyphPolicy>,
-        ?coalesceRepeatablePunctuation:Null<Array<Int>>,
-        ?autoSpace:Null<AutoSpacePolicy>,
-        ?gluePlacement:Null<PunctuationGluePlacement>,
-        // Kotlin default constructs AdjustmentStylePolicy(); constructor calls
+    public function new(id:String, strictness:ClreqStrictness, region:ClreqRegion, ?punctuationGlyphPolicy:Null<CjkPunctuationGlyphPolicy>,
+            ?coalesceRepeatablePunctuation:Null<Array<Int>>, ?autoSpace:Null<AutoSpacePolicy>, ?gluePlacement:Null<PunctuationGluePlacement>,
+            // Kotlin default constructs AdjustmentStylePolicy(); constructor calls
         // stay outside the sanctioned default grammar permanently.
-        adjustment:AdjustmentStylePolicy,
-        // Kotlin default constructs KinsokuMode.MeasureAdaptive(); permanent.
-        kinsokuMode:KinsokuMode,
-        // Kotlin default constructs PunctuationWidthPolicy(); permanent.
-        punctuationWidth:PunctuationWidthPolicy
-    ) {
+        adjustment:AdjustmentStylePolicy, // Kotlin default constructs KinsokuMode.MeasureAdaptive(); permanent.
+            kinsokuMode:KinsokuMode, // Kotlin default constructs PunctuationWidthPolicy(); permanent.
+        punctuationWidth:PunctuationWidthPolicy) {
         this.id = id;
         this.strictness = strictness;
         this.region = region;
-        this.punctuationGlyphPolicy = punctuationGlyphPolicy == null
-            ? CjkPunctuationGlyphPolicy.PreferClreqRecommendedCodepoints
-            : punctuationGlyphPolicy;
-        this.coalesceRepeatablePunctuation = coalesceRepeatablePunctuation == null
-            ? ClreqProfile.DefaultCoalesceRepeatablePunctuation
-            : coalesceRepeatablePunctuation;
+        this.punctuationGlyphPolicy = punctuationGlyphPolicy == null ? CjkPunctuationGlyphPolicy.PreferClreqRecommendedCodepoints : punctuationGlyphPolicy;
+        this.coalesceRepeatablePunctuation = coalesceRepeatablePunctuation == null ? ClreqProfile.DefaultCoalesceRepeatablePunctuation : coalesceRepeatablePunctuation;
         this.autoSpace = autoSpace == null ? AutoSpacePolicy.Default : autoSpace;
-        this.gluePlacement = gluePlacement == null
-            ? PunctuationGluePlacements.forRegion(region)
-            : gluePlacement;
+        this.gluePlacement = gluePlacement == null ? PunctuationGluePlacements.forRegion(region) : gluePlacement;
         this.adjustment = adjustment;
         this.kinsokuMode = kinsokuMode;
         this.punctuationWidth = punctuationWidth;
@@ -79,42 +64,12 @@ class ClreqProfile {
      */
     public static final DefaultCoalesceRepeatablePunctuation:ReadOnlyArray<Int> = [0x2014, 0x2026, 0x22EF];
 
-    public static final MainlandHorizontal:ClreqProfile = new ClreqProfile(
-        "clreq-mainland-horizontal",
-        ClreqStrictness.Normal,
-        ClreqRegion.Mainland,
-        null,
-        null,
-        null,
-        null,
-        new AdjustmentStylePolicy(),
-        KinsokuMode.MeasureAdaptive(14.0, 24.0, 32.0),
-        new PunctuationWidthPolicy()
-    );
+    public static final MainlandHorizontal:ClreqProfile = new ClreqProfile("clreq-mainland-horizontal", ClreqStrictness.Normal, ClreqRegion.Mainland, null,
+        null, null, null, new AdjustmentStylePolicy(), KinsokuMode.MeasureAdaptive(14.0, 24.0, 32.0), new PunctuationWidthPolicy());
 
-    public static final TaiwanHorizontal:ClreqProfile = new ClreqProfile(
-        "clreq-taiwan-horizontal",
-        ClreqStrictness.Normal,
-        ClreqRegion.Taiwan,
-        null,
-        null,
-        null,
-        null,
-        new AdjustmentStylePolicy(),
-        KinsokuMode.MeasureAdaptive(14.0, 24.0, 32.0),
-        new PunctuationWidthPolicy()
-    );
+    public static final TaiwanHorizontal:ClreqProfile = new ClreqProfile("clreq-taiwan-horizontal", ClreqStrictness.Normal, ClreqRegion.Taiwan, null, null,
+        null, null, new AdjustmentStylePolicy(), KinsokuMode.MeasureAdaptive(14.0, 24.0, 32.0), new PunctuationWidthPolicy());
 
-    public static final HongKongHorizontal:ClreqProfile = new ClreqProfile(
-        "clreq-hongkong-horizontal",
-        ClreqStrictness.Normal,
-        ClreqRegion.HongKong,
-        null,
-        null,
-        null,
-        null,
-        new AdjustmentStylePolicy(),
-        KinsokuMode.MeasureAdaptive(14.0, 24.0, 32.0),
-        new PunctuationWidthPolicy()
-    );
+    public static final HongKongHorizontal:ClreqProfile = new ClreqProfile("clreq-hongkong-horizontal", ClreqStrictness.Normal, ClreqRegion.HongKong, null,
+        null, null, null, new AdjustmentStylePolicy(), KinsokuMode.MeasureAdaptive(14.0, 24.0, 32.0), new PunctuationWidthPolicy());
 }

@@ -14,15 +14,8 @@ class TextStyle {
     public final baselineShift:Float;
     public final inlineAttachment:InlineAttachment;
 
-    public function new(
-        ?fontFamilies:Array<String>,
-        ?fontSize:Null<Float>,
-        ?locale:Null<String>,
-        ?fontWeight:Null<Int>,
-        ?italic:Null<Bool>,
-        ?baselineShift:Null<Float>,
-        ?inlineAttachment:Null<InlineAttachment>
-    ) {
+    public function new(?fontFamilies:Array<String>, ?fontSize:Null<Float>, ?locale:Null<String>, ?fontWeight:Null<Int>, ?italic:Null<Bool>,
+            ?baselineShift:Null<Float>, ?inlineAttachment:Null<InlineAttachment>) {
         this.fontFamilies = fontFamilies == null ? [] : fontFamilies;
         this.fontSize = fontSize == null ? 16.0 : fontSize;
         this.locale = locale == null ? "zh-Hans" : locale;

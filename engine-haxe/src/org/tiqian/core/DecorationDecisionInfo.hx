@@ -11,7 +11,8 @@ class DecorationDecisionInfo {
     public final anchorY:Float;
     public final dotDiameter:Float;
 
-    public function new(clusterRange:TextRange, sourceText:String, kind:String, applied:Bool, reason:String, ?anchorX:Null<Float>, ?anchorY:Null<Float>, ?dotDiameter:Null<Float>) {
+    public function new(clusterRange:TextRange, sourceText:String, kind:String, applied:Bool, reason:String, ?anchorX:Null<Float>, ?anchorY:Null<Float>,
+            ?dotDiameter:Null<Float>) {
         this.clusterRange = clusterRange;
         this.sourceText = sourceText;
         this.kind = kind;

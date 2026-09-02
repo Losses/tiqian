@@ -28,5 +28,4 @@ class LinkAddressDisplayTest {
         TracedAssertions.assertFalse(LinkAddressDisplay.displaysAddress("", "https://example.com"));
         TracedAssertions.assertFalse(LinkAddressDisplay.displaysAddress("Example", ""));
     }
-
 }

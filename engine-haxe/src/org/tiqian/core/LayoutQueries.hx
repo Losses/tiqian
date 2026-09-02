@@ -6,7 +6,6 @@ import org.tiqian.core.RichTextRole.LineThrough;
 import org.tiqian.core.RichTextRole.Link;
 import org.tiqian.core.RichTextRole.TechnicalInline;
 import org.tiqian.core.RichTextRole.InlineCode;
-
 import std.ReadOnlyArray;
 import std.StringBuf;
 
@@ -80,16 +79,8 @@ class LayoutQueries {
         final boxHeight:Float = maxFloat(segment.height - inset * 2.0, 0.0);
         final maximum:Float = minFloat(boxWidth / 2.0, boxHeight / 2.0);
         final paint:RichTextBackgroundPaint = segment.span.paint.background;
-        final leftRadius:Float = resolveRadius(
-            segment.continuesFromPreviousLine ? paint.continuationCornerRadius : paint.cornerRadius,
-            inset,
-            maximum
-        );
-        final rightRadius:Float = resolveRadius(
-            segment.continuesOnNextLine ? paint.continuationCornerRadius : paint.cornerRadius,
-            inset,
-            maximum
-        );
+        final leftRadius:Float = resolveRadius(segment.continuesFromPreviousLine ? paint.continuationCornerRadius : paint.cornerRadius, inset, maximum);
+        final rightRadius:Float = resolveRadius(segment.continuesOnNextLine ? paint.continuationCornerRadius : paint.cornerRadius, inset, maximum);
         return new RichTextCornerRadii(leftRadius, rightRadius, rightRadius, leftRadius);
     }
 
@@ -285,30 +276,11 @@ class LayoutQueries {
                         final sliceEnd:Int = minInt(end, cluster.range.end);
                         if (sliceStart < sliceEnd) {
                             final rect:Rect = sliceRect(cluster, sliceStart, sliceEnd);
-                            final next:RichTextLineSegment = new RichTextLineSegment(
-                                normalized,
-                                cluster.lineIndex,
-                                new TextRange(sliceStart, sliceEnd),
-                                rect.left,
-                                rect.top,
-                                rect.right,
-                                rect.bottom,
-                                cluster.baseline
-                            );
-                            if (pending != null
-                                && pending.lineIndex == next.lineIndex
-                                && pending.span == next.span
-                                && pending.range.end == next.range.start) {
-                                pending = new RichTextLineSegment(
-                                    pending.span,
-                                    pending.lineIndex,
-                                    new TextRange(pending.range.start, next.range.end),
-                                    pending.left,
-                                    minFloat(pending.top, next.top),
-                                    next.right,
-                                    maxFloat(pending.bottom, next.bottom),
-                                    pending.baseline
-                                );
+                            final next:RichTextLineSegment = new RichTextLineSegment(normalized, cluster.lineIndex, new TextRange(sliceStart, sliceEnd),
+                                rect.left, rect.top, rect.right, rect.bottom, cluster.baseline);
+                            if (pending != null && pending.lineIndex == next.lineIndex && pending.span == next.span && pending.range.end == next.range.start) {
+                                pending = new RichTextLineSegment(pending.span, pending.lineIndex, new TextRange(pending.range.start, next.range.end),
+                                    pending.left, minFloat(pending.top, next.top), next.right, maxFloat(pending.bottom, next.bottom), pending.baseline);
                             } else {
                                 if (pending != null) {
                                     output.push(pending);
@@ -381,15 +353,9 @@ class LayoutQueries {
             final horizontalPadding:Float = segment.span.paint.background.horizontalPadding;
             final leadingPadding:Float = segment.range.start == segment.span.range.start ? horizontalPadding : 0.0;
             final trailingPadding:Float = segment.range.end == segment.span.range.end ? horizontalPadding : 0.0;
-            final left:Float = minFloat(
-                segment.right,
-                maxFloat(segment.left, first.drawX - leadingPadding)
-            );
+            final left:Float = minFloat(segment.right, maxFloat(segment.left, first.drawX - leadingPadding));
             final naturalLastRight:Float = naturalLastRight(result, last);
-            final right:Float = maxFloat(
-                left,
-                minFloat(segment.right, naturalLastRight + trailingPadding)
-            );
+            final right:Float = maxFloat(left, minFloat(segment.right, naturalLastRight + trailingPadding));
             var faceTop:Float = 0.0;
             var faceBottom:Float = 0.0;
             switch (segment.span.paint.background.metricPolicy) {
@@ -398,11 +364,7 @@ class LayoutQueries {
                     faceTop = faces[0];
                     faceBottom = faces[1];
                 case UniformTextStyle:
-                    final uniform:Array<Float> = uniformTextStyleVerticalBounds(
-                        result,
-                        segment,
-                        resolvedTextStyleAt(result, segment.range.start)
-                    );
+                    final uniform:Array<Float> = uniformTextStyleVerticalBounds(result, segment, resolvedTextStyleAt(result, segment.range.start));
                     faceTop = uniform[0];
                     faceBottom = uniform[1];
                 case UniformParagraphStyle:
@@ -411,16 +373,8 @@ class LayoutQueries {
                     faceBottom = paragraph[1];
             }
             final verticalPadding:Float = segment.span.paint.background.verticalPadding;
-            output.push(new RichTextLineSegment(
-                segment.span,
-                segment.lineIndex,
-                segment.range,
-                left,
-                maxFloat(faceTop - verticalPadding, segment.top),
-                right,
-                minFloat(faceBottom + verticalPadding, segment.bottom),
-                segment.baseline
-            ));
+            output.push(new RichTextLineSegment(segment.span, segment.lineIndex, segment.range, left, maxFloat(faceTop - verticalPadding, segment.top), right,
+                minFloat(faceBottom + verticalPadding, segment.bottom), segment.baseline));
             index += 1;
         }
         return withAdjacentSameStyleClearance(result, output);
@@ -434,10 +388,10 @@ class LayoutQueries {
         final style:TextStyle = resolvedTextStyleAt(result, segment.range.start);
         var rawLineY:Float = segment.baseline;
         if (Std.isOfType(segment.span.role, Underline)) {
-                rawLineY = segment.baseline + style.fontSize * INTERLINEAR_UNDERLINE_OFFSET_EM;
+            rawLineY = segment.baseline + style.fontSize * INTERLINEAR_UNDERLINE_OFFSET_EM;
         } else if (Std.isOfType(segment.span.role, LineThrough)) {
-                final face:Array<Float> = uniformTextStyleVerticalBounds(result, segment, style);
-                rawLineY = (face[0] + face[1]) / 2.0;
+            final face:Array<Float> = uniformTextStyleVerticalBounds(result, segment, style);
+            rawLineY = (face[0] + face[1]) / 2.0;
         } else {
             rawLineY = segment.baseline;
         }
@@ -538,20 +492,13 @@ class LayoutQueries {
                     case Forward:
                         snapped = inlineObject.range.end;
                     case Nearest:
-                        snapped = clamped - inlineObject.range.start < inlineObject.range.end - clamped
-                            ? inlineObject.range.start
-                            : inlineObject.range.end;
+                        snapped = clamped - inlineObject.range.start < inlineObject.range.end - clamped ? inlineObject.range.start : inlineObject.range.end;
                 }
                 return snapped;
             }
             index += 1;
         }
-        return SourceInteractionBoundaries.coerceToInteractionBoundary(
-            text,
-            clamped,
-            new TextRange(0, text.length),
-            bias
-        );
+        return SourceInteractionBoundaries.coerceToInteractionBoundary(text, clamped, new TextRange(0, text.length), bias);
     }
 
     public static function getSelectionWordBoundary(result:LayoutResult, offset:Int):TextRange {
@@ -587,8 +534,7 @@ class LayoutQueries {
         while (first > 0 && selectionWordKind(text, boundaries[first - 1], boundaries[first]) == kind) {
             first -= 1;
         }
-        while (last + 2 < boundaries.length
-            && selectionWordKind(text, boundaries[last + 1], boundaries[last + 2]) == kind) {
+        while (last + 2 < boundaries.length && selectionWordKind(text, boundaries[last + 1], boundaries[last + 2]) == kind) {
             last += 1;
         }
         return new TextRange(boundaries[first], boundaries[last + 1]);
@@ -639,8 +585,7 @@ class LayoutQueries {
             if (clusterIndex >= 0 && clusterIndex < result.clusters.length) {
                 final cluster:Cluster = result.clusters[clusterIndex];
                 final leadingGap:Float = indexInLine == 0 ? 0.0 : floatByRange(leadingAutoSpaceGaps, cluster.range);
-                final drawX:Float = x + cluster.leadingLayoutAdvance + cluster.glyphInlineShift + leadingGap
-                    - floatByRange(leadingConsumed, cluster.range);
+                final drawX:Float = x + cluster.leadingLayoutAdvance + cluster.glyphInlineShift + leadingGap - floatByRange(leadingConsumed, cluster.range);
                 final right:Float = x + cluster.advance;
                 final glyphs:Array<Glyph> = glyphsForCluster(result, cluster.range);
                 var sourceStops:Null<Array<Float>> = null;
@@ -654,18 +599,8 @@ class LayoutQueries {
                     stops.push(right);
                     sourceStops = stops;
                 }
-                positioned.push(new PositionedCluster(
-                    lineIndex,
-                    clusterIndex,
-                    cluster.range,
-                    x,
-                    line.top,
-                    right,
-                    line.bottom,
-                    line.baseline + cluster.baselineShift,
-                    drawX,
-                    sourceStops
-                ));
+                positioned.push(new PositionedCluster(lineIndex, clusterIndex, cluster.range, x, line.top, right, line.bottom,
+                    line.baseline + cluster.baselineShift, drawX, sourceStops));
                 x += cluster.advance;
                 indexInLine += 1;
             }
@@ -720,12 +655,8 @@ class LayoutQueries {
                 final rubyRight:Float = ruby.centerX + ruby.width / 2.0;
                 index = 0;
                 while (index < baseIndices.length) {
-                    final segmentLeft:Float = index == 0
-                        ? rubyLeft
-                        : maxFloat(rubyLeft, (centers[index - 1] + centers[index]) / 2.0);
-                    final segmentRight:Float = index == baseIndices.length - 1
-                        ? rubyRight
-                        : minFloat(rubyRight, (centers[index] + centers[index + 1]) / 2.0);
+                    final segmentLeft:Float = index == 0 ? rubyLeft : maxFloat(rubyLeft, (centers[index - 1] + centers[index]) / 2.0);
+                    final segmentRight:Float = index == baseIndices.length - 1 ? rubyRight : minFloat(rubyRight, (centers[index] + centers[index + 1]) / 2.0);
                     final bound:SelectionBounds = bounds[baseIndices[index]];
                     bound.left = minFloat(bound.left, segmentLeft);
                     bound.right = maxFloat(bound.right, segmentRight);
@@ -740,11 +671,8 @@ class LayoutQueries {
             final left:SelectionBounds = bounds[index];
             final right:SelectionBounds = bounds[index + 1];
             if (left.right > right.left) {
-                final center:Float = clampFloat(
-                    (centerOfCluster(result, positioned[index]) + centerOfCluster(result, positioned[index + 1])) / 2.0,
-                    minFloat(left.left, right.left),
-                    maxFloat(left.right, right.right)
-                );
+                final center:Float = clampFloat((centerOfCluster(result, positioned[index]) + centerOfCluster(result, positioned[index + 1])) / 2.0,
+                    minFloat(left.left, right.left), maxFloat(left.right, right.right));
                 left.right = maxFloat(minFloat(left.right, center), left.left);
                 right.left = minFloat(maxFloat(right.left, center), right.right);
             }
@@ -756,18 +684,8 @@ class LayoutQueries {
         while (index < positioned.length) {
             final cluster:PositionedCluster = positioned[index];
             final bound:SelectionBounds = bounds[index];
-            output.push(new PositionedCluster(
-                cluster.lineIndex,
-                cluster.clusterIndex,
-                cluster.range,
-                bound.left,
-                cluster.top,
-                bound.right,
-                cluster.bottom,
-                cluster.baseline,
-                cluster.drawX,
-                null
-            ));
+            output.push(new PositionedCluster(cluster.lineIndex, cluster.clusterIndex, cluster.range, bound.left, cluster.top, bound.right, cluster.bottom,
+                cluster.baseline, cluster.drawX, null));
             index += 1;
         }
         return output;
@@ -814,16 +732,8 @@ class LayoutQueries {
                 }
             }
             final left:Float = minFloat(segment.right, segment.left + leadingGlue);
-            output.push(new RichTextLineSegment(
-                segment.span,
-                segment.lineIndex,
-                segment.range,
-                left,
-                segment.top,
-                maxFloat(left, segment.right - trailingGlue),
-                segment.bottom,
-                segment.baseline
-            ));
+            output.push(new RichTextLineSegment(segment.span, segment.lineIndex, segment.range, left, segment.top,
+                maxFloat(left, segment.right - trailingGlue), segment.bottom, segment.baseline));
             segmentIndex += 1;
         }
         return output;
@@ -855,16 +765,8 @@ class LayoutQueries {
             final leadingClearance:Float = sharedClearance(segment, leadingNeighbour);
             final trailingClearance:Float = sharedClearance(segment, trailingNeighbour);
             final left:Float = minFloat(segment.right, segment.left + leadingClearance / 2.0);
-            output.push(new RichTextLineSegment(
-                segment.span,
-                segment.lineIndex,
-                segment.range,
-                left,
-                segment.top,
-                maxFloat(left, segment.right - trailingClearance / 2.0),
-                segment.bottom,
-                segment.baseline
-            ));
+            output.push(new RichTextLineSegment(segment.span, segment.lineIndex, segment.range, left, segment.top,
+                maxFloat(left, segment.right - trailingClearance / 2.0), segment.bottom, segment.baseline));
             index += 1;
         }
         return output;
@@ -941,9 +843,7 @@ class LayoutQueries {
         var index:Int = 0;
         while (index < result.lines.length) {
             final line:LineBox = result.lines[index];
-            final distance:Int = offset < line.range.start
-                ? line.range.start - offset
-                : offset > line.range.end ? offset - line.range.end : 0;
+            final distance:Int = offset < line.range.start ? line.range.start - offset : offset > line.range.end ? offset - line.range.end : 0;
             if (distance < bestDistance) {
                 bestDistance = distance;
                 bestIndex = index;
@@ -1172,7 +1072,11 @@ class LayoutQueries {
 
     private static function selectionWordKind(text:String, start:Int, end:Int):SelectionWordKind {
         final codePoint:Int = SourceInteractionBoundaries.codePointAtCompat(text, start, end);
-        if (codePoint == CR || codePoint == LF || codePoint == NEL || codePoint == LINE_SEPARATOR || codePoint == PARAGRAPH_SEPARATOR) {
+        if (codePoint == CR
+            || codePoint == LF
+            || codePoint == NEL
+            || codePoint == LINE_SEPARATOR
+            || codePoint == PARAGRAPH_SEPARATOR) {
             return Single;
         }
         if (isWhitespace(codePoint)) {
@@ -1279,27 +1183,25 @@ class LayoutQueries {
     }
 
     private static function sameVisibleStyle(first:RichTextLineSegment, second:RichTextLineSegment):Bool {
-        return RichTextSpan.sameRole(first.span.role, second.span.role)
-            && first.span.paint.sameVisibleStyle(second.span.paint);
+        return RichTextSpan.sameRole(first.span.role, second.span.role) && first.span.paint.sameVisibleStyle(second.span.paint);
     }
 
     private static function sharedClearance(segment:RichTextLineSegment, neighbour:Null<RichTextLineSegment>):Float {
         if (neighbour == null || !sameVisibleStyle(segment, neighbour)) {
             return 0.0;
         }
-        return minFloat(
-            segment.span.paint.adjacentSameStyleClearance,
-            neighbour.span.paint.adjacentSameStyleClearance
-        );
+        return minFloat(segment.span.paint.adjacentSameStyleClearance, neighbour.span.paint.adjacentSameStyleClearance);
     }
 
     private static function isDecorationRole(role:RichTextRole):Bool {
-        if (Std.isOfType(role, Underline) || Std.isOfType(role, LineThrough)) return true;
+        if (Std.isOfType(role, Underline) || Std.isOfType(role, LineThrough))
+            return true;
         return false;
     }
 
     private static function isBackgroundRole(role:RichTextRole):Bool {
-        if (Std.isOfType(role, Background) || Std.isOfType(role, InlineCode)) return true;
+        if (Std.isOfType(role, Background) || Std.isOfType(role, InlineCode))
+            return true;
         return false;
     }
 

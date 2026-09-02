@@ -9,7 +9,8 @@ class ContextualKinsokuDecisionInfo {
     public final reason:String;
     public final impossibleMeasureFallback:Null<String>;
 
-    public function new(range:TextRange, sourceText:String, clusterIndex:Int, forbiddenPosition:String, reason:String, ?impossibleMeasureFallback:Null<String>) {
+    public function new(range:TextRange, sourceText:String, clusterIndex:Int, forbiddenPosition:String, reason:String,
+            ?impossibleMeasureFallback:Null<String>) {
         this.range = range;
         this.sourceText = sourceText;
         this.clusterIndex = clusterIndex;

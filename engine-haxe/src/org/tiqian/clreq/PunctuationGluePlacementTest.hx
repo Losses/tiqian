@@ -53,11 +53,13 @@ class PunctuationGluePlacementTest {
     @:test
     public static function forRegionMapsClreqRegionsToCorrectPlacement():Void {
         new TestTraceRecorder("PunctuationGluePlacementTest").section("forRegionMapsClreqRegionsToCorrectPlacement");
-        TracedAssertions.assertEqualsPunctuationGluePlacement(PunctuationGluePlacement.MainlandSimplified, PunctuationGluePlacements.forRegion(ClreqRegion.Mainland));
+        TracedAssertions.assertEqualsPunctuationGluePlacement(PunctuationGluePlacement.MainlandSimplified,
+            PunctuationGluePlacements.forRegion(ClreqRegion.Mainland));
         TracedAssertions.assertEqualsPunctuationGluePlacement(PunctuationGluePlacement.Traditional, PunctuationGluePlacements.forRegion(ClreqRegion.Taiwan));
         TracedAssertions.assertEqualsPunctuationGluePlacement(PunctuationGluePlacement.Traditional, PunctuationGluePlacements.forRegion(ClreqRegion.HongKong));
         // Custom defaults to Mainland Simplified until overridden by profile.
-        TracedAssertions.assertEqualsPunctuationGluePlacement(PunctuationGluePlacement.MainlandSimplified, PunctuationGluePlacements.forRegion(ClreqRegion.Custom));
+        TracedAssertions.assertEqualsPunctuationGluePlacement(PunctuationGluePlacement.MainlandSimplified,
+            PunctuationGluePlacements.forRegion(ClreqRegion.Custom));
     }
 
     @:test

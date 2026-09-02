@@ -12,14 +12,25 @@ class RichTextSpan {
     public final range:TextRange;
     public final role:RichTextRole;
     public final paint:RichTextPaint;
-    public function new(range:TextRange, role:RichTextRole, paint:RichTextPaint) { this.range = range; this.role = role; this.paint = paint; }
+
+    public function new(range:TextRange, role:RichTextRole, paint:RichTextPaint) {
+        this.range = range;
+        this.role = role;
+        this.paint = paint;
+    }
+
     @:allow(org.tiqian.core.LayoutQueries)
     private static function sameRole(a:RichTextRole, b:RichTextRole):Bool {
-        if (Std.isOfType(a, Link) && Std.isOfType(b, Link)) return (cast(a, Link)).target == (cast(b, Link)).target;
-        if (Std.isOfType(a, Background)) return Std.isOfType(b, Background);
-        if (Std.isOfType(a, Underline)) return Std.isOfType(b, Underline);
-        if (Std.isOfType(a, LineThrough)) return Std.isOfType(b, LineThrough);
-        if (Std.isOfType(a, TechnicalInline)) return Std.isOfType(b, TechnicalInline);
+        if (Std.isOfType(a, Link) && Std.isOfType(b, Link))
+            return (cast(a, Link)).target == (cast(b, Link)).target;
+        if (Std.isOfType(a, Background))
+            return Std.isOfType(b, Background);
+        if (Std.isOfType(a, Underline))
+            return Std.isOfType(b, Underline);
+        if (Std.isOfType(a, LineThrough))
+            return Std.isOfType(b, LineThrough);
+        if (Std.isOfType(a, TechnicalInline))
+            return Std.isOfType(b, TechnicalInline);
         return Std.isOfType(a, InlineCode) && Std.isOfType(b, InlineCode);
     }
 }

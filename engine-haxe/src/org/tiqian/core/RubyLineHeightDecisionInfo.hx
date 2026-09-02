@@ -14,7 +14,8 @@ class RubyLineHeightDecisionInfo {
     public final expandedLineIndices:ReadOnlyArray<Int>;
     public final reason:String;
 
-    public function new(mode:String, baseLineHeight:Float, baseFaceHeight:Float, rubyExtent:Float, availableInterlineSpace:Float, maxExtra:Float, lineExtras:Array<Float>, expandedLineIndices:Array<Int>, reason:String) {
+    public function new(mode:String, baseLineHeight:Float, baseFaceHeight:Float, rubyExtent:Float, availableInterlineSpace:Float, maxExtra:Float,
+            lineExtras:Array<Float>, expandedLineIndices:Array<Int>, reason:String) {
         this.mode = mode;
         this.baseLineHeight = baseLineHeight;
         this.baseFaceHeight = baseFaceHeight;

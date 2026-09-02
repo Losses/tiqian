@@ -11,6 +11,4 @@ class CjkPunctuationGlyphSubstitution {
         this.displayText = displayText;
         this.reason = reason;
     }
-
-
 }

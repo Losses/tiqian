@@ -9,6 +9,4 @@ class TextSpan {
         this.range = range;
         this.style = style;
     }
-
-
 }

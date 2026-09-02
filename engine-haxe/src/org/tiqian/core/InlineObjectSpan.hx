@@ -11,14 +11,8 @@ class InlineObjectSpan {
     public final leadingBoundary:InlineObjectBoundaryAdjustment;
     public final trailingBoundary:InlineObjectBoundaryAdjustment;
 
-    public function new(
-        range:TextRange,
-        advance:Float,
-        ascent:Float,
-        descent:Float,
-        ?leadingBoundary:Null<InlineObjectBoundaryAdjustment>,
-        ?trailingBoundary:Null<InlineObjectBoundaryAdjustment>
-    ) {
+    public function new(range:TextRange, advance:Float, ascent:Float, descent:Float, ?leadingBoundary:Null<InlineObjectBoundaryAdjustment>,
+            ?trailingBoundary:Null<InlineObjectBoundaryAdjustment>) {
         this.range = range;
         this.advance = advance;
         this.ascent = ascent;
@@ -26,6 +20,4 @@ class InlineObjectSpan {
         this.leadingBoundary = leadingBoundary == null ? InlineObjectBoundaryAdjustment.fixed() : leadingBoundary;
         this.trailingBoundary = trailingBoundary == null ? InlineObjectBoundaryAdjustment.fixed() : trailingBoundary;
     }
-
-
 }

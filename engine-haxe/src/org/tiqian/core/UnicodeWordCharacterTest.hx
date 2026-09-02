@@ -22,5 +22,4 @@ class UnicodeWordCharacterTest {
             index += 1;
         }
     }
-
 }

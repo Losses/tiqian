@@ -20,6 +20,4 @@ class LayoutConstraints {
             throw new TiqianIllegalArgumentException(Message("maxLines must be positive."));
         }
     }
-
-
 }

@@ -12,16 +12,8 @@ class Cluster {
     public final leadingLayoutAdvance:Float;
     public final glyphInlineShift:Float;
 
-    public function new(
-        range:TextRange,
-        text:String,
-        fontKey:String,
-        advance:Float,
-        ?displayText:Null<String>,
-        ?baselineShift:Null<Float>,
-        ?leadingLayoutAdvance:Null<Float>,
-        ?glyphInlineShift:Null<Float>
-    ) {
+    public function new(range:TextRange, text:String, fontKey:String, advance:Float, ?displayText:Null<String>, ?baselineShift:Null<Float>,
+            ?leadingLayoutAdvance:Null<Float>, ?glyphInlineShift:Null<Float>) {
         this.range = range;
         this.text = text;
         this.displayText = displayText == null ? text : displayText;

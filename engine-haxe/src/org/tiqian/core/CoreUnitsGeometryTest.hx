@@ -100,11 +100,10 @@ class CoreUnitsGeometryTest {
         TracedAssertions.assertEqualsInt(5, decision.laidOutLines);
         TracedAssertions.assertEqualsInt(3, decision.visibleLines);
     }
-
 }
 
 class CoreUnitsGeometryTestHelpers {
-    public static function expectArgumentFailure(block:()->Void):Void {
+    public static function expectArgumentFailure(block:() -> Void):Void {
         TracedAssertions.assertFailsWith(null, block);
     }
 }

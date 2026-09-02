@@ -15,7 +15,8 @@ class PositionedCluster {
     public final drawX:Float;
     public final sourceStops:Null<ReadOnlyArray<Float>>;
 
-    public function new(lineIndex:Int, clusterIndex:Int, range:TextRange, left:Float, top:Float, right:Float, bottom:Float, baseline:Float, drawX:Float, sourceStops:Null<Array<Float>>) {
+    public function new(lineIndex:Int, clusterIndex:Int, range:TextRange, left:Float, top:Float, right:Float, bottom:Float, baseline:Float, drawX:Float,
+            sourceStops:Null<Array<Float>>) {
         this.lineIndex = lineIndex;
         this.clusterIndex = clusterIndex;
         this.range = range;
@@ -45,6 +46,4 @@ class PositionedCluster {
     public function get_rect():Rect {
         return new Rect(left, top, right, bottom);
     }
-
-
 }

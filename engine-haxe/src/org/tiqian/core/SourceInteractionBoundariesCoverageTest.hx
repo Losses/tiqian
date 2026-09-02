@@ -17,7 +17,8 @@ class SourceInteractionBoundariesCoverageTest {
     public static function regionalIndicatorsPairUp():Void {
         new TestTraceRecorder("SourceInteractionBoundariesCoverageTest").section("regionalIndicatorsPairUp");
         SourceInteractionBoundariesCoverageTestHelpers.assertBoundaries("[0, 4]", TestHelpers.surrogateText([0xD83C, 0xDDE6, 0xD83C, 0xDDE8]));
-        SourceInteractionBoundariesCoverageTestHelpers.assertBoundaries("[0, 4, 6]", TestHelpers.surrogateText([0xD83C, 0xDDE6, 0xD83C, 0xDDE6, 0xD83C, 0xDDE6]));
+        SourceInteractionBoundariesCoverageTestHelpers.assertBoundaries("[0, 4, 6]",
+            TestHelpers.surrogateText([0xD83C, 0xDDE6, 0xD83C, 0xDDE6, 0xD83C, 0xDDE6]));
         SourceInteractionBoundariesCoverageTestHelpers.assertBoundaries("[0, 2, 3]", TestHelpers.surrogateText([0xD83C, 0xDDE6]) + "A");
         SourceInteractionBoundariesCoverageTestHelpers.assertBoundaries("[0, 2]", TestHelpers.surrogateText([0xD83C, 0xDDE6]));
     }
@@ -84,11 +85,13 @@ class SourceInteractionBoundariesCoverageTest {
     @:test
     public static function zwjChainsJoinOnlyExtendedPictographic():Void {
         new TestTraceRecorder("SourceInteractionBoundariesCoverageTest").section("zwjChainsJoinOnlyExtendedPictographic");
-        SourceInteractionBoundariesCoverageTestHelpers.assertBoundaries("[0, 8]", TestHelpers.surrogateText([0xD83D, 0xDC69, 0x200D, 0xD83D, 0xDC69, 0x200D, 0xD83D, 0xDC66]));
+        SourceInteractionBoundariesCoverageTestHelpers.assertBoundaries("[0, 8]",
+            TestHelpers.surrogateText([0xD83D, 0xDC69, 0x200D, 0xD83D, 0xDC69, 0x200D, 0xD83D, 0xDC66]));
         SourceInteractionBoundariesCoverageTestHelpers.assertBoundaries("[0, 2]", "a\u200D");
         SourceInteractionBoundariesCoverageTestHelpers.assertBoundaries("[0, 3, 4]", TestHelpers.surrogateText([0xD83D, 0xDC69]) + "\u200Da");
         SourceInteractionBoundariesCoverageTestHelpers.assertBoundaries("[0, 2, 3]", "a\u200Da");
-        SourceInteractionBoundariesCoverageTestHelpers.assertBoundaries("[0, 7]", TestHelpers.surrogateText([0xD83D, 0xDC4D, 0x200D, 0xD83D, 0xDC4D, 0xD83C, 0xDFFB]));
+        SourceInteractionBoundariesCoverageTestHelpers.assertBoundaries("[0, 7]",
+            TestHelpers.surrogateText([0xD83D, 0xDC4D, 0x200D, 0xD83D, 0xDC4D, 0xD83C, 0xDFFB]));
     }
 
     @:test
@@ -111,18 +114,20 @@ class SourceInteractionBoundariesCoverageTest {
     @:test
     public static function rangeBoundariesRespectTheRequestedWindow():Void {
         new TestTraceRecorder("SourceInteractionBoundariesCoverageTest").section("rangeBoundariesRespectTheRequestedWindow");
-        TracedAssertions.assertEqualsRendered("[1, 2, 3]", SourceInteractionBoundariesCoverageTestHelpers.renderInts(SourceInteractionBoundaries.interactionBoundaries("abcd", new TextRange(1, 3))));
-        TracedAssertions.assertEqualsRendered("[2]", SourceInteractionBoundariesCoverageTestHelpers.renderInts(SourceInteractionBoundaries.interactionBoundaries("ab", new TextRange(5, 9))));
+        TracedAssertions.assertEqualsRendered("[1, 2, 3]",
+            SourceInteractionBoundariesCoverageTestHelpers.renderInts(SourceInteractionBoundaries.interactionBoundaries("abcd", new TextRange(1, 3))));
+        TracedAssertions.assertEqualsRendered("[2]",
+            SourceInteractionBoundariesCoverageTestHelpers.renderInts(SourceInteractionBoundaries.interactionBoundaries("ab", new TextRange(5, 9))));
         final emojiB:String = TestHelpers.surrogateText([0xD83D, 0xDE00]) + "b";
-        TracedAssertions.assertEqualsRendered("[0, 2, 3]", SourceInteractionBoundariesCoverageTestHelpers.renderInts(SourceInteractionBoundaries.sourceGraphemeBoundaries(emojiB, new TextRange(0, 3))));
+        TracedAssertions.assertEqualsRendered("[0, 2, 3]",
+            SourceInteractionBoundariesCoverageTestHelpers.renderInts(SourceInteractionBoundaries.sourceGraphemeBoundaries(emojiB, new TextRange(0, 3))));
     }
 
     @:test
     public static function coercionHonoursEveryBiasAndEdgeCase():Void {
         new TestTraceRecorder("SourceInteractionBoundariesCoverageTest").section("coercionHonoursEveryBiasAndEdgeCase");
         final family:String = TestHelpers.surrogateText([
-            0xD83D, 0xDC68, 0x200D, 0xD83D, 0xDC69, 0x200D,
-            0xD83D, 0xDC67, 0x200D, 0xD83D, 0xDC67
+            0xD83D, 0xDC68, 0x200D, 0xD83D, 0xDC69, 0x200D, 0xD83D, 0xDC67, 0x200D, 0xD83D, 0xDC67
         ]);
         TracedAssertions.assertEqualsInt(11, family.length);
         final familyRange:TextRange = new TextRange(0, 11);
@@ -135,7 +140,6 @@ class SourceInteractionBoundariesCoverageTest {
         TracedAssertions.assertEqualsInt(3, SourceInteractionBoundaries.coerceToInteractionBoundary(emojiB, 9, emojiRange, SourceBoundaryBias.Backward));
         TracedAssertions.assertEqualsInt(0, SourceInteractionBoundaries.coerceToInteractionBoundary(emojiB, -1, emojiRange, SourceBoundaryBias.Forward));
     }
-
 }
 
 class SourceInteractionBoundariesCoverageTestHelpers {
@@ -144,7 +148,8 @@ class SourceInteractionBoundariesCoverageTestHelpers {
     }
 
     public static function assertBoundaries(expected:String, text:String):Void {
-        TracedAssertions.assertEqualsRendered(expected, SourceInteractionBoundariesCoverageTestHelpers.renderInts(SourceInteractionBoundariesCoverageTestHelpers.boundaries(text)));
+        TracedAssertions.assertEqualsRendered(expected,
+            SourceInteractionBoundariesCoverageTestHelpers.renderInts(SourceInteractionBoundariesCoverageTestHelpers.boundaries(text)));
     }
 
     public static function renderInts(values:Array<Int>):String {

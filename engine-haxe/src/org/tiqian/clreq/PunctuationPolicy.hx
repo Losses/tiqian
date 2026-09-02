@@ -8,19 +8,11 @@ class PunctuationPolicy {
     public final defaultBodyEm:Float;
     public final defaultAdvanceEm:Float;
 
-    public function new(
-        punctuationClass:PunctuationClass,
-        allowAtLineStart:Bool,
-        allowAtLineEnd:Bool,
-        defaultBodyEm:Float,
-        ?defaultAdvanceEm:Null<Float>
-    ) {
+    public function new(punctuationClass:PunctuationClass, allowAtLineStart:Bool, allowAtLineEnd:Bool, defaultBodyEm:Float, ?defaultAdvanceEm:Null<Float>) {
         this.punctuationClass = punctuationClass;
         this.allowAtLineStart = allowAtLineStart;
         this.allowAtLineEnd = allowAtLineEnd;
         this.defaultBodyEm = defaultBodyEm;
         this.defaultAdvanceEm = defaultAdvanceEm == null ? 1.0 : defaultAdvanceEm;
     }
-
-
 }

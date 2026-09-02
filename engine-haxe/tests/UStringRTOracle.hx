@@ -19,7 +19,7 @@ class UStringRTOracle {
         var total = 0;
         var cursor = 0;
         final stop = UStringPlatform.end(s);
-        while(cursor < stop) {
+        while (cursor < stop) {
             total += 1;
             cursor = UStringPlatform.advance(s, cursor);
         }
@@ -28,14 +28,14 @@ class UStringRTOracle {
 
     /** The code point at `index`, or null when the index is out of range. */
     public static function at(s:String, index:Int):Null<Int> {
-        if(index < 0) {
+        if (index < 0) {
             return null;
         }
         var remaining = index;
         var cursor = 0;
         final stop = UStringPlatform.end(s);
-        while(cursor < stop) {
-            if(remaining == 0) {
+        while (cursor < stop) {
+            if (remaining == 0) {
                 return UStringPlatform.codeAt(s, cursor);
             }
             remaining -= 1;
@@ -52,21 +52,21 @@ class UStringRTOracle {
     public static function slice(s:String, from:Int, to:Int):String {
         final total = count(s);
         var start = from < 0 ? 0 : from;
-        if(start > total) {
+        if (start > total) {
             start = total;
         }
         var stop = to > total ? total : to;
-        if(stop < 0) {
+        if (stop < 0) {
             stop = 0;
         }
-        if(start >= stop) {
+        if (start >= stop) {
             return "";
         }
         var ordinal = 0;
         var startCursor = 0;
         var cursor = 0;
-        while(ordinal < stop) {
-            if(ordinal == start) {
+        while (ordinal < stop) {
+            if (ordinal == start) {
                 startCursor = cursor;
             }
             cursor = UStringPlatform.advance(s, cursor);
@@ -80,7 +80,7 @@ class UStringRTOracle {
         final out:Array<Int> = [];
         var cursor = 0;
         final stop = UStringPlatform.end(s);
-        while(cursor < stop) {
+        while (cursor < stop) {
             out.push(UStringPlatform.codeAt(s, cursor));
             cursor = UStringPlatform.advance(s, cursor);
         }
@@ -95,7 +95,7 @@ class UStringRTOracle {
     /** The concatenation of every code point of the valid domain. */
     public static function fromCodePoints(codes:Array<Int>):String {
         var out = "";
-        for(index in 0...codes.length) {
+        for (index in 0...codes.length) {
             out += UStringPlatform.fromCodePoint(codes[index]);
         }
         return out;

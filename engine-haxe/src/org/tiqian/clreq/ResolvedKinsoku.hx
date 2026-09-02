@@ -12,6 +12,4 @@ class ResolvedKinsoku {
         this.hanging = hanging;
         this.reason = reason;
     }
-
-
 }

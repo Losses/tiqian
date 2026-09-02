@@ -14,17 +14,9 @@ class LayoutInput {
     public final inlineBoxes:ReadOnlyArray<InlineBoxSpan>;
     public final inlineObjects:ReadOnlyArray<InlineObjectSpan>;
 
-    public function new(
-        content:TiqianTextContent,
-        textStyle:TextStyle,
-        paragraphStyle:ParagraphStyle,
-        constraints:LayoutConstraints,
-        ?profileId:Null<LayoutProfileId>,
-        ?decorations:Array<DecorationSpan>,
-        ?rubySpans:Array<RubySpan>,
-        ?inlineBoxes:Array<InlineBoxSpan>,
-        ?inlineObjects:Array<InlineObjectSpan>
-    ) {
+    public function new(content:TiqianTextContent, textStyle:TextStyle, paragraphStyle:ParagraphStyle, constraints:LayoutConstraints,
+            ?profileId:Null<LayoutProfileId>, ?decorations:Array<DecorationSpan>, ?rubySpans:Array<RubySpan>, ?inlineBoxes:Array<InlineBoxSpan>,
+            ?inlineObjects:Array<InlineObjectSpan>) {
         this.content = content;
         this.textStyle = textStyle;
         this.paragraphStyle = paragraphStyle;
@@ -35,5 +27,4 @@ class LayoutInput {
         this.inlineBoxes = inlineBoxes == null ? [] : inlineBoxes;
         this.inlineObjects = inlineObjects == null ? [] : inlineObjects;
     }
-
 }

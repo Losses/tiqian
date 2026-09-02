@@ -11,6 +11,4 @@ class EastAsianSpacingEdges {
         this.trailing = trailing;
         this.containsWide = containsWide;
     }
-
-
 }

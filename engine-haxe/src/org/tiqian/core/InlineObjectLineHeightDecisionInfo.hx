@@ -17,7 +17,9 @@ class InlineObjectLineHeightDecisionInfo {
     public final expandedLineIndices:ReadOnlyArray<Int>;
     public final reason:String;
 
-    public function new(baseLineHeight:Float, baseFaceAscent:Float, baseFaceDescent:Float, availableInterlineSpace:Float, minimumClearance:Float, lineAscents:Array<Float>, lineDescents:Array<Float>, lineExtras:Array<Float>, boundaryShiftsAfter:Array<Float>, trailingExtra:Float, expandedLineIndices:Array<Int>, reason:String) {
+    public function new(baseLineHeight:Float, baseFaceAscent:Float, baseFaceDescent:Float, availableInterlineSpace:Float, minimumClearance:Float,
+            lineAscents:Array<Float>, lineDescents:Array<Float>, lineExtras:Array<Float>, boundaryShiftsAfter:Array<Float>, trailingExtra:Float,
+            expandedLineIndices:Array<Int>, reason:String) {
         this.baseLineHeight = baseLineHeight;
         this.baseFaceAscent = baseFaceAscent;
         this.baseFaceDescent = baseFaceDescent;

@@ -58,10 +58,7 @@ class ClreqPunctuationPolicies {
         }
         final cls:PunctuationClass = classify(char);
         if (policy.gbFixedSeparators
-            && (cls == PunctuationClass.Connector
-                || cls == PunctuationClass.MiddleDot
-                || cls == PunctuationClass.Interpunct
-                || cls == PunctuationClass.Solidus)) {
+            && (cls == PunctuationClass.Connector || cls == PunctuationClass.MiddleDot || cls == PunctuationClass.Interpunct || cls == PunctuationClass.Solidus)) {
             return true;
         }
         if (policy.interior == InteriorPunctuationStyle.Kaiming) {
@@ -79,13 +76,8 @@ class ClreqPunctuationPolicies {
 
     public static function policyFor(char:String):PunctuationPolicy {
         final punctuationClass:PunctuationClass = classify(char);
-        return new PunctuationPolicy(
-            punctuationClass,
-            !forbiddenAtLineStart(char, KinsokuLevel.Basic),
-            !forbiddenAtLineEnd(char, KinsokuLevel.Basic),
-            defaultPunctuationBodyEm(char.charCodeAt(0), punctuationClass),
-            defaultPunctuationAdvanceEm(char.charCodeAt(0), punctuationClass)
-        );
+        return new PunctuationPolicy(punctuationClass, !forbiddenAtLineStart(char, KinsokuLevel.Basic), !forbiddenAtLineEnd(char, KinsokuLevel.Basic),
+            defaultPunctuationBodyEm(char.charCodeAt(0), punctuationClass), defaultPunctuationAdvanceEm(char.charCodeAt(0), punctuationClass));
     }
 
     public static function forbiddenAtLineStart(char:String, level:KinsokuLevel):Bool {
@@ -95,12 +87,8 @@ class ClreqPunctuationPolicies {
         final cls:PunctuationClass = classify(char);
         // Pause marks, closing brackets, connectors, middle dots, and
         // separators are forbidden at line start at every processed level.
-        if (cls == PunctuationClass.PauseOrStop
-            || cls == PunctuationClass.Closing
-            || cls == PunctuationClass.Connector
-            || cls == PunctuationClass.MiddleDot
-            || cls == PunctuationClass.Interpunct
-            || cls == PunctuationClass.Solidus) {
+        if (cls == PunctuationClass.PauseOrStop || cls == PunctuationClass.Closing || cls == PunctuationClass.Connector
+            || cls == PunctuationClass.MiddleDot || cls == PunctuationClass.Interpunct || cls == PunctuationClass.Solidus) {
             return true;
         }
         // Dashes and ellipses join only under strict processing.
@@ -175,39 +163,21 @@ class ClreqPunctuationPolicies {
         0x201D, 0x2019, 0xFF09, 0x300B, 0x3009, 0x300D, 0x300F, 0x3011, 0x3015, 0x3017, 0x3019, 0x301B
     ];
 
-    private static final PAUSE_OR_STOP_UNITS:ReadOnlyArray<Int> = [
-        0xFF0C, 0x3001, 0x3002, 0xFF1B, 0xFF1A, 0xFF01, 0xFF1F
-    ];
+    private static final PAUSE_OR_STOP_UNITS:ReadOnlyArray<Int> = [0xFF0C, 0x3001, 0x3002, 0xFF1B, 0xFF1A, 0xFF01, 0xFF1F];
 
-    private static final INTERPUNCT_UNITS:ReadOnlyArray<Int> = [
-        0x30FB, 0x2027, 0x2022
-    ];
+    private static final INTERPUNCT_UNITS:ReadOnlyArray<Int> = [0x30FB, 0x2027, 0x2022];
 
-    private static final CONNECTOR_UNITS:ReadOnlyArray<Int> = [
-        0xFF5E, 0x007E, 0x002D, 0x2013
-    ];
+    private static final CONNECTOR_UNITS:ReadOnlyArray<Int> = [0xFF5E, 0x007E, 0x002D, 0x2013];
 
-    private static final SOLIDUS_UNITS:ReadOnlyArray<Int> = [
-        0x002F, 0xFF0F
-    ];
+    private static final SOLIDUS_UNITS:ReadOnlyArray<Int> = [0x002F, 0xFF0F];
 
-    private static final ELLIPSIS_UNITS:ReadOnlyArray<Int> = [
-        0x2026, 0x22EF
-    ];
+    private static final ELLIPSIS_UNITS:ReadOnlyArray<Int> = [0x2026, 0x22EF];
 
-    private static final DASH_UNITS:ReadOnlyArray<Int> = [
-        0x2014, 0x2E3A
-    ];
+    private static final DASH_UNITS:ReadOnlyArray<Int> = [0x2014, 0x2E3A];
 
-    private static final SHORT_HYPHEN_CONNECTORS:ReadOnlyArray<Int> = [
-        0x002D, 0x2013
-    ];
+    private static final SHORT_HYPHEN_CONNECTORS:ReadOnlyArray<Int> = [0x002D, 0x2013];
 
-    private static final SENTENCE_END_STOPS:ReadOnlyArray<Int> = [
-        0x3002, 0xFF01, 0xFF1F, 0xFF0E
-    ];
+    private static final SENTENCE_END_STOPS:ReadOnlyArray<Int> = [0x3002, 0xFF01, 0xFF1F, 0xFF0E];
 
-    private static final ASCII_POINT_MARKS:ReadOnlyArray<Int> = [
-        0x002C, 0x002E, 0x003A, 0x003B, 0x0021, 0x003F
-    ];
+    private static final ASCII_POINT_MARKS:ReadOnlyArray<Int> = [0x002C, 0x002E, 0x003A, 0x003B, 0x0021, 0x003F];
 }

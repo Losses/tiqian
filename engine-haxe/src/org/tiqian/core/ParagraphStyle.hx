@@ -45,7 +45,6 @@ class ParagraphStyle {
     // Known pixel-aligned widths and non-CJK text can set enabled to false and use the original maxWidth.
     // The 正文 block alignment controls the quantized remainder; the 双齐 paragraph still uses lastLineAlignment for its last line.
     // The default body alignment follows ParagraphStyle.lastLineAlignment and can be overridden independently.
-
     public static final DEFAULT_EMPHASIS_DOT_GAP_EM:Float = 0.1;
     public static final DEFAULT_INLINE_OBJECT_MINIMUM_CLEARANCE_EM:Float = 0.1;
 
@@ -60,18 +59,9 @@ class ParagraphStyle {
     public final inlineObjectMinimumClearanceEm:Float;
     public final emphasisDotGapEm:Float;
 
-    public function new(
-        ?lastLineAlignment:Null<LastLineAlignment>,
-        ?writingMode:Null<WritingMode>,
-        ?lineHeight:Null<Float>,
-        ?firstLineIndent:Null<Ic>,
-        ?blockIndent:Null<Ic>,
-        firstLineIndentPolicy:MeasureAdaptiveFirstLineIndent,
-        lineLengthGrid:LineLengthGrid,
-        ?rubyLineHeightMode:Null<RubyLineHeightMode>,
-        ?inlineObjectMinimumClearanceEm:Null<Float>,
-        ?emphasisDotGapEm:Null<Float>
-    ) {
+    public function new(?lastLineAlignment:Null<LastLineAlignment>, ?writingMode:Null<WritingMode>, ?lineHeight:Null<Float>, ?firstLineIndent:Null<Ic>,
+            ?blockIndent:Null<Ic>, firstLineIndentPolicy:MeasureAdaptiveFirstLineIndent, lineLengthGrid:LineLengthGrid,
+            ?rubyLineHeightMode:Null<RubyLineHeightMode>, ?inlineObjectMinimumClearanceEm:Null<Float>, ?emphasisDotGapEm:Null<Float>) {
         this.lastLineAlignment = lastLineAlignment == null ? LastLineAlignment.Start : lastLineAlignment;
         this.writingMode = writingMode == null ? WritingMode.HorizontalTb : writingMode;
         this.lineHeight = lineHeight == null ? null : lineHeight;
@@ -83,5 +73,4 @@ class ParagraphStyle {
         this.inlineObjectMinimumClearanceEm = inlineObjectMinimumClearanceEm == null ? ParagraphStyle.DEFAULT_INLINE_OBJECT_MINIMUM_CLEARANCE_EM : inlineObjectMinimumClearanceEm;
         this.emphasisDotGapEm = emphasisDotGapEm == null ? ParagraphStyle.DEFAULT_EMPHASIS_DOT_GAP_EM : emphasisDotGapEm;
     }
-
 }

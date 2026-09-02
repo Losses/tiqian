@@ -5,6 +5,7 @@ interface RichTextBackgroundDrawStyle {}
 
 class Fill implements RichTextBackgroundDrawStyle {
     public static final instance:Fill = new Fill();
+
     private function new() {}
 }
 

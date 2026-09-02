@@ -25,6 +25,4 @@ class RichTextCornerRadii {
     public function get_isUniform():Bool {
         return topLeft == topRight && topRight == bottomRight && bottomRight == bottomLeft;
     }
-
-
 }

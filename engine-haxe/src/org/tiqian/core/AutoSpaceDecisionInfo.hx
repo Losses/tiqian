@@ -10,7 +10,8 @@ class AutoSpaceDecisionInfo {
     public final totalReduction:Float;
     public final reason:String;
 
-    public function new(clusterRange:TextRange, side:String, boundaryRole:String, mode:String, charactersAffected:Int, reductionPerChar:Float, totalReduction:Float, reason:String) {
+    public function new(clusterRange:TextRange, side:String, boundaryRole:String, mode:String, charactersAffected:Int, reductionPerChar:Float,
+            totalReduction:Float, reason:String) {
         this.clusterRange = clusterRange;
         this.side = side;
         this.boundaryRole = boundaryRole;

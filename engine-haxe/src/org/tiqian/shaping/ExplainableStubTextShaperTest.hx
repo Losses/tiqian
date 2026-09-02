@@ -16,6 +16,7 @@ class ExplainableStubTextShaperTest {
         return new ShapingInput(text, range, new TextStyle(null, 16.0),
             new FontDecision(range, new FontCandidate("test-font", "test-font", role), role, "test"), displayText == null ? text : displayText);
     }
+
     @:test public static function shapesSingleCjkClusterWithOneEmAdvance():Void {
         new TestTraceRecorder("ExplainableStubTextShaperTest").section("shapesSingleCjkClusterWithOneEmAdvance");
         var result = new ExplainableStubTextShaper().shape(input("\u4E2D", FontRole.CjkText));
@@ -26,6 +27,7 @@ class ExplainableStubTextShaperTest {
         TracedAssertions.assertEqualsInt(1, result.glyphRuns[0].glyphs.length);
         TracedAssertions.assertEqualsString("Stub", result.decisions[0].source);
     }
+
     @:test public static function keepsLatinRunAsSingleShapedClusterWithNominalGlyphs():Void {
         new TestTraceRecorder("ExplainableStubTextShaperTest").section("keepsLatinRunAsSingleShapedClusterWithNominalGlyphs");
         var result = new ExplainableStubTextShaper().shape(input("Hello", FontRole.LatinText));
@@ -35,6 +37,7 @@ class ExplainableStubTextShaperTest {
         TracedAssertions.assertEqualsInt(5, result.glyphRuns[0].glyphs.length);
         TracedAssertions.assertEqualsInt(5, result.decisions[0].glyphCount);
     }
+
     @:test public static function shapesClreqDashSubstitutionAsTwoEmDisplayCluster():Void {
         new TestTraceRecorder("ExplainableStubTextShaperTest").section("shapesClreqDashSubstitutionAsTwoEmDisplayCluster");
         var result = new ExplainableStubTextShaper().shape(input("\u2014\u2014", FontRole.CjkPunctuation, "\u2E3A"));

@@ -12,6 +12,7 @@ package org.tiqian.core;
 // The px result uses [emPx], the 字身框 spacing for the current context; horizontal full-width CJK uses the 字号.
 // Author-facing literals are `2f.ic` and `0.25f.ic`.
 // Author-facing literals are `40.ic` and `2.ic`.
+
 /** Haxe spelling of the Kotlin Float.ic extension. */
 class FloatIc {
     public static function ic(value:Float):Ic {

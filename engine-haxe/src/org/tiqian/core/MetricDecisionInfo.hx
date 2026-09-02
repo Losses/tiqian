@@ -16,22 +16,8 @@ class MetricDecisionInfo {
     public final layoutSource:String;
     public final reason:String;
 
-    public function new(
-        range:TextRange,
-        sourceText:String,
-        role:String,
-        fontKey:String,
-        rawAscent:Float,
-        rawDescent:Float,
-        rawLeading:Float,
-        rawSource:String,
-        layoutAscent:Float,
-        layoutDescent:Float,
-        baselineClass:String,
-        metricBox:String,
-        layoutSource:String,
-        reason:String
-    ) {
+    public function new(range:TextRange, sourceText:String, role:String, fontKey:String, rawAscent:Float, rawDescent:Float, rawLeading:Float,
+            rawSource:String, layoutAscent:Float, layoutDescent:Float, baselineClass:String, metricBox:String, layoutSource:String, reason:String) {
         this.range = range;
         this.sourceText = sourceText;
         this.role = role;
