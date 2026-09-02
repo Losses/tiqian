@@ -202,7 +202,8 @@ class ParagraphDpLineBreaker implements LineBreaker {
                     final cost = (prev == null ? 0.0 : prev.cost) + geometry.baseCost +
                         (hyphenEnd ? consecutiveSyntheticHyphenPenalty * ph : 0.0) +
                         (geometry.visibleStretch ? consecutiveStretchPenalty * ps : 0.0);
-                    final hr:Int = hyphenEnd ? (ph + 1 > HYPHEN_RUN_STATE_CAP ? HYPHEN_RUN_STATE_CAP : ph + 1) : 0;
+                    var hr:Int = 0;
+                    if (hyphenEnd) hr = ph + 1 > HYPHEN_RUN_STATE_CAP ? HYPHEN_RUN_STATE_CAP : ph + 1;
                     var sr:Int = 0;
                     if (geometry.visibleStretch) sr = ps + 1 > STRETCH_RUN_STATE_CAP ? STRETCH_RUN_STATE_CAP : ps + 1;
                     final key = start + ":" + e + ":" + hr + ":" + sr;
