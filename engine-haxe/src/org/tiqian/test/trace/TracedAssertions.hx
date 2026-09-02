@@ -9,6 +9,7 @@ import org.tiqian.core.IntRange;
 import org.tiqian.clreq.BopomofoTone;
 import org.tiqian.font.FontRole;
 import org.tiqian.layout.LineOptimization.RepairOption;
+import org.tiqian.layout.LineOptimization.PushInAllocation;
 import org.tiqian.layout.LineOptimization.RepairOptions;
 import org.tiqian.layout.QuotePairAnalyzer.QuotePair;
 import org.tiqian.layout.QuotePairAnalyzer.QuoteType;
@@ -208,6 +209,21 @@ class TracedAssertions {
     public static function assertEqualsRepairOptionArray(expected:Array<RepairOption>, actual:Array<RepairOption>, ?message:String):Void {
         final expectedText = RepairOptions.renderList(expected);
         final actualText = RepairOptions.renderList(actual);
+        recordEvent("eq", [field("expected", expectedText), field("actual", actualText), msgField(message)]);
+        if (expectedText != actualText) {
+            fail(message == null ? "Expected arrays to be equal." : message);
+        }
+    }
+
+    private static function renderPushInAllocations(values:Array<PushInAllocation>):String {
+        final buf = new StringBuf(); buf.add("["); var i = 0;
+        while (i < values.length) { if (i > 0) buf.add(", "); buf.add(values[i].toString()); i++; }
+        buf.add("]"); return buf.toString();
+    }
+
+    public static function assertEqualsPushInAllocationArray(expected:Array<PushInAllocation>, actual:Array<PushInAllocation>, ?message:String):Void {
+        final expectedText = renderPushInAllocations(expected);
+        final actualText = renderPushInAllocations(actual);
         recordEvent("eq", [field("expected", expectedText), field("actual", actualText), msgField(message)]);
         if (expectedText != actualText) {
             fail(message == null ? "Expected arrays to be equal." : message);
