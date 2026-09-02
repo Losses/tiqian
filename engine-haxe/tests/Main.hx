@@ -456,7 +456,12 @@ class Main {
         run("classifiesLatinText", CjkFontRoleClassifierTest.classifiesLatinText);
         run("classifiesUnicodeEmojiPresentationWithoutReclassifyingPlainKeycapBases", CjkFontRoleClassifierTest.classifiesUnicodeEmojiPresentationWithoutReclassifyingPlainKeycapBases);
         TestTraceRecorder.flushClass("CjkFontRoleClassifierTest");
-        run("emitGoldenTrace", FontPolicyCoverageTest.emitGoldenTrace);
+        run("testCjkFontRoleClassifierAllRanges", FontPolicyCoverageTest.testCjkFontRoleClassifierAllRanges);
+        run("testFontEnumsAndModels", FontPolicyCoverageTest.testFontEnumsAndModels);
+        run("testFontMetricsRequestAndResolvers", FontPolicyCoverageTest.testFontMetricsRequestAndResolvers);
+        run("testFontRequestAndRoles", FontPolicyCoverageTest.testFontRequestAndRoles);
+        run("testPreferCjkForAmbiguousPunctuationResolver", FontPolicyCoverageTest.testPreferCjkForAmbiguousPunctuationResolver);
+        run("testScriptAwareFontMetricsNormalizerBranches", FontPolicyCoverageTest.testScriptAwareFontMetricsNormalizerBranches);
         TestTraceRecorder.flushClass("FontPolicyCoverageTest");
 
         run("supplementarySymbolIsUnknownBecauseItHasNoBmpCategory", FontRoleTailCoverageTest.supplementarySymbolIsUnknownBecauseItHasNoBmpCategory);
