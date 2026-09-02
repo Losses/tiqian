@@ -543,7 +543,7 @@ class Main {
         run("faceRequestRejectsNonPositiveAndNonFiniteFontSize", ReplayableFontBackendCoverageTest.faceRequestRejectsNonPositiveAndNonFiniteFontSize);
         run("capabilityReportReplayFlagRequiresFacesAndNoMissingFaceIssue", ReplayableFontBackendCoverageTest.capabilityReportReplayFlagRequiresFacesAndNoMissingFaceIssue);
         run("catalogContractResolvesByRequest", ReplayableFontBackendCoverageTest.catalogContractResolvesByRequest);
-        ReplayableFontBackendCoverageTest.flush();
+        TestTraceRecorder.flushClass("ReplayableFontBackendCoverageTest");
 
         run("glueRejectsInvertedBounds", PunctuationModelCoverageTest.glueRejectsInvertedBounds);
         run("adjustmentOpportunityCarriesRangeAndGlue", PunctuationModelCoverageTest.adjustmentOpportunityCarriesRangeAndGlue);
