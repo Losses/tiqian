@@ -87,3 +87,4 @@ org.tiqian.layout.LineRepairTailCoverageTest
 org.tiqian.font.UnicodeSymbolData
 
 org.tiqian.layout.ParagraphDpLineBreaker
+org.tiqian.layout.ParagraphDpLineBreaker

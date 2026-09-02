@@ -52,26 +52,20 @@ class ParagraphDpLineBreaker implements LineBreaker {
             ?forbiddenLineStartClusters:Null<SortedSet<Int>>, ?forbiddenLineEndClusters:SortedSet<Int>, ?hyphenBreakClusters:SortedSet<Int>,
             ?cjkInterCharBoundaries:SortedSet<Int>, ?maxCjkStretchPerGap:Float, ?sinoWesternBoundaries:SortedSet<Int>, ?sinoWesternStretchCap:Float,
             ?lineAdjustmentPushIn:Bool, ?lineAdjustmentCompressBias:Float, ?hardBreakAfterClusters:SortedSet<Int>, ?nonRenderingControlClusters:SortedSet<Int>,
-            ?progressiveBreakOpportunities:SortedMap<Int, ProgressiveBreakOpportunity>):LineSolution {
-        throw new IllegalStateException("TODO r3: breakLines");
+            ?progressiveBreakOpportunities:SortedMap<Int, ProgressiveBreakOpportunity>):LineSolution { throw new IllegalStateException("TODO r4: breakLines"); }
+
+    private function candidateEnds(context:DpContext, start:Int, segmentEndExclusive:Int, endsWithMandatory:Bool):Array<Int> { throw new IllegalStateException("TODO r4: candidateEnds"); }
+    private function edgeGeometry(context:DpContext, line:LineCandidate, isSegmentLast:Bool, hyphenEnd:Bool):EdgeGeometry { throw new IllegalStateException("TODO r4: edgeGeometry"); }
+    private function solveSegment(context:DpContext, segmentStart:Int, segmentEndExclusive:Int, endsWithMandatory:Bool):Array<Int> { throw new IllegalStateException("TODO r4: solveSegment"); }
+    private function greedyFallbackEnds(context:DpContext, segmentStart:Int, segmentEndExclusive:Int):Array<Int> { throw new IllegalStateException("TODO r4: greedyFallbackEnds"); }
+    private function commitSegment(committed:Array<LineCandidate>, ends:Array<Int>, segmentStart:Int, mandatoryEnd:Null<Int>, context:DpContext,
+            hardBreakAfterClusters:SortedSet<Int>):Void { throw new IllegalStateException("TODO r4: commitSegment"); }
+    private static function findGreedyEnd(clusters:Array<Cluster>, start:Int, limit:Float, endExclusive:Int, controls:SortedSet<Int>):Int {
+        var width = 0.0; var i = start; var hasContent = false;
+        while (i < endExclusive) { final next = width + clusters[i].advance; if (next > limit && hasContent) return i; width = next; if (!controls.has(i)) hasContent = true; i++; }
+        return endExclusive;
     }
 
-    private function candidateEnds(context:DpContext, start:Int, segmentEndExclusive:Int, endsWithMandatory:Bool):Array<Int> {
-        throw new IllegalStateException("TODO r3: candidateEnds");
-    }
-    private function edgeGeometry(context:DpContext, line:LineCandidate, isSegmentLast:Bool, hyphenEnd:Bool):EdgeGeometry {
-        throw new IllegalStateException("TODO r3: edgeGeometry");
-    }
-    private function solveSegment(context:DpContext, segmentStart:Int, segmentEndExclusive:Int, endsWithMandatory:Bool):Array<Int> {
-        throw new IllegalStateException("TODO r3: solveSegment");
-    }
-    private function greedyFallbackEnds(context:DpContext, segmentStart:Int, segmentEndExclusive:Int):Array<Int> {
-        throw new IllegalStateException("TODO r3: greedyFallbackEnds");
-    }
-    private function commitSegment(committed:Array<LineCandidate>, ends:Array<Int>, segmentStart:Int, mandatoryEnd:Null<Int>, context:DpContext,
-            hardBreakAfterClusters:SortedSet<Int>):Void {
-        throw new IllegalStateException("TODO r3: commitSegment");
-    }
     private static function rangeHasOnlyNonControlClusters(start:Int, endExclusive:Int, set:SortedSet<Int>):Bool {
         var i = start;
         while (i < endExclusive) { if (!set.has(i)) return true; i++; }
@@ -101,6 +95,13 @@ class DpContext {
     public final dRef:Float;
     public final allowCompressionEdges:Bool;
     public final progressiveBreakOpportunities:SortedMap<Int, ProgressiveBreakOpportunity>;
+    private final gapPrefix:Array<Int>;
+    private final sinoPrefix:Array<Int>;
+    private final cjkPrefix:Array<Int>;
+    private final naturalPrefix:Array<Float>;
+    private final adjustedPrefix:Array<Float>;
+    private final shrinkPrefix:Array<Float>;
+    private final lineEndOnlyCapacity:Array<Float>;
     public function new(naturalClusters:Array<Cluster>, adjustedClusters:Array<Cluster>, maxWidth:Float, shrinkOpportunities:Array<ShrinkOpportunity>,
             unbreakableRanges:UnbreakableRanges, firstLineIndent:Float, forbiddenLineStartClusters:Null<SortedSet<Int>>, forbiddenLineEndClusters:SortedSet<Int>,
             hyphenBreakClusters:SortedSet<Int>, cjkInterCharBoundaries:SortedSet<Int>, maxCjkStretchPerGap:Float, sinoWesternBoundaries:SortedSet<Int>,
@@ -112,12 +113,39 @@ class DpContext {
         this.maxCjkStretchPerGap=maxCjkStretchPerGap; this.sinoWesternBoundaries=sinoWesternBoundaries; this.sinoWesternStretchCap=sinoWesternStretchCap;
         this.nonRenderingControlClusters=nonRenderingControlClusters; this.gapBoundaries=gapBoundaries; this.dRef=dRef; this.allowCompressionEdges=allowCompressionEdges;
         this.progressiveBreakOpportunities=progressiveBreakOpportunities;
+        final n = adjustedClusters.length;
+        gapPrefix = [for (_ in 0...n + 1) 0];
+        sinoPrefix = [for (_ in 0...n + 1) 0];
+        cjkPrefix = [for (_ in 0...n + 1) 0];
+        naturalPrefix = [for (_ in 0...naturalClusters.length + 1) 0.0];
+        adjustedPrefix = [for (_ in 0...n + 1) 0.0];
+        var k = 0;
+        while (k < n) {
+            gapPrefix[k + 1] = gapPrefix[k] + (gapBoundaries.has(k) ? 1 : 0);
+            sinoPrefix[k + 1] = sinoPrefix[k] + (sinoWesternBoundaries.has(k) ? 1 : 0);
+            cjkPrefix[k + 1] = cjkPrefix[k] + (cjkInterCharBoundaries.has(k) ? 1 : 0);
+            naturalPrefix[k + 1] = naturalPrefix[k] + naturalClusters[k].advance;
+            adjustedPrefix[k + 1] = adjustedPrefix[k] + adjustedClusters[k].advance;
+            k++;
+        }
+        shrinkPrefix = [for (_ in 0...n + 1) 0.0];
+        lineEndOnlyCapacity = [for (_ in 0...n) 0.0];
+        for (opp in shrinkOpportunities) {
+            if (opp.capacity <= 0 || opp.clusterIndex < 0 || opp.clusterIndex >= n) continue;
+            if (opp.lineEndOnly) lineEndOnlyCapacity[opp.clusterIndex] += opp.capacity;
+            else shrinkPrefix[opp.clusterIndex + 1] += opp.capacity;
+        }
+        k = 0;
+        while (k < n) { shrinkPrefix[k + 1] += shrinkPrefix[k]; k++; }
     }
-    public function buildLine(clusterRange:IntRange, endReason:LineEndReason):LineCandidate throw new IllegalStateException("TODO r3: DpContext.buildLine");
-    public function gapCount(range:IntRange):Int throw new IllegalStateException("TODO r3: DpContext.gapCount");
-    public function sinoGapCount(range:IntRange):Int throw new IllegalStateException("TODO r3: DpContext.sinoGapCount");
-    public function cjkGapCount(range:IntRange):Int throw new IllegalStateException("TODO r3: DpContext.cjkGapCount");
-    public function shrinkCapacity(range:IntRange):Float throw new IllegalStateException("TODO r3: DpContext.shrinkCapacity");
+    public function buildLine(clusterRange:IntRange, endReason:LineEndReason):LineCandidate {
+        return new LineCandidate(clusterRange, new TextRange(adjustedClusters[clusterRange.start].range.start, adjustedClusters[clusterRange.end].range.end),
+            naturalPrefix[clusterRange.end + 1] - naturalPrefix[clusterRange.start], adjustedPrefix[clusterRange.end + 1] - adjustedPrefix[clusterRange.start], endReason);
+    }
+    public function gapCount(range:IntRange):Int return range.isEmpty ? 0 : gapPrefix[range.end] - gapPrefix[range.start];
+    public function sinoGapCount(range:IntRange):Int return range.isEmpty ? 0 : sinoPrefix[range.end] - sinoPrefix[range.start];
+    public function cjkGapCount(range:IntRange):Int return range.isEmpty ? 0 : cjkPrefix[range.end] - cjkPrefix[range.start];
+    public function shrinkCapacity(range:IntRange):Float return shrinkPrefix[range.end + 1] - shrinkPrefix[range.start] + lineEndOnlyCapacity[range.end];
 }
 
 class EdgeState {
