@@ -76,3 +76,10 @@ org.tiqian.layout.PunctuationGeometryStageCoverageTest
 org.tiqian.layout.LineBreaker
 org.tiqian.layout.LineRepair
 org.tiqian.layout.GreedyLineBreakerTest
+
+org.tiqian.layout.ClusterRoleResolution
+org.tiqian.layout.ClusterRoleResolutionCoverageTest
+org.tiqian.layout.ClusterRoleResolutionSurrogateAndExtenderEdgeTest
+org.tiqian.layout.DefaultHyphenator
+org.tiqian.layout.LineRepairCoverageTest
+org.tiqian.layout.LineRepairTailCoverageTest
