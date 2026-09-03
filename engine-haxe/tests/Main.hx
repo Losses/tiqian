@@ -1225,8 +1225,8 @@ class Main {
         run("decimalAlignedMantissaSkipsZeroChunk", PreparedParagraphJsonNumberTest.decimalAlignedMantissaSkipsZeroChunk);
         run("subnormalExpansionsSerialize", PreparedParagraphJsonNumberTest.subnormalExpansionsSerialize);
         TestTraceRecorder.flushClass("PreparedParagraphJsonNumberTest");
-        run("endOnlyInlineBoxEmitsEdgeWithoutInlineStartField", PreparedParagraphInlineEdgesTest.endOnlyInlineBoxEmitsEdgeWithoutInlineStartField);
         run("contentWithoutInlineBoxesOmitsInlineEdgesArray", PreparedParagraphInlineEdgesTest.contentWithoutInlineBoxesOmitsInlineEdgesArray);
+        run("endOnlyInlineBoxEmitsEdgeWithoutInlineStartField", PreparedParagraphInlineEdgesTest.endOnlyInlineBoxEmitsEdgeWithoutInlineStartField);
         TestTraceRecorder.flushClass("PreparedParagraphInlineEdgesTest");
         run("rubyBaseRangeCrossingClusterBoundariesDropsOutOfPerLineExtents", org.tiqian.layout.LineGeometryDirectTailTest.rubyBaseRangeCrossingClusterBoundariesDropsOutOfPerLineExtents);
         run("rubiesOnBothLinesExerciseBothSidesOfTheOverlapTest", org.tiqian.layout.LineGeometryDirectTailTest.rubiesOnBothLinesExerciseBothSidesOfTheOverlapTest);
