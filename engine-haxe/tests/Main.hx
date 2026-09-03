@@ -60,6 +60,7 @@ import org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest;
 import org.tiqian.layout.PunctuationGeometryStageCoverageTest;
 import org.tiqian.layout.PreparedParagraphJsonNumberTest;
 import org.tiqian.layout.PreparedParagraphJfTest;
+import org.tiqian.layout.PreparedParagraphPlanConstructionTest;
 import org.tiqian.layout.PreparedParagraphInlineEdgesTest;
 import org.tiqian.layout.ParagraphDpLineBreakerTest;
 import org.tiqian.layout.ParagraphDpLineBreakerCoverageTest;
@@ -1276,7 +1277,19 @@ class Main {
         run("inlineBoxEdgesAndEmphasisDotsFilter", org.tiqian.layout.PreparedParagraphJfTest.inlineBoxEdgesAndEmphasisDotsFilter);
         run("dashShapingDecisionWithGlyphIds", org.tiqian.layout.PreparedParagraphJfTest.dashShapingDecisionWithGlyphIds);
         run("ecmaJsonNumberEdgeCases", org.tiqian.layout.PreparedParagraphJfTest.ecmaJsonNumberEdgeCases);
-        TestTraceRecorder.flushClass("PreparedParagraphJfTest");
+        run("openTypeFeaturesAndRenderFontFamilyAttachPerCluster", org.tiqian.layout.PreparedParagraphPlanConstructionTest.openTypeFeaturesAndRenderFontFamilyAttachPerCluster);
+        run("multiUnitClusterMarksShapingBoundary", org.tiqian.layout.PreparedParagraphPlanConstructionTest.multiUnitClusterMarksShapingBoundary);
+        run("inlineObjectCellEmitsAdvanceOverride", org.tiqian.layout.PreparedParagraphPlanConstructionTest.inlineObjectCellEmitsAdvanceOverride);
+        run("styleDeltaListsOnlyPaintFields", org.tiqian.layout.PreparedParagraphPlanConstructionTest.styleDeltaListsOnlyPaintFields);
+        run("dashClusterEmitsShapingEvidenceBlock", org.tiqian.layout.PreparedParagraphPlanConstructionTest.dashClusterEmitsShapingEvidenceBlock);
+        run("punctuationInkFloorAndLatinRoleMarkCells", org.tiqian.layout.PreparedParagraphPlanConstructionTest.punctuationInkFloorAndLatinRoleMarkCells);
+        run("zeroWidthBreakClusterSurvivesEmptyDisplayText", org.tiqian.layout.PreparedParagraphPlanConstructionTest.zeroWidthBreakClusterSurvivesEmptyDisplayText);
+        run("paragraphEvidenceEmitsEverySection", org.tiqian.layout.PreparedParagraphPlanConstructionTest.paragraphEvidenceEmitsEverySection);
+        run("negativeZeroAndExponentWidthsNormalize", org.tiqian.layout.PreparedParagraphPlanConstructionTest.negativeZeroAndExponentWidthsNormalize);
+        run("jsonStringEscapesQuotesBackslashesAndControlCharacters", org.tiqian.layout.PreparedParagraphPlanConstructionTest.jsonStringEscapesQuotesBackslashesAndControlCharacters);
+        run("planWithDiagnosticsListsCapabilityIssuesAndAdvanceSuspects", org.tiqian.layout.PreparedParagraphPlanConstructionTest.planWithDiagnosticsListsCapabilityIssuesAndAdvanceSuspects);
+        TestTraceRecorder.flushClass("PreparedParagraphPlanConstructionTest");
+
 
         Console.log("all CoreUnitsGeometryTest checks passed");
         if (failures > 0) {
