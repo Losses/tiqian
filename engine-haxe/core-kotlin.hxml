@@ -106,4 +106,5 @@ org.tiqian.layout.LineBreakerCoverage2Test
 org.tiqian.layout.LineCandidateValidationTest
 org.tiqian.layout.ProgressiveTechnicalBreakTest
 org.tiqian.layout.ParagraphDpTierPromotionPoolTest
+org.tiqian.layout.PushInLineWideCapacityTest
 
