@@ -43,7 +43,7 @@ import org.tiqian.layout.ParagraphLayoutEngine.ExplainableStubParagraphLayoutEng
     public final text:String;
     public final fontDecisions:Array<FontDecision>;
     public final punctuationGlyphSubstitutor:ClreqPunctuationGlyphSubstitutor;
-    public final substitutionRollbacks:haxe.ds.ObjectMap<TextRange, String>;
+    public final substitutionRollbacks:std.SortedMap<TextRange, String>;
     public final shapingDecisions:Array<ShapingDecisionInfo>;
     public final metricDecisions:Array<ClusterMetricDecision>;
     public final punctuationAtoms:Array<PunctuationAtom>;
@@ -83,7 +83,7 @@ import org.tiqian.layout.ParagraphLayoutEngine.ExplainableStubParagraphLayoutEng
         text:String,
         fontDecisions:Array<FontDecision>,
         punctuationGlyphSubstitutor:ClreqPunctuationGlyphSubstitutor,
-        substitutionRollbacks:haxe.ds.ObjectMap<TextRange, String>,
+        substitutionRollbacks:std.SortedMap<TextRange, String>,
         shapingDecisions:Array<ShapingDecisionInfo>,
         metricDecisions:Array<ClusterMetricDecision>,
         punctuationAtoms:Array<PunctuationAtom>,
