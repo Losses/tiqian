@@ -10,6 +10,7 @@ import org.tiqian.core.LayoutInput;
 import org.tiqian.core.LayoutResult;
 import org.tiqian.core.ParagraphStyle;
 import org.tiqian.core.TextSpan;
+import org.tiqian.core.TextRange;
 import org.tiqian.core.AutoSpaceDecisionInfo;
 import std.ReadOnlyArray;
 import org.tiqian.core.TiqianTextContent;
@@ -36,6 +37,9 @@ class AutoSpaceSingleGapTestSupport {
             new ParagraphStyle(null, null, null, Ic.Zero), new LayoutConstraints(320.0)));
     }
 
+    public static function sameRange(first:TextRange, second:TextRange):Bool {
+        return first.start == second.start && first.end == second.end;
+    }
     public static function clustersWithText(result:LayoutResult, text:String):Array<org.tiqian.core.Cluster> {
         final matches = [];
         for (i in 0...result.clusters.length) if (result.clusters[i].text == text) matches.push(result.clusters[i]);

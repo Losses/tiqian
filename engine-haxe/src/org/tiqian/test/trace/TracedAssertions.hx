@@ -59,6 +59,17 @@ class TracedAssertions {
         }
     }
 
+    public static function assertEqualsNullableString(expected:Null<String>, actual:Null<String>, ?message:String):Void {
+        recordEvent("eq", [
+            field("expected", expected == null ? "-" : TestTraceRender.renderString(expected)),
+            field("actual", actual == null ? "-" : TestTraceRender.renderString(actual)),
+            msgField(message)
+        ]);
+        if (expected != actual) {
+            fail(message == null ? "Expected values to be equal." : message);
+        }
+    }
+
     public static function assertEqualsString(expected:String, actual:String, ?message:String):Void {
         recordEvent("eq", [
             field("expected", TestTraceRender.renderString(expected)),
