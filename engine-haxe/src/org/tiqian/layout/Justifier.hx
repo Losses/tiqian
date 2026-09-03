@@ -1,5 +1,7 @@
 package org.tiqian.layout;
 
+
+using std.Functional;
 import org.tiqian.core.Cluster;
 import org.tiqian.core.IntRange;
 import org.tiqian.core.EastAsianSpacingEdges;
@@ -127,33 +129,22 @@ class Justifier {
         function alloc(ops:Array<JustificationOpportunity>, reason:String):Void {
             if (ops.length == 0 || remaining <= 0)
                 return;
-            var total = 0.0;
-            var q = 0;
-            while (q < ops.length) {
-                total += ops[q].capacity;
-                q++;
-            }
+            final total = ops.sumOfFloat(o -> o.capacity);
             if (total <= 0)
                 return;
             if (total >= remaining) {
-                var f = remaining / total;
-                q = 0;
-                while (q < ops.length) {
-                    var o = ops[q];
-                    var d = o.capacity * f;
+                final f = remaining / total;
+                ops.forEach(o -> {
+                    final d = o.capacity * f;
                     if (d > 0)
                         out.push(new JustificationAllocation(o.targetClusterIndex, o.kind, o.priority, d, o.reason == null ? reason : o.reason));
-                    q++;
-                }
+                });
                 remaining = 0;
             } else {
-                q = 0;
-                while (q < ops.length) {
-                    var o = ops[q];
+                ops.forEach(o -> {
                     if (o.capacity > 0)
                         out.push(new JustificationAllocation(o.targetClusterIndex, o.kind, o.priority, o.capacity, o.reason == null ? reason : o.reason));
-                    q++;
-                }
+                });
                 remaining -= total;
             }
         }
@@ -240,14 +231,8 @@ class Justifier {
         ops = build(GlueKind.EmergencyGraphemeTracking, 3, remaining, null, function(l, x) {
             return pem.has(l);
         });
-        var pe:Array<JustificationOpportunity> = [];
-        i = 0;
-        while (i < ops.length) {
-            var eo = ops[i];
-            pe.push(new JustificationOpportunity(eo.targetClusterIndex, eo.kind, eo.priority, eo.capacity,
-                "TerminalTechnicalEmergencyTracking:" + pem.get(eo.targetClusterIndex)));
-            i++;
-        }
+        final pe = ops.map(eo -> new JustificationOpportunity(eo.targetClusterIndex, eo.kind, eo.priority, eo.capacity,
+            "TerminalTechnicalEmergencyTracking:" + pem.get(eo.targetClusterIndex)));
         alloc(pe, "TerminalTechnicalEmergencyTracking");
         if (remaining <= 0)
             return finish(null);
@@ -309,14 +294,8 @@ class Justifier {
         ops = build(GlueKind.EmergencyGraphemeTracking, 4, remaining, null, function(l, x) {
             return emg.has(l) && !pem.has(l);
         });
-        var ee:Array<JustificationOpportunity> = [];
-        i = 0;
-        while (i < ops.length) {
-            var o = ops[i];
-            ee.push(new JustificationOpportunity(o.targetClusterIndex, o.kind, o.priority, o.capacity,
-                "EmergencyGraphemeTracking:" + emg.get(o.targetClusterIndex)));
-            i++;
-        }
+        final ee = ops.map(o -> new JustificationOpportunity(o.targetClusterIndex, o.kind, o.priority, o.capacity,
+            "EmergencyGraphemeTracking:" + emg.get(o.targetClusterIndex)));
         alloc(ee, "EmergencyGraphemeTracking");
         return finish(remaining > 0 && hasE ? "EmergencyTrackingNoOpenBoundary" : null);
     }
@@ -326,45 +305,24 @@ class Justifier {
             return new CompressionPlan([], 0, 0);
         var rem = surplus;
         var out:Array<PushInAllocation> = [];
-        var byTier = SortedMap.builder();
-        var i = 0;
-        while (i < opps.length) {
-            var o = opps[i];
-            if (o.capacity > 0) {
-                var g = byTier.get(o.tier);
-                if (g == null) {
-                    g = [];
-                    byTier.put(o.tier, g);
-                }
-                g.push(o);
-            }
-            i++;
-        }
-        var m = byTier.build();
+        final m = opps.filter(o -> o.capacity > 0)
+            .groupBy(o -> {key: o.tier, value: o});
         var k = 0;
         while (k < m.size()) {
             if (rem <= 0)
                 break;
             var group:Array<ShrinkOpportunity> = m.valueAt(k);
-            var total = 0.0;
-            var j = 0;
-            while (j < group.length) {
-                total += group[j].capacity;
-                j++;
-            }
+            final total = group.sumOfFloat(o -> o.capacity);
             if (total <= 0) {
                 k++;
                 continue;
             }
             var f = Math.min(1, rem / total);
-            j = 0;
-            while (j < group.length) {
-                var q = group[j];
+            group.forEach(q -> {
                 var d = q.capacity * f;
                 if (d > 0)
                     out.push(new PushInAllocation(q.clusterIndex, d, q.capacity, q.channel));
-                j++;
-            }
+            });
             rem -= total * f;
             k++;
         }

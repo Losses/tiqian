@@ -32,6 +32,7 @@ import org.tiqian.font.ScriptAwareFontMetricsNormalizerTest;
 import org.tiqian.font.UsesLatinFaceTest;
 import org.tiqian.shaping.TextShaperCoverageTest;
 import org.tiqian.shaping.ExplainableStubTextShaperTest;
+import org.tiqian.shaping.ReplayableFontBackendCoverageTest;
 import org.tiqian.linebreak.EnglishHyphenationTest;
 import org.tiqian.linebreak.LiangHyphenatorTest;
 import org.tiqian.layout.ProgressiveBreakDecisionsCoverageTest;
@@ -57,6 +58,8 @@ import org.tiqian.layout.JustifierCompressionTest;
 import org.tiqian.layout.JustifierJfTest;
 import org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest;
 import org.tiqian.layout.PunctuationGeometryStageCoverageTest;
+import org.tiqian.layout.PreparedParagraphJsonNumberTest;
+import org.tiqian.layout.PreparedParagraphInlineEdgesTest;
 import org.tiqian.layout.GreedyLineBreakerTest;
 import org.tiqian.linebreak.LineBreakCoverageTest;
 import org.tiqian.linebreak.MandatoryBreakTest;
@@ -535,6 +538,12 @@ class Main {
         run("keepsLatinRunAsSingleShapedClusterWithNominalGlyphs", ExplainableStubTextShaperTest.keepsLatinRunAsSingleShapedClusterWithNominalGlyphs);
         run("shapesClreqDashSubstitutionAsTwoEmDisplayCluster", ExplainableStubTextShaperTest.shapesClreqDashSubstitutionAsTwoEmDisplayCluster);
         TestTraceRecorder.flushClass("ExplainableStubTextShaperTest");
+        run("fontFaceIdRejectsBlankAndKeepsValue", ReplayableFontBackendCoverageTest.fontFaceIdRejectsBlankAndKeepsValue);
+        run("faceDescriptorDefaultsAreStable", ReplayableFontBackendCoverageTest.faceDescriptorDefaultsAreStable);
+        run("faceRequestRejectsNonPositiveAndNonFiniteFontSize", ReplayableFontBackendCoverageTest.faceRequestRejectsNonPositiveAndNonFiniteFontSize);
+        run("capabilityReportReplayFlagRequiresFacesAndNoMissingFaceIssue", ReplayableFontBackendCoverageTest.capabilityReportReplayFlagRequiresFacesAndNoMissingFaceIssue);
+        run("catalogContractResolvesByRequest", ReplayableFontBackendCoverageTest.catalogContractResolvesByRequest);
+        TestTraceRecorder.flushClass("ReplayableFontBackendCoverageTest");
 
         run("glueRejectsInvertedBounds", PunctuationModelCoverageTest.glueRejectsInvertedBounds);
         run("adjustmentOpportunityCarriesRangeAndGlue", PunctuationModelCoverageTest.adjustmentOpportunityCarriesRangeAndGlue);
@@ -1141,6 +1150,21 @@ class Main {
             PunctuationGeometryStageCoverageTest.virtualGapsRespectNarrowToWideEdgesAndTheirNeighbours);
         run("wideToNarrowBoundariesInsertLeadingAndTrailingGaps", PunctuationGeometryStageCoverageTest.wideToNarrowBoundariesInsertLeadingAndTrailingGaps);
         TestTraceRecorder.flushClass("PunctuationGeometryStageCoverageTest");
+        run("zeroValuesSerializeWithoutSign", PreparedParagraphJsonNumberTest.zeroValuesSerializeWithoutSign);
+        run("integerFormsPadToDecimalExponent", PreparedParagraphJsonNumberTest.integerFormsPadToDecimalExponent);
+        run("fractionFormsInsertDecimalPoint", PreparedParagraphJsonNumberTest.fractionFormsInsertDecimalPoint);
+        run("smallFractionsUseLeadingZeros", PreparedParagraphJsonNumberTest.smallFractionsUseLeadingZeros);
+        run("exponentFormsCarryExplicitSign", PreparedParagraphJsonNumberTest.exponentFormsCarryExplicitSign);
+        run("negativeValuesKeepOnlyMagnitudeSign", PreparedParagraphJsonNumberTest.negativeValuesKeepOnlyMagnitudeSign);
+        run("exactTiesRoundToEvenDigit", PreparedParagraphJsonNumberTest.exactTiesRoundToEvenDigit);
+        run("exactExpansionRoundsPlatformDigits", PreparedParagraphJsonNumberTest.exactExpansionRoundsPlatformDigits);
+        run("boundaryMidpointsAcceptOnlyAtEvenMantissa", PreparedParagraphJsonNumberTest.boundaryMidpointsAcceptOnlyAtEvenMantissa);
+        run("decimalAlignedMantissaSkipsZeroChunk", PreparedParagraphJsonNumberTest.decimalAlignedMantissaSkipsZeroChunk);
+        run("subnormalExpansionsSerialize", PreparedParagraphJsonNumberTest.subnormalExpansionsSerialize);
+        TestTraceRecorder.flushClass("PreparedParagraphJsonNumberTest");
+        run("endOnlyInlineBoxEmitsEdgeWithoutInlineStartField", PreparedParagraphInlineEdgesTest.endOnlyInlineBoxEmitsEdgeWithoutInlineStartField);
+        run("contentWithoutInlineBoxesOmitsInlineEdgesArray", PreparedParagraphInlineEdgesTest.contentWithoutInlineBoxesOmitsInlineEdgesArray);
+        TestTraceRecorder.flushClass("PreparedParagraphInlineEdgesTest");
         if (failures > 0) {
             Process.exit(1);
         }
