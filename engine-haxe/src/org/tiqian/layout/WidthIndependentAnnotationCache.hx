@@ -9,11 +9,19 @@ import org.tiqian.core.DecorationSpan;
 import org.tiqian.core.RubySpan;
 import org.tiqian.core.InlineBoxSpan;
 import org.tiqian.core.InlineObjectSpan;
-import org.tiqian.clreq.LayoutProfileId;
+import org.tiqian.core.LayoutProfileId;
 import org.tiqian.clreq.ClreqProfile;
-import org.tiqian.font.FontDecision;
+import org.tiqian.clreq.ClreqPunctuationGlyphSubstitutor;
+import org.tiqian.font.FontPolicy.FontDecision;
 import org.tiqian.core.RoleOverrideInfo;
-import org.tiqian.shaping.ShapingResult;
+import org.tiqian.shaping.TextShaper.ShapingResult;
+import org.tiqian.layout.ProgressiveBreakDecisions.ProgressiveBreakTier;
+import org.tiqian.layout.QuotePairAnalyzer.QuotePair;
+import org.tiqian.layout.ClusterRoleResolution.ResolvedClusterRange;
+import org.tiqian.layout.AnnotationGeometryStage.RubyFontGeometry;
+import org.tiqian.layout.ParagraphShapingStage.ParagraphShapingStageResult;
+import org.tiqian.layout.LineBreakPlanningStage.ParagraphLayoutPrep;
+import org.tiqian.layout.ParagraphLayoutEngine.ExplainableStubParagraphLayoutEngine;
 import std.SortedSet;
 import std.SortedMap;
 
@@ -29,7 +37,35 @@ import std.SortedMap;
     public final inlineObjects:Array<InlineObjectSpan>;
     public final profileId:LayoutProfileId;
     public final emphasisDotGapEm:Float;
-    public final rejectedTechnicalTiersBySpan:haxe.ds.ObjectMap<TextRange, SortedSet<Int>>;
+    public final rejectedTechnicalTiersBySpan:SortedMap<TextRange, SortedSet<ProgressiveBreakTier>>;
+
+    public function new(
+        text:String,
+        spans:Array<TextSpan>,
+        lineBreakSpans:Array<LineBreakSpan>,
+        sourceBoundaries:SortedSet<Int>,
+        textStyle:TextStyle,
+        decorations:Array<DecorationSpan>,
+        rubySpans:Array<RubySpan>,
+        inlineBoxes:Array<InlineBoxSpan>,
+        inlineObjects:Array<InlineObjectSpan>,
+        profileId:LayoutProfileId,
+        emphasisDotGapEm:Float,
+        rejectedTechnicalTiersBySpan:SortedMap<TextRange, SortedSet<ProgressiveBreakTier>>
+    ) {
+        this.text = text;
+        this.spans = spans;
+        this.lineBreakSpans = lineBreakSpans;
+        this.sourceBoundaries = sourceBoundaries;
+        this.textStyle = textStyle;
+        this.decorations = decorations;
+        this.rubySpans = rubySpans;
+        this.inlineBoxes = inlineBoxes;
+        this.inlineObjects = inlineObjects;
+        this.profileId = profileId;
+        this.emphasisDotGapEm = emphasisDotGapEm;
+        this.rejectedTechnicalTiersBySpan = rejectedTechnicalTiersBySpan;
+    }
 }
 
 class WidthIndependentParagraphAnnotation {
@@ -48,11 +84,11 @@ class WidthIndependentParagraphAnnotation {
     public final roleOverrideInfos:Array<RoleOverrideInfo>;
     public final fontDecisions:Array<FontDecision>;
     public final clusterRanges:Array<ResolvedClusterRange>;
-    public final fontDecisionByRange:haxe.ds.ObjectMap<TextRange, FontDecision>;
-    public final inlineObjectByRange:haxe.ds.ObjectMap<TextRange, InlineObjectSpan>;
-    public final segmentShapingCache:haxe.ds.ObjectMap<TextRange, ShapingResult>;
-    public final substitutionRollbacks:haxe.ds.ObjectMap<TextRange, String>;
-    public final rubyFontGeometryBySpan:haxe.ds.ObjectMap<RubySpan, RubyFontGeometry>;
+    public final fontDecisionByRange:SortedMap<TextRange, FontDecision>;
+    public final inlineObjectByRange:SortedMap<TextRange, InlineObjectSpan>;
+    public final segmentShapingCache:SortedMap<TextRange, ShapingResult>;
+    public final substitutionRollbacks:SortedMap<TextRange, String>;
+    public final rubyFontGeometryBySpan:SortedMap<RubySpan, RubyFontGeometry>;
     public final baseShapingStage:ParagraphShapingStageResult;
 
     public function new(
@@ -71,11 +107,11 @@ class WidthIndependentParagraphAnnotation {
         roleOverrideInfos:Array<RoleOverrideInfo>,
         fontDecisions:Array<FontDecision>,
         clusterRanges:Array<ResolvedClusterRange>,
-        fontDecisionByRange:haxe.ds.ObjectMap<TextRange, FontDecision>,
-        inlineObjectByRange:haxe.ds.ObjectMap<TextRange, InlineObjectSpan>,
-        segmentShapingCache:haxe.ds.ObjectMap<TextRange, ShapingResult>,
-        substitutionRollbacks:haxe.ds.ObjectMap<TextRange, String>,
-        rubyFontGeometryBySpan:haxe.ds.ObjectMap<RubySpan, RubyFontGeometry>,
+        fontDecisionByRange:SortedMap<TextRange, FontDecision>,
+        inlineObjectByRange:SortedMap<TextRange, InlineObjectSpan>,
+        segmentShapingCache:SortedMap<TextRange, ShapingResult>,
+        substitutionRollbacks:SortedMap<TextRange, String>,
+        rubyFontGeometryBySpan:SortedMap<RubySpan, RubyFontGeometry>,
         baseShapingStage:ParagraphShapingStageResult
     ) {
         this.text = text;
@@ -111,11 +147,10 @@ interface WidthIndependentAnnotationCache {
 
 class LruWidthIndependentAnnotationCache implements WidthIndependentAnnotationCache {
     public final maxEntries:Int;
+    public var size(get, never):Int;
     
     public function new(maxEntries:Int = 512) {
         this.maxEntries = maxEntries;
-        // throw new haxe.exceptions.NotImplementedException("ring-r1 not-ported marker: LruWidthIndependentAnnotationCache.new");
-        // No wait, initialization should be true, wait "字段初始化器若调用未移植逻辑移入静态助手，照抄可编译则真身移植"
     }
     
     public function get(key:WidthIndependentAnnotationKey):Any {
@@ -138,7 +173,7 @@ class LruWidthIndependentAnnotationCache implements WidthIndependentAnnotationCa
 class WidthIndependentAnnotationCacheFns {
     public static function toWidthIndependentAnnotationKey(
         input:LayoutInput,
-        rejectedTechnicalTiersBySpan:haxe.ds.ObjectMap<TextRange, SortedSet<Int>>
+        ?rejectedTechnicalTiersBySpan:SortedMap<TextRange, SortedSet<ProgressiveBreakTier>>
     ):WidthIndependentAnnotationKey {
         throw new haxe.exceptions.NotImplementedException("ring-r1 not-ported marker: toWidthIndependentAnnotationKey");
     }
@@ -146,7 +181,7 @@ class WidthIndependentAnnotationCacheFns {
     public static function prepareWidthIndependentAnnotation(
         engine:ExplainableStubParagraphLayoutEngine,
         input:LayoutInput,
-        rejectedTechnicalTiersBySpan:haxe.ds.ObjectMap<TextRange, SortedSet<Int>>
+        rejectedTechnicalTiersBySpan:SortedMap<TextRange, SortedSet<ProgressiveBreakTier>>
     ):WidthIndependentParagraphAnnotation {
         throw new haxe.exceptions.NotImplementedException("ring-r1 not-ported marker: prepareWidthIndependentAnnotation");
     }
@@ -155,7 +190,7 @@ class WidthIndependentAnnotationCacheFns {
         engine:ExplainableStubParagraphLayoutEngine,
         input:LayoutInput,
         annotation:WidthIndependentParagraphAnnotation,
-        rejectedTechnicalTiersBySpan:haxe.ds.ObjectMap<TextRange, SortedSet<Int>>
+        rejectedTechnicalTiersBySpan:SortedMap<TextRange, SortedSet<ProgressiveBreakTier>>
     ):ParagraphLayoutPrep {
         throw new haxe.exceptions.NotImplementedException("ring-r1 not-ported marker: buildParagraphLayoutPrep");
     }

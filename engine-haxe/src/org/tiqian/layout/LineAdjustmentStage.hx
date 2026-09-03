@@ -1,6 +1,9 @@
 package org.tiqian.layout;
 
 import org.tiqian.core.LayoutResult;
+import org.tiqian.layout.ParagraphLayoutEngine.ExplainableStubParagraphLayoutEngine;
+import org.tiqian.layout.LineBreakPlanningStage.ParagraphLayoutPrep;
+import org.tiqian.layout.LineBreakPlanningStage.LineBreakPlanningStageResult;
 
 class LineAdjustmentStage {
     public static function finishParagraphLayout(
