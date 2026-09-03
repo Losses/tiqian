@@ -105,3 +105,6 @@ org.tiqian.layout.ParagraphDpLineBreakerCoverage2Test
 org.tiqian.layout.LookaheadLineBreakerTest
 org.tiqian.layout.LineBreakerCoverage2Test
 
+
+org.tiqian.layout.PunctuationGeometryBranchArmsCoverageTest
+org.tiqian.layout.UnicodeEmoji17RgiRoleAuditTest
