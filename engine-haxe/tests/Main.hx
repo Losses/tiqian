@@ -64,6 +64,7 @@ import org.tiqian.layout.ParagraphDpLineBreakerCoverageTest;
 import org.tiqian.layout.ParagraphDpLineBreakerCoverage2Test;
 import org.tiqian.layout.PreparedParagraphInlineEdgesTest;
 import org.tiqian.layout.GreedyLineBreakerTest;
+import org.tiqian.layout.LookaheadLineBreakerTest;
 import org.tiqian.linebreak.LineBreakCoverageTest;
 import org.tiqian.linebreak.MandatoryBreakTest;
 import org.tiqian.linebreak.UnicodePunctuationLineBreakCoverageTest;
@@ -1127,6 +1128,20 @@ class Main {
         run("retreatsBreakSoLineDoesNotEndOnOpeningMark", GreedyLineBreakerTest.retreatsBreakSoLineDoesNotEndOnOpeningMark);
         run("singleClusterFitsOnOneLine", GreedyLineBreakerTest.singleClusterFitsOnOneLine);
         TestTraceRecorder.flushClass("GreedyLineBreakerTest");
+
+        run("hangingTailIsExcludedFromFillDensityGeometry", LookaheadLineBreakerTest.hangingTailIsExcludedFromFillDensityGeometry);
+        run("hangingClustersMustBeAContiguousTrailingSuffix", LookaheadLineBreakerTest.hangingClustersMustBeAContiguousTrailingSuffix);
+        run("compatibilityHangingIndexSkipsATrailingMandatoryBreakControl", LookaheadLineBreakerTest.compatibilityHangingIndexSkipsATrailingMandatoryBreakControl);
+        run("emptyInputProducesNoLines", LookaheadLineBreakerTest.emptyInputProducesNoLines);
+        run("lookaheadMatchesGreedyWhenShiftingEarlierGivesNoBenefit", LookaheadLineBreakerTest.lookaheadMatchesGreedyWhenShiftingEarlierGivesNoBenefit);
+        run("lookaheadShiftsBreakEarlierToAvoidKinsokuRepair", LookaheadLineBreakerTest.lookaheadShiftsBreakEarlierToAvoidKinsokuRepair);
+        run("lookaheadKeepsGreedyBreakWhenPushInGlueCoversRepair", LookaheadLineBreakerTest.lookaheadKeepsGreedyBreakWhenPushInGlueCoversRepair);
+        run("lookaheadScoresFuturePushInBeforeChoosingEarlierBreak", LookaheadLineBreakerTest.lookaheadScoresFuturePushInBeforeChoosingEarlierBreak);
+        run("lookaheadFallsBackToGreedyWhenAlternativesAreWorse", LookaheadLineBreakerTest.lookaheadFallsBackToGreedyWhenAlternativesAreWorse);
+        run("lookaheadAvoidsConsecutiveSyntheticHyphenBreaks", LookaheadLineBreakerTest.lookaheadAvoidsConsecutiveSyntheticHyphenBreaks);
+        run("lookaheadScoresKinsokuRepairsWithUnbreakableRanges", LookaheadLineBreakerTest.lookaheadScoresKinsokuRepairsWithUnbreakableRanges);
+        run("windowZeroReducesLookaheadToGreedy", LookaheadLineBreakerTest.windowZeroReducesLookaheadToGreedy);
+        TestTraceRecorder.flushClass("LookaheadLineBreakerTest");
 
         run("attachedAsciiPointMarkKinsokuProtectsRuns", PunctuationGeometryStageCoverageTest.attachedAsciiPointMarkKinsokuProtectsRuns);
         run("attachedAsciiPointMarkKinsokuRejectsDetachedRuns", PunctuationGeometryStageCoverageTest.attachedAsciiPointMarkKinsokuRejectsDetachedRuns);
