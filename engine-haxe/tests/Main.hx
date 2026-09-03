@@ -65,6 +65,7 @@ import org.tiqian.layout.ParagraphDpLineBreakerCoverage2Test;
 import org.tiqian.layout.PreparedParagraphInlineEdgesTest;
 import org.tiqian.layout.GreedyLineBreakerTest;
 import org.tiqian.layout.LookaheadLineBreakerTest;
+import org.tiqian.layout.LineBreakerCoverage2Test;
 import org.tiqian.linebreak.LineBreakCoverageTest;
 import org.tiqian.linebreak.MandatoryBreakTest;
 import org.tiqian.linebreak.UnicodePunctuationLineBreakCoverageTest;
@@ -1142,6 +1143,16 @@ class Main {
         run("lookaheadScoresKinsokuRepairsWithUnbreakableRanges", LookaheadLineBreakerTest.lookaheadScoresKinsokuRepairsWithUnbreakableRanges);
         run("windowZeroReducesLookaheadToGreedy", LookaheadLineBreakerTest.windowZeroReducesLookaheadToGreedy);
         TestTraceRecorder.flushClass("LookaheadLineBreakerTest");
+        run("testLineBreakerStrategyNameDefault", LineBreakerCoverage2Test.testLineBreakerStrategyNameDefault);
+        run("testLookaheadLineBreakerPreconditions", LineBreakerCoverage2Test.testLookaheadLineBreakerPreconditions);
+        run("testLookaheadCandidateFilteringWithNonRenderingControlClusters", LineBreakerCoverage2Test.testLookaheadCandidateFilteringWithNonRenderingControlClusters);
+        run("testLookaheadHardBreakAtEndAndMiddle", LineBreakerCoverage2Test.testLookaheadHardBreakAtEndAndMiddle);
+        run("testLineCandidateEndsWithProgressiveBreak", LineBreakerCoverage2Test.testLineCandidateEndsWithProgressiveBreak);
+        run("testLineGapCount", LineBreakerCoverage2Test.testLineGapCount);
+        run("testRebuildLineEmptyRangeThrows", LineBreakerCoverage2Test.testRebuildLineEmptyRangeThrows);
+        run("testFindGreedyEndDefaultArgs", LineBreakerCoverage2Test.testFindGreedyEndDefaultArgs);
+        run("testLookaheadOrphanAndSyntheticHyphenRuns", LineBreakerCoverage2Test.testLookaheadOrphanAndSyntheticHyphenRuns);
+        TestTraceRecorder.flushClass("LineBreakerCoverage2Test");
 
         run("attachedAsciiPointMarkKinsokuProtectsRuns", PunctuationGeometryStageCoverageTest.attachedAsciiPointMarkKinsokuProtectsRuns);
         run("attachedAsciiPointMarkKinsokuRejectsDetachedRuns", PunctuationGeometryStageCoverageTest.attachedAsciiPointMarkKinsokuRejectsDetachedRuns);
