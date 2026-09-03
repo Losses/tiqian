@@ -209,7 +209,7 @@ class LookaheadLineBreaker implements LineBreaker {
         final maxStretch = maxCjkStretchPerGap == null ? Math.POSITIVE_INFINITY : maxCjkStretchPerGap;
         final sino = sinoWesternBoundaries == null ? LineBreakerLines.emptyIntSet() : sinoWesternBoundaries;
         final sinoCap = sinoWesternStretchCap == null ? 0.0 : sinoWesternStretchCap;
-        final pushIn = lineAdjustmentPushIn == null ? true : lineAdjustmentPushIn;
+        final pushIn = lineAdjustmentPushIn == null ? false : lineAdjustmentPushIn;
         final compressBias = lineAdjustmentCompressBias == null ? 1.0 : lineAdjustmentCompressBias;
         final hard = hardBreakAfterClusters == null ? LineBreakerLines.emptyIntSet() : hardBreakAfterClusters;
         final controls = nonRenderingControlClusters == null ? LineBreakerLines.emptyIntSet() : nonRenderingControlClusters;
