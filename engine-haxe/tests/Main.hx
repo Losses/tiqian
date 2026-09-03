@@ -1165,9 +1165,6 @@ class Main {
         run("endOnlyInlineBoxEmitsEdgeWithoutInlineStartField", PreparedParagraphInlineEdgesTest.endOnlyInlineBoxEmitsEdgeWithoutInlineStartField);
         run("contentWithoutInlineBoxesOmitsInlineEdgesArray", PreparedParagraphInlineEdgesTest.contentWithoutInlineBoxesOmitsInlineEdgesArray);
         TestTraceRecorder.flushClass("PreparedParagraphInlineEdgesTest");
-        if (failures > 0) {
-            Process.exit(1);
-        }
         run("rubyBaseRangeCrossingClusterBoundariesDropsOutOfPerLineExtents", org.tiqian.layout.LineGeometryDirectTailTest.rubyBaseRangeCrossingClusterBoundariesDropsOutOfPerLineExtents);
         run("rubiesOnBothLinesExerciseBothSidesOfTheOverlapTest", org.tiqian.layout.LineGeometryDirectTailTest.rubiesOnBothLinesExerciseBothSidesOfTheOverlapTest);
         run("emptyLineSolutionYieldsZeroArraysAndZeroMaxExtra", org.tiqian.layout.LineGeometryDirectTailTest.emptyLineSolutionYieldsZeroArraysAndZeroMaxExtra);
@@ -1195,5 +1192,8 @@ class Main {
         run("clusterIndexRangeFindCoveredClusters", PunctuationGeometryLedgerCoverageTest.clusterIndexRangeFindCoveredClusters);
         TestTraceRecorder.flushClass("PunctuationGeometryLedgerCoverageTest");
         Console.log("all CoreUnitsGeometryTest checks passed");
+        if (failures > 0) {
+            Process.exit(1);
+        }
     }
 }
