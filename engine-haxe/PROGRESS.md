@@ -451,3 +451,18 @@ BreakOpportunity.hx 的手写 toString 与登记注释，字段声明序 index�
 penalty、reason 即打印序，合成输出与手写体逐字节一致。验证链通过：
 compile.hxml 零错误、serial-test rc=0、35 类 tolerance 比对 35/35、
 exception-alias=300、core-kotlin 生成零错误。
+
+2026-09-02 dpbreaker 测试类收尾：ParagraphDpLineBreakerTest 10 测、
+CoverageTest 11 测、Coverage2Test 移植完成；引擎两处守卫对齐 Kotlin 原件
+（naturalClusters/adjustedClusters 对齐检查从 IllegalStateException 改为
+TiqianIllegalArgumentException 对应 require，candidateWindow 消息补句号，
+ParagraphDpLineBreaker.kt:106-108）；IntRange.hx 增忠实 toString
+（kotlin.ranges.IntRange 经 ClosedRange 显式打印 first..last，与 Rect 同为
+原件显式 override 类别）。四门：compile.hxml 零错误、serial-test rc=0、
+core-kotlin 零错误、tolerance 66 类 65 绿。仅剩 CoverageTest 9 行失配，
+全部属于两条 boring 已登记能力缺口，port 侧不得手写绕过：
+1. payload 枚举具名形态：spec 34 裁定 Name(param=value) 打印，LineOptimization.hx
+   RepairOptions 注释记录"not implemented yet"；repair=PushIn(2,...) 仍为位置形态。
+2. 集合字段打印：spec 33 只裁定 Array<T> 字段；hangingClusterIndices 的
+   SortedSet<Int> 字段打印 {\n\tkeys : []\n}，Kotlin Set 应印 [a, b]。
+两条缺口并入 boring 替换阻塞队列，落地后删除测试支撑里的临时渲染。
