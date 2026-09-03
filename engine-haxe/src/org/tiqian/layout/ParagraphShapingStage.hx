@@ -58,7 +58,7 @@ import std.SortedMap;
         this.breakOpportunityDecisions = breakOpportunityDecisions;
         this.emergencyTrackingEligibilityDecisions = emergencyTrackingEligibilityDecisions;
         this.progressiveBreakOffsets = progressiveBreakOffsets;
-        this.segmentShapingCache = segmentShapingCache != null ? segmentShapingCache : SortedMap.builder().build();
+        this.segmentShapingCache = segmentShapingCache == null ? SortedMap.builder().build() : segmentShapingCache;
     }
 }
 
@@ -72,27 +72,27 @@ class ParagraphShapingStage {
     public static inline final LATIN_OPAQUE_TOKEN_MIN_LENGTH:Int = 24;
     public static inline final EMERGENCY_TRACKING_TOKEN_MIN_LENGTH:Int = 12;
 
-    public static inline function isDigit(c:Int):Bool {
+    public static function isDigit(c:Int):Bool {
         return c >= 48 && c <= 57;
     }
 
-    public static inline function isLetter(c:Int):Bool {
+    public static function isLetter(c:Int):Bool {
         return (c >= 65 && c <= 90) || (c >= 97 && c <= 122) || (UnicodeWordCharacterData.contains(c) && !isDigit(c));
     }
 
-    public static inline function isLetterOrDigit(c:Int):Bool {
+    public static function isLetterOrDigit(c:Int):Bool {
         return (c >= 48 && c <= 57) || (c >= 65 && c <= 90) || (c >= 97 && c <= 122) || UnicodeWordCharacterData.contains(c);
     }
 
-    public static inline function isUpperCase(c:Int):Bool {
+    public static function isUpperCase(c:Int):Bool {
         return c >= 65 && c <= 90;
     }
 
-    public static inline function isLowerCase(c:Int):Bool {
+    public static function isLowerCase(c:Int):Bool {
         return c >= 97 && c <= 122;
     }
 
-    public static inline function isWhitespace(c:Int):Bool {
+    public static function isWhitespace(c:Int):Bool {
         return (c >= 0x0009 && c <= 0x000D) || c == 0x0020 || c == 0x00A0 || c == 0x1680
             || (c >= 0x2000 && c <= 0x200A) || c == 0x2028 || c == 0x2029 || c == 0x202F || c == 0x205F || c == 0x3000;
     }
@@ -106,11 +106,11 @@ class ParagraphShapingStage {
         return true;
     }
 
-    public static inline function isSharedCurlyQuote(c:Int):Bool {
+    public static function isSharedCurlyQuote(c:Int):Bool {
         return c == 0x2018 || c == 0x2019 || c == 0x201C || c == 0x201D;
     }
 
-    public static inline function isProgressiveTechnicalBreakAfterChar(c:Int):Bool {
+    public static function isProgressiveTechnicalBreakAfterChar(c:Int):Bool {
         return c == 47 || c == 92 || c == 46 || c == 45 || c == 95 || c == 58 || c == 59 || c == 44
             || c == 63 || c == 38 || c == 61 || c == 35 || c == 37 || c == 126 || c == 43 || c == 42
             || c == 124 || c == 41 || c == 93 || c == 125;
@@ -131,14 +131,12 @@ class ParagraphShapingStage {
     }
 
     public static function tierName(tier:ProgressiveBreakTier):String {
-        return switch (tier) {
-            case ProgressiveBreakTier.Whitespace: "Whitespace";
-            case ProgressiveBreakTier.Structural: "Structural";
-            case ProgressiveBreakTier.Syllable: "Syllable";
-            case ProgressiveBreakTier.WholeToken: "WholeToken";
-            case ProgressiveBreakTier.Emergency: "Emergency";
-            default: "Unknown";
-        };
+        if (tier == ProgressiveBreakTier.Whitespace) return "Whitespace";
+        if (tier == ProgressiveBreakTier.Structural) return "Structural";
+        if (tier == ProgressiveBreakTier.Syllable) return "Syllable";
+        if (tier == ProgressiveBreakTier.WholeToken) return "WholeToken";
+        if (tier == ProgressiveBreakTier.Emergency) return "Emergency";
+        return "Unknown";
     }
 
     public static function cjkPunctuationFullWidthFeatures(role:FontRole, displayText:String):Array<String> {
@@ -420,15 +418,15 @@ class ParagraphShapingStage {
         return result;
     }
 
-    public static inline function isMandatoryBreakCluster(cluster:Cluster):Bool {
+    public static function isMandatoryBreakCluster(cluster:Cluster):Bool {
         return cluster.fontKey == ParagraphLayoutEngineFns.MANDATORY_BREAK_FONT_KEY && cluster.displayText.length == 0;
     }
 
-    public static inline function isZeroWidthSoftBreakCluster(cluster:Cluster):Bool {
+    public static function isZeroWidthSoftBreakCluster(cluster:Cluster):Bool {
         return cluster.fontKey == ZERO_WIDTH_SOFT_BREAK_FONT_KEY && cluster.displayText.length == 0;
     }
 
-    public static inline function isInlineObjectCluster(cluster:Cluster):Bool {
+    public static function isInlineObjectCluster(cluster:Cluster):Bool {
         return cluster.fontKey == INLINE_OBJECT_FONT_KEY;
     }
 
@@ -479,7 +477,7 @@ class ParagraphShapingStage {
         punctuationGlyphSubstitutor:ClreqPunctuationGlyphSubstitutor,
         styleAt:Int->TextStyle,
         emphasisItalicAt:Int->Bool,
-        rejectedTechnicalTiersBySpan:SortedMap<TextRange, SortedSet<ProgressiveBreakTier>>,
+        rejectedTechnicalTiersBySpan:SortedMap<TextRange, SortedSet<Int>>,
         ?cachedSegmentShaping:SortedMap<TextRange, ShapingResult>,
         ?cachedSubstitutionRollbacks:SortedMap<TextRange, String>
     ):ParagraphShapingStageResult {
@@ -1145,15 +1143,11 @@ class ParagraphShapingStage {
                         registerEmergencyTrackingEligibility(progressiveSpan.range, reason);
                     }
 
-                    final tierList = [
-                        {tier: ProgressiveBreakTier.Structural, offsets: technicalStructuralCuts},
-                        {tier: ProgressiveBreakTier.Syllable, offsets: technicalSyllableCuts},
-                        {tier: ProgressiveBreakTier.Emergency, offsets: technicalEmergencyCuts}
-                    ];
-                    for (tIdx in 0...tierList.length) {
-                        final item = tierList[tIdx];
-                        final tier = item.tier;
-                        final offsets = item.offsets;
+                    final tierArrays = [technicalStructuralCuts, technicalSyllableCuts, technicalEmergencyCuts];
+                    final tierTypes = [ProgressiveBreakTier.Structural, ProgressiveBreakTier.Syllable, ProgressiveBreakTier.Emergency];
+                    for (tIdx in 0...3) {
+                        final tier = tierTypes[tIdx];
+                        final offsets = tierArrays[tIdx];
                         final rej = getRejectedTiers(progressiveSpan.range);
                         if (rej != null && rej.has(tier)) {
                             continue;

@@ -82,7 +82,7 @@ import std.SortedMap;
     public final inlineObjects:std.ReadOnlyArray<InlineObjectSpan>;
     public final profileId:LayoutProfileId;
     public final emphasisDotGapEm:Float;
-    public final rejectedTechnicalTiersBySpan:SortedMap<TextRange, SortedSet<ProgressiveBreakTier>>;
+    public final rejectedTechnicalTiersBySpan:SortedMap<TextRange, SortedSet<Int>>;
 
     public function new(
         text:String,
@@ -96,7 +96,7 @@ import std.SortedMap;
         inlineObjects:std.ReadOnlyArray<InlineObjectSpan>,
         profileId:LayoutProfileId,
         emphasisDotGapEm:Float,
-        rejectedTechnicalTiersBySpan:SortedMap<TextRange, SortedSet<ProgressiveBreakTier>>
+        rejectedTechnicalTiersBySpan:SortedMap<TextRange, SortedSet<Int>>
     ) {
         this.text = text;
         this.spans = spans;
@@ -184,8 +184,8 @@ class WidthIndependentParagraphAnnotation {
 }
 
 interface WidthIndependentAnnotationCache {
-    function get(key:WidthIndependentAnnotationKey):Any;
-    function put(key:WidthIndependentAnnotationKey, annotation:Any):Void;
+    function get(key:WidthIndependentAnnotationKey):Null<WidthIndependentParagraphAnnotation>;
+    function put(key:WidthIndependentAnnotationKey, annotation:WidthIndependentParagraphAnnotation):Void;
     function clear():Void;
     public var size(get, never):Int;
 }
@@ -193,7 +193,7 @@ interface WidthIndependentAnnotationCache {
 class LruWidthIndependentAnnotationCache implements WidthIndependentAnnotationCache {
     public final maxEntries:Int;
     private final keys:Array<WidthIndependentAnnotationKey> = [];
-    private final values:Array<Any> = [];
+    private final values:Array<WidthIndependentParagraphAnnotation> = [];
 
     public var size(get, never):Int;
 
@@ -219,7 +219,7 @@ class LruWidthIndependentAnnotationCache implements WidthIndependentAnnotationCa
         return true;
     }
 
-    public function get(key:WidthIndependentAnnotationKey):Any {
+    public function get(key:WidthIndependentAnnotationKey):Null<WidthIndependentParagraphAnnotation> {
         var foundIndex = -1;
         for (i in 0...keys.length) {
             if (keyEquals(keys[i], key)) {
@@ -237,7 +237,7 @@ class LruWidthIndependentAnnotationCache implements WidthIndependentAnnotationCa
         return v;
     }
 
-    public function put(key:WidthIndependentAnnotationKey, annotation:Any):Void {
+    public function put(key:WidthIndependentAnnotationKey, annotation:WidthIndependentParagraphAnnotation):Void {
         var foundIndex = -1;
         for (i in 0...keys.length) {
             if (keyEquals(keys[i], key)) {
@@ -285,11 +285,11 @@ class WidthIndependentAnnotationCacheFns {
         return result;
     }
 
-    private static inline function isFixedBoundary(b:InlineObjectBoundaryAdjustment):Bool {
+    private static function isFixedBoundary(b:InlineObjectBoundaryAdjustment):Bool {
         return !b.participatesInUniformStretch && b.preferredStretch == null && b.shrinkCapacity == 0.0 && b.lineEndDiscardableAdvance == 0.0 && !b.preventsLineBreak;
     }
 
-    public static inline function isContainedIn(r:TextRange, other:TextRange):Bool {
+    public static function isContainedIn(r:TextRange, other:TextRange):Bool {
         return r.start >= other.start && r.end <= other.end;
     }
 
@@ -377,7 +377,7 @@ class WidthIndependentAnnotationCacheFns {
 
     public static function toWidthIndependentAnnotationKey(
         input:LayoutInput,
-        ?rejectedTechnicalTiersBySpan:SortedMap<TextRange, SortedSet<ProgressiveBreakTier>>
+        ?rejectedTechnicalTiersBySpan:SortedMap<TextRange, SortedSet<Int>>
     ):WidthIndependentAnnotationKey {
         final tiers = rejectedTechnicalTiersBySpan != null
             ? rejectedTechnicalTiersBySpan
@@ -398,18 +398,18 @@ class WidthIndependentAnnotationCacheFns {
         );
     }
 
-    private static inline function clampInt(val:Int, min:Int, max:Int):Int {
+    private static function clampInt(val:Int, min:Int, max:Int):Int {
         return val < min ? min : (val > max ? max : val);
     }
 
-    private static inline function isInlineStop(code:Int):Bool {
+    private static function isInlineStop(code:Int):Bool {
         return code == 0x3002 || code == 0xFF01 || code == 0xFF1F || code == 0xFF0E;
     }
 
     public static function prepareWidthIndependentAnnotation(
         engine:ExplainableStubParagraphLayoutEngine,
         input:LayoutInput,
-        rejectedTechnicalTiersBySpan:SortedMap<TextRange, SortedSet<ProgressiveBreakTier>>
+        rejectedTechnicalTiersBySpan:SortedMap<TextRange, SortedSet<Int>>
     ):WidthIndependentParagraphAnnotation {
         final text = input.content.text;
         final fontSize = input.textStyle.fontSize;
@@ -524,11 +524,9 @@ class WidthIndependentAnnotationCacheFns {
             engine.fontRoleClassifier,
             context
         );
-        final quoteAwareClassifier:FontRoleClassifier = if (quoteRoleOverrides.size() > 0) {
-            new QuotePairAwareFontRoleClassifier(engine.fontRoleClassifier, quoteRoleOverrides);
-        } else {
-            engine.fontRoleClassifier;
-        };
+        final quoteAwareClassifier:FontRoleClassifier = quoteRoleOverrides.size() > 0
+            ? new QuotePairAwareFontRoleClassifier(engine.fontRoleClassifier, quoteRoleOverrides)
+            : engine.fontRoleClassifier;
 
         final dashEllipsisRoleDecisions = new ContextualDashEllipsisRoleResolver().resolve(text, context);
         final dashEllipsisRoleOverrideInfos = ContextualDashEllipsisRoles.toRoleOverrideInfos(
@@ -537,11 +535,9 @@ class WidthIndependentAnnotationCacheFns {
             quoteAwareClassifier,
             context
         );
-        final effectiveClassifier:FontRoleClassifier = if (dashEllipsisRoleDecisions.length > 0) {
-            new ContextualDashEllipsisAwareFontRoleClassifier(quoteAwareClassifier, dashEllipsisRoleDecisions);
-        } else {
-            quoteAwareClassifier;
-        };
+        final effectiveClassifier:FontRoleClassifier = dashEllipsisRoleDecisions.length > 0
+            ? new ContextualDashEllipsisAwareFontRoleClassifier(quoteAwareClassifier, dashEllipsisRoleDecisions)
+            : quoteAwareClassifier;
 
         final inlineObjectByStartBuilder = SortedMap.builder();
         for (i in 0...input.inlineObjects.length) {
@@ -648,10 +644,9 @@ class WidthIndependentAnnotationCacheFns {
             );
             final declaredAscent = raw.typoAscent != null ? raw.typoAscent : raw.ascent;
             final declaredDescent = raw.typoDescent != null ? raw.typoDescent : raw.descent;
-            final shaped = if (ruby.text.length == 0) {
-                null;
-            } else {
-                engine.textShaper.shape(
+            var shaped:Null<ShapingResult> = null;
+            if (ruby.text.length > 0) {
+                shaped = engine.textShaper.shape(
                     new ShapingInput(
                         ruby.text,
                         new TextRange(0, ruby.text.length),
@@ -668,7 +663,7 @@ class WidthIndependentAnnotationCacheFns {
                         ruby.text
                     )
                 );
-            };
+            }
             var rubyWidth = 0.0;
             final glyphList = new Array<Glyph>();
             if (shaped != null) {
@@ -731,24 +726,34 @@ class WidthIndependentAnnotationCacheFns {
             acc += natural[i].advance;
         }
 
-        final measures = new Array<{firstCluster:Int, centerNatural:Float, rw:Float}>();
+        final measuresFirstCluster = new Array<Int>();
+        final measuresCenter = new Array<Float>();
+        final measuresRw = new Array<Float>();
         for (i in 0...pinyinSpans.length) {
             final ruby = pinyinSpans[i];
             final idxRange = PunctuationGeometryLedger.clusterIndexRangeFor(natural, ruby.baseRange);
             if (idxRange == null) continue;
             final center = (leftX[idxRange.start] + leftX[idxRange.end] + natural[idxRange.end].advance) / 2.0;
             final geom = rubyFontGeometryBySpan.get(ruby);
-            measures.push({firstCluster: idxRange.start, centerNatural: center, rw: geom.width});
+            measuresFirstCluster.push(idxRange.start);
+            measuresCenter.push(center);
+            measuresRw.push(geom.width);
         }
         var mIdx = 1;
-        while (mIdx < measures.length) {
-            final curr = measures[mIdx];
+        while (mIdx < measuresFirstCluster.length) {
+            final currFc = measuresFirstCluster[mIdx];
+            final currCenter = measuresCenter[mIdx];
+            final currRw = measuresRw[mIdx];
             var j = mIdx - 1;
-            while (j >= 0 && measures[j].firstCluster > curr.firstCluster) {
-                measures[j + 1] = measures[j];
+            while (j >= 0 && measuresFirstCluster[j] > currFc) {
+                measuresFirstCluster[j + 1] = measuresFirstCluster[j];
+                measuresCenter[j + 1] = measuresCenter[j];
+                measuresRw[j + 1] = measuresRw[j];
                 j--;
             }
-            measures[j + 1] = curr;
+            measuresFirstCluster[j + 1] = currFc;
+            measuresCenter[j + 1] = currCenter;
+            measuresRw[j + 1] = currRw;
             mIdx++;
         }
 
@@ -774,17 +779,18 @@ class WidthIndependentAnnotationCacheFns {
 
         var shift = 0.0;
         var prevRight = -1e9;
-        for (m in 0...measures.length) {
-            final item = measures[m];
-            var center = item.centerNatural + shift;
-            final needed = prevRight + wordSpace - (center - item.rw / 2.0);
-            if (needed > 0.0 && item.firstCluster > 0) {
-                final key = item.firstCluster - 1;
+        for (m in 0...measuresFirstCluster.length) {
+            final firstCluster = measuresFirstCluster[m];
+            final rw = measuresRw[m];
+            var center = measuresCenter[m] + shift;
+            final needed = prevRight + wordSpace - (center - rw / 2.0);
+            if (needed > 0.0 && firstCluster > 0) {
+                final key = firstCluster - 1;
                 putSpread(key, getSpread(key) + needed);
                 shift += needed;
                 center += needed;
             }
-            prevRight = center + item.rw / 2.0;
+            prevRight = center + rw / 2.0;
         }
         for (i in 0...spreadKeys.length) {
             spreadBuilder.put(spreadKeys[i], spreadValues[i]);
@@ -837,7 +843,7 @@ class WidthIndependentAnnotationCacheFns {
         engine:ExplainableStubParagraphLayoutEngine,
         input:LayoutInput,
         annotation:WidthIndependentParagraphAnnotation,
-        rejectedTechnicalTiersBySpan:SortedMap<TextRange, SortedSet<ProgressiveBreakTier>>
+        rejectedTechnicalTiersBySpan:SortedMap<TextRange, SortedSet<Int>>
     ):ParagraphLayoutPrep {
         final text = annotation.text;
         final fontSize = input.textStyle.fontSize;
@@ -846,24 +852,21 @@ class WidthIndependentAnnotationCacheFns {
         var gridCells = Math.floor(containerWidth / fontSize);
         if (gridCells < 1) gridCells = 1;
         final gridCellsInt = Std.int(gridCells);
-        final measure = if (grid.enabled) {
-            var m = gridCellsInt * fontSize;
-            if (m > containerWidth) m = containerWidth;
-            m;
-        } else {
-            containerWidth;
-        };
+        var measure = containerWidth;
+        if (grid.enabled) {
+            measure = gridCellsInt * fontSize;
+            if (measure > containerWidth) measure = containerWidth;
+        }
         final gridSlack = containerWidth - measure;
         final gridBodyAlignment = grid.bodyAlignment != null ? grid.bodyAlignment : input.paragraphStyle.lastLineAlignment;
-        final gridBodyOffset = if (!grid.enabled) {
-            0.0;
-        } else {
-            switch (gridBodyAlignment) {
-                case LastLineAlignment.Start: 0.0;
-                case LastLineAlignment.Center: gridSlack / 2.0;
-                case LastLineAlignment.End: gridSlack;
+        var gridBodyOffset = 0.0;
+        if (grid.enabled) {
+            if (gridBodyAlignment == LastLineAlignment.Center) {
+                gridBodyOffset = gridSlack / 2.0;
+            } else if (gridBodyAlignment == LastLineAlignment.End) {
+                gridBodyOffset = gridSlack;
             }
-        };
+        }
         final lineLengthGridDecision = new LineLengthGridDecisionInfo(
             grid.enabled,
             containerWidth,
@@ -899,8 +902,9 @@ class WidthIndependentAnnotationCacheFns {
         final needsDynamicShaping = (rejectedTechnicalTiersBySpan != null && rejectedTechnicalTiersBySpan.size() > 0) ||
             hasProgSpan || hasOverMeasureToken;
 
-        final shapingStage = if (needsDynamicShaping) {
-            ParagraphShapingStage.shapeParagraph(
+        var shapingStage = annotation.baseShapingStage;
+        if (needsDynamicShaping) {
+            shapingStage = ParagraphShapingStage.shapeParagraph(
                 engine,
                 input,
                 text,
@@ -924,9 +928,7 @@ class WidthIndependentAnnotationCacheFns {
                 annotation.segmentShapingCache,
                 annotation.substitutionRollbacks
             );
-        } else {
-            annotation.baseShapingStage;
-        };
+        }
 
         final shapingResults = shapingStage.shapingResults;
         final rawNaturalClusters = new Array<Cluster>();
@@ -1051,9 +1053,8 @@ class WidthIndependentAnnotationCacheFns {
             return false;
         }
 
-        final eastAsianSpacingEdges = if (verbatimRanges.length == 0) {
-            resolvedSpacingEdges;
-        } else {
+        var eastAsianSpacingEdges = resolvedSpacingEdges;
+        if (verbatimRanges.length > 0) {
             final list = new Array<EastAsianSpacingEdges>();
             for (index in 0...resolvedSpacingEdges.length) {
                 final edges = resolvedSpacingEdges[index];
@@ -1070,8 +1071,8 @@ class WidthIndependentAnnotationCacheFns {
                     ));
                 }
             }
-            list;
-        };
+            eastAsianSpacingEdges = list;
+        }
 
         final verbatimSuppressionDecisions = new Array<AutoSpaceDecisionInfo>();
         if (verbatimRanges.length > 0) {
@@ -1117,23 +1118,25 @@ class WidthIndependentAnnotationCacheFns {
         final naturalClusters = inlineBoxResult.clusters;
 
         final inlineObjectByClusterIndexBuilder = SortedMap.builder();
-        final inlineObjectBoundaryAfterClusters = new Array<{idx:Int, adj:InlineObjectBoundaryAdjustment}>();
+        final boundaryIndices = new Array<Int>();
+        final boundaryAdjustments = new Array<InlineObjectBoundaryAdjustment>();
 
         function getRegisteredBoundary(leftClusterIndex:Int):Null<InlineObjectBoundaryAdjustment> {
-            for (i in 0...inlineObjectBoundaryAfterClusters.length) {
-                if (inlineObjectBoundaryAfterClusters[i].idx == leftClusterIndex) return inlineObjectBoundaryAfterClusters[i].adj;
+            for (i in 0...boundaryIndices.length) {
+                if (boundaryIndices[i] == leftClusterIndex) return boundaryAdjustments[i];
             }
             return null;
         }
 
         function setRegisteredBoundary(leftClusterIndex:Int, boundary:InlineObjectBoundaryAdjustment):Void {
-            for (i in 0...inlineObjectBoundaryAfterClusters.length) {
-                if (inlineObjectBoundaryAfterClusters[i].idx == leftClusterIndex) {
-                    inlineObjectBoundaryAfterClusters[i] = {idx: leftClusterIndex, adj: boundary};
+            for (i in 0...boundaryIndices.length) {
+                if (boundaryIndices[i] == leftClusterIndex) {
+                    boundaryAdjustments[i] = boundary;
                     return;
                 }
             }
-            inlineObjectBoundaryAfterClusters.push({idx: leftClusterIndex, adj: boundary});
+            boundaryIndices.push(leftClusterIndex);
+            boundaryAdjustments.push(boundary);
         }
 
         function registerInlineObjectBoundary(leftClusterIndex:Int, boundary:InlineObjectBoundaryAdjustment):Void {
@@ -1183,16 +1186,17 @@ class WidthIndependentAnnotationCacheFns {
         final preferredInlineObjectBoundaryBuilder = SortedMap.builder();
         final inlineObjectBoundaryUnbreakableRanges = new Array<IntRange>();
 
-        for (i in 0...inlineObjectBoundaryAfterClusters.length) {
-            final item = inlineObjectBoundaryAfterClusters[i];
-            if (item.adj.participatesInUniformStretch) {
-                uniformInlineObjectBoundaryBuilder.put(item.idx);
+        for (i in 0...boundaryIndices.length) {
+            final bIdx = boundaryIndices[i];
+            final bAdj = boundaryAdjustments[i];
+            if (bAdj.participatesInUniformStretch) {
+                uniformInlineObjectBoundaryBuilder.put(bIdx);
             }
-            if (item.adj.preferredStretch != null) {
-                preferredInlineObjectBoundaryBuilder.put(item.idx, item.adj.preferredStretch);
+            if (bAdj.preferredStretch != null) {
+                preferredInlineObjectBoundaryBuilder.put(bIdx, bAdj.preferredStretch);
             }
-            if (item.adj.preventsLineBreak) {
-                inlineObjectBoundaryUnbreakableRanges.push(new IntRange(item.idx, item.idx + 1));
+            if (bAdj.preventsLineBreak) {
+                inlineObjectBoundaryUnbreakableRanges.push(new IntRange(bIdx, bIdx + 1));
             }
         }
         final uniformInlineObjectBoundaryAfterClusters = uniformInlineObjectBoundaryBuilder.build();
@@ -1315,9 +1319,8 @@ class WidthIndependentAnnotationCacheFns {
             if (rs.kind == RubyKind.Bopomofo) bopomofoSpans.push(rs);
         }
 
-        final rubyAndBopomofoSpread = if (bopomofoSpans.length == 0) {
-            rubySpread;
-        } else {
+        var rubyAndBopomofoSpread = rubySpread;
+        if (bopomofoSpans.length > 0) {
             final mergedBuilder = SortedMap.builder();
             final mergedKeys = new Array<Int>();
             final mergedVals = new Array<Float>();
@@ -1346,8 +1349,8 @@ class WidthIndependentAnnotationCacheFns {
             for (i in 0...mergedKeys.length) {
                 mergedBuilder.put(mergedKeys[i], mergedVals[i]);
             }
-            mergedBuilder.build();
-        };
+            rubyAndBopomofoSpread = mergedBuilder.build();
+        }
 
         final adjustmentStyle = annotation.clreqProfile.adjustment;
 
