@@ -51,7 +51,7 @@ import org.tiqian.layout.ParagraphLayoutEngine.ExplainableStubParagraphLayoutEng
 
 @:dataClass class ParagraphLayoutPrep {
     public final input:LayoutInput;
-    public final rejectedTechnicalTiersBySpan:haxe.ds.ObjectMap<TextRange, std.SortedSet<ProgressiveBreakTier>>;
+    public final rejectedTechnicalTiersBySpan:std.SortedMap<TextRange, std.SortedSet<ProgressiveBreakTier>>;
     public final text:String;
     public final fontSize:Float;
     public final styleAt:Int->TextStyle;
@@ -73,12 +73,12 @@ import org.tiqian.layout.ParagraphLayoutEngine.ExplainableStubParagraphLayoutEng
     public final hyphenOffsets:std.SortedSet<Int>;
     public final hyphenAdvance:Float;
     public final hyphenGlyphs:Array<Glyph>;
-    public final substitutionRollbacks:haxe.ds.ObjectMap<TextRange, String>;
+    public final substitutionRollbacks:std.SortedMap<TextRange, String>;
     public final breakOpportunityDecisions:Array<BreakOpportunityDecisionInfo>;
     public final emergencyTrackingEligibilityDecisions:Array<EmergencyTrackingEligibilityDecisionInfo>;
     public final progressiveBreakOffsets:std.SortedMap<Int, ProgressiveBreakOpportunity>;
-    public final shapedGlyphsByClusterRange:haxe.ds.ObjectMap<TextRange, Array<Glyph>>;
-    public final openTypeFeaturesByClusterRange:haxe.ds.ObjectMap<TextRange, Array<String>>;
+    public final shapedGlyphsByClusterRange:std.SortedMap<TextRange, Array<Glyph>>;
+    public final openTypeFeaturesByClusterRange:std.SortedMap<TextRange, Array<String>>;
     public final shapingDecisions:Array<ShapingDecisionInfo>;
     public final eastAsianSpacingEdges:Array<EastAsianSpacingEdges>;
     public final autoSpaceDecisions:Array<AutoSpaceDecisionInfo>;
@@ -101,7 +101,7 @@ import org.tiqian.layout.ParagraphLayoutEngine.ExplainableStubParagraphLayoutEng
     public final zeroWidthBreakDecisions:Array<ZeroWidthBreakDecisionInfo>;
     public final punctuationAtoms:Array<PunctuationAtom>;
     public final spacingPlan:PunctuationSpacingCompressionResult;
-    public final rubyFontGeometryBySpan:haxe.ds.ObjectMap<RubySpan, RubyFontGeometry>;
+    public final rubyFontGeometryBySpan:std.SortedMap<RubySpan, RubyFontGeometry>;
     public final rubyAndBopomofoSpread:std.SortedMap<Int, Float>;
     public final naturalInlineAttachments:Array<InlineAttachment>;
     public final attachedPunctuationBoundary:AttachedInlinePunctuationBoundaryResult;
@@ -109,13 +109,13 @@ import org.tiqian.layout.ParagraphLayoutEngine.ExplainableStubParagraphLayoutEng
     public final attachedPunctuationTrailingGlueByCluster:std.SortedMap<Int, Float>;
     public final clusters:Array<Cluster>;
     public final adjustmentStyle:AdjustmentStylePolicy;
-    public final atomClassByRange:haxe.ds.ObjectMap<TextRange, PunctuationClass>;
+    public final atomClassByRange:std.SortedMap<TextRange, PunctuationClass>;
     public final shrinkOpportunities:Array<ShrinkOpportunity>;
 
     public function new(
         
         input:LayoutInput,
-        rejectedTechnicalTiersBySpan:haxe.ds.ObjectMap<TextRange, std.SortedSet<ProgressiveBreakTier>>,
+        rejectedTechnicalTiersBySpan:std.SortedMap<TextRange, std.SortedSet<ProgressiveBreakTier>>,
         text:String,
         fontSize:Float,
         styleAt:Int->TextStyle,
@@ -137,12 +137,12 @@ import org.tiqian.layout.ParagraphLayoutEngine.ExplainableStubParagraphLayoutEng
         hyphenOffsets:std.SortedSet<Int>,
         hyphenAdvance:Float,
         hyphenGlyphs:Array<Glyph>,
-        substitutionRollbacks:haxe.ds.ObjectMap<TextRange, String>,
+        substitutionRollbacks:std.SortedMap<TextRange, String>,
         breakOpportunityDecisions:Array<BreakOpportunityDecisionInfo>,
         emergencyTrackingEligibilityDecisions:Array<EmergencyTrackingEligibilityDecisionInfo>,
         progressiveBreakOffsets:std.SortedMap<Int, ProgressiveBreakOpportunity>,
-        shapedGlyphsByClusterRange:haxe.ds.ObjectMap<TextRange, Array<Glyph>>,
-        openTypeFeaturesByClusterRange:haxe.ds.ObjectMap<TextRange, Array<String>>,
+        shapedGlyphsByClusterRange:std.SortedMap<TextRange, Array<Glyph>>,
+        openTypeFeaturesByClusterRange:std.SortedMap<TextRange, Array<String>>,
         shapingDecisions:Array<ShapingDecisionInfo>,
         eastAsianSpacingEdges:Array<EastAsianSpacingEdges>,
         autoSpaceDecisions:Array<AutoSpaceDecisionInfo>,
@@ -165,7 +165,7 @@ import org.tiqian.layout.ParagraphLayoutEngine.ExplainableStubParagraphLayoutEng
         zeroWidthBreakDecisions:Array<ZeroWidthBreakDecisionInfo>,
         punctuationAtoms:Array<PunctuationAtom>,
         spacingPlan:PunctuationSpacingCompressionResult,
-        rubyFontGeometryBySpan:haxe.ds.ObjectMap<RubySpan, RubyFontGeometry>,
+        rubyFontGeometryBySpan:std.SortedMap<RubySpan, RubyFontGeometry>,
         rubyAndBopomofoSpread:std.SortedMap<Int, Float>,
         naturalInlineAttachments:Array<InlineAttachment>,
         attachedPunctuationBoundary:AttachedInlinePunctuationBoundaryResult,
@@ -173,7 +173,7 @@ import org.tiqian.layout.ParagraphLayoutEngine.ExplainableStubParagraphLayoutEng
         attachedPunctuationTrailingGlueByCluster:std.SortedMap<Int, Float>,
         clusters:Array<Cluster>,
         adjustmentStyle:AdjustmentStylePolicy,
-        atomClassByRange:haxe.ds.ObjectMap<TextRange, PunctuationClass>,
+        atomClassByRange:std.SortedMap<TextRange, PunctuationClass>,
         shrinkOpportunities:Array<ShrinkOpportunity>
     ) {
         this.input = input;
