@@ -59,6 +59,7 @@ import org.tiqian.layout.JustifierJfTest;
 import org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest;
 import org.tiqian.layout.PunctuationGeometryStageCoverageTest;
 import org.tiqian.layout.PreparedParagraphJsonNumberTest;
+import org.tiqian.layout.PreparedParagraphJfTest;
 import org.tiqian.layout.PreparedParagraphInlineEdgesTest;
 import org.tiqian.layout.ParagraphDpLineBreakerTest;
 import org.tiqian.layout.ParagraphDpLineBreakerCoverageTest;
@@ -1271,7 +1272,12 @@ class Main {
         run("carryPreviousRefusesToSplitUnbreakableSpan", org.tiqian.layout.PushInLineWideCapacityTest.carryPreviousRefusesToSplitUnbreakableSpan);
         TestTraceRecorder.flushClass("ProgressiveTechnicalBreakTest");
         TestTraceRecorder.flushClass("ParagraphDpTierPromotionPoolTest");
-        TestTraceRecorder.flushClass("PushInLineWideCapacityTest");
+        run("styleAtAndStyleDeltasInPreparedParagraphJson", org.tiqian.layout.PreparedParagraphJfTest.styleAtAndStyleDeltasInPreparedParagraphJson);
+        run("inlineBoxEdgesAndEmphasisDotsFilter", org.tiqian.layout.PreparedParagraphJfTest.inlineBoxEdgesAndEmphasisDotsFilter);
+        run("dashShapingDecisionWithGlyphIds", org.tiqian.layout.PreparedParagraphJfTest.dashShapingDecisionWithGlyphIds);
+        run("ecmaJsonNumberEdgeCases", org.tiqian.layout.PreparedParagraphJfTest.ecmaJsonNumberEdgeCases);
+        TestTraceRecorder.flushClass("PreparedParagraphJfTest");
+
         Console.log("all CoreUnitsGeometryTest checks passed");
         if (failures > 0) {
             Process.exit(1);
