@@ -1304,25 +1304,22 @@ class Main {
         run("carryPreviousRefusesToSplitUnbreakableSpan", org.tiqian.layout.PushInLineWideCapacityTest.carryPreviousRefusesToSplitUnbreakableSpan);
         TestTraceRecorder.flushClass("ProgressiveTechnicalBreakTest");
         TestTraceRecorder.flushClass("ParagraphDpTierPromotionPoolTest");
-        run("styleAtAndStyleDeltasInPreparedParagraphJson", org.tiqian.layout.PreparedParagraphJfTest.styleAtAndStyleDeltasInPreparedParagraphJson);
-        run("inlineBoxEdgesAndEmphasisDotsFilter", org.tiqian.layout.PreparedParagraphJfTest.inlineBoxEdgesAndEmphasisDotsFilter);
         run("dashShapingDecisionWithGlyphIds", org.tiqian.layout.PreparedParagraphJfTest.dashShapingDecisionWithGlyphIds);
         run("ecmaJsonNumberEdgeCases", org.tiqian.layout.PreparedParagraphJfTest.ecmaJsonNumberEdgeCases);
-        run("openTypeFeaturesAndRenderFontFamilyAttachPerCluster",
-            org.tiqian.layout.PreparedParagraphPlanConstructionTest.openTypeFeaturesAndRenderFontFamilyAttachPerCluster);
-        run("multiUnitClusterMarksShapingBoundary", org.tiqian.layout.PreparedParagraphPlanConstructionTest.multiUnitClusterMarksShapingBoundary);
-        run("inlineObjectCellEmitsAdvanceOverride", org.tiqian.layout.PreparedParagraphPlanConstructionTest.inlineObjectCellEmitsAdvanceOverride);
-        run("styleDeltaListsOnlyPaintFields", org.tiqian.layout.PreparedParagraphPlanConstructionTest.styleDeltaListsOnlyPaintFields);
+        run("inlineBoxEdgesAndEmphasisDotsFilter", org.tiqian.layout.PreparedParagraphJfTest.inlineBoxEdgesAndEmphasisDotsFilter);
+        run("styleAtAndStyleDeltasInPreparedParagraphJson", org.tiqian.layout.PreparedParagraphJfTest.styleAtAndStyleDeltasInPreparedParagraphJson);
+        TestTraceRecorder.flushClass("PreparedParagraphJfTest");
         run("dashClusterEmitsShapingEvidenceBlock", org.tiqian.layout.PreparedParagraphPlanConstructionTest.dashClusterEmitsShapingEvidenceBlock);
-        run("punctuationInkFloorAndLatinRoleMarkCells", org.tiqian.layout.PreparedParagraphPlanConstructionTest.punctuationInkFloorAndLatinRoleMarkCells);
-        run("zeroWidthBreakClusterSurvivesEmptyDisplayText",
-            org.tiqian.layout.PreparedParagraphPlanConstructionTest.zeroWidthBreakClusterSurvivesEmptyDisplayText);
-        run("paragraphEvidenceEmitsEverySection", org.tiqian.layout.PreparedParagraphPlanConstructionTest.paragraphEvidenceEmitsEverySection);
+        run("inlineObjectCellEmitsAdvanceOverride", org.tiqian.layout.PreparedParagraphPlanConstructionTest.inlineObjectCellEmitsAdvanceOverride);
+        run("jsonStringEscapesQuotesBackslashesAndControlCharacters", org.tiqian.layout.PreparedParagraphPlanConstructionTest.jsonStringEscapesQuotesBackslashesAndControlCharacters);
+        run("multiUnitClusterMarksShapingBoundary", org.tiqian.layout.PreparedParagraphPlanConstructionTest.multiUnitClusterMarksShapingBoundary);
         run("negativeZeroAndExponentWidthsNormalize", org.tiqian.layout.PreparedParagraphPlanConstructionTest.negativeZeroAndExponentWidthsNormalize);
-        run("jsonStringEscapesQuotesBackslashesAndControlCharacters",
-            org.tiqian.layout.PreparedParagraphPlanConstructionTest.jsonStringEscapesQuotesBackslashesAndControlCharacters);
-        run("planWithDiagnosticsListsCapabilityIssuesAndAdvanceSuspects",
-            org.tiqian.layout.PreparedParagraphPlanConstructionTest.planWithDiagnosticsListsCapabilityIssuesAndAdvanceSuspects);
+        run("openTypeFeaturesAndRenderFontFamilyAttachPerCluster", org.tiqian.layout.PreparedParagraphPlanConstructionTest.openTypeFeaturesAndRenderFontFamilyAttachPerCluster);
+        run("paragraphEvidenceEmitsEverySection", org.tiqian.layout.PreparedParagraphPlanConstructionTest.paragraphEvidenceEmitsEverySection);
+        run("planWithDiagnosticsListsCapabilityIssuesAndAdvanceSuspects", org.tiqian.layout.PreparedParagraphPlanConstructionTest.planWithDiagnosticsListsCapabilityIssuesAndAdvanceSuspects);
+        run("punctuationInkFloorAndLatinRoleMarkCells", org.tiqian.layout.PreparedParagraphPlanConstructionTest.punctuationInkFloorAndLatinRoleMarkCells);
+        run("styleDeltaListsOnlyPaintFields", org.tiqian.layout.PreparedParagraphPlanConstructionTest.styleDeltaListsOnlyPaintFields);
+        run("zeroWidthBreakClusterSurvivesEmptyDisplayText", org.tiqian.layout.PreparedParagraphPlanConstructionTest.zeroWidthBreakClusterSurvivesEmptyDisplayText);
         TestTraceRecorder.flushClass("PreparedParagraphPlanConstructionTest");
 
         run("closingPlusClosingCollapsesInnerToZero", PunctuationSpacingRuleTest.closingPlusClosingCollapsesInnerToZero);
