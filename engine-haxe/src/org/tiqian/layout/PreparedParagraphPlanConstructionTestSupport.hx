@@ -7,12 +7,14 @@ import org.tiqian.test.trace.TracedAssertions;
 
 class PreparedParagraphPlanConstructionTestSupport {
     public static function result(text:String):LayoutResult {
-        final c = [new Cluster(new TextRange(0, text.length), text, "cjk", 16 * text.length)];
-        final g = [new Glyph(1, new TextRange(0, text.length), 16 * text.length)];
-        return new LayoutResult(new LayoutInput(new TiqianTextContent(text), new TextStyle(), null, new LayoutConstraints(200)), new Size(200, 24), c,
-            [new GlyphRun(new TextRange(0, text.length), "cjk", g, 16 * text.length)], [
-                new LineBox(new TextRange(0, text.length), new IntRange(0, 0), 20, 0, 24, 16 * text.length, 16 * text.length, 16 * text.length, null, null,
-                    null, null, null, new LineDebugInfo(null))
+        final width = 480.0;
+        final advance = 16 * text.length;
+        final c = [new Cluster(new TextRange(0, text.length), text, "cjk", advance)];
+        final g = [new Glyph(1, new TextRange(0, text.length), advance)];
+        return new LayoutResult(new LayoutInput(new TiqianTextContent(text), new TextStyle(), null, new LayoutConstraints(width)), new Size(width, 24), c,
+            [new GlyphRun(new TextRange(0, text.length), "cjk", g, advance)], [
+                new LineBox(new TextRange(0, text.length), new IntRange(0, 0), 20, 0, 24, advance, advance, advance, null, null, null, null, null,
+                    new LineDebugInfo(null))
             ], new LayoutDebugInfo(null));
     }
 
