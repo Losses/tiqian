@@ -102,6 +102,14 @@ class RepairOptions {
             case LeaveRagged(_, _, _): null;
         };
 
+    public static function pushInAllocations(o:RepairOption):Null<Array<PushInAllocation>>
+        return switch (o) {
+            case PushIn(_, _, _, allocations, _, _): allocations;
+            case Hang(_, _, _): null;
+            case CarryPrevious(_, _, _, _): null;
+            case CarryNext(_, _, _): null;
+            case LeaveRagged(_, _, _): null;
+        };
 }
 
 @:dataClass
