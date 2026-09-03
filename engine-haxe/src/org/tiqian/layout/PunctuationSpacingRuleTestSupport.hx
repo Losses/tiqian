@@ -16,9 +16,11 @@ class PunctuationSpacingRuleTestSupport {
 
     public static function atom(char:String, index:Int):PunctuationAtom {
         final a = builder.build(char, new TextRange(index, index + 1), em);
-        if (a == null) throw new TiqianIllegalArgumentException(Message("atom build returned null for " + char));
+        if (a == null)
+            throw new TiqianIllegalArgumentException(Message("atom build returned null for " + char));
         final polClass = ClreqPunctuationPolicies.classify(char);
-        if (polClass == PunctuationClass.Other) throw new TiqianIllegalArgumentException(Message("unexpected punctuation class for " + char));
+        if (polClass == PunctuationClass.Other)
+            throw new TiqianIllegalArgumentException(Message("unexpected punctuation class for " + char));
         return a;
     }
 }
