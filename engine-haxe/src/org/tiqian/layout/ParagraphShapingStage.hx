@@ -39,17 +39,10 @@ import std.SortedMap;
     public final progressiveBreakOffsets:SortedMap<Int, ProgressiveBreakOpportunity>;
     public final segmentShapingCache:SortedMap<TextRange, ShapingResult>;
 
-    public function new(
-        shapingResults:Array<ShapingResult>,
-        hyphenOffsets:SortedSet<Int>,
-        hyphenAdvance:Float,
-        hyphenGlyphs:Array<Glyph>,
-        substitutionRollbacks:SortedMap<TextRange, String>,
-        breakOpportunityDecisions:Array<BreakOpportunityDecisionInfo>,
-        emergencyTrackingEligibilityDecisions:Array<EmergencyTrackingEligibilityDecisionInfo>,
-        progressiveBreakOffsets:SortedMap<Int, ProgressiveBreakOpportunity>,
-        ?segmentShapingCache:SortedMap<TextRange, ShapingResult>
-    ) {
+    public function new(shapingResults:Array<ShapingResult>, hyphenOffsets:SortedSet<Int>, hyphenAdvance:Float, hyphenGlyphs:Array<Glyph>,
+            substitutionRollbacks:SortedMap<TextRange, String>, breakOpportunityDecisions:Array<BreakOpportunityDecisionInfo>,
+            emergencyTrackingEligibilityDecisions:Array<EmergencyTrackingEligibilityDecisionInfo>,
+            progressiveBreakOffsets:SortedMap<Int, ProgressiveBreakOpportunity>, ?segmentShapingCache:SortedMap<TextRange, ShapingResult>) {
         this.shapingResults = shapingResults;
         this.hyphenOffsets = hyphenOffsets;
         this.hyphenAdvance = hyphenAdvance;
@@ -93,15 +86,17 @@ class ParagraphShapingStage {
     }
 
     public static function isWhitespace(c:Int):Bool {
-        return (c >= 0x0009 && c <= 0x000D) || c == 0x0020 || c == 0x00A0 || c == 0x1680
-            || (c >= 0x2000 && c <= 0x200A) || c == 0x2028 || c == 0x2029 || c == 0x202F || c == 0x205F || c == 0x3000;
+        return (c >= 0x0009 && c <= 0x000D) || c == 0x0020 || c == 0x00A0 || c == 0x1680 || (c >= 0x2000 && c <= 0x200A) || c == 0x2028 || c == 0x2029
+            || c == 0x202F || c == 0x205F || c == 0x3000;
     }
 
     public static function isAllDigits(s:String):Bool {
-        if (s.length == 0) return false;
+        if (s.length == 0)
+            return false;
         for (i in 0...s.length) {
             final c = s.charCodeAt(i);
-            if (c < 48 || c > 57) return false;
+            if (c < 48 || c > 57)
+                return false;
         }
         return true;
     }
@@ -111,9 +106,8 @@ class ParagraphShapingStage {
     }
 
     public static function isProgressiveTechnicalBreakAfterChar(c:Int):Bool {
-        return c == 47 || c == 92 || c == 46 || c == 45 || c == 95 || c == 58 || c == 59 || c == 44
-            || c == 63 || c == 38 || c == 61 || c == 35 || c == 37 || c == 126 || c == 43 || c == 42
-            || c == 124 || c == 41 || c == 93 || c == 125;
+        return c == 47 || c == 92 || c == 46 || c == 45 || c == 95 || c == 58 || c == 59 || c == 44 || c == 63 || c == 38 || c == 61 || c == 35 || c == 37
+            || c == 126 || c == 43 || c == 42 || c == 124 || c == 41 || c == 93 || c == 125;
     }
 
     public static function sortInts(arr:Array<Int>):Void {
@@ -131,11 +125,16 @@ class ParagraphShapingStage {
     }
 
     public static function tierName(tier:ProgressiveBreakTier):String {
-        if (tier == ProgressiveBreakTier.Whitespace) return "Whitespace";
-        if (tier == ProgressiveBreakTier.Structural) return "Structural";
-        if (tier == ProgressiveBreakTier.Syllable) return "Syllable";
-        if (tier == ProgressiveBreakTier.WholeToken) return "WholeToken";
-        if (tier == ProgressiveBreakTier.Emergency) return "Emergency";
+        if (tier == ProgressiveBreakTier.Whitespace)
+            return "Whitespace";
+        if (tier == ProgressiveBreakTier.Structural)
+            return "Structural";
+        if (tier == ProgressiveBreakTier.Syllable)
+            return "Syllable";
+        if (tier == ProgressiveBreakTier.WholeToken)
+            return "WholeToken";
+        if (tier == ProgressiveBreakTier.Emergency)
+            return "Emergency";
         return "Unknown";
     }
 
@@ -178,7 +177,8 @@ class ParagraphShapingStage {
     }
 
     public static function isLatinTokenBreakAfter(token:String, index:Int, keepUrlScheme:Bool):Bool {
-        if (index < 0 || index >= token.length - 1) return false;
+        if (index < 0 || index >= token.length - 1)
+            return false;
         final c = token.charCodeAt(index);
         if (c == 47) {
             return !keepUrlScheme || (index == 0 || token.charCodeAt(index - 1) != 58);
@@ -191,11 +191,14 @@ class ParagraphShapingStage {
 
     public static function bibliographicNumericLocatorBreakOffsets(token:String):Array<Int> {
         final open = token.indexOf("(");
-        if (open <= 0 || !isDigit(token.charCodeAt(0))) return [];
+        if (open <= 0 || !isDigit(token.charCodeAt(0)))
+            return [];
         final close = token.indexOf(")", open + 1);
-        if (close <= open + 1) return [];
+        if (close <= open + 1)
+            return [];
         final colon = token.indexOf(":", close + 1);
-        if (colon != close + 1 || colon >= token.length - 1) return [];
+        if (colon != close + 1 || colon >= token.length - 1)
+            return [];
 
         final volume = token.substring(0, open);
         final issue = token.substring(open + 1, close);
@@ -203,8 +206,10 @@ class ParagraphShapingStage {
         if (StringTools.endsWith(pages, ".")) {
             pages = pages.substring(0, pages.length - 1);
         }
-        if (volume.length == 0 || issue.length == 0 || pages.length == 0) return [];
-        if (!isAllDigits(volume) || !isAllDigits(issue)) return [];
+        if (volume.length == 0 || issue.length == 0 || pages.length == 0)
+            return [];
+        if (!isAllDigits(volume) || !isAllDigits(issue))
+            return [];
 
         var rangeSeparator = -1;
         for (i in 0...pages.length) {
@@ -217,21 +222,20 @@ class ParagraphShapingStage {
         final pagesAreNumeric = if (rangeSeparator < 0) {
             isAllDigits(pages);
         } else {
-            rangeSeparator > 0 &&
-                rangeSeparator < pages.length - 1 &&
-                isAllDigits(pages.substring(0, rangeSeparator)) &&
-                isAllDigits(pages.substring(rangeSeparator + 1));
+            rangeSeparator > 0
+            && rangeSeparator < pages.length - 1
+            && isAllDigits(pages.substring(0, rangeSeparator))
+            && isAllDigits(pages.substring(rangeSeparator + 1));
         };
-        if (!pagesAreNumeric) return [];
+        if (!pagesAreNumeric)
+            return [];
 
         return [open, colon + 1];
     }
 
     public static function hasBreakableLatinSolidus(token:String):Bool {
         for (i in 1...(token.length - 1)) {
-            if (token.charCodeAt(i) == 47 &&
-                isLetterOrDigit(token.charCodeAt(i - 1)) &&
-                isLetterOrDigit(token.charCodeAt(i + 1))) {
+            if (token.charCodeAt(i) == 47 && isLetterOrDigit(token.charCodeAt(i - 1)) && isLetterOrDigit(token.charCodeAt(i + 1))) {
                 return true;
             }
         }
@@ -242,14 +246,22 @@ class ParagraphShapingStage {
         final w = text.substring(wordRange.start, wordRange.end);
         final cuts = new Array<Int>();
         for (i in 0...w.length) {
-            if (w.charCodeAt(i) != 45) continue;
+            if (w.charCodeAt(i) != 45)
+                continue;
             var before = 0;
             var j = i - 1;
-            while (j >= 0 && isLetter(w.charCodeAt(j))) { before += 1; j -= 1; }
+            while (j >= 0 && isLetter(w.charCodeAt(j))) {
+                before += 1;
+                j -= 1;
+            }
             var after = 0;
             var k = i + 1;
-            while (k < w.length && isLetter(w.charCodeAt(k))) { after += 1; k += 1; }
-            if (before >= 2 && after >= 2) cuts.push(wordRange.start + i + 1);
+            while (k < w.length && isLetter(w.charCodeAt(k))) {
+                after += 1;
+                k += 1;
+            }
+            if (before >= 2 && after >= 2)
+                cuts.push(wordRange.start + i + 1);
         }
         return cuts;
     }
@@ -265,7 +277,8 @@ class ParagraphShapingStage {
             }
         }
         final bounds = [0];
-        for (h in 0...humps.length) bounds.push(humps[h]);
+        for (h in 0...humps.length)
+            bounds.push(humps[h]);
         bounds.push(w.length);
 
         final result = new Array<Int>();
@@ -273,7 +286,8 @@ class ParagraphShapingStage {
             final h = humps[idx];
             var lastBefore = 0;
             for (b in 0...bounds.length) {
-                if (bounds[b] < h) lastBefore = bounds[b];
+                if (bounds[b] < h)
+                    lastBefore = bounds[b];
             }
             var firstAfter = w.length;
             for (b in 0...bounds.length) {
@@ -303,7 +317,8 @@ class ParagraphShapingStage {
     }
 
     public static function strongNonLexicalReason(w:String):Null<String> {
-        if (w.length < EMERGENCY_TRACKING_TOKEN_MIN_LENGTH) return null;
+        if (w.length < EMERGENCY_TRACKING_TOKEN_MIN_LENGTH)
+            return null;
         var allLetters = true;
         final firstCharLower = w.charAt(0).toLowerCase();
         var allSameLetter = true;
@@ -324,7 +339,8 @@ class ParagraphShapingStage {
         var allHexOrDigit = true;
         for (i in 0...w.length) {
             final c = w.charCodeAt(i);
-            if (isLetter(c)) anyLetter = true;
+            if (isLetter(c))
+                anyLetter = true;
             final isHexDigit = isDigit(c) || (c >= 65 && c <= 70) || (c >= 97 && c <= 102);
             if (!isHexDigit) {
                 allHexOrDigit = false;
@@ -366,32 +382,16 @@ class ParagraphShapingStage {
     public static function zeroWidthSoftBreakShapingResult(text:String, range:TextRange):ShapingResult {
         final sourceText = text.substring(range.start, range.end);
         final cluster = new Cluster(range, sourceText, ZERO_WIDTH_SOFT_BREAK_FONT_KEY, 0.0, "");
-        final decision = new ShapingDecisionInfo(
-            range,
-            sourceText,
-            "",
-            ZERO_WIDTH_SOFT_BREAK_FONT_KEY,
-            0,
-            0.0,
-            "StructuralControl",
-            "ZeroWidthSpaceSoftBreakNoShape"
-        );
+        final decision = new ShapingDecisionInfo(range, sourceText, "", ZERO_WIDTH_SOFT_BREAK_FONT_KEY, 0, 0.0, "StructuralControl",
+            "ZeroWidthSpaceSoftBreakNoShape");
         return new ShapingResult([cluster], [], [decision]);
     }
 
     public static function inlineObjectShapingResult(text:String, inlineObject:InlineObjectSpan):ShapingResult {
         final sourceText = text.substring(inlineObject.range.start, inlineObject.range.end);
         final cluster = new Cluster(inlineObject.range, sourceText, INLINE_OBJECT_FONT_KEY, inlineObject.advance, "");
-        final decision = new ShapingDecisionInfo(
-            inlineObject.range,
-            sourceText,
-            "",
-            INLINE_OBJECT_FONT_KEY,
-            0,
-            inlineObject.advance,
-            "InlineObject",
-            "MeasurableOpaqueInlineObject:no-font-shaping"
-        );
+        final decision = new ShapingDecisionInfo(inlineObject.range, sourceText, "", INLINE_OBJECT_FONT_KEY, 0, inlineObject.advance, "InlineObject",
+            "MeasurableOpaqueInlineObject:no-font-shaping");
         return new ShapingResult([cluster], [], [decision]);
     }
 
@@ -431,7 +431,8 @@ class ParagraphShapingStage {
     }
 
     public static function shapingSegments(decision:FontDecision, text:String):Array<TextRange> {
-        if (decision.role != FontRole.LatinText) return [decision.range];
+        if (decision.role != FontRole.LatinText)
+            return [decision.range];
         final segments = new Array<TextRange>();
         var segStart = decision.range.start;
         var inSpace = text.charCodeAt(decision.range.start) == 32;
@@ -465,22 +466,11 @@ class ParagraphShapingStage {
         return result;
     }
 
-    public static function shapeParagraph(
-        engine:ExplainableStubParagraphLayoutEngine,
-        input:LayoutInput,
-        text:String,
-        fontSize:Float,
-        measure:Float,
-        clusterRanges:Array<ResolvedClusterRange>,
-        fontDecisionByRange:SortedMap<TextRange, FontDecision>,
-        inlineObjectByRange:SortedMap<TextRange, InlineObjectSpan>,
-        punctuationGlyphSubstitutor:ClreqPunctuationGlyphSubstitutor,
-        styleAt:Int->TextStyle,
-        emphasisItalicAt:Int->Bool,
-        rejectedTechnicalTiersBySpan:SortedMap<TextRange, SortedSet<Int>>,
-        ?cachedSegmentShaping:SortedMap<TextRange, ShapingResult>,
-        ?cachedSubstitutionRollbacks:SortedMap<TextRange, String>
-    ):ParagraphShapingStageResult {
+    public static function shapeParagraph(engine:ExplainableStubParagraphLayoutEngine, input:LayoutInput, text:String, fontSize:Float, measure:Float,
+            clusterRanges:Array<ResolvedClusterRange>, fontDecisionByRange:SortedMap<TextRange, FontDecision>,
+            inlineObjectByRange:SortedMap<TextRange, InlineObjectSpan>, punctuationGlyphSubstitutor:ClreqPunctuationGlyphSubstitutor, styleAt:Int->TextStyle,
+            emphasisItalicAt:Int->Bool, rejectedTechnicalTiersBySpan:SortedMap<TextRange, SortedSet<Int>>,
+            ?cachedSegmentShaping:SortedMap<TextRange, ShapingResult>, ?cachedSubstitutionRollbacks:SortedMap<TextRange, String>):ParagraphShapingStageResult {
         final segmentShapingCacheKeys = new Array<TextRange>();
         final segmentShapingCacheValues = new Array<ShapingResult>();
         if (cachedSegmentShaping != null) {
@@ -502,7 +492,8 @@ class ParagraphShapingStage {
         function getCachedSegmentShaping(r:TextRange):Null<ShapingResult> {
             for (i in 0...segmentShapingCacheKeys.length) {
                 final k = segmentShapingCacheKeys[i];
-                if (k.start == r.start && k.end == r.end) return segmentShapingCacheValues[i];
+                if (k.start == r.start && k.end == r.end)
+                    return segmentShapingCacheValues[i];
             }
             return null;
         }
@@ -532,7 +523,8 @@ class ParagraphShapingStage {
         }
 
         function dashInkCoverageDeficient(shaped:ShapingResult, displayText:String, segmentFontSize:Float):Bool {
-            if (displayText.indexOf("\u2E3A") < 0) return false;
+            if (displayText.indexOf("\u2E3A") < 0)
+                return false;
             var totalGlyphs = 0;
             var singleGlyph:Null<Glyph> = null;
             for (i in 0...shaped.glyphRuns.length) {
@@ -542,33 +534,29 @@ class ParagraphShapingStage {
                     singleGlyph = r.glyphs[j];
                 }
             }
-            if (totalGlyphs != 1 || singleGlyph == null) return false;
+            if (totalGlyphs != 1 || singleGlyph == null)
+                return false;
             final ink = singleGlyph.bounds;
-            if (ink == null) return false;
+            if (ink == null)
+                return false;
             final targetAdvance = DASH_SUBSTITUTION_TARGET_EM * segmentFontSize;
             return (ink.right - ink.left) < targetAdvance * DASH_SUBSTITUTION_MIN_INK_COVERAGE;
         }
 
         function shapeSegment(decision:FontDecision, segmentRange:TextRange):ShapingResult {
             final cached = getCachedSegmentShaping(segmentRange);
-            if (cached != null) return cached;
+            if (cached != null)
+                return cached;
             final sourceText = text.substring(segmentRange.start, segmentRange.end);
             final substitution = ContextualPunctuationDisplaySubstitutionFns.substituteForRole(punctuationGlyphSubstitutor, sourceText, decision.role);
             final baseSegmentStyle = styleAt(segmentRange.start);
             var segmentStyle = baseSegmentStyle;
             if (decision.role == FontRole.LatinText && emphasisItalicAt(segmentRange.start)) {
-                segmentStyle = new TextStyle(copyFontFamilies(baseSegmentStyle.fontFamilies), baseSegmentStyle.fontSize, baseSegmentStyle.locale, baseSegmentStyle.fontWeight, true, baseSegmentStyle.baselineShift, baseSegmentStyle.inlineAttachment);
+                segmentStyle = new TextStyle(copyFontFamilies(baseSegmentStyle.fontFamilies), baseSegmentStyle.fontSize, baseSegmentStyle.locale,
+                    baseSegmentStyle.fontWeight, true, baseSegmentStyle.baselineShift, baseSegmentStyle.inlineAttachment);
             }
-            final shaped = engine.textShaper.shape(
-                new ShapingInput(
-                    text,
-                    segmentRange,
-                    segmentStyle,
-                    decision,
-                    substitution.displayText,
-                    cjkPunctuationFullWidthFeatures(decision.role, substitution.displayText)
-                )
-            );
+            final shaped = engine.textShaper.shape(new ShapingInput(text, segmentRange, segmentStyle, decision, substitution.displayText,
+                cjkPunctuationFullWidthFeatures(decision.role, substitution.displayText)));
             var rollbackCause:Null<String> = null;
             if (substitution.displayText != sourceText) {
                 var hasUnverified = false;
@@ -593,16 +581,8 @@ class ParagraphShapingStage {
             var result:ShapingResult = shaped;
             if (rollbackCause != null) {
                 putSubstitutionRollback(segmentRange, rollbackCause);
-                result = engine.textShaper.shape(
-                    new ShapingInput(
-                        text,
-                        segmentRange,
-                        segmentStyle,
-                        decision,
-                        sourceText,
-                        cjkPunctuationFullWidthFeatures(decision.role, sourceText)
-                    )
-                );
+                result = engine.textShaper.shape(new ShapingInput(text, segmentRange, segmentStyle, decision, sourceText,
+                    cjkPunctuationFullWidthFeatures(decision.role, sourceText)));
             }
             putCachedSegmentShaping(segmentRange, result);
             return result;
@@ -637,15 +617,23 @@ class ParagraphShapingStage {
                 final s = syllable[i];
                 var exists = false;
                 for (j in 0...relBounds.length) {
-                    if (relBounds[j] == s) { exists = true; break; }
+                    if (relBounds[j] == s) {
+                        exists = true;
+                        break;
+                    }
                 }
-                if (!exists) relBounds.push(s);
+                if (!exists)
+                    relBounds.push(s);
             }
             var lenExists = false;
             for (j in 0...relBounds.length) {
-                if (relBounds[j] == wordRange.length) { lenExists = true; break; }
+                if (relBounds[j] == wordRange.length) {
+                    lenExists = true;
+                    break;
+                }
             }
-            if (!lenExists) relBounds.push(wordRange.length);
+            if (!lenExists)
+                relBounds.push(wordRange.length);
             sortInts(relBounds);
 
             for (i in 0...(relBounds.length - 1)) {
@@ -653,7 +641,8 @@ class ParagraphShapingStage {
                 final b = relBounds[i + 1];
                 final pieceShaped = shapeSegment(decision, new TextRange(wordRange.start + a, wordRange.start + b));
                 final pieceAdvance = pieceShaped.clusters.length == 1 ? pieceShaped.clusters[0].advance : 0.0;
-                if (pieceAdvance <= measure) continue;
+                if (pieceAdvance <= measure)
+                    continue;
                 final lo = a + HYPHEN_MIN_LEFT;
                 final hi = b - HYPHEN_MIN_RIGHT;
                 var off = lo <= hi ? lo : (a + 1);
@@ -662,9 +651,13 @@ class ParagraphShapingStage {
                     final c = wordRange.start + off;
                     var exists = false;
                     for (k in 0...cuts.length) {
-                        if (cuts[k] == c) { exists = true; break; }
+                        if (cuts[k] == c) {
+                            exists = true;
+                            break;
+                        }
                     }
-                    if (!exists) cuts.push(c);
+                    if (!exists)
+                        cuts.push(c);
                     off++;
                 }
             }
@@ -682,11 +675,7 @@ class ParagraphShapingStage {
                     return;
                 }
             }
-            emergencyTrackingEligibilityDecisions.push(new EmergencyTrackingEligibilityDecisionInfo(
-                range,
-                text.substring(range.start, range.end),
-                reason
-            ));
+            emergencyTrackingEligibilityDecisions.push(new EmergencyTrackingEligibilityDecisionInfo(range, text.substring(range.start, range.end), reason));
         }
 
         final progBreakKeys = new Array<Int>();
@@ -727,16 +716,11 @@ class ParagraphShapingStage {
                 cuts.push(tokenRange.start + bibliographicLocatorCuts[i]);
             }
             if (bibliographicLocatorCuts.length > 0) {
-                breakOpportunityDecisions.push(new BreakOpportunityDecisionInfo(
-                    tokenRange,
-                    token,
-                    copyInts(cuts),
-                    "BibliographicNumericLocatorBreak"
-                ));
+                breakOpportunityDecisions.push(new BreakOpportunityDecisionInfo(tokenRange, token, copyInts(cuts), "BibliographicNumericLocatorBreak"));
             }
             for (i in 0...(token.length - 1)) {
-                final breakAfter = (structuralSolidus && !urlLike && token.charCodeAt(i) == 47) ||
-                    (opaqueSeparatorMode && isLatinTokenBreakAfter(token, i, tokenAdvance <= measure));
+                final breakAfter = (structuralSolidus && !urlLike && token.charCodeAt(i) == 47)
+                    || (opaqueSeparatorMode && isLatinTokenBreakAfter(token, i, tokenAdvance <= measure));
                 if (breakAfter) {
                     cuts.push(tokenRange.start + i + 1);
                 }
@@ -750,22 +734,31 @@ class ParagraphShapingStage {
                 final rel = cleanCuts[i] - tokenRange.start;
                 var exists = false;
                 for (j in 0...relBounds.length) {
-                    if (relBounds[j] == rel) { exists = true; break; }
+                    if (relBounds[j] == rel) {
+                        exists = true;
+                        break;
+                    }
                 }
-                if (!exists) relBounds.push(rel);
+                if (!exists)
+                    relBounds.push(rel);
             }
             var lenExists = false;
             for (j in 0...relBounds.length) {
-                if (relBounds[j] == tokenRange.length) { lenExists = true; break; }
+                if (relBounds[j] == tokenRange.length) {
+                    lenExists = true;
+                    break;
+                }
             }
-            if (!lenExists) relBounds.push(tokenRange.length);
+            if (!lenExists)
+                relBounds.push(tokenRange.length);
             sortInts(relBounds);
 
             final cuts = new Array<Int>();
             for (i in 0...(relBounds.length - 1)) {
                 final a = relBounds[i];
                 final b = relBounds[i + 1];
-                if (b - a <= 1) continue;
+                if (b - a <= 1)
+                    continue;
                 final pieceRange = new TextRange(tokenRange.start + a, tokenRange.start + b);
                 final pieceShaped = shapeSegment(decision, pieceRange);
                 final pieceAdvance = pieceShaped.clusters.length == 1 ? pieceShaped.clusters[0].advance : 0.0;
@@ -778,9 +771,13 @@ class ParagraphShapingStage {
                     if (pos > pieceRange.start && pos < pieceRange.end) {
                         var exists = false;
                         for (k in 0...cuts.length) {
-                            if (cuts[k] == pos) { exists = true; break; }
+                            if (cuts[k] == pos) {
+                                exists = true;
+                                break;
+                            }
                         }
-                        if (!exists) cuts.push(pos);
+                        if (!exists)
+                            cuts.push(pos);
                     }
                 }
             }
@@ -789,28 +786,34 @@ class ParagraphShapingStage {
         }
 
         function getInlineObject(range:TextRange):Null<InlineObjectSpan> {
-            if (inlineObjectByRange == null) return null;
+            if (inlineObjectByRange == null)
+                return null;
             for (i in 0...inlineObjectByRange.size()) {
                 final k = inlineObjectByRange.keyAt(i);
-                if (k.start == range.start && k.end == range.end) return inlineObjectByRange.valueAt(i);
+                if (k.start == range.start && k.end == range.end)
+                    return inlineObjectByRange.valueAt(i);
             }
             return null;
         }
 
         function getFontDecision(range:TextRange):Null<FontDecision> {
-            if (fontDecisionByRange == null) return null;
+            if (fontDecisionByRange == null)
+                return null;
             for (i in 0...fontDecisionByRange.size()) {
                 final k = fontDecisionByRange.keyAt(i);
-                if (k.start == range.start && k.end == range.end) return fontDecisionByRange.valueAt(i);
+                if (k.start == range.start && k.end == range.end)
+                    return fontDecisionByRange.valueAt(i);
             }
             return null;
         }
 
         function getRejectedTiers(range:TextRange):Null<SortedSet<ProgressiveBreakTier>> {
-            if (rejectedTechnicalTiersBySpan == null) return null;
+            if (rejectedTechnicalTiersBySpan == null)
+                return null;
             for (i in 0...rejectedTechnicalTiersBySpan.size()) {
                 final k = rejectedTechnicalTiersBySpan.keyAt(i);
-                if (k.start == range.start && k.end == range.end) return rejectedTechnicalTiersBySpan.valueAt(i);
+                if (k.start == range.start && k.end == range.end)
+                    return rejectedTechnicalTiersBySpan.valueAt(i);
             }
             return null;
         }
@@ -821,7 +824,8 @@ class ParagraphShapingStage {
         function progressiveSpanAdvance(spanRange:TextRange):Float {
             for (i in 0...spanAdvanceCacheKeys.length) {
                 final k = spanAdvanceCacheKeys[i];
-                if (k.start == spanRange.start && k.end == spanRange.end) return spanAdvanceCacheValues[i];
+                if (k.start == spanRange.start && k.end == spanRange.end)
+                    return spanAdvanceCacheValues[i];
             }
             var totalAdvance = 0.0;
             for (crIdx in 0...clusterRanges.length) {
@@ -830,7 +834,8 @@ class ParagraphShapingStage {
                     continue;
                 }
                 final decision = getFontDecision(resolvedRange.range);
-                if (decision == null) continue;
+                if (decision == null)
+                    continue;
                 final candidates = shapingSegments(decision, text);
                 for (cIdx in 0...candidates.length) {
                     final candidate = candidates[cIdx];
@@ -866,7 +871,8 @@ class ParagraphShapingStage {
                 continue;
             }
             final decision = getFontDecision(resolvedRange.range);
-            if (decision == null) continue;
+            if (decision == null)
+                continue;
             final segments = shapingSegments(decision, text);
             for (segIdx in 0...segments.length) {
                 final segmentRange = segments[segIdx];
@@ -877,8 +883,9 @@ class ParagraphShapingStage {
                 var progressiveSpan:Null<org.tiqian.core.LineBreakSpan> = null;
                 for (sIdx in 0...input.content.lineBreakSpans.length) {
                     final s = input.content.lineBreakSpans[sIdx];
-                    if (s.policy == LineBreakPolicy.ProgressiveTechnical &&
-                        segmentRange.start >= s.range.start && segmentRange.end <= s.range.end) {
+                    if (s.policy == LineBreakPolicy.ProgressiveTechnical
+                        && segmentRange.start >= s.range.start
+                        && segmentRange.end <= s.range.end) {
                         progressiveSpan = s;
                         break;
                     }
@@ -929,9 +936,13 @@ class ParagraphShapingStage {
                         final pt = hyphenPoints[p];
                         var exists = false;
                         for (q in 0...uniquePoints.length) {
-                            if (uniquePoints[q] == pt) { exists = true; break; }
+                            if (uniquePoints[q] == pt) {
+                                exists = true;
+                                break;
+                            }
                         }
-                        if (!exists) uniquePoints.push(pt);
+                        if (!exists)
+                            uniquePoints.push(pt);
                     }
                     sortInts(uniquePoints);
                     syllableCuts = uniquePoints;
@@ -940,41 +951,57 @@ class ParagraphShapingStage {
                 var longestUnhyphenatedLetterPiece = 0;
                 if (allLetters) {
                     final bounds = [0];
-                    for (p in 0...syllableCuts.length) bounds.push(syllableCuts[p]);
+                    for (p in 0...syllableCuts.length)
+                        bounds.push(syllableCuts[p]);
                     bounds.push(w.length);
                     var maxLen = 0;
                     for (p in 0...(bounds.length - 1)) {
                         final diff = bounds[p + 1] - bounds[p];
-                        if (diff > maxLen) maxLen = diff;
+                        if (diff > maxLen)
+                            maxLen = diff;
                     }
                     longestUnhyphenatedLetterPiece = maxLen;
                 }
 
-                final isLongUnhyphenatedLetterToken = allLetters && !isAbbreviation && !isCamelCase && longestUnhyphenatedLetterPiece >= LATIN_OPAQUE_TOKEN_MIN_LENGTH;
-                final isLongOpaqueLatinToken = strongReason != null || isLongUnhyphenatedLetterToken || (isLatin && !allLetters && w.length >= LATIN_OPAQUE_TOKEN_MIN_LENGTH);
+                final isLongUnhyphenatedLetterToken = allLetters
+                    && !isAbbreviation
+                    && !isCamelCase
+                    && longestUnhyphenatedLetterPiece >= LATIN_OPAQUE_TOKEN_MIN_LENGTH;
+                final isLongOpaqueLatinToken = strongReason != null
+                    || isLongUnhyphenatedLetterToken
+                    || (isLatin && !allLetters && w.length >= LATIN_OPAQUE_TOKEN_MIN_LENGTH);
 
                 var technicalStructuralCuts = new Array<Int>();
                 if (progressiveSpan != null && isLatin) {
                     final cutsSet = new Array<Int>();
                     final cc = camelCaseCuts(text, segmentRange);
-                    for (c in 0...cc.length) cutsSet.push(cc[c]);
+                    for (c in 0...cc.length)
+                        cutsSet.push(cc[c]);
                     final at = alphaNumericTransitionCuts(text, segmentRange);
                     for (c in 0...at.length) {
                         final v = at[c];
                         var exists = false;
                         for (q in 0...cutsSet.length) {
-                            if (cutsSet[q] == v) { exists = true; break; }
+                            if (cutsSet[q] == v) {
+                                exists = true;
+                                break;
+                            }
                         }
-                        if (!exists) cutsSet.push(v);
+                        if (!exists)
+                            cutsSet.push(v);
                     }
                     for (i in 0...(w.length - 1)) {
                         if (isProgressiveTechnicalBreakAfterChar(w.charCodeAt(i))) {
                             final v = segmentRange.start + i + 1;
                             var exists = false;
                             for (q in 0...cutsSet.length) {
-                                if (cutsSet[q] == v) { exists = true; break; }
+                                if (cutsSet[q] == v) {
+                                    exists = true;
+                                    break;
+                                }
                             }
-                            if (!exists) cutsSet.push(v);
+                            if (!exists)
+                                cutsSet.push(v);
                         }
                     }
                     sortInts(cutsSet);
@@ -984,16 +1011,21 @@ class ParagraphShapingStage {
                 var rawTechnicalSyllableCuts = new Array<Int>();
                 if (progressiveSpan != null && isLatin) {
                     final preferredBounds = [segmentRange.start];
-                    for (c in 0...technicalStructuralCuts.length) preferredBounds.push(technicalStructuralCuts[c]);
+                    for (c in 0...technicalStructuralCuts.length)
+                        preferredBounds.push(technicalStructuralCuts[c]);
                     preferredBounds.push(segmentRange.end);
                     final uniqueBounds = new Array<Int>();
                     for (p in 0...preferredBounds.length) {
                         final pt = preferredBounds[p];
                         var exists = false;
                         for (q in 0...uniqueBounds.length) {
-                            if (uniqueBounds[q] == pt) { exists = true; break; }
+                            if (uniqueBounds[q] == pt) {
+                                exists = true;
+                                break;
+                            }
                         }
-                        if (!exists) uniqueBounds.push(pt);
+                        if (!exists)
+                            uniqueBounds.push(pt);
                     }
                     sortInts(uniqueBounds);
 
@@ -1002,12 +1034,15 @@ class ParagraphShapingStage {
                         final pieceStart = uniqueBounds[p];
                         final pieceEnd = uniqueBounds[p + 1];
                         final piece = text.substring(pieceStart, pieceEnd);
-                        if (strongNonLexicalReason(piece) != null) continue;
+                        if (strongNonLexicalReason(piece) != null)
+                            continue;
                         var runStart = pieceStart;
                         while (runStart < pieceEnd) {
-                            while (runStart < pieceEnd && !isLetter(text.charCodeAt(runStart))) runStart++;
+                            while (runStart < pieceEnd && !isLetter(text.charCodeAt(runStart)))
+                                runStart++;
                             var runEnd = runStart;
-                            while (runEnd < pieceEnd && isLetter(text.charCodeAt(runEnd))) runEnd++;
+                            while (runEnd < pieceEnd && isLetter(text.charCodeAt(runEnd)))
+                                runEnd++;
                             if (runEnd > runStart) {
                                 final word = text.substring(runStart, runEnd);
                                 final wordHyphs = engine.hyphenator.hyphenate(word);
@@ -1026,9 +1061,13 @@ class ParagraphShapingStage {
                         final pt = cutsList[p];
                         var exists = false;
                         for (q in 0...uniqueCuts.length) {
-                            if (uniqueCuts[q] == pt) { exists = true; break; }
+                            if (uniqueCuts[q] == pt) {
+                                exists = true;
+                                break;
+                            }
                         }
-                        if (!exists) uniqueCuts.push(pt);
+                        if (!exists)
+                            uniqueCuts.push(pt);
                     }
                     sortInts(uniqueCuts);
                     rawTechnicalSyllableCuts = uniqueCuts;
@@ -1054,17 +1093,23 @@ class ParagraphShapingStage {
                     final rejectedTiers = getRejectedTiers(progressiveSpan.range);
                     final exposedForCurrentLine = rejectedTiers != null && rejectedTiers.size() > 0;
                     final preferredBounds = [segmentRange.start];
-                    for (c in 0...technicalStructuralCuts.length) preferredBounds.push(technicalStructuralCuts[c]);
-                    for (c in 0...technicalSyllableCuts.length) preferredBounds.push(technicalSyllableCuts[c]);
+                    for (c in 0...technicalStructuralCuts.length)
+                        preferredBounds.push(technicalStructuralCuts[c]);
+                    for (c in 0...technicalSyllableCuts.length)
+                        preferredBounds.push(technicalSyllableCuts[c]);
                     preferredBounds.push(segmentRange.end);
                     final uniqueBounds = new Array<Int>();
                     for (p in 0...preferredBounds.length) {
                         final pt = preferredBounds[p];
                         var exists = false;
                         for (q in 0...uniqueBounds.length) {
-                            if (uniqueBounds[q] == pt) { exists = true; break; }
+                            if (uniqueBounds[q] == pt) {
+                                exists = true;
+                                break;
+                            }
                         }
-                        if (!exists) uniqueBounds.push(pt);
+                        if (!exists)
+                            uniqueBounds.push(pt);
                     }
                     sortInts(uniqueBounds);
 
@@ -1078,7 +1123,9 @@ class ParagraphShapingStage {
                         for (clIdx in 0...pieceShaped.clusters.length) {
                             pieceAdvance += pieceShaped.clusters[clIdx].advance;
                         }
-                        if (!exposedForCurrentLine && pieceAdvance <= measure && progressiveSpanAdvance(progressiveSpan.range) <= measure) {
+                        if (!exposedForCurrentLine
+                            && pieceAdvance <= measure
+                            && progressiveSpanAdvance(progressiveSpan.range) <= measure) {
                             // nothing
                         } else {
                             final graphemes = SourceInteractionBoundaries.sourceGraphemeBoundaries(text, pieceRange);
@@ -1093,23 +1140,31 @@ class ParagraphShapingStage {
                     final rejectedCleanBoundaries = new Array<Int>();
                     if (rejectedTiers != null) {
                         if (rejectedTiers.has(ProgressiveBreakTier.Structural)) {
-                            for (c in 0...technicalStructuralCuts.length) rejectedCleanBoundaries.push(technicalStructuralCuts[c]);
+                            for (c in 0...technicalStructuralCuts.length)
+                                rejectedCleanBoundaries.push(technicalStructuralCuts[c]);
                         }
                         if (rejectedTiers.has(ProgressiveBreakTier.Syllable)) {
-                            for (c in 0...technicalSyllableCuts.length) rejectedCleanBoundaries.push(technicalSyllableCuts[c]);
+                            for (c in 0...technicalSyllableCuts.length)
+                                rejectedCleanBoundaries.push(technicalSyllableCuts[c]);
                         }
                     }
                     final combined = new Array<Int>();
-                    for (c in 0...interiorEmergencyCuts.length) combined.push(interiorEmergencyCuts[c]);
-                    for (c in 0...rejectedCleanBoundaries.length) combined.push(rejectedCleanBoundaries[c]);
+                    for (c in 0...interiorEmergencyCuts.length)
+                        combined.push(interiorEmergencyCuts[c]);
+                    for (c in 0...rejectedCleanBoundaries.length)
+                        combined.push(rejectedCleanBoundaries[c]);
                     final uniqueCombined = new Array<Int>();
                     for (p in 0...combined.length) {
                         final pt = combined[p];
                         var exists = false;
                         for (q in 0...uniqueCombined.length) {
-                            if (uniqueCombined[q] == pt) { exists = true; break; }
+                            if (uniqueCombined[q] == pt) {
+                                exists = true;
+                                break;
+                            }
                         }
-                        if (!exists) uniqueCombined.push(pt);
+                        if (!exists)
+                            uniqueCombined.push(pt);
                     }
                     sortInts(uniqueCombined);
                     technicalEmergencyCuts = uniqueCombined;
@@ -1121,7 +1176,8 @@ class ParagraphShapingStage {
                         var reason = "ProgressiveTechnicalSpan";
                         if (rej != null && rej.size() > 0) {
                             final tiers = new Array<ProgressiveBreakTier>();
-                            for (i in 0...rej.size()) tiers.push(rej.at(i));
+                            for (i in 0...rej.size())
+                                tiers.push(rej.at(i));
                             var tIdx = 1;
                             while (tIdx < tiers.length) {
                                 final curr = tiers[tIdx];
@@ -1135,7 +1191,8 @@ class ParagraphShapingStage {
                             }
                             var joined = "";
                             for (i in 0...tiers.length) {
-                                if (i > 0) joined += "+";
+                                if (i > 0)
+                                    joined += "+";
                                 joined += tierName(tiers[i]);
                             }
                             reason = "CurrentLineTechnicalTierRejection:" + joined;
@@ -1144,7 +1201,11 @@ class ParagraphShapingStage {
                     }
 
                     final tierArrays = [technicalStructuralCuts, technicalSyllableCuts, technicalEmergencyCuts];
-                    final tierTypes = [ProgressiveBreakTier.Structural, ProgressiveBreakTier.Syllable, ProgressiveBreakTier.Emergency];
+                    final tierTypes = [
+                        ProgressiveBreakTier.Structural,
+                        ProgressiveBreakTier.Syllable,
+                        ProgressiveBreakTier.Emergency
+                    ];
                     for (tIdx in 0...3) {
                         final tier = tierTypes[tIdx];
                         final offsets = tierArrays[tIdx];
@@ -1157,23 +1218,21 @@ class ParagraphShapingStage {
                             final pt = offsets[p];
                             var exists = false;
                             for (q in 0...uniqueOffsets.length) {
-                                if (uniqueOffsets[q] == pt) { exists = true; break; }
+                                if (uniqueOffsets[q] == pt) {
+                                    exists = true;
+                                    break;
+                                }
                             }
-                            if (!exists) uniqueOffsets.push(pt);
+                            if (!exists)
+                                uniqueOffsets.push(pt);
                         }
                         sortInts(uniqueOffsets);
                         if (uniqueOffsets.length > 0) {
                             final rejNotEmpty = rej != null && rej.size() > 0;
-                            final breakReason = (tier == ProgressiveBreakTier.Emergency && rejNotEmpty)
-                                ? "CurrentLineTechnicalEmergencyBreak"
-                                : "ProgressiveTechnicalBreak";
-                            breakOpportunityDecisions.push(new BreakOpportunityDecisionInfo(
-                                segmentRange,
-                                w,
-                                copyInts(uniqueOffsets),
-                                breakReason,
-                                tierName(tier)
-                            ));
+                            final breakReason = (tier == ProgressiveBreakTier.Emergency
+                                && rejNotEmpty) ? "CurrentLineTechnicalEmergencyBreak" : "ProgressiveTechnicalBreak";
+                            breakOpportunityDecisions.push(new BreakOpportunityDecisionInfo(segmentRange, w, copyInts(uniqueOffsets), breakReason,
+                                tierName(tier)));
                         }
                         for (oIdx in 0...uniqueOffsets.length) {
                             final offset = uniqueOffsets[oIdx];
@@ -1189,31 +1248,29 @@ class ParagraphShapingStage {
                     if (rej == null || !rej.has(boundaryTier)) {
                         final wholeToken = new ProgressiveBreakOpportunity(boundaryTier, progressiveSpan.range);
                         putProgressiveBreak(segmentRange.start, wholeToken);
-                        final wrapReason = boundaryTier == ProgressiveBreakTier.Whitespace
-                            ? "ProgressiveTechnicalWhitespaceBreak"
-                            : "ProgressiveTechnicalWholeTokenWrap";
-                        breakOpportunityDecisions.push(new BreakOpportunityDecisionInfo(
-                            segmentRange,
-                            w,
-                            [segmentRange.start],
-                            wrapReason,
-                            tierName(boundaryTier)
-                        ));
+                        final wrapReason = boundaryTier == ProgressiveBreakTier.Whitespace ? "ProgressiveTechnicalWhitespaceBreak" : "ProgressiveTechnicalWholeTokenWrap";
+                        breakOpportunityDecisions.push(new BreakOpportunityDecisionInfo(segmentRange, w, [segmentRange.start], wrapReason,
+                            tierName(boundaryTier)));
                     }
                 }
 
                 var cleanCuts = new Array<Int>();
                 if (progressiveSpan != null) {
-                    for (c in 0...technicalStructuralCuts.length) cleanCuts.push(technicalStructuralCuts[c]);
-                    for (c in 0...technicalSyllableCuts.length) cleanCuts.push(technicalSyllableCuts[c]);
-                    for (c in 0...technicalEmergencyCuts.length) cleanCuts.push(technicalEmergencyCuts[c]);
+                    for (c in 0...technicalStructuralCuts.length)
+                        cleanCuts.push(technicalStructuralCuts[c]);
+                    for (c in 0...technicalSyllableCuts.length)
+                        cleanCuts.push(technicalSyllableCuts[c]);
+                    for (c in 0...technicalEmergencyCuts.length)
+                        cleanCuts.push(technicalEmergencyCuts[c]);
                 } else if (!isLatin) {
                     // empty
                 } else if (w.indexOf("-") >= 0) {
                     final existing = existingHyphenCuts(text, segmentRange);
-                    for (c in 0...existing.length) cleanCuts.push(existing[c]);
+                    for (c in 0...existing.length)
+                        cleanCuts.push(existing[c]);
                     final sep = latinSeparatorCuts(segmentRange, tokenAdvance, isLongOpaqueLatinToken);
-                    for (c in 0...sep.length) cleanCuts.push(sep[c]);
+                    for (c in 0...sep.length)
+                        cleanCuts.push(sep[c]);
                 } else if (isCamelCase) {
                     cleanCuts = camelCaseCuts(text, segmentRange);
                 } else if (!allLetters) {
@@ -1221,27 +1278,36 @@ class ParagraphShapingStage {
                 }
 
                 var hyphenCuts = new Array<Int>();
-                if (progressiveSpan == null && allLetters && !isAbbreviation && !isCamelCase && !isLongUnhyphenatedLetterToken && w.indexOf("-") < 0 && cleanCuts.length == 0) {
+                if (progressiveSpan == null && allLetters && !isAbbreviation && !isCamelCase && !isLongUnhyphenatedLetterToken && w.indexOf("-") < 0
+                    && cleanCuts.length == 0) {
                     hyphenCuts = latinWordCuts(decision, segmentRange, syllableCuts);
                 }
 
                 var opaqueHardCuts = new Array<Int>();
-                if (progressiveSpan == null && isLatin && (!allLetters || isLongUnhyphenatedLetterToken) && (tokenAdvance > measure || isLongOpaqueLatinToken)) {
+                if (progressiveSpan == null
+                    && isLatin
+                    && (!allLetters || isLongUnhyphenatedLetterToken)
+                    && (tokenAdvance > measure || isLongOpaqueLatinToken)) {
                     opaqueHardCuts = latinOpaqueHardCuts(decision, segmentRange, cleanCuts, isLongOpaqueLatinToken);
                 }
 
                 if (progressiveSpan == null && opaqueHardCuts.length > 0) {
                     final cleanBounds = [segmentRange.start];
-                    for (c in 0...cleanCuts.length) cleanBounds.push(cleanCuts[c]);
+                    for (c in 0...cleanCuts.length)
+                        cleanBounds.push(cleanCuts[c]);
                     cleanBounds.push(segmentRange.end);
                     final uniqueBounds = new Array<Int>();
                     for (p in 0...cleanBounds.length) {
                         final pt = cleanBounds[p];
                         var exists = false;
                         for (q in 0...uniqueBounds.length) {
-                            if (uniqueBounds[q] == pt) { exists = true; break; }
+                            if (uniqueBounds[q] == pt) {
+                                exists = true;
+                                break;
+                            }
                         }
-                        if (!exists) uniqueBounds.push(pt);
+                        if (!exists)
+                            uniqueBounds.push(pt);
                     }
                     sortInts(uniqueBounds);
 
@@ -1256,7 +1322,8 @@ class ParagraphShapingStage {
                                 break;
                             }
                         }
-                        if (!hasPieceHardCuts) continue;
+                        if (!hasPieceHardCuts)
+                            continue;
                         final pieceRange = new TextRange(pieceStart, pieceEnd);
                         final pieceReason = strongNonLexicalReason(text.substring(pieceStart, pieceEnd));
                         if (pieceReason != null) {
@@ -1266,18 +1333,25 @@ class ParagraphShapingStage {
                 }
 
                 final allCutsCombined = new Array<Int>();
-                for (c in 0...cleanCuts.length) allCutsCombined.push(cleanCuts[c]);
-                for (c in 0...hyphenCuts.length) allCutsCombined.push(hyphenCuts[c]);
-                for (c in 0...opaqueHardCuts.length) allCutsCombined.push(opaqueHardCuts[c]);
+                for (c in 0...cleanCuts.length)
+                    allCutsCombined.push(cleanCuts[c]);
+                for (c in 0...hyphenCuts.length)
+                    allCutsCombined.push(hyphenCuts[c]);
+                for (c in 0...opaqueHardCuts.length)
+                    allCutsCombined.push(opaqueHardCuts[c]);
 
                 final allCuts = new Array<Int>();
                 for (p in 0...allCutsCombined.length) {
                     final pt = allCutsCombined[p];
                     var exists = false;
                     for (q in 0...allCuts.length) {
-                        if (allCuts[q] == pt) { exists = true; break; }
+                        if (allCuts[q] == pt) {
+                            exists = true;
+                            break;
+                        }
                     }
-                    if (!exists) allCuts.push(pt);
+                    if (!exists)
+                        allCuts.push(pt);
                 }
                 sortInts(allCuts);
 
@@ -1289,20 +1363,16 @@ class ParagraphShapingStage {
                             final cut = hyphenCuts[c];
                             var exists = false;
                             for (q in 0...hyphenOffsets.length) {
-                                if (hyphenOffsets[q] == cut) { exists = true; break; }
+                                if (hyphenOffsets[q] == cut) {
+                                    exists = true;
+                                    break;
+                                }
                             }
-                            if (!exists) hyphenOffsets.push(cut);
+                            if (!exists)
+                                hyphenOffsets.push(cut);
                         }
                         if (hyphenAdvanceOrNull == null) {
-                            final hyphenShaped = engine.textShaper.shape(
-                                new ShapingInput(
-                                    "-",
-                                    new TextRange(0, 1),
-                                    input.textStyle,
-                                    decision,
-                                    "-"
-                                )
-                            );
+                            final hyphenShaped = engine.textShaper.shape(new ShapingInput("-", new TextRange(0, 1), input.textStyle, decision, "-"));
                             hyphenAdvanceOrNull = hyphenShaped.clusters.length == 1 ? hyphenShaped.clusters[0].advance : (0.5 * fontSize);
                             hyphenGlyphs = new Array<Glyph>();
                             for (r in 0...hyphenShaped.glyphRuns.length) {
@@ -1314,7 +1384,8 @@ class ParagraphShapingStage {
                         }
                     }
                     final bounds = [segmentRange.start];
-                    for (c in 0...allCuts.length) bounds.push(allCuts[c]);
+                    for (c in 0...allCuts.length)
+                        bounds.push(allCuts[c]);
                     bounds.push(segmentRange.end);
 
                     for (k in 0...(bounds.length - 1)) {
@@ -1330,31 +1401,26 @@ class ParagraphShapingStage {
         final hyphenAdvance = hyphenAdvanceOrNull != null ? hyphenAdvanceOrNull : 0.0;
 
         final hyphenOffsetsBuilder = SortedSet.builder();
-        for (i in 0...hyphenOffsets.length) hyphenOffsetsBuilder.put(hyphenOffsets[i]);
+        for (i in 0...hyphenOffsets.length)
+            hyphenOffsetsBuilder.put(hyphenOffsets[i]);
         final hyphenOffsetsSet = hyphenOffsetsBuilder.build();
 
         final rollbacksBuilder = SortedMap.builder();
-        for (i in 0...substitutionRollbackKeys.length) rollbacksBuilder.put(substitutionRollbackKeys[i], substitutionRollbackValues[i]);
+        for (i in 0...substitutionRollbackKeys.length)
+            rollbacksBuilder.put(substitutionRollbackKeys[i], substitutionRollbackValues[i]);
         final rollbacksMap = rollbacksBuilder.build();
 
         final progOffsetsBuilder = SortedMap.builder();
-        for (i in 0...progBreakKeys.length) progOffsetsBuilder.put(progBreakKeys[i], progBreakValues[i]);
+        for (i in 0...progBreakKeys.length)
+            progOffsetsBuilder.put(progBreakKeys[i], progBreakValues[i]);
         final progOffsetsMap = progOffsetsBuilder.build();
 
         final segmentCacheBuilder = SortedMap.builder();
-        for (i in 0...segmentShapingCacheKeys.length) segmentCacheBuilder.put(segmentShapingCacheKeys[i], segmentShapingCacheValues[i]);
+        for (i in 0...segmentShapingCacheKeys.length)
+            segmentCacheBuilder.put(segmentShapingCacheKeys[i], segmentShapingCacheValues[i]);
         final segmentCacheMap = segmentCacheBuilder.build();
 
-        return new ParagraphShapingStageResult(
-            shapingResults,
-            hyphenOffsetsSet,
-            hyphenAdvance,
-            hyphenGlyphs,
-            rollbacksMap,
-            breakOpportunityDecisions,
-            emergencyTrackingEligibilityDecisions,
-            progOffsetsMap,
-            segmentCacheMap
-        );
+        return new ParagraphShapingStageResult(shapingResults, hyphenOffsetsSet, hyphenAdvance, hyphenGlyphs, rollbacksMap, breakOpportunityDecisions,
+            emergencyTrackingEligibilityDecisions, progOffsetsMap, segmentCacheMap);
     }
 }
