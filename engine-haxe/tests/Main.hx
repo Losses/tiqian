@@ -1259,6 +1259,7 @@ class Main {
         run("clusterIndexRangeFindCoveredClusters", PunctuationGeometryLedgerCoverageTest.clusterIndexRangeFindCoveredClusters);
         TestTraceRecorder.flushClass("PunctuationGeometryLedgerCoverageTest");
         TestTraceRecorder.flushClass("LineCandidateValidationTest");
+        TestTraceRecorder.flushClass("ProgressiveTechnicalBreakTest");
         Console.log("all CoreUnitsGeometryTest checks passed");
         if (failures > 0) {
             Process.exit(1);
