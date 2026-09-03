@@ -1,7 +1,7 @@
 package org.tiqian.clreq;
 
-
 using std.Functional;
+
 import std.ReadOnlyArray;
 
 @:dataClass

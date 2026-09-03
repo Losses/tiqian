@@ -1,7 +1,7 @@
 package org.tiqian.layout;
 
-
 using std.Functional;
+
 import org.tiqian.core.Cluster;
 import org.tiqian.core.IntRange;
 import org.tiqian.core.LineEndReason;
@@ -217,11 +217,10 @@ class LineRepair {
         final expanded = LineBreakerLines.rebuildLine(expandedRange, naturalClusters, adjustedClusters);
         final overflow = expanded.adjustedWidth - maxWidth;
 
-        final inLine:Array<ShrinkOpportunity> = shrinkOpportunities
-            .filter(opp -> opp.clusterIndex >= expandedRange.start
-                && opp.clusterIndex <= expandedRange.end
-                && opp.capacity > 0
-                && (!opp.lineEndOnly || opp.clusterIndex == offenderIndex))
+        final inLine:Array<ShrinkOpportunity> = shrinkOpportunities.filter(opp -> opp.clusterIndex >= expandedRange.start
+            && opp.clusterIndex <= expandedRange.end
+            && opp.capacity > 0
+            && (!opp.lineEndOnly || opp.clusterIndex == offenderIndex))
             .map(opp -> {
                 if (opp.clusterIndex == offenderIndex
                     && (opp.channel == ShrinkChannel.TrailingGlue || opp.channel == ShrinkChannel.LeadingAndTrailingGlue))
@@ -338,8 +337,7 @@ class LineRepair {
             return false;
         final r:RepairOption = repair;
         return switch (r) {
-            case PushIn(_, reason, _, _, totalShrink, _):
-                totalShrink <= 0.001 && StringTools.startsWith(reason, "LineAdjustmentPushIn:");
+            case PushIn(_, reason, _, _, totalShrink, _): totalShrink <= 0.001 && StringTools.startsWith(reason, "LineAdjustmentPushIn:");
             case Hang(_, _, _): false;
             case CarryPrevious(_, _, _, _): false;
             case CarryNext(_, _, _): false;
@@ -347,8 +345,8 @@ class LineRepair {
         };
     }
 
-    public static function fillPushInGroupEnd(curr:LineCandidate, forbiddenLineStartClusters:Null<SortedSet<Int>>,
-            forbiddenLineEndClusters:SortedSet<Int>, unbreakableRanges:UnbreakableRanges):Null<Int> {
+    public static function fillPushInGroupEnd(curr:LineCandidate, forbiddenLineStartClusters:Null<SortedSet<Int>>, forbiddenLineEndClusters:SortedSet<Int>,
+            unbreakableRanges:UnbreakableRanges):Null<Int> {
         var groupEnd = curr.clusterRange.start;
         while (groupEnd <= curr.clusterRange.end) {
             final containing = unbreakableRanges.containingFromClosedStartOrNull(groupEnd);
@@ -376,10 +374,9 @@ class LineRepair {
         return null;
     }
 
-    public static function applyFillPushIn(lines:Array<LineCandidate>, naturalClusters:Array<Cluster>, adjustedClusters:Array<Cluster>,
-            maxWidth:Float, shrinkOpportunities:Array<ShrinkOpportunity>, firstLineIndent:Float, compressBias:Float,
-            forbiddenLineStartClusters:Null<SortedSet<Int>>, forbiddenLineEndClusters:SortedSet<Int>, unbreakableRanges:UnbreakableRanges,
-            pushInPenalty:Int, ?gapBoundaries:Null<SortedSet<Int>>,
+    public static function applyFillPushIn(lines:Array<LineCandidate>, naturalClusters:Array<Cluster>, adjustedClusters:Array<Cluster>, maxWidth:Float,
+            shrinkOpportunities:Array<ShrinkOpportunity>, firstLineIndent:Float, compressBias:Float, forbiddenLineStartClusters:Null<SortedSet<Int>>,
+            forbiddenLineEndClusters:SortedSet<Int>, unbreakableRanges:UnbreakableRanges, pushInPenalty:Int, ?gapBoundaries:Null<SortedSet<Int>>,
             ?progressiveBreakOpportunities:Null<SortedMap<Int, ProgressiveBreakOpportunity>>):Array<LineCandidate> {
         if (lines.length < 2 || compressBias <= 0)
             return lines;
@@ -391,7 +388,9 @@ class LineRepair {
             final prev = out[i];
             final curr = out[i + 1];
             final canExtendZeroShrinkFill = isContinuableZeroShrinkFillPushIn(prev.repair);
-            if ((prev.repair != null && !canExtendZeroShrinkFill) || prev.hangingClusterIndex != null || prev.endReason != LineEndReason.AutoWrap) {
+            if ((prev.repair != null && !canExtendZeroShrinkFill)
+                || prev.hangingClusterIndex != null
+                || prev.endReason != LineEndReason.AutoWrap) {
                 i += 1;
                 continue;
             }
@@ -499,15 +498,13 @@ class LineRepair {
     /** Gated [applyFillPushIn] over a [LineSolution] — no-op when not [enabled]. */
     public static function withFillPushIn(solution:LineSolution, enabled:Bool, naturalClusters:Array<Cluster>, adjustedClusters:Array<Cluster>,
             maxWidth:Float, shrinkOpportunities:Array<ShrinkOpportunity>, firstLineIndent:Float, compressBias:Float,
-            forbiddenLineStartClusters:Null<SortedSet<Int>>, forbiddenLineEndClusters:SortedSet<Int>, unbreakableRanges:UnbreakableRanges,
-            pushInPenalty:Int, ?gapBoundaries:Null<SortedSet<Int>>,
-            ?progressiveBreakOpportunities:Null<SortedMap<Int, ProgressiveBreakOpportunity>>):LineSolution {
+            forbiddenLineStartClusters:Null<SortedSet<Int>>, forbiddenLineEndClusters:SortedSet<Int>, unbreakableRanges:UnbreakableRanges, pushInPenalty:Int,
+            ?gapBoundaries:Null<SortedSet<Int>>, ?progressiveBreakOpportunities:Null<SortedMap<Int, ProgressiveBreakOpportunity>>):LineSolution {
         if (!enabled) {
             return solution;
         }
         return new LineSolution(applyFillPushIn(solution.lines, naturalClusters, adjustedClusters, maxWidth, shrinkOpportunities, firstLineIndent,
-            compressBias, forbiddenLineStartClusters, forbiddenLineEndClusters, unbreakableRanges, pushInPenalty, gapBoundaries,
-            progressiveBreakOpportunities), solution.totalBadness);
+            compressBias, forbiddenLineStartClusters, forbiddenLineEndClusters, unbreakableRanges, pushInPenalty, gapBoundaries, progressiveBreakOpportunities),
+            solution.totalBadness);
     }
 }
-

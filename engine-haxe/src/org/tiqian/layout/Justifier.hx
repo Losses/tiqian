@@ -1,7 +1,7 @@
 package org.tiqian.layout;
 
-
 using std.Functional;
+
 import org.tiqian.core.Cluster;
 import org.tiqian.core.IntRange;
 import org.tiqian.core.EastAsianSpacingEdges;
@@ -305,8 +305,7 @@ class Justifier {
             return new CompressionPlan([], 0, 0);
         var rem = surplus;
         var out:Array<PushInAllocation> = [];
-        final m = opps.filter(o -> o.capacity > 0)
-            .groupBy(o -> {key: o.tier, value: o});
+        final m = opps.filter(o -> o.capacity > 0).groupBy(o -> {key: o.tier, value: o});
         var k = 0;
         while (k < m.size()) {
             if (rem <= 0)

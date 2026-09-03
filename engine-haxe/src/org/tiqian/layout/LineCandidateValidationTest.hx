@@ -8,7 +8,6 @@ import org.tiqian.test.trace.TracedAssertions;
 import std.SortedSet;
 
 class LineCandidateValidationTest {
-
     @:test public static function hangingBelowLineRangeIsRejected():Void {
         final testTrace = new TestTraceRecorder("LineCandidateValidationTest");
         testTrace.section("hangingBelowLineRangeIsRejected");

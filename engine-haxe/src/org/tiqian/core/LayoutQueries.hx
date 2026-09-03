@@ -584,10 +584,12 @@ class LayoutQueries {
         var rubyIndex:Int = 0;
         while (rubyIndex < result.debug.rubyDecisions.length) {
             final ruby:RubyDecisionInfo = result.debug.rubyDecisions[rubyIndex];
-            if (ruby.lineIndex == lineIndex && ruby.width > 0.0) rubies.push(ruby);
+            if (ruby.lineIndex == lineIndex && ruby.width > 0.0)
+                rubies.push(ruby);
             rubyIndex++;
         }
-        if (rubies.length == 0) return positioned;
+        if (rubies.length == 0)
+            return positioned;
         final bounds:Array<SelectionBounds> = positioned.map(cluster -> {
             final spread:Float = floatByRangeFromGeometry(result, cluster.range);
             return new SelectionBounds(cluster.left, maxFloat(cluster.right - spread, cluster.left));
@@ -596,8 +598,10 @@ class LayoutQueries {
         var index:Int = 0;
         while (rubyIndex < rubies.length) {
             final ruby = rubies[rubyIndex];
-            final baseIndices:Array<Int> = [for (index in 0...positioned.length)
-                if (positioned[index].range.start >= ruby.baseRange.start && positioned[index].range.end <= ruby.baseRange.end) index];
+            final baseIndices:Array<Int> = [
+                for (index in 0...positioned.length)
+                    if (positioned[index].range.start >= ruby.baseRange.start && positioned[index].range.end <= ruby.baseRange.end) index
+            ];
             if (baseIndices.length > 0) {
                 final centers:Array<Float> = baseIndices.map(i -> centerOfCluster(result, positioned[i]));
                 final rubyLeft = ruby.centerX - ruby.width / 2.0;
@@ -606,7 +610,8 @@ class LayoutQueries {
                 while (index < baseIndices.length) {
                     final bound = bounds[baseIndices[index]];
                     bound.left = minFloat(bound.left, index == 0 ? rubyLeft : maxFloat(rubyLeft, (centers[index - 1] + centers[index]) / 2.0));
-                    bound.right = maxFloat(bound.right, index == baseIndices.length - 1 ? rubyRight : minFloat(rubyRight, (centers[index] + centers[index + 1]) / 2.0));
+                    bound.right = maxFloat(bound.right,
+                        index == baseIndices.length - 1 ? rubyRight : minFloat(rubyRight, (centers[index] + centers[index + 1]) / 2.0));
                     index++;
                 }
             }
@@ -741,12 +746,15 @@ class LayoutQueries {
         while (index < result.debug.metricDecisions.length) {
             final decision:MetricDecisionInfo = result.debug.metricDecisions[index];
             if (sameFontMetricStyle(resolvedTextStyleAt(result, decision.range.start), style)) {
-                if (firstMatch == null) firstMatch = decision;
-                if (decision.metricBox == IDEOGRAPHIC_EM_BOX_NAME) reference = decision;
+                if (firstMatch == null)
+                    firstMatch = decision;
+                if (decision.metricBox == IDEOGRAPHIC_EM_BOX_NAME)
+                    reference = decision;
             }
             index += 1;
         }
-        if (reference == null) reference = firstMatch;
+        if (reference == null)
+            reference = firstMatch;
         final ascent:Float = reference == null ? style.fontSize * BACKGROUND_FALLBACK_ASCENT_EM : reference.layoutAscent;
         final descent:Float = reference == null ? style.fontSize * BACKGROUND_FALLBACK_DESCENT_EM : reference.layoutDescent;
         return [segment.baseline - ascent, segment.baseline + descent];
@@ -879,6 +887,7 @@ class LayoutQueries {
         final sliceEnd:Int = minInt(end, cluster.range.end);
         return sliceStart < sliceEnd ? sliceRect(cluster, sliceStart, sliceEnd) : null;
     }
+
     private static function glyphsForCluster(result:LayoutResult, range:TextRange):Array<Glyph> {
         final output:Array<Glyph> = [];
         var runIndex:Int = 0;

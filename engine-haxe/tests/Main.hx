@@ -551,7 +551,8 @@ class Main {
         run("fontFaceIdRejectsBlankAndKeepsValue", ReplayableFontBackendCoverageTest.fontFaceIdRejectsBlankAndKeepsValue);
         run("faceDescriptorDefaultsAreStable", ReplayableFontBackendCoverageTest.faceDescriptorDefaultsAreStable);
         run("faceRequestRejectsNonPositiveAndNonFiniteFontSize", ReplayableFontBackendCoverageTest.faceRequestRejectsNonPositiveAndNonFiniteFontSize);
-        run("capabilityReportReplayFlagRequiresFacesAndNoMissingFaceIssue", ReplayableFontBackendCoverageTest.capabilityReportReplayFlagRequiresFacesAndNoMissingFaceIssue);
+        run("capabilityReportReplayFlagRequiresFacesAndNoMissingFaceIssue",
+            ReplayableFontBackendCoverageTest.capabilityReportReplayFlagRequiresFacesAndNoMissingFaceIssue);
         run("catalogContractResolvesByRequest", ReplayableFontBackendCoverageTest.catalogContractResolvesByRequest);
         TestTraceRecorder.flushClass("ReplayableFontBackendCoverageTest");
 
@@ -1137,7 +1138,8 @@ class Main {
 
         run("hangingTailIsExcludedFromFillDensityGeometry", LookaheadLineBreakerTest.hangingTailIsExcludedFromFillDensityGeometry);
         run("hangingClustersMustBeAContiguousTrailingSuffix", LookaheadLineBreakerTest.hangingClustersMustBeAContiguousTrailingSuffix);
-        run("compatibilityHangingIndexSkipsATrailingMandatoryBreakControl", LookaheadLineBreakerTest.compatibilityHangingIndexSkipsATrailingMandatoryBreakControl);
+        run("compatibilityHangingIndexSkipsATrailingMandatoryBreakControl",
+            LookaheadLineBreakerTest.compatibilityHangingIndexSkipsATrailingMandatoryBreakControl);
         run("emptyInputProducesNoLines", LookaheadLineBreakerTest.emptyInputProducesNoLines);
         run("lookaheadMatchesGreedyWhenShiftingEarlierGivesNoBenefit", LookaheadLineBreakerTest.lookaheadMatchesGreedyWhenShiftingEarlierGivesNoBenefit);
         run("lookaheadShiftsBreakEarlierToAvoidKinsokuRepair", LookaheadLineBreakerTest.lookaheadShiftsBreakEarlierToAvoidKinsokuRepair);
@@ -1150,7 +1152,8 @@ class Main {
         TestTraceRecorder.flushClass("LookaheadLineBreakerTest");
         run("testLineBreakerStrategyNameDefault", LineBreakerCoverage2Test.testLineBreakerStrategyNameDefault);
         run("testLookaheadLineBreakerPreconditions", LineBreakerCoverage2Test.testLookaheadLineBreakerPreconditions);
-        run("testLookaheadCandidateFilteringWithNonRenderingControlClusters", LineBreakerCoverage2Test.testLookaheadCandidateFilteringWithNonRenderingControlClusters);
+        run("testLookaheadCandidateFilteringWithNonRenderingControlClusters",
+            LineBreakerCoverage2Test.testLookaheadCandidateFilteringWithNonRenderingControlClusters);
         run("testLookaheadHardBreakAtEndAndMiddle", LineBreakerCoverage2Test.testLookaheadHardBreakAtEndAndMiddle);
         run("testLineCandidateEndsWithProgressiveBreak", LineBreakerCoverage2Test.testLineCandidateEndsWithProgressiveBreak);
         run("testLineGapCount", LineBreakerCoverage2Test.testLineGapCount);
@@ -1198,20 +1201,26 @@ class Main {
         run("emptyClustersReturnAnEmptySolution", ParagraphDpLineBreakerCoverageTest.emptyClustersReturnAnEmptySolution);
         run("mismatchedNaturalAndAdjustedSizesAreRejected", ParagraphDpLineBreakerCoverageTest.mismatchedNaturalAndAdjustedSizesAreRejected);
         run("negativeCandidateWindowIsRejected", ParagraphDpLineBreakerCoverageTest.negativeCandidateWindowIsRejected);
-        run("shrinkPrefixSkipsNonPositiveAndOutOfRangeOpportunities", ParagraphDpLineBreakerCoverageTest.shrinkPrefixSkipsNonPositiveAndOutOfRangeOpportunities);
+        run("shrinkPrefixSkipsNonPositiveAndOutOfRangeOpportunities",
+            ParagraphDpLineBreakerCoverageTest.shrinkPrefixSkipsNonPositiveAndOutOfRangeOpportunities);
         run("lineEndOnlyCapacityFeedsTheCompressedEdgeAtTheLineEnd", ParagraphDpLineBreakerCoverageTest.lineEndOnlyCapacityFeedsTheCompressedEdgeAtTheLineEnd);
         run("compressedEndsMayReachTheSegmentEnd", ParagraphDpLineBreakerCoverageTest.compressedEndsMayReachTheSegmentEnd);
-        run("compressedFinalMandatoryLineUsesTheCompressedCommitBranch", ParagraphDpLineBreakerCoverageTest.compressedFinalMandatoryLineUsesTheCompressedCommitBranch);
-        run("tierPromotionRoutesTheRepairReasonThroughThePromotionCode", ParagraphDpLineBreakerCoverageTest.tierPromotionRoutesTheRepairReasonThroughThePromotionCode);
-        run("promotionCheckReturnsFalseWhenTheCandidateEndHasNoOpportunity", ParagraphDpLineBreakerCoverageTest.promotionCheckReturnsFalseWhenTheCandidateEndHasNoOpportunity);
-        run("mandatorySegmentFiltersTheControlBoundaryFromCandidates", ParagraphDpLineBreakerCoverageTest.mandatorySegmentFiltersTheControlBoundaryFromCandidates);
+        run("compressedFinalMandatoryLineUsesTheCompressedCommitBranch",
+            ParagraphDpLineBreakerCoverageTest.compressedFinalMandatoryLineUsesTheCompressedCommitBranch);
+        run("tierPromotionRoutesTheRepairReasonThroughThePromotionCode",
+            ParagraphDpLineBreakerCoverageTest.tierPromotionRoutesTheRepairReasonThroughThePromotionCode);
+        run("promotionCheckReturnsFalseWhenTheCandidateEndHasNoOpportunity",
+            ParagraphDpLineBreakerCoverageTest.promotionCheckReturnsFalseWhenTheCandidateEndHasNoOpportunity);
+        run("mandatorySegmentFiltersTheControlBoundaryFromCandidates",
+            ParagraphDpLineBreakerCoverageTest.mandatorySegmentFiltersTheControlBoundaryFromCandidates);
         run("narrowWindowsDropEndsAtOrBelowTheLineStart", ParagraphDpLineBreakerCoverageTest.narrowWindowsDropEndsAtOrBelowTheLineStart);
         run("interfaceDefaultStrategyNameIsCustom", ParagraphDpLineBreakerCoverageTest.interfaceDefaultStrategyNameIsCustom);
         TestTraceRecorder.flushClass("ParagraphDpLineBreakerCoverageTest");
         run("testShrinkOpportunitiesNegativeAndOutOfRange", ParagraphDpLineBreakerCoverage2Test.testShrinkOpportunitiesNegativeAndOutOfRange);
         run("testCandidateWindowBoundsCompressionEdges", ParagraphDpLineBreakerCoverage2Test.testCandidateWindowBoundsCompressionEdges);
         run("testProgressiveTierPromotionBranches", ParagraphDpLineBreakerCoverage2Test.testProgressiveTierPromotionBranches);
-        run("testCommitSegmentOriginalBreakNotNullResultingBreakNull", ParagraphDpLineBreakerCoverage2Test.testCommitSegmentOriginalBreakNotNullResultingBreakNull);
+        run("testCommitSegmentOriginalBreakNotNullResultingBreakNull",
+            ParagraphDpLineBreakerCoverage2Test.testCommitSegmentOriginalBreakNotNullResultingBreakNull);
         run("testTierPreferredPoolEmptyFallback", ParagraphDpLineBreakerCoverage2Test.testTierPreferredPoolEmptyFallback);
         run("testHardBreakAfterClustersInDpCommit", ParagraphDpLineBreakerCoverage2Test.testHardBreakAfterClustersInDpCommit);
         run("testCandidateEndsWindowBelowLineStart", ParagraphDpLineBreakerCoverage2Test.testCandidateEndsWindowBelowLineStart);
@@ -1231,8 +1240,10 @@ class Main {
         run("contentWithoutInlineBoxesOmitsInlineEdgesArray", PreparedParagraphInlineEdgesTest.contentWithoutInlineBoxesOmitsInlineEdgesArray);
         run("endOnlyInlineBoxEmitsEdgeWithoutInlineStartField", PreparedParagraphInlineEdgesTest.endOnlyInlineBoxEmitsEdgeWithoutInlineStartField);
         TestTraceRecorder.flushClass("PreparedParagraphInlineEdgesTest");
-        run("rubyBaseRangeCrossingClusterBoundariesDropsOutOfPerLineExtents", org.tiqian.layout.LineGeometryDirectTailTest.rubyBaseRangeCrossingClusterBoundariesDropsOutOfPerLineExtents);
-        run("rubiesOnBothLinesExerciseBothSidesOfTheOverlapTest", org.tiqian.layout.LineGeometryDirectTailTest.rubiesOnBothLinesExerciseBothSidesOfTheOverlapTest);
+        run("rubyBaseRangeCrossingClusterBoundariesDropsOutOfPerLineExtents",
+            org.tiqian.layout.LineGeometryDirectTailTest.rubyBaseRangeCrossingClusterBoundariesDropsOutOfPerLineExtents);
+        run("rubiesOnBothLinesExerciseBothSidesOfTheOverlapTest",
+            org.tiqian.layout.LineGeometryDirectTailTest.rubiesOnBothLinesExerciseBothSidesOfTheOverlapTest);
         run("emptyLineSolutionYieldsZeroArraysAndZeroMaxExtra", org.tiqian.layout.LineGeometryDirectTailTest.emptyLineSolutionYieldsZeroArraysAndZeroMaxExtra);
         run("hangingBelowLineRangeIsRejected", org.tiqian.layout.LineCandidateValidationTest.hangingBelowLineRangeIsRejected);
         run("hangingEntirelyAboveLineIsRejected", org.tiqian.layout.LineCandidateValidationTest.hangingEntirelyAboveLineIsRejected);
@@ -1240,37 +1251,54 @@ class Main {
         run("nonContiguousHangingIsRejected", org.tiqian.layout.LineCandidateValidationTest.nonContiguousHangingIsRejected);
         run("inMeasureRangeExcludesHangingSuffix", org.tiqian.layout.LineCandidateValidationTest.inMeasureRangeExcludesHangingSuffix);
         run("inMeasureRangeIsFullLineWithoutHanging", org.tiqian.layout.LineCandidateValidationTest.inMeasureRangeIsFullLineWithoutHanging);
-        run("objectTopIntrusionBelowRubyDemandKeepsBoundaryClearanceZero", org.tiqian.layout.LineGeometryDirectTailTest.objectTopIntrusionBelowRubyDemandKeepsBoundaryClearanceZero);
-        run("objectTopIntrusionDominatingRubyDemandAddsBoundaryClearance", org.tiqian.layout.LineGeometryDirectTailTest.objectTopIntrusionDominatingRubyDemandAddsBoundaryClearance);
-        run("objectFlushWithBaseTopSkipsIntrusionConjunctionEarly", org.tiqian.layout.LineGeometryDirectTailTest.objectFlushWithBaseTopSkipsIntrusionConjunctionEarly);
-        run("metricListWithoutIdeographicEmBoxFallsBackToAllClusters", org.tiqian.layout.LineGeometryDirectTailTest.metricListWithoutIdeographicEmBoxFallsBackToAllClusters);
-        run("emptyMetricListTakesEmptyParagraphBaselineFallback", org.tiqian.layout.LineGeometryDirectTailTest.emptyMetricListTakesEmptyParagraphBaselineFallback);
+        run("objectTopIntrusionBelowRubyDemandKeepsBoundaryClearanceZero",
+            org.tiqian.layout.LineGeometryDirectTailTest.objectTopIntrusionBelowRubyDemandKeepsBoundaryClearanceZero);
+        run("objectTopIntrusionDominatingRubyDemandAddsBoundaryClearance",
+            org.tiqian.layout.LineGeometryDirectTailTest.objectTopIntrusionDominatingRubyDemandAddsBoundaryClearance);
+        run("objectFlushWithBaseTopSkipsIntrusionConjunctionEarly",
+            org.tiqian.layout.LineGeometryDirectTailTest.objectFlushWithBaseTopSkipsIntrusionConjunctionEarly);
+        run("metricListWithoutIdeographicEmBoxFallsBackToAllClusters",
+            org.tiqian.layout.LineGeometryDirectTailTest.metricListWithoutIdeographicEmBoxFallsBackToAllClusters);
+        run("emptyMetricListTakesEmptyParagraphBaselineFallback",
+            org.tiqian.layout.LineGeometryDirectTailTest.emptyMetricListTakesEmptyParagraphBaselineFallback);
         TestTraceRecorder.flushClass("LineGeometryDirectTailTest");
         run("budgetsResolveAdvancesThroughRemainingGlue", PunctuationGeometryLedgerCoverageTest.budgetsResolveAdvancesThroughRemainingGlue);
         run("glueCapacitiesReportSidesAndPairing", PunctuationGeometryLedgerCoverageTest.glueCapacitiesReportSidesAndPairing);
         run("sideConsumptionIsCappedAndSkipsNonPositiveAmounts", PunctuationGeometryLedgerCoverageTest.sideConsumptionIsCappedAndSkipsNonPositiveAmounts);
-        run("justificationDeltasAndStructuralChannelsFeedResolvedAdvance", PunctuationGeometryLedgerCoverageTest.justificationDeltasAndStructuralChannelsFeedResolvedAdvance);
+        run("justificationDeltasAndStructuralChannelsFeedResolvedAdvance",
+            PunctuationGeometryLedgerCoverageTest.justificationDeltasAndStructuralChannelsFeedResolvedAdvance);
         run("geometryWithoutBudgetFallsBackToBodyWidth", PunctuationGeometryLedgerCoverageTest.geometryWithoutBudgetFallsBackToBodyWidth);
         run("decisionInfoListsEveryGeometryWithBudgets", PunctuationGeometryLedgerCoverageTest.decisionInfoListsEveryGeometryWithBudgets);
         run("spacingPlanAdjustmentsConsumeByTargetAndAnchor", PunctuationGeometryLedgerCoverageTest.spacingPlanAdjustmentsConsumeByTargetAndAnchor);
-        run("attachedInlineBoundariesRequireAlignmentAndRunOnlyWithAttachments", PunctuationGeometryLedgerCoverageTest.attachedInlineBoundariesRequireAlignmentAndRunOnlyWithAttachments);
+        run("attachedInlineBoundariesRequireAlignmentAndRunOnlyWithAttachments",
+            PunctuationGeometryLedgerCoverageTest.attachedInlineBoundariesRequireAlignmentAndRunOnlyWithAttachments);
         run("attachedInlineBoundaryAtLineEndConsumesTrailingGlue", PunctuationGeometryLedgerCoverageTest.attachedInlineBoundaryAtLineEndConsumesTrailingGlue);
-        run("attachedInlineBoundaryAdjacentPunctuationHalvesTheVirtualGlue", PunctuationGeometryLedgerCoverageTest.attachedInlineBoundaryAdjacentPunctuationHalvesTheVirtualGlue);
-        run("attachedInlineBoundaryBeforeAsciiPointMarkCollapsesLikeAdjacent", PunctuationGeometryLedgerCoverageTest.attachedInlineBoundaryBeforeAsciiPointMarkCollapsesLikeAdjacent);
+        run("attachedInlineBoundaryAdjacentPunctuationHalvesTheVirtualGlue",
+            PunctuationGeometryLedgerCoverageTest.attachedInlineBoundaryAdjacentPunctuationHalvesTheVirtualGlue);
+        run("attachedInlineBoundaryBeforeAsciiPointMarkCollapsesLikeAdjacent",
+            PunctuationGeometryLedgerCoverageTest.attachedInlineBoundaryBeforeAsciiPointMarkCollapsesLikeAdjacent);
         run("attachedInlineBoundarySkipsMandatoryBreakNeighbour", PunctuationGeometryLedgerCoverageTest.attachedInlineBoundarySkipsMandatoryBreakNeighbour);
         run("attachedInlineBoundaryWithoutGlueEmitsNoDecision", PunctuationGeometryLedgerCoverageTest.attachedInlineBoundaryWithoutGlueEmitsNoDecision);
-        run("lineEdgeTrimConsumesHalfWidthAtEdgesAndSkipsEmptyInputs", PunctuationGeometryLedgerCoverageTest.lineEdgeTrimConsumesHalfWidthAtEdgesAndSkipsEmptyInputs);
+        run("lineEdgeTrimConsumesHalfWidthAtEdgesAndSkipsEmptyInputs",
+            PunctuationGeometryLedgerCoverageTest.lineEdgeTrimConsumesHalfWidthAtEdgesAndSkipsEmptyInputs);
         run("lineEdgeTrimConsumesCentredPunctuationOncePerLine", PunctuationGeometryLedgerCoverageTest.lineEdgeTrimConsumesCentredPunctuationOncePerLine);
         run("clusterIndexRangeFindCoveredClusters", PunctuationGeometryLedgerCoverageTest.clusterIndexRangeFindCoveredClusters);
         TestTraceRecorder.flushClass("PunctuationGeometryLedgerCoverageTest");
         TestTraceRecorder.flushClass("LineCandidateValidationTest");
-        run("sourceWhitespaceCapacityKeepsStructuralTierAheadOfSyllable", org.tiqian.layout.ProgressiveTechnicalBreakTest.sourceWhitespaceCapacityKeepsStructuralTierAheadOfSyllable);
-        run("lookaheadMayNotReplaceSelectedEmergencyBoundaryWithEarlierSameTierCut", org.tiqian.layout.ProgressiveTechnicalBreakTest.lookaheadMayNotReplaceSelectedEmergencyBoundaryWithEarlierSameTierCut);
-        run("foreignSpanCandidateSurvivesThePromotionPoolPurge", org.tiqian.layout.ParagraphDpTierPromotionPoolTest.foreignSpanCandidateSurvivesThePromotionPoolPurge);
-        run("committedCompressedLineWithForeignSpanOpportunitiesKeepsPlainPushInReason", org.tiqian.layout.ParagraphDpTierPromotionPoolTest.committedCompressedLineWithForeignSpanOpportunitiesKeepsPlainPushInReason);
-        run("committedCompressedEndWithoutOpportunityKeepsPlainPushInReason", org.tiqian.layout.ParagraphDpTierPromotionPoolTest.committedCompressedEndWithoutOpportunityKeepsPlainPushInReason);
-        run("pushInAggregatesShrinkFromMultiplePrecedingClusters", org.tiqian.layout.PushInLineWideCapacityTest.pushInAggregatesShrinkFromMultiplePrecedingClusters);
-        run("pushInRejectsWhenLineWideCapacityStillInsufficient", org.tiqian.layout.PushInLineWideCapacityTest.pushInRejectsWhenLineWideCapacityStillInsufficient);
+        run("sourceWhitespaceCapacityKeepsStructuralTierAheadOfSyllable",
+            org.tiqian.layout.ProgressiveTechnicalBreakTest.sourceWhitespaceCapacityKeepsStructuralTierAheadOfSyllable);
+        run("lookaheadMayNotReplaceSelectedEmergencyBoundaryWithEarlierSameTierCut",
+            org.tiqian.layout.ProgressiveTechnicalBreakTest.lookaheadMayNotReplaceSelectedEmergencyBoundaryWithEarlierSameTierCut);
+        run("foreignSpanCandidateSurvivesThePromotionPoolPurge",
+            org.tiqian.layout.ParagraphDpTierPromotionPoolTest.foreignSpanCandidateSurvivesThePromotionPoolPurge);
+        run("committedCompressedLineWithForeignSpanOpportunitiesKeepsPlainPushInReason",
+            org.tiqian.layout.ParagraphDpTierPromotionPoolTest.committedCompressedLineWithForeignSpanOpportunitiesKeepsPlainPushInReason);
+        run("committedCompressedEndWithoutOpportunityKeepsPlainPushInReason",
+            org.tiqian.layout.ParagraphDpTierPromotionPoolTest.committedCompressedEndWithoutOpportunityKeepsPlainPushInReason);
+        run("pushInAggregatesShrinkFromMultiplePrecedingClusters",
+            org.tiqian.layout.PushInLineWideCapacityTest.pushInAggregatesShrinkFromMultiplePrecedingClusters);
+        run("pushInRejectsWhenLineWideCapacityStillInsufficient",
+            org.tiqian.layout.PushInLineWideCapacityTest.pushInRejectsWhenLineWideCapacityStillInsufficient);
         run("pushInOffenderOnlyCapacityStillWorksBackCompat", org.tiqian.layout.PushInLineWideCapacityTest.pushInOffenderOnlyCapacityStillWorksBackCompat);
         run("pushInMergesOffenderThatFitsAfterChainedRepairs", org.tiqian.layout.PushInLineWideCapacityTest.pushInMergesOffenderThatFitsAfterChainedRepairs);
         run("carryPreviousRefusesToSplitUnbreakableSpan", org.tiqian.layout.PushInLineWideCapacityTest.carryPreviousRefusesToSplitUnbreakableSpan);
@@ -1280,19 +1308,22 @@ class Main {
         run("inlineBoxEdgesAndEmphasisDotsFilter", org.tiqian.layout.PreparedParagraphJfTest.inlineBoxEdgesAndEmphasisDotsFilter);
         run("dashShapingDecisionWithGlyphIds", org.tiqian.layout.PreparedParagraphJfTest.dashShapingDecisionWithGlyphIds);
         run("ecmaJsonNumberEdgeCases", org.tiqian.layout.PreparedParagraphJfTest.ecmaJsonNumberEdgeCases);
-        run("openTypeFeaturesAndRenderFontFamilyAttachPerCluster", org.tiqian.layout.PreparedParagraphPlanConstructionTest.openTypeFeaturesAndRenderFontFamilyAttachPerCluster);
+        run("openTypeFeaturesAndRenderFontFamilyAttachPerCluster",
+            org.tiqian.layout.PreparedParagraphPlanConstructionTest.openTypeFeaturesAndRenderFontFamilyAttachPerCluster);
         run("multiUnitClusterMarksShapingBoundary", org.tiqian.layout.PreparedParagraphPlanConstructionTest.multiUnitClusterMarksShapingBoundary);
         run("inlineObjectCellEmitsAdvanceOverride", org.tiqian.layout.PreparedParagraphPlanConstructionTest.inlineObjectCellEmitsAdvanceOverride);
         run("styleDeltaListsOnlyPaintFields", org.tiqian.layout.PreparedParagraphPlanConstructionTest.styleDeltaListsOnlyPaintFields);
         run("dashClusterEmitsShapingEvidenceBlock", org.tiqian.layout.PreparedParagraphPlanConstructionTest.dashClusterEmitsShapingEvidenceBlock);
         run("punctuationInkFloorAndLatinRoleMarkCells", org.tiqian.layout.PreparedParagraphPlanConstructionTest.punctuationInkFloorAndLatinRoleMarkCells);
-        run("zeroWidthBreakClusterSurvivesEmptyDisplayText", org.tiqian.layout.PreparedParagraphPlanConstructionTest.zeroWidthBreakClusterSurvivesEmptyDisplayText);
+        run("zeroWidthBreakClusterSurvivesEmptyDisplayText",
+            org.tiqian.layout.PreparedParagraphPlanConstructionTest.zeroWidthBreakClusterSurvivesEmptyDisplayText);
         run("paragraphEvidenceEmitsEverySection", org.tiqian.layout.PreparedParagraphPlanConstructionTest.paragraphEvidenceEmitsEverySection);
         run("negativeZeroAndExponentWidthsNormalize", org.tiqian.layout.PreparedParagraphPlanConstructionTest.negativeZeroAndExponentWidthsNormalize);
-        run("jsonStringEscapesQuotesBackslashesAndControlCharacters", org.tiqian.layout.PreparedParagraphPlanConstructionTest.jsonStringEscapesQuotesBackslashesAndControlCharacters);
-        run("planWithDiagnosticsListsCapabilityIssuesAndAdvanceSuspects", org.tiqian.layout.PreparedParagraphPlanConstructionTest.planWithDiagnosticsListsCapabilityIssuesAndAdvanceSuspects);
+        run("jsonStringEscapesQuotesBackslashesAndControlCharacters",
+            org.tiqian.layout.PreparedParagraphPlanConstructionTest.jsonStringEscapesQuotesBackslashesAndControlCharacters);
+        run("planWithDiagnosticsListsCapabilityIssuesAndAdvanceSuspects",
+            org.tiqian.layout.PreparedParagraphPlanConstructionTest.planWithDiagnosticsListsCapabilityIssuesAndAdvanceSuspects);
         TestTraceRecorder.flushClass("PreparedParagraphPlanConstructionTest");
-
 
         run("closingPlusClosingCollapsesInnerToZero", PunctuationSpacingRuleTest.closingPlusClosingCollapsesInnerToZero);
         run("openingPlusOpeningCollapsesInnerToZero", PunctuationSpacingRuleTest.openingPlusOpeningCollapsesInnerToZero);
@@ -1302,13 +1333,17 @@ class Main {
         run("closingPlusPauseOrStopStillCompresses", PunctuationSpacingRuleTest.closingPlusPauseOrStopStillCompresses);
         run("nonAdjacentPunctuationAtomsAreNotCompressed", PunctuationSpacingRuleTest.nonAdjacentPunctuationAtomsAreNotCompressed);
         run("cjkClosingBeforeAsciiPointMarkConsumesOnlyClosingGlue", PunctuationSpacingRuleTest.cjkClosingBeforeAsciiPointMarkConsumesOnlyClosingGlue);
-        run("cjkClosingDoesNotCompressAcrossWhitespaceBeforeAsciiPointMark", PunctuationSpacingRuleTest.cjkClosingDoesNotCompressAcrossWhitespaceBeforeAsciiPointMark);
+        run("cjkClosingDoesNotCompressAcrossWhitespaceBeforeAsciiPointMark",
+            PunctuationSpacingRuleTest.cjkClosingDoesNotCompressAcrossWhitespaceBeforeAsciiPointMark);
         TestTraceRecorder.flushClass("PunctuationSpacingRuleTest");
         run("asciiPointMarkKinsokuSkipsEmptyTextClusters", PunctuationGeometryBranchArmsCoverageTest.asciiPointMarkKinsokuSkipsEmptyTextClusters);
         run("attachedAsciiPointMarkCheckSkipsEmptyPreviousText", PunctuationGeometryBranchArmsCoverageTest.attachedAsciiPointMarkCheckSkipsEmptyPreviousText);
-        run("attachedBoundaryReasonFallsBackToNaturalWithoutLeftAtom", PunctuationGeometryBranchArmsCoverageTest.attachedBoundaryReasonFallsBackToNaturalWithoutLeftAtom);
-        run("attachedBoundaryRecordsNullCharactersForEmptyTextClusters", PunctuationGeometryBranchArmsCoverageTest.attachedBoundaryRecordsNullCharactersForEmptyTextClusters);
-        run("attachedBoundaryWithPlainPreviousClusterKeepsTheRightBudget", PunctuationGeometryBranchArmsCoverageTest.attachedBoundaryWithPlainPreviousClusterKeepsTheRightBudget);
+        run("attachedBoundaryReasonFallsBackToNaturalWithoutLeftAtom",
+            PunctuationGeometryBranchArmsCoverageTest.attachedBoundaryReasonFallsBackToNaturalWithoutLeftAtom);
+        run("attachedBoundaryRecordsNullCharactersForEmptyTextClusters",
+            PunctuationGeometryBranchArmsCoverageTest.attachedBoundaryRecordsNullCharactersForEmptyTextClusters);
+        run("attachedBoundaryWithPlainPreviousClusterKeepsTheRightBudget",
+            PunctuationGeometryBranchArmsCoverageTest.attachedBoundaryWithPlainPreviousClusterKeepsTheRightBudget);
         run("attachedMarkWalkStopsMidRunAtAGap", PunctuationGeometryBranchArmsCoverageTest.attachedMarkWalkStopsMidRunAtAGap);
         run("attachedRunAtParagraphEndEmitsNoAutoSpace", PunctuationGeometryBranchArmsCoverageTest.attachedRunAtParagraphEndEmitsNoAutoSpace);
         run("attachedTrailingGlueWidensABudgetedEndCluster", PunctuationGeometryBranchArmsCoverageTest.attachedTrailingGlueWidensABudgetedEndCluster);
@@ -1316,15 +1351,18 @@ class Main {
         run("emptyTextClustersCannotBeAttachedMarks", PunctuationGeometryBranchArmsCoverageTest.emptyTextClustersCannotBeAttachedMarks);
         run("glueCapacitiesMarkCentredFramesAsPaired", PunctuationGeometryBranchArmsCoverageTest.glueCapacitiesMarkCentredFramesAsPaired);
         run("haltAdvanceIsRejectedAtZeroAndAtFullWidth", PunctuationGeometryBranchArmsCoverageTest.haltAdvanceIsRejectedAtZeroAndAtFullWidth);
-        run("inlineBoxSpanWithZeroNetStructuralEdgeStillAppliesLeading", PunctuationGeometryBranchArmsCoverageTest.inlineBoxSpanWithZeroNetStructuralEdgeStillAppliesLeading);
+        run("inlineBoxSpanWithZeroNetStructuralEdgeStillAppliesLeading",
+            PunctuationGeometryBranchArmsCoverageTest.inlineBoxSpanWithZeroNetStructuralEdgeStillAppliesLeading);
         run("nonFiniteHaltPlacementIsIgnored", PunctuationGeometryBranchArmsCoverageTest.nonFiniteHaltPlacementIsIgnored);
-        run("resolveClustersAppliesGlyphShiftWithUnchangedAdvance", PunctuationGeometryBranchArmsCoverageTest.resolveClustersAppliesGlyphShiftWithUnchangedAdvance);
+        run("resolveClustersAppliesGlyphShiftWithUnchangedAdvance",
+            PunctuationGeometryBranchArmsCoverageTest.resolveClustersAppliesGlyphShiftWithUnchangedAdvance);
         run("spaceRunRequiresNonEmptyAllSpaceText", PunctuationGeometryBranchArmsCoverageTest.spaceRunRequiresNonEmptyAllSpaceText);
         run("spacingBoundariesAtListEdgesAreFalse", PunctuationGeometryBranchArmsCoverageTest.spacingBoundariesAtListEdgesAreFalse);
         run("spacingPlanIgnoresTargetsOutsideTheBudgets", PunctuationGeometryBranchArmsCoverageTest.spacingPlanIgnoresTargetsOutsideTheBudgets);
         run("typedSpaceWithEmptyTextNeighboursKeepsItsWidth", PunctuationGeometryBranchArmsCoverageTest.typedSpaceWithEmptyTextNeighboursKeepsItsWidth);
         run("unionIgnoresGlyphsWithoutBounds", PunctuationGeometryBranchArmsCoverageTest.unionIgnoresGlyphsWithoutBounds);
-        run("virtualGapWithEmptyPreviousTextHasNoNarrowCharacter", PunctuationGeometryBranchArmsCoverageTest.virtualGapWithEmptyPreviousTextHasNoNarrowCharacter);
+        run("virtualGapWithEmptyPreviousTextHasNoNarrowCharacter",
+            PunctuationGeometryBranchArmsCoverageTest.virtualGapWithEmptyPreviousTextHasNoNarrowCharacter);
         TestTraceRecorder.flushClass("PunctuationGeometryBranchArmsCoverageTest");
         run("fullyQualifiedEmojiSequencesResolveToOneEmojiRange", UnicodeEmoji17RgiRoleAuditTest.fullyQualifiedEmojiSequencesResolveToOneEmojiRange);
         TestTraceRecorder.flushClass("UnicodeEmoji17RgiRoleAuditTest");

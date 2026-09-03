@@ -1,7 +1,7 @@
 package org.tiqian.layout;
 
-
 using std.Functional;
+
 import org.tiqian.core.*;
 import org.tiqian.clreq.*;
 import org.tiqian.font.FontRole;
