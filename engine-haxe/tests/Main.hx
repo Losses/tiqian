@@ -1,5 +1,6 @@
 import org.tiqian.layout.LineGeometryDirectTailTest;
 import org.tiqian.layout.PunctuationGeometryLedgerCoverageTest;
+import org.tiqian.layout.PunctuationSpacingRuleTest;
 import org.tiqian.core.TiqianIllegalArgumentException;
 import org.tiqian.core.CoreUnitsGeometryTest;
 import org.tiqian.core.CoreLayoutQueriesGapsTest;
@@ -1252,6 +1253,16 @@ class Main {
         run("lineEdgeTrimConsumesCentredPunctuationOncePerLine", PunctuationGeometryLedgerCoverageTest.lineEdgeTrimConsumesCentredPunctuationOncePerLine);
         run("clusterIndexRangeFindCoveredClusters", PunctuationGeometryLedgerCoverageTest.clusterIndexRangeFindCoveredClusters);
         TestTraceRecorder.flushClass("PunctuationGeometryLedgerCoverageTest");
+        run("closingPlusClosingCollapsesInnerToZero", PunctuationSpacingRuleTest.closingPlusClosingCollapsesInnerToZero);
+        run("openingPlusOpeningCollapsesInnerToZero", PunctuationSpacingRuleTest.openingPlusOpeningCollapsesInnerToZero);
+        run("closingPlusOpeningKeepsHalfEmGap", PunctuationSpacingRuleTest.closingPlusOpeningKeepsHalfEmGap);
+        run("pauseStopPlusOpeningCollapsesByHalfEm", PunctuationSpacingRuleTest.pauseStopPlusOpeningCollapsesByHalfEm);
+        run("consecutivePauseOrStopMarksCompressLikeAnyAdjacentPair", PunctuationSpacingRuleTest.consecutivePauseOrStopMarksCompressLikeAnyAdjacentPair);
+        run("closingPlusPauseOrStopStillCompresses", PunctuationSpacingRuleTest.closingPlusPauseOrStopStillCompresses);
+        run("nonAdjacentPunctuationAtomsAreNotCompressed", PunctuationSpacingRuleTest.nonAdjacentPunctuationAtomsAreNotCompressed);
+        run("cjkClosingBeforeAsciiPointMarkConsumesOnlyClosingGlue", PunctuationSpacingRuleTest.cjkClosingBeforeAsciiPointMarkConsumesOnlyClosingGlue);
+        run("cjkClosingDoesNotCompressAcrossWhitespaceBeforeAsciiPointMark", PunctuationSpacingRuleTest.cjkClosingDoesNotCompressAcrossWhitespaceBeforeAsciiPointMark);
+        TestTraceRecorder.flushClass("PunctuationSpacingRuleTest");
         Console.log("all CoreUnitsGeometryTest checks passed");
         if (failures > 0) {
             Process.exit(1);
