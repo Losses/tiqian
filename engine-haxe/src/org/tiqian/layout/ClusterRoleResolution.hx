@@ -1,7 +1,7 @@
 package org.tiqian.layout;
 
-
 using std.Functional;
+
 import org.tiqian.core.Cluster;
 import org.tiqian.core.TextRange;
 import org.tiqian.core.RoleOverrideInfo;

@@ -1,7 +1,7 @@
 package org.tiqian.layout;
 
-
 using std.Functional;
+
 import org.tiqian.core.Cluster;
 import org.tiqian.core.IntRange;
 import org.tiqian.core.LineEndReason;
@@ -164,9 +164,8 @@ class LookaheadLineBreaker implements LineBreaker {
     final leaveRaggedPenalty:Int;
     final consecutiveSyntheticHyphenPenalty:Float;
 
-    public function new(?window:Null<Int>, ?futureLineHorizon:Null<Int>, ?raggednessWeight:Null<Float>, ?kinsoku:Null<KinsokuRule>,
-            ?pushInPenalty:Null<Int>, ?carryPreviousPenalty:Null<Int>, ?leaveRaggedPenalty:Null<Int>,
-            ?consecutiveSyntheticHyphenPenalty:Null<Float>) {
+    public function new(?window:Null<Int>, ?futureLineHorizon:Null<Int>, ?raggednessWeight:Null<Float>, ?kinsoku:Null<KinsokuRule>, ?pushInPenalty:Null<Int>,
+            ?carryPreviousPenalty:Null<Int>, ?leaveRaggedPenalty:Null<Int>, ?consecutiveSyntheticHyphenPenalty:Null<Float>) {
         this.window = window == null ? 2 : window;
         this.futureLineHorizon = futureLineHorizon == null ? 2 : futureLineHorizon;
         this.raggednessWeight = raggednessWeight == null ? 0.5 : raggednessWeight;
@@ -182,13 +181,12 @@ class LookaheadLineBreaker implements LineBreaker {
     function get_strategyName():String
         return "lookahead";
 
-    public function breakLines(naturalClusters:Array<Cluster>, adjustedClusters:Array<Cluster>, maxWidth:Float,
-            ?shrinkOpportunities:Array<ShrinkOpportunity>, ?unbreakableRanges:UnbreakableRanges, ?firstLineIndent:Float,
-            ?hangableClusters:SortedSet<Int>, ?extendableHangRanges:Array<IntRange>, ?forbiddenLineStartClusters:Null<SortedSet<Int>>,
-            ?forbiddenLineEndClusters:SortedSet<Int>, ?hyphenBreakClusters:SortedSet<Int>, ?cjkInterCharBoundaries:SortedSet<Int>,
-            ?maxCjkStretchPerGap:Float, ?sinoWesternBoundaries:SortedSet<Int>, ?sinoWesternStretchCap:Float, ?lineAdjustmentPushIn:Bool,
-            ?lineAdjustmentCompressBias:Float, ?hardBreakAfterClusters:SortedSet<Int>, ?nonRenderingControlClusters:SortedSet<Int>,
-            ?progressiveBreakOpportunities:SortedMap<Int, ProgressiveBreakOpportunity>):LineSolution {
+    public function breakLines(naturalClusters:Array<Cluster>, adjustedClusters:Array<Cluster>, maxWidth:Float, ?shrinkOpportunities:Array<ShrinkOpportunity>,
+            ?unbreakableRanges:UnbreakableRanges, ?firstLineIndent:Float, ?hangableClusters:SortedSet<Int>, ?extendableHangRanges:Array<IntRange>,
+            ?forbiddenLineStartClusters:Null<SortedSet<Int>>, ?forbiddenLineEndClusters:SortedSet<Int>, ?hyphenBreakClusters:SortedSet<Int>,
+            ?cjkInterCharBoundaries:SortedSet<Int>, ?maxCjkStretchPerGap:Float, ?sinoWesternBoundaries:SortedSet<Int>, ?sinoWesternStretchCap:Float,
+            ?lineAdjustmentPushIn:Bool, ?lineAdjustmentCompressBias:Float, ?hardBreakAfterClusters:SortedSet<Int>,
+            ?nonRenderingControlClusters:SortedSet<Int>, ?progressiveBreakOpportunities:SortedMap<Int, ProgressiveBreakOpportunity>):LineSolution {
         if (adjustedClusters.length == 0)
             return new LineSolution([]);
         if (naturalClusters.length != adjustedClusters.length)
@@ -248,8 +246,8 @@ class LookaheadLineBreaker implements LineBreaker {
             final mandatoryEnd:Null<Int> = breakCursor < sortedBreaks.length ? sortedBreaks[breakCursor] : null;
             final segmentEndExclusive = mandatoryEnd != null ? mandatoryEnd + 1 : adjustedClusters.length;
 
-            final rawGreedyEnd = LineBreakerLines.findGreedyEnd(adjustedClusters, lineStart,
-                ProgressiveBreakDecisions.lineLimit(maxWidth, indent, lineStart), segmentEndExclusive, controls);
+            final rawGreedyEnd = LineBreakerLines.findGreedyEnd(adjustedClusters, lineStart, ProgressiveBreakDecisions.lineLimit(maxWidth, indent, lineStart),
+                segmentEndExclusive, controls);
             final progBreak = ProgressiveBreakDecisions.decideProgressiveBreak(lineStart, rawGreedyEnd, progressive, adjustedClusters,
                 ProgressiveBreakDecisions.lineLimit(maxWidth, indent, lineStart), cjk, maxStretch, sino, sinoCap);
             final hyphenBreak = ProgressiveBreakDecisions.decideHyphenBreak(lineStart, progBreak, adjustedClusters,
@@ -298,8 +296,8 @@ class LookaheadLineBreaker implements LineBreaker {
             var bestScore = Math.POSITIVE_INFINITY;
             for (e in candidates) {
                 final score = scoreCandidate(lineStart, e, naturalClusters, adjustedClusters, maxWidth, shrinkOps, indent, hangables, extendables,
-                    forbiddenLineStartClusters, hyphens, cjk, maxStretch, sino, sinoCap, segmentEndExclusive, committedDensity,
-                    committedSyntheticHyphenRun, gapBoundaries, dRef, ranges, controls, progressive);
+                    forbiddenLineStartClusters, hyphens, cjk, maxStretch, sino, sinoCap, segmentEndExclusive, committedDensity, committedSyntheticHyphenRun,
+                    gapBoundaries, dRef, ranges, controls, progressive);
                 if (score < bestScore) {
                     bestScore = score;
                     bestEnd = e;
@@ -314,8 +312,7 @@ class LookaheadLineBreaker implements LineBreaker {
                 committedSyntheticHyphenRun = 0;
                 lineStart = committedEnd + 1;
                 if (lineStart == adjustedClusters.length) {
-                    committed.push(LineBreakerLines.emptyLineCandidate(adjustedClusters[adjustedClusters.length - 1].range.end,
-                        LineEndReason.ParagraphEnd));
+                    committed.push(LineBreakerLines.emptyLineCandidate(adjustedClusters[adjustedClusters.length - 1].range.end, LineEndReason.ParagraphEnd));
                 }
                 continue;
             }
@@ -334,20 +331,19 @@ class LookaheadLineBreaker implements LineBreaker {
             forbiddenLineStartClusters, forbidEnd, ranges, pushInPenalty, gapBoundaries, progressive);
     }
 
-    function scoreCandidate(s:Int, e:Int, natural:Array<Cluster>, adjusted:Array<Cluster>, maxWidth:Float,
-            shrinkOpportunities:Array<ShrinkOpportunity>, firstLineIndent:Float, hangableClusters:SortedSet<Int>,
-            extendableHangRanges:Array<IntRange>, forbiddenLineStartClusters:Null<SortedSet<Int>>, hyphenBreakClusters:SortedSet<Int>,
-            cjkInterCharBoundaries:SortedSet<Int>, maxCjkStretchPerGap:Float, sinoWesternBoundaries:SortedSet<Int>,
-            sinoWesternStretchCap:Float, segmentEndExclusive:Int, prevCommittedDensity:Float, prevSyntheticHyphenRun:Int,
-            gapBoundaries:SortedSet<Int>, dRef:Float, unbreakableRanges:UnbreakableRanges, nonRenderingControlClusters:SortedSet<Int>,
+    function scoreCandidate(s:Int, e:Int, natural:Array<Cluster>, adjusted:Array<Cluster>, maxWidth:Float, shrinkOpportunities:Array<ShrinkOpportunity>,
+            firstLineIndent:Float, hangableClusters:SortedSet<Int>, extendableHangRanges:Array<IntRange>, forbiddenLineStartClusters:Null<SortedSet<Int>>,
+            hyphenBreakClusters:SortedSet<Int>, cjkInterCharBoundaries:SortedSet<Int>, maxCjkStretchPerGap:Float, sinoWesternBoundaries:SortedSet<Int>,
+            sinoWesternStretchCap:Float, segmentEndExclusive:Int, prevCommittedDensity:Float, prevSyntheticHyphenRun:Int, gapBoundaries:SortedSet<Int>,
+            dRef:Float, unbreakableRanges:UnbreakableRanges, nonRenderingControlClusters:SortedSet<Int>,
             progressiveBreakOpportunities:SortedMap<Int, ProgressiveBreakOpportunity>):Float {
         final firstLine = LineBreakerLines.rebuildLine(new IntRange(s, e - 1), natural, adjusted);
         final future = rawGreedyLinesFrom(e, natural, adjusted, maxWidth, hyphenBreakClusters, cjkInterCharBoundaries, maxCjkStretchPerGap,
-            sinoWesternBoundaries, sinoWesternStretchCap, segmentEndExclusive, unbreakableRanges, nonRenderingControlClusters,
-            futureLineHorizon + 1, progressiveBreakOpportunities);
-        final spliced = LineRepair.applyKinsokuRepairs([firstLine].concat(future), natural, adjusted, maxWidth, kinsoku, shrinkOpportunities,
-            pushInPenalty, carryPreviousPenalty, leaveRaggedPenalty, unbreakableRanges, firstLineIndent, hangableClusters,
-            extendableHangRanges, 5, forbiddenLineStartClusters).lines;
+            sinoWesternBoundaries, sinoWesternStretchCap, segmentEndExclusive, unbreakableRanges, nonRenderingControlClusters, futureLineHorizon + 1,
+            progressiveBreakOpportunities);
+        final spliced = LineRepair.applyKinsokuRepairs([firstLine].concat(future), natural, adjusted, maxWidth, kinsoku, shrinkOpportunities, pushInPenalty,
+            carryPreviousPenalty, leaveRaggedPenalty, unbreakableRanges, firstLineIndent, hangableClusters, extendableHangRanges, 5, forbiddenLineStartClusters)
+            .lines;
 
         final horizon = Std.int(Math.min(1 + futureLineHorizon, spliced.length));
         var score = 0.0;
@@ -371,10 +367,9 @@ class LookaheadLineBreaker implements LineBreaker {
         return score;
     }
 
-    function rawGreedyLinesFrom(start:Int, natural:Array<Cluster>, adjusted:Array<Cluster>, maxWidth:Float,
-            hyphenBreakClusters:SortedSet<Int>, cjkInterCharBoundaries:SortedSet<Int>, maxCjkStretchPerGap:Float,
-            sinoWesternBoundaries:SortedSet<Int>, sinoWesternStretchCap:Float, endExclusive:Int,
-            unbreakableRanges:UnbreakableRanges, nonRenderingControlClusters:SortedSet<Int>, maxLines:Int,
+    function rawGreedyLinesFrom(start:Int, natural:Array<Cluster>, adjusted:Array<Cluster>, maxWidth:Float, hyphenBreakClusters:SortedSet<Int>,
+            cjkInterCharBoundaries:SortedSet<Int>, maxCjkStretchPerGap:Float, sinoWesternBoundaries:SortedSet<Int>, sinoWesternStretchCap:Float,
+            endExclusive:Int, unbreakableRanges:UnbreakableRanges, nonRenderingControlClusters:SortedSet<Int>, maxLines:Int,
             progressiveBreakOpportunities:SortedMap<Int, ProgressiveBreakOpportunity>):Array<LineCandidate> {
         if (start >= endExclusive)
             return [];
@@ -393,8 +388,8 @@ class LookaheadLineBreaker implements LineBreaker {
             if (overflows) {
                 final prog = ProgressiveBreakDecisions.decideProgressiveBreak(lineStart, i, progressiveBreakOpportunities, adjusted, maxWidth,
                     cjkInterCharBoundaries, maxCjkStretchPerGap, sinoWesternBoundaries, sinoWesternStretchCap);
-                final decided = ProgressiveBreakDecisions.decideHyphenBreak(lineStart, prog, adjusted, maxWidth, hyphenBreakClusters,
-                    cjkInterCharBoundaries, maxCjkStretchPerGap, sinoWesternBoundaries, sinoWesternStretchCap);
+                final decided = ProgressiveBreakDecisions.decideHyphenBreak(lineStart, prog, adjusted, maxWidth, hyphenBreakClusters, cjkInterCharBoundaries,
+                    maxCjkStretchPerGap, sinoWesternBoundaries, sinoWesternStretchCap);
                 final breakAt = ProgressiveBreakDecisions.adjustBreakForUnbreakables(decided, lineStart, unbreakableRanges);
                 lines.push(LineBreakerLines.rebuildLine(new IntRange(lineStart, breakAt - 1), natural, adjusted));
                 if (lines.length >= maxLines)
@@ -415,8 +410,8 @@ class LookaheadLineBreaker implements LineBreaker {
         return lines;
     }
 
-    function badness(line:LineCandidate, maxWidth:Float, isLast:Bool, firstLineIndent:Float, prevDensity:Float,
-            gapBoundaries:SortedSet<Int>, dRef:Float):Float {
+    function badness(line:LineCandidate, maxWidth:Float, isLast:Bool, firstLineIndent:Float, prevDensity:Float, gapBoundaries:SortedSet<Int>,
+            dRef:Float):Float {
         final limit = ProgressiveBreakDecisions.lineLimit(maxWidth, firstLineIndent, line.clusterRange.start);
         final ragged = isLast ? 0.0 : Math.max(0.0, limit - line.adjustedWidth);
         final inMeasureRange = line.inMeasureClusterRange;
@@ -425,7 +420,10 @@ class LookaheadLineBreaker implements LineBreaker {
         final d = LineBreakerLines.lineAdjustmentDensity(line, limit, isLast, gapBoundaries);
         final orphan = (!isLast && !inMeasureRange.isEmpty && inMeasureRange.start == inMeasureRange.end) ? leaveRaggedPenalty * 1.0 : 0.0;
         final repairPenalty = line.repair != null ? RepairOptions.penalty(line.repair) * 1.0 : 0.0;
-        return residual * raggednessWeight + orphan + LineBreakerLines.amortizedAdjustmentCost(d, prevDensity, dRef) * raggednessWeight + repairPenalty;
+        return residual * raggednessWeight
+            + orphan
+            + LineBreakerLines.amortizedAdjustmentCost(d, prevDensity, dRef) * raggednessWeight
+            + repairPenalty;
     }
 
     static function hasRenderingContentInRange(start:Int, end:Int, controls:SortedSet<Int>):Bool {
@@ -490,11 +488,15 @@ class LineBreakerLines {
     }
 
     public static function endsWithSyntheticHyphen(line:LineCandidate, hyphenBreakClusters:SortedSet<Int>):Bool {
-        return line.endReason == LineEndReason.AutoWrap && !line.clusterRange.isEmpty && hyphenBreakClusters.has(line.clusterRange.end + 1);
+        return line.endReason == LineEndReason.AutoWrap
+            && !line.clusterRange.isEmpty
+            && hyphenBreakClusters.has(line.clusterRange.end + 1);
     }
 
     public static function endsWithProgressiveBreak(candidate:LineCandidate, opportunities:SortedMap<Int, ProgressiveBreakOpportunity>):Bool {
-        return candidate.endReason == LineEndReason.AutoWrap && !candidate.clusterRange.isEmpty && opportunities.get(candidate.clusterRange.end + 1) != null;
+        return candidate.endReason == LineEndReason.AutoWrap
+            && !candidate.clusterRange.isEmpty
+            && opportunities.get(candidate.clusterRange.end + 1) != null;
     }
 
     public static function lineGapCount(range:IntRange, gapBoundaries:SortedSet<Int>):Int {
@@ -545,4 +547,3 @@ class LineBreakerLines {
         return end;
     }
 }
-

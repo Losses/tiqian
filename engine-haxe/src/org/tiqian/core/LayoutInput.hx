@@ -14,12 +14,12 @@ class LayoutInput {
     public final inlineBoxes:ReadOnlyArray<InlineBoxSpan>;
     public final inlineObjects:ReadOnlyArray<InlineObjectSpan>;
 
-    public function new(content:TiqianTextContent, textStyle:TextStyle, paragraphStyle:ParagraphStyle, constraints:LayoutConstraints,
+    public function new(content:TiqianTextContent, ?textStyle:Null<TextStyle>, ?paragraphStyle:Null<ParagraphStyle>, constraints:LayoutConstraints,
             ?profileId:Null<LayoutProfileId>, ?decorations:Array<DecorationSpan>, ?rubySpans:Array<RubySpan>, ?inlineBoxes:Array<InlineBoxSpan>,
             ?inlineObjects:Array<InlineObjectSpan>) {
         this.content = content;
-        this.textStyle = textStyle;
-        this.paragraphStyle = paragraphStyle;
+        this.textStyle = textStyle == null ? new TextStyle() : textStyle;
+        this.paragraphStyle = paragraphStyle == null ? new ParagraphStyle() : paragraphStyle;
         this.constraints = constraints;
         this.profileId = profileId == null ? BuiltInLayoutProfiles.ClreqHorizontal : profileId;
         this.decorations = decorations == null ? [] : decorations;

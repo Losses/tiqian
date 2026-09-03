@@ -1,7 +1,7 @@
 package org.tiqian.layout;
 
-
 using std.Functional;
+
 import org.tiqian.clreq.ClreqPunctuationPolicies;
 import org.tiqian.clreq.GlueSide;
 import org.tiqian.clreq.PunctuationClass;
