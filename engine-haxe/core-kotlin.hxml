@@ -85,6 +85,13 @@ org.tiqian.layout.DefaultHyphenator
 org.tiqian.layout.LineRepairCoverageTest
 org.tiqian.layout.LineRepairTailCoverageTest
 org.tiqian.font.UnicodeSymbolData
+org.tiqian.layout.AnnotationGeometryStage
+org.tiqian.layout.ParagraphLayoutEngine
+org.tiqian.layout.LineGeometryStage
+org.tiqian.layout.PunctuationGeometryLedger
+org.tiqian.layout.ContextualPunctuationDisplaySubstitution
+org.tiqian.layout.LineGeometryDirectTailTest
+org.tiqian.layout.PunctuationGeometryLedgerCoverageTest
 org.tiqian.layout.PreparedParagraph
 org.tiqian.layout.PreparedParagraphJsonNumberTest
 org.tiqian.shaping.ReplayableFontBackend
