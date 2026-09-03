@@ -1259,6 +1259,16 @@ class Main {
         run("clusterIndexRangeFindCoveredClusters", PunctuationGeometryLedgerCoverageTest.clusterIndexRangeFindCoveredClusters);
         TestTraceRecorder.flushClass("PunctuationGeometryLedgerCoverageTest");
         TestTraceRecorder.flushClass("LineCandidateValidationTest");
+        run("sourceWhitespaceCapacityKeepsStructuralTierAheadOfSyllable", org.tiqian.layout.ProgressiveTechnicalBreakTest.sourceWhitespaceCapacityKeepsStructuralTierAheadOfSyllable);
+        run("lookaheadMayNotReplaceSelectedEmergencyBoundaryWithEarlierSameTierCut", org.tiqian.layout.ProgressiveTechnicalBreakTest.lookaheadMayNotReplaceSelectedEmergencyBoundaryWithEarlierSameTierCut);
+        run("foreignSpanCandidateSurvivesThePromotionPoolPurge", org.tiqian.layout.ParagraphDpTierPromotionPoolTest.foreignSpanCandidateSurvivesThePromotionPoolPurge);
+        run("committedCompressedLineWithForeignSpanOpportunitiesKeepsPlainPushInReason", org.tiqian.layout.ParagraphDpTierPromotionPoolTest.committedCompressedLineWithForeignSpanOpportunitiesKeepsPlainPushInReason);
+        run("committedCompressedEndWithoutOpportunityKeepsPlainPushInReason", org.tiqian.layout.ParagraphDpTierPromotionPoolTest.committedCompressedEndWithoutOpportunityKeepsPlainPushInReason);
+        run("pushInAggregatesShrinkFromMultiplePrecedingClusters", org.tiqian.layout.PushInLineWideCapacityTest.pushInAggregatesShrinkFromMultiplePrecedingClusters);
+        run("pushInRejectsWhenLineWideCapacityStillInsufficient", org.tiqian.layout.PushInLineWideCapacityTest.pushInRejectsWhenLineWideCapacityStillInsufficient);
+        run("pushInOffenderOnlyCapacityStillWorksBackCompat", org.tiqian.layout.PushInLineWideCapacityTest.pushInOffenderOnlyCapacityStillWorksBackCompat);
+        run("pushInMergesOffenderThatFitsAfterChainedRepairs", org.tiqian.layout.PushInLineWideCapacityTest.pushInMergesOffenderThatFitsAfterChainedRepairs);
+        run("carryPreviousRefusesToSplitUnbreakableSpan", org.tiqian.layout.PushInLineWideCapacityTest.carryPreviousRefusesToSplitUnbreakableSpan);
         TestTraceRecorder.flushClass("ProgressiveTechnicalBreakTest");
         TestTraceRecorder.flushClass("ParagraphDpTierPromotionPoolTest");
         TestTraceRecorder.flushClass("PushInLineWideCapacityTest");

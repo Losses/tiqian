@@ -8,46 +8,41 @@ import org.tiqian.test.trace.TracedAssertions;
 import std.SortedSet;
 
 class LineCandidateValidationTest {
-    private static function candidate(hanging:Array<Int>, ?range:Null<IntRange>):LineCandidate {
-        final b = SortedSet.builder();
-        for (value in hanging) b.put(value);
-        return new LineCandidate(range == null ? new IntRange(0, 3) : range, new TextRange(0, 4), 64.0, 64.0, null, null, null, b.build());
-    }
 
     @:test public static function hangingBelowLineRangeIsRejected():Void {
         final testTrace = new TestTraceRecorder("LineCandidateValidationTest");
         testTrace.section("hangingBelowLineRangeIsRejected");
-        final error = TracedAssertions.assertFailsWith(null, function() candidate([-1, 3]));
+        final error = TracedAssertions.assertFailsWith(null, function() LineCandidateValidationTestSupport.candidate([-1, 3]));
         TracedAssertions.assertEqualsString("Hanging clusters must be a trailing line suffix: line=0..3 hanging=[-1, 3]", error.message);
     }
 
     @:test public static function hangingEntirelyAboveLineIsRejected():Void {
         final testTrace = new TestTraceRecorder("LineCandidateValidationTest");
         testTrace.section("hangingEntirelyAboveLineIsRejected");
-        TracedAssertions.assertFailsWith(null, function() candidate([5, 6]));
+        TracedAssertions.assertFailsWith(null, function() LineCandidateValidationTestSupport.candidate([5, 6]));
     }
 
     @:test public static function hangingAboveLineLastIsRejected():Void {
         final testTrace = new TestTraceRecorder("LineCandidateValidationTest");
         testTrace.section("hangingAboveLineLastIsRejected");
-        TracedAssertions.assertFailsWith(null, function() candidate([1, 4]));
+        TracedAssertions.assertFailsWith(null, function() LineCandidateValidationTestSupport.candidate([1, 4]));
     }
 
     @:test public static function nonContiguousHangingIsRejected():Void {
         final testTrace = new TestTraceRecorder("LineCandidateValidationTest");
         testTrace.section("nonContiguousHangingIsRejected");
-        TracedAssertions.assertFailsWith(null, function() candidate([0, 2, 3]));
+        TracedAssertions.assertFailsWith(null, function() LineCandidateValidationTestSupport.candidate([0, 2, 3]));
     }
 
     @:test public static function inMeasureRangeExcludesHangingSuffix():Void {
         final testTrace = new TestTraceRecorder("LineCandidateValidationTest");
         testTrace.section("inMeasureRangeExcludesHangingSuffix");
-        TracedAssertions.assertEqualsIntRange(new IntRange(0, 1), candidate([2, 3]).inMeasureClusterRange);
+        TracedAssertions.assertEqualsIntRange(new IntRange(0, 1), LineCandidateValidationTestSupport.candidate([2, 3]).inMeasureClusterRange);
     }
 
     @:test public static function inMeasureRangeIsFullLineWithoutHanging():Void {
         final testTrace = new TestTraceRecorder("LineCandidateValidationTest");
         testTrace.section("inMeasureRangeIsFullLineWithoutHanging");
-        TracedAssertions.assertEqualsIntRange(new IntRange(0, 3), candidate([]).inMeasureClusterRange);
+        TracedAssertions.assertEqualsIntRange(new IntRange(0, 3), LineCandidateValidationTestSupport.candidate([]).inMeasureClusterRange);
     }
 }
