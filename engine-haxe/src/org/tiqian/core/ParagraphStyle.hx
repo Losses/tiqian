@@ -60,15 +60,15 @@ class ParagraphStyle {
     public final emphasisDotGapEm:Float;
 
     public function new(?lastLineAlignment:Null<LastLineAlignment>, ?writingMode:Null<WritingMode>, ?lineHeight:Null<Float>, ?firstLineIndent:Null<Ic>,
-            ?blockIndent:Null<Ic>, firstLineIndentPolicy:MeasureAdaptiveFirstLineIndent, lineLengthGrid:LineLengthGrid,
+            ?blockIndent:Null<Ic>, ?firstLineIndentPolicy:Null<MeasureAdaptiveFirstLineIndent>, ?lineLengthGrid:Null<LineLengthGrid>,
             ?rubyLineHeightMode:Null<RubyLineHeightMode>, ?inlineObjectMinimumClearanceEm:Null<Float>, ?emphasisDotGapEm:Null<Float>) {
         this.lastLineAlignment = lastLineAlignment == null ? LastLineAlignment.Start : lastLineAlignment;
         this.writingMode = writingMode == null ? WritingMode.HorizontalTb : writingMode;
         this.lineHeight = lineHeight == null ? null : lineHeight;
         this.firstLineIndent = firstLineIndent == null ? null : firstLineIndent;
         this.blockIndent = blockIndent == null ? Ic.Zero : blockIndent;
-        this.firstLineIndentPolicy = firstLineIndentPolicy;
-        this.lineLengthGrid = lineLengthGrid;
+        this.firstLineIndentPolicy = firstLineIndentPolicy == null ? new MeasureAdaptiveFirstLineIndent() : firstLineIndentPolicy;
+        this.lineLengthGrid = lineLengthGrid == null ? new LineLengthGrid() : lineLengthGrid;
         this.rubyLineHeightMode = rubyLineHeightMode == null ? RubyLineHeightMode.PerLine : rubyLineHeightMode;
         this.inlineObjectMinimumClearanceEm = inlineObjectMinimumClearanceEm == null ? ParagraphStyle.DEFAULT_INLINE_OBJECT_MINIMUM_CLEARANCE_EM : inlineObjectMinimumClearanceEm;
         this.emphasisDotGapEm = emphasisDotGapEm == null ? ParagraphStyle.DEFAULT_EMPHASIS_DOT_GAP_EM : emphasisDotGapEm;
