@@ -96,7 +96,7 @@ class ParagraphDpLineBreaker implements LineBreaker {
 
     private function candidateEnds(context:DpContext, start:Int, segmentEndExclusive:Int, endsWithMandatory:Bool):Array<Int> {
         final limit = ProgressiveBreakDecisions.lineLimit(context.maxWidth, context.firstLineIndent, start);
-        final raw = findGreedyEnd(context.adjustedClusters, start, limit, segmentEndExclusive, context.nonRenderingControlClusters);
+        final raw = LineBreakerLines.findGreedyEnd(context.adjustedClusters, start, limit, segmentEndExclusive, context.nonRenderingControlClusters);
         if (raw >= segmentEndExclusive) return [segmentEndExclusive];
         final progressive = ProgressiveBreakDecisions.decideProgressiveBreak(start, raw, context.progressiveBreakOpportunities, context.adjustedClusters, limit,
             context.cjkInterCharBoundaries, context.maxCjkStretchPerGap, context.sinoWesternBoundaries, context.sinoWesternStretchCap);
@@ -234,7 +234,7 @@ class ParagraphDpLineBreaker implements LineBreaker {
         final ends:Array<Int> = []; var start = segmentStart;
         while (start < segmentEndExclusive) {
             final limit = ProgressiveBreakDecisions.lineLimit(context.maxWidth, context.firstLineIndent, start);
-            final raw = findGreedyEnd(context.adjustedClusters, start, limit, segmentEndExclusive, context.nonRenderingControlClusters);
+            final raw = LineBreakerLines.findGreedyEnd(context.adjustedClusters, start, limit, segmentEndExclusive, context.nonRenderingControlClusters);
             var e = raw >= segmentEndExclusive ? segmentEndExclusive : ProgressiveBreakDecisions.adjustBreakForUnbreakables(
                 ProgressiveBreakDecisions.decideHyphenBreak(start, raw, context.adjustedClusters, limit, context.hyphenBreakClusters,
                     context.cjkInterCharBoundaries, context.maxCjkStretchPerGap, context.sinoWesternBoundaries, context.sinoWesternStretchCap), start, context.unbreakableRanges);
@@ -256,7 +256,7 @@ class ParagraphDpLineBreaker implements LineBreaker {
             var compressed:Null<LineCandidate> = null;
             if (naturalLine.adjustedWidth > limit && lastIndex > lineStart) {
                 final resultingBreak = context.progressiveBreakOpportunities.get(chosenEnd);
-                final rawGreedy = findGreedyEnd(context.adjustedClusters, lineStart, limit, ends[ends.length - 1], context.nonRenderingControlClusters);
+                final rawGreedy = LineBreakerLines.findGreedyEnd(context.adjustedClusters, lineStart, limit, ends[ends.length - 1], context.nonRenderingControlClusters);
                 final originalBreak = context.progressiveBreakOpportunities.get(ProgressiveBreakDecisions.decideProgressiveBreak(lineStart, rawGreedy,
                     context.progressiveBreakOpportunities, context.adjustedClusters, limit, context.cjkInterCharBoundaries, context.maxCjkStretchPerGap,
                     context.sinoWesternBoundaries, context.sinoWesternStretchCap));
@@ -290,12 +290,6 @@ class ParagraphDpLineBreaker implements LineBreaker {
             }
         }
     }
-    private static function findGreedyEnd(clusters:Array<Cluster>, start:Int, limit:Float, endExclusive:Int, controls:SortedSet<Int>):Int {
-        var width = 0.0; var i = start; var hasContent = false;
-        while (i < endExclusive) { final next = width + clusters[i].advance; if (next > limit && hasContent) return i; width = next; if (!controls.has(i)) hasContent = true; i++; }
-        return endExclusive;
-    }
-
     private static function rangeHasOnlyNonControlClusters(start:Int, endExclusive:Int, set:SortedSet<Int>):Bool {
         var i = start;
         while (i < endExclusive) { if (!set.has(i)) return true; i++; }
