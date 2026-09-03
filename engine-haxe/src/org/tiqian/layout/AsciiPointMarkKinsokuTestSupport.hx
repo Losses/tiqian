@@ -31,11 +31,31 @@ typedef BreakerChoice = {label:String, breaker:LineBreaker};
 class AsciiPointMarkKinsokuTestSupport {
     public static function renderStrings(a:ReadOnlyArray<String>):String { final x:Array<String>=[];for(i in 0...a.length)x.push(a[i]);return "["+x.join(", ")+"]"; }
     public static function joinLines(a:Array<String>):String { return a.join("\n"); }
-    public static function renderClusters(a:ReadOnlyArray<Cluster>):String { return Std.string(a); }
-    public static function renderFonts(a:ReadOnlyArray<FontDecisionInfo>):String { return Std.string(a); }
-    public static function renderContextual(a:ReadOnlyArray<ContextualKinsokuDecisionInfo>):String { return Std.string(a); }
-    public static function renderLines(a:ReadOnlyArray<LineBox>):String { return Std.string(a); }
-    public static function renderLineDecisions(a:ReadOnlyArray<LineDecisionInfo>):String { return Std.string(a); }
+    public static function renderClusters(a:ReadOnlyArray<Cluster>):String {
+        final parts:Array<String> = [];
+        for (i in 0...a.length) parts.push(Std.string(a[i]));
+        return "[" + parts.join(", ") + "]";
+    }
+    public static function renderFonts(a:ReadOnlyArray<FontDecisionInfo>):String {
+        final parts:Array<String> = [];
+        for (i in 0...a.length) parts.push(Std.string(a[i]));
+        return "[" + parts.join(", ") + "]";
+    }
+    public static function renderContextual(a:ReadOnlyArray<ContextualKinsokuDecisionInfo>):String {
+        final parts:Array<String> = [];
+        for (i in 0...a.length) parts.push(Std.string(a[i]));
+        return "[" + parts.join(", ") + "]";
+    }
+    public static function renderLines(a:ReadOnlyArray<LineBox>):String {
+        final parts:Array<String> = [];
+        for (i in 0...a.length) parts.push(Std.string(a[i]));
+        return "[" + parts.join(", ") + "]";
+    }
+    public static function renderLineDecisions(a:ReadOnlyArray<LineDecisionInfo>):String {
+        final parts:Array<String> = [];
+        for (i in 0...a.length) parts.push(Std.string(a[i]));
+        return "[" + parts.join(", ") + "]";
+    }
     public static function hasCluster(r:LayoutResult,s:String):Bool { for(i in 0...r.clusters.length) if(r.clusters[i].text==s)return true; return false; }
     public static function clustersWithText(r:LayoutResult,s:String):Array<Cluster> { final x:Array<Cluster>=[]; for(i in 0...r.clusters.length)if(r.clusters[i].text==s)x.push(r.clusters[i]); return x; }
     public static function sameRange(first:TextRange, second:TextRange):Bool {
