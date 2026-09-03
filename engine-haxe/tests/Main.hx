@@ -1229,6 +1229,12 @@ class Main {
         run("rubyBaseRangeCrossingClusterBoundariesDropsOutOfPerLineExtents", org.tiqian.layout.LineGeometryDirectTailTest.rubyBaseRangeCrossingClusterBoundariesDropsOutOfPerLineExtents);
         run("rubiesOnBothLinesExerciseBothSidesOfTheOverlapTest", org.tiqian.layout.LineGeometryDirectTailTest.rubiesOnBothLinesExerciseBothSidesOfTheOverlapTest);
         run("emptyLineSolutionYieldsZeroArraysAndZeroMaxExtra", org.tiqian.layout.LineGeometryDirectTailTest.emptyLineSolutionYieldsZeroArraysAndZeroMaxExtra);
+        run("hangingBelowLineRangeIsRejected", org.tiqian.layout.LineCandidateValidationTest.hangingBelowLineRangeIsRejected);
+        run("hangingEntirelyAboveLineIsRejected", org.tiqian.layout.LineCandidateValidationTest.hangingEntirelyAboveLineIsRejected);
+        run("hangingAboveLineLastIsRejected", org.tiqian.layout.LineCandidateValidationTest.hangingAboveLineLastIsRejected);
+        run("nonContiguousHangingIsRejected", org.tiqian.layout.LineCandidateValidationTest.nonContiguousHangingIsRejected);
+        run("inMeasureRangeExcludesHangingSuffix", org.tiqian.layout.LineCandidateValidationTest.inMeasureRangeExcludesHangingSuffix);
+        run("inMeasureRangeIsFullLineWithoutHanging", org.tiqian.layout.LineCandidateValidationTest.inMeasureRangeIsFullLineWithoutHanging);
         run("objectTopIntrusionBelowRubyDemandKeepsBoundaryClearanceZero", org.tiqian.layout.LineGeometryDirectTailTest.objectTopIntrusionBelowRubyDemandKeepsBoundaryClearanceZero);
         run("objectTopIntrusionDominatingRubyDemandAddsBoundaryClearance", org.tiqian.layout.LineGeometryDirectTailTest.objectTopIntrusionDominatingRubyDemandAddsBoundaryClearance);
         run("objectFlushWithBaseTopSkipsIntrusionConjunctionEarly", org.tiqian.layout.LineGeometryDirectTailTest.objectFlushWithBaseTopSkipsIntrusionConjunctionEarly);
@@ -1252,6 +1258,7 @@ class Main {
         run("lineEdgeTrimConsumesCentredPunctuationOncePerLine", PunctuationGeometryLedgerCoverageTest.lineEdgeTrimConsumesCentredPunctuationOncePerLine);
         run("clusterIndexRangeFindCoveredClusters", PunctuationGeometryLedgerCoverageTest.clusterIndexRangeFindCoveredClusters);
         TestTraceRecorder.flushClass("PunctuationGeometryLedgerCoverageTest");
+        TestTraceRecorder.flushClass("LineCandidateValidationTest");
         Console.log("all CoreUnitsGeometryTest checks passed");
         if (failures > 0) {
             Process.exit(1);
