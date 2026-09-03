@@ -2,7 +2,10 @@ package org.tiqian.layout;
 
 import org.tiqian.core.*;
 import org.tiqian.font.FontRole;
+import org.tiqian.layout.PreparedParagraph.PreparedParagraphFns;
 import org.tiqian.test.TestHelpers;
+import org.tiqian.test.trace.TestTraceRecorder;
+import org.tiqian.test.trace.TracedAssertions;
 
 class PreparedParagraphPlanConstructionTestSupport {
     public static function line(r:TextRange, cr:IntRange, ?w:Null<Float>):LineBox {
@@ -200,5 +203,103 @@ class PreparedParagraphPlanConstructionTestSupport {
             new GlyphRun(c, "cjk", [new Glyph(3, c, 16)], 16)
         ],
             [line(new TextRange(0, 3), new IntRange(0, 2), 48)], null, null, null, new LayoutDebugInfo(null, null, null, null, null, null, null, ds));
+    }
+
+    static function begin(name:String):TestTraceRecorder {
+        final t = new TestTraceRecorder("PreparedParagraphPlanConstructionTest");
+        t.section(name);
+        return t;
+    }
+
+    public static function runEvidence(name:String, r:LayoutResult):Void {
+        final t = begin(name);
+        final j = PreparedParagraphFns.toPreparedParagraphJson(r, true);
+        TracedAssertions.assertTrue(j.indexOf("\"dashStrategy\":\"PairedEmDash\"") >= 0, j);
+        TracedAssertions.assertTrue(j.indexOf("\"shapingLanguage\":\"zh-Hans\"") >= 0, j);
+        TracedAssertions.assertTrue(j.indexOf("\"resolvedFace\":\"NotoSansCJK\"") >= 0, j);
+        TracedAssertions.assertTrue(j.indexOf("\"glyphIds\":\"9,10\"") >= 0, j);
+        TracedAssertions.assertTrue(j.indexOf("\"shapingEvidence\":\"dash-reason\"") >= 0, j);
+        TracedAssertions.assertTrue(j.indexOf("\"naturalWidth\":32") >= 0, j);
+    }
+
+    public static function runPunctuation():Void {
+        final t = begin("punctuationInkFloorAndLatinRoleMarkCells");
+        final j = PreparedParagraphFns.toPreparedParagraphJson(punctuationInkFloorAndLatinRoleMarkCells(), true);
+        TracedAssertions.assertTrue(j.indexOf("\"punctuationInkFloor\":6") >= 0, j);
+        TracedAssertions.assertTrue(j.indexOf("\"punctuationBodyWidth\":16") >= 0, j);
+        TracedAssertions.assertEquals(1, j.split("\"punctuationInkFloor\":").length - 1);
+        TracedAssertions.assertTrue(j.indexOf("\"latin\":true") >= 0, j);
+    }
+
+    public static function runZeroWidth():Void {
+        final t = begin("zeroWidthBreakClusterSurvivesEmptyDisplayText");
+        final r = zeroWidthBreakClusterSurvivesEmptyDisplayText();
+        final j = PreparedParagraphFns.toPreparedParagraphJson(r);
+        TracedAssertions.assertTrue(j.indexOf("\"display\":\"\",\"drawX\":16") >= 0, j);
+        TracedAssertions.assertEquals(3, j.split("\"source\":").length - 1);
+        final e = PreparedParagraphFns.toPreparedParagraphJson(r, true);
+        TracedAssertions.assertTrue(e.indexOf("\"dashStrategy\":\"ZeroWidthNoShape\"") >= 0, e);
+        TracedAssertions.assertTrue(e.indexOf("\"shapingEvidence\":\"no-shape\"") >= 0, e);
+        TracedAssertions.assertFalse(e.indexOf("shapingLanguage") >= 0, e);
+        TracedAssertions.assertFalse(e.indexOf("resolvedFace") >= 0, e);
+        TracedAssertions.assertFalse(e.indexOf("glyphIds") >= 0, e);
+    }
+
+    public static function runParagraphEvidence():Void {
+        final t = begin("paragraphEvidenceEmitsEverySection");
+        final j = PreparedParagraphFns.toPreparedParagraphJson(paragraphEvidenceEmitsEverySection(), true);
+        TracedAssertions.assertTrue(j.indexOf("\"emphasisRanges\":[[0,1],[1,2]]") >= 0, j);
+        TracedAssertions.assertTrue(j.indexOf("\"inlineEdges\":[{\"offset\":0,\"inlineStart\":2.5},{\"offset\":2,\"inlineEnd\":4.5}]") >= 0, j);
+        TracedAssertions.assertTrue(j.indexOf("\"rubyDecisions\":[{\"baseRangeStart\":0") >= 0, j);
+        TracedAssertions.assertTrue(j.indexOf("\"ascent\":6") >= 0, j);
+        TracedAssertions.assertTrue(j.indexOf("\"fontFamilies\":[\"RubyKai\",\"RubyLatin\"]") >= 0, j);
+        TracedAssertions.assertTrue(j.indexOf("\"bopomofoDecisions\":[{\"baseRangeStart\":1") >= 0, j);
+        TracedAssertions.assertTrue(j.indexOf("\"role\":\"Symbol\"") >= 0, j);
+        TracedAssertions.assertTrue(j.indexOf("\"role\":\"Tone\"") >= 0, j);
+        TracedAssertions.assertTrue(j.indexOf("\"fontFamilies\":[\"BopomofoKai\",\"BopomofoLatin\"]") >= 0, j);
+        TracedAssertions.assertTrue(j.indexOf("\"decorationSegments\":[{\"kind\":\"ProperNoun\"") >= 0, j);
+        TracedAssertions.assertTrue(j.indexOf("\"kind\":\"BookTitle\"") >= 0, j);
+        TracedAssertions.assertFalse(j.indexOf("Emphasis") >= 0, j);
+        TracedAssertions.assertTrue(j.indexOf("\"emphasisDots\":[{\"clusterRangeStart\":0,\"anchorX\":8,\"anchorY\":22,\"dotDiameter\":2}]") >= 0, j);
+        TracedAssertions.assertTrue(j.indexOf("\"fontSize\":16") >= 0, j);
+        TracedAssertions.assertTrue(j.indexOf("\"overlayWidth\":480") >= 0, j);
+    }
+
+    public static function runNegativeZero():Void {
+        final t = begin("negativeZeroAndExponentWidthsNormalize");
+        final j = PreparedParagraphFns.toPreparedParagraphJson(negativeZeroAndExponentWidthsNormalize());
+        TracedAssertions.assertTrue(j.indexOf("\"width\":1.0000000200408773e+21") >= 0, j);
+        TracedAssertions.assertTrue(j.indexOf("\"height\":0") >= 0, j);
+        TracedAssertions.assertTrue(j.indexOf("\"indent\":0") >= 0, j);
+        TracedAssertions.assertTrue(j.indexOf("\"hyphenAdvance\":0") >= 0, j);
+    }
+
+    public static function runEscapes():Void {
+        final t = begin("jsonStringEscapesQuotesBackslashesAndControlCharacters");
+        final j = PreparedParagraphFns.toPreparedParagraphJson(escapes());
+        final ss = ["\\\"", "\\\\", "\\b", "\\f", "\\n", "\\r", "\\t", "\\u0001"];
+        for (i in 0...ss.length) {
+            final s = ss[i];
+            TracedAssertions.assertTrue(j.indexOf(s) >= 0, j);
+        }
+    }
+
+    public static function runDiagnostics():Void {
+        final t = begin("planWithDiagnosticsListsCapabilityIssuesAndAdvanceSuspects");
+        final j = PreparedParagraphFns.toPlanWithDiagnosticsJson(diagnostics(), false, 0.5);
+        final d = j.substr(j.indexOf("\"diagnostics\":"));
+        for (s in [
+            "\"name\":\"InvalidWebShapingAdvance\"",
+            "\"reason\":\"capability-reason\"",
+            "\"rangeStart\":0",
+            "\"rangeEnd\":1",
+            "\"displayText\":\"零\"",
+            "\"advance\":\"0\"",
+            "\"advance\":\"NaN\"",
+            "\"advance\":\"Infinity\""
+        ])
+            TracedAssertions.assertTrue(d.indexOf(s) >= 0, j);
+        TracedAssertions.assertFalse(d.indexOf("\"advance\":\"32\"") >= 0, j);
+        TracedAssertions.assertTrue(j.indexOf("{\"plan\":\"") == 0, j.substr(0, 20));
     }
 }
