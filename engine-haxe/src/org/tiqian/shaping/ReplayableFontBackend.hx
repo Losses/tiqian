@@ -18,9 +18,12 @@ abstract FontFaceId(String) {
         return of(value);
 
     public var value(get, never):String;
-    inline function get_value():String return this;
 
-    public function toString():String return this;
+    inline function get_value():String
+        return this;
+
+    public function toString():String
+        return this;
 }
 
 class ReplayableFontFaceDescriptor {
@@ -33,9 +36,8 @@ class ReplayableFontFaceDescriptor {
     public final sourceLabel:String;
     public final variationAxes:SortedMap<String, Float>;
 
-    public function new(id:FontFaceId, familyAliases:SortedSet<String>, roles:Array<FontRole>,
-        sourceLabel:String, ?weight:Int = 400, ?italic:Bool = false, ?collectionIndex:Int = 0,
-        ?variationAxes:SortedMap<String, Float>) {
+    public function new(id:FontFaceId, familyAliases:SortedSet<String>, roles:Array<FontRole>, sourceLabel:String, ?weight:Int = 400, ?italic:Bool = false,
+            ?collectionIndex:Int = 0, ?variationAxes:SortedMap<String, Float>) {
         this.id = id;
         this.familyAliases = familyAliases;
         this.roles = roles;
@@ -56,8 +58,7 @@ class ReplayableFontFaceRequest {
     public final locale:String;
     public final selectionText:String;
 
-    public function new(role:FontRole, preferredFamilies:Array<String>, fontSize:Float, weight:Int,
-        italic:Bool, locale:String, selectionText:String) {
+    public function new(role:FontRole, preferredFamilies:Array<String>, fontSize:Float, weight:Int, italic:Bool, locale:String, selectionText:String) {
         if (!(fontSize > 0 && Math.isFinite(fontSize)))
             throw new TiqianIllegalArgumentException(Message("fontSize must be positive and finite"));
         this.role = role;
@@ -73,6 +74,7 @@ class ReplayableFontFaceRequest {
 class FontBackendCapabilityIssue {
     public final code:String;
     public final detail:String;
+
     public function new(code:String, detail:String) {
         this.code = code;
         this.detail = detail;
@@ -85,8 +87,7 @@ class FontBackendCapabilityReport {
     public final faces:Array<ReplayableFontFaceDescriptor>;
     public final issues:Array<FontBackendCapabilityIssue>;
 
-    public function new(backend:String, sourceKind:String, faces:Array<ReplayableFontFaceDescriptor>,
-        ?issues:Array<FontBackendCapabilityIssue>) {
+    public function new(backend:String, sourceKind:String, faces:Array<ReplayableFontFaceDescriptor>, ?issues:Array<FontBackendCapabilityIssue>) {
         this.backend = backend;
         this.sourceKind = sourceKind;
         this.faces = faces;
@@ -94,10 +95,13 @@ class FontBackendCapabilityReport {
     }
 
     public var canReplayFromControlledBytes(get, never):Bool;
+
     function get_canReplayFromControlledBytes():Bool {
-        if (faces.length == 0) return false;
+        if (faces.length == 0)
+            return false;
         for (issue in issues)
-            if (issue.code == "MissingControlledFontFace") return false;
+            if (issue.code == "MissingControlledFontFace")
+                return false;
         return true;
     }
 }

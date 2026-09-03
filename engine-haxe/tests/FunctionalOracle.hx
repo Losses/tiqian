@@ -22,7 +22,7 @@ class FunctionalOracle {
     }
 
     // Duplicate keys follow last-wins (macros/01, associate row).
-    private static function associate(arr:Array<Dynamic>, fn:(Dynamic) -> {key:Int, value:Dynamic}):std.SortedMap<Int, Dynamic> {
+    private static function associate(arr:Array<Dynamic>, fn:(Dynamic) -> {key: Int, value: Dynamic}):std.SortedMap<Int, Dynamic> {
         final builder = std.SortedMap.builder();
         var i:Int = 0;
         while (i < arr.length) {
@@ -70,7 +70,7 @@ class FunctionalOracle {
     }
 
     // Keys ascend; each bucket keeps receiver order (macros/03).
-    private static function groupBy(arr:Array<Dynamic>, fn:(Dynamic) -> {key:Int, value:Dynamic}):std.SortedMap<Int, Array<Dynamic>> {
+    private static function groupBy(arr:Array<Dynamic>, fn:(Dynamic) -> {key: Int, value: Dynamic}):std.SortedMap<Int, Array<Dynamic>> {
         final builder = std.SortedMap.builder();
         var i:Int = 0;
         while (i < arr.length) {
