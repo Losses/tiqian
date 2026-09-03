@@ -4,8 +4,11 @@ import org.tiqian.core.Cluster;
 import org.tiqian.core.IntRange;
 import org.tiqian.core.LineEndReason;
 import org.tiqian.core.TextRange;
+import org.tiqian.layout.LineBreaker.LineBreakerLines;
+import org.tiqian.layout.LineBreaker.LookaheadLineBreaker;
 import org.tiqian.layout.LineOptimization.LineCandidate;
 import org.tiqian.layout.ProgressiveBreakDecisions.ProgressiveBreakOpportunity;
+import org.tiqian.layout.ProgressiveBreakDecisions.ProgressiveBreakTier;
 import org.tiqian.layout.ProgressiveBreakDecisions.ShrinkOpportunity;
 import org.tiqian.layout.ProgressiveBreakDecisions.UnbreakableRanges;
 import org.tiqian.test.trace.TestTraceRecorder;
@@ -14,18 +17,16 @@ import std.SortedMap;
 import std.SortedSet;
 
 class LineBreakerCoverage2Test {
-    static function rec(name:String):Void {
-        new TestTraceRecorder("LineBreakerCoverage2Test").section(name);
-    }
-
     @:test public static function testLineBreakerStrategyNameDefault():Void {
-        rec("testLineBreakerStrategyNameDefault");
+        final testTrace = new TestTraceRecorder("LineBreakerCoverage2Test");
+        testTrace.section("testLineBreakerStrategyNameDefault");
         final breaker:LineBreaker = new LineBreakerCoverage2TestCustomBreaker();
         TracedAssertions.assertEqualsString("custom", breaker.strategyName);
     }
 
     @:test public static function testLookaheadLineBreakerPreconditions():Void {
-        rec("testLookaheadLineBreakerPreconditions");
+        final testTrace = new TestTraceRecorder("LineBreakerCoverage2Test");
+        testTrace.section("testLookaheadLineBreakerPreconditions");
         final clusters = LineBreakerCoverage2TestSupport.hanClusters(2);
         TracedAssertions.assertFailsWith(null, function() {
             new LookaheadLineBreaker().breakLines(LineBreakerCoverage2TestSupport.hanClusters(1), clusters, 100.0);
@@ -39,22 +40,24 @@ class LineBreakerCoverage2Test {
     }
 
     @:test public static function testLookaheadCandidateFilteringWithNonRenderingControlClusters():Void {
-        rec("testLookaheadCandidateFilteringWithNonRenderingControlClusters");
+        final testTrace = new TestTraceRecorder("LineBreakerCoverage2Test");
+        testTrace.section("testLookaheadCandidateFilteringWithNonRenderingControlClusters");
         final clusters = [
             LineBreakerCoverage2TestSupport.cluster(0, "\u200B", 0.0),
             LineBreakerCoverage2TestSupport.cluster(1, "A", 20.0),
             LineBreakerCoverage2TestSupport.cluster(2, "B", 20.0)
         ];
-        final solution = new LookaheadLineBreaker(2).breakLines(clusters, clusters, 25.0, null, null, null, null, null, null, null, null, null, null, null, null, null, null,
+        final solution = new LookaheadLineBreaker(2).breakLines(clusters, clusters, 25.0, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null,
             LineBreakerCoverage2TestSupport.ints([0]));
         TracedAssertions.assertTrue(solution.lines.length > 0);
         TracedAssertions.assertEqualsIntRange(new IntRange(0, 1), solution.lines[0].clusterRange);
     }
 
     @:test public static function testLookaheadHardBreakAtEndAndMiddle():Void {
-        rec("testLookaheadHardBreakAtEndAndMiddle");
+        final testTrace = new TestTraceRecorder("LineBreakerCoverage2Test");
+        testTrace.section("testLookaheadHardBreakAtEndAndMiddle");
         final endSolution = new LookaheadLineBreaker(1).breakLines(LineBreakerCoverage2TestSupport.hanClusters(2), LineBreakerCoverage2TestSupport.hanClusters(2), 20.0,
-            null, null, null, null, null, null, null, null, null, null, null, null, null, LineBreakerCoverage2TestSupport.ints([1]));
+            null, null, null, null, null, null, null, null, null, null, null, null, null, null, LineBreakerCoverage2TestSupport.ints([1]));
         TracedAssertions.assertEqualsInt(2, endSolution.lines.length);
         TracedAssertions.assertEqualsIntRange(new IntRange(0, 1), endSolution.lines[0].clusterRange);
         TracedAssertions.assertEqualsEnum(LineEndReason.MandatoryBreak, endSolution.lines[0].endReason);
@@ -62,19 +65,20 @@ class LineBreakerCoverage2Test {
         TracedAssertions.assertEqualsEnum(LineEndReason.ParagraphEnd, endSolution.lines[1].endReason);
 
         final middleSolution = new LookaheadLineBreaker(1).breakLines(LineBreakerCoverage2TestSupport.hanClusters(3), LineBreakerCoverage2TestSupport.hanClusters(3), 20.0,
-            null, null, null, null, null, null, null, null, null, null, null, null, null, LineBreakerCoverage2TestSupport.ints([0]));
+            null, null, null, null, null, null, null, null, null, null, null, null, null, null, LineBreakerCoverage2TestSupport.ints([0]));
         TracedAssertions.assertEqualsInt(3, middleSolution.lines.length);
         TracedAssertions.assertEqualsIntRange(new IntRange(0, 0), middleSolution.lines[0].clusterRange);
         TracedAssertions.assertEqualsEnum(LineEndReason.MandatoryBreak, middleSolution.lines[0].endReason);
 
         final oversized = [LineBreakerCoverage2TestSupport.cluster(0, "A", 50.0), LineBreakerCoverage2TestSupport.cluster(1, "B", 10.0)];
-        final oversizedSolution = new LookaheadLineBreaker(1).breakLines(oversized, oversized, 20.0, null, null, null, null, null, null, null, null, null, null, null, null, null,
+        final oversizedSolution = new LookaheadLineBreaker(1).breakLines(oversized, oversized, 20.0, null, null, null, null, null, null, null, null, null, null, null, null, null, null,
             LineBreakerCoverage2TestSupport.ints([0]));
         TracedAssertions.assertEqualsInt(2, oversizedSolution.lines.length);
     }
 
     @:test public static function testLineCandidateEndsWithProgressiveBreak():Void {
-        rec("testLineCandidateEndsWithProgressiveBreak");
+        final testTrace = new TestTraceRecorder("LineBreakerCoverage2Test");
+        testTrace.section("testLineCandidateEndsWithProgressiveBreak");
         final c = new LineCandidate(new IntRange(0, 1), new TextRange(0, 2), 32.0, 32.0, LineEndReason.AutoWrap);
         final opp = new ProgressiveBreakOpportunity(ProgressiveBreakTier.Syllable, new TextRange(0, 4));
         TracedAssertions.assertTrue(LineBreakerLines.endsWithProgressiveBreak(c, LineBreakerCoverage2TestSupport.oppMap([2], [opp])));
@@ -86,25 +90,29 @@ class LineBreakerCoverage2Test {
     }
 
     @:test public static function testLineGapCount():Void {
-        rec("testLineGapCount");
+        final testTrace = new TestTraceRecorder("LineBreakerCoverage2Test");
+        testTrace.section("testLineGapCount");
         TracedAssertions.assertEqualsInt(0, LineBreakerLines.lineGapCount(new IntRange(1, 0), LineBreakerCoverage2TestSupport.ints([0, 1])));
         TracedAssertions.assertEqualsInt(1, LineBreakerLines.lineGapCount(new IntRange(0, 2), LineBreakerCoverage2TestSupport.ints([1])));
         TracedAssertions.assertEqualsInt(0, LineBreakerLines.lineGapCount(new IntRange(0, 2), LineBreakerCoverage2TestSupport.ints([2])));
     }
 
     @:test public static function testRebuildLineEmptyRangeThrows():Void {
-        rec("testRebuildLineEmptyRangeThrows");
+        final testTrace = new TestTraceRecorder("LineBreakerCoverage2Test");
+        testTrace.section("testRebuildLineEmptyRangeThrows");
         final clusters = LineBreakerCoverage2TestSupport.hanClusters(2);
         TracedAssertions.assertFailsWith(null, function() LineBreakerLines.rebuildLine(new IntRange(1, 0), clusters, clusters));
     }
 
     @:test public static function testFindGreedyEndDefaultArgs():Void {
-        rec("testFindGreedyEndDefaultArgs");
+        final testTrace = new TestTraceRecorder("LineBreakerCoverage2Test");
+        testTrace.section("testFindGreedyEndDefaultArgs");
         TracedAssertions.assertEqualsInt(2, LineBreakerLines.findGreedyEnd(LineBreakerCoverage2TestSupport.hanClusters(5, 10.0), 0, 25.0));
     }
 
     @:test public static function testLookaheadOrphanAndSyntheticHyphenRuns():Void {
-        rec("testLookaheadOrphanAndSyntheticHyphenRuns");
+        final testTrace = new TestTraceRecorder("LineBreakerCoverage2Test");
+        testTrace.section("testLookaheadOrphanAndSyntheticHyphenRuns");
         final clusters = LineBreakerCoverage2TestSupport.hanClusters(4, 20.0);
         final solution = new LookaheadLineBreaker(null, 2).breakLines(clusters, clusters, 25.0, null, null, null, null, null, null, null, LineBreakerCoverage2TestSupport.ints([1, 2, 3]));
         TracedAssertions.assertEqualsInt(4, solution.lines.length);
