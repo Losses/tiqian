@@ -62,9 +62,8 @@ enum RepairOption {
 }
 
 /**
- * Member logic the Kotlin RepairOption interface held plus the printed form
- * of each variant; spec 34 rules the labeled constructor form for payload
- * enums and is not implemented yet, so the switches are handwritten.
+ * Member logic the Kotlin RepairOption interface held as abstract members.
+ * Printed forms come from Std.string under the stage-one forms ruling.
  */
 class RepairOptions {
     public static function penalty(o:RepairOption):Int
