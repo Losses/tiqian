@@ -1,5 +1,7 @@
 package org.tiqian.layout;
 
+
+using std.Functional;
 import org.tiqian.clreq.ClreqPunctuationPolicies;
 import org.tiqian.clreq.GlueSide;
 import org.tiqian.clreq.PunctuationClass;
@@ -171,13 +173,7 @@ enum GlueKind {
     public var totalReduction(get, never):Float;
 
     public function get_totalReduction():Float {
-        var n = 0.0;
-        var ai = 0;
-        while (ai < adjustments.length) {
-            n += adjustments[ai].reduction;
-            ai++;
-        }
-        return n;
+        return adjustments.sumOfFloat(adjustment -> adjustment.reduction);
     }
 }
 
