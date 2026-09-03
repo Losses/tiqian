@@ -33,7 +33,9 @@ class ParagraphDpLineBreakerTestSupport {
   return solve(c, width, shrink, hard, push, ranges, progressive, null, boundaries, 8.0, forbidStart);
  }
  public static function tiles(s:LineSolution,n:Int):Void { var e=0; for(l in s.lines) if(l.clusterRange.start<=l.clusterRange.end){ TracedAssertions.assertEqualsInt(e,l.clusterRange.start,"lines must tile clusters in order"); e=l.clusterRange.end+1; } TracedAssertions.assertEqualsInt(n,e,"lines must cover every cluster"); }
- public static function repairsString(s:LineSolution):String { var parts:Array<String>=[]; for(l in s.lines) parts.push(l.repair == null ? "null" : RepairOptions.render(l.repair)); return "["+parts.join(", ")+"]"; }
+ public static function repairsString(s:LineSolution):String { var parts:Array<String>=[]; for(l in s.lines) parts.push(renderRepair(l.repair)); return "["+parts.join(", ")+"]"; }
+ public static function renderRepair(r:Null<RepairOption>):String return r == null ? "null" : Std.string(r);
+ public static function linesString(s:LineSolution):String { var parts:Array<String>=[]; for(l in s.lines) parts.push(Std.string(l)); return "["+parts.join(", ")+"]"; }
  public static function pushInReason(r:Null<RepairOption>):Null<String> {
   return r == null ? null : RepairOptions.pushInReasonOf(r);
  }
