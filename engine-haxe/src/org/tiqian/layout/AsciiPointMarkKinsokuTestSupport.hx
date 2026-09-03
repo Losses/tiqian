@@ -23,21 +23,29 @@ import org.tiqian.core.Cluster;
 import org.tiqian.core.FontDecisionInfo;
 import org.tiqian.core.ContextualKinsokuDecisionInfo;
 import org.tiqian.core.LineBox;
+import org.tiqian.core.LineDecisionInfo;
 import org.tiqian.core.TextRange;
+
+typedef BreakerChoice = {label:String, breaker:LineBreaker};
 
 class AsciiPointMarkKinsokuTestSupport {
     public static function renderStrings(a:ReadOnlyArray<String>):String { final x:Array<String>=[];for(i in 0...a.length)x.push(a[i]);return "["+x.join(", ")+"]"; }
-    public static function renderClusters(a:ReadOnlyArray<Cluster>):String { final x:Array<String>=[]; for(i in 0...a.length)x.push(a[i].text); return "["+x.join(", ")+"]"; }
-    public static function renderFonts(a:ReadOnlyArray<FontDecisionInfo>):String { final x:Array<String>=[]; for(i in 0...a.length)x.push(a[i].sourceText); return "["+x.join(", ")+"]"; }
-    public static function renderContextual(a:ReadOnlyArray<ContextualKinsokuDecisionInfo>):String return "[contextual="+a.length+"]";
-    public static function renderLines(a:ReadOnlyArray<LineBox>):String return "[lines="+a.length+"]";
+    public static function joinLines(a:Array<String>):String { return a.join("\n"); }
+    public static function renderClusters(a:ReadOnlyArray<Cluster>):String { return Std.string(a); }
+    public static function renderFonts(a:ReadOnlyArray<FontDecisionInfo>):String { return Std.string(a); }
+    public static function renderContextual(a:ReadOnlyArray<ContextualKinsokuDecisionInfo>):String { return Std.string(a); }
+    public static function renderLines(a:ReadOnlyArray<LineBox>):String { return Std.string(a); }
+    public static function renderLineDecisions(a:ReadOnlyArray<LineDecisionInfo>):String { return Std.string(a); }
     public static function hasCluster(r:LayoutResult,s:String):Bool { for(i in 0...r.clusters.length) if(r.clusters[i].text==s)return true; return false; }
     public static function clustersWithText(r:LayoutResult,s:String):Array<Cluster> { final x:Array<Cluster>=[]; for(i in 0...r.clusters.length)if(r.clusters[i].text==s)x.push(r.clusters[i]); return x; }
-    public static function fontDecision(r:LayoutResult,range:TextRange):FontDecisionInfo { for(i in 0...r.debug.fontDecisions.length)if(r.debug.fontDecisions[i].range==range)return r.debug.fontDecisions[i]; return null; }
+    public static function sameRange(first:TextRange, second:TextRange):Bool {
+        return first.start == second.start && first.end == second.end;
+    }
+    public static function fontDecision(r:LayoutResult,range:TextRange):FontDecisionInfo { for(i in 0...r.debug.fontDecisions.length)if(sameRange(r.debug.fontDecisions[i].range,range))return r.debug.fontDecisions[i]; return null; }
     public static function hasFontSource(r:LayoutResult,s:String):Bool { for(i in 0...r.debug.fontDecisions.length)if(r.debug.fontDecisions[i].sourceText==s)return true; return false; }
     public static function fontDecisionByText(r:LayoutResult,s:String):FontDecisionInfo { for(i in 0...r.debug.fontDecisions.length)if(r.debug.fontDecisions[i].sourceText==s)return r.debug.fontDecisions[i]; return null; }
-    public static function hasPunctuation(r:LayoutResult,range:TextRange):Bool { for(i in 0...r.debug.punctuationDecisions.length)if(r.debug.punctuationDecisions[i].range==range)return true; return false; }
-    public static function contextual(r:LayoutResult,range:Null<TextRange>):ContextualKinsokuDecisionInfo { for(i in 0...r.debug.contextualKinsokuDecisions.length)if(range==null||r.debug.contextualKinsokuDecisions[i].range==range)return r.debug.contextualKinsokuDecisions[i]; return null; }
+    public static function hasPunctuation(r:LayoutResult,range:TextRange):Bool { for(i in 0...r.debug.punctuationDecisions.length)if(sameRange(r.debug.punctuationDecisions[i].range,range))return true; return false; }
+    public static function contextual(r:LayoutResult,range:Null<TextRange>):ContextualKinsokuDecisionInfo { for(i in 0...r.debug.contextualKinsokuDecisions.length)if(range==null||sameRange(r.debug.contextualKinsokuDecisions[i].range,range))return r.debug.contextualKinsokuDecisions[i]; return null; }
     public static function contextualByText(r:LayoutResult,s:String):ContextualKinsokuDecisionInfo { for(i in 0...r.debug.contextualKinsokuDecisions.length)if(r.debug.contextualKinsokuDecisions[i].sourceText==s)return r.debug.contextualKinsokuDecisions[i]; return null; }
     public static function hasRepair(r:LayoutResult,s:String):Bool { for(i in 0...r.debug.lineDecisions.length)if(r.debug.lineDecisions[i].repair==s)return true; return false; }
     public static function forbiddenFor(r:LayoutResult,s:String):Array<String> { final x:Array<String>=[];for(i in 0...r.debug.contextualKinsokuDecisions.length)if(r.debug.contextualKinsokuDecisions[i].sourceText==s)x.push(r.debug.contextualKinsokuDecisions[i].forbiddenPosition);return x; }
@@ -58,6 +66,15 @@ class AsciiPointMarkKinsokuTestSupport {
             new LayoutConstraints(maxWidth), null, null, rubySpans, null, null));
     }
 
+    public static function layoutWithoutExplicitIndent(text:String, maxWidth:Float, breaker:LineBreaker):LayoutResult {
+        final engine = new ExplainableStubParagraphLayoutEngine(null, null,
+            new AsciiKinsokuFixedResolver(KinsokuLevel.Basic, HangingPunctuationStyle.Disabled),
+            null, null, null, null, null, breaker, null, null, new NoHyphenator(), null);
+        return engine.layout(new LayoutInput(new TiqianTextContent(text, null), null,
+            new ParagraphStyle(null, null, null, null, null, null, new LineLengthGrid()),
+            new LayoutConstraints(maxWidth), null, null, null, null, null));
+    }
+
     public static function lineTexts(result:LayoutResult, source:String):Array<String> {
         final texts = [];
         for (i in 0...result.lines.length) {
@@ -67,8 +84,12 @@ class AsciiPointMarkKinsokuTestSupport {
         return texts;
     }
 
-    public static function breakers():Array<{label:String, breaker:LineBreaker}> {
-        return [{label: "greedy", breaker: new GreedyLineBreaker()}, {label: "lookahead", breaker: new LookaheadLineBreaker()}];
+    public static function breakers():Array<BreakerChoice> {
+        final choices:Array<BreakerChoice> = [
+            {label: "greedy", breaker: new GreedyLineBreaker()},
+            {label: "lookahead", breaker: new LookaheadLineBreaker()}
+        ];
+        return choices;
     }
 
     public static inline var REPORTED_PARAGRAPH:String = "对于你冒犯的断言不敢苟同,你以一种理所当然的语气声明\"明显的已经越过了人际尊重的基本门槛\"," +
