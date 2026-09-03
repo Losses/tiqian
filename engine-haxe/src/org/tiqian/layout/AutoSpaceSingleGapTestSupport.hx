@@ -10,10 +10,20 @@ import org.tiqian.core.LayoutInput;
 import org.tiqian.core.LayoutResult;
 import org.tiqian.core.ParagraphStyle;
 import org.tiqian.core.TextSpan;
+import org.tiqian.core.AutoSpaceDecisionInfo;
+import std.ReadOnlyArray;
 import org.tiqian.core.TiqianTextContent;
 import org.tiqian.layout.ParagraphLayoutEngine.ExplainableStubParagraphLayoutEngine;
 
 class AutoSpaceSingleGapTestSupport {
+    public static function renderAutoSpaceDecisions(list:ReadOnlyArray<AutoSpaceDecisionInfo>):String {
+        final parts:Array<String> = [];
+        for (i in 0...list.length) {
+            final d = list[i];
+            parts.push("AutoSpaceDecisionInfo(clusterRange=TextRange(start=" + d.clusterRange.start + ", end=" + d.clusterRange.end + "), side=" + d.side + ", boundaryRole=" + d.boundaryRole + ", mode=" + d.mode + ", charactersAffected=" + d.charactersAffected + ", reductionPerChar=" + d.reductionPerChar + ", totalReduction=" + d.totalReduction + ", reason=" + d.reason + ")");
+        }
+        return "[" + parts.join(", ") + "]";
+    }
     public static function layout(text:String, spans:Array<TextSpan>):LayoutResult {
         return new ExplainableStubParagraphLayoutEngine().layout(new LayoutInput(new TiqianTextContent(text, spans),
             null, new ParagraphStyle(null, null, null, Ic.Zero), new LayoutConstraints(320.0)));
