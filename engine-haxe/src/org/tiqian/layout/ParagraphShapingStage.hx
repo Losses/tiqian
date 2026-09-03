@@ -13,6 +13,7 @@ import org.tiqian.core.LineBreakPolicy;
 import org.tiqian.core.SourceInteractionBoundaries;
 import org.tiqian.core.UnicodeWordCharacterData;
 import org.tiqian.font.FontPolicy.FontDecision;
+import org.tiqian.font.FontPolicy.FontRequest;
 import org.tiqian.font.FontRole;
 import org.tiqian.shaping.TextShaper;
 import org.tiqian.shaping.TextShaper.ShapingInput;
@@ -870,9 +871,11 @@ class ParagraphShapingStage {
                 shapingResults.push(zeroWidthSoftBreakShapingResult(text, resolvedRange.range));
                 continue;
             }
-            final decision = getFontDecision(resolvedRange.range);
-            if (decision == null)
-                continue;
+            var decision = getFontDecision(resolvedRange.range);
+            if (decision == null) {
+                decision = engine.fallbackResolver.resolve(text, resolvedRange.range,
+                    new FontRequest(input.textStyle.fontFamilies, input.textStyle.locale, resolvedRange.role));
+            }
             final segments = shapingSegments(decision, text);
             for (segIdx in 0...segments.length) {
                 final segmentRange = segments[segIdx];
