@@ -1260,6 +1260,7 @@ class Main {
         TestTraceRecorder.flushClass("PunctuationGeometryLedgerCoverageTest");
         TestTraceRecorder.flushClass("LineCandidateValidationTest");
         TestTraceRecorder.flushClass("ProgressiveTechnicalBreakTest");
+        TestTraceRecorder.flushClass("ParagraphDpTierPromotionPoolTest");
         Console.log("all CoreUnitsGeometryTest checks passed");
         if (failures > 0) {
             Process.exit(1);
