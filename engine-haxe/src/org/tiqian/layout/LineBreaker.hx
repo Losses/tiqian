@@ -200,4 +200,38 @@ class LineBreakerLines {
         final b = SortedMap.builder();
         return b.build();
     }
+
+    public static function endsWithSyntheticHyphen(line:LineCandidate, hyphenBreakClusters:SortedSet<Int>):Bool {
+        return line.endReason == LineEndReason.AutoWrap && !line.clusterRange.isEmpty && hyphenBreakClusters.has(line.clusterRange.end + 1);
+    }
+
+    public static function lineGapCount(range:IntRange, gapBoundaries:SortedSet<Int>):Int {
+        if (range.isEmpty)
+            return 0;
+        var n = 0;
+        var i = range.start;
+        while (i < range.end) {
+            if (gapBoundaries.has(i))
+                n++;
+            i++;
+        }
+        return n;
+    }
+
+    public static function lineAdjustmentDensity(line:LineCandidate, limit:Float, isLast:Bool, gapBoundaries:SortedSet<Int>):Float {
+        if (isLast || line.endReason != LineEndReason.AutoWrap)
+            return 0.0;
+        final gaps = lineGapCount(line.inMeasureClusterRange, gapBoundaries);
+        if (gaps == 0)
+            return 0.0;
+        final delta = Math.max(0.0, limit - line.adjustedWidth);
+        return delta / gaps;
+    }
+
+    public static function amortizedAdjustmentCost(d:Float, prevD:Float, dRef:Float):Float {
+        final ref = dRef < 1.0 ? 1.0 : dRef;
+        final diff = d - prevD;
+        return (d * d + diff * diff) / ref;
+    }
 }
+
