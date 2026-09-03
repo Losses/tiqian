@@ -112,3 +112,6 @@ org.tiqian.layout.PreparedParagraphPlanConstructionTest
 
 org.tiqian.layout.PunctuationGeometryBranchArmsCoverageTest
 org.tiqian.layout.UnicodeEmoji17RgiRoleAuditTest
+org.tiqian.layout.OpeningBracketLineStartTest
+org.tiqian.layout.VerbatimRangeAutoSpaceTest
+org.tiqian.layout.ZeroWidthBreakControlLayoutTest
