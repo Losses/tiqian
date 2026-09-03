@@ -3,21 +3,31 @@ package org.tiqian.layout;
 import org.tiqian.core.Cluster;
 import org.tiqian.core.TextRange;
 import org.tiqian.layout.LineOptimization.RepairOption;
+import org.tiqian.layout.LineOptimization.PushInAllocation;
 import org.tiqian.test.trace.TracedAssertions;
 
 class PushInLineWideCapacityTestSupport {
     public static function cluster(s:Int, e:Int, text:String, a:Float):Cluster return new Cluster(new TextRange(s, e), text, "test", a);
 
-    public static function assertPushIn(o:RepairOption, expectedIndexes:Array<Int>, expectedShrink:Float, expectedCapacity:Null<Float>):Void {
-        switch (o) {
-            case PushIn(_, _, _, alloc, shrink, cap):
-                final indexes:Array<Int> = []; for (a in alloc) indexes.push(a.clusterIndex);
-                TracedAssertions.assertEqualsIntArray(expectedIndexes, indexes);
-                if (expectedCapacity != null) TracedAssertions.assertEqualsFloat(expectedCapacity, cap);
-                TracedAssertions.assertEqualsFloat(expectedShrink, shrink);
-            case Hang(_, _, _): case CarryPrevious(_, _, _, _): case CarryNext(_, _, _): case LeaveRagged(_, _, _):
-        }
-    }
+    public static function pushInAllocations(o:RepairOption):Array<PushInAllocation> return switch (o) {
+        case PushIn(_, _, _, alloc, _, _): alloc;
+        case Hang(_, _, _): []; case CarryPrevious(_, _, _, _): []; case CarryNext(_, _, _): []; case LeaveRagged(_, _, _): [];
+    };
+
+    public static function pushInOffenderClusterIndex(o:RepairOption):Int return switch (o) {
+        case PushIn(_, _, offender, _, _, _): offender;
+        case Hang(_, _, _): -1; case CarryPrevious(_, _, _, _): -1; case CarryNext(_, _, _): -1; case LeaveRagged(_, _, _): -1;
+    };
+
+    public static function pushInTotalShrink(o:RepairOption):Float return switch (o) {
+        case PushIn(_, _, _, _, shrink, _): shrink;
+        case Hang(_, _, _): 0; case CarryPrevious(_, _, _, _): 0; case CarryNext(_, _, _): 0; case LeaveRagged(_, _, _): 0;
+    };
+
+    public static function pushInTotalAvailableCapacity(o:RepairOption):Float return switch (o) {
+        case PushIn(_, _, _, _, _, capacity): capacity;
+        case Hang(_, _, _): 0; case CarryPrevious(_, _, _, _): 0; case CarryNext(_, _, _): 0; case LeaveRagged(_, _, _): 0;
+    };
 
     public static function isPushIn(o:RepairOption):Bool return switch (o) {
         case PushIn(_, _, _, _, _, _): true;
