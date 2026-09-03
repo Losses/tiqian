@@ -9,6 +9,11 @@ import org.tiqian.test.trace.TracedAssertions;
 class PushInLineWideCapacityTestSupport {
     public static function cluster(s:Int, e:Int, text:String, a:Float):Cluster return new Cluster(new TextRange(s, e), text, "test", a);
 
+    public static function pushInString(o:RepairOption):String return switch (o) {
+        case PushIn(penalty, reason, offender, allocations, shrink, capacity):
+            "PushIn(penalty=" + penalty + ", reason=" + reason + ", offenderClusterIndex=" + offender + ", allocations=" + Std.string(allocations) + ", totalShrink=" + shrink + ", totalAvailableCapacity=" + capacity + ")";
+        case Hang(_, _, _): Std.string(o); case CarryPrevious(_, _, _, _): Std.string(o); case CarryNext(_, _, _): Std.string(o); case LeaveRagged(_, _, _): Std.string(o);
+    };
     public static function pushInAllocations(o:RepairOption):Array<PushInAllocation> return switch (o) {
         case PushIn(_, _, _, alloc, _, _): alloc;
         case Hang(_, _, _): []; case CarryPrevious(_, _, _, _): []; case CarryNext(_, _, _): []; case LeaveRagged(_, _, _): [];
