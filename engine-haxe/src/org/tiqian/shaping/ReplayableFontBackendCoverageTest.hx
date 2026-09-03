@@ -17,7 +17,8 @@ import std.SortedSet;
 class ReplayableFontBackendCoverageTest {
     static function strings(values:Array<String>):SortedSet<String> {
         var b = SortedSet.builder();
-        for (value in values) b.put(value);
+        for (value in values)
+            b.put(value);
         return b.build();
     }
 
@@ -42,15 +43,14 @@ class ReplayableFontBackendCoverageTest {
 
     public static function faceDescriptorDefaultsAreStable():Void {
         new TestTraceRecorder("ReplayableFontBackendCoverageTest").section("faceDescriptorDefaultsAreStable");
-        var descriptor = new ReplayableFontFaceDescriptor(FontFaceId.of("face-a"), strings(["Serif"]),
-            roles([FontRole.CjkText]), "bundled/noto.ttf");
+        var descriptor = new ReplayableFontFaceDescriptor(FontFaceId.of("face-a"), strings(["Serif"]), roles([FontRole.CjkText]), "bundled/noto.ttf");
         TracedAssertions.assertEquals(400, descriptor.weight);
         TracedAssertions.assertFalse(descriptor.italic);
         TracedAssertions.assertEquals(0, descriptor.collectionIndex);
         TracedAssertions.assertTrue(descriptor.variationAxes.size() == 0);
         TracedAssertions.assertEqualsRendered("face-a", descriptor.id.toString());
-        var varied = new ReplayableFontFaceDescriptor(descriptor.id, descriptor.familyAliases, descriptor.roles,
-            descriptor.sourceLabel, 700, true, 2, axes("wght", 700.0));
+        var varied = new ReplayableFontFaceDescriptor(descriptor.id, descriptor.familyAliases, descriptor.roles, descriptor.sourceLabel, 700, true, 2,
+            axes("wght", 700.0));
         TracedAssertions.assertEquals(700, varied.weight);
         TracedAssertions.assertTrue(varied.italic);
         TracedAssertions.assertEquals(2, varied.collectionIndex);
@@ -73,8 +73,10 @@ class ReplayableFontBackendCoverageTest {
         new TestTraceRecorder("ReplayableFontBackendCoverageTest").section("capabilityReportReplayFlagRequiresFacesAndNoMissingFaceIssue");
         var face = new ReplayableFontFaceDescriptor(FontFaceId.of("face-a"), strings(["Serif"]), roles([FontRole.CjkText]), "bytes");
         TracedAssertions.assertFalse(new FontBackendCapabilityReport("b", "k", []).canReplayFromControlledBytes);
-        TracedAssertions.assertFalse(new FontBackendCapabilityReport("b", "k", [face], [new FontBackendCapabilityIssue("MissingControlledFontFace", "gone")]).canReplayFromControlledBytes);
-        TracedAssertions.assertTrue(new FontBackendCapabilityReport("b", "k", [face], [new FontBackendCapabilityIssue("Other", "note")]).canReplayFromControlledBytes);
+        TracedAssertions.assertFalse(new FontBackendCapabilityReport("b", "k", [face],
+            [new FontBackendCapabilityIssue("MissingControlledFontFace", "gone")]).canReplayFromControlledBytes);
+        TracedAssertions.assertTrue(new FontBackendCapabilityReport("b", "k", [face],
+            [new FontBackendCapabilityIssue("Other", "note")]).canReplayFromControlledBytes);
         TracedAssertions.assertTrue(new FontBackendCapabilityReport("b", "k", [face]).canReplayFromControlledBytes);
     }
 
@@ -94,15 +96,24 @@ class ReplayableFontBackendCoverageTest {
 private class CatalogImpl implements ReplayableFontCatalog {
     public var faces(get, never):Array<ReplayableFontFaceDescriptor>;
     public var capabilityReport(get, never):FontBackendCapabilityReport;
+
     var stored:Array<ReplayableFontFaceDescriptor>;
-    public function new(faces:Array<ReplayableFontFaceDescriptor>) this.stored = faces;
-    function get_faces() return stored;
-    function get_capabilityReport() return new FontBackendCapabilityReport("test", "bytes", stored);
+
+    public function new(faces:Array<ReplayableFontFaceDescriptor>)
+        this.stored = faces;
+
+    function get_faces()
+        return stored;
+
+    function get_capabilityReport()
+        return new FontBackendCapabilityReport("test", "bytes", stored);
+
     public function resolve(request:ReplayableFontFaceRequest):Null<ReplayableFontFaceDescriptor> {
         for (face in stored) {
             if (face.roles.indexOf(request.role) >= 0)
                 for (family in request.preferredFamilies)
-                    if (face.familyAliases.has(family)) return face;
+                    if (face.familyAliases.has(family))
+                        return face;
         }
         return null;
     }
