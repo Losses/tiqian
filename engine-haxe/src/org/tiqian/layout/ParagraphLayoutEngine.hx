@@ -9,11 +9,11 @@ import org.tiqian.core.InlineObjectSpan;
 import org.tiqian.core.TiqianIllegalArgumentException;
 import org.tiqian.core.TextRangeError.Message;
 import org.tiqian.font.CjkFontRoleClassifier;
+import org.tiqian.font.FontRole;
 import org.tiqian.font.FontPolicy.FallbackResolver;
 import org.tiqian.font.FontMetrics.FontMetricsNormalizer;
 import org.tiqian.font.FontMetrics.FontMetricsResolver;
 import org.tiqian.font.FontRoleContext.FontRoleClassifier;
-import org.tiqian.font.PreferCjkForAmbiguousPunctuationResolver;
 import org.tiqian.font.FontMetrics.ScriptAwareFontMetricsNormalizer;
 import org.tiqian.font.FontMetrics.StubFontMetricsResolver;
 import org.tiqian.linebreak.Hyphenator;
@@ -75,19 +75,19 @@ class ExplainableStubParagraphLayoutEngine implements ParagraphLayoutEngine {
         ?hyphenator:Hyphenator,
         ?annotationCache:WidthIndependentAnnotationCache
     ) {
-        this.fontRoleClassifier = fontRoleClassifier != null ? fontRoleClassifier : new CjkFontRoleClassifier();
-        this.fallbackResolver = fallbackResolver != null ? fallbackResolver : new PreferCjkForAmbiguousPunctuationResolver();
-        this.clreqProfileResolver = clreqProfileResolver != null ? clreqProfileResolver : new BuiltInClreqProfileResolver();
-        this.fontMetricsResolver = fontMetricsResolver != null ? fontMetricsResolver : new StubFontMetricsResolver();
-        this.fontMetricsNormalizer = fontMetricsNormalizer != null ? fontMetricsNormalizer : new ScriptAwareFontMetricsNormalizer();
-        this.punctuationAtomBuilder = punctuationAtomBuilder != null ? punctuationAtomBuilder : new PunctuationAtomBuilder();
-        this.punctuationSpacingCompressor = punctuationSpacingCompressor != null ? punctuationSpacingCompressor : new PunctuationSpacingCompressor();
-        this.quotePairAnalyzer = quotePairAnalyzer != null ? quotePairAnalyzer : new QuotePairAnalyzer();
-        this.lineBreaker = lineBreaker != null ? lineBreaker : new GreedyLineBreaker();
-        this.justifier = justifier != null ? justifier : new Justifier();
-        this.textShaper = textShaper != null ? textShaper : new ExplainableStubTextShaper();
-        this.hyphenator = hyphenator != null ? hyphenator : DefaultHyphenator.defaultHyphenator();
-        this.annotationCache = annotationCache != null ? annotationCache : new LruWidthIndependentAnnotationCache();
+        this.fontRoleClassifier = fontRoleClassifier == null ? new CjkFontRoleClassifier() : fontRoleClassifier;
+        this.fallbackResolver = fallbackResolver == null ? new ParagraphLayoutFallbackResolver() : fallbackResolver;
+        this.clreqProfileResolver = clreqProfileResolver == null ? new BuiltInClreqProfileResolver() : clreqProfileResolver;
+        this.fontMetricsResolver = fontMetricsResolver == null ? new StubFontMetricsResolver() : fontMetricsResolver;
+        this.fontMetricsNormalizer = fontMetricsNormalizer == null ? new ScriptAwareFontMetricsNormalizer() : fontMetricsNormalizer;
+        this.punctuationAtomBuilder = punctuationAtomBuilder == null ? new PunctuationAtomBuilder() : punctuationAtomBuilder;
+        this.punctuationSpacingCompressor = punctuationSpacingCompressor == null ? new PunctuationSpacingCompressor() : punctuationSpacingCompressor;
+        this.quotePairAnalyzer = quotePairAnalyzer == null ? new QuotePairAnalyzer() : quotePairAnalyzer;
+        this.lineBreaker = lineBreaker == null ? new GreedyLineBreaker() : lineBreaker;
+        this.justifier = justifier == null ? new Justifier() : justifier;
+        this.textShaper = textShaper == null ? new ExplainableStubTextShaper() : textShaper;
+        this.hyphenator = hyphenator == null ? DefaultHyphenator.defaultHyphenator() : hyphenator;
+        this.annotationCache = annotationCache == null ? new LruWidthIndependentAnnotationCache() : annotationCache;
     }
 
     public function layout(input:LayoutInput):LayoutResult {
@@ -96,18 +96,18 @@ class ExplainableStubParagraphLayoutEngine implements ParagraphLayoutEngine {
 
     public function layoutWithRejectedTechnicalTiers(
         input:LayoutInput,
-        rejectedTechnicalTiersBySpan:SortedMap<TextRange, SortedSet<ProgressiveBreakTier>>
+        rejectedTechnicalTiersBySpan:SortedMap<TextRange, SortedSet<Int>>
     ):LayoutResult {
         validateLayoutInput(input);
         final cacheKey = WidthIndependentAnnotationCacheFns.toWidthIndependentAnnotationKey(input, rejectedTechnicalTiersBySpan);
         final cached = annotationCache.get(cacheKey);
-        final annotation:WidthIndependentParagraphAnnotation = if (Std.isOfType(cached, WidthIndependentParagraphAnnotation)) {
-            cast(cached, WidthIndependentParagraphAnnotation);
+        var annotation:WidthIndependentParagraphAnnotation;
+        if (Std.isOfType(cached, WidthIndependentParagraphAnnotation)) {
+            annotation = cast(cached, WidthIndependentParagraphAnnotation);
         } else {
-            final fresh = WidthIndependentAnnotationCacheFns.prepareWidthIndependentAnnotation(this, input, rejectedTechnicalTiersBySpan);
-            annotationCache.put(cacheKey, fresh);
-            fresh;
-        };
+            annotation = WidthIndependentAnnotationCacheFns.prepareWidthIndependentAnnotation(this, input, rejectedTechnicalTiersBySpan);
+            annotationCache.put(cacheKey, annotation);
+        }
         final prep = WidthIndependentAnnotationCacheFns.buildParagraphLayoutPrep(this, input, annotation, rejectedTechnicalTiersBySpan);
         return LineAdjustmentStage.finishParagraphLayout(this, prep, LineBreakPlanningStage.planParagraphLines(this, prep));
     }
@@ -212,5 +212,30 @@ class ExplainableStubParagraphLayoutEngine implements ParagraphLayoutEngine {
                 throw new TiqianIllegalArgumentException(Message("InlineObjectSpan " + Std.string(inlineObject.range) + " trailing line-end discard must not exceed its advance"));
             }
         }
+    }
+}
+
+class ParagraphLayoutFallbackResolver implements FallbackResolver {
+    public final cjkFontKey:String;
+    public final latinFontKey:String;
+    public final symbolFontKey:String;
+
+    public function new(?cjkFontKey:Null<String>, ?latinFontKey:Null<String>, ?symbolFontKey:Null<String>) {
+        this.cjkFontKey = cjkFontKey == null ? "cjk-primary" : cjkFontKey;
+        this.latinFontKey = latinFontKey == null ? "latin-primary" : latinFontKey;
+        this.symbolFontKey = symbolFontKey == null ? "symbol-fallback" : symbolFontKey;
+    }
+
+    public function resolve(text:String, range:org.tiqian.core.TextRange, request:org.tiqian.font.FontPolicy.FontRequest):org.tiqian.font.FontPolicy.FontDecision {
+        var c:org.tiqian.font.FontPolicy.FontCandidate;
+        switch (request.role) {
+            case CjkText | CjkPunctuation:
+                c = new org.tiqian.font.FontPolicy.FontCandidate(cjkFontKey, request.preferredFamilies.length == 0 ? cjkFontKey : request.preferredFamilies[0], request.role);
+            case LatinText:
+                c = new org.tiqian.font.FontPolicy.FontCandidate(latinFontKey, latinFontKey, request.role);
+            case Symbol | Emoji | Unknown:
+                c = new org.tiqian.font.FontPolicy.FontCandidate(symbolFontKey, symbolFontKey, request.role);
+        }
+        return new org.tiqian.font.FontPolicy.FontDecision(range, c, request.role, "PreferCjkForAmbiguousPunctuationResolver:" + request.role);
     }
 }

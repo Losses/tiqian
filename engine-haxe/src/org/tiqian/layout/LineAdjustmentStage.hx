@@ -76,6 +76,16 @@ class LineAdjustmentStage {
     private static inline final CURRENT_LINE_TECHNICAL_BODY_STRETCH_LIMIT_EM:Float = 0.0;
     private static inline final TECHNICAL_STRETCH_EPSILON_PX:Float = 0.001;
 
+    private static function repairOptionName(repair:org.tiqian.layout.LineOptimization.RepairOption):String {
+        return switch (repair) {
+            case PushIn(_, _, _, _, _, _): "PushIn";
+            case Hang(_, _, _): "Hang";
+            case CarryPrevious(_, _, _, _): "CarryPrevious";
+            case CarryNext(_, _, _): "CarryNext";
+            case LeaveRagged(_, _, _): "LeaveRagged";
+        };
+    }
+
     private static function lineHyphenAdvanceAt(
         lineIndex:Int,
         lines:Array<LineCandidate>,
@@ -205,32 +215,30 @@ class LineAdjustmentStage {
                     }
                 }
             }
-            final baseIndent = if (!hasDrawableContent) {
-                0.0;
-            } else if (lineCandidate.clusterRange.start == 0) {
-                firstLineIndent;
-            } else {
-                blockIndent;
-            };
+            var baseIndent = 0.0;
+            if (hasDrawableContent) {
+                if (lineCandidate.clusterRange.start == 0) {
+                    baseIndent = firstLineIndent;
+                } else {
+                    baseIndent = blockIndent;
+                }
+            }
 
             final lineHyphenAdvance = lineHyphenAdvanceAt(lineIndex, lineSolution.lines, hyphenOffsets, naturalClusters, hyphenAdvance);
             final limit = measure - baseIndent;
-            final alignmentInset = if (lineCandidate.endReason == LineEndReason.AutoWrap) {
-                0.0;
-            } else {
-                switch (input.paragraphStyle.lastLineAlignment) {
-                    case LastLineAlignment.Start: 0.0;
-                    case LastLineAlignment.Center:
-                        final diff = (limit - visualWidth) / 2.0;
-                        diff < 0.0 ? 0.0 : diff;
-                    case LastLineAlignment.End:
-                        final diff = limit - visualWidth;
-                        diff < 0.0 ? 0.0 : diff;
+            var alignmentInset = 0.0;
+            if (lineCandidate.endReason != LineEndReason.AutoWrap) {
+                if (input.paragraphStyle.lastLineAlignment == LastLineAlignment.Center) {
+                    final diff = (limit - visualWidth) / 2.0;
+                    alignmentInset = diff < 0.0 ? 0.0 : diff;
+                } else if (input.paragraphStyle.lastLineAlignment == LastLineAlignment.End) {
+                    final diff = limit - visualWidth;
+                    alignmentInset = diff < 0.0 ? 0.0 : diff;
                 }
-            };
+            }
 
             final repairStr = lineCandidate.repair != null
-                ? (Type.enumConstructor(lineCandidate.repair) + ":" + RepairOptions.reason(lineCandidate.repair))
+                ? (repairOptionName(lineCandidate.repair) + ":" + RepairOptions.reason(lineCandidate.repair))
                 : null;
             final notes = new Array<String>();
             if (lineCandidate.clusterRange.isEmpty) {
@@ -266,7 +274,7 @@ class LineAdjustmentStage {
 
         final visibleLines = new Array<LineBox>();
         final maxLines = input.constraints.maxLines;
-        final count = (maxLines != null && laidOutLines.length > maxLines) ? maxLines : laidOutLines.length;
+        final count = laidOutLines.length > maxLines ? maxLines : laidOutLines.length;
         for (i in 0...count) {
             visibleLines.push(laidOutLines[i]);
         }
@@ -378,6 +386,64 @@ class LineAdjustmentStage {
         );
     }
 
+    private static function trimEdge(
+        lineSourceRange:TextRange,
+        clusterIdx:Int,
+        side:String,
+        naturalClusters:Array<Cluster>,
+        autoSpaceDecisions:Array<AutoSpaceDecisionInfo>,
+        autoSpaceGap:Float,
+        autoSpaceEdgeTrims:Array<Float>,
+        autoSpaceEdgeDecisions:Array<LineEdgeTrimDecisionInfo>
+    ):Void {
+        var foundDecision:Null<AutoSpaceDecisionInfo> = null;
+        final cRange = naturalClusters[clusterIdx].range;
+        for (dec in autoSpaceDecisions) {
+            if (dec.clusterRange.start == cRange.start && dec.clusterRange.end == cRange.end && dec.side == side) {
+                foundDecision = dec;
+                break;
+            }
+        }
+        if (foundDecision != null) {
+            autoSpaceEdgeTrims[clusterIdx] += autoSpaceGap;
+            autoSpaceEdgeDecisions.push(new LineEdgeTrimDecisionInfo(
+                lineSourceRange,
+                foundDecision.clusterRange,
+                side,
+                autoSpaceGap,
+                0.0,
+                autoSpaceGap,
+                "TextAutoSpaceLineEdgeTrim"
+            ));
+        }
+    }
+
+    private static function collapseEdgeSpace(
+        lineSourceRange:TextRange,
+        clusterIdx:Int,
+        side:String,
+        naturalClusters:Array<Cluster>,
+        inlineObjectSeparatorSpaceTrims:SortedMap<Int, Float>,
+        autoSpaceEdgeTrims:Array<Float>,
+        autoSpaceEdgeDecisions:Array<LineEdgeTrimDecisionInfo>
+    ):Void {
+        final cluster = naturalClusters[clusterIdx];
+        if (!PunctuationGeometryStage.isSpaceRun(cluster)) return;
+        if (inlineObjectSeparatorSpaceTrims.has(clusterIdx)) return;
+        final advance = cluster.advance;
+        if (advance <= 0.0) return;
+        autoSpaceEdgeTrims[clusterIdx] += advance;
+        autoSpaceEdgeDecisions.push(new LineEdgeTrimDecisionInfo(
+            lineSourceRange,
+            cluster.range,
+            side,
+            advance,
+            0.0,
+            advance,
+            "LineEdgeWordSpaceCollapse"
+        ));
+    }
+
     public static function finishParagraphLayout(
         engine:ExplainableStubParagraphLayoutEngine,
         prep:ParagraphLayoutPrep,
@@ -419,8 +485,7 @@ class LineAdjustmentStage {
             if (!alreadySeen) {
                 seenDecisionKeys.push(key);
                 final cIdx = decision.clusterIndex;
-                if (cIdx != null &&
-                    impossibleMeasureContextualHangClusters.has(cIdx) &&
+                if (impossibleMeasureContextualHangClusters.has(cIdx) &&
                     appliedHangingClusters.has(cIdx)) {
                     final fallback = decision.reason == "AttachedAsciiPointMarkKinsoku"
                         ? "AttachedAsciiPointMarkImpossibleMeasureHang"
@@ -448,27 +513,27 @@ class LineAdjustmentStage {
             pushInRawTrims.push(0.0);
         }
 
-        for (line in plan.lineSolution.lines) {
+        for (lIdx in 0...plan.lineSolution.lines.length) {
+            final line = plan.lineSolution.lines[lIdx];
             final repair = line.repair;
             if (repair != null) {
-                switch (repair) {
-                    case PushIn(_, _, _, allocations, _, _):
-                        for (alloc in allocations) {
-                            if (alloc.clusterIndex >= 0 && alloc.clusterIndex < prep.naturalClusters.length) {
-                                switch (alloc.channel) {
-                                    case TrailingGlue:
-                                        pushInTrailing[alloc.clusterIndex] += alloc.shrink;
-                                    case LeadingGlue:
-                                        pushInLeading[alloc.clusterIndex] += alloc.shrink;
-                                    case LeadingAndTrailingGlue:
-                                        pushInLeading[alloc.clusterIndex] += alloc.shrink / 2.0;
-                                        pushInTrailing[alloc.clusterIndex] += alloc.shrink / 2.0;
-                                    case RawAdvance:
-                                        pushInRawTrims[alloc.clusterIndex] += alloc.shrink;
-                                }
+                final allocations = RepairOptions.pushInAllocations(repair);
+                if (allocations != null) {
+                    for (aIdx in 0...allocations.length) {
+                        final alloc = allocations[aIdx];
+                        if (alloc.clusterIndex >= 0 && alloc.clusterIndex < prep.naturalClusters.length) {
+                            if (alloc.channel == TrailingGlue) {
+                                pushInTrailing[alloc.clusterIndex] += alloc.shrink;
+                            } else if (alloc.channel == LeadingGlue) {
+                                pushInLeading[alloc.clusterIndex] += alloc.shrink;
+                            } else if (alloc.channel == LeadingAndTrailingGlue) {
+                                pushInLeading[alloc.clusterIndex] += alloc.shrink / 2.0;
+                                pushInTrailing[alloc.clusterIndex] += alloc.shrink / 2.0;
+                            } else if (alloc.channel == RawAdvance) {
+                                pushInRawTrims[alloc.clusterIndex] += alloc.shrink;
                             }
                         }
-                    default:
+                    }
                 }
             }
         }
@@ -505,24 +570,32 @@ class LineAdjustmentStage {
                     rIdx++;
                 }
 
-                for (opp in sortedOpportunities) {
+                for (oIdx in 0...sortedOpportunities.length) {
+                    final opp = sortedOpportunities[oIdx];
                     if (shortfall <= 0.001) break;
-                    final used = switch (opp.channel) {
-                        case TrailingGlue: pushInTrailing[opp.clusterIndex];
-                        case LeadingGlue: pushInLeading[opp.clusterIndex];
-                        case RawAdvance: pushInRawTrims[opp.clusterIndex];
-                        case LeadingAndTrailingGlue: pushInLeading[opp.clusterIndex] + pushInTrailing[opp.clusterIndex];
-                    };
+                    var used = 0.0;
+                    if (opp.channel == TrailingGlue) {
+                        used = pushInTrailing[opp.clusterIndex];
+                    } else if (opp.channel == LeadingGlue) {
+                        used = pushInLeading[opp.clusterIndex];
+                    } else if (opp.channel == RawAdvance) {
+                        used = pushInRawTrims[opp.clusterIndex];
+                    } else if (opp.channel == LeadingAndTrailingGlue) {
+                        used = pushInLeading[opp.clusterIndex] + pushInTrailing[opp.clusterIndex];
+                    }
                     final avail = opp.capacity - used;
-                    final take = shortfall < avail ? (shortfall < 0.0 ? 0.0 : shortfall) : (avail < 0.0 ? 0.0 : avail);
+                    final target = shortfall < avail ? shortfall : avail;
+                    final take = target < 0.0 ? 0.0 : target;
                     if (take <= 0.0) continue;
-                    switch (opp.channel) {
-                        case TrailingGlue: pushInTrailing[opp.clusterIndex] += take;
-                        case LeadingGlue: pushInLeading[opp.clusterIndex] += take;
-                        case LeadingAndTrailingGlue:
-                            pushInLeading[opp.clusterIndex] += take / 2.0;
-                            pushInTrailing[opp.clusterIndex] += take / 2.0;
-                        case RawAdvance: pushInRawTrims[opp.clusterIndex] += take;
+                    if (opp.channel == TrailingGlue) {
+                        pushInTrailing[opp.clusterIndex] += take;
+                    } else if (opp.channel == LeadingGlue) {
+                        pushInLeading[opp.clusterIndex] += take;
+                    } else if (opp.channel == LeadingAndTrailingGlue) {
+                        pushInLeading[opp.clusterIndex] += take / 2.0;
+                        pushInTrailing[opp.clusterIndex] += take / 2.0;
+                    } else if (opp.channel == RawAdvance) {
+                        pushInRawTrims[opp.clusterIndex] += take;
                     }
                     shortfall -= take;
                 }
@@ -552,50 +625,11 @@ class LineAdjustmentStage {
         for (line in plan.lineSolution.lines) {
             if (line.clusterRange.isEmpty) continue;
 
-            final trimEdge = function(clusterIdx:Int, side:String) {
-                var foundDecision:Null<AutoSpaceDecisionInfo> = null;
-                final cRange = prep.naturalClusters[clusterIdx].range;
-                for (dec in prep.autoSpaceDecisions) {
-                    if (dec.clusterRange.start == cRange.start && dec.clusterRange.end == cRange.end && dec.side == side) {
-                        foundDecision = dec;
-                        break;
-                    }
-                }
-                if (foundDecision != null) {
-                    autoSpaceEdgeTrims[clusterIdx] += autoSpaceGap;
-                    autoSpaceEdgeDecisions.push(new LineEdgeTrimDecisionInfo(
-                        line.sourceRange,
-                        foundDecision.clusterRange,
-                        side,
-                        autoSpaceGap,
-                        0.0,
-                        autoSpaceGap,
-                        "TextAutoSpaceLineEdgeTrim"
-                    ));
-                }
-            };
-            trimEdge(line.clusterRange.end, "trailing");
-            trimEdge(line.clusterRange.start, "leading");
+            trimEdge(line.sourceRange, line.clusterRange.end, "trailing", prep.naturalClusters, prep.autoSpaceDecisions, autoSpaceGap, autoSpaceEdgeTrims, autoSpaceEdgeDecisions);
+            trimEdge(line.sourceRange, line.clusterRange.start, "leading", prep.naturalClusters, prep.autoSpaceDecisions, autoSpaceGap, autoSpaceEdgeTrims, autoSpaceEdgeDecisions);
 
-            final collapseEdgeSpace = function(clusterIdx:Int, side:String) {
-                final cluster = prep.naturalClusters[clusterIdx];
-                if (!PunctuationGeometryStage.isSpaceRun(cluster)) return;
-                if (prep.inlineObjectSeparatorSpaceTrims.has(clusterIdx)) return;
-                final advance = cluster.advance;
-                if (advance <= 0.0) return;
-                autoSpaceEdgeTrims[clusterIdx] += advance;
-                autoSpaceEdgeDecisions.push(new LineEdgeTrimDecisionInfo(
-                    line.sourceRange,
-                    cluster.range,
-                    side,
-                    advance,
-                    0.0,
-                    advance,
-                    "LineEdgeWordSpaceCollapse"
-                ));
-            };
-            collapseEdgeSpace(line.clusterRange.end, "trailing");
-            collapseEdgeSpace(line.clusterRange.start, "leading");
+            collapseEdgeSpace(line.sourceRange, line.clusterRange.end, "trailing", prep.naturalClusters, prep.inlineObjectSeparatorSpaceTrims, autoSpaceEdgeTrims, autoSpaceEdgeDecisions);
+            collapseEdgeSpace(line.sourceRange, line.clusterRange.start, "leading", prep.naturalClusters, prep.inlineObjectSeparatorSpaceTrims, autoSpaceEdgeTrims, autoSpaceEdgeDecisions);
 
             final attachedGlueCluster = line.clusterRange.end;
             final attachedGlue = prep.attachedPunctuationTrailingGlueByCluster.has(attachedGlueCluster)
@@ -713,11 +747,11 @@ class LineAdjustmentStage {
 
         final currentLineTechnicalBodyStretchLimit = CURRENT_LINE_TECHNICAL_BODY_STRETCH_LIMIT_EM * prep.fontSize;
         final newlyRejectedSpans = new Array<TextRange>();
-        final newlyRejectedTiersList = new Array<SortedSet<ProgressiveBreakTier>>();
+        final newlyRejectedTiersList = new Array<SortedSet<Int>>();
 
         for (lineIndex in 0...plan.lineSolution.lines.length) {
             final line = plan.lineSolution.lines[lineIndex];
-            if (line.endReason != LineEndReason.AutoWrap || line.clusterRange.isEmpty) {
+            if (line.endReason != LineEndReason.AutoWrap || line.clusterRange.start > line.clusterRange.end) {
                 continue;
             }
             final nextCluster = line.clusterRange.end + 1;
@@ -756,14 +790,14 @@ class LineAdjustmentStage {
                 }
                 if (foundSpanIdx < 0) {
                     newlyRejectedSpans.push(spanRange);
-                    final b = SortedSet.builder();
-                    b.put(selectedTechnicalBreak.tier);
+                    final b:std.SortedSetBuilder<Int> = std.SortedSet.builder();
+                    b.put(selectedTechnicalBreak.tier.priority);
                     newlyRejectedTiersList.push(b.build());
                 } else {
-                    final b = SortedSet.builder();
+                    final b:std.SortedSetBuilder<Int> = std.SortedSet.builder();
                     final existing = newlyRejectedTiersList[foundSpanIdx];
                     for (e in 0...existing.size()) b.put(existing.at(e));
-                    b.put(selectedTechnicalBreak.tier);
+                    b.put(selectedTechnicalBreak.tier.priority);
                     newlyRejectedTiersList[foundSpanIdx] = b.build();
                 }
             }
@@ -774,7 +808,7 @@ class LineAdjustmentStage {
             for (i in 0...prep.rejectedTechnicalTiersBySpan.size()) {
                 final span = prep.rejectedTechnicalTiersBySpan.keyAt(i);
                 final tiers = prep.rejectedTechnicalTiersBySpan.valueAt(i);
-                final b = SortedSet.builder();
+                final b:std.SortedSetBuilder<Int> = std.SortedSet.builder();
                 for (t in 0...tiers.size()) b.put(tiers.at(t));
                 for (nIdx in 0...newlyRejectedSpans.length) {
                     if (newlyRejectedSpans[nIdx].start == span.start && newlyRejectedSpans[nIdx].end == span.end) {
@@ -953,21 +987,21 @@ class LineAdjustmentStage {
         final bopomofoDecisions = annotationGeometry.bopomofoDecisions;
 
         var widestLine:Float = 0.0;
-        for (line in lines) {
+        for (i in 0...lines.length) {
+            final line = lines[i];
             final w = line.indent + line.visualWidth + line.hyphenAdvance;
             if (w > widestLine) widestLine = w;
         }
-        final totalHeight:Float = if (lines.length > 0) {
-            lines[lines.length - 1].bottom;
+        var totalHeight:Float = 0.0;
+        if (lines.length > 0) {
+            totalHeight = lines[lines.length - 1].bottom;
         } else if (prep.text.length == 0) {
-            0.0;
+            totalHeight = 0.0;
         } else {
-            plan.baseLineMetrics.height;
-        };
+            totalHeight = plan.baseLineMetrics.height;
+        }
         final maxWidthConstraint = prep.input.constraints.maxWidth;
-        final resultWidth = (maxWidthConstraint != null && widestLine > maxWidthConstraint)
-            ? maxWidthConstraint
-            : widestLine;
+        final resultWidth = widestLine > maxWidthConstraint ? maxWidthConstraint : widestLine;
 
         return new LayoutResult(
             prep.input,

@@ -69,7 +69,7 @@ import std.SortedMap;
 
 @:dataClass class ParagraphLayoutPrep {
     public final input:LayoutInput;
-    public final rejectedTechnicalTiersBySpan:std.SortedMap<TextRange, std.SortedSet<ProgressiveBreakTier>>;
+    public final rejectedTechnicalTiersBySpan:std.SortedMap<TextRange, std.SortedSet<Int>>;
     public final text:String;
     public final fontSize:Float;
     public final styleAt:Int->TextStyle;
@@ -132,7 +132,7 @@ import std.SortedMap;
 
     public function new(
         input:LayoutInput,
-        rejectedTechnicalTiersBySpan:std.SortedMap<TextRange, std.SortedSet<ProgressiveBreakTier>>,
+        rejectedTechnicalTiersBySpan:std.SortedMap<TextRange, std.SortedSet<Int>>,
         text:String,
         fontSize:Float,
         styleAt:Int->TextStyle,
@@ -395,7 +395,7 @@ class LineBreakPlanningStage {
     private static inline final HYPHEN_LAST_RESORT_CJK_STRETCH_EM:Float = 0.5;
     private static inline final HYPHEN_SINO_WESTERN_STRETCH_CAP_EM:Float = 0.25;
 
-    private static inline function isHangablePunctuation(str:String):Bool {
+    private static function isHangablePunctuation(str:String):Bool {
         return str == "、" || str == "，" || str == "。";
     }
 
@@ -546,22 +546,20 @@ class LineBreakPlanningStage {
         var existingInterlineSpace = baseLineMetrics.height - baseFaceHeight;
         if (existingInterlineSpace < 0.0) existingInterlineSpace = 0.0;
 
-        final lineSpacingDecision:Null<LineSpacingDecisionInfo> = if (baseLineMetrics.height <= 0.0) {
-            null;
-        } else {
+        var lineSpacingDecision:Null<LineSpacingDecisionInfo> = null;
+        if (baseLineMetrics.height > 0.0) {
             final natural = baseLineMetrics.height - baseLineMetrics.extraLeading;
             final requested = prep.input.paragraphStyle.lineHeight;
             final reqOrDefault = requested != null ? requested : defaultBodyLineHeight;
             final markFloorBinds = interlinearSpacingFloor > 0.0 &&
                 (natural + interlinearSpacingFloor > reqOrDefault + 0.001);
-            final reason = if (requested != null && !markFloorBinds) {
-                "ExplicitLineHeight";
+            var reason = "CjkBodyLineHeightDefault";
+            if (requested != null && !markFloorBinds) {
+                reason = "ExplicitLineHeight";
             } else if (markFloorBinds) {
-                "InterlinearMarkLineSpacingFloor";
-            } else {
-                "CjkBodyLineHeightDefault";
-            };
-            new LineSpacingDecisionInfo(
+                reason = "InterlinearMarkLineSpacingFloor";
+            }
+            lineSpacingDecision = new LineSpacingDecisionInfo(
                 natural,
                 requested,
                 baseLineMetrics.height,
@@ -569,11 +567,13 @@ class LineBreakPlanningStage {
                 markFloorBinds,
                 reason
             );
-        };
+        }
 
-        final explicitIndentEm:Null<Float> = prep.input.paragraphStyle.firstLineIndent != null
-            ? prep.input.paragraphStyle.firstLineIndent.count()
-            : null;
+        var explicitIndentEm:Null<Float> = null;
+        final fIndent = prep.input.paragraphStyle.firstLineIndent;
+        if (fIndent != null) {
+            explicitIndentEm = fIndent.toPx(1.0);
+        }
         final indentPolicy = prep.input.paragraphStyle.firstLineIndentPolicy;
         final blockIndent = prep.input.paragraphStyle.blockIndent.toPx(prep.fontSize);
         final resolvedIndentEm:Float = explicitIndentEm != null ? explicitIndentEm : indentPolicy.resolveEm(prep.measureEm);
@@ -704,21 +704,15 @@ class LineBreakPlanningStage {
         final clusterIndexBySourceStart = clusterIndexBySourceStartBuilder.build();
         final progressiveTechnicalWhitespaceStretchCapacity = engine.justifier.progressiveTechnicalWhitespaceStretchCapacity(prep.fontSize);
 
-        final progressiveBreakOpportunitiesBuilder = SortedMap.builder();
+        final progressiveBreakOpportunitiesBuilder:SortedMapBuilder<Int, ProgressiveBreakOpportunity> = SortedMap.builder();
         for (i in 0...prep.progressiveBreakOffsets.size()) {
             final sourceOffset = prep.progressiveBreakOffsets.keyAt(i);
             final opportunity = prep.progressiveBreakOffsets.valueAt(i);
             if (clusterIndexBySourceStart.has(sourceOffset)) {
                 final clusterIndex = clusterIndexBySourceStart.get(sourceOffset);
-                final opp:ProgressiveBreakOpportunity = if (opportunity.tier == ProgressiveBreakTier.Whitespace) {
-                    new ProgressiveBreakOpportunity(
-                        opportunity.tier,
-                        opportunity.spanRange,
-                        progressiveTechnicalWhitespaceStretchCapacity
-                    );
-                } else {
-                    opportunity;
-                };
+                final opp = opportunity.tier == ProgressiveBreakTier.Whitespace
+                    ? new ProgressiveBreakOpportunity(opportunity.tier, opportunity.spanRange, progressiveTechnicalWhitespaceStretchCapacity)
+                    : opportunity;
                 progressiveBreakOpportunitiesBuilder.put(clusterIndex, opp);
             }
         }
@@ -906,15 +900,15 @@ class LineBreakPlanningStage {
         for (i in 0...asciiPointMarkKinsoku.extendableHangRanges.length) combinedExtendableHangRanges.push(asciiPointMarkKinsoku.extendableHangRanges[i]);
         for (i in 0...inlineObjectKinsoku.extendableHangRanges.length) combinedExtendableHangRanges.push(inlineObjectKinsoku.extendableHangRanges[i]);
 
-        final lineSolution = if (prep.text.length == 0) {
-            new LineSolution([]);
-        } else {
-            final lineAdjustmentCompressBias = switch (prep.adjustmentStyle.lineAdjustment) {
-                case LineAdjustmentStrategy.PushInFirst: 1000000.0;
-                case LineAdjustmentStrategy.PushOutFirst: 0.5;
-                case LineAdjustmentStrategy.PushOutOnly: 0.0;
-            };
-            engine.lineBreaker.breakLines(
+        var lineSolution = new LineSolution([]);
+        if (prep.text.length > 0) {
+            var lineAdjustmentCompressBias = 0.0;
+            if (prep.adjustmentStyle.lineAdjustment == LineAdjustmentStrategy.PushInFirst) {
+                lineAdjustmentCompressBias = 1000000.0;
+            } else if (prep.adjustmentStyle.lineAdjustment == LineAdjustmentStrategy.PushOutFirst) {
+                lineAdjustmentCompressBias = 0.5;
+            }
+            lineSolution = engine.lineBreaker.breakLines(
                 prep.naturalClusters,
                 prep.clusters,
                 prep.measure - blockIndent,
@@ -936,7 +930,7 @@ class LineBreakPlanningStage {
                 prep.zeroWidthBreakClusters,
                 progressiveBreakOpportunities
             );
-        };
+        }
 
         return new LineBreakPlanningStageResult(
             metricDecisions,
