@@ -101,3 +101,5 @@ org.tiqian.layout.ParagraphDpLineBreaker
 org.tiqian.layout.ParagraphDpLineBreakerTest
 org.tiqian.layout.ParagraphDpLineBreakerCoverageTest
 org.tiqian.layout.ParagraphDpLineBreakerCoverage2Test
+org.tiqian.layout.LookaheadLineBreakerTest
+
