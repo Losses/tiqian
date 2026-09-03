@@ -130,69 +130,30 @@ import std.SortedMap;
     public final atomClassByRange:std.SortedMap<TextRange, PunctuationClass>;
     public final shrinkOpportunities:Array<ShrinkOpportunity>;
 
-    public function new(
-        input:LayoutInput,
-        rejectedTechnicalTiersBySpan:std.SortedMap<TextRange, std.SortedSet<Int>>,
-        text:String,
-        fontSize:Float,
-        styleAt:Int->TextStyle,
-        fontSizeAt:Int->Float,
-        bopomofoFontWeightAt:Int->Int,
-        rubyFontSize:Float,
-        rubyStackGap:Float,
-        rubyFontWeight:Int,
-        pinyinSpans:Array<RubySpan>,
-        clreqProfile:ClreqProfile,
-        punctuationGlyphSubstitutor:ClreqPunctuationGlyphSubstitutor,
-        measure:Float,
-        measureEm:Float,
-        gridBodyOffset:Float,
-        lineLengthGridDecision:LineLengthGridDecisionInfo,
-        quotePairs:Array<QuotePair>,
-        roleOverrideInfos:Array<RoleOverrideInfo>,
-        fontDecisions:Array<FontDecision>,
-        hyphenOffsets:std.SortedSet<Int>,
-        hyphenAdvance:Float,
-        hyphenGlyphs:Array<Glyph>,
-        substitutionRollbacks:std.SortedMap<TextRange, String>,
-        breakOpportunityDecisions:Array<BreakOpportunityDecisionInfo>,
-        emergencyTrackingEligibilityDecisions:Array<EmergencyTrackingEligibilityDecisionInfo>,
-        progressiveBreakOffsets:std.SortedMap<Int, ProgressiveBreakOpportunity>,
-        shapedGlyphsByClusterRange:std.SortedMap<TextRange, Array<Glyph>>,
-        openTypeFeaturesByClusterRange:std.SortedMap<TextRange, Array<String>>,
-        shapingDecisions:Array<ShapingDecisionInfo>,
-        eastAsianSpacingEdges:Array<EastAsianSpacingEdges>,
-        autoSpaceDecisions:Array<AutoSpaceDecisionInfo>,
-        inlineBoxResult:InlineBoxApplicationResult,
-        naturalClusters:Array<Cluster>,
-        inlineObjectByClusterIndex:std.SortedMap<Int, InlineObjectSpan>,
-        uniformInlineObjectBoundaryAfterClusters:std.SortedSet<Int>,
-        preferredInlineObjectBoundaryAfterClusters:std.SortedMap<Int, InlineObjectPreferredStretch>,
-        inlineObjectBoundaryUnbreakableRanges:Array<IntRange>,
-        clusterRoles:Array<FontRole>,
-        resolvedKinsoku:ResolvedKinsoku,
-        kinsokuRule:ClreqKinsokuRule,
-        inlineObjectAttachedMarks:Array<InlineObjectAttachedMark>,
-        inlineObjectSeparatorSpaceTrims:std.SortedMap<Int, Float>,
-        inlineObjectAttachmentNoStretchBoundaries:std.SortedSet<Int>,
-        inlineObjectPunctuationAttachmentDecisions:Array<InlineObjectPunctuationAttachmentDecisionInfo>,
-        mandatoryBreakClusters:std.SortedSet<Int>,
-        zeroWidthBreakClusters:std.SortedSet<Int>,
-        mandatoryBreakDecisions:Array<MandatoryBreakDecisionInfo>,
-        zeroWidthBreakDecisions:Array<ZeroWidthBreakDecisionInfo>,
-        punctuationAtoms:Array<PunctuationAtom>,
-        spacingPlan:PunctuationSpacingCompressionResult,
-        rubyFontGeometryBySpan:std.SortedMap<RubySpan, RubyFontGeometry>,
-        rubyAndBopomofoSpread:std.SortedMap<Int, Float>,
-        naturalInlineAttachments:Array<InlineAttachment>,
-        attachedPunctuationBoundary:AttachedInlinePunctuationBoundaryResult,
-        baseGeometry:PunctuationGeometryLedger,
-        attachedPunctuationTrailingGlueByCluster:std.SortedMap<Int, Float>,
-        clusters:Array<Cluster>,
-        adjustmentStyle:AdjustmentStylePolicy,
-        atomClassByRange:std.SortedMap<TextRange, PunctuationClass>,
-        shrinkOpportunities:Array<ShrinkOpportunity>
-    ) {
+    public function new(input:LayoutInput, rejectedTechnicalTiersBySpan:std.SortedMap<TextRange, std.SortedSet<Int>>, text:String, fontSize:Float,
+            styleAt:Int->TextStyle, fontSizeAt:Int->Float, bopomofoFontWeightAt:Int->Int, rubyFontSize:Float, rubyStackGap:Float, rubyFontWeight:Int,
+            pinyinSpans:Array<RubySpan>, clreqProfile:ClreqProfile, punctuationGlyphSubstitutor:ClreqPunctuationGlyphSubstitutor, measure:Float,
+            measureEm:Float, gridBodyOffset:Float, lineLengthGridDecision:LineLengthGridDecisionInfo, quotePairs:Array<QuotePair>,
+            roleOverrideInfos:Array<RoleOverrideInfo>, fontDecisions:Array<FontDecision>, hyphenOffsets:std.SortedSet<Int>, hyphenAdvance:Float,
+            hyphenGlyphs:Array<Glyph>, substitutionRollbacks:std.SortedMap<TextRange, String>, breakOpportunityDecisions:Array<BreakOpportunityDecisionInfo>,
+            emergencyTrackingEligibilityDecisions:Array<EmergencyTrackingEligibilityDecisionInfo>,
+            progressiveBreakOffsets:std.SortedMap<Int, ProgressiveBreakOpportunity>, shapedGlyphsByClusterRange:std.SortedMap<TextRange, Array<Glyph>>,
+            openTypeFeaturesByClusterRange:std.SortedMap<TextRange, Array<String>>, shapingDecisions:Array<ShapingDecisionInfo>,
+            eastAsianSpacingEdges:Array<EastAsianSpacingEdges>, autoSpaceDecisions:Array<AutoSpaceDecisionInfo>, inlineBoxResult:InlineBoxApplicationResult,
+            naturalClusters:Array<Cluster>, inlineObjectByClusterIndex:std.SortedMap<Int, InlineObjectSpan>,
+            uniformInlineObjectBoundaryAfterClusters:std.SortedSet<Int>,
+            preferredInlineObjectBoundaryAfterClusters:std.SortedMap<Int, InlineObjectPreferredStretch>,
+            inlineObjectBoundaryUnbreakableRanges:Array<IntRange>, clusterRoles:Array<FontRole>, resolvedKinsoku:ResolvedKinsoku,
+            kinsokuRule:ClreqKinsokuRule, inlineObjectAttachedMarks:Array<InlineObjectAttachedMark>,
+            inlineObjectSeparatorSpaceTrims:std.SortedMap<Int, Float>, inlineObjectAttachmentNoStretchBoundaries:std.SortedSet<Int>,
+            inlineObjectPunctuationAttachmentDecisions:Array<InlineObjectPunctuationAttachmentDecisionInfo>, mandatoryBreakClusters:std.SortedSet<Int>,
+            zeroWidthBreakClusters:std.SortedSet<Int>, mandatoryBreakDecisions:Array<MandatoryBreakDecisionInfo>,
+            zeroWidthBreakDecisions:Array<ZeroWidthBreakDecisionInfo>, punctuationAtoms:Array<PunctuationAtom>,
+            spacingPlan:PunctuationSpacingCompressionResult, rubyFontGeometryBySpan:std.SortedMap<RubySpan, RubyFontGeometry>,
+            rubyAndBopomofoSpread:std.SortedMap<Int, Float>, naturalInlineAttachments:Array<InlineAttachment>,
+            attachedPunctuationBoundary:AttachedInlinePunctuationBoundaryResult, baseGeometry:PunctuationGeometryLedger,
+            attachedPunctuationTrailingGlueByCluster:std.SortedMap<Int, Float>, clusters:Array<Cluster>, adjustmentStyle:AdjustmentStylePolicy,
+            atomClassByRange:std.SortedMap<TextRange, PunctuationClass>, shrinkOpportunities:Array<ShrinkOpportunity>) {
         this.input = input;
         this.rejectedTechnicalTiersBySpan = rejectedTechnicalTiersBySpan;
         this.text = text;
@@ -286,35 +247,16 @@ import std.SortedMap;
     public final progressiveBreakOpportunities:std.SortedMap<Int, ProgressiveBreakOpportunity>;
     public final lineSolution:LineSolution;
 
-    public function new(
-        metricDecisions:Array<ClusterMetricDecision>,
-        metricDecisionByRange:std.SortedMap<TextRange, ClusterMetricDecision>,
-        baseAscent:Float,
-        baseDescent:Float,
-        baseBoxDescent:Float,
-        baseFaceHeight:Float,
-        existingInterlineSpace:Float,
-        rubyExtent:Float,
-        baseLineMetrics:ResolvedLineMetrics,
-        lineSpacingDecision:Null<LineSpacingDecisionInfo>,
-        blockIndent:Float,
-        firstLineIndent:Float,
-        firstLineIndentDecision:FirstLineIndentDecisionInfo,
-        kinsokuDecision:KinsokuDecisionInfo,
-        asciiPointMarkKinsoku:ContextualKinsoku,
-        inlineObjectKinsoku:ContextualKinsoku,
-        unicodePunctuationBoundaries:UnicodePunctuationBoundaries,
-        westernBracketCjkInterCharBoundaryAfterClusters:std.SortedSet<Int>,
-        attachedInlinePhysicalBoundaryAfterClusters:std.SortedSet<Int>,
-        attachedInlineVirtualBoundaryAfterClusters:std.SortedMap<Int, Int>,
-        attachedInlineVirtualSinoWesternBoundaryAfterClusters:std.SortedSet<Int>,
-        noStretchBoundaryClusters:std.SortedSet<Int>,
-        noStretchBoundaryAfterClusters:std.SortedSet<Int>,
-        technicalBoundaryAfterClusters:std.SortedMap<Int, ProgressiveBreakTier>,
-        emergencyTrackingBoundaryAfterClusters:std.SortedMap<Int, String>,
-        progressiveBreakOpportunities:std.SortedMap<Int, ProgressiveBreakOpportunity>,
-        lineSolution:LineSolution
-    ) {
+    public function new(metricDecisions:Array<ClusterMetricDecision>, metricDecisionByRange:std.SortedMap<TextRange, ClusterMetricDecision>, baseAscent:Float,
+            baseDescent:Float, baseBoxDescent:Float, baseFaceHeight:Float, existingInterlineSpace:Float, rubyExtent:Float,
+            baseLineMetrics:ResolvedLineMetrics, lineSpacingDecision:Null<LineSpacingDecisionInfo>, blockIndent:Float, firstLineIndent:Float,
+            firstLineIndentDecision:FirstLineIndentDecisionInfo, kinsokuDecision:KinsokuDecisionInfo, asciiPointMarkKinsoku:ContextualKinsoku,
+            inlineObjectKinsoku:ContextualKinsoku, unicodePunctuationBoundaries:UnicodePunctuationBoundaries,
+            westernBracketCjkInterCharBoundaryAfterClusters:std.SortedSet<Int>, attachedInlinePhysicalBoundaryAfterClusters:std.SortedSet<Int>,
+            attachedInlineVirtualBoundaryAfterClusters:std.SortedMap<Int, Int>, attachedInlineVirtualSinoWesternBoundaryAfterClusters:std.SortedSet<Int>,
+            noStretchBoundaryClusters:std.SortedSet<Int>, noStretchBoundaryAfterClusters:std.SortedSet<Int>,
+            technicalBoundaryAfterClusters:std.SortedMap<Int, ProgressiveBreakTier>, emergencyTrackingBoundaryAfterClusters:std.SortedMap<Int, String>,
+            progressiveBreakOpportunities:std.SortedMap<Int, ProgressiveBreakOpportunity>, lineSolution:LineSolution) {
         this.metricDecisions = metricDecisions;
         this.metricDecisionByRange = metricDecisionByRange;
         this.baseAscent = baseAscent;
@@ -351,7 +293,8 @@ class IntervalOverlapIndex {
 
     public function new(ranges:Array<TextRange>) {
         final sorted = new Array<TextRange>();
-        for (i in 0...ranges.length) sorted.push(ranges[i]);
+        for (i in 0...ranges.length)
+            sorted.push(ranges[i]);
         var rIdx = 1;
         while (rIdx < sorted.length) {
             final curr = sorted[rIdx];
@@ -367,13 +310,15 @@ class IntervalOverlapIndex {
         this.prefixMaxEnd = new Array<Int>();
         var running = -2147483648;
         for (i in 0...sorted.length) {
-            if (sorted[i].end > running) running = sorted[i].end;
+            if (sorted[i].end > running)
+                running = sorted[i].end;
             prefixMaxEnd.push(running);
         }
     }
 
     public function overlaps(start:Int, endExclusive:Int):Bool {
-        if (byStart.length == 0) return false;
+        if (byStart.length == 0)
+            return false;
         var low = 0;
         var high = byStart.length;
         while (low < high) {
@@ -400,7 +345,8 @@ class LineBreakPlanningStage {
     }
 
     private static function isWhitespaceOnly(str:String):Bool {
-        if (str.length == 0) return false;
+        if (str.length == 0)
+            return false;
         for (i in 0...str.length) {
             if (!ParagraphShapingStage.isWhitespace(str.charCodeAt(i))) {
                 return false;
@@ -409,10 +355,8 @@ class LineBreakPlanningStage {
         return true;
     }
 
-    private static function containingClusterMetricDecisions(
-        clusters:Array<Cluster>,
-        decisions:Array<ClusterMetricDecision>
-    ):Array<Null<ClusterMetricDecision>> {
+    private static function containingClusterMetricDecisions(clusters:Array<Cluster>,
+            decisions:Array<ClusterMetricDecision>):Array<Null<ClusterMetricDecision>> {
         var itemIndex = 0;
         final result = new Array<Null<ClusterMetricDecision>>();
         for (i in 0...clusters.length) {
@@ -434,25 +378,18 @@ class LineBreakPlanningStage {
         return result;
     }
 
-    public static function planParagraphLines(
-        engine:ExplainableStubParagraphLayoutEngine,
-        prep:ParagraphLayoutPrep
-    ):LineBreakPlanningStageResult {
+    public static function planParagraphLines(engine:ExplainableStubParagraphLayoutEngine, prep:ParagraphLayoutPrep):LineBreakPlanningStageResult {
         var metricClusterIndex = 0;
         final metricDecisions = new Array<ClusterMetricDecision>();
         for (decIdx in 0...prep.fontDecisions.length) {
             final decision = prep.fontDecisions[decIdx];
-            while (
-                metricClusterIndex < prep.naturalClusters.length &&
-                prep.naturalClusters[metricClusterIndex].range.end <= decision.range.start
-            ) {
+            while (metricClusterIndex < prep.naturalClusters.length
+                && prep.naturalClusters[metricClusterIndex].range.end <= decision.range.start) {
                 metricClusterIndex += 1;
             }
             final textBuf = new StringBuf();
-            while (
-                metricClusterIndex < prep.naturalClusters.length &&
-                prep.naturalClusters[metricClusterIndex].range.start < decision.range.end
-            ) {
+            while (metricClusterIndex < prep.naturalClusters.length
+                && prep.naturalClusters[metricClusterIndex].range.start < decision.range.end) {
                 final cluster = prep.naturalClusters[metricClusterIndex];
                 if (cluster.range.start < decision.range.start || cluster.range.end > decision.range.end) {
                     throw new IllegalStateException("Shaped cluster " + cluster.range.toString() + " crosses font decision " + decision.range.toString());
@@ -464,28 +401,14 @@ class LineBreakPlanningStage {
             final displayedFaceSelectionText = bufStr.length > 0 ? bufStr : prep.text.substring(decision.range.start, decision.range.end);
             final decStyle = prep.styleAt(decision.range.start);
             final fontFamiliesCopy = new Array<String>();
-            for (f in 0...decStyle.fontFamilies.length) fontFamiliesCopy.push(decStyle.fontFamilies[f]);
-            final request = new FontMetricsRequest(
-                decision.candidate.key,
-                prep.fontSizeAt(decision.range.start),
-                decision.role,
-                prep.input.textStyle.locale,
-                fontFamiliesCopy,
-                decStyle.fontWeight,
-                decStyle.italic,
-                displayedFaceSelectionText
-            );
+            for (f in 0...decStyle.fontFamilies.length)
+                fontFamiliesCopy.push(decStyle.fontFamilies[f]);
+            final request = new FontMetricsRequest(decision.candidate.key, prep.fontSizeAt(decision.range.start), decision.role, prep.input.textStyle.locale,
+                fontFamiliesCopy, decStyle.fontWeight, decStyle.italic, displayedFaceSelectionText);
             final rawMetrics = engine.fontMetricsResolver.resolve(request);
-            final layoutMetrics = engine.fontMetricsNormalizer.normalize(
-                new FontMetricsNormalizationInput(request, rawMetrics)
-            );
-            metricDecisions.push(new ClusterMetricDecision(
-                decision.range,
-                prep.text.substring(decision.range.start, decision.range.end),
-                request,
-                rawMetrics,
-                layoutMetrics
-            ));
+            final layoutMetrics = engine.fontMetricsNormalizer.normalize(new FontMetricsNormalizationInput(request, rawMetrics));
+            metricDecisions.push(new ClusterMetricDecision(decision.range, prep.text.substring(decision.range.start, decision.range.end), request, rawMetrics,
+                layoutMetrics));
         }
 
         final ideographicDecisions = new Array<ClusterMetricDecision>();
@@ -500,16 +423,18 @@ class LineBreakPlanningStage {
         for (i in 0...baseMetricDecisions.length) {
             final asc = baseMetricDecisions[i].layoutMetrics.ascent;
             final dsc = baseMetricDecisions[i].layoutMetrics.descent;
-            if (maxAscent == null || asc > maxAscent) maxAscent = asc;
-            if (maxDescent == null || dsc > maxDescent) maxDescent = dsc;
+            if (maxAscent == null || asc > maxAscent)
+                maxAscent = asc;
+            if (maxDescent == null || dsc > maxDescent)
+                maxDescent = dsc;
         }
         final baseAscent = maxAscent != null ? maxAscent : (prep.fontSize * CJK_FACE_ASCENT_FALLBACK_EM);
         final baseDescent = maxDescent != null ? maxDescent : (prep.fontSize * CJK_FACE_DESCENT_FALLBACK_EM);
 
         var baseRefMetrics:Null<LayoutFontMetrics> = null;
         for (i in 0...metricDecisions.length) {
-            if (metricDecisions[i].layoutMetrics.metricBox == MetricBox.IdeographicEmBox &&
-                metricDecisions[i].request.fontSize == prep.fontSize) {
+            if (metricDecisions[i].layoutMetrics.metricBox == MetricBox.IdeographicEmBox
+                && metricDecisions[i].request.fontSize == prep.fontSize) {
                 baseRefMetrics = metricDecisions[i].layoutMetrics;
                 break;
             }
@@ -519,18 +444,15 @@ class LineBreakPlanningStage {
         var maxRubyExtent:Float = 0.0;
         for (i in 0...prep.rubyFontGeometryBySpan.size()) {
             final geom = prep.rubyFontGeometryBySpan.valueAt(i);
-            if (geom.requiredExtent > maxRubyExtent) maxRubyExtent = geom.requiredExtent;
+            if (geom.requiredExtent > maxRubyExtent)
+                maxRubyExtent = geom.requiredExtent;
         }
         final rubyExtent = maxRubyExtent;
 
         final interlinearSpacingFloor = prep.input.decorations.length == 0 ? 0.0 : 0.5 * prep.fontSize;
         final defaultBodyLineHeight = prep.fontSize * DEFAULT_BODY_LINE_HEIGHT_EM;
-        final baseLineMetrics = LineGeometryStageFns.lineMetrics(
-            metricDecisions,
-            prep.input.paragraphStyle.lineHeight,
-            defaultBodyLineHeight,
-            interlinearSpacingFloor
-        );
+        final baseLineMetrics = LineGeometryStageFns.lineMetrics(metricDecisions, prep.input.paragraphStyle.lineHeight, defaultBodyLineHeight,
+            interlinearSpacingFloor);
 
         final containingDecisions = containingClusterMetricDecisions(prep.naturalClusters, metricDecisions);
         final metricDecisionByRangeBuilder = SortedMap.builder();
@@ -544,29 +466,22 @@ class LineBreakPlanningStage {
 
         final baseFaceHeight = baseAscent + baseDescent;
         var existingInterlineSpace = baseLineMetrics.height - baseFaceHeight;
-        if (existingInterlineSpace < 0.0) existingInterlineSpace = 0.0;
+        if (existingInterlineSpace < 0.0)
+            existingInterlineSpace = 0.0;
 
         var lineSpacingDecision:Null<LineSpacingDecisionInfo> = null;
         if (baseLineMetrics.height > 0.0) {
             final natural = baseLineMetrics.height - baseLineMetrics.extraLeading;
             final requested = prep.input.paragraphStyle.lineHeight;
             final reqOrDefault = requested != null ? requested : defaultBodyLineHeight;
-            final markFloorBinds = interlinearSpacingFloor > 0.0 &&
-                (natural + interlinearSpacingFloor > reqOrDefault + 0.001);
+            final markFloorBinds = interlinearSpacingFloor > 0.0 && (natural + interlinearSpacingFloor > reqOrDefault + 0.001);
             var reason = "CjkBodyLineHeightDefault";
             if (requested != null && !markFloorBinds) {
                 reason = "ExplicitLineHeight";
             } else if (markFloorBinds) {
                 reason = "InterlinearMarkLineSpacingFloor";
             }
-            lineSpacingDecision = new LineSpacingDecisionInfo(
-                natural,
-                requested,
-                baseLineMetrics.height,
-                interlinearSpacingFloor,
-                markFloorBinds,
-                reason
-            );
+            lineSpacingDecision = new LineSpacingDecisionInfo(natural, requested, baseLineMetrics.height, interlinearSpacingFloor, markFloorBinds, reason);
         }
 
         var explicitIndentEm:Null<Float> = null;
@@ -578,20 +493,13 @@ class LineBreakPlanningStage {
         final blockIndent = prep.input.paragraphStyle.blockIndent.toPx(prep.fontSize);
         final resolvedIndentEm:Float = explicitIndentEm != null ? explicitIndentEm : indentPolicy.resolveEm(prep.measureEm);
         var firstLineIndent = blockIndent + resolvedIndentEm * prep.fontSize;
-        if (firstLineIndent < 0.0) firstLineIndent = 0.0;
-        final firstLineIndentDecision = new FirstLineIndentDecisionInfo(
-            explicitIndentEm != null ? "Explicit" : "MeasureAdaptiveFirstLineIndent",
-            prep.measureEm,
-            indentPolicy.shortBelowEm,
-            resolvedIndentEm
-        );
+        if (firstLineIndent < 0.0)
+            firstLineIndent = 0.0;
+        final firstLineIndentDecision = new FirstLineIndentDecisionInfo(explicitIndentEm != null ? "Explicit" : "MeasureAdaptiveFirstLineIndent",
+            prep.measureEm, indentPolicy.shortBelowEm, resolvedIndentEm);
 
-        final kinsokuDecision = new KinsokuDecisionInfo(
-            prep.measureEm,
-            Std.string(prep.resolvedKinsoku.level),
-            Std.string(prep.resolvedKinsoku.hanging),
-            prep.resolvedKinsoku.reason
-        );
+        final kinsokuDecision = new KinsokuDecisionInfo(prep.measureEm, Std.string(prep.resolvedKinsoku.level), Std.string(prep.resolvedKinsoku.hanging),
+            prep.resolvedKinsoku.reason);
 
         final hangableClustersBuilder = SortedSet.builder();
         if (prep.resolvedKinsoku.hanging == HangingPunctuationStyle.PauseStops) {
@@ -603,25 +511,14 @@ class LineBreakPlanningStage {
         }
         final hangableClusters = hangableClustersBuilder.build();
 
-        final asciiPointMarkKinsoku = PunctuationGeometryStage.attachedAsciiPointMarkKinsoku(
-            prep.naturalClusters,
-            prep.clusterRoles,
-            prep.clusters,
-            prep.resolvedKinsoku.level,
-            prep.measure - blockIndent,
-            prep.measure - firstLineIndent
-        );
-        final inlineObjectKinsoku = PunctuationGeometryStage.inlineObjectAttachedKinsoku(
-            prep.naturalClusters,
-            prep.inlineObjectAttachedMarks,
-            prep.clusters,
-            prep.resolvedKinsoku.level,
-            prep.measure - blockIndent,
-            prep.measure - firstLineIndent
-        );
+        final asciiPointMarkKinsoku = PunctuationGeometryStage.attachedAsciiPointMarkKinsoku(prep.naturalClusters, prep.clusterRoles, prep.clusters,
+            prep.resolvedKinsoku.level, prep.measure - blockIndent, prep.measure - firstLineIndent);
+        final inlineObjectKinsoku = PunctuationGeometryStage.inlineObjectAttachedKinsoku(prep.naturalClusters, prep.inlineObjectAttachedMarks, prep.clusters,
+            prep.resolvedKinsoku.level, prep.measure - blockIndent, prep.measure - firstLineIndent);
 
         final resolvedHangableClustersBuilder = SortedSet.builder();
-        for (i in 0...hangableClusters.size()) resolvedHangableClustersBuilder.put(hangableClusters.at(i));
+        for (i in 0...hangableClusters.size())
+            resolvedHangableClustersBuilder.put(hangableClusters.at(i));
         for (i in 0...asciiPointMarkKinsoku.impossibleMeasureHangEligibleClusters.size()) {
             resolvedHangableClustersBuilder.put(asciiPointMarkKinsoku.impossibleMeasureHangEligibleClusters.at(i));
         }
@@ -630,26 +527,13 @@ class LineBreakPlanningStage {
         }
         final resolvedHangableClusters = resolvedHangableClustersBuilder.build();
 
-        final unicodePunctuationBoundaries = UnicodePunctuationBoundaryResolver.resolveUnicodePunctuationBoundaries(
-            prep.text,
-            prep.naturalClusters,
-            prep.clusterRoles,
-            prep.quotePairs
-        );
+        final unicodePunctuationBoundaries = UnicodePunctuationBoundaryResolver.resolveUnicodePunctuationBoundaries(prep.text, prep.naturalClusters,
+            prep.clusterRoles, prep.quotePairs);
         final inlineAttachments = prep.naturalInlineAttachments;
-        final westernBracketBoundaries = UnicodePunctuationBoundaryResolver.resolveWesternBracketCjkInterCharBoundaries(
-            prep.text,
-            prep.naturalClusters,
-            prep.clusterRoles
-        );
-        final attachedInlineInterCharBoundaries = UnicodePunctuationBoundaryResolver.resolveAttachedInlineInterCharBoundaries(
-            prep.text,
-            prep.naturalClusters,
-            prep.clusterRoles,
-            prep.eastAsianSpacingEdges,
-            westernBracketBoundaries,
-            inlineAttachments
-        );
+        final westernBracketBoundaries = UnicodePunctuationBoundaryResolver.resolveWesternBracketCjkInterCharBoundaries(prep.text, prep.naturalClusters,
+            prep.clusterRoles);
+        final attachedInlineInterCharBoundaries = UnicodePunctuationBoundaryResolver.resolveAttachedInlineInterCharBoundaries(prep.text, prep.naturalClusters,
+            prep.clusterRoles, prep.eastAsianSpacingEdges, westernBracketBoundaries, inlineAttachments);
         final westernBracketCjkInterCharBoundaryAfterClusters = attachedInlineInterCharBoundaries.ordinaryWesternBoundaryAfterClusters;
         final attachedInlinePhysicalBoundaryAfterClusters = attachedInlineInterCharBoundaries.suppressedPhysicalBoundaryAfterClusters;
         final attachedInlineVirtualBoundaryAfterClusters = attachedInlineInterCharBoundaries.virtualBoundaryAfterClusters;
@@ -665,13 +549,13 @@ class LineBreakPlanningStage {
 
         final forbiddenLineStartClustersBuilder = SortedSet.builder();
         for (idx in 0...prep.naturalClusters.length) {
-            if (attachedInlineForbiddenLineStartClusters.has(idx) ||
-                prep.zeroWidthBreakClusters.has(idx) ||
-                (PunctuationGeometryStage.isCjkKinsokuRole(prep.clusterRoles[idx]) &&
-                    prep.kinsokuRule.forbiddenAtLineStart(prep.naturalClusters[idx])) ||
-                unicodePunctuationBoundaries.forbiddenLineStartClusters.has(idx) ||
-                asciiPointMarkKinsoku.forbiddenLineStartClusters.has(idx) ||
-                inlineObjectKinsoku.forbiddenLineStartClusters.has(idx)) {
+            if (attachedInlineForbiddenLineStartClusters.has(idx)
+                || prep.zeroWidthBreakClusters.has(idx)
+                || (PunctuationGeometryStage.isCjkKinsokuRole(prep.clusterRoles[idx])
+                    && prep.kinsokuRule.forbiddenAtLineStart(prep.naturalClusters[idx]))
+                || unicodePunctuationBoundaries.forbiddenLineStartClusters.has(idx)
+                || asciiPointMarkKinsoku.forbiddenLineStartClusters.has(idx)
+                || inlineObjectKinsoku.forbiddenLineStartClusters.has(idx)) {
                 forbiddenLineStartClustersBuilder.put(idx);
             }
         }
@@ -679,9 +563,9 @@ class LineBreakPlanningStage {
 
         final forbiddenLineEndClustersBuilder = SortedSet.builder();
         for (idx in 0...prep.naturalClusters.length) {
-            if ((PunctuationGeometryStage.isCjkKinsokuRole(prep.clusterRoles[idx]) &&
-                    prep.kinsokuRule.forbiddenAtLineEnd(prep.naturalClusters[idx])) ||
-                unicodePunctuationBoundaries.forbiddenLineEndClusters.has(idx)) {
+            if ((PunctuationGeometryStage.isCjkKinsokuRole(prep.clusterRoles[idx])
+                && prep.kinsokuRule.forbiddenAtLineEnd(prep.naturalClusters[idx]))
+                || unicodePunctuationBoundaries.forbiddenLineEndClusters.has(idx)) {
                 forbiddenLineEndClustersBuilder.put(idx);
             }
         }
@@ -710,9 +594,8 @@ class LineBreakPlanningStage {
             final opportunity = prep.progressiveBreakOffsets.valueAt(i);
             if (clusterIndexBySourceStart.has(sourceOffset)) {
                 final clusterIndex = clusterIndexBySourceStart.get(sourceOffset);
-                final opp = opportunity.tier == ProgressiveBreakTier.Whitespace
-                    ? new ProgressiveBreakOpportunity(opportunity.tier, opportunity.spanRange, progressiveTechnicalWhitespaceStretchCapacity)
-                    : opportunity;
+                final opp = opportunity.tier == ProgressiveBreakTier.Whitespace ? new ProgressiveBreakOpportunity(opportunity.tier, opportunity.spanRange,
+                    progressiveTechnicalWhitespaceStretchCapacity) : opportunity;
                 progressiveBreakOpportunitiesBuilder.put(clusterIndex, opp);
             }
         }
@@ -731,10 +614,7 @@ class LineBreakPlanningStage {
         for (i in 0...rawNumberSymbolRanges.length) {
             final sourceRange = rawNumberSymbolRanges[i];
             if (!progressiveTechnicalOverlap.overlaps(sourceRange.start, sourceRange.end + 1)) {
-                final idxRange = PunctuationGeometryLedger.clusterIndexRangeFor(
-                    prep.naturalClusters,
-                    new TextRange(sourceRange.start, sourceRange.end + 1)
-                );
+                final idxRange = PunctuationGeometryLedger.clusterIndexRangeFor(prep.naturalClusters, new TextRange(sourceRange.start, sourceRange.end + 1));
                 if (idxRange != null) {
                     numberSymbolClusterRanges.push(idxRange);
                 }
@@ -755,11 +635,8 @@ class LineBreakPlanningStage {
 
         final noStretchBoundaryClustersBuilder = SortedSet.builder();
         for (idx in 0...prep.naturalClusters.length) {
-            final cls = prep.atomClassByRange.has(prep.naturalClusters[idx].range)
-                ? prep.atomClassByRange.get(prep.naturalClusters[idx].range)
-                : null;
-            if (cls == PunctuationClass.Connector || cls == PunctuationClass.Solidus ||
-                cls == PunctuationClass.Dash || cls == PunctuationClass.Ellipsis) {
+            final cls = prep.atomClassByRange.has(prep.naturalClusters[idx].range) ? prep.atomClassByRange.get(prep.naturalClusters[idx].range) : null;
+            if (cls == PunctuationClass.Connector || cls == PunctuationClass.Solidus || cls == PunctuationClass.Dash || cls == PunctuationClass.Ellipsis) {
                 noStretchBoundaryClustersBuilder.put(idx);
             }
         }
@@ -788,33 +665,41 @@ class LineBreakPlanningStage {
         final technicalBoundaryAfterClusters = technicalBoundaryAfterClustersBuilder.build();
 
         final boundaryEligible = new Array<Bool>();
-        for (i in 0...prep.naturalClusters.length) boundaryEligible.push(false);
+        for (i in 0...prep.naturalClusters.length)
+            boundaryEligible.push(false);
         for (leftIndex in 0...prep.naturalClusters.length - 1) {
             final rightIndex = leftIndex + 1;
             final left = prep.naturalClusters[leftIndex];
             final right = prep.naturalClusters[rightIndex];
-            if (left.range.end != right.range.start) continue;
-            if (
-                prep.inlineObjectByClusterIndex.has(leftIndex) || prep.inlineObjectByClusterIndex.has(rightIndex) ||
-                prep.zeroWidthBreakClusters.has(leftIndex) || prep.zeroWidthBreakClusters.has(rightIndex) ||
-                prep.mandatoryBreakClusters.has(leftIndex) || prep.mandatoryBreakClusters.has(rightIndex) ||
-                left.text.length == 0 || right.text.length == 0 ||
-                isWhitespaceOnly(left.text) || isWhitespaceOnly(right.text)
-            ) {
+            if (left.range.end != right.range.start)
+                continue;
+            if (prep.inlineObjectByClusterIndex.has(leftIndex)
+                || prep.inlineObjectByClusterIndex.has(rightIndex)
+                || prep.zeroWidthBreakClusters.has(leftIndex)
+                || prep.zeroWidthBreakClusters.has(rightIndex)
+                || prep.mandatoryBreakClusters.has(leftIndex)
+                || prep.mandatoryBreakClusters.has(rightIndex)
+                || left.text.length == 0
+                || right.text.length == 0
+                || isWhitespaceOnly(left.text)
+                || isWhitespaceOnly(right.text)) {
                 continue;
             }
             boundaryEligible[leftIndex] = true;
         }
 
         final addedKeys = new Array<Bool>();
-        for (i in 0...prep.naturalClusters.length) addedKeys.push(false);
+        for (i in 0...prep.naturalClusters.length)
+            addedKeys.push(false);
         final emergencyTrackingBoundaryAfterClustersBuilder = SortedMap.builder();
         for (i in 0...prep.emergencyTrackingEligibilityDecisions.length) {
             final decision = prep.emergencyTrackingEligibilityDecisions[i];
             final span = PunctuationGeometryLedger.clusterIndexRangeFor(prep.naturalClusters, decision.range);
-            if (span == null) continue;
+            if (span == null)
+                continue;
             for (leftIndex in span.start...span.end) {
-                if (!boundaryEligible[leftIndex] || addedKeys[leftIndex]) continue;
+                if (!boundaryEligible[leftIndex] || addedKeys[leftIndex])
+                    continue;
                 addedKeys[leftIndex] = true;
                 emergencyTrackingBoundaryAfterClustersBuilder.put(leftIndex, decision.reason);
             }
@@ -825,11 +710,9 @@ class LineBreakPlanningStage {
         for (i in 0...prep.uniformInlineObjectBoundaryAfterClusters.size()) {
             final leftIndex = prep.uniformInlineObjectBoundaryAfterClusters.at(i);
             final rightIndex = leftIndex + 1;
-            if (
-                noStretchBoundaryAfterClusters.has(leftIndex) ||
-                noStretchBoundaryClusters.has(leftIndex) ||
-                noStretchBoundaryClusters.has(rightIndex)
-            ) {
+            if (noStretchBoundaryAfterClusters.has(leftIndex)
+                || noStretchBoundaryClusters.has(leftIndex)
+                || noStretchBoundaryClusters.has(rightIndex)) {
                 // skip
             } else {
                 adjustableInlineBoundaryRightClustersBuilder.put(rightIndex);
@@ -839,9 +722,10 @@ class LineBreakPlanningStage {
 
         final cjkInterCharBoundariesBuilder = SortedSet.builder();
         for (it in 1...prep.naturalClusters.length) {
-            if (!attachedInlinePhysicalBoundaryAfterClusters.has(it - 1) &&
-                !noStretchBoundaryAfterClusters.has(it - 1) &&
-                prep.clusterRoles[it - 1] == FontRole.CjkText && prep.clusterRoles[it] == FontRole.CjkText) {
+            if (!attachedInlinePhysicalBoundaryAfterClusters.has(it - 1)
+                && !noStretchBoundaryAfterClusters.has(it - 1)
+                && prep.clusterRoles[it - 1] == FontRole.CjkText
+                && prep.clusterRoles[it] == FontRole.CjkText) {
                 cjkInterCharBoundariesBuilder.put(it);
             }
         }
@@ -858,9 +742,9 @@ class LineBreakPlanningStage {
 
         final sinoWesternBoundariesBuilder = SortedSet.builder();
         for (it in 1...prep.naturalClusters.length) {
-            if (!attachedInlinePhysicalBoundaryAfterClusters.has(it - 1) &&
-                !noStretchBoundaryAfterClusters.has(it - 1) &&
-                PunctuationGeometryStage.isEastAsianSpacingBoundaryAt(it, prep.naturalClusters, prep.eastAsianSpacingEdges)) {
+            if (!attachedInlinePhysicalBoundaryAfterClusters.has(it - 1)
+                && !noStretchBoundaryAfterClusters.has(it - 1)
+                && PunctuationGeometryStage.isEastAsianSpacingBoundaryAt(it, prep.naturalClusters, prep.eastAsianSpacingEdges)) {
                 sinoWesternBoundariesBuilder.put(it);
             }
         }
@@ -881,24 +765,34 @@ class LineBreakPlanningStage {
             final d = prep.input.decorations[i];
             if (d.kind == DecorationKind.Mourning) {
                 final r = PunctuationGeometryLedger.clusterIndexRangeFor(prep.naturalClusters, d.range);
-                if (r != null) allUnbreakables.push(r);
+                if (r != null)
+                    allUnbreakables.push(r);
             }
         }
         for (i in 0...prep.pinyinSpans.length) {
             final r = PunctuationGeometryLedger.clusterIndexRangeFor(prep.naturalClusters, prep.pinyinSpans[i].baseRange);
-            if (r != null) allUnbreakables.push(r);
+            if (r != null)
+                allUnbreakables.push(r);
         }
-        for (i in 0...attachedInlineUnbreakableRanges.length) allUnbreakables.push(attachedInlineUnbreakableRanges[i]);
-        for (i in 0...numberSymbolUnbreakableRanges.length) allUnbreakables.push(numberSymbolUnbreakableRanges[i]);
-        for (i in 0...unicodePunctuationBoundaries.unbreakableRanges.length) allUnbreakables.push(unicodePunctuationBoundaries.unbreakableRanges[i]);
-        for (i in 0...asciiPointMarkKinsoku.unbreakableRanges.length) allUnbreakables.push(asciiPointMarkKinsoku.unbreakableRanges[i]);
-        for (i in 0...inlineObjectKinsoku.unbreakableRanges.length) allUnbreakables.push(inlineObjectKinsoku.unbreakableRanges[i]);
-        for (i in 0...prep.inlineObjectBoundaryUnbreakableRanges.length) allUnbreakables.push(prep.inlineObjectBoundaryUnbreakableRanges[i]);
+        for (i in 0...attachedInlineUnbreakableRanges.length)
+            allUnbreakables.push(attachedInlineUnbreakableRanges[i]);
+        for (i in 0...numberSymbolUnbreakableRanges.length)
+            allUnbreakables.push(numberSymbolUnbreakableRanges[i]);
+        for (i in 0...unicodePunctuationBoundaries.unbreakableRanges.length)
+            allUnbreakables.push(unicodePunctuationBoundaries.unbreakableRanges[i]);
+        for (i in 0...asciiPointMarkKinsoku.unbreakableRanges.length)
+            allUnbreakables.push(asciiPointMarkKinsoku.unbreakableRanges[i]);
+        for (i in 0...inlineObjectKinsoku.unbreakableRanges.length)
+            allUnbreakables.push(inlineObjectKinsoku.unbreakableRanges[i]);
+        for (i in 0...prep.inlineObjectBoundaryUnbreakableRanges.length)
+            allUnbreakables.push(prep.inlineObjectBoundaryUnbreakableRanges[i]);
         final unbreakableRanges = new UnbreakableRanges(allUnbreakables);
 
         final combinedExtendableHangRanges = new Array<IntRange>();
-        for (i in 0...asciiPointMarkKinsoku.extendableHangRanges.length) combinedExtendableHangRanges.push(asciiPointMarkKinsoku.extendableHangRanges[i]);
-        for (i in 0...inlineObjectKinsoku.extendableHangRanges.length) combinedExtendableHangRanges.push(inlineObjectKinsoku.extendableHangRanges[i]);
+        for (i in 0...asciiPointMarkKinsoku.extendableHangRanges.length)
+            combinedExtendableHangRanges.push(asciiPointMarkKinsoku.extendableHangRanges[i]);
+        for (i in 0...inlineObjectKinsoku.extendableHangRanges.length)
+            combinedExtendableHangRanges.push(inlineObjectKinsoku.extendableHangRanges[i]);
 
         var lineSolution = new LineSolution([]);
         if (prep.text.length > 0) {
@@ -908,58 +802,19 @@ class LineBreakPlanningStage {
             } else if (prep.adjustmentStyle.lineAdjustment == LineAdjustmentStrategy.PushOutFirst) {
                 lineAdjustmentCompressBias = 0.5;
             }
-            lineSolution = engine.lineBreaker.breakLines(
-                prep.naturalClusters,
-                prep.clusters,
-                prep.measure - blockIndent,
-                prep.shrinkOpportunities,
-                unbreakableRanges,
-                firstLineIndent - blockIndent,
-                resolvedHangableClusters,
-                combinedExtendableHangRanges,
-                forbiddenLineStartClusters,
-                forbiddenLineEndClusters,
-                hyphenBreakClusters,
-                cjkInterCharBoundaries,
-                HYPHEN_LAST_RESORT_CJK_STRETCH_EM * prep.fontSize,
-                sinoWesternBoundaries,
-                HYPHEN_SINO_WESTERN_STRETCH_CAP_EM * prep.fontSize,
-                prep.adjustmentStyle.lineAdjustment != LineAdjustmentStrategy.PushOutOnly,
-                lineAdjustmentCompressBias,
-                prep.mandatoryBreakClusters,
-                prep.zeroWidthBreakClusters,
-                progressiveBreakOpportunities
-            );
+            lineSolution = engine.lineBreaker.breakLines(prep.naturalClusters, prep.clusters, prep.measure - blockIndent, prep.shrinkOpportunities,
+                unbreakableRanges, firstLineIndent - blockIndent, resolvedHangableClusters, combinedExtendableHangRanges, forbiddenLineStartClusters,
+                forbiddenLineEndClusters, hyphenBreakClusters, cjkInterCharBoundaries, HYPHEN_LAST_RESORT_CJK_STRETCH_EM * prep.fontSize,
+                sinoWesternBoundaries, HYPHEN_SINO_WESTERN_STRETCH_CAP_EM * prep.fontSize,
+                prep.adjustmentStyle.lineAdjustment != LineAdjustmentStrategy.PushOutOnly, lineAdjustmentCompressBias, prep.mandatoryBreakClusters,
+                prep.zeroWidthBreakClusters, progressiveBreakOpportunities);
         }
 
-        return new LineBreakPlanningStageResult(
-            metricDecisions,
-            metricDecisionByRange,
-            baseAscent,
-            baseDescent,
-            baseBoxDescent,
-            baseFaceHeight,
-            existingInterlineSpace,
-            rubyExtent,
-            baseLineMetrics,
-            lineSpacingDecision,
-            blockIndent,
-            firstLineIndent,
-            firstLineIndentDecision,
-            kinsokuDecision,
-            asciiPointMarkKinsoku,
-            inlineObjectKinsoku,
-            unicodePunctuationBoundaries,
-            westernBracketCjkInterCharBoundaryAfterClusters,
-            attachedInlinePhysicalBoundaryAfterClusters,
-            attachedInlineVirtualBoundaryAfterClusters,
-            attachedInlineVirtualSinoWesternBoundaryAfterClusters,
-            noStretchBoundaryClusters,
-            noStretchBoundaryAfterClusters,
-            technicalBoundaryAfterClusters,
-            emergencyTrackingBoundaryAfterClusters,
-            progressiveBreakOpportunities,
-            lineSolution
-        );
+        return new LineBreakPlanningStageResult(metricDecisions, metricDecisionByRange, baseAscent, baseDescent, baseBoxDescent, baseFaceHeight,
+            existingInterlineSpace, rubyExtent, baseLineMetrics, lineSpacingDecision, blockIndent, firstLineIndent, firstLineIndentDecision, kinsokuDecision,
+            asciiPointMarkKinsoku, inlineObjectKinsoku, unicodePunctuationBoundaries, westernBracketCjkInterCharBoundaryAfterClusters,
+            attachedInlinePhysicalBoundaryAfterClusters, attachedInlineVirtualBoundaryAfterClusters, attachedInlineVirtualSinoWesternBoundaryAfterClusters,
+            noStretchBoundaryClusters, noStretchBoundaryAfterClusters, technicalBoundaryAfterClusters, emergencyTrackingBoundaryAfterClusters,
+            progressiveBreakOpportunities, lineSolution);
     }
 }
