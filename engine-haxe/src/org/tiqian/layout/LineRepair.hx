@@ -18,16 +18,16 @@ import org.tiqian.layout.ProgressiveBreakDecisions.ShrinkOpportunity;
 import org.tiqian.layout.ProgressiveBreakDecisions.ShrinkChannel;
 import org.tiqian.layout.ProgressiveBreakDecisions.UnbreakableRanges;
 import org.tiqian.layout.LineBreaker.LineBreakerLines;
+import org.tiqian.layout.ProgressiveBreakDecisions.ProgressiveBreakOpportunity;
 import std.SortedSet;
+import std.SortedMap;
 
 /**
  * Haxe port of Kotlin LineRepair.kt's kinsoku repair chain: applyKinsokuRepairs,
- * tryPushIn, distributePushInShrink and mandatoryBreakTailEnd. Kotlin keeps these
+ * tryPushIn, distributePushInShrink, mandatoryBreakTailEnd, and the fill PushIn
+ * pass (applyFillPushIn, withFillPushIn, fillPushInGroupEnd). Kotlin keeps these
  * as top-level functions; the port groups them as statics of this class so
- * cross-module calls stay explicit. The fill PushIn pass (applyFillPushIn,
- * withFillPushIn, fillPushInGroupEnd) is deferred to the LineRepair completion
- * lane; breakLines callers that leave lineAdjustmentPushIn false observe
- * byte-identical behavior without it.
+ * cross-module calls stay explicit.
  */
 @:dataClass class PushInResult {
     public final previous:LineCandidate;
@@ -330,4 +330,184 @@ class LineRepair {
         final b = SortedSet.builder();
         return b.build();
     }
+
+    static inline final PROGRESSIVE_TIER_PROMOTION_FILL_EPSILON:Float = 0.001;
+
+    static function isContinuableZeroShrinkFillPushIn(repair:Null<RepairOption>):Bool {
+        if (repair == null)
+            return false;
+        final r:RepairOption = repair;
+        return switch (r) {
+            case PushIn(_, reason, _, _, totalShrink, _):
+                totalShrink <= 0.001 && StringTools.startsWith(reason, "LineAdjustmentPushIn:");
+            case Hang(_, _, _): false;
+            case CarryPrevious(_, _, _, _): false;
+            case CarryNext(_, _, _): false;
+            case LeaveRagged(_, _, _): false;
+        };
+    }
+
+    public static function fillPushInGroupEnd(curr:LineCandidate, forbiddenLineStartClusters:Null<SortedSet<Int>>,
+            forbiddenLineEndClusters:SortedSet<Int>, unbreakableRanges:UnbreakableRanges):Null<Int> {
+        var groupEnd = curr.clusterRange.start;
+        while (groupEnd <= curr.clusterRange.end) {
+            final containing = unbreakableRanges.containingFromClosedStartOrNull(groupEnd);
+            if (containing != null) {
+                groupEnd = containing.end;
+                if (groupEnd > curr.clusterRange.end)
+                    return null;
+                // containing.last may begin the next contiguous unbreakable range: re-check so the
+                // pulled group ends past the WHOLE run, never inside it (closure, matching
+                // adjustBreakForUnbreakables). Without this, a per-atom formula's fill pass refills the
+                // break back inside the chain (`10^{34}|x^3`).
+                continue;
+            }
+            if (forbiddenLineEndClusters.has(groupEnd)) {
+                groupEnd += 1;
+                continue;
+            }
+            final nextHead = groupEnd + 1;
+            if (nextHead <= curr.clusterRange.end && forbiddenLineStartClusters != null && forbiddenLineStartClusters.has(nextHead)) {
+                groupEnd = nextHead;
+                continue;
+            }
+            return groupEnd;
+        }
+        return null;
+    }
+
+    public static function applyFillPushIn(lines:Array<LineCandidate>, naturalClusters:Array<Cluster>, adjustedClusters:Array<Cluster>,
+            maxWidth:Float, shrinkOpportunities:Array<ShrinkOpportunity>, firstLineIndent:Float, compressBias:Float,
+            forbiddenLineStartClusters:Null<SortedSet<Int>>, forbiddenLineEndClusters:SortedSet<Int>, unbreakableRanges:UnbreakableRanges,
+            pushInPenalty:Int, ?gapBoundaries:Null<SortedSet<Int>>,
+            ?progressiveBreakOpportunities:Null<SortedMap<Int, ProgressiveBreakOpportunity>>):Array<LineCandidate> {
+        if (lines.length < 2 || compressBias <= 0)
+            return lines;
+        final gaps = gapBoundaries == null ? LineBreakerLines.emptyIntSet() : gapBoundaries;
+        final progressive = progressiveBreakOpportunities == null ? LineBreakerLines.emptyProgressiveMap() : progressiveBreakOpportunities;
+        final out = lines.copy();
+        var i = 0;
+        while (i < out.length - 1) {
+            final prev = out[i];
+            final curr = out[i + 1];
+            final canExtendZeroShrinkFill = isContinuableZeroShrinkFillPushIn(prev.repair);
+            if ((prev.repair != null && !canExtendZeroShrinkFill) || prev.hangingClusterIndex != null || prev.endReason != LineEndReason.AutoWrap) {
+                i += 1;
+                continue;
+            }
+            final limit = ProgressiveBreakDecisions.lineLimit(maxWidth, firstLineIndent, prev.clusterRange.start);
+            final deficit = limit - prev.adjustedWidth;
+            if (deficit <= 0) {
+                i += 1;
+                continue;
+            }
+            final curr0 = curr.clusterRange.start;
+            var groupEnd = fillPushInGroupEnd(curr, forbiddenLineStartClusters, forbiddenLineEndClusters, unbreakableRanges);
+            if (groupEnd == null) {
+                i += 1;
+                continue;
+            }
+            final currentBreak = progressive.get(prev.clusterRange.end + 1);
+            var resultingBreak = progressive.get(groupEnd + 1);
+            var addedAdvance = 0.0;
+            var cIdx = curr0;
+            while (cIdx <= groupEnd) {
+                addedAdvance += adjustedClusters[cIdx].advance;
+                cIdx++;
+            }
+            var promotesProgressiveTier = currentBreak != null
+                && resultingBreak != null
+                && currentBreak.spanRange.start == resultingBreak.spanRange.start
+                && currentBreak.spanRange.end == resultingBreak.spanRange.end
+                && resultingBreak.tier.priority < currentBreak.tier.priority;
+            if (promotesProgressiveTier && addedAdvance < deficit - PROGRESSIVE_TIER_PROMOTION_FILL_EPSILON) {
+                final activeBreak = currentBreak;
+                final searchStart = groupEnd + 2;
+                final searchEnd = curr.clusterRange.end + 1;
+                var matchingTierBoundary:Null<Int> = null;
+                if (searchStart <= searchEnd) {
+                    var boundary = searchStart;
+                    while (boundary <= searchEnd) {
+                        final opp = progressive.get(boundary);
+                        if (opp != null
+                            && opp.spanRange.start == activeBreak.spanRange.start
+                            && opp.spanRange.end == activeBreak.spanRange.end
+                            && opp.tier == activeBreak.tier) {
+                            matchingTierBoundary = boundary;
+                            break;
+                        }
+                        boundary++;
+                    }
+                }
+                if (matchingTierBoundary != null) {
+                    groupEnd = matchingTierBoundary - 1;
+                    resultingBreak = progressive.get(matchingTierBoundary);
+                    addedAdvance = 0.0;
+                    var cIdx2 = curr0;
+                    while (cIdx2 <= groupEnd) {
+                        addedAdvance += adjustedClusters[cIdx2].advance;
+                        cIdx2++;
+                    }
+                    promotesProgressiveTier = false;
+                }
+            }
+            if (currentBreak != null
+                && resultingBreak != null
+                && currentBreak.spanRange.start == resultingBreak.spanRange.start
+                && currentBreak.spanRange.end == resultingBreak.spanRange.end
+                && resultingBreak.tier.priority > currentBreak.tier.priority) {
+                i += 1;
+                continue;
+            }
+            final overflow = addedAdvance - deficit;
+            if (promotesProgressiveTier && overflow < -PROGRESSIVE_TIER_PROMOTION_FILL_EPSILON) {
+                i += 1;
+                continue;
+            }
+            if (overflow >= deficit * compressBias) {
+                i += 1;
+                continue;
+            }
+            if (overflow > 0.0 && !promotesProgressiveTier) {
+                final prevGaps = LineBreakerLines.lineGapCount(prev.clusterRange, gaps);
+                final dStretchCured = prevGaps == 0 ? 0.0 : deficit / prevGaps;
+                final groupGaps = LineBreakerLines.lineGapCount(new IntRange(prev.clusterRange.start, groupEnd), gaps);
+                final dCompressionIntroduced = overflow / (groupGaps > 1 ? groupGaps : 1);
+                if (dCompressionIntroduced > dStretchCured) {
+                    i += 1;
+                    continue;
+                }
+            }
+            final result = tryPushIn(prev, curr, naturalClusters, adjustedClusters, limit, shrinkOpportunities, pushInPenalty, groupEnd,
+                promotesProgressiveTier ? "ProgressiveTechnicalTierPromotion" : "LineAdjustmentPushIn");
+            if (result.candidate.accepted) {
+                out[i] = result.previous;
+                if (result.current == null) {
+                    out.splice(i + 1, 1);
+                } else {
+                    out[i + 1] = result.current;
+                }
+                if (isContinuableZeroShrinkFillPushIn(result.previous.repair) && result.current != null) {
+                    continue;
+                }
+            }
+            i += 1;
+        }
+        return out;
+    }
+
+    /** Gated [applyFillPushIn] over a [LineSolution] — no-op when not [enabled]. */
+    public static function withFillPushIn(solution:LineSolution, enabled:Bool, naturalClusters:Array<Cluster>, adjustedClusters:Array<Cluster>,
+            maxWidth:Float, shrinkOpportunities:Array<ShrinkOpportunity>, firstLineIndent:Float, compressBias:Float,
+            forbiddenLineStartClusters:Null<SortedSet<Int>>, forbiddenLineEndClusters:SortedSet<Int>, unbreakableRanges:UnbreakableRanges,
+            pushInPenalty:Int, ?gapBoundaries:Null<SortedSet<Int>>,
+            ?progressiveBreakOpportunities:Null<SortedMap<Int, ProgressiveBreakOpportunity>>):LineSolution {
+        if (!enabled) {
+            return solution;
+        }
+        return new LineSolution(applyFillPushIn(solution.lines, naturalClusters, adjustedClusters, maxWidth, shrinkOpportunities, firstLineIndent,
+            compressBias, forbiddenLineStartClusters, forbiddenLineEndClusters, unbreakableRanges, pushInPenalty, gapBoundaries,
+            progressiveBreakOpportunities), solution.totalBadness);
+    }
 }
+
