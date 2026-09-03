@@ -38,8 +38,8 @@ class LookaheadLineBreakerTest {
     @:test public static function compatibilityHangingIndexSkipsATrailingMandatoryBreakControl():Void {
         final testTrace = new TestTraceRecorder("LookaheadLineBreakerTest");
         testTrace.section("compatibilityHangingIndexSkipsATrailingMandatoryBreakControl");
-        final line = new LineCandidate(new IntRange(0, 2), new TextRange(0, 3), 32.0, 16.0, null,
-            RepairOption.Hang(5, "test", 1), null, LookaheadLineBreakerTestSupport.ints([1, 2]));
+        final line = new LineCandidate(new IntRange(0, 2), new TextRange(0, 3), 32.0, 16.0, null, RepairOption.Hang(5, "test", 1), null,
+            LookaheadLineBreakerTestSupport.ints([1, 2]));
 
         TracedAssertions.assertEqualsInt(1, line.hangingClusterIndex);
     }
@@ -113,12 +113,7 @@ class LookaheadLineBreakerTest {
             LookaheadLineBreakerTestSupport.cluster(2, 3, "中", 16.0),
             LookaheadLineBreakerTestSupport.cluster(3, 4, "。", 16.0)
         ];
-        final solution = new LookaheadLineBreaker().breakLines(
-            clusters,
-            clusters,
-            60.0,
-            [new ShrinkOpportunity(3, 6, 4.0, ShrinkChannel.TrailingGlue)]
-        );
+        final solution = new LookaheadLineBreaker().breakLines(clusters, clusters, 60.0, [new ShrinkOpportunity(3, 6, 4.0, ShrinkChannel.TrailingGlue)]);
 
         TracedAssertions.assertEqualsInt(1, solution.lines.length);
         final line = solution.lines[0];
@@ -140,12 +135,7 @@ class LookaheadLineBreakerTest {
             LookaheadLineBreakerTestSupport.cluster(5, 6, "文", 16.0),
             LookaheadLineBreakerTestSupport.cluster(6, 7, "。", 16.0)
         ];
-        final solution = new LookaheadLineBreaker().breakLines(
-            clusters,
-            clusters,
-            60.0,
-            [new ShrinkOpportunity(6, 6, 4.0, ShrinkChannel.TrailingGlue)]
-        );
+        final solution = new LookaheadLineBreaker().breakLines(clusters, clusters, 60.0, [new ShrinkOpportunity(6, 6, 4.0, ShrinkChannel.TrailingGlue)]);
 
         TracedAssertions.assertEqualsInt(2, solution.lines.length);
         TracedAssertions.assertEqualsIntRange(new IntRange(0, 2), solution.lines[0].clusterRange);
@@ -178,32 +168,10 @@ class LookaheadLineBreakerTest {
             clusters.push(LookaheadLineBreakerTestSupport.cluster(i, i + 1, "x", 10.0));
         }
 
-        final noPenalty = new LookaheadLineBreaker(null, null, null, null, null, null, null, 0.0).breakLines(
-            clusters,
-            clusters,
-            30.0,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            LookaheadLineBreakerTestSupport.ints([3, 6])
-        );
-        final withPenalty = new LookaheadLineBreaker().breakLines(
-            clusters,
-            clusters,
-            30.0,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            LookaheadLineBreakerTestSupport.ints([3, 6])
-        );
+        final noPenalty = new LookaheadLineBreaker(null, null, null, null, null, null, null,
+            0.0).breakLines(clusters, clusters, 30.0, null, null, null, null, null, null, null, LookaheadLineBreakerTestSupport.ints([3, 6]));
+        final withPenalty = new LookaheadLineBreaker().breakLines(clusters, clusters, 30.0, null, null, null, null, null, null, null,
+            LookaheadLineBreakerTestSupport.ints([3, 6]));
 
         // With no demerit, two perfectly full synthetic-hyphen lines win:
         // 0..2- / 3..5- / 6..7.
@@ -234,24 +202,8 @@ class LookaheadLineBreakerTest {
             LookaheadLineBreakerTestSupport.cluster(8, 9, "。", 16.0)
         ];
 
-        final solution = new LookaheadLineBreaker(2).breakLines(
-            clusters,
-            clusters,
-            64.0,
-            null,
-            new UnbreakableRanges([new IntRange(6, 7)]),
-            null,
-            null,
-            null,
-            LookaheadLineBreakerTestSupport.ints([8]),
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            false
-        );
+        final solution = new LookaheadLineBreaker(2).breakLines(clusters, clusters, 64.0, null, new UnbreakableRanges([new IntRange(6, 7)]), null, null, null,
+            LookaheadLineBreakerTestSupport.ints([8]), null, null, null, null, null, null, false);
 
         TracedAssertions.assertEqualsInt(3, solution.lines.length);
         TracedAssertions.assertEqualsIntRange(new IntRange(0, 1), solution.lines[0].clusterRange);

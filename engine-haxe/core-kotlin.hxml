@@ -104,6 +104,10 @@ org.tiqian.layout.ParagraphDpLineBreakerCoverageTest
 org.tiqian.layout.ParagraphDpLineBreakerCoverage2Test
 org.tiqian.layout.LookaheadLineBreakerTest
 org.tiqian.layout.LineBreakerCoverage2Test
+org.tiqian.layout.LineCandidateValidationTest
+org.tiqian.layout.ProgressiveTechnicalBreakTest
+org.tiqian.layout.ParagraphDpTierPromotionPoolTest
+org.tiqian.layout.PreparedParagraphPlanConstructionTest
 
 
 org.tiqian.layout.PunctuationGeometryBranchArmsCoverageTest

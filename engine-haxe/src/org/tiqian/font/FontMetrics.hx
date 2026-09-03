@@ -33,9 +33,12 @@ class StubFontMetricsResolver implements FontMetricsResolver {
     public function resolve(r:FontMetricsRequest):RawFontMetrics {
         var result:RawFontMetrics;
         switch (r.role) {
-            case CjkText | CjkPunctuation: result = new RawFontMetrics(r.fontSize * 1.16, r.fontSize * 0.288, 0, RawTables, r.fontSize * 0.88, r.fontSize * 0.12);
-            case LatinText: result = new RawFontMetrics(r.fontSize * 0.8, r.fontSize * 0.2);
-            case Symbol | Emoji | Unknown: result = new RawFontMetrics(r.fontSize * 0.9, r.fontSize * 0.25);
+            case CjkText | CjkPunctuation:
+                result = new RawFontMetrics(r.fontSize * 1.16, r.fontSize * 0.288, 0, RawTables, r.fontSize * 0.88, r.fontSize * 0.12);
+            case LatinText:
+                result = new RawFontMetrics(r.fontSize * 0.8, r.fontSize * 0.2);
+            case Symbol | Emoji | Unknown:
+                result = new RawFontMetrics(r.fontSize * 0.9, r.fontSize * 0.25);
         }
         return result;
     }
@@ -61,9 +64,12 @@ class ScriptAwareFontMetricsNormalizer implements FontMetricsNormalizer {
     public function normalize(i:FontMetricsNormalizationInput):LayoutFontMetrics {
         var result:LayoutFontMetrics;
         switch (i.request.role) {
-            case CjkText | CjkPunctuation: result = normalizeCjk(i);
-            case LatinText: result = normalizeRaw(i, "roman-raw");
-            case Symbol | Emoji | Unknown: result = normalizeRaw(i, "fallback-raw");
+            case CjkText | CjkPunctuation:
+                result = normalizeCjk(i);
+            case LatinText:
+                result = normalizeRaw(i, "roman-raw");
+            case Symbol | Emoji | Unknown:
+                result = normalizeRaw(i, "fallback-raw");
         }
         return result;
     }

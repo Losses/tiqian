@@ -3947,12 +3947,18 @@ class UnicodeEmoji17RgiRoleAuditTestSupport {
         "1F3F4 E0067 E0062 E0073 E0063 E0074 E007F",
         "1F3F4 E0067 E0062 E0077 E006C E0073 E007F",
     ];
+
     public static function toUnicodeString(codePoints:String):String {
         final out = new StringBuf();
         for (hex in codePoints.split(" ")) {
             final cp = Std.parseInt("0x" + hex);
-            if (cp <= 0xFFFF) out.add(String.fromCharCode(cp));
-            else { final scalar = cp - 0x10000; out.add(String.fromCharCode((scalar >> 10) + 0xD800)); out.add(String.fromCharCode((scalar & 0x3FF) + 0xDC00)); }
+            if (cp <= 0xFFFF)
+                out.add(String.fromCharCode(cp));
+            else {
+                final scalar = cp - 0x10000;
+                out.add(String.fromCharCode((scalar >> 10) + 0xD800));
+                out.add(String.fromCharCode((scalar & 0x3FF) + 0xDC00));
+            }
         }
         return out.toString();
     }

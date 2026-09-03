@@ -1,7 +1,7 @@
 package org.tiqian.font;
 
-
 using std.Functional;
+
 @:dataClass class FontRequest {
     public final preferredFamilies:std.ReadOnlyArray<String>;
     public final locale:String;
