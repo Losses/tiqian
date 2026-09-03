@@ -37,6 +37,28 @@ class TracedAssertions {
         }
     }
 
+    public static function assertEqualsBool(expected:Bool, actual:Bool, ?message:String):Void {
+        recordEvent("eq", [
+            field("expected", TestTraceRender.renderBool(expected)),
+            field("actual", TestTraceRender.renderBool(actual)),
+            msgField(message)
+        ]);
+        if (expected != actual) {
+            fail(message == null ? "Expected values to be equal." : message);
+        }
+    }
+
+    public static function assertEqualsNullableRepairOption(expected:Null<RepairOption>, actual:Null<RepairOption>, ?message:String):Void {
+        recordEvent("eq", [
+            field("expected", expected == null ? "-" : Std.string(expected)),
+            field("actual", actual == null ? "-" : Std.string(actual)),
+            msgField(message)
+        ]);
+        if (expected != actual) {
+            fail(message == null ? "Expected values to be equal." : message);
+        }
+    }
+
     public static function assertEqualsString(expected:String, actual:String, ?message:String):Void {
         recordEvent("eq", [
             field("expected", TestTraceRender.renderString(expected)),
