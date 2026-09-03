@@ -3,10 +3,12 @@ package org.tiqian.layout;
 import org.tiqian.core.LayoutInput;
 import org.tiqian.core.TextRange;
 import org.tiqian.core.Glyph;
-import org.tiqian.shaping.ShapingResult;
+import org.tiqian.shaping.TextShaper.ShapingResult;
 import org.tiqian.core.BreakOpportunityDecisionInfo;
 import org.tiqian.core.EmergencyTrackingEligibilityDecisionInfo;
 import org.tiqian.layout.ProgressiveBreakDecisions.ProgressiveBreakOpportunity;
+import org.tiqian.layout.ProgressiveBreakDecisions.ProgressiveBreakTier;
+import org.tiqian.layout.ParagraphLayoutEngine.ExplainableStubParagraphLayoutEngine;
 import std.SortedSet;
 import std.SortedMap;
 
@@ -15,22 +17,22 @@ import std.SortedMap;
     public final hyphenOffsets:SortedSet<Int>;
     public final hyphenAdvance:Float;
     public final hyphenGlyphs:Array<Glyph>;
-    public final substitutionRollbacks:haxe.ds.ObjectMap<TextRange, String>;
+    public final substitutionRollbacks:SortedMap<TextRange, String>;
     public final breakOpportunityDecisions:Array<BreakOpportunityDecisionInfo>;
     public final emergencyTrackingEligibilityDecisions:Array<EmergencyTrackingEligibilityDecisionInfo>;
     public final progressiveBreakOffsets:SortedMap<Int, ProgressiveBreakOpportunity>;
-    public final segmentShapingCache:haxe.ds.ObjectMap<TextRange, ShapingResult>;
+    public final segmentShapingCache:SortedMap<TextRange, ShapingResult>;
 
     public function new(
         shapingResults:Array<ShapingResult>,
         hyphenOffsets:SortedSet<Int>,
         hyphenAdvance:Float,
         hyphenGlyphs:Array<Glyph>,
-        substitutionRollbacks:haxe.ds.ObjectMap<TextRange, String>,
+        substitutionRollbacks:SortedMap<TextRange, String>,
         breakOpportunityDecisions:Array<BreakOpportunityDecisionInfo>,
         emergencyTrackingEligibilityDecisions:Array<EmergencyTrackingEligibilityDecisionInfo>,
         progressiveBreakOffsets:SortedMap<Int, ProgressiveBreakOpportunity>,
-        ?segmentShapingCache:haxe.ds.ObjectMap<TextRange, ShapingResult>
+        ?segmentShapingCache:SortedMap<TextRange, ShapingResult>
     ) {
         this.shapingResults = shapingResults;
         this.hyphenOffsets = hyphenOffsets;
@@ -40,7 +42,7 @@ import std.SortedMap;
         this.breakOpportunityDecisions = breakOpportunityDecisions;
         this.emergencyTrackingEligibilityDecisions = emergencyTrackingEligibilityDecisions;
         this.progressiveBreakOffsets = progressiveBreakOffsets;
-        this.segmentShapingCache = segmentShapingCache != null ? segmentShapingCache : new haxe.ds.ObjectMap();
+        this.segmentShapingCache = segmentShapingCache != null ? segmentShapingCache : SortedMap.builder().build();
     }
 }
 
@@ -48,7 +50,7 @@ class ParagraphShapingStage {
     public static function shapeParagraph(
         engine:ExplainableStubParagraphLayoutEngine,
         input:LayoutInput,
-        rejectedTechnicalTiersBySpan:haxe.ds.ObjectMap<TextRange, SortedSet<Int>>
+        rejectedTechnicalTiersBySpan:SortedMap<TextRange, SortedSet<ProgressiveBreakTier>>
     ):ParagraphShapingStageResult {
         throw new haxe.exceptions.NotImplementedException("ring-r1 not-ported marker: shapeParagraph");
     }
