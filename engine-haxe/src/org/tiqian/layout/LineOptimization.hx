@@ -110,7 +110,6 @@ class RepairOptions {
             case CarryNext(_, _, _): null;
             case LeaveRagged(_, _, _): null;
         };
-
 }
 
 @:dataClass
