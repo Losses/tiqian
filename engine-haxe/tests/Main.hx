@@ -1,6 +1,7 @@
 import org.tiqian.layout.LineGeometryDirectTailTest;
 import org.tiqian.layout.PunctuationGeometryLedgerCoverageTest;
 import org.tiqian.layout.PunctuationSpacingRuleTest;
+import org.tiqian.layout.PunctuationGeometryBranchArmsCoverageTest;
 import org.tiqian.core.TiqianIllegalArgumentException;
 import org.tiqian.core.CoreUnitsGeometryTest;
 import org.tiqian.core.CoreLayoutQueriesGapsTest;
@@ -1263,6 +1264,8 @@ class Main {
         run("cjkClosingBeforeAsciiPointMarkConsumesOnlyClosingGlue", PunctuationSpacingRuleTest.cjkClosingBeforeAsciiPointMarkConsumesOnlyClosingGlue);
         run("cjkClosingDoesNotCompressAcrossWhitespaceBeforeAsciiPointMark", PunctuationSpacingRuleTest.cjkClosingDoesNotCompressAcrossWhitespaceBeforeAsciiPointMark);
         TestTraceRecorder.flushClass("PunctuationSpacingRuleTest");
+        run("haltAdvanceIsRejectedAtZeroAndAtFullWidth", PunctuationGeometryBranchArmsCoverageTest.haltAdvanceIsRejectedAtZeroAndAtFullWidth);
+        TestTraceRecorder.flushClass("PunctuationGeometryBranchArmsCoverageTest");
         Console.log("all CoreUnitsGeometryTest checks passed");
         if (failures > 0) {
             Process.exit(1);
