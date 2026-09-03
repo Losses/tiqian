@@ -14,4 +14,9 @@ class IntRange {
     public function get_isEmpty():Bool {
         return start > end;
     }
+
+    /** kotlin.ranges.IntRange prints "start..end" through ClosedRange's explicit toString. */
+    public function toString():String {
+        return start + ".." + end;
+    }
 }

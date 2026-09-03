@@ -96,3 +96,8 @@ org.tiqian.layout.PreparedParagraph
 org.tiqian.layout.PreparedParagraphJsonNumberTest
 org.tiqian.shaping.ReplayableFontBackend
 org.tiqian.shaping.ReplayableFontBackendCoverageTest
+org.tiqian.layout.ParagraphDpLineBreaker
+
+org.tiqian.layout.ParagraphDpLineBreakerTest
+org.tiqian.layout.ParagraphDpLineBreakerCoverageTest
+org.tiqian.layout.ParagraphDpLineBreakerCoverage2Test

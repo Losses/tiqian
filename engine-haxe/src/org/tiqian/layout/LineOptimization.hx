@@ -94,87 +94,15 @@ class RepairOptions {
             case LeaveRagged(_, _, _): null;
         };
 
-    public static function render(o:RepairOption):String
+    public static function pushInReasonOf(o:RepairOption):Null<String>
         return switch (o) {
-            case PushIn(penalty, reason, offenderClusterIndex, allocations, totalShrink, totalAvailableCapacity):
-                "PushIn(penalty="
-                + penalty
-                + ", reason="
-                + reason
-                + ", offenderClusterIndex="
-                + offenderClusterIndex
-                + ", allocations="
-                + renderAllocations(allocations)
-                + ", totalShrink="
-                + totalShrink
-                + ", totalAvailableCapacity="
-                + totalAvailableCapacity
-                + ")";
-            case Hang(penalty, reason, offenderClusterIndex):
-                "Hang(penalty="
-                + penalty
-                + ", reason="
-                + reason
-                + ", offenderClusterIndex="
-                + offenderClusterIndex
-                + ")";
-            case CarryPrevious(penalty, reason, offenderClusterIndex, carriedClusterIndex):
-                "CarryPrevious(penalty="
-                + penalty
-                + ", reason="
-                + reason
-                + ", offenderClusterIndex="
-                + offenderClusterIndex
-                + ", carriedClusterIndex="
-                + carriedClusterIndex
-                + ")";
-            case CarryNext(penalty, reason, movedClusterIndex):
-                "CarryNext(penalty="
-                + penalty
-                + ", reason="
-                + reason
-                + ", movedClusterIndex="
-                + movedClusterIndex
-                + ")";
-            case LeaveRagged(penalty, reason, offenderClusterIndex):
-                "LeaveRagged(penalty="
-                + penalty
-                + ", reason="
-                + reason
-                + ", offenderClusterIndex="
-                + offenderClusterIndex
-                + ")";
+            case PushIn(_, reason, _, _, _, _): reason;
+            case Hang(_, _, _): null;
+            case CarryPrevious(_, _, _, _): null;
+            case CarryNext(_, _, _): null;
+            case LeaveRagged(_, _, _): null;
         };
 
-    public static function renderList(options:Array<RepairOption>):String {
-        final buf = new StringBuf();
-        buf.add("[");
-        var i = 0;
-        while (i < options.length) {
-            if (i > 0)
-                buf.add(", ");
-            buf.add(render(options[i]));
-            i++;
-        }
-        buf.add("]");
-        return buf.toString();
-    }
-
-    static function renderAllocations(allocations:Array<PushInAllocation>):String {
-        final buf = new StringBuf();
-        buf.add("[");
-        var i = 0;
-        while (i < allocations.length) {
-            if (i > 0)
-                buf.add(", ");
-            final a = allocations[i];
-            buf.add("PushInAllocation(clusterIndex=" + a.clusterIndex + ", shrink=" + a.shrink + ", availableCapacity=" + a.availableCapacity + ", channel="
-                + a.channel + ")");
-            i++;
-        }
-        buf.add("]");
-        return buf.toString();
-    }
 }
 
 @:dataClass
@@ -229,10 +157,10 @@ class LineCandidate {
             final lastHanging = this.hangingClusterIndices.at(this.hangingClusterIndices.size() - 1);
             if (!(clusterRange.start <= firstHanging && firstHanging <= clusterRange.end && lastHanging == clusterRange.end))
                 throw new TiqianIllegalArgumentException(Message("Hanging clusters must be a trailing line suffix: line="
-                    + LineCandidates.renderRange(clusterRange) + " hanging=" + LineCandidates.renderIntSet(this.hangingClusterIndices)));
+                    + LineCandidates.renderRange(clusterRange) + " hanging=" + Std.string(this.hangingClusterIndices)));
             if (this.hangingClusterIndices.size() != clusterRange.end - firstHanging + 1)
                 throw new TiqianIllegalArgumentException(Message("Hanging clusters must be contiguous: line=" + LineCandidates.renderRange(clusterRange)
-                    + " hanging=" + LineCandidates.renderIntSet(this.hangingClusterIndices)));
+                    + " hanging=" + Std.string(this.hangingClusterIndices)));
         }
     }
 
@@ -263,24 +191,10 @@ class LineCandidate {
     }
 }
 
-/** Text helpers for LineCandidate's requirement messages (Kotlin renders IntRange as 0..4 and sets as [a, b]). */
+/** Text helper for LineCandidate's requirement messages (Kotlin renders IntRange as 0..4). */
 class LineCandidates {
     public static function renderRange(r:IntRange):String
         return r.start + ".." + r.end;
-
-    public static function renderIntSet(values:SortedSet<Int>):String {
-        final buf = new StringBuf();
-        buf.add("[");
-        var i = 0;
-        while (i < values.size()) {
-            if (i > 0)
-                buf.add(", ");
-            buf.add(values.at(i));
-            i++;
-        }
-        buf.add("]");
-        return buf.toString();
-    }
 }
 
 @:dataClass

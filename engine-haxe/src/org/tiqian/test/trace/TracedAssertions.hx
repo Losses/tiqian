@@ -59,6 +59,17 @@ class TracedAssertions {
         }
     }
 
+    public static function assertEqualsEnum<T>(expected:T, actual:T, ?message:String):Void {
+        recordEvent("eq", [
+            field("expected", Std.string(expected)),
+            field("actual", Std.string(actual)),
+            msgField(message)
+        ]);
+        if (expected != actual) {
+            fail(message == null ? "Expected values to be equal." : message);
+        }
+    }
+
     public static function assertEqualsEastAsianSpacingEdges(expected:EastAsianSpacingEdges, actual:EastAsianSpacingEdges, ?message:String):Void {
         recordEvent("eq", [
             field("expected", expected.toString()),
@@ -298,13 +309,30 @@ class TracedAssertions {
     }
 
     public static function assertEqualsRepairOptionArray(expected:Array<RepairOption>, actual:Array<RepairOption>, ?message:String):Void {
-        final expectedText = RepairOptions.renderList(expected);
-        final actualText = RepairOptions.renderList(actual);
+        final expectedText = renderRepairOptionList(expected);
+        final actualText = renderRepairOptionList(actual);
         recordEvent("eq", [field("expected", expectedText), field("actual", actualText), msgField(message)]);
         if (expectedText != actualText) {
             fail(message == null ? "Expected arrays to be equal." : message);
         }
     }
+
+    private static function renderRepairOptionList(values:Array<RepairOption>):String {
+        final buf = new StringBuf();
+        buf.add("[");
+        var i = 0;
+        while (i < values.length) {
+            if (i > 0)
+                buf.add(", ");
+            buf.add(renderRepairOption(values[i]));
+            i++;
+        }
+        buf.add("]");
+        return buf.toString();
+    }
+
+    static function renderRepairOption(option:RepairOption):String
+        return Std.string(option);
 
     private static function renderPushInAllocations(values:Array<PushInAllocation>):String {
         final buf = new StringBuf();
