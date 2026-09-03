@@ -60,21 +60,10 @@ class ExplainableStubParagraphLayoutEngine implements ParagraphLayoutEngine {
     public final hyphenator:Hyphenator;
     public final annotationCache:WidthIndependentAnnotationCache;
 
-    public function new(
-        ?fontRoleClassifier:FontRoleClassifier,
-        ?fallbackResolver:FallbackResolver,
-        ?clreqProfileResolver:ClreqProfileResolver,
-        ?fontMetricsResolver:FontMetricsResolver,
-        ?fontMetricsNormalizer:FontMetricsNormalizer,
-        ?punctuationAtomBuilder:PunctuationAtomBuilder,
-        ?punctuationSpacingCompressor:PunctuationSpacingCompressor,
-        ?quotePairAnalyzer:QuotePairAnalyzer,
-        ?lineBreaker:LineBreaker,
-        ?justifier:Justifier,
-        ?textShaper:ITextShaper,
-        ?hyphenator:Hyphenator,
-        ?annotationCache:WidthIndependentAnnotationCache
-    ) {
+    public function new(?fontRoleClassifier:FontRoleClassifier, ?fallbackResolver:FallbackResolver, ?clreqProfileResolver:ClreqProfileResolver,
+            ?fontMetricsResolver:FontMetricsResolver, ?fontMetricsNormalizer:FontMetricsNormalizer, ?punctuationAtomBuilder:PunctuationAtomBuilder,
+            ?punctuationSpacingCompressor:PunctuationSpacingCompressor, ?quotePairAnalyzer:QuotePairAnalyzer, ?lineBreaker:LineBreaker, ?justifier:Justifier,
+            ?textShaper:ITextShaper, ?hyphenator:Hyphenator, ?annotationCache:WidthIndependentAnnotationCache) {
         this.fontRoleClassifier = fontRoleClassifier == null ? new CjkFontRoleClassifier() : fontRoleClassifier;
         this.fallbackResolver = fallbackResolver == null ? new ParagraphLayoutFallbackResolver() : fallbackResolver;
         this.clreqProfileResolver = clreqProfileResolver == null ? new BuiltInClreqProfileResolver() : clreqProfileResolver;
@@ -94,10 +83,7 @@ class ExplainableStubParagraphLayoutEngine implements ParagraphLayoutEngine {
         return layoutWithRejectedTechnicalTiers(input, SortedMap.builder().build());
     }
 
-    public function layoutWithRejectedTechnicalTiers(
-        input:LayoutInput,
-        rejectedTechnicalTiersBySpan:SortedMap<TextRange, SortedSet<Int>>
-    ):LayoutResult {
+    public function layoutWithRejectedTechnicalTiers(input:LayoutInput, rejectedTechnicalTiersBySpan:SortedMap<TextRange, SortedSet<Int>>):LayoutResult {
         validateLayoutInput(input);
         final cacheKey = WidthIndependentAnnotationCacheFns.toWidthIndependentAnnotationKey(input, rejectedTechnicalTiersBySpan);
         final cached = annotationCache.get(cacheKey);
@@ -117,14 +103,17 @@ class ExplainableStubParagraphLayoutEngine implements ParagraphLayoutEngine {
         if (!Math.isFinite(input.paragraphStyle.emphasisDotGapEm) || input.paragraphStyle.emphasisDotGapEm < 0) {
             throw new TiqianIllegalArgumentException(Message("ParagraphStyle.emphasisDotGapEm must be finite and non-negative"));
         }
-        if (!Math.isFinite(input.paragraphStyle.inlineObjectMinimumClearanceEm) || input.paragraphStyle.inlineObjectMinimumClearanceEm < 0) {
+        if (!Math.isFinite(input.paragraphStyle.inlineObjectMinimumClearanceEm)
+            || input.paragraphStyle.inlineObjectMinimumClearanceEm < 0) {
             throw new TiqianIllegalArgumentException(Message("ParagraphStyle.inlineObjectMinimumClearanceEm must be finite and non-negative"));
         }
         var surrogateScan = 0;
         while (surrogateScan < text.length) {
             final code = text.charCodeAt(surrogateScan);
             if (code >= 0xD800 && code <= 0xDBFF) {
-                if (!(surrogateScan + 1 < text.length && text.charCodeAt(surrogateScan + 1) >= 0xDC00 && text.charCodeAt(surrogateScan + 1) <= 0xDFFF)) {
+                if (!(surrogateScan + 1 < text.length
+                    && text.charCodeAt(surrogateScan + 1) >= 0xDC00
+                    && text.charCodeAt(surrogateScan + 1) <= 0xDFFF)) {
                     throw new TiqianIllegalArgumentException(Message("SourceText has an unpaired high surrogate at char " + surrogateScan));
                 }
                 surrogateScan += 2;
@@ -186,30 +175,36 @@ class ExplainableStubParagraphLayoutEngine implements ParagraphLayoutEngine {
             final prevObj = sortedObjects[idx];
             final nextObj = sortedObjects[idx + 1];
             if (prevObj.range.end > nextObj.range.start) {
-                throw new TiqianIllegalArgumentException(Message("InlineObjectSpan ranges must not overlap: " + Std.string(prevObj.range) + " and " + Std.string(nextObj.range)));
+                throw new TiqianIllegalArgumentException(Message("InlineObjectSpan ranges must not overlap: " + Std.string(prevObj.range) + " and "
+                    + Std.string(nextObj.range)));
             }
         }
         for (k in 0...input.inlineObjects.length) {
             final inlineObject = input.inlineObjects[k];
-            if (!(inlineObject.range.start >= 0 && inlineObject.range.start < inlineObject.range.end && inlineObject.range.end <= text.length)) {
-                throw new TiqianIllegalArgumentException(Message("InlineObjectSpan " + Std.string(inlineObject.range) + " must cover a non-empty source range"));
+            if (!(inlineObject.range.start >= 0
+                && inlineObject.range.start < inlineObject.range.end
+                && inlineObject.range.end <= text.length)) {
+                throw new TiqianIllegalArgumentException(Message("InlineObjectSpan " + Std.string(inlineObject.range) +
+                    " must cover a non-empty source range"));
             }
-            if (!(Math.isFinite(inlineObject.advance) && inlineObject.advance > 0 &&
-                  Math.isFinite(inlineObject.ascent) && inlineObject.ascent >= 0 &&
-                  Math.isFinite(inlineObject.descent) && inlineObject.descent >= 0)) {
+            if (!(Math.isFinite(inlineObject.advance) && inlineObject.advance > 0 && Math.isFinite(inlineObject.ascent) && inlineObject.ascent >= 0
+                && Math.isFinite(inlineObject.descent) && inlineObject.descent >= 0)) {
                 throw new TiqianIllegalArgumentException(Message("InlineObjectSpan " + Std.string(inlineObject.range) + " must have finite positive geometry"));
             }
             if (inlineObject.leadingBoundary.shrinkCapacity != 0) {
                 throw new TiqianIllegalArgumentException(Message("InlineObjectSpan " + Std.string(inlineObject.range) + " cannot shrink its leading boundary"));
             }
             if (inlineObject.leadingBoundary.lineEndDiscardableAdvance != 0) {
-                throw new TiqianIllegalArgumentException(Message("InlineObjectSpan " + Std.string(inlineObject.range) + " cannot discard advance at its leading boundary"));
+                throw new TiqianIllegalArgumentException(Message("InlineObjectSpan " + Std.string(inlineObject.range)
+                    + " cannot discard advance at its leading boundary"));
             }
             if (inlineObject.trailingBoundary.shrinkCapacity > inlineObject.advance) {
-                throw new TiqianIllegalArgumentException(Message("InlineObjectSpan " + Std.string(inlineObject.range) + " trailing shrink capacity must not exceed its advance"));
+                throw new TiqianIllegalArgumentException(Message("InlineObjectSpan " + Std.string(inlineObject.range)
+                    + " trailing shrink capacity must not exceed its advance"));
             }
             if (inlineObject.trailingBoundary.lineEndDiscardableAdvance > inlineObject.advance) {
-                throw new TiqianIllegalArgumentException(Message("InlineObjectSpan " + Std.string(inlineObject.range) + " trailing line-end discard must not exceed its advance"));
+                throw new TiqianIllegalArgumentException(Message("InlineObjectSpan " + Std.string(inlineObject.range)
+                    + " trailing line-end discard must not exceed its advance"));
             }
         }
     }
@@ -226,11 +221,13 @@ class ParagraphLayoutFallbackResolver implements FallbackResolver {
         this.symbolFontKey = symbolFontKey == null ? "symbol-fallback" : symbolFontKey;
     }
 
-    public function resolve(text:String, range:org.tiqian.core.TextRange, request:org.tiqian.font.FontPolicy.FontRequest):org.tiqian.font.FontPolicy.FontDecision {
+    public function resolve(text:String, range:org.tiqian.core.TextRange,
+            request:org.tiqian.font.FontPolicy.FontRequest):org.tiqian.font.FontPolicy.FontDecision {
         var c:org.tiqian.font.FontPolicy.FontCandidate;
         switch (request.role) {
             case CjkText | CjkPunctuation:
-                c = new org.tiqian.font.FontPolicy.FontCandidate(cjkFontKey, request.preferredFamilies.length == 0 ? cjkFontKey : request.preferredFamilies[0], request.role);
+                c = new org.tiqian.font.FontPolicy.FontCandidate(cjkFontKey,
+                    request.preferredFamilies.length == 0 ? cjkFontKey : request.preferredFamilies[0], request.role);
             case LatinText:
                 c = new org.tiqian.font.FontPolicy.FontCandidate(latinFontKey, latinFontKey, request.role);
             case Symbol | Emoji | Unknown:

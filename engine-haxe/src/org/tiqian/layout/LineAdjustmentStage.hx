@@ -57,13 +57,8 @@ import std.SortedMap;
     public final rubyDecisions:Array<RubyDecisionInfo>;
     public final bopomofoDecisions:Array<BopomofoDecisionInfo>;
 
-    public function new(
-        inlineObjectDecisions:Array<InlineObjectDecisionInfo>,
-        decorationDecisions:Array<DecorationDecisionInfo>,
-        decorationSegments:Array<DecorationSegmentInfo>,
-        rubyDecisions:Array<RubyDecisionInfo>,
-        bopomofoDecisions:Array<BopomofoDecisionInfo>
-    ) {
+    public function new(inlineObjectDecisions:Array<InlineObjectDecisionInfo>, decorationDecisions:Array<DecorationDecisionInfo>,
+            decorationSegments:Array<DecorationSegmentInfo>, rubyDecisions:Array<RubyDecisionInfo>, bopomofoDecisions:Array<BopomofoDecisionInfo>) {
         this.inlineObjectDecisions = inlineObjectDecisions;
         this.decorationDecisions = decorationDecisions;
         this.decorationSegments = decorationSegments;
@@ -86,31 +81,27 @@ class LineAdjustmentStage {
         };
     }
 
-    private static function lineHyphenAdvanceAt(
-        lineIndex:Int,
-        lines:Array<LineCandidate>,
-        hyphenOffsets:SortedSet<Int>,
-        naturalClusters:Array<Cluster>,
-        hyphenAdvance:Float
-    ):Float {
-        if (hyphenOffsets.size() == 0 || lineIndex >= lines.length - 1) return 0.0;
+    private static function lineHyphenAdvanceAt(lineIndex:Int, lines:Array<LineCandidate>, hyphenOffsets:SortedSet<Int>, naturalClusters:Array<Cluster>,
+            hyphenAdvance:Float):Float {
+        if (hyphenOffsets.size() == 0 || lineIndex >= lines.length - 1)
+            return 0.0;
         final next = lines[lineIndex + 1];
-        if (next.clusterRange.isEmpty) return 0.0;
+        if (next.clusterRange.isEmpty)
+            return 0.0;
         final nextFirst = next.clusterRange.start;
         return hyphenOffsets.has(naturalClusters[nextFirst].range.start) ? hyphenAdvance : 0.0;
     }
 
-    private static function renderableGlyphRunClusters(
-        clusters:Array<Cluster>,
-        openTypeFeaturesByClusterRange:SortedMap<TextRange, Array<String>>
-    ):Array<Array<Cluster>> {
+    private static function renderableGlyphRunClusters(clusters:Array<Cluster>,
+            openTypeFeaturesByClusterRange:SortedMap<TextRange, Array<String>>):Array<Array<Cluster>> {
         final renderable = new Array<Cluster>();
         for (c in clusters) {
             if (c.displayText.length > 0 && !ParagraphShapingStage.isInlineObjectCluster(c)) {
                 renderable.push(c);
             }
         }
-        if (renderable.length == 0) return [];
+        if (renderable.length == 0)
+            return [];
 
         final groups = new Array<Array<Cluster>>();
         var currentGroup = [renderable[0]];
@@ -139,51 +130,29 @@ class LineAdjustmentStage {
         return groups;
     }
 
-    private static function centerDashInk(
-        glyphs:Array<Glyph>,
-        cluster:Cluster,
-        atomClassByRange:SortedMap<TextRange, PunctuationClass>
-    ):Array<Glyph> {
+    private static function centerDashInk(glyphs:Array<Glyph>, cluster:Cluster, atomClassByRange:SortedMap<TextRange, PunctuationClass>):Array<Glyph> {
         if (!atomClassByRange.has(cluster.range) || atomClassByRange.get(cluster.range) != PunctuationClass.Dash) {
             return glyphs;
         }
-        if (glyphs.length != 1) return glyphs;
+        if (glyphs.length != 1)
+            return glyphs;
         final glyph = glyphs[0];
         final ink = glyph.bounds;
-        if (ink == null) return glyphs;
+        if (ink == null)
+            return glyphs;
         final inset = (cluster.advance - (ink.right - ink.left)) / 2.0 - ink.left;
-        if (inset <= 0.5) return glyphs;
-        return [new Glyph(
-            glyph.id,
-            glyph.clusterRange,
-            glyph.advance,
-            glyph.x + inset,
-            glyph.y,
-            glyph.renderFontKey,
-            glyph.bounds,
-            glyph.haltAdvance,
-            glyph.haltPlacementX
-        )];
+        if (inset <= 0.5)
+            return glyphs;
+        return [
+            new Glyph(glyph.id, glyph.clusterRange, glyph.advance, glyph.x + inset, glyph.y, glyph.renderFontKey, glyph.bounds, glyph.haltAdvance,
+                glyph.haltPlacementX)
+        ];
     }
 
-    private static function buildLineBoxes(
-        input:LayoutInput,
-        lineSolution:LineSolution,
-        trimmedClusters:Array<Cluster>,
-        finalClusters:Array<Cluster>,
-        firstLineIndent:Float,
-        blockIndent:Float,
-        measure:Float,
-        gridBodyOffset:Float,
-        lineBaseline:Array<Float>,
-        lineTop:Array<Float>,
-        lineBottom:Array<Float>,
-        hyphenOffsets:SortedSet<Int>,
-        naturalClusters:Array<Cluster>,
-        hyphenAdvance:Float,
-        hyphenGlyphs:Array<Glyph>,
-        justificationPlans:Array<Null<JustificationPlan>>
-    ):LineBoxStageResult {
+    private static function buildLineBoxes(input:LayoutInput, lineSolution:LineSolution, trimmedClusters:Array<Cluster>, finalClusters:Array<Cluster>,
+            firstLineIndent:Float, blockIndent:Float, measure:Float, gridBodyOffset:Float, lineBaseline:Array<Float>, lineTop:Array<Float>,
+            lineBottom:Array<Float>, hyphenOffsets:SortedSet<Int>, naturalClusters:Array<Cluster>, hyphenAdvance:Float, hyphenGlyphs:Array<Glyph>,
+            justificationPlans:Array<Null<JustificationPlan>>):LineBoxStageResult {
         final laidOutLines = new Array<LineBox>();
         for (lineIndex in 0...lineSolution.lines.length) {
             final lineCandidate = lineSolution.lines[lineIndex];
@@ -237,9 +206,7 @@ class LineAdjustmentStage {
                 }
             }
 
-            final repairStr = lineCandidate.repair != null
-                ? (repairOptionName(lineCandidate.repair) + ":" + RepairOptions.reason(lineCandidate.repair))
-                : null;
+            final repairStr = lineCandidate.repair != null ? (repairOptionName(lineCandidate.repair) + ":" + RepairOptions.reason(lineCandidate.repair)) : null;
             final notes = new Array<String>();
             if (lineCandidate.clusterRange.isEmpty) {
                 notes.push("line:" + lineIndex + ":clusters=empty");
@@ -254,22 +221,9 @@ class LineAdjustmentStage {
             }
 
             final hGlyphs = lineHyphenAdvance > 0.0 ? hyphenGlyphs : [];
-            laidOutLines.push(new LineBox(
-                lineCandidate.sourceRange,
-                lineCandidate.clusterRange,
-                lineBaseline[lineIndex],
-                lineTop[lineIndex],
-                lineBottom[lineIndex],
-                lineCandidate.naturalWidth,
-                adjustedWidth,
-                visualWidth,
-                hangingPunctuationAdvance,
-                gridBodyOffset + baseIndent + alignmentInset,
-                lineCandidate.endReason,
-                lineHyphenAdvance,
-                hGlyphs,
-                new LineDebugInfo(repairStr, notes)
-            ));
+            laidOutLines.push(new LineBox(lineCandidate.sourceRange, lineCandidate.clusterRange, lineBaseline[lineIndex], lineTop[lineIndex],
+                lineBottom[lineIndex], lineCandidate.naturalWidth, adjustedWidth, visualWidth, hangingPunctuationAdvance,
+                gridBodyOffset + baseIndent + alignmentInset, lineCandidate.endReason, lineHyphenAdvance, hGlyphs, new LineDebugInfo(repairStr, notes)));
         }
 
         final visibleLines = new Array<LineBox>();
@@ -279,53 +233,28 @@ class LineAdjustmentStage {
             visibleLines.push(laidOutLines[i]);
         }
 
-        final maxLinesDecision = visibleLines.length < laidOutLines.length
-            ? new MaxLinesDecisionInfo(laidOutLines.length, visibleLines.length)
-            : null;
+        final maxLinesDecision = visibleLines.length < laidOutLines.length ? new MaxLinesDecisionInfo(laidOutLines.length, visibleLines.length) : null;
 
         final visibleLineRanges = new Array<IntRange>();
         for (i in 0...visibleLines.length) {
             visibleLineRanges.push(lineSolution.lines[i].clusterRange);
         }
 
-        return new LineBoxStageResult(
-            laidOutLines,
-            visibleLines,
-            maxLinesDecision,
-            visibleLineRanges
-        );
+        return new LineBoxStageResult(laidOutLines, visibleLines, maxLinesDecision, visibleLineRanges);
     }
 
     private static function isFixedBoundary(b:org.tiqian.core.InlineObjectBoundaryAdjustment):Bool {
-        return !b.participatesInUniformStretch && b.preferredStretch == null &&
-            b.shrinkCapacity == 0.0 && b.lineEndDiscardableAdvance == 0.0 && !b.preventsLineBreak;
+        return !b.participatesInUniformStretch && b.preferredStretch == null && b.shrinkCapacity == 0.0 && b.lineEndDiscardableAdvance == 0.0
+            && !b.preventsLineBreak;
     }
 
-    private static function resolveAnnotationGeometry(
-        input:LayoutInput,
-        fontSize:Float,
-        inlineObjectByClusterIndex:SortedMap<Int, InlineObjectSpan>,
-        lineSolution:LineSolution,
-        clreqProfile:ClreqProfile,
-        geometryDecisions:Array<ClusterGeometryDecisionInfo>,
-        autoSpaceDecisions:Array<AutoSpaceDecisionInfo>,
-        visibleLineRanges:Array<IntRange>,
-        lines:Array<LineBox>,
-        finalClusters:Array<Cluster>,
-        clusterRoles:Array<FontRole>,
-        justifyDeltaByCluster:SortedMap<Int, Float>,
-        rubyAndBopomofoSpread:SortedMap<Int, Float>,
-        metricDecisions:Array<ClusterMetricDecision>,
-        pinyinSpans:Array<RubySpan>,
-        naturalClusters:Array<Cluster>,
-        rubyFontGeometryBySpan:SortedMap<RubySpan, RubyFontGeometry>,
-        rubyStackGap:Float,
-        baseAscent:Float,
-        rubyFontSize:Float,
-        rubyFontWeight:Int,
-        baseDescent:Float,
-        bopomofoFontWeightAt:Int->Int
-    ):AnnotationGeometryStageResult {
+    private static function resolveAnnotationGeometry(input:LayoutInput, fontSize:Float, inlineObjectByClusterIndex:SortedMap<Int, InlineObjectSpan>,
+            lineSolution:LineSolution, clreqProfile:ClreqProfile, geometryDecisions:Array<ClusterGeometryDecisionInfo>,
+            autoSpaceDecisions:Array<AutoSpaceDecisionInfo>, visibleLineRanges:Array<IntRange>, lines:Array<LineBox>, finalClusters:Array<Cluster>,
+            clusterRoles:Array<FontRole>, justifyDeltaByCluster:SortedMap<Int, Float>, rubyAndBopomofoSpread:SortedMap<Int, Float>,
+            metricDecisions:Array<ClusterMetricDecision>, pinyinSpans:Array<RubySpan>, naturalClusters:Array<Cluster>,
+            rubyFontGeometryBySpan:SortedMap<RubySpan, RubyFontGeometry>, rubyStackGap:Float, baseAscent:Float, rubyFontSize:Float, rubyFontWeight:Int,
+            baseDescent:Float, bopomofoFontWeightAt:Int->Int):AnnotationGeometryStageResult {
         final inlineObjectDecisions = new Array<InlineObjectDecisionInfo>();
         for (i in 0...inlineObjectByClusterIndex.size()) {
             final clusterIndex = inlineObjectByClusterIndex.keyAt(i);
@@ -340,36 +269,19 @@ class LineAdjustmentStage {
             }
             final leadingPreferred = inlineObject.leadingBoundary.preferredStretch;
             final trailingPreferred = inlineObject.trailingBoundary.preferredStretch;
-            final reason = (!isFixedBoundary(inlineObject.leadingBoundary) ||
-                !isFixedBoundary(inlineObject.trailingBoundary))
-                ? "AdjustableInlineObject"
-                : "MeasurableOpaqueInlineObject";
+            final reason = (!isFixedBoundary(inlineObject.leadingBoundary)
+                || !isFixedBoundary(inlineObject.trailingBoundary)) ? "AdjustableInlineObject" : "MeasurableOpaqueInlineObject";
 
-            inlineObjectDecisions.push(new InlineObjectDecisionInfo(
-                inlineObject.range,
-                inlineObject.advance,
-                inlineObject.ascent,
-                inlineObject.descent,
-                clusterIndex,
-                lineIdx,
-                inlineObject.leadingBoundary.participatesInUniformStretch,
-                leadingPreferred != null ? Std.string(leadingPreferred.kind) : null,
-                leadingPreferred != null ? leadingPreferred.naturalWidth : 0.0,
-                leadingPreferred != null ? leadingPreferred.targetWidth : 0.0,
-                leadingPreferred != null ? leadingPreferred.capacity : 0.0,
-                inlineObject.leadingBoundary.preventsLineBreak,
-                inlineObject.leadingBoundary.shrinkCapacity,
-                inlineObject.leadingBoundary.lineEndDiscardableAdvance,
-                inlineObject.trailingBoundary.participatesInUniformStretch,
-                trailingPreferred != null ? Std.string(trailingPreferred.kind) : null,
-                trailingPreferred != null ? trailingPreferred.naturalWidth : 0.0,
-                trailingPreferred != null ? trailingPreferred.targetWidth : 0.0,
-                trailingPreferred != null ? trailingPreferred.capacity : 0.0,
-                inlineObject.trailingBoundary.preventsLineBreak,
-                inlineObject.trailingBoundary.shrinkCapacity,
-                inlineObject.trailingBoundary.lineEndDiscardableAdvance,
-                reason
-            ));
+            inlineObjectDecisions.push(new InlineObjectDecisionInfo(inlineObject.range, inlineObject.advance, inlineObject.ascent, inlineObject.descent,
+                clusterIndex, lineIdx, inlineObject.leadingBoundary.participatesInUniformStretch,
+                leadingPreferred != null ? Std.string(leadingPreferred.kind) : null, leadingPreferred != null ? leadingPreferred.naturalWidth : 0.0,
+                leadingPreferred != null ? leadingPreferred.targetWidth : 0.0, leadingPreferred != null ? leadingPreferred.capacity : 0.0,
+                inlineObject.leadingBoundary.preventsLineBreak, inlineObject.leadingBoundary.shrinkCapacity,
+                inlineObject.leadingBoundary.lineEndDiscardableAdvance, inlineObject.trailingBoundary.participatesInUniformStretch,
+                trailingPreferred != null ? Std.string(trailingPreferred.kind) : null, trailingPreferred != null ? trailingPreferred.naturalWidth : 0.0,
+                trailingPreferred != null ? trailingPreferred.targetWidth : 0.0, trailingPreferred != null ? trailingPreferred.capacity : 0.0,
+                inlineObject.trailingBoundary.preventsLineBreak, inlineObject.trailingBoundary.shrinkCapacity,
+                inlineObject.trailingBoundary.lineEndDiscardableAdvance, reason));
         }
 
         final decorationDecisions = new Array<DecorationDecisionInfo>();
@@ -377,25 +289,12 @@ class LineAdjustmentStage {
         final rubyDecisions = new Array<RubyDecisionInfo>();
         final bopomofoDecisions = new Array<BopomofoDecisionInfo>();
 
-        return new AnnotationGeometryStageResult(
-            inlineObjectDecisions,
-            decorationDecisions,
-            decorationSegments,
-            rubyDecisions,
-            bopomofoDecisions
-        );
+        return new AnnotationGeometryStageResult(inlineObjectDecisions, decorationDecisions, decorationSegments, rubyDecisions, bopomofoDecisions);
     }
 
-    private static function trimEdge(
-        lineSourceRange:TextRange,
-        clusterIdx:Int,
-        side:String,
-        naturalClusters:Array<Cluster>,
-        autoSpaceDecisions:Array<AutoSpaceDecisionInfo>,
-        autoSpaceGap:Float,
-        autoSpaceEdgeTrims:Array<Float>,
-        autoSpaceEdgeDecisions:Array<LineEdgeTrimDecisionInfo>
-    ):Void {
+    private static function trimEdge(lineSourceRange:TextRange, clusterIdx:Int, side:String, naturalClusters:Array<Cluster>,
+            autoSpaceDecisions:Array<AutoSpaceDecisionInfo>, autoSpaceGap:Float, autoSpaceEdgeTrims:Array<Float>,
+            autoSpaceEdgeDecisions:Array<LineEdgeTrimDecisionInfo>):Void {
         var foundDecision:Null<AutoSpaceDecisionInfo> = null;
         final cRange = naturalClusters[clusterIdx].range;
         for (dec in autoSpaceDecisions) {
@@ -406,49 +305,28 @@ class LineAdjustmentStage {
         }
         if (foundDecision != null) {
             autoSpaceEdgeTrims[clusterIdx] += autoSpaceGap;
-            autoSpaceEdgeDecisions.push(new LineEdgeTrimDecisionInfo(
-                lineSourceRange,
-                foundDecision.clusterRange,
-                side,
-                autoSpaceGap,
-                0.0,
-                autoSpaceGap,
-                "TextAutoSpaceLineEdgeTrim"
-            ));
+            autoSpaceEdgeDecisions.push(new LineEdgeTrimDecisionInfo(lineSourceRange, foundDecision.clusterRange, side, autoSpaceGap, 0.0, autoSpaceGap,
+                "TextAutoSpaceLineEdgeTrim"));
         }
     }
 
-    private static function collapseEdgeSpace(
-        lineSourceRange:TextRange,
-        clusterIdx:Int,
-        side:String,
-        naturalClusters:Array<Cluster>,
-        inlineObjectSeparatorSpaceTrims:SortedMap<Int, Float>,
-        autoSpaceEdgeTrims:Array<Float>,
-        autoSpaceEdgeDecisions:Array<LineEdgeTrimDecisionInfo>
-    ):Void {
+    private static function collapseEdgeSpace(lineSourceRange:TextRange, clusterIdx:Int, side:String, naturalClusters:Array<Cluster>,
+            inlineObjectSeparatorSpaceTrims:SortedMap<Int, Float>, autoSpaceEdgeTrims:Array<Float>,
+            autoSpaceEdgeDecisions:Array<LineEdgeTrimDecisionInfo>):Void {
         final cluster = naturalClusters[clusterIdx];
-        if (!PunctuationGeometryStage.isSpaceRun(cluster)) return;
-        if (inlineObjectSeparatorSpaceTrims.has(clusterIdx)) return;
+        if (!PunctuationGeometryStage.isSpaceRun(cluster))
+            return;
+        if (inlineObjectSeparatorSpaceTrims.has(clusterIdx))
+            return;
         final advance = cluster.advance;
-        if (advance <= 0.0) return;
+        if (advance <= 0.0)
+            return;
         autoSpaceEdgeTrims[clusterIdx] += advance;
-        autoSpaceEdgeDecisions.push(new LineEdgeTrimDecisionInfo(
-            lineSourceRange,
-            cluster.range,
-            side,
-            advance,
-            0.0,
-            advance,
-            "LineEdgeWordSpaceCollapse"
-        ));
+        autoSpaceEdgeDecisions.push(new LineEdgeTrimDecisionInfo(lineSourceRange, cluster.range, side, advance, 0.0, advance, "LineEdgeWordSpaceCollapse"));
     }
 
-    public static function finishParagraphLayout(
-        engine:ExplainableStubParagraphLayoutEngine,
-        prep:ParagraphLayoutPrep,
-        plan:LineBreakPlanningStageResult
-    ):LayoutResult {
+    public static function finishParagraphLayout(engine:ExplainableStubParagraphLayoutEngine, prep:ParagraphLayoutPrep,
+            plan:LineBreakPlanningStageResult):LayoutResult {
         final appliedHangingClustersBuilder = SortedSet.builder();
         for (line in plan.lineSolution.lines) {
             for (i in 0...line.hangingClusterIndices.size()) {
@@ -467,9 +345,12 @@ class LineAdjustmentStage {
         final impossibleMeasureContextualHangClusters = impossibleMeasureContextualHangClustersBuilder.build();
 
         final rawDecisions = new Array<ContextualKinsokuDecisionInfo>();
-        for (d in plan.asciiPointMarkKinsoku.decisions) rawDecisions.push(d);
-        for (d in plan.inlineObjectKinsoku.decisions) rawDecisions.push(d);
-        for (d in plan.unicodePunctuationBoundaries.decisions) rawDecisions.push(d);
+        for (d in plan.asciiPointMarkKinsoku.decisions)
+            rawDecisions.push(d);
+        for (d in plan.inlineObjectKinsoku.decisions)
+            rawDecisions.push(d);
+        for (d in plan.unicodePunctuationBoundaries.decisions)
+            rawDecisions.push(d);
 
         final seenDecisionKeys = new Array<String>();
         final contextualKinsokuDecisions = new Array<ContextualKinsokuDecisionInfo>();
@@ -485,19 +366,10 @@ class LineAdjustmentStage {
             if (!alreadySeen) {
                 seenDecisionKeys.push(key);
                 final cIdx = decision.clusterIndex;
-                if (impossibleMeasureContextualHangClusters.has(cIdx) &&
-                    appliedHangingClusters.has(cIdx)) {
-                    final fallback = decision.reason == "AttachedAsciiPointMarkKinsoku"
-                        ? "AttachedAsciiPointMarkImpossibleMeasureHang"
-                        : "InlineObjectAttachedMarkImpossibleMeasureHang";
-                    contextualKinsokuDecisions.push(new ContextualKinsokuDecisionInfo(
-                        decision.range,
-                        decision.sourceText,
-                        decision.clusterIndex,
-                        decision.forbiddenPosition,
-                        decision.reason,
-                        fallback
-                    ));
+                if (impossibleMeasureContextualHangClusters.has(cIdx) && appliedHangingClusters.has(cIdx)) {
+                    final fallback = decision.reason == "AttachedAsciiPointMarkKinsoku" ? "AttachedAsciiPointMarkImpossibleMeasureHang" : "InlineObjectAttachedMarkImpossibleMeasureHang";
+                    contextualKinsokuDecisions.push(new ContextualKinsokuDecisionInfo(decision.range, decision.sourceText, decision.clusterIndex,
+                        decision.forbiddenPosition, decision.reason, fallback));
                 } else {
                     contextualKinsokuDecisions.push(decision);
                 }
@@ -541,16 +413,19 @@ class LineAdjustmentStage {
         if (prep.hyphenOffsets.size() > 0) {
             for (lineIndex in 0...plan.lineSolution.lines.length) {
                 final line = plan.lineSolution.lines[lineIndex];
-                if (line.clusterRange.isEmpty) continue;
+                if (line.clusterRange.isEmpty)
+                    continue;
                 final hyphen = lineHyphenAdvanceAt(lineIndex, plan.lineSolution.lines, prep.hyphenOffsets, prep.naturalClusters, prep.hyphenAdvance);
-                if (hyphen <= 0.0) continue;
+                if (hyphen <= 0.0)
+                    continue;
                 final lineLimit = line.clusterRange.start == 0 ? prep.measure - plan.firstLineIndent : prep.measure - plan.blockIndent;
                 var content = 0.0;
                 for (cIdx in line.clusterRange.start...line.clusterRange.end + 1) {
                     content += prep.clusters[cIdx].advance;
                 }
                 var shortfall = content + hyphen - lineLimit;
-                if (shortfall <= 0.001) continue;
+                if (shortfall <= 0.001)
+                    continue;
 
                 final sortedOpportunities = new Array<org.tiqian.layout.ProgressiveBreakDecisions.ShrinkOpportunity>();
                 for (opp in prep.shrinkOpportunities) {
@@ -572,7 +447,8 @@ class LineAdjustmentStage {
 
                 for (oIdx in 0...sortedOpportunities.length) {
                     final opp = sortedOpportunities[oIdx];
-                    if (shortfall <= 0.001) break;
+                    if (shortfall <= 0.001)
+                        break;
                     var used = 0.0;
                     if (opp.channel == TrailingGlue) {
                         used = pushInTrailing[opp.clusterIndex];
@@ -586,7 +462,8 @@ class LineAdjustmentStage {
                     final avail = opp.capacity - used;
                     final target = shortfall < avail ? shortfall : avail;
                     final take = target < 0.0 ? 0.0 : target;
-                    if (take <= 0.0) continue;
+                    if (take <= 0.0)
+                        continue;
                     if (opp.channel == TrailingGlue) {
                         pushInTrailing[opp.clusterIndex] += take;
                     } else if (opp.channel == LeadingGlue) {
@@ -605,68 +482,56 @@ class LineAdjustmentStage {
         final pushInTrailingMapBuilder = SortedMap.builder();
         final pushInLeadingMapBuilder = SortedMap.builder();
         for (i in 0...prep.naturalClusters.length) {
-            if (pushInTrailing[i] != 0.0) pushInTrailingMapBuilder.put(i, pushInTrailing[i]);
-            if (pushInLeading[i] != 0.0) pushInLeadingMapBuilder.put(i, pushInLeading[i]);
+            if (pushInTrailing[i] != 0.0)
+                pushInTrailingMapBuilder.put(i, pushInTrailing[i]);
+            if (pushInLeading[i] != 0.0)
+                pushInLeadingMapBuilder.put(i, pushInLeading[i]);
         }
-        final pushInGeometry = prep.baseGeometry
-            .consumeTrailingByCluster(pushInTrailingMapBuilder.build())
+        final pushInGeometry = prep.baseGeometry.consumeTrailingByCluster(pushInTrailingMapBuilder.build())
             .consumeLeadingByCluster(pushInLeadingMapBuilder.build());
 
-        final edgeTrimResult = pushInGeometry.consumeLineEdgeGlue(
-            plan.lineSolution.lines,
-            prep.adjustmentStyle.lineEndPunctuation == LineEndPunctuationStyle.ForceHalfWidth
-        );
+        final edgeTrimResult = pushInGeometry.consumeLineEdgeGlue(plan.lineSolution.lines,
+            prep.adjustmentStyle.lineEndPunctuation == LineEndPunctuationStyle.ForceHalfWidth);
 
         final autoSpaceGap = prep.clreqProfile.autoSpace.gapEm * prep.fontSize;
         final autoSpaceEdgeTrims = new Array<Float>();
-        for (i in 0...prep.naturalClusters.length) autoSpaceEdgeTrims.push(0.0);
+        for (i in 0...prep.naturalClusters.length)
+            autoSpaceEdgeTrims.push(0.0);
         final autoSpaceEdgeDecisions = new Array<LineEdgeTrimDecisionInfo>();
 
         for (line in plan.lineSolution.lines) {
-            if (line.clusterRange.isEmpty) continue;
+            if (line.clusterRange.isEmpty)
+                continue;
 
-            trimEdge(line.sourceRange, line.clusterRange.end, "trailing", prep.naturalClusters, prep.autoSpaceDecisions, autoSpaceGap, autoSpaceEdgeTrims, autoSpaceEdgeDecisions);
-            trimEdge(line.sourceRange, line.clusterRange.start, "leading", prep.naturalClusters, prep.autoSpaceDecisions, autoSpaceGap, autoSpaceEdgeTrims, autoSpaceEdgeDecisions);
+            trimEdge(line.sourceRange, line.clusterRange.end, "trailing", prep.naturalClusters, prep.autoSpaceDecisions, autoSpaceGap, autoSpaceEdgeTrims,
+                autoSpaceEdgeDecisions);
+            trimEdge(line.sourceRange, line.clusterRange.start, "leading", prep.naturalClusters, prep.autoSpaceDecisions, autoSpaceGap, autoSpaceEdgeTrims,
+                autoSpaceEdgeDecisions);
 
-            collapseEdgeSpace(line.sourceRange, line.clusterRange.end, "trailing", prep.naturalClusters, prep.inlineObjectSeparatorSpaceTrims, autoSpaceEdgeTrims, autoSpaceEdgeDecisions);
-            collapseEdgeSpace(line.sourceRange, line.clusterRange.start, "leading", prep.naturalClusters, prep.inlineObjectSeparatorSpaceTrims, autoSpaceEdgeTrims, autoSpaceEdgeDecisions);
+            collapseEdgeSpace(line.sourceRange, line.clusterRange.end, "trailing", prep.naturalClusters, prep.inlineObjectSeparatorSpaceTrims,
+                autoSpaceEdgeTrims, autoSpaceEdgeDecisions);
+            collapseEdgeSpace(line.sourceRange, line.clusterRange.start, "leading", prep.naturalClusters, prep.inlineObjectSeparatorSpaceTrims,
+                autoSpaceEdgeTrims, autoSpaceEdgeDecisions);
 
             final attachedGlueCluster = line.clusterRange.end;
-            final attachedGlue = prep.attachedPunctuationTrailingGlueByCluster.has(attachedGlueCluster)
-                ? prep.attachedPunctuationTrailingGlueByCluster.get(attachedGlueCluster)
-                : 0.0;
+            final attachedGlue = prep.attachedPunctuationTrailingGlueByCluster.has(attachedGlueCluster) ? prep.attachedPunctuationTrailingGlueByCluster.get(attachedGlueCluster) : 0.0;
             if (attachedGlue > 0.0) {
                 autoSpaceEdgeTrims[attachedGlueCluster] += attachedGlue;
-                autoSpaceEdgeDecisions.push(new LineEdgeTrimDecisionInfo(
-                    line.sourceRange,
-                    prep.naturalClusters[attachedGlueCluster].range,
-                    "trailing",
-                    attachedGlue,
-                    0.0,
-                    attachedGlue,
-                    "AttachedInlineVirtualBoundaryLineEndTrim"
-                ));
+                autoSpaceEdgeDecisions.push(new LineEdgeTrimDecisionInfo(line.sourceRange, prep.naturalClusters[attachedGlueCluster].range, "trailing",
+                    attachedGlue, 0.0, attachedGlue, "AttachedInlineVirtualBoundaryLineEndTrim"));
             }
 
             if (line.endReason == LineEndReason.AutoWrap) {
                 final clusterIdx = line.clusterRange.end;
-                final discardable = prep.inlineObjectByClusterIndex.has(clusterIdx)
-                    ? prep.inlineObjectByClusterIndex.get(clusterIdx).trailingBoundary.lineEndDiscardableAdvance
-                    : 0.0;
+                final discardable = prep.inlineObjectByClusterIndex.has(clusterIdx) ? prep.inlineObjectByClusterIndex.get(clusterIdx)
+                    .trailingBoundary.lineEndDiscardableAdvance : 0.0;
                 final consumedBefore = pushInRawTrims[clusterIdx] < discardable ? pushInRawTrims[clusterIdx] : discardable;
                 final diff = discardable - consumedBefore;
                 final remaining = diff < 0.0 ? 0.0 : diff;
                 if (remaining > 0.0) {
                     autoSpaceEdgeTrims[clusterIdx] += remaining;
-                    autoSpaceEdgeDecisions.push(new LineEdgeTrimDecisionInfo(
-                        line.sourceRange,
-                        prep.naturalClusters[clusterIdx].range,
-                        "trailing",
-                        remaining,
-                        consumedBefore,
-                        discardable,
-                        "InlineObjectLineEndDiscardableGlue"
-                    ));
+                    autoSpaceEdgeDecisions.push(new LineEdgeTrimDecisionInfo(line.sourceRange, prep.naturalClusters[clusterIdx].range, "trailing", remaining,
+                        consumedBefore, discardable, "InlineObjectLineEndDiscardableGlue"));
                 }
             }
         }
@@ -682,8 +547,10 @@ class LineAdjustmentStage {
         final trimmedClusters = trimmedGeometry.resolveClusters();
 
         final edgeTrimDecisions = new Array<LineEdgeTrimDecisionInfo>();
-        for (d in edgeTrimResult.decisions) edgeTrimDecisions.push(d);
-        for (d in autoSpaceEdgeDecisions) edgeTrimDecisions.push(d);
+        for (d in edgeTrimResult.decisions)
+            edgeTrimDecisions.push(d);
+        for (d in autoSpaceEdgeDecisions)
+            edgeTrimDecisions.push(d);
 
         final justificationPlans = new Array<Null<JustificationPlan>>();
         for (lineIndex in 0...plan.lineSolution.lines.length) {
@@ -693,12 +560,9 @@ class LineAdjustmentStage {
                 justificationPlans.push(null);
             } else {
                 final nextIdx = lineCandidate.clusterRange.end + 1;
-                final selectedTechnicalBreak = plan.progressiveBreakOpportunities.has(nextIdx)
-                    ? plan.progressiveBreakOpportunities.get(nextIdx)
-                    : null;
-                final preferredTrackingSpan = (selectedTechnicalBreak != null && selectedTechnicalBreak.tier == ProgressiveBreakTier.Emergency)
-                    ? selectedTechnicalBreak.spanRange
-                    : null;
+                final selectedTechnicalBreak = plan.progressiveBreakOpportunities.has(nextIdx) ? plan.progressiveBreakOpportunities.get(nextIdx) : null;
+                final preferredTrackingSpan = (selectedTechnicalBreak != null
+                    && selectedTechnicalBreak.tier == ProgressiveBreakTier.Emergency) ? selectedTechnicalBreak.spanRange : null;
 
                 final preferredEmergencyTrackingBoundariesBuilder = SortedMap.builder();
                 if (preferredTrackingSpan != null) {
@@ -706,41 +570,27 @@ class LineAdjustmentStage {
                         final leftIndex = plan.emergencyTrackingBoundaryAfterClusters.keyAt(i);
                         final reason = plan.emergencyTrackingBoundaryAfterClusters.valueAt(i);
                         final rightIndex = leftIndex + 1;
-                        if (prep.naturalClusters[leftIndex].range.start >= preferredTrackingSpan.start &&
-                            prep.naturalClusters[rightIndex].range.end <= preferredTrackingSpan.end) {
+                        if (prep.naturalClusters[leftIndex].range.start >= preferredTrackingSpan.start
+                            && prep.naturalClusters[rightIndex].range.end <= preferredTrackingSpan.end) {
                             preferredEmergencyTrackingBoundariesBuilder.put(leftIndex, reason);
                         }
                     }
                 }
                 final preferredEmergencyTrackingBoundaries = preferredEmergencyTrackingBoundariesBuilder.build();
 
-                final hyphenAdvanceForLine = lineHyphenAdvanceAt(lineIndex, plan.lineSolution.lines, prep.hyphenOffsets, prep.naturalClusters, prep.hyphenAdvance);
-                final lineLimit = (lineCandidate.clusterRange.start == 0 ? (prep.measure - plan.firstLineIndent) : (prep.measure - plan.blockIndent)) - hyphenAdvanceForLine;
+                final hyphenAdvanceForLine = lineHyphenAdvanceAt(lineIndex, plan.lineSolution.lines, prep.hyphenOffsets, prep.naturalClusters,
+                    prep.hyphenAdvance);
+                final lineLimit = (lineCandidate.clusterRange.start == 0 ? (prep.measure - plan.firstLineIndent) : (prep.measure - plan.blockIndent))
+                    - hyphenAdvanceForLine;
 
-                final planResult = engine.justifier.justify(
-                    trimmedClusters,
-                    prep.clusterRoles,
-                    prep.eastAsianSpacingEdges,
-                    lineCandidate.inMeasureClusterRange,
-                    lineLimit,
-                    prep.fontSize,
-                    false,
-                    null,
-                    prep.adjustmentStyle.allowSinoWesternGapAdjustment,
-                    prep.clreqProfile.autoSpace.gapEm,
-                    prep.clreqProfile.autoSpace.stretchMaxEm,
-                    plan.noStretchBoundaryClusters,
-                    plan.noStretchBoundaryAfterClusters,
-                    plan.westernBracketCjkInterCharBoundaryAfterClusters,
-                    plan.attachedInlinePhysicalBoundaryAfterClusters,
-                    plan.attachedInlineVirtualBoundaryAfterClusters,
-                    plan.attachedInlineVirtualSinoWesternBoundaryAfterClusters,
-                    prep.uniformInlineObjectBoundaryAfterClusters,
-                    prep.preferredInlineObjectBoundaryAfterClusters,
-                    plan.technicalBoundaryAfterClusters,
-                    plan.emergencyTrackingBoundaryAfterClusters,
-                    preferredEmergencyTrackingBoundaries
-                );
+                final planResult = engine.justifier.justify(trimmedClusters, prep.clusterRoles, prep.eastAsianSpacingEdges,
+                    lineCandidate.inMeasureClusterRange, lineLimit, prep.fontSize, false, null, prep.adjustmentStyle.allowSinoWesternGapAdjustment,
+                    prep.clreqProfile.autoSpace.gapEm, prep.clreqProfile.autoSpace.stretchMaxEm, plan.noStretchBoundaryClusters,
+                    plan.noStretchBoundaryAfterClusters, plan.westernBracketCjkInterCharBoundaryAfterClusters,
+                    plan.attachedInlinePhysicalBoundaryAfterClusters, plan.attachedInlineVirtualBoundaryAfterClusters,
+                    plan.attachedInlineVirtualSinoWesternBoundaryAfterClusters, prep.uniformInlineObjectBoundaryAfterClusters,
+                    prep.preferredInlineObjectBoundaryAfterClusters, plan.technicalBoundaryAfterClusters, plan.emergencyTrackingBoundaryAfterClusters,
+                    preferredEmergencyTrackingBoundaries);
                 justificationPlans.push(planResult);
             }
         }
@@ -770,12 +620,13 @@ class LineAdjustmentStage {
                 }
             }
             final currentLinePlan = justificationPlans[lineIndex];
-            if (currentLinePlan == null) continue;
+            if (currentLinePlan == null)
+                continue;
 
             var currentLineUsesUnboundedTracking = false;
             for (alloc in currentLinePlan.allocations) {
-                if ((alloc.kind == GlueKind.CjkInterChar || alloc.kind == GlueKind.EmergencyGraphemeTracking) &&
-                    alloc.delta > currentLineTechnicalBodyStretchLimit + TECHNICAL_STRETCH_EPSILON_PX) {
+                if ((alloc.kind == GlueKind.CjkInterChar || alloc.kind == GlueKind.EmergencyGraphemeTracking)
+                    && alloc.delta > currentLineTechnicalBodyStretchLimit + TECHNICAL_STRETCH_EPSILON_PX) {
                     currentLineUsesUnboundedTracking = true;
                     break;
                 }
@@ -796,7 +647,8 @@ class LineAdjustmentStage {
                 } else {
                     final b:std.SortedSetBuilder<Int> = std.SortedSet.builder();
                     final existing = newlyRejectedTiersList[foundSpanIdx];
-                    for (e in 0...existing.size()) b.put(existing.at(e));
+                    for (e in 0...existing.size())
+                        b.put(existing.at(e));
                     b.put(selectedTechnicalBreak.tier.priority);
                     newlyRejectedTiersList[foundSpanIdx] = b.build();
                 }
@@ -809,11 +661,13 @@ class LineAdjustmentStage {
                 final span = prep.rejectedTechnicalTiersBySpan.keyAt(i);
                 final tiers = prep.rejectedTechnicalTiersBySpan.valueAt(i);
                 final b:std.SortedSetBuilder<Int> = std.SortedSet.builder();
-                for (t in 0...tiers.size()) b.put(tiers.at(t));
+                for (t in 0...tiers.size())
+                    b.put(tiers.at(t));
                 for (nIdx in 0...newlyRejectedSpans.length) {
                     if (newlyRejectedSpans[nIdx].start == span.start && newlyRejectedSpans[nIdx].end == span.end) {
                         final addTiers = newlyRejectedTiersList[nIdx];
-                        for (at in 0...addTiers.size()) b.put(addTiers.at(at));
+                        for (at in 0...addTiers.size())
+                            b.put(addTiers.at(at));
                     }
                 }
                 updatedRejectedTiersBuilder.put(span, b.build());
@@ -824,14 +678,12 @@ class LineAdjustmentStage {
                     updatedRejectedTiersBuilder.put(span, newlyRejectedTiersList[nIdx]);
                 }
             }
-            return engine.layoutWithRejectedTechnicalTiers(
-                prep.input,
-                updatedRejectedTiersBuilder.build()
-            );
+            return engine.layoutWithRejectedTechnicalTiers(prep.input, updatedRejectedTiersBuilder.build());
         }
 
         final justifyDeltas = new Array<Float>();
-        for (i in 0...prep.naturalClusters.length) justifyDeltas.push(0.0);
+        for (i in 0...prep.naturalClusters.length)
+            justifyDeltas.push(0.0);
         for (p in justificationPlans) {
             if (p != null) {
                 for (alloc in p.allocations) {
@@ -861,16 +713,7 @@ class LineAdjustmentStage {
                 if (shift > -0.01 && shift < 0.01) {
                     finalClusters.push(c);
                 } else {
-                    finalClusters.push(new Cluster(
-                        c.range,
-                        c.text,
-                        c.fontKey,
-                        c.advance,
-                        c.displayText,
-                        shift,
-                        c.leadingLayoutAdvance,
-                        c.glyphInlineShift
-                    ));
+                    finalClusters.push(new Cluster(c.range, c.text, c.fontKey, c.advance, c.displayText, shift, c.leadingLayoutAdvance, c.glyphInlineShift));
                 }
             }
         }
@@ -881,9 +724,7 @@ class LineAdjustmentStage {
         for (runClusters in runGroups) {
             final firstC = runClusters[0];
             final lastC = runClusters[runClusters.length - 1];
-            final openTypeFeatures = prep.openTypeFeaturesByClusterRange.has(firstC.range)
-                ? prep.openTypeFeaturesByClusterRange.get(firstC.range)
-                : [];
+            final openTypeFeatures = prep.openTypeFeaturesByClusterRange.has(firstC.range) ? prep.openTypeFeaturesByClusterRange.get(firstC.range) : [];
             final runGlyphs = new Array<Glyph>();
             var runAdvance = 0.0;
             for (clusterIdx in 0...runClusters.length) {
@@ -893,93 +734,36 @@ class LineAdjustmentStage {
                     final shaped = prep.shapedGlyphsByClusterRange.get(cluster.range);
                     final mapped = ParagraphShapingStage.mapToClusterRange(shaped, cluster);
                     final centered = centerDashInk(mapped, cluster, prep.atomClassByRange);
-                    for (g in centered) runGlyphs.push(g);
+                    for (g in centered)
+                        runGlyphs.push(g);
                 } else {
-                    runGlyphs.push(new Glyph(
-                        clusterIdx,
-                        cluster.range,
-                        cluster.advance
-                    ));
+                    runGlyphs.push(new Glyph(clusterIdx, cluster.range, cluster.advance));
                 }
             }
-            glyphRuns.push(new GlyphRun(
-                new TextRange(firstC.range.start, lastC.range.end),
-                firstC.fontKey,
-                runGlyphs,
-                runAdvance,
-                openTypeFeatures
-            ));
+            glyphRuns.push(new GlyphRun(new TextRange(firstC.range.start, lastC.range.end), firstC.fontKey, runGlyphs, runAdvance, openTypeFeatures));
         }
 
-        final verticalGeometry = LineGeometryStageFns.resolveLineVerticalGeometry(
-            prep.input,
-            prep.fontSize,
-            prep.pinyinSpans,
-            prep.naturalClusters,
-            plan.lineSolution,
-            prep.rubyFontGeometryBySpan,
-            plan.existingInterlineSpace,
-            plan.baseLineMetrics,
-            plan.baseFaceHeight,
-            plan.rubyExtent,
-            null,
-            plan.baseAscent,
-            plan.baseDescent
-        );
+        final verticalGeometry = LineGeometryStageFns.resolveLineVerticalGeometry(prep.input, prep.fontSize, prep.pinyinSpans, prep.naturalClusters,
+            plan.lineSolution, prep.rubyFontGeometryBySpan, plan.existingInterlineSpace, plan.baseLineMetrics, plan.baseFaceHeight, plan.rubyExtent, null,
+            plan.baseAscent, plan.baseDescent);
         final rubyLineHeightDecision = verticalGeometry.rubyLineHeightDecision;
         final inlineObjectLineHeightDecision = verticalGeometry.inlineObjectLineHeightDecision;
         final lineBaseline = verticalGeometry.lineBaseline;
         final lineTop = verticalGeometry.lineTop;
         final lineBottom = verticalGeometry.lineBottom;
 
-        final lineBoxes = buildLineBoxes(
-            prep.input,
-            plan.lineSolution,
-            trimmedClusters,
-            finalClusters,
-            plan.firstLineIndent,
-            plan.blockIndent,
-            prep.measure,
-            prep.gridBodyOffset,
-            lineBaseline,
-            lineTop,
-            lineBottom,
-            prep.hyphenOffsets,
-            prep.naturalClusters,
-            prep.hyphenAdvance,
-            prep.hyphenGlyphs,
-            justificationPlans
-        );
+        final lineBoxes = buildLineBoxes(prep.input, plan.lineSolution, trimmedClusters, finalClusters, plan.firstLineIndent, plan.blockIndent, prep.measure,
+            prep.gridBodyOffset, lineBaseline, lineTop, lineBottom, prep.hyphenOffsets, prep.naturalClusters, prep.hyphenAdvance, prep.hyphenGlyphs,
+            justificationPlans);
         final laidOutLines = lineBoxes.laidOutLines;
         final lines = lineBoxes.visibleLines;
         final maxLinesDecision = lineBoxes.maxLinesDecision;
         final visibleLineRanges = lineBoxes.visibleLineRanges;
 
-        final annotationGeometry = resolveAnnotationGeometry(
-            prep.input,
-            prep.fontSize,
-            prep.inlineObjectByClusterIndex,
-            plan.lineSolution,
-            prep.clreqProfile,
-            geometryDecisions,
-            prep.autoSpaceDecisions,
-            visibleLineRanges,
-            lines,
-            finalClusters,
-            prep.clusterRoles,
-            justifyDeltaByCluster,
-            prep.rubyAndBopomofoSpread,
-            plan.metricDecisions,
-            prep.pinyinSpans,
-            prep.naturalClusters,
-            prep.rubyFontGeometryBySpan,
-            prep.rubyStackGap,
-            plan.baseAscent,
-            prep.rubyFontSize,
-            prep.rubyFontWeight,
-            plan.baseDescent,
-            prep.bopomofoFontWeightAt
-        );
+        final annotationGeometry = resolveAnnotationGeometry(prep.input, prep.fontSize, prep.inlineObjectByClusterIndex, plan.lineSolution, prep.clreqProfile,
+            geometryDecisions, prep.autoSpaceDecisions, visibleLineRanges, lines, finalClusters, prep.clusterRoles, justifyDeltaByCluster,
+            prep.rubyAndBopomofoSpread, plan.metricDecisions, prep.pinyinSpans, prep.naturalClusters, prep.rubyFontGeometryBySpan, prep.rubyStackGap,
+            plan.baseAscent, prep.rubyFontSize, prep.rubyFontWeight, plan.baseDescent, prep.bopomofoFontWeightAt);
         final inlineObjectDecisions = annotationGeometry.inlineObjectDecisions;
         final decorationDecisions = annotationGeometry.decorationDecisions;
         final decorationSegments = annotationGeometry.decorationSegments;
@@ -990,7 +774,8 @@ class LineAdjustmentStage {
         for (i in 0...lines.length) {
             final line = lines[i];
             final w = line.indent + line.visualWidth + line.hyphenAdvance;
-            if (w > widestLine) widestLine = w;
+            if (w > widestLine)
+                widestLine = w;
         }
         var totalHeight:Float = 0.0;
         if (lines.length > 0) {
@@ -1003,54 +788,15 @@ class LineAdjustmentStage {
         final maxWidthConstraint = prep.input.constraints.maxWidth;
         final resultWidth = widestLine > maxWidthConstraint ? maxWidthConstraint : widestLine;
 
-        return new LayoutResult(
-            prep.input,
-            new Size(resultWidth, totalHeight),
-            finalClusters,
-            glyphRuns,
-            lines,
-            LayoutDebugAssembly.buildLayoutDebugInfo(
-                engine,
-                new LayoutDebugStageInput(
-                    prep.text,
-                    prep.fontDecisions,
-                    prep.punctuationGlyphSubstitutor,
-                    prep.substitutionRollbacks,
-                    prep.shapingDecisions,
-                    plan.metricDecisions,
-                    prep.punctuationAtoms,
-                    geometryDecisions,
-                    prep.spacingPlan,
-                    prep.attachedPunctuationBoundary,
-                    prep.roleOverrideInfos,
-                    laidOutLines,
-                    plan.lineSolution,
-                    prep.clusters,
-                    justificationPlans,
-                    prep.autoSpaceDecisions,
-                    edgeTrimDecisions,
-                    decorationDecisions,
-                    decorationSegments,
-                    rubyDecisions,
-                    bopomofoDecisions,
-                    prep.mandatoryBreakDecisions,
-                    maxLinesDecision,
-                    plan.lineSpacingDecision,
-                    rubyLineHeightDecision,
-                    inlineObjectLineHeightDecision,
-                    plan.kinsokuDecision,
-                    contextualKinsokuDecisions,
-                    prep.lineLengthGridDecision,
-                    plan.firstLineIndentDecision,
-                    prep.inlineBoxResult.decisions,
-                    inlineObjectDecisions,
-                    prep.inlineObjectPunctuationAttachmentDecisions,
-                    prep.zeroWidthBreakDecisions,
-                    prep.breakOpportunityDecisions,
-                    prep.emergencyTrackingEligibilityDecisions,
-                    plan.progressiveBreakOpportunities
-                )
-            )
-        );
+        return new LayoutResult(prep.input, new Size(resultWidth, totalHeight), finalClusters, glyphRuns, lines,
+            LayoutDebugAssembly.buildLayoutDebugInfo(engine,
+                new LayoutDebugStageInput(prep.text, prep.fontDecisions, prep.punctuationGlyphSubstitutor, prep.substitutionRollbacks, prep.shapingDecisions,
+                    plan.metricDecisions, prep.punctuationAtoms, geometryDecisions, prep.spacingPlan, prep.attachedPunctuationBoundary,
+                    prep.roleOverrideInfos, laidOutLines, plan.lineSolution, prep.clusters, justificationPlans, prep.autoSpaceDecisions, edgeTrimDecisions,
+                    decorationDecisions, decorationSegments, rubyDecisions, bopomofoDecisions, prep.mandatoryBreakDecisions, maxLinesDecision,
+                    plan.lineSpacingDecision, rubyLineHeightDecision, inlineObjectLineHeightDecision, plan.kinsokuDecision, contextualKinsokuDecisions,
+                    prep.lineLengthGridDecision, plan.firstLineIndentDecision, prep.inlineBoxResult.decisions, inlineObjectDecisions,
+                    prep.inlineObjectPunctuationAttachmentDecisions, prep.zeroWidthBreakDecisions, prep.breakOpportunityDecisions,
+                    prep.emergencyTrackingEligibilityDecisions, plan.progressiveBreakOpportunities)));
     }
 }
