@@ -493,6 +493,10 @@ class LineBreakerLines {
         return line.endReason == LineEndReason.AutoWrap && !line.clusterRange.isEmpty && hyphenBreakClusters.has(line.clusterRange.end + 1);
     }
 
+    public static function endsWithProgressiveBreak(candidate:LineCandidate, opportunities:SortedMap<Int, ProgressiveBreakOpportunity>):Bool {
+        return candidate.endReason == LineEndReason.AutoWrap && !candidate.clusterRange.isEmpty && opportunities.get(candidate.clusterRange.end + 1) != null;
+    }
+
     public static function lineGapCount(range:IntRange, gapBoundaries:SortedSet<Int>):Int {
         if (range.isEmpty)
             return 0;
