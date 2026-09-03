@@ -1,5 +1,8 @@
 import org.tiqian.layout.LineGeometryDirectTailTest;
 import org.tiqian.layout.PunctuationGeometryLedgerCoverageTest;
+import org.tiqian.layout.PunctuationSpacingRuleTest;
+import org.tiqian.layout.PunctuationGeometryBranchArmsCoverageTest;
+import org.tiqian.layout.UnicodeEmoji17RgiRoleAuditTest;
 import org.tiqian.core.TiqianIllegalArgumentException;
 import org.tiqian.core.CoreUnitsGeometryTest;
 import org.tiqian.core.CoreLayoutQueriesGapsTest;
@@ -1291,6 +1294,40 @@ class Main {
         TestTraceRecorder.flushClass("PreparedParagraphPlanConstructionTest");
 
 
+        run("closingPlusClosingCollapsesInnerToZero", PunctuationSpacingRuleTest.closingPlusClosingCollapsesInnerToZero);
+        run("openingPlusOpeningCollapsesInnerToZero", PunctuationSpacingRuleTest.openingPlusOpeningCollapsesInnerToZero);
+        run("closingPlusOpeningKeepsHalfEmGap", PunctuationSpacingRuleTest.closingPlusOpeningKeepsHalfEmGap);
+        run("pauseStopPlusOpeningCollapsesByHalfEm", PunctuationSpacingRuleTest.pauseStopPlusOpeningCollapsesByHalfEm);
+        run("consecutivePauseOrStopMarksCompressLikeAnyAdjacentPair", PunctuationSpacingRuleTest.consecutivePauseOrStopMarksCompressLikeAnyAdjacentPair);
+        run("closingPlusPauseOrStopStillCompresses", PunctuationSpacingRuleTest.closingPlusPauseOrStopStillCompresses);
+        run("nonAdjacentPunctuationAtomsAreNotCompressed", PunctuationSpacingRuleTest.nonAdjacentPunctuationAtomsAreNotCompressed);
+        run("cjkClosingBeforeAsciiPointMarkConsumesOnlyClosingGlue", PunctuationSpacingRuleTest.cjkClosingBeforeAsciiPointMarkConsumesOnlyClosingGlue);
+        run("cjkClosingDoesNotCompressAcrossWhitespaceBeforeAsciiPointMark", PunctuationSpacingRuleTest.cjkClosingDoesNotCompressAcrossWhitespaceBeforeAsciiPointMark);
+        TestTraceRecorder.flushClass("PunctuationSpacingRuleTest");
+        run("asciiPointMarkKinsokuSkipsEmptyTextClusters", PunctuationGeometryBranchArmsCoverageTest.asciiPointMarkKinsokuSkipsEmptyTextClusters);
+        run("attachedAsciiPointMarkCheckSkipsEmptyPreviousText", PunctuationGeometryBranchArmsCoverageTest.attachedAsciiPointMarkCheckSkipsEmptyPreviousText);
+        run("attachedBoundaryReasonFallsBackToNaturalWithoutLeftAtom", PunctuationGeometryBranchArmsCoverageTest.attachedBoundaryReasonFallsBackToNaturalWithoutLeftAtom);
+        run("attachedBoundaryRecordsNullCharactersForEmptyTextClusters", PunctuationGeometryBranchArmsCoverageTest.attachedBoundaryRecordsNullCharactersForEmptyTextClusters);
+        run("attachedBoundaryWithPlainPreviousClusterKeepsTheRightBudget", PunctuationGeometryBranchArmsCoverageTest.attachedBoundaryWithPlainPreviousClusterKeepsTheRightBudget);
+        run("attachedMarkWalkStopsMidRunAtAGap", PunctuationGeometryBranchArmsCoverageTest.attachedMarkWalkStopsMidRunAtAGap);
+        run("attachedRunAtParagraphEndEmitsNoAutoSpace", PunctuationGeometryBranchArmsCoverageTest.attachedRunAtParagraphEndEmitsNoAutoSpace);
+        run("attachedTrailingGlueWidensABudgetedEndCluster", PunctuationGeometryBranchArmsCoverageTest.attachedTrailingGlueWidensABudgetedEndCluster);
+        run("centredAdjacencyConsumesBothSidesEqually", PunctuationGeometryBranchArmsCoverageTest.centredAdjacencyConsumesBothSidesEqually);
+        run("emptyTextClustersCannotBeAttachedMarks", PunctuationGeometryBranchArmsCoverageTest.emptyTextClustersCannotBeAttachedMarks);
+        run("glueCapacitiesMarkCentredFramesAsPaired", PunctuationGeometryBranchArmsCoverageTest.glueCapacitiesMarkCentredFramesAsPaired);
+        run("haltAdvanceIsRejectedAtZeroAndAtFullWidth", PunctuationGeometryBranchArmsCoverageTest.haltAdvanceIsRejectedAtZeroAndAtFullWidth);
+        run("inlineBoxSpanWithZeroNetStructuralEdgeStillAppliesLeading", PunctuationGeometryBranchArmsCoverageTest.inlineBoxSpanWithZeroNetStructuralEdgeStillAppliesLeading);
+        run("nonFiniteHaltPlacementIsIgnored", PunctuationGeometryBranchArmsCoverageTest.nonFiniteHaltPlacementIsIgnored);
+        run("resolveClustersAppliesGlyphShiftWithUnchangedAdvance", PunctuationGeometryBranchArmsCoverageTest.resolveClustersAppliesGlyphShiftWithUnchangedAdvance);
+        run("spaceRunRequiresNonEmptyAllSpaceText", PunctuationGeometryBranchArmsCoverageTest.spaceRunRequiresNonEmptyAllSpaceText);
+        run("spacingBoundariesAtListEdgesAreFalse", PunctuationGeometryBranchArmsCoverageTest.spacingBoundariesAtListEdgesAreFalse);
+        run("spacingPlanIgnoresTargetsOutsideTheBudgets", PunctuationGeometryBranchArmsCoverageTest.spacingPlanIgnoresTargetsOutsideTheBudgets);
+        run("typedSpaceWithEmptyTextNeighboursKeepsItsWidth", PunctuationGeometryBranchArmsCoverageTest.typedSpaceWithEmptyTextNeighboursKeepsItsWidth);
+        run("unionIgnoresGlyphsWithoutBounds", PunctuationGeometryBranchArmsCoverageTest.unionIgnoresGlyphsWithoutBounds);
+        run("virtualGapWithEmptyPreviousTextHasNoNarrowCharacter", PunctuationGeometryBranchArmsCoverageTest.virtualGapWithEmptyPreviousTextHasNoNarrowCharacter);
+        TestTraceRecorder.flushClass("PunctuationGeometryBranchArmsCoverageTest");
+        run("fullyQualifiedEmojiSequencesResolveToOneEmojiRange", UnicodeEmoji17RgiRoleAuditTest.fullyQualifiedEmojiSequencesResolveToOneEmojiRange);
+        TestTraceRecorder.flushClass("UnicodeEmoji17RgiRoleAuditTest");
         Console.log("all CoreUnitsGeometryTest checks passed");
         if (failures > 0) {
             Process.exit(1);

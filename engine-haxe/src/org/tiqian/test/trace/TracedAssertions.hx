@@ -228,6 +228,17 @@ class TracedAssertions {
         }
     }
 
+    public static function assertEqualsNullableFloat(expected:Null<Float>, actual:Null<Float>, ?message:String):Void {
+        recordEvent("eq", [
+            field("expected", expected == null ? "-" : TestTraceRender.renderFloat(expected)),
+            field("actual", actual == null ? "-" : TestTraceRender.renderFloat(actual)),
+            msgField(message)
+        ]);
+        if (expected != actual) {
+            fail(message == null ? "Expected values to be equal." : message);
+        }
+    }
+
     public static function assertEqualsIntRange(expected:IntRange, actual:IntRange, ?message:String):Void {
         recordEvent("eq", [
             field("expected", renderIntRange(expected)),
