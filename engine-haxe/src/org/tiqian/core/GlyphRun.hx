@@ -2,6 +2,7 @@ package org.tiqian.core;
 
 import std.ReadOnlyArray;
 
+@:dataClass
 class GlyphRun {
     public final range:TextRange;
     public final fontKey:String;

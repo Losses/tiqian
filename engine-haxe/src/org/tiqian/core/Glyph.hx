@@ -1,5 +1,6 @@
 package org.tiqian.core;
 
+@:dataClass
 class Glyph {
     public final id:Int;
     public final clusterRange:TextRange;

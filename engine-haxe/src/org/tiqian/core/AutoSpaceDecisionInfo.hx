@@ -1,5 +1,6 @@
 package org.tiqian.core;
 
+@:dataClass
 class AutoSpaceDecisionInfo {
     public final clusterRange:TextRange;
     public final side:String;
