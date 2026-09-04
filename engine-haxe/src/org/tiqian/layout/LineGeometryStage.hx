@@ -105,21 +105,42 @@ class LineGeometryStageFns {
             ext.push(x);
         }
         final extras = ext.map(x -> Math.max(0, x - existingInterlineSpace));
+        var maxDeficit = 0.0;
+        for (x in extras)
+            if (x > maxDeficit)
+                maxDeficit = x;
+        var uniform = false;
+        switch (input.paragraphStyle.rubyLineHeightMode) {
+            case PerLine:
+                uniform = false;
+            case UniformParagraph:
+                uniform = true;
+        }
+        final topExtras:Array<Float> = [];
+        for (i in 0...extras.length) topExtras.push(uniform ? maxDeficit : extras[i]);
         final baselines:Array<Float> = [];
         final tops:Array<Float> = [];
         final bottoms:Array<Float> = [];
         for (i in 0...ext.length) {
-            baselines.push((i == 0 ? baseLineMetrics.baseline : baselines[i - 1] + baseLineMetrics.height) + extras[i]);
+            baselines.push((i == 0 ? baseLineMetrics.baseline : baselines[i - 1] + baseLineMetrics.height) + topExtras[i]);
             tops.push(i == 0 ? 0 : bottoms[i - 1]);
             bottoms.push(baselines[i] + baseLineMetrics.height - baseLineMetrics.baseline);
         }
         var hasExtra = false;
-        for (x in extras)
+        for (x in topExtras)
             if (x > 0)
                 hasExtra = true;
+        var maxExtra = 0.0;
+        for (x in topExtras)
+            if (x > maxExtra)
+                maxExtra = x;
+        final expanded:Array<Int> = [];
+        for (i in 0...topExtras.length)
+            if (topExtras[i] > 0)
+                expanded.push(i);
         final reason = hasExtra ? "ConditionalRubyLineHeight" : "ExistingInterlineSpaceFitsRuby";
         final rd = pinyinSpans.length == 0 ? null : new RubyLineHeightDecisionInfo(Type.enumConstructor(input.paragraphStyle.rubyLineHeightMode),
-            baseLineMetrics.height, baseFaceHeight, rubyExtent, existingInterlineSpace, extras.length == 0 ? 0 : extras[0], extras, [], reason);
+            baseLineMetrics.height, baseFaceHeight, rubyExtent, existingInterlineSpace, maxExtra, topExtras, expanded, reason);
         return new LineVerticalGeometryStageResult(rd, null, baselines, tops, bottoms);
     }
 
@@ -139,12 +160,14 @@ class LineGeometryStageFns {
         var src = self.filter(x -> x.layoutMetrics.metricBox == MetricBox.IdeographicEmBox);
         if (src.length == 0)
             src = self;
-        var a = src[0].layoutMetrics.ascent;
-        var d = src[0].layoutMetrics.descent;
+        var ideographicAscent = src[0].layoutMetrics.ascent;
+        var ideographicDescent = src[0].layoutMetrics.descent;
         for (x in src) {
-            a = Math.max(a, x.layoutMetrics.ascent);
-            d = Math.max(d, x.layoutMetrics.descent);
+            ideographicAscent = Math.max(ideographicAscent, x.layoutMetrics.ascent);
+            ideographicDescent = Math.max(ideographicDescent, x.layoutMetrics.descent);
         }
+        var a = ideographicAscent;
+        var d = ideographicDescent;
         final natural = a + d;
         var requestedValue = defaultLineHeight;
         if (explicitLineHeight != null)
