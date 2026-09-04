@@ -8,6 +8,7 @@ import org.tiqian.shaping.TextShaper.ShapingResult;
 import org.tiqian.shaping.TextShaper.ExplainableStubTextShaper;
 import org.tiqian.layout.ParagraphLayoutEngine.ExplainableStubParagraphLayoutEngine;
 import org.tiqian.layout.WidthIndependentAnnotationCache.WidthIndependentAnnotationCacheFns;
+import org.tiqian.layout.WidthIndependentAnnotationCache.WidthIndependentAnnotationKey;
 import org.tiqian.test.trace.TestTrace;
 import org.tiqian.test.trace.TestTraceRender;
 import org.tiqian.test.trace.TracedAssertions;
