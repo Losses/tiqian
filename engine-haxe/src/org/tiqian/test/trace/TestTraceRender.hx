@@ -45,6 +45,7 @@ class TestTraceRender {
         while (x >= 10) { x /= 10; e += 1; }
         while (x < 1) { x *= 10; e -= 1; }
         var targetBits = FPHelper.floatToI32(v);
+        var target = FPHelper.i32ToFloat(targetBits);
         var p = 1;
         while (p <= 9) {
             var exp = e - p + 1;
@@ -58,7 +59,7 @@ class TestTraceRender {
                     var candidateText:String = Std.string(c) + "e" + Std.string(exp);
                     var cand:Float = cast(Std.parseFloat(candidateText), Float);
                     if (FPHelper.floatToI32(cand) == targetBits) {
-                        var dist:Float = Math.abs(cand - v);
+                        var dist:Float = Math.abs(cand - target);
                         if (dist < bestDist || (dist == bestDist && (c % 2 == 0))) {
                             best = c;
                             bestDist = dist;
