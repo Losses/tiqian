@@ -132,3 +132,5 @@ org.tiqian.layout.InlineBoxLayoutTest
 org.tiqian.layout.InlineBoxLayoutTestSupport
 org.tiqian.layout.FontInstanceMetricsRequestTest
 org.tiqian.layout.UnicodePunctuationBoundaryTest
+org.tiqian.layout.LineBreakRepairEngineTest
+org.tiqian.layout.KinsokuAndCohesionRepairEngineTest
