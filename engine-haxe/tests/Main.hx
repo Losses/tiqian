@@ -1511,6 +1511,22 @@ class Main {
         run("numberWithSuffixSymbolNeverSplitsAcrossLines", org.tiqian.layout.KinsokuAndCohesionRepairEngineTest.numberWithSuffixSymbolNeverSplitsAcrossLines);
         run("ordinaryNumericFormsDoNotBecomeBibliographicLocators", org.tiqian.layout.KinsokuAndCohesionRepairEngineTest.ordinaryNumericFormsDoNotBecomeBibliographicLocators);
         TestTraceRecorder.flushClass("KinsokuAndCohesionRepairEngineTest");
+        run("dashAndSolidusBoundariesInsideTechnicalSpansNeverStretch", org.tiqian.layout.LineBreakPlanningStageCoverageTest.dashAndSolidusBoundariesInsideTechnicalSpansNeverStretch);
+        run("emergencyBoundaryEligibilitySkipsInlineObjectBoundaries", org.tiqian.layout.LineBreakPlanningStageCoverageTest.emergencyBoundaryEligibilitySkipsInlineObjectBoundaries);
+        run("emergencyBoundaryEligibilitySkipsZeroWidthAndMandatoryControls", org.tiqian.layout.LineBreakPlanningStageCoverageTest.emergencyBoundaryEligibilitySkipsZeroWidthAndMandatoryControls);
+        run("explicitZeroLineHeightKeepsTheControlParagraphAtZeroHeight", org.tiqian.layout.LineBreakPlanningStageCoverageTest.explicitZeroLineHeightKeepsTheControlParagraphAtZeroHeight);
+        run("overlappingTechnicalSpansKeepTheFirstBoundaryReason", org.tiqian.layout.LineBreakPlanningStageCoverageTest.overlappingTechnicalSpansKeepTheFirstBoundaryReason);
+        run("pushOutFirstTakesFewerFillPushInsThanPushInFirst", org.tiqian.layout.LineBreakPlanningStageCoverageTest.pushOutFirstTakesFewerFillPushInsThanPushInFirst);
+        TestTraceRecorder.flushClass("LineBreakPlanningStageCoverageTest");
+        run("testAdjustableInlineBoundaryRightClustersNoStretchBoundaries", org.tiqian.layout.LineBreakPlanningStageCoverage2Test.testAdjustableInlineBoundaryRightClustersNoStretchBoundaries);
+        run("testAsciiPointMarkKinsokuLineStart", org.tiqian.layout.LineBreakPlanningStageCoverage2Test.testAsciiPointMarkKinsokuLineStart);
+        run("testClusterCrossesFontDecisionThrows", org.tiqian.layout.LineBreakPlanningStageCoverage2Test.testClusterCrossesFontDecisionThrows);
+        run("testEmergencyTrackingBoundaryWhitespaceAndEmpty", org.tiqian.layout.LineBreakPlanningStageCoverage2Test.testEmergencyTrackingBoundaryWhitespaceAndEmpty);
+        run("testEmergencyTrackingEligibilityDecisionsBranches", org.tiqian.layout.LineBreakPlanningStageCoverage2Test.testEmergencyTrackingEligibilityDecisionsBranches);
+        run("testFontDecisionWithNoMatchingClustersUsesTextSubstring", org.tiqian.layout.LineBreakPlanningStageCoverage2Test.testFontDecisionWithNoMatchingClustersUsesTextSubstring);
+        run("testInlineObjectKinsokuLineStart", org.tiqian.layout.LineBreakPlanningStageCoverage2Test.testInlineObjectKinsokuLineStart);
+        run("testProgressiveBreakOffsetsUnmappedClusterIndex", org.tiqian.layout.LineBreakPlanningStageCoverage2Test.testProgressiveBreakOffsetsUnmappedClusterIndex);
+        TestTraceRecorder.flushClass("LineBreakPlanningStageCoverage2Test");
 
     }
 }
