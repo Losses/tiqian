@@ -3,8 +3,8 @@
 # Run from the worktree root: nix develop -c bash -c 'haxe engine-haxe/smoke-kotlin.hxml'
 -lib reflaxe
 -lib boring
--cp .haxelib/boring/git/src/reflaxe/kotlin/std-shadow
--cp .haxelib/boring/git/src/reflaxe/kotlin
+-cp .haxelib/boring/git/packages/compiler/reflaxe/kotlin/std-shadow
+-cp .haxelib/boring/git/packages/compiler/reflaxe/kotlin
 -cp .haxelib/boring/git/samples
 --macro Intercept.run(['samples'])
 --macro kotlincompiler.Compiler.use()
