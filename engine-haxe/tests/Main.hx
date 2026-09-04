@@ -1533,6 +1533,25 @@ class Main {
         run("numberWithSuffixSymbolNeverSplitsAcrossLines", org.tiqian.layout.KinsokuAndCohesionRepairEngineTest.numberWithSuffixSymbolNeverSplitsAcrossLines);
         run("ordinaryNumericFormsDoNotBecomeBibliographicLocators", org.tiqian.layout.KinsokuAndCohesionRepairEngineTest.ordinaryNumericFormsDoNotBecomeBibliographicLocators);
         TestTraceRecorder.flushClass("KinsokuAndCohesionRepairEngineTest");
+        run("ambiguousGlyphClusterMappingFallsBackToPolicyWithRecordedReason", org.tiqian.layout.DisplayGlyphSubstitutionEngineTest.ambiguousGlyphClusterMappingFallsBackToPolicyWithRecordedReason);
+        run("coalesceSetIsDrivenByProfile", org.tiqian.layout.DisplayGlyphSubstitutionEngineTest.coalesceSetIsDrivenByProfile);
+        run("dashCoverageTargetUsesTheDashSpanFontSize", org.tiqian.layout.DisplayGlyphSubstitutionEngineTest.dashCoverageTargetUsesTheDashSpanFontSize);
+        run("dashInkCentersWithinTheTwoEmBodyWhenTheFontRuleUnderfills", org.tiqian.layout.DisplayGlyphSubstitutionEngineTest.dashInkCentersWithinTheTwoEmBodyWhenTheFontRuleUnderfills);
+        run("dashSubstitutionIsKeptWhenInkFillsTheTwoEmAdvance", org.tiqian.layout.DisplayGlyphSubstitutionEngineTest.dashSubstitutionIsKeptWhenInkFillsTheTwoEmAdvance);
+        run("dashSubstitutionRollsBackWhenFallbackReportsAFullOneEmGlyph", org.tiqian.layout.DisplayGlyphSubstitutionEngineTest.dashSubstitutionRollsBackWhenFallbackReportsAFullOneEmGlyph);
+        run("dashSubstitutionRollsBackWhenInkDoesNotFillTheTwoEmAdvance", org.tiqian.layout.DisplayGlyphSubstitutionEngineTest.dashSubstitutionRollsBackWhenInkDoesNotFillTheTwoEmAdvance);
+        run("ellipsisSubstitutionRollsBackWhenCoverageCannotBeVerified", org.tiqian.layout.DisplayGlyphSubstitutionEngineTest.ellipsisSubstitutionRollsBackWhenCoverageCannotBeVerified);
+        run("honorsProfilePunctuationGlyphPolicy", org.tiqian.layout.DisplayGlyphSubstitutionEngineTest.honorsProfilePunctuationGlyphPolicy);
+        run("multiCharacterPunctuationUsesCharacterLocalInkBounds", org.tiqian.layout.DisplayGlyphSubstitutionEngineTest.multiCharacterPunctuationUsesCharacterLocalInkBounds);
+        run("preservesOpenTypeFeaturesAsFinalGlyphRunBoundaries", org.tiqian.layout.DisplayGlyphSubstitutionEngineTest.preservesOpenTypeFeaturesAsFinalGlyphRunBoundaries);
+        run("preservesSourceTextWhenUsingClreqRecommendedDisplayGlyphs", org.tiqian.layout.DisplayGlyphSubstitutionEngineTest.preservesSourceTextWhenUsingClreqRecommendedDisplayGlyphs);
+        run("rolledBackDashStillKeepsItsBoundariesClosedUnderJustification", org.tiqian.layout.DisplayGlyphSubstitutionEngineTest.rolledBackDashStillKeepsItsBoundariesClosedUnderJustification);
+        run("shapingWithoutBoundsProducesNamedProfileFallback", org.tiqian.layout.DisplayGlyphSubstitutionEngineTest.shapingWithoutBoundsProducesNamedProfileFallback);
+        run("stubShaperReportsProfileFallbackWhenInkBoundsAreUnavailable", org.tiqian.layout.DisplayGlyphSubstitutionEngineTest.stubShaperReportsProfileFallbackWhenInkBoundsAreUnavailable);
+        run("substitutionIsKeptWhenFontCoversTheGlyph", org.tiqian.layout.DisplayGlyphSubstitutionEngineTest.substitutionIsKeptWhenFontCoversTheGlyph);
+        run("substitutionRollsBackToSourceTextWhenFontLacksTheGlyph", org.tiqian.layout.DisplayGlyphSubstitutionEngineTest.substitutionRollsBackToSourceTextWhenFontLacksTheGlyph);
+        run("usesTwoEmAdvanceForRecommendedDashCodepoint", org.tiqian.layout.DisplayGlyphSubstitutionEngineTest.usesTwoEmAdvanceForRecommendedDashCodepoint);
+        TestTraceRecorder.flushClass("DisplayGlyphSubstitutionEngineTest");
 
     }
 }
