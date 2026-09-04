@@ -1,6 +1,6 @@
 package org.tiqian.core;
 
-class LineDebugInfo {
+@:dataClass class LineDebugInfo {
     public final repair:Null<String>;
     public final notes:Array<String>;
 
