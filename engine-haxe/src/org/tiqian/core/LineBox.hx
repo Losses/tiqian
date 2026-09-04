@@ -2,6 +2,7 @@ package org.tiqian.core;
 
 import std.ReadOnlyArray;
 
+@:dataClass
 class LineBox {
     public final range:TextRange;
     public final clusterRange:IntRange;

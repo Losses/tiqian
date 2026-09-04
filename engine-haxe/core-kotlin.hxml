@@ -118,3 +118,5 @@ org.tiqian.layout.ZeroWidthBreakControlLayoutTest
 org.tiqian.layout.PunctuationBodyFloorInvariantTest
 org.tiqian.layout.BaselineAlignmentTest
 org.tiqian.layout.InterpunctShrinkOpportunityTest
+org.tiqian.layout.AsciiPointMarkKinsokuTest
+org.tiqian.layout.AutoSpaceSingleGapTest
