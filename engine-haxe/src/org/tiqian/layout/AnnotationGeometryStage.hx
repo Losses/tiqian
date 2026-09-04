@@ -5,6 +5,7 @@ import org.tiqian.core.InlineObjectDecisionInfo;
 import org.tiqian.core.DecorationDecisionInfo;
 import org.tiqian.core.DecorationSegmentInfo;
 import org.tiqian.core.RubyDecisionInfo;
+import org.tiqian.core.RubySpan;
 import org.tiqian.core.BopomofoDecisionInfo;
 import org.tiqian.core.DecorationSpan;
 import org.tiqian.core.DecorationKind;
@@ -55,6 +56,16 @@ import std.ReadOnlyArray;
         this.decorationSegments = decorationSegments;
         this.rubyDecisions = rubyDecisions;
         this.bopomofoDecisions = bopomofoDecisions;
+    }
+}
+
+class IndexedDecorationSegment {
+    public final index:Int;
+    public final seg:DecorationSegmentInfo;
+
+    public function new(index:Int, seg:DecorationSegmentInfo) {
+        this.index = index;
+        this.seg = seg;
     }
 }
 
@@ -159,11 +170,81 @@ class AnnotationGeometryStage {
         return decisions;
     }
 
+    /**
+     * `AdjacentInterlinearLineShortening` (CLREQ 行间标点通则): adjacent
+     * 专名号/书名号 marks shorten their ADJACENT sides only, so two
+     * annotated items read as two — the outer sides keep the text's outer
+     * frame. Each adjacent edge pulls back 1/16 em (the visible gap is
+     * 1/8 em, within the ≤1/8 em-per-side cap).
+     */
     public static function shortenAdjacentInterlinearLines(
         segments:Array<DecorationSegmentInfo>,
         fontSize:Float
     ):Array<DecorationSegmentInfo> {
-        return segments;
+        final properNounName = Std.string(DecorationKind.ProperNoun);
+        final bookTitleName = Std.string(DecorationKind.BookTitle);
+        final result = segments.copy();
+        final byLineBuilder = SortedMap.builder();
+        for (i in 0...result.length) {
+            final seg = result[i];
+            if (seg.kind == properNounName || seg.kind == bookTitleName) {
+                var list:Array<IndexedDecorationSegment> = byLineBuilder.get(seg.lineIndex);
+                if (list == null) {
+                    list = new Array<IndexedDecorationSegment>();
+                    byLineBuilder.put(seg.lineIndex, list);
+                }
+                list.push(new IndexedDecorationSegment(i, seg));
+            }
+        }
+        final byLine = byLineBuilder.build();
+        for (k in 0...byLine.size()) {
+            final entries = byLine.valueAt(k);
+            for (p in 1...entries.length) {
+                final key = entries[p];
+                var q = p - 1;
+                while (q >= 0 && entries[q].seg.left > key.seg.left) {
+                    entries[q + 1] = entries[q];
+                    q--;
+                }
+                entries[q + 1] = key;
+            }
+            var i = 0;
+            while (i < entries.length - 1) {
+                final a = entries[i];
+                final b = entries[i + 1];
+                if (b.seg.left - a.seg.right <= ADJACENT_LINE_EPSILON * fontSize) {
+                    final pullback = fontSize * ADJACENT_LINE_SHORTEN_EM;
+                    final curA = result[a.index];
+                    result[a.index] = new DecorationSegmentInfo(
+                        curA.sourceRange,
+                        curA.kind,
+                        curA.lineIndex,
+                        curA.left,
+                        curA.top,
+                        curA.right - pullback,
+                        curA.bottom,
+                        curA.openStart,
+                        curA.openEnd,
+                        curA.reason + ";AdjacentInterlinearLineShortening"
+                    );
+                    final curB = result[b.index];
+                    result[b.index] = new DecorationSegmentInfo(
+                        curB.sourceRange,
+                        curB.kind,
+                        curB.lineIndex,
+                        curB.left + pullback,
+                        curB.top,
+                        curB.right,
+                        curB.bottom,
+                        curB.openStart,
+                        curB.openEnd,
+                        curB.reason + ";AdjacentInterlinearLineShortening"
+                    );
+                }
+                i++;
+            }
+        }
+        return result;
     }
 
     /**
@@ -297,5 +378,93 @@ class AnnotationGeometryStage {
             }
         }
         return shortenAdjacentInterlinearLines(segments, fontSize);
+    }
+
+    /**
+     * 行间注 geometry (ruby, ADR 0032): centre each注文 over the x-span of its
+     * base clusters on the line they land. `advance` is untouched (注文 overhangs
+     * if wider — diagnostic [RubyDecisionInfo.overhang]); the renderer measures
+     * the real注文 width and centres on [RubyDecisionInfo.centerX]. Vertical
+     * placement seats each annotation's declared Latin descent above the highest
+     * annotated base face. It first occupies existing inter-line space; any
+     * font-metric deficit was already reflected in the selected line-height mode.
+     * A base split across lines yields one decision per line (each over its
+     * on-line fragment).
+     */
+    public static function computeRubyDecisions(
+        rubySpans:Array<RubySpan>,
+        lineRanges:Array<IntRange>,
+        lineBoxes:Array<LineBox>,
+        finalClusters:Array<Cluster>,
+        naturalClusters:Array<Cluster>,
+        metricDecisions:Array<ClusterMetricDecision>,
+        rubyFontGeometryBySpan:SortedMap<RubySpan, RubyFontGeometry>,
+        rubyStackGap:Float,
+        fallbackBaseAscent:Float,
+        rubyFontSize:Float,
+        rubyFontWeight:Int,
+        baseLocale:String
+    ):Array<RubyDecisionInfo> {
+        if (rubySpans.length == 0) return [];
+        final out = new Array<RubyDecisionInfo>();
+        for (ri in 0...rubySpans.length) {
+            final ruby = rubySpans[ri];
+            final rubyGeometry = rubyFontGeometryBySpan.get(ruby);
+            for (lineIndex in 0...lineRanges.length) {
+                final clusterRange = lineRanges[lineIndex];
+                var x = lineBoxes[lineIndex].indent;
+                var hasBaseLeft = false;
+                var baseLeft:Float = 0.0;
+                var contentWidth:Float = 0.0;
+                var baseFaceTop:Float = Math.POSITIVE_INFINITY;
+                for (idx in clusterRange.start...clusterRange.end + 1) {
+                    final cluster = finalClusters[idx];
+                    if (cluster.range.start >= ruby.baseRange.start && cluster.range.end <= ruby.baseRange.end) {
+                        if (!hasBaseLeft) {
+                            baseLeft = x;
+                            hasBaseLeft = true;
+                        }
+                        // Centre on the base CONTENT (natural width), NOT the 避让-widened
+                        // slot — the spread is trailing space the注文 must not centre over.
+                        contentWidth += naturalClusters[idx].advance;
+                        var metric:Null<ClusterMetricDecision> = null;
+                        for (mi in 0...metricDecisions.length) {
+                            final m = metricDecisions[mi];
+                            if (cluster.range.start >= m.range.start && cluster.range.end <= m.range.end) {
+                                metric = m;
+                                break;
+                            }
+                        }
+                        final ascent = (metric != null && metric.layoutMetrics != null) ? metric.layoutMetrics.ascent : fallbackBaseAscent;
+                        final candidateTop = lineBoxes[lineIndex].baseline + cluster.baselineShift - ascent;
+                        if (candidateTop < baseFaceTop) {
+                            baseFaceTop = candidateTop;
+                        }
+                    }
+                    x += cluster.advance;
+                }
+                if (hasBaseLeft) {
+                    final rubyWidth = rubyGeometry.width;
+                    final fontFamilies = [for (f in 0...ruby.fontFamilies.length) ruby.fontFamilies[f]];
+                    out.push(new RubyDecisionInfo(
+                        ruby.baseRange,
+                        ruby.text,
+                        lineIndex,
+                        baseLeft + contentWidth / 2.0,
+                        baseFaceTop - rubyStackGap - rubyGeometry.descent,
+                        rubyFontSize,
+                        Math.max(0.0, (rubyWidth - contentWidth) / 2.0),
+                        rubyGeometry.ascent,
+                        rubyGeometry.descent,
+                        rubyWidth,
+                        fontFamilies,
+                        rubyFontWeight,
+                        ruby.locale != null ? ruby.locale : baseLocale,
+                        rubyGeometry.glyphs
+                    ));
+                }
+            }
+        }
+        return out;
     }
 }
