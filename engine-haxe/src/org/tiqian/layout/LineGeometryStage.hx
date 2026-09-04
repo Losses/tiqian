@@ -118,8 +118,9 @@ class LineGeometryStageFns {
             if (x > 0)
                 hasExtra = true;
         final reason = hasExtra ? "ConditionalRubyLineHeight" : "ExistingInterlineSpaceFitsRuby";
+        var maxExtraValue:Float = 0; final expanded:Array<Int> = []; for (i in 0...extras.length) { if (extras[i] > maxExtraValue) maxExtraValue = extras[i]; if (extras[i] > 0) expanded.push(i); }
         final rd = pinyinSpans.length == 0 ? null : new RubyLineHeightDecisionInfo(Type.enumConstructor(input.paragraphStyle.rubyLineHeightMode),
-            baseLineMetrics.height, baseFaceHeight, rubyExtent, existingInterlineSpace, extras.length == 0 ? 0 : extras[0], extras, [], reason);
+            baseLineMetrics.height, baseFaceHeight, rubyExtent, existingInterlineSpace, maxExtraValue, extras, expanded, reason);
         return new LineVerticalGeometryStageResult(rd, null, baselines, tops, bottoms);
     }
 
