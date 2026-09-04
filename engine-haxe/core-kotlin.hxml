@@ -138,3 +138,5 @@ org.tiqian.layout.LineBreakRepairEngineTest
 org.tiqian.layout.KinsokuAndCohesionRepairEngineTest
 org.tiqian.layout.LineAdjustmentPushInTest
 org.tiqian.layout.LineAdjustmentStageJfTest
+org.tiqian.layout.LineAdjustmentStageCoverageTest
+org.tiqian.layout.LineAdjustmentStageCoverageTestSupport
