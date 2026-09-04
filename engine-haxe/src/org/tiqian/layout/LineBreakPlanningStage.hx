@@ -63,7 +63,7 @@ import org.tiqian.layout.LineGeometryStage.LineGeometryStageFns;
 import org.tiqian.layout.ParagraphShapingStage;
 import org.tiqian.layout.PunctuationGeometryStage;
 import org.tiqian.layout.PunctuationGeometryLedger;
-import org.tiqian.core.IllegalStateException;
+import org.tiqian.core.TiqianIllegalArgumentException;
 import std.SortedSet;
 import std.SortedMap;
 
@@ -392,7 +392,7 @@ class LineBreakPlanningStage {
                 && prep.naturalClusters[metricClusterIndex].range.start < decision.range.end) {
                 final cluster = prep.naturalClusters[metricClusterIndex];
                 if (cluster.range.start < decision.range.start || cluster.range.end > decision.range.end) {
-                    throw new IllegalStateException("Shaped cluster " + cluster.range.toString() + " crosses font decision " + decision.range.toString());
+                    throw new TiqianIllegalArgumentException(org.tiqian.core.TextRangeError.Message("Shaped cluster " + cluster.range.toString() + " crosses font decision " + decision.range.toString()));
                 }
                 textBuf.add(cluster.displayText);
                 metricClusterIndex += 1;

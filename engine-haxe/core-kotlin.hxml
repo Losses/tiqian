@@ -149,3 +149,7 @@ org.tiqian.layout.ParagraphShapingStageCoverageTest
 org.tiqian.layout.ParagraphShapingStageCoverageTestSupport
 org.tiqian.layout.AnnotationGeometryStageCoverageTest
 org.tiqian.layout.AnnotationGeometryStageCoverageTestSupport
+org.tiqian.layout.LineBreakPlanningStageCoverageTest
+org.tiqian.layout.LineBreakPlanningStageCoverageTestSupport
+org.tiqian.layout.LineBreakPlanningStageCoverage2Test
+org.tiqian.layout.LineBreakPlanningStageCoverage2TestSupport
