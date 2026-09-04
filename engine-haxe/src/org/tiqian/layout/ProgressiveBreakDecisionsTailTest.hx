@@ -27,12 +27,14 @@ class ProgressiveBreakDecisionsTailTest {
 
     public static function infiniteLineLimitWithClustersAdmitsTheCleanestTier():Void
         t("infiniteLineLimitWithClustersAdmitsTheCleanestTier", function() {
-            TracedAssertions.assertEqualsInt(2, ProgressiveBreakDecisions.decideProgressiveBreak(0, 4, o(), [for (i in 0...5) c(i)]));
+            final cs = [c(0), c(1), c(2), c(3), c(4)];
+            TracedAssertions.assertEqualsInt(2, ProgressiveBreakDecisions.decideProgressiveBreak(0, 4, o(), cs));
         });
 
     public static function infiniteStretchCeilingWithFiniteLineLimitAdmitsTheCleanestTier():Void
         t("infiniteStretchCeilingWithFiniteLineLimitAdmitsTheCleanestTier", function() {
-            TracedAssertions.assertEqualsInt(2, ProgressiveBreakDecisions.decideProgressiveBreak(0, 4, o(), [for (i in 0...5) c(i)], 200));
+            final cs = [c(0), c(1), c(2), c(3), c(4)];
+            TracedAssertions.assertEqualsInt(2, ProgressiveBreakDecisions.decideProgressiveBreak(0, 4, o(), cs, 200));
         });
 
     public static function flush():Void
