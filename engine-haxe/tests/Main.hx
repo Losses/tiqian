@@ -106,6 +106,7 @@ class Main {
         SortedTablesOracle.install();
         FunctionalOracle.install();
         js.Syntax.code("globalThis.std = globalThis.std || {}; globalThis.std.UStringPlatform = {0};", UStringPlatform);
+        js.Syntax.code("std_ReadOnlyArray.iterator = function(a) { return new haxe_iterators_ArrayIterator(a); };");
         UStringRTOracle.install();
         run("hyphenatesCommonWordsAtSyllablePoints", EnglishHyphenationTest.hyphenatesCommonWordsAtSyllablePoints);
         run("respectsMarginsAndShortWords", EnglishHyphenationTest.respectsMarginsAndShortWords);
