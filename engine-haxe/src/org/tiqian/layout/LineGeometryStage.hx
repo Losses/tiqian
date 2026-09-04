@@ -110,7 +110,7 @@ class LineGeometryStageFns {
         final bottoms:Array<Float> = [];
         for (i in 0...ext.length) {
             baselines.push((i == 0 ? baseLineMetrics.baseline : baselines[i - 1] + baseLineMetrics.height) + extras[i]);
-            tops.push(0);
+            tops.push(i == 0 ? 0 : bottoms[i - 1]);
             bottoms.push(baselines[i] + baseLineMetrics.height - baseLineMetrics.baseline);
         }
         var hasExtra = false;
