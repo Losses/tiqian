@@ -1535,6 +1535,21 @@ class Main {
         TestTraceRecorder.flushClass("KinsokuAndCohesionRepairEngineTest");
         run("layoutDecisionDumpsMatchEmbeddedGolden", org.tiqian.layout.LayoutDumpGoldenParityTest.layoutDecisionDumpsMatchEmbeddedGolden);
         TestTraceRecorder.flushClass("LayoutDumpGoldenParityTest");
+        run("attachedRunExposesTheProseClustersOnItsTwoSides", org.tiqian.layout.AttachedInlineBoundaryRelocationTest.attachedRunExposesTheProseClustersOnItsTwoSides);
+        run("attachedRunAtParagraphEndHasNoVirtualRightNeighbor", org.tiqian.layout.AttachedInlineBoundaryRelocationTest.attachedRunAtParagraphEndHasNoVirtualRightNeighbor);
+        run("punctuationAfterFootnoteIsJudgedAgainstThePrecedingPunctuation", org.tiqian.layout.AttachedInlineBoundaryRelocationTest.punctuationAfterFootnoteIsJudgedAgainstThePrecedingPunctuation);
+        run("closingQuoteBeforeFootnoteAndBodyKeepsItsNaturalTrailingGlue", org.tiqian.layout.AttachedInlineBoundaryRelocationTest.closingQuoteBeforeFootnoteAndBodyKeepsItsNaturalTrailingGlue);
+        run("closingQuoteBeforeParagraphEndFootnoteHasNoTrailingGlue", org.tiqian.layout.AttachedInlineBoundaryRelocationTest.closingQuoteBeforeParagraphEndFootnoteHasNoTrailingGlue);
+        run("attachedReferenceNeverStartsAWrappedLine", org.tiqian.layout.AttachedInlineBoundaryRelocationTest.attachedReferenceNeverStartsAWrappedLine);
+        TestTraceRecorder.flushClass("AttachedInlineVirtualAdjacencyTest");
+        run("rubyDoesNotChangeLineBoxAndCentresOverBase", org.tiqian.layout.RubyLayoutTest.rubyDoesNotChangeLineBoxAndCentresOverBase);
+        run("rubyOnOneLineKeepsTheWholeBaselineGridStable", org.tiqian.layout.RubyLayoutTest.rubyOnOneLineKeepsTheWholeBaselineGridStable);
+        run("tightLineHeightRaisesOnlyTheAnnotatedLineByDefault", org.tiqian.layout.RubyLayoutTest.tightLineHeightRaisesOnlyTheAnnotatedLineByDefault);
+        run("uniformModeAddsTheSameDeficitToEveryLine", org.tiqian.layout.RubyLayoutTest.uniformModeAddsTheSameDeficitToEveryLine);
+        run("rubyVerticalGeometryUsesLatinMetricsNotReadingInk", org.tiqian.layout.RubyLayoutTest.rubyVerticalGeometryUsesLatinMetricsNotReadingInk);
+        run("noRubyIsUnchanged", org.tiqian.layout.RubyLayoutTest.noRubyIsUnchanged);
+        run("wideAdjacentReadingsSpreadButNarrowDoNot", org.tiqian.layout.RubyLayoutTest.wideAdjacentReadingsSpreadButNarrowDoNot);
+        TestTraceRecorder.flushClass("RubyLayoutTest");
 
     }
 }
