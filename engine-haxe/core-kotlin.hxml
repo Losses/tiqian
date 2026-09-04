@@ -5,7 +5,9 @@
 -cp .haxelib/boring/git/src/reflaxe/kotlin
 -cp .haxelib/boring/git/samples
 -cp engine-haxe/src
+-cp engine-haxe/macros
 --macro Intercept.run(['engine-haxe/src'])
+--macro GoldenDataMacros.init()
 --macro haxe.macro.Compiler.addGlobalMetadata('org.tiqian', '@:build(std.RecordMember.build())')
 --macro kotlincompiler.Compiler.use()
 -D kotlin-output=engine-haxe/out/kotlin-gen

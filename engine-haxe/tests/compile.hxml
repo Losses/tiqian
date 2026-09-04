@@ -2,10 +2,12 @@
 -lib boring
 -cp .haxelib/boring/git/samples
 -cp engine-haxe/src
+-cp engine-haxe/macros
 -cp engine-haxe/tests
 -main Main
 -js engine-haxe/out/haxe-tests.js
 -D analyzer-optimize
 -D boring_oracle
 --macro Intercept.run(['engine-haxe/src'])
+--macro GoldenDataMacros.init()
 --macro haxe.macro.Compiler.addGlobalMetadata('org.tiqian', '@:build(std.RecordMember.build())')
