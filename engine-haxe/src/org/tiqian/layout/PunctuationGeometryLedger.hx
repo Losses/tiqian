@@ -387,14 +387,29 @@ import std.SortedMap;
         return self.start >= other.start && self.end <= other.end;
 
     public static function clusterIndexRangeFor(self:Array<Cluster>, r:TextRange):Null<IntRange> {
-        var f = -1, l = -1;
-        for (i in 0...self.length)
-            if (self[i].range.start >= r.start && self[i].range.end <= r.end) {
-                if (f < 0)
-                    f = i;
-                l = i;
-            }
-        return f < 0 ? null : new IntRange(f, l);
+        if (self.length == 0)
+            return null;
+        var low = 0;
+        var high = self.length;
+        while (low < high) {
+            final mid = (low + high) >>> 1;
+            if (self[mid].range.start < r.start)
+                low = mid + 1;
+            else
+                high = mid;
+        }
+        final first = low;
+        low = first;
+        high = self.length;
+        while (low < high) {
+            final mid = (low + high) >>> 1;
+            if (self[mid].range.end <= r.end)
+                low = mid + 1;
+            else
+                high = mid;
+        }
+        final lastExclusive = low;
+        return first < lastExclusive ? new IntRange(first, lastExclusive - 1) : null;
     }
 }
 
