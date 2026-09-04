@@ -1550,6 +1550,26 @@ class Main {
         run("noRubyIsUnchanged", org.tiqian.layout.RubyLayoutTest.noRubyIsUnchanged);
         run("wideAdjacentReadingsSpreadButNarrowDoNot", org.tiqian.layout.RubyLayoutTest.wideAdjacentReadingsSpreadButNarrowDoNot);
         TestTraceRecorder.flushClass("RubyLayoutTest");
+        run("bopomofoAndDecorationLeadingBlankExhaustiveBranches",
+            org.tiqian.layout.AnnotationGeometryStageCoverageTest.bopomofoAndDecorationLeadingBlankExhaustiveBranches);
+        run("bopomofoDecisionsAllTonesAndSymbolCounts", org.tiqian.layout.AnnotationGeometryStageCoverageTest.bopomofoDecisionsAllTonesAndSymbolCounts);
+        run("bopomofoDecisionsMultiGlyphMinMaxAndEmptyPlacements",
+            org.tiqian.layout.AnnotationGeometryStageCoverageTest.bopomofoDecisionsMultiGlyphMinMaxAndEmptyPlacements);
+        run("bopomofoOverLatinClustersCoversCrossMetricLookup",
+            org.tiqian.layout.AnnotationGeometryStageCoverageTest.bopomofoOverLatinClustersCoversCrossMetricLookup);
+        run("decorationDecisionsEmphasisOnHanPunctuationAndWestern",
+            org.tiqian.layout.AnnotationGeometryStageCoverageTest.decorationDecisionsEmphasisOnHanPunctuationAndWestern);
+        run("decorationSegmentsLeadingAndTrailingBlanks", org.tiqian.layout.AnnotationGeometryStageCoverageTest.decorationSegmentsLeadingAndTrailingBlanks);
+        run("decorationSegmentsMourningProperNounBookTitleAndShortening",
+            org.tiqian.layout.AnnotationGeometryStageCoverageTest.decorationSegmentsMourningProperNounBookTitleAndShortening);
+        run("directResolveAnnotationGeometryEmptyLineRangesAndGapAtLineEdges",
+            org.tiqian.layout.AnnotationGeometryStageCoverageTest.directResolveAnnotationGeometryEmptyLineRangesAndGapAtLineEdges);
+        run("directResolveAnnotationGeometryFallbackBranches",
+            org.tiqian.layout.AnnotationGeometryStageCoverageTest.directResolveAnnotationGeometryFallbackBranches);
+        run("inlineObjectDecisionsWithPreferredStretchAndFixed",
+            org.tiqian.layout.AnnotationGeometryStageCoverageTest.inlineObjectDecisionsWithPreferredStretchAndFixed);
+        run("rubyDecisionsPinyinSingleAndSplitLines", org.tiqian.layout.AnnotationGeometryStageCoverageTest.rubyDecisionsPinyinSingleAndSplitLines);
+        TestTraceRecorder.flushClass("AnnotationGeometryStageCoverageTest");
 
     }
 }
