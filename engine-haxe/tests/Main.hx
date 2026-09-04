@@ -3,6 +3,9 @@ import org.tiqian.layout.PunctuationGeometryLedgerCoverageTest;
 import org.tiqian.layout.PunctuationSpacingRuleTest;
 import org.tiqian.layout.PunctuationGeometryBranchArmsCoverageTest;
 import org.tiqian.layout.UnicodeEmoji17RgiRoleAuditTest;
+import org.tiqian.layout.OpeningBracketLineStartTest;
+import org.tiqian.layout.VerbatimRangeAutoSpaceTest;
+import org.tiqian.layout.ZeroWidthBreakControlLayoutTest;
 import org.tiqian.core.TiqianIllegalArgumentException;
 import org.tiqian.core.CoreUnitsGeometryTest;
 import org.tiqian.core.CoreLayoutQueriesGapsTest;
@@ -1363,6 +1366,14 @@ class Main {
         TestTraceRecorder.flushClass("PunctuationGeometryBranchArmsCoverageTest");
         run("fullyQualifiedEmojiSequencesResolveToOneEmojiRange", UnicodeEmoji17RgiRoleAuditTest.fullyQualifiedEmojiSequencesResolveToOneEmojiRange);
         TestTraceRecorder.flushClass("UnicodeEmoji17RgiRoleAuditTest");
+        run("testOpeningBracketAtLineStartCompression", OpeningBracketLineStartTest.testOpeningBracketAtLineStartCompression);
+        TestTraceRecorder.flushClass("OpeningBracketLineStartTest");
+        run("internalBoundariesAreSuppressedAndOuterEdgesKeepTheGap", VerbatimRangeAutoSpaceTest.internalBoundariesAreSuppressedAndOuterEdgesKeepTheGap);
+        run("typedSpaceInsideAVerbatimRangeIsNotNormalised", VerbatimRangeAutoSpaceTest.typedSpaceInsideAVerbatimRangeIsNotNormalised);
+        TestTraceRecorder.flushClass("VerbatimRangeAutoSpaceTest");
+        run("leadingZeroWidthSpaceCannotCreateAnEmptyAutoWrappedLine", ZeroWidthBreakControlLayoutTest.leadingZeroWidthSpaceCannotCreateAnEmptyAutoWrappedLine);
+        run("zeroWidthSpaceIsUnshapedAndProvidesASoftBreakAfterIt", ZeroWidthBreakControlLayoutTest.zeroWidthSpaceIsUnshapedAndProvidesASoftBreakAfterIt);
+        TestTraceRecorder.flushClass("ZeroWidthBreakControlLayoutTest");
         Console.log("all CoreUnitsGeometryTest checks passed");
         if (failures > 0) {
             Process.exit(1);
