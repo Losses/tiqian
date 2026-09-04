@@ -1444,6 +1444,19 @@ class Main {
         run("everyNarrowInlineBoxGetsOuterAutospaceWithoutRoleSpecificCode", org.tiqian.layout.InlineBoxLayoutTest.everyNarrowInlineBoxGetsOuterAutospaceWithoutRoleSpecificCode);
         run("inlineEdgesReserveAdvanceAndMoveTheGlyphOrigin", org.tiqian.layout.InlineBoxLayoutTest.inlineEdgesReserveAdvanceAndMoveTheGlyphOrigin);
         TestTraceRecorder.flushClass("InlineBoxLayoutTest");
+        run("bracketBoundariesRemainProtectedAcrossWesternSpaces", org.tiqian.layout.UnicodePunctuationBoundaryTest.bracketBoundariesRemainProtectedAcrossWesternSpaces);
+        run("pairedLatinCurlyQuotesKeepTheirContentAcrossBothLineEdges", org.tiqian.layout.UnicodePunctuationBoundaryTest.pairedLatinCurlyQuotesKeepTheirContentAcrossBothLineEdges);
+        run("unmatchedElisionApostropheBindsForwardInsteadOfBeingGuessedAsACloser", org.tiqian.layout.UnicodePunctuationBoundaryTest.unmatchedElisionApostropheBindsForwardInsteadOfBeingGuessedAsACloser);
+        run("unmatchedWesternCurlyDoubleQuotesRetainTheirDirection", org.tiqian.layout.UnicodePunctuationBoundaryTest.unmatchedWesternCurlyDoubleQuotesRetainTheirDirection);
+        run("westernBaselineSurvivesClreqKinsokuNone", org.tiqian.layout.UnicodePunctuationBoundaryTest.westernBaselineSurvivesClreqKinsokuNone);
+        run("westernBracketsTouchingCjkExposeAllFourStretchBoundaries", org.tiqian.layout.UnicodePunctuationBoundaryTest.westernBracketsTouchingCjkExposeAllFourStretchBoundaries);
+        run("westernClosingPunctuationCannotBeginAnAutomaticLine", org.tiqian.layout.UnicodePunctuationBoundaryTest.westernClosingPunctuationCannotBeginAnAutomaticLine);
+        run("westernOpeningBracketsCannotEndAnAutomaticLine", org.tiqian.layout.UnicodePunctuationBoundaryTest.westernOpeningBracketsCannotEndAnAutomaticLine);
+        TestTraceRecorder.flushClass("UnicodePunctuationBoundaryTest");
+        run("faceSelectionUsesTheDisplayTextThatWasActuallyShaped", org.tiqian.layout.FontInstanceMetricsRequestTest.faceSelectionUsesTheDisplayTextThatWasActuallyShaped);
+        run("perSpanWeightAndItalicReachTheMetricsResolver", org.tiqian.layout.FontInstanceMetricsRequestTest.perSpanWeightAndItalicReachTheMetricsResolver);
+        run("rubyMetricsUseTheSameItalicInstanceAsRubyShaping", org.tiqian.layout.FontInstanceMetricsRequestTest.rubyMetricsUseTheSameItalicInstanceAsRubyShaping);
+        TestTraceRecorder.flushClass("FontInstanceMetricsRequestTest");
         Console.log("all CoreUnitsGeometryTest checks passed");
         if (failures > 0) {
             Process.exit(1);
