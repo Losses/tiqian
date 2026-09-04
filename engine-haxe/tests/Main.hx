@@ -1325,15 +1325,16 @@ class Main {
             org.tiqian.layout.ParagraphDpTierPromotionPoolTest.committedCompressedLineWithForeignSpanOpportunitiesKeepsPlainPushInReason);
         run("committedCompressedEndWithoutOpportunityKeepsPlainPushInReason",
             org.tiqian.layout.ParagraphDpTierPromotionPoolTest.committedCompressedEndWithoutOpportunityKeepsPlainPushInReason);
+        run("carryPreviousRefusesToSplitUnbreakableSpan", org.tiqian.layout.PushInLineWideCapacityTest.carryPreviousRefusesToSplitUnbreakableSpan);
         run("pushInAggregatesShrinkFromMultiplePrecedingClusters",
             org.tiqian.layout.PushInLineWideCapacityTest.pushInAggregatesShrinkFromMultiplePrecedingClusters);
+        run("pushInMergesOffenderThatFitsAfterChainedRepairs", org.tiqian.layout.PushInLineWideCapacityTest.pushInMergesOffenderThatFitsAfterChainedRepairs);
+        run("pushInOffenderOnlyCapacityStillWorksBackCompat", org.tiqian.layout.PushInLineWideCapacityTest.pushInOffenderOnlyCapacityStillWorksBackCompat);
         run("pushInRejectsWhenLineWideCapacityStillInsufficient",
             org.tiqian.layout.PushInLineWideCapacityTest.pushInRejectsWhenLineWideCapacityStillInsufficient);
-        run("pushInOffenderOnlyCapacityStillWorksBackCompat", org.tiqian.layout.PushInLineWideCapacityTest.pushInOffenderOnlyCapacityStillWorksBackCompat);
-        run("pushInMergesOffenderThatFitsAfterChainedRepairs", org.tiqian.layout.PushInLineWideCapacityTest.pushInMergesOffenderThatFitsAfterChainedRepairs);
-        run("carryPreviousRefusesToSplitUnbreakableSpan", org.tiqian.layout.PushInLineWideCapacityTest.carryPreviousRefusesToSplitUnbreakableSpan);
         TestTraceRecorder.flushClass("ProgressiveTechnicalBreakTest");
         TestTraceRecorder.flushClass("ParagraphDpTierPromotionPoolTest");
+        TestTraceRecorder.flushClass("PushInLineWideCapacityTest");
         run("dashShapingDecisionWithGlyphIds", org.tiqian.layout.PreparedParagraphJfTest.dashShapingDecisionWithGlyphIds);
         run("ecmaJsonNumberEdgeCases", org.tiqian.layout.PreparedParagraphJfTest.ecmaJsonNumberEdgeCases);
         run("inlineBoxEdgesAndEmphasisDotsFilter", org.tiqian.layout.PreparedParagraphJfTest.inlineBoxEdgesAndEmphasisDotsFilter);
