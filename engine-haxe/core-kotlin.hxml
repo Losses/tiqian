@@ -130,3 +130,5 @@ org.tiqian.layout.BopomofoLayoutTest
 org.tiqian.layout.BopomofoLayoutTestSupport
 org.tiqian.layout.InlineBoxLayoutTest
 org.tiqian.layout.InlineBoxLayoutTestSupport
+org.tiqian.layout.FontInstanceMetricsRequestTest
+org.tiqian.layout.UnicodePunctuationBoundaryTest
