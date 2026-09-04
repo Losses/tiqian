@@ -122,3 +122,13 @@ org.tiqian.layout.BaselineAlignmentTest
 org.tiqian.layout.InterpunctShrinkOpportunityTest
 org.tiqian.layout.AsciiPointMarkKinsokuTest
 org.tiqian.layout.AutoSpaceSingleGapTest
+org.tiqian.layout.R3GeometryTailCoverageTest
+org.tiqian.layout.HyphenationLayoutTest
+org.tiqian.layout.BilingualEmphasisTest
+org.tiqian.layout.BilingualEmphasisTestSupport
+org.tiqian.layout.BopomofoLayoutTest
+org.tiqian.layout.BopomofoLayoutTestSupport
+org.tiqian.layout.InlineBoxLayoutTest
+org.tiqian.layout.InlineBoxLayoutTestSupport
+org.tiqian.layout.FontInstanceMetricsRequestTest
+org.tiqian.layout.UnicodePunctuationBoundaryTest

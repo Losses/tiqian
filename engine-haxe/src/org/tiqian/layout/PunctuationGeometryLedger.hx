@@ -103,7 +103,7 @@ import std.SortedMap;
             final v = resolvedAdvance(i, c);
             final sh = geometries.has(i) ? geometries.get(i).glyphInlineShift : 0;
             result.push(v == c.advance
-                && sh == 0 ? c : new Cluster(c.range, c.text, c.fontKey, v, c.displayText, null, null, c.glyphInlineShift + sh));
+                && sh == 0 ? c : new Cluster(c.range, c.text, c.fontKey, v, c.displayText, c.baselineShift, c.leadingLayoutAdvance, c.glyphInlineShift + sh));
         }
         return result;
     }
