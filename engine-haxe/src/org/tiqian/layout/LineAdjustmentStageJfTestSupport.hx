@@ -35,7 +35,7 @@ class DashBoundsShaper implements ITextShaper {
         final r=delegate.shape(input); var runs:Array<GlyphRun>=[];
         for (ri in 0...r.glyphRuns.length) { final run=r.glyphRuns[ri]; var gs:Array<Glyph>=[];
             for (gi in 0...run.glyphs.length) { final g=run.glyphs[gi];
-                gs.push(input.displayText.indexOf("⸺")>=0 ? new Glyph(g.id,g.clusterRange,g.advance,g.x,g.y,g.renderFontKey,new Rect(0,0,wide?31.5:29,16),g.haltAdvance,g.haltPlacementX) : g);
+                gs.push(input.displayText.indexOf("⸺")>=0 ? new Glyph(g.id,g.clusterRange,g.advance,g.x,g.y,g.renderFontKey,new Rect(wide?0.0:1.0,0,wide?31.5:29,16),g.haltAdvance,g.haltPlacementX) : g);
             }
             runs.push(new GlyphRun(run.range,run.fontKey,gs,run.advance));
         }
