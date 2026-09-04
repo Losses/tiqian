@@ -198,3 +198,8 @@ org.tiqian.shaping.TextShaperCoverageTest
 org.tiqian.shaping.TextShaperCoverageTestSupport
 org.tiqian.layout.PushInLineWideCapacityTest
 org.tiqian.layout.PushInLineWideCapacityTestSupport
+
+org.tiqian.layout.PunctuationGeometryEngineTest
+org.tiqian.layout.PunctuationGeometryEngineTestSupport
+org.tiqian.layout.SpacingAndLineGeometryEngineTest
+org.tiqian.layout.SpacingAndLineGeometryEngineTestSupport
