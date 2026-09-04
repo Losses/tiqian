@@ -1417,7 +1417,15 @@ class Main {
         run("twoTypedSpacesAtBoundaryStillCollapseToOneGap", org.tiqian.layout.AutoSpaceSingleGapTest.twoTypedSpacesAtBoundaryStillCollapseToOneGap);
         run("unicodeEastAsianSpacingCoversNarrowScriptsWithoutScriptWhitelists", org.tiqian.layout.AutoSpaceSingleGapTest.unicodeEastAsianSpacingCoversNarrowScriptsWithoutScriptWhitelists);
         run("zeroSpacesGetInsertedGaps", org.tiqian.layout.AutoSpaceSingleGapTest.zeroSpacesGetInsertedGaps);
-        TestTraceRecorder.flushClass("AutoSpaceSingleGapTest");
+        run("bracketBoundariesRemainProtectedAcrossWesternSpaces", org.tiqian.layout.UnicodePunctuationBoundaryTest.bracketBoundariesRemainProtectedAcrossWesternSpaces);
+        run("pairedLatinCurlyQuotesKeepTheirContentAcrossBothLineEdges", org.tiqian.layout.UnicodePunctuationBoundaryTest.pairedLatinCurlyQuotesKeepTheirContentAcrossBothLineEdges);
+        run("unmatchedElisionApostropheBindsForwardInsteadOfBeingGuessedAsACloser", org.tiqian.layout.UnicodePunctuationBoundaryTest.unmatchedElisionApostropheBindsForwardInsteadOfBeingGuessedAsACloser);
+        run("unmatchedWesternCurlyDoubleQuotesRetainTheirDirection", org.tiqian.layout.UnicodePunctuationBoundaryTest.unmatchedWesternCurlyDoubleQuotesRetainTheirDirection);
+        run("westernBaselineSurvivesClreqKinsokuNone", org.tiqian.layout.UnicodePunctuationBoundaryTest.westernBaselineSurvivesClreqKinsokuNone);
+        run("westernBracketsTouchingCjkExposeAllFourStretchBoundaries", org.tiqian.layout.UnicodePunctuationBoundaryTest.westernBracketsTouchingCjkExposeAllFourStretchBoundaries);
+        run("westernClosingPunctuationCannotBeginAnAutomaticLine", org.tiqian.layout.UnicodePunctuationBoundaryTest.westernClosingPunctuationCannotBeginAnAutomaticLine);
+        run("westernOpeningBracketsCannotEndAnAutomaticLine", org.tiqian.layout.UnicodePunctuationBoundaryTest.westernOpeningBracketsCannotEndAnAutomaticLine);
+        TestTraceRecorder.flushClass("UnicodePunctuationBoundaryTest");
         Console.log("all CoreUnitsGeometryTest checks passed");
         if (failures > 0) {
             Process.exit(1);
