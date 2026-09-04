@@ -293,7 +293,8 @@ class LineAdjustmentStage {
 
         final decorationSegments = AnnotationGeometryStage.computeDecorationSegments(input.decorations, visibleLineRanges, lines, finalClusters,
             justifyDeltaByCluster, geometryByRange, leadingGapRanges, trailingGapRanges, autoSpaceGapPx, fontSize);
-        final rubyDecisions = new Array<RubyDecisionInfo>();
+        final rubyDecisions = AnnotationGeometryStage.computeRubyDecisions(pinyinSpans, visibleLineRanges, lines, finalClusters, naturalClusters,
+            metricDecisions, rubyFontGeometryBySpan, rubyStackGap, baseAscent, rubyFontSize, rubyFontWeight, input.textStyle.locale);
         final bopomofoDecisions = new Array<BopomofoDecisionInfo>();
 
         return new AnnotationGeometryStageResult(inlineObjectDecisions, decorationDecisions, decorationSegments, rubyDecisions, bopomofoDecisions);
