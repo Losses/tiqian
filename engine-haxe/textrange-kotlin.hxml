@@ -5,8 +5,8 @@
 #   nix develop -c bash -c 'haxe engine-haxe/textrange-kotlin.hxml'
 -lib reflaxe
 -lib boring
--cp .haxelib/boring/git/src/reflaxe/kotlin/std-shadow
--cp .haxelib/boring/git/src/reflaxe/kotlin
+-cp .haxelib/boring/git/packages/compiler/reflaxe/kotlin/std-shadow
+-cp .haxelib/boring/git/packages/compiler/reflaxe/kotlin
 -cp .haxelib/boring/git/samples
 -cp engine-haxe/src
 --macro Intercept.run(['engine-haxe/src'])
