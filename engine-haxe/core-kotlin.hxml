@@ -138,6 +138,8 @@ org.tiqian.layout.LineBreakRepairEngineTest
 org.tiqian.layout.KinsokuAndCohesionRepairEngineTest
 org.tiqian.layout.LineAdjustmentPushInTest
 org.tiqian.layout.LineAdjustmentStageJfTest
+org.tiqian.layout.EmergencyGraphemeTrackingTest
+org.tiqian.layout.WidthIndependentAnnotationCacheTest
 org.tiqian.layout.DisplayGlyphSubstitutionEngineTest
 org.tiqian.layout.DisplayGlyphSubstitutionEngineTestSupport
 org.tiqian.test.LayoutFixtures

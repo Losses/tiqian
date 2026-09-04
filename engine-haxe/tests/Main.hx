@@ -1575,6 +1575,25 @@ class Main {
         run("numberWithSuffixSymbolNeverSplitsAcrossLines", org.tiqian.layout.KinsokuAndCohesionRepairEngineTest.numberWithSuffixSymbolNeverSplitsAcrossLines);
         run("ordinaryNumericFormsDoNotBecomeBibliographicLocators", org.tiqian.layout.KinsokuAndCohesionRepairEngineTest.ordinaryNumericFormsDoNotBecomeBibliographicLocators);
         TestTraceRecorder.flushClass("KinsokuAndCohesionRepairEngineTest");
+org.tiqian.layout.EmergencyGraphemeTrackingTest
+org.tiqian.layout.WidthIndependentAnnotationCacheTest
+        run("hashPieceInsideTechnicalUrlSkipsSyllableClassification", org.tiqian.layout.EmergencyGraphemeTrackingTest.hashPieceInsideTechnicalUrlSkipsSyllableClassification);
+        run("longAllCapsWesternWordDoesNotBecomeTrackingEligible", org.tiqian.layout.EmergencyGraphemeTrackingTest.longAllCapsWesternWordDoesNotBecomeTrackingEligible);
+        run("ordinaryWesternProseIsNeverInferredAsTrackingEligible", org.tiqian.layout.EmergencyGraphemeTrackingTest.ordinaryWesternProseIsNeverInferredAsTrackingEligible);
+        run("plainOpaqueHardBreakKeepsCombiningGraphemeIntact", org.tiqian.layout.EmergencyGraphemeTrackingTest.plainOpaqueHardBreakKeepsCombiningGraphemeIntact);
+        run("rejectedLetterDigitStructuralOffsetsRemainAvailableAsEmergencyCuts", org.tiqian.layout.EmergencyGraphemeTrackingTest.rejectedLetterDigitStructuralOffsetsRemainAvailableAsEmergencyCuts);
+        run("repeatedPlainTokenGetsNarrowNonLexicalAuthorization", org.tiqian.layout.EmergencyGraphemeTrackingTest.repeatedPlainTokenGetsNarrowNonLexicalAuthorization);
+        run("standaloneTechnicalHashUsesTrackingToFillEveryAutoWrappedLine", org.tiqian.layout.EmergencyGraphemeTrackingTest.standaloneTechnicalHashUsesTrackingToFillEveryAutoWrappedLine);
+        run("technicalIdentifierRelabelsLooseLetterDigitBoundaryAsEmergency", org.tiqian.layout.EmergencyGraphemeTrackingTest.technicalIdentifierRelabelsLooseLetterDigitBoundaryAsEmergency);
+        run("technicalTrackingDoesNotOpenEdgesTouchingInlineObjectsOrZeroWidthControls", org.tiqian.layout.EmergencyGraphemeTrackingTest.technicalTrackingDoesNotOpenEdgesTouchingInlineObjectsOrZeroWidthControls);
+        run("unannotatedUrlDoesNotAuthorizeTrackingAcrossOrdinaryPathComponents", org.tiqian.layout.EmergencyGraphemeTrackingTest.unannotatedUrlDoesNotAuthorizeTrackingAcrossOrdinaryPathComponents);
+        TestTraceRecorder.flushClass("EmergencyGraphemeTrackingTest");
+        run("cacheKeyDistinguishesTypographyDecorationsAndSpans", org.tiqian.layout.WidthIndependentAnnotationCacheTest.cacheKeyDistinguishesTypographyDecorationsAndSpans);
+        run("cachedAndUncachedEnginesProduceIdenticalLayoutResultsAcrossWidths", org.tiqian.layout.WidthIndependentAnnotationCacheTest.cachedAndUncachedEnginesProduceIdenticalLayoutResultsAcrossWidths);
+        run("lruCacheEvictsOldestEntriesWhenCapacityExceeded", org.tiqian.layout.WidthIndependentAnnotationCacheTest.lruCacheEvictsOldestEntriesWhenCapacityExceeded);
+        run("reflowFuzzingRandomSequenceProducesExactOutput", org.tiqian.layout.WidthIndependentAnnotationCacheTest.reflowFuzzingRandomSequenceProducesExactOutput);
+        run("relayoutWithDifferentWidthHitsCacheAndSkipsShaper", org.tiqian.layout.WidthIndependentAnnotationCacheTest.relayoutWithDifferentWidthHitsCacheAndSkipsShaper);
+        TestTraceRecorder.flushClass("WidthIndependentAnnotationCacheTest");
         run("layoutDecisionDumpsMatchEmbeddedGolden", org.tiqian.layout.LayoutDumpGoldenParityTest.layoutDecisionDumpsMatchEmbeddedGolden);
         TestTraceRecorder.flushClass("LayoutDumpGoldenParityTest");
         run("attachedRunExposesTheProseClustersOnItsTwoSides", org.tiqian.layout.AttachedInlineBoundaryRelocationTest.attachedRunExposesTheProseClustersOnItsTwoSides);
