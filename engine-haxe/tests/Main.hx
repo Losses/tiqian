@@ -1496,6 +1496,27 @@ class Main {
         run("inlineObjectSeparatorSpaceTrimEdge", org.tiqian.layout.LineAdjustmentStageJfTest.inlineObjectSeparatorSpaceTrimEdge);
         run("inlineObjectWithZeroDiscardableAdvance", org.tiqian.layout.LineAdjustmentStageJfTest.inlineObjectWithZeroDiscardableAdvance);
         TestTraceRecorder.flushClass("LineAdjustmentStageJfTest");
+        run("attachedFootnoteTrailingGlueTrimsWhenTheLineEndsAtTheRun", org.tiqian.layout.LineAdjustmentStageCoverageTest.attachedFootnoteTrailingGlueTrimsWhenTheLineEndsAtTheRun);
+        run("attachedObjectMarkHangsInsteadOfLeavingTheSeparatorAtAnEdge", org.tiqian.layout.LineAdjustmentStageCoverageTest.attachedObjectMarkHangsInsteadOfLeavingTheSeparatorAtAnEdge);
+        run("baselineShiftSpanRaisesTheFinalClusterShift", org.tiqian.layout.LineAdjustmentStageCoverageTest.baselineShiftSpanRaisesTheFinalClusterShift);
+        run("blankMiddleLineSkipsEveryEdgePass", org.tiqian.layout.LineAdjustmentStageCoverageTest.blankMiddleLineSkipsEveryEdgePass);
+        run("dashRunWithoutInkBoundsKeepsSyntheticGlyphs", org.tiqian.layout.LineAdjustmentStageCoverageTest.dashRunWithoutInkBoundsKeepsSyntheticGlyphs);
+        run("emergencySelectedBreakOpensThePreferredTrackingSpan", org.tiqian.layout.LineAdjustmentStageCoverageTest.emergencySelectedBreakOpensThePreferredTrackingSpan);
+        run("emptyTextYieldsZeroHeightWithoutLines", org.tiqian.layout.LineAdjustmentStageCoverageTest.emptyTextYieldsZeroHeightWithoutLines);
+        run("formulaLineEndDiscardsTheTrailingBoundaryAdvance", org.tiqian.layout.LineAdjustmentStageCoverageTest.formulaLineEndDiscardsTheTrailingBoundaryAdvance);
+        run("formulaObjectWithoutBoundaryDiscardsNothingAtLineEnd", org.tiqian.layout.LineAdjustmentStageCoverageTest.formulaObjectWithoutBoundaryDiscardsNothingAtLineEnd);
+        run("hyphenSqueezeConsumesOpeningAndClosingBracketGlueChannels", org.tiqian.layout.LineAdjustmentStageCoverageTest.hyphenSqueezeConsumesOpeningAndClosingBracketGlueChannels);
+        run("hyphenSqueezeConsumesTheInterpunctPairedChannel", org.tiqian.layout.LineAdjustmentStageCoverageTest.hyphenSqueezeConsumesTheInterpunctPairedChannel);
+        run("hyphenSqueezeConsumesTheWordSpaceRawAdvanceChannel", org.tiqian.layout.LineAdjustmentStageCoverageTest.hyphenSqueezeConsumesTheWordSpaceRawAdvanceChannel);
+        run("hyphenSqueezeFallsBackToZeroUsedGlueWhenTheLineAlreadyFits", org.tiqian.layout.LineAdjustmentStageCoverageTest.hyphenSqueezeFallsBackToZeroUsedGlueWhenTheLineAlreadyFits);
+        run("loneLatinClusterMergesBothAutoSpaceEdgeTrimsIntoOneKey", org.tiqian.layout.LineAdjustmentStageCoverageTest.loneLatinClusterMergesBothAutoSpaceEdgeTrimsIntoOneKey);
+        run("loneMandatoryBreakEmitsTwoZeroWidthLines", org.tiqian.layout.LineAdjustmentStageCoverageTest.loneMandatoryBreakEmitsTwoZeroWidthLines);
+        run("mandatoryBreakMiddleLineSkipsItsJustificationPlan", org.tiqian.layout.LineAdjustmentStageCoverageTest.mandatoryBreakMiddleLineSkipsItsJustificationPlan);
+        run("technicalLineBodyStretchRejectsTheCleanTierAndReplays", org.tiqian.layout.LineAdjustmentStageCoverageTest.technicalLineBodyStretchRejectsTheCleanTierAndReplays);
+        run("tinyTechnicalTrackingStaysBelowTheRejectionThreshold", org.tiqian.layout.LineAdjustmentStageCoverageTest.tinyTechnicalTrackingStaysBelowTheRejectionThreshold);
+        run("trailingMandatoryBreakEmitsTerminalEmptyLineWithoutHyphen", org.tiqian.layout.LineAdjustmentStageCoverageTest.trailingMandatoryBreakEmitsTerminalEmptyLineWithoutHyphen);
+        run("zeroAdvanceEdgeSpaceIsNeverCollapsed", org.tiqian.layout.LineAdjustmentStageCoverageTest.zeroAdvanceEdgeSpaceIsNeverCollapsed);
+        TestTraceRecorder.flushClass("LineAdjustmentStageCoverageTest");
         if (failures > 0) {
             Process.exit(1);
         }
