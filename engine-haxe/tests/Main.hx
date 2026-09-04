@@ -1462,5 +1462,40 @@ class Main {
         if (failures > 0) {
             Process.exit(1);
         }
+        run("allCapsAbbreviationIsNeverBroken", org.tiqian.layout.LineBreakRepairEngineTest.allCapsAbbreviationIsNeverBroken);
+        run("camelCaseTokenBreaksAtTheHumpWithoutAHyphen", org.tiqian.layout.LineBreakRepairEngineTest.camelCaseTokenBreaksAtTheHumpWithoutAHyphen);
+        run("greedyBreakerProducesMultipleLinesWhenWidthOverflows", org.tiqian.layout.LineBreakRepairEngineTest.greedyBreakerProducesMultipleLinesWhenWidthOverflows);
+        run("hyphenatedCompoundBreaksAtExistingHyphenWithoutAddingOne", org.tiqian.layout.LineBreakRepairEngineTest.hyphenatedCompoundBreaksAtExistingHyphenWithoutAddingOne);
+        run("latinSolidusBreaksAfterSlashWithoutAddingHyphen", org.tiqian.layout.LineBreakRepairEngineTest.latinSolidusBreaksAfterSlashWithoutAddingHyphen);
+        run("longAllCapsOpaqueTokenHardBreaksWithoutSyntheticHyphen", org.tiqian.layout.LineBreakRepairEngineTest.longAllCapsOpaqueTokenHardBreaksWithoutSyntheticHyphen);
+        run("longLetterBlobStaysOpaqueEvenWhenTailLooksHyphenatable", org.tiqian.layout.LineBreakRepairEngineTest.longLetterBlobStaysOpaqueEvenWhenTailLooksHyphenatable);
+        run("longOpaqueTokenCanBreakEvenWhenItFitsAloneButNotAfterCjkPrefix", org.tiqian.layout.LineBreakRepairEngineTest.longOpaqueTokenCanBreakEvenWhenItFitsAloneButNotAfterCjkPrefix);
+        run("nonLexicalLetterRunAfterCjkPullsPrefixOntoLooseLineWithoutSyntheticHyphen", org.tiqian.layout.LineBreakRepairEngineTest.nonLexicalLetterRunAfterCjkPullsPrefixOntoLooseLineWithoutSyntheticHyphen);
+        run("opaqueLatinTokenAfterCjkPullsPrefixOntoLooseLine", org.tiqian.layout.LineBreakRepairEngineTest.opaqueLatinTokenAfterCjkPullsPrefixOntoLooseLine);
+        run("overlongLatinWordHardBreaksWithAHangingHyphen", org.tiqian.layout.LineBreakRepairEngineTest.overlongLatinWordHardBreaksWithAHangingHyphen);
+        run("overlongOpaqueLatinTokenHardBreaksWithoutSyntheticHyphen", org.tiqian.layout.LineBreakRepairEngineTest.overlongOpaqueLatinTokenHardBreaksWithoutSyntheticHyphen);
+        run("progressiveTechnicalBreakFallsThroughStructuralTierBeforeOverstretchingOutsideText", org.tiqian.layout.LineBreakRepairEngineTest.progressiveTechnicalBreakFallsThroughStructuralTierBeforeOverstretchingOutsideText);
+        run("progressiveTechnicalBreakKeepsCjkBodyUnstretchedInEveryStrategy", org.tiqian.layout.LineBreakRepairEngineTest.progressiveTechnicalBreakKeepsCjkBodyUnstretchedInEveryStrategy);
+        run("progressiveTechnicalCleanBreakMayNotStretchEarlierOpaqueToken", org.tiqian.layout.LineBreakRepairEngineTest.progressiveTechnicalCleanBreakMayNotStretchEarlierOpaqueToken);
+        run("progressiveTechnicalEmergencyIsExposedByCurrentLineStretchNotFullMeasure", org.tiqian.layout.LineBreakRepairEngineTest.progressiveTechnicalEmergencyIsExposedByCurrentLineStretchNotFullMeasure);
+        run("progressiveTechnicalHardBreakOverridesNumberRunCohesion", org.tiqian.layout.LineBreakRepairEngineTest.progressiveTechnicalHardBreakOverridesNumberRunCohesion);
+        run("progressiveTechnicalStructuralBreakFallsThroughToEmergencyBeforeTracking", org.tiqian.layout.LineBreakRepairEngineTest.progressiveTechnicalStructuralBreakFallsThroughToEmergencyBeforeTracking);
+        run("unbrokenProgressiveSpanUsesSourceSpaceThenKeepsBodyOpportunitiesAvailable", org.tiqian.layout.LineBreakRepairEngineTest.unbrokenProgressiveSpanUsesSourceSpaceThenKeepsBodyOpportunitiesAvailable);
+        run("urlLikeLatinTokenBreaksAtSeparatorsWithoutSyntheticHyphen", org.tiqian.layout.LineBreakRepairEngineTest.urlLikeLatinTokenBreaksAtSeparatorsWithoutSyntheticHyphen);
+        TestTraceRecorder.flushClass("LineBreakRepairEngineTest");
+        run("bibliographicNumericLocatorExposesStructuralBreaks", org.tiqian.layout.KinsokuAndCohesionRepairEngineTest.bibliographicNumericLocatorExposesStructuralBreaks);
+        run("hangingPunctuationFillsLineToMeasureAndOverflowsVisual", org.tiqian.layout.KinsokuAndCohesionRepairEngineTest.hangingPunctuationFillsLineToMeasureAndOverflowsVisual);
+        run("kinsokuCarriesPreviousClusterWhenLineWouldStartWithForbiddenPunctuation", org.tiqian.layout.KinsokuAndCohesionRepairEngineTest.kinsokuCarriesPreviousClusterWhenLineWouldStartWithForbiddenPunctuation);
+        run("kinsokuFallsBackToLeaveRaggedWhenPreviousLineCannotSpareACluster", org.tiqian.layout.KinsokuAndCohesionRepairEngineTest.kinsokuFallsBackToLeaveRaggedWhenPreviousLineCannotSpareACluster);
+        run("kinsokuLeavesGreedyBreakAloneWhenNoForbiddenPunctAtLineStart", org.tiqian.layout.KinsokuAndCohesionRepairEngineTest.kinsokuLeavesGreedyBreakAloneWhenNoForbiddenPunctAtLineStart);
+        run("kinsokuLevelNoneLeavesForbiddenMarksAtLineStart", org.tiqian.layout.KinsokuAndCohesionRepairEngineTest.kinsokuLevelNoneLeavesForbiddenMarksAtLineStart);
+        run("kinsokuLevelStrictForbidsDashAtLineStart", org.tiqian.layout.KinsokuAndCohesionRepairEngineTest.kinsokuLevelStrictForbidsDashAtLineStart);
+        run("kinsokuPushesLineStartPunctuationIntoPreviousLineWhenTrailingGlueCanShrink", org.tiqian.layout.KinsokuAndCohesionRepairEngineTest.kinsokuPushesLineStartPunctuationIntoPreviousLineWhenTrailingGlueCanShrink);
+        run("lineEndKinsokuMovesDanglingOpenerToNextLine", org.tiqian.layout.KinsokuAndCohesionRepairEngineTest.lineEndKinsokuMovesDanglingOpenerToNextLine);
+        run("longLatinSentenceWrapsAtWordBoundaries", org.tiqian.layout.KinsokuAndCohesionRepairEngineTest.longLatinSentenceWrapsAtWordBoundaries);
+        run("numberWithSuffixSymbolNeverSplitsAcrossLines", org.tiqian.layout.KinsokuAndCohesionRepairEngineTest.numberWithSuffixSymbolNeverSplitsAcrossLines);
+        run("ordinaryNumericFormsDoNotBecomeBibliographicLocators", org.tiqian.layout.KinsokuAndCohesionRepairEngineTest.ordinaryNumericFormsDoNotBecomeBibliographicLocators);
+        TestTraceRecorder.flushClass("KinsokuAndCohesionRepairEngineTest");
+
     }
 }

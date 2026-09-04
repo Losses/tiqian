@@ -155,10 +155,19 @@ class LineAdjustmentStage {
                     visualWidth += finalClusters[idx].advance;
                 }
             }
+            if (std.Math.abs(visualWidth - std.Math.round(visualWidth)) < 0.0001) {
+                visualWidth = std.Math.round(visualWidth);
+            }
+            if (std.Math.abs(adjustedWidth - std.Math.round(adjustedWidth)) < 0.0001) {
+                adjustedWidth = std.Math.round(adjustedWidth);
+            }
             var hangingPunctuationAdvance = 0.0;
             for (hIdx in 0...lineCandidate.hangingClusterIndices.size()) {
                 final it = lineCandidate.hangingClusterIndices.at(hIdx);
                 hangingPunctuationAdvance += finalClusters[it].advance;
+            }
+            if (std.Math.abs(hangingPunctuationAdvance - std.Math.round(hangingPunctuationAdvance)) < 0.0001) {
+                hangingPunctuationAdvance = std.Math.round(hangingPunctuationAdvance);
             }
             var hasDrawableContent = false;
             if (!lineCandidate.clusterRange.isEmpty) {
