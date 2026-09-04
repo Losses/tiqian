@@ -153,3 +153,5 @@ org.tiqian.layout.LineBreakPlanningStageCoverageTest
 org.tiqian.layout.LineBreakPlanningStageCoverageTestSupport
 org.tiqian.layout.LineBreakPlanningStageCoverage2Test
 org.tiqian.layout.LineBreakPlanningStageCoverage2TestSupport
+org.tiqian.layout.LineAdjustmentStageCoverageTest
+org.tiqian.layout.LineAdjustmentStageCoverageTestSupport
