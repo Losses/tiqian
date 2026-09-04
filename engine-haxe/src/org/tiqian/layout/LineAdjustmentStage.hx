@@ -242,7 +242,7 @@ class LineAdjustmentStage {
             && !b.preventsLineBreak;
     }
 
-    private static function resolveAnnotationGeometry(engine:ExplainableStubParagraphLayoutEngine, input:LayoutInput, fontSize:Float, inlineObjectByClusterIndex:SortedMap<Int, InlineObjectSpan>,
+    public static function resolveAnnotationGeometry(engine:ExplainableStubParagraphLayoutEngine, input:LayoutInput, fontSize:Float, inlineObjectByClusterIndex:SortedMap<Int, InlineObjectSpan>,
             lineSolution:LineSolution, clreqProfile:ClreqProfile, geometryDecisions:Array<ClusterGeometryDecisionInfo>,
             autoSpaceDecisions:Array<AutoSpaceDecisionInfo>, visibleLineRanges:Array<IntRange>, lines:Array<LineBox>, finalClusters:Array<Cluster>,
             clusterRoles:Array<FontRole>, justifyDeltaByCluster:SortedMap<Int, Float>, rubyAndBopomofoSpread:SortedMap<Int, Float>,
