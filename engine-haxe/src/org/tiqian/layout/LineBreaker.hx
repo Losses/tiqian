@@ -20,8 +20,6 @@ import org.tiqian.layout.ProgressiveBreakDecisions.ProgressiveBreakOpportunity;
 import std.SortedSet;
 import std.SortedMap;
 
-inline function f32(v:Float):Float
-    return FPHelper.i32ToFloat(FPHelper.floatToI32(v));
 /**
  * Haxe port of Kotlin LineBreaker.kt: the LineBreaker contract, the greedy
  * implementation (GreedyLineBreaker), and the lookahead implementation
@@ -133,7 +131,8 @@ class GreedyLineBreaker implements LineBreaker {
                 naturalAccum += n[i].advance;
                 if (!nonRenderingControlClusters.has(i))
                     hasRenderingContent = true;
-                if (hardBreakAfterClusters.has(i))(LineBreakerLines.rebuildLine(new IntRange(lineStart, i), n, a, LineEndReason.MandatoryBreak));
+                if (hardBreakAfterClusters.has(i)) {
+                    lines.push(LineBreakerLines.rebuildLine(new IntRange(lineStart, i), n, a, LineEndReason.MandatoryBreak));
                     lineStart = i + 1;
                     adjustedAccum = 0;
                     naturalAccum = 0;
@@ -443,7 +442,6 @@ class LookaheadLineBreaker implements LineBreaker {
  * closeFilledLine as package-level internal functions shared with
  * LineRepair.kt; the port groups them as statics of this class.
  */
-
 class LineBreakerLines {
     /**
      * Builds a line for [range]; if the break retreated from [naturalBreakAt]
