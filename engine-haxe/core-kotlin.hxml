@@ -120,3 +120,5 @@ org.tiqian.layout.BaselineAlignmentTest
 org.tiqian.layout.InterpunctShrinkOpportunityTest
 org.tiqian.layout.AsciiPointMarkKinsokuTest
 org.tiqian.layout.AutoSpaceSingleGapTest
+    org.tiqian.layout.R3GeometryTailCoverageTest
+    org.tiqian.layout.HyphenationLayoutTest

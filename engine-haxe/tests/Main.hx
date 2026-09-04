@@ -1418,6 +1418,21 @@ class Main {
         run("unicodeEastAsianSpacingCoversNarrowScriptsWithoutScriptWhitelists", org.tiqian.layout.AutoSpaceSingleGapTest.unicodeEastAsianSpacingCoversNarrowScriptsWithoutScriptWhitelists);
         run("zeroSpacesGetInsertedGaps", org.tiqian.layout.AutoSpaceSingleGapTest.zeroSpacesGetInsertedGaps);
         TestTraceRecorder.flushClass("AutoSpaceSingleGapTest");
+        run("attachedReferenceAtSourceEndLaysOutWithoutVirtualBoundary", org.tiqian.layout.R3GeometryTailCoverageTest.attachedReferenceAtSourceEndLaysOutWithoutVirtualBoundary);
+        run("centeredInkPunctuationKeepsPairedGlue", org.tiqian.layout.R3GeometryTailCoverageTest.centeredInkPunctuationKeepsPairedGlue);
+        run("emptyTextProducesNoVisibleLines", org.tiqian.layout.R3GeometryTailCoverageTest.emptyTextProducesNoVisibleLines);
+        run("maxLinesCapsVisibleLinesToOne", org.tiqian.layout.R3GeometryTailCoverageTest.maxLinesCapsVisibleLinesToOne);
+        run("pureLatinParagraphStillProducesLines", org.tiqian.layout.R3GeometryTailCoverageTest.pureLatinParagraphStillProducesLines);
+        run("rubyBaseRangeCrossingClusterBoundariesIsSkipped", org.tiqian.layout.R3GeometryTailCoverageTest.rubyBaseRangeCrossingClusterBoundariesIsSkipped);
+        run("spaceRunsResolveBothWideNarrowOrders", org.tiqian.layout.R3GeometryTailCoverageTest.spaceRunsResolveBothWideNarrowOrders);
+        TestTraceRecorder.flushClass("R3GeometryTailCoverageTest");
+        run("fittingWordHyphenatesOnlyWhenAHyphenatorIsInjected", org.tiqian.layout.HyphenationLayoutTest.fittingWordHyphenatesOnlyWhenAHyphenatorIsInjected);
+        run("hyphenIsReservedWithinTheMeasureNotHungPastIt", org.tiqian.layout.HyphenationLayoutTest.hyphenIsReservedWithinTheMeasureNotHungPastIt);
+        run("hyphenationIsOnByDefault", org.tiqian.layout.HyphenationLayoutTest.hyphenationIsOnByDefault);
+        run("hyphenationIsSkippedWhenStretchingCjkStaysTight", org.tiqian.layout.HyphenationLayoutTest.hyphenationIsSkippedWhenStretchingCjkStaysTight);
+        run("reservedHyphenSqueezesPunctuationGlueToPullItIn", org.tiqian.layout.HyphenationLayoutTest.reservedHyphenSqueezesPunctuationGlueToPullItIn);
+        run("syllableSplitMatchesTheHyphenatorExactly", org.tiqian.layout.HyphenationLayoutTest.syllableSplitMatchesTheHyphenatorExactly);
+        TestTraceRecorder.flushClass("HyphenationLayoutTest");
         Console.log("all CoreUnitsGeometryTest checks passed");
         if (failures > 0) {
             Process.exit(1);
