@@ -1,5 +1,6 @@
 package org.tiqian.test.trace;
 
+import haxe.io.FPHelper;
 import std.ReadOnlyArray;
 import std.StringBuf;
 
@@ -25,6 +26,76 @@ class TestTraceRender {
 
     public static function renderFloat(value:Float):String {
         return cap(TraceFormat.fd(value, 6));
+    }
+
+    /**
+     * Renders a Float the way the JVM golden generator's string
+     * templates do: the shortest decimal digit string that round-trips
+     * to the same f32 bits, with a trailing ".0" for whole numbers
+     * (canonicalNumbers at the record choke point strips it). Plain
+     * decimal form; values outside the normal range fall back to
+     * Std.string.
+     */
+    public static function floatText(value:Float):String {
+        var negative = value < 0;
+        var v = Math.abs(value);
+        if (v == 0) return negative ? "-0.0" : "0.0";
+        var e = 0;
+        var x = v;
+        while (x >= 10) { x /= 10; e += 1; }
+        while (x < 1) { x *= 10; e -= 1; }
+        var targetBits = FPHelper.floatToI32(v);
+        var target = FPHelper.i32ToFloat(targetBits);
+        var p = 1;
+        while (p <= 9) {
+            var exp = e - p + 1;
+            var scaled = v / Math.pow(10, exp);
+            var base = Math.floor(scaled);
+            var best = -1.0;
+            var bestDist = Math.POSITIVE_INFINITY;
+            var c:Float = base - 1;
+            while (c <= base + 2) {
+                if (c >= 1) {
+                    var candidateText:String = Std.string(c) + "e" + Std.string(exp);
+                    var cand:Float = cast(Std.parseFloat(candidateText), Float);
+                    if (FPHelper.floatToI32(cand) == targetBits) {
+                        var dist:Float = Math.abs(cand - target);
+                        if (dist < bestDist || (dist == bestDist && (c % 2 == 0))) {
+                            best = c;
+                            bestDist = dist;
+                        }
+                    }
+                }
+                c += 1;
+            }
+            if (best >= 0) return floatTextRender(best, e, p, negative);
+            p += 1;
+        }
+        return (negative ? "-" : "") + Std.string(v);
+    }
+
+    private static function floatTextRender(c:Float, e:Int, p:Int, negative:Bool):String {
+        var s = Std.string(c);
+        if (s.length < p) s = StringTools.lpad(s, "0", p);
+        var pointAfter = e + 1;
+        final out = new StringBuf();
+        if (negative) out.add("-");
+        if (pointAfter <= 0) {
+            out.add("0.");
+            var k = 0;
+            while (k < -pointAfter) { out.add("0"); k += 1; }
+            out.add(s);
+        } else if (pointAfter >= p) {
+            out.add(s);
+            var k = p;
+            while (k < pointAfter) { out.add("0"); k += 1; }
+            out.add(".0");
+        } else {
+            out.add(s.substring(0, pointAfter));
+            out.add(".");
+            out.add(s.substring(pointAfter));
+        }
+        return out.toString();
     }
 
     public static function renderBool(value:Bool):String {

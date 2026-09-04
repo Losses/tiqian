@@ -6,6 +6,9 @@ import org.tiqian.layout.UnicodeEmoji17RgiRoleAuditTest;
 import org.tiqian.layout.OpeningBracketLineStartTest;
 import org.tiqian.layout.VerbatimRangeAutoSpaceTest;
 import org.tiqian.layout.ZeroWidthBreakControlLayoutTest;
+import org.tiqian.layout.PunctuationBodyFloorInvariantTest;
+import org.tiqian.layout.BaselineAlignmentTest;
+import org.tiqian.layout.InterpunctShrinkOpportunityTest;
 import org.tiqian.core.TiqianIllegalArgumentException;
 import org.tiqian.core.CoreUnitsGeometryTest;
 import org.tiqian.core.CoreLayoutQueriesGapsTest;
@@ -1374,6 +1377,16 @@ class Main {
         run("leadingZeroWidthSpaceCannotCreateAnEmptyAutoWrappedLine", ZeroWidthBreakControlLayoutTest.leadingZeroWidthSpaceCannotCreateAnEmptyAutoWrappedLine);
         run("zeroWidthSpaceIsUnshapedAndProvidesASoftBreakAfterIt", ZeroWidthBreakControlLayoutTest.zeroWidthSpaceIsUnshapedAndProvidesASoftBreakAfterIt);
         TestTraceRecorder.flushClass("ZeroWidthBreakControlLayoutTest");
+        run("punctuationNeverResolvesBelowItsBodyWidth", PunctuationBodyFloorInvariantTest.punctuationNeverResolvesBelowItsBodyWidth);
+        TestTraceRecorder.flushClass("PunctuationBodyFloorInvariantTest");
+        run("cjkMixedSizesAlignByIdeographicBoxBottom", BaselineAlignmentTest.cjkMixedSizesAlignByIdeographicBoxBottom);
+        run("cjkPunctuationProvidesIdeographicReferenceWithoutHanBody", BaselineAlignmentTest.cjkPunctuationProvidesIdeographicReferenceWithoutHanBody);
+        run("explicitBaselineShiftAppliesToRomanClusters", BaselineAlignmentTest.explicitBaselineShiftAppliesToRomanClusters);
+        run("latinInsideCjkUsesSharedRomanBaseline", BaselineAlignmentTest.latinInsideCjkUsesSharedRomanBaseline);
+        TestTraceRecorder.flushClass("BaselineAlignmentTest");
+        run("interpunctInkEvidenceFreesPairedGlueForTierThreeShrink", InterpunctShrinkOpportunityTest.interpunctInkEvidenceFreesPairedGlueForTierThreeShrink);
+        run("preservedInterpunctCodepointKeepsInterpunctClassForTierThreeShrink", InterpunctShrinkOpportunityTest.preservedInterpunctCodepointKeepsInterpunctClassForTierThreeShrink);
+        TestTraceRecorder.flushClass("InterpunctShrinkOpportunityTest");
         Console.log("all CoreUnitsGeometryTest checks passed");
         if (failures > 0) {
             Process.exit(1);
