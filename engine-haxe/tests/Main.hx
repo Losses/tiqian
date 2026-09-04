@@ -1459,6 +1459,21 @@ class Main {
         run("rubyMetricsUseTheSameItalicInstanceAsRubyShaping", org.tiqian.layout.FontInstanceMetricsRequestTest.rubyMetricsUseTheSameItalicInstanceAsRubyShaping);
         TestTraceRecorder.flushClass("FontInstanceMetricsRequestTest");
         Console.log("all CoreUnitsGeometryTest checks passed");
+        run("fillPushInCompressesSourceSpaceToPromoteEmergencyBreakToSyllable", org.tiqian.layout.LineAdjustmentPushInTest.fillPushInCompressesSourceSpaceToPromoteEmergencyBreakToSyllable);
+        run("fillPushInCrossesIntermediateCleanerBoundaryToRefillAtSelectedTier", org.tiqian.layout.LineAdjustmentPushInTest.fillPushInCrossesIntermediateCleanerBoundaryToRefillAtSelectedTier);
+        run("fillPushInDoesNotPromoteEmergencyBreakWhenCleanerBoundaryStillLeavesDeficit", org.tiqian.layout.LineAdjustmentPushInTest.fillPushInDoesNotPromoteEmergencyBreakWhenCleanerBoundaryStillLeavesDeficit);
+        run("fillPushInExtendsPastForbiddenLineEndHead", org.tiqian.layout.LineAdjustmentPushInTest.fillPushInExtendsPastForbiddenLineEndHead);
+        run("fillPushInPullsMinimalGroupToAvoidForbiddenNextHead", org.tiqian.layout.LineAdjustmentPushInTest.fillPushInPullsMinimalGroupToAvoidForbiddenNextHead);
+        run("noShrinkFillPushInCanContinueUntilTheLineIsNoLongerLoose", org.tiqian.layout.LineAdjustmentPushInTest.noShrinkFillPushInCanContinueUntilTheLineIsNoLongerLoose);
+        run("pushInFirstCompressesSomeBoundariesPushOutOnlyNone", org.tiqian.layout.LineAdjustmentPushInTest.pushInFirstCompressesSomeBoundariesPushOutOnlyNone);
+        run("pushInFirstDoesNotCompressEveryLine", org.tiqian.layout.LineAdjustmentPushInTest.pushInFirstDoesNotCompressEveryLine);
+        TestTraceRecorder.flushClass("LineAdjustmentPushInTest");
+        run("dashInkCenteringWithShapedBounds", org.tiqian.layout.LineAdjustmentStageJfTest.dashInkCenteringWithShapedBounds);
+        run("dashInkCenteringWithWideBoundsReturnsSameGlyph", org.tiqian.layout.LineAdjustmentStageJfTest.dashInkCenteringWithWideBoundsReturnsSameGlyph);
+        run("hyphenSqueezeConsumesPairedLeadingAndTrailingGlueUnderTaiwanProfile", org.tiqian.layout.LineAdjustmentStageJfTest.hyphenSqueezeConsumesPairedLeadingAndTrailingGlueUnderTaiwanProfile);
+        run("inlineObjectSeparatorSpaceTrimEdge", org.tiqian.layout.LineAdjustmentStageJfTest.inlineObjectSeparatorSpaceTrimEdge);
+        run("inlineObjectWithZeroDiscardableAdvance", org.tiqian.layout.LineAdjustmentStageJfTest.inlineObjectWithZeroDiscardableAdvance);
+        TestTraceRecorder.flushClass("LineAdjustmentStageJfTest");
         if (failures > 0) {
             Process.exit(1);
         }
