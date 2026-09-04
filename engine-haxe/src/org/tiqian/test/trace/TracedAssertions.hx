@@ -250,6 +250,32 @@ class TracedAssertions {
         }
     }
 
+    public static function assertEqualsTextRangeArray(expected:Array<org.tiqian.core.TextRange>, actual:Array<org.tiqian.core.TextRange>, ?message:String):Void {
+        final expectedText = renderTextRangeArray(expected);
+        final actualText = renderTextRangeArray(actual);
+        recordEvent("eq", [
+            field("expected", expectedText),
+            field("actual", actualText),
+            msgField(message)
+        ]);
+        if (expected.length != actual.length) {
+            fail(message == null ? "Expected arrays to be equal." : message);
+        }
+        for (i in 0...expected.length) {
+            if (expected[i].start != actual[i].start || expected[i].end != actual[i].end) {
+                fail(message == null ? "Expected arrays to be equal." : message);
+            }
+        }
+    }
+
+    private static function renderTextRangeArray(ranges:Array<org.tiqian.core.TextRange>):String {
+        final parts:Array<String> = [];
+        for (i in 0...ranges.length) {
+            parts.push(Std.string(ranges[i]));
+        }
+        return "[" + parts.join(", ") + "]";
+    }
+
     public static function assertEqualsIntRange(expected:IntRange, actual:IntRange, ?message:String):Void {
         recordEvent("eq", [
             field("expected", renderIntRange(expected)),
