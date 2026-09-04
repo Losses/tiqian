@@ -122,3 +122,6 @@ org.tiqian.layout.BaselineAlignmentTest
 org.tiqian.layout.InterpunctShrinkOpportunityTest
 org.tiqian.layout.AsciiPointMarkKinsokuTest
 org.tiqian.layout.AutoSpaceSingleGapTest
+
+org.tiqian.layout.LineBreakRepairEngineTest
+org.tiqian.layout.KinsokuAndCohesionRepairEngineTest
