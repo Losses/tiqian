@@ -96,8 +96,16 @@ class GreedyLineBreaker implements LineBreaker {
         final controls = nonRenderingControlClusters == null ? LineBreakerLines.emptyIntSet() : nonRenderingControlClusters;
         final progressive = progressiveBreakOpportunities == null ? LineBreakerLines.emptyProgressiveMap() : progressiveBreakOpportunities;
         final greedy = greedyFill(n, a, maxWidth, ranges, indent, forbidEnd, hyphens, cjk, maxStretch, sino, sinoCap, hard, controls, progressive);
-        return LineRepair.applyKinsokuRepairs(greedy, n, a, maxWidth, this.kinsoku, shrinkOps, pushInPenalty, carryPreviousPenalty, leaveRaggedPenalty,
+        final repaired = LineRepair.applyKinsokuRepairs(greedy, n, a, maxWidth, this.kinsoku, shrinkOps, pushInPenalty, carryPreviousPenalty, leaveRaggedPenalty,
             ranges, indent, hangables, extendables, 5, forbiddenLineStartClusters);
+        final gapBuilder = SortedSet.builder();
+        var gapIndex = 0;
+        while (gapIndex < cjk.size()) { gapBuilder.put(cjk.at(gapIndex)); gapIndex++; }
+        gapIndex = 0;
+        while (gapIndex < sino.size()) { gapBuilder.put(sino.at(gapIndex)); gapIndex++; }
+        return LineRepair.withFillPushIn(repaired, lineAdjustmentPushIn == null ? false : lineAdjustmentPushIn, n, a, maxWidth, shrinkOps, indent,
+            lineAdjustmentCompressBias == null ? 1.0 : lineAdjustmentCompressBias, forbiddenLineStartClusters, forbidEnd, ranges, pushInPenalty,
+            gapBuilder.build(), progressive);
     }
 
     function greedyFill(n:Array<Cluster>, a:Array<Cluster>, maxWidth:Float, unbreakableRanges:UnbreakableRanges, firstLineIndent:Float,
