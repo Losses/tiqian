@@ -41,7 +41,7 @@ demo/web-history/*.tsbuildinfo
 
 # Haxe engine module: generated outputs and local baselines, never committed
 /engine-haxe/out/
-/engine-haxe/baseline-goldens/
+/engine-haxe/baseline-goldens
 /engine-haxe/smoke/
 
 # Locally generated trace goldens (Haxe port contract); regenerate with
