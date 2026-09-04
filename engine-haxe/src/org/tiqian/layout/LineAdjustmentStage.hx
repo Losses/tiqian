@@ -268,7 +268,8 @@ class LineAdjustmentStage {
                 inlineObject.trailingBoundary.lineEndDiscardableAdvance, reason));
         }
 
-        final decorationDecisions = new Array<DecorationDecisionInfo>();
+        final decorationDecisions = AnnotationGeometryStage.computeDecorationDecisions(input.decorations, visibleLineRanges, lines, finalClusters,
+            clusterRoles, justifyDeltaByCluster, rubyAndBopomofoSpread, metricDecisions, fontSize, input.paragraphStyle.emphasisDotGapEm);
         final decorationSegments = new Array<DecorationSegmentInfo>();
         final rubyDecisions = new Array<RubyDecisionInfo>();
         final bopomofoDecisions = new Array<BopomofoDecisionInfo>();
