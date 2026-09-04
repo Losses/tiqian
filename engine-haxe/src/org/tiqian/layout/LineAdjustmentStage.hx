@@ -40,6 +40,7 @@ import org.tiqian.layout.LineOptimization.LineCandidate;
 import org.tiqian.layout.LineOptimization.RepairOptions;
 import org.tiqian.layout.Justifier.JustificationPlan;
 import org.tiqian.layout.AnnotationGeometryStage.RubyFontGeometry;
+import org.tiqian.layout.AnnotationGeometryStage.AnnotationGeometryStageResult;
 import org.tiqian.layout.LineGeometryStage.ClusterMetricDecision;
 import org.tiqian.layout.LineGeometryStage.LineBoxStageResult;
 import org.tiqian.layout.LineGeometryStage.LineGeometryStageFns;
@@ -49,23 +50,6 @@ import org.tiqian.layout.ParagraphShapingStage;
 import org.tiqian.layout.PunctuationGeometryStage;
 import std.SortedSet;
 import std.SortedMap;
-
-@:dataClass class AnnotationGeometryStageResult {
-    public final inlineObjectDecisions:Array<InlineObjectDecisionInfo>;
-    public final decorationDecisions:Array<DecorationDecisionInfo>;
-    public final decorationSegments:Array<DecorationSegmentInfo>;
-    public final rubyDecisions:Array<RubyDecisionInfo>;
-    public final bopomofoDecisions:Array<BopomofoDecisionInfo>;
-
-    public function new(inlineObjectDecisions:Array<InlineObjectDecisionInfo>, decorationDecisions:Array<DecorationDecisionInfo>,
-            decorationSegments:Array<DecorationSegmentInfo>, rubyDecisions:Array<RubyDecisionInfo>, bopomofoDecisions:Array<BopomofoDecisionInfo>) {
-        this.inlineObjectDecisions = inlineObjectDecisions;
-        this.decorationDecisions = decorationDecisions;
-        this.decorationSegments = decorationSegments;
-        this.rubyDecisions = rubyDecisions;
-        this.bopomofoDecisions = bopomofoDecisions;
-    }
-}
 
 class LineAdjustmentStage {
     private static inline final CURRENT_LINE_TECHNICAL_BODY_STRETCH_LIMIT_EM:Float = 0.0;
