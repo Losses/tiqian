@@ -13,6 +13,7 @@ import org.tiqian.core.GlyphRun;
 import org.tiqian.core.LineEndReason;
 import org.tiqian.core.LastLineAlignment;
 import org.tiqian.core.RubySpan;
+import org.tiqian.core.RubyKind;
 import org.tiqian.core.InlineObjectSpan;
 import org.tiqian.core.LineEdgeTrimDecisionInfo;
 import org.tiqian.core.MaxLinesDecisionInfo;
@@ -232,7 +233,7 @@ class LineAdjustmentStage {
             && !b.preventsLineBreak;
     }
 
-    private static function resolveAnnotationGeometry(input:LayoutInput, fontSize:Float, inlineObjectByClusterIndex:SortedMap<Int, InlineObjectSpan>,
+    private static function resolveAnnotationGeometry(engine:ExplainableStubParagraphLayoutEngine, input:LayoutInput, fontSize:Float, inlineObjectByClusterIndex:SortedMap<Int, InlineObjectSpan>,
             lineSolution:LineSolution, clreqProfile:ClreqProfile, geometryDecisions:Array<ClusterGeometryDecisionInfo>,
             autoSpaceDecisions:Array<AutoSpaceDecisionInfo>, visibleLineRanges:Array<IntRange>, lines:Array<LineBox>, finalClusters:Array<Cluster>,
             clusterRoles:Array<FontRole>, justifyDeltaByCluster:SortedMap<Int, Float>, rubyAndBopomofoSpread:SortedMap<Int, Float>,
@@ -295,7 +296,15 @@ class LineAdjustmentStage {
             justifyDeltaByCluster, geometryByRange, leadingGapRanges, trailingGapRanges, autoSpaceGapPx, fontSize);
         final rubyDecisions = AnnotationGeometryStage.computeRubyDecisions(pinyinSpans, visibleLineRanges, lines, finalClusters, naturalClusters,
             metricDecisions, rubyFontGeometryBySpan, rubyStackGap, baseAscent, rubyFontSize, rubyFontWeight, input.textStyle.locale);
-        final bopomofoDecisions = new Array<BopomofoDecisionInfo>();
+        final bopomofoSpans = new Array<RubySpan>();
+        for (ri in 0...input.rubySpans.length) {
+            final rs = input.rubySpans[ri];
+            if (rs.kind == RubyKind.Bopomofo) {
+                bopomofoSpans.push(rs);
+            }
+        }
+        final bopomofoDecisions = AnnotationGeometryStage.computeBopomofoDecisions(engine, bopomofoSpans, visibleLineRanges, lines, finalClusters,
+            naturalClusters, baseAscent, baseDescent, fontSize, bopomofoFontWeightAt, input.textStyle);
 
         return new AnnotationGeometryStageResult(inlineObjectDecisions, decorationDecisions, decorationSegments, rubyDecisions, bopomofoDecisions);
     }
@@ -768,7 +777,7 @@ class LineAdjustmentStage {
         final maxLinesDecision = lineBoxes.maxLinesDecision;
         final visibleLineRanges = lineBoxes.visibleLineRanges;
 
-        final annotationGeometry = resolveAnnotationGeometry(prep.input, prep.fontSize, prep.inlineObjectByClusterIndex, plan.lineSolution, prep.clreqProfile,
+        final annotationGeometry = resolveAnnotationGeometry(engine, prep.input, prep.fontSize, prep.inlineObjectByClusterIndex, plan.lineSolution, prep.clreqProfile,
             geometryDecisions, prep.autoSpaceDecisions, visibleLineRanges, lines, finalClusters, prep.clusterRoles, justifyDeltaByCluster,
             prep.rubyAndBopomofoSpread, plan.metricDecisions, prep.pinyinSpans, prep.naturalClusters, prep.rubyFontGeometryBySpan, prep.rubyStackGap,
             plan.baseAscent, prep.rubyFontSize, prep.rubyFontWeight, plan.baseDescent, prep.bopomofoFontWeightAt);
