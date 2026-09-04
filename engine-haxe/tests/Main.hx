@@ -1533,6 +1533,13 @@ class Main {
         run("numberWithSuffixSymbolNeverSplitsAcrossLines", org.tiqian.layout.KinsokuAndCohesionRepairEngineTest.numberWithSuffixSymbolNeverSplitsAcrossLines);
         run("ordinaryNumericFormsDoNotBecomeBibliographicLocators", org.tiqian.layout.KinsokuAndCohesionRepairEngineTest.ordinaryNumericFormsDoNotBecomeBibliographicLocators);
         TestTraceRecorder.flushClass("KinsokuAndCohesionRepairEngineTest");
+        run("attachedRunExposesTheProseClustersOnItsTwoSides", org.tiqian.layout.AttachedInlineBoundaryRelocationTest.attachedRunExposesTheProseClustersOnItsTwoSides);
+        run("attachedRunAtParagraphEndHasNoVirtualRightNeighbor", org.tiqian.layout.AttachedInlineBoundaryRelocationTest.attachedRunAtParagraphEndHasNoVirtualRightNeighbor);
+        run("punctuationAfterFootnoteIsJudgedAgainstThePrecedingPunctuation", org.tiqian.layout.AttachedInlineBoundaryRelocationTest.punctuationAfterFootnoteIsJudgedAgainstThePrecedingPunctuation);
+        run("closingQuoteBeforeFootnoteAndBodyKeepsItsNaturalTrailingGlue", org.tiqian.layout.AttachedInlineBoundaryRelocationTest.closingQuoteBeforeFootnoteAndBodyKeepsItsNaturalTrailingGlue);
+        run("closingQuoteBeforeParagraphEndFootnoteHasNoTrailingGlue", org.tiqian.layout.AttachedInlineBoundaryRelocationTest.closingQuoteBeforeParagraphEndFootnoteHasNoTrailingGlue);
+        run("attachedReferenceNeverStartsAWrappedLine", org.tiqian.layout.AttachedInlineBoundaryRelocationTest.attachedReferenceNeverStartsAWrappedLine);
+        TestTraceRecorder.flushClass("AttachedInlineVirtualAdjacencyTest");
 
     }
 }
