@@ -2,6 +2,7 @@ package org.tiqian.core;
 
 import std.ReadOnlyArray;
 
+@:dataClass
 class LayoutResult {
     public final input:LayoutInput;
     public final size:Size;
