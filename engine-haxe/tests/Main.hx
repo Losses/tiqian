@@ -1433,6 +1433,17 @@ class Main {
         run("reservedHyphenSqueezesPunctuationGlueToPullItIn", org.tiqian.layout.HyphenationLayoutTest.reservedHyphenSqueezesPunctuationGlueToPullItIn);
         run("syllableSplitMatchesTheHyphenatorExactly", org.tiqian.layout.HyphenationLayoutTest.syllableSplitMatchesTheHyphenatorExactly);
         TestTraceRecorder.flushClass("HyphenationLayoutTest");
+        run("emphasisDotsHanButNotWestern", org.tiqian.layout.BilingualEmphasisTest.emphasisDotsHanButNotWestern);
+        TestTraceRecorder.flushClass("BilingualEmphasisTest");
+        run("annotatedBaseReservesHalfEmOnly", org.tiqian.layout.BopomofoLayoutTest.annotatedBaseReservesHalfEmOnly);
+        run("annotationLocaleDoesNotReplaceSimplifiedBaseLocale", org.tiqian.layout.BopomofoLayoutTest.annotationLocaleDoesNotReplaceSimplifiedBaseLocale);
+        run("decisionKeepsSourceReadingForCopy", org.tiqian.layout.BopomofoLayoutTest.decisionKeepsSourceReadingForCopy);
+        run("fontWeightFollowsAnnotatedBasePlusThreeSteps", org.tiqian.layout.BopomofoLayoutTest.fontWeightFollowsAnnotatedBasePlusThreeSteps);
+        run("symbolsAndToneRightOfBase", org.tiqian.layout.BopomofoLayoutTest.symbolsAndToneRightOfBase);
+        TestTraceRecorder.flushClass("BopomofoLayoutTest");
+        run("everyNarrowInlineBoxGetsOuterAutospaceWithoutRoleSpecificCode", org.tiqian.layout.InlineBoxLayoutTest.everyNarrowInlineBoxGetsOuterAutospaceWithoutRoleSpecificCode);
+        run("inlineEdgesReserveAdvanceAndMoveTheGlyphOrigin", org.tiqian.layout.InlineBoxLayoutTest.inlineEdgesReserveAdvanceAndMoveTheGlyphOrigin);
+        TestTraceRecorder.flushClass("InlineBoxLayoutTest");
         Console.log("all CoreUnitsGeometryTest checks passed");
         if (failures > 0) {
             Process.exit(1);
