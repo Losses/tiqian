@@ -3,6 +3,7 @@ import org.tiqian.layout.PunctuationGeometryLedgerCoverageTest;
 import org.tiqian.layout.PunctuationSpacingRuleTest;
 import org.tiqian.layout.PunctuationGeometryBranchArmsCoverageTest;
 import org.tiqian.layout.UnicodeEmoji17RgiRoleAuditTest;
+import org.tiqian.layout.BaselineAlignmentTest;
 import org.tiqian.core.TiqianIllegalArgumentException;
 import org.tiqian.core.CoreUnitsGeometryTest;
 import org.tiqian.core.CoreLayoutQueriesGapsTest;
@@ -1363,6 +1364,11 @@ class Main {
         TestTraceRecorder.flushClass("PunctuationGeometryBranchArmsCoverageTest");
         run("fullyQualifiedEmojiSequencesResolveToOneEmojiRange", UnicodeEmoji17RgiRoleAuditTest.fullyQualifiedEmojiSequencesResolveToOneEmojiRange);
         TestTraceRecorder.flushClass("UnicodeEmoji17RgiRoleAuditTest");
+        run("cjkMixedSizesAlignByIdeographicBoxBottom", BaselineAlignmentTest.cjkMixedSizesAlignByIdeographicBoxBottom);
+        run("cjkPunctuationProvidesIdeographicReferenceWithoutHanBody", BaselineAlignmentTest.cjkPunctuationProvidesIdeographicReferenceWithoutHanBody);
+        run("explicitBaselineShiftAppliesToRomanClusters", BaselineAlignmentTest.explicitBaselineShiftAppliesToRomanClusters);
+        run("latinInsideCjkUsesSharedRomanBaseline", BaselineAlignmentTest.latinInsideCjkUsesSharedRomanBaseline);
+        TestTraceRecorder.flushClass("BaselineAlignmentTest");
         Console.log("all CoreUnitsGeometryTest checks passed");
         if (failures > 0) {
             Process.exit(1);
