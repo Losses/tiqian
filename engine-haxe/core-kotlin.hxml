@@ -1,8 +1,8 @@
 # Stage A Kotlin generation entry for the translated core slice.
 -lib reflaxe
 -lib boring
--cp .haxelib/boring/git/src/reflaxe/kotlin/std-shadow
--cp .haxelib/boring/git/src/reflaxe/kotlin
+-cp .haxelib/boring/git/packages/compiler/reflaxe/kotlin/std-shadow
+-cp .haxelib/boring/git/packages/compiler/reflaxe/kotlin
 -cp .haxelib/boring/git/samples
 -cp engine-haxe/src
 -cp engine-haxe/macros
