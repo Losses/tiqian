@@ -144,4 +144,5 @@ org.tiqian.layout.LayoutDumpGoldenParityTest
 org.tiqian.layout.AttachedInlineBoundaryRelocationTest
 org.tiqian.layout.AttachedInlineBoundaryRelocationTestSupport
 org.tiqian.layout.RubyLayoutTest
-org.tiqian.layout.RubyLayoutTestSupport
+org.tiqian.layout.ParagraphShapingStageCoverageTest
+org.tiqian.layout.ParagraphShapingStageCoverageTestSupport
