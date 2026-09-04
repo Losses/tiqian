@@ -102,9 +102,10 @@ class PreparedParagraphJfTest {
             new TextSpan(new TextRange(2, 4), new TextStyle(null, 16, null, 700, false)),
             new TextSpan(new TextRange(4, 5), new TextStyle(null, 16, null, 400, true))
         ]);
+        final texts = ["甲", "乙", "丙", "丁", "戊", "己"];
         final clusters = [
             for (i in 0...6)
-                new Cluster(new TextRange(i, i + 1), ["甲", "乙", "丙", "丁", "戊", "己"][i], "k", i == 1 ? 20 : 16)
+                new Cluster(new TextRange(i, i + 1), texts[i], "k", i == 1 ? 20 : 16)
         ];
         final glyphs = [for (i in 0...6) new Glyph(i + 1, new TextRange(i, i + 1), i == 1 ? 20 : 16)];
         final r = new LayoutResult(new LayoutInput(content, new TextStyle(), null, new LayoutConstraints(200)), new Size(200, 24), clusters,

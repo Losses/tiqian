@@ -10,7 +10,8 @@ import org.tiqian.layout.ProgressiveBreakDecisions.ProgressiveBreakOpportunity;
 import org.tiqian.layout.ProgressiveBreakDecisions.ProgressiveBreakTier;
 
 class ProgressiveBreakDecisionsCoverageTest {
-    static var span = new TextRange(0, 5);
+    static function span():TextRange
+        return new TextRange(0, 5);
 
     static function c(i:Int, ?text:Null<String>, ?a:Null<Float>):Cluster
         return new Cluster(new TextRange(i, i + 1), text == null ? "中" : text, "test", a == null ? 16 : a, text == null ? "中" : text);
@@ -36,8 +37,8 @@ class ProgressiveBreakDecisionsCoverageTest {
     public static function defaultsAdmitTheCleanTierWithoutGeometryInputs():Void
         run("defaultsAdmitTheCleanTierWithoutGeometryInputs", function() {
             final bo = SortedMap.builder();
-            bo.put(1, op(ProgressiveBreakTier.Whitespace, span));
-            bo.put(2, op(ProgressiveBreakTier.Emergency, span));
+            bo.put(1, op(ProgressiveBreakTier.Whitespace, span()));
+            bo.put(2, op(ProgressiveBreakTier.Emergency, span()));
             final o = bo.build();
             TracedAssertions.assertEqualsInt(1, ProgressiveBreakDecisions.decideProgressiveBreak(0, 2, o));
             TracedAssertions.assertTrue(ProgressiveBreakDecisions.progressiveCandidateAllowed(0, 2, 3, o));
@@ -46,7 +47,7 @@ class ProgressiveBreakDecisionsCoverageTest {
     public static function lineStartAtTheOverflowBoundaryScansAnEmptyRange():Void
         run("lineStartAtTheOverflowBoundaryScansAnEmptyRange", function() {
             final bo = SortedMap.builder();
-            bo.put(2, op(ProgressiveBreakTier.Emergency, span));
+            bo.put(2, op(ProgressiveBreakTier.Emergency, span()));
             final o = bo.build();
             TracedAssertions.assertEqualsInt(2, ProgressiveBreakDecisions.decideProgressiveBreak(2, 2, o));
         });
@@ -54,28 +55,28 @@ class ProgressiveBreakDecisionsCoverageTest {
     public static function twoSameTierBoundariesPickTheRightmost():Void
         run("twoSameTierBoundariesPickTheRightmost", function() {
             final bo = SortedMap.builder();
-            bo.put(2, op(ProgressiveBreakTier.Whitespace, span));
-            bo.put(4, op(ProgressiveBreakTier.Whitespace, span));
+            bo.put(2, op(ProgressiveBreakTier.Whitespace, span()));
+            bo.put(4, op(ProgressiveBreakTier.Whitespace, span()));
             final o = bo.build();
-            TracedAssertions.assertEqualsInt(4, ProgressiveBreakDecisions.decideProgressiveBreak(0, 4, o, [for (i in 0...5) c(i)], 64, null, 8));
+            TracedAssertions.assertEqualsInt(4, ProgressiveBreakDecisions.decideProgressiveBreak(0, 4, o, [c(0), c(1), c(2), c(3), c(4)], 64, null, 8));
         });
 
     public static function visiblyLooseCleanTiersFallThroughToEmergency():Void
         run("visiblyLooseCleanTiersFallThroughToEmergency", function() {
             final bo = SortedMap.builder();
-            bo.put(2, op(ProgressiveBreakTier.Whitespace, span));
-            bo.put(4, op(ProgressiveBreakTier.Emergency, span));
+            bo.put(2, op(ProgressiveBreakTier.Whitespace, span()));
+            bo.put(4, op(ProgressiveBreakTier.Emergency, span()));
             final o = bo.build();
-            TracedAssertions.assertEqualsInt(4, ProgressiveBreakDecisions.decideProgressiveBreak(0, 4, o, [for (i in 0...5) c(i)], 200, null, 8));
+            TracedAssertions.assertEqualsInt(4, ProgressiveBreakDecisions.decideProgressiveBreak(0, 4, o, [c(0), c(1), c(2), c(3), c(4)], 200, null, 8));
         });
 
     public static function aLeftwardEmergencyBoundaryKeepsTheBestCleanTier():Void
         run("aLeftwardEmergencyBoundaryKeepsTheBestCleanTier", function() {
             final bo = SortedMap.builder();
-            bo.put(2, op(ProgressiveBreakTier.Emergency, span));
-            bo.put(4, op(ProgressiveBreakTier.Whitespace, span));
+            bo.put(2, op(ProgressiveBreakTier.Emergency, span()));
+            bo.put(4, op(ProgressiveBreakTier.Whitespace, span()));
             final o = bo.build();
-            TracedAssertions.assertEqualsInt(4, ProgressiveBreakDecisions.decideProgressiveBreak(0, 4, o, [for (i in 0...5) c(i)], 200, null, 8));
+            TracedAssertions.assertEqualsInt(4, ProgressiveBreakDecisions.decideProgressiveBreak(0, 4, o, [c(0), c(1), c(2), c(3), c(4)], 200, null, 8));
         });
 
     public static function spanEdgeAndWhitespaceClustersDoNotCountAsTechnicalUnits():Void
@@ -102,14 +103,14 @@ class ProgressiveBreakDecisionsCoverageTest {
     public static function candidateOutsideTheClusterListIsAllowed():Void
         run("candidateOutsideTheClusterListIsAllowed", function() {
             final bo = SortedMap.builder();
-            bo.put(1, op(ProgressiveBreakTier.Emergency, span));
+            bo.put(1, op(ProgressiveBreakTier.Emergency, span()));
             final o = bo.build();
             TracedAssertions.assertTrue(ProgressiveBreakDecisions.progressiveCandidateAllowed(0, 1, 5, o, [c(0)]));
         });
 
     public static function candidatesOutsideTheActiveSpanAreAllowed():Void
         run("candidatesOutsideTheActiveSpanAreAllowed", function() {
-            var cs = [for (i in 0...4) c(i)];
+            var cs = [c(0), c(1), c(2), c(3)];
             var a = new TextRange(5, 10);
             final bo = SortedMap.builder();
             bo.put(1, op(ProgressiveBreakTier.Emergency, a));
@@ -137,9 +138,9 @@ class ProgressiveBreakDecisionsCoverageTest {
     public static function sameTierPastTheRawGreedyIsAllowedAndWorseTiersAreNot():Void
         run("sameTierPastTheRawGreedyIsAllowedAndWorseTiersAreNot", function() {
             final bo = SortedMap.builder();
-            bo.put(2, op(ProgressiveBreakTier.Whitespace, span));
-            bo.put(3, op(ProgressiveBreakTier.Whitespace, span));
-            bo.put(4, op(ProgressiveBreakTier.Emergency, span));
+            bo.put(2, op(ProgressiveBreakTier.Whitespace, span()));
+            bo.put(3, op(ProgressiveBreakTier.Whitespace, span()));
+            bo.put(4, op(ProgressiveBreakTier.Emergency, span()));
             final o = bo.build();
             TracedAssertions.assertTrue(ProgressiveBreakDecisions.progressiveCandidateAllowed(0, 2, 3, o));
             TracedAssertions.assertFalse(ProgressiveBreakDecisions.progressiveCandidateAllowed(0, 2, 4, o));
@@ -148,16 +149,16 @@ class ProgressiveBreakDecisionsCoverageTest {
     public static function candidatesBeforeTheRawGreedyMustMatchTheSelectedBoundary():Void
         run("candidatesBeforeTheRawGreedyMustMatchTheSelectedBoundary", function() {
             final bo = SortedMap.builder();
-            bo.put(1, op(ProgressiveBreakTier.Whitespace, span));
-            bo.put(2, op(ProgressiveBreakTier.Whitespace, span));
-            bo.put(3, op(ProgressiveBreakTier.Emergency, span));
+            bo.put(1, op(ProgressiveBreakTier.Whitespace, span()));
+            bo.put(2, op(ProgressiveBreakTier.Whitespace, span()));
+            bo.put(3, op(ProgressiveBreakTier.Emergency, span()));
             final o = bo.build();
             TracedAssertions.assertTrue(ProgressiveBreakDecisions.progressiveCandidateAllowed(0, 3, 2, o));
             TracedAssertions.assertFalse(ProgressiveBreakDecisions.progressiveCandidateAllowed(0, 3, 1, o));
         });
 
     static function hy(n:String, limit:Float, g:SortedSet<Int>, ?s:Null<SortedSet<Int>>, ?cap:Null<Float>):Int {
-        var cs = [for (i in 0...4) c(i)];
+        var cs = [c(0), c(1), c(2), c(3)];
         return ProgressiveBreakDecisions.decideHyphenBreak(0, 3, cs, limit, m([3]), g, 8, s, cap);
     }
 

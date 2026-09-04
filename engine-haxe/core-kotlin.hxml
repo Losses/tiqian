@@ -168,10 +168,14 @@ org.tiqian.clreq.NumberSymbolCohesionTest
 org.tiqian.clreq.PunctuationGluePlacementTest
 org.tiqian.font.CjkDashCapabilityPolicyTest
 org.tiqian.font.CjkFontRoleClassifierTest
+org.tiqian.font.CjkFontRoleClassifierTestSupport
 org.tiqian.font.FontPolicyCoverageTest
+org.tiqian.font.FontPolicyCoverageTestSupport
 org.tiqian.font.FontRoleTailCoverageTest
 org.tiqian.font.InlineShapingStylePolicyTest
+org.tiqian.font.InlineShapingStylePolicyTestSupport
 org.tiqian.font.ScriptAwareFontMetricsNormalizerTest
+org.tiqian.font.ScriptAwareFontMetricsNormalizerTestSupport
 org.tiqian.font.UsesLatinFaceTest
 org.tiqian.layout.DecideHyphenBreakTest
 org.tiqian.layout.PreparedParagraphInlineEdgesTest
@@ -189,6 +193,8 @@ org.tiqian.linebreak.MandatoryBreakTest
 org.tiqian.linebreak.UnicodePunctuationLineBreakCoverageTest
 org.tiqian.linebreak.UnicodePunctuationLineBreakTest
 org.tiqian.shaping.ExplainableStubTextShaperTest
+org.tiqian.shaping.ExplainableStubTextShaperTestSupport
 org.tiqian.shaping.TextShaperCoverageTest
+org.tiqian.shaping.TextShaperCoverageTestSupport
 org.tiqian.layout.PushInLineWideCapacityTest
 org.tiqian.layout.PushInLineWideCapacityTestSupport
