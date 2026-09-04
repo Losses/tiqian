@@ -1,6 +1,7 @@
 package org.tiqian.layout;
 
 import org.tiqian.core.*;
+import org.tiqian.test.TestHelpers;
 import org.tiqian.test.trace.*;
 import org.tiqian.layout.LineAdjustmentStageCoverageTestSupport.ZeroSpaceShaper;
 
@@ -205,7 +206,7 @@ class LineAdjustmentStageCoverageTest {
         t.section("tinyTechnicalTrackingStaysBelowTheRejectionThreshold");
         final text = "\u4E2D\u4E2D\u4E2D\u4E2D\u4E2D\u4E2D aaaa";
         final span = [new LineBreakSpan(new TextRange(0, LineAdjustmentStageCoverageTestSupport.textLength(text)), LineBreakPolicy.ProgressiveTechnical)];
-        final tiny = LineAdjustmentStageCoverageTestSupport.layout(text, 96.004, null, null, span);
+        final tiny = LineAdjustmentStageCoverageTestSupport.layout(text, TestHelpers.f32Literal(96.004), null, null, span);
         TracedAssertions.assertEqualsIntRange(new IntRange(0, 5), tiny.lines[0].clusterRange, LineAdjustmentStageCoverageTestSupport.renderLines(tiny.lines));
         final deltas = LineAdjustmentStageCoverageTestSupport.allocationDeltas(tiny, "CjkInterChar");
         TracedAssertions.assertTrue(deltas.length > 0, LineAdjustmentStageCoverageTestSupport.renderJustifications(tiny.debug.justificationDecisions));
