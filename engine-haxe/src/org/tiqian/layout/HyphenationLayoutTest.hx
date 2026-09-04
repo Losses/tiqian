@@ -22,7 +22,7 @@ class HyphenationLayoutTest {
     @:test public static function hyphenIsReservedWithinTheMeasureNotHungPastIt():Void {
         final t=new TestTraceRecorder("HyphenationLayoutTest"); t.section("hyphenIsReservedWithinTheMeasureNotHungPastIt");
         final h=HyphenationLayoutTestSupport.layoutWith(EnglishHyphenation.enUs(),"请运行 internationalization 命令",160); var line:LineBox = h.lines[0];
-        for (i in 0...h.lines.length) if (h.lines[i].hyphenAdvance>0) line=h.lines[i];
+        for (i in 0...h.lines.length) if (h.lines[i].hyphenAdvance>0) { line=h.lines[i]; break; }
         TracedAssertions.assertTrue(line.indent+line.visualWidth+line.hyphenAdvance<=160+0.01,"hyphen hung past the measure: "+(line.indent+line.visualWidth+line.hyphenAdvance));
     }
     @:test public static function hyphenationIsOnByDefault():Void {
