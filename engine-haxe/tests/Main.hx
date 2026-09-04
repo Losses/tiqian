@@ -1575,8 +1575,6 @@ class Main {
         run("numberWithSuffixSymbolNeverSplitsAcrossLines", org.tiqian.layout.KinsokuAndCohesionRepairEngineTest.numberWithSuffixSymbolNeverSplitsAcrossLines);
         run("ordinaryNumericFormsDoNotBecomeBibliographicLocators", org.tiqian.layout.KinsokuAndCohesionRepairEngineTest.ordinaryNumericFormsDoNotBecomeBibliographicLocators);
         TestTraceRecorder.flushClass("KinsokuAndCohesionRepairEngineTest");
-org.tiqian.layout.EmergencyGraphemeTrackingTest
-org.tiqian.layout.WidthIndependentAnnotationCacheTest
         run("hashPieceInsideTechnicalUrlSkipsSyllableClassification", org.tiqian.layout.EmergencyGraphemeTrackingTest.hashPieceInsideTechnicalUrlSkipsSyllableClassification);
         run("longAllCapsWesternWordDoesNotBecomeTrackingEligible", org.tiqian.layout.EmergencyGraphemeTrackingTest.longAllCapsWesternWordDoesNotBecomeTrackingEligible);
         run("ordinaryWesternProseIsNeverInferredAsTrackingEligible", org.tiqian.layout.EmergencyGraphemeTrackingTest.ordinaryWesternProseIsNeverInferredAsTrackingEligible);
