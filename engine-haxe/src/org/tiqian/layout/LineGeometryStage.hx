@@ -86,62 +86,146 @@ import org.tiqian.layout.LineOptimization.LineCandidate;
     }
 }
 
+class RubyClusterRange {
+    public final ruby:RubySpan;
+    public final range:IntRange;
+    public function new(ruby:RubySpan, range:IntRange) {
+        this.ruby = ruby;
+        this.range = range;
+    }
+}
+
 class LineGeometryStageFns {
     public static function resolveLineVerticalGeometry(input:LayoutInput, fontSize:Float, pinyinSpans:Array<RubySpan>, naturalClusters:Array<Cluster>,
             lineSolution:LineSolution, rubyFontGeometryBySpan:std.SortedMap<RubySpan, RubyFontGeometry>, existingInterlineSpace:Float,
             baseLineMetrics:ResolvedLineMetrics, baseFaceHeight:Float, rubyExtent:Float, inlineObjectByClusterIndex:Map<Int, InlineObjectSpan>,
             baseAscent:Float, baseDescent:Float):LineVerticalGeometryStageResult {
-        final ext:Array<Float> = [];
+        return resolveLineVerticalGeometrySorted(input, fontSize, pinyinSpans, naturalClusters, lineSolution, rubyFontGeometryBySpan,
+            existingInterlineSpace, baseLineMetrics, baseFaceHeight, rubyExtent, null, baseAscent, baseDescent);
+    }
+
+    public static function resolveLineVerticalGeometrySorted(input:LayoutInput, fontSize:Float, pinyinSpans:Array<RubySpan>, naturalClusters:Array<Cluster>,
+            lineSolution:LineSolution, rubyFontGeometryBySpan:std.SortedMap<RubySpan, RubyFontGeometry>, existingInterlineSpace:Float,
+            baseLineMetrics:ResolvedLineMetrics, baseFaceHeight:Float, rubyExtent:Float, inlineObjectByClusterIndex:std.SortedMap<Int, InlineObjectSpan>,
+            baseAscent:Float, baseDescent:Float):LineVerticalGeometryStageResult {
+        final pinyinClusterRanges:Array<RubyClusterRange> = [];
+        for (ruby in pinyinSpans) {
+            final range = clusterIndexRangeFor(naturalClusters, ruby.baseRange);
+            if (range != null)
+                pinyinClusterRanges.push(new RubyClusterRange(ruby, range));
+        }
+        final perLineRubyExtent:Array<Float> = [];
         for (line in lineSolution.lines) {
-            var x = 0.0;
-            for (ruby in pinyinSpans) {
-                final range = clusterIndexRangeFor(naturalClusters, ruby.baseRange);
-                if (range != null
-                    && range.start <= line.clusterRange.end
-                    && range.end >= line.clusterRange.start
-                    && rubyFontGeometryBySpan.has(ruby))
-                    x = Math.max(x, rubyFontGeometryBySpan.get(ruby).requiredExtent);
+            var required = 0.0;
+            for (pair in pinyinClusterRanges) {
+                if (pair.range.start <= line.clusterRange.end && pair.range.end >= line.clusterRange.start
+                    && rubyFontGeometryBySpan.has(pair.ruby))
+                    required = Math.max(required, rubyFontGeometryBySpan.get(pair.ruby).requiredExtent);
             }
-            ext.push(x);
+            perLineRubyExtent.push(required);
         }
-        final extras = ext.map(x -> Math.max(0, x - existingInterlineSpace));
-        var maxDeficit = 0.0;
-        for (x in extras)
-            if (x > maxDeficit)
-                maxDeficit = x;
-        var uniform = false;
-        switch (input.paragraphStyle.rubyLineHeightMode) {
-            case PerLine:
-                uniform = false;
-            case UniformParagraph:
-                uniform = true;
+        final perLineRubyDeficit = perLineRubyExtent.map(x -> Math.max(0, x - existingInterlineSpace));
+        var paragraphRubyDeficit = 0.0;
+        for (x in perLineRubyDeficit)
+            paragraphRubyDeficit = Math.max(paragraphRubyDeficit, x);
+        final uniform = input.paragraphStyle.rubyLineHeightMode == RubyLineHeightMode.UniformParagraph;
+        var paragraphRubyExtent = 0.0;
+        for (x in perLineRubyExtent)
+            paragraphRubyExtent = Math.max(paragraphRubyExtent, x);
+        final lineRubyTopExtra:Array<Float> = [];
+        final lineRubyInterlineDemand:Array<Float> = [];
+        for (i in 0...lineSolution.lines.length) {
+            lineRubyTopExtra.push(uniform ? paragraphRubyDeficit : perLineRubyDeficit[i]);
+            lineRubyInterlineDemand.push(uniform ? paragraphRubyExtent : perLineRubyExtent[i]);
         }
-        final topExtras:Array<Float> = [];
-        for (i in 0...extras.length) topExtras.push(uniform ? maxDeficit : extras[i]);
-        final baselines:Array<Float> = [];
-        final tops:Array<Float> = [];
-        final bottoms:Array<Float> = [];
-        for (i in 0...ext.length) {
-            baselines.push((i == 0 ? baseLineMetrics.baseline : baselines[i - 1] + baseLineMetrics.height) + topExtras[i]);
-            tops.push(i == 0 ? 0 : bottoms[i - 1]);
-            bottoms.push(baselines[i] + baseLineMetrics.height - baseLineMetrics.baseline);
-        }
-        var hasExtra = false;
-        for (x in topExtras)
-            if (x > 0)
-                hasExtra = true;
         var maxExtra = 0.0;
-        for (x in topExtras)
-            if (x > maxExtra)
-                maxExtra = x;
-        final expanded:Array<Int> = [];
-        for (i in 0...topExtras.length)
-            if (topExtras[i] > 0)
-                expanded.push(i);
-        final reason = hasExtra ? "ConditionalRubyLineHeight" : "ExistingInterlineSpaceFitsRuby";
+        final expandedRuby:Array<Int> = [];
+        for (i in 0...lineRubyTopExtra.length) {
+            maxExtra = Math.max(maxExtra, lineRubyTopExtra[i]);
+            if (lineRubyTopExtra[i] > 0)
+                expandedRuby.push(i);
+        }
+        var hasRubyExtra = expandedRuby.length > 0;
+        final rubyReason = hasRubyExtra ? "ConditionalRubyLineHeight" : "ExistingInterlineSpaceFitsRuby";
         final rd = pinyinSpans.length == 0 ? null : new RubyLineHeightDecisionInfo(Type.enumConstructor(input.paragraphStyle.rubyLineHeightMode),
-            baseLineMetrics.height, baseFaceHeight, rubyExtent, existingInterlineSpace, maxExtra, topExtras, expanded, reason);
-        return new LineVerticalGeometryStageResult(rd, null, baselines, tops, bottoms);
+            baseLineMetrics.height, baseFaceHeight, rubyExtent, existingInterlineSpace, maxExtra, lineRubyTopExtra, expandedRuby, rubyReason);
+
+        final baseTopExtent = baseLineMetrics.baseline;
+        final baseBottomExtent = baseLineMetrics.height - baseLineMetrics.baseline;
+        final lineObjectAscent:Array<Float> = [];
+        final lineObjectDescent:Array<Float> = [];
+        for (line in lineSolution.lines) {
+            var ascent = 0.0;
+            var descent = 0.0;
+            var idx = line.clusterRange.start;
+            while (idx <= line.clusterRange.end) {
+                if (inlineObjectByClusterIndex != null && inlineObjectByClusterIndex.has(idx)) {
+                    final obj = inlineObjectByClusterIndex.get(idx);
+                    ascent = Math.max(ascent, obj.ascent);
+                    descent = Math.max(descent, obj.descent);
+                }
+                idx++;
+            }
+            lineObjectAscent.push(ascent);
+            lineObjectDescent.push(descent);
+        }
+        final lineObjectTopIntrusion = lineObjectAscent.map(x -> Math.max(0, x - baseAscent));
+        final lineObjectBottomIntrusion = lineObjectDescent.map(x -> Math.max(0, x - baseDescent));
+        final minimumClearance = input.paragraphStyle.inlineObjectMinimumClearanceEm * fontSize;
+        final combinedLineExtra:Array<Float> = [];
+        for (i in 0...lineSolution.lines.length) {
+            if (i == 0) {
+                combinedLineExtra.push(Math.max(lineRubyTopExtra[i], Math.max(0, lineObjectAscent[i] - baseTopExtent)));
+            } else {
+                final topDemand = Math.max(lineRubyInterlineDemand[i], lineObjectTopIntrusion[i]);
+                final intrudes = lineObjectBottomIntrusion[i - 1] > 0
+                    || (lineObjectTopIntrusion[i] > 0 && lineObjectTopIntrusion[i] >= lineRubyInterlineDemand[i]);
+                final clearance = intrudes ? minimumClearance : 0.0;
+                combinedLineExtra.push(Math.max(0, lineObjectBottomIntrusion[i - 1] + topDemand + clearance - existingInterlineSpace));
+            }
+        }
+        final objectLineExtra:Array<Float> = [];
+        for (i in 0...combinedLineExtra.length)
+            objectLineExtra.push(Math.max(0, combinedLineExtra[i] - lineRubyTopExtra[i]));
+        final baselines:Array<Float> = [];
+        if (lineSolution.lines.length > 0) {
+            baselines.push(baseLineMetrics.baseline + combinedLineExtra[0]);
+            for (i in 1...lineSolution.lines.length)
+                baselines.push(baselines[i - 1] + baseLineMetrics.height + combinedLineExtra[i]);
+        }
+        final tops:Array<Float> = [for (i in 0...lineSolution.lines.length) 0.0];
+        final bottoms:Array<Float> = [for (i in 0...lineSolution.lines.length) 0.0];
+        final boundaryCount:Int = lineSolution.lines.length > 1 ? lineSolution.lines.length - 1 : 0;
+        final boundaryShifts:Array<Float> = [for (i in 0...boundaryCount) 0.0];
+        for (i in 0...boundaryCount) {
+            final current = Math.max(baseDescent, lineObjectDescent[i]);
+            final boundaryExtent = resolveInlineObjectLineBoundaryExtent(baseBottomExtent, current,
+                baselines[i + 1] - baselines[i], Math.max(baseAscent, lineObjectAscent[i + 1]));
+            final nominal = baselines[i] + baseBottomExtent;
+            var boundary = baselines[i] + boundaryExtent;
+            if (std.Math.abs(boundary - std.Math.round(boundary)) < 0.0001)
+                boundary = std.Math.round(boundary);
+            bottoms[i] = boundary;
+            tops[i + 1] = boundary;
+            boundaryShifts[i] = boundary - nominal;
+        }
+        final trailing = lineSolution.lines.length == 0 ? 0.0 : Math.max(0, lineObjectDescent[lineObjectDescent.length - 1] - baseBottomExtent);
+        if (lineSolution.lines.length > 0) {
+            var lastBottom = baselines[baselines.length - 1] + baseBottomExtent + trailing;
+            if (std.Math.abs(lastBottom - std.Math.round(lastBottom)) < 0.0001)
+                lastBottom = std.Math.round(lastBottom);
+            bottoms[bottoms.length - 1] = lastBottom;
+        }
+        final objectIndices:Array<Int> = [];
+        for (i in 0...objectLineExtra.length)
+            if (objectLineExtra[i] > 0) objectIndices.push(i);
+        var hasInlineObjects = false;
+        if (inlineObjectByClusterIndex != null)
+            hasInlineObjects = inlineObjectByClusterIndex.size() > 0;
+        final iod = hasInlineObjects ? new InlineObjectLineHeightDecisionInfo(baseLineMetrics.height, baseAscent, baseDescent,
+            existingInterlineSpace, minimumClearance, lineObjectAscent, lineObjectDescent, objectLineExtra, boundaryShifts, trailing, objectIndices,
+            objectIndices.length == 0 && trailing == 0 ? "ExistingInterlineSpaceFitsInlineObjects" : "InlineObjectInterlineCollision") : null;
+        return new LineVerticalGeometryStageResult(rd, iod, baselines, tops, bottoms);
     }
 
     public static function lineMetrics(self:Array<ClusterMetricDecision>, explicitLineHeight:Null<Float>, defaultLineHeight:Float,
@@ -160,14 +244,12 @@ class LineGeometryStageFns {
         var src = self.filter(x -> x.layoutMetrics.metricBox == MetricBox.IdeographicEmBox);
         if (src.length == 0)
             src = self;
-        var ideographicAscent = src[0].layoutMetrics.ascent;
-        var ideographicDescent = src[0].layoutMetrics.descent;
+        var a = src[0].layoutMetrics.ascent;
+        var d = src[0].layoutMetrics.descent;
         for (x in src) {
-            ideographicAscent = Math.max(ideographicAscent, x.layoutMetrics.ascent);
-            ideographicDescent = Math.max(ideographicDescent, x.layoutMetrics.descent);
+            a = Math.max(a, x.layoutMetrics.ascent);
+            d = Math.max(d, x.layoutMetrics.descent);
         }
-        var a = ideographicAscent;
-        var d = ideographicDescent;
         final natural = a + d;
         var requestedValue = defaultLineHeight;
         if (explicitLineHeight != null)

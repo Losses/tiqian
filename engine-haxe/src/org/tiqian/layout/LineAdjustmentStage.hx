@@ -768,9 +768,8 @@ class LineAdjustmentStage {
             }
             glyphRuns.push(new GlyphRun(new TextRange(firstC.range.start, lastC.range.end), firstC.fontKey, runGlyphs, runAdvance, openTypeFeatures));
         }
-
-        final verticalGeometry = LineGeometryStageFns.resolveLineVerticalGeometry(prep.input, prep.fontSize, prep.pinyinSpans, prep.naturalClusters,
-            plan.lineSolution, prep.rubyFontGeometryBySpan, plan.existingInterlineSpace, plan.baseLineMetrics, plan.baseFaceHeight, plan.rubyExtent, null,
+        final verticalGeometry = LineGeometryStageFns.resolveLineVerticalGeometrySorted(prep.input, prep.fontSize, prep.pinyinSpans, prep.naturalClusters,
+            plan.lineSolution, prep.rubyFontGeometryBySpan, plan.existingInterlineSpace, plan.baseLineMetrics, plan.baseFaceHeight, plan.rubyExtent, prep.inlineObjectByClusterIndex,
             plan.baseAscent, plan.baseDescent);
         final rubyLineHeightDecision = verticalGeometry.rubyLineHeightDecision;
         final inlineObjectLineHeightDecision = verticalGeometry.inlineObjectLineHeightDecision;
