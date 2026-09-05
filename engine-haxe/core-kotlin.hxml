@@ -203,3 +203,6 @@ org.tiqian.layout.PunctuationGeometryEngineTest
 org.tiqian.layout.PunctuationGeometryEngineTestSupport
 org.tiqian.layout.SpacingAndLineGeometryEngineTest
 org.tiqian.layout.SpacingAndLineGeometryEngineTestSupport
+org.tiqian.test.ShapingEvidence
+org.tiqian.test.ShapingEvidenceJson
+org.tiqian.layout.RecordedEvidenceGoldenParityTest
