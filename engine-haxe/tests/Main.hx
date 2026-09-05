@@ -1712,6 +1712,27 @@ class Main {
         run("styleAtAndEmphasisItalicAtAndDynamicShapingBranches", org.tiqian.layout.WidthIndependentAnnotationCacheCoverageTest.styleAtAndEmphasisItalicAtAndDynamicShapingBranches);
         run("verbatimRangesAndAutoSpaceDecisions", org.tiqian.layout.WidthIndependentAnnotationCacheCoverageTest.verbatimRangesAndAutoSpaceDecisions);
         TestTraceRecorder.flushClass("WidthIndependentAnnotationCacheCoverageTest");
+        run("lineBoundaryClosesOneUlpGapWithoutChangingBaselineDistance", org.tiqian.layout.InlineObjectLayoutTest.lineBoundaryClosesOneUlpGapWithoutChangingBaselineDistance);
+        run("inlineObjectUsesExistingInterlineSpaceWithoutMovingBaselines", org.tiqian.layout.InlineObjectLayoutTest.inlineObjectUsesExistingInterlineSpaceWithoutMovingBaselines);
+        run("inlineObjectExpandsBaselineGapOnlyForActualCollision", org.tiqian.layout.InlineObjectLayoutTest.inlineObjectExpandsBaselineGapOnlyForActualCollision);
+        run("inlineObjectSkipsFontShapingAndExpandsItsOwnLineMetrics", org.tiqian.layout.InlineObjectLayoutTest.inlineObjectSkipsFontShapingAndExpandsItsOwnLineMetrics);
+        run("inlineObjectIsOneIndivisibleBreakCluster", org.tiqian.layout.InlineObjectLayoutTest.inlineObjectIsOneIndivisibleBreakCluster);
+        run("inlineObjectKeepsAlternateSourceTextWhileSkippingItsGlyphShaping", org.tiqian.layout.InlineObjectLayoutTest.inlineObjectKeepsAlternateSourceTextWhileSkippingItsGlyphShaping);
+        run("formulaBoundaryCompressionPushesAttachedCommaIntoPreviousLine", org.tiqian.layout.InlineObjectLayoutTest.formulaBoundaryCompressionPushesAttachedCommaIntoPreviousLine);
+        run("adjustBreakForUnbreakablesRetreatsPastTheWholeContiguousRun", org.tiqian.layout.InlineObjectLayoutTest.adjustBreakForUnbreakablesRetreatsPastTheWholeContiguousRun);
+        run("perAtomFormulaChainNeverBreaksMidRun", org.tiqian.layout.InlineObjectLayoutTest.perAtomFormulaChainNeverBreaksMidRun);
+        run("punctuationAttachedToInlineObjectNeverStartsWrappedLine", org.tiqian.layout.InlineObjectLayoutTest.punctuationAttachedToInlineObjectNeverStartsWrappedLine);
+        run("separatorSpaceBeforePunctuationCollapsesAndStaysWithInlineObject", org.tiqian.layout.InlineObjectLayoutTest.separatorSpaceBeforePunctuationCollapsesAndStaysWithInlineObject);
+        run("relationStretchMovesBothFormulaSidesByTheSameFinalGeometry", org.tiqian.layout.InlineObjectLayoutTest.relationStretchMovesBothFormulaSidesByTheSameFinalGeometry);
+        run("formulaBreakKeepsBaselineOperatorOnPreviousLine", org.tiqian.layout.InlineObjectLayoutTest.formulaBreakKeepsBaselineOperatorOnPreviousLine);
+        TestTraceRecorder.flushClass("InlineObjectLayoutTest");
+        run("plainParagraphEvidenceIsAppendOnly", org.tiqian.layout.PreparedParagraphRenderEvidenceTest.plainParagraphEvidenceIsAppendOnly);
+        run("pinyinRubyEmitsRubyDecisions", org.tiqian.layout.PreparedParagraphRenderEvidenceTest.pinyinRubyEmitsRubyDecisions);
+        run("bopomofoRubyEmitsBopomofoDecisions", org.tiqian.layout.PreparedParagraphRenderEvidenceTest.bopomofoRubyEmitsBopomofoDecisions);
+        run("decorationsEmitSegmentsDotsAndRanges", org.tiqian.layout.PreparedParagraphRenderEvidenceTest.decorationsEmitSegmentsDotsAndRanges);
+        run("styleDeltaEmitsPerCellStyleBlock", org.tiqian.layout.PreparedParagraphRenderEvidenceTest.styleDeltaEmitsPerCellStyleBlock);
+        run("inlineBoxesEmitInlineEdges", org.tiqian.layout.PreparedParagraphRenderEvidenceTest.inlineBoxesEmitInlineEdges);
+        TestTraceRecorder.flushClass("PreparedParagraphRenderEvidenceTest");
 
         run("appliesAdjacentPunctuationCompressionToDrawableGeometry", org.tiqian.layout.PunctuationGeometryEngineTest.appliesAdjacentPunctuationCompressionToDrawableGeometry);
         run("buildsTwoEmPunctuationAtomForRecommendedDashCodepoint", org.tiqian.layout.PunctuationGeometryEngineTest.buildsTwoEmPunctuationAtomForRecommendedDashCodepoint);
