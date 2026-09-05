@@ -150,8 +150,12 @@ class LineGeometryStageFns {
         final rd = pinyinSpans.length == 0 ? null : new RubyLineHeightDecisionInfo(Type.enumConstructor(input.paragraphStyle.rubyLineHeightMode),
             baseLineMetrics.height, baseFaceHeight, rubyExtent, existingInterlineSpace, maxExtra, lineRubyTopExtra, expandedRuby, rubyReason);
 
-        final baseTopExtent = baseLineMetrics.baseline;
-        final baseBottomExtent = baseLineMetrics.height - baseLineMetrics.baseline;
+        final baseBaseline = f32(baseLineMetrics.baseline);
+        final baseHeight = f32(baseLineMetrics.height);
+        final baseTopExtent = baseBaseline;
+        final baseBottomExtent = f32(baseHeight - baseBaseline);
+        final fBaseAscent = f32(baseAscent);
+        final fBaseDescent = f32(baseDescent);
         final lineObjectAscent:Array<Float> = [];
         final lineObjectDescent:Array<Float> = [];
         for (line in lineSolution.lines) {
@@ -161,61 +165,55 @@ class LineGeometryStageFns {
             while (idx <= line.clusterRange.end) {
                 if (inlineObjectByClusterIndex != null && inlineObjectByClusterIndex.has(idx)) {
                     final obj = inlineObjectByClusterIndex.get(idx);
-                    ascent = Math.max(ascent, obj.ascent);
-                    descent = Math.max(descent, obj.descent);
+                    ascent = Math.max(ascent, f32(obj.ascent));
+                    descent = Math.max(descent, f32(obj.descent));
                 }
                 idx++;
             }
             lineObjectAscent.push(ascent);
             lineObjectDescent.push(descent);
         }
-        final lineObjectTopIntrusion = lineObjectAscent.map(x -> Math.max(0, x - baseAscent));
-        final lineObjectBottomIntrusion = lineObjectDescent.map(x -> Math.max(0, x - baseDescent));
-        final minimumClearance = input.paragraphStyle.inlineObjectMinimumClearanceEm * fontSize;
+        final lineObjectTopIntrusion = lineObjectAscent.map(x -> Math.max(0, f32(x - fBaseAscent)));
+        final lineObjectBottomIntrusion = lineObjectDescent.map(x -> Math.max(0, f32(x - fBaseDescent)));
+        final minimumClearance = f32(f32(input.paragraphStyle.inlineObjectMinimumClearanceEm) * f32(fontSize));
         final combinedLineExtra:Array<Float> = [];
         for (i in 0...lineSolution.lines.length) {
             if (i == 0) {
-                combinedLineExtra.push(Math.max(lineRubyTopExtra[i], Math.max(0, lineObjectAscent[i] - baseTopExtent)));
+                combinedLineExtra.push(Math.max(f32(lineRubyTopExtra[i]), Math.max(0, f32(lineObjectAscent[i] - baseTopExtent))));
             } else {
-                final topDemand = Math.max(lineRubyInterlineDemand[i], lineObjectTopIntrusion[i]);
+                final topDemand = Math.max(f32(lineRubyInterlineDemand[i]), lineObjectTopIntrusion[i]);
                 final intrudes = lineObjectBottomIntrusion[i - 1] > 0
                     || (lineObjectTopIntrusion[i] > 0 && lineObjectTopIntrusion[i] >= lineRubyInterlineDemand[i]);
                 final clearance = intrudes ? minimumClearance : 0.0;
-                combinedLineExtra.push(Math.max(0, lineObjectBottomIntrusion[i - 1] + topDemand + clearance - existingInterlineSpace));
+                combinedLineExtra.push(Math.max(0, f32(f32(f32(lineObjectBottomIntrusion[i - 1] + topDemand) + clearance) - f32(existingInterlineSpace))));
             }
         }
         final objectLineExtra:Array<Float> = [];
         for (i in 0...combinedLineExtra.length)
-            objectLineExtra.push(Math.max(0, combinedLineExtra[i] - lineRubyTopExtra[i]));
+            objectLineExtra.push(Math.max(0, f32(combinedLineExtra[i] - f32(lineRubyTopExtra[i]))));
         final baselines:Array<Float> = [];
         if (lineSolution.lines.length > 0) {
-            baselines.push(baseLineMetrics.baseline + combinedLineExtra[0]);
+            baselines.push(f32(baseBaseline + combinedLineExtra[0]));
             for (i in 1...lineSolution.lines.length)
-                baselines.push(baselines[i - 1] + baseLineMetrics.height + combinedLineExtra[i]);
+                baselines.push(f32(f32(baselines[i - 1] + baseHeight) + combinedLineExtra[i]));
         }
         final tops:Array<Float> = [for (i in 0...lineSolution.lines.length) 0.0];
         final bottoms:Array<Float> = [for (i in 0...lineSolution.lines.length) 0.0];
         final boundaryCount:Int = lineSolution.lines.length > 1 ? lineSolution.lines.length - 1 : 0;
         final boundaryShifts:Array<Float> = [for (i in 0...boundaryCount) 0.0];
         for (i in 0...boundaryCount) {
-            final current = Math.max(baseDescent, lineObjectDescent[i]);
+            final current = Math.max(fBaseDescent, lineObjectDescent[i]);
             final boundaryExtent = resolveInlineObjectLineBoundaryExtent(baseBottomExtent, current,
-                baselines[i + 1] - baselines[i], Math.max(baseAscent, lineObjectAscent[i + 1]));
-            final nominal = baselines[i] + baseBottomExtent;
-            var boundary = baselines[i] + boundaryExtent;
-            if (std.Math.abs(boundary - std.Math.round(boundary)) < 0.0001)
-                boundary = std.Math.round(boundary);
+                f32(baselines[i + 1] - baselines[i]), Math.max(fBaseAscent, lineObjectAscent[i + 1]));
+            final nominal = f32(baselines[i] + baseBottomExtent);
+            final boundary = f32(baselines[i] + boundaryExtent);
             bottoms[i] = boundary;
             tops[i + 1] = boundary;
-            boundaryShifts[i] = boundary - nominal;
+            boundaryShifts[i] = f32(boundary - nominal);
         }
-        final trailing = lineSolution.lines.length == 0 ? 0.0 : Math.max(0, lineObjectDescent[lineObjectDescent.length - 1] - baseBottomExtent);
-        if (lineSolution.lines.length > 0) {
-            var lastBottom = baselines[baselines.length - 1] + baseBottomExtent + trailing;
-            if (std.Math.abs(lastBottom - std.Math.round(lastBottom)) < 0.0001)
-                lastBottom = std.Math.round(lastBottom);
-            bottoms[bottoms.length - 1] = lastBottom;
-        }
+        final trailing = lineSolution.lines.length == 0 ? 0.0 : Math.max(0, f32(lineObjectDescent[lineObjectDescent.length - 1] - baseBottomExtent));
+        if (lineSolution.lines.length > 0)
+            bottoms[bottoms.length - 1] = f32(f32(baselines[baselines.length - 1] + baseBottomExtent) + trailing);
         final objectIndices:Array<Int> = [];
         for (i in 0...objectLineExtra.length)
             if (objectLineExtra[i] > 0) objectIndices.push(i);
@@ -259,10 +257,17 @@ class LineGeometryStageFns {
         return new ResolvedLineMetrics(a + (h - natural) / 2, h, h - natural);
     }
 
+    // Kotlin stores every line-geometry operand as Float; the JS test bundle
+    // keeps the widened f64, so each Float op must snap back to the f32 grid
+    // to reproduce the Kotlin arithmetic chain.
+    static function f32(v:Float):Float {
+        return haxe.io.FPHelper.i32ToFloat(haxe.io.FPHelper.floatToI32(v));
+    }
+
     public static function resolveInlineObjectLineBoundaryExtent(nominalBoundaryExtent:Float, currentContentBottomExtent:Float, baselineDistance:Float,
             nextContentTopExtent:Float):Float {
         return Math.max(currentContentBottomExtent,
-            Math.min(nominalBoundaryExtent, Math.max(currentContentBottomExtent, baselineDistance - nextContentTopExtent)));
+            Math.min(nominalBoundaryExtent, Math.max(currentContentBottomExtent, f32(baselineDistance - nextContentTopExtent))));
     }
 
     public static function clusterIndexRangeFor(self:Array<Cluster>, r:TextRange):Null<IntRange> {
