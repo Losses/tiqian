@@ -67,7 +67,7 @@ import org.tiqian.core.TiqianIllegalArgumentException;
 import std.SortedSet;
 import std.SortedMap;
 
-@:dataClass class ParagraphLayoutPrep {
+class ParagraphLayoutPrep {
     public final input:LayoutInput;
     public final rejectedTechnicalTiersBySpan:std.SortedMap<TextRange, std.SortedSet<Int>>;
     public final text:String;
