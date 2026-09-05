@@ -1,3 +1,4 @@
+import org.tiqian.layout.QuoteClassificationEngineTest;
 import org.tiqian.layout.LineGeometryDirectTailTest;
 import org.tiqian.layout.PunctuationGeometryLedgerCoverageTest;
 import org.tiqian.layout.PunctuationSpacingRuleTest;
@@ -1643,6 +1644,37 @@ class Main {
         run("testInlineObjectKinsokuLineStart", org.tiqian.layout.LineBreakPlanningStageCoverage2Test.testInlineObjectKinsokuLineStart);
         run("testProgressiveBreakOffsetsUnmappedClusterIndex", org.tiqian.layout.LineBreakPlanningStageCoverage2Test.testProgressiveBreakOffsetsUnmappedClusterIndex);
         TestTraceRecorder.flushClass("LineBreakPlanningStageCoverage2Test");
+        run("keepsLatinTechnicalPunctuationInLatinRun", QuoteClassificationEngineTest.keepsLatinTechnicalPunctuationInLatinRun);
+        run("classifiesAsciiBracketsAsLatinRegardlessOfSurroundingContext", QuoteClassificationEngineTest.classifiesAsciiBracketsAsLatinRegardlessOfSurroundingContext);
+        run("classifiesAsciiBracketsAsLatinInsidePureCjkContent", QuoteClassificationEngineTest.classifiesAsciiBracketsAsLatinInsidePureCjkContent);
+        run("asciiClosingBracketWithCjkInteriorIsForbiddenAtLineStart", QuoteClassificationEngineTest.asciiClosingBracketWithCjkInteriorIsForbiddenAtLineStart);
+        run("asciiOpeningBracketWithCjkInteriorIsForbiddenAtLineEnd", QuoteClassificationEngineTest.asciiOpeningBracketWithCjkInteriorIsForbiddenAtLineEnd);
+        run("keepsTextStartLatinQuotePairInLatinRun", QuoteClassificationEngineTest.keepsTextStartLatinQuotePairInLatinRun);
+        run("mixedQuoteContextsReachTheFontAndPunctuationPipeline", QuoteClassificationEngineTest.mixedQuoteContextsReachTheFontAndPunctuationPipeline);
+        run("quoteRolesSurviveStyleAndSourceBoundaries", QuoteClassificationEngineTest.quoteRolesSurviveStyleAndSourceBoundaries);
+        run("adjacentQuotedListItemsKeepCjkQuoteGeometryAcrossMixedContent", QuoteClassificationEngineTest.adjacentQuotedListItemsKeepCjkQuoteGeometryAcrossMixedContent);
+        run("mi10sAdjacentLatinTranscriptionsKeepTheFinalQuotePairInCjkContext", QuoteClassificationEngineTest.mi10sAdjacentLatinTranscriptionsKeepTheFinalQuotePairInCjkContext);
+        run("skipsNeutralDashBeforeLatinQuotePairInLayout", QuoteClassificationEngineTest.skipsNeutralDashBeforeLatinQuotePairInLayout);
+        run("keepsSlashLedLatinTechnicalRunOutOfCjkPunctuationGeometry", QuoteClassificationEngineTest.keepsSlashLedLatinTechnicalRunOutOfCjkPunctuationGeometry);
+        run("recordsRoleOverridesForResolvedQuotePairs", QuoteClassificationEngineTest.recordsRoleOverridesForResolvedQuotePairs);
+        run("mixedChineseQuestionAtParagraphStartKeepsCjkQuoteGeometry", QuoteClassificationEngineTest.mixedChineseQuestionAtParagraphStartKeepsCjkQuoteGeometry);
+        run("keepsNumberedCjkQuotePairOnCjkFace", QuoteClassificationEngineTest.keepsNumberedCjkQuotePairOnCjkFace);
+        run("requestsFullWidthCjkQuotesAndSynthesizesTheCellWhenTheFontStaysProportional", QuoteClassificationEngineTest.requestsFullWidthCjkQuotesAndSynthesizesTheCellWhenTheFontStaysProportional);
+        run("leavesLatinContextCurlyQuotesOutsideCjkPunctuationGeometry", QuoteClassificationEngineTest.leavesLatinContextCurlyQuotesOutsideCjkPunctuationGeometry);
+        run("keepsContractionApostropheLatinInsideCjkSingleQuotes", QuoteClassificationEngineTest.keepsContractionApostropheLatinInsideCjkSingleQuotes);
+        run("keepsLatinWordInternalCurlyQuotesInLatinRunInsideMixedParagraph", QuoteClassificationEngineTest.keepsLatinWordInternalCurlyQuotesInLatinRunInsideMixedParagraph);
+        run("supportsSupplementaryLettersInsideLatinWordInternalQuotes", QuoteClassificationEngineTest.supportsSupplementaryLettersInsideLatinWordInternalQuotes);
+        run("keepsLetterBoundedWordInternalQuotesLatin", QuoteClassificationEngineTest.keepsLetterBoundedWordInternalQuotesLatin);
+        run("keepsDigitContentInsideLetterBoundedQuotesLatin", QuoteClassificationEngineTest.keepsDigitContentInsideLetterBoundedQuotesLatin);
+        run("keepsDigitBoundedWordInternalQuotesCjk", QuoteClassificationEngineTest.keepsDigitBoundedWordInternalQuotesCjk);
+        run("keepsFullwidthLetterBoundedWordInternalQuotesCjk", QuoteClassificationEngineTest.keepsFullwidthLetterBoundedWordInternalQuotesCjk);
+        run("keepsEmptyWordInternalQuotesLatin", QuoteClassificationEngineTest.keepsEmptyWordInternalQuotesLatin);
+        run("keepsAstralLetterBoundedWordInternalQuotesLatin", QuoteClassificationEngineTest.keepsAstralLetterBoundedWordInternalQuotesLatin);
+        run("keepsSpaceInsidePairOutOfWordInternalFastPathLatin", QuoteClassificationEngineTest.keepsSpaceInsidePairOutOfWordInternalFastPathLatin);
+        run("keepsDigitBoundedSingleQuotePairCjkViaEnclosingQuotation", QuoteClassificationEngineTest.keepsDigitBoundedSingleQuotePairCjkViaEnclosingQuotation);
+        run("resolvesDigitBoundUnmatchedQuotesAsPrimes", QuoteClassificationEngineTest.resolvesDigitBoundUnmatchedQuotesAsPrimes);
+        run("keepsDecadeStyleApostropheWithLetterFlankLatin", QuoteClassificationEngineTest.keepsDecadeStyleApostropheWithLetterFlankLatin);
+        TestTraceRecorder.flushClass("QuoteClassificationEngineTest");
 
     }
 }
