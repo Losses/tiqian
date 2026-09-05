@@ -425,7 +425,7 @@ import std.SortedMap;
     }
 }
 
-class PunctuationClusterGeometry {
+@:dataClass class PunctuationClusterGeometry {
     public final range:TextRange;
     public final sourceText:String;
     public final displayText:String;
@@ -440,35 +440,37 @@ class PunctuationClusterGeometry {
     public final anchor:Null<PunctuationAnchor>;
     public final reason:String;
 
-    public function new(r:TextRange, s:String, d:String, b:Float, w:Float, ln:Float, tn:Float, lc:Float, tc:Float, sh:Float, pr:Null<String>,
-            a:Null<PunctuationAnchor>, reason:String) {
-        range = r;
-        sourceText = s;
-        displayText = d;
-        baseAdvance = b;
-        bodyWidth = w;
-        leadingGlueNatural = ln;
-        trailingGlueNatural = tn;
-        leadingGlueInitiallyConsumed = lc;
-        trailingGlueInitiallyConsumed = tc;
-        glyphInlineShift = sh;
-        glyphPlacementReason = pr;
-        anchor = a;
+    public function new(range:TextRange, sourceText:String, displayText:String, baseAdvance:Float, bodyWidth:Float,
+            leadingGlueNatural:Float, trailingGlueNatural:Float, leadingGlueInitiallyConsumed:Float,
+            trailingGlueInitiallyConsumed:Float, glyphInlineShift:Float, glyphPlacementReason:Null<String>,
+            anchor:Null<PunctuationAnchor>, reason:String) {
+        this.range = range;
+        this.sourceText = sourceText;
+        this.displayText = displayText;
+        this.baseAdvance = baseAdvance;
+        this.bodyWidth = bodyWidth;
+        this.leadingGlueNatural = leadingGlueNatural;
+        this.trailingGlueNatural = trailingGlueNatural;
+        this.leadingGlueInitiallyConsumed = leadingGlueInitiallyConsumed;
+        this.trailingGlueInitiallyConsumed = trailingGlueInitiallyConsumed;
+        this.glyphInlineShift = glyphInlineShift;
+        this.glyphPlacementReason = glyphPlacementReason;
+        this.anchor = anchor;
         this.reason = reason;
     }
 }
 
-class GlueBudget {
+@:dataClass class GlueBudget {
     public final leadingNatural:Float;
     public final leadingConsumed:Float;
     public final trailingNatural:Float;
     public final trailingConsumed:Float;
 
-    public function new(a:Float, b:Float, c:Float, d:Float) {
-        leadingNatural = a;
-        leadingConsumed = b;
-        trailingNatural = c;
-        trailingConsumed = d;
+    public function new(leadingNatural:Float, leadingConsumed:Float, trailingNatural:Float, trailingConsumed:Float) {
+        this.leadingNatural = leadingNatural;
+        this.leadingConsumed = leadingConsumed;
+        this.trailingNatural = trailingNatural;
+        this.trailingConsumed = trailingConsumed;
     }
 
     public var leadingRemaining(get, never):Float;
