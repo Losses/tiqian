@@ -19,7 +19,8 @@ class BaselineAlignmentTest {
         final result = new ExplainableStubParagraphLayoutEngine().layout(new LayoutInput(new TiqianTextContent("中小大", [
             new TextSpan(new TextRange(1, 2), new TextStyle(null, 12.0)),
             new TextSpan(new TextRange(2, 3), new TextStyle(null, 20.0))
-        ]), null, new ParagraphStyle(null, null, null, Ic.Zero), new LayoutConstraints(400.0)));
+        ]), null, new ParagraphStyle(null, null, null, Ic.Zero),
+            new LayoutConstraints(400.0)));
         final base = result.clusters[0];
         final small = result.clusters[1];
         final large = result.clusters[2];
@@ -43,7 +44,8 @@ class BaselineAlignmentTest {
         t.section("explicitBaselineShiftAppliesToRomanClusters");
         final result = new ExplainableStubParagraphLayoutEngine().layout(new LayoutInput(new TiqianTextContent("中A文", [
             new TextSpan(new TextRange(1, 2), new TextStyle(null, null, null, null, null, -6.0))
-        ]), null, new ParagraphStyle(null, null, null, Ic.Zero), new LayoutConstraints(400.0)));
+        ]), null, new ParagraphStyle(null, null, null, Ic.Zero),
+            new LayoutConstraints(400.0)));
         final latin = result.clusters[1];
         TracedAssertions.assertEqualsFloatTolerance(-6.0, latin.baselineShift, TracedAssertions.f32Literal(0.001));
     }
@@ -54,7 +56,6 @@ class BaselineAlignmentTest {
         final result = new ExplainableStubParagraphLayoutEngine().layout(new LayoutInput(new TiqianTextContent("中A文"), null,
             new ParagraphStyle(null, null, null, Ic.Zero), new LayoutConstraints(400.0)));
         final latin = result.clusters[1];
-        TracedAssertions.assertEqualsFloat(0.0, latin.baselineShift,
-            "Latin mixed into CJK should use the shared Roman baseline");
+        TracedAssertions.assertEqualsFloat(0.0, latin.baselineShift, "Latin mixed into CJK should use the shared Roman baseline");
     }
 }

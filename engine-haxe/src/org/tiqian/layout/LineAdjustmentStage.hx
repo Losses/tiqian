@@ -242,13 +242,13 @@ class LineAdjustmentStage {
             && !b.preventsLineBreak;
     }
 
-    public static function resolveAnnotationGeometry(engine:ExplainableStubParagraphLayoutEngine, input:LayoutInput, fontSize:Float, inlineObjectByClusterIndex:SortedMap<Int, InlineObjectSpan>,
-            lineSolution:LineSolution, clreqProfile:ClreqProfile, geometryDecisions:Array<ClusterGeometryDecisionInfo>,
-            autoSpaceDecisions:Array<AutoSpaceDecisionInfo>, visibleLineRanges:Array<IntRange>, lines:Array<LineBox>, finalClusters:Array<Cluster>,
-            clusterRoles:Array<FontRole>, justifyDeltaByCluster:SortedMap<Int, Float>, rubyAndBopomofoSpread:SortedMap<Int, Float>,
-            metricDecisions:Array<ClusterMetricDecision>, pinyinSpans:Array<RubySpan>, naturalClusters:Array<Cluster>,
-            rubyFontGeometryBySpan:SortedMap<RubySpan, RubyFontGeometry>, rubyStackGap:Float, baseAscent:Float, rubyFontSize:Float, rubyFontWeight:Int,
-            baseDescent:Float, bopomofoFontWeightAt:Int->Int):AnnotationGeometryStageResult {
+    public static function resolveAnnotationGeometry(engine:ExplainableStubParagraphLayoutEngine, input:LayoutInput, fontSize:Float,
+            inlineObjectByClusterIndex:SortedMap<Int, InlineObjectSpan>, lineSolution:LineSolution, clreqProfile:ClreqProfile,
+            geometryDecisions:Array<ClusterGeometryDecisionInfo>, autoSpaceDecisions:Array<AutoSpaceDecisionInfo>, visibleLineRanges:Array<IntRange>,
+            lines:Array<LineBox>, finalClusters:Array<Cluster>, clusterRoles:Array<FontRole>, justifyDeltaByCluster:SortedMap<Int, Float>,
+            rubyAndBopomofoSpread:SortedMap<Int, Float>, metricDecisions:Array<ClusterMetricDecision>, pinyinSpans:Array<RubySpan>,
+            naturalClusters:Array<Cluster>, rubyFontGeometryBySpan:SortedMap<RubySpan, RubyFontGeometry>, rubyStackGap:Float, baseAscent:Float,
+            rubyFontSize:Float, rubyFontWeight:Int, baseDescent:Float, bopomofoFontWeightAt:Int->Int):AnnotationGeometryStageResult {
         final inlineObjectDecisions = new Array<InlineObjectDecisionInfo>();
         for (i in 0...inlineObjectByClusterIndex.size()) {
             final clusterIndex = inlineObjectByClusterIndex.keyAt(i);
@@ -769,8 +769,8 @@ class LineAdjustmentStage {
             glyphRuns.push(new GlyphRun(new TextRange(firstC.range.start, lastC.range.end), firstC.fontKey, runGlyphs, runAdvance, openTypeFeatures));
         }
         final verticalGeometry = LineGeometryStageFns.resolveLineVerticalGeometrySorted(prep.input, prep.fontSize, prep.pinyinSpans, prep.naturalClusters,
-            plan.lineSolution, prep.rubyFontGeometryBySpan, plan.existingInterlineSpace, plan.baseLineMetrics, plan.baseFaceHeight, plan.rubyExtent, prep.inlineObjectByClusterIndex,
-            plan.baseAscent, plan.baseDescent);
+            plan.lineSolution, prep.rubyFontGeometryBySpan, plan.existingInterlineSpace, plan.baseLineMetrics, plan.baseFaceHeight, plan.rubyExtent,
+            prep.inlineObjectByClusterIndex, plan.baseAscent, plan.baseDescent);
         final rubyLineHeightDecision = verticalGeometry.rubyLineHeightDecision;
         final inlineObjectLineHeightDecision = verticalGeometry.inlineObjectLineHeightDecision;
         final lineBaseline = verticalGeometry.lineBaseline;
@@ -785,8 +785,8 @@ class LineAdjustmentStage {
         final maxLinesDecision = lineBoxes.maxLinesDecision;
         final visibleLineRanges = lineBoxes.visibleLineRanges;
 
-        final annotationGeometry = resolveAnnotationGeometry(engine, prep.input, prep.fontSize, prep.inlineObjectByClusterIndex, plan.lineSolution, prep.clreqProfile,
-            geometryDecisions, prep.autoSpaceDecisions, visibleLineRanges, lines, finalClusters, prep.clusterRoles, justifyDeltaByCluster,
+        final annotationGeometry = resolveAnnotationGeometry(engine, prep.input, prep.fontSize, prep.inlineObjectByClusterIndex, plan.lineSolution,
+            prep.clreqProfile, geometryDecisions, prep.autoSpaceDecisions, visibleLineRanges, lines, finalClusters, prep.clusterRoles, justifyDeltaByCluster,
             prep.rubyAndBopomofoSpread, plan.metricDecisions, prep.pinyinSpans, prep.naturalClusters, prep.rubyFontGeometryBySpan, prep.rubyStackGap,
             plan.baseAscent, prep.rubyFontSize, prep.rubyFontWeight, plan.baseDescent, prep.bopomofoFontWeightAt);
         final inlineObjectDecisions = annotationGeometry.inlineObjectDecisions;

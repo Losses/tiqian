@@ -40,31 +40,35 @@ class GoldenDataMacros {
             stmts.push(macro b.put($v{id}, $v{content}));
         }
         stmts.push(macro return b.build());
-        defineClass(name, [{
-            name: "byId",
-            access: [AStatic, APublic],
-            pos: macroPos(),
-            kind: FFun({
-                args: [],
-                ret: null,
-                expr: { expr: EBlock(stmts), pos: macroPos() }
-            })
-        }]);
+        defineClass(name, [
+            {
+                name: "byId",
+                access: [AStatic, APublic],
+                pos: macroPos(),
+                kind: FFun({
+                    args: [],
+                    ret: null,
+                    expr: {expr: EBlock(stmts), pos: macroPos()}
+                })
+            }
+        ]);
     }
 
     static function defineEvidenceJsonClass():Void {
         final path = "engine-haxe/baseline-goldens/shaping-evidence.json";
         final content = readTextFile(path);
-        defineClass("RecordedShapingEvidenceData", [{
-            name: "evidenceJson",
-            access: [AStatic, APublic],
-            pos: macroPos(),
-            kind: FFun({
-                args: [],
-                ret: null,
-                expr: macro return $v{content}
-            })
-        }]);
+        defineClass("RecordedShapingEvidenceData", [
+            {
+                name: "evidenceJson",
+                access: [AStatic, APublic],
+                pos: macroPos(),
+                kind: FFun({
+                    args: [],
+                    ret: null,
+                    expr: macro return $v{content}
+                })
+            }
+        ]);
     }
 
     static function readDumpEntries(dir:String):Array<{id:String, content:String}> {
@@ -81,7 +85,7 @@ class GoldenDataMacros {
                 continue;
             }
             final id = name.substring(0, name.length - 4);
-            entries.push({ id: id, content: readTextFile(dir + "/" + name) });
+            entries.push({id: id, content: readTextFile(dir + "/" + name)});
         }
         if (entries.length == 0) {
             Context.fatalError('Golden data directory holds no .txt entries: $dir', macroPos());
@@ -108,7 +112,7 @@ class GoldenDataMacros {
     }
 
     static function macroPos():Position {
-        return Context.makePosition({ file: sourcePosFile, min: 0, max: 0 });
+        return Context.makePosition({file: sourcePosFile, min: 0, max: 0});
     }
 }
 #end

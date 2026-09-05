@@ -51,7 +51,8 @@ class PushInLineWideCapacityTest {
         final t = new TestTraceRecorder("PushInLineWideCapacityTest");
         t.section("pushInRejectsWhenLineWideCapacityStillInsufficient");
         final c = [
-            for (i in 0...11) PushInLineWideCapacityTestSupport.cluster(i, i + 1, i == 5 ? "、" : i == 10 ? "。" : "文", 16)
+            for (i in 0...11)
+                PushInLineWideCapacityTestSupport.cluster(i, i + 1, i == 5 ? "、" : i == 10 ? "。" : "文", 16)
         ];
         final s = new GreedyLineBreaker().breakLines(c, c, 160, [new ShrinkOpportunity(5, 6, 4, ShrinkChannel.TrailingGlue)]);
         TracedAssertions.assertEqualsInt(2, s.lines.length);
@@ -94,7 +95,8 @@ class PushInLineWideCapacityTest {
         final t = new TestTraceRecorder("PushInLineWideCapacityTest");
         t.section("pushInMergesOffenderThatFitsAfterChainedRepairs");
         final c = [
-            for (i in 0...10) PushInLineWideCapacityTestSupport.cluster(i, i + 1, i == 3 ? "」" : i == 4 ? "。" : i == 8 ? "、" : "中", 16)
+            for (i in 0...10)
+                PushInLineWideCapacityTestSupport.cluster(i, i + 1, i == 3 ? "」" : i == 4 ? "。" : i == 8 ? "、" : "中", 16)
         ];
         final s = new GreedyLineBreaker().breakLines(c, c, 64, [
             new ShrinkOpportunity(3, 6, 8, ShrinkChannel.TrailingGlue),

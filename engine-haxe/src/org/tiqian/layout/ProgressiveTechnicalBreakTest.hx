@@ -32,7 +32,8 @@ class ProgressiveTechnicalBreakTest {
         t.section("lookaheadMayNotReplaceSelectedEmergencyBoundaryWithEarlierSameTierCut");
         final span = new TextRange(0, 5);
         final c = [
-            for (i in 0...5) ProgressiveTechnicalBreakTestSupport.cluster(i, String.fromCharCode(97 + i), 20)
+            for (i in 0...5)
+                ProgressiveTechnicalBreakTestSupport.cluster(i, String.fromCharCode(97 + i), 20)
         ];
         final o = ProgressiveTechnicalBreakTestSupport.opportunityMap([3, 4], [
             new ProgressiveBreakOpportunity(ProgressiveBreakTier.Emergency, span),

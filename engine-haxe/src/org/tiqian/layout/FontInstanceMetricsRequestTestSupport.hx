@@ -9,8 +9,10 @@ import org.tiqian.layout.ParagraphLayoutEngine.ExplainableStubParagraphLayoutEng
 
 class FontInstanceMetricsRequestTestSupport {
     public static function recordingEngine(requests:Array<FontMetricsRequest>):ExplainableStubParagraphLayoutEngine {
-        return new ExplainableStubParagraphLayoutEngine(null, null, null, new RecordingResolver(requests), null, null, null, null, null, null, null, null, null);
+        return new ExplainableStubParagraphLayoutEngine(null, null, null, new RecordingResolver(requests), null, null, null, null, null, null, null, null,
+            null);
     }
+
     public static function baseStyle():TextStyle {
         return new TextStyle(["Fixture Sans"], 18.0, null, 400, false);
     }
@@ -19,10 +21,12 @@ class FontInstanceMetricsRequestTestSupport {
 class RecordingResolver implements FontMetricsResolver {
     final requests:Array<FontMetricsRequest>;
     final stub:StubFontMetricsResolver;
+
     public function new(requests:Array<FontMetricsRequest>) {
         this.requests = requests;
         this.stub = new StubFontMetricsResolver();
     }
+
     public function resolve(request:FontMetricsRequest):RawFontMetrics {
         requests.push(request);
         return stub.resolve(request);
