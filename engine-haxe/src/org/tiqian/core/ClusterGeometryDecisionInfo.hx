@@ -1,5 +1,6 @@
 package org.tiqian.core;
 
+@:dataClass
 class ClusterGeometryDecisionInfo {
     public final range:TextRange;
     public final sourceText:String;
