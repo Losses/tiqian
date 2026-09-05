@@ -9,19 +9,23 @@ import org.tiqian.shaping.TextShaper.ExplainableStubTextShaper;
 import org.tiqian.layout.ParagraphLayoutEngine.ExplainableStubParagraphLayoutEngine;
 import org.tiqian.layout.WidthIndependentAnnotationCache.WidthIndependentAnnotationCacheFns;
 import org.tiqian.layout.WidthIndependentAnnotationCache.WidthIndependentAnnotationKey;
+import org.tiqian.layout.WidthIndependentAnnotationCache.WidthIndependentParagraphAnnotation;
 import org.tiqian.test.trace.TestTrace;
 import org.tiqian.test.trace.TestTraceRender;
+import org.tiqian.test.TestHelpers;
 import org.tiqian.test.trace.TracedAssertions;
+using std.RecordCopy;
 
 class CountingTextShaper implements ITextShaper {
     public var shapeCallCount:Int = 0;
-    final delegate:ITextShaper;
+    final delegate:Null<ITextShaper>;
     public function new(?delegate:ITextShaper) {
-        this.delegate = delegate != null ? delegate : new ExplainableStubTextShaper();
+        this.delegate = delegate;
     }
     public function shape(input:ShapingInput):ShapingResult {
         shapeCallCount += 1;
-        return delegate.shape(input);
+        final d = delegate == null ? new ExplainableStubTextShaper() : delegate;
+        return d.shape(input);
     }
 }
 
@@ -41,20 +45,32 @@ class WidthIndependentAnnotationCacheTestSupport {
         return WidthIndependentAnnotationCacheFns.toWidthIndependentAnnotationKey(input);
     }
 
-    public static function copyInput(input:LayoutInput, ?content:TiqianTextContent, ?textStyle:TextStyle, ?paragraphStyle:ParagraphStyle, ?constraints:LayoutConstraints, ?decorations:Array<DecorationSpan>, ?rubySpans:Array<RubySpan>, ?inlineBoxes:Array<InlineBoxSpan>):LayoutInput {
-        return new LayoutInput(
-            content != null ? content : input.content,
-            textStyle != null ? textStyle : input.textStyle,
-            paragraphStyle != null ? paragraphStyle : input.paragraphStyle,
-            constraints != null ? constraints : input.constraints,
-            input.profileId,
-            decorations != null ? decorations : cast(input.decorations, Array<DecorationSpan>),
-            rubySpans != null ? rubySpans : cast(input.rubySpans, Array<RubySpan>),
-            inlineBoxes != null ? inlineBoxes : cast(input.inlineBoxes, Array<InlineBoxSpan>),
-            input.inlineObjects
-        );
+    public static function floatText(value:Float):String {
+        return TestTraceRender.floatText(value);
     }
 
+    public static function generateSweepWidths(start:Float, step:Float, max:Float):Array<Float> {
+        final widths:Array<Float> = [];
+        var w = TestHelpers.f32Literal(start);
+        final f32Step = TestHelpers.f32Literal(step);
+        while (w <= max) {
+            widths.push(w);
+            w = TestHelpers.f32Literal(w + f32Step);
+        }
+        return widths;
+    }
+
+    public static function assertEqualsNullableAnnotation(expected:Null<WidthIndependentParagraphAnnotation>, actual:Null<WidthIndependentParagraphAnnotation>, ?message:String):Void {
+        final recorder = TestTrace.currentRecorder();
+        if (recorder != null) {
+            final e = expected == null ? "-" : "<annotation>";
+            final a = actual == null ? "-" : "<annotation>";
+            var line = "eq expected=" + e + " actual=" + a;
+            if (message != null) line += " msg='" + TestTraceRender.escapeOperand(message) + "'";
+            recorder.record(line);
+        }
+        if (expected != actual) TracedAssertions.fail(message == null ? "Annotation mismatch" : message);
+    }
     public static function assertEqualsTextRange(expected:TextRange, actual:TextRange, ?message:String):Void {
         final e = TestTraceRender.canonicalNumbers(Std.string(expected));
         final a = TestTraceRender.canonicalNumbers(Std.string(actual));
