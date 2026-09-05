@@ -326,7 +326,7 @@ class PreparedParagraphFns {
     }
 
     private static function styleAt(result:LayoutResult, offset:Int):TextStyle {
-        var found:TextStyle = null;
+        var found:Null<TextStyle> = null;
         {
             final spanSrc = result.input.content.spans;
             for (si in 0...spanSrc.length) {
