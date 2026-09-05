@@ -349,7 +349,16 @@ K6 与 K4 的分界：桶 4 里与可空相关的形状（Int? 给 Int 等）计
       `:engine:jvmTest` 通过，工树 gates 三项全部通过（G4-RC=0、121/121、
       COMPARE-RC=0），`core-rust.hxml` 的报错面不再出现三个类名。剩余四处
       （一个 abstract 加 `ParagraphLayoutPrep` 的三个函数字段）的处置选项
-      已报用户裁定，裁定前不动。C2，P0，S0。
+      已报用户裁定，裁定前不动。裁定补充事实（2026-09-05 实测）：
+      `ParagraphLayoutPrep` 无排序键使用（`SortedMap<ParagraphLayoutPrep`、
+      `SortedSet<ParagraphLayoutPrep`、`compareParagraphLayoutPrep` 三种模式
+      在 engine-haxe 源与 kotlin 生成树全部零命中）；`ProgressiveBreakTier`
+      的类型名在 kotlin 生成树整体零命中，`@:enum abstract` 折叠成 `Int`
+      （`ProgressiveBreakOpportunity` 生成为 `val tier: Int`，比较生成为
+      `o.tier == 4` 一类 Int 字面量；Kotlin 原件
+      `ProgressiveBreakDecisions.kt:8` 是 `enum class
+      ProgressiveBreakTier(val priority: Int)`，移植后该字段不再持有枚举
+      类型而持有 Int）。C2，P0，S0。
 
 ### 第 1 组：三大错误种类（Kotlin）
 
