@@ -218,3 +218,6 @@ org.tiqian.layout.JustifierEngineTest
 org.tiqian.layout.JustifierEngineTestSupport
 org.tiqian.layout.WidthIndependentAnnotationCacheCoverageTest
 org.tiqian.layout.WidthIndependentAnnotationCacheCoverageTestSupport
+org.tiqian.layout.InlineObjectLayoutTest
+org.tiqian.layout.InlineObjectLayoutTestSupport
+org.tiqian.layout.PreparedParagraphRenderEvidenceTest
