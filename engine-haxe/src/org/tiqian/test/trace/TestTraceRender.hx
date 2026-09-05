@@ -39,11 +39,18 @@ class TestTraceRender {
     public static function floatText(value:Float):String {
         var negative = value < 0;
         var v = Math.abs(value);
-        if (v == 0) return negative ? "-0.0" : "0.0";
+        if (v == 0)
+            return negative ? "-0.0" : "0.0";
         var e = 0;
         var x = v;
-        while (x >= 10) { x /= 10; e += 1; }
-        while (x < 1) { x *= 10; e -= 1; }
+        while (x >= 10) {
+            x /= 10;
+            e += 1;
+        }
+        while (x < 1) {
+            x *= 10;
+            e -= 1;
+        }
         var targetBits = FPHelper.floatToI32(v);
         var target = FPHelper.i32ToFloat(targetBits);
         var p = 1;
@@ -68,7 +75,8 @@ class TestTraceRender {
                 }
                 c += 1;
             }
-            if (best >= 0) return floatTextRender(best, e, p, negative);
+            if (best >= 0)
+                return floatTextRender(best, e, p, negative);
             p += 1;
         }
         return (negative ? "-" : "") + Std.string(v);
@@ -76,19 +84,27 @@ class TestTraceRender {
 
     private static function floatTextRender(c:Float, e:Int, p:Int, negative:Bool):String {
         var s = Std.string(c);
-        if (s.length < p) s = StringTools.lpad(s, "0", p);
+        if (s.length < p)
+            s = StringTools.lpad(s, "0", p);
         var pointAfter = e + 1;
         final out = new StringBuf();
-        if (negative) out.add("-");
+        if (negative)
+            out.add("-");
         if (pointAfter <= 0) {
             out.add("0.");
             var k = 0;
-            while (k < -pointAfter) { out.add("0"); k += 1; }
+            while (k < -pointAfter) {
+                out.add("0");
+                k += 1;
+            }
             out.add(s);
         } else if (pointAfter >= p) {
             out.add(s);
             var k = p;
-            while (k < pointAfter) { out.add("0"); k += 1; }
+            while (k < pointAfter) {
+                out.add("0");
+                k += 1;
+            }
             out.add(".0");
         } else {
             out.add(s.substring(0, pointAfter));

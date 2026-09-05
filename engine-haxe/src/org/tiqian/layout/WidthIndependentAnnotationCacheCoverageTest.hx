@@ -9,6 +9,7 @@ import org.tiqian.layout.WidthIndependentAnnotationCache.WidthIndependentAnnotat
 import org.tiqian.layout.WidthIndependentAnnotationCache.WidthIndependentParagraphAnnotation;
 import org.tiqian.layout.ProgressiveBreakDecisions.ProgressiveBreakTier;
 import org.tiqian.layout.WidthIndependentAnnotationCacheCoverageTestSupport;
+
 using std.RecordCopy;
 
 class WidthIndependentAnnotationCacheCoverageTest {
@@ -58,7 +59,12 @@ class WidthIndependentAnnotationCacheCoverageTest {
             new Cluster(new TextRange(5, 7), "cc", "k", 10.0, "cc"),
             new Cluster(new TextRange(7, 9), "dd", "k", 10.0, "dd"),
         ];
-        final items:Array<TextRange> = [new TextRange(0, 2), new TextRange(1, 4), new TextRange(5, 8), new TextRange(10, 12)];
+        final items:Array<TextRange> = [
+            new TextRange(0, 2),
+            new TextRange(1, 4),
+            new TextRange(5, 8),
+            new TextRange(10, 12)
+        ];
 
         final contained = WidthIndependentAnnotationCacheCoverageTestSupport.containingItems(clusters, items);
         TracedAssertions.assertEqualsInt(4, contained.length);
@@ -80,42 +86,34 @@ class WidthIndependentAnnotationCacheCoverageTest {
         t.section("prepareWidthIndependentAnnotationBranches");
         final engine = WidthIndependentAnnotationCacheCoverageTestSupport.engine();
 
-        final input = new LayoutInput(
-            new TiqianTextContent("\u6D4B\u8BD5\u6587\u672C\u3010\u4E2D\u6587\u3011\u4E0EEnglish\uFF0C\u4EE5\u53CA\u6CE8\u97F3\u4E0E\u884C\u5185\u6846\u3002",
-                [
-                    new TextSpan(new TextRange(0, 0), new TextStyle(null, 10.0)),
-                    new TextSpan(new TextRange(0, 1), new TextStyle(null, 18.0, null, 500)),
-                    new TextSpan(new TextRange(1, 4), new TextStyle(null, 18.0, null, 500)),
-                    new TextSpan(new TextRange(4, 8), new TextStyle(null, 14.0, null, 300)),
-                ],
-                [1, 2, 3, 4, 6],
-                [new LineBreakSpan(new TextRange(8, 15), LineBreakPolicy.ProgressiveTechnical)],
-            ),
-            new TextStyle(null, 16.0, "zh-CN", 400),
-            null,
-            new LayoutConstraints(300),
-            null,
+        final input = new LayoutInput(new TiqianTextContent("\u6D4B\u8BD5\u6587\u672C\u3010\u4E2D\u6587\u3011\u4E0EEnglish\uFF0C\u4EE5\u53CA\u6CE8\u97F3\u4E0E\u884C\u5185\u6846\u3002",
             [
+            new TextSpan(new TextRange(0, 0), new TextStyle(null, 10.0)),
+            new TextSpan(new TextRange(0, 1), new TextStyle(null, 18.0, null, 500)),
+            new TextSpan(new TextRange(1, 4), new TextStyle(null, 18.0, null, 500)),
+            new TextSpan(new TextRange(4, 8), new TextStyle(null, 14.0, null, 300)),
+        ],
+            [1, 2, 3, 4, 6],
+            [new LineBreakSpan(new TextRange(8, 15),
+                LineBreakPolicy.ProgressiveTechnical)],), new TextStyle(null, 16.0, "zh-CN", 400), null, new LayoutConstraints(300),
+            null, [
                 new DecorationSpan(new TextRange(0, 4), DecorationKind.Emphasis),
                 new DecorationSpan(new TextRange(4, 8), DecorationKind.ProperNoun),
-            ],
-            [
+            ], [
                 new RubySpan(new TextRange(0, 2), "c\u00E8sh\u00EC", null, RubyKind.Pinyin, "zh-Latn"),
                 new RubySpan(new TextRange(2, 4), "", null, RubyKind.Pinyin),
                 new RubySpan(new TextRange(0, 1), "\u02D9\u3105", null, RubyKind.Bopomofo),
                 new RubySpan(new TextRange(0, 1), "\u3106", null, RubyKind.Bopomofo),
                 new RubySpan(new TextRange(99, 100), "invalid", null, RubyKind.Bopomofo),
-            ],
-            [
+            ], [
                 new InlineBoxSpan(new TextRange(15, 17), 4.0, 0.0),
                 new InlineBoxSpan(new TextRange(17, 19), 0.0, 4.0),
                 new InlineBoxSpan(new TextRange(19, 21), null, null, InlineBoxOuterSpacing.Narrow),
                 new InlineBoxSpan(new TextRange(21, 23), 0.0, 0.0, InlineBoxOuterSpacing.Source),
-            ],
-            [new InlineObjectSpan(new TextRange(23, 24), 20.0, 12.0, 4.0)],
-        );
+            ], [new InlineObjectSpan(new TextRange(23, 24), 20.0, 12.0, 4.0)],);
 
-        final annotation = WidthIndependentAnnotationCacheFns.prepareWidthIndependentAnnotation(engine, input, WidthIndependentAnnotationCacheCoverageTestSupport.emptyTiers());
+        final annotation = WidthIndependentAnnotationCacheFns.prepareWidthIndependentAnnotation(engine, input,
+            WidthIndependentAnnotationCacheCoverageTestSupport.emptyTiers());
         TracedAssertions.assertNotNullRendered(annotation != null, annotation == null ? "null" : "WidthIndependentParagraphAnnotation@identity");
         TracedAssertions.assertEqualsFloat(18.0, annotation.fontSizeAt(0));
         TracedAssertions.assertEqualsFloat(14.0, annotation.fontSizeAt(5));
@@ -132,7 +130,8 @@ class WidthIndependentAnnotationCacheCoverageTest {
         TracedAssertions.assertEqualsFloat(16.0, annotation.styleAt(8).fontSize);
         TracedAssertions.assertEqualsFloat(16.0, annotation.styleAt(25).fontSize);
 
-        final prep = WidthIndependentAnnotationCacheFns.buildParagraphLayoutPrep(engine, input, annotation, WidthIndependentAnnotationCacheCoverageTestSupport.emptyTiers());
+        final prep = WidthIndependentAnnotationCacheFns.buildParagraphLayoutPrep(engine, input, annotation,
+            WidthIndependentAnnotationCacheCoverageTestSupport.emptyTiers());
         TracedAssertions.assertNotNullRendered(prep != null, prep == null ? "null" : "ParagraphLayoutPrep@identity");
         TracedAssertions.assertTrue(prep.rubyAndBopomofoSpread.size() > 0);
     }
@@ -144,14 +143,12 @@ class WidthIndependentAnnotationCacheCoverageTest {
         final text = "\u4E00\u4E8C\u4E09\u56DB\u4E94\u516D\u4E03\u516B\u4E5D\u5341";
 
         for (align in [LastLineAlignment.Start, LastLineAlignment.Center, LastLineAlignment.End]) {
-            final input = new LayoutInput(
-                new TiqianTextContent(text),
-                new TextStyle(null, 16.0),
-                new ParagraphStyle(null, null, null, Ic.Zero, null, null, new LineLengthGrid(true, align)),
-                new LayoutConstraints(100),
-            );
-            final annotation = WidthIndependentAnnotationCacheFns.prepareWidthIndependentAnnotation(engine, input, WidthIndependentAnnotationCacheCoverageTestSupport.emptyTiers());
-            final prep = WidthIndependentAnnotationCacheFns.buildParagraphLayoutPrep(engine, input, annotation, WidthIndependentAnnotationCacheCoverageTestSupport.emptyTiers());
+            final input = new LayoutInput(new TiqianTextContent(text), new TextStyle(null, 16.0),
+                new ParagraphStyle(null, null, null, Ic.Zero, null, null, new LineLengthGrid(true, align)), new LayoutConstraints(100),);
+            final annotation = WidthIndependentAnnotationCacheFns.prepareWidthIndependentAnnotation(engine, input,
+                WidthIndependentAnnotationCacheCoverageTestSupport.emptyTiers());
+            final prep = WidthIndependentAnnotationCacheFns.buildParagraphLayoutPrep(engine, input, annotation,
+                WidthIndependentAnnotationCacheCoverageTestSupport.emptyTiers());
             TracedAssertions.assertNotNullRendered(prep != null, prep == null ? "null" : "ParagraphLayoutPrep@identity");
             if (align == LastLineAlignment.Start) {
                 TracedAssertions.assertEqualsFloat(0.0, prep.gridBodyOffset);
@@ -169,29 +166,29 @@ class WidthIndependentAnnotationCacheCoverageTest {
         final engine = WidthIndependentAnnotationCacheCoverageTestSupport.engine();
 
         final simpleInput = new LayoutInput(new TiqianTextContent("\u4E2D\u6587\u6B63\u6587\u6392\u7248"), null, null, new LayoutConstraints(500));
-        final simpleAnnotation = WidthIndependentAnnotationCacheFns.prepareWidthIndependentAnnotation(engine, simpleInput, WidthIndependentAnnotationCacheCoverageTestSupport.emptyTiers());
-        final simplePrep = WidthIndependentAnnotationCacheFns.buildParagraphLayoutPrep(engine, simpleInput, simpleAnnotation, WidthIndependentAnnotationCacheCoverageTestSupport.emptyTiers());
+        final simpleAnnotation = WidthIndependentAnnotationCacheFns.prepareWidthIndependentAnnotation(engine, simpleInput,
+            WidthIndependentAnnotationCacheCoverageTestSupport.emptyTiers());
+        final simplePrep = WidthIndependentAnnotationCacheFns.buildParagraphLayoutPrep(engine, simpleInput, simpleAnnotation,
+            WidthIndependentAnnotationCacheCoverageTestSupport.emptyTiers());
         TracedAssertions.assertNotNullRendered(simplePrep != null, simplePrep == null ? "null" : "ParagraphLayoutPrep@identity");
 
-        final input = new LayoutInput(
-            new TiqianTextContent("Hello World with English Words", null, null, [new LineBreakSpan(new TextRange(0, 11), LineBreakPolicy.ProgressiveTechnical)]),
-            null,
-            null,
-            new LayoutConstraints(50),
-            null,
-            [
+        final input = new LayoutInput(new TiqianTextContent("Hello World with English Words", null, null,
+            [new LineBreakSpan(new TextRange(0, 11), LineBreakPolicy.ProgressiveTechnical)]),
+            null, null, new LayoutConstraints(50), null, [
                 new DecorationSpan(new TextRange(0, 5), DecorationKind.Emphasis),
                 new DecorationSpan(new TextRange(6, 11), DecorationKind.ProperNoun),
-            ],
-        );
-        final annotation = WidthIndependentAnnotationCacheFns.prepareWidthIndependentAnnotation(engine, input, WidthIndependentAnnotationCacheCoverageTestSupport.emptyTiers());
+            ],);
+        final annotation = WidthIndependentAnnotationCacheFns.prepareWidthIndependentAnnotation(engine, input,
+            WidthIndependentAnnotationCacheCoverageTestSupport.emptyTiers());
         final prep = WidthIndependentAnnotationCacheFns.buildParagraphLayoutPrep(engine, input, annotation,
             WidthIndependentAnnotationCacheCoverageTestSupport.tierMap(new TextRange(0, 11), [ProgressiveBreakTier.Structural]));
         TracedAssertions.assertNotNullRendered(prep != null, prep == null ? "null" : "ParagraphLayoutPrep@identity");
 
         final overMeasureInput = new LayoutInput(new TiqianTextContent("VeryLongEnglishWordThatExceedsMeasure"), null, null, new LayoutConstraints(30));
-        final overMeasureAnnotation = WidthIndependentAnnotationCacheFns.prepareWidthIndependentAnnotation(engine, overMeasureInput, WidthIndependentAnnotationCacheCoverageTestSupport.emptyTiers());
-        final overMeasurePrep = WidthIndependentAnnotationCacheFns.buildParagraphLayoutPrep(engine, overMeasureInput, overMeasureAnnotation, WidthIndependentAnnotationCacheCoverageTestSupport.emptyTiers());
+        final overMeasureAnnotation = WidthIndependentAnnotationCacheFns.prepareWidthIndependentAnnotation(engine, overMeasureInput,
+            WidthIndependentAnnotationCacheCoverageTestSupport.emptyTiers());
+        final overMeasurePrep = WidthIndependentAnnotationCacheFns.buildParagraphLayoutPrep(engine, overMeasureInput, overMeasureAnnotation,
+            WidthIndependentAnnotationCacheCoverageTestSupport.emptyTiers());
         TracedAssertions.assertNotNullRendered(overMeasurePrep != null, overMeasurePrep == null ? "null" : "ParagraphLayoutPrep@identity");
     }
 
@@ -200,9 +197,12 @@ class WidthIndependentAnnotationCacheCoverageTest {
         t.section("conflictingOpenTypeFeaturesThrows");
         final engine = WidthIndependentAnnotationCacheCoverageTestSupport.engine(null, new ConflictingOpenTypeFeaturesShaper());
         final input = new LayoutInput(new TiqianTextContent("\u6D4B\u8BD5"), null, null, new LayoutConstraints(300));
-        final annotation = WidthIndependentAnnotationCacheFns.prepareWidthIndependentAnnotation(engine, input, WidthIndependentAnnotationCacheCoverageTestSupport.emptyTiers());
+        final annotation = WidthIndependentAnnotationCacheFns.prepareWidthIndependentAnnotation(engine, input,
+            WidthIndependentAnnotationCacheCoverageTestSupport.emptyTiers());
 
-        final error = TracedAssertions.assertFailsWith(null, () -> WidthIndependentAnnotationCacheFns.buildParagraphLayoutPrep(engine, input, annotation, WidthIndependentAnnotationCacheCoverageTestSupport.emptyTiers()));
+        final error = TracedAssertions.assertFailsWith(null,
+            () -> WidthIndependentAnnotationCacheFns.buildParagraphLayoutPrep(engine, input, annotation,
+                WidthIndependentAnnotationCacheCoverageTestSupport.emptyTiers()));
         TracedAssertions.assertTrue(error.message.indexOf("Conflicting OpenType features") >= 0);
     }
 
@@ -217,13 +217,18 @@ class WidthIndependentAnnotationCacheCoverageTest {
                 for (prevent1 in [true, false]) {
                     for (prevent2 in [true, false]) {
                         final obj1 = new InlineObjectSpan(new TextRange(1, 2), 20.0, 12.0, 4.0, null,
-                            new InlineObjectBoundaryAdjustment(uniform1, new InlineObjectPreferredStretch(InlineObjectPreferredStretchKind.PunctuationTrailing, 10.0, 15.0), 2.0, 1.0, prevent1));
+                            new InlineObjectBoundaryAdjustment(uniform1,
+                                new InlineObjectPreferredStretch(InlineObjectPreferredStretchKind.PunctuationTrailing, 10.0, 15.0), 2.0, 1.0, prevent1));
                         final obj2 = new InlineObjectSpan(new TextRange(2, 3), 20.0, 12.0, 4.0,
-                            new InlineObjectBoundaryAdjustment(uniform2, new InlineObjectPreferredStretch(InlineObjectPreferredStretchKind.PunctuationTrailing, 10.0, 20.0), null, 0.0, prevent2),
+                            new InlineObjectBoundaryAdjustment(uniform2,
+                                new InlineObjectPreferredStretch(InlineObjectPreferredStretchKind.PunctuationTrailing, 10.0, 20.0), null, 0.0, prevent2),
                             null);
-                        final input = new LayoutInput(new TiqianTextContent(text), null, null, new LayoutConstraints(300), null, null, null, null, [obj1, obj2]);
-                        final annotation = WidthIndependentAnnotationCacheFns.prepareWidthIndependentAnnotation(engine, input, WidthIndependentAnnotationCacheCoverageTestSupport.emptyTiers());
-                        final prep = WidthIndependentAnnotationCacheFns.buildParagraphLayoutPrep(engine, input, annotation, WidthIndependentAnnotationCacheCoverageTestSupport.emptyTiers());
+                        final input = new LayoutInput(new TiqianTextContent(text), null, null, new LayoutConstraints(300), null, null, null, null,
+                            [obj1, obj2]);
+                        final annotation = WidthIndependentAnnotationCacheFns.prepareWidthIndependentAnnotation(engine, input,
+                            WidthIndependentAnnotationCacheCoverageTestSupport.emptyTiers());
+                        final prep = WidthIndependentAnnotationCacheFns.buildParagraphLayoutPrep(engine, input, annotation,
+                            WidthIndependentAnnotationCacheCoverageTestSupport.emptyTiers());
                         TracedAssertions.assertNotNullRendered(prep != null, prep == null ? "null" : "ParagraphLayoutPrep@identity");
                     }
                 }
@@ -231,13 +236,18 @@ class WidthIndependentAnnotationCacheCoverageTest {
         }
 
         final obj1 = new InlineObjectSpan(new TextRange(1, 2), 20.0, 12.0, 4.0, null,
-            new InlineObjectBoundaryAdjustment(null, new InlineObjectPreferredStretch(InlineObjectPreferredStretchKind.PunctuationTrailing, 10.0, 15.0), null, 0.0, null));
+            new InlineObjectBoundaryAdjustment(null, new InlineObjectPreferredStretch(InlineObjectPreferredStretchKind.PunctuationTrailing, 10.0, 15.0), null,
+                0.0, null));
         final conflictingObj2 = new InlineObjectSpan(new TextRange(2, 3), 20.0, 12.0, 4.0,
             new InlineObjectBoundaryAdjustment(null, new InlineObjectPreferredStretch(InlineObjectPreferredStretchKind.Relation, 10.0, 20.0), null, 0.0, null),
             null);
-        final conflictInput = new LayoutInput(new TiqianTextContent(text), null, null, new LayoutConstraints(300), null, null, null, null, [obj1, conflictingObj2]);
-        final conflictAnnotation = WidthIndependentAnnotationCacheFns.prepareWidthIndependentAnnotation(engine, conflictInput, WidthIndependentAnnotationCacheCoverageTestSupport.emptyTiers());
-        final conflictError = TracedAssertions.assertFailsWith(null, () -> WidthIndependentAnnotationCacheFns.buildParagraphLayoutPrep(engine, conflictInput, conflictAnnotation, WidthIndependentAnnotationCacheCoverageTestSupport.emptyTiers()));
+        final conflictInput = new LayoutInput(new TiqianTextContent(text), null, null, new LayoutConstraints(300), null, null, null, null,
+            [obj1, conflictingObj2]);
+        final conflictAnnotation = WidthIndependentAnnotationCacheFns.prepareWidthIndependentAnnotation(engine, conflictInput,
+            WidthIndependentAnnotationCacheCoverageTestSupport.emptyTiers());
+        final conflictError = TracedAssertions.assertFailsWith(null,
+            () -> WidthIndependentAnnotationCacheFns.buildParagraphLayoutPrep(engine, conflictInput, conflictAnnotation,
+                WidthIndependentAnnotationCacheCoverageTestSupport.emptyTiers()));
         TracedAssertions.assertTrue(conflictError.message.indexOf("Conflicting inline-object stretch classes") >= 0);
     }
 
@@ -246,19 +256,12 @@ class WidthIndependentAnnotationCacheCoverageTest {
         t.section("verbatimRangesAndAutoSpaceDecisions");
         final engine = WidthIndependentAnnotationCacheCoverageTestSupport.engine();
         final text = "\u4E2D\u6587 English \u6DF7\u6392\u6D4B\u8BD5 12345";
-        final input = new LayoutInput(
-            new TiqianTextContent(text, null, null, null, [new TextRange(0, 15)]),
-            null,
-            null,
-            new LayoutConstraints(300),
-            null,
-            null,
-            null,
-            [new InlineBoxSpan(new TextRange(2, 9), null, null, InlineBoxOuterSpacing.Narrow)],
-            null,
-        );
-        final annotation = WidthIndependentAnnotationCacheFns.prepareWidthIndependentAnnotation(engine, input, WidthIndependentAnnotationCacheCoverageTestSupport.emptyTiers());
-        final prep = WidthIndependentAnnotationCacheFns.buildParagraphLayoutPrep(engine, input, annotation, WidthIndependentAnnotationCacheCoverageTestSupport.emptyTiers());
+        final input = new LayoutInput(new TiqianTextContent(text, null, null, null, [new TextRange(0, 15)]), null, null, new LayoutConstraints(300), null,
+            null, null, [new InlineBoxSpan(new TextRange(2, 9), null, null, InlineBoxOuterSpacing.Narrow)], null,);
+        final annotation = WidthIndependentAnnotationCacheFns.prepareWidthIndependentAnnotation(engine, input,
+            WidthIndependentAnnotationCacheCoverageTestSupport.emptyTiers());
+        final prep = WidthIndependentAnnotationCacheFns.buildParagraphLayoutPrep(engine, input, annotation,
+            WidthIndependentAnnotationCacheCoverageTestSupport.emptyTiers());
         TracedAssertions.assertNotNullRendered(prep != null, prep == null ? "null" : "ParagraphLayoutPrep@identity");
     }
 
@@ -272,17 +275,12 @@ class WidthIndependentAnnotationCacheCoverageTest {
         final ruby2 = new RubySpan(new TextRange(4, 6), "du\u00E0nlu\u00F2ch\u00E1ngd\u00E0", null, RubyKind.Pinyin);
         final rubyInvalid = new RubySpan(new TextRange(99, 100), "invalid", null, RubyKind.Pinyin);
 
-        final input = new LayoutInput(
-            new TiqianTextContent(text, null, [1, 2, 3, 4, 5]),
-            null,
-            null,
-            new LayoutConstraints(300),
-            null,
-            null,
-            [ruby0, ruby1, ruby2, rubyInvalid],
-        );
-        final annotation = WidthIndependentAnnotationCacheFns.prepareWidthIndependentAnnotation(engine, input, WidthIndependentAnnotationCacheCoverageTestSupport.emptyTiers());
-        final prep = WidthIndependentAnnotationCacheFns.buildParagraphLayoutPrep(engine, input, annotation, WidthIndependentAnnotationCacheCoverageTestSupport.emptyTiers());
+        final input = new LayoutInput(new TiqianTextContent(text, null, [1, 2, 3, 4, 5]), null, null, new LayoutConstraints(300), null, null,
+            [ruby0, ruby1, ruby2, rubyInvalid],);
+        final annotation = WidthIndependentAnnotationCacheFns.prepareWidthIndependentAnnotation(engine, input,
+            WidthIndependentAnnotationCacheCoverageTestSupport.emptyTiers());
+        final prep = WidthIndependentAnnotationCacheFns.buildParagraphLayoutPrep(engine, input, annotation,
+            WidthIndependentAnnotationCacheCoverageTestSupport.emptyTiers());
         TracedAssertions.assertNotNullRendered(prep != null, prep == null ? "null" : "ParagraphLayoutPrep@identity");
     }
 
@@ -295,21 +293,17 @@ class WidthIndependentAnnotationCacheCoverageTest {
         for (allowInlineStop in [true, false]) {
             for (allowSinoWestern in [true, false]) {
                 final sbs:Array<Int> = [];
-                for (i in 0...std.UString.count(text)) sbs.push(i);
-                final input = new LayoutInput(
-                    new TiqianTextContent(text, spans, sbs),
-                    null,
-                    null,
-                    new LayoutConstraints(300),
-                    null,
-                    null,
-                    null,
-                    null,
-                    [new InlineObjectSpan(new TextRange(0, 1), 20.0, 12.0, 4.0, null, new InlineObjectBoundaryAdjustment(null, null, 5.0, 0.0, null))],
-                );
-                final annotation = WidthIndependentAnnotationCacheFns.prepareWidthIndependentAnnotation(engine, input, WidthIndependentAnnotationCacheCoverageTestSupport.emptyTiers());
-                final modifiedAnnotation = WidthIndependentAnnotationCacheCoverageTestSupport.withAdjustedProfile(annotation, allowInlineStop, allowSinoWestern);
-                final prep = WidthIndependentAnnotationCacheFns.buildParagraphLayoutPrep(engine, input, modifiedAnnotation, WidthIndependentAnnotationCacheCoverageTestSupport.emptyTiers());
+                for (i in 0...std.UString.count(text))
+                    sbs.push(i);
+                final input = new LayoutInput(new TiqianTextContent(text, spans, sbs), null, null, new LayoutConstraints(300), null, null, null, null, [
+                    new InlineObjectSpan(new TextRange(0, 1), 20.0, 12.0, 4.0, null, new InlineObjectBoundaryAdjustment(null, null, 5.0, 0.0, null))
+                ],);
+                final annotation = WidthIndependentAnnotationCacheFns.prepareWidthIndependentAnnotation(engine, input,
+                    WidthIndependentAnnotationCacheCoverageTestSupport.emptyTiers());
+                final modifiedAnnotation = WidthIndependentAnnotationCacheCoverageTestSupport.withAdjustedProfile(annotation, allowInlineStop,
+                    allowSinoWestern);
+                final prep = WidthIndependentAnnotationCacheFns.buildParagraphLayoutPrep(engine, input, modifiedAnnotation,
+                    WidthIndependentAnnotationCacheCoverageTestSupport.emptyTiers());
                 TracedAssertions.assertNotNullRendered(prep != null, prep == null ? "null" : "ParagraphLayoutPrep@identity");
                 TracedAssertions.assertTrue(prep.shrinkOpportunities.length > 0);
             }
@@ -327,16 +321,10 @@ class WidthIndependentAnnotationCacheCoverageTest {
             new DecorationSpan(new TextRange(11, 13), DecorationKind.ProperNoun),
         ];
         final lineBreakSpans:Array<LineBreakSpan> = [new LineBreakSpan(new TextRange(0, 7), LineBreakPolicy.ProgressiveTechnical)];
-        final input = new LayoutInput(
-            new TiqianTextContent(text, spans, null, lineBreakSpans),
-            null,
-            null,
-            new LayoutConstraints(50),
-            null,
-            decorations,
-        );
+        final input = new LayoutInput(new TiqianTextContent(text, spans, null, lineBreakSpans), null, null, new LayoutConstraints(50), null, decorations,);
 
-        final annotation = WidthIndependentAnnotationCacheFns.prepareWidthIndependentAnnotation(engine, input, WidthIndependentAnnotationCacheCoverageTestSupport.emptyTiers());
+        final annotation = WidthIndependentAnnotationCacheFns.prepareWidthIndependentAnnotation(engine, input,
+            WidthIndependentAnnotationCacheCoverageTestSupport.emptyTiers());
         TracedAssertions.assertEqualsFloat(24.0, annotation.fontSizeAt(8));
         TracedAssertions.assertEqualsFloat(24.0, annotation.fontSizeAt(9));
         TracedAssertions.assertEqualsFloat(input.textStyle.fontSize, annotation.fontSizeAt(-1));
@@ -351,17 +339,22 @@ class WidthIndependentAnnotationCacheCoverageTest {
         TracedAssertions.assertNotNullRendered(prep != null, prep == null ? "null" : "ParagraphLayoutPrep@identity");
 
         final noBreakInput = new LayoutInput(new TiqianTextContent("English"), null, null, new LayoutConstraints(500));
-        final noBreakAnnotation = WidthIndependentAnnotationCacheFns.prepareWidthIndependentAnnotation(engine, noBreakInput, WidthIndependentAnnotationCacheCoverageTestSupport.emptyTiers());
-        final prepNoDynamic = WidthIndependentAnnotationCacheFns.buildParagraphLayoutPrep(engine, noBreakInput, noBreakAnnotation, WidthIndependentAnnotationCacheCoverageTestSupport.emptyTiers());
+        final noBreakAnnotation = WidthIndependentAnnotationCacheFns.prepareWidthIndependentAnnotation(engine, noBreakInput,
+            WidthIndependentAnnotationCacheCoverageTestSupport.emptyTiers());
+        final prepNoDynamic = WidthIndependentAnnotationCacheFns.buildParagraphLayoutPrep(engine, noBreakInput, noBreakAnnotation,
+            WidthIndependentAnnotationCacheCoverageTestSupport.emptyTiers());
         TracedAssertions.assertNotNullRendered(prepNoDynamic != null, prepNoDynamic == null ? "null" : "ParagraphLayoutPrep@identity");
 
         final smallMeasureInput = new LayoutInput(new TiqianTextContent("English"), null, null, new LayoutConstraints(1));
-        final smallAnnotation = WidthIndependentAnnotationCacheFns.prepareWidthIndependentAnnotation(engine, smallMeasureInput, WidthIndependentAnnotationCacheCoverageTestSupport.emptyTiers());
-        final prepSmall = WidthIndependentAnnotationCacheFns.buildParagraphLayoutPrep(engine, smallMeasureInput, smallAnnotation, WidthIndependentAnnotationCacheCoverageTestSupport.emptyTiers());
+        final smallAnnotation = WidthIndependentAnnotationCacheFns.prepareWidthIndependentAnnotation(engine, smallMeasureInput,
+            WidthIndependentAnnotationCacheCoverageTestSupport.emptyTiers());
+        final prepSmall = WidthIndependentAnnotationCacheFns.buildParagraphLayoutPrep(engine, smallMeasureInput, smallAnnotation,
+            WidthIndependentAnnotationCacheCoverageTestSupport.emptyTiers());
         TracedAssertions.assertNotNullRendered(prepSmall != null, prepSmall == null ? "null" : "ParagraphLayoutPrep@identity");
 
         final modifiedAnnotation = WidthIndependentAnnotationCacheCoverageTestSupport.withFirstFontDecisionOnly(annotation);
-        final prepUnknownRoles = WidthIndependentAnnotationCacheFns.buildParagraphLayoutPrep(engine, input, modifiedAnnotation, WidthIndependentAnnotationCacheCoverageTestSupport.emptyTiers());
+        final prepUnknownRoles = WidthIndependentAnnotationCacheFns.buildParagraphLayoutPrep(engine, input, modifiedAnnotation,
+            WidthIndependentAnnotationCacheCoverageTestSupport.emptyTiers());
         TracedAssertions.assertNotNullRendered(prepUnknownRoles != null, prepUnknownRoles == null ? "null" : "ParagraphLayoutPrep@identity");
     }
 
@@ -376,18 +369,14 @@ class WidthIndependentAnnotationCacheCoverageTest {
         final ruby2 = new RubySpan(new TextRange(2, 3), "ch\u00E1ngd\u00E0ch\u00E1ngd\u00E0ch\u00E1ngd\u00E0", null, RubyKind.Pinyin);
 
         final sbs:Array<Int> = [];
-        for (i in 0...std.UString.count(text)) sbs.push(i);
-        final input = new LayoutInput(
-            new TiqianTextContent(text, null, sbs),
-            null,
-            null,
-            new LayoutConstraints(300),
-            null,
-            null,
-            [ruby0a, ruby0b, ruby1, ruby2],
-        );
-        final annotation = WidthIndependentAnnotationCacheFns.prepareWidthIndependentAnnotation(engine, input, WidthIndependentAnnotationCacheCoverageTestSupport.emptyTiers());
-        final prep = WidthIndependentAnnotationCacheFns.buildParagraphLayoutPrep(engine, input, annotation, WidthIndependentAnnotationCacheCoverageTestSupport.emptyTiers());
+        for (i in 0...std.UString.count(text))
+            sbs.push(i);
+        final input = new LayoutInput(new TiqianTextContent(text, null, sbs), null, null, new LayoutConstraints(300), null, null,
+            [ruby0a, ruby0b, ruby1, ruby2],);
+        final annotation = WidthIndependentAnnotationCacheFns.prepareWidthIndependentAnnotation(engine, input,
+            WidthIndependentAnnotationCacheCoverageTestSupport.emptyTiers());
+        final prep = WidthIndependentAnnotationCacheFns.buildParagraphLayoutPrep(engine, input, annotation,
+            WidthIndependentAnnotationCacheCoverageTestSupport.emptyTiers());
         TracedAssertions.assertNotNullRendered(prep != null, prep == null ? "null" : "ParagraphLayoutPrep@identity");
     }
 
@@ -397,8 +386,10 @@ class WidthIndependentAnnotationCacheCoverageTest {
         final engine = WidthIndependentAnnotationCacheCoverageTestSupport.engine();
         final text = "\uFF08\u62EC\u53F7\uFF09";
         final input = new LayoutInput(new TiqianTextContent(text), null, null, new LayoutConstraints(300));
-        final annotation = WidthIndependentAnnotationCacheFns.prepareWidthIndependentAnnotation(engine, input, WidthIndependentAnnotationCacheCoverageTestSupport.emptyTiers());
-        final prep = WidthIndependentAnnotationCacheFns.buildParagraphLayoutPrep(engine, input, annotation, WidthIndependentAnnotationCacheCoverageTestSupport.emptyTiers());
+        final annotation = WidthIndependentAnnotationCacheFns.prepareWidthIndependentAnnotation(engine, input,
+            WidthIndependentAnnotationCacheCoverageTestSupport.emptyTiers());
+        final prep = WidthIndependentAnnotationCacheFns.buildParagraphLayoutPrep(engine, input, annotation,
+            WidthIndependentAnnotationCacheCoverageTestSupport.emptyTiers());
         TracedAssertions.assertNotNullRendered(prep != null, prep == null ? "null" : "ParagraphLayoutPrep@identity");
     }
 
@@ -407,18 +398,14 @@ class WidthIndependentAnnotationCacheCoverageTest {
         t.section("dynamicShapingEmphasisItalicAtAndZeroPairedCapacityBranches");
         final engine = WidthIndependentAnnotationCacheCoverageTestSupport.engine();
         final text = "Hello World Latin";
-        final input = new LayoutInput(
-            new TiqianTextContent(text, null, null, [new LineBreakSpan(new TextRange(0, 17), LineBreakPolicy.ProgressiveTechnical)]),
-            null,
-            null,
-            new LayoutConstraints(100),
-            null,
-            [
+        final input = new LayoutInput(new TiqianTextContent(text, null, null,
+            [new LineBreakSpan(new TextRange(0, 17), LineBreakPolicy.ProgressiveTechnical)]), null, null,
+            new LayoutConstraints(100), null, [
                 new DecorationSpan(new TextRange(0, 5), DecorationKind.ProperNoun),
                 new DecorationSpan(new TextRange(6, 11), DecorationKind.Emphasis),
-            ],
-        );
-        final annotation = WidthIndependentAnnotationCacheFns.prepareWidthIndependentAnnotation(engine, input, WidthIndependentAnnotationCacheCoverageTestSupport.emptyTiers());
+            ],);
+        final annotation = WidthIndependentAnnotationCacheFns.prepareWidthIndependentAnnotation(engine, input,
+            WidthIndependentAnnotationCacheCoverageTestSupport.emptyTiers());
         final uncachedAnnotation = WidthIndependentAnnotationCacheCoverageTestSupport.withEmptyShapingCache(annotation);
 
         final rejected = WidthIndependentAnnotationCacheCoverageTestSupport.tierMap(new TextRange(0, 17), [ProgressiveBreakTier.Structural]);
@@ -431,17 +418,11 @@ class WidthIndependentAnnotationCacheCoverageTest {
         t.section("centeredPunctBeforeAttachedReferenceKeepsLeadingGlueOnly");
         final text = "\u6B63\u6587\uFF1A\u201C\u5185\u5BB9\u00B7[1]\uFF0C\u540E\u6587";
         final attachAt = WidthIndependentAnnotationCacheCoverageTestSupport.indexOf(text, "[1]");
-        final result = WidthIndependentAnnotationCacheCoverageTestSupport.engine(null, new NarrowInkShaper()).layout(
-            new LayoutInput(
-                new TiqianTextContent(
-                    text,
-                    [new TextSpan(new TextRange(attachAt, attachAt + 3), new TextStyle(null, null, null, null, null, null, InlineAttachment.Previous))],
-                ),
-                null,
-                new ParagraphStyle(null, null, null, Ic.Zero),
-                new LayoutConstraints(320),
-            ),
-        );
+        final result = WidthIndependentAnnotationCacheCoverageTestSupport.engine(null, new NarrowInkShaper())
+            .layout(new LayoutInput(new TiqianTextContent(text, [
+                new TextSpan(new TextRange(attachAt, attachAt + 3), new TextStyle(null, null, null, null, null, null, InlineAttachment.Previous))
+            ],), null, new ParagraphStyle(null, null, null, Ic.Zero),
+                new LayoutConstraints(320),),);
         var boundary:org.tiqian.core.SpacingDecisionInfo = null;
         for (i in 0...result.debug.spacingDecisions.length) {
             final d = result.debug.spacingDecisions[i];

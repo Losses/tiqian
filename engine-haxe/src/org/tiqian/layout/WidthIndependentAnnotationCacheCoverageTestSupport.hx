@@ -12,12 +12,15 @@ import org.tiqian.layout.WidthIndependentAnnotationCache.WidthIndependentAnnotat
 import org.tiqian.layout.WidthIndependentAnnotationCache.WidthIndependentParagraphAnnotation;
 import org.tiqian.layout.ProgressiveBreakDecisions.ProgressiveBreakTier;
 import org.tiqian.font.FontPolicy.FontDecision;
+
 using std.RecordCopy;
+
 import std.SortedMap;
 import std.SortedSet;
 
 class WidthIndependentAnnotationCacheCoverageTestSupport {
-    public static function emptyTiers():SortedMap<TextRange, SortedSet<Int>> return SortedMap.builder().build();
+    public static function emptyTiers():SortedMap<TextRange, SortedSet<Int>>
+        return SortedMap.builder().build();
 
     public static function engine(?clreqProfileResolver:ClreqProfileResolver, ?textShaper:ITextShaper):ExplainableStubParagraphLayoutEngine
         return new ExplainableStubParagraphLayoutEngine(null, null, clreqProfileResolver, null, null, null, null, null, null, null, textShaper);
@@ -77,19 +80,18 @@ class WidthIndependentAnnotationCacheCoverageTestSupport {
 
     private static function copyAnnotation(a:WidthIndependentParagraphAnnotation, ?clreqProfile:ClreqProfile, ?fontDecisions:Array<FontDecision>,
             ?segmentShapingCache:SortedMap<TextRange, ShapingResult>):WidthIndependentParagraphAnnotation
-        return new WidthIndependentParagraphAnnotation(a.text, a.fontSize, a.styleAt, a.fontSizeAt, a.bopomofoFontWeightAt, a.rubyFontSize,
-            a.rubyStackGap, a.rubyFontWeight, a.pinyinSpans, clreqProfile == null ? a.clreqProfile : clreqProfile, a.punctuationGlyphSubstitutor,
-            a.quotePairs, a.roleOverrideInfos, fontDecisions == null ? a.fontDecisions : fontDecisions, a.clusterRanges, a.fontDecisionByRange,
-            a.inlineObjectByRange, segmentShapingCache == null ? a.segmentShapingCache : segmentShapingCache, a.substitutionRollbacks,
-            a.rubyFontGeometryBySpan, a.baseShapingStage);
+        return new WidthIndependentParagraphAnnotation(a.text, a.fontSize, a.styleAt, a.fontSizeAt, a.bopomofoFontWeightAt, a.rubyFontSize, a.rubyStackGap,
+            a.rubyFontWeight, a.pinyinSpans, clreqProfile == null ? a.clreqProfile : clreqProfile, a.punctuationGlyphSubstitutor, a.quotePairs,
+            a.roleOverrideInfos, fontDecisions == null ? a.fontDecisions : fontDecisions, a.clusterRanges, a.fontDecisionByRange, a.inlineObjectByRange,
+            segmentShapingCache == null ? a.segmentShapingCache : segmentShapingCache, a.substitutionRollbacks, a.rubyFontGeometryBySpan, a.baseShapingStage);
 
     /** Reconstruction of WidthIndependentParagraphAnnotation with a customized
      *  clreqProfile adjustment, matching the Kotlin data-class copy. */
-    public static function withAdjustedProfile(annotation:WidthIndependentParagraphAnnotation,
-            allowInlineStopCompression:Bool, allowSinoWesternGapAdjustment:Bool):WidthIndependentParagraphAnnotation {
+    public static function withAdjustedProfile(annotation:WidthIndependentParagraphAnnotation, allowInlineStopCompression:Bool,
+            allowSinoWesternGapAdjustment:Bool):WidthIndependentParagraphAnnotation {
         final source = annotation.clreqProfile;
-        final customAdjustment = new AdjustmentStylePolicy(source.adjustment.lineEndPunctuation, allowInlineStopCompression,
-            allowSinoWesternGapAdjustment, source.adjustment.lineAdjustment);
+        final customAdjustment = new AdjustmentStylePolicy(source.adjustment.lineEndPunctuation, allowInlineStopCompression, allowSinoWesternGapAdjustment,
+            source.adjustment.lineAdjustment);
         final customProfile = new ClreqProfile(source.id, source.strictness, source.region, source.punctuationGlyphPolicy,
             source.coalesceRepeatablePunctuation, source.autoSpace, source.gluePlacement, customAdjustment, source.kinsokuMode, source.punctuationWidth);
         return copyAnnotation(annotation, customProfile);
@@ -111,7 +113,8 @@ class WidthIndependentAnnotationCacheCoverageTestSupport {
     public static function withEmptyShapingCache(annotation:WidthIndependentParagraphAnnotation):WidthIndependentParagraphAnnotation
         return copyAnnotation(annotation, null, null, SortedMap.builder().build());
 
-    public static function nonGbResolver():ClreqProfileResolver return new TiqianClreqFixedResolver(ClreqProfile.TaiwanHorizontal);
+    public static function nonGbResolver():ClreqProfileResolver
+        return new TiqianClreqFixedResolver(ClreqProfile.TaiwanHorizontal);
 
     /** RubySpan positional constructor keeps fontFamilies between text and kind
      *  in this port; expose the Kotlin-style (range, text, kind, locale) shape. */
@@ -165,14 +168,19 @@ class WidthIndependentAnnotationCacheCoverageTestSupport {
 
 class TiqianClreqFixedResolver implements ClreqProfileResolver {
     final profile:ClreqProfile;
-    public function new(p:ClreqProfile) profile = p;
-    public function resolve(profileId:LayoutProfileId):ClreqProfile return profile;
+
+    public function new(p:ClreqProfile)
+        profile = p;
+
+    public function resolve(profileId:LayoutProfileId):ClreqProfile
+        return profile;
 }
 
 /** Shaper emitting two glyph runs with distinct OpenType features, which the
  *  engine rejects as conflicting. */
 class ConflictingOpenTypeFeaturesShaper implements ITextShaper {
     public function new() {}
+
     public function shape(input:ShapingInput):ShapingResult {
         final cluster = new Cluster(input.range, input.text.substring(input.range.start, input.range.end), "test", 16.0, input.displayText);
         final glyph1 = new Glyph(1, input.range, 8.0, 0.0);
@@ -187,7 +195,10 @@ class ConflictingOpenTypeFeaturesShaper implements ITextShaper {
  *  punctuation boundary to degenerate to zero paired capacity. */
 class NarrowInkShaper implements ITextShaper {
     final delegate:ExplainableStubTextShaper;
-    public function new() delegate = new ExplainableStubTextShaper();
+
+    public function new()
+        delegate = new ExplainableStubTextShaper();
+
     public function shape(input:ShapingInput):ShapingResult {
         final r = delegate.shape(input);
         final runs:Array<GlyphRun> = [];
@@ -196,7 +207,8 @@ class NarrowInkShaper implements ITextShaper {
             final glyphs:Array<Glyph> = [];
             for (gi in 0...run.glyphs.length) {
                 final g = run.glyphs[gi];
-                glyphs.push(new Glyph(g.id, g.clusterRange, g.advance, g.x, g.y, g.renderFontKey, new Rect(4.0, 2.0, 12.0, 10.0), g.haltAdvance, g.haltPlacementX));
+                glyphs.push(new Glyph(g.id, g.clusterRange, g.advance, g.x, g.y, g.renderFontKey, new Rect(4.0, 2.0, 12.0, 10.0), g.haltAdvance,
+                    g.haltPlacementX));
             }
             runs.push(new GlyphRun(run.range, run.fontKey, glyphs, run.advance));
         }

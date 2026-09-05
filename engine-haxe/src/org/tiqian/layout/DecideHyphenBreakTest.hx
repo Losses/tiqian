@@ -10,7 +10,8 @@ class DecideHyphenBreakTest {
     static function c(i:Int, a:Float):Cluster
         return new Cluster(new TextRange(i, i + 1), "x", "k", a);
 
-    static function cs():Array<Cluster> return [c(0, 16), c(1, 16), c(2, 32), c(3, 32), c(4, 32)];
+    static function cs():Array<Cluster>
+        return [c(0, 16), c(1, 16), c(2, 32), c(3, 32), c(4, 32)];
 
     static function m(a:Array<Int>):SortedSet<Int> {
         final b = SortedSet.builder();
