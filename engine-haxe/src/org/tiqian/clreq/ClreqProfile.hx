@@ -16,7 +16,7 @@ class ClreqProfile {
     public final punctuationWidth:PunctuationWidthPolicy;
 
     public function new(id:String, strictness:ClreqStrictness, region:ClreqRegion, ?punctuationGlyphPolicy:Null<CjkPunctuationGlyphPolicy>,
-            ?coalesceRepeatablePunctuation:Null<Array<Int>>, ?autoSpace:Null<AutoSpacePolicy>, ?gluePlacement:Null<PunctuationGluePlacement>,
+            ?coalesceRepeatablePunctuation:Null<ReadOnlyArray<Int>>, ?autoSpace:Null<AutoSpacePolicy>, ?gluePlacement:Null<PunctuationGluePlacement>,
             // Kotlin default constructs AdjustmentStylePolicy(); constructor calls
         // stay outside the sanctioned default grammar permanently.
         adjustment:AdjustmentStylePolicy, // Kotlin default constructs KinsokuMode.MeasureAdaptive(); permanent.
