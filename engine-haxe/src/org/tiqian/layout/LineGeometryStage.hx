@@ -89,6 +89,7 @@ import org.tiqian.layout.LineOptimization.LineCandidate;
 class RubyClusterRange {
     public final ruby:RubySpan;
     public final range:IntRange;
+
     public function new(ruby:RubySpan, range:IntRange) {
         this.ruby = ruby;
         this.range = range;
@@ -100,8 +101,8 @@ class LineGeometryStageFns {
             lineSolution:LineSolution, rubyFontGeometryBySpan:std.SortedMap<RubySpan, RubyFontGeometry>, existingInterlineSpace:Float,
             baseLineMetrics:ResolvedLineMetrics, baseFaceHeight:Float, rubyExtent:Float, inlineObjectByClusterIndex:Map<Int, InlineObjectSpan>,
             baseAscent:Float, baseDescent:Float):LineVerticalGeometryStageResult {
-        return resolveLineVerticalGeometrySorted(input, fontSize, pinyinSpans, naturalClusters, lineSolution, rubyFontGeometryBySpan,
-            existingInterlineSpace, baseLineMetrics, baseFaceHeight, rubyExtent, null, baseAscent, baseDescent);
+        return resolveLineVerticalGeometrySorted(input, fontSize, pinyinSpans, naturalClusters, lineSolution, rubyFontGeometryBySpan, existingInterlineSpace,
+            baseLineMetrics, baseFaceHeight, rubyExtent, null, baseAscent, baseDescent);
     }
 
     public static function resolveLineVerticalGeometrySorted(input:LayoutInput, fontSize:Float, pinyinSpans:Array<RubySpan>, naturalClusters:Array<Cluster>,
@@ -118,7 +119,8 @@ class LineGeometryStageFns {
         for (line in lineSolution.lines) {
             var required = 0.0;
             for (pair in pinyinClusterRanges) {
-                if (pair.range.start <= line.clusterRange.end && pair.range.end >= line.clusterRange.start
+                if (pair.range.start <= line.clusterRange.end
+                    && pair.range.end >= line.clusterRange.start
                     && rubyFontGeometryBySpan.has(pair.ruby))
                     required = Math.max(required, rubyFontGeometryBySpan.get(pair.ruby).requiredExtent);
             }
@@ -203,8 +205,8 @@ class LineGeometryStageFns {
         final boundaryShifts:Array<Float> = [for (i in 0...boundaryCount) 0.0];
         for (i in 0...boundaryCount) {
             final current = Math.max(fBaseDescent, lineObjectDescent[i]);
-            final boundaryExtent = resolveInlineObjectLineBoundaryExtent(baseBottomExtent, current,
-                f32(baselines[i + 1] - baselines[i]), Math.max(fBaseAscent, lineObjectAscent[i + 1]));
+            final boundaryExtent = resolveInlineObjectLineBoundaryExtent(baseBottomExtent, current, f32(baselines[i + 1] - baselines[i]),
+                Math.max(fBaseAscent, lineObjectAscent[i + 1]));
             final nominal = f32(baselines[i] + baseBottomExtent);
             final boundary = f32(baselines[i] + boundaryExtent);
             bottoms[i] = boundary;
@@ -216,13 +218,14 @@ class LineGeometryStageFns {
             bottoms[bottoms.length - 1] = f32(f32(baselines[baselines.length - 1] + baseBottomExtent) + trailing);
         final objectIndices:Array<Int> = [];
         for (i in 0...objectLineExtra.length)
-            if (objectLineExtra[i] > 0) objectIndices.push(i);
+            if (objectLineExtra[i] > 0)
+                objectIndices.push(i);
         var hasInlineObjects = false;
         if (inlineObjectByClusterIndex != null)
             hasInlineObjects = inlineObjectByClusterIndex.size() > 0;
-        final iod = hasInlineObjects ? new InlineObjectLineHeightDecisionInfo(baseLineMetrics.height, baseAscent, baseDescent,
-            existingInterlineSpace, minimumClearance, lineObjectAscent, lineObjectDescent, objectLineExtra, boundaryShifts, trailing, objectIndices,
-            objectIndices.length == 0 && trailing == 0 ? "ExistingInterlineSpaceFitsInlineObjects" : "InlineObjectInterlineCollision") : null;
+        final iod = hasInlineObjects ? new InlineObjectLineHeightDecisionInfo(baseLineMetrics.height, baseAscent, baseDescent, existingInterlineSpace,
+            minimumClearance, lineObjectAscent, lineObjectDescent, objectLineExtra, boundaryShifts, trailing,
+            objectIndices, objectIndices.length == 0 && trailing == 0 ? "ExistingInterlineSpaceFitsInlineObjects" : "InlineObjectInterlineCollision") : null;
         return new LineVerticalGeometryStageResult(rd, iod, baselines, tops, bottoms);
     }
 

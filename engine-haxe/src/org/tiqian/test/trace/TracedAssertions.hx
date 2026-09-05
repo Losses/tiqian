@@ -250,14 +250,11 @@ class TracedAssertions {
         }
     }
 
-    public static function assertEqualsTextRangeArray(expected:Array<org.tiqian.core.TextRange>, actual:Array<org.tiqian.core.TextRange>, ?message:String):Void {
+    public static function assertEqualsTextRangeArray(expected:Array<org.tiqian.core.TextRange>, actual:Array<org.tiqian.core.TextRange>,
+            ?message:String):Void {
         final expectedText = renderTextRangeArray(expected);
         final actualText = renderTextRangeArray(actual);
-        recordEvent("eq", [
-            field("expected", expectedText),
-            field("actual", actualText),
-            msgField(message)
-        ]);
+        recordEvent("eq", [field("expected", expectedText), field("actual", actualText), msgField(message)]);
         if (expected.length != actual.length) {
             fail(message == null ? "Expected arrays to be equal." : message);
         }

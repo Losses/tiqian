@@ -65,7 +65,7 @@ class ShapingEvidenceKey {
     public final openTypeFeatures:std.ReadOnlyArray<String>;
 
     public function new(displayText:String, fontKey:String, fontFamily:String, role:String, styleFontFamilies:std.ReadOnlyArray<String>, fontSize:Float,
-        fontWeight:Int, italic:Bool, locale:String, openTypeFeatures:std.ReadOnlyArray<String>) {
+            fontWeight:Int, italic:Bool, locale:String, openTypeFeatures:std.ReadOnlyArray<String>) {
         this.displayText = displayText;
         this.fontKey = fontKey;
         this.fontFamily = fontFamily;
@@ -88,7 +88,8 @@ class ShapingEvidenceFns {
 
     public static function shapingResult(evidence:ShapingEvidence, key:ShapingEvidenceKey):Null<RecordedShapingResult> {
         for (i in 0...evidence.shaping.length) {
-            if (shapingKeyEquals(evidence.shaping[i].key, key)) return evidence.shaping[i].result;
+            if (shapingKeyEquals(evidence.shaping[i].key, key))
+                return evidence.shaping[i].result;
         }
         return null;
     }
@@ -166,8 +167,8 @@ class RecordedShapingDecision {
     public final featureEvidence:Null<String>;
     public final capabilityIssue:Null<String>;
 
-    public function new(glyphCount:Int, advance:Float, source:String, reason:String, glyphsWithoutInkBounds:Int, missingGlyphs:Int,
-        resolvedFace:Null<String>, script:Null<String>, language:Null<String>, strategy:Null<String>, featureEvidence:Null<String>, capabilityIssue:Null<String>) {
+    public function new(glyphCount:Int, advance:Float, source:String, reason:String, glyphsWithoutInkBounds:Int, missingGlyphs:Int, resolvedFace:Null<String>,
+            script:Null<String>, language:Null<String>, strategy:Null<String>, featureEvidence:Null<String>, capabilityIssue:Null<String>) {
         this.glyphCount = glyphCount;
         this.advance = advance;
         this.source = source;
@@ -191,7 +192,8 @@ class RecordedShapingResult {
     public final glyphs:Array<RecordedGlyph>;
     public final decisions:Array<RecordedShapingDecision>;
 
-    public function new(clusterAdvance:Float, runAdvance:Float, runFeatures:Array<String>, glyphs:Array<RecordedGlyph>, decisions:Array<RecordedShapingDecision>) {
+    public function new(clusterAdvance:Float, runAdvance:Float, runFeatures:Array<String>, glyphs:Array<RecordedGlyph>,
+            decisions:Array<RecordedShapingDecision>) {
         this.clusterAdvance = clusterAdvance;
         this.runAdvance = runAdvance;
         this.runFeatures = runFeatures;
@@ -211,7 +213,8 @@ class MetricsEvidenceKey {
     public final italic:Bool;
     public final faceSelectionText:String;
 
-    public function new(fontKey:String, fontSize:Float, role:String, locale:String, fontFamilies:std.ReadOnlyArray<String>, fontWeight:Int, italic:Bool, faceSelectionText:String) {
+    public function new(fontKey:String, fontSize:Float, role:String, locale:String, fontFamilies:std.ReadOnlyArray<String>, fontWeight:Int, italic:Bool,
+            faceSelectionText:String) {
         this.fontKey = fontKey;
         this.fontSize = fontSize;
         this.role = role;
@@ -225,13 +228,14 @@ class MetricsEvidenceKey {
 
 class MetricsEvidenceFns {
     public static function fontMetricsRequestToEvidenceKey(request:FontMetricsRequest):MetricsEvidenceKey {
-        return new MetricsEvidenceKey(request.fontKey, request.fontSize, Std.string(request.role), request.locale, request.fontFamilies,
-            request.fontWeight, request.italic, request.faceSelectionText);
+        return new MetricsEvidenceKey(request.fontKey, request.fontSize, Std.string(request.role), request.locale, request.fontFamilies, request.fontWeight,
+            request.italic, request.faceSelectionText);
     }
 
     public static function metricsResult(evidence:ShapingEvidence, key:MetricsEvidenceKey):Null<RecordedFontMetrics> {
         for (i in 0...evidence.metrics.length) {
-            if (metricsKeyEquals(evidence.metrics[i].key, key)) return evidence.metrics[i].result;
+            if (metricsKeyEquals(evidence.metrics[i].key, key))
+                return evidence.metrics[i].result;
         }
         return null;
     }
@@ -308,7 +312,9 @@ class RecordedEvidenceTextShaper implements ITextShaper {
         final key = ShapingEvidenceFns.shapingInputToEvidenceKey(input);
         final recorded = ShapingEvidenceFns.shapingResult(evidence, key);
         if (recorded == null) {
-            throw new TiqianIllegalArgumentException(TextRangeError.Message("No recorded shaping evidence for " + Std.string(key) + " — re-record on the JVM with "
+            throw new TiqianIllegalArgumentException(TextRangeError.Message("No recorded shaping evidence for "
+                + Std.string(key)
+                + " — re-record on the JVM with "
                 + "TIQIAN_RECORD_SHAPING=1 ./gradlew :engine:jvmTest --tests '*ShapingEvidenceRecorder*'"));
         }
         final sourceText = input.text.substring(input.range.start, input.range.end);
@@ -339,7 +345,9 @@ class RecordedEvidenceFontMetricsResolver implements FontMetricsResolver {
         final key = MetricsEvidenceFns.fontMetricsRequestToEvidenceKey(request);
         final recorded = MetricsEvidenceFns.metricsResult(evidence, key);
         if (recorded == null) {
-            throw new TiqianIllegalArgumentException(TextRangeError.Message("No recorded font metrics evidence for " + Std.string(key) + " — re-record on the JVM with "
+            throw new TiqianIllegalArgumentException(TextRangeError.Message("No recorded font metrics evidence for "
+                + Std.string(key)
+                + " — re-record on the JVM with "
                 + "TIQIAN_RECORD_SHAPING=1 ./gradlew :engine:jvmTest --tests '*ShapingEvidenceRecorder*'"));
         }
         return recorded.toRawFontMetrics();

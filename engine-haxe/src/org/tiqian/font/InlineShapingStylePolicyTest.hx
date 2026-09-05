@@ -8,7 +8,8 @@ class InlineShapingStylePolicyTest {
         new TestTraceRecorder("InlineShapingStylePolicyTest").section("reportsFirstPropertyWhenItDiverges");
         var a = InlineShapingStylePolicyTestSupport.vals(15);
         a[0] = "divergent";
-        TracedAssertions.assertEqualsString("font-feature-settings", InlineShapingStylePolicy.firstDivergentProperty(a, InlineShapingStylePolicyTestSupport.vals(15)));
+        TracedAssertions.assertEqualsString("font-feature-settings",
+            InlineShapingStylePolicy.firstDivergentProperty(a, InlineShapingStylePolicyTestSupport.vals(15)));
     }
 
     @:test public static function reportsMiddlePropertyWhenItIsFirstDivergence():Void {
@@ -20,7 +21,9 @@ class InlineShapingStylePolicyTest {
 
     @:test public static function returnsNullWhenAllValuesMatch():Void {
         new TestTraceRecorder("InlineShapingStylePolicyTest").section("returnsNullWhenAllValuesMatch");
-        TracedAssertions.assertNullRendered(InlineShapingStylePolicy.firstDivergentProperty(InlineShapingStylePolicyTestSupport.vals(15), InlineShapingStylePolicyTestSupport.vals(15)) == null, "-");
+        TracedAssertions.assertNullRendered(InlineShapingStylePolicy.firstDivergentProperty(InlineShapingStylePolicyTestSupport.vals(15),
+            InlineShapingStylePolicyTestSupport.vals(15)) == null,
+            "-");
     }
 
     @:test public static function returnsNullForEmptyLists():Void {
@@ -30,6 +33,8 @@ class InlineShapingStylePolicyTest {
 
     @:test public static function longerValueListsStopAtThePropertyListBoundary():Void {
         new TestTraceRecorder("InlineShapingStylePolicyTest").section("longerValueListsStopAtThePropertyListBoundary");
-        TracedAssertions.assertNullRendered(InlineShapingStylePolicy.firstDivergentProperty(InlineShapingStylePolicyTestSupport.vals(19), InlineShapingStylePolicyTestSupport.vals(19)) == null, "-");
+        TracedAssertions.assertNullRendered(InlineShapingStylePolicy.firstDivergentProperty(InlineShapingStylePolicyTestSupport.vals(19),
+            InlineShapingStylePolicyTestSupport.vals(19)) == null,
+            "-");
     }
 }

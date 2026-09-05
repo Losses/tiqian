@@ -111,31 +111,24 @@ class AnnotationGeometryStage {
      * for mixed font sizes and explicit baseline shifts. [dotDiameter] is final
      * paint geometry: renderers draw it exactly and apply no hidden scaling.
      */
-    public static function computeDecorationDecisions(
-        decorations:ReadOnlyArray<DecorationSpan>,
-        lineRanges:Array<IntRange>,
-        lineBoxes:Array<LineBox>,
-        finalClusters:Array<Cluster>,
-        clusterRoles:Array<FontRole>,
-        justifyDeltaByCluster:SortedMap<Int, Float>,
-        rubySpreadByCluster:SortedMap<Int, Float>,
-        metricDecisions:Array<ClusterMetricDecision>,
-        fontSize:Float,
-        emphasisDotGapEm:Float
-    ):Array<DecorationDecisionInfo> {
-        if (decorations.length == 0) return [];
+    public static function computeDecorationDecisions(decorations:ReadOnlyArray<DecorationSpan>, lineRanges:Array<IntRange>, lineBoxes:Array<LineBox>,
+            finalClusters:Array<Cluster>, clusterRoles:Array<FontRole>, justifyDeltaByCluster:SortedMap<Int, Float>,
+            rubySpreadByCluster:SortedMap<Int, Float>, metricDecisions:Array<ClusterMetricDecision>, fontSize:Float,
+            emphasisDotGapEm:Float):Array<DecorationDecisionInfo> {
+        if (decorations.length == 0)
+            return [];
 
         final decisions = new Array<DecorationDecisionInfo>();
         for (si in 0...decorations.length) {
             final span = decorations[si];
-            if (span.kind != DecorationKind.Emphasis) continue;
+            if (span.kind != DecorationKind.Emphasis)
+                continue;
             for (lineIndex in 0...lineRanges.length) {
                 final clusterRange = lineRanges[lineIndex];
                 var x = lineBoxes[lineIndex].indent;
                 for (idx in clusterRange.start...clusterRange.end + 1) {
                     final cluster = finalClusters[idx];
-                    final coveredBySpan = cluster.range.start >= span.range.start &&
-                        cluster.range.end <= span.range.end;
+                    final coveredBySpan = cluster.range.start >= span.range.start && cluster.range.end <= span.range.end;
                     if (coveredBySpan) {
                         final role = clusterRoles[idx];
                         final applied = role == FontRole.CjkText;
@@ -153,8 +146,7 @@ class AnnotationGeometryStage {
                             }
                         }
                         final clusterEm = (metric != null && metric.request != null) ? metric.request.fontSize : fontSize;
-                        final faceDescent = (metric != null && metric.layoutMetrics != null) ? metric.layoutMetrics.descent
-                            : clusterEm * LineBreakPlanningStage.CJK_FACE_DESCENT_FALLBACK_EM;
+                        final faceDescent = (metric != null && metric.layoutMetrics != null) ? metric.layoutMetrics.descent : clusterEm * LineBreakPlanningStage.CJK_FACE_DESCENT_FALLBACK_EM;
                         final candidateDotDiameter = clusterEm * EMPHASIS_DOT_DIAMETER_EM;
                         final dotDiameter = applied ? candidateDotDiameter : 0.0;
                         final reason = if (applied) {
@@ -164,17 +156,13 @@ class AnnotationGeometryStage {
                         } else {
                             "no-dot-on-non-han";
                         };
-                        decisions.push(new DecorationDecisionInfo(
-                            cluster.range,
-                            cluster.text,
-                            Std.string(span.kind),
-                            applied,
-                            reason,
-                            x + glyphAdvance / 2.0,
-                            lineBoxes[lineIndex].baseline + cluster.baselineShift +
-                                faceDescent + clusterEm * emphasisDotGapEm + candidateDotDiameter / 2.0,
-                            dotDiameter
-                        ));
+                        decisions.push(new DecorationDecisionInfo(cluster.range, cluster.text, Std.string(span.kind), applied, reason, x + glyphAdvance / 2.0,
+                            lineBoxes[lineIndex].baseline
+                                + cluster.baselineShift
+                                + faceDescent
+                                + clusterEm * emphasisDotGapEm
+                                + candidateDotDiameter / 2.0,
+                            dotDiameter));
                     }
                     x += cluster.advance;
                 }
@@ -190,10 +178,7 @@ class AnnotationGeometryStage {
      * frame. Each adjacent edge pulls back 1/16 em (the visible gap is
      * 1/8 em, within the ≤1/8 em-per-side cap).
      */
-    public static function shortenAdjacentInterlinearLines(
-        segments:Array<DecorationSegmentInfo>,
-        fontSize:Float
-    ):Array<DecorationSegmentInfo> {
+    public static function shortenAdjacentInterlinearLines(segments:Array<DecorationSegmentInfo>, fontSize:Float):Array<DecorationSegmentInfo> {
         final properNounName = Std.string(DecorationKind.ProperNoun);
         final bookTitleName = Std.string(DecorationKind.BookTitle);
         final result = segments.copy();
@@ -228,31 +213,11 @@ class AnnotationGeometryStage {
                 if (b.seg.left - a.seg.right <= ADJACENT_LINE_EPSILON * fontSize) {
                     final pullback = fontSize * ADJACENT_LINE_SHORTEN_EM;
                     final curA = result[a.index];
-                    result[a.index] = new DecorationSegmentInfo(
-                        curA.sourceRange,
-                        curA.kind,
-                        curA.lineIndex,
-                        curA.left,
-                        curA.top,
-                        curA.right - pullback,
-                        curA.bottom,
-                        curA.openStart,
-                        curA.openEnd,
-                        curA.reason + ";AdjacentInterlinearLineShortening"
-                    );
+                    result[a.index] = new DecorationSegmentInfo(curA.sourceRange, curA.kind, curA.lineIndex, curA.left, curA.top, curA.right - pullback,
+                        curA.bottom, curA.openStart, curA.openEnd, curA.reason + ";AdjacentInterlinearLineShortening");
                     final curB = result[b.index];
-                    result[b.index] = new DecorationSegmentInfo(
-                        curB.sourceRange,
-                        curB.kind,
-                        curB.lineIndex,
-                        curB.left + pullback,
-                        curB.top,
-                        curB.right,
-                        curB.bottom,
-                        curB.openStart,
-                        curB.openEnd,
-                        curB.reason + ";AdjacentInterlinearLineShortening"
-                    );
+                    result[b.index] = new DecorationSegmentInfo(curB.sourceRange, curB.kind, curB.lineIndex, curB.left + pullback, curB.top, curB.right,
+                        curB.bottom, curB.openStart, curB.openEnd, curB.reason + ";AdjacentInterlinearLineShortening");
                 }
                 i++;
             }
@@ -275,18 +240,9 @@ class AnnotationGeometryStage {
      * `MourningSpanKeptUnbroken` otherwise prevents the split at break
      * time).
      */
-    public static function computeDecorationSegments(
-        decorations:ReadOnlyArray<DecorationSpan>,
-        lineRanges:Array<IntRange>,
-        lineBoxes:Array<LineBox>,
-        finalClusters:Array<Cluster>,
-        justifyDeltaByCluster:SortedMap<Int, Float>,
-        geometryByRange:SortedMap<TextRange, ClusterGeometryDecisionInfo>,
-        leadingGapRanges:SortedSet<TextRange>,
-        trailingGapRanges:SortedSet<TextRange>,
-        autoSpaceGapPx:Float,
-        fontSize:Float
-    ):Array<DecorationSegmentInfo> {
+    public static function computeDecorationSegments(decorations:ReadOnlyArray<DecorationSpan>, lineRanges:Array<IntRange>, lineBoxes:Array<LineBox>,
+            finalClusters:Array<Cluster>, justifyDeltaByCluster:SortedMap<Int, Float>, geometryByRange:SortedMap<TextRange, ClusterGeometryDecisionInfo>,
+            leadingGapRanges:SortedSet<TextRange>, trailingGapRanges:SortedSet<TextRange>, autoSpaceGapPx:Float, fontSize:Float):Array<DecorationSegmentInfo> {
         // Remaining edge blank to strip off a covered cluster so 行间线 hugs the ink/body
         // (CLREQ 避两侧空白): the autospace gap + the punctuation glue still present
         // (开/闭标点 half-width), mirroring how the renderer positions the glyph.
@@ -309,7 +265,8 @@ class AnnotationGeometryStage {
                 boxSpans.push(s);
             }
         }
-        if (boxSpans.length == 0) return [];
+        if (boxSpans.length == 0)
+            return [];
 
         final segments = new Array<DecorationSegmentInfo>();
         for (bi in 0...boxSpans.length) {
@@ -324,8 +281,7 @@ class AnnotationGeometryStage {
                 var segEnd:Int = -1;
                 for (idx in clusterRange.start...clusterRange.end + 1) {
                     final cluster = finalClusters[idx];
-                    final covered = cluster.range.start >= span.range.start &&
-                        cluster.range.end <= span.range.end;
+                    final covered = cluster.range.start >= span.range.start && cluster.range.end <= span.range.end;
                     if (covered) {
                         if (left == null) {
                             // Start at the first covered cluster's ink/body left: skip the
@@ -342,7 +298,8 @@ class AnnotationGeometryStage {
                     }
                     x += cluster.advance;
                 }
-                if (left == null) continue;
+                if (left == null)
+                    continue;
                 final leftEdge = left;
                 final baseline = lineBoxes[lineIndex].baseline;
                 final isLine = span.kind != DecorationKind.Mourning;
@@ -354,18 +311,9 @@ class AnnotationGeometryStage {
                 // 0.06em into that clearance and touch the glyphs.
                 final lineYEm = (span.kind == DecorationKind.BookTitle) ? BOOK_TITLE_WAVE_LINE_Y_EM : INTERLINEAR_LINE_Y_EM;
                 final lineY = baseline + fontSize * lineYEm;
-                spanSegments.push(new DecorationSegmentInfo(
-                    new TextRange(segStart, segEnd),
-                    Std.string(span.kind),
-                    lineIndex,
-                    leftEdge,
-                    isLine ? lineY : baseline - fontSize * MOURNING_FRAME_FACE_ASCENT_EM,
-                    right,
-                    isLine ? lineY : baseline + fontSize * MOURNING_FRAME_FACE_DESCENT_EM,
-                    segStart > span.range.start,
-                    segEnd < span.range.end,
-                    ""
-                ));
+                spanSegments.push(new DecorationSegmentInfo(new TextRange(segStart, segEnd), Std.string(span.kind), lineIndex, leftEdge,
+                    isLine ? lineY : baseline - fontSize * MOURNING_FRAME_FACE_ASCENT_EM, right,
+                    isLine ? lineY : baseline + fontSize * MOURNING_FRAME_FACE_DESCENT_EM, segStart > span.range.start, segEnd < span.range.end, ""));
             }
             final reason = if (span.kind == DecorationKind.Mourning && spanSegments.length <= 1) {
                 "MourningSpanKeptUnbroken";
@@ -376,18 +324,8 @@ class AnnotationGeometryStage {
             };
             for (ssi in 0...spanSegments.length) {
                 final seg = spanSegments[ssi];
-                segments.push(new DecorationSegmentInfo(
-                    seg.sourceRange,
-                    seg.kind,
-                    seg.lineIndex,
-                    seg.left,
-                    seg.top,
-                    seg.right,
-                    seg.bottom,
-                    seg.openStart,
-                    seg.openEnd,
-                    reason
-                ));
+                segments.push(new DecorationSegmentInfo(seg.sourceRange, seg.kind, seg.lineIndex, seg.left, seg.top, seg.right, seg.bottom, seg.openStart,
+                    seg.openEnd, reason));
             }
         }
         return shortenAdjacentInterlinearLines(segments, fontSize);
@@ -404,21 +342,11 @@ class AnnotationGeometryStage {
      * A base split across lines yields one decision per line (each over its
      * on-line fragment).
      */
-    public static function computeRubyDecisions(
-        rubySpans:Array<RubySpan>,
-        lineRanges:Array<IntRange>,
-        lineBoxes:Array<LineBox>,
-        finalClusters:Array<Cluster>,
-        naturalClusters:Array<Cluster>,
-        metricDecisions:Array<ClusterMetricDecision>,
-        rubyFontGeometryBySpan:SortedMap<RubySpan, RubyFontGeometry>,
-        rubyStackGap:Float,
-        fallbackBaseAscent:Float,
-        rubyFontSize:Float,
-        rubyFontWeight:Int,
-        baseLocale:String
-    ):Array<RubyDecisionInfo> {
-        if (rubySpans.length == 0) return [];
+    public static function computeRubyDecisions(rubySpans:Array<RubySpan>, lineRanges:Array<IntRange>, lineBoxes:Array<LineBox>, finalClusters:Array<Cluster>,
+            naturalClusters:Array<Cluster>, metricDecisions:Array<ClusterMetricDecision>, rubyFontGeometryBySpan:SortedMap<RubySpan, RubyFontGeometry>,
+            rubyStackGap:Float, fallbackBaseAscent:Float, rubyFontSize:Float, rubyFontWeight:Int, baseLocale:String):Array<RubyDecisionInfo> {
+        if (rubySpans.length == 0)
+            return [];
         final out = new Array<RubyDecisionInfo>();
         for (ri in 0...rubySpans.length) {
             final ruby = rubySpans[ri];
@@ -459,22 +387,9 @@ class AnnotationGeometryStage {
                 if (hasBaseLeft) {
                     final rubyWidth = rubyGeometry.width;
                     final fontFamilies = [for (f in 0...ruby.fontFamilies.length) ruby.fontFamilies[f]];
-                    out.push(new RubyDecisionInfo(
-                        ruby.baseRange,
-                        ruby.text,
-                        lineIndex,
-                        baseLeft + contentWidth / 2.0,
-                        baseFaceTop - rubyStackGap - rubyGeometry.descent,
-                        rubyFontSize,
-                        Math.max(0.0, (rubyWidth - contentWidth) / 2.0),
-                        rubyGeometry.ascent,
-                        rubyGeometry.descent,
-                        rubyWidth,
-                        fontFamilies,
-                        rubyFontWeight,
-                        ruby.locale != null ? ruby.locale : baseLocale,
-                        rubyGeometry.glyphs
-                    ));
+                    out.push(new RubyDecisionInfo(ruby.baseRange, ruby.text, lineIndex, baseLeft + contentWidth / 2.0,
+                        baseFaceTop - rubyStackGap - rubyGeometry.descent, rubyFontSize, Math.max(0.0, (rubyWidth - contentWidth) / 2.0), rubyGeometry.ascent,
+                        rubyGeometry.descent, rubyWidth, fontFamilies, rubyFontWeight, ruby.locale != null ? ruby.locale : baseLocale, rubyGeometry.glyphs));
                 }
             }
         }
@@ -545,34 +460,13 @@ class AnnotationGeometryStage {
         return result;
     }
 
-    private static function bopomofoBox(
-        zoneLeft:Float,
-        boxTop:Float,
-        hUnit:Float,
-        vUnit:Float,
-        leftU:Float,
-        widthU:Float,
-        topU:Int,
-        botU:Int,
-        role:BopomofoGlyphRole,
-        text:String
-    ):BopomofoGlyphPlacement {
+    private static function bopomofoBox(zoneLeft:Float, boxTop:Float, hUnit:Float, vUnit:Float, leftU:Float, widthU:Float, topU:Int, botU:Int,
+            role:BopomofoGlyphRole, text:String):BopomofoGlyphPlacement {
         final bLeft = zoneLeft + leftU * hUnit;
         final bTop = boxTop + topU * vUnit;
         final bWidth = widthU * hUnit;
         final bHeight = (botU - topU) * vUnit;
-        return new BopomofoGlyphPlacement(
-            text,
-            bLeft,
-            bTop,
-            bWidth,
-            bHeight,
-            role,
-            [],
-            bLeft,
-            bTop + bHeight,
-            bHeight
-        );
+        return new BopomofoGlyphPlacement(text, bLeft, bTop, bWidth, bHeight, role, [], bLeft, bTop + bHeight, bHeight);
     }
 
     private static function bopomofoInkBounds(shaped:ShapingResult):Null<Rect> {
@@ -591,15 +485,20 @@ class AnnotationGeometryStage {
                     final t = bound.top + glyph.y;
                     final r = bound.right + glyph.x;
                     final b = bound.bottom + glyph.y;
-                    if (l < minLeft) minLeft = l;
-                    if (t < minTop) minTop = t;
-                    if (r > maxRight) maxRight = r;
-                    if (b > maxBottom) maxBottom = b;
+                    if (l < minLeft)
+                        minLeft = l;
+                    if (t < minTop)
+                        minTop = t;
+                    if (r > maxRight)
+                        maxRight = r;
+                    if (b > maxBottom)
+                        maxBottom = b;
                     hasBounds = true;
                 }
             }
         }
-        if (!hasBounds) return null;
+        if (!hasBounds)
+            return null;
         return new Rect(minLeft, minTop, maxRight, maxBottom);
     }
 
@@ -608,20 +507,11 @@ class AnnotationGeometryStage {
      * and the 调号 (5×5 份 / 轻声) in the base's right-side 15-份 zone, mapping the
      * 30-份 grid onto the base 字身框 (typo box). `BopomofoParser` derives the tone.
      */
-    public static function computeBopomofoDecisions(
-        engine:ExplainableStubParagraphLayoutEngine,
-        rubySpans:Array<RubySpan>,
-        lineRanges:Array<IntRange>,
-        lineBoxes:Array<LineBox>,
-        finalClusters:Array<Cluster>,
-        naturalClusters:Array<Cluster>,
-        baseAscent:Float,
-        baseDescent:Float,
-        fontSize:Float,
-        bopomofoFontWeightAt:Int->Int,
-        baseTextStyle:TextStyle
-    ):Array<BopomofoDecisionInfo> {
-        if (rubySpans.length == 0) return [];
+    public static function computeBopomofoDecisions(engine:ExplainableStubParagraphLayoutEngine, rubySpans:Array<RubySpan>, lineRanges:Array<IntRange>,
+            lineBoxes:Array<LineBox>, finalClusters:Array<Cluster>, naturalClusters:Array<Cluster>, baseAscent:Float, baseDescent:Float, fontSize:Float,
+            bopomofoFontWeightAt:Int->Int, baseTextStyle:TextStyle):Array<BopomofoDecisionInfo> {
+        if (rubySpans.length == 0)
+            return [];
         final hUnit = fontSize / 30.0;
         final vUnit = (baseAscent + baseDescent) / 30.0;
         final out = new Array<BopomofoDecisionInfo>();
@@ -645,12 +535,16 @@ class AnnotationGeometryStage {
                     }
                     x += cluster.advance;
                 }
-                if (!hasContentLeft) continue;
+                if (!hasContentLeft)
+                    continue;
                 final zoneLeft = contentLeft + contentWidth; // 注音 zone = right of base content
                 final boxTop = lineBoxes[lineIndex].baseline - baseAscent;
                 final parsed = BopomofoParser.parse(ruby.text);
                 var n = parsed.symbols.length;
-                if (n < 1) n = 1; else if (n > 3) n = 3;
+                if (n < 1)
+                    n = 1;
+                else if (n > 3)
+                    n = 3;
                 final neutral = parsed.tone == BopomofoTone.Neutral;
                 final placements = new Array<BopomofoGlyphPlacement>();
                 if (parsed.tone == BopomofoTone.Neutral) {
@@ -667,20 +561,26 @@ class AnnotationGeometryStage {
                     placements.push(bopomofoBox(zoneLeft, boxTop, hUnit, vUnit, 1.0, 9.0, row.start, row.end, BopomofoGlyphRole.Symbol, sym));
                 }
                 switch (parsed.tone) {
-                    case Neutral: null;
+                    case Neutral:
+                        null;
                     case Yangping:
                         final row = bopomofoRegularToneRow(n);
-                        placements.push(bopomofoBox(zoneLeft, boxTop, hUnit, vUnit, 10.0, 5.0, row.start, row.end, BopomofoGlyphRole.Tone, bopomofoToneGlyph(parsed.tone)));
+                        placements.push(bopomofoBox(zoneLeft, boxTop, hUnit, vUnit, 10.0, 5.0, row.start, row.end, BopomofoGlyphRole.Tone,
+                            bopomofoToneGlyph(parsed.tone)));
                     case Shang:
                         final row = bopomofoRegularToneRow(n);
-                        placements.push(bopomofoBox(zoneLeft, boxTop, hUnit, vUnit, 10.0, 5.0, row.start, row.end, BopomofoGlyphRole.Tone, bopomofoToneGlyph(parsed.tone)));
+                        placements.push(bopomofoBox(zoneLeft, boxTop, hUnit, vUnit, 10.0, 5.0, row.start, row.end, BopomofoGlyphRole.Tone,
+                            bopomofoToneGlyph(parsed.tone)));
                     case Qu:
                         final row = bopomofoRegularToneRow(n);
-                        placements.push(bopomofoBox(zoneLeft, boxTop, hUnit, vUnit, 10.0, 5.0, row.start, row.end, BopomofoGlyphRole.Tone, bopomofoToneGlyph(parsed.tone)));
+                        placements.push(bopomofoBox(zoneLeft, boxTop, hUnit, vUnit, 10.0, 5.0, row.start, row.end, BopomofoGlyphRole.Tone,
+                            bopomofoToneGlyph(parsed.tone)));
                     case Ru:
                         final row = bopomofoRuToneRow(n);
-                        placements.push(bopomofoBox(zoneLeft, boxTop, hUnit, vUnit, 10.0, 5.0, row.start, row.end, BopomofoGlyphRole.Tone, bopomofoToneGlyph(parsed.tone)));
-                    case Yinping: null;
+                        placements.push(bopomofoBox(zoneLeft, boxTop, hUnit, vUnit, 10.0, 5.0, row.start, row.end, BopomofoGlyphRole.Tone,
+                            bopomofoToneGlyph(parsed.tone)));
+                    case Yinping:
+                        null;
                 }
                 if (placements.length > 0) {
                     final placementWeight = bopomofoFontWeightAt(ruby.baseRange.start);
@@ -689,36 +589,22 @@ class AnnotationGeometryStage {
                         final placement = placements[pi];
                         var replayFontSize:Float = 0.0;
                         switch (placement.role) {
-                            case Neutral: replayFontSize = placement.width;
-                            case Symbol: replayFontSize = fontSize * BOPOMOFO_ANNOTATION_FONT_EM;
-                            case Tone: replayFontSize = fontSize * BOPOMOFO_ANNOTATION_FONT_EM;
+                            case Neutral:
+                                replayFontSize = placement.width;
+                            case Symbol:
+                                replayFontSize = fontSize * BOPOMOFO_ANNOTATION_FONT_EM;
+                            case Tone:
+                                replayFontSize = fontSize * BOPOMOFO_ANNOTATION_FONT_EM;
                         }
                         // BopomofoToneSharedAnnotationEmSizing: keep the previously verified
                         // annotation size; the 5×5 tone slot only supplies the centre target.
                         final range = new TextRange(0, placement.text.length);
                         final preferredFamilies:Array<String> = copyFontFamilies(ruby.fontFamilies);
-                        final decision = engine.fallbackResolver.resolve(
-                            placement.text,
-                            range,
-                            new FontRequest(preferredFamilies, rubyLocale, FontRole.CjkText)
-                        );
-                        final styled:TextStyle = new TextStyle(
-                            preferredFamilies,
-                            replayFontSize,
-                            rubyLocale,
-                            placementWeight,
-                            false,
-                            baseTextStyle.baselineShift,
-                            baseTextStyle.inlineAttachment
-                        );
-                        final shaped = engine.textShaper.shape(new ShapingInput(
-                            placement.text,
-                            range,
-                            styled,
-                            decision,
-                            placement.text,
-                            ["vert=1"]
-                        ));
+                        final decision = engine.fallbackResolver.resolve(placement.text, range,
+                            new FontRequest(preferredFamilies, rubyLocale, FontRole.CjkText));
+                        final styled:TextStyle = new TextStyle(preferredFamilies, replayFontSize, rubyLocale, placementWeight, false,
+                            baseTextStyle.baselineShift, baseTextStyle.inlineAttachment);
+                        final shaped = engine.textShaper.shape(new ShapingInput(placement.text, range, styled, decision, placement.text, ["vert=1"]));
                         final glyphs = new Array<Glyph>();
                         for (rri in 0...shaped.glyphRuns.length) {
                             final run = shaped.glyphRuns[rri];
@@ -759,29 +645,12 @@ class AnnotationGeometryStage {
                                 final inkBottom = ink != null ? ink.bottom : 0.0;
                                 baselineY = placement.top + placement.height / 2.0 - (inkTop + inkBottom) / 2.0;
                         }
-                        replayPlacements.push(new BopomofoGlyphPlacement(
-                            placement.text,
-                            placement.left,
-                            placement.top,
-                            placement.width,
-                            placement.height,
-                            placement.role,
-                            glyphs,
-                            drawX,
-                            baselineY,
-                            replayFontSize
-                        ));
+                        replayPlacements.push(new BopomofoGlyphPlacement(placement.text, placement.left, placement.top, placement.width, placement.height,
+                            placement.role, glyphs, drawX, baselineY, replayFontSize));
                     }
                     final rubyFamilies:Array<String> = copyFontFamilies(ruby.fontFamilies);
-                    out.push(new BopomofoDecisionInfo(
-                        ruby.baseRange,
-                        ruby.text,
-                        lineIndex,
-                        replayPlacements,
-                        rubyFamilies,
-                        bopomofoFontWeightAt(ruby.baseRange.start),
-                        rubyLocale
-                    ));
+                    out.push(new BopomofoDecisionInfo(ruby.baseRange, ruby.text, lineIndex, replayPlacements, rubyFamilies,
+                        bopomofoFontWeightAt(ruby.baseRange.start), rubyLocale));
                 }
             }
         }

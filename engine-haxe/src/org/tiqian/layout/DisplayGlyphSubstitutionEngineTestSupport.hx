@@ -31,19 +31,17 @@ class DisplayGlyphSubstitutionEngineTestSupport {
     }
 
     public static function layout320(engine:ExplainableStubParagraphLayoutEngine, text:String):LayoutResult {
-        return engine.layout(new LayoutInput(new TiqianTextContent(text), null,
-            new ParagraphStyle(null, null, null, Ic.Zero), new LayoutConstraints(320)));
+        return engine.layout(new LayoutInput(new TiqianTextContent(text), null, new ParagraphStyle(null, null, null, Ic.Zero), new LayoutConstraints(320)));
     }
 
     public static function layout320WithSpans(engine:ExplainableStubParagraphLayoutEngine, text:String, spans:Array<TextSpan>):LayoutResult {
-        return engine.layout(new LayoutInput(new TiqianTextContent(text, spans), null,
-            new ParagraphStyle(null, null, null, Ic.Zero), new LayoutConstraints(320)));
+        return engine.layout(new LayoutInput(new TiqianTextContent(text, spans), null, new ParagraphStyle(null, null, null, Ic.Zero),
+            new LayoutConstraints(320)));
     }
 
     public static function layoutWithoutGrid(engine:ExplainableStubParagraphLayoutEngine, text:String, maxWidth:Float):LayoutResult {
         return engine.layout(new LayoutInput(new TiqianTextContent(text), null,
-            new ParagraphStyle(null, null, null, Ic.Zero, null, null, new LineLengthGrid(false)),
-            new LayoutConstraints(maxWidth)));
+            new ParagraphStyle(null, null, null, Ic.Zero, null, null, new LineLengthGrid(false)), new LayoutConstraints(maxWidth)));
     }
 
     public static function findJustifiedDashHit(engine:ExplainableStubParagraphLayoutEngine, text:String):JustifiedDashHit {
@@ -206,9 +204,11 @@ class SingleClusterNoBoundsShaper implements ITextShaper {
     public function new() {}
 
     public function shape(input:ShapingInput):ShapingResult {
-        return new ShapingResult(
-            [new Cluster(input.range, input.text.substring(input.range.start, input.range.end), input.fontDecision.candidate.key, 16, input.displayText)],
-            [new GlyphRun(input.range, input.fontDecision.candidate.key, [new Glyph(0, input.range, 16)], 16)]);
+        return new ShapingResult([
+            new Cluster(input.range, input.text.substring(input.range.start, input.range.end), input.fontDecision.candidate.key, 16, input.displayText)
+        ], [
+            new GlyphRun(input.range, input.fontDecision.candidate.key, [new Glyph(0, input.range, 16)], 16)
+        ]);
     }
 }
 
@@ -216,9 +216,11 @@ class SingleClusterAmbiguousShaper implements ITextShaper {
     public function new() {}
 
     public function shape(input:ShapingInput):ShapingResult {
-        return new ShapingResult(
-            [new Cluster(input.range, input.text.substring(input.range.start, input.range.end), input.fontDecision.candidate.key, 32, input.displayText)],
-            [new GlyphRun(input.range, input.fontDecision.candidate.key, [new Glyph(0, input.range, 32, null, null, null, new Rect(2, -10, 30, -6))], 32)]);
+        return new ShapingResult([
+            new Cluster(input.range, input.text.substring(input.range.start, input.range.end), input.fontDecision.candidate.key, 32, input.displayText)
+        ], [
+            new GlyphRun(input.range, input.fontDecision.candidate.key, [new Glyph(0, input.range, 32, null, null, null, new Rect(2, -10, 30, -6))], 32)
+        ]);
     }
 }
 
@@ -291,8 +293,7 @@ class DashInkOverrideShaper implements ITextShaper {
         final clusters:Array<Cluster> = [];
         for (i in 0...res.clusters.length) {
             final c = res.clusters[i];
-            clusters.push(new Cluster(c.range, c.text, c.fontKey, overrideAdvance, c.displayText, c.baselineShift, c.leadingLayoutAdvance,
-                c.glyphInlineShift));
+            clusters.push(new Cluster(c.range, c.text, c.fontKey, overrideAdvance, c.displayText, c.baselineShift, c.leadingLayoutAdvance, c.glyphInlineShift));
         }
         final decisions:Array<ShapingDecisionInfo> = [];
         for (i in 0...res.decisions.length) {
@@ -329,10 +330,13 @@ class TwoGlyphEllipsisShaper implements ITextShaper {
         if (input.displayText != "\u22EF\u22EF") {
             return delegate.shape(input);
         }
-        return new ShapingResult(
-            [new Cluster(input.range, input.text.substring(input.range.start, input.range.end), input.fontDecision.candidate.key, 32, input.displayText)],
-            [new GlyphRun(input.range, input.fontDecision.candidate.key,
-                [new Glyph(1, input.range, 16, 0, null, null, new Rect(1.5, -7, 14.5, -5)),
-                    new Glyph(2, input.range, 16, 16, null, null, new Rect(1.5, -7, 14.5, -5))], 32)]);
+        return new ShapingResult([
+            new Cluster(input.range, input.text.substring(input.range.start, input.range.end), input.fontDecision.candidate.key, 32, input.displayText)
+        ], [
+            new GlyphRun(input.range, input.fontDecision.candidate.key, [
+                new Glyph(1, input.range, 16, 0, null, null, new Rect(1.5, -7, 14.5, -5)),
+                new Glyph(2, input.range, 16, 16, null, null, new Rect(1.5, -7, 14.5, -5))
+            ], 32)
+        ]);
     }
 }

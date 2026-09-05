@@ -11,9 +11,11 @@ import org.tiqian.shaping.TextShaper.ShapingResult;
 
 class InkBoundsTextShaper implements ITextShaper {
     final delegate:ExplainableStubTextShaper;
+
     public function new(?delegate:ExplainableStubTextShaper) {
         this.delegate = delegate == null ? new ExplainableStubTextShaper() : delegate;
     }
+
     public function shape(input:ShapingInput):ShapingResult {
         final res = delegate.shape(input);
         final runs:Array<GlyphRun> = [];
@@ -22,11 +24,11 @@ class InkBoundsTextShaper implements ITextShaper {
             final gs:Array<Glyph> = [];
             for (j in 0...run.glyphs.length) {
                 final g = run.glyphs[j];
-                gs.push(new Glyph(g.id, g.clusterRange, g.advance, g.x, g.y, g.renderFontKey, new Rect(1.0, 2.0, 9.0, 10.0), g.haltAdvance,
-                    g.haltPlacementX));
+                gs.push(new Glyph(g.id, g.clusterRange, g.advance, g.x, g.y, g.renderFontKey, new Rect(1.0, 2.0, 9.0, 10.0), g.haltAdvance, g.haltPlacementX));
             }
             final features:Array<String> = [];
-            for (k in 0...run.openTypeFeatures.length) features.push(run.openTypeFeatures[k]);
+            for (k in 0...run.openTypeFeatures.length)
+                features.push(run.openTypeFeatures[k]);
             runs.push(new GlyphRun(run.range, run.fontKey, gs, run.advance, features));
         }
         return new ShapingResult(res.clusters, runs, res.decisions);
@@ -35,9 +37,11 @@ class InkBoundsTextShaper implements ITextShaper {
 
 class MultiGlyphMinMaxShaper implements ITextShaper {
     final delegate:ExplainableStubTextShaper;
+
     public function new() {
         delegate = new ExplainableStubTextShaper();
     }
+
     public function shape(input:ShapingInput):ShapingResult {
         final res = delegate.shape(input);
         final runs:Array<GlyphRun> = [];
@@ -54,9 +58,11 @@ class MultiGlyphMinMaxShaper implements ITextShaper {
 
 class MultiGlyphBoundsShaper implements ITextShaper {
     public var callCount:Int;
+
     public function new() {
         callCount = 0;
     }
+
     public function shape(input:ShapingInput):ShapingResult {
         callCount += 1;
         final cluster = new Cluster(input.range, input.text.substring(input.range.start, input.range.end), "test", 16.0, input.displayText);

@@ -10,8 +10,8 @@ class OpeningBracketLineStartTest {
         final t = new TestTraceRecorder("OpeningBracketLineStartTest");
         t.section("testOpeningBracketAtLineStartCompression");
         final text = "这是第一行测试文字这是第一行测试\n（Shaping & Font Metrics）这是第二行文字\n（GPOS / GSUB 特性表查询）这是第三行文字";
-        final result = new ExplainableStubParagraphLayoutEngine().layout(new LayoutInput(
-            new TiqianTextContent(text), null, new ParagraphStyle(null, null, null, Ic.Zero), new LayoutConstraints(672.0)));
+        final result = new ExplainableStubParagraphLayoutEngine().layout(new LayoutInput(new TiqianTextContent(text), null,
+            new ParagraphStyle(null, null, null, Ic.Zero), new LayoutConstraints(672.0)));
         TracedAssertions.assertEqualsInt(3, result.lines.length);
         final line1 = result.clusters[result.lines[1].clusterRange.start];
         final line2 = result.clusters[result.lines[2].clusterRange.start];
@@ -25,7 +25,8 @@ class OpeningBracketLineStartTest {
             final d = result.debug.lineEdgeTrimDecisions[i];
             if (d.reason == "LineStartHalfWidthPunctuation") {
                 count++;
-                if (!(d.side == "leading" && d.trimAmount == 8.0)) all = false;
+                if (!(d.side == "leading" && d.trimAmount == 8.0))
+                    all = false;
             }
         }
         TracedAssertions.assertEqualsInt(2, count);

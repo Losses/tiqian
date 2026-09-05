@@ -629,22 +629,29 @@ class Main {
             ContextualDashEllipsisRoleResolverCoverageTest.forwardPassWalkerArmsRunBeforeTheClassifierRejectsLoneSurrogates);
         TestTraceRecorder.flushClass("ContextualDashEllipsisRoleResolverCoverageTest");
         run("resolvesBySurroundingScriptRatherThanMarkCount", ContextualDashEllipsisRoleResolverTest.resolvesBySurroundingScriptRatherThanMarkCount);
-        run("conflictingOrAbsentScriptFallsBackToParagraphLanguage", ContextualDashEllipsisRoleResolverTest.conflictingOrAbsentScriptFallsBackToParagraphLanguage);
+        run("conflictingOrAbsentScriptFallsBackToParagraphLanguage",
+            ContextualDashEllipsisRoleResolverTest.conflictingOrAbsentScriptFallsBackToParagraphLanguage);
         run("decisionReasonNamesTheEvidenceShape", ContextualDashEllipsisRoleResolverTest.decisionReasonNamesTheEvidenceShape);
         run("mandatoryBreakStopsContextSearch", ContextualDashEllipsisRoleResolverTest.mandatoryBreakStopsContextSearch);
-        run("linearContextIndexPreservesSupplementaryScriptEvidence", ContextualDashEllipsisRoleResolverTest.linearContextIndexPreservesSupplementaryScriptEvidence);
-        run("resolvesManyNeutralSeparatedRunsFromOneParagraphIndex", ContextualDashEllipsisRoleResolverTest.resolvesManyNeutralSeparatedRunsFromOneParagraphIndex);
+        run("linearContextIndexPreservesSupplementaryScriptEvidence",
+            ContextualDashEllipsisRoleResolverTest.linearContextIndexPreservesSupplementaryScriptEvidence);
+        run("resolvesManyNeutralSeparatedRunsFromOneParagraphIndex",
+            ContextualDashEllipsisRoleResolverTest.resolvesManyNeutralSeparatedRunsFromOneParagraphIndex);
         run("pairsParentheticalDashesAcrossInsertedContent", ContextualDashEllipsisRoleResolverTest.pairsParentheticalDashesAcrossInsertedContent);
-        run("matchingOuterScriptResolvesTheParentheticalPairDirectly", ContextualDashEllipsisRoleResolverTest.matchingOuterScriptResolvesTheParentheticalPairDirectly);
+        run("matchingOuterScriptResolvesTheParentheticalPairDirectly",
+            ContextualDashEllipsisRoleResolverTest.matchingOuterScriptResolvesTheParentheticalPairDirectly);
         run("punctuationBetweenRunsKeepsThemIndependent", ContextualDashEllipsisRoleResolverTest.punctuationBetweenRunsKeepsThemIndependent);
         run("symbolBetweenRunsKeepsThemIndependent", ContextualDashEllipsisRoleResolverTest.symbolBetweenRunsKeepsThemIndependent);
         run("unequalRunLengthsDoNotPair", ContextualDashEllipsisRoleResolverTest.unequalRunLengthsDoNotPair);
         run("ellipsisRunsNeverPair", ContextualDashEllipsisRoleResolverTest.ellipsisRunsNeverPair);
         run("mandatoryBreakBetweenRunsKeepsThemIndependent", ContextualDashEllipsisRoleResolverTest.mandatoryBreakBetweenRunsKeepsThemIndependent);
-        run("westernContextKeepsDashAndEllipsisOnLatinFaceAndPreservesSourceDisplay", ContextualDashEllipsisRoleResolverTest.westernContextKeepsDashAndEllipsisOnLatinFaceAndPreservesSourceDisplay);
-        run("cjkContextKeepsClreqDisplaySubstitutionIndependentOfMarkCount", ContextualDashEllipsisRoleResolverTest.cjkContextKeepsClreqDisplaySubstitutionIndependentOfMarkCount);
+        run("westernContextKeepsDashAndEllipsisOnLatinFaceAndPreservesSourceDisplay",
+            ContextualDashEllipsisRoleResolverTest.westernContextKeepsDashAndEllipsisOnLatinFaceAndPreservesSourceDisplay);
+        run("cjkContextKeepsClreqDisplaySubstitutionIndependentOfMarkCount",
+            ContextualDashEllipsisRoleResolverTest.cjkContextKeepsClreqDisplaySubstitutionIndependentOfMarkCount);
         run("parentheticalPairSharesOneFaceAndSubstitution", ContextualDashEllipsisRoleResolverTest.parentheticalPairSharesOneFaceAndSubstitution);
-        run("standaloneWesternEllipsisCannotBeRewrittenByTheSubstitutor", ContextualDashEllipsisRoleResolverTest.standaloneWesternEllipsisCannotBeRewrittenByTheSubstitutor);
+        run("standaloneWesternEllipsisCannotBeRewrittenByTheSubstitutor",
+            ContextualDashEllipsisRoleResolverTest.standaloneWesternEllipsisCannotBeRewrittenByTheSubstitutor);
         run("contextualRoleExtensionsWrapOutsideThePipeline", ContextualRoleExtensionCoverageTest.contextualRoleExtensionsWrapOutsideThePipeline);
         TestTraceRecorder.flushClass("ContextualRoleExtensionCoverageTest");
         run("latinDashRunAtParagraphEndStaysOneCluster", ContextualDashEllipsisClusterCoverageTest.latinDashRunAtParagraphEndStaysOneCluster);
@@ -1347,15 +1354,19 @@ class Main {
         TestTraceRecorder.flushClass("PreparedParagraphJfTest");
         run("dashClusterEmitsShapingEvidenceBlock", org.tiqian.layout.PreparedParagraphPlanConstructionTest.dashClusterEmitsShapingEvidenceBlock);
         run("inlineObjectCellEmitsAdvanceOverride", org.tiqian.layout.PreparedParagraphPlanConstructionTest.inlineObjectCellEmitsAdvanceOverride);
-        run("jsonStringEscapesQuotesBackslashesAndControlCharacters", org.tiqian.layout.PreparedParagraphPlanConstructionTest.jsonStringEscapesQuotesBackslashesAndControlCharacters);
+        run("jsonStringEscapesQuotesBackslashesAndControlCharacters",
+            org.tiqian.layout.PreparedParagraphPlanConstructionTest.jsonStringEscapesQuotesBackslashesAndControlCharacters);
         run("multiUnitClusterMarksShapingBoundary", org.tiqian.layout.PreparedParagraphPlanConstructionTest.multiUnitClusterMarksShapingBoundary);
         run("negativeZeroAndExponentWidthsNormalize", org.tiqian.layout.PreparedParagraphPlanConstructionTest.negativeZeroAndExponentWidthsNormalize);
-        run("openTypeFeaturesAndRenderFontFamilyAttachPerCluster", org.tiqian.layout.PreparedParagraphPlanConstructionTest.openTypeFeaturesAndRenderFontFamilyAttachPerCluster);
+        run("openTypeFeaturesAndRenderFontFamilyAttachPerCluster",
+            org.tiqian.layout.PreparedParagraphPlanConstructionTest.openTypeFeaturesAndRenderFontFamilyAttachPerCluster);
         run("paragraphEvidenceEmitsEverySection", org.tiqian.layout.PreparedParagraphPlanConstructionTest.paragraphEvidenceEmitsEverySection);
-        run("planWithDiagnosticsListsCapabilityIssuesAndAdvanceSuspects", org.tiqian.layout.PreparedParagraphPlanConstructionTest.planWithDiagnosticsListsCapabilityIssuesAndAdvanceSuspects);
+        run("planWithDiagnosticsListsCapabilityIssuesAndAdvanceSuspects",
+            org.tiqian.layout.PreparedParagraphPlanConstructionTest.planWithDiagnosticsListsCapabilityIssuesAndAdvanceSuspects);
         run("punctuationInkFloorAndLatinRoleMarkCells", org.tiqian.layout.PreparedParagraphPlanConstructionTest.punctuationInkFloorAndLatinRoleMarkCells);
         run("styleDeltaListsOnlyPaintFields", org.tiqian.layout.PreparedParagraphPlanConstructionTest.styleDeltaListsOnlyPaintFields);
-        run("zeroWidthBreakClusterSurvivesEmptyDisplayText", org.tiqian.layout.PreparedParagraphPlanConstructionTest.zeroWidthBreakClusterSurvivesEmptyDisplayText);
+        run("zeroWidthBreakClusterSurvivesEmptyDisplayText",
+            org.tiqian.layout.PreparedParagraphPlanConstructionTest.zeroWidthBreakClusterSurvivesEmptyDisplayText);
         TestTraceRecorder.flushClass("PreparedParagraphPlanConstructionTest");
 
         run("closingPlusClosingCollapsesInnerToZero", PunctuationSpacingRuleTest.closingPlusClosingCollapsesInnerToZero);
@@ -1415,40 +1426,62 @@ class Main {
         run("latinInsideCjkUsesSharedRomanBaseline", BaselineAlignmentTest.latinInsideCjkUsesSharedRomanBaseline);
         TestTraceRecorder.flushClass("BaselineAlignmentTest");
         run("interpunctInkEvidenceFreesPairedGlueForTierThreeShrink", InterpunctShrinkOpportunityTest.interpunctInkEvidenceFreesPairedGlueForTierThreeShrink);
-        run("preservedInterpunctCodepointKeepsInterpunctClassForTierThreeShrink", InterpunctShrinkOpportunityTest.preservedInterpunctCodepointKeepsInterpunctClassForTierThreeShrink);
+        run("preservedInterpunctCodepointKeepsInterpunctClassForTierThreeShrink",
+            InterpunctShrinkOpportunityTest.preservedInterpunctCodepointKeepsInterpunctClassForTierThreeShrink);
         TestTraceRecorder.flushClass("InterpunctShrinkOpportunityTest");
-        run("LatinTokensAndAmbiguousAsciiCharactersKeepExistingSegmentation", org.tiqian.layout.AsciiPointMarkKinsokuTest.LatinTokensAndAmbiguousAsciiCharactersKeepExistingSegmentation);
+        run("LatinTokensAndAmbiguousAsciiCharactersKeepExistingSegmentation",
+            org.tiqian.layout.AsciiPointMarkKinsokuTest.LatinTokensAndAmbiguousAsciiCharactersKeepExistingSegmentation);
         run("adjacentImpossibleGroupsDoNotShareHangProvenance", org.tiqian.layout.AsciiPointMarkKinsokuTest.adjacentImpossibleGroupsDoNotShareHangProvenance);
-        run("authoredWhitespaceAndMandatoryBreakDoNotCreateContextualKinsoku", org.tiqian.layout.AsciiPointMarkKinsokuTest.authoredWhitespaceAndMandatoryBreakDoNotCreateContextualKinsoku);
-        run("cjkAttachedAsciiPointMarksCannotStartWrappedLinesAndStayLatin", org.tiqian.layout.AsciiPointMarkKinsokuTest.cjkAttachedAsciiPointMarksCannotStartWrappedLinesAndStayLatin);
-        run("compressedClosingAndPointMarkPairDoesNotReportAnUnusedHangFallback", org.tiqian.layout.AsciiPointMarkKinsokuTest.compressedClosingAndPointMarkPairDoesNotReportAnUnusedHangFallback);
-        run("contextualRunCanExtendAProfileHangOnlyWithinTheSameProtectedGroup", org.tiqian.layout.AsciiPointMarkKinsokuTest.contextualRunCanExtendAProfileHangOnlyWithinTheSameProtectedGroup);
-        run("firstLineIndentUsesTheSameImpossibleMeasureFallback", org.tiqian.layout.AsciiPointMarkKinsokuTest.firstLineIndentUsesTheSameImpossibleMeasureFallback);
-        run("impossibleMeasureHangsThePointMarkInsteadOfLeavingItAtLineStart", org.tiqian.layout.AsciiPointMarkKinsokuTest.impossibleMeasureHangsThePointMarkInsteadOfLeavingItAtLineStart);
-        run("kinsokuNoneDisablesClreqButKeepsTheUax14AsciiPointMarkBoundary", org.tiqian.layout.AsciiPointMarkKinsokuTest.kinsokuNoneDisablesClreqButKeepsTheUax14AsciiPointMarkBoundary);
+        run("authoredWhitespaceAndMandatoryBreakDoNotCreateContextualKinsoku",
+            org.tiqian.layout.AsciiPointMarkKinsokuTest.authoredWhitespaceAndMandatoryBreakDoNotCreateContextualKinsoku);
+        run("cjkAttachedAsciiPointMarksCannotStartWrappedLinesAndStayLatin",
+            org.tiqian.layout.AsciiPointMarkKinsokuTest.cjkAttachedAsciiPointMarksCannotStartWrappedLinesAndStayLatin);
+        run("compressedClosingAndPointMarkPairDoesNotReportAnUnusedHangFallback",
+            org.tiqian.layout.AsciiPointMarkKinsokuTest.compressedClosingAndPointMarkPairDoesNotReportAnUnusedHangFallback);
+        run("contextualRunCanExtendAProfileHangOnlyWithinTheSameProtectedGroup",
+            org.tiqian.layout.AsciiPointMarkKinsokuTest.contextualRunCanExtendAProfileHangOnlyWithinTheSameProtectedGroup);
+        run("firstLineIndentUsesTheSameImpossibleMeasureFallback",
+            org.tiqian.layout.AsciiPointMarkKinsokuTest.firstLineIndentUsesTheSameImpossibleMeasureFallback);
+        run("impossibleMeasureHangsThePointMarkInsteadOfLeavingItAtLineStart",
+            org.tiqian.layout.AsciiPointMarkKinsokuTest.impossibleMeasureHangsThePointMarkInsteadOfLeavingItAtLineStart);
+        run("kinsokuNoneDisablesClreqButKeepsTheUax14AsciiPointMarkBoundary",
+            org.tiqian.layout.AsciiPointMarkKinsokuTest.kinsokuNoneDisablesClreqButKeepsTheUax14AsciiPointMarkBoundary);
         run("leadingPointMarkRunIsSplitFromFollowingLatinText", org.tiqian.layout.AsciiPointMarkKinsokuTest.leadingPointMarkRunIsSplitFromFollowingLatinText);
-        run("lineBreakGeometryIncludesBopomofoSpreadWhenChoosingTheFallback", org.tiqian.layout.AsciiPointMarkKinsokuTest.lineBreakGeometryIncludesBopomofoSpreadWhenChoosingTheFallback);
-        run("mandatoryBreakControlAfterAHungPointMarkStaysInTheTrailingSuffix", org.tiqian.layout.AsciiPointMarkKinsokuTest.mandatoryBreakControlAfterAHungPointMarkStaysInTheTrailingSuffix);
-        run("pointMarkExposedByASecondStageLatinCutIsSplitFromItsSuffix", org.tiqian.layout.AsciiPointMarkKinsokuTest.pointMarkExposedByASecondStageLatinCutIsSplitFromItsSuffix);
-        run("pointMarkSplitFromAnOverlongLatinTokenStillCannotStartALine", org.tiqian.layout.AsciiPointMarkKinsokuTest.pointMarkSplitFromAnOverlongLatinTokenStillCannotStartALine);
-        run("reportedRealWorldParagraphNeverWrapsDirectlyBeforeAnAsciiComma", org.tiqian.layout.AsciiPointMarkKinsokuTest.reportedRealWorldParagraphNeverWrapsDirectlyBeforeAnAsciiComma);
-        run("styledPointMarkRunCanExtendOneImpossibleMeasureHang", org.tiqian.layout.AsciiPointMarkKinsokuTest.styledPointMarkRunCanExtendOneImpossibleMeasureHang);
+        run("lineBreakGeometryIncludesBopomofoSpreadWhenChoosingTheFallback",
+            org.tiqian.layout.AsciiPointMarkKinsokuTest.lineBreakGeometryIncludesBopomofoSpreadWhenChoosingTheFallback);
+        run("mandatoryBreakControlAfterAHungPointMarkStaysInTheTrailingSuffix",
+            org.tiqian.layout.AsciiPointMarkKinsokuTest.mandatoryBreakControlAfterAHungPointMarkStaysInTheTrailingSuffix);
+        run("pointMarkExposedByASecondStageLatinCutIsSplitFromItsSuffix",
+            org.tiqian.layout.AsciiPointMarkKinsokuTest.pointMarkExposedByASecondStageLatinCutIsSplitFromItsSuffix);
+        run("pointMarkSplitFromAnOverlongLatinTokenStillCannotStartALine",
+            org.tiqian.layout.AsciiPointMarkKinsokuTest.pointMarkSplitFromAnOverlongLatinTokenStillCannotStartALine);
+        run("reportedRealWorldParagraphNeverWrapsDirectlyBeforeAnAsciiComma",
+            org.tiqian.layout.AsciiPointMarkKinsokuTest.reportedRealWorldParagraphNeverWrapsDirectlyBeforeAnAsciiComma);
+        run("styledPointMarkRunCanExtendOneImpossibleMeasureHang",
+            org.tiqian.layout.AsciiPointMarkKinsokuTest.styledPointMarkRunCanExtendOneImpossibleMeasureHang);
         TestTraceRecorder.flushClass("AsciiPointMarkKinsokuTest");
         run("attachedReferenceAtParagraphEndHasNoAutospaceGap", org.tiqian.layout.AutoSpaceSingleGapTest.attachedReferenceAtParagraphEndHasNoAutospaceGap);
-        run("attachedReferenceBeforeLatinTextGetsTheVirtualCjkLatinGap", org.tiqian.layout.AutoSpaceSingleGapTest.attachedReferenceBeforeLatinTextGetsTheVirtualCjkLatinGap);
-        run("attachedReferenceBetweenCjkTextDoesNotInventAnAutospaceGap", org.tiqian.layout.AutoSpaceSingleGapTest.attachedReferenceBetweenCjkTextDoesNotInventAnAutospaceGap);
+        run("attachedReferenceBeforeLatinTextGetsTheVirtualCjkLatinGap",
+            org.tiqian.layout.AutoSpaceSingleGapTest.attachedReferenceBeforeLatinTextGetsTheVirtualCjkLatinGap);
+        run("attachedReferenceBetweenCjkTextDoesNotInventAnAutospaceGap",
+            org.tiqian.layout.AutoSpaceSingleGapTest.attachedReferenceBetweenCjkTextDoesNotInventAnAutospaceGap);
         run("autospaceDistinguishesLetterFromDigitAtBoundary", org.tiqian.layout.AutoSpaceSingleGapTest.autospaceDistinguishesLetterFromDigitAtBoundary);
-        run("autospaceDoesNotFireBeforeSlashLedLatinTechnicalRun", org.tiqian.layout.AutoSpaceSingleGapTest.autospaceDoesNotFireBeforeSlashLedLatinTechnicalRun);
+        run("autospaceDoesNotFireBeforeSlashLedLatinTechnicalRun",
+            org.tiqian.layout.AutoSpaceSingleGapTest.autospaceDoesNotFireBeforeSlashLedLatinTechnicalRun);
         run("autospaceDoesNotFireBetweenLatinAndCjkPunctuation", org.tiqian.layout.AutoSpaceSingleGapTest.autospaceDoesNotFireBetweenLatinAndCjkPunctuation);
-        run("autospaceStillFiresBetweenLatinAndCjkTextEvenWithPunctuationNearby", org.tiqian.layout.AutoSpaceSingleGapTest.autospaceStillFiresBetweenLatinAndCjkTextEvenWithPunctuationNearby);
-        run("conditionalPunctuationFollowsChineseLanguageResolution", org.tiqian.layout.AutoSpaceSingleGapTest.conditionalPunctuationFollowsChineseLanguageResolution);
+        run("autospaceStillFiresBetweenLatinAndCjkTextEvenWithPunctuationNearby",
+            org.tiqian.layout.AutoSpaceSingleGapTest.autospaceStillFiresBetweenLatinAndCjkTextEvenWithPunctuationNearby);
+        run("conditionalPunctuationFollowsChineseLanguageResolution",
+            org.tiqian.layout.AutoSpaceSingleGapTest.conditionalPunctuationFollowsChineseLanguageResolution);
         run("oneTypedSpaceBecomesOneAutospaceGap", org.tiqian.layout.AutoSpaceSingleGapTest.oneTypedSpaceBecomesOneAutospaceGap);
         run("threeTypedSpacesStillOneGap", org.tiqian.layout.AutoSpaceSingleGapTest.threeTypedSpacesStillOneGap);
         run("twoTypedSpacesAtBoundaryStillCollapseToOneGap", org.tiqian.layout.AutoSpaceSingleGapTest.twoTypedSpacesAtBoundaryStillCollapseToOneGap);
-        run("unicodeEastAsianSpacingCoversNarrowScriptsWithoutScriptWhitelists", org.tiqian.layout.AutoSpaceSingleGapTest.unicodeEastAsianSpacingCoversNarrowScriptsWithoutScriptWhitelists);
+        run("unicodeEastAsianSpacingCoversNarrowScriptsWithoutScriptWhitelists",
+            org.tiqian.layout.AutoSpaceSingleGapTest.unicodeEastAsianSpacingCoversNarrowScriptsWithoutScriptWhitelists);
         run("zeroSpacesGetInsertedGaps", org.tiqian.layout.AutoSpaceSingleGapTest.zeroSpacesGetInsertedGaps);
         TestTraceRecorder.flushClass("AutoSpaceSingleGapTest");
-        run("attachedReferenceAtSourceEndLaysOutWithoutVirtualBoundary", org.tiqian.layout.R3GeometryTailCoverageTest.attachedReferenceAtSourceEndLaysOutWithoutVirtualBoundary);
+        run("attachedReferenceAtSourceEndLaysOutWithoutVirtualBoundary",
+            org.tiqian.layout.R3GeometryTailCoverageTest.attachedReferenceAtSourceEndLaysOutWithoutVirtualBoundary);
         run("centeredInkPunctuationKeepsPairedGlue", org.tiqian.layout.R3GeometryTailCoverageTest.centeredInkPunctuationKeepsPairedGlue);
         run("emptyTextProducesNoVisibleLines", org.tiqian.layout.R3GeometryTailCoverageTest.emptyTextProducesNoVisibleLines);
         run("maxLinesCapsVisibleLinesToOne", org.tiqian.layout.R3GeometryTailCoverageTest.maxLinesCapsVisibleLinesToOne);
@@ -1471,76 +1504,119 @@ class Main {
         run("fontWeightFollowsAnnotatedBasePlusThreeSteps", org.tiqian.layout.BopomofoLayoutTest.fontWeightFollowsAnnotatedBasePlusThreeSteps);
         run("symbolsAndToneRightOfBase", org.tiqian.layout.BopomofoLayoutTest.symbolsAndToneRightOfBase);
         TestTraceRecorder.flushClass("BopomofoLayoutTest");
-        run("everyNarrowInlineBoxGetsOuterAutospaceWithoutRoleSpecificCode", org.tiqian.layout.InlineBoxLayoutTest.everyNarrowInlineBoxGetsOuterAutospaceWithoutRoleSpecificCode);
+        run("everyNarrowInlineBoxGetsOuterAutospaceWithoutRoleSpecificCode",
+            org.tiqian.layout.InlineBoxLayoutTest.everyNarrowInlineBoxGetsOuterAutospaceWithoutRoleSpecificCode);
         run("inlineEdgesReserveAdvanceAndMoveTheGlyphOrigin", org.tiqian.layout.InlineBoxLayoutTest.inlineEdgesReserveAdvanceAndMoveTheGlyphOrigin);
         TestTraceRecorder.flushClass("InlineBoxLayoutTest");
-        run("bracketBoundariesRemainProtectedAcrossWesternSpaces", org.tiqian.layout.UnicodePunctuationBoundaryTest.bracketBoundariesRemainProtectedAcrossWesternSpaces);
-        run("pairedLatinCurlyQuotesKeepTheirContentAcrossBothLineEdges", org.tiqian.layout.UnicodePunctuationBoundaryTest.pairedLatinCurlyQuotesKeepTheirContentAcrossBothLineEdges);
-        run("unmatchedElisionApostropheBindsForwardInsteadOfBeingGuessedAsACloser", org.tiqian.layout.UnicodePunctuationBoundaryTest.unmatchedElisionApostropheBindsForwardInsteadOfBeingGuessedAsACloser);
-        run("unmatchedWesternCurlyDoubleQuotesRetainTheirDirection", org.tiqian.layout.UnicodePunctuationBoundaryTest.unmatchedWesternCurlyDoubleQuotesRetainTheirDirection);
+        run("bracketBoundariesRemainProtectedAcrossWesternSpaces",
+            org.tiqian.layout.UnicodePunctuationBoundaryTest.bracketBoundariesRemainProtectedAcrossWesternSpaces);
+        run("pairedLatinCurlyQuotesKeepTheirContentAcrossBothLineEdges",
+            org.tiqian.layout.UnicodePunctuationBoundaryTest.pairedLatinCurlyQuotesKeepTheirContentAcrossBothLineEdges);
+        run("unmatchedElisionApostropheBindsForwardInsteadOfBeingGuessedAsACloser",
+            org.tiqian.layout.UnicodePunctuationBoundaryTest.unmatchedElisionApostropheBindsForwardInsteadOfBeingGuessedAsACloser);
+        run("unmatchedWesternCurlyDoubleQuotesRetainTheirDirection",
+            org.tiqian.layout.UnicodePunctuationBoundaryTest.unmatchedWesternCurlyDoubleQuotesRetainTheirDirection);
         run("westernBaselineSurvivesClreqKinsokuNone", org.tiqian.layout.UnicodePunctuationBoundaryTest.westernBaselineSurvivesClreqKinsokuNone);
-        run("westernBracketsTouchingCjkExposeAllFourStretchBoundaries", org.tiqian.layout.UnicodePunctuationBoundaryTest.westernBracketsTouchingCjkExposeAllFourStretchBoundaries);
-        run("westernClosingPunctuationCannotBeginAnAutomaticLine", org.tiqian.layout.UnicodePunctuationBoundaryTest.westernClosingPunctuationCannotBeginAnAutomaticLine);
+        run("westernBracketsTouchingCjkExposeAllFourStretchBoundaries",
+            org.tiqian.layout.UnicodePunctuationBoundaryTest.westernBracketsTouchingCjkExposeAllFourStretchBoundaries);
+        run("westernClosingPunctuationCannotBeginAnAutomaticLine",
+            org.tiqian.layout.UnicodePunctuationBoundaryTest.westernClosingPunctuationCannotBeginAnAutomaticLine);
         run("westernOpeningBracketsCannotEndAnAutomaticLine", org.tiqian.layout.UnicodePunctuationBoundaryTest.westernOpeningBracketsCannotEndAnAutomaticLine);
         TestTraceRecorder.flushClass("UnicodePunctuationBoundaryTest");
-        run("faceSelectionUsesTheDisplayTextThatWasActuallyShaped", org.tiqian.layout.FontInstanceMetricsRequestTest.faceSelectionUsesTheDisplayTextThatWasActuallyShaped);
+        run("faceSelectionUsesTheDisplayTextThatWasActuallyShaped",
+            org.tiqian.layout.FontInstanceMetricsRequestTest.faceSelectionUsesTheDisplayTextThatWasActuallyShaped);
         run("perSpanWeightAndItalicReachTheMetricsResolver", org.tiqian.layout.FontInstanceMetricsRequestTest.perSpanWeightAndItalicReachTheMetricsResolver);
-        run("rubyMetricsUseTheSameItalicInstanceAsRubyShaping", org.tiqian.layout.FontInstanceMetricsRequestTest.rubyMetricsUseTheSameItalicInstanceAsRubyShaping);
+        run("rubyMetricsUseTheSameItalicInstanceAsRubyShaping",
+            org.tiqian.layout.FontInstanceMetricsRequestTest.rubyMetricsUseTheSameItalicInstanceAsRubyShaping);
         TestTraceRecorder.flushClass("FontInstanceMetricsRequestTest");
         Console.log("all CoreUnitsGeometryTest checks passed");
-        run("fillPushInCompressesSourceSpaceToPromoteEmergencyBreakToSyllable", org.tiqian.layout.LineAdjustmentPushInTest.fillPushInCompressesSourceSpaceToPromoteEmergencyBreakToSyllable);
-        run("fillPushInCrossesIntermediateCleanerBoundaryToRefillAtSelectedTier", org.tiqian.layout.LineAdjustmentPushInTest.fillPushInCrossesIntermediateCleanerBoundaryToRefillAtSelectedTier);
-        run("fillPushInDoesNotPromoteEmergencyBreakWhenCleanerBoundaryStillLeavesDeficit", org.tiqian.layout.LineAdjustmentPushInTest.fillPushInDoesNotPromoteEmergencyBreakWhenCleanerBoundaryStillLeavesDeficit);
+        run("fillPushInCompressesSourceSpaceToPromoteEmergencyBreakToSyllable",
+            org.tiqian.layout.LineAdjustmentPushInTest.fillPushInCompressesSourceSpaceToPromoteEmergencyBreakToSyllable);
+        run("fillPushInCrossesIntermediateCleanerBoundaryToRefillAtSelectedTier",
+            org.tiqian.layout.LineAdjustmentPushInTest.fillPushInCrossesIntermediateCleanerBoundaryToRefillAtSelectedTier);
+        run("fillPushInDoesNotPromoteEmergencyBreakWhenCleanerBoundaryStillLeavesDeficit",
+            org.tiqian.layout.LineAdjustmentPushInTest.fillPushInDoesNotPromoteEmergencyBreakWhenCleanerBoundaryStillLeavesDeficit);
         run("fillPushInExtendsPastForbiddenLineEndHead", org.tiqian.layout.LineAdjustmentPushInTest.fillPushInExtendsPastForbiddenLineEndHead);
-        run("fillPushInPullsMinimalGroupToAvoidForbiddenNextHead", org.tiqian.layout.LineAdjustmentPushInTest.fillPushInPullsMinimalGroupToAvoidForbiddenNextHead);
-        run("noShrinkFillPushInCanContinueUntilTheLineIsNoLongerLoose", org.tiqian.layout.LineAdjustmentPushInTest.noShrinkFillPushInCanContinueUntilTheLineIsNoLongerLoose);
-        run("pushInFirstCompressesSomeBoundariesPushOutOnlyNone", org.tiqian.layout.LineAdjustmentPushInTest.pushInFirstCompressesSomeBoundariesPushOutOnlyNone);
+        run("fillPushInPullsMinimalGroupToAvoidForbiddenNextHead",
+            org.tiqian.layout.LineAdjustmentPushInTest.fillPushInPullsMinimalGroupToAvoidForbiddenNextHead);
+        run("noShrinkFillPushInCanContinueUntilTheLineIsNoLongerLoose",
+            org.tiqian.layout.LineAdjustmentPushInTest.noShrinkFillPushInCanContinueUntilTheLineIsNoLongerLoose);
+        run("pushInFirstCompressesSomeBoundariesPushOutOnlyNone",
+            org.tiqian.layout.LineAdjustmentPushInTest.pushInFirstCompressesSomeBoundariesPushOutOnlyNone);
         run("pushInFirstDoesNotCompressEveryLine", org.tiqian.layout.LineAdjustmentPushInTest.pushInFirstDoesNotCompressEveryLine);
         TestTraceRecorder.flushClass("LineAdjustmentPushInTest");
         run("dashInkCenteringWithShapedBounds", org.tiqian.layout.LineAdjustmentStageJfTest.dashInkCenteringWithShapedBounds);
         run("dashInkCenteringWithWideBoundsReturnsSameGlyph", org.tiqian.layout.LineAdjustmentStageJfTest.dashInkCenteringWithWideBoundsReturnsSameGlyph);
-        run("hyphenSqueezeConsumesPairedLeadingAndTrailingGlueUnderTaiwanProfile", org.tiqian.layout.LineAdjustmentStageJfTest.hyphenSqueezeConsumesPairedLeadingAndTrailingGlueUnderTaiwanProfile);
+        run("hyphenSqueezeConsumesPairedLeadingAndTrailingGlueUnderTaiwanProfile",
+            org.tiqian.layout.LineAdjustmentStageJfTest.hyphenSqueezeConsumesPairedLeadingAndTrailingGlueUnderTaiwanProfile);
         run("inlineObjectSeparatorSpaceTrimEdge", org.tiqian.layout.LineAdjustmentStageJfTest.inlineObjectSeparatorSpaceTrimEdge);
         run("inlineObjectWithZeroDiscardableAdvance", org.tiqian.layout.LineAdjustmentStageJfTest.inlineObjectWithZeroDiscardableAdvance);
         TestTraceRecorder.flushClass("LineAdjustmentStageJfTest");
-        run("ambiguousGlyphClusterMappingFallsBackToPolicyWithRecordedReason", org.tiqian.layout.DisplayGlyphSubstitutionEngineTest.ambiguousGlyphClusterMappingFallsBackToPolicyWithRecordedReason);
+        run("ambiguousGlyphClusterMappingFallsBackToPolicyWithRecordedReason",
+            org.tiqian.layout.DisplayGlyphSubstitutionEngineTest.ambiguousGlyphClusterMappingFallsBackToPolicyWithRecordedReason);
         run("coalesceSetIsDrivenByProfile", org.tiqian.layout.DisplayGlyphSubstitutionEngineTest.coalesceSetIsDrivenByProfile);
         run("dashCoverageTargetUsesTheDashSpanFontSize", org.tiqian.layout.DisplayGlyphSubstitutionEngineTest.dashCoverageTargetUsesTheDashSpanFontSize);
-        run("dashInkCentersWithinTheTwoEmBodyWhenTheFontRuleUnderfills", org.tiqian.layout.DisplayGlyphSubstitutionEngineTest.dashInkCentersWithinTheTwoEmBodyWhenTheFontRuleUnderfills);
-        run("dashSubstitutionIsKeptWhenInkFillsTheTwoEmAdvance", org.tiqian.layout.DisplayGlyphSubstitutionEngineTest.dashSubstitutionIsKeptWhenInkFillsTheTwoEmAdvance);
-        run("dashSubstitutionRollsBackWhenFallbackReportsAFullOneEmGlyph", org.tiqian.layout.DisplayGlyphSubstitutionEngineTest.dashSubstitutionRollsBackWhenFallbackReportsAFullOneEmGlyph);
-        run("dashSubstitutionRollsBackWhenInkDoesNotFillTheTwoEmAdvance", org.tiqian.layout.DisplayGlyphSubstitutionEngineTest.dashSubstitutionRollsBackWhenInkDoesNotFillTheTwoEmAdvance);
-        run("ellipsisSubstitutionRollsBackWhenCoverageCannotBeVerified", org.tiqian.layout.DisplayGlyphSubstitutionEngineTest.ellipsisSubstitutionRollsBackWhenCoverageCannotBeVerified);
+        run("dashInkCentersWithinTheTwoEmBodyWhenTheFontRuleUnderfills",
+            org.tiqian.layout.DisplayGlyphSubstitutionEngineTest.dashInkCentersWithinTheTwoEmBodyWhenTheFontRuleUnderfills);
+        run("dashSubstitutionIsKeptWhenInkFillsTheTwoEmAdvance",
+            org.tiqian.layout.DisplayGlyphSubstitutionEngineTest.dashSubstitutionIsKeptWhenInkFillsTheTwoEmAdvance);
+        run("dashSubstitutionRollsBackWhenFallbackReportsAFullOneEmGlyph",
+            org.tiqian.layout.DisplayGlyphSubstitutionEngineTest.dashSubstitutionRollsBackWhenFallbackReportsAFullOneEmGlyph);
+        run("dashSubstitutionRollsBackWhenInkDoesNotFillTheTwoEmAdvance",
+            org.tiqian.layout.DisplayGlyphSubstitutionEngineTest.dashSubstitutionRollsBackWhenInkDoesNotFillTheTwoEmAdvance);
+        run("ellipsisSubstitutionRollsBackWhenCoverageCannotBeVerified",
+            org.tiqian.layout.DisplayGlyphSubstitutionEngineTest.ellipsisSubstitutionRollsBackWhenCoverageCannotBeVerified);
         run("honorsProfilePunctuationGlyphPolicy", org.tiqian.layout.DisplayGlyphSubstitutionEngineTest.honorsProfilePunctuationGlyphPolicy);
-        run("multiCharacterPunctuationUsesCharacterLocalInkBounds", org.tiqian.layout.DisplayGlyphSubstitutionEngineTest.multiCharacterPunctuationUsesCharacterLocalInkBounds);
-        run("preservesOpenTypeFeaturesAsFinalGlyphRunBoundaries", org.tiqian.layout.DisplayGlyphSubstitutionEngineTest.preservesOpenTypeFeaturesAsFinalGlyphRunBoundaries);
-        run("preservesSourceTextWhenUsingClreqRecommendedDisplayGlyphs", org.tiqian.layout.DisplayGlyphSubstitutionEngineTest.preservesSourceTextWhenUsingClreqRecommendedDisplayGlyphs);
-        run("rolledBackDashStillKeepsItsBoundariesClosedUnderJustification", org.tiqian.layout.DisplayGlyphSubstitutionEngineTest.rolledBackDashStillKeepsItsBoundariesClosedUnderJustification);
-        run("shapingWithoutBoundsProducesNamedProfileFallback", org.tiqian.layout.DisplayGlyphSubstitutionEngineTest.shapingWithoutBoundsProducesNamedProfileFallback);
-        run("stubShaperReportsProfileFallbackWhenInkBoundsAreUnavailable", org.tiqian.layout.DisplayGlyphSubstitutionEngineTest.stubShaperReportsProfileFallbackWhenInkBoundsAreUnavailable);
+        run("multiCharacterPunctuationUsesCharacterLocalInkBounds",
+            org.tiqian.layout.DisplayGlyphSubstitutionEngineTest.multiCharacterPunctuationUsesCharacterLocalInkBounds);
+        run("preservesOpenTypeFeaturesAsFinalGlyphRunBoundaries",
+            org.tiqian.layout.DisplayGlyphSubstitutionEngineTest.preservesOpenTypeFeaturesAsFinalGlyphRunBoundaries);
+        run("preservesSourceTextWhenUsingClreqRecommendedDisplayGlyphs",
+            org.tiqian.layout.DisplayGlyphSubstitutionEngineTest.preservesSourceTextWhenUsingClreqRecommendedDisplayGlyphs);
+        run("rolledBackDashStillKeepsItsBoundariesClosedUnderJustification",
+            org.tiqian.layout.DisplayGlyphSubstitutionEngineTest.rolledBackDashStillKeepsItsBoundariesClosedUnderJustification);
+        run("shapingWithoutBoundsProducesNamedProfileFallback",
+            org.tiqian.layout.DisplayGlyphSubstitutionEngineTest.shapingWithoutBoundsProducesNamedProfileFallback);
+        run("stubShaperReportsProfileFallbackWhenInkBoundsAreUnavailable",
+            org.tiqian.layout.DisplayGlyphSubstitutionEngineTest.stubShaperReportsProfileFallbackWhenInkBoundsAreUnavailable);
         run("substitutionIsKeptWhenFontCoversTheGlyph", org.tiqian.layout.DisplayGlyphSubstitutionEngineTest.substitutionIsKeptWhenFontCoversTheGlyph);
-        run("substitutionRollsBackToSourceTextWhenFontLacksTheGlyph", org.tiqian.layout.DisplayGlyphSubstitutionEngineTest.substitutionRollsBackToSourceTextWhenFontLacksTheGlyph);
+        run("substitutionRollsBackToSourceTextWhenFontLacksTheGlyph",
+            org.tiqian.layout.DisplayGlyphSubstitutionEngineTest.substitutionRollsBackToSourceTextWhenFontLacksTheGlyph);
         run("usesTwoEmAdvanceForRecommendedDashCodepoint", org.tiqian.layout.DisplayGlyphSubstitutionEngineTest.usesTwoEmAdvanceForRecommendedDashCodepoint);
         TestTraceRecorder.flushClass("DisplayGlyphSubstitutionEngineTest");
-        run("attachedFootnoteTrailingGlueTrimsWhenTheLineEndsAtTheRun", org.tiqian.layout.LineAdjustmentStageCoverageTest.attachedFootnoteTrailingGlueTrimsWhenTheLineEndsAtTheRun);
-        run("attachedObjectMarkHangsInsteadOfLeavingTheSeparatorAtAnEdge", org.tiqian.layout.LineAdjustmentStageCoverageTest.attachedObjectMarkHangsInsteadOfLeavingTheSeparatorAtAnEdge);
+        run("attachedFootnoteTrailingGlueTrimsWhenTheLineEndsAtTheRun",
+            org.tiqian.layout.LineAdjustmentStageCoverageTest.attachedFootnoteTrailingGlueTrimsWhenTheLineEndsAtTheRun);
+        run("attachedObjectMarkHangsInsteadOfLeavingTheSeparatorAtAnEdge",
+            org.tiqian.layout.LineAdjustmentStageCoverageTest.attachedObjectMarkHangsInsteadOfLeavingTheSeparatorAtAnEdge);
         run("baselineShiftSpanRaisesTheFinalClusterShift", org.tiqian.layout.LineAdjustmentStageCoverageTest.baselineShiftSpanRaisesTheFinalClusterShift);
         run("blankMiddleLineSkipsEveryEdgePass", org.tiqian.layout.LineAdjustmentStageCoverageTest.blankMiddleLineSkipsEveryEdgePass);
         run("dashRunWithoutInkBoundsKeepsSyntheticGlyphs", org.tiqian.layout.LineAdjustmentStageCoverageTest.dashRunWithoutInkBoundsKeepsSyntheticGlyphs);
-        run("emergencySelectedBreakOpensThePreferredTrackingSpan", org.tiqian.layout.LineAdjustmentStageCoverageTest.emergencySelectedBreakOpensThePreferredTrackingSpan);
+        run("emergencySelectedBreakOpensThePreferredTrackingSpan",
+            org.tiqian.layout.LineAdjustmentStageCoverageTest.emergencySelectedBreakOpensThePreferredTrackingSpan);
         run("emptyTextYieldsZeroHeightWithoutLines", org.tiqian.layout.LineAdjustmentStageCoverageTest.emptyTextYieldsZeroHeightWithoutLines);
-        run("formulaLineEndDiscardsTheTrailingBoundaryAdvance", org.tiqian.layout.LineAdjustmentStageCoverageTest.formulaLineEndDiscardsTheTrailingBoundaryAdvance);
-        run("formulaObjectWithoutBoundaryDiscardsNothingAtLineEnd", org.tiqian.layout.LineAdjustmentStageCoverageTest.formulaObjectWithoutBoundaryDiscardsNothingAtLineEnd);
-        run("hyphenSqueezeConsumesOpeningAndClosingBracketGlueChannels", org.tiqian.layout.LineAdjustmentStageCoverageTest.hyphenSqueezeConsumesOpeningAndClosingBracketGlueChannels);
-        run("hyphenSqueezeConsumesTheInterpunctPairedChannel", org.tiqian.layout.LineAdjustmentStageCoverageTest.hyphenSqueezeConsumesTheInterpunctPairedChannel);
-        run("hyphenSqueezeConsumesTheWordSpaceRawAdvanceChannel", org.tiqian.layout.LineAdjustmentStageCoverageTest.hyphenSqueezeConsumesTheWordSpaceRawAdvanceChannel);
-        run("hyphenSqueezeFallsBackToZeroUsedGlueWhenTheLineAlreadyFits", org.tiqian.layout.LineAdjustmentStageCoverageTest.hyphenSqueezeFallsBackToZeroUsedGlueWhenTheLineAlreadyFits);
-        run("loneLatinClusterMergesBothAutoSpaceEdgeTrimsIntoOneKey", org.tiqian.layout.LineAdjustmentStageCoverageTest.loneLatinClusterMergesBothAutoSpaceEdgeTrimsIntoOneKey);
+        run("formulaLineEndDiscardsTheTrailingBoundaryAdvance",
+            org.tiqian.layout.LineAdjustmentStageCoverageTest.formulaLineEndDiscardsTheTrailingBoundaryAdvance);
+        run("formulaObjectWithoutBoundaryDiscardsNothingAtLineEnd",
+            org.tiqian.layout.LineAdjustmentStageCoverageTest.formulaObjectWithoutBoundaryDiscardsNothingAtLineEnd);
+        run("hyphenSqueezeConsumesOpeningAndClosingBracketGlueChannels",
+            org.tiqian.layout.LineAdjustmentStageCoverageTest.hyphenSqueezeConsumesOpeningAndClosingBracketGlueChannels);
+        run("hyphenSqueezeConsumesTheInterpunctPairedChannel",
+            org.tiqian.layout.LineAdjustmentStageCoverageTest.hyphenSqueezeConsumesTheInterpunctPairedChannel);
+        run("hyphenSqueezeConsumesTheWordSpaceRawAdvanceChannel",
+            org.tiqian.layout.LineAdjustmentStageCoverageTest.hyphenSqueezeConsumesTheWordSpaceRawAdvanceChannel);
+        run("hyphenSqueezeFallsBackToZeroUsedGlueWhenTheLineAlreadyFits",
+            org.tiqian.layout.LineAdjustmentStageCoverageTest.hyphenSqueezeFallsBackToZeroUsedGlueWhenTheLineAlreadyFits);
+        run("loneLatinClusterMergesBothAutoSpaceEdgeTrimsIntoOneKey",
+            org.tiqian.layout.LineAdjustmentStageCoverageTest.loneLatinClusterMergesBothAutoSpaceEdgeTrimsIntoOneKey);
         run("loneMandatoryBreakEmitsTwoZeroWidthLines", org.tiqian.layout.LineAdjustmentStageCoverageTest.loneMandatoryBreakEmitsTwoZeroWidthLines);
-        run("mandatoryBreakMiddleLineSkipsItsJustificationPlan", org.tiqian.layout.LineAdjustmentStageCoverageTest.mandatoryBreakMiddleLineSkipsItsJustificationPlan);
-        run("technicalLineBodyStretchRejectsTheCleanTierAndReplays", org.tiqian.layout.LineAdjustmentStageCoverageTest.technicalLineBodyStretchRejectsTheCleanTierAndReplays);
-        run("tinyTechnicalTrackingStaysBelowTheRejectionThreshold", org.tiqian.layout.LineAdjustmentStageCoverageTest.tinyTechnicalTrackingStaysBelowTheRejectionThreshold);
-        run("trailingMandatoryBreakEmitsTerminalEmptyLineWithoutHyphen", org.tiqian.layout.LineAdjustmentStageCoverageTest.trailingMandatoryBreakEmitsTerminalEmptyLineWithoutHyphen);
+        run("mandatoryBreakMiddleLineSkipsItsJustificationPlan",
+            org.tiqian.layout.LineAdjustmentStageCoverageTest.mandatoryBreakMiddleLineSkipsItsJustificationPlan);
+        run("technicalLineBodyStretchRejectsTheCleanTierAndReplays",
+            org.tiqian.layout.LineAdjustmentStageCoverageTest.technicalLineBodyStretchRejectsTheCleanTierAndReplays);
+        run("tinyTechnicalTrackingStaysBelowTheRejectionThreshold",
+            org.tiqian.layout.LineAdjustmentStageCoverageTest.tinyTechnicalTrackingStaysBelowTheRejectionThreshold);
+        run("trailingMandatoryBreakEmitsTerminalEmptyLineWithoutHyphen",
+            org.tiqian.layout.LineAdjustmentStageCoverageTest.trailingMandatoryBreakEmitsTerminalEmptyLineWithoutHyphen);
         run("zeroAdvanceEdgeSpaceIsNeverCollapsed", org.tiqian.layout.LineAdjustmentStageCoverageTest.zeroAdvanceEdgeSpaceIsNeverCollapsed);
         TestTraceRecorder.flushClass("LineAdjustmentStageCoverageTest");
         if (failures > 0) {
@@ -1548,78 +1624,126 @@ class Main {
         }
         run("allCapsAbbreviationIsNeverBroken", org.tiqian.layout.LineBreakRepairEngineTest.allCapsAbbreviationIsNeverBroken);
         run("camelCaseTokenBreaksAtTheHumpWithoutAHyphen", org.tiqian.layout.LineBreakRepairEngineTest.camelCaseTokenBreaksAtTheHumpWithoutAHyphen);
-        run("greedyBreakerProducesMultipleLinesWhenWidthOverflows", org.tiqian.layout.LineBreakRepairEngineTest.greedyBreakerProducesMultipleLinesWhenWidthOverflows);
-        run("hyphenatedCompoundBreaksAtExistingHyphenWithoutAddingOne", org.tiqian.layout.LineBreakRepairEngineTest.hyphenatedCompoundBreaksAtExistingHyphenWithoutAddingOne);
+        run("greedyBreakerProducesMultipleLinesWhenWidthOverflows",
+            org.tiqian.layout.LineBreakRepairEngineTest.greedyBreakerProducesMultipleLinesWhenWidthOverflows);
+        run("hyphenatedCompoundBreaksAtExistingHyphenWithoutAddingOne",
+            org.tiqian.layout.LineBreakRepairEngineTest.hyphenatedCompoundBreaksAtExistingHyphenWithoutAddingOne);
         run("latinSolidusBreaksAfterSlashWithoutAddingHyphen", org.tiqian.layout.LineBreakRepairEngineTest.latinSolidusBreaksAfterSlashWithoutAddingHyphen);
-        run("longAllCapsOpaqueTokenHardBreaksWithoutSyntheticHyphen", org.tiqian.layout.LineBreakRepairEngineTest.longAllCapsOpaqueTokenHardBreaksWithoutSyntheticHyphen);
-        run("longLetterBlobStaysOpaqueEvenWhenTailLooksHyphenatable", org.tiqian.layout.LineBreakRepairEngineTest.longLetterBlobStaysOpaqueEvenWhenTailLooksHyphenatable);
-        run("longOpaqueTokenCanBreakEvenWhenItFitsAloneButNotAfterCjkPrefix", org.tiqian.layout.LineBreakRepairEngineTest.longOpaqueTokenCanBreakEvenWhenItFitsAloneButNotAfterCjkPrefix);
-        run("nonLexicalLetterRunAfterCjkPullsPrefixOntoLooseLineWithoutSyntheticHyphen", org.tiqian.layout.LineBreakRepairEngineTest.nonLexicalLetterRunAfterCjkPullsPrefixOntoLooseLineWithoutSyntheticHyphen);
+        run("longAllCapsOpaqueTokenHardBreaksWithoutSyntheticHyphen",
+            org.tiqian.layout.LineBreakRepairEngineTest.longAllCapsOpaqueTokenHardBreaksWithoutSyntheticHyphen);
+        run("longLetterBlobStaysOpaqueEvenWhenTailLooksHyphenatable",
+            org.tiqian.layout.LineBreakRepairEngineTest.longLetterBlobStaysOpaqueEvenWhenTailLooksHyphenatable);
+        run("longOpaqueTokenCanBreakEvenWhenItFitsAloneButNotAfterCjkPrefix",
+            org.tiqian.layout.LineBreakRepairEngineTest.longOpaqueTokenCanBreakEvenWhenItFitsAloneButNotAfterCjkPrefix);
+        run("nonLexicalLetterRunAfterCjkPullsPrefixOntoLooseLineWithoutSyntheticHyphen",
+            org.tiqian.layout.LineBreakRepairEngineTest.nonLexicalLetterRunAfterCjkPullsPrefixOntoLooseLineWithoutSyntheticHyphen);
         run("opaqueLatinTokenAfterCjkPullsPrefixOntoLooseLine", org.tiqian.layout.LineBreakRepairEngineTest.opaqueLatinTokenAfterCjkPullsPrefixOntoLooseLine);
         run("overlongLatinWordHardBreaksWithAHangingHyphen", org.tiqian.layout.LineBreakRepairEngineTest.overlongLatinWordHardBreaksWithAHangingHyphen);
-        run("overlongOpaqueLatinTokenHardBreaksWithoutSyntheticHyphen", org.tiqian.layout.LineBreakRepairEngineTest.overlongOpaqueLatinTokenHardBreaksWithoutSyntheticHyphen);
-        run("progressiveTechnicalBreakFallsThroughStructuralTierBeforeOverstretchingOutsideText", org.tiqian.layout.LineBreakRepairEngineTest.progressiveTechnicalBreakFallsThroughStructuralTierBeforeOverstretchingOutsideText);
-        run("progressiveTechnicalBreakKeepsCjkBodyUnstretchedInEveryStrategy", org.tiqian.layout.LineBreakRepairEngineTest.progressiveTechnicalBreakKeepsCjkBodyUnstretchedInEveryStrategy);
-        run("progressiveTechnicalCleanBreakMayNotStretchEarlierOpaqueToken", org.tiqian.layout.LineBreakRepairEngineTest.progressiveTechnicalCleanBreakMayNotStretchEarlierOpaqueToken);
-        run("progressiveTechnicalEmergencyIsExposedByCurrentLineStretchNotFullMeasure", org.tiqian.layout.LineBreakRepairEngineTest.progressiveTechnicalEmergencyIsExposedByCurrentLineStretchNotFullMeasure);
-        run("progressiveTechnicalHardBreakOverridesNumberRunCohesion", org.tiqian.layout.LineBreakRepairEngineTest.progressiveTechnicalHardBreakOverridesNumberRunCohesion);
-        run("progressiveTechnicalStructuralBreakFallsThroughToEmergencyBeforeTracking", org.tiqian.layout.LineBreakRepairEngineTest.progressiveTechnicalStructuralBreakFallsThroughToEmergencyBeforeTracking);
-        run("unbrokenProgressiveSpanUsesSourceSpaceThenKeepsBodyOpportunitiesAvailable", org.tiqian.layout.LineBreakRepairEngineTest.unbrokenProgressiveSpanUsesSourceSpaceThenKeepsBodyOpportunitiesAvailable);
-        run("urlLikeLatinTokenBreaksAtSeparatorsWithoutSyntheticHyphen", org.tiqian.layout.LineBreakRepairEngineTest.urlLikeLatinTokenBreaksAtSeparatorsWithoutSyntheticHyphen);
+        run("overlongOpaqueLatinTokenHardBreaksWithoutSyntheticHyphen",
+            org.tiqian.layout.LineBreakRepairEngineTest.overlongOpaqueLatinTokenHardBreaksWithoutSyntheticHyphen);
+        run("progressiveTechnicalBreakFallsThroughStructuralTierBeforeOverstretchingOutsideText",
+            org.tiqian.layout.LineBreakRepairEngineTest.progressiveTechnicalBreakFallsThroughStructuralTierBeforeOverstretchingOutsideText);
+        run("progressiveTechnicalBreakKeepsCjkBodyUnstretchedInEveryStrategy",
+            org.tiqian.layout.LineBreakRepairEngineTest.progressiveTechnicalBreakKeepsCjkBodyUnstretchedInEveryStrategy);
+        run("progressiveTechnicalCleanBreakMayNotStretchEarlierOpaqueToken",
+            org.tiqian.layout.LineBreakRepairEngineTest.progressiveTechnicalCleanBreakMayNotStretchEarlierOpaqueToken);
+        run("progressiveTechnicalEmergencyIsExposedByCurrentLineStretchNotFullMeasure",
+            org.tiqian.layout.LineBreakRepairEngineTest.progressiveTechnicalEmergencyIsExposedByCurrentLineStretchNotFullMeasure);
+        run("progressiveTechnicalHardBreakOverridesNumberRunCohesion",
+            org.tiqian.layout.LineBreakRepairEngineTest.progressiveTechnicalHardBreakOverridesNumberRunCohesion);
+        run("progressiveTechnicalStructuralBreakFallsThroughToEmergencyBeforeTracking",
+            org.tiqian.layout.LineBreakRepairEngineTest.progressiveTechnicalStructuralBreakFallsThroughToEmergencyBeforeTracking);
+        run("unbrokenProgressiveSpanUsesSourceSpaceThenKeepsBodyOpportunitiesAvailable",
+            org.tiqian.layout.LineBreakRepairEngineTest.unbrokenProgressiveSpanUsesSourceSpaceThenKeepsBodyOpportunitiesAvailable);
+        run("urlLikeLatinTokenBreaksAtSeparatorsWithoutSyntheticHyphen",
+            org.tiqian.layout.LineBreakRepairEngineTest.urlLikeLatinTokenBreaksAtSeparatorsWithoutSyntheticHyphen);
         TestTraceRecorder.flushClass("LineBreakRepairEngineTest");
-        run("bibliographicNumericLocatorExposesStructuralBreaks", org.tiqian.layout.KinsokuAndCohesionRepairEngineTest.bibliographicNumericLocatorExposesStructuralBreaks);
-        run("hangingPunctuationFillsLineToMeasureAndOverflowsVisual", org.tiqian.layout.KinsokuAndCohesionRepairEngineTest.hangingPunctuationFillsLineToMeasureAndOverflowsVisual);
-        run("kinsokuCarriesPreviousClusterWhenLineWouldStartWithForbiddenPunctuation", org.tiqian.layout.KinsokuAndCohesionRepairEngineTest.kinsokuCarriesPreviousClusterWhenLineWouldStartWithForbiddenPunctuation);
-        run("kinsokuFallsBackToLeaveRaggedWhenPreviousLineCannotSpareACluster", org.tiqian.layout.KinsokuAndCohesionRepairEngineTest.kinsokuFallsBackToLeaveRaggedWhenPreviousLineCannotSpareACluster);
-        run("kinsokuLeavesGreedyBreakAloneWhenNoForbiddenPunctAtLineStart", org.tiqian.layout.KinsokuAndCohesionRepairEngineTest.kinsokuLeavesGreedyBreakAloneWhenNoForbiddenPunctAtLineStart);
-        run("kinsokuLevelNoneLeavesForbiddenMarksAtLineStart", org.tiqian.layout.KinsokuAndCohesionRepairEngineTest.kinsokuLevelNoneLeavesForbiddenMarksAtLineStart);
+        run("bibliographicNumericLocatorExposesStructuralBreaks",
+            org.tiqian.layout.KinsokuAndCohesionRepairEngineTest.bibliographicNumericLocatorExposesStructuralBreaks);
+        run("hangingPunctuationFillsLineToMeasureAndOverflowsVisual",
+            org.tiqian.layout.KinsokuAndCohesionRepairEngineTest.hangingPunctuationFillsLineToMeasureAndOverflowsVisual);
+        run("kinsokuCarriesPreviousClusterWhenLineWouldStartWithForbiddenPunctuation",
+            org.tiqian.layout.KinsokuAndCohesionRepairEngineTest.kinsokuCarriesPreviousClusterWhenLineWouldStartWithForbiddenPunctuation);
+        run("kinsokuFallsBackToLeaveRaggedWhenPreviousLineCannotSpareACluster",
+            org.tiqian.layout.KinsokuAndCohesionRepairEngineTest.kinsokuFallsBackToLeaveRaggedWhenPreviousLineCannotSpareACluster);
+        run("kinsokuLeavesGreedyBreakAloneWhenNoForbiddenPunctAtLineStart",
+            org.tiqian.layout.KinsokuAndCohesionRepairEngineTest.kinsokuLeavesGreedyBreakAloneWhenNoForbiddenPunctAtLineStart);
+        run("kinsokuLevelNoneLeavesForbiddenMarksAtLineStart",
+            org.tiqian.layout.KinsokuAndCohesionRepairEngineTest.kinsokuLevelNoneLeavesForbiddenMarksAtLineStart);
         run("kinsokuLevelStrictForbidsDashAtLineStart", org.tiqian.layout.KinsokuAndCohesionRepairEngineTest.kinsokuLevelStrictForbidsDashAtLineStart);
-        run("kinsokuPushesLineStartPunctuationIntoPreviousLineWhenTrailingGlueCanShrink", org.tiqian.layout.KinsokuAndCohesionRepairEngineTest.kinsokuPushesLineStartPunctuationIntoPreviousLineWhenTrailingGlueCanShrink);
+        run("kinsokuPushesLineStartPunctuationIntoPreviousLineWhenTrailingGlueCanShrink",
+            org.tiqian.layout.KinsokuAndCohesionRepairEngineTest.kinsokuPushesLineStartPunctuationIntoPreviousLineWhenTrailingGlueCanShrink);
         run("lineEndKinsokuMovesDanglingOpenerToNextLine", org.tiqian.layout.KinsokuAndCohesionRepairEngineTest.lineEndKinsokuMovesDanglingOpenerToNextLine);
         run("longLatinSentenceWrapsAtWordBoundaries", org.tiqian.layout.KinsokuAndCohesionRepairEngineTest.longLatinSentenceWrapsAtWordBoundaries);
         run("numberWithSuffixSymbolNeverSplitsAcrossLines", org.tiqian.layout.KinsokuAndCohesionRepairEngineTest.numberWithSuffixSymbolNeverSplitsAcrossLines);
-        run("ordinaryNumericFormsDoNotBecomeBibliographicLocators", org.tiqian.layout.KinsokuAndCohesionRepairEngineTest.ordinaryNumericFormsDoNotBecomeBibliographicLocators);
+        run("ordinaryNumericFormsDoNotBecomeBibliographicLocators",
+            org.tiqian.layout.KinsokuAndCohesionRepairEngineTest.ordinaryNumericFormsDoNotBecomeBibliographicLocators);
         TestTraceRecorder.flushClass("KinsokuAndCohesionRepairEngineTest");
-        run("hashPieceInsideTechnicalUrlSkipsSyllableClassification", org.tiqian.layout.EmergencyGraphemeTrackingTest.hashPieceInsideTechnicalUrlSkipsSyllableClassification);
-        run("longAllCapsWesternWordDoesNotBecomeTrackingEligible", org.tiqian.layout.EmergencyGraphemeTrackingTest.longAllCapsWesternWordDoesNotBecomeTrackingEligible);
-        run("ordinaryWesternProseIsNeverInferredAsTrackingEligible", org.tiqian.layout.EmergencyGraphemeTrackingTest.ordinaryWesternProseIsNeverInferredAsTrackingEligible);
-        run("plainOpaqueHardBreakKeepsCombiningGraphemeIntact", org.tiqian.layout.EmergencyGraphemeTrackingTest.plainOpaqueHardBreakKeepsCombiningGraphemeIntact);
-        run("rejectedLetterDigitStructuralOffsetsRemainAvailableAsEmergencyCuts", org.tiqian.layout.EmergencyGraphemeTrackingTest.rejectedLetterDigitStructuralOffsetsRemainAvailableAsEmergencyCuts);
-        run("repeatedPlainTokenGetsNarrowNonLexicalAuthorization", org.tiqian.layout.EmergencyGraphemeTrackingTest.repeatedPlainTokenGetsNarrowNonLexicalAuthorization);
-        run("standaloneTechnicalHashUsesTrackingToFillEveryAutoWrappedLine", org.tiqian.layout.EmergencyGraphemeTrackingTest.standaloneTechnicalHashUsesTrackingToFillEveryAutoWrappedLine);
-        run("technicalIdentifierRelabelsLooseLetterDigitBoundaryAsEmergency", org.tiqian.layout.EmergencyGraphemeTrackingTest.technicalIdentifierRelabelsLooseLetterDigitBoundaryAsEmergency);
-        run("technicalTrackingDoesNotOpenEdgesTouchingInlineObjectsOrZeroWidthControls", org.tiqian.layout.EmergencyGraphemeTrackingTest.technicalTrackingDoesNotOpenEdgesTouchingInlineObjectsOrZeroWidthControls);
-        run("unannotatedUrlDoesNotAuthorizeTrackingAcrossOrdinaryPathComponents", org.tiqian.layout.EmergencyGraphemeTrackingTest.unannotatedUrlDoesNotAuthorizeTrackingAcrossOrdinaryPathComponents);
+        run("hashPieceInsideTechnicalUrlSkipsSyllableClassification",
+            org.tiqian.layout.EmergencyGraphemeTrackingTest.hashPieceInsideTechnicalUrlSkipsSyllableClassification);
+        run("longAllCapsWesternWordDoesNotBecomeTrackingEligible",
+            org.tiqian.layout.EmergencyGraphemeTrackingTest.longAllCapsWesternWordDoesNotBecomeTrackingEligible);
+        run("ordinaryWesternProseIsNeverInferredAsTrackingEligible",
+            org.tiqian.layout.EmergencyGraphemeTrackingTest.ordinaryWesternProseIsNeverInferredAsTrackingEligible);
+        run("plainOpaqueHardBreakKeepsCombiningGraphemeIntact",
+            org.tiqian.layout.EmergencyGraphemeTrackingTest.plainOpaqueHardBreakKeepsCombiningGraphemeIntact);
+        run("rejectedLetterDigitStructuralOffsetsRemainAvailableAsEmergencyCuts",
+            org.tiqian.layout.EmergencyGraphemeTrackingTest.rejectedLetterDigitStructuralOffsetsRemainAvailableAsEmergencyCuts);
+        run("repeatedPlainTokenGetsNarrowNonLexicalAuthorization",
+            org.tiqian.layout.EmergencyGraphemeTrackingTest.repeatedPlainTokenGetsNarrowNonLexicalAuthorization);
+        run("standaloneTechnicalHashUsesTrackingToFillEveryAutoWrappedLine",
+            org.tiqian.layout.EmergencyGraphemeTrackingTest.standaloneTechnicalHashUsesTrackingToFillEveryAutoWrappedLine);
+        run("technicalIdentifierRelabelsLooseLetterDigitBoundaryAsEmergency",
+            org.tiqian.layout.EmergencyGraphemeTrackingTest.technicalIdentifierRelabelsLooseLetterDigitBoundaryAsEmergency);
+        run("technicalTrackingDoesNotOpenEdgesTouchingInlineObjectsOrZeroWidthControls",
+            org.tiqian.layout.EmergencyGraphemeTrackingTest.technicalTrackingDoesNotOpenEdgesTouchingInlineObjectsOrZeroWidthControls);
+        run("unannotatedUrlDoesNotAuthorizeTrackingAcrossOrdinaryPathComponents",
+            org.tiqian.layout.EmergencyGraphemeTrackingTest.unannotatedUrlDoesNotAuthorizeTrackingAcrossOrdinaryPathComponents);
         TestTraceRecorder.flushClass("EmergencyGraphemeTrackingTest");
-        run("cacheKeyDistinguishesTypographyDecorationsAndSpans", org.tiqian.layout.WidthIndependentAnnotationCacheTest.cacheKeyDistinguishesTypographyDecorationsAndSpans);
-        run("cachedAndUncachedEnginesProduceIdenticalLayoutResultsAcrossWidths", org.tiqian.layout.WidthIndependentAnnotationCacheTest.cachedAndUncachedEnginesProduceIdenticalLayoutResultsAcrossWidths);
-        run("lruCacheEvictsOldestEntriesWhenCapacityExceeded", org.tiqian.layout.WidthIndependentAnnotationCacheTest.lruCacheEvictsOldestEntriesWhenCapacityExceeded);
-        run("reflowFuzzingRandomSequenceProducesExactOutput", org.tiqian.layout.WidthIndependentAnnotationCacheTest.reflowFuzzingRandomSequenceProducesExactOutput);
-        run("relayoutWithDifferentWidthHitsCacheAndSkipsShaper", org.tiqian.layout.WidthIndependentAnnotationCacheTest.relayoutWithDifferentWidthHitsCacheAndSkipsShaper);
+        run("cacheKeyDistinguishesTypographyDecorationsAndSpans",
+            org.tiqian.layout.WidthIndependentAnnotationCacheTest.cacheKeyDistinguishesTypographyDecorationsAndSpans);
+        run("cachedAndUncachedEnginesProduceIdenticalLayoutResultsAcrossWidths",
+            org.tiqian.layout.WidthIndependentAnnotationCacheTest.cachedAndUncachedEnginesProduceIdenticalLayoutResultsAcrossWidths);
+        run("lruCacheEvictsOldestEntriesWhenCapacityExceeded",
+            org.tiqian.layout.WidthIndependentAnnotationCacheTest.lruCacheEvictsOldestEntriesWhenCapacityExceeded);
+        run("reflowFuzzingRandomSequenceProducesExactOutput",
+            org.tiqian.layout.WidthIndependentAnnotationCacheTest.reflowFuzzingRandomSequenceProducesExactOutput);
+        run("relayoutWithDifferentWidthHitsCacheAndSkipsShaper",
+            org.tiqian.layout.WidthIndependentAnnotationCacheTest.relayoutWithDifferentWidthHitsCacheAndSkipsShaper);
         TestTraceRecorder.flushClass("WidthIndependentAnnotationCacheTest");
         run("layoutDecisionDumpsMatchEmbeddedGolden", org.tiqian.layout.LayoutDumpGoldenParityTest.layoutDecisionDumpsMatchEmbeddedGolden);
         TestTraceRecorder.flushClass("LayoutDumpGoldenParityTest");
-        run("attachedRunExposesTheProseClustersOnItsTwoSides", org.tiqian.layout.AttachedInlineBoundaryRelocationTest.attachedRunExposesTheProseClustersOnItsTwoSides);
-        run("attachedRunAtParagraphEndHasNoVirtualRightNeighbor", org.tiqian.layout.AttachedInlineBoundaryRelocationTest.attachedRunAtParagraphEndHasNoVirtualRightNeighbor);
-        run("punctuationAfterFootnoteIsJudgedAgainstThePrecedingPunctuation", org.tiqian.layout.AttachedInlineBoundaryRelocationTest.punctuationAfterFootnoteIsJudgedAgainstThePrecedingPunctuation);
-        run("closingQuoteBeforeFootnoteAndBodyKeepsItsNaturalTrailingGlue", org.tiqian.layout.AttachedInlineBoundaryRelocationTest.closingQuoteBeforeFootnoteAndBodyKeepsItsNaturalTrailingGlue);
-        run("closingQuoteBeforeParagraphEndFootnoteHasNoTrailingGlue", org.tiqian.layout.AttachedInlineBoundaryRelocationTest.closingQuoteBeforeParagraphEndFootnoteHasNoTrailingGlue);
+        run("attachedRunExposesTheProseClustersOnItsTwoSides",
+            org.tiqian.layout.AttachedInlineBoundaryRelocationTest.attachedRunExposesTheProseClustersOnItsTwoSides);
+        run("attachedRunAtParagraphEndHasNoVirtualRightNeighbor",
+            org.tiqian.layout.AttachedInlineBoundaryRelocationTest.attachedRunAtParagraphEndHasNoVirtualRightNeighbor);
+        run("punctuationAfterFootnoteIsJudgedAgainstThePrecedingPunctuation",
+            org.tiqian.layout.AttachedInlineBoundaryRelocationTest.punctuationAfterFootnoteIsJudgedAgainstThePrecedingPunctuation);
+        run("closingQuoteBeforeFootnoteAndBodyKeepsItsNaturalTrailingGlue",
+            org.tiqian.layout.AttachedInlineBoundaryRelocationTest.closingQuoteBeforeFootnoteAndBodyKeepsItsNaturalTrailingGlue);
+        run("closingQuoteBeforeParagraphEndFootnoteHasNoTrailingGlue",
+            org.tiqian.layout.AttachedInlineBoundaryRelocationTest.closingQuoteBeforeParagraphEndFootnoteHasNoTrailingGlue);
         run("attachedReferenceNeverStartsAWrappedLine", org.tiqian.layout.AttachedInlineBoundaryRelocationTest.attachedReferenceNeverStartsAWrappedLine);
         TestTraceRecorder.flushClass("AttachedInlineVirtualAdjacencyTest");
         run("clusterPredicatesAndCurlyQuoteFeatures", org.tiqian.layout.ParagraphShapingStageCoverageTest.clusterPredicatesAndCurlyQuoteFeatures);
         run("dashSubstitutionRollbackAndCoverageBranches", org.tiqian.layout.ParagraphShapingStageCoverageTest.dashSubstitutionRollbackAndCoverageBranches);
         run("directShapeParagraphEdgeCases", org.tiqian.layout.ParagraphShapingStageCoverageTest.directShapeParagraphEdgeCases);
-        run("hyphenAdvanceFallbackWhenShaperReturnsEmptyClusters", org.tiqian.layout.ParagraphShapingStageCoverageTest.hyphenAdvanceFallbackWhenShaperReturnsEmptyClusters);
+        run("hyphenAdvanceFallbackWhenShaperReturnsEmptyClusters",
+            org.tiqian.layout.ParagraphShapingStageCoverageTest.hyphenAdvanceFallbackWhenShaperReturnsEmptyClusters);
         run("latinSegmentationAndCutsBranches", org.tiqian.layout.ParagraphShapingStageCoverageTest.latinSegmentationAndCutsBranches);
         run("latinSeparatorCutsAndSolidusBranches", org.tiqian.layout.ParagraphShapingStageCoverageTest.latinSeparatorCutsAndSolidusBranches);
         run("latinSeparatorCutsExhaustiveBranches", org.tiqian.layout.ParagraphShapingStageCoverageTest.latinSeparatorCutsExhaustiveBranches);
-        run("latinSeparatorTokensCoverUrlLeadingSlashAndDashLocators", org.tiqian.layout.ParagraphShapingStageCoverageTest.latinSeparatorTokensCoverUrlLeadingSlashAndDashLocators);
+        run("latinSeparatorTokensCoverUrlLeadingSlashAndDashLocators",
+            org.tiqian.layout.ParagraphShapingStageCoverageTest.latinSeparatorTokensCoverUrlLeadingSlashAndDashLocators);
         run("latinWordCutsLoHiAndEmptyBranches", org.tiqian.layout.ParagraphShapingStageCoverageTest.latinWordCutsLoHiAndEmptyBranches);
         run("mapToClusterRangeWithZeroAndPositiveAdvance", org.tiqian.layout.ParagraphShapingStageCoverageTest.mapToClusterRangeWithZeroAndPositiveAdvance);
-        run("multiClusterShaperForWordCutsAndOpaqueHardCuts", org.tiqian.layout.ParagraphShapingStageCoverageTest.multiClusterShaperForWordCutsAndOpaqueHardCuts);
+        run("multiClusterShaperForWordCutsAndOpaqueHardCuts",
+            org.tiqian.layout.ParagraphShapingStageCoverageTest.multiClusterShaperForWordCutsAndOpaqueHardCuts);
         run("progressiveTechnicalSpanBreaksAndTiers", org.tiqian.layout.ParagraphShapingStageCoverageTest.progressiveTechnicalSpanBreaksAndTiers);
-        run("progressiveTechnicalTierPriorityAndFalseBranches", org.tiqian.layout.ParagraphShapingStageCoverageTest.progressiveTechnicalTierPriorityAndFalseBranches);
-        run("progressiveTierLoopRevisitsOffsetsWithLowerPriorityTiers", org.tiqian.layout.ParagraphShapingStageCoverageTest.progressiveTierLoopRevisitsOffsetsWithLowerPriorityTiers);
+        run("progressiveTechnicalTierPriorityAndFalseBranches",
+            org.tiqian.layout.ParagraphShapingStageCoverageTest.progressiveTechnicalTierPriorityAndFalseBranches);
+        run("progressiveTierLoopRevisitsOffsetsWithLowerPriorityTiers",
+            org.tiqian.layout.ParagraphShapingStageCoverageTest.progressiveTierLoopRevisitsOffsetsWithLowerPriorityTiers);
         TestTraceRecorder.flushClass("ParagraphShapingStageCoverageTest");
         run("rubyDoesNotChangeLineBoxAndCentresOverBase", org.tiqian.layout.RubyLayoutTest.rubyDoesNotChangeLineBoxAndCentresOverBase);
         run("rubyOnOneLineKeepsTheWholeBaselineGridStable", org.tiqian.layout.RubyLayoutTest.rubyOnOneLineKeepsTheWholeBaselineGridStable);
@@ -1649,42 +1773,62 @@ class Main {
             org.tiqian.layout.AnnotationGeometryStageCoverageTest.inlineObjectDecisionsWithPreferredStretchAndFixed);
         run("rubyDecisionsPinyinSingleAndSplitLines", org.tiqian.layout.AnnotationGeometryStageCoverageTest.rubyDecisionsPinyinSingleAndSplitLines);
         TestTraceRecorder.flushClass("AnnotationGeometryStageCoverageTest");
-        run("dashAndSolidusBoundariesInsideTechnicalSpansNeverStretch", org.tiqian.layout.LineBreakPlanningStageCoverageTest.dashAndSolidusBoundariesInsideTechnicalSpansNeverStretch);
-        run("emergencyBoundaryEligibilitySkipsInlineObjectBoundaries", org.tiqian.layout.LineBreakPlanningStageCoverageTest.emergencyBoundaryEligibilitySkipsInlineObjectBoundaries);
-        run("emergencyBoundaryEligibilitySkipsZeroWidthAndMandatoryControls", org.tiqian.layout.LineBreakPlanningStageCoverageTest.emergencyBoundaryEligibilitySkipsZeroWidthAndMandatoryControls);
-        run("explicitZeroLineHeightKeepsTheControlParagraphAtZeroHeight", org.tiqian.layout.LineBreakPlanningStageCoverageTest.explicitZeroLineHeightKeepsTheControlParagraphAtZeroHeight);
-        run("overlappingTechnicalSpansKeepTheFirstBoundaryReason", org.tiqian.layout.LineBreakPlanningStageCoverageTest.overlappingTechnicalSpansKeepTheFirstBoundaryReason);
-        run("pushOutFirstTakesFewerFillPushInsThanPushInFirst", org.tiqian.layout.LineBreakPlanningStageCoverageTest.pushOutFirstTakesFewerFillPushInsThanPushInFirst);
+        run("dashAndSolidusBoundariesInsideTechnicalSpansNeverStretch",
+            org.tiqian.layout.LineBreakPlanningStageCoverageTest.dashAndSolidusBoundariesInsideTechnicalSpansNeverStretch);
+        run("emergencyBoundaryEligibilitySkipsInlineObjectBoundaries",
+            org.tiqian.layout.LineBreakPlanningStageCoverageTest.emergencyBoundaryEligibilitySkipsInlineObjectBoundaries);
+        run("emergencyBoundaryEligibilitySkipsZeroWidthAndMandatoryControls",
+            org.tiqian.layout.LineBreakPlanningStageCoverageTest.emergencyBoundaryEligibilitySkipsZeroWidthAndMandatoryControls);
+        run("explicitZeroLineHeightKeepsTheControlParagraphAtZeroHeight",
+            org.tiqian.layout.LineBreakPlanningStageCoverageTest.explicitZeroLineHeightKeepsTheControlParagraphAtZeroHeight);
+        run("overlappingTechnicalSpansKeepTheFirstBoundaryReason",
+            org.tiqian.layout.LineBreakPlanningStageCoverageTest.overlappingTechnicalSpansKeepTheFirstBoundaryReason);
+        run("pushOutFirstTakesFewerFillPushInsThanPushInFirst",
+            org.tiqian.layout.LineBreakPlanningStageCoverageTest.pushOutFirstTakesFewerFillPushInsThanPushInFirst);
         TestTraceRecorder.flushClass("LineBreakPlanningStageCoverageTest");
-        run("testAdjustableInlineBoundaryRightClustersNoStretchBoundaries", org.tiqian.layout.LineBreakPlanningStageCoverage2Test.testAdjustableInlineBoundaryRightClustersNoStretchBoundaries);
+        run("testAdjustableInlineBoundaryRightClustersNoStretchBoundaries",
+            org.tiqian.layout.LineBreakPlanningStageCoverage2Test.testAdjustableInlineBoundaryRightClustersNoStretchBoundaries);
         run("testAsciiPointMarkKinsokuLineStart", org.tiqian.layout.LineBreakPlanningStageCoverage2Test.testAsciiPointMarkKinsokuLineStart);
         run("testClusterCrossesFontDecisionThrows", org.tiqian.layout.LineBreakPlanningStageCoverage2Test.testClusterCrossesFontDecisionThrows);
-        run("testEmergencyTrackingBoundaryWhitespaceAndEmpty", org.tiqian.layout.LineBreakPlanningStageCoverage2Test.testEmergencyTrackingBoundaryWhitespaceAndEmpty);
-        run("testEmergencyTrackingEligibilityDecisionsBranches", org.tiqian.layout.LineBreakPlanningStageCoverage2Test.testEmergencyTrackingEligibilityDecisionsBranches);
-        run("testFontDecisionWithNoMatchingClustersUsesTextSubstring", org.tiqian.layout.LineBreakPlanningStageCoverage2Test.testFontDecisionWithNoMatchingClustersUsesTextSubstring);
+        run("testEmergencyTrackingBoundaryWhitespaceAndEmpty",
+            org.tiqian.layout.LineBreakPlanningStageCoverage2Test.testEmergencyTrackingBoundaryWhitespaceAndEmpty);
+        run("testEmergencyTrackingEligibilityDecisionsBranches",
+            org.tiqian.layout.LineBreakPlanningStageCoverage2Test.testEmergencyTrackingEligibilityDecisionsBranches);
+        run("testFontDecisionWithNoMatchingClustersUsesTextSubstring",
+            org.tiqian.layout.LineBreakPlanningStageCoverage2Test.testFontDecisionWithNoMatchingClustersUsesTextSubstring);
         run("testInlineObjectKinsokuLineStart", org.tiqian.layout.LineBreakPlanningStageCoverage2Test.testInlineObjectKinsokuLineStart);
-        run("testProgressiveBreakOffsetsUnmappedClusterIndex", org.tiqian.layout.LineBreakPlanningStageCoverage2Test.testProgressiveBreakOffsetsUnmappedClusterIndex);
+        run("testProgressiveBreakOffsetsUnmappedClusterIndex",
+            org.tiqian.layout.LineBreakPlanningStageCoverage2Test.testProgressiveBreakOffsetsUnmappedClusterIndex);
         TestTraceRecorder.flushClass("LineBreakPlanningStageCoverage2Test");
         run("keepsLatinTechnicalPunctuationInLatinRun", QuoteClassificationEngineTest.keepsLatinTechnicalPunctuationInLatinRun);
-        run("classifiesAsciiBracketsAsLatinRegardlessOfSurroundingContext", QuoteClassificationEngineTest.classifiesAsciiBracketsAsLatinRegardlessOfSurroundingContext);
+        run("classifiesAsciiBracketsAsLatinRegardlessOfSurroundingContext",
+            QuoteClassificationEngineTest.classifiesAsciiBracketsAsLatinRegardlessOfSurroundingContext);
         run("classifiesAsciiBracketsAsLatinInsidePureCjkContent", QuoteClassificationEngineTest.classifiesAsciiBracketsAsLatinInsidePureCjkContent);
         run("asciiClosingBracketWithCjkInteriorIsForbiddenAtLineStart", QuoteClassificationEngineTest.asciiClosingBracketWithCjkInteriorIsForbiddenAtLineStart);
         run("asciiOpeningBracketWithCjkInteriorIsForbiddenAtLineEnd", QuoteClassificationEngineTest.asciiOpeningBracketWithCjkInteriorIsForbiddenAtLineEnd);
         run("keepsTextStartLatinQuotePairInLatinRun", QuoteClassificationEngineTest.keepsTextStartLatinQuotePairInLatinRun);
         run("mixedQuoteContextsReachTheFontAndPunctuationPipeline", QuoteClassificationEngineTest.mixedQuoteContextsReachTheFontAndPunctuationPipeline);
         run("quoteRolesSurviveStyleAndSourceBoundaries", QuoteClassificationEngineTest.quoteRolesSurviveStyleAndSourceBoundaries);
-        run("adjacentQuotedListItemsKeepCjkQuoteGeometryAcrossMixedContent", QuoteClassificationEngineTest.adjacentQuotedListItemsKeepCjkQuoteGeometryAcrossMixedContent);
-        run("mi10sAdjacentLatinTranscriptionsKeepTheFinalQuotePairInCjkContext", QuoteClassificationEngineTest.mi10sAdjacentLatinTranscriptionsKeepTheFinalQuotePairInCjkContext);
+        run("adjacentQuotedListItemsKeepCjkQuoteGeometryAcrossMixedContent",
+            QuoteClassificationEngineTest.adjacentQuotedListItemsKeepCjkQuoteGeometryAcrossMixedContent);
+        run("mi10sAdjacentLatinTranscriptionsKeepTheFinalQuotePairInCjkContext",
+            QuoteClassificationEngineTest.mi10sAdjacentLatinTranscriptionsKeepTheFinalQuotePairInCjkContext);
         run("skipsNeutralDashBeforeLatinQuotePairInLayout", QuoteClassificationEngineTest.skipsNeutralDashBeforeLatinQuotePairInLayout);
-        run("keepsSlashLedLatinTechnicalRunOutOfCjkPunctuationGeometry", QuoteClassificationEngineTest.keepsSlashLedLatinTechnicalRunOutOfCjkPunctuationGeometry);
+        run("keepsSlashLedLatinTechnicalRunOutOfCjkPunctuationGeometry",
+            QuoteClassificationEngineTest.keepsSlashLedLatinTechnicalRunOutOfCjkPunctuationGeometry);
         run("recordsRoleOverridesForResolvedQuotePairs", QuoteClassificationEngineTest.recordsRoleOverridesForResolvedQuotePairs);
-        run("mixedChineseQuestionAtParagraphStartKeepsCjkQuoteGeometry", QuoteClassificationEngineTest.mixedChineseQuestionAtParagraphStartKeepsCjkQuoteGeometry);
+        run("mixedChineseQuestionAtParagraphStartKeepsCjkQuoteGeometry",
+            QuoteClassificationEngineTest.mixedChineseQuestionAtParagraphStartKeepsCjkQuoteGeometry);
         run("keepsNumberedCjkQuotePairOnCjkFace", QuoteClassificationEngineTest.keepsNumberedCjkQuotePairOnCjkFace);
-        run("requestsFullWidthCjkQuotesAndSynthesizesTheCellWhenTheFontStaysProportional", QuoteClassificationEngineTest.requestsFullWidthCjkQuotesAndSynthesizesTheCellWhenTheFontStaysProportional);
-        run("leavesLatinContextCurlyQuotesOutsideCjkPunctuationGeometry", QuoteClassificationEngineTest.leavesLatinContextCurlyQuotesOutsideCjkPunctuationGeometry);
+        run("requestsFullWidthCjkQuotesAndSynthesizesTheCellWhenTheFontStaysProportional",
+            QuoteClassificationEngineTest.requestsFullWidthCjkQuotesAndSynthesizesTheCellWhenTheFontStaysProportional);
+        run("leavesLatinContextCurlyQuotesOutsideCjkPunctuationGeometry",
+            QuoteClassificationEngineTest.leavesLatinContextCurlyQuotesOutsideCjkPunctuationGeometry);
         run("keepsContractionApostropheLatinInsideCjkSingleQuotes", QuoteClassificationEngineTest.keepsContractionApostropheLatinInsideCjkSingleQuotes);
-        run("keepsLatinWordInternalCurlyQuotesInLatinRunInsideMixedParagraph", QuoteClassificationEngineTest.keepsLatinWordInternalCurlyQuotesInLatinRunInsideMixedParagraph);
-        run("supportsSupplementaryLettersInsideLatinWordInternalQuotes", QuoteClassificationEngineTest.supportsSupplementaryLettersInsideLatinWordInternalQuotes);
+        run("keepsLatinWordInternalCurlyQuotesInLatinRunInsideMixedParagraph",
+            QuoteClassificationEngineTest.keepsLatinWordInternalCurlyQuotesInLatinRunInsideMixedParagraph);
+        run("supportsSupplementaryLettersInsideLatinWordInternalQuotes",
+            QuoteClassificationEngineTest.supportsSupplementaryLettersInsideLatinWordInternalQuotes);
         run("keepsLetterBoundedWordInternalQuotesLatin", QuoteClassificationEngineTest.keepsLetterBoundedWordInternalQuotesLatin);
         run("keepsDigitContentInsideLetterBoundedQuotesLatin", QuoteClassificationEngineTest.keepsDigitContentInsideLetterBoundedQuotesLatin);
         run("keepsDigitBoundedWordInternalQuotesCjk", QuoteClassificationEngineTest.keepsDigitBoundedWordInternalQuotesCjk);
@@ -1696,34 +1840,51 @@ class Main {
         run("resolvesDigitBoundUnmatchedQuotesAsPrimes", QuoteClassificationEngineTest.resolvesDigitBoundUnmatchedQuotesAsPrimes);
         run("keepsDecadeStyleApostropheWithLetterFlankLatin", QuoteClassificationEngineTest.keepsDecadeStyleApostropheWithLetterFlankLatin);
         TestTraceRecorder.flushClass("QuoteClassificationEngineTest");
-        run("adjacentInlineObjectBoundariesMergingAndConflicts", org.tiqian.layout.WidthIndependentAnnotationCacheCoverageTest.adjacentInlineObjectBoundariesMergingAndConflicts);
-        run("centeredPunctBeforeAttachedReferenceKeepsLeadingGlueOnly", org.tiqian.layout.WidthIndependentAnnotationCacheCoverageTest.centeredPunctBeforeAttachedReferenceKeepsLeadingGlueOnly);
+        run("adjacentInlineObjectBoundariesMergingAndConflicts",
+            org.tiqian.layout.WidthIndependentAnnotationCacheCoverageTest.adjacentInlineObjectBoundariesMergingAndConflicts);
+        run("centeredPunctBeforeAttachedReferenceKeepsLeadingGlueOnly",
+            org.tiqian.layout.WidthIndependentAnnotationCacheCoverageTest.centeredPunctBeforeAttachedReferenceKeepsLeadingGlueOnly);
         run("conflictingOpenTypeFeaturesThrows", org.tiqian.layout.WidthIndependentAnnotationCacheCoverageTest.conflictingOpenTypeFeaturesThrows);
-        run("containingItemsAndFirstContainedItemBranches", org.tiqian.layout.WidthIndependentAnnotationCacheCoverageTest.containingItemsAndFirstContainedItemBranches);
-        run("dynamicShapingEmphasisItalicAtAndZeroPairedCapacityBranches", org.tiqian.layout.WidthIndependentAnnotationCacheCoverageTest.dynamicShapingEmphasisItalicAtAndZeroPairedCapacityBranches);
+        run("containingItemsAndFirstContainedItemBranches",
+            org.tiqian.layout.WidthIndependentAnnotationCacheCoverageTest.containingItemsAndFirstContainedItemBranches);
+        run("dynamicShapingEmphasisItalicAtAndZeroPairedCapacityBranches",
+            org.tiqian.layout.WidthIndependentAnnotationCacheCoverageTest.dynamicShapingEmphasisItalicAtAndZeroPairedCapacityBranches);
         run("dynamicShapingTriggersAndEmphasisItalic", org.tiqian.layout.WidthIndependentAnnotationCacheCoverageTest.dynamicShapingTriggersAndEmphasisItalic);
         run("lineLengthGridBodyAlignmentBranches", org.tiqian.layout.WidthIndependentAnnotationCacheCoverageTest.lineLengthGridBodyAlignmentBranches);
         run("lruCacheUpdateExistingKeyAndClear", org.tiqian.layout.WidthIndependentAnnotationCacheCoverageTest.lruCacheUpdateExistingKeyAndClear);
         run("pairedPunctuationWithZeroCapacity", org.tiqian.layout.WidthIndependentAnnotationCacheCoverageTest.pairedPunctuationWithZeroCapacity);
-        run("prepareWidthIndependentAnnotationBranches", org.tiqian.layout.WidthIndependentAnnotationCacheCoverageTest.prepareWidthIndependentAnnotationBranches);
+        run("prepareWidthIndependentAnnotationBranches",
+            org.tiqian.layout.WidthIndependentAnnotationCacheCoverageTest.prepareWidthIndependentAnnotationBranches);
         run("rubySpreadAccumulationAndEdges", org.tiqian.layout.WidthIndependentAnnotationCacheCoverageTest.rubySpreadAccumulationAndEdges);
         run("rubySpreadSecondVisitAndZeroFirstCluster", org.tiqian.layout.WidthIndependentAnnotationCacheCoverageTest.rubySpreadSecondVisitAndZeroFirstCluster);
-        run("shrinkOpportunitiesCoverAllPunctuationClassesAndSpaces", org.tiqian.layout.WidthIndependentAnnotationCacheCoverageTest.shrinkOpportunitiesCoverAllPunctuationClassesAndSpaces);
-        run("styleAtAndEmphasisItalicAtAndDynamicShapingBranches", org.tiqian.layout.WidthIndependentAnnotationCacheCoverageTest.styleAtAndEmphasisItalicAtAndDynamicShapingBranches);
+        run("shrinkOpportunitiesCoverAllPunctuationClassesAndSpaces",
+            org.tiqian.layout.WidthIndependentAnnotationCacheCoverageTest.shrinkOpportunitiesCoverAllPunctuationClassesAndSpaces);
+        run("styleAtAndEmphasisItalicAtAndDynamicShapingBranches",
+            org.tiqian.layout.WidthIndependentAnnotationCacheCoverageTest.styleAtAndEmphasisItalicAtAndDynamicShapingBranches);
         run("verbatimRangesAndAutoSpaceDecisions", org.tiqian.layout.WidthIndependentAnnotationCacheCoverageTest.verbatimRangesAndAutoSpaceDecisions);
         TestTraceRecorder.flushClass("WidthIndependentAnnotationCacheCoverageTest");
-        run("lineBoundaryClosesOneUlpGapWithoutChangingBaselineDistance", org.tiqian.layout.InlineObjectLayoutTest.lineBoundaryClosesOneUlpGapWithoutChangingBaselineDistance);
-        run("inlineObjectUsesExistingInterlineSpaceWithoutMovingBaselines", org.tiqian.layout.InlineObjectLayoutTest.inlineObjectUsesExistingInterlineSpaceWithoutMovingBaselines);
-        run("inlineObjectExpandsBaselineGapOnlyForActualCollision", org.tiqian.layout.InlineObjectLayoutTest.inlineObjectExpandsBaselineGapOnlyForActualCollision);
-        run("inlineObjectSkipsFontShapingAndExpandsItsOwnLineMetrics", org.tiqian.layout.InlineObjectLayoutTest.inlineObjectSkipsFontShapingAndExpandsItsOwnLineMetrics);
+        run("lineBoundaryClosesOneUlpGapWithoutChangingBaselineDistance",
+            org.tiqian.layout.InlineObjectLayoutTest.lineBoundaryClosesOneUlpGapWithoutChangingBaselineDistance);
+        run("inlineObjectUsesExistingInterlineSpaceWithoutMovingBaselines",
+            org.tiqian.layout.InlineObjectLayoutTest.inlineObjectUsesExistingInterlineSpaceWithoutMovingBaselines);
+        run("inlineObjectExpandsBaselineGapOnlyForActualCollision",
+            org.tiqian.layout.InlineObjectLayoutTest.inlineObjectExpandsBaselineGapOnlyForActualCollision);
+        run("inlineObjectSkipsFontShapingAndExpandsItsOwnLineMetrics",
+            org.tiqian.layout.InlineObjectLayoutTest.inlineObjectSkipsFontShapingAndExpandsItsOwnLineMetrics);
         run("inlineObjectIsOneIndivisibleBreakCluster", org.tiqian.layout.InlineObjectLayoutTest.inlineObjectIsOneIndivisibleBreakCluster);
-        run("inlineObjectKeepsAlternateSourceTextWhileSkippingItsGlyphShaping", org.tiqian.layout.InlineObjectLayoutTest.inlineObjectKeepsAlternateSourceTextWhileSkippingItsGlyphShaping);
-        run("formulaBoundaryCompressionPushesAttachedCommaIntoPreviousLine", org.tiqian.layout.InlineObjectLayoutTest.formulaBoundaryCompressionPushesAttachedCommaIntoPreviousLine);
-        run("adjustBreakForUnbreakablesRetreatsPastTheWholeContiguousRun", org.tiqian.layout.InlineObjectLayoutTest.adjustBreakForUnbreakablesRetreatsPastTheWholeContiguousRun);
+        run("inlineObjectKeepsAlternateSourceTextWhileSkippingItsGlyphShaping",
+            org.tiqian.layout.InlineObjectLayoutTest.inlineObjectKeepsAlternateSourceTextWhileSkippingItsGlyphShaping);
+        run("formulaBoundaryCompressionPushesAttachedCommaIntoPreviousLine",
+            org.tiqian.layout.InlineObjectLayoutTest.formulaBoundaryCompressionPushesAttachedCommaIntoPreviousLine);
+        run("adjustBreakForUnbreakablesRetreatsPastTheWholeContiguousRun",
+            org.tiqian.layout.InlineObjectLayoutTest.adjustBreakForUnbreakablesRetreatsPastTheWholeContiguousRun);
         run("perAtomFormulaChainNeverBreaksMidRun", org.tiqian.layout.InlineObjectLayoutTest.perAtomFormulaChainNeverBreaksMidRun);
-        run("punctuationAttachedToInlineObjectNeverStartsWrappedLine", org.tiqian.layout.InlineObjectLayoutTest.punctuationAttachedToInlineObjectNeverStartsWrappedLine);
-        run("separatorSpaceBeforePunctuationCollapsesAndStaysWithInlineObject", org.tiqian.layout.InlineObjectLayoutTest.separatorSpaceBeforePunctuationCollapsesAndStaysWithInlineObject);
-        run("relationStretchMovesBothFormulaSidesByTheSameFinalGeometry", org.tiqian.layout.InlineObjectLayoutTest.relationStretchMovesBothFormulaSidesByTheSameFinalGeometry);
+        run("punctuationAttachedToInlineObjectNeverStartsWrappedLine",
+            org.tiqian.layout.InlineObjectLayoutTest.punctuationAttachedToInlineObjectNeverStartsWrappedLine);
+        run("separatorSpaceBeforePunctuationCollapsesAndStaysWithInlineObject",
+            org.tiqian.layout.InlineObjectLayoutTest.separatorSpaceBeforePunctuationCollapsesAndStaysWithInlineObject);
+        run("relationStretchMovesBothFormulaSidesByTheSameFinalGeometry",
+            org.tiqian.layout.InlineObjectLayoutTest.relationStretchMovesBothFormulaSidesByTheSameFinalGeometry);
         run("formulaBreakKeepsBaselineOperatorOnPreviousLine", org.tiqian.layout.InlineObjectLayoutTest.formulaBreakKeepsBaselineOperatorOnPreviousLine);
         TestTraceRecorder.flushClass("InlineObjectLayoutTest");
         run("plainParagraphEvidenceIsAppendOnly", org.tiqian.layout.PreparedParagraphRenderEvidenceTest.plainParagraphEvidenceIsAppendOnly);
@@ -1734,87 +1895,126 @@ class Main {
         run("inlineBoxesEmitInlineEdges", org.tiqian.layout.PreparedParagraphRenderEvidenceTest.inlineBoxesEmitInlineEdges);
         TestTraceRecorder.flushClass("PreparedParagraphRenderEvidenceTest");
 
-        run("appliesAdjacentPunctuationCompressionToDrawableGeometry", org.tiqian.layout.PunctuationGeometryEngineTest.appliesAdjacentPunctuationCompressionToDrawableGeometry);
-        run("buildsTwoEmPunctuationAtomForRecommendedDashCodepoint", org.tiqian.layout.PunctuationGeometryEngineTest.buildsTwoEmPunctuationAtomForRecommendedDashCodepoint);
+        run("appliesAdjacentPunctuationCompressionToDrawableGeometry",
+            org.tiqian.layout.PunctuationGeometryEngineTest.appliesAdjacentPunctuationCompressionToDrawableGeometry);
+        run("buildsTwoEmPunctuationAtomForRecommendedDashCodepoint",
+            org.tiqian.layout.PunctuationGeometryEngineTest.buildsTwoEmPunctuationAtomForRecommendedDashCodepoint);
         run("compressesAdjacentCjkSingleQuoteCommaSequence", org.tiqian.layout.PunctuationGeometryEngineTest.compressesAdjacentCjkSingleQuoteCommaSequence);
-        run("compressesCjkClosingBeforeAsciiPointMarkWithoutReclassifyingAscii", org.tiqian.layout.PunctuationGeometryEngineTest.compressesCjkClosingBeforeAsciiPointMarkWithoutReclassifyingAscii);
+        run("compressesCjkClosingBeforeAsciiPointMarkWithoutReclassifyingAscii",
+            org.tiqian.layout.PunctuationGeometryEngineTest.compressesCjkClosingBeforeAsciiPointMarkWithoutReclassifyingAscii);
         run("gbFixedSeparatorsAreHalfWidthAndUnadjustable", org.tiqian.layout.PunctuationGeometryEngineTest.gbFixedSeparatorsAreHalfWidthAndUnadjustable);
-        run("haltAdvanceFromShaperDrivesPunctuationBodyEndToEnd", org.tiqian.layout.PunctuationGeometryEngineTest.haltAdvanceFromShaperDrivesPunctuationBodyEndToEnd);
+        run("haltAdvanceFromShaperDrivesPunctuationBodyEndToEnd",
+            org.tiqian.layout.PunctuationGeometryEngineTest.haltAdvanceFromShaperDrivesPunctuationBodyEndToEnd);
         run("inkBoundsDetermineCompressionAmountAndSides", org.tiqian.layout.PunctuationGeometryEngineTest.inkBoundsDetermineCompressionAmountAndSides);
-        run("kaimingStyleHalvesInteriorPunctuationButNotSentenceEnd", org.tiqian.layout.PunctuationGeometryEngineTest.kaimingStyleHalvesInteriorPunctuationButNotSentenceEnd);
+        run("kaimingStyleHalvesInteriorPunctuationButNotSentenceEnd",
+            org.tiqian.layout.PunctuationGeometryEngineTest.kaimingStyleHalvesInteriorPunctuationButNotSentenceEnd);
         run("inlineStopCompressionKnobLimitsPushInCapacity", org.tiqian.layout.PunctuationGeometryEngineTest.inlineStopCompressionKnobLimitsPushInCapacity);
         run("lineStartLenticularBracketConsumesOpeningGlue", org.tiqian.layout.PunctuationGeometryEngineTest.lineStartLenticularBracketConsumesOpeningGlue);
         run("looseLineEndStyleKeepsFullWidthPunctuation", org.tiqian.layout.PunctuationGeometryEngineTest.looseLineEndStyleKeepsFullWidthPunctuation);
         run("pushInConsumesWordSpaceBeforeMidLinePunctGlue", org.tiqian.layout.PunctuationGeometryEngineTest.pushInConsumesWordSpaceBeforeMidLinePunctGlue);
         run("pushInDrainsBracketOuterGlueBeforeInlineComma", org.tiqian.layout.PunctuationGeometryEngineTest.pushInDrainsBracketOuterGlueBeforeInlineComma);
-        run("pushInKeepsFontCenteredPunctuationCompressionPaired", org.tiqian.layout.PunctuationGeometryEngineTest.pushInKeepsFontCenteredPunctuationCompressionPaired);
-        run("recordsInkCalibratedPunctuationGeometryInLayoutDebug", org.tiqian.layout.PunctuationGeometryEngineTest.recordsInkCalibratedPunctuationGeometryInLayoutDebug);
+        run("pushInKeepsFontCenteredPunctuationCompressionPaired",
+            org.tiqian.layout.PunctuationGeometryEngineTest.pushInKeepsFontCenteredPunctuationCompressionPaired);
+        run("recordsInkCalibratedPunctuationGeometryInLayoutDebug",
+            org.tiqian.layout.PunctuationGeometryEngineTest.recordsInkCalibratedPunctuationGeometryInLayoutDebug);
         run("recordsPunctuationAtomsInLayoutDebug", org.tiqian.layout.PunctuationGeometryEngineTest.recordsPunctuationAtomsInLayoutDebug);
-        run("shortHyphenConnectorIsHalfWidthWavyTildeFullWidth", org.tiqian.layout.PunctuationGeometryEngineTest.shortHyphenConnectorIsHalfWidthWavyTildeFullWidth);
+        run("shortHyphenConnectorIsHalfWidthWavyTildeFullWidth",
+            org.tiqian.layout.PunctuationGeometryEngineTest.shortHyphenConnectorIsHalfWidthWavyTildeFullWidth);
         run("sinoWesternGapKnobDisablesStretchAndShrink", org.tiqian.layout.PunctuationGeometryEngineTest.sinoWesternGapKnobDisablesStretchAndShrink);
         run("sinoWesternGapShrinkFloorsAtEighthEm", org.tiqian.layout.PunctuationGeometryEngineTest.sinoWesternGapShrinkFloorsAtEighthEm);
-        run("traditionalProfileCentresPauseStopGlueOnBothSides", org.tiqian.layout.PunctuationGeometryEngineTest.traditionalProfileCentresPauseStopGlueOnBothSides);
+        run("traditionalProfileCentresPauseStopGlueOnBothSides",
+            org.tiqian.layout.PunctuationGeometryEngineTest.traditionalProfileCentresPauseStopGlueOnBothSides);
         TestTraceRecorder.flushClass("PunctuationGeometryEngineTest");
-        run("autoSpaceDigitModeIsWiredIndependentlyOfLetterMode", org.tiqian.layout.SpacingAndLineGeometryEngineTest.autoSpaceDigitModeIsWiredIndependentlyOfLetterMode);
+        run("autoSpaceDigitModeIsWiredIndependentlyOfLetterMode",
+            org.tiqian.layout.SpacingAndLineGeometryEngineTest.autoSpaceDigitModeIsWiredIndependentlyOfLetterMode);
         run("autoSpaceDoesNotShrinkSpacesBetweenLatinWords", org.tiqian.layout.SpacingAndLineGeometryEngineTest.autoSpaceDoesNotShrinkSpacesBetweenLatinWords);
         run("autoSpaceDisabledKeepsTypedSpacesAtHalfEm", org.tiqian.layout.SpacingAndLineGeometryEngineTest.autoSpaceDisabledKeepsTypedSpacesAtHalfEm);
-        run("autoSpaceGapAtLineEndIsTrimmedLikeAnyLineEdgeBlank", org.tiqian.layout.SpacingAndLineGeometryEngineTest.autoSpaceGapAtLineEndIsTrimmedLikeAnyLineEdgeBlank);
+        run("autoSpaceGapAtLineEndIsTrimmedLikeAnyLineEdgeBlank",
+            org.tiqian.layout.SpacingAndLineGeometryEngineTest.autoSpaceGapAtLineEndIsTrimmedLikeAnyLineEdgeBlank);
         run("autoSpaceReplacesTypedSpaceAtCjkLatinBoundary", org.tiqian.layout.SpacingAndLineGeometryEngineTest.autoSpaceReplacesTypedSpaceAtCjkLatinBoundary);
         run("blockIndentInsetsEveryLine", org.tiqian.layout.SpacingAndLineGeometryEngineTest.blockIndentInsetsEveryLine);
-        run("emphasisDotGapIsExplicitAndIndependentOfLineHeight", org.tiqian.layout.SpacingAndLineGeometryEngineTest.emphasisDotGapIsExplicitAndIndependentOfLineHeight);
-        run("emphasisSpanProducesDotAnchorsForHanAndSkipsPunctuation", org.tiqian.layout.SpacingAndLineGeometryEngineTest.emphasisSpanProducesDotAnchorsForHanAndSkipsPunctuation);
-        run("firstLineIndentAdaptsToMeasureAndCanBeOverridden", org.tiqian.layout.SpacingAndLineGeometryEngineTest.firstLineIndentAdaptsToMeasureAndCanBeOverridden);
+        run("emphasisDotGapIsExplicitAndIndependentOfLineHeight",
+            org.tiqian.layout.SpacingAndLineGeometryEngineTest.emphasisDotGapIsExplicitAndIndependentOfLineHeight);
+        run("emphasisSpanProducesDotAnchorsForHanAndSkipsPunctuation",
+            org.tiqian.layout.SpacingAndLineGeometryEngineTest.emphasisSpanProducesDotAnchorsForHanAndSkipsPunctuation);
+        run("firstLineIndentAdaptsToMeasureAndCanBeOverridden",
+            org.tiqian.layout.SpacingAndLineGeometryEngineTest.firstLineIndentAdaptsToMeasureAndCanBeOverridden);
         run("firstLineIndentShrinksFirstLineMeasureOnly", org.tiqian.layout.SpacingAndLineGeometryEngineTest.firstLineIndentShrinksFirstLineMeasureOnly);
-        run("halfEmWordSpacesDoNotStretchUnderJustification", org.tiqian.layout.SpacingAndLineGeometryEngineTest.halfEmWordSpacesDoNotStretchUnderJustification);
+        run("halfEmWordSpacesDoNotStretchUnderJustification",
+            org.tiqian.layout.SpacingAndLineGeometryEngineTest.halfEmWordSpacesDoNotStretchUnderJustification);
         run("hangingIndentFlushesFirstLineAndInsetsRest", org.tiqian.layout.SpacingAndLineGeometryEngineTest.hangingIndentFlushesFirstLineAndInsetsRest);
-        run("interlinearLinesGetPerItemSegmentsWithAdjacentShortening", org.tiqian.layout.SpacingAndLineGeometryEngineTest.interlinearLinesGetPerItemSegmentsWithAdjacentShortening);
-        run("interlinearMarksRaiseAutoLineHeightToSpacingFloor", org.tiqian.layout.SpacingAndLineGeometryEngineTest.interlinearMarksRaiseAutoLineHeightToSpacingFloor);
-        run("justifyFillsSaturatedLineWithUncappedEvenShare", org.tiqian.layout.SpacingAndLineGeometryEngineTest.justifyFillsSaturatedLineWithUncappedEvenShare);
-        run("justifyStretchesPunctuationLatinBoundaryInTierThree", org.tiqian.layout.SpacingAndLineGeometryEngineTest.justifyStretchesPunctuationLatinBoundaryInTierThree);
+        run("interlinearLinesGetPerItemSegmentsWithAdjacentShortening",
+            org.tiqian.layout.SpacingAndLineGeometryEngineTest.interlinearLinesGetPerItemSegmentsWithAdjacentShortening);
+        run("interlinearMarksRaiseAutoLineHeightToSpacingFloor",
+            org.tiqian.layout.SpacingAndLineGeometryEngineTest.interlinearMarksRaiseAutoLineHeightToSpacingFloor);
+        run("justifyFillsSaturatedLineWithUncappedEvenShare",
+            org.tiqian.layout.SpacingAndLineGeometryEngineTest.justifyFillsSaturatedLineWithUncappedEvenShare);
+        run("justifyStretchesPunctuationLatinBoundaryInTierThree",
+            org.tiqian.layout.SpacingAndLineGeometryEngineTest.justifyStretchesPunctuationLatinBoundaryInTierThree);
         run("lineLengthGridCanBeBypassedForExactWidths", org.tiqian.layout.SpacingAndLineGeometryEngineTest.lineLengthGridCanBeBypassedForExactWidths);
-        run("lineLengthGridFloorsMeasureToWholeCharsAndOffsetsBody", org.tiqian.layout.SpacingAndLineGeometryEngineTest.lineLengthGridFloorsMeasureToWholeCharsAndOffsetsBody);
+        run("lineLengthGridFloorsMeasureToWholeCharsAndOffsetsBody",
+            org.tiqian.layout.SpacingAndLineGeometryEngineTest.lineLengthGridFloorsMeasureToWholeCharsAndOffsetsBody);
         run("mourningSpanIsKeptUnbrokenAndFramedPerLine", org.tiqian.layout.SpacingAndLineGeometryEngineTest.mourningSpanIsKeptUnbrokenAndFramedPerLine);
-        run("mourningSpanWiderThanMeasureSplitsWithOpenEdges", org.tiqian.layout.SpacingAndLineGeometryEngineTest.mourningSpanWiderThanMeasureSplitsWithOpenEdges);
+        run("mourningSpanWiderThanMeasureSplitsWithOpenEdges",
+            org.tiqian.layout.SpacingAndLineGeometryEngineTest.mourningSpanWiderThanMeasureSplitsWithOpenEdges);
         run("usesFontDeclaredTypoBoxForCjkLineBox", org.tiqian.layout.SpacingAndLineGeometryEngineTest.usesFontDeclaredTypoBoxForCjkLineBox);
         TestTraceRecorder.flushClass("SpacingAndLineGeometryEngineTest");
         run("recordedEvidenceLayoutMatchesGolden", RecordedEvidenceGoldenParityTest.recordedEvidenceLayoutMatchesGolden);
         TestTraceRecorder.flushClass("RecordedEvidenceGoldenParityTest");
 
-        run("emphasisDotGapEmMustBeFiniteAndNonNegative", org.tiqian.layout.ParagraphLayoutEngineValidationCoverageTest.emphasisDotGapEmMustBeFiniteAndNonNegative);
-        run("inlineObjectMinimumClearanceEmMustBeFiniteAndNonNegative", org.tiqian.layout.ParagraphLayoutEngineValidationCoverageTest.inlineObjectMinimumClearanceEmMustBeFiniteAndNonNegative);
-        run("sourceTextMustNotContainUnpairedSurrogates", org.tiqian.layout.ParagraphLayoutEngineValidationCoverageTest.sourceTextMustNotContainUnpairedSurrogates);
-        run("inlineBoxSpanMustBeANonEmptyInBoundsRange", org.tiqian.layout.ParagraphLayoutEngineValidationCoverageTest.inlineBoxSpanMustBeANonEmptyInBoundsRange);
+        run("emphasisDotGapEmMustBeFiniteAndNonNegative",
+            org.tiqian.layout.ParagraphLayoutEngineValidationCoverageTest.emphasisDotGapEmMustBeFiniteAndNonNegative);
+        run("inlineObjectMinimumClearanceEmMustBeFiniteAndNonNegative",
+            org.tiqian.layout.ParagraphLayoutEngineValidationCoverageTest.inlineObjectMinimumClearanceEmMustBeFiniteAndNonNegative);
+        run("sourceTextMustNotContainUnpairedSurrogates",
+            org.tiqian.layout.ParagraphLayoutEngineValidationCoverageTest.sourceTextMustNotContainUnpairedSurrogates);
+        run("inlineBoxSpanMustBeANonEmptyInBoundsRange",
+            org.tiqian.layout.ParagraphLayoutEngineValidationCoverageTest.inlineBoxSpanMustBeANonEmptyInBoundsRange);
         run("inlineBoxSpanMustHaveFiniteInlineEdges", org.tiqian.layout.ParagraphLayoutEngineValidationCoverageTest.inlineBoxSpanMustHaveFiniteInlineEdges);
-        run("lineBreakSpansMustBeNonEmptyInBoundsRanges", org.tiqian.layout.ParagraphLayoutEngineValidationCoverageTest.lineBreakSpansMustBeNonEmptyInBoundsRanges);
-        run("autoSpaceSuppressedRangesMustBeNonEmptyInBounds", org.tiqian.layout.ParagraphLayoutEngineValidationCoverageTest.autoSpaceSuppressedRangesMustBeNonEmptyInBounds);
+        run("lineBreakSpansMustBeNonEmptyInBoundsRanges",
+            org.tiqian.layout.ParagraphLayoutEngineValidationCoverageTest.lineBreakSpansMustBeNonEmptyInBoundsRanges);
+        run("autoSpaceSuppressedRangesMustBeNonEmptyInBounds",
+            org.tiqian.layout.ParagraphLayoutEngineValidationCoverageTest.autoSpaceSuppressedRangesMustBeNonEmptyInBounds);
         run("inlineObjectRangesMustBeUnique", org.tiqian.layout.ParagraphLayoutEngineValidationCoverageTest.inlineObjectRangesMustBeUnique);
         run("inlineObjectRangesMustNotOverlap", org.tiqian.layout.ParagraphLayoutEngineValidationCoverageTest.inlineObjectRangesMustNotOverlap);
-        run("inlineObjectMustCoverANonEmptyInBoundsRange", org.tiqian.layout.ParagraphLayoutEngineValidationCoverageTest.inlineObjectMustCoverANonEmptyInBoundsRange);
-        run("inlineObjectMustHaveFinitePositiveGeometry", org.tiqian.layout.ParagraphLayoutEngineValidationCoverageTest.inlineObjectMustHaveFinitePositiveGeometry);
+        run("inlineObjectMustCoverANonEmptyInBoundsRange",
+            org.tiqian.layout.ParagraphLayoutEngineValidationCoverageTest.inlineObjectMustCoverANonEmptyInBoundsRange);
+        run("inlineObjectMustHaveFinitePositiveGeometry",
+            org.tiqian.layout.ParagraphLayoutEngineValidationCoverageTest.inlineObjectMustHaveFinitePositiveGeometry);
         run("inlineObjectLeadingBoundaryMustBeFixed", org.tiqian.layout.ParagraphLayoutEngineValidationCoverageTest.inlineObjectLeadingBoundaryMustBeFixed);
-        run("inlineObjectTrailingBoundaryMustNotExceedAdvance", org.tiqian.layout.ParagraphLayoutEngineValidationCoverageTest.inlineObjectTrailingBoundaryMustNotExceedAdvance);
+        run("inlineObjectTrailingBoundaryMustNotExceedAdvance",
+            org.tiqian.layout.ParagraphLayoutEngineValidationCoverageTest.inlineObjectTrailingBoundaryMustNotExceedAdvance);
         TestTraceRecorder.flushClass("ParagraphLayoutEngineValidationCoverageTest");
         run("returnsDebuggableSingleLineResult", ExplainableStubParagraphLayoutEngineTest.returnsDebuggableSingleLineResult);
         run("recordsInjectedLineBreakerStrategyInDebugDecisions", ExplainableStubParagraphLayoutEngineTest.recordsInjectedLineBreakerStrategyInDebugDecisions);
         run("mandatoryLineBreakClustersAreZeroWidthAndNotShaped", ExplainableStubParagraphLayoutEngineTest.mandatoryLineBreakClustersAreZeroWidthAndNotShaped);
-        run("consecutiveMandatoryLineBreaksCreateOneEmptyLineBox", ExplainableStubParagraphLayoutEngineTest.consecutiveMandatoryLineBreaksCreateOneEmptyLineBox);
-        run("singleMandatoryBreakAfterWrappedLineDoesNotCreateEmptyLine", ExplainableStubParagraphLayoutEngineTest.singleMandatoryBreakAfterWrappedLineDoesNotCreateEmptyLine);
+        run("consecutiveMandatoryLineBreaksCreateOneEmptyLineBox",
+            ExplainableStubParagraphLayoutEngineTest.consecutiveMandatoryLineBreaksCreateOneEmptyLineBox);
+        run("singleMandatoryBreakAfterWrappedLineDoesNotCreateEmptyLine",
+            ExplainableStubParagraphLayoutEngineTest.singleMandatoryBreakAfterWrappedLineDoesNotCreateEmptyLine);
         run("crlfIsOneMandatoryBreakCluster", ExplainableStubParagraphLayoutEngineTest.crlfIsOneMandatoryBreakCluster);
-        run("consecutiveAndTrailingMandatoryBreaksPreserveBlankLines", ExplainableStubParagraphLayoutEngineTest.consecutiveAndTrailingMandatoryBreaksPreserveBlankLines);
+        run("consecutiveAndTrailingMandatoryBreaksPreserveBlankLines",
+            ExplainableStubParagraphLayoutEngineTest.consecutiveAndTrailingMandatoryBreaksPreserveBlankLines);
         run("mandatoryBreakLineIsNotJustified", ExplainableStubParagraphLayoutEngineTest.mandatoryBreakLineIsNotJustified);
-        run("rejectsShaperClustersThatDoNotCoverFontDecisionRange", ExplainableStubParagraphLayoutEngineTest.rejectsShaperClustersThatDoNotCoverFontDecisionRange);
+        run("rejectsShaperClustersThatDoNotCoverFontDecisionRange",
+            ExplainableStubParagraphLayoutEngineTest.rejectsShaperClustersThatDoNotCoverFontDecisionRange);
         run("preservesShaperGlyphBoundsInLayoutGlyphRuns", ExplainableStubParagraphLayoutEngineTest.preservesShaperGlyphBoundsInLayoutGlyphRuns);
         run("recordsFallbackDecisionsPerCluster", ExplainableStubParagraphLayoutEngineTest.recordsFallbackDecisionsPerCluster);
         run("combiningMarksStayInTheirBaseShapingRuns", ExplainableStubParagraphLayoutEngineTest.combiningMarksStayInTheirBaseShapingRuns);
-        run("complexEmojiGraphemesStayAtomicAcrossGeometryOnlyBoundaries", ExplainableStubParagraphLayoutEngineTest.complexEmojiGraphemesStayAtomicAcrossGeometryOnlyBoundaries);
-        run("complexEmojiSequencesReachTheShaperAsCompleteEmojiRanges", ExplainableStubParagraphLayoutEngineTest.complexEmojiSequencesReachTheShaperAsCompleteEmojiRanges);
-        run("emojiRoleMatrixSeparatesSupportedSequencesFromAdjacentAndUnrelatedText", ExplainableStubParagraphLayoutEngineTest.emojiRoleMatrixSeparatesSupportedSequencesFromAdjacentAndUnrelatedText);
-        run("sourceGraphemeBoundariesDoNotJoinZwJWithOrdinaryText", ExplainableStubParagraphLayoutEngineTest.sourceGraphemeBoundariesDoNotJoinZwJWithOrdinaryText);
+        run("complexEmojiGraphemesStayAtomicAcrossGeometryOnlyBoundaries",
+            ExplainableStubParagraphLayoutEngineTest.complexEmojiGraphemesStayAtomicAcrossGeometryOnlyBoundaries);
+        run("complexEmojiSequencesReachTheShaperAsCompleteEmojiRanges",
+            ExplainableStubParagraphLayoutEngineTest.complexEmojiSequencesReachTheShaperAsCompleteEmojiRanges);
+        run("emojiRoleMatrixSeparatesSupportedSequencesFromAdjacentAndUnrelatedText",
+            ExplainableStubParagraphLayoutEngineTest.emojiRoleMatrixSeparatesSupportedSequencesFromAdjacentAndUnrelatedText);
+        run("sourceGraphemeBoundariesDoNotJoinZwJWithOrdinaryText",
+            ExplainableStubParagraphLayoutEngineTest.sourceGraphemeBoundariesDoNotJoinZwJWithOrdinaryText);
         run("recordsUnicodeEmojiSequenceRolePromotions", ExplainableStubParagraphLayoutEngineTest.recordsUnicodeEmojiSequenceRolePromotions);
         run("complexEmojiGraphemesHonorTextSpanStyleBoundaries", ExplainableStubParagraphLayoutEngineTest.complexEmojiGraphemesHonorTextSpanStyleBoundaries);
         TestTraceRecorder.flushClass("ExplainableStubParagraphLayoutEngineTest");
         run("connectorBoundariesAvoidStretchUnderJustification", JustifierEngineTest.connectorBoundariesAvoidStretchUnderJustification);
-        run("inseparableNumberAndUnitBoundaryAvoidsStretchUnderJustification", JustifierEngineTest.inseparableNumberAndUnitBoundaryAvoidsStretchUnderJustification);
+        run("inseparableNumberAndUnitBoundaryAvoidsStretchUnderJustification",
+            JustifierEngineTest.inseparableNumberAndUnitBoundaryAvoidsStretchUnderJustification);
         run("lastLineAlignmentPositionsTheLastLineViaIndent", JustifierEngineTest.lastLineAlignmentPositionsTheLastLineViaIndent);
         run("mandatoryBreakLinesTakeLastLineAlignment", JustifierEngineTest.mandatoryBreakLinesTakeLastLineAlignment);
         run("lastLineIsNeverJustified", JustifierEngineTest.lastLineIsNeverJustified);

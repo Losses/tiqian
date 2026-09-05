@@ -105,19 +105,23 @@ class LineAdjustmentPushInTest {
         final pushOut = LineAdjustmentPushInTestSupport.layout(LineAdjustmentStrategy.PushOutOnly);
         TracedAssertions.assertEqualsInt(0, LineAdjustmentPushInTestSupport.fillPushInCount(pushOut), "PushOutOnly must never fill-push-in");
         TracedAssertions.assertTrue(LineAdjustmentPushInTestSupport.fillPushInCount(auto) > 0, "PushInFirst should compress at least one boundary");
-        TracedAssertions.assertTrue(
-            auto.lines.length <= pushOut.lines.length,
-            "PushInFirst (" + auto.lines.length + ") should not need more lines than PushOutOnly (" + pushOut.lines.length + ")"
-        );
+        TracedAssertions.assertTrue(auto.lines.length <= pushOut.lines.length,
+            "PushInFirst ("
+            + auto.lines.length
+            + ") should not need more lines than PushOutOnly ("
+            + pushOut.lines.length
+            + ")");
     }
 
     @:test public static function pushInFirstDoesNotCompressEveryLine():Void {
         final t = new TestTraceRecorder("LineAdjustmentPushInTest");
         t.section("pushInFirstDoesNotCompressEveryLine");
         final auto = LineAdjustmentPushInTestSupport.layout(LineAdjustmentStrategy.PushInFirst);
-        TracedAssertions.assertTrue(
-            LineAdjustmentPushInTestSupport.fillPushInCount(auto) < auto.lines.length,
-            "not every line should be a fill-push-in (" + LineAdjustmentPushInTestSupport.fillPushInCount(auto) + "/" + auto.lines.length + ")"
-        );
+        TracedAssertions.assertTrue(LineAdjustmentPushInTestSupport.fillPushInCount(auto) < auto.lines.length,
+            "not every line should be a fill-push-in ("
+            + LineAdjustmentPushInTestSupport.fillPushInCount(auto)
+            + "/"
+            + auto.lines.length
+            + ")");
     }
 }

@@ -47,7 +47,8 @@ class DisplayGlyphSubstitutionEngineTest {
         final engine = DisplayGlyphSubstitutionEngineTestSupport.shaperEngine(new DashInkOverrideShaper(32, new Rect(1, -18, 31, -14), true));
         final result = DisplayGlyphSubstitutionEngineTestSupport.layout320WithSpans(engine, "\u4E2D\u2014\u2014\u6587",
             [new TextSpan(new TextRange(1, 3), new TextStyle(null, 32))]);
-        TracedAssertions.assertEqualsString("\u2014\u2014", DisplayGlyphSubstitutionEngineTestSupport.singleClusterWithText(result, "\u2014\u2014").displayText);
+        TracedAssertions.assertEqualsString("\u2014\u2014",
+            DisplayGlyphSubstitutionEngineTestSupport.singleClusterWithText(result, "\u2014\u2014").displayText);
     }
 
     @:test public static function dashInkCentersWithinTheTwoEmBodyWhenTheFontRuleUnderfills():Void {
@@ -74,9 +75,10 @@ class DisplayGlyphSubstitutionEngineTest {
         t.section("dashSubstitutionRollsBackWhenFallbackReportsAFullOneEmGlyph");
         final engine = DisplayGlyphSubstitutionEngineTestSupport.shaperEngine(new DashInkOverrideShaper(16, new Rect(0.5, -9, 15.7, -7), true));
         final result = DisplayGlyphSubstitutionEngineTestSupport.layout320(engine, "\u4E2D\u2014\u2014\u6587");
-        TracedAssertions.assertEqualsString("\u2014\u2014", DisplayGlyphSubstitutionEngineTestSupport.singleClusterWithText(result, "\u2014\u2014").displayText);
-        TracedAssertions.assertTrue(StringTools.endsWith(
-            DisplayGlyphSubstitutionEngineTestSupport.singleFontDecisionWithSourceText(result, "\u2014\u2014").substitutionReason,
+        TracedAssertions.assertEqualsString("\u2014\u2014",
+            DisplayGlyphSubstitutionEngineTestSupport.singleClusterWithText(result, "\u2014\u2014").displayText);
+        TracedAssertions.assertTrue(StringTools.endsWith(DisplayGlyphSubstitutionEngineTestSupport.singleFontDecisionWithSourceText(result, "\u2014\u2014")
+            .substitutionReason,
             "DashSubstitutionInkCoverageRollback"));
     }
 
@@ -85,9 +87,10 @@ class DisplayGlyphSubstitutionEngineTest {
         t.section("dashSubstitutionRollsBackWhenInkDoesNotFillTheTwoEmAdvance");
         final engine = DisplayGlyphSubstitutionEngineTestSupport.shaperEngine(new DashInkOverrideShaper(32, new Rect(1, -10, 26, -8), false));
         final result = DisplayGlyphSubstitutionEngineTestSupport.layout320(engine, "\u4E2D\u2014\u2014\u6587");
-        TracedAssertions.assertEqualsString("\u2014\u2014", DisplayGlyphSubstitutionEngineTestSupport.singleClusterWithText(result, "\u2014\u2014").displayText);
-        TracedAssertions.assertTrue(StringTools.endsWith(
-            DisplayGlyphSubstitutionEngineTestSupport.singleFontDecisionWithSourceText(result, "\u2014\u2014").substitutionReason,
+        TracedAssertions.assertEqualsString("\u2014\u2014",
+            DisplayGlyphSubstitutionEngineTestSupport.singleClusterWithText(result, "\u2014\u2014").displayText);
+        TracedAssertions.assertTrue(StringTools.endsWith(DisplayGlyphSubstitutionEngineTestSupport.singleFontDecisionWithSourceText(result, "\u2014\u2014")
+            .substitutionReason,
             "DashSubstitutionInkCoverageRollback"));
     }
 
@@ -96,9 +99,10 @@ class DisplayGlyphSubstitutionEngineTest {
         t.section("ellipsisSubstitutionRollsBackWhenCoverageCannotBeVerified");
         final engine = DisplayGlyphSubstitutionEngineTestSupport.shaperEngine(new UnverifiedCoverageReportingShaper());
         final result = DisplayGlyphSubstitutionEngineTestSupport.layout320(engine, "\u4E2D\u2026\u2026\u6587");
-        TracedAssertions.assertEqualsString("\u2026\u2026", DisplayGlyphSubstitutionEngineTestSupport.singleClusterWithText(result, "\u2026\u2026").displayText);
-        TracedAssertions.assertTrue(StringTools.endsWith(
-            DisplayGlyphSubstitutionEngineTestSupport.singleFontDecisionWithSourceText(result, "\u2026\u2026").substitutionReason,
+        TracedAssertions.assertEqualsString("\u2026\u2026",
+            DisplayGlyphSubstitutionEngineTestSupport.singleClusterWithText(result, "\u2026\u2026").displayText);
+        TracedAssertions.assertTrue(StringTools.endsWith(DisplayGlyphSubstitutionEngineTestSupport.singleFontDecisionWithSourceText(result, "\u2026\u2026")
+            .substitutionReason,
             "SubstitutionRollbackOnUnverifiedGlyphCoverage"));
     }
 
@@ -107,8 +111,10 @@ class DisplayGlyphSubstitutionEngineTest {
         t.section("honorsProfilePunctuationGlyphPolicy");
         final engine = DisplayGlyphSubstitutionEngineTestSupport.profileEngine(CjkPunctuationGlyphPolicy.PreserveInput);
         final result = DisplayGlyphSubstitutionEngineTestSupport.layout320(engine, "\u2026\u2026\u2014\u2014");
-        TracedAssertions.assertEqualsString("\u2026\u2026", DisplayGlyphSubstitutionEngineTestSupport.firstClusterWithText(result, "\u2026\u2026").displayText);
-        TracedAssertions.assertEqualsString("\u2014\u2014", DisplayGlyphSubstitutionEngineTestSupport.firstClusterWithText(result, "\u2014\u2014").displayText);
+        TracedAssertions.assertEqualsString("\u2026\u2026", DisplayGlyphSubstitutionEngineTestSupport.firstClusterWithText(result, "\u2026\u2026")
+            .displayText);
+        TracedAssertions.assertEqualsString("\u2014\u2014", DisplayGlyphSubstitutionEngineTestSupport.firstClusterWithText(result, "\u2014\u2014")
+            .displayText);
     }
 
     @:test public static function multiCharacterPunctuationUsesCharacterLocalInkBounds():Void {
@@ -144,8 +150,7 @@ class DisplayGlyphSubstitutionEngineTest {
         }
         TracedAssertions.assertEqualsTextRangeArray([new TextRange(0, 1), new TextRange(1, 2), new TextRange(2, 3)], ranges);
         final emptyFeatures:Array<String> = [];
-        TracedAssertions.assertEqualsRendered(
-            DisplayGlyphSubstitutionEngineTestSupport.renderStringListArray([emptyFeatures, proportionalQuoteFeatures, emptyFeatures]),
+        TracedAssertions.assertEqualsRendered(DisplayGlyphSubstitutionEngineTestSupport.renderStringListArray([emptyFeatures, proportionalQuoteFeatures, emptyFeatures]),
             DisplayGlyphSubstitutionEngineTestSupport.renderStringListArray(featureLists));
     }
 
@@ -184,7 +189,8 @@ class DisplayGlyphSubstitutionEngineTest {
         var opened = false;
         for (i in 0...decision.allocations.length) {
             final allocation = decision.allocations[i];
-            if (allocation.kind == "CjkInterChar" && allocation.clusterRange.start == dash.range.start
+            if (allocation.kind == "CjkInterChar"
+                && allocation.clusterRange.start == dash.range.start
                 && allocation.clusterRange.end == dash.range.end) {
                 opened = true;
                 break;

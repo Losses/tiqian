@@ -18,7 +18,9 @@ class InterpunctShrinkOpportunityTest {
             InterpunctShrinkOpportunityTestSupport.haltInkShaper()).layout(new LayoutInput(new TiqianTextContent(text), null,
                 new ParagraphStyle(null, null, null, Ic.Zero), new LayoutConstraints(320.0)));
         final dots = [];
-        for (i in 0...result.debug.punctuationDecisions.length) if (result.debug.punctuationDecisions[i].char == "·") dots.push(result.debug.punctuationDecisions[i]);
+        for (i in 0...result.debug.punctuationDecisions.length)
+            if (result.debug.punctuationDecisions[i].char == "·")
+                dots.push(result.debug.punctuationDecisions[i]);
         TracedAssertions.assertEqualsInt(2, dots.length);
         for (dot in dots) {
             TracedAssertions.assertTrue(dot.leadingGlueNatural > 0.0, "leading glue: " + dot.leadingGlueNatural);
@@ -36,14 +38,17 @@ class InterpunctShrinkOpportunityTest {
         final t = new TestTraceRecorder("InterpunctShrinkOpportunityTest");
         t.section("preservedInterpunctCodepointKeepsInterpunctClassForTierThreeShrink");
         final text = "正文・间隔・后文";
-        final result = new ExplainableStubParagraphLayoutEngine(null, null,
-            InterpunctShrinkOpportunityTestSupport.preserveResolver(), null, null, null, null, null, null, null,
+        final result = new ExplainableStubParagraphLayoutEngine(null, null, InterpunctShrinkOpportunityTestSupport.preserveResolver(), null, null, null, null,
+            null, null, null,
             InterpunctShrinkOpportunityTestSupport.haltInkShaper()).layout(new LayoutInput(new TiqianTextContent(text), null,
                 new ParagraphStyle(null, null, null, Ic.Zero), new LayoutConstraints(320.0)));
         final interpuncts = [];
-        for (i in 0...result.debug.punctuationDecisions.length) if (result.debug.punctuationDecisions[i].punctuationClass == "Interpunct") interpuncts.push(result.debug.punctuationDecisions[i]);
+        for (i in 0...result.debug.punctuationDecisions.length)
+            if (result.debug.punctuationDecisions[i].punctuationClass == "Interpunct")
+                interpuncts.push(result.debug.punctuationDecisions[i]);
         final chars = [];
-        for (dot in interpuncts) chars.push(dot.char);
+        for (dot in interpuncts)
+            chars.push(dot.char);
         TracedAssertions.assertEqualsStringArray(["・", "・"], chars);
         for (dot in interpuncts) {
             TracedAssertions.assertTrue(dot.leadingGlueNatural > 0.0, "leading glue: " + dot.leadingGlueNatural);
