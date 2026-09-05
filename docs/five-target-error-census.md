@@ -7,8 +7,8 @@ Dart）下的编译错误，作为跨目标行为对齐（见
 原生 `engine` 模块的 `./gradlew :engine:jvmTest` 无失败，不在本文范围内。
 
 当前状态：Kotlin 的 f32 与 f64 两个目录已完成全量普查（第 3 节）；TypeScript、
-Rust、Swift、Dart 四个目录的生成在 boring 侧被未实现的降级主动中止（第 4 节），
-解锁这些降级是四语言普查的前置条件。
+Rust、Swift、Dart 四个目录的生成当前在第一处尚未实现生成规则的 Haxe 构造上
+中止（第 4 节），逐个补齐这些生成规则是四语言普查的前置条件。
 
 ## 1 更新规则
 
@@ -47,7 +47,7 @@ grep -c " error: " /tmp/census-f32.log
 grep -c " error: " /tmp/census-f64.log'
 ```
 
-### 2.2 其余四目标（当前被降级门阻断）
+### 2.2 其余四目标（当前在第一处未实现构造上中止）
 
 ```shell
 nix develop -c bash -c 'haxe engine-haxe/core-ts.hxml'      # TypeScript
@@ -56,8 +56,10 @@ nix develop -c bash -c 'haxe engine-haxe/core-swift.hxml'   # Swift
 nix develop -c bash -c 'haxe engine-haxe/core-dart.hxml'    # Dart
 ```
 
-四条命令当前都以退出码 1 结束，报错文本见第 4 节阻断门表。解锁后各自的编译
-普查命令（tsc、cargo check、swift build、dart analyze）在第 4 节的门全部消除后补记。
+四条命令当前都以退出码 1 结束：boring 遇到尚未实现生成规则的 Haxe 构造时，
+在第一处这样的构造上报错并中止，报错文本见第 4 节。第一处报错消除后重新
+生成，才能看到下一处；全部消除、四条命令退出码为 0 后，各自的编译普查命令
+（tsc、cargo check、swift build、dart analyze）补记在本节。
 
 ### 2.3 三个已知的测量错误
 
@@ -161,38 +163,43 @@ super 不能作被调函数 1、局部变量被闭包捕获导致无法 smart ca
 1、iterator 二义 1、枚举当表达式引用 1；f64 另有独有 13 条（见分桶表下方关于
 桶 21 的注）。
 
-## 4 四目标生成阻断门
+## 4 四目标生成在第一处未实现构造上中止的位置
 
-boring 对尚未实现降级的 Haxe 构造，在生成阶段调用 `Context.error` 主动中止
-编译，不做猜测性输出。四条生成命令（第 2.2 节）当前各在第一处命中门时中止，
-一门之后的构造无法枚举；门清一个，下一个门才出现。下表是 2026-09-05 每个目标
-的第一阻断门（vendored `5d7417e` 实测）。
+boring 对尚未实现生成规则的 Haxe 构造，在生成阶段调用 `Context.error` 报错
+并中止，不做猜测性输出。四条生成命令（第 2.2 节）当前各在第一处这样的构造
+上中止；第一处之前的构造可以生成，之后的构造无法枚举，所以每消除一处报错
+都要重新生成一次才知道下一处。下表是 2026-09-05 每个目标的第一处（vendored
+`012ab59` 实测；Kotlin 无中止，两目录已生成）。
 
-| 目标 | 第一阻断门的错误文本 | boring 门位置 | tiqian 触发点 |
+| 目标 | 第一处报错的文本 | boring 报错位置 | tiqian 触发点 |
 |---|---|---|---|
-| TypeScript | ts target: variant switch lowers at return position | `packages/compiler/reflaxe/ts/tscompiler/TsExpr.hx:1204` | `engine-haxe/src/org/tiqian/test/ShapingEvidenceJson.hx:144`（变体 switch 在赋值语句位） |
+| TypeScript | ts target: variant switch lowers at return position | `packages/compiler/reflaxe/ts/tscompiler/TsExpr.hx:1204` | `engine-haxe/src/org/tiqian/test/ShapingEvidenceJson.hx:144`（按枚举变体分派的 switch 表达式出现在赋值位置） |
 | Swift | swift target: variant switch lowers at return position | `packages/compiler/reflaxe/swift/swiftcompiler/SwiftExpr.hx:1169` | 同上 `ShapingEvidenceJson.hx:144` |
-| Rust | cannot lower fallible capacity expression: missing error enum or overflow variant | boring rust 后端容量表达式降级处 | `engine-haxe/src/org/tiqian/layout/ParagraphShapingStage.hx:1182`（Std.string 参数域门 2026-09-05 清除后成为 rust 第一门，F0f） |
-| Dart | dart target: variant switch lowers at return position | `packages/compiler/reflaxe/dart/dartcompiler/DartExpr.hx` 变体 switch 门 | 同 ts 行 `ShapingEvidenceJson.hx:144`（Math.abs 门 2026-09-05 清除后 dart 下一门与 ts、swift 同位点，dart 后端的同构造降级待补，F0g 范围） |
+| Rust | Std.string accepts scalars, enum values, records, and arrays of them only | `packages/compiler/reflaxe/rust/rustcompiler/RustExpr.hx:4052` | 七处 record 打印合成拼接了不在 `Std.string` 参数域内的值（三个普通类、一个 abstract、三个函数类型的字段，清单见 F0k） |
+| Dart | dart target: variant switch lowers at return position | `packages/compiler/reflaxe/dart/dartcompiler/DartExpr.hx` 的 variant switch 报错处 | 同 ts 行 `ShapingEvidenceJson.hx:144`（`Math.abs` 的报错 2026-09-05 消除后，dart 的第一处与 ts、swift 是同一个构造，dart 生成器的对应规则待补，F0g 范围） |
 
-已确认但排在第一门之后的门：
+已确认排在第一处之后的报错：
 
 - 表达式块必须以值语句结尾（features/43）：TypeScript 目标在只编译
-  `org.tiqian.core.TextRange` 加 `org.tiqian.core.TextRangeTest` 的最小集时命中，
-  位置 `engine-haxe/src/org/tiqian/core/TiqianNoSuchElementException.hx:22`，
-  该函数是单 case 捕获 switch 表达式（枚举只有一个变体 Message）。五个后端都
-  有此门（`TsExpr.hx:529`、`SwiftExpr.hx:599`、`DartExpr.hx:805`、
-  `RustExpr.hx:1064`、`KotlinExpr.hx:719`），Kotlin 侧已实现降级所以 Kotlin
-  目录不受影响；Swift、Dart、Rust 是否在同一位点命中，待各自第一门消除后
-  复测。
-- Std.string 参数域门五个后端都有（`TsExpr.hx:1778`、`SwiftExpr.hx:2094`、
-  `DartExpr.hx:2020`、`RustExpr.hx:4047`、`KotlinExpr.hx:2104`）。tiqian 源的
-  违规形态已于 2026-09-05 定位并清除（F0f）：两个无 `toString` 的普通类被
-  record 打印合成引用，即 `ClreqPunctuationGlyphSubstitutor`（三个 record 的
-  字段）与 `AttachedInlinePunctuationBoundaryResult`（两个 record 的字段）；
-  门消息以 `(unknown)` 报出位置，定位方法是 boring 报错处临时加类型打印与
-  类清单前缀二分（200 类收敛到第 53 类 `ContextualDashEllipsisRoleResolverTest`
-  独立触发）。
+  `org.tiqian.core.TextRange` 加 `org.tiqian.core.TextRangeTest` 的最小集时
+  命中，位置 `engine-haxe/src/org/tiqian/core/TiqianNoSuchElementException.hx:22`。
+  五个生成器都有这条报错（`TsExpr.hx:529`、`SwiftExpr.hx:599`、
+  `DartExpr.hx:805`、`RustExpr.hx:1064`、`KotlinExpr.hx:719`），kotlin 生成器
+  已实现对应规则，所以 Kotlin 目录不受影响；Swift、Dart、Rust 是否在同样
+  位置命中，待各自第一处报错消除后复测。
+- `Std.string` 参数域的报错五个生成器都有（`TsExpr.hx:1778`、
+  `SwiftExpr.hx:2094`、`DartExpr.hx:2020`、`RustExpr.hx:4047`、
+  `KotlinExpr.hx:2104`）。参数域指 boring 规格 46 允许传入 `Std.string` 与
+  字符串拼接的类型集合：标量、枚举值、record、它们的数组与 Null。tiqian 源
+  的违规形态已于 2026-09-05 定位并清除一批（F0f，两个无 `toString` 的普通类
+  被记录类型的打印合成拼接）；rust 目标在 fallible capacity 报错消除后又
+  暴露出更深处的七处（F0k）。报错位置显示为 `(unknown)` 时的定位方法：在
+  boring 报错处临时改为打印被拒类型并继续（记下结果后立即还原），可一次
+  跑出全部违规类型（200 类收敛到第 53 类
+  `ContextualDashEllipsisRoleResolverTest` 独立触发，2026-09-05 实测）。
+- 2026-09-05 实测：把 rust 目标的 `Std.string` 参数域报错临时放宽为直接
+  生成后，`core-rust.hxml` 退出码为 0，即 F0k 的七处是 rust 生成路径上最后
+  一类中止。
 
 ## 5 分级标尺
 
@@ -218,7 +225,7 @@ S2 二十到一百九十九条；S3 二十条以下。流程类条目不适用 S
 | K6 | Kotlin 其余全部桶 | f32 463 / f64 469 | 0 | 桶 4 余量、5、6、9 至 21、23 至 28 |
 | K7 | Kotlin 两目录错误总数 | f32 3335 / f64 3355 | 0 | 全部桶 |
 | K8 | boring 验收链 | 全通过 | 每次合并后保持 | 不适用 |
-| K9 | 四目标生成阻断门 | 4 个第一门＋2 个已确认后续门 | 门全部消除并产出四语言分桶表 | 第 4 节 |
+| K9 | 四目标生成中止的第一处报错 | 4 个第一处（vendored `012ab59`） | 全部消除并产出四语言分桶表 | 第 4 节 |
 | K10 | 修复排队项 | nullargs 在验收，features/43 未派发 | 全部完成 | 修复项清单 |
 
 K6 与 K4 的分界：桶 4 里与可空相关的形状（Int? 给 Int 等）计入 K6，只有宽度
@@ -244,41 +251,72 @@ K6 与 K4 的分界：桶 4 里与可空相关的形状（Int? 给 Int 等）计
 
 ### 第 0.5 组：四目标生成阻断门（K9 的解锁项）
 
-- [x] F0e Dart 的 `Math.abs` 调用点降级补臂：2026-09-05 完成并合入 boring
-      main `7f2bced`。dart 与 rust 在 `DartExpr.hx` 与 `RustExpr.hx` 的 Math
-      调用位加 abs 臂并用 `mathFloatArg` 把 Int 操作数拓宽到浮点域；swift 侧
-      `SwiftExpr.hx` 调用位同日补 `abs(mathFloatArg(...))` 臂（tiqian 的 swift
-      树生成后发现 Int32 接收者编译错，中央补第三臂）。样本
-      `samples/boring/MathMinMaxOps.hx` 加 `absValue` 与 `absOfInts`，测试
-      `samples/tests/MathMinMaxTests.hx` 加对应用例（Int 用正值：boring 把
-      Haxe Int 映射 u32，负字面量出域）。验收十条套件（五条 stage1 加
-      test:kotlin-f32、test:rust-f32、test:swift、test:swift-f32、test:dart）
-      全部 rc=0；vendored 已推进到 `7f2bced`。
-- [x] F0f 定位 Std.string 违规调用点：2026-09-05 完成。违规形态不在源码直接
-      调 `Std.string` 的位置；实际触发点是 `@:dataClass` 的 record toString
-      合成对无 `toString` 普通类字段的拼接（binop 拼接路径经 `stdStringArg`
-      进入同一
-      门）。boring 规格 46 裁定 3 明文规定无 `toString` 的类保持拒绝、编译器
-      不猜文本形态，故修复位置裁定为 tiqian 侧：`ClreqPunctuationGlyphSubstitutor`
-      在 Kotlin 原件（`engine/src/commonMain/kotlin/org/tiqian/clreq/ClreqProfile.kt`）
-      与 Haxe 移植两侧同加显式 `toString`（两侧文本一致
-      `ClreqPunctuationGlyphSubstitutor(policy=…)`，无测试打印旧形态，实测
-      无断言破坏）；`AttachedInlinePunctuationBoundaryResult` 的 Kotlin 原件
-      是 `internal data class`，Haxe 侧补 `@:dataClass` 标记并改构造参数名与
-      字段同名（延续 520f4be5 对 decision 类的先例）。rust 树 Std.string 门
-      不再出现，下一个门为 `ParagraphShapingStage.hx:1182` 的 fallible
-      capacity 降级；移植树验收（gates.sh 的 g4、tests、compare）全部通过
+- [x] F0e 三个生成器补上 `Math.abs` 的生成规则：2026-09-05 完成并合入 boring
+      main `7f2bced`。此前 Haxe 源调用 `Math.abs` 时，rust 与 dart 生成器没有
+      对应的生成规则，生成阶段直接中止。本次在 `DartExpr.hx` 与 `RustExpr.hx`
+      里分派 Math 函数的 switch 新增 abs 一条，操作数先经 `mathFloatArg`
+      拓宽到浮点类型再取绝对值；swift 侧 `SwiftExpr.hx` 同日生成
+      `abs(mathFloatArg(...))`（tiqian 的 swift 树生成后发现 Int32 接收者
+      编译错，追加同一处拓宽）。样本 `samples/boring/MathMinMaxOps.hx` 新增
+      `absValue` 与 `absOfInts`，测试 `samples/tests/MathMinMaxTests.hx` 新增
+      对应用例（Int 用正值：boring 把 Haxe Int 映射 u32，负字面量出域）。
+      验收十条套件（五条 stage1 加 test:kotlin-f32、test:rust-f32、
+      test:swift、test:swift-f32、test:dart）全部 rc=0；vendored 已推进到
+      `7f2bced`。
+- [x] F0f 定位 `Std.string` 违规调用点：2026-09-05 完成第一轮。违规形态不在
+      源码直接调 `Std.string` 的位置；实际触发点是 `@:dataClass` 的记录类型
+      打印合成对无 `toString` 普通类字段的拼接（二元加法拼接经 `stdStringArg`
+      进入同一条参数域检查）。boring 规格 46 裁定 3 明文规定无 `toString` 的
+      类保持拒绝、编译器不猜文本形态，故修复位置裁定为 tiqian 侧：
+      `ClreqPunctuationGlyphSubstitutor` 在 Kotlin 原件
+      （`engine/src/commonMain/kotlin/org/tiqian/clreq/ClreqProfile.kt`）与
+      Haxe 移植两侧同加显式 `toString`（两侧文本一致
+      `ClreqPunctuationGlyphSubstitutor(policy=…)`，改前检查过无测试断言旧
+      打印形态）；`AttachedInlinePunctuationBoundaryResult` 的 Kotlin 原件是
+      `internal data class`，Haxe 侧补 `@:dataClass` 标记并改构造参数名与
+      字段同名（延续 520f4be5 对 decision 类的先例）。本轮当时 rust 树的
+      `Std.string` 报错不再出现；后续 fallible capacity 报错（F0j）消除后，
+      生成范围扩大，又在更深处的七处出现同类报错（F0k，本轮补充修正此前的
+      「不再出现」）。移植树验收（gates.sh 的 g4、tests、compare）全部通过
       （G4=0、trace 对比 121/121）。
-- [ ] F0g 变体 switch 在非返回位的降级（TypeScript 与 Swift 第一门）：kotlin
-      后端已实现同构造降级，以此为参照移植到 `TsExpr.hx:1204` 与
-      `SwiftExpr.hx:1169`；触发样本 `ShapingEvidenceJson.hx:144`。C2，P0，S0
-      （ts 与 swift 目录无法生成）。
-- [ ] F0h 单 case 捕获 switch 表达式降级（features/43，含「表达式块必须以值
-      语句结尾」门）：kotlin 后端已实现，移植到 ts、swift、dart、rust 四个
-      后端；触发样本 `TiqianNoSuchElementException.hx:22`。C3，P0，S0。此项
-      即任务 #21 的派发范围，原评级 C2、P2、S3，因阻塞四语言普查升级。
-- [ ] F0i 每清一门后重跑对应生成命令，记录下一个门，直到四条命令退出码 0；
-      然后补记第 2.2 节四语言的编译普查命令与首次分桶表。C1，P1，S-。
+- [ ] F0g 按枚举变体分派的 switch 表达式出现在赋值等其他位置时的生成规则
+      （TypeScript 与 Swift 第一处报错）。boring 的报错文本是 variant switch
+      lowers at return position，意思是这类 switch 只实现了在函数返回值位置
+      的生成，其他位置一律中止。kotlin 生成器已支持任意位置，以此为参照移植
+      到 `TsExpr.hx:1204` 与 `SwiftExpr.hx:1169`；触发文件
+      `ShapingEvidenceJson.hx:144`。C2，P0，S0（ts 与 swift 目录无法生成）。
+- [ ] F0h 函数体只有一个 switch 表达式、且被分派的枚举只有一个变体时的生成
+      规则（features/43，连带「表达式块必须以值语句结尾」报错）。触发文件
+      `TiqianNoSuchElementException.hx:22`：`describe` 函数的函数体是单个
+      switch 表达式，枚举 `NoSuchElementError` 只有 `Message(text)` 一个变体，
+      生成器把它展开成语句块后没有以返回值的语句结尾。kotlin 生成器已实现，
+      移植到 ts、swift、dart、rust 四个生成器。C3，P0，S0。此项即任务 #21
+      的派发范围，原评级 C2、P2、S3，因阻塞四语言普查升级。
+- [ ] F0i 每消除一处第一位的报错后重跑对应生成命令，记录下一处，直到四条
+      命令退出码 0；然后补记第 2.2 节四语言的编译普查命令与首次分桶表。
+      C1，P1，S-。
+- [x] F0j 无错误枚举函数里的整型容量表达式生成规则（rust 第一处报错，接
+      F0f 之后）：2026-09-05 完成并合入 boring main `012ab59`。此前 Haxe
+      源里 `new Array<T>()` 后紧跟按下标填满的循环时，rust 生成器会生成
+      `Vec::with_capacity`，但循环上界既不是常量也不是 `.length` 时，要求
+      函数声明错误枚举，`ParagraphShapingStage.hx:1182`（上界 `rej.size()`）
+      因此中止。本次在该生成分支新增：上界是 Haxe `Int` 且函数无错误枚举时，
+      按 T3 下标形式生成 `usize::try_from(上界).unwrap_or(0)`（u32 到 usize
+      在所有支持的目标上必成功，`unwrap_or(0)` 分支不可达；容量只决定提前
+      预留多少存储，预留 0 不影响数组正确性）。规格 06 增补「Capacity bounds
+      on the Rust target」
+      一节记录四类上界各自的生成形态。样本 `samples/boring/ClusterTags.hx`
+      新增 `setScores` 与 `describeScores`，测试 `samples/tests/SortedKeyDomainTests.hx`
+      与 `tests/ts/sorted-key-domains.test.ts` 各新增对应用例。验收十条套件
+      与 test:consistency 全部 rc=0；vendored 已推进到 `012ab59`，rust 树
+      该报错不再出现。
+- [ ] F0k rust 树 `Std.string` 参数域报错第二批（七处，F0j 消除后暴露，
+      rust 生成路径最后一类中止）：三个普通类（`PunctuationClusterGeometry`、
+      `GlueBudget`、`ClreqKinsokuRule`）、一个 abstract（`ProgressiveBreakTier`）、
+      一个记录类型的三个函数类型字段（`style_at`、`bopomofo_font_weight_at`、
+      `font_size_at`）被记录类型打印合成拼接。逐个按 F0f 的裁定处理：Kotlin
+      原件是 data class 的补 `@:dataClass` 标记；原件是普通类的两侧同加显式
+      `toString`；函数类型字段与 abstract 的形态先报裁定再动。C2，P0，S0。
 
 ### 第 1 组：三大错误种类（Kotlin）
 
@@ -318,9 +356,10 @@ K6 与 K4 的分界：桶 4 里与可空相关的形状（Int? 给 Int 等）计
 |---|---|---|---|---|
 | 2026-09-05 | Kotlin 基线建立 | boring `a75601a` | f32 3338 / f64 3358（分桶脚本有条件类错分） | 不适用 |
 | 2026-09-05 | 基线迁移到 `5d7417e` 并修正分桶脚本 | boring `5d7417e` | f32 3335 / f64 3355，分桶合计与总数一致 | 不适用 |
-| 2026-09-05 | 四目标第一阻断门实测记录 | 本文档第 4 节 | ts、swift、rust、dart 均无法生成 | 不适用 |
-| 2026-09-05 | F0e Math.abs 三目标补臂 | boring `7f2bced`（vendored 已推进） | dart 树 Math.abs 门不再出现，dart 下一门＝变体 switch | 十条套件全 rc=0 |
-| 2026-09-05 | F0f Std.string 违规调用定位与修复 | tiqian `e0e1172d`＋`ec285e24` | rust 树 Std.string 门不再出现（全族枚举仅两类），rust 下一门＝`ParagraphShapingStage.hx:1182` fallible capacity | 移植树 gates.sh 三项全过；engine jvmTest 通过 |
+| 2026-09-05 | 四目标第一处报错实测记录 | 本文档第 4 节 | ts、swift、rust、dart 均无法生成 | 不适用 |
+| 2026-09-05 | F0e 三生成器补 `Math.abs` 规则 | boring `7f2bced`（vendored 已推进） | dart 树该报错不再出现，dart 第一处改为 variant switch | 十条套件全 rc=0 |
+| 2026-09-05 | F0f `Std.string` 违规调用定位与修复（第一轮） | tiqian `e0e1172d`＋`ec285e24` | 当时 rust 树该报错不再出现（当轮枚举两类），rust 第一处改为 fallible capacity | 移植树 gates.sh 三项全过；engine jvmTest 通过 |
+| 2026-09-05 | F0j 整型容量上界生成规则 | boring `012ab59`（vendored 已推进） | rust 树该报错不再出现，rust 第一处改为 F0k 的 `Std.string` 第二批（放宽实测确认是最后一类） | 十条套件＋test:consistency 全 rc=0 |
 
 ## 9 已完成并合入的修复（背景）
 
