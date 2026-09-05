@@ -1,3 +1,4 @@
+import org.tiqian.layout.RecordedEvidenceGoldenParityTest;
 import org.tiqian.layout.LineGeometryDirectTailTest;
 import org.tiqian.layout.PunctuationGeometryLedgerCoverageTest;
 import org.tiqian.layout.PunctuationSpacingRuleTest;
@@ -1687,5 +1688,7 @@ class Main {
         run("mourningSpanWiderThanMeasureSplitsWithOpenEdges", org.tiqian.layout.SpacingAndLineGeometryEngineTest.mourningSpanWiderThanMeasureSplitsWithOpenEdges);
         run("usesFontDeclaredTypoBoxForCjkLineBox", org.tiqian.layout.SpacingAndLineGeometryEngineTest.usesFontDeclaredTypoBoxForCjkLineBox);
         TestTraceRecorder.flushClass("SpacingAndLineGeometryEngineTest");
+        run("recordedEvidenceLayoutMatchesGolden", RecordedEvidenceGoldenParityTest.recordedEvidenceLayoutMatchesGolden);
+        TestTraceRecorder.flushClass("RecordedEvidenceGoldenParityTest");
     }
 }
