@@ -1644,5 +1644,48 @@ class Main {
         run("testProgressiveBreakOffsetsUnmappedClusterIndex", org.tiqian.layout.LineBreakPlanningStageCoverage2Test.testProgressiveBreakOffsetsUnmappedClusterIndex);
         TestTraceRecorder.flushClass("LineBreakPlanningStageCoverage2Test");
 
+        run("appliesAdjacentPunctuationCompressionToDrawableGeometry", org.tiqian.layout.PunctuationGeometryEngineTest.appliesAdjacentPunctuationCompressionToDrawableGeometry);
+        run("buildsTwoEmPunctuationAtomForRecommendedDashCodepoint", org.tiqian.layout.PunctuationGeometryEngineTest.buildsTwoEmPunctuationAtomForRecommendedDashCodepoint);
+        run("compressesAdjacentCjkSingleQuoteCommaSequence", org.tiqian.layout.PunctuationGeometryEngineTest.compressesAdjacentCjkSingleQuoteCommaSequence);
+        run("compressesCjkClosingBeforeAsciiPointMarkWithoutReclassifyingAscii", org.tiqian.layout.PunctuationGeometryEngineTest.compressesCjkClosingBeforeAsciiPointMarkWithoutReclassifyingAscii);
+        run("gbFixedSeparatorsAreHalfWidthAndUnadjustable", org.tiqian.layout.PunctuationGeometryEngineTest.gbFixedSeparatorsAreHalfWidthAndUnadjustable);
+        run("haltAdvanceFromShaperDrivesPunctuationBodyEndToEnd", org.tiqian.layout.PunctuationGeometryEngineTest.haltAdvanceFromShaperDrivesPunctuationBodyEndToEnd);
+        run("inkBoundsDetermineCompressionAmountAndSides", org.tiqian.layout.PunctuationGeometryEngineTest.inkBoundsDetermineCompressionAmountAndSides);
+        run("kaimingStyleHalvesInteriorPunctuationButNotSentenceEnd", org.tiqian.layout.PunctuationGeometryEngineTest.kaimingStyleHalvesInteriorPunctuationButNotSentenceEnd);
+        run("inlineStopCompressionKnobLimitsPushInCapacity", org.tiqian.layout.PunctuationGeometryEngineTest.inlineStopCompressionKnobLimitsPushInCapacity);
+        run("lineStartLenticularBracketConsumesOpeningGlue", org.tiqian.layout.PunctuationGeometryEngineTest.lineStartLenticularBracketConsumesOpeningGlue);
+        run("looseLineEndStyleKeepsFullWidthPunctuation", org.tiqian.layout.PunctuationGeometryEngineTest.looseLineEndStyleKeepsFullWidthPunctuation);
+        run("pushInConsumesWordSpaceBeforeMidLinePunctGlue", org.tiqian.layout.PunctuationGeometryEngineTest.pushInConsumesWordSpaceBeforeMidLinePunctGlue);
+        run("pushInDrainsBracketOuterGlueBeforeInlineComma", org.tiqian.layout.PunctuationGeometryEngineTest.pushInDrainsBracketOuterGlueBeforeInlineComma);
+        run("pushInKeepsFontCenteredPunctuationCompressionPaired", org.tiqian.layout.PunctuationGeometryEngineTest.pushInKeepsFontCenteredPunctuationCompressionPaired);
+        run("recordsInkCalibratedPunctuationGeometryInLayoutDebug", org.tiqian.layout.PunctuationGeometryEngineTest.recordsInkCalibratedPunctuationGeometryInLayoutDebug);
+        run("recordsPunctuationAtomsInLayoutDebug", org.tiqian.layout.PunctuationGeometryEngineTest.recordsPunctuationAtomsInLayoutDebug);
+        run("shortHyphenConnectorIsHalfWidthWavyTildeFullWidth", org.tiqian.layout.PunctuationGeometryEngineTest.shortHyphenConnectorIsHalfWidthWavyTildeFullWidth);
+        run("sinoWesternGapKnobDisablesStretchAndShrink", org.tiqian.layout.PunctuationGeometryEngineTest.sinoWesternGapKnobDisablesStretchAndShrink);
+        run("sinoWesternGapShrinkFloorsAtEighthEm", org.tiqian.layout.PunctuationGeometryEngineTest.sinoWesternGapShrinkFloorsAtEighthEm);
+        run("traditionalProfileCentresPauseStopGlueOnBothSides", org.tiqian.layout.PunctuationGeometryEngineTest.traditionalProfileCentresPauseStopGlueOnBothSides);
+        TestTraceRecorder.flushClass("PunctuationGeometryEngineTest");
+        run("autoSpaceDigitModeIsWiredIndependentlyOfLetterMode", org.tiqian.layout.SpacingAndLineGeometryEngineTest.autoSpaceDigitModeIsWiredIndependentlyOfLetterMode);
+        run("autoSpaceDoesNotShrinkSpacesBetweenLatinWords", org.tiqian.layout.SpacingAndLineGeometryEngineTest.autoSpaceDoesNotShrinkSpacesBetweenLatinWords);
+        run("autoSpaceDisabledKeepsTypedSpacesAtHalfEm", org.tiqian.layout.SpacingAndLineGeometryEngineTest.autoSpaceDisabledKeepsTypedSpacesAtHalfEm);
+        run("autoSpaceGapAtLineEndIsTrimmedLikeAnyLineEdgeBlank", org.tiqian.layout.SpacingAndLineGeometryEngineTest.autoSpaceGapAtLineEndIsTrimmedLikeAnyLineEdgeBlank);
+        run("autoSpaceReplacesTypedSpaceAtCjkLatinBoundary", org.tiqian.layout.SpacingAndLineGeometryEngineTest.autoSpaceReplacesTypedSpaceAtCjkLatinBoundary);
+        run("blockIndentInsetsEveryLine", org.tiqian.layout.SpacingAndLineGeometryEngineTest.blockIndentInsetsEveryLine);
+        run("emphasisDotGapIsExplicitAndIndependentOfLineHeight", org.tiqian.layout.SpacingAndLineGeometryEngineTest.emphasisDotGapIsExplicitAndIndependentOfLineHeight);
+        run("emphasisSpanProducesDotAnchorsForHanAndSkipsPunctuation", org.tiqian.layout.SpacingAndLineGeometryEngineTest.emphasisSpanProducesDotAnchorsForHanAndSkipsPunctuation);
+        run("firstLineIndentAdaptsToMeasureAndCanBeOverridden", org.tiqian.layout.SpacingAndLineGeometryEngineTest.firstLineIndentAdaptsToMeasureAndCanBeOverridden);
+        run("firstLineIndentShrinksFirstLineMeasureOnly", org.tiqian.layout.SpacingAndLineGeometryEngineTest.firstLineIndentShrinksFirstLineMeasureOnly);
+        run("halfEmWordSpacesDoNotStretchUnderJustification", org.tiqian.layout.SpacingAndLineGeometryEngineTest.halfEmWordSpacesDoNotStretchUnderJustification);
+        run("hangingIndentFlushesFirstLineAndInsetsRest", org.tiqian.layout.SpacingAndLineGeometryEngineTest.hangingIndentFlushesFirstLineAndInsetsRest);
+        run("interlinearLinesGetPerItemSegmentsWithAdjacentShortening", org.tiqian.layout.SpacingAndLineGeometryEngineTest.interlinearLinesGetPerItemSegmentsWithAdjacentShortening);
+        run("interlinearMarksRaiseAutoLineHeightToSpacingFloor", org.tiqian.layout.SpacingAndLineGeometryEngineTest.interlinearMarksRaiseAutoLineHeightToSpacingFloor);
+        run("justifyFillsSaturatedLineWithUncappedEvenShare", org.tiqian.layout.SpacingAndLineGeometryEngineTest.justifyFillsSaturatedLineWithUncappedEvenShare);
+        run("justifyStretchesPunctuationLatinBoundaryInTierThree", org.tiqian.layout.SpacingAndLineGeometryEngineTest.justifyStretchesPunctuationLatinBoundaryInTierThree);
+        run("lineLengthGridCanBeBypassedForExactWidths", org.tiqian.layout.SpacingAndLineGeometryEngineTest.lineLengthGridCanBeBypassedForExactWidths);
+        run("lineLengthGridFloorsMeasureToWholeCharsAndOffsetsBody", org.tiqian.layout.SpacingAndLineGeometryEngineTest.lineLengthGridFloorsMeasureToWholeCharsAndOffsetsBody);
+        run("mourningSpanIsKeptUnbrokenAndFramedPerLine", org.tiqian.layout.SpacingAndLineGeometryEngineTest.mourningSpanIsKeptUnbrokenAndFramedPerLine);
+        run("mourningSpanWiderThanMeasureSplitsWithOpenEdges", org.tiqian.layout.SpacingAndLineGeometryEngineTest.mourningSpanWiderThanMeasureSplitsWithOpenEdges);
+        run("usesFontDeclaredTypoBoxForCjkLineBox", org.tiqian.layout.SpacingAndLineGeometryEngineTest.usesFontDeclaredTypoBoxForCjkLineBox);
+        TestTraceRecorder.flushClass("SpacingAndLineGeometryEngineTest");
     }
 }
