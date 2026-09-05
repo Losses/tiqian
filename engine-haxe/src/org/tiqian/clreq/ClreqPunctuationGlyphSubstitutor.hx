@@ -22,6 +22,9 @@ class ClreqPunctuationGlyphSubstitutor {
         return new CjkPunctuationGlyphSubstitution(sourceText, displayText, reason);
     }
 
+    public function toString():String
+        return "ClreqPunctuationGlyphSubstitutor(policy=" + policy + ")";
+
     private static function toClreqRecommendedDisplayText(text:String):String {
         // Every unit an ellipsis (U+2026): each becomes one midline ellipsis.
         final output = new StringBuf();
