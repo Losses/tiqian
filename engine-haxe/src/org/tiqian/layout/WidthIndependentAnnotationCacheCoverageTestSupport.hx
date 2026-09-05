@@ -59,7 +59,7 @@ class WidthIndependentAnnotationCacheCoverageTestSupport {
     }
 
     /** Port of `List<Cluster>.firstContainedItem`: the first item whose range
-     *  contains the cluster, via monotonic inverse interval join. */
+     *  is contained in the cluster, via monotonic inverse interval join. */
     public static function firstContainedItem(clusters:Array<Cluster>, items:Array<TextRange>):Array<Null<TextRange>> {
         final out:Array<Null<TextRange>> = [];
         var itemIndex = 0;
@@ -69,7 +69,7 @@ class WidthIndependentAnnotationCacheCoverageTestSupport {
                 itemIndex += 1;
             }
             final item = itemIndex < items.length ? items[itemIndex] : null;
-            final candidate = item != null && cluster.range.start >= item.start ? item : null;
+            final candidate = item != null && item.start >= cluster.range.start && item.end <= cluster.range.end ? item : null;
             out.push(candidate);
         }
         return out;

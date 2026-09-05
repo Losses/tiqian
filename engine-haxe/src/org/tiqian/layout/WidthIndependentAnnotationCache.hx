@@ -874,6 +874,8 @@ class WidthIndependentAnnotationCacheFns {
 
         final glyphsByClusterRangeKeys = new Array<TextRange>();
         final glyphsByClusterRangeValues = new Array<Array<Glyph>>();
+        final openTypeFeatureKeys = new Array<TextRange>();
+        final openTypeFeatureValues = new Array<Array<String>>();
         function addGlyphToClusterRange(range:TextRange, g:Glyph):Void {
             for (i in 0...glyphsByClusterRangeKeys.length) {
                 if (glyphsByClusterRangeKeys[i].start == range.start && glyphsByClusterRangeKeys[i].end == range.end) {
@@ -908,6 +910,28 @@ class WidthIndependentAnnotationCacheFns {
                     final featCopy = new Array<String>();
                     for (fi in 0...run.openTypeFeatures.length)
                         featCopy.push(run.openTypeFeatures[fi]);
+                    var previousFeatures:Array<String> = null;
+                    for (pi in 0...openTypeFeatureKeys.length) {
+                        if (openTypeFeatureKeys[pi].start == range.start && openTypeFeatureKeys[pi].end == range.end) {
+                            previousFeatures = openTypeFeatureValues[pi];
+                            break;
+                        }
+                    }
+                    if (previousFeatures != null) {
+                        var sameFeatures = previousFeatures.length == featCopy.length;
+                        if (sameFeatures) {
+                            for (fi in 0...previousFeatures.length) {
+                                if (previousFeatures[fi] != featCopy[fi]) {
+                                    sameFeatures = false;
+                                    break;
+                                }
+                            }
+                        }
+                        if (!sameFeatures)
+                            throw new org.tiqian.core.TiqianIllegalArgumentException(org.tiqian.core.TextRangeError.Message("Conflicting OpenType features for shaped cluster " + Std.string(range)));
+                    }
+                    openTypeFeatureKeys.push(range);
+                    openTypeFeatureValues.push(featCopy);
                     openTypeFeaturesByClusterRangeBuilder.put(range, featCopy);
                 }
             }
@@ -1061,7 +1085,7 @@ class WidthIndependentAnnotationCacheFns {
             var prevKind = previous.preferredStretch != null ? previous.preferredStretch.kind : null;
             var boundKind = boundary.preferredStretch != null ? boundary.preferredStretch.kind : null;
             if (prevKind != null && boundKind != null && prevKind != boundKind) {
-                throw new IllegalStateException("Conflicting inline-object stretch classes at cluster boundary " + leftClusterIndex);
+                throw new org.tiqian.core.TiqianIllegalArgumentException(org.tiqian.core.TextRangeError.Message("Conflicting inline-object stretch classes at cluster boundary " + leftClusterIndex));
             }
             var preferred:Null<InlineObjectPreferredStretch> = null;
             if (previous.preferredStretch != null && boundary.preferredStretch != null) {
