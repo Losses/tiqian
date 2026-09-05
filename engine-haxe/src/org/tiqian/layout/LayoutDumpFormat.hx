@@ -3,6 +3,7 @@ package org.tiqian.layout;
 import org.tiqian.core.*;
 import org.tiqian.test.LayoutFixtures.LayoutFixture;
 import org.tiqian.font.FontMetrics.StubFontMetricsResolver;
+import org.tiqian.font.FontMetrics.FontMetricsResolver;
 import org.tiqian.shaping.TextShaper.ITextShaper;
 import org.tiqian.shaping.TextShaper.ExplainableStubTextShaper;
 import org.tiqian.linebreak.Hyphenator.NoHyphenator;
@@ -34,15 +35,15 @@ class LayoutDumpFormat {
         }
         return out.toString();
     }
-    public static function layoutFixtureDump(f:LayoutFixture):String {
+    public static function layoutFixtureDump(f:LayoutFixture, ?textShaper:Null<ITextShaper>, ?fontMetricsResolver:Null<FontMetricsResolver>):String {
         final out = new StringBuf(); out.add("fixture: "); out.add(f.id); out.add("\ntext: "); out.add(escapeDumpText(f.text));
         out.add("\nmaxWidth: "); out.add(dumpFmt(f.constraints.maxWidth)); out.add("\n");
-        final shaper:ITextShaper = new ExplainableStubTextShaper();
+        final shaper:ITextShaper = textShaper == null ? new ExplainableStubTextShaper() : textShaper;
         for (n in 0...3) {
             final breaker:LineBreaker = n == 0 ? new GreedyLineBreaker() : n == 1 ? new LookaheadLineBreaker() : new ParagraphDpLineBreaker();
             final hyphenator = f.useEnglishHyphenation ? EnglishHyphenation.enUs() : new NoHyphenator();
             final resolver:Null<ClreqProfileResolver> = f.pinBasicNoHang ? new BasicProfileResolver() : null;
-            final engine = new ExplainableStubParagraphLayoutEngine(null, null, resolver, new StubFontMetricsResolver(), null, null, null, null,
+            final engine = new ExplainableStubParagraphLayoutEngine(null, null, resolver, fontMetricsResolver == null ? new StubFontMetricsResolver() : fontMetricsResolver, null, null, null, null,
                 breaker, null, shaper, hyphenator, null);
             final indent:Null<Ic> = f.firstLineIndentEm == null ? null : new Ic(f.firstLineIndentEm);
             final input = new LayoutInput(new TiqianTextContent(f.text, f.lineBreakSpans), null,
