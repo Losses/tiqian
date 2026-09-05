@@ -2,6 +2,7 @@ package org.tiqian.core;
 
 import std.ReadOnlyArray;
 
+@:dataClass
 class BopomofoDecisionInfo {
     public final baseRange:TextRange;
     public final text:String;
