@@ -80,6 +80,7 @@ import org.tiqian.layout.ParagraphDpLineBreakerCoverage2Test;
 import org.tiqian.layout.GreedyLineBreakerTest;
 import org.tiqian.layout.LookaheadLineBreakerTest;
 import org.tiqian.layout.LineBreakerCoverage2Test;
+import org.tiqian.layout.WidthIndependentAnnotationCacheCoverageTest;
 import org.tiqian.linebreak.LineBreakCoverageTest;
 import org.tiqian.linebreak.MandatoryBreakTest;
 import org.tiqian.linebreak.UnicodePunctuationLineBreakCoverageTest;
@@ -1660,6 +1661,22 @@ class Main {
         run("testInlineObjectKinsokuLineStart", org.tiqian.layout.LineBreakPlanningStageCoverage2Test.testInlineObjectKinsokuLineStart);
         run("testProgressiveBreakOffsetsUnmappedClusterIndex", org.tiqian.layout.LineBreakPlanningStageCoverage2Test.testProgressiveBreakOffsetsUnmappedClusterIndex);
         TestTraceRecorder.flushClass("LineBreakPlanningStageCoverage2Test");
+        run("adjacentInlineObjectBoundariesMergingAndConflicts", org.tiqian.layout.WidthIndependentAnnotationCacheCoverageTest.adjacentInlineObjectBoundariesMergingAndConflicts);
+        run("centeredPunctBeforeAttachedReferenceKeepsLeadingGlueOnly", org.tiqian.layout.WidthIndependentAnnotationCacheCoverageTest.centeredPunctBeforeAttachedReferenceKeepsLeadingGlueOnly);
+        run("conflictingOpenTypeFeaturesThrows", org.tiqian.layout.WidthIndependentAnnotationCacheCoverageTest.conflictingOpenTypeFeaturesThrows);
+        run("containingItemsAndFirstContainedItemBranches", org.tiqian.layout.WidthIndependentAnnotationCacheCoverageTest.containingItemsAndFirstContainedItemBranches);
+        run("dynamicShapingEmphasisItalicAtAndZeroPairedCapacityBranches", org.tiqian.layout.WidthIndependentAnnotationCacheCoverageTest.dynamicShapingEmphasisItalicAtAndZeroPairedCapacityBranches);
+        run("dynamicShapingTriggersAndEmphasisItalic", org.tiqian.layout.WidthIndependentAnnotationCacheCoverageTest.dynamicShapingTriggersAndEmphasisItalic);
+        run("lineLengthGridBodyAlignmentBranches", org.tiqian.layout.WidthIndependentAnnotationCacheCoverageTest.lineLengthGridBodyAlignmentBranches);
+        run("lruCacheUpdateExistingKeyAndClear", org.tiqian.layout.WidthIndependentAnnotationCacheCoverageTest.lruCacheUpdateExistingKeyAndClear);
+        run("pairedPunctuationWithZeroCapacity", org.tiqian.layout.WidthIndependentAnnotationCacheCoverageTest.pairedPunctuationWithZeroCapacity);
+        run("prepareWidthIndependentAnnotationBranches", org.tiqian.layout.WidthIndependentAnnotationCacheCoverageTest.prepareWidthIndependentAnnotationBranches);
+        run("rubySpreadAccumulationAndEdges", org.tiqian.layout.WidthIndependentAnnotationCacheCoverageTest.rubySpreadAccumulationAndEdges);
+        run("rubySpreadSecondVisitAndZeroFirstCluster", org.tiqian.layout.WidthIndependentAnnotationCacheCoverageTest.rubySpreadSecondVisitAndZeroFirstCluster);
+        run("shrinkOpportunitiesCoverAllPunctuationClassesAndSpaces", org.tiqian.layout.WidthIndependentAnnotationCacheCoverageTest.shrinkOpportunitiesCoverAllPunctuationClassesAndSpaces);
+        run("styleAtAndEmphasisItalicAtAndDynamicShapingBranches", org.tiqian.layout.WidthIndependentAnnotationCacheCoverageTest.styleAtAndEmphasisItalicAtAndDynamicShapingBranches);
+        run("verbatimRangesAndAutoSpaceDecisions", org.tiqian.layout.WidthIndependentAnnotationCacheCoverageTest.verbatimRangesAndAutoSpaceDecisions);
+        TestTraceRecorder.flushClass("WidthIndependentAnnotationCacheCoverageTest");
 
     }
 }
