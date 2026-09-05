@@ -89,6 +89,8 @@ import org.tiqian.linebreak.UnicodePunctuationLineBreakTest;
 import org.tiqian.test.trace.TestTraceRecorder;
 import org.tiqian.test.trace.TraceAssertionException;
 import std.Console;
+import org.tiqian.layout.ExplainableStubParagraphLayoutEngineTest;
+import org.tiqian.layout.JustifierEngineTest;
 import std.Process;
 
 class Main {
@@ -1722,5 +1724,56 @@ class Main {
         TestTraceRecorder.flushClass("SpacingAndLineGeometryEngineTest");
         run("recordedEvidenceLayoutMatchesGolden", RecordedEvidenceGoldenParityTest.recordedEvidenceLayoutMatchesGolden);
         TestTraceRecorder.flushClass("RecordedEvidenceGoldenParityTest");
+
+        run("emphasisDotGapEmMustBeFiniteAndNonNegative", org.tiqian.layout.ParagraphLayoutEngineValidationCoverageTest.emphasisDotGapEmMustBeFiniteAndNonNegative);
+        run("inlineObjectMinimumClearanceEmMustBeFiniteAndNonNegative", org.tiqian.layout.ParagraphLayoutEngineValidationCoverageTest.inlineObjectMinimumClearanceEmMustBeFiniteAndNonNegative);
+        run("sourceTextMustNotContainUnpairedSurrogates", org.tiqian.layout.ParagraphLayoutEngineValidationCoverageTest.sourceTextMustNotContainUnpairedSurrogates);
+        run("inlineBoxSpanMustBeANonEmptyInBoundsRange", org.tiqian.layout.ParagraphLayoutEngineValidationCoverageTest.inlineBoxSpanMustBeANonEmptyInBoundsRange);
+        run("inlineBoxSpanMustHaveFiniteInlineEdges", org.tiqian.layout.ParagraphLayoutEngineValidationCoverageTest.inlineBoxSpanMustHaveFiniteInlineEdges);
+        run("lineBreakSpansMustBeNonEmptyInBoundsRanges", org.tiqian.layout.ParagraphLayoutEngineValidationCoverageTest.lineBreakSpansMustBeNonEmptyInBoundsRanges);
+        run("autoSpaceSuppressedRangesMustBeNonEmptyInBounds", org.tiqian.layout.ParagraphLayoutEngineValidationCoverageTest.autoSpaceSuppressedRangesMustBeNonEmptyInBounds);
+        run("inlineObjectRangesMustBeUnique", org.tiqian.layout.ParagraphLayoutEngineValidationCoverageTest.inlineObjectRangesMustBeUnique);
+        run("inlineObjectRangesMustNotOverlap", org.tiqian.layout.ParagraphLayoutEngineValidationCoverageTest.inlineObjectRangesMustNotOverlap);
+        run("inlineObjectMustCoverANonEmptyInBoundsRange", org.tiqian.layout.ParagraphLayoutEngineValidationCoverageTest.inlineObjectMustCoverANonEmptyInBoundsRange);
+        run("inlineObjectMustHaveFinitePositiveGeometry", org.tiqian.layout.ParagraphLayoutEngineValidationCoverageTest.inlineObjectMustHaveFinitePositiveGeometry);
+        run("inlineObjectLeadingBoundaryMustBeFixed", org.tiqian.layout.ParagraphLayoutEngineValidationCoverageTest.inlineObjectLeadingBoundaryMustBeFixed);
+        run("inlineObjectTrailingBoundaryMustNotExceedAdvance", org.tiqian.layout.ParagraphLayoutEngineValidationCoverageTest.inlineObjectTrailingBoundaryMustNotExceedAdvance);
+        TestTraceRecorder.flushClass("ParagraphLayoutEngineValidationCoverageTest");
+        run("returnsDebuggableSingleLineResult", ExplainableStubParagraphLayoutEngineTest.returnsDebuggableSingleLineResult);
+        run("recordsInjectedLineBreakerStrategyInDebugDecisions", ExplainableStubParagraphLayoutEngineTest.recordsInjectedLineBreakerStrategyInDebugDecisions);
+        run("mandatoryLineBreakClustersAreZeroWidthAndNotShaped", ExplainableStubParagraphLayoutEngineTest.mandatoryLineBreakClustersAreZeroWidthAndNotShaped);
+        run("consecutiveMandatoryLineBreaksCreateOneEmptyLineBox", ExplainableStubParagraphLayoutEngineTest.consecutiveMandatoryLineBreaksCreateOneEmptyLineBox);
+        run("singleMandatoryBreakAfterWrappedLineDoesNotCreateEmptyLine", ExplainableStubParagraphLayoutEngineTest.singleMandatoryBreakAfterWrappedLineDoesNotCreateEmptyLine);
+        run("crlfIsOneMandatoryBreakCluster", ExplainableStubParagraphLayoutEngineTest.crlfIsOneMandatoryBreakCluster);
+        run("consecutiveAndTrailingMandatoryBreaksPreserveBlankLines", ExplainableStubParagraphLayoutEngineTest.consecutiveAndTrailingMandatoryBreaksPreserveBlankLines);
+        run("mandatoryBreakLineIsNotJustified", ExplainableStubParagraphLayoutEngineTest.mandatoryBreakLineIsNotJustified);
+        run("rejectsShaperClustersThatDoNotCoverFontDecisionRange", ExplainableStubParagraphLayoutEngineTest.rejectsShaperClustersThatDoNotCoverFontDecisionRange);
+        run("preservesShaperGlyphBoundsInLayoutGlyphRuns", ExplainableStubParagraphLayoutEngineTest.preservesShaperGlyphBoundsInLayoutGlyphRuns);
+        run("recordsFallbackDecisionsPerCluster", ExplainableStubParagraphLayoutEngineTest.recordsFallbackDecisionsPerCluster);
+        run("combiningMarksStayInTheirBaseShapingRuns", ExplainableStubParagraphLayoutEngineTest.combiningMarksStayInTheirBaseShapingRuns);
+        run("complexEmojiGraphemesStayAtomicAcrossGeometryOnlyBoundaries", ExplainableStubParagraphLayoutEngineTest.complexEmojiGraphemesStayAtomicAcrossGeometryOnlyBoundaries);
+        run("complexEmojiSequencesReachTheShaperAsCompleteEmojiRanges", ExplainableStubParagraphLayoutEngineTest.complexEmojiSequencesReachTheShaperAsCompleteEmojiRanges);
+        run("emojiRoleMatrixSeparatesSupportedSequencesFromAdjacentAndUnrelatedText", ExplainableStubParagraphLayoutEngineTest.emojiRoleMatrixSeparatesSupportedSequencesFromAdjacentAndUnrelatedText);
+        run("sourceGraphemeBoundariesDoNotJoinZwJWithOrdinaryText", ExplainableStubParagraphLayoutEngineTest.sourceGraphemeBoundariesDoNotJoinZwJWithOrdinaryText);
+        run("recordsUnicodeEmojiSequenceRolePromotions", ExplainableStubParagraphLayoutEngineTest.recordsUnicodeEmojiSequenceRolePromotions);
+        run("complexEmojiGraphemesHonorTextSpanStyleBoundaries", ExplainableStubParagraphLayoutEngineTest.complexEmojiGraphemesHonorTextSpanStyleBoundaries);
+        TestTraceRecorder.flushClass("ExplainableStubParagraphLayoutEngineTest");
+        run("connectorBoundariesAvoidStretchUnderJustification", JustifierEngineTest.connectorBoundariesAvoidStretchUnderJustification);
+        run("inseparableNumberAndUnitBoundaryAvoidsStretchUnderJustification", JustifierEngineTest.inseparableNumberAndUnitBoundaryAvoidsStretchUnderJustification);
+        run("lastLineAlignmentPositionsTheLastLineViaIndent", JustifierEngineTest.lastLineAlignmentPositionsTheLastLineViaIndent);
+        run("mandatoryBreakLinesTakeLastLineAlignment", JustifierEngineTest.mandatoryBreakLinesTakeLastLineAlignment);
+        run("lastLineIsNeverJustified", JustifierEngineTest.lastLineIsNeverJustified);
+        run("latinGlyphPositionsSurviveAutospaceAndJustification", JustifierEngineTest.latinGlyphPositionsSurviveAutospaceAndJustification);
+        run("justifiesNonLastLineUsingCjkInterCharGapsAsLastResort", JustifierEngineTest.justifiesNonLastLineUsingCjkInterCharGapsAsLastResort);
+        run("usesPunctuationGlueFirstWhenDeficitMatchesCompression", JustifierEngineTest.usesPunctuationGlueFirstWhenDeficitMatchesCompression);
+        run("justifyDistributesDeficitAcrossPriorityChain", JustifierEngineTest.justifyDistributesDeficitAcrossPriorityChain);
+        run("cjkInterCharActsAsLastResortWhenPunctGlueExhausted", JustifierEngineTest.cjkInterCharActsAsLastResortWhenPunctGlueExhausted);
+        run("uniformTrackingIncludesBracketInnerSides", JustifierEngineTest.uniformTrackingIncludesBracketInnerSides);
+        run("bracketWesternInteriorStretchesInTierThreeNotTierTwo", JustifierEngineTest.bracketWesternInteriorStretchesInTierThreeNotTierTwo);
+        run("dashBoundariesDoNotReceiveUniformTracking", JustifierEngineTest.dashBoundariesDoNotReceiveUniformTracking);
+        run("typedSinoWesternSpacesStretchInTierTwo", JustifierEngineTest.typedSinoWesternSpacesStretchInTierTwo);
+        run("punctuationToWesternBoundaryStretchesInTierThree", JustifierEngineTest.punctuationToWesternBoundaryStretchesInTierThree);
+        run("lineEdgeSinoWesternSpaceStaysCollapsed", JustifierEngineTest.lineEdgeSinoWesternSpaceStaysCollapsed);
+        TestTraceRecorder.flushClass("JustifierEngineTest");
     }
 }
