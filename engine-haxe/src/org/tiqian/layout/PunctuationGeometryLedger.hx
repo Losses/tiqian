@@ -413,15 +413,15 @@ import std.SortedMap;
     }
 }
 
-class AttachedInlinePunctuationBoundaryResult {
+@:dataClass class AttachedInlinePunctuationBoundaryResult {
     public final geometry:PunctuationGeometryLedger;
     public final trailingGlueByCluster:SortedMap<Int, Float>;
     public final decisions:Array<SpacingDecisionInfo>;
 
-    public function new(g:PunctuationGeometryLedger, t:SortedMap<Int, Float>, d:Array<SpacingDecisionInfo>) {
-        geometry = g;
-        trailingGlueByCluster = t;
-        decisions = d;
+    public function new(geometry:PunctuationGeometryLedger, trailingGlueByCluster:SortedMap<Int, Float>, decisions:Array<SpacingDecisionInfo>) {
+        this.geometry = geometry;
+        this.trailingGlueByCluster = trailingGlueByCluster;
+        this.decisions = decisions;
     }
 }
 
