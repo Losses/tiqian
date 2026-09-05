@@ -651,9 +651,10 @@ class TracedAssertions {
             }
             index += 1;
         }
+        final rendered = line.toString();
         final recorder = TestTrace.currentRecorder();
         if (recorder != null) {
-            recorder.record(line.toString());
+            recorder.record(rendered);
         }
     }
 
