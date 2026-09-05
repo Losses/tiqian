@@ -19,7 +19,6 @@ import std.SortedMap;
  * of ShapingEvidenceJson.kt on the Kotlin side; the corpus is machine-generated
  * by kotlinx.serialization.
  */
-
 enum JsonValue {
     JNull;
     JBool(v:Bool);
@@ -80,16 +79,10 @@ class ShapingEvidenceJson {
     // --- decoders (field order mirrors ShapingEvidenceJson.kt) ---
 
     private static function parseShapingKey(obj:Array<JsonMember>):ShapingEvidenceKey {
-        return new ShapingEvidenceKey(
-            strRequired(field(obj, "displayText"), "displayText"),
-            strRequired(field(obj, "fontKey"), "fontKey"),
-            strRequired(field(obj, "fontFamily"), "fontFamily"),
-            strRequired(field(obj, "role"), "role"),
-            strArrayRequired(field(obj, "styleFontFamilies"), "styleFontFamilies"),
-            numRequired(field(obj, "fontSize"), "fontSize"),
-            intRequired(field(obj, "fontWeight"), "fontWeight"),
-            boolRequired(field(obj, "italic"), "italic"),
-            strRequired(field(obj, "locale"), "locale"),
+        return new ShapingEvidenceKey(strRequired(field(obj, "displayText"), "displayText"), strRequired(field(obj, "fontKey"), "fontKey"),
+            strRequired(field(obj, "fontFamily"), "fontFamily"), strRequired(field(obj, "role"), "role"),
+            strArrayRequired(field(obj, "styleFontFamilies"), "styleFontFamilies"), numRequired(field(obj, "fontSize"), "fontSize"),
+            intRequired(field(obj, "fontWeight"), "fontWeight"), boolRequired(field(obj, "italic"), "italic"), strRequired(field(obj, "locale"), "locale"),
             strArrayRequired(field(obj, "openTypeFeatures"), "openTypeFeatures"));
     }
 
@@ -98,60 +91,35 @@ class ShapingEvidenceJson {
         final glyphs:Array<RecordedGlyph> = [];
         for (i in 0...glyphValues.length) {
             final g = objRequired(glyphValues[i], "glyphs[" + i + "]");
-            glyphs.push(new RecordedGlyph(
-                intRequired(field(g, "id"), "id"),
-                numRequired(field(g, "advance"), "advance"),
-                numRequired(field(g, "x"), "x"),
-                numRequired(field(g, "y"), "y"),
-                rectOrNull(field(g, "bounds"), "bounds"),
-                floatOrNull(field(g, "haltAdvance"), "haltAdvance"),
+            glyphs.push(new RecordedGlyph(intRequired(field(g, "id"), "id"), numRequired(field(g, "advance"), "advance"), numRequired(field(g, "x"), "x"),
+                numRequired(field(g, "y"), "y"), rectOrNull(field(g, "bounds"), "bounds"), floatOrNull(field(g, "haltAdvance"), "haltAdvance"),
                 floatOrNull(field(g, "haltPlacementX"), "haltPlacementX")));
         }
         final decisionValues = arrRequired(field(obj, "decisions"), "decisions");
         final decisions:Array<RecordedShapingDecision> = [];
         for (i in 0...decisionValues.length) {
             final d = objRequired(decisionValues[i], "decisions[" + i + "]");
-            decisions.push(new RecordedShapingDecision(
-                intRequired(field(d, "glyphCount"), "glyphCount"),
-                numRequired(field(d, "advance"), "advance"),
-                strRequired(field(d, "source"), "source"),
-                strRequired(field(d, "reason"), "reason"),
-                intRequired(field(d, "glyphsWithoutInkBounds"), "glyphsWithoutInkBounds"),
-                intRequired(field(d, "missingGlyphs"), "missingGlyphs"),
-                strOrNull(field(d, "resolvedFace"), "resolvedFace"),
-                strOrNull(field(d, "script"), "script"),
-                strOrNull(field(d, "language"), "language"),
-                strOrNull(field(d, "strategy"), "strategy"),
-                strOrNull(field(d, "featureEvidence"), "featureEvidence"),
+            decisions.push(new RecordedShapingDecision(intRequired(field(d, "glyphCount"), "glyphCount"), numRequired(field(d, "advance"), "advance"),
+                strRequired(field(d, "source"), "source"), strRequired(field(d, "reason"), "reason"),
+                intRequired(field(d, "glyphsWithoutInkBounds"), "glyphsWithoutInkBounds"), intRequired(field(d, "missingGlyphs"), "missingGlyphs"),
+                strOrNull(field(d, "resolvedFace"), "resolvedFace"), strOrNull(field(d, "script"), "script"), strOrNull(field(d, "language"), "language"),
+                strOrNull(field(d, "strategy"), "strategy"), strOrNull(field(d, "featureEvidence"), "featureEvidence"),
                 strOrNull(field(d, "capabilityIssue"), "capabilityIssue")));
         }
-        return new RecordedShapingResult(
-            numRequired(field(obj, "clusterAdvance"), "clusterAdvance"),
-            numRequired(field(obj, "runAdvance"), "runAdvance"),
-            strArrayRequired(field(obj, "runFeatures"), "runFeatures"),
-            glyphs,
-            decisions);
+        return new RecordedShapingResult(numRequired(field(obj, "clusterAdvance"), "clusterAdvance"), numRequired(field(obj, "runAdvance"), "runAdvance"),
+            strArrayRequired(field(obj, "runFeatures"), "runFeatures"), glyphs, decisions);
     }
 
     private static function parseMetricsKey(obj:Array<JsonMember>):MetricsEvidenceKey {
-        return new MetricsEvidenceKey(
-            strRequired(field(obj, "fontKey"), "fontKey"),
-            numRequired(field(obj, "fontSize"), "fontSize"),
-            strRequired(field(obj, "role"), "role"),
-            strRequired(field(obj, "locale"), "locale"),
-            strArrayRequired(field(obj, "fontFamilies"), "fontFamilies"),
-            intRequired(field(obj, "fontWeight"), "fontWeight"),
-            boolRequired(field(obj, "italic"), "italic"),
-            strRequired(field(obj, "faceSelectionText"), "faceSelectionText"));
+        return new MetricsEvidenceKey(strRequired(field(obj, "fontKey"), "fontKey"), numRequired(field(obj, "fontSize"), "fontSize"),
+            strRequired(field(obj, "role"), "role"), strRequired(field(obj, "locale"), "locale"),
+            strArrayRequired(field(obj, "fontFamilies"), "fontFamilies"), intRequired(field(obj, "fontWeight"), "fontWeight"),
+            boolRequired(field(obj, "italic"), "italic"), strRequired(field(obj, "faceSelectionText"), "faceSelectionText"));
     }
 
     private static function parseFontMetrics(obj:Array<JsonMember>):RecordedFontMetrics {
-        return new RecordedFontMetrics(
-            numRequired(field(obj, "ascent"), "ascent"),
-            numRequired(field(obj, "descent"), "descent"),
-            numRequired(field(obj, "leading"), "leading"),
-            strRequired(field(obj, "source"), "source"),
-            floatOrNull(field(obj, "typoAscent"), "typoAscent"),
+        return new RecordedFontMetrics(numRequired(field(obj, "ascent"), "ascent"), numRequired(field(obj, "descent"), "descent"),
+            numRequired(field(obj, "leading"), "leading"), strRequired(field(obj, "source"), "source"), floatOrNull(field(obj, "typoAscent"), "typoAscent"),
             floatOrNull(field(obj, "typoDescent"), "typoDescent"));
     }
 
@@ -174,12 +142,18 @@ class ShapingEvidenceJson {
     private static function strRequired(v:JsonValue, name:String):String {
         var value:Null<String> = null;
         switch (v) {
-            case JStr(s): value = s;
-            case JNull: value = null;
-            case JBool(_): value = null;
-            case JNum(_): value = null;
-            case JArr(_): value = null;
-            case JObj(_): value = null;
+            case JStr(s):
+                value = s;
+            case JNull:
+                value = null;
+            case JBool(_):
+                value = null;
+            case JNum(_):
+                value = null;
+            case JArr(_):
+                value = null;
+            case JObj(_):
+                value = null;
         }
         if (value == null) {
             throw new TiqianIllegalArgumentException(TextRangeError.Message("Field " + name + ": expected string"));
@@ -191,12 +165,19 @@ class ShapingEvidenceJson {
         var matched = false;
         var value = 0.0;
         switch (v) {
-            case JNum(n): value = n; matched = true;
-            case JNull: matched = false;
-            case JBool(_): matched = false;
-            case JStr(_): matched = false;
-            case JArr(_): matched = false;
-            case JObj(_): matched = false;
+            case JNum(n):
+                value = n;
+                matched = true;
+            case JNull:
+                matched = false;
+            case JBool(_):
+                matched = false;
+            case JStr(_):
+                matched = false;
+            case JArr(_):
+                matched = false;
+            case JObj(_):
+                matched = false;
         }
         if (!matched) {
             throw new TiqianIllegalArgumentException(TextRangeError.Message("Field " + name + ": expected number"));
@@ -212,12 +193,19 @@ class ShapingEvidenceJson {
         var matched = false;
         var value = false;
         switch (v) {
-            case JBool(b): value = b; matched = true;
-            case JNull: matched = false;
-            case JNum(_): matched = false;
-            case JStr(_): matched = false;
-            case JArr(_): matched = false;
-            case JObj(_): matched = false;
+            case JBool(b):
+                value = b;
+                matched = true;
+            case JNull:
+                matched = false;
+            case JNum(_):
+                matched = false;
+            case JStr(_):
+                matched = false;
+            case JArr(_):
+                matched = false;
+            case JObj(_):
+                matched = false;
         }
         if (!matched) {
             throw new TiqianIllegalArgumentException(TextRangeError.Message("Field " + name + ": expected bool"));
@@ -238,12 +226,18 @@ class ShapingEvidenceJson {
         var nullKind = false;
         var value:Null<String> = null;
         switch (v) {
-            case JNull: nullKind = true;
-            case JStr(s): value = s;
-            case JBool(_): value = null;
-            case JNum(_): value = null;
-            case JArr(_): value = null;
-            case JObj(_): value = null;
+            case JNull:
+                nullKind = true;
+            case JStr(s):
+                value = s;
+            case JBool(_):
+                value = null;
+            case JNum(_):
+                value = null;
+            case JArr(_):
+                value = null;
+            case JObj(_):
+                value = null;
         }
         if (!nullKind && value == null) {
             throw new TiqianIllegalArgumentException(TextRangeError.Message("Field " + name + ": expected string or null"));
@@ -255,12 +249,18 @@ class ShapingEvidenceJson {
         var nullKind = false;
         var value:Null<Float> = null;
         switch (v) {
-            case JNull: nullKind = true;
-            case JNum(n): value = n;
-            case JBool(_): value = null;
-            case JStr(_): value = null;
-            case JArr(_): value = null;
-            case JObj(_): value = null;
+            case JNull:
+                nullKind = true;
+            case JNum(n):
+                value = n;
+            case JBool(_):
+                value = null;
+            case JStr(_):
+                value = null;
+            case JArr(_):
+                value = null;
+            case JObj(_):
+                value = null;
         }
         if (!nullKind && value == null) {
             throw new TiqianIllegalArgumentException(TextRangeError.Message("Field " + name + ": expected number or null"));
@@ -276,20 +276,26 @@ class ShapingEvidenceJson {
         if (values.length != 4) {
             throw new TiqianIllegalArgumentException(TextRangeError.Message("Field " + name + ": expected 4 bounds values, got " + values.length));
         }
-        return new Rect(numRequired(values[0], name + "[0]"), numRequired(values[1], name + "[1]"),
-            numRequired(values[2], name + "[2]"), numRequired(values[3], name + "[3]"));
+        return new Rect(numRequired(values[0], name + "[0]"), numRequired(values[1], name + "[1]"), numRequired(values[2], name + "[2]"),
+            numRequired(values[3], name + "[3]"));
     }
 
     private static function arrOrNull(v:JsonValue, name:String):Null<Array<JsonValue>> {
         var nullKind = false;
         var value:Null<Array<JsonValue>> = null;
         switch (v) {
-            case JNull: nullKind = true;
-            case JArr(a): value = a;
-            case JBool(_): value = null;
-            case JNum(_): value = null;
-            case JStr(_): value = null;
-            case JObj(_): value = null;
+            case JNull:
+                nullKind = true;
+            case JArr(a):
+                value = a;
+            case JBool(_):
+                value = null;
+            case JNum(_):
+                value = null;
+            case JStr(_):
+                value = null;
+            case JObj(_):
+                value = null;
         }
         if (!nullKind && value == null) {
             throw new TiqianIllegalArgumentException(TextRangeError.Message("Field " + name + ": expected array or null"));
@@ -300,12 +306,18 @@ class ShapingEvidenceJson {
     private static function arrRequired(v:JsonValue, name:String):Array<JsonValue> {
         var value:Null<Array<JsonValue>> = null;
         switch (v) {
-            case JArr(a): value = a;
-            case JNull: value = null;
-            case JBool(_): value = null;
-            case JNum(_): value = null;
-            case JStr(_): value = null;
-            case JObj(_): value = null;
+            case JArr(a):
+                value = a;
+            case JNull:
+                value = null;
+            case JBool(_):
+                value = null;
+            case JNum(_):
+                value = null;
+            case JStr(_):
+                value = null;
+            case JObj(_):
+                value = null;
         }
         if (value == null) {
             throw new TiqianIllegalArgumentException(TextRangeError.Message("Field " + name + ": expected array"));
@@ -316,12 +328,18 @@ class ShapingEvidenceJson {
     private static function objRequired(v:JsonValue, name:String):Array<JsonMember> {
         var value:Null<Array<JsonMember>> = null;
         switch (v) {
-            case JObj(o): value = o;
-            case JNull: value = null;
-            case JBool(_): value = null;
-            case JNum(_): value = null;
-            case JStr(_): value = null;
-            case JArr(_): value = null;
+            case JObj(o):
+                value = o;
+            case JNull:
+                value = null;
+            case JBool(_):
+                value = null;
+            case JNum(_):
+                value = null;
+            case JStr(_):
+                value = null;
+            case JArr(_):
+                value = null;
         }
         if (value == null) {
             throw new TiqianIllegalArgumentException(TextRangeError.Message("Field " + name + ": expected object"));

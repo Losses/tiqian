@@ -23,12 +23,18 @@ class TextShaperCoverageTest {
         var e = 0;
         while (e < sources.length) {
             var entry = sources[e];
-            if (entry == ShapingSource.Stub) hasStub = true;
-            if (entry == ShapingSource.JvmAwt) hasJvmAwt = true;
-            if (entry == ShapingSource.AndroidPaint) hasAndroidPaint = true;
-            if (entry == ShapingSource.Skia) hasSkia = true;
-            if (entry == ShapingSource.HarfBuzz) hasHarfBuzz = true;
-            if (entry == ShapingSource.CoreText) hasCoreText = true;
+            if (entry == ShapingSource.Stub)
+                hasStub = true;
+            if (entry == ShapingSource.JvmAwt)
+                hasJvmAwt = true;
+            if (entry == ShapingSource.AndroidPaint)
+                hasAndroidPaint = true;
+            if (entry == ShapingSource.Skia)
+                hasSkia = true;
+            if (entry == ShapingSource.HarfBuzz)
+                hasHarfBuzz = true;
+            if (entry == ShapingSource.CoreText)
+                hasCoreText = true;
             e += 1;
         }
         TracedAssertions.assertTrue(hasStub);
@@ -57,7 +63,8 @@ class TextShaperCoverageTest {
         new TestTraceRecorder("TextShaperCoverageTest").section("explainableStubNominalAdvanceBranches");
         var shaper = new ExplainableStubTextShaper();
         TracedAssertions.assertEqualsFloat(32.0, shaper.shape(TextShaperCoverageTestSupport.input("\u2E3A", FontRole.CjkPunctuation)).clusters[0].advance);
-        TracedAssertions.assertEqualsFloat(32.0, shaper.shape(TextShaperCoverageTestSupport.input("——", FontRole.CjkPunctuation, "\u2E3A")).clusters[0].advance);
+        TracedAssertions.assertEqualsFloat(32.0,
+            shaper.shape(TextShaperCoverageTestSupport.input("——", FontRole.CjkPunctuation, "\u2E3A")).clusters[0].advance);
         TracedAssertions.assertEqualsFloat(8.0, shaper.shape(TextShaperCoverageTestSupport.input(" ")).clusters[0].advance);
         TracedAssertions.assertEqualsFloat(24.0, shaper.shape(TextShaperCoverageTestSupport.input("   ")).clusters[0].advance);
         var empty = shaper.shape(TextShaperCoverageTestSupport.input(""));

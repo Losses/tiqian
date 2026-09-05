@@ -50,7 +50,8 @@ class LineBreakRepairEngineTest {
         TracedAssertions.assertEqualsInt(2, r.debug.lineDecisions.length);
         var ok = true;
         for (i in 0...r.debug.lineDecisions.length) {
-            if (r.debug.lineDecisions[i].kind != "greedy") ok = false;
+            if (r.debug.lineDecisions[i].kind != "greedy")
+                ok = false;
         }
         TracedAssertions.assertTrue(ok);
         TracedAssertions.assertEqualsFloat(48, r.size.height);
@@ -66,7 +67,8 @@ class LineBreakRepairEngineTest {
         TracedAssertions.assertTrue(LineBreakRepairEngineTestSupport.hasText(r, "way"));
         var x = "";
         for (i in 0...r.clusters.length) {
-            if (r.clusters[i].range.end <= r.lines[0].range.end) x = r.clusters[i].text;
+            if (r.clusters[i].range.end <= r.lines[0].range.end)
+                x = r.clusters[i].text;
         }
         TracedAssertions.assertTrue(StringTools.endsWith(x, "-"), "line 0 should end at the existing hyphen: " + x);
     }
@@ -116,7 +118,11 @@ class LineBreakRepairEngineTest {
         final prefix = "为什么历史是 ";
         final r = LineBreakRepairEngineTestSupport.layout(prefix + "abc123def456ghi789", 160, new LookaheadLineBreaker(), new NoHyphenator());
         final firstLineText = LineBreakRepairEngineTestSupport.lineText(r, 0);
-        TracedAssertions.assertTrue(firstLineText.length > 7, "first line should carry part of the opaque token instead of stretching only '" + prefix + "': " + firstLineText);
+        TracedAssertions.assertTrue(firstLineText.length > 7,
+            "first line should carry part of the opaque token instead of stretching only '"
+            + prefix
+            + "': "
+            + firstLineText);
         TracedAssertions.assertTrue(r.lines[0].hyphenAdvance == 0);
     }
 
@@ -140,7 +146,8 @@ class LineBreakRepairEngineTest {
         TracedAssertions.assertTrue(!LineBreakRepairEngineTestSupport.hasText(r, "abc123def456ghi789"));
         var allWithin = true;
         for (i in 0...r.lines.length) {
-            if (r.lines[i].visualWidth > 96) allWithin = false;
+            if (r.lines[i].visualWidth > 96)
+                allWithin = false;
         }
         TracedAssertions.assertTrue(allWithin);
     }
@@ -151,11 +158,7 @@ class LineBreakRepairEngineTest {
         final text = "中 ab/cdefghijk";
         final technical = new LineBreakSpan(new TextRange(2, 14), LineBreakPolicy.ProgressiveTechnical);
         final syllables = new SyllableHyphenator([2, 4, 6]);
-        final breakers:Array<LineBreaker> = [
-            new GreedyLineBreaker(),
-            new LookaheadLineBreaker(),
-            new ParagraphDpLineBreaker()
-        ];
+        final breakers:Array<LineBreaker> = [new GreedyLineBreaker(), new LookaheadLineBreaker(), new ParagraphDpLineBreaker()];
         for (i in 0...breakers.length) {
             final breaker = breakers[i];
             final result = LineBreakRepairEngineTestSupport.layoutWithGrid(text, 100, false, breaker, syllables, [technical]);
@@ -163,9 +166,11 @@ class LineBreakRepairEngineTest {
             TracedAssertions.assertEqualsFloat(0, result.lines[0].hyphenAdvance, breaker.strategyName);
             var hasNote = false;
             for (j in 0...result.debug.lineDecisions[0].notes.length) {
-                if (result.debug.lineDecisions[0].notes[j] == "technical-break:Syllable") hasNote = true;
+                if (result.debug.lineDecisions[0].notes[j] == "technical-break:Syllable")
+                    hasNote = true;
             }
-            TracedAssertions.assertTrue(hasNote, breaker.strategyName + ": " + LineBreakRepairEngineTestSupport.renderStrings(result.debug.lineDecisions[0].notes));
+            TracedAssertions.assertTrue(hasNote,
+                breaker.strategyName + ": " + LineBreakRepairEngineTestSupport.renderStrings(result.debug.lineDecisions[0].notes));
 
             var adjIndex = -1;
             for (j in 0...result.debug.justificationDecisions.length) {
@@ -193,11 +198,7 @@ class LineBreakRepairEngineTest {
         final text = "中文abcdefghij";
         final technical = new LineBreakSpan(new TextRange(2, 12), LineBreakPolicy.ProgressiveTechnical);
         final syllables = new SyllableHyphenator([4, 7]);
-        final breakers:Array<LineBreaker> = [
-            new GreedyLineBreaker(),
-            new LookaheadLineBreaker(),
-            new ParagraphDpLineBreaker()
-        ];
+        final breakers:Array<LineBreaker> = [new GreedyLineBreaker(), new LookaheadLineBreaker(), new ParagraphDpLineBreaker()];
         for (i in 0...breakers.length) {
             final breaker = breakers[i];
             final result = LineBreakRepairEngineTestSupport.layoutWithGrid(text, 104, false, breaker, syllables, [technical]);
@@ -205,9 +206,11 @@ class LineBreakRepairEngineTest {
             TracedAssertions.assertEqualsFloat(0, result.lines[0].hyphenAdvance, breaker.strategyName);
             var hasEmergency = false;
             for (j in 0...result.debug.lineDecisions[0].notes.length) {
-                if (result.debug.lineDecisions[0].notes[j] == "technical-break:Emergency") hasEmergency = true;
+                if (result.debug.lineDecisions[0].notes[j] == "technical-break:Emergency")
+                    hasEmergency = true;
             }
-            TracedAssertions.assertTrue(hasEmergency, breaker.strategyName + ": " + LineBreakRepairEngineTestSupport.renderStrings(result.debug.lineDecisions[0].notes));
+            TracedAssertions.assertTrue(hasEmergency,
+                breaker.strategyName + ": " + LineBreakRepairEngineTestSupport.renderStrings(result.debug.lineDecisions[0].notes));
 
             var adjIndex = -1;
             for (j in 0...result.debug.justificationDecisions.length) {
@@ -222,7 +225,8 @@ class LineBreakRepairEngineTest {
 
             var noneCjk = true;
             for (j in 0...adjustment.allocations.length) {
-                if (adjustment.allocations[j].kind == "CjkInterChar") noneCjk = false;
+                if (adjustment.allocations[j].kind == "CjkInterChar")
+                    noneCjk = false;
             }
             TracedAssertions.assertTrue(noneCjk, breaker.strategyName + ": " + LineBreakRepairEngineTestSupport.renderList(adjustment.allocations));
 
@@ -233,7 +237,8 @@ class LineBreakRepairEngineTest {
                     hasEmergencyTracking = true;
                 }
             }
-            TracedAssertions.assertTrue(hasEmergencyTracking, breaker.strategyName + ": " + LineBreakRepairEngineTestSupport.renderList(adjustment.allocations));
+            TracedAssertions.assertTrue(hasEmergencyTracking,
+                breaker.strategyName + ": " + LineBreakRepairEngineTestSupport.renderList(adjustment.allocations));
             TracedAssertions.assertEqualsFloatTolerance(0, adjustment.deficitAfter, 0.001, breaker.strategyName);
         }
     }
@@ -243,10 +248,8 @@ class LineBreakRepairEngineTest {
         t.section("progressiveTechnicalCleanBreakMayNotStretchEarlierOpaqueToken");
         final text = "deadbeef1234deadbeef1234 ab.cdEfghijklmnop";
         final terminalTechnicalRange = new TextRange(25, text.length);
-        final result = LineBreakRepairEngineTestSupport.layoutWithGrid(
-            text, 300, false, new LookaheadLineBreaker(), new SyllableHyphenator([2, 4, 6]),
-            [new LineBreakSpan(terminalTechnicalRange, LineBreakPolicy.ProgressiveTechnical)]
-        );
+        final result = LineBreakRepairEngineTestSupport.layoutWithGrid(text, 300, false, new LookaheadLineBreaker(), new SyllableHyphenator([2, 4, 6]),
+            [new LineBreakSpan(terminalTechnicalRange, LineBreakPolicy.ProgressiveTechnical)]);
 
         var affectedLineIndex = -1;
         for (i in 0...result.debug.lineDecisions.length) {
@@ -257,17 +260,26 @@ class LineBreakRepairEngineTest {
                     break;
                 }
             }
-            if (affectedLineIndex >= 0) break;
+            if (affectedLineIndex >= 0)
+                break;
         }
         TracedAssertions.assertTrue(affectedLineIndex >= 0, LineBreakRepairEngineTestSupport.renderList(result.debug.lineDecisions));
 
         var hasEmergencyNote = false;
         for (j in 0...result.debug.lineDecisions[affectedLineIndex].notes.length) {
-            if (result.debug.lineDecisions[affectedLineIndex].notes[j] == "technical-break:Emergency") hasEmergencyNote = true;
+            if (result.debug.lineDecisions[affectedLineIndex].notes[j] == "technical-break:Emergency")
+                hasEmergencyNote = true;
         }
         final lineStrings:Array<String> = [];
-        for (i in 0...result.lines.length) lineStrings.push(LineBreakRepairEngineTestSupport.lineText(result, i));
-        TracedAssertions.assertTrue(hasEmergencyNote, "lines=" + LineBreakRepairEngineTestSupport.renderStrings(lineStrings) + " decisions=" + LineBreakRepairEngineTestSupport.renderList(result.debug.lineDecisions) + " adjustments=" + LineBreakRepairEngineTestSupport.renderList(result.debug.justificationDecisions));
+        for (i in 0...result.lines.length)
+            lineStrings.push(LineBreakRepairEngineTestSupport.lineText(result, i));
+        TracedAssertions.assertTrue(hasEmergencyNote,
+            "lines="
+            + LineBreakRepairEngineTestSupport.renderStrings(lineStrings)
+            + " decisions="
+            + LineBreakRepairEngineTestSupport.renderList(result.debug.lineDecisions)
+            + " adjustments="
+            + LineBreakRepairEngineTestSupport.renderList(result.debug.justificationDecisions));
 
         final affectedLine = result.lines[affectedLineIndex];
         var adjIndex = -1;
@@ -292,27 +304,25 @@ class LineBreakRepairEngineTest {
                 allInTechnical = false;
             }
         }
-        TracedAssertions.assertTrue(allInTechnical, "a later clean break borrowed tracking from the earlier hash: " + LineBreakRepairEngineTestSupport.renderList(emergencyTracking));
+        TracedAssertions.assertTrue(allInTechnical,
+            "a later clean break borrowed tracking from the earlier hash: " + LineBreakRepairEngineTestSupport.renderList(emergencyTracking));
     }
 
     @:test public static function progressiveTechnicalEmergencyIsExposedByCurrentLineStretchNotFullMeasure():Void {
         final t = new TestTraceRecorder("LineBreakRepairEngineTest");
         t.section("progressiveTechnicalEmergencyIsExposedByCurrentLineStretchNotFullMeasure");
-        final text = "Swift 这边是我最有体感的。JSONDecoder 慢是个老问题，" +
-            "SR-6252[36] 那个 issue 里挖出的根因是底层走 NSJSONSerialization " +
-            "再桥接回 Objective-C，swift_dynamicCast 吃掉大量时间。";
+        final text = "Swift 这边是我最有体感的。JSONDecoder 慢是个老问题，" + "SR-6252[36] 那个 issue 里挖出的根因是底层走 NSJSONSerialization "
+            + "再桥接回 Objective-C，swift_dynamicCast 吃掉大量时间。";
         final swiftRange = new TextRange(104, 121);
-        final result = LineBreakRepairEngineTestSupport.layoutWithGrid(
-            text, 579, false, new LookaheadLineBreaker(), new NoHyphenator(),
-            [
-                new LineBreakSpan(new TextRange(16, 27), LineBreakPolicy.ProgressiveTechnical),
-                new LineBreakSpan(new TextRange(67, 86), LineBreakPolicy.ProgressiveTechnical),
-                new LineBreakSpan(swiftRange, LineBreakPolicy.ProgressiveTechnical)
-            ]
-        );
+        final result = LineBreakRepairEngineTestSupport.layoutWithGrid(text, 579, false, new LookaheadLineBreaker(), new NoHyphenator(), [
+            new LineBreakSpan(new TextRange(16, 27), LineBreakPolicy.ProgressiveTechnical),
+            new LineBreakSpan(new TextRange(67, 86), LineBreakPolicy.ProgressiveTechnical),
+            new LineBreakSpan(swiftRange, LineBreakPolicy.ProgressiveTechnical)
+        ]);
 
         final lineTexts:Array<String> = [];
-        for (i in 0...result.lines.length) lineTexts.push(LineBreakRepairEngineTestSupport.lineText(result, i));
+        for (i in 0...result.lines.length)
+            lineTexts.push(LineBreakRepairEngineTestSupport.lineText(result, i));
         var affectedLineIndex = -1;
         for (i in 0...lineTexts.length) {
             if (lineTexts[i].indexOf("Objective-C") >= 0) {
@@ -326,7 +336,8 @@ class LineBreakRepairEngineTest {
 
         var hasEmergency = false;
         for (i in 0...result.debug.lineDecisions[affectedLineIndex].notes.length) {
-            if (result.debug.lineDecisions[affectedLineIndex].notes[i] == "technical-break:Emergency") hasEmergency = true;
+            if (result.debug.lineDecisions[affectedLineIndex].notes[i] == "technical-break:Emergency")
+                hasEmergency = true;
         }
         TracedAssertions.assertTrue(hasEmergency);
 
@@ -343,7 +354,8 @@ class LineBreakRepairEngineTest {
             final allocs = result.debug.justificationDecisions[adjIndex].allocations;
             for (i in 0...allocs.length) {
                 if (allocs[i].kind == "CjkInterChar") {
-                    if (allocs[i].delta > cjkStretch) cjkStretch = allocs[i].delta;
+                    if (allocs[i].delta > cjkStretch)
+                        cjkStretch = allocs[i].delta;
                 }
             }
         }
@@ -352,8 +364,10 @@ class LineBreakRepairEngineTest {
         var hasBreakOpp = false;
         for (i in 0...result.debug.breakOpportunityDecisions.length) {
             final opp = result.debug.breakOpportunityDecisions[i];
-            if (opp.range.start == swiftRange.start && opp.range.end == swiftRange.end
-                && opp.tier == "Emergency" && opp.reason == "CurrentLineTechnicalEmergencyBreak") {
+            if (opp.range.start == swiftRange.start
+                && opp.range.end == swiftRange.end
+                && opp.tier == "Emergency"
+                && opp.reason == "CurrentLineTechnicalEmergencyBreak") {
                 hasBreakOpp = true;
                 break;
             }
@@ -363,7 +377,8 @@ class LineBreakRepairEngineTest {
         var hasTrackingElig = false;
         for (i in 0...result.debug.emergencyTrackingEligibilityDecisions.length) {
             final elig = result.debug.emergencyTrackingEligibilityDecisions[i];
-            if (elig.range.start == swiftRange.start && elig.range.end == swiftRange.end
+            if (elig.range.start == swiftRange.start
+                && elig.range.end == swiftRange.end
                 && StringTools.startsWith(elig.reason, "CurrentLineTechnicalTierRejection:")) {
                 hasTrackingElig = true;
                 break;
@@ -377,11 +392,7 @@ class LineBreakRepairEngineTest {
         t.section("progressiveTechnicalHardBreakOverridesNumberRunCohesion");
         final text = "aaaaa1234567890bbbb";
         final technical = new LineBreakSpan(new TextRange(0, text.length), LineBreakPolicy.ProgressiveTechnical);
-        final breakers:Array<LineBreaker> = [
-            new GreedyLineBreaker(),
-            new LookaheadLineBreaker(),
-            new ParagraphDpLineBreaker()
-        ];
+        final breakers:Array<LineBreaker> = [new GreedyLineBreaker(), new LookaheadLineBreaker(), new ParagraphDpLineBreaker()];
 
         for (i in 0...breakers.length) {
             final breaker = breakers[i];
@@ -389,7 +400,8 @@ class LineBreakRepairEngineTest {
             TracedAssertions.assertEqualsString("aaaaa12345", LineBreakRepairEngineTestSupport.lineText(result, 0), breaker.strategyName);
             var hasEmergency = false;
             for (j in 0...result.debug.lineDecisions[0].notes.length) {
-                if (result.debug.lineDecisions[0].notes[j] == "technical-break:Emergency") hasEmergency = true;
+                if (result.debug.lineDecisions[0].notes[j] == "technical-break:Emergency")
+                    hasEmergency = true;
             }
             TracedAssertions.assertTrue(hasEmergency, breaker.strategyName + ": " + LineBreakRepairEngineTestSupport.renderList(result.debug.lineDecisions));
         }
@@ -400,29 +412,38 @@ class LineBreakRepairEngineTest {
         t.section("progressiveTechnicalStructuralBreakFallsThroughToEmergencyBeforeTracking");
         final text = "中文ab.cdEfghij";
         final technical = new LineBreakSpan(new TextRange(2, 13), LineBreakPolicy.ProgressiveTechnical);
-        final result = LineBreakRepairEngineTestSupport.layoutWithGrid(
-            text, 124, false, new LookaheadLineBreaker(), new SyllableHyphenator([2, 4, 6]), [technical]
-        );
+        final result = LineBreakRepairEngineTestSupport.layoutWithGrid(text, 124, false, new LookaheadLineBreaker(), new SyllableHyphenator([2, 4, 6]),
+            [technical]);
 
         TracedAssertions.assertEqualsString("中文ab.cd", LineBreakRepairEngineTestSupport.lineText(result, 0));
         var hasEmergency = false;
         for (i in 0...result.debug.lineDecisions[0].notes.length) {
-            if (result.debug.lineDecisions[0].notes[i] == "technical-break:Emergency") hasEmergency = true;
+            if (result.debug.lineDecisions[0].notes[i] == "technical-break:Emergency")
+                hasEmergency = true;
         }
         final lineStrings:Array<String> = [];
-        for (i in 0...result.lines.length) lineStrings.push(LineBreakRepairEngineTestSupport.lineText(result, i));
-        TracedAssertions.assertTrue(hasEmergency, "lines=" + LineBreakRepairEngineTestSupport.renderStrings(lineStrings) + " decisions=" + LineBreakRepairEngineTestSupport.renderList(result.debug.lineDecisions) + " adjustments=" + LineBreakRepairEngineTestSupport.renderList(result.debug.justificationDecisions));
+        for (i in 0...result.lines.length)
+            lineStrings.push(LineBreakRepairEngineTestSupport.lineText(result, i));
+        TracedAssertions.assertTrue(hasEmergency,
+            "lines="
+            + LineBreakRepairEngineTestSupport.renderStrings(lineStrings)
+            + " decisions="
+            + LineBreakRepairEngineTestSupport.renderList(result.debug.lineDecisions)
+            + " adjustments="
+            + LineBreakRepairEngineTestSupport.renderList(result.debug.justificationDecisions));
 
         var allNoHyphen = true;
         for (i in 0...result.lines.length) {
-            if (result.lines[i].hyphenAdvance != 0) allNoHyphen = false;
+            if (result.lines[i].hyphenAdvance != 0)
+                allNoHyphen = false;
         }
         TracedAssertions.assertTrue(allNoHyphen);
 
         final firstLineAdjustment = result.debug.justificationDecisions[0];
         var noneCjk = true;
         for (i in 0...firstLineAdjustment.allocations.length) {
-            if (firstLineAdjustment.allocations[i].kind == "CjkInterChar") noneCjk = false;
+            if (firstLineAdjustment.allocations[i].kind == "CjkInterChar")
+                noneCjk = false;
         }
         TracedAssertions.assertTrue(noneCjk);
 
@@ -447,7 +468,8 @@ class LineBreakRepairEngineTest {
 
         var noneTech = true;
         for (i in 0...result.debug.lineDecisions[0].notes.length) {
-            if (StringTools.startsWith(result.debug.lineDecisions[0].notes[i], "technical-break:")) noneTech = false;
+            if (StringTools.startsWith(result.debug.lineDecisions[0].notes[i], "technical-break:"))
+                noneTech = false;
         }
         TracedAssertions.assertTrue(noneTech);
 
@@ -455,16 +477,19 @@ class LineBreakRepairEngineTest {
         TracedAssertions.assertTrue(adjustment.allocations.length > 0);
 
         final baselineRanges:Array<TextRange> = [];
-        for (i in 0...baseline.lines.length) baselineRanges.push(baseline.lines[i].range);
+        for (i in 0...baseline.lines.length)
+            baselineRanges.push(baseline.lines[i].range);
         final resultRanges:Array<TextRange> = [];
-        for (i in 0...result.lines.length) resultRanges.push(result.lines[i].range);
+        for (i in 0...result.lines.length)
+            resultRanges.push(result.lines[i].range);
         TracedAssertions.assertEqualsTextRangeArray(baselineRanges, resultRanges);
         TracedAssertions.assertEqualsFloatTolerance(0, adjustment.deficitAfter, 0.001);
 
         var hasWhitespaceStretch = false;
         for (i in 0...adjustment.allocations.length) {
             final alloc = adjustment.allocations[i];
-            if (alloc.clusterRange.start == 4 && alloc.clusterRange.end == 5
+            if (alloc.clusterRange.start == 4
+                && alloc.clusterRange.end == 5
                 && alloc.kind == "ProgressiveTechnical"
                 && alloc.reason == "ProgressiveTechnicalWhitespaceStretch") {
                 hasWhitespaceStretch = true;
@@ -481,7 +506,9 @@ class LineBreakRepairEngineTest {
                 break;
             }
         }
-        TracedAssertions.assertTrue(hasRemainingBodyOpp, "bounded technical whitespace must not freeze the remaining body opportunities: " + LineBreakRepairEngineTestSupport.renderList(adjustment.allocations));
+        TracedAssertions.assertTrue(hasRemainingBodyOpp,
+            "bounded technical whitespace must not freeze the remaining body opportunities: " +
+            LineBreakRepairEngineTestSupport.renderList(adjustment.allocations));
     }
 
     @:test public static function urlLikeLatinTokenBreaksAtSeparatorsWithoutSyntheticHyphen():Void {
@@ -495,7 +522,8 @@ class LineBreakRepairEngineTest {
         TracedAssertions.assertTrue(!LineBreakRepairEngineTestSupport.hasText(result, url));
         var anyEndsWithSlash = false;
         for (i in 0...result.clusters.length) {
-            if (StringTools.endsWith(result.clusters[i].text, "/")) anyEndsWithSlash = true;
+            if (StringTools.endsWith(result.clusters[i].text, "/"))
+                anyEndsWithSlash = true;
         }
         TracedAssertions.assertTrue(anyEndsWithSlash);
         TracedAssertions.assertTrue(LineBreakRepairEngineTestSupport.hasText(result, "example."));
@@ -509,5 +537,4 @@ class LineBreakRepairEngineTest {
         }
         TracedAssertions.assertTrue(noneForbidden, "URL separators are LatinText and must not trigger CJK line-start kinsoku");
     }
-
 }

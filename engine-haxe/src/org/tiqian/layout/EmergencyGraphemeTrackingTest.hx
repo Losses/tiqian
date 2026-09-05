@@ -18,11 +18,19 @@ class EmergencyGraphemeTrackingTest {
         final syllableOffsets = EmergencyGraphemeTrackingTestSupport.breakOffsetsForTier(result.debug.breakOpportunityDecisions, "Syllable");
         var none = true;
         for (i in 0...syllableOffsets.length) {
-            if (syllableOffsets[i] > hashStart && syllableOffsets[i] < text.length) { none = false; break; }
+            if (syllableOffsets[i] > hashStart && syllableOffsets[i] < text.length) {
+                none = false;
+                break;
+            }
         }
         TracedAssertions.assertTrue(none, EmergencyGraphemeTrackingTestSupport.renderInts(syllableOffsets));
         var allZero = true;
-        for (i in 0...result.lines.length) { if (result.lines[i].hyphenAdvance != 0) { allZero = false; break; } }
+        for (i in 0...result.lines.length) {
+            if (result.lines[i].hyphenAdvance != 0) {
+                allZero = false;
+                break;
+            }
+        }
         TracedAssertions.assertTrue(allZero);
     }
 
@@ -46,7 +54,10 @@ class EmergencyGraphemeTrackingTest {
         TracedAssertions.assertFalse(trackAllocs.length > 0);
         var anyDeficit = false;
         for (i in 0...result.debug.justificationDecisions.length) {
-            if (result.debug.justificationDecisions[i].deficitAfter > 0) { anyDeficit = true; break; }
+            if (result.debug.justificationDecisions[i].deficitAfter > 0) {
+                anyDeficit = true;
+                break;
+            }
         }
         TracedAssertions.assertTrue(anyDeficit, "ordinary Western lines may remain ragged after bounded word-space adjustment");
     }
@@ -65,7 +76,9 @@ class EmergencyGraphemeTrackingTest {
         for (i in 0...result.clusters.length) {
             final r = result.clusters[i].range;
             ranges.push(r);
-            if (r.start == combiningMarkOffset || r.end == combiningMarkOffset) { none = false; }
+            if (r.start == combiningMarkOffset || r.end == combiningMarkOffset) {
+                none = false;
+            }
         }
         TracedAssertions.assertTrue(none, EmergencyGraphemeTrackingTestSupport.joinTextRanges(ranges));
     }
@@ -76,12 +89,23 @@ class EmergencyGraphemeTrackingTest {
         final text = "Machine2Machine";
         final result = EmergencyGraphemeTrackingTestSupport.layout(text, 120, [new LineBreakSpan(new TextRange(0, text.length), ProgressiveTechnical)]);
         final emergency = EmergencyGraphemeTrackingTestSupport.breakOffsetsForTier(result.debug.breakOpportunityDecisions, "Emergency");
-        var has7 = false; var has8 = false;
-        for (i in 0...emergency.length) { if (emergency[i] == 7) has7 = true; if (emergency[i] == 8) has8 = true; }
+        var has7 = false;
+        var has8 = false;
+        for (i in 0...emergency.length) {
+            if (emergency[i] == 7)
+                has7 = true;
+            if (emergency[i] == 8)
+                has8 = true;
+        }
         TracedAssertions.assertTrue(has7, EmergencyGraphemeTrackingTestSupport.renderInts(emergency));
         TracedAssertions.assertTrue(has8, EmergencyGraphemeTrackingTestSupport.renderInts(emergency));
         var allZero = true;
-        for (i in 0...result.lines.length) { if (result.lines[i].hyphenAdvance != 0) { allZero = false; break; } }
+        for (i in 0...result.lines.length) {
+            if (result.lines[i].hyphenAdvance != 0) {
+                allZero = false;
+                break;
+            }
+        }
         TracedAssertions.assertTrue(allZero);
     }
 
@@ -93,7 +117,10 @@ class EmergencyGraphemeTrackingTest {
         var any = false;
         for (i in 0...result.debug.emergencyTrackingEligibilityDecisions.length) {
             final d = result.debug.emergencyTrackingEligibilityDecisions[i];
-            if (d.range.start == 0 && d.range.end == text.length && d.reason == "LongRepeatedLetterRun") { any = true; break; }
+            if (d.range.start == 0 && d.range.end == text.length && d.reason == "LongRepeatedLetterRun") {
+                any = true;
+                break;
+            }
         }
         TracedAssertions.assertTrue(any);
         for (i in 0...result.lines.length) {
@@ -109,7 +136,10 @@ class EmergencyGraphemeTrackingTest {
         final text = "deadbeefcafebabefeedfaceabcdefabcdef";
         final result = EmergencyGraphemeTrackingTestSupport.layout(text, 101, [new LineBreakSpan(new TextRange(0, text.length), ProgressiveTechnical)]);
         var autoCount = 0;
-        for (i in 0...result.lines.length) { if (result.lines[i].endReason == AutoWrap) autoCount++; }
+        for (i in 0...result.lines.length) {
+            if (result.lines[i].endReason == AutoWrap)
+                autoCount++;
+        }
         TracedAssertions.assertTrue(autoCount > 0);
         for (i in 0...result.lines.length) {
             if (result.lines[i].endReason == AutoWrap) {
@@ -119,7 +149,10 @@ class EmergencyGraphemeTrackingTest {
         var found = false;
         final allocs = EmergencyGraphemeTrackingTestSupport.allocationsForKind(result.debug.justificationDecisions, "EmergencyGraphemeTracking");
         for (i in 0...allocs.length) {
-            if (allocs[i].reason == "TerminalTechnicalEmergencyTracking:ProgressiveTechnicalSpan") { found = true; break; }
+            if (allocs[i].reason == "TerminalTechnicalEmergencyTracking:ProgressiveTechnicalSpan") {
+                found = true;
+                break;
+            }
         }
         TracedAssertions.assertTrue(found);
     }
@@ -128,11 +161,17 @@ class EmergencyGraphemeTrackingTest {
         final t = new TestTraceRecorder("EmergencyGraphemeTrackingTest");
         t.section("technicalIdentifierRelabelsLooseLetterDigitBoundaryAsEmergency");
         final text = "Machine2Machine";
-        final result = EmergencyGraphemeTrackingTestSupport.layoutWithShaper(text, 85, new UniformAdvanceShaper(), [new LineBreakSpan(new TextRange(0, text.length), ProgressiveTechnical)]);
+        final result = EmergencyGraphemeTrackingTestSupport.layoutWithShaper(text, 85, new UniformAdvanceShaper(),
+            [new LineBreakSpan(new TextRange(0, text.length), ProgressiveTechnical)]);
         EmergencyGraphemeTrackingTestSupport.assertEqualsTextRange(new TextRange(0, 8), result.lines[0].range);
         var foundNote = false;
         final notes = result.debug.lineDecisions[0].notes;
-        for (i in 0...notes.length) { if (notes[i].indexOf("technical-break:Emergency") >= 0) { foundNote = true; break; } }
+        for (i in 0...notes.length) {
+            if (notes[i].indexOf("technical-break:Emergency") >= 0) {
+                foundNote = true;
+                break;
+            }
+        }
         TracedAssertions.assertTrue(foundNote);
         TracedAssertions.assertEqualsFloat(0.0, result.lines[0].hyphenAdvance);
     }
@@ -145,13 +184,17 @@ class EmergencyGraphemeTrackingTest {
         final objectText = objectAs + "\uFFFC" + objectBs;
         final objectRange = new TextRange(objectAs.length, objectAs.length + 1);
         final objectLen = objectAs.length + 1 + objectBs.length;
-        final objectResult = EmergencyGraphemeTrackingTestSupport.layoutWithObjects(objectText, 300, [new InlineObjectSpan(objectRange, 16, 12, 4)], [new LineBreakSpan(new TextRange(0, objectLen), ProgressiveTechnical)]);
-        final objectAllocations = EmergencyGraphemeTrackingTestSupport.allocationsForKind(objectResult.debug.justificationDecisions, "EmergencyGraphemeTracking");
+        final objectResult = EmergencyGraphemeTrackingTestSupport.layoutWithObjects(objectText, 300, [new InlineObjectSpan(objectRange, 16, 12, 4)],
+            [new LineBreakSpan(new TextRange(0, objectLen), ProgressiveTechnical)]);
+        final objectAllocations = EmergencyGraphemeTrackingTestSupport.allocationsForKind(objectResult.debug.justificationDecisions,
+            "EmergencyGraphemeTracking");
         TracedAssertions.assertTrue(objectAllocations.length > 0);
         var none = true;
         for (i in 0...objectAllocations.length) {
             final cr = objectAllocations[i].clusterRange;
-            if (cr.end == objectRange.start || (cr.start == objectRange.start && cr.end == objectRange.end)) { none = false; }
+            if (cr.end == objectRange.start || (cr.start == objectRange.start && cr.end == objectRange.end)) {
+                none = false;
+            }
         }
         TracedAssertions.assertTrue(none, EmergencyGraphemeTrackingTestSupport.renderAllocations(objectAllocations));
 
@@ -160,13 +203,17 @@ class EmergencyGraphemeTrackingTest {
         final zeroWidthText = zeroWidthAs + "\u200B" + zeroWidthBs;
         final zeroWidthRange = new TextRange(zeroWidthAs.length, zeroWidthAs.length + 1);
         final zeroWidthLen = zeroWidthAs.length + 1 + zeroWidthBs.length;
-        final zeroWidthResult = EmergencyGraphemeTrackingTestSupport.layoutWithObjects(zeroWidthText, 300, [], [new LineBreakSpan(new TextRange(0, zeroWidthLen), ProgressiveTechnical)]);
-        final zeroWidthAllocations = EmergencyGraphemeTrackingTestSupport.allocationsForKind(zeroWidthResult.debug.justificationDecisions, "EmergencyGraphemeTracking");
+        final zeroWidthResult = EmergencyGraphemeTrackingTestSupport.layoutWithObjects(zeroWidthText, 300, [],
+            [new LineBreakSpan(new TextRange(0, zeroWidthLen), ProgressiveTechnical)]);
+        final zeroWidthAllocations = EmergencyGraphemeTrackingTestSupport.allocationsForKind(zeroWidthResult.debug.justificationDecisions,
+            "EmergencyGraphemeTracking");
         TracedAssertions.assertTrue(zeroWidthAllocations.length > 0);
         var noneZ = true;
         for (i in 0...zeroWidthAllocations.length) {
             final cr = zeroWidthAllocations[i].clusterRange;
-            if (cr.end == zeroWidthRange.start || (cr.start == zeroWidthRange.start && cr.end == zeroWidthRange.end)) { noneZ = false; }
+            if (cr.end == zeroWidthRange.start || (cr.start == zeroWidthRange.start && cr.end == zeroWidthRange.end)) {
+                noneZ = false;
+            }
         }
         TracedAssertions.assertTrue(noneZ, EmergencyGraphemeTrackingTestSupport.renderAllocations(zeroWidthAllocations));
     }
@@ -186,7 +233,10 @@ class EmergencyGraphemeTrackingTest {
         final trackAllocations = EmergencyGraphemeTrackingTestSupport.allocationsForKind(result.debug.justificationDecisions, "EmergencyGraphemeTracking");
         var allGte = true;
         for (i in 0...trackAllocations.length) {
-            if (trackAllocations[i].clusterRange.start < identityStart) { allGte = false; break; }
+            if (trackAllocations[i].clusterRange.start < identityStart) {
+                allGte = false;
+                break;
+            }
         }
         TracedAssertions.assertTrue(allGte);
     }

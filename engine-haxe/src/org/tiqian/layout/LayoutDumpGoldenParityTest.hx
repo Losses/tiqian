@@ -16,8 +16,10 @@ class LayoutDumpGoldenParityTest {
                 continue;
             }
             final actual = LayoutDumpFormat.layoutFixtureDump(fixture);
-            if (golden != actual) failures.push(LayoutDumpFormat.layoutDumpDiffMessage(fixture.id, golden, actual));
+            if (golden != actual)
+                failures.push(LayoutDumpFormat.layoutDumpDiffMessage(fixture.id, golden, actual));
         }
-        assertTrue(failures.length == 0, failures.join("\n\n") + "\n\nIf the change is intentional, regenerate with TIQIAN_UPDATE_GOLDEN=1 on the JVM and review the golden diff.");
+        assertTrue(failures.length == 0,
+            failures.join("\n\n") + "\n\nIf the change is intentional, regenerate with TIQIAN_UPDATE_GOLDEN=1 on the JVM and review the golden diff.");
     }
 }

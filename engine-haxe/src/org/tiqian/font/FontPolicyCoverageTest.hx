@@ -43,15 +43,21 @@ class FontPolicyCoverageTest {
         TracedAssertions.assertEqualsFontRole(CjkPunctuation, classifier.classify("\u2019b", new TextRange(0, 1)));
         TracedAssertions.assertEqualsFontRole(CjkPunctuation, classifier.classify("a\u2019", new TextRange(1, 2)));
         TracedAssertions.assertEqualsFontRole(CjkPunctuation, classifier.classify("\u4E2D\u2019\u6587", new TextRange(1, 2)));
-        TracedAssertions.assertEqualsFontRole(CjkPunctuation, classifier.classify(FontPolicyCoverageTestSupport.surrogateText([0xD83D, 0xDE00, 0x2019, 'b'.code]), new TextRange(2, 3)));
-        TracedAssertions.assertEqualsFontRole(CjkPunctuation, classifier.classify(FontPolicyCoverageTestSupport.surrogateText(['A'.code, 0xDC00, 0x2019, 'b'.code]), new TextRange(2, 3)));
-        TracedAssertions.assertEqualsFontRole(CjkPunctuation, classifier.classify(FontPolicyCoverageTestSupport.surrogateText([0xE000, 0xDC00, 0x2019, 'b'.code]), new TextRange(2, 3)));
-        TracedAssertions.assertEqualsFontRole(CjkPunctuation, classifier.classify(FontPolicyCoverageTestSupport.surrogateText([0xDC00, 0x2019, 'b'.code]), new TextRange(1, 2)));
+        TracedAssertions.assertEqualsFontRole(CjkPunctuation,
+            classifier.classify(FontPolicyCoverageTestSupport.surrogateText([0xD83D, 0xDE00, 0x2019, 'b'.code]), new TextRange(2, 3)));
+        TracedAssertions.assertEqualsFontRole(CjkPunctuation,
+            classifier.classify(FontPolicyCoverageTestSupport.surrogateText(['A'.code, 0xDC00, 0x2019, 'b'.code]), new TextRange(2, 3)));
+        TracedAssertions.assertEqualsFontRole(CjkPunctuation,
+            classifier.classify(FontPolicyCoverageTestSupport.surrogateText([0xE000, 0xDC00, 0x2019, 'b'.code]), new TextRange(2, 3)));
+        TracedAssertions.assertEqualsFontRole(CjkPunctuation,
+            classifier.classify(FontPolicyCoverageTestSupport.surrogateText([0xDC00, 0x2019, 'b'.code]), new TextRange(1, 2)));
         TracedAssertions.assertEqualsFontRole(CjkPunctuation, classifier.classify("\uE000\u2019b", new TextRange(1, 2)));
-        TracedAssertions.assertEqualsFontRole(CjkPunctuation, classifier.classify(FontPolicyCoverageTestSupport.surrogateText(['a'.code, 0x2019, 0xD83D, 0xDE00]), new TextRange(1, 2)));
+        TracedAssertions.assertEqualsFontRole(CjkPunctuation,
+            classifier.classify(FontPolicyCoverageTestSupport.surrogateText(['a'.code, 0x2019, 0xD83D, 0xDE00]), new TextRange(1, 2)));
         TracedAssertions.assertEqualsFontRole(Unknown, classifier.classify("\uE000", new TextRange(0, 1)));
         TracedAssertions.assertEqualsFontRole(Unknown, classifier.classify(FontPolicyCoverageTestSupport.surrogateText([0xD800]), new TextRange(0, 1)));
-        TracedAssertions.assertEqualsFontRole(Unknown, classifier.classify(FontPolicyCoverageTestSupport.surrogateText([0xD800, 'A'.code]), new TextRange(0, 2)));
+        TracedAssertions.assertEqualsFontRole(Unknown,
+            classifier.classify(FontPolicyCoverageTestSupport.surrogateText([0xD800, 'A'.code]), new TextRange(0, 2)));
         TracedAssertions.assertEqualsFontRole(Unknown, classifier.classify(FontPolicyCoverageTestSupport.surrogateText([0xD800, 0xE000]), new TextRange(0, 2)));
         TracedAssertions.assertEqualsFontRole(Unknown, classifier.classify(FontPolicyCoverageTestSupport.surrogateText([0xD804, 0xDC00]), new TextRange(0, 2)));
         TracedAssertions.assertEqualsFontRole(LatinText, classifier.classify("A", new TextRange(0, 1)));
@@ -119,8 +125,8 @@ class FontPolicyCoverageTest {
         TracedAssertions.assertEqualsInt(700, request.fontWeight);
         TracedAssertions.assertTrue(request.italic);
         TracedAssertions.assertEqualsString("\u6D4B\u8BD5", request.faceSelectionText);
-        final requestCopy = new FontMetricsRequest(request.fontKey, request.fontSize, request.role, request.locale, FontPolicyCoverageTestSupport.copyStrings(request.fontFamilies),
-            request.fontWeight, request.italic, request.faceSelectionText);
+        final requestCopy = new FontMetricsRequest(request.fontKey, request.fontSize, request.role, request.locale,
+            FontPolicyCoverageTestSupport.copyStrings(request.fontFamilies), request.fontWeight, request.italic, request.faceSelectionText);
         TracedAssertions.assertEqualsRendered(Std.string(request), Std.string(requestCopy));
         TracedAssertions.assertTrue(Std.string(request) == Std.string(requestCopy));
         final resolver = new StubFontMetricsResolver();
@@ -130,17 +136,17 @@ class FontPolicyCoverageTest {
         final punct = resolver.resolve(new FontMetricsRequest(request.fontKey, request.fontSize, CjkPunctuation, request.locale,
             FontPolicyCoverageTestSupport.copyStrings(request.fontFamilies), request.fontWeight, request.italic, request.faceSelectionText));
         TracedAssertions.assertEqualsFloat(16 * 1.16, punct.ascent);
-        final latin = resolver.resolve(new FontMetricsRequest(request.fontKey, request.fontSize, LatinText, request.locale, FontPolicyCoverageTestSupport.copyStrings(request.fontFamilies),
-            request.fontWeight, request.italic, request.faceSelectionText));
+        final latin = resolver.resolve(new FontMetricsRequest(request.fontKey, request.fontSize, LatinText, request.locale,
+            FontPolicyCoverageTestSupport.copyStrings(request.fontFamilies), request.fontWeight, request.italic, request.faceSelectionText));
         TracedAssertions.assertEqualsFloat(16 * 0.8, latin.ascent);
-        final symbol = resolver.resolve(new FontMetricsRequest(request.fontKey, request.fontSize, Symbol, request.locale, FontPolicyCoverageTestSupport.copyStrings(request.fontFamilies),
-            request.fontWeight, request.italic, request.faceSelectionText));
+        final symbol = resolver.resolve(new FontMetricsRequest(request.fontKey, request.fontSize, Symbol, request.locale,
+            FontPolicyCoverageTestSupport.copyStrings(request.fontFamilies), request.fontWeight, request.italic, request.faceSelectionText));
         TracedAssertions.assertEqualsFloat(16 * 0.9, symbol.ascent);
-        final emoji = resolver.resolve(new FontMetricsRequest(request.fontKey, request.fontSize, Emoji, request.locale, FontPolicyCoverageTestSupport.copyStrings(request.fontFamilies),
-            request.fontWeight, request.italic, request.faceSelectionText));
+        final emoji = resolver.resolve(new FontMetricsRequest(request.fontKey, request.fontSize, Emoji, request.locale,
+            FontPolicyCoverageTestSupport.copyStrings(request.fontFamilies), request.fontWeight, request.italic, request.faceSelectionText));
         TracedAssertions.assertEqualsFloat(16 * 0.9, emoji.ascent);
-        final unknown = resolver.resolve(new FontMetricsRequest(request.fontKey, request.fontSize, Unknown, request.locale, FontPolicyCoverageTestSupport.copyStrings(request.fontFamilies),
-            request.fontWeight, request.italic, request.faceSelectionText));
+        final unknown = resolver.resolve(new FontMetricsRequest(request.fontKey, request.fontSize, Unknown, request.locale,
+            FontPolicyCoverageTestSupport.copyStrings(request.fontFamilies), request.fontWeight, request.italic, request.faceSelectionText));
         TracedAssertions.assertEqualsFloat(16 * 0.9, unknown.ascent);
     }
 
