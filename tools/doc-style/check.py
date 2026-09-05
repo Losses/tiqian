@@ -26,6 +26,8 @@ REPO_ROOT = Path(__file__).resolve().parents[2]
 # verb or noun; swapping one metaphor for a near-synonym metaphor is not a
 # fix (收窄 was such a failed replacement for 瘦身 and is banned as well).
 WORDS = [
+    # aviation shorthand for running/dispatched work (2026-09-05 correction)
+    "在飞",
     # gate and doorway metaphors
     "门面", "扇门", "门控", "门禁", "缓存门", "字体门",
     # gate / threshold 直译（CI gate、graduation gate）
