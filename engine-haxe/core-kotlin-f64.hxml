@@ -1,7 +1,7 @@
 # Stage A Kotlin f64 generation entry for the all-target f64 consistency
 # matrix (no float-precision define; full Float precision). Mirrors
 # core-kotlin.hxml module coverage. Run from the worktree root:
-#   nix develop -c bash -c 'haxe engine-haxe/core-kotlin-f64.hxml.hxml'
+#   nix develop -c bash -c 'haxe engine-haxe/core-kotlin-f64.hxml'
 -lib reflaxe
 -lib boring
 -cp .haxelib/boring/git/packages/compiler/reflaxe/kotlin/std-shadow

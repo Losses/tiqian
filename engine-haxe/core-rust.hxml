@@ -1,7 +1,7 @@
 # Stage A Rust generation entry for the all-target f64 consistency
 # matrix (no float-precision define; full Float precision). Mirrors
 # core-kotlin.hxml module coverage. Run from the worktree root:
-#   nix develop -c bash -c 'haxe engine-haxe/core-rust.hxml.hxml'
+#   nix develop -c bash -c 'haxe engine-haxe/core-rust.hxml'
 -lib reflaxe
 -lib boring
 -cp .haxelib/boring/git/packages/compiler/reflaxe/rust/std-shadow
