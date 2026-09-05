@@ -82,16 +82,18 @@ def normalize_collection_joins(line: str) -> str:
 
 
 # The render cap cuts operand text at a fixed character count, so two
-# separator-differing renders of the same value cut at different fields and
-# leave different partial tokens before the truncation stamp. The stamp
-# already compares by marker kind only, so the partial token is cap-position
-# noise; drop it back to the last separator (tolerance mode only).
-_PARTIAL_TOKEN_STAMP_RE = re.compile(r",[^,\[\]()]*~\d+#[0-9a-f]+")
+# renders whose numeric tokens differ in digit width (f32 artifacts such as
+# 0.8000001 vs a clean f64 0.8) cut at different fields and leave different
+# partial tokens before the truncation stamp. The stamp already compares by
+# marker kind only, so the partial token is cap-position noise; drop it back
+# to the last separator, a comma or the "=" of a cut field
+# (tolerance mode only).
+_PARTIAL_TOKEN_STAMP_RE = re.compile(r"([,=])[^,=\[\]()]*~\d+#[0-9a-f]+")
 
 
 def normalize_truncation_stamps(line: str) -> str:
     """Replace each partial-token-plus-stamp region with a bare marker."""
-    return _PARTIAL_TOKEN_STAMP_RE.sub(",~", line)
+    return _PARTIAL_TOKEN_STAMP_RE.sub(lambda m: m.group(1) + "~", line)
 
 MAX_REPORTED_LINES = 12
 
