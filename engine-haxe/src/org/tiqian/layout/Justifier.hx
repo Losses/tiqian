@@ -126,6 +126,11 @@ class Justifier {
             return nsa.has(l) || ns.has(l) || ns.has(x);
         function spaceGapIsClosed(x:Int):Bool
             return nsa.has(x - 1) || nsa.has(x) || ns.has(x - 1) || ns.has(x + 1);
+        // Kotlin stores every justification Math/float operand as f32; Haxe keeps
+        // the widened f64, so each intermediate that reaches a Float field must be
+        // snapped back to the f32 grid to reproduce the Kotlin allocation.
+        function f32(v:Float):Float
+            return haxe.io.FPHelper.i32ToFloat(haxe.io.FPHelper.floatToI32(v));
         function alloc(ops:Array<JustificationOpportunity>, reason:String):Void {
             if (ops.length == 0 || remaining <= 0)
                 return;
@@ -133,9 +138,9 @@ class Justifier {
             if (total <= 0)
                 return;
             if (total >= remaining) {
-                final f = remaining / total;
+                final f = f32(remaining / total);
                 ops.forEach(o -> {
-                    final d = o.capacity * f;
+                    final d = f32(o.capacity * f);
                     if (d > 0)
                         out.push(new JustificationAllocation(o.targetClusterIndex, o.kind, o.priority, d, o.reason == null ? reason : o.reason));
                 });
@@ -143,7 +148,7 @@ class Justifier {
             } else {
                 ops.forEach(o -> {
                     if (o.capacity > 0)
-                        out.push(new JustificationAllocation(o.targetClusterIndex, o.kind, o.priority, o.capacity, o.reason == null ? reason : o.reason));
+                        out.push(new JustificationAllocation(o.targetClusterIndex, o.kind, o.priority, f32(o.capacity), o.reason == null ? reason : o.reason));
                 });
                 remaining -= total;
             }

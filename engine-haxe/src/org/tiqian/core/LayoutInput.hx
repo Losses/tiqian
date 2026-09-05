@@ -15,8 +15,8 @@ class LayoutInput {
     public final inlineObjects:ReadOnlyArray<InlineObjectSpan>;
 
     public function new(content:TiqianTextContent, ?textStyle:Null<TextStyle>, ?paragraphStyle:Null<ParagraphStyle>, constraints:LayoutConstraints,
-            ?profileId:Null<LayoutProfileId>, ?decorations:Array<DecorationSpan>, ?rubySpans:Array<RubySpan>, ?inlineBoxes:Array<InlineBoxSpan>,
-            ?inlineObjects:Array<InlineObjectSpan>) {
+            ?profileId:Null<LayoutProfileId>, ?decorations:ReadOnlyArray<DecorationSpan>, ?rubySpans:ReadOnlyArray<RubySpan>, ?inlineBoxes:ReadOnlyArray<InlineBoxSpan>,
+            ?inlineObjects:ReadOnlyArray<InlineObjectSpan>) {
         this.content = content;
         this.textStyle = textStyle == null ? new TextStyle() : textStyle;
         this.paragraphStyle = paragraphStyle == null ? new ParagraphStyle() : paragraphStyle;
