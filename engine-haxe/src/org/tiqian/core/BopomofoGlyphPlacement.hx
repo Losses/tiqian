@@ -2,6 +2,7 @@ package org.tiqian.core;
 
 import std.ReadOnlyArray;
 
+@:dataClass
 class BopomofoGlyphPlacement {
     public final text:String;
     public final left:Float;
