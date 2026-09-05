@@ -9,7 +9,9 @@
 -cp .haxelib/boring/git/samples
 -cp engine-haxe/src
 -cp engine-haxe/macros
---macro Intercept.run(['engine-haxe/src'])
+# std.UStringException (samples/std) must sit inside the source scope so the
+# rust target registers its payload enum for stdlib/08 string buffer checks.
+--macro Intercept.run(['engine-haxe/src', '.haxelib/boring/git/samples/std'])
 --macro GoldenDataMacros.init()
 --macro haxe.macro.Compiler.addGlobalMetadata('org.tiqian', '@:build(std.RecordMember.build())')
 --macro rustcompiler.Compiler.use()
@@ -18,6 +20,7 @@
 -D runtime-emit=runtime
 -D package-name=tiqian-engine-gen
 -D package-license=MIT
+std.UStringException
 org.tiqian.core.TextRange
 org.tiqian.core.TextRangeError
 org.tiqian.core.TiqianIllegalArgumentException
