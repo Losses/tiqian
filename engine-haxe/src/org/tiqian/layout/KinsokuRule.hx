@@ -22,6 +22,10 @@ class ClreqKinsokuRule implements KinsokuRule {
         this.level = level == null ? KinsokuLevel.Basic : level;
     }
 
+    public function toString():String {
+        return "ClreqKinsokuRule(level=" + level + ")";
+    }
+
     public function forbiddenAtLineStart(cluster:Cluster):Bool {
         if (cluster.displayText.length == 0) {
             return false;
