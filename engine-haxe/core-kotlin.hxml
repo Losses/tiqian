@@ -208,3 +208,9 @@ org.tiqian.test.ShapingEvidenceJson
 org.tiqian.layout.RecordedEvidenceGoldenParityTest
 org.tiqian.layout.QuoteClassificationEngineTest
 org.tiqian.layout.QuoteClassificationEngineTestSupport
+org.tiqian.layout.ParagraphLayoutEngineValidationCoverageTest
+org.tiqian.layout.ParagraphLayoutEngineValidationCoverageSupport
+org.tiqian.layout.ExplainableStubParagraphLayoutEngineTest
+org.tiqian.layout.ExplainableStubParagraphLayoutEngineTestSupport
+org.tiqian.layout.JustifierEngineTest
+org.tiqian.layout.JustifierEngineTestSupport
