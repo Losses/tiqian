@@ -206,3 +206,5 @@ org.tiqian.layout.SpacingAndLineGeometryEngineTestSupport
 org.tiqian.test.ShapingEvidence
 org.tiqian.test.ShapingEvidenceJson
 org.tiqian.layout.RecordedEvidenceGoldenParityTest
+org.tiqian.layout.QuoteClassificationEngineTest
+org.tiqian.layout.QuoteClassificationEngineTestSupport
