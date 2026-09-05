@@ -172,8 +172,8 @@ boring 对尚未实现降级的 Haxe 构造，在生成阶段调用 `Context.err
 |---|---|---|---|
 | TypeScript | ts target: variant switch lowers at return position | `packages/compiler/reflaxe/ts/tscompiler/TsExpr.hx:1204` | `engine-haxe/src/org/tiqian/test/ShapingEvidenceJson.hx:144`（变体 switch 在赋值语句位） |
 | Swift | swift target: variant switch lowers at return position | `packages/compiler/reflaxe/swift/swiftcompiler/SwiftExpr.hx:1169` | 同上 `ShapingEvidenceJson.hx:144` |
-| Rust | Std.string accepts scalars, enum values, records, and arrays of them only | `packages/compiler/reflaxe/rust/rustcompiler/RustExpr.hx:4047` | 位置信息缺失（宏阶段以 `(unknown)` 报出），待定位（F0f） |
-| Dart | dart target: Math.abs has no direct Dart lowering; the call site lowers it | `packages/compiler/reflaxe/dart/dartcompiler/DartExpr.hx:1761` | `engine-haxe/src/org/tiqian/test/trace/TraceFormat.hx:112` 等 6 处 `Math.abs` 调用 |
+| Rust | cannot lower fallible capacity expression: missing error enum or overflow variant | boring rust 后端容量表达式降级处 | `engine-haxe/src/org/tiqian/layout/ParagraphShapingStage.hx:1182`（Std.string 参数域门 2026-09-05 清除后成为 rust 第一门，F0f） |
+| Dart | dart target: variant switch lowers at return position | `packages/compiler/reflaxe/dart/dartcompiler/DartExpr.hx` 变体 switch 门 | 同 ts 行 `ShapingEvidenceJson.hx:144`（Math.abs 门 2026-09-05 清除后 dart 下一门与 ts、swift 同位点，dart 后端的同构造降级待补，F0g 范围） |
 
 已确认但排在第一门之后的门：
 
@@ -186,8 +186,13 @@ boring 对尚未实现降级的 Haxe 构造，在生成阶段调用 `Context.err
   目录不受影响；Swift、Dart、Rust 是否在同一位点命中，待各自第一门消除后
   复测。
 - Std.string 参数域门五个后端都有（`TsExpr.hx:1778`、`SwiftExpr.hx:2094`、
-  `DartExpr.hx:2020`、`RustExpr.hx:4047`、`KotlinExpr.hx:2104`）；tiqian 源码
-  有 73 个文件调用 `Std.string`，违规调用的具体清单待定位（F0f）。
+  `DartExpr.hx:2020`、`RustExpr.hx:4047`、`KotlinExpr.hx:2104`）。tiqian 源的
+  违规形态已于 2026-09-05 定位并清除（F0f）：两个无 `toString` 的普通类被
+  record 打印合成引用，即 `ClreqPunctuationGlyphSubstitutor`（三个 record 的
+  字段）与 `AttachedInlinePunctuationBoundaryResult`（两个 record 的字段）；
+  门消息以 `(unknown)` 报出位置，定位方法是 boring 报错处临时加类型打印与
+  类清单前缀二分（200 类收敛到第 53 类 `ContextualDashEllipsisRoleResolverTest`
+  独立触发）。
 
 ## 5 分级标尺
 
@@ -239,14 +244,31 @@ K6 与 K4 的分界：桶 4 里与可空相关的形状（Int? 给 Int 等）计
 
 ### 第 0.5 组：四目标生成阻断门（K9 的解锁项）
 
-- [ ] F0e Dart 的 `Math.abs` 调用点降级补臂：boring
-      `packages/compiler/reflaxe/dart/dartcompiler/DartExpr.hx` 第 1761 位的
-      fail 分支加 abs 臂，与已合入的 Math.min 与 Math.max 补臂同一写法；tiqian
-      侧不改。C1，P0，S0（dart 目录无法生成）。
-- [ ] F0f 定位 Std.string 违规调用点：rust 目录第一门在 `(unknown)` 位置报出，
-      先在 tiqian 源 73 个 `Std.string` 调用文件里定位违规形态（消息限定参数
-      只能是标量、枚举值、record、以及这些值的数组），再裁定修 boring 扩参数
-      域或 tiqian 源改用 record 序列化。C1，P0，S-（定位项）。
+- [x] F0e Dart 的 `Math.abs` 调用点降级补臂：2026-09-05 完成并合入 boring
+      main `7f2bced`。dart 与 rust 在 `DartExpr.hx` 与 `RustExpr.hx` 的 Math
+      调用位加 abs 臂并用 `mathFloatArg` 把 Int 操作数拓宽到浮点域；swift 侧
+      `SwiftExpr.hx` 调用位同日补 `abs(mathFloatArg(...))` 臂（tiqian 的 swift
+      树生成后发现 Int32 接收者编译错，中央补第三臂）。样本
+      `samples/boring/MathMinMaxOps.hx` 加 `absValue` 与 `absOfInts`，测试
+      `samples/tests/MathMinMaxTests.hx` 加对应用例（Int 用正值：boring 把
+      Haxe Int 映射 u32，负字面量出域）。验收十条套件（五条 stage1 加
+      test:kotlin-f32、test:rust-f32、test:swift、test:swift-f32、test:dart）
+      全部 rc=0；vendored 已推进到 `7f2bced`。
+- [x] F0f 定位 Std.string 违规调用点：2026-09-05 完成。违规形态不在源码直接
+      调 `Std.string` 的位置；实际触发点是 `@:dataClass` 的 record toString
+      合成对无 `toString` 普通类字段的拼接（binop 拼接路径经 `stdStringArg`
+      进入同一
+      门）。boring 规格 46 裁定 3 明文规定无 `toString` 的类保持拒绝、编译器
+      不猜文本形态，故修复位置裁定为 tiqian 侧：`ClreqPunctuationGlyphSubstitutor`
+      在 Kotlin 原件（`engine/src/commonMain/kotlin/org/tiqian/clreq/ClreqProfile.kt`）
+      与 Haxe 移植两侧同加显式 `toString`（两侧文本一致
+      `ClreqPunctuationGlyphSubstitutor(policy=…)`，无测试打印旧形态，实测
+      无断言破坏）；`AttachedInlinePunctuationBoundaryResult` 的 Kotlin 原件
+      是 `internal data class`，Haxe 侧补 `@:dataClass` 标记并改构造参数名与
+      字段同名（延续 520f4be5 对 decision 类的先例）。rust 树 Std.string 门
+      不再出现，下一个门为 `ParagraphShapingStage.hx:1182` 的 fallible
+      capacity 降级；移植树验收（gates.sh 的 g4、tests、compare）全部通过
+      （G4=0、trace 对比 121/121）。
 - [ ] F0g 变体 switch 在非返回位的降级（TypeScript 与 Swift 第一门）：kotlin
       后端已实现同构造降级，以此为参照移植到 `TsExpr.hx:1204` 与
       `SwiftExpr.hx:1169`；触发样本 `ShapingEvidenceJson.hx:144`。C2，P0，S0
@@ -297,6 +319,8 @@ K6 与 K4 的分界：桶 4 里与可空相关的形状（Int? 给 Int 等）计
 | 2026-09-05 | Kotlin 基线建立 | boring `a75601a` | f32 3338 / f64 3358（分桶脚本有条件类错分） | 不适用 |
 | 2026-09-05 | 基线迁移到 `5d7417e` 并修正分桶脚本 | boring `5d7417e` | f32 3335 / f64 3355，分桶合计与总数一致 | 不适用 |
 | 2026-09-05 | 四目标第一阻断门实测记录 | 本文档第 4 节 | ts、swift、rust、dart 均无法生成 | 不适用 |
+| 2026-09-05 | F0e Math.abs 三目标补臂 | boring `7f2bced`（vendored 已推进） | dart 树 Math.abs 门不再出现，dart 下一门＝变体 switch | 十条套件全 rc=0 |
+| 2026-09-05 | F0f Std.string 违规调用定位与修复 | tiqian `e0e1172d`＋`ec285e24` | rust 树 Std.string 门不再出现（全族枚举仅两类），rust 下一门＝`ParagraphShapingStage.hx:1182` fallible capacity | 移植树 gates.sh 三项全过；engine jvmTest 通过 |
 
 ## 9 已完成并合入的修复（背景）
 
