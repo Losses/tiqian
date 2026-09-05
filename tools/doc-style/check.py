@@ -52,6 +52,12 @@ WORDS = [
     # internet jargon verbs
     "链路", "打通", "拉齐", "沉淀", "反哺", "赋能", "抓手", "打磨", "深耕",
     "复盘", "一把梭", "弃坑", "跑通", "回流", "通路", "真·", "波次",
+    # alignment-dimension metaphor (2026-09-05 correction): 轴 as in 对齐轴
+    "轴",
+    # gate metaphor for the verification suite (2026-09-05 correction)
+    "四门",
+    # coined compressions (2026-09-05 corrections)
+    "降级链", "终态", "横比",
     # misattributed or vague causal wording
     "根因", "归因", "掩盖", "口径", "挡住", "契约", "缺口", "夹具", "刀次",
     "包袱", "载体", "收束", "下沉", "节拍",
