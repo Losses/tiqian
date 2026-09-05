@@ -47,6 +47,25 @@ grep -c " error: " /tmp/census-f32.log
 grep -c " error: " /tmp/census-f64.log'
 ```
 
+K4（数值宽度族）的取数命令如下，在同一批日志上执行。六条模式按顺序
+对应：桶 7（运算符两侧类型）、桶 14（Int 字面量初始化给浮点字段）、
+桶 22（Number 装箱值的星投影）、桶 4 的三类宽度形状（Int 给浮点、Number
+装箱给浮点、Long 给浮点；最后一条在 f32 日志里为 0）。桶 4 里其余形状
+（可空给非空等）计入 K6，不在本命令内。2026-09-05 实测：f32 六项相加
+36+15+6+58+29+0=144，f64 相加 33+17+6+66+28+2=152，与基线一致。
+
+```shell
+for LOG in /tmp/census-f32.log /tmp/census-f64.log; do
+  echo "== $LOG"
+  grep -c " error: operator '.*' cannot be applied to " $LOG
+  grep -c " error: initializer type mismatch: expected '\(Float\|Double\)', actual 'Int'\." $LOG
+  grep -c " error: receiver type '.*' contains star projection" $LOG
+  grep -c " error: argument type mismatch: actual type is 'Int', but '\(Float\|Double\)' was expected\." $LOG
+  grep -c " error: argument type mismatch: actual type is 'Number & Comparable<CapturedType(\*)>', but '\(Float\|Double\)' was expected\." $LOG
+  grep -c " error: argument type mismatch: actual type is 'Long', but '\(Float\|Double\)' was expected\." $LOG
+done
+```
+
 ### 2.2 其余四目标（当前在第一处未实现构造上中止）
 
 ```shell
@@ -175,7 +194,7 @@ boring 对尚未实现生成规则的 Haxe 构造，在生成阶段调用 `Conte
 |---|---|---|---|
 | TypeScript | ts target: variant switch lowers at return position | `packages/compiler/reflaxe/ts/tscompiler/TsExpr.hx:1204` | `engine-haxe/src/org/tiqian/test/ShapingEvidenceJson.hx:144`（按枚举变体分派的 switch 表达式出现在赋值位置） |
 | Swift | swift target: variant switch lowers at return position | `packages/compiler/reflaxe/swift/swiftcompiler/SwiftExpr.hx:1169` | 同上 `ShapingEvidenceJson.hx:144` |
-| Rust | Std.string accepts scalars, enum values, records, and arrays of them only | `packages/compiler/reflaxe/rust/rustcompiler/RustExpr.hx:4052` | 七处 record 打印合成拼接了不在 `Std.string` 参数域内的值（三个普通类、一个 abstract、三个函数类型的字段，清单见 F0k） |
+| Rust | Std.string accepts scalars, enum values, records, and arrays of them only | `packages/compiler/reflaxe/rust/rustcompiler/RustExpr.hx:4052` | 七处 record 打印合成拼接了不在 `Std.string` 参数域内的值（三个普通类已修、一个 abstract `ProgressiveBreakTier`、`ParagraphLayoutPrep` 的三个函数类型字段，清单与持有者见 F0k） |
 | Dart | dart target: variant switch lowers at return position | `packages/compiler/reflaxe/dart/dartcompiler/DartExpr.hx` 的 variant switch 报错处 | 同 ts 行 `ShapingEvidenceJson.hx:144`（`Math.abs` 的报错 2026-09-05 消除后，dart 的第一处与 ts、swift 是同一个构造，dart 生成器的对应规则待补，F0g 范围） |
 
 已确认排在第一处之后的报错：
@@ -220,7 +239,7 @@ S2 二十到一百九十九条；S3 二十条以下。流程类条目不适用 S
 | K1 | Kotlin null 传非空参数 | f32 2122 / f64 2122 | 0 | 桶 1 |
 | K2 | Kotlin 可空接收者两桶合计 | f32 316 / f64 316 | 0 | 桶 3、8 |
 | K3 | Kotlin unresolved reference | f32 290 / f64 283 | 0 | 桶 2 |
-| K4 | Kotlin 数值宽度族（桶 7、14、22，加桶 4 的 Int 给 Float 58 与 Number 装箱 29） | f32 144 / f64 152 | 0 | 桶 7、14、22、4 部分 |
+| K4 | Kotlin 数值宽度族（桶 7、14、22 加桶 4 的宽度类形状，取数命令见第 2.1 节） | f32 144 / f64 152 | 0 | 桶 7、14、22、4 部分 |
 | K5 | Kotlin f64 独有语法错误 | f32 0 / f64 13 | 0 | 桶 21 注 |
 | K6 | Kotlin 其余全部桶 | f32 463 / f64 469 | 0 | 桶 4 余量、5、6、9 至 21、23 至 28 |
 | K7 | Kotlin 两目录错误总数 | f32 3335 / f64 3355 | 0 | 全部桶 |
@@ -229,7 +248,8 @@ S2 二十到一百九十九条；S3 二十条以下。流程类条目不适用 S
 | K10 | 修复排队项 | nullargs 在验收，features/43 未派发 | 全部完成 | 修复项清单 |
 
 K6 与 K4 的分界：桶 4 里与可空相关的形状（Int? 给 Int 等）计入 K6，只有宽度
-转换类形状（Int 给 Float、Number 装箱给 Float）计入 K4。
+转换类形状（Int 给浮点、Number 装箱给浮点、f64 独有的 Long 给 Double）计入
+K4。
 
 ## 7 修复项清单
 
@@ -310,13 +330,26 @@ K6 与 K4 的分界：桶 4 里与可空相关的形状（Int? 给 Int 等）计
       与 `tests/ts/sorted-key-domains.test.ts` 各新增对应用例。验收十条套件
       与 test:consistency 全部 rc=0；vendored 已推进到 `012ab59`，rust 树
       该报错不再出现。
-- [ ] F0k rust 树 `Std.string` 参数域报错第二批（七处，F0j 消除后暴露，
-      rust 生成路径最后一类中止）：三个普通类（`PunctuationClusterGeometry`、
-      `GlueBudget`、`ClreqKinsokuRule`）、一个 abstract（`ProgressiveBreakTier`）、
-      一个记录类型的三个函数类型字段（`style_at`、`bopomofo_font_weight_at`、
-      `font_size_at`）被记录类型打印合成拼接。逐个按 F0f 的裁定处理：Kotlin
-      原件是 data class 的补 `@:dataClass` 标记；原件是普通类的两侧同加显式
-      `toString`；函数类型字段与 abstract 的形态先报裁定再动。C2，P0，S0。
+- [~] F0k rust 树 `Std.string` 参数域报错第二批（七处，F0j 消除后暴露，
+      rust 生成路径最后一类中止）。本轮修正一处此前记错的事实：三个函数
+      类型字段的持有者是 `ParagraphLayoutPrep`（Haxe 侧
+      `engine-haxe/src/org/tiqian/layout/LineBreakPlanningStage.hx:70` 标了
+      `@:dataClass`，`styleAt`、`fontSizeAt`、`bopomofoFontWeightAt` 在第 75
+      至 77 行；Kotlin 原件 `LineBreakPlanningStage.kt:122` 是未标 data 的
+      `internal class`）；此前误记为 `WidthIndependentParagraphAnnotation`，
+      本轮已改正。一个
+      abstract 是 `ProgressiveBreakTier`，把它作为记录字段持有的类只有
+      `ProgressiveBreakOpportunity`（Haxe 侧 `ProgressiveBreakDecisions.hx:24`
+      标了 `@:dataClass`，对应 Kotlin 原件 `ProgressiveBreakDecisions.kt:17`
+      的 `data class`；除此之外无其他记录持有该类型的字段或数组）。三个
+      普通类（`PunctuationClusterGeometry`、`GlueBudget`、`ClreqKinsokuRule`）
+      已按 F0f 的两条修法由 tiqian-f0k 派发任务修复并合并 main（`26d89566`：
+      前两个 Kotlin 原件是 data class，Haxe 侧补 `@:dataClass` 标记；
+      `ClreqKinsokuRule` 两侧同加文本一致的显式 `toString`）。中央复验：
+      `:engine:jvmTest` 通过，工树 gates 三项全部通过（G4-RC=0、121/121、
+      COMPARE-RC=0），`core-rust.hxml` 的报错面不再出现三个类名。剩余四处
+      （一个 abstract 加 `ParagraphLayoutPrep` 的三个函数字段）的处置选项
+      已报用户裁定，裁定前不动。C2，P0，S0。
 
 ### 第 1 组：三大错误种类（Kotlin）
 
