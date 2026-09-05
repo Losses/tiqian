@@ -1,7 +1,9 @@
 package org.tiqian.core;
 
 @:sealed
-interface RichTextLinePattern {}
+interface RichTextLinePattern {
+    function toString():String;
+}
 
 class Solid implements RichTextLinePattern {
     public static final instance:Solid = new Solid();

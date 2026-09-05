@@ -1,7 +1,9 @@
 package org.tiqian.core;
 
 @:sealed
-interface RichTextBackgroundDrawStyle {}
+interface RichTextBackgroundDrawStyle {
+    function toString():String;
+}
 
 class Fill implements RichTextBackgroundDrawStyle {
     public static final instance:Fill = new Fill();

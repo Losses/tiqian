@@ -8,7 +8,9 @@ import org.tiqian.core.RichTextRole.TechnicalInline;
 import org.tiqian.core.RichTextRole.InlineCode;
 
 @:sealed
-interface RichTextRole {}
+interface RichTextRole {
+    function toString():String;
+}
 
 // Compose SpanStyle.background, painted as one continuous typographic box per visual line.
 class Background implements RichTextRole {
