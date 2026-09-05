@@ -69,6 +69,7 @@ import org.tiqian.core.IntRange;
 import org.tiqian.core.InlineAttachment;
 import std.SortedSet;
 import std.SortedMap;
+import std.RecordEq;
 
 @:dataClass class WidthIndependentAnnotationKey {
     public final text:String;
@@ -176,36 +177,119 @@ class LruWidthIndependentAnnotationCache implements WidthIndependentAnnotationCa
         this.maxEntries = maxEntries;
     }
 
-    private static function keyEquals(a:WidthIndependentAnnotationKey, b:WidthIndependentAnnotationKey):Bool {
-        if (a == b)
-            return true;
-        if (a == null || b == null)
-            return false;
-        if (a.text != b.text)
-            return false;
-        if (a.profileId != b.profileId)
-            return false;
-        if (a.emphasisDotGapEm != b.emphasisDotGapEm)
-            return false;
-        if (a.textStyle != b.textStyle)
-            return false;
-        if (a.spans != b.spans)
-            return false;
-        if (a.lineBreakSpans != b.lineBreakSpans)
-            return false;
-        if (a.decorations != b.decorations)
-            return false;
-        if (a.rubySpans != b.rubySpans)
-            return false;
-        if (a.inlineBoxes != b.inlineBoxes)
-            return false;
-        if (a.inlineObjects != b.inlineObjects)
-            return false;
-        if (a.sourceBoundaries != b.sourceBoundaries)
-            return false;
-        if (a.rejectedTechnicalTiersBySpan != b.rejectedTechnicalTiersBySpan)
-            return false;
+    private static function textRangeEquals(a:TextRange, b:TextRange):Bool {
+        return a == b || (a != null && b != null && RecordEq.eq(a, b));
+    }
+
+    private static function textStyleEquals(a:TextStyle, b:TextStyle):Bool {
+        if (a == b) return true;
+        if (a == null || b == null) return false;
+        return a.fontSize == b.fontSize
+            && a.locale == b.locale
+            && a.fontWeight == b.fontWeight
+            && a.italic == b.italic
+            && a.baselineShift == b.baselineShift
+            && a.inlineAttachment == b.inlineAttachment
+            && stringsEqual(a.fontFamilies, b.fontFamilies);
+    }
+
+    private static function textSpanEquals(a:TextSpan, b:TextSpan):Bool {
+        return a == b || (a != null && b != null && textRangeEquals(a.range, b.range) && textStyleEquals(a.style, b.style));
+    }
+
+    private static function lineBreakSpanEquals(a:LineBreakSpan, b:LineBreakSpan):Bool {
+        return a == b || (a != null && b != null && textRangeEquals(a.range, b.range) && a.policy == b.policy);
+    }
+
+    private static function decorationEquals(a:DecorationSpan, b:DecorationSpan):Bool {
+        return a == b || (a != null && b != null && textRangeEquals(a.range, b.range) && a.kind == b.kind);
+    }
+
+    private static function rubyEquals(a:RubySpan, b:RubySpan):Bool {
+        if (a == b) return true;
+        if (a == null || b == null || !textRangeEquals(a.baseRange, b.baseRange) || a.text != b.text || a.kind != b.kind || a.locale != b.locale) return false;
+        return stringsEqual(a.fontFamilies, b.fontFamilies);
+    }
+
+    private static function inlineBoxEquals(a:InlineBoxSpan, b:InlineBoxSpan):Bool {
+        return a == b || (a != null && b != null && textRangeEquals(a.range, b.range) && a.inlineStart == b.inlineStart
+            && a.inlineEnd == b.inlineEnd && a.outerSpacing == b.outerSpacing);
+    }
+
+    private static function preferredStretchEquals(a:InlineObjectPreferredStretch, b:InlineObjectPreferredStretch):Bool {
+        if (a == b) return true;
+        if (a == null || b == null) return false;
+        return a.kind == b.kind && a.naturalWidth == b.naturalWidth && a.targetWidth == b.targetWidth;
+    }
+
+    private static function boundaryAdjustmentEquals(a:InlineObjectBoundaryAdjustment, b:InlineObjectBoundaryAdjustment):Bool {
+        if (a == b) return true;
+        if (a == null || b == null) return false;
+        return a.participatesInUniformStretch == b.participatesInUniformStretch
+            && preferredStretchEquals(a.preferredStretch, b.preferredStretch)
+            && a.shrinkCapacity == b.shrinkCapacity
+            && a.lineEndDiscardableAdvance == b.lineEndDiscardableAdvance
+            && a.preventsLineBreak == b.preventsLineBreak;
+    }
+
+    private static function inlineObjectEquals(a:InlineObjectSpan, b:InlineObjectSpan):Bool {
+        return a == b || (a != null && b != null && textRangeEquals(a.range, b.range) && a.advance == b.advance
+            && a.ascent == b.ascent && a.descent == b.descent && boundaryAdjustmentEquals(a.leadingBoundary, b.leadingBoundary)
+            && boundaryAdjustmentEquals(a.trailingBoundary, b.trailingBoundary));
+    }
+
+    private static function stringsEqual(a:std.ReadOnlyArray<String>, b:std.ReadOnlyArray<String>):Bool {
+        if (a == b) return true;
+        if (a == null || b == null || a.length != b.length) return false;
+        for (i in 0...a.length) if (a[i] != b[i]) return false;
         return true;
+    }
+
+    private static function intsEqual(a:std.ReadOnlyArray<Int>, b:std.ReadOnlyArray<Int>):Bool {
+        if (a == b) return true;
+        if (a == null || b == null || a.length != b.length) return false;
+        for (i in 0...a.length) if (a[i] != b[i]) return false;
+        return true;
+    }
+
+    private static function mapEquals(a:SortedMap<TextRange, SortedSet<Int>>, b:SortedMap<TextRange, SortedSet<Int>>):Bool {
+        if (a == b) return true;
+        if (a == null || b == null || a.size() != b.size()) return false;
+        for (i in 0...a.size()) {
+            final ak = a.keyAt(i);
+            var matched = false;
+            for (j in 0...b.size()) {
+                final bk = b.keyAt(j);
+                if (textRangeEquals(ak, bk)) {
+                    final av = a.valueAt(i);
+                    final bv = b.valueAt(j);
+                    if (av == bv) matched = true;
+                    else if (av == null || bv == null || av.size() != bv.size()) return false;
+                    else {
+                        matched = true;
+                        for (k in 0...av.size()) if (av.at(k) != bv.at(k)) { matched = false; break; }
+                    }
+                    break;
+                }
+            }
+            if (!matched) return false;
+        }
+        return true;
+    }
+
+    private static function keyEquals(a:WidthIndependentAnnotationKey, b:WidthIndependentAnnotationKey):Bool {
+        if (a == b) return true;
+        if (a == null || b == null || a.text != b.text || !RecordEq.eq(a.profileId, b.profileId) || a.emphasisDotGapEm != b.emphasisDotGapEm
+            || !textStyleEquals(a.textStyle, b.textStyle)) return false;
+        if (a.spans.length != b.spans.length || a.lineBreakSpans.length != b.lineBreakSpans.length || a.decorations.length != b.decorations.length
+            || a.rubySpans.length != b.rubySpans.length || a.inlineBoxes.length != b.inlineBoxes.length || a.inlineObjects.length != b.inlineObjects.length) return false;
+        for (i in 0...a.spans.length) if (!textSpanEquals(a.spans[i], b.spans[i])) return false;
+        for (i in 0...a.lineBreakSpans.length) if (!lineBreakSpanEquals(a.lineBreakSpans[i], b.lineBreakSpans[i])) return false;
+        for (i in 0...a.decorations.length) if (!decorationEquals(a.decorations[i], b.decorations[i])) return false;
+        for (i in 0...a.rubySpans.length) if (!rubyEquals(a.rubySpans[i], b.rubySpans[i])) return false;
+        for (i in 0...a.inlineBoxes.length) if (!inlineBoxEquals(a.inlineBoxes[i], b.inlineBoxes[i])) return false;
+        for (i in 0...a.inlineObjects.length) if (!inlineObjectEquals(a.inlineObjects[i], b.inlineObjects[i])) return false;
+        return intsEqual(a.sourceBoundaries, b.sourceBoundaries) && mapEquals(a.rejectedTechnicalTiersBySpan, b.rejectedTechnicalTiersBySpan);
     }
 
     public function get(key:WidthIndependentAnnotationKey):Null<WidthIndependentParagraphAnnotation> {

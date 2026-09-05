@@ -9,6 +9,7 @@ import org.tiqian.layout.WidthIndependentAnnotationCache.WidthIndependentAnnotat
 import org.tiqian.layout.WidthIndependentAnnotationCache.WidthIndependentAnnotationCacheFns;
 import org.tiqian.layout.WidthIndependentAnnotationCache.WidthIndependentParagraphAnnotation;
 import org.tiqian.layout.WidthIndependentAnnotationCacheTestSupport;
+using std.RecordCopy;
 
 class WidthIndependentAnnotationCacheTest {
     @:test public static function relayoutWithDifferentWidthHitsCacheAndSkipsShaper():Void {
@@ -34,12 +35,12 @@ class WidthIndependentAnnotationCacheTest {
         final initialShapeCalls = shaper.shapeCallCount;
         TracedAssertions.assertTrue(initialShapeCalls > 0, "Initial layout must shape segments");
 
-        final inputWidth2 = WidthIndependentAnnotationCacheTestSupport.copyInput(inputWidth1, null, null, null, new LayoutConstraints(180));
+        final inputWidth2 = inputWidth1.copy(constraints = new LayoutConstraints(180));
         final result2 = engine.layout(inputWidth2);
         TracedAssertions.assertEquals(initialShapeCalls, shaper.shapeCallCount, "Relayout at new width must reuse cached annotation without shaping");
         TracedAssertions.assertEquals(1, cache.size);
 
-        final inputWidth3 = WidthIndependentAnnotationCacheTestSupport.copyInput(inputWidth1, null, null, null, new LayoutConstraints(500));
+        final inputWidth3 = inputWidth1.copy(constraints = new LayoutConstraints(500));
         final result3 = engine.layout(inputWidth3);
         TracedAssertions.assertEquals(initialShapeCalls, shaper.shapeCallCount, "Relayout at third width must also reuse cached annotation");
 
@@ -55,7 +56,7 @@ class WidthIndependentAnnotationCacheTest {
         final cachedEngine = new ExplainableStubParagraphLayoutEngine(null, null, null, null, null, null, null, null, null, null, null, null, new LruWidthIndependentAnnotationCache());
         final uncachedEngine = new ExplainableStubParagraphLayoutEngine(null, null, null, null, null, null, null, null, null, null, null, null, new NoOpWidthIndependentAnnotationCache());
 
-        final sweepWidths = generateSweepWidths(80, 7.3, 650);
+        final sweepWidths = WidthIndependentAnnotationCacheTestSupport.generateSweepWidths(80, 7.3, 650);
         for (fixture in fixtures) {
             for (width in sweepWidths) {
                 final input = new LayoutInput(
@@ -67,15 +68,15 @@ class WidthIndependentAnnotationCacheTest {
                 final expected = uncachedEngine.layout(input);
                 final actual = cachedEngine.layout(input);
 
-                TracedAssertions.assertEquals(expected.lines.length, actual.lines.length, "Line count mismatch for fixture at width " + width);
+                TracedAssertions.assertEquals(expected.lines.length, actual.lines.length, "Line count mismatch for fixture at width " + WidthIndependentAnnotationCacheTestSupport.floatText(width));
                 for (i in 0...expected.lines.length) {
-                    WidthIndependentAnnotationCacheTestSupport.assertEqualsTextRange(expected.lines[i].range, actual.lines[i].range, "Line " + i + " range mismatch at width " + width);
-                    TracedAssertions.assertEqualsFloatTolerance(expected.lines[i].visualWidth, actual.lines[i].visualWidth, 0.001, "Line " + i + " visualWidth mismatch at width " + width);
-                    TracedAssertions.assertEqualsFloatTolerance(expected.lines[i].adjustedWidth, actual.lines[i].adjustedWidth, 0.001, "Line " + i + " adjustedWidth mismatch at width " + width);
-                    TracedAssertions.assertEqualsFloatTolerance(expected.lines[i].naturalWidth, actual.lines[i].naturalWidth, 0.001, "Line " + i + " naturalWidth mismatch at width " + width);
-                    TracedAssertions.assertEqualsFloatTolerance(expected.lines[i].indent, actual.lines[i].indent, 0.001, "Line " + i + " indent mismatch at width " + width);
-                    TracedAssertions.assertEqualsFloatTolerance(expected.lines[i].hangingPunctuationAdvance, actual.lines[i].hangingPunctuationAdvance, 0.001, "Line " + i + " hanging mismatch at width " + width);
-                    TracedAssertions.assertEqualsEnum(expected.lines[i].endReason, actual.lines[i].endReason, "Line " + i + " endReason mismatch at width " + width);
+                    WidthIndependentAnnotationCacheTestSupport.assertEqualsTextRange(expected.lines[i].range, actual.lines[i].range, "Line " + i + " range mismatch at width " + WidthIndependentAnnotationCacheTestSupport.floatText(width));
+                    TracedAssertions.assertEqualsFloatTolerance(expected.lines[i].visualWidth, actual.lines[i].visualWidth, 0.001, "Line " + i + " visualWidth mismatch at width " + WidthIndependentAnnotationCacheTestSupport.floatText(width));
+                    TracedAssertions.assertEqualsFloatTolerance(expected.lines[i].adjustedWidth, actual.lines[i].adjustedWidth, 0.001, "Line " + i + " adjustedWidth mismatch at width " + WidthIndependentAnnotationCacheTestSupport.floatText(width));
+                    TracedAssertions.assertEqualsFloatTolerance(expected.lines[i].naturalWidth, actual.lines[i].naturalWidth, 0.001, "Line " + i + " naturalWidth mismatch at width " + WidthIndependentAnnotationCacheTestSupport.floatText(width));
+                    TracedAssertions.assertEqualsFloatTolerance(expected.lines[i].indent, actual.lines[i].indent, 0.001, "Line " + i + " indent mismatch at width " + WidthIndependentAnnotationCacheTestSupport.floatText(width));
+                    TracedAssertions.assertEqualsFloatTolerance(expected.lines[i].hangingPunctuationAdvance, actual.lines[i].hangingPunctuationAdvance, 0.001, "Line " + i + " hanging mismatch at width " + WidthIndependentAnnotationCacheTestSupport.floatText(width));
+                    TracedAssertions.assertEqualsEnum(expected.lines[i].endReason, actual.lines[i].endReason, "Line " + i + " endReason mismatch at width " + WidthIndependentAnnotationCacheTestSupport.floatText(width));
                 }
             }
         }
@@ -99,10 +100,10 @@ class WidthIndependentAnnotationCacheTest {
             final expected = uncachedEngine.layout(input);
             final actual = cachedEngine.layout(input);
 
-            TracedAssertions.assertEquals(expected.lines.length, actual.lines.length, "Fuzz line count mismatch at width " + width);
+            TracedAssertions.assertEquals(expected.lines.length, actual.lines.length, "Fuzz line count mismatch at width " + WidthIndependentAnnotationCacheTestSupport.floatText(width));
             for (i in 0...expected.lines.length) {
-                WidthIndependentAnnotationCacheTestSupport.assertEqualsTextRange(expected.lines[i].range, actual.lines[i].range, "Fuzz line " + i + " range mismatch at width " + width);
-                TracedAssertions.assertEqualsFloatTolerance(expected.lines[i].visualWidth, actual.lines[i].visualWidth, 0.001, "Fuzz line " + i + " width mismatch at width " + width);
+                WidthIndependentAnnotationCacheTestSupport.assertEqualsTextRange(expected.lines[i].range, actual.lines[i].range, "Fuzz line " + i + " range mismatch at width " + WidthIndependentAnnotationCacheTestSupport.floatText(width));
+                TracedAssertions.assertEqualsFloatTolerance(expected.lines[i].visualWidth, actual.lines[i].visualWidth, 0.001, "Fuzz line " + i + " width mismatch at width " + WidthIndependentAnnotationCacheTestSupport.floatText(width));
             }
         }
     }
@@ -122,23 +123,23 @@ class WidthIndependentAnnotationCacheTest {
         engine.layout(baseInput);
         TracedAssertions.assertEquals(1, cache.size);
 
-        final textChanged = WidthIndependentAnnotationCacheTestSupport.copyInput(baseInput, new TiqianTextContent("\u4E2D\u897F\u6DF7\u5408\u6392\u7248\u4E0E\u53D8\u52A8\u6587\u672C\u3002"));
+        final textChanged = baseInput.copy(content = new TiqianTextContent("\u4E2D\u897F\u6DF7\u5408\u6392\u7248\u4E0E\u53D8\u52A8\u6587\u672C\u3002"));
         engine.layout(textChanged);
         TracedAssertions.assertEquals(2, cache.size);
 
-        final fontChanged = WidthIndependentAnnotationCacheTestSupport.copyInput(baseInput, null, new TextStyle(null, 24));
+        final fontChanged = baseInput.copy(textStyle = new TextStyle(null, 24));
         engine.layout(fontChanged);
         TracedAssertions.assertEquals(3, cache.size);
 
-        final emphasisChanged = WidthIndependentAnnotationCacheTestSupport.copyInput(baseInput, null, null, null, null, [new DecorationSpan(new TextRange(0, 4), Emphasis)]);
+        final emphasisChanged = baseInput.copy(decorations = [new DecorationSpan(new TextRange(0, 4), Emphasis)]);
         engine.layout(emphasisChanged);
         TracedAssertions.assertEquals(4, cache.size);
 
-        final rubyChanged = WidthIndependentAnnotationCacheTestSupport.copyInput(baseInput, null, null, null, null, null, [new RubySpan(new TextRange(0, 2), "zh\u014Dngx\u012B", Pinyin)]);
+        final rubyChanged = baseInput.copy(rubySpans = [new RubySpan(new TextRange(0, 2), "zh\u014Dngx\u012B", Pinyin)]);
         engine.layout(rubyChanged);
         TracedAssertions.assertEquals(5, cache.size);
 
-        final inlineBoxChanged = WidthIndependentAnnotationCacheTestSupport.copyInput(baseInput, null, null, null, null, null, null, [new InlineBoxSpan(new TextRange(2, 4), 4, 4)]);
+        final inlineBoxChanged = baseInput.copy(inlineBoxes = [new InlineBoxSpan(new TextRange(2, 4), 4, 4)]);
         engine.layout(inlineBoxChanged);
         TracedAssertions.assertEquals(6, cache.size);
     }
@@ -167,25 +168,7 @@ class WidthIndependentAnnotationCacheTest {
         final key3 = WidthIndependentAnnotationCacheTestSupport.annotationKey(input3);
         TracedAssertions.assertTrue(cache.get(key3) != null);
         TracedAssertions.assertTrue(cache.get(key2) != null);
-        final evictedActual = cache.get(key1);
-        final evictedExpected:Null<WidthIndependentParagraphAnnotation> = null;
-        final recorder = TestTrace.currentRecorder();
-        if (recorder != null) {
-            final expStr = evictedExpected == null ? "-" : Std.string(evictedExpected);
-            final actStr = evictedActual == null ? "-" : Std.string(evictedActual);
-            recorder.record("eq expected=" + expStr + " actual=" + actStr + " msg='Oldest entry key1 should be evicted'");
-        }
-        if (evictedActual != null) TracedAssertions.fail("Oldest entry key1 should be evicted");
-    }
-
-    private static function generateSweepWidths(start:Float, step:Float, max:Float):Array<Float> {
-        final widths:Array<Float> = [];
-        var w = start;
-        while (w <= max) {
-            widths.push(w);
-            w += step;
-        }
-        return widths;
+        WidthIndependentAnnotationCacheTestSupport.assertEqualsNullableAnnotation(null, cache.get(key1), "Oldest entry key1 should be evicted");
     }
 }
 
