@@ -47,9 +47,9 @@ grep -c " error: " /tmp/census-f32.log
 grep -c " error: " /tmp/census-f64.log'
 ```
 
-K4（数值宽度族）的取数命令如下，在同一批日志上执行。六条模式按顺序
+K4（数值类型不匹配错误）的取数命令如下，在同一批日志上执行。六条模式按顺序
 对应：桶 7（运算符两侧类型）、桶 14（Int 字面量初始化给浮点字段）、
-桶 22（Number 装箱值的星投影）、桶 4 的三类宽度形状（Int 给浮点、Number
+桶 22（Number 装箱值的星投影）、桶 4 的三类数值类型转换形状（Int 给浮点、Number
 装箱给浮点、Long 给浮点；最后一条在 f32 日志里为 0）。桶 4 里其余形状
 （可空给非空等）计入 K6，不在本命令内。2026-09-05 实测：f32 六项相加
 36+15+6+58+29+0=144，f64 相加 33+17+6+66+28+2=152，与基线一致。
@@ -97,7 +97,7 @@ nix develop -c bash -c 'haxe engine-haxe/core-dart.hxml'    # Dart
 - f32 目录（out/kotlin-gen 与 kotlin-gen-tests）：3335 条错误；f64 目录
   （out/kotlin-gen-f64 与 kotlin-gen-f64-tests）：3355 条错误
 - 两个目录的错误种类分布一致，差异只有 20 条，全部是同一错误里 Float 与 Double
-  的宽度写法不同；另有 13 条 f64 独有错误，见下表桶 21 的注。
+  的类型名写法不同；另有 13 条 f64 独有错误，见下表桶 21 的注。
 - 基线历史：`a75601a` 上首次普查为 3338 与 3358 条；推进到 `5d7417e` 后
   toString 遮蔽超类一桶减少 3 条（5 变 2），两目录各减少 3 条。首版分桶脚本
   把条件类 26 条错计入推断类，本表按修正后的脚本重新分桶，两目录合计数与
@@ -154,9 +154,9 @@ PunctuationSpacingCompressor 51、PunctuationAtomBuilder 51、FontMetricsNormali
 48、List&lt;InlineBoxSpan&gt; 44、MutableList&lt;FontDecisionInfo&gt; 42；其余 66 种
 类型合计 746。
 
-桶 2（290 个符号，六个子族）：
+桶 2（290 个符号，六个分组）：
 
-| 子族 | 条数 | 符号 |
+| 分组 | 条数 | 符号 |
 |---|---|---|
 | compare 前缀数据类比较函数 | 41 | compareTextStyle、compareCluster、compareGlue 等 41 个符号各 1 条 |
 | 类型与模块名导入缺失 | 52 | UString 29、Ic 8、TiqianNoSuchElementException 7、SortedMap 2、Type 2、NodeFileSystem 2、__functional_shim 4、haxe 1、StubFontMetricsResolver、ExplainableStubTextShaper、BuiltInClreqProfileResolver、CjkFontRoleClassifier、ScriptAwareFontMetricsNormalizer 各 1 |
@@ -239,7 +239,7 @@ S2 二十到一百九十九条；S3 二十条以下。流程类条目不适用 S
 | K1 | Kotlin null 传非空参数 | f32 2122 / f64 2122 | 0 | 桶 1 |
 | K2 | Kotlin 可空接收者两桶合计 | f32 316 / f64 316 | 0 | 桶 3、8 |
 | K3 | Kotlin unresolved reference | f32 290 / f64 283 | 0 | 桶 2 |
-| K4 | Kotlin 数值宽度族（桶 7、14、22 加桶 4 的宽度类形状，取数命令见第 2.1 节） | f32 144 / f64 152 | 0 | 桶 7、14、22、4 部分 |
+| K4 | Kotlin 数值类型不匹配（桶 7、14、22 加桶 4 的数值转换形状，取数命令见第 2.1 节） | f32 144 / f64 152 | 0 | 桶 7、14、22、4 部分 |
 | K5 | Kotlin f64 独有语法错误 | f32 0 / f64 13 | 0 | 桶 21 注 |
 | K6 | Kotlin 其余全部桶 | f32 463 / f64 469 | 0 | 桶 4 余量、5、6、9 至 21、23 至 28 |
 | K7 | Kotlin 两目录错误总数 | f32 3335 / f64 3355 | 0 | 全部桶 |
@@ -247,9 +247,9 @@ S2 二十到一百九十九条；S3 二十条以下。流程类条目不适用 S
 | K9 | 四目标生成中止的第一处报错 | 4 个第一处（vendored `012ab59`） | 全部消除并产出四语言分桶表 | 第 4 节 |
 | K10 | 修复排队项 | nullargs 在验收，features/43 未派发 | 全部完成 | 修复项清单 |
 
-K6 与 K4 的分界：桶 4 里与可空相关的形状（Int? 给 Int 等）计入 K6，只有宽度
-转换类形状（Int 给浮点、Number 装箱给浮点、f64 独有的 Long 给 Double）计入
-K4。
+K6 与 K4 的分界：桶 4 里与可空相关的形状（Int? 给 Int 等）计入 K6，只有数值
+类型转换的形状（Int 给浮点、Number 装箱给浮点、f64 独有的 Long 给 Double）
+计入 K4。
 
 ## 7 修复项清单
 
@@ -353,15 +353,15 @@ K4。
 
 ### 第 1 组：三大错误种类（Kotlin）
 
-- [ ] F1a 可空接收者族（K2）：先取五个失败点的生成代码，判定归属为
+- [ ] F1a 可空接收者错误（K2）：先取五个失败点的生成代码，判定归属为
       engine-haxe 源缺少空值判断（修 tiqian 源）或 boring 应生成 `?.` 安全
       调用（修生成器）。C2，P1，S1。
-- [ ] F1b 名称解析第二批（K3），按桶 2 六个子族各派发或中央修复，每个子族
+- [ ] F1b 名称解析第二批（K3），按桶 2 的六个分组各派发或中央修复，每个分组
       先取一个最小失败样本写进任务书。C2，P1，S1。
 
-### 第 2 组：数值宽度与 f64 独有错误（Kotlin）
+### 第 2 组：数值类型不匹配与 f64 独有错误（Kotlin）
 
-- [ ] F2a 数值宽度族（K4）：boring 在 Float 位置为 Int 字面量与 Number 装箱值
+- [ ] F2a 数值类型不匹配（K4）：boring 在 Float 位置为 Int 字面量与 Number 装箱值
       生成显式转换，样本库增加覆盖。C2，P1，S2。
 - [ ] F2b f64 独有语法错误（K5）：先取 9 条 `Expecting an element` 的文件与
       行号，定位 f64 生成路径独有的分支。C1，P0，S0。
