@@ -50,8 +50,8 @@ class TracedAssertions {
 
     public static function assertEqualsNullableRepairOption(expected:Null<RepairOption>, actual:Null<RepairOption>, ?message:String):Void {
         recordEvent("eq", [
-            field("expected", expected == null ? "-" : Std.string(expected)),
-            field("actual", actual == null ? "-" : Std.string(actual)),
+            field("expected", expected == null ? "-" : renderRepairOption(expected)),
+            field("actual", actual == null ? "-" : renderRepairOption(actual)),
             msgField(message)
         ]);
         if (expected != actual) {
@@ -169,12 +169,15 @@ class TracedAssertions {
     public static function assertEqualsFontRole(expected:FontRole, actual:Null<FontRole>, ?message:String):Void {
         recordEvent("eq", [
             field("expected", Std.string(expected)),
-            field("actual", actual == null ? "null" : Std.string(actual)),
+            field("actual", actual == null ? "null" : renderFontRole(actual)),
             msgField(message)
         ]);
         if (actual == null || expected != actual)
             fail(message == null ? "Expected values to be equal." : message);
     }
+
+    static function renderFontRole(value:FontRole):String
+        return Std.string(value);
 
     public static function assertEqualsQuoteType(expected:QuoteType, actual:QuoteType, ?message:String):Void {
         recordEvent("eq", [
