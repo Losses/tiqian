@@ -1,5 +1,7 @@
 package org.tiqian.layout;
 
+using org.tiqian.layout.ProgressiveBreakTierPriority;
+
 using std.Functional;
 
 import org.tiqian.core.Cluster;
@@ -418,7 +420,7 @@ class LineRepair {
                 && resultingBreak != null
                 && currentBreak.spanRange.start == resultingBreak.spanRange.start
                 && currentBreak.spanRange.end == resultingBreak.spanRange.end
-                && resultingBreak.tier.priority < currentBreak.tier.priority;
+                && resultingBreak.tier.priority() < currentBreak.tier.priority();
             if (promotesProgressiveTier && addedAdvance < deficit - PROGRESSIVE_TIER_PROMOTION_FILL_EPSILON) {
                 final activeBreak = currentBreak;
                 final searchStart = groupEnd + 2;
@@ -454,7 +456,7 @@ class LineRepair {
                 && resultingBreak != null
                 && currentBreak.spanRange.start == resultingBreak.spanRange.start
                 && currentBreak.spanRange.end == resultingBreak.spanRange.end
-                && resultingBreak.tier.priority > currentBreak.tier.priority) {
+                && resultingBreak.tier.priority() > currentBreak.tier.priority()) {
                 i += 1;
                 continue;
             }

@@ -1,5 +1,7 @@
 package org.tiqian.layout;
 
+using org.tiqian.layout.ProgressiveBreakTierPriority;
+
 import org.tiqian.core.LayoutInput;
 import org.tiqian.core.LayoutResult;
 import org.tiqian.core.Size;
@@ -641,7 +643,7 @@ class LineAdjustmentStage {
             final spanRange = selectedTechnicalBreak.spanRange;
             if (prep.rejectedTechnicalTiersBySpan.has(spanRange)) {
                 final rejectedForSpan = prep.rejectedTechnicalTiersBySpan.get(spanRange);
-                if (rejectedForSpan.has(selectedTechnicalBreak.tier)) {
+                if (rejectedForSpan.has(selectedTechnicalBreak.tier.priority())) {
                     continue;
                 }
             }
@@ -668,14 +670,14 @@ class LineAdjustmentStage {
                 if (foundSpanIdx < 0) {
                     newlyRejectedSpans.push(spanRange);
                     final b:std.SortedSetBuilder<Int> = std.SortedSet.builder();
-                    b.put(selectedTechnicalBreak.tier.priority);
+                    b.put(selectedTechnicalBreak.tier.priority());
                     newlyRejectedTiersList.push(b.build());
                 } else {
                     final b:std.SortedSetBuilder<Int> = std.SortedSet.builder();
                     final existing = newlyRejectedTiersList[foundSpanIdx];
                     for (e in 0...existing.size())
                         b.put(existing.at(e));
-                    b.put(selectedTechnicalBreak.tier.priority);
+                    b.put(selectedTechnicalBreak.tier.priority());
                     newlyRejectedTiersList[foundSpanIdx] = b.build();
                 }
             }
