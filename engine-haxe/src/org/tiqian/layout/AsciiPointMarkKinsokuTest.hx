@@ -27,15 +27,15 @@ class AsciiPointMarkKinsokuTest {
                 var p = AsciiPointMarkKinsokuTestSupport.clustersWithText(r, mark)[0];
                 TracedAssertions.assertEqualsString("latin-primary", p.fontKey, b.label + " '" + mark + "' face");
                 var f = AsciiPointMarkKinsokuTestSupport.fontDecision(r, p.range);
-                TracedAssertions.assertEqualsString("LatinText", f.role, b.label + " '" + mark + "' role");
+                TracedAssertions.assertEqualsString("LatinText", f == null ? "<no font decision>" : f.role, b.label + " '" + mark + "' role");
                 TracedAssertions.assertTrue(!AsciiPointMarkKinsokuTestSupport.hasPunctuation(r, p.range),
                     b.label
                     + " '"
                     + mark
                     + "' must not enter CJK punctuation geometry");
                 var c = AsciiPointMarkKinsokuTestSupport.contextual(r, p.range);
-                TracedAssertions.assertEqualsString("LineStart", c.forbiddenPosition);
-                TracedAssertions.assertEqualsString("AttachedAsciiPointMarkKinsoku", c.reason);
+                TracedAssertions.assertEqualsString("LineStart", c == null ? "<no contextual kinsoku decision>" : c.forbiddenPosition);
+                TracedAssertions.assertEqualsString("AttachedAsciiPointMarkKinsoku", c == null ? "<no contextual kinsoku decision>" : c.reason);
             }
         }
     }
@@ -255,8 +255,8 @@ class AsciiPointMarkKinsokuTest {
                     x = true;
             TracedAssertions.assertTrue(!x,
                 b.label + " lines: " + AsciiPointMarkKinsokuTestSupport.renderStrings(AsciiPointMarkKinsokuTestSupport.lineTexts(r, "中文中文,中文")));
-            TracedAssertions.assertEqualsString("Uax14WesternPunctuationBoundary:LB15d", AsciiPointMarkKinsokuTestSupport.contextualByText(r, ",").reason,
-                b.label);
+            final d = AsciiPointMarkKinsokuTestSupport.contextualByText(r, ",");
+            TracedAssertions.assertEqualsString("Uax14WesternPunctuationBoundary:LB15d", d == null ? "<no contextual kinsoku decision>" : d.reason, b.label);
         }
     }
 
@@ -275,8 +275,8 @@ class AsciiPointMarkKinsokuTest {
             }
         for (b in AsciiPointMarkKinsokuTestSupport.breakers()) {
             final r = AsciiPointMarkKinsokuTestSupport.layout("中 ,文", 1000, b.breaker);
-            TracedAssertions.assertEqualsString("Uax14WesternPunctuationBoundary:LB15d", AsciiPointMarkKinsokuTestSupport.contextualByText(r, ",").reason,
-                b.label);
+            final d = AsciiPointMarkKinsokuTestSupport.contextualByText(r, ",");
+            TracedAssertions.assertEqualsString("Uax14WesternPunctuationBoundary:LB15d", d == null ? "<no contextual kinsoku decision>" : d.reason, b.label);
         }
     }
 

@@ -49,8 +49,9 @@ class DisplayGlyphSubstitutionEngineTestSupport {
         while (cells <= 30) {
             final result = layoutWithoutGrid(engine, text, cells * 16 + 7);
             final dash = singleClusterWithText(result, "\u2014\u2014");
-            final decision = firstJustificationDecisionCovering(result, dash.range);
-            if (decision != null && decision.allocations.length > 0) {
+            final found = firstJustificationDecisionCovering(result, dash.range);
+            if (found != null && found.allocations.length > 0) {
+                final decision:JustificationDecisionInfo = found;
                 return {dash: dash, decision: decision};
             }
             cells++;
@@ -129,7 +130,7 @@ class DisplayGlyphSubstitutionEngineTestSupport {
         return found;
     }
 
-    public static function firstJustificationDecisionCovering(r:LayoutResult, range:TextRange):JustificationDecisionInfo {
+    public static function firstJustificationDecisionCovering(r:LayoutResult, range:TextRange):Null<JustificationDecisionInfo> {
         for (i in 0...r.debug.justificationDecisions.length) {
             final d = r.debug.justificationDecisions[i];
             if (range.start >= d.lineRange.start && range.end <= d.lineRange.end) {

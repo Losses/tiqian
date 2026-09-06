@@ -107,7 +107,7 @@ class LineGeometryStageFns {
 
     public static function resolveLineVerticalGeometrySorted(input:LayoutInput, fontSize:Float, pinyinSpans:Array<RubySpan>, naturalClusters:Array<Cluster>,
             lineSolution:LineSolution, rubyFontGeometryBySpan:std.SortedMap<RubySpan, RubyFontGeometry>, existingInterlineSpace:Float,
-            baseLineMetrics:ResolvedLineMetrics, baseFaceHeight:Float, rubyExtent:Float, inlineObjectByClusterIndex:std.SortedMap<Int, InlineObjectSpan>,
+            baseLineMetrics:ResolvedLineMetrics, baseFaceHeight:Float, rubyExtent:Float, inlineObjectByClusterIndex:Null<std.SortedMap<Int, InlineObjectSpan>>,
             baseAscent:Float, baseDescent:Float):LineVerticalGeometryStageResult {
         final pinyinClusterRanges:Array<RubyClusterRange> = [];
         for (ruby in pinyinSpans) {

@@ -94,7 +94,7 @@ class AsciiPointMarkKinsokuTestSupport {
         return first.start == second.start && first.end == second.end;
     }
 
-    public static function fontDecision(r:LayoutResult, range:TextRange):FontDecisionInfo {
+    public static function fontDecision(r:LayoutResult, range:TextRange):Null<FontDecisionInfo> {
         for (i in 0...r.debug.fontDecisions.length)
             if (sameRange(r.debug.fontDecisions[i].range, range))
                 return r.debug.fontDecisions[i];
@@ -108,7 +108,7 @@ class AsciiPointMarkKinsokuTestSupport {
         return false;
     }
 
-    public static function fontDecisionByText(r:LayoutResult, s:String):FontDecisionInfo {
+    public static function fontDecisionByText(r:LayoutResult, s:String):Null<FontDecisionInfo> {
         for (i in 0...r.debug.fontDecisions.length)
             if (r.debug.fontDecisions[i].sourceText == s)
                 return r.debug.fontDecisions[i];
@@ -122,14 +122,14 @@ class AsciiPointMarkKinsokuTestSupport {
         return false;
     }
 
-    public static function contextual(r:LayoutResult, range:Null<TextRange>):ContextualKinsokuDecisionInfo {
+    public static function contextual(r:LayoutResult, range:Null<TextRange>):Null<ContextualKinsokuDecisionInfo> {
         for (i in 0...r.debug.contextualKinsokuDecisions.length)
             if (range == null || sameRange(r.debug.contextualKinsokuDecisions[i].range, range))
                 return r.debug.contextualKinsokuDecisions[i];
         return null;
     }
 
-    public static function contextualByText(r:LayoutResult, s:String):ContextualKinsokuDecisionInfo {
+    public static function contextualByText(r:LayoutResult, s:String):Null<ContextualKinsokuDecisionInfo> {
         for (i in 0...r.debug.contextualKinsokuDecisions.length)
             if (r.debug.contextualKinsokuDecisions[i].sourceText == s)
                 return r.debug.contextualKinsokuDecisions[i];
@@ -153,7 +153,10 @@ class AsciiPointMarkKinsokuTestSupport {
 
     public static function nullFallback(r:LayoutResult):String {
         final d = contextual(r, null);
-        return d == null || d.impossibleMeasureFallback == null ? "" : d.impossibleMeasureFallback;
+        if (d == null)
+            return "";
+        final v = d.impossibleMeasureFallback;
+        return v == null ? "" : v;
     }
 
     public static function layout(text:String, maxWidth:Float, breaker:LineBreaker, ?level:Null<KinsokuLevel>, ?hanging:Null<HangingPunctuationStyle>,
