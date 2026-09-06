@@ -635,7 +635,7 @@ jsBrowserTest、jsNodeTest 全部通过；golden 零 diff。统一 KPI：对照�
   进度（策略点 1，2026-08-23）：9ef3606。dash issue 命名与 detail 组装移入
   font 模块 `CjkDashCapabilityPolicy`（null status、空白 detail、带 detail
   共五分支 commonTest），WebCanvasTextShaper 只递探针的 status/detail 证据
-  并调用策略，name 与 detail 输出字节不变。TS 门 cjk-dash.js 删除无消费者
+  并调用策略，name 与 detail 输出字节不变。TS 侧的 cjk-dash.js 删除无消费者
   的 issue 字段（宿主 Lifecycle 只读 status 与 detail；demo/web 与
   exact-session 测试读的是引擎输出的 data-tiqian-capability-issue 属性），
   期望同步更新。jsTest dash 断言组不改且通过，npm test 395 例、golden
@@ -974,7 +974,7 @@ jsBrowserTest、jsNodeTest 全部通过；golden 零 diff。统一 KPI：对照�
   逐步移植——eligibility、样式捕获、降级（DomLoweringFailure 与
   UnsupportedParagraph 两条失败路径）、custody begin 十四参、
   applyConfiguredHostFontSize、activeOptions、worker 请求与 plan/issue、
-  canUseRichBrowserFallback、exact worker 门（style 属性还原）、take 与
+  canUseRichBrowserFallback、exact worker 检查（style 属性还原）、take 与
   stabilize、rendered/runtime-render-font、commit、worker 与直连两条 commit
   分发、失败 restoreParagraph；三个 prepared 元数据 JSON 构建器与降级
   helpers 以内联孪生进入模块（ESM 源不可 import）；issue 对象补 element
@@ -1057,7 +1057,7 @@ jsBrowserTest、jsNodeTest 全部通过；golden 零 diff。统一 KPI：对照�
   进度（Slice 5，2026-08-24）：afb0fde、62be699。npm-core 新增
   core/engine/root-state.js（globalThis.__TiqianRootState：WeakMap 状态表与
   DetachedRootWeakOwnership、createRootState 自 bag 起点的解析链与快照
-  准入门、createRootStateFromCanonical 供已解析选项再入、engineState 十字段
+  准入检查、createRootStateFromCanonical 供已解析选项再入、engineState 十字段
   描述符与 processParagraph/session/prepare 三个参数构建器、
   paragraphCandidates 的 RuntimeEligibleMeasureSet 过滤、
   strandedSourceParagraphs、publishState 三分支与属性维护、
