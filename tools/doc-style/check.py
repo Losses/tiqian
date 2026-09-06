@@ -32,6 +32,10 @@ WORDS = [
     "门面", "扇门", "门控", "门禁", "缓存门", "字体门",
     # gate / threshold 直译（CI gate、graduation gate）
     "门槛", "毕业门", "硬门", "CI 门",
+    # gate-sense 门 compounds (2026-09-06 correction): 门清 borrows the
+    # mahjong term for "rerun until clean"; write the action out instead.
+    # 门表 compresses "blocking-status table"; name the table by content.
+    "门清", "门表", "验证门", "准入门",
     # bookkeeping and finance metaphors
     "闭环", "台账", "账", "账目", "兑现", "零钱", "流失",
     # coined self-reference for the coordinating session (2026-08-29 correction)
@@ -125,6 +129,13 @@ PATTERNS = [
     # (会话级, 帧级). "top-level" is platform vocabulary and stays the
     # single English exemption.
     (r"(?i)\b(?!top-levels?\b)[a-z]+-levels?\b", "coinage"),
+    # Gate-sense 门 attached to a target name or a count (ts 门, rust 门,
+    # 三门, 19 门): write the target name or the command list instead
+    # (2026-09-06 correction). 门面 and 门槛 are separate word-list
+    # entries (js 门面, 20 s 门槛), so the lookaheads keep them from
+    # being reported twice by these patterns.
+    (r"[A-Za-z0-9] ?门(?!面|槛)", "coinage"),
+    (r"[一两二三四五六七八九十每] ?门(?!面|槛)", "coinage"),
 ]
 
 # Dictionary compounds where 级 is part of a standard word, not a glued
