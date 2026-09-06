@@ -105,7 +105,7 @@ grep -a " error: unresolved reference" /tmp/census-f32.log \
 nix develop -c bash -c 'haxe engine-haxe/core-ts.hxml'      # TypeScript，自 boring de11c06a 起退出码 0
 nix develop -c bash -c 'haxe engine-haxe/core-rust.hxml'    # Rust，当前退出码 0
 nix develop -c bash -c 'haxe engine-haxe/core-swift.hxml'   # Swift，自 boring 2c9257d 起退出码 0
-nix develop -c bash -c 'haxe engine-haxe/core-dart.hxml'    # Dart，当前退出码 1
+nix develop -c bash -c 'haxe engine-haxe/core-dart.hxml'    # Dart，自 boring `31627b5c` 起退出码 0
 
 # Swift 重生成与首次编译普查（2026-09-06；boring 185cf02，tiqian 3240f50a）
 cd /tmp/tiqian-swiftcens && nix develop -c bash -c 'printf /tmp/boring-swiftcens > .haxelib/boring/.dev; haxe engine-haxe/core-swift.hxml; echo REGEN_RC=$?'
@@ -113,9 +113,7 @@ cd /tmp/tiqian-swiftcens && nix develop /home/losses/Development/boring -c bash 
 ```
 
 boring 遇到尚未实现生成规则的 Haxe 构造时，在第一处这样的构造上报错并中止。
-dart 的生成命令当前停在第一处报错，见第 4 节；ts、swift 与 rust 的生成命令
-退出码已为 0，三者的编译普查命令已记在本节。dart 的生成命令退出码为 0
-之后，它的编译普查命令（dart analyze）补记在本节。
+四个目标的生成命令退出码均已为 0，四者的编译普查命令都已记在本节。
 
 TypeScript 重生成与首次编译普查（2026-09-06；boring `7606ff85`，tiqian
 `f2517918`，工作树 /tmp/tiqian-audit，重生成日志 /tmp/audit-gen.log，
@@ -173,6 +171,34 @@ grep -a ": error" /tmp/census-r4-rust.log | sed 's/^.*: error//' \
 # 求和校验：上式输出第一列求和必须等于错误总数
 ```
 
+Dart 重生成与首次编译普查（2026-09-06；boring `31627b5c`，tiqian `17a646da`，
+工作树 /tmp/tiqian-dartic，普查日志 /tmp/dartic-census-gen.log 与
+/tmp/dartic-census-tests.log，逐类表 /tmp/dartic-code-combined.txt，类内分解
+/tmp/dartic-undef-name.txt 等）：
+
+```shell
+# 重生成（消费树克隆与 .dev 都指向合并工树 /tmp/boring-darticm 的 main
+# 检出 31627b5c；两处须指向同一提交，不一致时报 Type not found）
+cd /tmp/tiqian-dartic && nix develop -c bash -c 'printf /tmp/boring-darticm > .haxelib/boring/.dev; rm -rf engine-haxe/out/dart-gen engine-haxe/out/dart-gen-tests; haxe engine-haxe/core-dart.hxml; echo DART_RC=$?'
+
+# 编译普查。dart SDK 来自 boring 的 nix develop（3.13.0）；有错误时退出码
+# 非 0 是预期，错误计数来自日志；两个目录分别运行
+cd /tmp/tiqian-dartic/engine-haxe/out/dart-gen && nix develop /home/losses/Development/boring -c bash -c 'dart analyze --format=machine > /tmp/dartic-census-gen.log 2>&1; echo rc=$?; grep -c "^ERROR" /tmp/dartic-census-gen.log'
+cd /tmp/tiqian-dartic/engine-haxe/out/dart-gen-tests && nix develop /home/losses/Development/boring -c bash -c 'dart analyze --format=machine > /tmp/dartic-census-tests.log 2>&1; echo rc=$?; grep -c "^ERROR" /tmp/dartic-census-tests.log'
+
+# 逐类枚举（第 8 节逐类表的产出命令）。机器格式为
+# 级别|类别|错误码|文件|行|列|长度|消息，错误码取第 3 列；WARNING 与 INFO
+# 不计入；gen 与 tests 两目录合并计数，keys 收两侧并集
+for side in gen tests; do awk -F'|' -v s=$side '/^ERROR/{print $3"\t"s}' /tmp/dartic-census-$side.log; done \
+  | awk -F'\t' '{if($2=="gen") g[$1]+=1; else t[$1]+=1; keys[$1]=1} END{for (k in keys) printf "%s\t%d\t%d\t%d\n", k, g[k]+0, t[k]+0, g[k]+t[k]+0}' \
+  | sort -t$'\t' -k4 -rn
+# 求和校验：上式输出合计列求和必须等于错误总数 2931
+
+# 类内分解（第 8.2 节各表的产出命令）。以 UNDEFINED_IDENTIFIER 的名称
+# 分布为例，其余错误码的抽取规则见第 8.2 节
+cat /tmp/dartic-census-gen.log /tmp/dartic-census-tests.log | awk -F'|' '/^ERROR/ && $3=="UNDEFINED_IDENTIFIER" {msg=$8; if (match(msg, /Undefined name '\''[^'\'']*'\''\.\''/)) print substr(msg, RSTART+16, RLENGTH-18)}' | sort | uniq -c | sort -rn
+```
+
 ### 2.3 已知的测量错误
 
 - kotlinc 2.4.10 的错误消息是「null cannot be a value of a non-null type」
@@ -212,7 +238,7 @@ grep -a ": error" /tmp/census-r4-rust.log | sed 's/^.*: error//' \
 
 「判定」列的含义：一个错误类的修复位置（boring 生成器的机制位置，或
 tiqian 源的一类写法）已经探针证实时，记修复面；只有猜测记「假设」；都没有
-记「未判定」。判定的方法见 T-attr（第 10 节第 1 组）：对类内抽样错误点读
+记「未判定」。判定的方法见 T-attr（第 11 节第 1 组）：对类内抽样错误点读
 生成代码后定性。假设不构成派发依据，证实后才开修复项。本文用到两个修复面
 名：修复面 A 指可空接收者上方法调用的生成机制；数值转换面指数值类型互转的
 生成机制（候选，待证实）。
@@ -318,16 +344,18 @@ f64 侧（326 行）按第 2.1 节命令重新统计后再列举。符号名只�
 
 boring 对尚未实现生成规则的 Haxe 构造，在生成阶段调用 `Context.error` 报错
 并中止，不做猜测性输出。每消除一处报错都要重新生成一次才知道下一处；本文把
-这套循环称为逐处重跑。kotlin 与 rust 的生成命令退出码为 0，不在表内；swift
-与 ts 两行只列出编译普查的去向。swift 行沿用 /tmp/tiqian-swiftcens 实测；
-ts 与 dart 两行 2026-09-06 在工作树 /tmp/tiqian-audit（tiqian `f2517918`
-加 boring `7606ff85`，重生成日志 /tmp/audit-gen.log）实测。
+这套循环称为逐处重跑。kotlin 与 rust 的生成命令退出码为 0，不在表内；swift、
+ts 与 dart 三行只列出编译普查的去向。swift 行沿用 /tmp/tiqian-swiftcens
+实测；ts 行 2026-09-06 在工作树 /tmp/tiqian-audit（tiqian `f2517918` 加
+boring `7606ff85`，重生成日志 /tmp/audit-gen.log）实测；dart 行 2026-09-06
+在工作树 /tmp/tiqian-dartic（tiqian `17a646da` 加 boring `31627b5c`，普查
+日志 /tmp/dartic-census-gen.log 与 /tmp/dartic-census-tests.log）实测。
 
 | 目标 | 第一处报错的文本 | tiqian 触发点 | 处置 |
 |---|---|---|---|
-| TypeScript | 重生成退出码为 0（boring `47d6cea` 修复 std/Type.hx extern 错误类、`f270c670` 修复 UStringException 值引用后达成）；tsc 首次编译普查见第 7 节 | — | 修复项见第 10 节 F3e、T-ts |
+| TypeScript | 重生成退出码为 0（boring `47d6cea` 修复 std/Type.hx extern 错误类、`f270c670` 修复 UStringException 值引用后达成）；tsc 首次编译普查见第 7 节 | — | 修复项见第 11 节 F3e、T-ts |
 | Swift | 重生成退出码为 0（boring `2c9257d` 修复异常超类报错后达成）；swiftc 首次编译普查见第 5 节 | — | 浮点字面量渲染、字符串控制字符转义；修复项 F3f、F3g |
-| Dart | `Units.hx:25` 静态成员顶层重名错误类：top-level name ic is claimed twice in org.tiqian.core.Units | `engine-haxe/src/org/tiqian/core/Units.hx:25`（FloatIc 与 IntIc 两个类各有一个静态函数 `ic`） | F0l 修复立项 |
+| Dart | 重生成退出码为 0（boring `189e01ad` 修复静态成员顶层重名后达成，原 F0l）；dart analyze 首次编译普查见第 8 节 | — | 修复项见第 11 节 F3h、F3i、T-dart |
 
 已越过并完成修复的阻断（保留索引）：dart 变体 switch 语句位（boring
 `4e2b441`）、swift 与 dart 的 Math.pow 调用点（boring `fc0d577`）、实例字段
@@ -529,7 +557,319 @@ TS2339 的名称分布（求和 14）：kind 6、copy 6、push 1、insert 1。
 TS2551 的名称分布（求和 28）：get_strategyName 28 条（分布在读取
 strategyName 属性的测试与支撑文件）。
 
-## 8 分级标尺
+## 8 Dart 首次编译普查（2026-09-06）
+
+基线为 boring `31627b5c`（F0l 修复并入 main 的合并提交）、tiqian `17a646da`
+（工作树 /tmp/tiqian-dartic，重生成退出码 0，普查日志
+/tmp/dartic-census-gen.log 与 /tmp/dartic-census-tests.log，逐类表
+/tmp/dartic-code-combined.txt，类内分解 /tmp/dartic-undef-name.txt 等，产出
+命令见第 2.2 节）。这是 dart 目标对 tiqian 源的首次全量生成与首次编译
+普查；dart analyze（SDK 3.13.0，boring 的 nix develop 提供）在 dart-gen
+目录报 1748 条 ERROR、在 dart-gen-tests 目录报 1183 条 ERROR，合计 2931
+条，按下表 35 个错误码分类，求和校验相等。dart 普查没有测量环境条目：
+运行时与测试运行器都以产物内相对路径引用，analyzer 在生成目录自带的
+pubspec.yaml 上运行，不依赖外部类型配置。
+
+| 错误码 | gen | tests | 合计 | 判定与处置 |
+|---|---:|---:|---:|---|
+| `UNDEFINED_IDENTIFIER` | 444 | 581 | 1025 | 名称分布见 8.2（79 个名字全列）；计数前六的名字在 tiqian 源内实测均为 enum 或 abstract 声明的类型名，与 ts TS2304 的 Ic 同一原因的假设（类型声明只生成类型侧，值位引用缺少名字引入）；随 T-dart |
+| `UNCHECKED_USE_OF_NULLABLE_VALUE` | 231 | 189 | 420 | 形状分布见 8.2（接收者可空四种形状）；与 kotlin 修复面 A（#22 可空接收者）同一原因的假设；随 T-dart |
+| `REFERENCED_BEFORE_DECLARATION` | 314 | 96 | 410 | 文件分布见 8.2；layout_dump_format.dart 215 条与 ts TS2448 的 LayoutDumpFormat.ts 214 条同一原因的假设（顶层声明顺序未按依赖排序）；随 T-dart |
+| `ARGUMENT_TYPE_NOT_ASSIGNABLE` | 176 | 123 | 299 | 目标类型分布见 8.2（23 种全列）；与 kotlin 数值转换面（#24）同一原因的假设；随 T-dart |
+| `NOT_ENOUGH_POSITIONAL_ARGUMENTS` | 71 | 34 | 105 | 与 ts TS2554 同一原因的假设（可选参数与默认参数的调用实参数生成）；随 T-dart |
+| `PREFIX_SHADOWED_BY_LOCAL_DECLARATION` | 32 | 42 | 74 | 未判定；随 T-dart |
+| `UNDEFINED_METHOD` | 53 | 11 | 64 | 方法与接收类型分布见 8.2（23 对全列）；接收类型为 List 的 23 条是 Haxe 数组方法名生成到 dart 的 List 接收者的假设；随 T-dart |
+| `EXPECTED_TOKEN` | 56 | 0 | 56 | 期待符号分布：缺分号 49、缺右括号 4、缺冒号 2、缺右花括号 1；未判定；随 T-dart |
+| `UNDEFINED_FUNCTION` | 55 | 0 | 55 | 名称分布见 8.2（42 个名字全列）；compare 前缀与 ts TS2724 比较函数未导出假设同源；随 T-dart |
+| `MISSING_ASSIGNABLE_SELECTOR` | 49 | 0 | 49 | 未判定；随 T-dart |
+| `ILLEGAL_ASSIGNMENT_TO_NON_ASSIGNABLE` | 49 | 0 | 49 | 未判定；随 T-dart |
+| `UNDEFINED_PREFIXED_NAME` | 20 | 22 | 42 | 未判定；随 T-dart |
+| `URI_DOES_NOT_EXIST` | 25 | 11 | 36 | 已判定：运行时文件、std 影子文件与 test_host.dart 未随消费方配置写出，路径明细见 8.2；修复项 F3i |
+| `READ_POTENTIALLY_UNASSIGNED_FINAL` | 36 | 0 | 36 | 未判定；随 T-dart |
+| `MISSING_IDENTIFIER` | 34 | 1 | 35 | 未判定；随 T-dart |
+| `UNDEFINED_GETTER` | 1 | 31 | 32 | 已判定：32 条全部为 The getter 'strategyName' isn't defined for the type 'LineBreaker'（gen 1 条、tests 31 条）；修复项 F3h |
+| `INVOCATION_OF_NON_FUNCTION_EXPRESSION` | 0 | 31 | 31 | 未判定；随 T-dart |
+| `DOT_SHORTHAND_MISSING_CONTEXT` | 27 | 0 | 27 | 未判定；随 T-dart |
+| `DUPLICATE_DEFINITION` | 17 | 1 | 18 | 未判定；与 ts TS2451 顶层重名的机制位置关系待探针；随 T-dart |
+| `PREFIX_COLLIDES_WITH_TOP_LEVEL_MEMBER` | 5 | 6 | 11 | 未判定；随 T-dart |
+| `MISSING_DEFAULT_VALUE_FOR_PARAMETER` | 11 | 0 | 11 | 未判定；随 T-dart |
+| `UNDEFINED_ENUM_CONSTANT` | 8 | 0 | 8 | 未判定；与 UNDEFINED_IDENTIFIER 的枚举名假设可能同一原因；随 T-dart |
+| `INVALID_ASSIGNMENT` | 7 | 0 | 7 | 未判定；随 T-dart |
+| `NON_ABSTRACT_CLASS_INHERITS_ABSTRACT_MEMBER` | 4 | 2 | 6 | 未判定；随 T-dart |
+| `RETURN_OF_INVALID_TYPE` | 4 | 0 | 4 | 未判定；随 T-dart |
+| `NOT_INITIALIZED_NON_NULLABLE_INSTANCE_FIELD` | 4 | 0 | 4 | 未判定；随 T-dart |
+| `NON_EXHAUSTIVE_SWITCH_STATEMENT` | 4 | 0 | 4 | 未判定；变体 switch 完备性降级待查；随 T-dart |
+| `UNDEFINED_OPERATOR` | 3 | 0 | 3 | 未判定；随 T-dart |
+| `IMPLICIT_THIS_REFERENCE_IN_INITIALIZER` | 3 | 0 | 3 | 未判定；随 T-dart |
+| `LIST_ELEMENT_TYPE_NOT_ASSIGNABLE` | 0 | 2 | 2 | 未判定；随 T-dart |
+| `RETURN_OF_INVALID_TYPE_FROM_CLOSURE` | 1 | 0 | 1 | 未判定；随 T-dart |
+| `NON_TYPE_AS_TYPE_ARGUMENT` | 1 | 0 | 1 | 未判定；随 T-dart |
+| `INSTANCE_MEMBER_ACCESS_FROM_STATIC` | 1 | 0 | 1 | 未判定；随 T-dart |
+| `EXTRA_POSITIONAL_ARGUMENTS` | 1 | 0 | 1 | 未判定；随 T-dart |
+| `CONFLICTING_METHOD_AND_FIELD` | 1 | 0 | 1 | 未判定；随 T-dart |
+| 合计（求和校验） | 1748 | 1183 | 2931 | 与错误总数相等 |
+
+判定进度小结：已判定 2 个类合计 68 条，对准修复项 F3h（UNDEFINED_GETTER
+的 32 条）与 F3i（URI_DOES_NOT_EXIST 的 36 条）。5 个类持有跨目标同一
+原因的假设：UNDEFINED_IDENTIFIER 连到 ts TS2304 的 Ic、
+UNCHECKED_USE_OF_NULLABLE_VALUE 连到 kotlin 修复面 A（#22）、
+REFERENCED_BEFORE_DECLARATION 连到 ts TS2448、ARGUMENT_TYPE_NOT_ASSIGNABLE
+连到 kotlin 数值转换面（#24）、NOT_ENOUGH_POSITIONAL_ARGUMENTS 连到 ts
+TS2554；UNDEFINED_FUNCTION 类内的 compare 前缀名字连到 ts TS2724。
+EXPECTED_TOKEN、MISSING_IDENTIFIER、MISSING_ASSIGNABLE_SELECTOR、
+ILLEGAL_ASSIGNMENT_TO_NON_ASSIGNABLE、DOT_SHORTHAND_MISSING_CONTEXT 五个
+错误码合计 216 条，全部只出现在 gen 目录且文件分布重叠，未判定，等待
+探针定性。其余类同样未判定，全部随 T-dart 探针。
+
+### 8.2 大类与中类内部分解（2026-09-06 实测，产出命令见第 2.2 节）
+
+UNDEFINED_IDENTIFIER 的名称分布（求和 1025；判定列写「与 ts Ic 同一
+原因」的名字在 tiqian 源内实测为 enum 或 abstract 声明的类型名）：
+
+| 计数 | 名称 | 判定 |
+|---:|---|---|
+| 157 | `WritingMode` | 与 ts TS2304 的 Ic 同一原因的假设（类型名的值位引用） |
+| 155 | `LastLineAlignment` | 与 ts TS2304 的 Ic 同一原因的假设（类型名的值位引用） |
+| 147 | `InlineAttachment` | 与 ts TS2304 的 Ic 同一原因的假设（类型名的值位引用） |
+| 106 | `Ic` | 与 ts TS2304 的 Ic 同一原因的假设（类型名的值位引用） |
+| 77 | `RubyLineHeightMode` | 与 ts TS2304 的 Ic 同一原因的假设（类型名的值位引用） |
+| 35 | `RubyKind` | 与 ts TS2304 的 Ic 同一原因的假设（类型名的值位引用） |
+| 33 | `kind` | 未判定 |
+| 16 | `LineEndReason` | 与 ts TS2304 的 Ic 同一原因的假设（类型名的值位引用） |
+| 15 | `PunctuationGeometryStageCoverageSupport` | 未判定 |
+| 13 | `JustifierTestSupport` | 未判定 |
+| 12 | `plan` | 未判定 |
+| 12 | `FontRole` | 与 ts TS2304 的 Ic 同一原因的假设（类型名的值位引用） |
+| 12 | `FontMetricSource` | 未判定 |
+| 11 | `ink` | 未判定 |
+| 11 | `cls` | 未判定 |
+| 10 | `item` | 未判定 |
+| 9 | `x` | 未判定 |
+| 8 | `previousBudget` | 未判定 |
+| 8 | `nextBudget` | 未判定 |
+| 8 | `g` | 未判定 |
+| 6 | `r` | 未判定 |
+| 6 | `n` | 未判定 |
+| 5 | `prev` | 未判定 |
+| 5 | `nextChar` | 未判定 |
+| 5 | `mandatory` | 未判定 |
+| 5 | `InteriorPunctuationStyle` | 未判定 |
+| 5 | `halt` | 未判定 |
+| 5 | `CjkPunctuationGlyphPolicy` | 未判定 |
+| 4 | `shaped` | 未判定 |
+| 4 | `selectedTechnicalBreak` | 未判定 |
+| 4 | `previousSpacing` | 未判定 |
+| 4 | `preferredTrackingSpan` | 未判定 |
+| 4 | `pi` | 未判定 |
+| 4 | `pairs` | 未判定 |
+| 4 | `nextSpacing` | 未判定 |
+| 4 | `io` | 未判定 |
+| 4 | `cp` | 未判定 |
+| 4 | `candidate` | 未判定 |
+| 4 | `bi` | 未判定 |
+| 4 | `AutoSpaceMode` | 未判定 |
+| 3 | `text` | 未判定 |
+| 3 | `strongReason` | 未判定 |
+| 3 | `startPrior` | 未判定 |
+| 3 | `role` | 未判定 |
+| 3 | `prevKind` | 未判定 |
+| 3 | `naturalPrior` | 未判定 |
+| 3 | `LineEndPunctuationStyle` | 未判定 |
+| 3 | `KinsokuLevel` | 未判定 |
+| 3 | `fromRepair` | 未判定 |
+| 3 | `firstHanging` | 未判定 |
+| 3 | `endPrior` | 未判定 |
+| 3 | `boundKind` | 未判定 |
+| 2 | `twoPowers` | 未判定 |
+| 2 | `repairStr` | 未判定 |
+| 2 | `repairName` | 未判定 |
+| 2 | `repairedCurrent` | 未判定 |
+| 2 | `repairDecision` | 未判定 |
+| 2 | `region` | 未判定 |
+| 2 | `rd` | 未判定 |
+| 2 | `org` | 未判定 |
+| 2 | `maxLinesDecision` | 未判定 |
+| 2 | `last` | 未判定 |
+| 2 | `l` | 未判定 |
+| 2 | `issue` | 未判定 |
+| 2 | `iod` | 未判定 |
+| 2 | `inkWidth` | 未判定 |
+| 2 | `HangingPunctuationStyle` | 未判定 |
+| 2 | `fivePowers` | 未判定 |
+| 2 | `center` | 未判定 |
+| 1 | `twoPowersBuilder` | 未判定 |
+| 1 | `ShrinkChannel` | 未判定 |
+| 1 | `RichTextBackgroundMetricPolicy` | 未判定 |
+| 1 | `MetricBox` | 未判定 |
+| 1 | `LineAdjustmentStrategy` | 未判定 |
+| 1 | `InlineBoxOuterSpacing` | 未判定 |
+| 1 | `fivePowersBuilder` | 未判定 |
+| 1 | `enUsCache` | 未判定 |
+| 1 | `count` | 未判定 |
+| 1 | `BaselineClass` | 未判定 |
+
+UNCHECKED_USE_OF_NULLABLE_VALUE 的形状分布（求和 420；消息里的名字以 X
+代替）：
+
+| 计数 | 形状 | 判定 |
+|---:|---|---|
+| 314 | The property 'X' can't be unconditionally accessed because the receiver can be 'null'. | 与 kotlin 修复面 A（#22 可空接收者）同一原因的假设 |
+| 82 | The method 'X' can't be unconditionally invoked because the receiver can be 'null'. | 同上 |
+| 18 | The operator 'X' can't be unconditionally invoked because the receiver can be 'null'. | 同上 |
+| 6 | A nullable expression can't be used as a condition. | 同上 |
+
+REFERENCED_BEFORE_DECLARATION 的文件分布（求和 410）：
+
+| 计数 | 文件 | 判定 |
+|---:|---|---|
+| 215 | `layout_dump_format.dart` | 与 ts TS2448 的 LayoutDumpFormat.ts 214 条同一原因的假设（同一源文件的两个目标侧产物，顶层声明顺序未按依赖排序） |
+| 78 | `justifier_jf_test.dart` | 未判定 |
+| 64 | `justifier_coverage_test.dart` | 未判定 |
+| 23 | `punctuation_geometry_stage_coverage_test.dart` | 未判定 |
+| 6 | `layout_queries_test.dart` | 未判定 |
+| 5 | `line_repair.dart` | 未判定 |
+| 4 | `paragraph_shaping_stage.dart` | 未判定 |
+| 3 | `cluster_role_resolution.dart` | 未判定 |
+| 2 | `punctuation_model.dart` | 未判定 |
+| 2 | `justifier_compression_test.dart` | 未判定 |
+| 1 | `width_independent_annotation_cache_coverage_test_support.dart` | 未判定 |
+| 1 | `unicode_emoji17_rgi_role_audit_test_support.dart` | 未判定 |
+| 1 | `text_shaper.dart` | 未判定 |
+| 1 | `shaping_evidence_json.dart` | 未判定 |
+| 1 | `shaping_evidence.dart` | 未判定 |
+| 1 | `punctuation_geometry_stage.dart` | 未判定 |
+| 1 | `line_optimization_coverage_test.dart` | 未判定 |
+| 1 | `annotation_geometry_stage_coverage_test_support.dart` | 未判定 |
+
+ARGUMENT_TYPE_NOT_ASSIGNABLE 的目标类型分布（求和 299；消息形如 The
+argument type 'X' can't be assigned to the parameter type 'Y'，本表按 Y
+计，整体持有与 kotlin 数值转换面（#24）同一原因的假设）：
+
+| 计数 | 目标类型 | 判定 |
+|---:|---|---|
+| 74 | `double` | 未判定 |
+| 70 | `List<Cluster>` | 未判定 |
+| 40 | `List<EastAsianSpacingEdges>` | 未判定 |
+| 37 | `int` | 未判定 |
+| 24 | `String` | 未判定 |
+| 18 | `num` | 未判定 |
+| 8 | `List<String>?` | 未判定 |
+| 6 | `Cluster` | 未判定 |
+| 5 | `SortedSetTable<int>` | 未判定 |
+| 3 | `SortedMapTable<String, double>` | 未判定 |
+| 2 | `KinsokuLevel` | 未判定 |
+| 1 | `UnbreakableRanges` | 未判定 |
+| 1 | `SortedMapTable<TextRange, SortedSetTable<int>>` | 未判定 |
+| 1 | `SortedMapTable<TextRange, ClusterMetricDecision>` | 未判定 |
+| 1 | `SortedMapTable<String, String>` | 未判定 |
+| 1 | `SortedMapTable<int, ProgressiveBreakOpportunity>` | 未判定 |
+| 1 | `SortedMapTable<int, InlineObjectSpan>` | 未判定 |
+| 1 | `SortedMapTable<int, InlineObjectPreferredStretch>` | 未判定 |
+| 1 | `List<ShrinkOpportunity>` | 未判定 |
+| 1 | `List<int>` | 未判定 |
+| 1 | `List<Glyph>` | 未判定 |
+| 1 | `Iterable<int>` | 未判定 |
+| 1 | `HangingPunctuationStyle` | 未判定 |
+
+UNDEFINED_METHOD 的方法与接收类型分布（求和 64，记法为方法 @ 接收类型）：
+
+| 计数 | 方法与接收类型 | 判定 |
+|---:|---|---|
+| 13 | `Cluster` @ `Function` | 未判定 |
+| 10 | `emptyF` @ `PunctuationGeometryLedger` | 未判定 |
+| 6 | `copy` @ `List` | Haxe 数组方法名生成到 dart 的 List 接收者的假设 |
+| 5 | `concat` @ `List` | Haxe 数组方法名生成到 dart 的 List 接收者的假设 |
+| 4 | `splice` @ `List` | Haxe 数组方法名生成到 dart 的 List 接收者的假设 |
+| 4 | `pop` @ `List` | Haxe 数组方法名生成到 dart 的 List 接收者的假设 |
+| 3 | `Cluster` @ `Cluster` | 未判定 |
+| 2 | `shift` @ `List` | Haxe 数组方法名生成到 dart 的 List 接收者的假设 |
+| 2 | `Ic` @ `Function` | 未判定 |
+| 2 | `emptyHanging` @ `LineCandidate` | 未判定 |
+| 1 | `unshift` @ `List` | Haxe 数组方法名生成到 dart 的 List 接收者的假设 |
+| 1 | `reverse` @ `List` | Haxe 数组方法名生成到 dart 的 List 接收者的假设 |
+| 1 | `Rect` @ `Rect` | 未判定 |
+| 1 | `Glyph` @ `Glyph` | 未判定 |
+| 1 | `compareTo` @ `RubyLineHeightDecisionInfo` | 未判定 |
+| 1 | `compareTo` @ `MaxLinesDecisionInfo` | 未判定 |
+| 1 | `compareTo` @ `LineSpacingDecisionInfo` | 未判定 |
+| 1 | `compareTo` @ `LineRepairDecisionInfo` | 未判定 |
+| 1 | `compareTo` @ `LineLengthGridDecisionInfo` | 未判定 |
+| 1 | `compareTo` @ `LineCandidate` | 未判定 |
+| 1 | `compareTo` @ `KinsokuDecisionInfo` | 未判定 |
+| 1 | `compareTo` @ `InlineObjectLineHeightDecisionInfo` | 未判定 |
+| 1 | `compareTo` @ `FirstLineIndentDecisionInfo` | 未判定 |
+
+UNDEFINED_FUNCTION 的名称分布（求和 55，消息全部为 The function 'X'
+isn't defined.）：
+
+| 计数 | 名称 | 判定 |
+|---:|---|---|
+| 7 | `floatToI32` | 未判定（Haxe 浮点位转换函数名，tiqian 源 org/tiqian/test/TestHelpers.hx 等处使用） |
+| 5 | `i32ToFloat` | 未判定（Haxe 浮点位转换函数名，tiqian 源 org/tiqian/test/TestHelpers.hx 等处使用） |
+| 2 | `compareTextStyle` | 有序表键比较函数未导出假设（同 ts TS2724） |
+| 2 | `compareFontMetricsRequest` | 有序表键比较函数未导出假设（同 ts TS2724） |
+| 2 | `compareRawFontMetrics` | 有序表键比较函数未导出假设（同 ts TS2724） |
+| 1 | `compareAutoSpacePolicy` | 有序表键比较函数未导出假设（同 ts TS2724） |
+| 1 | `compareAdjustmentStylePolicy` | 有序表键比较函数未导出假设（同 ts TS2724） |
+| 1 | `comparePunctuationWidthPolicy` | 有序表键比较函数未导出假设（同 ts TS2724） |
+| 1 | `compareBopomofoGlyphPlacement` | 有序表键比较函数未导出假设（同 ts TS2724） |
+| 1 | `compareMetricDecisionInfo` | 有序表键比较函数未导出假设（同 ts TS2724） |
+| 1 | `compareClusterGeometryDecisionInfo` | 有序表键比较函数未导出假设（同 ts TS2724） |
+| 1 | `compareAutoSpaceDecisionInfo` | 有序表键比较函数未导出假设（同 ts TS2724） |
+| 1 | `compareRubyDecisionInfo` | 有序表键比较函数未导出假设（同 ts TS2724） |
+| 1 | `compareShapingDecisionInfo` | 有序表键比较函数未导出假设（同 ts TS2724） |
+| 1 | `comparePunctuationDecisionInfo` | 有序表键比较函数未导出假设（同 ts TS2724） |
+| 1 | `compareSpacingDecisionInfo` | 有序表键比较函数未导出假设（同 ts TS2724） |
+| 1 | `compareJustificationDecisionInfo` | 有序表键比较函数未导出假设（同 ts TS2724） |
+| 1 | `compareLineEdgeTrimDecisionInfo` | 有序表键比较函数未导出假设（同 ts TS2724） |
+| 1 | `compareDecorationDecisionInfo` | 有序表键比较函数未导出假设（同 ts TS2724） |
+| 1 | `compareDecorationSegmentInfo` | 有序表键比较函数未导出假设（同 ts TS2724） |
+| 1 | `compareInlineBoxDecisionInfo` | 有序表键比较函数未导出假设（同 ts TS2724） |
+| 1 | `compareInlineObjectDecisionInfo` | 有序表键比较函数未导出假设（同 ts TS2724） |
+| 1 | `compareInlineObjectPunctuationAttachmentDecisionInfo` | 有序表键比较函数未导出假设（同 ts TS2724） |
+| 1 | `compareParagraphStyle` | 有序表键比较函数未导出假设（同 ts TS2724） |
+| 1 | `compareLayoutConstraints` | 有序表键比较函数未导出假设（同 ts TS2724） |
+| 1 | `compareInlineBoxSpan` | 有序表键比较函数未导出假设（同 ts TS2724） |
+| 1 | `compareInlineObjectSpan` | 有序表键比较函数未导出假设（同 ts TS2724） |
+| 1 | `compareSize` | 有序表键比较函数未导出假设（同 ts TS2724） |
+| 1 | `compareCluster` | 有序表键比较函数未导出假设（同 ts TS2724） |
+| 1 | `compareGlyphRun` | 有序表键比较函数未导出假设（同 ts TS2724） |
+| 1 | `compareLineBox` | 有序表键比较函数未导出假设（同 ts TS2724） |
+| 1 | `compareLineRepairCandidateInfo` | 有序表键比较函数未导出假设（同 ts TS2724） |
+| 1 | `compareLayoutFontMetrics` | 有序表键比较函数未导出假设（同 ts TS2724） |
+| 1 | `compareLineCandidate` | 有序表键比较函数未导出假设（同 ts TS2724） |
+| 1 | `compareRepairCandidate` | 有序表键比较函数未导出假设（同 ts TS2724） |
+| 1 | `compareGlue` | 有序表键比较函数未导出假设（同 ts TS2724） |
+| 1 | `compareShapingEvidenceKey` | 有序表键比较函数未导出假设（同 ts TS2724） |
+| 1 | `compareRecordedShapingResult` | 有序表键比较函数未导出假设（同 ts TS2724） |
+| 1 | `compareMetricsEvidenceKey` | 有序表键比较函数未导出假设（同 ts TS2724） |
+| 1 | `compareRecordedFontMetrics` | 有序表键比较函数未导出假设（同 ts TS2724） |
+| 1 | `mkdirSync` | 未判定 |
+| 1 | `writeFileSync` | 未判定 |
+
+EXPECTED_TOKEN 的期待符号分布（求和 56）：';' 49 条、')' 4 条、':' 2 条、
+'}' 1 条（全部未判定）。
+
+URI_DOES_NOT_EXIST 的引用路径分布（求和 36；目录列 gen 指 dart-gen 内
+的文件、tests 指 dart-gen-tests 内的文件；已判定 F3i）：
+
+| 计数 | 引用路径 | 目录 |
+|---:|---|---|
+| 5 | `../../../std/u_string_fault.dart` | gen |
+| 5 | `../../../std/u_string_exception.dart` | gen |
+| 4 | `../../../../std/u_string_fault.dart` | gen |
+| 4 | `../../../../std/u_string_exception.dart` | gen |
+| 4 | `../../../../dart-gen/lib/std/u_string_fault.dart` | tests |
+| 4 | `../../../../dart-gen/lib/std/u_string_exception.dart` | tests |
+| 3 | `../../../runtime/sorted_table.dart` | gen |
+| 2 | `../../../std/sorted_map.dart` | gen |
+| 1 | `test_host.dart` | tests |
+| 1 | `../../../std/functional.dart` | gen |
+| 1 | `../../../../haxe/exception.dart` | gen |
+| 1 | `../../../../dart-gen/lib/runtime/sorted_table.dart` | tests |
+| 1 | `../../../../dart-gen/lib/org/tiqian/linebreak/liang_hyphenator_test.dart` | tests |
+
+## 9 分级标尺
 
 复杂度（C）：C1 单点修复，一个生成器分支或一处源文件，改动预计不超过一百行；
 C2 跨文件或跨目标，同一缺陷出现在多个目标，或需要 tiqian 源与 boring 生成器
@@ -541,7 +881,7 @@ C2 跨文件或跨目标，同一缺陷出现在多个目标，或需要 tiqian 
 严重性（S）：S0 错误出在语法层，使整个生成目录无法编译或无法生成；S1 两百条
 以上；S2 二十到一百九十九条；S3 二十条以下。流程类条目不适用 S，记为 S-。
 
-## 9 KPI
+## 10 KPI
 
 工作量检验的方式（2026-09-06 用户裁定）：进度以各目标逐类表的行计数变化
 为准，每类可单独复测；不设覆盖多类的「其余」聚合指标，聚合数只保留合计
@@ -552,14 +892,14 @@ C2 跨文件或跨目标，同一缺陷出现在多个目标，或需要 tiqian 
 | KPI | 指标 | 现值 | 目标 | 对应 |
 |---|---|---|---|---|
 | K1 | 修复面 A：only safe 类计数 | f32 75 / f64 75 | 0 | #22 执行中 |
-| K2 | 各目标逐类判定完成度 | kotlin 已判定 2 / 39 类；swift 2 / 2 类；rust 2 / 15 类；ts 已判定 1 / 19 类（另有 TS2341 类内 10 条已判定）；dart 未建表 | 五目标全部类有判定结论 | T-attr、F4c、T-ts |
-| K3 | 各目标错误总数 | kotlin f32 1183 / f64 1201；rust 181；swift 8；ts 1127（引擎侧 819）；dart 未测量 | 全部 0 | 各节逐类表求和（完整性数字，非派发单位） |
+| K2 | 各目标逐类判定完成度 | kotlin 已判定 2 / 39 类；swift 2 / 2 类；rust 2 / 15 类；ts 已判定 1 / 19 类（另有 TS2341 类内 10 条已判定）；dart 已判定 2 / 35 类 | 五目标全部类有判定结论 | T-attr、F4c、T-ts、T-dart |
+| K3 | 各目标错误总数 | kotlin f32 1183 / f64 1201；rust 181；swift 8；ts 1127（引擎侧 819）；dart 2931 | 全部 0 | 各节逐类表求和（完整性数字，非派发单位） |
 | K4 | kotlin 两个目录 warning 计数 | 0 / 0 | 保持 0 | 每次复测 |
-| K5 | 各目标重生成退出码 | kotlin 0、kotlin-f64 0、rust 0、swift 0（自 boring `2c9257d`）、ts 0（自 boring `de11c06a`）；dart 1 | 全部 0 | F0l 加逐处重跑 |
-| K6 | boring 验收命令 | 全部通过（2026-09-06 合并 `f9f26726` 后 19 项检查退出码全部为 0；合并后 boring main 的 bun test 为 670 pass / 3 fail，三个既有名目） | 每次合并后保持 | 不适用 |
-| K7 | 五目标普查覆盖 | kotlin、swift、rust、ts 的逐类表已建（第 3、5、6、7 节）；dart 随 K5 | 五目标各有逐类表 | F4b（dart 半项） |
+| K5 | 各目标重生成退出码 | kotlin 0、kotlin-f64 0、rust 0、swift 0（自 boring `2c9257d`）、ts 0（自 boring `de11c06a`）、dart 0（自 boring `31627b5c`） | 全部 0 | F0l 与逐处重跑（已完成） |
+| K6 | boring 验收命令 | 全部通过（2026-09-06 合并 `f9f26726` 与 `31627b5c` 后 19 项检查退出码全部为 0；合并后 boring main 的 bun test 为 672 pass / 3 fail，三个既有名目） | 每次合并后保持 | 不适用 |
+| K7 | 五目标普查覆盖 | kotlin、swift、rust、ts、dart 的逐类表已建（第 3、5、6、7、8 节） | 五目标各有逐类表 | F4b（已完成） |
 
-## 10 修复项清单
+## 11 修复项清单
 
 ### 第 0 组：nullargs 收尾（已完成合入，保留记录）
 
@@ -589,21 +929,29 @@ C2 跨文件或跨目标，同一缺陷出现在多个目标，或需要 tiqian 
       references through the enum query expander，合并 `a0b7416e`）完成。其后
       ts 逐处重跑暴露的 UStringException 值引用错误类由 boring `f270c670`
       （合并 `de11c06a`）完成，ts 生成命令自此退出码为 0。
-- [ ] F0i-逐处重跑 每消除一处当前第一位的报错后，重跑对应目标的生成命令并
+- [x] F0i-逐处重跑 每消除一处当前第一位的报错后，重跑对应目标的生成命令并
       记录新出现的第一处报错，循环到 ts、dart 两个目标的生成命令退出码为
       0。ts 已于 boring `de11c06a` 后达成，首次编译普查见第 7 节；swift 已
-      完成，逐类表见第 5 节；dart 当前第一处为 Units.hx 静态重名（F0l）。
-      C1，P1，S-。
+      完成，逐类表见第 5 节；dart 已于 boring `189e01ad`（合并 `31627b5c`）
+      后达成，首次编译普查见第 8 节。四个目标的重生成退出码均为 0，本项
+      完成。C1，P1，S-。
 - [x] F0k-核 变体 switch 赋值位的修复提交号核对（见 F0g 条）：ts
       `73c076d8`、swift `ab1d7882`（2026-09-06 用 git merge-base
       --is-ancestor 验证两者都在 boring main）。C1，P3，S-。
-- [ ] F0l dart 静态成员顶层重名：`engine-haxe/src/org/tiqian/core/Units.hx:25`
+- [x] F0l dart 静态成员顶层重名：`engine-haxe/src/org/tiqian/core/Units.hx:25`
       起 FloatIc 与 IntIc 两个类各有一个静态函数 `ic`，dart 目标把类静态
       降级为库文件内的顶层名字，同名 `ic` 在 org.tiqian.core.Units 库内
       冲突（生成错误原文：top-level name ic is claimed twice in
       org.tiqian.core.Units；2026-09-06 于 boring `7606ff85` 实测）。修复
       面＝boring dart 目标静态成员的顶层命名。ts 侧 TS2451 是跨文件顶层
-      重名，机制位置不同，不并项。C2，P0，S0。
+      重名，机制位置不同，不并项。2026-09-06 由修复任务 dartic 完成：
+      boring `189e01ad` 在静态成员重名时保留类形，不再把类静态降级为
+      顶层函数（生成开始前扫描整个模块，登记 statics-only 类的静态成员
+      名单，重名的类走 DartDecl.hx 居民模块的既有做法），合并 `31627b5c`
+      已推送；新增样本 StaticCollisionOps 与测试，一致性检查六列全 pass；
+      生成文件逐字节对照实测（sha256，基线 `0a57b83e` 对修复后生成树）：
+      非 dart 树只新增样本文件与测试登记行，dart 树既有文件零变化。
+      C2，P0，S0。
 
 ### 第 1 组：判定探针（K2，先于其余修复任务的派发）
 
@@ -627,6 +975,16 @@ C2 跨文件或跨目标，同一缺陷出现在多个目标，或需要 tiqian 
       TS2554 两形合计 187 条、TS2345 的 87 条、TS2724 的 35 条、TS2451 的
       23 条、TS2339 的 14 条、TS2341 未判定的 4 条，其余按表降序。方法与
       T-attr 相同。C2，P1，S-。
+- [ ] T-dart dart 逐类判定探针：对第 8 节判定列为「未判定」或「假设」的
+      每个错误类，按类内计数降序抽样错误点（每类 3 至 5 处），读对应生成
+      代码，把错误类归到修复面；产出＝第 8 节判定列填全，每个新修复面在
+      第 3 组开一条修复项。抽样顺序：UNDEFINED_IDENTIFIER 的 1025 条、
+      UNCHECKED_USE_OF_NULLABLE_VALUE 的 420 条、REFERENCED_BEFORE_
+      DECLARATION 的 410 条、ARGUMENT_TYPE_NOT_ASSIGNABLE 的 299 条、
+      EXPECTED_TOKEN、MISSING_IDENTIFIER、MISSING_ASSIGNABLE_SELECTOR、
+      ILLEGAL_ASSIGNMENT_TO_NON_ASSIGNABLE、DOT_SHORTHAND_MISSING_CONTEXT
+      五码合计 216 条、NOT_ENOUGH_POSITIONAL_ARGUMENTS 的 105 条，其余按
+      表降序。方法与 T-attr 相同。C2，P1，S-。
 
 ### 第 2 组：已排定位任务
 
@@ -664,6 +1022,23 @@ C2 跨文件或跨目标，同一缺陷出现在多个目标，或需要 tiqian 
       character found in source file` 全类 1 条（ShapingEvidenceJson.swift:445，
       Haxe 源 `buf.addChar(8)` 被生成为源文件内的控制字符）。修复面＝
       swift 目标字符串字面量的转义。C1，P2，S3。
+- [ ] F3h dart 目标 getter-only 属性调用点：覆盖 UNDEFINED_GETTER 全类
+      32 条（全部为 The getter 'strategyName' isn't defined for the type
+      'LineBreaker'，gen 1 条加 tests 31 条）。修复面＝dart 生成器实例
+      成员读取路径上 getter-only 判定规则缺失（boring `5628b4d` 已在
+      kotlin、swift、rust 实现对应规则，dart 侧此形状漏过，机制位置随
+      探针定位；规格为 docs/specs/features/27-class-members-and-records.md
+      规则 5）。判据＝UNDEFINED_GETTER 计数降为 0，其余类计数不上升。
+      C1，P1，S2。
+- [ ] F3i dart 目标运行时与 std 影子文件的写出：覆盖 URI_DOES_NOT_EXIST
+      全类 36 条（路径明细见第 8.2 节：runtime/sorted_table、
+      std/sorted_map、std/functional、std/u_string_exception、
+      std/u_string_fault、haxe/exception、tests 侧的 test_host 与跨目录
+      测试引用）。判定来源＝2026-09-06 磁盘对照：boring 自身样本生成树
+      含 lib/std、lib/haxe 与 test_host.dart，tiqian 消费树 out/ 下这些
+      文件均不存在而生成代码以相对路径引用它们。修复面＝dart 目标这些
+      文件在消费方配置下的写出条件。判据＝URI_DOES_NOT_EXIST 计数降为
+      0，其余类计数不上升。C2，P1，S2。
 
 ### 第 4 组：五目标普查（K7）
 
@@ -671,15 +1046,16 @@ C2 跨文件或跨目标，同一缺陷出现在多个目标，或需要 tiqian 
       基线同第 3.1 节）；`cargo check` 报 181 条错误、15 个消息骨架，逐类表
       与产出命令见第 2.2、6 节。同时判定 kotlin 表 `'X' cannot be a callee`
       类（IllegalStateException.kt:5:5，异常子类第二代的生成缺陷）。
-- [ ] F4b dart 目标的逐类表：swift 的逐类表在第 5 节，ts 的逐类表在第
-      7 节（2026-09-06 完成）；dart 随 F0l 与逐处重跑的产出补齐，填入
-      cross-target-alignment 的最终对照。C2，P1，S-。
+- [x] F4b dart 目标的逐类表：swift 的逐类表在第 5 节，ts 的逐类表在第
+      7 节，dart 的逐类表在第 8 节（三者均 2026-09-06 完成；dart 为 35
+      类、2931 条，求和校验相等，无测量环境条目）。cross-target-alignment
+      的最终对照待各目标判定列填全后补。C2，P1，S-。
 - [ ] F4c rust 逐类判定探针：对第 6 节未判定的 13 类按类内计数降序抽样
       错误点，读生成代码，把错误类归到修复面，并补齐两个已判定修复面
       （浮点字面量生成、保留字转义缺失）的生成函数定位；产出＝第 6 节
       判定列填全，修复项随后按修复面开列。C2，P1，S-。
 
-## 11 进度记录
+## 12 进度记录
 
 | 日期 | 修复项 | 合入位置 | 复测计数 | 验收 |
 |---|---|---|---|---|
@@ -691,13 +1067,14 @@ C2 跨文件或跨目标，同一缺陷出现在多个目标，或需要 tiqian 
 | 2026-09-05 | F0j 整型容量上界生成规则 | boring `012ab59`（vendored 已推进） | rust 生成目录该报错不再出现，rust 第一处改为 F0k 的 `Std.string` 第二批（放宽实测确认是最后一类） | 十条套件＋test:consistency 全部退出码 0 |
 | 2026-09-06 | 基线迁移到 tiqian `105dfb30` 加 boring `4b1fec9`（r4） | 本文档第 3 节 | f32 1183 / f64 1201，warnings 0；ts、swift、dart 首处更新为第 4 节现值 | G4-RC=0、bun pass=121 fail=0、COMPARE-RC=0（sbuf-bind 条目） |
 | 2026-09-06 | 桶表改逐类表，修两条测量错误（续行计数、消息文本过期） | 本文档第 2.3、3.2 节 | f32 36 类 / f64 39 类，求和各等于 total | 不适用 |
-| 2026-09-06 | KPI 重切：按修复面与判定覆盖取代主题合并，撤销 F3a-d | 本文档第 8、9 节 | 判定进度见 3.2 节小结 | 不适用 |
+| 2026-09-06 | KPI 重切：按修复面与判定覆盖取代主题合并，撤销 F3a-d | 本文档第 9、10 节 | 判定进度见 3.2 节小结 | 不适用 |
 | 2026-09-06 | rust 首次编译普查（F4a）与 kotlin `'X' cannot be a callee` 类判定 | 本文档第 2.2、3.2、6 节 | rust 181 条、15 类，求和校验相等；kotlin 该类 f32/f64 各 1＝异常子类第二代 super 误入 init 块 | 不适用 |
 | 2026-09-06 | ts 第二处生成阻断 UStringException 值引用修复（修复任务 ustr） | boring `f270c670`（合并 `de11c06a`，已推送） | ts 生成退出码 0，首次全量生成 | 19 项验收检查退出码全部为 0；合并后 boring main 的 bun test 670 pass / 3 fail（三个既有名目） |
 | 2026-09-06 | getter 属性读四目标调用点修复（修复任务 getprop） | boring `5628b4d`（合并 `f9f26726`，已推送） | 一致性检查 342 个测试六目标一致（含新增的 PublicGetterPropertyTests） | 19 项验收检查退出码全部为 0 |
 | 2026-09-06 | ts 首次编译普查（F4b 的 ts 半项）；swift 与 ts 并入 KPI；文档条目全量列举与格式统一 | 本文档第 1、2.2、3.4、4、7 至 11 节 | ts 1127 条、19 类，求和校验相等；测量环境 308 条、引擎侧 819 条；dart 第一处更新为 Units.hx 静态重名（F0l） | 不适用 |
+| 2026-09-06 | F0l dart 静态成员顶层重名修复（修复任务 dartic）与 dart 首次编译普查（F4b dart 半项）；dart 并入 KPI | boring `189e01ad`（合并 `31627b5c`，已推送） | dart 生成退出码 0；dart analyze 报 2931 条、35 类，求和校验相等；无测量环境条目 | 19 项验收检查在修复工树与合并工树各全部退出码 0；合并后 bun test 672 pass / 3 fail（三个既有名目） |
 
-## 12 已完成并合入的修复（背景）
+## 13 已完成并合入的修复（背景）
 
 以下修复在 r4 基线之前已合入，其效果已包含在基线数字里：names-r2 名称解析
 第一批（unresolved 从 347 降到 290）、单变体异常折叠回归修复（boring
