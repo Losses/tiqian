@@ -6,10 +6,24 @@ import org.tiqian.core.*;
 import org.tiqian.clreq.*;
 import org.tiqian.layout.ParagraphLayoutEngine.ExplainableStubParagraphLayoutEngine;
 import org.tiqian.test.trace.TestTraceRecorder;
+import org.tiqian.test.trace.TestTraceRender;
 import org.tiqian.layout.LineBreaker.GreedyLineBreaker;
 import std.ReadOnlyArray;
 
 class InlineObjectLayoutTestSupport {
+    public static function renderNullableDecision(v:Null<InlineObjectLineHeightDecisionInfo>):String
+        return v == null ? "null" : renderDecision(v);
+
+    public static function renderDecision(v:InlineObjectLineHeightDecisionInfo):String
+        return TestTraceRender.cap(Std.string(v));
+
+    public static function renderNullableRepair(v:Null<LineRepairDecisionInfo>):String
+        return v == null ? "null" : renderRepair(v);
+
+    public static function renderRepair(v:LineRepairDecisionInfo):String
+        return TestTraceRender.cap(Std.string(v));
+
+
     public static function rec(n:String):TestTraceRecorder {
         final t = new TestTraceRecorder("InlineObjectLayoutTest");
         t.section(n);
