@@ -741,7 +741,8 @@ class PreparedParagraphFns {
             i--;
             j--;
         }
-        return reverse(out.toString());
+        final text = out.toString();
+        return reverse(text);
     }
 
     private static function roundToSignificant(exact:String, length:Int):PreparedParagraphDigitsAndExponent {
@@ -786,7 +787,8 @@ class PreparedParagraphFns {
             out.addChar(48 + carry % 10);
             carry = Std.int(carry / 10);
         }
-        return reverse(out.toString());
+        final text = out.toString();
+        return reverse(text);
     }
 
     private static function incrementDecimal(digits:String):String {
