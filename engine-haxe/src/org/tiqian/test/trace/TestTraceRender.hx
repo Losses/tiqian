@@ -134,7 +134,8 @@ class TestTraceRender {
             index += 1;
         }
         output.add("]");
-        return cap(output.toString());
+        final text = output.toString();
+        return cap(text);
     }
 
     public static function renderStringArray(values:ReadOnlyArray<String>):String {
@@ -149,7 +150,8 @@ class TestTraceRender {
             index += 1;
         }
         output.add("]");
-        return cap(output.toString());
+        final text = output.toString();
+        return cap(text);
     }
 
     public static function canonicalNumbers(value:String):String {
