@@ -8,8 +8,9 @@ Dart）下的编译错误，作为跨目标行为对齐（见
 
 当前状态：Kotlin 的 f32 与 f64 两个目录已完成逐类普查（第 3 节，基线为
 tiqian `105dfb30` 加 boring `4b1fec9`）；rust 门重新生成退出码为 0，首次
-rust 编译普查尚待运行；TypeScript、Swift、Dart 三门生成仍各在第一处未实现
-构造上中止（第 4 节），逐个补齐是三语言普查的前置条件。
+rust 编译普查已完成（第 5 节，181 条错误，按消息骨架 15 类，全部在语法
+层）；TypeScript、Swift、Dart 三门生成仍各在第一处未实现构造上中止
+（第 4 节），逐个补齐是三语言普查的前置条件。
 
 ## 1 更新规则
 
@@ -99,8 +100,31 @@ nix develop -c bash -c 'haxe engine-haxe/core-dart.hxml'    # Dart，当前退�
 
 boring 遇到尚未实现生成规则的 Haxe 构造时，在第一处这样的构造上报错并中止。
 ts、swift、dart 三门当前的第一处报错见第 4 节；三门全部退出码为 0 后，各自的
-编译普查命令（tsc、swiftc、dart analyze）补记在本节。rust 门已退出码 0，其
-编译普查命令随首次运行（F4a）补记。
+编译普查命令（tsc、swiftc、dart analyze）补记在本节。
+
+rust 门已退出码 0，编译普查命令（2026-09-06 首次运行，F4a）：
+
+```shell
+# Cargo.toml 由 boring Compiler.hx 在 PackageShell 启用时写进输出目录本身
+# （core-rust.hxml 的 -D rust-output 指到 .../rust-gen/src），cargo 从该
+# 目录运行。退出码 101 是预期，错误计数来自日志
+nix develop -c bash -c 'cd /tmp/tiqian-census4/engine-haxe/out/rust-gen/src && cargo check' \
+  2> /tmp/census-r4-rust.log; echo rc=$?
+
+grep -a -c ": error" /tmp/census-r4-rust.log   # 错误总数
+
+# 逐类枚举（第 5 节逐类表的产出命令）。骨架化规则与 Kotlin 相同：引号与
+# 反引号内的文本替换为占位符、重复枚举项收敛、数字替换为 N；另把
+# error[E####] 收敛为 [E]
+grep -a ": error" /tmp/census-r4-rust.log | sed 's/^.*: error//' \
+  | sed 's/^\[E[0-9]*\]:/[E]:/' \
+  | sed 's/`[^`]*`/`X`/g' \
+  | sed "s/'[^']*'/'X'/g" \
+  | sed 's/\(, `X`\)\{2,\}/, `X`…/g' \
+  | sed 's/[0-9]\+/N/g' \
+  | sort | uniq -c | sort -rn
+# 求和校验：上式输出第一列求和必须等于错误总数
+```
 
 ### 2.3 已知的测量错误
 
@@ -141,7 +165,7 @@ ts、swift、dart 三门当前的第一处报错见第 4 节；三门全部退�
 
 「判定」列的含义：一个错误类的修复位置（boring 生成器的机制位置，或
 tiqian 源的一类写法）已经探针证实时，记修复面；只有猜测记「假设」；都没有
-记「未判定」。判定的方法见 T-attr（第 7 节第 1 组）：对类内抽样错误点读
+记「未判定」。判定的方法见 T-attr（第 8 节第 1 组）：对类内抽样错误点读
 生成代码后定性。假设不构成派发依据，证实后才开修复项。本文用到两个修复面
 名：修复面 A 指可空接收者上方法调用的生成机制；数值转换面指数值类型互转的
 生成机制（候选，待证实）。
@@ -176,7 +200,7 @@ tiqian 源的一类写法）已经探针证实时，记修复面；只有猜测�
 | 'X' hides member of supertype 'X' and needs an 'X' modifier. | 2 | 2 | 未判定；修饰符决策聚集是假设；随 T-attr |
 | redeclaration: | 2 | 2 | 未判定；随 T-attr |
 | condition type mismatch: inferred type is 'X' but 'X' was expected. | 2 | 2 | 未判定；随 T-attr |
-| 'X' cannot be a callee. | 1 | 1 | 未判定；随 T-attr |
+| 'X' cannot be a callee. | 1 | 1 | 修复面＝KotlinDecl 异常子类第二代的生成规则：super 调用被放进 init 块（IllegalStateException.kt:5:5，该类计数 1 即全部样本）；与 #37 同构造不同目标，修复项在 #37 后按面开列 |
 | this declaration needs opt-in. Its usage must be marked with 'X' or 'X' | 1 | 1 | 未判定；随 T-attr |
 | smart cast to 'X' is impossible, because 'X' is a local variable that is mutated in a capturing closure. | 1 | 1 | 未判定；随 T-attr |
 | non-nullable value required to call an 'X' method in a for-loop. | 1 | 1 | 假设：修复面 A 延伸；待探针 |
@@ -189,9 +213,10 @@ tiqian 源的一类写法）已经探针证实时，记修复面；只有猜测�
 | the expression cannot be a selector (cannot occur after a dot). | 0 | 1 | f64 独有；#25 定位任务 |
 | 合计（求和校验） | 1183 | 1201 | 与 3.1 节总数相等 |
 
-判定进度小结：已判定 1 类（only-safe）；假设待证 6 类（修复面 A 延伸 3 类、
-数值转换面 3 类）加 argument type mismatch 的可空与数值两类形状；f64 独有
-3 类已排定位任务；其余 29 类未判定。
+判定进度小结：已判定 2 类（only safe 类；`'X' cannot be a callee` 类＝
+KotlinDecl 异常子类第二代的生成缺陷，2026-09-06 随 #37 事实核查判定）；假设待证
+6 类（修复面 A 延伸 3 类、数值转换面 3 类）加 argument type mismatch 的
+可空与数值两类形状；f64 独有 3 类已排定位任务；其余 28 类未判定。
 
 ### 3.3 argument type mismatch 形状分解
 
@@ -245,7 +270,41 @@ rust 门 Std.string 参数域（随裁定二 A 解除：`ParagraphLayoutPrep` �
 在 r4 实测中两门均已越过，当前第一处是异常超类报错；完成该规则的提交号
 待核。
 
-## 5 分级标尺
+## 5 rust 门首次编译普查（2026-09-06）
+
+基线与第 3.1 节相同（tiqian `105dfb30` 加 boring `4b1fec9`，工树
+/tmp/tiqian-census4，日志 /tmp/census-r4-rust.log，逐类表
+/tmp/census-r4-rust-families.txt，取数命令见第 2.2 节）。rust 门重新生成
+退出码 0（403 个 .rs 文件）；`cargo check` 退出码 101，报 181 条错误，按下
+表 15 个消息骨架分类，求和校验相等。这 181 条全部在语法层（rustc 还没有
+开始类型检查），第 3 节 Kotlin 侧的语义层错误类（可空形状、数值转换等）
+在 rust 侧尚未进入测量。
+
+| 错误消息类（骨架） | 计数 | 判定与处置 |
+|---|---:|---|
+| float literals must have an integer part | 124 | 修复面＝rust 浮点字面量生成规则：写成 `.25` 形，rust 语法要求 `0.25`（justifier_test.rs:311 实测样本）；生成函数定位随修复立项 |
+| expected identifier, found keyword `X`（尾段重复消息） | 11 | 修复面＝rust 保留字标识符转义缺失：字段名 `type` 6 处、`match` 5 处原样输出（quote_pair_analyzer.rs:116 实测结构字段 `type:`） |
+| expected one of `X`, `X`…, or an operator, found `X`（8 词消息） | 10 | 未判定；match 臂体生成在语句位（layout_queries.rs:379 实测 `=> let faces = …`）；随探针 |
+| expected expression, found `X` | 10 | 未判定；记号分布 `.` 6、`+` 2、`)` 1、`=` 1；随探针 |
+| expected pattern, found `X` | 7 | 未判定；记号分布 `=` 6、`:` 1；随探针 |
+| `X` has been removed（box 语法位） | 4 | 未判定；box 记号位于 layout_queries_residual_coverage_test.rs:734 一带；随探针 |
+| expected identifier, found `X` | 4 | 未判定；记号分布 `=` 2、`;` 2；随探针 |
+| [E] the name `X` is defined multiple times（INSTANCE 四处） | 4 | 未判定；`pub static INSTANCE` 在同一文件四个类各一份（rich_text_role.rs:36、62、120、146）；rust 单文件多类布局与静态名冲突，机制随探针 |
+| recursion limit reached while expanding `X`（format! 链） | 1 | 未判定；inline_object_decision_info.rs:78 超长 format! 链；随探针 |
+| expected one of `X`, `X`…, or an operator, found `X`（unexpected token 尾） | 1 | 未判定；记号 `i`；随探针 |
+| expected one of `X`, `X`…, or an operator, found `X`（消息两段重复形） | 1 | 未判定；layout_debug_assembly.rs:176；随探针 |
+| expected identifier, found reserved keyword `X` | 1 | 修复面＝保留字转义缺失（同 keyword 行）：字段名 `virtual`（justifier.rs:140 实测） |
+| expected expression, found reserved keyword `X` | 1 | 修复面＝保留字转义缺失（同 keyword 行）：`virtual`（justifier.rs:145） |
+| [E] file not found for module `X` | 1 | 未判定；runtime/mod.rs:4 声明 `pub mod u_string;` 但无对应文件；随探针 |
+| comparison operators cannot be chained | 1 | 未判定；punctuation_geometry_ledger.rs:293；随探针 |
+| 合计（求和校验） | 181 | 与错误总数相等 |
+
+判定进度小结：已判定 2 个修复面（浮点字面量生成 124 条；保留字标识符转义
+缺失 13 条，跨上表 3 行），未判定 13 类共 44 条。两个修复面的修复项在
+F4c 判定探针补齐生成函数定位后开列；派发顺序遵循目标优先级裁定
+（kotlin、rust、dart、ts、swift）。
+
+## 6 分级标尺
 
 复杂度（C）：C1 单点修复，一个生成器分支或一处源文件，改动预计不超过一百行；
 C2 跨文件或跨目标，同一缺陷出现在多个目标，或需要 tiqian 源与 boring 生成器
@@ -257,7 +316,7 @@ C2 跨文件或跨目标，同一缺陷出现在多个目标，或需要 tiqian 
 严重性（S）：S0 错误出在语法层，使整个生成目录无法编译或无法生成；S1 两百条
 以上；S2 二十到一百九十九条；S3 二十条以下。流程类条目不适用 S，记为 S-。
 
-## 6 KPI
+## 7 KPI
 
 工作量检验的方式（2026-09-06 用户裁定）：进度以第 3.2 节逐类表的行计数变化
 为准，每类可单独复测；不设覆盖多类的「其余」聚合指标，聚合数只保留 total
@@ -267,14 +326,14 @@ C2 跨文件或跨目标，同一缺陷出现在多个目标，或需要 tiqian 
 | KPI | 指标 | 现值 | 目标 | 对应 |
 |---|---|---|---|---|
 | K1 | 修复面 A：only safe 类计数 | f32 75 / f64 75 | 0 | #22 执行中 |
-| K2 | 逐类判定完成度 | 已判定 1 / 假设待证 6＋两类形状 / 定位已排 3 / 未判定 29（共 39 类） | 39 类全部有判定结论 | T-attr |
+| K2 | 逐类判定完成度 | 已判定 2 / 假设待证 6＋两类形状 / 定位已排 3 / 未判定 28（共 39 类） | 39 类全部有判定结论 | T-attr |
 | K3 | f32 与 f64 错误总数 | f32 1183 / f64 1201 | 0 | 逐类表求和（完整性数字，非派发单位） |
 | K4 | 两个目录 warning 计数 | 0 / 0 | 保持 0 | 每次复测 |
 | K5 | 五门重生成退出码 | kotlin 0、kotlin-f64 0、rust 0；ts、swift、dart 为 1 | 全部 0 | #37、#38 加 reveal loop |
 | K6 | boring 验收链 | 全通过 | 每次合并后保持 | 不适用 |
-| K7 | 五目标普查覆盖 | kotlin 逐类表已建；rust 门已解锁待首跑；ts、swift、dart 随 K5 | 五目标各有逐类表 | F4a |
+| K7 | 五目标普查覆盖 | kotlin 与 rust 逐类表已建（第 3、5 节）；ts、swift、dart 随 K5 | 五目标各有逐类表 | F4a、F4b、F4c |
 
-## 7 修复项清单
+## 8 修复项清单
 
 ### 第 0 组：nullargs 收尾（已完成合入，保留记录）
 
@@ -339,12 +398,18 @@ C2 跨文件或跨目标，同一缺陷出现在多个目标，或需要 tiqian 
 
 ### 第 4 组：五目标普查（K7）
 
-- [ ] F4a rust 门首次编译普查：门已退出码 0，跑 cargo 侧编译检查并产出
-      rust 逐类表，命令与结果补记第 2.2 节。C1，P1，S-。
+- [x] F4a rust 门首次编译普查：2026-09-06 完成（工树 /tmp/tiqian-census4，
+      基线同第 3.1 节）；`cargo check` 报 181 条错误、15 个消息骨架，逐类表
+      与取数命令见第 2.2、5 节。同时判定 kotlin 表 `'X' cannot be a callee`
+      类（IllegalStateException.kt:5:5，异常子类第二代的生成缺陷）。
 - [ ] F4b ts、swift、dart 三门逐类表：随 F0i 的门清产出，填入
       cross-target-alignment 的最终对照。C2，P1，S-。
+- [ ] F4c rust 逐类判定探针：对第 5 节未判定的 13 类按类内计数降序抽样
+      错误点，读生成代码，把错误类归到修复面，并补齐两个已判定修复面
+      （浮点字面量生成、保留字转义缺失）的生成函数定位；产出＝第 5 节
+      判定列填全，修复项随后按面开列。C2，P1，S-。
 
-## 8 进度记录
+## 9 进度记录
 
 | 日期 | 修复项 | 合入位置 | 复测计数 | 验收链 |
 |---|---|---|---|---|
@@ -356,9 +421,10 @@ C2 跨文件或跨目标，同一缺陷出现在多个目标，或需要 tiqian 
 | 2026-09-05 | F0j 整型容量上界生成规则 | boring `012ab59`（vendored 已推进） | rust 树该报错不再出现，rust 第一处改为 F0k 的 `Std.string` 第二批（放宽实测确认是最后一类） | 十条套件＋test:consistency 全部退出码 0 |
 | 2026-09-06 | 基线迁移到 tiqian `105dfb30` 加 boring `4b1fec9`（r4） | 本文档第 3 节 | f32 1183 / f64 1201，warnings 0；ts、swift、dart 首处更新为第 4 节现值 | G4-RC=0、bun pass=121 fail=0、COMPARE-RC=0（sbuf-bind 条目） |
 | 2026-09-06 | 桶表改逐类表，修两条测量错误（续行计数、消息文本过期） | 本文档第 2.3、3.2 节 | f32 36 类 / f64 39 类，求和各等于 total | 不适用 |
-| 2026-09-06 | KPI 重切：按修复面与判定覆盖取代主题合并，撤销 F3a-d | 本文档第 6、7 节 | 判定进度见 3.2 节小结 | 不适用 |
+| 2026-09-06 | KPI 重切：按修复面与判定覆盖取代主题合并，撤销 F3a-d | 本文档第 7、8 节 | 判定进度见 3.2 节小结 | 不适用 |
+| 2026-09-06 | rust 门首次编译普查（F4a）与 kotlin `'X' cannot be a callee` 类判定 | 本文档第 2.2、3.2、5 节 | rust 181 条、15 类，求和校验相等；kotlin 该类 f32/f64 各 1＝异常子类第二代 super 误入 init 块 | 不适用 |
 
-## 9 已完成并合入的修复（背景）
+## 10 已完成并合入的修复（背景）
 
 以下修复在 r4 基线之前已合入，其效果已包含在基线数字里：names-r2 名称解析
 第一批（unresolved 从 347 降到 290）、单变体异常折叠回归修复（boring
