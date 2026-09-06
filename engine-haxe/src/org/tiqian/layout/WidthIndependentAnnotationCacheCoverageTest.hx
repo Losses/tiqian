@@ -68,14 +68,14 @@ class WidthIndependentAnnotationCacheCoverageTest {
 
         final contained = WidthIndependentAnnotationCacheCoverageTestSupport.containingItems(clusters, items);
         TracedAssertions.assertEqualsInt(4, contained.length);
-        TracedAssertions.assertEqualsRendered("TextRange(start=0, end=2)", Std.string(contained[0]));
+        TracedAssertions.assertEqualsRendered("TextRange(start=0, end=2)", WidthIndependentAnnotationCacheCoverageTestSupport.renderNullableRange(contained[0]));
         TracedAssertions.assertNullRendered(contained[1] == null, "-");
-        TracedAssertions.assertEqualsRendered("TextRange(start=5, end=8)", Std.string(contained[2]));
+        TracedAssertions.assertEqualsRendered("TextRange(start=5, end=8)", WidthIndependentAnnotationCacheCoverageTestSupport.renderNullableRange(contained[2]));
         TracedAssertions.assertNullRendered(contained[3] == null, "-");
 
         final firstContained = WidthIndependentAnnotationCacheCoverageTestSupport.firstContainedItem(clusters, items);
         TracedAssertions.assertEqualsInt(4, firstContained.length);
-        TracedAssertions.assertEqualsRendered("TextRange(start=0, end=2)", Std.string(firstContained[0]));
+        TracedAssertions.assertEqualsRendered("TextRange(start=0, end=2)", WidthIndependentAnnotationCacheCoverageTestSupport.renderNullableRange(firstContained[0]));
         TracedAssertions.assertNullRendered(firstContained[1] == null, "-");
         TracedAssertions.assertNullRendered(firstContained[2] == null, "-");
         TracedAssertions.assertNullRendered(firstContained[3] == null, "-");
