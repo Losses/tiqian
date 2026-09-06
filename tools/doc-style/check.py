@@ -161,9 +161,11 @@ def matchedLevelSuffix(line: str) -> list[str]:
 # keep entries narrow: a line holding both an accepted use and a real
 # violation would be missed, and the skip is per line, not per match.
 # YOU ARE NOT ALLOWED TO EXPAND THIS LIST WITHOUT CLEAR PERMISSION.
-ALLOW = re.compile(
-    r"回退路径"  # contains the substring 退路 but is a standard term
-)
+# The single former entry 回退路径 was removed on 2026-09-06 by user
+# ruling: it was never an accepted fixed phrase, only an unnoticed
+# violation that had been skipping the 退路 check since the first commit.
+# With no accepted uses the pattern matches no line.
+ALLOW = re.compile(r"(?!x)x")
 
 
 def iter_targets(args: list[str]):
