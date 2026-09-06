@@ -1,5 +1,7 @@
 package org.tiqian.layout;
 
+using org.tiqian.layout.ProgressiveBreakTierPriority;
+
 using std.Functional;
 
 import org.tiqian.core.Cluster;
@@ -162,7 +164,7 @@ class Justifier {
         }
         function finish(fallback:Null<String>):JustificationPlan
             return new JustificationPlan(r, out, deficit, Math.max(remaining, 0), fallback);
-        var ops = build(GlueKind.ProgressiveTechnical, ProgressiveBreakTier.Whitespace.priority, progressiveTechnicalWhitespaceStretchCapacity(fontSize),
+        var ops = build(GlueKind.ProgressiveTechnical, ProgressiveBreakTier.Whitespace.priority(), progressiveTechnicalWhitespaceStretchCapacity(fontSize),
             "ProgressiveTechnicalWhitespaceStretch", function(l, x) {
                 var t = te.get(l);
                 return t == ProgressiveBreakTier.Whitespace && allWhitespace(c[l].text);
