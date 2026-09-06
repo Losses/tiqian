@@ -9,8 +9,8 @@ Dart）下的编译错误，作为跨目标行为对齐（见
 当前状态：Kotlin 的 f32 与 f64 两个目录已完成逐类普查（第 3 节，基线为
 tiqian `105dfb30` 加 boring `4b1fec9`）；rust 门重新生成退出码为 0，首次
 rust 编译普查已完成（第 5 节，181 条错误，按消息骨架 15 类，全部在语法
-层）；TypeScript、Swift、Dart 三门生成仍各在第一处未实现构造上中止
-（第 4 节），逐个补齐是三语言普查的前置条件。
+层）；Swift 已重生成并完成首编译普查（第 4 节，8 条错误，按消息骨架 2 类）；
+TypeScript、Dart 两门生成仍各在第一处未实现构造上中止（第 5 节）。
 
 ## 1 更新规则
 
@@ -96,6 +96,10 @@ nix develop -c bash -c 'haxe engine-haxe/core-ts.hxml'      # TypeScript，当�
 nix develop -c bash -c 'haxe engine-haxe/core-rust.hxml'    # Rust，当前退出码 0
 nix develop -c bash -c 'haxe engine-haxe/core-swift.hxml'   # Swift，当前退出码 1
 nix develop -c bash -c 'haxe engine-haxe/core-dart.hxml'    # Dart，当前退出码 1
+
+# Swift 重生成与首编译普查（2026-09-06；boring 185cf02，tiqian 3240f50a）
+cd /tmp/tiqian-swiftcens && nix develop -c bash -c 'printf /tmp/boring-swiftcens > .haxelib/boring/.dev; haxe engine-haxe/core-swift.hxml; echo REGEN_RC=$?'
+cd /tmp/tiqian-swiftcens && nix develop /home/losses/Development/boring -c bash -c 'find engine-haxe/out/swift-gen -name "*.swift" | sort | xargs swiftc -typecheck 2> /tmp/swiftc-census.log; echo SWIFTC_RC=$?; grep -c ": error:" /tmp/swiftc-census.log'
 ```
 
 boring 遇到尚未实现生成规则的 Haxe 构造时，在第一处这样的构造上报错并中止。
@@ -254,9 +258,9 @@ loop）。下表是 2026-09-06 每门的第一处（工树 /tmp/tiqian-census4�
 
 | 目标 | 第一处报错的文本 | tiqian 触发点 | 处置 |
 |---|---|---|---|
-| TypeScript | super class has no TypeScript lowering in the subset: org.tiqian.core.TiqianIllegalArgumentException | `engine-haxe/src/org/tiqian/core/IllegalStateException.hx:3`（异常子类继承链） | #37（boring ts/swift Decl 层） |
-| Swift | super class has no Swift lowering in the subset: org.tiqian.core.TiqianIllegalArgumentException | 同上 | #37 |
-| Dart | dart target: variant switch lowers at return, statement, initializer, or assign position | `engine-haxe/src/org/tiqian/layout/PunctuationModel.hx:264` | #38（先判定：源侧位置或 DartExpr 降级未覆盖处） |
+| TypeScript | `std/Type.hx:32` extern class Type 无 `@:native`/`@:jsRequire` 错误类 | `engine-haxe/src/std/Type.hx:32` | 修复进行中 |
+| Swift | 重生成 rc0（2c9257d excsup 修复异常超类错误类）；swiftc 首编译普查见第 5 节 | — | 浮点字面量渲染、字符串控制字符转义；修复进行中 |
+| Dart | `PunctuationModel.hx:264` 变体 switch 条件臂位置错误类 | `engine-haxe/src/org/tiqian/layout/PunctuationModel.hx:264` | 两类修复进行中 |
 
 已越过并完成修复的阻断（保留索引）：dart 变体 switch 语句位（boring
 `4e2b441`）、swift 与 dart 的 Math.pow 调用点（boring `fc0d577`）、实例字段
@@ -270,7 +274,24 @@ rust 门 Std.string 参数域（随裁定二 A 解除：`ParagraphLayoutPrep` �
 在 r4 实测中两门均已越过，当前第一处是异常超类报错；完成该规则的提交号
 待核。
 
-## 5 rust 门首次编译普查（2026-09-06）
+## 5 Swift 首次编译普查（2026-09-06）
+
+基线为 boring `185cf02`、tiqian `3240f50a`。重生成命令退出码为 0，输出目录含 283 个 `.swift` 文件；使用 boring devshell 的 `swiftc -typecheck` 退出码为 123（xargs 聚合码），`/tmp/swiftc-census.log` 中含 8 条 `: error:`。
+
+| 错误消息类（骨架） | 条数 | 代表样本文件:行 | 一句成因假设 |
+|---|---:|---|---|
+| expected member name following `.` | 7 | `org/tiqian/layout/PunctuationGeometryStage.swift:139` | Haxe 浮点字面量 `0.` 未被 Swift 渲染为有效浮点字面量 |
+| unprintable ASCII character found in source file | 1 | `org/tiqian/test/ShapingEvidenceJson.swift:445` | Haxe 字符串转义 `\\b` 被生成成源文件中的控制字符 |
+| 合计（求和校验） | 8 | 与 `/tmp/swiftc-census.log` 相等 | |
+
+逐类定位：
+
+- `expected member name following '.'`：生成位置为 `PunctuationGeometryStage.swift:139, 203, 255, 277, 409, 492, 493`；对应 Haxe 源 `engine-haxe/src/org/tiqian/layout/PunctuationGeometryStage.hx` 的 `pairWidth`、`runWidth`、`characterPen`、`totalAdvance`、`added`、`lead`、`trail` 初始化表达式（分别为 135、205、255、278、403、约 492、493 行）。可判定为已知的浮点字面量渲染错误类。
+- `unprintable ASCII character found in source file`：生成位置为 `ShapingEvidenceJson.swift:445`；对应 Haxe 源 `engine-haxe/src/org/tiqian/test/ShapingEvidenceJson.hx` 的 `e == "b"` 分支（约 478 行）调用 `buf.addChar(8)` 的表达式。可判定为字符串控制字符转义错误类。
+
+swift 错误逐行原文保存在 `/tmp/swiftc-census.log`；该节不修改 boring 或生成器。
+
+## 6 rust 门首次编译普查（2026-09-06）
 
 基线与第 3.1 节相同（tiqian `105dfb30` 加 boring `4b1fec9`，工树
 /tmp/tiqian-census4，日志 /tmp/census-r4-rust.log，逐类表
@@ -304,7 +325,7 @@ rust 门 Std.string 参数域（随裁定二 A 解除：`ParagraphLayoutPrep` �
 F4c 判定探针补齐生成函数定位后开列；派发顺序遵循目标优先级裁定
 （kotlin、rust、dart、ts、swift）。
 
-## 6 分级标尺
+## 7 分级标尺
 
 复杂度（C）：C1 单点修复，一个生成器分支或一处源文件，改动预计不超过一百行；
 C2 跨文件或跨目标，同一缺陷出现在多个目标，或需要 tiqian 源与 boring 生成器
@@ -316,7 +337,7 @@ C2 跨文件或跨目标，同一缺陷出现在多个目标，或需要 tiqian 
 严重性（S）：S0 错误出在语法层，使整个生成目录无法编译或无法生成；S1 两百条
 以上；S2 二十到一百九十九条；S3 二十条以下。流程类条目不适用 S，记为 S-。
 
-## 7 KPI
+## 8 KPI
 
 工作量检验的方式（2026-09-06 用户裁定）：进度以第 3.2 节逐类表的行计数变化
 为准，每类可单独复测；不设覆盖多类的「其余」聚合指标，聚合数只保留 total
@@ -333,7 +354,7 @@ C2 跨文件或跨目标，同一缺陷出现在多个目标，或需要 tiqian 
 | K6 | boring 验收链 | 全通过 | 每次合并后保持 | 不适用 |
 | K7 | 五目标普查覆盖 | kotlin 与 rust 逐类表已建（第 3、5 节）；ts、swift、dart 随 K5 | 五目标各有逐类表 | F4a、F4b、F4c |
 
-## 8 修复项清单
+## 9 修复项清单
 
 ### 第 0 组：nullargs 收尾（已完成合入，保留记录）
 
@@ -357,9 +378,12 @@ C2 跨文件或跨目标，同一缺陷出现在多个目标，或需要 tiqian 
       `04777e8b`，`ParagraphLayoutPrep` 移除 `@:dataClass`、
       `ProgressiveBreakTier` 改真枚举；合并态六门实测 rust 退出码 0）。
       此前三普通类的修复见 tiqian `26d89566`。
-- [ ] F0i 每消除一处第一位的报错后重跑对应生成命令，记录下一处，直到 ts、
-      swift、dart 三门退出码 0；然后补记第 2.2 节三语言的编译普查命令与
-      首次逐类表（与 F4a 合并执行）。C1，P1，S-。
+- [ ] F0i TypeScript extern 错误类：`std/Type.hx:32` 的 extern class Type 缺少
+      `@:native`/`@:jsRequire`。修复进行中；完成后重跑 TypeScript 生成并继续
+      reveal loop。C1，P1，S0。
+- [ ] F0i-门清 每消除一处第一位的报错后重跑对应生成命令，记录下一处，直到
+      ts、dart 两门退出码 0；Swift 已完成重生成与首编译普查，表见第 5 节。
+      C1，P1，S-。
 - [ ] F0k-核 变体 switch 赋值位的修复提交号核对（见 F0g 条）。C1，P3，S-。
 
 ### 第 1 组：判定探针（K2，先于其余修复任务的派发）
@@ -409,7 +433,7 @@ C2 跨文件或跨目标，同一缺陷出现在多个目标，或需要 tiqian 
       （浮点字面量生成、保留字转义缺失）的生成函数定位；产出＝第 5 节
       判定列填全，修复项随后按面开列。C2，P1，S-。
 
-## 9 进度记录
+## 10 进度记录
 
 | 日期 | 修复项 | 合入位置 | 复测计数 | 验收链 |
 |---|---|---|---|---|
@@ -424,7 +448,7 @@ C2 跨文件或跨目标，同一缺陷出现在多个目标，或需要 tiqian 
 | 2026-09-06 | KPI 重切：按修复面与判定覆盖取代主题合并，撤销 F3a-d | 本文档第 7、8 节 | 判定进度见 3.2 节小结 | 不适用 |
 | 2026-09-06 | rust 门首次编译普查（F4a）与 kotlin `'X' cannot be a callee` 类判定 | 本文档第 2.2、3.2、5 节 | rust 181 条、15 类，求和校验相等；kotlin 该类 f32/f64 各 1＝异常子类第二代 super 误入 init 块 | 不适用 |
 
-## 10 已完成并合入的修复（背景）
+## 11 已完成并合入的修复（背景）
 
 以下修复在 r4 基线之前已合入，其效果已包含在基线数字里：names-r2 名称解析
 第一批（unresolved 从 347 降到 290）、单变体异常折叠回归修复（boring
