@@ -37,7 +37,7 @@
 
 ## Decision
 
-Web = **第四个平台 adapter + 引擎全量行布局 + DOM 画预断行的文本节点**。
+Web = **第四个平台 adapter + 引擎完整行布局 + DOM 画预断行的文本节点**。
 
 ### `KotlinJsOnlyWebRuntime` : 发布链不再保留 WebAssembly 后端
 
@@ -116,7 +116,7 @@ background task 继续验证，避免 Edge 关闭 JIT 时证明 continuation 与
 adoption 校验候选集合、source / semantic digest、宿主 typography、有效宽度和 prepared DOM 几何；
 后者只校验 manifest/revision、CSS face/source/coverage、浏览器 advance probe 与异步前后的 manifest
 identity。宽度 miss 或 mixed completion 进入 runtime 时只能复核后者，不能为了建立 shaping session
-再次遍历整篇的 snapshot source 与 layout-only typography。runtime replay lookup 继续以全量的实时
+再次遍历整篇的 snapshot source 与 layout-only typography。runtime replay lookup 继续以整份实时
 `ShapingInput` 为 key，因此拆分验证不放宽错误内容消费服务器证据的边界。低层同步 API 可以显式
 选择浏览器度量 fallback；custom element 的 exact-session 路径则只接管已有 Worker plan 的段落，
 replay miss 或不可序列化的 inline contract 保留原生 DOM 并报告 `ExactLayoutWorkerPlanUnavailable`，
@@ -155,7 +155,7 @@ Web 列表不复刻 Compose 的自动 marker gutter。公开静态样式表让�
 并让 CSS 在 runtime 前已经给出最终列表几何。构建期 snapshot 缓存可证明的 `<p>` / leaf `<li>`；
 未预排正文继续保留 semantic source，再由 runtime 按视口优先逐段补齐，不能因为一个 runtime-only
 candidate 丢弃同 root 内其余已验证快照。marker 与两字缩进始终由同一份静态 Web CSS 持有。复杂 item 不能
-全量 lower 时保留其原生内容，不影响同列表 marker。
+完整 lower 时保留其原生内容，不影响同列表 marker。
 
 ### `ExplicitBreakSemanticFlow` : DOM 画预断行，但不切断语义树
 
@@ -210,7 +210,7 @@ white-space / wrapping longhand 由 `[data-tq-rendered]` 与 `[data-tq-source-se
 `padding: 4px; margin: -4px`），可以保留；Tiqian 的 autospace / justify 必须在捕获到的宿主
 padding / margin 上做增量叠加，不能覆盖原值。`InlineBoxBoundaryAdvance` 已支持这些非零边界；
 只有 `box-decoration-break: clone` 实际跨行、状态对象不能静态复制或几何不可测时，才报告具名
-capability issue 并全量保留原生段落。
+capability issue 并完整保留原生段落。
 
 `ContinuousSemanticFlow` 要求整段 source semantic path 只克隆一次：同一个 `<a>` 即使内部因
 autospace / justification 分成多个 geometry run、并跨越多个 `<br>`，也必须保持一个宿主 `<a>`，
@@ -232,7 +232,7 @@ source paragraph，再采样所有 descendant computed style，并在增强存�
 formatting context。lowerer 在 source projection 中放一个结构性的 U+FFFC，并以 `InlineObjectSpan`
 把 margin-box advance、相对宿主 baseline 的 ascent / descent 送入 core；对象不经过字体 shaping，作为
 不可拆 cluster 参与断行，其上下界参与所在行的实际高度。DOM renderer 再按 source range 深克隆原
-宿主节点，所以 `img`、无样式 SVG 与普通自定义 `inline-block` 由同一 formatting-context 能力覆盖，不依赖
+宿主节点，所以 `img`、内联 SVG 与普通自定义 `inline-block` 由同一 formatting-context 能力覆盖，不依赖
 标签白名单。U+FFFC 不进入可见 DOM，也不进入复制结果。
 
 默认只接受几何稳定、非交互且可安全克隆的对象；具备表单状态、焦点/编辑状态、canvas 或内联事件处理器的
@@ -240,7 +240,7 @@ formatting context。lowerer 在 source projection 中放一个结构性的 U+FF
 `data-tiqian-static-inline-object` 明确声明其 DOM 可作为静态绘制内容复制。对象加载后自行改变几何的
 监听尚未接入，命名为 `OpaqueInlineObjectGeometryInvalidation`，不得把初次测量伪装成永久有效缓存。
 
-`CjkStrongAsEmphasisMark` 是显式 opt-in 的 HTML 语义映射。默认情况下 `<strong>` 全量保留宿主
+`CjkStrongAsEmphasisMark` 是显式 opt-in 的 HTML 语义映射。默认情况下 `<strong>` 完整保留宿主
 粗体语义；Markdown 的 `strong` 只表达重要性，不能据此推断作者想要中文着重号。只有调用方设置
 Web API 的 `strongAsEmphasisMarks: true`，或在 `<tiqian-prose>` 上添加
 `strong-as-emphasis-marks` boolean attribute 时，`<strong>` 内被同一
@@ -281,7 +281,7 @@ browser runtime 只有在调用方显式提供 `monospaceFontFamily` contract，
 advance 的浏览器侧字体 polyfill，同时保留正文 face / size / weight / slant / line-height。
 例如 astro 站点的 `CP` 字体已经把部分右标点做成半字宽，而 Canvas 2D 对 CSS fallback 栈的
 度量仍可能落到后继正文 face 的全字宽；随后 Tiqian 再按引擎几何减去半字，DOM 中该标点就会
-被压成 `0px`。这不是 kerning，也不能靠拆 span 修复。应从源代码 typography token 派生
+被压成 `0px`。这不是 kerning，也不能靠拆 span 修复。宿主应从源代码 typography token 派生
 一个仅移除 `CP` 的 layout-neutral 栈，在 `<tiqian-prose>:defined` 后生效；no-JS 原文仍保留
 原有 polyfill，增强路径则由 Tiqian 独占标点 advance。
 
@@ -296,7 +296,7 @@ Gradle 生成的 `runtime/tiqian-web.js`；仓库内 build helper 不是安装�
 `ReversibleDisabledEnhancement` 把 `<tiqian-prose disabled>` 定义为原生 Boolean attribute 生命周期，
 该定义独立于 CSS 可见性或宿主 DOM 重建约定。初始存在时保留 semantic source，不采用 snapshot、不加载
 runtime、不建立字体或几何 observer；运行中增加时取消所有代际化任务、恢复 snapshot/runtime source、
-释放 exact-font session 与 document-scoped 状态。移除属性后从同一 semantic source 重新进入全量连接
+释放 exact-font session 与 document-scoped 状态。移除属性后从同一 semantic source 重新进入完整连接
 生命周期，并可复用仍已注册的 snapshot。URL、localStorage、rollout 等偏好来源属于宿主，只能把最终
 状态投影到 `disabled`；通用 element 不读取或持久化宿主策略。SSR 已经传输的 inert snapshot 不因
 客户端关闭而从 HTML 消失。
@@ -316,16 +316,16 @@ generation 变化立即废弃旧导航的请求与 plan。随后主线程在约 
 提交 prepared DOM，每段在同一 callback 内原子替换自己的 children；尚未轮到的段落继续显示响应式
 SSR DOM。调度不会等待滚轮、触摸或 scroll 的“安静窗口”。计算不占主线程，commit 自身受 slice
 budget 约束，输入只与普通 frame 调度竞争。Worker 不可用、replay 缺项或 prepared DOM 复核失败时，
-custom element 保留该段 native source；禁止以同步 Kotlin/JS 或 browser-metric relayout 作为隐形保底。
+custom element 保留该段 native source；禁止以同步 Kotlin/JS 或 browser-metric relayout 作为隐式回退。
 root 内的 exact font family、宿主字号、行高与 content width 在接管前已经统一，因此中间帧可以混合
 native / Tiqian 段落，但不能出现字体、行高或版心参差。断开 root 会取消待执行 callback，却不改写
 已经脱离 document 的 DOM；同一节点重连时才从 weak backing 精确还原。完成事件同时报告总耗时与
 最大单 slice 耗时，避免只看 bundle 下载大小而忽略主线程任务。
 
 `WorkerCandidateSetMatchesCommitSet` 要求 Worker 准备集合与随后 Kotlin runtime 实际访问的集合相同：
-mixed snapshot completion 传入明确的 unkeyed selector，只准备该子集；全量 width / typography fallback
+mixed snapshot completion 传入明确的 unkeyed selector，只准备该子集；完整 width / typography fallback
 没有显式 selector 时则使用 `p, li`，与 runtime 默认段落集合一致。snapshot manifest selector 只描述
-keyed 构建产物，不能在全量 fallback 中复用，否则未 keyed 的上标、富文本等可支持段落会永久缺少
+keyed 构建产物，不能在完整 fallback 中复用，否则未 keyed 的上标、富文本等可支持段落会永久缺少
 Worker plan，并被误报为不可接管。
 
 每段接管必须满足 `ParagraphAtomicNativeRollback`：lowering、layout 或 DOM commit 任一阶段失败，都在
@@ -339,7 +339,7 @@ light DOM 继承宿主 CSS，因此 custom element 不能把 `connectedCallback`
 cascade 落定；随后只对正文 computed font descriptor 与实际字符调用 `FontFaceSet.load()`，而不等
 `document.fonts.ready` 中无关的图标、代码或 widget 字体。正文字体等待以 3 秒为上限；超时后原生
 SSR 继续作为事实来源，不启动可能与 font swap 竞态的测量。对应 load promise 最终 settle、相关
-`loadingdone` / `loadingerror` 或宿主字体样式变化时，custom element 从最新一代连接状态重新走全量
+`loadingdone` / `loadingerror` 或宿主字体样式变化时，custom element 从最新一代连接状态重新走完整
 gate。构建期 snapshot 自己验证明确声明的 exact face，因此命中候选不重复执行这次通用字体扫描。
 否则 Vite/Astro 的模块 CSS 仍可能把正文从浏览器默认 `16px / normal` 改成站点的 `18px / 460`，
 canvas 按旧值度量而 DOM 按新值绘制，整行墨迹会超出 `LineBox.visualWidth` 并被宿主容器裁切。
@@ -373,8 +373,8 @@ eligibility，不能让等待字体之前捕获的旧值在等待结束后提交
 与引擎 spacing 叠加并造成整行错排。link 被移除后，下一次 `ensureTiqianStyles()` 必须新建并等待
 实际 stylesheet，不使用复用指向已断开节点的旧 Promise。
 
-渐进增强的 typography signature 以 `tiqian:ready` 完成时为准，忽略首次 dispatch 时
-dispatch 时为准；逐段分帧接管期间若响应式 CSS 刚好稳定，完成值才是引擎
+渐进增强的 typography signature 以 `tiqian:ready` 完成时为准，不采用首次 dispatch 时
+dispatch 时的值；逐段分帧接管期间若响应式 CSS 刚好稳定，完成值才是引擎
 实际使用的宿主状态。typography / resize observer 在 progressive job 期间必须暂停，并只在
 `tiqian:ready` 后重新连接；否则它会把引擎自己写入的 paragraph style 当成宿主变化，反复取消
 尚未处理首段的 job。后续每次 full refresh 完成也同步更新该 signature。
@@ -384,7 +384,7 @@ dispatch 时为准；逐段分帧接管期间若响应式 CSS 刚好稳定，完
 Web lowerer 的输入是宿主已经生成的 DOM，不直接读取 Markdown 源文件。SSR/HTML 序列化器会在 inline
 节点之间以及 `<br>` 之后保留用于格式化源码的换行；在宿主 `white-space: normal` 下，这些 text
 node 空白会由浏览器折叠，不能直接作为 UAX mandatory break 送进 layout。否则普通 Markdown
-软换行会变成硬换行，`<br>\n` 会变成两个连续硬换行并产生一个宽度为零、却占全量行高的空行。
+软换行会变成硬换行，`<br>\n` 会变成两个连续硬换行并产生一个宽度为零、却占完整行高的空行。
 
 lowerer 因此先按每个 inline formatting context 的 computed `white-space` 建立源投影：
 `normal` / `nowrap` 折叠连续 CSS 空白，`pre-line` 折叠空格但保留 text node segment break，
@@ -453,10 +453,10 @@ rendered backing 上准备单段 replacement，但 `ParagraphCurrentMeasureCommi
 不能保留固定宽度溢出，也不能让一次取消永久遗漏尾部段落。
 
 snapshot、runtime 与 native source 之间采用 `AtomicSnapshotNativeTransition`。异步加载 runtime 与字体
-时，当前 snapshot / rendered DOM 继续留在 live tree；实际开始 width fallback 前一次恢复全量的 native
+时，当前 snapshot / rendered DOM 继续留在 live tree；实际开始 width fallback 前一次恢复全部 native
 source，随后由 `ProgressiveParagraphEnhancement` 视口优先逐段接管。snapshot 验证失败、
 离开最大版心，以及命名为 `InlineCloneDecorationBreakUnsupported` 的宽度相关 capability retry 都遵守
-同一恢复规则：异步资源就绪前保留当前全量 backing；开始 runtime 接管后，每段只在自己的原子 commit
+同一恢复规则：异步资源就绪前保留当前完整 backing；开始 runtime 接管后，每段只在自己的原子 commit
 中切换。`InvalidWebShapingAdvance` 等稳定 issue 继续让对应段落保持 native，只重排其他可增强段落。
 
 client template 的 source / digest / typography / 字体证据在 commit 前复核两次。随后
@@ -476,10 +476,10 @@ font/size/weight/vertical-align 组的 fragment top；较小 code、上标与已
 
 初始最大版心允许 `MixedSnapshotRuntimeCompletion`：通过全部证据校验的 keyed 段落保留 snapshot DOM，
 同 root 内未 keyed 的 runtime-eligible 段落从各自 semantic source 进入 Kotlin pipeline；两类段落的所有权
-互不重叠。只有 keyed canonical 段落可以假定 server replay 全量并进入 prepared DOM；unkeyed completion
+互不重叠。只有 keyed canonical 段落可以假定 server replay 完整并进入 prepared DOM；unkeyed completion
 按 shaping run 混用 exact replay 与 browser fallback，避免普通字符的 replay miss 连带丢失只能由服务端
 证明的破折号字形。任何 width / typography invalidation 都先分别恢复 snapshot 与 runtime 持有的 source，
-再让 runtime 从全量 native backing 重排，禁止把已排 DOM 当成另一条 pipeline 的输入；若取消后 maximum-
+再让 runtime 从完整 native backing 重排，禁止把已排 DOM 当成另一条 pipeline 的输入；若取消后 maximum-
 measure snapshot 仍有效，则只重启 unkeyed completion，不能把 keyed snapshot 误当成整个根节点已经完成。
 
 若在途 job 准备期间 typography attribute 或相关 FontFace 发生变化，
@@ -491,7 +491,7 @@ target 重新 lower。typography 与 width refresh 都先恢复 native backing�
 
 `text-spacing-trim` / `text-autospace` / `hanging-punctuation` 支持时,可对**与宽度无关的**
 标点半宽 / 中西间距走纯 CSS 快路径(零 span);不支持(Safari / Firefox 现状)则落到引擎生成的
-span / thin-space 保底。引擎标注是**跨浏览器参考来源 + 通用保底**,CSS 只是 Chromium 上的优化。
+span / thin-space 回退。引擎标注是**跨浏览器真相来源 + 通用回退**,CSS 只是 Chromium 上的优化。
 标注机制与 `halt` 同构:有则精修、无则降级。**CSS 一律不碰断行**。开发期可拿引擎几何比对
 `getBoundingClientRect`、dump「浏览器是否同意」,保留可解释性。
 
@@ -539,7 +539,7 @@ boundary 显式使用 `text-spacing-trim: space-all`。否则支持 `normal` 上
 
 - **canvas 渲染**:引擎全权、与 Compose 像素一致,但丢文本选择 / 无障碍 / 复制 / 原生 reflow /
   SSR。对正文是错的取舍。否。
-- **DOM + CSS Text 4 统一交由浏览器处理(浏览器折行)**：排版模型,但排版模型退化成「Chromium 当前版本怎么
+- **DOM + CSS Text 4 全部交给浏览器处理(浏览器折行)**：实现最省事,但排版模型退化成「Chromium 当前版本怎么
   解释 CLREQ」,丢推入推出、跨浏览器不一致、违背「模型必须真」。否。
 - **断词交给浏览器(`hyphens: auto`)**:连字符不受控(不是引擎/CLREQ 那一个、不进 justify),
   且断点两端 kerning 与两行 advance 与引擎度量对不上。见 `EngineOwnedHyphenation`。否。
@@ -554,7 +554,7 @@ boundary 显式使用 `text-spacing-trim: space-all`。否则支持 `normal` 上
 - 完成 `WidthIndependentAnnotationCache`，让 resize 从整段 pipeline 收敛为实际意义的 rebreak。
 - 完成 `OpaqueInlineObjectGeometryInvalidation`，让无固有尺寸或运行期改变尺寸的静态 inline object
   触发重新测量，作为宿主宽度 / typography invalidation 触发测量的补充。
-- 用接近正文长度的站点继续扩充 capability issue 语料；unsupported 内容必须留原生，不能扩大 reduced DOM
+- 用实际网站继续扩充 capability issue 语料；unsupported 内容必须留原生，不能扩大 reduced DOM
   lowerer 后静默丢语义。
 - 复用现有 golden:web adapter 的逐标点 advance / ink 侧与 AWT / Skia / Android 对照,分歧入
   `haltValidation` 通道。
@@ -582,7 +582,7 @@ Web 不为逐角 1 px / 3 px 圆角拆分一个跨行 `<code>`。源元素继续
 
 Firefox profile（拖动 width-slider，25 个 `<tiqian-prose>`）显示：每次 relayout 的逐节点
 `removeChild` / `appendChild` 让每段产生约 44 条 mutation 记录，每条记录附带一次 Firefox
-a11y 树同步与父进程 IPC；快速拖动下累计为内容进程 94k marker、270–550 MB/s 分配与
+a11y 树同步与父进程 IPC；快速拖动下累计为内容进程 94k marker、270–550 MB/s 的内存分配浪费与
 365ms eventDelay 峰值。本修订调整三处提交与守卫的粒度：
 
 1. **`AtomicParagraphDomSwap`**：renderer 先把全部行盒构建进 `DocumentFragment`，再对宿主
@@ -689,7 +689,7 @@ computed padding 与 border。`elementFragmentBorderBoxInlineSize` 仍为 plain 
 
 ## Amendment (2026-08-18): skip discarded finish reads
 
-2026-08-18 的 Zen profile（快拖，172 次字格穿越）把最大单一可追溯项定位到
+2026-08-18 的 Zen profile（快拖，172 次字格穿越）把最大的单一原因项定位到
 `fragmentedBorderBoxInlineSize`（gBCR）23.1%、1483ms：每个 relayout job 完成时
 `#finishLayoutWorkAndObserve` 对 root 内每段读一次布局签名。审计发现这些读取没有消费者：
 
@@ -708,7 +708,7 @@ settle 后 commit 比较的基准。
 demo CDP burst 基线（1500×6000 视口、12 root 全可见、900ms 逐帧宽度振荡）：段落 gBCR
 读取从 610-624 降到 335-419；`drag-responsiveness-metrics` 以 500 为预算固定该行为。
 后续 enhance 停摆修复让 burst 内完成次数接近翻倍，绝对预算随机器吞吐漂移，2026-08-18
-改为按完成次数计算（每次完成 gBCR ≤ 4、gCS ≤ 24，实测基线 3.0 与 18.2），被固定的
+改为按完成次数标准化（每次完成 gBCR ≤ 4、gCS ≤ 24，实测基线 3.0 与 18.2），被固定的
 行为仍是 finish 路径的单次成本。
 
 ## Amendment (2026-08-18): coordinator 不再预估排版耗时
@@ -722,7 +722,7 @@ job generation、换算到 `Date.now` 域的截止时间戳、段数配额），
 预判这次排版时间段会不会超出帧预算，会则不授予；帧预算下限与轻量任务的让路判断也都参考
 它。帧追踪（`__tqFrameTrace`）证实这套预判会失效：冷启动的一个慢排版时间段把估计值抬过
 帧预算后，发放凭证的条件在预算远未耗尽时就一直成立，所有区块一张凭证都拿不到，只剩
-「连续两帧毫无产出」的保底通道，节奏退化成三帧排一段。估计值全页共享，一个慢排版时间段
+「连续两帧毫无产出」的回退通道，节奏退化成三帧排一段。估计值全页共享，一个慢排版时间段
 惩罚所有区块。
 
 决定：删除整个预估层，coordinator 只切分帧和排序。
@@ -730,7 +730,7 @@ job generation、换算到 `Date.now` 域的截止时间戳、段数配额），
 1. `RefreshAnchoredFrameBudget`：帧预算每帧由实测帧间隔直接算出
    `clamp(帧间隔 × 0.4, 2.5, 6.0)`，不随压力事件调节。帧来得晚，截止时刻不变，
    能装的工作自然变少。
-2. `DeadlineGate`：发不发凭证只看实际时间，预算耗尽即停。保底改成结构性的：一帧里
+2. `DeadlineGate`：发不发凭证只看实际时间，预算耗尽即停。下限保证改成结构性的：一帧里
    轻量任务与凭证发放都毫无产出时仍发放一张，保证再慢的排版时间段也有前向推进。
 3. 删除排版时间段耗时估计、三处预判消费点、压力反比调节与连续空转帧计数。轻量任务的
    让路只看已耗时间，每帧第一个任务始终执行。
@@ -755,7 +755,7 @@ job generation、换算到 `Date.now` 域的截止时间戳、段数配额），
    主线程被宿主长任务占满时排版整体让路，没有机制能抢回时间。根治方向是把排版
    计算挪进真 Worker，请求与结果都是纯数据，`worker-layout.js` 的快照排版已是
    雏形；代价是 Worker 内拿不到 DOM 与计算样式，度量正确性只能靠构建期证据链
-   （ADR 0040）。这是独立的 ADR 内决策，本文件不预设结论。
+   （ADR 0040）。这是需要单独一份 ADR 的决策，本文件不预设结论。
 
 2. **取消与预算的最小作用单位是整个段落。** 排版作业按段落推进：断行、准备、
    DOM 提交对一个段落一次做完，停止检查只在段落之间生效。段落成本方差很大：
@@ -765,7 +765,7 @@ job generation、换算到 `Date.now` 域的截止时间戳、段数配额），
    「该不该停」的判断当时有两份副本：coordinator 发放凭证前比较 deadline 与
    performance.now，排版循环在每个段落后比较 sliceDeadline 与 Date.now，后者
    的数字来自发放时传入的剩余毫秒。两份副本可能给出不同答案。预算 deadline
-   误用 rAF 回调参数（帧起点时间戳）导致凭证长期发不出去的事故就是时钟不一致不一致
+   误用 rAF 回调参数（帧起点时间戳）导致凭证长期发不出去的事故就是时钟基准不一致
    的实例，ClockTierDiscipline 修正了时钟选择，副本本身仍待合并。
 
    讨论收敛的目标形态已于同日实施（GrantController）。停止检查收拢为一个准入判断：
@@ -783,13 +783,13 @@ job generation、换算到 `Date.now` 域的截止时间戳、段数配额），
    拒绝，发给已替换 job 的旧凭证不会跑到新 job 上。无 coordinator 的路径（detach
    收尾、未 attach 的同步跑完）在 slice 开头构造本地准入，沿用毫秒与段数上限。
    单线程的事实不变：slice 运行期间收件人的其余状态冻结，循环中途实际推进的量
-   只有时间。多个 root 之间的排序、预算切分与前向推进保底依赖全局页面状态，
+   只有时间。多个 root 之间的排序、预算切分与前向推进保证依赖全局页面状态，
    计算留在 coordinator，算出的值随凭证下行，本张凭证的截止与配额就是预算切分的
    产物；全局状态本身不跨线，执行侧零全局知识。
 
    剩余部分：把检查点下移进断行循环、让段落做到一半能停且能恢复，仍是替换
-   治理模型的 ADR 内变更，只在单段超重场景有收益，demo 规模未观测到失控。
-   触发条件：实际页面出现单段超帧的可追溯卡顿证据。
+   治理模型、需要单独修订 ADR 的变更，只在单段超重场景有收益，demo 规模未观测到失控。
+   触发条件：实际页面出现可认定由单段超帧引起的卡顿证据。
 
 3. **每条停止路径必须带上重派义务。** 协议要求：任何取消、挂起、强制终止排版工作的
    路径，必须能指出谁负责重新唤醒工作；说不出唤醒者的沉默只允许出现在元素断连
@@ -826,6 +826,6 @@ quota 加一（上限 8，原常量变成上限）。帧距 ≤ 4 或 ≥ 150 �
 
 Kotlin 侧不变：quota 是凭证携带的条款，排版循环照读。冷启动 2、逐帧增减、
 地板与上限、挂起豁免、按 root 隔离由 `coordinator.test.mjs` 逐帧断言。demo 的
-scroll 套件是严格的护栏：headless Chromium 的原生后续远低于 Gecko 的逐节点 a11y
-记记录，实测拆掉自适应后帧距仅 16.8 升到 33.4ms，无法在此环境做灵敏度断言，
+scroll 套件只防最严重的回退：headless Chromium 的原生后续远低于 Gecko 的逐节点 a11y
+记录，实测拆掉自适应后帧距仅 16.8 升到 33.4ms，无法在此环境做灵敏度断言，
 方向性验证留在 npm 单测。
