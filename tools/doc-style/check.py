@@ -94,6 +94,7 @@ WORDS = [
     # colloquial shorthand
     "毛躁", "全绿", "全红", "锁相", "塞进", "收进", "测试绿", "测试红",
     "糊", "照跑", "拍平", "散落", "堆放", "接线", "免费拿到",
+    "撞名", "钉到", "混树", "语法层五码",
     # decorative adjectives and vague quantifiers: judge each line by context
     "恒", "恰好", "巨大的", "完整的", "真实", "合法", "归一", "缝隙", "大概率",
     "当日",
