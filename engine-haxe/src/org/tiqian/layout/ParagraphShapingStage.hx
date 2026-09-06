@@ -1,5 +1,7 @@
 package org.tiqian.layout;
 
+using org.tiqian.layout.ProgressiveBreakTierPriority;
+
 import org.tiqian.core.LayoutInput;
 import org.tiqian.core.TextRange;
 import org.tiqian.core.TextStyle;
@@ -686,7 +688,7 @@ class ParagraphShapingStage {
             for (i in 0...progBreakKeys.length) {
                 if (progBreakKeys[i] == offset) {
                     final current = progBreakValues[i];
-                    if (opp.tier.priority < current.tier.priority) {
+                    if (opp.tier.priority() < current.tier.priority()) {
                         progBreakValues[i] = opp;
                     }
                     return;
@@ -808,7 +810,7 @@ class ParagraphShapingStage {
             return null;
         }
 
-        function getRejectedTiers(range:TextRange):Null<SortedSet<ProgressiveBreakTier>> {
+        function getRejectedTiers(range:TextRange):Null<SortedSet<Int>> {
             if (rejectedTechnicalTiersBySpan == null)
                 return null;
             for (i in 0...rejectedTechnicalTiersBySpan.size()) {
@@ -1142,11 +1144,11 @@ class ParagraphShapingStage {
                     }
                     final rejectedCleanBoundaries = new Array<Int>();
                     if (rejectedTiers != null) {
-                        if (rejectedTiers.has(ProgressiveBreakTier.Structural)) {
+                        if (rejectedTiers.has(ProgressiveBreakTier.Structural.priority())) {
                             for (c in 0...technicalStructuralCuts.length)
                                 rejectedCleanBoundaries.push(technicalStructuralCuts[c]);
                         }
-                        if (rejectedTiers.has(ProgressiveBreakTier.Syllable)) {
+                        if (rejectedTiers.has(ProgressiveBreakTier.Syllable.priority())) {
                             for (c in 0...technicalSyllableCuts.length)
                                 rejectedCleanBoundaries.push(technicalSyllableCuts[c]);
                         }
@@ -1178,14 +1180,14 @@ class ParagraphShapingStage {
                         final rej = getRejectedTiers(progressiveSpan.range);
                         var reason = "ProgressiveTechnicalSpan";
                         if (rej != null && rej.size() > 0) {
-                            final tiers = new Array<ProgressiveBreakTier>();
+                            final tiers = new Array<Int>();
                             for (i in 0...rej.size())
                                 tiers.push(rej.at(i));
                             var tIdx = 1;
                             while (tIdx < tiers.length) {
                                 final curr = tiers[tIdx];
                                 var j = tIdx - 1;
-                                while (j >= 0 && tiers[j].priority > curr.priority) {
+                                while (j >= 0 && tiers[j] > curr) {
                                     tiers[j + 1] = tiers[j];
                                     j--;
                                 }
@@ -1196,7 +1198,7 @@ class ParagraphShapingStage {
                             for (i in 0...tiers.length) {
                                 if (i > 0)
                                     joined += "+";
-                                joined += tierName(tiers[i]);
+                                joined += tierName(ProgressiveBreakTierPriority.fromPriority(tiers[i]));
                             }
                             reason = "CurrentLineTechnicalTierRejection:" + joined;
                         }
@@ -1213,7 +1215,7 @@ class ParagraphShapingStage {
                         final tier = tierTypes[tIdx];
                         final offsets = tierArrays[tIdx];
                         final rej = getRejectedTiers(progressiveSpan.range);
-                        if (rej != null && rej.has(tier)) {
+                        if (rej != null && rej.has(tier.priority())) {
                             continue;
                         }
                         final uniqueOffsets = new Array<Int>();
@@ -1248,7 +1250,7 @@ class ParagraphShapingStage {
                         boundaryTier = ProgressiveBreakTier.Whitespace;
                     }
                     final rej = getRejectedTiers(progressiveSpan.range);
-                    if (rej == null || !rej.has(boundaryTier)) {
+                    if (rej == null || !rej.has(boundaryTier.priority())) {
                         final wholeToken = new ProgressiveBreakOpportunity(boundaryTier, progressiveSpan.range);
                         putProgressiveBreak(segmentRange.start, wholeToken);
                         final wrapReason = boundaryTier == ProgressiveBreakTier.Whitespace ? "ProgressiveTechnicalWhitespaceBreak" : "ProgressiveTechnicalWholeTokenWrap";

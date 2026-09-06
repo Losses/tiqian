@@ -1,5 +1,7 @@
 package org.tiqian.layout;
 
+using org.tiqian.layout.ProgressiveBreakTierPriority;
+
 import org.tiqian.core.Cluster;
 import org.tiqian.core.IntRange;
 import org.tiqian.core.LineEndReason;
@@ -140,7 +142,7 @@ class ParagraphDpLineBreaker implements LineBreaker {
                 && resulting != null
                 && current.spanRange.start == resulting.spanRange.start
                 && current.spanRange.end == resulting.spanRange.end
-                && resulting.tier.priority < current.tier.priority;
+                && resulting.tier.priority() < current.tier.priority();
         };
         final filtered:Array<Int> = [];
         var i = raw - candidateWindow;
@@ -182,13 +184,13 @@ class ParagraphDpLineBreaker implements LineBreaker {
             final promoted = context.progressiveBreakOpportunities.get(promotions[0]).spanRange;
             for (e in promotions) {
                 final o = context.progressiveBreakOpportunities.get(e);
-                if (o.tier.priority < best)
-                    best = o.tier.priority;
+                if (o.tier.priority() < best)
+                    best = o.tier.priority();
             }
             final preferred:Array<Int> = [];
             for (e in pool) {
                 final o = context.progressiveBreakOpportunities.get(e);
-                if (o == null || o.spanRange.start != promoted.start || o.spanRange.end != promoted.end || o.tier.priority <= best)
+                if (o == null || o.spanRange.start != promoted.start || o.spanRange.end != promoted.end || o.tier.priority() <= best)
                     preferred.push(e);
             }
             pool = preferred;
@@ -350,7 +352,7 @@ class ParagraphDpLineBreaker implements LineBreaker {
                     && resultingBreak != null
                     && originalBreak.spanRange.start == resultingBreak.spanRange.start
                     && originalBreak.spanRange.end == resultingBreak.spanRange.end
-                    && resultingBreak.tier.priority < originalBreak.tier.priority;
+                    && resultingBreak.tier.priority() < originalBreak.tier.priority();
                 // CompressionAsDpEdge realization: identical repair records to
                 // the fill pass. Same tiered capacity, same promotion reason.
                 final result = LineRepair.tryPushIn(LineBreakerLines.rebuildLine(new IntRange(lineStart, lineStart), context.naturalClusters,
