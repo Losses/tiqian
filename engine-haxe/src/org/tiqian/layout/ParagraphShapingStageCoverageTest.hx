@@ -1,5 +1,7 @@
 package org.tiqian.layout;
 
+using org.tiqian.layout.ProgressiveBreakTierPriority;
+
 import org.tiqian.core.*;
 import org.tiqian.layout.ClusterRoleResolution.ResolvedClusterRange;
 import org.tiqian.layout.ParagraphLayoutEngine.ExplainableStubParagraphLayoutEngine;
@@ -171,7 +173,7 @@ class ParagraphShapingStageCoverageTest {
             ProgressiveBreakTier.Syllable,
             ProgressiveBreakTier.Emergency
         ]) {
-            var ti:Int = tier;
+            var ti:Int = tier.priority();
             var tiers = SortedSet.builder();
             tiers.put(ti);
             var m = SortedMap.builder();
@@ -182,8 +184,8 @@ class ParagraphShapingStageCoverageTest {
         }
         var annEmpty = WidthIndependentAnnotationCacheFns.prepareWidthIndependentAnnotation(e, i, SortedMap.builder().build());
         var multi = SortedSet.builder();
-        multi.put((ProgressiveBreakTier.Structural : Int));
-        multi.put((ProgressiveBreakTier.Syllable : Int));
+        multi.put(ProgressiveBreakTier.Structural.priority());
+        multi.put(ProgressiveBreakTier.Syllable.priority());
         var mm = SortedMap.builder();
         mm.put(key, multi.build());
         var prepMulti = WidthIndependentAnnotationCacheFns.buildParagraphLayoutPrep(e, i, annEmpty, mm.build());

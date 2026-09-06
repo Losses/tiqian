@@ -1,5 +1,7 @@
 package org.tiqian.layout;
 
+using org.tiqian.layout.ProgressiveBreakTierPriority;
+
 import org.tiqian.core.*;
 import org.tiqian.clreq.*;
 import org.tiqian.shaping.TextShaper.ITextShaper;
@@ -31,8 +33,7 @@ class WidthIndependentAnnotationCacheCoverageTestSupport {
     public static function tierSet(tiers:Array<ProgressiveBreakTier>):SortedSet<Int> {
         final b = SortedSet.builder();
         for (i in 0...tiers.length) {
-            final tier:Int = tiers[i];
-            b.put(tier);
+            b.put(tiers[i].priority());
         }
         return b.build();
     }

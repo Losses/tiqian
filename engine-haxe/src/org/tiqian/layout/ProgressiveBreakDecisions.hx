@@ -1,5 +1,7 @@
 package org.tiqian.layout;
 
+using org.tiqian.layout.ProgressiveBreakTierPriority;
+
 using std.Functional;
 
 import org.tiqian.core.Cluster;
@@ -8,16 +10,12 @@ import std.SortedMap;
 import std.SortedSet;
 
 /** Ordered fallback tier for a break inside one progressive technical span. */
-@:enum abstract ProgressiveBreakTier(Int) from Int to Int {
-    var Whitespace = 0;
-    var Structural = 1;
-    var Syllable = 2;
-    var WholeToken = 3;
-    var Emergency = 4;
-    public var priority(get, never):Int;
-
-    private inline function get_priority():Int
-        return this;
+enum ProgressiveBreakTier {
+    Whitespace;
+    Structural;
+    Syllable;
+    WholeToken;
+    Emergency;
 }
 
 /** One cluster boundary exposed by a line-break span. */
@@ -58,7 +56,7 @@ class ProgressiveBreakDecisions {
             if (o != null
                 && o.spanRange.start == active.spanRange.start
                 && o.spanRange.end == active.spanRange.end
-                && o.tier.priority == bestPriority
+                && o.tier.priority() == bestPriority
                 && (best == null || boundary > best))
                 best = boundary;
             boundary++;
@@ -88,7 +86,7 @@ class ProgressiveBreakDecisions {
         if (candidate.spanRange.start != active.spanRange.start || candidate.spanRange.end != active.spanRange.end)
             return true;
         if (candidateEnd > rawGreedy)
-            return candidate.tier.priority <= active.tier.priority;
+            return candidate.tier.priority() <= active.tier.priority();
         final selected = decideProgressiveBreak(lineStart, rawGreedy, opportunities, adjustedClusters, limit, cjk, max, sino, cap);
         return candidateEnd == selected;
     }
@@ -101,12 +99,12 @@ class ProgressiveBreakDecisions {
         while (i <= overflowAt) {
             final o = opportunities.get(i);
             if (o != null && o.spanRange.start == active.spanRange.start && o.spanRange.end == active.spanRange.end)
-                prioritiesBuilder.put(o.tier.priority);
+                prioritiesBuilder.put(o.tier.priority());
             i++;
         }
         final priorities = prioritiesBuilder.build();
         if (priorities.size() == 0)
-            return active.tier.priority;
+            return active.tier.priority();
         if (adjustedClusters == null || !Math.isFinite(lineLimit) || !Math.isFinite(maxCjkStretchPerGap))
             return priorities.at(0);
         final stretch = maxCjkStretchPerGap * PROGRESSIVE_TECHNICAL_VISIBLE_STRETCH_FRACTION;
@@ -123,7 +121,7 @@ class ProgressiveBreakDecisions {
                 if (o != null
                     && o.spanRange.start == active.spanRange.start
                     && o.spanRange.end == active.spanRange.end
-                    && o.tier.priority == priority)
+                    && o.tier.priority() == priority)
                     b = i;
                 i++;
             }
@@ -153,7 +151,7 @@ class ProgressiveBreakDecisions {
                 emergency = i;
             i++;
         }
-        return emergency != 0 && emergency >= leastBoundary ? ProgressiveBreakTier.Emergency : least;
+        return emergency != 0 && emergency >= leastBoundary ? ProgressiveBreakTierPriority.priority(ProgressiveBreakTier.Emergency) : least;
     }
 
     private static function progressiveCandidateStretchDensity(lineStart:Int, boundary:Int, opportunities:SortedMap<Int, ProgressiveBreakOpportunity>,
