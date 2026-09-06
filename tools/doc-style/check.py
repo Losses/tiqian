@@ -80,6 +80,10 @@ WORDS = [
     "首绘", "真身", "含射", "发射", "烘焙", "单一事实源", "语义负担", "全链",
     "表路", "读侧", "走表", "填表人", "子片", "进表", "补造", "切片", "打桩",
     "进解", "对赛", "互串", "错层", "加建", "过桥", "反连接", "换带", "收紧",
+    # band-switching coinages (2026-09-06 corrections): 换带 was rewritten as
+    # the near-synonym 切带 and mistranslated as 频带; write 切换格数区间 in
+    # full and never reach for a frequency-domain word for width intervals.
+    "切带", "频带",
     # coined technical-sounding words replaced by plain statements
     "失配", "真源", "转出口", "合批", "同批", "执行位", "线格式", "零违例", "违例",
     "伪差异", "偶合", "已真", "换嗓", 
