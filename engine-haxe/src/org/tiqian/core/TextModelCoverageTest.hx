@@ -327,7 +327,7 @@ class TextModelCoverageTest {
         final grid:LineLengthGrid = new LineLengthGrid(true, LastLineAlignment.Center);
         TracedAssertions.assertTrue(grid.enabled);
         final gridAlignment = grid.bodyAlignment;
-        TracedAssertions.assertEqualsRendered(Std.string(LastLineAlignment.Center), gridAlignment == null ? "null" : Std.string(gridAlignment));
+        TracedAssertions.assertEqualsRendered(Std.string(LastLineAlignment.Center), TextModelCoverageTestHelpers.renderNullableAlignment(gridAlignment));
         TextModelCoverageTestHelpers.assertRendered(grid.toString());
 
         final paraStyle:ParagraphStyle = new ParagraphStyle(LastLineAlignment.End, WritingMode.VerticalRl, 32.0, null, Ic.Zero, adaptiveIndent, grid,
@@ -358,6 +358,12 @@ class TextModelCoverageTestHelpers {
     public static function expectArgumentFailure(block:() -> Void):Void {
         TracedAssertions.assertFailsWith(null, block);
     }
+
+    public static function renderNullableAlignment(value:Null<LastLineAlignment>):String
+        return value == null ? "null" : renderLastLineAlignment(value);
+
+    public static function renderLastLineAlignment(value:LastLineAlignment):String
+        return Std.string(value);
 
     public static function assertRendered(rendered:String):Void {
         TracedAssertions.assertEqualsRendered(rendered, rendered);

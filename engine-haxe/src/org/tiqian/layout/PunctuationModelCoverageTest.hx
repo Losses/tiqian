@@ -180,7 +180,7 @@ class PunctuationModelCoverageTest {
         PunctuationModelCoverageSupport.eqf(8, a.haltAdvance);
         PunctuationModelCoverageSupport.nul(a.haltValidation);
         TracedAssertions.assertFalse(a.inkContainmentApplied);
-        TracedAssertions.assertNotNullRendered(a.inkContainmentBodyFloor != null, TestTraceRender.cap(Std.string(a.inkContainmentBodyFloor)));
+        TracedAssertions.assertNotNullRendered(a.inkContainmentBodyFloor != null, PunctuationModelCoverageSupport.renderNullableBodyFloor(a.inkContainmentBodyFloor));
     }
 
     @:test public static function haltTrimIsLimitedByInkBoundsAndRecordsWhy():Void {
@@ -289,7 +289,16 @@ class PunctuationModelCoverageSupport {
         TracedAssertions.assertNullRendered(v == null, "-");
 
     public static function nn(v:Null<PunctuationAtom>):Void
-        TracedAssertions.assertNotNullRendered(v != null, v == null ? "-" : TestTraceRender.cap(Std.string(v)));
+        TracedAssertions.assertNotNullRendered(v != null, v == null ? "-" : PunctuationModelCoverageSupport.renderPunctuationAtom(v));
+
+    public static function renderNullableBodyFloor(v:Null<Float>):String
+        return v == null ? "null" : renderBodyFloorText(v);
+
+    public static function renderBodyFloorText(v:Float):String
+        return TestTraceRender.cap(Std.string(v));
+
+    public static function renderPunctuationAtom(v:PunctuationAtom):String
+        return TestTraceRender.cap(Std.string(v));
 
     public static function eqf(e:Float, a:Float):Void
         TracedAssertions.assertEqualsFloat(e, a);

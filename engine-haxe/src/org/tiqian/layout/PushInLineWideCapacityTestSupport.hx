@@ -3,13 +3,23 @@ package org.tiqian.layout;
 import org.tiqian.core.Cluster;
 import org.tiqian.core.TextRange;
 import org.tiqian.layout.LineOptimization.RepairOption;
+import org.tiqian.layout.LineOptimization.RepairCandidate;
 import org.tiqian.layout.LineOptimization.PushInAllocation;
 import org.tiqian.test.trace.TracedAssertions;
+import org.tiqian.test.trace.TestTraceRender;
 
 class PushInLineWideCapacityTestSupport {
     public static function cluster(s:Int, e:Int, text:String, a:Float):Cluster
         return new Cluster(new TextRange(s, e), text, "test", a);
 
+    public static function renderNullableCandidate(v:Null<RepairCandidate>):String
+        return v == null ? "null" : renderCandidate(v);
+
+    public static function renderCandidate(v:RepairCandidate):String
+        return TestTraceRender.cap(renderCandidateText(v));
+
+    static function renderCandidateText(v:RepairCandidate):String
+        return Std.string(v);
     public static function pushInString(o:RepairOption):String
         return switch (o) {
             case PushIn(penalty, reason, offender, allocations, shrink, capacity):

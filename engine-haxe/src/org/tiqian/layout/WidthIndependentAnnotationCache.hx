@@ -404,6 +404,12 @@ class LruWidthIndependentAnnotationCache implements WidthIndependentAnnotationCa
 }
 
 class WidthIndependentAnnotationCacheFns {
+    private static function renderNullableLastLineAlignment(value:Null<LastLineAlignment>):String
+        return value == null ? "null" : renderLastLineAlignment(value);
+
+    private static function renderLastLineAlignment(value:LastLineAlignment):String
+        return Std.string(value);
+
     private static inline final RUBY_FONT_EM:Float = 0.5;
     private static inline final RUBY_FONT_WEIGHT_BOOST:Int = 100;
     private static inline final BOPOMOFO_FONT_WEIGHT_BOOST:Int = 300;
@@ -878,7 +884,7 @@ class WidthIndependentAnnotationCacheFns {
             }
         }
         final lineLengthGridDecision = new LineLengthGridDecisionInfo(grid.enabled, containerWidth, fontSize,
-            grid.enabled ? gridCellsInt : Std.int(measure / fontSize), measure, gridSlack, Std.string(gridBodyAlignment), gridBodyOffset,
+            grid.enabled ? gridCellsInt : Std.int(measure / fontSize), measure, gridSlack, renderNullableLastLineAlignment(gridBodyAlignment), gridBodyOffset,
             grid.enabled ? "LineLengthGridQuantization" : "GridBypassed");
         final measureEm = measure / fontSize;
         final resolvedKinsoku = KinsokuModes.resolve(annotation.clreqProfile.kinsokuMode, measureEm);

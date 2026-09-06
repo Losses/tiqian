@@ -8,8 +8,14 @@ import org.tiqian.shaping.TextShaper.ShapingInput;
 import org.tiqian.shaping.TextShaper.ShapingResult;
 import org.tiqian.font.FontRole;
 import org.tiqian.test.trace.TestTraceRecorder;
-
+import org.tiqian.test.trace.TestTraceRender;
 class ExplainableStubParagraphLayoutEngineTestSupport {
+    public static function renderNullableBounds(v:Null<Rect>):String
+        return v == null ? "null" : renderBounds(v);
+
+    public static function renderBounds(v:Rect):String
+        return Std.string(v);
+
     public static function start(name:String):TestTraceRecorder {
         var t = new TestTraceRecorder("ExplainableStubParagraphLayoutEngineTest");
         t.section(name);

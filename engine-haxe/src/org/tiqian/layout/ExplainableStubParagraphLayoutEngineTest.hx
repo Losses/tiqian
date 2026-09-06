@@ -152,7 +152,7 @@ class ExplainableStubParagraphLayoutEngineTest {
             .layout(ExplainableStubParagraphLayoutEngineTestSupport.input("A", 240));
         var g = r.glyphRuns[0].glyphs[0];
         TracedAssertions.assertEqualsInt(42, g.id);
-        TracedAssertions.assertEqualsRendered("Rect(left=1, top=-10, right=12, bottom=2)", Std.string(g.bounds));
+        TracedAssertions.assertEqualsRendered("Rect(left=1, top=-10, right=12, bottom=2)", ExplainableStubParagraphLayoutEngineTestSupport.renderNullableBounds(g.bounds));
         TracedAssertions.assertEqualsFloat(20, g.advance);
     }
 

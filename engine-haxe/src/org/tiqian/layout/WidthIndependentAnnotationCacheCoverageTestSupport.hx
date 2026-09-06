@@ -46,6 +46,12 @@ class WidthIndependentAnnotationCacheCoverageTestSupport {
     /** Port of `List<Cluster>.containingItems`: for each cluster, the first item
      *  whose range contains the cluster, else null. The item range getter is the
      *  identity for TextRange items. */
+    public static function renderNullableRange(v:Null<TextRange>):String
+        return v == null ? "null" : renderRange(v);
+
+    public static function renderRange(v:TextRange):String
+        return Std.string(v);
+
     public static function containingItems(clusters:Array<Cluster>, items:Array<TextRange>):Array<Null<TextRange>> {
         final out:Array<Null<TextRange>> = [];
         var itemIndex = 0;

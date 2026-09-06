@@ -65,7 +65,7 @@ class PushInLineWideCapacityTest {
                 p = cand;
                 break;
             }
-        TracedAssertions.assertNotNullRendered(p != null, p == null ? "null" : TestTraceRender.cap(Std.string(p)));
+        TracedAssertions.assertNotNullRendered(p != null, PushInLineWideCapacityTestSupport.renderNullableCandidate(p));
         TracedAssertions.assertEqualsBool(false, p.accepted);
         TracedAssertions.assertEqualsString("insufficient-capacity", p.rejectionReason);
         TracedAssertions.assertEqualsFloat(4, p.availableCapacity);

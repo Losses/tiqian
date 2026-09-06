@@ -1,5 +1,7 @@
 package org.tiqian.core;
 
+import std.ReadOnlyArray;
+
 import org.tiqian.core.RichTextRole.Background;
 import org.tiqian.core.RichTextRole.Underline;
 import org.tiqian.core.RichTextRole.LineThrough;
@@ -674,9 +676,9 @@ class LayoutQueriesResidualCoverageTest {
         final positioned:Array<PositionedCluster> = LayoutQueries.positionedClusters(content);
         TracedAssertions.assertEqualsInt(2, positioned.length);
         final firstStops = positioned[0].sourceStops;
-        TracedAssertions.assertNullRendered(firstStops == null, firstStops == null ? "-" : Std.string(firstStops));
+        TracedAssertions.assertNullRendered(firstStops == null, LayoutQueriesResidualCoverageTestHelpers.renderNullableSourceStops(firstStops));
         final secondStops = positioned[1].sourceStops;
-        TracedAssertions.assertNullRendered(secondStops == null, secondStops == null ? "-" : Std.string(secondStops));
+        TracedAssertions.assertNullRendered(secondStops == null, LayoutQueriesResidualCoverageTestHelpers.renderNullableSourceStops(secondStops));
         TracedAssertions.assertEqualsFloat(0.0, positioned[0].left);
         TracedAssertions.assertEqualsFloat(17.5, positioned[0].right);
         TracedAssertions.assertEqualsFloat(17.5, positioned[1].left);
@@ -1541,6 +1543,12 @@ class LayoutQueriesResidualCoverageTest {
 }
 
 class LayoutQueriesResidualCoverageTestHelpers {
+    public static function renderNullableSourceStops(v:Null<ReadOnlyArray<Float>>):String
+        return v == null ? "-" : renderSourceStops(v);
+
+    public static function renderSourceStops(v:ReadOnlyArray<Float>):String
+        return Std.string(v);
+
     public static function cluster(range:TextRange, text:String, advance:Float):Cluster {
         return new Cluster(range, text, "test", advance, (text), 0.0, 0.0, 0.0);
     }

@@ -90,7 +90,10 @@ class ParagraphDpLineBreakerTestSupport {
     }
 
     public static function renderRepair(r:Null<RepairOption>):String
-        return r == null ? "null" : Std.string(r);
+        return r == null ? "null" : renderRepairOption(r);
+
+    static function renderRepairOption(r:RepairOption):String
+        return Std.string(r);
 
     public static function linesString(s:LineSolution):String {
         var parts:Array<String> = [];

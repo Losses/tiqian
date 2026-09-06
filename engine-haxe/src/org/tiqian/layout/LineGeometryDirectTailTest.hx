@@ -61,7 +61,7 @@ import std.SortedMap;
         TracedAssertions.assertEqualsInt(0, r.lineTop.length);
         TracedAssertions.assertEqualsInt(0, r.lineBottom.length);
         TracedAssertions.assertNotNullRendered(r.rubyLineHeightDecision != null,
-            r.rubyLineHeightDecision == null ? "null" : Std.string(r.rubyLineHeightDecision));
+            LineGeometryDirectTailSupport.renderNullableDecision(r.rubyLineHeightDecision));
         TracedAssertions.assertEqualsFloat(0, r.rubyLineHeightDecision.maxExtra);
     }
 
@@ -111,6 +111,13 @@ import std.SortedMap;
 typedef RubyEntry = {s:RubySpan, g:RubyFontGeometry};
 
 class LineGeometryDirectTailSupport {
+    public static function renderNullableDecision(v:Null<RubyLineHeightDecisionInfo>):String
+        return v == null ? "null" : renderDecision(v);
+
+    public static function renderDecision(v:RubyLineHeightDecisionInfo):String
+        return Std.string(v);
+
+
     public static function start(n:String):Void
         new TestTraceRecorder("LineGeometryDirectTailTest").section(n);
 
