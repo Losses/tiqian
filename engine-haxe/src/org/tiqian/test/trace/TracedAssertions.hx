@@ -595,7 +595,7 @@ class TracedAssertions {
         }
     }
 
-    public static function assertFailsWith(?message:String, block:() -> Void):TiqianIllegalArgumentException {
+    public static function assertFailsWith(?message:String, block:() -> Void):Null<TiqianIllegalArgumentException> {
         try {
             block();
         } catch (error:TiqianIllegalArgumentException) {
@@ -610,7 +610,7 @@ class TracedAssertions {
         return null;
     }
 
-    public static function assertFailsWithNoSuchElement(?message:String, block:() -> Void):TiqianNoSuchElementException {
+    public static function assertFailsWithNoSuchElement(?message:String, block:() -> Void):Null<TiqianNoSuchElementException> {
         try {
             block();
         } catch (error:TiqianNoSuchElementException) {
