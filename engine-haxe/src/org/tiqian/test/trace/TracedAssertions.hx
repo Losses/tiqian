@@ -595,7 +595,7 @@ class TracedAssertions {
         }
     }
 
-    public static function assertFailsWith(?message:String, block:() -> Void):Null<TiqianIllegalArgumentException> {
+    public static function assertFailsWith(?message:String, block:() -> Void):TiqianIllegalArgumentException {
         try {
             block();
         } catch (error:TiqianIllegalArgumentException) {
@@ -606,11 +606,11 @@ class TracedAssertions {
             ]);
             return error;
         }
-        fail(message == null ? "Expected an exception." : message);
-        return null;
+        recordEvent("fail", [msgField(message)]);
+        throw new TraceAssertionException(TraceAssertionError.AssertionFailed(message == null ? "Expected an exception." : message));
     }
 
-    public static function assertFailsWithNoSuchElement(?message:String, block:() -> Void):Null<TiqianNoSuchElementException> {
+    public static function assertFailsWithNoSuchElement(?message:String, block:() -> Void):TiqianNoSuchElementException {
         try {
             block();
         } catch (error:TiqianNoSuchElementException) {
@@ -621,8 +621,8 @@ class TracedAssertions {
             ]);
             return error;
         }
-        fail(message == null ? "Expected an exception." : message);
-        return null;
+        recordEvent("fail", [msgField(message)]);
+        throw new TraceAssertionException(TraceAssertionError.AssertionFailed(message == null ? "Expected an exception." : message));
     }
 
     public static function fail(?message:String, ?cause:haxe.Exception):Void {
