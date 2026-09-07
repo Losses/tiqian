@@ -6,7 +6,7 @@
 #   nix develop -c bash engine-haxe/tools/gates.sh [all|g4|tests|compare]
 #
 # Gates:
-#   g4      compile the engine with core-kotlin.hxml, print G4-RC
+#   g4      compile the engine with targets/kotlin-f32.hxml, print G4-RC
 #   tests   compile the test bundle (tests/compile.hxml), then run it with
 #           bun and print the FAIL line count (want 0)
 #   compare tolerance-compare produced traces against baseline goldens for
@@ -17,7 +17,7 @@ cd "$(git rev-parse --show-toplevel)"
 HERE="$(git rev-parse --show-toplevel)"
 
 run_g4() {
-  haxe engine-haxe/core-kotlin.hxml >/dev/null 2>&1
+  haxe engine-haxe/targets/kotlin-f32.hxml >/dev/null 2>&1
   echo "G4-RC=$?"
 }
 
