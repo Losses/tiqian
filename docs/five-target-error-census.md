@@ -248,57 +248,73 @@ cat /tmp/dartic-census-gen.log /tmp/dartic-census-tests.log | awk -F'|' '/^ERROR
 「判定」列的含义：一个错误类的修复位置（boring 生成器的机制位置，或
 tiqian 源的一类写法）已经探针证实时，记修复面；只有猜测记「假设」；都没有
 记「未判定」。判定的方法见 T-attr（第 11 节第 1 组）：对类内抽样错误点读
-生成代码后定性。假设不构成派发依据，证实后才开修复项。本文用到两个修复面
-名：修复面 A 指可空接收者上方法调用的生成机制；数值转换面指数值类型互转的
-生成机制（候选，待证实）。
+生成代码后定性。假设不构成派发依据，证实后才开修复项。本轮新增一档
+「形状证实」：探针读过该类抽样错误点的生成代码、确认错误落在生成形状上，
+但还没有把生成器机制定位到文件与分支；它的可信度高于假设、低于修复面，
+不单独构成派发依据。本文用到两个修复面名：修复面 A 指可空接收者上方法调用
+的生成机制；数值转换面指数值类型互转的生成机制。
+
+判定来源：T-attr r1 报告 /tmp/dispatch-state/tiqian-tattr-r1.report.md（基线
+boring `4b1fec9`）。该报告的逐类「修复面位置」段是同一份七条引用的重复粘贴，
+不构成逐类定位，本文不采信其定位、只采信其抽样形状；数值转换面
+（KotlinExpr.hx:2806-2820 的 renderCallArgs 只在实参位插入转换）与 getter
+降级可见性（`5628b4d` 生成 `private override`）两处机制由派发方在 4b1fec9
+检出复核。
 
 | 错误消息类（骨架） | f32 | f64 | 判定与处置 |
 |---|---:|---:|---|
-| argument type mismatch: actual type is 'X', but 'X' was expected. | 407 | 416 | 形状分解见 3.3；可空形状疑与修复面 A 同源，数值形状疑为数值转换面，均待探针 |
-| unresolved reference 'X'. | 333 | 326 | 未判定；符号分布见 3.4；随 T-attr |
+| argument type mismatch: actual type is 'X', but 'X' was expected. | 407 | 416 | 形状分解见 3.3；Int 给浮点与 Long 给浮点两形状已判数值转换面（F3j），可空、装箱与其余形状仍待证 |
+| unresolved reference 'X'. | 333 | 326 | 假设（T-attr 抽样读到缺失导入 UString 与成员 kind 两形，机制未逐一定位）；符号分布见 3.4；#23 |
 | only safe (?.) or non-null asserted (!!.) calls are allowed on a nullable receiver of type 'X'. | 75 | 75 | 修复面 A（探针列出的三个原因见 boring-onlysafe-probe.report.md）；#22 执行中 |
-| operator call is prohibited on a nullable receiver of type 'X'. Use 'X'-qualified call instead. | 60 | 60 | 假设：修复面 A 延伸（接收者类型相同）；待探针 |
-| cannot infer type for type parameter 'X'. Specify it explicitly. | 42 | 42 | 未判定；随 T-attr |
-| operator 'X' cannot be applied to 'X' and 'X'. | 35 | 32 | 假设：数值转换面；待探针 |
-| return type mismatch: expected 'X', actual 'X'. | 28 | 28 | 未判定；随 T-attr |
-| cannot access 'X': it is private in 'X'. | 27 | 27 | 未判定；随 T-attr |
-| assignment type mismatch: actual type is 'X', but 'X' was expected. | 19 | 23 | 未判定；随 T-attr |
-| none of the following candidates is applicable: | 18 | 18 | 未判定；随 T-attr |
-| initializer type mismatch: expected 'X', actual 'X'. | 15 | 17 | 假设：数值转换面（Int 字面量给浮点为主）；待探针 |
-| too many arguments for 'X'. | 14 | 14 | 未判定；随 T-attr |
-| modifier 'X' is incompatible with 'X'. | 14 | 14 | 未判定；修饰符决策聚集是假设；随 T-attr |
-| conflicting declarations: | 13 | 13 | 未判定；随 T-attr |
-| 'X' modifier is required on 'X'. | 11 | 12 | 未判定；修饰符决策聚集是假设；随 T-attr |
-| type mismatch: inferred type is 'X', but 'X' was expected. | 11 | 11 | 未判定；随 T-attr |
-| function invocation 'X' expected. | 8 | 8 | 未判定；随 T-attr |
-| cannot weaken access privilege private for 'X' in 'X'. | 7 | 7 | 未判定；随 T-attr |
-| no 'X' operator method providing array access. | 6 | 6 | 未判定；随 T-attr |
-| receiver type 'X' contains star projection which prohibits the use of 'X'. | 6 | 6 | 假设：数值转换面（Number 装箱）；待探针 |
-| 'X' is prohibited here. | 5 | 5 | 未判定；随 T-attr |
-| jvmField has no effect on a private property. | 5 | 5 | 未判定；随 T-attr |
-| 'X' expression must be exhaustive. Add the 'X', 'X'… branches or an 'X' branch. | 4 | 4 | 未判定；随 T-attr |
-| variable 'X' must be initialized. | 3 | 3 | 未判定；随 T-attr |
-| unresolved reference 'X' for operator 'X'. | 3 | 3 | 未判定；随 unresolved 主类 |
-| 'X' hides member of supertype 'X' and needs an 'X' modifier. | 2 | 2 | 未判定；修饰符决策聚集是假设；随 T-attr |
-| redeclaration: | 2 | 2 | 未判定；随 T-attr |
-| condition type mismatch: inferred type is 'X' but 'X' was expected. | 2 | 2 | 未判定；随 T-attr |
+| operator call is prohibited on a nullable receiver of type 'X'. Use 'X'-qualified call instead. | 60 | 60 | 假设：修复面 A 延伸（接收者类型相同；InlineObjectLayoutTest.kt:48 可空算术实测）；待探针 |
+| cannot infer type for type parameter 'X'. Specify it explicitly. | 42 | 42 | 假设（T-attr 抽样集中在 run 块与长实参表，未定位统一推断机制）；随第二轮定位 |
+| operator 'X' cannot be applied to 'X' and 'X'. | 35 | 32 | 修复面＝数值转换面：运算位没有 Int 到 Float 的转换（EmergencyGraphemeTrackingTest.kt:33 比较 `hyphenAdvance != 0` 实测；机制位置 KotlinExpr.hx:2806-2820 的 renderCallArgs 只在实参位插入转换，派发方复核）；F3j |
+| return type mismatch: expected 'X', actual 'X'. | 28 | 28 | 修复面＝数值转换面：return 位没有转换（GreedyLineBreakerTest.kt:366 给 Float 函数 `return -1` 实测）；F3j |
+| cannot access 'X': it is private in 'X'. | 27 | 27 | 修复面＝getter 降级可见性与私有静态跨类调用（形状实测：get_strategyName 于 LineBreakerCoverage2Test.kt:21、get_isMixed 于 ContextualQuoteRoleResolver.kt:88、emptyHanging 于 LineOptimizationCoverageTest.kt:151；生成位置待定位）；F3k |
+| assignment type mismatch: actual type is 'X', but 'X' was expected. | 19 | 23 | 修复面＝数值转换面：赋值位没有转换（Justifier.kt:89 `remaining = 0`、LineAdjustmentStage.kt:134 Math.round 结果回赋实测；可空赋值形状混在此类，修复后剩余归可空形状再判）；F3j |
+| none of the following candidates is applicable: | 18 | 18 | 假设（T-attr 抽样为构造实参 Float 与 Number 混型、复合赋值两形混杂）；待证 |
+| initializer type mismatch: expected 'X', actual 'X'. | 15 | 17 | 修复面＝数值转换面：默认值位没有转换（RawFontMetrics.kt:3 `val leading: Float = 0` 实测）；F3j |
+| too many arguments for 'X'. | 14 | 14 | 形状证实：std 影子数组的 indexOf 带了 null 第二实参（CoreBoundaryTest.kt:58 `indexOf(3, null)` 实测）；机制位置待定位 |
+| modifier 'X' is incompatible with 'X'. | 14 | 14 | 修复面＝getter 降级生成 `private override`（boring `5628b4d` 引入的降级形状；LineBreakerCoverage2Test.kt:138 与 LineBreaker.kt:42 实测，Kotlin 语法禁止 private 与 override 并用）；F3k |
+| conflicting declarations: | 13 | 13 | 形状证实：循环外提升的临时名 `_g` 在同一函数体重复声明（PreparedParagraphJfTest.kt:116 与 :126 实测）；机制位置待定位 |
+| 'X' modifier is required on 'X'. | 11 | 12 | 假设：Number 装箱值走比较运算触发（Justifier.kt:85 `d > 0` 实测，d 为 Number 装箱）；待证 |
+| type mismatch: inferred type is 'X', but 'X' was expected. | 11 | 11 | 假设（T-attr 抽样含异常第二代嵌套类引用 LayoutQueries.kt:390 `TiqianNoSuchElementException.Message`，疑与 #37 异常子类是同一机制）；待证 |
+| function invocation 'X' expected. | 8 | 8 | 形状证实：方法名作值使用时没有带调用括号（ContextualQuoteRoleResolverNestedAndSurrogateTest.kt:84 读 `surrogateText` 实测）；机制位置待定位 |
+| cannot weaken access privilege private for 'X' in 'X'. | 7 | 7 | 修复面＝getter 降级可见性（同 modifier incompatible 行：实现可见性低于接口成员）；F3k |
+| no 'X' operator method providing array access. | 6 | 6 | 形状证实：数组 set 访问器渲染（PreparedParagraph.kt:1726 `a[i] = …` 实测）；机制位置待定位 |
+| receiver type 'X' contains star projection which prohibits the use of 'X'. | 6 | 6 | 假设：Number 装箱（LineRepair.kt:198 `shrink > 0` 实测，shrink 为 Number 装箱）；待证 |
+| 'X' is prohibited here. | 5 | 5 | 形状证实：return 语句被生成到不可用位置（BilingualEmphasisTest.kt:16 实测）；机制位置待定位 |
+| jvmField has no effect on a private property. | 5 | 5 | 形状证实：@JvmField 注解在私有属性上无条件生成（PreparedParagraph.kt:25 实测）；机制位置待定位 |
+| 'X' expression must be exhaustive. Add the 'X', 'X'… branches or an 'X' branch. | 4 | 4 | 形状证实：枚举 when 缺少未列构造器的臂（FontMetrics.kt:15 缺 CjkPunctuation、Emoji、Unknown 实测）；机制位置待定位 |
+| variable 'X' must be initialized. | 3 | 3 | 形状证实：var 声明无初始化器、分支赋值后读取（FontMetrics.kt:21 实测）；机制位置待定位 |
+| unresolved reference 'X' for operator 'X'. | 3 | 3 | 形状证实：可空算术混型（PunctuationGeometryLedger.kt:36 实测）；T-attr 判操作符名称渲染，派发方未复核 |
+| 'X' hides member of supertype 'X' and needs an 'X' modifier. | 2 | 2 | 形状证实：dataClass 生成的 hashCode 覆写缺 override 修饰（BopomofoReading.kt:15 实测）；机制位置待定位 |
+| redeclaration: | 2 | 2 | 形状证实：两个外层类各自生成同名嵌套类 Resolution（ContextualDashEllipsisRoleResolver.kt:241 与 ContextualQuoteRoleResolver.kt:311 实测）；机制位置待定位 |
+| condition type mismatch: inferred type is 'X' but 'X' was expected. | 2 | 2 | 假设：修复面 A 延伸（可空 Boolean 作条件，PunctuationGeometryLedgerCoverageTest.kt:46 实测） |
 | 'X' cannot be a callee. | 1 | 1 | 修复面＝KotlinDecl 异常子类第二代的生成规则：super 调用被放进 init 块（IllegalStateException.kt:5:5，该类计数 1 即全部样本）；与 #37 同构造不同目标，修复项在 #37 完成后按修复面开列 |
-| this declaration needs opt-in. Its usage must be marked with 'X' or 'X' | 1 | 1 | 未判定；随 T-attr |
-| smart cast to 'X' is impossible, because 'X' is a local variable that is mutated in a capturing closure. | 1 | 1 | 未判定；随 T-attr |
-| non-nullable value required to call an 'X' method in a for-loop. | 1 | 1 | 假设：修复面 A 延伸；待探针 |
-| names _, __, ___, ... are reserved in Kotlin. | 1 | 1 | 未判定；随 T-attr |
-| method 'X' is ambiguous for this expression. Applicable candidates: | 1 | 1 | 未判定；随 T-attr |
-| infix call is prohibited on a nullable receiver of type 'X'. Use 'X'-qualified call instead. | 1 | 1 | 假设：修复面 A 延伸；待探针 |
-| classifier 'X' does not have a companion object, so it cannot be used as an expression. | 1 | 1 | 未判定；随 T-attr |
+| this declaration needs opt-in. Its usage must be marked with 'X' or 'X' | 1 | 1 | 测量环境（kotlinc 2.4.10 对实验性标准库 API 的 opt-in 要求，LineRepair.kt:114；可用编译器参数消除，不派修复） |
+| smart cast to 'X' is impossible, because 'X' is a local variable that is mutated in a capturing closure. | 1 | 1 | 修复面＝闭包捕获的局部变量在闭包外读取（ParagraphDpLineBreaker.kt:261 实测；Kotlin 语义要求拷贝到不可变局部）；修复项随第二轮定位开列 |
+| non-nullable value required to call an 'X' method in a for-loop. | 1 | 1 | 假设：修复面 A 延伸（可空迭代器，LineAdjustmentStage.kt:610 实测） |
+| names _, __, ___, ... are reserved in Kotlin. | 1 | 1 | 形状证实：下划线参数名直接输出（UnicodePunctuationBoundaryTestSupport.kt:118 `resolve(_: LayoutProfileId)` 实测）；机制位置待定位 |
+| method 'X' is ambiguous for this expression. Applicable candidates: | 1 | 1 | 形状证实：for-in 迭代候选二义（LineRepair.kt:160 实测）；机制位置待定位 |
+| infix call is prohibited on a nullable receiver of type 'X'. Use 'X'-qualified call instead. | 1 | 1 | 假设：修复面 A 延伸（可空区间端点，LineBreakPlanningStage.kt:409 实测） |
+| classifier 'X' does not have a companion object, so it cannot be used as an expression. | 1 | 1 | 形状证实：std Type 反射把枚举类名作值使用（TextShaperCoverageTest.kt:55 实测）；机制位置待定位 |
 | Expecting an element. | 0 | 9 | f64 独有；#25 定位任务 |
 | 'X' must have both main and 'X' branches when used as an expression. | 0 | 2 | f64 独有；#25 定位任务 |
 | the expression cannot be a selector (cannot occur after a dot). | 0 | 1 | f64 独有；#25 定位任务 |
 | 合计（求和校验） | 1183 | 1201 | 与 3.1 节总数相等 |
 
-判定进度小结：已判定 2 类（only safe 类；`'X' cannot be a callee` 类＝
-KotlinDecl 异常子类第二代的生成缺陷，2026-09-06 随 #37 事实核查判定）；假设待证
-6 类（修复面 A 延伸 3 类、数值转换面 3 类）加 argument type mismatch 的
-可空与数值两类形状；f64 独有 3 类已排定位任务；其余 28 类未判定。
+判定进度小结（2026-09-06 T-attr r1 抽样并入后）：修复面 10 整类（only safe；
+operator applied、return、initializer 三类与 assignment、argument 的数值形状
+同属 F3j 的数值转换面；cannot access、modifier incompatible、cannot weaken
+三类同属 F3k 的 getter 降级可见性；smart cast；cannot be a callee）加
+argument 类内 Int 给浮点与 Long 给浮点两形状；测量环境 1 类（opt-in）；
+形状证实 14 类（机制位置待定位，不单独构成派发依据）；假设 10 类（修复面
+A 延伸 4 类：operator call prohibited、condition、for-loop 迭代、infix；
+Number 装箱候选 2 类：modifier required、star projection；其余 4 类：
+unresolved、cannot infer、none of candidates、type mismatch）；f64 独有
+3 类已排定位任务。T-attr 第二轮的剩余工作＝把 14 类形状证实定位到文件与
+分支、证实或否证 10 类假设、对 3.4 节符号逐个定位所属机制。
 
 ### 3.3 argument type mismatch 形状分解
 
@@ -306,11 +322,11 @@ KotlinDecl 异常子类第二代的生成缺陷，2026-09-06 随 #37 事实核�
 
 | 形状 | f32 | f64 | 判定 |
 |---|---:|---:|---|
-| 可空给非空（actual 类型以 ? 结尾，expected 非空） | 261 | 261 | 疑与修复面 A 同源；待探针 |
-| Int 给浮点 | 80 | 88 | 疑为数值转换面；待探针 |
-| Number 装箱给浮点 | 33 | 32 | 疑为数值转换面；待探针 |
-| Long 给浮点 | 0 | 2 | f64 独有；疑为数值转换面；待探针 |
-| 其余转换 | 33 | 33 | 未判定；随 T-attr |
+| 可空给非空（actual 类型以 ? 结尾，expected 非空） | 261 | 261 | 假设：疑与修复面 A 同源；待探针 |
+| Int 给浮点 | 80 | 88 | 修复面＝数值转换面（F3j）：FontPolicyCoverageTest.kt:243 里 `(13).toFloat()` 与未经转换的 `0` 并存，实参位已转换、未经转换的 `0` 是该机制没有覆盖的形状；运算、return、默认值、赋值位同样没有转换（对应 3.2 表四类） |
+| Number 装箱给浮点 | 33 | 32 | 假设：T-attr 抽样为可空两臂条件表达式（FontPolicyCoverageTest.kt:125 实测），装箱路径未定位；待证 |
+| Long 给浮点 | 0 | 2 | 修复面＝数值转换面（F3j）：renderCallArgs 的 isIntType 不覆盖 Long（PreparedParagraphJsonNumberTest.kt:32 实测）；f64 独有 |
+| 其余转换 | 33 | 33 | 未判定；随 T-attr 第二轮 |
 | 合计（等于该类计数） | 407 | 416 | |
 
 旧版 K4 的统计命令只覆盖数值形状（当时 f32 144 / f64 152），由本表取代；
@@ -347,7 +363,7 @@ mismatch 这一个类内部的形状分类，下次分解出现新的成批形�
 
 f64 侧（326 行）按第 2.1 节命令重新统计后再列举。符号名只是导航线索；哪些
 符号共享一个修复面（数据类比较合成、import 登记、成员名映射、操作符生成等
-机制中的哪几个）由 T-attr 探针判定，不按符号名分组派发。
+机制中的哪几个）由 T-attr 第二轮判定，不按符号名分组派发。
 
 ## 4 ts、swift、dart 三个目标的当前位置（2026-09-06 实测）
 
@@ -583,76 +599,90 @@ strategyName 属性的测试与支撑文件）。
 运行时与测试运行器都以产物内相对路径引用，analyzer 在生成目录自带的
 pubspec.yaml 上运行，不依赖外部类型配置。
 
+判定来源：T-dart r1 报告 /tmp/dispatch-state/tiqian-tdart-r1.report.md（基线
+boring `31627b5c`，35 个错误码里抽了 33 类各 3 处，另两类已有修复面）。
+本文新用一档「探针定位待因果验证」：探针引用的生成器位置经派发方在
+31627b5c 检出复核确认代码存在且与抽样形状相邻，但从源构造到错误输出的
+因果链还没有逐环走通；它的可信度高于形状证实、低于修复面，不单独构成
+派发依据。该报告的引用有两处经复核降级：REFERENCED_BEFORE_DECLARATION
+引用的 Compiler.hx:216-220 实为测试函数排序，与样本不吻合；
+MISSING_DEFAULT_VALUE_FOR_PARAMETER 引用的 DartDecl.hx:260-300 落在比较
+函数合成代码内，拟合存疑。因果链闭合的两类开列为修复项 F3l 与 F3m。
+
 | 错误码 | gen | tests | 合计 | 判定与处置 |
 |---|---:|---:|---:|---|
-| `UNDEFINED_IDENTIFIER` | 444 | 581 | 1025 | 名称分布见 8.2（79 个名字全列）；计数前六的名字在 tiqian 源内实测均为 enum 或 abstract 声明的类型名，与 ts TS2304 的 Ic 同一原因的假设（类型声明只生成类型侧，值位引用缺少名字引入）；随 T-dart |
-| `UNCHECKED_USE_OF_NULLABLE_VALUE` | 231 | 189 | 420 | 形状分布见 8.2（接收者可空四种形状）；与 kotlin 修复面 A（#22 可空接收者）同一原因的假设；随 T-dart |
-| `REFERENCED_BEFORE_DECLARATION` | 314 | 96 | 410 | 文件分布见 8.2；layout_dump_format.dart 215 条与 ts TS2448 的 LayoutDumpFormat.ts 214 条同一原因的假设（顶层声明顺序未按依赖排序）；随 T-dart |
-| `ARGUMENT_TYPE_NOT_ASSIGNABLE` | 176 | 123 | 299 | 目标类型分布见 8.2（23 种全列）；与 kotlin 数值转换面（#24）同一原因的假设；随 T-dart |
-| `NOT_ENOUGH_POSITIONAL_ARGUMENTS` | 71 | 34 | 105 | 与 ts TS2554 同一原因的假设（可选参数与默认参数的调用实参数生成）；随 T-dart |
-| `PREFIX_SHADOWED_BY_LOCAL_DECLARATION` | 32 | 42 | 74 | 未判定；随 T-dart |
-| `UNDEFINED_METHOD` | 53 | 11 | 64 | 方法与接收类型分布见 8.2（23 对全列）；接收类型为 List 的 23 条是 Haxe 数组方法名生成到 dart 的 List 接收者的假设；随 T-dart |
-| `EXPECTED_TOKEN` | 56 | 0 | 56 | 期待符号分布：缺分号 49、缺右括号 4、缺冒号 2、缺右花括号 1；未判定；随 T-dart |
-| `UNDEFINED_FUNCTION` | 55 | 0 | 55 | 名称分布见 8.2（42 个名字全列）；compare 前缀与 ts TS2724 比较函数未导出假设同源；随 T-dart |
-| `MISSING_ASSIGNABLE_SELECTOR` | 49 | 0 | 49 | 未判定；随 T-dart |
-| `ILLEGAL_ASSIGNMENT_TO_NON_ASSIGNABLE` | 49 | 0 | 49 | 未判定；随 T-dart |
-| `UNDEFINED_PREFIXED_NAME` | 20 | 22 | 42 | 未判定；随 T-dart |
+| `UNDEFINED_IDENTIFIER` | 444 | 581 | 1025 | 名称分布见 8.2（79 个名字全列）；类内 8 个类型名条目合计 705 条（WritingMode 157、LastLineAlignment 155、InlineAttachment 147、Ic 106、RubyLineHeightMode 77、RubyKind 35、LineEndReason 16、FontRole 12）已判修复面＝类型名与枚举名值位引用缺导入前缀（adjustment_style_policy.dart:14 值位不带前缀直接使用 `LineEndPunctuationStyle` 实测，同文件类型位用带前缀形；机制位置 DartExpr.hx:1466-1485 的枚举引用分支与 DartImports.hx:186-215 的前缀登记，派发方在 31627b5c 复核）；F3l；其余名字未判定 |
+| `UNCHECKED_USE_OF_NULLABLE_VALUE` | 231 | 189 | 420 | 修复面＝dart 可空接收者守卫缺失（clreq_punctuation_advance_policy.dart:27 的 int? 接收者直接比较实测；机制位置 DartExpr.hx:1315-1341 的 binop 守卫，派发方在 31627b5c 复核；与 kotlin 修复面 A 同构造）；形状分布见 8.2；F3m |
+| `REFERENCED_BEFORE_DECLARATION` | 314 | 96 | 410 | 形状证实：抽样含导入前缀与局部名同名冲突（cluster_role_resolution.dart:55 生成 `final cluster = cluster.Cluster(...)`）与不带前缀的类名（:64 的 `ResolvedClusterRange`）两形；探针引用的 Compiler.hx:216-220 经派发方复核是测试函数排序，与样本不吻合，已否证；layout_dump_format.dart 215 条与 ts TS2448 同源的假设保留；文件分布见 8.2；机制位置待定位；随 T-dart 第二轮 |
+| `ARGUMENT_TYPE_NOT_ASSIGNABLE` | 176 | 123 | 299 | 假设：T-dart 抽样为可空 int? 给 int（codeUnitAt 闭包位），连可空守卫（F3m 同构造）；目标类型分布里 double 74 条是否数值转换待抽样；分布见 8.2（23 种全列）；随 T-dart 第二轮 |
+| `NOT_ENOUGH_POSITIONAL_ARGUMENTS` | 71 | 34 | 105 | 探针定位待因果验证：生成调用发零参而 Haxe 源构造有参（样本 PunctuationAtomBuilder.new 实参 0 个）；机制位置 DartExpr.hx:2550-2563 的 constructorArgTexts，派发方在 31627b5c 复核存在；与 ts TS2554 同源的假设保留；随 T-dart 第二轮 |
+| `PREFIX_SHADOWED_BY_LOCAL_DECLARATION` | 32 | 42 | 74 | 形状证实（T-dart r1 抽样读过生成代码）；机制位置待定位；随 T-dart 第二轮 |
+| `UNDEFINED_METHOD` | 53 | 11 | 64 | 形状证实（T-dart r1 抽样读过生成代码）；接收类型为 List 的 23 条保持 Haxe 数组方法名生成到 dart 的 List 接收者的假设；方法与接收类型分布见 8.2（23 对全列）；机制位置待定位；随 T-dart 第二轮 |
+| `EXPECTED_TOKEN` | 56 | 0 | 56 | 形状证实：非法 `int??` 双问号类型渲染（cjk_font_role_classifier.dart:23-24 生成 `final int?? l` 实测）；与 MISSING_ASSIGNABLE_SELECTOR、ILLEGAL_ASSIGNMENT_TO_NON_ASSIGNABLE、MISSING_IDENTIFIER、DOT_SHORTHAND_MISSING_CONTEXT 四码共享同一形状，五码文件分布重叠；期待符号分布：缺分号 49、缺右括号 4、缺冒号 2、缺右花括号 1；机制位置待定位；随 T-dart 第二轮 |
+| `UNDEFINED_FUNCTION` | 55 | 0 | 55 | 探针定位待因果验证：有序表键比较函数被调用但未在目标库生成（clreq_profile.dart:79-83 调用 compareAutoSpacePolicy 等实测）；机制位置 DartDecl.hx:221-333 的数据类比较函数合成只在数据类路径，派发方在 31627b5c 复核存在；与 ts TS2724 同源假设保留；名称分布见 8.2（42 个名字全列）；随 T-dart 第二轮 |
+| `MISSING_ASSIGNABLE_SELECTOR` | 49 | 0 | 49 | 形状证实：非法 `int??` 双问号类型渲染（与 EXPECTED_TOKEN 共享形状，五码文件分布重叠）；机制位置待定位；随 T-dart 第二轮 |
+| `ILLEGAL_ASSIGNMENT_TO_NON_ASSIGNABLE` | 49 | 0 | 49 | 形状证实：非法 `int??` 双问号类型渲染（与 EXPECTED_TOKEN 共享形状，五码文件分布重叠）；机制位置待定位；随 T-dart 第二轮 |
+| `UNDEFINED_PREFIXED_NAME` | 20 | 22 | 42 | 探针定位待因果验证：前缀引用的名字不在目标库（clreq_profile.dart:35 经前缀引用 PunctuationGluePlacements 实测）；机制位置 DartImports.hx:186-215 的前缀登记只按模块名记录，派发方在 31627b5c 复核存在；随 T-dart 第二轮 |
 | `URI_DOES_NOT_EXIST` | 25 | 11 | 36 | 已判定：运行时文件、std 影子文件与 test_host.dart 未随消费方配置写出，路径明细见 8.2；修复项 F3i |
-| `READ_POTENTIALLY_UNASSIGNED_FINAL` | 36 | 0 | 36 | 未判定；随 T-dart |
-| `MISSING_IDENTIFIER` | 34 | 1 | 35 | 未判定；随 T-dart |
+| `READ_POTENTIALLY_UNASSIGNED_FINAL` | 36 | 0 | 36 | 形状证实（T-dart r1 抽样读过生成代码）；机制位置待定位；随 T-dart 第二轮 |
+| `MISSING_IDENTIFIER` | 34 | 1 | 35 | 形状证实：非法 `int??` 双问号类型渲染（与 EXPECTED_TOKEN 共享形状，五码文件分布重叠）；机制位置待定位；随 T-dart 第二轮 |
 | `UNDEFINED_GETTER` | 1 | 31 | 32 | 已判定：32 条全部为 The getter 'strategyName' isn't defined for the type 'LineBreaker'（gen 1 条、tests 31 条）；修复项 F3h |
-| `INVOCATION_OF_NON_FUNCTION_EXPRESSION` | 0 | 31 | 31 | 未判定；随 T-dart |
-| `DOT_SHORTHAND_MISSING_CONTEXT` | 27 | 0 | 27 | 未判定；随 T-dart |
-| `DUPLICATE_DEFINITION` | 17 | 1 | 18 | 未判定；与 ts TS2451 顶层重名的机制位置关系待探针；随 T-dart |
-| `PREFIX_COLLIDES_WITH_TOP_LEVEL_MEMBER` | 5 | 6 | 11 | 未判定；随 T-dart |
-| `MISSING_DEFAULT_VALUE_FOR_PARAMETER` | 11 | 0 | 11 | 未判定；随 T-dart |
-| `UNDEFINED_ENUM_CONSTANT` | 8 | 0 | 8 | 未判定；与 UNDEFINED_IDENTIFIER 的枚举名假设可能同一原因；随 T-dart |
-| `INVALID_ASSIGNMENT` | 7 | 0 | 7 | 未判定；随 T-dart |
-| `NON_ABSTRACT_CLASS_INHERITS_ABSTRACT_MEMBER` | 4 | 2 | 6 | 未判定；随 T-dart |
-| `RETURN_OF_INVALID_TYPE` | 4 | 0 | 4 | 未判定；随 T-dart |
-| `NOT_INITIALIZED_NON_NULLABLE_INSTANCE_FIELD` | 4 | 0 | 4 | 未判定；随 T-dart |
-| `NON_EXHAUSTIVE_SWITCH_STATEMENT` | 4 | 0 | 4 | 未判定；变体 switch 完备性降级待查；随 T-dart |
-| `UNDEFINED_OPERATOR` | 3 | 0 | 3 | 未判定；随 T-dart |
-| `IMPLICIT_THIS_REFERENCE_IN_INITIALIZER` | 3 | 0 | 3 | 未判定；随 T-dart |
-| `LIST_ELEMENT_TYPE_NOT_ASSIGNABLE` | 0 | 2 | 2 | 未判定；随 T-dart |
-| `RETURN_OF_INVALID_TYPE_FROM_CLOSURE` | 1 | 0 | 1 | 未判定；随 T-dart |
-| `NON_TYPE_AS_TYPE_ARGUMENT` | 1 | 0 | 1 | 未判定；随 T-dart |
-| `INSTANCE_MEMBER_ACCESS_FROM_STATIC` | 1 | 0 | 1 | 未判定；随 T-dart |
-| `EXTRA_POSITIONAL_ARGUMENTS` | 1 | 0 | 1 | 未判定；随 T-dart |
-| `CONFLICTING_METHOD_AND_FIELD` | 1 | 0 | 1 | 未判定；随 T-dart |
+| `INVOCATION_OF_NON_FUNCTION_EXPRESSION` | 0 | 31 | 31 | 形状证实（T-dart r1 抽样读过生成代码）；机制位置待定位；随 T-dart 第二轮 |
+| `DOT_SHORTHAND_MISSING_CONTEXT` | 27 | 0 | 27 | 形状证实：非法 `??` 双问号类型渲染（annotation_geometry_stage.dart:165 生成 `ClusterGeometryDecisionInfo?? g` 实测；与 EXPECTED_TOKEN 共享形状）；机制位置待定位；随 T-dart 第二轮 |
+| `DUPLICATE_DEFINITION` | 17 | 1 | 18 | 探针定位待因果验证：同库内重复名字（ic.dart:5 的 count、layout_queries.dart:641 与 :671 的 rubyIndex 实测）；机制位置 DartDecl.hx:39-40 的顶层名登记与 :625-626，派发方在 31627b5c 复核存在；与 ts TS2451 顶层重名的机制位置关系待证；随 T-dart 第二轮 |
+| `PREFIX_COLLIDES_WITH_TOP_LEVEL_MEMBER` | 5 | 6 | 11 | 形状证实（T-dart r1 抽样读过生成代码）；机制位置待定位；随 T-dart 第二轮 |
+| `MISSING_DEFAULT_VALUE_FOR_PARAMETER` | 11 | 0 | 11 | 形状证实：非空参数的隐式默认值为 null（ClreqProfile 可选参数实测）；探针引用的 DartDecl.hx:260-300 经派发方复核落在比较函数合成代码内，与参数签名不吻合，定位存疑；机制位置待定位；随 T-dart 第二轮 |
+| `UNDEFINED_ENUM_CONSTANT` | 8 | 0 | 8 | 形状证实：枚举构造器名空串或保留字（unicode_punctuation_boundary_resolver.dart:208-219 生成 `Dir.final` 实测，final 是 dart 保留字）；机制位置待定位；随 T-dart 第二轮 |
+| `INVALID_ASSIGNMENT` | 7 | 0 | 7 | 形状证实：dart 侧赋值位没有 int 到 double 的转换（line_adjustment_stage.dart:148、:151、:159 生成 `visualWidth = (visualWidth).round()` 实测，与 kotlin F3j 的赋值位同构造）；机制位置待定位；随 T-dart 第二轮 |
+| `NON_ABSTRACT_CLASS_INHERITS_ABSTRACT_MEMBER` | 4 | 2 | 6 | 探针定位待因果验证：实现类缺接口成员实现（line_breaker.dart:19 的 GreedyLineBreaker 缺 get_strategyName 实测，与 F3h 的接口侧缺陷同构造，F3h 修复后可能随之消除）；机制位置 DartDecl.hx:77-85 的接口转抽象类与 :161-174 的实现类路径，派发方在 31627b5c 复核存在；随 T-dart 第二轮 |
+| `RETURN_OF_INVALID_TYPE` | 4 | 0 | 4 | 形状证实（T-dart r1 抽样读过生成代码）；机制位置待定位；随 T-dart 第二轮 |
+| `NOT_INITIALIZED_NON_NULLABLE_INSTANCE_FIELD` | 4 | 0 | 4 | 探针定位待因果验证：非空实例字段在构造器外初始化（line_breaker.dart:28 的 _kinsoku 等实测）；机制位置 DartDecl.hx:598-621 的字段默认值路径，派发方在 31627b5c 复核存在；随 T-dart 第二轮 |
+| `NON_EXHAUSTIVE_SWITCH_STATEMENT` | 4 | 0 | 4 | 形状证实（T-dart r1 抽样读过生成代码）；机制位置待定位；随 T-dart 第二轮 |
+| `UNDEFINED_OPERATOR` | 3 | 0 | 3 | 形状证实（T-dart r1 抽样读过生成代码）；机制位置待定位；随 T-dart 第二轮 |
+| `IMPLICIT_THIS_REFERENCE_IN_INITIALIZER` | 3 | 0 | 3 | 形状证实（T-dart r1 抽样读过生成代码）；机制位置待定位；随 T-dart 第二轮 |
+| `LIST_ELEMENT_TYPE_NOT_ASSIGNABLE` | 0 | 2 | 2 | 形状证实（T-dart r1 抽样读过生成代码）；机制位置待定位；随 T-dart 第二轮 |
+| `RETURN_OF_INVALID_TYPE_FROM_CLOSURE` | 1 | 0 | 1 | 形状证实（T-dart r1 抽样读过生成代码）；机制位置待定位；随 T-dart 第二轮 |
+| `NON_TYPE_AS_TYPE_ARGUMENT` | 1 | 0 | 1 | 形状证实（T-dart r1 抽样读过生成代码）；机制位置待定位；随 T-dart 第二轮 |
+| `INSTANCE_MEMBER_ACCESS_FROM_STATIC` | 1 | 0 | 1 | 形状证实（T-dart r1 抽样读过生成代码）；机制位置待定位；随 T-dart 第二轮 |
+| `EXTRA_POSITIONAL_ARGUMENTS` | 1 | 0 | 1 | 形状证实（T-dart r1 抽样读过生成代码）；机制位置待定位；随 T-dart 第二轮 |
+| `CONFLICTING_METHOD_AND_FIELD` | 1 | 0 | 1 | 形状证实（T-dart r1 抽样读过生成代码）；机制位置待定位；随 T-dart 第二轮 |
 | 合计（求和校验） | 1748 | 1183 | 2931 | 与错误总数相等 |
 
-判定进度小结：已判定 2 个类合计 68 条，对准修复项 F3h（UNDEFINED_GETTER
-的 32 条）与 F3i（URI_DOES_NOT_EXIST 的 36 条）。5 个类持有跨目标同一
-原因的假设：UNDEFINED_IDENTIFIER 连到 ts TS2304 的 Ic、
-UNCHECKED_USE_OF_NULLABLE_VALUE 连到 kotlin 修复面 A（#22）、
-REFERENCED_BEFORE_DECLARATION 连到 ts TS2448、ARGUMENT_TYPE_NOT_ASSIGNABLE
-连到 kotlin 数值转换面（#24）、NOT_ENOUGH_POSITIONAL_ARGUMENTS 连到 ts
-TS2554；UNDEFINED_FUNCTION 类内的 compare 前缀名字连到 ts TS2724。
-EXPECTED_TOKEN、MISSING_IDENTIFIER、MISSING_ASSIGNABLE_SELECTOR、
-ILLEGAL_ASSIGNMENT_TO_NON_ASSIGNABLE、DOT_SHORTHAND_MISSING_CONTEXT 五个
-错误码合计 216 条，全部只出现在 gen 目录且文件分布重叠，未判定，等待
-探针定性。其余类同样未判定，全部随 T-dart 探针。
+判定进度小结（2026-09-06 T-dart r1 抽样并入后）：修复面 3 个整类加 1 个
+类内部条目：UNCHECKED_USE_OF_NULLABLE_VALUE 全类 420 条（F3m）、
+UNDEFINED_GETTER 32 条（F3h）、URI_DOES_NOT_EXIST 36 条（F3i）、
+UNDEFINED_IDENTIFIER 类内 8 个类型名条目 705 条（F3l）；探针定位待因果
+验证 6 类（NOT_ENOUGH_POSITIONAL_ARGUMENTS、UNDEFINED_FUNCTION、
+UNDEFINED_PREFIXED_NAME、DUPLICATE_DEFINITION、
+NON_ABSTRACT_CLASS_INHERITS_ABSTRACT_MEMBER、
+NOT_INITIALIZED_NON_NULLABLE_INSTANCE_FIELD）；其余 25 类为形状证实或
+假设，其中 EXPECTED_TOKEN、MISSING_ASSIGNABLE_SELECTOR、
+ILLEGAL_ASSIGNMENT_TO_NON_ASSIGNABLE、MISSING_IDENTIFIER、
+DOT_SHORTHAND_MISSING_CONTEXT 五码合计 216 条共享非法 `??` 双问号类型
+渲染形状，是形状证实里计数最大的一组错误码。T-dart 第二轮的剩余工作＝给 6 类
+探针定位待因果验证补齐因果链、给形状证实类定位机制位置、证实或否证跨
+目标假设（ARGUMENT_TYPE_NOT_ASSIGNABLE 的 double 74 条是否数值转换也在
+其列）。
 
 ### 8.2 大类与中类内部分解（2026-09-06 实测，产出命令见第 2.2 节）
 
-UNDEFINED_IDENTIFIER 的名称分布（求和 1025；判定列写「与 ts Ic 同一
-原因」的名字在 tiqian 源内实测为 enum 或 abstract 声明的类型名）：
+UNDEFINED_IDENTIFIER 的名称分布（求和 1025；判定列写 F3l 的名字在 tiqian
+源内实测为 enum 或 abstract 声明的类型名）：
 
 | 计数 | 名称 | 判定 |
 |---:|---|---|
-| 157 | `WritingMode` | 与 ts TS2304 的 Ic 同一原因的假设（类型名的值位引用） |
-| 155 | `LastLineAlignment` | 与 ts TS2304 的 Ic 同一原因的假设（类型名的值位引用） |
-| 147 | `InlineAttachment` | 与 ts TS2304 的 Ic 同一原因的假设（类型名的值位引用） |
-| 106 | `Ic` | 与 ts TS2304 的 Ic 同一原因的假设（类型名的值位引用） |
-| 77 | `RubyLineHeightMode` | 与 ts TS2304 的 Ic 同一原因的假设（类型名的值位引用） |
-| 35 | `RubyKind` | 与 ts TS2304 的 Ic 同一原因的假设（类型名的值位引用） |
+| 157 | `WritingMode` | 修复面＝类型名值位引用缺导入前缀（F3l） |
+| 155 | `LastLineAlignment` | 修复面＝类型名值位引用缺导入前缀（F3l） |
+| 147 | `InlineAttachment` | 修复面＝类型名值位引用缺导入前缀（F3l） |
+| 106 | `Ic` | 修复面＝类型名值位引用缺导入前缀（F3l）；与 ts TS2304 的 Ic 103 条同一原因的假设保留 |
+| 77 | `RubyLineHeightMode` | 修复面＝类型名值位引用缺导入前缀（F3l） |
+| 35 | `RubyKind` | 修复面＝类型名值位引用缺导入前缀（F3l） |
 | 33 | `kind` | 未判定 |
-| 16 | `LineEndReason` | 与 ts TS2304 的 Ic 同一原因的假设（类型名的值位引用） |
+| 16 | `LineEndReason` | 修复面＝类型名值位引用缺导入前缀（F3l） |
 | 15 | `PunctuationGeometryStageCoverageSupport` | 未判定 |
 | 13 | `JustifierTestSupport` | 未判定 |
 | 12 | `plan` | 未判定 |
-| 12 | `FontRole` | 与 ts TS2304 的 Ic 同一原因的假设（类型名的值位引用） |
+| 12 | `FontRole` | 修复面＝类型名值位引用缺导入前缀（F3l） |
 | 12 | `FontMetricSource` | 未判定 |
 | 11 | `ink` | 未判定 |
 | 11 | `cls` | 未判定 |
@@ -668,7 +698,7 @@ UNDEFINED_IDENTIFIER 的名称分布（求和 1025；判定列写「与 ts Ic �
 | 5 | `mandatory` | 未判定 |
 | 5 | `InteriorPunctuationStyle` | 未判定 |
 | 5 | `halt` | 未判定 |
-| 5 | `CjkPunctuationGlyphPolicy` | 未判定 |
+| 5 | `CjkPunctuationGlyphPolicy` | 未判定（T-dart 抽样里有值位不带前缀直接使用的形状，源侧声明核实随第二轮） |
 | 4 | `shaped` | 未判定 |
 | 4 | `selectedTechnicalBreak` | 未判定 |
 | 4 | `previousSpacing` | 未判定 |
@@ -680,14 +710,14 @@ UNDEFINED_IDENTIFIER 的名称分布（求和 1025；判定列写「与 ts Ic �
 | 4 | `cp` | 未判定 |
 | 4 | `candidate` | 未判定 |
 | 4 | `bi` | 未判定 |
-| 4 | `AutoSpaceMode` | 未判定 |
+| 4 | `AutoSpaceMode` | T-dart 抽样同形状（auto_space_policy.dart:14 值位不带前缀直接使用 `AutoSpaceMode.insert` 实测）；源侧声明核实与并入 F3l 随第二轮 |
 | 3 | `text` | 未判定 |
 | 3 | `strongReason` | 未判定 |
 | 3 | `startPrior` | 未判定 |
 | 3 | `role` | 未判定 |
 | 3 | `prevKind` | 未判定 |
 | 3 | `naturalPrior` | 未判定 |
-| 3 | `LineEndPunctuationStyle` | 未判定 |
+| 3 | `LineEndPunctuationStyle` | T-dart 抽样同形状（adjustment_style_policy.dart:14 值位不带前缀直接使用实测）；源侧声明核实与并入 F3l 随第二轮 |
 | 3 | `KinsokuLevel` | 未判定 |
 | 3 | `fromRepair` | 未判定 |
 | 3 | `firstHanging` | 未判定 |
@@ -714,7 +744,7 @@ UNDEFINED_IDENTIFIER 的名称分布（求和 1025；判定列写「与 ts Ic �
 | 1 | `ShrinkChannel` | 未判定 |
 | 1 | `RichTextBackgroundMetricPolicy` | 未判定 |
 | 1 | `MetricBox` | 未判定 |
-| 1 | `LineAdjustmentStrategy` | 未判定 |
+| 1 | `LineAdjustmentStrategy` | T-dart 抽样同形状（adjustment_style_policy.dart:17 值位不带前缀直接使用 `LineAdjustmentStrategy.pushInFirst` 实测）；源侧声明核实与并入 F3l 随第二轮 |
 | 1 | `InlineBoxOuterSpacing` | 未判定 |
 | 1 | `fivePowersBuilder` | 未判定 |
 | 1 | `enUsCache` | 未判定 |
@@ -722,11 +752,11 @@ UNDEFINED_IDENTIFIER 的名称分布（求和 1025；判定列写「与 ts Ic �
 | 1 | `BaselineClass` | 未判定 |
 
 UNCHECKED_USE_OF_NULLABLE_VALUE 的形状分布（求和 420；消息里的名字以 X
-代替）：
+代替；全类已判修复面＝dart 可空接收者守卫缺失，F3m）：
 
 | 计数 | 形状 | 判定 |
 |---:|---|---|
-| 314 | The property 'X' can't be unconditionally accessed because the receiver can be 'null'. | 与 kotlin 修复面 A（#22 可空接收者）同一原因的假设 |
+| 314 | The property 'X' can't be unconditionally accessed because the receiver can be 'null'. | 修复面＝dart 可空接收者守卫缺失（F3m；与 kotlin 修复面 A 同构造） |
 | 82 | The method 'X' can't be unconditionally invoked because the receiver can be 'null'. | 同上 |
 | 18 | The operator 'X' can't be unconditionally invoked because the receiver can be 'null'. | 同上 |
 | 6 | A nullable expression can't be used as a condition. | 同上 |
@@ -756,7 +786,8 @@ REFERENCED_BEFORE_DECLARATION 的文件分布（求和 410）：
 
 ARGUMENT_TYPE_NOT_ASSIGNABLE 的目标类型分布（求和 299；消息形如 The
 argument type 'X' can't be assigned to the parameter type 'Y'，本表按 Y
-计，整体持有与 kotlin 数值转换面（#24）同一原因的假设）：
+计；T-dart 抽样为可空 int? 给 int，连可空守卫 F3m；double 74 条是否数值
+转换待第二轮抽样）：
 
 | 计数 | 目标类型 | 判定 |
 |---:|---|---|
@@ -905,7 +936,7 @@ C2 跨文件或跨目标，同一缺陷出现在多个目标，或需要 tiqian 
 | KPI | 指标 | 现值 | 目标 | 对应 |
 |---|---|---|---|---|
 | K1 | 修复面 A：only safe 类计数 | f32 75 / f64 75 | 0 | #22 执行中 |
-| K2 | 各目标逐类判定完成度 | kotlin 已判定 2 / 39 类；swift 2 / 2 类；rust 2 / 15 类；ts 已判定 1 / 19 类（另有 TS2341 类内 10 条已判定）；dart 已判定 2 / 35 类 | 五目标全部类有判定结论 | T-attr、F4c、T-ts、T-dart |
+| K2 | 各目标逐类判定完成度 | kotlin 修复面 10 / 36 个 f32 类加 argument 类内 2 形状（另测量环境 1 类、形状证实 14 类、假设 10 类）；swift 2 / 2 类；rust 2 / 15 类；ts 修复面 1 / 19 类（另有 TS2341 类内 10 条）；dart 修复面 3 / 35 类加 UNDEFINED_IDENTIFIER 类内 705 条（另探针定位待因果验证 6 类） | 五目标全部类有判定结论 | T-attr、F4c、T-ts、T-dart |
 | K3 | 各目标错误总数 | kotlin f32 1183 / f64 1201；rust 180（boring `75b08ed2` 复测）；swift 8；ts 1127（引擎侧 819）；dart 2931 | 全部 0 | 各节逐类表求和（完整性数字，非派发单位） |
 | K4 | kotlin 两个目录 warning 计数 | 0 / 0 | 保持 0 | 每次复测 |
 | K5 | 各目标重生成退出码 | kotlin 0、kotlin-f64 0、rust 0、swift 0（自 boring `2c9257d`）、ts 0（自 boring `de11c06a`）、dart 0（自 boring `31627b5c`） | 全部 0 | F0l 与逐处重跑（已完成） |
@@ -976,8 +1007,12 @@ C2 跨文件或跨目标，同一缺陷出现在多个目标，或需要 tiqian 
       boring-onlysafe-probe.report.md）。抽样顺序：argument 可空形状 261、
       unresolved 336 / 329、operator call prohibited 60、cannot infer 42、
       argument 数值形状 113 / 122、return 28、cannot access 27，其余按表
-      降序。假设的证实或否证（修复面 A 延伸 3 类、数值转换面 3 类）属于
-      本项产出。C2，P1，S-。
+      降序。r1 已于 2026-09-06 交付（报告
+      /tmp/dispatch-state/tiqian-tattr-r1.report.md，34 节全量）：抽样形状
+      已并入 3.2 与 3.3 节，其逐类「修复面位置」段是同一份七条引用的
+      重复粘贴，不采信；数值转换面与 getter 降级可见性两处机制由派发方在
+      4b1fec9 复核后开列 F3j、F3k。第二轮范围＝把 14 类形状证实定位到
+      文件与分支、证实或否证 10 类假设、对 3.4 节符号逐个定位所属机制。C2，P1，S-。
 - [ ] F1a 修复面 A 计数降为 0（#22）：only safe 类两个目录；执行中的
       派发任务现为第三轮（boring-onlysafe-r3，前两轮已并入），判据与
       任务书见 /tmp/dispatch-state/ 下 boring-onlysafe 各轮 brief。C2，P1，S1。
@@ -997,7 +1032,12 @@ C2 跨文件或跨目标，同一缺陷出现在多个目标，或需要 tiqian 
       EXPECTED_TOKEN、MISSING_IDENTIFIER、MISSING_ASSIGNABLE_SELECTOR、
       ILLEGAL_ASSIGNMENT_TO_NON_ASSIGNABLE、DOT_SHORTHAND_MISSING_CONTEXT
       五码合计 216 条、NOT_ENOUGH_POSITIONAL_ARGUMENTS 的 105 条，其余按
-      表降序。方法与 T-attr 相同。C2，P1，S-。
+      表降序。方法与 T-attr 相同。r1 已于 2026-09-06 交付（报告
+      /tmp/dispatch-state/tiqian-tdart-r1.report.md，33 类全量）：抽样与
+      生成器引用经派发方在 31627b5c 复核后并入第 8 节，F3l、F3m 随之
+      开列，两处不吻合的引用已降级并记录在第 8 节判定来源段。第二轮
+      范围＝给 6 类探针定位待因果验证补齐因果链、给形状证实类定位机制
+      位置、证实或否证跨目标假设。C2，P1，S-。
 
 ### 第 2 组：已排定位任务
 
@@ -1016,7 +1056,10 @@ C2 跨文件或跨目标，同一缺陷出现在多个目标，或需要 tiqian 
 主题）、F3b（语句位置主题）、F3c（推断与重载主题）、F3d（桶 4 可空形状）
 四条按消息主题合并的条目；各错误类已在 3.2 节逐行可见，其中可空形状与
 数值形状的疑议随 T-attr 判定。撤销理由：按主题把多个修复面合并成一个
-任务后，进度勾选无法与任何一个错误类的计数核对。
+任务后，进度勾选无法与任何一个错误类的计数核对。2026-09-06 T-attr r1
+与 T-dart r1 的判定并入后，本组新增 F3j 至 F3m 四条：F3j、F3k 来自
+kotlin 侧（机制由派发方在 boring `4b1fec9` 复核后开列），F3l、F3m 来自
+dart 侧（引用由派发方在 boring `31627b5c` 复核后开列）。
 
 - [ ] F3e ts 目标 getter-only 属性调用点：覆盖 TS2551 全类 28 条（全部
       get_strategyName）加 TS2341 的 get_ 前缀 10 条，合计 38 条。修复
@@ -1052,6 +1095,43 @@ C2 跨文件或跨目标，同一缺陷出现在多个目标，或需要 tiqian 
       文件均不存在而生成代码以相对路径引用它们。修复面＝dart 目标这些
       文件在消费方配置下的写出条件。判据＝URI_DOES_NOT_EXIST 计数降为
       0，其余类计数不上升。C2，P1，S2。
+- [ ] F3j kotlin 数值转换位扩展：覆盖 operator applied 全类（f32 35 /
+      f64 32）、return 全类（28 / 28）、initializer 全类（15 / 17）、
+      assignment 类内数值形状（19 / 23 中数值部分）与 3.3 节 Int 给浮点
+      （80 / 88）、Long 给浮点（0 / 2）两形状。修复面＝KotlinExpr.hx
+      的 renderCallArgs（boring `4b1fec9` 时位于 2806-2820，派发方复核）
+      只在实参位对 isIntType 的接收值插入 `(x).toFloat()/.toDouble()`
+      转换，运算、return、默认值、赋值四个位置没有同等转换，isIntType
+      也不覆盖 Long；修复＝把这四个位置与 Long 纳入同一转换机制。判据＝
+      operator applied、return、initializer 三类与 Int 给浮点、Long 给
+      浮点两形状计数降为 0，assignment 剩余条目全部为可空形状，其余类
+      计数不上升。C2，P1，S1。
+- [ ] F3k kotlin getter 降级可见性：覆盖 modifier incompatible 全类
+      （14 / 14）、cannot weaken 全类（7 / 7）、cannot access 类内 get_
+      前缀条目（get_strategyName、get_isMixed；27 / 27 中的 getter 部分）。
+      修复面＝boring `5628b4d`（getprop 修复任务）在 kotlin 实现类生成
+      `private override fun get_X()`，Kotlin 语法禁止 private 与
+      override 并用，实现成员可见性也不得低于接口成员（LineBreaker.kt:42
+      与 LineBreakerCoverage2Test.kt:138 实测）。判据＝modifier
+      incompatible 与 cannot weaken 两类降为 0，cannot access 降至私有
+      静态跨类调用条目（emptyHanging 一类）的基数，其余类计数不上升。
+      C2，P1，S2。
+- [ ] F3l dart 类型名与枚举名值位引用缺导入前缀：覆盖 UNDEFINED_IDENTIFIER
+      类内 8 个类型名条目合计 705 条（WritingMode 157、LastLineAlignment
+      155、InlineAttachment 147、Ic 106、RubyLineHeightMode 77、RubyKind
+      35、LineEndReason 16、FontRole 12，分布见 8.2）。修复面＝
+      DartExpr.hx:1466-1485 的枚举引用分支对值位引用输出不带前缀的名字、
+      DartImports.hx:186-215 的前缀登记没有覆盖这类引用
+      （adjustment_style_policy.dart:14 值位不带前缀直接使用 `LineEndPunctuationStyle`
+      实测，同文件类型位用带前缀形；两处位置派发方在 31627b5c 复核）。
+      判据＝上述 8 个名字的计数降为 0，其余名字计数不上升。C2，P1，S1。
+- [ ] F3m dart 可空接收者守卫缺失：覆盖 UNCHECKED_USE_OF_NULLABLE_VALUE
+      全类 420 条（property 314、method 82、operator 18、condition 6，
+      分布见 8.2）。修复面＝dart 生成器对可空接收者的成员访问、调用、
+      运算与条件位没有发守卫（clreq_punctuation_advance_policy.dart:27
+      的 int? 接收者直接比较实测；DartExpr.hx:1315-1341 的 binop 守卫位
+      派发方在 31627b5c 复核），与 kotlin 修复面 A（#22）同构造。判据＝
+      该错误码计数降为 0，其余类计数不上升。C2，P1，S1。
 
 ### 第 4 组：五目标普查（K7）
 
@@ -1087,6 +1167,7 @@ C2 跨文件或跨目标，同一缺陷出现在多个目标，或需要 tiqian 
 | 2026-09-06 | ts 首次编译普查（F4b 的 ts 半项）；swift 与 ts 并入 KPI；文档条目全量列举与格式统一 | 本文档第 1、2.2、3.4、4、7 至 11 节 | ts 1127 条、19 类，求和校验相等；测量环境 308 条、引擎侧 819 条；dart 第一处更新为 Units.hx 静态重名（F0l） | 不适用 |
 | 2026-09-06 | F0l dart 静态成员顶层重名修复（修复任务 dartic）与 dart 首次编译普查（F4b dart 半项）；dart 并入 KPI | boring `189e01ad`（合并 `31627b5c`，已推送） | dart 生成退出码 0；dart analyze 报 2931 条、35 类，求和校验相等；无测量环境条目 | 19 项验收检查在修复工树与合并工树各全部退出码 0；合并后 bun test 672 pass / 3 fail（三个既有名目） |
 | 2026-09-06 | rust 普查复测（基线推进到 boring `75b08ed2`）；补两条 rust 测量错误记录 | 本文档第 2.2、2.3、6 节 | rust 180 条、15 类，求和校验相等；相对 4b1fec9 首测的 181 条少一条保留字转义类（`type` 6 处降 5 处）；浮点字面量类 124 条不变 | 不适用 |
+| 2026-09-06 | T-attr r1 与 T-dart r1 判定并入普查文档；新增修复项 F3j、F3k、F3l、F3m | 本文档第 3.2、3.3、3.4、8、8.2、10、11 节 | 判定进度见 3.2 与第 8 节小结；错误计数未复测，基线不变 | 不适用 |
 
 ## 13 已完成并合入的修复（背景）
 
