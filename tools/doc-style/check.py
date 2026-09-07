@@ -172,6 +172,13 @@ def matchedLevelSuffix(line: str) -> list[str]:
 # With no accepted uses the pattern matches no line.
 ALLOW = re.compile(r"(?!x)x")
 
+# Governance file exempt whole-file by the 2026-09-06 user ruling: AGENTS.md
+# is the style rule text itself, so it quotes banned words to define them.
+# CLAUDE.md is a symlink to AGENTS.md; both names are exempt so edits staged
+# under either path skip the scan. Do not add other files here without a
+# user ruling.
+EXEMPT_FILE_NAMES = {"AGENTS.md", "CLAUDE.md"}
+
 
 def iter_targets(args: list[str]):
     if args:
@@ -200,6 +207,8 @@ def matched_words(line: str) -> list[str]:
 def main() -> int:
     hits: list[tuple[str, int, str, str, str]] = []
     for path in iter_targets(sys.argv[1:]):
+        if path.name in EXEMPT_FILE_NAMES:
+            continue
         try:
             text = path.read_text(encoding="utf-8")
         except (OSError, UnicodeDecodeError) as exc:
