@@ -92,7 +92,7 @@ clusters
 
 ## 当前阶段：标点悬挂
 
-《中文排版的最大迷思：标点悬挂》对 Slice 4b 的帮助最大。它把”悬挂”从精致排版神话里拉回到工程位置：悬挂是避头尾的一种可选处理，不属于默认合格线，也不属于可以代替标点挤压和断行修复的捷径。
+《中文排版的最大迷思：标点悬挂》对 Slice 4b 的帮助最大。它把“悬挂”从精致排版神话里拉回到工程位置：悬挂是避头尾的一种可选处理，不属于默认合格线，也不属于可以代替标点挤压和断行修复的捷径。
 
 对提椠当前阶段的影响：
 
@@ -131,13 +131,13 @@ line-end punctuation half-width
 - ADR 0001：孔雀计划强化了“模型必须真”的要求。source text、display text、natural geometry、adjusted geometry 必须分开。
 - ADR 0003：CLREQ 推荐码点是显示层策略，不应改动 source text。
 - ADR 0004：加法标点模型有传统工艺依据，应作为长期方向。
-- ADR 0005：结构化 debug 是必要条件，否则无法解释”为什么这一行推入而不推出”。
+- ADR 0005：结构化 debug 是必要条件，否则无法解释“为什么这一行推入而不推出”。
 - ADR 0006：悬挂不是默认选项。孔雀计划也强调避头尾与行内调整有多种取舍，Hang 应 profile opt-in。
 
 ## 工程待办
 
 - ADR 0007 已固化“字格优先 + 加法标点 + 可解释断行决策”。
-- 在 roadmap 中把 Slice 4b 的 PushIn 明确为”借用 punctuation glue 容量”的实现，不用简单把标点放回上一行。
+- 在 roadmap 中把 Slice 4b 的 PushIn 明确为“借用 punctuation glue 容量”的实现，不用简单把标点放回上一行。
 - 增加 research fixture：22em 行宽、句号触发行尾冲突，分别观察 PushIn / CarryPrevious / LeaveRagged。
 - 在 `LayoutDebugInfo` 里为 line decisions 增加 target width、actual width、repair candidates、chosen repair。
 - 后续 shaping 接入后，用实际 glyph ink box 校正 punctuation atom，不只依赖宽度表。
