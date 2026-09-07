@@ -71,7 +71,7 @@ CLREQ 原文「原则上，汉字与西文字母、数字间使用不多于四�
 - **行宽变窄**：每个 CJK ↔ Latin 边界 typed space 从 16px 降到 4px。real-paragraph-1 visual-sum 3656 → 3620 px（14 个空格，部分在边界）。
 - **测试断言变化**：`"Hello" world` 现在聚成单个 Latin cluster 而非两个；`keepsTextStartLatinQuotePairInLatinRun` 等基于「空格切 cluster」的测试需要重写以适应新聚合。
 - **profile-driven**：CJK / CSS-style / region-specific 工作流可以独立设置 `gapEm`、`cjkLatin`、`cjkDigit` 三档。`Disabled` 模式保留给「CJK 全部按 typed」的怀旧/调试场景。
-- **跟 Justifier 的 `CjkLatinSpace` 没有立即冲突**：但需要 follow-up 跟踪，目前 justifier 仍按 0.25em 容量在 CJK-Latin 边界上加 glue；如果该边界 cluster 已被 autospace 处理过，理论上 stretch capacity 应基于「max gap」而非「nominal 1em」。在 stub 状态下数字凑巧合理，实际上 shaping 接上后再校准。
+- **跟 Justifier 的 `CjkLatinSpace` 没有立即冲突**：但需要 follow-up 跟踪，目前 justifier 仍按 0.25em 容量在 CJK-Latin 边界上加 glue；如果该边界 cluster 已被 autospace 处理过，理论上 stretch capacity 应基于「max gap」而非「nominal 1em」。在 stub 状态下数字凑巧合理，实际 shaping 接上后再校准。
 
 ## Alternatives considered
 
@@ -83,7 +83,7 @@ CLREQ 原文「原则上，汉字与西文字母、数字间使用不多于四�
 ## Follow-up
 
 - `Insert` 模式：等虚拟 cluster 注入或 `ClusterPart` 概念可用后实现。
-- Justifier 跟 autospace 的协调：当 Latin cluster 已经被 autospace 缩窄后，`CjkLatinSpace` priority 的 stretch 上限应基于 `(1em - gapEm)` 还原，不从 0 开始累计。当前 stub 数字凑巧 OK，接实际上 shaping 时校准。
+- Justifier 跟 autospace 的协调：当 Latin cluster 已经被 autospace 缩窄后，`CjkLatinSpace` priority 的 stretch 上限应基于 `(1em - gapEm)` 还原，不从 0 开始累计。当前 stub 数字凑巧 OK，接实际 shaping 时校准。
 - 数字边界：`cjkDigit` 已经在 policy 里了但 `applyAutoSpacePolicy` 暂时只看 `cjkLatin`（因为 stub classifier 把 ASCII 数字归 LatinText，跟字母无差别）。等数字有独立 role 或独立 metric class 时再启用。
 - `text-spacing-trim`（fullwidth 标点行首/行末/段首边界裁剪）是 CSS Text 4 的姊妹属性，但跟 [ADR 0006 hanging](0006-hanging-punctuation-opt-in.md) / 行尾半宽紧密耦合，单独 ADR 处理。
 
