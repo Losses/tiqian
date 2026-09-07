@@ -101,7 +101,7 @@ WORDS = [
     "真正", "恰", "诱人", "灾难", "今天", "当天",
     # machine-translated or literal-translation feel
     "烘出", "烘入", "烘死", "农场", "裸", "回落",
-    "电池",
+    "电池", "工树",
     "缝", "姿态",
     # meta phrasing about the document itself: state facts instead
     "本记录", "终版", "不进仓库", "够支撑", "记录在案",
