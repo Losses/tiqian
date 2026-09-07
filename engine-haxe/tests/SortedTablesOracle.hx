@@ -15,7 +15,7 @@ import runtime.SortedTable;
  * TextRange, or RubySpan; compareKeys dispatches on the runtime key type.
  * The two structure-key arms mirror the per-type comparators boring
  * generates for real targets (compareTextRange and compareRubySpan in
- * out/kotlin-gen); when a dataClass key type changes its fields, update
+ * out/kotlin-gen-f32); when a dataClass key type changes its fields, update
  * the matching arm here in the same change.
  */
 class SortedTablesOracle {
