@@ -470,7 +470,7 @@ tests 侧（每精度 57 条）。判定来源为 tswift1 r1 报告
 | 错误消息类（骨架） | 条数 | 判定与处置 |
 |---|---:|---|
 | cannot find 'X' in scope | 32 | 消费侧配置：tests 树文件没有 import 头（tiqian 的 targets/swift-common.hxml 未定义 `-D swift-test-import`，boring 合同见 examples/swift.hxml:20 与 Compiler.hx fileContent 的头部条件 :422-425），且支撑类 TracedAssertions 与 TestTraceRecorder 实际生成在 gen 树 org/tiqian/test/trace/，tests 树单独 typecheck 必然找不到；合并测量下这类错误数为 0。F3u |
-| static methods may only be declared on a type | 13 | 修复面：SwiftExpr.hx stdStringType 的 IsArray 分支把 Swift 闭包字面量直接嵌进字符串插值，引号与插值定界符不配对（ExplainableStubParagraphLayoutEngineTest.swift:69 实测；源头 Haxe 源 ExplainableStubParagraphLayoutEngineTest.hx:63-104 的 Std.string 拼接）；解析器脱离 enum 作用域后，:106 起的 13 个 public static func 变成顶层声明。F3t |
+| static methods may only be declared on a type | 13 | 修复面：swift 生成器把语句体闭包字面量直接嵌进外层字符串插值段（ExplainableStubParagraphLayoutEngineTest.swift:69 实测：Haxe 源的 UString.slice 调用被降级成 `let from`/`let to` 多语句闭包后原样拼进 `\(...)` 段；SwiftExpr.hx stdStringType 的 IsArray/IsSortedSet/IsSortedMap 三个分支在 e01b03b3 :1824-1836 也生成同类 `{ () -> String in … }()` 闭包，是同一修复面的第二条触发路径）；解析器脱离 enum 作用域后，:106 起的 13 个 public static func 变成顶层声明。源头 Haxe 源 ExplainableStubParagraphLayoutEngineTest.hx:63-104 的字符串拼接。F3t |
 | 'X' requires a contextual type | 9 | 消费侧配置连锁：被调方不可见时字面 nil 无上下文类型（BopomofoParserTest.swift 断言调用的第三实参）；合并测量下这类错误数为 0。随 F3u |
 | unterminated string literal | 1 | F3t（同一连锁的词法症状，:69:20） |
 | extraneous 'X' at top level | 1 | F3t（enum 被提前关闭后末尾 } 变多余，:315:1） |
@@ -1176,14 +1176,17 @@ rustf4c r2 判定并入第 6 节后新增 F3n 至 F3s 六条。
       be chained 1 条。修复面为链式比较未降级为 `a < b && b < c`
       （punctuation_geometry_ledger.rs:293:30）。判据为该类计数降为 0，
       其余类计数不上升。C1，P2，S3。
-- [ ] F3t swift 字符串插值内嵌闭包破坏定界符：覆盖第 5 节 tests 侧
+- [ ] F3t swift 字符串插值内嵌语句体闭包：覆盖第 5 节 tests 侧
       static methods 13、unterminated string 1、extraneous 1、string
-      interpolation 1，每精度 16 条（f32 与 f64 同值）。修复面为
-      SwiftExpr.hx stdStringType 的 IsArray 分支（e01b03b3 位于 :1824-1828，
-      派发方复核）把 Swift 闭包字面量直接拼进外层字符串插值，定界符不
-      配对；正确输出需保证插值定界符配对（例如先把闭包结果绑定到局部
-      常量再插值）。判据为四类计数降为 0，其余类计数不上升（合并测量
-      下 gen 侧语义错误不上升）。C2，P1，S2。
+      interpolation 1，每精度 16 条（f32 与 f64 同值）。修复面为 swift
+      生成器字符串拼接合成把语句体闭包字面量嵌进插值段：实测样本是
+      多语句表达式降级成的闭包（ExplainableStubParagraphLayoutEngineTest.swift:69，
+      `let from`/`let to` 两条声明在 `\(...)` 段内）；SwiftExpr.hx
+      stdStringType 的 IsArray/IsSortedSet/IsSortedMap 分支（e01b03b3
+      :1824-1836）生成同类闭包，构成第二条触发路径。两条路径出自同一
+      修复面（插值段不得含语句体闭包），修复需同时覆盖；正确输出先把
+      闭包结果绑定到局部常量再插值。判据为四类计数降为 0，其余类计数
+      不上升（合并测量下 gen 侧语义错误不上升）。C2，P1，S2。
 - [ ] F3u swift 测试树 import 头的消费侧配置：覆盖第 5 节 tests 侧
       cannot find 32 与 contextual type 9，每精度 41 条（合并测量下这类错误数为 0，
       证明符号本身可解析）。修复位置为 tiqian 的
