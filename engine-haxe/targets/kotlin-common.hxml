@@ -1,0 +1,10 @@
+# Kotlin-specific configuration shared by the f32 and f64 generation entries.
+# Included by kotlin-f32.hxml and kotlin-f64.hxml.
+engine-haxe/targets/common.hxml
+engine-haxe/targets/classes.hxml
+-cp .haxelib/boring/git/packages/compiler/reflaxe/kotlin/std-shadow
+-cp .haxelib/boring/git/packages/compiler/reflaxe/kotlin
+--macro Intercept.run(['engine-haxe/src'])
+--macro kotlincompiler.Compiler.use()
+-D runtime-import=org.tiqian.boring.runtime
+-D runtime-emit=runtime

@@ -45,7 +45,8 @@ PORT_CORE = WORKTREE / "engine-haxe/src/org/tiqian/core"
 MANIFEST_DIR = WORKTREE / "engine-haxe/out/swap"
 GEN_DIR = WORKTREE / "engine-haxe/out/swap-gen"
 GEN_TEST_DIR = WORKTREE / "engine-haxe/out/swap-gen-tests"
-BASE_MANIFEST = WORKTREE / "engine-haxe/core-kotlin.hxml"
+BASE_MANIFEST = WORKTREE / "engine-haxe/targets/kotlin-f32.hxml"
+HXML_DIR = WORKTREE / "engine-haxe/targets"
 MAIN_TREE = Path("/home/losses/Development/tiqian")
 
 KOTLIN_MODIFIERS = {
@@ -187,9 +188,25 @@ def index_port_modules():
     return index
 
 
+def manifest_header_lines(path):
+    # Expand hxml include lines inline, except the shared class list: the
+    # swap manifest carries its own subset of roots, so classes.hxml must be
+    # dropped or its 199 roots would be compiled alongside the subset.
+    lines = []
+    for line in path.read_text().splitlines():
+        if line.strip() == "engine-haxe/targets/classes.hxml":
+            continue
+        if line in ("engine-haxe/targets/common.hxml",
+                    "engine-haxe/targets/kotlin-common.hxml"):
+            lines.extend(manifest_header_lines(HXML_DIR / line.rsplit("/", 1)[-1]))
+            continue
+        lines.append(line)
+    return lines
+
+
 def build_manifest(stem, roots):
     header = []
-    for line in BASE_MANIFEST.read_text().splitlines():
+    for line in manifest_header_lines(BASE_MANIFEST):
         if line.startswith("org.tiqian."):
             continue
         if line.startswith("-D kotlin-output="):

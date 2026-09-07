@@ -5,7 +5,7 @@
 
 ## 三项目标对齐
 
-1. f32 生成物对原生 Kotlin：Haxe 生成的 Kotlin（`engine-haxe/core-kotlin.hxml`，
+1. f32 生成物对原生 Kotlin：Haxe 生成的 Kotlin（`engine-haxe/targets/kotlin-f32.hxml`，
    带 `-D float-precision=f32`）编译并运行后，其测试轨迹与原生 Kotlin 引擎的
    golden 轨迹（`engine/src/jvmTest/resources/golden/test-traces/`）逐类一致。
    这条判据回答「Haxe Kotlin 与原本 Kotlin 行为是否相同」。

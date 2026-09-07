@@ -466,3 +466,28 @@ core-kotlin 零错误、tolerance 66 类 65 绿。仅剩 CoverageTest 9 行不�
 2. 集合字段打印：spec 33 只裁定 Array<T> 字段；hangingClusterIndices 的
    SortedSet<Int> 字段打印 {\n\tkeys : []\n}，Kotlin Set 应印 [a, b]。
 两条 Gap 条目并入 boring 替换阻塞队列，实现后删除测试支撑里的临时渲染。
+
+2026-09-07 生成入口按目标拆分进 targets/ 目录：八个 core-*.hxml 生成入口（kotlin、
+swift、rust 各两个精度，ts 与 dart 单精度）拆为 engine-haxe/targets/ 下的
+公共件与入口文件。common.hxml 存五目标共享的 -lib、-cp 与宏调用；
+classes.hxml 存 199 个根类清单，此前这份清单在每个入口文件末尾重复一份；
+kotlin-common.hxml、swift-common.hxml、rust-common.hxml 存各目标的
+std-shadow 类路径、Intercept 宏与编译器启用宏；八个入口文件（如
+kotlin-f32.hxml、swift-f64.hxml）每个只含对公共件的 include、-D 输出目录
+与精度 define。hxml 文件的 include 按执行 haxe 时的工作目录解析路径，入口仍须
+从仓库根目录发起。等价性验证在 /tmp/tiqian-swiftrem 消费树执行：每一对
+旧入口与新入口各自先删输出目录再重新生成，比对全部输出文件的 md5，七对
+全部逐字节一致（每侧文件数：kotlin 397、swift 393、rust 405、ts 394、
+dart 393；swift-f64 一对此前已单独验证）。引用旧文件名的位置同步改为
+新名：gates.sh 的 g4 编译、README 的文件清单、five-target-error-census
+第 2 节测量配方、cross-target-alignment 的 f32 判据、swap_kotlin.py 的
+BASE_MANIFEST（拼清单时展开 include 并剔除 classes.hxml，使换验清单只含
+自己那部分根类）、FunctionalOracle.hx 注释。旧八个 core-*.hxml 删除。
+输出目录命名同轮统一为按精度后缀命名：kotlin 与 swift 的生成目录及测试目录、
+rust 的生成目录一律带 -f32 或 -f64 后缀（kotlin-gen-f32、swift-gen-f64、
+rust-gen-f64 等），ts-gen 与 dart-gen 单精度保持无后缀。改名前无后缀名
+属于各目标先生成的那一档：kotlin-gen 是 f32 产物，swift-gen 与 rust-gen
+是 f64 产物。受影响引用同步更新：targets/kotlin-f32.hxml、swift-f64.hxml、
+rust-f64.hxml 的 -D 输出目录（swift-f32.hxml 与 rust-f32.hxml 原已带后缀）、
+SortedTablesOracle.hx 注释、five-target-error-census 第 2.1 节测量配方的
+find 路径。

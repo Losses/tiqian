@@ -5,7 +5,7 @@
 // FunctionalOracle). Member bodies mirror those two sources; the specs are
 // docs/specs/macros/01-functional-idiom-expansion.md, macros/02 (additions),
 // and macros/03 (groupBy). Contract: sortedBy/associate/groupBy keys are Int
-// in current use; extend per adopted key type. The core-kotlin gate expands
+// in current use; extend per adopted key type. The kotlin-f32 gate expands
 // all closed-list calls into loops and never runs this oracle.
 class FunctionalOracle {
     public static function install():Void {

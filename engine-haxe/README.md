@@ -13,8 +13,12 @@
 - `tools/compare-traces.py`：把 Haxe 测试记录的执行轨迹与引擎 golden
   逐行比对。golden 指引擎测试留下的基准轨迹文件，位于
   `engine/src/jvmTest/resources/golden/test-traces/`（本地生成，不入库）。
-- `core-kotlin.hxml`、`textrange-kotlin.hxml`、`smoke-kotlin.hxml`：
-  调用 boring 生成 Kotlin 的编译清单。
+- `targets/`：八个生成入口（五目标，kotlin/swift/rust 各含 f32 与 f64
+  两个精度，ts 与 dart 单精度）。`common.hxml` 存五目标共享的类路径与
+  宏，`classes.hxml` 存全部根类清单，其余文件每个对应一个目标×精度，
+  只含 include、输出目录与精度 define。
+- `textrange-kotlin.hxml`、`smoke-kotlin.hxml`：独立用途的 Kotlin
+  生成清单。
 - `data/`：生成 Unicode 数据类所需的区间数据。
 - `patches/`：vendored boring（`.haxelib/`，不入库）之上的本地补丁存档。
 - `out/`、`baseline-goldens/`、`smoke/`：生成物与本地基线拷贝，不入库。
