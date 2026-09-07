@@ -8,7 +8,8 @@ Dart）下的编译错误，作为跨目标行为对齐（见
 
 当前状态：Kotlin 的 f32 与 f64 两个目录已完成逐类普查（第 3 节，基线为
 tiqian `105dfb30` 加 boring `4b1fec9`）；rust 的生成命令退出码为 0，首次
-编译普查已完成（第 6 节：181 条错误，按消息骨架 15 类，全部在语法层）；
+编译普查已完成，2026-09-06 在 boring `75b08ed2` 复测为 180 条错误，按消息
+骨架 15 类，全部在语法层（第 6 节）；
 Swift 的生成命令自 boring `2c9257d` 起退出码为 0，首次编译普查已完成
 （第 5 节：8 条错误，按消息骨架 2 类）；TypeScript 的生成命令自 boring
 `de11c06a`（合并 UStringException 生成修复 `f270c670`）起退出码为 0，首次
@@ -152,8 +153,9 @@ rust 的编译普查命令如下（2026-09-06 首次运行，F4a）：
 ```shell
 # Cargo.toml 由 boring Compiler.hx 在 PackageShell 启用时写进输出目录本身
 # （core-rust.hxml 的 -D rust-output 指到 .../rust-gen/src），cargo 从该
-# 目录运行。退出码 101 是预期，错误计数来自日志
-nix develop -c bash -c 'cd /tmp/tiqian-census4/engine-haxe/out/rust-gen/src && cargo check' \
+# 目录运行。退出码 101 是预期，错误计数来自日志；必须带
+# --message-format=short，原因见 2.3 节
+nix develop -c bash -c 'cd /tmp/tiqian-census4/engine-haxe/out/rust-gen/src && cargo check --message-format=short' \
   2> /tmp/census-r4-rust.log; echo rc=$?
 
 grep -a -c ": error" /tmp/census-r4-rust.log   # 错误总数
@@ -215,6 +217,13 @@ cat /tmp/dartic-census-gen.log /tmp/dartic-census-tests.log | awk -F'|' '/^ERROR
   `tests/ts/package-shell.test.ts` 的 5 秒超时项失败，普查与测试不要同时运行。
 - haxe 的宏阶段错误打印格式是「文件:行号 : 消息」，与警告格式相同，没有
   「Error:」前缀；判断一条输出是错误还是警告，唯一依据是命令的退出码。
+- rust 的 `cargo check` 默认输出多行诊断：错误行以行首 `error` 开始，没有
+  `文件:行:列: error:` 前缀，本节的 `: error` 锚点一个都数不到
+  （2026-09-06 实测：同一棵生成树，默认形按该锚点数得 0，short 形数得
+  180）。普查命令必须带 `--message-format=short`。
+- rust 的默认多行输出里，`grep -c "^error"` 会把末尾的汇总行 `error:
+  could not compile ... due to N previous errors` 也计入（同一棵树 180 条
+  诊断加 1 行汇总数得 181）；short 形没有汇总行，不存在这个问题。
 
 ## 3 Kotlin 普查结果
 
@@ -394,18 +403,22 @@ swift 错误逐行原文保存在 `/tmp/swiftc-census.log`；该节不修改 bor
 
 ## 6 rust 首次编译普查（2026-09-06）
 
-基线与第 3.1 节相同（tiqian `105dfb30` 加 boring `4b1fec9`，工作树
+首测基线与第 3.1 节相同（tiqian `105dfb30` 加 boring `4b1fec9`，工作树
 /tmp/tiqian-census4，日志 /tmp/census-r4-rust.log，逐类表
-/tmp/census-r4-rust-families.txt，产出逐类表的命令见第 2.2 节）。rust 的
-生成命令退出码为 0（403 个 .rs 文件）；`cargo check` 退出码 101，报 181 条错误，按下
-表 15 个消息骨架分类，求和校验相等。这 181 条全部在语法层（rustc 还没有
+/tmp/census-r4-rust-families.txt），报 181 条错误。2026-09-06 在 boring
+main `75b08ed2`（tiqian 仍为 `105dfb30`，工作树 /tmp/tiqian-rustcens2，
+日志 /tmp/rustcens2-short.log，逐类表 /tmp/rustcens2-families.txt）复测：
+生成命令退出码为 0（403 个 .rs 文件），`cargo check --message-format=short`
+退出码 101，报 180 条错误；与首测的唯一差异是 expected identifier, found
+keyword 类从 11 条降为 10 条（`type` 从 6 处降为 5 处）。下表数字为复测值，
+按 15 个消息骨架分类，求和校验相等。这 180 条全部在语法层（rustc 还没有
 开始类型检查），第 3 节 Kotlin 侧的语义层错误类（可空形状、数值转换等）
 在 rust 侧尚未进入测量。
 
 | 错误消息类（骨架） | 计数 | 判定与处置 |
 |---|---:|---|
 | float literals must have an integer part | 124 | 修复面＝rust 浮点字面量生成规则：写成 `.25` 形，rust 语法要求 `0.25`（justifier_test.rs:311 实测样本）；生成函数定位随修复立项 |
-| expected identifier, found keyword `X`（尾段重复消息） | 11 | 修复面＝rust 保留字标识符转义缺失：字段名 `type` 6 处、`match` 5 处原样输出（quote_pair_analyzer.rs:116 实测结构字段 `type:`） |
+| expected identifier, found keyword `X`（尾段重复消息） | 10 | 修复面＝rust 保留字标识符转义缺失：字段名 `type` 5 处、`match` 5 处原样输出（quote_pair_analyzer.rs:116 实测结构字段 `type:`；首测 4b1fec9 时 `type` 为 6 处） |
 | expected one of `X`, `X`…, or an operator, found `X`（8 词消息） | 10 | 未判定；match 臂体生成在语句位（layout_queries.rs:379 实测 `=> let faces = …`）；随探针 |
 | expected expression, found `X` | 10 | 未判定；记号分布 `.` 6、`+` 2、`)` 1、`=` 1；随探针 |
 | expected pattern, found `X` | 7 | 未判定；记号分布 `=` 6、`:` 1；随探针 |
@@ -419,10 +432,10 @@ swift 错误逐行原文保存在 `/tmp/swiftc-census.log`；该节不修改 bor
 | expected expression, found reserved keyword `X` | 1 | 修复面＝保留字转义缺失（同 keyword 行）：`virtual`（justifier.rs:145） |
 | [E] file not found for module `X` | 1 | 未判定；runtime/mod.rs:4 声明 `pub mod u_string;` 但无对应文件；随探针 |
 | comparison operators cannot be chained | 1 | 未判定；punctuation_geometry_ledger.rs:293；随探针 |
-| 合计（求和校验） | 181 | 与错误总数相等 |
+| 合计（求和校验） | 180 | 与错误总数相等 |
 
 判定进度小结：已判定 2 个修复面（浮点字面量生成 124 条；保留字标识符转义
-缺失 13 条，跨上表 3 行），未判定 13 类共 44 条。两个修复面的修复项在
+缺失 12 条，跨上表 3 行），未判定 13 类共 44 条。两个修复面的修复项在
 F4c 判定探针补齐生成函数定位后开列；派发顺序遵循目标优先级裁定
 （kotlin、rust、dart、ts、swift）。
 
@@ -893,7 +906,7 @@ C2 跨文件或跨目标，同一缺陷出现在多个目标，或需要 tiqian 
 |---|---|---|---|---|
 | K1 | 修复面 A：only safe 类计数 | f32 75 / f64 75 | 0 | #22 执行中 |
 | K2 | 各目标逐类判定完成度 | kotlin 已判定 2 / 39 类；swift 2 / 2 类；rust 2 / 15 类；ts 已判定 1 / 19 类（另有 TS2341 类内 10 条已判定）；dart 已判定 2 / 35 类 | 五目标全部类有判定结论 | T-attr、F4c、T-ts、T-dart |
-| K3 | 各目标错误总数 | kotlin f32 1183 / f64 1201；rust 181；swift 8；ts 1127（引擎侧 819）；dart 2931 | 全部 0 | 各节逐类表求和（完整性数字，非派发单位） |
+| K3 | 各目标错误总数 | kotlin f32 1183 / f64 1201；rust 180（boring `75b08ed2` 复测）；swift 8；ts 1127（引擎侧 819）；dart 2931 | 全部 0 | 各节逐类表求和（完整性数字，非派发单位） |
 | K4 | kotlin 两个目录 warning 计数 | 0 / 0 | 保持 0 | 每次复测 |
 | K5 | 各目标重生成退出码 | kotlin 0、kotlin-f64 0、rust 0、swift 0（自 boring `2c9257d`）、ts 0（自 boring `de11c06a`）、dart 0（自 boring `31627b5c`） | 全部 0 | F0l 与逐处重跑（已完成） |
 | K6 | boring 验收命令 | 全部通过（2026-09-06 合并 `f9f26726` 与 `31627b5c` 后 19 项检查退出码全部为 0；合并后 boring main 的 bun test 为 672 pass / 3 fail，三个既有名目） | 每次合并后保持 | 不适用 |
@@ -1073,6 +1086,7 @@ C2 跨文件或跨目标，同一缺陷出现在多个目标，或需要 tiqian 
 | 2026-09-06 | getter 属性读四目标调用点修复（修复任务 getprop） | boring `5628b4d`（合并 `f9f26726`，已推送） | 一致性检查 342 个测试六目标一致（含新增的 PublicGetterPropertyTests） | 19 项验收检查退出码全部为 0 |
 | 2026-09-06 | ts 首次编译普查（F4b 的 ts 半项）；swift 与 ts 并入 KPI；文档条目全量列举与格式统一 | 本文档第 1、2.2、3.4、4、7 至 11 节 | ts 1127 条、19 类，求和校验相等；测量环境 308 条、引擎侧 819 条；dart 第一处更新为 Units.hx 静态重名（F0l） | 不适用 |
 | 2026-09-06 | F0l dart 静态成员顶层重名修复（修复任务 dartic）与 dart 首次编译普查（F4b dart 半项）；dart 并入 KPI | boring `189e01ad`（合并 `31627b5c`，已推送） | dart 生成退出码 0；dart analyze 报 2931 条、35 类，求和校验相等；无测量环境条目 | 19 项验收检查在修复工树与合并工树各全部退出码 0；合并后 bun test 672 pass / 3 fail（三个既有名目） |
+| 2026-09-06 | rust 普查复测（基线推进到 boring `75b08ed2`）；补两条 rust 测量错误记录 | 本文档第 2.2、2.3、6 节 | rust 180 条、15 类，求和校验相等；相对 4b1fec9 首测的 181 条少一条保留字转义类（`type` 6 处降 5 处）；浮点字面量类 124 条不变 | 不适用 |
 
 ## 13 已完成并合入的修复（背景）
 
