@@ -34,7 +34,7 @@ f32 与 swift tests 两侧为本次首测。kotlin f32 696 条 / f64 717 条（�
   与计数，不设「前 N 位」的截断，也不设把多个名字合并成一行的聚合行
   （2026-09-06 用户裁定：条目折叠省略会让工作量检验失真）。
 - 修复项与 KPI 的切分必须反映修复工作量：每条修复项写明它覆盖的错误类、
-  类内条目与计数，KPI 的现值写各目标逐类表的实测计数；不把多个修复面合并
+  类内条目与计数，KPI 的现值写各目标逐类表的实测计数；不把多个修复位置合并
   成一个指标（2026-09-06 用户裁定）。
 - 每次修复合入 boring main 后就重测受影响目标的目录：只要计数相对上一
   基线下降，立即更新对应逐类表与第 10 节 KPI 现值，并向用户交前后对照表；
@@ -299,12 +299,12 @@ cat /tmp/dartic-census-gen.log /tmp/dartic-census-tests.log | awk -F'|' '/^ERROR
 ### 3.2 逐类全表（2026-09-07 基线；f32 32 类、f64 35 类非零，合并 35 行）
 
 「判定」列的含义：一个错误类的修复位置（boring 生成器的机制位置，或
-tiqian 源的一类写法）已经探针证实时，记修复面；只有猜测记「假设」；都没有
+tiqian 源的一类写法）已经探针证实时，记修复位置；只有猜测记「假设」；都没有
 记「未判定」。判定的方法见 T-attr（第 11 节第 1 组）：对类内抽样错误点读
 生成代码后定性。假设不构成派发依据，证实后才开修复项。本轮新增一档
 「形状证实」：探针读过该类抽样错误点的生成代码、确认错误落在生成形状上，
-但还没有把生成器机制定位到文件与分支；它的可信度高于假设、低于修复面，
-不单独构成派发依据。本文用到两个修复面名：修复面 A 指可空接收者上方法调用
+但还没有把生成器机制定位到文件与分支；它的可信度高于假设、低于修复位置，
+不单独构成派发依据。本文用到两个修复位置名：修复位置 A 指可空接收者上方法调用
 的生成机制；数值转换面指数值类型互转的生成机制。
 
 判定来源：T-attr r1 报告 /tmp/dispatch-state/tiqian-tattr-r1.report.md（基线
@@ -313,7 +313,10 @@ boring `4b1fec9`，抽样形状）；T-attr r2 报告
 unresolved reference 相关的十七类全量判定，覆盖 111 个符号 Σ=366；本次基线实测 112 个
 符号 Σ=368，两个符号的计数差异原因未逐条查明，类归属按符号名沿用该报告）；
 f64only r1 报告 /home/losses/Development/tiqian-f64only/F64ONLY-REPORT.md
-（f64 独有类的根本原因定位）。r1 报告的逐类「修复面位置」段是同一份七条引用的
+（f64 独有类的根本原因定位）；T-attr r3 报告
+/tmp/dispatch-state/boring-tattr3-r1.report.md（基线 boring `e01b03b3`，
+十四类形状证实的机制定位与假设检验，报告引用的生成器行号由派发方在
+e01b03b3 检出逐处复核）。r1 报告的逐类「修复位置位置」段是同一份七条引用的
 重复粘贴，不构成逐类定位，本文不采信其定位、只采信其抽样形状；数值转换面
 （KotlinExpr.hx:2806-2820 的 renderCallArgs 只在实参位插入转换）与 getter
 降级可见性（`5628b4d` 生成 `private override`）两处机制由派发方在 4b1fec9
@@ -321,39 +324,39 @@ f64only r1 报告 /home/losses/Development/tiqian-f64only/F64ONLY-REPORT.md
 
 | 错误消息类（骨架） | f32 | f64 | 判定与处置 |
 |---|---:|---:|---|
-| unresolved reference 'X'. | 365 | 358 | 修复面已全量判定（tattr2 r2 十七类，符号到类的归属见 3.4；本行是主类计数，operator 形 3 条单列在 unresolved reference for operator 行）；修复任务 knamefix-r2（#23）由用户派出，不由本会话验收 |
+| unresolved reference 'X'. | 365 | 358 | 修复位置已全量判定（tattr2 r2 十七类，符号到类的归属见 3.4；本行是主类计数，operator 形 3 条单列在 unresolved reference for operator 行）；修复任务 knamefix-r2（#23）由用户派出，不由本会话验收 |
 | argument type mismatch: actual type is 'X', but 'X' was expected. | 135 | 144 | 形状分解见 3.3；Int 给浮点 6/13 与 Long 给浮点 0/2 是 F3j 残余；可空 82、Number 装箱 14、其余 33 待证（knulljud r1 只交付了按错误类汇总的预览计数，逐形状判定未并入本表） |
-| cannot infer type for type parameter 'X'. Specify it explicitly. | 42 | 42 | 假设（T-attr 抽样集中在 run 块与长实参表，未定位统一推断机制）；随下一轮判定 |
+| cannot infer type for type parameter 'X'. Specify it explicitly. | 42 | 42 | 假设部分否证（tattr3 r1）：原「run 块与长实参表统一机制」假设不成立；42 条中相当部分是 unresolved `copy` 与字段错误在同一函数内的连锁（每行字段访问带一条 cannot infer），连锁部分随 F3ag 消除；独立子集集中在实参含泛型或函数值的调用（`SortedTable.mapBuilder(…)`、26 参构造，与 F3x 方法值行相关），待独立轮逐点归面；tattr3 r1 列入剩余范围的逐点判定未完成 |
 | return type mismatch: expected 'X', actual 'X'. | 17 | 17 | F3j 残余（knumconv-r3 合并 `7b3135a1` 后由 28/28 降 17/17）；剩余 17 条未再抽样判定 |
-| too many arguments for 'X'. | 14 | 14 | 形状证实：std 影子数组的 indexOf 带了 null 第二实参（CoreBoundaryTest.kt:58 `indexOf(3, null)` 实测）；机制位置待定位 |
-| conflicting declarations: | 13 | 13 | 形状证实：循环外提升的临时名 `_g` 在同一函数体重复声明（PreparedParagraphJfTest.kt:116 与 :126 实测）；机制位置待定位 |
-| type mismatch: inferred type is 'X', but 'X' was expected. | 11 | 11 | 假设（T-attr 抽样含异常第二代嵌套类引用 LayoutQueries.kt:390 `TiqianNoSuchElementException.Message`，疑与 #37 异常子类是同一机制）；待证 |
-| none of the following candidates is applicable: | 11 | 11 | 假设（T-attr 抽样为构造实参 Float 与 Number 混型、复合赋值两形混杂）；由 18/18 降 11/11 的原因没有查明；待证 |
-| 'X' modifier is required on 'X'. | 9 | 10 | 假设：Number 装箱值走比较运算触发（Justifier.kt:85 `d > 0` 实测，d 为 Number 装箱）；f64 由 12 降 10 的原因没有查明；待证 |
-| function invocation 'X' expected. | 8 | 8 | 形状证实：方法名作值使用时没有带调用括号（ContextualQuoteRoleResolverNestedAndSurrogateTest.kt:84 读 `surrogateText` 实测）；机制位置待定位 |
+| too many arguments for 'X'. | 14 | 14 | 修复位置（tattr3 r1）：typer 为 std 影子数组 indexOf 的可选 ?fromIndex 合成 null 实参，String 接收者有专支丢弃该参（KotlinExpr.hx:2910-2911），List/Array 接收者走通用实例调用分支 :2973，renderCallArgs :3052-3071 只在 DefaultArgExpander 注册过默认值时替换 null，std Array.indexOf 未注册 → `indexOf(f, null)`（PreparedParagraph.kt:50、CoreBoundaryTest.kt:58 实测）。F3v |
+| conflicting declarations: | 13 | 13 | 修复位置（tattr3 r1）：typer 把数组推导 `[for …]` 展开成构建器局部 `_g`，kotlin 目标 Compiler.hx:72 的 `preventRepeatVars: false` 关闭 reflaxe 的 RepeatVariableFixer，KotlinExpr.hx localName :3299-3306 对这类展开名原样输出不做兄弟去重（只对 `` ` `` 与 `_` 生成避让名）→ 同函数两个 `val _g`（PreparedParagraphJfTest.kt:116 与 :126、LayoutQueries.kt:588 起实测；tattr3 r1 加临时 trace 实验证实展开名到达生成器，实验改动已还原）。F3w |
+| type mismatch: inferred type is 'X', but 'X' was expected. | 11 | 11 | 假设（T-attr 抽样含异常第二代嵌套类引用 LayoutQueries.kt:390 `TiqianNoSuchElementException.Message`，疑与 #37 异常子类是同一机制）；tattr3 r1 列入剩余范围，逐点判定未完成；待证 |
+| none of the following candidates is applicable: | 11 | 11 | 探针定位待因果验证（tattr3 r1）：`+` 两侧为 `Number & Comparable<…>` 装箱与具体 Float 时 kotlinc 列出全部候选（PunctuationGeometryLedger.kt:36、:40、:43 实测；机制位置 KotlinExpr.hx binopCore :1996 起）；与 unresolved for operator、modifier required 两行同源（装箱值仍是 Number，没有转换成具体数值类型），随 #23；由 18/18 降 11/11 的原因没有查明 |
+| 'X' modifier is required on 'X'. | 9 | 10 | 探针定位待因果验证（tattr3 r1）：Number 装箱值参与比较运算，kotlinc 要求 compareTo 的 operator 修饰（Justifier.kt:85 `d > 0` 实测，d 为装箱）；与 unresolved for operator、none of candidates 两行同源（装箱值仍是 Number，没有转换成具体数值类型），随 #23；f64 由 12 降 10 的原因没有查明 |
+| function invocation 'X' expected. | 8 | 8 | 修复位置（tattr3 r1）：静态方法作值使用时 KotlinExpr.hx field() 的 FStatic 分支 :2184-2187 经 staticRef 返回 `Class.method` 文本，函数类型位置需要 callable reference `Class::method` 或 lambda 包装（ContextualQuoteRoleResolverNestedAndSurrogateTest.kt:84 `Support.surrogateText`、ParseTexHyphenationPatterns.kt:55 `SortedTable.compareStrings` 实测）；8 条中 1 条（`range()`）是 Array.copy 未降级产生的连锁错误（见 ambiguous 行）。F3x |
 | assignment type mismatch: actual type is 'X', but 'X' was expected. | 6 | 10 | F3j 数值形状已修（19/23 降 6/10）；剩余条目待按可空形状再判 |
-| operator call is prohibited on a nullable receiver of type 'X'. Use 'X'-qualified call instead. | 6 | 6 | 修复面 A 残余（knullinit 系列合并 `23f4bf63` 后由 60/60 降 6/6）；#22 残余 |
-| no 'X' operator method providing array access. | 6 | 6 | 形状证实：数组 set 访问器渲染（PreparedParagraph.kt:1726 `a[i] = …` 实测）；机制位置待定位 |
-| 'X' is prohibited here. | 5 | 5 | 形状证实：return 语句被生成到不可用位置（BilingualEmphasisTest.kt:16 实测）；机制位置待定位 |
-| jvmField has no effect on a private property. | 5 | 5 | 形状证实：@JvmField 注解在私有属性上无条件生成（PreparedParagraph.kt:25 实测）；机制位置待定位 |
-| 'X' expression must be exhaustive. Add the 'X', 'X'… branches or an 'X' branch. | 4 | 4 | 形状证实：枚举 when 缺少未列构造器的臂（FontMetrics.kt:15 缺 CjkPunctuation、Emoji、Unknown 实测）；机制位置待定位 |
-| the feature "collection literals" is experimental and should be enabled explicitly. This can be done by supplying the compiler argument 'X', but note that no stability guarantees are provided. | 4 | 4 | 新出现的类（r4 基线没有此类）；未判定 |
-| the expression cannot be a selector (cannot occur after a dot). | 4 | 5 | r4 时为 f64 独有 1 条，本次两精度共有（f64 升 5 的原因没有查明）；未判定 |
-| receiver type 'X' contains star projection which prohibits the use of 'X'. | 4 | 4 | 假设：Number 装箱（LineRepair.kt:198 `shrink > 0` 实测，shrink 为 Number 装箱）；由 6/6 降 4/4 的原因没有查明；待证 |
-| array literals outside of annotations are unsupported. | 4 | 4 | 新出现的类（r4 基线没有此类）；未判定 |
-| variable 'X' must be initialized. | 3 | 3 | 形状证实：var 声明无初始化器、分支赋值后读取（FontMetrics.kt:21 实测）；机制位置待定位 |
-| unresolved reference 'X' for operator 'X'. | 3 | 3 | 形状证实：可空算术混型（PunctuationGeometryLedger.kt:36 实测）；与 unresolved 主类同随 #23 |
-| only safe (?.) or non-null asserted (!!.) calls are allowed on a nullable receiver of type 'X'. | 3 | 3 | 修复面 A 残余（knullinit 系列合并 `23f4bf63` 后由 75/75 降 3/3）；#22 残余 |
-| cannot access 'X': it is private in 'X'. | 3 | 3 | 形状证实：私有成员跨作用域访问（emptyHanging 于 LineOptimizationCoverageTest.kt:151、codePointLengthAt 与 strongScriptRole 于 ContextualQuoteRoleResolver.kt:293 起实测；kgetvis 合并 `ad0990e2` 后由 27/27 降 3/3，这 3 条是该修复判据写明的残余基数）；机制位置待定位 |
-| 'X' hides member of supertype 'X' and needs an 'X' modifier. | 2 | 2 | 形状证实：dataClass 生成的 hashCode 覆写缺 override 修饰（BopomofoReading.kt:15 实测）；机制位置待定位 |
-| redeclaration: | 2 | 2 | 形状证实：两个外层类各自生成同名嵌套类 Resolution（ContextualDashEllipsisRoleResolver.kt:241 与 ContextualQuoteRoleResolver.kt:311 实测）；机制位置待定位 |
+| operator call is prohibited on a nullable receiver of type 'X'. Use 'X'-qualified call instead. | 6 | 6 | 修复位置 A 残余（knullinit 系列合并 `23f4bf63` 后由 60/60 降 6/6）；#22 残余 |
+| no 'X' operator method providing array access. | 6 | 6 | 修复位置（tattr3 r1）：set 形 4 条为 `split` 走通用实例调用分支 KotlinExpr.hx:2973 产出只读 `List`，随后下标写 `a[i] = …` 无 set（PreparedParagraph.kt:1726/1729/1741/1745）；get 形 2 条为 stringBufMutationLines :698 以文本拼接 `part + "[0].code"` 取首字符，part 为 `"" + values[i]` 时 `[0]` 绑到 `values[i]`（TracedAssertions.kt:116）。F3y |
+| 'X' is prohibited here. | 5 | 5 | 修复位置（tattr3 r1）：KotlinDecl.hx testFuncDecl :1152-1177 把测试函数体包进非 inline 的 `Test.run { … }` lambda，KotlinExpr.hx stmtLines 的无实参 TReturn 分支 :557 输出不带标签的 `return`，该位置禁止（BilingualEmphasisTest.kt:16、BopomofoLayoutTest.kt:24/96/118 实测）。F3z |
+| jvmField has no effect on a private property. | 5 | 5 | 修复位置（tattr3 r1）：KotlinDecl.hx objectVarDecl :1009 对一切非 final 静态字段无条件生成 `@JvmField`，未排除 private（PreparedParagraph.kt:25/27/29/31、EnglishHyphenation.kt:4 实测）。F3aa |
+| 'X' expression must be exhaustive. Add the 'X', 'X'… branches or an 'X' branch. | 4 | 4 | 修复位置（tattr3 r1）：Haxe typer 把 `case A | B:` 归并为一个 case 多值，KotlinExpr.hx switchExpression :1345-1349 只渲染 `c.values[0]`，其余值丢弃 → when 缺臂（FontMetrics.kt:15、ParagraphLayoutEngine.kt:158 实测；tattr3 r1 用 `-D dump=pretty` 实验证实归并形状）。F3ab |
+| the feature "collection literals" is experimental and should be enabled explicitly. This can be done by supplying the compiler argument 'X', but note that no stability guarantees are provided. | 4 | 4 | 未判定；tattr3 r1 观察到本类与 array literals、selector 两类在同表达式重叠（RubyLayoutTest.kt:27 一条表达式同时报三码），逐点判定列入剩余范围 |
+| the expression cannot be a selector (cannot occur after a dot). | 4 | 5 | 未判定；与 collection literals 行同表达式重叠（见该行）；r4 时为 f64 独有 1 条，本次两精度共有（f64 升 5 的原因没有查明） |
+| receiver type 'X' contains star projection which prohibits the use of 'X'. | 4 | 4 | 假设：Number 装箱，疑与 none of candidates 行同一根本原因（LineRepair.kt:198 `shrink > 0` 实测，shrink 为装箱；tattr3 r1 未逐点验证）；由 6/6 降 4/4 的原因没有查明；待证 |
+| array literals outside of annotations are unsupported. | 4 | 4 | 未判定；与 collection literals 行同表达式重叠（见该行）；r4 基线没有此类 |
+| variable 'X' must be initialized. | 3 | 3 | 修复位置（tattr3 r1）：与 exhaustive 行同一机制（switchExpression 丢分组值）的连锁报错，分支缺臂路径无赋值，definite-assignment 无法证明初始化（FontMetrics.kt:21/52、ParagraphLayoutEngine.kt:164 实测）。F3ab |
+| unresolved reference 'X' for operator 'X'. | 3 | 3 | 探针定位待因果验证（tattr3 r1）：SortedMapTable get 返回的 `Number` 装箱值参与 `-` 运算，`!!` 后仍为 Number（PunctuationGeometryLedger.kt:36 实测；机制位置 KotlinExpr.hx binopCore :1996 起）；与 none of candidates、modifier required 两行同源（装箱值仍是 Number，没有转换成具体数值类型），随 #23 |
+| only safe (?.) or non-null asserted (!!.) calls are allowed on a nullable receiver of type 'X'. | 3 | 3 | 修复位置 A 残余（knullinit 系列合并 `23f4bf63` 后由 75/75 降 3/3）；#22 残余 |
+| cannot access 'X': it is private in 'X'. | 3 | 3 | 修复位置（tattr3 r1）：kgetvis 合并 `ad0990e2` 后的残余 3 条，机制为 KotlinDecl.hx funcDecl :1103 与 objectVarDecl :1008 的可见性选择只把 `:allow` 转 internal，Haxe 的 `@:access` 授权与同模块文件私有跨类访问无映射（emptyHanging 于 LineOptimizationCoverageTest.kt:151、`@:access` 的 codePointLengthAt 与 strongScriptRole 于 ContextualQuoteRoleResolver.kt:293 起实测）。F3af |
+| 'X' hides member of supertype 'X' and needs an 'X' modifier. | 2 | 2 | 修复位置（tattr3 r1）：KotlinDecl.hx funcDecl :1095-1099 的 overridesAny 只认零参 toString，手写 `hashCode` 与异常载荷 `message` 不在内（BopomofoReading.hx:27 手写 `public function hashCode():Int` 于 @:dataClass 类、TraceAssertionException 载荷 `val message` 与 sealedExceptionDecl :603-604 基类 `override val message` 冲突实测；早把本类记成 dataClass 合成 hashCode 缺 override 不属实，已更正）。F3ac |
+| redeclaration: | 2 | 2 | 修复位置（tattr3 r1）：tiqian 两个模块各有一个 Haxe 文件私有类 `private class Resolution`（ContextualQuoteRoleResolver.hx:316、ContextualDashEllipsisRoleResolver.hx:223），KotlinDecl.hx classDecl :207 无条件生成 top-level `class`，同 package 冲突（ContextualDashEllipsisRoleResolver.kt:241 与 ContextualQuoteRoleResolver.kt:311 实测；早把本类记成嵌套类冲突不属实，已更正）。F3ad |
 | operator 'X' cannot be applied to 'X' and 'X'. | 2 | 2 | F3j 残余（knumconv-r3 合并 `7b3135a1` 后由 35/32 降 2/2） |
-| 'X' cannot be a callee. | 1 | 1 | 修复面为 KotlinDecl 异常子类第二代的生成规则：super 调用被放进 init 块（IllegalStateException.kt:5:5，该类计数 1 即全部样本）；与 #37 同构造不同目标，修复项在 #37 完成后按修复面开列 |
+| 'X' cannot be a callee. | 1 | 1 | 修复位置为 KotlinDecl 异常子类第二代的生成规则：super 调用被放进 init 块（IllegalStateException.kt:5:5，该类计数 1 即全部样本）；与 #37 同构造不同目标，修复项在 #37 完成后按修复位置开列 |
 | this declaration needs opt-in. Its usage must be marked with 'X' or 'X' | 1 | 1 | 测量环境（kotlinc 2.4.10 对实验性标准库 API 的 opt-in 要求，LineRepair.kt:114；可用编译器参数消除，不派修复） |
-| names _, __, ___, ... are reserved in Kotlin. | 1 | 1 | 形状证实：下划线参数名直接输出（UnicodePunctuationBoundaryTestSupport.kt:118 `resolve(_: LayoutProfileId)` 实测）；机制位置待定位 |
-| method 'X' is ambiguous for this expression. Applicable candidates: | 1 | 1 | 形状证实：for-in 迭代候选二义（LineRepair.kt:160 实测）；机制位置待定位 |
-| condition type mismatch: inferred type is 'X' but 'X' was expected. | 1 | 1 | 假设：修复面 A 延伸（可空 Boolean 作条件，PunctuationGeometryLedgerCoverageTest.kt:46 实测）；由 2/2 降 1/1 的原因没有查明 |
-| Expecting an element. | 0 | 9 | 修复面已判定为 kotlin f64 浮点字面量尾点（f64only r1：KotlinExpr.hx 的 `defaultArgText` 约 158 行、`coalescingDefaultText` 约 170 行、`expr` 的 TFloat 分支约 1029 行三条 f64 路径都返回没有补数字的字符串，`0.` 形字面量破坏解析并连带产生本类与 both main 类）；修复在修复任务 knamefix-r2（#23）范围内 |
+| names _, __, ___, ... are reserved in Kotlin. | 1 | 1 | 修复位置（tattr3 r1）：KotlinDecl.hx parameterText :873 与 lambda 参数渲染只调 KotlinNameEscape.escape（:42-43，只给关键字加反引号），`_` 参数名原样输出（UnicodePunctuationBoundaryTestSupport.kt:118 `resolve(_: LayoutProfileId)` 实测）；函数体局部的 `_` 已有生成名路径（localName :3304），参数位没有。F3ae |
+| method 'X' is ambiguous for this expression. Applicable candidates: | 1 | 1 | 形状记录（连锁伪影，tattr3 r1）：根本原因是 LineRepair.kt:38 `initial.copy()` 的 unresolved（Haxe Array.copy 无 Kotlin 降级，走通用实例调用 :2973 产出 List 上不存在的 copy），同函数 :41-158 的错误与 :160 的迭代候选二义全为连锁错误，无独立机制。F3ag |
+| condition type mismatch: inferred type is 'X' but 'X' was expected. | 1 | 1 | 假设：修复位置 A 延伸（可空 Boolean 作条件，PunctuationGeometryLedgerCoverageTest.kt:46 实测）；由 2/2 降 1/1 的原因没有查明 |
+| Expecting an element. | 0 | 9 | 修复位置已判定为 kotlin f64 浮点字面量尾点（f64only r1：KotlinExpr.hx 的 `defaultArgText` 约 158 行、`coalescingDefaultText` 约 170 行、`expr` 的 TFloat 分支约 1029 行三条 f64 路径都返回没有补数字的字符串，`0.` 形字面量破坏解析并连带产生本类与 both main 类）；修复在修复任务 knamefix-r2（#23）范围内 |
 | 'X' must have both main and 'X' branches when used as an expression. | 0 | 2 | 同上一行（f64only r1 判定为同一根本原因的连锁错误） |
 | initializer type mismatch: expected 'X', actual 'X'. | 0 | 2 | F3j 残余（knumconv-r3 合并后 f32 侧降为 0、f64 侧余 2） |
 | 合计（求和校验） | 696 | 717 | 与 3.1 节总数相等 |
@@ -362,22 +365,26 @@ cannot weaken（7/7，kgetvis）、smart cast（1/1）、for-loop non-nullable
 （1/1）、infix（1/1）、classifier companion（1/1）；后四类降为 0 的提交未逐项
 核对，它们发生在 boring `4b1fec9` 至 `e01b03b3` 之间的合并内。
 
-判定进度小结（2026-09-07 基线，tattr2 r2 与 f64only r1 并入后）：修复面已判
-且仍存活 9 类（unresolved 全类经 tattr2 r2 十七类判定；return、assignment、
-initializer、operator applied 四类与 argument 类内 Int 给浮点、Long 给浮点
-两形状是 F3j 残余；only safe 与 operator call prohibited 是修复面 A 残余；
-cannot be a callee 随 #37）；测量环境 1 类（opt-in）；形状证实 14 类（too
-many、conflicting、function invocation、no operator array access、
-prohibited here、jvmField、exhaustive、variable must be initialized、
-unresolved for operator、hides member、redeclaration、reserved、ambiguous、
-cannot access；机制位置待定位，不单独构成派发依据）；假设 6 类（cannot
-infer、none of candidates、modifier required、type mismatch inferred、star
-projection、condition）；未判定 3 类（collection literals、array literals、
-selector，均为本次新出现或新两精度化的类）；f64 独有已判 2 类（Expecting
-an element、both main，f64only r1 判为同一根本原因的连锁错误）。9 加 1 加
-14 加 6 加 3 加 2 等于 35，与合并行数相等。kotlin 侧剩余的判定工作是给
-14 类形状证实定位机制位置、证实或否证 6 类假设、判定 3 个未判定类、把
-argument 类内可空与 Number 装箱形状归到修复面。
+判定进度小结（2026-09-07 基线，tattr3 r1 并入后）：修复位置 21 类（unresolved
+全类经 tattr2 r2 十七类判定；return、assignment、initializer、operator
+applied 四类与 argument 类内 Int 给浮点、Long 给浮点两形状是 F3j 残余；
+only safe 与 operator call prohibited 是修复位置 A 残余；cannot be a callee
+随 #37；tattr3 r1 把 too many、conflicting、function invocation、no operator
+array access、prohibited here、jvmField、exhaustive、variable must be
+initialized、hides member、redeclaration、reserved、cannot access 十二类升为
+修复位置，修复项 F3v 至 F3ag 开列）；探针定位待因果验证 3 类（unresolved for
+operator、none of candidates、modifier required，tattr3 r1 判为同一根本
+原因：装箱值仍是 Number、没有转换成具体数值类型，随 #23）；形状记录
+（连锁伪影）1 类（ambiguous，根本原因是 Haxe
+Array.copy 无 Kotlin 降级，修复项 F3ag）；测量环境 1 类（opt-in）；假设
+4 类（cannot infer 部分否证、type mismatch inferred、star projection、
+condition）；未判定 3 类（collection literals、array literals、selector，
+三码同表达式重叠）；f64 独有已判 2 类（Expecting an element、both main，
+f64only r1 判为同一根本原因的连锁错误）。21 加 3 加 1 加 1 加 4 加 3 加 2
+等于 35，与合并行数相等。kotlin 侧剩余的判定工作是给 3 类探针定位补因果
+链（随 #23 修复时验证）、逐点判定假设 4 类与未判定 3 类、把 argument 类内
+可空 82、Number 装箱 14、其余 33 归到修复位置、F3ag 合入后重数 cannot infer
+的连锁部分。
 
 ### 3.3 argument type mismatch 形状分解
 
@@ -385,7 +392,7 @@ argument 类内可空与 Number 装箱形状归到修复面。
 
 | 形状 | f32 | f64 | 判定 |
 |---|---:|---:|---|
-| 可空给非空（actual 类型以 ? 结尾，expected 非空） | 82 | 82 | 假设：疑与修复面 A 同源；knulljud r1 对 null 相关错误类的判定报告只预览了按类汇总的计数、未逐形状并入，待并入后再判 |
+| 可空给非空（actual 类型以 ? 结尾，expected 非空） | 82 | 82 | 假设：疑与修复位置 A 同源；knulljud r1 对 null 相关错误类的判定报告只预览了按类汇总的计数、未逐形状并入，待并入后再判 |
 | 其余转换 | 33 | 33 | 未判定；随下一轮判定 |
 | Number 装箱给浮点 | 14 | 14 | 假设：T-attr 抽样为可空两臂条件表达式（FontPolicyCoverageTest.kt:125 实测），装箱路径未定位；待证 |
 | Int 给浮点 | 6 | 13 | F3j 残余（knumconv-r3 合并 `7b3135a1` 后由 80/88 降至此）；FontPolicyCoverageTest.kt:243 里 `(13).toFloat()` 与未经转换的 `0` 并存是原始形状 |
@@ -424,7 +431,7 @@ mismatch 这一个类内部的形状分类，下次分解出现新的成批形�
 | 1 compareAutoSpacePolicy | 1 compareAutoSpaceDecisionInfo | 1 compareAdjustmentStylePolicy | 1 charCodeAt | 1 char | 1 bodyWidth |
 | 1 anchor | 1 advanceExpansion | 1 advance | 1 add |  |  |
 
-f64 侧原始 361 行（主类 358 加 operator 形 3）未逐符号列举。符号到修复面的
+f64 侧原始 361 行（主类 358 加 operator 形 3）未逐符号列举。符号到修复位置的
 归属按 tattr2 r2 的十七类判定（报告
 /tmp/dispatch-state/boring-tattr2-r2.report.md）：strategyName 32 属类 1
 接口 getter 属性未生成；kind 37 属类 2 dataClass 默认值引用兄弟参数；
@@ -433,7 +440,11 @@ compareTo 9 属类 5 comparator 缺 nullable 分支；clusterRange 24、endReaso
 10、sourceRange 5、region 5、adjustedWidth 5、trailingGlue 4、naturalWidth
 4、lineIndex 4、hangingClusterIndices 4 九个属性名属类 6 属性访问位的连锁错误；
 compareXxx 长尾属类 17 顶层函数跨文件 import 未登记与未生成；pow 2 与
-NodeFileSystem 2 尚待因果验证（报告内类 14 与类 15）。类 6、类 16、类 17
+NodeFileSystem 2 的因果结论由 tattr3 r1 的结束消息给出（该轮报告文件
+仍记为未定位，机制锚点未存档，随 #23 修复时验证）：pow 2 条只在 f32 侧，
+幂运算被降成自由函数调用形，Kotlin 没有 `kotlin.math.pow` 自由函数，f64
+侧走 `Math.pow` 不触发；NodeFileSystem 2 条为 `@:jsRequire` extern 在
+Kotlin 目标没有宿主边处理被丢弃。类 6、类 16、类 17
 共享同一根本原因 canEmitDataClassComparator。修复随修复任务 knamefix-r2（#23），
 不按符号名另行分组派发。
 
@@ -470,7 +481,7 @@ tests 侧（每精度 57 条）。判定来源为 tswift1 r1 报告
 | 错误消息类（骨架） | 条数 | 判定与处置 |
 |---|---:|---|
 | cannot find 'X' in scope | 32 | 消费侧配置：tests 树文件没有 import 头（tiqian 的 targets/swift-common.hxml 未定义 `-D swift-test-import`，boring 合同见 examples/swift.hxml:20 与 Compiler.hx fileContent 的头部条件 :422-425），且支撑类 TracedAssertions 与 TestTraceRecorder 实际生成在 gen 树 org/tiqian/test/trace/，tests 树单独 typecheck 必然找不到；合并测量下这类错误数为 0。F3u |
-| static methods may only be declared on a type | 13 | 修复面：swift 生成器把语句体闭包字面量直接嵌进外层字符串插值段（ExplainableStubParagraphLayoutEngineTest.swift:69 实测：Haxe 源的 UString.slice 调用被降级成 `let from`/`let to` 多语句闭包后原样拼进 `\(...)` 段；SwiftExpr.hx stdStringType 的 IsArray/IsSortedSet/IsSortedMap 三个分支在 e01b03b3 :1824-1836 也生成同类 `{ () -> String in … }()` 闭包，是同一修复面的第二条触发路径）；解析器脱离 enum 作用域后，:106 起的 13 个 public static func 变成顶层声明。源头 Haxe 源 ExplainableStubParagraphLayoutEngineTest.hx:63-104 的字符串拼接。F3t |
+| static methods may only be declared on a type | 13 | 修复位置：swift 生成器把语句体闭包字面量直接嵌进外层字符串插值段（ExplainableStubParagraphLayoutEngineTest.swift:69 实测：Haxe 源的 UString.slice 调用被降级成 `let from`/`let to` 多语句闭包后原样拼进 `\(...)` 段；SwiftExpr.hx stdStringType 的 IsArray/IsSortedSet/IsSortedMap 三个分支在 e01b03b3 :1824-1836 也生成同类 `{ () -> String in … }()` 闭包，是同一修复位置的第二条触发路径）；解析器脱离 enum 作用域后，:106 起的 13 个 public static func 变成顶层声明。源头 Haxe 源 ExplainableStubParagraphLayoutEngineTest.hx:63-104 的字符串拼接。F3t |
 | 'X' requires a contextual type | 9 | 消费侧配置连锁：被调方不可见时字面 nil 无上下文类型（BopomofoParserTest.swift 断言调用的第三实参）；合并测量下这类错误数为 0。随 F3u |
 | unterminated string literal | 1 | F3t（同一连锁的词法症状，:69:20） |
 | extraneous 'X' at top level | 1 | F3t（enum 被提前关闭后末尾 } 变多余，:315:1） |
@@ -506,20 +517,20 @@ boring `75b08ed2` 复测 180 条；rustflit 修掉浮点字面量类 124 条（�
 `e01b03b3` 之间的哪些合并未逐笔核对（我还没有验证）。剩余 7 类已由
 rustf4c r2 判定探针全部归到 rust 生成器（报告
 /tmp/dispatch-state/boring-rustf4c-r2.report.md），修复项 F3n 至 F3s
-按修复面开列。
+按修复位置开列。
 
 | 错误消息类（骨架） | 计数 | 判定与处置 |
 |---|---:|---|
-| expected one of `X`, `X`…, or an operator, found `X`（match 臂语句位） | 10 | 修复面为 rust 生成器 switch 臂渲染把臂模式前置于语句（RustExpr.hx 的 switch 分支约 2600-2690；layout_queries.rs:379、383、387 与 annotation_geometry_stage.rs:483、487、491、496、539、552、557）；F3n |
-| [E] the name `X` is defined multiple times（INSTANCE） | 4 | 修复面为 rust 静态成员生成在单文件多类布局下重名（RustDecl.hx 的 static 约 1000-1250 与 impl 约 2000 起；rich_text_role.rs:36、62、120、146 四处 `pub static INSTANCE`）；F3o |
-| expected identifier, found `X`（分号位） | 2 | 修复面为标识符转换产出空标识符（RustImports 的 toSnakeCase 返回空名；display_glyph_substitution_engine_test_support.rs:12:56 与 text_shaper.rs:4:56）；F3p |
+| expected one of `X`, `X`…, or an operator, found `X`（match 臂语句位） | 10 | 修复位置为 rust 生成器 switch 臂渲染把臂模式前置于语句（RustExpr.hx 的 switch 分支约 2600-2690；layout_queries.rs:379、383、387 与 annotation_geometry_stage.rs:483、487、491、496、539、552、557）；F3n |
+| [E] the name `X` is defined multiple times（INSTANCE） | 4 | 修复位置为 rust 静态成员生成在单文件多类布局下重名（RustDecl.hx 的 static 约 1000-1250 与 impl 约 2000 起；rich_text_role.rs:36、62、120、146 四处 `pub static INSTANCE`）；F3o |
+| expected identifier, found `X`（分号位） | 2 | 修复位置为标识符转换产出空标识符（RustImports 的 toSnakeCase 返回空名；display_glyph_substitution_engine_test_support.rs:12:56 与 text_shaper.rs:4:56）；F3p |
 | expected one of `X`, `X`…, or an operator, found `X`（layout_debug_assembly 形） | 1 | 与 match 臂语句位同一根本原因（layout_debug_assembly.rs:176:161）；F3n |
-| [E] file not found for module `X` | 1 | 修复面为 u_string 模块文件未随消费方配置写出（Compiler.hx 约 347 与 RustRuntime.hx 约 320；runtime/mod.rs:4 声明 `pub mod u_string;` 但无对应文件）；F3q |
-| recursion limit reached while expanding `X`（format! 链） | 1 | 修复面为超长 format! 链递归超限（RustExpr.hx 约 2458-2478 与 4117-4165；inline_object_decision_info.rs:78）；F3r |
-| comparison operators cannot be chained | 1 | 修复面为链式比较未降级为 `a < b && b < c`（punctuation_geometry_ledger.rs:293:30）；F3s |
+| [E] file not found for module `X` | 1 | 修复位置为 u_string 模块文件未随消费方配置写出（Compiler.hx 约 347 与 RustRuntime.hx 约 320；runtime/mod.rs:4 声明 `pub mod u_string;` 但无对应文件）；F3q |
+| recursion limit reached while expanding `X`（format! 链） | 1 | 修复位置为超长 format! 链递归超限（RustExpr.hx 约 2458-2478 与 4117-4165；inline_object_decision_info.rs:78）；F3r |
+| comparison operators cannot be chained | 1 | 修复位置为链式比较未降级为 `a < b && b < c`（punctuation_geometry_ledger.rs:293:30）；F3s |
 | 合计（求和校验） | 20 | 与每精度错误总数相等（f32 与 f64 同值） |
 
-判定进度小结：7 类全部有修复面判定，修复项 F3n 至 F3s 开列在第 11 节
+判定进度小结：7 类全部有修复位置判定，修复项 F3n 至 F3s 开列在第 11 节
 第 3 组；派发顺序遵循目标优先级裁定（kotlin、rust、dart、ts、swift）。
 
 ## 7 TypeScript 编译普查（2026-09-07 复测）
@@ -539,7 +550,7 @@ tsc 5.9.3 报 1127 条错误，19 个消息骨架的逐类计数与首测全部�
 
 | 错误码：错误消息类（骨架） | 计数 | 判定与处置 |
 |---|---:|---|
-| TS2307：Cannot find module 'X' or its corresponding type declarations. | 303 | 模块分布见 7.2；297 条为测量环境；其余 6 条（相对路径 5 条与 haxe/Exception 1 条）已判引擎侧为 ts 生成器的导入路径问题，分支未逐条定位；转按修复面派发 |
+| TS2307：Cannot find module 'X' or its corresponding type declarations. | 303 | 模块分布见 7.2；297 条为测量环境；其余 6 条（相对路径 5 条与 haxe/Exception 1 条）已判引擎侧为 ts 生成器的导入路径问题，分支未逐条定位；转按修复位置派发 |
 | TS2448：Block-scoped variable 'X' used before its declaration. | 215 | 已证实 ts 生成器（TsExpr 的语句融合与局部绑定生成顺序；LayoutDumpFormat.ts 单文件 214 条、ShapingEvidenceJson.ts 1 条，分布见 7.2） |
 | TS2304：Cannot find name 'X'. | 183 | 已判 ts 生成器：分组判定全归生成侧（Ic 103 条源于Ic 声明只生成类型、未生成值侧声明；compare 前缀 6 条同 TS2724 的导出登记缺陷）；TestCore 8 条为测量环境；名称分布见 7.2 |
 | TS2554：Expected N arguments, but got N. | 133 | 已证实 ts 生成器：默认参数与可选参数的调用实参补全机制不完整（与区间形 54 条同一原因，两形合计 187 条） |
@@ -563,9 +574,9 @@ tsc 5.9.3 报 1127 条错误，19 个消息骨架的逐类计数与首测全部�
 判定进度小结（tsprobe2 r1 并入后）：19 类全部有判定结论：测量环境 2 处
 （TS2580 全类 3 条与 TS2307 类内 297 条）；F3e 已修复待合并（TS2551 全类
 28 条加 TS2341 类内 get_ 前缀 10 条，修复任务 tsgetcal（#54）由用户派出，
-不由本会话验收）；其余 16 类与 TS2307 类内 6 条全部归到 ts 生成器，涉及修复面
+不由本会话验收）；其余 16 类与 TS2307 类内 6 条全部归到 ts 生成器，涉及修复位置
 文件 TsExpr.hx、TsDecl.hx、TsImports.hx、Compiler.hx（逐类机制清单见
-tsprobe2 r1 报告）。下一步是把这些判定按修复面切分成修复项并按目标优先
+tsprobe2 r1 报告）。下一步是把这些判定按修复位置切分成修复项并按目标优先
 级派发。
 
 ### 7.2 大类内部分解（2026-09-06 实测，产出命令见第 2.2 节）
@@ -686,9 +697,9 @@ ARGUMENT_TYPE_NOT_ASSIGNABLE 299→290（double 74→67、num 18→16，原因�
 
 判定来源：T-dart r1 报告 /tmp/dispatch-state/tiqian-tdart-r1.report.md
 （基线 boring `31627b5c`，35 个错误码里抽了 33 类各 3 处，另两类已有
-修复面）。本文新用一档「探针定位待因果验证」：探针引用的生成器位置经
+修复位置）。本文新用一档「探针定位待因果验证」：探针引用的生成器位置经
 派发方在 31627b5c 检出复核确认代码存在且与抽样形状相邻，但从源构造到
-错误输出的因果链还没有逐环走通；它的可信度高于形状证实、低于修复面，
+错误输出的因果链还没有逐环走通；它的可信度高于形状证实、低于修复位置，
 不单独构成派发依据。该报告的引用有两处经复核降级：
 REFERENCED_BEFORE_DECLARATION 引用的 Compiler.hx:216-220 实为测试函数
 排序，与样本不吻合；MISSING_DEFAULT_VALUE_FOR_PARAMETER 引用的
@@ -698,7 +709,7 @@ DartDecl.hx:260-300 落在比较函数合成代码内，拟合存疑。因果链
 
 | 错误码 | gen | tests | 合计 | 判定与处置 |
 |---|---:|---:|---:|---|
-| `UNDEFINED_IDENTIFIER` | 444 | 581 | 1025 | 名称分布见 8.2（79 个名字全列，与首测逐项相同）；类内 8 个类型名条目合计 705 条（WritingMode 157、LastLineAlignment 155、InlineAttachment 147、Ic 106、RubyLineHeightMode 77、RubyKind 35、LineEndReason 16、FontRole 12）已判修复面为类型名与枚举名值位引用缺导入前缀（adjustment_style_policy.dart:14 值位不带前缀直接使用 `LineEndPunctuationStyle` 实测，同文件类型位用带前缀形；机制位置 DartExpr.hx:1466-1485 的枚举引用分支与 DartImports.hx:186-215 的前缀登记，派发方在 31627b5c 复核）；F3l，修复任务 dartguard（#64）由用户派出、尚未交付；其余名字未判定 |
+| `UNDEFINED_IDENTIFIER` | 444 | 581 | 1025 | 名称分布见 8.2（79 个名字全列，与首测逐项相同）；类内 8 个类型名条目合计 705 条（WritingMode 157、LastLineAlignment 155、InlineAttachment 147、Ic 106、RubyLineHeightMode 77、RubyKind 35、LineEndReason 16、FontRole 12）已判修复位置为类型名与枚举名值位引用缺导入前缀（adjustment_style_policy.dart:14 值位不带前缀直接使用 `LineEndPunctuationStyle` 实测，同文件类型位用带前缀形；机制位置 DartExpr.hx:1466-1485 的枚举引用分支与 DartImports.hx:186-215 的前缀登记，派发方在 31627b5c 复核）；F3l，修复任务 dartguard（#64）由用户派出、尚未交付；其余名字未判定 |
 | `REFERENCED_BEFORE_DECLARATION` | 314 | 96 | 410 | 形状证实：抽样含导入前缀与局部名同名冲突（cluster_role_resolution.dart:55 生成 `final cluster = cluster.Cluster(...)`）与不带前缀的类名（:64 的 `ResolvedClusterRange`）两形；探针引用的 Compiler.hx:216-220 经派发方复核是测试函数排序，与样本不吻合，已否证；layout_dump_format.dart 215 条与 ts TS2448 同源的假设保留（ts 侧 TS2448 已判生成器，本码随 T-dart 第二轮复核）；文件分布见 8.2（与首测逐项相同）；机制位置待定位；随 T-dart 第二轮 |
 | `ARGUMENT_TYPE_NOT_ASSIGNABLE` | 172 | 118 | 290 | 假设：T-dart 抽样为可空 int? 给 int（codeUnitAt 闭包位），连可空守卫（F3m 同构造）；目标类型分布里 double 67 条是否数值转换待抽样；分布见 8.2（23 种全列）；随 T-dart 第二轮 |
 | `UNCHECKED_USE_OF_NULLABLE_VALUE` | 121 | 22 | 143 | F3m 部分：knullinit 系列的 dart 侧守卫（boring `9e0537d0`，合并 `23f4bf63`）把 property 形从 314 修到 40，残余 143 条（property 40、method 81、operator 16、condition 6，形状分布见 8.2）；修复任务 dartguard（#64）由用户派出、尚未交付 |
@@ -737,7 +748,7 @@ DartDecl.hx:260-300 落在比较函数合成代码内，拟合存疑。因果链
 dartifget boring `14c5031d`）、NON_ABSTRACT_CLASS_INHERITS_ABSTRACT_MEMBER
 （6 条，随同修复降为 0）。
 
-判定进度小结（2026-09-07 复测后）：修复面 2 个整类加 1 个类内部条目：
+判定进度小结（2026-09-07 复测后）：修复位置 2 个整类加 1 个类内部条目：
 UNCHECKED_USE_OF_NULLABLE_VALUE（F3m，残余 143，修复任务 dartguard（#64）
 由用户派出、尚未交付）、URI_DOES_NOT_EXIST 36 条（F3i）、UNDEFINED_IDENTIFIER 类内 8 个
 类型名条目 705 条（F3l，dartguard #64 同道）；探针定位待因果验证 5 类
@@ -766,18 +777,18 @@ UNDEFINED_IDENTIFIER 的名称分布（求和 1025；判定列写 F3l 的名字�
 
 | 计数 | 名称 | 判定 |
 |---:|---|---|
-| 157 | `WritingMode` | 修复面为类型名值位引用缺导入前缀（F3l） |
-| 155 | `LastLineAlignment` | 修复面为类型名值位引用缺导入前缀（F3l） |
-| 147 | `InlineAttachment` | 修复面为类型名值位引用缺导入前缀（F3l） |
-| 106 | `Ic` | 修复面为类型名值位引用缺导入前缀（F3l）；与 ts TS2304 的 Ic 103 条同一原因的假设保留 |
-| 77 | `RubyLineHeightMode` | 修复面为类型名值位引用缺导入前缀（F3l） |
-| 35 | `RubyKind` | 修复面为类型名值位引用缺导入前缀（F3l） |
+| 157 | `WritingMode` | 修复位置为类型名值位引用缺导入前缀（F3l） |
+| 155 | `LastLineAlignment` | 修复位置为类型名值位引用缺导入前缀（F3l） |
+| 147 | `InlineAttachment` | 修复位置为类型名值位引用缺导入前缀（F3l） |
+| 106 | `Ic` | 修复位置为类型名值位引用缺导入前缀（F3l）；与 ts TS2304 的 Ic 103 条同一原因的假设保留 |
+| 77 | `RubyLineHeightMode` | 修复位置为类型名值位引用缺导入前缀（F3l） |
+| 35 | `RubyKind` | 修复位置为类型名值位引用缺导入前缀（F3l） |
 | 33 | `kind` | 未判定 |
-| 16 | `LineEndReason` | 修复面为类型名值位引用缺导入前缀（F3l） |
+| 16 | `LineEndReason` | 修复位置为类型名值位引用缺导入前缀（F3l） |
 | 15 | `PunctuationGeometryStageCoverageSupport` | 未判定 |
 | 13 | `JustifierTestSupport` | 未判定 |
 | 12 | `plan` | 未判定 |
-| 12 | `FontRole` | 修复面为类型名值位引用缺导入前缀（F3l） |
+| 12 | `FontRole` | 修复位置为类型名值位引用缺导入前缀（F3l） |
 | 12 | `FontMetricSource` | 未判定 |
 | 11 | `ink` | 未判定 |
 | 11 | `cls` | 未判定 |
@@ -848,8 +859,8 @@ UNDEFINED_IDENTIFIER 的名称分布（求和 1025；判定列写 F3l 的名字�
 
 UNCHECKED_USE_OF_NULLABLE_VALUE 的形状分布（求和 143；消息里的名字以 X
 代替；knullinit 系列的 dart 侧守卫（boring `9e0537d0`，合并 `23f4bf63`）
-已修掉 property 形的 314 条，残余全类的修复面是dart 可空接收者守卫缺失
-（F3m，与 kotlin 修复面 A 同构造），修复任务 dartguard（#64）由用户派出、尚未交付）：
+已修掉 property 形的 314 条，残余全类的修复位置是dart 可空接收者守卫缺失
+（F3m，与 kotlin 修复位置 A 同构造），修复任务 dartguard（#64）由用户派出、尚未交付）：
 
 | 计数 | 形状 | 判定 |
 |---:|---|---|
@@ -1029,14 +1040,14 @@ C2 跨文件或跨目标，同一缺陷出现在多个目标，或需要 tiqian 
 
 工作量检验的方式（2026-09-06 用户裁定）：进度以各目标逐类表的行计数变化
 为准，每类可单独复测；不设覆盖多类的「其余」聚合指标，聚合数只保留合计
-一个完整性数字（各类求和必须等于合计）。修复项只对修复面开，不对消息类
+一个完整性数字（各类求和必须等于合计）。修复项只对修复位置开，不对消息类
 主题开；每条修复项写明覆盖的错误类、类内条目与计数，KPI 现值写各目标
-逐类表的实测计数，切分反映修复工作量，不合并修复面。
+逐类表的实测计数，切分反映修复工作量，不合并修复位置。
 
 | KPI | 指标 | 现值 | 目标 | 对应 |
 |---|---|---|---|---|
-| K1 | 修复面 A：only safe 类计数 | f32 3 / f64 3（knullinit 系列合并 `23f4bf63` 后的残余） | 0 | #22 残余 |
-| K2 | 各目标逐类判定完成度 | kotlin 35 合并行中 32 行有判定（修复面 9、形状证实 14、假设 6、测量环境 1、f64 独有已判 2；未判定 3）；rust 7 / 7 类（rustf4c r2）；ts 19 / 19 类（tsprobe2 r1；含测量环境 2 处）；dart 33 类中修复面 3 类加类内 705 条、探针定位 5 类、其余 25 类形状证实或假设；swift tests 侧 6 / 6 类（tswift1 r1：消费侧配置 2 类、修复面 F3t 覆盖 4 类） | 五目标全部类有判定结论 | T-attr、T-swift、T-dart、tsprobe2、rustf4c r2 |
+| K1 | 修复位置 A：only safe 类计数 | f32 3 / f64 3（knullinit 系列合并 `23f4bf63` 后的残余） | 0 | #22 残余 |
+| K2 | 各目标逐类判定完成度 | kotlin 35 合并行中 32 行有判定（修复位置 21、探针定位待因果验证 3、形状记录（连锁伪影）1、假设 4、测量环境 1、f64 独有已判 2；未判定 3；tattr3 r1 并入后形状证实类全部升级或归档）；rust 7 / 7 类（rustf4c r2）；ts 19 / 19 类（tsprobe2 r1；含测量环境 2 处）；dart 33 类中修复位置 3 类加类内 705 条、探针定位 5 类、其余 25 类形状证实或假设；swift tests 侧 6 / 6 类（tswift1 r1：消费侧配置 2 类、修复位置 F3t 覆盖 4 类） | 五目标全部类有判定结论 | T-attr、T-swift、T-dart、tsprobe2、rustf4c r2 |
 | K3 | 各目标错误总数 | kotlin f32 696 / f64 717；swift gen 1 加 tests 57（每精度同值；tests 内消费侧配置 41、引擎侧 16）；rust 20（每精度同值）；ts 1127（引擎侧 819）；dart 2606 | 全部 0 | 各节逐类表求和（完整性数字，非派发单位） |
 | K4 | kotlin 两个精度目录 warning 计数 | 0 / 0 | 保持 0 | 每次复测 |
 | K5 | 各目标重生成退出码 | 八个生成入口全部 0（2026-09-07，/tmp/census6/report.txt：kotlin、swift、rust 各 f32 与 f64，ts、dart） | 全部 0 | 逐处重跑阶段（已完成，第 4 节） |
@@ -1061,10 +1072,10 @@ F0k-核）、第 2 组 F2b、F3f、F3g、F3h、F3k、T-ts、第 4 组 F4a 至 F4
       全量判定并入 3.4 节。剩余范围是把 3.2 节 14 类形状证实定位到文件与
       分支、证实或否证 6 类假设、判定 3 个未判定类（collection literals、
       array literals、selector）、把 3.3 节 argument 类内可空 82、Number
-      装箱 14、其余 33 归到修复面（knulljud r1 只交付了按错误类汇总的预览计数，逐
+      装箱 14、其余 33 归到修复位置（knulljud r1 只交付了按错误类汇总的预览计数，逐
       形状判定未并入）、对 3.4 节 pow 2 与 NodeFileSystem 2 两条补因果
       验证。C2，P1，S-。
-- [ ] F1a 修复面 A 计数降为 0（#22 残余）：knullinit 系列合并 `23f4bf63`
+- [ ] F1a 修复位置 A 计数降为 0（#22 残余）：knullinit 系列合并 `23f4bf63`
       后残余 only safe 类 f32 3 / f64 3、operator call prohibited 类
       f32 6 / f64 6。C2，P1，S3。
 - [ ] T-dart dart 逐类判定探针（第二轮）：r1 于 2026-09-06 交付（报告
@@ -1081,20 +1092,22 @@ F0k-核）、第 2 组 F2b、F3f、F3g、F3h、F3k、T-ts、第 4 组 F4a 至 F4
 
 ### 第 3 组：按判定结果立项
 
-本组条目按修复面开列：一条修复项对应一个修复面，附它覆盖的错误类与
+本组条目按修复位置开列：一条修复项对应一个修复位置，附它覆盖的错误类与
 类内条目清单、计数、判据（对应计数降为 0 且其余类计数不上升）。条目的
 判定来源写明：kotlin 侧由 T-attr 产出；swift 与 ts 侧的下列三条来自各
 目标首次编译普查时已可定性的错误类。2026-09-06 撤销原第 3 组 F3a（修饰符
 主题）、F3b（语句位置主题）、F3c（推断与重载主题）、F3d（桶 4 可空形状）
 四条按消息主题合并的条目；各错误类已在 3.2 节逐行可见，其中可空形状与
-数值形状的疑议随 T-attr 判定。撤销理由：按主题把多个修复面合并成一个
+数值形状的疑议随 T-attr 判定。撤销理由：按主题把多个修复位置合并成一个
 任务后，进度勾选无法与任何一个错误类的计数核对。2026-09-06 T-attr r1
 与 T-dart r1 的判定并入后，本组新增 F3j 至 F3m 四条：F3j、F3k 来自
 kotlin 侧（机制由派发方在 boring `4b1fec9` 复核后开列），F3l、F3m 来自
 dart 侧（引用由派发方在 boring `31627b5c` 复核后开列）。2026-09-07 复测
 后，F3f 与 F3g（合并 `e01b03b3`）、F3h（合并 `14c5031d`）、F3k（合并
 `ad0990e2`，cannot access 残余 3 / 3 即判据写明的基数）完成并删除；
-rustf4c r2 判定并入第 6 节后新增 F3n 至 F3s 六条。
+rustf4c r2 判定并入第 6 节后新增 F3n 至 F3s 六条；tswift1 r1 判定并入
+第 5 节后开列 F3t 与 F3u；tattr3 r1 判定并入第 3.2 节后开列 F3v 至 F3ag
+十二条。
 
 - [ ] F3e ts 目标 getter-only 属性调用点：状态为已修复待合并（修复任务
       tsgetcal（#54）由用户派出，不由本会话验收；第 7 节计数待合并复测后
@@ -1112,14 +1125,14 @@ rustf4c r2 判定并入第 6 节后新增 F3n 至 F3s 六条。
       std/u_string_fault、haxe/exception、tests 侧的 test_host 与跨目录
       测试引用）。判定来源为2026-09-06 磁盘对照：boring 自身样本生成树
       含 lib/std、lib/haxe 与 test_host.dart，tiqian 消费树 out/ 下这些
-      文件均不存在而生成代码以相对路径引用它们。修复面为 dart 目标这些
+      文件均不存在而生成代码以相对路径引用它们。修复位置为 dart 目标这些
       文件在消费方配置下的写出条件。判据为 URI_DOES_NOT_EXIST 计数降为
       0，其余类计数不上升。C2，P1，S2。
 - [ ] F3j kotlin 数值转换位扩展（残余）：knumconv-r3（boring `8aa72e16`，
       合并 `7b3135a1`）已修掉主体；残余为 operator applied 全类（f32 2 /
       f64 2）、return 全类（17 / 17）、initializer f64 侧（0 / 2）、
       assignment 类内待再分形状（6 / 10，数值形状已修、残余疑为可空）与
-      3.3 节 Int 给浮点（6 / 13）、Long 给浮点（0 / 2）两形状。修复面为
+      3.3 节 Int 给浮点（6 / 13）、Long 给浮点（0 / 2）两形状。修复位置为
       KotlinExpr.hx 的 renderCallArgs（boring `4b1fec9` 时位于 2806-2820，
       派发方复核）只在实参位对 isIntType 的接收值插入
       `(x).toFloat()/.toDouble()` 转换，运算、return、默认值、赋值四个
@@ -1131,7 +1144,7 @@ rustf4c r2 判定并入第 6 节后新增 F3n 至 F3s 六条。
       由用户派出，不由本会话验收。覆盖 UNDEFINED_IDENTIFIER
       类内 8 个类型名条目合计 705 条（WritingMode 157、LastLineAlignment
       155、InlineAttachment 147、Ic 106、RubyLineHeightMode 77、RubyKind
-      35、LineEndReason 16、FontRole 12，分布见 8.2）。修复面为
+      35、LineEndReason 16、FontRole 12，分布见 8.2）。修复位置为
       DartExpr.hx:1466-1485 的枚举引用分支对值位引用输出不带前缀的名字、
       DartImports.hx:186-215 的前缀登记没有覆盖这类引用
       （adjustment_style_policy.dart:14 值位不带前缀直接使用 `LineEndPunctuationStyle`
@@ -1141,50 +1154,50 @@ rustf4c r2 判定并入第 6 节后新增 F3n 至 F3s 六条。
       侧守卫（boring `9e0537d0`，合并 `23f4bf63`）已把 property 形从 314
       修到 40；残余覆盖 UNCHECKED_USE_OF_NULLABLE_VALUE 全类 143 条
       （property 40、method 81、operator 16、condition 6，分布见 8.2）。
-      修复任务 dartguard（#64）由用户派出，不由本会话验收。修复面为 dart
+      修复任务 dartguard（#64）由用户派出，不由本会话验收。修复位置为 dart
       生成器对可空接收者的成员访问、调用、运算与条件位没有生成守卫
       （clreq_punctuation_advance_policy.dart:27 的 int? 接收者直接比较
       实测；DartExpr.hx:1315-1341 的 binop 守卫位派发方在 31627b5c
-      复核），与 kotlin 修复面 A（#22）同构造。判据为该错误码计数降为
+      复核），与 kotlin 修复位置 A（#22）同构造。判据为该错误码计数降为
       0，其余类计数不上升。C2，P1，S2。
 - [ ] F3n rust switch 臂语句位渲染：覆盖第 6 节 match 臂语句位 10 条与
-      layout_debug_assembly 形 1 条。修复面为 rust 生成器 switch 臂渲染把
+      layout_debug_assembly 形 1 条。修复位置为 rust 生成器 switch 臂渲染把
       臂模式前置于语句（RustExpr.hx 的 switch 分支约 2600-2690；样本
       layout_queries.rs:379、383、387 与 annotation_geometry_stage.rs:483、
       487、491、496、539、552、557，layout_debug_assembly.rs:176:161）。
       判据为两类计数降为 0，其余类计数不上升。C2，P1，S2。
 - [ ] F3o rust 静态成员 INSTANCE 重名：覆盖第 6 节 defined multiple
-      times 4 条。修复面为 rust 静态成员生成在单文件多类布局下重名
+      times 4 条。修复位置为 rust 静态成员生成在单文件多类布局下重名
       （RustDecl.hx 的 static 约 1000-1250 与 impl 约 2000 起；
       rich_text_role.rs:36、62、120、146 四处 `pub static INSTANCE`）。
       判据为该类计数降为 0，其余类计数不上升。C1，P1，S3。
 - [ ] F3p rust 标识符转换产出空标识符：覆盖第 6 节 expected identifier
-      2 条。修复面为 RustImports 的 toSnakeCase 返回空名
+      2 条。修复位置为 RustImports 的 toSnakeCase 返回空名
       （display_glyph_substitution_engine_test_support.rs:12:56 与
       text_shaper.rs:4:56）。判据为该类计数降为 0，其余类计数不上升。
       C1，P2，S3。
 - [ ] F3q rust u_string 模块文件未写出：覆盖第 6 节 file not found for
-      module 1 条。修复面为 u_string 模块文件未随消费方配置写出
+      module 1 条。修复位置为 u_string 模块文件未随消费方配置写出
       （Compiler.hx 约 347 与 RustRuntime.hx 约 320；runtime/mod.rs:4
       声明 `pub mod u_string;` 但无对应文件）。判据为该类计数降为 0，
       其余类计数不上升。C2，P1，S3。
 - [ ] F3r rust 超长 format! 链递归超限：覆盖第 6 节 recursion limit 1 条。
-      修复面为超长 format! 链的宏递归超限（RustExpr.hx 约 2458-2478 与
+      修复位置为超长 format! 链的宏递归超限（RustExpr.hx 约 2458-2478 与
       4117-4165；inline_object_decision_info.rs:78）。判据为该类计数降为
       0，其余类计数不上升。C1，P2，S3。
 - [ ] F3s rust 链式比较未降级：覆盖第 6 节 comparison operators cannot
-      be chained 1 条。修复面为链式比较未降级为 `a < b && b < c`
+      be chained 1 条。修复位置为链式比较未降级为 `a < b && b < c`
       （punctuation_geometry_ledger.rs:293:30）。判据为该类计数降为 0，
       其余类计数不上升。C1，P2，S3。
 - [ ] F3t swift 字符串插值内嵌语句体闭包：覆盖第 5 节 tests 侧
       static methods 13、unterminated string 1、extraneous 1、string
-      interpolation 1，每精度 16 条（f32 与 f64 同值）。修复面为 swift
+      interpolation 1，每精度 16 条（f32 与 f64 同值）。修复位置为 swift
       生成器字符串拼接合成把语句体闭包字面量嵌进插值段：实测样本是
       多语句表达式降级成的闭包（ExplainableStubParagraphLayoutEngineTest.swift:69，
       `let from`/`let to` 两条声明在 `\(...)` 段内）；SwiftExpr.hx
       stdStringType 的 IsArray/IsSortedSet/IsSortedMap 分支（e01b03b3
       :1824-1836）生成同类闭包，构成第二条触发路径。两条路径出自同一
-      修复面（插值段不得含语句体闭包），修复需同时覆盖；正确输出先把
+      修复位置（插值段不得含语句体闭包），修复需同时覆盖；正确输出先把
       闭包结果绑定到局部常量再插值。判据为四类计数降为 0，其余类计数
       不上升（合并测量下 gen 侧语义错误不上升）。C2，P1，S2。
 - [ ] F3u swift 测试树 import 头的消费侧配置：覆盖第 5 节 tests 侧
@@ -1195,6 +1208,86 @@ rustf4c r2 判定并入第 6 节后新增 F3n 至 F3s 六条。
       examples/swift.hxml:20-21 与 Compiler.hx:422-425）。判据为生成的
       tests 文件带 import 头且 SwiftPM 构建下测试目标符号解析通过。
       C1，P2，S-。
+- [ ] F3v kotlin std 数组 indexOf 可选参合成 null 未丢弃：覆盖 3.2 节 too
+      many arguments 全类 14/14。修复位置为 KotlinExpr.hx call() 的通用实例
+      调用分支（:2973）与 renderCallArgs（:3052-3071）：typer 为
+      `?fromIndex` 合成的 null 实参在 String 接收者的专支（:2910-2911）
+      被丢弃，List/Array 接收者没有同等处理，std Array.indexOf 也未在
+      DefaultArgExpander 注册默认值（PreparedParagraph.kt:50
+      `fs!!.indexOf(f, null)` 实测，tattr3 r1）。判据为该类计数降为 0，
+      其余类计数不上升。C1，P1，S2。
+- [ ] F3w kotlin 同函数局部变量名不去重：覆盖 3.2 节 conflicting
+      declarations 全类 13/13。修复位置为 KotlinExpr.hx localName
+      （:3299-3306）只对 `` ` `` 与 `_` 生成避让名、对 typer 展开数组推导
+      产出的 `_g` 等名字原样输出，且 kotlin 目标 Compiler.hx:72
+      `preventRepeatVars: false` 关闭了 reflaxe 的 RepeatVariableFixer
+      （PreparedParagraphJfTest.kt:116/126 两个 `val _g` 实测，tattr3 r1）。
+      判据为该类计数降为 0，其余类计数不上升。C2，P1，S2。
+- [ ] F3x kotlin 静态方法值缺 callable reference：覆盖 3.2 节 function
+      invocation 全类 8/8（其中 1 条为 Array.copy 未降级产生的连锁错误，随 F3ag 消除）。
+      修复位置为 KotlinExpr.hx field() 的 FStatic 分支（:2184-2187）对函数
+      类型位置的静态成员返回 `Class.method` 文本，需要 `Class::method` 或
+      lambda 包装（ContextualQuoteRoleResolverNestedAndSurrogateTest.kt:84、
+      ParseTexHyphenationPatterns.kt:55 实测，tattr3 r1）。判据为该类计数
+      降为 0，其余类计数不上升。C1，P1，S2。
+- [ ] F3y kotlin 数组下标访问两条降级缺失：覆盖 3.2 节 no operator array
+      access 全类 6/6（set 形 4：`split` 经 KotlinExpr.hx:2973 产出只读
+      List 后下标写，PreparedParagraph.kt:1726 起；get 形 2：
+      stringBufMutationLines :698 文本拼接 `part + "[0].code"` 未给 part
+      加括号，TracedAssertions.kt:116 实测，tattr3 r1）。判据为该类计数
+      降为 0，其余类计数不上升。C2，P2，S2。
+- [ ] F3z kotlin 测试 lambda 内无标签 return：覆盖 3.2 节 prohibited here
+      全类 5/5。修复位置为 KotlinDecl.hx testFuncDecl（:1152-1177）把测试
+      函数体包进非 inline 的 `Test.run { … }`，而 KotlinExpr.hx stmtLines
+      无实参 TReturn 分支（:557）输出不带标签的 `return`（BilingualEmphasisTest.kt:16
+      实测，tattr3 r1）。判据为该类计数降为 0，其余类计数不上升。
+      C1，P2，S3。
+- [ ] F3aa kotlin @JvmField 未排除 private：覆盖 3.2 节 jvmField 全类
+      5/5。修复位置为 KotlinDecl.hx objectVarDecl（:1009）对非 final 静态
+      字段无条件生成 `@JvmField`，未考虑可见性（PreparedParagraph.kt:25
+      实测，tattr3 r1）。判据为该类计数降为 0，其余类计数不上升。
+      C1，P2，S3。
+- [ ] F3ab kotlin when 臂分组多值丢弃：覆盖 3.2 节 exhaustive 全类 4/4
+      与 variable must be initialized 全类 3/3（同一机制连锁，分支缺臂
+      路径无赋值）。修复位置为 KotlinExpr.hx switchExpression（:1345-1349）
+      只渲染每个 case 的 `c.values[0]`，Haxe typer 归并的 `case A | B:`
+      其余值被丢弃（FontMetrics.kt:15 与 :21 实测，tattr3 r1）；
+      KotlinDecl.hx collectMessageCases（:672 起）同形，需同步检查。
+      判据为两类计数降为 0，其余类计数不上升。C1，P1，S3。
+- [ ] F3ac kotlin hashCode 与异常载荷 message 缺 override：覆盖 3.2 节
+      hides member 全类 2/2。修复位置为 KotlinDecl.hx funcDecl（:1095-1099）
+      的 overridesAny 只认零参 toString，与 sealedExceptionDecl（:603-604）
+      载荷字段与基类 `override val message` 同名时无 override
+      （BopomofoReading.hx:27 手写 hashCode、TraceAssertionException 载荷
+      message 实测，tattr3 r1）。判据为该类计数降为 0，其余类计数不上升。
+      C1，P2，S3。
+- [ ] F3ad kotlin Haxe 文件私有类映射缺失：覆盖 3.2 节 redeclaration
+      全类 2/2。修复位置为 KotlinDecl.hx classDecl（:207）对一切类无条件
+      生成 top-level `class`，Haxe 文件私有类（仅本文件可见）需要 Kotlin
+      private top-level 映射（ContextualQuoteRoleResolver.hx:316 与
+      ContextualDashEllipsisRoleResolver.hx:223 各一个 `private class
+      Resolution`，生成后同 package 冲突，tattr3 r1）。判据为该类计数
+      降为 0，其余类计数不上升。C2，P2，S3。
+- [ ] F3ae kotlin 下划线参数名原样输出：覆盖 3.2 节 reserved 全类 1/1。
+      修复位置为 KotlinDecl.hx parameterText（:873）与 lambda 参数渲染只调
+      KotlinNameEscape.escape（:42-43 只给关键字加反引号），`_` 参数需要
+      与函数体局部一致的生成名路径（UnicodePunctuationBoundaryTestSupport.kt:118
+      实测，tattr3 r1）。判据为该类计数降为 0，其余类计数不上升。
+      C1，P2，S3。
+- [ ] F3af kotlin @:access 与模块可见性无映射：覆盖 3.2 节 cannot access
+      全类 3/3（kgetvis 合并 `ad0990e2` 后的残余基数）。修复位置为
+      KotlinDecl.hx funcDecl（:1103）与 objectVarDecl（:1008）的可见性
+      选择只把 `:allow` 转 internal，`@:access` 授权类跨类访问与 Haxe
+      同模块文件私有访问没有对应映射（LineOptimizationCoverageTest.kt:151、
+      ContextualQuoteRoleResolver.kt:293 起实测，tattr3 r1）。判据为该类
+      计数降为 0，其余类计数不上升。C2，P2，S3。
+- [ ] F3ag kotlin Array.copy 无降级：直接覆盖 3.2 节 ambiguous 全类 1/1
+      （根本原因：LineRepair.kt:38 `initial.copy()` 为 Haxe Array.copy 走
+      KotlinExpr.hx:2973 通用实例调用，Kotlin List 无 copy 成员，同函数
+      其后错误全为连锁错误，tattr3 r1）；同时预期消减 cannot infer 行的连锁
+      部分与 function invocation 行的 `range()` 连锁条目（消减量在合并
+      复测后重数，不预先承诺）。判据为 ambiguous 计数降为 0，其余类计数
+      不上升。C1，P2，S3。
 
 ## 12 进度记录
 
@@ -1208,7 +1301,7 @@ rustf4c r2 判定并入第 6 节后新增 F3n 至 F3s 六条。
 | 2026-09-05 | F0j 整型容量上界生成规则 | boring `012ab59`（vendored 已推进） | rust 生成目录该报错不再出现，rust 第一处改为 F0k 的 `Std.string` 第二批（放宽实测确认是最后一类） | 十条套件＋test:consistency 全部退出码 0 |
 | 2026-09-06 | 基线迁移到 tiqian `105dfb30` 加 boring `4b1fec9`（r4） | 本文档第 3 节 | f32 1183 / f64 1201，warnings 0；ts、swift、dart 首处更新为第 4 节现值 | G4-RC=0、bun pass=121 fail=0、COMPARE-RC=0（sbuf-bind 条目） |
 | 2026-09-06 | 桶表改逐类表，修两条测量错误（续行计数、消息文本过期） | 本文档第 2.3、3.2 节 | f32 36 类 / f64 39 类，求和各等于 total | 不适用 |
-| 2026-09-06 | KPI 重切：按修复面与判定覆盖取代主题合并，撤销 F3a-d | 本文档第 9、10 节 | 判定进度见 3.2 节小结 | 不适用 |
+| 2026-09-06 | KPI 重切：按修复位置与判定覆盖取代主题合并，撤销 F3a-d | 本文档第 9、10 节 | 判定进度见 3.2 节小结 | 不适用 |
 | 2026-09-06 | rust 首次编译普查（F4a）与 kotlin `'X' cannot be a callee` 类判定 | 本文档第 2.2、3.2、6 节 | rust 181 条、15 类，求和校验相等；kotlin 该类 f32/f64 各 1 条，为异常子类第二代 super 误入 init 块 | 不适用 |
 | 2026-09-06 | ts 第二处生成阻断 UStringException 值引用修复（修复任务 ustr） | boring `f270c670`（合并 `de11c06a`，已推送） | ts 生成退出码 0，首次全量生成 | 19 项验收检查退出码全部为 0；合并后 boring main 的 bun test 670 pass / 3 fail（三个既有名目） |
 | 2026-09-06 | getter 属性读四目标调用点修复（修复任务 getprop） | boring `5628b4d`（合并 `f9f26726`，已推送） | 一致性检查 342 个测试六目标一致（含新增的 PublicGetterPropertyTests） | 19 项验收检查退出码全部为 0 |
@@ -1224,7 +1317,8 @@ rustf4c r2 判定并入第 6 节后新增 F3n 至 F3s 六条。
 | 2026-09-07 | kgetvis 合并（kotlin getter 可见性与 override 组合，F3k 关闭） | boring `6f3bc868`（合并 `ad0990e2`） | modifier incompatible 14→0、cannot weaken 7→0、cannot access 27→3（3 即判据写明的私有成员跨作用域基数） | 同上 |
 | 2026-09-07 | dartifget 合并（dart 接口 getter 声明缺失，F3h 关闭） | boring `0d470797`（合并 `14c5031d`） | dart UNDEFINED_GETTER 32→0、NON_ABSTRACT_CLASS_INHERITS_ABSTRACT_MEMBER 6→0 | 同上 |
 | 2026-09-07 | rustflit 合并（rust 浮点字面量缺整数部分） | boring `4deac694`（合并 `d870489c`） | rust 浮点字面量类 124→0 | 同上 |
-| 2026-09-07 | rustf4c 合并（rust 保留字转义；r2 探针判定 7 类，F4c 关闭、F3n 至 F3s 开列） | boring `dc09d773`＋`e4c24e77`（合并 `782526d7`）；r2 报告 /tmp/dispatch-state/boring-rustf4c-r2.report.md | rust 保留字转义类 12→0；本次复测 20 条、7 类全部有修复面判定 | 同上 |
+| 2026-09-07 | rustf4c 合并（rust 保留字转义；r2 探针判定 7 类，F4c 关闭、F3n 至 F3s 开列） | boring `dc09d773`＋`e4c24e77`（合并 `782526d7`）；r2 报告 /tmp/dispatch-state/boring-rustf4c-r2.report.md | rust 保留字转义类 12→0；本次复测 20 条、7 类全部有修复位置判定 | 同上 |
 | 2026-09-07 | swiftrem-r2 合并（swift 浮点字面量与控制字符转义，F3f、F3g 关闭） | boring `4c81c5fc`（合并 `e01b03b3`） | swift gen 侧浮点 7 条与控制字符 1 条均→0 | 同上 |
 | 2026-09-07 | 八格矩阵重测与新判定并入（tattr2 r2、tsprobe2 r1 即 T-ts 关闭、f64only r1 即 F2b 关闭、knulljud r1 的按类汇总预览、rustf4c r2）；第 10、11、12 节按 2026-09-07 用户裁定改为删除制 | 本文档第 3、5、6、7、8、10、11 节 | kotlin f32 696 / f64 717；swift gen 1 加 tests 57（每精度）；rust 20（每精度）；ts 1127（与首测逐类相同）；dart 2606、33 类 | 重生成八入口退出码 0；各逐类表求和校验相等 |
 | 2026-09-07 | tswift1 r1 探针交付（swift tests 六类判定）＋合并测量补进配方 | 本文档第 2.2、2.3、5、10、11 节 | tests 57 分解为消费侧配置 41 与引擎侧 16（F3t 连锁四类）；早先把合并 16 条记为截断系误判，已更正 | 不适用（判定轮，无代码改动） |
+| 2026-09-07 | tattr3 r1 探针交付（kotlin 十二类升修复位置、假设检验、连锁错误归类）＋修复项 F3v 至 F3ag 开列 | 本文档第 3.2、3.4、10、11 节 | 修复位置 9→21 类、形状证实 14→0（12 类升修复位置、1 类判为连锁伪影、1 类升探针定位）；探针定位 3 类随 #23；pow 与 NodeFileSystem 因果结论在探针轮结束消息里（报告文件未及更新，锚点未存档） | 不适用（判定轮，无代码改动；探针工树 git status 干净核实，报告引用的生成器行号逐处复核） |
