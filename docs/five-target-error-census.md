@@ -116,10 +116,11 @@ nix develop -c bash -c 'haxe engine-haxe/targets/swift-f64.hxml' # Swift（f64�
 nix develop -c bash -c 'haxe engine-haxe/targets/dart.hxml'      # Dart，自 boring `31627b5c` 起退出码 0
 ```
 
-Swift 编译普查必须逐目录运行（gen 与 tests 两目录同名文件在一次 swiftc
-调用里触发 filename used twice 使编译提前终止，见 2.3 节）。2026-09-07
-配方（基线 boring `e01b03b3`、tiqian `3f609c0f`，工作树 /tmp/tiqian-census6，
-日志与逐类表 /tmp/census6/swift-tests-table.txt）：
+Swift 编译普查按目录运行：gen 与 tests 各自单独 typecheck 得到每目录
+计数（2026-09-07 配方，基线 boring `e01b03b3`、tiqian `3f609c0f`，工作树
+/tmp/tiqian-census6，日志与逐类表 /tmp/census6/swift-tests-table.txt）。
+同精度的 gen 与 tests 两目录没有同名文件（2026-09-07 comm 实测），可以
+合并进一次 swiftc 调用；合并测量用于区分消费侧配置与引擎侧错误：
 
 ```shell
 cd /tmp/tiqian-census6/engine-haxe/out
@@ -127,6 +128,12 @@ for D in swift-gen-f64 swift-gen-f64-tests; do
   nix develop /tmp/boring-main -c bash -c "find $D -name '*.swift' | sort | xargs swiftc -typecheck" > /tmp/census6/sw-$D.log 2>&1
   echo "$D rc=$?"; grep -a -c ': error:' /tmp/census6/sw-$D.log
 done   # f32 侧同形，目录名换 swift-gen-f32 与 swift-gen-f32-tests
+
+# 合并测量（诊断用，不替代逐目录计数）：同精度 gen 与 tests 合并后跨树
+# 符号可解析；语法解析错误还有剩余时语义检查不完整（实测 gen 侧的 optional
+# 解包错误在合并输出中缺席），语义错误仍以逐目录计数为准
+nix develop /tmp/boring-main -c bash -c "find swift-gen-f64 swift-gen-f64-tests -name '*.swift' | sort | xargs swiftc -typecheck" > /tmp/sw-combined-64.log 2>&1; echo rc=$?
+grep -a -c ': error:' /tmp/sw-combined-64.log   # f32 侧同形，/tmp/sw-combined-32.log
 ```
 
 boring 遇到尚未实现生成规则的 Haxe 构造时，在第一处这样的构造上报错并中止。
@@ -245,10 +252,15 @@ cat /tmp/dartic-census-gen.log /tmp/dartic-census-tests.log | awk -F'|' '/^ERROR
   /dev/null（`> /dev/null 2> log`）会得到空日志而退出码仍非 0，两个目标
   被计为 0 条错误（2026-09-07 实测，ts 与 dart 两格一度误记 0）。普查命令
   必须写 `> log 2>&1`。
-- swift 的 gen 与 tests 两目录含同名文件，合并进一次 swiftc 调用会触发
-  `filename used twice` 使编译提前终止，计数总是两目录实际错误数的截断值
-  （2026-09-07 实测：合并调用只得 16 条，逐目录各有 1 加 57 条）。必须逐
-  目录运行，见 2.2 节配方。
+- swift 同精度的 gen 与 tests 两目录没有同名文件（2026-09-07 comm 实测），
+  合并调用可行。2026-09-07 早先把合并调用只得 16 条记为 filename used
+  twice 截断是误判：16 条是跨树符号解析后剩下的语法解析错误数（第
+  5 节）。同名文件冲突出现在 f32 与 f64 两个精度目录之间（同名文件集
+  完全相同），跨精度不能合并。
+- swiftc 在语法解析错误还有剩余时语义检查不完整：合并测量里 gen 侧
+  BopomofoParser.swift 的 optional 解包错误缺席，而逐目录 gen 单独测量
+  该错误在（实测对照 /tmp/census6/sw-swift-gen-f64.log 与
+  /tmp/sw-combined-64.log）；语义错误计数以逐目录为准。
 - rust 当前全部错误在解析层（rustc 未开始类型检查）时，cargo check 约 1
   秒返回，属正常；完整性以日志末行 `due to N previous errors` 的 N 与计数
   相等核对（2026-09-07 两侧 N=20 均核过）。
@@ -449,22 +461,25 @@ gen 侧（每精度 1 条）：
 |---|---:|---|---|
 | value of optional type 'X?' must be unwrapped to a value of type 'X' | 1 | swift-gen-f64/org/tiqian/clreq/BopomofoParser.swift:21:27 | 修复任务 swiftnarrow 正在执行（提交 `49b1d52a` 修掉此缺陷但在消费树引入 6 条回归，r2 轮追加清除回归，判据为逐目录 0 条） |
 
-tests 侧（每精度 57 条；此前两目录合并在一次 swiftc 调用里被 filename
-used twice 截断，本次逐目录运行才得到全量，见 2.3 节）：
+tests 侧（每精度 57 条）。判定来源为 tswift1 r1 报告
+/tmp/dispatch-state/boring-tswift1-r1.report.md（六类逐类三件，生成器锚点
+由派发方在 e01b03b3 复核）；消费侧配置与引擎侧的区分来自合并测量
+（第 2.2 节，日志 /tmp/sw-combined-64.log 与 /tmp/sw-combined-32.log，
+两精度同为 16 条语法解析错误）：
 
 | 错误消息类（骨架） | 条数 | 判定与处置 |
 |---|---:|---|
-| cannot find 'X' in scope | 32 | 未判定；随 T-swift |
-| static methods may only be declared on a type | 13 | 未判定；随 T-swift |
-| 'X' requires a contextual type | 9 | 未判定；随 T-swift |
-| unterminated string literal | 1 | 未判定；随 T-swift |
-| extraneous 'X' at top level | 1 | 未判定；随 T-swift |
-| cannot find 'X' to match opening 'X' in string interpolation | 1 | 未判定；随 T-swift |
-| 合计（求和校验） | 57 | 与 tests 目录错误总数相等 |
+| cannot find 'X' in scope | 32 | 消费侧配置：tests 树文件没有 import 头（tiqian 的 targets/swift-common.hxml 未定义 `-D swift-test-import`，boring 合同见 examples/swift.hxml:20 与 Compiler.hx fileContent 的头部条件 :422-425），且支撑类 TracedAssertions 与 TestTraceRecorder 实际生成在 gen 树 org/tiqian/test/trace/，tests 树单独 typecheck 必然找不到；合并测量下这类错误数为 0。F3u |
+| static methods may only be declared on a type | 13 | 修复面：SwiftExpr.hx stdStringType 的 IsArray 分支把 Swift 闭包字面量直接嵌进字符串插值，引号与插值定界符不配对（ExplainableStubParagraphLayoutEngineTest.swift:69 实测；源头 Haxe 源 ExplainableStubParagraphLayoutEngineTest.hx:63-104 的 Std.string 拼接）；解析器脱离 enum 作用域后，:106 起的 13 个 public static func 变成顶层声明。F3t |
+| 'X' requires a contextual type | 9 | 消费侧配置连锁：被调方不可见时字面 nil 无上下文类型（BopomofoParserTest.swift 断言调用的第三实参）；合并测量下这类错误数为 0。随 F3u |
+| unterminated string literal | 1 | F3t（同一连锁的词法症状，:69:20） |
+| extraneous 'X' at top level | 1 | F3t（enum 被提前关闭后末尾 } 变多余，:315:1） |
+| cannot find 'X' to match opening 'X' in string interpolation | 1 | F3t（同一连锁的插值定界症状，:69:99） |
+| 合计（求和校验） | 57 | 与 tests 目录错误总数相等；其中消费侧配置 41、引擎侧（F3t）16 |
 
-文件分布：BopomofoParserTest.swift 41 条、
-ExplainableStubParagraphLayoutEngineTest.swift 16 条（求和 57）。全部
-落在 tests 目录的两个文件里。
+文件分布：BopomofoParserTest.swift 41 条（全部为消费侧配置两类）、
+ExplainableStubParagraphLayoutEngineTest.swift 16 条（全部为 F3t 连锁；
+合并测量后仅剩这 16 条，f32 侧同值同分布）。
 
 2026-09-06 首测（boring `185cf02`、tiqian `3240f50a`）gen 侧报 8 条：浮点
 字面量 `expected member name following '.'` 7 条（PunctuationGeometryStage.swift
@@ -1021,8 +1036,8 @@ C2 跨文件或跨目标，同一缺陷出现在多个目标，或需要 tiqian 
 | KPI | 指标 | 现值 | 目标 | 对应 |
 |---|---|---|---|---|
 | K1 | 修复面 A：only safe 类计数 | f32 3 / f64 3（knullinit 系列合并 `23f4bf63` 后的残余） | 0 | #22 残余 |
-| K2 | 各目标逐类判定完成度 | kotlin 35 合并行中 32 行有判定（修复面 9、形状证实 14、假设 6、测量环境 1、f64 独有已判 2；未判定 3）；rust 7 / 7 类（rustf4c r2）；ts 19 / 19 类（tsprobe2 r1；含测量环境 2 处）；dart 33 类中修复面 3 类加类内 705 条、探针定位 5 类、其余 25 类形状证实或假设；swift tests 侧 0 / 6 类（T-swift 待开） | 五目标全部类有判定结论 | T-attr、T-swift、T-dart、tsprobe2、rustf4c r2 |
-| K3 | 各目标错误总数 | kotlin f32 696 / f64 717；swift gen 1 加 tests 57（每精度同值）；rust 20（每精度同值）；ts 1127（引擎侧 819）；dart 2606 | 全部 0 | 各节逐类表求和（完整性数字，非派发单位） |
+| K2 | 各目标逐类判定完成度 | kotlin 35 合并行中 32 行有判定（修复面 9、形状证实 14、假设 6、测量环境 1、f64 独有已判 2；未判定 3）；rust 7 / 7 类（rustf4c r2）；ts 19 / 19 类（tsprobe2 r1；含测量环境 2 处）；dart 33 类中修复面 3 类加类内 705 条、探针定位 5 类、其余 25 类形状证实或假设；swift tests 侧 6 / 6 类（tswift1 r1：消费侧配置 2 类、修复面 F3t 覆盖 4 类） | 五目标全部类有判定结论 | T-attr、T-swift、T-dart、tsprobe2、rustf4c r2 |
+| K3 | 各目标错误总数 | kotlin f32 696 / f64 717；swift gen 1 加 tests 57（每精度同值；tests 内消费侧配置 41、引擎侧 16）；rust 20（每精度同值）；ts 1127（引擎侧 819）；dart 2606 | 全部 0 | 各节逐类表求和（完整性数字，非派发单位） |
 | K4 | kotlin 两个精度目录 warning 计数 | 0 / 0 | 保持 0 | 每次复测 |
 | K5 | 各目标重生成退出码 | 八个生成入口全部 0（2026-09-07，/tmp/census6/report.txt：kotlin、swift、rust 各 f32 与 f64，ts、dart） | 全部 0 | 逐处重跑阶段（已完成，第 4 节） |
 | K6 | boring 验收命令 | 2026-09-06 合并 `f9f26726` 与 `31627b5c` 后 19 项检查退出码全部为 0（当时 bun test 672 pass / 3 fail，三个既有名目）；其后至 `e01b03b3` 的 8 次合并只经各修复任务报告内的验收命令，19 项检查未在合并后统一重跑（我还没有验证） | 每次合并后保持 | 不适用 |
@@ -1032,9 +1047,10 @@ C2 跨文件或跨目标，同一缺陷出现在多个目标，或需要 tiqian 
 
 本清单只留未完成条目。已完成并在新基线复测确认的条目自 2026-09-07 起从
 本清单删除，只在第 12 节进度表留行；条目编号保留不复用（第 1 节更新规则）。
-本轮删除的条目：第 0 组 F0a-F0d、第 0.5 组 F0e 至 F0l（含 F0i-逐处重跑与
-F0k-核）、第 2 组 F2b、F3f、F3g、F3h、F3k、T-ts、第 4 组 F4a 至 F4c；各条
-的提交号与复测计数移入第 12 节对应行。
+已删除的条目：第 0 组 F0a-F0d、第 0.5 组 F0e 至 F0l（含 F0i-逐处重跑与
+F0k-核）、第 2 组 F2b、F3f、F3g、F3h、F3k、T-ts、第 4 组 F4a 至 F4c、
+第 1 组 T-swift（tswift1 r1 交付，判定并入第 5 节，F3t 与 F3u 随之开列）；
+各条的提交号与复测计数移入第 12 节对应行。
 
 ### 第 1 组：判定探针（K2，先于其余修复任务的派发）
 
@@ -1062,14 +1078,6 @@ F0k-核）、第 2 组 F2b、F3f、F3g、F3h、F3k、T-ts、第 4 组 F4a 至 F4
       机制位置、证实或否证跨目标假设（ARGUMENT_TYPE_NOT_ASSIGNABLE 的
       double 67 条与 UNDEFINED_METHOD 新增 `toDouble @ bool` 5 条的原因查明
       在其列）。C2，P1，S-。
-- [ ] T-swift swift tests 侧逐类判定探针：对第 5 节 tests 侧 6 类 57 条
-      （cannot find 32、static methods 13、contextual type 9、unterminated
-      string 1、extraneous 1、string interpolation 1）按类内计数降序抽样
-      错误点（每类 3 至 5 处，计数不足按实际），读
-      BopomofoParserTest.swift 与
-      ExplainableStubParagraphLayoutEngineTest.swift 的生成代码，把错误类
-      归到修复面；产出为第 5 节判定列填全，每个新修复面在第 3 组开一条
-      修复项。方法与 T-attr 相同。C2，P2，S-。
 
 ### 第 3 组：按判定结果立项
 
@@ -1168,6 +1176,22 @@ rustf4c r2 判定并入第 6 节后新增 F3n 至 F3s 六条。
       be chained 1 条。修复面为链式比较未降级为 `a < b && b < c`
       （punctuation_geometry_ledger.rs:293:30）。判据为该类计数降为 0，
       其余类计数不上升。C1，P2，S3。
+- [ ] F3t swift 字符串插值内嵌闭包破坏定界符：覆盖第 5 节 tests 侧
+      static methods 13、unterminated string 1、extraneous 1、string
+      interpolation 1，每精度 16 条（f32 与 f64 同值）。修复面为
+      SwiftExpr.hx stdStringType 的 IsArray 分支（e01b03b3 位于 :1824-1828，
+      派发方复核）把 Swift 闭包字面量直接拼进外层字符串插值，定界符不
+      配对；正确输出需保证插值定界符配对（例如先把闭包结果绑定到局部
+      常量再插值）。判据为四类计数降为 0，其余类计数不上升（合并测量
+      下 gen 侧语义错误不上升）。C2，P1，S2。
+- [ ] F3u swift 测试树 import 头的消费侧配置：覆盖第 5 节 tests 侧
+      cannot find 32 与 contextual type 9，每精度 41 条（合并测量下这类错误数为 0，
+      证明符号本身可解析）。修复位置为 tiqian 的
+      engine-haxe/targets/swift-common.hxml 补 `-D swift-test-import=<模块名>`
+      （并与 package-shell 配置一起评估，当前为 none；boring 合同见
+      examples/swift.hxml:20-21 与 Compiler.hx:422-425）。判据为生成的
+      tests 文件带 import 头且 SwiftPM 构建下测试目标符号解析通过。
+      C1，P2，S-。
 
 ## 12 进度记录
 
@@ -1200,3 +1224,4 @@ rustf4c r2 判定并入第 6 节后新增 F3n 至 F3s 六条。
 | 2026-09-07 | rustf4c 合并（rust 保留字转义；r2 探针判定 7 类，F4c 关闭、F3n 至 F3s 开列） | boring `dc09d773`＋`e4c24e77`（合并 `782526d7`）；r2 报告 /tmp/dispatch-state/boring-rustf4c-r2.report.md | rust 保留字转义类 12→0；本次复测 20 条、7 类全部有修复面判定 | 同上 |
 | 2026-09-07 | swiftrem-r2 合并（swift 浮点字面量与控制字符转义，F3f、F3g 关闭） | boring `4c81c5fc`（合并 `e01b03b3`） | swift gen 侧浮点 7 条与控制字符 1 条均→0 | 同上 |
 | 2026-09-07 | 八格矩阵重测与新判定并入（tattr2 r2、tsprobe2 r1 即 T-ts 关闭、f64only r1 即 F2b 关闭、knulljud r1 的按类汇总预览、rustf4c r2）；第 10、11、12 节按 2026-09-07 用户裁定改为删除制 | 本文档第 3、5、6、7、8、10、11 节 | kotlin f32 696 / f64 717；swift gen 1 加 tests 57（每精度）；rust 20（每精度）；ts 1127（与首测逐类相同）；dart 2606、33 类 | 重生成八入口退出码 0；各逐类表求和校验相等 |
+| 2026-09-07 | tswift1 r1 探针交付（swift tests 六类判定）＋合并测量补进配方 | 本文档第 2.2、2.3、5、10、11 节 | tests 57 分解为消费侧配置 41 与引擎侧 16（F3t 连锁四类）；早先把合并 16 条记为截断系误判，已更正 | 不适用（判定轮，无代码改动） |
