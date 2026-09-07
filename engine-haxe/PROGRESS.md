@@ -2,7 +2,7 @@
 
 状态：阶段 A 与阶段 B 均完成。
 
-## 类级记录
+## 按类记录
 
 - `TraceFormat`：完成 trace 数字、控制字符和确定性文本格式化；TextRange golden 对照通过。
 - `TraceRecorder`：完成事件、原始行和文本累积记录功能。
@@ -70,7 +70,7 @@ bff1294cace0779caaf7f22153b6dabb  core-kotlin.hxml
 
 `PROGRESS.md` 是 checkpoint 容器，未把自身 MD5 写入自身内容；提交前单独执行 `md5sum porting/haxe/PROGRESS.md`。
 
-## 阶段 B 类级记录
+## 阶段 B 按类记录
 
 - `CoreUnitsGeometryTest`：完成几何、`ic`、约束和最大行数决策覆盖；trace 对照通过，生成入口 rc=0。
 - `UnicodeNumberTest`：完成 Unicode 17 Number 范围表、scalar 校验和跨脚本成员覆盖；trace 对照通过，生成入口 rc=0。
@@ -254,23 +254,23 @@ porting/haxe/patches/boring-tnew-precise-lookup.patch：DefaultArgExpander
 对 TNew 的默认值查找在精确键未命中时回退到全局按名匹配，多个类带
 默认构造器后任何未登记构造器的 TNew 都会误报 ambiguous。修复为 TNew
 只走精确键链（类加方法名、接口、父类），按名匹配的后备路径仅保留给
-无法确定声明类的访问路径。该缺陷在 Codex defaults 分支的在飞实现中
+无法确定声明类的访问路径。该缺陷在 Codex defaults 分支的进行中的实现中
 同样存在（line 698 一带），中央审查时并入修复。
 
 2026-08-31 核销：0383591（coalescing default 回收合并）重写了 completeNew
-序段——先取构造器参数表，args.length >= params.length 直接返回，默认值
+序段，先取构造器参数表，args.length >= params.length 直接返回，默认值
 查找移到其后。历史触发形态（StringBuf 零参 TNew、IntRange 全参 TNew）在
 到达按名回退之前就被前置返回截断，缺陷在 boring main 不再可达。port 树对
 9cfc006 干净 vendored（补丁未应用）编译，仅剩 RubySpan.hx:46 条件构造赋值
-报错（缺口 4 已知拦截），无任何 TNew 歧义。补丁文件已删；流程裁定：
+报错（Gap 4 已知拦截），无任何 TNew 歧义。补丁文件已删；流程裁定：
 boring 的修复一律进 boring main 后推进 vendored 指针，不再留本地补丁。
 
 2026-08-31 指针推进 ce28a3a（枚举无参值形态 + 值查询 + Std.string 标量行
 合并后）：port 树编译拦截点更新为 `TextStyle.hx:39 Std.string accepts
-scalars and parameterless enum values only`——Std.string 的数组域当时尚未
+scalars and parameterless enum values only`，Std.string 的数组域当时尚未
 降级。已按 boring-first 裁定在 boring main 落规格修订 997828d（数组渲染
 `[a, b]` 五端统一、Haxe 原生 `[a,b]` 分隔符分歧走 boring_oracle 条件），
-实现派发 lane/std-string-arrays。数组域落地后 port 侧 TextStyle、
+实现派发 std-string-arrays 任务。数组域实现后 port 侧 TextStyle、
 RubySpan、CoreLayoutQueriesGapsTest 三处 `Std.string(<数组>)` 保持原样即
 可编译；RichTextPaint 对 `RichTextLinePattern`/`RichTextBackgroundPaint`
 类实例的 Std.string 仍需 port 侧改写（对象不在域内）。
@@ -278,7 +278,7 @@ RubySpan、CoreLayoutQueriesGapsTest 三处 `Std.string(<数组>)` 保持原样�
 ## 中央条目（2026-08-30）：目录定为 engine-haxe
 
 用户裁定：porting/ 不进 git；Haxe 源码树移到仓库根目录 engine-haxe/
-（本次已移动）。终态是删掉 engine/，本目录改名为 engine/。比对脚本移至
+（本次已移动）。最终状态是删掉 engine/，本目录改名为 engine/。比对脚本移至
 engine-haxe/tools/compare-traces.py；TASK.md 与 codex 日志留在不跟踪的
 porting/；out/、baseline-goldens/、smoke/ 加入忽略清单。移动与路径修正
 后验证链重新通过：compile.hxml 零错误、测试 rc=0 无 FAIL、15 类比对
@@ -286,36 +286,36 @@ porting/；out/、baseline-goldens/、smoke/ 加入忽略清单。移动与路�
 
 2026-08-31 指针推进 405857f（Std.string 数组单遍降级合并后）+ 全量拦截点
 普查：以丢弃 worktree 逐个中和迭代编译，摸清到零错误的完整清单并已全部
-处置。已修复入库：裸类拼接 toString 全批（InlineBoxSpan/LineBreakSpan/
+处置。已修复入库：无注解类拼接 toString 全批（InlineBoxSpan/LineBreakSpan/
 DecorationSpan/TextSpan/RichTextSpan/RichTextLineSegment/RubySpan/
 PositionedCluster/InlineObjectSpan 的 range/style/paint/span/baseRange/
 boundary 字段，ParagraphStyle 的 blockIndent/lineLengthGrid/
 firstLineIndentPolicy，LayoutInput 的 content/textStyle/paragraphStyle/
-constraints/profileId 头部五行——Std.string 域检查同样作用于字符串拼接
+constraints/profileId 头部五行，Std.string 域检查同样作用于字符串拼接
 操作数，早期 census 只 grep Std.string 漏了这一类）；sameRole 嵌套
 variant switch 改平（switch 子集三规则：arm 必须是表达式、绑定载荷的
-switch 必须全构造器覆盖、arm 内嵌套 switch 无降级——Link 载荷比较拆到
+switch 必须全构造器覆盖、arm 内嵌套 switch 无降级，Link 载荷比较拆到
 sameLinkTarget 助手，parameterless 构造器用 == 比较 data object 单例）。
-剩余拦截分三类，均登记 boring 缺口队列：缺口 4 构造器纪律（RubySpan.hx:46
+剩余拦截分三类，均登记 boring 的 Gap 队列：Gap 4 构造器纪律（RubySpan.hx:46
 locale 跨参数条件默认、InlineObjectBoundaryAdjustment.hx:27 Null 解析+
-校验+赋值）；缺口 10 可变静态字段赋值（TestTrace.recorder 全局记录器、
+校验+赋值）；Gap 10 可变静态字段赋值（TestTrace.recorder 全局记录器、
 普通类自身静态 var 赋值同样无降级，已探针实锤）；测试类成员纪律波
 （15 个测试类携带非测试成员 testTrace/currentTrace/flushTestTrace/
 lowerHex 及各类 helper，boring 裁定共享逻辑入普通类，重构波待派发）。
 flushTestTrace 十四处定义零调用者，属死代码随波删除。首错即停教训：
-haxe 编译器本配置下报首个错误即止，lane 判据不能用「恰好 N 个已知错误」，
+haxe 编译器本配置下报首个错误即止，派发任务的判据不能用「正好 N 个已知错误」，
 必须迭代到零或以丢弃树中和验证。
 
 2026-08-31 InlineObjectBoundaryAdjustment 改常量默认：Kotlin 原版
 shrinkCapacity 与 lineEndDiscardableAdvance 就是 `Float = 0f` 常量默认，port
 侧原以 Null 解析加校验加赋值建模并无必要。改为 `shrinkCapacity:Float = 0.0`
 等常量默认后构造器通过全部检查，TextModelCoverageTest 四处拒绝用例同步改为
-省略或显式 0.0 形态，fixed() 改全默认构造。该文件退出缺口 4 拦截清单。同一轮
+省略或显式 0.0 形态，fixed() 改全默认构造。该文件退出 Gap 4 拦截清单。同一轮
 修复 74c92c12 的遗漏：Main.hx 仍调用已删除的 flushTestTrace，测试入口在该
 提交上编译失败；TestTraceRecorder 增 flushClass(className) 静态，Main 十五处
 改经它写 golden。验证：tests/compile.hxml 零错误、测试 rc=0、15 类比对 15/15、
-exception-alias=73。剩余 Kotlin 拦截两处：RubySpan.hx:46（缺口 4）、
-TestTraceRecorder.hx:10 静态赋值（缺口 10）。
+exception-alias=73。剩余 Kotlin 拦截两处：RubySpan.hx:46（Gap 4）、
+TestTraceRecorder.hx:10 静态赋值（Gap 10）。
 
 2026-08-31 LayoutModel 剩余 28 个 DecisionInfo 记录全部入库（fd9d9e44）：
 BreakOpportunity/EmergencyTrackingEligibility/InlineBox/InlineObject/
@@ -340,7 +340,7 @@ TextModel.kt:142 形态一致。Kotlin 允许带默认参数后跟必选参数�
 kotlinc 最小样例实证通过。
 
 两个待办随记：PunctuationDecisionInfo.policyBodyFloor 的 Kotlin 原默认读
-bodyWidth 参数（缺口 4 范畴），过渡为必选参数，缺口 4 实现合并后改
+bodyWidth 参数（Gap 4 范畴），过渡为必选参数，Gap 4 实现合并后改
 ?Null<Float> 合并式；PunctuationDecisionInfo.char 与 SpacingDecisionInfo
 leftChar/rightChar 的 Kotlin Char 以单 UTF-16 单元 String 移植，手写消费方
 在 layout 波移植时同步换字面量形态。既有文件的原生常量默认统一转换见下一条。
@@ -361,7 +361,7 @@ RichTextBackgroundPaint.continuationCornerRadius 与 drawStyle、
 RichTextPaint.linePattern 与 background、ParagraphStyle.blockIndent、
 firstLineIndentPolicy、lineLengthGrid 与两个 em 常量默认、LayoutInput 三个
 样式默认、InlineObjectSpan 两个边界、BopomofoGlyphPlacement 三个几何默认、
-LineBox.debug（构造调用默认不在缺口 4 扩展文法内，长期必选）。
+LineBox.debug（构造调用默认不在 Gap 4 扩展文法内，长期必选）。
 TiqianTextContent.sourceBoundaries 的 Kotlin 类型是 Set<Int>，移植持有
 Array<Int>，类型偏差留待 layout 波移植时裁定。验证链通过：compile.hxml 零错误、
 serial-test rc=0、15 类 tolerance 比对 15/15、exception-alias=73、
@@ -377,7 +377,7 @@ TextModelCoverageTestHelpers 先例）。TestTraceRender 增 renderStringArray�
 TracedAssertions 增 assertEqualsStringArray、assertEqualsBopomofoTone、
 assertEqualsBopomofoReading 三个入口。clreq 文件在隔离 hxml 下做 Kotlin
 降级检查：修掉 BopomofoParser 的 V15 与测试类非测试成员两处后，止于已登记
-的 TestTraceRecorder.hx:10（缺口 10 范畴）。中文字面量沿移植树既有约定
+的 TestTraceRecorder.hx:10（Gap 10 范畴）。中文字面量沿移植树既有约定
 直接写原字面量（从 Kotlin 原文机械复制）。验证链通过：compile.hxml 零错误、
 serial-test rc=0、17 类 tolerance 比对 17/17、exception-alias=73、
 core-kotlin 仍止于 RubySpan.hx:46 首错。
@@ -407,7 +407,7 @@ TiqianTextContent 先例。ClreqProfile toString 经 TestTraceRender.cap 截断�
 golden 的 240 字符 FNV 行逐字节一致；1f/3f 一律写 0.33333334 字面量保 f32
 渲染一致。验证链通过：compile.hxml 零错误、serial-test rc=0、22 类 tolerance
 比对 22/22、exception-alias=73、隔离 clreq 检查止于 TestTraceRecorder.hx:10
-（缺口 10 范畴，无新增违规）、core-kotlin 仍止于 RubySpan.hx:46 首错。
+（Gap 10 范畴，无新增违规）、core-kotlin 仍止于 RubySpan.hx:46 首错。
 
 2026-08-31 cat3 波：七处构造默认值还原。AutoSpacePolicy（cjkLatin、cjkDigit、
 gapEm、stretchMaxEm 四参全默认，Default 静态 preset 改零参构造）、Cluster
@@ -443,9 +443,9 @@ ClreqProfile.DefaultCoalesceRepeatablePunctuation，阶段 B 静态字段根，�
 ClreqProfile.kt:17-19 同形（容器名 PunctuationGluePlacements 与
 MutableList/Set 集合映射除外）。
 
-2026-08-31 spec 37 落地收尾：BreakOpportunity 手写 toString 删除，偏离记录
+2026-08-31 spec 37 实现收尾：BreakOpportunity 手写 toString 删除，偏离记录
 类别 1 全部还原。boring c8cccc8（spec 37 record 打印与相等比较按字段声明
-位置排序；Kotlin 在构造参数序与字段声明序不一致时显式发射合成成员覆盖
+位置排序；Kotlin 在构造参数序与字段声明序不一致时显式生成合成成员覆盖
 原生 data class 打印）合并推送后推进 vendored 指针，port 侧删除
 BreakOpportunity.hx 的手写 toString 与登记注释，字段声明序 index、kind、
 penalty、reason 即打印序，合成输出与手写体逐字节一致。验证链通过：
@@ -458,11 +458,11 @@ CoverageTest 11 测、Coverage2Test 移植完成；引擎两处守卫对齐 Kotl
 TiqianIllegalArgumentException 对应 require，candidateWindow 消息补句号，
 ParagraphDpLineBreaker.kt:106-108）；IntRange.hx 增忠实 toString
 （kotlin.ranges.IntRange 经 ClosedRange 显式打印 first..last，与 Rect 同为
-原件显式 override 类别）。四门：compile.hxml 零错误、serial-test rc=0、
-core-kotlin 零错误、tolerance 66 类 65 绿。仅剩 CoverageTest 9 行失配，
-全部属于两条 boring 已登记能力缺口，port 侧不得手写绕过：
+原件显式 override 类别）。四项检查：compile.hxml 零错误、serial-test rc=0、
+core-kotlin 零错误、tolerance 66 类 65 绿。仅剩 CoverageTest 9 行不一致，
+全部属于两条 boring 已登记的未实现能力，port 侧不得手写绕过：
 1. payload 枚举具名形态：spec 34 裁定 Name(param=value) 打印，LineOptimization.hx
    RepairOptions 注释记录"not implemented yet"；repair=PushIn(2,...) 仍为位置形态。
 2. 集合字段打印：spec 33 只裁定 Array<T> 字段；hangingClusterIndices 的
    SortedSet<Int> 字段打印 {\n\tkeys : []\n}，Kotlin Set 应印 [a, b]。
-两条缺口并入 boring 替换阻塞队列，落地后删除测试支撑里的临时渲染。
+两条 Gap 条目并入 boring 替换阻塞队列，实现后删除测试支撑里的临时渲染。
