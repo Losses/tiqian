@@ -126,7 +126,7 @@ alternate advance 与 placement 暴露为 `Glyph.haltAdvance` / `haltPlacementX`
 
 ### Amendment (2026-07-11): 上下文中文引号的 underwidth glyph
 
-实际 Web 字体暴露出”CJK role 已判对，但 glyph 仍是西文比例宽度”的独立情况。
+实际 Web 字体暴露出“CJK role 已判对，但 glyph 仍是西文比例宽度”的独立情况。
 以 MiSans VF 为例，U+201C/U+201D 有 cmap 覆盖，却只有约 `0.378em` advance；
 `locl` / `fwid` 在该字体上都不产生一字宽引号。仅把 quote pair 分类成
 `CjkPunctuation` 并不能自动得到中文占位，反而会让标点 atom 缩成字体给出的窄宽。
