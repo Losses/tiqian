@@ -59,7 +59,7 @@ WORDS = [
     "链路", "打通", "拉齐", "沉淀", "反哺", "赋能", "抓手", "打磨", "深耕",
     "复盘", "一把梭", "弃坑", "跑通", "回流", "通路", "真·", "波次",
     # alignment-dimension metaphor (2026-09-05 correction): 轴 as in 对齐轴
-    "轴",
+    "轴", "＝",
     # gate metaphor for the verification suite (2026-09-05 correction)
     "四门",
     # coined compressions (2026-09-05 corrections)
