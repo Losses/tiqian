@@ -23,6 +23,7 @@ platforms/web/server/precompute/target/
 # Agent working artifacts (specs, reports, logs, baselines; kept on disk, never committed)
 .agent-specs/
 .b2-tmp/
+.agent-policy.md
 
 # npm workspace root install output
 /node_modules/
