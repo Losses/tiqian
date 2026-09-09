@@ -29,28 +29,28 @@ NOT_ENOUGH_POSITIONAL_ARGUMENTS 105→4，F3ah 的修复经 dartargs-r2 生效�
   （写提交号）或 tiqian（写提交号）；vendored 副本已推进并重新生成相关目录；
   该错误种类在相关目录的计数都是 0；boring 的验收命令全部通过。完成并在新
   基线复测确认后，把该修复项从第 11 节清单删除，只在第 12 节进度记录表留
-  一行（2026-09-07 用户裁定，取代此前「勾选后保留记录」的做法）；修复项
+  一行（2026-09-07 用户规定，取代此前「勾选后保留记录」的做法）；修复项
   编号保留不复用。
 - 一次修复只允许对应一个修复项；不允许一次核销多项，也不允许提前核销。
 - 计数必须来自本文「测量配方」一节的命令输出，不允许凭印象填写。
-- 错误按消息骨架逐行记录，每一类一行（2026-09-06 用户裁定：不设「未归类」
+- 错误按消息骨架逐行记录，每一类一行（2026-09-06 用户规定：不设「未归类」
   「其余」聚合行，折叠会让任务量检验失真）。新暴露的错误类在逐类表加新行，
   不允许并入既有行，也不允许并入任何聚合行。每张逐类表必须附求和校验，各类
   计数之和等于总数。
 - 大类内部的分解同样逐条列出：名称、模块、文件等维度的分布写全每一个名字
   与计数，不设「前 N 位」的截断，也不设把多个名字合并成一行的聚合行
-  （2026-09-06 用户裁定：条目折叠省略会让工作量检验失真）。
+  （2026-09-06 用户规定：条目折叠省略会让工作量检验失真）。
 - 修复项与 KPI 的切分必须反映修复工作量：每条修复项写明它覆盖的错误类、
   类内条目与计数，KPI 的现值写各目标逐类表的实测计数；不把多个修复位置合并
-  成一个指标（2026-09-06 用户裁定）。
+  成一个指标（2026-09-06 用户规定）。
 - 每次修复合入 boring main 后就重测受影响目标的目录：只要计数相对上一
   基线下降，立即更新对应逐类表与第 10 节 KPI 现值，并向用户交前后对照表；
-  不必等计数降为 0，也不必等修复项整体完成（2026-09-07 用户裁定）。
+  不必等计数降为 0，也不必等修复项整体完成（2026-09-07 用户规定）。
 - 第 12 节进度表与第 11 节修复历程不复述提交内容：哪个提交改了哪个文件、
   哪个分支、加了几行，经提交号用 git show 得知，文档不重复叙述
-  （2026-09-08 用户裁定）。进度表修复项栏写修复项编号、修复名与覆盖的
+  （2026-09-08 用户规定）。进度表修复项栏写修复项编号、修复名与覆盖的
   错误类；修复历程括注写轮次、提交号与提交号无法得知的事实（计数、
-  验收结果、判定、裁定、失败的定性、未提交事件）。提交号本身可以出现在
+  验收结果、判定、规定、失败的定性、未提交事件）。提交号本身可以出现在
   任意栏。
 
 ## 2 测量配方
@@ -458,7 +458,7 @@ condition、overload ambiguity、Unexpected tokens、null cannot be 七类
 | 合计（等于该类计数） | 131 | 138 | Long 给浮点形状（0/2）已随 knamefix-r8 降 0 删除 |
 
 旧版 K4 的统计命令只覆盖数值形状（当时 f32 144 / f64 152），由本表取代；
-「其余转换」行的存在不违反第 1 节的禁折叠裁定，它是对 argument type
+「其余转换」行的存在不违反第 1 节的禁折叠规定，它是对 argument type
 mismatch 这一个类内部的形状分类，下次分解出现新的成批形状时拆成具名行。
 
 ### 3.4 unresolved reference 符号分布（含 tattr2 r2 归属沿用）
@@ -468,7 +468,7 @@ mismatch 这一个类内部的形状分类，下次分解出现新的成批形�
 operator 类的 operator 名 3。相对 `b7054019` 表的 112 个符号 Σ=368，
 knamefix-r8 消灭了 101 个符号共 311 条（UString 29、clusterRange 24、
 strategyName 32、Ic 16、compareXxx 长尾与全部属性名连锁在内）。f64 侧
-分布与 f32 相同（主类 54 加 operator 形 3）。按第 1 节裁定全量列举：
+分布与 f32 相同（主类 54 加 operator 形 3）。按第 1 节规定全量列举：
 
 | 计数 | 符号 | 判定 |
 |---:|---|---|
@@ -856,7 +856,7 @@ F3at 的修复与 A/B 验证：dartnull-r1 与 r2 死于渠道端点挂起零交
 其他错误码零扰动；r3 样本未复现三个错误码的原因判定为 r1 任务书规格
 缺陷（样本局部不标注，消费树触发错误的是标注 `Int` 的局部）。r4（terra）
 补 kotlin、swift、dart 测试侧四处漏补非空断言（`c25cc3c1`、`17b3d3a8`、
-`9f0b52df`），rust 越界断言裁定为断言形态问题、非缺陷掩蔽；r5（terra）
+`9f0b52df`），rust 越界断言规定为断言形态问题、非缺陷掩蔽；r5（terra）
 交付 rust 双 unwrap_or 去重 `7994eceb`。任务分支六笔经合并 `b822afee`
 进入 boring main 并已推送，条目待 census13 复测删除。
 
@@ -1210,7 +1210,7 @@ C2 跨文件或跨目标，同一缺陷出现在多个目标，或需要 tiqian 
 
 ## 10 KPI
 
-工作量检验的方式（2026-09-06 用户裁定）：进度以各目标逐类表的行计数变化
+工作量检验的方式（2026-09-06 用户规定）：进度以各目标逐类表的行计数变化
 为准，每类可单独复测；不设覆盖多类的「其余」聚合指标，聚合数只保留合计
 一个完整性数字（各类求和必须等于合计）。修复项只对修复位置开，不对消息类
 主题开；每条修复项写明覆盖的错误类、类内条目与计数，KPI 现值写各目标
@@ -1553,7 +1553,7 @@ dartguard（#64）r1 至 r4 累计把残余 143 条修到 17 条、r6 后残余 
       r3（terra）交付 dart 侧修复 `819f6d3a`，消费树 A/B 验证与样本未复现
       的根本原因（r1 任务书规格缺陷：样本局部不标注）见第 8 节；r4（terra）
       补 kotlin、swift、dart 测试侧三笔 `c25cc3c1`、`17b3d3a8`、
-      `9f0b52df`（rust 越界断言裁定为断言形态问题、非缺陷掩蔽）；r5
+      `9f0b52df`（rust 越界断言规定为断言形态问题、非缺陷掩蔽）；r5
       （terra）交付 rust 双 unwrap_or 去重 `7994eceb`。任务分支六笔经
       合并 `b822afee` 进入 boring main 并已推送。条目待 census13 复测
       dart 三个错误码的 charCodeAt 条目与 rust E0599 同机制条目后删除）- [ ] F3au kotlin counted-loop 识别未查循环体写计数器：覆盖 3.2 节 cannot
@@ -1746,7 +1746,7 @@ dartguard（#64）r1 至 r4 累计把残余 143 条修到 17 条、r6 后残余 
 | 2026-09-06 | F0l dart 静态成员顶层重名修复（修复任务 dartic）与 dart 首次编译普查（F4b dart 半项）；dart 并入 KPI | boring `189e01ad`（合并 `31627b5c`，已推送） | dart 生成退出码 0；dart analyze 报 2931 条、35 类，求和校验相等；无测量环境条目 | 19 项验收检查在修复检出与合并检出各全部退出码 0；合并后 bun test 672 pass / 3 fail（三个既有名目） |
 | 2026-09-06 | rust 普查复测（基线推进到 boring `75b08ed2`）；补两条 rust 测量错误记录 | 本文档第 2.2、2.3、6 节 | rust 180 条、15 类，求和校验相等；相对 4b1fec9 首测的 181 条少一条保留字转义类（`type` 6 处降 5 处）；浮点字面量类 124 条不变 | 不适用 |
 | 2026-09-06 | T-attr r1 与 T-dart r1 判定并入普查文档；新增修复项 F3j、F3k、F3l、F3m | 本文档第 3.2、3.3、3.4、8、8.2、10、11 节 | 判定进度见 3.2 与第 8 节小结；错误计数未复测，基线不变 | 不适用 |
-| 2026-09-06 | 补记已完成并自第 11 节删除的条目：F0a-F0d nullargs（boring `8d17b59`，null 字面量错误 2122→0，合并后普查 f32 1535 / f64 1553）、F0g 变体 switch 赋值位（ts `73c076d8`、swift `ab1d7882`，样本 `2b0189c9`）、F0h 表达式位块 features/43（boring `6251842`）、F0k Std.string 第二批（tiqian `26d89566`；裁定解除 `04777e8b`）、F0i 第一处 std/Type extern（boring `47d6cea`，合并 `a0b7416e`）与逐处重跑收尾 | 见左列 | 效果已含在 r4 与本次基线数字内 | nullargs 19 项验收检查退出码 0；F0k 合并后六个生成命令实测，rust 退出码 0 |
+| 2026-09-06 | 补记已完成并自第 11 节删除的条目：F0a-F0d nullargs（boring `8d17b59`，null 字面量错误 2122→0，合并后普查 f32 1535 / f64 1553）、F0g 变体 switch 赋值位（ts `73c076d8`、swift `ab1d7882`，样本 `2b0189c9`）、F0h 表达式位块 features/43（boring `6251842`）、F0k Std.string 第二批（tiqian `26d89566`；规定解除 `04777e8b`）、F0i 第一处 std/Type extern（boring `47d6cea`，合并 `a0b7416e`）与逐处重跑收尾 | 见左列 | 效果已含在 r4 与本次基线数字内 | nullargs 19 项验收检查退出码 0；F0k 合并后六个生成命令实测，rust 退出码 0 |
 | 2026-09-06 | 原第 13 节背景条目并入本表后该节删除：names-r2 第一批（unresolved 347→290）、单变体异常折叠回归（boring `a75601a`）、record 接口字段打印与 Rust derive（boring `5d7417e`）、Dart Math.min/max 调用点降级补臂、knarrow null 初始化位（boring `4b1fec9`，52→0）、onlysafe 上半（tiqian `3ce6f511`，only safe 95→75）、sbuf-bind（tiqian `0b152313`，stringbuffer 表达位错误→0） | 见左列 | 效果已含在各基线数字内 | 不适用 |
 | 2026-09-07 | knullinit 系列合并（kotlin 可空接收者守卫与 dart 侧同机制守卫） | boring `3d397740`、`9e0537d0`、`b552e2a1`（合并 `23f4bf63`） | kotlin only safe 75→3、operator call prohibited 60→6；dart UNCHECKED 420→143（property 314→40） | 修复任务报告内验收命令通过；合并后 19 项检查未整体重跑（我还没有验证） |
 | 2026-09-07 | kparamnull 合并（kotlin 可选参数 null 默认值） | boring `1f35923d`（合并 `2b78ab4b`） | 效果含在第 3.1 节本次基线内，原因未逐类查明 | 同上 |
@@ -1756,7 +1756,7 @@ dartguard（#64）r1 至 r4 累计把残余 143 条修到 17 条、r6 后残余 
 | 2026-09-07 | rustflit 合并（rust 浮点字面量缺整数部分） | boring `4deac694`（合并 `d870489c`） | rust 浮点字面量类 124→0 | 同上 |
 | 2026-09-07 | rustf4c 合并（rust 保留字转义；r2 探针判定 7 类，F4c 关闭、F3n 至 F3s 开列） | boring `dc09d773`＋`e4c24e77`（合并 `782526d7`）；r2 报告 /tmp/dispatch-state/boring-rustf4c-r2.report.md | rust 保留字转义类 12→0；本次复测 20 条、7 类全部有修复位置判定 | 同上 |
 | 2026-09-07 | swiftrem-r2 合并（swift 浮点字面量与控制字符转义，F3f、F3g 关闭） | boring `4c81c5fc`（合并 `e01b03b3`） | swift gen 侧浮点 7 条与控制字符 1 条均→0 | 同上 |
-| 2026-09-07 | 八格矩阵重测与新判定并入（tattr2 r2、tsprobe2 r1 即 T-ts 关闭、f64only r1 即 F2b 关闭、knulljud r1 的按类汇总预览、rustf4c r2）；第 10、11、12 节按 2026-09-07 用户裁定改为删除制 | 本文档第 3、5、6、7、8、10、11 节 | kotlin f32 696 / f64 717；swift gen 1 加 tests 57（每精度）；rust 20（每精度）；ts 1127（与首测逐类相同）；dart 2606、33 类 | 重生成八入口退出码 0；各逐类表求和校验相等 |
+| 2026-09-07 | 八格矩阵重测与新判定并入（tattr2 r2、tsprobe2 r1 即 T-ts 关闭、f64only r1 即 F2b 关闭、knulljud r1 的按类汇总预览、rustf4c r2）；第 10、11、12 节按 2026-09-07 用户规定改为删除制 | 本文档第 3、5、6、7、8、10、11 节 | kotlin f32 696 / f64 717；swift gen 1 加 tests 57（每精度）；rust 20（每精度）；ts 1127（与首测逐类相同）；dart 2606、33 类 | 重生成八入口退出码 0；各逐类表求和校验相等 |
 | 2026-09-07 | tswift1 r1 探针交付（swift tests 六类判定）＋合并测量补进配方 | 本文档第 2.2、2.3、5、10、11 节 | tests 57 分解为消费侧配置 41 与引擎侧 16（F3t 连锁四类）；早先把合并 16 条记为截断系误判，已更正 | 不适用（判定轮，无代码改动） |
 | 2026-09-07 | tattr3 r1 探针交付（kotlin 十二类升修复位置、假设检验、连锁错误归类）＋修复项 F3v 至 F3ag 开列 | 本文档第 3.2、3.4、10、11 节 | 修复位置 9→21 类、形状证实 14→0（12 类升修复位置、1 类判为连锁伪影、1 类升探针定位）；探针定位 3 类随 #23；pow 与 NodeFileSystem 因果结论在探针轮结束消息里（报告文件未及更新，锚点未存档） | 不适用（判定轮，无代码改动；探针检出 git status 干净核实，报告引用的生成器行号逐处复核） |
 | 2026-09-07 | F3t swift 字符串插值内嵌语句体闭包（修复任务 swiftstr-r1） | boring `6ad8dc66`（合并 `d2c6b559`，已推送） | swift tests 侧每精度 57→41：F3t 四类（static methods 13、unterminated 1、extraneous 1、string interpolation 1）16→0；gen 侧每精度 1 条不变；基线参考目录对照无差异 | 修复任务报告内两精度 gen+test 退出码 0；合并检出两精度 gen+test 复跑退出码 0；消费方检出四目录计数（gen 1/283、tests 41/109 每精度）由派发方按磁盘日志复核，残余 41 条全部属于 cannot find 32 与 contextual type 9 两类 |
@@ -1772,7 +1772,7 @@ dartguard（#64）r1 至 r4 累计把残余 143 条修到 17 条、r6 后残余 
 | 2026-09-07 | swift 产物文件计数核对：`_GeneratedFiles.txt` 末行无换行符，`wc -l` 比 `grep -c .` 少 1；rm-first 重生成后 f64 目录 393 个文件与普查记录相同，std/UString 两个文件在 tiqian `77e9bd3c` 与 `3f609c0f` 两个基线都不生成（非回归） | 本文档第 2.3 节 | swift f64 rm-first 复测 393（find -type f 计数，含清单文件本身）；f32 未做 rm-first 复测 | 不适用（测量核对，无代码改动） |
 | 2026-09-07 | tsgetcal-r6 合并（F3e）；F3e 完成并从第 11 节删除 | boring `4fa632e6`（未推送） | ts 1127→1004、19→16 类：TS2551 28→0 与 TS2341 get_ 前缀 10→0；TS2420 6→0、TS2693 3→0；TS2345 87→14、TS2322 8→2；TS2304 183→186（org 2→108 为新形态即 F3as）；测量环境 308 不变 | 修复任务检出 19 项 ALL-DONE；派发方在合并态重跑（tag mainmg1，`d0df20db`）15 项通过、4 项失败，失败四项非本批引入：kotlin 两项为 main 既有 UString 生成缺陷（修复归 knamefix 续作）、test:dart 为 StringUnitTests.unitSurface 单测失败（基线已有）、consistency 的进入点经逐合并树核对更正为 `dd703b1f` 进、`c332897a` 出 |
 | 2026-09-07 | rustfix r2 至 r4 合并（F3p、F3r、F3s；r4 另使 boring 侧 stage1:rust 残余诊断降为 0；三笔修复各自对应哪次合并没有逐笔核对）；F3p、F3r、F3s 完成并从第 11 节删除 | boring `e509f6df`（r2，经 `09f1b8ad`）与 `d0df20db`（r4，经 `3dc775a3`；r3 无独立合并提交，其工作经 rustfix 分支并入，未逐笔核对）；报告 /tmp/dispatch-state/boring-rustfix-r4.report.md | rust 解析层每精度 4→0；语义层首次测得每精度 189、8 类（第 6 节新表：108 条的错误类有最小复现实证，42 条的 compare 前缀错误类为与 ts/dart 同源的假设）；消费方 189/189 与 rustfix 系列修复自 r2 起的消费方基线一致 | 派发方在合并态重跑 19 项检查（tag mainmg1，`d0df20db`）15 项通过、4 项失败：test:stage1:rust 与 test:rust-f32 均 0；失败四项为 kotlin 两项检查、test:dart、consistency 的既有缺陷（见上一行），与 rust 批次无关；未推送 |
-| 2026-09-07 | ts 测量命令补类型配置并同树复测（用户裁定测量环境条目应随测量配方配置）：第 2.2 节新增类型支撑目录安装命令与测量树 out 目录 tsconfig.json（bun 与 node 的类型定义、`@tiqian/runtime` 两个模块名映射到生成树内文件），编译选项其余各项不变；tsprobe2 r1 对 TestCore 的测量环境判定经机制核对改判引擎侧 | 本文档第 1、2.2、7、7.2、10 节；无代码改动 | ts 1004→722、消息骨架 16 个不变：测量环境 300 条全部解析（TS2307 类内 bun:test 108、@tiqian/runtime 79、@tiqian/runtime/test 108、node:fs 1、node:path 1；TS2580 的 process 3 整类删除）；新暴露引擎侧 19 条（TS2305 的 `@tiqian/runtime` UString 8、floatToI32 6、i32ToFloat 4，runtime.ts 只导出 12 个名字不含这三个；TS2304 的 compareFontMetricsRequest 1 条换骨架为 TS2552）；TestCore 8 条改判引擎侧（ts Compiler.hx 缺 runtime.TestCore 强制类型化，kotlin 侧 kotlincompiler/Compiler.hx:58 有该调用、kotlin 生成树有 runtime/test/TestCore.kt，ts 生成树全树无声明）；逐类表求和校验相等 | 同一棵 `d0df20db` 生成树前后两次测量（日志 /tmp/census7/ts.log 与 ts-typed.log），差值全部来自类型配置；判据=bun:test、@tiqian、node:fs、node:path、process 条目在 ts-typed.log 中不再出现（TS2307 模块分布仅剩 4 个相对路径模块名） |
+| 2026-09-07 | ts 测量命令补类型配置并同树复测（用户规定测量环境条目应随测量配方配置）：第 2.2 节新增类型支撑目录安装命令与测量树 out 目录 tsconfig.json（bun 与 node 的类型定义、`@tiqian/runtime` 两个模块名映射到生成树内文件），编译选项其余各项不变；tsprobe2 r1 对 TestCore 的测量环境判定经机制核对改判引擎侧 | 本文档第 1、2.2、7、7.2、10 节；无代码改动 | ts 1004→722、消息骨架 16 个不变：测量环境 300 条全部解析（TS2307 类内 bun:test 108、@tiqian/runtime 79、@tiqian/runtime/test 108、node:fs 1、node:path 1；TS2580 的 process 3 整类删除）；新暴露引擎侧 19 条（TS2305 的 `@tiqian/runtime` UString 8、floatToI32 6、i32ToFloat 4，runtime.ts 只导出 12 个名字不含这三个；TS2304 的 compareFontMetricsRequest 1 条换骨架为 TS2552）；TestCore 8 条改判引擎侧（ts Compiler.hx 缺 runtime.TestCore 强制类型化，kotlin 侧 kotlincompiler/Compiler.hx:58 有该调用、kotlin 生成树有 runtime/test/TestCore.kt，ts 生成树全树无声明）；逐类表求和校验相等 | 同一棵 `d0df20db` 生成树前后两次测量（日志 /tmp/census7/ts.log 与 ts-typed.log），差值全部来自类型配置；判据=bun:test、@tiqian、node:fs、node:path、process 条目在 ts-typed.log 中不再出现（TS2307 模块分布仅剩 4 个相对路径模块名） |
 | 2026-09-08 | rustsem r1 判定并入（rust 语义层八类逐类三件套：第 6 节逐类表更新为修复位置判定，原 4 条的 could-not-find 类拆为 tiqian_no_such_element_exception 3 条与 crate::std::functional 1 条两行，修复项 F4d 至 F4k 开列；探针 cmd deepseek-v4-flash 死于周限额但报告完整交付）＋org108 r1 判定的 K2 进度更正（ts 侧 org 108 从待定位改为已判定，修复项 F3as 开列）＋tsforce-r1 的 F3ar 按删除制从第 11 节移除 | 本文档第 6、10、11 节 | 判定进度：rust 语义层 8/8 类全部有修复位置（探针为静态对照判定，未运行构建；108 条类的机制另有 /tmp/cfgtest-repro 最小复现）；错误计数未复测，基线不变（rust 189/精度、ts 714） | 不适用（判定轮，无代码改动） |
 | 2026-09-08 | dunitsurf-r2 合并（dart 运行时崩溃消除；test:dart 链首次走到 analyze 步，暴露 boring 自身 48 条名字解析错误，dunitsurf-r3 派发）＋rustf4d-r1 合并（F4d 完成删除）＋F3at 开列（dartnull 派发）；`d38459ab` 复测 | boring `c5cf26d8`（合并 `fc2b53b6`）与 `0629b847`（合并 `d38459ab`），均已推送；日志 /tmp/census10 | rust 每精度 189→255：E0432 pub use 类 108→0，新增四码 174 条全部未判定（进入区间拓扑缩小为 `d0df20db..d38459ab`，rustprobe r1 派发）；dart 1670→1702（生成侧 +32 全部 F3at，测试侧不变） | 派发方中央复测 census10（逐类求和校验相等）；knamefix-r7 经 gates 否决（CI run 34189663133 判为本支引入），r8 返工派发；dartargs-r1 部分交付（dart 侧正确、rust 五错与 kotlin 样本拒绝待修），r2 返工派发 |
 | 2026-09-08 | rustprobe r1 判定并入（新增四错误码原因判定：A/B 实测 `908305a0` 精确复现基线 189 且其非测试 .rs 文件与 `d38459ab` 逐字节相同、`c332897a` 生成整体崩溃剩 4 条属 knamefix-r2 自身回归、控制实验在 `d38459ab` 树手工删除全部 216 条 `#[cfg(test)]` 条件编译标注后计数精确回到 189；结论是新增四码为 rustf4d 条件编译揭露的既有缺陷而非新引入翻译缺陷）＋修复项 F4l 至 F4o 开列（E0425 的 org 加 region 加 count 60 条 F4l、E0424 75 条 F4m、E0423 1 条 F4n、E0433 13 条 F4o；E0425 compare 六支按位点改判随 F4e） | 本文档第 6、11 节；无代码改动 | 错误计数未复测（`d38459ab` 基线 255/精度不变），判定结论进入第 6 节原因判定段与逐类表 | 不适用（判定轮，纯只读探针；报告 /tmp/dispatch-state/boring-rustprobe.report.md，A/B 与控制实验证据 /tmp/rustprobe-*.log） |
@@ -1787,11 +1787,13 @@ dartguard（#64）r1 至 r4 累计把残余 143 条修到 17 条、r6 后残余 
 | 2026-09-08 | rustjudge r2 验收（诚实部分交付：E0308-198 形状组完整三件套判为修复位置、错误来源判定 `74371c5a`（VNull 双包装与递归装箱两候选证伪）、E0277 全量 18 形状表 Σ=834 并证伪 F4g 同机制说法（send 仅 5 条）；19 码三件套与 E0689 四文件对照未完成、报告内声明）；F4p 开列；三项任务派发：rustcoalesce-r1（terra，F4p 修复，先补样本复现）、rustjudge-r3（terra，2230 条九档优先级续判，E0308 与 E0277-send 排除）、dartnull-r2（zen，F3at） | 无代码改动（验收与派发轮）；r2 结论并入第 6 节，F4p 进第 11 节 | 错误计数未复测（census12 基线不变；三任务交付后统一 census13） | 派发前按 env 文件 pid 验活（terra×2 加 zen×1，渠道容量内） |
 | 2026-09-08 | rustjudge r3 验收（E0599 四子形 569/701 条三件套：clone 459 修复位置开列 F4q、关联常量 51、`as_deref` 36、Option `to_string` 23 三组 110 条既有暴露；E0599 逐轮计数核对实测 census10 与 census11 均为 0、census12 为 701，显现全部为新增）＋rustcoalesce-r1 部分验收（rust 侧 `bc750c22` 两项退出码 0；六项失败经派发方逐条核对 gates 日志定性为两个跨目标缺陷模式，r1 的「gate 顺序/环境状态」定性被日志证伪）＋三项再派发：rustcoalesce-r2、rustjudge-r4（398 条续判，E0061、E0277、E0689 排除待 census13）、dartnull-r3（r1 与 r2 死于渠道端点挂起，SOP 33 重发说明）＋F4q 开列 | 无代码改动（验收与派发轮）；r3 结论并入第 6 节与 K2，F4q 进第 11 节 | 错误计数未复测（census12 基线不变） | 启动后 env 核对（terra 3/3 满、zen 0/1、cmd 0/2），pid 验活并挂盯守 |
 | 2026-09-08 | rustjudge r4 验收（诚实部分交付 26/398：u32 双重 `unwrap_or` 12 条（`RustExpr.hx:613-629` 局部声明分支与 `:3343-3353` 算术分支对同一 charCodeAt 调用各追加一次，bopomofo_parser.rs:22 双后缀实测）、关联常量 `AUTO_SPACE_POLICY_DEFAULT` 14 条（与 r3 的 51 条组同一机制、扩为 65）；两组均既有暴露，区间三笔 rust 提交 hunk 不触相关分支；372 条未完成在报告内声明，进程干净结束）；F4q 前置问题回答并经派发方逐行复核（data-class 路径仍有 isAllClone 检查，r3「放宽 derive 触发条件」表述更正）；第 6 节小结求和笔误更正（十三小码 167→105） | 无代码改动（判定探针验收轮）；r4 结论并入第 6 节、F4q 与 K2 | 错误计数未复测（census12 基线不变） | 报告 /tmp/dispatch-state/boring-rustjudge-r4.report.md |
-| 2026-09-08 | dartnull-r3 验收（部分接受：dart 侧修复 `819f6d3a` 与样本 `fd23a839` 保留在待合并分支；样本未复现三码判定为 r1 任务书规格缺陷：样本局部不标注、消费树触发错误的是标注 `Int` 的局部；越界断言 `Test.equals(null, argShape(""))` 裁定为断言形态问题、非缺陷掩蔽；gates 六项失败逐条定性：kotlin 比较右算员与推断局部返回位、swift 调用返回位漏补非空断言、rust 越界断言语义、dart 测试侧 equalsInt(null) 类型）＋dartnull-r4 派发（terra，续修四处） | 无代码改动（验收与派发轮）；r3 结论并入第 8 节与 F3at | 消费树 A/B 实测三码 170→153、26→12、2→1、总量 −32 与新增数一致、其他错误码零扰动（/tmp/dartnull-ab-*.ml）；boring main 基线不变 | 报告 /tmp/dispatch-state/boring-dartnull-r3.report.md |
+| 2026-09-08 | dartnull-r3 验收（部分接受：dart 侧修复 `819f6d3a` 与样本 `fd23a839` 保留在待合并分支；样本未复现三码判定为 r1 任务书规格缺陷：样本局部不标注、消费树触发错误的是标注 `Int` 的局部；越界断言 `Test.equals(null, argShape(""))` 规定为断言形态问题、非缺陷掩蔽；gates 六项失败逐条定性：kotlin 比较右算员与推断局部返回位、swift 调用返回位漏补非空断言、rust 越界断言语义、dart 测试侧 equalsInt(null) 类型）＋dartnull-r4 派发（terra，续修四处） | 无代码改动（验收与派发轮）；r3 结论并入第 8 节与 F3at | 消费树 A/B 实测三码 170→153、26→12、2→1、总量 −32 与新增数一致、其他错误码零扰动（/tmp/dartnull-ab-*.ml）；boring main 基线不变 | 报告 /tmp/dispatch-state/boring-dartnull-r3.report.md |
 | 2026-09-08 | rustcoalesce-r2 验收（全部不可保留：三笔归档 rustcoalesce-r2-archive，任务分支复位 `bc750c22`）；SOP 30 重审记为任务书缺陷（指定锚点不在渲染链上，三树输出与修复前逐字节相同）；派发方两轮插桩探针（已还原）定缺陷产生点为共享层 DefaultArgExpander.hx completeNew 与 completeCall 的 VCoalescing 分支只对 rustTarget 补位；kotlin 侧 r2 改动引入七条新错；rustcoalesce-r3 派发（terra） | 无代码改动（验收与派发轮）；F4p 条目更新 | 错误计数未复测（census12 基线不变；复位后基线复测仅 r1 已知单错 /tmp/rco2-kotlin-baseline.log） | 探针还原后检出 git status 为空核实 |
-| 2026-09-08 | dartnull-r4 验收（三笔保留并证实：`c25cc3c1` 标注形样本与越界断言改 `Null<Int>` 绑定判等〔预裁定准许的断言形态修正〕、`17b3d3a8` kotlin 声明位补 `!!` 与算员位返回位补非空断言、`9f0b52df` swift 返回非可选时追加 `!`；rust 去重尝试产出零解包形状 E0308 后按停机条款诚实结束、未保留）＋E0599 双 `unwrap_or` 机制更正（两次追加都在局部声明渲染路径，rustjudge r4 记的算术分支不在缺陷链上，第 6 节已更正）＋dartnull-r5 派发（terra，只修 rust 双 unwrap 去重） | 无代码改动（验收与派发轮）；r4 结论并入第 6 节与 F3at；任务分支合并押后至 r5 的 gates 19 项全部退出码 0 | 错误计数未复测（census12 基线不变）；r4 报告所称 registry 等既有编译错误经 HEAD 全量重生成复测定性为陈旧树假象，真基线 3 条 E0599（/tmp/dn4-fresh-stage1rust.log） | 真基线判定方法为全量重生成后 stage1:rust 复测 |
+| 2026-09-08 | dartnull-r4 验收（三笔保留并证实：`c25cc3c1` 标注形样本与越界断言改 `Null<Int>` 绑定判等〔预规定准许的断言形态修正〕、`17b3d3a8` kotlin 声明位补 `!!` 与算员位返回位补非空断言、`9f0b52df` swift 返回非可选时追加 `!`；rust 去重尝试产出零解包形状 E0308 后按停机条款诚实结束、未保留）＋E0599 双 `unwrap_or` 机制更正（两次追加都在局部声明渲染路径，rustjudge r4 记的算术分支不在缺陷链上，第 6 节已更正）＋dartnull-r5 派发（terra，只修 rust 双 unwrap 去重） | 无代码改动（验收与派发轮）；r4 结论并入第 6 节与 F3at；任务分支合并押后至 r5 的 gates 19 项全部退出码 0 | 错误计数未复测（census12 基线不变）；r4 报告所称 registry 等既有编译错误经 HEAD 全量重生成复测定性为陈旧树假象，真基线 3 条 E0599（/tmp/dn4-fresh-stage1rust.log） | 真基线判定方法为全量重生成后 stage1:rust 复测 |
 | 2026-09-08 | dartnull-r5 验收（rust 双 `unwrap_or` 去重 `7994eceb`：生成树标注形与不标注形逐字节同形）＋dartnull 任务分支六笔（`fd23a839` 至 `7994eceb`）合并 boring main 并推送 | boring `7994eceb`（合并 `b822afee`，已推送） | gates 19 项全部退出码 0（/tmp/gates-dartnull5-rc.txt）；消费树计数未复测（census12 基线不变，待 census13） | 报告 /tmp/dispatch-state/boring-dartnull-r5.report.md |
 | 2026-09-08 | rustcoalesce-r3 验收（部分接受：两笔 `f7e6ba6c` 与 `f75015b4` 保留；gates 7 项失败定性为 r3 规格错一半：常量默认值的省略物化正确，参数读取默认值的省略在 swift/dart/ts 把被读参数名直接写进调用点、另有拼接位浮点缺 formatFloat 的独立缺陷）＋rustcoalesce-r4 派发（terra，两个工作项：参数读取默认值只在 rust 物化、三目标拼接位浮点走 formatFloat，任务书 /tmp/dispatch-state/boring-rustcoalesce-r4.prompt.md）＋F4m 派发（terra，修复任务 boring-f4m-r1：rust E0424 全类 75 条，@:dataClass 构造器体 this.<field> 读取改绑构造器局部，样本先行，任务书 /tmp/dispatch-state/boring-f4m-r1.prompt.md） | 无代码改动（验收与派发轮）；F4p 条目更新 | 错误计数未复测（census12 基线不变；r4 合并后统一 census13） | 启动后 env 核对（terra 2/3 在用：rustcoalesce-r4 加 boring-f4m-r1），pid 验活 |
 | 2026-09-08 | tiqian-tattr4-r1 探针验收（kotlin 11 类：cannot be reassigned 升修复位置并开列 F3au（PolicyQueries.hx 的 intervalCore 与 intervalShort 未查循环体写计数器）；假设 5 类与未判定 5 类全部升形状证实，其中 collection literals、array literals、selector 三码 12 条为同一生成表达式 `?.[i]`（可空接收者数组下标）的三个解析视角，Unexpected tokens 与 overload ambiguity 同位 sumOf 渲染，null cannot be 为 lastIndexOf 降级插入 null 参） | 无代码改动（判定探针）；判定并入 3.2 表与小结，F3au 进第 11 节 | f32 343 / f64 354、warnings 0/0、逐类求和校验相等（基线锚定 `a72f994d`，与 census12 相等） | 报告 /tmp/dispatch-state/tiqian-tattr4-r1.report.md；vendored 推进记录与检出干净核对 |
 | 2026-09-08 | boring-f4m-r1 验收（两笔 `1d7f72e9` 样本与 `52c574ff` 修复证实：样本在修复前复现 E0424 两条，修复后构造器读局部绑定 `magnitude`；gates 19 项全部退出码 0）＋合并 boring main 并推送；同日五条修复任务派发占满全部渠道（f3ae luna、f3ab terra、f3ao zen、f3z 与 f3aa cmd；启动途中 glm 周限额与 longcat、deepseek 未拉起均按白名单换位处置） | boring `1d7f72e9`、`52c574ff`（合并 `4644e29b`，已推送） | 合并树统一重跑 gates 19 项全部退出码 0（/tmp/gates-f4mm-rc.txt）；E0424 全类 75 条的复测归 census13；/tmp/boring-f4m 检出已删除并 worktree prune | 报告 /tmp/dispatch-state/boring-f4m-r1.report.md；`git status --porcelain` 为空 |
 | 2026-09-08 | rustcoalesce-r4 验收（两笔 `21234a8d` 与 `2b139721` 证实：swift `dependenceEarlier("alpha")` 省略、dart RubySpan 6 参调用、kotlin defaultRecord 输出 `zh-Hans:16:400:false:0`；gates 19 项全部退出码 0）＋合并 boring main 并推送 | boring `21234a8d`、`2b139721`（合并 `c38a359c`，已推送） | 合并解八处 examples/*.hxml 样本登记冲突（两组登记行都保留）；合并树统一重跑 gates 19 项全部退出码 0（/tmp/gates-rustcoalesce4m-rc.txt）；消费树 4301/4311 回归复测归 census13；/tmp/boring-rustcoalesce 检出已删除并 worktree prune | 报告 /tmp/dispatch-state/boring-rustcoalesce-r4.report.md；`git status --porcelain` 为空 |
+
+| 2026-09-09 夜 | 夜间批（用户就寝，自主推进）。合并入 boring main 并推送：`5919f6b7`（isCloneType 认类型参数与函数类型，SortedSetTable/SortedMapTable derive）、`1b0e647f`（f3ac kotlin override 样本）、`640beb48`（f4i functional shim＋样本 float 标注）、`05df2ce4`（f4g3 thread_local 收尾＋StaticFn 八入口完成 consistency 修复）、`4f87fa40`（swift f32 float 数组标注）、`3d08f81a`（Dart 嵌套可空折叠，mercury 首用＋中央修 StringTools.endsWith）、`b972cd32`（f4k 异常降级＋e0599 模块静态读取）、`5a682f6a`（e0369 TextRange 比较＋swift 一致性）、`6fb881f4`（e0308fa 借用串/浮点字面量两类 476 条）、`c2fc1135`（f3aq ts 运行时导出）、`41cd4c13`（ktext 省略构造对位十轮完成：completeNew 常量形 coalescing 默认物化补首槽洞）、`446fb874`（ktext-r11 回归修复：撤销 alignConstructorDefaults 的宏期 eager getType，二分定罪 311a4bf0 破坏 IntRange abstract 结构访问）。测量：rust 4103/4093@640beb48（rc13，E0277 -93、E0599 -328 归 derive 修复）；ts 915@3d08f81a（f3aq 并入前）；dart 476@3d08f81a；swift f32 164@3d08f81a、f64 被 TestCore 泄漏硬停（testcore 任务在修）；kotlin 400/411@446fb874。新缺陷登记：TestCore.formatFloat 泄入生产 toString（F0k 浮点格式化路径，ClreqProfile.swift:47 实测）；kotlin 复测曾因 `.dev` 指针被测量代理写坏假死（路径翻倍，已修复）。Mercury 记录：10 次授权，已用 1（ktext-r9 断点诊断），余 9。 |
