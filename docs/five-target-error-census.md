@@ -1497,3 +1497,41 @@ dartguard（#64）r1 至 r4 累计把残余 143 条修到 17 条、r6 后残余 
 | 2026-09-09 | 夜间批次推进合并 | boring `5919f6b7..446fb874` | 合并 isCloneType 判定（F4q）、functional shim（F4i）、异常降级（F4k）、dart 嵌套可空折叠、kotlin 构造默认物化等多项目标改动 | 19 项验证套件按提交逐项验证通过 |
 
 | 2026-09-09 深夜 | 统一基线最终数字（@boring `cc34c779`，六目标同 HEAD 逐目标生成加编译计数，日志 /tmp/rc13v-*.log、/tmp/rc13u-r*.log）。swift f32 为 0、swift f64 为 0（双精度全部消除；testcore 修复＋空访问守卫＋swiftanno 三链合力）；ts 为 677（1127 起，f3aq 运行时导出＋tsfix resident 模块导入）；dart gen 为 463、dart tests 为 415（2606 起，dartdq 嵌套可空折叠＋dartfix 空数组与局部名冲突）；kotlin f32 为 356、f64 为 367（696/717 起，rc13m 可空数组 get＋kfix2 可空数值加宽）；rust f64 为 4073、f32 为 4063（4558/4548 起；E0308 六组修复位置、E0599 五组、isCloneType 泛型 derive、Arc 闭包化；M1/M2 判定残余主体在 tiqian 源侧：From trait 494、TryFrom 137）。测量过程记录：.dev 指针两次被写坏致 Type not found: Intercept 假死（修复配方 为 指回 vendored git 检出）；串行生成脚本的 rm 误删前序目标输出（改为逐目标生成后立刻计数）。Mercury 九任务批（用户指定）：M1 合并（Rc→Arc＋RustType 函数类型补齐）、M2/M3/M5/M6/M8 判定交付、M7 判定确认与 dartfix 同源、M4/M9 排队补跑。 |
+
+## census13（2026-09-10 上午；boring `ecf140dc` × tiqian `3f609c0f`）
+
+中央在消费树 /tmp/tiqian-census6 复测，vendored 指针与生成树一并推进到
+`ecf140dc`。总表：
+
+| 目标 | census12 基线 @cc34c779 | census13 @ecf140dc | 变化 |
+|---|---:|---:|---:|
+| kotlin f32 | 356 | 356 | 0 |
+| kotlin f64 | 367 | 367 | 0 |
+| ts | 677 | 430 | -247 |
+| rust f64 | 4073 | 3850 | -223 |
+| rust f32 | 4063 | 3840 | -223 |
+| swift f64 | 0 | 7 | +7 |
+| swift f32 | 0 | 0 | 0 |
+| dart gen | 463 | 463 | 0 |
+| dart tests | 415 | 415 | 0 |
+
+两点测量对象说明：
+
+1. **测量树源漂移**：swift f64 的 +7 与 kotlin/dart 部分条目来自 tiqian 侧
+   `66437f69` 新增的 `LayoutQueriesResidualCoverageTest`（基线 swift 树
+   `3240f50a` 不含该文件）；这批错误来自新增测试面暴露的生成器未支持形状，
+   与 boring 侧最近合并的修复无关。swift 的 7 条集中在 `LayoutQueries.swift`（BinaryInteger
+   比较、AnyHashable 转换、index 重声明、可选数组未解包四形）。
+2. **测量对象更正**：boring 仓库自带样本套件（reference/dart/gen）与
+   tiqian 消费树是两个测量对象；m7fin-r8 曾按前者报「dart 0 ERROR」，
+   普查计数一律以消费树为准（本表 dart 两行持平即消费树实测）。
+
+ts 降幅 -247 的主类（骨架前八，Σ=421，其余 9 条散在小类；全量逐类表可由
+`/tmp/census13/ts.log` 按 §2.2 骨架命令再生）：Cannot find module 201、
+Argument not assignable 100、Cannot find name 67、Expected N arguments 32、
+Property not exist 8、比较无交集 6、private 访问 4、?? 右支不可达 3。
+
+rust f64 降幅 -223 的主类（骨架前八）：mismatched types 1613、couldn't
+convert error（From/TryFrom 转换类）507、no method named 444、mismatched
+found integer 237、ambiguous numeric 95、trait bound 75、参数个数 70、
+no field 61。全部日志与计数文件在 `/tmp/census13/`。
