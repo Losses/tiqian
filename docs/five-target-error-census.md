@@ -1535,3 +1535,25 @@ rust f64 降幅 -223 的主类（骨架前八）：mismatched types 1613、could
 convert error（From/TryFrom 转换类）507、no method named 444、mismatched
 found integer 237、ambiguous numeric 95、trait bound 75、参数个数 70、
 no field 61。全部日志与计数文件在 `/tmp/census13/`。
+
+## census14（2026-09-10 午后；boring `cf31edba` × tiqian `3f609c0f`）
+
+中央复测，vendored 与生成树一并推进到 `cf31edba`（含 2026-09-10 的六波合并：rust
+From/Fault 与迭代修复、ts 两类、swift 七条、dart 双线十一笔）。总表：
+
+| 目标 | census12 基线 | census13 @ecf140dc | census14 @cf31edba |
+|---|---:|---:|---:|
+| kotlin f32 | 356 | 356 | 178 |
+| kotlin f64 | 367 | 367 | 189 |
+| ts | 677 | 430 | 337 |
+| rust f64 | 4073 | 3850 | 3412 |
+| rust f32 | 4063 | 3840 | 3402 |
+| swift f64 | 0 | 7 | 1 |
+| swift f32 | 0 | 0 | 0 |
+| dart gen | 463 | 463 | 331 |
+| dart tests | 415 | 415 | 67 |
+
+降幅说明：dart 双线的 DefaultArgExpander 共享层修复同时压低 kotlin（默认值
+槽位类）与 ts；swift 剩 1 条为 sw7 报告记录的本底既有错误；rust 降幅来自
+From/Fault 转换生成与迭代类修复。swift f64 的 7→1 与 dart tests 的 415→67
+为 2026-09-10 的最大两项改善。全部日志与计数在 `/tmp/census14/`。
