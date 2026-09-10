@@ -4,7 +4,7 @@ package org.tiqian.font;
 class UnicodeEmojiStyleVariationData {
     public static function contains(codePoint:Int):Bool {
         var l = 0;
-        var h = Std.int(RANGES.length / 2) - 1;
+        var h = Std.int(RANGES.length >> 1) - 1;
         while (l <= h) {
             var m = (l + h) >> 1;
             var b = m * 2;
