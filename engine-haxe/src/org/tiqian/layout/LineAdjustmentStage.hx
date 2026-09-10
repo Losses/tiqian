@@ -456,7 +456,8 @@ class LineAdjustmentStage {
                     continue;
 
                 final sortedOpportunities = new Array<org.tiqian.layout.ProgressiveBreakDecisions.ShrinkOpportunity>();
-                for (opp in prep.shrinkOpportunities) {
+                for (oppIdx in 0...prep.shrinkOpportunities.length) {
+                    final opp = prep.shrinkOpportunities[oppIdx];
                     if (opp.clusterIndex >= line.clusterRange.start && opp.clusterIndex <= line.clusterRange.end && !opp.lineEndOnly) {
                         sortedOpportunities.push(opp);
                     }
