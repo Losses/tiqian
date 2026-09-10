@@ -6,7 +6,7 @@ Dart）下的编译错误，作为跨目标行为对齐（见
 普查对象是 engine-haxe/out/ 下由 boring 从 Haxe 源码翻译出的目标语言代码目录。
 原生 `engine` 模块的 `./gradlew :engine:jvmTest` 无失败，不在本文范围内。
 
-当前状态（2026-09-10，基线 tiqian `3f609c0f` 加 boring `cf31edba`，主树直接复测）：八个生成命令退出码全部为 0。kotlin f32 178 条 / f64 189 条；ts 337 条；rust f32 3402 条 / f64 3412 条；swift gen 侧 f32 0 条 / f64 1 条、tests 侧两精度均为 0 条；dart 398 条（生成侧 331 条、测试侧 67 条）。已解决并复测确认的修复项自 2026-09-07 起从第 11 节清单删除，只留第 12 节进度行。
+当前状态（2026-09-10，基线 tiqian `3f609c0f` 加 boring `cf31edba`，主树直接复测）：八个生成命令退出码全部为 0。kotlin f32 178 条 / f64 189 条；ts 337 条；rust f32 3402 条 / f64 3412 条；swift gen 侧 f32 0 条 / f64 1 条、tests 侧 f64 41 条（swiftc 实测于 cf31edba，gen 侧无对应错误）；dart 398 条（生成侧 331 条、测试侧 67 条）。已解决并复测确认的修复项自 2026-09-07 起从第 11 节清单删除，只留第 12 节进度行。
 
 ## 1 更新规则
 
@@ -1143,6 +1143,26 @@ dartguard（#64）r1 至 r4 累计把残余 143 条修到 17 条、r6 后残余 
       int? 接收者直接比较实测；DartExpr.hx:1315-1341 的 binop 守卫位
       派发方在 31627b5c 复核），与 kotlin 修复位置 A（#22）同构造。判据为
       该错误码计数降为 0，其余类计数不上升。C2，P1，S2。
+- [ ] F4q rust Clone derive 供给与 `.clone()` 调用需求不一致：census14 实测
+      该形状残余 435 条（修复未派发，判定见 rustjudge r3/r4）。修复位置
+      候选两处二选一：derive 判定侧（data-class 路径对结构补 derive）与
+      `.clone()` 追加侧（判 Clone 能力再追加）。判据为该形状降为 0。
+      C2，P1，S2。（census14 后排首）
+- [ ] F4p rust 可空类 coalescing 默认值物化与 Option 形参不匹配：census14
+      实测 Option 形状 E0308 残余 389 条。修复位置为默认值物化与被调函数
+      形参实际类型对齐（嵌套构造实参按形参类型包 `Some(...)`）。判据为
+      该形状降为 0。C2，P1，S2。
+- [ ] F3as ts coalescing 静态字段对 abstract 类的完整路径泄漏：修复已合并
+      `87255540`，census14 实测 TS2304 org 条目残余 67 条未消。判据为
+      org 条目降为 0 后核销。
+- [ ] F3u swift tests 目录 import 头的消费侧配置：census14 实测
+      swift-gen-f64-tests 41 条（swiftc rc=123）。修复位置为
+      engine-haxe/targets/swift-common.hxml 补测试 import 配置。判据为
+      tests 侧符号解析通过且计数可产出为 0。C1，P2，S-。
+- [ ] 小残余复合项（census14 实测）：F4k haxe.Exception shim（E0433 残余
+      8 条、原 1 条）；F4i std.Functional shim（E0432 残余 2 条）；F4m
+      dataClass 构造器 self 绑定（E0424 残余 2 条）；F3ah dart 省缺实参
+      （NOT_ENOUGH_POSITIONAL 残余 3 条）。判据为各残余降为 0。
 - [ ] F3w kotlin 同函数局部变量名不去重：覆盖 3.2 节 conflicting
       declarations 全类 13/13。修复位置为 KotlinExpr.hx localName
       （:3299-3306）只对 `` ` `` 与 `_` 生成避让名、对 typer 展开数组推导
