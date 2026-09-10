@@ -23,12 +23,10 @@ class LiangHyphenator implements Hyphenator {
         final explicit = exceptions.get(lower);
         if (explicit != null) {
             final out = [];
-            var q = 0;
-            while (q < explicit.length) {
-                final v = explicit[q];
+            for (qIdx in 0...explicit.length) {
+                final v = explicit[qIdx];
                 if (v >= leftMin && v <= word.length - rightMin)
                     out.push(v);
-                q++;
             }
             return out;
         }
