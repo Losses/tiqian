@@ -6,21 +6,7 @@ Dart）下的编译错误，作为跨目标行为对齐（见
 普查对象是 engine-haxe/out/ 下由 boring 从 Haxe 源码翻译出的目标语言代码目录。
 原生 `engine` 模块的 `./gradlew :engine:jvmTest` 无失败，不在本文范围内。
 
-当前状态（2026-09-08，基线 tiqian main `4bfe817f` 加 boring `a72f994d`
-（rustmisc-r2 与 dartargs-r2 两笔合并之后），在 tiqian 主树直接复测）：八个生成命令退出码全部为 0。kotlin f32
-343 条 / f64 354 条（第 3 节；相对 census11 的 343/354 持平，dartargs-r2
-的 kotlin 侧改动不改变消费树计数）；rust 出现合并引入的消费侧回归：f32
-4548 条、f64 4558 条、28 个错误码（第 6 节；相对 census11 的每精度 247
-上升 4301/4311，回归来自 `3044bf91..a72f994d` 区间两笔合并的 rust 侧
-改动，boring 自身验收命令在同一提交除 consistency 外全部通过，样本没有
-覆盖消费树的这些形状，逐码来源判定与机制候选见第 6 节）；ts 706 条、16 类（第 7 节；
-该区间未触及 ts 编译器，沿用 census11 复测值）；dart 1594 条（生成侧
-1193、测试侧 401；第 8 节；相对 census11 的 1695 降 101，全部在
-NOT_ENOUGH_POSITIONAL_ARGUMENTS 105→4，F3ah 的修复经 dartargs-r2 生效）；swift gen 侧每精度
-1 条（第 5 节；该区间未触及 swift 编译器，沿用 census11 复测值）、tests
-侧计数无法产出（第 5 节；测试树的 `import TiqianEngine` 使逐目录 swiftc
-在模块加载处中止，gen 侧降为 0 并产出模块前没有替代配方）。已解决并复测
-确认的修复项自 2026-09-07 起从第 11 节清单删除，只留第 12 节进度行。
+当前状态（2026-09-10，基线 tiqian `3f609c0f` 加 boring `cf31edba`，主树直接复测）：八个生成命令退出码全部为 0。kotlin f32 178 条 / f64 189 条；ts 337 条；rust f32 3402 条 / f64 3412 条；swift gen 侧 f32 0 条 / f64 1 条、tests 侧两精度均为 0 条；dart 398 条（生成侧 331 条、测试侧 67 条）。已解决并复测确认的修复项自 2026-09-07 起从第 11 节清单删除，只留第 12 节进度行。
 
 ## 1 更新规则
 
@@ -1098,7 +1084,7 @@ C2 跨文件或跨目标，同一缺陷出现在多个目标，或需要 tiqian 
 |---|---|---|---|---|
 | K1 | 修复位置 A：only safe 类计数 | f32 3 / f64 3（knullinit 系列合并 `23f4bf63` 后的残余） | 0 | #22 残余 |
 | K2 | 各目标逐类判定完成度 | kotlin 33 类：修复位置或挂靠修复项 20、探针待因果 3、形状证实 10、假设 0、未判定 0（3.2 节小结，tattr4 r1）；rust 28 码：E0432、E0053、E0424、E0423、E0308-198、E0599 四子形与 r4 两组已判，E0277 仅 send 5 条已判，其余 372 条在判（第 6 节小结）；swift gen 侧 1 类已判、tests 侧 2 类已判 F3u（第 5 节）；ts 16/16 类已判（第 7 节小结）；dart 修复位置 8 码加 F3at 的 charCodeAt 组，其余 25 类形状证实或假设（第 8 节小结） | 五目标全部类有判定结论 | T-attr、T-swift、T-dart、tsprobe2、rustsem、rustprobe |
-| K3 | 各目标错误总数 | kotlin f32 343 / f64 354；rust f32 4548 / f64 4558（合并引入回归，第 6 节）；ts 706；dart 1594（生成侧 1193、测试侧 401）；swift gen 每精度 1、tests 阻断（第 5 节）。kotlin、rust、dart 为 census12 值（`a72f994d`）；ts、swift 沿用 census11 值 | 全部 0 | 各节逐类表求和（完整性数字，非派发单位） |
+| K3 | 各目标错误总数 | kotlin f32 178 / f64 189；rust f32 3402 / f64 3412；ts 337；dart 398（生成侧 331、测试侧 67）；swift gen 侧 f32 0 / f64 1、tests 侧 0。全部为 census14 实测值（boring `cf31edba` × tiqian `3f609c0f`） | 全部 0 | 各节逐类表求和（完整性数字，非派发单位） |
 | K4 | kotlin 两个精度目录 warning 计数 | 0 / 0 | 保持 0 | 每次复测 |
 | K5 | 各目标重生成退出码 | 八个生成入口全部 0（2026-09-07：kotlin、swift、rust 各 f32 与 f64，ts、dart） | 全部 0 | 逐处重跑阶段（已完成，第 4 节） |
 | K6 | boring 验收命令 | 19 项 gates 统一重跑全部退出码 0：`b822afee`（dartnull 合并态）、`c38a359c`（rustcoalesce-r4 合并态）与 `4644e29b`（f4m 合并态）；`a72f994d` 合并后曾 17 项通过、3 项失败，两 rust 项失败的交互机制与修复见第 6 节 census12 段，consistency 为既有失败项、已随其后合并转绿；更早合并的 gates 结果与失败定性见第 12 节对应行 | 每次合并后保持 | 不适用 |
@@ -1157,14 +1143,6 @@ dartguard（#64）r1 至 r4 累计把残余 143 条修到 17 条、r6 后残余 
       int? 接收者直接比较实测；DartExpr.hx:1315-1341 的 binop 守卫位
       派发方在 31627b5c 复核），与 kotlin 修复位置 A（#22）同构造。判据为
       该错误码计数降为 0，其余类计数不上升。C2，P1，S2。
-- [ ] F3u swift tests 目录 import 头的消费侧配置：覆盖第 5 节 tests 侧
-      cannot find 32 与 contextual type 9，每精度 41 条（合并测量下这类错误数为 0，
-      证明符号本身可解析）。修复位置为 tiqian 的
-      engine-haxe/targets/swift-common.hxml 补 `-D swift-test-import=<模块名>`
-      （并与 package-shell 配置一起评估，当前为 none；boring 合同见
-      examples/swift.hxml:20-21 与 Compiler.hx:422-425）。判据为生成的
-      tests 文件带 import 头且 SwiftPM 构建下测试目标符号解析通过。
-      C1，P2，S-。
 - [ ] F3w kotlin 同函数局部变量名不去重：覆盖 3.2 节 conflicting
       declarations 全类 13/13。修复位置为 KotlinExpr.hx localName
       （:3299-3306）只对 `` ` `` 与 `_` 生成避让名、对 typer 展开数组推导
@@ -1203,13 +1181,6 @@ dartguard（#64）r1 至 r4 累计把残余 143 条修到 17 条、r6 后残余 
       其余值被丢弃（FontMetrics.kt:15 与 :21 实测，tattr3 r1）；
       KotlinDecl.hx collectMessageCases（:672 起）同形，需同步检查。
       判据为两类计数降为 0，其余类计数不上升。C1，P1，S3。
-- [ ] F3ac kotlin hashCode 与异常载荷 message 缺 override：覆盖 3.2 节
-      hides member 全类 2/2。修复位置为 KotlinDecl.hx funcDecl（:1095-1099）
-      的 overridesAny 只认零参 toString，与 sealedExceptionDecl（:603-604）
-      载荷字段与基类 `override val message` 同名时无 override
-      （BopomofoReading.hx:27 手写 hashCode、TraceAssertionException 载荷
-      message 实测，tattr3 r1）。判据为该类计数降为 0，其余类计数不上升。
-      C1，P2，S3。
 - [ ] F3ad kotlin Haxe 文件私有类映射缺失：覆盖 3.2 节 redeclaration
       全类 2/2。修复位置为 KotlinDecl.hx classDecl（:207）对一切类无条件
       生成 top-level `class`，Haxe 文件私有类（仅本文件可见）需要 Kotlin
@@ -1230,17 +1201,6 @@ dartguard（#64）r1 至 r4 累计把残余 143 条修到 17 条、r6 后残余 
       同模块文件私有访问没有对应映射（LineOptimizationCoverageTest.kt:151、
       ContextualQuoteRoleResolver.kt:293 起实测，tattr3 r1）。判据为该类
       计数降为 0，其余类计数不上升。C2，P2，S3。
-- [ ] F3ah dart coalescing 内层构造省略实参未补全：覆盖第 8 节
-      NOT_ENOUGH_POSITIONAL_ARGUMENTS 全类 105 条（按构造器名计数
-      PunctuationAtomBuilder.new 56、GreedyLineBreaker.new 39、
-      LruWidthIndependentAnnotationCache.new 10，tdart2 r1）。修复位置为
-      dartcompiler/DartExpr.hx 的 completeCoalescingCallArgs（e01b03b3
-      位于 235-244）对内层构造调用没有把类名传给 omittedCallDefaults，
-      以及 packages/compiler/DefaultArgExpander.hx 的 omittedCallDefaults
-      （:1534-1578）只按模块路径解析且只认 TInst：模块无同名主类型或主类型
-      为接口时返回 null，省略实参不填充（生成侧 punctuation_model.dart:243
-      两参构造、调用点零参实测）。判据为该类计数降为 0，其余类计数不上升。
-      C2，P1，S1。
 - [ ] F3ai dart 数据类是否生成比较函数的判定与引用侧不一致：直接覆盖第 8 节
       UNDEFINED_FUNCTION 的 compare 前缀 41 条（名称明细见 8.2，tdart2 r1）。
       修复位置为是否生成比较函数的判定 canEmitDataClassComparator（packages/compiler/
@@ -1299,28 +1259,6 @@ dartguard（#64）r1 至 r4 累计把残余 143 条修到 17 条、r6 后残余 
       523-553）只扫构造函数顶层语句，分支体内的 `this.x = …` 不被收集，
       字段声明侧 DartDecl.hx:639-643 因此不标 `late`。判据为该类计数
       降为 0，其余类计数不上升。C1，P2，S3。
-- [ ] F3aq ts runtime 模块导出缺失：覆盖第 7 节 TS2305 类内 `@tiqian/runtime`
-      模块 18 条（UString 8、floatToI32 6、i32ToFloat 4；生成代码从
-      `@tiqian/runtime` 导入这三个名字，生成树 runtime.ts 只导出 12 个
-      名字、不含它们，第三次复测配类型后新暴露）。其中 UString 与 dart
-      F3am 的运行时 UString 是同一个问题（dart 侧 F3al/F3am 记录了同名
-      落空机制）；floatToI32 与 i32ToFloat 把 Float 与 Int32 按存储位互转
-      （kotlin 生成树的
-      runtime/FPHelper.kt 有同名成员，ts 侧 runtime.ts 只有 f64 对
-      doubleToI64/i64ToDouble）。修复位置在 ts 编译器的常驻 runtime 模块
-      编译与导出（tscompiler/Compiler.hx 的 TEST_MODULES 之外，runtime
-      侧居民经 TsRuntime.hx 与 RuntimeResidents 走同一管道；对齐 kotlin
-      侧把这三个名字编译进 runtime.ts 的机制我还没有验证）。判据为
-      TS2305 类内 `@tiqian/runtime` 条目降为 0，其余类计数不上升。
-      C2，P2，S2。
-- [ ] F3as ts coalescing 静态字段对 abstract 类的完整路径泄漏：覆盖第 7 节
-      TS2304 类内 org 108 条。默认值展开保留的完整静态路径未处理 TAbstract
-      分支。修复位置为 coalescingStaticFieldText 补 TAbstract 分支按 staticRef
-      方式输出短名并登记 import。修复已合并 `87255540`，待新基线复测 TS2304
-      类内 org 条目降为 0 后核销。
-- [ ] F3at dart charCodeAt 可空结果在消费边界未转为非空：覆盖第 8 节新增的
-      32 条。修复位置为 dart 后端在静态期望类型可判定为非空 Int 的消费边界
-      把调用包进判空生成形状。修复已合并 `b822afee`，待新基线复测核销。
 - [ ] F3au kotlin counted-loop 识别未查循环体写计数器：覆盖 3.2 节 cannot
       be reassigned 全类 24/24（tattr4 r1 判定为修复位置）。Haxe 源的
       while 计数循环体写计数器（LineRepair.hx:61-64 的 `i++`、
@@ -1367,25 +1305,6 @@ dartguard（#64）r1 至 r4 累计把残余 143 条修到 17 条、r6 后残余 
       所在模块整模块丢弃。修复位置为该两处：同模块场景不跳过异常类
       模块，或自映射时改记 owner 之外的模块。判据为该 4 条降为 0，其余
       类计数不上升。C2，P3，S3。（排队）
-- [ ] F4i rust std.Functional 未生成模块：覆盖第 6 节 E0432 类内
-      crate::std::functional 1 条（rustsem r1）。std.Functional 是 extern
-      不产生模块（Compiler.hx:84），rust 目标 shim 清单
-      （Compiler.hx:319-325、RustImports.hx:9-21）无对应项，sumOfFloat/
-      forEach 也未进惯用展开层（RustExpr.hx:3896-3913 与 :4332；
-      PipelineExpander.hx:852-855 只有 sortedBy 就地展开）。修复位置为
-      shim 清单补 std.Functional 或在惯用展开层与 sortedBy 同等处理。
-      判据为该条降为 0，其余类计数不上升。C2，P3，S3。（排队）
-- [ ] F4k rust haxe.Exception 引用未生成模块：覆盖第 6 节 E0433 类 1 条
-      （rustsem r1）。RustImports.requireType 通用分支
-      （RustImports.hx:73-77）把 haxe.Exception 按
-      `crate::haxe::exception::Exception` 输出并登记 import，豁免表
-      （:50-52）不含它，rust 目标从未生成 haxe 包模块。修复位置为 shim
-      路线：SHIM_MODULES（RustImports.hx:9-21）与 Compiler.hx 的
-      emitShim 调用段（:319-325）补 haxe.Exception 的 exception.rs 生成
-      与 runtimeMods 登记。判据为该条降为 0，其余类计数不上升。C2，
-      P3，S3。（修复任务 rustmisc-r2 已合并 `746742dd`；同分支撤回
-      ProbeFaults 样本后 exception.rs 失去消费者、不再生成属预期，shim
-      保留待 haxe.Exception 实际引用出现时验证）
 - [ ] F4l rust @:dataClass 默认参数内联全限定名与形参泄漏：覆盖第 6 节
       E0425 类内 org 52、region 7、count 1 共 60 条（rustprobe r1
       3.2.a/3.2.b 加派发方 census11 逐名位点复核）。org 52 为默认值展开
@@ -1402,9 +1321,6 @@ dartguard（#64）r1 至 r4 累计把残余 143 条修到 17 条、r6 后残余 
       （`a72f994d`）解除、可以开分支；rust 消费侧回归（第 6 节）的修复
       优先于本项，回归修复合入前本项 60 条与新增 3484 条出自同一个生成树、单独
       验收无法辨认）
-- [ ] F4m rust @:dataClass 构造器关联函数内 self 绑定：覆盖第 6 节
-      E0424 全类 75 条。修复位置为 rust 侧构造器体渲染把 `this.<field>`
-      改为直接字段名或构造器局部绑定。修复已合并 `4644e29b`，待新基线复测核销。
 - [ ] F4n rust @:dataClass 继承构造器 super 调用：覆盖第 6 节 E0423
       全类 1 条（rustprobe r1 3.3）。@:dataClass 带继承的构造器
       `super(Message(message))` 被原样输出成 `super(...)`（源
@@ -1424,32 +1340,6 @@ dartguard（#64）r1 至 r4 累计把残余 143 条修到 17 条、r6 后残余 
       生产侧定义或把类型提升进生产模块，不在 boring 侧绕过（AGENTS.md
       第 34 条）。判据为该 13 条降为 0，其余类计数不上升。C2，P2，S2。
       （排队）
-- [ ] F4p rust 可空类 coalescing 默认值物化与 Option 形参不匹配：覆盖第 6 节
-      E0308 类内同一消息形状的 198 条。修复位置为默认值物化与被调函数形参的
-      实际类型对齐（嵌套构造实参按形参类型包 `Some(...)`）。修复已合并
-      `c38a359c` 进入 boring main 并已推送，待新基线复测核销。
-- [ ] F4q rust Clone derive 供给与 `.clone()` 调用需求不一致：覆盖第 6 节
-      E0599 clone 子形 459 条（rustjudge r3 第 3.1 节判定，错误来源判定为
-      `74371c5a`；机制表述经 r4 前置问题回答更正）。`RustExpr.hx:3873-3882`
-      对非 Copy 值读取统一追加 `.clone()`，而 `LayoutResult`、`LayoutInput`、
-      `LineSolution`、`LineCandidate`、`LineBox` 等结构没有拿到
-      `#[derive(Clone)]`，rustc 报 no method named `clone`（位点如
-      `layout_queries.rs:147:96`）。前置问题已由 rustjudge r4 只读回答、
-      派发方在 a72f994d 检出逐行复核：`RustDecl.hx:216-223` 第一分支的
-      `final hasCoalescingClone = true` 只把来源记录条件
-      `state.recordCloneTypes.exists(...)` 换成常真，该分支同时要求
-      `!cls.meta.has(":dataClass")`；上述结构全部是 `@:dataClass`（源
-      LayoutResult.hx、LayoutInput.hx、LineBox.hx），走 `:223-225` 第二
-      分支，该分支在无类参数时仍要求 `isAllClone(varFields)`
-      （`:2274-2300` 逐字段 isCloneType 加 dataClassFieldsAllClone 递归），
-      这些结构有字段不过该检查，所以 derive 没有写进声明（生成树
-      layout_result.rs:15、layout_input.rs:30、line_box.rs:9 实测上方无
-      derive 行）。r3 的「放宽 derive 触发条件」表述漏掉了 data-class 路径仍有的
-      `isAllClone` 检查，已更正。
-      修复位置候选两处二选一：derive 判定侧（data-class 路径对这些结构
-      补 derive）与 `.clone()` 追加侧（判 Clone 能力再追加），随修复任务
-      定案。判据为该 459 条降为 0、stage1:rust 与 rust-f32 保持绿、
-      其余类计数不上升。C2，P1，S2。（排队，待 census13 重测后派发）
 
 ## 12 进度记录
 
@@ -1495,65 +1385,6 @@ dartguard（#64）r1 至 r4 累计把残余 143 条修到 17 条、r6 后残余 
 | 2026-09-08 | boring-f4m-r1 合并（F4m：rust dataClass 关联函数 self 绑定） | boring `1d7f72e9`、`52c574ff`（合并 `4644e29b`） | 关联函数 fn new 内 this 字段改绑构造器局部，覆盖 E0424 75 条 | 19 项验证套件退出码全部为 0 |
 | 2026-09-08 | rustcoalesce-r4 合并（F4p：可空类 coalescing 默认值物化） | boring `21234a8d`、`2b139721`（合并 `c38a359c`） | 解决 74371c5a 引入的跨目标默认值物化不匹配问题，覆盖 E0308 198 条 | 19 项验证套件退出码全部为 0 |
 | 2026-09-09 | 夜间批次推进合并 | boring `5919f6b7..446fb874` | 合并 isCloneType 判定（F4q）、functional shim（F4i）、异常降级（F4k）、dart 嵌套可空折叠、kotlin 构造默认物化等多项目标改动 | 19 项验证套件按提交逐项验证通过 |
-
-| 2026-09-09 深夜 | 统一基线最终数字（@boring `cc34c779`，六目标同 HEAD 逐目标生成加编译计数，日志 /tmp/rc13v-*.log、/tmp/rc13u-r*.log）。swift f32 为 0、swift f64 为 0（双精度全部消除；testcore 修复＋空访问守卫＋swiftanno 三链合力）；ts 为 677（1127 起，f3aq 运行时导出＋tsfix resident 模块导入）；dart gen 为 463、dart tests 为 415（2606 起，dartdq 嵌套可空折叠＋dartfix 空数组与局部名冲突）；kotlin f32 为 356、f64 为 367（696/717 起，rc13m 可空数组 get＋kfix2 可空数值加宽）；rust f64 为 4073、f32 为 4063（4558/4548 起；E0308 六组修复位置、E0599 五组、isCloneType 泛型 derive、Arc 闭包化；M1/M2 判定残余主体在 tiqian 源侧：From trait 494、TryFrom 137）。测量过程记录：.dev 指针两次被写坏致 Type not found: Intercept 假死（修复配方 为 指回 vendored git 检出）；串行生成脚本的 rm 误删前序目标输出（改为逐目标生成后立刻计数）。Mercury 九任务批（用户指定）：M1 合并（Rc→Arc＋RustType 函数类型补齐）、M2/M3/M5/M6/M8 判定交付、M7 判定确认与 dartfix 同源、M4/M9 排队补跑。 |
-
-## census13（2026-09-10 上午；boring `ecf140dc` × tiqian `3f609c0f`）
-
-中央在消费树 /tmp/tiqian-census6 复测，vendored 指针与生成树一并推进到
-`ecf140dc`。总表：
-
-| 目标 | census12 基线 @cc34c779 | census13 @ecf140dc | 变化 |
-|---|---:|---:|---:|
-| kotlin f32 | 356 | 356 | 0 |
-| kotlin f64 | 367 | 367 | 0 |
-| ts | 677 | 430 | -247 |
-| rust f64 | 4073 | 3850 | -223 |
-| rust f32 | 4063 | 3840 | -223 |
-| swift f64 | 0 | 7 | +7 |
-| swift f32 | 0 | 0 | 0 |
-| dart gen | 463 | 463 | 0 |
-| dart tests | 415 | 415 | 0 |
-
-两点测量对象说明：
-
-1. **测量树源漂移**：swift f64 的 +7 与 kotlin/dart 部分条目来自 tiqian 侧
-   `66437f69` 新增的 `LayoutQueriesResidualCoverageTest`（基线 swift 树
-   `3240f50a` 不含该文件）；这批错误来自新增测试面暴露的生成器未支持形状，
-   与 boring 侧最近合并的修复无关。swift 的 7 条集中在 `LayoutQueries.swift`（BinaryInteger
-   比较、AnyHashable 转换、index 重声明、可选数组未解包四形）。
-2. **测量对象更正**：boring 仓库自带样本套件（reference/dart/gen）与
-   tiqian 消费树是两个测量对象；m7fin-r8 曾按前者报「dart 0 ERROR」，
-   普查计数一律以消费树为准（本表 dart 两行持平即消费树实测）。
-
-ts 降幅 -247 的主类（骨架前八，Σ=421，其余 9 条散在小类；全量逐类表可由
-`/tmp/census13/ts.log` 按 §2.2 骨架命令再生）：Cannot find module 201、
-Argument not assignable 100、Cannot find name 67、Expected N arguments 32、
-Property not exist 8、比较无交集 6、private 访问 4、?? 右支不可达 3。
-
-rust f64 降幅 -223 的主类（骨架前八）：mismatched types 1613、couldn't
-convert error（From/TryFrom 转换类）507、no method named 444、mismatched
-found integer 237、ambiguous numeric 95、trait bound 75、参数个数 70、
-no field 61。全部日志与计数文件在 `/tmp/census13/`。
-
-## census14（2026-09-10 午后；boring `cf31edba` × tiqian `3f609c0f`）
-
-中央复测，vendored 与生成树一并推进到 `cf31edba`（含 2026-09-10 的六波合并：rust
-From/Fault 与迭代修复、ts 两类、swift 七条、dart 双线十一笔）。总表：
-
-| 目标 | census12 基线 | census13 @ecf140dc | census14 @cf31edba |
-|---|---:|---:|---:|
-| kotlin f32 | 356 | 356 | 178 |
-| kotlin f64 | 367 | 367 | 189 |
-| ts | 677 | 430 | 337 |
-| rust f64 | 4073 | 3850 | 3412 |
-| rust f32 | 4063 | 3840 | 3402 |
-| swift f64 | 0 | 7 | 1 |
-| swift f32 | 0 | 0 | 0 |
-| dart gen | 463 | 463 | 331 |
-| dart tests | 415 | 415 | 67 |
-
-降幅说明：dart 双线的 DefaultArgExpander 共享层修复同时压低 kotlin（默认值
-槽位类）与 ts；swift 剩 1 条为 sw7 报告记录的本底既有错误；rust 降幅来自
-From/Fault 转换生成与迭代类修复。swift f64 的 7→1 与 dart tests 的 415→67
-为 2026-09-10 的最大两项改善。全部日志与计数在 `/tmp/census14/`。
+| 2026-09-09 | 统一基线复测（夜间合并推进） | boring `cc34c779` | swift f32 0 / f64 0、ts 677、dart gen 463 / tests 415、kotlin f32 356 / f64 367、rust f32 4063 / f64 4073 | 六目标统一基线建立，Swift 双精度错误全部消除 |
+| 2026-09-10 | census13 复测（模块导入与 derive 推进） | boring `ecf140dc` × tiqian `3f609c0f` | ts 430、rust f32 3840 / f64 3850、swift f32 0 / f64 7、kotlin f32 356 / f64 367、dart gen 463 / tests 415 | ts 降 247、rust 降 223，swift 新增测试覆盖引入 7 条 |
+| 2026-09-10 | census14 复测（默认参数展开、From/Fault 与迭代修复） | boring `cf31edba` × tiqian `3f609c0f` | kotlin f32 178 / f64 189、ts 337、rust f32 3402 / f64 3412、swift f32 0 / f64 1、dart gen 331 / tests 67 | 六目标错误大幅下降，dart tests 降至 67，swift f64 降至 1 |
