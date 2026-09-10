@@ -354,7 +354,7 @@ class LruWidthIndependentAnnotationCache implements WidthIndependentAnnotationCa
     }
 
     public function get(key:WidthIndependentAnnotationKey):Null<WidthIndependentParagraphAnnotation> {
-        var foundIndex = -1;
+        var foundIndex:Int = -1;
         for (i in 0...keys.length) {
             if (keyEquals(keys[i], key)) {
                 foundIndex = i;
@@ -373,7 +373,7 @@ class LruWidthIndependentAnnotationCache implements WidthIndependentAnnotationCa
     }
 
     public function put(key:WidthIndependentAnnotationKey, annotation:WidthIndependentParagraphAnnotation):Void {
-        var foundIndex = -1;
+        var foundIndex:Int = -1;
         for (i in 0...keys.length) {
             if (keyEquals(keys[i], key)) {
                 foundIndex = i;
