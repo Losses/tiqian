@@ -616,8 +616,8 @@ class ParagraphShapingStage {
                 cuts.push(wordRange.start + syllable[i]);
             }
             final relBounds = [0];
-            for (i in 0...syllable.length) {
-                final s = syllable[i];
+            for (sIdx in 0...syllable.length) {
+                final s = syllable[sIdx];
                 var exists = false;
                 for (j in 0...relBounds.length) {
                     if (relBounds[j] == s) {
