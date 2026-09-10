@@ -6,7 +6,7 @@ Dart）下的编译错误，作为跨目标行为对齐（见
 普查对象是 engine-haxe/out/ 下由 boring 从 Haxe 源码翻译出的目标语言代码目录。
 原生 `engine` 模块的 `./gradlew :engine:jvmTest` 无失败，不在本文范围内。
 
-当前状态（2026-09-10，基线 tiqian `3f609c0f` 加 boring `cf31edba`，主树直接复测）：八个生成命令退出码全部为 0。kotlin f32 178 条 / f64 189 条；ts 337 条；rust f32 3402 条 / f64 3412 条；swift gen 侧 f32 0 条 / f64 1 条、tests 侧 f64 41 条（swiftc 实测于 cf31edba，gen 侧无对应错误）；dart 398 条（生成侧 331 条、测试侧 67 条）。已解决并复测确认的修复项自 2026-09-07 起从第 11 节清单删除，只留第 12 节进度行。
+当前状态（2026-09-10 傍晚，基线 tiqian `3f609c0f` 加 boring `a2f2bdc2`，主树直接复测）：八个生成命令退出码全部为 0。kotlin f32 176 条 / f64 187 条；ts 337 条；rust f32 3402 条 / f64 3174 条；swift gen 侧 f32 0 条 / f64 1 条、tests 侧 f64 41 条；dart 317 条（生成侧 269 条、测试侧 48 条）。两日累计：总错误 6546 降至 4394（kotlin 减半、dart tests 减 88%、ts 减半）。已解决并复测确认的修复项自 2026-09-07 起从第 11 节清单删除，只留第 12 节进度行。
 
 ## 1 更新规则
 
@@ -1084,7 +1084,7 @@ C2 跨文件或跨目标，同一缺陷出现在多个目标，或需要 tiqian 
 |---|---|---|---|---|
 | K1 | 修复位置 A：only safe 类计数 | f32 3 / f64 3（knullinit 系列合并 `23f4bf63` 后的残余） | 0 | #22 残余 |
 | K2 | 各目标逐类判定完成度 | kotlin 33 类：修复位置或挂靠修复项 20、探针待因果 3、形状证实 10、假设 0、未判定 0（3.2 节小结，tattr4 r1）；rust 28 码：E0432、E0053、E0424、E0423、E0308-198、E0599 四子形与 r4 两组已判，E0277 仅 send 5 条已判，其余 372 条在判（第 6 节小结）；swift gen 侧 1 类已判、tests 侧 2 类已判 F3u（第 5 节）；ts 16/16 类已判（第 7 节小结）；dart 修复位置 8 码加 F3at 的 charCodeAt 组，其余 25 类形状证实或假设（第 8 节小结） | 五目标全部类有判定结论 | T-attr、T-swift、T-dart、tsprobe2、rustsem、rustprobe |
-| K3 | 各目标错误总数 | kotlin f32 178 / f64 189；rust f32 3402 / f64 3412；ts 337；dart 398（生成侧 331、测试侧 67）；swift gen 侧 f32 0 / f64 1、tests 侧 0。全部为 census14 实测值（boring `cf31edba` × tiqian `3f609c0f`） | 全部 0 | 各节逐类表求和（完整性数字，非派发单位） |
+| K3 | 各目标错误总数 | kotlin f32 176 / f64 187；rust f32 3402 / f64 3174；ts 337；dart 317（生成侧 269、测试侧 48）；swift gen 侧 f32 0 / f64 1、tests 侧 41。全部为 census15 实测值（boring `a2f2bdc2` × tiqian `3f609c0f`） | 全部 0 | 各节逐类表求和（完整性数字，非派发单位） |
 | K4 | kotlin 两个精度目录 warning 计数 | 0 / 0 | 保持 0 | 每次复测 |
 | K5 | 各目标重生成退出码 | 八个生成入口全部 0（2026-09-07：kotlin、swift、rust 各 f32 与 f64，ts、dart） | 全部 0 | 逐处重跑阶段（已完成，第 4 节） |
 | K6 | boring 验收命令 | 19 项 gates 统一重跑全部退出码 0：`b822afee`（dartnull 合并态）、`c38a359c`（rustcoalesce-r4 合并态）与 `4644e29b`（f4m 合并态）；`a72f994d` 合并后曾 17 项通过、3 项失败，两 rust 项失败的交互机制与修复见第 6 节 census12 段，consistency 为既有失败项、已随其后合并转绿；更早合并的 gates 结果与失败定性见第 12 节对应行 | 每次合并后保持 | 不适用 |
