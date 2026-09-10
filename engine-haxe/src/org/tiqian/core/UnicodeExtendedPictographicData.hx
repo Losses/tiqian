@@ -12,7 +12,7 @@ package org.tiqian.core;
 class UnicodeExtendedPictographicData {
     public static function contains(codePoint:Int):Bool {
         var low:Int = 0;
-        var high:Int = Std.int(RANGES.length / 2) - 1;
+        var high:Int = Std.int(RANGES.length >> 1) - 1;
         while (low <= high) {
             final middle:Int = (low + high) >> 1;
             final base:Int = middle * 2;
