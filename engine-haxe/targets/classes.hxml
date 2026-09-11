@@ -204,3 +204,5 @@ org.tiqian.layout.WidthIndependentAnnotationCacheCoverageTestSupport
 org.tiqian.layout.InlineObjectLayoutTest
 org.tiqian.layout.InlineObjectLayoutTestSupport
 org.tiqian.layout.PreparedParagraphRenderEvidenceTest
+runtime.UString
+runtime.TestCore
