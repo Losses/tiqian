@@ -1096,7 +1096,7 @@ C2 跨文件或跨目标，同一缺陷出现在多个目标，或需要 tiqian 
 |---|---|---|---|---|
 | K1 | 修复位置 A：only safe 类计数 | f32 3 / f64 3（knullinit 系列合并 `23f4bf63` 后的残余） | 0 | #22 残余 |
 | K2 | 各目标逐类判定完成度 | kotlin 33 类：修复位置或挂靠修复项 20、探针待因果 3、形状证实 10、假设 0、未判定 0（3.2 节小结，tattr4 r1）；rust 28 码：E0432、E0053、E0424、E0423、E0308-198、E0599 四子形与 r4 两组已判，E0277 仅 send 5 条已判，其余 372 条在判（第 6 节小结）；swift gen 侧 1 类已判、tests 侧 2 类已判 F3u（第 5 节）；ts 16/16 类已判（第 7 节小结）；dart 修复位置 8 码加 F3at 的 charCodeAt 组，其余 25 类形状证实或假设（第 8 节小结） | 五目标全部类有判定结论 | T-attr、T-swift、T-dart、tsprobe2、rustsem、rustprobe |
-| K3 | 各目标错误总数 | kotlin f32 147 / f64 49；rust f32 3493 / f64 3490；ts 330；dart 317（生成侧 269、测试侧 48）；swift f32 1289 / f64 1262（WMO 全模块测量）。全部为 census16 实测值（boring `4d91f806` × tiqian `3f609c0f`） | 全部 0 | 各节逐类表求和（完整性数字，非派发单位） |
+| K3 | 各目标错误总数 | kotlin f32 146 / f64 49；rust f32 3058 / f64 3055；ts 330；dart 303（生成侧 260、测试侧 43）；swift f32 297 / f64 266（WMO 全模块测量）。全部为 census17 实测值（boring `f3099727` × tiqian `3f609c0f`） | 全部 0 | 各节逐类表求和（完整性数字，非派发单位） |
 | K4 | kotlin 两个精度目录 warning 计数 | 0 / 0 | 保持 0 | 每次复测 |
 | K5 | 各目标重生成退出码 | 八个生成入口全部 0（2026-09-07：kotlin、swift、rust 各 f32 与 f64，ts、dart） | 全部 0 | 逐处重跑阶段（已完成，第 4 节） |
 | K6 | boring 验收命令 | 19 项 gates 统一重跑全部退出码 0：`b822afee`（dartnull 合并态）、`c38a359c`（rustcoalesce-r4 合并态）与 `4644e29b`（f4m 合并态）；`a72f994d` 合并后曾 17 项通过、3 项失败，两 rust 项失败的交互机制与修复见第 6 节 census12 段，consistency 为既有失败项、已随其后合并转绿；更早合并的 gates 结果与失败定性见第 12 节对应行 | 每次合并后保持 | 不适用 |
@@ -1422,3 +1422,4 @@ dartguard（#64）r1 至 r4 累计把残余 143 条修到 17 条、r6 后残余 
 | 2026-09-10 | census14 复测（默认参数展开、From/Fault 与迭代修复） | boring `cf31edba` × tiqian `3f609c0f` | kotlin f32 178 / f64 189、ts 337、rust f32 3402 / f64 3412、swift f32 0 / f64 1、dart gen 331 / tests 67 | 六目标错误大幅下降，dart tests 降至 67，swift f64 降至 1 |
 | 2026-09-10 | census15 复测（参数名绑定与 ts 路由前基线） | boring `a2f2bdc2` × tiqian `3f609c0f` | kotlin f32 176 / f64 187、ts 337、rust f32 3402 / f64 3174、dart gen 269 / tests 48 | dart tests 67→48，rust f64 3174（redo 测量修正） |
 | 2026-09-10 | census16 复测（kotlin 参数名绑定＋ts 路由＋F4q clone 后） | boring `4d91f806` × tiqian `3f609c0f` | kotlin f32 147 / f64 49、ts 330、rust f32 3493 / f64 3490、swift f32 1289 / f64 1262（WMO 测量）、dart gen 269 / tests 48 | kotlin f64 187→49；rust E0599 降至 656、E0308 升至 2019（clone 修复解锁下游暴露）；swift 改用 `-wmo` 全模块测量，旧 batch 计数为截断值 |
+| 2026-09-11 | census17 复测（swift 全栈＋rust E0308 所有权批＋异常链后） | boring `f3099727` × tiqian `3f609c0f` | kotlin f32 146 / f64 49、ts 330、rust f32 3058 / f64 3055、swift f32 297 / f64 266（WMO 测量）、dart gen 260 / tests 43 | swift WMO 每精度降约 1000；rust 每精度降 435；dart gen 269→260、tests 48→43；swift 首测零值已当场复测纠正 |
