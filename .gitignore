@@ -55,3 +55,6 @@ engine/src/commonTest/kotlin/org/tiqian/test/trace/TracedTestManifest.kt
 
 # Central deviation ledger (agent working artifact; kept on disk, never committed)
 /DEVIATION-LEDGER.md
+
+# pinned unicode build inputs (fetch via tools/unicode-data/fetch.sh)
+tools/unicode-data/*.txt
