@@ -385,21 +385,28 @@ narrowed variant arm、same-module class members、pipeline 展开后降为 0）
 census27 快照（2026-09-12，boring `3b675e9e` × tiqian `d0a2ab9a`）：
 dart gen 31 / dart tests 0（census20 为 gen 96 / tests 39）。
 
-gen 侧 31 条的逐码分布（13 码）：
+gen 侧 31 条的逐码四列表（13 码，附每码代表样本）：
 
-| 错误码 | 条数 | 错误码 | 条数 |
-|---|---:|---|---:|
-| UNCHECKED_USE_OF_NULLABLE_VALUE | 5 | UNDEFINED_FUNCTION | 2 |
-| UNDEFINED_IDENTIFIER | 4 | MISSING_DEFAULT_VALUE_FOR_PARAMETER | 2 |
-| NOT_INITIALIZED_NON_NULLABLE_INSTANCE_FIELD | 4 | ARGUMENT_TYPE_NOT_ASSIGNABLE | 2 |
-| NON_EXHAUSTIVE_SWITCH_STATEMENT | 4 | 其余六码各 1 | 6 |
-| NOT_ENOUGH_POSITIONAL_ARGUMENTS | 3 | | |
+| 错误码 | 条数 | 代表样本（文件:行） | 说明 |
+|---|---:|---|---|
+| UNCHECKED_USE_OF_NULLABLE_VALUE | 5 | core/paragraph_style.dart:47 | 可空值未判空即用 |
+| UNDEFINED_IDENTIFIER | 4 | layout/contextual_quote_role_resolver.dart:38 | 标识符未生成 |
+| NOT_INITIALIZED_NON_NULLABLE_INSTANCE_FIELD | 4 | layout/line_breaker.dart:29 | 非空字段未初始化 |
+| NON_EXHAUSTIVE_SWITCH_STATEMENT | 4 | font/font_metrics.dart:51 | switch 缺分支 |
+| NOT_ENOUGH_POSITIONAL_ARGUMENTS | 3 | layout/paragraph_shaping_stage.dart:48 | 实参数不足 |
+| UNDEFINED_FUNCTION | 2 | test/trace/test_trace_platform.dart:10 | 函数未生成 |
+| MISSING_DEFAULT_VALUE_FOR_PARAMETER | 2 | layout/display_glyph_substitution_engine_test_support.dart:189 | 可选参数缺默认值 |
+| ARGUMENT_TYPE_NOT_ASSIGNABLE | 2 | layout/display_glyph_substitution_engine_test_support.dart:50 | 实参类型不可赋值 |
+| RETURN_OF_INVALID_TYPE_FROM_CLOSURE | 1 | layout/paragraph_shaping_stage_coverage_test_support.dart:217 | 闭包返回类型不符 |
+| REFERENCED_BEFORE_DECLARATION | 1 | layout/unicode_emoji17_rgi_role_audit_test_support.dart:10 | 声明前引用 |
+| READ_POTENTIALLY_UNASSIGNED_FINAL | 1 | layout/unicode_emoji17_rgi_role_audit_test_support.dart:10 | final 可能未赋值 |
+| INSTANCE_MEMBER_ACCESS_FROM_STATIC | 1 | core/rich_text_background_paint.dart:44 | 静态位访问实例成员 |
+| CONFLICTING_METHOD_AND_FIELD | 1 | clreq/bopomofo_reading.dart:19 | 方法与字段同名冲突 |
 
-文件分布无单点大户：line_breaker 4、contextual_quote_role_resolver 4、
-test_trace_platform 2、unicode_emoji 2、punctuation_geometry_ledger 2、
-line_break_planning_stage_coverage_test_support 2、其余散布。
-dart tests 侧为 0。census12 时代的逐类表计数已整体过期，明细见 git
-历史与本节 2026-09-12 之前的版本。
+求和校验：13 码合计 31，与 counts.txt 一致。文件分布无单点大户：
+line_breaker 4、contextual_quote_role_resolver 4、display_glyph_substitution_engine
+test_support 3、其余散布。dart tests 侧为 0。census12 时代的逐类表计数已
+整体过期，明细见 git 历史与本节 2026-09-12 之前的版本。
 
 ## 9 分级标尺
 
