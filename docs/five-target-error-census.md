@@ -458,7 +458,26 @@ rustsurvey-r1 报告整理（完整版见 /tmp/dispatch-state/boring-rustsurvey-
 | E0369 | 50 | 50 | core/layout_queries.rs:187（LineBox 上用 !=） | 值类型未实现 PartialEq |
 | E0425 | 39 | 39 | clreq/clreq_profile.rs:20（cannot find value region） | 标识符未生成 |
 | E0382 | 35 | 35 | layout/paragraph_dp_line_breaker.rs:141（borrow of moved） | 按值传递后引用 |
-| 其余 18 码 | 118 | 121 | 见 rustsurvey 报告 | 分散 |
+| E0594 | 30 | 30 | test/shaping_evidence_json.rs:393 等 | 特征方法存在性与导出形态 |
+| E0596 | 17 | 17 | layout 前缀 test_support.rs:55（cannot borrow） | 不可变借用与可变要求冲突 |
+| E0053 | 17 | 17 | layout/display_glyph_substitution_engine 等 | trait impl 返回类型与声明不一致 |
+| E0507 | 16 | 16 | layout/ascii_point_mark_kinsoku_test_support 等 | 不能移出共享引用背后的值 |
+| E0608 | 12 | 12 | core/layout_queries.rs:923（cannot index） | 该类型未实现索引 |
+| E0624 | 8 | 8 | core/layout_queries.rs:935（method len 不存在） | 关联函数误作方法调用 |
+| E0433 | 8 | 8 | layout/paragraph_shaping_stage.rs:116 | 模块路径解析失败（引用类，e0433 线在修） |
+| E0282 | 7 | 7 | layout/line_break_planning_stage.rs:375 | 模式绑定缺类型标注 |
+| E0004 | 6 | 6 | font/font_metrics.rs:74（FontRole 非穷尽匹配） | match 缺臂 |
+| E0689 | 5 | 5 | layout/hyphenation_layout_test_support 等 | 对 Option 直接调用方法 |
+| E0600 | 5 | 5 | layout/prepared_paragraph.rs:1746 | 方法返回类型与预期不符 |
+| E0015 | 4 | 4 | core/rich_text_background_draw_style 等 | 常量求值缺函数体 |
+| E0610 | 2 | 2 | layout/punctuation_geometry_ledger.rs:185 | 关联函数当方法调用（self 缺失） |
+| E0432 | 2 | 2 | layout/justifier.rs:16（unresolved import） | 导入路径不存在 |
+| E0424 | 2 | 2 | layout/contextual_quote_role_resolver 等 | 当前作用域无此标识符 |
+| E0658 | 1 | 1 | layout/paragraph_shaping_stage.rs:756 | 语言特性需启用标记 |
+| E0560 | 1 | 1 | shaping/replayable_font_backend_coverage 等 | 宏展开失败 |
+| E0505 | 1 | 1 | layout/prepared_paragraph_plan_construction 等 | 值被移动后仍借用 |
+
+求和校验：f64 列 25 码合计 1900、f32 列合计 1907，与 counts.txt 一致。
 
 专道分工：E0308 归 e0308 线（muse）、E0277 归 e0277 线（longcat cmd600）、
 域追踪归 rustdomain 线、clone 归 F4q（已闭合）、E0433 引用类归 e0433 线
