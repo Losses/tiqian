@@ -121,6 +121,11 @@ data class AndroidFontCatalog(
          * face specs and chains with their own before `install()`.
          */
         fun system(context: Context): AndroidFontCatalog = TiqianAndroidFontBackend.systemCatalog(context)
+
+        /** Discover real system sans style instances (100–900), preserving physical axes and indices.
+         * Synthesised bold/italic are excluded on API 31+; older systems use the declared font families.
+         */
+        fun systemStyles(context: Context): AndroidFontCatalog = TiqianAndroidFontBackend.systemStyleCatalog(context)
     }
 }
 
