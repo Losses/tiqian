@@ -432,645 +432,70 @@ boring 对尚未实现生成规则的 Haxe 构造，在生成阶段调用 `Conte
 这套循环称为逐处重跑。2026-09-07 基线（tiqian `3f609c0f` 加 boring `e01b03b3`）上，kotlin、swift、rust 各 f32 与 f64 加 ts、dart 共八个生成命令退出码全部为 0，产物文件数依次为 397、397、393、393、405、405、394、393，逐处重跑阶段结束。八个格子的编译普查见第 3、5、6、7、8 节；生成阻断期的修复历史
 并入第 12 节进度表。
 
-## 5 Swift 编译普查（2026-09-08 tests 侧计数阻断中）
+## 5 Swift 编译普查
 
-测量更正（2026-09-10，swf64 修复任务 r11 实测并经 census16 复测证实）：
-`swiftc -typecheck` 默认 batch 模式把每个文件作为独立编译任务，首个失败
-任务后不再启动后续任务。本节与 census14、census15 引用的 gen 侧「每精度
-1 条」、tests 侧「41 条」以及更早的合并测量计数都是首个失败文件处的截断
-值。全模块一次检查（`swiftc -typecheck -wmo`，gen 树与 tests 树合并）的
-实际计数为 f64 1262、f32 1289（boring `4d91f806` × tiqian `3f609c0f`，
-与 02720bae 位点两次独立测量一致）。前三大骨架：call can throw but is
-not marked with 'try' 170、operator can throw but expression is not
-marked with 'try' 121、'nil' requires a contextual type 73（swf64-r1
-报告，主树 f64 WMO 日志）。下表保留为截断测量的历史记录，修复派发以
-WMO 测量为准。
+census27 快照（2026-09-12，boring `3b675e9e` × tiqian `d0a2ab9a`）：
+strip import 后 `swiftc -typecheck -wmo` 联合检查 gen 树与 tests 树，
+f64 与 f32 计数都是 0。swift 编译错误面已闭合。
 
-2026-09-08 census11 复测现值（boring `3044bf91`）：gen 侧每精度 1 条（错误在
-census11 换成另一组：swiftnarrow 记录的 optional 解包错误消失、修复归
-knamefix-r8 期间的合并，未逐笔核对；现存 1 条见下表）；tests 侧计数无法
-产出：两个精度的 tests 目录逐目录 swiftc 与合并调用都在第一条
-`no such module 'TiqianEngine'` 处中止（BopomofoParserTest.swift:1:8，
-rc=123，计数 1 不是实际错误数）；测试文件头的 `import TiqianEngine` 在
-census6 基线树同样存在（重跑记录为 57 条），census6 能计数是因为它当时的语法解析错误使 swiftc 在解析阶段
-中止、未到模块加载；本轮 gen 侧语法错误减少后 swiftc 走到模块加载被
-import 卡住。gen 侧计数降为 0 并经 `-emit-module -module-name TiqianEngine`
-产出模块前，tests 侧没有替代测量配方，下表 tests 侧仍标 `d2c6b559`
-复测值。轮次历史：census6 基线（tiqian `3f609c0f` 加 boring `e01b03b3`）gen 每精度 1、tests 每精度 57；swiftstr 修复合并（boring `6ad8dc66`，合并 `d2c6b559`）后 tests 每精度降 41；
-首测（2026-09-06，boring `185cf02`）gen 侧浮点字面量 7 条与控制字符 1 条
-两类由 swiftrem-r2（boring `4c81c5fc`，合并 `e01b03b3`）修复。
+历史测量记录（2026-09-08 census11 至 2026-09-12 swiftcens-r9）：
+batch 模式曾把每个文件作为独立编译任务造成截断计数（f64 1262、f32 1289
+的 WMO 真值发现于 swf64-r1），经 swiftinit、swf64、swiftcens 各线修复后
+降为 0。逐类明细见 git 历史与本节 2026-09-12 之前的版本。
 
-gen 侧（每精度 1 条）：
+## 6 rust 编译普查
 
-| 错误消息类（骨架） | 条数 | 样本 | 判定与处置 |
-|---|---:|---|---|
-| cannot find 'X' in scope | 1 | swift-gen-f64/org/tiqian/core/LayoutInput.swift:22:255（f32 同位） | 已判生成器：@:dataClass 默认参数内联把 Haxe 点分全限定名 `org.tiqian.core.Ic.Zero` 原样输出（生成行 `_ paragraphStyle: ParagraphStyle = ParagraphStyle(…, org.tiqian.core.Ic.Zero, …)` 实测），与 rust E0425.a、ts F3as org 名字条目、kotlin 3.4 节 region 形参泄漏是同一构造的 swift 表现；修复随跨目标统一判定开列 |
+census27 快照（2026-09-12，boring `3b675e9e` × tiqian `d0a2ab9a`）：
+f64 1894 / f32 1907（census20 为 2738 / 2741）。逐码四列表由
+rustsurvey-r1 报告整理（完整版见 /tmp/dispatch-state/boring-rustsurvey-r1.report.md）：
 
-tests 侧（每精度 41 条，复测值）。判定来源 tswift1 r1 报告（六类逐类三件，锚点经复核）；消费侧配置与引擎侧的区分来自合并测量（第 2.2 节，两精度同为 16 条
-语法解析错误）。引擎侧 F3t 四类（每精度 16 条，全部集中在
-ExplainableStubParagraphLayoutEngineTest.swift:69 的多语句闭包嵌进插值段
-连锁）已随 swiftstr 合并 `d2c6b559` 消除，对应四行已从表内删除：
+| 错误码 | f64 | f32 | 代表样本（文件:行） | 机制假设 |
+|---|---:|---:|---|---|
+| E0308 | 1319 | 1331 | clreq/clreq_profile.rs:20（expected Vec<u32>, found [u32; 3]） | 数组字面量与 Vec、枚举与整数的类型错配 |
+| E0277 | 181 | 182 | layout/prepared_paragraph.rs:113（dyn Fn 无法 shared/sent） | Mutex 包装要求 Send，捕获未满足 |
+| E0599 | 71 | 71 | core/paragraph_style.rs:55（Option<Ic> 无 Display） | 可空接收者调用方法 |
+| E0609 | 61 | 61 | core/layout_queries.rs:211（Option<Rect> 无字段 left） | 可空 receiver 未解包取字段 |
+| E0369 | 50 | 50 | core/layout_queries.rs:187（LineBox 上用 !=） | 值类型未实现 PartialEq |
+| E0425 | 39 | 39 | clreq/clreq_profile.rs:20（cannot find value region） | 标识符未生成 |
+| E0382 | 35 | 35 | layout/paragraph_dp_line_breaker.rs:141（borrow of moved） | 按值传递后引用 |
+| 其余 18 码 | 118 | 121 | 见 rustsurvey 报告 | 分散 |
 
-| 错误消息类（骨架） | 条数 | 判定与处置 |
-|---|---:|---|
-| cannot find 'X' in scope | 32 | 消费侧配置：tests 目录文件没有 import 头（tiqian 的 targets/swift-common.hxml 未定义 `-D swift-test-import`，boring 合同见 examples/swift.hxml:20 与 Compiler.hx fileContent 的头部条件 :422-425），且支撑类 TracedAssertions 与 TestTraceRecorder 实际生成在 gen 目录 org/tiqian/test/trace/，tests 目录单独 typecheck 必然找不到；合并测量下这类错误数为 0。F3u |
-| 'X' requires a contextual type | 9 | 消费侧配置连锁：被调方不可见时字面 nil 无上下文类型（BopomofoParserTest.swift 断言调用的第三实参）；合并测量下这类错误数为 0。随 F3u |
-| 合计（求和校验） | 41 | 与 tests 目录错误总数相等（全部为消费侧配置 F3u；引擎侧 F3t 四类已消除） |
+专道分工：E0308 归 e0308 线（muse）、E0277 归 e0277 线（longcat cmd600）、
+域追踪归 rustdomain 线、clone 归 F4q（已闭合）、E0433 引用类归 e0433 线
+（NodeFileSystem 与 map builder 两笔已推 `b8b17665`/`553d3fd2`）。
 
-文件分布（复测）：BopomofoParserTest.swift 41 条（全部为消费侧配置
-两类，即 F3u）；ExplainableStubParagraphLayoutEngineTest.swift 0 条
-（修复前 16 条全部为 F3t 连锁，随合并 `d2c6b559` 消除；f32 侧同值
-同分布）。
+census12 时代的逐类表（f32 4548 / f64 4558 时代）计数已整体过期，
+明细见 git 历史与本节 2026-09-12 之前的版本。
 
+## 7 TypeScript 编译普查
 
-## 6 rust 编译普查（2026-09-08 census12 复测：f32 4548 / f64 4558，回归来源与逐码判定见逐类表）
+census27 快照（2026-09-12，boring `3b675e9e` × tiqian `d0a2ab9a`）：
+`tsc --noEmit` 计数为 0。ts 编译错误面已闭合。
 
-首测与早期历史：2026-09-06 首测（boring `4b1fec9`）181 条、15 类；
-rustflit 与 rustf4c 修掉浮点字面量 124 条与保留字转义 12 条（合并
-`d870489c` 与 `782526d7`），rustf4c r2 判定探针把当时剩余 7 类归到 rust
-生成器（F3n 至 F3s 开列）；`e01b03b3` 复测每精度 20 条、7 类（全语法层，
-完整性以日志末行 N 与计数核对相等）；rustfix-r1 合并 `b7054019` 后每
-精度 4 条、3 类（F3n、F3o、F3q 降 0；F3p、F3r、F3s 现场形状与 rustf4c
-r2 记录不符，当轮更正）；rustfix r2 至 r4 合并后（`d0df20db`）解析层
-三类计数降为 0、完成删除，rustc 进入类型检查，语义层错误首次进入测量：每精度
-189 条、8 个消息骨架，f32 与 f64 逐类相同（两侧 N=189 均核过，见 2.3
-节）。boring 自身的 stage1:rust 与 rust-f32 在 `d0df20db` 仍为 0：该
-错误类只在 lib 单独构建下出现。
+历史记录（2026-09-07 首测 330 起，经 ts2、ts1 各线修复，b54 三笔
+narrowed variant arm、same-module class members、pipeline 展开后降为 0）：
+逐类明细见 git 历史与本节 2026-09-12 之前的版本。
 
-2026-09-08 boring `d38459ab` 第四次复测（两精度同值）：F4d 修复生效（pub use 行错误类 108→0，E0432 全类 154→46，求和
-校验相等），同次复测新增四个错误码 174 条（E0425 84、E0424 75、E0433
-净增 14、E0423 1），进入区间经提交拓扑缩小为 `d0df20db..d38459ab`。
-rustprobe r1 只读探针 A/B 判定：新增四码是 `0629b847` 把测试模块加 `#[cfg(test)]` 条件编译排除
-后、类型检查首次到达非测试模块既有错误的暴露（控制实验删光全部
-cfg(test) 标注后计数精确回到 189；`908305a0` 精确复现基线 189 且其非
-测试 .rs 文件与 `d38459ab` 逐字节相同）；派发方假设的两个候选
-（`39054311` 经 `c332897a`、`7c2a1c02` 经 `908305a0`）都被实验否定，
-`c332897a` 生成整体崩溃属 knamefix-r2 自身回归。
+## 8 Dart 编译普查
 
-2026-09-08 census11 复测（boring `3044bf91`）：每精度 247 条、8 个错误码（逐码 E0425 76、E0424 75、E0432 46、
-E0053 28、E0433 15、E0277 5、E0423 1、E0072 1，求和校验相等），相对
-`d38459ab` 的 255 降 8，唯一变动 E0425（84→76，名字 `pi` 4 条与 `bi`
-4 条消失，归 knamefix-r8 期间的合并，未逐笔核对），其余七个错误码计数不变。
+census27 快照（2026-09-12，boring `3b675e9e` × tiqian `d0a2ab9a`）：
+dart gen 31 / dart tests 0（census20 为 gen 96 / tests 39）。
 
-2026-09-08 census12 复测（boring `a72f994d`）：f32 4548 条、f64 4558 条（两精度逐码差异只在 E0689，93 对 83），
-相对 census11 的每精度 247 上升 4301/4311，为 `3044bf91..a72f994d` 区间
-仅有的两笔 rust 侧合并（`746742dd` rustmisc-r2 与 `a72f994d` dartargs-r2）
-引入的消费侧回归，boring 样本没有覆盖消费树的这些形状。boring 验收命令在合并后统一重跑 17 项通过、3 项失败：stage1:rust 与 rust-f32 的失败是两笔改动的交互（dartargs
-的 fieldInits 优先分支消费了 rustmisc 装箱分支要处理的同名形参记录），
-派发方修复 RustExpr.hx constructorBody 的同名形参不记录规则并入
-`a72f994d` 后两套件单独复测通过；consistency 为既有失败项。抽样核对
-一致的机制候选（经 rustjudge r2/r3 逐环验证，逐码判定与形状明细见
-下表）：E0308 计数最大的形状 198 条与嵌套构造实参缺 Some 包装一致
-（错误来源判定 `74371c5a`，F4p）；E0277 条数 5→834 的扩大与调用点
-写出默认值相关（F4g 仅覆盖 send 5 条）；E0599 的 470 条 no method 形与
-`.clone()` 调用点落在没有 Clone 派生的类上一致（F4q）；E0689 与无类型
-后缀整数字面量上的方法调用一致；E0061 与构造器和函数签名减参后调用点
-未补实参一致。E0072 1→0（F4j 修复生效）；E0433 15→14（census11 段落
-记 15、表行记 14 的两处不一致以本轮实测 14 为准，消失的一条未逐名
-核对）；其余六个 census11 错误码计数不变。
+gen 侧 31 条的逐码分布（13 码）：
 
-| 错误消息类（骨架） | 计数 | 判定与处置 |
-|---|---:|---|
-| cannot find value `X` in this scope 等 E0425 全部消息骨架 | 76 | 判定分四支（rustprobe r1 加派发方 census11 逐名位点复核；名字分布全列：org 52、UStringException 8、region 7、compare 前缀函数 6〔compare_font_metrics_request、compare_glue、compare_shaping_evidence_key、compare_recorded_shaping_result、compare_metrics_evidence_key、compare_recorded_font_metrics 各 1〕、SORTED_TABLE_COMPARE_STRINGS 2、count 1）：org 52 为 @:dataClass 默认参数内联把 Haxe 点分全限定名 `org.tiqian.core.Ic.Zero` 原样输出（rustprobe r1 3.2.a，layout_input.rs:44:150 实测；位点分布 35 个文件，core 侧 layout_input.rs、paragraph_style.rs、rich_text_paint.rs、rich_text_background_paint.rs 各 1，其余 48 条在 layout 目录的 test_support 类文件，最大 ruby_layout_test_support.rs 6）；region 7 与 count 1 为同一内联路径把构造器形参泄漏进调用点上下文（clreq_profile.rs:24:433 的 pub static 初始化器与 layout_dump_format.rs:146 的 `Ic(count)` 实测，rustprobe r1 3.2.a/3.2.b）；compare 前缀 6 条落在比较函数合成体内（font_metrics.rs:114、punctuation_model.rs:159、shaping_evidence.rs:39/41/66/68 实测），是引用了未生成的兄弟比较函数，与 E0432 compare 前缀 42 条同一谓词不一致（F4e 修复项；rustprobe r1 3.2.b 把这六条记入默认参数内联的修复范围，与位点形状不符，按位点改判）；UStringException 8（text_shaper.rs:176/185 等 Return 位 `Result<…, UStringException>`）与 SORTED_TABLE_COMPARE_STRINGS 2（parse_tex_hyphenation_patterns.rs:54/55 引 crate::runtime::sorted_table 常量）为模块未生成或未导出形态，假设与 F4k/F4i 同类（ts F3aq 与 dart F3am 记录同名 UString 问题），待证。修复项 F4l（org 加 region 加 count 60 条）；compare 6 条随 F4e；UStringException 加 SORTED_TABLE 10 条待证 |
-| expected value, found module `self`（E0424） | 75 | 修复位置（rustprobe r1 3.1）：@:dataClass 构造器体里的 `this.<field>` 被输出成关联函数 `fn new` 内的 `self.<field>`，而关联函数没有 `self` 绑定（源 InlineObjectBoundaryAdjustment.hx:18-22 的构造器校验、生成 inline_object_boundary_adjustment.rs:21 实测；受害 Haxe 源另有 LayoutConstraints.hx、RichTextBackgroundPaint.hx、RichTextPaint.hx、LineBreaker.hx、LineBreakPlanningStage.hx、LineOptimization.hx、ParagraphDpLineBreaker.hx、ProgressiveBreakDecisions.hx、ContextualDashEllipsisRoleResolver.hx、ContextualQuoteRoleResolver.hx、TestTraceRecorder.hx 十一个，清单见报告 3.1）。修复项 F4m |
-| unresolved import `X`（compare 前缀函数） | 42 | 判定完成（rustsem r1）：嵌套 record 的 compare 引用侧未校验共享谓词 canEmitDataClassComparator：引用生成段在 RustDecl.hx:333-337、:364-366、:391-393、:409-411、:469-470，谓词定义在 PolicyQueries.hx:163-192；定义侧判定不生成时引用侧仍输出 compare_X（样本 layout_input.rs:17 引 compare_paragraph_style、layout_result.rs:10 引 compare_line_box）。与 ts TS2724、dart F3ai 为同一谓词不一致的跨目标表现。修复项 F4e（排队） |
-| method `X` has an incompatible type for trait: expected `X`, found `X` | 23 | 判定完成（rustsem r1）：接口 trait 声明（RustDecl.hx:87-102，:96 固定为 `&self`、返回类型不带 Result）与 impl 块签名（RustDecl.hx:291-321 经 instanceFuncDecl :1728-1738 按方法体可抛性写 `Result<…>`）不对齐；Haxe 无 checked exception，trait 声明没有可抛信息（display_glyph_substitution_engine_test_support.rs:265 等 23 处实测）。修复项 F4f（排队） |
-| `X` cannot be sent between threads safely: `X` cannot be sent between threads safely | 834 | 仅 send 形状 5 条判定完成（rustsem r1）：moduleStaticVarDecl 默认分支（RustDecl.hx:1154-1157）无条件把 mutable static 包成 `Mutex<T>`，内层 `Rc<dyn Fn(&K,&K)->i32>`（RustType.hx:148）与无 Send 上界的 `Box<dyn Trait>`（RustType.hx:85-87）不满足 static 的 Sync 要求（english_hyphenation.rs:9 一条、prepared_paragraph.rs:37-40 四条实测）。修复项 F4g（排队，覆盖该 5 条）。census12 条数 5→834，早先「新增条目与该机制相同」的说法经 rustjudge r2 全量形状分解证伪：834 条分 18 种消息形状（couldn't convert the error 494、闭包 `?` 算子 137、trait bound 未满足 62、can't compare 两形 57＋34、not an iterator 13、cannot divide 12、send 5、其余 11 形合计 20，Σ=834），F4g 只覆盖 send 5 条，其余 829 条的逐形状判定由 rustjudge r3 执行 |
-| method `X` has an incompatible type for trait: types differ in mutability | 5 | 判定完成（rustsem r1）：与 23 条同一生成路径的可变维度：isMethodMutating（RustDecl.hx:1857-1869）检测到方法体写自身字段后 impl 侧输出 `&mut self`（:1712-1717），trait 声明固定为 `&self`（:96）。修复项 F4f（与 23 条同一修复位置，排队） |
-| unresolved import `X`: could not find `X` in `X`（tiqian_no_such_element_exception） | 3 | 判定完成（rustsem r1）：payload enum 与异常类声明在同一 Haxe 模块（TiqianNoSuchElementException.hx）时，preScan（Compiler.hx:818-820）形成自映射，generateFilesManually 的去重跳过（Compiler.hx:250-252）把异常类自己的模块整模块丢弃，文件不写、mod.rs 不登记。修复项 F4h（排队） |
-| unresolved import `X`: could not find `X` in `X`（crate::std::functional） | 1 | 判定完成（rustsem r1）：std.Functional 是 extern 不产生模块（Compiler.hx:84），rust 目标 shim 清单（Compiler.hx:319-325 与 RustImports.hx:9-21）无对应项，sumOfFloat/forEach 也未进惯用展开层（RustExpr.hx:3896-3913 与 :4332；PipelineExpander.hx:852-855 只有 sortedBy 就地展开）。修复项 F4i（排队） |
-| cannot find `X` in `X`（E0433 新增条目） | 14 | 判定分两支（rustprobe r1 3.4，census11 逐名核对分布不变：SortedMap 6、test_core 5、NodeFileSystem 2、tiqian_no_such_element_exception 1）：SortedMap 加 test_core 加 NodeFileSystem 13 条为 tiqian 生产模块引用只在测试支撑模块定义的名字（paragraph_shaping_stage.rs:61 与 replayable_font_backend.rs:40 引 SortedMap、prepared_paragraph.rs:556 引 test_core），测试模块被 `#[cfg(test)]` 条件编译排除后名字不再参与解析而暴露；修复位置在 tiqian 的 engine-haxe 源把生产模块的引用改指生产侧定义或把类型提升进生产模块，不在 boring 侧绕过，修复项 F4o；tiqian_no_such_element_exception 1 条（layout_queries.rs）与 E0432 同名 3 条（F4h）是同一模块未写出的连锁，随 F4h |
-| expected function, found module `super`（E0423） | 1 | 判定完成（rustprobe r1 3.3）：@:dataClass 带继承的构造器 `super(Message(message))` 被原样输出成 `super(...)`（源 IllegalStateException.hx、生成 illegal_state_exception.rs:9 实测），Rust 无类继承、`super` 是父模块路径关键字，类继承加构造器 super 调用的 Haxe 语义在 rust 目标无法直接承载，属 AGENTS.md 第 34 条例外情形；修复须把此类类从 @:dataClass 构造器生成路径改到手工 impl 构造路径，任务书与报告写明所依赖的 Haxe 语义。修复项 F4n |
-| mismatched types: expected `X`, found `X`（E0308） | 2083 | 计数最大的形状 198 条判定完成（rustjudge r2 第 3.1 节，档位修复位置）：Haxe 源 `LayoutInput.hx:21` 的 `textStyle == null ? new TextStyle() : textStyle` 经 `RustExpr.hx:503` coalescingNormalizationLines 与 `:201` coalescingDefaultText 物化默认构造，嵌套构造实参列表的生成路径（`RustExpr.hx:246`）不传既有的 asOption 形参，实参不带 Some 包装直接写出（生成 `layout_input.rs:43`），对 `text_style.rs:17` 的全 `Option<...>` 形参逐个不匹配；错误来源判定为 `74371c5a`（git show hunk 与该形状直接相交），VNull 双包装与递归装箱两候选证伪。修复项 F4p，修复已由 rustcoalesce 系列任务推进。其余形状：expected `f64` found integer 222、expected `u32` found `i32` 87 与反向 69、expected `Option<String>` found `String` 70、语句位收 `Result` 56＋55＋55、接口位收具体类缺 `Box::new` 55×3（clreq_profile.rs:24、bopomofo_parser.rs:22 实测）；类内全量形状分解的测量已由 rustjudge r1 交付并经派发方验收（209 种形状 Σ=2083），逐形状判定待 F4p 合并后 census13 重测再按新形状空间执行（当前判定会随修复失效） |
-| no method or associated item named `X` found（E0599） | 701 | 四个消息子形 569 条已判（rustjudge r3 第 3 节，2026-09-08 验收）：clone 459 条修复位置（错误来源判定为 `74371c5a`：该提交在调用点对非 Copy 值读取统一追加 `.clone()`（`RustExpr.hx:3873-3882`），而这些结构没有拿到 `#[derive(Clone)]`，要求与供给不一致（r4 前置问题回答更正了 r3 的「放宽 derive 触发条件」表述：`RustDecl.hx:216-223` 的 `final hasCoalescingClone = true` 只把非 data-class 分支的来源记录条件换成常真，`@:dataClass` 结构走 `:223-225` 第二分支、仍被 `isAllClone(varFields)`（`:2274-2300`）拦住，见 F4q），`LayoutResult` 87、`LayoutInput` 77、`LineSolution` 54、`LineCandidate` 48、`LineBox` 39 等结构无 Clone impl，位点如 `layout_queries.rs:147:96`；`d4a43a33` 递归装箱与 `b74f9da9` VNull 双包装两候选证伪），开列修复项 F4q；关联常量 51 条（`BuiltInLayoutProfiles::BUILT_IN_LAYOUT_PROFILES_CLREQ_HORIZONTAL` 等，`RustExpr.hx:3644-3660` FStatic 静态字段映射成关联常量而实际声明是模块静态 `pub static`，built_in_layout_profiles.rs:5 实测）、`as_deref` on `Option<f64>`/`Option<u32>` 36 条（`RustExpr.hx:950-966` 字符串化分支对 null 类型统一发 `.as_deref().unwrap_or("")`，glyph.rs:40 实测）、Option 上 `to_string` 23 条（`RustExpr.hx:4167-4173` 把条件 null 分支直接字符串化成 `None.to_string()`，justifier.rs:168 实测）三组均为既有暴露（生成分支在 `3044bf91..a72f994d` 区间外已存在，错误位点由 `74371c5a` 的 coalescing 物化新引入；逐轮计数核对：census10 `rust-f64-check.log`/`rust-f32-check.log` 与 census11 `r64.log`/`r32.log` 的 E0599 计数均为 0，census12 为 701，显现全部为 census12 新增）。rustjudge r4 续判（2026-09-08 验收，诚实部分交付 26/398）：u32 上双重 `unwrap_or` 12 条（机制经派发方 2026-09-08 在 dartnull 检出 `9f0b52df` 逐行复核更正：两次追加都发生在局部声明渲染路径，`RustExpr.hx:611` 调用的 renderValueForType（定义 `:6281` 起）对标注 `Int` 局部经其 charCodeAt 桥追加第一个 `.unwrap_or(0)`，`:625`-`:631` 声明分支再追加第二个，不标注 `Null<Int>` 局部只吃声明分支一次、输出正确；`:3346`-`:3353` 算术 operand 分支只处理内联调用形、产出单 unwrap，不在此缺陷链上，rustjudge r4 早先把第二个追加记到该分支不属实；bopomofo_parser.rs:22 双后缀实测；判定为既有暴露，`3044bf91..a72f994d` 区间三笔 RustExpr 提交的 hunk 均不触及这些分支）、关联常量 `AUTO_SPACE_POLICY_DEFAULT` 14 条（`AutoSpacePolicy.hx:24` 的 `public static final Default` 经 `RustDecl.hx:1116-1170` 的 moduleStaticVarDecl 写成模块静态 `pub static LazyLock`，调用点却经 `RustExpr.hx:3640-3660` 的 FStatic 分支按 `AutoSpacePolicy::` 关联常量访问；与 51 条组同一机制，该组扩为 65 条；判定为既有暴露）两组并入。剩余 106 条（其余方法/trait 94、关联常量 12）未判 |
-| this function takes N arguments but N was supplied（E0061） | 341 | 未判定（census12 新增）。data 表函数声明两个参数而调用只给一个参数（east_asian_spacing_data.rs:374 实测）。与构造器和函数签名因 coalescing 降级而减少参数、调用点未补实参相关，待判定 |
-| can't call method `X` on ambiguous numeric type（E0689） | 93 | 未判定（census12 新增），rustjudge r2 已定位候选机制：`RustExpr.hx:201` coalescingDefaultText 的 CFloat 分支 f32 追加 `f32` 后缀、f64 不追加，无后缀整数字面量上调用 `to_ne_bytes`、`is_nan`（layout_queries.rs:538、annotation_geometry_stage.rs:305 实测）；f32 侧 83，f64 比 f32 多 10 条的文件分布（line_breaker.rs 多 2、paragraph_dp_line_breaker.rs 多 1、annotation_geometry_stage.rs 多 1、line_geometry_stage.rs 20 对 14）已核对，四文件 f64/f32 同位生成行对照由 rustjudge r3 完成后写入本行 |
-| binary operation `==` cannot be applied to type `X`（E0369） | 69 | 未判定（census12 新增）。`==` 作用于 `TextRange`、`Fill` 等缺 PartialEq 实现（layout_queries.rs:1249、rich_text_background_paint.rs:58 实测），待判定 |
-| no field `X` on type `Option<X>`（E0609） | 61 | 未判定（census12 新增）。`Option<Rect>` 上取 `.left`、`.top`（layout_queries.rs:181 实测），待判定 |
-| cannot assign to `X`, which is behind a `&` reference（E0594） | 31 | 未判定（census12 新增）。`&` 引用后赋值 `self.call_count`（annotation_geometry_stage_coverage_test_support.rs:126 实测），待判定 |
-| type `X` cannot be dereferenced（E0614） | 21 | 未判定（census12 新增）。对枚举 `ClreqStrictness` 解引用（justifier_engine_test_support.rs:74 实测），待判定 |
-| use of moved value: `X`（E0382） | 13 | 未判定（census12 新增）。循环内使用已被移动的值（cluster_role_resolution.rs:89 实测），待判定 |
-| use of unstable library feature `str_as_str`（E0658） | 11 | 未判定（census12 新增）。`str_as_str` 非 stable（layout_debug_assembly.rs:246 实测），待判定 |
-| cannot index into a value of type `Option<Vec<f64>>`（E0608） | 11 | 未判定（census12 新增）。对 `Option<Vec<f64>>` 直接索引（layout_queries.rs:889 实测），待判定 |
-| cannot borrow `X` as mutable, as it is not declared as mutable（E0596） | 11 | 未判定（census12 新增）。非 mut 声明被可变借用（explainable_stub_paragraph_layout_engine_test_support.rs:56 实测），待判定 |
-| cannot move out of `X` which is behind a shared reference（E0507） | 9 | 未判定（census12 新增）。共享引用后移动 `self.points`（hyphenator.rs:70 实测），待判定 |
-| method `X` is private（E0624） | 8 | 未判定（census12 新增）。`len` 为私有方法（layout_queries.rs:901 实测），待判定 |
-| cannot apply unary operator `-` to type `u32`（E0600） | 5 | 未判定（census12 新增）。对 `u32` 取负（prepared_paragraph.rs:1686 实测），待判定 |
-| non-exhaustive patterns: `X` not covered（E0004） | 5 | 未判定（census12 新增）。match 不穷尽（font_metrics.rs:141 实测），待判定 |
-| type annotations needed（E0282） | 4 | 未判定（census12 新增）。`Option<T>` 无法推断（line_break_planning_stage.rs:371 实测），待判定 |
-| cannot call non-const associated function in statics（E0015） | 4 | 未判定（census12 新增）。static 初始化器调用 `Fill::new`（rich_text_background_draw_style.rs:10 实测），待判定 |
-| `f64` is a primitive type and therefore doesn't have fields（E0610） | 2 | 未判定（census12 新增）。对 `f64` 取字段（punctuation_geometry_ledger.rs:183 实测），待判定 |
-| struct `X` has no field named `X`（E0560） | 1 | 未判定（census12 新增）。`CatalogImpl` 无 `faces` 字段（replayable_font_backend_coverage_test.rs:177 实测），待判定 |
-| 合计（求和校验） | 4558 | 与 f64 错误总数相等；f32 4548（E0689 83，其余逐码与 f64 相同）。本行为 census12 复测值（`a72f994d`）；census11 复测值 247（`3044bf91`）；`d38459ab` 复测值 255；`d0df20db` 复测值 189 |
+| 错误码 | 条数 | 错误码 | 条数 |
+|---|---:|---|---:|
+| UNCHECKED_USE_OF_NULLABLE_VALUE | 5 | UNDEFINED_FUNCTION | 2 |
+| UNDEFINED_IDENTIFIER | 4 | MISSING_DEFAULT_VALUE_FOR_PARAMETER | 2 |
+| NOT_INITIALIZED_NON_NULLABLE_INSTANCE_FIELD | 4 | ARGUMENT_TYPE_NOT_ASSIGNABLE | 2 |
+| NON_EXHAUSTIVE_SWITCH_STATEMENT | 4 | 其余六码各 1 | 6 |
+| NOT_ENOUGH_POSITIONAL_ARGUMENTS | 3 | | |
 
-相对上一表已降为 0 并删除的行：unresolved import `X`: use of unresolved
-module or unlinked crate `X`（mod.rs 对 `X_test` 模块的 pub use 行，F4d，
-`d38459ab` 复测 108→0，census11 复核仍为 0，按删除制移除，进度见第 12 节）；
-recursive type `X` has infinite size（E0072，F4j，rustmisc-r2 递归字段装箱
-合并 `746742dd` 后 census12 复测 1→0，按删除制移除，进度见第 12 节）。
-
-判定进度小结（2026-09-08 census12 复测，28 个错误码：既有 7 码中 6 码
-判定保持、E0277 判定范围缩小；新增 20 码中 E0308 计数最大的形状与 E0599
-四个消息子形已判，其余判定中）：解析层已清空（F3n 至 F3s 六项全部完成
-删除）。既有错误码：E0432（46，compare 前缀 42 加
-tiqian_no_such_element_exception 3 加 crate::std::functional 1）与 E0053
-（28，即表中 23 与 5 两行）由 rustsem r1 判定为修复位置；E0277（834）
-经 rustjudge r2 全量形状分解改为仅 send 形状 5 条属 F4g 机制，其余 829
-条分 17 种消息形状（couldn't convert 494、闭包 `?` 137、trait bound 62
-等，全表见该报告第 5 节）待逐形状判定；E0425（76）分四支：F4l 60 条、
-随 F4e 6 条、假设待证 10 条；E0424（75）修复位置 F4m（修复任务
-boring-f4m-r1 已交付并合并 `4644e29b`）；E0423（1）判定完成 F4n（条款 34 例外）；E0433
-（14）分 F4o 13 条、F4h 连锁 1 条；E0072 已由 rustmisc-r2 修掉并删除。
-census12 新增 20 码共 3484 条：E0308 计数最大的形状 198 条判定为修复
-位置（rustjudge r2，错误来源判定 `74371c5a`，修复项 F4p 的修复任务
-rustcoalesce r1 至 r4 已交付、末轮合并 `c38a359c`），其余形状待 census13
-重测后按新形状空间再判（当前判定会随修复失效）；E0599 四个消息子形
-569 条已判（rustjudge r3：clone 459 修复位置开列 F4q、关联常量 51、
-`as_deref` 36、Option `to_string` 23 三组 110 条既有暴露）；r4 续判交付
-26 条（u32 双重 `unwrap_or` 12 与关联常量 `AUTO_SPACE_POLICY_DEFAULT`
-14，均既有暴露，见 E0599 行）；E0061、E0277、E0689 三码形状空间随 F4p
-修复合并变化，判定排除待 census13。剩余未判 372 条（E0599 余 106、
-E0369 69、E0609 61、E0594 31、十三个小码 105，Σ=372；早记「十三个
-小码 167」为求和笔误，本轮更正）待续轮。rustjudge r1 至 r4 的验收历程
-见第 12 节对应行。剩余既有判定工作是给 UStringException 8 加
-SORTED_TABLE_COMPARE_STRINGS 2 共 10 条假设补因果（疑与 F4k/F4i 同为
-模块未生成或未导出形态，可与 #93 的 haxe.Exception 跨目标立项合并
-评估）。F4e 至 F4i、F4l 至 F4o 排队；F4l 要改的 DefaultArgExpander.hx
-与 dartargs-r2 的文件冲突已随其合并解除、可以开分支，但 rust 侧回归的
-复测（census13）优先于 F4l（回归修复合入前 F4l 的 60 条与新增 3484 条
-出自同一个生成树，单独验收无法辨认）。
-
-## 7 TypeScript 编译普查（2026-09-07 第三次复测）
-
-轮次历史：首测（boring `7606ff85`、tiqian `f2517918`）1127 条、19 类（其中测量环境条目 308 条：TS2307 的 bun:test 与 @tiqian 模块名、TS2580 的 process 等，引擎侧 819 条）；census6 复测（`e01b03b3`）1127 条与首测逐类相同；`d0df20db` 复测 1004 条、16 类（F3e 覆盖的 TS2551 28 条与 TS2341 get_ 前缀 10 条降 0，TS2420、TS2693 两类降 0，TS2345 87→14、TS2322 8→2；TS2304 类内 Ic 103 条消失、org 2→108 条为新形态即 F3as）；按类型配置与模块映射复测 722 条：测量环境 300 条全部解析、TS2580 整类删除，新暴露引擎侧 19 条（TS2305 新增 18 条，TS2304 类内 compareFontMetricsRequest 1 条换骨架为 TS2552；TestCore 8 条改判引擎侧）；tsforce-r1 合并（`7c2a1c02`，合并 `908305a0`）后复测 714 条，TestCore 8 条降 0；census11 复测（`3044bf91`）706 条、16 类不变，逐名对照的两处变化都在
-名称维度（TS2304 177→171：`pi` 4 与 `bi` 4 消失、count 系列重编号；
-TS2451 23→21：`rubyIndex` 2 消失；与 kotlin conflicting 13→11、dart
-DUPLICATE_DEFINITION 17→16 同为 Haxe 源构造 LayoutQueries.hx 重声明的
-三目标联动），归于 knamefix-r8 的循环识别这一组提交，其余十四类计数
-不变。本轮 706 条全部为引擎侧。
-
-| 错误码：错误消息类（骨架） | 计数 | 判定与处置 |
-|---|---:|---|
-| TS2307：Cannot find module 'X' or its corresponding type declarations. | 6 | 模块分布见 7.2（第三次复测后测量环境的 bun:test、@tiqian、node 模块全部解析，本类只剩引擎侧条目）；6 条（相对路径 5 条与 haxe/Exception 1 条）已判引擎侧为 ts 生成器的导入路径问题，分支未逐条定位；转按修复位置派发 |
-| TS2448：Block-scoped variable 'X' used before its declaration. | 215 | 已证实 ts 生成器（TsExpr 的语句融合与局部绑定生成顺序；LayoutDumpFormat.ts 单文件 214 条、ShapingEvidenceJson.ts 1 条，分布见 7.2） |
-| TS2304：Cannot find name 'X'. | 171 | 已判 ts 生成器：org 名称 108 条为完整限定路径 `org.tiqian.…` 引用未导入（F3as，机制与位点见 7.2）；compare 前缀 6 条同 TS2724 的导出登记缺陷（compareFontMetricsRequest 1 条换骨架为 TS2552，见该行）；TestCore 8 条已由 tsforce-r1 修复降为 0（依据见节首）；名称分布见 7.2 |
-| TS2554：Expected N arguments, but got N. | 133 | 已证实 ts 生成器：默认参数与可选参数的调用实参补全机制不完整（与区间形 54 条同一原因，两形合计 187 条） |
-| TS2345：Argument of type 'X' is not assignable to parameter of type 'X'. | 14 | 已判 ts 生成器：枚举载荷假设经逐类判定证伪为主因（原假设为对象字面量不能赋给枚举类型，KinsokuLevelTest.test.ts:113 样本）；`d0df20db` 复测由 87 降为 14，余量在 PreparedParagraphJfTest.test.ts 7、KinsokuLevelTest.test.ts 4、LineOptimizationCoverageTest.test.ts 3，下降与 TS2304 类内枚举值改发限定路径同现，机制未逐条验证；TS2322 同组 |
-| TS2554：Expected N-N arguments, but got N. | 54 | 同 TS2554 第一形（默认/可选参数补全机制不完整，两形合计 187 条） |
-| TS2724：'X' has no exported member named 'X'. Did you mean 'X'? | 35 | 已证实 ts 生成器：compare 函数的导出与导入登记缺陷（名称分布见 7.2，35 个比较器名全列；与 TS2305、TS2304 的 compare 条目同源；dart UNDEFINED_FUNCTION 的 compare 前缀 41 条与本病同源已由 tdart2 r1 双侧证实，dart 侧机制见第 8 节 F3ai，ts 侧机制位置待定位） |
-| TS2451：Cannot redeclare block-scoped variable 'X'. | 21 | 已证实 ts 生成器：局部作用域复用（alpha-renaming 的 index2 计数器；原跨文件重名假设已证伪；名称分布见 7.2；dart DUPLICATE_DEFINITION 的 Haxe 源同块 var 重声明 2 条与本病同源已由 tdart2 r1 双侧证实，dart 侧机制见 F3an）；census11 相对第四次复测 23→21（rubyIndex 2 条消失，归 knamefix-r8，见节首） |
-| TS2341：Property 'X' is private and only accessible within class 'X'. | 4 | get_ 前缀 10 条属 F3e，`d0df20db` 复测降为 0（F3e 完成删除）；其余 4 条已判 ts 生成器为 private 可见性过度保留；名称与类分布见 7.2 |
-| TS2339：Property 'X' does not exist on type 'X'. | 14 | 已判 ts 生成器为 Haxe Array.copy 与只读数组方法在 ts 侧的映射缺失（kind 6、copy 6、push 1、insert 1，分布见 7.2） |
-| TS2322：Type 'X' is not assignable to type 'X'. | 2 | 同 TS2345 组（枚举载荷判定；余 2 条在 LineOptimizationCoverageTest.test.ts:26 与 :28） |
-| TS2305：Module 'X' has no exported member 'X'. | 25 | compare 函数导出/导入登记缺陷（同 TS2724，7 条）加第三次复测新暴露的 runtime 模块导出缺失 18 条（`@tiqian/runtime` 的 UString 8、floatToI32 6、i32ToFloat 4，依据见节首；模块与名称分布见 7.2） |
-| TS2367：This comparison appears to be unintentional because the types 'X' and 'X' have no overlap. | 6 | 已判 ts 生成器为枚举跨构造器相等比较未降级（Haxe 允许比较不同构造器并返回 false；PushInLineWideCapacityTestSupport.ts:30 样本） |
-| TS2869：Right operand of ?? is unreachable because the left operand is never nullish. | 3 | 已判 ts 生成器为左操作数已判非空时仍保留 ??（LineRepair.ts:456 样本） |
-| TS2552：Cannot find name 'X'. Did you mean 'X'? | 1 | compare 函数导出/导入登记缺陷（compareFontMetricsRequest @ FontMetrics.ts:84，同 TS2724；第二次复测时报 TS2304，类型定义装入后 tsc 给出拼写建议换为本骨架） |
-| TS2540：Cannot assign to 'X' because it is a read-only property. | 2 | 已判 ts 生成器为只读字段生成策略错误（TestTraceStore.ts:53 与 :58 的 lines 字段） |
-| 合计（求和校验） | 706 | 与错误总数相等（本轮为 census11 复测值（`3044bf91`）；前四轮为 1127、1004、722 与 714） |
-
-判定进度小结（census11 复测后，706 条全部为引擎侧）：测量环境条目已随
-第 2.2 节配方全部解析，现存 16 类全部归到 ts 生成器，涉及修复位置文件
-TsExpr.hx、TsDecl.hx、TsImports.hx、Compiler.hx、TsRuntime.hx（逐类机制
-清单见 tsprobe2 r1 报告）。已按修复位置开列的修复项：F3aq（runtime 模块
-F3as（org 108 条，org108 r1 判定；修复任务 tsorg r2 已合并
-`87255540`，条目待新基线复测后删除）。
-谓词不一致构造的跨目标表现（tdart2 r1 与 rustsem r1 分别在两侧证实）。
-剩余工作是按目标优先级派发 F3aq 与其余判定类的修复位置。
-
-### 7.2 大类内部分解（产出命令见第 2.2 节）
-
-2026-09-07 晚 `d0df20db` 复测重抽了 TS2304 与 TS2341 两张名称分布表并更新为本次值；TS2448、TS2451、TS2724、TS2339 各表本轮逐项核对与 2026-09-06 首测相同，仍标首测值；判定列已并入 tsprobe2 r1 的结论。同日第三次复测重抽
-TS2307、TS2304、TS2305 三表并更新为本次值（测量环境模块名全部解析后，
-TS2307 只剩引擎侧条目）。
-
-TS2307 的模块分布（求和 6，第三次复测值）：
-
-| 计数 | 模块名 | 判定 |
-|---:|---|---|
-| 3 | ./../../../runtime/SortedTable.ts | 已判 ts 生成器为导入路径问题（随第 7 节 TS2307 行） |
-| 1 | ../../../../ts-gen/runtime/SortedTable.ts | 同上 |
-| 1 | ../../../../ts-gen/org/tiqian/linebreak/LiangHyphenatorTest.ts | 同上 |
-| 1 | ./../../../../haxe/Exception.ts | 同上 |
-
-TS2304 的名称分布（求和 171，census11 复测值；Ic 103 条在 `d0df20db` 消失、
-org 2→108 条为该轮新形态；compareFontMetricsRequest 1 条第三次复测起
-换骨架为 TS2552；pi 4 条与 bi 4 条在 census11 消失、count 系列重编号，
-归 knamefix-r8，见节首）：
-
-| 计数 | 名称 | 判定 |
-|---:|---|---|
-| 108 | org | 已判 ts 生成器并定位机制（org108 探针，2026-09-08）：默认值展开保留的完整静态路径 `org.tiqian.core.Ic.Zero` 在 `TsExpr.hx:179` 进入 coalescingStaticFieldText（`TsExpr.hx:244-258`），`Context.getType` 对 abstract `Ic` 不返回 TInst，异常与非 TInst 都被吞掉后在 `:258` 原样返回完整路径，且该分支不调用 `imports.value`（正常静态引用路径在 `TsExpr.hx:1478-1479` 既输出短名又登记 import），生成文件没有 `org` 绑定，TS2304 落在首段 `org`；抽样四位点（AnnotationGeometryStageCoverageTest.test.ts:65、FontInstanceMetricsRequestTest.test.ts:31、LineBreakPlanningStageCoverageTestSupport.ts:42、LineBreakRepairEngineTestSupport.ts:46）全部同一机制，源头是 ParagraphStyle.hx:69 的 `blockIndent == null ? Ic.Zero : blockIndent` 默认值；形态切换的引入提交在 `7606ff85..d0df20db` 区间内检索没有找到对应提交（修复项 F3as） |
-| 33 | kind | 已判 ts 生成器（随第 7 节 TS2304 行的分组判定） |
-| 5 | region | 已判 ts 生成器（随第 7 节 TS2304 行的分组判定；与 rust E0425 的 region、kotlin 3.4 节 region 同为 @:dataClass 默认参数内联形参泄漏这一构造，rustprobe r1 跨目标对照） |
-| 3 | text | 已判 ts 生成器（随第 7 节 TS2304 行的分组判定；同 region 行的跨目标同一构造假设） |
-| 3 | __functional_shim | 已判 ts 生成器（随第 7 节 TS2304 行的分组判定） |
-| 2 | SortedMap | 已判 ts 生成器（随第 7 节 TS2304 行的分组判定） |
-| 2 | NodeFileSystem | 已判 ts 生成器（随第 7 节 TS2304 行的分组判定） |
-| 2 | count7 | 已判 ts 生成器（随第 7 节 TS2304 行的分组判定；census11 重编号新名） |
-| 2 | count27 | 已判 ts 生成器（随第 7 节 TS2304 行的分组判定；census11 重编号新名，原 count25） |
-| 2 | count26 | 已判 ts 生成器（随第 7 节 TS2304 行的分组判定） |
-| 2 | count12 | 已判 ts 生成器（随第 7 节 TS2304 行的分组判定；census11 重编号新名，原 count11） |
-| 1 | count | 已判 ts 生成器（随第 7 节 TS2304 行的分组判定） |
-| 1 | cornerRadius | 已判 ts 生成器（随第 7 节 TS2304 行的分组判定；同 region 行的跨目标同一构造假设） |
-| 1 | compareShapingEvidenceKey | 已证实 ts 生成器：compare 函数导出/导入登记缺陷（同 TS2724） |
-| 1 | compareRecordedShapingResult | 同上 |
-| 1 | compareRecordedFontMetrics | 同上 |
-| 1 | compareMetricsEvidenceKey | 同上 |
-| 1 | compareGlue | 同上 |
-
-TS2448 的文件分布（求和 215）：LayoutDumpFormat.ts 214 条（行 90 至 398
-间）、ShapingEvidenceJson.ts 1 条（:546）。
-
-TS2451 的名称分布（求和 21，census11 复测值）：index 6、_g 5、row 4、
-parseHexCode 2、inkTop 2、inkBottom 2。rubyIndex 2 条在 census11 消失
-（归 knamefix-r8，见节首）；TS2448、TS2724、TS2339 三表
-计数在 census11 不变，仍标旧轮值。
-
-TS2341 的名称与类分布（求和 4，`d0df20db` 复测值；get_ 前缀 10 条属 F3e，
-已随修复降为 0，对应五行删除）：
-
-| 计数 | 属性（所属类） | 判定 |
-|---:|---|---|
-| 1 | strongScriptRole（ContextualQuoteRoleResolver） | 已判 ts 生成器为 private 可见性过度保留 |
-| 1 | pairByOpen（ContextualQuoteRoleResolver） | 同上 |
-| 1 | emptyHanging（LineCandidate） | 同上 |
-| 1 | codePointLengthAt（ContextualQuoteRoleResolver） | 同上 |
-
-TS2724 的名称分布（求和 35）：compareRawFontMetrics 2 条，其余 34 个名字
-各 1 条：compareSpacingDecisionInfo、compareShapingDecisionInfo、
-compareRubyLineHeightDecisionInfo、compareRubyDecisionInfo、
-compareRepairCandidate、comparePunctuationWidthPolicy、
-comparePunctuationDecisionInfo、compareParagraphStyle、
-compareMetricDecisionInfo、compareLineSpacingDecisionInfo、
-compareLineRepairDecisionInfo、compareLineRepairCandidateInfo、
-compareLineLengthGridDecisionInfo、compareLineEdgeTrimDecisionInfo、
-compareLineCandidate、compareLayoutFontMetrics、compareLayoutConstraints、
-compareKinsokuDecisionInfo、compareJustificationDecisionInfo、
-compareInlineObjectSpan、compareInlineObjectPunctuationAttachmentDecisionInfo、
-compareInlineObjectLineHeightDecisionInfo、compareInlineObjectDecisionInfo、
-compareInlineBoxDecisionInfo、compareFontMetricsRequest、
-compareFirstLineIndentDecisionInfo、compareDecorationSegmentInfo、
-compareDecorationDecisionInfo、compareClusterGeometryDecisionInfo、
-compareBopomofoGlyphPlacement、compareAutoSpacePolicy、
-compareAutoSpaceDecisionInfo、compareAdjustmentStylePolicy。
-
-TS2305 的模块与名称分布（求和 25，第三次复测值）：`@tiqian/runtime` 的
-UString 8、floatToI32 6、i32ToFloat 4（runtime 模块导出缺失，依据见第
-7 节节首）；./TextStyle.ts 的 compareTextStyle 2 条，./Size.ts 的
-compareSize、./LineBox.ts 的 compareLineBox、./InlineBoxSpan.ts 的
-compareInlineBoxSpan、./GlyphRun.ts 的 compareGlyphRun、./Cluster.ts 的
-compareCluster 各 1 条。
-
-TS2339 的名称分布（求和 14）：kind 6、copy 6、push 1、insert 1。
-
-TS2551 全类 28 条（全部 get_strategyName）已随 F3e 修复降为 0，名称分布
-表删除（进度见第 12 节 tsgetcal-r6 行）。
-
-## 8 Dart 编译普查（2026-09-08 census12 复测）
-
-轮次历史（gen 与 tests 合计）：首测 2026-09-06（boring `31627b5c`、tiqian `17a646da`）2931 条、35 个错误码；`e01b03b3` 复测 2606 条、33 码（knullinit 守卫把 UNCHECKED 420→143、dartifget 两码降 0）。判定来源：探针 T-dart r1 与 tdart2 r1（五类升修复位置、三处跨目标同源证实）。修复轮：dartguard r1 至 r6（F3l 全部、F3m 至残余 13 条，
-`f42c38c9`、`18d5d8d1`、`e4952dab`、`b4b574b5`）、dartstd-r2 合并
-`c629b1d1`（URI_DOES_NOT_EXIST 36→2，同笔新暴露 13 条进入各自错误码
-判定队列）、fph32-r1 合并 `014d9640`（UNDEFINED_FUNCTION 58→46）、
-dunitsurf-r2 合并 `fc2b53b6`（dart 运行时崩溃消除、test:dart 链首次走到
-analyze 步；净增 32 条为 charCodeAt 可空结果流入非空 Int 语境：
-ARGUMENT_TYPE +17、UNCHECKED +14、RETURN_OF_INVALID +1，开列 F3at）、
-census11（`3044bf91`）1695 条、census12（`a72f994d`）1594 条（唯一变动
-NOT_ENOUGH_POSITIONAL_ARGUMENTS 105→4，F3ah 经 dartargs-r2 修复生效，
-残余 4 条的按构造器名分布未逐条抽取）。
-
-F3at 的修复与验证：dart 侧修复 `819f6d3a` 在消费树 A/B 实测中使三个错误码分别降为 170→153、26→12、2→1，差值与 F3at 的新增数一致，其余错误码保持稳定。后续补齐跨目标非空断言与 rust 双 `unwrap_or` 去重（`7994eceb`），相关提交已合并 `b822afee` 进入 boring main 并推送，待新基线复测核销。
-
-dunitsurf-r3 的 URI 回归（census11 实测明细）：`db0f713a` 把 resident
-模块并入合并 runtime 库，消费配置下不再单独写出 runtime/ 目录（census10
-树 dart-gen/lib/runtime/ 实测有 sorted_table.dart 与 string_tools.dart，
-census11 树只剩 haxe、org、std 三目录），四处对 runtime/sorted_table.dart
-的 import 断链报 URI_DOES_NOT_EXIST（生成侧 liang_hyphenator.dart:3、
-parse_tex_hyphenation_patterns.dart:3、parsed_tex_hyphenation.dart:2，
-测试侧 liang_hyphenator_test.dart:7）；已写出文件内的 `_codePointAt` 4
-条随文件不再写出而消失；parse_tex_hyphenation_patterns.dart:99 的两条
-与 liang_hyphenator_test.dart:56 的返回位一条因 import 不可解析、类型
-检查未到达错误位而不再报（掩蔽，import 恢复后错误会回来）。`bi`、
-`rubyIndex`、可空 for-in 迭代子新条归 knamefix-r8 的循环识别（未逐笔
-核对）。F3i 修复位置随合并 runtime 库机制重判。
-
-| 错误码 | gen | tests | 合计 | 判定与处置 |
-|---|---:|---:|---:|---|
-| `UNDEFINED_IDENTIFIER` | 212 | 64 | 276 | 名称分布见 8.2（58 个名字全列，census11 复测）；类内全部类型名条目（2026-09-07 复测判定的 8 个名字合计 705 条，与其余类型名条目 FontMetricSource 12、InteriorPunctuationStyle 5、CjkPunctuationGlyphPolicy 5、AutoSpaceMode 4、LineEndPunctuationStyle 3、KinsokuLevel 3、HangingPunctuationStyle 2 和六个单条名字）已随 F3l（dartguard r1 至 r6，提交号见第 12 节）降为 0，逐笔提交与名字的对应未逐条验证；残余 276 条全部为局部名与测试支持类名，未判定 |
-| `REFERENCED_BEFORE_DECLARATION` | 314 | 96 | 410 | 形状证实：抽样含导入前缀与局部名同名冲突（cluster_role_resolution.dart:55 生成 `final cluster = cluster.Cluster(...)`）与不带前缀的类名（:64 的 `ResolvedClusterRange`）两形；探针引用的 Compiler.hx:216-220 经派发方复核是测试函数排序，与样本不吻合，已否证；layout_dump_format.dart 215 条与 ts TS2448 同源的假设保留（ts 侧 TS2448 已判生成器，本码随 T-dart 第二轮复核）；文件分布见 8.2（与首测逐项相同）；机制位置待定位；随 T-dart 第二轮 |
-| `ARGUMENT_TYPE_NOT_ASSIGNABLE` | 170 | 118 | 288 | 假设：可空 int? 给 int（codeUnitAt 闭包位），连可空守卫（F3m 同构造）；目标类型分布见 8.2（23 种全列，该表数值取自首测日志）；F3at 的 charCodeAt 结果 `int?` 给 `int` 形参 17 条（clreq_punctuation_policies.dart:35:37 实测，修复已合并待 census13 复测）；dartstd-r2 期新增的 SortedMapTable 两条现为 import 断链掩蔽（见节首 URI 回归段）；double 67 条是否数值转换待抽样；随 T-dart 第二轮 |
-| `UNCHECKED_USE_OF_NULLABLE_VALUE` | 26 | 2 | 28 | 构成三部分：F3m 残余 13 条（修复任务 dartguard r1 至 r6 的提交号见第 12 节；残余逐文件分布：生成侧 ParagraphStyle 1、Justifier 3、LineBreakPlanningStageCoverageTestSupport 2、LineRepair 2、PunctuationGeometryLedger 3，测试侧 FontPolicyCoverageTest 1、TextShaperCoverageTest 1）、F3at 的 charCodeAt 可空结果比较运算 14 条（clreq_punctuation_advance_policy.dart:27:12 实测，修复已合并待 census13 复测）、可空 for-in 迭代子 1 条（line_repair.dart:79，knamefix-r8 循环改写后新暴露、待归面）；r6 同期实验 `cd34ca32` 扩大断言面使总数回归 1755，已整笔回退，不得原样重试 |
-| `NOT_ENOUGH_POSITIONAL_ARGUMENTS` | 1 | 3 | 4 | 修复位置（tdart2 r1）：coalescing 内层构造的省略实参没有补全。调用点经 `DartExpr.hx` 的 `completeCoalescingCallArgs`（e01b03b3 位于 235-244，派发方复核），它传给 `omittedCallDefaults` 的只有模块路径与方法名，内层构造的类名被丢弃；`omittedCallDefaults`（packages/compiler/DefaultArgExpander.hx:1534-1578）用 `Context.getType(modulePath)` 解析且只认 TInst，模块无同名主类型（PunctuationModel.hx 的 PunctuationAtomBuilder）或主类型是接口（GreedyLineBreaker、LruWidthIndependentAnnotationCache）时返回 null，省略实参不填充，调用点渲染零参而构造声明要求参数（声明侧 DartDecl.hx:838-888 只把带默认值的参数排进可选组，且按字段名匹配的判定对构造参数名不成立）。修复项 F3ah（修复任务 dartargs 经 r1 与 r2 交付，合并 `a72f994d`；census12 复测全类 105→4（生成侧 71→1、测试侧 34→3），census11 的按构造器名计数 PunctuationAtomBuilder.new 56、GreedyLineBreaker.new 39、LruWidthIndependentAnnotationCache.new 10 对应修复前分布，残余 4 条的按构造器名分布未逐条抽取） |
-| `PREFIX_SHADOWED_BY_LOCAL_DECLARATION` | 32 | 42 | 74 | 形状证实（T-dart r1 抽样读过生成代码）；机制位置待定位；随 T-dart 第二轮 |
-| `UNDEFINED_METHOD` | 58 | 11 | 69 | 形状证实（T-dart r1 抽样读过生成代码）；接收类型为 List 的 23 条保持 Haxe 数组方法名生成到 dart 的 List 接收者的假设；新增 `toDouble @ bool` 形 5 条的原因没有查明（gen 侧，2026-09-07 复测新增）；dartstd-r2 合并（`c629b1d1`）后生成侧 62，新增 4 条为新写出的 runtime/sorted_table.dart 内 `_codePointAt` @ `SortedTable`（未判定）；census11 生成侧 62→58，`_codePointAt` 4 条随 runtime/sorted_table.dart 不再写出而消失（dunitsurf-r3 的 `db0f713a`，见节首 URI 回归段）；方法与接收类型分布见 8.2（24 对全列，census11 复测）；机制位置待定位；随 T-dart 第二轮 |
-| `EXPECTED_TOKEN` | 56 | 0 | 56 | 形状证实：非法 `int??` 双问号类型渲染（cjk_font_role_classifier.dart:23-24 生成 `final int?? l` 实测）；与 MISSING_ASSIGNABLE_SELECTOR、ILLEGAL_ASSIGNMENT_TO_NON_ASSIGNABLE、MISSING_IDENTIFIER、DOT_SHORTHAND_MISSING_CONTEXT 四码共享同一形状，五码文件分布重叠；期待符号分布：缺分号 49、缺右括号 4、缺冒号 2、缺右花括号 1（与首测相同）；机制位置待定位；随 T-dart 第二轮 |
-| `UNDEFINED_FUNCTION` | 46 | 0 | 46 | 修复位置分三个分支（tdart2 r1，名称分布见 8.2）：compare 前缀 41 条，是否生成比较函数的判定与引用侧不一致：判定函数 `canEmitDataClassComparator`（packages/compiler/PolicyQueries.hx:163-171）经 `isDataClassFieldKey`（:173-192）只认 Int、enum、String、dataClass 与其可空/只读数组包装，含 Bool 或 Float 字段的数据类不生成比较函数，而引用侧 DartDecl.hx 的 NullableArray 与 PlainField 分支（e01b03b3 位于 :311-312 与 :326）只复查 `:dataClass` meta、不复查是否生成的判定，引用照发（修复项 F3ai；与 ts TS2724/TS2305 同源证实）；mkdirSync 与 writeFileSync 各 1 条，测试 extern 的静态成员在调用点降级为不带限定名的名字（DartExpr.hx:1605-1606 走 fail 分支的调用点形状），定义不随 tests 产物目录写出（修复项 F3ak）；floatToI32 7 条加 i32ToFloat 5 条已随 F3aj（fph32-r1，见第 12 节）降为 0；dartstd-r2 期新增 justifier.dart 的 `sumOfFloat` 1 与 `forEach` 2（未判定，8.2 表已补两行） |
-| `MISSING_ASSIGNABLE_SELECTOR` | 49 | 0 | 49 | 形状证实：非法 `int??` 双问号类型渲染（与 EXPECTED_TOKEN 共享形状，五码文件分布重叠）；机制位置待定位；随 T-dart 第二轮 |
-| `ILLEGAL_ASSIGNMENT_TO_NON_ASSIGNABLE` | 49 | 0 | 49 | 形状证实：非法 `int??` 双问号类型渲染（与 EXPECTED_TOKEN 共享形状，五码文件分布重叠）；机制位置待定位；随 T-dart 第二轮 |
-| `UNDEFINED_PREFIXED_NAME` | 22 | 22 | 44 | 修复位置分两个分支（tdart2 r1；名称分布按 dartstd-r2 合并态实测：UString 21（生成侧 6、测试侧 15）、DefaultHyphenator 15（生成侧 8、测试侧 7）、PunctuationGluePlacements 6、SortedMap 2）：DefaultHyphenator 加 PunctuationGluePlacements 21 条，`DartExpr.hx` 的 `coalescingStaticCallText`（e01b03b3 位于 246-258，派发方复核）把静态调用渲染成类限定引用，没有 `staticRef`（:1619 起）对 statics-only 类去类名的降级路径（修复项 F3al）；UString 21 条，std.UStringRT 的成员走运行时限定渲染 `runtime.UString.成员`（DartExpr.hx:1607-1608 一带），但运行时模块的拼接（dartcompiler/Compiler.hx:388-396）只追加 parts 非空的 resident，tiqian 的 engine-haxe/targets/classes.hxml 没有任何 `runtime.*` 清单条目（boring examples/dart.hxml 带 `runtime.UString` 等条目），std.UStringRT 又是 extern 不产生 parts，定义与引用两侧都落空（修复项 F3am；dartstd-r2 合并 `c629b1d1` 后 runtime.dart 已写出但其中 UString 出现 0 次，extern 不产生 parts 的落空机制不变，修复位置不变）；SortedMap 2 条为 dartstd-r2 合并后新增（paragraph_shaping_stage.dart:49 与 replayable_font_backend.dart:40 经前缀 sorted_map 引用），std/sorted_map.dart 已写出但为仅含生成头注释的空壳文件（实测 1 行），名字仍未定义，与 F3am 的 extern 空壳构造同类（未逐条验证因果） |
-| `URI_DOES_NOT_EXIST` | 3 | 3 | 6 | F3i（dartstd-r2 主体修复，提交号见第 12 节）在 census11 部分回归后的现状：生成侧 3 条与测试侧 sorted_table 1 条为合并 runtime 库机制的 import 断链（见节首 URI 回归段）；测试侧 test_host.dart（main.dart:6）与跨目录 liang_hyphenator_test.dart（line_break_coverage_test.dart:8）两条为 dartstd-r2 期残余，写出条件的不一致尚未定位；路径明细见 8.2（census11 重抽）；修复位置随合并 runtime 库机制重判 |
-| `READ_POTENTIALLY_UNASSIGNED_FINAL` | 36 | 0 | 36 | 形状证实（T-dart r1 抽样读过生成代码）；机制位置待定位；随 T-dart 第二轮 |
-| `MISSING_IDENTIFIER` | 27 | 0 | 27 | 形状证实：非法 `int??` 双问号类型渲染（与 EXPECTED_TOKEN 共享形状，五码文件分布重叠）；dartguard 合并后 27|0，较首测 34|1 少 8 条，减少的 8 条与哪笔修复对应未逐条查明；机制位置待定位；随 T-dart 第二轮 |
-| `INVOCATION_OF_NON_FUNCTION_EXPRESSION` | 0 | 31 | 31 | 形状证实（T-dart r1 抽样读过生成代码）；机制位置待定位；随 T-dart 第二轮 |
-| `DOT_SHORTHAND_MISSING_CONTEXT` | 27 | 0 | 27 | 形状证实：非法 `??` 双问号类型渲染（annotation_geometry_stage.dart:165 生成 `ClusterGeometryDecisionInfo?? g` 实测；与 EXPECTED_TOKEN 共享形状）；机制位置待定位；随 T-dart 第二轮 |
-| `DUPLICATE_DEFINITION` | 16 | 1 | 17 | 修复位置分四个分支（tdart2 r1）：int?? 双问号类型的连锁错误 10 条，并入第 8 节既有 `??` 双问号五个错误码的连锁条目，不独立立项；同名合成临时变量 5 条（line_geometry_stage.dart:234-246 三个 `_g`、line_adjustment_stage.dart:392 与 :471 的 `index`，`DartExpr.hx` 的 localName（e01b03b3 位于 3498 起）对命名临时变量原样输出、同块不去重）加 Haxe 源同块 var 重声明 2 条（layout_queries.dart:641 与 :671 的 `rubyIndex`，源 LayoutQueries.hx:584/:597，TS2451 同源证实）合计 7 条（修复项 F3an）；extension type 的表示字段与成员同名 1 条（ic.dart:5 `extension type Ic(double count)` 里 `count()` 与表示字段 `count` 同名，DartDecl.hx 的 valueTypeDecl 取第一个构造参数名为表示字段，e01b03b3 位于 422-431）（修复项 F3ao；`rubyIndex` 两条降一条归 knamefix-r8，三目标联动见节首） |
-| `PREFIX_COLLIDES_WITH_TOP_LEVEL_MEMBER` | 5 | 6 | 11 | 形状证实（T-dart r1 抽样读过生成代码）；机制位置待定位；随 T-dart 第二轮 |
-| `MISSING_DEFAULT_VALUE_FOR_PARAMETER` | 11 | 0 | 11 | 形状证实：非空参数的隐式默认值为 null（ClreqProfile 可选参数实测）；探针引用的 DartDecl.hx:260-300 经派发方复核落在比较函数合成代码内，与参数签名不吻合，定位存疑；机制位置待定位；随 T-dart 第二轮 |
-| `UNDEFINED_ENUM_CONSTANT` | 8 | 0 | 8 | 形状证实：枚举构造器名空串或保留字（unicode_punctuation_boundary_resolver.dart:208-219 生成 `Dir.final` 实测，final 是 dart 保留字）；机制位置待定位；随 T-dart 第二轮 |
-| `NOT_INITIALIZED_NON_NULLABLE_INSTANCE_FIELD` | 4 | 0 | 4 | 修复位置（tdart2 r1）：`DartExpr.hx` 的 `coalescedBodyFields`（e01b03b3 位于 523-553，派发方复核）只扫构造函数顶层语句里的 `this.x = …` 赋值，if/else 分支体里的守卫赋值（line_breaker.dart:28 的 `_kinsoku` 等四字段，源 LineBreaker.hx:50-57）不被收集，字段声明侧 DartDecl.hx:639-643 因此不标 `late`。修复项 F3ap |
-| `NON_EXHAUSTIVE_SWITCH_STATEMENT` | 4 | 0 | 4 | 形状证实（T-dart r1 抽样读过生成代码）；机制位置待定位；随 T-dart 第二轮 |
-| `UNDEFINED_OPERATOR` | 3 | 0 | 3 | 形状证实（T-dart r1 抽样读过生成代码）；机制位置待定位；随 T-dart 第二轮 |
-| `INVALID_ASSIGNMENT` | 3 | 0 | 3 | 形状证实：dart 侧赋值位没有 int 到 double 的转换（line_adjustment_stage.dart:148、:151、:159 生成 `visualWidth = (visualWidth).round()` 实测，与 kotlin F3j 的赋值位同构造；首测 7 条，本次复测 3 条的下降原因未单独查明）；机制位置待定位；随 T-dart 第二轮 |
-| `IMPLICIT_THIS_REFERENCE_IN_INITIALIZER` | 3 | 0 | 3 | 形状证实（T-dart r1 抽样读过生成代码）；机制位置待定位；随 T-dart 第二轮 |
-| `RETURN_OF_INVALID_TYPE` | 2 | 0 | 2 | 形状证实（T-dart r1 抽样读过生成代码）；F3at 的 charCodeAt 结果 int? 处于返回 Int 的返回位 1 条（修复已合并待 census13 复测）；测试侧 liang_hyphenator_test.dart:56 的 `SortedMapTable<String, dynamic>` 返回位 1 条现为 import 断链掩蔽（见节首 URI 回归段）；机制位置待定位；随 T-dart 第二轮 |
-| `LIST_ELEMENT_TYPE_NOT_ASSIGNABLE` | 0 | 2 | 2 | 形状证实（T-dart r1 抽样读过生成代码）；机制位置待定位；随 T-dart 第二轮 |
-| `RETURN_OF_INVALID_TYPE_FROM_CLOSURE` | 1 | 0 | 1 | 形状证实（T-dart r1 抽样读过生成代码）；机制位置待定位；随 T-dart 第二轮 |
-| `NON_TYPE_AS_TYPE_ARGUMENT` | 1 | 0 | 1 | 形状证实（T-dart r1 抽样读过生成代码）；机制位置待定位；随 T-dart 第二轮 |
-| `INSTANCE_MEMBER_ACCESS_FROM_STATIC` | 1 | 0 | 1 | 形状证实（T-dart r1 抽样读过生成代码）；机制位置待定位；随 T-dart 第二轮 |
-| `EXTRA_POSITIONAL_ARGUMENTS` | 1 | 0 | 1 | 形状证实（T-dart r1 抽样读过生成代码）；机制位置待定位；随 T-dart 第二轮 |
-| `CONFLICTING_METHOD_AND_FIELD` | 1 | 0 | 1 | 形状证实（T-dart r1 抽样读过生成代码）；机制位置待定位；随 T-dart 第二轮 |
-| `UNDEFINED_CLASS` | 1 | 0 | 1 | 形状证实：dartstd-r2 合并（`c629b1d1`）后新增，traced_assertions.dart:651 引用类名 'Exception'（生成代码对 haxe.Exception 的 dart 侧引用）；机制位置待定位；随 T-dart 第二轮 |
-| 合计（求和校验） | 1193 | 401 | 1594 | 与错误总数相等；本行为 census12 复测值（`a72f994d`）；census11 复测值 1695（`3044bf91`）；`d38459ab` 复测值为 1702，fph32-r1 合并（`2382140b`，合并提交 `014d9640`）后为 1670，dartguard-r6 合并态（`b4b574b5`）为 1682，dartstd-r2 合并态（`c629b1d1`）为 1686，dartguard r4 合并态（`e4952dab`）为 1707，r3 合并态为 1739，首测与 2026-09-07 复测值为 2931 与 2606 |
-
-相对首测计数已降为 0 并从表内删除的错误码：UNDEFINED_GETTER（32 条，
-dartifget boring `14c5031d`）、NON_ABSTRACT_CLASS_INHERITS_ABSTRACT_MEMBER
-（6 条，随同修复降为 0）。
-
-判定进度小结（2026-09-08 census12 复测；8.2 各表仍标各自标注轮次）：
-定位到修复位置的错误码 8 个：UNCHECKED_USE_OF_NULLABLE_VALUE（F3m 残余
-13 条；另有 F3at 的 14 条与 census11 新增可空 for-in 迭代子 1 条归
-knamefix-r8 循环改写、待归面；dartguard r1 至 r6 已交付合并）、
-URI_DOES_NOT_EXIST 6 条（F3i，修复位置随合并 runtime 库机制重判，见
-节首 URI 回归段）、NOT_ENOUGH_POSITIONAL_ARGUMENTS 4 条（F3ah 残余）、
-UNDEFINED_FUNCTION 46 条（F3ai 41、F3ak 2、dartstd-r2 后新增未判定 3；
-F3aj 的 floatToI32 7 加 i32ToFloat 5 已由 fph32-r1 修复降 0）、
-UNDEFINED_PREFIXED_NAME 44 条（F3al 21、F3am 21、SortedMap 2 未归类）、
-DUPLICATE_DEFINITION 17 条（10 条并入 `??` 双问号连锁条目、F3an 6、
-F3ao 1）、NOT_INITIALIZED_NON_NULLABLE_INSTANCE_FIELD 4 条（F3ap）；
-ARGUMENT_TYPE_NOT_ASSIGNABLE 与 RETURN_OF_INVALID_TYPE 各自的
-charCodeAt 新增部分（+17 与 +1）为 F3at，修复已合并 `b822afee`、待
-census13 复测删除；UNDEFINED_IDENTIFIER 类内类型名条目（F3l）已由
-dartguard 降为 0，该错误码残余 276 条全部为局部名与测试支持类名，回到
-未判定档；UNDEFINED_METHOD 的 compareTo 形 9 条由 NullableScalar 分支
-渲染 `.compareTo` 解释，预期随 F3ai 消除，不预先承诺计数。探针定位待
-因果验证这一档已没有条目；其余 25 类为形状证实或假设，其中
-EXPECTED_TOKEN、MISSING_ASSIGNABLE_SELECTOR、
-ILLEGAL_ASSIGNMENT_TO_NON_ASSIGNABLE、MISSING_IDENTIFIER、
-DOT_SHORTHAND_MISSING_CONTEXT 五码合计 208 条共享非法 `??` 双问号类型
-渲染形状，是形状证实里计数最大的一组。T-dart 第二轮的剩余工作是给
-形状证实类定位机制位置、证实或否证其余跨目标假设
-（ARGUMENT_TYPE_NOT_ASSIGNABLE 的 double 67 条是否数值转换、
-UNDEFINED_METHOD 新增 `toDouble @ bool` 5 条的原因查明都在其列）。
-
-### 8.2 大类与中类内部分解（census11 部分重抽，产出命令见第 2.2 节）
-
-UNDEFINED_IDENTIFIER、UNDEFINED_METHOD 与 URI_DOES_NOT_EXIST 三张表按 census11 复测数据重新抽取（2026-09-08）：UNDEFINED_IDENTIFIER
-删去名字 `bi` 的行（4 条随 knamefix-r8 消失），其余 58 个名字与上一轮
-逐项相同；UNDEFINED_METHOD 删去 `_codePointAt` @ `SortedTable` 行（4 条
-随 runtime/sorted_table.dart 不再写出而消失），其余 24 对逐项相同；URI
-表为断链后的 6 条现值。UNCHECKED_USE_OF_NULLABLE_VALUE 表仍标
-dartguard r3 合并态（boring `f9b446df`，31 条未重新按形状分桶；census11 现值 28 条见第 8 节该行，含 F3at 的 14 条与 for-in 新增 1 条）。其余各表仍基于 2026-09-07 复测数据（boring `e01b03b3` 态）：其中 ARGUMENT_TYPE_NOT_ASSIGNABLE 表（23 种全列）
-对应生成侧首测值 172，其后的下降未重新逐条抽取。
-UNDEFINED_PREFIXED_NAME 的名称分布仍标 dartstd-r2 合并态（`c629b1d1`）。
-
-UNDEFINED_IDENTIFIER 的名称分布（求和 276，census11 复测值；dartguard 把
-类型名条目降为 0 后，残余全部为局部名与测试支持类名，判定列全部未判定；
-带「测试侧」标记的四个名字合计 64 条来自测试日志，其余 54 个名字合计
-212 条来自生成日志；`bi` 4 条在 census11 消失，归 knamefix-r8 循环
-识别这一组提交）：
-
-| 计数 | 名称 | 判定 |
-|---:|---|---|
-| 33 | `kind` | 未判定（测试侧） |
-| 15 | `PunctuationGeometryStageCoverageSupport` | 未判定（测试侧） |
-| 13 | `JustifierTestSupport` | 未判定（测试侧） |
-| 12 | `plan` | 未判定 |
-| 11 | `ink` | 未判定 |
-| 11 | `cls` | 未判定 |
-| 10 | `item` | 未判定 |
-| 9 | `x` | 未判定 |
-| 8 | `previousBudget` | 未判定 |
-| 8 | `nextBudget` | 未判定 |
-| 8 | `g` | 未判定 |
-| 6 | `r` | 未判定 |
-| 6 | `n` | 未判定 |
-| 5 | `prev` | 未判定 |
-| 5 | `nextChar` | 未判定 |
-| 5 | `mandatory` | 未判定 |
-| 5 | `halt` | 未判定 |
-| 4 | `shaped` | 未判定 |
-| 4 | `selectedTechnicalBreak` | 未判定 |
-| 4 | `previousSpacing` | 未判定 |
-| 4 | `preferredTrackingSpan` | 未判定 |
-| 4 | `pi` | 未判定 |
-| 4 | `pairs` | 未判定 |
-| 4 | `nextSpacing` | 未判定 |
-| 4 | `io` | 未判定 |
-| 4 | `cp` | 未判定 |
-| 4 | `candidate` | 未判定 |
-| 3 | `text` | 未判定（测试侧） |
-| 3 | `strongReason` | 未判定 |
-| 3 | `startPrior` | 未判定 |
-| 3 | `role` | 未判定 |
-| 3 | `prevKind` | 未判定 |
-| 3 | `naturalPrior` | 未判定 |
-| 3 | `fromRepair` | 未判定 |
-| 3 | `firstHanging` | 未判定 |
-| 3 | `endPrior` | 未判定 |
-| 3 | `boundKind` | 未判定 |
-| 2 | `twoPowers` | 未判定 |
-| 2 | `repairStr` | 未判定 |
-| 2 | `repairName` | 未判定 |
-| 2 | `repairedCurrent` | 未判定 |
-| 2 | `repairDecision` | 未判定 |
-| 2 | `region` | 未判定 |
-| 2 | `rd` | 未判定 |
-| 2 | `org` | 未判定 |
-| 2 | `maxLinesDecision` | 未判定 |
-| 2 | `last` | 未判定 |
-| 2 | `l` | 未判定 |
-| 2 | `issue` | 未判定 |
-| 2 | `iod` | 未判定 |
-| 2 | `inkWidth` | 未判定 |
-| 2 | `fivePowers` | 未判定 |
-| 2 | `center` | 未判定 |
-| 1 | `twoPowersBuilder` | 未判定 |
-| 1 | `fivePowersBuilder` | 未判定 |
-| 1 | `enUsCache` | 未判定 |
-| 1 | `count` | 未判定 |
-
-UNCHECKED_USE_OF_NULLABLE_VALUE 的形状分布（求和 31，生成侧 28 条与
-测试侧 3 条合并，r3 合并态计数；消息里的名字以 X 代替；knullinit 系列
-的 dart 侧守卫（boring `9e0537d0`，合并 `23f4bf63`）已修掉 property 形的
-314 条，修复任务 dartguard 的可空接收者守卫（`b5bed1e3`，合并
-`f42c38c9`）又修掉 112 条，残余 31 条的修复位置仍是 dart 可空接收者守卫
-缺失（F3m，与 kotlin 修复位置 A 同构造），逐条三件套由 dartguard r4
-补齐；r4 合并（`e4952dab`）后残余 17 条，见第 8 节该行）：
-
-| 计数 | 形状 | 判定 |
-|---:|---|---|
-| 6 | The method 'X' can't be unconditionally invoked because the receiver can be 'null'. | F3m（生成侧 5、测试侧 1；r3 合并态计数） |
-| 3 | The property 'X' can't be unconditionally accessed because the receiver can be 'null'. | 同上（生成侧 1、测试侧 2；首测 314 条已由 boring `9e0537d0` 修复） |
-| 16 | The operator 'X' can't be unconditionally invoked because the receiver can be 'null'. | 同上（全部生成侧） |
-| 6 | A nullable expression can't be used as a condition. | 同上（全部生成侧） |
-
-REFERENCED_BEFORE_DECLARATION 的文件分布（求和 410）：
-
-| 计数 | 文件 | 判定 |
-|---:|---|---|
-| 215 | `layout_dump_format.dart` | 与 ts TS2448 的 LayoutDumpFormat.ts 214 条同一原因的假设（同一源文件的两个目标侧产物，顶层声明顺序未按依赖排序） |
-| 78 | `justifier_jf_test.dart` | 未判定 |
-| 64 | `justifier_coverage_test.dart` | 未判定 |
-| 23 | `punctuation_geometry_stage_coverage_test.dart` | 未判定 |
-| 6 | `layout_queries_test.dart` | 未判定 |
-| 5 | `line_repair.dart` | 未判定 |
-| 4 | `paragraph_shaping_stage.dart` | 未判定 |
-| 3 | `cluster_role_resolution.dart` | 未判定 |
-| 2 | `punctuation_model.dart` | 未判定 |
-| 2 | `justifier_compression_test.dart` | 未判定 |
-| 1 | `width_independent_annotation_cache_coverage_test_support.dart` | 未判定 |
-| 1 | `unicode_emoji17_rgi_role_audit_test_support.dart` | 未判定 |
-| 1 | `text_shaper.dart` | 未判定 |
-| 1 | `shaping_evidence_json.dart` | 未判定 |
-| 1 | `shaping_evidence.dart` | 未判定 |
-| 1 | `punctuation_geometry_stage.dart` | 未判定 |
-| 1 | `line_optimization_coverage_test.dart` | 未判定 |
-| 1 | `annotation_geometry_stage_coverage_test_support.dart` | 未判定 |
-
-ARGUMENT_TYPE_NOT_ASSIGNABLE 的目标类型分布（求和 290，24 行全列；消息
-形如 The argument type 'X' can't be assigned to the parameter type 'Y'，
-本表按 Y 计；T-dart 抽样为可空 int? 给 int，连可空守卫 F3m；double 67 条
-是否数值转换待第二轮抽样；double 与 num 两形状相对首测的下降原因未单独
-查明）：
-
-| 计数 | 目标类型 | 判定 |
-|---:|---|---|
-| 70 | `List<Cluster>` | 未判定 |
-| 67 | `double` | 未判定 |
-| 40 | `List<EastAsianSpacingEdges>` | 未判定 |
-| 37 | `int` | 未判定 |
-| 24 | `String` | 未判定 |
-| 16 | `num` | 未判定 |
-| 8 | `List<String>?` | 未判定 |
-| 6 | `Cluster` | 未判定 |
-| 5 | `SortedSetTable<int>` | 未判定 |
-| 3 | `SortedMapTable<String, double>` | 未判定 |
-| 2 | `KinsokuLevel` | 未判定 |
-| 1 | `UnbreakableRanges` | 未判定 |
-| 1 | `SortedMapTable<TextRange, SortedSetTable<int>>` | 未判定 |
-| 1 | `SortedMapTable<TextRange, ClusterMetricDecision>` | 未判定 |
-| 1 | `SortedMapTable<String, String>` | 未判定 |
-| 1 | `SortedMapTable<int, ProgressiveBreakOpportunity>` | 未判定 |
-| 1 | `SortedMapTable<int, InlineObjectSpan>` | 未判定 |
-| 1 | `SortedMapTable<int, InlineObjectPreferredStretch>` | 未判定 |
-| 1 | `List<ShrinkOpportunity>` | 未判定 |
-| 1 | `List<int>` | 未判定 |
-| 1 | `List<Glyph>` | 未判定 |
-| 1 | `Iterable<int>` | 未判定 |
-| 1 | `HangingPunctuationStyle` | 未判定 |
-
-UNDEFINED_METHOD 的方法与接收类型分布（求和 69，24 对全列，census11
-复测值，记法为方法 @ 接收类型；`_codePointAt` @ `SortedTable` 4 条随
-runtime/sorted_table.dart 不再写出而消失（dunitsurf-r3 的 `db0f713a`），
-其余各对与 dartstd-r2 期逐项相同；`toDouble` @ `bool` 形 5 条为
-2026-09-07 复测新增，原因没有查明；compareTo 形 9 条由 NullableScalar
-分支对非 Comparable 数据类实例渲染 `.compareTo` 解释
-（DartDecl.hx:279-281 一带，tdart2 r1），预期随 F3ai 的修复消除，计数在
-合并复测后重数）：
-
-| 计数 | 方法与接收类型 | 判定 |
-|---:|---|---|
-| 13 | `Cluster` @ `Function` | 未判定 |
-| 10 | `emptyF` @ `PunctuationGeometryLedger` | 未判定 |
-| 6 | `copy` @ `List` | Haxe 数组方法名生成到 dart 的 List 接收者的假设 |
-| 5 | `toDouble` @ `bool` | 未判定（2026-09-07 复测新增形，原因没有查明） |
-| 5 | `concat` @ `List` | Haxe 数组方法名生成到 dart 的 List 接收者的假设 |
-| 4 | `splice` @ `List` | Haxe 数组方法名生成到 dart 的 List 接收者的假设 |
-| 4 | `pop` @ `List` | Haxe 数组方法名生成到 dart 的 List 接收者的假设 |
-| 3 | `Cluster` @ `Cluster` | 未判定 |
-| 2 | `shift` @ `List` | Haxe 数组方法名生成到 dart 的 List 接收者的假设 |
-| 2 | `Ic` @ `Function` | 未判定 |
-| 2 | `emptyHanging` @ `LineCandidate` | 未判定 |
-| 1 | `unshift` @ `List` | Haxe 数组方法名生成到 dart 的 List 接收者的假设 |
-| 1 | `reverse` @ `List` | Haxe 数组方法名生成到 dart 的 List 接收者的假设 |
-| 1 | `Rect` @ `Rect` | 未判定 |
-| 1 | `Glyph` @ `Glyph` | 未判定 |
-| 1 | `compareTo` @ `RubyLineHeightDecisionInfo` | NullableScalar 渲染 `.compareTo`，预期随 F3ai 消除（tdart2 r1） |
-| 1 | `compareTo` @ `MaxLinesDecisionInfo` | 同上 |
-| 1 | `compareTo` @ `LineSpacingDecisionInfo` | 同上 |
-| 1 | `compareTo` @ `LineRepairDecisionInfo` | 同上 |
-| 1 | `compareTo` @ `LineLengthGridDecisionInfo` | 同上 |
-| 1 | `compareTo` @ `LineCandidate` | 同上 |
-| 1 | `compareTo` @ `KinsokuDecisionInfo` | 同上 |
-| 1 | `compareTo` @ `InlineObjectLineHeightDecisionInfo` | 同上 |
-| 1 | `compareTo` @ `FirstLineIndentDecisionInfo` | 同上 |
-
-UNDEFINED_FUNCTION 的名称分布（求和 46，消息全部为 The function 'X'
-isn't defined.；末两行为 dartstd-r2 合并后新增；floatToI32 7 条与
-i32ToFloat 5 条已由 fph32-r1（`2382140b`，合并 `014d9640`）修复，两行
-删除）：
-
-| 计数 | 名称 | 判定 |
-|---:|---|---|
-| 2 | `compareTextStyle` | 修复位置：是否生成比较函数的判定与引用侧不一致（F3ai） |
-| 2 | `compareFontMetricsRequest` | 修复位置：是否生成比较函数的判定与引用侧不一致（F3ai） |
-| 2 | `compareRawFontMetrics` | 修复位置：是否生成比较函数的判定与引用侧不一致（F3ai） |
-| 1 | `compareAutoSpacePolicy` | 修复位置：是否生成比较函数的判定与引用侧不一致（F3ai） |
-| 1 | `compareAdjustmentStylePolicy` | 修复位置：是否生成比较函数的判定与引用侧不一致（F3ai） |
-| 1 | `comparePunctuationWidthPolicy` | 修复位置：是否生成比较函数的判定与引用侧不一致（F3ai） |
-| 1 | `compareBopomofoGlyphPlacement` | 修复位置：是否生成比较函数的判定与引用侧不一致（F3ai） |
-| 1 | `compareMetricDecisionInfo` | 修复位置：是否生成比较函数的判定与引用侧不一致（F3ai） |
-| 1 | `compareClusterGeometryDecisionInfo` | 修复位置：是否生成比较函数的判定与引用侧不一致（F3ai） |
-| 1 | `compareAutoSpaceDecisionInfo` | 修复位置：是否生成比较函数的判定与引用侧不一致（F3ai） |
-| 1 | `compareRubyDecisionInfo` | 修复位置：是否生成比较函数的判定与引用侧不一致（F3ai） |
-| 1 | `compareShapingDecisionInfo` | 修复位置：是否生成比较函数的判定与引用侧不一致（F3ai） |
-| 1 | `comparePunctuationDecisionInfo` | 修复位置：是否生成比较函数的判定与引用侧不一致（F3ai） |
-| 1 | `compareSpacingDecisionInfo` | 修复位置：是否生成比较函数的判定与引用侧不一致（F3ai） |
-| 1 | `compareJustificationDecisionInfo` | 修复位置：是否生成比较函数的判定与引用侧不一致（F3ai） |
-| 1 | `compareLineEdgeTrimDecisionInfo` | 修复位置：是否生成比较函数的判定与引用侧不一致（F3ai） |
-| 1 | `compareDecorationDecisionInfo` | 修复位置：是否生成比较函数的判定与引用侧不一致（F3ai） |
-| 1 | `compareDecorationSegmentInfo` | 修复位置：是否生成比较函数的判定与引用侧不一致（F3ai） |
-| 1 | `compareInlineBoxDecisionInfo` | 修复位置：是否生成比较函数的判定与引用侧不一致（F3ai） |
-| 1 | `compareInlineObjectDecisionInfo` | 修复位置：是否生成比较函数的判定与引用侧不一致（F3ai） |
-| 1 | `compareInlineObjectPunctuationAttachmentDecisionInfo` | 修复位置：是否生成比较函数的判定与引用侧不一致（F3ai） |
-| 1 | `compareParagraphStyle` | 修复位置：是否生成比较函数的判定与引用侧不一致（F3ai） |
-| 1 | `compareLayoutConstraints` | 修复位置：是否生成比较函数的判定与引用侧不一致（F3ai） |
-| 1 | `compareInlineBoxSpan` | 修复位置：是否生成比较函数的判定与引用侧不一致（F3ai） |
-| 1 | `compareInlineObjectSpan` | 修复位置：是否生成比较函数的判定与引用侧不一致（F3ai） |
-| 1 | `compareSize` | 修复位置：是否生成比较函数的判定与引用侧不一致（F3ai） |
-| 1 | `compareCluster` | 修复位置：是否生成比较函数的判定与引用侧不一致（F3ai） |
-| 1 | `compareGlyphRun` | 修复位置：是否生成比较函数的判定与引用侧不一致（F3ai） |
-| 1 | `compareLineBox` | 修复位置：是否生成比较函数的判定与引用侧不一致（F3ai） |
-| 1 | `compareLineRepairCandidateInfo` | 修复位置：是否生成比较函数的判定与引用侧不一致（F3ai） |
-| 1 | `compareLayoutFontMetrics` | 修复位置：是否生成比较函数的判定与引用侧不一致（F3ai） |
-| 1 | `compareLineCandidate` | 修复位置：是否生成比较函数的判定与引用侧不一致（F3ai） |
-| 1 | `compareRepairCandidate` | 修复位置：是否生成比较函数的判定与引用侧不一致（F3ai） |
-| 1 | `compareGlue` | 修复位置：是否生成比较函数的判定与引用侧不一致（F3ai） |
-| 1 | `compareShapingEvidenceKey` | 修复位置：是否生成比较函数的判定与引用侧不一致（F3ai） |
-| 1 | `compareRecordedShapingResult` | 修复位置：是否生成比较函数的判定与引用侧不一致（F3ai） |
-| 1 | `compareMetricsEvidenceKey` | 修复位置：是否生成比较函数的判定与引用侧不一致（F3ai） |
-| 1 | `compareRecordedFontMetrics` | 修复位置：是否生成比较函数的判定与引用侧不一致（F3ai） |
-| 1 | `mkdirSync` | 修复位置：测试 extern 静态成员调用点输出不带限定名的名字（F3ak） |
-| 1 | `writeFileSync` | 修复位置：同 F3ak |
-| 1 | `sumOfFloat` | 未判定（dartstd-r2 合并后新增，justifier.dart:141） |
-| 2 | `forEach` | 未判定（dartstd-r2 合并后新增，justifier.dart:147 与 :155） |
-
-EXPECTED_TOKEN 的期待符号分布（求和 56）：';' 49 条、')' 4 条、':' 2 条、
-'}' 1 条（全部未判定）。
-
-URI_DOES_NOT_EXIST 的引用路径分布（求和 6，census11 复测值；目录列 gen 指
-dart-gen 内的文件、tests 指 dart-gen-tests 内的文件；已判定 F3i；生成侧
-3 条与测试侧 sorted_table 1 条为 dunitsurf-r3 的 `db0f713a` 不再写出
-runtime/ 目录后的 import 断链，测试侧 test_host 与跨目录 liang_hyphenator_
-test 两条为 dartstd-r2 期已有残余）：
-
-| 计数 | 引用路径 | 目录 |
-|---:|---|---|
-| 3 | `../../../runtime/sorted_table.dart` | gen（liang_hyphenator.dart:3、parse_tex_hyphenation_patterns.dart:3、parsed_tex_hyphenation.dart:2） |
-| 1 | `test_host.dart` | tests（main.dart:6） |
-| 1 | `../../../../dart-gen/lib/runtime/sorted_table.dart` | tests（liang_hyphenator_test.dart:7） |
-| 1 | `../../../../dart-gen/lib/org/tiqian/linebreak/liang_hyphenator_test.dart` | tests（line_break_coverage_test.dart:8） |
+文件分布无单点大户：line_breaker 4、contextual_quote_role_resolver 4、
+test_trace_platform 2、unicode_emoji 2、punctuation_geometry_ledger 2、
+line_break_planning_stage_coverage_test_support 2、其余散布。
+dart tests 侧为 0。census12 时代的逐类表计数已整体过期，明细见 git
+历史与本节 2026-09-12 之前的版本。
 
 ## 9 分级标尺
 
@@ -1164,14 +589,7 @@ dartguard（#64）r1 至 r4 累计把残余 143 条修到 17 条、r6 后残余 
       实测 Option 形状 E0308 残余 389 条。修复位置为默认值物化与被调函数
       形参实际类型对齐（嵌套构造实参按形参类型包 `Some(...)`）。判据为
       该形状降为 0。C2，P1，S2。
-- [ ] F3as ts coalescing 静态字段对 abstract 类的完整路径泄漏：修复已合并
-      `87255540`，census14 实测 TS2304 org 条目残余 67 条未消。判据为
-      org 条目降为 0 后核销。
-- [ ] F3u swift tests 目录 import 头的消费侧配置：census14 实测
-      swift-gen-f64-tests 41 条（swiftc rc=123）。修复位置为
-      engine-haxe/targets/swift-common.hxml 补测试 import 配置。判据为
-      tests 侧符号解析通过且计数可产出为 0。C1，P2，S-。
-- [ ] 小残余复合项（census14 实测）：F4k haxe.Exception shim（E0433 残余
+- [ ] - [ ] - [ ] 小残余复合项（census14 实测）：F4k haxe.Exception shim（E0433 残余
       8 条、原 1 条）；F4i std.Functional shim（E0432 残余 2 条）；F4m
       dataClass 构造器 self 绑定（E0424 残余 2 条）；F3ah dart 省缺实参
       （NOT_ENOUGH_POSITIONAL 残余 3 条）。判据为各残余降为 0。
@@ -1374,6 +792,8 @@ dartguard（#64）r1 至 r4 累计把残余 143 条修到 17 条、r6 后残余 
       （排队）
 
 ## 12 进度记录
+- | 2026-09-12 | F3u swift tests import 头消费侧配置归档（swift 双精度联合 WMO 计数 0，census27） |
+- | 2026-09-12 | F3as ts coalescing 静态字段路径泄漏归档（ts 计数 0，census27） |
 
 | 日期 | 修复项 | 合入位置 | 复测计数 | 验收结论 |
 |---|---|---|---|---|
