@@ -281,27 +281,6 @@ cat engine-haxe/out/dart-gen.log engine-haxe/out/dart-tests.log | awk -F'|' '/^E
 
 ## 3 Kotlin 普查结果
 
-### 3.1 基线快照
-
-- 测量基线：tiqian `3f609c0f`（本地 main）加 boring `e01b03b3`，2026-09-07 实测。vendored 副本指向 `.haxelib/boring/git` 里的 `e01b03b3`。
-- f32 目录（out/kotlin-gen-f32 与 kotlin-gen-f32-tests）696 条错误；f64
-  目录（out/kotlin-gen-f64 与 kotlin-gen-f64-tests）717 条错误；两目录
-  warning 计数均为 0。
-- 基线血统：`a75601a` 首测 f32 3338 / f64 3358（`5d7417e` 上 3335/3355）；
-  `8d17b59`（nullargs 合入）1535 / 1553；tiqian `105dfb30` 加 boring
-  `4b1fec9` 1183 / 1201；本节基线 696 / 717；kf3v-r1 合并后 `b7054019`
-  680 / 701（too many arguments 14/14 随 F3v 降 0 删除，）；knamefix-r8 合并后
-  `3044bf91` 343 / 354（census11，两列类集首次完全相同，各 33 类；逐类
-  降量、新类引入路径与未查明项见 3.2 表行内说明）；`a72f994d` 343 / 354
-  （census12，见下）。旧分桶表 28 桶 2026-09-06 起作废，由第 3.2 节
-  逐类表取代。
-- 2026-09-08 census12 复测（boring `a72f994d`，vendored 推进到该提交，
-  tiqian 主树 `4bfe817f` 重生成，退出码 0）：f32 343 / f64 354、warnings 0/0，与 census11 总数持平
-  （`3044bf91..a72f994d` 区间 dartargs-r2 的 kotlin 侧改动不改变消费树
-  计数）；逐类枚举本轮未做，3.2 表数值仍标 census11 复测。
-
-### 3.2 逐类全表（2026-09-12 b1562731 补测；f32 与 f64 各 12 条，两列类集相同）
-
 boring `b1562731`（含 Sol 可空实参统一处理三笔与守卫笔）单目标补测：
 `kotlinc -Xallow-kotlin-package`（12g 堆）对 kotlin-gen-f64 计数。
 
