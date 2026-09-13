@@ -130,6 +130,57 @@ internal object AndroidPlatformFontOracle {
         )
     }.getOrNull()
 
+    /** Import actual platform instances for a host family without disguising synthetic styles as real faces. */
+    fun styleCatalogOrNull(): AndroidFontCatalog? = runCatching {
+        val weightRanges = mutableMapOf<Pair<String, Int>, ClosedFloatingPointRange<Float>?>()
+        val specs = listOf(FontRole.CjkText to "中", FontRole.LatinText to "A").flatMap { (role, probe) ->
+            (100..900 step 100).flatMap { weight ->
+                listOf(false, true).mapNotNull { italic ->
+                    val selection = select(ReplayableFontFaceRequest(
+                        role = role, preferredFamilies = listOf("sans-serif"), fontSize = 32f,
+                        weight = weight, italic = italic, locale = "zh-Hans", selectionText = probe,
+                    ))
+                    if (selection.syntheticBold || selection.syntheticItalic || selection.spansMultipleFaces) return@mapNotNull null
+                    val font = selection.font
+                    val key = (font.file?.absolutePath ?: "buffer:${font.sourceIdentifier}") to selection.collectionIndex
+                    val weightRange = if (key in weightRanges) weightRanges[key] else {
+                        physicalWeightRange(font).also { weightRanges[key] = it }
+                    }
+                    val physicalWeight = weightRange?.let { selection.weight.toFloat().coerceIn(it).toInt() }
+                        ?: font.style.weight
+                    val physicalAxes = selection.variationAxes - "wght" +
+                        if (weightRange == null) emptyMap() else mapOf("wght" to physicalWeight.toFloat())
+                    AndroidFontFaceSpec(
+                        source = selection.source, collectionIndex = selection.collectionIndex,
+                        familyKey = "platform-styles-${role.name}", familyAliases = selection.aliases,
+                        roles = if (role == FontRole.CjkText) setOf(role, FontRole.CjkPunctuation) else setOf(role),
+                        weight = physicalWeight, italic = selection.italic, variationAxes = physicalAxes,
+                    )
+                }
+            }
+        }.distinctBy { listOf(it.familyKey, it.source.label, it.collectionIndex, it.weight, it.italic, it.variationAxes) }
+        check(specs.any { FontRole.CjkText in it.roles } && specs.any { FontRole.LatinText in it.roles })
+        AndroidFontCatalog(faceSpecs = specs, sourceKind = "AndroidPlatformStyleInstancesApi31")
+    }.getOrNull()
+
+    /** Inspect the selected TTC face through the same FreeType bridge used for replay. */
+    private fun physicalWeightRange(font: Font): ClosedFloatingPointRange<Float>? {
+        val buffer = font.buffer.duplicate().apply { position(0) }
+        val source = NativeFontBridge.nativeRegisterBufferSource(buffer, buffer.remaining().toLong())
+        check(source != 0L) { "Cannot inspect the platform font source" }
+        try {
+            val face = NativeFontBridge.nativeCreateFace(source, font.ttcIndex, intArrayOf(), floatArrayOf())
+            check(face != 0L) { "Cannot inspect the platform font face" }
+            try {
+                return NativeFontFace(face, NativeFontBridge.nativeUnitsPerEm(face)).axisRange("wght")
+            } finally {
+                NativeFontBridge.nativeReleaseFace(face)
+            }
+        } finally {
+            NativeFontBridge.nativeReleaseSource(source)
+        }
+    }
+
     private fun requestedTypeface(request: ReplayableFontFaceRequest): Typeface {
         val family = request.preferredFamilies.firstOrNull(String::isNotBlank)
         return if (family == null) {
