@@ -300,130 +300,36 @@ cat engine-haxe/out/dart-gen.log engine-haxe/out/dart-tests.log | awk -F'|' '/^E
   （`3044bf91..a72f994d` 区间 dartargs-r2 的 kotlin 侧改动不改变消费树
   计数）；逐类枚举本轮未做，3.2 表数值仍标 census11 复测。
 
-### 3.2 逐类全表（2026-09-08 census11 复测；f32 与 f64 各 33 类非零，两列类集相同）
+### 3.2 逐类全表（2026-09-12 b1562731 补测；f32 与 f64 各 12 条，两列类集相同）
 
-「判定」列的含义：一个错误类的修复位置（boring 生成器的机制位置，或
-tiqian 源的一类写法）已经探针证实时，记修复位置；只有猜测记「假设」；都没有
-记「未判定」。判定的方法见 T-attr（第 11 节第 1 组）：对类内抽样错误点读
-生成代码后定性。假设不构成派发依据，证实后才开修复项。本轮新增一档
-「形状证实」：探针读过该类抽样错误点的生成代码、确认错误落在生成形状上，
-但还没有把生成器机制定位到文件与分支；它的可信度高于假设、低于修复位置，
-不单独构成派发依据。本文用到两个修复位置名：修复位置 A 指可空接收者上方法调用
-的生成机制；数值转换面指数值类型互转的生成机制。
+boring `b1562731`（含 Sol 可空实参统一处理三笔与守卫笔）单目标补测：
+`kotlinc -Xallow-kotlin-package`（12g 堆）对 kotlin-gen-f64 计数。
 
-判定来源：探针 T-attr r1（基线 boring `4b1fec9`，采信其抽样形状）；tattr2 r2（基线 boring `d870489c`，unresolved reference 相关十七类全量判定）；f64only r1（f64 独有类的根本原因）；tattr3 r1（十四类机制定位与假设检验，生成器行号在 `e01b03b3` 检出逐处复核）。数值转换面
-（KotlinExpr.hx:2806-2820 的 renderCallArgs 只在实参位插入转换）与 getter
-降级可见性（`5628b4d` 生成 `private override`）两处机制由派发方在 4b1fec9
-检出复核。
+| 文件:行 | 错误消息骨架 | 实参/类型形状 |
+|---|---|---|
+| LayoutDumpFormat.kt:128 | unresolved reference 'count' | 引用未生成 |
+| LineAdjustmentStage.kt:77 | argument type mismatch | Int? → Int |
+| ParagraphLayoutEngine.kt:48 | assignment type mismatch | WidthIndependentParagraphAnnotation? → 非 |
+| PreparedParagraph.kt:333 | argument type mismatch | Int? → Int |
+| PreparedParagraph.kt:681 | operator call prohibited on nullable receiver | Int? |
+| PunctuationGeometryLedger.kt:44 | argument type mismatch ×2 | Double? → Double |
+| PunctuationGeometryLedger.kt:145 | operator call prohibited ＋ argument type mismatch | Double? |
+| PunctuationGeometryLedger.kt:179 | operator call prohibited on nullable receiver | Double? |
+| PunctuationGeometryLedger.kt:180 | operator call prohibited on nullable receiver | Double? |
+| WidthIndependentAnnotationCacheTestSupport.kt:38 | return type mismatch | ShapingResult? → ShapingResult |
 
-| 错误消息类（骨架） | f32 | f64 | 判定与处置 |
-|---|---:|---:|---|
-| argument type mismatch: actual type is 'X', but 'X' was expected. | 131 | 138 | 形状分解见 3.3；Int 给浮点 12/12 是 F3j 残余（形状明细见 3.3）；可空 81、Number 装箱 14、其余 24/31 待证（knulljud r1 只交付了按错误类汇总的预览计数，逐形状判定未并入本表） |
-| unresolved reference 'X'. | 54 | 54 | knamefix-r8 合并后的残余（365/358→54/54）；符号分布与归属见 3.4（11 个符号 Σ=57，含 operator 形 3 条）；修复任务 knamefix（#23）由本会话派出 |
-| 'X' cannot be reassigned. | 24 | 24 | 新类（census11 引入，knamefix-r8）；引入路径已判定（两树同位对照）：knamefix-r8 的 counted-loop 识别改动把 `b7054019` 树的 `var i = 1; while (…)` 形改写成 `for (i in …)` 形时没有检查循环体是否写计数器（LineRepair.kt:38 加 :44 的 `i++`、LayoutQueries.kt:283 的 `index += 1` 实测；24 条分布 LineRepair.kt 12、PunctuationGeometryStage.kt 6、LayoutQueries.kt 2、其余四文件各 1）；修复位置（tattr4 r1）：循环识别的区间谓词 PolicyQueries.hx intervalCore（:800-868）与 intervalShort（:888-930）匹配 while 形计数循环时只识别声明、条件与尾部自增，不检查循环体其余位置写计数器，KotlinExpr.hx:867-870 matchInterval 命中后 :966-1000 输出只读 for 绑定（LineRepair.kt:39-44 实测）；修复为两谓词加体写检查（赋值与自增形、递归嵌套语句）返回 null 保留 while 形。F3au |
-| return type mismatch: expected 'X', actual 'X'. | 17 | 21 | F3j 残余；f64 由 17 升 21 的原因没有查明 |
-| none of the following candidates is applicable: | 12 | 12 | 探针定位待因果验证（tattr3 r1）：`+` 两侧为 `Number & Comparable<…>` 装箱与具体 Float 时 kotlinc 列出全部候选（PunctuationGeometryLedger.kt:36、:40、:43 实测；机制位置 KotlinExpr.hx binopCore :1996 起）；与 unresolved for operator、modifier required 两行同源（装箱值仍是 Number，没有转换成具体数值类型），随 #23；11→12 的原因没有查明 |
-| conflicting declarations: | 11 | 11 | 修复位置（tattr3 r1）：typer 把数组推导 `[for …]` 展开成构建器局部 `_g`，kotlin 目标 Compiler.hx:72 的 `preventRepeatVars: false` 关闭 reflaxe 的 RepeatVariableFixer，KotlinExpr.hx localName :3299-3306 对这类展开名原样输出不做兄弟去重（只对 `` ` `` 与 `_` 生成避让名）→ 同函数两个 `val _g`（PreparedParagraphJfTest.kt:116 与 :126、LayoutQueries.kt:588 起实测；tattr3 r1 加临时 trace 实验证实展开名到达生成器，实验改动已还原）。F3w；13→11 的降幅归 knamefix-r8，未逐条核对 |
-| type mismatch: inferred type is 'X', but 'X' was expected. | 8 | 8 | 假设（T-attr 抽样含异常第二代嵌套类引用 LayoutQueries.kt:390 `TiqianNoSuchElementException.Message`，疑与 #37 异常子类是同一机制）；形状证实（tattr4 r1）：抽样全部是异常构造位 `throw IllegalStateException` 与 Throwable 期望不符（DisplayGlyphSubstitutionEngineTestSupport.kt:81 等七处、TextShaper.kt:118），第二代异常引用这一组错误；声明侧分支未隔离；11→8 的降幅归 knamefix-r8，未逐条核对 |
-| function invocation 'X' expected. | 7 | 7 | 修复位置（tattr3 r1）：静态方法作值使用时 KotlinExpr.hx field() 的 FStatic 分支 :2184-2187 经 staticRef 返回 `Class.method` 文本，函数类型位置需要 callable reference `Class::method` 或 lambda 包装（ContextualQuoteRoleResolverNestedAndSurrogateTest.kt:84 `Support.surrogateText`、ParseTexHyphenationPatterns.kt:55 `SortedTable.compareStrings` 实测）；8→7 即 F3ag 连锁条目 `range()` 随 knamefix-r8 消除。F3x |
-| operator call is prohibited on a nullable receiver of type 'X'. Use 'X'-qualified call instead. | 6 | 6 | 修复位置 A 残余；#22 残余 |
-| no 'X' operator method providing array access. | 6 | 6 | 修复位置（tattr3 r1）：set 形 4 条为 `split` 走通用实例调用分支 KotlinExpr.hx:2973 产出只读 `List`，随后下标写 `a[i] = …` 无 set（PreparedParagraph.kt:1726/1729/1741/1745）；get 形 2 条为 stringBufMutationLines :698 以文本拼接 `part + "[0].code"` 取首字符，part 为 `"" + values[i]` 时 `[0]` 绑到 `values[i]`（TracedAssertions.kt:116）。F3y |
-| cannot infer type for type parameter 'X'. Specify it explicitly. | 6 | 6 | 假设部分否证（tattr3 r1）：42→6 的降幅与 F3ag 连锁消除同现（unresolved `copy` 消失后每行字段访问带的 cannot infer 连锁随之消失），tattr3 r1 的连锁判断成立；残余 6 条形状证实（tattr4 r1）：全部是 `SortedTable.mapBuilder(compareStrings)` 调用走通用调用渲染（KotlinExpr.hx:2362-2397）、未走 :3133 的类型化 map-builder 分支，K 与 V 无法推断（ParseTexHyphenationPatterns.kt:50-51 实测）；修复分支未隔离 |
-| assignment type mismatch: actual type is 'X', but 'X' was expected. | 6 | 6 | F3j 数值形状已修（19/23 降 6/10）；f64 由 10 降 6 归 knamefix-r8；剩余条目待按可空形状再判 |
-| 'X' is prohibited here. | 5 | 5 | 修复位置（tattr3 r1）：KotlinDecl.hx testFuncDecl :1152-1177 把测试函数体包进非 inline 的 `Test.run { … }` lambda，KotlinExpr.hx stmtLines 的无实参 TReturn 分支 :557 输出不带标签的 `return`，该位置禁止（BilingualEmphasisTest.kt:16、BopomofoLayoutTest.kt:24/96/118 实测）。F3z |
-| jvmField has no effect on a private property. | 5 | 5 | 修复位置（tattr3 r1）：KotlinDecl.hx objectVarDecl :1009 对一切非 final 静态字段无条件生成 `@JvmField`，未排除 private（PreparedParagraph.kt:25/27/29/31、EnglishHyphenation.kt:4 实测）。F3aa |
-| 'X' expression must be exhaustive. Add the 'X', 'X'… branches or an 'X' branch. | 4 | 4 | 修复位置（tattr3 r1）：Haxe typer 把 `case A | B:` 归并为一个 case 多值，KotlinExpr.hx switchExpression :1345-1349 只渲染 `c.values[0]`，其余值丢弃 → when 缺臂（FontMetrics.kt:15、ParagraphLayoutEngine.kt:158 实测；tattr3 r1 用 `-D dump=pretty` 实验证实归并形状）。F3ab |
-| the feature "collection literals" is experimental and should be enabled explicitly. This can be done by supplying the compiler argument 'X', but note that no stability guarantees are provided. | 4 | 4 | 形状证实（tattr4 r1）：与 array literals、selector 两码为同一生成表达式 `lineExtras?.[i]`（可空接收者加数组下标，KotlinExpr.hx:1126 数组访问位）的三个解析视角，四条错误点全部同构（RubyLayoutTest.kt:26-27、LineAdjustmentStage.kt:79 两条、PreparedParagraph.kt:339）；修复分支待隔离 |
-| the expression cannot be a selector (cannot occur after a dot). | 4 | 4 | 形状证实（tattr4 r1）：与 collection literals 行同一表达式 `?.[i]` 的第二个诊断视角（见该行）；f64 由 5 降 4 归 knamefix-r8 |
-| receiver type 'X' contains star projection which prohibits the use of 'X'. | 4 | 4 | 假设：Number 装箱，与 none of candidates 行同一 Number 装箱机制（tattr4 r1 逐点证实）：`Number & Comparable<*>` 装箱值参与比较与 Float 调用（LineRepair.kt:187-190 `shrink > (0).toFloat()` 实测）；修复分支未隔离 |
-| only safe (?.) or non-null asserted (!!.) calls are allowed on a nullable receiver of type 'X'. | 4 | 4 | 修复位置 A 残余（3→4 的原因没有查明）；#22 残余 |
-| array literals outside of annotations are unsupported. | 4 | 4 | 形状证实（tattr4 r1）：与 collection literals 行同一表达式 `?.[i]` 的第二个诊断视角（见该行） |
-| variable 'X' must be initialized. | 3 | 3 | 修复位置（tattr3 r1）：与 exhaustive 行同一机制（switchExpression 丢分组值）的连锁报错，分支缺臂路径无赋值，definite-assignment 无法证明初始化（FontMetrics.kt:21/52、ParagraphLayoutEngine.kt:164 实测）。F3ab |
-| unresolved reference 'X' for operator 'X'. | 3 | 3 | 探针定位待因果验证（tattr3 r1）：SortedMapTable get 返回的 `Number` 装箱值参与 `-` 运算，`!!` 后仍为 Number（PunctuationGeometryLedger.kt:36 实测；机制位置 KotlinExpr.hx binopCore :1996 起）；与 none of candidates、modifier required 两行同源（装箱值仍是 Number，没有转换成具体数值类型），随 #23 |
-| cannot access 'X': it is private in 'X'. | 3 | 3 | 修复位置（tattr3 r1）：kgetvis 合并 `ad0990e2` 后的残余 3 条，机制为 KotlinDecl.hx funcDecl :1103 与 objectVarDecl :1008 的可见性选择只把 `:allow` 转 internal，Haxe 的 `@:access` 授权与同模块文件私有跨类访问无映射（emptyHanging 于 LineOptimizationCoverageTest.kt:151、`@:access` 的 codePointLengthAt 与 strongScriptRole 于 ContextualQuoteRoleResolver.kt:293 起实测）。F3af |
-| 'X' hides member of supertype 'X' and needs an 'X' modifier. | 2 | 2 | 修复位置（tattr3 r1）：KotlinDecl.hx funcDecl :1095-1099 的 overridesAny 只认零参 toString，手写 `hashCode` 与异常载荷 `message` 不在内（BopomofoReading.hx:27 手写 `public function hashCode():Int` 于 @:dataClass 类、TraceAssertionException 载荷 `val message` 与 sealedExceptionDecl :603-604 基类 `override val message` 冲突实测；早把本类记成 dataClass 合成 hashCode 缺 override 不属实，已更正）。F3ac |
-| redeclaration: | 2 | 2 | 修复位置（tattr3 r1）：tiqian 两个模块各有一个 Haxe 文件私有类 `private class Resolution`（ContextualQuoteRoleResolver.hx:316、ContextualDashEllipsisRoleResolver.hx:223），KotlinDecl.hx classDecl :207 无条件生成 top-level `class`，同 package 冲突（ContextualDashEllipsisRoleResolver.kt:241 与 ContextualQuoteRoleResolver.kt:311 实测；早把本类记成嵌套类冲突不属实，已更正）。F3ad |
-| 'X' modifier is required on 'X'. | 1 | 1 | 探针定位待因果验证（tattr3 r1）：Number 装箱值参与比较运算，kotlinc 要求 compareTo 的 operator 修饰（Justifier.kt:85 `d > 0` 实测，d 为装箱）；与 unresolved for operator、none of candidates 两行同源（装箱值仍是 Number，没有转换成具体数值类型），随 #23；9/10→1/1 归 knamefix-r8 |
-| 'X' cannot be a callee. | 1 | 1 | 修复位置为 KotlinDecl 异常子类第二代的生成规则：super 调用被放进 init 块（IllegalStateException.kt:5:5，该类计数 1 即全部样本）；与 #37 同构造不同目标，修复项在 #37 完成后按修复位置开列 |
-| Unexpected tokens (use 'X' to separate expressions on the same line). | 1 | 1 | 新类：Justifier.kt:151:2 的语法错误，与 overload resolution ambiguity 行的位点（Justifier.kt:149:21）同函数相邻，形状证实（tattr4 r1）：sumOf 块 lambda 表达式渲染残留（`}.toDouble() }.toFloat()` 续接，Justifier.kt:149-151 实测），与 overload resolution ambiguity 行同一位点；修复分支待隔离 |
-| overload resolution ambiguity between candidates: | 1 | 1 | 新类（旧 ambiguous 类随 F3ag 消除）：Justifier.kt:149:21，与 modifier required 行的装箱 Number 位点（Justifier.kt:85）同文件；形状证实（tattr4 r1）：`ops.sumOf { … .toDouble() }.toFloat()` 的数值多重载无法解析（Justifier.kt:149-151 实测），装箱数值机制；修复分支未隔离 |
-| operator 'X' cannot be applied to 'X' and 'X'. | 1 | 1 | F3j 残余 |
-| null cannot be a value of a non-null type 'X'. | 1 | 1 | 形状证实（tattr4 r1）：String.lastIndexOf 单参调用降级时对非空 Int 形参插入 null 第二参（QuoteClassificationEngineTestSupport.kt:203-207 实测）；修复分支待隔离 |
-| names _, __, ___, ... are reserved in Kotlin. | 1 | 1 | 修复位置（tattr3 r1）：KotlinDecl.hx parameterText :873 与 lambda 参数渲染只调 KotlinNameEscape.escape（:42-43，只给关键字加反引号），`_` 参数名原样输出（UnicodePunctuationBoundaryTestSupport.kt:118 `resolve(_: LayoutProfileId)` 实测）；函数体局部的 `_` 已有生成名路径（localName :3304），参数位没有。F3ae |
-| condition type mismatch: inferred type is 'X' but 'X' was expected. | 1 | 1 | 形状证实（tattr4 r1）：可空接收者安全调用 `.has(...)` 返回 Boolean? 直接作条件（LineAdjustmentStage.kt:597 `if ((rejectedForSpan?.has(...)))` 实测），修复位置 A 延伸维持；修复分支未隔离 |
-| 合计（求和校验） | 343 | 354 | 与 3.1 节 census11 总数相等 |
-相对上一表（`b7054019`）计数已降为 0 并从表内删除的类：Expecting an
-element（0/9）、both main（0/2）、initializer type mismatch（0/2），三类为
-f64only r1 判定的 f64 浮点尾点路径，随 knamefix-r8 降 0；this declaration
-needs opt-in（1/1，测量环境条目）与 method 'X' is ambiguous（1/1，F3ag）
-随 knamefix-r8 降 0，F3ag 按删除制完成（进度见第 12 节）。更早降 0 删除的
-类见第 12 节进度表（modifier incompatible、cannot weaken、smart cast、
-for-loop non-nullable、infix、classifier companion、too many arguments）。
+求和校验：上表合计 12，与 kotlinc 输出一致。机制归并：可空值进入非空参数位 10 条（argument 5、operator 4、assignment 1，同一可空判定的遗漏），另有引用未生成 1 条、返回位 1 条。历史：census11（2026-09-08）时 33 类 228 条，census24
+时 66 条，Sol 三笔与守卫笔合入后余 12 条。census11 时代逐类表见 git 历史。
 
-判定进度小结（tattr4 r1 后，33 类）：修复位置与残余挂靠修复项 20 类
-（tattr4 r1 把 cannot be reassigned 升为修复位置 F3au；其余十九类同前：
-unresolved 残余经 tattr2 r2 十七类判定，return、assignment、operator
-applied 三类与 argument 类内 Int 给浮点形状是 F3j 残余，only safe 与
-operator call prohibited 是修复位置 A 残余，cannot be a callee 随 #37，
-conflicting、function invocation、no operator array access、prohibited
-here、jvmField、exhaustive、variable must be initialized、hides member、
-redeclaration、reserved、cannot access 十一类为 tattr3 r1 判定的修复
-位置）；探针定位待因果验证 3 类（unresolved for operator、none of
-candidates、modifier required，同一 Number 装箱机制，随 #23）；形状证实 10 类
-（tattr4 r1：cannot infer、type mismatch inferred、star projection、
-condition、overload ambiguity、Unexpected tokens、null cannot be 七类
-各给生成样本与机制候选，collection literals、array literals、selector
-三码 12 条为同一生成表达式 `?.[i]` 的三个解析视角）；假设与未判定
-两档不再有条目。20 加 3 加 10 等于 33，与表行数相等。kotlin 侧剩余的判定工作是
-给 3 类探针定位补因果链（随 #23 修复时验证）、给形状证实 10 类隔离
-修复分支、把 argument 类内可空 81、Number 装箱 14、其余 24/31 归到
-修复位置。
+### 3.3 argument type mismatch 形状分解（b1562731 补测）
 
-### 3.3 argument type mismatch 形状分解
+剩余 argument type mismatch 共 5 条：Int? → Int 2（LineAdjustmentStage:77、
+PreparedParagraph:333）、Double? → Double 3（PunctuationGeometryLedger:44
+两处与 :145 一处）。全部属于可空判定的同一遗漏，由 kargnull 线继续清偿。
 
-2026-09-08 census11 复测（产出本表的命令见第 2.1 节）：
+### 3.4 unresolved reference 符号分布（b1562731 补测）
 
-| 形状 | f32 | f64 | 判定 |
-|---|---:|---:|---|
-| 可空给非空（actual 类型以 ? 结尾，expected 非空） | 81 | 81 | 假设：疑与修复位置 A 同源；knulljud r1 对 null 相关错误类的判定报告只预览了按类汇总的计数、未逐形状并入，待并入后再判 |
-| 其余转换 | 24 | 31 | 未判定；随下一轮判定 |
-| Number 装箱给浮点 | 14 | 14 | 假设：T-attr 抽样为可空两臂条件表达式（FontPolicyCoverageTest.kt:125 实测），装箱路径未定位；待证 |
-| Int 给浮点 | 12 | 12 | F3j 残余；FontPolicyCoverageTest.kt:243 里 `(13).toFloat()` 与未经转换的 `0` 并存是原始形状 |
-| 合计（等于该类计数） | 131 | 138 | Long 给浮点形状（0/2）已随 knamefix-r8 降 0 删除 |
-
-旧版 K4 的统计命令只覆盖数值形状（当时 f32 144 / f64 152），由本表取代；
-「其余转换」行的存在不违反第 1 节的禁折叠规定，它是对 argument type
-mismatch 这一个类内部的形状分类，下次分解出现新的成批形状时拆成具名行。
-
-### 3.4 unresolved reference 符号分布（含 tattr2 r2 归属沿用）
-
-2026-09-08 census11 实测（产出命令见第 2.1 节）：
-去重后 11 个符号，计数合计 57，等于 unresolved 主类 54 加 unresolved for
-operator 类的 operator 名 3。相对 `b7054019` 表的 112 个符号 Σ=368，
-knamefix-r8 消灭了 101 个符号共 311 条（UString 29、clusterRange 24、
-strategyName 32、Ic 16、compareXxx 长尾与全部属性名连锁在内）。f64 侧
-分布与 f32 相同（主类 54 加 operator 形 3）。按第 1 节规定全量列举：
-
-| 计数 | 符号 | 判定 |
-|---:|---|---|
-| 33 | kind | 修复位置（tattr2 r2 类 2）：dataClass 默认值引用兄弟参数 |
-| 6 | s | 未判定（tattr2 r2 表内同名符号 6 条未单列归属） |
-| 5 | region | 形状证实（rustprobe r1 跨目标对照，待 kotlin 侧探针证实）：@:dataClass 默认参数内联把构造器形参 `region` 泄漏进静态初始化器（rust 侧 clreq_profile.rs:24:433 同构造；kotlin 侧 ClreqProfile.kt:8 的 `PunctuationGluePlacements.for…` 调用点实测） |
-| 3 | text | 同上假设（默认参数内联形参泄漏这一构造；kotlin 侧逐点判定未做） |
-| 3 | minus | 未判定 |
-| 2 | NodeFileSystem | 修复位置（tattr3 r1 结束消息）：`@:jsRequire` extern 在 Kotlin 目标没有宿主边处理被丢弃 |
-| 1 | length | 未判定 |
-| 1 | haxe | 未判定（疑为 haxe.Exception 引用，与 rust 侧 F4k 同名的跨目标表现，未验证） |
-| 1 | count | 未判定 |
-| 1 | cornerRadius | 同 region 行假设（默认参数内联形参泄漏这一构造） |
-| 1 | charCodeAt | 未判定（疑与 dart F3at 的 charCodeAt 构造同源的调用点残留，未验证） |
-
-符号到修复位置的归属沿用 tattr2 r2 十七类判定；region、text、
-cornerRadius 三个符号与 rust E0425.b、swift gen 侧 org 全限定名条目、ts
-F3as 的 org 名字条目是同一个 @:dataClass 默认参数内联构造在各目标的表现
-（rustprobe r1 报告 3.2 节），
-修复位置待跨目标统一判定后开列。修复随修复任务 knamefix（#23，由本会话
-派出）的续作轮，不按符号名另行分组派发。
+剩余 unresolved reference 1 条：LayoutDumpFormat.kt:128 的 'count'。
 
 ## 4 五个目标的生成状态（2026-09-07 实测）
 
