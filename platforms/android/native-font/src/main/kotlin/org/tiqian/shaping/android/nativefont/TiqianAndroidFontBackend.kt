@@ -407,6 +407,14 @@ object TiqianAndroidFontBackend {
     /** Discovery only: the catalog [install] would fall back to, without loading or installing it. */
     fun systemCatalog(context: Context): AndroidFontCatalog = defaultCatalog(context.applicationContext)
 
+    /** Complete real style instances for hosts composing a custom system-derived font family. */
+    fun systemStyleCatalog(context: Context): AndroidFontCatalog {
+        if (Build.VERSION.SDK_INT >= 31) {
+            AndroidPlatformFontOracle.styleCatalogOrNull()?.let { return it }
+        }
+        return declaredSystemCatalog(context.applicationContext)
+    }
+
     /** The declared system catalog without the API 31 oracle; what a platform-default entry expands to. */
     private fun declaredSystemCatalog(context: Context): AndroidFontCatalog {
         DeclaredSystemFontConfigCatalog.createOrNull()?.let { return it }
