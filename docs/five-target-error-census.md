@@ -6,7 +6,7 @@ Dart）下的编译错误，作为跨目标行为对齐（见
 普查对象是 engine-haxe/out/ 下由 boring 从 Haxe 源码翻译出的目标语言代码目录。
 原生 `engine` 模块的 `./gradlew :engine:jvmTest` 无失败，不在本文范围内。
 
-当前状态（2026-09-10 傍晚，基线 tiqian `3f609c0f` 加 boring `a2f2bdc2`，主树直接复测）：八个生成命令退出码全部为 0。kotlin f32 176 条 / f64 187 条；ts 337 条；rust f32 3402 条 / f64 3174 条；swift gen 侧 f32 0 条 / f64 1 条、tests 侧 f64 41 条；dart 317 条（生成侧 269 条、测试侧 48 条）。两日累计：总错误 6546 降至 4394（kotlin 减半、dart tests 减 88%、ts 减半）。已解决并复测确认的修复项自 2026-09-07 起从第 11 节清单删除，只留第 12 节进度行。
+当前状态（2026-09-14，census46，基线 tiqian `4f6855d2` 加 boring `c25f776e`）：八个生成命令退出码全部为 0。kotlin f32 0 条 / f64 0 条；ts 0 条；rust f32 673 条 / f64 673 条（逐码分布见第 6 节）；swift gen 侧 f32 0 条 / f64 0 条、tests 侧 0 条；dart gen 0 条 / tests 0 条。五目标中仅 rust 存有编译错误。已解决并复测确认的修复项自 2026-09-07 起从第 11 节清单删除，只留第 12 节进度行。
 
 ## 1 更新规则
 
@@ -330,43 +330,46 @@ batch 模式曾把每个文件作为独立编译任务造成截断计数（f64 1
 
 ## 6 rust 编译普查
 
-census27 快照（2026-09-12，boring `3b675e9e` × tiqian `d0a2ab9a`）：
-f64 1894 / f32 1907（census20 为 2738 / 2741）。逐码四列表由
-rustsurvey-r1 报告整理（完整版见 /tmp/dispatch-state/boring-rustsurvey-r1.report.md）：
+census46 快照（2026-09-14，boring `c25f776e` × tiqian `4f6855d2`）：
+f64 673 / f32 673，两精度分布逐码相同（census27 为 1894 / 1907，
+census20 为 2738 / 2741）。下表的 census27 列为 2026-09-12 快照 f64 计数，census46 列为
+2026-09-14 快照 f64 计数，代表样本取自 census46 日志：
 
-| 错误码 | f64 | f32 | 代表样本（文件:行） | 机制假设 |
+| 错误码 | census27 f64 | census46 f64 | 代表样本（文件:行） | 机制假设 |
 |---|---:|---:|---|---|
-| E0308 | 1319 | 1331 | clreq/clreq_profile.rs:20（expected Vec<u32>, found [u32; 3]） | 数组字面量与 Vec、枚举与整数的类型错配 |
-| E0277 | 181 | 182 | layout/prepared_paragraph.rs:113（dyn Fn 无法 shared/sent） | Mutex 包装要求 Send，捕获未满足 |
-| E0599 | 71 | 71 | core/paragraph_style.rs:55（Option<Ic> 无 Display） | 可空接收者调用方法 |
-| E0609 | 61 | 61 | core/layout_queries.rs:211（Option<Rect> 无字段 left） | 可空 receiver 未解包取字段 |
-| E0369 | 50 | 50 | core/layout_queries.rs:187（LineBox 上用 !=） | 值类型未实现 PartialEq |
-| E0425 | 39 | 39 | clreq/clreq_profile.rs:20（cannot find value region） | 标识符未生成 |
-| E0382 | 35 | 35 | layout/paragraph_dp_line_breaker.rs:141（borrow of moved） | 按值传递后引用 |
-| E0594 | 30 | 30 | test/shaping_evidence_json.rs:393 等 | 特征方法存在性与导出形态 |
-| E0596 | 17 | 17 | layout 前缀 test_support.rs:55（cannot borrow） | 不可变借用与可变要求冲突 |
-| E0053 | 17 | 17 | layout/display_glyph_substitution_engine 等 | trait impl 返回类型与声明不一致 |
-| E0507 | 16 | 16 | layout/ascii_point_mark_kinsoku_test_support 等 | 不能移出共享引用背后的值 |
-| E0608 | 12 | 12 | core/layout_queries.rs:923（cannot index） | 该类型未实现索引 |
-| E0624 | 8 | 8 | core/layout_queries.rs:935（method len 不存在） | 关联函数误作方法调用 |
-| E0433 | 8 | 8 | layout/paragraph_shaping_stage.rs:116 | 模块路径解析失败（引用类，e0433 线在修） |
-| E0282 | 7 | 7 | layout/line_break_planning_stage.rs:375 | 模式绑定缺类型标注 |
-| E0004 | 6 | 6 | font/font_metrics.rs:74（FontRole 非穷尽匹配） | match 缺臂 |
-| E0689 | 5 | 5 | layout/hyphenation_layout_test_support 等 | 对 Option 直接调用方法 |
-| E0600 | 5 | 5 | layout/prepared_paragraph.rs:1746 | 方法返回类型与预期不符 |
-| E0015 | 4 | 4 | core/rich_text_background_draw_style 等 | 常量求值缺函数体 |
-| E0610 | 2 | 2 | layout/punctuation_geometry_ledger.rs:185 | 关联函数当方法调用（self 缺失） |
-| E0432 | 2 | 2 | layout/justifier.rs:16（unresolved import） | 导入路径不存在 |
-| E0424 | 2 | 2 | layout/contextual_quote_role_resolver 等 | 当前作用域无此标识符 |
-| E0658 | 1 | 1 | layout/paragraph_shaping_stage.rs:756 | 语言特性需启用标记 |
-| E0560 | 1 | 1 | shaping/replayable_font_backend_coverage 等 | 宏展开失败 |
-| E0505 | 1 | 1 | layout/prepared_paragraph_plan_construction 等 | 值被移动后仍借用 |
+| E0308 | 1319 | 283 | core/rich_text_background_paint.rs:60:302（expected Fill） | 装箱一类已闭合（B01），残余为借用形与数值域转换 |
+| E0277 | 181 | 172 | core/layout_queries.rs:1295:5（TextRange 无 Debug） | trait 约束未满足（B06 闭包类已闭合，B07 续判其余子形） |
+| E0609 | 61 | 86 | core/layout_queries.rs:211:118（Option<Rect> 无字段 left） | 可空 receiver 未解包取字段（B11 在修；计数回升为其他修复暴露新实例） |
+| E0599 | 71 | 54 | layout/annotation_geometry_stage.rs:187:22（Option 无 push） | 可空接收者调用方法（B09 在修） |
+| E0382 | 35 | 21 | layout/paragraph_dp_line_breaker.rs:588:32（use of moved） | 按值传递后引用（B14 待发） |
+| E0507 | 16 | 11 | core/layout_queries.rs:306:81（cannot move out） | 不能移出共享引用背后的值（B22） |
+| E0369 | 50 | 3 | layout/punctuation_geometry_ledger.rs:105:84（f64 加 Option<f64>） | 值类型未实现 PartialEq/算术（B12 残余 3） |
+| E0596 | 17 | 5 | layout/paragraph_layout_engine.rs:226:19（cannot borrow *self） | 不可变借用与可变要求冲突（B22） |
+| E0594 | 30 | 0 | — | 计数 0（B15 面已闭合） |
+| E0053 | 17 | 0 | — | 计数 0（B16 面已闭合） |
+| E0608 | 12 | 3 | core/layout_queries.rs:935:40（Option<Vec<f64>> 不可索引） | 该类型未实现索引（B17） |
+| E0624 | 8 | 8 | core/layout_queries.rs:947:70（方法 len 为 private） | 关联函数误作方法调用（B22） |
+| E0433 | 8 | 0 | — | 计数 0（e0433 线 `b8b17665`/`553d3fd2` 等已闭合） |
+| E0282 | 7 | 7 | layout/line_adjustment_stage.rs:469:13（Vec<_> 缺标注） | 模式绑定缺类型标注（B22） |
+| E0004 | 6 | 7 | font/font_metrics.rs:80:19（FontRole 非穷尽） | match 缺臂（B22；计数回升为其他修复暴露新实例） |
+| E0425 | 39 | 0 | — | 计数 0（B13 面已闭合） |
+| E0689 | 5 | 0 | — | 计数 0 |
+| E0600 | 5 | 1 | layout/punctuation_model.rs:333:106（Option 取负） | 方法返回类型与预期不符（B22） |
+| E0015 | 4 | 4 | core/rich_text_background_draw_style.rs:23:52（非常量调用） | 常量求值缺函数体（B22） |
+| E0610 | 2 | 2 | layout/punctuation_geometry_ledger.rs:185:281（f64 关联函数） | 关联函数当方法调用（B22） |
+| E0432 | 2 | 2 | layout/justifier.rs:16:21（unresolved import __functional_shim） | 导入路径不存在（B22） |
+| E0424 | 2 | 2 | layout/contextual_quote_role_resolver.rs:43:54（module self） | 当前作用域无此标识符（B22） |
+| E0658 | 1 | 1 | layout/paragraph_shaping_stage.rs:772:258（unstable str_as_str） | 语言特性需启用标记（B22） |
+| E0560 | 1 | 1 | shaping/replayable_font_backend_coverage_test.rs:608:13 | 宏展开失败（B22） |
+| E0505 | 1 | 0 | — | 计数 0 |
 
-求和校验：f64 列 25 码合计 1900、f32 列合计 1907，与 counts.txt 一致。
+求和校验：census46 列 19 个非零码合计 673，与 counts.txt 一致；
+census27 列 25 码合计 1900，与 2026-09-12 快照一致。
 
-专道分工：E0308 归 e0308 线（muse）、E0277 归 e0277 线（longcat cmd600）、
-域追踪归 rustdomain 线、clone 归 F4q（已闭合）、E0433 引用类归 e0433 线
-（NodeFileSystem 与 map builder 两笔已推 `b8b17665`/`553d3fd2`）。
+专道分工（2026-09-14 轮）：E0308 借用形归 B20、E0277 其余子形归 B07、
+E0609 归 B11、E0369 残余归 B12、E0382 归 B14、E0599 子形归 B09、
+小码九类（E0507/E0624/E0282/E0004/E0596/E0015/E0608/E0610/E0432 等）归 B22；
+clone 归 F4q（已闭合）、E0433 已闭合。
 
 census12 时代的逐类表（f32 4548 / f64 4558 时代）计数已整体过期，
 明细见 git 历史与本节 2026-09-12 之前的版本。
@@ -432,7 +435,7 @@ C2 跨文件或跨目标，同一缺陷出现在多个目标，或需要 tiqian 
 |---|---|---|---|---|
 | K1 | 修复位置 A：only safe 类计数 | f32 3 / f64 3（knullinit 系列合并 `23f4bf63` 后的残余） | 0 | #22 残余 |
 | K2 | 各目标逐类判定完成度 | kotlin 33 类：修复位置或挂靠修复项 20、探针待因果 3、形状证实 10、假设 0、未判定 0（3.2 节小结，tattr4 r1）；rust 28 码：E0432、E0053、E0424、E0423、E0308-198、E0599 四子形与 r4 两组已判，E0277 仅 send 5 条已判，其余 372 条在判（第 6 节小结）；swift gen 侧 1 类已判、tests 侧 2 类已判 F3u（第 5 节）；ts 16/16 类已判（第 7 节小结）；dart 修复位置 8 码加 F3at 的 charCodeAt 组，其余 25 类形状证实或假设（第 8 节小结） | 五目标全部类有判定结论 | T-attr、T-swift、T-dart、tsprobe2、rustsem、rustprobe |
-| K3 | 各目标错误总数 | kotlin f32 12 / f64 12（b1562731 补测，含 Sol 三笔与守卫笔）；rust f32 1907 / f64 1894；ts 0；dart gen 31 / tests 0；swift f32 0 / f64 0（strip import 联合 WMO）。census27 实测（2026-09-12，boring `3b675e9e` × tiqian `d0a2ab9a`）；kotlin 为 b1562731 单目标补测值 | 全部 0 | 各节逐类表求和（完整性数字，非派发单位） |
+| K3 | 各目标错误总数 | kotlin f32 0 / f64 0；ts 0；swift f32 0 / f64 0（strip import 联合 WMO）；dart gen 0 / tests 0；rust f32 673 / f64 673。census46 实测（2026-09-14，boring `c25f776e` × tiqian `4f6855d2`） | 全部 0 | 各节逐类表求和（完整性数字，非派发单位） |
 | K4 | kotlin 两个精度目录 warning 计数 | 0 / 0 | 保持 0 | 每次复测 |
 | K5 | 各目标重生成退出码 | 八个生成入口全部 0（2026-09-07：kotlin、swift、rust 各 f32 与 f64，ts、dart） | 全部 0 | 逐处重跑阶段（已完成，第 4 节） |
 | K6 | boring 验收命令 | 19 项 gates 统一重跑全部退出码 0：`b822afee`（dartnull 合并态）、`c38a359c`（rustcoalesce-r4 合并态）与 `4644e29b`（f4m 合并态）；`a72f994d` 合并后曾 17 项通过、3 项失败，两 rust 项失败的交互机制与修复见第 6 节 census12 段，consistency 为既有失败项、已随其后合并转绿；更早合并的 gates 结果与失败定性见第 12 节对应行 | 每次合并后保持 | 不适用 |
