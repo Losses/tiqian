@@ -6,10 +6,13 @@ class EnglishHyphenation {
     private static var enUsCache:Null<Hyphenator> = null;
 
     public static function enUs():Hyphenator {
-        if (enUsCache == null) {
-            final parsed = ParseTexHyphenationPatterns.parse(EnglishHyphenationPatterns.load());
-            enUsCache = new LiangHyphenator(parsed.patterns, parsed.exceptions, 2, 3);
+        final cached:Null<Hyphenator> = enUsCache;
+        if (cached != null) {
+            return cached;
         }
-        return enUsCache;
+        final parsed = ParseTexHyphenationPatterns.parse(EnglishHyphenationPatterns.load());
+        final hyphenator:Hyphenator = new LiangHyphenator(parsed.patterns, parsed.exceptions, 2, 3);
+        enUsCache = hyphenator;
+        return hyphenator;
     }
 }
