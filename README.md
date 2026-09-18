@@ -1,4 +1,9 @@
-# 提椠 Tíqiàn
+<h1>
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="docs/images/tiqian_wordmark_with_pinyin_white.svg">
+    <img src="docs/images/tiqian_wordmark_with_pinyin_black.svg" alt="提椠 Tíqiàn" height="64">
+  </picture>
+</h1>
 
 [![Maven Central](https://img.shields.io/maven-central/v/org.tiqian/tiqian-compose?label=maven)](https://central.sonatype.com/artifact/org.tiqian/tiqian-compose)
 [![npm version](https://img.shields.io/npm/v/%40tiqian%2Fprose?label=npm)](https://www.npmjs.com/package/@tiqian/prose)
