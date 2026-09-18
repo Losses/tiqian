@@ -118,10 +118,12 @@ class QuotePairAnalyzer {
             && (isNonCjkNonNumericWordCharacter(before) || isNonCjkNonNumericWordCharacter(after));
     }
 
-    public static function isDigitBoundClosingQuote(text:String, index:Int):Bool
+    public static function isDigitBoundClosingQuote(text:String, index:Int):Bool {
+        final before = codePointBefore(text, index);
         return (text.charCodeAt(index) == 0x2019 || text.charCodeAt(index) == 0x201D)
-            && codePointBefore(text, index) != null
-            && UnicodeNumber.contains(codePointBefore(text, index));
+            && before != null
+            && UnicodeNumber.contains(before);
+    }
 
     public static function isNonCjkWordInternalQuotePair(text:String, pair:QuotePair):Bool {
         final before = codePointBefore(text, pair.openIndex);
