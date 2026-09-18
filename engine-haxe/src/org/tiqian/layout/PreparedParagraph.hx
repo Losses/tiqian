@@ -13,9 +13,9 @@ typedef PreparedParagraphF32Decomposed = {mant24:Int, exp2:Int};
 /** Prepared paragraph JSON serialization functions. */
 class PreparedParagraphFns {
     private static var fivePowersBuilder = null;
-    private static var fivePowers:std.SortedMap<Int, String> = null;
+    private static var fivePowers:Null<std.SortedMap<Int, String>> = null;
     private static var twoPowersBuilder = null;
-    private static var twoPowers:std.SortedMap<Int, String> = null;
+    private static var twoPowers:Null<std.SortedMap<Int, String>> = null;
 
     public static function toPreparedParagraphJson(result:LayoutResult, renderEvidence:Bool = false):String {
         final naturalB = SortedMap.builder();
