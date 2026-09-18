@@ -20,7 +20,7 @@ class PreparedParagraphFns {
     public static function toPreparedParagraphJson(result:LayoutResult, renderEvidence:Bool = false):String {
         final naturalB = SortedMap.builder();
         final featuresB = SortedMap.builder();
-        final fontsB = SortedMap.builder();
+        final fontsB:SortedMapBuilder<String, String> = SortedMap.builder();
         final glyphIdsB = SortedMap.builder();
         for (ri in 0...result.glyphRuns.length) {
             final run = result.glyphRuns[ri];
@@ -41,7 +41,7 @@ class PreparedParagraphFns {
                     featuresB.put(k, fs);
                 }
                 if (glyph.renderFontKey != null)
-                    fontsB.put(k, glyph.renderFontKey);
+                    fontsB.put(k, glyph.renderFontKey == null ? "" : glyph.renderFontKey);
                 var ids = glyphIdsB.get(k);
                 if (ids == null)
                     ids = [];
