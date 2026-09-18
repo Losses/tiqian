@@ -226,7 +226,7 @@ class LruWidthIndependentAnnotationCache implements WidthIndependentAnnotationCa
                 && a.outerSpacing == b.outerSpacing);
     }
 
-    private static function preferredStretchEquals(a:InlineObjectPreferredStretch, b:InlineObjectPreferredStretch):Bool {
+    private static function preferredStretchEquals(a:Null<InlineObjectPreferredStretch>, b:Null<InlineObjectPreferredStretch>):Bool {
         if (a == b)
             return true;
         if (a == null || b == null)
