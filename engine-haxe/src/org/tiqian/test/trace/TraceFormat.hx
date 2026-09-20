@@ -1,7 +1,5 @@
 package org.tiqian.test.trace;
 
-import std.StringBuf;
-
 class TraceFormat {
     private static final HEX:String = "0123456789abcdef";
 
@@ -79,32 +77,32 @@ class TraceFormat {
     }
 
     public static function escapeText(value:String):String {
-        final output = new StringBuf();
+        var output = "";
         var index = 0;
         while (index < value.length) {
             final codeUnit = value.charCodeAt(index);
             if (codeUnit == 10) {
-                output.add("\\n");
+                output += "\\n";
             } else if (codeUnit == 13) {
-                output.add("\\r");
+                output += "\\r";
             } else if (codeUnit == 11) {
-                output.add("\\v");
+                output += "\\v";
             } else if (codeUnit == 12) {
-                output.add("\\f");
+                output += "\\f";
             } else if (codeUnit == 133) {
-                output.add("\\u0085");
+                output += "\\u0085";
             } else if (codeUnit == 8232) {
-                output.add("\\u2028");
+                output += "\\u2028";
             } else if (codeUnit == 8233) {
-                output.add("\\u2029");
+                output += "\\u2029";
             } else if (codeUnit == 8203) {
-                output.add("\\u200B");
+                output += "\\u200B";
             } else {
-                output.add(value.substring(index, index + 1));
+                output += value.substring(index, index + 1);
             }
             index += 1;
         }
-        return output.toString();
+        return output;
     }
 
     private static function fixedDecimalText(value:Float, decimals:Int):String {
