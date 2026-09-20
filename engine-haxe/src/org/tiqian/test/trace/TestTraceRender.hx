@@ -167,18 +167,18 @@ class TestTraceRender {
     }
 
     private static function escape(value:String):String {
-        final output = new StringBuf();
+        var output = "";
         var index = 0;
         while (index < value.length) {
             final codeUnit = value.charCodeAt(index);
             if (codeUnit == 0) {
-                output.add("\\u0000");
+                output += "\\u0000";
             } else {
-                output.add(TraceFormat.escapeText(value.substring(index, index + 1)));
+                output += TraceFormat.escapeText(value.substring(index, index + 1));
             }
             index += 1;
         }
-        return output.toString();
+        return output;
     }
 
     private static function expandScientific(value:String):String {
