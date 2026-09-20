@@ -1,7 +1,5 @@
 package org.tiqian.test;
 
-import std.StringBuf;
-
 class TestHelpers {
     public static function f32Literal(value:Float):Float {
         return haxe.io.FPHelper.i32ToFloat(haxe.io.FPHelper.floatToI32(value));
@@ -12,12 +10,12 @@ class TestHelpers {
     }
 
     public static function surrogateText(codeUnits:Array<Int>):String {
-        final output = new StringBuf();
+        var output = "";
         var index = 0;
         while (index < codeUnits.length) {
-            output.addChar(codeUnits[index]);
+            output += String.fromCharCode(codeUnits[index]);
             index += 1;
         }
-        return output.toString();
+        return output;
     }
 }
