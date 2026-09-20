@@ -36,9 +36,11 @@ class DisplayGlyphSubstitutionEngineTest {
         TracedAssertions.assertEqualsString("\u2014", result.clusters[0].text);
         TracedAssertions.assertEqualsString("\u2014", result.clusters[1].text);
         // The Latin-face contextual run below exercises the same profile gate.
-        // Its list assertion postdates the golden snapshot (fe43125d) and is
-        // not recorded in the baseline trace.
         final latin = DisplayGlyphSubstitutionEngineTestSupport.layout320(engine, "A\u2014\u2014B");
+        final latinTexts:Array<String> = [];
+        for (i in 0...latin.clusters.length)
+            latinTexts.push(latin.clusters[i].text);
+        TracedAssertions.assertEqualsStringArray(["A", "\u2014", "\u2014", "B"], latinTexts);
     }
 
     @:test public static function dashCoverageTargetUsesTheDashSpanFontSize():Void {
