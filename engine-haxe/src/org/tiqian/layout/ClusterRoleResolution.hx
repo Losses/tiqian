@@ -91,9 +91,15 @@ class ClusterRoleResolution {
                 }
                 index = b;
             } else if (role == FontRole.LatinText) {
-                if ((cp == 0x2014 || cp == 0x2026) && ClusterRoleResolution.contains(profile.coalesceRepeatablePunctuation, cp)) {
-                    while (index < text.length && !spanBoundaries.has(index) && ClusterRoleResolution.codePoint(text, index) == cp)
-                        index += cp > 0xFFFF ? 2 : 1;
+                if (cp == 0x2014 || cp == 0x2026) {
+                    // `ContextualDashEllipsisRunSegmentation`: a mark run resolved to the
+                    // Latin face still forms its own cluster, keeping the code-point
+                    // line-break classes' opportunities at the run boundary. The same
+                    // profile coalesce set gates repeats on both faces.
+                    if (ClusterRoleResolution.contains(profile.coalesceRepeatablePunctuation, cp)) {
+                        while (index < text.length && !spanBoundaries.has(index) && ClusterRoleResolution.codePoint(text, index) == cp)
+                            index += cp > 0xFFFF ? 2 : 1;
+                    }
                 } else if (attached) {
                     while (index < text.length
                         && !spanBoundaries.has(index)
