@@ -6,7 +6,6 @@ import org.tiqian.clreq.ClreqProfileResolver.BuiltInClreqProfileResolver;
 import org.tiqian.test.trace.TestTraceRecorder;
 import org.tiqian.test.trace.TracedAssertions;
 import std.ReadOnlyArray;
-import std.StringBuf;
 
 class ClreqProfileCoverageTest {
     @:test
@@ -331,15 +330,15 @@ class ClreqProfileCoverageTest {
 
 class ClreqProfileCoverageTestHelpers {
     public static function surrogateText(codes:Array<Int>):String {
-        final output = new StringBuf();
+        var output = "";
         var index:Int = 0;
         while (index < codes.length) {
             // Runtime code unit, not a literal: lone surrogates must survive
             // every re-serialization of the sources.
-            output.add(String.fromCharCode(codes[index]));
+            output += String.fromCharCode(codes[index]);
             index += 1;
         }
-        return output.toString();
+        return output;
     }
 
     public static function containsInt(values:ReadOnlyArray<Int>, value:Int):Bool {
