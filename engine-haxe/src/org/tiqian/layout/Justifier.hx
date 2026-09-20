@@ -363,7 +363,7 @@ function reason(k:InlineObjectPreferredStretchKind):String
 function wideNarrowBoundary(l:Int, x:Int, e:Array<EastAsianSpacingEdges>):Bool
     return wideNarrowPairWith(e[l].trailing, e[x].leading);
 
-function wideNarrowPairWith(a:EastAsianSpacingValue, b:Null<EastAsianSpacingValue>):Bool
+function wideNarrowPairWith(a:Null<EastAsianSpacingValue>, b:Null<EastAsianSpacingValue>):Bool
     return (a == EastAsianSpacingValue.Wide && b == EastAsianSpacingValue.Narrow)
         || (a == EastAsianSpacingValue.Narrow && b == EastAsianSpacingValue.Wide);
 
