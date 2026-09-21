@@ -15,6 +15,7 @@ import org.tiqian.test.trace.TestTraceRecorder;
 import org.tiqian.test.trace.TestTraceRender;
 import org.tiqian.test.trace.TracedAssertions;
 import std.SortedMap;
+import std.SortedSet;
 import org.tiqian.font.FontPolicy.FontCandidate;
 import org.tiqian.font.FontPolicy.FontDecision;
 
@@ -179,6 +180,43 @@ class ParagraphTierHyphenator implements Hyphenator {
         return w.indexOf("Machine") >= 0 ? [-1, 0, 3, w.length, w.length + 1] : [2];
 }
 
+/** Matches the legacy directShapeParagraphEdgeCases hyphenator
+    * (engine/src/commonTest/kotlin/org/tiqian/layout/ParagraphShapingStageCoverageTest.kt:342),
+    * whose word list drives the latin cuts of that case and nothing else. */
+class ParagraphDirectShapeHyphenator implements Hyphenator {
+    public function new() {}
+
+    public function hyphenate(w:String):std.ReadOnlyArray<Int> {
+        if (w == "abcdef") return [1];
+        if (w == "abcdeg") return [2];
+        if (w == "antidisestablishmentarianism") return [];
+        if (w == "Machine") return [-1, 0, 2, w.length, w.length + 2];
+        return [2];
+    }
+}
+
+/** Matches the legacy progressiveTechnicalTierPriorityAndFalseBranches
+    * hyphenator (ParagraphShapingStageCoverageTest.kt:557): "abcdef" breaks at
+    * 2 and 4, every other word reports out-of-range offsets. */
+class ParagraphTierPriorityHyphenator implements Hyphenator {
+    public function new() {}
+
+    public function hyphenate(w:String):std.ReadOnlyArray<Int>
+        return w == "abcdef" ? [2, 4] : [-1, 0, 1, 2, w.length, w.length + 2];
+}
+
+/** Matches the legacy progressiveTierLoopRevisitsOffsetsWithLowerPriorityTiers
+    * hyphenator (ParagraphShapingStageCoverageTest.kt:650). */
+class ParagraphTierLoopHyphenator implements Hyphenator {
+    public function new() {}
+
+    public function hyphenate(w:String):std.ReadOnlyArray<Int> {
+        if (w == "abcdef") return [2, 4];
+        if (w == "cdef") return [1];
+        return [];
+    }
+}
+
 class ParagraphShapingStageCoverageTestSupport {
     public static function input(text:String, width:Float, ?spans:Array<LineBreakSpan>):LayoutInput {
         return new LayoutInput(new TiqianTextContent(text, null, null, spans), null, null, new LayoutConstraints(width));
@@ -223,6 +261,29 @@ class ParagraphShapingStageCoverageTestSupport {
         for (r in decisions)
             b.put(r, decision(r, FontRole.LatinText));
         var rb = SortedMap.builder();
+        return ParagraphShapingStage.shapeParagraph(engine, input, text, 16.0, width, ranges, b.build(), SortedMap.builder().build(),
+            new org.tiqian.clreq.ClreqPunctuationGlyphSubstitutor(), function(_:Int) return new TextStyle(null, 16.0), function(_:Int) return false,
+            rb.build());
+    }
+
+    /** Same direct stage call as paragraphRanges, plus the rejected technical
+        * tiers per progressive span that the legacy
+        * progressiveTechnicalTierPriorityAndFalseBranches case passes
+        * (ParagraphShapingStageCoverageTest.kt:610). Tier values are stored as
+        * their ProgressiveBreakTier priorities. */
+    public static function paragraphRangesWithRejectedTiers(engine:ExplainableStubParagraphLayoutEngine, input:LayoutInput, text:String, width:Float,
+            ranges:Array<ResolvedClusterRange>, decisions:Array<TextRange>, rejectedSpans:Array<TextRange>,
+            rejectedTiers:Array<Array<Int>>):ParagraphShapingStageResult {
+        var b = SortedMap.builder();
+        for (r in decisions)
+            b.put(r, decision(r, FontRole.LatinText));
+        var rb = SortedMap.builder();
+        for (i in 0...rejectedSpans.length) {
+            final tiers = SortedSet.builder();
+            for (j in 0...rejectedTiers[i].length)
+                tiers.put(rejectedTiers[i][j]);
+            rb.put(rejectedSpans[i], tiers.build());
+        }
         return ParagraphShapingStage.shapeParagraph(engine, input, text, 16.0, width, ranges, b.build(), SortedMap.builder().build(),
             new org.tiqian.clreq.ClreqPunctuationGlyphSubstitutor(), function(_:Int) return new TextStyle(null, 16.0), function(_:Int) return false,
             rb.build());
