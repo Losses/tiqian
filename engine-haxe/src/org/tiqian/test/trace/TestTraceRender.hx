@@ -7,6 +7,7 @@ import std.StringBuf;
 class TestTraceRender {
     private static final MAX_OPERAND_CHARS:Int = 240;
     private static final HEX:String = "0123456789abcdef";
+    private static final MAX_SIGNIFICANT_DIGITS:Int = 9;
 
     public static function escapeOperand(value:String):String {
         return cap(escape(value));
@@ -41,32 +42,41 @@ class TestTraceRender {
         var v = Math.abs(value);
         if (v == 0)
             return negative ? "-0.0" : "0.0";
-        var e = 0;
-        var x = v;
-        while (x >= 10) {
-            x /= 10;
-            e += 1;
-        }
-        while (x < 1) {
-            x *= 10;
-            e -= 1;
-        }
-        var targetBits = FPHelper.floatToI32(v);
-        var target = FPHelper.i32ToFloat(targetBits);
+
+        // The window and the candidate distances are read off the decimal
+        // digits of the value's shortest round-trip text rather than from
+        // arithmetic on the value itself. Dividing by a power of ten and
+        // subtracting two near-equal candidates both need more significant
+        // bits than a binary32 carries once the search reaches eight or
+        // nine digits: a 24-bit real puts the window in the wrong decade
+        // slot and reads every accepted candidate as equidistant.
+        final shape = decimalShape(v);
+        if (shape == null)
+            return (negative ? "-" : "") + Std.string(v);
+
+        final digits = shape.digits;
+        final width = digits.length;
+        final position = shape.position;
+        final targetBits = FPHelper.floatToI32(v);
         var p = 1;
         while (p <= 9) {
-            var exp = e - p + 1;
-            var scaled = v / Math.pow(10, exp);
-            var base = Math.floor(scaled);
+            final exp = position - p;
+            final base:Int = p >= width
+                ? decimalInt(digits) * pow10Int(p - width)
+                : decimalInt(digits.substring(0, p));
+            final frac:Float = fractionAfter(digits, p, shape.extended);
             var best = -1;
             var bestDist = Math.POSITIVE_INFINITY;
             var c = base - 1;
             while (c <= base + 2) {
                 if (c >= 1) {
-                    var candidateText:String = Std.string(c) + "e" + Std.string(exp);
-                    var cand:Float = cast(Std.parseFloat(candidateText), Float);
+                    final candidateText:String = Std.string(c) + "e" + Std.string(exp);
+                    final cand:Float = cast(Std.parseFloat(candidateText), Float);
                     if (FPHelper.floatToI32(cand) == targetBits) {
-                        var dist:Float = Math.abs(cand - target);
+                        // The offset and the fraction both stay within a
+                        // few units, so the comparison keeps every bit it
+                        // needs at any real width.
+                        final dist:Float = Math.abs((c - base) - frac);
                         if (dist < bestDist || (dist == bestDist && (c % 2 == 0))) {
                             best = c;
                             bestDist = dist;
@@ -76,10 +86,92 @@ class TestTraceRender {
                 c += 1;
             }
             if (best >= 0)
-                return floatTextRender(best, e, p, negative);
+                return floatTextRender(best, position - 1, p, negative);
             p += 1;
         }
         return (negative ? "-" : "") + Std.string(v);
+    }
+
+    /** The integer that a digit string of at most nine digits spells. */
+    private static function decimalInt(digits:String):Int {
+        var value = 0;
+        var index = 0;
+        while (index < digits.length) {
+            value = value * 10 + digits.charCodeAt(index) - 48;
+            index += 1;
+        }
+        return value;
+    }
+
+    private static function pow10Int(exponent:Int):Int {
+        var value = 1;
+        var index = 0;
+        while (index < exponent) {
+            value *= 10;
+            index += 1;
+        }
+        return value;
+    }
+
+    /**
+        The fractional digits the value carries beyond its first p
+        significant ones, as a Float in [0, 1). A digit the shape dropped
+        past its kept prefix makes any exact half an upper half.
+    **/
+    private static function fractionAfter(digits:String, p:Int, extended:Bool):Float {
+        if (p >= digits.length)
+            return 0.0;
+        final frac:Float = cast(Std.parseFloat("0." + digits.substring(p)), Float);
+        if (extended && frac == 0.5)
+            return 0.75;
+        return frac;
+    }
+
+    /**
+        The decimal that the runtime's shortest round-trip text of the
+        value spells: its significant digits with leading and trailing
+        zeros removed, the power of ten position with value == 0.<digits>
+        * 10^position, and whether digits past the kept prefix were
+        dropped. That text names a value within half an ulp of the input,
+        which is all the digit-driven window search needs; a non-finite
+        input has no such text.
+    **/
+    private static function decimalShape(v:Float):Null<DecimalShape> {
+        if (!Math.isFinite(v))
+            return null;
+        final plain = expandScientific(Std.string(v));
+        var point = plain.length;
+        var index = 0;
+        while (index < plain.length) {
+            if (plain.charCodeAt(index) == 46) {
+                point = index;
+                break;
+            }
+            index += 1;
+        }
+        final all = plain.substring(0, point) + plain.substring(point + 1);
+        var first = 0;
+        while (first < all.length && all.charCodeAt(first) == 48) {
+            first += 1;
+        }
+        if (first == all.length)
+            return null;
+        var last = all.length;
+        while (last > first + 1 && all.charCodeAt(last - 1) == 48) {
+            last -= 1;
+        }
+        var digits = "";
+        var extended = false;
+        var cursor = first;
+        while (cursor < last) {
+            if (digits.length < MAX_SIGNIFICANT_DIGITS) {
+                digits += all.substring(cursor, cursor + 1);
+            } else if (all.charCodeAt(cursor) != 48) {
+                extended = true;
+            }
+            cursor += 1;
+        }
+        return new DecimalShape(digits, point - first, extended);
     }
 
     private static function floatTextRender(c:Int, e:Int, p:Int, negative:Bool):String {
@@ -368,6 +460,18 @@ class TestTraceRender {
 
     private static function hexByte(value:Int):String {
         return HEX.substring((value >>> 4) & 15, ((value >>> 4) & 15) + 1) + HEX.substring(value & 15, (value & 15) + 1);
+    }
+}
+
+private class DecimalShape {
+    public final digits:String;
+    public final position:Int;
+    public final extended:Bool;
+
+    public function new(digits:String, position:Int, extended:Bool) {
+        this.digits = digits;
+        this.position = position;
+        this.extended = extended;
     }
 }
 
