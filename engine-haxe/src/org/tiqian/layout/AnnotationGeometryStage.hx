@@ -1,6 +1,7 @@
 package org.tiqian.layout;
 
 import org.tiqian.core.Glyph;
+import org.tiqian.core.AccurateSum;
 import org.tiqian.core.InlineObjectDecisionInfo;
 import org.tiqian.core.DecorationDecisionInfo;
 import org.tiqian.core.DecorationSegmentInfo;
@@ -612,10 +613,11 @@ class AnnotationGeometryStage {
                                 glyphs.push(run.glyphs[gi]);
                             }
                         }
-                        var advance:Float = 0.0;
+                        final advanceTerms:Array<Float> = [];
                         for (ci in 0...shaped.clusters.length) {
-                            advance += shaped.clusters[ci].advance;
+                            advanceTerms.push(shaped.clusters[ci].advance);
                         }
+                        final advance:Float = AccurateSum.of(advanceTerms);
                         final ink = bopomofoInkBounds(shaped);
                         // Skia/Android/web replay this horizontal-baseline origin directly:
                         // the ㄅㄆㄇ symbol centres by its advance and sits on the 字身框

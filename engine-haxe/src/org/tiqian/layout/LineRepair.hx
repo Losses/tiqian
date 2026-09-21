@@ -5,6 +5,7 @@ using org.tiqian.layout.ProgressiveBreakTierPriority;
 using std.Functional;
 
 import org.tiqian.core.Cluster;
+import org.tiqian.core.AccurateSum;
 import org.tiqian.core.IntRange;
 import org.tiqian.core.LineEndReason;
 import org.tiqian.core.TextRange;
@@ -120,12 +121,13 @@ class LineRepair {
                 final hangCandidate = new RepairCandidate("Hang", "ForbiddenAtLineStart", offenderIndex, hangCost, true);
                 repairCandidates.push(hangCandidate);
                 final mergedRange = new IntRange(prev.clusterRange.start, mergeEndIndex);
-                var mergedNatural = prev.naturalWidth;
+                final mergedTerms:Array<Float> = [];
                 var wi = prev.clusterRange.end + 1;
                 while (wi <= mergeEndIndex) {
-                    mergedNatural += naturalClusters[wi].advance;
+                    mergedTerms.push(naturalClusters[wi].advance);
                     wi++;
                 }
+                final mergedNatural = prev.naturalWidth + AccurateSum.of(mergedTerms);
                 final hangIndices = SortedSet.builder();
                 var ai = 0;
                 while (ai < existingHanging.size()) {
@@ -204,7 +206,10 @@ class LineRepair {
             i++;
         }
 
-        final totalBadness = mutable.sumOfFloat(line -> line.repair == null ? 0.0 : RepairOptions.penalty(line.repair) * 1.0);
+        final badnessTerms:Array<Float> = [];
+        for (bi in 0...mutable.length)
+            badnessTerms.push(mutable[bi].repair == null ? 0.0 : RepairOptions.penalty(mutable[bi].repair) * 1.0);
+        final totalBadness = AccurateSum.of(badnessTerms);
         return new LineSolution(mutable, totalBadness);
     }
 
@@ -229,7 +234,10 @@ class LineRepair {
                     return new ShrinkOpportunity(opp.clusterIndex, 1, opp.capacity, opp.channel, opp.lineEndOnly);
                 return opp;
             });
-        final totalCapacity = inLine.sumOfFloat(opp -> opp.capacity);
+        final capacityTerms:Array<Float> = [];
+        for (ci in 0...inLine.length)
+            capacityTerms.push(inLine[ci].capacity);
+        final totalCapacity = AccurateSum.of(capacityTerms);
 
         if (overflow > totalCapacity) {
             final required = overflow > 0 ? overflow : 0;
@@ -288,7 +296,10 @@ class LineRepair {
         var tierIdx = 0;
         while (tierIdx < byTier.size()) {
             final tierOpps:Array<ShrinkOpportunity> = byTier.valueAt(tierIdx);
-            final tierCapacity = tierOpps.sumOfFloat(opp -> opp.capacity);
+            final tierTerms:Array<Float> = [];
+            for (ti in 0...tierOpps.length)
+                tierTerms.push(tierOpps[ti].capacity);
+            final tierCapacity = AccurateSum.of(tierTerms);
             if (tierCapacity > 0) {
                 final tierShrink = remaining < tierCapacity ? remaining : tierCapacity;
                 var tierRemaining = tierShrink;
@@ -410,12 +421,13 @@ class LineRepair {
             }
             final currentBreak = progressive.get(prev.clusterRange.end + 1);
             var resultingBreak = progressive.get(groupEnd + 1);
-            var addedAdvance = 0.0;
+            final addedTerms:Array<Float> = [];
             var cIdx = curr0;
             while (cIdx <= groupEnd) {
-                addedAdvance += adjustedClusters[cIdx].advance;
+                addedTerms.push(adjustedClusters[cIdx].advance);
                 cIdx++;
             }
+            var addedAdvance = AccurateSum.of(addedTerms);
             var promotesProgressiveTier = currentBreak != null
                 && resultingBreak != null
                 && currentBreak.spanRange.start == resultingBreak.spanRange.start
@@ -443,12 +455,13 @@ class LineRepair {
                 if (matchingTierBoundary != null) {
                     groupEnd = matchingTierBoundary - 1;
                     resultingBreak = progressive.get(matchingTierBoundary);
-                    addedAdvance = 0.0;
+                    final reassignedTerms:Array<Float> = [];
                     var cIdx2 = curr0;
                     while (cIdx2 <= groupEnd) {
-                        addedAdvance += adjustedClusters[cIdx2].advance;
+                        reassignedTerms.push(adjustedClusters[cIdx2].advance);
                         cIdx2++;
                     }
+                    addedAdvance = AccurateSum.of(reassignedTerms);
                     promotesProgressiveTier = false;
                 }
             }

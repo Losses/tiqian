@@ -1,6 +1,7 @@
 package org.tiqian.layout;
 
 import org.tiqian.core.LayoutInput;
+import org.tiqian.core.AccurateSum;
 import org.tiqian.core.TextRange;
 import org.tiqian.core.IntRange;
 import org.tiqian.core.TextStyle;
@@ -626,11 +627,11 @@ class LineBreakPlanningStage {
         final numberSymbolUnbreakableRanges = new Array<IntRange>();
         for (i in 0...numberSymbolClusterRanges.length) {
             final idxRange = numberSymbolClusterRanges[i];
-            var rangeAdv = 0.0;
+            final rangeTerms:Array<Float> = [];
             for (cIdx in idxRange.start...idxRange.end + 1) {
-                rangeAdv += prep.naturalClusters[cIdx].advance;
+                rangeTerms.push(prep.naturalClusters[cIdx].advance);
             }
-            if (rangeAdv <= prep.measure) {
+            if (AccurateSum.of(rangeTerms) <= prep.measure) {
                 numberSymbolUnbreakableRanges.push(idxRange);
             }
         }
