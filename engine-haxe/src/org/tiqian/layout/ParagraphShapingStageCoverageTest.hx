@@ -6,6 +6,9 @@ import org.tiqian.core.*;
 import org.tiqian.layout.ClusterRoleResolution.ResolvedClusterRange;
 import org.tiqian.layout.ParagraphLayoutEngine.ExplainableStubParagraphLayoutEngine;
 import org.tiqian.layout.ParagraphShapingStageCoverageTestSupport.ParagraphCoverageHyphenator;
+import org.tiqian.layout.ParagraphShapingStageCoverageTestSupport.ParagraphDirectShapeHyphenator;
+import org.tiqian.layout.ParagraphShapingStageCoverageTestSupport.ParagraphTierPriorityHyphenator;
+import org.tiqian.layout.ParagraphShapingStageCoverageTestSupport.ParagraphTierLoopHyphenator;
 import org.tiqian.layout.ParagraphShapingStageCoverageTestSupport.ParagraphDeficientDashShaper;
 import org.tiqian.layout.ParagraphShapingStageCoverageTestSupport.ParagraphEmptyClusterShaper;
 import org.tiqian.layout.ParagraphShapingStageCoverageTestSupport.ParagraphEmptyHyphenShaper;
@@ -73,7 +76,8 @@ class ParagraphShapingStageCoverageTest {
     @:test public static function directShapeParagraphEdgeCases():Void {
         var r = ParagraphShapingStageCoverageTestSupport.begin("directShapeParagraphEdgeCases");
         var text = "abcdef abcdeg antidisestablishmentarianism singlecluster Machine2Machine /a/b/c 12(3):. 12a(3):45 12(3a):45 12(3):-45 12(3):45- 12(3):45-6a 12(3):4a-65 12(3):abc aaaaaa111111 a1b2c3d4e5f6 http://example.com/foo https://example.com/foo?a=1&b=2#x%20~y abc.d abc.12 abc.de abc.de12 --.com foo.-bar /start end/ a/b a//b";
-        var e = ParagraphShapingStageCoverageTestSupport.engine(new ParagraphEmptyClusterShaper(), new ParagraphCoverageHyphenator());
+        var e = ParagraphShapingStageCoverageTestSupport.engine(new ParagraphEmptyClusterShaper(),
+            new ParagraphDirectShapeHyphenator());
         var i = ParagraphShapingStageCoverageTestSupport.input(text, 1, [new LineBreakSpan(new TextRange(0, 10), LineBreakPolicy.ProgressiveTechnical)]);
         var p1 = ParagraphShapingStageCoverageTestSupport.paragraph(e, i, text, 1, FontRole.LatinText, true);
         TracedAssertions.assertNotNullRendered(p1 != null, TestTraceRender.cap(p1 == null ? "null" : Std.string(p1)));
@@ -94,7 +98,7 @@ class ParagraphShapingStageCoverageTest {
         var r = ParagraphShapingStageCoverageTestSupport.begin("latinSegmentationAndCutsBranches");
         var e = ParagraphShapingStageCoverageTestSupport.engine(null, new ParagraphSegmentationHyphenator());
         ParagraphShapingStageCoverageTestSupport.layout(e,
-            "Text with ,Hello Machine2Machine XMLHttp HTTPServer TeX/LaTeX /start end/ /a a/ a/b https://example.com/path www.test.org sub.domain.co .com a. a..b a.b --.com test.-com test.c test.123 test.co123 12(3):45 12(3):45. 12(3):45-50 12(3):45\u201350 (1):2 a(1):2 1():2 1(2)a:3 1(2): 1(2):a-b 1(2):-5 1(2):5- 1(2):a 12():34 12(34): a(b):c-d 12(3):. 12a(3):45 12(3a):45 12(3):-45 12(3):45- 12(3):45-6a 12(3):4a-65 12(3):abc hyphenatedword VERYLONGALLCAPSWORDTHATISNOTANABBREVIATIONANDSHOULDBEOPAQ",
+            "Text with ,Hello Machine2Machine XMLHttp HTTPServer TeX/LaTeX /start end/ /a a/ a/b https://example.com/path www.test.org sub.domain.co .com a. a..b a.b --.com test.-com test.c test.123 test.co123 12(3):45 12(3):45. 12(3):45-50 12(3):45\u201350 12(3):45\u201450 (1):2 a(1):2 1():2 1(2)a:3 1(2): 1(2):a-b 1(2):-5 1(2):5- 1(2):a 12():34 12(34): a(b):c-d 12(3):. 12a(3):45 12(3a):45 12(3):-45 12(3):45- 12(3):45-6a 12(3):4a-65 12(3):abc hyphenatedword VERYLONGALLCAPSWORDTHATISNOTANABBREVIATIONANDSHOULDBEOPAQ",
             80);
         ParagraphShapingStageCoverageTestSupport.layout(e, "antidisestablishmentarianism abc def xyz", 30);
         ParagraphShapingStageCoverageTestSupport.layout(e, "semi-conductor co-19 a-b 3-4 COVID-19 cross-module-link", 80);
@@ -200,13 +204,20 @@ class ParagraphShapingStageCoverageTest {
     @:test public static function progressiveTechnicalTierPriorityAndFalseBranches():Void {
         var r = ParagraphShapingStageCoverageTestSupport.begin("progressiveTechnicalTierPriorityAndFalseBranches");
         var t = "abcdef/ghijkl";
+        var progSpan = new TextRange(0, 13);
         {
-            var p = ParagraphShapingStageCoverageTestSupport.paragraphRanges(ParagraphShapingStageCoverageTestSupport.engine(null,
-                new ParagraphCoverageHyphenator(2)),
-                ParagraphShapingStageCoverageTestSupport.input(t, 10), t, 10, [
+            var input = ParagraphShapingStageCoverageTestSupport.input(t, 10, [
+                new LineBreakSpan(new TextRange(0, 2), LineBreakPolicy.ProgressiveTechnical),
+                new LineBreakSpan(progSpan, LineBreakPolicy.ProgressiveTechnical),
+                new LineBreakSpan(new TextRange(10, 13), LineBreakPolicy.ProgressiveTechnical)
+            ]);
+            var p = ParagraphShapingStageCoverageTestSupport.paragraphRangesWithRejectedTiers(ParagraphShapingStageCoverageTestSupport.engine(null,
+                new ParagraphTierPriorityHyphenator()), input, t, 10, [
                     new ResolvedClusterRange(new TextRange(0, 7), FontRole.LatinText, false, false),
-                    new ResolvedClusterRange(new TextRange(2, 7), FontRole.LatinText, false, false)
-                ], [new TextRange(0, 7), new TextRange(2, 7)]);
+                    new ResolvedClusterRange(new TextRange(2, 7), FontRole.LatinText, false, false),
+                    new ResolvedClusterRange(new TextRange(0, 0), FontRole.LatinText, false, false)
+                ], [new TextRange(0, 7), new TextRange(2, 7), new TextRange(0, 0)], [progSpan],
+                [[ProgressiveBreakTier.Structural.priority(), ProgressiveBreakTier.Syllable.priority()]]);
             TracedAssertions.assertNotNullRendered(p != null, TestTraceRender.cap(p == null ? "null" : Std.string(p)));
         }
     }
@@ -215,8 +226,10 @@ class ParagraphShapingStageCoverageTest {
         var r = ParagraphShapingStageCoverageTestSupport.begin("progressiveTierLoopRevisitsOffsetsWithLowerPriorityTiers");
         {
             var p = ParagraphShapingStageCoverageTestSupport.paragraphRanges(ParagraphShapingStageCoverageTestSupport.engine(null,
-                new ParagraphCoverageHyphenator(2)),
-                ParagraphShapingStageCoverageTestSupport.input("abcdef/", 4), "abcdef/", 4, [
+                new ParagraphTierLoopHyphenator()),
+                ParagraphShapingStageCoverageTestSupport.input("abcdef/", 4, [
+                    new LineBreakSpan(new TextRange(0, 7), LineBreakPolicy.ProgressiveTechnical)
+                ]), "abcdef/", 4, [
                     new ResolvedClusterRange(new TextRange(0, 7), FontRole.LatinText, false, false),
                     new ResolvedClusterRange(new TextRange(2, 7), FontRole.LatinText, false, false)
                 ], [new TextRange(0, 7), new TextRange(2, 7)]);
