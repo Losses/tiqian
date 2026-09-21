@@ -8,6 +8,7 @@ import std.SortedMap;
 import std.SortedSet;
 import org.tiqian.layout.ProgressiveBreakDecisions.ProgressiveBreakOpportunity;
 import org.tiqian.layout.ProgressiveBreakDecisions.ProgressiveBreakTier;
+import org.tiqian.test.trace.ClassTestEntry;
 
 class ProgressiveBreakDecisionsCoverageTest {
     static function span():TextRange
@@ -191,5 +192,36 @@ class ProgressiveBreakDecisionsCoverageTest {
 
     public static function flush():Void {
         new TestTraceRecorder("ProgressiveBreakDecisionsCoverageTest").flush();
+    }
+
+    /**
+        The conventional class test entry (boring feature spec 19).
+        The class carries no test marker, so the Kotlin runner generated from
+        that marker's collection never instantiates it; this entry is how the
+        runner calls the class once. It registers no test id, so the cross-target
+        test id set is unchanged. The body repeats the calls
+        engine-haxe/tests/Main.hx makes for this class, through the same failure
+        accounting Main.hx uses, and then flushes the class trace the way Main.hx
+        does.
+    **/
+    public static function runTestEntries():Void {
+        ClassTestEntry.run(defaultsAdmitTheCleanTierWithoutGeometryInputs);
+        ClassTestEntry.run(lineStartAtTheOverflowBoundaryScansAnEmptyRange);
+        ClassTestEntry.run(twoSameTierBoundariesPickTheRightmost);
+        ClassTestEntry.run(visiblyLooseCleanTiersFallThroughToEmergency);
+        ClassTestEntry.run(aLeftwardEmergencyBoundaryKeepsTheBestCleanTier);
+        ClassTestEntry.run(spanEdgeAndWhitespaceClustersDoNotCountAsTechnicalUnits);
+        ClassTestEntry.run(singleTechnicalUnitFallsBackToTheCjkGapDensity);
+        ClassTestEntry.run(candidateOutsideTheClusterListIsAllowed);
+        ClassTestEntry.run(candidatesOutsideTheActiveSpanAreAllowed);
+        ClassTestEntry.run(candidatesOfADifferentSpanAreAllowed);
+        ClassTestEntry.run(sameTierPastTheRawGreedyIsAllowedAndWorseTiersAreNot);
+        ClassTestEntry.run(candidatesBeforeTheRawGreedyMustMatchTheSelectedBoundary);
+        ClassTestEntry.run(hyphenBreakReturnsOverflowAtPlainWordBoundaries);
+        ClassTestEntry.run(overLongWordsMustHyphenateFromTheLineStart);
+        ClassTestEntry.run(aFittingWholeWordBreaksThere);
+        ClassTestEntry.run(sinoWesternGapsAbsorbingTheDeficitKeepTheWholeWord);
+        ClassTestEntry.run(gaplessOrTooLooseLinesHyphenateInstead);
+        TestTraceRecorder.flushClass("ProgressiveBreakDecisionsCoverageTest");
     }
 }

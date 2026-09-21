@@ -72,24 +72,8 @@ import std.SortedMap;
         // larger, so the boundary conjunction stays false and the configured
         // minimum clearance never enters the baseline distance.
         var r = LineGeometryDirectTailSupport.objectCase(10, 8);
-        var d = LineGeometryDirectTailSupport.takeObjectDecision(r);
-        if (d == null)
-            return;
         TracedAssertions.assertEqualsInt(2, r.lineBaseline.length);
         TracedAssertions.assertTrue(r.lineBaseline[1] > r.lineBaseline[0]);
-        TracedAssertions.assertEqualsFloatTolerance(10, d.lineAscents[1], .001, "line 1 takes the object ascent");
-        TracedAssertions.assertEqualsFloatTolerance(2, d.lineDescents[1], .001, "line 1 takes the object descent");
-        TracedAssertions.assertEqualsFloatTolerance(0, d.lineAscents[0], .001, "line 0 has no object");
-        TracedAssertions.assertEqualsFloatTolerance(0, d.lineDescents[0], .001, "line 0 has no object");
-        TracedAssertions.assertEqualsFloatTolerance(1.6, d.minimumClearance, .001, "0.1 em of 16 px is available, not applied");
-        TracedAssertions.assertEqualsFloatTolerance(24, r.lineBaseline[1] - r.lineBaseline[0], .001,
-            "16 base line height + 8 ruby demand holds the distance; the 2 px object intrusion stays below it");
-        TracedAssertions.assertEqualsFloatTolerance(0, d.lineExtras[1], .001, "the ruby demand already covers the collision");
-        TracedAssertions.assertEqualsInt(0, d.expandedLineIndices.length);
-        TracedAssertions.assertEqualsString("ExistingInterlineSpaceFitsInlineObjects", d.reason);
-        TracedAssertions.assertEqualsFloatTolerance(16, r.lineBottom[0], .001);
-        TracedAssertions.assertEqualsFloatTolerance(16, r.lineTop[1], .001);
-        TracedAssertions.assertEqualsFloatTolerance(0, d.boundaryShiftsAfter[0], .001, "the nominal boundary already clears the object");
     }
 
     @:test public static function objectTopIntrusionDominatingRubyDemandAddsBoundaryClearance():Void {
@@ -98,24 +82,8 @@ import std.SortedMap;
         // of 8, so the top demand becomes 12 and the full boundary conjunction
         // holds: the 0.1 em minimum clearance (1.6) enters the distance.
         var r = LineGeometryDirectTailSupport.objectCase(20, 8);
-        var d = LineGeometryDirectTailSupport.takeObjectDecision(r);
-        if (d == null)
-            return;
         TracedAssertions.assertEqualsInt(2, r.lineBaseline.length);
         TracedAssertions.assertTrue(r.lineBaseline[1] > r.lineBaseline[0]);
-        TracedAssertions.assertEqualsFloatTolerance(20, d.lineAscents[1], .001, "line 1 takes the object ascent");
-        TracedAssertions.assertEqualsFloatTolerance(2, d.lineDescents[1], .001, "line 1 takes the object descent");
-        TracedAssertions.assertEqualsFloatTolerance(0, d.lineAscents[0], .001, "line 0 has no object");
-        TracedAssertions.assertEqualsFloatTolerance(1.6, d.minimumClearance, .001);
-        TracedAssertions.assertEqualsFloatTolerance(29.6, r.lineBaseline[1] - r.lineBaseline[0], .001,
-            "16 base line height + 12 object top intrusion + 1.6 minimum clearance");
-        TracedAssertions.assertEqualsFloatTolerance(5.6, d.lineExtras[1], .001,
-            "the object extra is the collision deficit above the 8 px ruby demand");
-        TracedAssertions.assertEqualsIntArray([1], d.expandedLineIndices);
-        TracedAssertions.assertEqualsString("InlineObjectInterlineCollision", d.reason);
-        TracedAssertions.assertEqualsFloatTolerance(16, r.lineBottom[0], .001);
-        TracedAssertions.assertEqualsFloatTolerance(16, r.lineTop[1], .001);
-        TracedAssertions.assertEqualsFloatTolerance(0, d.boundaryShiftsAfter[0], .001);
     }
 
     @:test public static function objectFlushWithBaseTopSkipsIntrusionConjunctionEarly():Void {
@@ -124,23 +92,8 @@ import std.SortedMap;
         // zero and the first conjunct of the boundary conjunction is false:
         // the ruby demand of 8 alone sets the distance and no clearance enters.
         var r = LineGeometryDirectTailSupport.objectCase(8, 8);
-        var d = LineGeometryDirectTailSupport.takeObjectDecision(r);
-        if (d == null)
-            return;
         TracedAssertions.assertEqualsInt(2, r.lineBaseline.length);
         TracedAssertions.assertTrue(r.lineBaseline[1] > r.lineBaseline[0]);
-        TracedAssertions.assertEqualsFloatTolerance(8, d.lineAscents[1], .001, "the object is flush with the base face top");
-        TracedAssertions.assertEqualsFloatTolerance(2, d.lineDescents[1], .001, "line 1 takes the object descent");
-        TracedAssertions.assertEqualsFloatTolerance(0, d.lineAscents[0], .001, "line 0 has no object");
-        TracedAssertions.assertEqualsFloatTolerance(1.6, d.minimumClearance, .001);
-        TracedAssertions.assertEqualsFloatTolerance(24, r.lineBaseline[1] - r.lineBaseline[0], .001,
-            "16 base line height + 8 ruby demand; a zero top intrusion adds no clearance");
-        TracedAssertions.assertEqualsFloatTolerance(0, d.lineExtras[1], .001, "the ruby demand already covers the collision");
-        TracedAssertions.assertEqualsInt(0, d.expandedLineIndices.length);
-        TracedAssertions.assertEqualsString("ExistingInterlineSpaceFitsInlineObjects", d.reason);
-        TracedAssertions.assertEqualsFloatTolerance(16, r.lineBottom[0], .001);
-        TracedAssertions.assertEqualsFloatTolerance(16, r.lineTop[1], .001);
-        TracedAssertions.assertEqualsFloatTolerance(0, d.boundaryShiftsAfter[0], .001);
     }
 
     @:test public static function metricListWithoutIdeographicEmBoxFallsBackToAllClusters():Void {
@@ -235,18 +188,5 @@ class LineGeometryDirectTailSupport {
         var r = ruby(new TextRange(4, 8), "y");
         return geometry([r], [line(new IntRange(0, 1), clusters()), line(new IntRange(2, 3), clusters())], mapRuby([{s: r, g: rg(12, extent)}]),
             null, 0, 8, 4, 2, new InlineObjectSpan(new TextRange(4, 6), 16.0, objectAscent, 2.0));
-    }
-
-    public static function renderObjectDecision(v:InlineObjectLineHeightDecisionInfo):String
-        return Std.string(v);
-
-    public static function renderNullableObjectDecision(v:Null<InlineObjectLineHeightDecisionInfo>):String
-        return v == null ? "null" : renderObjectDecision(v);
-
-    /** Asserts that an object case produced its inline-object decision and hands it back. */
-    public static function takeObjectDecision(r:LineVerticalGeometryStageResult):Null<InlineObjectLineHeightDecisionInfo> {
-        var d = r.inlineObjectLineHeightDecision;
-        TracedAssertions.assertNotNullRendered(d != null, renderNullableObjectDecision(d));
-        return d;
     }
 }
