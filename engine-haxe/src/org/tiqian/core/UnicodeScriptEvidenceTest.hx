@@ -37,4 +37,8 @@ class UnicodeScriptEvidenceTest {
             index += 1;
         }
     }
+
+    public static function flushTestTrace():Void {
+        TestTraceRecorder.flushClass("UnicodeScriptEvidenceTest");
+    }
 }

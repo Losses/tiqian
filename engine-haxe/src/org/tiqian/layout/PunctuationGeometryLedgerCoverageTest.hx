@@ -335,6 +335,10 @@ using std.RecordCopy;
         var d = PunctuationGeometryLedger.clusterIndexRangeFor(cs, new TextRange(0, 1));
         TracedAssertions.assertEqualsIntRange(new IntRange(0, 0), d);
     }
+
+    public static function flushTestTrace():Void {
+        TestTraceRecorder.flushClass("PunctuationGeometryLedgerCoverageTest");
+    }
 }
 
 /** Shared fixtures and cluster builders for PunctuationGeometryLedgerCoverageTest; the Kotlin test-class lowering admits test functions only. */

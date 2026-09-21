@@ -17,4 +17,8 @@ class TextRangeTest {
             new TextRange(-1, 1);
         });
     }
+
+    public static function flushTestTrace():Void {
+        TestTraceRecorder.flushClass("TextRangeTest");
+    }
 }

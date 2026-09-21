@@ -50,4 +50,8 @@ class ContextualDashEllipsisClusterCoverageTest {
             if (ds[i].role != Type.enumConstructor(FontRole.LatinText))
                 throw new TiqianIllegalArgumentException(Message("dash split role"));
     }
+
+    public static function flushTestTrace():Void {
+        TestTraceRecorder.flushClass("ContextualDashEllipsisClusterCoverageTest");
+    }
 }

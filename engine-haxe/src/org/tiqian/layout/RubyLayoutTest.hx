@@ -124,4 +124,8 @@ class RubyLayoutTest {
         TracedAssertions.assertTrue(narrow >= plain, "spread never shrinks the line (" + narrow + " vs " + plain + ")");
         TracedAssertions.assertTrue(wide > narrow, "wider readings spread more (" + wide + " vs " + narrow + ")");
     }
+
+    public static function flushTestTrace():Void {
+        TestTraceRecorder.flushClass("RubyLayoutTest");
+    }
 }

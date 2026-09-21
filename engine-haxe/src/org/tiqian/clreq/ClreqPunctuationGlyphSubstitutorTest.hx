@@ -46,4 +46,8 @@ class ClreqPunctuationGlyphSubstitutorTest {
         TracedAssertions.assertEqualsFloat(2.0, ClreqPunctuationAdvancePolicy.advanceEm("⸺", "⸺"));
         TracedAssertions.assertEqualsFloat(2.0, ClreqPunctuationAdvancePolicy.advanceEm("——", "⸺"));
     }
+
+    public static function flushTestTrace():Void {
+        TestTraceRecorder.flushClass("ClreqPunctuationGlyphSubstitutorTest");
+    }
 }

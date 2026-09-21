@@ -331,4 +331,8 @@ class LineAdjustmentStageCoverageTest {
             }
         TracedAssertions.assertTrue(noneCollapse, LineAdjustmentStageCoverageTestSupport.renderTrims(r.debug.lineEdgeTrimDecisions));
     }
+
+    public static function flushTestTrace():Void {
+        TestTraceRecorder.flushClass("LineAdjustmentStageCoverageTest");
+    }
 }

@@ -22,4 +22,8 @@ class UnicodeEmoji17RgiRoleAuditTest {
         }
         TracedAssertions.assertEqualsInt(0, failures.length, failures.length + " RGI role mismatches: " + failures.slice(0, 20));
     }
+
+    public static function flushTestTrace():Void {
+        TestTraceRecorder.flushClass("UnicodeEmoji17RgiRoleAuditTest");
+    }
 }

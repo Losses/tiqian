@@ -124,4 +124,8 @@ class LineAdjustmentPushInTest {
             + auto.lines.length
             + ")");
     }
+
+    public static function flushTestTrace():Void {
+        TestTraceRecorder.flushClass("LineAdjustmentPushInTest");
+    }
 }

@@ -31,4 +31,8 @@ class UnicodeNumberTest {
             UnicodeNumber.contains(0x110000);
         });
     }
+
+    public static function flushTestTrace():Void {
+        TestTraceRecorder.flushClass("UnicodeNumberTest");
+    }
 }
