@@ -9,7 +9,7 @@ import org.tiqian.layout.AsciiPointMarkKinsokuTestSupport.BreakerChoice;
 import org.tiqian.layout.UnicodePunctuationBoundaryResolver.AttachedInlineVirtualBoundary;
 import std.ReadOnlyArray;
 
-class AttachedInlineBoundaryRelocationTestSupport {
+class AttachedInlineVirtualAdjacencyTestSupport {
     public static function resolve(a:Array<InlineAttachment>):Array<AttachedInlineVirtualBoundary> {
         return UnicodePunctuationBoundaryResolver.resolveAttachedInlineVirtualBoundaries(a);
     }
