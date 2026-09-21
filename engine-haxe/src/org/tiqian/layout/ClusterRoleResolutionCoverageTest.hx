@@ -397,7 +397,7 @@ import org.tiqian.test.trace.*;
         r.record("no-throw");
     }
 
-    @:test public static function flushTestTrace():Void {
+    public static function flushTestTrace():Void {
         TestTraceRecorder.flushClass("ClusterRoleResolutionCoverageTest");
     }
 }
