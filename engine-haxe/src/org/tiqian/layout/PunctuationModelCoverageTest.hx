@@ -74,20 +74,20 @@ class PunctuationModelCoverageTest {
 
     @:test public static function adjacentPunctuationSkipsNonAdjacentZeroGlueAndZeroEm():Void {
         PunctuationModelCoverageSupport.start("adjacentPunctuationSkipsNonAdjacentZeroGlueAndZeroEm");
-        final stop = PunctuationModelCoverageSupport.atom("。", 0), opening = PunctuationModelCoverageSupport.atom("「", 2);
+        final stop = PunctuationModelCoverageSupport.atomOrFail("。", 0), opening = PunctuationModelCoverageSupport.atomOrFail("「", 2);
         TracedAssertions.assertTrue(new PunctuationSpacingCompressor().compress([stop, opening], PunctuationModelCoverageSupport.em).adjustments.length == 0);
-        final c = stop.copy(trailingGlueInitiallyConsumed = 8), ao = PunctuationModelCoverageSupport.atom("「", 1).copy(leadingGlueInitiallyConsumed = 8);
+        final c = stop.copy(trailingGlueInitiallyConsumed = 8), ao = PunctuationModelCoverageSupport.atomOrFail("「", 1).copy(leadingGlueInitiallyConsumed = 8);
         TracedAssertions.assertTrue(new PunctuationSpacingCompressor().compress([c, ao], PunctuationModelCoverageSupport.em).adjustments.length == 0);
         TracedAssertions.assertTrue(new PunctuationSpacingCompressor().compress([stop], PunctuationModelCoverageSupport.em).adjustments.length == 0);
         TracedAssertions.assertTrue(new PunctuationSpacingCompressor().compress([
-            PunctuationModelCoverageSupport.atom("。", 0),
-            PunctuationModelCoverageSupport.atom("「", 1)
+            PunctuationModelCoverageSupport.atomOrFail("。", 0),
+            PunctuationModelCoverageSupport.atomOrFail("「", 1)
         ], 0).adjustments.length == 0);
     }
 
     @:test public static function cjkClosingBeforeAsciiPointMarkCollapsesTrailingGlue():Void {
         PunctuationModelCoverageSupport.start("cjkClosingBeforeAsciiPointMarkCollapsesTrailingGlue");
-        final c = PunctuationModelCoverageSupport.atom("」", 0);
+        final c = PunctuationModelCoverageSupport.atomOrFail("」", 0);
         final a = new PunctuationSpacingCompressor().compressCjkClosingBeforeAsciiPointMark([c], "」, rest", PunctuationModelCoverageSupport.em).adjustments[0];
         PunctuationModelCoverageSupport.eqr(Std.string(new TextRange(0, 2)), Std.string(a.range));
         PunctuationModelCoverageSupport.eqr(Std.string(c.range), Std.string(a.reductionTargetRange));
@@ -100,7 +100,7 @@ class PunctuationModelCoverageTest {
 
     @:test public static function cjkClosingCompressionRejectsNonMatchingNeighbours():Void {
         PunctuationModelCoverageSupport.start("cjkClosingCompressionRejectsNonMatchingNeighbours");
-        final x = new PunctuationSpacingCompressor(), o = PunctuationModelCoverageSupport.atom("「", 0), c = PunctuationModelCoverageSupport.atom("」", 0);
+        final x = new PunctuationSpacingCompressor(), o = PunctuationModelCoverageSupport.atomOrFail("「", 0), c = PunctuationModelCoverageSupport.atomOrFail("」", 0);
         TracedAssertions.assertTrue(x.compressCjkClosingBeforeAsciiPointMark([o], "「, x", PunctuationModelCoverageSupport.em).adjustments.length == 0);
         TracedAssertions.assertTrue(x.compressCjkClosingBeforeAsciiPointMark([c], "」", PunctuationModelCoverageSupport.em).adjustments.length == 0);
         TracedAssertions.assertTrue(x.compressCjkClosingBeforeAsciiPointMark([c], "」中", PunctuationModelCoverageSupport.em).adjustments.length == 0);
