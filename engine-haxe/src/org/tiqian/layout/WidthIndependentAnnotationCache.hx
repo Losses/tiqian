@@ -123,7 +123,7 @@ class WidthIndependentParagraphAnnotation {
     public final clusterRanges:Array<ResolvedClusterRange>;
     public final fontDecisionByRange:SortedMap<TextRange, FontDecision>;
     public final inlineObjectByRange:SortedMap<TextRange, InlineObjectSpan>;
-    public final segmentShapingCache:SegmentShapingCache;
+    public final segmentShapingCache:SortedMap<TextRange, ShapingResult>;
     public final substitutionRollbacks:SortedMap<TextRange, String>;
     public final rubyFontGeometryBySpan:SortedMap<RubySpan, RubyFontGeometry>;
     public final baseShapingStage:ParagraphShapingStageResult;
@@ -132,7 +132,7 @@ class WidthIndependentParagraphAnnotation {
             rubyStackGap:Float, rubyFontWeight:Int, pinyinSpans:Array<RubySpan>, clreqProfile:ClreqProfile,
             punctuationGlyphSubstitutor:ClreqPunctuationGlyphSubstitutor, quotePairs:Array<QuotePair>, roleOverrideInfos:Array<RoleOverrideInfo>,
             fontDecisions:Array<FontDecision>, clusterRanges:Array<ResolvedClusterRange>, fontDecisionByRange:SortedMap<TextRange, FontDecision>,
-            inlineObjectByRange:SortedMap<TextRange, InlineObjectSpan>, segmentShapingCache:SegmentShapingCache,
+            inlineObjectByRange:SortedMap<TextRange, InlineObjectSpan>, segmentShapingCache:SortedMap<TextRange, ShapingResult>,
             substitutionRollbacks:SortedMap<TextRange, String>, rubyFontGeometryBySpan:SortedMap<RubySpan, RubyFontGeometry>,
             baseShapingStage:ParagraphShapingStageResult) {
         this.text = text;
@@ -1437,21 +1437,12 @@ class WidthIndependentAnnotationCacheFns {
             }
         }
 
-        // The line-break planner reads this table by offset, and it built a
-        // sorted table before the stage stopped reordering it; rebuild the same
-        // sorted view here so the planner keeps its input unchanged.
-        final progressiveBreakOffsetsBuilder = SortedMap.builder();
-        for (i in 0...shapingStage.progressiveBreakOffsets.size()) {
-            progressiveBreakOffsetsBuilder.put(shapingStage.progressiveBreakOffsets.offsetAt(i), shapingStage.progressiveBreakOffsets.opportunityAt(i));
-        }
-        final progressiveBreakOffsetsSorted = progressiveBreakOffsetsBuilder.build();
-
         return new ParagraphLayoutPrep(input, rejectedTechnicalTiersBySpan, text, fontSize, annotation.styleAt, annotation.fontSizeAt,
             annotation.bopomofoFontWeightAt, annotation.rubyFontSize, annotation.rubyStackGap, annotation.rubyFontWeight, annotation.pinyinSpans,
             annotation.clreqProfile, annotation.punctuationGlyphSubstitutor, measure, measureEm, gridBodyOffset, lineLengthGridDecision,
             annotation.quotePairs, annotation.roleOverrideInfos, annotation.fontDecisions, shapingStage.hyphenOffsets, shapingStage.hyphenAdvance,
             shapingStage.hyphenGlyphs, shapingStage.substitutionRollbacks, shapingStage.breakOpportunityDecisions,
-            shapingStage.emergencyTrackingEligibilityDecisions, progressiveBreakOffsetsSorted, shapedGlyphsByClusterRange,
+            shapingStage.emergencyTrackingEligibilityDecisions, shapingStage.progressiveBreakOffsets, shapedGlyphsByClusterRange,
             openTypeFeaturesByClusterRange, shapingDecisionsList, eastAsianSpacingEdges, autoSpaceDecisions, inlineBoxResult, naturalClusters,
             inlineObjectByClusterIndex, uniformInlineObjectBoundaryAfterClusters, preferredInlineObjectBoundaryAfterClusters,
             inlineObjectBoundaryUnbreakableRanges, clusterRoles, resolvedKinsoku, kinsokuRule, inlineObjectAttachedMarks, inlineObjectSeparatorSpaceTrims,
