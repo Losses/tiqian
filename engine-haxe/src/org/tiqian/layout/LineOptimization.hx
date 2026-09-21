@@ -192,7 +192,7 @@ class LineCandidate {
         return firstHanging == null ? clusterRange : new IntRange(clusterRange.start, firstHanging - 1);
     }
 
-    static function emptyHanging():SortedSet<Int> {
+    public static function emptyHanging():SortedSet<Int> {
         final b = SortedSet.builder();
         return b.build();
     }
