@@ -13,7 +13,10 @@ import org.tiqian.layout.ParagraphShapingStageCoverageTestSupport.ParagraphMulti
 import org.tiqian.layout.ParagraphShapingStageCoverageTestSupport.ParagraphMultiGlyphShaper;
 import org.tiqian.layout.ParagraphShapingStageCoverageTestSupport.ParagraphRollbackShaper;
 import org.tiqian.layout.ParagraphShapingStageCoverageTestSupport.ParagraphSufficientDashShaper;
+import org.tiqian.layout.ParagraphShapingStageCoverageTestSupport.ParagraphBiblioHyphenator;
+import org.tiqian.layout.ParagraphShapingStageCoverageTestSupport.ParagraphSegmentationHyphenator;
 import org.tiqian.layout.ParagraphShapingStageCoverageTestSupport.ParagraphTierHyphenator;
+import org.tiqian.layout.ParagraphShapingStageCoverageTestSupport.ParagraphWordCutsHyphenator;
 import org.tiqian.layout.ParagraphShapingStageCoverageTestSupport.ParagraphWordShaper;
 import org.tiqian.layout.ProgressiveBreakDecisions.ProgressiveBreakTier;
 import org.tiqian.layout.WidthIndependentAnnotationCache.WidthIndependentAnnotationCacheFns;
@@ -89,7 +92,7 @@ class ParagraphShapingStageCoverageTest {
 
     @:test public static function latinSegmentationAndCutsBranches():Void {
         var r = ParagraphShapingStageCoverageTestSupport.begin("latinSegmentationAndCutsBranches");
-        var e = ParagraphShapingStageCoverageTestSupport.engine(null, new ParagraphCoverageHyphenator(1));
+        var e = ParagraphShapingStageCoverageTestSupport.engine(null, new ParagraphSegmentationHyphenator());
         ParagraphShapingStageCoverageTestSupport.layout(e,
             "Text with ,Hello Machine2Machine XMLHttp HTTPServer TeX/LaTeX /start end/ /a a/ a/b https://example.com/path www.test.org sub.domain.co .com a. a..b a.b --.com test.-com test.c test.123 test.co123 12(3):45 12(3):45. 12(3):45-50 12(3):45\u201350 (1):2 a(1):2 1():2 1(2)a:3 1(2): 1(2):a-b 1(2):-5 1(2):5- 1(2):a 12():34 12(34): a(b):c-d 12(3):. 12a(3):45 12(3a):45 12(3):-45 12(3):45- 12(3):45-6a 12(3):4a-65 12(3):abc hyphenatedword VERYLONGALLCAPSWORDTHATISNOTANABBREVIATIONANDSHOULDBEOPAQ",
             80);
@@ -109,8 +112,10 @@ class ParagraphShapingStageCoverageTest {
 
     @:test public static function latinSeparatorCutsExhaustiveBranches():Void {
         var r = ParagraphShapingStageCoverageTestSupport.begin("latinSeparatorCutsExhaustiveBranches");
-        var t = "12(3):45-67 12(3):45\u201367 12(3):45\u201467 12(3):45 12(3):. 12():45 12(3): :(3):45 12(3):- 12(3):45- 12(3):4a-65 12(3):45-6a 12(3):abc http://example.com/a/b/c https://test.org:8080/foo?bar=1&baz=2#frag%20~val+1*2|3;4,5.6-7_8";
-        var e = ParagraphShapingStageCoverageTestSupport.engine(null, new ParagraphCoverageHyphenator(1));
+        var t = "12(3):45-67 12(3):45\u201367 12(3):45\u201467 12(3):45 12(3):. 12():45 12(3): :(3):45 12(3):- 12(3):45- 12(3):4a-65 12(3):45-6a 12(3):abc " +
+            "http://example.com/a/b/c https://test.org:8080/foo?bar=1&baz=2#frag%20~val+1*2|3;4,5.6-7_8 http:/test /a a/ a//b a/b " +
+            "ABC CamelCase aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa hyphenated-word clean/solidus hyphenated";
+        var e = ParagraphShapingStageCoverageTestSupport.engine(null, new ParagraphBiblioHyphenator());
         ParagraphShapingStageCoverageTestSupport.layout(e, t, 500);
         ParagraphShapingStageCoverageTestSupport.layout(e, t, 10);
     }
@@ -130,7 +135,7 @@ class ParagraphShapingStageCoverageTest {
     @:test public static function latinWordCutsLoHiAndEmptyBranches():Void {
         var r = ParagraphShapingStageCoverageTestSupport.begin("latinWordCutsLoHiAndEmptyBranches");
         ParagraphShapingStageCoverageTestSupport.layout(ParagraphShapingStageCoverageTestSupport.engine(new ParagraphWordShaper(),
-            new ParagraphCoverageHyphenator(1)), "abcdef ghijkl mnopqr empty", 1);
+            new ParagraphWordCutsHyphenator()), "abcdef ghijkl mnopqr empty", 1);
     }
 
     @:test public static function mapToClusterRangeWithZeroAndPositiveAdvance():Void {

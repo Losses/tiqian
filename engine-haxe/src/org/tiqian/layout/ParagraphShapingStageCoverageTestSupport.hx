@@ -140,6 +140,38 @@ class ParagraphCoverageHyphenator implements Hyphenator {
         return mode == 1 && w.indexOf("hyphen") >= 0 ? [2, 4] : (mode == 2 ? [1, 2, 3] : [2]);
 }
 
+/** Matches the legacy latinSegmentationAndCutsBranches hyphenator: a word
+    * containing "hyphen" breaks at 2 and 4; every other word has no break. */
+class ParagraphSegmentationHyphenator implements Hyphenator {
+    public function new() {}
+
+    public function hyphenate(w:String):std.ReadOnlyArray<Int>
+        return w.indexOf("hyphen") >= 0 ? [2, 4] : [];
+}
+
+/** Matches the legacy latinSeparatorCutsExhaustiveBranches hyphenator: only the
+    * exact word "hyphenated" breaks, at 3 and 6. */
+class ParagraphBiblioHyphenator implements Hyphenator {
+    public function new() {}
+
+    public function hyphenate(w:String):std.ReadOnlyArray<Int>
+        return w == "hyphenated" ? [3, 6] : [];
+}
+
+/** Matches the legacy latinWordCutsLoHiAndEmptyBranches hyphenator: one break
+    * offset per known word, none otherwise. */
+class ParagraphWordCutsHyphenator implements Hyphenator {
+    public function new() {}
+
+    public function hyphenate(w:String):std.ReadOnlyArray<Int> {
+        if (w == "abcdef") return [1];
+        if (w == "ghijkl") return [2];
+        if (w == "mnopqr") return [3];
+        if (w == "empty") return [2];
+        return [];
+    }
+}
+
 class ParagraphTierHyphenator implements Hyphenator {
     public function new() {}
 
