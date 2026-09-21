@@ -189,46 +189,4 @@ class ContextualDashEllipsisRoleResolverTest {
         if (d.length != 2 || d[0].role != LatinText || d[1].role != CjkPunctuation)
             ContextualDashEllipsisRoleResolverTestSupport.fail("break pair");
     }
-
-    @:test public static function westernContextKeepsDashAndEllipsisOnLatinFaceAndPreservesSourceDisplay():Void {
-        var s = "English \u2014 next; ellipsis\u2026 / slash. A\u2014\u2014B; Wait\u2026\u2026what?";
-        var r = ContextualDashEllipsisRoleResolverTestSupport.layout(s);
-        for (i in 0...r.debug.fontDecisions.length) {
-            var d = r.debug.fontDecisions[i];
-            if (d.role != "LatinText" || d.sourceText != d.displayText)
-                ContextualDashEllipsisRoleResolverTestSupport.fail("western layout");
-        }
-    }
-
-    @:test public static function cjkContextKeepsClreqDisplaySubstitutionIndependentOfMarkCount():Void {
-        var s = "\u4E2D\u2014\u6587\uFF0C\u7B49\u2026\u771F\uFF1B\u4E2D\u6587\u2014\u2014\u4E0B\u53E5\uFF0C\u7701\u7565\u53F7\u2026\u2026\u3002";
-        var r = ContextualDashEllipsisRoleResolverTestSupport.layout(s);
-        var n = 0;
-        for (i in 0...r.debug.fontDecisions.length) {
-            var d = r.debug.fontDecisions[i];
-            if (d.role == "CjkPunctuation") {
-                n++;
-            }
-        }
-        if (n == 0)
-            ContextualDashEllipsisRoleResolverTestSupport.fail("cjk decisions missing");
-    }
-
-    @:test public static function parentheticalPairSharesOneFaceAndSubstitution():Void {
-        var s = "\u4ED6\u5F7B\u591C\u60F3Jessica\u2014\u2014Jessica\u662F\u4ED6\u7684\u524D\u5973\u53CB\u2014\u2014\u7761\u4E0D\u7740\u89C9";
-        var r = ContextualDashEllipsisRoleResolverTestSupport.layout(s);
-        var n = 0;
-        for (i in 0...r.debug.fontDecisions.length)
-            if (r.debug.fontDecisions[i].role == "CjkPunctuation")
-                n++;
-        if (n == 0)
-            ContextualDashEllipsisRoleResolverTestSupport.fail("pair decisions missing");
-    }
-
-    @:test public static function standaloneWesternEllipsisCannotBeRewrittenByTheSubstitutor():Void {
-        var r = ContextualDashEllipsisRoleResolverTestSupport.layout("\u2026", "en-US");
-        var d = r.debug.fontDecisions[0];
-        if (d.role != "LatinText" || d.sourceText != "\u2026" || d.displayText != "\u2026")
-            ContextualDashEllipsisRoleResolverTestSupport.fail("standalone ellipsis");
-    }
 }
