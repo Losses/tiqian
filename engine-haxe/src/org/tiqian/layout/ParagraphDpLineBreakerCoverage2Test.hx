@@ -9,6 +9,8 @@ import org.tiqian.layout.ProgressiveBreakDecisions.ProgressiveBreakOpportunity;
 import org.tiqian.layout.ProgressiveBreakDecisions.ProgressiveBreakTier;
 import org.tiqian.layout.LineOptimization.LineSolution;
 import std.SortedMap;
+import org.tiqian.test.trace.TestTraceRecorder;
+import org.tiqian.test.trace.ClassTestEntry;
 
 class ParagraphDpLineBreakerCoverage2Test {
     static function rec(n:String):Void
@@ -93,5 +95,26 @@ class ParagraphDpLineBreakerCoverage2Test {
         rec("testCandidateEndsWindowBelowLineStart");
         var s = solve(han(3, 20), 25, null, null, null, null, null, 5);
         TracedAssertions.assertEqualsInt(3, s.lines.length);
+    }
+
+    /**
+        The conventional class test entry (boring feature spec 19).
+        The class carries no test marker, so the Kotlin runner generated from
+        that marker's collection never instantiates it; this entry is how the
+        runner calls the class once. It registers no test id, so the cross-target
+        test id set is unchanged. The body repeats the calls
+        engine-haxe/tests/Main.hx makes for this class, through the same failure
+        accounting Main.hx uses, and then flushes the class trace the way Main.hx
+        does.
+    **/
+    public static function runTestEntries():Void {
+        ClassTestEntry.run(testShrinkOpportunitiesNegativeAndOutOfRange);
+        ClassTestEntry.run(testCandidateWindowBoundsCompressionEdges);
+        ClassTestEntry.run(testProgressiveTierPromotionBranches);
+        ClassTestEntry.run(testCommitSegmentOriginalBreakNotNullResultingBreakNull);
+        ClassTestEntry.run(testTierPreferredPoolEmptyFallback);
+        ClassTestEntry.run(testHardBreakAfterClustersInDpCommit);
+        ClassTestEntry.run(testCandidateEndsWindowBelowLineStart);
+        TestTraceRecorder.flushClass("ParagraphDpLineBreakerCoverage2Test");
     }
 }
