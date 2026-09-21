@@ -136,7 +136,17 @@ class Justifier {
         function alloc(ops:Array<JustificationOpportunity>, reason:String):Void {
             if (ops.length == 0 || remaining <= 0)
                 return;
-            final total = ops.sumOfFloat(o -> o.capacity);
+            // The reference writes opportunities.sumOf { it.capacity.toDouble() }
+            // .toFloat(): one binary64 accumulator, narrowed once. Go through
+            // AccurateSum rather than std.Functional.sumOfFloat directly: the
+            // Kotlin backend renders that entry point as
+            // sumOf { ... .toDouble() }.toFloat(), a narrowing that is right
+            // only while the compilation's Float is binary32, and this
+            // compilation's Float is binary64.
+            final capacityTerms:Array<Float> = [];
+            for (o in ops)
+                capacityTerms.push(o.capacity);
+            final total = AccurateSum.of(capacityTerms);
             if (total <= 0)
                 return;
             if (total >= remaining) {
