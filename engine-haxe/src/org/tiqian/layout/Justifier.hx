@@ -5,6 +5,7 @@ using org.tiqian.layout.ProgressiveBreakTierPriority;
 using std.Functional;
 
 import org.tiqian.core.Cluster;
+import org.tiqian.core.AccurateSum;
 import org.tiqian.core.IntRange;
 import org.tiqian.core.EastAsianSpacingEdges;
 import org.tiqian.core.EastAsianSpacingValue;
@@ -113,12 +114,16 @@ class Justifier {
             throw new org.tiqian.core.TiqianIllegalArgumentException(org.tiqian.core.TextRangeError.Message("clusterRoles must align with adjustedClusters."));
         if (edges.length != c.length)
             throw new org.tiqian.core.TiqianIllegalArgumentException(org.tiqian.core.TextRangeError.Message("East_Asian_Spacing values must align with adjustedClusters."));
-        var width = 0.0;
+        // The reference accumulates the range in Double and narrows the
+        // finished sum once, so a run of equal binary32 advances reaches its
+        // exact total instead of rounding on every step.
+        final widthTerms:Array<Float> = [];
         var i = r.start;
         while (i <= r.end) {
-            width += c[i].advance;
+            widthTerms.push(c[i].advance);
             i++;
         }
+        final width = AccurateSum.of(widthTerms);
         final deficit = Math.max(maxWidth - width, 0);
         if (skip || deficit <= 0)
             return new JustificationPlan(r, [], deficit, deficit, skip ? skipReason : null);
@@ -313,7 +318,10 @@ class Justifier {
             if (rem <= 0)
                 break;
             var group:Array<ShrinkOpportunity> = m.valueAt(k);
-            final total = group.sumOfFloat(o -> o.capacity);
+            final groupTerms:Array<Float> = [];
+            for (gi in 0...group.length)
+                groupTerms.push(group[gi].capacity);
+            final total = AccurateSum.of(groupTerms);
             if (total <= 0) {
                 k++;
                 continue;

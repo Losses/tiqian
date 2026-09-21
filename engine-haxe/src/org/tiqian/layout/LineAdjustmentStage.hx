@@ -441,10 +441,11 @@ class LineAdjustmentStage {
                 if (hyphen <= 0.0)
                     continue;
                 final lineLimit = line.clusterRange.start == 0 ? prep.measure - plan.firstLineIndent : prep.measure - plan.blockIndent;
-                var content = 0.0;
+                final contentTerms:Array<Float> = [];
                 for (cIdx in line.clusterRange.start...line.clusterRange.end + 1) {
-                    content += prep.clusters[cIdx].advance;
+                    contentTerms.push(prep.clusters[cIdx].advance);
                 }
+                final content = AccurateSum.of(contentTerms);
                 var shortfall = content + hyphen - lineLimit;
                 if (shortfall <= 0.001)
                     continue;
@@ -749,10 +750,10 @@ class LineAdjustmentStage {
             final lastC = runClusters[runClusters.length - 1];
             final openTypeFeatures = prep.openTypeFeaturesByClusterRange.has(firstC.range) ? prep.openTypeFeaturesByClusterRange.get(firstC.range) : [];
             final runGlyphs = new Array<Glyph>();
-            var runAdvance = 0.0;
+            final runAdvanceTerms:Array<Float> = [];
             for (clusterIdx in 0...runClusters.length) {
                 final cluster = runClusters[clusterIdx];
-                runAdvance += cluster.advance;
+                runAdvanceTerms.push(cluster.advance);
                 if (prep.shapedGlyphsByClusterRange.has(cluster.range)) {
                     final shaped = prep.shapedGlyphsByClusterRange.get(cluster.range);
                     final mapped = ParagraphShapingStage.mapToClusterRange(shaped, cluster);
@@ -763,7 +764,8 @@ class LineAdjustmentStage {
                     runGlyphs.push(new Glyph(clusterIdx, cluster.range, cluster.advance));
                 }
             }
-            glyphRuns.push(new GlyphRun(new TextRange(firstC.range.start, lastC.range.end), firstC.fontKey, runGlyphs, runAdvance, openTypeFeatures));
+            glyphRuns.push(new GlyphRun(new TextRange(firstC.range.start, lastC.range.end), firstC.fontKey, runGlyphs,
+                AccurateSum.of(runAdvanceTerms), openTypeFeatures));
         }
         final verticalGeometry = LineGeometryStageFns.resolveLineVerticalGeometrySorted(prep.input, prep.fontSize, prep.pinyinSpans, prep.naturalClusters,
             plan.lineSolution, prep.rubyFontGeometryBySpan, plan.existingInterlineSpace, plan.baseLineMetrics, plan.baseFaceHeight, plan.rubyExtent,
