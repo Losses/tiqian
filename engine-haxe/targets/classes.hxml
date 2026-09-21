@@ -50,6 +50,7 @@ org.tiqian.layout.ContextualQuoteRoleResolverCoverageTest
 org.tiqian.layout.ContextualQuoteRoleResolverNestedAndSurrogateTest
 org.tiqian.layout.ContextualDashEllipsisRoleResolverCoverageTest
 org.tiqian.layout.ContextualDashEllipsisRoleResolverTest
+org.tiqian.layout.ContextualDashEllipsisLayoutTest
 org.tiqian.layout.ContextualDashEllipsisClusterCoverageTest
 org.tiqian.layout.ContextualRoleExtensionCoverageTest
 org.tiqian.layout.Justifier
@@ -128,8 +129,8 @@ org.tiqian.layout.DisplayGlyphSubstitutionEngineTestSupport
 org.tiqian.test.LayoutFixtures
 org.tiqian.layout.LayoutDumpFormat
 org.tiqian.layout.LayoutDumpGoldenParityTest
-org.tiqian.layout.AttachedInlineBoundaryRelocationTest
-org.tiqian.layout.AttachedInlineBoundaryRelocationTestSupport
+org.tiqian.layout.AttachedInlineVirtualAdjacencyTest
+org.tiqian.layout.AttachedInlineVirtualAdjacencyTestSupport
 org.tiqian.layout.RubyLayoutTest
 org.tiqian.layout.RubyLayoutTestSupport
 org.tiqian.layout.ParagraphShapingStageCoverageTest
