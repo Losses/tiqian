@@ -25,6 +25,7 @@ import org.tiqian.layout.AnnotationGeometryStage.RubyFontGeometry;
 import org.tiqian.layout.Justifier.JustificationPlan;
 import org.tiqian.layout.LineOptimization.LineSolution;
 import org.tiqian.layout.LineOptimization.LineCandidate;
+import std.SortedMap;
 
 @:dataClass class LineBoxStageResult {
     public final laidOutLines:Array<LineBox>;
@@ -102,7 +103,28 @@ class LineGeometryStageFns {
             baseLineMetrics:ResolvedLineMetrics, baseFaceHeight:Float, rubyExtent:Float, inlineObjectByClusterIndex:Map<Int, InlineObjectSpan>,
             baseAscent:Float, baseDescent:Float):LineVerticalGeometryStageResult {
         return resolveLineVerticalGeometrySorted(input, fontSize, pinyinSpans, naturalClusters, lineSolution, rubyFontGeometryBySpan, existingInterlineSpace,
-            baseLineMetrics, baseFaceHeight, rubyExtent, null, baseAscent, baseDescent);
+            baseLineMetrics, baseFaceHeight, rubyExtent, sortedInlineObjectByClusterIndex(inlineObjectByClusterIndex, naturalClusters), baseAscent, baseDescent);
+    }
+
+    /**
+        The unsorted entry accepts an index map while the single reader consumes
+        a sorted table. This port bans plain haxe.ds.Map (style standard V13) and
+        every iteration form but the integer range (V01), so the table is
+        rebuilt over the cluster domain the caller already passes: the reader
+        only looks up cluster indices inside the line ranges, and the cluster
+        domain of the same paragraph contains them.
+    **/
+    static function sortedInlineObjectByClusterIndex(inlineObjectByClusterIndex:Map<Int, InlineObjectSpan>,
+            naturalClusters:Array<Cluster>):SortedMap<Int, InlineObjectSpan> {
+        final builder:SortedMapBuilder<Int, InlineObjectSpan> = SortedMap.builder();
+        if (inlineObjectByClusterIndex != null) {
+            for (index in 0...naturalClusters.length) {
+                final inlineObject = inlineObjectByClusterIndex.get(index);
+                if (inlineObject != null)
+                    builder.put(index, inlineObject);
+            }
+        }
+        return builder.build();
     }
 
     public static function resolveLineVerticalGeometrySorted(input:LayoutInput, fontSize:Float, pinyinSpans:Array<RubySpan>, naturalClusters:Array<Cluster>,
