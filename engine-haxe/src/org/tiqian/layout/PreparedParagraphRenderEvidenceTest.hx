@@ -53,7 +53,7 @@ class PreparedParagraphRenderEvidenceTest {
         final t = new TestTraceRecorder("PreparedParagraphRenderEvidenceTest");
         t.section("bopomofoRubyEmitsBopomofoDecisions");
         final r = PreparedParagraphRenderEvidenceTestSupport.layout(new LayoutInput(new TiqianTextContent("好文。"), null, null, new LayoutConstraints(200),
-            null, null, [new RubySpan(new TextRange(0, 1), "ㄏㄠˇ", RubyKind.Bopomofo)], null));
+            null, null, [new RubySpan(new TextRange(0, 1), "ㄏㄠˇ", RubyKind.Bopomofo, "zh-TW")], null));
         final p = PreparedParagraphRenderEvidenceTestSupport.plain(r);
         final e = PreparedParagraphRenderEvidenceTestSupport.evidence(r);
         TracedAssertions.assertFalse(p.indexOf("bopomofoDecisions") >= 0);

@@ -123,7 +123,7 @@ class EarlyLayoutFixtures {
             18, [], [new RubySpan(new TextRange(4, 5), "wù")], RubyLineHeightMode.PerLine, 0, false, false, new LineLengthGrid(), []),
         new LayoutFixture("bopomofo-tone-em-box", "好", new LayoutConstraints(64),
             "BopomofoToneSharedAnnotationEmSizing: the ordinary tone mark shares the 0.3em annotation size; its 5×5 slot only positions it, and glyph ink does not rescale it.",
-            null, [], [new RubySpan(new TextRange(0, 1), "ㄏㄠˇ", RubyKind.Bopomofo),], RubyLineHeightMode.PerLine, 0, false, false, new LineLengthGrid(), []),
+            null, [], [new RubySpan(new TextRange(0, 1), "ㄏㄠˇ", RubyKind.Bopomofo, "zh-TW"),], RubyLineHeightMode.PerLine, 0, false, false, new LineLengthGrid(), []),
         new LayoutFixture("first-line-indent", "咖啡的风味因产地而各异，烘焙的深浅同样会改变口感与香气。", new LayoutConstraints(200),
             "段首缩进: first line indents 2em (CLREQ standard) — its usable measure shrinks to maxWidth-2em and the LineBox carries the indent; later lines use the full measure. Justify targets the indented measure on line 0.",
             null, [], [], RubyLineHeightMode.PerLine, 2, false, false, new LineLengthGrid(), []),
