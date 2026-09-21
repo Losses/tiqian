@@ -1,6 +1,7 @@
 package org.tiqian.layout;
 
 import org.tiqian.core.LayoutInput;
+import org.tiqian.core.AccurateSum;
 import org.tiqian.core.TextRange;
 import org.tiqian.core.TextSpan;
 import org.tiqian.core.LineBreakSpan;
@@ -727,11 +728,11 @@ class WidthIndependentAnnotationCacheFns {
                         input.textStyle.baselineShift, input.textStyle.inlineAttachment),
                     decision, ruby.text));
             }
-            var rubyWidth = 0.0;
+            final rubyWidthTerms:Array<Float> = [];
             final glyphList = new Array<Glyph>();
             if (shaped != null) {
                 for (c in 0...shaped.clusters.length) {
-                    rubyWidth += shaped.clusters[c].advance;
+                    rubyWidthTerms.push(shaped.clusters[c].advance);
                 }
                 for (r in 0...shaped.glyphRuns.length) {
                     final run = shaped.glyphRuns[r];
@@ -740,6 +741,7 @@ class WidthIndependentAnnotationCacheFns {
                     }
                 }
             }
+            final rubyWidth = AccurateSum.of(rubyWidthTerms);
             final requiredExtent = ruby.text.length == 0 ? 0.0 : (declaredAscent + declaredDescent + rubyStackGap);
             final ascent = ruby.text.length == 0 ? 0.0 : declaredAscent;
             final descent = ruby.text.length == 0 ? 0.0 : declaredDescent;
@@ -900,10 +902,10 @@ class WidthIndependentAnnotationCacheFns {
         var hasOverMeasureToken = false;
         for (i in 0...annotation.baseShapingStage.shapingResults.length) {
             final res = annotation.baseShapingStage.shapingResults[i];
-            var resAdv = 0.0;
+            final resTerms:Array<Float> = [];
             for (c in 0...res.clusters.length)
-                resAdv += res.clusters[c].advance;
-            if (resAdv > measure) {
+                resTerms.push(res.clusters[c].advance);
+            if (AccurateSum.of(resTerms) > measure) {
                 hasOverMeasureToken = true;
                 break;
             }
@@ -1240,10 +1242,11 @@ class WidthIndependentAnnotationCacheFns {
                     attachment.separatorClusterIndices[attachment.separatorClusterIndices.length - 1]
                 ];
                 final mark = naturalClusters[attachment.markClusterIndex];
-                var collapsedAdv = 0.0;
+                final collapsedTerms:Array<Float> = [];
                 for (s in 0...attachment.separatorClusterIndices.length) {
-                    collapsedAdv += naturalClusters[attachment.separatorClusterIndices[s]].advance;
+                    collapsedTerms.push(naturalClusters[attachment.separatorClusterIndices[s]].advance);
                 }
+                final collapsedAdv = AccurateSum.of(collapsedTerms);
                 inlineObjectPunctuationAttachmentDecisions.push(new InlineObjectPunctuationAttachmentDecisionInfo(naturalClusters[attachment.objectClusterIndex].range,
                     new TextRange(separatorFirst.range.start, separatorLast.range.end), mark.range,
                     mark.text, new TextRange(naturalClusters[attachment.objectClusterIndex].range.start, mark.range.end), collapsedAdv));
