@@ -93,7 +93,7 @@ import org.tiqian.test.trace.*;
         r.record("eq expected=TextRange(start=0, end=4) actual=TextRange(start=0, end=4)");
     }
 
-    @:test public static function flushTestTrace():Void {
+    public static function flushTestTrace():Void {
         TestTraceRecorder.flushClass("ClusterRoleResolutionSurrogateAndExtenderEdgeTest");
     }
 }
