@@ -28,10 +28,17 @@
 # RecordedEvidenceGoldenParityTest.recordedEvidenceLayoutMatchesGolden
 # 4.7-7.0 s. The 5000 fallback therefore records those bodies as failures
 # carrying "this test timed out after 5000ms", and the verdict of the
-# borderline case depends on machine load. 180000 is the budget
-# engine-haxe/tools/f64-trace-compare.sh:47 already records for the Kotlin
-# f64 bundle, so the five targets and every lane measure against one value
-# instead of drifting between rounds.
+# borderline case depends on machine load. The recorded value is 600000
+# because the TypeScript bundle carries the slowest body on this machine:
+# WidthIndependentAnnotationCacheTest
+# .cachedAndUncachedEnginesProduceIdenticalLayoutResultsAcrossWidths measured
+# 210-221 s in the ts bundle (one run under machine load 15.68 recorded
+# "this test timed out after 180000ms" at 220944 ms), while the same case in
+# the Kotlin bundle measures 28-43 s. A 180000 budget therefore reports the
+# ts case as a timeout under load, and one ts run needs 515-557 s of wall
+# clock in total, so 600000 leaves margin without letting a hung body block a
+# lane for hours. Every lane and every target measures against this one
+# recorded value instead of drifting between rounds.
 #
 # The budget decides the timeout verdict alone. An assertion that fails
 # raises inside the test body and is recorded with its own message, whatever
@@ -45,7 +52,7 @@
 set -u
 
 # Recorded budget (see the header). An explicit value from the caller wins.
-: "${BORING_TEST_TIMEOUT_MS:=180000}"
+: "${BORING_TEST_TIMEOUT_MS:=600000}"
 export BORING_TEST_TIMEOUT_MS
 
 LOCK="${TIQIAN_TEST_LOCK:-/tmp/tiqian-serial-test.lock}"
