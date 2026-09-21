@@ -545,13 +545,24 @@ class TracedAssertions {
         }
     }
 
+    /**
+        The operand-equality entry point the Kotlin reference spells as the
+        generic \`assertEquals<T>(expected, actual)\`: it renders both operands
+        and compares the values. Rendering here means the recorded operand text,
+        so the comparison runs on the same capped, number-canonical text the
+        trace stores, and a pair of equal values whose plain spine differs only
+        by a whole-number fraction ("5.0" against "5") still compares equal,
+        exactly as the reference's value comparison does.
+    **/
     public static function assertEqualsRendered(expected:String, actual:String, ?message:String):Void {
+        final expectedText = TestTraceRender.cap(expected);
+        final actualText = TestTraceRender.cap(actual);
         recordEvent("eq", [
-            field("expected", TestTraceRender.cap(expected)),
-            field("actual", TestTraceRender.cap(actual)),
+            field("expected", expectedText),
+            field("actual", actualText),
             msgField(message)
         ]);
-        if (expected != actual) {
+        if (expectedText != actualText) {
             fail(message == null ? "Expected rendered values to be equal." : message);
         }
     }
@@ -595,16 +606,36 @@ class TracedAssertions {
         }
     }
 
+    /**
+        Records the reference name of the raised failure. The derived type
+        gets its own nested try region: a runtime type test written as
+        \`Std.isOfType(error, IllegalStateException)\` inside the base catch is
+        folded to \`false\` at compile time, which recorded
+        \`TiqianIllegalArgumentException\` for the shaping stub's
+        \`IllegalStateException\` and broke TextShaperCoverageTest byte parity,
+        and one try region carries one exception domain.
+    **/
     public static function assertFailsWith(?message:String, block:() -> Void):TiqianIllegalArgumentException {
+        var caught:TiqianIllegalArgumentException = null;
+        var derived = false;
         try {
-            block();
+            try {
+                block();
+            } catch (error:IllegalStateException) {
+                caught = error;
+                derived = true;
+            }
         } catch (error:TiqianIllegalArgumentException) {
+            caught = error;
+            derived = false;
+        }
+        if (caught != null) {
             recordEvent("raises", [
-                field("exception", Std.isOfType(error, IllegalStateException) ? "IllegalStateException" : "TiqianIllegalArgumentException"),
-                field("thrown", TestTraceRender.renderString(error.message)),
+                field("exception", derived ? "IllegalStateException" : "TiqianIllegalArgumentException"),
+                field("thrown", TestTraceRender.renderString(caught.message)),
                 msgField(message)
             ]);
-            return error;
+            return caught;
         }
         recordEvent("fail", [msgField(message)]);
         throw new TraceAssertionException(TraceAssertionError.AssertionFailed(message == null ? "Expected an exception." : message));
