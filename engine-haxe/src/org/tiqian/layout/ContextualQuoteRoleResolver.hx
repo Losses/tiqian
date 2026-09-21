@@ -294,7 +294,7 @@ private class ScriptEvidence {
     public function addRange(start:Int, end:Int):Void {
         var index:Int = start;
         while (index < end) {
-            final nested:QuotePair = resolver.pairByOpen.get(index);
+            final nested:Null<QuotePair> = resolver.pairByOpen.get(index);
             if (nested != null && nested.closeIndex < end) {
                 index = nested.closeIndex + 1;
                 continue;

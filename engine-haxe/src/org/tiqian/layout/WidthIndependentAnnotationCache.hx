@@ -1121,7 +1121,7 @@ class WidthIndependentAnnotationCacheFns {
         final inlineBoxResult = PunctuationGeometryStage.applyInlineBoxSpans(autoSpaceResult.clusters, inlineBoxesCopy);
         final naturalClusters = inlineBoxResult.clusters;
 
-        final inlineObjectByClusterIndexBuilder = SortedMap.builder();
+        final inlineObjectByClusterIndexBuilder:SortedMapBuilder<Int, InlineObjectSpan> = SortedMap.builder();
         final boundaryIndices = new Array<Int>();
         final boundaryAdjustments = new Array<InlineObjectBoundaryAdjustment>();
 
@@ -1173,8 +1173,8 @@ class WidthIndependentAnnotationCacheFns {
 
         for (clusterIndex in 0...naturalClusters.length) {
             final cluster = naturalClusters[clusterIndex];
-            if (annotation.inlineObjectByRange.has(cluster.range)) {
-                final inlineObject = annotation.inlineObjectByRange.get(cluster.range);
+            final inlineObject = annotation.inlineObjectByRange.get(cluster.range);
+            if (inlineObject != null) {
                 inlineObjectByClusterIndexBuilder.put(clusterIndex, inlineObject);
                 if (clusterIndex > 0 && !isFixedBoundary(inlineObject.leadingBoundary)) {
                     registerInlineObjectBoundary(clusterIndex - 1, inlineObject.leadingBoundary);
@@ -1187,7 +1187,7 @@ class WidthIndependentAnnotationCacheFns {
         final inlineObjectByClusterIndex = inlineObjectByClusterIndexBuilder.build();
 
         final uniformInlineObjectBoundaryBuilder = SortedSet.builder();
-        final preferredInlineObjectBoundaryBuilder = SortedMap.builder();
+        final preferredInlineObjectBoundaryBuilder:SortedMapBuilder<Int, InlineObjectPreferredStretch> = SortedMap.builder();
         final inlineObjectBoundaryUnbreakableRanges = new Array<IntRange>();
 
         for (i in 0...boundaryIndices.length) {
