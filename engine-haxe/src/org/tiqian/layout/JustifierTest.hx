@@ -14,6 +14,7 @@ import org.tiqian.layout.PunctuationModel.GlueKind;
 import org.tiqian.layout.Justifier.JustificationPlan;
 import org.tiqian.layout.Justifier.JustificationOpportunity;
 import org.tiqian.test.trace.TestTraceRecorder;
+import org.tiqian.test.trace.TestTraceRender;
 import org.tiqian.test.trace.TracedAssertions;
 
 class JustifierTestSupport {
@@ -488,7 +489,13 @@ class JustifierTest {
                 ok = false;
             i++;
         }
-        TracedAssertions.assertTrue(ok, "50|% must stay closed: " + Std.string(p.allocations));
+        // The reference interpolates the List into the message, so the operand
+        // is the list printed with ", " between elements, not the "," join the
+        // Haxe/JS target gives a collection.
+        final allocationParts:Array<String> = [];
+        for (allocation in p.allocations)
+            allocationParts.push(Std.string(allocation));
+        TracedAssertions.assertTrue(ok, "50|% must stay closed: " + TestTraceRender.legacyListText(allocationParts));
         TracedAssertions.assertEqualsFloat(0, p.unfilledDeficit);
     }
 
