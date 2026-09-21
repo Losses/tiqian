@@ -22,4 +22,8 @@ class UnicodeWordCharacterTest {
             index += 1;
         }
     }
+
+    public static function flushTestTrace():Void {
+        TestTraceRecorder.flushClass("UnicodeWordCharacterTest");
+    }
 }

@@ -54,4 +54,8 @@ class ParagraphDpTierPromotionPoolTest {
         TracedAssertions.assertTrue(ParagraphDpTierPromotionPoolTestSupport.repairReason(s.lines[0].repair).indexOf("LineAdjustmentPushIn") == 0,
             ParagraphDpLineBreakerTestSupport.repairsString(s));
     }
+
+    public static function flushTestTrace():Void {
+        TestTraceRecorder.flushClass("ParagraphDpTierPromotionPoolTest");
+    }
 }

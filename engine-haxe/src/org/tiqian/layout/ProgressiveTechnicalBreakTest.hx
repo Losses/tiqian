@@ -42,4 +42,8 @@ class ProgressiveTechnicalBreakTest {
         TracedAssertions.assertFalse(ProgressiveBreakDecisions.progressiveCandidateAllowed(0, 4, 3, o, c, 90, null, 8));
         TracedAssertions.assertTrue(ProgressiveBreakDecisions.progressiveCandidateAllowed(0, 4, 4, o, c, 90, null, 8));
     }
+
+    public static function flushTestTrace():Void {
+        TestTraceRecorder.flushClass("ProgressiveTechnicalBreakTest");
+    }
 }

@@ -89,4 +89,8 @@ class ClreqPolicyTailCoverageTest {
         // U+02CC is outside the switch range entirely: range-miss default.
         TracedAssertions.assertEqualsBopomofoTone(BopomofoTone.Yinping, BopomofoParser.parse("ㄅㄚˌ").tone);
     }
+
+    public static function flushTestTrace():Void {
+        TestTraceRecorder.flushClass("ClreqPolicyTailCoverageTest");
+    }
 }

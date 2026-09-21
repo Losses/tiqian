@@ -546,4 +546,8 @@ class PunctuationGeometryStageCoverageTest {
         TracedAssertions.assertEqualsString("trailing", trailingResult.decisions[0].side);
         TracedAssertions.assertEqualsFloat(10, trailingResult.clusters[0].advance);
     }
+
+    public static function flushTestTrace():Void {
+        TestTraceRecorder.flushClass("PunctuationGeometryStageCoverageTest");
+    }
 }

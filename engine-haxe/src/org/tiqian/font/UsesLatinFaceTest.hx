@@ -30,4 +30,8 @@ class UsesLatinFaceTest {
         TracedAssertions.assertFalse(FontRoleFns.fontRoleNameUsesLatinFace(null));
         TracedAssertions.assertFalse(FontRoleFns.fontRoleNameUsesLatinFace("NotARole"));
     }
+
+    public static function flushTestTrace():Void {
+        TestTraceRecorder.flushClass("UsesLatinFaceTest");
+    }
 }

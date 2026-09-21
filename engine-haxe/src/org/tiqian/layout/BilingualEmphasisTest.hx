@@ -21,4 +21,8 @@ class BilingualEmphasisTest {
         TracedAssertions.assertEqualsString("no-dot-on-non-han", western.reason);
         TracedAssertions.assertEqualsFloat(0, western.dotDiameter);
     }
+
+    public static function flushTestTrace():Void {
+        TestTraceRecorder.flushClass("BilingualEmphasisTest");
+    }
 }

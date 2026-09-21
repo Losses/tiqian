@@ -81,4 +81,8 @@ class R3GeometryTailCoverageTest {
         TracedAssertions.assertEqualsInt(1, b.lines.length);
         TracedAssertions.assertTrue(b.lines[0].naturalWidth > 0);
     }
+
+    public static function flushTestTrace():Void {
+        TestTraceRecorder.flushClass("R3GeometryTailCoverageTest");
+    }
 }

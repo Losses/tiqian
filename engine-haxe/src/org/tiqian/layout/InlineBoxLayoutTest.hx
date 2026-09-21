@@ -38,4 +38,8 @@ class InlineBoxLayoutTest {
         TracedAssertions.assertTrue(source.debug.autoSpaceDecisions.length == 0);
         TracedAssertions.assertEqualsString("Source", source.debug.inlineBoxDecisions[0].outerSpacing);
     }
+
+    public static function flushTestTrace():Void {
+        TestTraceRecorder.flushClass("InlineBoxLayoutTest");
+    }
 }

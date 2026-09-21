@@ -41,4 +41,8 @@ class ExplainableStubTextShaperTest {
         TracedAssertions.assertEqualsInt(1, result.glyphRuns[0].glyphs.length);
         TracedAssertions.assertEqualsFloat(32.0, result.glyphRuns[0].glyphs[0].advance);
     }
+
+    public static function flushTestTrace():Void {
+        TestTraceRecorder.flushClass("ExplainableStubTextShaperTest");
+    }
 }

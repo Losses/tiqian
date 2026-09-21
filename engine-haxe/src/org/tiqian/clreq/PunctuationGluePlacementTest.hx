@@ -69,4 +69,8 @@ class PunctuationGluePlacementTest {
         TracedAssertions.assertEqualsPunctuationGluePlacement(PunctuationGluePlacement.Traditional, ClreqProfile.HongKongHorizontal.gluePlacement);
         TracedAssertions.assertEqualsPunctuationGluePlacement(PunctuationGluePlacement.MainlandSimplified, ClreqProfile.MainlandHorizontal.gluePlacement);
     }
+
+    public static function flushTestTrace():Void {
+        TestTraceRecorder.flushClass("PunctuationGluePlacementTest");
+    }
 }

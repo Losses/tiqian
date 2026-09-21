@@ -58,4 +58,8 @@ class BaselineAlignmentTest {
         final latin = result.clusters[1];
         TracedAssertions.assertEqualsFloat(0.0, latin.baselineShift, "Latin mixed into CJK should use the shared Roman baseline");
     }
+
+    public static function flushTestTrace():Void {
+        TestTraceRecorder.flushClass("BaselineAlignmentTest");
+    }
 }

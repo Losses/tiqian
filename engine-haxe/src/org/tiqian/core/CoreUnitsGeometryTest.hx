@@ -100,6 +100,10 @@ class CoreUnitsGeometryTest {
         TracedAssertions.assertEqualsInt(5, decision.laidOutLines);
         TracedAssertions.assertEqualsInt(3, decision.visibleLines);
     }
+
+    public static function flushTestTrace():Void {
+        TestTraceRecorder.flushClass("CoreUnitsGeometryTest");
+    }
 }
 
 class CoreUnitsGeometryTestHelpers {

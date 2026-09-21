@@ -104,6 +104,10 @@ class LineOptimizationCoverageTest {
         LineOptimizationCoverageSupport.start("optimizationStrategyEnumeratesAllThreeStrategies");
         TracedAssertions.assertEqualsRendered("[Greedy, Lookahead, ParagraphDynamicProgramming]", LineOptimizationCoverageSupport.renderStrategies());
     }
+
+    public static function flushTestTrace():Void {
+        TestTraceRecorder.flushClass("LineOptimizationCoverageTest");
+    }
 }
 
 /** Shared fixtures and traced-assertion helpers for LineOptimizationCoverageTest; the Kotlin test-class lowering admits test functions only. */

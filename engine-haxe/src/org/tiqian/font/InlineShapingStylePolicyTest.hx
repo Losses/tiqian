@@ -37,4 +37,8 @@ class InlineShapingStylePolicyTest {
             InlineShapingStylePolicyTestSupport.vals(19)) == null,
             "-");
     }
+
+    public static function flushTestTrace():Void {
+        TestTraceRecorder.flushClass("InlineShapingStylePolicyTest");
+    }
 }

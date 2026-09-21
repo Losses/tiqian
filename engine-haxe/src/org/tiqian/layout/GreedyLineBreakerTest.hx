@@ -339,6 +339,10 @@ class GreedyLineBreakerTest {
         TracedAssertions.assertEqualsIntRange(new IntRange(2, 2), solution.lines[1].clusterRange);
         TracedAssertions.assertEqualsRendered("-", GreedyLineBreakerTestSupport.repairKind(solution.lines[1].repair));
     }
+
+    public static function flushTestTrace():Void {
+        TestTraceRecorder.flushClass("GreedyLineBreakerTest");
+    }
 }
 
 class GreedyLineBreakerTestSupport {

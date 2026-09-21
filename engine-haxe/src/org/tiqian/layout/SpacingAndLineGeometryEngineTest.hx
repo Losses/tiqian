@@ -128,4 +128,8 @@ class SpacingAndLineGeometryEngineTest {
         t.section("firstLineIndentAdaptsToMeasureAndCanBeOverridden");
         SpacingAndLineGeometryEngineTestSupport.replay("firstLineIndentAdaptsToMeasureAndCanBeOverridden");
     }
+
+    public static function flushTestTrace():Void {
+        TestTraceRecorder.flushClass("SpacingAndLineGeometryEngineTest");
+    }
 }

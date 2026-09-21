@@ -538,4 +538,8 @@ class JustifierTest {
             S.natural(c) + S.em, S.em, false, null, true, .25, 1.0 / 3.0);
         TracedAssertions.assertEqualsFloatTolerance((1.0 / 3.0 - .25) * S.em, p.allocations[0].delta, .001);
     }
+
+    public static function flushTestTrace():Void {
+        TestTraceRecorder.flushClass("JustifierTest");
+    }
 }

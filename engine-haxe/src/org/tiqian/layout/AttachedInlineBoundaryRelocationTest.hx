@@ -92,4 +92,8 @@ class AttachedInlineBoundaryRelocationTest {
                 choice.breaker.strategyName + ": reference detached from prose: " + AttachedInlineBoundaryRelocationTestSupport.renderRanges(result.lines));
         }
     }
+
+    public static function flushTestTrace():Void {
+        TestTraceRecorder.flushClass("AttachedInlineVirtualAdjacencyTest");
+    }
 }

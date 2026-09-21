@@ -53,4 +53,8 @@ class LineAdjustmentStageJfTest {
         final r = LineAdjustmentStageJfTestSupport.layout("甲\uFFFC乙丙丁戊", 48, o);
         TracedAssertions.assertEqualsIntRange(new IntRange(0, 1), r.lines[0].clusterRange);
     }
+
+    public static function flushTestTrace():Void {
+        TestTraceRecorder.flushClass("LineAdjustmentStageJfTest");
+    }
 }
