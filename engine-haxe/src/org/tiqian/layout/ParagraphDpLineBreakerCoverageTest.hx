@@ -12,52 +12,30 @@ import org.tiqian.layout.LineOptimization.RepairOption;
 import org.tiqian.layout.LineOptimization.RepairOptions;
 import std.SortedMap;
 import org.tiqian.test.trace.TestTraceRecorder;
-import org.tiqian.test.trace.ClassTestEntry;
 
 class ParagraphDpLineBreakerCoverageTest {
-    static function rec(n:String):Void
-        new TestTraceRecorder("ParagraphDpLineBreakerCoverageTest").section(n);
-
-    static function solve(c:Array<Cluster>, width:Float, ?shrink:Array<ShrinkOpportunity>, ?hard:Array<Int>, ?push:Bool, ?ranges:UnbreakableRanges,
-            ?progressive:SortedMap<Int, ProgressiveBreakOpportunity>, ?window:Int, ?cjk:Array<Int>):LineSolution
-        return ParagraphDpLineBreakerTestSupport.solve(c, width, shrink, hard, push, ranges, progressive, window, cjk);
-
-    static function han(n:Int, ?a:Float):Array<Cluster>
-        return ParagraphDpLineBreakerTestSupport.han(n, a);
-
-    static function latin():Array<Cluster>
-        return ParagraphDpLineBreakerTestSupport.latin();
-
-    static function opp(v:Array<Int>, spans:Array<TextRange>, tiers:Array<ProgressiveBreakTier>):SortedMap<Int, ProgressiveBreakOpportunity>
-        return ParagraphDpLineBreakerTestSupport.opportunities(v, spans, tiers);
-
-    static function pushInReasonStartsWith(repair:Null<RepairOption>, prefix:String):Bool {
-        final r = ParagraphDpLineBreakerTestSupport.pushInReason(repair);
-        return r != null && StringTools.startsWith(r, prefix);
-    }
-
-    public static function emptyClustersReturnAnEmptySolution():Void {
-        rec("emptyClustersReturnAnEmptySolution");
-        var s = solve([], 100);
+    @:test public static function emptyClustersReturnAnEmptySolution():Void {
+        ParagraphDpLineBreakerCoverageTestSupport.rec("emptyClustersReturnAnEmptySolution");
+        var s = ParagraphDpLineBreakerCoverageTestSupport.solve([], 100);
         TracedAssertions.assertTrue(s.lines.length == 0, ParagraphDpLineBreakerTestSupport.linesString(s));
     }
 
-    public static function mismatchedNaturalAndAdjustedSizesAreRejected():Void {
-        rec("mismatchedNaturalAndAdjustedSizesAreRejected");
-        var e = TracedAssertions.assertFailsWith(function() new ParagraphDpLineBreaker().breakLines(han(2), han(1), 100));
+    @:test public static function mismatchedNaturalAndAdjustedSizesAreRejected():Void {
+        ParagraphDpLineBreakerCoverageTestSupport.rec("mismatchedNaturalAndAdjustedSizesAreRejected");
+        var e = TracedAssertions.assertFailsWith(function() new ParagraphDpLineBreaker().breakLines(ParagraphDpLineBreakerCoverageTestSupport.han(2), ParagraphDpLineBreakerCoverageTestSupport.han(1), 100));
         TracedAssertions.assertTrue(e.message.indexOf("cluster-for-cluster") >= 0, e.message);
     }
 
-    public static function negativeCandidateWindowIsRejected():Void {
-        rec("negativeCandidateWindowIsRejected");
-        var e = TracedAssertions.assertFailsWith(function() new ParagraphDpLineBreaker(-1).breakLines(han(2), han(2), 100));
+    @:test public static function negativeCandidateWindowIsRejected():Void {
+        ParagraphDpLineBreakerCoverageTestSupport.rec("negativeCandidateWindowIsRejected");
+        var e = TracedAssertions.assertFailsWith(function() new ParagraphDpLineBreaker(-1).breakLines(ParagraphDpLineBreakerCoverageTestSupport.han(2), ParagraphDpLineBreakerCoverageTestSupport.han(2), 100));
         TracedAssertions.assertTrue(e.message.indexOf("non-negative") >= 0, e.message);
     }
 
-    public static function shrinkPrefixSkipsNonPositiveAndOutOfRangeOpportunities():Void {
-        rec("shrinkPrefixSkipsNonPositiveAndOutOfRangeOpportunities");
-        var c = han(4);
-        var s = solve(c, 100, [
+    @:test public static function shrinkPrefixSkipsNonPositiveAndOutOfRangeOpportunities():Void {
+        ParagraphDpLineBreakerCoverageTestSupport.rec("shrinkPrefixSkipsNonPositiveAndOutOfRangeOpportunities");
+        var c = ParagraphDpLineBreakerCoverageTestSupport.han(4);
+        var s = ParagraphDpLineBreakerCoverageTestSupport.solve(c, 100, [
             new ShrinkOpportunity(1, 2, 0, ShrinkChannel.RawAdvance),
             new ShrinkOpportunity(4, 2, 8, ShrinkChannel.RawAdvance),
             new ShrinkOpportunity(1, 2, 8, ShrinkChannel.RawAdvance)
@@ -66,61 +44,61 @@ class ParagraphDpLineBreakerCoverageTest {
         TracedAssertions.assertEqualsIntRange(new IntRange(0, 3), s.lines[0].clusterRange);
     }
 
-    public static function lineEndOnlyCapacityFeedsTheCompressedEdgeAtTheLineEnd():Void {
-        rec("lineEndOnlyCapacityFeedsTheCompressedEdgeAtTheLineEnd");
-        var c = han(4);
-        var s = solve(c, 44, [new ShrinkOpportunity(2, 1, 4, ShrinkChannel.TrailingGlue, true)], null, true, null, null, null, [1]);
+    @:test public static function lineEndOnlyCapacityFeedsTheCompressedEdgeAtTheLineEnd():Void {
+        ParagraphDpLineBreakerCoverageTestSupport.rec("lineEndOnlyCapacityFeedsTheCompressedEdgeAtTheLineEnd");
+        var c = ParagraphDpLineBreakerCoverageTestSupport.han(4);
+        var s = ParagraphDpLineBreakerCoverageTestSupport.solve(c, 44, [new ShrinkOpportunity(2, 1, 4, ShrinkChannel.TrailingGlue, true)], null, true, null, null, null, [1]);
         TracedAssertions.assertEqualsIntRange(new IntRange(0, 2), s.lines[0].clusterRange, ParagraphDpLineBreakerTestSupport.linesString(s));
-        TracedAssertions.assertTrue(pushInReasonStartsWith(s.lines[0].repair, "LineAdjustmentPushIn"), ParagraphDpLineBreakerTestSupport.repairsString(s));
+        TracedAssertions.assertTrue(ParagraphDpLineBreakerCoverageTestSupport.pushInReasonStartsWith(s.lines[0].repair, "LineAdjustmentPushIn"), ParagraphDpLineBreakerTestSupport.repairsString(s));
     }
 
-    public static function compressedEndsMayReachTheSegmentEnd():Void {
-        rec("compressedEndsMayReachTheSegmentEnd");
-        var s = solve(han(3), 44, [new ShrinkOpportunity(1, 2, 12, ShrinkChannel.RawAdvance)], null, true, null, null, null, [1]);
+    @:test public static function compressedEndsMayReachTheSegmentEnd():Void {
+        ParagraphDpLineBreakerCoverageTestSupport.rec("compressedEndsMayReachTheSegmentEnd");
+        var s = ParagraphDpLineBreakerCoverageTestSupport.solve(ParagraphDpLineBreakerCoverageTestSupport.han(3), 44, [new ShrinkOpportunity(1, 2, 12, ShrinkChannel.RawAdvance)], null, true, null, null, null, [1]);
         TracedAssertions.assertEqualsIntRange(new IntRange(0, 2), s.lines[0].clusterRange, ParagraphDpLineBreakerTestSupport.linesString(s));
-        TracedAssertions.assertTrue(pushInReasonStartsWith(s.lines[0].repair, "LineAdjustmentPushIn"), ParagraphDpLineBreakerTestSupport.repairsString(s));
+        TracedAssertions.assertTrue(ParagraphDpLineBreakerCoverageTestSupport.pushInReasonStartsWith(s.lines[0].repair, "LineAdjustmentPushIn"), ParagraphDpLineBreakerTestSupport.repairsString(s));
         TracedAssertions.assertEqualsRendered("ParagraphEnd", Std.string(s.lines[s.lines.length - 1].endReason));
     }
 
-    public static function compressedFinalMandatoryLineUsesTheCompressedCommitBranch():Void {
-        rec("compressedFinalMandatoryLineUsesTheCompressedCommitBranch");
-        var s = solve(han(4), 44, [new ShrinkOpportunity(2, 1, 4, ShrinkChannel.TrailingGlue, true)], [2], true);
+    @:test public static function compressedFinalMandatoryLineUsesTheCompressedCommitBranch():Void {
+        ParagraphDpLineBreakerCoverageTestSupport.rec("compressedFinalMandatoryLineUsesTheCompressedCommitBranch");
+        var s = ParagraphDpLineBreakerCoverageTestSupport.solve(ParagraphDpLineBreakerCoverageTestSupport.han(4), 44, [new ShrinkOpportunity(2, 1, 4, ShrinkChannel.TrailingGlue, true)], [2], true);
         TracedAssertions.assertEqualsIntRange(new IntRange(0, 2), s.lines[0].clusterRange, ParagraphDpLineBreakerTestSupport.linesString(s));
         TracedAssertions.assertEqualsRendered("MandatoryBreak", Std.string(s.lines[0].endReason));
-        TracedAssertions.assertTrue(pushInReasonStartsWith(s.lines[0].repair, "LineAdjustmentPushIn"), ParagraphDpLineBreakerTestSupport.repairsString(s));
+        TracedAssertions.assertTrue(ParagraphDpLineBreakerCoverageTestSupport.pushInReasonStartsWith(s.lines[0].repair, "LineAdjustmentPushIn"), ParagraphDpLineBreakerTestSupport.repairsString(s));
     }
 
-    public static function tierPromotionRoutesTheRepairReasonThroughThePromotionCode():Void {
-        rec("tierPromotionRoutesTheRepairReasonThroughThePromotionCode");
-        var c = latin();
+    @:test public static function tierPromotionRoutesTheRepairReasonThroughThePromotionCode():Void {
+        ParagraphDpLineBreakerCoverageTestSupport.rec("tierPromotionRoutesTheRepairReasonThroughThePromotionCode");
+        var c = ParagraphDpLineBreakerCoverageTestSupport.latin();
         var span = new TextRange(0, 5);
-        var s = solve(c, 80, [new ShrinkOpportunity(2, 2, 5, ShrinkChannel.RawAdvance)], null, true, null,
-            opp([2, 3], [span, span], [ProgressiveBreakTier.Emergency, ProgressiveBreakTier.Whitespace]));
+        var s = ParagraphDpLineBreakerCoverageTestSupport.solve(c, 80, [new ShrinkOpportunity(2, 2, 5, ShrinkChannel.RawAdvance)], null, true, null,
+            ParagraphDpLineBreakerCoverageTestSupport.opp([2, 3], [span, span], [ProgressiveBreakTier.Emergency, ProgressiveBreakTier.Whitespace]));
         TracedAssertions.assertEqualsIntRange(new IntRange(0, 2), s.lines[0].clusterRange, ParagraphDpLineBreakerTestSupport.linesString(s));
-        TracedAssertions.assertTrue(pushInReasonStartsWith(s.lines[0].repair, "ProgressiveTechnicalTierPromotion"),
+        TracedAssertions.assertTrue(ParagraphDpLineBreakerCoverageTestSupport.pushInReasonStartsWith(s.lines[0].repair, "ProgressiveTechnicalTierPromotion"),
             ParagraphDpLineBreakerTestSupport.repairsString(s));
     }
 
-    public static function promotionCheckReturnsFalseWhenTheCandidateEndHasNoOpportunity():Void {
-        rec("promotionCheckReturnsFalseWhenTheCandidateEndHasNoOpportunity");
-        var c = latin();
-        var s = solve(c, 80, [new ShrinkOpportunity(2, 2, 5, ShrinkChannel.RawAdvance)], null, true, null,
-            opp([2], [new TextRange(0, 5)], [ProgressiveBreakTier.Emergency]));
+    @:test public static function promotionCheckReturnsFalseWhenTheCandidateEndHasNoOpportunity():Void {
+        ParagraphDpLineBreakerCoverageTestSupport.rec("promotionCheckReturnsFalseWhenTheCandidateEndHasNoOpportunity");
+        var c = ParagraphDpLineBreakerCoverageTestSupport.latin();
+        var s = ParagraphDpLineBreakerCoverageTestSupport.solve(c, 80, [new ShrinkOpportunity(2, 2, 5, ShrinkChannel.RawAdvance)], null, true, null,
+            ParagraphDpLineBreakerCoverageTestSupport.opp([2], [new TextRange(0, 5)], [ProgressiveBreakTier.Emergency]));
         TracedAssertions.assertEqualsIntRange(new IntRange(0, 1), s.lines[0].clusterRange, ParagraphDpLineBreakerTestSupport.linesString(s));
         TracedAssertions.assertTrue(s.lines[0].repair == null, ParagraphDpLineBreakerTestSupport.repairsString(s));
     }
 
-    public static function mandatorySegmentFiltersTheControlBoundaryFromCandidates():Void {
-        rec("mandatorySegmentFiltersTheControlBoundaryFromCandidates");
-        var s = solve(han(6), 32, null, [2]);
+    @:test public static function mandatorySegmentFiltersTheControlBoundaryFromCandidates():Void {
+        ParagraphDpLineBreakerCoverageTestSupport.rec("mandatorySegmentFiltersTheControlBoundaryFromCandidates");
+        var s = ParagraphDpLineBreakerCoverageTestSupport.solve(ParagraphDpLineBreakerCoverageTestSupport.han(6), 32, null, [2]);
         TracedAssertions.assertEqualsIntRange(new IntRange(0, 2), s.lines[0].clusterRange, ParagraphDpLineBreakerTestSupport.linesString(s));
         TracedAssertions.assertEqualsRendered("MandatoryBreak", Std.string(s.lines[0].endReason));
         TracedAssertions.assertEqualsInt(5, s.lines[s.lines.length - 1].clusterRange.end, ParagraphDpLineBreakerTestSupport.linesString(s));
     }
 
-    public static function narrowWindowsDropEndsAtOrBelowTheLineStart():Void {
-        rec("narrowWindowsDropEndsAtOrBelowTheLineStart");
-        var s = solve(han(4), 20);
+    @:test public static function narrowWindowsDropEndsAtOrBelowTheLineStart():Void {
+        ParagraphDpLineBreakerCoverageTestSupport.rec("narrowWindowsDropEndsAtOrBelowTheLineStart");
+        var s = ParagraphDpLineBreakerCoverageTestSupport.solve(ParagraphDpLineBreakerCoverageTestSupport.han(4), 20);
         TracedAssertions.assertEqualsInt(4, s.lines.length, ParagraphDpLineBreakerTestSupport.linesString(s));
         var all = true;
         for (l in s.lines)
@@ -129,37 +107,16 @@ class ParagraphDpLineBreakerCoverageTest {
         TracedAssertions.assertTrue(all, ParagraphDpLineBreakerTestSupport.rangesString(s));
     }
 
-    public static function interfaceDefaultStrategyNameIsCustom():Void {
-        rec("interfaceDefaultStrategyNameIsCustom");
+    @:test public static function interfaceDefaultStrategyNameIsCustom():Void {
+        ParagraphDpLineBreakerCoverageTestSupport.rec("interfaceDefaultStrategyNameIsCustom");
         var b:LineBreaker = new CustomBreaker();
         TracedAssertions.assertEqualsString("custom", b.strategyName);
     }
 
-    /**
-        The conventional class test entry (boring feature spec 19).
-        The class carries no test marker, so the Kotlin runner generated from
-        that marker's collection never instantiates it; this entry is how the
-        runner calls the class once. It registers no test id, so the cross-target
-        test id set is unchanged. The body repeats the calls
-        engine-haxe/tests/Main.hx makes for this class, through the same failure
-        accounting Main.hx uses, and then flushes the class trace the way Main.hx
-        does.
-    **/
-    public static function runTestEntries():Void {
-        ClassTestEntry.run(emptyClustersReturnAnEmptySolution);
-        ClassTestEntry.run(mismatchedNaturalAndAdjustedSizesAreRejected);
-        ClassTestEntry.run(negativeCandidateWindowIsRejected);
-        ClassTestEntry.run(shrinkPrefixSkipsNonPositiveAndOutOfRangeOpportunities);
-        ClassTestEntry.run(lineEndOnlyCapacityFeedsTheCompressedEdgeAtTheLineEnd);
-        ClassTestEntry.run(compressedEndsMayReachTheSegmentEnd);
-        ClassTestEntry.run(compressedFinalMandatoryLineUsesTheCompressedCommitBranch);
-        ClassTestEntry.run(tierPromotionRoutesTheRepairReasonThroughThePromotionCode);
-        ClassTestEntry.run(promotionCheckReturnsFalseWhenTheCandidateEndHasNoOpportunity);
-        ClassTestEntry.run(mandatorySegmentFiltersTheControlBoundaryFromCandidates);
-        ClassTestEntry.run(narrowWindowsDropEndsAtOrBelowTheLineStart);
-        ClassTestEntry.run(interfaceDefaultStrategyNameIsCustom);
+    public static function flushTestTrace():Void {
         TestTraceRecorder.flushClass("ParagraphDpLineBreakerCoverageTest");
     }
+
 }
 
 class CustomBreaker implements LineBreaker {
