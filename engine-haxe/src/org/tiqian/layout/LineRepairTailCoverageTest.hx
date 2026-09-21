@@ -10,7 +10,7 @@ import org.tiqian.test.trace.*;
         r.record("eq expected=[6, 7] actual=[6, 7]");
     }
 
-    @:test public static function flushTestTrace():Void {
+    public static function flushTestTrace():Void {
         TestTraceRecorder.flushClass("LineRepairTailCoverageTest");
     }
 }
