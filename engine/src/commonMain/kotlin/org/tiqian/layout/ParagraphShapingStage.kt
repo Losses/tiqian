@@ -744,11 +744,16 @@ internal fun ExplainableStubParagraphLayoutEngine.shapeParagraph(
         hyphenOffsets = hyphenOffsets.toSet(),
         hyphenAdvance = hyphenAdvance,
         hyphenGlyphs = hyphenGlyphs,
-        substitutionRollbacks = substitutionRollbacks.toMap(),
+        // Map-typed fields render key-ascending (key-order rule: Int natural
+        // order; TextRange by (start, end); RubySpan by (baseRange.start,
+        // baseRange.end, text); other key types by their fields in declaration
+        // order). The value lookups above are unchanged; only the rendered
+        // iteration order is pinned.
+        substitutionRollbacks = substitutionRollbacks.toSortedMap(compareBy({ it.start }, { it.end })),
         breakOpportunityDecisions = breakOpportunityDecisions.toList(),
         emergencyTrackingEligibilityDecisions = emergencyTrackingEligibilityDecisions.toList(),
-        progressiveBreakOffsets = progressiveBreakOffsets.toMap(),
-        segmentShapingCache = segmentShapingCache.toMap(),
+        progressiveBreakOffsets = progressiveBreakOffsets.toSortedMap(),
+        segmentShapingCache = segmentShapingCache.toSortedMap(compareBy({ it.start }, { it.end })),
     )
 }
 

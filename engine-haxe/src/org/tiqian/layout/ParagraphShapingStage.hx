@@ -40,13 +40,13 @@ import std.SortedMap;
     public final substitutionRollbacks:SortedMap<TextRange, String>;
     public final breakOpportunityDecisions:Array<BreakOpportunityDecisionInfo>;
     public final emergencyTrackingEligibilityDecisions:Array<EmergencyTrackingEligibilityDecisionInfo>;
-    public final progressiveBreakOffsets:ProgressiveBreakOffsetMap;
-    public final segmentShapingCache:SegmentShapingCache;
+    public final progressiveBreakOffsets:SortedMap<Int, ProgressiveBreakOpportunity>;
+    public final segmentShapingCache:SortedMap<TextRange, ShapingResult>;
 
     public function new(shapingResults:Array<ShapingResult>, hyphenOffsets:SortedSet<Int>, hyphenAdvance:Float, hyphenGlyphs:Array<Glyph>,
             substitutionRollbacks:SortedMap<TextRange, String>, breakOpportunityDecisions:Array<BreakOpportunityDecisionInfo>,
             emergencyTrackingEligibilityDecisions:Array<EmergencyTrackingEligibilityDecisionInfo>,
-            progressiveBreakOffsets:ProgressiveBreakOffsetMap, segmentShapingCache:SegmentShapingCache) {
+            progressiveBreakOffsets:SortedMap<Int, ProgressiveBreakOpportunity>, ?segmentShapingCache:SortedMap<TextRange, ShapingResult>) {
         this.shapingResults = shapingResults;
         this.hyphenOffsets = hyphenOffsets;
         this.hyphenAdvance = hyphenAdvance;
@@ -55,7 +55,7 @@ import std.SortedMap;
         this.breakOpportunityDecisions = breakOpportunityDecisions;
         this.emergencyTrackingEligibilityDecisions = emergencyTrackingEligibilityDecisions;
         this.progressiveBreakOffsets = progressiveBreakOffsets;
-        this.segmentShapingCache = segmentShapingCache;
+        this.segmentShapingCache = segmentShapingCache == null ? SortedMap.builder().build() : segmentShapingCache;
     }
 }
 
@@ -475,7 +475,7 @@ class ParagraphShapingStage {
             clusterRanges:Array<ResolvedClusterRange>, fontDecisionByRange:SortedMap<TextRange, FontDecision>,
             inlineObjectByRange:SortedMap<TextRange, InlineObjectSpan>, punctuationGlyphSubstitutor:ClreqPunctuationGlyphSubstitutor, styleAt:Int->TextStyle,
             emphasisItalicAt:Int->Bool, rejectedTechnicalTiersBySpan:SortedMap<TextRange, SortedSet<Int>>,
-            ?cachedSegmentShaping:SegmentShapingCache, ?cachedSubstitutionRollbacks:SortedMap<TextRange, String>):ParagraphShapingStageResult {
+            ?cachedSegmentShaping:SortedMap<TextRange, ShapingResult>, ?cachedSubstitutionRollbacks:SortedMap<TextRange, String>):ParagraphShapingStageResult {
         final segmentShapingCacheKeys = new Array<TextRange>();
         final segmentShapingCacheValues = new Array<ShapingResult>();
         if (cachedSegmentShaping != null) {
@@ -1420,15 +1420,15 @@ class ParagraphShapingStage {
             rollbacksBuilder.put(substitutionRollbackKeys[i], substitutionRollbackValues[i]);
         final rollbacksMap = rollbacksBuilder.build();
 
-        // The legacy stage returns this table as a Kotlin `Map`
-        // (`ParagraphShapingStage.kt:750`), whose rendering order is the
-        // order the tiers recorded the offsets, so that order is handed on.
-        final progOffsetsMap = new ProgressiveBreakOffsetMap(progBreakKeys, progBreakValues);
+        final progOffsetsBuilder = SortedMap.builder();
+        for (i in 0...progBreakKeys.length)
+            progOffsetsBuilder.put(progBreakKeys[i], progBreakValues[i]);
+        final progOffsetsMap = progOffsetsBuilder.build();
 
-        // The legacy stage returns the cache as a Kotlin `Map`
-        // (`ParagraphShapingStage.kt:751`), whose iteration and rendering
-        // order is insertion order, so the recorded order is handed on as-is.
-        final segmentCacheMap = new SegmentShapingCache(segmentShapingCacheKeys, segmentShapingCacheValues);
+        final segmentCacheBuilder = SortedMap.builder();
+        for (i in 0...segmentShapingCacheKeys.length)
+            segmentCacheBuilder.put(segmentShapingCacheKeys[i], segmentShapingCacheValues[i]);
+        final segmentCacheMap = segmentCacheBuilder.build();
 
         return new ParagraphShapingStageResult(shapingResults, hyphenOffsetsSet, hyphenAdvance, hyphenGlyphs, rollbacksMap, breakOpportunityDecisions,
             emergencyTrackingEligibilityDecisions, progOffsetsMap, segmentCacheMap);
