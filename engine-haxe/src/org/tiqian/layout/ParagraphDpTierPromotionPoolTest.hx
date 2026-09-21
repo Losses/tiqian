@@ -35,7 +35,7 @@ class ParagraphDpTierPromotionPoolTest {
                 new ProgressiveBreakOpportunity(ProgressiveBreakTier.Emergency, new TextRange(0, 2)),
                 new ProgressiveBreakOpportunity(ProgressiveBreakTier.Whitespace, new TextRange(2, 4))
             ]), null, [1], 8);
-        final repairs:Array<RepairOption> = [for (l in s.lines) l.repair];
+        final repairs:Array<Null<RepairOption>> = [for (l in s.lines) l.repair];
         TracedAssertions.assertEqualsIntRange(new IntRange(0, 2), s.lines[0].clusterRange, ParagraphDpLineBreakerTestSupport.linesString(s));
         TracedAssertions.assertTrue(ParagraphDpTierPromotionPoolTestSupport.repairReason(s.lines[0].repair).indexOf("LineAdjustmentPushIn") == 0,
             ParagraphDpLineBreakerTestSupport.repairsString(s));
@@ -49,7 +49,7 @@ class ParagraphDpTierPromotionPoolTest {
             ParagraphDpTierPromotionPoolTestSupport.opp([2], [
                 new ProgressiveBreakOpportunity(ProgressiveBreakTier.Emergency, new TextRange(0, 2))
             ]), null, [1], 8);
-        final repairs:Array<RepairOption> = [for (l in s.lines) l.repair];
+        final repairs:Array<Null<RepairOption>> = [for (l in s.lines) l.repair];
         TracedAssertions.assertEqualsIntRange(new IntRange(0, 2), s.lines[0].clusterRange, ParagraphDpLineBreakerTestSupport.linesString(s));
         TracedAssertions.assertTrue(ParagraphDpTierPromotionPoolTestSupport.repairReason(s.lines[0].repair).indexOf("LineAdjustmentPushIn") == 0,
             ParagraphDpLineBreakerTestSupport.repairsString(s));
