@@ -86,7 +86,7 @@ class WidthIndependentAnnotationCacheCoverageTestSupport {
     }
 
     private static function copyAnnotation(a:WidthIndependentParagraphAnnotation, ?clreqProfile:ClreqProfile, ?fontDecisions:Array<FontDecision>,
-            ?segmentShapingCache:SortedMap<TextRange, ShapingResult>):WidthIndependentParagraphAnnotation
+            ?segmentShapingCache:SegmentShapingCache):WidthIndependentParagraphAnnotation
         return new WidthIndependentParagraphAnnotation(a.text, a.fontSize, a.styleAt, a.fontSizeAt, a.bopomofoFontWeightAt, a.rubyFontSize, a.rubyStackGap,
             a.rubyFontWeight, a.pinyinSpans, clreqProfile == null ? a.clreqProfile : clreqProfile, a.punctuationGlyphSubstitutor, a.quotePairs,
             a.roleOverrideInfos, fontDecisions == null ? a.fontDecisions : fontDecisions, a.clusterRanges, a.fontDecisionByRange, a.inlineObjectByRange,
@@ -117,8 +117,11 @@ class WidthIndependentAnnotationCacheCoverageTestSupport {
 
     /** Reconstruction with an empty segmentShapingCache so dynamic shaping calls
      *  shapeSegment and invokes the emphasisItalicAt lambda. */
-    public static function withEmptyShapingCache(annotation:WidthIndependentParagraphAnnotation):WidthIndependentParagraphAnnotation
-        return copyAnnotation(annotation, null, null, SortedMap.builder().build());
+    public static function withEmptyShapingCache(annotation:WidthIndependentParagraphAnnotation):WidthIndependentParagraphAnnotation {
+        final emptyKeys:Array<TextRange> = [];
+        final emptyValues:Array<ShapingResult> = [];
+        return copyAnnotation(annotation, null, null, new SegmentShapingCache(emptyKeys, emptyValues));
+    }
 
     public static function nonGbResolver():ClreqProfileResolver
         return new TiqianClreqFixedResolver(ClreqProfile.TaiwanHorizontal);
