@@ -14,6 +14,10 @@ import org.tiqian.layout.LineOptimization.LineCandidate;
 import org.tiqian.layout.LineOptimization.RepairOption;
 import org.tiqian.layout.LineOptimization.RepairOptions;
 import org.tiqian.test.trace.TracedAssertions;
+import org.tiqian.core.*;
+import org.tiqian.test.trace.*;
+import org.tiqian.layout.ProgressiveBreakDecisions.ShrinkChannel;
+import org.tiqian.test.trace.TestTraceRecorder;
 
 class ParagraphDpLineBreakerTestSupport {
     public static function cluster(i:Int, ?text:String, ?advance:Float):Cluster
@@ -112,4 +116,10 @@ class ParagraphDpLineBreakerTestSupport {
             parts.push(l.clusterRange.start + ".." + l.clusterRange.end);
         return "[" + parts.join(", ") + "]";
     }
+
+    public static function rec(n:String):Void
+        new TestTraceRecorder("ParagraphDpLineBreakerTest").section(n);
+
+    public static function c(i:Int, t:String, a:Float):Cluster
+        return ParagraphDpLineBreakerTestSupport.cluster(i, t, a);
 }

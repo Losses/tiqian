@@ -8,65 +8,25 @@ import org.tiqian.layout.QuotePairAnalyzer.QuotePair;
 import org.tiqian.layout.QuotePairAnalyzer.QuoteType;
 import org.tiqian.test.trace.TestTraceRecorder;
 import org.tiqian.test.trace.TracedAssertions;
-import org.tiqian.test.trace.ClassTestEntry;
 
 class QuotePairAnalyzerTest {
-    private static function rec(name:String):Void
-        new TestTraceRecorder("QuotePairAnalyzerTest").section(name);
-
-    private static function a():QuotePairAnalyzer
-        return new QuotePairAnalyzer();
-
-    private static function sig(text:String, roles:std.SortedMap<Int, FontRole>):String {
-        var out = "";
-        var i = 0;
-        while (i < text.length) {
-            var c = text.charCodeAt(i);
-            if (c == 0x2018 || c == 0x2019 || c == 0x201C || c == 0x201D) {
-                var r = roles.get(i);
-                out += r == FontRole.LatinText ? "L" : r == FontRole.CjkPunctuation ? "C" : "?";
-            }
-            i++;
-        }
-        return out;
-    }
-
-    private static function role(label:String, text:String, expected:String):Void {
-        TracedAssertions.assertEqualsString(expected, sig(text, a().classifyPairs(text, a().analyze(text))), label);
-    }
-
-    private static function decisions(text:String):Array<QuotePairAnalyzer.QuoteRoleDecision>
-        return a().classifyQuoteRoles(text, a().analyze(text));
-
-    private static function renderDecisions(values:Array<QuotePairAnalyzer.QuoteRoleDecision>):String {
-        var out = "[";
-        var i = 0;
-        while (i < values.length) {
-            if (i > 0)
-                out += ", ";
-            out += values[i].toString();
-            i++;
-        }
-        return out + "]";
-    }
-
-    public static function matchesDoubleQuotePair():Void {
-        rec("matchesDoubleQuotePair");
-        var p = a().analyze("\u4ED6\u8BF4\u201C\u4F60\u597D\u201D");
+    @:test public static function matchesDoubleQuotePair():Void {
+        QuotePairAnalyzerTestSupport.rec("matchesDoubleQuotePair");
+        var p = QuotePairAnalyzerTestSupport.a().analyze("\u4ED6\u8BF4\u201C\u4F60\u597D\u201D");
         TracedAssertions.assertEquals(1, p.length);
         TracedAssertions.assertEqualsQuotePair(new QuotePair(2, 5, QuoteType.Double), p[0]);
     }
 
-    public static function matchesSingleQuotePair():Void {
-        rec("matchesSingleQuotePair");
-        var p = a().analyze("\u4ED6\u8BF4\u2018\u4F60\u597D\u2019");
+    @:test public static function matchesSingleQuotePair():Void {
+        QuotePairAnalyzerTestSupport.rec("matchesSingleQuotePair");
+        var p = QuotePairAnalyzerTestSupport.a().analyze("\u4ED6\u8BF4\u2018\u4F60\u597D\u2019");
         TracedAssertions.assertEquals(1, p.length);
         TracedAssertions.assertEqualsQuotePair(new QuotePair(2, 5, QuoteType.Single), p[0]);
     }
 
-    public static function matchesNestedQuotePairs():Void {
-        rec("matchesNestedQuotePairs");
-        var p = a().analyze("\u4ED6\u8BF4\uFF1A\u201C\u5979\u8BF4\u2018\u4F60\u597D\u2019\u3002\u201D");
+    @:test public static function matchesNestedQuotePairs():Void {
+        QuotePairAnalyzerTestSupport.rec("matchesNestedQuotePairs");
+        var p = QuotePairAnalyzerTestSupport.a().analyze("\u4ED6\u8BF4\uFF1A\u201C\u5979\u8BF4\u2018\u4F60\u597D\u2019\u3002\u201D");
         TracedAssertions.assertEquals(2, p.length);
         var has6 = false;
         var has3 = false;
@@ -82,21 +42,21 @@ class QuotePairAnalyzerTest {
         TracedAssertions.assertTrue(has3);
     }
 
-    public static function unmatchedQuotesProduceNoPairs():Void {
-        rec("unmatchedQuotesProduceNoPairs");
-        TracedAssertions.assertEquals(0, a().analyze("it\u2019s").length);
+    @:test public static function unmatchedQuotesProduceNoPairs():Void {
+        QuotePairAnalyzerTestSupport.rec("unmatchedQuotesProduceNoPairs");
+        TracedAssertions.assertEquals(0, QuotePairAnalyzerTestSupport.a().analyze("it\u2019s").length);
     }
 
-    public static function contractionApostropheDoesNotCloseOuterSingleQuote():Void {
-        rec("contractionApostropheDoesNotCloseOuterSingleQuote");
+    @:test public static function contractionApostropheDoesNotCloseOuterSingleQuote():Void {
+        QuotePairAnalyzerTestSupport.rec("contractionApostropheDoesNotCloseOuterSingleQuote");
         var t = "\u2018that\u2019s\u2019";
-        TracedAssertions.assertEqualsQuotePairArray([new QuotePair(0, 7, QuoteType.Single)], a().analyze(t));
+        TracedAssertions.assertEqualsQuotePairArray([new QuotePair(0, 7, QuoteType.Single)], QuotePairAnalyzerTestSupport.a().analyze(t));
     }
 
-    public static function contractionInsideCjkSingleQuotesKeepsApostropheLatin():Void {
-        rec("contractionInsideCjkSingleQuotesKeepsApostropheLatin");
+    @:test public static function contractionInsideCjkSingleQuotesKeepsApostropheLatin():Void {
+        QuotePairAnalyzerTestSupport.rec("contractionInsideCjkSingleQuotesKeepsApostropheLatin");
         var t = "\u4E2D\u2018that\u2019s\u2019\u4E2D";
-        var r = a().classifyPairs(t, a().analyze(t));
+        var r = QuotePairAnalyzerTestSupport.a().classifyPairs(t, QuotePairAnalyzerTestSupport.a().analyze(t));
         var c = new CjkFontRoleClassifier();
         TracedAssertions.assertEqualsFontRole(FontRole.CjkPunctuation, r.get(1));
         TracedAssertions.assertEqualsFontRole(FontRole.CjkPunctuation, r.get(std.UString.count(t) - 2));
@@ -104,8 +64,8 @@ class QuotePairAnalyzerTest {
         TracedAssertions.assertEqualsFontRole(FontRole.LatinText, c.classify(t, new TextRange(6, 7)));
     }
 
-    public static function inWordApostropheMatrixDoesNotConsumeOuterQuotePairs():Void {
-        rec("inWordApostropheMatrixDoesNotConsumeOuterQuotePairs");
+    @:test public static function inWordApostropheMatrixDoesNotConsumeOuterQuotePairs():Void {
+        QuotePairAnalyzerTestSupport.rec("inWordApostropheMatrixDoesNotConsumeOuterQuotePairs");
         var words = [
             "that\u2019s",
             "l\u2019\u00E9t\u00E9",
@@ -118,8 +78,8 @@ class QuotePairAnalyzerTest {
         var i = 0;
         while (i < words.length) {
             var w = words[i];
-            var d = a().classifyQuoteRoles(w, []);
-            TracedAssertions.assertTrue(a().analyze(w).length == 0, w);
+            var d = QuotePairAnalyzerTestSupport.a().classifyQuoteRoles(w, []);
+            TracedAssertions.assertTrue(QuotePairAnalyzerTestSupport.a().analyze(w).length == 0, w);
             var allLatin = true;
             var j = 0;
             while (j < d.length) {
@@ -127,7 +87,7 @@ class QuotePairAnalyzerTest {
                     allLatin = false;
                 j++;
             }
-            TracedAssertions.assertTrue(allLatin, w + ": " + renderDecisions(d));
+            TracedAssertions.assertTrue(allLatin, w + ": " + QuotePairAnalyzerTestSupport.renderDecisions(d));
             var allSource = true;
             j = 0;
             while (j < d.length) {
@@ -135,9 +95,9 @@ class QuotePairAnalyzerTest {
                     allSource = false;
                 j++;
             }
-            TracedAssertions.assertTrue(allSource, w + ": " + renderDecisions(d));
+            TracedAssertions.assertTrue(allSource, w + ": " + QuotePairAnalyzerTestSupport.renderDecisions(d));
             var q = "\u2018" + w + "\u2019";
-            TracedAssertions.assertEqualsQuotePairArray([new QuotePair(0, q.length - 1, QuoteType.Single)], a().analyze(q), q);
+            TracedAssertions.assertEqualsQuotePairArray([new QuotePair(0, q.length - 1, QuoteType.Single)], QuotePairAnalyzerTestSupport.a().analyze(q), q);
             var curly = 0;
             var k = 0;
             while (k < q.length) {
@@ -152,72 +112,62 @@ class QuotePairAnalyzerTest {
                 exp += "L";
                 m++;
             }
-            TracedAssertions.assertEqualsString(exp, sig(q, a().classifyPairs(q, a().analyze(q))), q);
+            TracedAssertions.assertEqualsString(exp, QuotePairAnalyzerTestSupport.sig(q, QuotePairAnalyzerTestSupport.a().classifyPairs(q, QuotePairAnalyzerTestSupport.a().analyze(q))), q);
             i++;
         }
     }
 
-    public static function unmatchedCurlyQuotesUseDirectionalContext():Void {
-        rec("unmatchedCurlyQuotesUseDirectionalContext");
-        role("leading elision at text start", "\u201990s", "L");
-        role("leading elision after CJK and Western space", "\u4E2D\u6587 \u201990s", "L");
-        role("trailing possessive", "James\u2019 book", "L");
-        role("truncated Latin opening quote", "\u201CHello", "L");
-        role("truncated Latin closing quote", "Hello\u201D", "L");
-        role("unspaced CJK opening quote", "\u4E2D\u6587\u201CHello", "C");
-        role("unmatched CJK closing quote", "\u4E2D\u6587\u201D", "C");
-        role("context-free quote", "\u201D", "C");
+    @:test public static function unmatchedCurlyQuotesUseDirectionalContext():Void {
+        QuotePairAnalyzerTestSupport.rec("unmatchedCurlyQuotesUseDirectionalContext");
+        QuotePairAnalyzerTestSupport.role("leading elision at text start", "\u201990s", "L");
+        QuotePairAnalyzerTestSupport.role("leading elision after CJK and Western space", "\u4E2D\u6587 \u201990s", "L");
+        QuotePairAnalyzerTestSupport.role("trailing possessive", "James\u2019 book", "L");
+        QuotePairAnalyzerTestSupport.role("truncated Latin opening quote", "\u201CHello", "L");
+        QuotePairAnalyzerTestSupport.role("truncated Latin closing quote", "Hello\u201D", "L");
+        QuotePairAnalyzerTestSupport.role("unspaced CJK opening quote", "\u4E2D\u6587\u201CHello", "C");
+        QuotePairAnalyzerTestSupport.role("unmatched CJK closing quote", "\u4E2D\u6587\u201D", "C");
+        QuotePairAnalyzerTestSupport.role("context-free quote", "\u201D", "C");
     }
 
-    public static function mismatchedNestingLeavesQuotesUnmatched():Void {
-        rec("mismatchedNestingLeavesQuotesUnmatched");
-        TracedAssertions.assertEquals(0, a().analyze("\u201Chello\u2019").length);
+    @:test public static function mismatchedNestingLeavesQuotesUnmatched():Void {
+        QuotePairAnalyzerTestSupport.rec("mismatchedNestingLeavesQuotesUnmatched");
+        TracedAssertions.assertEquals(0, QuotePairAnalyzerTestSupport.a().analyze("\u201Chello\u2019").length);
     }
 
-    private static function pairRole(name:String, text:String, indexes:Array<Int>, expected:FontRole):Void {
-        rec(name);
-        var r = a().classifyPairs(text, a().analyze(text));
-        var i = 0;
-        while (i < indexes.length) {
-            TracedAssertions.assertEqualsFontRole(expected, r.get(indexes[i]));
-            i++;
-        }
-    }
+    @:test public static function classifiesPairAsCjkWhenOuterContextIsCjk():Void
+        QuotePairAnalyzerTestSupport.pairRole("classifiesPairAsCjkWhenOuterContextIsCjk", "\u4ED6\u8BF4\u201C\u4F60\u597D\u201D", [2, 5], FontRole.CjkPunctuation);
 
-    public static function classifiesPairAsCjkWhenOuterContextIsCjk():Void
-        pairRole("classifiesPairAsCjkWhenOuterContextIsCjk", "\u4ED6\u8BF4\u201C\u4F60\u597D\u201D", [2, 5], FontRole.CjkPunctuation);
+    @:test public static function classifiesPairAsLatinWhenOuterContextIsLatin():Void
+        QuotePairAnalyzerTestSupport.pairRole("classifiesPairAsLatinWhenOuterContextIsLatin", "he said \u201Chello\u201D world", [8, 14], FontRole.LatinText);
 
-    public static function classifiesPairAsLatinWhenOuterContextIsLatin():Void
-        pairRole("classifiesPairAsLatinWhenOuterContextIsLatin", "he said \u201Chello\u201D world", [8, 14], FontRole.LatinText);
+    @:test public static function classifiesBothQuotesAsCjkForCjkQuotedLatinContent():Void
+        QuotePairAnalyzerTestSupport.pairRole("classifiesBothQuotesAsCjkForCjkQuotedLatinContent", "\u4ED6\u8BF4\u201Chello\u201D", [2, 8], FontRole.CjkPunctuation);
 
-    public static function classifiesBothQuotesAsCjkForCjkQuotedLatinContent():Void
-        pairRole("classifiesBothQuotesAsCjkForCjkQuotedLatinContent", "\u4ED6\u8BF4\u201Chello\u201D", [2, 8], FontRole.CjkPunctuation);
+    @:test public static function unspacedCjkQuotationOfLatinTextRemainsCjk():Void
+        QuotePairAnalyzerTestSupport.pairRole("unspacedCjkQuotationOfLatinTextRemainsCjk", "\u4ED6\u8BF4\u2018hello\u2019", [2, 8], FontRole.CjkPunctuation);
 
-    public static function unspacedCjkQuotationOfLatinTextRemainsCjk():Void
-        pairRole("unspacedCjkQuotationOfLatinTextRemainsCjk", "\u4ED6\u8BF4\u2018hello\u2019", [2, 8], FontRole.CjkPunctuation);
+    @:test public static function spacedCjkQuotedContentRemainsCjk():Void
+        QuotePairAnalyzerTestSupport.pairRole("spacedCjkQuotedContentRemainsCjk", "\u4ED6\u8BF4 \u2018\u4F60\u597D\u2019", [3, 6], FontRole.CjkPunctuation);
 
-    public static function spacedCjkQuotedContentRemainsCjk():Void
-        pairRole("spacedCjkQuotedContentRemainsCjk", "\u4ED6\u8BF4 \u2018\u4F60\u597D\u2019", [3, 6], FontRole.CjkPunctuation);
+    @:test public static function classifiesPairAsCjkAtTextBoundary():Void
+        QuotePairAnalyzerTestSupport.pairRole("classifiesPairAsCjkAtTextBoundary", "\u201C\u4F60\u597D\u201D", [0, 3], FontRole.CjkPunctuation);
 
-    public static function classifiesPairAsCjkAtTextBoundary():Void
-        pairRole("classifiesPairAsCjkAtTextBoundary", "\u201C\u4F60\u597D\u201D", [0, 3], FontRole.CjkPunctuation);
+    @:test public static function classifiesTextStartLatinPairFromQuotedContent():Void
+        QuotePairAnalyzerTestSupport.pairRole("classifiesTextStartLatinPairFromQuotedContent", "\u201CHello\u201D world", [0, 6], FontRole.LatinText);
 
-    public static function classifiesTextStartLatinPairFromQuotedContent():Void
-        pairRole("classifiesTextStartLatinPairFromQuotedContent", "\u201CHello\u201D world", [0, 6], FontRole.LatinText);
+    @:test public static function skipsAsciiPunctuationWhenResolvingContext():Void
+        QuotePairAnalyzerTestSupport.pairRole("skipsAsciiPunctuationWhenResolvingContext", "English: \u201Chello\u201D", [9, 15], FontRole.LatinText);
 
-    public static function skipsAsciiPunctuationWhenResolvingContext():Void
-        pairRole("skipsAsciiPunctuationWhenResolvingContext", "English: \u201Chello\u201D", [9, 15], FontRole.LatinText);
+    @:test public static function skipsNeutralDashWhenResolvingContext():Void
+        QuotePairAnalyzerTestSupport.pairRole("skipsNeutralDashWhenResolvingContext", "English \u2014 \u201Chello\u201D", [10, 16], FontRole.LatinText);
 
-    public static function skipsNeutralDashWhenResolvingContext():Void
-        pairRole("skipsNeutralDashWhenResolvingContext", "English \u2014 \u201Chello\u201D", [10, 16], FontRole.LatinText);
+    @:test public static function endOfTextQuotePairClassifiedByOuterContext():Void
+        QuotePairAnalyzerTestSupport.pairRole("endOfTextQuotePairClassifiedByOuterContext", "he said \u201Chello\u201D", [8, 14], FontRole.LatinText);
 
-    public static function endOfTextQuotePairClassifiedByOuterContext():Void
-        pairRole("endOfTextQuotePairClassifiedByOuterContext", "he said \u201Chello\u201D", [8, 14], FontRole.LatinText);
-
-    public static function whitespaceDelimitedLatinQuotePairOverridesCjkOuterContext():Void {
-        rec("whitespaceDelimitedLatinQuotePairOverridesCjkOuterContext");
+    @:test public static function whitespaceDelimitedLatinQuotePairOverridesCjkOuterContext():Void {
+        QuotePairAnalyzerTestSupport.rec("whitespaceDelimitedLatinQuotePairOverridesCjkOuterContext");
         var t = "\uFF08\u5982 \u2018O\u2019, \u2018Q\u2019\uFF09";
-        var d = decisions(t);
+        var d = QuotePairAnalyzerTestSupport.decisions(t);
         var indexes = new Array<Int>();
         var j = 0;
         while (j < d.length) {
@@ -225,16 +175,16 @@ class QuotePairAnalyzerTest {
             j++;
         }
         TracedAssertions.assertEqualsIntArray([3, 5, 8, 10], indexes);
-        TracedAssertions.assertTrue(d.length == 4, renderDecisions(d));
-        TracedAssertions.assertTrue(d[0].source == "DelimitedWesternQuotationRun", renderDecisions(d));
+        TracedAssertions.assertTrue(d.length == 4, QuotePairAnalyzerTestSupport.renderDecisions(d));
+        TracedAssertions.assertTrue(d[0].source == "DelimitedWesternQuotationRun", QuotePairAnalyzerTestSupport.renderDecisions(d));
     }
 
-    public static function adjacentQuotedListItemsDoNotUsePreviousItemContentAsOuterContext():Void {
-        rec("adjacentQuotedListItemsDoNotUsePreviousItemContentAsOuterContext");
-        role("CJK list item after mixed-script item",
+    @:test public static function adjacentQuotedListItemsDoNotUsePreviousItemContentAsOuterContext():Void {
+        QuotePairAnalyzerTestSupport.rec("adjacentQuotedListItemsDoNotUsePreviousItemContentAsOuterContext");
+        QuotePairAnalyzerTestSupport.role("CJK list item after mixed-script item",
             "\u4FBF\u5EF6\u4F38\u51FA\u4E86\u201C\u4E43\u5B50\u201D\u201C\u5927\u6CE2\u201D\u201C\u5927\u706F\u201D\u201C\u5927\u96F7\u201D\u201C\u5927\u624E\u201D\u201C\u5BF9A\u201D\u201C\u6CE2\u9738\u201D\u8FD9\u4E9B\u8BCD",
             "CCCCCCCCCCCCCC");
-        role("Latin list item after Latin item in CJK prose",
+        QuotePairAnalyzerTestSupport.role("Latin list item after Latin item in CJK prose",
             "\u8FD9\u4E9B\u592A\u76F4\u767D\u4E86\u662F\u5427\uFF0C\n \u201C\u6B27\u6D3E\u201D\u201Cdouble\u201D\u201Cdouble may\u201D\u5462", "CCCCCC");
         var texts = [
             "\u4FBF\u5EF6\u4F38\u51FA\u4E86\u201C\u4E43\u5B50\u201D\u201C\u5927\u6CE2\u201D\u201C\u5927\u706F\u201D\u201C\u5927\u96F7\u201D\u201C\u5927\u624E\u201D\u201C\u5BF9A\u201D\u201C\u6CE2\u9738\u201D\u8FD9\u4E9B\u8BCD",
@@ -254,7 +204,7 @@ class QuotePairAnalyzerTest {
                     finalClose = p;
                 p++;
             }
-            var fd = decisions(tt);
+            var fd = QuotePairAnalyzerTestSupport.decisions(tt);
             var filtered = new Array<QuotePairAnalyzer.QuoteRoleDecision>();
             var fi = 0;
             while (fi < fd.length) {
@@ -270,49 +220,49 @@ class QuotePairAnalyzerTest {
                     allSrc = false;
                 si++;
             }
-            TracedAssertions.assertTrue(allSrc, tt + ": " + renderDecisions(filtered));
+            TracedAssertions.assertTrue(allSrc, tt + ": " + QuotePairAnalyzerTestSupport.renderDecisions(filtered));
             ti++;
         }
     }
 
-    public static function mixedChineseQuestionAtParagraphStartUsesParagraphLanguage():Void {
-        rec("mixedChineseQuestionAtParagraphStartUsesParagraphLanguage");
-        var d = decisions("\u201CJson\u662F\u8C01\uFF1F\u201D");
+    @:test public static function mixedChineseQuestionAtParagraphStartUsesParagraphLanguage():Void {
+        QuotePairAnalyzerTestSupport.rec("mixedChineseQuestionAtParagraphStartUsesParagraphLanguage");
+        var d = QuotePairAnalyzerTestSupport.decisions("\u201CJson\u662F\u8C01\uFF1F\u201D");
         TracedAssertions.assertEqualsIntArray([0, 8], [d[0].index, d[1].index]);
-        TracedAssertions.assertTrue(d[0].role == FontRole.CjkPunctuation, renderDecisions(d));
-        TracedAssertions.assertTrue(d[0].source == "ParagraphLanguageQuoteContext", renderDecisions(d));
+        TracedAssertions.assertTrue(d[0].role == FontRole.CjkPunctuation, QuotePairAnalyzerTestSupport.renderDecisions(d));
+        TracedAssertions.assertTrue(d[0].source == "ParagraphLanguageQuoteContext", QuotePairAnalyzerTestSupport.renderDecisions(d));
     }
 
-    public static function explicitEnglishParagraphLanguageWinsForMixedQuotation():Void {
-        rec("explicitEnglishParagraphLanguageWinsForMixedQuotation");
+    @:test public static function explicitEnglishParagraphLanguageWinsForMixedQuotation():Void {
+        QuotePairAnalyzerTestSupport.rec("explicitEnglishParagraphLanguageWinsForMixedQuotation");
         var t = "\u201CJson\u662F\u8C01\uFF1F\u201D";
-        var d = a().classifyQuoteRoles(t, a().analyze(t), new FontRoleContext("en"));
-        TracedAssertions.assertTrue(d[0].role == FontRole.LatinText, renderDecisions(d));
-        TracedAssertions.assertTrue(d[0].source == "ParagraphLanguageQuoteContext", renderDecisions(d));
+        var d = QuotePairAnalyzerTestSupport.a().classifyQuoteRoles(t, QuotePairAnalyzerTestSupport.a().analyze(t), new FontRoleContext("en"));
+        TracedAssertions.assertTrue(d[0].role == FontRole.LatinText, QuotePairAnalyzerTestSupport.renderDecisions(d));
+        TracedAssertions.assertTrue(d[0].source == "ParagraphLanguageQuoteContext", QuotePairAnalyzerTestSupport.renderDecisions(d));
     }
 
-    public static function commonDigitsDoNotChooseTheQuoteRole():Void {
-        rec("commonDigitsDoNotChooseTheQuoteRole");
+    @:test public static function commonDigitsDoNotChooseTheQuoteRole():Void {
+        QuotePairAnalyzerTestSupport.rec("commonDigitsDoNotChooseTheQuoteRole");
         var t = "\u201C2024\u201D";
-        var d = decisions(t);
-        TracedAssertions.assertTrue(d[0].role == FontRole.CjkPunctuation, renderDecisions(d));
-        TracedAssertions.assertTrue(d[0].source == "ParagraphLanguageQuoteContext", renderDecisions(d));
-        var e = a().classifyQuoteRoles(t, a().analyze(t), new FontRoleContext("en"));
-        TracedAssertions.assertTrue(e[0].role == FontRole.LatinText, renderDecisions(e));
-        TracedAssertions.assertTrue(e[0].source == "ParagraphLanguageQuoteContext", renderDecisions(e));
+        var d = QuotePairAnalyzerTestSupport.decisions(t);
+        TracedAssertions.assertTrue(d[0].role == FontRole.CjkPunctuation, QuotePairAnalyzerTestSupport.renderDecisions(d));
+        TracedAssertions.assertTrue(d[0].source == "ParagraphLanguageQuoteContext", QuotePairAnalyzerTestSupport.renderDecisions(d));
+        var e = QuotePairAnalyzerTestSupport.a().classifyQuoteRoles(t, QuotePairAnalyzerTestSupport.a().analyze(t), new FontRoleContext("en"));
+        TracedAssertions.assertTrue(e[0].role == FontRole.LatinText, QuotePairAnalyzerTestSupport.renderDecisions(e));
+        TracedAssertions.assertTrue(e[0].source == "ParagraphLanguageQuoteContext", QuotePairAnalyzerTestSupport.renderDecisions(e));
     }
 
-    public static function nonLatinWesternScriptsParticipateAsStrongScriptEvidence():Void {
-        rec("nonLatinWesternScriptsParticipateAsStrongScriptEvidence");
-        role("standalone Cyrillic quotation", "\u201C\u041F\u0440\u0438\u0432\u0435\u0442\u201D", "LL");
-        role("mixed Greek and Chinese quotation", "\u201C\u03C0\u8C01\uFF1F\u201D", "CC");
-        role("CJK prose quoting Cyrillic", "\u4ED6\u8BF4\u201C\u041F\u0440\u0438\u0432\u0435\u0442\u201D", "CC");
+    @:test public static function nonLatinWesternScriptsParticipateAsStrongScriptEvidence():Void {
+        QuotePairAnalyzerTestSupport.rec("nonLatinWesternScriptsParticipateAsStrongScriptEvidence");
+        QuotePairAnalyzerTestSupport.role("standalone Cyrillic quotation", "\u201C\u041F\u0440\u0438\u0432\u0435\u0442\u201D", "LL");
+        QuotePairAnalyzerTestSupport.role("mixed Greek and Chinese quotation", "\u201C\u03C0\u8C01\uFF1F\u201D", "CC");
+        QuotePairAnalyzerTestSupport.role("CJK prose quoting Cyrillic", "\u4ED6\u8BF4\u201C\u041F\u0440\u0438\u0432\u0435\u0442\u201D", "CC");
     }
 
-    public static function numberedCjkQuotePrefixUsesQuotedContent():Void {
-        rec("numberedCjkQuotePrefixUsesQuotedContent");
+    @:test public static function numberedCjkQuotePrefixUsesQuotedContent():Void {
+        QuotePairAnalyzerTestSupport.rec("numberedCjkQuotePrefixUsesQuotedContent");
         var t = "1.\u201C\u4F60\u77E5\u9053\u674E\u767D\u662F\u600E\u4E48\u6B7B\u7684\u5417\uFF1F\u201D";
-        var d = decisions(t);
+        var d = QuotePairAnalyzerTestSupport.decisions(t);
         var role2:FontRole = FontRole.CjkPunctuation;
         var roleLast:FontRole = FontRole.CjkPunctuation;
         var src2:String = "";
@@ -331,18 +281,18 @@ class QuotePairAnalyzerTest {
         TracedAssertions.assertEqualsString("PairedPunctuationContentScriptContext", src2);
     }
 
-    public static function numberedLatinQuotePrefixStillUsesLatinContent():Void
-        pairRole("numberedLatinQuotePrefixStillUsesLatinContent", "1.\u201CHello\u201D", [2, 8], FontRole.LatinText);
+    @:test public static function numberedLatinQuotePrefixStillUsesLatinContent():Void
+        QuotePairAnalyzerTestSupport.pairRole("numberedLatinQuotePrefixStillUsesLatinContent", "1.\u201CHello\u201D", [2, 8], FontRole.LatinText);
 
-    public static function classifiesNestedPairsByOutermostContext():Void
-        pairRole("classifiesNestedPairsByOutermostContext", "\u4ED6\u8BF4\uFF1A\u201C\u5979\u8BF4\u2018\u4F60\u597D\u2019\u3002\u201D", [3, 11, 6, 9],
+    @:test public static function classifiesNestedPairsByOutermostContext():Void
+        QuotePairAnalyzerTestSupport.pairRole("classifiesNestedPairsByOutermostContext", "\u4ED6\u8BF4\uFF1A\u201C\u5979\u8BF4\u2018\u4F60\u597D\u2019\u3002\u201D", [3, 11, 6, 9],
             FontRole.CjkPunctuation);
 
-    public static function classifiesLatinNestedQuotesByOuterContext():Void
-        pairRole("classifiesLatinNestedQuotesByOuterContext", "She said \u201Che said \u2018hello\u2019 today\u201D end", [9, 18, 24, 31], FontRole.LatinText);
+    @:test public static function classifiesLatinNestedQuotesByOuterContext():Void
+        QuotePairAnalyzerTestSupport.pairRole("classifiesLatinNestedQuotesByOuterContext", "She said \u201Che said \u2018hello\u2019 today\u201D end", [9, 18, 24, 31], FontRole.LatinText);
 
-    public static function representativeQuoteContextMatrixRemainsStable():Void {
-        rec("representativeQuoteContextMatrixRemainsStable");
+    @:test public static function representativeQuoteContextMatrixRemainsStable():Void {
+        QuotePairAnalyzerTestSupport.rec("representativeQuoteContextMatrixRemainsStable");
         var xs = [
             "Latin content at text start|\u201CHello\u201D|LL",
             "CJK content at text start|\u201C\u4F60\u597D\u201D|CC",
@@ -367,13 +317,13 @@ class QuotePairAnalyzerTest {
         var i = 0;
         while (i < xs.length) {
             var z = xs[i].split("|");
-            role(z[0], z[1], z[2]);
+            QuotePairAnalyzerTestSupport.role(z[0], z[1], z[2]);
             i++;
         }
     }
 
-    public static function roleDecisionSourcesStayExplainableAcrossFallbackPaths():Void {
-        rec("roleDecisionSourcesStayExplainableAcrossFallbackPaths");
+    @:test public static function roleDecisionSourcesStayExplainableAcrossFallbackPaths():Void {
+        QuotePairAnalyzerTestSupport.rec("roleDecisionSourcesStayExplainableAcrossFallbackPaths");
         var xs = [
             "\u201CHello\u201D",
             "\u201CJson\u662F\u8C01\uFF1F\u201D",
@@ -390,55 +340,15 @@ class QuotePairAnalyzerTest {
         ];
         var i = 0;
         while (i < xs.length) {
-            var d = decisions(xs[i]);
+            var d = QuotePairAnalyzerTestSupport.decisions(xs[i]);
             TracedAssertions.assertTrue(d.length > 0, xs[i]);
-            TracedAssertions.assertTrue(d[0].source.length > 0, xs[i] + ": " + renderDecisions(d));
+            TracedAssertions.assertTrue(d[0].source.length > 0, xs[i] + ": " + QuotePairAnalyzerTestSupport.renderDecisions(d));
             i++;
         }
     }
 
-    /**
-        The conventional class test entry (boring feature spec 19).
-        The class carries no test marker, so the Kotlin runner generated from
-        that marker's collection never instantiates it; this entry is how the
-        runner calls the class once. It registers no test id, so the cross-target
-        test id set is unchanged. The body repeats the calls
-        engine-haxe/tests/Main.hx makes for this class, through the same failure
-        accounting Main.hx uses, and then flushes the class trace the way Main.hx
-        does.
-    **/
-    public static function runTestEntries():Void {
-        ClassTestEntry.run(matchesDoubleQuotePair);
-        ClassTestEntry.run(matchesSingleQuotePair);
-        ClassTestEntry.run(matchesNestedQuotePairs);
-        ClassTestEntry.run(unmatchedQuotesProduceNoPairs);
-        ClassTestEntry.run(contractionApostropheDoesNotCloseOuterSingleQuote);
-        ClassTestEntry.run(contractionInsideCjkSingleQuotesKeepsApostropheLatin);
-        ClassTestEntry.run(inWordApostropheMatrixDoesNotConsumeOuterQuotePairs);
-        ClassTestEntry.run(unmatchedCurlyQuotesUseDirectionalContext);
-        ClassTestEntry.run(mismatchedNestingLeavesQuotesUnmatched);
-        ClassTestEntry.run(classifiesPairAsCjkWhenOuterContextIsCjk);
-        ClassTestEntry.run(classifiesPairAsLatinWhenOuterContextIsLatin);
-        ClassTestEntry.run(classifiesBothQuotesAsCjkForCjkQuotedLatinContent);
-        ClassTestEntry.run(whitespaceDelimitedLatinQuotePairOverridesCjkOuterContext);
-        ClassTestEntry.run(unspacedCjkQuotationOfLatinTextRemainsCjk);
-        ClassTestEntry.run(adjacentQuotedListItemsDoNotUsePreviousItemContentAsOuterContext);
-        ClassTestEntry.run(spacedCjkQuotedContentRemainsCjk);
-        ClassTestEntry.run(classifiesPairAsCjkAtTextBoundary);
-        ClassTestEntry.run(classifiesTextStartLatinPairFromQuotedContent);
-        ClassTestEntry.run(mixedChineseQuestionAtParagraphStartUsesParagraphLanguage);
-        ClassTestEntry.run(explicitEnglishParagraphLanguageWinsForMixedQuotation);
-        ClassTestEntry.run(commonDigitsDoNotChooseTheQuoteRole);
-        ClassTestEntry.run(nonLatinWesternScriptsParticipateAsStrongScriptEvidence);
-        ClassTestEntry.run(numberedCjkQuotePrefixUsesQuotedContent);
-        ClassTestEntry.run(numberedLatinQuotePrefixStillUsesLatinContent);
-        ClassTestEntry.run(classifiesNestedPairsByOutermostContext);
-        ClassTestEntry.run(classifiesLatinNestedQuotesByOuterContext);
-        ClassTestEntry.run(skipsAsciiPunctuationWhenResolvingContext);
-        ClassTestEntry.run(skipsNeutralDashWhenResolvingContext);
-        ClassTestEntry.run(endOfTextQuotePairClassifiedByOuterContext);
-        ClassTestEntry.run(representativeQuoteContextMatrixRemainsStable);
-        ClassTestEntry.run(roleDecisionSourcesStayExplainableAcrossFallbackPaths);
+    public static function flushTestTrace():Void {
         TestTraceRecorder.flushClass("QuotePairAnalyzerTest");
     }
+
 }
