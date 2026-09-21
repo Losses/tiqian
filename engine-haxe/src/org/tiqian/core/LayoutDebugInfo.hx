@@ -3,30 +3,36 @@ package org.tiqian.core;
 import std.ReadOnlyArray;
 
 // The Kotlin original declares every constructor parameter with a default
-// (empty list or null) and orders the list fields before the nullable
-// decisions. The port keeps maxLinesDecision as the mandatory first
-// parameter because the ported tests construct positionally; callers that
-// interoperate with the handwritten Kotlin use named arguments, so the
+// (empty list or null). The port keeps maxLinesDecision as the mandatory
+// first parameter because the ported tests construct positionally; callers
+// that interoperate with the handwritten Kotlin use named arguments, so the
 // parameter order carries no interop meaning.
+//
+// The field declarations below stay in the Kotlin primary-constructor order.
+// A record prints and compares by declared field position, so a declaration
+// order that drifted from LayoutModel.kt would reorder every
+// LayoutDebugInfo dump the traced assertions record, and a golden operand
+// would differ from the Kotlin engine in field sequence while keeping the
+// same text length.
 @:dataClass
 class LayoutDebugInfo {
-    public final maxLinesDecision:Null<MaxLinesDecisionInfo>;
-    public final metricDecisions:ReadOnlyArray<MetricDecisionInfo>;
-    public final geometryDecisions:ReadOnlyArray<ClusterGeometryDecisionInfo>;
-    public final autoSpaceDecisions:ReadOnlyArray<AutoSpaceDecisionInfo>;
-    public final rubyDecisions:ReadOnlyArray<RubyDecisionInfo>;
-    public final bopomofoDecisions:ReadOnlyArray<BopomofoDecisionInfo>;
     public final fontDecisions:ReadOnlyArray<FontDecisionInfo>;
     public final shapingDecisions:ReadOnlyArray<ShapingDecisionInfo>;
+    public final metricDecisions:ReadOnlyArray<MetricDecisionInfo>;
     public final punctuationDecisions:ReadOnlyArray<PunctuationDecisionInfo>;
+    public final geometryDecisions:ReadOnlyArray<ClusterGeometryDecisionInfo>;
     public final spacingDecisions:ReadOnlyArray<SpacingDecisionInfo>;
     public final roleOverrides:ReadOnlyArray<RoleOverrideInfo>;
     public final lineDecisions:ReadOnlyArray<LineDecisionInfo>;
     public final justificationDecisions:ReadOnlyArray<JustificationDecisionInfo>;
+    public final autoSpaceDecisions:ReadOnlyArray<AutoSpaceDecisionInfo>;
     public final lineEdgeTrimDecisions:ReadOnlyArray<LineEdgeTrimDecisionInfo>;
     public final decorationDecisions:ReadOnlyArray<DecorationDecisionInfo>;
     public final decorationSegments:ReadOnlyArray<DecorationSegmentInfo>;
+    public final rubyDecisions:ReadOnlyArray<RubyDecisionInfo>;
+    public final bopomofoDecisions:ReadOnlyArray<BopomofoDecisionInfo>;
     public final mandatoryBreakDecisions:ReadOnlyArray<MandatoryBreakDecisionInfo>;
+    public final maxLinesDecision:Null<MaxLinesDecisionInfo>;
     public final lineSpacingDecision:Null<LineSpacingDecisionInfo>;
     public final rubyLineHeightDecision:Null<RubyLineHeightDecisionInfo>;
     public final inlineObjectLineHeightDecision:Null<InlineObjectLineHeightDecisionInfo>;

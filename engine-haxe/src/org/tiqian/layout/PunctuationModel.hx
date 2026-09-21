@@ -9,6 +9,7 @@ import org.tiqian.clreq.PunctuationGluePlacement;
 import org.tiqian.clreq.PunctuationGluePlacements;
 import org.tiqian.clreq.PunctuationWidthPolicy;
 import org.tiqian.core.Rect;
+import org.tiqian.core.AccurateSum;
 import org.tiqian.core.TextRange;
 import org.tiqian.core.TiqianIllegalArgumentException;
 import org.tiqian.core.TextRangeError;
@@ -173,7 +174,10 @@ enum GlueKind {
     public var totalReduction(get, never):Float;
 
     public function get_totalReduction():Float {
-        return adjustments.sumOfFloat(adjustment -> adjustment.reduction);
+        final reductionTerms:Array<Float> = [];
+        for (ai in 0...adjustments.length)
+            reductionTerms.push(adjustments[ai].reduction);
+        return AccurateSum.of(reductionTerms);
     }
 }
 

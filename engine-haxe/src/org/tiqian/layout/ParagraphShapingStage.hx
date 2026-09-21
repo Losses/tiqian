@@ -3,6 +3,7 @@ package org.tiqian.layout;
 using org.tiqian.layout.ProgressiveBreakTierPriority;
 
 import org.tiqian.core.LayoutInput;
+import org.tiqian.core.AccurateSum;
 import org.tiqian.core.TextRange;
 import org.tiqian.core.TextStyle;
 import org.tiqian.core.Glyph;
@@ -399,10 +400,11 @@ class ParagraphShapingStage {
     }
 
     public static function mapToClusterRange(glyphs:Array<Glyph>, cluster:Cluster):Array<Glyph> {
-        var sourceAdvance = 0.0;
+        final sourceTerms:Array<Float> = [];
         for (i in 0...glyphs.length) {
-            sourceAdvance += glyphs[i].advance;
+            sourceTerms.push(glyphs[i].advance);
         }
+        final sourceAdvance = AccurateSum.of(sourceTerms);
         if (sourceAdvance <= 0.0) {
             final count = glyphs.length > 1 ? glyphs.length : 1;
             final fallbackAdvance = cluster.advance / count;
@@ -830,7 +832,7 @@ class ParagraphShapingStage {
                 if (k.start == spanRange.start && k.end == spanRange.end)
                     return spanAdvanceCacheValues[i];
             }
-            var totalAdvance = 0.0;
+            final advanceTerms:Array<Float> = [];
             for (crIdx in 0...clusterRanges.length) {
                 final resolvedRange = clusterRanges[crIdx];
                 if (resolvedRange.mandatoryBreak || resolvedRange.zeroWidthSoftBreak || getInlineObject(resolvedRange.range) != null) {
@@ -847,11 +849,12 @@ class ParagraphShapingStage {
                     if (start < end) {
                         final pieceShaped = shapeSegment(decision, new TextRange(start, end));
                         for (clIdx in 0...pieceShaped.clusters.length) {
-                            totalAdvance += pieceShaped.clusters[clIdx].advance;
+                            advanceTerms.push(pieceShaped.clusters[clIdx].advance);
                         }
                     }
                 }
             }
+            final totalAdvance = AccurateSum.of(advanceTerms);
             spanAdvanceCacheKeys.push(spanRange);
             spanAdvanceCacheValues.push(totalAdvance);
             return totalAdvance;
@@ -927,10 +930,11 @@ class ParagraphShapingStage {
                 }
                 final isCamelCase = allLetters && !isAllCaps && !isAbbreviation && hasInternalUpper;
 
-                var tokenAdvance = 0.0;
+                final tokenTerms:Array<Float> = [];
                 for (clIdx in 0...shaped.clusters.length) {
-                    tokenAdvance += shaped.clusters[clIdx].advance;
+                    tokenTerms.push(shaped.clusters[clIdx].advance);
                 }
+                final tokenAdvance = AccurateSum.of(tokenTerms);
                 final strongReason = isLatin ? strongNonLexicalReason(w) : null;
 
                 var syllableCuts = new Array<Int>();
@@ -1124,10 +1128,11 @@ class ParagraphShapingStage {
                         final pEnd = uniqueBounds[p + 1];
                         final pieceRange = new TextRange(pStart, pEnd);
                         final pieceShaped = shapeSegment(decision, pieceRange);
-                        var pieceAdvance = 0.0;
+                        final pieceTerms:Array<Float> = [];
                         for (clIdx in 0...pieceShaped.clusters.length) {
-                            pieceAdvance += pieceShaped.clusters[clIdx].advance;
+                            pieceTerms.push(pieceShaped.clusters[clIdx].advance);
                         }
+                        final pieceAdvance = AccurateSum.of(pieceTerms);
                         if (!exposedForCurrentLine
                             && pieceAdvance <= measure
                             && progressiveSpanAdvance(progressiveSpan.range) <= measure) {

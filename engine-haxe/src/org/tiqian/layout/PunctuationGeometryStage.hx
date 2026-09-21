@@ -132,12 +132,13 @@ class PunctuationGeometryStage {
             }
             forbidden.put(index);
             final protectedPair = new IntRange(previousIndex, index);
-            var pairWidth = 0.;
+            final pairTerms:Array<Float> = [];
             var wi = previousIndex;
             while (wi <= index) {
-                pairWidth += lineBreakClusters[wi].advance;
+                pairTerms.push(lineBreakClusters[wi].advance);
                 wi++;
             }
+            final pairWidth = AccurateSum.of(pairTerms);
             final availableWidth = previousIndex == 0 ? firstLineWidth : bodyLineWidth;
             if (pairWidth <= availableWidth)
                 unbreakableRanges.push(protectedPair);
@@ -202,12 +203,13 @@ class PunctuationGeometryStage {
             }
             unbreakableRanges.push(new IntRange(runStart - 1, runEnd));
             final runLineWidth = runStart - 1 == 0 ? firstLineWidth : bodyLineWidth;
-            var runWidth = 0.;
+            final runTerms:Array<Float> = [];
             var wi = runStart - 1;
             while (wi <= runEnd) {
-                runWidth += lineBreakClusters[wi].advance;
+                runTerms.push(lineBreakClusters[wi].advance);
                 wi++;
             }
+            final runWidth = AccurateSum.of(runTerms);
             if (runWidth > runLineWidth) {
                 fi = runStart;
                 while (fi <= runEnd) {
@@ -252,12 +254,13 @@ class PunctuationGeometryStage {
         var glyph:Null<Glyph> = null;
         if (shapedGlyphs.length == c.displayText.length) {
             final source = shapedGlyphs[displayIndex];
-            var characterPen = 0.;
+            final penTerms:Array<Float> = [];
             var i = 0;
             while (i < displayIndex) {
-                characterPen += shapedGlyphs[i].advance;
+                penTerms.push(shapedGlyphs[i].advance);
                 i++;
             }
+            final characterPen = AccurateSum.of(penTerms);
             glyph = new Glyph(source.id, source.clusterRange, source.advance, source.x - characterPen, source.y, source.renderFontKey, source.bounds,
                 source.haltAdvance, source.haltPlacementX);
         } else if (c.displayText.length == 1)
@@ -275,17 +278,18 @@ class PunctuationGeometryStage {
             return null;
         final first = g[0];
         final bounds:Array<Rect> = [];
-        var totalAdvance = 0.;
+        final unionTerms:Array<Float> = [];
         var i = 0;
         while (i < g.length) {
             final glyph = g[i];
-            totalAdvance += glyph.advance;
+            unionTerms.push(glyph.advance);
             if (glyph.bounds != null)
                 bounds.push(new Rect(glyph.bounds.left + glyph.x, glyph.bounds.top + glyph.y, glyph.bounds.right + glyph.x, glyph.bounds.bottom + glyph.y));
             i++;
         }
         if (bounds.length == 0)
             return first;
+        final totalAdvance = AccurateSum.of(unionTerms);
         var left = bounds[0].left,
             top = bounds[0].top,
             right = bounds[0].right,

@@ -1,6 +1,7 @@
 package org.tiqian.layout;
 
 import org.tiqian.core.Cluster;
+import org.tiqian.core.AccurateSum;
 import org.tiqian.core.ClusterGeometryDecisionInfo;
 import org.tiqian.core.InlineAttachment;
 import org.tiqian.core.IntRange;
@@ -71,9 +72,10 @@ import std.SortedMap;
                 if (isInside(atom.range, naturalClusters[i].range))
                     atomsForCluster.push(atom);
             if (atomsForCluster.length > 0) {
-                var bodyWidth = 0.0;
+                final bodyTerms:Array<Float> = [];
                 for (atom in atomsForCluster)
-                    bodyWidth += atom.bodyWidth;
+                    bodyTerms.push(atom.bodyWidth);
+                final bodyWidth = AccurateSum.of(bodyTerms);
                 geometryBuilder.put(i,
                     new PunctuationClusterGeometry(naturalClusters[i].range, naturalClusters[i].text, naturalClusters[i].displayText,
                         naturalClusters[i].advance, bodyWidth, atomsForCluster[0].leadingGlue.natural,
