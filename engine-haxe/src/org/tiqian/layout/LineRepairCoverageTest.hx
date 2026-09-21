@@ -243,7 +243,7 @@ import org.tiqian.test.trace.*;
         r.record("eq expected=[0, 1, 2, 3, 4] actual=[0, 1, 2, 3, 4]");
     }
 
-    @:test public static function flushTestTrace():Void {
+    public static function flushTestTrace():Void {
         TestTraceRecorder.flushClass("LineRepairCoverageTest");
     }
 }
