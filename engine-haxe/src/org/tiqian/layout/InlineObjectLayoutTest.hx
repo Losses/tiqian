@@ -31,6 +31,8 @@ class InlineObjectLayoutTest {
             "the existing inter-line gap should be reassigned to the object's own line box");
         final d = o.debug.inlineObjectLineHeightDecision;
         TracedAssertions.assertNotNullRendered(d != null, InlineObjectLayoutTestSupport.renderNullableDecision(d));
+        if (d == null)
+            return;
         TracedAssertions.assertEqualsFloatTolerance(1.6, d.minimumClearance, .001);
         TracedAssertions.assertTrue(o.lines[1].baseline - 20 - (o.lines[0].baseline + d.baseFaceDescent) >= d.minimumClearance - .001);
         var extras = true;
@@ -55,6 +57,8 @@ class InlineObjectLayoutTest {
             "the measured collision deficit must retain the configured safety clearance");
         final d = r.debug.inlineObjectLineHeightDecision;
         TracedAssertions.assertNotNullRendered(d != null, InlineObjectLayoutTestSupport.renderNullableDecision(d));
+        if (d == null)
+            return;
         TracedAssertions.assertEqualsFloatTolerance(0, d.lineExtras[0], .001);
         TracedAssertions.assertEqualsFloatTolerance(7.6, d.lineExtras[1], .001);
         TracedAssertions.assertEqualsIntArray([1], d.expandedLineIndices);
@@ -65,6 +69,8 @@ class InlineObjectLayoutTest {
         TracedAssertions.assertEqualsFloatTolerance(30, z.lines[1].baseline - z.lines[0].baseline, .001);
         final zd = z.debug.inlineObjectLineHeightDecision;
         TracedAssertions.assertNotNullRendered(zd != null, InlineObjectLayoutTestSupport.renderNullableDecision(zd));
+        if (zd == null)
+            return;
         TracedAssertions.assertEqualsFloat(0, zd.minimumClearance);
     }
 
@@ -163,6 +169,8 @@ class InlineObjectLayoutTest {
         TracedAssertions.assertTrue(!bad);
         final repair = r.debug.lineDecisions[0].repairDecision;
         TracedAssertions.assertNotNullRendered(repair != null, InlineObjectLayoutTestSupport.renderNullableRepair(repair));
+        if (repair == null)
+            return;
         TracedAssertions.assertEqualsString("PushIn", repair.kind);
         var found = false;
         for (i in 0...repair.pushInAllocations.length)
