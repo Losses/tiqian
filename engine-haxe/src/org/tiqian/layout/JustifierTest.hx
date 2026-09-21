@@ -270,7 +270,8 @@ class JustifierTest {
         }
         TracedAssertions.assertTrue(has, "mixed CJK lines retain punctuation-western tier-3 tracking");
         TracedAssertions.assertEqualsFloat(0, p.unfilledDeficit);
-        TracedAssertions.assertEqualsRendered("-", p.fallbackReason == null ? "-" : p.fallbackReason);
+        final fallbackReason = p.fallbackReason;
+        TracedAssertions.assertEqualsRendered("-", fallbackReason == null ? "-" : fallbackReason);
     }
 
     @:test public static function typedSinoWesternSpaceStretchesInTierTwo():Void {

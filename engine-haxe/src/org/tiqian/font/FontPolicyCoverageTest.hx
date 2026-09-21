@@ -132,7 +132,8 @@ class FontPolicyCoverageTest {
         final resolver = new StubFontMetricsResolver();
         final cjk = resolver.resolve(request);
         TracedAssertions.assertEqualsFloat(16 * 1.16, cjk.ascent);
-        TracedAssertions.assertEqualsFloat(16 * 0.88, cjk.typoAscent == null ? 0 : cjk.typoAscent);
+        final typoAscent = cjk.typoAscent;
+        TracedAssertions.assertEqualsFloat(16 * 0.88, typoAscent == null ? 0 : typoAscent);
         final punct = resolver.resolve(new FontMetricsRequest(request.fontKey, request.fontSize, CjkPunctuation, request.locale,
             FontPolicyCoverageTestSupport.copyStrings(request.fontFamilies), request.fontWeight, request.italic, request.faceSelectionText));
         TracedAssertions.assertEqualsFloat(16 * 1.16, punct.ascent);
