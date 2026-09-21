@@ -58,6 +58,7 @@ import org.tiqian.layout.PunctuationAtomBuilderHaltTest;
 import org.tiqian.layout.LineOptimizationCoverageTest;
 import org.tiqian.layout.ContextualDashEllipsisRoleResolverCoverageTest;
 import org.tiqian.layout.ContextualDashEllipsisRoleResolverTest;
+import org.tiqian.layout.ContextualDashEllipsisLayoutTest;
 import org.tiqian.layout.ContextualDashEllipsisClusterCoverageTest;
 import org.tiqian.layout.ContextualRoleExtensionCoverageTest;
 import org.tiqian.layout.ContextualQuoteRoleResolverCoverageTest;
@@ -646,12 +647,12 @@ class Main {
         run("ellipsisRunsNeverPair", ContextualDashEllipsisRoleResolverTest.ellipsisRunsNeverPair);
         run("mandatoryBreakBetweenRunsKeepsThemIndependent", ContextualDashEllipsisRoleResolverTest.mandatoryBreakBetweenRunsKeepsThemIndependent);
         run("westernContextKeepsDashAndEllipsisOnLatinFaceAndPreservesSourceDisplay",
-            ContextualDashEllipsisRoleResolverTest.westernContextKeepsDashAndEllipsisOnLatinFaceAndPreservesSourceDisplay);
+            ContextualDashEllipsisLayoutTest.westernContextKeepsDashAndEllipsisOnLatinFaceAndPreservesSourceDisplay);
         run("cjkContextKeepsClreqDisplaySubstitutionIndependentOfMarkCount",
-            ContextualDashEllipsisRoleResolverTest.cjkContextKeepsClreqDisplaySubstitutionIndependentOfMarkCount);
-        run("parentheticalPairSharesOneFaceAndSubstitution", ContextualDashEllipsisRoleResolverTest.parentheticalPairSharesOneFaceAndSubstitution);
+            ContextualDashEllipsisLayoutTest.cjkContextKeepsClreqDisplaySubstitutionIndependentOfMarkCount);
+        run("parentheticalPairSharesOneFaceAndSubstitution", ContextualDashEllipsisLayoutTest.parentheticalPairSharesOneFaceAndSubstitution);
         run("standaloneWesternEllipsisCannotBeRewrittenByTheSubstitutor",
-            ContextualDashEllipsisRoleResolverTest.standaloneWesternEllipsisCannotBeRewrittenByTheSubstitutor);
+            ContextualDashEllipsisLayoutTest.standaloneWesternEllipsisCannotBeRewrittenByTheSubstitutor);
         run("contextualRoleExtensionsWrapOutsideThePipeline", ContextualRoleExtensionCoverageTest.contextualRoleExtensionsWrapOutsideThePipeline);
         TestTraceRecorder.flushClass("ContextualRoleExtensionCoverageTest");
         run("latinDashRunAtParagraphEndStaysOneCluster", ContextualDashEllipsisClusterCoverageTest.latinDashRunAtParagraphEndStaysOneCluster);
@@ -1714,16 +1715,16 @@ class Main {
         run("layoutDecisionDumpsMatchEmbeddedGolden", org.tiqian.layout.LayoutDumpGoldenParityTest.layoutDecisionDumpsMatchEmbeddedGolden);
         TestTraceRecorder.flushClass("LayoutDumpGoldenParityTest");
         run("attachedRunExposesTheProseClustersOnItsTwoSides",
-            org.tiqian.layout.AttachedInlineBoundaryRelocationTest.attachedRunExposesTheProseClustersOnItsTwoSides);
+            org.tiqian.layout.AttachedInlineVirtualAdjacencyTest.attachedRunExposesTheProseClustersOnItsTwoSides);
         run("attachedRunAtParagraphEndHasNoVirtualRightNeighbor",
-            org.tiqian.layout.AttachedInlineBoundaryRelocationTest.attachedRunAtParagraphEndHasNoVirtualRightNeighbor);
+            org.tiqian.layout.AttachedInlineVirtualAdjacencyTest.attachedRunAtParagraphEndHasNoVirtualRightNeighbor);
         run("punctuationAfterFootnoteIsJudgedAgainstThePrecedingPunctuation",
-            org.tiqian.layout.AttachedInlineBoundaryRelocationTest.punctuationAfterFootnoteIsJudgedAgainstThePrecedingPunctuation);
+            org.tiqian.layout.AttachedInlineVirtualAdjacencyTest.punctuationAfterFootnoteIsJudgedAgainstThePrecedingPunctuation);
         run("closingQuoteBeforeFootnoteAndBodyKeepsItsNaturalTrailingGlue",
-            org.tiqian.layout.AttachedInlineBoundaryRelocationTest.closingQuoteBeforeFootnoteAndBodyKeepsItsNaturalTrailingGlue);
+            org.tiqian.layout.AttachedInlineVirtualAdjacencyTest.closingQuoteBeforeFootnoteAndBodyKeepsItsNaturalTrailingGlue);
         run("closingQuoteBeforeParagraphEndFootnoteHasNoTrailingGlue",
-            org.tiqian.layout.AttachedInlineBoundaryRelocationTest.closingQuoteBeforeParagraphEndFootnoteHasNoTrailingGlue);
-        run("attachedReferenceNeverStartsAWrappedLine", org.tiqian.layout.AttachedInlineBoundaryRelocationTest.attachedReferenceNeverStartsAWrappedLine);
+            org.tiqian.layout.AttachedInlineVirtualAdjacencyTest.closingQuoteBeforeParagraphEndFootnoteHasNoTrailingGlue);
+        run("attachedReferenceNeverStartsAWrappedLine", org.tiqian.layout.AttachedInlineVirtualAdjacencyTest.attachedReferenceNeverStartsAWrappedLine);
         TestTraceRecorder.flushClass("AttachedInlineVirtualAdjacencyTest");
         run("clusterPredicatesAndCurlyQuoteFeatures", org.tiqian.layout.ParagraphShapingStageCoverageTest.clusterPredicatesAndCurlyQuoteFeatures);
         run("dashSubstitutionRollbackAndCoverageBranches", org.tiqian.layout.ParagraphShapingStageCoverageTest.dashSubstitutionRollbackAndCoverageBranches);
