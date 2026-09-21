@@ -58,9 +58,9 @@ class TestTraceRender {
             var exp = e - p + 1;
             var scaled = v / Math.pow(10, exp);
             var base = Math.floor(scaled);
-            var best = -1.0;
+            var best = -1;
             var bestDist = Math.POSITIVE_INFINITY;
-            var c:Float = base - 1;
+            var c = base - 1;
             while (c <= base + 2) {
                 if (c >= 1) {
                     var candidateText:String = Std.string(c) + "e" + Std.string(exp);
@@ -82,7 +82,7 @@ class TestTraceRender {
         return (negative ? "-" : "") + Std.string(v);
     }
 
-    private static function floatTextRender(c:Float, e:Int, p:Int, negative:Bool):String {
+    private static function floatTextRender(c:Int, e:Int, p:Int, negative:Bool):String {
         var s = Std.string(c);
         if (s.length < p)
             s = StringTools.lpad(s, "0", p);
