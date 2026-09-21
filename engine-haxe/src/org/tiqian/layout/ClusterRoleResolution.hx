@@ -217,7 +217,7 @@ class ClusterRoleResolution {
         if (UnicodeEmojiModifierBaseData.contains(b)) {
             while (n < e && (isCombining(codePoint(t, n)) || isVariation(codePoint(t, n))))
                 n += codePoint(t, n) > 0xFFFF ? 2 : 1;
-            final m = codePoint(t, n);
+            final m = n < e ? codePoint(t, n) : -1;
             if (m >= 0x1F3FB && m <= 0x1F3FF)
                 return "EmojiModifierSequence";
         }
