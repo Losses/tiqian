@@ -20,6 +20,14 @@ import org.tiqian.shaping.TextShaper.ShapingResult;
  *
  * Haxe's `haxe.ds.Map` is not an option: style rule V13
  * (`docs/specs/style/01-haxe-style-standard.md`) rejects it.
+ *
+ * The table exposes no keyed lookup. A keyed read would walk the
+ * insertion-order arrays, and the indexed replacement is a hashing structure
+ * that `docs/specs/stdlib/07-sorted-keyed-tables.md` reserves for a later
+ * amendment (lines 19-22) and leaves a mutable keyed cache without a structure
+ * until then (lines 141-145). The uncalled `get` was removed for that reason:
+ * its only possible cost is the linear walk the arrays already avoid on the
+ * read path, which reads `keyAt` and `valueAt` by index.
  */
 class SegmentShapingCache {
     public final keys:Array<TextRange>;
@@ -40,14 +48,6 @@ class SegmentShapingCache {
 
     public function valueAt(index:Int):ShapingResult {
         return values[index];
-    }
-
-    public function get(range:TextRange):Null<ShapingResult> {
-        for (i in 0...keys.length) {
-            if (keys[i].start == range.start && keys[i].end == range.end)
-                return values[i];
-        }
-        return null;
     }
 
     public function toString():String {
