@@ -10,10 +10,10 @@ class RubyDecisionInfo {
     public final centerX:Float;
     public final baselineY:Float;
     public final fontSize:Float;
-    public final overhang:Float;
     public final ascent:Float;
     public final descent:Float;
     public final width:Float;
+    public final overhang:Float;
     public final fontFamilies:ReadOnlyArray<String>;
     public final fontWeight:Int;
     public final locale:String;
