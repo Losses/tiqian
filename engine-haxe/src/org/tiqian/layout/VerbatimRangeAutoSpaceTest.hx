@@ -2,6 +2,7 @@ package org.tiqian.layout;
 
 import org.tiqian.core.*;
 import org.tiqian.test.trace.TestTraceRecorder;
+import org.tiqian.test.trace.TestTraceRender;
 import org.tiqian.test.trace.TracedAssertions;
 
 class VerbatimRangeAutoSpaceTest {
@@ -14,10 +15,21 @@ class VerbatimRangeAutoSpaceTest {
             Std.string(control) + ".debug.autoSpaceDecisions");
         final result = VerbatimRangeAutoSpaceTestSupport.layout(text, [new TextRange(1, 13)]);
         final decisions = result.debug.autoSpaceDecisions;
+        // The reference interpolates the List into the message, so the operand
+        // is the list printed with ", " between elements. Std.string of a
+        // collection joins with "," on the Haxe/JS target, so the text is
+        // built from the elements instead.
+        final decisionParts:Array<String> = [];
+        var di = 0;
+        while (di < decisions.length) {
+            decisionParts.push(Std.string(decisions[di]));
+            di++;
+        }
+        final decisionsText = TestTraceRender.legacyListText(decisionParts);
         TracedAssertions.assertEqualsInt(2, VerbatimRangeAutoSpaceTestSupport.count(result, "TextAutoSpaceInsert:east-asian-spacing-W-N"),
-            Std.string(decisions));
+            decisionsText);
         TracedAssertions.assertEqualsInt(2, VerbatimRangeAutoSpaceTestSupport.count(result, "VerbatimRangeAutoSpace:east-asian-spacing-W-N-suppressed"),
-            Std.string(decisions));
+            decisionsText);
     }
 
     @:test public static function typedSpaceInsideAVerbatimRangeIsNotNormalised():Void {

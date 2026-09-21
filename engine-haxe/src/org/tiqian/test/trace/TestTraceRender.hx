@@ -246,6 +246,19 @@ class TestTraceRender {
         return cap(text);
     }
 
+    /**
+     * The text the Kotlin reference's string template gives a List: each
+     * element in its own printed form, joined with ", " inside brackets.
+     * Std.string of a collection is not portable — the Haxe/JS target joins
+     * an Array with "," while the Kotlin target joins with ", " — so a trace
+     * operand that has to read the same on both targets builds the list text
+     * here from the parts it renders itself, instead of calling Std.string on
+     * the collection.
+     */
+    public static function legacyListText(parts:Array<String>):String {
+        return "[" + parts.join(", ") + "]";
+    }
+
     public static function canonicalNumbers(value:String):String {
         return stripWholeFraction(expandScientific(value));
     }
