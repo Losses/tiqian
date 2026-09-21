@@ -18,9 +18,9 @@ class PreparedParagraphFns {
     private static var twoPowers:std.SortedMap<Int, String> = null;
 
     public static function toPreparedParagraphJson(result:LayoutResult, renderEvidence:Bool = false):String {
-        final naturalB = SortedMap.builder();
+        final naturalB:SortedMapBuilder<String, Float> = SortedMap.builder();
         final featuresB = SortedMap.builder();
-        final fontsB = SortedMap.builder();
+        final fontsB:SortedMapBuilder<String, String> = SortedMap.builder();
         final glyphIdsB = SortedMap.builder();
         for (ri in 0...result.glyphRuns.length) {
             final run = result.glyphRuns[ri];
@@ -28,7 +28,8 @@ class PreparedParagraphFns {
                 final glyph = run.glyphs[gi];
                 final k = rangeKey(glyph.clusterRange);
                 final naturalPrior = naturalB.get(k);
-                naturalB.put(k, (naturalPrior == null ? 0.0 : naturalPrior) + glyph.advance);
+                final priorNatural:Float = naturalPrior == null ? 0.0 : naturalPrior;
+                naturalB.put(k, priorNatural + glyph.advance);
                 if (run.openTypeFeatures.length > 0) {
                     var fs = featuresB.get(k);
                     if (fs == null)
@@ -40,8 +41,9 @@ class PreparedParagraphFns {
                     }
                     featuresB.put(k, fs);
                 }
-                if (glyph.renderFontKey != null)
-                    fontsB.put(k, glyph.renderFontKey);
+                final renderFontKey = glyph.renderFontKey;
+                if (renderFontKey != null)
+                    fontsB.put(k, renderFontKey);
                 var ids = glyphIdsB.get(k);
                 if (ids == null)
                     ids = [];
@@ -65,20 +67,22 @@ class PreparedParagraphFns {
         final inlineObjSrc = result.input.inlineObjects;
         for (zi in 0...inlineObjSrc.length)
             inlineAdvanceB.put(rangeKey(inlineObjSrc[zi].range), inlineObjSrc[zi].advance);
-        final edgeStartB = SortedMap.builder();
-        final edgeEndB = SortedMap.builder();
+        final edgeStartB:SortedMapBuilder<String, Float> = SortedMap.builder();
+        final edgeEndB:SortedMapBuilder<String, Float> = SortedMap.builder();
         final boxSrc = result.input.inlineBoxes;
         for (bi in 0...boxSrc.length) {
             final b = boxSrc[bi];
             if (b.inlineStart != 0) {
                 final sk = Std.string(b.range.start);
                 final startPrior = edgeStartB.get(sk);
-                edgeStartB.put(sk, (startPrior == null ? 0.0 : startPrior) + b.inlineStart);
+                final priorStart:Float = startPrior == null ? 0.0 : startPrior;
+                edgeStartB.put(sk, priorStart + b.inlineStart);
             }
             if (b.inlineEnd != 0) {
                 final ek = Std.string(b.range.end);
                 final endPrior = edgeEndB.get(ek);
-                edgeEndB.put(ek, (endPrior == null ? 0.0 : endPrior) + b.inlineEnd);
+                final priorEnd:Float = endPrior == null ? 0.0 : endPrior;
+                edgeEndB.put(ek, priorEnd + b.inlineEnd);
             }
         }
         final natural = naturalB.build();

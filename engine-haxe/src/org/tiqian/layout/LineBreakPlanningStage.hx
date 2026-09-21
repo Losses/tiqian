@@ -456,11 +456,12 @@ class LineBreakPlanningStage {
             interlinearSpacingFloor);
 
         final containingDecisions = containingClusterMetricDecisions(prep.naturalClusters, metricDecisions);
-        final metricDecisionByRangeBuilder = SortedMap.builder();
+        final metricDecisionByRangeBuilder:SortedMapBuilder<TextRange, ClusterMetricDecision> = SortedMap.builder();
         for (i in 0...prep.naturalClusters.length) {
             final d = containingDecisions[i];
             if (d != null) {
-                metricDecisionByRangeBuilder.put(prep.naturalClusters[i].range, d);
+                final decision:ClusterMetricDecision = d;
+                metricDecisionByRangeBuilder.put(prep.naturalClusters[i].range, decision);
             }
         }
         final metricDecisionByRange = metricDecisionByRangeBuilder.build();
