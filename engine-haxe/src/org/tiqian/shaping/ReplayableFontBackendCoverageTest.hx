@@ -13,26 +13,9 @@ import org.tiqian.test.trace.TestTraceRecorder;
 import org.tiqian.test.trace.TracedAssertions;
 import std.SortedMap;
 import std.SortedSet;
-import org.tiqian.test.trace.ClassTestEntry;
 
 class ReplayableFontBackendCoverageTest {
-    static function strings(values:Array<String>):SortedSet<String> {
-        var b = SortedSet.builder();
-        for (value in values)
-            b.put(value);
-        return b.build();
-    }
-
-    static function roles(values:Array<FontRole>):Array<FontRole>
-        return values;
-
-    static function axes(key:String, value:Float):SortedMap<String, Float> {
-        var b = SortedMap.builder();
-        b.put(key, value);
-        return b.build();
-    }
-
-    public static function fontFaceIdRejectsBlankAndKeepsValue():Void {
+    @:test public static function fontFaceIdRejectsBlankAndKeepsValue():Void {
         new TestTraceRecorder("ReplayableFontBackendCoverageTest").section("fontFaceIdRejectsBlankAndKeepsValue");
         var id = FontFaceId.of("noto-cjk-1");
         TracedAssertions.assertEqualsString("noto-cjk-1", id.value);
@@ -42,23 +25,23 @@ class ReplayableFontBackendCoverageTest {
         TracedAssertions.assertFailsWith(null, function() FontFaceId.of(""));
     }
 
-    public static function faceDescriptorDefaultsAreStable():Void {
+    @:test public static function faceDescriptorDefaultsAreStable():Void {
         new TestTraceRecorder("ReplayableFontBackendCoverageTest").section("faceDescriptorDefaultsAreStable");
-        var descriptor = new ReplayableFontFaceDescriptor(FontFaceId.of("face-a"), strings(["Serif"]), roles([FontRole.CjkText]), "bundled/noto.ttf");
+        var descriptor = new ReplayableFontFaceDescriptor(FontFaceId.of("face-a"), ReplayableFontBackendCoverageTestSupport.strings(["Serif"]), ReplayableFontBackendCoverageTestSupport.roles([FontRole.CjkText]), "bundled/noto.ttf");
         TracedAssertions.assertEquals(400, descriptor.weight);
         TracedAssertions.assertFalse(descriptor.italic);
         TracedAssertions.assertEquals(0, descriptor.collectionIndex);
         TracedAssertions.assertTrue(descriptor.variationAxes.size() == 0);
         TracedAssertions.assertEqualsRendered("face-a", descriptor.id.toString());
         var varied = new ReplayableFontFaceDescriptor(descriptor.id, descriptor.familyAliases, descriptor.roles, descriptor.sourceLabel, 700, true, 2,
-            axes("wght", 700.0));
+            ReplayableFontBackendCoverageTestSupport.axes("wght", 700.0));
         TracedAssertions.assertEquals(700, varied.weight);
         TracedAssertions.assertTrue(varied.italic);
         TracedAssertions.assertEquals(2, varied.collectionIndex);
         TracedAssertions.assertEqualsFloat(700.0, varied.variationAxes.get("wght"));
     }
 
-    public static function faceRequestRejectsNonPositiveAndNonFiniteFontSize():Void {
+    @:test public static function faceRequestRejectsNonPositiveAndNonFiniteFontSize():Void {
         new TestTraceRecorder("ReplayableFontBackendCoverageTest").section("faceRequestRejectsNonPositiveAndNonFiniteFontSize");
         var request = new ReplayableFontFaceRequest(FontRole.LatinText, ["Plex"], 15.0, 400, false, "zh-CN", "A");
         TracedAssertions.assertEqualsFontRole(FontRole.LatinText, request.role);
@@ -70,9 +53,9 @@ class ReplayableFontBackendCoverageTest {
         TracedAssertions.assertFailsWith(null, function() new ReplayableFontFaceRequest(FontRole.LatinText, [], Math.POSITIVE_INFINITY, 400, false, "", "A"));
     }
 
-    public static function capabilityReportReplayFlagRequiresFacesAndNoMissingFaceIssue():Void {
+    @:test public static function capabilityReportReplayFlagRequiresFacesAndNoMissingFaceIssue():Void {
         new TestTraceRecorder("ReplayableFontBackendCoverageTest").section("capabilityReportReplayFlagRequiresFacesAndNoMissingFaceIssue");
-        var face = new ReplayableFontFaceDescriptor(FontFaceId.of("face-a"), strings(["Serif"]), roles([FontRole.CjkText]), "bytes");
+        var face = new ReplayableFontFaceDescriptor(FontFaceId.of("face-a"), ReplayableFontBackendCoverageTestSupport.strings(["Serif"]), ReplayableFontBackendCoverageTestSupport.roles([FontRole.CjkText]), "bytes");
         TracedAssertions.assertFalse(new FontBackendCapabilityReport("b", "k", []).canReplayFromControlledBytes);
         TracedAssertions.assertFalse(new FontBackendCapabilityReport("b", "k", [face],
             [new FontBackendCapabilityIssue("MissingControlledFontFace", "gone")]).canReplayFromControlledBytes);
@@ -81,10 +64,10 @@ class ReplayableFontBackendCoverageTest {
         TracedAssertions.assertTrue(new FontBackendCapabilityReport("b", "k", [face]).canReplayFromControlledBytes);
     }
 
-    public static function catalogContractResolvesByRequest():Void {
+    @:test public static function catalogContractResolvesByRequest():Void {
         new TestTraceRecorder("ReplayableFontBackendCoverageTest").section("catalogContractResolvesByRequest");
-        var cjkFace = new ReplayableFontFaceDescriptor(FontFaceId.of("face-cjk"), strings(["Noto Serif CJK"]), roles([FontRole.CjkText]), "bytes");
-        var latinFace = new ReplayableFontFaceDescriptor(FontFaceId.of("face-latin"), strings(["Plex"]), roles([FontRole.LatinText]), "bytes");
+        var cjkFace = new ReplayableFontFaceDescriptor(FontFaceId.of("face-cjk"), ReplayableFontBackendCoverageTestSupport.strings(["Noto Serif CJK"]), ReplayableFontBackendCoverageTestSupport.roles([FontRole.CjkText]), "bytes");
+        var latinFace = new ReplayableFontFaceDescriptor(FontFaceId.of("face-latin"), ReplayableFontBackendCoverageTestSupport.strings(["Plex"]), ReplayableFontBackendCoverageTestSupport.roles([FontRole.LatinText]), "bytes");
         var catalog:ReplayableFontCatalog = new CatalogImpl([cjkFace, latinFace]);
         TracedAssertions.assertTrue(catalog.capabilityReport.canReplayFromControlledBytes);
         var hit = catalog.resolve(new ReplayableFontFaceRequest(FontRole.LatinText, ["Plex"], 12.0, 400, false, "zh-CN", "A"));
@@ -93,24 +76,10 @@ class ReplayableFontBackendCoverageTest {
         TracedAssertions.assertNullRendered(miss == null, "-");
     }
 
-    /**
-        The conventional class test entry (boring feature spec 19).
-        The class carries no test marker, so the Kotlin runner generated from
-        that marker's collection never instantiates it; this entry is how the
-        runner calls the class once. It registers no test id, so the cross-target
-        test id set is unchanged. The body repeats the calls
-        engine-haxe/tests/Main.hx makes for this class, through the same failure
-        accounting Main.hx uses, and then flushes the class trace the way Main.hx
-        does.
-    **/
-    public static function runTestEntries():Void {
-        ClassTestEntry.run(fontFaceIdRejectsBlankAndKeepsValue);
-        ClassTestEntry.run(faceDescriptorDefaultsAreStable);
-        ClassTestEntry.run(faceRequestRejectsNonPositiveAndNonFiniteFontSize);
-        ClassTestEntry.run(capabilityReportReplayFlagRequiresFacesAndNoMissingFaceIssue);
-        ClassTestEntry.run(catalogContractResolvesByRequest);
+    public static function flushTestTrace():Void {
         TestTraceRecorder.flushClass("ReplayableFontBackendCoverageTest");
     }
+
 }
 
 private class CatalogImpl implements ReplayableFontCatalog {
