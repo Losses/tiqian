@@ -171,7 +171,7 @@ class PunctuationModelCoverageTest {
 
     @:test public static function haltFittedCompressionUsesFontMeasurements():Void {
         PunctuationModelCoverageSupport.start("haltFittedCompressionUsesFontMeasurements");
-        final a = PunctuationModelCoverageSupport.atom("·", 0, new PunctuationInkInput(16, new Rect(2, 4, 10, 12), 8, -2));
+        final a = PunctuationModelCoverageSupport.atomOrFail("·", 0, new PunctuationInkInput(16, new Rect(2, 4, 10, 12), 8, -2));
         PunctuationModelCoverageSupport.eqs("FontHaltFittedBodyCompression", a.geometrySource);
         PunctuationModelCoverageSupport.eqf(2, a.leadingGlue.natural);
         PunctuationModelCoverageSupport.eqf(6, a.trailingGlue.natural);
@@ -280,9 +280,32 @@ class PunctuationModelCoverageSupport {
     public static function glue(n:Float):Glue
         return new Glue(PunctuationTrailing, 0, n, n, 0, 0);
 
-    public static function atom(c:String, ?s:Int, ?ink:PunctuationInkInput):PunctuationAtom {
+    public static function atom(c:String, ?s:Int, ?ink:PunctuationInkInput):Null<PunctuationAtom> {
         final i = s == null ? 0 : s;
         return builder.build(c, new TextRange(i, i + 1), em, ink);
+    }
+
+    /**
+     * Non-null accessor for cases that require the built atom. The declared
+     * non-null return keeps the generated Kotlin free of the safe-call
+     * extraction a nullable return forces, so a field read or a null
+     * comparison does not become an unconditional extraction. Cases asserting
+     * the absent atom keep `atom`.
+     */
+    public static function atomOrFail(c:String, ?s:Int, ?ink:PunctuationInkInput):PunctuationAtom {
+        final a = atom(c, s, ink);
+        rejectMissingAtom(a);
+        return a;
+    }
+
+    /**
+     * Records the traced non-null assertion only when the atom is absent, so a
+     * passing case adds no event and the recorded trace keeps matching the
+     * legacy Kotlin test golden, which asserts no non-null atom there.
+     */
+    public static function rejectMissingAtom(v:Null<PunctuationAtom>):Void {
+        if (v == null)
+            TracedAssertions.assertNotNullRendered(false, "-");
     }
 
     public static function nul<T>(v:Null<T>):Void

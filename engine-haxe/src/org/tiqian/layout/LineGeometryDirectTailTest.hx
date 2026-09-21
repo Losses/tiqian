@@ -31,7 +31,7 @@ import std.SortedMap;
                 s: a,
                 g: LineGeometryDirectTailSupport.rg(12, 8)
             }
-            ]));
+            ]), null);
         TracedAssertions.assertEqualsInt(1, r.lineBaseline.length);
         TracedAssertions.assertTrue(r.lineBaseline[0] > 0);
     }
@@ -49,14 +49,14 @@ import std.SortedMap;
                 g: LineGeometryDirectTailSupport.rg(12, 8)
             },
             {s: b, g: LineGeometryDirectTailSupport.rg(12, 6)}
-            ]));
+            ]), null);
         TracedAssertions.assertEqualsInt(2, r.lineBaseline.length);
         TracedAssertions.assertTrue(r.lineBaseline[1] > r.lineBaseline[0]);
     }
 
     @:test public static function emptyLineSolutionYieldsZeroArraysAndZeroMaxExtra():Void {
         LineGeometryDirectTailSupport.start("emptyLineSolutionYieldsZeroArraysAndZeroMaxExtra");
-        var r = LineGeometryDirectTailSupport.geometry([LineGeometryDirectTailSupport.ruby(new TextRange(0, 2), "y")], []);
+        var r = LineGeometryDirectTailSupport.geometry([LineGeometryDirectTailSupport.ruby(new TextRange(0, 2), "y")], [], null, null);
         TracedAssertions.assertEqualsInt(0, r.lineBaseline.length);
         TracedAssertions.assertEqualsInt(0, r.lineTop.length);
         TracedAssertions.assertEqualsInt(0, r.lineBottom.length);
@@ -156,8 +156,9 @@ class LineGeometryDirectTailSupport {
     public static function geometry(?spans:Array<RubySpan>, lines:Array<LineCandidate>, ?rmap:SortedMap<RubySpan, RubyFontGeometry>,
             ?objects:Map<Int, InlineObjectSpan>, ?existing:Float = 0.0, ?ascent:Float = 8.0, ?descent:Float = 4.0):LineVerticalGeometryStageResult {
         var cs = clusters();
+        var inlineObjects = objects == null ? new Map() : objects;
         return LineGeometryStageFns.resolveLineVerticalGeometry(input(), 16.0, spans == null ? [] : spans, cs, new LineSolution(lines),
-            rmap == null ? SortedMap.builder().build() : rmap, existing, new ResolvedLineMetrics(12.0, 16.0), 16.0, 0.0, objects, ascent, descent);
+            rmap == null ? SortedMap.builder().build() : rmap, existing, new ResolvedLineMetrics(12.0, 16.0), 16.0, 0.0, inlineObjects, ascent, descent);
     }
 
     public static function ruby(range:TextRange, text:String):RubySpan
