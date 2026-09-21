@@ -9,6 +9,7 @@ import org.tiqian.layout.QuotePairAnalyzer.QuoteType;
 import org.tiqian.test.TestHelpers;
 import org.tiqian.test.trace.TestTraceRecorder;
 import org.tiqian.test.trace.TracedAssertions;
+import org.tiqian.test.trace.ClassTestEntry;
 
 class QuotePairAnalyzerCoverageTest {
     private static function rec(n:String):Void
@@ -169,5 +170,46 @@ class QuotePairAnalyzerCoverageTest {
     public static function codePointBeforeNonSurrogateBmpChar():Void {
         rec("codePointBeforeNonSurrogateBmpChar");
         nonEmpty("A\u2019");
+    }
+
+    /**
+        The conventional class test entry (boring feature spec 19).
+        The class carries no test marker, so the Kotlin runner generated from
+        that marker's collection never instantiates it; this entry is how the
+        runner calls the class once. It registers no test id, so the cross-target
+        test id set is unchanged. The body repeats the calls
+        engine-haxe/tests/Main.hx makes for this class, through the same failure
+        accounting Main.hx uses, and then flushes the class trace the way Main.hx
+        does.
+    **/
+    public static function runTestEntries():Void {
+        ClassTestEntry.run(deprecatedClassifyPairsWithFontRoleClassifierDelegates);
+        ClassTestEntry.run(deprecatedClassifyQuoteRolesWithFontRoleClassifierDelegates);
+        ClassTestEntry.run(codePointBeforeSurrogatePairReturnsSupplementary);
+        ClassTestEntry.run(codePointAtOrNullSurrogatePairReturnsSupplementary);
+        ClassTestEntry.run(codePointAtOrNullNonSurrogateReturnsSelf);
+        ClassTestEntry.run(codePointBeforeReturnsNullAtStart);
+        ClassTestEntry.run(codePointBeforeReturnsSupplementaryForSurrogatePair);
+        ClassTestEntry.run(quotePairAwareFontRoleClassifierUsesOverride);
+        ClassTestEntry.run(quotePairAwareFontRoleClassifierDelegatesWhenNoOverride);
+        ClassTestEntry.run(doubleQuoteCloseWithEmptyStackIgnores);
+        ClassTestEntry.run(singleQuoteCloseWithEmptyStackIgnores);
+        ClassTestEntry.run(inWordApostropheAfterSupplementaryDoesNotClose);
+        ClassTestEntry.run(codePointAtOrNullWithSupplementaryAfterQuote);
+        ClassTestEntry.run(codePointBeforeWithHighSurrogateBeforeQuote);
+        ClassTestEntry.run(codePointBeforeWithLowSurrogateAtStart);
+        ClassTestEntry.run(codePointBeforeWithLowSurrogateAfterNonHighSurrogate);
+        ClassTestEntry.run(codePointAtOrNullWithIndexOutOfRange);
+        ClassTestEntry.run(codePointAtOrNullWithHighSurrogateAtEnd);
+        ClassTestEntry.run(codePointAtOrNullWithHighSurrogateFollowedByNonLowSurrogate);
+        ClassTestEntry.run(analyzeWithDoubleQuoteOpen);
+        ClassTestEntry.run(codePointAtOrNullHighSurrogateNotInRangeReturnsHigh);
+        ClassTestEntry.run(codePointBeforeLowInRangeIndexGe2HighNotInRange);
+        ClassTestEntry.run(singleQuotePairMatch);
+        ClassTestEntry.run(codePointAtOrNullLoneHighSurrogateAfterQuote);
+        ClassTestEntry.run(codePointAtOrNullHighSurrogateAtStringEnd);
+        ClassTestEntry.run(analyzeWithAllQuoteTypes);
+        ClassTestEntry.run(codePointBeforeNonSurrogateBmpChar);
+        TestTraceRecorder.flushClass("QuotePairAnalyzerCoverageTest");
     }
 }

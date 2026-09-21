@@ -7,6 +7,7 @@ import org.tiqian.test.trace.TracedAssertions;
 import std.SortedMap;
 import org.tiqian.layout.ProgressiveBreakDecisions.ProgressiveBreakOpportunity;
 import org.tiqian.layout.ProgressiveBreakDecisions.ProgressiveBreakTier;
+import org.tiqian.test.trace.ClassTestEntry;
 
 class ProgressiveBreakDecisionsTailTest {
     static function c(i:Int):Cluster
@@ -39,4 +40,20 @@ class ProgressiveBreakDecisionsTailTest {
 
     public static function flush():Void
         new TestTraceRecorder("ProgressiveBreakDecisionsTailTest").flush();
+
+    /**
+        The conventional class test entry (boring feature spec 19).
+        The class carries no test marker, so the Kotlin runner generated from
+        that marker's collection never instantiates it; this entry is how the
+        runner calls the class once. It registers no test id, so the cross-target
+        test id set is unchanged. The body repeats the calls
+        engine-haxe/tests/Main.hx makes for this class, through the same failure
+        accounting Main.hx uses, and then flushes the class trace the way Main.hx
+        does.
+    **/
+    public static function runTestEntries():Void {
+        ClassTestEntry.run(infiniteLineLimitWithClustersAdmitsTheCleanestTier);
+        ClassTestEntry.run(infiniteStretchCeilingWithFiniteLineLimitAdmitsTheCleanestTier);
+        TestTraceRecorder.flushClass("ProgressiveBreakDecisionsTailTest");
+    }
 }

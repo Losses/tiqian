@@ -8,6 +8,7 @@ import org.tiqian.layout.QuotePairAnalyzer.QuotePair;
 import org.tiqian.layout.QuotePairAnalyzer.QuoteType;
 import org.tiqian.test.trace.TestTraceRecorder;
 import org.tiqian.test.trace.TracedAssertions;
+import org.tiqian.test.trace.ClassTestEntry;
 
 class QuotePairAnalyzerTest {
     private static function rec(name:String):Void
@@ -394,5 +395,50 @@ class QuotePairAnalyzerTest {
             TracedAssertions.assertTrue(d[0].source.length > 0, xs[i] + ": " + renderDecisions(d));
             i++;
         }
+    }
+
+    /**
+        The conventional class test entry (boring feature spec 19).
+        The class carries no test marker, so the Kotlin runner generated from
+        that marker's collection never instantiates it; this entry is how the
+        runner calls the class once. It registers no test id, so the cross-target
+        test id set is unchanged. The body repeats the calls
+        engine-haxe/tests/Main.hx makes for this class, through the same failure
+        accounting Main.hx uses, and then flushes the class trace the way Main.hx
+        does.
+    **/
+    public static function runTestEntries():Void {
+        ClassTestEntry.run(matchesDoubleQuotePair);
+        ClassTestEntry.run(matchesSingleQuotePair);
+        ClassTestEntry.run(matchesNestedQuotePairs);
+        ClassTestEntry.run(unmatchedQuotesProduceNoPairs);
+        ClassTestEntry.run(contractionApostropheDoesNotCloseOuterSingleQuote);
+        ClassTestEntry.run(contractionInsideCjkSingleQuotesKeepsApostropheLatin);
+        ClassTestEntry.run(inWordApostropheMatrixDoesNotConsumeOuterQuotePairs);
+        ClassTestEntry.run(unmatchedCurlyQuotesUseDirectionalContext);
+        ClassTestEntry.run(mismatchedNestingLeavesQuotesUnmatched);
+        ClassTestEntry.run(classifiesPairAsCjkWhenOuterContextIsCjk);
+        ClassTestEntry.run(classifiesPairAsLatinWhenOuterContextIsLatin);
+        ClassTestEntry.run(classifiesBothQuotesAsCjkForCjkQuotedLatinContent);
+        ClassTestEntry.run(whitespaceDelimitedLatinQuotePairOverridesCjkOuterContext);
+        ClassTestEntry.run(unspacedCjkQuotationOfLatinTextRemainsCjk);
+        ClassTestEntry.run(adjacentQuotedListItemsDoNotUsePreviousItemContentAsOuterContext);
+        ClassTestEntry.run(spacedCjkQuotedContentRemainsCjk);
+        ClassTestEntry.run(classifiesPairAsCjkAtTextBoundary);
+        ClassTestEntry.run(classifiesTextStartLatinPairFromQuotedContent);
+        ClassTestEntry.run(mixedChineseQuestionAtParagraphStartUsesParagraphLanguage);
+        ClassTestEntry.run(explicitEnglishParagraphLanguageWinsForMixedQuotation);
+        ClassTestEntry.run(commonDigitsDoNotChooseTheQuoteRole);
+        ClassTestEntry.run(nonLatinWesternScriptsParticipateAsStrongScriptEvidence);
+        ClassTestEntry.run(numberedCjkQuotePrefixUsesQuotedContent);
+        ClassTestEntry.run(numberedLatinQuotePrefixStillUsesLatinContent);
+        ClassTestEntry.run(classifiesNestedPairsByOutermostContext);
+        ClassTestEntry.run(classifiesLatinNestedQuotesByOuterContext);
+        ClassTestEntry.run(skipsAsciiPunctuationWhenResolvingContext);
+        ClassTestEntry.run(skipsNeutralDashWhenResolvingContext);
+        ClassTestEntry.run(endOfTextQuotePairClassifiedByOuterContext);
+        ClassTestEntry.run(representativeQuoteContextMatrixRemainsStable);
+        ClassTestEntry.run(roleDecisionSourcesStayExplainableAcrossFallbackPaths);
+        TestTraceRecorder.flushClass("QuotePairAnalyzerTest");
     }
 }

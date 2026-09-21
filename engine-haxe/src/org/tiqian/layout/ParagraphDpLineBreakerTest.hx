@@ -9,6 +9,8 @@ import org.tiqian.layout.ProgressiveBreakDecisions.ShrinkOpportunity;
 import org.tiqian.layout.ProgressiveBreakDecisions.ShrinkChannel;
 import org.tiqian.layout.ProgressiveBreakDecisions.UnbreakableRanges;
 import org.tiqian.layout.ProgressiveBreakDecisions.ProgressiveBreakTier;
+import org.tiqian.test.trace.TestTraceRecorder;
+import org.tiqian.test.trace.ClassTestEntry;
 
 class ParagraphDpLineBreakerTest {
     static function rec(n:String):Void
@@ -127,5 +129,29 @@ class ParagraphDpLineBreakerTest {
         rec("overWideSingleClusterStillProgresses");
         var s = ParagraphDpLineBreakerTestSupport.solveTestDefaults([c(0, "中", 16), c(1, "Ｗ", 300), c(2, "中", 16)], 48);
         ParagraphDpLineBreakerTestSupport.tiles(s, 3);
+    }
+
+    /**
+        The conventional class test entry (boring feature spec 19).
+        The class carries no test marker, so the Kotlin runner generated from
+        that marker's collection never instantiates it; this entry is how the
+        runner calls the class once. It registers no test id, so the cross-target
+        test id set is unchanged. The body repeats the calls
+        engine-haxe/tests/Main.hx makes for this class, through the same failure
+        accounting Main.hx uses, and then flushes the class trace the way Main.hx
+        does.
+    **/
+    public static function runTestEntries():Void {
+        ClassTestEntry.run(compressedSameTierBoundaryIsNotReportedAsPromotion);
+        ClassTestEntry.run(tilesAllClustersInOrder);
+        ClassTestEntry.run(singleLineWhenEverythingFits);
+        ClassTestEntry.run(mandatoryBreakBindsControlToPreviousLine);
+        ClassTestEntry.run(trailingMandatoryBreakEmitsParagraphEndLine);
+        ClassTestEntry.run(neverBreaksInsideUnbreakableRange);
+        ClassTestEntry.run(kinsokuAvoidanceRoutesAroundForbiddenLineStart);
+        ClassTestEntry.run(compressionEdgeRecordsPushInRepair);
+        ClassTestEntry.run(compressionDisabledWithoutPushInFlag);
+        ClassTestEntry.run(overWideSingleClusterStillProgresses);
+        TestTraceRecorder.flushClass("ParagraphDpLineBreakerTest");
     }
 }

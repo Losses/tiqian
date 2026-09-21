@@ -76,10 +76,14 @@ class ExplainableStubParagraphLayoutEngineTest {
         var text = "很久以前，曾经有一个名叫小红帽的孩子，生活在大森林的边上，大森林里充满了濒临灭绝的猫头鹰和珍稀植物，如果有人愿意花时间研究它们，就会发现癌症的治疗方法。\n小红帽和一位称为母亲的养育者一起生活";
         var r = ExplainableStubParagraphLayoutEngineTestSupport.engine(null, new LookaheadLineBreaker())
             .layout(ExplainableStubParagraphLayoutEngineTestSupport.input(text, 1200, null, null, new TextStyle(null, 48)));
-        var dbg = "";
+        // The legacy test builds this message with joinToString(separator =
+        // "\n"), so the last line carries no trailing separator
+        // (ExplainableStubParagraphLayoutEngineTest.kt:142-145).
+        var dbgLines:Array<String> = [];
         for (l in r.lines)
-            dbg += l.clusterRange.toString() + " " + Std.string(l.range) + " " + Std.string(l.endReason) + " \""
-                + UString.slice(text, l.range.start, l.range.end) + "\"\n";
+            dbgLines.push(l.clusterRange.toString() + " " + Std.string(l.range) + " " + Std.string(l.endReason) + " \""
+                + UString.slice(text, l.range.start, l.range.end) + "\"");
+        var dbg = dbgLines.join("\n");
         TracedAssertions.assertTrue(r.lines.length >= 4);
         var no = false;
         for (l in r.lines)
@@ -152,7 +156,12 @@ class ExplainableStubParagraphLayoutEngineTest {
             .layout(ExplainableStubParagraphLayoutEngineTestSupport.input("A", 240));
         var g = r.glyphRuns[0].glyphs[0];
         TracedAssertions.assertEqualsInt(42, g.id);
-        TracedAssertions.assertEqualsRendered("Rect(left=1, top=-10, right=12, bottom=2)", ExplainableStubParagraphLayoutEngineTestSupport.renderNullableBounds(g.bounds));
+        // The legacy test asserts the Rect value the shaper was built with
+        // (ExplainableStubParagraphLayoutEngineTest.kt:287). Build the same
+        // value here and render both sides through one path, so the check
+        // does not depend on how a target turns a Float into text.
+        TracedAssertions.assertEqualsRendered(new Rect(1, -10, 12, 2).toString(),
+            ExplainableStubParagraphLayoutEngineTestSupport.renderNullableBounds(g.bounds));
         TracedAssertions.assertEqualsFloat(20, g.advance);
     }
 

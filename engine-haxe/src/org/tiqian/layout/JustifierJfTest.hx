@@ -17,6 +17,7 @@ import org.tiqian.layout.PunctuationModel.GlueKind;
 import org.tiqian.layout.ProgressiveBreakDecisions.ProgressiveBreakTier;
 import org.tiqian.layout.ProgressiveBreakDecisions.ShrinkOpportunity;
 import org.tiqian.layout.ProgressiveBreakDecisions.ShrinkChannel;
+import org.tiqian.test.trace.ClassTestEntry;
 
 class JustifierJfTestSupport {
     public static var em:Float = 16.0;
@@ -376,5 +377,33 @@ class JustifierJfTest {
             i6++;
         }
         TracedAssertions.assertTrue(ok);
+    }
+
+    /**
+        The conventional class test entry (boring feature spec 19).
+        The class carries no test marker, so the Kotlin runner generated from
+        that marker's collection never instantiates it; this entry is how the
+        runner calls the class once. It registers no test id, so the cross-target
+        test id set is unchanged. The body repeats the calls
+        engine-haxe/tests/Main.hx makes for this class, through the same failure
+        accounting Main.hx uses, and then flushes the class trace the way Main.hx
+        does.
+    **/
+    public static function runTestEntries():Void {
+        ClassTestEntry.run(attachedInlineVirtualSinoWesternBoundaryOutOfBounds);
+        ClassTestEntry.run(attachedInlineVirtualSinoWesternZeroHeadroomInAllocate);
+        ClassTestEntry.run(cjkLatinMixedZeroAndPositiveCapacityAllocation);
+        ClassTestEntry.run(closedSpaceGapInTypedSinoWesternAndUniformSpace);
+        ClassTestEntry.run(closedSpaceGapInUniformSpaceWhenWordSpace);
+        ClassTestEntry.run(compressSubnormalUnderflowShrinkZero);
+        ClassTestEntry.run(compressionWithZeroSurplusAndZeroCapacity);
+        ClassTestEntry.run(emptyLineClusterRangeSkipsUniformSpaceLoop);
+        ClassTestEntry.run(preferredInlineObjectBoundaryOutOfBounds);
+        ClassTestEntry.run(singleClusterRangeProducesNoOpportunities);
+        ClassTestEntry.run(typedSpaceAndWordSpacePredicateEdgeConditions);
+        ClassTestEntry.run(virtualNonSinoWesternBoundaryWhenAllowSinoWesternGapStretchIsFalse);
+        ClassTestEntry.run(virtualSinoWesternGapWhenAllowSinoWesternGapStretchIsFalse);
+        ClassTestEntry.run(zeroCjkLatinHeadroomProducesNoOpportunities);
+        TestTraceRecorder.flushClass("JustifierJfTest");
     }
 }

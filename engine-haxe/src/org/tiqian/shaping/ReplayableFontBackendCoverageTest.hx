@@ -13,6 +13,7 @@ import org.tiqian.test.trace.TestTraceRecorder;
 import org.tiqian.test.trace.TracedAssertions;
 import std.SortedMap;
 import std.SortedSet;
+import org.tiqian.test.trace.ClassTestEntry;
 
 class ReplayableFontBackendCoverageTest {
     static function strings(values:Array<String>):SortedSet<String> {
@@ -90,6 +91,25 @@ class ReplayableFontBackendCoverageTest {
         TracedAssertions.assertEqualsRendered("face-latin", hit == null ? "-" : hit.id.toString());
         var miss = catalog.resolve(new ReplayableFontFaceRequest(FontRole.LatinText, ["Missing"], 12.0, 400, false, "zh-CN", "A"));
         TracedAssertions.assertNullRendered(miss == null, "-");
+    }
+
+    /**
+        The conventional class test entry (boring feature spec 19).
+        The class carries no test marker, so the Kotlin runner generated from
+        that marker's collection never instantiates it; this entry is how the
+        runner calls the class once. It registers no test id, so the cross-target
+        test id set is unchanged. The body repeats the calls
+        engine-haxe/tests/Main.hx makes for this class, through the same failure
+        accounting Main.hx uses, and then flushes the class trace the way Main.hx
+        does.
+    **/
+    public static function runTestEntries():Void {
+        ClassTestEntry.run(fontFaceIdRejectsBlankAndKeepsValue);
+        ClassTestEntry.run(faceDescriptorDefaultsAreStable);
+        ClassTestEntry.run(faceRequestRejectsNonPositiveAndNonFiniteFontSize);
+        ClassTestEntry.run(capabilityReportReplayFlagRequiresFacesAndNoMissingFaceIssue);
+        ClassTestEntry.run(catalogContractResolvesByRequest);
+        TestTraceRecorder.flushClass("ReplayableFontBackendCoverageTest");
     }
 }
 
