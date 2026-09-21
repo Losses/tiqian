@@ -531,7 +531,8 @@ class LineBreakRepairEngineTest {
         var noneForbidden = true;
         for (i in 0...result.debug.lineDecisions.length) {
             final dec = result.debug.lineDecisions[i];
-            if (dec.repairDecision != null && dec.repairDecision.reasonCode == "ForbiddenAtLineStart") {
+            final repairDecision = dec.repairDecision;
+            if (repairDecision != null && repairDecision.reasonCode == "ForbiddenAtLineStart") {
                 noneForbidden = false;
             }
         }

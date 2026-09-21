@@ -252,7 +252,8 @@ class PunctuationGeometryStageCoverageTest {
         PunctuationGeometryStageCoverageSupport.start("glyphlessClustersUseThePurePolicyPath");
         var a = PunctuationGeometryStageCoverageSupport.atoms(PunctuationGeometryStageCoverageSupport.c("\uFF0C", 0), [])[0];
         TracedAssertions.assertEqualsString("ProfileGlueFallbackWithoutFontGeometry", a.geometrySource);
-        TracedAssertions.assertEqualsRendered("-", a.inkBoundsFallback == null ? "-" : a.inkBoundsFallback);
+        final inkBoundsFallback = a.inkBoundsFallback;
+        TracedAssertions.assertEqualsRendered("-", inkBoundsFallback == null ? "-" : inkBoundsFallback);
         TracedAssertions.assertEqualsFloat(8, a.trailingGlue.natural);
     }
 
@@ -332,7 +333,8 @@ class PunctuationGeometryStageCoverageTest {
         TracedAssertions.assertEqualsFloat(14, a.inkBounds.width);
         TracedAssertions.assertEqualsFloat(16, a.inkBounds.bottom);
         TracedAssertions.assertEqualsFloat(16, a.advance);
-        TracedAssertions.assertEqualsRendered("-", a.inkBoundsFallback == null ? "-" : a.inkBoundsFallback);
+        final inkBoundsFallback = a.inkBoundsFallback;
+        TracedAssertions.assertEqualsRendered("-", inkBoundsFallback == null ? "-" : inkBoundsFallback);
     }
 
     @:test public static function narrowInlineBoxesOwnTheirOuterAutoSpace():Void {
