@@ -20,6 +20,19 @@ class PushInLineWideCapacityTestSupport {
 
     static function renderCandidateText(v:RepairCandidate):String
         return Std.string(v);
+
+    /**
+     * The printed form of one data class List member: the reference reads it
+     * through the member's own toString, so its elements join with ", ".
+     * Std.string of a collection joins with "," on the Haxe/JS target.
+     */
+    static function allocationParts(values:Array<PushInAllocation>):Array<String> {
+        final parts:Array<String> = [];
+        for (value in values) {
+            parts.push(Std.string(value));
+        }
+        return parts;
+    }
     public static function pushInString(o:RepairOption):String
         return switch (o) {
             case PushIn(penalty, reason, offender, allocations, shrink, capacity):
@@ -30,7 +43,7 @@ class PushInLineWideCapacityTestSupport {
                 + ", offenderClusterIndex="
                 + offender
                 + ", allocations="
-                + Std.string(allocations)
+                + TestTraceRender.legacyListText(allocationParts(allocations))
                 + ", totalShrink="
                 + shrink
                 + ", totalAvailableCapacity="
