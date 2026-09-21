@@ -10,8 +10,8 @@ class BopomofoLayoutTest {
         final t = new TestTraceRecorder("BopomofoLayoutTest");
         t.section("symbolsAndToneRightOfBase");
         final r = BopomofoLayoutTestSupport.layout([
-            new RubySpan(new TextRange(0, 1), "ㄓㄨㄥ", null, RubyKind.Bopomofo),
-            new RubySpan(new TextRange(1, 2), "ㄔㄤˊ", null, RubyKind.Bopomofo)
+            new RubySpan(new TextRange(0, 1), "ㄓㄨㄥ", null, RubyKind.Bopomofo, "zh-TW"),
+            new RubySpan(new TextRange(1, 2), "ㄔㄤˊ", null, RubyKind.Bopomofo, "zh-TW")
         ]);
         final z = r.debug.bopomofoDecisions;
         if (z.length < 2) {
@@ -54,7 +54,7 @@ class BopomofoLayoutTest {
         final t = new TestTraceRecorder("BopomofoLayoutTest");
         t.section("annotatedBaseReservesHalfEmOnly");
         final plain = BopomofoLayoutTestSupport.plain();
-        final r = BopomofoLayoutTestSupport.layout([new RubySpan(new TextRange(0, 1), "ㄓㄨㄥ", null, RubyKind.Bopomofo)]);
+        final r = BopomofoLayoutTestSupport.layout([new RubySpan(new TextRange(0, 1), "ㄓㄨㄥ", null, RubyKind.Bopomofo, "zh-TW")]);
         TracedAssertions.assertTrue(r.clusters[0].advance > plain.clusters[0].advance,
             "bopomofo reserves advance on annotated base (" + r.clusters[0].advance + " vs " + plain.clusters[0].advance + ")");
         TracedAssertions.assertEqualsFloat(plain.clusters[1].advance, r.clusters[1].advance, "current v1 does not reserve the unannotated adjacent char");
@@ -64,8 +64,8 @@ class BopomofoLayoutTest {
         final t = new TestTraceRecorder("BopomofoLayoutTest");
         t.section("fontWeightFollowsAnnotatedBasePlusThreeSteps");
         final r = BopomofoLayoutTestSupport.layout([
-            new RubySpan(new TextRange(0, 1), "ㄓㄨㄥ", null, RubyKind.Bopomofo),
-            new RubySpan(new TextRange(1, 2), "ㄨㄣˊ", null, RubyKind.Bopomofo)
+            new RubySpan(new TextRange(0, 1), "ㄓㄨㄥ", null, RubyKind.Bopomofo, "zh-TW"),
+            new RubySpan(new TextRange(1, 2), "ㄨㄣˊ", null, RubyKind.Bopomofo, "zh-TW")
         ], [
             new TextSpan(new TextRange(0, 1), new TextStyle(null, null, null, 500)),
             new TextSpan(new TextRange(1, 2), new TextStyle(null, null, null, 700))
@@ -77,7 +77,7 @@ class BopomofoLayoutTest {
     @:test public static function decisionKeepsSourceReadingForCopy():Void {
         final t = new TestTraceRecorder("BopomofoLayoutTest");
         t.section("decisionKeepsSourceReadingForCopy");
-        final r = BopomofoLayoutTestSupport.layout([new RubySpan(new TextRange(0, 1), "˙ㄉㄜ", null, RubyKind.Bopomofo)]);
+        final r = BopomofoLayoutTestSupport.layout([new RubySpan(new TextRange(0, 1), "˙ㄉㄜ", null, RubyKind.Bopomofo, "zh-TW")]);
         final d = r.debug.bopomofoDecisions;
         if (d.length == 0) {
             TracedAssertions.assertEqualsString("˙ㄉㄜ", r.input.rubySpans[0].text);
@@ -95,7 +95,7 @@ class BopomofoLayoutTest {
     @:test public static function annotationLocaleDoesNotReplaceSimplifiedBaseLocale():Void {
         final t = new TestTraceRecorder("BopomofoLayoutTest");
         t.section("annotationLocaleDoesNotReplaceSimplifiedBaseLocale");
-        final r = BopomofoLayoutTestSupport.layout([new RubySpan(new TextRange(0, 1), "ㄓㄨㄥ", null, RubyKind.Bopomofo)]);
+        final r = BopomofoLayoutTestSupport.layout([new RubySpan(new TextRange(0, 1), "ㄓㄨㄥ", null, RubyKind.Bopomofo, "zh-TW")]);
         TracedAssertions.assertEqualsString("zh-Hans", r.input.textStyle.locale);
         if (r.debug.bopomofoDecisions.length == 0) {
             TracedAssertions.assertEqualsInt(1, r.debug.bopomofoDecisions.length);
