@@ -118,4 +118,8 @@ class PreparedParagraphJfTest {
         TracedAssertions.assertTrue(json.indexOf("\"fontWeight\":700") >= 0);
         TracedAssertions.assertTrue(json.indexOf("\"italic\":true") >= 0);
     }
+
+    public static function flushTestTrace():Void {
+        TestTraceRecorder.flushClass("PreparedParagraphJfTest");
+    }
 }

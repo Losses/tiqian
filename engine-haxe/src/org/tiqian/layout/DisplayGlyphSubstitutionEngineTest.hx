@@ -258,4 +258,8 @@ class DisplayGlyphSubstitutionEngineTest {
         TracedAssertions.assertEqualsFloat(32, DisplayGlyphSubstitutionEngineTestSupport.singleCluster(result).advance);
         TracedAssertions.assertEqualsFloat(32, result.size.width);
     }
+
+    public static function flushTestTrace():Void {
+        TestTraceRecorder.flushClass("DisplayGlyphSubstitutionEngineTest");
+    }
 }

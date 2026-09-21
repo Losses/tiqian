@@ -61,4 +61,8 @@ class ContextualDashEllipsisRoleResolverCoverageTest {
         TracedAssertions.assertFailsWith(null, () -> r.resolve(ContextualDashEllipsisRoleResolverCoverageSupport.surrogateText([0xD83D, 0x2014])));
         TracedAssertions.assertFailsWith(null, () -> r.resolve(ContextualDashEllipsisRoleResolverCoverageSupport.surrogateText([0xD83D, 0xFFFD, 0x2014])));
     }
+
+    public static function flushTestTrace():Void {
+        TestTraceRecorder.flushClass("ContextualDashEllipsisRoleResolverCoverageTest");
+    }
 }

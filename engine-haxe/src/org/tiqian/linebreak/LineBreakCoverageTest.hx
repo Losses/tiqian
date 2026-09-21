@@ -177,6 +177,10 @@ class LineBreakCoverageTest {
             i++;
         }
     }
+
+    public static function flushTestTrace():Void {
+        TestTraceRecorder.flushClass("LineBreakCoverageTest");
+    }
 }
 
 class LineBreakCoverageTestHelpers {

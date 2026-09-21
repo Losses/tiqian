@@ -1540,6 +1540,10 @@ class LayoutQueriesResidualCoverageTest {
             1.0);
         TracedAssertions.assertEqualsFloat(15.0 + 20.0 * 0.18, value);
     }
+
+    public static function flushTestTrace():Void {
+        TestTraceRecorder.flushClass("LayoutQueriesResidualCoverageTest");
+    }
 }
 
 class LayoutQueriesResidualCoverageTestHelpers {

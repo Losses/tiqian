@@ -312,4 +312,8 @@ class KinsokuAndCohesionRepairEngineTest {
                 token + " must keep its existing numeric/token policy: " + LineBreakRepairEngineTestSupport.renderList(result.debug.breakOpportunityDecisions));
         }
     }
+
+    public static function flushTestTrace():Void {
+        TestTraceRecorder.flushClass("KinsokuAndCohesionRepairEngineTest");
+    }
 }

@@ -32,4 +32,8 @@ class OpeningBracketLineStartTest {
         TracedAssertions.assertEqualsInt(2, count);
         TracedAssertions.assertTrue(all);
     }
+
+    public static function flushTestTrace():Void {
+        TestTraceRecorder.flushClass("OpeningBracketLineStartTest");
+    }
 }

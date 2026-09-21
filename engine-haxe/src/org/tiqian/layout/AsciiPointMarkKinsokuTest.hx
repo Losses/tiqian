@@ -315,4 +315,8 @@ class AsciiPointMarkKinsokuTest {
                         AsciiPointMarkKinsokuTestSupport.REPORTED_PARAGRAPH)));
             }
     }
+
+    public static function flushTestTrace():Void {
+        TestTraceRecorder.flushClass("AsciiPointMarkKinsokuTest");
+    }
 }

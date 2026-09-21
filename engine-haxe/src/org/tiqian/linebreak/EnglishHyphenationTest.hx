@@ -25,6 +25,10 @@ class EnglishHyphenationTest {
         TracedAssertions.assertEqualsIntArray([], EnglishHyphenation.enUs().hyphenate("project"));
         TracedAssertions.assertEqualsIntArray([], EnglishHyphenation.enUs().hyphenate("present"));
     }
+
+    public static function flushTestTrace():Void {
+        TestTraceRecorder.flushClass("EnglishHyphenationTest");
+    }
 }
 
 class EnglishHyphenationTestHelpers {

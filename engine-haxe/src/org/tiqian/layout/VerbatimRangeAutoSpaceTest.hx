@@ -31,4 +31,8 @@ class VerbatimRangeAutoSpaceTest {
         TracedAssertions.assertEqualsInt(0, VerbatimRangeAutoSpaceTestSupport.count(result, "TextAutoSpaceReplace:east-asian-spacing-W-space-N"),
             Std.string(result) + ".debug.autoSpaceDecisions");
     }
+
+    public static function flushTestTrace():Void {
+        TestTraceRecorder.flushClass("VerbatimRangeAutoSpaceTest");
+    }
 }

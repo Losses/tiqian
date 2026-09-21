@@ -140,6 +140,10 @@ class SourceInteractionBoundariesCoverageTest {
         TracedAssertions.assertEqualsInt(3, SourceInteractionBoundaries.coerceToInteractionBoundary(emojiB, 9, emojiRange, SourceBoundaryBias.Backward));
         TracedAssertions.assertEqualsInt(0, SourceInteractionBoundaries.coerceToInteractionBoundary(emojiB, -1, emojiRange, SourceBoundaryBias.Forward));
     }
+
+    public static function flushTestTrace():Void {
+        TestTraceRecorder.flushClass("SourceInteractionBoundariesCoverageTest");
+    }
 }
 
 class SourceInteractionBoundariesCoverageTestHelpers {

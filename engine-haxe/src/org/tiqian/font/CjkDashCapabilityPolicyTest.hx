@@ -34,4 +34,8 @@ class CjkDashCapabilityPolicyTest {
         TracedAssertions.assertEqualsString("NoConformingCjkDashGlyph", CjkDashCapabilityPolicy.issueNameFor("unavailable"));
         TracedAssertions.assertEqualsString("status=unavailable", CjkDashCapabilityPolicy.issueDetailFor("unavailable", null));
     }
+
+    public static function flushTestTrace():Void {
+        TestTraceRecorder.flushClass("CjkDashCapabilityPolicyTest");
+    }
 }

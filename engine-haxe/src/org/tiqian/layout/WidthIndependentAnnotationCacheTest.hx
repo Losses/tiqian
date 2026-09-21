@@ -205,6 +205,10 @@ class WidthIndependentAnnotationCacheTest {
         TracedAssertions.assertTrue(cache.get(key2) != null);
         WidthIndependentAnnotationCacheTestSupport.assertEqualsNullableAnnotation(null, cache.get(key1), "Oldest entry key1 should be evicted");
     }
+
+    public static function flushTestTrace():Void {
+        TestTraceRecorder.flushClass("WidthIndependentAnnotationCacheTest");
+    }
 }
 
 class NoOpWidthIndependentAnnotationCache implements WidthIndependentAnnotationCache {

@@ -1712,4 +1712,8 @@ class UnicodePunctuationBoundaryResolverCoverageTest {
         final r = UnicodePunctuationBoundaryResolver.resolveUnicodePunctuationBoundaries(text, c, [FontRole.LatinText], []);
         TracedAssertions.assertEquals(0, r.decisions.length);
     }
+
+    public static function flushTestTrace():Void {
+        TestTraceRecorder.flushClass("UnicodePunctuationBoundaryResolverCoverageTest");
+    }
 }

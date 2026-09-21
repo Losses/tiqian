@@ -381,6 +381,10 @@ using std.RecordCopy;
         TracedAssertions.assertEqualsString("」", r.decisions[0].leftChar);
         TracedAssertions.assertEqualsFloat(8, r.trailingGlueByCluster.get(1));
     }
+
+    public static function flushTestTrace():Void {
+        TestTraceRecorder.flushClass("PunctuationGeometryBranchArmsCoverageTest");
+    }
 }
 
 class PunctuationGeometryBranchArmsCoverageTestSupport {

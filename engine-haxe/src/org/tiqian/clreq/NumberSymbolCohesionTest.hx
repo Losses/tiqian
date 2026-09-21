@@ -31,6 +31,10 @@ class NumberSymbolCohesionTest {
         TracedAssertions.assertEqualsStringArray(["1,000"], NumberSymbolCohesionTestHelpers.groups("共1,000人"));
         TracedAssertions.assertEqualsStringArray(["100"], NumberSymbolCohesionTestHelpers.groups("有100。"));
     }
+
+    public static function flushTestTrace():Void {
+        TestTraceRecorder.flushClass("NumberSymbolCohesionTest");
+    }
 }
 
 class NumberSymbolCohesionTestHelpers {

@@ -267,6 +267,10 @@ class PunctuationModelCoverageTest {
         PunctuationModelCoverageSupport.eqr(Std.string(BothSides), Std.string(PunctuationGluePlacements.glueSideFor(MainlandSimplified, MiddleDot)));
         PunctuationModelCoverageSupport.eqr(Std.string(BothSides), Std.string(PunctuationGluePlacements.glueSideFor(Traditional, Opening)));
     }
+
+    public static function flushTestTrace():Void {
+        TestTraceRecorder.flushClass("PunctuationModelCoverageTest");
+    }
 }
 
 /** Shared fixtures and traced-assertion helpers for PunctuationModelCoverageTest; the Kotlin test-class lowering admits test functions only. */

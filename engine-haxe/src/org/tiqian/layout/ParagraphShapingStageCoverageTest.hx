@@ -218,4 +218,8 @@ class ParagraphShapingStageCoverageTest {
             TracedAssertions.assertNotNullRendered(p != null, TestTraceRender.cap(p == null ? "null" : Std.string(p)));
         }
     }
+
+    public static function flushTestTrace():Void {
+        TestTraceRecorder.flushClass("ParagraphShapingStageCoverageTest");
+    }
 }

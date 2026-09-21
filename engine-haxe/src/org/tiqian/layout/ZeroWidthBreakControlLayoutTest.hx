@@ -56,4 +56,8 @@ class ZeroWidthBreakControlLayoutTest {
             TracedAssertions.assertEqualsRendered("TextRange(start=0, end=2)", Std.string(result.lines[0].range), breaker.strategyName);
         }
     }
+
+    public static function flushTestTrace():Void {
+        TestTraceRecorder.flushClass("ZeroWidthBreakControlLayoutTest");
+    }
 }

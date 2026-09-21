@@ -33,4 +33,8 @@ class RecordedEvidenceGoldenParityTest {
         TracedAssertions.assertTrue(failures.length == 0,
             failures.join("\n\n") + "\n\nIf the change is intentional, re-record with " + "TIQIAN_RECORD_SHAPING=1 on the JVM and review the golden diff.");
     }
+
+    public static function flushTestTrace():Void {
+        TestTraceRecorder.flushClass("RecordedEvidenceGoldenParityTest");
+    }
 }

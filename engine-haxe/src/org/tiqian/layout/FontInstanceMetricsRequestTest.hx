@@ -57,4 +57,8 @@ class FontInstanceMetricsRequestTest {
                 found = true;
         TracedAssertions.assertTrue(found);
     }
+
+    public static function flushTestTrace():Void {
+        TestTraceRecorder.flushClass("FontInstanceMetricsRequestTest");
+    }
 }

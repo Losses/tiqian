@@ -144,4 +144,8 @@ class PushInLineWideCapacityTest {
             throw new TiqianIllegalArgumentException(Message("CarryPrevious candidate not found"));
         TracedAssertions.assertEqualsString("carry-would-split-mourning-span", carry.rejectionReason);
     }
+
+    public static function flushTestTrace():Void {
+        TestTraceRecorder.flushClass("PushInLineWideCapacityTest");
+    }
 }

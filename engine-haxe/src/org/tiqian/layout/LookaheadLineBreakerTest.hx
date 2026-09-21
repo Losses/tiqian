@@ -233,6 +233,10 @@ class LookaheadLineBreakerTest {
         TracedAssertions.assertEqualsInt(3, solution.lines.length);
         TracedAssertions.assertEqualsBool(true, LookaheadLineBreakerTestSupport.isCarryPrevious(solution.lines[2].repair));
     }
+
+    public static function flushTestTrace():Void {
+        TestTraceRecorder.flushClass("LookaheadLineBreakerTest");
+    }
 }
 
 class LookaheadLineBreakerTestSupport {

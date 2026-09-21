@@ -95,4 +95,8 @@ class LineBreakPlanningStageCoverage2Test {
             LineBreakPlanningStageCoverage2TestSupport.mapOpp()));
         TracedAssertions.assertTrue(r.progressiveBreakOpportunities.size() == 0);
     }
+
+    public static function flushTestTrace():Void {
+        TestTraceRecorder.flushClass("LineBreakPlanningStageCoverage2Test");
+    }
 }

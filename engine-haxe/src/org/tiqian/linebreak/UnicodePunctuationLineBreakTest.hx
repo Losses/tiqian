@@ -35,4 +35,8 @@ class UnicodePunctuationLineBreakTest {
         TracedAssertions.assertEqualsRendered("Other", Std.string(UnicodePunctuationLineBreak.classOf(65)));
         TracedAssertions.assertEqualsRendered("Other", Std.string(UnicodePunctuationLineBreak.classOf(0x4E2D)));
     }
+
+    public static function flushTestTrace():Void {
+        TestTraceRecorder.flushClass("UnicodePunctuationLineBreakTest");
+    }
 }

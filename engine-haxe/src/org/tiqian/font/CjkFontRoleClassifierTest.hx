@@ -109,4 +109,8 @@ class CjkFontRoleClassifierTest {
         TracedAssertions.assertEqualsRendered("LatinText", Std.string(CjkFontRoleClassifierTestSupport.c("1", 0, 1)));
         TracedAssertions.assertEqualsRendered("Symbol", Std.string(CjkFontRoleClassifierTestSupport.c("❤", 0, 1)));
     }
+
+    public static function flushTestTrace():Void {
+        TestTraceRecorder.flushClass("CjkFontRoleClassifierTest");
+    }
 }

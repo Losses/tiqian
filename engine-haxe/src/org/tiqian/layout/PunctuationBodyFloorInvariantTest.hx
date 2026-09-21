@@ -48,4 +48,8 @@ class PunctuationBodyFloorInvariantTest {
                 }
             }
     }
+
+    public static function flushTestTrace():Void {
+        TestTraceRecorder.flushClass("PunctuationBodyFloorInvariantTest");
+    }
 }

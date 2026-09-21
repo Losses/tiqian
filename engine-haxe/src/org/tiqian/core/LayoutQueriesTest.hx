@@ -412,6 +412,10 @@ class LayoutQueriesTest {
         TracedAssertions.assertEqualsRendered(new Rect(-6.0, 0.0, 26.0, 20.0).toString(), first[0].toString());
         TracedAssertions.assertEqualsRendered(new Rect(29.0, 0.0, 61.0, 20.0).toString(), second[0].toString());
     }
+
+    public static function flushTestTrace():Void {
+        TestTraceRecorder.flushClass("LayoutQueriesTest");
+    }
 }
 
 class LayoutQueriesTestHelpers {

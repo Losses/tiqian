@@ -126,6 +126,10 @@ class PunctuationAtomBuilderHaltTest {
         PunctuationAtomBuilderHaltSupport.f(0, a.glyphInlineShift);
         TracedAssertions.assertTrue(a.inkContainmentApplied);
     }
+
+    public static function flushTestTrace():Void {
+        TestTraceRecorder.flushClass("PunctuationAtomBuilderHaltTest");
+    }
 }
 
 /** Shared fixtures and traced-assertion helpers for PunctuationAtomBuilderHaltTest; the Kotlin test-class lowering admits test functions only. */

@@ -284,4 +284,8 @@ class ContextualQuoteRoleResolverCoverageTest {
         final d = ContextualQuoteRoleResolverCoverageSupport.execute("unmatchedQuoteAtStartWithRightRole", "\u201Cabc");
         TracedAssertions.assertTrue(ContextualQuoteRoleResolverCoverageSupport.nonEmpty(d));
     }
+
+    public static function flushTestTrace():Void {
+        TestTraceRecorder.flushClass("ContextualQuoteRoleResolverCoverageTest");
+    }
 }

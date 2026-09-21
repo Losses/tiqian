@@ -125,6 +125,10 @@ class LineBreakerCoverage2Test {
             2).breakLines(clusters, clusters, 25.0, null, null, null, null, null, null, null, LineBreakerCoverage2TestSupport.ints([1, 2, 3]));
         TracedAssertions.assertEqualsInt(4, solution.lines.length);
     }
+
+    public static function flushTestTrace():Void {
+        TestTraceRecorder.flushClass("LineBreakerCoverage2Test");
+    }
 }
 
 class LineBreakerCoverage2TestCustomBreaker implements LineBreaker {

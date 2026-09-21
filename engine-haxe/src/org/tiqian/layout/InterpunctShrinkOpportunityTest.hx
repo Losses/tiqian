@@ -57,4 +57,8 @@ class InterpunctShrinkOpportunityTest {
         }
         TracedAssertions.assertTrue(result.lines.length > 0);
     }
+
+    public static function flushTestTrace():Void {
+        TestTraceRecorder.flushClass("InterpunctShrinkOpportunityTest");
+    }
 }

@@ -80,4 +80,8 @@ class LineBreakPlanningStageCoverageTest {
         ]);
         TracedAssertions.assertEquals(1, r.lines.length, LineBreakPlanningStageCoverageTestSupport.renderLines(r.lines));
     }
+
+    public static function flushTestTrace():Void {
+        TestTraceRecorder.flushClass("LineBreakPlanningStageCoverageTest");
+    }
 }

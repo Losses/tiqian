@@ -261,4 +261,8 @@ class FontPolicyCoverageTest {
         TracedAssertions.assertEqualsRendered(Std.string(inputWithTypo), Std.string(inputCopy));
         TracedAssertions.assertTrue(Std.string(inputWithTypo) == Std.string(inputCopy));
     }
+
+    public static function flushTestTrace():Void {
+        TestTraceRecorder.flushClass("FontPolicyCoverageTest");
+    }
 }

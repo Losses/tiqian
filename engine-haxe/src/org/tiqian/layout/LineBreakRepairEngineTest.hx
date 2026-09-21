@@ -538,4 +538,8 @@ class LineBreakRepairEngineTest {
         }
         TracedAssertions.assertTrue(noneForbidden, "URL separators are LatinText and must not trigger CJK line-start kinsoku");
     }
+
+    public static function flushTestTrace():Void {
+        TestTraceRecorder.flushClass("LineBreakRepairEngineTest");
+    }
 }

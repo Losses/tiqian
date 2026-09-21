@@ -353,4 +353,8 @@ class InlineObjectLayoutTest {
             TracedAssertions.assertTrue(!no);
         }
     }
+
+    public static function flushTestTrace():Void {
+        TestTraceRecorder.flushClass("InlineObjectLayoutTest");
+    }
 }

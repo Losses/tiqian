@@ -181,4 +181,8 @@ class AutoSpaceSingleGapTest {
                 saw = true;
         TracedAssertions.assertTrue(!saw, "digit boundary must not fire when cjkDigit disabled");
     }
+
+    public static function flushTestTrace():Void {
+        TestTraceRecorder.flushClass("AutoSpaceSingleGapTest");
+    }
 }

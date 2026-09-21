@@ -537,4 +537,8 @@ class QuoteClassificationEngineTest {
         TracedAssertions.assertEqualsString("LatinText", a.overriddenRole);
         TracedAssertions.assertEqualsString("NonCjkInWordApostrophe", a.source);
     }
+
+    public static function flushTestTrace():Void {
+        TestTraceRecorder.flushClass("QuoteClassificationEngineTest");
+    }
 }

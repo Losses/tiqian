@@ -119,4 +119,8 @@ class HyphenationLayoutTest {
                 parts.push(r.clusters[i].text);
         TracedAssertions.assertEqualsString(HyphenationLayoutTestSupport.rebuild(word, EnglishHyphenation.enUs().hyphenate(word)), parts.join("-"));
     }
+
+    public static function flushTestTrace():Void {
+        TestTraceRecorder.flushClass("HyphenationLayoutTest");
+    }
 }

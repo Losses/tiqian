@@ -28,4 +28,8 @@ class LinkAddressDisplayTest {
         TracedAssertions.assertFalse(LinkAddressDisplay.displaysAddress("", "https://example.com"));
         TracedAssertions.assertFalse(LinkAddressDisplay.displaysAddress("Example", ""));
     }
+
+    public static function flushTestTrace():Void {
+        TestTraceRecorder.flushClass("LinkAddressDisplayTest");
+    }
 }

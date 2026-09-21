@@ -128,6 +128,10 @@ class KinsokuLevelTest {
         // Above 32 em: Strict.
         TracedAssertions.assertEqualsKinsokuLevel(KinsokuLevel.Strict, KinsokuModes.resolve(m, 40.0).level);
     }
+
+    public static function flushTestTrace():Void {
+        TestTraceRecorder.flushClass("KinsokuLevelTest");
+    }
 }
 
 class KinsokuLevelTestHelpers {

@@ -155,4 +155,8 @@ class ContextualQuoteRoleResolverNestedAndSurrogateTest {
         ContextualQuoteRoleResolverNestedAndSurrogateSupport.assertIllegal(() ->
             ContextualQuoteRoleResolverNestedAndSurrogateSupport.decisions(s([0x201C, 0xD83D, 0xE000, 0x201D])));
     }
+
+    public static function flushTestTrace():Void {
+        TestTraceRecorder.flushClass("ContextualQuoteRoleResolverNestedAndSurrogateTest");
+    }
 }

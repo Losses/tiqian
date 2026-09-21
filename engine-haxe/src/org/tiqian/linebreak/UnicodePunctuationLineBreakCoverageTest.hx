@@ -25,4 +25,8 @@ class UnicodePunctuationLineBreakCoverageTest {
             UnicodePunctuationLineBreak.classOf(0xD800);
         });
     }
+
+    public static function flushTestTrace():Void {
+        TestTraceRecorder.flushClass("UnicodePunctuationLineBreakCoverageTest");
+    }
 }

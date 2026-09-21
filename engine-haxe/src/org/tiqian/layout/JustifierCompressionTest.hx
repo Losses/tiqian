@@ -69,4 +69,8 @@ class JustifierCompressionTest {
         TracedAssertions.assertTrue(plan.allocations.length == 0);
         TracedAssertions.assertTrue(Math.isNaN(plan.unfilledSurplus));
     }
+
+    public static function flushTestTrace():Void {
+        TestTraceRecorder.flushClass("JustifierCompressionTest");
+    }
 }

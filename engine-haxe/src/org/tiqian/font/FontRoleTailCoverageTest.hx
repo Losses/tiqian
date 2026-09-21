@@ -19,4 +19,8 @@ class FontRoleTailCoverageTest {
             xi++;
         }
     }
+
+    public static function flushTestTrace():Void {
+        TestTraceRecorder.flushClass("FontRoleTailCoverageTest");
+    }
 }

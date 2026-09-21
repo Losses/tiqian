@@ -103,4 +103,8 @@ class BopomofoLayoutTest {
         }
         TracedAssertions.assertEqualsString("zh-TW", r.debug.bopomofoDecisions[0].locale);
     }
+
+    public static function flushTestTrace():Void {
+        TestTraceRecorder.flushClass("BopomofoLayoutTest");
+    }
 }

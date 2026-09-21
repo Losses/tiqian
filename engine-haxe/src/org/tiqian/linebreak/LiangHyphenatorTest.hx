@@ -46,6 +46,10 @@ class LiangHyphenatorTest {
         TracedAssertions.assertEqualsIntArray([2], p.exceptions.get("table"));
         TracedAssertions.assertEqualsIntArray([], p.exceptions.get("present"));
     }
+
+    public static function flushTestTrace():Void {
+        TestTraceRecorder.flushClass("LiangHyphenatorTest");
+    }
 }
 
 class LiangHyphenatorTestHelpers {

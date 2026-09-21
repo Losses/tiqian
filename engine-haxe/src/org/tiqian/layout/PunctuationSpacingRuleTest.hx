@@ -106,4 +106,8 @@ class PunctuationSpacingRuleTest {
             "」 ,", PunctuationSpacingRuleTestSupport.em);
         TracedAssertions.assertEqualsRendered("[]", Std.string(plan.adjustments));
     }
+
+    public static function flushTestTrace():Void {
+        TestTraceRecorder.flushClass("PunctuationSpacingRuleTest");
+    }
 }

@@ -80,4 +80,8 @@ class PreparedParagraphPlanConstructionTest {
     @:test public static function planWithDiagnosticsListsCapabilityIssuesAndAdvanceSuspects():Void {
         return PreparedParagraphPlanConstructionTestSupport.runDiagnostics();
     }
+
+    public static function flushTestTrace():Void {
+        TestTraceRecorder.flushClass("PreparedParagraphPlanConstructionTest");
+    }
 }

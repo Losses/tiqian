@@ -122,4 +122,8 @@ class PunctuationGeometryEngineTest {
         t.section("pushInConsumesWordSpaceBeforeMidLinePunctGlue");
         PunctuationGeometryEngineTestSupport.replay("pushInConsumesWordSpaceBeforeMidLinePunctGlue");
     }
+
+    public static function flushTestTrace():Void {
+        TestTraceRecorder.flushClass("PunctuationGeometryEngineTest");
+    }
 }

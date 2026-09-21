@@ -52,4 +52,8 @@ class EastAsianSpacingTest {
         TracedAssertions.assertEqualsEastAsianSpacingEdges(new EastAsianSpacingEdges(EastAsianSpacingValue.Other, EastAsianSpacingValue.Other, false),
             UnicodeEastAsianSpacing.resolvedEdges("A\u20DD", "zh-Hans"));
     }
+
+    public static function flushTestTrace():Void {
+        TestTraceRecorder.flushClass("EastAsianSpacingTest");
+    }
 }

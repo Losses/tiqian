@@ -114,4 +114,8 @@ class PreparedParagraphRenderEvidenceTest {
         PreparedParagraphRenderEvidenceTestSupport.contains(e, "\"inlineStart\":2", "start");
         PreparedParagraphRenderEvidenceTestSupport.contains(e, "\"inlineEnd\":3", "end");
     }
+
+    public static function flushTestTrace():Void {
+        TestTraceRecorder.flushClass("PreparedParagraphRenderEvidenceTest");
+    }
 }

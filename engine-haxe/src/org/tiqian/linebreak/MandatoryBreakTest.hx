@@ -52,6 +52,10 @@ class MandatoryBreakTest {
         TracedAssertions.assertEqualsRendered("Required", Std.string(o[1].kind));
         TracedAssertions.assertEqualsRendered("Required", Std.string(o[2].kind));
     }
+
+    public static function flushTestTrace():Void {
+        TestTraceRecorder.flushClass("MandatoryBreakTest");
+    }
 }
 
 class MandatoryBreakTestHelpers {

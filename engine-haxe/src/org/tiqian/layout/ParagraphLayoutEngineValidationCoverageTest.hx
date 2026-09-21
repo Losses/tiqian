@@ -161,4 +161,8 @@ class ParagraphLayoutEngineValidationCoverageTest {
             ParagraphLayoutEngineValidationCoverageSupport.obj(null, null, null, null, null, new InlineObjectBoundaryAdjustment(null, null, null, 10.5))
         ]), "trailing line-end discard");
     }
+
+    public static function flushTestTrace():Void {
+        TestTraceRecorder.flushClass("ParagraphLayoutEngineValidationCoverageTest");
+    }
 }

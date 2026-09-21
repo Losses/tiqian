@@ -183,6 +183,10 @@ class EastAsianSpacingCoverageTest {
         EastAsianSpacingCoverageTestHelpers.expectArgumentFailure(() ->
             UnicodeEastAsianSpacing.resolvedForGraphemeCluster(TestHelpers.surrogateText([0xD800, 0xE000]), "zh"));
     }
+
+    public static function flushTestTrace():Void {
+        TestTraceRecorder.flushClass("EastAsianSpacingCoverageTest");
+    }
 }
 
 class EastAsianSpacingCoverageTestHelpers {

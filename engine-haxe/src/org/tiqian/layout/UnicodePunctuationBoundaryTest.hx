@@ -194,4 +194,8 @@ class UnicodePunctuationBoundaryTest {
                 UnicodePunctuationBoundaryTestSupport.findReason(z, "“", "LineEnd"));
         }
     }
+
+    public static function flushTestTrace():Void {
+        TestTraceRecorder.flushClass("UnicodePunctuationBoundaryTest");
+    }
 }

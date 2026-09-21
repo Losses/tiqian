@@ -910,4 +910,8 @@ class JustifierCoverageTest {
         TracedAssertions.assertEqualsRendered("CjkInterChar", Std.string(a.kind));
         TracedAssertions.assertEqualsFloat(4, a.delta);
     }
+
+    public static function flushTestTrace():Void {
+        TestTraceRecorder.flushClass("JustifierCoverageTest");
+    }
 }

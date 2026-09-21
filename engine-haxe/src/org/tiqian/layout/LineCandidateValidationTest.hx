@@ -44,4 +44,8 @@ class LineCandidateValidationTest {
         testTrace.section("inMeasureRangeIsFullLineWithoutHanging");
         TracedAssertions.assertEqualsIntRange(new IntRange(0, 3), LineCandidateValidationTestSupport.candidate([]).inMeasureClusterRange);
     }
+
+    public static function flushTestTrace():Void {
+        TestTraceRecorder.flushClass("LineCandidateValidationTest");
+    }
 }

@@ -352,6 +352,10 @@ class TextModelCoverageTest {
         TracedAssertions.assertEqualsRendered(profileId.toString(), layoutInput.profileId.toString());
         TextModelCoverageTestHelpers.assertRendered(layoutInput.toString());
     }
+
+    public static function flushTestTrace():Void {
+        TestTraceRecorder.flushClass("TextModelCoverageTest");
+    }
 }
 
 class TextModelCoverageTestHelpers {

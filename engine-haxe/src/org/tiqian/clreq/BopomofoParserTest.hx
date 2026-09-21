@@ -34,4 +34,8 @@ class BopomofoParserTest {
         new TestTraceRecorder("BopomofoParserTest").section("singleSymbol");
         TracedAssertions.assertEqualsBopomofoReading(new BopomofoReading(["ㄦ"], BopomofoTone.Yangping), BopomofoParser.parse("ㄦˊ"));
     }
+
+    public static function flushTestTrace():Void {
+        TestTraceRecorder.flushClass("BopomofoParserTest");
+    }
 }
