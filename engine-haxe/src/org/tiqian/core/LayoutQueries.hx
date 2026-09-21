@@ -847,7 +847,12 @@ class LayoutQueries {
         if (cluster.sourceStops != null) {
             return cluster.sourceStops[index];
         }
-        return cluster.left + cluster.width * (index / cluster.range.length);
+        // Legacy LayoutQueries.kt:818 divides as Float (`i.toFloat() /
+        // range.length.toFloat()`). The Kotlin backend renders an Int/Int
+        // division as Kotlin Int division, which truncates, so widen the
+        // numerator the way LineBreaker.hx already widens leaveRaggedPenalty
+        // (LineBreaker.kt:763 `leaveRaggedPenalty.toFloat()`).
+        return cluster.left + cluster.width * ((index * 1.0) / cluster.range.length);
     }
 
     private static function offsetForX(cluster:PositionedCluster, x:Float):Int {

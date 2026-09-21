@@ -11,6 +11,8 @@ import org.tiqian.layout.LineOptimization.LineSolution;
 import org.tiqian.layout.LineOptimization.RepairOption;
 import org.tiqian.layout.LineOptimization.RepairOptions;
 import std.SortedMap;
+import org.tiqian.test.trace.TestTraceRecorder;
+import org.tiqian.test.trace.ClassTestEntry;
 
 class ParagraphDpLineBreakerCoverageTest {
     static function rec(n:String):Void
@@ -131,6 +133,32 @@ class ParagraphDpLineBreakerCoverageTest {
         rec("interfaceDefaultStrategyNameIsCustom");
         var b:LineBreaker = new CustomBreaker();
         TracedAssertions.assertEqualsString("custom", b.strategyName);
+    }
+
+    /**
+        The conventional class test entry (boring feature spec 19).
+        The class carries no test marker, so the Kotlin runner generated from
+        that marker's collection never instantiates it; this entry is how the
+        runner calls the class once. It registers no test id, so the cross-target
+        test id set is unchanged. The body repeats the calls
+        engine-haxe/tests/Main.hx makes for this class, through the same failure
+        accounting Main.hx uses, and then flushes the class trace the way Main.hx
+        does.
+    **/
+    public static function runTestEntries():Void {
+        ClassTestEntry.run(emptyClustersReturnAnEmptySolution);
+        ClassTestEntry.run(mismatchedNaturalAndAdjustedSizesAreRejected);
+        ClassTestEntry.run(negativeCandidateWindowIsRejected);
+        ClassTestEntry.run(shrinkPrefixSkipsNonPositiveAndOutOfRangeOpportunities);
+        ClassTestEntry.run(lineEndOnlyCapacityFeedsTheCompressedEdgeAtTheLineEnd);
+        ClassTestEntry.run(compressedEndsMayReachTheSegmentEnd);
+        ClassTestEntry.run(compressedFinalMandatoryLineUsesTheCompressedCommitBranch);
+        ClassTestEntry.run(tierPromotionRoutesTheRepairReasonThroughThePromotionCode);
+        ClassTestEntry.run(promotionCheckReturnsFalseWhenTheCandidateEndHasNoOpportunity);
+        ClassTestEntry.run(mandatorySegmentFiltersTheControlBoundaryFromCandidates);
+        ClassTestEntry.run(narrowWindowsDropEndsAtOrBelowTheLineStart);
+        ClassTestEntry.run(interfaceDefaultStrategyNameIsCustom);
+        TestTraceRecorder.flushClass("ParagraphDpLineBreakerCoverageTest");
     }
 }
 

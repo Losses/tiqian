@@ -4,6 +4,7 @@ import org.tiqian.layout.PreparedParagraph.PreparedParagraphFns;
 import org.tiqian.test.TestHelpers;
 import org.tiqian.test.trace.TestTraceRecorder;
 import org.tiqian.test.trace.TracedAssertions;
+import org.tiqian.test.trace.ClassTestEntry;
 
 class PreparedParagraphJsonNumberTest {
     private static function rec(name:String):Void
@@ -94,5 +95,30 @@ class PreparedParagraphJsonNumberTest {
         rec("subnormalExpansionsSerialize");
         eq("1.401298464324817e-45", TestHelpers.f32Bits(1));
         eq("4.203895392974451e-45", TestHelpers.f32Bits(3));
+    }
+
+    /**
+        The conventional class test entry (boring feature spec 19).
+        The class carries no test marker, so the Kotlin runner generated from
+        that marker's collection never instantiates it; this entry is how the
+        runner calls the class once. It registers no test id, so the cross-target
+        test id set is unchanged. The body repeats the calls
+        engine-haxe/tests/Main.hx makes for this class, through the same failure
+        accounting Main.hx uses, and then flushes the class trace the way Main.hx
+        does.
+    **/
+    public static function runTestEntries():Void {
+        ClassTestEntry.run(zeroValuesSerializeWithoutSign);
+        ClassTestEntry.run(integerFormsPadToDecimalExponent);
+        ClassTestEntry.run(fractionFormsInsertDecimalPoint);
+        ClassTestEntry.run(smallFractionsUseLeadingZeros);
+        ClassTestEntry.run(exponentFormsCarryExplicitSign);
+        ClassTestEntry.run(negativeValuesKeepOnlyMagnitudeSign);
+        ClassTestEntry.run(exactTiesRoundToEvenDigit);
+        ClassTestEntry.run(exactExpansionRoundsPlatformDigits);
+        ClassTestEntry.run(boundaryMidpointsAcceptOnlyAtEvenMantissa);
+        ClassTestEntry.run(decimalAlignedMantissaSkipsZeroChunk);
+        ClassTestEntry.run(subnormalExpansionsSerialize);
+        TestTraceRecorder.flushClass("PreparedParagraphJsonNumberTest");
     }
 }

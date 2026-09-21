@@ -5,6 +5,7 @@ import org.tiqian.core.TextRange;
 import org.tiqian.test.trace.TestTraceRecorder;
 import org.tiqian.test.trace.TracedAssertions;
 import std.SortedSet;
+import org.tiqian.test.trace.ClassTestEntry;
 
 class DecideHyphenBreakTest {
     static function c(i:Int, a:Float):Cluster
@@ -35,4 +36,20 @@ class DecideHyphenBreakTest {
 
     public static function flush():Void
         new TestTraceRecorder("DecideHyphenBreakTest").flush();
+
+    /**
+        The conventional class test entry (boring feature spec 19).
+        The class carries no test marker, so the Kotlin runner generated from
+        that marker's collection never instantiates it; this entry is how the
+        runner calls the class once. It registers no test id, so the cross-target
+        test id set is unchanged. The body repeats the calls
+        engine-haxe/tests/Main.hx makes for this class, through the same failure
+        accounting Main.hx uses, and then flushes the class trace the way Main.hx
+        does.
+    **/
+    public static function runTestEntries():Void {
+        ClassTestEntry.run(chargesAllDeficitToCjkWhenNoSinoWesternCapacityIsKnown);
+        ClassTestEntry.run(discountsSinoWesternCapacityBeforeChargingCjkLooseness);
+        TestTraceRecorder.flushClass("DecideHyphenBreakTest");
+    }
 }
