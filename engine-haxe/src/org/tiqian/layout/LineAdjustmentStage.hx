@@ -1,7 +1,9 @@
 package org.tiqian.layout;
 
 using org.tiqian.layout.ProgressiveBreakTierPriority;
+using std.Functional;
 
+import org.tiqian.core.AccurateSum;
 import org.tiqian.core.LayoutInput;
 import org.tiqian.core.LayoutResult;
 import org.tiqian.core.Size;
@@ -143,34 +145,26 @@ class LineAdjustmentStage {
         final laidOutLines = new Array<LineBox>();
         for (lineIndex in 0...lineSolution.lines.length) {
             final lineCandidate = lineSolution.lines[lineIndex];
-            var adjustedWidth = 0.0;
+            // The reference sums these three widths in Double and narrows the
+            // finished sum once, so a line of equal binary32 advances reaches its
+            // exact total instead of rounding on every step. `sumOfFloat` carries
+            // the Double accumulator; a binary32 accumulator would leave
+            // 479.999817 where the reference records 480.
+            final adjustedTerms:Array<Float> = [];
+            final visualTerms:Array<Float> = [];
             if (!lineCandidate.clusterRange.isEmpty) {
                 for (idx in lineCandidate.clusterRange.start...lineCandidate.clusterRange.end + 1) {
-                    if (!lineCandidate.hangingClusterIndices.has(idx)) {
-                        adjustedWidth += trimmedClusters[idx].advance;
-                    }
+                    adjustedTerms.push(lineCandidate.hangingClusterIndices.has(idx) ? 0.0 : trimmedClusters[idx].advance);
+                    visualTerms.push(finalClusters[idx].advance);
                 }
             }
-            var visualWidth = 0.0;
-            if (!lineCandidate.clusterRange.isEmpty) {
-                for (idx in lineCandidate.clusterRange.start...lineCandidate.clusterRange.end + 1) {
-                    visualWidth += finalClusters[idx].advance;
-                }
-            }
-            if (std.Math.abs(visualWidth - std.Math.round(visualWidth)) < 0.0001) {
-                visualWidth = std.Math.round(visualWidth);
-            }
-            if (std.Math.abs(adjustedWidth - std.Math.round(adjustedWidth)) < 0.0001) {
-                adjustedWidth = std.Math.round(adjustedWidth);
-            }
-            var hangingPunctuationAdvance = 0.0;
+            final adjustedWidth = AccurateSum.of(adjustedTerms);
+            final visualWidth = AccurateSum.of(visualTerms);
+            final hangingTerms:Array<Float> = [];
             for (hIdx in 0...lineCandidate.hangingClusterIndices.size()) {
-                final it = lineCandidate.hangingClusterIndices.at(hIdx);
-                hangingPunctuationAdvance += finalClusters[it].advance;
+                hangingTerms.push(finalClusters[lineCandidate.hangingClusterIndices.at(hIdx)].advance);
             }
-            if (std.Math.abs(hangingPunctuationAdvance - std.Math.round(hangingPunctuationAdvance)) < 0.0001) {
-                hangingPunctuationAdvance = std.Math.round(hangingPunctuationAdvance);
-            }
+            final hangingPunctuationAdvance = AccurateSum.of(hangingTerms);
             var hasDrawableContent = false;
             if (!lineCandidate.clusterRange.isEmpty) {
                 for (idx in lineCandidate.clusterRange.start...lineCandidate.clusterRange.end + 1) {
