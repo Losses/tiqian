@@ -79,7 +79,12 @@ class ExplainableStubTextShaper implements ITextShaper {
             glyphs.push(new Glyph(glyphId, input.range, glyphAdvance, glyphAdvance * glyphId));
             glyphId++;
         }
-        var run = new GlyphRun(input.range, input.fontDecision.candidate.key, glyphs, advance, input.openTypeFeatures);
+        // The legacy stub shaper (`engine/src/commonMain/kotlin/org/tiqian/shaping/TextShaper.kt:74`)
+        // constructs the run without the feature list, so the `GlyphRun`
+        // default (`engine/src/commonMain/kotlin/org/tiqian/core/LayoutModel.kt:38`)
+        // applies and every stub run carries empty features. Requested
+        // features stay on `ShapingInput` for the shapers that replay them.
+        var run = new GlyphRun(input.range, input.fontDecision.candidate.key, glyphs, advance);
         var decision = new ShapingDecisionInfo(input.range, sourceText, input.displayText, input.fontDecision.candidate.key, glyphCount, advance,
             Type.enumConstructor(ShapingSource.Stub), "ExplainableStubTextShaper:nominal-em-advance", glyphCount);
         return new ShapingResult([cluster], [run], [decision]);
