@@ -102,9 +102,9 @@ class WidthIndependentAnnotationCacheCoverageTest {
             ], [
                 new RubySpan(new TextRange(0, 2), "c\u00E8sh\u00EC", null, RubyKind.Pinyin, "zh-Latn"),
                 new RubySpan(new TextRange(2, 4), "", null, RubyKind.Pinyin),
-                new RubySpan(new TextRange(0, 1), "\u02D9\u3105", null, RubyKind.Bopomofo),
-                new RubySpan(new TextRange(0, 1), "\u3106", null, RubyKind.Bopomofo),
-                new RubySpan(new TextRange(99, 100), "invalid", null, RubyKind.Bopomofo),
+                new RubySpan(new TextRange(0, 1), "\u02D9\u3105", null, RubyKind.Bopomofo, "zh-TW"),
+                new RubySpan(new TextRange(0, 1), "\u3106", null, RubyKind.Bopomofo, "zh-TW"),
+                new RubySpan(new TextRange(99, 100), "invalid", null, RubyKind.Bopomofo, "zh-TW"),
             ], [
                 new InlineBoxSpan(new TextRange(15, 17), 4.0, 0.0),
                 new InlineBoxSpan(new TextRange(17, 19), 0.0, 4.0),

@@ -155,7 +155,7 @@ class AsciiPointMarkKinsokuTest {
         t.section("lineBreakGeometryIncludesBopomofoSpreadWhenChoosingTheFallback");
         for (b in AsciiPointMarkKinsokuTestSupport.breakers()) {
             final r = AsciiPointMarkKinsokuTestSupport.layout("中,文", 32, b.breaker, null, null, null,
-                [new RubySpan(new TextRange(0, 1), "ㄅ", RubyKind.Bopomofo)]);
+                [new RubySpan(new TextRange(0, 1), "ㄅ", RubyKind.Bopomofo, "zh-TW")]);
             TracedAssertions.assertTrue(!StringTools.startsWith(AsciiPointMarkKinsokuTestSupport.lineTexts(r, "中,文")[0], ","),
                 b.label + " lines: " + AsciiPointMarkKinsokuTestSupport.renderStrings(AsciiPointMarkKinsokuTestSupport.lineTexts(r, "中,文")));
             TracedAssertions.assertEqualsString("AttachedAsciiPointMarkImpossibleMeasureHang",

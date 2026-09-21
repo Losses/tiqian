@@ -38,6 +38,10 @@ class RubySpan {
         this.text = text;
         this.fontFamilies = fontFamilies == null ? [] : fontFamilies;
         this.kind = kind;
-        this.locale = locale == null ? (kind == RubyKind.Bopomofo ? "zh-TW" : null) : locale;
+        // Kotlin declares the default as an expression over [kind]; the Kotlin
+        // backend emits it as a default parameter value, so omitting the
+        // argument stays the caller's decision. Coalescing a null [locale] here
+        // would erase an explicitly passed null, which the legacy engine keeps.
+        this.locale = locale;
     }
 }

@@ -299,7 +299,7 @@ class TextModelCoverageTest {
         final pinyinLocale = pinyinRuby.locale;
         TracedAssertions.assertNullRendered(pinyinLocale == null, pinyinLocale == null ? "-" : TestTraceRender.renderString(pinyinLocale));
 
-        final bopomofoRuby:RubySpan = new RubySpan(new TextRange(0, 1), "\u310F\u3122\u02CB", [], RubyKind.Bopomofo, null);
+        final bopomofoRuby:RubySpan = new RubySpan(new TextRange(0, 1), "\u310F\u3122\u02CB", [], RubyKind.Bopomofo, "zh-TW");
         TracedAssertions.assertEqualsRendered(Std.string(RubyKind.Bopomofo), Std.string(bopomofoRuby.kind));
         TracedAssertions.assertEqualsString("zh-TW", bopomofoRuby.locale);
         TextModelCoverageTestHelpers.assertRendered(bopomofoRuby.toString());

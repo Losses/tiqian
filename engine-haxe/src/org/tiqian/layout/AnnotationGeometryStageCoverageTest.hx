@@ -103,20 +103,20 @@ class AnnotationGeometryStageCoverageTest {
         final text = "\u4E00\u4E8C\u4E09\u56DB\u4E94\u516D\u4E03\u516B\u4E5D\u5341\u7532\u4E59\u4E19\u4E01\u620A\u5DF1\u5E9A\u8F9B";
         final rubySpans = [
             new RubySpan(new TextRange(0, 1), "\u02D9\u3105", null, RubyKind.Bopomofo, "zh-Bopo"),
-            new RubySpan(new TextRange(1, 2), "\u02D9\u3105\u3106", null, RubyKind.Bopomofo, null),
-            new RubySpan(new TextRange(2, 3), "\u02D9\u3105\u3106\u3107", null, RubyKind.Bopomofo, null),
-            new RubySpan(new TextRange(3, 4), "\u3105\u02CA", null, RubyKind.Bopomofo, null),
-            new RubySpan(new TextRange(4, 5), "\u3105\u3106\u02CA", null, RubyKind.Bopomofo, null),
-            new RubySpan(new TextRange(5, 6), "\u3105\u3106\u3107\u02CA", null, RubyKind.Bopomofo, null),
-            new RubySpan(new TextRange(6, 7), "\u3105\u02C7", null, RubyKind.Bopomofo, null),
-            new RubySpan(new TextRange(7, 8), "\u3105\u3106\u02C7", null, RubyKind.Bopomofo, null),
-            new RubySpan(new TextRange(8, 9), "\u3105\u3106\u3107\u02C7", null, RubyKind.Bopomofo, null),
-            new RubySpan(new TextRange(9, 10), "\u3105\u02CB", null, RubyKind.Bopomofo, null),
-            new RubySpan(new TextRange(10, 11), "\u3105\u3106\u02CB", null, RubyKind.Bopomofo, null),
-            new RubySpan(new TextRange(11, 12), "\u3105\u3106\u3107\u02CB", null, RubyKind.Bopomofo, null),
-            new RubySpan(new TextRange(12, 13), "\u3105", null, RubyKind.Bopomofo, null),
-            new RubySpan(new TextRange(13, 14), "\u3105\u3106", null, RubyKind.Bopomofo, null),
-            new RubySpan(new TextRange(14, 15), "\u3105\u3106\u3107", null, RubyKind.Bopomofo, null)
+            new RubySpan(new TextRange(1, 2), "\u02D9\u3105\u3106", null, RubyKind.Bopomofo, "zh-TW"),
+            new RubySpan(new TextRange(2, 3), "\u02D9\u3105\u3106\u3107", null, RubyKind.Bopomofo, "zh-TW"),
+            new RubySpan(new TextRange(3, 4), "\u3105\u02CA", null, RubyKind.Bopomofo, "zh-TW"),
+            new RubySpan(new TextRange(4, 5), "\u3105\u3106\u02CA", null, RubyKind.Bopomofo, "zh-TW"),
+            new RubySpan(new TextRange(5, 6), "\u3105\u3106\u3107\u02CA", null, RubyKind.Bopomofo, "zh-TW"),
+            new RubySpan(new TextRange(6, 7), "\u3105\u02C7", null, RubyKind.Bopomofo, "zh-TW"),
+            new RubySpan(new TextRange(7, 8), "\u3105\u3106\u02C7", null, RubyKind.Bopomofo, "zh-TW"),
+            new RubySpan(new TextRange(8, 9), "\u3105\u3106\u3107\u02C7", null, RubyKind.Bopomofo, "zh-TW"),
+            new RubySpan(new TextRange(9, 10), "\u3105\u02CB", null, RubyKind.Bopomofo, "zh-TW"),
+            new RubySpan(new TextRange(10, 11), "\u3105\u3106\u02CB", null, RubyKind.Bopomofo, "zh-TW"),
+            new RubySpan(new TextRange(11, 12), "\u3105\u3106\u3107\u02CB", null, RubyKind.Bopomofo, "zh-TW"),
+            new RubySpan(new TextRange(12, 13), "\u3105", null, RubyKind.Bopomofo, "zh-TW"),
+            new RubySpan(new TextRange(13, 14), "\u3105\u3106", null, RubyKind.Bopomofo, "zh-TW"),
+            new RubySpan(new TextRange(14, 15), "\u3105\u3106\u3107", null, RubyKind.Bopomofo, "zh-TW")
         ];
         final input = new LayoutInput(new TiqianTextContent(text), null, null, new LayoutConstraints(300.0), null, null, rubySpans);
         final result = engine.layout(input);
@@ -205,10 +205,10 @@ class AnnotationGeometryStageCoverageTest {
         final rubySpans = [
             new RubySpan(new TextRange(0, 2), "\u3105\u3106\u02CA", null, RubyKind.Bopomofo,
                 "zh-Bopo"),            new RubySpan(new TextRange(2, 3), " ", null, RubyKind.Bopomofo,
-                null),     new RubySpan(new TextRange(3, 4), "\u3105", null, RubyKind.Bopomofo, null),
+                "zh-TW"),     new RubySpan(new TextRange(3, 4), "\u3105", null, RubyKind.Bopomofo, "zh-TW"),
                        new RubySpan(new TextRange(4, 5), "\u02D9\u3105", null, RubyKind.Bopomofo,
-                null), new RubySpan(new TextRange(5, 6), "\u3105\u02C7", null, RubyKind.Bopomofo,
-                null), new RubySpan(new TextRange(6, 7), "\u3105\u02CB", null, RubyKind.Bopomofo, null)
+                "zh-TW"), new RubySpan(new TextRange(5, 6), "\u3105\u02C7", null, RubyKind.Bopomofo,
+                "zh-TW"), new RubySpan(new TextRange(6, 7), "\u3105\u02CB", null, RubyKind.Bopomofo, "zh-TW")
         ];
         final input = new LayoutInput(new TiqianTextContent(text), null, null, new LayoutConstraints(300.0), null, null, rubySpans);
         final result = engine.layout(input);
@@ -289,7 +289,7 @@ class AnnotationGeometryStageCoverageTest {
         ], [
             new RubySpan(new TextRange(0, 1), "\u3105", null, RubyKind.Bopomofo, null),
             new RubySpan(new TextRange(1, 2), "\u3106", null, RubyKind.Bopomofo, "zh-TW"),
-            new RubySpan(new TextRange(0, 1), "", null, RubyKind.Bopomofo, null)
+            new RubySpan(new TextRange(0, 1), "", null, RubyKind.Bopomofo, "zh-TW")
         ]);
         final res = engine.layout(input);
         TracedAssertions.assertNotNullRendered(res != null, res == null ? "null" : TestTraceRender.cap(Std.string(res)));
@@ -299,7 +299,7 @@ class AnnotationGeometryStageCoverageTest {
         ], [
             new RubySpan(new TextRange(0, 1), "\u3105", null, RubyKind.Bopomofo, null),
             new RubySpan(new TextRange(1, 2), "\u3106", null, RubyKind.Bopomofo, "zh-TW"),
-            new RubySpan(new TextRange(0, 1), "", null, RubyKind.Bopomofo, null)
+            new RubySpan(new TextRange(0, 1), "", null, RubyKind.Bopomofo, "zh-TW")
         ]);
         final resNarrow = engine.layout(inputNarrow);
         TracedAssertions.assertNotNullRendered(resNarrow != null, resNarrow == null ? "null" : TestTraceRender.cap(Std.string(resNarrow)));
