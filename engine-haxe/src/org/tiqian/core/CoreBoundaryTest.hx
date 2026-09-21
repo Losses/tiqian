@@ -123,6 +123,10 @@ class CoreBoundaryTest {
         final value:LayoutResult = new LayoutResult(input, new Size(0.0, 20.0), [], [], [line], new LayoutDebugInfo(null, [], [], [], [], []));
         TracedAssertions.assertEqualsInt(0, LayoutQueries.getSelectionOffsetForPosition(value, 5.0, 10.0));
     }
+
+    public static function flushTestTrace():Void {
+        TestTraceRecorder.flushClass("CoreBoundaryTest");
+    }
 }
 
 class CoreBoundaryTestHelpers {

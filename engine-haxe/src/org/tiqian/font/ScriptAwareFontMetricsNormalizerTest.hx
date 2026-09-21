@@ -41,4 +41,8 @@ class ScriptAwareFontMetricsNormalizerTest {
         TracedAssertions.assertEqualsRendered("Roman", Std.string(l.baselineClass));
         TracedAssertions.assertEqualsRendered("RawFontBox", Std.string(l.metricBox));
     }
+
+    public static function flushTestTrace():Void {
+        TestTraceRecorder.flushClass("ScriptAwareFontMetricsNormalizerTest");
+    }
 }

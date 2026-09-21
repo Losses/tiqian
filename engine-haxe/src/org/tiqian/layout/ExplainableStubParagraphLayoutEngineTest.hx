@@ -312,4 +312,8 @@ class ExplainableStubParagraphLayoutEngineTest {
         TracedAssertions.assertEqualsRendered("['👩', '🏽‍💻']",
             ExplainableStubParagraphLayoutEngineTestSupport.renderStrings([r.debug.shapingDecisions[0].sourceText, r.debug.shapingDecisions[1].sourceText]));
     }
+
+    public static function flushTestTrace():Void {
+        TestTraceRecorder.flushClass("ExplainableStubParagraphLayoutEngineTest");
+    }
 }

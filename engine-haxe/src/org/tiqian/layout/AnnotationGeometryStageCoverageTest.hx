@@ -317,4 +317,8 @@ class AnnotationGeometryStageCoverageTest {
         final res = engine.layout(input);
         TracedAssertions.assertNotNullRendered(res != null, res == null ? "null" : TestTraceRender.cap(Std.string(res)));
     }
+
+    public static function flushTestTrace():Void {
+        TestTraceRecorder.flushClass("AnnotationGeometryStageCoverageTest");
+    }
 }

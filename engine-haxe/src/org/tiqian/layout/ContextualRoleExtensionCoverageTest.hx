@@ -54,6 +54,10 @@ class ContextualRoleExtensionCoverageTest {
             TracedAssertions.fail("quote-aware wrapper missed the nested Latin quote role");
         }
     }
+
+    public static function flushTestTrace():Void {
+        TestTraceRecorder.flushClass("ContextualRoleExtensionCoverageTest");
+    }
 }
 
 class ContextualRoleExtensionCoverageSupport {

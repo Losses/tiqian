@@ -257,6 +257,10 @@ class CoreLayoutQueriesGapsTest {
         final boundary:TextRange = LayoutQueries.getSelectionWordBoundary(result, 0);
         TracedAssertions.assertEqualsRendered(new TextRange(0, 0).toString(), boundary.toString());
     }
+
+    public static function flushTestTrace():Void {
+        TestTraceRecorder.flushClass("CoreLayoutQueriesGapsTest");
+    }
 }
 
 class CoreLayoutQueriesGapsTestHelpers {

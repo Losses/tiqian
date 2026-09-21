@@ -328,4 +328,8 @@ class JustifierEngineTest {
                 TracedAssertions.assertEqualsFloat(0, edge.advance, "line-edge sino-western space must stay collapsed");
         }
     }
+
+    public static function flushTestTrace():Void {
+        TestTraceRecorder.flushClass("JustifierEngineTest");
+    }
 }

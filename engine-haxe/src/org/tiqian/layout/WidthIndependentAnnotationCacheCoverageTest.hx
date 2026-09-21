@@ -438,4 +438,8 @@ class WidthIndependentAnnotationCacheCoverageTest {
         TracedAssertions.assertTrue(boundary.reduction > 0.0);
         TracedAssertions.assertEqualsInt(WidthIndependentAnnotationCacheCoverageTestSupport.indexOf(text, "\u00B7"), boundary.reductionTargetRange.start);
     }
+
+    public static function flushTestTrace():Void {
+        TestTraceRecorder.flushClass("WidthIndependentAnnotationCacheCoverageTest");
+    }
 }

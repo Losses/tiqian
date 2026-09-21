@@ -240,4 +240,8 @@ class EmergencyGraphemeTrackingTest {
         }
         TracedAssertions.assertTrue(allGte);
     }
+
+    public static function flushTestTrace():Void {
+        TestTraceRecorder.flushClass("EmergencyGraphemeTrackingTest");
+    }
 }

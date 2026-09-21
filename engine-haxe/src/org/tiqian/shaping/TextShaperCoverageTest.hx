@@ -106,4 +106,8 @@ class TextShaperCoverageTest {
         TracedAssertions.assertNotNullRendered(TextShaper.PLATFORM_MULTI_FACE_STRING_DRAW_ISSUE != null,
             "'" + TextShaper.PLATFORM_MULTI_FACE_STRING_DRAW_ISSUE + "'");
     }
+
+    public static function flushTestTrace():Void {
+        TestTraceRecorder.flushClass("TextShaperCoverageTest");
+    }
 }

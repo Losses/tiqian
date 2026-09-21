@@ -326,6 +326,10 @@ class ClreqProfileCoverageTest {
         TracedAssertions.assertEqualsString("abc", forceRes.displayText);
         TracedAssertions.assertTrue(forceRes.reason.indexOf("preserve") >= 0);
     }
+
+    public static function flushTestTrace():Void {
+        TestTraceRecorder.flushClass("ClreqProfileCoverageTest");
+    }
 }
 
 class ClreqProfileCoverageTestHelpers {
