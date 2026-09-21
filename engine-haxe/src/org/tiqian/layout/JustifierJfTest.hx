@@ -17,7 +17,6 @@ import org.tiqian.layout.PunctuationModel.GlueKind;
 import org.tiqian.layout.ProgressiveBreakDecisions.ProgressiveBreakTier;
 import org.tiqian.layout.ProgressiveBreakDecisions.ShrinkOpportunity;
 import org.tiqian.layout.ProgressiveBreakDecisions.ShrinkChannel;
-import org.tiqian.test.trace.ClassTestEntry;
 
 class JustifierJfTestSupport {
     public static var em:Float = 16.0;
@@ -58,14 +57,14 @@ class JustifierJfTestSupport {
         }
         return b.build();
     }
+
+    public static function sec(s:String):Void
+        new TestTraceRecorder("JustifierJfTest").section(s);
 }
 
 class JustifierJfTest {
-    static function sec(s:String):Void
-        new TestTraceRecorder("JustifierJfTest").section(s);
-
-    public static function attachedInlineVirtualSinoWesternBoundaryOutOfBounds():Void {
-        sec("attachedInlineVirtualSinoWesternBoundaryOutOfBounds");
+    @:test public static function attachedInlineVirtualSinoWesternBoundaryOutOfBounds():Void {
+        JustifierJfTestSupport.sec("attachedInlineVirtualSinoWesternBoundaryOutOfBounds");
         var c = [
             JustifierJfTestSupport.c("\u4E2D", 0),
             JustifierJfTestSupport.c("\u6587", 1),
@@ -83,8 +82,8 @@ class JustifierJfTest {
             .allocations.length > 0);
     }
 
-    public static function attachedInlineVirtualSinoWesternZeroHeadroomInAllocate():Void {
-        sec("attachedInlineVirtualSinoWesternZeroHeadroomInAllocate");
+    @:test public static function attachedInlineVirtualSinoWesternZeroHeadroomInAllocate():Void {
+        JustifierJfTestSupport.sec("attachedInlineVirtualSinoWesternZeroHeadroomInAllocate");
         var c = [
             JustifierJfTestSupport.c("\u4E2D", 0),
             JustifierJfTestSupport.c("\u6587", 1),
@@ -112,8 +111,8 @@ class JustifierJfTest {
         TracedAssertions.assertTrue(hasInter);
     }
 
-    public static function cjkLatinMixedZeroAndPositiveCapacityAllocation():Void {
-        sec("cjkLatinMixedZeroAndPositiveCapacityAllocation");
+    @:test public static function cjkLatinMixedZeroAndPositiveCapacityAllocation():Void {
+        JustifierJfTestSupport.sec("cjkLatinMixedZeroAndPositiveCapacityAllocation");
         var c = [
             JustifierJfTestSupport.c("\u4E2D", 0),
             JustifierJfTestSupport.c(" ", 1, 2),
@@ -153,8 +152,8 @@ class JustifierJfTest {
         TracedAssertions.assertEqualsFloat(6, lz[0].delta);
     }
 
-    public static function closedSpaceGapInTypedSinoWesternAndUniformSpace():Void {
-        sec("closedSpaceGapInTypedSinoWesternAndUniformSpace");
+    @:test public static function closedSpaceGapInTypedSinoWesternAndUniformSpace():Void {
+        JustifierJfTestSupport.sec("closedSpaceGapInTypedSinoWesternAndUniformSpace");
         var c = [
             JustifierJfTestSupport.c("\u4E2D", 0),
             JustifierJfTestSupport.c(" ", 1, 4),
@@ -170,8 +169,8 @@ class JustifierJfTest {
         TracedAssertions.assertTrue(p.allocations.length == 0 || p.allocations[0].targetClusterIndex != 1);
     }
 
-    public static function closedSpaceGapInUniformSpaceWhenWordSpace():Void {
-        sec("closedSpaceGapInUniformSpaceWhenWordSpace");
+    @:test public static function closedSpaceGapInUniformSpaceWhenWordSpace():Void {
+        JustifierJfTestSupport.sec("closedSpaceGapInUniformSpaceWhenWordSpace");
         var c = [
             JustifierJfTestSupport.c("a", 0),
             JustifierJfTestSupport.c(" ", 1, 4),
@@ -187,15 +186,15 @@ class JustifierJfTest {
         TracedAssertions.assertTrue(p.allocations.length == 0 || p.allocations[0].targetClusterIndex != 1);
     }
 
-    public static function compressSubnormalUnderflowShrinkZero():Void {
-        sec("compressSubnormalUnderflowShrinkZero");
+    @:test public static function compressSubnormalUnderflowShrinkZero():Void {
+        JustifierJfTestSupport.sec("compressSubnormalUnderflowShrinkZero");
         var p = new Justifier().compress(1e-300, [new ShrinkOpportunity(0, 1, 1e300, ShrinkChannel.TrailingGlue)]);
         TracedAssertions.assertEquals(0, p.allocations.length);
         TracedAssertions.assertEqualsFloat(1e-300, p.surplusBefore);
     }
 
-    public static function compressionWithZeroSurplusAndZeroCapacity():Void {
-        sec("compressionWithZeroSurplusAndZeroCapacity");
+    @:test public static function compressionWithZeroSurplusAndZeroCapacity():Void {
+        JustifierJfTestSupport.sec("compressionWithZeroSurplusAndZeroCapacity");
         var j = new Justifier();
         var a = j.compress(0, []);
         TracedAssertions.assertEqualsFloat(0, a.surplusBefore);
@@ -207,8 +206,8 @@ class JustifierJfTest {
         TracedAssertions.assertTrue(b.allocations.length == 0);
     }
 
-    public static function emptyLineClusterRangeSkipsUniformSpaceLoop():Void {
-        sec("emptyLineClusterRangeSkipsUniformSpaceLoop");
+    @:test public static function emptyLineClusterRangeSkipsUniformSpaceLoop():Void {
+        JustifierJfTestSupport.sec("emptyLineClusterRangeSkipsUniformSpaceLoop");
         var c = [JustifierJfTestSupport.c("\u4E2D", 0), JustifierJfTestSupport.c("\u6587", 1)];
         var r = [FontRole.CjkText, FontRole.CjkText];
         var e = [
@@ -220,8 +219,8 @@ class JustifierJfTest {
         TracedAssertions.assertEqualsFloat(50, p.unfilledDeficit);
     }
 
-    public static function preferredInlineObjectBoundaryOutOfBounds():Void {
-        sec("preferredInlineObjectBoundaryOutOfBounds");
+    @:test public static function preferredInlineObjectBoundaryOutOfBounds():Void {
+        JustifierJfTestSupport.sec("preferredInlineObjectBoundaryOutOfBounds");
         var c = [
             JustifierJfTestSupport.c("\u4E2D", 0),
             JustifierJfTestSupport.c("\u6587", 1),
@@ -253,16 +252,16 @@ class JustifierJfTest {
         TracedAssertions.assertTrue(p.allocations.length > 0);
     }
 
-    public static function singleClusterRangeProducesNoOpportunities():Void {
-        sec("singleClusterRangeProducesNoOpportunities");
+    @:test public static function singleClusterRangeProducesNoOpportunities():Void {
+        JustifierJfTestSupport.sec("singleClusterRangeProducesNoOpportunities");
         var p = JustifierJfTestSupport.justify([JustifierJfTestSupport.c("\u4E2D", 0)], [FontRole.CjkText], [
             JustifierJfTestSupport.e(EastAsianSpacingValue.Wide, EastAsianSpacingValue.Wide, true)
         ], new IntRange(0, 0), 30);
         TracedAssertions.assertEquals(0, p.allocations.length);
     }
 
-    public static function typedSpaceAndWordSpacePredicateEdgeConditions():Void {
-        sec("typedSpaceAndWordSpacePredicateEdgeConditions");
+    @:test public static function typedSpaceAndWordSpacePredicateEdgeConditions():Void {
+        JustifierJfTestSupport.sec("typedSpaceAndWordSpacePredicateEdgeConditions");
         var c = [
             JustifierJfTestSupport.c("", 0),
             JustifierJfTestSupport.c(" ", 1, 4),
@@ -290,8 +289,8 @@ class JustifierJfTest {
         TracedAssertions.assertTrue(JustifierJfTestSupport.justify(c, r, e, new IntRange(0, 5), 150).allocations.length > 0);
     }
 
-    public static function virtualNonSinoWesternBoundaryWhenAllowSinoWesternGapStretchIsFalse():Void {
-        sec("virtualNonSinoWesternBoundaryWhenAllowSinoWesternGapStretchIsFalse");
+    @:test public static function virtualNonSinoWesternBoundaryWhenAllowSinoWesternGapStretchIsFalse():Void {
+        JustifierJfTestSupport.sec("virtualNonSinoWesternBoundaryWhenAllowSinoWesternGapStretchIsFalse");
         var c = [
             JustifierJfTestSupport.c("\u4E2D", 0),
             JustifierJfTestSupport.c("[", 1),
@@ -325,8 +324,8 @@ class JustifierJfTest {
         TracedAssertions.assertTrue(ok);
     }
 
-    public static function virtualSinoWesternGapWhenAllowSinoWesternGapStretchIsFalse():Void {
-        sec("virtualSinoWesternGapWhenAllowSinoWesternGapStretchIsFalse");
+    @:test public static function virtualSinoWesternGapWhenAllowSinoWesternGapStretchIsFalse():Void {
+        JustifierJfTestSupport.sec("virtualSinoWesternGapWhenAllowSinoWesternGapStretchIsFalse");
         var c = [
             JustifierJfTestSupport.c("\u4E2D", 0),
             JustifierJfTestSupport.c("[", 1),
@@ -360,8 +359,8 @@ class JustifierJfTest {
         TracedAssertions.assertTrue(ok);
     }
 
-    public static function zeroCjkLatinHeadroomProducesNoOpportunities():Void {
-        sec("zeroCjkLatinHeadroomProducesNoOpportunities");
+    @:test public static function zeroCjkLatinHeadroomProducesNoOpportunities():Void {
+        JustifierJfTestSupport.sec("zeroCjkLatinHeadroomProducesNoOpportunities");
         var c = [JustifierJfTestSupport.c("\u4E2D", 0), JustifierJfTestSupport.c("a", 1)];
         var r = [FontRole.CjkText, FontRole.LatinText];
         var e = [
@@ -379,31 +378,8 @@ class JustifierJfTest {
         TracedAssertions.assertTrue(ok);
     }
 
-    /**
-        The conventional class test entry (boring feature spec 19).
-        The class carries no test marker, so the Kotlin runner generated from
-        that marker's collection never instantiates it; this entry is how the
-        runner calls the class once. It registers no test id, so the cross-target
-        test id set is unchanged. The body repeats the calls
-        engine-haxe/tests/Main.hx makes for this class, through the same failure
-        accounting Main.hx uses, and then flushes the class trace the way Main.hx
-        does.
-    **/
-    public static function runTestEntries():Void {
-        ClassTestEntry.run(attachedInlineVirtualSinoWesternBoundaryOutOfBounds);
-        ClassTestEntry.run(attachedInlineVirtualSinoWesternZeroHeadroomInAllocate);
-        ClassTestEntry.run(cjkLatinMixedZeroAndPositiveCapacityAllocation);
-        ClassTestEntry.run(closedSpaceGapInTypedSinoWesternAndUniformSpace);
-        ClassTestEntry.run(closedSpaceGapInUniformSpaceWhenWordSpace);
-        ClassTestEntry.run(compressSubnormalUnderflowShrinkZero);
-        ClassTestEntry.run(compressionWithZeroSurplusAndZeroCapacity);
-        ClassTestEntry.run(emptyLineClusterRangeSkipsUniformSpaceLoop);
-        ClassTestEntry.run(preferredInlineObjectBoundaryOutOfBounds);
-        ClassTestEntry.run(singleClusterRangeProducesNoOpportunities);
-        ClassTestEntry.run(typedSpaceAndWordSpacePredicateEdgeConditions);
-        ClassTestEntry.run(virtualNonSinoWesternBoundaryWhenAllowSinoWesternGapStretchIsFalse);
-        ClassTestEntry.run(virtualSinoWesternGapWhenAllowSinoWesternGapStretchIsFalse);
-        ClassTestEntry.run(zeroCjkLatinHeadroomProducesNoOpportunities);
+    public static function flushTestTrace():Void {
         TestTraceRecorder.flushClass("JustifierJfTest");
     }
+
 }

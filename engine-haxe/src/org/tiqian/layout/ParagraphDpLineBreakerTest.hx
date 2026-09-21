@@ -10,18 +10,11 @@ import org.tiqian.layout.ProgressiveBreakDecisions.ShrinkChannel;
 import org.tiqian.layout.ProgressiveBreakDecisions.UnbreakableRanges;
 import org.tiqian.layout.ProgressiveBreakDecisions.ProgressiveBreakTier;
 import org.tiqian.test.trace.TestTraceRecorder;
-import org.tiqian.test.trace.ClassTestEntry;
 
 class ParagraphDpLineBreakerTest {
-    static function rec(n:String):Void
-        new TestTraceRecorder("ParagraphDpLineBreakerTest").section(n);
-
-    static function c(i:Int, t:String, a:Float):Cluster
-        return ParagraphDpLineBreakerTestSupport.cluster(i, t, a);
-
-    public static function compressedSameTierBoundaryIsNotReportedAsPromotion():Void {
-        rec("compressedSameTierBoundaryIsNotReportedAsPromotion");
-        var cs = [c(0, "a", 30), c(1, "/", 30), c(2, "b", 25), c(3, "c", 30), c(4, "d", 30)];
+    @:test public static function compressedSameTierBoundaryIsNotReportedAsPromotion():Void {
+        ParagraphDpLineBreakerTestSupport.rec("compressedSameTierBoundaryIsNotReportedAsPromotion");
+        var cs = [ParagraphDpLineBreakerTestSupport.c(0, "a", 30), ParagraphDpLineBreakerTestSupport.c(1, "/", 30), ParagraphDpLineBreakerTestSupport.c(2, "b", 25), ParagraphDpLineBreakerTestSupport.c(3, "c", 30), ParagraphDpLineBreakerTestSupport.c(4, "d", 30)];
         var s = ParagraphDpLineBreakerTestSupport.solve(cs, 80, [new ShrinkOpportunity(2, 2, 5, ShrinkChannel.RawAdvance)], null, true, null,
             ParagraphDpLineBreakerTestSupport.opportunities([2, 3], [new TextRange(0, 5), new TextRange(0, 5)],
                 [ProgressiveBreakTier.Emergency, ProgressiveBreakTier.Emergency]),
@@ -31,23 +24,23 @@ class ParagraphDpLineBreakerTest {
             && StringTools.startsWith(RepairOptions.reason(s.lines[0].repair), "LineAdjustmentPushIn"));
     }
 
-    public static function tilesAllClustersInOrder():Void {
-        rec("tilesAllClustersInOrder");
+    @:test public static function tilesAllClustersInOrder():Void {
+        ParagraphDpLineBreakerTestSupport.rec("tilesAllClustersInOrder");
         var s = ParagraphDpLineBreakerTestSupport.solveTestDefaults(ParagraphDpLineBreakerTestSupport.han(23), 100);
         ParagraphDpLineBreakerTestSupport.tiles(s, 23);
         TracedAssertions.assertEqualsRendered("ParagraphEnd", Std.string(s.lines[s.lines.length - 1].endReason));
     }
 
-    public static function singleLineWhenEverythingFits():Void {
-        rec("singleLineWhenEverythingFits");
+    @:test public static function singleLineWhenEverythingFits():Void {
+        ParagraphDpLineBreakerTestSupport.rec("singleLineWhenEverythingFits");
         var s = ParagraphDpLineBreakerTestSupport.solveTestDefaults(ParagraphDpLineBreakerTestSupport.han(4), 400);
         TracedAssertions.assertEqualsInt(1, s.lines.length);
         TracedAssertions.assertEqualsRendered("ParagraphEnd", Std.string(s.lines[0].endReason));
     }
 
-    public static function mandatoryBreakBindsControlToPreviousLine():Void {
-        rec("mandatoryBreakBindsControlToPreviousLine");
-        var cs = [c(0, "中", 16), c(1, "中", 16), c(2, "\n", 0), c(3, "中", 16), c(4, "中", 16)];
+    @:test public static function mandatoryBreakBindsControlToPreviousLine():Void {
+        ParagraphDpLineBreakerTestSupport.rec("mandatoryBreakBindsControlToPreviousLine");
+        var cs = [ParagraphDpLineBreakerTestSupport.c(0, "中", 16), ParagraphDpLineBreakerTestSupport.c(1, "中", 16), ParagraphDpLineBreakerTestSupport.c(2, "\n", 0), ParagraphDpLineBreakerTestSupport.c(3, "中", 16), ParagraphDpLineBreakerTestSupport.c(4, "中", 16)];
         var s = ParagraphDpLineBreakerTestSupport.solveTestDefaults(cs, 200, null, [2]);
         ParagraphDpLineBreakerTestSupport.tiles(s, 5);
         TracedAssertions.assertEqualsInt(2, s.lines.length);
@@ -56,16 +49,16 @@ class ParagraphDpLineBreakerTest {
         TracedAssertions.assertEqualsRendered("ParagraphEnd", Std.string(s.lines[1].endReason));
     }
 
-    public static function trailingMandatoryBreakEmitsParagraphEndLine():Void {
-        rec("trailingMandatoryBreakEmitsParagraphEndLine");
-        var s = ParagraphDpLineBreakerTestSupport.solveTestDefaults([c(0, "中", 16), c(1, "\n", 0)], 200, null, [1]);
+    @:test public static function trailingMandatoryBreakEmitsParagraphEndLine():Void {
+        ParagraphDpLineBreakerTestSupport.rec("trailingMandatoryBreakEmitsParagraphEndLine");
+        var s = ParagraphDpLineBreakerTestSupport.solveTestDefaults([ParagraphDpLineBreakerTestSupport.c(0, "中", 16), ParagraphDpLineBreakerTestSupport.c(1, "\n", 0)], 200, null, [1]);
         TracedAssertions.assertEqualsRendered("MandatoryBreak", Std.string(s.lines[0].endReason));
         TracedAssertions.assertEqualsRendered("ParagraphEnd", Std.string(s.lines[s.lines.length - 1].endReason));
         TracedAssertions.assertTrue(s.lines[s.lines.length - 1].clusterRange.start > s.lines[s.lines.length - 1].clusterRange.end);
     }
 
-    public static function neverBreaksInsideUnbreakableRange():Void {
-        rec("neverBreaksInsideUnbreakableRange");
+    @:test public static function neverBreaksInsideUnbreakableRange():Void {
+        ParagraphDpLineBreakerTestSupport.rec("neverBreaksInsideUnbreakableRange");
         var s = ParagraphDpLineBreakerTestSupport.solveTestDefaults(ParagraphDpLineBreakerTestSupport.han(10), 64, null, null, null,
             new UnbreakableRanges([new IntRange(3, 6)]));
         ParagraphDpLineBreakerTestSupport.tiles(s, 10);
@@ -78,10 +71,10 @@ class ParagraphDpLineBreakerTest {
                     + l.clusterRange.end);
     }
 
-    public static function kinsokuAvoidanceRoutesAroundForbiddenLineStart():Void {
-        rec("kinsokuAvoidanceRoutesAroundForbiddenLineStart");
+    @:test public static function kinsokuAvoidanceRoutesAroundForbiddenLineStart():Void {
+        ParagraphDpLineBreakerTestSupport.rec("kinsokuAvoidanceRoutesAroundForbiddenLineStart");
         var cs = ParagraphDpLineBreakerTestSupport.han(7);
-        cs[6] = c(6, "。", 16);
+        cs[6] = ParagraphDpLineBreakerTestSupport.c(6, "。", 16);
         var s = ParagraphDpLineBreakerTestSupport.solveTestDefaults(cs, 48, null, null, null, null, null, [6]);
         ParagraphDpLineBreakerTestSupport.tiles(s, 7);
         for (l in s.lines)
@@ -89,10 +82,10 @@ class ParagraphDpLineBreakerTest {
                 TracedAssertions.assertTrue(l.clusterRange.start != 6 || l.repair != null, "。 must not start a line without a recorded repair");
     }
 
-    public static function compressionEdgeRecordsPushInRepair():Void {
-        rec("compressionEdgeRecordsPushInRepair");
+    @:test public static function compressionEdgeRecordsPushInRepair():Void {
+        ParagraphDpLineBreakerTestSupport.rec("compressionEdgeRecordsPushInRepair");
         var cs = ParagraphDpLineBreakerTestSupport.han(7);
-        cs[3] = c(3, "，", 16);
+        cs[3] = ParagraphDpLineBreakerTestSupport.c(3, "，", 16);
         var s = ParagraphDpLineBreakerTestSupport.solveTestDefaults(cs, 56, [new ShrinkOpportunity(3, 5, 8, ShrinkChannel.TrailingGlue)], null, true);
         ParagraphDpLineBreakerTestSupport.tiles(s, 7);
         var compressed:Null<LineCandidate> = null;
@@ -110,10 +103,10 @@ class ParagraphDpLineBreakerTest {
             "compression must be recorded as the fill-pass reason code");
     }
 
-    public static function compressionDisabledWithoutPushInFlag():Void {
-        rec("compressionDisabledWithoutPushInFlag");
+    @:test public static function compressionDisabledWithoutPushInFlag():Void {
+        ParagraphDpLineBreakerTestSupport.rec("compressionDisabledWithoutPushInFlag");
         var cs = ParagraphDpLineBreakerTestSupport.han(5);
-        cs[3] = c(3, "，", 16);
+        cs[3] = ParagraphDpLineBreakerTestSupport.c(3, "，", 16);
         var s = ParagraphDpLineBreakerTestSupport.solveTestDefaults(cs, 56, [new ShrinkOpportunity(3, 5, 8, ShrinkChannel.TrailingGlue)], null, false);
         ParagraphDpLineBreakerTestSupport.tiles(s, 5);
         var none = true;
@@ -125,33 +118,14 @@ class ParagraphDpLineBreakerTest {
         TracedAssertions.assertTrue(none, "PushOutOnly must not produce fill push-ins");
     }
 
-    public static function overWideSingleClusterStillProgresses():Void {
-        rec("overWideSingleClusterStillProgresses");
-        var s = ParagraphDpLineBreakerTestSupport.solveTestDefaults([c(0, "中", 16), c(1, "Ｗ", 300), c(2, "中", 16)], 48);
+    @:test public static function overWideSingleClusterStillProgresses():Void {
+        ParagraphDpLineBreakerTestSupport.rec("overWideSingleClusterStillProgresses");
+        var s = ParagraphDpLineBreakerTestSupport.solveTestDefaults([ParagraphDpLineBreakerTestSupport.c(0, "中", 16), ParagraphDpLineBreakerTestSupport.c(1, "Ｗ", 300), ParagraphDpLineBreakerTestSupport.c(2, "中", 16)], 48);
         ParagraphDpLineBreakerTestSupport.tiles(s, 3);
     }
 
-    /**
-        The conventional class test entry (boring feature spec 19).
-        The class carries no test marker, so the Kotlin runner generated from
-        that marker's collection never instantiates it; this entry is how the
-        runner calls the class once. It registers no test id, so the cross-target
-        test id set is unchanged. The body repeats the calls
-        engine-haxe/tests/Main.hx makes for this class, through the same failure
-        accounting Main.hx uses, and then flushes the class trace the way Main.hx
-        does.
-    **/
-    public static function runTestEntries():Void {
-        ClassTestEntry.run(compressedSameTierBoundaryIsNotReportedAsPromotion);
-        ClassTestEntry.run(tilesAllClustersInOrder);
-        ClassTestEntry.run(singleLineWhenEverythingFits);
-        ClassTestEntry.run(mandatoryBreakBindsControlToPreviousLine);
-        ClassTestEntry.run(trailingMandatoryBreakEmitsParagraphEndLine);
-        ClassTestEntry.run(neverBreaksInsideUnbreakableRange);
-        ClassTestEntry.run(kinsokuAvoidanceRoutesAroundForbiddenLineStart);
-        ClassTestEntry.run(compressionEdgeRecordsPushInRepair);
-        ClassTestEntry.run(compressionDisabledWithoutPushInFlag);
-        ClassTestEntry.run(overWideSingleClusterStillProgresses);
+    public static function flushTestTrace():Void {
         TestTraceRecorder.flushClass("ParagraphDpLineBreakerTest");
     }
+
 }

@@ -7,53 +7,22 @@ import org.tiqian.test.trace.TracedAssertions;
 import std.SortedMap;
 import org.tiqian.layout.ProgressiveBreakDecisions.ProgressiveBreakOpportunity;
 import org.tiqian.layout.ProgressiveBreakDecisions.ProgressiveBreakTier;
-import org.tiqian.test.trace.ClassTestEntry;
 
 class ProgressiveBreakDecisionsTailTest {
-    static function c(i:Int):Cluster
-        return new Cluster(new TextRange(i, i + 1), "中", "test", 16, "中");
-
-    static function o():SortedMap<Int, ProgressiveBreakOpportunity> {
-        final b = SortedMap.builder();
-        var s = new TextRange(0, 5);
-        b.put(2, new ProgressiveBreakOpportunity(ProgressiveBreakTier.Whitespace, s));
-        b.put(4, new ProgressiveBreakOpportunity(ProgressiveBreakTier.Emergency, s));
-        return b.build();
-    }
-
-    static function t(n:String, f:Void->Void):Void {
-        new TestTraceRecorder("ProgressiveBreakDecisionsTailTest").section(n);
-        f();
-    }
-
-    public static function infiniteLineLimitWithClustersAdmitsTheCleanestTier():Void
-        t("infiniteLineLimitWithClustersAdmitsTheCleanestTier", function() {
-            final cs = [c(0), c(1), c(2), c(3), c(4)];
-            TracedAssertions.assertEqualsInt(2, ProgressiveBreakDecisions.decideProgressiveBreak(0, 4, o(), cs));
+    @:test public static function infiniteLineLimitWithClustersAdmitsTheCleanestTier():Void
+        ProgressiveBreakDecisionsTailTestSupport.t("infiniteLineLimitWithClustersAdmitsTheCleanestTier", function() {
+            final cs = [ProgressiveBreakDecisionsTailTestSupport.c(0), ProgressiveBreakDecisionsTailTestSupport.c(1), ProgressiveBreakDecisionsTailTestSupport.c(2), ProgressiveBreakDecisionsTailTestSupport.c(3), ProgressiveBreakDecisionsTailTestSupport.c(4)];
+            TracedAssertions.assertEqualsInt(2, ProgressiveBreakDecisions.decideProgressiveBreak(0, 4, ProgressiveBreakDecisionsTailTestSupport.o(), cs));
         });
 
-    public static function infiniteStretchCeilingWithFiniteLineLimitAdmitsTheCleanestTier():Void
-        t("infiniteStretchCeilingWithFiniteLineLimitAdmitsTheCleanestTier", function() {
-            final cs = [c(0), c(1), c(2), c(3), c(4)];
-            TracedAssertions.assertEqualsInt(2, ProgressiveBreakDecisions.decideProgressiveBreak(0, 4, o(), cs, 200));
+    @:test public static function infiniteStretchCeilingWithFiniteLineLimitAdmitsTheCleanestTier():Void
+        ProgressiveBreakDecisionsTailTestSupport.t("infiniteStretchCeilingWithFiniteLineLimitAdmitsTheCleanestTier", function() {
+            final cs = [ProgressiveBreakDecisionsTailTestSupport.c(0), ProgressiveBreakDecisionsTailTestSupport.c(1), ProgressiveBreakDecisionsTailTestSupport.c(2), ProgressiveBreakDecisionsTailTestSupport.c(3), ProgressiveBreakDecisionsTailTestSupport.c(4)];
+            TracedAssertions.assertEqualsInt(2, ProgressiveBreakDecisions.decideProgressiveBreak(0, 4, ProgressiveBreakDecisionsTailTestSupport.o(), cs, 200));
         });
 
-    public static function flush():Void
-        new TestTraceRecorder("ProgressiveBreakDecisionsTailTest").flush();
-
-    /**
-        The conventional class test entry (boring feature spec 19).
-        The class carries no test marker, so the Kotlin runner generated from
-        that marker's collection never instantiates it; this entry is how the
-        runner calls the class once. It registers no test id, so the cross-target
-        test id set is unchanged. The body repeats the calls
-        engine-haxe/tests/Main.hx makes for this class, through the same failure
-        accounting Main.hx uses, and then flushes the class trace the way Main.hx
-        does.
-    **/
-    public static function runTestEntries():Void {
-        ClassTestEntry.run(infiniteLineLimitWithClustersAdmitsTheCleanestTier);
-        ClassTestEntry.run(infiniteStretchCeilingWithFiniteLineLimitAdmitsTheCleanestTier);
+    public static function flushTestTrace():Void {
         TestTraceRecorder.flushClass("ProgressiveBreakDecisionsTailTest");
     }
+
 }
