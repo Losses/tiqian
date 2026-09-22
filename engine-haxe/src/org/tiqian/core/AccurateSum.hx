@@ -18,18 +18,17 @@ using std.Functional;
  * position into a binary32 loop. The accumulator therefore runs inside a
  * local function, which the expansion leaves alone, and every caller reaches
  * it through this non-inline entry point.
+ *
+ * One call serves both float configurations: the Kotlin backend emits the
+ * closing narrowing only in the binary32 module, so the binary64 module keeps
+ * the finished sum in Double (boring/fix/kotlin-sumoffloat-narrowing; earlier
+ * the two configurations needed separate bodies here).
  */
 class AccurateSum {
     /** The exact sum of [values], narrowed to binary32 once. */
     public static function of(values:Array<Float>):Float {
         function accumulate():Float {
-#if float_precision
             return values.sumOfFloat(value -> value);
-#else
-            var total = 0.0;
-            for (value in values) total += value;
-            return total;
-#end
         }
         return accumulate();
     }
