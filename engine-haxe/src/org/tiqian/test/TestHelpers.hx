@@ -10,24 +10,18 @@ class TestHelpers {
     }
 
     public static function surrogateText(codeUnits:Array<Int>):String {
+        // One fromCharCode per unit. Merging a surrogate pair into a single
+        // scalar shortens the text wherever the target's fromCharCode builds a
+        // 16-bit character: the Kotlin backend renders String.fromCharCode(x)
+        // as (x).toChar(), which keeps the low sixteen bits, so the merged
+        // scalar loses the high surrogate and every boundary expectation that
+        // counts units (SourceInteractionBoundariesCoverageTest, CoreBoundaryTest,
+        // LayoutQueriesTest and its residual coverage) stops matching.
         var output = "";
         var index = 0;
         while (index < codeUnits.length) {
-            final unit = codeUnits[index];
-            // A high surrogate followed by a low surrogate forms one
-            // scalar; emit it as a single fromCharCode so a target that
-            // decodes one UTF-16 unit at a time keeps the pair intact.
-            // A lone surrogate stays a unit (a target without unpaired
-            // surrogates cannot represent it).
-            if (unit >= 0xD800 && unit <= 0xDBFF && index + 1 < codeUnits.length
-                && codeUnits[index + 1] >= 0xDC00 && codeUnits[index + 1] <= 0xDFFF) {
-                final low = codeUnits[index + 1];
-                output += String.fromCharCode(0x10000 + ((unit - 0xD800) << 10) + (low - 0xDC00));
-                index += 2;
-            } else {
-                output += String.fromCharCode(unit);
-                index += 1;
-            }
+            output += String.fromCharCode(codeUnits[index]);
+            index += 1;
         }
         return output;
     }
