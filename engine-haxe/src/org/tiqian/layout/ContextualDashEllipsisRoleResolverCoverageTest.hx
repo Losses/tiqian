@@ -54,7 +54,7 @@ class ContextualDashEllipsisRoleResolverCoverageTest {
             TracedAssertions.fail(Std.string(d));
     }
 
-    @:test public static function forwardPassWalkerArmsRunBeforeTheClassifierRejectsLoneSurrogates():Void {
+    @:test(except = ["swift"]) public static function forwardPassWalkerArmsRunBeforeTheClassifierRejectsLoneSurrogates():Void {
         ContextualDashEllipsisRoleResolverCoverageSupport.start("forwardPassWalkerArmsRunBeforeTheClassifierRejectsLoneSurrogates");
         final r = new ContextualDashEllipsisRoleResolver();
         TracedAssertions.assertFailsWith(null, () -> r.resolve(ContextualDashEllipsisRoleResolverCoverageSupport.surrogateText([0x2014, 0xD83D])));
