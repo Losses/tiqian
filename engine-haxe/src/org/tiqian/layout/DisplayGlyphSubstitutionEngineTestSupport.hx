@@ -159,7 +159,7 @@ class DisplayGlyphSubstitutionEngineTestSupport {
 
 class GlyphPolicyResolver implements ClreqProfileResolver {
     final policy:CjkPunctuationGlyphPolicy;
-    final coalesce:Array<Int>;
+    final coalesce:Null<Array<Int>>;
 
     public function new(policy:CjkPunctuationGlyphPolicy, ?coalesce:Array<Int>) {
         this.policy = policy;
