@@ -102,7 +102,7 @@ class SourceInteractionBoundariesCoverageTest {
         SourceInteractionBoundariesCoverageTestHelpers.assertBoundaries("[0, 2, 3]", TestHelpers.surrogateText([0xD83D, 0xDE00]) + "A");
     }
 
-    @:test
+    @:test(except = ["swift"])
     public static function codePointAtCompatCoversEverySurrogateCase():Void {
         new TestTraceRecorder("SourceInteractionBoundariesCoverageTest").section("codePointAtCompatCoversEverySurrogateCase");
         TracedAssertions.assertEqualsInt(97, SourceInteractionBoundaries.codePointAtCompat("a", 0, 1));

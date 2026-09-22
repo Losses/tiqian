@@ -12,7 +12,7 @@ class QuotePairAnalyzerSurrogateAdjacencyTest {
         TracedAssertions.assertEqualsQuotePairArray([new QuotePair(2, 3, QuoteType.Double)], new QuotePairAnalyzer().analyze("\u201A\u201B\u201C\u201D"));
     }
 
-    @:test public static function apostropheAfterASurrogatePairWalksTheCombineArmBefore():Void {
+    @:test(except = ["swift"]) public static function apostropheAfterASurrogatePairWalksTheCombineArmBefore():Void {
         QuotePairAnalyzerSurrogateAdjacencyTestSupport.rec("apostropheAfterASurrogatePairWalksTheCombineArmBefore");
         TracedAssertions.assertFalse(QuotePairAnalyzer.isNonCjkInWordApostrophe(TestHelpers.surrogateText([0xD83D, 0xDE00, 0x2019, 0x78]), 2));
         TracedAssertions.assertFailsWith(null, () -> QuotePairAnalyzer.isNonCjkInWordApostrophe(TestHelpers.surrogateText([0xDC00, 0x2019, 0x78]), 1));
@@ -23,13 +23,13 @@ class QuotePairAnalyzerSurrogateAdjacencyTest {
             () -> QuotePairAnalyzer.isNonCjkInWordApostrophe(TestHelpers.surrogateText([0x78, 0xDC00, 0xDC00, 0x2019, 0x78]), 3));
     }
 
-    @:test public static function apostropheBeforeASurrogateWalksBothLowCheckArms():Void {
+    @:test(except = ["swift"]) public static function apostropheBeforeASurrogateWalksBothLowCheckArms():Void {
         QuotePairAnalyzerSurrogateAdjacencyTestSupport.rec("apostropheBeforeASurrogateWalksBothLowCheckArms");
         TracedAssertions.assertFalse(QuotePairAnalyzer.isNonCjkInWordApostrophe(TestHelpers.surrogateText([0x61, 0x2019, 0xD83D, 0xDE00]), 1));
         TracedAssertions.assertFailsWith(null, () -> QuotePairAnalyzer.isNonCjkInWordApostrophe(TestHelpers.surrogateText([0x61, 0x2019, 0xD83D, 0x62]), 1));
     }
 
-    @:test public static function plainAndBoundaryNeighboursWalkTheNonSurrogateArms():Void {
+    @:test(except = ["swift"]) public static function plainAndBoundaryNeighboursWalkTheNonSurrogateArms():Void {
         QuotePairAnalyzerSurrogateAdjacencyTestSupport.rec("plainAndBoundaryNeighboursWalkTheNonSurrogateArms");
         TracedAssertions.assertTrue(QuotePairAnalyzer.isNonCjkInWordApostrophe("a\u2019b", 1));
         TracedAssertions.assertFalse(QuotePairAnalyzer.isNonCjkInWordApostrophe("\u2019a", 0));

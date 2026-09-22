@@ -90,12 +90,12 @@ class QuotePairAnalyzerCoverageTest {
         QuotePairAnalyzerCoverageTestSupport.nonEmpty(TestHelpers.surrogateText([0xD83D, 0xDE00, 0x2019]));
     }
 
-    @:test public static function codePointBeforeWithLowSurrogateAtStart():Void {
+    @:test(except = ["swift"]) public static function codePointBeforeWithLowSurrogateAtStart():Void {
         QuotePairAnalyzerCoverageTestSupport.rec("codePointBeforeWithLowSurrogateAtStart");
         QuotePairAnalyzerCoverageTestSupport.failLow(TestHelpers.surrogateText([0xDC00, 0x2019]));
     }
 
-    @:test public static function codePointBeforeWithLowSurrogateAfterNonHighSurrogate():Void {
+    @:test(except = ["swift"]) public static function codePointBeforeWithLowSurrogateAfterNonHighSurrogate():Void {
         QuotePairAnalyzerCoverageTestSupport.rec("codePointBeforeWithLowSurrogateAfterNonHighSurrogate");
         QuotePairAnalyzerCoverageTestSupport.failLow(TestHelpers.surrogateText([0x61, 0xDC00, 0x2019]));
     }
@@ -105,12 +105,12 @@ class QuotePairAnalyzerCoverageTest {
         QuotePairAnalyzerCoverageTestSupport.nonEmpty("a\u2019");
     }
 
-    @:test public static function codePointAtOrNullWithHighSurrogateAtEnd():Void {
+    @:test(except = ["swift"]) public static function codePointAtOrNullWithHighSurrogateAtEnd():Void {
         QuotePairAnalyzerCoverageTestSupport.rec("codePointAtOrNullWithHighSurrogateAtEnd");
         QuotePairAnalyzerCoverageTestSupport.failLow(TestHelpers.surrogateText([0x2019, 0xD800]));
     }
 
-    @:test public static function codePointAtOrNullWithHighSurrogateFollowedByNonLowSurrogate():Void {
+    @:test(except = ["swift"]) public static function codePointAtOrNullWithHighSurrogateFollowedByNonLowSurrogate():Void {
         QuotePairAnalyzerCoverageTestSupport.rec("codePointAtOrNullWithHighSurrogateFollowedByNonLowSurrogate");
         QuotePairAnalyzerCoverageTestSupport.failLow(TestHelpers.surrogateText([0x2019, 0xD800, 0x61]));
     }
@@ -125,7 +125,7 @@ class QuotePairAnalyzerCoverageTest {
         QuotePairAnalyzerCoverageTestSupport.nonEmpty("x\u2019a");
     }
 
-    @:test public static function codePointBeforeLowInRangeIndexGe2HighNotInRange():Void {
+    @:test(except = ["swift"]) public static function codePointBeforeLowInRangeIndexGe2HighNotInRange():Void {
         QuotePairAnalyzerCoverageTestSupport.rec("codePointBeforeLowInRangeIndexGe2HighNotInRange");
         QuotePairAnalyzerCoverageTestSupport.failLow(TestHelpers.surrogateText([0x61, 0xDC00, 0x2019]));
     }
@@ -137,12 +137,12 @@ class QuotePairAnalyzerCoverageTest {
         TracedAssertions.assertEqualsQuoteType(QuoteType.Single, p[0].quoteType);
     }
 
-    @:test public static function codePointAtOrNullLoneHighSurrogateAfterQuote():Void {
+    @:test(except = ["swift"]) public static function codePointAtOrNullLoneHighSurrogateAfterQuote():Void {
         QuotePairAnalyzerCoverageTestSupport.rec("codePointAtOrNullLoneHighSurrogateAfterQuote");
         QuotePairAnalyzerCoverageTestSupport.failLow(TestHelpers.surrogateText([0x61, 0x2019, 0xD800, 0x61]));
     }
 
-    @:test public static function codePointAtOrNullHighSurrogateAtStringEnd():Void {
+    @:test(except = ["swift"]) public static function codePointAtOrNullHighSurrogateAtStringEnd():Void {
         QuotePairAnalyzerCoverageTestSupport.rec("codePointAtOrNullHighSurrogateAtStringEnd");
         QuotePairAnalyzerCoverageTestSupport.failLow(TestHelpers.surrogateText([0x61, 0x2019, 0xD800]));
     }

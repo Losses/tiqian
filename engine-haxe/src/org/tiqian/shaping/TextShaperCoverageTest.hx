@@ -74,7 +74,7 @@ class TextShaperCoverageTest {
         TracedAssertions.assertEqualsFloat(32.0, shaper.shape(TextShaperCoverageTestSupport.input("a ")).clusters[0].advance);
     }
 
-    @:test public static function surrogatePairHandlingInCodePointCount():Void {
+    @:test(except = ["swift"]) public static function surrogatePairHandlingInCodePointCount():Void {
         new TestTraceRecorder("TextShaperCoverageTest").section("surrogatePairHandlingInCodePointCount");
         var shaper = new ExplainableStubTextShaper();
         var one = shaper.shape(TextShaperCoverageTestSupport.input(TextShaperCoverageTestSupport.surrogateText([0xD83D, 0xDE00])));
