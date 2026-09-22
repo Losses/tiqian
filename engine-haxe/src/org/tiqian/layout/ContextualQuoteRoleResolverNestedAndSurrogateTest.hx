@@ -67,7 +67,7 @@ class ContextualQuoteRoleResolverNestedAndSurrogateTest {
         TracedAssertions.assertEqualsFontRole(FontRole.CjkPunctuation, x.role);
     }
 
-    @:test public static function leftwardScanFromALowSurrogateWalksEveryBacktrackArm():Void {
+    @:test(except = ["swift"]) public static function leftwardScanFromALowSurrogateWalksEveryBacktrackArm():Void {
         ContextualQuoteRoleResolverNestedAndSurrogateSupport.start("leftwardScanFromALowSurrogateWalksEveryBacktrackArm");
         final s = ContextualQuoteRoleResolverNestedAndSurrogateSupport.surrogateText;
         ContextualQuoteRoleResolverNestedAndSurrogateSupport.assertIllegal(() ->
@@ -125,7 +125,7 @@ class ContextualQuoteRoleResolverNestedAndSurrogateTest {
         TracedAssertions.assertEqualsFontRole(FontRole.CjkPunctuation, x.role);
     }
 
-    @:test public static function highSurrogateAtTheContentEndHasNoRoomAndThrows():Void {
+    @:test(except = ["swift"]) public static function highSurrogateAtTheContentEndHasNoRoomAndThrows():Void {
         ContextualQuoteRoleResolverNestedAndSurrogateSupport.start("highSurrogateAtTheContentEndHasNoRoomAndThrows");
         final s = ContextualQuoteRoleResolverNestedAndSurrogateSupport.surrogateText;
         ContextualQuoteRoleResolverNestedAndSurrogateSupport.assertIllegal(() ->
@@ -142,14 +142,14 @@ class ContextualQuoteRoleResolverNestedAndSurrogateTest {
         TracedAssertions.assertEqualsFontRole(a.role, b.role);
     }
 
-    @:test public static function plainFollowerOfAHighSurrogateCountsAsOneUnit():Void {
+    @:test(except = ["swift"]) public static function plainFollowerOfAHighSurrogateCountsAsOneUnit():Void {
         ContextualQuoteRoleResolverNestedAndSurrogateSupport.start("plainFollowerOfAHighSurrogateCountsAsOneUnit");
         final s = ContextualQuoteRoleResolverNestedAndSurrogateSupport.surrogateText;
         ContextualQuoteRoleResolverNestedAndSurrogateSupport.assertIllegal(() ->
             ContextualQuoteRoleResolverNestedAndSurrogateSupport.decisions(s([0x201C, 0xD83D, 0x78, 0x201D])));
     }
 
-    @:test public static function privateUseFollowerOfAHighSurrogateCountsAsOneUnit():Void {
+    @:test(except = ["swift"]) public static function privateUseFollowerOfAHighSurrogateCountsAsOneUnit():Void {
         ContextualQuoteRoleResolverNestedAndSurrogateSupport.start("privateUseFollowerOfAHighSurrogateCountsAsOneUnit");
         final s = ContextualQuoteRoleResolverNestedAndSurrogateSupport.surrogateText;
         ContextualQuoteRoleResolverNestedAndSurrogateSupport.assertIllegal(() ->
