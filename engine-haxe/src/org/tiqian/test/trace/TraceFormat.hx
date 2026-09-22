@@ -1,7 +1,6 @@
 package org.tiqian.test.trace;
 
 class TraceFormat {
-    private static final HEX:String = "0123456789abcdef";
 
     public static function i(value:Int):String {
         return "" + value;
