@@ -49,9 +49,15 @@ class ParseTexHyphenationPatterns {
         }
         final pb = SortedTable.mapBuilder(SortedTable.compareStrings);
         final eb = SortedTable.mapBuilder(SortedTable.compareStrings);
+        // The token list is loop-invariant: block() scans the whole pattern
+        // text and tokens() rebuilds every token, so recomputing it in both
+        // the condition and the body made the parse quadratic in the number
+        // of tokens. Hoisting it keeps the parsed result identical and turns
+        // the parse back into a single pass. (HyphenationParseHoist)
+        final patternTokens = tokens(block(noComments, "\\patterns"));
         var ti = 0;
-        while (ti < tokens(block(noComments, "\\patterns")).length) {
-            final token = tokens(block(noComments, "\\patterns"))[ti];
+        while (ti < patternTokens.length) {
+            final token = patternTokens[ti];
             final key = new StringBuf();
             final levels = [0];
             var i = 0;
@@ -68,9 +74,11 @@ class ParseTexHyphenationPatterns {
             pb.put(key.toString(), levels);
             ti++;
         }
+        // Same hoist as the patterns loop above. (HyphenationParseHoist)
+        final hyphenationTokens = tokens(block(noComments, "\\hyphenation"));
         var ei = 0;
-        while (ei < tokens(block(noComments, "\\hyphenation")).length) {
-            final token = tokens(block(noComments, "\\hyphenation"))[ei];
+        while (ei < hyphenationTokens.length) {
+            final token = hyphenationTokens[ei];
             final key = new StringBuf();
             final offsets = [];
             var pos = 0;
