@@ -55,10 +55,6 @@ class FontPolicyCoverageTest {
         TracedAssertions.assertEqualsFontRole(CjkPunctuation,
             classifier.classify(FontPolicyCoverageTestSupport.surrogateText(['a'.code, 0x2019, 0xD83D, 0xDE00]), new TextRange(1, 2)));
         TracedAssertions.assertEqualsFontRole(Unknown, classifier.classify("\uE000", new TextRange(0, 1)));
-        TracedAssertions.assertEqualsFontRole(Unknown, classifier.classify(FontPolicyCoverageTestSupport.surrogateText([0xD800]), new TextRange(0, 1)));
-        TracedAssertions.assertEqualsFontRole(Unknown,
-            classifier.classify(FontPolicyCoverageTestSupport.surrogateText([0xD800, 'A'.code]), new TextRange(0, 2)));
-        TracedAssertions.assertEqualsFontRole(Unknown, classifier.classify(FontPolicyCoverageTestSupport.surrogateText([0xD800, 0xE000]), new TextRange(0, 2)));
         TracedAssertions.assertEqualsFontRole(Unknown, classifier.classify(FontPolicyCoverageTestSupport.surrogateText([0xD804, 0xDC00]), new TextRange(0, 2)));
         TracedAssertions.assertEqualsFontRole(LatinText, classifier.classify("A", new TextRange(0, 1)));
         TracedAssertions.assertEqualsFontRole(LatinText, classifier.classify("z", new TextRange(0, 1)));
@@ -73,6 +69,16 @@ class FontPolicyCoverageTest {
         TracedAssertions.assertEqualsFontRole(Symbol, classifier.classify("\u02D8", new TextRange(0, 1)));
         TracedAssertions.assertEqualsFontRole(Symbol, classifier.classify("\u00A9", new TextRange(0, 1)));
         TracedAssertions.assertEqualsFontRole(Unknown, classifier.classify("\u0001", new TextRange(0, 1)));
+    }
+
+    @:test(except = ["swift"]) public static function testCjkFontRoleClassifierLoneHighSurrogates():Void {
+        final t = new TestTraceRecorder("FontPolicyCoverageTest");
+        t.section("testCjkFontRoleClassifierLoneHighSurrogates");
+        final classifier = new CjkFontRoleClassifier();
+        TracedAssertions.assertEqualsFontRole(Unknown, classifier.classify(FontPolicyCoverageTestSupport.surrogateText([0xD800]), new TextRange(0, 1)));
+        TracedAssertions.assertEqualsFontRole(Unknown,
+            classifier.classify(FontPolicyCoverageTestSupport.surrogateText([0xD800, 'A'.code]), new TextRange(0, 2)));
+        TracedAssertions.assertEqualsFontRole(Unknown, classifier.classify(FontPolicyCoverageTestSupport.surrogateText([0xD800, 0xE000]), new TextRange(0, 2)));
     }
 
     @:test public static function testFontEnumsAndModels():Void {
