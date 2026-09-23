@@ -3952,13 +3952,10 @@ class UnicodeEmoji17RgiRoleAuditTestSupport {
         final out = new StringBuf();
         for (hex in codePoints.split(" ")) {
             final cp = Std.parseInt("0x" + hex);
-            if (cp <= 0xFFFF)
-                out.add(String.fromCharCode(cp));
-            else {
-                final scalar = cp - 0x10000;
-                out.add(String.fromCharCode((scalar >> 10) + 0xD800));
-                out.add(String.fromCharCode((scalar & 0x3FF) + 0xDC00));
-            }
+            // Emit the whole code point in one fromCharCode so a target
+            // decodes the supplementary-plane scalar as a single unit
+            // instead of receiving two unpaired surrogate halves.
+            out.add(String.fromCharCode(cp));
         }
         return out.toString();
     }
