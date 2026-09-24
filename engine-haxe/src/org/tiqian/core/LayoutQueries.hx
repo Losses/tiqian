@@ -608,10 +608,12 @@ class LayoutQueries {
                 final rubyRight = ruby.centerX + ruby.width / 2.0;
                 index = 0;
                 while (index < baseIndices.length) {
-                    final bound = bounds[baseIndices[index]];
-                    bound.left = minFloat(bound.left, index == 0 ? rubyLeft : maxFloat(rubyLeft, (centers[index - 1] + centers[index]) / 2.0));
-                    bound.right = maxFloat(bound.right,
-                        index == baseIndices.length - 1 ? rubyRight : minFloat(rubyRight, (centers[index] + centers[index + 1]) / 2.0));
+                    final idx = baseIndices[index];
+                    final bound = bounds[idx];
+                    bounds[idx] = new SelectionBounds(
+                        minFloat(bound.left, index == 0 ? rubyLeft : maxFloat(rubyLeft, (centers[index - 1] + centers[index]) / 2.0)),
+                        maxFloat(bound.right,
+                            index == baseIndices.length - 1 ? rubyRight : minFloat(rubyRight, (centers[index] + centers[index + 1]) / 2.0)));
                     index++;
                 }
             }
@@ -624,8 +626,8 @@ class LayoutQueries {
             if (left.right > right.left) {
                 final center = clampFloat((centerOfCluster(result, positioned[index]) + centerOfCluster(result, positioned[index + 1])) / 2.0,
                     minFloat(left.left, right.left), maxFloat(left.right, right.right));
-                left.right = maxFloat(minFloat(left.right, center), left.left);
-                right.left = minFloat(maxFloat(right.left, center), right.right);
+                bounds[index] = new SelectionBounds(left.left, maxFloat(minFloat(left.right, center), left.left));
+                bounds[index + 1] = new SelectionBounds(minFloat(maxFloat(right.left, center), right.right), right.right);
             }
             index++;
         }
