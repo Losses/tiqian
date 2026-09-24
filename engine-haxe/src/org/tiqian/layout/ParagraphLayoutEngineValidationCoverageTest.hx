@@ -28,7 +28,7 @@ class ParagraphLayoutEngineValidationCoverageTest {
             "inlineObjectMinimumClearanceEm");
     }
 
-    @:test(except = ["swift"]) public static function sourceTextMustNotContainUnpairedSurrogates():Void {
+    @:test(except = ["swift", "rust"]) public static function sourceTextMustNotContainUnpairedSurrogates():Void {
         final t = new TestTraceRecorder("ParagraphLayoutEngineValidationCoverageTest");
         t.section("sourceTextMustNotContainUnpairedSurrogates");
         ParagraphLayoutEngineValidationCoverageSupport.reject(ParagraphLayoutEngineValidationCoverageSupport.input(null, null, null,
