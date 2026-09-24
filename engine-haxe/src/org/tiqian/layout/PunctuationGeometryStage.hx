@@ -555,7 +555,7 @@ class PunctuationGeometryStage {
         return isDigitChar(boundaryChar.charCodeAt(0)) ? policy.cjkDigit : policy.cjkLatin;
     }
 
-    static function isDigitChar(code:Int):Bool {
+    static function isDigitChar(code:Null<Int>):Bool {
         // Kotlin Char.isDigit is Unicode Nd. The realistic Nd code points in CJK prose
         // are ASCII 0x30-0x39 and fullwidth 0xFF10-0xFF19; other Nd scripts have no
         // distinct auto-space policy in the golden corpus.
