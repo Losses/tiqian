@@ -91,7 +91,7 @@ using std.RecordCopy;
         PunctuationGeometryBranchArmsCoverageTestSupport.t("emptyTextClustersCannotBeAttachedMarks");
         var cs = [
             PunctuationGeometryBranchArmsCoverageTestSupport.o(0),
-            PunctuationGeometryBranchArmsCoverageTestSupport.c("", 1, null, "latin")
+            PunctuationGeometryBranchArmsCoverageTestSupport.c("", 1, 16, "latin")
         ];
         var r = new ClreqKinsokuRule();
         TracedAssertions.assertTrue(cs.inlineObjectAttachedMarks([FontRole.Unknown, FontRole.LatinText], KinsokuLevel.Basic, r).length == 0);
@@ -106,20 +106,20 @@ using std.RecordCopy;
         var r = new ClreqKinsokuRule();
         var a = [
             PunctuationGeometryBranchArmsCoverageTestSupport.c("中", 0),
-            PunctuationGeometryBranchArmsCoverageTestSupport.c("", 1, "latin", "x")
+            PunctuationGeometryBranchArmsCoverageTestSupport.c("", 1, 16, "latin", "x")
         ];
         TracedAssertions.assertTrue(a.attachedAsciiPointMarkKinsoku([FontRole.CjkText, FontRole.LatinText], a, KinsokuLevel.Basic, 100, 100)
             .decisions.length == 0);
         var b = [
-            PunctuationGeometryBranchArmsCoverageTestSupport.c("", 0, null, "latin", "x"),
-            PunctuationGeometryBranchArmsCoverageTestSupport.c(",", 0, null, "latin")
+            PunctuationGeometryBranchArmsCoverageTestSupport.c("", 0, 16, "latin", "x"),
+            PunctuationGeometryBranchArmsCoverageTestSupport.c(",", 0, 16, "latin")
         ];
         TracedAssertions.assertTrue(b.attachedAsciiPointMarkKinsoku([FontRole.LatinText, FontRole.LatinText], b, KinsokuLevel.Basic, 100, 100)
             .decisions.length == 0);
         var d = [
             PunctuationGeometryBranchArmsCoverageTestSupport.c("中", 0),
             PunctuationGeometryBranchArmsCoverageTestSupport.c(",", 1, 8, "latin"),
-            PunctuationGeometryBranchArmsCoverageTestSupport.c("", 2, null, "latin", "x")
+            PunctuationGeometryBranchArmsCoverageTestSupport.c("", 2, 16, "latin", "x")
         ];
         var dr = d.attachedAsciiPointMarkKinsoku([FontRole.CjkText, FontRole.LatinText, FontRole.LatinText], d, KinsokuLevel.Basic, 100, 100);
         TracedAssertions.assertEqualsRendered("[[0, 1]]", PunctuationGeometryBranchArmsCoverageTestSupport.render(dr.unbreakableRanges));
@@ -138,7 +138,7 @@ using std.RecordCopy;
         PunctuationGeometryBranchArmsCoverageTestSupport.t("spaceRunRequiresNonEmptyAllSpaceText");
         TracedAssertions.assertTrue(PunctuationGeometryBranchArmsCoverageTestSupport.c(" ", 0, 16, "latin").isSpaceRun());
         TracedAssertions.assertTrue(PunctuationGeometryBranchArmsCoverageTestSupport.c("  ", 0, 16, "latin").isSpaceRun());
-        TracedAssertions.assertFalse(PunctuationGeometryBranchArmsCoverageTestSupport.c("", 0, "latin", " ").isSpaceRun());
+        TracedAssertions.assertFalse(PunctuationGeometryBranchArmsCoverageTestSupport.c("", 0, 16, "latin", " ").isSpaceRun());
         TracedAssertions.assertFalse(PunctuationGeometryBranchArmsCoverageTestSupport.c("a b", 0, 16, "latin").isSpaceRun());
         TracedAssertions.assertFalse(PunctuationGeometryBranchArmsCoverageTestSupport.c("中", 0).isSpaceRun());
     }
@@ -161,7 +161,7 @@ using std.RecordCopy;
     @:test public static function virtualGapWithEmptyPreviousTextHasNoNarrowCharacter():Void {
         PunctuationGeometryBranchArmsCoverageTestSupport.t("virtualGapWithEmptyPreviousTextHasNoNarrowCharacter");
         var x = [
-            PunctuationGeometryBranchArmsCoverageTestSupport.c("", 0, "latin", "y"),
+            PunctuationGeometryBranchArmsCoverageTestSupport.c("", 0, 16, "latin", "y"),
             PunctuationGeometryBranchArmsCoverageTestSupport.c("r", 1, 16, "latin"),
             PunctuationGeometryBranchArmsCoverageTestSupport.c("中", 2)
         ];
@@ -180,7 +180,7 @@ using std.RecordCopy;
         var x = [
             PunctuationGeometryBranchArmsCoverageTestSupport.c("中", 0),
             PunctuationGeometryBranchArmsCoverageTestSupport.c(" ", 1, 16, "latin"),
-            PunctuationGeometryBranchArmsCoverageTestSupport.c("", 2, null, "latin", "y")
+            PunctuationGeometryBranchArmsCoverageTestSupport.c("", 2, 16, "latin", "y")
         ];
         var r = x.applyAutoSpacePolicy([
             PunctuationGeometryBranchArmsCoverageTestSupport.e(EastAsianSpacingValue.Wide, EastAsianSpacingValue.Wide),
@@ -238,8 +238,8 @@ using std.RecordCopy;
     @:test public static function attachedAsciiPointMarkCheckSkipsEmptyPreviousText():Void {
         PunctuationGeometryBranchArmsCoverageTestSupport.t("attachedAsciiPointMarkCheckSkipsEmptyPreviousText");
         TracedAssertions.assertFalse([
-            PunctuationGeometryBranchArmsCoverageTestSupport.c("", 0, null, "latin", "x"),
-            PunctuationGeometryBranchArmsCoverageTestSupport.c(",", 0, null, "latin")
+            PunctuationGeometryBranchArmsCoverageTestSupport.c("", 0, 16, "latin", "x"),
+            PunctuationGeometryBranchArmsCoverageTestSupport.c(",", 0, 16, "latin")
         ].isAttachedAsciiPointMarkAt(1));
     }
 
