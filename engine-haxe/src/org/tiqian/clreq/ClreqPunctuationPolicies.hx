@@ -15,7 +15,7 @@ class ClreqPunctuationPolicies {
     }
 
     public static function classify(char:String):PunctuationClass {
-        final unit:Int = char.charCodeAt(0);
+        final unit:Null<Int> = char.charCodeAt(0);
         if (containsUnit(OPENING_UNITS, unit)) {
             return PunctuationClass.Opening;
         }
@@ -51,7 +51,7 @@ class ClreqPunctuationPolicies {
      * adjustable glue) by the punctuation-width policy.
      */
     public static function forcedHalfWidth(char:String, policy:PunctuationWidthPolicy):Bool {
-        final unit:Int = char.charCodeAt(0);
+        final unit:Null<Int> = char.charCodeAt(0);
         // Short hyphens occupy half an em (CLREQ 5.1.6, style-independent).
         if (containsUnit(SHORT_HYPHEN_CONNECTORS, unit)) {
             return true;
@@ -114,7 +114,7 @@ class ClreqPunctuationPolicies {
         return false;
     }
 
-    private static function defaultPunctuationBodyEm(unit:Int, punctuationClass:PunctuationClass):Float {
+    private static function defaultPunctuationBodyEm(unit:Null<Int>, punctuationClass:PunctuationClass):Float {
         if (unit == 0x2E3A) {
             return 2.0;
         }
@@ -133,7 +133,7 @@ class ClreqPunctuationPolicies {
         return 1.0;
     }
 
-    private static function defaultPunctuationAdvanceEm(unit:Int, punctuationClass:PunctuationClass):Float {
+    private static function defaultPunctuationAdvanceEm(unit:Null<Int>, punctuationClass:PunctuationClass):Float {
         if (unit == 0x2E3A) {
             return 2.0;
         }
@@ -144,7 +144,7 @@ class ClreqPunctuationPolicies {
         return 1.0;
     }
 
-    private static function containsUnit(units:ReadOnlyArray<Int>, unit:Int):Bool {
+    private static function containsUnit(units:ReadOnlyArray<Int>, unit:Null<Int>):Bool {
         var index:Int = 0;
         while (index < units.length) {
             if (units[index] == unit) {
