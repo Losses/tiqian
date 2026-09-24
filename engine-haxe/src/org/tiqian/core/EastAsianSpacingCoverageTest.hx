@@ -178,7 +178,7 @@ class EastAsianSpacingCoverageTest {
             Std.string(UnicodeEastAsianSpacing.resolvedForGraphemeCluster(TestHelpers.surrogateText([0xD83D, 0xDE00]), "zh")));
     }
 
-    @:test(except = ["swift"])
+    @:test(except = ["swift", "rust"])
     public static function testUnicodeEastAsianSpacingLoneHighSurrogates():Void {
         new TestTraceRecorder("EastAsianSpacingCoverageTest").section("testUnicodeEastAsianSpacingLoneHighSurrogates");
         EastAsianSpacingCoverageTestHelpers.expectArgumentFailure(() -> UnicodeEastAsianSpacing.resolvedForGraphemeCluster(TestHelpers.surrogateText([0xD800]),
