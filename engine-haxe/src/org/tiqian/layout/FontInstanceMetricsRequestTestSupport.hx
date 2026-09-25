@@ -8,8 +8,11 @@ import org.tiqian.font.FontMetrics.StubFontMetricsResolver;
 import org.tiqian.layout.ParagraphLayoutEngine.ExplainableStubParagraphLayoutEngine;
 
 class FontInstanceMetricsRequestTestSupport {
-    public static function recordingEngine(requests:Array<FontMetricsRequest>):ExplainableStubParagraphLayoutEngine {
-        return new ExplainableStubParagraphLayoutEngine(null, null, null, new RecordingResolver(requests), null, null, null, null, null, null, null, null,
+    public static var recorded:Array<FontMetricsRequest> = [];
+
+    public static function recordingEngine():ExplainableStubParagraphLayoutEngine {
+        recorded = [];
+        return new ExplainableStubParagraphLayoutEngine(null, null, null, new RecordingResolver(), null, null, null, null, null, null, null, null,
             null);
     }
 
@@ -19,16 +22,15 @@ class FontInstanceMetricsRequestTestSupport {
 }
 
 class RecordingResolver implements FontMetricsResolver {
-    final requests:Array<FontMetricsRequest>;
     final stub:StubFontMetricsResolver;
 
-    public function new(requests:Array<FontMetricsRequest>) {
-        this.requests = requests;
+    public function new() {
         this.stub = new StubFontMetricsResolver();
     }
 
     public function resolve(request:FontMetricsRequest):RawFontMetrics {
-        requests.push(request);
-        return stub.resolve(request);
+        final result = stub.resolve(request);
+        FontInstanceMetricsRequestTestSupport.recorded.push(request);
+        return result;
     }
 }
