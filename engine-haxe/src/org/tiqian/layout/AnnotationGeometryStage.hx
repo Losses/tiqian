@@ -183,18 +183,36 @@ class AnnotationGeometryStage {
         final properNounName = Std.string(DecorationKind.ProperNoun);
         final bookTitleName = Std.string(DecorationKind.BookTitle);
         final result = segments.copy();
+        // The groups are assembled completely before the builder sees them.
+        // Reading a group back out of the builder and pushing into it only
+        // works where a table value is a shared reference; the Rust builder
+        // returns an owned clone of the stored value (stdlib/07), so that
+        // push would be lost and every line would come back empty.
         final byLineBuilder = SortedMap.builder();
+        final lineKeys:Array<Int> = [];
+        final lineGroups:Array<Array<IndexedDecorationSegment>> = [];
         for (i in 0...result.length) {
             final seg = result[i];
             if (seg.kind == properNounName || seg.kind == bookTitleName) {
-                var list:Array<IndexedDecorationSegment> = byLineBuilder.get(seg.lineIndex);
-                if (list == null) {
-                    list = new Array<IndexedDecorationSegment>();
-                    byLineBuilder.put(seg.lineIndex, list);
+                var slot = -1;
+                var k = 0;
+                while (k < lineKeys.length) {
+                    if (lineKeys[k] == seg.lineIndex) {
+                        slot = k;
+                        break;
+                    }
+                    k++;
                 }
-                list.push(new IndexedDecorationSegment(i, seg));
+                if (slot < 0) {
+                    lineKeys.push(seg.lineIndex);
+                    lineGroups.push(new Array<IndexedDecorationSegment>());
+                    slot = lineKeys.length - 1;
+                }
+                lineGroups[slot].push(new IndexedDecorationSegment(i, seg));
             }
         }
+        for (k in 0...lineKeys.length)
+            byLineBuilder.put(lineKeys[k], lineGroups[k]);
         final byLine = byLineBuilder.build();
         for (k in 0...byLine.size()) {
             final entries = byLine.valueAt(k);
