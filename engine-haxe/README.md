@@ -68,7 +68,7 @@ nix develop -c bash -c 'bun /path/to/boring/out/bundle/driver.js test kotlin-f32
 nix develop -c bash -c 'bun /path/to/boring/out/bundle/driver.js compare --project boring.json'
 ```
 
-五个动作：`gen` 只生成，`test` 生成并编译运行该束，`pack` 打发布包，
+五个动作：`gen` 生成该束的两棵源码树，`test` 把该束已生成的树编译并运行、留下结果文件（它不生成，跑 test 之前先对该束跑 gen；`verify` 会自动先做全部 gen），`pack` 打发布包，
 `compare` 按 `boring.json` 的 `baseline` 逐用例比对各束的结果文件，
 `verify` 依次做完全部束的 gen、test、compare（加 `--with-pack` 连 pack）。
 束的清单与精度写在 `boring.json` 里，当前六个束是 `kotlin-f32`、`kotlin-f64`、
