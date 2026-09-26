@@ -16,27 +16,30 @@ class WidthIndependentAnnotationCacheTest {
     @:test public static function relayoutWithDifferentWidthHitsCacheAndSkipsShaper():Void {
         final t = new TestTraceRecorder("WidthIndependentAnnotationCacheTest");
         t.section("relayoutWithDifferentWidthHitsCacheAndSkipsShaper");
-        CountingTextShaper.shapeCallCount = 0;
         final shaper = new CountingTextShaper();
-        final engine = new ExplainableStubParagraphLayoutEngine(null, null, null, null, null, null, null, null, null, null, shaper, null, null);
+        final cache = new LruWidthIndependentAnnotationCache(64);
+        final engine = new ExplainableStubParagraphLayoutEngine(null, null, null, null, null, null, null, null, null, null, shaper, null, cache);
 
         final inputWidth1 = new LayoutInput(new TiqianTextContent("\u63D0\u6920\u662F\u4E00\u4E2A\u9762\u5411\u4E2D\u6587\u6B63\u6587\u7684 CJK \u6BB5\u843D\u5E03\u5C40\u5F15\u64CE\u3002"),
             null, new ParagraphStyle(null, null, null, Ic.Zero), new LayoutConstraints(300));
 
-        TracedAssertions.assertEquals(0, CountingTextShaper.shapeCallCount);
+        TracedAssertions.assertEquals(0, cache.size);
+        TracedAssertions.assertEquals(0, shaper.shapeCallCount);
 
         final result1 = engine.layout(inputWidth1);
         TracedAssertions.assertTrue(result1.lines.length > 0);
-        final initialShapeCalls = CountingTextShaper.shapeCallCount;
+        TracedAssertions.assertEquals(1, cache.size);
+        final initialShapeCalls = shaper.shapeCallCount;
         TracedAssertions.assertTrue(initialShapeCalls > 0, "Initial layout must shape segments");
 
         final inputWidth2 = inputWidth1.copy(constraints = new LayoutConstraints(180));
         final result2 = engine.layout(inputWidth2);
-        TracedAssertions.assertEquals(initialShapeCalls, CountingTextShaper.shapeCallCount, "Relayout at new width must reuse cached annotation without shaping");
+        TracedAssertions.assertEquals(initialShapeCalls, shaper.shapeCallCount, "Relayout at new width must reuse cached annotation without shaping");
+        TracedAssertions.assertEquals(1, cache.size);
 
         final inputWidth3 = inputWidth1.copy(constraints = new LayoutConstraints(500));
         final result3 = engine.layout(inputWidth3);
-        TracedAssertions.assertEquals(initialShapeCalls, CountingTextShaper.shapeCallCount, "Relayout at third width must also reuse cached annotation");
+        TracedAssertions.assertEquals(initialShapeCalls, shaper.shapeCallCount, "Relayout at third width must also reuse cached annotation");
 
         TracedAssertions.assertTrue(result2.lines.length >= result1.lines.length, "Narrower width should have at least as many lines");
         TracedAssertions.assertTrue(result1.lines.length >= result3.lines.length, "Wider width should have fewer or equal lines");
@@ -145,36 +148,31 @@ class WidthIndependentAnnotationCacheTest {
         final t = new TestTraceRecorder("WidthIndependentAnnotationCacheTest");
         t.section("cacheKeyDistinguishesTypographyDecorationsAndSpans");
         final cache = new LruWidthIndependentAnnotationCache();
+        final engine = new ExplainableStubParagraphLayoutEngine(null, null, null, null, null, null, null, null, null, null, null, null, cache);
 
         final baseInput = new LayoutInput(new TiqianTextContent("\u4E2D\u897F\u6DF7\u5408\u6392\u7248\u4E0E\u6D4B\u8BD5\u6587\u672C\u3002"), null,
             new ParagraphStyle(null, null, null, Ic.Zero), new LayoutConstraints(300));
-        cache.put(WidthIndependentAnnotationCacheTestSupport.annotationKey(baseInput),
-            WidthIndependentAnnotationCacheTestSupport.annotationForInput(baseInput));
+        engine.layout(baseInput);
         TracedAssertions.assertEquals(1, cache.size);
 
         final textChanged = baseInput.copy(content = new TiqianTextContent("\u4E2D\u897F\u6DF7\u5408\u6392\u7248\u4E0E\u53D8\u52A8\u6587\u672C\u3002"));
-        cache.put(WidthIndependentAnnotationCacheTestSupport.annotationKey(textChanged),
-            WidthIndependentAnnotationCacheTestSupport.annotationForInput(textChanged));
+        engine.layout(textChanged);
         TracedAssertions.assertEquals(2, cache.size);
 
         final fontChanged = baseInput.copy(textStyle = new TextStyle(null, 24));
-        cache.put(WidthIndependentAnnotationCacheTestSupport.annotationKey(fontChanged),
-            WidthIndependentAnnotationCacheTestSupport.annotationForInput(fontChanged));
+        engine.layout(fontChanged);
         TracedAssertions.assertEquals(3, cache.size);
 
         final emphasisChanged = baseInput.copy(decorations = [new DecorationSpan(new TextRange(0, 4), Emphasis)]);
-        cache.put(WidthIndependentAnnotationCacheTestSupport.annotationKey(emphasisChanged),
-            WidthIndependentAnnotationCacheTestSupport.annotationForInput(emphasisChanged));
+        engine.layout(emphasisChanged);
         TracedAssertions.assertEquals(4, cache.size);
 
         final rubyChanged = baseInput.copy(rubySpans = [new RubySpan(new TextRange(0, 2), "zh\u014Dngx\u012B", Pinyin)]);
-        cache.put(WidthIndependentAnnotationCacheTestSupport.annotationKey(rubyChanged),
-            WidthIndependentAnnotationCacheTestSupport.annotationForInput(rubyChanged));
+        engine.layout(rubyChanged);
         TracedAssertions.assertEquals(5, cache.size);
 
         final inlineBoxChanged = baseInput.copy(inlineBoxes = [new InlineBoxSpan(new TextRange(2, 4), 4, 4)]);
-        cache.put(WidthIndependentAnnotationCacheTestSupport.annotationKey(inlineBoxChanged),
-            WidthIndependentAnnotationCacheTestSupport.annotationForInput(inlineBoxChanged));
+        engine.layout(inlineBoxChanged);
         TracedAssertions.assertEquals(6, cache.size);
     }
 
@@ -182,6 +180,7 @@ class WidthIndependentAnnotationCacheTest {
         final t = new TestTraceRecorder("WidthIndependentAnnotationCacheTest");
         t.section("lruCacheEvictsOldestEntriesWhenCapacityExceeded");
         final cache = new LruWidthIndependentAnnotationCache(2);
+        final engine = new ExplainableStubParagraphLayoutEngine(null, null, null, null, null, null, null, null, null, null, null, null, cache);
 
         final input1 = new LayoutInput(new TiqianTextContent("\u6BB5\u843D\u4E00\u6587\u672C\u5185\u5BB9"), null,
             new ParagraphStyle(null, null, null, Ic.Zero), new LayoutConstraints(300));
@@ -190,18 +189,18 @@ class WidthIndependentAnnotationCacheTest {
         final input3 = new LayoutInput(new TiqianTextContent("\u6BB5\u843D\u4E09\u6587\u672C\u5185\u5BB9"), null,
             new ParagraphStyle(null, null, null, Ic.Zero), new LayoutConstraints(300));
 
-        final key1 = WidthIndependentAnnotationCacheTestSupport.annotationKey(input1);
-        final key2 = WidthIndependentAnnotationCacheTestSupport.annotationKey(input2);
-        final key3 = WidthIndependentAnnotationCacheTestSupport.annotationKey(input3);
-        cache.put(key1, WidthIndependentAnnotationCacheTestSupport.annotationForInput(input1));
-        cache.put(key2, WidthIndependentAnnotationCacheTestSupport.annotationForInput(input2));
+        engine.layout(input1);
+        engine.layout(input2);
         TracedAssertions.assertEquals(2, cache.size);
 
+        final key1 = WidthIndependentAnnotationCacheTestSupport.annotationKey(input1);
+        final key2 = WidthIndependentAnnotationCacheTestSupport.annotationKey(input2);
         TracedAssertions.assertTrue(cache.get(key1) != null);
         TracedAssertions.assertTrue(cache.get(key2) != null);
 
-        cache.put(key3, WidthIndependentAnnotationCacheTestSupport.annotationForInput(input3));
+        engine.layout(input3);
         TracedAssertions.assertEquals(2, cache.size);
+        final key3 = WidthIndependentAnnotationCacheTestSupport.annotationKey(input3);
         TracedAssertions.assertTrue(cache.get(key3) != null);
         TracedAssertions.assertTrue(cache.get(key2) != null);
         WidthIndependentAnnotationCacheTestSupport.assertEqualsNullableAnnotation(null, cache.get(key1), "Oldest entry key1 should be evicted");
