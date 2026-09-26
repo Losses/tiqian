@@ -27,10 +27,10 @@ TARGET="$(git rev-parse --show-toplevel)"
 SOURCE="${1:-}"
 
 if [ -z "$SOURCE" ]; then
-  # A worktree sits beside the main checkout; find a sibling that has .haxelib.
-  SOURCE="$(cd "$TARGET/.." && ls -d */ 2>/dev/null | sed "s#/##" | while read -r d; do
-    if [ -d "$TARGET/../$d/.haxelib" ] && [ -d "$TARGET/../$d/tools/unicode-data" ]; then echo "$TARGET/../$d"; break; fi
-  done | head -1)"
+  # The main working tree of this repository is the canonical source. A sibling
+  # directory is the wrong guess: the compiler checkout next to this one also
+  # satisfies a path-existence test on tools/unicode-data.
+  SOURCE="$(git worktree list --porcelain | sed -n 's/^worktree //p' | head -1)"
 fi
 
 if [ -z "$SOURCE" ] || [ ! -d "$SOURCE" ]; then
