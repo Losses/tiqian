@@ -748,12 +748,26 @@ internal fun ExplainableStubParagraphLayoutEngine.shapeParagraph(
         // order; TextRange by (start, end); RubySpan by (baseRange.start,
         // baseRange.end, text); other key types by their fields in declaration
         // order). The value lookups above are unchanged; only the rendered
-        // iteration order is pinned.
-        substitutionRollbacks = substitutionRollbacks.toSortedMap(compareBy({ it.start }, { it.end })),
+        // iteration order is pinned. buildMap yields a LinkedHashMap in
+        // insertion order; TreeMap and toSortedMap are JVM-only in the
+        // Kotlin 2.3 stdlib, so commonMain cannot use them.
+        substitutionRollbacks = buildMap {
+            for (key in substitutionRollbacks.keys.sortedWith(compareBy({ it.start }, { it.end }))) {
+                put(key, substitutionRollbacks.getValue(key))
+            }
+        },
         breakOpportunityDecisions = breakOpportunityDecisions.toList(),
         emergencyTrackingEligibilityDecisions = emergencyTrackingEligibilityDecisions.toList(),
-        progressiveBreakOffsets = progressiveBreakOffsets.toSortedMap(),
-        segmentShapingCache = segmentShapingCache.toSortedMap(compareBy({ it.start }, { it.end })),
+        progressiveBreakOffsets = buildMap {
+            for (key in progressiveBreakOffsets.keys.sorted()) {
+                put(key, progressiveBreakOffsets.getValue(key))
+            }
+        },
+        segmentShapingCache = buildMap {
+            for (key in segmentShapingCache.keys.sortedWith(compareBy({ it.start }, { it.end }))) {
+                put(key, segmentShapingCache.getValue(key))
+            }
+        },
     )
 }
 
