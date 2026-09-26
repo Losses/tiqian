@@ -14,12 +14,11 @@ import org.tiqian.test.trace.TestTrace;
 import org.tiqian.test.trace.TestTraceRender;
 import org.tiqian.test.TestHelpers;
 import org.tiqian.test.trace.TracedAssertions;
-import std.SortedMap;
 
 using std.RecordCopy;
 
 class CountingTextShaper implements ITextShaper {
-    public static var shapeCallCount:Int = 0;
+    public var shapeCallCount:Int = 0;
 
     final delegate:Null<ITextShaper>;
 
@@ -43,12 +42,6 @@ class WidthIndependentAnnotationCacheTestSupport {
 
     public static function annotationKey(input:LayoutInput):WidthIndependentAnnotationKey {
         return WidthIndependentAnnotationCacheFns.toWidthIndependentAnnotationKey(input);
-    }
-
-    public static function annotationForInput(input:LayoutInput):WidthIndependentParagraphAnnotation {
-        return WidthIndependentAnnotationCacheFns.prepareWidthIndependentAnnotation(
-            new ExplainableStubParagraphLayoutEngine(null, null, null, null, null, null, null, null, null, null, null, null, null),
-            input, SortedMap.builder().build());
     }
 
     public static function floatText(value:Float):String {
