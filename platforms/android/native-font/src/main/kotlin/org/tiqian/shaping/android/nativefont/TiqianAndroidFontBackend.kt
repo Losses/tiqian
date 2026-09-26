@@ -2,8 +2,10 @@ package org.tiqian.shaping.android.nativefont
 
 import android.annotation.TargetApi
 import android.content.Context
+import android.graphics.Paint
 import android.graphics.fonts.Font
 import android.os.Build
+import android.text.TextPaint
 import org.tiqian.font.FontRole
 import org.tiqian.shaping.FontBackendCapabilityIssue
 import org.tiqian.shaping.FontBackendCapabilityReport
@@ -11,18 +13,57 @@ import org.tiqian.shaping.FontFaceId
 import org.tiqian.shaping.ReplayableFontCatalog
 import org.tiqian.shaping.ReplayableFontFaceDescriptor
 import org.tiqian.shaping.ReplayableFontFaceRequest
+import org.tiqian.shaping.android.AndroidGlyphReplayRegistry
+import org.tiqian.shaping.android.AndroidTypefaceResolverRegistry
+import org.tiqian.shaping.android.platformRunAdvance
 import java.io.File
+import java.util.Locale
+import kotlin.math.roundToInt
 
-private data class LoadedFace(
+internal data class LoadedFace(
     val catalogIndex: Int,
     val familyKey: String,
     val descriptor: ReplayableFontFaceDescriptor,
     val nativeFace: NativeFontFace,
+    val opticalSize: OpticalSizeInstancer? = null,
+)
+
+/** OpticalSizeFollowsFontSize state for one loaded face: the declared `opsz` range and its per-size instances. */
+internal class OpticalSizeInstancer(
+    val rule: AndroidOpticalSizeRule,
+    val range: ClosedFloatingPointRange<Float>,
+    val sourceHandle: Long,
+    val sourceDigestHex: String,
+) {
+    /** Guarded by the backend lock; keyed by the clamped `opsz` value. */
+    val instances = HashMap<Float, Pair<ReplayableFontFaceDescriptor, NativeFontFace>>()
+}
+
+/** One retained face as the renderer needs it: outline source, style provenance and platform Font. */
+internal class ReplayFace(
+    val face: NativeFontFace,
+    val italic: Boolean,
+    val syntheticItalic: Boolean,
+    val syntheticBold: Boolean,
+    /** An `android.graphics.fonts.Font` on API 31+, kept as Any so the class loads below API 29. */
+    val platformFont: Any?,
 )
 
 private data class LoadedFamily(
     val faces: List<LoadedFace>,
-)
+    /** PlatformDefaultFamily on API 31+: resolved by asking the platform per request. */
+    val platformOracle: Boolean = false,
+) {
+    val aliases: Set<String>
+        get() = if (platformOracle) {
+            setOf(AndroidFontCatalog.PLATFORM_DEFAULT_FAMILY)
+        } else {
+            faces.flatMapTo(linkedSetOf()) { it.descriptor.familyAliases }
+        }
+}
+
+/** Platform selection for one request; null when [acceptUncovered] is false and the platform face lacks the text. */
+private typealias PlatformOracle = (request: ReplayableFontFaceRequest, acceptUncovered: Boolean) -> ResolvedNativeFontFace?
 
 private data class PlatformLoadedFace(
     val descriptor: ReplayableFontFaceDescriptor,
@@ -61,31 +102,90 @@ private class LoadedAndroidFontCatalog(
     override val faces: List<ReplayableFontFaceDescriptor> = loadedFaces.map { it.descriptor }
 
     override fun resolve(request: ReplayableFontFaceRequest): ReplayableFontFaceDescriptor? =
-        resolveNative(request)?.descriptor
+        resolveNative(request, oracle = null)?.descriptor
 
-    fun resolveNative(request: ReplayableFontFaceRequest): ResolvedNativeFontFace? {
+    fun resolveNative(
+        request: ReplayableFontFaceRequest,
+        oracle: PlatformOracle?,
+    ): ResolvedNativeFontFace? {
         val roleFamilies = familiesByRole[request.role].orEmpty()
         if (roleFamilies.isEmpty()) return null
-        val selection = selectOrderedFamilyFace(
-            families = roleFamilies.map(LoadedFamily::faces),
-            preferredFamilies = request.preferredFamilies,
+        val pool = orderedFamilyPool(roleFamilies, request.preferredFamilies, LoadedFamily::aliases)
+        fun matched(family: LoadedFamily): LoadedFace? = matchStyle(
+            faces = family.faces,
             requestedWeight = request.weight,
             requestedItalic = request.italic,
-            aliases = { it.descriptor.familyAliases },
-            covers = { it.nativeFace.hasGlyphs(request.selectionText) },
             weight = { it.descriptor.weight },
             italic = { it.descriptor.italic },
             stableId = { "${it.catalogIndex}:${it.descriptor.id.value}" },
-        ) ?: return null
-        val selected = selection.face
+        )
+        // StyleMatchedFaceCoverage: only the style-matched face of each family is checked for the
+        // text; a platform-default position asks the platform instead.
+        for (familyIndex in pool.indices) {
+            val family = roleFamilies[familyIndex]
+            if (family.platformOracle) {
+                oracle?.invoke(request, false)?.let { return it }
+                continue
+            }
+            val face = matched(family) ?: continue
+            if (!face.nativeFace.hasGlyphs(request.selectionText)) continue
+            return resolved(request, face, exactFamily = pool.isExact(familyIndex), covering = true)
+        }
+        // NoCoveringFacePlatformDegrade: no controlled face has these glyphs, so the platform text
+        // stack measures and draws the segment; the chain's last declared family only supplies metrics.
+        val lastDeclared = roleFamilies.lastOrNull { !it.platformOracle }
+            ?: return oracle?.invoke(request, true)
+        val face = matched(lastDeclared) ?: return null
+        return resolved(request, face, exactFamily = pool.isExact(roleFamilies.indexOf(lastDeclared)), covering = false)
+    }
+
+    private fun resolved(
+        request: ReplayableFontFaceRequest,
+        selected: LoadedFace,
+        exactFamily: Boolean,
+        covering: Boolean,
+    ): ResolvedNativeFontFace {
+        val instance = selected.opticalSize?.takeIf { covering }?.let { instancer ->
+            TiqianAndroidFontBackend.opticalSizeInstance(selected, instancer, request.fontSize)
+        }
+        var descriptor = instance?.first ?: selected.descriptor
+        val native = instance?.second ?: selected.nativeFace
+        val syntheticBold = covering && requiresSyntheticBold(request.weight, descriptor.weight)
+        if (syntheticBold) descriptor = TiqianAndroidFontBackend.syntheticBoldDescriptor(descriptor, native)
         return ResolvedNativeFontFace(
-            descriptor = selected.descriptor,
-            nativeFace = selected.nativeFace,
-            exactFamily = selection.exactFamily,
+            descriptor = descriptor,
+            nativeFace = native,
+            exactFamily = exactFamily,
             exactStyle = selected.descriptor.italic == request.italic && selected.descriptor.weight == request.weight,
-            coversSelectionText = true,
+            coversSelectionText = covering,
+            replayable = covering,
+            degradedRunAdvance = if (covering) 0f else platformDegradeAdvance(request),
+            stringDrawCause = if (covering) null else PlatformStringDrawCause.NoCoveringFace,
+            syntheticBold = syntheticBold,
         )
     }
+}
+
+private val platformDegradeLock = Any()
+
+/** The advance the Android renderer's string fallback will consume for [request]'s text. */
+private fun platformDegradeAdvance(request: ReplayableFontFaceRequest): Float {
+    val text = request.selectionText
+    if (text.isEmpty()) return 0f
+    val cjkRole = request.role == FontRole.CjkText || request.role == FontRole.CjkPunctuation
+    val paint = TextPaint(Paint.ANTI_ALIAS_FLAG).apply {
+        textSize = request.fontSize
+        textLocale = Locale.forLanguageTag(request.locale)
+        typeface = synchronized(platformDegradeLock) {
+            AndroidTypefaceResolverRegistry.current.resolve(
+                request.role,
+                request.preferredFamilies,
+                request.weight,
+                italic = request.italic && !cjkRole,
+            )
+        }
+    }
+    return platformRunAdvance(paint, text, request.role)
 }
 
 /**
@@ -94,6 +194,7 @@ private class LoadedAndroidFontCatalog(
  */
 object TiqianAndroidFontBackend {
     private const val BackendName = "TiqianHarfBuzzFreeType"
+    private const val SyntheticBoldStrokeSuffix = ":syntheticBold=stroke"
     private val lock = Any()
     private val sourceByLocator = LinkedHashMap<String, LoadedNativeFontSource>()
     private val sourceByDigest = LinkedHashMap<String, LoadedNativeFontSource>()
@@ -101,7 +202,7 @@ object TiqianAndroidFontBackend {
     private val descriptorById = LinkedHashMap<FontFaceId, ReplayableFontFaceDescriptor>()
     private val platformFaceByRequest = object : LinkedHashMap<ReplayableFontFaceRequest, ResolvedNativeFontFace>(256, 0.75f, true) {}
     private val platformFaceByInstance = LinkedHashMap<String, PlatformLoadedFace>()
-    private val platformFontById = LinkedHashMap<FontFaceId, Font>()
+    private val platformFontById = LinkedHashMap<FontFaceId, Any>()
     private val revisionListeners = linkedSetOf<RevisionListener>()
     private val syntheticBoldFaceIds = linkedSetOf<FontFaceId>()
     private val syntheticItalicFaceIds = linkedSetOf<FontFaceId>()
@@ -124,15 +225,80 @@ object TiqianAndroidFontBackend {
         synchronized(lock) {
             installed = loadCatalog(
                 context = context.applicationContext,
-                catalog = catalog,
+                hostCatalog = catalog,
                 revision = nextRevisionLocked(),
                 usesPlatformDefaultOracle = false,
             )
             activeCatalog = installed
             listeners = revisionListeners.toList()
         }
+        registerGlyphReplay()
         listeners.forEach { listener -> runCatching { listener.deliver(installed.revision) } }
         return installed.capabilityReport
+    }
+
+    /** Makes Compose renderers draw this backend's glyph ids through [AndroidNativeGlyphReplay]. */
+    private fun registerGlyphReplay() {
+        AndroidGlyphReplayRegistry.register(AndroidNativeGlyphReplay)
+    }
+
+    /** StrokeSyntheticBold identity over the same native face; retained so old layouts keep replaying. */
+    internal fun syntheticBoldDescriptor(
+        descriptor: ReplayableFontFaceDescriptor,
+        native: NativeFontFace,
+    ): ReplayableFontFaceDescriptor = synchronized(lock) {
+        val id = FontFaceId(descriptor.id.value + SyntheticBoldStrokeSuffix)
+        descriptorById.getOrPut(id) {
+            faceById[id] = native
+            syntheticBoldFaceIds += id
+            descriptor.copy(id = id, sourceLabel = descriptor.sourceLabel + SyntheticBoldStrokeSuffix)
+        }
+    }
+
+    /** The `opsz` instance of [face] for [fontSize]: whole units clamped to the axis range, retained per value. */
+    internal fun opticalSizeInstance(
+        face: LoadedFace,
+        instancer: OpticalSizeInstancer,
+        fontSize: Float,
+    ): Pair<ReplayableFontFaceDescriptor, NativeFontFace> {
+        val opsz = (fontSize * instancer.rule.pointsPerPixel).roundToInt().toFloat().coerceIn(instancer.range)
+        synchronized(lock) {
+            instancer.instances[opsz]?.let { return it }
+            val axes = face.descriptor.variationAxes.toSortedMap().apply { this["opsz"] = opsz }
+            val id = stableFaceId(instancer.sourceDigestHex, face.descriptor.collectionIndex, axes)
+            val native = createOrGetFaceLocked(id, instancer.sourceHandle, face.descriptor.collectionIndex, axes)
+            val descriptor = descriptorById.getOrPut(id) { face.descriptor.copy(id = id, variationAxes = axes) }
+            return (descriptor to native).also { instancer.instances[opsz] = it }
+        }
+    }
+
+    /** One FreeType/HarfBuzz face per stable id; callers hold [lock]. */
+    private fun createOrGetFaceLocked(
+        id: FontFaceId,
+        sourceHandle: Long,
+        collectionIndex: Int,
+        axes: Map<String, Float>,
+    ): NativeFontFace = faceById.getOrPut(id) {
+        val handle = NativeFontBridge.nativeCreateFace(
+            sourceHandle = sourceHandle,
+            collectionIndex = collectionIndex,
+            variationTags = axes.keys.map(::variationTag).toIntArray(),
+            variationValues = axes.values.toFloatArray(),
+        )
+        NativeFontFace(handle, NativeFontBridge.nativeUnitsPerEm(handle))
+    }
+
+    /** Everything a renderer needs about a retained face, read under one lock acquisition. */
+    internal fun replayFace(renderFontKey: String): ReplayFace? = synchronized(lock) {
+        val id = FontFaceId(renderFontKey)
+        val face = faceById[id] ?: return null
+        ReplayFace(
+            face = face,
+            italic = descriptorById[id]?.italic == true,
+            syntheticItalic = id in syntheticItalicFaceIds,
+            syntheticBold = id in syntheticBoldFaceIds,
+            platformFont = platformFontById[id],
+        )
     }
 
     /** Monotonic identity of the active immutable catalog, suitable for layout/cache keys. */
@@ -162,9 +328,16 @@ object TiqianAndroidFontBackend {
     ): ResolvedNativeFontFace {
         val catalog = ensureInstalled(context)
         if (Build.VERSION.SDK_INT >= 31 && catalog.usesPlatformDefaultOracle) {
-            resolvePlatformDefaultFace(context.applicationContext, request)?.let { return it }
+            resolvePlatformDefaultFace(context.applicationContext, request, acceptUncovered = false)?.let { return it }
         }
-        return catalog.resolveNative(request) ?: error(
+        val oracle: PlatformOracle? = if (Build.VERSION.SDK_INT >= 31) {
+            { platformRequest, acceptUncovered ->
+                resolvePlatformDefaultFace(context.applicationContext, platformRequest, acceptUncovered)
+            }
+        } else {
+            null
+        }
+        return catalog.resolveNative(request, oracle) ?: error(
             "MissingControlledFontFace: role=${request.role}; families=${request.preferredFamilies}; " +
                 "install an AndroidFontCatalog before composing CjkText; report=${catalog.capabilityReport}",
         )
@@ -187,8 +360,9 @@ object TiqianAndroidFontBackend {
         FontFaceId(renderFontKey) in syntheticBoldFaceIds
     }
 
+    @TargetApi(31)
     internal fun platformFontFor(renderFontKey: String): Font? = synchronized(lock) {
-        platformFontById[FontFaceId(renderFontKey)]
+        platformFontById[FontFaceId(renderFontKey)] as? Font
     }
 
     internal fun resourceStatsForTesting(): NativeFontResourceStats = nativeFontResourceStats()
@@ -200,11 +374,12 @@ object TiqianAndroidFontBackend {
             val catalog = defaultCatalog(context.applicationContext)
             activeCatalog = loadCatalog(
                 context = context.applicationContext,
-                catalog = catalog,
+                hostCatalog = catalog,
                 revision = nextRevisionLocked(),
                 usesPlatformDefaultOracle = catalog.isPlatformDefaultOracleCatalog(),
             )
         }
+        registerGlyphReplay()
     }
 
     private fun ensureInstalled(context: Context): LoadedAndroidFontCatalog {
@@ -217,13 +392,36 @@ object TiqianAndroidFontBackend {
                     catalog,
                     nextRevisionLocked(),
                     usesPlatformDefaultOracle = catalog.isPlatformDefaultOracleCatalog(),
-                ).also { activeCatalog = it }
+                ).also {
+                    activeCatalog = it
+                    registerGlyphReplay()
+                }
             }
         }
     }
 
     private fun nextRevisionLocked(): Long = (++lastRevision).also {
         check(it > 0L) { "Android font catalog revision overflow" }
+    }
+
+    /** Discovery only: the catalog [install] would fall back to, without loading or installing it. */
+    fun systemCatalog(context: Context): AndroidFontCatalog = defaultCatalog(context.applicationContext)
+
+    /** Complete real style instances for hosts composing a custom system-derived font family. */
+    fun systemStyleCatalog(context: Context): AndroidFontCatalog {
+        if (Build.VERSION.SDK_INT >= 31) {
+            AndroidPlatformFontOracle.styleCatalogOrNull()?.let { return it }
+        }
+        return declaredSystemCatalog(context.applicationContext)
+    }
+
+    /** The declared system catalog without the API 31 oracle; what a platform-default entry expands to. */
+    private fun declaredSystemCatalog(context: Context): AndroidFontCatalog {
+        DeclaredSystemFontConfigCatalog.createOrNull()?.let { return it }
+        if (Build.VERSION.SDK_INT >= 29) {
+            ApproximatePublicSystemFontsCatalog.createOrNull()?.let { return it }
+        }
+        return wellKnownSystemPathCatalog()
     }
 
     private fun defaultCatalog(context: Context): AndroidFontCatalog {
@@ -242,10 +440,20 @@ object TiqianAndroidFontBackend {
 
     private fun loadCatalog(
         context: Context,
-        catalog: AndroidFontCatalog,
+        hostCatalog: AndroidFontCatalog,
         revision: Long,
         usesPlatformDefaultOracle: Boolean,
     ): LoadedAndroidFontCatalog {
+        // PlatformDefaultFamily: API 31+ keeps the marker and asks the platform per request;
+        // older systems expand it into the declared system families now.
+        val delegateToOracle = hostCatalog.referencesPlatformDefault &&
+            Build.VERSION.SDK_INT >= 31 &&
+            AndroidPlatformFontOracle.bootstrapCatalogOrNull() != null
+        val catalog = if (hostCatalog.referencesPlatformDefault && !delegateToOracle) {
+            hostCatalog.expandPlatformDefault(declaredSystemCatalog(context))
+        } else {
+            hostCatalog
+        }
         val issues = catalog.declaredIssues.toMutableList()
         val loaded = mutableListOf<LoadedFace>()
         for ((catalogIndex, spec) in catalog.faceSpecs.withIndex()) {
@@ -259,16 +467,7 @@ object TiqianAndroidFontBackend {
             }
             val loadedFace = runCatching {
                 val id = stableFaceId(source.digestHex, spec.collectionIndex, axes)
-                val native = faceById.getOrPut(id) {
-                    val handle = NativeFontBridge.nativeCreateFace(
-                        sourceHandle = source.handle,
-                        collectionIndex = spec.collectionIndex,
-                        variationTags = axes.keys.map(::variationTag).toIntArray(),
-                        variationValues = axes.values.toFloatArray(),
-                    )
-                    NativeFontFace(handle, NativeFontBridge.nativeUnitsPerEm(handle))
-                }
-                id to native
+                id to createOrGetFaceLocked(id, source.handle, spec.collectionIndex, axes)
             }.getOrElse { error ->
                 issues += FontBackendCapabilityIssue(
                     code = "FontFaceLoadFailed",
@@ -288,15 +487,36 @@ object TiqianAndroidFontBackend {
                 variationAxes = axes,
             )
             descriptorById[id] = descriptor
+            val opticalSize = spec.opticalSize?.let { rule ->
+                val range = native.axisRange("opsz")
+                if (range == null) {
+                    issues += FontBackendCapabilityIssue(
+                        code = "OpticalSizeAxisUnavailable",
+                        detail = "${spec.source.label}#${spec.collectionIndex} declares OpticalSizeFollowsFontSize without an opsz axis",
+                    )
+                    null
+                } else {
+                    OpticalSizeInstancer(
+                        rule = rule,
+                        range = range,
+                        sourceHandle = source.handle,
+                        sourceDigestHex = source.digestHex,
+                    )
+                }
+            }
             loaded += LoadedFace(
                 catalogIndex = catalogIndex,
                 familyKey = spec.familyKey,
                 descriptor = descriptor,
                 nativeFace = native,
+                opticalSize = opticalSize,
             )
         }
         val familiesByRole = catalog.fallbackChains.mapValues { (role, familyKeys) ->
             familyKeys.mapNotNull { familyKey ->
+                if (familyKey == AndroidFontCatalog.PLATFORM_DEFAULT_FAMILY) {
+                    return@mapNotNull LoadedFamily(faces = emptyList(), platformOracle = true)
+                }
                 loaded
                     .filter { it.familyKey == familyKey && role in it.descriptor.roles }
                     .takeIf(List<LoadedFace>::isNotEmpty)
@@ -331,6 +551,7 @@ object TiqianAndroidFontBackend {
     private fun resolvePlatformDefaultFace(
         context: Context,
         request: ReplayableFontFaceRequest,
+        acceptUncovered: Boolean,
     ): ResolvedNativeFontFace? {
         synchronized(lock) {
             platformFaceByRequest[request]?.let { return it }
@@ -351,6 +572,7 @@ object TiqianAndroidFontBackend {
                     coversSelectionText = !selection.spansMultipleFaces,
                     replayable = !selection.spansMultipleFaces,
                     degradedRunAdvance = selection.degradedRunAdvance,
+                    stringDrawCause = if (selection.spansMultipleFaces) PlatformStringDrawCause.MultiFace else null,
                 ).also { resolved -> cachePlatformRequestLocked(request, resolved) }
             }
         }
@@ -364,15 +586,7 @@ object TiqianAndroidFontBackend {
                     syntheticBold = selection.syntheticBold,
                     syntheticItalic = selection.syntheticItalic,
                 )
-                val physicalFace = faceById.getOrPut(physicalId) {
-                    val handle = NativeFontBridge.nativeCreateFace(
-                        sourceHandle = source.handle,
-                        collectionIndex = selection.collectionIndex,
-                        variationTags = axes.keys.map(::variationTag).toIntArray(),
-                        variationValues = axes.values.toFloatArray(),
-                    )
-                    NativeFontFace(handle, NativeFontBridge.nativeUnitsPerEm(handle))
-                }
+                val physicalFace = createOrGetFaceLocked(physicalId, source.handle, selection.collectionIndex, axes)
                 faceById[id] = physicalFace
                 if (selection.syntheticBold) syntheticBoldFaceIds += id
                 if (selection.syntheticItalic) syntheticItalicFaceIds += id
@@ -404,6 +618,7 @@ object TiqianAndroidFontBackend {
                 coversSelectionText = nativeFace.hasGlyphs(request.selectionText),
                 replayable = !selection.spansMultipleFaces,
                 degradedRunAdvance = selection.degradedRunAdvance,
+                stringDrawCause = if (selection.spansMultipleFaces) PlatformStringDrawCause.MultiFace else null,
             )
         }.getOrElse { return null }
         // CjkPunctuationHanFaceAnchor deliberately keeps the CJK face even when a proposed
@@ -412,7 +627,16 @@ object TiqianAndroidFontBackend {
         // would both defeat the role decision and conceal that evidence. A non-replayable
         // multi-face degrade intentionally does not cover the whole run, so it bypasses this
         // rejection and is handled by the platform string-draw path.
-        if (resolved.replayable && !resolved.coversSelectionText && request.role != FontRole.CjkPunctuation) return null
+        if (resolved.replayable && !resolved.coversSelectionText && request.role != FontRole.CjkPunctuation) {
+            if (!acceptUncovered) return null
+            // End of a chain that delegates to the platform: the platform text stack draws the
+            // segment; this face only supplies metrics. Not cached, the covering answer is.
+            return resolved.copy(
+                replayable = false,
+                degradedRunAdvance = platformDegradeAdvance(request),
+                stringDrawCause = PlatformStringDrawCause.NoCoveringFace,
+            )
+        }
         synchronized(lock) {
             descriptorById[resolved.descriptor.id] = resolved.descriptor
             platformFaceByInstance[selection.instanceKey] = PlatformLoadedFace(
@@ -469,6 +693,7 @@ object TiqianAndroidFontBackend {
         sourceByLocator[locator]?.let { return it }
         val prepared = source.prepare(context)
         sourceByDigest[prepared.digestHex]?.let { existing ->
+            if (prepared is PreparedAndroidFontSource.DescriptorRegion) prepared.descriptor.close()
             sourceByLocator[locator] = existing
             return existing
         }
@@ -477,6 +702,8 @@ object TiqianAndroidFontBackend {
                 NativeFontBridge.nativeRegisterFileSource(prepared.path)
             is PreparedAndroidFontSource.DirectBuffer ->
                 NativeFontBridge.nativeRegisterBufferSource(prepared.buffer, prepared.sizeBytes)
+            is PreparedAndroidFontSource.DescriptorRegion ->
+                NativeFontBridge.nativeRegisterDescriptorRegionSource(prepared.descriptor.detachFd(), prepared.offset, prepared.sizeBytes)
         }
         check(handle != 0L) { "Native font source registration did not return a handle" }
         return LoadedNativeFontSource(
@@ -584,5 +811,5 @@ private fun wellKnownSystemPathCatalog(): AndroidFontCatalog {
     )
 }
 
-private fun variationTag(tag: String): Int =
+internal fun variationTag(tag: String): Int =
     tag.fold(0) { result, char -> (result shl 8) or char.code }
