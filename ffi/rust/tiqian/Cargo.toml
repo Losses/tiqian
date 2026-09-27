@@ -9,4 +9,4 @@ version.workspace = true
 edition.workspace = true
 
 [dependencies]
-tiqian-engine-gen = { path = "../../../engine-haxe/out/engine-rust-f64/gen" }
+tiqian-engine-gen = { path = "../engine-gen" }
