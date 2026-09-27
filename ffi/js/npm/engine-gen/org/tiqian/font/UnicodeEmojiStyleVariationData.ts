@@ -53,14 +53,14 @@ export class UnicodeEmojiStyleVariationData {
 
   public static contains(codePoint: number): boolean {
     let l = 0;
-    let h = Math.trunc(Array.from(RANGES).length >> 1) - 1;
+    let h = Math.trunc(RANGES.length >> 1) - 1;
     while (l <= h) {
       const m = l + h >> 1;
       const b = m * 2;
-      if (codePoint < Array.from(RANGES)[b]!) {
+      if (codePoint < RANGES[b]!) {
         h = m - 1;
       } else {
-        if (codePoint > Array.from(RANGES)[b + 1]!) {
+        if (codePoint > RANGES[b + 1]!) {
           l = m + 1;
         } else {
           return true;
