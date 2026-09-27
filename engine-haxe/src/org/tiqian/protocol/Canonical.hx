@@ -81,15 +81,15 @@ class Canonical {
             numberField(writer, numberMember(input, "maxWidthPx"));
         }
         final semantics = encodeSemantics(writer, member(input, "semantics"));
-        if (semantics != null) {
+        if (semantics != "") {
             return CErr(semantics);
         }
         final spans = encodeTextSpans(writer, member(input, "textSpans"));
-        if (spans != null) {
+        if (spans != "") {
             return CErr(spans);
         }
         final boxes = encodeInlineBoxes(writer, member(input, "inlineBoxes"));
-        if (boxes != null) {
+        if (boxes != "") {
             return CErr(boxes);
         }
         // A non-array reads as absent boundaries, the capture loop's own rule.
@@ -142,7 +142,10 @@ class Canonical {
     /** `Number(member)` when the member survives, absent otherwise. */
     static function numberMember(input:WireValue, name:String):Null<Float> {
         final resolved = member(input, name);
-        return resolved == WNull ? null : canonicalF64(JsCoerce.toNumber(resolved));
+        if (resolved == WNull) {
+            return null;
+        }
+        return canonicalF64(JsCoerce.toNumber(resolved));
     }
 
     /** An optional numeric field: present flag plus the f64 bytes. */
@@ -285,7 +288,7 @@ class Canonical {
             }
             spanIndexIdx++;
         }
-        return null;
+        return "";
     }
 
     static function encodeTextSpans(writer:Writer, value:WireValue):String {
@@ -298,13 +301,15 @@ class Canonical {
         var spanIndexIdx:Int = 0;
         while (spanIndexIdx < items.length) {
             final span = items[spanIndexIdx];
+            final hasFamilies = familiesPresent(span);
             final families = familiesOf(span);
             final fontSizePx = numberMember(span, "fontSizePx");
             final fontWeight = numberMember(span, "fontWeight");
-            final italic = italicOf(span);
+            final hasItalic = italicPresent(span);
+            final italicValue = italicValueOf(span);
             final baselineShiftPx = numberMember(span, "baselineShiftPx");
             var flags = 0;
-            if (families != null) {
+            if (hasFamilies) {
                 flags |= SPAN_FAMILIES;
             }
             if (fontSizePx != null) {
@@ -313,7 +318,7 @@ class Canonical {
             if (fontWeight != null) {
                 flags |= SPAN_FONT_WEIGHT;
             }
-            if (italic != null) {
+            if (hasItalic) {
                 flags |= SPAN_ITALIC;
             }
             if (baselineShiftPx != null) {
@@ -322,7 +327,7 @@ class Canonical {
             writer.u8(flags);
             numberField(writer, numberMember(span, "start"));
             numberField(writer, numberMember(span, "end"));
-            if (families != null) {
+            if (hasFamilies) {
                 writer.u32(families.length);
                 var nameIndexIdx:Int = 0;
                 while (nameIndexIdx < families.length) {
@@ -336,15 +341,15 @@ class Canonical {
             if (fontWeight != null) {
                 writer.f64(fontWeight);
             }
-            if (italic != null) {
-                writer.u8(italic ? 1 : 0);
+            if (hasItalic) {
+                writer.u8(italicValue ? 1 : 0);
             }
             if (baselineShiftPx != null) {
                 writer.f64(baselineShiftPx);
             }
             spanIndexIdx++;
         }
-        return null;
+        return "";
     }
 
     static function encodeInlineBoxes(writer:Writer, value:WireValue):String {
@@ -384,15 +389,15 @@ class Canonical {
             }
             itemIndexIdx++;
         }
-        return null;
+        return "";
     }
 
-    static function familiesOf(span:WireValue):Null<Array<String>> {
-        final raw = member(span, "fontFamilies");
-        if (isWireArr(raw)) {
-            return familiesFromList(arrOf(raw));
-        }
-        return null;
+    static function familiesPresent(span:WireValue):Bool {
+        return isWireArr(member(span, "fontFamilies"));
+    }
+
+    static function familiesOf(span:WireValue):Array<String> {
+        return familiesFromList(arrOf(member(span, "fontFamilies")));
     }
 
     static function familiesFromList(list:Array<WireValue>):Array<String> {
@@ -405,12 +410,12 @@ class Canonical {
         return names;
     }
 
-    static function italicOf(span:WireValue):Null<Bool> {
-        final raw = member(span, "italic");
-        if (isWireBool(raw)) {
-            return boolOf(raw);
-        }
-        return null;
+    static function italicPresent(span:WireValue):Bool {
+        return isWireBool(member(span, "italic"));
+    }
+
+    static function italicValueOf(span:WireValue):Bool {
+        return boolOf(member(span, "italic"));
     }
 
     static function isWireBool(value:WireValue):Bool {
@@ -448,7 +453,7 @@ class Canonical {
         }
         if (isWireArr(value)) {
             writer.u8(2);
-            writer.bytes(Bytes.ofString(JsCoerce.renderJson(value)));
+            writer.str(JsCoerce.renderJson(value));
             return;
         }
         writer.u8(0);
@@ -481,9 +486,10 @@ private enum ListShape {
  * canonical.rs:93).
  */
 private class Writer {
-    final buf:BytesBuffer = new BytesBuffer();
+    final buf:BytesBuffer;
 
     public function new(kind:Int) {
+        buf = new BytesBuffer();
         buf.add(Bytes.ofString(Canonical.MAGIC));
         u8(Canonical.VERSION);
         u8(kind);
@@ -513,12 +519,9 @@ private class Writer {
     }
 
     public function str(value:String):Void {
-        bytes(Bytes.ofString(value));
-    }
-
-    public function bytes(value:Bytes):Void {
-        u32(value.length);
-        buf.add(value);
+        final encoded = Bytes.ofString(value);
+        u32(encoded.length);
+        buf.add(encoded);
     }
 
     public function finish():Bytes {
