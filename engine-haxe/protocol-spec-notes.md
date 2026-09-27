@@ -77,3 +77,9 @@
 ## assembly-record 冻结产物标注（P2，提交 5d366296）
 
 - tools/schema 两个生成器已删除，ffi/schema 的 assembly-record TS/Rust DTO 产物在 5d366296 冻结；ffi/schema/FROZEN.md 就地标注，P5 接线前不得当作可重生成产物。
+
+## Rust decodeInto weight 读数待查（P2 遗留，pin 4f412c6a）
+
+- 现象：同一份冻结字节（weight=400.0，LE 字节 00 00 00 00 00 00 79 40 已核在位），TS decodeInto 解出 400，Rust decodeInto 解出 0.0（27/28 快照测试，唯一失败 restore_keeps_rows_and_the_url_stable）。
+- 已排除：壳层 Json 降级与字符串表映射（instrument 证实进入 decode_into 前文件字节正确、之后 TableData.metric_rows[0].weight=0.0）。
+- 待办：按四步取证追 Rust 目标 TableReader.f64 的降级与 FPHelper::i64_to_double 调用（Rust 运行时签名 (low, high) 与 TS 一致，但需核对 Rust 发射端参数转发与 u32 组装路径），并核对 cutover 席 f1b28bd3 之后的发射端修正是否覆盖。
