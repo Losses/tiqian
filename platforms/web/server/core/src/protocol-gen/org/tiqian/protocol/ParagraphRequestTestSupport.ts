@@ -2,11 +2,59 @@
 
 import { ParagraphRequest } from "./ParagraphRequest.js";
 import { ParagraphRequestChecks } from "./ParagraphRequestChecks.js";
+import { ParagraphRequestError } from "./ParagraphRequestError.js";
 import { ParagraphRequestException } from "./ParagraphRequestException.js";
 
 export class ParagraphRequestTestSupport {
   public static request(): ParagraphRequest {
     return { fontSessionId: "tq-font-test-1", text: "正文一段", maxWidthPx: 80.0, fontFamilies: ["Fake CJK"], fontSizePx: 16.0, lineHeightPx: 24.0, locale: "zh-Hans", fontWeight: 400, italic: false, firstLineIndentIc: 0.0, lineLengthGridEnabled: false, emphasisDotGapEm: null, sourceBoundaries: [], textSpans: [], lineBreakSpans: [], inlineBoxes: [], inlineObjects: [], decorations: [] };
+  }
+
+  public static issueNameOf(error: ParagraphRequestError): string {
+    switch (error.kind) {
+      case "EmptyParagraph":
+        return "EmptyParagraph";
+      case "InvalidMaximumMeasure":
+        return "InvalidMaximumMeasure";
+      case "InvalidFontSize":
+        return "InvalidFontSize";
+      case "InvalidLineHeight":
+        return "InvalidLineHeight";
+      case "InvalidFirstLineIndent":
+        return "InvalidFirstLineIndent";
+      case "InvalidFontWeight":
+        return "InvalidFontWeight";
+      case "InvalidEmphasisDotGapEm":
+        return "InvalidEmphasisDotGapEm";
+      case "MissingExplicitFontFamilies":
+        return "MissingExplicitFontFamilies";
+      case "InvalidTextSpanRange":
+        return "InvalidTextSpanRange";
+      case "MissingTextSpanFontFamilies":
+        return "MissingTextSpanFontFamilies";
+      case "InvalidTextSpanFontSize":
+        return "InvalidTextSpanFontSize";
+      case "InvalidTextSpanFontWeight":
+        return "InvalidTextSpanFontWeight";
+      case "InvalidTextSpanBaselineShift":
+        return "InvalidTextSpanBaselineShift";
+      case "InvalidSourceBoundary":
+        return "InvalidSourceBoundary";
+      case "InvalidLineBreakSpanRange":
+        return "InvalidLineBreakSpanRange";
+      case "InvalidInlineBoxRange":
+        return "InvalidInlineBoxRange";
+      case "InvalidInlineBoxGeometry":
+        return "InvalidInlineBoxGeometry";
+      case "InvalidInlineObjectRange":
+        return "InvalidInlineObjectRange";
+      case "InvalidInlineObjectAdvance":
+        return "InvalidInlineObjectAdvance";
+      case "InvalidInlineObjectVerticalGeometry":
+        return "InvalidInlineObjectVerticalGeometry";
+      case "InvalidDecorationRange":
+        return "InvalidDecorationRange";
+    }
   }
 
   public static issueOf(request: ParagraphRequest): string {
@@ -15,7 +63,7 @@ export class ParagraphRequestTestSupport {
       ParagraphRequestChecks.validate(request);
     } catch (error) {
       if (error instanceof ParagraphRequestException) {
-        name = ParagraphRequestException.describe(error.error);
+        name = ParagraphRequestTestSupport.issueNameOf(error.error);
       } else {
         throw error;
       }
