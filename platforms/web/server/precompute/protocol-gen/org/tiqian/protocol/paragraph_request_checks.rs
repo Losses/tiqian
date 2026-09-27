@@ -58,7 +58,7 @@ impl ParagraphRequestChecks {
         let mut boundary_index_idx = 0u32;
         while (i32::from_ne_bytes((boundary_index_idx).to_ne_bytes())) < (i32::from_ne_bytes((u32::try_from((request.source_boundaries.len()) & 0xFFFF_FFFF).unwrap_or(0)).to_ne_bytes())) {
             let boundary = request.source_boundaries[usize::try_from(boundary_index_idx).unwrap_or(0)];
-            if boundary > 2147483647 || (i32::from_ne_bytes((boundary).to_ne_bytes())) > (i32::from_ne_bytes((text_length).to_ne_bytes())) {
+            if boundary > 2147483647 || ({ let v: u32 = boundary; i32::from_ne_bytes(v.to_ne_bytes()) }) > (i32::from_ne_bytes((text_length).to_ne_bytes())) {
                 return Err(NamedError::InvalidSourceBoundary);
             }
             boundary_index_idx = u32::wrapping_add(boundary_index_idx, 1);

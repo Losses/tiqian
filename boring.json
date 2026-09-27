@@ -96,6 +96,22 @@
       "id": "protocol-c",
       "target": "haxe",
       "rootsFile": "engine-haxe/targets/protocol-c.hxml"
+    },
+    {
+      "id": "engine-rust-f32",
+      "target": "rust",
+      "rootsFile": "engine-haxe/targets/rust-f32.hxml",
+      "run": {
+        "env": { "BORING_TEST_TIMEOUT_MS": "600000" }
+      }
+    },
+    {
+      "id": "engine-rust-f64",
+      "target": "rust",
+      "rootsFile": "engine-haxe/targets/rust-f64.hxml",
+      "run": {
+        "env": { "BORING_TEST_TIMEOUT_MS": "600000" }
+      }
     }
   ]
 }

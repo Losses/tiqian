@@ -59,7 +59,6 @@ include(
     ":platforms:compose:compose",
     ":platforms:compose:material3",
     ":ffi:js",
-    ":ffi:native",
     ":demo",
     ":demo:android",
     ":demo:font-diagnostics",

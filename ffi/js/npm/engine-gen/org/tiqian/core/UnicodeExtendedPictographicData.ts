@@ -46,14 +46,14 @@ export class UnicodeExtendedPictographicData {
 
   public static contains(codePoint: number): boolean {
     let low = 0;
-    let high = Math.trunc(Array.from(RANGES).length >> 1) - 1;
+    let high = Math.trunc(RANGES.length >> 1) - 1;
     while (low <= high) {
       const middle = low + high >> 1;
       const base = middle * 2;
-      if (codePoint < Array.from(RANGES)[base]!) {
+      if (codePoint < RANGES[base]!) {
         high = middle - 1;
       } else {
-        if (codePoint > Array.from(RANGES)[base + 1]!) {
+        if (codePoint > RANGES[base + 1]!) {
           low = middle + 1;
         } else {
           return true;
