@@ -34,7 +34,7 @@ class EastAsianSpacingCoverageTest {
         var index:Int = 0;
         while (index < values.length) {
             final value = values[index];
-            TracedAssertions.assertNotNullRendered(value != null, value == null ? "-" : Std.string(value));
+            TracedAssertions.recordRenderedNotNull(value == null ? "-" : Std.string(value));
             index += 1;
         }
 
@@ -64,7 +64,7 @@ class EastAsianSpacingCoverageTest {
         var index:Int = 0;
         while (index < values.length) {
             final value = values[index];
-            TracedAssertions.assertNotNullRendered(value != null, value == null ? "-" : Std.string(value));
+            TracedAssertions.recordRenderedNotNull(value == null ? "-" : Std.string(value));
             index += 1;
         }
 

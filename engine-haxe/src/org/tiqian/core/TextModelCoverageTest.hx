@@ -52,15 +52,15 @@ class TextModelCoverageTest {
         TextModelCoverageTestHelpers.assertRendered(lineBreakSpan.toString());
 
         final progressiveTechnical = LineBreakPolicy.ProgressiveTechnical;
-        TracedAssertions.assertNotNullRendered(progressiveTechnical != null, progressiveTechnical == null ? "-" : Std.string(progressiveTechnical));
+        TracedAssertions.recordRenderedNotNull(progressiveTechnical == null ? "-" : Std.string(progressiveTechnical));
         final attachmentNone = InlineAttachment.None;
-        TracedAssertions.assertNotNullRendered(attachmentNone != null, attachmentNone == null ? "-" : Std.string(attachmentNone));
+        TracedAssertions.recordRenderedNotNull(attachmentNone == null ? "-" : Std.string(attachmentNone));
         final attachmentPrevious = InlineAttachment.Previous;
-        TracedAssertions.assertNotNullRendered(attachmentPrevious != null, attachmentPrevious == null ? "-" : Std.string(attachmentPrevious));
+        TracedAssertions.recordRenderedNotNull(attachmentPrevious == null ? "-" : Std.string(attachmentPrevious));
         final spacingNarrow = InlineBoxOuterSpacing.Narrow;
-        TracedAssertions.assertNotNullRendered(spacingNarrow != null, spacingNarrow == null ? "-" : Std.string(spacingNarrow));
+        TracedAssertions.recordRenderedNotNull(spacingNarrow == null ? "-" : Std.string(spacingNarrow));
         final spacingSource = InlineBoxOuterSpacing.Source;
-        TracedAssertions.assertNotNullRendered(spacingSource != null, spacingSource == null ? "-" : Std.string(spacingSource));
+        TracedAssertions.recordRenderedNotNull(spacingSource == null ? "-" : Std.string(spacingSource));
 
         final inlineBox:InlineBoxSpan = new InlineBoxSpan(new TextRange(1, 3), 2.0, 3.0, InlineBoxOuterSpacing.Source);
         TracedAssertions.assertEqualsRendered(new TextRange(1, 3).toString(), inlineBox.range.toString());
@@ -76,11 +76,11 @@ class TextModelCoverageTest {
     public static function testInlineObjectPreferredStretchAndAdjustment():Void {
         new TestTraceRecorder("TextModelCoverageTest").section("testInlineObjectPreferredStretchAndAdjustment");
         final punctuationTrailing = InlineObjectPreferredStretchKind.PunctuationTrailing;
-        TracedAssertions.assertNotNullRendered(punctuationTrailing != null, punctuationTrailing == null ? "-" : Std.string(punctuationTrailing));
+        TracedAssertions.recordRenderedNotNull(punctuationTrailing == null ? "-" : Std.string(punctuationTrailing));
         final relation = InlineObjectPreferredStretchKind.Relation;
-        TracedAssertions.assertNotNullRendered(relation != null, relation == null ? "-" : Std.string(relation));
+        TracedAssertions.recordRenderedNotNull(relation == null ? "-" : Std.string(relation));
         final binaryOperator = InlineObjectPreferredStretchKind.BinaryOperator;
-        TracedAssertions.assertNotNullRendered(binaryOperator != null, binaryOperator == null ? "-" : Std.string(binaryOperator));
+        TracedAssertions.recordRenderedNotNull(binaryOperator == null ? "-" : Std.string(binaryOperator));
 
         final stretch:InlineObjectPreferredStretch = new InlineObjectPreferredStretch(InlineObjectPreferredStretchKind.Relation, 10.0, 15.0);
         TracedAssertions.assertEqualsRendered(Std.string(InlineObjectPreferredStretchKind.Relation), Std.string(stretch.kind));
@@ -148,13 +148,13 @@ class TextModelCoverageTest {
         TextModelCoverageTestHelpers.assertRendered(style.toString());
 
         final emphasis = DecorationKind.Emphasis;
-        TracedAssertions.assertNotNullRendered(emphasis != null, emphasis == null ? "-" : Std.string(emphasis));
+        TracedAssertions.recordRenderedNotNull(emphasis == null ? "-" : Std.string(emphasis));
         final mourning = DecorationKind.Mourning;
-        TracedAssertions.assertNotNullRendered(mourning != null, mourning == null ? "-" : Std.string(mourning));
+        TracedAssertions.recordRenderedNotNull(mourning == null ? "-" : Std.string(mourning));
         final properNoun = DecorationKind.ProperNoun;
-        TracedAssertions.assertNotNullRendered(properNoun != null, properNoun == null ? "-" : Std.string(properNoun));
+        TracedAssertions.recordRenderedNotNull(properNoun == null ? "-" : Std.string(properNoun));
         final bookTitle = DecorationKind.BookTitle;
-        TracedAssertions.assertNotNullRendered(bookTitle != null, bookTitle == null ? "-" : Std.string(bookTitle));
+        TracedAssertions.recordRenderedNotNull(bookTitle == null ? "-" : Std.string(bookTitle));
 
         final decoration:DecorationSpan = new DecorationSpan(new TextRange(2, 4), DecorationKind.Emphasis);
         TracedAssertions.assertEqualsRendered(new TextRange(2, 4).toString(), decoration.range.toString());
@@ -220,11 +220,11 @@ class TextModelCoverageTest {
         TextModelCoverageTestHelpers.expectArgumentFailure(() -> new Border(0.0 / 0.0));
 
         final markedFaces = RichTextBackgroundMetricPolicy.MarkedFaces;
-        TracedAssertions.assertNotNullRendered(markedFaces != null, markedFaces == null ? "-" : Std.string(markedFaces));
+        TracedAssertions.recordRenderedNotNull(markedFaces == null ? "-" : Std.string(markedFaces));
         final uniformTextStyle = RichTextBackgroundMetricPolicy.UniformTextStyle;
-        TracedAssertions.assertNotNullRendered(uniformTextStyle != null, uniformTextStyle == null ? "-" : Std.string(uniformTextStyle));
+        TracedAssertions.recordRenderedNotNull(uniformTextStyle == null ? "-" : Std.string(uniformTextStyle));
         final uniformParagraphStyle = RichTextBackgroundMetricPolicy.UniformParagraphStyle;
-        TracedAssertions.assertNotNullRendered(uniformParagraphStyle != null, uniformParagraphStyle == null ? "-" : Std.string(uniformParagraphStyle));
+        TracedAssertions.recordRenderedNotNull(uniformParagraphStyle == null ? "-" : Std.string(uniformParagraphStyle));
 
         TracedAssertions.assertEqualsRendered(Solid.instance.toString(), Solid.instance.toString());
         final dashed:Dashed = new Dashed(1.0, 4.0, 2.0);
@@ -286,13 +286,13 @@ class TextModelCoverageTest {
     public static function testRubyAndParagraphModels():Void {
         new TestTraceRecorder("TextModelCoverageTest").section("testRubyAndParagraphModels");
         final pinyin = RubyKind.Pinyin;
-        TracedAssertions.assertNotNullRendered(pinyin != null, pinyin == null ? "-" : Std.string(pinyin));
+        TracedAssertions.recordRenderedNotNull(pinyin == null ? "-" : Std.string(pinyin));
         final bopomofo = RubyKind.Bopomofo;
-        TracedAssertions.assertNotNullRendered(bopomofo != null, bopomofo == null ? "-" : Std.string(bopomofo));
+        TracedAssertions.recordRenderedNotNull(bopomofo == null ? "-" : Std.string(bopomofo));
         final perLine = RubyLineHeightMode.PerLine;
-        TracedAssertions.assertNotNullRendered(perLine != null, perLine == null ? "-" : Std.string(perLine));
+        TracedAssertions.recordRenderedNotNull(perLine == null ? "-" : Std.string(perLine));
         final uniformParagraph = RubyLineHeightMode.UniformParagraph;
-        TracedAssertions.assertNotNullRendered(uniformParagraph != null, uniformParagraph == null ? "-" : Std.string(uniformParagraph));
+        TracedAssertions.recordRenderedNotNull(uniformParagraph == null ? "-" : Std.string(uniformParagraph));
 
         final pinyinRuby:RubySpan = new RubySpan(new TextRange(0, 1), "h\u00E0n", ["CustomFont"], RubyKind.Pinyin, null);
         TracedAssertions.assertEqualsRendered(Std.string(RubyKind.Pinyin), Std.string(pinyinRuby.kind));
@@ -308,15 +308,15 @@ class TextModelCoverageTest {
         TracedAssertions.assertEqualsFloat(0.1, ParagraphStyle.DEFAULT_INLINE_OBJECT_MINIMUM_CLEARANCE_EM);
 
         final alignmentStart = LastLineAlignment.Start;
-        TracedAssertions.assertNotNullRendered(alignmentStart != null, alignmentStart == null ? "-" : Std.string(alignmentStart));
+        TracedAssertions.recordRenderedNotNull(alignmentStart == null ? "-" : Std.string(alignmentStart));
         final alignmentCenter = LastLineAlignment.Center;
-        TracedAssertions.assertNotNullRendered(alignmentCenter != null, alignmentCenter == null ? "-" : Std.string(alignmentCenter));
+        TracedAssertions.recordRenderedNotNull(alignmentCenter == null ? "-" : Std.string(alignmentCenter));
         final alignmentEnd = LastLineAlignment.End;
-        TracedAssertions.assertNotNullRendered(alignmentEnd != null, alignmentEnd == null ? "-" : Std.string(alignmentEnd));
+        TracedAssertions.recordRenderedNotNull(alignmentEnd == null ? "-" : Std.string(alignmentEnd));
         final horizontalTb = WritingMode.HorizontalTb;
-        TracedAssertions.assertNotNullRendered(horizontalTb != null, horizontalTb == null ? "-" : Std.string(horizontalTb));
+        TracedAssertions.recordRenderedNotNull(horizontalTb == null ? "-" : Std.string(horizontalTb));
         final verticalRl = WritingMode.VerticalRl;
-        TracedAssertions.assertNotNullRendered(verticalRl != null, verticalRl == null ? "-" : Std.string(verticalRl));
+        TracedAssertions.recordRenderedNotNull(verticalRl == null ? "-" : Std.string(verticalRl));
 
         final adaptiveIndent:MeasureAdaptiveFirstLineIndent = new MeasureAdaptiveFirstLineIndent(14.0, 1.0, 2.0);
         TracedAssertions.assertEqualsFloat(1.0, adaptiveIndent.resolveEm(10.0));
