@@ -1252,6 +1252,30 @@ impl PlanJson {
                     }
                     out.extend(PlanJsonNumber::plan_json_number_ecma_json_number(seg.right)?.encode_utf16());
                     if let Some(&unit) = out.last() {
+                        if unit >= 55296 && unit <= 56319 && !",\"sourceRangeStart\":".is_empty() {
+                            return Err(UStringFault::UnpairedSurrogate { unit: u32::from(unit) });
+                        }
+                    }
+                    out.extend(",\"sourceRangeStart\":".encode_utf16());
+                    if let Some(&unit) = out.last() {
+                        if unit >= 55296 && unit <= 56319 && !crate::runtime::int_text::IntText::int_text(seg.source_range_start).is_empty() {
+                            return Err(UStringFault::UnpairedSurrogate { unit: u32::from(unit) });
+                        }
+                    }
+                    out.extend(crate::runtime::int_text::IntText::int_text(seg.source_range_start).encode_utf16());
+                    if let Some(&unit) = out.last() {
+                        if unit >= 55296 && unit <= 56319 && !",\"sourceRangeEnd\":".is_empty() {
+                            return Err(UStringFault::UnpairedSurrogate { unit: u32::from(unit) });
+                        }
+                    }
+                    out.extend(",\"sourceRangeEnd\":".encode_utf16());
+                    if let Some(&unit) = out.last() {
+                        if unit >= 55296 && unit <= 56319 && !crate::runtime::int_text::IntText::int_text(seg.source_range_end).is_empty() {
+                            return Err(UStringFault::UnpairedSurrogate { unit: u32::from(unit) });
+                        }
+                    }
+                    out.extend(crate::runtime::int_text::IntText::int_text(seg.source_range_end).encode_utf16());
+                    if let Some(&unit) = out.last() {
                         if unit >= 55296 && unit <= 56319 && !"}".is_empty() {
                             return Err(UStringFault::UnpairedSurrogate { unit: u32::from(unit) });
                         }

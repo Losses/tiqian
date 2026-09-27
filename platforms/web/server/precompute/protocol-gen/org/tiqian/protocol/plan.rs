@@ -62,6 +62,8 @@ pub struct PlanDecorationSegment {
     pub left: f64,
     pub top: f64,
     pub right: f64,
+    pub source_range_start: u32,
+    pub source_range_end: u32,
 }
 
 #[derive(Debug, Clone, PartialEq)]
