@@ -486,13 +486,16 @@ private enum ListShape {
  * canonical.rs:93).
  */
 private class Writer {
-    final buf:BytesBuffer;
+    final buf:BytesBuffer = new BytesBuffer();
 
     public function new(kind:Int) {
-        buf = new BytesBuffer();
-        buf.add(Bytes.ofString(Canonical.MAGIC));
+        writeMagic();
         u8(Canonical.VERSION);
         u8(kind);
+    }
+
+    function writeMagic():Void {
+        buf.add(Bytes.ofString(Canonical.MAGIC));
     }
 
     public function u8(value:Int):Void {
