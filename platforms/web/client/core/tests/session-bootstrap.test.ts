@@ -10,8 +10,8 @@ import type { ProbeBootstrapOptions } from "../src/engine/web-worker/session-boo
 import { createServerReplayFontSession } from "../src/measurement/browser-font-replay.js";
 import type { ServerReplayFontSession, ReplayProbe } from "../src/measurement/browser-font-replay.js";
 import { FONT_REPLAY_REVISION } from "../src/sampler/snapshot/snapshot-schema.js";
-import { writeBinaryTable } from "../src/sampler/snapshot/table-binary-writer.js";
-import type { BinaryTableInput } from "../src/sampler/snapshot/table-binary-writer.js";
+import { writeBinaryTable } from "../src/sampler/snapshot/table-binary-encode.js";
+import type { BinaryTableInput } from "../src/sampler/snapshot/table-binary-encode.js";
 import type { SnapshotManifestWire } from "../src/sampler/snapshot/snapshot-manifest.js";
 import { initializeGlobalServices } from "../src/services/global-services.js";
 initializeGlobalServices();

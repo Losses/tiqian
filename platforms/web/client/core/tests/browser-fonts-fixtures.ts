@@ -22,7 +22,7 @@ import {
   FONT_REPLAY_REVISION,
 } from "../src/sampler/snapshot/snapshot-schema.js";
 import type { SnapshotProbe } from "../src/sampler/snapshot/snapshot-table-binary.js";
-import { writeBinaryTable } from "../src/sampler/snapshot/table-binary-writer.js";
+import { writeBinaryTable } from "../src/sampler/snapshot/table-binary-encode.js";
 import { FakeElement } from "./snapshot-dom-fixtures.js";
 
 function probe<T>(value: unknown): T {
