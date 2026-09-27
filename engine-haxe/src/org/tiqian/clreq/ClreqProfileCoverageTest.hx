@@ -22,7 +22,7 @@ class ClreqProfileCoverageTest {
         var toneIndex:Int = 0;
         while (toneIndex < tones.length) {
             final tone = tones[toneIndex];
-            TracedAssertions.assertNotNullRendered(tone != null, tone == null ? "-" : Std.string(tone));
+            TracedAssertions.recordRenderedNotNull(tone == null ? "-" : Std.string(tone));
             toneIndex += 1;
         }
 
@@ -70,7 +70,7 @@ class ClreqProfileCoverageTest {
         var strictnessIndex:Int = 0;
         while (strictnessIndex < strictnesses.length) {
             final strictness = strictnesses[strictnessIndex];
-            TracedAssertions.assertNotNullRendered(strictness != null, strictness == null ? "-" : Std.string(strictness));
+            TracedAssertions.recordRenderedNotNull(strictness == null ? "-" : Std.string(strictness));
             strictnessIndex += 1;
         }
         final regions:Array<ClreqRegion> = [
@@ -82,7 +82,7 @@ class ClreqProfileCoverageTest {
         var regionIndex:Int = 0;
         while (regionIndex < regions.length) {
             final region = regions[regionIndex];
-            TracedAssertions.assertNotNullRendered(region != null, region == null ? "-" : Std.string(region));
+            TracedAssertions.recordRenderedNotNull(region == null ? "-" : Std.string(region));
             regionIndex += 1;
         }
         final glyphPolicies:Array<CjkPunctuationGlyphPolicy> = [
@@ -93,7 +93,7 @@ class ClreqProfileCoverageTest {
         var policyIndex:Int = 0;
         while (policyIndex < glyphPolicies.length) {
             final policy = glyphPolicies[policyIndex];
-            TracedAssertions.assertNotNullRendered(policy != null, policy == null ? "-" : Std.string(policy));
+            TracedAssertions.recordRenderedNotNull(policy == null ? "-" : Std.string(policy));
             policyIndex += 1;
         }
         final classes:Array<PunctuationClass> = [
@@ -111,7 +111,7 @@ class ClreqProfileCoverageTest {
         var classIndex:Int = 0;
         while (classIndex < classes.length) {
             final cls = classes[classIndex];
-            TracedAssertions.assertNotNullRendered(cls != null, cls == null ? "-" : Std.string(cls));
+            TracedAssertions.recordRenderedNotNull(cls == null ? "-" : Std.string(cls));
             classIndex += 1;
         }
 

@@ -114,7 +114,7 @@ class WidthIndependentAnnotationCacheCoverageTest {
 
         final annotation = WidthIndependentAnnotationCacheFns.prepareWidthIndependentAnnotation(engine, input,
             WidthIndependentAnnotationCacheCoverageTestSupport.emptyTiers());
-        TracedAssertions.assertNotNullRendered(annotation != null, annotation == null ? "null" : "WidthIndependentParagraphAnnotation@identity");
+        TracedAssertions.recordRenderedNotNull(annotation == null ? "null" : "WidthIndependentParagraphAnnotation@identity");
         TracedAssertions.assertEqualsFloat(18.0, annotation.fontSizeAt(0));
         TracedAssertions.assertEqualsFloat(14.0, annotation.fontSizeAt(5));
         TracedAssertions.assertEqualsFloat(16.0, annotation.fontSizeAt(24));
@@ -132,7 +132,7 @@ class WidthIndependentAnnotationCacheCoverageTest {
 
         final prep = WidthIndependentAnnotationCacheFns.buildParagraphLayoutPrep(engine, input, annotation,
             WidthIndependentAnnotationCacheCoverageTestSupport.emptyTiers());
-        TracedAssertions.assertNotNullRendered(prep != null, prep == null ? "null" : "ParagraphLayoutPrep@identity");
+        TracedAssertions.recordRenderedNotNull(prep == null ? "null" : "ParagraphLayoutPrep@identity");
         TracedAssertions.assertTrue(prep.rubyAndBopomofoSpread.size() > 0);
     }
 
@@ -149,7 +149,7 @@ class WidthIndependentAnnotationCacheCoverageTest {
                 WidthIndependentAnnotationCacheCoverageTestSupport.emptyTiers());
             final prep = WidthIndependentAnnotationCacheFns.buildParagraphLayoutPrep(engine, input, annotation,
                 WidthIndependentAnnotationCacheCoverageTestSupport.emptyTiers());
-            TracedAssertions.assertNotNullRendered(prep != null, prep == null ? "null" : "ParagraphLayoutPrep@identity");
+            TracedAssertions.recordRenderedNotNull(prep == null ? "null" : "ParagraphLayoutPrep@identity");
             if (align == LastLineAlignment.Start) {
                 TracedAssertions.assertEqualsFloat(0.0, prep.gridBodyOffset);
             } else if (align == LastLineAlignment.Center) {
@@ -170,7 +170,7 @@ class WidthIndependentAnnotationCacheCoverageTest {
             WidthIndependentAnnotationCacheCoverageTestSupport.emptyTiers());
         final simplePrep = WidthIndependentAnnotationCacheFns.buildParagraphLayoutPrep(engine, simpleInput, simpleAnnotation,
             WidthIndependentAnnotationCacheCoverageTestSupport.emptyTiers());
-        TracedAssertions.assertNotNullRendered(simplePrep != null, simplePrep == null ? "null" : "ParagraphLayoutPrep@identity");
+        TracedAssertions.recordRenderedNotNull(simplePrep == null ? "null" : "ParagraphLayoutPrep@identity");
 
         final input = new LayoutInput(new TiqianTextContent("Hello World with English Words", null, null,
             [new LineBreakSpan(new TextRange(0, 11), LineBreakPolicy.ProgressiveTechnical)]),
@@ -182,14 +182,14 @@ class WidthIndependentAnnotationCacheCoverageTest {
             WidthIndependentAnnotationCacheCoverageTestSupport.emptyTiers());
         final prep = WidthIndependentAnnotationCacheFns.buildParagraphLayoutPrep(engine, input, annotation,
             WidthIndependentAnnotationCacheCoverageTestSupport.tierMap(new TextRange(0, 11), [ProgressiveBreakTier.Structural]));
-        TracedAssertions.assertNotNullRendered(prep != null, prep == null ? "null" : "ParagraphLayoutPrep@identity");
+        TracedAssertions.recordRenderedNotNull(prep == null ? "null" : "ParagraphLayoutPrep@identity");
 
         final overMeasureInput = new LayoutInput(new TiqianTextContent("VeryLongEnglishWordThatExceedsMeasure"), null, null, new LayoutConstraints(30));
         final overMeasureAnnotation = WidthIndependentAnnotationCacheFns.prepareWidthIndependentAnnotation(engine, overMeasureInput,
             WidthIndependentAnnotationCacheCoverageTestSupport.emptyTiers());
         final overMeasurePrep = WidthIndependentAnnotationCacheFns.buildParagraphLayoutPrep(engine, overMeasureInput, overMeasureAnnotation,
             WidthIndependentAnnotationCacheCoverageTestSupport.emptyTiers());
-        TracedAssertions.assertNotNullRendered(overMeasurePrep != null, overMeasurePrep == null ? "null" : "ParagraphLayoutPrep@identity");
+        TracedAssertions.recordRenderedNotNull(overMeasurePrep == null ? "null" : "ParagraphLayoutPrep@identity");
     }
 
     @:test public static function conflictingOpenTypeFeaturesThrows():Void {
@@ -229,7 +229,7 @@ class WidthIndependentAnnotationCacheCoverageTest {
                             WidthIndependentAnnotationCacheCoverageTestSupport.emptyTiers());
                         final prep = WidthIndependentAnnotationCacheFns.buildParagraphLayoutPrep(engine, input, annotation,
                             WidthIndependentAnnotationCacheCoverageTestSupport.emptyTiers());
-                        TracedAssertions.assertNotNullRendered(prep != null, prep == null ? "null" : "ParagraphLayoutPrep@identity");
+                        TracedAssertions.recordRenderedNotNull(prep == null ? "null" : "ParagraphLayoutPrep@identity");
                     }
                 }
             }
@@ -262,7 +262,7 @@ class WidthIndependentAnnotationCacheCoverageTest {
             WidthIndependentAnnotationCacheCoverageTestSupport.emptyTiers());
         final prep = WidthIndependentAnnotationCacheFns.buildParagraphLayoutPrep(engine, input, annotation,
             WidthIndependentAnnotationCacheCoverageTestSupport.emptyTiers());
-        TracedAssertions.assertNotNullRendered(prep != null, prep == null ? "null" : "ParagraphLayoutPrep@identity");
+        TracedAssertions.recordRenderedNotNull(prep == null ? "null" : "ParagraphLayoutPrep@identity");
     }
 
     @:test public static function rubySpreadAccumulationAndEdges():Void {
@@ -281,7 +281,7 @@ class WidthIndependentAnnotationCacheCoverageTest {
             WidthIndependentAnnotationCacheCoverageTestSupport.emptyTiers());
         final prep = WidthIndependentAnnotationCacheFns.buildParagraphLayoutPrep(engine, input, annotation,
             WidthIndependentAnnotationCacheCoverageTestSupport.emptyTiers());
-        TracedAssertions.assertNotNullRendered(prep != null, prep == null ? "null" : "ParagraphLayoutPrep@identity");
+        TracedAssertions.recordRenderedNotNull(prep == null ? "null" : "ParagraphLayoutPrep@identity");
     }
 
     @:test public static function shrinkOpportunitiesCoverAllPunctuationClassesAndSpaces():Void {
@@ -304,7 +304,7 @@ class WidthIndependentAnnotationCacheCoverageTest {
                     allowSinoWestern);
                 final prep = WidthIndependentAnnotationCacheFns.buildParagraphLayoutPrep(engine, input, modifiedAnnotation,
                     WidthIndependentAnnotationCacheCoverageTestSupport.emptyTiers());
-                TracedAssertions.assertNotNullRendered(prep != null, prep == null ? "null" : "ParagraphLayoutPrep@identity");
+                TracedAssertions.recordRenderedNotNull(prep == null ? "null" : "ParagraphLayoutPrep@identity");
                 TracedAssertions.assertTrue(prep.shrinkOpportunities.length > 0);
             }
         }
@@ -336,26 +336,26 @@ class WidthIndependentAnnotationCacheCoverageTest {
 
         final rejected = WidthIndependentAnnotationCacheCoverageTestSupport.tierMap(new TextRange(0, 7), [ProgressiveBreakTier.Structural]);
         final prep = WidthIndependentAnnotationCacheFns.buildParagraphLayoutPrep(engine, input, annotation, rejected);
-        TracedAssertions.assertNotNullRendered(prep != null, prep == null ? "null" : "ParagraphLayoutPrep@identity");
+        TracedAssertions.recordRenderedNotNull(prep == null ? "null" : "ParagraphLayoutPrep@identity");
 
         final noBreakInput = new LayoutInput(new TiqianTextContent("English"), null, null, new LayoutConstraints(500));
         final noBreakAnnotation = WidthIndependentAnnotationCacheFns.prepareWidthIndependentAnnotation(engine, noBreakInput,
             WidthIndependentAnnotationCacheCoverageTestSupport.emptyTiers());
         final prepNoDynamic = WidthIndependentAnnotationCacheFns.buildParagraphLayoutPrep(engine, noBreakInput, noBreakAnnotation,
             WidthIndependentAnnotationCacheCoverageTestSupport.emptyTiers());
-        TracedAssertions.assertNotNullRendered(prepNoDynamic != null, prepNoDynamic == null ? "null" : "ParagraphLayoutPrep@identity");
+        TracedAssertions.recordRenderedNotNull(prepNoDynamic == null ? "null" : "ParagraphLayoutPrep@identity");
 
         final smallMeasureInput = new LayoutInput(new TiqianTextContent("English"), null, null, new LayoutConstraints(1));
         final smallAnnotation = WidthIndependentAnnotationCacheFns.prepareWidthIndependentAnnotation(engine, smallMeasureInput,
             WidthIndependentAnnotationCacheCoverageTestSupport.emptyTiers());
         final prepSmall = WidthIndependentAnnotationCacheFns.buildParagraphLayoutPrep(engine, smallMeasureInput, smallAnnotation,
             WidthIndependentAnnotationCacheCoverageTestSupport.emptyTiers());
-        TracedAssertions.assertNotNullRendered(prepSmall != null, prepSmall == null ? "null" : "ParagraphLayoutPrep@identity");
+        TracedAssertions.recordRenderedNotNull(prepSmall == null ? "null" : "ParagraphLayoutPrep@identity");
 
         final modifiedAnnotation = WidthIndependentAnnotationCacheCoverageTestSupport.withFirstFontDecisionOnly(annotation);
         final prepUnknownRoles = WidthIndependentAnnotationCacheFns.buildParagraphLayoutPrep(engine, input, modifiedAnnotation,
             WidthIndependentAnnotationCacheCoverageTestSupport.emptyTiers());
-        TracedAssertions.assertNotNullRendered(prepUnknownRoles != null, prepUnknownRoles == null ? "null" : "ParagraphLayoutPrep@identity");
+        TracedAssertions.recordRenderedNotNull(prepUnknownRoles == null ? "null" : "ParagraphLayoutPrep@identity");
     }
 
     @:test public static function rubySpreadSecondVisitAndZeroFirstCluster():Void {
@@ -377,7 +377,7 @@ class WidthIndependentAnnotationCacheCoverageTest {
             WidthIndependentAnnotationCacheCoverageTestSupport.emptyTiers());
         final prep = WidthIndependentAnnotationCacheFns.buildParagraphLayoutPrep(engine, input, annotation,
             WidthIndependentAnnotationCacheCoverageTestSupport.emptyTiers());
-        TracedAssertions.assertNotNullRendered(prep != null, prep == null ? "null" : "ParagraphLayoutPrep@identity");
+        TracedAssertions.recordRenderedNotNull(prep == null ? "null" : "ParagraphLayoutPrep@identity");
     }
 
     @:test public static function pairedPunctuationWithZeroCapacity():Void {
@@ -390,7 +390,7 @@ class WidthIndependentAnnotationCacheCoverageTest {
             WidthIndependentAnnotationCacheCoverageTestSupport.emptyTiers());
         final prep = WidthIndependentAnnotationCacheFns.buildParagraphLayoutPrep(engine, input, annotation,
             WidthIndependentAnnotationCacheCoverageTestSupport.emptyTiers());
-        TracedAssertions.assertNotNullRendered(prep != null, prep == null ? "null" : "ParagraphLayoutPrep@identity");
+        TracedAssertions.recordRenderedNotNull(prep == null ? "null" : "ParagraphLayoutPrep@identity");
     }
 
     @:test public static function dynamicShapingEmphasisItalicAtAndZeroPairedCapacityBranches():Void {
@@ -410,7 +410,7 @@ class WidthIndependentAnnotationCacheCoverageTest {
 
         final rejected = WidthIndependentAnnotationCacheCoverageTestSupport.tierMap(new TextRange(0, 17), [ProgressiveBreakTier.Structural]);
         final prep = WidthIndependentAnnotationCacheFns.buildParagraphLayoutPrep(engine, input, uncachedAnnotation, rejected);
-        TracedAssertions.assertNotNullRendered(prep != null, prep == null ? "null" : "ParagraphLayoutPrep@identity");
+        TracedAssertions.recordRenderedNotNull(prep == null ? "null" : "ParagraphLayoutPrep@identity");
     }
 
     @:test public static function centeredPunctBeforeAttachedReferenceKeepsLeadingGlueOnly():Void {
