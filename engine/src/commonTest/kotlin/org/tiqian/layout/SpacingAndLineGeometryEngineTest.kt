@@ -715,7 +715,7 @@ class SpacingAndLineGeometryEngineTest {
         val long = indentOf(ExplainableStubParagraphLayoutEngine(), 240f)
         assertEquals(32f, long.lines.single().indent)
         assertEquals("MeasureAdaptiveFirstLineIndent", long.debug.firstLineIndentDecision!!.source)
-        assertEquals(2f, long.debug.firstLineIndentDecision!!.resolvedEm)
+        assertEquals(2f, long.debug.firstLineIndentDecision.resolvedEm)
 
         // Short line (10 字 < 14): default narrows to 1 字.
         val short = indentOf(ExplainableStubParagraphLayoutEngine(), 160f)

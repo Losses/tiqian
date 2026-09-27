@@ -134,6 +134,13 @@ tasks.matching {
 }
 
 kotlin {
+    // Project-wide Kotlin compiler options. KT-61573: 'expect'/'actual'
+    // classes are Beta; TestTracePlatform (org.tiqian.test.trace) is an
+    // intentional JVM-only golden-writing hook, so the language-feature
+    // notice is silenced instead of restructuring the hook.
+    compilerOptions {
+        freeCompilerArgs.add("-Xexpect-actual-classes")
+    }
     jvm()
     android {
         namespace = "org.tiqian.engine"
