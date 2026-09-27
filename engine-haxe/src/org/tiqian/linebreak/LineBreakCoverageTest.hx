@@ -32,7 +32,7 @@ class LineBreakCoverageTest {
         var i = 0;
         final kinds:Array<BreakKind> = [Allowed, Forbidden, Required, Problematic];
         while (i < kinds.length) {
-            TracedAssertions.assertNotNullRendered(true, Std.string(kinds[i]));
+            TracedAssertions.recordRenderedNotNull(Std.string(kinds[i]));
             i++;
         }
         final f = new ForbiddenBreak(new TextRange(2, 6), "ForbiddenReason");
@@ -153,7 +153,7 @@ class LineBreakCoverageTest {
             Other
         ];
         while (i < kinds.length) {
-            TracedAssertions.assertNotNullRendered(true, Std.string(kinds[i]));
+            TracedAssertions.recordRenderedNotNull(Std.string(kinds[i]));
             i++;
         }
         TracedAssertions.assertFailsWith(null, function():Void {

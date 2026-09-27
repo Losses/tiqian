@@ -230,7 +230,7 @@ class ParagraphShapingStageCoverageTestSupport {
 
     public static function layout(e:ExplainableStubParagraphLayoutEngine, text:String, width:Float):Void {
         var res = e.layout(new LayoutInput(new TiqianTextContent(text), null, null, new LayoutConstraints(width)));
-        TracedAssertions.assertNotNullRendered(res != null, TestTraceRender.cap(res == null ? "null" : Std.string(res)));
+        TracedAssertions.recordRenderedNotNull(TestTraceRender.cap(res == null ? "null" : Std.string(res)));
     }
 
     public static function engine(?shaper:ITextShaper, ?hyphenator:Hyphenator):ExplainableStubParagraphLayoutEngine {

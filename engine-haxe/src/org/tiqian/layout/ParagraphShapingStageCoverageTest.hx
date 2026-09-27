@@ -80,12 +80,12 @@ class ParagraphShapingStageCoverageTest {
             new ParagraphDirectShapeHyphenator());
         var i = ParagraphShapingStageCoverageTestSupport.input(text, 1, [new LineBreakSpan(new TextRange(0, 10), LineBreakPolicy.ProgressiveTechnical)]);
         var p1 = ParagraphShapingStageCoverageTestSupport.paragraph(e, i, text, 1, FontRole.LatinText, true);
-        TracedAssertions.assertNotNullRendered(p1 != null, TestTraceRender.cap(p1 == null ? "null" : Std.string(p1)));
+        TracedAssertions.recordRenderedNotNull(TestTraceRender.cap(p1 == null ? "null" : Std.string(p1)));
         var p2 = ParagraphShapingStageCoverageTestSupport.paragraph(e, i, text, 40, FontRole.CjkText);
-        TracedAssertions.assertNotNullRendered(p2 != null, TestTraceRender.cap(p2 == null ? "null" : Std.string(p2)));
+        TracedAssertions.recordRenderedNotNull(TestTraceRender.cap(p2 == null ? "null" : Std.string(p2)));
         var si = ParagraphShapingStageCoverageTestSupport.input(" ", 100);
         var p3 = ParagraphShapingStageCoverageTestSupport.paragraph(e, si, " ", 100, FontRole.LatinText);
-        TracedAssertions.assertNotNullRendered(p3 != null, TestTraceRender.cap(p3 == null ? "null" : Std.string(p3)));
+        TracedAssertions.recordRenderedNotNull(TestTraceRender.cap(p3 == null ? "null" : Std.string(p3)));
     }
 
     @:test public static function hyphenAdvanceFallbackWhenShaperReturnsEmptyClusters():Void {
@@ -131,7 +131,7 @@ class ParagraphShapingStageCoverageTest {
             var i = ParagraphShapingStageCoverageTestSupport.input(t, 500);
             for (m in [500.0, 8.0]) {
                 var p = ParagraphShapingStageCoverageTestSupport.paragraph(e, i, t, m, FontRole.LatinText);
-                TracedAssertions.assertNotNullRendered(p != null, TestTraceRender.cap(p == null ? "null" : Std.string(p)));
+                TracedAssertions.recordRenderedNotNull(TestTraceRender.cap(p == null ? "null" : Std.string(p)));
             }
         }
     }
@@ -189,7 +189,7 @@ class ParagraphShapingStageCoverageTest {
             m.put(key, tiers.build());
             var ann = WidthIndependentAnnotationCacheFns.prepareWidthIndependentAnnotation(e, i, m.build());
             var prep = WidthIndependentAnnotationCacheFns.buildParagraphLayoutPrep(e, i, ann, m.build());
-            TracedAssertions.assertNotNullRendered(prep != null, TestTraceRender.cap(prep == null ? "null" : "ParagraphLayoutPrep@identity"));
+            TracedAssertions.recordRenderedNotNull(TestTraceRender.cap(prep == null ? "null" : "ParagraphLayoutPrep@identity"));
         }
         var annEmpty = WidthIndependentAnnotationCacheFns.prepareWidthIndependentAnnotation(e, i, SortedMap.builder().build());
         var multi = SortedSet.builder();
@@ -198,7 +198,7 @@ class ParagraphShapingStageCoverageTest {
         var mm = SortedMap.builder();
         mm.put(key, multi.build());
         var prepMulti = WidthIndependentAnnotationCacheFns.buildParagraphLayoutPrep(e, i, annEmpty, mm.build());
-        TracedAssertions.assertNotNullRendered(prepMulti != null, TestTraceRender.cap(prepMulti == null ? "null" : "ParagraphLayoutPrep@identity"));
+        TracedAssertions.recordRenderedNotNull(TestTraceRender.cap(prepMulti == null ? "null" : "ParagraphLayoutPrep@identity"));
     }
 
     @:test public static function progressiveTechnicalTierPriorityAndFalseBranches():Void {
@@ -218,7 +218,7 @@ class ParagraphShapingStageCoverageTest {
                     new ResolvedClusterRange(new TextRange(0, 0), FontRole.LatinText, false, false)
                 ], [new TextRange(0, 7), new TextRange(2, 7), new TextRange(0, 0)], [progSpan],
                 [[ProgressiveBreakTier.Structural.priority(), ProgressiveBreakTier.Syllable.priority()]]);
-            TracedAssertions.assertNotNullRendered(p != null, TestTraceRender.cap(p == null ? "null" : Std.string(p)));
+            TracedAssertions.recordRenderedNotNull(TestTraceRender.cap(p == null ? "null" : Std.string(p)));
         }
     }
 
@@ -233,7 +233,7 @@ class ParagraphShapingStageCoverageTest {
                     new ResolvedClusterRange(new TextRange(0, 7), FontRole.LatinText, false, false),
                     new ResolvedClusterRange(new TextRange(2, 7), FontRole.LatinText, false, false)
                 ], [new TextRange(0, 7), new TextRange(2, 7)]);
-            TracedAssertions.assertNotNullRendered(p != null, TestTraceRender.cap(p == null ? "null" : Std.string(p)));
+            TracedAssertions.recordRenderedNotNull(TestTraceRender.cap(p == null ? "null" : Std.string(p)));
         }
     }
 

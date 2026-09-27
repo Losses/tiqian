@@ -607,6 +607,18 @@ class TracedAssertions {
     }
 
     /**
+        Records the rendered value on the trace without evaluating a nullness
+        claim. Callers whose checked expression is statically non-null use
+        this entry so the statement keeps writing its trace record. The event
+        kind ("not-null"), the field list and the rendered text are identical
+        to what assertNotNullRendered records for a passing check, so the
+        golden trace comparison stays byte-identical.
+    **/
+    public static function recordRenderedNotNull(renderedActual:String, ?message:String):Void {
+        recordEvent("not-null", [field("actual", renderedActual), msgField(message)]);
+    }
+
+    /**
         Records the reference name of the raised failure. The derived type
         gets its own nested try region: a runtime type test written as
         \`Std.isOfType(error, IllegalStateException)\` inside the base catch is

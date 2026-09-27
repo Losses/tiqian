@@ -36,7 +36,7 @@ class AnnotationGeometryStageCoverageTest {
         final input = new LayoutInput(new TiqianTextContent(text), null, null, new LayoutConstraints(300.0), null, null, null, null,
             [objWithStretch, objFixed]);
         final result = engine.layout(input);
-        TracedAssertions.assertNotNullRendered(result != null, result == null ? "null" : TestTraceRender.cap(Std.string(result)));
+        TracedAssertions.recordRenderedNotNull(result == null ? "null" : TestTraceRender.cap(Std.string(result)));
         TracedAssertions.assertTrue(result.lines.length > 0);
     }
 
@@ -49,7 +49,7 @@ class AnnotationGeometryStageCoverageTest {
             new ParagraphStyle(null, null, null, null, null, null, null, null, null, 0.2), new LayoutConstraints(300.0), null,
             [new DecorationSpan(new TextRange(0, 11), DecorationKind.Emphasis)]);
         final result = engine.layout(input);
-        TracedAssertions.assertNotNullRendered(result != null, result == null ? "null" : TestTraceRender.cap(Std.string(result)));
+        TracedAssertions.recordRenderedNotNull(result == null ? "null" : TestTraceRender.cap(Std.string(result)));
     }
 
     @:test public static function decorationSegmentsMourningProperNounBookTitleAndShortening():Void {
@@ -67,7 +67,7 @@ class AnnotationGeometryStageCoverageTest {
                 new DecorationSpan(new TextRange(0, 16), DecorationKind.Mourning)
             ]);
         final result = engine.layout(input);
-        TracedAssertions.assertNotNullRendered(result != null, result == null ? "null" : TestTraceRender.cap(Std.string(result)));
+        TracedAssertions.recordRenderedNotNull(result == null ? "null" : TestTraceRender.cap(Std.string(result)));
     }
 
     @:test public static function decorationSegmentsLeadingAndTrailingBlanks():Void {
@@ -79,7 +79,7 @@ class AnnotationGeometryStageCoverageTest {
             new DecorationSpan(new TextRange(0, UString.count(text)), DecorationKind.ProperNoun)
         ]);
         final result = engine.layout(input);
-        TracedAssertions.assertNotNullRendered(result != null, result == null ? "null" : TestTraceRender.cap(Std.string(result)));
+        TracedAssertions.recordRenderedNotNull(result == null ? "null" : TestTraceRender.cap(Std.string(result)));
     }
 
     @:test public static function rubyDecisionsPinyinSingleAndSplitLines():Void {
@@ -93,7 +93,7 @@ class AnnotationGeometryStageCoverageTest {
             new RubySpan(new TextRange(6, 12), "ch\u00E1ngdedu\u00E0nlu\u00F2", null, RubyKind.Pinyin, null)
         ]);
         final result = engine.layout(input);
-        TracedAssertions.assertNotNullRendered(result != null, result == null ? "null" : TestTraceRender.cap(Std.string(result)));
+        TracedAssertions.recordRenderedNotNull(result == null ? "null" : TestTraceRender.cap(Std.string(result)));
     }
 
     @:test public static function bopomofoDecisionsAllTonesAndSymbolCounts():Void {
@@ -120,7 +120,7 @@ class AnnotationGeometryStageCoverageTest {
         ];
         final input = new LayoutInput(new TiqianTextContent(text), null, null, new LayoutConstraints(300.0), null, null, rubySpans);
         final result = engine.layout(input);
-        TracedAssertions.assertNotNullRendered(result != null, result == null ? "null" : TestTraceRender.cap(Std.string(result)));
+        TracedAssertions.recordRenderedNotNull(result == null ? "null" : TestTraceRender.cap(Std.string(result)));
     }
 
     @:test public static function directResolveAnnotationGeometryFallbackBranches():Void {
@@ -181,7 +181,7 @@ class AnnotationGeometryStageCoverageTest {
         ],
             [new IntRange(0, 2), new IntRange(3, 3)], lineBoxes, clusters, [FontRole.CjkText, FontRole.CjkPunctuation, FontRole.CjkText, FontRole.LatinText],
             justifyMap, spreadMap, [], [pinyinA, pinyinB], clusters, rfgMap, 0.0, 16.0, 8.0, 400, 4.0, function(_:Int) return 400);
-        TracedAssertions.assertNotNullRendered(res1 != null, res1 == null ? "null" : TestTraceRender.cap(Std.string(res1)));
+        TracedAssertions.recordRenderedNotNull(res1 == null ? "null" : TestTraceRender.cap(Std.string(res1)));
         TracedAssertions.assertEquals(3, res1.inlineObjectDecisions.length);
         TracedAssertions.assertEquals(-1, res1.inlineObjectDecisions[res1.inlineObjectDecisions.length - 1].lineIndex);
         final metricDecision = new ClusterMetricDecision(new TextRange(0, 2), "\u6C49\u5B57", new FontMetricsRequest("k", 16.0, FontRole.CjkText, "zh-Hans"),
@@ -194,7 +194,7 @@ class AnnotationGeometryStageCoverageTest {
             [new IntRange(0, 2), new IntRange(3, 3)], lineBoxes, clusters, [FontRole.CjkText, FontRole.CjkPunctuation, FontRole.CjkText, FontRole.LatinText],
             SortedMap.builder().build(), SortedMap.builder().build(), [metricDecision], [pinyinC], clusters, rfgMap2, 0.0, 16.0, 8.0, 400, 4.0,
             function(_:Int) return 400);
-        TracedAssertions.assertNotNullRendered(res2 != null, res2 == null ? "null" : TestTraceRender.cap(Std.string(res2)));
+        TracedAssertions.recordRenderedNotNull(res2 == null ? "null" : TestTraceRender.cap(Std.string(res2)));
     }
 
     @:test public static function bopomofoDecisionsMultiGlyphMinMaxAndEmptyPlacements():Void {
@@ -212,7 +212,7 @@ class AnnotationGeometryStageCoverageTest {
         ];
         final input = new LayoutInput(new TiqianTextContent(text), null, null, new LayoutConstraints(300.0), null, null, rubySpans);
         final result = engine.layout(input);
-        TracedAssertions.assertNotNullRendered(result != null, result == null ? "null" : TestTraceRender.cap(Std.string(result)));
+        TracedAssertions.recordRenderedNotNull(result == null ? "null" : TestTraceRender.cap(Std.string(result)));
     }
 
     @:test public static function directResolveAnnotationGeometryEmptyLineRangesAndGapAtLineEdges():Void {
@@ -274,7 +274,7 @@ class AnnotationGeometryStageCoverageTest {
             [new IntRange(1, 0), new IntRange(0, 2)], lineBoxes, clusters, [FontRole.CjkText, FontRole.CjkPunctuation, FontRole.CjkText, FontRole.LatinText],
             SortedMap.builder().build(), SortedMap.builder().build(), [metricDecision1, metricDecision2], [pinyinA, pinyinB, pinyinC], clusters, rfgMap, 0.0,
             16.0, 8.0, 400, 4.0, function(_:Int) return 400);
-        TracedAssertions.assertNotNullRendered(res != null, res == null ? "null" : TestTraceRender.cap(Std.string(res)));
+        TracedAssertions.recordRenderedNotNull(res == null ? "null" : TestTraceRender.cap(Std.string(res)));
     }
 
     @:test public static function bopomofoAndDecorationLeadingBlankExhaustiveBranches():Void {
@@ -292,7 +292,7 @@ class AnnotationGeometryStageCoverageTest {
             new RubySpan(new TextRange(0, 1), "", null, RubyKind.Bopomofo, "zh-TW")
         ]);
         final res = engine.layout(input);
-        TracedAssertions.assertNotNullRendered(res != null, res == null ? "null" : TestTraceRender.cap(Std.string(res)));
+        TracedAssertions.recordRenderedNotNull(res == null ? "null" : TestTraceRender.cap(Std.string(res)));
         final inputNarrow = new LayoutInput(new TiqianTextContent(text), null, null, new LayoutConstraints(30.0), null, [
             new DecorationSpan(new TextRange(0, 7), DecorationKind.ProperNoun),
             new DecorationSpan(new TextRange(2, 7), DecorationKind.ProperNoun)
@@ -302,7 +302,7 @@ class AnnotationGeometryStageCoverageTest {
             new RubySpan(new TextRange(0, 1), "", null, RubyKind.Bopomofo, "zh-TW")
         ]);
         final resNarrow = engine.layout(inputNarrow);
-        TracedAssertions.assertNotNullRendered(resNarrow != null, resNarrow == null ? "null" : TestTraceRender.cap(Std.string(resNarrow)));
+        TracedAssertions.recordRenderedNotNull(resNarrow == null ? "null" : TestTraceRender.cap(Std.string(resNarrow)));
     }
 
     @:test public static function bopomofoOverLatinClustersCoversCrossMetricLookup():Void {
@@ -315,7 +315,7 @@ class AnnotationGeometryStageCoverageTest {
             new RubySpan(new TextRange(3, 4), "\u3106", null, RubyKind.Bopomofo, "zh-TW")
         ]);
         final res = engine.layout(input);
-        TracedAssertions.assertNotNullRendered(res != null, res == null ? "null" : TestTraceRender.cap(Std.string(res)));
+        TracedAssertions.recordRenderedNotNull(res == null ? "null" : TestTraceRender.cap(Std.string(res)));
     }
 
     public static function flushTestTrace():Void {

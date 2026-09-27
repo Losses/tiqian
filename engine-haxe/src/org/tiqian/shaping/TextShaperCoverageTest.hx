@@ -101,9 +101,9 @@ class TextShaperCoverageTest {
         TracedAssertions.assertEqualsInt(4, result.decisions[0].glyphsWithoutInkBounds);
         TracedAssertions.assertEqualsString("ExplainableStubTextShaper:nominal-em-advance", result.decisions[0].reason);
         TracedAssertions.assertEqualsString(Type.enumConstructor(ShapingSource.Stub), result.decisions[0].source);
-        TracedAssertions.assertNotNullRendered(TextShaper.UNVERIFIED_DISPLAY_SUBSTITUTION_COVERAGE_ISSUE != null,
+        TracedAssertions.recordRenderedNotNull(
             "'" + TextShaper.UNVERIFIED_DISPLAY_SUBSTITUTION_COVERAGE_ISSUE + "'");
-        TracedAssertions.assertNotNullRendered(TextShaper.PLATFORM_MULTI_FACE_STRING_DRAW_ISSUE != null,
+        TracedAssertions.recordRenderedNotNull(
             "'" + TextShaper.PLATFORM_MULTI_FACE_STRING_DRAW_ISSUE + "'");
     }
 
