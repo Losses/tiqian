@@ -123,9 +123,6 @@ const INLINE_EDGE_EPSILON = 0.01;
 // WebEnhancerSupport.kt ZERO_ADVANCE_EPSILON: the host threshold passed to
 // the ffi diagnostics export, which pre-filters advance suspects.
 const ZERO_ADVANCE_EPSILON = 0.01;
-// PreparedParagraph.kt PREPARED_PARAGRAPH_LAYOUT_REVISION: the plan wire
-// revision the installed prepared-DOM renderer must report.
-const PREPARED_LAYOUT_REVISION = 'tiqian-layout-v2';
 // WebEnhancerSupport.kt SNAPSHOT_FONT_SESSION_CAPABILITY_FAILURES: substrings
 // that mark an snapshot-session layout failure as a font capability issue,
 // after which the whole paragraph retries through the browser bridge.
@@ -245,10 +242,12 @@ export function wireArguments(lowered: LoweredParagraph): PrepareParagraphReques
   }
 
   // PreparedDomUnifiedEligibility: the prepared-dom module is imported
-  // statically, so bridge availability reduces to a schema and layout
-  // revision comparison against the imported constants.
+  // statically, and the plan revision the renderer must report now comes
+  // from the same single source as the snapshot revision (boring cutover
+  // Stage1-P4), so the revision comparison reduces to the schema gate on
+  // the imported constant.
   function isPreparedDomBridgeAvailable(): boolean {
-    return SNAPSHOT_SCHEMA === 1 && LAYOUT_REVISION === PREPARED_LAYOUT_REVISION;
+    return SNAPSHOT_SCHEMA === 1;
   }
 
   function isSnapshotSessionCapabilityFailure(error: unknown): boolean {
@@ -292,7 +291,7 @@ export function wireArguments(lowered: LoweredParagraph): PrepareParagraphReques
       return {
         kind: 'unsupported',
         name: 'PreparedDomBridgeUnavailable',
-        detail: 'expectedLayoutRevision=' + PREPARED_LAYOUT_REVISION,
+        detail: 'expectedLayoutRevision=' + LAYOUT_REVISION,
         element: element,
       };
     }

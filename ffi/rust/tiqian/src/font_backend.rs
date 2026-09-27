@@ -3,7 +3,13 @@
 //! The layout engine is a Kotlin/Native static library that calls the host
 //! font session through the vtable declared in
 //! `shaping/api/src/nativeInterop/cinterop/tiqian_font_backend.h`. This module
-//! mirrors that header; the two must stay byte-compatible. The engine-side
+//! mirrors that header; the two must stay byte-compatible. The protocol
+//! revision constant below is a pure-Rust mirror of the single source
+//! (engine-haxe/src/org/tiqian/protocol/Revision.hx, boring cutover
+//! Stage1-P4): this crate stays header-free (build.rs only links the
+//! engine archive), so the mirror is pinned to the generated value by the
+//! drift assertion in the precompute engine crate
+//! (schema.rs `c_abi_mirrors_match_the_single_source`). The engine-side
 //! buffer reader and the Rust-side writer in [`crate::shape_buffer`] share the
 //! offsets documented there.
 //!

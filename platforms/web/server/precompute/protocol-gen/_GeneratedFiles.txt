@@ -2,6 +2,7 @@ haxe/crypto/sha256.rs
 org/tiqian/protocol/canonical.rs
 org/tiqian/protocol/encode_result.rs
 org/tiqian/protocol/js_coerce.rs
+org/tiqian/protocol/revision.rs
 org/tiqian/protocol/wire_field.rs
 org/tiqian/protocol/wire_value.rs
 runtime/u_string.rs
