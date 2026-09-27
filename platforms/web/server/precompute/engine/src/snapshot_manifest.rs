@@ -15,7 +15,7 @@ use tiqian::NamedError;
 
 use crate::js_compat::js_int_to_number;
 use crate::json::{parse_json, Json};
-use crate::schema::{stable_stringify, FONT_REPLAY_REVISION, FONT_REPLAY_TRANSPORT};
+use crate::schema::{stable_stringify, RevisionFamily, FONT_REPLAY_REVISION, FONT_REPLAY_TRANSPORT};
 use crate::snapshot_tables::SnapshotTables;
 
 pub(crate) fn field<'a>(value: &'a Json, key: &str) -> Option<&'a Json> {
@@ -327,7 +327,12 @@ pub fn compact_snapshot_manifest_with_tables(
                 .collect::<Vec<_>>()
         })
         .unwrap_or_default();
-    output.push(("schema".to_string(), Json::Num(2.0)));
+    // The manifest schema number comes from the single-sourced revision
+    // family (Stage1-P4): the literal 2.0 was the vendored copy's drift.
+    output.push((
+        "schema".to_string(),
+        Json::Num(f64::from(RevisionFamily::REVISION_SNAPSHOT_TABLES_SCHEMA)),
+    ));
     output.push((
         "tables".to_string(),
         Json::Obj(vec![("snapshot".to_string(), Json::str(table_sha))]),

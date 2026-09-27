@@ -686,7 +686,7 @@ dependencies = [
  "sha2",
  "skrifa",
  "tiqian",
- "tiqian-protocol-gen-stub",
+ "tiqian-protocol-gen",
  "url",
  "wuff",
 ]
@@ -701,10 +701,6 @@ dependencies = [
 
 [[package]]
 name = "tiqian-protocol-gen"
-version = "0.1.0"
-
-[[package]]
-name = "tiqian-protocol-gen-stub"
 version = "0.1.0"
 
 [[package]]

@@ -24,4 +24,5 @@ org.tiqian.protocol.ParagraphRequest
 org.tiqian.protocol.ParagraphRequestTest
 runtime.SortedTable
 runtime.UString
+org.tiqian.protocol.Revision
 std.UStringException
