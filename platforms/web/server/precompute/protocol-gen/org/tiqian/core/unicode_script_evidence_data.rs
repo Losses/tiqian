@@ -274,15 +274,15 @@ impl UnicodeScriptEvidenceData {
     pub fn unicode_script_evidence_data_classify(code_point: u32) -> UnicodeScriptEvidence {
         let mut low = 0u32;
         let mut high = u32::wrapping_sub((u32::try_from((RANGES.len()) & 0xFFFF_FFFF).unwrap_or(0)) / (3), 1);
-        while (i32::from_ne_bytes((low).to_ne_bytes())) <= i32::from_ne_bytes((high).to_ne_bytes()) {
+        while (i32::from_ne_bytes(((low) as i32).to_ne_bytes())) <= i32::from_ne_bytes(((high) as i32).to_ne_bytes()) {
             let middle = u32::wrapping_add(low, high) >> 1;
             let base = u32::wrapping_mul(middle, 3);
             let start = RANGES[usize::try_from(base).unwrap_or(0)];
             let end = RANGES[usize::try_from(u32::wrapping_add(base, 1)).unwrap_or(0)];
-            if i32::from_ne_bytes((code_point).to_ne_bytes()) < ({ let v: u32 = start; i32::from_ne_bytes(v.to_ne_bytes()) }) {
+            if i32::from_ne_bytes(((code_point) as i32).to_ne_bytes()) < ({ let v: u32 = start; i32::from_ne_bytes(v.to_ne_bytes()) }) {
                 high = u32::wrapping_sub(middle, 1);
             } else {
-                if i32::from_ne_bytes((code_point).to_ne_bytes()) > ({ let v: u32 = end; i32::from_ne_bytes(v.to_ne_bytes()) }) {
+                if i32::from_ne_bytes(((code_point) as i32).to_ne_bytes()) > ({ let v: u32 = end; i32::from_ne_bytes(v.to_ne_bytes()) }) {
                     low = u32::wrapping_add(middle, 1);
                 } else {
                     if RANGES[usize::try_from(u32::wrapping_add(base, 2)).unwrap_or(0)] == 1 {

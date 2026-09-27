@@ -292,6 +292,7 @@ org/tiqian/layout/paragraph_layout_engine_validation_coverage_test.rs
 org/tiqian/layout/paragraph_shaping_stage.rs
 org/tiqian/layout/paragraph_shaping_stage_coverage_test.rs
 org/tiqian/layout/paragraph_shaping_stage_coverage_test_support.rs
+org/tiqian/layout/plan_lowering.rs
 org/tiqian/layout/prepared_paragraph.rs
 org/tiqian/layout/prepared_paragraph_inline_edges_test.rs
 org/tiqian/layout/prepared_paragraph_jf_test.rs
@@ -376,6 +377,13 @@ org/tiqian/linebreak/unicode_punctuation_line_break.rs
 org/tiqian/linebreak/unicode_punctuation_line_break_coverage_test.rs
 org/tiqian/linebreak/unicode_punctuation_line_break_data.rs
 org/tiqian/linebreak/unicode_punctuation_line_break_test.rs
+org/tiqian/protocol/plan.rs
+org/tiqian/protocol/plan_end_reason.rs
+org/tiqian/protocol/plan_json.rs
+org/tiqian/protocol/plan_json_number.rs
+org/tiqian/protocol/plan_packed.rs
+org/tiqian/protocol/plan_schema.rs
+org/tiqian/protocol/plan_style_delta.rs
 org/tiqian/shaping/explainable_stub_text_shaper_test.rs
 org/tiqian/shaping/explainable_stub_text_shaper_test_support.rs
 org/tiqian/shaping/replayable_font_backend.rs
@@ -406,6 +414,7 @@ std/mod.rs
 org/tiqian/test/trace/mod.rs
 org/tiqian/test/mod.rs
 org/tiqian/shaping/mod.rs
+org/tiqian/protocol/mod.rs
 org/tiqian/linebreak/mod.rs
 org/tiqian/layout/mod.rs
 org/tiqian/font/mod.rs
@@ -414,6 +423,7 @@ org/tiqian/clreq/mod.rs
 org/tiqian/mod.rs
 org/mod.rs
 runtime/fp_helper.rs
+runtime/bytes_buffer.rs
 runtime/exception.rs
 runtime/fs.rs
 runtime/functional.rs

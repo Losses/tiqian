@@ -1,3 +1,4 @@
+pub mod bytes_buffer;
 pub mod exception;
 pub mod fp_helper;
 pub mod fs;

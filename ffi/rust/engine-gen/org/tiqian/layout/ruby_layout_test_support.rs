@@ -40,12 +40,24 @@ use crate::org::tiqian::shaping::text_shaper::ShapingResult;
 use crate::org::tiqian::shaping::text_shaper::TextShaperShapeFault;
 use crate::org::tiqian::test::trace::traced_assertions::TracedAssertions;
 use crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault;
+use crate::runtime::u_string::UStr;
+use crate::runtime::u_string::UString;
+use std::sync::Arc;
+use std::sync::Mutex;
 
 
 #[derive(Debug, Clone, PartialEq)]
 pub enum RubyLayoutTestSupportLayoutContradictoryFault {
     TextRangeErrorFault(crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError),
     UStringFaultFault(crate::std::u_string_exception::UStringFault),
+}
+impl std::fmt::Display for RubyLayoutTestSupportLayoutContradictoryFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            RubyLayoutTestSupportLayoutContradictoryFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            RubyLayoutTestSupportLayoutContradictoryFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
 }
 
 impl From<RubyLayoutTestSupportLayoutContradictoryFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
@@ -83,6 +95,14 @@ pub enum RubyLayoutTestSupportEngineFault {
     TextRangeErrorFault(crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError),
     UStringFaultFault(crate::std::u_string_exception::UStringFault),
 }
+impl std::fmt::Display for RubyLayoutTestSupportEngineFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            RubyLayoutTestSupportEngineFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            RubyLayoutTestSupportEngineFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
+}
 
 impl From<RubyLayoutTestSupportEngineFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
     fn from(value: RubyLayoutTestSupportEngineFault) -> Self {
@@ -119,6 +139,15 @@ pub enum RubyLayoutTestSupportTotalWidthFault {
     TextRangeErrorFault(crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError),
     ParagraphLayoutEngineNewFaultFault(crate::org::tiqian::layout::paragraph_layout_engine::ParagraphLayoutEngineNewFault),
     ParagraphLayoutEngineLayoutWithRejectedTechnicalTiersFaultFault(crate::org::tiqian::layout::paragraph_layout_engine::ParagraphLayoutEngineLayoutWithRejectedTechnicalTiersFault),
+}
+impl std::fmt::Display for RubyLayoutTestSupportTotalWidthFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            RubyLayoutTestSupportTotalWidthFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            RubyLayoutTestSupportTotalWidthFault::ParagraphLayoutEngineNewFaultFault(value) => write!(formatter, "{}", value),
+            RubyLayoutTestSupportTotalWidthFault::ParagraphLayoutEngineLayoutWithRejectedTechnicalTiersFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
 }
 
 impl From<RubyLayoutTestSupportTotalWidthFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
@@ -171,72 +200,42 @@ pub struct RubyLayoutTestSupport;
 
 impl RubyLayoutTestSupport {
     pub fn ruby_layout_test_support_engine() -> Result<ExplainableStubParagraphLayoutEngine, ParagraphLayoutEngineNewFault> {
-        return Ok(ExplainableStubParagraphLayoutEngine::new(Some(Box::new(CjkFontRoleClassifier::new())), Some(Box::new(ParagraphLayoutFallbackResolver::new(Some("cjk-primary".to_string()), Some("latin-primary".to_string()), Some("symbol-fallback".to_string()))?)),
-Some(Box::new(BuiltInClreqProfileResolver::new())), Some(Box::new(StubFontMetricsResolver::new())), Some(Box::new(ScriptAwareFontMetricsNormalizer::new())), Some((PunctuationAtomBuilder::new(None, None)?).clone()), Some((PunctuationSpacingCompressor::new()?).clone()),
-Some(QuotePairAnalyzer::new()), Some(Box::new(GreedyLineBreaker::new(None, None, None, None))), Some(Justifier::new(Some(0.5), Some(0.25))), Some(Box::new(ExplainableStubTextShaper::new())), Some((DefaultHyphenator::default_hyphenator_default_hyphenator()?).clone()),
-Some(Box::new(LruWidthIndependentAnnotationCache::new(512))))?);
+        return Ok(ExplainableStubParagraphLayoutEngine::new(Some(Box::new(CjkFontRoleClassifier::new())), Some(Box::new(ParagraphLayoutFallbackResolver::new(Some(UString::from("cjk-primary")), Some(UString::from("latin-primary")), Some(UString::from("symbol-fallback")))?)), Some(Box::new(BuiltInClreqProfileResolver::new())), Some(Box::new(StubFontMetricsResolver::new())), Some(Box::new(ScriptAwareFontMetricsNormalizer::new())), Some((PunctuationAtomBuilder::new(None, None)?).clone()), Some((PunctuationSpacingCompressor::new()?).clone()), Some(QuotePairAnalyzer::new()), Some(Box::new(GreedyLineBreaker::new(None, None, None, None))), Some(Justifier::new(Some(0.5), Some(0.25))), Some(Arc::new(Mutex::new(ExplainableStubTextShaper::new()))), Some((DefaultHyphenator::default_hyphenator_default_hyphenator()?).clone()), Some(Arc::new(Mutex::new(LruWidthIndependentAnnotationCache::new(512)))))?);
     }
 
     pub fn ruby_layout_test_support_input(ruby: &Vec<RubySpan>) -> Result<LayoutInput, TextRangeError> {
-        return Ok(LayoutInput::new(TiqianTextContent::new("中文排版", Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![])), Some(TextStyle::new(Some(vec![]), Some(16.0), Some("zh-Hans".to_string()), Some(400), Some(false), Some(0.0), Some(InlineAttachment::None))),
-Some(ParagraphStyle::new(Some(LastLineAlignment::Start), Some(WritingMode::HorizontalTb), None, Some(Ic(0 as f64)), Some(Ic::zero()), Some(MeasureAdaptiveFirstLineIndent::new(Some(14.0), Some(1.0), Some(2.0))), Some(LineLengthGrid::new(Some(true), None)),
-Some(RubyLineHeightMode::PerLine), Some(ParagraphStyle::PARAGRAPH_STYLE_DEFAULT_INLINE_OBJECT_MINIMUM_CLEARANCE_EM), Some(ParagraphStyle::PARAGRAPH_STYLE_DEFAULT_EMPHASIS_DOT_GAP_EM))), LayoutConstraints::new(400.0f64, Some(f64::INFINITY), Some(2147483647))?,
-Some((*crate::org::tiqian::core::built_in_layout_profiles::BUILT_IN_LAYOUT_PROFILES_CLREQ_HORIZONTAL).clone()), Some(vec![]), Some((ruby).clone()), Some(vec![]), Some(vec![])));
+        return Ok(LayoutInput::new(TiqianTextContent::new(&(UStr::new(&[20013,25991,25490,29256])), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![])), Some(TextStyle::new(Some(vec![]), Some(16.0), Some(UString::from("zh-Hans")), Some(400), Some(false), Some(0.0), Some(InlineAttachment::None))), Some(ParagraphStyle::new(Some(LastLineAlignment::Start), Some(WritingMode::HorizontalTb), None, Some(Ic(0 as f64)), Some(Ic::zero()), Some(MeasureAdaptiveFirstLineIndent::new(Some(14.0), Some(1.0), Some(2.0))), Some(LineLengthGrid::new(Some(true), None)), Some(RubyLineHeightMode::PerLine), Some(ParagraphStyle::PARAGRAPH_STYLE_DEFAULT_INLINE_OBJECT_MINIMUM_CLEARANCE_EM), Some(ParagraphStyle::PARAGRAPH_STYLE_DEFAULT_EMPHASIS_DOT_GAP_EM))), LayoutConstraints::new(400.0f64, Some(f64::INFINITY), Some(2147483647))?, Some((*crate::org::tiqian::core::built_in_layout_profiles::BUILT_IN_LAYOUT_PROFILES_CLREQ_HORIZONTAL).clone()), Some(vec![]), Some((ruby).clone()), Some(vec![]), Some(vec![])));
     }
 
     pub fn ruby_layout_test_support_layout(ruby: &Vec<RubySpan>) -> Result<LayoutResult, ParagraphLayoutEngineNewFault> {
-        return Ok(RubyLayoutTestSupport::ruby_layout_test_support_engine()?.layout(RubyLayoutTestSupport::ruby_layout_test_support_input(&ruby).map_err(|e| ParagraphLayoutEngineNewFault::TextRangeErrorFault(e))?).map_err(|e|
-ParagraphLayoutEngineNewFault::LayoutWithRejectedTechnicalTiersFault(e))?);
+        return Ok(RubyLayoutTestSupport::ruby_layout_test_support_engine()?.layout(RubyLayoutTestSupport::ruby_layout_test_support_input(&ruby).map_err(|e| ParagraphLayoutEngineNewFault::TextRangeErrorFault(e))?).map_err(|e| ParagraphLayoutEngineNewFault::LayoutWithRejectedTechnicalTiersFault(e))?);
     }
 
     pub fn ruby_layout_test_support_layout_eight(ruby: &Vec<RubySpan>) -> Result<LayoutResult, ParagraphLayoutEngineNewFault> {
-        return Ok(RubyLayoutTestSupport::ruby_layout_test_support_engine()?.layout(LayoutInput::new(TiqianTextContent::new("甲乙丙丁戊己庚辛", Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![])), Some(TextStyle::new(Some(vec![]), Some(16.0), Some("zh-Hans".to_string()), Some(400),
-Some(false), Some(0.0), Some(InlineAttachment::None))), Some(ParagraphStyle::new(Some(LastLineAlignment::Start), Some(WritingMode::HorizontalTb), None, Some(Ic(0 as f64)), Some(Ic::zero()), Some(MeasureAdaptiveFirstLineIndent::new(Some(14.0), Some(1.0), Some(2.0))),
-Some(LineLengthGrid::new(Some(true), None)), Some(RubyLineHeightMode::PerLine), Some(ParagraphStyle::PARAGRAPH_STYLE_DEFAULT_INLINE_OBJECT_MINIMUM_CLEARANCE_EM), Some(ParagraphStyle::PARAGRAPH_STYLE_DEFAULT_EMPHASIS_DOT_GAP_EM))), LayoutConstraints::new(64.0f64,
-Some(f64::INFINITY), Some(2147483647)).map_err(|e| ParagraphLayoutEngineNewFault::TextRangeErrorFault(e))?, Some((*crate::org::tiqian::core::built_in_layout_profiles::BUILT_IN_LAYOUT_PROFILES_CLREQ_HORIZONTAL).clone()), Some(vec![]), Some((ruby).clone()), Some(vec![]),
-Some(vec![]))).map_err(|e| ParagraphLayoutEngineNewFault::LayoutWithRejectedTechnicalTiersFault(e))?);
+        return Ok(RubyLayoutTestSupport::ruby_layout_test_support_engine()?.layout(LayoutInput::new(TiqianTextContent::new(&(UStr::new(&[30002,20057,19993,19969,25098,24049,24218,36763])), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![])), Some(TextStyle::new(Some(vec![]), Some(16.0), Some(UString::from("zh-Hans")), Some(400), Some(false), Some(0.0), Some(InlineAttachment::None))), Some(ParagraphStyle::new(Some(LastLineAlignment::Start), Some(WritingMode::HorizontalTb), None, Some(Ic(0 as f64)), Some(Ic::zero()), Some(MeasureAdaptiveFirstLineIndent::new(Some(14.0), Some(1.0), Some(2.0))), Some(LineLengthGrid::new(Some(true), None)), Some(RubyLineHeightMode::PerLine), Some(ParagraphStyle::PARAGRAPH_STYLE_DEFAULT_INLINE_OBJECT_MINIMUM_CLEARANCE_EM), Some(ParagraphStyle::PARAGRAPH_STYLE_DEFAULT_EMPHASIS_DOT_GAP_EM))), LayoutConstraints::new(64.0f64, Some(f64::INFINITY), Some(2147483647)).map_err(|e| ParagraphLayoutEngineNewFault::TextRangeErrorFault(e))?, Some((*crate::org::tiqian::core::built_in_layout_profiles::BUILT_IN_LAYOUT_PROFILES_CLREQ_HORIZONTAL).clone()), Some(vec![]), Some((ruby).clone()), Some(vec![]), Some(vec![]))).map_err(|e| ParagraphLayoutEngineNewFault::LayoutWithRejectedTechnicalTiersFault(e))?);
     }
 
     pub fn ruby_layout_test_support_layout_twelve(ruby: &Vec<RubySpan>) -> Result<LayoutResult, ParagraphLayoutEngineNewFault> {
-        return Ok(RubyLayoutTestSupport::ruby_layout_test_support_engine()?.layout(LayoutInput::new(TiqianTextContent::new("甲乙丙丁戊己庚辛壬癸子丑", Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![])), Some(TextStyle::new(Some(vec![]), Some(16.0), Some("zh-Hans".to_string()), Some(400),
-Some(false), Some(0.0), Some(InlineAttachment::None))), Some(ParagraphStyle::new(Some(LastLineAlignment::Start), Some(WritingMode::HorizontalTb), Some(18.0f64), Some(Ic(0 as f64)), Some(Ic::zero()), Some(MeasureAdaptiveFirstLineIndent::new(Some(14.0), Some(1.0), Some(2.0))),
-Some(LineLengthGrid::new(Some(true), None)), Some(RubyLineHeightMode::PerLine), Some(ParagraphStyle::PARAGRAPH_STYLE_DEFAULT_INLINE_OBJECT_MINIMUM_CLEARANCE_EM), Some(ParagraphStyle::PARAGRAPH_STYLE_DEFAULT_EMPHASIS_DOT_GAP_EM))), LayoutConstraints::new(64.0f64,
-Some(f64::INFINITY), Some(2147483647)).map_err(|e| ParagraphLayoutEngineNewFault::TextRangeErrorFault(e))?, Some((*crate::org::tiqian::core::built_in_layout_profiles::BUILT_IN_LAYOUT_PROFILES_CLREQ_HORIZONTAL).clone()), Some(vec![]), Some((ruby).clone()), Some(vec![]),
-Some(vec![]))).map_err(|e| ParagraphLayoutEngineNewFault::LayoutWithRejectedTechnicalTiersFault(e))?);
+        return Ok(RubyLayoutTestSupport::ruby_layout_test_support_engine()?.layout(LayoutInput::new(TiqianTextContent::new(&(UStr::new(&[30002,20057,19993,19969,25098,24049,24218,36763,22764,30328,23376,19985])), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![])), Some(TextStyle::new(Some(vec![]), Some(16.0), Some(UString::from("zh-Hans")), Some(400), Some(false), Some(0.0), Some(InlineAttachment::None))), Some(ParagraphStyle::new(Some(LastLineAlignment::Start), Some(WritingMode::HorizontalTb), Some(18.0f64), Some(Ic(0 as f64)), Some(Ic::zero()), Some(MeasureAdaptiveFirstLineIndent::new(Some(14.0), Some(1.0), Some(2.0))), Some(LineLengthGrid::new(Some(true), None)), Some(RubyLineHeightMode::PerLine), Some(ParagraphStyle::PARAGRAPH_STYLE_DEFAULT_INLINE_OBJECT_MINIMUM_CLEARANCE_EM), Some(ParagraphStyle::PARAGRAPH_STYLE_DEFAULT_EMPHASIS_DOT_GAP_EM))), LayoutConstraints::new(64.0f64, Some(f64::INFINITY), Some(2147483647)).map_err(|e| ParagraphLayoutEngineNewFault::TextRangeErrorFault(e))?, Some((*crate::org::tiqian::core::built_in_layout_profiles::BUILT_IN_LAYOUT_PROFILES_CLREQ_HORIZONTAL).clone()), Some(vec![]), Some((ruby).clone()), Some(vec![]), Some(vec![]))).map_err(|e| ParagraphLayoutEngineNewFault::LayoutWithRejectedTechnicalTiersFault(e))?);
     }
 
     pub fn ruby_layout_test_support_layout_uniform(ruby: &Vec<RubySpan>) -> Result<LayoutResult, ParagraphLayoutEngineNewFault> {
-        return Ok(RubyLayoutTestSupport::ruby_layout_test_support_engine()?.layout(LayoutInput::new(TiqianTextContent::new("甲乙丙丁戊己庚辛壬癸子丑", Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![])), Some(TextStyle::new(Some(vec![]), Some(16.0), Some("zh-Hans".to_string()), Some(400),
-Some(false), Some(0.0), Some(InlineAttachment::None))), Some(ParagraphStyle::new(Some(LastLineAlignment::Start), Some(WritingMode::HorizontalTb), Some(18.0f64), Some(Ic(0 as f64)), Some(Ic::zero()), Some(MeasureAdaptiveFirstLineIndent::new(Some(14.0), Some(1.0), Some(2.0))),
-Some(LineLengthGrid::new(Some(true), None)), Some(RubyLineHeightMode::UniformParagraph), Some(ParagraphStyle::PARAGRAPH_STYLE_DEFAULT_INLINE_OBJECT_MINIMUM_CLEARANCE_EM), Some(ParagraphStyle::PARAGRAPH_STYLE_DEFAULT_EMPHASIS_DOT_GAP_EM))), LayoutConstraints::new(64.0f64,
-Some(f64::INFINITY), Some(2147483647)).map_err(|e| ParagraphLayoutEngineNewFault::TextRangeErrorFault(e))?, Some((*crate::org::tiqian::core::built_in_layout_profiles::BUILT_IN_LAYOUT_PROFILES_CLREQ_HORIZONTAL).clone()), Some(vec![]), Some((ruby).clone()), Some(vec![]),
-Some(vec![]))).map_err(|e| ParagraphLayoutEngineNewFault::LayoutWithRejectedTechnicalTiersFault(e))?);
+        return Ok(RubyLayoutTestSupport::ruby_layout_test_support_engine()?.layout(LayoutInput::new(TiqianTextContent::new(&(UStr::new(&[30002,20057,19993,19969,25098,24049,24218,36763,22764,30328,23376,19985])), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![])), Some(TextStyle::new(Some(vec![]), Some(16.0), Some(UString::from("zh-Hans")), Some(400), Some(false), Some(0.0), Some(InlineAttachment::None))), Some(ParagraphStyle::new(Some(LastLineAlignment::Start), Some(WritingMode::HorizontalTb), Some(18.0f64), Some(Ic(0 as f64)), Some(Ic::zero()), Some(MeasureAdaptiveFirstLineIndent::new(Some(14.0), Some(1.0), Some(2.0))), Some(LineLengthGrid::new(Some(true), None)), Some(RubyLineHeightMode::UniformParagraph), Some(ParagraphStyle::PARAGRAPH_STYLE_DEFAULT_INLINE_OBJECT_MINIMUM_CLEARANCE_EM), Some(ParagraphStyle::PARAGRAPH_STYLE_DEFAULT_EMPHASIS_DOT_GAP_EM))), LayoutConstraints::new(64.0f64, Some(f64::INFINITY), Some(2147483647)).map_err(|e| ParagraphLayoutEngineNewFault::TextRangeErrorFault(e))?, Some((*crate::org::tiqian::core::built_in_layout_profiles::BUILT_IN_LAYOUT_PROFILES_CLREQ_HORIZONTAL).clone()), Some(vec![]), Some((ruby).clone()), Some(vec![]), Some(vec![]))).map_err(|e| ParagraphLayoutEngineNewFault::LayoutWithRejectedTechnicalTiersFault(e))?);
     }
 
-    pub fn ruby_layout_test_support_layout_contradictory(reading: &str) -> Result<LayoutResult, ParagraphLayoutEngineNewFault> {
-        let mut e = ExplainableStubParagraphLayoutEngine::new(Some(Box::new(CjkFontRoleClassifier::new())), Some(Box::new(ParagraphLayoutFallbackResolver::new(Some("cjk-primary".to_string()), Some("latin-primary".to_string()), Some("symbol-fallback".to_string()))?)),
-Some(Box::new(BuiltInClreqProfileResolver::new())), Some(Box::new(StubFontMetricsResolver::new())), Some(Box::new(ScriptAwareFontMetricsNormalizer::new())), Some((PunctuationAtomBuilder::new(None, None)?).clone()), Some((PunctuationSpacingCompressor::new()?).clone()),
-Some(QuotePairAnalyzer::new()), Some(Box::new(GreedyLineBreaker::new(None, None, None, None))), Some(Justifier::new(Some(0.5), Some(0.25))), Some(Box::new(ContradictoryInkShaper::new())), Some((DefaultHyphenator::default_hyphenator_default_hyphenator()?).clone()),
-Some(Box::new(LruWidthIndependentAnnotationCache::new(512))))?;
-        return Ok(e.layout(LayoutInput::new(TiqianTextContent::new("甲乙丙丁", Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![])), Some(TextStyle::new(Some(vec![]), Some(16.0), Some("zh-Hans".to_string()), Some(400), Some(false), Some(0.0), Some(InlineAttachment::None))),
-Some(ParagraphStyle::new(Some(LastLineAlignment::Start), Some(WritingMode::HorizontalTb), Some(18.0f64), Some(Ic(0 as f64)), Some(Ic::zero()), Some(MeasureAdaptiveFirstLineIndent::new(Some(14.0), Some(1.0), Some(2.0))), Some(LineLengthGrid::new(Some(true), None)),
-Some(RubyLineHeightMode::PerLine), Some(ParagraphStyle::PARAGRAPH_STYLE_DEFAULT_INLINE_OBJECT_MINIMUM_CLEARANCE_EM), Some(ParagraphStyle::PARAGRAPH_STYLE_DEFAULT_EMPHASIS_DOT_GAP_EM))), LayoutConstraints::new(64.0f64, Some(f64::INFINITY), Some(2147483647)).map_err(|e|
-ParagraphLayoutEngineNewFault::TextRangeErrorFault(e))?, Some((*crate::org::tiqian::core::built_in_layout_profiles::BUILT_IN_LAYOUT_PROFILES_CLREQ_HORIZONTAL).clone()), Some(vec![]), Some(vec![
+    pub fn ruby_layout_test_support_layout_contradictory(reading: &UStr) -> Result<LayoutResult, ParagraphLayoutEngineNewFault> {
+        let mut e = ExplainableStubParagraphLayoutEngine::new(Some(Box::new(CjkFontRoleClassifier::new())), Some(Box::new(ParagraphLayoutFallbackResolver::new(Some(UString::from("cjk-primary")), Some(UString::from("latin-primary")), Some(UString::from("symbol-fallback")))?)), Some(Box::new(BuiltInClreqProfileResolver::new())), Some(Box::new(StubFontMetricsResolver::new())), Some(Box::new(ScriptAwareFontMetricsNormalizer::new())), Some((PunctuationAtomBuilder::new(None, None)?).clone()), Some((PunctuationSpacingCompressor::new()?).clone()), Some(QuotePairAnalyzer::new()), Some(Box::new(GreedyLineBreaker::new(None, None, None, None))), Some(Justifier::new(Some(0.5), Some(0.25))), Some(Arc::new(Mutex::new(ContradictoryInkShaper::new()))), Some((DefaultHyphenator::default_hyphenator_default_hyphenator()?).clone()), Some(Arc::new(Mutex::new(LruWidthIndependentAnnotationCache::new(512)))))?;
+        return Ok(e.layout(LayoutInput::new(TiqianTextContent::new(&(UStr::new(&[30002,20057,19993,19969])), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![])), Some(TextStyle::new(Some(vec![]), Some(16.0), Some(UString::from("zh-Hans")), Some(400), Some(false), Some(0.0), Some(InlineAttachment::None))), Some(ParagraphStyle::new(Some(LastLineAlignment::Start), Some(WritingMode::HorizontalTb), Some(18.0f64), Some(Ic(0 as f64)), Some(Ic::zero()), Some(MeasureAdaptiveFirstLineIndent::new(Some(14.0), Some(1.0), Some(2.0))), Some(LineLengthGrid::new(Some(true), None)), Some(RubyLineHeightMode::PerLine), Some(ParagraphStyle::PARAGRAPH_STYLE_DEFAULT_INLINE_OBJECT_MINIMUM_CLEARANCE_EM), Some(ParagraphStyle::PARAGRAPH_STYLE_DEFAULT_EMPHASIS_DOT_GAP_EM))), LayoutConstraints::new(64.0f64, Some(f64::INFINITY), Some(2147483647)).map_err(|e| ParagraphLayoutEngineNewFault::TextRangeErrorFault(e))?, Some((*crate::org::tiqian::core::built_in_layout_profiles::BUILT_IN_LAYOUT_PROFILES_CLREQ_HORIZONTAL).clone()), Some(vec![]), Some(vec![
     (RubySpan::new(TextRange::new(0u32, 1u32).map_err(|e| ParagraphLayoutEngineNewFault::TextRangeErrorFault(e))?, reading, Some(vec![]), RubyKind::Pinyin, None)).clone(),
 ]), Some(vec![]), Some(vec![]))).map_err(|e| ParagraphLayoutEngineNewFault::LayoutWithRejectedTechnicalTiersFault(e))?);
     }
 
-    pub fn ruby_layout_test_support_total_width(texts: &Vec<String>) -> Result<f64, RubyLayoutTestSupportTotalWidthFault> {
+    pub fn ruby_layout_test_support_total_width(texts: &Vec<UString>) -> Result<f64, RubyLayoutTestSupportTotalWidthFault> {
         let mut spans: Vec<RubySpan> = vec![];
         for i in 0..match u32::try_from(texts.len()) { Ok(value) => value, Err(_) => u32::MAX } {
-            spans.push(RubySpan::new(TextRange::new(i, u32::wrapping_add(i, 1)).map_err(|e| RubyLayoutTestSupportTotalWidthFault::TextRangeErrorFault(e))?, (texts[usize::try_from(i).unwrap_or(0)]).clone().as_str(), Some(vec![]), RubyKind::Pinyin, None));
+            spans.push(RubySpan::new(TextRange::new(i, u32::wrapping_add(i, 1)).map_err(|e| RubyLayoutTestSupportTotalWidthFault::TextRangeErrorFault(e))?, (texts[usize::try_from(i).unwrap_or(0)]).clone().as_ustr(), Some(vec![]), RubyKind::Pinyin, None));
         }
-        let r = RubyLayoutTestSupport::ruby_layout_test_support_engine().map_err(|e| RubyLayoutTestSupportTotalWidthFault::ParagraphLayoutEngineNewFaultFault(e))?.layout(LayoutInput::new(TiqianTextContent::new("中文排版", Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![])),
-Some(TextStyle::new(Some(vec![]), Some(16.0), Some("zh-Hans".to_string()), Some(400), Some(false), Some(0.0), Some(InlineAttachment::None))), Some(ParagraphStyle::new(Some(LastLineAlignment::Start), Some(WritingMode::HorizontalTb), None, Some(Ic(0 as f64)), Some(Ic::zero()),
-Some(MeasureAdaptiveFirstLineIndent::new(Some(14.0), Some(1.0), Some(2.0))), Some(LineLengthGrid::new(Some(true), None)), Some(RubyLineHeightMode::PerLine), Some(ParagraphStyle::PARAGRAPH_STYLE_DEFAULT_INLINE_OBJECT_MINIMUM_CLEARANCE_EM),
-Some(ParagraphStyle::PARAGRAPH_STYLE_DEFAULT_EMPHASIS_DOT_GAP_EM))), LayoutConstraints::new(4000.0f64, Some(f64::INFINITY), Some(2147483647)).map_err(|e| RubyLayoutTestSupportTotalWidthFault::TextRangeErrorFault(e))?,
-Some((*crate::org::tiqian::core::built_in_layout_profiles::BUILT_IN_LAYOUT_PROFILES_CLREQ_HORIZONTAL).clone()), Some(vec![]), Some((spans).clone()), Some(vec![]), Some(vec![]))).map_err(|e|
-RubyLayoutTestSupportTotalWidthFault::ParagraphLayoutEngineLayoutWithRejectedTechnicalTiersFaultFault(e))?;
+        let r = RubyLayoutTestSupport::ruby_layout_test_support_engine().map_err(|e| RubyLayoutTestSupportTotalWidthFault::ParagraphLayoutEngineNewFaultFault(e))?.layout(LayoutInput::new(TiqianTextContent::new(&(UStr::new(&[20013,25991,25490,29256])), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![])), Some(TextStyle::new(Some(vec![]), Some(16.0), Some(UString::from("zh-Hans")), Some(400), Some(false), Some(0.0), Some(InlineAttachment::None))), Some(ParagraphStyle::new(Some(LastLineAlignment::Start), Some(WritingMode::HorizontalTb), None, Some(Ic(0 as f64)), Some(Ic::zero()), Some(MeasureAdaptiveFirstLineIndent::new(Some(14.0), Some(1.0), Some(2.0))), Some(LineLengthGrid::new(Some(true), None)), Some(RubyLineHeightMode::PerLine), Some(ParagraphStyle::PARAGRAPH_STYLE_DEFAULT_INLINE_OBJECT_MINIMUM_CLEARANCE_EM), Some(ParagraphStyle::PARAGRAPH_STYLE_DEFAULT_EMPHASIS_DOT_GAP_EM))), LayoutConstraints::new(4000.0f64, Some(f64::INFINITY), Some(2147483647)).map_err(|e| RubyLayoutTestSupportTotalWidthFault::TextRangeErrorFault(e))?, Some((*crate::org::tiqian::core::built_in_layout_profiles::BUILT_IN_LAYOUT_PROFILES_CLREQ_HORIZONTAL).clone()), Some(vec![]), Some((spans).clone()), Some(vec![]), Some(vec![]))).map_err(|e| RubyLayoutTestSupportTotalWidthFault::ParagraphLayoutEngineLayoutWithRejectedTechnicalTiersFaultFault(e))?;
         let mut total = 0.0f64;
         for i in 0..match u32::try_from(r.clusters.len()) { Ok(value) => value, Err(_) => u32::MAX } {
             total += r.clusters[usize::try_from(i).unwrap_or(0)].advance;
@@ -247,36 +246,32 @@ RubyLayoutTestSupportTotalWidthFault::ParagraphLayoutEngineLayoutWithRejectedTec
     pub fn ruby_layout_test_support_assert_float_list_equals(expected: &Vec<f64>, actual: &[f64]) -> Result<(), TracedAssertionsFailFault> {
         let mut e: Vec<u32> = vec![];
         for i in 0..match u32::try_from(expected.len()) { Ok(value) => value, Err(_) => u32::MAX } {
-            e.push(u32::from_ne_bytes((match f64::from(expected[usize::try_from(i).unwrap_or(0)]) { v if v.is_nan() => 0i32, v if v >= 2147483648.0 => 2147483647i32, v if v < -2147483648.0 => -2147483648i32, v if v < 0.0 => i32::from_ne_bytes(u32::wrapping_sub(0, match ((0.0 -
-v).to_bits() >> 52) & 2047 { e if e < 1023 => 0u32, e => u32::try_from((((0.0 - v).to_bits() & 4503599627370495) | 4503599627370496) >> (52 - (e - 1023))).unwrap_or(0) }).to_ne_bytes()), v => i32::from_ne_bytes(match ((v).to_bits() >> 52) & 2047 { e if e < 1023 => 0u32, e =>
-u32::try_from((((v).to_bits() & 4503599627370495) | 4503599627370496) >> (52 - (e - 1023))).unwrap_or(0) }.to_ne_bytes()) }).to_ne_bytes()));
+            e.push(u32::from_ne_bytes(((match f64::from(expected[usize::try_from(i).unwrap_or(0)]) { v if v.is_nan() => 0i32, v if v >= 2147483648.0 => 2147483647i32, v if v < -2147483648.0 => -2147483648i32, v if v < 0.0 => i32::from_ne_bytes(u32::wrapping_sub(0, match ((0.0 - v).to_bits() >> 52) & 2047 { e if e < 1023 => 0u32, e => u32::try_from((((0.0 - v).to_bits() & 4503599627370495) | 4503599627370496) >> (52 - (e - 1023))).unwrap_or(0) }).to_ne_bytes()), v => i32::from_ne_bytes(match ((v).to_bits() >> 52) & 2047 { e if e < 1023 => 0u32, e => u32::try_from((((v).to_bits() & 4503599627370495) | 4503599627370496) >> (52 - (e - 1023))).unwrap_or(0) }.to_ne_bytes()) }) as u32).to_ne_bytes()));
         }
         let mut a: Vec<u32> = vec![];
         for i in 0..match u32::try_from(actual.len()) { Ok(value) => value, Err(_) => u32::MAX } {
-            a.push(u32::from_ne_bytes((match f64::from(actual[usize::try_from(i).unwrap_or(0)]) { v if v.is_nan() => 0i32, v if v >= 2147483648.0 => 2147483647i32, v if v < -2147483648.0 => -2147483648i32, v if v < 0.0 => i32::from_ne_bytes(u32::wrapping_sub(0, match ((0.0 -
-v).to_bits() >> 52) & 2047 { e if e < 1023 => 0u32, e => u32::try_from((((0.0 - v).to_bits() & 4503599627370495) | 4503599627370496) >> (52 - (e - 1023))).unwrap_or(0) }).to_ne_bytes()), v => i32::from_ne_bytes(match ((v).to_bits() >> 52) & 2047 { e if e < 1023 => 0u32, e =>
-u32::try_from((((v).to_bits() & 4503599627370495) | 4503599627370496) >> (52 - (e - 1023))).unwrap_or(0) }.to_ne_bytes()) }).to_ne_bytes()));
+            a.push(u32::from_ne_bytes(((match f64::from(actual[usize::try_from(i).unwrap_or(0)]) { v if v.is_nan() => 0i32, v if v >= 2147483648.0 => 2147483647i32, v if v < -2147483648.0 => -2147483648i32, v if v < 0.0 => i32::from_ne_bytes(u32::wrapping_sub(0, match ((0.0 - v).to_bits() >> 52) & 2047 { e if e < 1023 => 0u32, e => u32::try_from((((0.0 - v).to_bits() & 4503599627370495) | 4503599627370496) >> (52 - (e - 1023))).unwrap_or(0) }).to_ne_bytes()), v => i32::from_ne_bytes(match ((v).to_bits() >> 52) & 2047 { e if e < 1023 => 0u32, e => u32::try_from((((v).to_bits() & 4503599627370495) | 4503599627370496) >> (52 - (e - 1023))).unwrap_or(0) }.to_ne_bytes()) }) as u32).to_ne_bytes()));
         }
         let _ = TracedAssertions::traced_assertions_assert_equals_int_array(&e, &a, None)?;
         Ok(())
     }
 }
 
-#[derive(Clone, PartialEq)]
+#[derive(Clone)]
 pub struct ContradictoryInkShaper {
-    pub(crate) delegate: ExplainableStubTextShaper,
+    pub(crate) delegate: Arc<Mutex<ExplainableStubTextShaper>>,
 }
 
 impl ContradictoryInkShaper {
     pub fn new() -> Self {
         Self {
-            delegate: ExplainableStubTextShaper::new(),
+            delegate: Arc::new(Mutex::new(ExplainableStubTextShaper::new())),
         }
     }
 
     pub fn shape(&self, input: ShapingInput) -> Result<ShapingResult, TextShaperShapeFault> {
-        let r = self.delegate.shape((input).clone())?;
-        let bounds = if input.display_text.to_string() == "pg" { Rect::new(0.0f64, -100.0f64, 16.0f64, 100.0f64) } else { Rect::new(0.0f64, -1.0f64, 16.0f64, 1.0f64) };
+        let r = self.delegate.lock().unwrap().shape((input).clone())?;
+        let bounds = if input.display_text.to_ustring() == UString::from("pg") { Rect::new(0.0f64, -100.0f64, 16.0f64, 100.0f64) } else { Rect::new(0.0f64, -1.0f64, 16.0f64, 1.0f64) };
         let mut runs: Vec<GlyphRun> = vec![];
         for i in 0..match u32::try_from(r.glyph_runs.len()) { Ok(value) => value, Err(_) => u32::MAX } {
             let run = (r.glyph_runs[usize::try_from(i).unwrap_or(0)]).clone();
@@ -285,13 +280,12 @@ impl ContradictoryInkShaper {
                 let g = (run.glyphs[usize::try_from(j).unwrap_or(0)]).clone();
                 gs.push(Glyph::new(g.id, (g.cluster_range).clone(), g.advance, Some(g.x), Some(g.y), g.render_font_key.clone(), Some((bounds).clone()), g.halt_advance, g.halt_placement_x));
             }
-            runs.push(GlyphRun::new((run.range).clone(), (run.font_key).to_string().as_str(), gs.to_vec(), run.advance, Some(vec![])));
+            runs.push(GlyphRun::new((run.range).clone(), (run.font_key).to_ustring().as_ustr(), gs.to_vec(), run.advance, Some(vec![])));
         }
         let mut ds: Vec<ShapingDecisionInfo> = vec![];
         for i in 0..match u32::try_from(r.decisions.len()) { Ok(value) => value, Err(_) => u32::MAX } {
             let d = (r.decisions[usize::try_from(i).unwrap_or(0)]).clone();
-            ds.push(ShapingDecisionInfo::new((d.range).clone(), (d.source_text).to_string().as_str(), (d.display_text).to_string().as_str(), (d.font_key).to_string().as_str(), d.glyph_count, d.advance, (d.source).to_string().as_str(), (d.reason).to_string().as_str(), Some(0),
-Some(d.missing_glyphs), d.resolved_face.clone(), d.script.clone(), d.language.clone(), d.strategy.clone(), d.feature_evidence.clone(), d.capability_issue.clone()));
+            ds.push(ShapingDecisionInfo::new((d.range).clone(), (d.source_text).to_ustring().as_ustr(), (d.display_text).to_ustring().as_ustr(), (d.font_key).to_ustring().as_ustr(), d.glyph_count, d.advance, (d.source).to_ustring().as_ustr(), (d.reason).to_ustring().as_ustr(), Some(0), Some(d.missing_glyphs), d.resolved_face.clone(), d.script.clone(), d.language.clone(), d.strategy.clone(), d.feature_evidence.clone(), d.capability_issue.clone()));
         }
         return Ok(ShapingResult::new(r.clusters.to_vec(), runs.to_vec(), Some((ds).clone())));
     }
@@ -309,8 +303,8 @@ impl ITextShaper for ContradictoryInkShaper {
     }
 
     fn shape(&mut self, input: ShapingInput) -> Result<ShapingResult, TextShaperShapeFault> {
-        let r = self.delegate.shape((input).clone())?;
-        let bounds = if input.display_text.to_string() == "pg" { Rect::new(0.0f64, -100.0f64, 16.0f64, 100.0f64) } else { Rect::new(0.0f64, -1.0f64, 16.0f64, 1.0f64) };
+        let r = self.delegate.lock().unwrap().shape((input).clone())?;
+        let bounds = if input.display_text.to_ustring() == UString::from("pg") { Rect::new(0.0f64, -100.0f64, 16.0f64, 100.0f64) } else { Rect::new(0.0f64, -1.0f64, 16.0f64, 1.0f64) };
         let mut runs: Vec<GlyphRun> = vec![];
         for i in 0..match u32::try_from(r.glyph_runs.len()) { Ok(value) => value, Err(_) => u32::MAX } {
             let run = (r.glyph_runs[usize::try_from(i).unwrap_or(0)]).clone();
@@ -319,13 +313,12 @@ impl ITextShaper for ContradictoryInkShaper {
                 let g = (run.glyphs[usize::try_from(j).unwrap_or(0)]).clone();
                 gs.push(Glyph::new(g.id, (g.cluster_range).clone(), g.advance, Some(g.x), Some(g.y), g.render_font_key.clone(), Some((bounds).clone()), g.halt_advance, g.halt_placement_x));
             }
-            runs.push(GlyphRun::new((run.range).clone(), (run.font_key).to_string().as_str(), gs.to_vec(), run.advance, Some(vec![])));
+            runs.push(GlyphRun::new((run.range).clone(), (run.font_key).to_ustring().as_ustr(), gs.to_vec(), run.advance, Some(vec![])));
         }
         let mut ds: Vec<ShapingDecisionInfo> = vec![];
         for i in 0..match u32::try_from(r.decisions.len()) { Ok(value) => value, Err(_) => u32::MAX } {
             let d = (r.decisions[usize::try_from(i).unwrap_or(0)]).clone();
-            ds.push(ShapingDecisionInfo::new((d.range).clone(), (d.source_text).to_string().as_str(), (d.display_text).to_string().as_str(), (d.font_key).to_string().as_str(), d.glyph_count, d.advance, (d.source).to_string().as_str(), (d.reason).to_string().as_str(), Some(0),
-Some(d.missing_glyphs), d.resolved_face.clone(), d.script.clone(), d.language.clone(), d.strategy.clone(), d.feature_evidence.clone(), d.capability_issue.clone()));
+            ds.push(ShapingDecisionInfo::new((d.range).clone(), (d.source_text).to_ustring().as_ustr(), (d.display_text).to_ustring().as_ustr(), (d.font_key).to_ustring().as_ustr(), d.glyph_count, d.advance, (d.source).to_ustring().as_ustr(), (d.reason).to_ustring().as_ustr(), Some(0), Some(d.missing_glyphs), d.resolved_face.clone(), d.script.clone(), d.language.clone(), d.strategy.clone(), d.feature_evidence.clone(), d.capability_issue.clone()));
         }
         return Ok(ShapingResult::new(r.clusters.to_vec(), runs.to_vec(), Some((ds).clone())));
     }

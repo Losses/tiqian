@@ -30,13 +30,13 @@ impl UnicodeEmojiPresentationData {
     pub fn unicode_emoji_presentation_data_contains(code_point: u32) -> bool {
         let mut l = 0u32;
         let mut h = u32::wrapping_sub(u32::try_from((RANGES.len()) & 0xFFFF_FFFF).unwrap_or(0) >> 1, 1);
-        while (i32::from_ne_bytes((l).to_ne_bytes())) <= i32::from_ne_bytes((h).to_ne_bytes()) {
+        while (i32::from_ne_bytes(((l) as i32).to_ne_bytes())) <= i32::from_ne_bytes(((h) as i32).to_ne_bytes()) {
             let m = u32::wrapping_add(l, h) >> 1;
             let b = u32::wrapping_mul(m, 2);
-            if i32::from_ne_bytes((code_point).to_ne_bytes()) < ({ let v: u32 = RANGES[usize::try_from(b).unwrap_or(0)]; i32::from_ne_bytes(v.to_ne_bytes()) }) {
+            if i32::from_ne_bytes(((code_point) as i32).to_ne_bytes()) < ({ let v: u32 = RANGES[usize::try_from(b).unwrap_or(0)]; i32::from_ne_bytes(v.to_ne_bytes()) }) {
                 h = u32::wrapping_sub(m, 1);
             } else {
-                if i32::from_ne_bytes((code_point).to_ne_bytes()) > ({ let v: u32 = RANGES[usize::try_from(u32::wrapping_add(b, 1)).unwrap_or(0)]; i32::from_ne_bytes(v.to_ne_bytes()) }) {
+                if i32::from_ne_bytes(((code_point) as i32).to_ne_bytes()) > ({ let v: u32 = RANGES[usize::try_from(u32::wrapping_add(b, 1)).unwrap_or(0)]; i32::from_ne_bytes(v.to_ne_bytes()) }) {
                     l = u32::wrapping_add(m, 1);
                 } else {
                     return true;

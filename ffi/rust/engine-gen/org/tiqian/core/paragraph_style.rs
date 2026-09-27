@@ -4,6 +4,7 @@ use crate::org::tiqian::core::line_length_grid::LineLengthGrid;
 use crate::org::tiqian::core::measure_adaptive_first_line_indent::MeasureAdaptiveFirstLineIndent;
 use crate::org::tiqian::core::ruby_line_height_mode::RubyLineHeightMode;
 use crate::org::tiqian::core::writing_mode::WritingMode;
+use crate::runtime::u_string::UString;
 
 
 #[derive(Debug, Clone, PartialEq)]
@@ -25,8 +26,7 @@ impl ParagraphStyle {
 
     pub const PARAGRAPH_STYLE_DEFAULT_INLINE_OBJECT_MINIMUM_CLEARANCE_EM: f64 = 0.1f64;
 
-    pub fn new(last_line_alignment: Option<LastLineAlignment>, writing_mode: Option<WritingMode>, line_height: Option<f64>, first_line_indent: Option<Ic>, block_indent: Option<Ic>, first_line_indent_policy: Option<MeasureAdaptiveFirstLineIndent>, line_length_grid:
-Option<LineLengthGrid>, ruby_line_height_mode: Option<RubyLineHeightMode>, inline_object_minimum_clearance_em: Option<f64>, emphasis_dot_gap_em: Option<f64>) -> Self {
+    pub fn new(last_line_alignment: Option<LastLineAlignment>, writing_mode: Option<WritingMode>, line_height: Option<f64>, first_line_indent: Option<Ic>, block_indent: Option<Ic>, first_line_indent_policy: Option<MeasureAdaptiveFirstLineIndent>, line_length_grid: Option<LineLengthGrid>, ruby_line_height_mode: Option<RubyLineHeightMode>, inline_object_minimum_clearance_em: Option<f64>, emphasis_dot_gap_em: Option<f64>) -> Self {
         let last_line_alignment = last_line_alignment.unwrap_or_else(|| LastLineAlignment::Start);
         let writing_mode = writing_mode.unwrap_or_else(|| WritingMode::HorizontalTb);
         let line_height = line_height.or_else(|| None);
@@ -51,39 +51,7 @@ Option<LineLengthGrid>, ruby_line_height_mode: Option<RubyLineHeightMode>, inlin
         }
     }
 
-    pub fn to_string(&self) -> String {
-        return format!("{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}",
-            "ParagraphStyle(",
-            "lastLineAlignment=",
-            self.last_line_alignment.name(),
-            ", ",
-            "writingMode=",
-            self.writing_mode.name(),
-            ", ",
-            "lineHeight=",
-            match self.line_height { Some(v) => crate::runtime::fp_helper::FPHelper::format_float(v), None => "null".to_string() },
-            ", ",
-            "firstLineIndent=",
-            (match &(self.first_line_indent) { None => "null".to_string(), Some(__option) => __option.to_string() }),
-            ", ",
-            "blockIndent=",
-            (self.block_indent).clone().to_string(),
-            ", ",
-            "firstLineIndentPolicy=",
-            (self.first_line_indent_policy).clone().to_string(),
-            ", ",
-            "lineLengthGrid=",
-            (self.line_length_grid).clone().to_string(),
-            ", ",
-            "rubyLineHeightMode=",
-            self.ruby_line_height_mode.name(),
-            ", ",
-            "inlineObjectMinimumClearanceEm=",
-            self.inline_object_minimum_clearance_em,
-            ", ",
-            "emphasisDotGapEm=",
-            self.emphasis_dot_gap_em,
-            ")"
-        );
+    pub fn to_string(&self) -> UString {
+        return UString::from(format!("{}", { let mut __s = UString::new(); __s += &(UString::from("ParagraphStyle(")); __s += &(UString::from("lastLineAlignment=")); __s += UString::from(self.last_line_alignment.name()).as_ustr(); __s += &(UString::from(", ")); __s += &(UString::from("writingMode=")); __s += UString::from(self.writing_mode.name()).as_ustr(); __s += &(UString::from(", ")); __s += &(UString::from("lineHeight=")); __s += &(match self.line_height { Some(v) => UString::from(format!("{}", crate::runtime::fp_helper::FPHelper::format_float(v)).as_str()), None => UString::from("null") }); __s += &(UString::from(", ")); __s += &(UString::from("firstLineIndent=")); __s += (match &(self.first_line_indent) { None => UString::from("null"), Some(__option) => UString::from((__option).to_string().as_str()) }).as_ustr(); __s += &(UString::from(", ")); __s += &(UString::from("blockIndent=")); __s += UString::from(((self.block_indent).clone()).to_string().as_str()).as_ustr(); __s += &(UString::from(", ")); __s += &(UString::from("firstLineIndentPolicy=")); __s += UString::from(format!("{}", (self.first_line_indent_policy).clone().to_string()).as_str()).as_ustr(); __s += &(UString::from(", ")); __s += &(UString::from("lineLengthGrid=")); __s += UString::from(format!("{}", (self.line_length_grid).clone().to_string()).as_str()).as_ustr(); __s += &(UString::from(", ")); __s += &(UString::from("rubyLineHeightMode=")); __s += UString::from(self.ruby_line_height_mode.name()).as_ustr(); __s += &(UString::from(", ")); __s += &(UString::from("inlineObjectMinimumClearanceEm=")); __s += &(crate::runtime::fp_helper::FPHelper::format_float(self.inline_object_minimum_clearance_em)); __s += &(UString::from(", ")); __s += &(UString::from("emphasisDotGapEm=")); __s += &(crate::runtime::fp_helper::FPHelper::format_float(self.emphasis_dot_gap_em)); __s += &(UString::from(")")); __s }).as_str());
     }
 }

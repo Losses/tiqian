@@ -41,13 +41,25 @@ use crate::org::tiqian::shaping::text_shaper::ShapingResult;
 use crate::org::tiqian::shaping::text_shaper::TextShaperShapeFault;
 use crate::org::tiqian::test::trace::test_trace_recorder::TestTraceRecorder;
 use crate::runtime::u_string;
+use crate::runtime::u_string::UStr;
+use crate::runtime::u_string::UString;
 use std::fmt::Write;
+use std::sync::Arc;
+use std::sync::Mutex;
 
 
 #[derive(Debug, Clone, PartialEq)]
 pub enum JustifierEngineTestSupportEngineFault {
     TextRangeErrorFault(crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError),
     UStringFaultFault(crate::std::u_string_exception::UStringFault),
+}
+impl std::fmt::Display for JustifierEngineTestSupportEngineFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            JustifierEngineTestSupportEngineFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            JustifierEngineTestSupportEngineFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
 }
 
 impl From<JustifierEngineTestSupportEngineFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
@@ -84,54 +96,32 @@ impl From<crate::std::u_string_exception::UStringFault> for JustifierEngineTestS
 pub struct JustifierEngineTestSupport;
 
 impl JustifierEngineTestSupport {
-    pub fn justifier_engine_test_support_start(n: &str) -> TestTraceRecorder {
-        let mut t = TestTraceRecorder::new("JustifierEngineTest");
+    pub fn justifier_engine_test_support_start(n: &UStr) -> TestTraceRecorder {
+        let mut t = TestTraceRecorder::new(&(UStr::new(&[74,117,115,116,105,102,105,101,114,69,110,103,105,110,101,84,101,115,116])));
         t.section(n);
         return t;
     }
 
     pub fn justifier_engine_test_support_engine() -> Result<ExplainableStubParagraphLayoutEngine, ParagraphLayoutEngineNewFault> {
         let p = (*crate::org::tiqian::clreq::clreq_profile::CLREQ_PROFILE_MAINLAND_HORIZONTAL).clone();
-        let r: Box<dyn ClreqProfileResolver> = Box::new(Fixed::new(ClreqProfile::new((p.id).to_string().as_str(), p.strictness, p.region, Some(p.punctuation_glyph_policy), Some((p.coalesce_repeatable_punctuation).clone()), Some((p.auto_space).clone()), Some(p.glue_placement),
-AdjustmentStylePolicy::new(Some((p.adjustment).clone().line_end_punctuation), Some((p.adjustment).clone().allow_inline_stop_compression), Some((p.adjustment).clone().allow_sino_western_gap_adjustment), Some(LineAdjustmentStrategy::PushOutOnly)), (p.kinsoku_mode).clone(),
-(p.punctuation_width).clone())));
-        return Ok(ExplainableStubParagraphLayoutEngine::new(Some(Box::new(CjkFontRoleClassifier::new())), Some(Box::new(ParagraphLayoutFallbackResolver::new(Some("cjk-primary".to_string()), Some("latin-primary".to_string()), Some("symbol-fallback".to_string()))?)),
-Some((r).clone()), Some(Box::new(StubFontMetricsResolver::new())), Some(Box::new(ScriptAwareFontMetricsNormalizer::new())), Some((PunctuationAtomBuilder::new(None, None)?).clone()), Some((PunctuationSpacingCompressor::new()?).clone()), Some(QuotePairAnalyzer::new()),
-Some(Box::new(GreedyLineBreaker::new(None, None, None, None))), Some(Justifier::new(Some(0.5), Some(0.25))), Some(Box::new(ExplainableStubTextShaper::new())), Some((DefaultHyphenator::default_hyphenator_default_hyphenator()?).clone()),
-Some(Box::new(LruWidthIndependentAnnotationCache::new(512))))?);
+        let r: Box<dyn ClreqProfileResolver> = Box::new(Fixed::new(ClreqProfile::new((p.id).to_ustring().as_ustr(), p.strictness, p.region, Some(p.punctuation_glyph_policy), Some((p.coalesce_repeatable_punctuation).clone()), Some((p.auto_space).clone()), Some(p.glue_placement), AdjustmentStylePolicy::new(Some((p.adjustment).clone().line_end_punctuation), Some((p.adjustment).clone().allow_inline_stop_compression), Some((p.adjustment).clone().allow_sino_western_gap_adjustment), Some(LineAdjustmentStrategy::PushOutOnly)), (p.kinsoku_mode).clone(), (p.punctuation_width).clone())));
+        return Ok(ExplainableStubParagraphLayoutEngine::new(Some(Box::new(CjkFontRoleClassifier::new())), Some(Box::new(ParagraphLayoutFallbackResolver::new(Some(UString::from("cjk-primary")), Some(UString::from("latin-primary")), Some(UString::from("symbol-fallback")))?)), Some((r).clone()), Some(Box::new(StubFontMetricsResolver::new())), Some(Box::new(ScriptAwareFontMetricsNormalizer::new())), Some((PunctuationAtomBuilder::new(None, None)?).clone()), Some((PunctuationSpacingCompressor::new()?).clone()), Some(QuotePairAnalyzer::new()), Some(Box::new(GreedyLineBreaker::new(None, None, None, None))), Some(Justifier::new(Some(0.5), Some(0.25))), Some(Arc::new(Mutex::new(ExplainableStubTextShaper::new()))), Some((DefaultHyphenator::default_hyphenator_default_hyphenator()?).clone()), Some(Arc::new(Mutex::new(LruWidthIndependentAnnotationCache::new(512)))))?);
     }
 
     pub fn justifier_engine_test_support_positioned() -> Result<ExplainableStubParagraphLayoutEngine, ParagraphLayoutEngineNewFault> {
-        return Ok(ExplainableStubParagraphLayoutEngine::new(Some(Box::new(CjkFontRoleClassifier::new())), Some(Box::new(ParagraphLayoutFallbackResolver::new(Some("cjk-primary".to_string()), Some("latin-primary".to_string()), Some("symbol-fallback".to_string()))?)),
-Some(Box::new(Fixed::new(ClreqProfile::new(((*crate::org::tiqian::clreq::clreq_profile::CLREQ_PROFILE_MAINLAND_HORIZONTAL).clone().id).to_string().as_str(), (*crate::org::tiqian::clreq::clreq_profile::CLREQ_PROFILE_MAINLAND_HORIZONTAL).clone().strictness,
-(*crate::org::tiqian::clreq::clreq_profile::CLREQ_PROFILE_MAINLAND_HORIZONTAL).clone().region, Some((*crate::org::tiqian::clreq::clreq_profile::CLREQ_PROFILE_MAINLAND_HORIZONTAL).clone().punctuation_glyph_policy),
-Some(((*crate::org::tiqian::clreq::clreq_profile::CLREQ_PROFILE_MAINLAND_HORIZONTAL).clone().coalesce_repeatable_punctuation).clone()), Some(((*crate::org::tiqian::clreq::clreq_profile::CLREQ_PROFILE_MAINLAND_HORIZONTAL).clone().auto_space).clone()),
-Some((*crate::org::tiqian::clreq::clreq_profile::CLREQ_PROFILE_MAINLAND_HORIZONTAL).clone().glue_placement), AdjustmentStylePolicy::new(Some(((*crate::org::tiqian::clreq::clreq_profile::CLREQ_PROFILE_MAINLAND_HORIZONTAL).clone().adjustment).clone().line_end_punctuation),
-Some(((*crate::org::tiqian::clreq::clreq_profile::CLREQ_PROFILE_MAINLAND_HORIZONTAL).clone().adjustment).clone().allow_inline_stop_compression),
-Some(((*crate::org::tiqian::clreq::clreq_profile::CLREQ_PROFILE_MAINLAND_HORIZONTAL).clone().adjustment).clone().allow_sino_western_gap_adjustment), Some(LineAdjustmentStrategy::PushOutOnly)),
-((*crate::org::tiqian::clreq::clreq_profile::CLREQ_PROFILE_MAINLAND_HORIZONTAL).clone().kinsoku_mode).clone(), ((*crate::org::tiqian::clreq::clreq_profile::CLREQ_PROFILE_MAINLAND_HORIZONTAL).clone().punctuation_width).clone())))), Some(Box::new(StubFontMetricsResolver::new())),
-Some(Box::new(ScriptAwareFontMetricsNormalizer::new())), Some((PunctuationAtomBuilder::new(None, None)?).clone()), Some((PunctuationSpacingCompressor::new()?).clone()), Some(QuotePairAnalyzer::new()), Some(Box::new(GreedyLineBreaker::new(None, None, None, None))),
-Some(Justifier::new(Some(0.5), Some(0.25))), Some(Box::new(PositionedPairShaper::new())), Some(Box::new(NoHyphenator::new())), Some(Box::new(LruWidthIndependentAnnotationCache::new(512))))?);
+        return Ok(ExplainableStubParagraphLayoutEngine::new(Some(Box::new(CjkFontRoleClassifier::new())), Some(Box::new(ParagraphLayoutFallbackResolver::new(Some(UString::from("cjk-primary")), Some(UString::from("latin-primary")), Some(UString::from("symbol-fallback")))?)), Some(Box::new(Fixed::new(ClreqProfile::new(((*crate::org::tiqian::clreq::clreq_profile::CLREQ_PROFILE_MAINLAND_HORIZONTAL).clone().id).to_ustring().as_ustr(), (*crate::org::tiqian::clreq::clreq_profile::CLREQ_PROFILE_MAINLAND_HORIZONTAL).clone().strictness, (*crate::org::tiqian::clreq::clreq_profile::CLREQ_PROFILE_MAINLAND_HORIZONTAL).clone().region, Some((*crate::org::tiqian::clreq::clreq_profile::CLREQ_PROFILE_MAINLAND_HORIZONTAL).clone().punctuation_glyph_policy), Some(((*crate::org::tiqian::clreq::clreq_profile::CLREQ_PROFILE_MAINLAND_HORIZONTAL).clone().coalesce_repeatable_punctuation).clone()), Some(((*crate::org::tiqian::clreq::clreq_profile::CLREQ_PROFILE_MAINLAND_HORIZONTAL).clone().auto_space).clone()), Some((*crate::org::tiqian::clreq::clreq_profile::CLREQ_PROFILE_MAINLAND_HORIZONTAL).clone().glue_placement), AdjustmentStylePolicy::new(Some(((*crate::org::tiqian::clreq::clreq_profile::CLREQ_PROFILE_MAINLAND_HORIZONTAL).clone().adjustment).clone().line_end_punctuation), Some(((*crate::org::tiqian::clreq::clreq_profile::CLREQ_PROFILE_MAINLAND_HORIZONTAL).clone().adjustment).clone().allow_inline_stop_compression), Some(((*crate::org::tiqian::clreq::clreq_profile::CLREQ_PROFILE_MAINLAND_HORIZONTAL).clone().adjustment).clone().allow_sino_western_gap_adjustment), Some(LineAdjustmentStrategy::PushOutOnly)), ((*crate::org::tiqian::clreq::clreq_profile::CLREQ_PROFILE_MAINLAND_HORIZONTAL).clone().kinsoku_mode).clone(), ((*crate::org::tiqian::clreq::clreq_profile::CLREQ_PROFILE_MAINLAND_HORIZONTAL).clone().punctuation_width).clone())))), Some(Box::new(StubFontMetricsResolver::new())), Some(Box::new(ScriptAwareFontMetricsNormalizer::new())), Some((PunctuationAtomBuilder::new(None, None)?).clone()), Some((PunctuationSpacingCompressor::new()?).clone()), Some(QuotePairAnalyzer::new()), Some(Box::new(GreedyLineBreaker::new(None, None, None, None))), Some(Justifier::new(Some(0.5), Some(0.25))), Some(Arc::new(Mutex::new(PositionedPairShaper::new()))), Some(Box::new(NoHyphenator::new())), Some(Arc::new(Mutex::new(LruWidthIndependentAnnotationCache::new(512)))))?);
     }
 
-    pub fn justifier_engine_test_support_layout(text: &str, width: f64) -> Result<LayoutResult, ParagraphLayoutEngineNewFault> {
-        return Ok(JustifierEngineTestSupport::justifier_engine_test_support_engine()?.layout(LayoutInput::new(TiqianTextContent::new(text, Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![])), Some(TextStyle::new(Some(vec![]), Some(16.0), Some("zh-Hans".to_string()), Some(400),
-Some(false), Some(0.0), Some(InlineAttachment::None))), Some(ParagraphStyle::new(Some(LastLineAlignment::Start), Some(WritingMode::HorizontalTb), None, Some((Ic::zero()).clone()), Some(Ic::zero()), Some(MeasureAdaptiveFirstLineIndent::new(Some(14.0), Some(1.0), Some(2.0))),
-Some(LineLengthGrid::new(Some(true), None)), Some(RubyLineHeightMode::PerLine), Some(ParagraphStyle::PARAGRAPH_STYLE_DEFAULT_INLINE_OBJECT_MINIMUM_CLEARANCE_EM), Some(ParagraphStyle::PARAGRAPH_STYLE_DEFAULT_EMPHASIS_DOT_GAP_EM))), LayoutConstraints::new(width, Some(f64::INFINITY),
-Some(2147483647)).map_err(|e| ParagraphLayoutEngineNewFault::TextRangeErrorFault(e))?, Some((*crate::org::tiqian::core::built_in_layout_profiles::BUILT_IN_LAYOUT_PROFILES_CLREQ_HORIZONTAL).clone()), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]))).map_err(|e|
-ParagraphLayoutEngineNewFault::LayoutWithRejectedTechnicalTiersFault(e))?);
+    pub fn justifier_engine_test_support_layout(text: &UStr, width: f64) -> Result<LayoutResult, ParagraphLayoutEngineNewFault> {
+        return Ok(JustifierEngineTestSupport::justifier_engine_test_support_engine()?.layout(LayoutInput::new(TiqianTextContent::new(text, Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![])), Some(TextStyle::new(Some(vec![]), Some(16.0), Some(UString::from("zh-Hans")), Some(400), Some(false), Some(0.0), Some(InlineAttachment::None))), Some(ParagraphStyle::new(Some(LastLineAlignment::Start), Some(WritingMode::HorizontalTb), None, Some((Ic::zero()).clone()), Some(Ic::zero()), Some(MeasureAdaptiveFirstLineIndent::new(Some(14.0), Some(1.0), Some(2.0))), Some(LineLengthGrid::new(Some(true), None)), Some(RubyLineHeightMode::PerLine), Some(ParagraphStyle::PARAGRAPH_STYLE_DEFAULT_INLINE_OBJECT_MINIMUM_CLEARANCE_EM), Some(ParagraphStyle::PARAGRAPH_STYLE_DEFAULT_EMPHASIS_DOT_GAP_EM))), LayoutConstraints::new(width, Some(f64::INFINITY), Some(2147483647)).map_err(|e| ParagraphLayoutEngineNewFault::TextRangeErrorFault(e))?, Some((*crate::org::tiqian::core::built_in_layout_profiles::BUILT_IN_LAYOUT_PROFILES_CLREQ_HORIZONTAL).clone()), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]))).map_err(|e| ParagraphLayoutEngineNewFault::LayoutWithRejectedTechnicalTiersFault(e))?);
     }
 
-    pub fn justifier_engine_test_support_allocations_text(list: &[JustificationAllocationInfo]) -> String {
-        let mut out: Vec<String> = vec![];
+    pub fn justifier_engine_test_support_allocations_text(list: &[JustificationAllocationInfo]) -> UString {
+        let mut out: Vec<UString> = vec![];
         for i in 0..match u32::try_from(list.len()) { Ok(value) => value, Err(_) => u32::MAX } {
-            out.push((list[usize::try_from(i).unwrap_or(0)]).clone().to_string());
+            out.push(UString::from(format!("{}", (list[usize::try_from(i).unwrap_or(0)]).clone().to_string()).as_str()));
         }
-        return format!("{}{}{}",
-            "[",
-            { let joined = out; let mut out = String::new(); let n = joined.len(); let mut index = 0usize; while index < n { if index > 0 { out.push_str(&(", ")); } let _ = write!(out, "{}", joined[index]); index += 1; } out },
-            "]"
-        );
+        return UString::from(format!("{}", { let mut __s = UString::new(); __s += &(UString::from("[")); __s += UString::from(format!("{}", { let joined = out; let mut out = String::new(); let n = joined.len(); let mut index = 0usize; while index < n { if index > 0 { out.push_str(", "); } let _ = write!(out, "{}", joined[index]); index += 1; } UString::from(out.as_str()) }).as_str()).as_ustr(); __s += &(UString::from("]")); __s }).as_str());
     }
 }
 
@@ -179,20 +169,19 @@ impl PositionedPairShaper {
     }
 
     pub fn shape(&self, input: ShapingInput) -> ShapingResult {
-        let text = u_string::substring(&(input.text).to_string(), i32::from_ne_bytes(((input.range).clone().start).to_ne_bytes()), i32::from_ne_bytes(((input.range).clone().end).to_ne_bytes()));
-        let advance = if text == "AV" { 10 } else { u32::wrapping_mul(u_string::unit_count(&(text)), 16) };
+        let text = u_string::substring(&(input.text).to_ustring(), i32::from_ne_bytes((((input.range).clone().start) as i32).to_ne_bytes()), i32::from_ne_bytes((((input.range).clone().end) as i32).to_ne_bytes()));
+        let advance = if text == UString::from("AV") { 10 } else { u32::wrapping_mul(u_string::unit_count(&(text)), 16) };
         let mut gs: Vec<Glyph> = vec![];
-        if text == "AV" {
+        if text == UString::from("AV") {
             gs.push(Glyph::new(1u32, (input.range).clone(), 5 as f64 as f64, Some(0 as f64), Some(0 as f64), None, None, None, None));
             gs.push(Glyph::new(2u32, (input.range).clone(), 5 as f64 as f64, Some(5 as f64), Some(0 as f64), None, None, None, None));
         } else {
             gs.push(Glyph::new(3u32, (input.range).clone(), { let v: u32 = advance; i32::from_ne_bytes(v.to_ne_bytes()) } as f64 as f64, Some(0 as f64), Some(0 as f64), None, None, None, None));
         }
         return ShapingResult::new(vec![
-    (Cluster::new((input.range).clone(), text.as_str(), (((input.font_decision).clone().candidate).clone().key).to_string().as_str(), { let v: u32 = advance; i32::from_ne_bytes(v.to_ne_bytes()) } as f64 as f64, Some((input.display_text).to_string()), Some(0.0), Some(0.0),
-Some(0.0))).clone(),
+    (Cluster::new((input.range).clone(), text.as_ustr(), (((input.font_decision).clone().candidate).clone().key).to_ustring().as_ustr(), { let v: u32 = advance; i32::from_ne_bytes(v.to_ne_bytes()) } as f64 as f64, Some((input.display_text).to_ustring()), Some(0.0), Some(0.0), Some(0.0))).clone(),
 ].to_vec(), vec![
-    (GlyphRun::new((input.range).clone(), (((input.font_decision).clone().candidate).clone().key).to_string().as_str(), gs.to_vec(), { let v: u32 = advance; i32::from_ne_bytes(v.to_ne_bytes()) } as f64 as f64, Some(vec![]))).clone(),
+    (GlyphRun::new((input.range).clone(), (((input.font_decision).clone().candidate).clone().key).to_ustring().as_ustr(), gs.to_vec(), { let v: u32 = advance; i32::from_ne_bytes(v.to_ne_bytes()) } as f64 as f64, Some(vec![]))).clone(),
 ].to_vec(), Some(vec![]));
     }
 }
@@ -209,20 +198,19 @@ impl ITextShaper for PositionedPairShaper {
     }
 
     fn shape(&mut self, input: ShapingInput) -> Result<ShapingResult, TextShaperShapeFault> {
-        let text = u_string::substring(&(input.text).to_string(), i32::from_ne_bytes(((input.range).clone().start).to_ne_bytes()), i32::from_ne_bytes(((input.range).clone().end).to_ne_bytes()));
-        let advance = if text == "AV" { 10 } else { u32::wrapping_mul(u_string::unit_count(&(text)), 16) };
+        let text = u_string::substring(&(input.text).to_ustring(), i32::from_ne_bytes((((input.range).clone().start) as i32).to_ne_bytes()), i32::from_ne_bytes((((input.range).clone().end) as i32).to_ne_bytes()));
+        let advance = if text == UString::from("AV") { 10 } else { u32::wrapping_mul(u_string::unit_count(&(text)), 16) };
         let mut gs: Vec<Glyph> = vec![];
-        if text == "AV" {
+        if text == UString::from("AV") {
             gs.push(Glyph::new(1u32, (input.range).clone(), 5 as f64 as f64, Some(0 as f64), Some(0 as f64), None, None, None, None));
             gs.push(Glyph::new(2u32, (input.range).clone(), 5 as f64 as f64, Some(5 as f64), Some(0 as f64), None, None, None, None));
         } else {
             gs.push(Glyph::new(3u32, (input.range).clone(), { let v: u32 = advance; i32::from_ne_bytes(v.to_ne_bytes()) } as f64 as f64, Some(0 as f64), Some(0 as f64), None, None, None, None));
         }
         return Ok(ShapingResult::new(vec![
-    (Cluster::new((input.range).clone(), text.as_str(), (((input.font_decision).clone().candidate).clone().key).to_string().as_str(), { let v: u32 = advance; i32::from_ne_bytes(v.to_ne_bytes()) } as f64 as f64, Some((input.display_text).to_string()), Some(0.0), Some(0.0),
-Some(0.0))).clone(),
+    (Cluster::new((input.range).clone(), text.as_ustr(), (((input.font_decision).clone().candidate).clone().key).to_ustring().as_ustr(), { let v: u32 = advance; i32::from_ne_bytes(v.to_ne_bytes()) } as f64 as f64, Some((input.display_text).to_ustring()), Some(0.0), Some(0.0), Some(0.0))).clone(),
 ].to_vec(), vec![
-    (GlyphRun::new((input.range).clone(), (((input.font_decision).clone().candidate).clone().key).to_string().as_str(), gs.to_vec(), { let v: u32 = advance; i32::from_ne_bytes(v.to_ne_bytes()) } as f64 as f64, Some(vec![]))).clone(),
+    (GlyphRun::new((input.range).clone(), (((input.font_decision).clone().candidate).clone().key).to_ustring().as_ustr(), gs.to_vec(), { let v: u32 = advance; i32::from_ne_bytes(v.to_ne_bytes()) } as f64 as f64, Some(vec![]))).clone(),
 ].to_vec(), Some(vec![])));
     }
 }

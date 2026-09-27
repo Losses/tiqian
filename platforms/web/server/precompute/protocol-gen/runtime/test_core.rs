@@ -1,80 +1,82 @@
 use crate::runtime::u_string;
+use crate::runtime::u_string::UStr;
+use crate::runtime::u_string::UString;
 
 
 #[derive(Clone, Copy)]
 pub struct TestCore;
 
 impl TestCore {
-    pub fn test_core_ok(condition: bool, message: &str) {
+    pub fn test_core_ok(condition: bool, message: &UStr) {
         if !condition {
-            panic!("{}", TestCore::test_core_format_canonical_message(crate::runtime::test::current_test_id().as_str(), message, &"", &"", false));
+            panic!("{}", TestCore::test_core_format_canonical_message(UString::from(format!("{}", crate::runtime::test::current_test_id()).as_str()).as_ustr(), message, UStr::new(&[]), UStr::new(&[]), false));
         }
     }
 
-    pub fn test_core_fail(message: &str) {
-        panic!("{}", TestCore::test_core_format_canonical_message(crate::runtime::test::current_test_id().as_str(), message, &"", &"", false));
+    pub fn test_core_fail(message: &UStr) {
+        panic!("{}", TestCore::test_core_format_canonical_message(UString::from(format!("{}", crate::runtime::test::current_test_id()).as_str()).as_ustr(), message, UStr::new(&[]), UStr::new(&[]), false));
     }
 
-    pub fn test_core_equals_bool(expected: bool, actual: bool, message: &str) {
+    pub fn test_core_equals_bool(expected: bool, actual: bool, message: &UStr) {
         if expected != actual {
-            panic!("{}", TestCore::test_core_format_canonical_message(crate::runtime::test::current_test_id().as_str(), message, TestCore::test_core_format_bool(expected).as_str(), TestCore::test_core_format_bool(actual).as_str(), true));
+            panic!("{}", TestCore::test_core_format_canonical_message(UString::from(format!("{}", crate::runtime::test::current_test_id()).as_str()).as_ustr(), message, TestCore::test_core_format_bool(expected).as_ustr(), TestCore::test_core_format_bool(actual).as_ustr(), true));
         }
     }
 
-    pub fn test_core_equals_int(expected: i32, actual: i32, message: &str) {
+    pub fn test_core_equals_int(expected: i32, actual: i32, message: &UStr) {
         if expected != actual {
-            panic!("{}", TestCore::test_core_format_canonical_message(crate::runtime::test::current_test_id().as_str(), message, TestCore::test_core_format_int(expected).as_str(), TestCore::test_core_format_int(actual).as_str(), true));
+            panic!("{}", TestCore::test_core_format_canonical_message(UString::from(format!("{}", crate::runtime::test::current_test_id()).as_str()).as_ustr(), message, TestCore::test_core_format_int(expected).as_ustr(), TestCore::test_core_format_int(actual).as_ustr(), true));
         }
     }
 
-    pub fn test_core_equals_float(expected: f64, actual: f64, message: &str) {
+    pub fn test_core_equals_float(expected: f64, actual: f64, message: &UStr) {
         if expected != actual {
-            panic!("{}", TestCore::test_core_format_canonical_message(crate::runtime::test::current_test_id().as_str(), message, TestCore::test_core_format_float(expected).as_str(), TestCore::test_core_format_float(actual).as_str(), true));
+            panic!("{}", TestCore::test_core_format_canonical_message(UString::from(format!("{}", crate::runtime::test::current_test_id()).as_str()).as_ustr(), message, TestCore::test_core_format_float(expected).as_ustr(), TestCore::test_core_format_float(actual).as_ustr(), true));
         }
     }
 
-    pub fn test_core_equals_string(expected: &str, actual: &str, message: &str) {
+    pub fn test_core_equals_string(expected: &UStr, actual: &UStr, message: &UStr) {
         if expected != actual {
-            panic!("{}", TestCore::test_core_format_canonical_message(crate::runtime::test::current_test_id().as_str(), message, TestCore::test_core_format_string(expected).as_str(), TestCore::test_core_format_string(actual).as_str(), true));
+            panic!("{}", TestCore::test_core_format_canonical_message(UString::from(format!("{}", crate::runtime::test::current_test_id()).as_str()).as_ustr(), message, TestCore::test_core_format_string(expected).as_ustr(), TestCore::test_core_format_string(actual).as_ustr(), true));
         }
     }
 
-    pub fn test_core_report_failure(message: &str, expected_str: &str, actual_str: &str) {
-        panic!("{}", TestCore::test_core_format_canonical_message(crate::runtime::test::current_test_id().as_str(), message, expected_str, actual_str, true));
+    pub fn test_core_report_failure(message: &UStr, expected_str: &UStr, actual_str: &UStr) {
+        panic!("{}", TestCore::test_core_format_canonical_message(UString::from(format!("{}", crate::runtime::test::current_test_id()).as_str()).as_ustr(), message, expected_str, actual_str, true));
     }
 
-    pub fn test_core_format_bool(v: bool) -> String {
+    pub fn test_core_format_bool(v: bool) -> UString {
         if v {
-            return "true".to_string();
+            return UString::from("true").to_ustring();
         }
-        return "false".to_string();
+        return UString::from("false").to_ustring();
     }
 
-    pub fn test_core_format_int(v: i32) -> String {
-        return (v).to_string();
+    pub fn test_core_format_int(v: i32) -> UString {
+        return UString::from((v).to_string().as_str());
     }
 
-    pub fn test_core_format_float(v: f64) -> String {
+    pub fn test_core_format_float(v: f64) -> UString {
         if v != v {
-            return "NaN".to_string();
+            return UString::from("NaN").to_ustring();
         }
         if v == f64::INFINITY {
-            return "Infinity".to_string();
+            return UString::from("Infinity").to_ustring();
         }
         if v == f64::NEG_INFINITY {
-            return "-Infinity".to_string();
+            return UString::from("-Infinity").to_ustring();
         }
         if v == 0.0f64 {
-            return "0".to_string();
+            return UString::from("0").to_ustring();
         }
-        let raw = (v).to_string();
+        let raw = UString::from((v).to_string().as_str());
         let mut s = (raw).clone();
         let mut negative = false;
         if u_string::unit_at(&s, 0u32).as_ref().map_or(false, |v| v == &(45)) {
             negative = true;
             s = u_string::substring_from(&s, 1i32);
         }
-        let exponent_parts = u_string::split(&s, &"e");
+        let exponent_parts = u_string::split(&s, &UString::from("e"));
         let mut exponent = 0i32;
         if i32::from_ne_bytes(u32::try_from(((exponent_parts).len()) & 4294967295).unwrap_or(0).to_ne_bytes()) == 2 {
             let exponent_text = (exponent_parts[1usize]).clone();
@@ -82,95 +84,61 @@ impl TestCore {
             exponent = match &(exponent_value) { None => 0, Some(__option) => *__option };
             s = (exponent_parts[0usize]).clone();
         }
-        let decimal_parts = u_string::split(&s, &".");
+        let decimal_parts = u_string::split(&s, &UString::from("."));
         let has_dot = i32::from_ne_bytes(u32::try_from(((decimal_parts).len()) & 4294967295).unwrap_or(0).to_ne_bytes()) == 2;
-        let mut fraction = String::new();
+        let mut fraction = UString::new();
         if has_dot {
             fraction = (decimal_parts[1usize]).clone();
         }
-        let mut digits = format!("{}{}",
-            (decimal_parts[0usize]).clone(),
-            fraction
-        );
-        let mut decimal_position = i32::wrapping_add(i32::from_ne_bytes((u_string::unit_count(&((decimal_parts[0usize]).clone()))).to_ne_bytes()), exponent);
-        while (i32::from_ne_bytes((u_string::unit_count(&(digits))).to_ne_bytes())) > (1) && u_string::unit_at(&digits, 0u32).as_ref().map_or(false, |v| v == &(48)) {
+        let mut digits = { let mut __s = UString::new(); __s += (decimal_parts[0usize]).clone().as_ustr(); __s += fraction.as_ustr(); __s };
+        let mut decimal_position = i32::wrapping_add(i32::from_ne_bytes(((u_string::unit_count(&((decimal_parts[0usize]).clone()))) as i32).to_ne_bytes()), exponent);
+        while (i32::from_ne_bytes(((u_string::unit_count(&(digits))) as i32).to_ne_bytes())) > (1) && u_string::unit_at(&digits, 0u32).as_ref().map_or(false, |v| v == &(48)) {
             digits = u_string::substring_from(&digits, 1i32);
             decimal_position = i32::wrapping_sub(decimal_position, 1);
         }
-        if digits == "0" {
-            return "0".to_string();
+        if digits == UString::from("0") {
+            return UString::from("0").to_ustring();
         }
         if decimal_position >= -5 && (decimal_position) <= 21 {
-            let mut plain = if decimal_position <= 0 { TestCore::test_core_plain_leading(digits.as_str(), decimal_position).to_string() } else { if decimal_position >= i32::from_ne_bytes((u_string::unit_count(&(digits))).to_ne_bytes()) {
-TestCore::test_core_plain_trailing(digits.as_str(), decimal_position).to_string() } else { format!("{}{}{}",
-            u_string::substring(&digits, 0i32, decimal_position),
-            ".",
-            u_string::substring_from(&digits, decimal_position)
-        ).to_string() }.to_string() };
-            while (i32::from_ne_bytes((u_string::unit_count(&(plain))).to_ne_bytes())) > (0) && u_string::unit_at(&plain, u32::from_ne_bytes((i32::wrapping_sub(i32::from_ne_bytes((u_string::unit_count(&(plain))).to_ne_bytes()), 1)).to_ne_bytes())).as_ref().map_or(false, |v| v ==
-&(48)) && (i32::from_ne_bytes(u32::try_from(((u_string::split(&plain, &".")).len()) & 4294967295).unwrap_or(0).to_ne_bytes())) > (1) {
-                plain = u_string::substring(&plain, 0i32, i32::wrapping_sub(i32::from_ne_bytes((u_string::unit_count(&(plain))).to_ne_bytes()), 1));
+            let mut plain = if decimal_position <= 0 { TestCore::test_core_plain_leading(digits.as_ustr(), decimal_position).to_ustring() } else { if decimal_position >= i32::from_ne_bytes(((u_string::unit_count(&(digits))) as i32).to_ne_bytes()) { TestCore::test_core_plain_trailing(digits.as_ustr(), decimal_position).to_ustring() } else { UString::from(format!("{}", { let mut __s = UString::new(); __s += u_string::substring(&digits, 0i32, decimal_position).as_ustr(); __s += &(UString::from(".")); __s += u_string::substring_from(&digits, decimal_position).as_ustr(); __s }).as_str()) }.to_ustring() };
+            while (i32::from_ne_bytes(((u_string::unit_count(&(plain))) as i32).to_ne_bytes())) > (0) && u_string::unit_at(&plain, u32::from_ne_bytes(((i32::wrapping_sub(i32::from_ne_bytes(((u_string::unit_count(&(plain))) as i32).to_ne_bytes()), 1)) as u32).to_ne_bytes())).as_ref().map_or(false, |v| v == &(48)) && (i32::from_ne_bytes(u32::try_from(((u_string::split(&plain, &UString::from("."))).len()) & 4294967295).unwrap_or(0).to_ne_bytes())) > (1) {
+                plain = u_string::substring(&plain, 0i32, i32::wrapping_sub(i32::from_ne_bytes(((u_string::unit_count(&(plain))) as i32).to_ne_bytes()), 1));
             }
-            if i32::from_ne_bytes((u_string::unit_count(&(plain))).to_ne_bytes()) > (0) && u_string::unit_at(&plain, u32::from_ne_bytes((i32::wrapping_sub(i32::from_ne_bytes((u_string::unit_count(&(plain))).to_ne_bytes()), 1)).to_ne_bytes())).as_ref().map_or(false, |v| v ==
-&(46)) {
-                plain = u_string::substring(&plain, 0i32, i32::wrapping_sub(i32::from_ne_bytes((u_string::unit_count(&(plain))).to_ne_bytes()), 1));
+            if i32::from_ne_bytes(((u_string::unit_count(&(plain))) as i32).to_ne_bytes()) > (0) && u_string::unit_at(&plain, u32::from_ne_bytes(((i32::wrapping_sub(i32::from_ne_bytes(((u_string::unit_count(&(plain))) as i32).to_ne_bytes()), 1)) as u32).to_ne_bytes())).as_ref().map_or(false, |v| v == &(46)) {
+                plain = u_string::substring(&plain, 0i32, i32::wrapping_sub(i32::from_ne_bytes(((u_string::unit_count(&(plain))) as i32).to_ne_bytes()), 1));
             }
-            return format!("{}{}",
-            (if negative { "-".to_string() } else { "".to_string() }),
-            plain
-        );
+            return UString::from(format!("{}", { let mut __s = UString::new(); __s += (if negative { UString::from("-") } else { UString::from("") }).as_ustr(); __s += plain.as_ustr(); __s }).as_str());
         }
-        while (i32::from_ne_bytes((u_string::unit_count(&(digits))).to_ne_bytes())) > (1) && u_string::unit_at(&digits, u32::from_ne_bytes((i32::wrapping_sub(i32::from_ne_bytes((u_string::unit_count(&(digits))).to_ne_bytes()), 1)).to_ne_bytes())).as_ref().map_or(false, |v| v ==
-&(48)) {
-            digits = u_string::substring(&digits, 0i32, i32::wrapping_sub(i32::from_ne_bytes((u_string::unit_count(&(digits))).to_ne_bytes()), 1));
+        while (i32::from_ne_bytes(((u_string::unit_count(&(digits))) as i32).to_ne_bytes())) > (1) && u_string::unit_at(&digits, u32::from_ne_bytes(((i32::wrapping_sub(i32::from_ne_bytes(((u_string::unit_count(&(digits))) as i32).to_ne_bytes()), 1)) as u32).to_ne_bytes())).as_ref().map_or(false, |v| v == &(48)) {
+            digits = u_string::substring(&digits, 0i32, i32::wrapping_sub(i32::from_ne_bytes(((u_string::unit_count(&(digits))) as i32).to_ne_bytes()), 1));
         }
         let sci_exponent = i32::wrapping_sub(decimal_position, 1);
-        let mantissa = if i32::from_ne_bytes((u_string::unit_count(&(digits))).to_ne_bytes()) == 1 { digits.to_string() } else { format!("{}{}{}",
-            u_string::substring(&digits, 0i32, 1i32),
-            ".",
-            u_string::substring_from(&digits, 1i32)
-        ).to_string() };
-        return format!("{}{}{}{}{}",
-            (if negative { "-".to_string() } else { "".to_string() }),
-            mantissa,
-            "e",
-            (if sci_exponent >= 0 { "+".to_string() } else { "".to_string() }),
-            sci_exponent
-        );
+        let mantissa = if i32::from_ne_bytes(((u_string::unit_count(&(digits))) as i32).to_ne_bytes()) == 1 { digits.to_ustring() } else { UString::from(format!("{}", { let mut __s = UString::new(); __s += u_string::substring(&digits, 0i32, 1i32).as_ustr(); __s += &(UString::from(".")); __s += u_string::substring_from(&digits, 1i32).as_ustr(); __s }).as_str()) };
+        return UString::from(format!("{}", { let mut __s = UString::new(); __s += (if negative { UString::from("-") } else { UString::from("") }).as_ustr(); __s += mantissa.as_ustr(); __s += &(UString::from("e")); __s += (if sci_exponent >= 0 { UString::from("+") } else { UString::from("") }).as_ustr(); __s += &(UString::from(format!("{}", (sci_exponent).to_string()).as_str())); __s }).as_str());
     }
 
-    pub(crate) fn test_core_plain_leading(digits: &str, decimal_position: i32) -> String {
-        let mut head = "0.".to_string();
+    pub(crate) fn test_core_plain_leading(digits: &UStr, decimal_position: i32) -> UString {
+        let mut head = UString::from("0.").to_ustring();
         for _ in 0..-decimal_position {
-            head += &("0");
+            head += &(UString::from("0"));
         }
-        return format!("{}{}",
-            head,
-            digits
-        );
+        return UString::from(format!("{}", { let mut __s = UString::new(); __s += head.as_ustr(); __s += digits; __s }).as_str());
     }
 
-    pub(crate) fn test_core_plain_trailing(digits: &str, decimal_position: i32) -> String {
-        let mut tail = String::new();
-        for _ in 0..i32::wrapping_sub(decimal_position, i32::from_ne_bytes((u_string::unit_count(&(digits))).to_ne_bytes())) {
-            tail += &("0");
+    pub(crate) fn test_core_plain_trailing(digits: &UStr, decimal_position: i32) -> UString {
+        let mut tail = UString::new();
+        for _ in 0..i32::wrapping_sub(decimal_position, i32::from_ne_bytes(((u_string::unit_count(&(digits))) as i32).to_ne_bytes())) {
+            tail += &(UString::from("0"));
         }
-        return format!("{}{}",
-            digits,
-            tail
-        );
+        return UString::from(format!("{}", { let mut __s = UString::new(); __s += digits; __s += tail.as_ustr(); __s }).as_str());
     }
 
-    pub fn test_core_format_string(v: &str) -> String {
-        return format!("{}{}{}",
-            "\"",
-            TestCore::test_core_escape_json(v),
-            "\""
-        );
+    pub fn test_core_format_string(v: &UStr) -> UString {
+        return UString::from(format!("{}", { let mut __s = UString::new(); __s += &(UString::from("\"")); __s += TestCore::test_core_escape_json(v).as_ustr(); __s += &(UString::from("\"")); __s }).as_str());
     }
 
-    pub fn test_core_format_bytes(b: &[u8]) -> String {
-        let mut out = String::new();
+    pub fn test_core_format_bytes(b: &[u8]) -> UString {
+        let mut out = UString::new();
         for index in 0..match u32::try_from(b.len()) { Ok(value) => value, Err(_) => u32::MAX } {
             let value = i32::from(b[usize::try_from(index).unwrap_or(0)]);
             out += &(TestCore::test_core_hex_digit(value >> 4 & 15));
@@ -179,114 +147,75 @@ TestCore::test_core_plain_trailing(digits.as_str(), decimal_position).to_string(
         return out;
     }
 
-    pub fn test_core_escape_json(s: &str) -> String {
-        let mut out = String::new();
+    pub fn test_core_escape_json(s: &UStr) -> UString {
+        let mut out = UString::new();
         let mut cursor = 0i32;
         let stop = i32::from_ne_bytes(u32::try_from(((s).len()) & 4294967295).unwrap_or(0).to_ne_bytes());
         while (cursor) < (stop) {
-            let code = i32::try_from(u32::from((s)[usize::try_from(cursor).unwrap_or(0)..].chars().next().unwrap_or('\0'))).unwrap_or(0);
+            let code = i32::try_from(u32::from((s)[usize::try_from(cursor).unwrap_or(0)..].first().copied().unwrap_or(0))).unwrap_or(0);
             if code == 34 {
-                out += &("\\\"");
+                out += &(UString::from("\\\""));
             } else {
                 if code == 92 {
-                    out += &("\\\\");
+                    out += &(UString::from("\\\\"));
                 } else {
                     if code == 10 {
-                        out += &("\\n");
+                        out += &(UString::from("\\n"));
                     } else {
                         if code == 13 {
-                            out += &("\\r");
+                            out += &(UString::from("\\r"));
                         } else {
                             if code == 9 {
-                                out += &("\\t");
+                                out += &(UString::from("\\t"));
                             } else {
                                 if code < (32) {
-                                    out += &(format!("{}{}{}{}{}",
-            "\\u",
-            TestCore::test_core_hex_digit(code >> 12 & 15),
-            TestCore::test_core_hex_digit(code >> 8 & 15),
-            TestCore::test_core_hex_digit(code >> 4 & 15),
-            TestCore::test_core_hex_digit(code & 15)
-        ));
+                                    out += &({ let mut __s = UString::new(); __s += &(UString::from("\\u")); __s += TestCore::test_core_hex_digit(code >> 12 & 15).as_ustr(); __s += TestCore::test_core_hex_digit(code >> 8 & 15).as_ustr(); __s += TestCore::test_core_hex_digit(code >> 4 & 15).as_ustr(); __s += TestCore::test_core_hex_digit(code & 15).as_ustr(); __s });
                                 } else {
-                                    out += &((s)[usize::try_from(cursor).unwrap_or(0)..usize::try_from(i32::from_ne_bytes(u32::try_from((usize::try_from(cursor).unwrap_or(0) + (s)[usize::try_from(cursor).unwrap_or(0)..].chars().next().unwrap_or('\0').len_utf8()) &
-4294967295).unwrap_or(0).to_ne_bytes())).unwrap_or(0)].to_string());
+                                    out += &(UString::from(UStr::new(&(s)[usize::try_from(cursor).unwrap_or(0)..usize::try_from(i32::from_ne_bytes(u32::try_from((usize::try_from(cursor).unwrap_or(0) + 1) & 4294967295).unwrap_or(0).to_ne_bytes())).unwrap_or(0)])));
                                 }
                             }
                         }
                     }
                 }
             }
-            cursor = i32::from_ne_bytes(u32::try_from((usize::try_from(cursor).unwrap_or(0) + (s)[usize::try_from(cursor).unwrap_or(0)..].chars().next().unwrap_or('\0').len_utf8()) & 4294967295).unwrap_or(0).to_ne_bytes());
+            cursor = i32::from_ne_bytes(u32::try_from((usize::try_from(cursor).unwrap_or(0) + 1) & 4294967295).unwrap_or(0).to_ne_bytes());
         }
         return out;
     }
 
-    pub fn test_core_format_canonical_message(id: &str, message: &str, expected_str: &str, actual_str: &str, is_equals: bool) -> String {
-        let mut out = format!("{}{}",
-            "test failed: ",
-            id
-        );
-        if message != "" {
-            out += &(format!("{}{}",
-            concat!("\n",
-"  message: "),
-            message
-        ));
+    pub fn test_core_format_canonical_message(id: &UStr, message: &UStr, expected_str: &UStr, actual_str: &UStr, is_equals: bool) -> UString {
+        let mut out = { let mut __s = UString::new(); __s += &(UString::from("test failed: ")); __s += id; __s };
+        if message != UString::from("") {
+            out += &({ let mut __s = UString::new(); __s += &(UString::from(concat!("\n",
+"  message: "))); __s += message; __s });
         }
         if is_equals {
-            out += &(format!("{}{}",
-            concat!("\n",
-"  expected: "),
-            expected_str
-        ));
-            out += &(format!("{}{}",
-            concat!("\n",
-"  actual:   "),
-            actual_str
-        ));
+            out += &({ let mut __s = UString::new(); __s += &(UString::from(concat!("\n",
+"  expected: "))); __s += expected_str; __s });
+            out += &({ let mut __s = UString::new(); __s += &(UString::from(concat!("\n",
+"  actual:   "))); __s += actual_str; __s });
         }
         return out;
     }
 
-    pub fn test_core_result_line(id: &str, name: &str, failed: bool, message: &str) -> String {
+    pub fn test_core_result_line(id: &UStr, name: &UStr, failed: bool, message: &UStr) -> UString {
         if failed {
-            return format!("{}{}{}{}{}{}{}",
-            "{\"id\":\"",
-            TestCore::test_core_escape_json(id),
-            "\",\"name\":\"",
-            TestCore::test_core_escape_json(name),
-            "\",\"verdict\":\"fail\",\"message\":\"",
-            TestCore::test_core_escape_json(message),
-            concat!("\"}\n",
-"")
-        );
+            return UString::from(format!("{}", { let mut __s = UString::new(); __s += &(UString::from("{\"id\":\"")); __s += TestCore::test_core_escape_json(id).as_ustr(); __s += &(UString::from("\",\"name\":\"")); __s += TestCore::test_core_escape_json(name).as_ustr(); __s += &(UString::from("\",\"verdict\":\"fail\",\"message\":\"")); __s += TestCore::test_core_escape_json(message).as_ustr(); __s += &(UString::from(concat!("\"}\n",
+""))); __s }).as_str());
         }
-        return format!("{}{}{}{}{}",
-            "{\"id\":\"",
-            TestCore::test_core_escape_json(id),
-            "\",\"name\":\"",
-            TestCore::test_core_escape_json(name),
-            concat!("\",\"verdict\":\"pass\"}\n",
-"")
-        );
+        return UString::from(format!("{}", { let mut __s = UString::new(); __s += &(UString::from("{\"id\":\"")); __s += TestCore::test_core_escape_json(id).as_ustr(); __s += &(UString::from("\",\"name\":\"")); __s += TestCore::test_core_escape_json(name).as_ustr(); __s += &(UString::from(concat!("\",\"verdict\":\"pass\"}\n",
+""))); __s }).as_str());
     }
 
-    pub fn test_core_not_applicable_line(id: &str, name: &str) -> String {
-        return format!("{}{}{}{}{}",
-            "{\"id\":\"",
-            TestCore::test_core_escape_json(id),
-            "\",\"name\":\"",
-            TestCore::test_core_escape_json(name),
-            concat!("\",\"verdict\":\"not_applicable\"}\n",
-"")
-        );
+    pub fn test_core_not_applicable_line(id: &UStr, name: &UStr) -> UString {
+        return UString::from(format!("{}", { let mut __s = UString::new(); __s += &(UString::from("{\"id\":\"")); __s += TestCore::test_core_escape_json(id).as_ustr(); __s += &(UString::from("\",\"name\":\"")); __s += TestCore::test_core_escape_json(name).as_ustr(); __s += &(UString::from(concat!("\",\"verdict\":\"not_applicable\"}\n",
+""))); __s }).as_str());
     }
 
-    pub(crate) fn test_core_hex_digit(nibble: i32) -> String {
+    pub(crate) fn test_core_hex_digit(nibble: i32) -> UString {
         if nibble < (10) {
-            return char::from_u32(u32::from_ne_bytes((i32::wrapping_add(48, nibble)).to_ne_bytes())).unwrap_or('\0').to_string();
+            return UString::from(&char::from_u32(u32::from_ne_bytes(((i32::wrapping_add(48, nibble)) as u32).to_ne_bytes())).unwrap_or('\0').to_string());
         }
-        return char::from_u32(u32::from_ne_bytes((i32::wrapping_add(87, nibble)).to_ne_bytes())).unwrap_or('\0').to_string();
+        return UString::from(&char::from_u32(u32::from_ne_bytes(((i32::wrapping_add(87, nibble)) as u32).to_ne_bytes())).unwrap_or('\0').to_string());
     }
 }

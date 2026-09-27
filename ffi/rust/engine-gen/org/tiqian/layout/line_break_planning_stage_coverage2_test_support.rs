@@ -48,13 +48,24 @@ use crate::runtime::sorted_table::SortedMapTableBuilder;
 use crate::runtime::sorted_table::SortedSetTable;
 use crate::runtime::sorted_table::SortedSetTableBuilder;
 use crate::runtime::sorted_table::SortedTable;
+use crate::runtime::u_string::UStr;
+use crate::runtime::u_string::UString;
 use std::sync::Arc;
+use std::sync::Mutex;
 
 
 #[derive(Debug, Clone, PartialEq)]
 pub enum LineBreakPlanningStageCoverage2TestSupportEngineFault {
     TextRangeErrorFault(crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError),
     UStringFaultFault(crate::std::u_string_exception::UStringFault),
+}
+impl std::fmt::Display for LineBreakPlanningStageCoverage2TestSupportEngineFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            LineBreakPlanningStageCoverage2TestSupportEngineFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            LineBreakPlanningStageCoverage2TestSupportEngineFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
 }
 
 impl From<LineBreakPlanningStageCoverage2TestSupportEngineFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
@@ -94,6 +105,17 @@ pub enum LineBreakPlanningStageCoverage2TestSupportPrepFault {
     WidthIndependentAnnotationCacheBuildParagraphLayoutPrepFaultFault(crate::org::tiqian::layout::width_independent_annotation_cache::WidthIndependentAnnotationCacheBuildParagraphLayoutPrepFault),
     ParagraphShapingStageShapeParagraphFaultFault(crate::org::tiqian::layout::paragraph_shaping_stage::ParagraphShapingStageShapeParagraphFault),
     TextRangeErrorFault(crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError),
+}
+impl std::fmt::Display for LineBreakPlanningStageCoverage2TestSupportPrepFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            LineBreakPlanningStageCoverage2TestSupportPrepFault::ParagraphLayoutEngineNewFaultFault(value) => write!(formatter, "{}", value),
+            LineBreakPlanningStageCoverage2TestSupportPrepFault::WidthIndependentAnnotationCachePrepareWidthIndependentAnnotationFaultFault(value) => write!(formatter, "{}", value),
+            LineBreakPlanningStageCoverage2TestSupportPrepFault::WidthIndependentAnnotationCacheBuildParagraphLayoutPrepFaultFault(value) => write!(formatter, "{}", value),
+            LineBreakPlanningStageCoverage2TestSupportPrepFault::ParagraphShapingStageShapeParagraphFaultFault(value) => write!(formatter, "{}", value),
+            LineBreakPlanningStageCoverage2TestSupportPrepFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+        }
+    }
 }
 
 impl From<LineBreakPlanningStageCoverage2TestSupportPrepFault> for crate::org::tiqian::layout::paragraph_layout_engine::ParagraphLayoutEngineNewFault {
@@ -176,6 +198,14 @@ pub enum LineBreakPlanningStageCoverage2TestSupportPlanFault {
     TextRangeErrorFault(crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError),
     ParagraphLayoutEngineNewFaultFault(crate::org::tiqian::layout::paragraph_layout_engine::ParagraphLayoutEngineNewFault),
 }
+impl std::fmt::Display for LineBreakPlanningStageCoverage2TestSupportPlanFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            LineBreakPlanningStageCoverage2TestSupportPlanFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            LineBreakPlanningStageCoverage2TestSupportPlanFault::ParagraphLayoutEngineNewFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
+}
 
 impl From<LineBreakPlanningStageCoverage2TestSupportPlanFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
     fn from(value: LineBreakPlanningStageCoverage2TestSupportPlanFault) -> Self {
@@ -212,39 +242,27 @@ pub struct LineBreakPlanningStageCoverage2TestSupport;
 
 impl LineBreakPlanningStageCoverage2TestSupport {
     pub fn line_break_planning_stage_coverage2_test_support_engine() -> Result<ExplainableStubParagraphLayoutEngine, ParagraphLayoutEngineNewFault> {
-        return Ok(ExplainableStubParagraphLayoutEngine::new(Some(Box::new(CjkFontRoleClassifier::new())), Some(Box::new(ParagraphLayoutFallbackResolver::new(Some("cjk-primary".to_string()), Some("latin-primary".to_string()), Some("symbol-fallback".to_string()))?)),
-Some(Box::new(BuiltInClreqProfileResolver::new())), Some(Box::new(StubFontMetricsResolver::new())), Some(Box::new(ScriptAwareFontMetricsNormalizer::new())), Some((PunctuationAtomBuilder::new(None, None)?).clone()), Some((PunctuationSpacingCompressor::new()?).clone()),
-Some(QuotePairAnalyzer::new()), Some(Box::new(GreedyLineBreaker::new(None, None, None, None))), Some(Justifier::new(Some(0.5), Some(0.25))), Some(Box::new(ExplainableStubTextShaper::new())), Some((DefaultHyphenator::default_hyphenator_default_hyphenator()?).clone()),
-Some(Box::new(LruWidthIndependentAnnotationCache::new(512))))?);
+        return Ok(ExplainableStubParagraphLayoutEngine::new(Some(Box::new(CjkFontRoleClassifier::new())), Some(Box::new(ParagraphLayoutFallbackResolver::new(Some(UString::from("cjk-primary")), Some(UString::from("latin-primary")), Some(UString::from("symbol-fallback")))?)), Some(Box::new(BuiltInClreqProfileResolver::new())), Some(Box::new(StubFontMetricsResolver::new())), Some(Box::new(ScriptAwareFontMetricsNormalizer::new())), Some((PunctuationAtomBuilder::new(None, None)?).clone()), Some((PunctuationSpacingCompressor::new()?).clone()), Some(QuotePairAnalyzer::new()), Some(Box::new(GreedyLineBreaker::new(None, None, None, None))), Some(Justifier::new(Some(0.5), Some(0.25))), Some(Arc::new(Mutex::new(ExplainableStubTextShaper::new()))), Some((DefaultHyphenator::default_hyphenator_default_hyphenator()?).clone()), Some(Arc::new(Mutex::new(LruWidthIndependentAnnotationCache::new(512)))))?);
     }
 
-    pub fn line_break_planning_stage_coverage2_test_support_layout(text: &str, width: f64, objects: Option<Vec<InlineObjectSpan>>) -> Result<LayoutResult, ParagraphLayoutEngineNewFault> {
+    pub fn line_break_planning_stage_coverage2_test_support_layout(text: &UStr, width: f64, objects: Option<Vec<InlineObjectSpan>>) -> Result<LayoutResult, ParagraphLayoutEngineNewFault> {
         let mut e = LineBreakPlanningStageCoverage2TestSupport::line_break_planning_stage_coverage2_test_support_engine()?;
-        return Ok(e.layout(LayoutInput::new(TiqianTextContent::new(text, Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![])), Some(TextStyle::new(Some(vec![]), Some(16.0), Some("zh-Hans".to_string()), Some(400), Some(false), Some(0.0), Some(InlineAttachment::None))),
-Some(ParagraphStyle::new(Some(LastLineAlignment::Start), Some(WritingMode::HorizontalTb), None, None, Some(Ic::zero()), Some(MeasureAdaptiveFirstLineIndent::new(Some(14.0), Some(1.0), Some(2.0))), Some(LineLengthGrid::new(Some(true), None)), Some(RubyLineHeightMode::PerLine),
-Some(ParagraphStyle::PARAGRAPH_STYLE_DEFAULT_INLINE_OBJECT_MINIMUM_CLEARANCE_EM), Some(ParagraphStyle::PARAGRAPH_STYLE_DEFAULT_EMPHASIS_DOT_GAP_EM))), LayoutConstraints::new(width, Some(f64::INFINITY), Some(2147483647)).map_err(|e|
-ParagraphLayoutEngineNewFault::TextRangeErrorFault(e))?, Some((*crate::org::tiqian::core::built_in_layout_profiles::BUILT_IN_LAYOUT_PROFILES_CLREQ_HORIZONTAL).clone()), Some(vec![]), Some(vec![]), Some(vec![]), (objects).clone())).map_err(|e|
-ParagraphLayoutEngineNewFault::LayoutWithRejectedTechnicalTiersFault(e))?);
+        return Ok(e.layout(LayoutInput::new(TiqianTextContent::new(text, Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![])), Some(TextStyle::new(Some(vec![]), Some(16.0), Some(UString::from("zh-Hans")), Some(400), Some(false), Some(0.0), Some(InlineAttachment::None))), Some(ParagraphStyle::new(Some(LastLineAlignment::Start), Some(WritingMode::HorizontalTb), None, None, Some(Ic::zero()), Some(MeasureAdaptiveFirstLineIndent::new(Some(14.0), Some(1.0), Some(2.0))), Some(LineLengthGrid::new(Some(true), None)), Some(RubyLineHeightMode::PerLine), Some(ParagraphStyle::PARAGRAPH_STYLE_DEFAULT_INLINE_OBJECT_MINIMUM_CLEARANCE_EM), Some(ParagraphStyle::PARAGRAPH_STYLE_DEFAULT_EMPHASIS_DOT_GAP_EM))), LayoutConstraints::new(width, Some(f64::INFINITY), Some(2147483647)).map_err(|e| ParagraphLayoutEngineNewFault::TextRangeErrorFault(e))?, Some((*crate::org::tiqian::core::built_in_layout_profiles::BUILT_IN_LAYOUT_PROFILES_CLREQ_HORIZONTAL).clone()), Some(vec![]), Some(vec![]), Some(vec![]), (objects).clone())).map_err(|e| ParagraphLayoutEngineNewFault::LayoutWithRejectedTechnicalTiersFault(e))?);
     }
 
-    pub fn line_break_planning_stage_coverage2_test_support_input(text: &str) -> Result<LayoutInput, TextRangeError> {
-        return Ok(LayoutInput::new(TiqianTextContent::new(text, Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![])), Some(TextStyle::new(Some(vec![]), Some(16.0), Some("zh-Hans".to_string()), Some(400), Some(false), Some(0.0), Some(InlineAttachment::None))),
-Some(ParagraphStyle::new(Some(LastLineAlignment::Start), Some(WritingMode::HorizontalTb), None, None, Some(Ic::zero()), Some(MeasureAdaptiveFirstLineIndent::new(Some(14.0), Some(1.0), Some(2.0))), Some(LineLengthGrid::new(Some(true), None)), Some(RubyLineHeightMode::PerLine),
-Some(ParagraphStyle::PARAGRAPH_STYLE_DEFAULT_INLINE_OBJECT_MINIMUM_CLEARANCE_EM), Some(ParagraphStyle::PARAGRAPH_STYLE_DEFAULT_EMPHASIS_DOT_GAP_EM))), LayoutConstraints::new(200 as f64 as f64, Some(f64::INFINITY), Some(2147483647))?,
-Some((*crate::org::tiqian::core::built_in_layout_profiles::BUILT_IN_LAYOUT_PROFILES_CLREQ_HORIZONTAL).clone()), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![])));
+    pub fn line_break_planning_stage_coverage2_test_support_input(text: &UStr) -> Result<LayoutInput, TextRangeError> {
+        return Ok(LayoutInput::new(TiqianTextContent::new(text, Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![])), Some(TextStyle::new(Some(vec![]), Some(16.0), Some(UString::from("zh-Hans")), Some(400), Some(false), Some(0.0), Some(InlineAttachment::None))), Some(ParagraphStyle::new(Some(LastLineAlignment::Start), Some(WritingMode::HorizontalTb), None, None, Some(Ic::zero()), Some(MeasureAdaptiveFirstLineIndent::new(Some(14.0), Some(1.0), Some(2.0))), Some(LineLengthGrid::new(Some(true), None)), Some(RubyLineHeightMode::PerLine), Some(ParagraphStyle::PARAGRAPH_STYLE_DEFAULT_INLINE_OBJECT_MINIMUM_CLEARANCE_EM), Some(ParagraphStyle::PARAGRAPH_STYLE_DEFAULT_EMPHASIS_DOT_GAP_EM))), LayoutConstraints::new(200 as f64 as f64, Some(f64::INFINITY), Some(2147483647))?, Some((*crate::org::tiqian::core::built_in_layout_profiles::BUILT_IN_LAYOUT_PROFILES_CLREQ_HORIZONTAL).clone()), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![])));
     }
 
-    pub fn line_break_planning_stage_coverage2_test_support_prep(text: &str) -> Result<ParagraphLayoutPrep, LineBreakPlanningStageCoverage2TestSupportPrepFault> {
+    pub fn line_break_planning_stage_coverage2_test_support_prep(text: &UStr) -> Result<ParagraphLayoutPrep, LineBreakPlanningStageCoverage2TestSupportPrepFault> {
         let mut e = LineBreakPlanningStageCoverage2TestSupport::line_break_planning_stage_coverage2_test_support_engine().map_err(|e| LineBreakPlanningStageCoverage2TestSupportPrepFault::ParagraphLayoutEngineNewFaultFault(e))?;
         let i = LineBreakPlanningStageCoverage2TestSupport::line_break_planning_stage_coverage2_test_support_input(text).map_err(|e| LineBreakPlanningStageCoverage2TestSupportPrepFault::TextRangeErrorFault(e))?;
         let z: SortedMapTable<TextRange, SortedSetTable<u32>> = SortedTable::sorted_table_map_builder::<TextRange, SortedSetTable<u32>>(Arc::new(compare_text_range)).clone().build();
         let a = WidthIndependentAnnotationCacheFns::width_independent_annotation_cache_fns_prepare_width_independent_annotation(&mut e, (i).clone(), (z).clone()).map_err(|e| LineBreakPlanningStageCoverage2TestSupportPrepFault::ParagraphShapingStageShapeParagraphFaultFault(e))?;
-        return Ok(WidthIndependentAnnotationCacheFns::width_independent_annotation_cache_fns_build_paragraph_layout_prep(&mut e, (i).clone(), (a).clone(), (z).clone()).map_err(|e|
-LineBreakPlanningStageCoverage2TestSupportPrepFault::WidthIndependentAnnotationCacheBuildParagraphLayoutPrepFaultFault(e))?);
+        return Ok(WidthIndependentAnnotationCacheFns::width_independent_annotation_cache_fns_build_paragraph_layout_prep(&mut e, (i).clone(), (a).clone(), (z).clone()).map_err(|e| LineBreakPlanningStageCoverage2TestSupportPrepFault::WidthIndependentAnnotationCacheBuildParagraphLayoutPrepFaultFault(e))?);
     }
 
-    pub fn line_break_planning_stage_coverage2_test_support_with_prep(p: ParagraphLayoutPrep, natural: Option<Vec<Cluster>>, clusters: Option<Vec<Cluster>>, fonts: Option<Vec<FontDecision>>, offsets: Option<SortedMapTable<u32, ProgressiveBreakOpportunity>>, elig:
-Option<Vec<EmergencyTrackingEligibilityDecisionInfo>>, uniform: Option<SortedSetTable<u32>>, atoms: Option<SortedMapTable<TextRange, PunctuationClass>>) -> ParagraphLayoutPrep {
+    pub fn line_break_planning_stage_coverage2_test_support_with_prep(p: ParagraphLayoutPrep, natural: Option<Vec<Cluster>>, clusters: Option<Vec<Cluster>>, fonts: Option<Vec<FontDecision>>, offsets: Option<SortedMapTable<u32, ProgressiveBreakOpportunity>>, elig: Option<Vec<EmergencyTrackingEligibilityDecisionInfo>>, uniform: Option<SortedSetTable<u32>>, atoms: Option<SortedMapTable<TextRange, PunctuationClass>>) -> ParagraphLayoutPrep {
         let nc = match &(natural) { None => (p.natural_clusters).clone(), Some(__option) => (*__option).clone() };
         let cr = match &(clusters) { None => (p.clusters).clone(), Some(__option1) => (*__option1).clone() };
         let mut roles = p.cluster_roles.clone();
@@ -260,26 +278,16 @@ Option<Vec<EmergencyTrackingEligibilityDecisionInfo>>, uniform: Option<SortedSet
                 attachments.push(InlineAttachment::None);
             }
         }
-        return ParagraphLayoutPrep::new((p.input).clone(), (p.rejected_technical_tiers_by_span).clone(), (p.text).to_string().as_str(), p.font_size, (p.style_at).clone(), (p.font_size_at).clone(), (p.bopomofo_font_weight_at).clone(), p.ruby_font_size, p.ruby_stack_gap,
-p.ruby_font_weight, p.pinyin_spans.to_vec(), (p.clreq_profile).clone(), (p.punctuation_glyph_substitutor).clone(), p.measure, p.measure_em, p.grid_body_offset, (p.line_length_grid_decision).clone(), p.quote_pairs.to_vec(), p.role_override_infos.to_vec(), match &(fonts) { None =>
-(p.font_decisions).clone(), Some(__option4) => (*__option4).clone() }.to_vec(), (p.hyphen_offsets).clone(), p.hyphen_advance, p.hyphen_glyphs.to_vec(), (p.substitution_rollbacks).clone(), p.break_opportunity_decisions.to_vec(), match &(elig) { None =>
-(p.emergency_tracking_eligibility_decisions).clone(), Some(__option5) => (*__option5).clone() }.to_vec(), match &(offsets) { None => (p.progressive_break_offsets).clone(), Some(__option6) => (*__option6).clone() }, (p.shaped_glyphs_by_cluster_range).clone(),
-(p.open_type_features_by_cluster_range).clone(), p.shaping_decisions.to_vec(), edges.to_vec(), p.auto_space_decisions.to_vec(), (p.inline_box_result).clone(), (nc).clone(), (p.inline_object_by_cluster_index).clone(), match &(uniform) { None =>
-(p.uniform_inline_object_boundary_after_clusters).clone(), Some(__option7) => (*__option7).clone() }, (p.preferred_inline_object_boundary_after_clusters).clone(), p.inline_object_boundary_unbreakable_ranges.to_vec(), roles.to_vec(), (p.resolved_kinsoku).clone(),
-(p.kinsoku_rule).clone(), p.inline_object_attached_marks.to_vec(), (p.inline_object_separator_space_trims).clone(), (p.inline_object_attachment_no_stretch_boundaries).clone(), p.inline_object_punctuation_attachment_decisions.to_vec(), (p.mandatory_break_clusters).clone(),
-(p.zero_width_break_clusters).clone(), p.mandatory_break_decisions.to_vec(), p.zero_width_break_decisions.to_vec(), p.punctuation_atoms.to_vec(), (p.spacing_plan).clone(), (p.ruby_font_geometry_by_span).clone(), (p.ruby_and_bopomofo_spread).clone(), attachments.to_vec(),
-(p.attached_punctuation_boundary).clone(), (p.base_geometry).clone(), (p.attached_punctuation_trailing_glue_by_cluster).clone(), (cr).clone(), (p.adjustment_style).clone(), match &(atoms) { None => (p.atom_class_by_range).clone(), Some(__option8) => (*__option8).clone() },
-p.shrink_opportunities.to_vec());
+        return ParagraphLayoutPrep::new((p.input).clone(), (p.rejected_technical_tiers_by_span).clone(), (p.text).to_ustring().as_ustr(), p.font_size, (p.style_at).clone(), (p.font_size_at).clone(), (p.bopomofo_font_weight_at).clone(), p.ruby_font_size, p.ruby_stack_gap, p.ruby_font_weight, p.pinyin_spans.to_vec(), (p.clreq_profile).clone(), (p.punctuation_glyph_substitutor).clone(), p.measure, p.measure_em, p.grid_body_offset, (p.line_length_grid_decision).clone(), p.quote_pairs.to_vec(), p.role_override_infos.to_vec(), match &(fonts) { None => (p.font_decisions).clone(), Some(__option4) => (*__option4).clone() }.to_vec(), (p.hyphen_offsets).clone(), p.hyphen_advance, p.hyphen_glyphs.to_vec(), (p.substitution_rollbacks).clone(), p.break_opportunity_decisions.to_vec(), match &(elig) { None => (p.emergency_tracking_eligibility_decisions).clone(), Some(__option5) => (*__option5).clone() }.to_vec(), match &(offsets) { None => (p.progressive_break_offsets).clone(), Some(__option6) => (*__option6).clone() }, (p.shaped_glyphs_by_cluster_range).clone(), (p.open_type_features_by_cluster_range).clone(), p.shaping_decisions.to_vec(), edges.to_vec(), p.auto_space_decisions.to_vec(), (p.inline_box_result).clone(), (nc).clone(), (p.inline_object_by_cluster_index).clone(), match &(uniform) { None => (p.uniform_inline_object_boundary_after_clusters).clone(), Some(__option7) => (*__option7).clone() }, (p.preferred_inline_object_boundary_after_clusters).clone(), p.inline_object_boundary_unbreakable_ranges.to_vec(), roles.to_vec(), (p.resolved_kinsoku).clone(), (p.kinsoku_rule).clone(), p.inline_object_attached_marks.to_vec(), (p.inline_object_separator_space_trims).clone(), (p.inline_object_attachment_no_stretch_boundaries).clone(), p.inline_object_punctuation_attachment_decisions.to_vec(), (p.mandatory_break_clusters).clone(), (p.zero_width_break_clusters).clone(), p.mandatory_break_decisions.to_vec(), p.zero_width_break_decisions.to_vec(), p.punctuation_atoms.to_vec(), (p.spacing_plan).clone(), (p.ruby_font_geometry_by_span).clone(), (p.ruby_and_bopomofo_spread).clone(), attachments.to_vec(), (p.attached_punctuation_boundary).clone(), (p.base_geometry).clone(), (p.attached_punctuation_trailing_glue_by_cluster).clone(), (cr).clone(), (p.adjustment_style).clone(), match &(atoms) { None => (p.atom_class_by_range).clone(), Some(__option8) => (*__option8).clone() }, p.shrink_opportunities.to_vec());
     }
 
     pub fn line_break_planning_stage_coverage2_test_support_plan(p: ParagraphLayoutPrep) -> Result<LineBreakPlanningStageResult, LineBreakPlanningStageCoverage2TestSupportPlanFault> {
-        return Ok(LineBreakPlanningStage::line_break_planning_stage_plan_paragraph_lines(LineBreakPlanningStageCoverage2TestSupport::line_break_planning_stage_coverage2_test_support_engine().map_err(|e|
-LineBreakPlanningStageCoverage2TestSupportPlanFault::ParagraphLayoutEngineNewFaultFault(e))?, (p).clone()).map_err(|e| LineBreakPlanningStageCoverage2TestSupportPlanFault::TextRangeErrorFault(e))?);
+        return Ok(LineBreakPlanningStage::line_break_planning_stage_plan_paragraph_lines(LineBreakPlanningStageCoverage2TestSupport::line_break_planning_stage_coverage2_test_support_engine().map_err(|e| LineBreakPlanningStageCoverage2TestSupportPlanFault::ParagraphLayoutEngineNewFaultFault(e))?, (p).clone()).map_err(|e| LineBreakPlanningStageCoverage2TestSupportPlanFault::TextRangeErrorFault(e))?);
     }
 
     pub fn line_break_planning_stage_coverage2_test_support_map_opp() -> Result<SortedMapTable<u32, ProgressiveBreakOpportunity>, TextRangeError> {
-        let mut b: SortedMapTableBuilder<u32, ProgressiveBreakOpportunity> = SortedTable::sorted_table_map_builder::<u32, ProgressiveBreakOpportunity>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_bytes((*a).to_ne_bytes()),
-i32::from_ne_bytes((*b).to_ne_bytes()))));
+        let mut b: SortedMapTableBuilder<u32, ProgressiveBreakOpportunity> = SortedTable::sorted_table_map_builder::<u32,
+ProgressiveBreakOpportunity>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_bytes(((*a) as i32).to_ne_bytes()), i32::from_ne_bytes(((*b) as i32).to_ne_bytes()))));
         b.put(&(999), &(ProgressiveBreakOpportunity::new(ProgressiveBreakTier::Whitespace, TextRange::new(0u32, 3u32)?, Some(0.0))));
         return Ok(b.clone().build());
     }
@@ -292,7 +300,7 @@ i32::from_ne_bytes((*b).to_ne_bytes()))));
     }
 
     pub fn line_break_planning_stage_coverage2_test_support_set_uniform() -> SortedSetTable<u32> {
-        let mut b: SortedSetTableBuilder<u32> = SortedTable::sorted_table_set_builder::<u32>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_bytes((*a).to_ne_bytes()), i32::from_ne_bytes((*b).to_ne_bytes()))));
+        let mut b: SortedSetTableBuilder<u32> = SortedTable::sorted_table_set_builder::<u32>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_bytes(((*a) as i32).to_ne_bytes()), i32::from_ne_bytes(((*b) as i32).to_ne_bytes()))));
         b.put(&(0));
         b.put(&(1));
         b.put(&(3));

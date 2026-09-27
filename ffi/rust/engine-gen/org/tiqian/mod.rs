@@ -5,6 +5,7 @@ pub mod core;
 pub mod font;
 pub mod layout;
 pub mod linebreak;
+pub mod protocol;
 pub mod shaping;
 pub mod test;
 
@@ -13,5 +14,6 @@ pub use core::*;
 pub use font::*;
 pub use layout::*;
 pub use linebreak::*;
+pub use protocol::*;
 pub use shaping::*;
 pub use test::*;

@@ -1,3 +1,6 @@
+use crate::runtime::u_string::UString;
+
+
 #[derive(Debug, Clone, PartialEq)]
 pub struct ColorSpan {
     pub start: u32,
@@ -14,19 +17,8 @@ impl ColorSpan {
         }
     }
 
-    pub fn to_string(&self) -> String {
-        return format!("{}{}{}{}{}{}{}{}{}{}",
-            "ColorSpan(",
-            "start=",
-            crate::runtime::int_text::IntText::int_text(self.start),
-            ", ",
-            "end=",
-            crate::runtime::int_text::IntText::int_text(self.end),
-            ", ",
-            "argb=",
-            crate::runtime::int_text::IntText::int_text(self.argb),
-            ")"
-        );
+    pub fn to_string(&self) -> UString {
+        return UString::from(format!("{}", { let mut __s = UString::new(); __s += &(UString::from("ColorSpan(")); __s += &(UString::from("start=")); __s += &(UString::from(format!("{}", crate::runtime::int_text::IntText::int_text(self.start)).as_str())); __s += &(UString::from(", ")); __s += &(UString::from("end=")); __s += &(UString::from(format!("{}", crate::runtime::int_text::IntText::int_text(self.end)).as_str())); __s += &(UString::from(", ")); __s += &(UString::from("argb=")); __s += &(UString::from(format!("{}", crate::runtime::int_text::IntText::int_text(self.argb)).as_str())); __s += &(UString::from(")")); __s }).as_str());
     }
 }
 

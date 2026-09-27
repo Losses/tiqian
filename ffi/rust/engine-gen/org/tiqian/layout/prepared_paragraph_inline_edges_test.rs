@@ -34,6 +34,10 @@ use crate::org::tiqian::test::trace::test_trace_recorder::TestTraceRecorder;
 use crate::org::tiqian::test::trace::traced_assertions::TracedAssertions;
 use crate::runtime::test as testlib;
 use crate::runtime::u_string;
+use crate::runtime::u_string::UStr;
+use crate::runtime::u_string::UString;
+use std::sync::Arc;
+use std::sync::Mutex;
 
 
 #[derive(Debug, Clone, PartialEq)]
@@ -46,6 +50,20 @@ pub enum PreparedParagraphInlineEdgesTestEndOnlyInlineBoxEmitsEdgeWithoutInlineS
     TracedAssertionsAssertFalseFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsAssertFalseFault),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
     ParagraphLayoutEngineLayoutWithRejectedTechnicalTiersFaultFault(crate::org::tiqian::layout::paragraph_layout_engine::ParagraphLayoutEngineLayoutWithRejectedTechnicalTiersFault),
+}
+impl std::fmt::Display for PreparedParagraphInlineEdgesTestEndOnlyInlineBoxEmitsEdgeWithoutInlineStartFieldFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            PreparedParagraphInlineEdgesTestEndOnlyInlineBoxEmitsEdgeWithoutInlineStartFieldFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            PreparedParagraphInlineEdgesTestEndOnlyInlineBoxEmitsEdgeWithoutInlineStartFieldFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            PreparedParagraphInlineEdgesTestEndOnlyInlineBoxEmitsEdgeWithoutInlineStartFieldFault::ParagraphLayoutEngineNewFaultFault(value) => write!(formatter, "{}", value),
+            PreparedParagraphInlineEdgesTestEndOnlyInlineBoxEmitsEdgeWithoutInlineStartFieldFault::PreparedParagraphToPreparedParagraphJsonFaultFault(value) => write!(formatter, "{}", value),
+            PreparedParagraphInlineEdgesTestEndOnlyInlineBoxEmitsEdgeWithoutInlineStartFieldFault::TracedAssertionsAssertTrueFaultFault(value) => write!(formatter, "{}", value),
+            PreparedParagraphInlineEdgesTestEndOnlyInlineBoxEmitsEdgeWithoutInlineStartFieldFault::TracedAssertionsAssertFalseFaultFault(value) => write!(formatter, "{}", value),
+            PreparedParagraphInlineEdgesTestEndOnlyInlineBoxEmitsEdgeWithoutInlineStartFieldFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+            PreparedParagraphInlineEdgesTestEndOnlyInlineBoxEmitsEdgeWithoutInlineStartFieldFault::ParagraphLayoutEngineLayoutWithRejectedTechnicalTiersFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
 }
 
 impl From<PreparedParagraphInlineEdgesTestEndOnlyInlineBoxEmitsEdgeWithoutInlineStartFieldFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
@@ -178,6 +196,19 @@ pub enum PreparedParagraphInlineEdgesTestContentWithoutInlineBoxesOmitsInlineEdg
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
     ParagraphLayoutEngineLayoutWithRejectedTechnicalTiersFaultFault(crate::org::tiqian::layout::paragraph_layout_engine::ParagraphLayoutEngineLayoutWithRejectedTechnicalTiersFault),
 }
+impl std::fmt::Display for PreparedParagraphInlineEdgesTestContentWithoutInlineBoxesOmitsInlineEdgesArrayFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            PreparedParagraphInlineEdgesTestContentWithoutInlineBoxesOmitsInlineEdgesArrayFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            PreparedParagraphInlineEdgesTestContentWithoutInlineBoxesOmitsInlineEdgesArrayFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            PreparedParagraphInlineEdgesTestContentWithoutInlineBoxesOmitsInlineEdgesArrayFault::ParagraphLayoutEngineNewFaultFault(value) => write!(formatter, "{}", value),
+            PreparedParagraphInlineEdgesTestContentWithoutInlineBoxesOmitsInlineEdgesArrayFault::PreparedParagraphToPreparedParagraphJsonFaultFault(value) => write!(formatter, "{}", value),
+            PreparedParagraphInlineEdgesTestContentWithoutInlineBoxesOmitsInlineEdgesArrayFault::TracedAssertionsAssertFalseFaultFault(value) => write!(formatter, "{}", value),
+            PreparedParagraphInlineEdgesTestContentWithoutInlineBoxesOmitsInlineEdgesArrayFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+            PreparedParagraphInlineEdgesTestContentWithoutInlineBoxesOmitsInlineEdgesArrayFault::ParagraphLayoutEngineLayoutWithRejectedTechnicalTiersFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
+}
 
 impl From<PreparedParagraphInlineEdgesTestContentWithoutInlineBoxesOmitsInlineEdgesArrayFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
     fn from(value: PreparedParagraphInlineEdgesTestContentWithoutInlineBoxesOmitsInlineEdgesArrayFault) -> Self {
@@ -287,55 +318,28 @@ impl From<crate::org::tiqian::layout::paragraph_layout_engine::ParagraphLayoutEn
 #[test]
 fn content_without_inline_boxes_omits_inline_edges_array() {
     testlib::run("org.tiqian.layout.PreparedParagraphInlineEdgesTest.contentWithoutInlineBoxesOmitsInlineEdgesArray", "org.tiqian.layout.PreparedParagraphInlineEdgesTest.contentWithoutInlineBoxesOmitsInlineEdgesArray", || {
-        let mut t = TestTraceRecorder::new("PreparedParagraphInlineEdgesTest");
-        t.section(&"contentWithoutInlineBoxesOmitsInlineEdgesArray");
-        let result = ExplainableStubParagraphLayoutEngine::new(Some(Box::new(CjkFontRoleClassifier::new())), Some(Box::new(ParagraphLayoutFallbackResolver::new(Some("cjk-primary".to_string()), Some("latin-primary".to_string()), Some("symbol-fallback".to_string())).unwrap())),
-Some(Box::new(BuiltInClreqProfileResolver::new())), Some(Box::new(StubFontMetricsResolver::new())), Some(Box::new(ScriptAwareFontMetricsNormalizer::new())), Some(PunctuationAtomBuilder::new(None, None).unwrap()), Some(PunctuationSpacingCompressor::new().unwrap()),
-Some(QuotePairAnalyzer::new()), Some(Box::new(GreedyLineBreaker::new(None, None, None, None))), Some(Justifier::new(Some(0.5), Some(0.25))), Some(Box::new(ExplainableStubTextShaper::new())), Some(DefaultHyphenator::default_hyphenator_default_hyphenator().unwrap()),
-Some(Box::new(LruWidthIndependentAnnotationCache::new(512)))).unwrap().layout(LayoutInput::new(TiqianTextContent::new("中文正文", Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![])), Some(TextStyle::new(Some(vec![]), Some(16.0), Some("zh-Hans".to_string()), Some(400), Some(false),
-Some(0.0), Some(InlineAttachment::None))), Some(ParagraphStyle::new(Some(LastLineAlignment::Start), Some(WritingMode::HorizontalTb), None, Some((Ic::zero()).clone()), Some(Ic::zero()), Some(MeasureAdaptiveFirstLineIndent::new(Some(14.0), Some(1.0), Some(2.0))),
-Some(LineLengthGrid::new(Some(true), None)), Some(RubyLineHeightMode::PerLine), Some(ParagraphStyle::PARAGRAPH_STYLE_DEFAULT_INLINE_OBJECT_MINIMUM_CLEARANCE_EM), Some(ParagraphStyle::PARAGRAPH_STYLE_DEFAULT_EMPHASIS_DOT_GAP_EM))), LayoutConstraints::new(320 as f64 as f64,
-Some(f64::INFINITY), Some(2147483647)).unwrap(), Some((*crate::org::tiqian::core::built_in_layout_profiles::BUILT_IN_LAYOUT_PROFILES_CLREQ_HORIZONTAL).clone()), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]))).unwrap();
+        let mut t = TestTraceRecorder::new(&(UStr::new(&[80,114,101,112,97,114,101,100,80,97,114,97,103,114,97,112,104,73,110,108,105,110,101,69,100,103,101,115,84,101,115,116])));
+        t.section(UStr::new(&[99,111,110,116,101,110,116,87,105,116,104,111,117,116,73,110,108,105,110,101,66,111,120,101,115,79,109,105,116,115,73,110,108,105,110,101,69,100,103,101,115,65,114,114,97,121]));
+        let result = ExplainableStubParagraphLayoutEngine::new(Some(Box::new(CjkFontRoleClassifier::new())), Some(Box::new(ParagraphLayoutFallbackResolver::new(Some(UString::from("cjk-primary")), Some(UString::from("latin-primary")), Some(UString::from("symbol-fallback"))).unwrap())), Some(Box::new(BuiltInClreqProfileResolver::new())), Some(Box::new(StubFontMetricsResolver::new())), Some(Box::new(ScriptAwareFontMetricsNormalizer::new())), Some(PunctuationAtomBuilder::new(None, None).unwrap()), Some(PunctuationSpacingCompressor::new().unwrap()), Some(QuotePairAnalyzer::new()), Some(Box::new(GreedyLineBreaker::new(None, None, None, None))), Some(Justifier::new(Some(0.5), Some(0.25))), Some(Arc::new(Mutex::new(ExplainableStubTextShaper::new()))), Some(DefaultHyphenator::default_hyphenator_default_hyphenator().unwrap()), Some(Arc::new(Mutex::new(LruWidthIndependentAnnotationCache::new(512))))).unwrap().layout(LayoutInput::new(TiqianTextContent::new(&(UStr::new(&[20013,25991,27491,25991])), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![])), Some(TextStyle::new(Some(vec![]), Some(16.0), Some(UString::from("zh-Hans")), Some(400), Some(false), Some(0.0), Some(InlineAttachment::None))), Some(ParagraphStyle::new(Some(LastLineAlignment::Start), Some(WritingMode::HorizontalTb), None, Some((Ic::zero()).clone()), Some(Ic::zero()), Some(MeasureAdaptiveFirstLineIndent::new(Some(14.0), Some(1.0), Some(2.0))), Some(LineLengthGrid::new(Some(true), None)), Some(RubyLineHeightMode::PerLine), Some(ParagraphStyle::PARAGRAPH_STYLE_DEFAULT_INLINE_OBJECT_MINIMUM_CLEARANCE_EM), Some(ParagraphStyle::PARAGRAPH_STYLE_DEFAULT_EMPHASIS_DOT_GAP_EM))), LayoutConstraints::new(320 as f64 as f64, Some(f64::INFINITY), Some(2147483647)).unwrap(), Some((*crate::org::tiqian::core::built_in_layout_profiles::BUILT_IN_LAYOUT_PROFILES_CLREQ_HORIZONTAL).clone()), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]))).unwrap();
         let json = PreparedParagraphFns::prepared_paragraph_fns_to_prepared_paragraph_json((result).clone(), true).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_false((u32::from_ne_bytes((u_string::find_from(&json, "\"inlineEdges\":", 0)).to_ne_bytes())) <= 2147483647, Some((format!("{}{}",
-            "no boxes, no edges: ",
-            json
-        )).to_string())).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_false((u32::from_ne_bytes(((u_string::find_from(&(json), UString::from("\"inlineEdges\":").as_ustr(), 0)) as u32).to_ne_bytes())) <= 2147483647, Some(UString::from(format!("{}", { let mut __s = UString::new(); __s += &(UString::from("no boxes, no edges: ")); __s += json.as_ustr(); __s }).as_str()))).unwrap();
     });
 }
 
 #[test]
 fn end_only_inline_box_emits_edge_without_inline_start_field() {
     testlib::run("org.tiqian.layout.PreparedParagraphInlineEdgesTest.endOnlyInlineBoxEmitsEdgeWithoutInlineStartField", "org.tiqian.layout.PreparedParagraphInlineEdgesTest.endOnlyInlineBoxEmitsEdgeWithoutInlineStartField", || {
-        let mut t = TestTraceRecorder::new("PreparedParagraphInlineEdgesTest");
-        t.section(&"endOnlyInlineBoxEmitsEdgeWithoutInlineStartField");
-        let result = ExplainableStubParagraphLayoutEngine::new(Some(Box::new(CjkFontRoleClassifier::new())), Some(Box::new(ParagraphLayoutFallbackResolver::new(Some("cjk-primary".to_string()), Some("latin-primary".to_string()), Some("symbol-fallback".to_string())).unwrap())),
-Some(Box::new(BuiltInClreqProfileResolver::new())), Some(Box::new(StubFontMetricsResolver::new())), Some(Box::new(ScriptAwareFontMetricsNormalizer::new())), Some(PunctuationAtomBuilder::new(None, None).unwrap()), Some(PunctuationSpacingCompressor::new().unwrap()),
-Some(QuotePairAnalyzer::new()), Some(Box::new(GreedyLineBreaker::new(None, None, None, None))), Some(Justifier::new(Some(0.5), Some(0.25))), Some(Box::new(ExplainableStubTextShaper::new())), Some(DefaultHyphenator::default_hyphenator_default_hyphenator().unwrap()),
-Some(Box::new(LruWidthIndependentAnnotationCache::new(512)))).unwrap().layout(LayoutInput::new(TiqianTextContent::new("中文正文", Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![])), Some(TextStyle::new(Some(vec![]), Some(16.0), Some("zh-Hans".to_string()), Some(400), Some(false),
-Some(0.0), Some(InlineAttachment::None))), Some(ParagraphStyle::new(Some(LastLineAlignment::Start), Some(WritingMode::HorizontalTb), None, Some((Ic::zero()).clone()), Some(Ic::zero()), Some(MeasureAdaptiveFirstLineIndent::new(Some(14.0), Some(1.0), Some(2.0))),
-Some(LineLengthGrid::new(Some(true), None)), Some(RubyLineHeightMode::PerLine), Some(ParagraphStyle::PARAGRAPH_STYLE_DEFAULT_INLINE_OBJECT_MINIMUM_CLEARANCE_EM), Some(ParagraphStyle::PARAGRAPH_STYLE_DEFAULT_EMPHASIS_DOT_GAP_EM))), LayoutConstraints::new(320 as f64 as f64,
-Some(f64::INFINITY), Some(2147483647)).unwrap(), Some((*crate::org::tiqian::core::built_in_layout_profiles::BUILT_IN_LAYOUT_PROFILES_CLREQ_HORIZONTAL).clone()), Some(vec![]), Some(vec![]), Some(vec![
+        let mut t = TestTraceRecorder::new(&(UStr::new(&[80,114,101,112,97,114,101,100,80,97,114,97,103,114,97,112,104,73,110,108,105,110,101,69,100,103,101,115,84,101,115,116])));
+        t.section(UStr::new(&[101,110,100,79,110,108,121,73,110,108,105,110,101,66,111,120,69,109,105,116,115,69,100,103,101,87,105,116,104,111,117,116,73,110,108,105,110,101,83,116,97,114,116,70,105,101,108,100]));
+        let result = ExplainableStubParagraphLayoutEngine::new(Some(Box::new(CjkFontRoleClassifier::new())), Some(Box::new(ParagraphLayoutFallbackResolver::new(Some(UString::from("cjk-primary")), Some(UString::from("latin-primary")), Some(UString::from("symbol-fallback"))).unwrap())), Some(Box::new(BuiltInClreqProfileResolver::new())), Some(Box::new(StubFontMetricsResolver::new())), Some(Box::new(ScriptAwareFontMetricsNormalizer::new())), Some(PunctuationAtomBuilder::new(None, None).unwrap()), Some(PunctuationSpacingCompressor::new().unwrap()), Some(QuotePairAnalyzer::new()), Some(Box::new(GreedyLineBreaker::new(None, None, None, None))), Some(Justifier::new(Some(0.5), Some(0.25))), Some(Arc::new(Mutex::new(ExplainableStubTextShaper::new()))), Some(DefaultHyphenator::default_hyphenator_default_hyphenator().unwrap()), Some(Arc::new(Mutex::new(LruWidthIndependentAnnotationCache::new(512))))).unwrap().layout(LayoutInput::new(TiqianTextContent::new(&(UStr::new(&[20013,25991,27491,25991])), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![])), Some(TextStyle::new(Some(vec![]), Some(16.0), Some(UString::from("zh-Hans")), Some(400), Some(false), Some(0.0), Some(InlineAttachment::None))), Some(ParagraphStyle::new(Some(LastLineAlignment::Start), Some(WritingMode::HorizontalTb), None, Some((Ic::zero()).clone()), Some(Ic::zero()), Some(MeasureAdaptiveFirstLineIndent::new(Some(14.0), Some(1.0), Some(2.0))), Some(LineLengthGrid::new(Some(true), None)), Some(RubyLineHeightMode::PerLine), Some(ParagraphStyle::PARAGRAPH_STYLE_DEFAULT_INLINE_OBJECT_MINIMUM_CLEARANCE_EM), Some(ParagraphStyle::PARAGRAPH_STYLE_DEFAULT_EMPHASIS_DOT_GAP_EM))), LayoutConstraints::new(320 as f64 as f64, Some(f64::INFINITY), Some(2147483647)).unwrap(), Some((*crate::org::tiqian::core::built_in_layout_profiles::BUILT_IN_LAYOUT_PROFILES_CLREQ_HORIZONTAL).clone()), Some(vec![]), Some(vec![]), Some(vec![
     (InlineBoxSpan::new(TextRange::new(0u32, 2u32).unwrap(), Some(0 as f64), Some(4 as f64), Some(InlineBoxOuterSpacing::Narrow))).clone(),
 ]), Some(vec![]))).unwrap();
         let json = PreparedParagraphFns::prepared_paragraph_fns_to_prepared_paragraph_json((result).clone(), true).unwrap();
-        let edges_at = u_string::find_from(&json, "\"inlineEdges\":[", 0);
-        let _ = TracedAssertions::traced_assertions_assert_true((edges_at) >= 0, Some((format!("{}{}",
-            "inlineEdges array missing: ",
-            json
-        )).to_string())).unwrap();
-        let entry = u_string::substring_from(&json, i32::from_ne_bytes((edges_at).to_ne_bytes()));
-        let _ = TracedAssertions::traced_assertions_assert_true((u32::from_ne_bytes((u_string::find_from(&entry, "\"offset\":2", 0)).to_ne_bytes())) <= 2147483647, Some((format!("{}{}",
-            "edge offset (box end) missing: ",
-            entry
-        )).to_string())).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_true((u32::from_ne_bytes((u_string::find_from(&entry, "\"inlineEnd\":4", 0)).to_ne_bytes())) <= 2147483647, Some((format!("{}{}",
-            "inlineEnd field missing: ",
-            entry
-        )).to_string())).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_false((u32::from_ne_bytes((u_string::find_from(&entry, "\"inlineStart\":", 0)).to_ne_bytes())) <= 2147483647, Some((format!("{}{}",
-            "inlineStart must be absent for an end-only box: ",
-            entry
-        )).to_string())).unwrap();
+        let edges_at = u_string::find_from(&(json), UString::from("\"inlineEdges\":[").as_ustr(), 0);
+        let _ = TracedAssertions::traced_assertions_assert_true((edges_at) >= 0, Some(UString::from(format!("{}", { let mut __s = UString::new(); __s += &(UString::from("inlineEdges array missing: ")); __s += json.as_ustr(); __s }).as_str()))).unwrap();
+        let entry = u_string::substring_from(&json, i32::from_ne_bytes(((edges_at) as i32).to_ne_bytes()));
+        let _ = TracedAssertions::traced_assertions_assert_true((u32::from_ne_bytes(((u_string::find_from(&(entry), UString::from("\"offset\":2").as_ustr(), 0)) as u32).to_ne_bytes())) <= 2147483647, Some(UString::from(format!("{}", { let mut __s = UString::new(); __s += &(UString::from("edge offset (box end) missing: ")); __s += entry.as_ustr(); __s }).as_str()))).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_true((u32::from_ne_bytes(((u_string::find_from(&(entry), UString::from("\"inlineEnd\":4").as_ustr(), 0)) as u32).to_ne_bytes())) <= 2147483647, Some(UString::from(format!("{}", { let mut __s = UString::new(); __s += &(UString::from("inlineEnd field missing: ")); __s += entry.as_ustr(); __s }).as_str()))).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_false((u32::from_ne_bytes(((u_string::find_from(&(entry), UString::from("\"inlineStart\":").as_ustr(), 0)) as u32).to_ne_bytes())) <= 2147483647, Some(UString::from(format!("{}", { let mut __s = UString::new(); __s += &(UString::from("inlineStart must be absent for an end-only box: ")); __s += entry.as_ustr(); __s }).as_str()))).unwrap();
     });
 }

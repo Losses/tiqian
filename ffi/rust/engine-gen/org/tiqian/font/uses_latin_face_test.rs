@@ -5,6 +5,8 @@ use crate::org::tiqian::font::font_role::FontRole;
 use crate::org::tiqian::test::trace::test_trace_recorder::TestTraceRecorder;
 use crate::org::tiqian::test::trace::traced_assertions::TracedAssertions;
 use crate::runtime::test as testlib;
+use crate::runtime::u_string::UStr;
+use crate::runtime::u_string::UString;
 
 
 #[derive(Debug, Clone, PartialEq)]
@@ -12,6 +14,15 @@ pub enum UsesLatinFaceTestOnlyLatinTextUsesLatinFaceFault {
     TracedAssertionsAssertTrueFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsAssertTrueFault),
     TracedAssertionsAssertFalseFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsAssertFalseFault),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
+}
+impl std::fmt::Display for UsesLatinFaceTestOnlyLatinTextUsesLatinFaceFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            UsesLatinFaceTestOnlyLatinTextUsesLatinFaceFault::TracedAssertionsAssertTrueFaultFault(value) => write!(formatter, "{}", value),
+            UsesLatinFaceTestOnlyLatinTextUsesLatinFaceFault::TracedAssertionsAssertFalseFaultFault(value) => write!(formatter, "{}", value),
+            UsesLatinFaceTestOnlyLatinTextUsesLatinFaceFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
 }
 
 impl From<UsesLatinFaceTestOnlyLatinTextUsesLatinFaceFault> for crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsAssertTrueFault {
@@ -65,6 +76,15 @@ pub enum UsesLatinFaceTestNameOverloadAgreesWithEnumFault {
     TracedAssertionsAssertFalseFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsAssertFalseFault),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
 }
+impl std::fmt::Display for UsesLatinFaceTestNameOverloadAgreesWithEnumFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            UsesLatinFaceTestNameOverloadAgreesWithEnumFault::TracedAssertionsAssertEqualsRenderedFaultFault(value) => write!(formatter, "{}", value),
+            UsesLatinFaceTestNameOverloadAgreesWithEnumFault::TracedAssertionsAssertFalseFaultFault(value) => write!(formatter, "{}", value),
+            UsesLatinFaceTestNameOverloadAgreesWithEnumFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
+}
 
 impl From<UsesLatinFaceTestNameOverloadAgreesWithEnumFault> for crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsAssertEqualsRenderedFault {
     fn from(value: UsesLatinFaceTestNameOverloadAgreesWithEnumFault) -> Self {
@@ -114,7 +134,7 @@ impl From<crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFa
 #[test]
 fn only_latin_text_uses_latin_face() {
     testlib::run("org.tiqian.font.UsesLatinFaceTest.onlyLatinTextUsesLatinFace", "org.tiqian.font.UsesLatinFaceTest.onlyLatinTextUsesLatinFace", || {
-        TestTraceRecorder::new("UsesLatinFaceTest").section(&"onlyLatinTextUsesLatinFace");
+        TestTraceRecorder::new(&(UStr::new(&[85,115,101,115,76,97,116,105,110,70,97,99,101,84,101,115,116]))).section(UStr::new(&[111,110,108,121,76,97,116,105,110,84,101,120,116,85,115,101,115,76,97,116,105,110,70,97,99,101]));
         let _ = TracedAssertions::traced_assertions_assert_true(FontRole::LatinText.uses_latin_face(), None).unwrap();
         let a = vec![
     FontRole::CjkText,
@@ -124,11 +144,8 @@ fn only_latin_text_uses_latin_face() {
     FontRole::Unknown,
 ];
         let mut i = 0u32;
-        while (i32::from_ne_bytes((i).to_ne_bytes())) < (i32::from_ne_bytes((u32::try_from((a.len()) & 0xFFFF_FFFF).unwrap_or(0)).to_ne_bytes())) {
-            let _ = TracedAssertions::traced_assertions_assert_false(a[usize::try_from(i).unwrap_or(0)].uses_latin_face(), Some((format!("{}{}",
-            a[usize::try_from(i).unwrap_or(0)].name(),
-            " must fall back to the CJK face"
-        )).to_string())).unwrap();
+        while (i32::from_ne_bytes(((i) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((a.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
+            let _ = TracedAssertions::traced_assertions_assert_false(a[usize::try_from(i).unwrap_or(0)].uses_latin_face(), Some(UString::from(format!("{}", { let mut __s = UString::new(); __s += UString::from(a[usize::try_from(i).unwrap_or(0)].name()).as_ustr(); __s += &(UString::from(" must fall back to the CJK face")); __s }).as_str()))).unwrap();
             i = u32::wrapping_add(i, 1);
         }
     });
@@ -137,26 +154,22 @@ fn only_latin_text_uses_latin_face() {
 #[test]
 fn name_overload_agrees_with_enum() {
     testlib::run("org.tiqian.font.UsesLatinFaceTest.nameOverloadAgreesWithEnum", "org.tiqian.font.UsesLatinFaceTest.nameOverloadAgreesWithEnum", || {
-        TestTraceRecorder::new("UsesLatinFaceTest").section(&"nameOverloadAgreesWithEnum");
+        TestTraceRecorder::new(&(UStr::new(&[85,115,101,115,76,97,116,105,110,70,97,99,101,84,101,115,116]))).section(UStr::new(&[110,97,109,101,79,118,101,114,108,111,97,100,65,103,114,101,101,115,87,105,116,104,69,110,117,109]));
         let names = vec![
-    "CjkText".to_string(),
-    "CjkPunctuation".to_string(),
-    "LatinText".to_string(),
-    "Symbol".to_string(),
-    "Emoji".to_string(),
-    "Unknown".to_string(),
+    UString::from("CjkText").to_ustring(),
+    UString::from("CjkPunctuation").to_ustring(),
+    UString::from("LatinText").to_ustring(),
+    UString::from("Symbol").to_ustring(),
+    UString::from("Emoji").to_ustring(),
+    UString::from("Unknown").to_ustring(),
 ];
         let mut i = 0u32;
-        while (i32::from_ne_bytes((i).to_ne_bytes())) < (i32::from_ne_bytes((u32::try_from((names.len()) & 0xFFFF_FFFF).unwrap_or(0)).to_ne_bytes())) {
+        while (i32::from_ne_bytes(((i) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((names.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
             let x = (names[usize::try_from(i).unwrap_or(0)]).clone();
-            let _ = TracedAssertions::traced_assertions_assert_equals_rendered(if x == "LatinText" { "true".to_string() } else { "false".to_string() }.as_str(), if font_role_name_uses_latin_face(Some((x).to_string())) { "true".to_string() } else { "false".to_string() }.as_str(),
-Some((format!("{}{}",
-            "name overload must match the enum for ",
-            x
-        )).to_string())).unwrap();
+            let _ = TracedAssertions::traced_assertions_assert_equals_rendered(if x == UString::from("LatinText") { UString::from("true") } else { UString::from("false") }.as_ustr(), if font_role_name_uses_latin_face(Some((x).to_ustring())) { UString::from("true") } else { UString::from("false") }.as_ustr(), Some(UString::from(format!("{}", { let mut __s = UString::new(); __s += &(UString::from("name overload must match the enum for ")); __s += x.as_ustr(); __s }).as_str()))).unwrap();
             i = u32::wrapping_add(i, 1);
         }
         let _ = TracedAssertions::traced_assertions_assert_false(font_role_name_uses_latin_face(None.clone()), None).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_false(font_role_name_uses_latin_face(Some("NotARole".to_string())), None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_false(font_role_name_uses_latin_face(Some(UString::from("NotARole"))), None).unwrap();
     });
 }

@@ -1,14 +1,16 @@
 use crate::org::tiqian::core::text_range::TextRange;
+use crate::runtime::u_string::UStr;
+use crate::runtime::u_string::UString;
 
 
 #[derive(Debug, Clone, PartialEq)]
 pub struct LineRepairCandidateInfo {
-    pub kind: String,
-    pub reason_code: String,
+    pub kind: UString,
+    pub reason_code: UString,
     pub offender_range: TextRange,
     pub penalty: u32,
     pub accepted: bool,
-    pub rejection_reason: Option<String>,
+    pub rejection_reason: Option<UString>,
     pub target_cluster_index: Option<u32>,
     pub carried_cluster_index: Option<u32>,
     pub shrink: f64,
@@ -17,8 +19,7 @@ pub struct LineRepairCandidateInfo {
 }
 
 impl LineRepairCandidateInfo {
-    pub fn new(kind: &str, reason_code: &str, offender_range: TextRange, penalty: u32, accepted: bool, rejection_reason: Option<String>, target_cluster_index: Option<u32>, carried_cluster_index: Option<u32>, shrink: Option<f64>, required_shrink: Option<f64>, available_capacity:
-Option<f64>) -> Self {
+    pub fn new(kind: &UStr, reason_code: &UStr, offender_range: TextRange, penalty: u32, accepted: bool, rejection_reason: Option<UString>, target_cluster_index: Option<u32>, carried_cluster_index: Option<u32>, shrink: Option<f64>, required_shrink: Option<f64>, available_capacity: Option<f64>) -> Self {
         let rejection_reason = rejection_reason.or_else(|| None);
         let target_cluster_index = target_cluster_index.or_else(|| None);
         let carried_cluster_index = carried_cluster_index.or_else(|| None);
@@ -26,8 +27,8 @@ Option<f64>) -> Self {
         let required_shrink = required_shrink.unwrap_or_else(|| 0.0);
         let available_capacity = available_capacity.unwrap_or_else(|| 0.0);
         Self {
-            kind: kind.to_string(),
-            reason_code: reason_code.to_string(),
+            kind: kind.to_ustring(),
+            reason_code: reason_code.to_ustring(),
             offender_range,
             penalty,
             accepted,
@@ -40,42 +41,7 @@ Option<f64>) -> Self {
         }
     }
 
-    pub fn to_string(&self) -> String {
-        return format!("{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}",
-            "LineRepairCandidateInfo(",
-            "kind=",
-            (self.kind).to_string(),
-            ", ",
-            "reasonCode=",
-            (self.reason_code).to_string(),
-            ", ",
-            "offenderRange=",
-            (self.offender_range).clone().to_string(),
-            ", ",
-            "penalty=",
-            crate::runtime::int_text::IntText::int_text(self.penalty),
-            ", ",
-            "accepted=",
-            self.accepted,
-            ", ",
-            "rejectionReason=",
-            match (self.rejection_reason).clone() { Some(ref v) => v.to_string(), None => "null".to_string() },
-            ", ",
-            "targetClusterIndex=",
-            match self.target_cluster_index { Some(v) => crate::runtime::int_text::IntText::int_text(v), None => "null".to_string() },
-            ", ",
-            "carriedClusterIndex=",
-            match self.carried_cluster_index { Some(v) => crate::runtime::int_text::IntText::int_text(v), None => "null".to_string() },
-            ", ",
-            "shrink=",
-            self.shrink,
-            ", ",
-            "requiredShrink=",
-            self.required_shrink,
-            ", ",
-            "availableCapacity=",
-            self.available_capacity,
-            ")"
-        );
+    pub fn to_string(&self) -> UString {
+        return UString::from(format!("{}", { let mut __s = UString::new(); __s += &(UString::from("LineRepairCandidateInfo(")); __s += &(UString::from("kind=")); __s += (self.kind).to_ustring().as_ustr(); __s += &(UString::from(", ")); __s += &(UString::from("reasonCode=")); __s += (self.reason_code).to_ustring().as_ustr(); __s += &(UString::from(", ")); __s += &(UString::from("offenderRange=")); __s += UString::from(format!("{}", (self.offender_range).clone().to_string()).as_str()).as_ustr(); __s += &(UString::from(", ")); __s += &(UString::from("penalty=")); __s += &(UString::from(format!("{}", crate::runtime::int_text::IntText::int_text(self.penalty)).as_str())); __s += &(UString::from(", ")); __s += &(UString::from("accepted=")); __s += UString::from(format!("{}", (self.accepted).to_string()).as_str()).as_ustr(); __s += &(UString::from(", ")); __s += &(UString::from("rejectionReason=")); __s += match &((self.rejection_reason).clone()) { Some(v) => v.as_ustr(), None => UStr::new(&[]) }; __s += &(UString::from(", ")); __s += &(UString::from("targetClusterIndex=")); __s += &(match self.target_cluster_index { Some(v) => UString::from(format!("{}", crate::runtime::int_text::IntText::int_text(v)).as_str()), None => UString::from("null") }); __s += &(UString::from(", ")); __s += &(UString::from("carriedClusterIndex=")); __s += &(match self.carried_cluster_index { Some(v) => UString::from(format!("{}", crate::runtime::int_text::IntText::int_text(v)).as_str()), None => UString::from("null") }); __s += &(UString::from(", ")); __s += &(UString::from("shrink=")); __s += &(crate::runtime::fp_helper::FPHelper::format_float(self.shrink)); __s += &(UString::from(", ")); __s += &(UString::from("requiredShrink=")); __s += &(crate::runtime::fp_helper::FPHelper::format_float(self.required_shrink)); __s += &(UString::from(", ")); __s += &(UString::from("availableCapacity=")); __s += &(crate::runtime::fp_helper::FPHelper::format_float(self.available_capacity)); __s += &(UString::from(")")); __s }).as_str());
     }
 }

@@ -1,9 +1,12 @@
+use crate::runtime::u_string::UString;
+
+
 #[derive(Clone, Copy)]
 pub struct RecordedShapingEvidenceData;
 
 impl RecordedShapingEvidenceData {
-    pub fn recorded_shaping_evidence_data_evidence_json() -> String {
-        return concat!("{\n",
+    pub fn recorded_shaping_evidence_data_evidence_json() -> UString {
+        return UString::from(concat!("{\n",
 "    \"meta\": {\n",
 "        \"recorder\": \"skia-jvm\",\n",
 "        \"os\": \"Mac OS X\",\n",
@@ -37965,6 +37968,6 @@ impl RecordedShapingEvidenceData {
 "            }\n",
 "        }\n",
 "    ]\n",
-"}").to_string();
+"}")).to_ustring();
     }
 }

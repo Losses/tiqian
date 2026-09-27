@@ -1,4 +1,5 @@
 use crate::org::tiqian::font::font_metric_source::FontMetricSource;
+use crate::runtime::u_string::UString;
 
 
 #[derive(Debug, Clone, PartialEq)]
@@ -25,27 +26,7 @@ impl RawFontMetrics {
         }
     }
 
-    pub fn to_string(&self) -> String {
-        return format!("{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}",
-            "RawFontMetrics(",
-            "ascent=",
-            self.ascent,
-            ", ",
-            "descent=",
-            self.descent,
-            ", ",
-            "leading=",
-            self.leading,
-            ", ",
-            "source=",
-            self.source.name(),
-            ", ",
-            "typoAscent=",
-            match self.typo_ascent { Some(v) => crate::runtime::fp_helper::FPHelper::format_float(v), None => "null".to_string() },
-            ", ",
-            "typoDescent=",
-            match self.typo_descent { Some(v) => crate::runtime::fp_helper::FPHelper::format_float(v), None => "null".to_string() },
-            ")"
-        );
+    pub fn to_string(&self) -> UString {
+        return UString::from(format!("{}", { let mut __s = UString::new(); __s += &(UString::from("RawFontMetrics(")); __s += &(UString::from("ascent=")); __s += &(crate::runtime::fp_helper::FPHelper::format_float(self.ascent)); __s += &(UString::from(", ")); __s += &(UString::from("descent=")); __s += &(crate::runtime::fp_helper::FPHelper::format_float(self.descent)); __s += &(UString::from(", ")); __s += &(UString::from("leading=")); __s += &(crate::runtime::fp_helper::FPHelper::format_float(self.leading)); __s += &(UString::from(", ")); __s += &(UString::from("source=")); __s += UString::from(self.source.name()).as_ustr(); __s += &(UString::from(", ")); __s += &(UString::from("typoAscent=")); __s += &(match self.typo_ascent { Some(v) => UString::from(format!("{}", crate::runtime::fp_helper::FPHelper::format_float(v)).as_str()), None => UString::from("null") }); __s += &(UString::from(", ")); __s += &(UString::from("typoDescent=")); __s += &(match self.typo_descent { Some(v) => UString::from(format!("{}", crate::runtime::fp_helper::FPHelper::format_float(v)).as_str()), None => UString::from("null") }); __s += &(UString::from(")")); __s }).as_str());
     }
 }

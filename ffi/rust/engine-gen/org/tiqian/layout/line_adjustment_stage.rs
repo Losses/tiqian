@@ -57,6 +57,8 @@ use crate::runtime::sorted_table::SortedSetTable;
 use crate::runtime::sorted_table::SortedSetTableBuilder;
 use crate::runtime::sorted_table::SortedTable;
 use crate::runtime::u_string;
+use crate::runtime::u_string::UStr;
+use crate::runtime::u_string::UString;
 use std::sync::Arc;
 
 
@@ -65,6 +67,15 @@ pub enum LineAdjustmentStageFinishParagraphLayoutFault {
     TextRangeErrorFault(crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError),
     UStringFaultFault(crate::std::u_string_exception::UStringFault),
     TextShaperShapeFaultFault(crate::org::tiqian::shaping::text_shaper::TextShaperShapeFault),
+}
+impl std::fmt::Display for LineAdjustmentStageFinishParagraphLayoutFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            LineAdjustmentStageFinishParagraphLayoutFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            LineAdjustmentStageFinishParagraphLayoutFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            LineAdjustmentStageFinishParagraphLayoutFault::TextShaperShapeFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
 }
 
 impl From<LineAdjustmentStageFinishParagraphLayoutFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
@@ -116,18 +127,18 @@ impl From<crate::org::tiqian::shaping::text_shaper::TextShaperShapeFault> for Li
 pub struct LineAdjustmentStage;
 
 impl LineAdjustmentStage {
-    pub(crate) fn line_adjustment_stage_repair_option_name(repair: RepairOption) -> String {
+    pub(crate) fn line_adjustment_stage_repair_option_name(repair: RepairOption) -> UString {
         return match repair {
-            RepairOption::PushIn { .. } => "PushIn".to_string(),
-            RepairOption::Hang { .. } => "Hang".to_string(),
-            RepairOption::CarryPrevious { .. } => "CarryPrevious".to_string(),
-            RepairOption::CarryNext { .. } => "CarryNext".to_string(),
-            RepairOption::LeaveRagged { .. } => "LeaveRagged".to_string(),
+            RepairOption::PushIn { .. } => UString::from("PushIn").to_ustring(),
+            RepairOption::Hang { .. } => UString::from("Hang").to_ustring(),
+            RepairOption::CarryPrevious { .. } => UString::from("CarryPrevious").to_ustring(),
+            RepairOption::CarryNext { .. } => UString::from("CarryNext").to_ustring(),
+            RepairOption::LeaveRagged { .. } => UString::from("LeaveRagged").to_ustring(),
         };
     }
 
     pub(crate) fn line_adjustment_stage_line_hyphen_advance_at(line_index: u32, lines: &Vec<LineCandidate>, hyphen_offsets: SortedSetTable<u32>, natural_clusters: &Vec<Cluster>, hyphen_advance: f64) -> f64 {
-        if u32::from_ne_bytes((hyphen_offsets.size()).to_ne_bytes()) == 0 || (i32::from_ne_bytes((line_index).to_ne_bytes())) >= i32::from_ne_bytes((u32::wrapping_sub(u32::try_from((lines.len()) & 0xFFFF_FFFF).unwrap_or(0), 1)).to_ne_bytes()) {
+        if u32::from_ne_bytes(((hyphen_offsets.size()) as u32).to_ne_bytes()) == 0 || (i32::from_ne_bytes(((line_index) as i32).to_ne_bytes())) >= i32::from_ne_bytes(((u32::wrapping_sub(u32::try_from((lines.len()) & 0xFFFF_FFFF).unwrap_or(0), 1)) as i32).to_ne_bytes()) {
             return 0.0f64;
         }
         let next = (lines[usize::try_from(u32::wrapping_add(line_index, 1)).unwrap_or(0)]).clone();
@@ -138,10 +149,10 @@ impl LineAdjustmentStage {
         return if hyphen_offsets.has(&(((natural_clusters[usize::try_from(next_first).unwrap_or(0)]).clone().range).clone().start)) { hyphen_advance } else { 0.0f64 };
     }
 
-    pub(crate) fn line_adjustment_stage_renderable_glyph_run_clusters(clusters: &Vec<Cluster>, open_type_features_by_cluster_range: SortedMapTable<TextRange, Vec<String>>) -> Vec<Vec<Cluster>> {
+    pub(crate) fn line_adjustment_stage_renderable_glyph_run_clusters(clusters: &Vec<Cluster>, open_type_features_by_cluster_range: SortedMapTable<TextRange, Vec<UString>>) -> Vec<Vec<Cluster>> {
         let mut renderable: Vec<Cluster> = Vec::new();
         for c in clusters {
-            if i32::from_ne_bytes((u_string::unit_count(&((c.display_text).to_string()))).to_ne_bytes()) > (0) && !ParagraphShapingStage::paragraph_shaping_stage_is_inline_object_cluster((c).clone()) {
+            if i32::from_ne_bytes(((u_string::unit_count(&((c.display_text).to_ustring()))) as i32).to_ne_bytes()) > (0) && !ParagraphShapingStage::paragraph_shaping_stage_is_inline_object_cluster((c).clone()) {
                 renderable.push(c.clone());
             }
         }
@@ -164,7 +175,7 @@ impl LineAdjustmentStage {
                     }
                 }
             }
-            if prev.font_key.to_string() == (curr.font_key).to_string() && (prev.range).clone().end == (curr.range).clone().start && same_features {
+            if prev.font_key.to_ustring() == (curr.font_key).to_ustring() && (prev.range).clone().end == (curr.range).clone().start && same_features {
                 current_group.push(curr.clone());
             } else {
                 groups.push(current_group.clone());
@@ -196,8 +207,7 @@ impl LineAdjustmentStage {
 ];
     }
 
-    pub(crate) fn line_adjustment_stage_build_line_boxes(input: LayoutInput, line_solution: LineSolution, trimmed_clusters: &Vec<Cluster>, final_clusters: &Vec<Cluster>, first_line_indent: f64, block_indent: f64, measure: f64, grid_body_offset: f64, line_baseline: &Vec<f64>,
-line_top: &Vec<f64>, line_bottom: &Vec<f64>, hyphen_offsets: SortedSetTable<u32>, natural_clusters: &Vec<Cluster>, hyphen_advance: f64, hyphen_glyphs: &Vec<Glyph>, justification_plans: &Vec<Option<JustificationPlan>>) -> LineBoxStageResult {
+    pub(crate) fn line_adjustment_stage_build_line_boxes(input: LayoutInput, line_solution: LineSolution, trimmed_clusters: &Vec<Cluster>, final_clusters: &Vec<Cluster>, first_line_indent: f64, block_indent: f64, measure: f64, grid_body_offset: f64, line_baseline: &Vec<f64>, line_top: &Vec<f64>, line_bottom: &Vec<f64>, hyphen_offsets: SortedSetTable<u32>, natural_clusters: &Vec<Cluster>, hyphen_advance: f64, hyphen_glyphs: &Vec<Glyph>, justification_plans: &Vec<Option<JustificationPlan>>) -> LineBoxStageResult {
         let mut laid_out_lines: Vec<LineBox> = Vec::new();
         for line_index in 0..match u32::try_from(line_solution.lines.len()) { Ok(value) => value, Err(_) => u32::MAX } {
             let line_candidate = (line_solution.lines[usize::try_from(line_index).unwrap_or(0)]).clone();
@@ -212,14 +222,14 @@ line_top: &Vec<f64>, line_bottom: &Vec<f64>, hyphen_offsets: SortedSetTable<u32>
             let adjusted_width = AccurateSum::accurate_sum_of(&adjusted_terms);
             let visual_width = AccurateSum::accurate_sum_of(&visual_terms);
             let mut hanging_terms: Vec<f64> = vec![];
-            for h_idx in 0..u32::from_ne_bytes((line_candidate.hanging_cluster_indices.size()).to_ne_bytes()) {
+            for h_idx in 0..u32::from_ne_bytes(((line_candidate.hanging_cluster_indices.size()) as u32).to_ne_bytes()) {
                 hanging_terms.push(final_clusters[usize::try_from(line_candidate.hanging_cluster_indices.at({ let v: u32 = h_idx; i32::from_ne_bytes(v.to_ne_bytes()) })).unwrap_or(0)].advance);
             }
             let hanging_punctuation_advance = AccurateSum::accurate_sum_of(&hanging_terms);
             let mut has_drawable_content = false;
             if !line_candidate.cluster_range.get_is_empty() {
                 for idx in line_candidate.cluster_range.start..u32::wrapping_add(line_candidate.cluster_range.end, 1) {
-                    if i32::from_ne_bytes((u_string::unit_count(&(((final_clusters[usize::try_from(idx).unwrap_or(0)]).clone().display_text).to_string()))).to_ne_bytes()) > (0) {
+                    if i32::from_ne_bytes(((u_string::unit_count(&(((final_clusters[usize::try_from(idx).unwrap_or(0)]).clone().display_text).to_ustring()))) as i32).to_ne_bytes()) > (0) {
                         has_drawable_content = true;
                         break;
                     }
@@ -247,66 +257,35 @@ line_top: &Vec<f64>, line_bottom: &Vec<f64>, hyphen_offsets: SortedSetTable<u32>
                     }
                 }
             }
-            let repair_str = match &(line_candidate.repair) { Some(__option) => Some(format!("{}{}{}",
-            LineAdjustmentStage::line_adjustment_stage_repair_option_name((*__option).clone()),
-            ":",
-            RepairOptions::repair_options_reason((*__option).clone())
-        ).to_string()), None => None };
-            let mut notes: Vec<String> = Vec::new();
+            let repair_str = match &(line_candidate.repair) { Some(__option) => Some(UString::from(format!("{}", { let mut __s = UString::new(); __s += LineAdjustmentStage::line_adjustment_stage_repair_option_name((*__option).clone()).as_ustr(); __s += &(UString::from(":")); __s += RepairOptions::repair_options_reason((*__option).clone()).as_ustr(); __s }).as_str())), None => None };
+            let mut notes: Vec<UString> = Vec::new();
             if line_candidate.cluster_range.get_is_empty() {
-                notes.push(format!("{}{}{}",
-            "line:",
-            crate::runtime::int_text::IntText::int_text(line_index),
-            ":clusters=empty"
-        ));
+                notes.push(UString::from(format!("{}", { let mut __s = UString::new(); __s += &(UString::from("line:")); __s += &(UString::from(format!("{}", crate::runtime::int_text::IntText::int_text(line_index)).as_str())); __s += &(UString::from(":clusters=empty")); __s }).as_str()));
             } else {
-                notes.push(format!("{}{}{}{}{}{}",
-            "line:",
-            crate::runtime::int_text::IntText::int_text(line_index),
-            ":clusters=",
-            crate::runtime::int_text::IntText::int_text(line_candidate.cluster_range.start),
-            "-",
-            crate::runtime::int_text::IntText::int_text(line_candidate.cluster_range.end)
-        ));
+                notes.push(UString::from(format!("{}", { let mut __s = UString::new(); __s += &(UString::from("line:")); __s += &(UString::from(format!("{}", crate::runtime::int_text::IntText::int_text(line_index)).as_str())); __s += &(UString::from(":clusters=")); __s += &(UString::from(format!("{}", crate::runtime::int_text::IntText::int_text(line_candidate.cluster_range.start)).as_str())); __s += &(UString::from("-")); __s += &(UString::from(format!("{}", crate::runtime::int_text::IntText::int_text(line_candidate.cluster_range.end)).as_str())); __s }).as_str()));
             }
-            notes.push(format!("{}{}",
-            "end:",
-            line_candidate.end_reason.name()
-        ));
-            notes.push(format!("{}{}{}{}{}{}",
-            "natural=",
-            line_candidate.natural_width,
-            ",adjusted=",
-            line_candidate.adjusted_width,
-            ",visual=",
-            visual_width
-        ));
+            notes.push(UString::from(format!("{}", { let mut __s = UString::new(); __s += &(UString::from("end:")); __s += UString::from(line_candidate.end_reason.name()).as_ustr(); __s }).as_str()));
+            notes.push(UString::from(format!("{}", { let mut __s = UString::new(); __s += &(UString::from("natural=")); __s += &(crate::runtime::fp_helper::FPHelper::format_float(line_candidate.natural_width)); __s += &(UString::from(",adjusted=")); __s += &(crate::runtime::fp_helper::FPHelper::format_float(line_candidate.adjusted_width)); __s += &(UString::from(",visual=")); __s += &(crate::runtime::fp_helper::FPHelper::format_float(visual_width)); __s }).as_str()));
             let plan_for_line = (justification_plans[usize::try_from(line_index).unwrap_or(0)]).clone();
             match &(plan_for_line) {
                 Some(__option1) => {
                     if __option1.fallback_reason.is_some() {
-                    notes.push(format!("{}{}",
-            "justify-fallback:",
-            match __option1.fallback_reason { Some(ref v) => v.to_string(), None => "null".to_string() }
-        ));
+                    notes.push(UString::from(format!("{}", { let mut __s = UString::new(); __s += &(UString::from("justify-fallback:")); __s += match &(__option1.fallback_reason) { Some(v) => v.as_ustr(), None => UStr::new(&[]) }; __s }).as_str()));
                     }
                 }
                 None => {
                 }
             }
             let h_glyphs = if line_hyphen_advance > (0.0f64) { (*hyphen_glyphs).clone() } else { vec![] };
-            laid_out_lines.push(LineBox::new((line_candidate.source_range).clone(), (line_candidate.cluster_range).clone(), line_baseline[usize::try_from(line_index).unwrap_or(0)], line_top[usize::try_from(line_index).unwrap_or(0)],
-line_bottom[usize::try_from(line_index).unwrap_or(0)], line_candidate.natural_width, adjusted_width, visual_width, Some(hanging_punctuation_advance), Some(grid_body_offset + base_indent + alignment_inset), Some(line_candidate.end_reason), Some(line_hyphen_advance),
-Some((h_glyphs).clone()), LineDebugInfo::new(repair_str.clone(), Some((notes).clone()))));
+            laid_out_lines.push(LineBox::new((line_candidate.source_range).clone(), (line_candidate.cluster_range).clone(), line_baseline[usize::try_from(line_index).unwrap_or(0)], line_top[usize::try_from(line_index).unwrap_or(0)], line_bottom[usize::try_from(line_index).unwrap_or(0)], line_candidate.natural_width, adjusted_width, visual_width, Some(hanging_punctuation_advance), Some(grid_body_offset + base_indent + alignment_inset), Some(line_candidate.end_reason), Some(line_hyphen_advance), Some((h_glyphs).clone()), LineDebugInfo::new(repair_str.clone(), Some((notes).clone()))));
         }
         let mut visible_lines: Vec<LineBox> = Vec::new();
         let max_lines = (input.constraints).clone().max_lines;
-        let count = if i32::from_ne_bytes((u32::try_from((laid_out_lines.len()) & 0xFFFF_FFFF).unwrap_or(0)).to_ne_bytes()) > (i32::from_ne_bytes((max_lines).to_ne_bytes())) { max_lines } else { u32::try_from((laid_out_lines.len()) & 0xFFFF_FFFF).unwrap_or(0) };
+        let count = if i32::from_ne_bytes(((u32::try_from((laid_out_lines.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes()) > (i32::from_ne_bytes(((max_lines) as i32).to_ne_bytes())) { max_lines } else { u32::try_from((laid_out_lines.len()) & 0xFFFF_FFFF).unwrap_or(0) };
         for i in 0..count {
             visible_lines.push((laid_out_lines[usize::try_from(i).unwrap_or(0)]).clone());
         }
-        let max_lines_decision = if i32::from_ne_bytes((u32::try_from((visible_lines.len()) & 0xFFFF_FFFF).unwrap_or(0)).to_ne_bytes()) < (i32::from_ne_bytes((u32::try_from((laid_out_lines.len()) & 0xFFFF_FFFF).unwrap_or(0)).to_ne_bytes())) {
-Some(MaxLinesDecisionInfo::new(u32::try_from((laid_out_lines.len()) & 0xFFFF_FFFF).unwrap_or(0), u32::try_from((visible_lines.len()) & 0xFFFF_FFFF).unwrap_or(0), Some("MaxLinesLineTruncation".to_string()))) } else { None };
+        let max_lines_decision = if i32::from_ne_bytes(((u32::try_from((visible_lines.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes()) < (i32::from_ne_bytes(((u32::try_from((laid_out_lines.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) { Some(MaxLinesDecisionInfo::new(u32::try_from((laid_out_lines.len()) & 0xFFFF_FFFF).unwrap_or(0), u32::try_from((visible_lines.len()) & 0xFFFF_FFFF).unwrap_or(0), Some(UString::from("MaxLinesLineTruncation")))) } else { None };
         let capacity = visible_lines.len();
         let mut visible_line_ranges = Vec::with_capacity(capacity);
         for i in 0..match u32::try_from(visible_lines.len()) { Ok(value) => value, Err(_) => u32::MAX } {
@@ -319,36 +298,26 @@ Some(MaxLinesDecisionInfo::new(u32::try_from((laid_out_lines.len()) & 0xFFFF_FFF
         return !b.participates_in_uniform_stretch && b.preferred_stretch.is_none() && b.shrink_capacity == 0.0f64 && b.line_end_discardable_advance == 0.0f64 && !b.prevents_line_break;
     }
 
-    pub fn line_adjustment_stage_resolve_annotation_geometry(engine: &mut ExplainableStubParagraphLayoutEngine, input: LayoutInput, font_size: f64, inline_object_by_cluster_index: SortedMapTable<u32, InlineObjectSpan>, line_solution: LineSolution, clreq_profile: ClreqProfile,
-geometry_decisions: &Vec<ClusterGeometryDecisionInfo>, auto_space_decisions: &Vec<AutoSpaceDecisionInfo>, visible_line_ranges: &Vec<IntRange>, lines: &Vec<LineBox>, final_clusters: &Vec<Cluster>, cluster_roles: &Vec<FontRole>, justify_delta_by_cluster: SortedMapTable<u32, f64>,
-ruby_and_bopomofo_spread: SortedMapTable<u32, f64>, metric_decisions: &Vec<ClusterMetricDecision>, pinyin_spans: &Vec<RubySpan>, natural_clusters: &Vec<Cluster>, ruby_font_geometry_by_span: SortedMapTable<RubySpan, RubyFontGeometry>, ruby_stack_gap: f64, base_ascent: f64,
-ruby_font_size: f64, ruby_font_weight: u32, base_descent: f64, bopomofo_font_weight_at: Arc<dyn Fn(u32) -> u32 + Send + Sync>) -> Result<AnnotationGeometryStageResult, TextShaperShapeFault> {
-        let capacity = usize::try_from(u32::from_ne_bytes((inline_object_by_cluster_index.size()).to_ne_bytes())).unwrap_or(0);
+    pub fn line_adjustment_stage_resolve_annotation_geometry(engine: &mut ExplainableStubParagraphLayoutEngine, input: LayoutInput, font_size: f64, inline_object_by_cluster_index: SortedMapTable<u32, InlineObjectSpan>, line_solution: LineSolution, clreq_profile: ClreqProfile, geometry_decisions: &Vec<ClusterGeometryDecisionInfo>, auto_space_decisions: &Vec<AutoSpaceDecisionInfo>, visible_line_ranges: &Vec<IntRange>, lines: &Vec<LineBox>, final_clusters: &Vec<Cluster>, cluster_roles: &Vec<FontRole>, justify_delta_by_cluster: SortedMapTable<u32, f64>, ruby_and_bopomofo_spread: SortedMapTable<u32, f64>, metric_decisions: &Vec<ClusterMetricDecision>, pinyin_spans: &Vec<RubySpan>, natural_clusters: &Vec<Cluster>, ruby_font_geometry_by_span: SortedMapTable<RubySpan, RubyFontGeometry>, ruby_stack_gap: f64, base_ascent: f64, ruby_font_size: f64, ruby_font_weight: u32, base_descent: f64, bopomofo_font_weight_at: Arc<dyn Fn(u32) -> u32 + Send + Sync>) -> Result<AnnotationGeometryStageResult, TextShaperShapeFault> {
+        let capacity = usize::try_from(u32::from_ne_bytes(((inline_object_by_cluster_index.size()) as u32).to_ne_bytes())).unwrap_or(0);
         let mut inline_object_decisions = Vec::with_capacity(capacity);
-        for i in 0..u32::from_ne_bytes((inline_object_by_cluster_index.size()).to_ne_bytes()) {
-            let cluster_index = inline_object_by_cluster_index.key_at(i32::from_ne_bytes((i).to_ne_bytes()));
-            let inline_object = inline_object_by_cluster_index.value_at(i32::from_ne_bytes((i).to_ne_bytes()));
+        for i in 0..u32::from_ne_bytes(((inline_object_by_cluster_index.size()) as u32).to_ne_bytes()) {
+            let cluster_index = inline_object_by_cluster_index.key_at(i32::from_ne_bytes(((i) as i32).to_ne_bytes()));
+            let inline_object = inline_object_by_cluster_index.value_at(i32::from_ne_bytes(((i) as i32).to_ne_bytes()));
             let mut line_idx = 4294967295u32;
             for l in 0..match u32::try_from(line_solution.lines.len()) { Ok(value) => value, Err(_) => u32::MAX } {
                 let cr = (line_solution.lines[usize::try_from(l).unwrap_or(0)]).clone().cluster_range;
-                if !cr.get_is_empty() && (i32::from_ne_bytes((cluster_index).to_ne_bytes())) >= i32::from_ne_bytes((cr.start).to_ne_bytes()) && (i32::from_ne_bytes((cluster_index).to_ne_bytes())) <= i32::from_ne_bytes((cr.end).to_ne_bytes()) {
+                if !cr.get_is_empty() && (i32::from_ne_bytes(((cluster_index) as i32).to_ne_bytes())) >= i32::from_ne_bytes(((cr.start) as i32).to_ne_bytes()) && (i32::from_ne_bytes(((cluster_index) as i32).to_ne_bytes())) <= i32::from_ne_bytes(((cr.end) as i32).to_ne_bytes()) {
                     line_idx = l;
                     break;
                 }
             }
             let leading_preferred = (inline_object.leading_boundary).clone().preferred_stretch;
             let trailing_preferred = (inline_object.trailing_boundary).clone().preferred_stretch;
-            let reason = if !LineAdjustmentStage::line_adjustment_stage_is_fixed_boundary((inline_object.leading_boundary).clone()) || !LineAdjustmentStage::line_adjustment_stage_is_fixed_boundary((inline_object.trailing_boundary).clone()) { "AdjustableInlineObject".to_string() }
-else { "MeasurableOpaqueInlineObject".to_string() };
-            inline_object_decisions.push(InlineObjectDecisionInfo::new((inline_object.range).clone(), inline_object.advance, inline_object.ascent, inline_object.descent, cluster_index, line_idx, Some((inline_object.leading_boundary).clone().participates_in_uniform_stretch), match
-&(leading_preferred) { Some(__option2) => Some(__option2.kind.name().to_string()), None => None }.clone(), Some(match &(leading_preferred) { Some(__option4) => __option4.natural_width, None => 0.0f64 }), Some(match &(leading_preferred) { Some(__option6) => __option6.target_width,
-None => 0.0f64 }), Some(match &(leading_preferred) { Some(__option8) => __option8.get_capacity(), None => 0.0f64 }), Some((inline_object.leading_boundary).clone().prevents_line_break), Some((inline_object.leading_boundary).clone().shrink_capacity),
-Some((inline_object.leading_boundary).clone().line_end_discardable_advance), Some((inline_object.trailing_boundary).clone().participates_in_uniform_stretch), match &(trailing_preferred) { Some(__option10) => Some(__option10.kind.name().to_string()), None => None }.clone(),
-Some(match &(trailing_preferred) { Some(__option12) => __option12.natural_width, None => 0.0f64 }), Some(match &(trailing_preferred) { Some(__option14) => __option14.target_width, None => 0.0f64 }), Some(match &(trailing_preferred) { Some(__option16) => __option16.get_capacity(),
-None => 0.0f64 }), Some((inline_object.trailing_boundary).clone().prevents_line_break), Some((inline_object.trailing_boundary).clone().shrink_capacity), Some((inline_object.trailing_boundary).clone().line_end_discardable_advance), Some((reason).to_string())));
+            let reason = if !LineAdjustmentStage::line_adjustment_stage_is_fixed_boundary((inline_object.leading_boundary).clone()) || !LineAdjustmentStage::line_adjustment_stage_is_fixed_boundary((inline_object.trailing_boundary).clone()) { UString::from("AdjustableInlineObject") } else { UString::from("MeasurableOpaqueInlineObject") };
+            inline_object_decisions.push(InlineObjectDecisionInfo::new((inline_object.range).clone(), inline_object.advance, inline_object.ascent, inline_object.descent, cluster_index, line_idx, Some((inline_object.leading_boundary).clone().participates_in_uniform_stretch), match &(leading_preferred) { Some(__option2) => Some(UString::from(__option2.kind.name())), None => None }.clone(), Some(match &(leading_preferred) { Some(__option4) => __option4.natural_width, None => 0.0f64 }), Some(match &(leading_preferred) { Some(__option6) => __option6.target_width, None => 0.0f64 }), Some(match &(leading_preferred) { Some(__option8) => __option8.get_capacity(), None => 0.0f64 }), Some((inline_object.leading_boundary).clone().prevents_line_break), Some((inline_object.leading_boundary).clone().shrink_capacity), Some((inline_object.leading_boundary).clone().line_end_discardable_advance), Some((inline_object.trailing_boundary).clone().participates_in_uniform_stretch), match &(trailing_preferred) { Some(__option10) => Some(UString::from(__option10.kind.name())), None => None }.clone(), Some(match &(trailing_preferred) { Some(__option12) => __option12.natural_width, None => 0.0f64 }), Some(match &(trailing_preferred) { Some(__option14) => __option14.target_width, None => 0.0f64 }), Some(match &(trailing_preferred) { Some(__option16) => __option16.get_capacity(), None => 0.0f64 }), Some((inline_object.trailing_boundary).clone().prevents_line_break), Some((inline_object.trailing_boundary).clone().shrink_capacity), Some((inline_object.trailing_boundary).clone().line_end_discardable_advance), Some((reason).to_ustring())));
         }
-        let decoration_decisions = AnnotationGeometryStage::annotation_geometry_stage_compute_decoration_decisions(&input.decorations, &visible_line_ranges, &lines, &final_clusters, &cluster_roles, (justify_delta_by_cluster).clone(), (ruby_and_bopomofo_spread).clone(),
-&metric_decisions, font_size, (input.paragraph_style).clone().emphasis_dot_gap_em);
+        let decoration_decisions = AnnotationGeometryStage::annotation_geometry_stage_compute_decoration_decisions(&input.decorations, &visible_line_ranges, &lines, &final_clusters, &cluster_roles, (justify_delta_by_cluster).clone(), (ruby_and_bopomofo_spread).clone(), &metric_decisions, font_size, (input.paragraph_style).clone().emphasis_dot_gap_em);
         let auto_space_gap_px = (clreq_profile.auto_space).clone().gap_em * font_size;
         let mut geometry_by_range_builder: SortedMapTableBuilder<TextRange, ClusterGeometryDecisionInfo> = SortedTable::sorted_table_map_builder::<TextRange, ClusterGeometryDecisionInfo>(Arc::new(compare_text_range));
         for gd in geometry_decisions {
@@ -358,20 +327,18 @@ None => 0.0f64 }), Some((inline_object.trailing_boundary).clone().prevents_line_
         let mut leading_gap_ranges_builder: SortedSetTableBuilder<TextRange> = SortedTable::sorted_table_set_builder::<TextRange>(Arc::new(compare_text_range));
         let mut trailing_gap_ranges_builder: SortedSetTableBuilder<TextRange> = SortedTable::sorted_table_set_builder::<TextRange>(Arc::new(compare_text_range));
         for ad in auto_space_decisions {
-            if ad.side.to_string() == "leading" {
+            if ad.side.to_ustring() == UString::from("leading") {
                 leading_gap_ranges_builder.put(&((ad.cluster_range).clone()));
             } else {
-                if ad.side.to_string() == "trailing" {
+                if ad.side.to_ustring() == UString::from("trailing") {
                     trailing_gap_ranges_builder.put(&((ad.cluster_range).clone()));
                 }
             }
         }
         let leading_gap_ranges: SortedSetTable<TextRange> = leading_gap_ranges_builder.clone().build();
         let trailing_gap_ranges: SortedSetTable<TextRange> = trailing_gap_ranges_builder.clone().build();
-        let decoration_segments = AnnotationGeometryStage::annotation_geometry_stage_compute_decoration_segments(&input.decorations, &visible_line_ranges, &lines, &final_clusters, (justify_delta_by_cluster).clone(), (geometry_by_range).clone(), (leading_gap_ranges).clone(),
-(trailing_gap_ranges).clone(), auto_space_gap_px, font_size).map_err(|e| TextShaperShapeFault::TextRangeErrorFault(e))?;
-        let ruby_decisions = AnnotationGeometryStage::annotation_geometry_stage_compute_ruby_decisions(&pinyin_spans, &visible_line_ranges, &lines, &final_clusters, &natural_clusters, &metric_decisions, (ruby_font_geometry_by_span).clone(), ruby_stack_gap, base_ascent,
-ruby_font_size, ruby_font_weight, ((input.text_style).clone().locale).to_string().as_str());
+        let decoration_segments = AnnotationGeometryStage::annotation_geometry_stage_compute_decoration_segments(&input.decorations, &visible_line_ranges, &lines, &final_clusters, (justify_delta_by_cluster).clone(), (geometry_by_range).clone(), (leading_gap_ranges).clone(), (trailing_gap_ranges).clone(), auto_space_gap_px, font_size).map_err(|e| TextShaperShapeFault::TextRangeErrorFault(e))?;
+        let ruby_decisions = AnnotationGeometryStage::annotation_geometry_stage_compute_ruby_decisions(&pinyin_spans, &visible_line_ranges, &lines, &final_clusters, &natural_clusters, &metric_decisions, (ruby_font_geometry_by_span).clone(), ruby_stack_gap, base_ascent, ruby_font_size, ruby_font_weight, ((input.text_style).clone().locale).to_ustring().as_ustr());
         let mut bopomofo_spans: Vec<RubySpan> = Vec::new();
         for ri in 0..match u32::try_from(input.ruby_spans.len()) { Ok(value) => value, Err(_) => u32::MAX } {
             let rs = (input.ruby_spans[usize::try_from(ri).unwrap_or(0)]).clone();
@@ -379,17 +346,15 @@ ruby_font_size, ruby_font_weight, ((input.text_style).clone().locale).to_string(
                 bopomofo_spans.push(rs.clone());
             }
         }
-        let bopomofo_decisions = AnnotationGeometryStage::annotation_geometry_stage_compute_bopomofo_decisions(engine, &bopomofo_spans, &visible_line_ranges, &lines, &final_clusters, &natural_clusters, base_ascent, base_descent, font_size, (bopomofo_font_weight_at).clone(),
-(input.text_style).clone())?;
+        let bopomofo_decisions = AnnotationGeometryStage::annotation_geometry_stage_compute_bopomofo_decisions(engine, &bopomofo_spans, &visible_line_ranges, &lines, &final_clusters, &natural_clusters, base_ascent, base_descent, font_size, (bopomofo_font_weight_at).clone(), (input.text_style).clone())?;
         return Ok(AnnotationGeometryStageResult::new(inline_object_decisions.to_vec(), decoration_decisions.to_vec(), decoration_segments.to_vec(), ruby_decisions.to_vec(), bopomofo_decisions.to_vec()));
     }
 
-    pub(crate) fn line_adjustment_stage_trim_edge(line_source_range: TextRange, cluster_idx: u32, side: &str, natural_clusters: &Vec<Cluster>, auto_space_decisions: &Vec<AutoSpaceDecisionInfo>, auto_space_gap: f64, auto_space_edge_trims: &mut Vec<f64>, auto_space_edge_decisions:
-&mut Vec<LineEdgeTrimDecisionInfo>) {
+    pub(crate) fn line_adjustment_stage_trim_edge(line_source_range: TextRange, cluster_idx: u32, side: &UStr, natural_clusters: &Vec<Cluster>, auto_space_decisions: &Vec<AutoSpaceDecisionInfo>, auto_space_gap: f64, auto_space_edge_trims: &mut Vec<f64>, auto_space_edge_decisions: &mut Vec<LineEdgeTrimDecisionInfo>) {
         let mut found_decision: Option<AutoSpaceDecisionInfo> = None;
         let c_range = ((natural_clusters[usize::try_from(cluster_idx).unwrap_or(0)]).clone().range).clone();
         for dec in auto_space_decisions {
-            if dec.cluster_range.clone().start == c_range.start && (dec.cluster_range).clone().end == c_range.end && (dec.side).to_string() == side {
+            if dec.cluster_range.clone().start == c_range.start && (dec.cluster_range).clone().end == c_range.end && (dec.side).to_ustring() == side {
                 found_decision = Some(dec.clone());
                 break;
             }
@@ -397,15 +362,14 @@ ruby_font_size, ruby_font_weight, ((input.text_style).clone().locale).to_string(
         match &(found_decision) {
             Some(__option18) => {
                 auto_space_edge_trims[usize::try_from(cluster_idx).unwrap_or(0)] += auto_space_gap;
-                auto_space_edge_decisions.push(LineEdgeTrimDecisionInfo::new((line_source_range).clone(), (__option18.cluster_range).clone(), side, auto_space_gap, 0.0f64, auto_space_gap, "TextAutoSpaceLineEdgeTrim"));
+                auto_space_edge_decisions.push(LineEdgeTrimDecisionInfo::new((line_source_range).clone(), (__option18.cluster_range).clone(), side, auto_space_gap, 0.0f64, auto_space_gap, &(UStr::new(&[84,101,120,116,65,117,116,111,83,112,97,99,101,76,105,110,101,69,100,103,101,84,114,105,109]))));
             }
             None => {
             }
         }
     }
 
-    pub(crate) fn line_adjustment_stage_collapse_edge_space(line_source_range: TextRange, cluster_idx: u32, side: &str, natural_clusters: &Vec<Cluster>, inline_object_separator_space_trims: SortedMapTable<u32, f64>, auto_space_edge_trims: &mut Vec<f64>, auto_space_edge_decisions:
-&mut Vec<LineEdgeTrimDecisionInfo>) {
+    pub(crate) fn line_adjustment_stage_collapse_edge_space(line_source_range: TextRange, cluster_idx: u32, side: &UStr, natural_clusters: &Vec<Cluster>, inline_object_separator_space_trims: SortedMapTable<u32, f64>, auto_space_edge_trims: &mut Vec<f64>, auto_space_edge_decisions: &mut Vec<LineEdgeTrimDecisionInfo>) {
         let cluster = (natural_clusters[usize::try_from(cluster_idx).unwrap_or(0)]).clone();
         if !PunctuationGeometryStage::punctuation_geometry_stage_is_space_run((cluster).clone()) {
             return;
@@ -418,25 +382,25 @@ ruby_font_size, ruby_font_weight, ((input.text_style).clone().locale).to_string(
             return;
         }
         auto_space_edge_trims[usize::try_from(cluster_idx).unwrap_or(0)] += advance;
-        auto_space_edge_decisions.push(LineEdgeTrimDecisionInfo::new((line_source_range).clone(), (cluster.range).clone(), side, advance, 0.0f64, advance, "LineEdgeWordSpaceCollapse"));
+        auto_space_edge_decisions.push(LineEdgeTrimDecisionInfo::new((line_source_range).clone(), (cluster.range).clone(), side, advance, 0.0f64, advance, &(UStr::new(&[76,105,110,101,69,100,103,101,87,111,114,100,83,112,97,99,101,67,111,108,108,97,112,115,101]))));
     }
 
     pub fn line_adjustment_stage_finish_paragraph_layout(engine: &mut ExplainableStubParagraphLayoutEngine, prep: ParagraphLayoutPrep, plan: LineBreakPlanningStageResult) -> Result<LayoutResult, LineAdjustmentStageFinishParagraphLayoutFault> {
-        let mut applied_hanging_clusters_builder: SortedSetTableBuilder<u32> = SortedTable::sorted_table_set_builder::<u32>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_bytes((*a).to_ne_bytes()), i32::from_ne_bytes((*b).to_ne_bytes()))));
+        let mut applied_hanging_clusters_builder: SortedSetTableBuilder<u32> = SortedTable::sorted_table_set_builder::<u32>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_bytes(((*a) as i32).to_ne_bytes()), i32::from_ne_bytes(((*b) as i32).to_ne_bytes()))));
         {
             let _g1 = ((plan.line_solution).clone().lines).clone();
             for line in &_g1 {
-                for i in 0..u32::from_ne_bytes(((line.hanging_cluster_indices).clone().size()).to_ne_bytes()) {
+                for i in 0..u32::from_ne_bytes((((line.hanging_cluster_indices).clone().size()) as u32).to_ne_bytes()) {
                     applied_hanging_clusters_builder.put(&((line.hanging_cluster_indices).clone().at({ let v: u32 = i; i32::from_ne_bytes(v.to_ne_bytes()) })));
                 }
             }
         }
         let applied_hanging_clusters: SortedSetTable<u32> = applied_hanging_clusters_builder.clone().build();
-        let mut impossible_measure_contextual_hang_clusters_builder: SortedSetTableBuilder<u32> = SortedTable::sorted_table_set_builder::<u32>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_bytes((*a).to_ne_bytes()), i32::from_ne_bytes((*b).to_ne_bytes()))));
-        for i in 0..u32::from_ne_bytes(((plan.ascii_point_mark_kinsoku).clone().impossible_measure_hang_eligible_clusters.size()).to_ne_bytes()) {
+        let mut impossible_measure_contextual_hang_clusters_builder: SortedSetTableBuilder<u32> = SortedTable::sorted_table_set_builder::<u32>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_bytes(((*a) as i32).to_ne_bytes()), i32::from_ne_bytes(((*b) as i32).to_ne_bytes()))));
+        for i in 0..u32::from_ne_bytes((((plan.ascii_point_mark_kinsoku).clone().impossible_measure_hang_eligible_clusters.size()) as u32).to_ne_bytes()) {
             impossible_measure_contextual_hang_clusters_builder.put(&((plan.ascii_point_mark_kinsoku).clone().impossible_measure_hang_eligible_clusters.at({ let v: u32 = i; i32::from_ne_bytes(v.to_ne_bytes()) })));
         }
-        for i in 0..u32::from_ne_bytes(((plan.inline_object_kinsoku).clone().impossible_measure_hang_eligible_clusters.size()).to_ne_bytes()) {
+        for i in 0..u32::from_ne_bytes((((plan.inline_object_kinsoku).clone().impossible_measure_hang_eligible_clusters.size()) as u32).to_ne_bytes()) {
             impossible_measure_contextual_hang_clusters_builder.put(&((plan.inline_object_kinsoku).clone().impossible_measure_hang_eligible_clusters.at({ let v: u32 = i; i32::from_ne_bytes(v.to_ne_bytes()) })));
         }
         let impossible_measure_contextual_hang_clusters: SortedSetTable<u32> = impossible_measure_contextual_hang_clusters_builder.clone().build();
@@ -459,18 +423,14 @@ ruby_font_size, ruby_font_weight, ((input.text_style).clone().locale).to_string(
                 raw_decisions.push(d.clone());
             }
         }
-        let mut seen_decision_keys: Vec<String> = Vec::new();
+        let mut seen_decision_keys: Vec<UString> = Vec::new();
         let mut contextual_kinsoku_decisions: Vec<ContextualKinsokuDecisionInfo> = Vec::new();
         for decision in &raw_decisions {
-            let key = format!("{}{}{}",
-            (decision.range).clone().to_string(),
-            ":",
-            (decision.forbidden_position).to_string()
-        );
+            let key = { let mut __s = UString::new(); __s += UString::from(format!("{}", (decision.range).clone().to_string()).as_str()).as_ustr(); __s += &(UString::from(":")); __s += (decision.forbidden_position).to_ustring().as_ustr(); __s };
             let mut already_seen = false;
             {
                 let mut _g = 0u32;
-                while (i32::from_ne_bytes((_g).to_ne_bytes())) < (i32::from_ne_bytes((u32::try_from((seen_decision_keys.len()) & 0xFFFF_FFFF).unwrap_or(0)).to_ne_bytes())) {
+                while (i32::from_ne_bytes(((_g) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((seen_decision_keys.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
                     let s = (seen_decision_keys[usize::try_from(_g).unwrap_or(0)]).clone();
                     _g = u32::wrapping_add(_g, 1);
                     if s == key {
@@ -483,9 +443,8 @@ ruby_font_size, ruby_font_weight, ((input.text_style).clone().locale).to_string(
                 seen_decision_keys.push(key.clone());
                 let c_idx = decision.cluster_index;
                 if impossible_measure_contextual_hang_clusters.has(&(c_idx)) && applied_hanging_clusters.has(&(c_idx)) {
-                    let fallback = if decision.reason.to_string() == "AttachedAsciiPointMarkKinsoku" { "AttachedAsciiPointMarkImpossibleMeasureHang".to_string() } else { "InlineObjectAttachedMarkImpossibleMeasureHang".to_string() };
-                    contextual_kinsoku_decisions.push(ContextualKinsokuDecisionInfo::new((decision.range).clone(), (decision.source_text).to_string().as_str(), decision.cluster_index, (decision.forbidden_position).to_string().as_str(), (decision.reason).to_string().as_str(),
-Some((fallback).to_string())));
+                    let fallback = if decision.reason.to_ustring() == UString::from("AttachedAsciiPointMarkKinsoku") { UString::from("AttachedAsciiPointMarkImpossibleMeasureHang") } else { UString::from("InlineObjectAttachedMarkImpossibleMeasureHang") };
+                    contextual_kinsoku_decisions.push(ContextualKinsokuDecisionInfo::new((decision.range).clone(), (decision.source_text).to_ustring().as_ustr(), decision.cluster_index, (decision.forbidden_position).to_ustring().as_ustr(), (decision.reason).to_ustring().as_ustr(), Some((fallback).to_ustring())));
                 } else {
                     contextual_kinsoku_decisions.push(decision.clone());
                 }
@@ -508,7 +467,7 @@ Some((fallback).to_string())));
                     match &(allocations) {
                         Some(__option20) => {
                             for alloc in __option20 {
-                                if alloc.cluster_index <= 2147483647 && (i32::from_ne_bytes((alloc.cluster_index).to_ne_bytes())) < (i32::from_ne_bytes((u32::try_from((prep.natural_clusters.len()) & 0xFFFF_FFFF).unwrap_or(0)).to_ne_bytes())) {
+                                if alloc.cluster_index <= 2147483647 && (i32::from_ne_bytes(((alloc.cluster_index) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((prep.natural_clusters.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
                                     if alloc.channel == ShrinkChannel::TrailingGlue {
                                         let index = alloc.cluster_index;
                                         push_in_trailing[usize::try_from(index).unwrap_or(0)] += alloc.shrink;
@@ -541,7 +500,7 @@ Some((fallback).to_string())));
                 }
             }
         }
-        if i32::from_ne_bytes((u32::from_ne_bytes((prep.hyphen_offsets.size()).to_ne_bytes())).to_ne_bytes()) > (0) {
+        if i32::from_ne_bytes(((u32::from_ne_bytes(((prep.hyphen_offsets.size()) as u32).to_ne_bytes())) as i32).to_ne_bytes()) > (0) {
             for line_index in 0..match u32::try_from((plan.line_solution).clone().lines.len()) { Ok(value) => value, Err(_) => u32::MAX } {
                 let line = ((plan.line_solution).clone().lines[usize::try_from(line_index).unwrap_or(0)]).clone();
                 if line.cluster_range.get_is_empty() {
@@ -564,16 +523,15 @@ Some((fallback).to_string())));
                 let mut sorted_opportunities: Vec<ShrinkOpportunity> = Vec::new();
                 for opp_idx in 0..match u32::try_from(prep.shrink_opportunities.len()) { Ok(value) => value, Err(_) => u32::MAX } {
                     let opp = (prep.shrink_opportunities[usize::try_from(opp_idx).unwrap_or(0)]).clone();
-                    if i32::from_ne_bytes((opp.cluster_index).to_ne_bytes()) >= i32::from_ne_bytes((line.cluster_range.start).to_ne_bytes()) && (i32::from_ne_bytes((opp.cluster_index).to_ne_bytes())) <= i32::from_ne_bytes((line.cluster_range.end).to_ne_bytes()) &&
-!opp.line_end_only {
+                    if i32::from_ne_bytes(((opp.cluster_index) as i32).to_ne_bytes()) >= i32::from_ne_bytes(((line.cluster_range.start) as i32).to_ne_bytes()) && (i32::from_ne_bytes(((opp.cluster_index) as i32).to_ne_bytes())) <= i32::from_ne_bytes(((line.cluster_range.end) as i32).to_ne_bytes()) && !opp.line_end_only {
                         sorted_opportunities.push(opp.clone());
                     }
                 }
                 let mut r_idx = 1u32;
-                while (i32::from_ne_bytes((r_idx).to_ne_bytes())) < (i32::from_ne_bytes((u32::try_from((sorted_opportunities.len()) & 0xFFFF_FFFF).unwrap_or(0)).to_ne_bytes())) {
+                while (i32::from_ne_bytes(((r_idx) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((sorted_opportunities.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
                     let curr = (sorted_opportunities[usize::try_from(r_idx).unwrap_or(0)]).clone();
                     let mut j = r_idx;
-                    while (j) > (0) && (i32::from_ne_bytes((sorted_opportunities[usize::try_from(u32::wrapping_sub(j, 1)).unwrap_or(0)].tier).to_ne_bytes())) > (i32::from_ne_bytes((curr.tier).to_ne_bytes())) {
+                    while (j) > (0) && (i32::from_ne_bytes(((sorted_opportunities[usize::try_from(u32::wrapping_sub(j, 1)).unwrap_or(0)].tier) as i32).to_ne_bytes())) > (i32::from_ne_bytes(((curr.tier) as i32).to_ne_bytes())) {
                         sorted_opportunities[usize::try_from(j).unwrap_or(0)] = (sorted_opportunities[usize::try_from(u32::wrapping_sub(j, 1)).unwrap_or(0)]).clone();
                         j = u32::wrapping_sub(j, 1);
                     }
@@ -631,8 +589,10 @@ Some((fallback).to_string())));
                 }
             }
         }
-        let mut push_in_trailing_map_builder: SortedMapTableBuilder<u32, f64> = SortedTable::sorted_table_map_builder::<u32, f64>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_bytes((*a).to_ne_bytes()), i32::from_ne_bytes((*b).to_ne_bytes()))));
-        let mut push_in_leading_map_builder: SortedMapTableBuilder<u32, f64> = SortedTable::sorted_table_map_builder::<u32, f64>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_bytes((*a).to_ne_bytes()), i32::from_ne_bytes((*b).to_ne_bytes()))));
+        let mut push_in_trailing_map_builder: SortedMapTableBuilder<u32, f64> = SortedTable::sorted_table_map_builder::<u32,
+f64>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_bytes(((*a) as i32).to_ne_bytes()), i32::from_ne_bytes(((*b) as i32).to_ne_bytes()))));
+        let mut push_in_leading_map_builder: SortedMapTableBuilder<u32, f64> = SortedTable::sorted_table_map_builder::<u32,
+f64>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_bytes(((*a) as i32).to_ne_bytes()), i32::from_ne_bytes(((*b) as i32).to_ne_bytes()))));
         for i in 0..match u32::try_from(prep.natural_clusters.len()) { Ok(value) => value, Err(_) => u32::MAX } {
             if push_in_trailing[usize::try_from(i).unwrap_or(0)] != 0.0f64 {
                 push_in_trailing_map_builder.put(&(i), &(push_in_trailing[usize::try_from(i).unwrap_or(0)]));
@@ -656,18 +616,15 @@ Some((fallback).to_string())));
                 if line.cluster_range.clone().get_is_empty() {
                     continue;
                 }
-                LineAdjustmentStage::line_adjustment_stage_trim_edge((line.source_range).clone(), (line.cluster_range).clone().end, &"trailing", &prep.natural_clusters, &prep.auto_space_decisions, auto_space_gap, &mut auto_space_edge_trims, &mut auto_space_edge_decisions);
-                LineAdjustmentStage::line_adjustment_stage_trim_edge((line.source_range).clone(), (line.cluster_range).clone().start, &"leading", &prep.natural_clusters, &prep.auto_space_decisions, auto_space_gap, &mut auto_space_edge_trims, &mut auto_space_edge_decisions);
-                LineAdjustmentStage::line_adjustment_stage_collapse_edge_space((line.source_range).clone(), (line.cluster_range).clone().end, &"trailing", &prep.natural_clusters, (prep.inline_object_separator_space_trims).clone(), &mut auto_space_edge_trims, &mut
-auto_space_edge_decisions);
-                LineAdjustmentStage::line_adjustment_stage_collapse_edge_space((line.source_range).clone(), (line.cluster_range).clone().start, &"leading", &prep.natural_clusters, (prep.inline_object_separator_space_trims).clone(), &mut auto_space_edge_trims, &mut
-auto_space_edge_decisions);
+                LineAdjustmentStage::line_adjustment_stage_trim_edge((line.source_range).clone(), (line.cluster_range).clone().end, UStr::new(&[116,114,97,105,108,105,110,103]), &prep.natural_clusters, &prep.auto_space_decisions, auto_space_gap, &mut auto_space_edge_trims, &mut auto_space_edge_decisions);
+                LineAdjustmentStage::line_adjustment_stage_trim_edge((line.source_range).clone(), (line.cluster_range).clone().start, UStr::new(&[108,101,97,100,105,110,103]), &prep.natural_clusters, &prep.auto_space_decisions, auto_space_gap, &mut auto_space_edge_trims, &mut auto_space_edge_decisions);
+                LineAdjustmentStage::line_adjustment_stage_collapse_edge_space((line.source_range).clone(), (line.cluster_range).clone().end, UStr::new(&[116,114,97,105,108,105,110,103]), &prep.natural_clusters, (prep.inline_object_separator_space_trims).clone(), &mut auto_space_edge_trims, &mut auto_space_edge_decisions);
+                LineAdjustmentStage::line_adjustment_stage_collapse_edge_space((line.source_range).clone(), (line.cluster_range).clone().start, UStr::new(&[108,101,97,100,105,110,103]), &prep.natural_clusters, (prep.inline_object_separator_space_trims).clone(), &mut auto_space_edge_trims, &mut auto_space_edge_decisions);
                 let attached_glue_cluster = (line.cluster_range).clone().end;
                 let attached_glue = if prep.attached_punctuation_trailing_glue_by_cluster.has(&(attached_glue_cluster)) { (prep.attached_punctuation_trailing_glue_by_cluster.get(&(attached_glue_cluster))).unwrap() } else { 0.0f64 };
                 if attached_glue > (0.0f64) {
                     auto_space_edge_trims[usize::try_from(attached_glue_cluster).unwrap_or(0)] += attached_glue;
-                    auto_space_edge_decisions.push(LineEdgeTrimDecisionInfo::new((line.source_range).clone(), ((prep.natural_clusters[usize::try_from(attached_glue_cluster).unwrap_or(0)]).clone().range).clone(), "trailing", attached_glue, 0.0f64, attached_glue,
-"AttachedInlineVirtualBoundaryLineEndTrim"));
+                    auto_space_edge_decisions.push(LineEdgeTrimDecisionInfo::new((line.source_range).clone(), ((prep.natural_clusters[usize::try_from(attached_glue_cluster).unwrap_or(0)]).clone().range).clone(), &(UStr::new(&[116,114,97,105,108,105,110,103])), attached_glue, 0.0f64, attached_glue, &(UStr::new(&[65,116,116,97,99,104,101,100,73,110,108,105,110,101,86,105,114,116,117,97,108,66,111,117,110,100,97,114,121,76,105,110,101,69,110,100,84,114,105,109]))));
                 }
                 if line.end_reason == LineEndReason::AutoWrap {
                     let cluster_idx = (line.cluster_range).clone().end;
@@ -677,13 +634,12 @@ auto_space_edge_decisions);
                     let remaining = if diff < (0.0f64) { 0.0f64 } else { diff };
                     if remaining > (0.0f64) {
                         auto_space_edge_trims[usize::try_from(cluster_idx).unwrap_or(0)] += remaining;
-                        auto_space_edge_decisions.push(LineEdgeTrimDecisionInfo::new((line.source_range).clone(), ((prep.natural_clusters[usize::try_from(cluster_idx).unwrap_or(0)]).clone().range).clone(), "trailing", remaining, consumed_before, discardable,
-"InlineObjectLineEndDiscardableGlue"));
+                        auto_space_edge_decisions.push(LineEdgeTrimDecisionInfo::new((line.source_range).clone(), ((prep.natural_clusters[usize::try_from(cluster_idx).unwrap_or(0)]).clone().range).clone(), &(UStr::new(&[116,114,97,105,108,105,110,103])), remaining, consumed_before, discardable, &(UStr::new(&[73,110,108,105,110,101,79,98,106,101,99,116,76,105,110,101,69,110,100,68,105,115,99,97,114,100,97,98,108,101,71,108,117,101]))));
                     }
                 }
             }
         }
-        let mut raw_trims_builder: SortedMapTableBuilder<u32, f64> = SortedTable::sorted_table_map_builder::<u32, f64>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_bytes((*a).to_ne_bytes()), i32::from_ne_bytes((*b).to_ne_bytes()))));
+        let mut raw_trims_builder: SortedMapTableBuilder<u32, f64> = SortedTable::sorted_table_map_builder::<u32, f64>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_bytes(((*a) as i32).to_ne_bytes()), i32::from_ne_bytes(((*b) as i32).to_ne_bytes()))));
         for i in 0..match u32::try_from(prep.natural_clusters.len()) { Ok(value) => value, Err(_) => u32::MAX } {
             let total = auto_space_edge_trims[usize::try_from(i).unwrap_or(0)] + push_in_raw_trims[usize::try_from(i).unwrap_or(0)];
             if total != 0.0f64 {
@@ -712,31 +668,26 @@ auto_space_edge_decisions);
                 let next_idx = u32::wrapping_add(line_candidate.cluster_range.end, 1);
                 let selected_technical_break = if plan.progressive_break_opportunities.has(&(next_idx)) { plan.progressive_break_opportunities.get(&(next_idx)) } else { None };
                 let preferred_tracking_span = match &(selected_technical_break) { Some(__option22) => (if __option22.tier == ProgressiveBreakTier::Emergency { Some((__option22.span_range).clone()) } else { None }).clone(), None => None };
-                let mut preferred_emergency_tracking_boundaries_builder: SortedMapTableBuilder<u32, String> = SortedTable::sorted_table_map_builder::<u32, String>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_bytes((*a).to_ne_bytes()),
-i32::from_ne_bytes((*b).to_ne_bytes()))));
+                let mut preferred_emergency_tracking_boundaries_builder: SortedMapTableBuilder<u32, UString> = SortedTable::sorted_table_map_builder::<u32,
+UString>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_bytes(((*a) as i32).to_ne_bytes()), i32::from_ne_bytes(((*b) as i32).to_ne_bytes()))));
                 match &(preferred_tracking_span) {
                     Some(__option23) => {
-                        for i in 0..u32::from_ne_bytes((plan.emergency_tracking_boundary_after_clusters.size()).to_ne_bytes()) {
+                        for i in 0..u32::from_ne_bytes(((plan.emergency_tracking_boundary_after_clusters.size()) as u32).to_ne_bytes()) {
                             let left_index = plan.emergency_tracking_boundary_after_clusters.key_at({ let v: u32 = i; i32::from_ne_bytes(v.to_ne_bytes()) });
                             let reason = plan.emergency_tracking_boundary_after_clusters.value_at({ let v: u32 = i; i32::from_ne_bytes(v.to_ne_bytes()) });
                             let right_index = u32::wrapping_add(left_index, 1);
-                            if i32::from_ne_bytes((((prep.natural_clusters[usize::try_from(left_index).unwrap_or(0)]).clone().range).clone().start).to_ne_bytes()) >= i32::from_ne_bytes((__option23.start).to_ne_bytes()) &&
-(i32::from_ne_bytes((((prep.natural_clusters[usize::try_from(right_index).unwrap_or(0)]).clone().range).clone().end).to_ne_bytes())) <= i32::from_ne_bytes((__option23.end).to_ne_bytes()) {
-                                preferred_emergency_tracking_boundaries_builder.put(&(left_index), &(reason).to_string());
+                            if i32::from_ne_bytes(((((prep.natural_clusters[usize::try_from(left_index).unwrap_or(0)]).clone().range).clone().start) as i32).to_ne_bytes()) >= i32::from_ne_bytes(((__option23.start) as i32).to_ne_bytes()) && (i32::from_ne_bytes(((((prep.natural_clusters[usize::try_from(right_index).unwrap_or(0)]).clone().range).clone().end) as i32).to_ne_bytes())) <= i32::from_ne_bytes(((__option23.end) as i32).to_ne_bytes()) {
+                                preferred_emergency_tracking_boundaries_builder.put(&(left_index), &(reason).to_ustring());
                             }
                         }
                     }
                     None => {
                     }
                 }
-                let preferred_emergency_tracking_boundaries: SortedMapTable<u32, String> = preferred_emergency_tracking_boundaries_builder.clone().build();
+                let preferred_emergency_tracking_boundaries: SortedMapTable<u32, UString> = preferred_emergency_tracking_boundaries_builder.clone().build();
                 let hyphen_advance_for_line = LineAdjustmentStage::line_adjustment_stage_line_hyphen_advance_at(line_index, &(plan.line_solution).clone().lines, (prep.hyphen_offsets).clone(), &prep.natural_clusters, prep.hyphen_advance);
                 let line_limit = (if line_candidate.cluster_range.start == 0 { prep.measure - plan.first_line_indent } else { prep.measure - plan.block_indent }) - hyphen_advance_for_line;
-                let plan_result = engine.justifier.justify(&trimmed_clusters, &prep.cluster_roles, &prep.east_asian_spacing_edges, line_candidate.get_in_measure_cluster_range(), line_limit, prep.font_size, false, None.clone(),
-Some((prep.adjustment_style).clone().allow_sino_western_gap_adjustment), ((prep.clreq_profile).clone().auto_space).clone().gap_em, ((prep.clreq_profile).clone().auto_space).clone().stretch_max_em, Some((plan.no_stretch_boundary_clusters).clone()),
-Some((plan.no_stretch_boundary_after_clusters).clone()), Some((plan.western_bracket_cjk_inter_char_boundary_after_clusters).clone()), Some((plan.attached_inline_physical_boundary_after_clusters).clone()), Some((plan.attached_inline_virtual_boundary_after_clusters).clone()),
-Some((plan.attached_inline_virtual_sino_western_boundary_after_clusters).clone()), Some((prep.uniform_inline_object_boundary_after_clusters).clone()), Some((prep.preferred_inline_object_boundary_after_clusters).clone()), Some((plan.technical_boundary_after_clusters).clone()),
-Some((plan.emergency_tracking_boundary_after_clusters).clone()), Some((preferred_emergency_tracking_boundaries).clone())).map_err(|e| LineAdjustmentStageFinishParagraphLayoutFault::TextRangeErrorFault(e))?;
+                let plan_result = engine.justifier.justify(&trimmed_clusters, &prep.cluster_roles, &prep.east_asian_spacing_edges, line_candidate.get_in_measure_cluster_range(), line_limit, prep.font_size, false, None.clone(), Some((prep.adjustment_style).clone().allow_sino_western_gap_adjustment), ((prep.clreq_profile).clone().auto_space).clone().gap_em, ((prep.clreq_profile).clone().auto_space).clone().stretch_max_em, Some((plan.no_stretch_boundary_clusters).clone()), Some((plan.no_stretch_boundary_after_clusters).clone()), Some((plan.western_bracket_cjk_inter_char_boundary_after_clusters).clone()), Some((plan.attached_inline_physical_boundary_after_clusters).clone()), Some((plan.attached_inline_virtual_boundary_after_clusters).clone()), Some((plan.attached_inline_virtual_sino_western_boundary_after_clusters).clone()), Some((prep.uniform_inline_object_boundary_after_clusters).clone()), Some((prep.preferred_inline_object_boundary_after_clusters).clone()), Some((plan.technical_boundary_after_clusters).clone()), Some((plan.emergency_tracking_boundary_after_clusters).clone()), Some((preferred_emergency_tracking_boundaries).clone())).map_err(|e| LineAdjustmentStageFinishParagraphLayoutFault::TextRangeErrorFault(e))?;
                 justification_plans.push(Some(plan_result));
             }
         }
@@ -745,7 +696,7 @@ Some((plan.emergency_tracking_boundary_after_clusters).clone()), Some((preferred
         let mut newly_rejected_tiers_list: Vec<SortedSetTable<u32>> = Vec::new();
         for line_index in 0..match u32::try_from((plan.line_solution).clone().lines.len()) { Ok(value) => value, Err(_) => u32::MAX } {
             let line = ((plan.line_solution).clone().lines[usize::try_from(line_index).unwrap_or(0)]).clone();
-            if line.end_reason != LineEndReason::AutoWrap || (i32::from_ne_bytes((line.cluster_range.start).to_ne_bytes())) > (i32::from_ne_bytes((line.cluster_range.end).to_ne_bytes())) {
+            if line.end_reason != LineEndReason::AutoWrap || (i32::from_ne_bytes(((line.cluster_range.start) as i32).to_ne_bytes())) > (i32::from_ne_bytes(((line.cluster_range.end) as i32).to_ne_bytes())) {
                 continue;
             }
             let next_cluster = u32::wrapping_add(line.cluster_range.end, 1);
@@ -787,13 +738,13 @@ Some((plan.emergency_tracking_boundary_after_clusters).clone()), Some((preferred
                 }
                 if found_span_idx > 2147483647 {
                     newly_rejected_spans.push(span_range.clone());
-                    let mut b: SortedSetTableBuilder<u32> = SortedTable::sorted_table_set_builder::<u32>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_bytes((*a).to_ne_bytes()), i32::from_ne_bytes((*b).to_ne_bytes()))));
+                    let mut b: SortedSetTableBuilder<u32> = SortedTable::sorted_table_set_builder::<u32>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_bytes(((*a) as i32).to_ne_bytes()), i32::from_ne_bytes(((*b) as i32).to_ne_bytes()))));
                     b.put(&(ProgressiveBreakTierPriority::progressive_break_tier_priority_priority(selected_technical_break.as_ref().unwrap().tier)));
                     newly_rejected_tiers_list.push(b.clone().build());
                 } else {
-                    let mut b: SortedSetTableBuilder<u32> = SortedTable::sorted_table_set_builder::<u32>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_bytes((*a).to_ne_bytes()), i32::from_ne_bytes((*b).to_ne_bytes()))));
+                    let mut b: SortedSetTableBuilder<u32> = SortedTable::sorted_table_set_builder::<u32>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_bytes(((*a) as i32).to_ne_bytes()), i32::from_ne_bytes(((*b) as i32).to_ne_bytes()))));
                     let existing: SortedSetTable<u32> = (newly_rejected_tiers_list[usize::try_from(found_span_idx).unwrap_or(0)]).clone();
-                    for e in 0..u32::from_ne_bytes((existing.size()).to_ne_bytes()) {
+                    for e in 0..u32::from_ne_bytes(((existing.size()) as u32).to_ne_bytes()) {
                         b.put(&(existing.at({ let v: u32 = e; i32::from_ne_bytes(v.to_ne_bytes()) })));
                     }
                     b.put(&(ProgressiveBreakTierPriority::progressive_break_tier_priority_priority(selected_technical_break.as_ref().unwrap().tier)));
@@ -801,19 +752,19 @@ Some((plan.emergency_tracking_boundary_after_clusters).clone()), Some((preferred
                 }
             }
         }
-        if i32::from_ne_bytes((u32::try_from((newly_rejected_spans.len()) & 0xFFFF_FFFF).unwrap_or(0)).to_ne_bytes()) > (0) {
+        if i32::from_ne_bytes(((u32::try_from((newly_rejected_spans.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes()) > (0) {
             let mut updated_rejected_tiers_builder: SortedMapTableBuilder<TextRange, SortedSetTable<u32>> = SortedTable::sorted_table_map_builder::<TextRange, SortedSetTable<u32>>(Arc::new(compare_text_range));
-            for i in 0..u32::from_ne_bytes((prep.rejected_technical_tiers_by_span.size()).to_ne_bytes()) {
+            for i in 0..u32::from_ne_bytes(((prep.rejected_technical_tiers_by_span.size()) as u32).to_ne_bytes()) {
                 let span = prep.rejected_technical_tiers_by_span.key_at({ let v: u32 = i; i32::from_ne_bytes(v.to_ne_bytes()) });
                 let tiers: SortedSetTable<u32> = prep.rejected_technical_tiers_by_span.value_at({ let v: u32 = i; i32::from_ne_bytes(v.to_ne_bytes()) });
-                let mut b: SortedSetTableBuilder<u32> = SortedTable::sorted_table_set_builder::<u32>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_bytes((*a).to_ne_bytes()), i32::from_ne_bytes((*b).to_ne_bytes()))));
-                for t in 0..u32::from_ne_bytes((tiers.size()).to_ne_bytes()) {
+                let mut b: SortedSetTableBuilder<u32> = SortedTable::sorted_table_set_builder::<u32>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_bytes(((*a) as i32).to_ne_bytes()), i32::from_ne_bytes(((*b) as i32).to_ne_bytes()))));
+                for t in 0..u32::from_ne_bytes(((tiers.size()) as u32).to_ne_bytes()) {
                     b.put(&(tiers.at({ let v: u32 = t; i32::from_ne_bytes(v.to_ne_bytes()) })));
                 }
                 for n_idx in 0..match u32::try_from(newly_rejected_spans.len()) { Ok(value) => value, Err(_) => u32::MAX } {
                     if newly_rejected_spans[usize::try_from(n_idx).unwrap_or(0)].start == span.start && newly_rejected_spans[usize::try_from(n_idx).unwrap_or(0)].end == span.end {
                         let add_tiers: SortedSetTable<u32> = (newly_rejected_tiers_list[usize::try_from(n_idx).unwrap_or(0)]).clone();
-                        for at in 0..u32::from_ne_bytes((add_tiers.size()).to_ne_bytes()) {
+                        for at in 0..u32::from_ne_bytes(((add_tiers.size()) as u32).to_ne_bytes()) {
                             b.put(&(add_tiers.at({ let v: u32 = at; i32::from_ne_bytes(v.to_ne_bytes()) })));
                         }
                     }
@@ -838,10 +789,10 @@ Some((plan.emergency_tracking_boundary_after_clusters).clone()), Some((preferred
                 Some(__option24) => {
                     let mut _g = 0u32;
                     let _g1 = (__option24.allocations).clone().clone();
-                    while (i32::from_ne_bytes((_g).to_ne_bytes())) < (i32::from_ne_bytes((u32::try_from((_g1.len()) & 0xFFFF_FFFF).unwrap_or(0)).to_ne_bytes())) {
+                    while (i32::from_ne_bytes(((_g) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((_g1.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
                         let alloc = (_g1[usize::try_from(_g).unwrap_or(0)]).clone();
                         _g = u32::wrapping_add(_g, 1);
-                        if alloc.target_cluster_index <= 2147483647 && (i32::from_ne_bytes((alloc.target_cluster_index).to_ne_bytes())) < (i32::from_ne_bytes((u32::try_from((justify_deltas.len()) & 0xFFFF_FFFF).unwrap_or(0)).to_ne_bytes())) {
+                        if alloc.target_cluster_index <= 2147483647 && (i32::from_ne_bytes(((alloc.target_cluster_index) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((justify_deltas.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
                             let index = alloc.target_cluster_index;
                             justify_deltas[usize::try_from(index).unwrap_or(0)] += alloc.delta;
                         }
@@ -851,7 +802,7 @@ Some((plan.emergency_tracking_boundary_after_clusters).clone()), Some((preferred
                 }
             }
         }
-        let mut justify_delta_builder: SortedMapTableBuilder<u32, f64> = SortedTable::sorted_table_map_builder::<u32, f64>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_bytes((*a).to_ne_bytes()), i32::from_ne_bytes((*b).to_ne_bytes()))));
+        let mut justify_delta_builder: SortedMapTableBuilder<u32, f64> = SortedTable::sorted_table_map_builder::<u32, f64>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_bytes(((*a) as i32).to_ne_bytes()), i32::from_ne_bytes(((*b) as i32).to_ne_bytes()))));
         for i in 0..match u32::try_from(justify_deltas.len()) { Ok(value) => value, Err(_) => u32::MAX } {
             if justify_deltas[usize::try_from(i).unwrap_or(0)] != 0.0f64 {
                 justify_delta_builder.put(&(i), &(justify_deltas[usize::try_from(i).unwrap_or(0)]));
@@ -871,7 +822,7 @@ Some((plan.emergency_tracking_boundary_after_clusters).clone()), Some((preferred
                 if shift > (-0.01f64) && (shift) < (0.01f64) {
                     final_clusters.push(c.clone());
                 } else {
-                    final_clusters.push(Cluster::new((c.range).clone(), (c.text).to_string().as_str(), (c.font_key).to_string().as_str(), c.advance, Some((c.display_text).to_string()), Some(shift), Some(c.leading_layout_advance), Some(c.glyph_inline_shift)));
+                    final_clusters.push(Cluster::new((c.range).clone(), (c.text).to_ustring().as_ustr(), (c.font_key).to_ustring().as_ustr(), c.advance, Some((c.display_text).to_ustring()), Some(shift), Some(c.leading_layout_advance), Some(c.glyph_inline_shift)));
                 }
             }
         }
@@ -895,7 +846,7 @@ Some((plan.emergency_tracking_boundary_after_clusters).clone()), Some((preferred
                     let centered = LineAdjustmentStage::line_adjustment_stage_center_dash_ink(&mapped, (cluster).clone(), (prep.atom_class_by_range).clone());
                     {
                         let mut _g = 0u32;
-                        while (i32::from_ne_bytes((_g).to_ne_bytes())) < (i32::from_ne_bytes((u32::try_from((centered.len()) & 0xFFFF_FFFF).unwrap_or(0)).to_ne_bytes())) {
+                        while (i32::from_ne_bytes(((_g) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((centered.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
                             let g = (centered[usize::try_from(_g).unwrap_or(0)]).clone();
                             _g = u32::wrapping_add(_g, 1);
                             run_glyphs.push(g.clone());
@@ -905,25 +856,20 @@ Some((plan.emergency_tracking_boundary_after_clusters).clone()), Some((preferred
                     run_glyphs.push(Glyph::new(cluster_idx, (cluster.range).clone(), cluster.advance, Some(0.0), Some(0.0), None, None, None, None));
                 }
             }
-            glyph_runs.push(GlyphRun::new(TextRange::new((first_c.range).clone().start, (last_c.range).clone().end).map_err(|e| LineAdjustmentStageFinishParagraphLayoutFault::TextRangeErrorFault(e))?, (first_c.font_key).to_string().as_str(), run_glyphs.to_vec(),
-AccurateSum::accurate_sum_of(&run_advance_terms), Some((open_type_features).clone())));
+            glyph_runs.push(GlyphRun::new(TextRange::new((first_c.range).clone().start, (last_c.range).clone().end).map_err(|e| LineAdjustmentStageFinishParagraphLayoutFault::TextRangeErrorFault(e))?, (first_c.font_key).to_ustring().as_ustr(), run_glyphs.to_vec(), AccurateSum::accurate_sum_of(&run_advance_terms), Some((open_type_features).clone())));
         }
-        let vertical_geometry = LineGeometryStageFns::line_geometry_stage_fns_resolve_line_vertical_geometry_sorted((prep.input).clone(), prep.font_size, &prep.pinyin_spans, &prep.natural_clusters, (plan.line_solution).clone(), (prep.ruby_font_geometry_by_span).clone(),
-plan.existing_interline_space, (plan.base_line_metrics).clone(), plan.base_face_height, plan.ruby_extent, Some((prep.inline_object_by_cluster_index).clone()), plan.base_ascent, plan.base_descent);
+        let vertical_geometry = LineGeometryStageFns::line_geometry_stage_fns_resolve_line_vertical_geometry_sorted((prep.input).clone(), prep.font_size, &prep.pinyin_spans, &prep.natural_clusters, (plan.line_solution).clone(), (prep.ruby_font_geometry_by_span).clone(), plan.existing_interline_space, (plan.base_line_metrics).clone(), plan.base_face_height, plan.ruby_extent, Some((prep.inline_object_by_cluster_index).clone()), plan.base_ascent, plan.base_descent);
         let ruby_line_height_decision = vertical_geometry.ruby_line_height_decision.clone();
         let inline_object_line_height_decision = vertical_geometry.inline_object_line_height_decision.clone();
         let line_baseline = vertical_geometry.line_baseline.clone();
         let line_top = vertical_geometry.line_top.clone();
         let line_bottom = vertical_geometry.line_bottom.clone();
-        let line_boxes = LineAdjustmentStage::line_adjustment_stage_build_line_boxes((prep.input).clone(), (plan.line_solution).clone(), &trimmed_clusters, &final_clusters, plan.first_line_indent, plan.block_indent, prep.measure, prep.grid_body_offset, &line_baseline, &line_top,
-&line_bottom, (prep.hyphen_offsets).clone(), &prep.natural_clusters, prep.hyphen_advance, &prep.hyphen_glyphs, &justification_plans);
+        let line_boxes = LineAdjustmentStage::line_adjustment_stage_build_line_boxes((prep.input).clone(), (plan.line_solution).clone(), &trimmed_clusters, &final_clusters, plan.first_line_indent, plan.block_indent, prep.measure, prep.grid_body_offset, &line_baseline, &line_top, &line_bottom, (prep.hyphen_offsets).clone(), &prep.natural_clusters, prep.hyphen_advance, &prep.hyphen_glyphs, &justification_plans);
         let laid_out_lines = line_boxes.laid_out_lines.clone();
         let lines = line_boxes.visible_lines.clone();
         let max_lines_decision = line_boxes.max_lines_decision.clone();
         let visible_line_ranges = line_boxes.visible_line_ranges.clone();
-        let annotation_geometry = LineAdjustmentStage::line_adjustment_stage_resolve_annotation_geometry(engine, (prep.input).clone(), prep.font_size, (prep.inline_object_by_cluster_index).clone(), (plan.line_solution).clone(), (prep.clreq_profile).clone(), &geometry_decisions,
-&prep.auto_space_decisions, &visible_line_ranges, &lines, &final_clusters, &prep.cluster_roles, (justify_delta_by_cluster).clone(), (prep.ruby_and_bopomofo_spread).clone(), &plan.metric_decisions, &prep.pinyin_spans, &prep.natural_clusters,
-(prep.ruby_font_geometry_by_span).clone(), prep.ruby_stack_gap, plan.base_ascent, prep.ruby_font_size, prep.ruby_font_weight, plan.base_descent, (prep.bopomofo_font_weight_at).clone()).map_err(|e| LineAdjustmentStageFinishParagraphLayoutFault::TextShaperShapeFaultFault(e))?;
+        let annotation_geometry = LineAdjustmentStage::line_adjustment_stage_resolve_annotation_geometry(engine, (prep.input).clone(), prep.font_size, (prep.inline_object_by_cluster_index).clone(), (plan.line_solution).clone(), (prep.clreq_profile).clone(), &geometry_decisions, &prep.auto_space_decisions, &visible_line_ranges, &lines, &final_clusters, &prep.cluster_roles, (justify_delta_by_cluster).clone(), (prep.ruby_and_bopomofo_spread).clone(), &plan.metric_decisions, &prep.pinyin_spans, &prep.natural_clusters, (prep.ruby_font_geometry_by_span).clone(), prep.ruby_stack_gap, plan.base_ascent, prep.ruby_font_size, prep.ruby_font_weight, plan.base_descent, (prep.bopomofo_font_weight_at).clone()).map_err(|e| LineAdjustmentStageFinishParagraphLayoutFault::TextShaperShapeFaultFault(e))?;
         let inline_object_decisions = annotation_geometry.inline_object_decisions.clone();
         let decoration_decisions = annotation_geometry.decoration_decisions.clone();
         let decoration_segments = annotation_geometry.decoration_segments.clone();
@@ -937,10 +883,10 @@ plan.existing_interline_space, (plan.base_line_metrics).clone(), plan.base_face_
             }
         }
         let total_height: f64;
-        if i32::from_ne_bytes((u32::try_from((lines.len()) & 0xFFFF_FFFF).unwrap_or(0)).to_ne_bytes()) > (0) {
+        if i32::from_ne_bytes(((u32::try_from((lines.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes()) > (0) {
             total_height = lines[usize::try_from(u32::wrapping_sub(u32::try_from((lines.len()) & 0xFFFF_FFFF).unwrap_or(0), 1)).unwrap_or(0)].bottom;
         } else {
-            if u_string::unit_count(&((prep.text).to_string())) == 0 {
+            if u_string::unit_count(&((prep.text).to_ustring())) == 0 {
                 total_height = 0.0f64;
             } else {
                 total_height = (plan.base_line_metrics).clone().height;
@@ -948,12 +894,6 @@ plan.existing_interline_space, (plan.base_line_metrics).clone(), plan.base_face_
         }
         let max_width_constraint = ((prep.input).clone().constraints).clone().max_width;
         let result_width = if widest_line > (max_width_constraint) { max_width_constraint } else { widest_line };
-        return Ok(LayoutResult::new((prep.input).clone(), Size::new(result_width, total_height), (final_clusters).clone(), (glyph_runs).clone(), (lines).clone(), LayoutDebugAssembly::layout_debug_assembly_build_layout_debug_info((engine).clone(),
-LayoutDebugStageInput::new((prep.text).to_string().as_str(), prep.font_decisions.to_vec(), (prep.punctuation_glyph_substitutor).clone(), (prep.substitution_rollbacks).clone(), prep.shaping_decisions.to_vec(), plan.metric_decisions.to_vec(), prep.punctuation_atoms.to_vec(),
-geometry_decisions.to_vec(), (prep.spacing_plan).clone(), (prep.attached_punctuation_boundary).clone(), prep.role_override_infos.to_vec(), laid_out_lines.to_vec(), (plan.line_solution).clone(), prep.clusters.to_vec(), justification_plans.to_vec(),
-prep.auto_space_decisions.to_vec(), edge_trim_decisions.to_vec(), decoration_decisions.to_vec(), decoration_segments.to_vec(), ruby_decisions.to_vec(), bopomofo_decisions.to_vec(), prep.mandatory_break_decisions.to_vec(), (max_lines_decision).clone(),
-(plan.line_spacing_decision).clone(), (ruby_line_height_decision).clone(), (inline_object_line_height_decision).clone(), (plan.kinsoku_decision).clone(), contextual_kinsoku_decisions.to_vec(), (prep.line_length_grid_decision).clone(), (plan.first_line_indent_decision).clone(),
-(prep.inline_box_result).clone().decisions.to_vec(), inline_object_decisions.to_vec(), prep.inline_object_punctuation_attachment_decisions.to_vec(), prep.zero_width_break_decisions.to_vec(), prep.break_opportunity_decisions.to_vec(),
-prep.emergency_tracking_eligibility_decisions.to_vec(), (plan.progressive_break_opportunities).clone())).map_err(|e| LineAdjustmentStageFinishParagraphLayoutFault::UStringFaultFault(e))?));
+        return Ok(LayoutResult::new((prep.input).clone(), Size::new(result_width, total_height), (final_clusters).clone(), (glyph_runs).clone(), (lines).clone(), LayoutDebugAssembly::layout_debug_assembly_build_layout_debug_info((engine).clone(), LayoutDebugStageInput::new((prep.text).to_ustring().as_ustr(), prep.font_decisions.to_vec(), (prep.punctuation_glyph_substitutor).clone(), (prep.substitution_rollbacks).clone(), prep.shaping_decisions.to_vec(), plan.metric_decisions.to_vec(), prep.punctuation_atoms.to_vec(), geometry_decisions.to_vec(), (prep.spacing_plan).clone(), (prep.attached_punctuation_boundary).clone(), prep.role_override_infos.to_vec(), laid_out_lines.to_vec(), (plan.line_solution).clone(), prep.clusters.to_vec(), justification_plans.to_vec(), prep.auto_space_decisions.to_vec(), edge_trim_decisions.to_vec(), decoration_decisions.to_vec(), decoration_segments.to_vec(), ruby_decisions.to_vec(), bopomofo_decisions.to_vec(), prep.mandatory_break_decisions.to_vec(), (max_lines_decision).clone(), (plan.line_spacing_decision).clone(), (ruby_line_height_decision).clone(), (inline_object_line_height_decision).clone(), (plan.kinsoku_decision).clone(), contextual_kinsoku_decisions.to_vec(), (prep.line_length_grid_decision).clone(), (plan.first_line_indent_decision).clone(), (prep.inline_box_result).clone().decisions.to_vec(), inline_object_decisions.to_vec(), prep.inline_object_punctuation_attachment_decisions.to_vec(), prep.zero_width_break_decisions.to_vec(), prep.break_opportunity_decisions.to_vec(), prep.emergency_tracking_eligibility_decisions.to_vec(), (plan.progressive_break_opportunities).clone())).map_err(|e| LineAdjustmentStageFinishParagraphLayoutFault::UStringFaultFault(e))?));
     }
 }

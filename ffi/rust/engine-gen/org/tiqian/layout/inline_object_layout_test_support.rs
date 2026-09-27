@@ -45,15 +45,27 @@ use crate::org::tiqian::shaping::text_shaper::ExplainableStubTextShaper;
 use crate::org::tiqian::test::trace::test_trace_recorder::TestTraceRecorder;
 use crate::org::tiqian::test::trace::test_trace_render::TestTraceRender;
 use crate::runtime::u_string;
+use crate::runtime::u_string::UStr;
+use crate::runtime::u_string::UString;
 use crate::std::u_string_exception::UStringFault;
 use std::fmt::Write;
+use std::sync::Arc;
 use std::sync::LazyLock;
+use std::sync::Mutex;
 
 
 #[derive(Debug, Clone, PartialEq)]
 pub enum InlineObjectLayoutTestSupportFixedBasicKinsokuEngineFault {
     TextRangeErrorFault(crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError),
     UStringFaultFault(crate::std::u_string_exception::UStringFault),
+}
+impl std::fmt::Display for InlineObjectLayoutTestSupportFixedBasicKinsokuEngineFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            InlineObjectLayoutTestSupportFixedBasicKinsokuEngineFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            InlineObjectLayoutTestSupportFixedBasicKinsokuEngineFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
 }
 
 impl From<InlineObjectLayoutTestSupportFixedBasicKinsokuEngineFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
@@ -91,6 +103,14 @@ pub enum InlineObjectLayoutTestSupportFixedFault {
     TextRangeErrorFault(crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError),
     UStringFaultFault(crate::std::u_string_exception::UStringFault),
 }
+impl std::fmt::Display for InlineObjectLayoutTestSupportFixedFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            InlineObjectLayoutTestSupportFixedFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            InlineObjectLayoutTestSupportFixedFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
+}
 
 impl From<InlineObjectLayoutTestSupportFixedFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
     fn from(value: InlineObjectLayoutTestSupportFixedFault) -> Self {
@@ -122,33 +142,31 @@ impl From<crate::std::u_string_exception::UStringFault> for InlineObjectLayoutTe
     }
 }
 
-pub static INLINE_OBJECT_LAYOUT_TEST_SUPPORT_STYLE: LazyLock<ParagraphStyle> = LazyLock::new(|| ParagraphStyle::new(Some(LastLineAlignment::Start), Some(WritingMode::HorizontalTb), Some(24 as f64), Some((Ic::zero()).clone()), Some(Ic::zero()),
-Some(MeasureAdaptiveFirstLineIndent::new(Some(14.0), Some(1.0), Some(2.0))), Some(LineLengthGrid::new(Some(false), None)), Some(RubyLineHeightMode::PerLine), Some(ParagraphStyle::PARAGRAPH_STYLE_DEFAULT_INLINE_OBJECT_MINIMUM_CLEARANCE_EM),
-Some(ParagraphStyle::PARAGRAPH_STYLE_DEFAULT_EMPHASIS_DOT_GAP_EM)));
+pub static INLINE_OBJECT_LAYOUT_TEST_SUPPORT_STYLE: LazyLock<ParagraphStyle> = LazyLock::new(|| ParagraphStyle::new(Some(LastLineAlignment::Start), Some(WritingMode::HorizontalTb), Some(24 as f64), Some((Ic::zero()).clone()), Some(Ic::zero()), Some(MeasureAdaptiveFirstLineIndent::new(Some(14.0), Some(1.0), Some(2.0))), Some(LineLengthGrid::new(Some(false), None)), Some(RubyLineHeightMode::PerLine), Some(ParagraphStyle::PARAGRAPH_STYLE_DEFAULT_INLINE_OBJECT_MINIMUM_CLEARANCE_EM), Some(ParagraphStyle::PARAGRAPH_STYLE_DEFAULT_EMPHASIS_DOT_GAP_EM)));
 
 #[derive(Clone, Copy)]
 pub struct InlineObjectLayoutTestSupport;
 
 impl InlineObjectLayoutTestSupport {
 
-    pub fn inline_object_layout_test_support_render_nullable_decision(v: Option<InlineObjectLineHeightDecisionInfo>) -> Result<String, UStringFault> {
-        return Ok(match &(v) { None => "null".to_string(), Some(__option) => InlineObjectLayoutTestSupport::inline_object_layout_test_support_render_decision(((*__option).clone()).clone())?.to_string() });
+    pub fn inline_object_layout_test_support_render_nullable_decision(v: Option<InlineObjectLineHeightDecisionInfo>) -> Result<UString, UStringFault> {
+        return Ok(match &(v) { None => UString::from("null"), Some(__option) => InlineObjectLayoutTestSupport::inline_object_layout_test_support_render_decision(((*__option).clone()).clone())?.to_ustring() });
     }
 
-    pub fn inline_object_layout_test_support_render_decision(v: InlineObjectLineHeightDecisionInfo) -> Result<String, UStringFault> {
-        return Ok(TestTraceRender::test_trace_render_cap(v.to_string().as_str())?);
+    pub fn inline_object_layout_test_support_render_decision(v: InlineObjectLineHeightDecisionInfo) -> Result<UString, UStringFault> {
+        return Ok(TestTraceRender::test_trace_render_cap(UString::from(format!("{}", v.to_string()).as_str()).as_ustr())?);
     }
 
-    pub fn inline_object_layout_test_support_render_nullable_repair(v: Option<LineRepairDecisionInfo>) -> Result<String, UStringFault> {
-        return Ok(match &(v) { None => "null".to_string(), Some(__option1) => InlineObjectLayoutTestSupport::inline_object_layout_test_support_render_repair(((*__option1).clone()).clone())?.to_string() });
+    pub fn inline_object_layout_test_support_render_nullable_repair(v: Option<LineRepairDecisionInfo>) -> Result<UString, UStringFault> {
+        return Ok(match &(v) { None => UString::from("null"), Some(__option1) => InlineObjectLayoutTestSupport::inline_object_layout_test_support_render_repair(((*__option1).clone()).clone())?.to_ustring() });
     }
 
-    pub fn inline_object_layout_test_support_render_repair(v: LineRepairDecisionInfo) -> Result<String, UStringFault> {
-        return Ok(TestTraceRender::test_trace_render_cap(v.to_string().as_str())?);
+    pub fn inline_object_layout_test_support_render_repair(v: LineRepairDecisionInfo) -> Result<UString, UStringFault> {
+        return Ok(TestTraceRender::test_trace_render_cap(UString::from(format!("{}", v.to_string()).as_str()).as_ustr())?);
     }
 
-    pub fn inline_object_layout_test_support_rec(n: &str) -> TestTraceRecorder {
-        let mut t = TestTraceRecorder::new("InlineObjectLayoutTest");
+    pub fn inline_object_layout_test_support_rec(n: &UStr) -> TestTraceRecorder {
+        let mut t = TestTraceRecorder::new(&(UStr::new(&[73,110,108,105,110,101,79,98,106,101,99,116,76,97,121,111,117,116,84,101,115,116])));
         t.section(n);
         return t;
     }
@@ -158,43 +176,29 @@ impl InlineObjectLayoutTestSupport {
     }
 
     pub fn inline_object_layout_test_support_fixed(b: Option<Box<dyn LineBreaker>>) -> Result<ExplainableStubParagraphLayoutEngine, ParagraphLayoutEngineNewFault> {
-        return Ok(ExplainableStubParagraphLayoutEngine::new(Some(Box::new(CjkFontRoleClassifier::new())), Some(Box::new(ParagraphLayoutFallbackResolver::new(Some("cjk-primary".to_string()), Some("latin-primary".to_string()), Some("symbol-fallback".to_string()))?)),
-Some(InlineObjectLayoutTestSupport::inline_object_layout_test_support_resolver((*crate::org::tiqian::clreq::clreq_profile::CLREQ_PROFILE_MAINLAND_HORIZONTAL).clone())), Some(Box::new(StubFontMetricsResolver::new())), Some(Box::new(ScriptAwareFontMetricsNormalizer::new())),
-Some((PunctuationAtomBuilder::new(None, None)?).clone()), Some((PunctuationSpacingCompressor::new()?).clone()), Some(QuotePairAnalyzer::new()), match &(b) { None => Some(Box::new(GreedyLineBreaker::new(None, None, None, None)) as Box<dyn LineBreaker>), Some(__option9) =>
-Some((*__option9).clone()) }, Some(Justifier::new(Some(0.5), Some(0.25))), Some(Box::new(ExplainableStubTextShaper::new())), Some((DefaultHyphenator::default_hyphenator_default_hyphenator()?).clone()), Some(Box::new(LruWidthIndependentAnnotationCache::new(512))))?);
+        return Ok(ExplainableStubParagraphLayoutEngine::new(Some(Box::new(CjkFontRoleClassifier::new())), Some(Box::new(ParagraphLayoutFallbackResolver::new(Some(UString::from("cjk-primary")), Some(UString::from("latin-primary")), Some(UString::from("symbol-fallback")))?)), Some(InlineObjectLayoutTestSupport::inline_object_layout_test_support_resolver((*crate::org::tiqian::clreq::clreq_profile::CLREQ_PROFILE_MAINLAND_HORIZONTAL).clone())), Some(Box::new(StubFontMetricsResolver::new())), Some(Box::new(ScriptAwareFontMetricsNormalizer::new())), Some((PunctuationAtomBuilder::new(None, None)?).clone()), Some((PunctuationSpacingCompressor::new()?).clone()), Some(QuotePairAnalyzer::new()), match &(b) { None => Some(Box::new(GreedyLineBreaker::new(None, None, None, None)) as Box<dyn LineBreaker>), Some(__option9) => Some((*__option9).clone()) }, Some(Justifier::new(Some(0.5), Some(0.25))), Some(Arc::new(Mutex::new(ExplainableStubTextShaper::new()))), Some((DefaultHyphenator::default_hyphenator_default_hyphenator()?).clone()), Some(Arc::new(Mutex::new(LruWidthIndependentAnnotationCache::new(512)))))?);
     }
 
-    pub fn inline_object_layout_test_support_layout(text: &str, width: f64, objects: Option<Vec<InlineObjectSpan>>, b: Option<Box<dyn LineBreaker>>) -> Result<LayoutResult, ParagraphLayoutEngineNewFault> {
-        return Ok(InlineObjectLayoutTestSupport::inline_object_layout_test_support_fixed((b).clone())?.layout(LayoutInput::new(TiqianTextContent::new(text, Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![])), Some(TextStyle::new(Some(vec![]), Some(16 as f64),
-Some("zh-Hans".to_string()), Some(400), Some(false), Some(0.0), Some(InlineAttachment::None))), Some((*INLINE_OBJECT_LAYOUT_TEST_SUPPORT_STYLE).clone()), LayoutConstraints::new(width, Some(f64::INFINITY), Some(2147483647)).map_err(|e|
-ParagraphLayoutEngineNewFault::TextRangeErrorFault(e))?, Some((*crate::org::tiqian::core::built_in_layout_profiles::BUILT_IN_LAYOUT_PROFILES_CLREQ_HORIZONTAL).clone()), Some(vec![]), Some(vec![]), Some(vec![]), (objects).clone())).map_err(|e|
-ParagraphLayoutEngineNewFault::LayoutWithRejectedTechnicalTiersFault(e))?);
+    pub fn inline_object_layout_test_support_layout(text: &UStr, width: f64, objects: Option<Vec<InlineObjectSpan>>, b: Option<Box<dyn LineBreaker>>) -> Result<LayoutResult, ParagraphLayoutEngineNewFault> {
+        return Ok(InlineObjectLayoutTestSupport::inline_object_layout_test_support_fixed((b).clone())?.layout(LayoutInput::new(TiqianTextContent::new(text, Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![])), Some(TextStyle::new(Some(vec![]), Some(16 as f64), Some(UString::from("zh-Hans")), Some(400), Some(false), Some(0.0), Some(InlineAttachment::None))), Some((*INLINE_OBJECT_LAYOUT_TEST_SUPPORT_STYLE).clone()), LayoutConstraints::new(width, Some(f64::INFINITY), Some(2147483647)).map_err(|e| ParagraphLayoutEngineNewFault::TextRangeErrorFault(e))?, Some((*crate::org::tiqian::core::built_in_layout_profiles::BUILT_IN_LAYOUT_PROFILES_CLREQ_HORIZONTAL).clone()), Some(vec![]), Some(vec![]), Some(vec![]), (objects).clone())).map_err(|e| ParagraphLayoutEngineNewFault::LayoutWithRejectedTechnicalTiersFault(e))?);
     }
 
     pub fn inline_object_layout_test_support_fixed_basic_kinsoku_engine(b: Option<Box<dyn LineBreaker>>) -> Result<ExplainableStubParagraphLayoutEngine, ParagraphLayoutEngineNewFault> {
         let base = (*crate::org::tiqian::clreq::clreq_profile::CLREQ_PROFILE_MAINLAND_HORIZONTAL).clone();
-        let p = ClreqProfile::new((base.id).to_string().as_str(), base.strictness, base.region, Some(base.punctuation_glyph_policy), Some(crate::org::tiqian::clreq::clreq_profile::CLREQ_PROFILE_DEFAULT_COALESCE_REPEATABLE_PUNCTUATION.to_vec()), Some((base.auto_space).clone()),
-Some(base.glue_placement), (base.adjustment).clone(), KinsokuMode::Fixed { level: KinsokuLevel::Basic, hanging: HangingPunctuationStyle::Disabled }, (base.punctuation_width).clone());
-        return Ok(ExplainableStubParagraphLayoutEngine::new(Some(Box::new(CjkFontRoleClassifier::new())), Some(Box::new(ParagraphLayoutFallbackResolver::new(Some("cjk-primary".to_string()), Some("latin-primary".to_string()), Some("symbol-fallback".to_string()))?)),
-Some(InlineObjectLayoutTestSupport::inline_object_layout_test_support_resolver((p).clone())), Some(Box::new(StubFontMetricsResolver::new())), Some(Box::new(ScriptAwareFontMetricsNormalizer::new())), Some((PunctuationAtomBuilder::new(None, None)?).clone()),
-Some((PunctuationSpacingCompressor::new()?).clone()), Some(QuotePairAnalyzer::new()), match &(b) { None => Some(Box::new(GreedyLineBreaker::new(None, None, None, None)) as Box<dyn LineBreaker>), Some(__option22) => Some((*__option22).clone()) }, Some(Justifier::new(Some(0.5),
-Some(0.25))), Some(Box::new(ExplainableStubTextShaper::new())), Some((DefaultHyphenator::default_hyphenator_default_hyphenator()?).clone()), Some(Box::new(LruWidthIndependentAnnotationCache::new(512))))?);
+        let p = ClreqProfile::new((base.id).to_ustring().as_ustr(), base.strictness, base.region, Some(base.punctuation_glyph_policy), Some(crate::org::tiqian::clreq::clreq_profile::CLREQ_PROFILE_DEFAULT_COALESCE_REPEATABLE_PUNCTUATION.to_vec()), Some((base.auto_space).clone()), Some(base.glue_placement), (base.adjustment).clone(), KinsokuMode::Fixed { level: KinsokuLevel::Basic, hanging: HangingPunctuationStyle::Disabled }, (base.punctuation_width).clone());
+        return Ok(ExplainableStubParagraphLayoutEngine::new(Some(Box::new(CjkFontRoleClassifier::new())), Some(Box::new(ParagraphLayoutFallbackResolver::new(Some(UString::from("cjk-primary")), Some(UString::from("latin-primary")), Some(UString::from("symbol-fallback")))?)), Some(InlineObjectLayoutTestSupport::inline_object_layout_test_support_resolver((p).clone())), Some(Box::new(StubFontMetricsResolver::new())), Some(Box::new(ScriptAwareFontMetricsNormalizer::new())), Some((PunctuationAtomBuilder::new(None, None)?).clone()), Some((PunctuationSpacingCompressor::new()?).clone()), Some(QuotePairAnalyzer::new()), match &(b) { None => Some(Box::new(GreedyLineBreaker::new(None, None, None, None)) as Box<dyn LineBreaker>), Some(__option22) => Some((*__option22).clone()) }, Some(Justifier::new(Some(0.5), Some(0.25))), Some(Arc::new(Mutex::new(ExplainableStubTextShaper::new()))), Some((DefaultHyphenator::default_hyphenator_default_hyphenator()?).clone()), Some(Arc::new(Mutex::new(LruWidthIndependentAnnotationCache::new(512)))))?);
     }
 
-    pub fn inline_object_layout_test_support_lines(r: LayoutResult, text: &str) -> Vec<String> {
-        let mut a: Vec<String> = vec![];
+    pub fn inline_object_layout_test_support_lines(r: LayoutResult, text: &UStr) -> Vec<UString> {
+        let mut a: Vec<UString> = vec![];
         for i in 0..match u32::try_from(r.lines.len()) { Ok(value) => value, Err(_) => u32::MAX } {
-            a.push(u_string::substring(&text, i32::from_ne_bytes((((r.lines[usize::try_from(i).unwrap_or(0)]).clone().range).clone().start).to_ne_bytes()), i32::from_ne_bytes((((r.lines[usize::try_from(i).unwrap_or(0)]).clone().range).clone().end).to_ne_bytes())));
+            a.push(u_string::substring(&text, i32::from_ne_bytes(((((r.lines[usize::try_from(i).unwrap_or(0)]).clone().range).clone().start) as i32).to_ne_bytes()), i32::from_ne_bytes(((((r.lines[usize::try_from(i).unwrap_or(0)]).clone().range).clone().end) as i32).to_ne_bytes())));
         }
         return a;
     }
 
-    pub fn inline_object_layout_test_support_render_strings(a: &Vec<String>) -> String {
-        return format!("{}{}{}",
-            "[",
-            { let joined = a; let mut out = String::new(); let n = joined.len(); let mut index = 0usize; while index < n { if index > 0 { out.push_str(&(", ")); } let _ = write!(out, "{}", joined[index]); index += 1; } out },
-            "]"
-        );
+    pub fn inline_object_layout_test_support_render_strings(a: &Vec<UString>) -> UString {
+        return UString::from(format!("{}", { let mut __s = UString::new(); __s += &(UString::from("[")); __s += UString::from(format!("{}", { let joined = a; let mut out = String::new(); let n = joined.len(); let mut index = 0usize; while index < n { if index > 0 { out.push_str(", "); } let _ = write!(out, "{}", joined[index]); index += 1; } UString::from(out.as_str()) }).as_str()).as_ustr(); __s += &(UString::from("]")); __s }).as_str());
     }
 
     pub fn inline_object_layout_test_support_same_range(first: TextRange, second: TextRange) -> bool {
@@ -249,40 +253,28 @@ Some(0.25))), Some(Box::new(ExplainableStubTextShaper::new())), Some((DefaultHyp
         return (if n == 1 { f } else { None }).unwrap();
     }
 
-    pub fn inline_object_layout_test_support_render_repair_allocations(a: &[LineRepairAllocationInfo]) -> String {
-        let mut x: Vec<String> = vec![];
+    pub fn inline_object_layout_test_support_render_repair_allocations(a: &[LineRepairAllocationInfo]) -> UString {
+        let mut x: Vec<UString> = vec![];
         for i in 0..match u32::try_from(a.len()) { Ok(value) => value, Err(_) => u32::MAX } {
-            x.push((a[usize::try_from(i).unwrap_or(0)]).clone().to_string());
+            x.push(UString::from(format!("{}", (a[usize::try_from(i).unwrap_or(0)]).clone().to_string()).as_str()));
         }
-        return format!("{}{}{}",
-            "[",
-            { let joined1 = x; let mut out = String::new(); let n = joined1.len(); let mut index1 = 0usize; while index1 < n { if index1 > 0 { out.push_str(&(", ")); } let _ = write!(out, "{}", joined1[index1]); index1 += 1; } out },
-            "]"
-        );
+        return UString::from(format!("{}", { let mut __s = UString::new(); __s += &(UString::from("[")); __s += UString::from(format!("{}", { let joined1 = x; let mut out = String::new(); let n = joined1.len(); let mut index1 = 0usize; while index1 < n { if index1 > 0 { out.push_str(", "); } let _ = write!(out, "{}", joined1[index1]); index1 += 1; } UString::from(out.as_str()) }).as_str()).as_ustr(); __s += &(UString::from("]")); __s }).as_str());
     }
 
-    pub fn inline_object_layout_test_support_render_trim_decisions(a: &[LineEdgeTrimDecisionInfo]) -> String {
-        let mut x: Vec<String> = vec![];
+    pub fn inline_object_layout_test_support_render_trim_decisions(a: &[LineEdgeTrimDecisionInfo]) -> UString {
+        let mut x: Vec<UString> = vec![];
         for i in 0..match u32::try_from(a.len()) { Ok(value) => value, Err(_) => u32::MAX } {
-            x.push((a[usize::try_from(i).unwrap_or(0)]).clone().to_string());
+            x.push(UString::from(format!("{}", (a[usize::try_from(i).unwrap_or(0)]).clone().to_string()).as_str()));
         }
-        return format!("{}{}{}",
-            "[",
-            { let joined2 = x; let mut out = String::new(); let n = joined2.len(); let mut index2 = 0usize; while index2 < n { if index2 > 0 { out.push_str(&(", ")); } let _ = write!(out, "{}", joined2[index2]); index2 += 1; } out },
-            "]"
-        );
+        return UString::from(format!("{}", { let mut __s = UString::new(); __s += &(UString::from("[")); __s += UString::from(format!("{}", { let joined2 = x; let mut out = String::new(); let n = joined2.len(); let mut index2 = 0usize; while index2 < n { if index2 > 0 { out.push_str(", "); } let _ = write!(out, "{}", joined2[index2]); index2 += 1; } UString::from(out.as_str()) }).as_str()).as_ustr(); __s += &(UString::from("]")); __s }).as_str());
     }
 
-    pub fn inline_object_layout_test_support_render_line_ranges(r: LayoutResult) -> String {
-        let mut x: Vec<String> = vec![];
+    pub fn inline_object_layout_test_support_render_line_ranges(r: LayoutResult) -> UString {
+        let mut x: Vec<UString> = vec![];
         for i in 0..match u32::try_from(r.lines.len()) { Ok(value) => value, Err(_) => u32::MAX } {
-            x.push(((r.lines[usize::try_from(i).unwrap_or(0)]).clone().range).clone().to_string());
+            x.push(UString::from(format!("{}", ((r.lines[usize::try_from(i).unwrap_or(0)]).clone().range).clone().to_string()).as_str()));
         }
-        return format!("{}{}{}",
-            "[",
-            { let joined3 = x; let mut out = String::new(); let n = joined3.len(); let mut index3 = 0usize; while index3 < n { if index3 > 0 { out.push_str(&(", ")); } let _ = write!(out, "{}", joined3[index3]); index3 += 1; } out },
-            "]"
-        );
+        return UString::from(format!("{}", { let mut __s = UString::new(); __s += &(UString::from("[")); __s += UString::from(format!("{}", { let joined3 = x; let mut out = String::new(); let n = joined3.len(); let mut index3 = 0usize; while index3 < n { if index3 > 0 { out.push_str(", "); } let _ = write!(out, "{}", joined3[index3]); index3 += 1; } UString::from(out.as_str()) }).as_str()).as_ustr(); __s += &(UString::from("]")); __s }).as_str());
     }
 }
 

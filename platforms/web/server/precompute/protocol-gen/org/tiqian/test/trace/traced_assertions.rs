@@ -27,6 +27,8 @@ use crate::runtime::exception::Exception;
 use crate::runtime::sorted_table::SortedSetTable;
 use crate::runtime::sorted_table::SortedSetTableBuilder;
 use crate::runtime::sorted_table::SortedTable;
+use crate::runtime::u_string::UStr;
+use crate::runtime::u_string::UString;
 use crate::std::u_string_exception::UStringFault;
 use std::fmt::Write;
 use std::sync::Arc;
@@ -36,6 +38,14 @@ use std::sync::Arc;
 pub enum TracedAssertionsFailFault {
     TraceAssertionErrorFault(crate::org::tiqian::test::trace::trace_assertion_exception::TraceAssertionError),
     UStringFaultFault(crate::std::u_string_exception::UStringFault),
+}
+impl std::fmt::Display for TracedAssertionsFailFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            TracedAssertionsFailFault::TraceAssertionErrorFault(value) => write!(formatter, "{}", value),
+            TracedAssertionsFailFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
 }
 
 impl From<TracedAssertionsFailFault> for crate::org::tiqian::test::trace::trace_assertion_exception::TraceAssertionError {
@@ -73,6 +83,14 @@ pub enum TracedAssertionsAssertTrueFault {
     UStringFaultFault(crate::std::u_string_exception::UStringFault),
     TraceAssertionErrorFault(crate::org::tiqian::test::trace::trace_assertion_exception::TraceAssertionError),
 }
+impl std::fmt::Display for TracedAssertionsAssertTrueFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            TracedAssertionsAssertTrueFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            TracedAssertionsAssertTrueFault::TraceAssertionErrorFault(value) => write!(formatter, "{}", value),
+        }
+    }
+}
 
 impl From<TracedAssertionsAssertTrueFault> for crate::std::u_string_exception::UStringFault {
     fn from(value: TracedAssertionsAssertTrueFault) -> Self {
@@ -108,6 +126,14 @@ impl From<crate::org::tiqian::test::trace::trace_assertion_exception::TraceAsser
 pub enum TracedAssertionsAssertNullRenderedFault {
     UStringFaultFault(crate::std::u_string_exception::UStringFault),
     TraceAssertionErrorFault(crate::org::tiqian::test::trace::trace_assertion_exception::TraceAssertionError),
+}
+impl std::fmt::Display for TracedAssertionsAssertNullRenderedFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            TracedAssertionsAssertNullRenderedFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            TracedAssertionsAssertNullRenderedFault::TraceAssertionErrorFault(value) => write!(formatter, "{}", value),
+        }
+    }
 }
 
 impl From<TracedAssertionsAssertNullRenderedFault> for crate::std::u_string_exception::UStringFault {
@@ -145,6 +171,14 @@ pub enum TracedAssertionsAssertNotNullRenderedFault {
     UStringFaultFault(crate::std::u_string_exception::UStringFault),
     TraceAssertionErrorFault(crate::org::tiqian::test::trace::trace_assertion_exception::TraceAssertionError),
 }
+impl std::fmt::Display for TracedAssertionsAssertNotNullRenderedFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            TracedAssertionsAssertNotNullRenderedFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            TracedAssertionsAssertNotNullRenderedFault::TraceAssertionErrorFault(value) => write!(formatter, "{}", value),
+        }
+    }
+}
 
 impl From<TracedAssertionsAssertNotNullRenderedFault> for crate::std::u_string_exception::UStringFault {
     fn from(value: TracedAssertionsAssertNotNullRenderedFault) -> Self {
@@ -180,6 +214,14 @@ impl From<crate::org::tiqian::test::trace::trace_assertion_exception::TraceAsser
 pub enum TracedAssertionsAssertFalseFault {
     UStringFaultFault(crate::std::u_string_exception::UStringFault),
     TraceAssertionErrorFault(crate::org::tiqian::test::trace::trace_assertion_exception::TraceAssertionError),
+}
+impl std::fmt::Display for TracedAssertionsAssertFalseFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            TracedAssertionsAssertFalseFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            TracedAssertionsAssertFalseFault::TraceAssertionErrorFault(value) => write!(formatter, "{}", value),
+        }
+    }
 }
 
 impl From<TracedAssertionsAssertFalseFault> for crate::std::u_string_exception::UStringFault {
@@ -217,6 +259,14 @@ pub enum TracedAssertionsAssertFailsWithNoSuchElementFault {
     TraceAssertionErrorFault(crate::org::tiqian::test::trace::trace_assertion_exception::TraceAssertionError),
     UStringFaultFault(crate::std::u_string_exception::UStringFault),
 }
+impl std::fmt::Display for TracedAssertionsAssertFailsWithNoSuchElementFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            TracedAssertionsAssertFailsWithNoSuchElementFault::TraceAssertionErrorFault(value) => write!(formatter, "{}", value),
+            TracedAssertionsAssertFailsWithNoSuchElementFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
+}
 
 impl From<TracedAssertionsAssertFailsWithNoSuchElementFault> for crate::org::tiqian::test::trace::trace_assertion_exception::TraceAssertionError {
     fn from(value: TracedAssertionsAssertFailsWithNoSuchElementFault) -> Self {
@@ -252,6 +302,14 @@ impl From<crate::std::u_string_exception::UStringFault> for TracedAssertionsAsse
 pub enum TracedAssertionsAssertFailsWithFault {
     TraceAssertionErrorFault(crate::org::tiqian::test::trace::trace_assertion_exception::TraceAssertionError),
     UStringFaultFault(crate::std::u_string_exception::UStringFault),
+}
+impl std::fmt::Display for TracedAssertionsAssertFailsWithFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            TracedAssertionsAssertFailsWithFault::TraceAssertionErrorFault(value) => write!(formatter, "{}", value),
+            TracedAssertionsAssertFailsWithFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
 }
 
 impl From<TracedAssertionsAssertFailsWithFault> for crate::org::tiqian::test::trace::trace_assertion_exception::TraceAssertionError {
@@ -289,6 +347,14 @@ pub enum TracedAssertionsAssertEqualsTextRangeArrayFault {
     UStringFaultFault(crate::std::u_string_exception::UStringFault),
     TraceAssertionErrorFault(crate::org::tiqian::test::trace::trace_assertion_exception::TraceAssertionError),
 }
+impl std::fmt::Display for TracedAssertionsAssertEqualsTextRangeArrayFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            TracedAssertionsAssertEqualsTextRangeArrayFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            TracedAssertionsAssertEqualsTextRangeArrayFault::TraceAssertionErrorFault(value) => write!(formatter, "{}", value),
+        }
+    }
+}
 
 impl From<TracedAssertionsAssertEqualsTextRangeArrayFault> for crate::std::u_string_exception::UStringFault {
     fn from(value: TracedAssertionsAssertEqualsTextRangeArrayFault) -> Self {
@@ -324,6 +390,14 @@ impl From<crate::org::tiqian::test::trace::trace_assertion_exception::TraceAsser
 pub enum TracedAssertionsAssertEqualsStringArrayFault {
     UStringFaultFault(crate::std::u_string_exception::UStringFault),
     TraceAssertionErrorFault(crate::org::tiqian::test::trace::trace_assertion_exception::TraceAssertionError),
+}
+impl std::fmt::Display for TracedAssertionsAssertEqualsStringArrayFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            TracedAssertionsAssertEqualsStringArrayFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            TracedAssertionsAssertEqualsStringArrayFault::TraceAssertionErrorFault(value) => write!(formatter, "{}", value),
+        }
+    }
 }
 
 impl From<TracedAssertionsAssertEqualsStringArrayFault> for crate::std::u_string_exception::UStringFault {
@@ -361,6 +435,14 @@ pub enum TracedAssertionsAssertEqualsStringFault {
     UStringFaultFault(crate::std::u_string_exception::UStringFault),
     TraceAssertionErrorFault(crate::org::tiqian::test::trace::trace_assertion_exception::TraceAssertionError),
 }
+impl std::fmt::Display for TracedAssertionsAssertEqualsStringFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            TracedAssertionsAssertEqualsStringFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            TracedAssertionsAssertEqualsStringFault::TraceAssertionErrorFault(value) => write!(formatter, "{}", value),
+        }
+    }
+}
 
 impl From<TracedAssertionsAssertEqualsStringFault> for crate::std::u_string_exception::UStringFault {
     fn from(value: TracedAssertionsAssertEqualsStringFault) -> Self {
@@ -397,6 +479,15 @@ pub enum TracedAssertionsAssertEqualsRepairOptionArrayFault {
     UStringFaultFault(crate::std::u_string_exception::UStringFault),
     TraceAssertionErrorFault(crate::org::tiqian::test::trace::trace_assertion_exception::TraceAssertionError),
     FailFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
+}
+impl std::fmt::Display for TracedAssertionsAssertEqualsRepairOptionArrayFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            TracedAssertionsAssertEqualsRepairOptionArrayFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            TracedAssertionsAssertEqualsRepairOptionArrayFault::TraceAssertionErrorFault(value) => write!(formatter, "{}", value),
+            TracedAssertionsAssertEqualsRepairOptionArrayFault::FailFault(value) => write!(formatter, "{}", value),
+        }
+    }
 }
 
 impl From<TracedAssertionsAssertEqualsRepairOptionArrayFault> for crate::std::u_string_exception::UStringFault {
@@ -449,6 +540,14 @@ pub enum TracedAssertionsAssertEqualsRenderedFault {
     UStringFaultFault(crate::std::u_string_exception::UStringFault),
     TraceAssertionErrorFault(crate::org::tiqian::test::trace::trace_assertion_exception::TraceAssertionError),
 }
+impl std::fmt::Display for TracedAssertionsAssertEqualsRenderedFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            TracedAssertionsAssertEqualsRenderedFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            TracedAssertionsAssertEqualsRenderedFault::TraceAssertionErrorFault(value) => write!(formatter, "{}", value),
+        }
+    }
+}
 
 impl From<TracedAssertionsAssertEqualsRenderedFault> for crate::std::u_string_exception::UStringFault {
     fn from(value: TracedAssertionsAssertEqualsRenderedFault) -> Self {
@@ -484,6 +583,14 @@ impl From<crate::org::tiqian::test::trace::trace_assertion_exception::TraceAsser
 pub enum TracedAssertionsAssertEqualsQuoteTypeFault {
     UStringFaultFault(crate::std::u_string_exception::UStringFault),
     TraceAssertionErrorFault(crate::org::tiqian::test::trace::trace_assertion_exception::TraceAssertionError),
+}
+impl std::fmt::Display for TracedAssertionsAssertEqualsQuoteTypeFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            TracedAssertionsAssertEqualsQuoteTypeFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            TracedAssertionsAssertEqualsQuoteTypeFault::TraceAssertionErrorFault(value) => write!(formatter, "{}", value),
+        }
+    }
 }
 
 impl From<TracedAssertionsAssertEqualsQuoteTypeFault> for crate::std::u_string_exception::UStringFault {
@@ -521,6 +628,14 @@ pub enum TracedAssertionsAssertEqualsQuotePairArrayFault {
     UStringFaultFault(crate::std::u_string_exception::UStringFault),
     TraceAssertionErrorFault(crate::org::tiqian::test::trace::trace_assertion_exception::TraceAssertionError),
 }
+impl std::fmt::Display for TracedAssertionsAssertEqualsQuotePairArrayFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            TracedAssertionsAssertEqualsQuotePairArrayFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            TracedAssertionsAssertEqualsQuotePairArrayFault::TraceAssertionErrorFault(value) => write!(formatter, "{}", value),
+        }
+    }
+}
 
 impl From<TracedAssertionsAssertEqualsQuotePairArrayFault> for crate::std::u_string_exception::UStringFault {
     fn from(value: TracedAssertionsAssertEqualsQuotePairArrayFault) -> Self {
@@ -556,6 +671,14 @@ impl From<crate::org::tiqian::test::trace::trace_assertion_exception::TraceAsser
 pub enum TracedAssertionsAssertEqualsQuotePairFault {
     UStringFaultFault(crate::std::u_string_exception::UStringFault),
     TraceAssertionErrorFault(crate::org::tiqian::test::trace::trace_assertion_exception::TraceAssertionError),
+}
+impl std::fmt::Display for TracedAssertionsAssertEqualsQuotePairFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            TracedAssertionsAssertEqualsQuotePairFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            TracedAssertionsAssertEqualsQuotePairFault::TraceAssertionErrorFault(value) => write!(formatter, "{}", value),
+        }
+    }
 }
 
 impl From<TracedAssertionsAssertEqualsQuotePairFault> for crate::std::u_string_exception::UStringFault {
@@ -593,6 +716,15 @@ pub enum TracedAssertionsAssertEqualsPushInAllocationArrayFault {
     UStringFaultFault(crate::std::u_string_exception::UStringFault),
     TraceAssertionErrorFault(crate::org::tiqian::test::trace::trace_assertion_exception::TraceAssertionError),
     FailFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
+}
+impl std::fmt::Display for TracedAssertionsAssertEqualsPushInAllocationArrayFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            TracedAssertionsAssertEqualsPushInAllocationArrayFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            TracedAssertionsAssertEqualsPushInAllocationArrayFault::TraceAssertionErrorFault(value) => write!(formatter, "{}", value),
+            TracedAssertionsAssertEqualsPushInAllocationArrayFault::FailFault(value) => write!(formatter, "{}", value),
+        }
+    }
 }
 
 impl From<TracedAssertionsAssertEqualsPushInAllocationArrayFault> for crate::std::u_string_exception::UStringFault {
@@ -645,6 +777,14 @@ pub enum TracedAssertionsAssertEqualsPunctuationGluePlacementFault {
     UStringFaultFault(crate::std::u_string_exception::UStringFault),
     TraceAssertionErrorFault(crate::org::tiqian::test::trace::trace_assertion_exception::TraceAssertionError),
 }
+impl std::fmt::Display for TracedAssertionsAssertEqualsPunctuationGluePlacementFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            TracedAssertionsAssertEqualsPunctuationGluePlacementFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            TracedAssertionsAssertEqualsPunctuationGluePlacementFault::TraceAssertionErrorFault(value) => write!(formatter, "{}", value),
+        }
+    }
+}
 
 impl From<TracedAssertionsAssertEqualsPunctuationGluePlacementFault> for crate::std::u_string_exception::UStringFault {
     fn from(value: TracedAssertionsAssertEqualsPunctuationGluePlacementFault) -> Self {
@@ -680,6 +820,14 @@ impl From<crate::org::tiqian::test::trace::trace_assertion_exception::TraceAsser
 pub enum TracedAssertionsAssertEqualsPunctuationClassFault {
     UStringFaultFault(crate::std::u_string_exception::UStringFault),
     TraceAssertionErrorFault(crate::org::tiqian::test::trace::trace_assertion_exception::TraceAssertionError),
+}
+impl std::fmt::Display for TracedAssertionsAssertEqualsPunctuationClassFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            TracedAssertionsAssertEqualsPunctuationClassFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            TracedAssertionsAssertEqualsPunctuationClassFault::TraceAssertionErrorFault(value) => write!(formatter, "{}", value),
+        }
+    }
 }
 
 impl From<TracedAssertionsAssertEqualsPunctuationClassFault> for crate::std::u_string_exception::UStringFault {
@@ -717,6 +865,14 @@ pub enum TracedAssertionsAssertEqualsNullableStringFault {
     UStringFaultFault(crate::std::u_string_exception::UStringFault),
     TraceAssertionErrorFault(crate::org::tiqian::test::trace::trace_assertion_exception::TraceAssertionError),
 }
+impl std::fmt::Display for TracedAssertionsAssertEqualsNullableStringFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            TracedAssertionsAssertEqualsNullableStringFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            TracedAssertionsAssertEqualsNullableStringFault::TraceAssertionErrorFault(value) => write!(formatter, "{}", value),
+        }
+    }
+}
 
 impl From<TracedAssertionsAssertEqualsNullableStringFault> for crate::std::u_string_exception::UStringFault {
     fn from(value: TracedAssertionsAssertEqualsNullableStringFault) -> Self {
@@ -752,6 +908,14 @@ impl From<crate::org::tiqian::test::trace::trace_assertion_exception::TraceAsser
 pub enum TracedAssertionsAssertEqualsNullableRepairOptionFault {
     UStringFaultFault(crate::std::u_string_exception::UStringFault),
     TraceAssertionErrorFault(crate::org::tiqian::test::trace::trace_assertion_exception::TraceAssertionError),
+}
+impl std::fmt::Display for TracedAssertionsAssertEqualsNullableRepairOptionFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            TracedAssertionsAssertEqualsNullableRepairOptionFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            TracedAssertionsAssertEqualsNullableRepairOptionFault::TraceAssertionErrorFault(value) => write!(formatter, "{}", value),
+        }
+    }
 }
 
 impl From<TracedAssertionsAssertEqualsNullableRepairOptionFault> for crate::std::u_string_exception::UStringFault {
@@ -789,6 +953,14 @@ pub enum TracedAssertionsAssertEqualsNullableIntFault {
     UStringFaultFault(crate::std::u_string_exception::UStringFault),
     TraceAssertionErrorFault(crate::org::tiqian::test::trace::trace_assertion_exception::TraceAssertionError),
 }
+impl std::fmt::Display for TracedAssertionsAssertEqualsNullableIntFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            TracedAssertionsAssertEqualsNullableIntFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            TracedAssertionsAssertEqualsNullableIntFault::TraceAssertionErrorFault(value) => write!(formatter, "{}", value),
+        }
+    }
+}
 
 impl From<TracedAssertionsAssertEqualsNullableIntFault> for crate::std::u_string_exception::UStringFault {
     fn from(value: TracedAssertionsAssertEqualsNullableIntFault) -> Self {
@@ -824,6 +996,14 @@ impl From<crate::org::tiqian::test::trace::trace_assertion_exception::TraceAsser
 pub enum TracedAssertionsAssertEqualsNullableFloatFault {
     UStringFaultFault(crate::std::u_string_exception::UStringFault),
     TraceAssertionErrorFault(crate::org::tiqian::test::trace::trace_assertion_exception::TraceAssertionError),
+}
+impl std::fmt::Display for TracedAssertionsAssertEqualsNullableFloatFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            TracedAssertionsAssertEqualsNullableFloatFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            TracedAssertionsAssertEqualsNullableFloatFault::TraceAssertionErrorFault(value) => write!(formatter, "{}", value),
+        }
+    }
 }
 
 impl From<TracedAssertionsAssertEqualsNullableFloatFault> for crate::std::u_string_exception::UStringFault {
@@ -861,6 +1041,14 @@ pub enum TracedAssertionsAssertEqualsKinsokuLevelFault {
     UStringFaultFault(crate::std::u_string_exception::UStringFault),
     TraceAssertionErrorFault(crate::org::tiqian::test::trace::trace_assertion_exception::TraceAssertionError),
 }
+impl std::fmt::Display for TracedAssertionsAssertEqualsKinsokuLevelFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            TracedAssertionsAssertEqualsKinsokuLevelFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            TracedAssertionsAssertEqualsKinsokuLevelFault::TraceAssertionErrorFault(value) => write!(formatter, "{}", value),
+        }
+    }
+}
 
 impl From<TracedAssertionsAssertEqualsKinsokuLevelFault> for crate::std::u_string_exception::UStringFault {
     fn from(value: TracedAssertionsAssertEqualsKinsokuLevelFault) -> Self {
@@ -896,6 +1084,14 @@ impl From<crate::org::tiqian::test::trace::trace_assertion_exception::TraceAsser
 pub enum TracedAssertionsAssertEqualsIntSetUnorderedFault {
     UStringFaultFault(crate::std::u_string_exception::UStringFault),
     TraceAssertionErrorFault(crate::org::tiqian::test::trace::trace_assertion_exception::TraceAssertionError),
+}
+impl std::fmt::Display for TracedAssertionsAssertEqualsIntSetUnorderedFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            TracedAssertionsAssertEqualsIntSetUnorderedFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            TracedAssertionsAssertEqualsIntSetUnorderedFault::TraceAssertionErrorFault(value) => write!(formatter, "{}", value),
+        }
+    }
 }
 
 impl From<TracedAssertionsAssertEqualsIntSetUnorderedFault> for crate::std::u_string_exception::UStringFault {
@@ -933,6 +1129,14 @@ pub enum TracedAssertionsAssertEqualsIntSetFault {
     UStringFaultFault(crate::std::u_string_exception::UStringFault),
     TraceAssertionErrorFault(crate::org::tiqian::test::trace::trace_assertion_exception::TraceAssertionError),
 }
+impl std::fmt::Display for TracedAssertionsAssertEqualsIntSetFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            TracedAssertionsAssertEqualsIntSetFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            TracedAssertionsAssertEqualsIntSetFault::TraceAssertionErrorFault(value) => write!(formatter, "{}", value),
+        }
+    }
+}
 
 impl From<TracedAssertionsAssertEqualsIntSetFault> for crate::std::u_string_exception::UStringFault {
     fn from(value: TracedAssertionsAssertEqualsIntSetFault) -> Self {
@@ -968,6 +1172,14 @@ impl From<crate::org::tiqian::test::trace::trace_assertion_exception::TraceAsser
 pub enum TracedAssertionsAssertEqualsIntRangeFault {
     UStringFaultFault(crate::std::u_string_exception::UStringFault),
     TraceAssertionErrorFault(crate::org::tiqian::test::trace::trace_assertion_exception::TraceAssertionError),
+}
+impl std::fmt::Display for TracedAssertionsAssertEqualsIntRangeFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            TracedAssertionsAssertEqualsIntRangeFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            TracedAssertionsAssertEqualsIntRangeFault::TraceAssertionErrorFault(value) => write!(formatter, "{}", value),
+        }
+    }
 }
 
 impl From<TracedAssertionsAssertEqualsIntRangeFault> for crate::std::u_string_exception::UStringFault {
@@ -1005,6 +1217,14 @@ pub enum TracedAssertionsAssertEqualsIntArrayFault {
     UStringFaultFault(crate::std::u_string_exception::UStringFault),
     TraceAssertionErrorFault(crate::org::tiqian::test::trace::trace_assertion_exception::TraceAssertionError),
 }
+impl std::fmt::Display for TracedAssertionsAssertEqualsIntArrayFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            TracedAssertionsAssertEqualsIntArrayFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            TracedAssertionsAssertEqualsIntArrayFault::TraceAssertionErrorFault(value) => write!(formatter, "{}", value),
+        }
+    }
+}
 
 impl From<TracedAssertionsAssertEqualsIntArrayFault> for crate::std::u_string_exception::UStringFault {
     fn from(value: TracedAssertionsAssertEqualsIntArrayFault) -> Self {
@@ -1040,6 +1260,14 @@ impl From<crate::org::tiqian::test::trace::trace_assertion_exception::TraceAsser
 pub enum TracedAssertionsAssertEqualsIntFault {
     UStringFaultFault(crate::std::u_string_exception::UStringFault),
     TraceAssertionErrorFault(crate::org::tiqian::test::trace::trace_assertion_exception::TraceAssertionError),
+}
+impl std::fmt::Display for TracedAssertionsAssertEqualsIntFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            TracedAssertionsAssertEqualsIntFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            TracedAssertionsAssertEqualsIntFault::TraceAssertionErrorFault(value) => write!(formatter, "{}", value),
+        }
+    }
 }
 
 impl From<TracedAssertionsAssertEqualsIntFault> for crate::std::u_string_exception::UStringFault {
@@ -1077,6 +1305,14 @@ pub enum TracedAssertionsAssertEqualsIcFault {
     UStringFaultFault(crate::std::u_string_exception::UStringFault),
     TraceAssertionErrorFault(crate::org::tiqian::test::trace::trace_assertion_exception::TraceAssertionError),
 }
+impl std::fmt::Display for TracedAssertionsAssertEqualsIcFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            TracedAssertionsAssertEqualsIcFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            TracedAssertionsAssertEqualsIcFault::TraceAssertionErrorFault(value) => write!(formatter, "{}", value),
+        }
+    }
+}
 
 impl From<TracedAssertionsAssertEqualsIcFault> for crate::std::u_string_exception::UStringFault {
     fn from(value: TracedAssertionsAssertEqualsIcFault) -> Self {
@@ -1112,6 +1348,14 @@ impl From<crate::org::tiqian::test::trace::trace_assertion_exception::TraceAsser
 pub enum TracedAssertionsAssertEqualsHangingPunctuationStyleFault {
     UStringFaultFault(crate::std::u_string_exception::UStringFault),
     TraceAssertionErrorFault(crate::org::tiqian::test::trace::trace_assertion_exception::TraceAssertionError),
+}
+impl std::fmt::Display for TracedAssertionsAssertEqualsHangingPunctuationStyleFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            TracedAssertionsAssertEqualsHangingPunctuationStyleFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            TracedAssertionsAssertEqualsHangingPunctuationStyleFault::TraceAssertionErrorFault(value) => write!(formatter, "{}", value),
+        }
+    }
 }
 
 impl From<TracedAssertionsAssertEqualsHangingPunctuationStyleFault> for crate::std::u_string_exception::UStringFault {
@@ -1149,6 +1393,14 @@ pub enum TracedAssertionsAssertEqualsGlueSideFault {
     UStringFaultFault(crate::std::u_string_exception::UStringFault),
     TraceAssertionErrorFault(crate::org::tiqian::test::trace::trace_assertion_exception::TraceAssertionError),
 }
+impl std::fmt::Display for TracedAssertionsAssertEqualsGlueSideFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            TracedAssertionsAssertEqualsGlueSideFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            TracedAssertionsAssertEqualsGlueSideFault::TraceAssertionErrorFault(value) => write!(formatter, "{}", value),
+        }
+    }
+}
 
 impl From<TracedAssertionsAssertEqualsGlueSideFault> for crate::std::u_string_exception::UStringFault {
     fn from(value: TracedAssertionsAssertEqualsGlueSideFault) -> Self {
@@ -1184,6 +1436,14 @@ impl From<crate::org::tiqian::test::trace::trace_assertion_exception::TraceAsser
 pub enum TracedAssertionsAssertEqualsFontRoleFault {
     UStringFaultFault(crate::std::u_string_exception::UStringFault),
     TraceAssertionErrorFault(crate::org::tiqian::test::trace::trace_assertion_exception::TraceAssertionError),
+}
+impl std::fmt::Display for TracedAssertionsAssertEqualsFontRoleFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            TracedAssertionsAssertEqualsFontRoleFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            TracedAssertionsAssertEqualsFontRoleFault::TraceAssertionErrorFault(value) => write!(formatter, "{}", value),
+        }
+    }
 }
 
 impl From<TracedAssertionsAssertEqualsFontRoleFault> for crate::std::u_string_exception::UStringFault {
@@ -1221,6 +1481,14 @@ pub enum TracedAssertionsAssertEqualsFloatToleranceFault {
     UStringFaultFault(crate::std::u_string_exception::UStringFault),
     TraceAssertionErrorFault(crate::org::tiqian::test::trace::trace_assertion_exception::TraceAssertionError),
 }
+impl std::fmt::Display for TracedAssertionsAssertEqualsFloatToleranceFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            TracedAssertionsAssertEqualsFloatToleranceFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            TracedAssertionsAssertEqualsFloatToleranceFault::TraceAssertionErrorFault(value) => write!(formatter, "{}", value),
+        }
+    }
+}
 
 impl From<TracedAssertionsAssertEqualsFloatToleranceFault> for crate::std::u_string_exception::UStringFault {
     fn from(value: TracedAssertionsAssertEqualsFloatToleranceFault) -> Self {
@@ -1256,6 +1524,14 @@ impl From<crate::org::tiqian::test::trace::trace_assertion_exception::TraceAsser
 pub enum TracedAssertionsAssertEqualsFloatFault {
     UStringFaultFault(crate::std::u_string_exception::UStringFault),
     TraceAssertionErrorFault(crate::org::tiqian::test::trace::trace_assertion_exception::TraceAssertionError),
+}
+impl std::fmt::Display for TracedAssertionsAssertEqualsFloatFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            TracedAssertionsAssertEqualsFloatFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            TracedAssertionsAssertEqualsFloatFault::TraceAssertionErrorFault(value) => write!(formatter, "{}", value),
+        }
+    }
 }
 
 impl From<TracedAssertionsAssertEqualsFloatFault> for crate::std::u_string_exception::UStringFault {
@@ -1293,6 +1569,14 @@ pub enum TracedAssertionsAssertEqualsEnumFault {
     UStringFaultFault(crate::std::u_string_exception::UStringFault),
     TraceAssertionErrorFault(crate::org::tiqian::test::trace::trace_assertion_exception::TraceAssertionError),
 }
+impl std::fmt::Display for TracedAssertionsAssertEqualsEnumFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            TracedAssertionsAssertEqualsEnumFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            TracedAssertionsAssertEqualsEnumFault::TraceAssertionErrorFault(value) => write!(formatter, "{}", value),
+        }
+    }
+}
 
 impl From<TracedAssertionsAssertEqualsEnumFault> for crate::std::u_string_exception::UStringFault {
     fn from(value: TracedAssertionsAssertEqualsEnumFault) -> Self {
@@ -1328,6 +1612,14 @@ impl From<crate::org::tiqian::test::trace::trace_assertion_exception::TraceAsser
 pub enum TracedAssertionsAssertEqualsEastAsianSpacingEdgesFault {
     UStringFaultFault(crate::std::u_string_exception::UStringFault),
     TraceAssertionErrorFault(crate::org::tiqian::test::trace::trace_assertion_exception::TraceAssertionError),
+}
+impl std::fmt::Display for TracedAssertionsAssertEqualsEastAsianSpacingEdgesFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            TracedAssertionsAssertEqualsEastAsianSpacingEdgesFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            TracedAssertionsAssertEqualsEastAsianSpacingEdgesFault::TraceAssertionErrorFault(value) => write!(formatter, "{}", value),
+        }
+    }
 }
 
 impl From<TracedAssertionsAssertEqualsEastAsianSpacingEdgesFault> for crate::std::u_string_exception::UStringFault {
@@ -1365,6 +1657,14 @@ pub enum TracedAssertionsAssertEqualsClreqProfileFault {
     UStringFaultFault(crate::std::u_string_exception::UStringFault),
     TraceAssertionErrorFault(crate::org::tiqian::test::trace::trace_assertion_exception::TraceAssertionError),
 }
+impl std::fmt::Display for TracedAssertionsAssertEqualsClreqProfileFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            TracedAssertionsAssertEqualsClreqProfileFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            TracedAssertionsAssertEqualsClreqProfileFault::TraceAssertionErrorFault(value) => write!(formatter, "{}", value),
+        }
+    }
+}
 
 impl From<TracedAssertionsAssertEqualsClreqProfileFault> for crate::std::u_string_exception::UStringFault {
     fn from(value: TracedAssertionsAssertEqualsClreqProfileFault) -> Self {
@@ -1400,6 +1700,14 @@ impl From<crate::org::tiqian::test::trace::trace_assertion_exception::TraceAsser
 pub enum TracedAssertionsAssertEqualsBopomofoToneFault {
     UStringFaultFault(crate::std::u_string_exception::UStringFault),
     TraceAssertionErrorFault(crate::org::tiqian::test::trace::trace_assertion_exception::TraceAssertionError),
+}
+impl std::fmt::Display for TracedAssertionsAssertEqualsBopomofoToneFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            TracedAssertionsAssertEqualsBopomofoToneFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            TracedAssertionsAssertEqualsBopomofoToneFault::TraceAssertionErrorFault(value) => write!(formatter, "{}", value),
+        }
+    }
 }
 
 impl From<TracedAssertionsAssertEqualsBopomofoToneFault> for crate::std::u_string_exception::UStringFault {
@@ -1437,6 +1745,14 @@ pub enum TracedAssertionsAssertEqualsBopomofoReadingFault {
     UStringFaultFault(crate::std::u_string_exception::UStringFault),
     TraceAssertionErrorFault(crate::org::tiqian::test::trace::trace_assertion_exception::TraceAssertionError),
 }
+impl std::fmt::Display for TracedAssertionsAssertEqualsBopomofoReadingFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            TracedAssertionsAssertEqualsBopomofoReadingFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            TracedAssertionsAssertEqualsBopomofoReadingFault::TraceAssertionErrorFault(value) => write!(formatter, "{}", value),
+        }
+    }
+}
 
 impl From<TracedAssertionsAssertEqualsBopomofoReadingFault> for crate::std::u_string_exception::UStringFault {
     fn from(value: TracedAssertionsAssertEqualsBopomofoReadingFault) -> Self {
@@ -1472,6 +1788,14 @@ impl From<crate::org::tiqian::test::trace::trace_assertion_exception::TraceAsser
 pub enum TracedAssertionsAssertEqualsBoolFault {
     UStringFaultFault(crate::std::u_string_exception::UStringFault),
     TraceAssertionErrorFault(crate::org::tiqian::test::trace::trace_assertion_exception::TraceAssertionError),
+}
+impl std::fmt::Display for TracedAssertionsAssertEqualsBoolFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            TracedAssertionsAssertEqualsBoolFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            TracedAssertionsAssertEqualsBoolFault::TraceAssertionErrorFault(value) => write!(formatter, "{}", value),
+        }
+    }
 }
 
 impl From<TracedAssertionsAssertEqualsBoolFault> for crate::std::u_string_exception::UStringFault {
@@ -1509,6 +1833,14 @@ pub enum TracedAssertionsAssertEqualsFault {
     UStringFaultFault(crate::std::u_string_exception::UStringFault),
     TraceAssertionErrorFault(crate::org::tiqian::test::trace::trace_assertion_exception::TraceAssertionError),
 }
+impl std::fmt::Display for TracedAssertionsAssertEqualsFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            TracedAssertionsAssertEqualsFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            TracedAssertionsAssertEqualsFault::TraceAssertionErrorFault(value) => write!(formatter, "{}", value),
+        }
+    }
+}
 
 impl From<TracedAssertionsAssertEqualsFault> for crate::std::u_string_exception::UStringFault {
     fn from(value: TracedAssertionsAssertEqualsFault) -> Self {
@@ -1544,699 +1876,743 @@ impl From<crate::org::tiqian::test::trace::trace_assertion_exception::TraceAsser
 pub struct TracedAssertions;
 
 impl TracedAssertions {
-    pub fn traced_assertions_assert_equals(expected: u32, actual: u32, message: Option<String>) -> Result<(), TracedAssertionsFailFault> {
-        let _ = TracedAssertions::traced_assertions_record_event(&"eq", &vec![
-    Some(TracedAssertions::traced_assertions_field(&"expected", TestTraceRender::test_trace_render_render_int(expected).map_err(|e| TracedAssertionsFailFault::UStringFaultFault(e))?.as_str())),
-    Some(TracedAssertions::traced_assertions_field(&"actual", TestTraceRender::test_trace_render_render_int(actual).map_err(|e| TracedAssertionsFailFault::UStringFaultFault(e))?.as_str())),
-    TracedAssertions::traced_assertions_msg_field(match &(message) { Some(v) => Some(v.to_string()), None => None }.clone()).map_err(|e| TracedAssertionsFailFault::UStringFaultFault(e))?,
+    pub fn traced_assertions_assert_equals(expected: u32, actual: u32, message: Option<UString>) -> Result<(), TracedAssertionsFailFault> {
+        let _ = TracedAssertions::traced_assertions_record_event(UStr::new(&[101,113]), &vec![
+    Some(TracedAssertions::traced_assertions_field(UStr::new(&[101,120,112,101,99,116,101,100]), TestTraceRender::test_trace_render_render_int(expected).map_err(|e| TracedAssertionsFailFault::UStringFaultFault(e))?.as_ustr())),
+    Some(TracedAssertions::traced_assertions_field(UStr::new(&[97,99,116,117,97,108]), TestTraceRender::test_trace_render_render_int(actual).map_err(|e| TracedAssertionsFailFault::UStringFaultFault(e))?.as_ustr())),
+    TracedAssertions::traced_assertions_msg_field(match &(message) { Some(v) => Some(v.to_ustring()), None => None }.clone()).map_err(|e| TracedAssertionsFailFault::UStringFaultFault(e))?,
 ]).map_err(|e| TracedAssertionsFailFault::UStringFaultFault(e))?;
         if expected != actual {
-            let _ = TracedAssertions::traced_assertions_fail(Some(match &(message) { None => "Expected values to be equal.".to_string(), Some(__option1) => __option1.to_string() }.to_string()), None)?;
+            let _ = TracedAssertions::traced_assertions_fail(Some((match &(message) { None => UString::from("Expected values to be equal."), Some(__option1) => __option1.to_ustring() }).to_ustring()), None)?;
         }
         Ok(())
     }
 
-    pub fn traced_assertions_assert_equals_bool(expected: bool, actual: bool, message: Option<String>) -> Result<(), TracedAssertionsFailFault> {
-        let _ = TracedAssertions::traced_assertions_record_event(&"eq", &vec![
-    Some(TracedAssertions::traced_assertions_field(&"expected", TestTraceRender::test_trace_render_render_bool(expected).map_err(|e| TracedAssertionsFailFault::UStringFaultFault(e))?.as_str())),
-    Some(TracedAssertions::traced_assertions_field(&"actual", TestTraceRender::test_trace_render_render_bool(actual).map_err(|e| TracedAssertionsFailFault::UStringFaultFault(e))?.as_str())),
-    TracedAssertions::traced_assertions_msg_field(match &(message) { Some(v) => Some(v.to_string()), None => None }.clone()).map_err(|e| TracedAssertionsFailFault::UStringFaultFault(e))?,
+    pub fn traced_assertions_assert_equals_bool(expected: bool, actual: bool, message: Option<UString>) -> Result<(), TracedAssertionsFailFault> {
+        let _ = TracedAssertions::traced_assertions_record_event(UStr::new(&[101,113]), &vec![
+    Some(TracedAssertions::traced_assertions_field(UStr::new(&[101,120,112,101,99,116,101,100]), TestTraceRender::test_trace_render_render_bool(expected).map_err(|e| TracedAssertionsFailFault::UStringFaultFault(e))?.as_ustr())),
+    Some(TracedAssertions::traced_assertions_field(UStr::new(&[97,99,116,117,97,108]), TestTraceRender::test_trace_render_render_bool(actual).map_err(|e| TracedAssertionsFailFault::UStringFaultFault(e))?.as_ustr())),
+    TracedAssertions::traced_assertions_msg_field(match &(message) { Some(v) => Some(v.to_ustring()), None => None }.clone()).map_err(|e| TracedAssertionsFailFault::UStringFaultFault(e))?,
 ]).map_err(|e| TracedAssertionsFailFault::UStringFaultFault(e))?;
         if expected != actual {
-            let _ = TracedAssertions::traced_assertions_fail(Some(match &(message) { None => "Expected values to be equal.".to_string(), Some(__option3) => __option3.to_string() }.to_string()), None)?;
+            let _ = TracedAssertions::traced_assertions_fail(Some((match &(message) { None => UString::from("Expected values to be equal."), Some(__option3) => __option3.to_ustring() }).to_ustring()), None)?;
         }
         Ok(())
     }
 
-    pub fn traced_assertions_assert_equals_nullable_repair_option(expected: Option<RepairOption>, actual: Option<RepairOption>, message: Option<String>) -> Result<(), TracedAssertionsFailFault> {
-        let _ = TracedAssertions::traced_assertions_record_event(&"eq", &vec![
-    Some(TracedAssertions::traced_assertions_field(&"expected", match &(expected) { None => "-".to_string(), Some(__option12) => TracedAssertions::traced_assertions_render_repair_option((*__option12).clone()).to_string() }.as_str())),
-    Some(TracedAssertions::traced_assertions_field(&"actual", match &(actual) { None => "-".to_string(), Some(__option15) => TracedAssertions::traced_assertions_render_repair_option((*__option15).clone()).to_string() }.as_str())),
-    TracedAssertions::traced_assertions_msg_field(match &(message) { Some(v) => Some(v.to_string()), None => None }.clone()).map_err(|e| TracedAssertionsFailFault::UStringFaultFault(e))?,
+    pub fn traced_assertions_assert_equals_nullable_repair_option(expected: Option<RepairOption>, actual: Option<RepairOption>, message: Option<UString>) -> Result<(), TracedAssertionsFailFault> {
+        let _ = TracedAssertions::traced_assertions_record_event(UStr::new(&[101,113]), &vec![
+    Some(TracedAssertions::traced_assertions_field(UStr::new(&[101,120,112,101,99,116,101,100]), match &(expected) { None => UString::from("-"), Some(__option12) => TracedAssertions::traced_assertions_render_repair_option((*__option12).clone()).to_ustring() }.as_ustr())),
+    Some(TracedAssertions::traced_assertions_field(UStr::new(&[97,99,116,117,97,108]), match &(actual) { None => UString::from("-"), Some(__option15) => TracedAssertions::traced_assertions_render_repair_option((*__option15).clone()).to_ustring() }.as_ustr())),
+    TracedAssertions::traced_assertions_msg_field(match &(message) { Some(v) => Some(v.to_ustring()), None => None }.clone()).map_err(|e| TracedAssertionsFailFault::UStringFaultFault(e))?,
 ]).map_err(|e| TracedAssertionsFailFault::UStringFaultFault(e))?;
         if expected != actual {
-            let _ = TracedAssertions::traced_assertions_fail(Some(match &(message) { None => "Expected values to be equal.".to_string(), Some(__option17) => __option17.to_string() }.to_string()), None)?;
+            let _ = TracedAssertions::traced_assertions_fail(Some((match &(message) { None => UString::from("Expected values to be equal."), Some(__option17) => __option17.to_ustring() }).to_ustring()), None)?;
         }
         Ok(())
     }
 
-    pub fn traced_assertions_assert_equals_nullable_string(expected: Option<String>, actual: Option<String>, message: Option<String>) -> Result<(), TracedAssertionsFailFault> {
-        let _ = TracedAssertions::traced_assertions_record_event(&"eq", &vec![
-    Some(TracedAssertions::traced_assertions_field(&"expected", match &(expected) { None => "-".to_string(), Some(__option26) => TestTraceRender::test_trace_render_render_string(__option26).map_err(|e| TracedAssertionsFailFault::UStringFaultFault(e))?.to_string() }.as_str())),
-    Some(TracedAssertions::traced_assertions_field(&"actual", match &(actual) { None => "-".to_string(), Some(__option29) => TestTraceRender::test_trace_render_render_string(__option29).map_err(|e| TracedAssertionsFailFault::UStringFaultFault(e))?.to_string() }.as_str())),
-    TracedAssertions::traced_assertions_msg_field(match &(message) { Some(v) => Some(v.to_string()), None => None }.clone()).map_err(|e| TracedAssertionsFailFault::UStringFaultFault(e))?,
+    pub fn traced_assertions_assert_equals_nullable_string(expected: Option<UString>, actual: Option<UString>, message: Option<UString>) -> Result<(), TracedAssertionsFailFault> {
+        let _ = TracedAssertions::traced_assertions_record_event(UStr::new(&[101,113]), &vec![
+    Some(TracedAssertions::traced_assertions_field(UStr::new(&[101,120,112,101,99,116,101,100]), match &(expected) { None => UString::from("-"), Some(__option26) => TestTraceRender::test_trace_render_render_string(__option26).map_err(|e| TracedAssertionsFailFault::UStringFaultFault(e))?.to_ustring() }.as_ustr())),
+    Some(TracedAssertions::traced_assertions_field(UStr::new(&[97,99,116,117,97,108]), match &(actual) { None => UString::from("-"), Some(__option29) => TestTraceRender::test_trace_render_render_string(__option29).map_err(|e| TracedAssertionsFailFault::UStringFaultFault(e))?.to_ustring() }.as_ustr())),
+    TracedAssertions::traced_assertions_msg_field(match &(message) { Some(v) => Some(v.to_ustring()), None => None }.clone()).map_err(|e| TracedAssertionsFailFault::UStringFaultFault(e))?,
 ]).map_err(|e| TracedAssertionsFailFault::UStringFaultFault(e))?;
         if expected != actual {
-            let _ = TracedAssertions::traced_assertions_fail(Some(match &(message) { None => "Expected values to be equal.".to_string(), Some(__option31) => __option31.to_string() }.to_string()), None)?;
+            let _ = TracedAssertions::traced_assertions_fail(Some((match &(message) { None => UString::from("Expected values to be equal."), Some(__option31) => __option31.to_ustring() }).to_ustring()), None)?;
         }
         Ok(())
     }
 
-    pub fn traced_assertions_assert_equals_string(expected: &str, actual: &str, message: Option<String>) -> Result<(), TracedAssertionsFailFault> {
-        let _ = TracedAssertions::traced_assertions_record_event(&"eq", &vec![
-    Some(TracedAssertions::traced_assertions_field(&"expected", TestTraceRender::test_trace_render_render_string(expected).map_err(|e| TracedAssertionsFailFault::UStringFaultFault(e))?.as_str())),
-    Some(TracedAssertions::traced_assertions_field(&"actual", TestTraceRender::test_trace_render_render_string(actual).map_err(|e| TracedAssertionsFailFault::UStringFaultFault(e))?.as_str())),
-    TracedAssertions::traced_assertions_msg_field(match &(message) { Some(v) => Some(v.to_string()), None => None }.clone()).map_err(|e| TracedAssertionsFailFault::UStringFaultFault(e))?,
+    pub fn traced_assertions_assert_equals_string(expected: &UStr, actual: &UStr, message: Option<UString>) -> Result<(), TracedAssertionsFailFault> {
+        let _ = TracedAssertions::traced_assertions_record_event(UStr::new(&[101,113]), &vec![
+    Some(TracedAssertions::traced_assertions_field(UStr::new(&[101,120,112,101,99,116,101,100]), TestTraceRender::test_trace_render_render_string(expected).map_err(|e| TracedAssertionsFailFault::UStringFaultFault(e))?.as_ustr())),
+    Some(TracedAssertions::traced_assertions_field(UStr::new(&[97,99,116,117,97,108]), TestTraceRender::test_trace_render_render_string(actual).map_err(|e| TracedAssertionsFailFault::UStringFaultFault(e))?.as_ustr())),
+    TracedAssertions::traced_assertions_msg_field(match &(message) { Some(v) => Some(v.to_ustring()), None => None }.clone()).map_err(|e| TracedAssertionsFailFault::UStringFaultFault(e))?,
 ]).map_err(|e| TracedAssertionsFailFault::UStringFaultFault(e))?;
         if expected != actual {
-            let _ = TracedAssertions::traced_assertions_fail(Some(match &(message) { None => "Expected values to be equal.".to_string(), Some(__option33) => __option33.to_string() }.to_string()), None)?;
+            let _ = TracedAssertions::traced_assertions_fail(Some((match &(message) { None => UString::from("Expected values to be equal."), Some(__option33) => __option33.to_ustring() }).to_ustring()), None)?;
         }
         Ok(())
     }
 
-    pub fn traced_assertions_assert_equals_ic(expected: Ic, actual: Ic, message: Option<String>) -> Result<(), TracedAssertionsFailFault> {
-        let _ = TracedAssertions::traced_assertions_record_event(&"eq", &vec![
-    Some(TracedAssertions::traced_assertions_field(&"expected", expected.to_string().as_str())),
-    Some(TracedAssertions::traced_assertions_field(&"actual", actual.to_string().as_str())),
-    TracedAssertions::traced_assertions_msg_field(match &(message) { Some(v) => Some(v.to_string()), None => None }.clone()).map_err(|e| TracedAssertionsFailFault::UStringFaultFault(e))?,
+    pub fn traced_assertions_assert_equals_ic(expected: Ic, actual: Ic, message: Option<UString>) -> Result<(), TracedAssertionsFailFault> {
+        let _ = TracedAssertions::traced_assertions_record_event(UStr::new(&[101,113]), &vec![
+    Some(TracedAssertions::traced_assertions_field(UStr::new(&[101,120,112,101,99,116,101,100]), UString::from((expected).to_string().as_str()).as_ustr())),
+    Some(TracedAssertions::traced_assertions_field(UStr::new(&[97,99,116,117,97,108]), UString::from((actual).to_string().as_str()).as_ustr())),
+    TracedAssertions::traced_assertions_msg_field(match &(message) { Some(v) => Some(v.to_ustring()), None => None }.clone()).map_err(|e| TracedAssertionsFailFault::UStringFaultFault(e))?,
 ]).map_err(|e| TracedAssertionsFailFault::UStringFaultFault(e))?;
         if expected != actual {
-            let _ = TracedAssertions::traced_assertions_fail(Some(match &(message) { None => "Expected values to be equal.".to_string(), Some(__option35) => __option35.to_string() }.to_string()), None)?;
+            let _ = TracedAssertions::traced_assertions_fail(Some((match &(message) { None => UString::from("Expected values to be equal."), Some(__option35) => __option35.to_ustring() }).to_ustring()), None)?;
         }
         Ok(())
     }
 
-    pub fn traced_assertions_assert_equals_enum<T: Clone + std::fmt::Debug + PartialEq>(expected: &T, actual: &T, message: Option<String>) -> Result<(), TracedAssertionsFailFault> {
-        let _ = TracedAssertions::traced_assertions_record_event(&"eq", &vec![
-    Some(TracedAssertions::traced_assertions_field(&"expected", format!("{:?}", expected).as_str())),
-    Some(TracedAssertions::traced_assertions_field(&"actual", format!("{:?}", actual).as_str())),
-    TracedAssertions::traced_assertions_msg_field(match &(message) { Some(v) => Some(v.to_string()), None => None }.clone()).map_err(|e| TracedAssertionsFailFault::UStringFaultFault(e))?,
+    pub fn traced_assertions_assert_equals_enum<T: Clone + std::fmt::Debug + PartialEq>(expected: &T, actual: &T, message: Option<UString>) -> Result<(), TracedAssertionsFailFault> {
+        let _ = TracedAssertions::traced_assertions_record_event(UStr::new(&[101,113]), &vec![
+    Some(TracedAssertions::traced_assertions_field(UStr::new(&[101,120,112,101,99,116,101,100]), UString::from(format!("{}", format!("{:?}", expected)).as_str()).as_ustr())),
+    Some(TracedAssertions::traced_assertions_field(UStr::new(&[97,99,116,117,97,108]), UString::from(format!("{}", format!("{:?}", actual)).as_str()).as_ustr())),
+    TracedAssertions::traced_assertions_msg_field(match &(message) { Some(v) => Some(v.to_ustring()), None => None }.clone()).map_err(|e| TracedAssertionsFailFault::UStringFaultFault(e))?,
 ]).map_err(|e| TracedAssertionsFailFault::UStringFaultFault(e))?;
         if expected != actual {
-            let _ = TracedAssertions::traced_assertions_fail(Some(match &(message) { None => "Expected values to be equal.".to_string(), Some(__option37) => __option37.to_string() }.to_string()), None)?;
+            let _ = TracedAssertions::traced_assertions_fail(Some((match &(message) { None => UString::from("Expected values to be equal."), Some(__option37) => __option37.to_ustring() }).to_ustring()), None)?;
         }
         Ok(())
     }
 
-    pub fn traced_assertions_assert_equals_east_asian_spacing_edges(expected: EastAsianSpacingEdges, actual: EastAsianSpacingEdges, message: Option<String>) -> Result<(), TracedAssertionsFailFault> {
-        let _ = TracedAssertions::traced_assertions_record_event(&"eq", &vec![
-    Some(TracedAssertions::traced_assertions_field(&"expected", expected.to_string().as_str())),
-    Some(TracedAssertions::traced_assertions_field(&"actual", actual.to_string().as_str())),
-    TracedAssertions::traced_assertions_msg_field(match &(message) { Some(v) => Some(v.to_string()), None => None }.clone()).map_err(|e| TracedAssertionsFailFault::UStringFaultFault(e))?,
+    pub fn traced_assertions_assert_equals_east_asian_spacing_edges(expected: EastAsianSpacingEdges, actual: EastAsianSpacingEdges, message: Option<UString>) -> Result<(), TracedAssertionsFailFault> {
+        let _ = TracedAssertions::traced_assertions_record_event(UStr::new(&[101,113]), &vec![
+    Some(TracedAssertions::traced_assertions_field(UStr::new(&[101,120,112,101,99,116,101,100]), UString::from(format!("{}", expected.to_string()).as_str()).as_ustr())),
+    Some(TracedAssertions::traced_assertions_field(UStr::new(&[97,99,116,117,97,108]), UString::from(format!("{}", actual.to_string()).as_str()).as_ustr())),
+    TracedAssertions::traced_assertions_msg_field(match &(message) { Some(v) => Some(v.to_ustring()), None => None }.clone()).map_err(|e| TracedAssertionsFailFault::UStringFaultFault(e))?,
 ]).map_err(|e| TracedAssertionsFailFault::UStringFaultFault(e))?;
         if expected.leading != actual.leading || expected.trailing != actual.trailing || expected.contains_wide != actual.contains_wide {
-            let _ = TracedAssertions::traced_assertions_fail(Some(match &(message) { None => "Expected values to be equal.".to_string(), Some(__option39) => __option39.to_string() }.to_string()), None)?;
+            let _ = TracedAssertions::traced_assertions_fail(Some((match &(message) { None => UString::from("Expected values to be equal."), Some(__option39) => __option39.to_ustring() }).to_ustring()), None)?;
         }
         Ok(())
     }
 
-    pub fn traced_assertions_assert_equals_int_array(expected: &[u32], actual: &[u32], message: Option<String>) -> Result<(), TracedAssertionsFailFault> {
-        let _ = TracedAssertions::traced_assertions_record_event(&"eq", &vec![
-    Some(TracedAssertions::traced_assertions_field(&"expected", TracedAssertions::traced_assertions_render_ints(&expected).map_err(|e| TracedAssertionsFailFault::UStringFaultFault(e))?.as_str())),
-    Some(TracedAssertions::traced_assertions_field(&"actual", TracedAssertions::traced_assertions_render_ints(&actual).map_err(|e| TracedAssertionsFailFault::UStringFaultFault(e))?.as_str())),
-    TracedAssertions::traced_assertions_msg_field(match &(message) { Some(v) => Some(v.to_string()), None => None }.clone()).map_err(|e| TracedAssertionsFailFault::UStringFaultFault(e))?,
+    pub fn traced_assertions_assert_equals_int_array(expected: &[u32], actual: &[u32], message: Option<UString>) -> Result<(), TracedAssertionsFailFault> {
+        let _ = TracedAssertions::traced_assertions_record_event(UStr::new(&[101,113]), &vec![
+    Some(TracedAssertions::traced_assertions_field(UStr::new(&[101,120,112,101,99,116,101,100]), TracedAssertions::traced_assertions_render_ints(&expected).map_err(|e| TracedAssertionsFailFault::UStringFaultFault(e))?.as_ustr())),
+    Some(TracedAssertions::traced_assertions_field(UStr::new(&[97,99,116,117,97,108]), TracedAssertions::traced_assertions_render_ints(&actual).map_err(|e| TracedAssertionsFailFault::UStringFaultFault(e))?.as_ustr())),
+    TracedAssertions::traced_assertions_msg_field(match &(message) { Some(v) => Some(v.to_ustring()), None => None }.clone()).map_err(|e| TracedAssertionsFailFault::UStringFaultFault(e))?,
 ]).map_err(|e| TracedAssertionsFailFault::UStringFaultFault(e))?;
         if u32::try_from((expected.len()) & 0xFFFF_FFFF).unwrap_or(0) != u32::try_from((actual.len()) & 0xFFFF_FFFF).unwrap_or(0) {
-            let _ = TracedAssertions::traced_assertions_fail(Some(match &(message) { None => "Expected arrays to be equal.".to_string(), Some(__option41) => __option41.to_string() }.to_string()), None)?;
+            let _ = TracedAssertions::traced_assertions_fail(Some((match &(message) { None => UString::from("Expected arrays to be equal."), Some(__option41) => __option41.to_ustring() }).to_ustring()), None)?;
         }
         let mut i = 0u32;
-        while (i32::from_ne_bytes((i).to_ne_bytes())) < (i32::from_ne_bytes((u32::try_from((expected.len()) & 0xFFFF_FFFF).unwrap_or(0)).to_ne_bytes())) {
+        while (i32::from_ne_bytes(((i) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((expected.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
             if expected[usize::try_from(i).unwrap_or(0)] != actual[usize::try_from(i).unwrap_or(0)] {
-                let _ = TracedAssertions::traced_assertions_fail(Some(match &(message) { None => "Expected arrays to be equal.".to_string(), Some(__option43) => __option43.to_string() }.to_string()), None)?;
+                let _ = TracedAssertions::traced_assertions_fail(Some((match &(message) { None => UString::from("Expected arrays to be equal."), Some(__option43) => __option43.to_ustring() }).to_ustring()), None)?;
             }
             i = u32::wrapping_add(i, 1);
         }
         Ok(())
     }
 
-    pub(crate) fn traced_assertions_render_ints(values: &[u32]) -> Result<String, UStringFault> {
+    pub(crate) fn traced_assertions_render_ints(values: &[u32]) -> Result<UString, UStringFault> {
         let mut buf = Vec::<u16>::new();
         if let Some(&unit) = buf.last() {
-            if unit >= 55296 && unit <= 56319 && !"[".is_empty() {
-                return Err(UStringFault::UnpairedSurrogate { unit: u32::from(unit) });
-            }
-        }
-        buf.extend("[".encode_utf16());
-        let mut i = 0u32;
-        while (i32::from_ne_bytes((i).to_ne_bytes())) < (i32::from_ne_bytes((u32::try_from((values.len()) & 0xFFFF_FFFF).unwrap_or(0)).to_ne_bytes())) {
-            if i32::from_ne_bytes((i).to_ne_bytes()) > (0) {
-                if let Some(&unit) = buf.last() {
-                    if unit >= 55296 && unit <= 56319 && !", ".is_empty() {
-                        return Err(UStringFault::UnpairedSurrogate { unit: u32::from(unit) });
-                    }
-                }
-                buf.extend(", ".encode_utf16());
-            }
-            if let Some(&unit) = buf.last() {
-                if unit >= 55296 && unit <= 56319 && !format!("{}{}",
-            "",
-            crate::runtime::int_text::IntText::int_text(values[usize::try_from(i).unwrap_or(0)])
-        ).is_empty() {
+            if unit >= 55296 && unit <= 56319 && !UString::from("[").is_empty() {
+                if !UString::from("[").encode_utf16().next().map_or(false, |head| head >= 56320 && head <= 57343) {
                     return Err(UStringFault::UnpairedSurrogate { unit: u32::from(unit) });
                 }
             }
-            buf.extend(format!("{}{}",
-            "",
-            crate::runtime::int_text::IntText::int_text(values[usize::try_from(i).unwrap_or(0)])
-        ).encode_utf16());
-            i = u32::wrapping_add(i, 1);
         }
-        if let Some(&unit) = buf.last() {
-            if unit >= 55296 && unit <= 56319 && !"]".is_empty() {
-                return Err(UStringFault::UnpairedSurrogate { unit: u32::from(unit) });
-            }
-        }
-        buf.extend("]".encode_utf16());
-        return Ok(String::from_utf16(buf.as_slice()).map_err(|_| UStringFault::UnpairedSurrogate { unit: u32::from(buf[buf.len() - 1]) })?);
-    }
-
-    pub fn traced_assertions_assert_equals_string_array(expected: &[String], actual: &[String], message: Option<String>) -> Result<(), TracedAssertionsFailFault> {
-        let _ = TracedAssertions::traced_assertions_record_event(&"eq", &vec![
-    Some(TracedAssertions::traced_assertions_field(&"expected", TestTraceRender::test_trace_render_render_string_array(&expected).map_err(|e| TracedAssertionsFailFault::UStringFaultFault(e))?.as_str())),
-    Some(TracedAssertions::traced_assertions_field(&"actual", TestTraceRender::test_trace_render_render_string_array(&actual).map_err(|e| TracedAssertionsFailFault::UStringFaultFault(e))?.as_str())),
-    TracedAssertions::traced_assertions_msg_field(match &(message) { Some(v) => Some(v.to_string()), None => None }.clone()).map_err(|e| TracedAssertionsFailFault::UStringFaultFault(e))?,
-]).map_err(|e| TracedAssertionsFailFault::UStringFaultFault(e))?;
-        if !TracedAssertions::traced_assertions_same_string_array(&expected, &actual) {
-            let _ = TracedAssertions::traced_assertions_fail(Some(match &(message) { None => "Expected values to be equal.".to_string(), Some(__option45) => __option45.to_string() }.to_string()), None)?;
-        }
-        Ok(())
-    }
-
-    pub fn traced_assertions_assert_equals_bopomofo_tone(expected: BopomofoTone, actual: BopomofoTone, message: Option<String>) -> Result<(), TracedAssertionsFailFault> {
-        let _ = TracedAssertions::traced_assertions_record_event(&"eq", &vec![
-    Some(TracedAssertions::traced_assertions_field(&"expected", expected.name().to_string().as_str())),
-    Some(TracedAssertions::traced_assertions_field(&"actual", actual.name().to_string().as_str())),
-    TracedAssertions::traced_assertions_msg_field(match &(message) { Some(v) => Some(v.to_string()), None => None }.clone()).map_err(|e| TracedAssertionsFailFault::UStringFaultFault(e))?,
-]).map_err(|e| TracedAssertionsFailFault::UStringFaultFault(e))?;
-        if expected != actual {
-            let _ = TracedAssertions::traced_assertions_fail(Some(match &(message) { None => "Expected values to be equal.".to_string(), Some(__option47) => __option47.to_string() }.to_string()), None)?;
-        }
-        Ok(())
-    }
-
-    pub fn traced_assertions_assert_equals_font_role(expected: FontRole, actual: Option<FontRole>, message: Option<String>) -> Result<(), TracedAssertionsFailFault> {
-        let _ = TracedAssertions::traced_assertions_record_event(&"eq", &vec![
-    Some(TracedAssertions::traced_assertions_field(&"expected", expected.name().to_string().as_str())),
-    Some(TracedAssertions::traced_assertions_field(&"actual", match &(actual) { None => "null".to_string(), Some(__option53) => TracedAssertions::traced_assertions_render_font_role(*__option53).to_string() }.as_str())),
-    TracedAssertions::traced_assertions_msg_field(match &(message) { Some(v) => Some(v.to_string()), None => None }.clone()).map_err(|e| TracedAssertionsFailFault::UStringFaultFault(e))?,
-]).map_err(|e| TracedAssertionsFailFault::UStringFaultFault(e))?;
-        if match &(actual) { None => true, Some(__option54) => Some(expected) != Some(*__option54) } {
-            let _ = TracedAssertions::traced_assertions_fail(Some(match &(message) { None => "Expected values to be equal.".to_string(), Some(__option56) => __option56.to_string() }.to_string()), None)?;
-        }
-        Ok(())
-    }
-
-    pub(crate) fn traced_assertions_render_font_role(value: FontRole) -> String {
-        return value.name().to_string();
-    }
-
-    pub fn traced_assertions_assert_equals_quote_type(expected: QuoteType, actual: QuoteType, message: Option<String>) -> Result<(), TracedAssertionsFailFault> {
-        let _ = TracedAssertions::traced_assertions_record_event(&"eq", &vec![
-    Some(TracedAssertions::traced_assertions_field(&"expected", expected.name().to_string().as_str())),
-    Some(TracedAssertions::traced_assertions_field(&"actual", actual.name().to_string().as_str())),
-    TracedAssertions::traced_assertions_msg_field(match &(message) { Some(v) => Some(v.to_string()), None => None }.clone()).map_err(|e| TracedAssertionsFailFault::UStringFaultFault(e))?,
-]).map_err(|e| TracedAssertionsFailFault::UStringFaultFault(e))?;
-        if expected != actual {
-            let _ = TracedAssertions::traced_assertions_fail(Some(match &(message) { None => "Expected values to be equal.".to_string(), Some(__option58) => __option58.to_string() }.to_string()), None)?;
-        }
-        Ok(())
-    }
-
-    pub fn traced_assertions_assert_equals_quote_pair(expected: QuotePair, actual: QuotePair, message: Option<String>) -> Result<(), TracedAssertionsFailFault> {
-        let _ = TracedAssertions::traced_assertions_record_event(&"eq", &vec![
-    Some(TracedAssertions::traced_assertions_field(&"expected", expected.to_string().as_str())),
-    Some(TracedAssertions::traced_assertions_field(&"actual", actual.to_string().as_str())),
-    TracedAssertions::traced_assertions_msg_field(match &(message) { Some(v) => Some(v.to_string()), None => None }.clone()).map_err(|e| TracedAssertionsFailFault::UStringFaultFault(e))?,
-]).map_err(|e| TracedAssertionsFailFault::UStringFaultFault(e))?;
-        if expected.open_index != actual.open_index || expected.close_index != actual.close_index || expected.quote_type != actual.quote_type {
-            let _ = TracedAssertions::traced_assertions_fail(Some(match &(message) { None => "Expected values to be equal.".to_string(), Some(__option60) => __option60.to_string() }.to_string()), None)?;
-        }
-        Ok(())
-    }
-
-    pub(crate) fn traced_assertions_render_quote_pairs(values: &Vec<QuotePair>) -> Result<String, UStringFault> {
-        let mut buf = Vec::<u16>::new();
-        if let Some(&unit) = buf.last() {
-            if unit >= 55296 && unit <= 56319 && !"[".is_empty() {
-                return Err(UStringFault::UnpairedSurrogate { unit: u32::from(unit) });
-            }
-        }
-        buf.extend("[".encode_utf16());
+        buf.extend(UString::from("[").encode_utf16());
         let mut i = 0u32;
-        while (i32::from_ne_bytes((i).to_ne_bytes())) < (i32::from_ne_bytes((u32::try_from((values.len()) & 0xFFFF_FFFF).unwrap_or(0)).to_ne_bytes())) {
-            if i32::from_ne_bytes((i).to_ne_bytes()) > (0) {
+        while (i32::from_ne_bytes(((i) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((values.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
+            if i32::from_ne_bytes(((i) as i32).to_ne_bytes()) > (0) {
                 if let Some(&unit) = buf.last() {
-                    if unit >= 55296 && unit <= 56319 && !", ".is_empty() {
+                    if unit >= 55296 && unit <= 56319 && !UString::from(", ").is_empty() {
+                        if !UString::from(", ").encode_utf16().next().map_or(false, |head| head >= 56320 && head <= 57343) {
+                            return Err(UStringFault::UnpairedSurrogate { unit: u32::from(unit) });
+                        }
+                    }
+                }
+                buf.extend(UString::from(", ").encode_utf16());
+            }
+            if let Some(&unit) = buf.last() {
+                if unit >= 55296 && unit <= 56319 && !{ let mut __s = UString::new(); __s += &(UString::from("")); __s += &(UString::from(format!("{}", crate::runtime::int_text::IntText::int_text(values[usize::try_from(i).unwrap_or(0)])).as_str())); __s }.is_empty() {
+                    if !{ let mut __s = UString::new(); __s += &(UString::from("")); __s += &(UString::from(format!("{}", crate::runtime::int_text::IntText::int_text(values[usize::try_from(i).unwrap_or(0)])).as_str())); __s }.encode_utf16().next().map_or(false, |head| head >= 56320 && head <= 57343) {
                         return Err(UStringFault::UnpairedSurrogate { unit: u32::from(unit) });
                     }
                 }
-                buf.extend(", ".encode_utf16());
+            }
+            buf.extend({ let mut __s = UString::new(); __s += &(UString::from("")); __s += &(UString::from(format!("{}", crate::runtime::int_text::IntText::int_text(values[usize::try_from(i).unwrap_or(0)])).as_str())); __s }.encode_utf16());
+            i = u32::wrapping_add(i, 1);
+        }
+        if let Some(&unit) = buf.last() {
+            if unit >= 55296 && unit <= 56319 && !UString::from("]").is_empty() {
+                if !UString::from("]").encode_utf16().next().map_or(false, |head| head >= 56320 && head <= 57343) {
+                    return Err(UStringFault::UnpairedSurrogate { unit: u32::from(unit) });
+                }
+            }
+        }
+        buf.extend(UString::from("]").encode_utf16());
+        return Ok(UString::from_utf16(buf.as_slice()).map_err(|_| UStringFault::UnpairedSurrogate { unit: u32::from(buf[buf.len() - 1]) })?);
+    }
+
+    pub fn traced_assertions_assert_equals_string_array(expected: &[UString], actual: &[UString], message: Option<UString>) -> Result<(), TracedAssertionsFailFault> {
+        let _ = TracedAssertions::traced_assertions_record_event(UStr::new(&[101,113]), &vec![
+    Some(TracedAssertions::traced_assertions_field(UStr::new(&[101,120,112,101,99,116,101,100]), TestTraceRender::test_trace_render_render_string_array(&expected).map_err(|e| TracedAssertionsFailFault::UStringFaultFault(e))?.as_ustr())),
+    Some(TracedAssertions::traced_assertions_field(UStr::new(&[97,99,116,117,97,108]), TestTraceRender::test_trace_render_render_string_array(&actual).map_err(|e| TracedAssertionsFailFault::UStringFaultFault(e))?.as_ustr())),
+    TracedAssertions::traced_assertions_msg_field(match &(message) { Some(v) => Some(v.to_ustring()), None => None }.clone()).map_err(|e| TracedAssertionsFailFault::UStringFaultFault(e))?,
+]).map_err(|e| TracedAssertionsFailFault::UStringFaultFault(e))?;
+        if !TracedAssertions::traced_assertions_same_string_array(&expected, &actual) {
+            let _ = TracedAssertions::traced_assertions_fail(Some((match &(message) { None => UString::from("Expected values to be equal."), Some(__option45) => __option45.to_ustring() }).to_ustring()), None)?;
+        }
+        Ok(())
+    }
+
+    pub fn traced_assertions_assert_equals_bopomofo_tone(expected: BopomofoTone, actual: BopomofoTone, message: Option<UString>) -> Result<(), TracedAssertionsFailFault> {
+        let _ = TracedAssertions::traced_assertions_record_event(UStr::new(&[101,113]), &vec![
+    Some(TracedAssertions::traced_assertions_field(UStr::new(&[101,120,112,101,99,116,101,100]), UString::from(expected.name()).as_ustr())),
+    Some(TracedAssertions::traced_assertions_field(UStr::new(&[97,99,116,117,97,108]), UString::from(actual.name()).as_ustr())),
+    TracedAssertions::traced_assertions_msg_field(match &(message) { Some(v) => Some(v.to_ustring()), None => None }.clone()).map_err(|e| TracedAssertionsFailFault::UStringFaultFault(e))?,
+]).map_err(|e| TracedAssertionsFailFault::UStringFaultFault(e))?;
+        if expected != actual {
+            let _ = TracedAssertions::traced_assertions_fail(Some((match &(message) { None => UString::from("Expected values to be equal."), Some(__option47) => __option47.to_ustring() }).to_ustring()), None)?;
+        }
+        Ok(())
+    }
+
+    pub fn traced_assertions_assert_equals_font_role(expected: FontRole, actual: Option<FontRole>, message: Option<UString>) -> Result<(), TracedAssertionsFailFault> {
+        let _ = TracedAssertions::traced_assertions_record_event(UStr::new(&[101,113]), &vec![
+    Some(TracedAssertions::traced_assertions_field(UStr::new(&[101,120,112,101,99,116,101,100]), UString::from(expected.name()).as_ustr())),
+    Some(TracedAssertions::traced_assertions_field(UStr::new(&[97,99,116,117,97,108]), match &(actual) { None => UString::from("null"), Some(__option53) => TracedAssertions::traced_assertions_render_font_role(*__option53).to_ustring() }.as_ustr())),
+    TracedAssertions::traced_assertions_msg_field(match &(message) { Some(v) => Some(v.to_ustring()), None => None }.clone()).map_err(|e| TracedAssertionsFailFault::UStringFaultFault(e))?,
+]).map_err(|e| TracedAssertionsFailFault::UStringFaultFault(e))?;
+        if match &(actual) { None => true, Some(__option54) => Some(expected) != Some(*__option54) } {
+            let _ = TracedAssertions::traced_assertions_fail(Some((match &(message) { None => UString::from("Expected values to be equal."), Some(__option56) => __option56.to_ustring() }).to_ustring()), None)?;
+        }
+        Ok(())
+    }
+
+    pub(crate) fn traced_assertions_render_font_role(value: FontRole) -> UString {
+        return UString::from(value.name());
+    }
+
+    pub fn traced_assertions_assert_equals_quote_type(expected: QuoteType, actual: QuoteType, message: Option<UString>) -> Result<(), TracedAssertionsFailFault> {
+        let _ = TracedAssertions::traced_assertions_record_event(UStr::new(&[101,113]), &vec![
+    Some(TracedAssertions::traced_assertions_field(UStr::new(&[101,120,112,101,99,116,101,100]), UString::from(expected.name()).as_ustr())),
+    Some(TracedAssertions::traced_assertions_field(UStr::new(&[97,99,116,117,97,108]), UString::from(actual.name()).as_ustr())),
+    TracedAssertions::traced_assertions_msg_field(match &(message) { Some(v) => Some(v.to_ustring()), None => None }.clone()).map_err(|e| TracedAssertionsFailFault::UStringFaultFault(e))?,
+]).map_err(|e| TracedAssertionsFailFault::UStringFaultFault(e))?;
+        if expected != actual {
+            let _ = TracedAssertions::traced_assertions_fail(Some((match &(message) { None => UString::from("Expected values to be equal."), Some(__option58) => __option58.to_ustring() }).to_ustring()), None)?;
+        }
+        Ok(())
+    }
+
+    pub fn traced_assertions_assert_equals_quote_pair(expected: QuotePair, actual: QuotePair, message: Option<UString>) -> Result<(), TracedAssertionsFailFault> {
+        let _ = TracedAssertions::traced_assertions_record_event(UStr::new(&[101,113]), &vec![
+    Some(TracedAssertions::traced_assertions_field(UStr::new(&[101,120,112,101,99,116,101,100]), UString::from(format!("{}", expected.to_string()).as_str()).as_ustr())),
+    Some(TracedAssertions::traced_assertions_field(UStr::new(&[97,99,116,117,97,108]), UString::from(format!("{}", actual.to_string()).as_str()).as_ustr())),
+    TracedAssertions::traced_assertions_msg_field(match &(message) { Some(v) => Some(v.to_ustring()), None => None }.clone()).map_err(|e| TracedAssertionsFailFault::UStringFaultFault(e))?,
+]).map_err(|e| TracedAssertionsFailFault::UStringFaultFault(e))?;
+        if expected.open_index != actual.open_index || expected.close_index != actual.close_index || expected.quote_type != actual.quote_type {
+            let _ = TracedAssertions::traced_assertions_fail(Some((match &(message) { None => UString::from("Expected values to be equal."), Some(__option60) => __option60.to_ustring() }).to_ustring()), None)?;
+        }
+        Ok(())
+    }
+
+    pub(crate) fn traced_assertions_render_quote_pairs(values: &Vec<QuotePair>) -> Result<UString, UStringFault> {
+        let mut buf = Vec::<u16>::new();
+        if let Some(&unit) = buf.last() {
+            if unit >= 55296 && unit <= 56319 && !UString::from("[").is_empty() {
+                if !UString::from("[").encode_utf16().next().map_or(false, |head| head >= 56320 && head <= 57343) {
+                    return Err(UStringFault::UnpairedSurrogate { unit: u32::from(unit) });
+                }
+            }
+        }
+        buf.extend(UString::from("[").encode_utf16());
+        let mut i = 0u32;
+        while (i32::from_ne_bytes(((i) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((values.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
+            if i32::from_ne_bytes(((i) as i32).to_ne_bytes()) > (0) {
+                if let Some(&unit) = buf.last() {
+                    if unit >= 55296 && unit <= 56319 && !UString::from(", ").is_empty() {
+                        if !UString::from(", ").encode_utf16().next().map_or(false, |head| head >= 56320 && head <= 57343) {
+                            return Err(UStringFault::UnpairedSurrogate { unit: u32::from(unit) });
+                        }
+                    }
+                }
+                buf.extend(UString::from(", ").encode_utf16());
             }
             if let Some(&unit) = buf.last() {
                 if unit >= 55296 && unit <= 56319 && !(values[usize::try_from(i).unwrap_or(0)]).clone().to_string().is_empty() {
-                    return Err(UStringFault::UnpairedSurrogate { unit: u32::from(unit) });
+                    if !(values[usize::try_from(i).unwrap_or(0)]).clone().to_string().encode_utf16().next().map_or(false, |head| head >= 56320 && head <= 57343) {
+                        return Err(UStringFault::UnpairedSurrogate { unit: u32::from(unit) });
+                    }
                 }
             }
             buf.extend((values[usize::try_from(i).unwrap_or(0)]).clone().to_string().encode_utf16());
             i = u32::wrapping_add(i, 1);
         }
         if let Some(&unit) = buf.last() {
-            if unit >= 55296 && unit <= 56319 && !"]".is_empty() {
-                return Err(UStringFault::UnpairedSurrogate { unit: u32::from(unit) });
+            if unit >= 55296 && unit <= 56319 && !UString::from("]").is_empty() {
+                if !UString::from("]").encode_utf16().next().map_or(false, |head| head >= 56320 && head <= 57343) {
+                    return Err(UStringFault::UnpairedSurrogate { unit: u32::from(unit) });
+                }
             }
         }
-        buf.extend("]".encode_utf16());
-        return Ok(String::from_utf16(buf.as_slice()).map_err(|_| UStringFault::UnpairedSurrogate { unit: u32::from(buf[buf.len() - 1]) })?);
+        buf.extend(UString::from("]").encode_utf16());
+        return Ok(UString::from_utf16(buf.as_slice()).map_err(|_| UStringFault::UnpairedSurrogate { unit: u32::from(buf[buf.len() - 1]) })?);
     }
 
-    pub fn traced_assertions_assert_equals_quote_pair_array(expected: &Vec<QuotePair>, actual: &Vec<QuotePair>, message: Option<String>) -> Result<(), TracedAssertionsFailFault> {
-        let _ = TracedAssertions::traced_assertions_record_event(&"eq", &vec![
-    Some(TracedAssertions::traced_assertions_field(&"expected", TracedAssertions::traced_assertions_render_quote_pairs(&expected).map_err(|e| TracedAssertionsFailFault::UStringFaultFault(e))?.as_str())),
-    Some(TracedAssertions::traced_assertions_field(&"actual", TracedAssertions::traced_assertions_render_quote_pairs(&actual).map_err(|e| TracedAssertionsFailFault::UStringFaultFault(e))?.as_str())),
-    TracedAssertions::traced_assertions_msg_field(match &(message) { Some(v) => Some(v.to_string()), None => None }.clone()).map_err(|e| TracedAssertionsFailFault::UStringFaultFault(e))?,
+    pub fn traced_assertions_assert_equals_quote_pair_array(expected: &Vec<QuotePair>, actual: &Vec<QuotePair>, message: Option<UString>) -> Result<(), TracedAssertionsFailFault> {
+        let _ = TracedAssertions::traced_assertions_record_event(UStr::new(&[101,113]), &vec![
+    Some(TracedAssertions::traced_assertions_field(UStr::new(&[101,120,112,101,99,116,101,100]), TracedAssertions::traced_assertions_render_quote_pairs(&expected).map_err(|e| TracedAssertionsFailFault::UStringFaultFault(e))?.as_ustr())),
+    Some(TracedAssertions::traced_assertions_field(UStr::new(&[97,99,116,117,97,108]), TracedAssertions::traced_assertions_render_quote_pairs(&actual).map_err(|e| TracedAssertionsFailFault::UStringFaultFault(e))?.as_ustr())),
+    TracedAssertions::traced_assertions_msg_field(match &(message) { Some(v) => Some(v.to_ustring()), None => None }.clone()).map_err(|e| TracedAssertionsFailFault::UStringFaultFault(e))?,
 ]).map_err(|e| TracedAssertionsFailFault::UStringFaultFault(e))?;
         if u32::try_from((expected.len()) & 0xFFFF_FFFF).unwrap_or(0) != u32::try_from((actual.len()) & 0xFFFF_FFFF).unwrap_or(0) {
-            let _ = TracedAssertions::traced_assertions_fail(Some(match &(message) { None => "Expected arrays to be equal.".to_string(), Some(__option62) => __option62.to_string() }.to_string()), None)?;
+            let _ = TracedAssertions::traced_assertions_fail(Some((match &(message) { None => UString::from("Expected arrays to be equal."), Some(__option62) => __option62.to_ustring() }).to_ustring()), None)?;
         }
         let mut i = 0u32;
-        while (i32::from_ne_bytes((i).to_ne_bytes())) < (i32::from_ne_bytes((u32::try_from((expected.len()) & 0xFFFF_FFFF).unwrap_or(0)).to_ne_bytes())) {
-            if expected[usize::try_from(i).unwrap_or(0)].open_index != actual[usize::try_from(i).unwrap_or(0)].open_index || expected[usize::try_from(i).unwrap_or(0)].close_index != actual[usize::try_from(i).unwrap_or(0)].close_index ||
-expected[usize::try_from(i).unwrap_or(0)].quote_type != actual[usize::try_from(i).unwrap_or(0)].quote_type {
-                let _ = TracedAssertions::traced_assertions_fail(Some(match &(message) { None => "Expected arrays to be equal.".to_string(), Some(__option64) => __option64.to_string() }.to_string()), None)?;
+        while (i32::from_ne_bytes(((i) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((expected.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
+            if expected[usize::try_from(i).unwrap_or(0)].open_index != actual[usize::try_from(i).unwrap_or(0)].open_index || expected[usize::try_from(i).unwrap_or(0)].close_index != actual[usize::try_from(i).unwrap_or(0)].close_index || expected[usize::try_from(i).unwrap_or(0)].quote_type != actual[usize::try_from(i).unwrap_or(0)].quote_type {
+                let _ = TracedAssertions::traced_assertions_fail(Some((match &(message) { None => UString::from("Expected arrays to be equal."), Some(__option64) => __option64.to_ustring() }).to_ustring()), None)?;
             }
             i = u32::wrapping_add(i, 1);
         }
         Ok(())
     }
 
-    pub fn traced_assertions_assert_equals_nullable_int(expected: Option<u32>, actual: Option<u32>, message: Option<String>) -> Result<(), TracedAssertionsFailFault> {
-        let _ = TracedAssertions::traced_assertions_record_event(&"eq", &vec![
-    Some(TracedAssertions::traced_assertions_field(&"expected", match &(expected) { None => "-".to_string(), Some(__option73) => TestTraceRender::test_trace_render_render_int(*__option73).map_err(|e| TracedAssertionsFailFault::UStringFaultFault(e))?.to_string() }.as_str())),
-    Some(TracedAssertions::traced_assertions_field(&"actual", match &(actual) { None => "-".to_string(), Some(__option76) => TestTraceRender::test_trace_render_render_int(*__option76).map_err(|e| TracedAssertionsFailFault::UStringFaultFault(e))?.to_string() }.as_str())),
-    TracedAssertions::traced_assertions_msg_field(match &(message) { Some(v) => Some(v.to_string()), None => None }.clone()).map_err(|e| TracedAssertionsFailFault::UStringFaultFault(e))?,
+    pub fn traced_assertions_assert_equals_nullable_int(expected: Option<u32>, actual: Option<u32>, message: Option<UString>) -> Result<(), TracedAssertionsFailFault> {
+        let _ = TracedAssertions::traced_assertions_record_event(UStr::new(&[101,113]), &vec![
+    Some(TracedAssertions::traced_assertions_field(UStr::new(&[101,120,112,101,99,116,101,100]), match &(expected) { None => UString::from("-"), Some(__option73) => TestTraceRender::test_trace_render_render_int(*__option73).map_err(|e| TracedAssertionsFailFault::UStringFaultFault(e))?.to_ustring() }.as_ustr())),
+    Some(TracedAssertions::traced_assertions_field(UStr::new(&[97,99,116,117,97,108]), match &(actual) { None => UString::from("-"), Some(__option76) => TestTraceRender::test_trace_render_render_int(*__option76).map_err(|e| TracedAssertionsFailFault::UStringFaultFault(e))?.to_ustring() }.as_ustr())),
+    TracedAssertions::traced_assertions_msg_field(match &(message) { Some(v) => Some(v.to_ustring()), None => None }.clone()).map_err(|e| TracedAssertionsFailFault::UStringFaultFault(e))?,
 ]).map_err(|e| TracedAssertionsFailFault::UStringFaultFault(e))?;
         if expected != actual {
-            let _ = TracedAssertions::traced_assertions_fail(Some(match &(message) { None => "Expected values to be equal.".to_string(), Some(__option78) => __option78.to_string() }.to_string()), None)?;
+            let _ = TracedAssertions::traced_assertions_fail(Some((match &(message) { None => UString::from("Expected values to be equal."), Some(__option78) => __option78.to_ustring() }).to_ustring()), None)?;
         }
         Ok(())
     }
 
-    pub fn traced_assertions_assert_equals_nullable_float(expected: Option<f64>, actual: Option<f64>, message: Option<String>) -> Result<(), TracedAssertionsFailFault> {
-        let _ = TracedAssertions::traced_assertions_record_event(&"eq", &vec![
-    Some(TracedAssertions::traced_assertions_field(&"expected", match &(expected) { None => "-".to_string(), Some(__option87) => TestTraceRender::test_trace_render_render_float(*__option87).map_err(|e| TracedAssertionsFailFault::UStringFaultFault(e))?.to_string() }.as_str())),
-    Some(TracedAssertions::traced_assertions_field(&"actual", match &(actual) { None => "-".to_string(), Some(__option90) => TestTraceRender::test_trace_render_render_float(*__option90).map_err(|e| TracedAssertionsFailFault::UStringFaultFault(e))?.to_string() }.as_str())),
-    TracedAssertions::traced_assertions_msg_field(match &(message) { Some(v) => Some(v.to_string()), None => None }.clone()).map_err(|e| TracedAssertionsFailFault::UStringFaultFault(e))?,
+    pub fn traced_assertions_assert_equals_nullable_float(expected: Option<f64>, actual: Option<f64>, message: Option<UString>) -> Result<(), TracedAssertionsFailFault> {
+        let _ = TracedAssertions::traced_assertions_record_event(UStr::new(&[101,113]), &vec![
+    Some(TracedAssertions::traced_assertions_field(UStr::new(&[101,120,112,101,99,116,101,100]), match &(expected) { None => UString::from("-"), Some(__option87) => TestTraceRender::test_trace_render_render_float(*__option87).map_err(|e| TracedAssertionsFailFault::UStringFaultFault(e))?.to_ustring() }.as_ustr())),
+    Some(TracedAssertions::traced_assertions_field(UStr::new(&[97,99,116,117,97,108]), match &(actual) { None => UString::from("-"), Some(__option90) => TestTraceRender::test_trace_render_render_float(*__option90).map_err(|e| TracedAssertionsFailFault::UStringFaultFault(e))?.to_ustring() }.as_ustr())),
+    TracedAssertions::traced_assertions_msg_field(match &(message) { Some(v) => Some(v.to_ustring()), None => None }.clone()).map_err(|e| TracedAssertionsFailFault::UStringFaultFault(e))?,
 ]).map_err(|e| TracedAssertionsFailFault::UStringFaultFault(e))?;
         if expected != actual {
-            let _ = TracedAssertions::traced_assertions_fail(Some(match &(message) { None => "Expected values to be equal.".to_string(), Some(__option92) => __option92.to_string() }.to_string()), None)?;
+            let _ = TracedAssertions::traced_assertions_fail(Some((match &(message) { None => UString::from("Expected values to be equal."), Some(__option92) => __option92.to_ustring() }).to_ustring()), None)?;
         }
         Ok(())
     }
 
-    pub fn traced_assertions_assert_equals_text_range_array(expected: &Vec<TextRange>, actual: &Vec<TextRange>, message: Option<String>) -> Result<(), TracedAssertionsFailFault> {
+    pub fn traced_assertions_assert_equals_text_range_array(expected: &Vec<TextRange>, actual: &Vec<TextRange>, message: Option<UString>) -> Result<(), TracedAssertionsFailFault> {
         let expected_text = TracedAssertions::traced_assertions_render_text_range_array(&expected);
         let actual_text = TracedAssertions::traced_assertions_render_text_range_array(&actual);
-        let _ = TracedAssertions::traced_assertions_record_event(&"eq", &vec![
-    Some(TracedAssertions::traced_assertions_field(&"expected", expected_text.as_str())),
-    Some(TracedAssertions::traced_assertions_field(&"actual", actual_text.as_str())),
-    TracedAssertions::traced_assertions_msg_field(match &(message) { Some(v) => Some(v.to_string()), None => None }.clone()).map_err(|e| TracedAssertionsFailFault::UStringFaultFault(e))?,
+        let _ = TracedAssertions::traced_assertions_record_event(UStr::new(&[101,113]), &vec![
+    Some(TracedAssertions::traced_assertions_field(UStr::new(&[101,120,112,101,99,116,101,100]), expected_text.as_ustr())),
+    Some(TracedAssertions::traced_assertions_field(UStr::new(&[97,99,116,117,97,108]), actual_text.as_ustr())),
+    TracedAssertions::traced_assertions_msg_field(match &(message) { Some(v) => Some(v.to_ustring()), None => None }.clone()).map_err(|e| TracedAssertionsFailFault::UStringFaultFault(e))?,
 ]).map_err(|e| TracedAssertionsFailFault::UStringFaultFault(e))?;
         if u32::try_from((expected.len()) & 0xFFFF_FFFF).unwrap_or(0) != u32::try_from((actual.len()) & 0xFFFF_FFFF).unwrap_or(0) {
-            let _ = TracedAssertions::traced_assertions_fail(Some(match &(message) { None => "Expected arrays to be equal.".to_string(), Some(__option94) => __option94.to_string() }.to_string()), None)?;
+            let _ = TracedAssertions::traced_assertions_fail(Some((match &(message) { None => UString::from("Expected arrays to be equal."), Some(__option94) => __option94.to_ustring() }).to_ustring()), None)?;
         }
         for i in 0..match u32::try_from(expected.len()) { Ok(value) => value, Err(_) => u32::MAX } {
             if expected[usize::try_from(i).unwrap_or(0)].start != actual[usize::try_from(i).unwrap_or(0)].start || expected[usize::try_from(i).unwrap_or(0)].end != actual[usize::try_from(i).unwrap_or(0)].end {
-                let _ = TracedAssertions::traced_assertions_fail(Some(match &(message) { None => "Expected arrays to be equal.".to_string(), Some(__option96) => __option96.to_string() }.to_string()), None)?;
+                let _ = TracedAssertions::traced_assertions_fail(Some((match &(message) { None => UString::from("Expected arrays to be equal."), Some(__option96) => __option96.to_ustring() }).to_ustring()), None)?;
             }
         }
         Ok(())
     }
 
-    pub(crate) fn traced_assertions_render_text_range_array(ranges: &Vec<TextRange>) -> String {
-        let mut parts: Vec<String> = vec![];
+    pub(crate) fn traced_assertions_render_text_range_array(ranges: &Vec<TextRange>) -> UString {
+        let mut parts: Vec<UString> = vec![];
         for i in 0..match u32::try_from(ranges.len()) { Ok(value) => value, Err(_) => u32::MAX } {
-            parts.push((ranges[usize::try_from(i).unwrap_or(0)]).clone().to_string());
+            parts.push(UString::from(format!("{}", (ranges[usize::try_from(i).unwrap_or(0)]).clone().to_string()).as_str()));
         }
-        return format!("{}{}{}",
-            "[",
-            { let joined = parts; let mut out = String::new(); let n = joined.len(); let mut index = 0usize; while index < n { if index > 0 { out.push_str(&(", ")); } let _ = write!(out, "{}", joined[index]); index += 1; } out },
-            "]"
-        );
+        return UString::from(format!("{}", { let mut __s = UString::new(); __s += &(UString::from("[")); __s += UString::from(format!("{}", { let joined = parts; let mut out = String::new(); let n = joined.len(); let mut index = 0usize; while index < n { if index > 0 { out.push_str(", "); } let _ = write!(out, "{}", joined[index]); index += 1; } UString::from(out.as_str()) }).as_str()).as_ustr(); __s += &(UString::from("]")); __s }).as_str());
     }
 
-    pub fn traced_assertions_assert_equals_int_range(expected: IntRange, actual: IntRange, message: Option<String>) -> Result<(), TracedAssertionsFailFault> {
-        let _ = TracedAssertions::traced_assertions_record_event(&"eq", &vec![
-    Some(TracedAssertions::traced_assertions_field(&"expected", TracedAssertions::traced_assertions_render_int_range((expected).clone()).map_err(|e| TracedAssertionsFailFault::UStringFaultFault(e))?.as_str())),
-    Some(TracedAssertions::traced_assertions_field(&"actual", TracedAssertions::traced_assertions_render_int_range((actual).clone()).map_err(|e| TracedAssertionsFailFault::UStringFaultFault(e))?.as_str())),
-    TracedAssertions::traced_assertions_msg_field(match &(message) { Some(v) => Some(v.to_string()), None => None }.clone()).map_err(|e| TracedAssertionsFailFault::UStringFaultFault(e))?,
+    pub fn traced_assertions_assert_equals_int_range(expected: IntRange, actual: IntRange, message: Option<UString>) -> Result<(), TracedAssertionsFailFault> {
+        let _ = TracedAssertions::traced_assertions_record_event(UStr::new(&[101,113]), &vec![
+    Some(TracedAssertions::traced_assertions_field(UStr::new(&[101,120,112,101,99,116,101,100]), TracedAssertions::traced_assertions_render_int_range((expected).clone()).map_err(|e| TracedAssertionsFailFault::UStringFaultFault(e))?.as_ustr())),
+    Some(TracedAssertions::traced_assertions_field(UStr::new(&[97,99,116,117,97,108]), TracedAssertions::traced_assertions_render_int_range((actual).clone()).map_err(|e| TracedAssertionsFailFault::UStringFaultFault(e))?.as_ustr())),
+    TracedAssertions::traced_assertions_msg_field(match &(message) { Some(v) => Some(v.to_ustring()), None => None }.clone()).map_err(|e| TracedAssertionsFailFault::UStringFaultFault(e))?,
 ]).map_err(|e| TracedAssertionsFailFault::UStringFaultFault(e))?;
         if expected.start != actual.start || expected.end != actual.end {
-            let _ = TracedAssertions::traced_assertions_fail(Some(match &(message) { None => "Expected values to be equal.".to_string(), Some(__option98) => __option98.to_string() }.to_string()), None)?;
+            let _ = TracedAssertions::traced_assertions_fail(Some((match &(message) { None => UString::from("Expected values to be equal."), Some(__option98) => __option98.to_ustring() }).to_ustring()), None)?;
         }
         Ok(())
     }
 
-    pub(crate) fn traced_assertions_render_int_range(r: IntRange) -> Result<String, UStringFault> {
+    pub(crate) fn traced_assertions_render_int_range(r: IntRange) -> Result<UString, UStringFault> {
         let mut buf = Vec::<u16>::new();
         if let Some(&unit) = buf.last() {
-            if unit >= 55296 && unit <= 56319 && !"[".is_empty() {
-                return Err(UStringFault::UnpairedSurrogate { unit: u32::from(unit) });
+            if unit >= 55296 && unit <= 56319 && !UString::from("[").is_empty() {
+                if !UString::from("[").encode_utf16().next().map_or(false, |head| head >= 56320 && head <= 57343) {
+                    return Err(UStringFault::UnpairedSurrogate { unit: u32::from(unit) });
+                }
             }
         }
-        buf.extend("[".encode_utf16());
+        buf.extend(UString::from("[").encode_utf16());
         let mut i = r.start;
-        while (i32::from_ne_bytes((i).to_ne_bytes())) <= i32::from_ne_bytes((r.end).to_ne_bytes()) {
-            if i32::from_ne_bytes((i).to_ne_bytes()) > (i32::from_ne_bytes((r.start).to_ne_bytes())) {
+        while (i32::from_ne_bytes(((i) as i32).to_ne_bytes())) <= i32::from_ne_bytes(((r.end) as i32).to_ne_bytes()) {
+            if i32::from_ne_bytes(((i) as i32).to_ne_bytes()) > (i32::from_ne_bytes(((r.start) as i32).to_ne_bytes())) {
                 if let Some(&unit) = buf.last() {
-                    if unit >= 55296 && unit <= 56319 && !", ".is_empty() {
-                        return Err(UStringFault::UnpairedSurrogate { unit: u32::from(unit) });
+                    if unit >= 55296 && unit <= 56319 && !UString::from(", ").is_empty() {
+                        if !UString::from(", ").encode_utf16().next().map_or(false, |head| head >= 56320 && head <= 57343) {
+                            return Err(UStringFault::UnpairedSurrogate { unit: u32::from(unit) });
+                        }
                     }
                 }
-                buf.extend(", ".encode_utf16());
+                buf.extend(UString::from(", ").encode_utf16());
             }
             if let Some(&unit) = buf.last() {
                 if unit >= 55296 && unit <= 56319 && !TestTraceRender::test_trace_render_render_int(i)?.is_empty() {
-                    return Err(UStringFault::UnpairedSurrogate { unit: u32::from(unit) });
+                    if !TestTraceRender::test_trace_render_render_int(i)?.encode_utf16().next().map_or(false, |head| head >= 56320 && head <= 57343) {
+                        return Err(UStringFault::UnpairedSurrogate { unit: u32::from(unit) });
+                    }
                 }
             }
             buf.extend(TestTraceRender::test_trace_render_render_int(i)?.encode_utf16());
             i = u32::wrapping_add(i, 1);
         }
         if let Some(&unit) = buf.last() {
-            if unit >= 55296 && unit <= 56319 && !"]".is_empty() {
-                return Err(UStringFault::UnpairedSurrogate { unit: u32::from(unit) });
+            if unit >= 55296 && unit <= 56319 && !UString::from("]").is_empty() {
+                if !UString::from("]").encode_utf16().next().map_or(false, |head| head >= 56320 && head <= 57343) {
+                    return Err(UStringFault::UnpairedSurrogate { unit: u32::from(unit) });
+                }
             }
         }
-        buf.extend("]".encode_utf16());
-        return Ok(String::from_utf16(buf.as_slice()).map_err(|_| UStringFault::UnpairedSurrogate { unit: u32::from(buf[buf.len() - 1]) })?);
+        buf.extend(UString::from("]").encode_utf16());
+        return Ok(UString::from_utf16(buf.as_slice()).map_err(|_| UStringFault::UnpairedSurrogate { unit: u32::from(buf[buf.len() - 1]) })?);
     }
 
-    pub fn traced_assertions_assert_equals_int_set(expected: SortedSetTable<u32>, actual: SortedSetTable<u32>, message: Option<String>) -> Result<(), TracedAssertionsFailFault> {
-        let _ = TracedAssertions::traced_assertions_record_event(&"eq", &vec![
-    Some(TracedAssertions::traced_assertions_field(&"expected", TracedAssertions::traced_assertions_render_int_set((expected).clone()).map_err(|e| TracedAssertionsFailFault::UStringFaultFault(e))?.as_str())),
-    Some(TracedAssertions::traced_assertions_field(&"actual", TracedAssertions::traced_assertions_render_int_set((actual).clone()).map_err(|e| TracedAssertionsFailFault::UStringFaultFault(e))?.as_str())),
-    TracedAssertions::traced_assertions_msg_field(match &(message) { Some(v) => Some(v.to_string()), None => None }.clone()).map_err(|e| TracedAssertionsFailFault::UStringFaultFault(e))?,
+    pub fn traced_assertions_assert_equals_int_set(expected: SortedSetTable<u32>, actual: SortedSetTable<u32>, message: Option<UString>) -> Result<(), TracedAssertionsFailFault> {
+        let _ = TracedAssertions::traced_assertions_record_event(UStr::new(&[101,113]), &vec![
+    Some(TracedAssertions::traced_assertions_field(UStr::new(&[101,120,112,101,99,116,101,100]), TracedAssertions::traced_assertions_render_int_set((expected).clone()).map_err(|e| TracedAssertionsFailFault::UStringFaultFault(e))?.as_ustr())),
+    Some(TracedAssertions::traced_assertions_field(UStr::new(&[97,99,116,117,97,108]), TracedAssertions::traced_assertions_render_int_set((actual).clone()).map_err(|e| TracedAssertionsFailFault::UStringFaultFault(e))?.as_ustr())),
+    TracedAssertions::traced_assertions_msg_field(match &(message) { Some(v) => Some(v.to_ustring()), None => None }.clone()).map_err(|e| TracedAssertionsFailFault::UStringFaultFault(e))?,
 ]).map_err(|e| TracedAssertionsFailFault::UStringFaultFault(e))?;
-        if u32::from_ne_bytes((expected.size()).to_ne_bytes()) != u32::from_ne_bytes((actual.size()).to_ne_bytes()) {
-            let _ = TracedAssertions::traced_assertions_fail(Some(match &(message) { None => "Expected values to be equal.".to_string(), Some(__option100) => __option100.to_string() }.to_string()), None)?;
+        if u32::from_ne_bytes(((expected.size()) as u32).to_ne_bytes()) != u32::from_ne_bytes(((actual.size()) as u32).to_ne_bytes()) {
+            let _ = TracedAssertions::traced_assertions_fail(Some((match &(message) { None => UString::from("Expected values to be equal."), Some(__option100) => __option100.to_ustring() }).to_ustring()), None)?;
         }
         let mut i = 0u32;
-        while (i32::from_ne_bytes((i).to_ne_bytes())) < (i32::from_ne_bytes((u32::from_ne_bytes((expected.size()).to_ne_bytes())).to_ne_bytes())) {
-            if expected.at(i32::from_ne_bytes((i).to_ne_bytes())) != actual.at(i32::from_ne_bytes((i).to_ne_bytes())) {
-                let _ = TracedAssertions::traced_assertions_fail(Some(match &(message) { None => "Expected values to be equal.".to_string(), Some(__option102) => __option102.to_string() }.to_string()), None)?;
+        while (i32::from_ne_bytes(((i) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::from_ne_bytes(((expected.size()) as u32).to_ne_bytes())) as i32).to_ne_bytes())) {
+            if expected.at(i32::from_ne_bytes(((i) as i32).to_ne_bytes())) != actual.at(i32::from_ne_bytes(((i) as i32).to_ne_bytes())) {
+                let _ = TracedAssertions::traced_assertions_fail(Some((match &(message) { None => UString::from("Expected values to be equal."), Some(__option102) => __option102.to_ustring() }).to_ustring()), None)?;
             }
             i = u32::wrapping_add(i, 1);
         }
         Ok(())
     }
 
-    pub(crate) fn traced_assertions_render_int_set(values: SortedSetTable<u32>) -> Result<String, UStringFault> {
+    pub(crate) fn traced_assertions_render_int_set(values: SortedSetTable<u32>) -> Result<UString, UStringFault> {
         let mut buf = Vec::<u16>::new();
         if let Some(&unit) = buf.last() {
-            if unit >= 55296 && unit <= 56319 && !"[".is_empty() {
-                return Err(UStringFault::UnpairedSurrogate { unit: u32::from(unit) });
-            }
-        }
-        buf.extend("[".encode_utf16());
-        let mut i = 0u32;
-        while (i32::from_ne_bytes((i).to_ne_bytes())) < (i32::from_ne_bytes((u32::from_ne_bytes((values.size()).to_ne_bytes())).to_ne_bytes())) {
-            if i32::from_ne_bytes((i).to_ne_bytes()) > (0) {
-                if let Some(&unit) = buf.last() {
-                    if unit >= 55296 && unit <= 56319 && !", ".is_empty() {
-                        return Err(UStringFault::UnpairedSurrogate { unit: u32::from(unit) });
-                    }
-                }
-                buf.extend(", ".encode_utf16());
-            }
-            if let Some(&unit) = buf.last() {
-                if unit >= 55296 && unit <= 56319 && !TestTraceRender::test_trace_render_render_int(values.at(i32::from_ne_bytes((i).to_ne_bytes())))?.is_empty() {
+            if unit >= 55296 && unit <= 56319 && !UString::from("[").is_empty() {
+                if !UString::from("[").encode_utf16().next().map_or(false, |head| head >= 56320 && head <= 57343) {
                     return Err(UStringFault::UnpairedSurrogate { unit: u32::from(unit) });
                 }
             }
-            buf.extend(TestTraceRender::test_trace_render_render_int(values.at(i32::from_ne_bytes((i).to_ne_bytes())))?.encode_utf16());
+        }
+        buf.extend(UString::from("[").encode_utf16());
+        let mut i = 0u32;
+        while (i32::from_ne_bytes(((i) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::from_ne_bytes(((values.size()) as u32).to_ne_bytes())) as i32).to_ne_bytes())) {
+            if i32::from_ne_bytes(((i) as i32).to_ne_bytes()) > (0) {
+                if let Some(&unit) = buf.last() {
+                    if unit >= 55296 && unit <= 56319 && !UString::from(", ").is_empty() {
+                        if !UString::from(", ").encode_utf16().next().map_or(false, |head| head >= 56320 && head <= 57343) {
+                            return Err(UStringFault::UnpairedSurrogate { unit: u32::from(unit) });
+                        }
+                    }
+                }
+                buf.extend(UString::from(", ").encode_utf16());
+            }
+            if let Some(&unit) = buf.last() {
+                if unit >= 55296 && unit <= 56319 && !TestTraceRender::test_trace_render_render_int(values.at(i32::from_ne_bytes(((i) as i32).to_ne_bytes())))?.is_empty() {
+                    if !TestTraceRender::test_trace_render_render_int(values.at(i32::from_ne_bytes(((i) as i32).to_ne_bytes())))?.encode_utf16().next().map_or(false, |head| head >= 56320 && head <= 57343) {
+                        return Err(UStringFault::UnpairedSurrogate { unit: u32::from(unit) });
+                    }
+                }
+            }
+            buf.extend(TestTraceRender::test_trace_render_render_int(values.at(i32::from_ne_bytes(((i) as i32).to_ne_bytes())))?.encode_utf16());
             i = u32::wrapping_add(i, 1);
         }
         if let Some(&unit) = buf.last() {
-            if unit >= 55296 && unit <= 56319 && !"]".is_empty() {
-                return Err(UStringFault::UnpairedSurrogate { unit: u32::from(unit) });
+            if unit >= 55296 && unit <= 56319 && !UString::from("]").is_empty() {
+                if !UString::from("]").encode_utf16().next().map_or(false, |head| head >= 56320 && head <= 57343) {
+                    return Err(UStringFault::UnpairedSurrogate { unit: u32::from(unit) });
+                }
             }
         }
-        buf.extend("]".encode_utf16());
-        return Ok(String::from_utf16(buf.as_slice()).map_err(|_| UStringFault::UnpairedSurrogate { unit: u32::from(buf[buf.len() - 1]) })?);
+        buf.extend(UString::from("]").encode_utf16());
+        return Ok(UString::from_utf16(buf.as_slice()).map_err(|_| UStringFault::UnpairedSurrogate { unit: u32::from(buf[buf.len() - 1]) })?);
     }
 
-    pub fn traced_assertions_assert_equals_int_set_unordered(expected: &Vec<u32>, actual: &Vec<u32>, message: Option<String>) -> Result<(), TracedAssertionsFailFault> {
-        let _ = TracedAssertions::traced_assertions_record_event(&"eq", &vec![
-    Some(TracedAssertions::traced_assertions_field(&"expected", TracedAssertions::traced_assertions_render_int_list_in_given_order(&expected).map_err(|e| TracedAssertionsFailFault::UStringFaultFault(e))?.as_str())),
-    Some(TracedAssertions::traced_assertions_field(&"actual", TracedAssertions::traced_assertions_render_int_list_in_given_order(&actual).map_err(|e| TracedAssertionsFailFault::UStringFaultFault(e))?.as_str())),
-    TracedAssertions::traced_assertions_msg_field(match &(message) { Some(v) => Some(v.to_string()), None => None }.clone()).map_err(|e| TracedAssertionsFailFault::UStringFaultFault(e))?,
+    pub fn traced_assertions_assert_equals_int_set_unordered(expected: &Vec<u32>, actual: &Vec<u32>, message: Option<UString>) -> Result<(), TracedAssertionsFailFault> {
+        let _ = TracedAssertions::traced_assertions_record_event(UStr::new(&[101,113]), &vec![
+    Some(TracedAssertions::traced_assertions_field(UStr::new(&[101,120,112,101,99,116,101,100]), TracedAssertions::traced_assertions_render_int_list_in_given_order(&expected).map_err(|e| TracedAssertionsFailFault::UStringFaultFault(e))?.as_ustr())),
+    Some(TracedAssertions::traced_assertions_field(UStr::new(&[97,99,116,117,97,108]), TracedAssertions::traced_assertions_render_int_list_in_given_order(&actual).map_err(|e| TracedAssertionsFailFault::UStringFaultFault(e))?.as_ustr())),
+    TracedAssertions::traced_assertions_msg_field(match &(message) { Some(v) => Some(v.to_ustring()), None => None }.clone()).map_err(|e| TracedAssertionsFailFault::UStringFaultFault(e))?,
 ]).map_err(|e| TracedAssertionsFailFault::UStringFaultFault(e))?;
-        let mut expected_set: SortedSetTableBuilder<u32> = SortedTable::sorted_table_set_builder::<u32>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_bytes((*a).to_ne_bytes()), i32::from_ne_bytes((*b).to_ne_bytes()))));
+        let mut expected_set: SortedSetTableBuilder<u32> = SortedTable::sorted_table_set_builder::<u32>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_bytes(((*a) as i32).to_ne_bytes()), i32::from_ne_bytes(((*b) as i32).to_ne_bytes()))));
         let mut i = 0u32;
-        while (i32::from_ne_bytes((i).to_ne_bytes())) < (i32::from_ne_bytes((u32::try_from((expected.len()) & 0xFFFF_FFFF).unwrap_or(0)).to_ne_bytes())) {
+        while (i32::from_ne_bytes(((i) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((expected.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
             expected_set.put(&(expected[usize::try_from(i).unwrap_or(0)]));
             i = u32::wrapping_add(i, 1);
         }
-        let mut actual_set: SortedSetTableBuilder<u32> = SortedTable::sorted_table_set_builder::<u32>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_bytes((*a).to_ne_bytes()), i32::from_ne_bytes((*b).to_ne_bytes()))));
+        let mut actual_set: SortedSetTableBuilder<u32> = SortedTable::sorted_table_set_builder::<u32>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_bytes(((*a) as i32).to_ne_bytes()), i32::from_ne_bytes(((*b) as i32).to_ne_bytes()))));
         i = 0u32;
-        while (i32::from_ne_bytes((i).to_ne_bytes())) < (i32::from_ne_bytes((u32::try_from((actual.len()) & 0xFFFF_FFFF).unwrap_or(0)).to_ne_bytes())) {
+        while (i32::from_ne_bytes(((i) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((actual.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
             actual_set.put(&(actual[usize::try_from(i).unwrap_or(0)]));
             i = u32::wrapping_add(i, 1);
         }
         let e: SortedSetTable<u32> = expected_set.clone().build();
         let a: SortedSetTable<u32> = actual_set.clone().build();
-        if u32::from_ne_bytes((e.size()).to_ne_bytes()) != u32::from_ne_bytes((a.size()).to_ne_bytes()) {
-            let _ = TracedAssertions::traced_assertions_fail(Some(match &(message) { None => "Expected values to be equal.".to_string(), Some(__option104) => __option104.to_string() }.to_string()), None)?;
+        if u32::from_ne_bytes(((e.size()) as u32).to_ne_bytes()) != u32::from_ne_bytes(((a.size()) as u32).to_ne_bytes()) {
+            let _ = TracedAssertions::traced_assertions_fail(Some((match &(message) { None => UString::from("Expected values to be equal."), Some(__option104) => __option104.to_ustring() }).to_ustring()), None)?;
         }
         i = 0u32;
-        while (i32::from_ne_bytes((i).to_ne_bytes())) < (i32::from_ne_bytes((u32::from_ne_bytes((e.size()).to_ne_bytes())).to_ne_bytes())) {
-            if e.at(i32::from_ne_bytes((i).to_ne_bytes())) != a.at(i32::from_ne_bytes((i).to_ne_bytes())) {
-                let _ = TracedAssertions::traced_assertions_fail(Some(match &(message) { None => "Expected values to be equal.".to_string(), Some(__option106) => __option106.to_string() }.to_string()), None)?;
+        while (i32::from_ne_bytes(((i) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::from_ne_bytes(((e.size()) as u32).to_ne_bytes())) as i32).to_ne_bytes())) {
+            if e.at(i32::from_ne_bytes(((i) as i32).to_ne_bytes())) != a.at(i32::from_ne_bytes(((i) as i32).to_ne_bytes())) {
+                let _ = TracedAssertions::traced_assertions_fail(Some((match &(message) { None => UString::from("Expected values to be equal."), Some(__option106) => __option106.to_ustring() }).to_ustring()), None)?;
             }
             i = u32::wrapping_add(i, 1);
         }
         Ok(())
     }
 
-    pub(crate) fn traced_assertions_render_int_list_in_given_order(values: &Vec<u32>) -> Result<String, UStringFault> {
+    pub(crate) fn traced_assertions_render_int_list_in_given_order(values: &Vec<u32>) -> Result<UString, UStringFault> {
         let mut buf = Vec::<u16>::new();
         if let Some(&unit) = buf.last() {
-            if unit >= 55296 && unit <= 56319 && !"[".is_empty() {
-                return Err(UStringFault::UnpairedSurrogate { unit: u32::from(unit) });
+            if unit >= 55296 && unit <= 56319 && !UString::from("[").is_empty() {
+                if !UString::from("[").encode_utf16().next().map_or(false, |head| head >= 56320 && head <= 57343) {
+                    return Err(UStringFault::UnpairedSurrogate { unit: u32::from(unit) });
+                }
             }
         }
-        buf.extend("[".encode_utf16());
+        buf.extend(UString::from("[").encode_utf16());
         let mut i = 0u32;
-        while (i32::from_ne_bytes((i).to_ne_bytes())) < (i32::from_ne_bytes((u32::try_from((values.len()) & 0xFFFF_FFFF).unwrap_or(0)).to_ne_bytes())) {
-            if i32::from_ne_bytes((i).to_ne_bytes()) > (0) {
+        while (i32::from_ne_bytes(((i) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((values.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
+            if i32::from_ne_bytes(((i) as i32).to_ne_bytes()) > (0) {
                 if let Some(&unit) = buf.last() {
-                    if unit >= 55296 && unit <= 56319 && !", ".is_empty() {
-                        return Err(UStringFault::UnpairedSurrogate { unit: u32::from(unit) });
+                    if unit >= 55296 && unit <= 56319 && !UString::from(", ").is_empty() {
+                        if !UString::from(", ").encode_utf16().next().map_or(false, |head| head >= 56320 && head <= 57343) {
+                            return Err(UStringFault::UnpairedSurrogate { unit: u32::from(unit) });
+                        }
                     }
                 }
-                buf.extend(", ".encode_utf16());
+                buf.extend(UString::from(", ").encode_utf16());
             }
             if let Some(&unit) = buf.last() {
                 if unit >= 55296 && unit <= 56319 && !TestTraceRender::test_trace_render_render_int(values[usize::try_from(i).unwrap_or(0)])?.is_empty() {
-                    return Err(UStringFault::UnpairedSurrogate { unit: u32::from(unit) });
+                    if !TestTraceRender::test_trace_render_render_int(values[usize::try_from(i).unwrap_or(0)])?.encode_utf16().next().map_or(false, |head| head >= 56320 && head <= 57343) {
+                        return Err(UStringFault::UnpairedSurrogate { unit: u32::from(unit) });
+                    }
                 }
             }
             buf.extend(TestTraceRender::test_trace_render_render_int(values[usize::try_from(i).unwrap_or(0)])?.encode_utf16());
             i = u32::wrapping_add(i, 1);
         }
         if let Some(&unit) = buf.last() {
-            if unit >= 55296 && unit <= 56319 && !"]".is_empty() {
-                return Err(UStringFault::UnpairedSurrogate { unit: u32::from(unit) });
+            if unit >= 55296 && unit <= 56319 && !UString::from("]").is_empty() {
+                if !UString::from("]").encode_utf16().next().map_or(false, |head| head >= 56320 && head <= 57343) {
+                    return Err(UStringFault::UnpairedSurrogate { unit: u32::from(unit) });
+                }
             }
         }
-        buf.extend("]".encode_utf16());
-        return Ok(String::from_utf16(buf.as_slice()).map_err(|_| UStringFault::UnpairedSurrogate { unit: u32::from(buf[buf.len() - 1]) })?);
+        buf.extend(UString::from("]").encode_utf16());
+        return Ok(UString::from_utf16(buf.as_slice()).map_err(|_| UStringFault::UnpairedSurrogate { unit: u32::from(buf[buf.len() - 1]) })?);
     }
 
-    pub fn traced_assertions_assert_equals_repair_option_array(expected: &Vec<RepairOption>, actual: &Vec<RepairOption>, message: Option<String>) -> Result<(), TracedAssertionsAssertEqualsRepairOptionArrayFault> {
+    pub fn traced_assertions_assert_equals_repair_option_array(expected: &Vec<RepairOption>, actual: &Vec<RepairOption>, message: Option<UString>) -> Result<(), TracedAssertionsAssertEqualsRepairOptionArrayFault> {
         let expected_text = TracedAssertions::traced_assertions_render_repair_option_list(&expected).map_err(|e| TracedAssertionsAssertEqualsRepairOptionArrayFault::UStringFaultFault(e))?;
         let actual_text = TracedAssertions::traced_assertions_render_repair_option_list(&actual).map_err(|e| TracedAssertionsAssertEqualsRepairOptionArrayFault::UStringFaultFault(e))?;
-        let _ = TracedAssertions::traced_assertions_record_event(&"eq", &vec![
-    Some(TracedAssertions::traced_assertions_field(&"expected", expected_text.as_str())),
-    Some(TracedAssertions::traced_assertions_field(&"actual", actual_text.as_str())),
-    TracedAssertions::traced_assertions_msg_field(match &(message) { Some(v) => Some(v.to_string()), None => None }.clone()).map_err(|e| TracedAssertionsAssertEqualsRepairOptionArrayFault::UStringFaultFault(e))?,
+        let _ = TracedAssertions::traced_assertions_record_event(UStr::new(&[101,113]), &vec![
+    Some(TracedAssertions::traced_assertions_field(UStr::new(&[101,120,112,101,99,116,101,100]), expected_text.as_ustr())),
+    Some(TracedAssertions::traced_assertions_field(UStr::new(&[97,99,116,117,97,108]), actual_text.as_ustr())),
+    TracedAssertions::traced_assertions_msg_field(match &(message) { Some(v) => Some(v.to_ustring()), None => None }.clone()).map_err(|e| TracedAssertionsAssertEqualsRepairOptionArrayFault::UStringFaultFault(e))?,
 ]).map_err(|e| TracedAssertionsAssertEqualsRepairOptionArrayFault::UStringFaultFault(e))?;
         if expected_text != actual_text {
-            let _ = TracedAssertions::traced_assertions_fail(Some(match &(message) { None => "Expected arrays to be equal.".to_string(), Some(__option108) => __option108.to_string() }.to_string()), None).map_err(|e|
-TracedAssertionsAssertEqualsRepairOptionArrayFault::FailFault(e))?;
+            let _ = TracedAssertions::traced_assertions_fail(Some((match &(message) { None => UString::from("Expected arrays to be equal."), Some(__option108) => __option108.to_ustring() }).to_ustring()), None).map_err(|e| TracedAssertionsAssertEqualsRepairOptionArrayFault::FailFault(e))?;
         }
         Ok(())
     }
 
-    pub(crate) fn traced_assertions_render_repair_option_list(values: &Vec<RepairOption>) -> Result<String, UStringFault> {
+    pub(crate) fn traced_assertions_render_repair_option_list(values: &Vec<RepairOption>) -> Result<UString, UStringFault> {
         let mut buf = Vec::<u16>::new();
         if let Some(&unit) = buf.last() {
-            if unit >= 55296 && unit <= 56319 && !"[".is_empty() {
-                return Err(UStringFault::UnpairedSurrogate { unit: u32::from(unit) });
+            if unit >= 55296 && unit <= 56319 && !UString::from("[").is_empty() {
+                if !UString::from("[").encode_utf16().next().map_or(false, |head| head >= 56320 && head <= 57343) {
+                    return Err(UStringFault::UnpairedSurrogate { unit: u32::from(unit) });
+                }
             }
         }
-        buf.extend("[".encode_utf16());
+        buf.extend(UString::from("[").encode_utf16());
         let mut i = 0u32;
-        while (i32::from_ne_bytes((i).to_ne_bytes())) < (i32::from_ne_bytes((u32::try_from((values.len()) & 0xFFFF_FFFF).unwrap_or(0)).to_ne_bytes())) {
-            if i32::from_ne_bytes((i).to_ne_bytes()) > (0) {
+        while (i32::from_ne_bytes(((i) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((values.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
+            if i32::from_ne_bytes(((i) as i32).to_ne_bytes()) > (0) {
                 if let Some(&unit) = buf.last() {
-                    if unit >= 55296 && unit <= 56319 && !", ".is_empty() {
-                        return Err(UStringFault::UnpairedSurrogate { unit: u32::from(unit) });
+                    if unit >= 55296 && unit <= 56319 && !UString::from(", ").is_empty() {
+                        if !UString::from(", ").encode_utf16().next().map_or(false, |head| head >= 56320 && head <= 57343) {
+                            return Err(UStringFault::UnpairedSurrogate { unit: u32::from(unit) });
+                        }
                     }
                 }
-                buf.extend(", ".encode_utf16());
+                buf.extend(UString::from(", ").encode_utf16());
             }
             if let Some(&unit) = buf.last() {
                 if unit >= 55296 && unit <= 56319 && !TracedAssertions::traced_assertions_render_repair_option((values[usize::try_from(i).unwrap_or(0)]).clone()).is_empty() {
-                    return Err(UStringFault::UnpairedSurrogate { unit: u32::from(unit) });
+                    if !TracedAssertions::traced_assertions_render_repair_option((values[usize::try_from(i).unwrap_or(0)]).clone()).encode_utf16().next().map_or(false, |head| head >= 56320 && head <= 57343) {
+                        return Err(UStringFault::UnpairedSurrogate { unit: u32::from(unit) });
+                    }
                 }
             }
             buf.extend(TracedAssertions::traced_assertions_render_repair_option((values[usize::try_from(i).unwrap_or(0)]).clone()).encode_utf16());
             i = u32::wrapping_add(i, 1);
         }
         if let Some(&unit) = buf.last() {
-            if unit >= 55296 && unit <= 56319 && !"]".is_empty() {
-                return Err(UStringFault::UnpairedSurrogate { unit: u32::from(unit) });
+            if unit >= 55296 && unit <= 56319 && !UString::from("]").is_empty() {
+                if !UString::from("]").encode_utf16().next().map_or(false, |head| head >= 56320 && head <= 57343) {
+                    return Err(UStringFault::UnpairedSurrogate { unit: u32::from(unit) });
+                }
             }
         }
-        buf.extend("]".encode_utf16());
-        return Ok(String::from_utf16(buf.as_slice()).map_err(|_| UStringFault::UnpairedSurrogate { unit: u32::from(buf[buf.len() - 1]) })?);
+        buf.extend(UString::from("]").encode_utf16());
+        return Ok(UString::from_utf16(buf.as_slice()).map_err(|_| UStringFault::UnpairedSurrogate { unit: u32::from(buf[buf.len() - 1]) })?);
     }
 
-    pub(crate) fn traced_assertions_render_repair_option(option: RepairOption) -> String {
-        return option.to_string();
+    pub(crate) fn traced_assertions_render_repair_option(option: RepairOption) -> UString {
+        return UString::from(format!("{}", option.to_string()).as_str());
     }
 
-    pub(crate) fn traced_assertions_render_push_in_allocations(values: &Vec<PushInAllocation>) -> Result<String, UStringFault> {
+    pub(crate) fn traced_assertions_render_push_in_allocations(values: &Vec<PushInAllocation>) -> Result<UString, UStringFault> {
         let mut buf = Vec::<u16>::new();
         if let Some(&unit) = buf.last() {
-            if unit >= 55296 && unit <= 56319 && !"[".is_empty() {
-                return Err(UStringFault::UnpairedSurrogate { unit: u32::from(unit) });
+            if unit >= 55296 && unit <= 56319 && !UString::from("[").is_empty() {
+                if !UString::from("[").encode_utf16().next().map_or(false, |head| head >= 56320 && head <= 57343) {
+                    return Err(UStringFault::UnpairedSurrogate { unit: u32::from(unit) });
+                }
             }
         }
-        buf.extend("[".encode_utf16());
+        buf.extend(UString::from("[").encode_utf16());
         let mut i = 0u32;
-        while (i32::from_ne_bytes((i).to_ne_bytes())) < (i32::from_ne_bytes((u32::try_from((values.len()) & 0xFFFF_FFFF).unwrap_or(0)).to_ne_bytes())) {
-            if i32::from_ne_bytes((i).to_ne_bytes()) > (0) {
+        while (i32::from_ne_bytes(((i) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((values.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
+            if i32::from_ne_bytes(((i) as i32).to_ne_bytes()) > (0) {
                 if let Some(&unit) = buf.last() {
-                    if unit >= 55296 && unit <= 56319 && !", ".is_empty() {
-                        return Err(UStringFault::UnpairedSurrogate { unit: u32::from(unit) });
+                    if unit >= 55296 && unit <= 56319 && !UString::from(", ").is_empty() {
+                        if !UString::from(", ").encode_utf16().next().map_or(false, |head| head >= 56320 && head <= 57343) {
+                            return Err(UStringFault::UnpairedSurrogate { unit: u32::from(unit) });
+                        }
                     }
                 }
-                buf.extend(", ".encode_utf16());
+                buf.extend(UString::from(", ").encode_utf16());
             }
             if let Some(&unit) = buf.last() {
                 if unit >= 55296 && unit <= 56319 && !(values[usize::try_from(i).unwrap_or(0)]).clone().to_string().is_empty() {
-                    return Err(UStringFault::UnpairedSurrogate { unit: u32::from(unit) });
+                    if !(values[usize::try_from(i).unwrap_or(0)]).clone().to_string().encode_utf16().next().map_or(false, |head| head >= 56320 && head <= 57343) {
+                        return Err(UStringFault::UnpairedSurrogate { unit: u32::from(unit) });
+                    }
                 }
             }
             buf.extend((values[usize::try_from(i).unwrap_or(0)]).clone().to_string().encode_utf16());
             i = u32::wrapping_add(i, 1);
         }
         if let Some(&unit) = buf.last() {
-            if unit >= 55296 && unit <= 56319 && !"]".is_empty() {
-                return Err(UStringFault::UnpairedSurrogate { unit: u32::from(unit) });
+            if unit >= 55296 && unit <= 56319 && !UString::from("]").is_empty() {
+                if !UString::from("]").encode_utf16().next().map_or(false, |head| head >= 56320 && head <= 57343) {
+                    return Err(UStringFault::UnpairedSurrogate { unit: u32::from(unit) });
+                }
             }
         }
-        buf.extend("]".encode_utf16());
-        return Ok(String::from_utf16(buf.as_slice()).map_err(|_| UStringFault::UnpairedSurrogate { unit: u32::from(buf[buf.len() - 1]) })?);
+        buf.extend(UString::from("]").encode_utf16());
+        return Ok(UString::from_utf16(buf.as_slice()).map_err(|_| UStringFault::UnpairedSurrogate { unit: u32::from(buf[buf.len() - 1]) })?);
     }
 
-    pub fn traced_assertions_assert_equals_push_in_allocation_array(expected: &Vec<PushInAllocation>, actual: &Vec<PushInAllocation>, message: Option<String>) -> Result<(), TracedAssertionsAssertEqualsPushInAllocationArrayFault> {
+    pub fn traced_assertions_assert_equals_push_in_allocation_array(expected: &Vec<PushInAllocation>, actual: &Vec<PushInAllocation>, message: Option<UString>) -> Result<(), TracedAssertionsAssertEqualsPushInAllocationArrayFault> {
         let expected_text = TracedAssertions::traced_assertions_render_push_in_allocations(&expected).map_err(|e| TracedAssertionsAssertEqualsPushInAllocationArrayFault::UStringFaultFault(e))?;
         let actual_text = TracedAssertions::traced_assertions_render_push_in_allocations(&actual).map_err(|e| TracedAssertionsAssertEqualsPushInAllocationArrayFault::UStringFaultFault(e))?;
-        let _ = TracedAssertions::traced_assertions_record_event(&"eq", &vec![
-    Some(TracedAssertions::traced_assertions_field(&"expected", expected_text.as_str())),
-    Some(TracedAssertions::traced_assertions_field(&"actual", actual_text.as_str())),
-    TracedAssertions::traced_assertions_msg_field(match &(message) { Some(v) => Some(v.to_string()), None => None }.clone()).map_err(|e| TracedAssertionsAssertEqualsPushInAllocationArrayFault::UStringFaultFault(e))?,
+        let _ = TracedAssertions::traced_assertions_record_event(UStr::new(&[101,113]), &vec![
+    Some(TracedAssertions::traced_assertions_field(UStr::new(&[101,120,112,101,99,116,101,100]), expected_text.as_ustr())),
+    Some(TracedAssertions::traced_assertions_field(UStr::new(&[97,99,116,117,97,108]), actual_text.as_ustr())),
+    TracedAssertions::traced_assertions_msg_field(match &(message) { Some(v) => Some(v.to_ustring()), None => None }.clone()).map_err(|e| TracedAssertionsAssertEqualsPushInAllocationArrayFault::UStringFaultFault(e))?,
 ]).map_err(|e| TracedAssertionsAssertEqualsPushInAllocationArrayFault::UStringFaultFault(e))?;
         if expected_text != actual_text {
-            let _ = TracedAssertions::traced_assertions_fail(Some(match &(message) { None => "Expected arrays to be equal.".to_string(), Some(__option110) => __option110.to_string() }.to_string()), None).map_err(|e|
-TracedAssertionsAssertEqualsPushInAllocationArrayFault::FailFault(e))?;
+            let _ = TracedAssertions::traced_assertions_fail(Some((match &(message) { None => UString::from("Expected arrays to be equal."), Some(__option110) => __option110.to_ustring() }).to_ustring()), None).map_err(|e| TracedAssertionsAssertEqualsPushInAllocationArrayFault::FailFault(e))?;
         }
         Ok(())
     }
 
-    pub fn traced_assertions_assert_equals_bopomofo_reading(expected: BopomofoReading, actual: BopomofoReading, message: Option<String>) -> Result<(), TracedAssertionsFailFault> {
-        let _ = TracedAssertions::traced_assertions_record_event(&"eq", &vec![
-    Some(TracedAssertions::traced_assertions_field(&"expected", expected.to_string().as_str())),
-    Some(TracedAssertions::traced_assertions_field(&"actual", actual.to_string().as_str())),
-    TracedAssertions::traced_assertions_msg_field(match &(message) { Some(v) => Some(v.to_string()), None => None }.clone()).map_err(|e| TracedAssertionsFailFault::UStringFaultFault(e))?,
+    pub fn traced_assertions_assert_equals_bopomofo_reading(expected: BopomofoReading, actual: BopomofoReading, message: Option<UString>) -> Result<(), TracedAssertionsFailFault> {
+        let _ = TracedAssertions::traced_assertions_record_event(UStr::new(&[101,113]), &vec![
+    Some(TracedAssertions::traced_assertions_field(UStr::new(&[101,120,112,101,99,116,101,100]), UString::from(format!("{}", expected.to_string()).as_str()).as_ustr())),
+    Some(TracedAssertions::traced_assertions_field(UStr::new(&[97,99,116,117,97,108]), UString::from(format!("{}", actual.to_string()).as_str()).as_ustr())),
+    TracedAssertions::traced_assertions_msg_field(match &(message) { Some(v) => Some(v.to_ustring()), None => None }.clone()).map_err(|e| TracedAssertionsFailFault::UStringFaultFault(e))?,
 ]).map_err(|e| TracedAssertionsFailFault::UStringFaultFault(e))?;
         if !TracedAssertions::traced_assertions_same_string_array(&expected.symbols, &actual.symbols) || expected.tone != actual.tone {
-            let _ = TracedAssertions::traced_assertions_fail(Some(match &(message) { None => "Expected values to be equal.".to_string(), Some(__option112) => __option112.to_string() }.to_string()), None)?;
+            let _ = TracedAssertions::traced_assertions_fail(Some((match &(message) { None => UString::from("Expected values to be equal."), Some(__option112) => __option112.to_ustring() }).to_ustring()), None)?;
         }
         Ok(())
     }
 
-    pub fn traced_assertions_assert_equals_punctuation_class(expected: PunctuationClass, actual: PunctuationClass, message: Option<String>) -> Result<(), TracedAssertionsFailFault> {
-        let _ = TracedAssertions::traced_assertions_record_event(&"eq", &vec![
-    Some(TracedAssertions::traced_assertions_field(&"expected", expected.name().to_string().as_str())),
-    Some(TracedAssertions::traced_assertions_field(&"actual", actual.name().to_string().as_str())),
-    TracedAssertions::traced_assertions_msg_field(match &(message) { Some(v) => Some(v.to_string()), None => None }.clone()).map_err(|e| TracedAssertionsFailFault::UStringFaultFault(e))?,
+    pub fn traced_assertions_assert_equals_punctuation_class(expected: PunctuationClass, actual: PunctuationClass, message: Option<UString>) -> Result<(), TracedAssertionsFailFault> {
+        let _ = TracedAssertions::traced_assertions_record_event(UStr::new(&[101,113]), &vec![
+    Some(TracedAssertions::traced_assertions_field(UStr::new(&[101,120,112,101,99,116,101,100]), UString::from(expected.name()).as_ustr())),
+    Some(TracedAssertions::traced_assertions_field(UStr::new(&[97,99,116,117,97,108]), UString::from(actual.name()).as_ustr())),
+    TracedAssertions::traced_assertions_msg_field(match &(message) { Some(v) => Some(v.to_ustring()), None => None }.clone()).map_err(|e| TracedAssertionsFailFault::UStringFaultFault(e))?,
 ]).map_err(|e| TracedAssertionsFailFault::UStringFaultFault(e))?;
         if expected != actual {
-            let _ = TracedAssertions::traced_assertions_fail(Some(match &(message) { None => "Expected values to be equal.".to_string(), Some(__option114) => __option114.to_string() }.to_string()), None)?;
+            let _ = TracedAssertions::traced_assertions_fail(Some((match &(message) { None => UString::from("Expected values to be equal."), Some(__option114) => __option114.to_ustring() }).to_ustring()), None)?;
         }
         Ok(())
     }
 
-    pub fn traced_assertions_assert_equals_glue_side(expected: GlueSide, actual: GlueSide, message: Option<String>) -> Result<(), TracedAssertionsFailFault> {
-        let _ = TracedAssertions::traced_assertions_record_event(&"eq", &vec![
-    Some(TracedAssertions::traced_assertions_field(&"expected", expected.name().to_string().as_str())),
-    Some(TracedAssertions::traced_assertions_field(&"actual", actual.name().to_string().as_str())),
-    TracedAssertions::traced_assertions_msg_field(match &(message) { Some(v) => Some(v.to_string()), None => None }.clone()).map_err(|e| TracedAssertionsFailFault::UStringFaultFault(e))?,
+    pub fn traced_assertions_assert_equals_glue_side(expected: GlueSide, actual: GlueSide, message: Option<UString>) -> Result<(), TracedAssertionsFailFault> {
+        let _ = TracedAssertions::traced_assertions_record_event(UStr::new(&[101,113]), &vec![
+    Some(TracedAssertions::traced_assertions_field(UStr::new(&[101,120,112,101,99,116,101,100]), UString::from(expected.name()).as_ustr())),
+    Some(TracedAssertions::traced_assertions_field(UStr::new(&[97,99,116,117,97,108]), UString::from(actual.name()).as_ustr())),
+    TracedAssertions::traced_assertions_msg_field(match &(message) { Some(v) => Some(v.to_ustring()), None => None }.clone()).map_err(|e| TracedAssertionsFailFault::UStringFaultFault(e))?,
 ]).map_err(|e| TracedAssertionsFailFault::UStringFaultFault(e))?;
         if expected != actual {
-            let _ = TracedAssertions::traced_assertions_fail(Some(match &(message) { None => "Expected values to be equal.".to_string(), Some(__option116) => __option116.to_string() }.to_string()), None)?;
+            let _ = TracedAssertions::traced_assertions_fail(Some((match &(message) { None => UString::from("Expected values to be equal."), Some(__option116) => __option116.to_ustring() }).to_ustring()), None)?;
         }
         Ok(())
     }
 
-    pub fn traced_assertions_assert_equals_punctuation_glue_placement(expected: PunctuationGluePlacement, actual: PunctuationGluePlacement, message: Option<String>) -> Result<(), TracedAssertionsFailFault> {
-        let _ = TracedAssertions::traced_assertions_record_event(&"eq", &vec![
-    Some(TracedAssertions::traced_assertions_field(&"expected", expected.name().to_string().as_str())),
-    Some(TracedAssertions::traced_assertions_field(&"actual", actual.name().to_string().as_str())),
-    TracedAssertions::traced_assertions_msg_field(match &(message) { Some(v) => Some(v.to_string()), None => None }.clone()).map_err(|e| TracedAssertionsFailFault::UStringFaultFault(e))?,
+    pub fn traced_assertions_assert_equals_punctuation_glue_placement(expected: PunctuationGluePlacement, actual: PunctuationGluePlacement, message: Option<UString>) -> Result<(), TracedAssertionsFailFault> {
+        let _ = TracedAssertions::traced_assertions_record_event(UStr::new(&[101,113]), &vec![
+    Some(TracedAssertions::traced_assertions_field(UStr::new(&[101,120,112,101,99,116,101,100]), UString::from(expected.name()).as_ustr())),
+    Some(TracedAssertions::traced_assertions_field(UStr::new(&[97,99,116,117,97,108]), UString::from(actual.name()).as_ustr())),
+    TracedAssertions::traced_assertions_msg_field(match &(message) { Some(v) => Some(v.to_ustring()), None => None }.clone()).map_err(|e| TracedAssertionsFailFault::UStringFaultFault(e))?,
 ]).map_err(|e| TracedAssertionsFailFault::UStringFaultFault(e))?;
         if expected != actual {
-            let _ = TracedAssertions::traced_assertions_fail(Some(match &(message) { None => "Expected values to be equal.".to_string(), Some(__option118) => __option118.to_string() }.to_string()), None)?;
+            let _ = TracedAssertions::traced_assertions_fail(Some((match &(message) { None => UString::from("Expected values to be equal."), Some(__option118) => __option118.to_ustring() }).to_ustring()), None)?;
         }
         Ok(())
     }
 
-    pub fn traced_assertions_assert_equals_kinsoku_level(expected: KinsokuLevel, actual: KinsokuLevel, message: Option<String>) -> Result<(), TracedAssertionsFailFault> {
-        let _ = TracedAssertions::traced_assertions_record_event(&"eq", &vec![
-    Some(TracedAssertions::traced_assertions_field(&"expected", expected.name().to_string().as_str())),
-    Some(TracedAssertions::traced_assertions_field(&"actual", actual.name().to_string().as_str())),
-    TracedAssertions::traced_assertions_msg_field(match &(message) { Some(v) => Some(v.to_string()), None => None }.clone()).map_err(|e| TracedAssertionsFailFault::UStringFaultFault(e))?,
+    pub fn traced_assertions_assert_equals_kinsoku_level(expected: KinsokuLevel, actual: KinsokuLevel, message: Option<UString>) -> Result<(), TracedAssertionsFailFault> {
+        let _ = TracedAssertions::traced_assertions_record_event(UStr::new(&[101,113]), &vec![
+    Some(TracedAssertions::traced_assertions_field(UStr::new(&[101,120,112,101,99,116,101,100]), UString::from(expected.name()).as_ustr())),
+    Some(TracedAssertions::traced_assertions_field(UStr::new(&[97,99,116,117,97,108]), UString::from(actual.name()).as_ustr())),
+    TracedAssertions::traced_assertions_msg_field(match &(message) { Some(v) => Some(v.to_ustring()), None => None }.clone()).map_err(|e| TracedAssertionsFailFault::UStringFaultFault(e))?,
 ]).map_err(|e| TracedAssertionsFailFault::UStringFaultFault(e))?;
         if expected != actual {
-            let _ = TracedAssertions::traced_assertions_fail(Some(match &(message) { None => "Expected values to be equal.".to_string(), Some(__option120) => __option120.to_string() }.to_string()), None)?;
+            let _ = TracedAssertions::traced_assertions_fail(Some((match &(message) { None => UString::from("Expected values to be equal."), Some(__option120) => __option120.to_ustring() }).to_ustring()), None)?;
         }
         Ok(())
     }
 
-    pub fn traced_assertions_assert_equals_hanging_punctuation_style(expected: HangingPunctuationStyle, actual: HangingPunctuationStyle, message: Option<String>) -> Result<(), TracedAssertionsFailFault> {
-        let _ = TracedAssertions::traced_assertions_record_event(&"eq", &vec![
-    Some(TracedAssertions::traced_assertions_field(&"expected", expected.name().to_string().as_str())),
-    Some(TracedAssertions::traced_assertions_field(&"actual", actual.name().to_string().as_str())),
-    TracedAssertions::traced_assertions_msg_field(match &(message) { Some(v) => Some(v.to_string()), None => None }.clone()).map_err(|e| TracedAssertionsFailFault::UStringFaultFault(e))?,
+    pub fn traced_assertions_assert_equals_hanging_punctuation_style(expected: HangingPunctuationStyle, actual: HangingPunctuationStyle, message: Option<UString>) -> Result<(), TracedAssertionsFailFault> {
+        let _ = TracedAssertions::traced_assertions_record_event(UStr::new(&[101,113]), &vec![
+    Some(TracedAssertions::traced_assertions_field(UStr::new(&[101,120,112,101,99,116,101,100]), UString::from(expected.name()).as_ustr())),
+    Some(TracedAssertions::traced_assertions_field(UStr::new(&[97,99,116,117,97,108]), UString::from(actual.name()).as_ustr())),
+    TracedAssertions::traced_assertions_msg_field(match &(message) { Some(v) => Some(v.to_ustring()), None => None }.clone()).map_err(|e| TracedAssertionsFailFault::UStringFaultFault(e))?,
 ]).map_err(|e| TracedAssertionsFailFault::UStringFaultFault(e))?;
         if expected != actual {
-            let _ = TracedAssertions::traced_assertions_fail(Some(match &(message) { None => "Expected values to be equal.".to_string(), Some(__option122) => __option122.to_string() }.to_string()), None)?;
+            let _ = TracedAssertions::traced_assertions_fail(Some((match &(message) { None => UString::from("Expected values to be equal."), Some(__option122) => __option122.to_ustring() }).to_ustring()), None)?;
         }
         Ok(())
     }
 
-    pub fn traced_assertions_assert_equals_clreq_profile(expected: ClreqProfile, actual: ClreqProfile, message: Option<String>) -> Result<(), TracedAssertionsFailFault> {
-        let _ = TracedAssertions::traced_assertions_record_event(&"eq", &vec![
-    Some(TracedAssertions::traced_assertions_field(&"expected", TestTraceRender::test_trace_render_cap(expected.to_string().as_str()).map_err(|e| TracedAssertionsFailFault::UStringFaultFault(e))?.as_str())),
-    Some(TracedAssertions::traced_assertions_field(&"actual", TestTraceRender::test_trace_render_cap(actual.to_string().as_str()).map_err(|e| TracedAssertionsFailFault::UStringFaultFault(e))?.as_str())),
-    TracedAssertions::traced_assertions_msg_field(match &(message) { Some(v) => Some(v.to_string()), None => None }.clone()).map_err(|e| TracedAssertionsFailFault::UStringFaultFault(e))?,
+    pub fn traced_assertions_assert_equals_clreq_profile(expected: ClreqProfile, actual: ClreqProfile, message: Option<UString>) -> Result<(), TracedAssertionsFailFault> {
+        let _ = TracedAssertions::traced_assertions_record_event(UStr::new(&[101,113]), &vec![
+    Some(TracedAssertions::traced_assertions_field(UStr::new(&[101,120,112,101,99,116,101,100]), TestTraceRender::test_trace_render_cap(UString::from(format!("{}", expected.to_string()).as_str()).as_ustr()).map_err(|e| TracedAssertionsFailFault::UStringFaultFault(e))?.as_ustr())),
+
+    Some(TracedAssertions::traced_assertions_field(UStr::new(&[97,99,116,117,97,108]), TestTraceRender::test_trace_render_cap(UString::from(format!("{}", actual.to_string()).as_str()).as_ustr()).map_err(|e| TracedAssertionsFailFault::UStringFaultFault(e))?.as_ustr())),
+    TracedAssertions::traced_assertions_msg_field(match &(message) { Some(v) => Some(v.to_ustring()), None => None }.clone()).map_err(|e| TracedAssertionsFailFault::UStringFaultFault(e))?,
 ]).map_err(|e| TracedAssertionsFailFault::UStringFaultFault(e))?;
         if !ClreqProfile::clreq_profile_same_profile((expected).clone(), (actual).clone()) {
-            let _ = TracedAssertions::traced_assertions_fail(Some(match &(message) { None => "Expected values to be equal.".to_string(), Some(__option124) => __option124.to_string() }.to_string()), None)?;
+            let _ = TracedAssertions::traced_assertions_fail(Some((match &(message) { None => UString::from("Expected values to be equal."), Some(__option124) => __option124.to_ustring() }).to_ustring()), None)?;
         }
         Ok(())
     }
 
-    pub(crate) fn traced_assertions_same_string_array(first: &[String], second: &[String]) -> bool {
+    pub(crate) fn traced_assertions_same_string_array(first: &[UString], second: &[UString]) -> bool {
         if u32::try_from((first.len()) & 0xFFFF_FFFF).unwrap_or(0) != u32::try_from((second.len()) & 0xFFFF_FFFF).unwrap_or(0) {
             return false;
         }
         let mut index = 0u32;
-        while (i32::from_ne_bytes((index).to_ne_bytes())) < (i32::from_ne_bytes((u32::try_from((first.len()) & 0xFFFF_FFFF).unwrap_or(0)).to_ne_bytes())) {
+        while (i32::from_ne_bytes(((index) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((first.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
             if first[usize::try_from(index).unwrap_or(0)].clone() != (second[usize::try_from(index).unwrap_or(0)]).clone() {
                 return false;
             }
@@ -2249,110 +2625,110 @@ TracedAssertionsAssertEqualsPushInAllocationArrayFault::FailFault(e))?;
         return TestHelpers::test_helpers_f32_literal(value);
     }
 
-    pub fn traced_assertions_assert_equals_float(expected: f64, actual: f64, message: Option<String>) -> Result<(), TracedAssertionsFailFault> {
-        let _ = TracedAssertions::traced_assertions_record_event(&"eq", &vec![
-    Some(TracedAssertions::traced_assertions_field(&"expected", TestTraceRender::test_trace_render_render_float(expected).map_err(|e| TracedAssertionsFailFault::UStringFaultFault(e))?.as_str())),
-    Some(TracedAssertions::traced_assertions_field(&"actual", TestTraceRender::test_trace_render_render_float(actual).map_err(|e| TracedAssertionsFailFault::UStringFaultFault(e))?.as_str())),
-    TracedAssertions::traced_assertions_msg_field(match &(message) { Some(v) => Some(v.to_string()), None => None }.clone()).map_err(|e| TracedAssertionsFailFault::UStringFaultFault(e))?,
+    pub fn traced_assertions_assert_equals_float(expected: f64, actual: f64, message: Option<UString>) -> Result<(), TracedAssertionsFailFault> {
+        let _ = TracedAssertions::traced_assertions_record_event(UStr::new(&[101,113]), &vec![
+    Some(TracedAssertions::traced_assertions_field(UStr::new(&[101,120,112,101,99,116,101,100]), TestTraceRender::test_trace_render_render_float(expected).map_err(|e| TracedAssertionsFailFault::UStringFaultFault(e))?.as_ustr())),
+    Some(TracedAssertions::traced_assertions_field(UStr::new(&[97,99,116,117,97,108]), TestTraceRender::test_trace_render_render_float(actual).map_err(|e| TracedAssertionsFailFault::UStringFaultFault(e))?.as_ustr())),
+    TracedAssertions::traced_assertions_msg_field(match &(message) { Some(v) => Some(v.to_ustring()), None => None }.clone()).map_err(|e| TracedAssertionsFailFault::UStringFaultFault(e))?,
 ]).map_err(|e| TracedAssertionsFailFault::UStringFaultFault(e))?;
         if expected != actual {
-            let _ = TracedAssertions::traced_assertions_fail(Some(match &(message) { None => "Expected values to be equal.".to_string(), Some(__option126) => __option126.to_string() }.to_string()), None)?;
+            let _ = TracedAssertions::traced_assertions_fail(Some((match &(message) { None => UString::from("Expected values to be equal."), Some(__option126) => __option126.to_ustring() }).to_ustring()), None)?;
         }
         Ok(())
     }
 
-    pub fn traced_assertions_assert_equals_float_tolerance(expected: f64, actual: f64, tolerance: f64, message: Option<String>) -> Result<(), TracedAssertionsFailFault> {
-        let _ = TracedAssertions::traced_assertions_record_event(&"eq-tol", &vec![
-    Some(TracedAssertions::traced_assertions_field(&"expected", TestTraceRender::test_trace_render_render_float(expected).map_err(|e| TracedAssertionsFailFault::UStringFaultFault(e))?.as_str())),
-    Some(TracedAssertions::traced_assertions_field(&"actual", TestTraceRender::test_trace_render_render_float(actual).map_err(|e| TracedAssertionsFailFault::UStringFaultFault(e))?.as_str())),
-    Some(TracedAssertions::traced_assertions_field(&"tol", TestTraceRender::test_trace_render_render_float(tolerance).map_err(|e| TracedAssertionsFailFault::UStringFaultFault(e))?.as_str())),
-    TracedAssertions::traced_assertions_msg_field(match &(message) { Some(v) => Some(v.to_string()), None => None }.clone()).map_err(|e| TracedAssertionsFailFault::UStringFaultFault(e))?,
+    pub fn traced_assertions_assert_equals_float_tolerance(expected: f64, actual: f64, tolerance: f64, message: Option<UString>) -> Result<(), TracedAssertionsFailFault> {
+        let _ = TracedAssertions::traced_assertions_record_event(UStr::new(&[101,113,45,116,111,108]), &vec![
+    Some(TracedAssertions::traced_assertions_field(UStr::new(&[101,120,112,101,99,116,101,100]), TestTraceRender::test_trace_render_render_float(expected).map_err(|e| TracedAssertionsFailFault::UStringFaultFault(e))?.as_ustr())),
+    Some(TracedAssertions::traced_assertions_field(UStr::new(&[97,99,116,117,97,108]), TestTraceRender::test_trace_render_render_float(actual).map_err(|e| TracedAssertionsFailFault::UStringFaultFault(e))?.as_ustr())),
+    Some(TracedAssertions::traced_assertions_field(UStr::new(&[116,111,108]), TestTraceRender::test_trace_render_render_float(tolerance).map_err(|e| TracedAssertionsFailFault::UStringFaultFault(e))?.as_ustr())),
+    TracedAssertions::traced_assertions_msg_field(match &(message) { Some(v) => Some(v.to_ustring()), None => None }.clone()).map_err(|e| TracedAssertionsFailFault::UStringFaultFault(e))?,
 ]).map_err(|e| TracedAssertionsFailFault::UStringFaultFault(e))?;
         if expected != expected || actual != actual || ((expected - actual).abs()) > (tolerance) {
-            let _ = TracedAssertions::traced_assertions_fail(Some(match &(message) { None => "Expected values to be equal within tolerance.".to_string(), Some(__option128) => __option128.to_string() }.to_string()), None)?;
+            let _ = TracedAssertions::traced_assertions_fail(Some((match &(message) { None => UString::from("Expected values to be equal within tolerance."), Some(__option128) => __option128.to_ustring() }).to_ustring()), None)?;
         }
         Ok(())
     }
 
-    pub fn traced_assertions_assert_equals_rendered(expected: &str, actual: &str, message: Option<String>) -> Result<(), TracedAssertionsFailFault> {
+    pub fn traced_assertions_assert_equals_rendered(expected: &UStr, actual: &UStr, message: Option<UString>) -> Result<(), TracedAssertionsFailFault> {
         let expected_text = TestTraceRender::test_trace_render_cap(expected).map_err(|e| TracedAssertionsFailFault::UStringFaultFault(e))?;
         let actual_text = TestTraceRender::test_trace_render_cap(actual).map_err(|e| TracedAssertionsFailFault::UStringFaultFault(e))?;
-        let _ = TracedAssertions::traced_assertions_record_event(&"eq", &vec![
-    Some(TracedAssertions::traced_assertions_field(&"expected", expected_text.as_str())),
-    Some(TracedAssertions::traced_assertions_field(&"actual", actual_text.as_str())),
-    TracedAssertions::traced_assertions_msg_field(match &(message) { Some(v) => Some(v.to_string()), None => None }.clone()).map_err(|e| TracedAssertionsFailFault::UStringFaultFault(e))?,
+        let _ = TracedAssertions::traced_assertions_record_event(UStr::new(&[101,113]), &vec![
+    Some(TracedAssertions::traced_assertions_field(UStr::new(&[101,120,112,101,99,116,101,100]), expected_text.as_ustr())),
+    Some(TracedAssertions::traced_assertions_field(UStr::new(&[97,99,116,117,97,108]), actual_text.as_ustr())),
+    TracedAssertions::traced_assertions_msg_field(match &(message) { Some(v) => Some(v.to_ustring()), None => None }.clone()).map_err(|e| TracedAssertionsFailFault::UStringFaultFault(e))?,
 ]).map_err(|e| TracedAssertionsFailFault::UStringFaultFault(e))?;
         if expected_text != actual_text {
-            let _ = TracedAssertions::traced_assertions_fail(Some(match &(message) { None => "Expected rendered values to be equal.".to_string(), Some(__option130) => __option130.to_string() }.to_string()), None)?;
+            let _ = TracedAssertions::traced_assertions_fail(Some((match &(message) { None => UString::from("Expected rendered values to be equal."), Some(__option130) => __option130.to_ustring() }).to_ustring()), None)?;
         }
         Ok(())
     }
 
-    pub fn traced_assertions_assert_equals_int(expected: u32, actual: u32, message: Option<String>) -> Result<(), TracedAssertionsFailFault> {
-        let _ = TracedAssertions::traced_assertions_record_event(&"eq", &vec![
-    Some(TracedAssertions::traced_assertions_field(&"expected", TestTraceRender::test_trace_render_render_int(expected).map_err(|e| TracedAssertionsFailFault::UStringFaultFault(e))?.as_str())),
-    Some(TracedAssertions::traced_assertions_field(&"actual", TestTraceRender::test_trace_render_render_int(actual).map_err(|e| TracedAssertionsFailFault::UStringFaultFault(e))?.as_str())),
-    TracedAssertions::traced_assertions_msg_field(match &(message) { Some(v) => Some(v.to_string()), None => None }.clone()).map_err(|e| TracedAssertionsFailFault::UStringFaultFault(e))?,
+    pub fn traced_assertions_assert_equals_int(expected: u32, actual: u32, message: Option<UString>) -> Result<(), TracedAssertionsFailFault> {
+        let _ = TracedAssertions::traced_assertions_record_event(UStr::new(&[101,113]), &vec![
+    Some(TracedAssertions::traced_assertions_field(UStr::new(&[101,120,112,101,99,116,101,100]), TestTraceRender::test_trace_render_render_int(expected).map_err(|e| TracedAssertionsFailFault::UStringFaultFault(e))?.as_ustr())),
+    Some(TracedAssertions::traced_assertions_field(UStr::new(&[97,99,116,117,97,108]), TestTraceRender::test_trace_render_render_int(actual).map_err(|e| TracedAssertionsFailFault::UStringFaultFault(e))?.as_ustr())),
+    TracedAssertions::traced_assertions_msg_field(match &(message) { Some(v) => Some(v.to_ustring()), None => None }.clone()).map_err(|e| TracedAssertionsFailFault::UStringFaultFault(e))?,
 ]).map_err(|e| TracedAssertionsFailFault::UStringFaultFault(e))?;
         if expected != actual {
-            let _ = TracedAssertions::traced_assertions_fail(Some(match &(message) { None => "Expected values to be equal.".to_string(), Some(__option132) => __option132.to_string() }.to_string()), None)?;
+            let _ = TracedAssertions::traced_assertions_fail(Some((match &(message) { None => UString::from("Expected values to be equal."), Some(__option132) => __option132.to_ustring() }).to_ustring()), None)?;
         }
         Ok(())
     }
 
-    pub fn traced_assertions_assert_true(actual: bool, message: Option<String>) -> Result<(), TracedAssertionsFailFault> {
-        let _ = TracedAssertions::traced_assertions_record_event(&"is-true", &vec![
-    Some(TracedAssertions::traced_assertions_field(&"actual", TestTraceRender::test_trace_render_render_bool(actual).map_err(|e| TracedAssertionsFailFault::UStringFaultFault(e))?.as_str())),
-    TracedAssertions::traced_assertions_msg_field(match &(message) { Some(v) => Some(v.to_string()), None => None }.clone()).map_err(|e| TracedAssertionsFailFault::UStringFaultFault(e))?,
+    pub fn traced_assertions_assert_true(actual: bool, message: Option<UString>) -> Result<(), TracedAssertionsFailFault> {
+        let _ = TracedAssertions::traced_assertions_record_event(UStr::new(&[105,115,45,116,114,117,101]), &vec![
+    Some(TracedAssertions::traced_assertions_field(UStr::new(&[97,99,116,117,97,108]), TestTraceRender::test_trace_render_render_bool(actual).map_err(|e| TracedAssertionsFailFault::UStringFaultFault(e))?.as_ustr())),
+    TracedAssertions::traced_assertions_msg_field(match &(message) { Some(v) => Some(v.to_ustring()), None => None }.clone()).map_err(|e| TracedAssertionsFailFault::UStringFaultFault(e))?,
 ]).map_err(|e| TracedAssertionsFailFault::UStringFaultFault(e))?;
         if !actual {
-            let _ = TracedAssertions::traced_assertions_fail(Some(match &(message) { None => "Expected value to be true.".to_string(), Some(__option134) => __option134.to_string() }.to_string()), None)?;
+            let _ = TracedAssertions::traced_assertions_fail(Some((match &(message) { None => UString::from("Expected value to be true."), Some(__option134) => __option134.to_ustring() }).to_ustring()), None)?;
         }
         Ok(())
     }
 
-    pub fn traced_assertions_assert_false(actual: bool, message: Option<String>) -> Result<(), TracedAssertionsFailFault> {
-        let _ = TracedAssertions::traced_assertions_record_event(&"is-false", &vec![
-    Some(TracedAssertions::traced_assertions_field(&"actual", TestTraceRender::test_trace_render_render_bool(actual).map_err(|e| TracedAssertionsFailFault::UStringFaultFault(e))?.as_str())),
-    TracedAssertions::traced_assertions_msg_field(match &(message) { Some(v) => Some(v.to_string()), None => None }.clone()).map_err(|e| TracedAssertionsFailFault::UStringFaultFault(e))?,
+    pub fn traced_assertions_assert_false(actual: bool, message: Option<UString>) -> Result<(), TracedAssertionsFailFault> {
+        let _ = TracedAssertions::traced_assertions_record_event(UStr::new(&[105,115,45,102,97,108,115,101]), &vec![
+    Some(TracedAssertions::traced_assertions_field(UStr::new(&[97,99,116,117,97,108]), TestTraceRender::test_trace_render_render_bool(actual).map_err(|e| TracedAssertionsFailFault::UStringFaultFault(e))?.as_ustr())),
+    TracedAssertions::traced_assertions_msg_field(match &(message) { Some(v) => Some(v.to_ustring()), None => None }.clone()).map_err(|e| TracedAssertionsFailFault::UStringFaultFault(e))?,
 ]).map_err(|e| TracedAssertionsFailFault::UStringFaultFault(e))?;
         if actual {
-            let _ = TracedAssertions::traced_assertions_fail(Some(match &(message) { None => "Expected value to be false.".to_string(), Some(__option136) => __option136.to_string() }.to_string()), None)?;
+            let _ = TracedAssertions::traced_assertions_fail(Some((match &(message) { None => UString::from("Expected value to be false."), Some(__option136) => __option136.to_ustring() }).to_ustring()), None)?;
         }
         Ok(())
     }
 
-    pub fn traced_assertions_assert_null_rendered(was_null: bool, rendered_actual: &str, message: Option<String>) -> Result<(), TracedAssertionsFailFault> {
-        let _ = TracedAssertions::traced_assertions_record_event(&"null", &vec![
-    Some(TracedAssertions::traced_assertions_field(&"actual", rendered_actual)),
-    TracedAssertions::traced_assertions_msg_field(match &(message) { Some(v) => Some(v.to_string()), None => None }.clone()).map_err(|e| TracedAssertionsFailFault::UStringFaultFault(e))?,
+    pub fn traced_assertions_assert_null_rendered(was_null: bool, rendered_actual: &UStr, message: Option<UString>) -> Result<(), TracedAssertionsFailFault> {
+        let _ = TracedAssertions::traced_assertions_record_event(UStr::new(&[110,117,108,108]), &vec![
+    Some(TracedAssertions::traced_assertions_field(UStr::new(&[97,99,116,117,97,108]), rendered_actual)),
+    TracedAssertions::traced_assertions_msg_field(match &(message) { Some(v) => Some(v.to_ustring()), None => None }.clone()).map_err(|e| TracedAssertionsFailFault::UStringFaultFault(e))?,
 ]).map_err(|e| TracedAssertionsFailFault::UStringFaultFault(e))?;
         if !was_null {
-            let _ = TracedAssertions::traced_assertions_fail(Some(match &(message) { None => "Expected value to be null.".to_string(), Some(__option138) => __option138.to_string() }.to_string()), None)?;
+            let _ = TracedAssertions::traced_assertions_fail(Some((match &(message) { None => UString::from("Expected value to be null."), Some(__option138) => __option138.to_ustring() }).to_ustring()), None)?;
         }
         Ok(())
     }
 
-    pub fn traced_assertions_assert_not_null_rendered(was_not_null: bool, rendered_actual: &str, message: Option<String>) -> Result<(), TracedAssertionsFailFault> {
-        let _ = TracedAssertions::traced_assertions_record_event(&"not-null", &vec![
-    Some(TracedAssertions::traced_assertions_field(&"actual", rendered_actual)),
-    TracedAssertions::traced_assertions_msg_field(match &(message) { Some(v) => Some(v.to_string()), None => None }.clone()).map_err(|e| TracedAssertionsFailFault::UStringFaultFault(e))?,
+    pub fn traced_assertions_assert_not_null_rendered(was_not_null: bool, rendered_actual: &UStr, message: Option<UString>) -> Result<(), TracedAssertionsFailFault> {
+        let _ = TracedAssertions::traced_assertions_record_event(UStr::new(&[110,111,116,45,110,117,108,108]), &vec![
+    Some(TracedAssertions::traced_assertions_field(UStr::new(&[97,99,116,117,97,108]), rendered_actual)),
+    TracedAssertions::traced_assertions_msg_field(match &(message) { Some(v) => Some(v.to_ustring()), None => None }.clone()).map_err(|e| TracedAssertionsFailFault::UStringFaultFault(e))?,
 ]).map_err(|e| TracedAssertionsFailFault::UStringFaultFault(e))?;
         if !was_not_null {
-            let _ = TracedAssertions::traced_assertions_fail(Some(match &(message) { None => "Expected value to be non-null.".to_string(), Some(__option140) => __option140.to_string() }.to_string()), None)?;
+            let _ = TracedAssertions::traced_assertions_fail(Some((match &(message) { None => UString::from("Expected value to be non-null."), Some(__option140) => __option140.to_ustring() }).to_ustring()), None)?;
         }
         Ok(())
     }
 
-    pub fn traced_assertions_record_rendered_not_null(rendered_actual: &str, message: Option<String>) -> Result<(), UStringFault> {
-        let _ = TracedAssertions::traced_assertions_record_event(&"not-null", &vec![
-    Some(TracedAssertions::traced_assertions_field(&"actual", rendered_actual)),
-    TracedAssertions::traced_assertions_msg_field(match &(message) { Some(v) => Some(v.to_string()), None => None }.clone())?,
+    pub fn traced_assertions_record_rendered_not_null(rendered_actual: &UStr, message: Option<UString>) -> Result<(), UStringFault> {
+        let _ = TracedAssertions::traced_assertions_record_event(UStr::new(&[110,111,116,45,110,117,108,108]), &vec![
+    Some(TracedAssertions::traced_assertions_field(UStr::new(&[97,99,116,117,97,108]), rendered_actual)),
+    TracedAssertions::traced_assertions_msg_field(match &(message) { Some(v) => Some(v.to_ustring()), None => None }.clone())?,
 ])?;
         Ok(())
     }
 
-    pub fn traced_assertions_assert_fails_with(message: Option<String>, block: Arc<dyn Fn() -> () + Send + Sync>) -> Result<TextRangeError, TracedAssertionsAssertFailsWithFault> {
+    pub fn traced_assertions_assert_fails_with(message: Option<UString>, block: Arc<dyn Fn() -> () + Send + Sync>) -> Result<TextRangeError, TracedAssertionsAssertFailsWithFault> {
         let mut caught: Option<TextRangeError> = None;
         let mut derived = false;
         let __outcome: Result<(), TextRangeError> = (|| {
@@ -2363,7 +2739,7 @@ TracedAssertionsAssertEqualsPushInAllocationArrayFault::FailFault(e))?;
             match __outcome1 {
                 Ok(_) => {}
                 Err(__caught) => {
-                        let error = TextRangeError::Message { text: __caught.message.clone() };
+                        let error = TextRangeError::Message { text: UString::from(format!("{}", __caught.message.clone()).as_str()) };
                         caught = Some(error.clone());
                         derived = true;
                 }
@@ -2379,23 +2755,23 @@ TracedAssertionsAssertEqualsPushInAllocationArrayFault::FailFault(e))?;
         }
         match &(caught) {
             Some(__option141) => {
-                let _ = TracedAssertions::traced_assertions_record_event(&"raises", &vec![
-    Some(TracedAssertions::traced_assertions_field(&"exception", if derived { "IllegalStateException".to_string() } else { "TiqianIllegalArgumentException".to_string() }.as_str())),
-    Some(TracedAssertions::traced_assertions_field(&"thrown", TestTraceRender::test_trace_render_render_string(format!("{}", __option141).as_str()).map_err(|e| TracedAssertionsAssertFailsWithFault::UStringFaultFault(e))?.as_str())),
-    TracedAssertions::traced_assertions_msg_field(match &(message) { Some(v) => Some(v.to_string()), None => None }.clone()).map_err(|e| TracedAssertionsAssertFailsWithFault::UStringFaultFault(e))?,
+                let _ = TracedAssertions::traced_assertions_record_event(UStr::new(&[114,97,105,115,101,115]), &vec![
+    Some(TracedAssertions::traced_assertions_field(UStr::new(&[101,120,99,101,112,116,105,111,110]), if derived { UString::from("IllegalStateException") } else { UString::from("TiqianIllegalArgumentException") }.as_ustr())),
+    Some(TracedAssertions::traced_assertions_field(UStr::new(&[116,104,114,111,119,110]), TestTraceRender::test_trace_render_render_string(UString::from(format!("{}", format!("{}", __option141)).as_str()).as_ustr()).map_err(|e| TracedAssertionsAssertFailsWithFault::UStringFaultFault(e))?.as_ustr())),
+    TracedAssertions::traced_assertions_msg_field(match &(message) { Some(v) => Some(v.to_ustring()), None => None }.clone()).map_err(|e| TracedAssertionsAssertFailsWithFault::UStringFaultFault(e))?,
 ]).map_err(|e| TracedAssertionsAssertFailsWithFault::UStringFaultFault(e))?;
                 return Ok((__option141).clone());
             }
             None => {
             }
         }
-        let _ = TracedAssertions::traced_assertions_record_event(&"fail", &vec![
-    TracedAssertions::traced_assertions_msg_field(match &(message) { Some(v) => Some(v.to_string()), None => None }.clone()).map_err(|e| TracedAssertionsAssertFailsWithFault::UStringFaultFault(e))?,
+        let _ = TracedAssertions::traced_assertions_record_event(UStr::new(&[102,97,105,108]), &vec![
+    TracedAssertions::traced_assertions_msg_field(match &(message) { Some(v) => Some(v.to_ustring()), None => None }.clone()).map_err(|e| TracedAssertionsAssertFailsWithFault::UStringFaultFault(e))?,
 ]).map_err(|e| TracedAssertionsAssertFailsWithFault::UStringFaultFault(e))?;
-        return Err(TracedAssertionsAssertFailsWithFault::TraceAssertionErrorFault(TraceAssertionError::AssertionFailed { message: match &(message) { None => "Expected an exception.".to_string(), Some(__option142) => __option142.to_string() }.to_string() }));
+        return Err(TracedAssertionsAssertFailsWithFault::TraceAssertionErrorFault(TraceAssertionError::AssertionFailed { message: match &(message) { None => UString::from("Expected an exception."), Some(__option142) => __option142.to_ustring() }.to_ustring() }));
     }
 
-    pub fn traced_assertions_assert_fails_with_no_such_element(message: Option<String>, block: Arc<dyn Fn() -> () + Send + Sync>) -> Result<NoSuchElementError, TracedAssertionsAssertFailsWithNoSuchElementFault> {
+    pub fn traced_assertions_assert_fails_with_no_such_element(message: Option<UString>, block: Arc<dyn Fn() -> () + Send + Sync>) -> Result<NoSuchElementError, TracedAssertionsAssertFailsWithNoSuchElementFault> {
         let __outcome2: Result<(), NoSuchElementError> = (|| {
             block();
             Ok(())
@@ -2403,85 +2779,95 @@ TracedAssertionsAssertEqualsPushInAllocationArrayFault::FailFault(e))?;
         match __outcome2 {
             Ok(_) => {}
             Err(error) => {
-                let _ = TracedAssertions::traced_assertions_record_event(&"raises", &vec![
-    Some(TracedAssertions::traced_assertions_field(&"exception", &"TiqianNoSuchElementException")),
-    Some(TracedAssertions::traced_assertions_field(&"thrown", TestTraceRender::test_trace_render_render_string(format!("{}", error).as_str()).map_err(|e| TracedAssertionsAssertFailsWithNoSuchElementFault::UStringFaultFault(e))?.as_str())),
-    TracedAssertions::traced_assertions_msg_field(match &(message) { Some(v) => Some(v.to_string()), None => None }.clone()).map_err(|e| TracedAssertionsAssertFailsWithNoSuchElementFault::UStringFaultFault(e))?,
+                let _ = TracedAssertions::traced_assertions_record_event(UStr::new(&[114,97,105,115,101,115]), &vec![
+    Some(TracedAssertions::traced_assertions_field(UStr::new(&[101,120,99,101,112,116,105,111,110]), UStr::new(&[84,105,113,105,97,110,78,111,83,117,99,104,69,108,101,109,101,110,116,69,120,99,101,112,116,105,111,110]))),
+    Some(TracedAssertions::traced_assertions_field(UStr::new(&[116,104,114,111,119,110]), TestTraceRender::test_trace_render_render_string(UString::from(format!("{}", format!("{}", error)).as_str()).as_ustr()).map_err(|e| TracedAssertionsAssertFailsWithNoSuchElementFault::UStringFaultFault(e))?.as_ustr())),
+    TracedAssertions::traced_assertions_msg_field(match &(message) { Some(v) => Some(v.to_ustring()), None => None }.clone()).map_err(|e| TracedAssertionsAssertFailsWithNoSuchElementFault::UStringFaultFault(e))?,
 ]).map_err(|e| TracedAssertionsAssertFailsWithNoSuchElementFault::UStringFaultFault(e))?;
                 return Ok(error);
             }
         }
-        let _ = TracedAssertions::traced_assertions_record_event(&"fail", &vec![
-    TracedAssertions::traced_assertions_msg_field(match &(message) { Some(v) => Some(v.to_string()), None => None }.clone()).map_err(|e| TracedAssertionsAssertFailsWithNoSuchElementFault::UStringFaultFault(e))?,
+        let _ = TracedAssertions::traced_assertions_record_event(UStr::new(&[102,97,105,108]), &vec![
+    TracedAssertions::traced_assertions_msg_field(match &(message) { Some(v) => Some(v.to_ustring()), None => None }.clone()).map_err(|e| TracedAssertionsAssertFailsWithNoSuchElementFault::UStringFaultFault(e))?,
 ]).map_err(|e| TracedAssertionsAssertFailsWithNoSuchElementFault::UStringFaultFault(e))?;
-        return Err(TracedAssertionsAssertFailsWithNoSuchElementFault::TraceAssertionErrorFault(TraceAssertionError::AssertionFailed { message: match &(message) { None => "Expected an exception.".to_string(), Some(__option143) => __option143.to_string() }.to_string() }));
+        return Err(TracedAssertionsAssertFailsWithNoSuchElementFault::TraceAssertionErrorFault(TraceAssertionError::AssertionFailed { message: match &(message) { None => UString::from("Expected an exception."), Some(__option143) => __option143.to_ustring() }.to_ustring() }));
     }
 
-    pub fn traced_assertions_fail(message: Option<String>, _cause: Option<Exception>) -> Result<(), TracedAssertionsFailFault> {
-        let text = match &(message) { None => "Assertion failed.".to_string(), Some(__option144) => __option144.to_string() };
-        let _ = TracedAssertions::traced_assertions_record_event(&"fail", &vec![
-    TracedAssertions::traced_assertions_msg_field(match &(message) { Some(v) => Some(v.to_string()), None => None }.clone()).map_err(|e| TracedAssertionsFailFault::UStringFaultFault(e))?,
+    pub fn traced_assertions_fail(message: Option<UString>, _cause: Option<Exception>) -> Result<(), TracedAssertionsFailFault> {
+        let text = match &(message) { None => UString::from("Assertion failed."), Some(__option144) => __option144.to_ustring() };
+        let _ = TracedAssertions::traced_assertions_record_event(UStr::new(&[102,97,105,108]), &vec![
+    TracedAssertions::traced_assertions_msg_field(match &(message) { Some(v) => Some(v.to_ustring()), None => None }.clone()).map_err(|e| TracedAssertionsFailFault::UStringFaultFault(e))?,
 ]).map_err(|e| TracedAssertionsFailFault::UStringFaultFault(e))?;
-        return Err(TracedAssertionsFailFault::TraceAssertionErrorFault(TraceAssertionError::AssertionFailed { message: text.to_string() }));
+        return Err(TracedAssertionsFailFault::TraceAssertionErrorFault(TraceAssertionError::AssertionFailed { message: text.to_ustring() }));
     }
 
     pub fn traced_assertions_assert_does_not_throw<T: Clone>(block: Arc<dyn Fn() -> T + Send + Sync>) -> Result<T, UStringFault> {
         let result = block();
-        let _ = TracedAssertions::traced_assertions_record_event(&"no-throw", &vec![])?;
+        let _ = TracedAssertions::traced_assertions_record_event(UStr::new(&[110,111,45,116,104,114,111,119]), &vec![])?;
         return Ok((result).clone());
     }
 
-    pub(crate) fn traced_assertions_record_event(name: &str, fields: &Vec<Option<TraceField>>) -> Result<(), UStringFault> {
+    pub(crate) fn traced_assertions_record_event(name: &UStr, fields: &Vec<Option<TraceField>>) -> Result<(), UStringFault> {
         if !TestTrace::TEST_TRACE_UPDATE_MODE {
             return Ok(());
         }
         let mut line = Vec::<u16>::new();
         if let Some(&unit) = line.last() {
             if unit >= 55296 && unit <= 56319 && !name.is_empty() {
-                return Err(UStringFault::UnpairedSurrogate { unit: u32::from(unit) });
+                if !name.encode_utf16().next().map_or(false, |head| head >= 56320 && head <= 57343) {
+                    return Err(UStringFault::UnpairedSurrogate { unit: u32::from(unit) });
+                }
             }
         }
         line.extend(name.encode_utf16());
         let mut index = 0u32;
-        while (i32::from_ne_bytes((index).to_ne_bytes())) < (i32::from_ne_bytes((u32::try_from((fields.len()) & 0xFFFF_FFFF).unwrap_or(0)).to_ne_bytes())) {
+        while (i32::from_ne_bytes(((index) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((fields.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
             let current = (fields[usize::try_from(index).unwrap_or(0)]).clone();
             match &(current) {
                 Some(__option145) => {
                     if let Some(&unit) = line.last() {
-                        if unit >= 55296 && unit <= 56319 && !" ".is_empty() {
-                            return Err(UStringFault::UnpairedSurrogate { unit: u32::from(unit) });
+                        if unit >= 55296 && unit <= 56319 && !UString::from(" ").is_empty() {
+                            if !UString::from(" ").encode_utf16().next().map_or(false, |head| head >= 56320 && head <= 57343) {
+                                return Err(UStringFault::UnpairedSurrogate { unit: u32::from(unit) });
+                            }
                         }
                     }
-                    line.extend(" ".encode_utf16());
+                    line.extend(UString::from(" ").encode_utf16());
                     if let Some(&unit) = line.last() {
-                        if unit >= 55296 && unit <= 56319 && !(__option145.key).to_string().is_empty() {
-                            return Err(UStringFault::UnpairedSurrogate { unit: u32::from(unit) });
+                        if unit >= 55296 && unit <= 56319 && !(__option145.key).to_ustring().is_empty() {
+                            if !(__option145.key).to_ustring().encode_utf16().next().map_or(false, |head| head >= 56320 && head <= 57343) {
+                                return Err(UStringFault::UnpairedSurrogate { unit: u32::from(unit) });
+                            }
                         }
                     }
-                    line.extend((__option145.key).to_string().encode_utf16());
+                    line.extend((__option145.key).to_ustring().encode_utf16());
                     if let Some(&unit) = line.last() {
-                        if unit >= 55296 && unit <= 56319 && !"=".is_empty() {
-                            return Err(UStringFault::UnpairedSurrogate { unit: u32::from(unit) });
+                        if unit >= 55296 && unit <= 56319 && !UString::from("=").is_empty() {
+                            if !UString::from("=").encode_utf16().next().map_or(false, |head| head >= 56320 && head <= 57343) {
+                                return Err(UStringFault::UnpairedSurrogate { unit: u32::from(unit) });
+                            }
                         }
                     }
-                    line.extend("=".encode_utf16());
+                    line.extend(UString::from("=").encode_utf16());
                     if let Some(&unit) = line.last() {
-                        if unit >= 55296 && unit <= 56319 && !TestTraceRender::test_trace_render_canonical_numbers((__option145.value).to_string().as_str())?.is_empty() {
-                            return Err(UStringFault::UnpairedSurrogate { unit: u32::from(unit) });
+                        if unit >= 55296 && unit <= 56319 && !TestTraceRender::test_trace_render_canonical_numbers((__option145.value).to_ustring().as_ustr())?.is_empty() {
+                            if !TestTraceRender::test_trace_render_canonical_numbers((__option145.value).to_ustring().as_ustr())?.encode_utf16().next().map_or(false, |head| head >= 56320 && head <= 57343) {
+                                return Err(UStringFault::UnpairedSurrogate { unit: u32::from(unit) });
+                            }
                         }
                     }
-                    line.extend(TestTraceRender::test_trace_render_canonical_numbers((__option145.value).to_string().as_str())?.encode_utf16());
+                    line.extend(TestTraceRender::test_trace_render_canonical_numbers((__option145.value).to_ustring().as_ustr())?.encode_utf16());
                 }
                 None => {
                 }
             }
             index = u32::wrapping_add(index, 1);
         }
-        let rendered = String::from_utf16(line.as_slice()).map_err(|_| UStringFault::UnpairedSurrogate { unit: u32::from(line[line.len() - 1]) })?;
+        let rendered = UString::from_utf16(line.as_slice()).map_err(|_| UStringFault::UnpairedSurrogate { unit: u32::from(line[line.len() - 1]) })?;
         let recorder = TestTrace::test_trace_current_recorder();
         match &(recorder) {
             Some(__option146) => {
-                let _ = __option146.record(rendered.as_str())?;
+                let _ = __option146.record(rendered.as_ustr())?;
             }
             None => {
             }
@@ -2489,18 +2875,14 @@ TracedAssertionsAssertEqualsPushInAllocationArrayFault::FailFault(e))?;
         Ok(())
     }
 
-    pub(crate) fn traced_assertions_field(key: &str, value: &str) -> TraceField {
-        return TraceField { key: key.to_string(), value: value.to_string() };
+    pub(crate) fn traced_assertions_field(key: &UStr, value: &UStr) -> TraceField {
+        return TraceField { key: key.to_ustring(), value: value.to_ustring() };
     }
 
-    pub(crate) fn traced_assertions_msg_field(message: Option<String>) -> Result<Option<TraceField>, UStringFault> {
+    pub(crate) fn traced_assertions_msg_field(message: Option<UString>) -> Result<Option<TraceField>, UStringFault> {
         if message.is_none() {
             return Ok(None);
         }
-        return Ok(Some(TracedAssertions::traced_assertions_field(&"msg", format!("{}{}{}",
-            "'",
-            TestTraceRender::test_trace_render_escape_operand((message).as_deref().unwrap_or(""))?,
-            "'"
-        ).as_str())));
+        return Ok(Some(TracedAssertions::traced_assertions_field(UStr::new(&[109,115,103]), UString::from(format!("{}", { let mut __s = UString::new(); __s += &(UString::from("'")); __s += TestTraceRender::test_trace_render_escape_operand((message).as_deref().unwrap_or(UStr::new(&[])))?.as_ustr(); __s += &(UString::from("'")); __s }).as_str()).as_ustr())));
     }
 }

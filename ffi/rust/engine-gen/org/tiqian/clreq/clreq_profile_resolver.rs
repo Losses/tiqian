@@ -32,8 +32,7 @@ impl BuiltInClreqProfileResolver {
     }
 
     pub fn resolve(&self, profile_id: LayoutProfileId) -> ClreqProfile {
-        if profile_id.value.to_string() == ((*crate::org::tiqian::core::built_in_layout_profiles::BUILT_IN_LAYOUT_PROFILES_CLREQ_HORIZONTAL).clone().value).to_string() || (profile_id.value).to_string() ==
-((*crate::org::tiqian::clreq::clreq_profile::CLREQ_PROFILE_MAINLAND_HORIZONTAL).clone().id).to_string() {
+        if profile_id.value.to_ustring() == ((*crate::org::tiqian::core::built_in_layout_profiles::BUILT_IN_LAYOUT_PROFILES_CLREQ_HORIZONTAL).clone().value).to_ustring() || (profile_id.value).to_ustring() == ((*crate::org::tiqian::clreq::clreq_profile::CLREQ_PROFILE_MAINLAND_HORIZONTAL).clone().id).to_ustring() {
             return ((*crate::org::tiqian::clreq::clreq_profile::CLREQ_PROFILE_MAINLAND_HORIZONTAL).clone()).clone();
         }
         return ((*crate::org::tiqian::clreq::clreq_profile::CLREQ_PROFILE_MAINLAND_HORIZONTAL).clone()).clone();
@@ -52,8 +51,7 @@ impl ClreqProfileResolver for BuiltInClreqProfileResolver {
     }
 
     fn resolve(&self, profile_id: LayoutProfileId) -> ClreqProfile {
-        if profile_id.value.to_string() == ((*crate::org::tiqian::core::built_in_layout_profiles::BUILT_IN_LAYOUT_PROFILES_CLREQ_HORIZONTAL).clone().value).to_string() || (profile_id.value).to_string() ==
-((*crate::org::tiqian::clreq::clreq_profile::CLREQ_PROFILE_MAINLAND_HORIZONTAL).clone().id).to_string() {
+        if profile_id.value.to_ustring() == ((*crate::org::tiqian::core::built_in_layout_profiles::BUILT_IN_LAYOUT_PROFILES_CLREQ_HORIZONTAL).clone().value).to_ustring() || (profile_id.value).to_ustring() == ((*crate::org::tiqian::clreq::clreq_profile::CLREQ_PROFILE_MAINLAND_HORIZONTAL).clone().id).to_ustring() {
             return ((*crate::org::tiqian::clreq::clreq_profile::CLREQ_PROFILE_MAINLAND_HORIZONTAL).clone()).clone();
         }
         return ((*crate::org::tiqian::clreq::clreq_profile::CLREQ_PROFILE_MAINLAND_HORIZONTAL).clone()).clone();

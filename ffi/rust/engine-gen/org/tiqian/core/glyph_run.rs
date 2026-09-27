@@ -1,40 +1,33 @@
 use crate::org::tiqian::core::glyph::Glyph;
 use crate::org::tiqian::core::text_range::TextRange;
+use crate::runtime::u_string::UStr;
+use crate::runtime::u_string::UString;
 use std::fmt::Write;
 
 
 #[derive(Debug, Clone, PartialEq)]
 pub struct GlyphRun {
     pub range: TextRange,
-    pub font_key: String,
+    pub font_key: UString,
     pub glyphs: Vec<Glyph>,
     pub advance: f64,
-    pub open_type_features: Vec<String>,
+    pub open_type_features: Vec<UString>,
 }
 
 impl GlyphRun {
-    pub fn new(range: TextRange, font_key: &str, glyphs: Vec<Glyph>, advance: f64, open_type_features: Option<Vec<String>>) -> Self {
+    pub fn new(range: TextRange, font_key: &UStr, glyphs: Vec<Glyph>, advance: f64, open_type_features: Option<Vec<UString>>) -> Self {
         let open_type_features = open_type_features.unwrap_or_else(|| vec![]);
         Self {
             range,
-            font_key: font_key.to_string(),
+            font_key: font_key.to_ustring(),
             glyphs,
             advance,
             open_type_features: open_type_features,
         }
     }
 
-    pub fn to_string(&self) -> String {
-        return format!("{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}",
-            "GlyphRun(",
-            "range=",
-            (self.range).clone().to_string(),
-            ", ",
-            "fontKey=",
-            (self.font_key).to_string(),
-            ", ",
-            "glyphs=",
-            {
+    pub fn to_string(&self) -> UString {
+        return UString::from(format!("{}", { let mut __s = UString::new(); __s += &(UString::from("GlyphRun(")); __s += &(UString::from("range=")); __s += UString::from(format!("{}", (self.range).clone().to_string()).as_str()).as_ustr(); __s += &(UString::from(", ")); __s += &(UString::from("fontKey=")); __s += (self.font_key).to_ustring().as_ustr(); __s += &(UString::from(", ")); __s += &(UString::from("glyphs=")); __s += UString::from(format!("{}", {
         let mut out = String::new();
         out.push('[');
         let arr = (self.glyphs).clone();
@@ -47,13 +40,7 @@ impl GlyphRun {
         }
         out.push(']');
         out
-    },
-            ", ",
-            "advance=",
-            self.advance,
-            ", ",
-            "openTypeFeatures=",
-            {
+    }).as_str()).as_ustr(); __s += &(UString::from(", ")); __s += &(UString::from("advance=")); __s += &(crate::runtime::fp_helper::FPHelper::format_float(self.advance)); __s += &(UString::from(", ")); __s += &(UString::from("openTypeFeatures=")); __s += UString::from(format!("{}", {
         let mut out = String::new();
         out.push('[');
         let arr = (self.open_type_features).clone();
@@ -66,8 +53,6 @@ impl GlyphRun {
         }
         out.push(']');
         out
-    },
-            ")"
-        );
+    }).as_str()).as_ustr(); __s += &(UString::from(")")); __s }).as_str());
     }
 }

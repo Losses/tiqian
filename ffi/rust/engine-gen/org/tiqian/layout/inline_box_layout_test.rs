@@ -6,6 +6,8 @@ use crate::org::tiqian::layout::inline_box_layout_test_support::InlineBoxLayoutT
 use crate::org::tiqian::test::trace::test_trace_recorder::TestTraceRecorder;
 use crate::org::tiqian::test::trace::traced_assertions::TracedAssertions;
 use crate::runtime::test as testlib;
+use crate::runtime::u_string::UStr;
+use crate::runtime::u_string::UString;
 
 
 #[derive(Debug, Clone, PartialEq)]
@@ -14,6 +16,16 @@ pub enum InlineBoxLayoutTestInlineEdgesReserveAdvanceAndMoveTheGlyphOriginFault 
     UStringFaultFault(crate::std::u_string_exception::UStringFault),
     ParagraphLayoutEngineNewFaultFault(crate::org::tiqian::layout::paragraph_layout_engine::ParagraphLayoutEngineNewFault),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
+}
+impl std::fmt::Display for InlineBoxLayoutTestInlineEdgesReserveAdvanceAndMoveTheGlyphOriginFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            InlineBoxLayoutTestInlineEdgesReserveAdvanceAndMoveTheGlyphOriginFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            InlineBoxLayoutTestInlineEdgesReserveAdvanceAndMoveTheGlyphOriginFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            InlineBoxLayoutTestInlineEdgesReserveAdvanceAndMoveTheGlyphOriginFault::ParagraphLayoutEngineNewFaultFault(value) => write!(formatter, "{}", value),
+            InlineBoxLayoutTestInlineEdgesReserveAdvanceAndMoveTheGlyphOriginFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
 }
 
 impl From<InlineBoxLayoutTestInlineEdgesReserveAdvanceAndMoveTheGlyphOriginFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
@@ -83,6 +95,16 @@ pub enum InlineBoxLayoutTestEveryNarrowInlineBoxGetsOuterAutospaceWithoutRoleSpe
     ParagraphLayoutEngineNewFaultFault(crate::org::tiqian::layout::paragraph_layout_engine::ParagraphLayoutEngineNewFault),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
 }
+impl std::fmt::Display for InlineBoxLayoutTestEveryNarrowInlineBoxGetsOuterAutospaceWithoutRoleSpecificCodeFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            InlineBoxLayoutTestEveryNarrowInlineBoxGetsOuterAutospaceWithoutRoleSpecificCodeFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            InlineBoxLayoutTestEveryNarrowInlineBoxGetsOuterAutospaceWithoutRoleSpecificCodeFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            InlineBoxLayoutTestEveryNarrowInlineBoxGetsOuterAutospaceWithoutRoleSpecificCodeFault::ParagraphLayoutEngineNewFaultFault(value) => write!(formatter, "{}", value),
+            InlineBoxLayoutTestEveryNarrowInlineBoxGetsOuterAutospaceWithoutRoleSpecificCodeFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
+}
 
 impl From<InlineBoxLayoutTestEveryNarrowInlineBoxGetsOuterAutospaceWithoutRoleSpecificCodeFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
     fn from(value: InlineBoxLayoutTestEveryNarrowInlineBoxGetsOuterAutospaceWithoutRoleSpecificCodeFault) -> Self {
@@ -147,8 +169,8 @@ impl From<crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFa
 #[test]
 fn inline_edges_reserve_advance_and_move_the_glyph_origin() {
     testlib::run("org.tiqian.layout.InlineBoxLayoutTest.inlineEdgesReserveAdvanceAndMoveTheGlyphOrigin", "org.tiqian.layout.InlineBoxLayoutTest.inlineEdgesReserveAdvanceAndMoveTheGlyphOrigin", || {
-        let mut t = TestTraceRecorder::new("InlineBoxLayoutTest");
-        t.section(&"inlineEdgesReserveAdvanceAndMoveTheGlyphOrigin");
+        let mut t = TestTraceRecorder::new(&(UStr::new(&[73,110,108,105,110,101,66,111,120,76,97,121,111,117,116,84,101,115,116])));
+        t.section(UStr::new(&[105,110,108,105,110,101,69,100,103,101,115,82,101,115,101,114,118,101,65,100,118,97,110,99,101,65,110,100,77,111,118,101,84,104,101,71,108,121,112,104,79,114,105,103,105,110]));
         let plain = InlineBoxLayoutTestSupport::inline_box_layout_test_support_plain().unwrap();
         let boxed = InlineBoxLayoutTestSupport::inline_box_layout_test_support_boxed_edges().unwrap();
         let p = (plain.clusters[1usize]).clone();
@@ -158,33 +180,33 @@ fn inline_edges_reserve_advance_and_move_the_glyph_origin() {
         let _ = TracedAssertions::traced_assertions_assert_equals_float_tolerance(3 as f64, b.leading_layout_advance, 0.001f64, None).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_equals_float_tolerance(positioned.left + format!("{}", (3i32)).parse::<f64>().unwrap_or(0.0), positioned.draw_x, 0.001f64, None).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_equals_int(1, u32::try_from(((boxed.debug).clone().inline_box_decisions.len()) & 0xFFFF_FFFF).unwrap_or(0), None).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_equals_string(&"InlineBoxBoundaryAdvance", (((boxed.debug).clone().inline_box_decisions[0usize]).clone().reason).to_string().as_str(), None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_equals_string(UStr::new(&[73,110,108,105,110,101,66,111,120,66,111,117,110,100,97,114,121,65,100,118,97,110,99,101]), (((boxed.debug).clone().inline_box_decisions[0usize]).clone().reason).to_ustring().as_ustr(), None).unwrap();
     });
 }
 
 #[test]
 fn every_narrow_inline_box_gets_outer_autospace_without_role_specific_code() {
     testlib::run("org.tiqian.layout.InlineBoxLayoutTest.everyNarrowInlineBoxGetsOuterAutospaceWithoutRoleSpecificCode", "org.tiqian.layout.InlineBoxLayoutTest.everyNarrowInlineBoxGetsOuterAutospaceWithoutRoleSpecificCode", || {
-        let mut t = TestTraceRecorder::new("InlineBoxLayoutTest");
-        t.section(&"everyNarrowInlineBoxGetsOuterAutospaceWithoutRoleSpecificCode");
+        let mut t = TestTraceRecorder::new(&(UStr::new(&[73,110,108,105,110,101,66,111,120,76,97,121,111,117,116,84,101,115,116])));
+        t.section(UStr::new(&[101,118,101,114,121,78,97,114,114,111,119,73,110,108,105,110,101,66,111,120,71,101,116,115,79,117,116,101,114,65,117,116,111,115,112,97,99,101,87,105,116,104,111,117,116,82,111,108,101,83,112,101,99,105,102,105,99,67,111,100,101]));
         let boxed = InlineBoxLayoutTestSupport::inline_box_layout_test_support_layout(InlineBoxOuterSpacing::Narrow).unwrap();
-        let mut reasons: Vec<String> = vec![];
+        let mut reasons: Vec<UString> = vec![];
         let mut roles = true;
         for _g_index in 0..match u32::try_from((boxed.debug).clone().auto_space_decisions.len()) { Ok(value) => value, Err(_) => u32::MAX } {
             let d = ((boxed.debug).clone().auto_space_decisions[usize::try_from(_g_index).unwrap_or(0)]).clone();
-            reasons.push((d.reason).to_string());
-            if d.boundary_role.to_string() != "InlineBox.Narrow" {
+            reasons.push((d.reason).to_ustring());
+            if d.boundary_role.to_ustring() != UString::from("InlineBox.Narrow") {
                 roles = false;
             }
         }
         let _ = TracedAssertions::traced_assertions_assert_equals_string_array(&vec![
-    "InlineBoxOuterAutoSpace:leading-W-N".to_string(),
-    "InlineBoxOuterAutoSpace:trailing-N-W".to_string(),
+    UString::from("InlineBoxOuterAutoSpace:leading-W-N").to_ustring(),
+    UString::from("InlineBoxOuterAutoSpace:trailing-N-W").to_ustring(),
 ], &reasons, None).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_true(roles, None).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_equals_string(&"Narrow", (((boxed.debug).clone().inline_box_decisions[0usize]).clone().outer_spacing).to_string().as_str(), None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_equals_string(UStr::new(&[78,97,114,114,111,119]), (((boxed.debug).clone().inline_box_decisions[0usize]).clone().outer_spacing).to_ustring().as_ustr(), None).unwrap();
         let source = InlineBoxLayoutTestSupport::inline_box_layout_test_support_layout(InlineBoxOuterSpacing::Source).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_true(u32::try_from(((source.debug).clone().auto_space_decisions.len()) & 0xFFFF_FFFF).unwrap_or(0) == 0, None).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_equals_string(&"Source", (((source.debug).clone().inline_box_decisions[0usize]).clone().outer_spacing).to_string().as_str(), None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_equals_string(UStr::new(&[83,111,117,114,99,101]), (((source.debug).clone().inline_box_decisions[0usize]).clone().outer_spacing).to_ustring().as_ustr(), None).unwrap();
     });
 }

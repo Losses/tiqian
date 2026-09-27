@@ -6,6 +6,8 @@ use crate::org::tiqian::protocol::table_probe::TableProbe;
 use crate::org::tiqian::protocol::value_row::ValueRow;
 use crate::runtime::bytes_buffer::BytesBuffer;
 use crate::runtime::fp_helper::FPHelper;
+use crate::runtime::u_string::UStr;
+use crate::runtime::u_string::UString;
 
 
 #[derive(Clone, Copy)]
@@ -18,7 +20,7 @@ impl SnapshotTableBinary {
 
     pub fn snapshot_table_binary_encode_data(data: TableData) -> Vec<u8> {
         let mut writer = TableWriter::new();
-        writer.raw(&"TIQTBL03".as_bytes().to_vec());
+        writer.raw(&UString::from("TIQTBL03").as_bytes().to_vec());
         writer.u32(data.replay_string_count);
         writer.u32(u32::try_from((data.strings.len()) & 0xFFFF_FFFF).unwrap_or(0));
         writer.u32(u32::try_from((data.metric_rows.len()) & 0xFFFF_FFFF).unwrap_or(0));
@@ -33,67 +35,67 @@ impl SnapshotTableBinary {
         writer.u32(u32::try_from((data.font_preload_texts.len()) & 0xFFFF_FFFF).unwrap_or(0));
         SnapshotTableBinary::snapshot_table_binary_write_text_region(&mut writer, &data.strings);
         let mut index_idx = 0u32;
-        while (i32::from_ne_bytes((index_idx).to_ne_bytes())) < (i32::from_ne_bytes((u32::try_from((data.metric_rows.len()) & 0xFFFF_FFFF).unwrap_or(0)).to_ne_bytes())) {
+        while (i32::from_ne_bytes(((index_idx) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((data.metric_rows.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
             writer.u32(data.metric_rows[usize::try_from(index_idx).unwrap_or(0)].families_ref);
             index_idx = u32::wrapping_add(index_idx, 1);
         }
         index_idx = 0u32;
-        while (i32::from_ne_bytes((index_idx).to_ne_bytes())) < (i32::from_ne_bytes((u32::try_from((data.metric_rows.len()) & 0xFFFF_FFFF).unwrap_or(0)).to_ne_bytes())) {
+        while (i32::from_ne_bytes(((index_idx) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((data.metric_rows.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
             writer.f64(data.metric_rows[usize::try_from(index_idx).unwrap_or(0)].weight);
             index_idx = u32::wrapping_add(index_idx, 1);
         }
         index_idx = 0u32;
-        while (i32::from_ne_bytes((index_idx).to_ne_bytes())) < (i32::from_ne_bytes((u32::try_from((data.metric_rows.len()) & 0xFFFF_FFFF).unwrap_or(0)).to_ne_bytes())) {
+        while (i32::from_ne_bytes(((index_idx) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((data.metric_rows.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
             writer.u8(data.metric_rows[usize::try_from(index_idx).unwrap_or(0)].italic);
             index_idx = u32::wrapping_add(index_idx, 1);
         }
         index_idx = 0u32;
-        while (i32::from_ne_bytes((index_idx).to_ne_bytes())) < (i32::from_ne_bytes((u32::try_from((data.metric_rows.len()) & 0xFFFF_FFFF).unwrap_or(0)).to_ne_bytes())) {
+        while (i32::from_ne_bytes(((index_idx) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((data.metric_rows.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
             writer.u32(data.metric_rows[usize::try_from(index_idx).unwrap_or(0)].role_ref);
             index_idx = u32::wrapping_add(index_idx, 1);
         }
         index_idx = 0u32;
-        while (i32::from_ne_bytes((index_idx).to_ne_bytes())) < (i32::from_ne_bytes((u32::try_from((data.metric_rows.len()) & 0xFFFF_FFFF).unwrap_or(0)).to_ne_bytes())) {
+        while (i32::from_ne_bytes(((index_idx) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((data.metric_rows.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
             writer.u32(data.metric_rows[usize::try_from(index_idx).unwrap_or(0)].face_selection_ref);
             index_idx = u32::wrapping_add(index_idx, 1);
         }
         index_idx = 0u32;
-        while (i32::from_ne_bytes((index_idx).to_ne_bytes())) < (i32::from_ne_bytes((u32::try_from((data.metric_rows.len()) & 0xFFFF_FFFF).unwrap_or(0)).to_ne_bytes())) {
+        while (i32::from_ne_bytes(((index_idx) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((data.metric_rows.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
             writer.u32(data.metric_rows[usize::try_from(index_idx).unwrap_or(0)].value_pool_ref);
             index_idx = u32::wrapping_add(index_idx, 1);
         }
         index_idx = 0u32;
-        while (i32::from_ne_bytes((index_idx).to_ne_bytes())) < (i32::from_ne_bytes((u32::try_from((data.value_pool.len()) & 0xFFFF_FFFF).unwrap_or(0)).to_ne_bytes())) {
+        while (i32::from_ne_bytes(((index_idx) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((data.value_pool.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
             SnapshotTableBinary::snapshot_table_binary_write_value_row(&mut writer, (data.value_pool[usize::try_from(index_idx).unwrap_or(0)]).clone());
             index_idx = u32::wrapping_add(index_idx, 1);
         }
         index_idx = 0u32;
-        while (i32::from_ne_bytes((index_idx).to_ne_bytes())) < (i32::from_ne_bytes((u32::try_from((data.probe_text_refs.len()) & 0xFFFF_FFFF).unwrap_or(0)).to_ne_bytes())) {
+        while (i32::from_ne_bytes(((index_idx) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((data.probe_text_refs.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
             writer.u32(data.probe_text_refs[usize::try_from(index_idx).unwrap_or(0)]);
             index_idx = u32::wrapping_add(index_idx, 1);
         }
         index_idx = 0u32;
-        while (i32::from_ne_bytes((index_idx).to_ne_bytes())) < (i32::from_ne_bytes((u32::try_from((data.probe_advance_refs.len()) & 0xFFFF_FFFF).unwrap_or(0)).to_ne_bytes())) {
+        while (i32::from_ne_bytes(((index_idx) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((data.probe_advance_refs.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
             writer.u16(data.probe_advance_refs[usize::try_from(index_idx).unwrap_or(0)]);
             index_idx = u32::wrapping_add(index_idx, 1);
         }
         index_idx = 0u32;
-        while (i32::from_ne_bytes((index_idx).to_ne_bytes())) < (i32::from_ne_bytes((u32::try_from((data.probe_style_refs.len()) & 0xFFFF_FFFF).unwrap_or(0)).to_ne_bytes())) {
+        while (i32::from_ne_bytes(((index_idx) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((data.probe_style_refs.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
             writer.u16(data.probe_style_refs[usize::try_from(index_idx).unwrap_or(0)]);
             index_idx = u32::wrapping_add(index_idx, 1);
         }
         index_idx = 0u32;
-        while (i32::from_ne_bytes((index_idx).to_ne_bytes())) < (i32::from_ne_bytes((u32::try_from((data.probe_feature_refs.len()) & 0xFFFF_FFFF).unwrap_or(0)).to_ne_bytes())) {
+        while (i32::from_ne_bytes(((index_idx) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((data.probe_feature_refs.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
             writer.u16(data.probe_feature_refs[usize::try_from(index_idx).unwrap_or(0)]);
             index_idx = u32::wrapping_add(index_idx, 1);
         }
         index_idx = 0u32;
-        while (i32::from_ne_bytes((index_idx).to_ne_bytes())) < (i32::from_ne_bytes((u32::try_from((data.advance_pool.len()) & 0xFFFF_FFFF).unwrap_or(0)).to_ne_bytes())) {
+        while (i32::from_ne_bytes(((index_idx) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((data.advance_pool.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
             writer.f64(data.advance_pool[usize::try_from(index_idx).unwrap_or(0)]);
             index_idx = u32::wrapping_add(index_idx, 1);
         }
         index_idx = 0u32;
-        while (i32::from_ne_bytes((index_idx).to_ne_bytes())) < (i32::from_ne_bytes((u32::try_from((data.style_font_size.len()) & 0xFFFF_FFFF).unwrap_or(0)).to_ne_bytes())) {
+        while (i32::from_ne_bytes(((index_idx) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((data.style_font_size.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
             writer.f64(data.style_font_size[usize::try_from(index_idx).unwrap_or(0)]);
             writer.f64(data.style_font_weight[usize::try_from(index_idx).unwrap_or(0)]);
             writer.u8(data.style_italic[usize::try_from(index_idx).unwrap_or(0)]);
@@ -102,12 +104,12 @@ impl SnapshotTableBinary {
             index_idx = u32::wrapping_add(index_idx, 1);
         }
         index_idx = 0u32;
-        while (i32::from_ne_bytes((index_idx).to_ne_bytes())) < (i32::from_ne_bytes((u32::try_from((data.features_pool.len()) & 0xFFFF_FFFF).unwrap_or(0)).to_ne_bytes())) {
+        while (i32::from_ne_bytes(((index_idx) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((data.features_pool.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
             writer.u32(u32::try_from((SnapshotTableBinary::snapshot_table_binary_feature_row_bytes(&(data.features_pool[usize::try_from(index_idx).unwrap_or(0)]).clone()).len()) & 0xFFFF_FFFF).unwrap_or(0));
             index_idx = u32::wrapping_add(index_idx, 1);
         }
         index_idx = 0u32;
-        while (i32::from_ne_bytes((index_idx).to_ne_bytes())) < (i32::from_ne_bytes((u32::try_from((data.features_pool.len()) & 0xFFFF_FFFF).unwrap_or(0)).to_ne_bytes())) {
+        while (i32::from_ne_bytes(((index_idx) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((data.features_pool.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
             writer.raw(&SnapshotTableBinary::snapshot_table_binary_feature_row_bytes(&(data.features_pool[usize::try_from(index_idx).unwrap_or(0)]).clone()));
             index_idx = u32::wrapping_add(index_idx, 1);
         }
@@ -115,14 +117,14 @@ impl SnapshotTableBinary {
         SnapshotTableBinary::snapshot_table_binary_write_text_region(&mut writer, &data.typography_texts);
         SnapshotTableBinary::snapshot_table_binary_write_text_region(&mut writer, &data.value_style_texts);
         SnapshotTableBinary::snapshot_table_binary_write_text_region(&mut writer, &data.font_preload_texts);
-        writer.raw(&(data.revision_text).to_string().as_bytes().to_vec());
+        writer.raw(&(data.revision_text).to_ustring().as_bytes().to_vec());
         return writer.finish();
     }
 
-    pub fn snapshot_table_binary_decode_into(bytes: &[u8], data: &mut TableData) -> String {
+    pub fn snapshot_table_binary_decode_into(bytes: &[u8], data: &mut TableData) -> UString {
         let mut reader = TableReader::new(bytes);
         if !reader.match_magic() {
-            return ((reader.issue).to_string()).clone();
+            return ((reader.issue).to_ustring()).clone();
         }
         data.replay_string_count = reader.u32();
         let string_count = reader.u32();
@@ -144,73 +146,72 @@ impl SnapshotTableBinary {
         let mut face_sel_refs: Vec<u32> = Vec::new();
         let mut pool_refs: Vec<u32> = Vec::new();
         let mut col_idx = 0u32;
-        while (i32::from_ne_bytes((col_idx).to_ne_bytes())) < (i32::from_ne_bytes((metric_count).to_ne_bytes())) {
+        while (i32::from_ne_bytes(((col_idx) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((metric_count) as i32).to_ne_bytes())) {
             fam_refs.push(reader.u32());
             col_idx = u32::wrapping_add(col_idx, 1);
         }
         col_idx = 0u32;
-        while (i32::from_ne_bytes((col_idx).to_ne_bytes())) < (i32::from_ne_bytes((metric_count).to_ne_bytes())) {
+        while (i32::from_ne_bytes(((col_idx) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((metric_count) as i32).to_ne_bytes())) {
             weights.push(reader.f64());
             col_idx = u32::wrapping_add(col_idx, 1);
         }
         col_idx = 0u32;
-        while (i32::from_ne_bytes((col_idx).to_ne_bytes())) < (i32::from_ne_bytes((metric_count).to_ne_bytes())) {
+        while (i32::from_ne_bytes(((col_idx) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((metric_count) as i32).to_ne_bytes())) {
             italics.push(reader.u8());
             col_idx = u32::wrapping_add(col_idx, 1);
         }
         col_idx = 0u32;
-        while (i32::from_ne_bytes((col_idx).to_ne_bytes())) < (i32::from_ne_bytes((metric_count).to_ne_bytes())) {
+        while (i32::from_ne_bytes(((col_idx) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((metric_count) as i32).to_ne_bytes())) {
             role_refs.push(reader.u32());
             col_idx = u32::wrapping_add(col_idx, 1);
         }
         col_idx = 0u32;
-        while (i32::from_ne_bytes((col_idx).to_ne_bytes())) < (i32::from_ne_bytes((metric_count).to_ne_bytes())) {
+        while (i32::from_ne_bytes(((col_idx) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((metric_count) as i32).to_ne_bytes())) {
             face_sel_refs.push(reader.u32());
             col_idx = u32::wrapping_add(col_idx, 1);
         }
         col_idx = 0u32;
-        while (i32::from_ne_bytes((col_idx).to_ne_bytes())) < (i32::from_ne_bytes((metric_count).to_ne_bytes())) {
+        while (i32::from_ne_bytes(((col_idx) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((metric_count) as i32).to_ne_bytes())) {
             pool_refs.push(reader.u32());
             col_idx = u32::wrapping_add(col_idx, 1);
         }
         col_idx = 0u32;
-        while (i32::from_ne_bytes((col_idx).to_ne_bytes())) < (i32::from_ne_bytes((metric_count).to_ne_bytes())) {
-            data.metric_rows.push(MetricEntry::new(fam_refs[usize::try_from(col_idx).unwrap_or(0)], weights[usize::try_from(col_idx).unwrap_or(0)], italics[usize::try_from(col_idx).unwrap_or(0)], role_refs[usize::try_from(col_idx).unwrap_or(0)],
-face_sel_refs[usize::try_from(col_idx).unwrap_or(0)], pool_refs[usize::try_from(col_idx).unwrap_or(0)]));
+        while (i32::from_ne_bytes(((col_idx) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((metric_count) as i32).to_ne_bytes())) {
+            data.metric_rows.push(MetricEntry::new(fam_refs[usize::try_from(col_idx).unwrap_or(0)], weights[usize::try_from(col_idx).unwrap_or(0)], italics[usize::try_from(col_idx).unwrap_or(0)], role_refs[usize::try_from(col_idx).unwrap_or(0)], face_sel_refs[usize::try_from(col_idx).unwrap_or(0)], pool_refs[usize::try_from(col_idx).unwrap_or(0)]));
             col_idx = u32::wrapping_add(col_idx, 1);
         }
         let mut index_idx = 0u32;
-        while (i32::from_ne_bytes((index_idx).to_ne_bytes())) < (i32::from_ne_bytes((value_pool_count).to_ne_bytes())) {
+        while (i32::from_ne_bytes(((index_idx) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((value_pool_count) as i32).to_ne_bytes())) {
             data.value_pool.push(SnapshotTableBinary::snapshot_table_binary_read_value_row(&mut reader));
             index_idx = u32::wrapping_add(index_idx, 1);
         }
         index_idx = 0u32;
-        while (i32::from_ne_bytes((index_idx).to_ne_bytes())) < (i32::from_ne_bytes((probe_count).to_ne_bytes())) {
+        while (i32::from_ne_bytes(((index_idx) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((probe_count) as i32).to_ne_bytes())) {
             data.probe_text_refs.push(reader.u32());
             index_idx = u32::wrapping_add(index_idx, 1);
         }
         index_idx = 0u32;
-        while (i32::from_ne_bytes((index_idx).to_ne_bytes())) < (i32::from_ne_bytes((probe_count).to_ne_bytes())) {
+        while (i32::from_ne_bytes(((index_idx) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((probe_count) as i32).to_ne_bytes())) {
             data.probe_advance_refs.push(reader.u16());
             index_idx = u32::wrapping_add(index_idx, 1);
         }
         index_idx = 0u32;
-        while (i32::from_ne_bytes((index_idx).to_ne_bytes())) < (i32::from_ne_bytes((probe_count).to_ne_bytes())) {
+        while (i32::from_ne_bytes(((index_idx) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((probe_count) as i32).to_ne_bytes())) {
             data.probe_style_refs.push(reader.u16());
             index_idx = u32::wrapping_add(index_idx, 1);
         }
         index_idx = 0u32;
-        while (i32::from_ne_bytes((index_idx).to_ne_bytes())) < (i32::from_ne_bytes((probe_count).to_ne_bytes())) {
+        while (i32::from_ne_bytes(((index_idx) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((probe_count) as i32).to_ne_bytes())) {
             data.probe_feature_refs.push(reader.u16());
             index_idx = u32::wrapping_add(index_idx, 1);
         }
         index_idx = 0u32;
-        while (i32::from_ne_bytes((index_idx).to_ne_bytes())) < (i32::from_ne_bytes((advance_pool_count).to_ne_bytes())) {
+        while (i32::from_ne_bytes(((index_idx) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((advance_pool_count) as i32).to_ne_bytes())) {
             data.advance_pool.push(reader.f64());
             index_idx = u32::wrapping_add(index_idx, 1);
         }
         index_idx = 0u32;
-        while (i32::from_ne_bytes((index_idx).to_ne_bytes())) < (i32::from_ne_bytes((style_pool_count).to_ne_bytes())) {
+        while (i32::from_ne_bytes(((index_idx) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((style_pool_count) as i32).to_ne_bytes())) {
             data.style_font_size.push(reader.f64());
             data.style_font_weight.push(reader.f64());
             data.style_italic.push(reader.u8());
@@ -219,7 +220,7 @@ face_sel_refs[usize::try_from(col_idx).unwrap_or(0)], pool_refs[usize::try_from(
             index_idx = u32::wrapping_add(index_idx, 1);
         }
         index_idx = 0u32;
-        while (i32::from_ne_bytes((index_idx).to_ne_bytes())) < (i32::from_ne_bytes((features_pool_count).to_ne_bytes())) {
+        while (i32::from_ne_bytes(((index_idx) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((features_pool_count) as i32).to_ne_bytes())) {
             reader.u32();
             index_idx = u32::wrapping_add(index_idx, 1);
         }
@@ -231,18 +232,18 @@ face_sel_refs[usize::try_from(col_idx).unwrap_or(0)], pool_refs[usize::try_from(
         data.value_style_texts = reader.text_region(value_style_count);
         data.font_preload_texts = reader.text_region(font_preload_count);
         if reader.failed {
-            return ((reader.issue).to_string()).clone();
+            return ((reader.issue).to_ustring()).clone();
         }
         data.revision_text = reader.rest_text();
         if reader.failed {
-            return ((reader.issue).to_string()).clone();
+            return ((reader.issue).to_ustring()).clone();
         }
-        return String::new();
+        return UString::new();
     }
 
     pub fn snapshot_table_binary_sort_metric_rows(rows: &mut Vec<MetricEntry>) -> &Vec<MetricEntry> {
         let mut write_idx = 1u32;
-        while (i32::from_ne_bytes((write_idx).to_ne_bytes())) < (i32::from_ne_bytes((u32::try_from((rows.len()) & 0xFFFF_FFFF).unwrap_or(0)).to_ne_bytes())) {
+        while (i32::from_ne_bytes(((write_idx) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((rows.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
             let record = (rows[usize::try_from(write_idx).unwrap_or(0)]).clone();
             let mut read_idx = write_idx;
             while (read_idx) > (0) && SnapshotTableBinary::snapshot_table_binary_metric_before((record).clone(), (rows[usize::try_from(u32::wrapping_sub(read_idx, 1)).unwrap_or(0)]).clone()) {
@@ -257,7 +258,7 @@ face_sel_refs[usize::try_from(col_idx).unwrap_or(0)], pool_refs[usize::try_from(
 
     pub(crate) fn snapshot_table_binary_metric_before(a: MetricEntry, b: MetricEntry) -> bool {
         if a.families_ref != b.families_ref {
-            return (i32::from_ne_bytes((a.families_ref).to_ne_bytes())) < (i32::from_ne_bytes((b.families_ref).to_ne_bytes()));
+            return (i32::from_ne_bytes(((a.families_ref) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((b.families_ref) as i32).to_ne_bytes()));
         }
         if a.weight < (b.weight) {
             return true;
@@ -266,12 +267,12 @@ face_sel_refs[usize::try_from(col_idx).unwrap_or(0)], pool_refs[usize::try_from(
             return false;
         }
         if a.italic != b.italic {
-            return (i32::from_ne_bytes((a.italic).to_ne_bytes())) < (i32::from_ne_bytes((b.italic).to_ne_bytes()));
+            return (i32::from_ne_bytes(((a.italic) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((b.italic) as i32).to_ne_bytes()));
         }
         if a.role_ref != b.role_ref {
-            return (i32::from_ne_bytes((a.role_ref).to_ne_bytes())) < (i32::from_ne_bytes((b.role_ref).to_ne_bytes()));
+            return (i32::from_ne_bytes(((a.role_ref) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((b.role_ref) as i32).to_ne_bytes()));
         }
-        return (i32::from_ne_bytes((a.face_selection_ref).to_ne_bytes())) < (i32::from_ne_bytes((b.face_selection_ref).to_ne_bytes()));
+        return (i32::from_ne_bytes(((a.face_selection_ref) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((b.face_selection_ref) as i32).to_ne_bytes()));
     }
 
     pub(crate) fn snapshot_table_binary_lower(table: TableInput) -> TableData {
@@ -280,9 +281,9 @@ face_sel_refs[usize::try_from(col_idx).unwrap_or(0)], pool_refs[usize::try_from(
         let mut interner = StringInterner::new(table.replay_strings.to_vec());
         let mut index_idx = 0u32;
         let mut metric_entries: Vec<MetricEntry> = Vec::new();
-        while (i32::from_ne_bytes((index_idx).to_ne_bytes())) < (i32::from_ne_bytes((u32::try_from((table.metrics.len()) & 0xFFFF_FFFF).unwrap_or(0)).to_ne_bytes())) {
+        while (i32::from_ne_bytes(((index_idx) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((table.metrics.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
             let row = (table.metrics[usize::try_from(index_idx).unwrap_or(0)]).clone();
-            let mut entry = MetricEntry::new(interner.intern((row.serialized_families).to_string().as_str()), row.font_weight, if row.italic { 1 } else { 0 }, interner.intern((row.role).to_string().as_str()), interner.intern((row.face_selection_text).to_string().as_str()), 0u32);
+            let mut entry = MetricEntry::new(interner.intern((row.serialized_families).to_ustring().as_ustr()), row.font_weight, if row.italic { 1 } else { 0 }, interner.intern((row.role).to_ustring().as_ustr()), interner.intern((row.face_selection_text).to_ustring().as_ustr()), 0u32);
             entry.values_em = row.values_em;
             metric_entries.push(entry.clone());
             index_idx = u32::wrapping_add(index_idx, 1);
@@ -291,7 +292,7 @@ face_sel_refs[usize::try_from(col_idx).unwrap_or(0)], pool_refs[usize::try_from(
         let mut value_pool: Vec<ValueRow> = Vec::new();
         let mut pooled: Vec<MetricEntry> = Vec::new();
         index_idx = 0u32;
-        while (i32::from_ne_bytes((index_idx).to_ne_bytes())) < (i32::from_ne_bytes((u32::try_from((metric_entries.len()) & 0xFFFF_FFFF).unwrap_or(0)).to_ne_bytes())) {
+        while (i32::from_ne_bytes(((index_idx) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((metric_entries.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
             let sorted = (metric_entries[usize::try_from(index_idx).unwrap_or(0)]).clone();
             pooled.push(MetricEntry::new(sorted.families_ref, sorted.weight, sorted.italic, sorted.role_ref, sorted.face_selection_ref, SnapshotTableBinary::snapshot_table_binary_pool_ref_of(&mut value_pool, &sorted.values_em)));
             index_idx = u32::wrapping_add(index_idx, 1);
@@ -302,15 +303,15 @@ face_sel_refs[usize::try_from(col_idx).unwrap_or(0)], pool_refs[usize::try_from(
         let mut style_pool: Vec<StyleRow> = Vec::new();
         let mut features_pool: Vec<Vec<u32>> = Vec::new();
         index_idx = 0u32;
-        while (i32::from_ne_bytes((index_idx).to_ne_bytes())) < (i32::from_ne_bytes((u32::try_from((table.probes.len()) & 0xFFFF_FFFF).unwrap_or(0)).to_ne_bytes())) {
+        while (i32::from_ne_bytes(((index_idx) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((table.probes.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
             let probe = (table.probes[usize::try_from(index_idx).unwrap_or(0)]).clone();
-            let text_ref = interner.intern((probe.text).to_string().as_str());
-            let script_ref = interner.intern((probe.script).to_string().as_str());
-            let language_ref = interner.intern((probe.language).to_string().as_str());
+            let text_ref = interner.intern((probe.text).to_ustring().as_ustr());
+            let script_ref = interner.intern((probe.script).to_ustring().as_ustr());
+            let language_ref = interner.intern((probe.language).to_ustring().as_ustr());
             let mut feature_refs: Vec<u32> = Vec::new();
             let mut feature_idx = 0u32;
-            while (i32::from_ne_bytes((feature_idx).to_ne_bytes())) < (i32::from_ne_bytes((u32::try_from((probe.features.len()) & 0xFFFF_FFFF).unwrap_or(0)).to_ne_bytes())) {
-                feature_refs.push(interner.intern((probe.features[usize::try_from(feature_idx).unwrap_or(0)]).clone().as_str()));
+            while (i32::from_ne_bytes(((feature_idx) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((probe.features.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
+                feature_refs.push(interner.intern((probe.features[usize::try_from(feature_idx).unwrap_or(0)]).clone().as_ustr()));
                 feature_idx = u32::wrapping_add(feature_idx, 1);
             }
             data.probe_text_refs.push(text_ref);
@@ -327,7 +328,7 @@ face_sel_refs[usize::try_from(col_idx).unwrap_or(0)], pool_refs[usize::try_from(
         data.style_script_refs = Vec::new();
         data.style_language_refs = Vec::new();
         let mut style_idx = 0u32;
-        while (i32::from_ne_bytes((style_idx).to_ne_bytes())) < (i32::from_ne_bytes((u32::try_from((style_pool.len()) & 0xFFFF_FFFF).unwrap_or(0)).to_ne_bytes())) {
+        while (i32::from_ne_bytes(((style_idx) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((style_pool.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
             data.style_font_size.push(style_pool[usize::try_from(style_idx).unwrap_or(0)].font_size_px);
             data.style_font_weight.push(style_pool[usize::try_from(style_idx).unwrap_or(0)].font_weight);
             data.style_italic.push(style_pool[usize::try_from(style_idx).unwrap_or(0)].italic);
@@ -340,14 +341,14 @@ face_sel_refs[usize::try_from(col_idx).unwrap_or(0)], pool_refs[usize::try_from(
         data.typography_texts = SnapshotTableBinary::snapshot_table_binary_copy_texts(&table.typographies);
         data.value_style_texts = SnapshotTableBinary::snapshot_table_binary_copy_texts(&table.value_styles);
         data.font_preload_texts = SnapshotTableBinary::snapshot_table_binary_copy_texts(&table.font_preloads);
-        data.revision_text = (table.revisions_text).to_string();
+        data.revision_text = (table.revisions_text).to_ustring();
         return data;
     }
 
-    pub(crate) fn snapshot_table_binary_copy_texts(texts: &Vec<String>) -> Vec<String> {
-        let mut out: Vec<String> = Vec::new();
+    pub(crate) fn snapshot_table_binary_copy_texts(texts: &Vec<UString>) -> Vec<UString> {
+        let mut out: Vec<UString> = Vec::new();
         let mut index_idx = 0u32;
-        while (i32::from_ne_bytes((index_idx).to_ne_bytes())) < (i32::from_ne_bytes((u32::try_from((texts.len()) & 0xFFFF_FFFF).unwrap_or(0)).to_ne_bytes())) {
+        while (i32::from_ne_bytes(((index_idx) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((texts.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
             out.push((texts[usize::try_from(index_idx).unwrap_or(0)]).clone());
             index_idx = u32::wrapping_add(index_idx, 1);
         }
@@ -356,7 +357,7 @@ face_sel_refs[usize::try_from(col_idx).unwrap_or(0)], pool_refs[usize::try_from(
 
     pub(crate) fn snapshot_table_binary_pool_ref_of(pool: &mut Vec<ValueRow>, values: &Vec<Option<f64>>) -> u32 {
         let mut index_idx = 0u32;
-        while (i32::from_ne_bytes((index_idx).to_ne_bytes())) < (i32::from_ne_bytes((u32::try_from((pool.len()) & 0xFFFF_FFFF).unwrap_or(0)).to_ne_bytes())) {
+        while (i32::from_ne_bytes(((index_idx) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((pool.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
             if SnapshotTableBinary::snapshot_table_binary_same_values(&((pool[usize::try_from(index_idx).unwrap_or(0)]).clone().values).clone(), &values) {
                 return index_idx;
             }
@@ -371,7 +372,7 @@ face_sel_refs[usize::try_from(col_idx).unwrap_or(0)], pool_refs[usize::try_from(
             return false;
         }
         let mut index_idx = 0u32;
-        while (i32::from_ne_bytes((index_idx).to_ne_bytes())) < (i32::from_ne_bytes((u32::try_from((a.len()) & 0xFFFF_FFFF).unwrap_or(0)).to_ne_bytes())) {
+        while (i32::from_ne_bytes(((index_idx) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((a.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
             let left = a[usize::try_from(index_idx).unwrap_or(0)];
             let right = b[usize::try_from(index_idx).unwrap_or(0)];
             if left.is_none() && right.is_none() {
@@ -397,7 +398,7 @@ face_sel_refs[usize::try_from(col_idx).unwrap_or(0)], pool_refs[usize::try_from(
 
     pub(crate) fn snapshot_table_binary_pooled_float(pool: &mut Vec<f64>, value: f64) -> u32 {
         let mut index_idx = 0u32;
-        while (i32::from_ne_bytes((index_idx).to_ne_bytes())) < (i32::from_ne_bytes((u32::try_from((pool.len()) & 0xFFFF_FFFF).unwrap_or(0)).to_ne_bytes())) {
+        while (i32::from_ne_bytes(((index_idx) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((pool.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
             if SnapshotTableBinary::snapshot_table_binary_f64_bits_equal(pool[usize::try_from(index_idx).unwrap_or(0)], value) {
                 return index_idx;
             }
@@ -409,10 +410,9 @@ face_sel_refs[usize::try_from(col_idx).unwrap_or(0)], pool_refs[usize::try_from(
 
     pub(crate) fn snapshot_table_binary_pooled_style(pool: &mut Vec<StyleRow>, probe: TableProbe, script_ref: u32, language_ref: u32) -> u32 {
         let mut index_idx = 0u32;
-        while (i32::from_ne_bytes((index_idx).to_ne_bytes())) < (i32::from_ne_bytes((u32::try_from((pool.len()) & 0xFFFF_FFFF).unwrap_or(0)).to_ne_bytes())) {
+        while (i32::from_ne_bytes(((index_idx) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((pool.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
             let row = (pool[usize::try_from(index_idx).unwrap_or(0)]).clone();
-            if SnapshotTableBinary::snapshot_table_binary_f64_bits_equal(row.font_size_px, probe.font_size_px) && SnapshotTableBinary::snapshot_table_binary_f64_bits_equal(row.font_weight, probe.font_weight) && row.italic == if probe.italic { 1 } else { 0 } && row.script_ref ==
-script_ref && row.language_ref == language_ref {
+            if SnapshotTableBinary::snapshot_table_binary_f64_bits_equal(row.font_size_px, probe.font_size_px) && SnapshotTableBinary::snapshot_table_binary_f64_bits_equal(row.font_weight, probe.font_weight) && row.italic == if probe.italic { 1 } else { 0 } && row.script_ref == script_ref && row.language_ref == language_ref {
                 return index_idx;
             }
             index_idx = u32::wrapping_add(index_idx, 1);
@@ -423,7 +423,7 @@ script_ref && row.language_ref == language_ref {
 
     pub(crate) fn snapshot_table_binary_pooled_features(pool: &mut Vec<Vec<u32>>, refs: &Vec<u32>) -> u32 {
         let mut index_idx = 0u32;
-        while (i32::from_ne_bytes((index_idx).to_ne_bytes())) < (i32::from_ne_bytes((u32::try_from((pool.len()) & 0xFFFF_FFFF).unwrap_or(0)).to_ne_bytes())) {
+        while (i32::from_ne_bytes(((index_idx) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((pool.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
             if SnapshotTableBinary::snapshot_table_binary_same_refs(&(pool[usize::try_from(index_idx).unwrap_or(0)]).clone(), &refs) {
                 return index_idx;
             }
@@ -438,7 +438,7 @@ script_ref && row.language_ref == language_ref {
             return false;
         }
         let mut index_idx = 0u32;
-        while (i32::from_ne_bytes((index_idx).to_ne_bytes())) < (i32::from_ne_bytes((u32::try_from((a.len()) & 0xFFFF_FFFF).unwrap_or(0)).to_ne_bytes())) {
+        while (i32::from_ne_bytes(((index_idx) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((a.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
             if a[usize::try_from(index_idx).unwrap_or(0)] != b[usize::try_from(index_idx).unwrap_or(0)] {
                 return false;
             }
@@ -447,14 +447,14 @@ script_ref && row.language_ref == language_ref {
         return true;
     }
 
-    pub(crate) fn snapshot_table_binary_write_text_region(writer: &mut TableWriter, texts: &Vec<String>) {
+    pub(crate) fn snapshot_table_binary_write_text_region(writer: &mut TableWriter, texts: &Vec<UString>) {
         let mut total_idx = 0u32;
-        while (i32::from_ne_bytes((total_idx).to_ne_bytes())) < (i32::from_ne_bytes((u32::try_from((texts.len()) & 0xFFFF_FFFF).unwrap_or(0)).to_ne_bytes())) {
+        while (i32::from_ne_bytes(((total_idx) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((texts.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
             writer.u32(u32::try_from(((texts[usize::try_from(total_idx).unwrap_or(0)]).clone().as_bytes().to_vec().len()) & 0xFFFF_FFFF).unwrap_or(0));
             total_idx = u32::wrapping_add(total_idx, 1);
         }
         total_idx = 0u32;
-        while (i32::from_ne_bytes((total_idx).to_ne_bytes())) < (i32::from_ne_bytes((u32::try_from((texts.len()) & 0xFFFF_FFFF).unwrap_or(0)).to_ne_bytes())) {
+        while (i32::from_ne_bytes(((total_idx) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((texts.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
             writer.raw(&(texts[usize::try_from(total_idx).unwrap_or(0)]).clone().as_bytes().to_vec());
             total_idx = u32::wrapping_add(total_idx, 1);
         }
@@ -462,7 +462,7 @@ script_ref && row.language_ref == language_ref {
 
     pub(crate) fn snapshot_table_binary_write_value_row(writer: &mut TableWriter, row: ValueRow) {
         let mut slot_idx = 0u32;
-        while (i32::from_ne_bytes((slot_idx).to_ne_bytes())) < (i32::from_ne_bytes((u32::try_from((row.values.len()) & 0xFFFF_FFFF).unwrap_or(0)).to_ne_bytes())) {
+        while (i32::from_ne_bytes(((slot_idx) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((row.values.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
             let value = row.values[usize::try_from(slot_idx).unwrap_or(0)];
             match &(value) {
                 None => {
@@ -480,7 +480,7 @@ script_ref && row.language_ref == language_ref {
         let mut row = TableWriter::new();
         row.u16(u32::try_from((refs.len()) & 0xFFFF_FFFF).unwrap_or(0));
         let mut index_idx = 0u32;
-        while (i32::from_ne_bytes((index_idx).to_ne_bytes())) < (i32::from_ne_bytes((u32::try_from((refs.len()) & 0xFFFF_FFFF).unwrap_or(0)).to_ne_bytes())) {
+        while (i32::from_ne_bytes(((index_idx) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((refs.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
             row.u32(refs[usize::try_from(index_idx).unwrap_or(0)]);
             index_idx = u32::wrapping_add(index_idx, 1);
         }
@@ -504,14 +504,14 @@ script_ref && row.language_ref == language_ref {
 
 #[derive(Clone, PartialEq)]
 pub struct StringInterner {
-    pub strings: Vec<String>,
+    pub strings: Vec<UString>,
 }
 
 impl StringInterner {
-    pub fn new(replay_strings: Vec<String>) -> Self {
+    pub fn new(replay_strings: Vec<UString>) -> Self {
     let mut strings = Vec::new();
         let mut index_idx = 0u32;
-        while (i32::from_ne_bytes((index_idx).to_ne_bytes())) < (i32::from_ne_bytes((u32::try_from((replay_strings.len()) & 0xFFFF_FFFF).unwrap_or(0)).to_ne_bytes())) {
+        while (i32::from_ne_bytes(((index_idx) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((replay_strings.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
             strings.push((replay_strings[usize::try_from(index_idx).unwrap_or(0)]).clone());
             index_idx = u32::wrapping_add(index_idx, 1);
         }
@@ -520,15 +520,15 @@ impl StringInterner {
         }
     }
 
-    pub fn intern(&mut self, text: &str) -> u32 {
+    pub fn intern(&mut self, text: &UStr) -> u32 {
         let mut index_idx = 0u32;
-        while (i32::from_ne_bytes((index_idx).to_ne_bytes())) < (i32::from_ne_bytes((u32::try_from((self.strings.len()) & 0xFFFF_FFFF).unwrap_or(0)).to_ne_bytes())) {
+        while (i32::from_ne_bytes(((index_idx) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((self.strings.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
             if self.strings[usize::try_from(index_idx).unwrap_or(0)].clone() == text {
                 return index_idx;
             }
             index_idx = u32::wrapping_add(index_idx, 1);
         }
-        self.strings.push(text.to_string());
+        self.strings.push(text.to_ustring());
         return u32::wrapping_sub(u32::try_from((self.strings.len()) & 0xFFFF_FFFF).unwrap_or(0), 1);
     }
 }
@@ -546,7 +546,7 @@ impl TableWriter {
 
     pub fn raw(&mut self, bytes: &[u8]) {
         let mut index_idx = 0u32;
-        while (i32::from_ne_bytes((index_idx).to_ne_bytes())) < (i32::from_ne_bytes((u32::try_from((bytes.len()) & 0xFFFF_FFFF).unwrap_or(0)).to_ne_bytes())) {
+        while (i32::from_ne_bytes(((index_idx) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((bytes.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
             self.buf.add_byte(u8::try_from((u32::from(bytes[usize::try_from(index_idx).unwrap_or(0)])) & 0xFF).unwrap_or(0));
             index_idx = u32::wrapping_add(index_idx, 1);
         }
@@ -588,7 +588,7 @@ pub struct TableReader<'a> {
     pub(crate) bytes: &'a [u8],
     pub(crate) pos: u32,
     pub failed: bool,
-    pub issue: String,
+    pub issue: UString,
 }
 
 impl<'a> TableReader<'a> {
@@ -597,7 +597,7 @@ impl<'a> TableReader<'a> {
             bytes,
             pos: 0,
             failed: false,
-            issue: "".to_string(),
+            issue: UString::from(""),
         }
     }
 
@@ -623,8 +623,7 @@ impl<'a> TableReader<'a> {
         if !self.need(4) {
             return 0;
         }
-        let value = u32::wrapping_add(u32::from(self.bytes[usize::try_from(self.pos).unwrap_or(0)]) | (u32::from(self.bytes[usize::try_from(u32::wrapping_add(self.pos, 1)).unwrap_or(0)])) << (8) | (u32::from(self.bytes[usize::try_from(u32::wrapping_add(self.pos,
-2)).unwrap_or(0)])) << (16), u32::wrapping_mul(u32::from(self.bytes[usize::try_from(u32::wrapping_add(self.pos, 3)).unwrap_or(0)]), 16777216));
+        let value = u32::wrapping_add(u32::from(self.bytes[usize::try_from(self.pos).unwrap_or(0)]) | (u32::from(self.bytes[usize::try_from(u32::wrapping_add(self.pos, 1)).unwrap_or(0)])) << (8) | (u32::from(self.bytes[usize::try_from(u32::wrapping_add(self.pos, 2)).unwrap_or(0)])) << (16), u32::wrapping_mul(u32::from(self.bytes[usize::try_from(u32::wrapping_add(self.pos, 3)).unwrap_or(0)]), 16777216));
         self.pos += 4;
         return value;
     }
@@ -642,12 +641,12 @@ impl<'a> TableReader<'a> {
         if !self.need(8) {
             return false;
         }
-        let expected = "TIQTBL03".as_bytes().to_vec();
+        let expected = UString::from("TIQTBL03").as_bytes().to_vec();
         let mut index_idx = 0u32;
-        while (i32::from_ne_bytes((index_idx).to_ne_bytes())) < (8) {
+        while (i32::from_ne_bytes(((index_idx) as i32).to_ne_bytes())) < (8) {
             if u32::from(self.bytes[usize::try_from(u32::wrapping_add(self.pos, index_idx)).unwrap_or(0)]) != u32::from(expected[usize::try_from(index_idx).unwrap_or(0)]) {
                 self.failed = true;
-                self.issue = "SnapshotTablesInvalid".to_string();
+                self.issue = UString::from("SnapshotTablesInvalid").to_ustring();
                 return false;
             }
             index_idx = u32::wrapping_add(index_idx, 1);
@@ -668,42 +667,42 @@ impl<'a> TableReader<'a> {
         return refs;
     }
 
-    pub fn text_region(&mut self, count: u32) -> Vec<String> {
-        let mut texts: Vec<String> = Vec::new();
+    pub fn text_region(&mut self, count: u32) -> Vec<UString> {
+        let mut texts: Vec<UString> = Vec::new();
         if self.failed {
             return texts;
         }
         let mut lengths: Vec<u32> = Vec::new();
         let mut running = 0u32;
         let mut index_idx = 0u32;
-        while (i32::from_ne_bytes((index_idx).to_ne_bytes())) < (i32::from_ne_bytes((count).to_ne_bytes())) {
+        while (i32::from_ne_bytes(((index_idx) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((count) as i32).to_ne_bytes())) {
             let delta = self.u32();
             if self.failed {
                 return texts;
             }
             running = u32::wrapping_add(running, delta);
-            if running > 2147483647 || (i32::from_ne_bytes((u32::wrapping_add(self.pos, running)).to_ne_bytes())) > (i32::from_ne_bytes((u32::try_from((self.bytes.len()) & 0xFFFF_FFFF).unwrap_or(0)).to_ne_bytes())) {
+            if running > 2147483647 || (i32::from_ne_bytes(((u32::wrapping_add(self.pos, running)) as i32).to_ne_bytes())) > (i32::from_ne_bytes(((u32::try_from((self.bytes.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
                 self.failed = true;
-                self.issue = "SnapshotTablesInvalid".to_string();
+                self.issue = UString::from("SnapshotTablesInvalid").to_ustring();
                 return texts;
             }
             lengths.push(delta);
             index_idx = u32::wrapping_add(index_idx, 1);
         }
         index_idx = 0u32;
-        while (i32::from_ne_bytes((index_idx).to_ne_bytes())) < (i32::from_ne_bytes((u32::try_from((lengths.len()) & 0xFFFF_FFFF).unwrap_or(0)).to_ne_bytes())) {
-            texts.push(String::from_utf8_lossy(&self.bytes[usize::try_from(self.pos).unwrap_or(0)..usize::try_from(self.pos + lengths[usize::try_from(index_idx).unwrap_or(0)]).unwrap_or(0)]).into_owned());
+        while (i32::from_ne_bytes(((index_idx) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((lengths.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
+            texts.push(UString::from(String::from_utf8_lossy(&self.bytes[usize::try_from(self.pos).unwrap_or(0)..usize::try_from(self.pos + lengths[usize::try_from(index_idx).unwrap_or(0)]).unwrap_or(0)]).into_owned().as_str()));
             self.pos += lengths[usize::try_from(index_idx).unwrap_or(0)];
             index_idx = u32::wrapping_add(index_idx, 1);
         }
         return texts;
     }
 
-    pub fn rest_text(&mut self) -> String {
+    pub fn rest_text(&mut self) -> UString {
         if !self.need(0) {
-            return String::new();
+            return UString::new();
         }
-        let value = String::from_utf8_lossy(&self.bytes[usize::try_from(self.pos).unwrap_or(0)..usize::try_from(self.pos + u32::wrapping_sub(u32::try_from((self.bytes.len()) & 0xFFFF_FFFF).unwrap_or(0), self.pos)).unwrap_or(0)]).into_owned();
+        let value = UString::from(String::from_utf8_lossy(&self.bytes[usize::try_from(self.pos).unwrap_or(0)..usize::try_from(self.pos + u32::wrapping_sub(u32::try_from((self.bytes.len()) & 0xFFFF_FFFF).unwrap_or(0), self.pos)).unwrap_or(0)]).into_owned().as_str());
         self.pos = u32::try_from((self.bytes.len()) & 0xFFFF_FFFF).unwrap_or(0);
         return value;
     }
@@ -712,9 +711,9 @@ impl<'a> TableReader<'a> {
         if self.failed {
             return false;
         }
-        if length > 2147483647 || (i32::from_ne_bytes((u32::wrapping_add(self.pos, length)).to_ne_bytes())) > (i32::from_ne_bytes((u32::try_from((self.bytes.len()) & 0xFFFF_FFFF).unwrap_or(0)).to_ne_bytes())) {
+        if length > 2147483647 || (i32::from_ne_bytes(((u32::wrapping_add(self.pos, length)) as i32).to_ne_bytes())) > (i32::from_ne_bytes(((u32::try_from((self.bytes.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
             self.failed = true;
-            self.issue = "SnapshotTablesInvalid".to_string();
+            self.issue = UString::from("SnapshotTablesInvalid").to_ustring();
             return false;
         }
         return true;

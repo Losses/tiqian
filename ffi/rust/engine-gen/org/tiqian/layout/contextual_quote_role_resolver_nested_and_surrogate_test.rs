@@ -11,6 +11,8 @@ use crate::org::tiqian::test::trace::traced_assertions::TracedAssertions;
 use crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsAssertFailsWithFault;
 use crate::runtime::test as testlib;
 use crate::runtime::u_string;
+use crate::runtime::u_string::UStr;
+use crate::runtime::u_string::UString;
 use std::sync::Arc;
 
 
@@ -19,6 +21,15 @@ pub enum ContextualQuoteRoleResolverNestedAndSurrogateTestTabBeforeAWhollyWester
     UStringFaultFault(crate::std::u_string_exception::UStringFault),
     TextRangeErrorFault(crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
+}
+impl std::fmt::Display for ContextualQuoteRoleResolverNestedAndSurrogateTestTabBeforeAWhollyWesternPairDelimitsLikeASpaceFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            ContextualQuoteRoleResolverNestedAndSurrogateTestTabBeforeAWhollyWesternPairDelimitsLikeASpaceFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            ContextualQuoteRoleResolverNestedAndSurrogateTestTabBeforeAWhollyWesternPairDelimitsLikeASpaceFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            ContextualQuoteRoleResolverNestedAndSurrogateTestTabBeforeAWhollyWesternPairDelimitsLikeASpaceFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
 }
 
 impl From<ContextualQuoteRoleResolverNestedAndSurrogateTestTabBeforeAWhollyWesternPairDelimitsLikeASpaceFault> for crate::std::u_string_exception::UStringFault {
@@ -72,6 +83,15 @@ pub enum ContextualQuoteRoleResolverNestedAndSurrogateTestSpaceBeforeUnmatchedQu
     TextRangeErrorFault(crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
 }
+impl std::fmt::Display for ContextualQuoteRoleResolverNestedAndSurrogateTestSpaceBeforeUnmatchedQuoteWithCjkRightSkipsTheDelimitedRuleFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            ContextualQuoteRoleResolverNestedAndSurrogateTestSpaceBeforeUnmatchedQuoteWithCjkRightSkipsTheDelimitedRuleFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            ContextualQuoteRoleResolverNestedAndSurrogateTestSpaceBeforeUnmatchedQuoteWithCjkRightSkipsTheDelimitedRuleFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            ContextualQuoteRoleResolverNestedAndSurrogateTestSpaceBeforeUnmatchedQuoteWithCjkRightSkipsTheDelimitedRuleFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
+}
 
 impl From<ContextualQuoteRoleResolverNestedAndSurrogateTestSpaceBeforeUnmatchedQuoteWithCjkRightSkipsTheDelimitedRuleFault> for crate::std::u_string_exception::UStringFault {
     fn from(value: ContextualQuoteRoleResolverNestedAndSurrogateTestSpaceBeforeUnmatchedQuoteWithCjkRightSkipsTheDelimitedRuleFault) -> Self {
@@ -123,6 +143,15 @@ pub enum ContextualQuoteRoleResolverNestedAndSurrogateTestSpaceBeforeAPairWithNo
     UStringFaultFault(crate::std::u_string_exception::UStringFault),
     TextRangeErrorFault(crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
+}
+impl std::fmt::Display for ContextualQuoteRoleResolverNestedAndSurrogateTestSpaceBeforeAPairWithNonWesternContentSkipsTheDelimitedRuleFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            ContextualQuoteRoleResolverNestedAndSurrogateTestSpaceBeforeAPairWithNonWesternContentSkipsTheDelimitedRuleFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            ContextualQuoteRoleResolverNestedAndSurrogateTestSpaceBeforeAPairWithNonWesternContentSkipsTheDelimitedRuleFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            ContextualQuoteRoleResolverNestedAndSurrogateTestSpaceBeforeAPairWithNonWesternContentSkipsTheDelimitedRuleFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
 }
 
 impl From<ContextualQuoteRoleResolverNestedAndSurrogateTestSpaceBeforeAPairWithNonWesternContentSkipsTheDelimitedRuleFault> for crate::std::u_string_exception::UStringFault {
@@ -176,6 +205,15 @@ pub enum ContextualQuoteRoleResolverNestedAndSurrogateTestSpaceBeforeAMixedConte
     TextRangeErrorFault(crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
 }
+impl std::fmt::Display for ContextualQuoteRoleResolverNestedAndSurrogateTestSpaceBeforeAMixedContentPairReportsMixedContentFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            ContextualQuoteRoleResolverNestedAndSurrogateTestSpaceBeforeAMixedContentPairReportsMixedContentFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            ContextualQuoteRoleResolverNestedAndSurrogateTestSpaceBeforeAMixedContentPairReportsMixedContentFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            ContextualQuoteRoleResolverNestedAndSurrogateTestSpaceBeforeAMixedContentPairReportsMixedContentFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
+}
 
 impl From<ContextualQuoteRoleResolverNestedAndSurrogateTestSpaceBeforeAMixedContentPairReportsMixedContentFault> for crate::std::u_string_exception::UStringFault {
     fn from(value: ContextualQuoteRoleResolverNestedAndSurrogateTestSpaceBeforeAMixedContentPairReportsMixedContentFault) -> Self {
@@ -227,6 +265,15 @@ pub enum ContextualQuoteRoleResolverNestedAndSurrogateTestSiblingPairsInsideOneQ
     UStringFaultFault(crate::std::u_string_exception::UStringFault),
     TextRangeErrorFault(crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
+}
+impl std::fmt::Display for ContextualQuoteRoleResolverNestedAndSurrogateTestSiblingPairsInsideOneQuotationEachInheritTheOuterRoleFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            ContextualQuoteRoleResolverNestedAndSurrogateTestSiblingPairsInsideOneQuotationEachInheritTheOuterRoleFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            ContextualQuoteRoleResolverNestedAndSurrogateTestSiblingPairsInsideOneQuotationEachInheritTheOuterRoleFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            ContextualQuoteRoleResolverNestedAndSurrogateTestSiblingPairsInsideOneQuotationEachInheritTheOuterRoleFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
 }
 
 impl From<ContextualQuoteRoleResolverNestedAndSurrogateTestSiblingPairsInsideOneQuotationEachInheritTheOuterRoleFault> for crate::std::u_string_exception::UStringFault {
@@ -280,6 +327,15 @@ pub enum ContextualQuoteRoleResolverNestedAndSurrogateTestPrivateUseFollowerOfAH
     TextRangeErrorFault(crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError),
     TracedAssertionsAssertFailsWithFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsAssertFailsWithFault),
 }
+impl std::fmt::Display for ContextualQuoteRoleResolverNestedAndSurrogateTestPrivateUseFollowerOfAHighSurrogateCountsAsOneUnitFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            ContextualQuoteRoleResolverNestedAndSurrogateTestPrivateUseFollowerOfAHighSurrogateCountsAsOneUnitFault::TraceAssertionErrorFault(value) => write!(formatter, "{}", value),
+            ContextualQuoteRoleResolverNestedAndSurrogateTestPrivateUseFollowerOfAHighSurrogateCountsAsOneUnitFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            ContextualQuoteRoleResolverNestedAndSurrogateTestPrivateUseFollowerOfAHighSurrogateCountsAsOneUnitFault::TracedAssertionsAssertFailsWithFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
+}
 
 impl From<ContextualQuoteRoleResolverNestedAndSurrogateTestPrivateUseFollowerOfAHighSurrogateCountsAsOneUnitFault> for crate::org::tiqian::test::trace::trace_assertion_exception::TraceAssertionError {
     fn from(value: ContextualQuoteRoleResolverNestedAndSurrogateTestPrivateUseFollowerOfAHighSurrogateCountsAsOneUnitFault) -> Self {
@@ -331,6 +387,15 @@ pub enum ContextualQuoteRoleResolverNestedAndSurrogateTestPrivateUseCharBeforeAQ
     UStringFaultFault(crate::std::u_string_exception::UStringFault),
     TextRangeErrorFault(crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
+}
+impl std::fmt::Display for ContextualQuoteRoleResolverNestedAndSurrogateTestPrivateUseCharBeforeAQuoteFailsTheLowSurrogateRangeAboveFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            ContextualQuoteRoleResolverNestedAndSurrogateTestPrivateUseCharBeforeAQuoteFailsTheLowSurrogateRangeAboveFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            ContextualQuoteRoleResolverNestedAndSurrogateTestPrivateUseCharBeforeAQuoteFailsTheLowSurrogateRangeAboveFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            ContextualQuoteRoleResolverNestedAndSurrogateTestPrivateUseCharBeforeAQuoteFailsTheLowSurrogateRangeAboveFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
 }
 
 impl From<ContextualQuoteRoleResolverNestedAndSurrogateTestPrivateUseCharBeforeAQuoteFailsTheLowSurrogateRangeAboveFault> for crate::std::u_string_exception::UStringFault {
@@ -384,6 +449,15 @@ pub enum ContextualQuoteRoleResolverNestedAndSurrogateTestPlainFollowerOfAHighSu
     TextRangeErrorFault(crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError),
     TracedAssertionsAssertFailsWithFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsAssertFailsWithFault),
 }
+impl std::fmt::Display for ContextualQuoteRoleResolverNestedAndSurrogateTestPlainFollowerOfAHighSurrogateCountsAsOneUnitFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            ContextualQuoteRoleResolverNestedAndSurrogateTestPlainFollowerOfAHighSurrogateCountsAsOneUnitFault::TraceAssertionErrorFault(value) => write!(formatter, "{}", value),
+            ContextualQuoteRoleResolverNestedAndSurrogateTestPlainFollowerOfAHighSurrogateCountsAsOneUnitFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            ContextualQuoteRoleResolverNestedAndSurrogateTestPlainFollowerOfAHighSurrogateCountsAsOneUnitFault::TracedAssertionsAssertFailsWithFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
+}
 
 impl From<ContextualQuoteRoleResolverNestedAndSurrogateTestPlainFollowerOfAHighSurrogateCountsAsOneUnitFault> for crate::org::tiqian::test::trace::trace_assertion_exception::TraceAssertionError {
     fn from(value: ContextualQuoteRoleResolverNestedAndSurrogateTestPlainFollowerOfAHighSurrogateCountsAsOneUnitFault) -> Self {
@@ -435,6 +509,15 @@ pub enum ContextualQuoteRoleResolverNestedAndSurrogateTestNonChineseLocaleResolv
     UStringFaultFault(crate::std::u_string_exception::UStringFault),
     TextRangeErrorFault(crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
+}
+impl std::fmt::Display for ContextualQuoteRoleResolverNestedAndSurrogateTestNonChineseLocaleResolvesNeutralContextToLatinTextFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            ContextualQuoteRoleResolverNestedAndSurrogateTestNonChineseLocaleResolvesNeutralContextToLatinTextFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            ContextualQuoteRoleResolverNestedAndSurrogateTestNonChineseLocaleResolvesNeutralContextToLatinTextFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            ContextualQuoteRoleResolverNestedAndSurrogateTestNonChineseLocaleResolvesNeutralContextToLatinTextFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
 }
 
 impl From<ContextualQuoteRoleResolverNestedAndSurrogateTestNonChineseLocaleResolvesNeutralContextToLatinTextFault> for crate::std::u_string_exception::UStringFault {
@@ -488,6 +571,15 @@ pub enum ContextualQuoteRoleResolverNestedAndSurrogateTestNestedPairInsideNeutra
     TextRangeErrorFault(crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
 }
+impl std::fmt::Display for ContextualQuoteRoleResolverNestedAndSurrogateTestNestedPairInsideNeutralEnclosingInheritsTheOuterQuotationFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            ContextualQuoteRoleResolverNestedAndSurrogateTestNestedPairInsideNeutralEnclosingInheritsTheOuterQuotationFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            ContextualQuoteRoleResolverNestedAndSurrogateTestNestedPairInsideNeutralEnclosingInheritsTheOuterQuotationFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            ContextualQuoteRoleResolverNestedAndSurrogateTestNestedPairInsideNeutralEnclosingInheritsTheOuterQuotationFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
+}
 
 impl From<ContextualQuoteRoleResolverNestedAndSurrogateTestNestedPairInsideNeutralEnclosingInheritsTheOuterQuotationFault> for crate::std::u_string_exception::UStringFault {
     fn from(value: ContextualQuoteRoleResolverNestedAndSurrogateTestNestedPairInsideNeutralEnclosingInheritsTheOuterQuotationFault) -> Self {
@@ -539,6 +631,15 @@ pub enum ContextualQuoteRoleResolverNestedAndSurrogateTestMixedEnclosingLevelFal
     UStringFaultFault(crate::std::u_string_exception::UStringFault),
     TextRangeErrorFault(crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
+}
+impl std::fmt::Display for ContextualQuoteRoleResolverNestedAndSurrogateTestMixedEnclosingLevelFallsBackToParagraphLanguageFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            ContextualQuoteRoleResolverNestedAndSurrogateTestMixedEnclosingLevelFallsBackToParagraphLanguageFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            ContextualQuoteRoleResolverNestedAndSurrogateTestMixedEnclosingLevelFallsBackToParagraphLanguageFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            ContextualQuoteRoleResolverNestedAndSurrogateTestMixedEnclosingLevelFallsBackToParagraphLanguageFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
 }
 
 impl From<ContextualQuoteRoleResolverNestedAndSurrogateTestMixedEnclosingLevelFallsBackToParagraphLanguageFault> for crate::std::u_string_exception::UStringFault {
@@ -592,6 +693,15 @@ pub enum ContextualQuoteRoleResolverNestedAndSurrogateTestLeftwardScanFromALowSu
     TextRangeErrorFault(crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError),
     TracedAssertionsAssertFailsWithFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsAssertFailsWithFault),
 }
+impl std::fmt::Display for ContextualQuoteRoleResolverNestedAndSurrogateTestLeftwardScanFromALowSurrogateWalksEveryBacktrackArmFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            ContextualQuoteRoleResolverNestedAndSurrogateTestLeftwardScanFromALowSurrogateWalksEveryBacktrackArmFault::TraceAssertionErrorFault(value) => write!(formatter, "{}", value),
+            ContextualQuoteRoleResolverNestedAndSurrogateTestLeftwardScanFromALowSurrogateWalksEveryBacktrackArmFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            ContextualQuoteRoleResolverNestedAndSurrogateTestLeftwardScanFromALowSurrogateWalksEveryBacktrackArmFault::TracedAssertionsAssertFailsWithFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
+}
 
 impl From<ContextualQuoteRoleResolverNestedAndSurrogateTestLeftwardScanFromALowSurrogateWalksEveryBacktrackArmFault> for crate::org::tiqian::test::trace::trace_assertion_exception::TraceAssertionError {
     fn from(value: ContextualQuoteRoleResolverNestedAndSurrogateTestLeftwardScanFromALowSurrogateWalksEveryBacktrackArmFault) -> Self {
@@ -644,6 +754,15 @@ pub enum ContextualQuoteRoleResolverNestedAndSurrogateTestHighSurrogateAtTheCont
     TextRangeErrorFault(crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError),
     TracedAssertionsAssertFailsWithFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsAssertFailsWithFault),
 }
+impl std::fmt::Display for ContextualQuoteRoleResolverNestedAndSurrogateTestHighSurrogateAtTheContentEndHasNoRoomAndThrowsFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            ContextualQuoteRoleResolverNestedAndSurrogateTestHighSurrogateAtTheContentEndHasNoRoomAndThrowsFault::TraceAssertionErrorFault(value) => write!(formatter, "{}", value),
+            ContextualQuoteRoleResolverNestedAndSurrogateTestHighSurrogateAtTheContentEndHasNoRoomAndThrowsFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            ContextualQuoteRoleResolverNestedAndSurrogateTestHighSurrogateAtTheContentEndHasNoRoomAndThrowsFault::TracedAssertionsAssertFailsWithFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
+}
 
 impl From<ContextualQuoteRoleResolverNestedAndSurrogateTestHighSurrogateAtTheContentEndHasNoRoomAndThrowsFault> for crate::org::tiqian::test::trace::trace_assertion_exception::TraceAssertionError {
     fn from(value: ContextualQuoteRoleResolverNestedAndSurrogateTestHighSurrogateAtTheContentEndHasNoRoomAndThrowsFault) -> Self {
@@ -694,19 +813,19 @@ impl From<crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsAs
 pub struct ContextualQuoteRoleResolverNestedAndSurrogateSupport;
 
 impl ContextualQuoteRoleResolverNestedAndSurrogateSupport {
-    pub fn contextual_quote_role_resolver_nested_and_surrogate_support_start(n: &str) {
-        TestTraceRecorder::new("ContextualQuoteRoleResolverNestedAndSurrogateTest").section(n);
+    pub fn contextual_quote_role_resolver_nested_and_surrogate_support_start(n: &UStr) {
+        TestTraceRecorder::new(&(UStr::new(&[67,111,110,116,101,120,116,117,97,108,81,117,111,116,101,82,111,108,101,82,101,115,111,108,118,101,114,78,101,115,116,101,100,65,110,100,83,117,114,114,111,103,97,116,101,84,101,115,116]))).section(n);
     }
 
-    pub fn contextual_quote_role_resolver_nested_and_surrogate_support_decisions(text: &str, locale: Option<String>) -> Result<Vec<QuoteRoleDecision>, TextRangeError> {
-        let c = match &(locale) { None => FontRoleContext::new(Some("zh-Hans".to_string()), None), Some(__option) => FontRoleContext::new(Some((*__option).clone()), None) };
+    pub fn contextual_quote_role_resolver_nested_and_surrogate_support_decisions(text: &UStr, locale: Option<UString>) -> Result<Vec<QuoteRoleDecision>, TextRangeError> {
+        let c = match &(locale) { None => FontRoleContext::new(Some(UString::from("zh-Hans")), None), Some(__option) => FontRoleContext::new(Some((*__option).clone()), None) };
         let a = QuotePairAnalyzer::new();
         return Ok(a.classify_quote_roles(text, &a.analyze(text)?, Some((c).clone()))?);
     }
 
     pub fn contextual_quote_role_resolver_nested_and_surrogate_support_locate(ds: &Vec<QuoteRoleDecision>, i: u32) -> QuoteRoleDecision {
         let mut n = 0u32;
-        while (i32::from_ne_bytes((n).to_ne_bytes())) < (i32::from_ne_bytes((u32::try_from((ds.len()) & 0xFFFF_FFFF).unwrap_or(0)).to_ne_bytes())) {
+        while (i32::from_ne_bytes(((n) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((ds.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
             if ds[usize::try_from(n).unwrap_or(0)].index == i {
                 return (ds[usize::try_from(n).unwrap_or(0)]).clone();
             }
@@ -715,12 +834,11 @@ impl ContextualQuoteRoleResolverNestedAndSurrogateSupport {
         return (ds[0usize]).clone();
     }
 
-    pub fn contextual_quote_role_resolver_nested_and_surrogate_support_surrogate_text(codes: &Vec<u32>) -> String {
-        let mut s = String::new();
+    pub fn contextual_quote_role_resolver_nested_and_surrogate_support_surrogate_text(codes: &Vec<u32>) -> UString {
+        let mut s = UString::new();
         let mut i = 0u32;
-        while (i32::from_ne_bytes((i).to_ne_bytes())) < (i32::from_ne_bytes((u32::try_from((codes.len()) & 0xFFFF_FFFF).unwrap_or(0)).to_ne_bytes())) {
-            s += &(if codes[usize::try_from(i).unwrap_or(0)] > 0xFFFF { String::from_utf16(&[0xD800 + (((codes[usize::try_from(i).unwrap_or(0)]) - 0x10000) >> 10) as u16, 0xDC00 + (((codes[usize::try_from(i).unwrap_or(0)]) - 0x10000) & 0x3FF) as u16]).unwrap() } else {
-String::from_utf16_lossy(&[(codes[usize::try_from(i).unwrap_or(0)]) as u16]) });
+        while (i32::from_ne_bytes(((i) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((codes.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
+            s += &(if codes[usize::try_from(i).unwrap_or(0)] > 0xFFFF { u_string::from_units(&[0xD800 + (((codes[usize::try_from(i).unwrap_or(0)]) - 0x10000) >> 10) as u16, 0xDC00 + (((codes[usize::try_from(i).unwrap_or(0)]) - 0x10000) & 0x3FF) as u16]) } else { u_string::from_units(&[(codes[usize::try_from(i).unwrap_or(0)]) as u16]) });
             i = u32::wrapping_add(i, 1);
         }
         return s;
@@ -735,17 +853,17 @@ String::from_utf16_lossy(&[(codes[usize::try_from(i).unwrap_or(0)]) as u16]) });
 #[test]
 fn nested_pair_inside_neutral_enclosing_inherits_the_outer_quotation() {
     testlib::run("org.tiqian.layout.ContextualQuoteRoleResolverNestedAndSurrogateTest.nestedPairInsideNeutralEnclosingInheritsTheOuterQuotation", "org.tiqian.layout.ContextualQuoteRoleResolverNestedAndSurrogateTest.nestedPairInsideNeutralEnclosingInheritsTheOuterQuotation", || {
-        ContextualQuoteRoleResolverNestedAndSurrogateSupport::contextual_quote_role_resolver_nested_and_surrogate_support_start(&"nestedPairInsideNeutralEnclosingInheritsTheOuterQuotation");
-        let d = ContextualQuoteRoleResolverNestedAndSurrogateSupport::contextual_quote_role_resolver_nested_and_surrogate_support_decisions(&"“—‘文’—”", None).unwrap();
+        ContextualQuoteRoleResolverNestedAndSurrogateSupport::contextual_quote_role_resolver_nested_and_surrogate_support_start(UStr::new(&[110,101,115,116,101,100,80,97,105,114,73,110,115,105,100,101,78,101,117,116,114,97,108,69,110,99,108,111,115,105,110,103,73,110,104,101,114,105,116,115,84,104,101,79,117,116,101,114,81,117,111,116,97,116,105,111,110]));
+        let d = ContextualQuoteRoleResolverNestedAndSurrogateSupport::contextual_quote_role_resolver_nested_and_surrogate_support_decisions(UStr::new(&[8220,8212,8216,25991,8217,8212,8221]), None).unwrap();
         let outer = ContextualQuoteRoleResolverNestedAndSurrogateSupport::contextual_quote_role_resolver_nested_and_surrogate_support_locate(&d, 0);
         let inner = ContextualQuoteRoleResolverNestedAndSurrogateSupport::contextual_quote_role_resolver_nested_and_surrogate_support_locate(&d, 2);
-        let _ = TracedAssertions::traced_assertions_assert_equals_string(&"PairedPunctuationEnclosingQuoteContext", (inner.source).to_string().as_str(), None).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_equals_string(&"quote-pair-inherits-enclosing-quotation", (inner.reason).to_string().as_str(), None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_equals_string(UStr::new(&[80,97,105,114,101,100,80,117,110,99,116,117,97,116,105,111,110,69,110,99,108,111,115,105,110,103,81,117,111,116,101,67,111,110,116,101,120,116]), (inner.source).to_ustring().as_ustr(), None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_equals_string(UStr::new(&[113,117,111,116,101,45,112,97,105,114,45,105,110,104,101,114,105,116,115,45,101,110,99,108,111,115,105,110,103,45,113,117,111,116,97,116,105,111,110]), (inner.reason).to_ustring().as_ustr(), None).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_equals_font_role(outer.role, Some(inner.role), None).unwrap();
         let mut has = false;
         let mut i = 0u32;
-        while (i32::from_ne_bytes((i).to_ne_bytes())) < (i32::from_ne_bytes((u32::try_from((d.len()) & 0xFFFF_FFFF).unwrap_or(0)).to_ne_bytes())) {
-            if d[usize::try_from(i).unwrap_or(0)].clone().source.to_string() == "DelimitedWesternQuotationRun" {
+        while (i32::from_ne_bytes(((i) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((d.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
+            if d[usize::try_from(i).unwrap_or(0)].clone().source.to_ustring() == UString::from("DelimitedWesternQuotationRun") {
                 has = true;
             }
             i = u32::wrapping_add(i, 1);
@@ -756,40 +874,35 @@ fn nested_pair_inside_neutral_enclosing_inherits_the_outer_quotation() {
 
 #[test]
 fn space_before_unmatched_quote_with_cjk_right_skips_the_delimited_rule() {
-    testlib::run("org.tiqian.layout.ContextualQuoteRoleResolverNestedAndSurrogateTest.spaceBeforeUnmatchedQuoteWithCjkRightSkipsTheDelimitedRule", "org.tiqian.layout.ContextualQuoteRoleResolverNestedAndSurrogateTest.spaceBeforeUnmatchedQuoteWithCjkRightSkipsTheDelimitedRule", ||
-{
-        ContextualQuoteRoleResolverNestedAndSurrogateSupport::contextual_quote_role_resolver_nested_and_surrogate_support_start(&"spaceBeforeUnmatchedQuoteWithCjkRightSkipsTheDelimitedRule");
-        let d = ContextualQuoteRoleResolverNestedAndSurrogateSupport::contextual_quote_role_resolver_nested_and_surrogate_support_decisions(&" ’中", None).unwrap();
+    testlib::run("org.tiqian.layout.ContextualQuoteRoleResolverNestedAndSurrogateTest.spaceBeforeUnmatchedQuoteWithCjkRightSkipsTheDelimitedRule", "org.tiqian.layout.ContextualQuoteRoleResolverNestedAndSurrogateTest.spaceBeforeUnmatchedQuoteWithCjkRightSkipsTheDelimitedRule", || {
+        ContextualQuoteRoleResolverNestedAndSurrogateSupport::contextual_quote_role_resolver_nested_and_surrogate_support_start(UStr::new(&[115,112,97,99,101,66,101,102,111,114,101,85,110,109,97,116,99,104,101,100,81,117,111,116,101,87,105,116,104,67,106,107,82,105,103,104,116,83,107,105,112,115,84,104,101,68,101,108,105,109,105,116,101,100,82,117,108,101]));
+        let d = ContextualQuoteRoleResolverNestedAndSurrogateSupport::contextual_quote_role_resolver_nested_and_surrogate_support_decisions(UStr::new(&[32,8217,20013]), None).unwrap();
         let x = ContextualQuoteRoleResolverNestedAndSurrogateSupport::contextual_quote_role_resolver_nested_and_surrogate_support_locate(&d, 1);
-        let _ = TracedAssertions::traced_assertions_assert_equals_string(&"UnmatchedQuoteSurroundingScriptContext", (x.source).to_string().as_str(), None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_equals_string(UStr::new(&[85,110,109,97,116,99,104,101,100,81,117,111,116,101,83,117,114,114,111,117,110,100,105,110,103,83,99,114,105,112,116,67,111,110,116,101,120,116]), (x.source).to_ustring().as_ustr(), None).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_equals_font_role(FontRole::CjkPunctuation, Some(x.role), None).unwrap();
     });
 }
 
 #[test]
 fn leftward_scan_from_a_low_surrogate_walks_every_backtrack_arm() {
-    testlib::record_not_applicable("org.tiqian.layout.ContextualQuoteRoleResolverNestedAndSurrogateTest.leftwardScanFromALowSurrogateWalksEveryBacktrackArm",
-"org.tiqian.layout.ContextualQuoteRoleResolverNestedAndSurrogateTest.leftwardScanFromALowSurrogateWalksEveryBacktrackArm");
+    testlib::record_not_applicable("org.tiqian.layout.ContextualQuoteRoleResolverNestedAndSurrogateTest.leftwardScanFromALowSurrogateWalksEveryBacktrackArm", "org.tiqian.layout.ContextualQuoteRoleResolverNestedAndSurrogateTest.leftwardScanFromALowSurrogateWalksEveryBacktrackArm");
 }
 
 #[test]
 fn tab_before_a_wholly_western_pair_delimits_like_a_space() {
     testlib::run("org.tiqian.layout.ContextualQuoteRoleResolverNestedAndSurrogateTest.tabBeforeAWhollyWesternPairDelimitsLikeASpace", "org.tiqian.layout.ContextualQuoteRoleResolverNestedAndSurrogateTest.tabBeforeAWhollyWesternPairDelimitsLikeASpace", || {
-        ContextualQuoteRoleResolverNestedAndSurrogateSupport::contextual_quote_role_resolver_nested_and_surrogate_support_start(&"tabBeforeAWhollyWesternPairDelimitsLikeASpace");
-        let x = ContextualQuoteRoleResolverNestedAndSurrogateSupport::contextual_quote_role_resolver_nested_and_surrogate_support_locate(&ContextualQuoteRoleResolverNestedAndSurrogateSupport::contextual_quote_role_resolver_nested_and_surrogate_support_decisions(&"\t“a”",
-None).unwrap(), 1);
-        let _ = TracedAssertions::traced_assertions_assert_equals_string(&"DelimitedWesternQuotationRun", (x.source).to_string().as_str(), None).unwrap();
+        ContextualQuoteRoleResolverNestedAndSurrogateSupport::contextual_quote_role_resolver_nested_and_surrogate_support_start(UStr::new(&[116,97,98,66,101,102,111,114,101,65,87,104,111,108,108,121,87,101,115,116,101,114,110,80,97,105,114,68,101,108,105,109,105,116,115,76,105,107,101,65,83,112,97,99,101]));
+        let x = ContextualQuoteRoleResolverNestedAndSurrogateSupport::contextual_quote_role_resolver_nested_and_surrogate_support_locate(&ContextualQuoteRoleResolverNestedAndSurrogateSupport::contextual_quote_role_resolver_nested_and_surrogate_support_decisions(UStr::new(&[9,8220,97,8221]), None).unwrap(), 1);
+        let _ = TracedAssertions::traced_assertions_assert_equals_string(UStr::new(&[68,101,108,105,109,105,116,101,100,87,101,115,116,101,114,110,81,117,111,116,97,116,105,111,110,82,117,110]), (x.source).to_ustring().as_ustr(), None).unwrap();
     });
 }
 
 #[test]
 fn space_before_a_pair_with_non_western_content_skips_the_delimited_rule() {
-    testlib::run("org.tiqian.layout.ContextualQuoteRoleResolverNestedAndSurrogateTest.spaceBeforeAPairWithNonWesternContentSkipsTheDelimitedRule", "org.tiqian.layout.ContextualQuoteRoleResolverNestedAndSurrogateTest.spaceBeforeAPairWithNonWesternContentSkipsTheDelimitedRule", ||
-{
-        ContextualQuoteRoleResolverNestedAndSurrogateSupport::contextual_quote_role_resolver_nested_and_surrogate_support_start(&"spaceBeforeAPairWithNonWesternContentSkipsTheDelimitedRule");
-        let x = ContextualQuoteRoleResolverNestedAndSurrogateSupport::contextual_quote_role_resolver_nested_and_surrogate_support_locate(&ContextualQuoteRoleResolverNestedAndSurrogateSupport::contextual_quote_role_resolver_nested_and_surrogate_support_decisions(&" “中”",
-None).unwrap(), 1);
-        let _ = TracedAssertions::traced_assertions_assert_equals_string(&"PairedPunctuationContentScriptContext", (x.source).to_string().as_str(), None).unwrap();
+    testlib::run("org.tiqian.layout.ContextualQuoteRoleResolverNestedAndSurrogateTest.spaceBeforeAPairWithNonWesternContentSkipsTheDelimitedRule", "org.tiqian.layout.ContextualQuoteRoleResolverNestedAndSurrogateTest.spaceBeforeAPairWithNonWesternContentSkipsTheDelimitedRule", || {
+        ContextualQuoteRoleResolverNestedAndSurrogateSupport::contextual_quote_role_resolver_nested_and_surrogate_support_start(UStr::new(&[115,112,97,99,101,66,101,102,111,114,101,65,80,97,105,114,87,105,116,104,78,111,110,87,101,115,116,101,114,110,67,111,110,116,101,110,116,83,107,105,112,115,84,104,101,68,101,108,105,109,105,116,101,100,82,117,108,101]));
+        let x = ContextualQuoteRoleResolverNestedAndSurrogateSupport::contextual_quote_role_resolver_nested_and_surrogate_support_locate(&ContextualQuoteRoleResolverNestedAndSurrogateSupport::contextual_quote_role_resolver_nested_and_surrogate_support_decisions(UStr::new(&[32,8220,20013,8221]), None).unwrap(), 1);
+        let _ = TracedAssertions::traced_assertions_assert_equals_string(UStr::new(&[80,97,105,114,101,100,80,117,110,99,116,117,97,116,105,111,110,67,111,110,116,101,110,116,83,99,114,105,112,116,67,111,110,116,101,120,116]), (x.source).to_ustring().as_ustr(), None).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_equals_font_role(FontRole::CjkPunctuation, Some(x.role), None).unwrap();
     });
 }
@@ -797,43 +910,40 @@ None).unwrap(), 1);
 #[test]
 fn space_before_a_mixed_content_pair_reports_mixed_content() {
     testlib::run("org.tiqian.layout.ContextualQuoteRoleResolverNestedAndSurrogateTest.spaceBeforeAMixedContentPairReportsMixedContent", "org.tiqian.layout.ContextualQuoteRoleResolverNestedAndSurrogateTest.spaceBeforeAMixedContentPairReportsMixedContent", || {
-        ContextualQuoteRoleResolverNestedAndSurrogateSupport::contextual_quote_role_resolver_nested_and_surrogate_support_start(&"spaceBeforeAMixedContentPairReportsMixedContent");
-        let x = ContextualQuoteRoleResolverNestedAndSurrogateSupport::contextual_quote_role_resolver_nested_and_surrogate_support_locate(&ContextualQuoteRoleResolverNestedAndSurrogateSupport::contextual_quote_role_resolver_nested_and_surrogate_support_decisions(&" “a中”",
-None).unwrap(), 1);
-        let _ = TracedAssertions::traced_assertions_assert_equals_string(&"ParagraphLanguageQuoteContext", (x.source).to_string().as_str(), None).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_true((u32::from_ne_bytes((u_string::find_from(&(x.reason).to_string(), "mixed-quoted-content", 0)).to_ne_bytes())) <= 2147483647, Some((x.reason).to_string())).unwrap();
+        ContextualQuoteRoleResolverNestedAndSurrogateSupport::contextual_quote_role_resolver_nested_and_surrogate_support_start(UStr::new(&[115,112,97,99,101,66,101,102,111,114,101,65,77,105,120,101,100,67,111,110,116,101,110,116,80,97,105,114,82,101,112,111,114,116,115,77,105,120,101,100,67,111,110,116,101,110,116]));
+        let x = ContextualQuoteRoleResolverNestedAndSurrogateSupport::contextual_quote_role_resolver_nested_and_surrogate_support_locate(&ContextualQuoteRoleResolverNestedAndSurrogateSupport::contextual_quote_role_resolver_nested_and_surrogate_support_decisions(UStr::new(&[32,8220,97,20013,8221]), None).unwrap(), 1);
+        let _ = TracedAssertions::traced_assertions_assert_equals_string(UStr::new(&[80,97,114,97,103,114,97,112,104,76,97,110,103,117,97,103,101,81,117,111,116,101,67,111,110,116,101,120,116]), (x.source).to_ustring().as_ustr(), None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_true((u32::from_ne_bytes(((u_string::find_from(&((x.reason).to_ustring()), UString::from("mixed-quoted-content").as_ustr(), 0)) as u32).to_ne_bytes())) <= 2147483647, Some((x.reason).to_ustring())).unwrap();
     });
 }
 
 #[test]
 fn mixed_enclosing_level_falls_back_to_paragraph_language() {
     testlib::run("org.tiqian.layout.ContextualQuoteRoleResolverNestedAndSurrogateTest.mixedEnclosingLevelFallsBackToParagraphLanguage", "org.tiqian.layout.ContextualQuoteRoleResolverNestedAndSurrogateTest.mixedEnclosingLevelFallsBackToParagraphLanguage", || {
-        ContextualQuoteRoleResolverNestedAndSurrogateSupport::contextual_quote_role_resolver_nested_and_surrogate_support_start(&"mixedEnclosingLevelFallsBackToParagraphLanguage");
-        let x = ContextualQuoteRoleResolverNestedAndSurrogateSupport::contextual_quote_role_resolver_nested_and_surrogate_support_locate(&ContextualQuoteRoleResolverNestedAndSurrogateSupport::contextual_quote_role_resolver_nested_and_surrogate_support_decisions(&"a“中”文",
-None).unwrap(), 1);
-        let _ = TracedAssertions::traced_assertions_assert_equals_string(&"ParagraphLanguageQuoteContext", (x.source).to_string().as_str(), None).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_true((u32::from_ne_bytes((u_string::find_from(&(x.reason).to_string(), "mixed-enclosing-level-script", 0)).to_ne_bytes())) <= 2147483647, Some((x.reason).to_string())).unwrap();
+        ContextualQuoteRoleResolverNestedAndSurrogateSupport::contextual_quote_role_resolver_nested_and_surrogate_support_start(UStr::new(&[109,105,120,101,100,69,110,99,108,111,115,105,110,103,76,101,118,101,108,70,97,108,108,115,66,97,99,107,84,111,80,97,114,97,103,114,97,112,104,76,97,110,103,117,97,103,101]));
+        let x = ContextualQuoteRoleResolverNestedAndSurrogateSupport::contextual_quote_role_resolver_nested_and_surrogate_support_locate(&ContextualQuoteRoleResolverNestedAndSurrogateSupport::contextual_quote_role_resolver_nested_and_surrogate_support_decisions(UStr::new(&[97,8220,20013,8221,25991]), None).unwrap(), 1);
+        let _ = TracedAssertions::traced_assertions_assert_equals_string(UStr::new(&[80,97,114,97,103,114,97,112,104,76,97,110,103,117,97,103,101,81,117,111,116,101,67,111,110,116,101,120,116]), (x.source).to_ustring().as_ustr(), None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_true((u32::from_ne_bytes(((u_string::find_from(&((x.reason).to_ustring()), UString::from("mixed-enclosing-level-script").as_ustr(), 0)) as u32).to_ne_bytes())) <= 2147483647, Some((x.reason).to_ustring())).unwrap();
     });
 }
 
 #[test]
 fn non_chinese_locale_resolves_neutral_context_to_latin_text() {
     testlib::run("org.tiqian.layout.ContextualQuoteRoleResolverNestedAndSurrogateTest.nonChineseLocaleResolvesNeutralContextToLatinText", "org.tiqian.layout.ContextualQuoteRoleResolverNestedAndSurrogateTest.nonChineseLocaleResolvesNeutralContextToLatinText", || {
-        ContextualQuoteRoleResolverNestedAndSurrogateSupport::contextual_quote_role_resolver_nested_and_surrogate_support_start(&"nonChineseLocaleResolvesNeutralContextToLatinText");
-        let d = ContextualQuoteRoleResolverNestedAndSurrogateSupport::contextual_quote_role_resolver_nested_and_surrogate_support_decisions(&"’", Some("en-US".to_string())).unwrap();
+        ContextualQuoteRoleResolverNestedAndSurrogateSupport::contextual_quote_role_resolver_nested_and_surrogate_support_start(UStr::new(&[110,111,110,67,104,105,110,101,115,101,76,111,99,97,108,101,82,101,115,111,108,118,101,115,78,101,117,116,114,97,108,67,111,110,116,101,120,116,84,111,76,97,116,105,110,84,101,120,116]));
+        let d = ContextualQuoteRoleResolverNestedAndSurrogateSupport::contextual_quote_role_resolver_nested_and_surrogate_support_decisions(UStr::new(&[8217]), Some(UString::from("en-US"))).unwrap();
         let x = (d[0usize]).clone();
         let _ = TracedAssertions::traced_assertions_assert_equals_font_role(FontRole::LatinText, Some(x.role), None).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_true((u32::from_ne_bytes((u_string::find_from(&(x.reason).to_string(), "paragraph-language=en-US", 0)).to_ne_bytes())) <= 2147483647, None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_true((u32::from_ne_bytes(((u_string::find_from(&((x.reason).to_ustring()), UString::from("paragraph-language=en-US").as_ustr(), 0)) as u32).to_ne_bytes())) <= 2147483647, None).unwrap();
     });
 }
 
 #[test]
 fn private_use_char_before_a_quote_fails_the_low_surrogate_range_above() {
     testlib::run("org.tiqian.layout.ContextualQuoteRoleResolverNestedAndSurrogateTest.privateUseCharBeforeAQuoteFailsTheLowSurrogateRangeAbove", "org.tiqian.layout.ContextualQuoteRoleResolverNestedAndSurrogateTest.privateUseCharBeforeAQuoteFailsTheLowSurrogateRangeAbove", || {
-        ContextualQuoteRoleResolverNestedAndSurrogateSupport::contextual_quote_role_resolver_nested_and_surrogate_support_start(&"privateUseCharBeforeAQuoteFailsTheLowSurrogateRangeAbove");
-        let x = ContextualQuoteRoleResolverNestedAndSurrogateSupport::contextual_quote_role_resolver_nested_and_surrogate_support_locate(&ContextualQuoteRoleResolverNestedAndSurrogateSupport::contextual_quote_role_resolver_nested_and_surrogate_support_decisions(&"“中",
-None).unwrap(), 1);
-        let _ = TracedAssertions::traced_assertions_assert_equals_string(&"UnmatchedQuoteSurroundingScriptContext", (x.source).to_string().as_str(), None).unwrap();
+        ContextualQuoteRoleResolverNestedAndSurrogateSupport::contextual_quote_role_resolver_nested_and_surrogate_support_start(UStr::new(&[112,114,105,118,97,116,101,85,115,101,67,104,97,114,66,101,102,111,114,101,65,81,117,111,116,101,70,97,105,108,115,84,104,101,76,111,119,83,117,114,114,111,103,97,116,101,82,97,110,103,101,65,98,111,118,101]));
+        let x = ContextualQuoteRoleResolverNestedAndSurrogateSupport::contextual_quote_role_resolver_nested_and_surrogate_support_locate(&ContextualQuoteRoleResolverNestedAndSurrogateSupport::contextual_quote_role_resolver_nested_and_surrogate_support_decisions(UStr::new(&[57344,8220,20013]), None).unwrap(), 1);
+        let _ = TracedAssertions::traced_assertions_assert_equals_string(UStr::new(&[85,110,109,97,116,99,104,101,100,81,117,111,116,101,83,117,114,114,111,117,110,100,105,110,103,83,99,114,105,112,116,67,111,110,116,101,120,116]), (x.source).to_ustring().as_ustr(), None).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_equals_font_role(FontRole::CjkPunctuation, Some(x.role), None).unwrap();
     });
 }
@@ -846,12 +956,12 @@ fn high_surrogate_at_the_content_end_has_no_room_and_throws() {
 #[test]
 fn sibling_pairs_inside_one_quotation_each_inherit_the_outer_role() {
     testlib::run("org.tiqian.layout.ContextualQuoteRoleResolverNestedAndSurrogateTest.siblingPairsInsideOneQuotationEachInheritTheOuterRole", "org.tiqian.layout.ContextualQuoteRoleResolverNestedAndSurrogateTest.siblingPairsInsideOneQuotationEachInheritTheOuterRole", || {
-        ContextualQuoteRoleResolverNestedAndSurrogateSupport::contextual_quote_role_resolver_nested_and_surrogate_support_start(&"siblingPairsInsideOneQuotationEachInheritTheOuterRole");
-        let d = ContextualQuoteRoleResolverNestedAndSurrogateSupport::contextual_quote_role_resolver_nested_and_surrogate_support_decisions(&"“‘a’‘b’”", None).unwrap();
+        ContextualQuoteRoleResolverNestedAndSurrogateSupport::contextual_quote_role_resolver_nested_and_surrogate_support_start(UStr::new(&[115,105,98,108,105,110,103,80,97,105,114,115,73,110,115,105,100,101,79,110,101,81,117,111,116,97,116,105,111,110,69,97,99,104,73,110,104,101,114,105,116,84,104,101,79,117,116,101,114,82,111,108,101]));
+        let d = ContextualQuoteRoleResolverNestedAndSurrogateSupport::contextual_quote_role_resolver_nested_and_surrogate_support_decisions(UStr::new(&[8220,8216,97,8217,8216,98,8217,8221]), None).unwrap();
         let a = ContextualQuoteRoleResolverNestedAndSurrogateSupport::contextual_quote_role_resolver_nested_and_surrogate_support_locate(&d, 1);
         let b = ContextualQuoteRoleResolverNestedAndSurrogateSupport::contextual_quote_role_resolver_nested_and_surrogate_support_locate(&d, 4);
-        let _ = TracedAssertions::traced_assertions_assert_equals_string(&"PairedPunctuationEnclosingQuoteContext", (a.source).to_string().as_str(), None).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_equals_string(&"PairedPunctuationEnclosingQuoteContext", (b.source).to_string().as_str(), None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_equals_string(UStr::new(&[80,97,105,114,101,100,80,117,110,99,116,117,97,116,105,111,110,69,110,99,108,111,115,105,110,103,81,117,111,116,101,67,111,110,116,101,120,116]), (a.source).to_ustring().as_ustr(), None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_equals_string(UStr::new(&[80,97,105,114,101,100,80,117,110,99,116,117,97,116,105,111,110,69,110,99,108,111,115,105,110,103,81,117,111,116,101,67,111,110,116,101,120,116]), (b.source).to_ustring().as_ustr(), None).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_equals_font_role(a.role, Some(b.role), None).unwrap();
     });
 }

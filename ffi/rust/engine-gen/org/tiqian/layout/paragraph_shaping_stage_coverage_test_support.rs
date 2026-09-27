@@ -57,13 +57,24 @@ use crate::runtime::sorted_table::SortedSetTable;
 use crate::runtime::sorted_table::SortedSetTableBuilder;
 use crate::runtime::sorted_table::SortedTable;
 use crate::runtime::u_string;
+use crate::runtime::u_string::UStr;
+use crate::runtime::u_string::UString;
 use std::sync::Arc;
+use std::sync::Mutex;
 
 
 #[derive(Debug, Clone, PartialEq)]
 pub enum ParagraphShapingStageCoverageTestSupportParagraphFault {
     TextRangeErrorFault(crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError),
     IllegalStateExceptionFault(crate::org::tiqian::core::illegal_state_exception::IllegalStateException),
+}
+impl std::fmt::Display for ParagraphShapingStageCoverageTestSupportParagraphFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            ParagraphShapingStageCoverageTestSupportParagraphFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            ParagraphShapingStageCoverageTestSupportParagraphFault::IllegalStateExceptionFault(value) => write!(formatter, "{}", value),
+        }
+    }
 }
 
 impl From<ParagraphShapingStageCoverageTestSupportParagraphFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
@@ -101,6 +112,15 @@ pub enum ParagraphShapingStageCoverageTestSupportLayoutFault {
     TextRangeErrorFault(crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError),
     UStringFaultFault(crate::std::u_string_exception::UStringFault),
     ParagraphLayoutEngineLayoutWithRejectedTechnicalTiersFaultFault(crate::org::tiqian::layout::paragraph_layout_engine::ParagraphLayoutEngineLayoutWithRejectedTechnicalTiersFault),
+}
+impl std::fmt::Display for ParagraphShapingStageCoverageTestSupportLayoutFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            ParagraphShapingStageCoverageTestSupportLayoutFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            ParagraphShapingStageCoverageTestSupportLayoutFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            ParagraphShapingStageCoverageTestSupportLayoutFault::ParagraphLayoutEngineLayoutWithRejectedTechnicalTiersFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
 }
 
 impl From<ParagraphShapingStageCoverageTestSupportLayoutFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
@@ -153,6 +173,14 @@ pub enum ParagraphShapingStageCoverageTestSupportShapeFault {
     TextShaperShapeFaultFault(crate::org::tiqian::shaping::text_shaper::TextShaperShapeFault),
     TextRangeErrorFault(crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError),
 }
+impl std::fmt::Display for ParagraphShapingStageCoverageTestSupportShapeFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            ParagraphShapingStageCoverageTestSupportShapeFault::TextShaperShapeFaultFault(value) => write!(formatter, "{}", value),
+            ParagraphShapingStageCoverageTestSupportShapeFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+        }
+    }
+}
 
 impl From<ParagraphShapingStageCoverageTestSupportShapeFault> for crate::org::tiqian::shaping::text_shaper::TextShaperShapeFault {
     fn from(value: ParagraphShapingStageCoverageTestSupportShapeFault) -> Self {
@@ -184,23 +212,23 @@ impl From<crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRange
     }
 }
 
-#[derive(Clone, PartialEq)]
+#[derive(Clone)]
 pub struct ParagraphEmptyHyphenShaper {
-    pub delegate: ExplainableStubTextShaper,
+    pub delegate: Arc<Mutex<ExplainableStubTextShaper>>,
 }
 
 impl ParagraphEmptyHyphenShaper {
     pub fn new() -> Self {
         Self {
-            delegate: ExplainableStubTextShaper::new(),
+            delegate: Arc::new(Mutex::new(ExplainableStubTextShaper::new())),
         }
     }
 
     pub fn shape(&self, i: ShapingInput) -> Result<ShapingResult, ParagraphShapingStageCoverageTestSupportShapeFault> {
-        if i.text.to_string() == "-" || (i.display_text).to_string() == "-" {
+        if i.text.to_ustring() == UString::from("-") || (i.display_text).to_ustring() == UString::from("-") {
             return Ok(ShapingResult::new(vec![].to_vec(), vec![].to_vec(), Some(vec![])));
         }
-        return Ok(self.delegate.shape((i).clone()).map_err(|e| ParagraphShapingStageCoverageTestSupportShapeFault::TextShaperShapeFaultFault(e))?);
+        return Ok(self.delegate.lock().unwrap().shape((i).clone()).map_err(|e| ParagraphShapingStageCoverageTestSupportShapeFault::TextShaperShapeFaultFault(e))?);
     }
 }
 
@@ -216,30 +244,30 @@ impl ITextShaper for ParagraphEmptyHyphenShaper {
     }
 
     fn shape(&mut self, i: ShapingInput) -> Result<ShapingResult, TextShaperShapeFault> {
-        if i.text.to_string() == "-" || (i.display_text).to_string() == "-" {
+        if i.text.to_ustring() == UString::from("-") || (i.display_text).to_ustring() == UString::from("-") {
             return Ok(ShapingResult::new(vec![].to_vec(), vec![].to_vec(), Some(vec![])));
         }
-        return Ok(self.delegate.shape((i).clone())?);
+        return Ok(self.delegate.lock().unwrap().shape((i).clone())?);
     }
 }
 
-#[derive(Clone, PartialEq)]
+#[derive(Clone)]
 pub struct ParagraphMultiClusterShaper {
-    pub delegate: ExplainableStubTextShaper,
+    pub delegate: Arc<Mutex<ExplainableStubTextShaper>>,
     pub toggle: bool,
 }
 
 impl ParagraphMultiClusterShaper {
     pub fn new() -> Self {
         Self {
-            delegate: ExplainableStubTextShaper::new(),
+            delegate: Arc::new(Mutex::new(ExplainableStubTextShaper::new())),
             toggle: false,
         }
     }
 
     pub fn shape(&mut self, i: ShapingInput) -> Result<ShapingResult, ParagraphShapingStageCoverageTestSupportShapeFault> {
-        let r = self.delegate.shape((i).clone()).map_err(|e| ParagraphShapingStageCoverageTestSupportShapeFault::TextShaperShapeFaultFault(e))?;
-        if i32::from_ne_bytes(((i.range).clone().get_length()).to_ne_bytes()) <= 1 {
+        let r = self.delegate.lock().unwrap().shape((i).clone()).map_err(|e| ParagraphShapingStageCoverageTestSupportShapeFault::TextShaperShapeFaultFault(e))?;
+        if i32::from_ne_bytes((((i.range).clone().get_length()) as i32).to_ne_bytes()) <= 1 {
             return Ok(r);
         }
         self.toggle = !self.toggle;
@@ -248,8 +276,8 @@ impl ParagraphMultiClusterShaper {
         }
         let m = u32::wrapping_add((i.range).clone().start, (i.range).clone().end) / (2);
         return Ok(ShapingResult::new(vec![
-    (Cluster::new(TextRange::new((i.range).clone().start, m).map_err(|e| ParagraphShapingStageCoverageTestSupportShapeFault::TextRangeErrorFault(e))?, "a", "k", 100.0f64, Some("a".to_string()), Some(0.0), Some(0.0), Some(0.0))).clone(),
-    (Cluster::new(TextRange::new(m, (i.range).clone().end).map_err(|e| ParagraphShapingStageCoverageTestSupportShapeFault::TextRangeErrorFault(e))?, "b", "k", 100.0f64, Some("b".to_string()), Some(0.0), Some(0.0), Some(0.0))).clone(),
+    (Cluster::new(TextRange::new((i.range).clone().start, m).map_err(|e| ParagraphShapingStageCoverageTestSupportShapeFault::TextRangeErrorFault(e))?, &(UStr::new(&[97])), &(UStr::new(&[107])), 100.0f64, Some(UString::from("a")), Some(0.0), Some(0.0), Some(0.0))).clone(),
+    (Cluster::new(TextRange::new(m, (i.range).clone().end).map_err(|e| ParagraphShapingStageCoverageTestSupportShapeFault::TextRangeErrorFault(e))?, &(UStr::new(&[98])), &(UStr::new(&[107])), 100.0f64, Some(UString::from("b")), Some(0.0), Some(0.0), Some(0.0))).clone(),
 ].to_vec(), r.glyph_runs.to_vec(), Some((r.decisions).clone())));
     }
 }
@@ -266,8 +294,8 @@ impl ITextShaper for ParagraphMultiClusterShaper {
     }
 
     fn shape(&mut self, i: ShapingInput) -> Result<ShapingResult, TextShaperShapeFault> {
-        let r = self.delegate.shape((i).clone())?;
-        if i32::from_ne_bytes(((i.range).clone().get_length()).to_ne_bytes()) <= 1 {
+        let r = self.delegate.lock().unwrap().shape((i).clone())?;
+        if i32::from_ne_bytes((((i.range).clone().get_length()) as i32).to_ne_bytes()) <= 1 {
             return Ok(r);
         }
         self.toggle = !self.toggle;
@@ -276,30 +304,30 @@ impl ITextShaper for ParagraphMultiClusterShaper {
         }
         let m = u32::wrapping_add((i.range).clone().start, (i.range).clone().end) / (2);
         return Ok(ShapingResult::new(vec![
-    (Cluster::new(TextRange::new((i.range).clone().start, m).map_err(|e| TextShaperShapeFault::TextRangeErrorFault(e))?, "a", "k", 100.0f64, Some("a".to_string()), Some(0.0), Some(0.0), Some(0.0))).clone(),
-    (Cluster::new(TextRange::new(m, (i.range).clone().end).map_err(|e| TextShaperShapeFault::TextRangeErrorFault(e))?, "b", "k", 100.0f64, Some("b".to_string()), Some(0.0), Some(0.0), Some(0.0))).clone(),
+    (Cluster::new(TextRange::new((i.range).clone().start, m).map_err(|e| TextShaperShapeFault::TextRangeErrorFault(e))?, &(UStr::new(&[97])), &(UStr::new(&[107])), 100.0f64, Some(UString::from("a")), Some(0.0), Some(0.0), Some(0.0))).clone(),
+    (Cluster::new(TextRange::new(m, (i.range).clone().end).map_err(|e| TextShaperShapeFault::TextRangeErrorFault(e))?, &(UStr::new(&[98])), &(UStr::new(&[107])), 100.0f64, Some(UString::from("b")), Some(0.0), Some(0.0), Some(0.0))).clone(),
 ].to_vec(), r.glyph_runs.to_vec(), Some((r.decisions).clone())));
     }
 }
 
-#[derive(Clone, PartialEq)]
+#[derive(Clone)]
 pub struct ParagraphWordShaper {
-    pub delegate: ExplainableStubTextShaper,
+    pub delegate: Arc<Mutex<ExplainableStubTextShaper>>,
 }
 
 impl ParagraphWordShaper {
     pub fn new() -> Self {
         Self {
-            delegate: ExplainableStubTextShaper::new(),
+            delegate: Arc::new(Mutex::new(ExplainableStubTextShaper::new())),
         }
     }
 
     pub fn shape(&self, i: ShapingInput) -> Result<ShapingResult, ParagraphShapingStageCoverageTestSupportShapeFault> {
-        let r = self.delegate.shape((i).clone()).map_err(|e| ParagraphShapingStageCoverageTestSupportShapeFault::TextShaperShapeFaultFault(e))?;
-        if i.range.clone().get_length() == 2 && u_string::substring(&(i.text).to_string(), i32::from_ne_bytes(((i.range).clone().start).to_ne_bytes()), i32::from_ne_bytes(((i.range).clone().end).to_ne_bytes())) == "em" {
+        let r = self.delegate.lock().unwrap().shape((i).clone()).map_err(|e| ParagraphShapingStageCoverageTestSupportShapeFault::TextShaperShapeFaultFault(e))?;
+        if i.range.clone().get_length() == 2 && u_string::substring(&(i.text).to_ustring(), i32::from_ne_bytes((((i.range).clone().start) as i32).to_ne_bytes()), i32::from_ne_bytes((((i.range).clone().end) as i32).to_ne_bytes())) == UString::from("em") {
             return Ok(ShapingResult::new(vec![
-    (Cluster::new(TextRange::new((i.range).clone().start, u32::wrapping_add((i.range).clone().start, 1)).map_err(|e| ParagraphShapingStageCoverageTestSupportShapeFault::TextRangeErrorFault(e))?, "e", "k", 10.0f64, Some("e".to_string()), Some(0.0), Some(0.0), Some(0.0))).clone(),
-    (Cluster::new(TextRange::new(u32::wrapping_add((i.range).clone().start, 1), (i.range).clone().end).map_err(|e| ParagraphShapingStageCoverageTestSupportShapeFault::TextRangeErrorFault(e))?, "m", "k", 10.0f64, Some("m".to_string()), Some(0.0), Some(0.0), Some(0.0))).clone(),
+    (Cluster::new(TextRange::new((i.range).clone().start, u32::wrapping_add((i.range).clone().start, 1)).map_err(|e| ParagraphShapingStageCoverageTestSupportShapeFault::TextRangeErrorFault(e))?, &(UStr::new(&[101])), &(UStr::new(&[107])), 10.0f64, Some(UString::from("e")), Some(0.0), Some(0.0), Some(0.0))).clone(),
+    (Cluster::new(TextRange::new(u32::wrapping_add((i.range).clone().start, 1), (i.range).clone().end).map_err(|e| ParagraphShapingStageCoverageTestSupportShapeFault::TextRangeErrorFault(e))?, &(UStr::new(&[109])), &(UStr::new(&[107])), 10.0f64, Some(UString::from("m")), Some(0.0), Some(0.0), Some(0.0))).clone(),
 ].to_vec(), r.glyph_runs.to_vec(), Some((r.decisions).clone())));
         }
         return Ok(r);
@@ -318,32 +346,32 @@ impl ITextShaper for ParagraphWordShaper {
     }
 
     fn shape(&mut self, i: ShapingInput) -> Result<ShapingResult, TextShaperShapeFault> {
-        let r = self.delegate.shape((i).clone())?;
-        if i.range.clone().get_length() == 2 && u_string::substring(&(i.text).to_string(), i32::from_ne_bytes(((i.range).clone().start).to_ne_bytes()), i32::from_ne_bytes(((i.range).clone().end).to_ne_bytes())) == "em" {
+        let r = self.delegate.lock().unwrap().shape((i).clone())?;
+        if i.range.clone().get_length() == 2 && u_string::substring(&(i.text).to_ustring(), i32::from_ne_bytes((((i.range).clone().start) as i32).to_ne_bytes()), i32::from_ne_bytes((((i.range).clone().end) as i32).to_ne_bytes())) == UString::from("em") {
             return Ok(ShapingResult::new(vec![
-    (Cluster::new(TextRange::new((i.range).clone().start, u32::wrapping_add((i.range).clone().start, 1)).map_err(|e| TextShaperShapeFault::TextRangeErrorFault(e))?, "e", "k", 10.0f64, Some("e".to_string()), Some(0.0), Some(0.0), Some(0.0))).clone(),
-    (Cluster::new(TextRange::new(u32::wrapping_add((i.range).clone().start, 1), (i.range).clone().end).map_err(|e| TextShaperShapeFault::TextRangeErrorFault(e))?, "m", "k", 10.0f64, Some("m".to_string()), Some(0.0), Some(0.0), Some(0.0))).clone(),
+    (Cluster::new(TextRange::new((i.range).clone().start, u32::wrapping_add((i.range).clone().start, 1)).map_err(|e| TextShaperShapeFault::TextRangeErrorFault(e))?, &(UStr::new(&[101])), &(UStr::new(&[107])), 10.0f64, Some(UString::from("e")), Some(0.0), Some(0.0), Some(0.0))).clone(),
+    (Cluster::new(TextRange::new(u32::wrapping_add((i.range).clone().start, 1), (i.range).clone().end).map_err(|e| TextShaperShapeFault::TextRangeErrorFault(e))?, &(UStr::new(&[109])), &(UStr::new(&[107])), 10.0f64, Some(UString::from("m")), Some(0.0), Some(0.0), Some(0.0))).clone(),
 ].to_vec(), r.glyph_runs.to_vec(), Some((r.decisions).clone())));
         }
         return Ok(r);
     }
 }
 
-#[derive(Clone, PartialEq)]
+#[derive(Clone)]
 pub struct ParagraphEmptyClusterShaper {
-    pub delegate: ExplainableStubTextShaper,
+    pub delegate: Arc<Mutex<ExplainableStubTextShaper>>,
 }
 
 impl ParagraphEmptyClusterShaper {
     pub fn new() -> Self {
         Self {
-            delegate: ExplainableStubTextShaper::new(),
+            delegate: Arc::new(Mutex::new(ExplainableStubTextShaper::new())),
         }
     }
 
     pub fn shape(&self, i: ShapingInput) -> Result<ShapingResult, ParagraphShapingStageCoverageTestSupportShapeFault> {
-        let r = self.delegate.shape((i).clone()).map_err(|e| ParagraphShapingStageCoverageTestSupportShapeFault::TextShaperShapeFaultFault(e))?;
-        if i.text.to_string() == "singlecluster" || (i.display_text).to_string() == "singlecluster" {
+        let r = self.delegate.lock().unwrap().shape((i).clone()).map_err(|e| ParagraphShapingStageCoverageTestSupportShapeFault::TextShaperShapeFaultFault(e))?;
+        if i.text.to_ustring() == UString::from("singlecluster") || (i.display_text).to_ustring() == UString::from("singlecluster") {
             return Ok(ShapingResult::new(vec![].to_vec(), r.glyph_runs.to_vec(), Some((r.decisions).clone())));
         }
         return Ok(r);
@@ -362,8 +390,8 @@ impl ITextShaper for ParagraphEmptyClusterShaper {
     }
 
     fn shape(&mut self, i: ShapingInput) -> Result<ShapingResult, TextShaperShapeFault> {
-        let r = self.delegate.shape((i).clone())?;
-        if i.text.to_string() == "singlecluster" || (i.display_text).to_string() == "singlecluster" {
+        let r = self.delegate.lock().unwrap().shape((i).clone())?;
+        if i.text.to_ustring() == UString::from("singlecluster") || (i.display_text).to_ustring() == UString::from("singlecluster") {
             return Ok(ShapingResult::new(vec![].to_vec(), r.glyph_runs.to_vec(), Some((r.decisions).clone())));
         }
         return Ok(r);
@@ -381,11 +409,10 @@ impl ParagraphDeficientDashShaper {
     }
 
     pub fn shape(&self, i: ShapingInput) -> Result<ShapingResult, ParagraphShapingStageCoverageTestSupportShapeFault> {
-        let c = Cluster::new((i.range).clone(), u_string::substring(&(i.text).to_string(), i32::from_ne_bytes(((i.range).clone().start).to_ne_bytes()), i32::from_ne_bytes(((i.range).clone().end).to_ne_bytes())).as_str(), "test", 32.0f64, Some((i.display_text).to_string()),
-Some(0.0), Some(0.0), Some(0.0));
+        let c = Cluster::new((i.range).clone(), u_string::substring(&(i.text).to_ustring(), i32::from_ne_bytes((((i.range).clone().start) as i32).to_ne_bytes()), i32::from_ne_bytes((((i.range).clone().end) as i32).to_ne_bytes())).as_ustr(), &(UStr::new(&[116,101,115,116])), 32.0f64, Some((i.display_text).to_ustring()), Some(0.0), Some(0.0), Some(0.0));
         let g = Glyph::new(1u32, (i.range).clone(), 32.0f64, Some(0.0f64), Some(0.0), None, Some(Rect::new(0.0f64, 0.0f64, 20.0f64, 10.0f64)), None, None);
         return Ok(ShapingResult::new(vec![(c).clone()].to_vec(), vec![
-    (GlyphRun::new((i.range).clone(), "test", vec![(g).clone()].to_vec(), 32.0f64, Some(vec![]))).clone(),
+    (GlyphRun::new((i.range).clone(), &(UStr::new(&[116,101,115,116])), vec![(g).clone()].to_vec(), 32.0f64, Some(vec![]))).clone(),
 ].to_vec(), Some(vec![])));
     }
 }
@@ -402,11 +429,10 @@ impl ITextShaper for ParagraphDeficientDashShaper {
     }
 
     fn shape(&mut self, i: ShapingInput) -> Result<ShapingResult, TextShaperShapeFault> {
-        let c = Cluster::new((i.range).clone(), u_string::substring(&(i.text).to_string(), i32::from_ne_bytes(((i.range).clone().start).to_ne_bytes()), i32::from_ne_bytes(((i.range).clone().end).to_ne_bytes())).as_str(), "test", 32.0f64, Some((i.display_text).to_string()),
-Some(0.0), Some(0.0), Some(0.0));
+        let c = Cluster::new((i.range).clone(), u_string::substring(&(i.text).to_ustring(), i32::from_ne_bytes((((i.range).clone().start) as i32).to_ne_bytes()), i32::from_ne_bytes((((i.range).clone().end) as i32).to_ne_bytes())).as_ustr(), &(UStr::new(&[116,101,115,116])), 32.0f64, Some((i.display_text).to_ustring()), Some(0.0), Some(0.0), Some(0.0));
         let g = Glyph::new(1u32, (i.range).clone(), 32.0f64, Some(0.0f64), Some(0.0), None, Some(Rect::new(0.0f64, 0.0f64, 20.0f64, 10.0f64)), None, None);
         return Ok(ShapingResult::new(vec![(c).clone()].to_vec(), vec![
-    (GlyphRun::new((i.range).clone(), "test", vec![(g).clone()].to_vec(), 32.0f64, Some(vec![]))).clone(),
+    (GlyphRun::new((i.range).clone(), &(UStr::new(&[116,101,115,116])), vec![(g).clone()].to_vec(), 32.0f64, Some(vec![]))).clone(),
 ].to_vec(), Some(vec![])));
     }
 }
@@ -422,11 +448,10 @@ impl ParagraphSufficientDashShaper {
     }
 
     pub fn shape(&self, i: ShapingInput) -> Result<ShapingResult, ParagraphShapingStageCoverageTestSupportShapeFault> {
-        let c = Cluster::new((i.range).clone(), u_string::substring(&(i.text).to_string(), i32::from_ne_bytes(((i.range).clone().start).to_ne_bytes()), i32::from_ne_bytes(((i.range).clone().end).to_ne_bytes())).as_str(), "test", 32.0f64, Some((i.display_text).to_string()),
-Some(0.0), Some(0.0), Some(0.0));
+        let c = Cluster::new((i.range).clone(), u_string::substring(&(i.text).to_ustring(), i32::from_ne_bytes((((i.range).clone().start) as i32).to_ne_bytes()), i32::from_ne_bytes((((i.range).clone().end) as i32).to_ne_bytes())).as_ustr(), &(UStr::new(&[116,101,115,116])), 32.0f64, Some((i.display_text).to_ustring()), Some(0.0), Some(0.0), Some(0.0));
         let g = Glyph::new(1u32, (i.range).clone(), 32.0f64, Some(0.0f64), Some(0.0), None, Some(Rect::new(0.0f64, 0.0f64, 30.0f64, 10.0f64)), None, None);
         return Ok(ShapingResult::new(vec![(c).clone()].to_vec(), vec![
-    (GlyphRun::new((i.range).clone(), "test", vec![(g).clone()].to_vec(), 32.0f64, Some(vec![]))).clone(),
+    (GlyphRun::new((i.range).clone(), &(UStr::new(&[116,101,115,116])), vec![(g).clone()].to_vec(), 32.0f64, Some(vec![]))).clone(),
 ].to_vec(), Some(vec![])));
     }
 }
@@ -443,11 +468,10 @@ impl ITextShaper for ParagraphSufficientDashShaper {
     }
 
     fn shape(&mut self, i: ShapingInput) -> Result<ShapingResult, TextShaperShapeFault> {
-        let c = Cluster::new((i.range).clone(), u_string::substring(&(i.text).to_string(), i32::from_ne_bytes(((i.range).clone().start).to_ne_bytes()), i32::from_ne_bytes(((i.range).clone().end).to_ne_bytes())).as_str(), "test", 32.0f64, Some((i.display_text).to_string()),
-Some(0.0), Some(0.0), Some(0.0));
+        let c = Cluster::new((i.range).clone(), u_string::substring(&(i.text).to_ustring(), i32::from_ne_bytes((((i.range).clone().start) as i32).to_ne_bytes()), i32::from_ne_bytes((((i.range).clone().end) as i32).to_ne_bytes())).as_ustr(), &(UStr::new(&[116,101,115,116])), 32.0f64, Some((i.display_text).to_ustring()), Some(0.0), Some(0.0), Some(0.0));
         let g = Glyph::new(1u32, (i.range).clone(), 32.0f64, Some(0.0f64), Some(0.0), None, Some(Rect::new(0.0f64, 0.0f64, 30.0f64, 10.0f64)), None, None);
         return Ok(ShapingResult::new(vec![(c).clone()].to_vec(), vec![
-    (GlyphRun::new((i.range).clone(), "test", vec![(g).clone()].to_vec(), 32.0f64, Some(vec![]))).clone(),
+    (GlyphRun::new((i.range).clone(), &(UStr::new(&[116,101,115,116])), vec![(g).clone()].to_vec(), 32.0f64, Some(vec![]))).clone(),
 ].to_vec(), Some(vec![])));
     }
 }
@@ -466,12 +490,12 @@ impl ParagraphRollbackShaper {
 
     pub fn shape(&mut self, i: ShapingInput) -> Result<ShapingResult, ParagraphShapingStageCoverageTestSupportShapeFault> {
         self.call += 1;
-        let c = Cluster::new((i.range).clone(), u_string::substring(&(i.text).to_string(), i32::from_ne_bytes(((i.range).clone().start).to_ne_bytes()), i32::from_ne_bytes(((i.range).clone().end).to_ne_bytes())).as_str(), "test", 16.0f64, Some((i.display_text).to_string()),
-Some(0.0), Some(0.0), Some(0.0));
-        let issue = if self.call == 1 { Some(TextShaper::TEXT_SHAPER_UNVERIFIED_DISPLAY_SUBSTITUTION_COVERAGE_ISSUE.to_string()) } else { None };
-        let d = ShapingDecisionInfo::new((i.range).clone(), u_string::substring(&(i.text).to_string(), i32::from_ne_bytes(((i.range).clone().start).to_ne_bytes()), i32::from_ne_bytes(((i.range).clone().end).to_ne_bytes())).as_str(), (i.display_text).to_string().as_str(), "test",
-1u32, 16.0f64, "Test", "test", Some(0), if self.call == 2 { Some(1) } else { Some(0) }, None, None, None, None, None, issue.clone());
-        return Ok(ShapingResult::new(vec![(c).clone()].to_vec(), vec![(GlyphRun::new((i.range).clone(), "test", vec![].to_vec(), 16.0f64, Some(vec![]))).clone()].to_vec(), Some(vec![(d).clone()])));
+        let c = Cluster::new((i.range).clone(), u_string::substring(&(i.text).to_ustring(), i32::from_ne_bytes((((i.range).clone().start) as i32).to_ne_bytes()), i32::from_ne_bytes((((i.range).clone().end) as i32).to_ne_bytes())).as_ustr(), &(UStr::new(&[116,101,115,116])), 16.0f64, Some((i.display_text).to_ustring()), Some(0.0), Some(0.0), Some(0.0));
+        let issue = if self.call == 1 { Some(TextShaper::TEXT_SHAPER_UNVERIFIED_DISPLAY_SUBSTITUTION_COVERAGE_ISSUE.to_ustring()) } else { None };
+        let d = ShapingDecisionInfo::new((i.range).clone(), u_string::substring(&(i.text).to_ustring(), i32::from_ne_bytes((((i.range).clone().start) as i32).to_ne_bytes()), i32::from_ne_bytes((((i.range).clone().end) as i32).to_ne_bytes())).as_ustr(), (i.display_text).to_ustring().as_ustr(), &(UStr::new(&[116,101,115,116])), 1u32, 16.0f64, &(UStr::new(&[84,101,115,116])), &(UStr::new(&[116,101,115,116])), Some(0), if self.call == 2 { Some(1) } else { Some(0) }, None, None, None, None, None, issue.clone());
+        return Ok(ShapingResult::new(vec![(c).clone()].to_vec(), vec![
+    (GlyphRun::new((i.range).clone(), &(UStr::new(&[116,101,115,116])), vec![].to_vec(), 16.0f64, Some(vec![]))).clone(),
+].to_vec(), Some(vec![(d).clone()])));
     }
 }
 
@@ -488,12 +512,12 @@ impl ITextShaper for ParagraphRollbackShaper {
 
     fn shape(&mut self, i: ShapingInput) -> Result<ShapingResult, TextShaperShapeFault> {
         self.call += 1;
-        let c = Cluster::new((i.range).clone(), u_string::substring(&(i.text).to_string(), i32::from_ne_bytes(((i.range).clone().start).to_ne_bytes()), i32::from_ne_bytes(((i.range).clone().end).to_ne_bytes())).as_str(), "test", 16.0f64, Some((i.display_text).to_string()),
-Some(0.0), Some(0.0), Some(0.0));
-        let issue = if self.call == 1 { Some(TextShaper::TEXT_SHAPER_UNVERIFIED_DISPLAY_SUBSTITUTION_COVERAGE_ISSUE.to_string()) } else { None };
-        let d = ShapingDecisionInfo::new((i.range).clone(), u_string::substring(&(i.text).to_string(), i32::from_ne_bytes(((i.range).clone().start).to_ne_bytes()), i32::from_ne_bytes(((i.range).clone().end).to_ne_bytes())).as_str(), (i.display_text).to_string().as_str(), "test",
-1u32, 16.0f64, "Test", "test", Some(0), if self.call == 2 { Some(1) } else { Some(0) }, None, None, None, None, None, issue.clone());
-        return Ok(ShapingResult::new(vec![(c).clone()].to_vec(), vec![(GlyphRun::new((i.range).clone(), "test", vec![].to_vec(), 16.0f64, Some(vec![]))).clone()].to_vec(), Some(vec![(d).clone()])));
+        let c = Cluster::new((i.range).clone(), u_string::substring(&(i.text).to_ustring(), i32::from_ne_bytes((((i.range).clone().start) as i32).to_ne_bytes()), i32::from_ne_bytes((((i.range).clone().end) as i32).to_ne_bytes())).as_ustr(), &(UStr::new(&[116,101,115,116])), 16.0f64, Some((i.display_text).to_ustring()), Some(0.0), Some(0.0), Some(0.0));
+        let issue = if self.call == 1 { Some(TextShaper::TEXT_SHAPER_UNVERIFIED_DISPLAY_SUBSTITUTION_COVERAGE_ISSUE.to_ustring()) } else { None };
+        let d = ShapingDecisionInfo::new((i.range).clone(), u_string::substring(&(i.text).to_ustring(), i32::from_ne_bytes((((i.range).clone().start) as i32).to_ne_bytes()), i32::from_ne_bytes((((i.range).clone().end) as i32).to_ne_bytes())).as_ustr(), (i.display_text).to_ustring().as_ustr(), &(UStr::new(&[116,101,115,116])), 1u32, 16.0f64, &(UStr::new(&[84,101,115,116])), &(UStr::new(&[116,101,115,116])), Some(0), if self.call == 2 { Some(1) } else { Some(0) }, None, None, None, None, None, issue.clone());
+        return Ok(ShapingResult::new(vec![(c).clone()].to_vec(), vec![
+    (GlyphRun::new((i.range).clone(), &(UStr::new(&[116,101,115,116])), vec![].to_vec(), 16.0f64, Some(vec![]))).clone(),
+].to_vec(), Some(vec![(d).clone()])));
     }
 }
 
@@ -511,15 +535,16 @@ impl ParagraphMultiGlyphShaper {
 
     pub fn shape(&mut self, i: ShapingInput) -> Result<ShapingResult, ParagraphShapingStageCoverageTestSupportShapeFault> {
         self.count += 1;
-        let c = Cluster::new((i.range).clone(), u_string::substring(&(i.text).to_string(), i32::from_ne_bytes(((i.range).clone().start).to_ne_bytes()), i32::from_ne_bytes(((i.range).clone().end).to_ne_bytes())).as_str(), "test", 32.0f64, Some((i.display_text).to_string()),
-Some(0.0), Some(0.0), Some(0.0));
-        let gs = if u32::from_ne_bytes((i32::from_ne_bytes((self.count).to_ne_bytes()) % 3i32).to_ne_bytes()) == 0 { vec![] } else { if u32::from_ne_bytes((i32::from_ne_bytes((self.count).to_ne_bytes()) % 3i32).to_ne_bytes()) == 1 { vec![
+        let c = Cluster::new((i.range).clone(), u_string::substring(&(i.text).to_ustring(), i32::from_ne_bytes((((i.range).clone().start) as i32).to_ne_bytes()), i32::from_ne_bytes((((i.range).clone().end) as i32).to_ne_bytes())).as_ustr(), &(UStr::new(&[116,101,115,116])), 32.0f64, Some((i.display_text).to_ustring()), Some(0.0), Some(0.0), Some(0.0));
+        let gs = if u32::from_ne_bytes(((i32::from_ne_bytes(((self.count) as i32).to_ne_bytes()) % 3i32) as u32).to_ne_bytes()) == 0 { vec![] } else { if u32::from_ne_bytes(((i32::from_ne_bytes(((self.count) as i32).to_ne_bytes()) % 3i32) as u32).to_ne_bytes()) == 1 { vec![
     (Glyph::new(1u32, (i.range).clone(), 16.0f64, Some(0.0f64), Some(0.0), None, None, None, None)).clone(),
     (Glyph::new(2u32, (i.range).clone(), 16.0f64, Some(16.0f64), Some(0.0), None, None, None, None)).clone(),
 ] } else { vec![
     (Glyph::new(1u32, (i.range).clone(), 32.0f64, Some(0.0f64), Some(0.0), None, None, None, None)).clone(),
 ] } };
-        return Ok(ShapingResult::new(vec![(c).clone()].to_vec(), vec![(GlyphRun::new((i.range).clone(), "test", gs.to_vec(), 32.0f64, Some(vec![]))).clone()].to_vec(), Some(vec![])));
+        return Ok(ShapingResult::new(vec![(c).clone()].to_vec(), vec![
+    (GlyphRun::new((i.range).clone(), &(UStr::new(&[116,101,115,116])), gs.to_vec(), 32.0f64, Some(vec![]))).clone(),
+].to_vec(), Some(vec![])));
     }
 }
 
@@ -536,15 +561,16 @@ impl ITextShaper for ParagraphMultiGlyphShaper {
 
     fn shape(&mut self, i: ShapingInput) -> Result<ShapingResult, TextShaperShapeFault> {
         self.count += 1;
-        let c = Cluster::new((i.range).clone(), u_string::substring(&(i.text).to_string(), i32::from_ne_bytes(((i.range).clone().start).to_ne_bytes()), i32::from_ne_bytes(((i.range).clone().end).to_ne_bytes())).as_str(), "test", 32.0f64, Some((i.display_text).to_string()),
-Some(0.0), Some(0.0), Some(0.0));
-        let gs = if u32::from_ne_bytes((i32::from_ne_bytes((self.count).to_ne_bytes()) % 3i32).to_ne_bytes()) == 0 { vec![] } else { if u32::from_ne_bytes((i32::from_ne_bytes((self.count).to_ne_bytes()) % 3i32).to_ne_bytes()) == 1 { vec![
+        let c = Cluster::new((i.range).clone(), u_string::substring(&(i.text).to_ustring(), i32::from_ne_bytes((((i.range).clone().start) as i32).to_ne_bytes()), i32::from_ne_bytes((((i.range).clone().end) as i32).to_ne_bytes())).as_ustr(), &(UStr::new(&[116,101,115,116])), 32.0f64, Some((i.display_text).to_ustring()), Some(0.0), Some(0.0), Some(0.0));
+        let gs = if u32::from_ne_bytes(((i32::from_ne_bytes(((self.count) as i32).to_ne_bytes()) % 3i32) as u32).to_ne_bytes()) == 0 { vec![] } else { if u32::from_ne_bytes(((i32::from_ne_bytes(((self.count) as i32).to_ne_bytes()) % 3i32) as u32).to_ne_bytes()) == 1 { vec![
     (Glyph::new(1u32, (i.range).clone(), 16.0f64, Some(0.0f64), Some(0.0), None, None, None, None)).clone(),
     (Glyph::new(2u32, (i.range).clone(), 16.0f64, Some(16.0f64), Some(0.0), None, None, None, None)).clone(),
 ] } else { vec![
     (Glyph::new(1u32, (i.range).clone(), 32.0f64, Some(0.0f64), Some(0.0), None, None, None, None)).clone(),
 ] } };
-        return Ok(ShapingResult::new(vec![(c).clone()].to_vec(), vec![(GlyphRun::new((i.range).clone(), "test", gs.to_vec(), 32.0f64, Some(vec![]))).clone()].to_vec(), Some(vec![])));
+        return Ok(ShapingResult::new(vec![(c).clone()].to_vec(), vec![
+    (GlyphRun::new((i.range).clone(), &(UStr::new(&[116,101,115,116])), gs.to_vec(), 32.0f64, Some(vec![]))).clone(),
+].to_vec(), Some(vec![])));
     }
 }
 
@@ -560,8 +586,8 @@ impl ParagraphCoverageHyphenator {
         }
     }
 
-    pub fn hyphenate(&self, w: &str) -> Vec<u32> {
-        return if self.mode == 1 && (u32::from_ne_bytes((u_string::find_from(&w, "hyphen", 0)).to_ne_bytes())) <= 2147483647 { vec![2, 4] } else { if self.mode == 2 { vec![1, 2, 3] } else { vec![2] } };
+    pub fn hyphenate(&self, w: &UStr) -> Vec<u32> {
+        return if self.mode == 1 && (u32::from_ne_bytes(((u_string::find_from(&(w), UString::from("hyphen").as_ustr(), 0)) as u32).to_ne_bytes())) <= 2147483647 { vec![2, 4] } else { if self.mode == 2 { vec![1, 2, 3] } else { vec![2] } };
     }
 }
 
@@ -576,8 +602,8 @@ impl Hyphenator for ParagraphCoverageHyphenator {
         Box::new(self.clone())
     }
 
-    fn hyphenate(&self, w: &str) -> Vec<u32> {
-        return if self.mode == 1 && (u32::from_ne_bytes((u_string::find_from(&w, "hyphen", 0)).to_ne_bytes())) <= 2147483647 { vec![2, 4] } else { if self.mode == 2 { vec![1, 2, 3] } else { vec![2] } };
+    fn hyphenate(&self, w: &UStr) -> Vec<u32> {
+        return if self.mode == 1 && (u32::from_ne_bytes(((u_string::find_from(&(w), UString::from("hyphen").as_ustr(), 0)) as u32).to_ne_bytes())) <= 2147483647 { vec![2, 4] } else { if self.mode == 2 { vec![1, 2, 3] } else { vec![2] } };
     }
 }
 
@@ -591,8 +617,8 @@ impl ParagraphSegmentationHyphenator {
         }
     }
 
-    pub fn hyphenate(&self, w: &str) -> Vec<u32> {
-        return if u32::from_ne_bytes((u_string::find_from(&w, "hyphen", 0)).to_ne_bytes()) <= 2147483647 { vec![2, 4] } else { vec![] };
+    pub fn hyphenate(&self, w: &UStr) -> Vec<u32> {
+        return if u32::from_ne_bytes(((u_string::find_from(&(w), UString::from("hyphen").as_ustr(), 0)) as u32).to_ne_bytes()) <= 2147483647 { vec![2, 4] } else { vec![] };
     }
 }
 
@@ -607,8 +633,8 @@ impl Hyphenator for ParagraphSegmentationHyphenator {
         Box::new(self.clone())
     }
 
-    fn hyphenate(&self, w: &str) -> Vec<u32> {
-        return if u32::from_ne_bytes((u_string::find_from(&w, "hyphen", 0)).to_ne_bytes()) <= 2147483647 { vec![2, 4] } else { vec![] };
+    fn hyphenate(&self, w: &UStr) -> Vec<u32> {
+        return if u32::from_ne_bytes(((u_string::find_from(&(w), UString::from("hyphen").as_ustr(), 0)) as u32).to_ne_bytes()) <= 2147483647 { vec![2, 4] } else { vec![] };
     }
 }
 
@@ -622,8 +648,8 @@ impl ParagraphBiblioHyphenator {
         }
     }
 
-    pub fn hyphenate(&self, w: &str) -> Vec<u32> {
-        return if w == "hyphenated" { vec![3, 6] } else { vec![] };
+    pub fn hyphenate(&self, w: &UStr) -> Vec<u32> {
+        return if w == UString::from("hyphenated") { vec![3, 6] } else { vec![] };
     }
 }
 
@@ -638,8 +664,8 @@ impl Hyphenator for ParagraphBiblioHyphenator {
         Box::new(self.clone())
     }
 
-    fn hyphenate(&self, w: &str) -> Vec<u32> {
-        return if w == "hyphenated" { vec![3, 6] } else { vec![] };
+    fn hyphenate(&self, w: &UStr) -> Vec<u32> {
+        return if w == UString::from("hyphenated") { vec![3, 6] } else { vec![] };
     }
 }
 
@@ -653,17 +679,17 @@ impl ParagraphWordCutsHyphenator {
         }
     }
 
-    pub fn hyphenate(&self, w: &str) -> Vec<u32> {
-        if w == "abcdef" {
+    pub fn hyphenate(&self, w: &UStr) -> Vec<u32> {
+        if w == UString::from("abcdef") {
             return vec![1];
         }
-        if w == "ghijkl" {
+        if w == UString::from("ghijkl") {
             return vec![2];
         }
-        if w == "mnopqr" {
+        if w == UString::from("mnopqr") {
             return vec![3];
         }
-        if w == "empty" {
+        if w == UString::from("empty") {
             return vec![2];
         }
         return vec![];
@@ -681,17 +707,17 @@ impl Hyphenator for ParagraphWordCutsHyphenator {
         Box::new(self.clone())
     }
 
-    fn hyphenate(&self, w: &str) -> Vec<u32> {
-        if w == "abcdef" {
+    fn hyphenate(&self, w: &UStr) -> Vec<u32> {
+        if w == UString::from("abcdef") {
             return vec![1];
         }
-        if w == "ghijkl" {
+        if w == UString::from("ghijkl") {
             return vec![2];
         }
-        if w == "mnopqr" {
+        if w == UString::from("mnopqr") {
             return vec![3];
         }
-        if w == "empty" {
+        if w == UString::from("empty") {
             return vec![2];
         }
         return vec![];
@@ -708,10 +734,10 @@ impl ParagraphTierHyphenator {
         }
     }
 
-    pub fn hyphenate(&self, w: &str) -> Vec<u32> {
+    pub fn hyphenate(&self, w: &UStr) -> Vec<u32> {
     let __units = u_string::units(&w);
     let __count = u_string::unit_count(&w);
-        return if u32::from_ne_bytes((u_string::find_from(&w, "Machine", 0)).to_ne_bytes()) <= 2147483647 { vec![4294967295u32, 0, 3, __count, u32::wrapping_add(__count, 1)] } else { vec![2] };
+        return if u32::from_ne_bytes(((u_string::find_from(&(w), UString::from("Machine").as_ustr(), 0)) as u32).to_ne_bytes()) <= 2147483647 { vec![4294967295u32, 0, 3, __count, u32::wrapping_add(__count, 1)] } else { vec![2] };
     }
 }
 
@@ -726,10 +752,10 @@ impl Hyphenator for ParagraphTierHyphenator {
         Box::new(self.clone())
     }
 
-    fn hyphenate(&self, w: &str) -> Vec<u32> {
+    fn hyphenate(&self, w: &UStr) -> Vec<u32> {
     let __units1 = u_string::units(&w);
     let __count1 = u_string::unit_count(&w);
-        return if u32::from_ne_bytes((u_string::find_from(&w, "Machine", 0)).to_ne_bytes()) <= 2147483647 { vec![4294967295u32, 0, 3, __count1, u32::wrapping_add(__count1, 1)] } else { vec![2] };
+        return if u32::from_ne_bytes(((u_string::find_from(&(w), UString::from("Machine").as_ustr(), 0)) as u32).to_ne_bytes()) <= 2147483647 { vec![4294967295u32, 0, 3, __count1, u32::wrapping_add(__count1, 1)] } else { vec![2] };
     }
 }
 
@@ -743,19 +769,19 @@ impl ParagraphDirectShapeHyphenator {
         }
     }
 
-    pub fn hyphenate(&self, w: &str) -> Vec<u32> {
+    pub fn hyphenate(&self, w: &UStr) -> Vec<u32> {
     let __units2 = u_string::units(&w);
     let __count2 = u_string::unit_count(&w);
-        if w == "abcdef" {
+        if w == UString::from("abcdef") {
             return vec![1];
         }
-        if w == "abcdeg" {
+        if w == UString::from("abcdeg") {
             return vec![2];
         }
-        if w == "antidisestablishmentarianism" {
+        if w == UString::from("antidisestablishmentarianism") {
             return vec![];
         }
-        if w == "Machine" {
+        if w == UString::from("Machine") {
             return vec![4294967295u32, 0, 2, __count2, u32::wrapping_add(__count2, 2)];
         }
         return vec![2];
@@ -773,19 +799,19 @@ impl Hyphenator for ParagraphDirectShapeHyphenator {
         Box::new(self.clone())
     }
 
-    fn hyphenate(&self, w: &str) -> Vec<u32> {
+    fn hyphenate(&self, w: &UStr) -> Vec<u32> {
     let __units3 = u_string::units(&w);
     let __count3 = u_string::unit_count(&w);
-        if w == "abcdef" {
+        if w == UString::from("abcdef") {
             return vec![1];
         }
-        if w == "abcdeg" {
+        if w == UString::from("abcdeg") {
             return vec![2];
         }
-        if w == "antidisestablishmentarianism" {
+        if w == UString::from("antidisestablishmentarianism") {
             return vec![];
         }
-        if w == "Machine" {
+        if w == UString::from("Machine") {
             return vec![4294967295u32, 0, 2, __count3, u32::wrapping_add(__count3, 2)];
         }
         return vec![2];
@@ -802,10 +828,10 @@ impl ParagraphTierPriorityHyphenator {
         }
     }
 
-    pub fn hyphenate(&self, w: &str) -> Vec<u32> {
+    pub fn hyphenate(&self, w: &UStr) -> Vec<u32> {
     let __units4 = u_string::units(&w);
     let __count4 = u_string::unit_count(&w);
-        return if w == "abcdef" { vec![2, 4] } else { vec![4294967295u32, 0, 1, 2, __count4, u32::wrapping_add(__count4, 2)] };
+        return if w == UString::from("abcdef") { vec![2, 4] } else { vec![4294967295u32, 0, 1, 2, __count4, u32::wrapping_add(__count4, 2)] };
     }
 }
 
@@ -820,10 +846,10 @@ impl Hyphenator for ParagraphTierPriorityHyphenator {
         Box::new(self.clone())
     }
 
-    fn hyphenate(&self, w: &str) -> Vec<u32> {
+    fn hyphenate(&self, w: &UStr) -> Vec<u32> {
     let __units5 = u_string::units(&w);
     let __count5 = u_string::unit_count(&w);
-        return if w == "abcdef" { vec![2, 4] } else { vec![4294967295u32, 0, 1, 2, __count5, u32::wrapping_add(__count5, 2)] };
+        return if w == UString::from("abcdef") { vec![2, 4] } else { vec![4294967295u32, 0, 1, 2, __count5, u32::wrapping_add(__count5, 2)] };
     }
 }
 
@@ -837,11 +863,11 @@ impl ParagraphTierLoopHyphenator {
         }
     }
 
-    pub fn hyphenate(&self, w: &str) -> Vec<u32> {
-        if w == "abcdef" {
+    pub fn hyphenate(&self, w: &UStr) -> Vec<u32> {
+        if w == UString::from("abcdef") {
             return vec![2, 4];
         }
-        if w == "cdef" {
+        if w == UString::from("cdef") {
             return vec![1];
         }
         return vec![];
@@ -859,11 +885,11 @@ impl Hyphenator for ParagraphTierLoopHyphenator {
         Box::new(self.clone())
     }
 
-    fn hyphenate(&self, w: &str) -> Vec<u32> {
-        if w == "abcdef" {
+    fn hyphenate(&self, w: &UStr) -> Vec<u32> {
+        if w == UString::from("abcdef") {
             return vec![2, 4];
         }
-        if w == "cdef" {
+        if w == UString::from("cdef") {
             return vec![1];
         }
         return vec![];
@@ -874,91 +900,77 @@ impl Hyphenator for ParagraphTierLoopHyphenator {
 pub struct ParagraphShapingStageCoverageTestSupport;
 
 impl ParagraphShapingStageCoverageTestSupport {
-    pub fn paragraph_shaping_stage_coverage_test_support_input(text: &str, width: f64, spans: Option<Vec<LineBreakSpan>>) -> Result<LayoutInput, TextRangeError> {
-        return Ok(LayoutInput::new(TiqianTextContent::new(text, Some(vec![]), Some(vec![]), (spans).clone(), Some(vec![])), Some(TextStyle::new(Some(vec![]), Some(16.0), Some("zh-Hans".to_string()), Some(400), Some(false), Some(0.0), Some(InlineAttachment::None))),
-Some(ParagraphStyle::new(Some(LastLineAlignment::Start), Some(WritingMode::HorizontalTb), None, None, Some(Ic::zero()), Some(MeasureAdaptiveFirstLineIndent::new(Some(14.0), Some(1.0), Some(2.0))), Some(LineLengthGrid::new(Some(true), None)), Some(RubyLineHeightMode::PerLine),
-Some(ParagraphStyle::PARAGRAPH_STYLE_DEFAULT_INLINE_OBJECT_MINIMUM_CLEARANCE_EM), Some(ParagraphStyle::PARAGRAPH_STYLE_DEFAULT_EMPHASIS_DOT_GAP_EM))), LayoutConstraints::new(width, Some(f64::INFINITY), Some(2147483647))?,
-Some((*crate::org::tiqian::core::built_in_layout_profiles::BUILT_IN_LAYOUT_PROFILES_CLREQ_HORIZONTAL).clone()), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![])));
+    pub fn paragraph_shaping_stage_coverage_test_support_input(text: &UStr, width: f64, spans: Option<Vec<LineBreakSpan>>) -> Result<LayoutInput, TextRangeError> {
+        return Ok(LayoutInput::new(TiqianTextContent::new(text, Some(vec![]), Some(vec![]), (spans).clone(), Some(vec![])), Some(TextStyle::new(Some(vec![]), Some(16.0), Some(UString::from("zh-Hans")), Some(400), Some(false), Some(0.0), Some(InlineAttachment::None))), Some(ParagraphStyle::new(Some(LastLineAlignment::Start), Some(WritingMode::HorizontalTb), None, None, Some(Ic::zero()), Some(MeasureAdaptiveFirstLineIndent::new(Some(14.0), Some(1.0), Some(2.0))), Some(LineLengthGrid::new(Some(true), None)), Some(RubyLineHeightMode::PerLine), Some(ParagraphStyle::PARAGRAPH_STYLE_DEFAULT_INLINE_OBJECT_MINIMUM_CLEARANCE_EM), Some(ParagraphStyle::PARAGRAPH_STYLE_DEFAULT_EMPHASIS_DOT_GAP_EM))), LayoutConstraints::new(width, Some(f64::INFINITY), Some(2147483647))?, Some((*crate::org::tiqian::core::built_in_layout_profiles::BUILT_IN_LAYOUT_PROFILES_CLREQ_HORIZONTAL).clone()), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![])));
     }
 
-    pub fn paragraph_shaping_stage_coverage_test_support_begin(n: &str) -> TestTraceRecorder {
-        let mut r = TestTraceRecorder::new("ParagraphShapingStageCoverageTest");
+    pub fn paragraph_shaping_stage_coverage_test_support_begin(n: &UStr) -> TestTraceRecorder {
+        let mut r = TestTraceRecorder::new(&(UStr::new(&[80,97,114,97,103,114,97,112,104,83,104,97,112,105,110,103,83,116,97,103,101,67,111,118,101,114,97,103,101,84,101,115,116])));
         r.section(n);
         return r;
     }
 
-    pub fn paragraph_shaping_stage_coverage_test_support_layout(e: &mut ExplainableStubParagraphLayoutEngine, text: &str, width: f64) -> Result<(), ParagraphShapingStageCoverageTestSupportLayoutFault> {
-        let res = e.layout(LayoutInput::new(TiqianTextContent::new(text, Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![])), Some(TextStyle::new(Some(vec![]), Some(16.0), Some("zh-Hans".to_string()), Some(400), Some(false), Some(0.0), Some(InlineAttachment::None))),
-Some(ParagraphStyle::new(Some(LastLineAlignment::Start), Some(WritingMode::HorizontalTb), None, None, Some(Ic::zero()), Some(MeasureAdaptiveFirstLineIndent::new(Some(14.0), Some(1.0), Some(2.0))), Some(LineLengthGrid::new(Some(true), None)), Some(RubyLineHeightMode::PerLine),
-Some(ParagraphStyle::PARAGRAPH_STYLE_DEFAULT_INLINE_OBJECT_MINIMUM_CLEARANCE_EM), Some(ParagraphStyle::PARAGRAPH_STYLE_DEFAULT_EMPHASIS_DOT_GAP_EM))), LayoutConstraints::new(width, Some(f64::INFINITY), Some(2147483647)).map_err(|e|
-ParagraphShapingStageCoverageTestSupportLayoutFault::TextRangeErrorFault(e))?, Some((*crate::org::tiqian::core::built_in_layout_profiles::BUILT_IN_LAYOUT_PROFILES_CLREQ_HORIZONTAL).clone()), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]))).map_err(|e|
-ParagraphShapingStageCoverageTestSupportLayoutFault::ParagraphLayoutEngineLayoutWithRejectedTechnicalTiersFaultFault(e))?;
-        let _ = TracedAssertions::traced_assertions_record_rendered_not_null(TestTraceRender::test_trace_render_cap(if false { "null".to_string() } else { res.to_string() }.as_str()).map_err(|e| ParagraphShapingStageCoverageTestSupportLayoutFault::UStringFaultFault(e))?.as_str(),
-None).map_err(|e| ParagraphShapingStageCoverageTestSupportLayoutFault::UStringFaultFault(e))?;
+    pub fn paragraph_shaping_stage_coverage_test_support_layout(e: &mut ExplainableStubParagraphLayoutEngine, text: &UStr, width: f64) -> Result<(), ParagraphShapingStageCoverageTestSupportLayoutFault> {
+        let res = e.layout(LayoutInput::new(TiqianTextContent::new(text, Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![])), Some(TextStyle::new(Some(vec![]), Some(16.0), Some(UString::from("zh-Hans")), Some(400), Some(false), Some(0.0), Some(InlineAttachment::None))), Some(ParagraphStyle::new(Some(LastLineAlignment::Start), Some(WritingMode::HorizontalTb), None, None, Some(Ic::zero()), Some(MeasureAdaptiveFirstLineIndent::new(Some(14.0), Some(1.0), Some(2.0))), Some(LineLengthGrid::new(Some(true), None)), Some(RubyLineHeightMode::PerLine), Some(ParagraphStyle::PARAGRAPH_STYLE_DEFAULT_INLINE_OBJECT_MINIMUM_CLEARANCE_EM), Some(ParagraphStyle::PARAGRAPH_STYLE_DEFAULT_EMPHASIS_DOT_GAP_EM))), LayoutConstraints::new(width, Some(f64::INFINITY), Some(2147483647)).map_err(|e| ParagraphShapingStageCoverageTestSupportLayoutFault::TextRangeErrorFault(e))?, Some((*crate::org::tiqian::core::built_in_layout_profiles::BUILT_IN_LAYOUT_PROFILES_CLREQ_HORIZONTAL).clone()), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]))).map_err(|e| ParagraphShapingStageCoverageTestSupportLayoutFault::ParagraphLayoutEngineLayoutWithRejectedTechnicalTiersFaultFault(e))?;
+        let _ = TracedAssertions::traced_assertions_record_rendered_not_null(TestTraceRender::test_trace_render_cap(if false { UString::from("null") } else { UString::from(format!("{}", res.to_string()).as_str()) }.as_ustr()).map_err(|e| ParagraphShapingStageCoverageTestSupportLayoutFault::UStringFaultFault(e))?.as_ustr(), None).map_err(|e| ParagraphShapingStageCoverageTestSupportLayoutFault::UStringFaultFault(e))?;
         Ok(())
     }
 
-    pub fn paragraph_shaping_stage_coverage_test_support_engine(shaper: Option<Box<dyn ITextShaper>>, hyphenator: Option<Box<dyn Hyphenator>>) -> Result<ExplainableStubParagraphLayoutEngine, ParagraphLayoutEngineNewFault> {
-        return Ok(ExplainableStubParagraphLayoutEngine::new(Some(Box::new(CjkFontRoleClassifier::new())), Some(Box::new(ParagraphLayoutFallbackResolver::new(Some("cjk-primary".to_string()), Some("latin-primary".to_string()), Some("symbol-fallback".to_string()))?)),
-Some(Box::new(BuiltInClreqProfileResolver::new())), Some(Box::new(StubFontMetricsResolver::new())), Some(Box::new(ScriptAwareFontMetricsNormalizer::new())), Some((PunctuationAtomBuilder::new(None, None)?).clone()), Some((PunctuationSpacingCompressor::new()?).clone()),
-Some(QuotePairAnalyzer::new()), Some(Box::new(GreedyLineBreaker::new(None, None, None, None))), Some(Justifier::new(Some(0.5), Some(0.25))), shaper, hyphenator, Some(Box::new(LruWidthIndependentAnnotationCache::new(512))))?);
+    pub fn paragraph_shaping_stage_coverage_test_support_engine(shaper: Option<Arc<Mutex<dyn ITextShaper>>>, hyphenator: Option<Box<dyn Hyphenator>>) -> Result<ExplainableStubParagraphLayoutEngine, ParagraphLayoutEngineNewFault> {
+        return Ok(ExplainableStubParagraphLayoutEngine::new(Some(Box::new(CjkFontRoleClassifier::new())), Some(Box::new(ParagraphLayoutFallbackResolver::new(Some(UString::from("cjk-primary")), Some(UString::from("latin-primary")), Some(UString::from("symbol-fallback")))?)), Some(Box::new(BuiltInClreqProfileResolver::new())), Some(Box::new(StubFontMetricsResolver::new())), Some(Box::new(ScriptAwareFontMetricsNormalizer::new())), Some((PunctuationAtomBuilder::new(None, None)?).clone()), Some((PunctuationSpacingCompressor::new()?).clone()), Some(QuotePairAnalyzer::new()), Some(Box::new(GreedyLineBreaker::new(None, None, None, None))), Some(Justifier::new(Some(0.5), Some(0.25))), shaper, hyphenator, Some(Arc::new(Mutex::new(LruWidthIndependentAnnotationCache::new(512)))))?);
     }
 
     pub fn paragraph_shaping_stage_coverage_test_support_candidate(role: FontRole) -> FontCandidate {
-        return FontCandidate::new("k", "f", role);
+        return FontCandidate::new(&(UStr::new(&[107])), &(UStr::new(&[102])), role);
     }
 
     pub fn paragraph_shaping_stage_coverage_test_support_decision(range: TextRange, role: FontRole) -> FontDecision {
-        return FontDecision::new((range).clone(), ParagraphShapingStageCoverageTestSupport::paragraph_shaping_stage_coverage_test_support_candidate(role), role, "r");
+        return FontDecision::new((range).clone(), ParagraphShapingStageCoverageTestSupport::paragraph_shaping_stage_coverage_test_support_candidate(role), role, &(UStr::new(&[114])));
     }
 
-    pub fn paragraph_shaping_stage_coverage_test_support_paragraph(engine: &mut ExplainableStubParagraphLayoutEngine, input: LayoutInput, text: &str, width: f64, role: FontRole, italic: Option<bool>) -> Result<ParagraphShapingStageResult, ParagraphShapingStageShapeParagraphFault>
-{
+    pub fn paragraph_shaping_stage_coverage_test_support_paragraph(engine: &mut ExplainableStubParagraphLayoutEngine, input: LayoutInput, text: &UStr, width: f64, role: FontRole, italic: Option<bool>) -> Result<ParagraphShapingStageResult,
+ParagraphShapingStageShapeParagraphFault> {
         let range = TextRange::new(0u32, u_string::unit_count(&(text))).map_err(|e| ParagraphShapingStageShapeParagraphFault::TextRangeErrorFault(e))?;
         let mut b: SortedMapTableBuilder<TextRange, FontDecision> = SortedTable::sorted_table_map_builder::<TextRange, FontDecision>(Arc::new(compare_text_range));
         b.put(&(range), &(ParagraphShapingStageCoverageTestSupport::paragraph_shaping_stage_coverage_test_support_decision((range).clone(), role)));
         let rb: SortedMapTableBuilder<TextRange, SortedSetTable<u32>> = SortedTable::sorted_table_map_builder::<TextRange, SortedSetTable<u32>>(Arc::new(compare_text_range));
         let cb = vec![(ResolvedClusterRange::new((range).clone(), role, Some(false), Some(false), None)).clone()];
-        return Ok(ParagraphShapingStage::paragraph_shaping_stage_shape_paragraph(engine, (input).clone(), text, 16.0f64, width, &cb, b.clone().build(), SortedTable::sorted_table_map_builder::<TextRange, InlineObjectSpan>(Arc::new(compare_text_range)).clone().build(),
-ClreqPunctuationGlyphSubstitutor::new(Some(CjkPunctuationGlyphPolicy::PreferClreqRecommendedCodepoints)), {  Arc::new(move |__| {
-        return TextStyle::new(Some(vec![]), Some(16.0f64), Some("zh-Hans".to_string()), Some(400), Some(false), Some(0.0), Some(InlineAttachment::None));
+        return Ok(ParagraphShapingStage::paragraph_shaping_stage_shape_paragraph(engine, (input).clone(), text, 16.0f64, width, &cb, b.clone().build(), SortedTable::sorted_table_map_builder::<TextRange, InlineObjectSpan>(Arc::new(compare_text_range)).clone().build(), ClreqPunctuationGlyphSubstitutor::new(Some(CjkPunctuationGlyphPolicy::PreferClreqRecommendedCodepoints)), {  Arc::new(move |__| {
+        return TextStyle::new(Some(vec![]), Some(16.0f64), Some(UString::from("zh-Hans")), Some(400), Some(false), Some(0.0), Some(InlineAttachment::None));
 }) }, {  Arc::new(move |__| {
         return (italic).unwrap();
 }) }, rb.clone().build(), None, None)?);
     }
 
-    pub fn paragraph_shaping_stage_coverage_test_support_paragraph_ranges(engine: &mut ExplainableStubParagraphLayoutEngine, input: LayoutInput, text: &str, width: f64, ranges: &Vec<ResolvedClusterRange>, decisions: &Vec<TextRange>) -> Result<ParagraphShapingStageResult,
+    pub fn paragraph_shaping_stage_coverage_test_support_paragraph_ranges(engine: &mut ExplainableStubParagraphLayoutEngine, input: LayoutInput, text: &UStr, width: f64, ranges: &Vec<ResolvedClusterRange>, decisions: &Vec<TextRange>) -> Result<ParagraphShapingStageResult,
 ParagraphShapingStageShapeParagraphFault> {
         let mut b: SortedMapTableBuilder<TextRange, FontDecision> = SortedTable::sorted_table_map_builder::<TextRange, FontDecision>(Arc::new(compare_text_range));
         for r in decisions {
             b.put(&(r), &(ParagraphShapingStageCoverageTestSupport::paragraph_shaping_stage_coverage_test_support_decision((r).clone(), FontRole::LatinText)));
         }
         let rb: SortedMapTableBuilder<TextRange, SortedSetTable<u32>> = SortedTable::sorted_table_map_builder::<TextRange, SortedSetTable<u32>>(Arc::new(compare_text_range));
-        return Ok(ParagraphShapingStage::paragraph_shaping_stage_shape_paragraph(engine, (input).clone(), text, 16.0f64, width, &ranges, b.clone().build(), SortedTable::sorted_table_map_builder::<TextRange, InlineObjectSpan>(Arc::new(compare_text_range)).clone().build(),
-ClreqPunctuationGlyphSubstitutor::new(Some(CjkPunctuationGlyphPolicy::PreferClreqRecommendedCodepoints)), {  Arc::new(move |__| {
-        return TextStyle::new(Some(vec![]), Some(16.0f64), Some("zh-Hans".to_string()), Some(400), Some(false), Some(0.0), Some(InlineAttachment::None));
+        return Ok(ParagraphShapingStage::paragraph_shaping_stage_shape_paragraph(engine, (input).clone(), text, 16.0f64, width, &ranges, b.clone().build(), SortedTable::sorted_table_map_builder::<TextRange, InlineObjectSpan>(Arc::new(compare_text_range)).clone().build(), ClreqPunctuationGlyphSubstitutor::new(Some(CjkPunctuationGlyphPolicy::PreferClreqRecommendedCodepoints)), {  Arc::new(move |__| {
+        return TextStyle::new(Some(vec![]), Some(16.0f64), Some(UString::from("zh-Hans")), Some(400), Some(false), Some(0.0), Some(InlineAttachment::None));
 }) }, {  Arc::new(move |__| {
         return false;
 }) }, rb.clone().build(), None, None)?);
     }
 
-    pub fn paragraph_shaping_stage_coverage_test_support_paragraph_ranges_with_rejected_tiers(engine: &mut ExplainableStubParagraphLayoutEngine, input: LayoutInput, text: &str, width: f64, ranges: &Vec<ResolvedClusterRange>, decisions: &Vec<TextRange>, rejected_spans:
-&Vec<TextRange>, rejected_tiers: &Vec<Vec<u32>>) -> Result<ParagraphShapingStageResult, ParagraphShapingStageShapeParagraphFault> {
+    pub fn paragraph_shaping_stage_coverage_test_support_paragraph_ranges_with_rejected_tiers(engine: &mut ExplainableStubParagraphLayoutEngine, input: LayoutInput, text: &UStr, width: f64, ranges: &Vec<ResolvedClusterRange>, decisions: &Vec<TextRange>, rejected_spans: &Vec<TextRange>, rejected_tiers: &Vec<Vec<u32>>) -> Result<ParagraphShapingStageResult, ParagraphShapingStageShapeParagraphFault> {
         let mut b: SortedMapTableBuilder<TextRange, FontDecision> = SortedTable::sorted_table_map_builder::<TextRange, FontDecision>(Arc::new(compare_text_range));
         for r in decisions {
             b.put(&(r), &(ParagraphShapingStageCoverageTestSupport::paragraph_shaping_stage_coverage_test_support_decision((r).clone(), FontRole::LatinText)));
         }
         let mut rb: SortedMapTableBuilder<TextRange, SortedSetTable<u32>> = SortedTable::sorted_table_map_builder::<TextRange, SortedSetTable<u32>>(Arc::new(compare_text_range));
         for i in 0..match u32::try_from(rejected_spans.len()) { Ok(value) => value, Err(_) => u32::MAX } {
-            let mut tiers: SortedSetTableBuilder<u32> = SortedTable::sorted_table_set_builder::<u32>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_bytes((*a).to_ne_bytes()), i32::from_ne_bytes((*b).to_ne_bytes()))));
+            let mut tiers: SortedSetTableBuilder<u32> = SortedTable::sorted_table_set_builder::<u32>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_bytes(((*a) as i32).to_ne_bytes()), i32::from_ne_bytes(((*b) as i32).to_ne_bytes()))));
             for j in 0..match u32::try_from((rejected_tiers[usize::try_from(i).unwrap_or(0)]).clone().len()) { Ok(value) => value, Err(_) => u32::MAX } {
                 tiers.put(&((rejected_tiers[usize::try_from(i).unwrap_or(0)]).clone()[usize::try_from(j).unwrap_or(0)]));
             }
             rb.put(&((rejected_spans[usize::try_from(i).unwrap_or(0)]).clone()), &(tiers.clone().build()));
         }
-        return Ok(ParagraphShapingStage::paragraph_shaping_stage_shape_paragraph(engine, (input).clone(), text, 16.0f64, width, &ranges, b.clone().build(), SortedTable::sorted_table_map_builder::<TextRange, InlineObjectSpan>(Arc::new(compare_text_range)).clone().build(),
-ClreqPunctuationGlyphSubstitutor::new(Some(CjkPunctuationGlyphPolicy::PreferClreqRecommendedCodepoints)), {  Arc::new(move |__| {
-        return TextStyle::new(Some(vec![]), Some(16.0f64), Some("zh-Hans".to_string()), Some(400), Some(false), Some(0.0), Some(InlineAttachment::None));
+        return Ok(ParagraphShapingStage::paragraph_shaping_stage_shape_paragraph(engine, (input).clone(), text, 16.0f64, width, &ranges, b.clone().build(), SortedTable::sorted_table_map_builder::<TextRange, InlineObjectSpan>(Arc::new(compare_text_range)).clone().build(), ClreqPunctuationGlyphSubstitutor::new(Some(CjkPunctuationGlyphPolicy::PreferClreqRecommendedCodepoints)), {  Arc::new(move |__| {
+        return TextStyle::new(Some(vec![]), Some(16.0f64), Some(UString::from("zh-Hans")), Some(400), Some(false), Some(0.0), Some(InlineAttachment::None));
 }) }, {  Arc::new(move |__| {
         return false;
 }) }, rb.clone().build(), None, None)?);

@@ -14,10 +14,10 @@ impl Functional {
     where
         F: FnMut(&T) -> f64,
     {
-        let mut total = 0.0;
+        let mut total = 0.0f64;
         for item in arr {
-            total += f(item);
+            total += f(item) as f64;
         }
-        total
+        total as f64
     }
 }

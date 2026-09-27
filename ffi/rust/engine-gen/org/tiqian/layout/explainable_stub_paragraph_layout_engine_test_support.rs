@@ -36,97 +36,77 @@ use crate::org::tiqian::shaping::text_shaper::ShapingResult;
 use crate::org::tiqian::shaping::text_shaper::TextShaperShapeFault;
 use crate::org::tiqian::test::trace::test_trace_recorder::TestTraceRecorder;
 use crate::runtime::u_string;
+use crate::runtime::u_string::UStr;
+use crate::runtime::u_string::UString;
+use std::sync::Arc;
+use std::sync::Mutex;
 
 
 #[derive(Clone, Copy)]
 pub struct ExplainableStubParagraphLayoutEngineTestSupport;
 
 impl ExplainableStubParagraphLayoutEngineTestSupport {
-    pub fn explainable_stub_paragraph_layout_engine_test_support_render_nullable_bounds(v: Option<Rect>) -> String {
-        return match &(v) { None => "null".to_string(), Some(__option) => ExplainableStubParagraphLayoutEngineTestSupport::explainable_stub_paragraph_layout_engine_test_support_render_bounds(((*__option).clone()).clone()).to_string() };
+    pub fn explainable_stub_paragraph_layout_engine_test_support_render_nullable_bounds(v: Option<Rect>) -> UString {
+        return match &(v) { None => UString::from("null"), Some(__option) => ExplainableStubParagraphLayoutEngineTestSupport::explainable_stub_paragraph_layout_engine_test_support_render_bounds(((*__option).clone()).clone()).to_ustring() };
     }
 
-    pub fn explainable_stub_paragraph_layout_engine_test_support_render_bounds(v: Rect) -> String {
-        return v.to_string();
+    pub fn explainable_stub_paragraph_layout_engine_test_support_render_bounds(v: Rect) -> UString {
+        return UString::from(format!("{}", v.to_string()).as_str());
     }
 
-    pub fn explainable_stub_paragraph_layout_engine_test_support_start(name: &str) -> TestTraceRecorder {
-        let mut t = TestTraceRecorder::new("ExplainableStubParagraphLayoutEngineTest");
+    pub fn explainable_stub_paragraph_layout_engine_test_support_start(name: &UStr) -> TestTraceRecorder {
+        let mut t = TestTraceRecorder::new(&(UStr::new(&[69,120,112,108,97,105,110,97,98,108,101,83,116,117,98,80,97,114,97,103,114,97,112,104,76,97,121,111,117,116,69,110,103,105,110,101,84,101,115,116])));
         t.section(name);
         return t;
     }
 
-    pub fn explainable_stub_paragraph_layout_engine_test_support_text_length(s: &str) -> u32 {
+    pub fn explainable_stub_paragraph_layout_engine_test_support_text_length(s: &UStr) -> u32 {
         return u_string::unit_count(&(s));
     }
 
-    pub fn explainable_stub_paragraph_layout_engine_test_support_grapheme_boundaries(s: &str) -> Result<Vec<u32>, TextRangeError> {
+    pub fn explainable_stub_paragraph_layout_engine_test_support_grapheme_boundaries(s: &UStr) -> Result<Vec<u32>, TextRangeError> {
         return Ok(SourceInteractionBoundaries::source_interaction_boundaries_source_grapheme_boundaries(s, TextRange::new(0u32, u_string::unit_count(&(s)))?));
     }
 
-    pub fn explainable_stub_paragraph_layout_engine_test_support_render_ranges(a: &Vec<TextRange>) -> String {
-        let mut s = "[".to_string();
+    pub fn explainable_stub_paragraph_layout_engine_test_support_render_ranges(a: &Vec<TextRange>) -> UString {
+        let mut s = UString::from("[").to_ustring();
         for i in 0..match u32::try_from(a.len()) { Ok(value) => value, Err(_) => u32::MAX } {
             if ({ let v: u32 = i; i32::from_ne_bytes(v.to_ne_bytes()) }) > (0) {
-                s += &(", ");
+                s += &(UString::from(", "));
             }
             s += &((a[usize::try_from(i).unwrap_or(0)]).clone().to_string());
         }
-        return format!("{}{}",
-            s,
-            "]"
-        );
+        return UString::from(format!("{}", { let mut __s = UString::new(); __s += s.as_ustr(); __s += &(UString::from("]")); __s }).as_str());
     }
 
-    pub fn explainable_stub_paragraph_layout_engine_test_support_render_pairs(a: &Vec<String>, b: &Vec<String>) -> String {
-        let mut s = "[".to_string();
+    pub fn explainable_stub_paragraph_layout_engine_test_support_render_pairs(a: &Vec<UString>, b: &Vec<UString>) -> UString {
+        let mut s = UString::from("[").to_ustring();
         for i in 0..match u32::try_from(a.len()) { Ok(value) => value, Err(_) => u32::MAX } {
             if ({ let v: u32 = i; i32::from_ne_bytes(v.to_ne_bytes()) }) > (0) {
-                s += &(", ");
+                s += &(UString::from(", "));
             }
-            s += &(format!("{}{}{}{}{}",
-            "(",
-            (a[usize::try_from(i).unwrap_or(0)]).clone(),
-            ", ",
-            (b[usize::try_from(i).unwrap_or(0)]).clone(),
-            ")"
-        ));
+            s += &({ let mut __s = UString::new(); __s += &(UString::from("(")); __s += (a[usize::try_from(i).unwrap_or(0)]).clone().as_ustr(); __s += &(UString::from(", ")); __s += (b[usize::try_from(i).unwrap_or(0)]).clone().as_ustr(); __s += &(UString::from(")")); __s });
         }
-        return format!("{}{}",
-            s,
-            "]"
-        );
+        return UString::from(format!("{}", { let mut __s = UString::new(); __s += s.as_ustr(); __s += &(UString::from("]")); __s }).as_str());
     }
 
-    pub fn explainable_stub_paragraph_layout_engine_test_support_input(text: &str, width: f64, style: Option<ParagraphStyle>, _shaper: Option<Box<dyn ITextShaper>>, text_style: Option<TextStyle>) -> Result<LayoutInput, TextRangeError> {
-        return Ok(LayoutInput::new(TiqianTextContent::new(text, Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![])), (text_style).clone(), Some((match &(style) { None => ParagraphStyle::new(Some(LastLineAlignment::Start), Some(WritingMode::HorizontalTb), None,
-Some((Ic::zero()).clone()), Some(Ic::zero()), Some(MeasureAdaptiveFirstLineIndent::new(Some(14.0), Some(1.0), Some(2.0))), Some(LineLengthGrid::new(Some(true), None)), Some(RubyLineHeightMode::PerLine),
-Some(ParagraphStyle::PARAGRAPH_STYLE_DEFAULT_INLINE_OBJECT_MINIMUM_CLEARANCE_EM), Some(ParagraphStyle::PARAGRAPH_STYLE_DEFAULT_EMPHASIS_DOT_GAP_EM)), Some(__option1) => (*__option1).clone() }).clone()), LayoutConstraints::new(width, Some(f64::INFINITY), Some(2147483647))?,
-Some((*crate::org::tiqian::core::built_in_layout_profiles::BUILT_IN_LAYOUT_PROFILES_CLREQ_HORIZONTAL).clone()), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![])));
+    pub fn explainable_stub_paragraph_layout_engine_test_support_input(text: &UStr, width: f64, style: Option<ParagraphStyle>, _shaper: Option<Arc<Mutex<dyn ITextShaper>>>, text_style: Option<TextStyle>) -> Result<LayoutInput, TextRangeError> {
+        return Ok(LayoutInput::new(TiqianTextContent::new(text, Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![])), (text_style).clone(), Some((match &(style) { None => ParagraphStyle::new(Some(LastLineAlignment::Start), Some(WritingMode::HorizontalTb), None, Some((Ic::zero()).clone()), Some(Ic::zero()), Some(MeasureAdaptiveFirstLineIndent::new(Some(14.0), Some(1.0), Some(2.0))), Some(LineLengthGrid::new(Some(true), None)), Some(RubyLineHeightMode::PerLine), Some(ParagraphStyle::PARAGRAPH_STYLE_DEFAULT_INLINE_OBJECT_MINIMUM_CLEARANCE_EM), Some(ParagraphStyle::PARAGRAPH_STYLE_DEFAULT_EMPHASIS_DOT_GAP_EM)), Some(__option1) => (*__option1).clone() }).clone()), LayoutConstraints::new(width, Some(f64::INFINITY), Some(2147483647))?, Some((*crate::org::tiqian::core::built_in_layout_profiles::BUILT_IN_LAYOUT_PROFILES_CLREQ_HORIZONTAL).clone()), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![])));
     }
 
-    pub fn explainable_stub_paragraph_layout_engine_test_support_engine(shaper: Option<Box<dyn ITextShaper>>, breaker: Option<Box<dyn LineBreaker>>) -> Result<ExplainableStubParagraphLayoutEngine, ParagraphLayoutEngineNewFault> {
-        return Ok(ExplainableStubParagraphLayoutEngine::new(Some(Box::new(CjkFontRoleClassifier::new())), Some(Box::new(ParagraphLayoutFallbackResolver::new(Some("cjk-primary".to_string()), Some("latin-primary".to_string()), Some("symbol-fallback".to_string()))?)),
-Some(Box::new(BuiltInClreqProfileResolver::new())), Some(Box::new(StubFontMetricsResolver::new())), Some(Box::new(ScriptAwareFontMetricsNormalizer::new())), Some((PunctuationAtomBuilder::new(None, None)?).clone()), Some((PunctuationSpacingCompressor::new()?).clone()),
-Some(QuotePairAnalyzer::new()), breaker, Some(Justifier::new(Some(0.5), Some(0.25))), shaper, Some(Box::new(NoHyphenator::new())), Some(Box::new(LruWidthIndependentAnnotationCache::new(512))))?);
+    pub fn explainable_stub_paragraph_layout_engine_test_support_engine(shaper: Option<Arc<Mutex<dyn ITextShaper>>>, breaker: Option<Box<dyn LineBreaker>>) -> Result<ExplainableStubParagraphLayoutEngine, ParagraphLayoutEngineNewFault> {
+        return Ok(ExplainableStubParagraphLayoutEngine::new(Some(Box::new(CjkFontRoleClassifier::new())), Some(Box::new(ParagraphLayoutFallbackResolver::new(Some(UString::from("cjk-primary")), Some(UString::from("latin-primary")), Some(UString::from("symbol-fallback")))?)), Some(Box::new(BuiltInClreqProfileResolver::new())), Some(Box::new(StubFontMetricsResolver::new())), Some(Box::new(ScriptAwareFontMetricsNormalizer::new())), Some((PunctuationAtomBuilder::new(None, None)?).clone()), Some((PunctuationSpacingCompressor::new()?).clone()), Some(QuotePairAnalyzer::new()), breaker, Some(Justifier::new(Some(0.5), Some(0.25))), shaper, Some(Box::new(NoHyphenator::new())), Some(Arc::new(Mutex::new(LruWidthIndependentAnnotationCache::new(512)))))?);
     }
 
-    pub fn explainable_stub_paragraph_layout_engine_test_support_render_strings(a: &Vec<String>) -> String {
-        let mut s = "[".to_string();
+    pub fn explainable_stub_paragraph_layout_engine_test_support_render_strings(a: &Vec<UString>) -> UString {
+        let mut s = UString::from("[").to_ustring();
         for i in 0..match u32::try_from(a.len()) { Ok(value) => value, Err(_) => u32::MAX } {
             if ({ let v: u32 = i; i32::from_ne_bytes(v.to_ne_bytes()) }) > (0) {
-                s += &(", ");
+                s += &(UString::from(", "));
             }
-            s += &(format!("{}{}{}",
-            "'",
-            (a[usize::try_from(i).unwrap_or(0)]).clone(),
-            "'"
-        ));
+            s += &({ let mut __s = UString::new(); __s += &(UString::from("'")); __s += (a[usize::try_from(i).unwrap_or(0)]).clone().as_ustr(); __s += &(UString::from("'")); __s });
         }
-        return format!("{}{}",
-            s,
-            "]"
-        );
+        return UString::from(format!("{}", { let mut __s = UString::new(); __s += s.as_ustr(); __s += &(UString::from("]")); __s }).as_str());
     }
 }
 
@@ -172,12 +152,11 @@ impl FixedBoundsTextShaper {
     }
 
     pub fn shape(&self, input: ShapingInput) -> ShapingResult {
-        let text = u_string::substring(&(input.text).to_string(), i32::from_ne_bytes(((input.range).clone().start).to_ne_bytes()), i32::from_ne_bytes(((input.range).clone().end).to_ne_bytes()));
-        let c = Cluster::new((input.range).clone(), text.as_str(), (((input.font_decision).clone().candidate).clone().key).to_string().as_str(), { let v: u32 = if u32::wrapping_sub((input.range).clone().end, (input.range).clone().start) == 0 { 0 } else { 20 };
-i32::from_ne_bytes(v.to_ne_bytes()) } as f64 as f64, Some((input.display_text).to_string()), Some(0.0), Some(0.0), Some(0.0));
-        let g = Glyph::new(42u32, (input.range).clone(), 20 as f64 as f64, Some(0.0), Some(0.0), None, Some(Rect::new(1 as f64 as f64, i32::from_ne_bytes((4294967286u32).to_ne_bytes()) as f64 as f64, 12 as f64 as f64, 2 as f64 as f64)), None, None);
+        let text = u_string::substring(&(input.text).to_ustring(), i32::from_ne_bytes((((input.range).clone().start) as i32).to_ne_bytes()), i32::from_ne_bytes((((input.range).clone().end) as i32).to_ne_bytes()));
+        let c = Cluster::new((input.range).clone(), text.as_ustr(), (((input.font_decision).clone().candidate).clone().key).to_ustring().as_ustr(), { let v: u32 = if u32::wrapping_sub((input.range).clone().end, (input.range).clone().start) == 0 { 0 } else { 20 }; i32::from_ne_bytes(v.to_ne_bytes()) } as f64 as f64, Some((input.display_text).to_ustring()), Some(0.0), Some(0.0), Some(0.0));
+        let g = Glyph::new(42u32, (input.range).clone(), 20 as f64 as f64, Some(0.0), Some(0.0), None, Some(Rect::new(1 as f64 as f64, i32::from_ne_bytes(((4294967286u32) as i32).to_ne_bytes()) as f64 as f64, 12 as f64 as f64, 2 as f64 as f64)), None, None);
         return ShapingResult::new(vec![(c).clone()].to_vec(), vec![
-    (GlyphRun::new((input.range).clone(), (((input.font_decision).clone().candidate).clone().key).to_string().as_str(), vec![(g).clone()].to_vec(), 20 as f64 as f64, Some(vec![]))).clone(),
+    (GlyphRun::new((input.range).clone(), (((input.font_decision).clone().candidate).clone().key).to_ustring().as_ustr(), vec![(g).clone()].to_vec(), 20 as f64 as f64, Some(vec![]))).clone(),
 ].to_vec(), Some(vec![]));
     }
 }
@@ -194,12 +173,11 @@ impl ITextShaper for FixedBoundsTextShaper {
     }
 
     fn shape(&mut self, input: ShapingInput) -> Result<ShapingResult, TextShaperShapeFault> {
-        let text = u_string::substring(&(input.text).to_string(), i32::from_ne_bytes(((input.range).clone().start).to_ne_bytes()), i32::from_ne_bytes(((input.range).clone().end).to_ne_bytes()));
-        let c = Cluster::new((input.range).clone(), text.as_str(), (((input.font_decision).clone().candidate).clone().key).to_string().as_str(), { let v: u32 = if u32::wrapping_sub((input.range).clone().end, (input.range).clone().start) == 0 { 0 } else { 20 };
-i32::from_ne_bytes(v.to_ne_bytes()) } as f64 as f64, Some((input.display_text).to_string()), Some(0.0), Some(0.0), Some(0.0));
-        let g = Glyph::new(42u32, (input.range).clone(), 20 as f64 as f64, Some(0.0), Some(0.0), None, Some(Rect::new(1 as f64 as f64, i32::from_ne_bytes((4294967286u32).to_ne_bytes()) as f64 as f64, 12 as f64 as f64, 2 as f64 as f64)), None, None);
+        let text = u_string::substring(&(input.text).to_ustring(), i32::from_ne_bytes((((input.range).clone().start) as i32).to_ne_bytes()), i32::from_ne_bytes((((input.range).clone().end) as i32).to_ne_bytes()));
+        let c = Cluster::new((input.range).clone(), text.as_ustr(), (((input.font_decision).clone().candidate).clone().key).to_ustring().as_ustr(), { let v: u32 = if u32::wrapping_sub((input.range).clone().end, (input.range).clone().start) == 0 { 0 } else { 20 }; i32::from_ne_bytes(v.to_ne_bytes()) } as f64 as f64, Some((input.display_text).to_ustring()), Some(0.0), Some(0.0), Some(0.0));
+        let g = Glyph::new(42u32, (input.range).clone(), 20 as f64 as f64, Some(0.0), Some(0.0), None, Some(Rect::new(1 as f64 as f64, i32::from_ne_bytes(((4294967286u32) as i32).to_ne_bytes()) as f64 as f64, 12 as f64 as f64, 2 as f64 as f64)), None, None);
         return Ok(ShapingResult::new(vec![(c).clone()].to_vec(), vec![
-    (GlyphRun::new((input.range).clone(), (((input.font_decision).clone().candidate).clone().key).to_string().as_str(), vec![(g).clone()].to_vec(), 20 as f64 as f64, Some(vec![]))).clone(),
+    (GlyphRun::new((input.range).clone(), (((input.font_decision).clone().candidate).clone().key).to_ustring().as_ustr(), vec![(g).clone()].to_vec(), 20 as f64 as f64, Some(vec![]))).clone(),
 ].to_vec(), Some(vec![])));
     }
 }

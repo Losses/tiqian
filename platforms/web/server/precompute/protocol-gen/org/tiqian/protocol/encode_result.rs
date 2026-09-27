@@ -1,7 +1,10 @@
+use crate::runtime::u_string::UString;
+
+
 #[derive(Debug, Clone, PartialEq)]
 pub enum EncodeResult {
     COk { bytes: Vec<u8> },
-    CErr { issue: String },
+    CErr { issue: UString },
 }
 
 impl EncodeResult {

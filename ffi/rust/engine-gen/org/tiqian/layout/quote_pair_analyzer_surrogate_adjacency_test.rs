@@ -6,6 +6,7 @@ use crate::org::tiqian::layout::quote_pair_analyzer::QuoteType;
 use crate::org::tiqian::layout::quote_pair_analyzer_surrogate_adjacency_test_support::QuotePairAnalyzerSurrogateAdjacencyTestSupport;
 use crate::org::tiqian::test::trace::traced_assertions::TracedAssertions;
 use crate::runtime::test as testlib;
+use crate::runtime::u_string::UStr;
 
 
 #[derive(Debug, Clone, PartialEq)]
@@ -17,6 +18,19 @@ pub enum QuotePairAnalyzerSurrogateAdjacencyTestPlainAndBoundaryNeighboursWalkTh
     TracedAssertionsAssertFalseFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsAssertFalseFault),
     TracedAssertionsAssertFailsWithFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsAssertFailsWithFault),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
+}
+impl std::fmt::Display for QuotePairAnalyzerSurrogateAdjacencyTestPlainAndBoundaryNeighboursWalkTheNonSurrogateArmsFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            QuotePairAnalyzerSurrogateAdjacencyTestPlainAndBoundaryNeighboursWalkTheNonSurrogateArmsFault::TraceAssertionErrorFault(value) => write!(formatter, "{}", value),
+            QuotePairAnalyzerSurrogateAdjacencyTestPlainAndBoundaryNeighboursWalkTheNonSurrogateArmsFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            QuotePairAnalyzerSurrogateAdjacencyTestPlainAndBoundaryNeighboursWalkTheNonSurrogateArmsFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            QuotePairAnalyzerSurrogateAdjacencyTestPlainAndBoundaryNeighboursWalkTheNonSurrogateArmsFault::TracedAssertionsAssertTrueFaultFault(value) => write!(formatter, "{}", value),
+            QuotePairAnalyzerSurrogateAdjacencyTestPlainAndBoundaryNeighboursWalkTheNonSurrogateArmsFault::TracedAssertionsAssertFalseFaultFault(value) => write!(formatter, "{}", value),
+            QuotePairAnalyzerSurrogateAdjacencyTestPlainAndBoundaryNeighboursWalkTheNonSurrogateArmsFault::TracedAssertionsAssertFailsWithFaultFault(value) => write!(formatter, "{}", value),
+            QuotePairAnalyzerSurrogateAdjacencyTestPlainAndBoundaryNeighboursWalkTheNonSurrogateArmsFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
 }
 
 impl From<QuotePairAnalyzerSurrogateAdjacencyTestPlainAndBoundaryNeighboursWalkTheNonSurrogateArmsFault> for crate::org::tiqian::test::trace::trace_assertion_exception::TraceAssertionError {
@@ -131,6 +145,16 @@ pub enum QuotePairAnalyzerSurrogateAdjacencyTestLowQuoteCodePointsTakeTheSwitchD
     TracedAssertionsAssertEqualsQuotePairArrayFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsAssertEqualsQuotePairArrayFault),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
 }
+impl std::fmt::Display for QuotePairAnalyzerSurrogateAdjacencyTestLowQuoteCodePointsTakeTheSwitchDefaultWithoutPairingFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            QuotePairAnalyzerSurrogateAdjacencyTestLowQuoteCodePointsTakeTheSwitchDefaultWithoutPairingFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            QuotePairAnalyzerSurrogateAdjacencyTestLowQuoteCodePointsTakeTheSwitchDefaultWithoutPairingFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            QuotePairAnalyzerSurrogateAdjacencyTestLowQuoteCodePointsTakeTheSwitchDefaultWithoutPairingFault::TracedAssertionsAssertEqualsQuotePairArrayFaultFault(value) => write!(formatter, "{}", value),
+            QuotePairAnalyzerSurrogateAdjacencyTestLowQuoteCodePointsTakeTheSwitchDefaultWithoutPairingFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
+}
 
 impl From<QuotePairAnalyzerSurrogateAdjacencyTestLowQuoteCodePointsTakeTheSwitchDefaultWithoutPairingFault> for crate::std::u_string_exception::UStringFault {
     fn from(value: QuotePairAnalyzerSurrogateAdjacencyTestLowQuoteCodePointsTakeTheSwitchDefaultWithoutPairingFault) -> Self {
@@ -200,6 +224,18 @@ pub enum QuotePairAnalyzerSurrogateAdjacencyTestApostropheBeforeASurrogateWalksB
     TracedAssertionsAssertFalseFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsAssertFalseFault),
     TracedAssertionsAssertFailsWithFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsAssertFailsWithFault),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
+}
+impl std::fmt::Display for QuotePairAnalyzerSurrogateAdjacencyTestApostropheBeforeASurrogateWalksBothLowCheckArmsFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            QuotePairAnalyzerSurrogateAdjacencyTestApostropheBeforeASurrogateWalksBothLowCheckArmsFault::TraceAssertionErrorFault(value) => write!(formatter, "{}", value),
+            QuotePairAnalyzerSurrogateAdjacencyTestApostropheBeforeASurrogateWalksBothLowCheckArmsFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            QuotePairAnalyzerSurrogateAdjacencyTestApostropheBeforeASurrogateWalksBothLowCheckArmsFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            QuotePairAnalyzerSurrogateAdjacencyTestApostropheBeforeASurrogateWalksBothLowCheckArmsFault::TracedAssertionsAssertFalseFaultFault(value) => write!(formatter, "{}", value),
+            QuotePairAnalyzerSurrogateAdjacencyTestApostropheBeforeASurrogateWalksBothLowCheckArmsFault::TracedAssertionsAssertFailsWithFaultFault(value) => write!(formatter, "{}", value),
+            QuotePairAnalyzerSurrogateAdjacencyTestApostropheBeforeASurrogateWalksBothLowCheckArmsFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
 }
 
 impl From<QuotePairAnalyzerSurrogateAdjacencyTestApostropheBeforeASurrogateWalksBothLowCheckArmsFault> for crate::org::tiqian::test::trace::trace_assertion_exception::TraceAssertionError {
@@ -301,6 +337,18 @@ pub enum QuotePairAnalyzerSurrogateAdjacencyTestApostropheAfterASurrogatePairWal
     TracedAssertionsAssertFailsWithFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsAssertFailsWithFault),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
 }
+impl std::fmt::Display for QuotePairAnalyzerSurrogateAdjacencyTestApostropheAfterASurrogatePairWalksTheCombineArmBeforeFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            QuotePairAnalyzerSurrogateAdjacencyTestApostropheAfterASurrogatePairWalksTheCombineArmBeforeFault::TraceAssertionErrorFault(value) => write!(formatter, "{}", value),
+            QuotePairAnalyzerSurrogateAdjacencyTestApostropheAfterASurrogatePairWalksTheCombineArmBeforeFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            QuotePairAnalyzerSurrogateAdjacencyTestApostropheAfterASurrogatePairWalksTheCombineArmBeforeFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            QuotePairAnalyzerSurrogateAdjacencyTestApostropheAfterASurrogatePairWalksTheCombineArmBeforeFault::TracedAssertionsAssertFalseFaultFault(value) => write!(formatter, "{}", value),
+            QuotePairAnalyzerSurrogateAdjacencyTestApostropheAfterASurrogatePairWalksTheCombineArmBeforeFault::TracedAssertionsAssertFailsWithFaultFault(value) => write!(formatter, "{}", value),
+            QuotePairAnalyzerSurrogateAdjacencyTestApostropheAfterASurrogatePairWalksTheCombineArmBeforeFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
+}
 
 impl From<QuotePairAnalyzerSurrogateAdjacencyTestApostropheAfterASurrogatePairWalksTheCombineArmBeforeFault> for crate::org::tiqian::test::trace::trace_assertion_exception::TraceAssertionError {
     fn from(value: QuotePairAnalyzerSurrogateAdjacencyTestApostropheAfterASurrogatePairWalksTheCombineArmBeforeFault) -> Self {
@@ -395,8 +443,8 @@ impl From<crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFa
 #[test]
 fn low_quote_code_points_take_the_switch_default_without_pairing() {
     testlib::run("org.tiqian.layout.QuotePairAnalyzerSurrogateAdjacencyTest.lowQuoteCodePointsTakeTheSwitchDefaultWithoutPairing", "org.tiqian.layout.QuotePairAnalyzerSurrogateAdjacencyTest.lowQuoteCodePointsTakeTheSwitchDefaultWithoutPairing", || {
-        QuotePairAnalyzerSurrogateAdjacencyTestSupport::quote_pair_analyzer_surrogate_adjacency_test_support_rec(&"lowQuoteCodePointsTakeTheSwitchDefaultWithoutPairing");
-        let _ = TracedAssertions::traced_assertions_assert_equals_quote_pair_array(&vec![(QuotePair::new(2u32, 3u32, QuoteType::Double)).clone()], &QuotePairAnalyzer::new().analyze(&"‚‛“”").unwrap(), None).unwrap();
+        QuotePairAnalyzerSurrogateAdjacencyTestSupport::quote_pair_analyzer_surrogate_adjacency_test_support_rec(UStr::new(&[108,111,119,81,117,111,116,101,67,111,100,101,80,111,105,110,116,115,84,97,107,101,84,104,101,83,119,105,116,99,104,68,101,102,97,117,108,116,87,105,116,104,111,117,116,80,97,105,114,105,110,103]));
+        let _ = TracedAssertions::traced_assertions_assert_equals_quote_pair_array(&vec![(QuotePair::new(2u32, 3u32, QuoteType::Double)).clone()], &QuotePairAnalyzer::new().analyze(UStr::new(&[8218,8219,8220,8221])).unwrap(), None).unwrap();
     });
 }
 

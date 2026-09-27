@@ -7,32 +7,34 @@ use crate::org::tiqian::font::font_role::FontRole;
 use crate::org::tiqian::font::layout_font_metrics::LayoutFontMetrics;
 use crate::org::tiqian::font::metric_box::MetricBox;
 use crate::org::tiqian::font::raw_font_metrics::RawFontMetrics;
+use crate::runtime::u_string::UStr;
+use crate::runtime::u_string::UString;
 use std::fmt::Write;
 
 
 #[derive(Debug, Clone, PartialEq)]
 pub struct FontMetricsRequest {
-    pub font_key: String,
+    pub font_key: UString,
     pub font_size: f64,
     pub role: FontRole,
-    pub locale: String,
-    pub font_families: Vec<String>,
+    pub locale: UString,
+    pub font_families: Vec<UString>,
     pub font_weight: u32,
     pub italic: bool,
-    pub face_selection_text: String,
+    pub face_selection_text: UString,
 }
 
 impl FontMetricsRequest {
-    pub fn new(font_key: &str, font_size: f64, role: FontRole, locale: &str, font_families: Option<Vec<String>>, font_weight: Option<u32>, italic: Option<bool>, face_selection_text: Option<String>) -> Self {
+    pub fn new(font_key: &UStr, font_size: f64, role: FontRole, locale: &UStr, font_families: Option<Vec<UString>>, font_weight: Option<u32>, italic: Option<bool>, face_selection_text: Option<UString>) -> Self {
         let font_families = font_families.unwrap_or_else(|| vec![]);
         let font_weight = font_weight.unwrap_or_else(|| 400);
         let italic = italic.unwrap_or_else(|| false);
-        let face_selection_text = face_selection_text.unwrap_or_else(|| "".to_string());
+        let face_selection_text = face_selection_text.unwrap_or_else(|| UString::from(""));
         Self {
-            font_key: font_key.to_string(),
+            font_key: font_key.to_ustring(),
             font_size,
             role,
-            locale: locale.to_string(),
+            locale: locale.to_ustring(),
             font_families: font_families,
             font_weight: font_weight,
             italic: italic,
@@ -40,23 +42,8 @@ impl FontMetricsRequest {
         }
     }
 
-    pub fn to_string(&self) -> String {
-        return format!("{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}",
-            "FontMetricsRequest(",
-            "fontKey=",
-            (self.font_key).to_string(),
-            ", ",
-            "fontSize=",
-            self.font_size,
-            ", ",
-            "role=",
-            self.role.name(),
-            ", ",
-            "locale=",
-            (self.locale).to_string(),
-            ", ",
-            "fontFamilies=",
-            {
+    pub fn to_string(&self) -> UString {
+        return UString::from(format!("{}", { let mut __s = UString::new(); __s += &(UString::from("FontMetricsRequest(")); __s += &(UString::from("fontKey=")); __s += (self.font_key).to_ustring().as_ustr(); __s += &(UString::from(", ")); __s += &(UString::from("fontSize=")); __s += &(crate::runtime::fp_helper::FPHelper::format_float(self.font_size)); __s += &(UString::from(", ")); __s += &(UString::from("role=")); __s += UString::from(self.role.name()).as_ustr(); __s += &(UString::from(", ")); __s += &(UString::from("locale=")); __s += (self.locale).to_ustring().as_ustr(); __s += &(UString::from(", ")); __s += &(UString::from("fontFamilies=")); __s += UString::from(format!("{}", {
         let mut out = String::new();
         out.push('[');
         let arr = (self.font_families).clone();
@@ -69,18 +56,7 @@ impl FontMetricsRequest {
         }
         out.push(']');
         out
-    },
-            ", ",
-            "fontWeight=",
-            crate::runtime::int_text::IntText::int_text(self.font_weight),
-            ", ",
-            "italic=",
-            self.italic,
-            ", ",
-            "faceSelectionText=",
-            (self.face_selection_text).to_string(),
-            ")"
-        );
+    }).as_str()).as_ustr(); __s += &(UString::from(", ")); __s += &(UString::from("fontWeight=")); __s += &(UString::from(format!("{}", crate::runtime::int_text::IntText::int_text(self.font_weight)).as_str())); __s += &(UString::from(", ")); __s += &(UString::from("italic=")); __s += UString::from(format!("{}", (self.italic).to_string()).as_str()).as_ustr(); __s += &(UString::from(", ")); __s += &(UString::from("faceSelectionText=")); __s += (self.face_selection_text).to_ustring().as_ustr(); __s += &(UString::from(")")); __s }).as_str());
     }
 }
 
@@ -166,16 +142,8 @@ impl FontMetricsNormalizationInput {
         }
     }
 
-    pub fn to_string(&self) -> String {
-        return format!("{}{}{}{}{}{}{}",
-            "FontMetricsNormalizationInput(",
-            "request=",
-            (self.request).clone().to_string(),
-            ", ",
-            "rawMetrics=",
-            (self.raw_metrics).clone().to_string(),
-            ")"
-        );
+    pub fn to_string(&self) -> UString {
+        return UString::from(format!("{}", { let mut __s = UString::new(); __s += &(UString::from("FontMetricsNormalizationInput(")); __s += &(UString::from("request=")); __s += UString::from(format!("{}", (self.request).clone().to_string()).as_str()).as_ustr(); __s += &(UString::from(", ")); __s += &(UString::from("rawMetrics=")); __s += UString::from(format!("{}", (self.raw_metrics).clone().to_string()).as_str()).as_ustr(); __s += &(UString::from(")")); __s }).as_str());
     }
 }
 
@@ -214,8 +182,8 @@ impl ScriptAwareFontMetricsNormalizer {
             let _g = (i.request).clone().role;
             let _ = match _g {
     FontRole::CjkText | FontRole::CjkPunctuation => result = self.normalize_cjk((i).clone()),
-    FontRole::LatinText => result = self.normalize_raw((i).clone(), &"roman-raw"),
-    FontRole::Symbol | FontRole::Emoji | FontRole::Unknown => result = self.normalize_raw((i).clone(), &"fallback-raw"),
+    FontRole::LatinText => result = self.normalize_raw((i).clone(), UStr::new(&[114,111,109,97,110,45,114,97,119])),
+    FontRole::Symbol | FontRole::Emoji | FontRole::Unknown => result = self.normalize_raw((i).clone(), UStr::new(&[102,97,108,108,98,97,99,107,45,114,97,119])),
 };
         }
         return result;
@@ -224,23 +192,12 @@ impl ScriptAwareFontMetricsNormalizer {
     fn normalize_cjk(&self, i: FontMetricsNormalizationInput) -> LayoutFontMetrics {
         let m = (i.raw_metrics).clone().clone();
         let t = match &(m.typo_ascent) { Some(__option) => m.typo_descent.is_some(), None => false };
-        return LayoutFontMetrics::new(match &(m.typo_ascent) { Some(__option1) => *__option1, None => m.ascent }, match &(m.typo_descent) { Some(__option2) => *__option2, None => m.descent }, 0 as f64 as f64, if t { FontMetricsPolicy::IdeographicBox } else {
-FontMetricsPolicy::Raw }, BaselinePolicy::Ideographic, Some(BaselineClass::IdeographicLow), Some(MetricBox::IdeographicEmBox), Some(m.source), Some((format!("{}{}{}{}",
-            "ScriptAwareFontMetricsNormalizer:",
-            (i.request).clone().role.name(),
-            ":",
-            (if t { "font-typo-box".to_string() } else { "hhea-fallback-no-os2".to_string() })
-        )).to_string()));
+        return LayoutFontMetrics::new(match &(m.typo_ascent) { Some(__option1) => *__option1, None => m.ascent }, match &(m.typo_descent) { Some(__option2) => *__option2, None => m.descent }, 0 as f64 as f64, if t { FontMetricsPolicy::IdeographicBox } else { FontMetricsPolicy::Raw }, BaselinePolicy::Ideographic, Some(BaselineClass::IdeographicLow), Some(MetricBox::IdeographicEmBox), Some(m.source), Some(UString::from(format!("{}", { let mut __s = UString::new(); __s += &(UString::from("ScriptAwareFontMetricsNormalizer:")); __s += UString::from((i.request).clone().role.name()).as_ustr(); __s += &(UString::from(":")); __s += (if t { UString::from("font-typo-box") } else { UString::from("hhea-fallback-no-os2") }).as_ustr(); __s }).as_str())));
     }
 
-    fn normalize_raw(&self, i: FontMetricsNormalizationInput, why: &str) -> LayoutFontMetrics {
+    fn normalize_raw(&self, i: FontMetricsNormalizationInput, why: &UStr) -> LayoutFontMetrics {
         let m = (i.raw_metrics).clone().clone();
-        return LayoutFontMetrics::new(m.ascent, m.descent, 0 as f64 as f64, FontMetricsPolicy::Raw, BaselinePolicy::Alphabetic, Some(BaselineClass::Roman), Some(MetricBox::RawFontBox), Some(m.source), Some((format!("{}{}{}{}",
-            "ScriptAwareFontMetricsNormalizer:",
-            (i.request).clone().role.name(),
-            ":",
-            why
-        )).to_string()));
+        return LayoutFontMetrics::new(m.ascent, m.descent, 0 as f64 as f64, FontMetricsPolicy::Raw, BaselinePolicy::Alphabetic, Some(BaselineClass::Roman), Some(MetricBox::RawFontBox), Some(m.source), Some(UString::from(format!("{}", { let mut __s = UString::new(); __s += &(UString::from("ScriptAwareFontMetricsNormalizer:")); __s += UString::from((i.request).clone().role.name()).as_ustr(); __s += &(UString::from(":")); __s += why; __s }).as_str())));
     }
 }
 
@@ -261,8 +218,8 @@ impl FontMetricsNormalizer for ScriptAwareFontMetricsNormalizer {
             let _g = (i.request).clone().role;
             let _ = match _g {
     FontRole::CjkText | FontRole::CjkPunctuation => result = self.normalize_cjk((i).clone()),
-    FontRole::LatinText => result = self.normalize_raw((i).clone(), &"roman-raw"),
-    FontRole::Symbol | FontRole::Emoji | FontRole::Unknown => result = self.normalize_raw((i).clone(), &"fallback-raw"),
+    FontRole::LatinText => result = self.normalize_raw((i).clone(), UStr::new(&[114,111,109,97,110,45,114,97,119])),
+    FontRole::Symbol | FontRole::Emoji | FontRole::Unknown => result = self.normalize_raw((i).clone(), UStr::new(&[102,97,108,108,98,97,99,107,45,114,97,119])),
 };
         }
         return result;

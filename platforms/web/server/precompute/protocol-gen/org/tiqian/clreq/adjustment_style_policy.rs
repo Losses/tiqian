@@ -1,5 +1,6 @@
 use crate::org::tiqian::clreq::line_adjustment_strategy::LineAdjustmentStrategy;
 use crate::org::tiqian::clreq::line_end_punctuation_style::LineEndPunctuationStyle;
+use crate::runtime::u_string::UString;
 
 
 #[derive(Debug, Clone, PartialEq)]
@@ -24,22 +25,8 @@ impl AdjustmentStylePolicy {
         }
     }
 
-    pub fn to_string(&self) -> String {
-        return format!("{}{}{}{}{}{}{}{}{}{}{}{}{}",
-            "AdjustmentStylePolicy(",
-            "lineEndPunctuation=",
-            self.line_end_punctuation.name(),
-            ", ",
-            "allowInlineStopCompression=",
-            self.allow_inline_stop_compression,
-            ", ",
-            "allowSinoWesternGapAdjustment=",
-            self.allow_sino_western_gap_adjustment,
-            ", ",
-            "lineAdjustment=",
-            self.line_adjustment.name(),
-            ")"
-        );
+    pub fn to_string(&self) -> UString {
+        return UString::from(format!("{}", { let mut __s = UString::new(); __s += &(UString::from("AdjustmentStylePolicy(")); __s += &(UString::from("lineEndPunctuation=")); __s += UString::from(self.line_end_punctuation.name()).as_ustr(); __s += &(UString::from(", ")); __s += &(UString::from("allowInlineStopCompression=")); __s += UString::from(format!("{}", (self.allow_inline_stop_compression).to_string()).as_str()).as_ustr(); __s += &(UString::from(", ")); __s += &(UString::from("allowSinoWesternGapAdjustment=")); __s += UString::from(format!("{}", (self.allow_sino_western_gap_adjustment).to_string()).as_str()).as_ustr(); __s += &(UString::from(", ")); __s += &(UString::from("lineAdjustment=")); __s += UString::from(self.line_adjustment.name()).as_ustr(); __s += &(UString::from(")")); __s }).as_str());
     }
 
     pub fn adjustment_style_policy_same_policy(a: AdjustmentStylePolicy, b: AdjustmentStylePolicy) -> bool {

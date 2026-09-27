@@ -35,6 +35,8 @@ use crate::org::tiqian::test::test_helpers::TestHelpers;
 use crate::org::tiqian::test::trace::test_trace_recorder::TestTraceRecorder;
 use crate::org::tiqian::test::trace::traced_assertions::TracedAssertions;
 use crate::runtime::test as testlib;
+use crate::runtime::u_string::UStr;
+use crate::runtime::u_string::UString;
 use crate::std::u_string_exception::UStringFault;
 
 
@@ -43,6 +45,15 @@ pub enum CoreLayoutQueriesGapsTestRichTextBackgroundUsesHorizontalPaddingFault {
     TextRangeErrorFault(crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError),
     UStringFaultFault(crate::std::u_string_exception::UStringFault),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
+}
+impl std::fmt::Display for CoreLayoutQueriesGapsTestRichTextBackgroundUsesHorizontalPaddingFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            CoreLayoutQueriesGapsTestRichTextBackgroundUsesHorizontalPaddingFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            CoreLayoutQueriesGapsTestRichTextBackgroundUsesHorizontalPaddingFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            CoreLayoutQueriesGapsTestRichTextBackgroundUsesHorizontalPaddingFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
 }
 
 impl From<CoreLayoutQueriesGapsTestRichTextBackgroundUsesHorizontalPaddingFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
@@ -96,6 +107,15 @@ pub enum CoreLayoutQueriesGapsTestRichTextBackgroundUniformParagraphStyleUsesPar
     UStringFaultFault(crate::std::u_string_exception::UStringFault),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
 }
+impl std::fmt::Display for CoreLayoutQueriesGapsTestRichTextBackgroundUniformParagraphStyleUsesParagraphStyleFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            CoreLayoutQueriesGapsTestRichTextBackgroundUniformParagraphStyleUsesParagraphStyleFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            CoreLayoutQueriesGapsTestRichTextBackgroundUniformParagraphStyleUsesParagraphStyleFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            CoreLayoutQueriesGapsTestRichTextBackgroundUniformParagraphStyleUsesParagraphStyleFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
+}
 
 impl From<CoreLayoutQueriesGapsTestRichTextBackgroundUniformParagraphStyleUsesParagraphStyleFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
     fn from(value: CoreLayoutQueriesGapsTestRichTextBackgroundUniformParagraphStyleUsesParagraphStyleFault) -> Self {
@@ -147,6 +167,15 @@ pub enum CoreLayoutQueriesGapsTestRichTextBackgroundTrailingPaddingWhenSpanEndsA
     TextRangeErrorFault(crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError),
     UStringFaultFault(crate::std::u_string_exception::UStringFault),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
+}
+impl std::fmt::Display for CoreLayoutQueriesGapsTestRichTextBackgroundTrailingPaddingWhenSpanEndsAtSegmentEndFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            CoreLayoutQueriesGapsTestRichTextBackgroundTrailingPaddingWhenSpanEndsAtSegmentEndFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            CoreLayoutQueriesGapsTestRichTextBackgroundTrailingPaddingWhenSpanEndsAtSegmentEndFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            CoreLayoutQueriesGapsTestRichTextBackgroundTrailingPaddingWhenSpanEndsAtSegmentEndFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
 }
 
 impl From<CoreLayoutQueriesGapsTestRichTextBackgroundTrailingPaddingWhenSpanEndsAtSegmentEndFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
@@ -200,6 +229,15 @@ pub enum CoreLayoutQueriesGapsTestPositionedClustersProducesSourceStopsForLatinR
     UStringFaultFault(crate::std::u_string_exception::UStringFault),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
 }
+impl std::fmt::Display for CoreLayoutQueriesGapsTestPositionedClustersProducesSourceStopsForLatinRunFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            CoreLayoutQueriesGapsTestPositionedClustersProducesSourceStopsForLatinRunFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            CoreLayoutQueriesGapsTestPositionedClustersProducesSourceStopsForLatinRunFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            CoreLayoutQueriesGapsTestPositionedClustersProducesSourceStopsForLatinRunFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
+}
 
 impl From<CoreLayoutQueriesGapsTestPositionedClustersProducesSourceStopsForLatinRunFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
     fn from(value: CoreLayoutQueriesGapsTestPositionedClustersProducesSourceStopsForLatinRunFault) -> Self {
@@ -251,6 +289,15 @@ pub enum CoreLayoutQueriesGapsTestPositionedClusterHeightReturnsDifferenceFault 
     UStringFaultFault(crate::std::u_string_exception::UStringFault),
     TextRangeErrorFault(crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
+}
+impl std::fmt::Display for CoreLayoutQueriesGapsTestPositionedClusterHeightReturnsDifferenceFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            CoreLayoutQueriesGapsTestPositionedClusterHeightReturnsDifferenceFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            CoreLayoutQueriesGapsTestPositionedClusterHeightReturnsDifferenceFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            CoreLayoutQueriesGapsTestPositionedClusterHeightReturnsDifferenceFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
 }
 
 impl From<CoreLayoutQueriesGapsTestPositionedClusterHeightReturnsDifferenceFault> for crate::std::u_string_exception::UStringFault {
@@ -304,6 +351,15 @@ pub enum CoreLayoutQueriesGapsTestOffsetForXUsesSourceStopsWhenAvailableFault {
     UStringFaultFault(crate::std::u_string_exception::UStringFault),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
 }
+impl std::fmt::Display for CoreLayoutQueriesGapsTestOffsetForXUsesSourceStopsWhenAvailableFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            CoreLayoutQueriesGapsTestOffsetForXUsesSourceStopsWhenAvailableFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            CoreLayoutQueriesGapsTestOffsetForXUsesSourceStopsWhenAvailableFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            CoreLayoutQueriesGapsTestOffsetForXUsesSourceStopsWhenAvailableFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
+}
 
 impl From<CoreLayoutQueriesGapsTestOffsetForXUsesSourceStopsWhenAvailableFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
     fn from(value: CoreLayoutQueriesGapsTestOffsetForXUsesSourceStopsWhenAvailableFault) -> Self {
@@ -355,6 +411,15 @@ pub enum CoreLayoutQueriesGapsTestMarkedFaceVerticalBoundsUsesFallbackWhenNoMetr
     TextRangeErrorFault(crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError),
     UStringFaultFault(crate::std::u_string_exception::UStringFault),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
+}
+impl std::fmt::Display for CoreLayoutQueriesGapsTestMarkedFaceVerticalBoundsUsesFallbackWhenNoMetricMatchesFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            CoreLayoutQueriesGapsTestMarkedFaceVerticalBoundsUsesFallbackWhenNoMetricMatchesFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            CoreLayoutQueriesGapsTestMarkedFaceVerticalBoundsUsesFallbackWhenNoMetricMatchesFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            CoreLayoutQueriesGapsTestMarkedFaceVerticalBoundsUsesFallbackWhenNoMetricMatchesFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
 }
 
 impl From<CoreLayoutQueriesGapsTestMarkedFaceVerticalBoundsUsesFallbackWhenNoMetricMatchesFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
@@ -408,6 +473,15 @@ pub enum CoreLayoutQueriesGapsTestGetSelectionWordBoundaryReturnsEmptyForEmptyTe
     TextRangeErrorFault(crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
 }
+impl std::fmt::Display for CoreLayoutQueriesGapsTestGetSelectionWordBoundaryReturnsEmptyForEmptyTextFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            CoreLayoutQueriesGapsTestGetSelectionWordBoundaryReturnsEmptyForEmptyTextFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            CoreLayoutQueriesGapsTestGetSelectionWordBoundaryReturnsEmptyForEmptyTextFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            CoreLayoutQueriesGapsTestGetSelectionWordBoundaryReturnsEmptyForEmptyTextFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
+}
 
 impl From<CoreLayoutQueriesGapsTestGetSelectionWordBoundaryReturnsEmptyForEmptyTextFault> for crate::std::u_string_exception::UStringFault {
     fn from(value: CoreLayoutQueriesGapsTestGetSelectionWordBoundaryReturnsEmptyForEmptyTextFault) -> Self {
@@ -460,6 +534,15 @@ pub enum CoreLayoutQueriesGapsTestGetSelectionWordBoundaryForPunctuationReturnsS
     UStringFaultFault(crate::std::u_string_exception::UStringFault),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
 }
+impl std::fmt::Display for CoreLayoutQueriesGapsTestGetSelectionWordBoundaryForPunctuationReturnsSingleFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            CoreLayoutQueriesGapsTestGetSelectionWordBoundaryForPunctuationReturnsSingleFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            CoreLayoutQueriesGapsTestGetSelectionWordBoundaryForPunctuationReturnsSingleFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            CoreLayoutQueriesGapsTestGetSelectionWordBoundaryForPunctuationReturnsSingleFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
+}
 
 impl From<CoreLayoutQueriesGapsTestGetSelectionWordBoundaryForPunctuationReturnsSingleFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
     fn from(value: CoreLayoutQueriesGapsTestGetSelectionWordBoundaryForPunctuationReturnsSingleFault) -> Self {
@@ -511,6 +594,15 @@ pub enum CoreLayoutQueriesGapsTestGetSelectionWordBoundaryForEmojiZwjSequenceFau
     TextRangeErrorFault(crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError),
     UStringFaultFault(crate::std::u_string_exception::UStringFault),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
+}
+impl std::fmt::Display for CoreLayoutQueriesGapsTestGetSelectionWordBoundaryForEmojiZwjSequenceFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            CoreLayoutQueriesGapsTestGetSelectionWordBoundaryForEmojiZwjSequenceFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            CoreLayoutQueriesGapsTestGetSelectionWordBoundaryForEmojiZwjSequenceFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            CoreLayoutQueriesGapsTestGetSelectionWordBoundaryForEmojiZwjSequenceFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
 }
 
 impl From<CoreLayoutQueriesGapsTestGetSelectionWordBoundaryForEmojiZwjSequenceFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
@@ -565,6 +657,17 @@ pub enum CoreLayoutQueriesGapsTestGetSelectionOffsetForPositionReturnsStartOfLin
     NoSuchElementErrorFault(crate::org::tiqian::core::tiqian_no_such_element_exception::NoSuchElementError),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
     LayoutQueriesGetSelectionOffsetForPositionFaultFault(crate::org::tiqian::core::layout_queries::LayoutQueriesGetSelectionOffsetForPositionFault),
+}
+impl std::fmt::Display for CoreLayoutQueriesGapsTestGetSelectionOffsetForPositionReturnsStartOfLineWhenClustersEmptyFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            CoreLayoutQueriesGapsTestGetSelectionOffsetForPositionReturnsStartOfLineWhenClustersEmptyFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            CoreLayoutQueriesGapsTestGetSelectionOffsetForPositionReturnsStartOfLineWhenClustersEmptyFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            CoreLayoutQueriesGapsTestGetSelectionOffsetForPositionReturnsStartOfLineWhenClustersEmptyFault::NoSuchElementErrorFault(value) => write!(formatter, "{}", value),
+            CoreLayoutQueriesGapsTestGetSelectionOffsetForPositionReturnsStartOfLineWhenClustersEmptyFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+            CoreLayoutQueriesGapsTestGetSelectionOffsetForPositionReturnsStartOfLineWhenClustersEmptyFault::LayoutQueriesGetSelectionOffsetForPositionFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
 }
 
 impl From<CoreLayoutQueriesGapsTestGetSelectionOffsetForPositionReturnsStartOfLineWhenClustersEmptyFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
@@ -650,6 +753,17 @@ pub enum CoreLayoutQueriesGapsTestGetSelectionOffsetForPositionReturnsNearestWhe
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
     LayoutQueriesGetSelectionOffsetForPositionFaultFault(crate::org::tiqian::core::layout_queries::LayoutQueriesGetSelectionOffsetForPositionFault),
 }
+impl std::fmt::Display for CoreLayoutQueriesGapsTestGetSelectionOffsetForPositionReturnsNearestWhenBeforeFirstClusterFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            CoreLayoutQueriesGapsTestGetSelectionOffsetForPositionReturnsNearestWhenBeforeFirstClusterFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            CoreLayoutQueriesGapsTestGetSelectionOffsetForPositionReturnsNearestWhenBeforeFirstClusterFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            CoreLayoutQueriesGapsTestGetSelectionOffsetForPositionReturnsNearestWhenBeforeFirstClusterFault::NoSuchElementErrorFault(value) => write!(formatter, "{}", value),
+            CoreLayoutQueriesGapsTestGetSelectionOffsetForPositionReturnsNearestWhenBeforeFirstClusterFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+            CoreLayoutQueriesGapsTestGetSelectionOffsetForPositionReturnsNearestWhenBeforeFirstClusterFault::LayoutQueriesGetSelectionOffsetForPositionFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
+}
 
 impl From<CoreLayoutQueriesGapsTestGetSelectionOffsetForPositionReturnsNearestWhenBeforeFirstClusterFault> for crate::std::u_string_exception::UStringFault {
     fn from(value: CoreLayoutQueriesGapsTestGetSelectionOffsetForPositionReturnsNearestWhenBeforeFirstClusterFault) -> Self {
@@ -734,6 +848,17 @@ pub enum CoreLayoutQueriesGapsTestGetSelectionOffsetForPositionReturnsNearestWhe
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
     LayoutQueriesGetSelectionOffsetForPositionFaultFault(crate::org::tiqian::core::layout_queries::LayoutQueriesGetSelectionOffsetForPositionFault),
 }
+impl std::fmt::Display for CoreLayoutQueriesGapsTestGetSelectionOffsetForPositionReturnsNearestWhenAfterLastClusterFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            CoreLayoutQueriesGapsTestGetSelectionOffsetForPositionReturnsNearestWhenAfterLastClusterFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            CoreLayoutQueriesGapsTestGetSelectionOffsetForPositionReturnsNearestWhenAfterLastClusterFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            CoreLayoutQueriesGapsTestGetSelectionOffsetForPositionReturnsNearestWhenAfterLastClusterFault::NoSuchElementErrorFault(value) => write!(formatter, "{}", value),
+            CoreLayoutQueriesGapsTestGetSelectionOffsetForPositionReturnsNearestWhenAfterLastClusterFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+            CoreLayoutQueriesGapsTestGetSelectionOffsetForPositionReturnsNearestWhenAfterLastClusterFault::LayoutQueriesGetSelectionOffsetForPositionFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
+}
 
 impl From<CoreLayoutQueriesGapsTestGetSelectionOffsetForPositionReturnsNearestWhenAfterLastClusterFault> for crate::std::u_string_exception::UStringFault {
     fn from(value: CoreLayoutQueriesGapsTestGetSelectionOffsetForPositionReturnsNearestWhenAfterLastClusterFault) -> Self {
@@ -816,6 +941,15 @@ pub enum CoreLayoutQueriesGapsTestGetOffsetForPositionUsesMinByWhenOutsideCluste
     TextRangeErrorFault(crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
 }
+impl std::fmt::Display for CoreLayoutQueriesGapsTestGetOffsetForPositionUsesMinByWhenOutsideClustersFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            CoreLayoutQueriesGapsTestGetOffsetForPositionUsesMinByWhenOutsideClustersFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            CoreLayoutQueriesGapsTestGetOffsetForPositionUsesMinByWhenOutsideClustersFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            CoreLayoutQueriesGapsTestGetOffsetForPositionUsesMinByWhenOutsideClustersFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
+}
 
 impl From<CoreLayoutQueriesGapsTestGetOffsetForPositionUsesMinByWhenOutsideClustersFault> for crate::std::u_string_exception::UStringFault {
     fn from(value: CoreLayoutQueriesGapsTestGetOffsetForPositionUsesMinByWhenOutsideClustersFault) -> Self {
@@ -867,6 +1001,15 @@ pub enum CoreLayoutQueriesGapsTestGetLineForOffsetUsesNearestLineWhenGapBetweenL
     TextRangeErrorFault(crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError),
     UStringFaultFault(crate::std::u_string_exception::UStringFault),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
+}
+impl std::fmt::Display for CoreLayoutQueriesGapsTestGetLineForOffsetUsesNearestLineWhenGapBetweenLinesFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            CoreLayoutQueriesGapsTestGetLineForOffsetUsesNearestLineWhenGapBetweenLinesFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            CoreLayoutQueriesGapsTestGetLineForOffsetUsesNearestLineWhenGapBetweenLinesFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            CoreLayoutQueriesGapsTestGetLineForOffsetUsesNearestLineWhenGapBetweenLinesFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
 }
 
 impl From<CoreLayoutQueriesGapsTestGetLineForOffsetUsesNearestLineWhenGapBetweenLinesFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
@@ -920,6 +1063,15 @@ pub enum CoreLayoutQueriesGapsTestGetLineForOffsetReturnsNearestLineFault {
     UStringFaultFault(crate::std::u_string_exception::UStringFault),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
 }
+impl std::fmt::Display for CoreLayoutQueriesGapsTestGetLineForOffsetReturnsNearestLineFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            CoreLayoutQueriesGapsTestGetLineForOffsetReturnsNearestLineFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            CoreLayoutQueriesGapsTestGetLineForOffsetReturnsNearestLineFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            CoreLayoutQueriesGapsTestGetLineForOffsetReturnsNearestLineFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
+}
 
 impl From<CoreLayoutQueriesGapsTestGetLineForOffsetReturnsNearestLineFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
     fn from(value: CoreLayoutQueriesGapsTestGetLineForOffsetReturnsNearestLineFault) -> Self {
@@ -972,6 +1124,16 @@ pub enum CoreLayoutQueriesGapsTestGetCursorRectReturnsCaretInClusterFault {
     UStringFaultFault(crate::std::u_string_exception::UStringFault),
     TextRangeErrorFault(crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
+}
+impl std::fmt::Display for CoreLayoutQueriesGapsTestGetCursorRectReturnsCaretInClusterFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            CoreLayoutQueriesGapsTestGetCursorRectReturnsCaretInClusterFault::NoSuchElementErrorFault(value) => write!(formatter, "{}", value),
+            CoreLayoutQueriesGapsTestGetCursorRectReturnsCaretInClusterFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            CoreLayoutQueriesGapsTestGetCursorRectReturnsCaretInClusterFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            CoreLayoutQueriesGapsTestGetCursorRectReturnsCaretInClusterFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
 }
 
 impl From<CoreLayoutQueriesGapsTestGetCursorRectReturnsCaretInClusterFault> for crate::org::tiqian::core::tiqian_no_such_element_exception::NoSuchElementError {
@@ -1040,6 +1202,15 @@ pub enum CoreLayoutQueriesGapsTestGetBoundingBoxesIntDelegatesToTextRangeFault {
     UStringFaultFault(crate::std::u_string_exception::UStringFault),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
 }
+impl std::fmt::Display for CoreLayoutQueriesGapsTestGetBoundingBoxesIntDelegatesToTextRangeFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            CoreLayoutQueriesGapsTestGetBoundingBoxesIntDelegatesToTextRangeFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            CoreLayoutQueriesGapsTestGetBoundingBoxesIntDelegatesToTextRangeFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            CoreLayoutQueriesGapsTestGetBoundingBoxesIntDelegatesToTextRangeFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
+}
 
 impl From<CoreLayoutQueriesGapsTestGetBoundingBoxesIntDelegatesToTextRangeFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
     fn from(value: CoreLayoutQueriesGapsTestGetBoundingBoxesIntDelegatesToTextRangeFault) -> Self {
@@ -1092,6 +1263,15 @@ pub enum CoreLayoutQueriesGapsTestGetBoundingBoxesEmptyRangeReturnsEmptyListFaul
     UStringFaultFault(crate::std::u_string_exception::UStringFault),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
 }
+impl std::fmt::Display for CoreLayoutQueriesGapsTestGetBoundingBoxesEmptyRangeReturnsEmptyListFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            CoreLayoutQueriesGapsTestGetBoundingBoxesEmptyRangeReturnsEmptyListFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            CoreLayoutQueriesGapsTestGetBoundingBoxesEmptyRangeReturnsEmptyListFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            CoreLayoutQueriesGapsTestGetBoundingBoxesEmptyRangeReturnsEmptyListFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
+}
 
 impl From<CoreLayoutQueriesGapsTestGetBoundingBoxesEmptyRangeReturnsEmptyListFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
     fn from(value: CoreLayoutQueriesGapsTestGetBoundingBoxesEmptyRangeReturnsEmptyListFault) -> Self {
@@ -1141,7 +1321,7 @@ impl From<crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFa
 #[test]
 fn positioned_cluster_height_returns_difference() {
     testlib::run("org.tiqian.core.CoreLayoutQueriesGapsTest.positionedClusterHeightReturnsDifference", "org.tiqian.core.CoreLayoutQueriesGapsTest.positionedClusterHeightReturnsDifference", || {
-        TestTraceRecorder::new("CoreLayoutQueriesGapsTest").section(&"positionedClusterHeightReturnsDifference");
+        TestTraceRecorder::new(&(UStr::new(&[67,111,114,101,76,97,121,111,117,116,81,117,101,114,105,101,115,71,97,112,115,84,101,115,116]))).section(UStr::new(&[112,111,115,105,116,105,111,110,101,100,67,108,117,115,116,101,114,72,101,105,103,104,116,82,101,116,117,114,110,115,68,105,102,102,101,114,101,110,99,101]));
         let result = CoreLayoutQueriesGapsTestHelpers::core_layout_queries_gaps_test_helpers_sample_result().unwrap();
         let positions = LayoutQueries::layout_queries_positioned_clusters((result).clone());
         let _ = TracedAssertions::traced_assertions_assert_equals_float(20.0f64, (positions[0usize]).clone().get_height(), None).unwrap();
@@ -1151,12 +1331,12 @@ fn positioned_cluster_height_returns_difference() {
 #[test]
 fn get_line_for_offset_uses_nearest_line_when_gap_between_lines() {
     testlib::run("org.tiqian.core.CoreLayoutQueriesGapsTest.getLineForOffsetUsesNearestLineWhenGapBetweenLines", "org.tiqian.core.CoreLayoutQueriesGapsTest.getLineForOffsetUsesNearestLineWhenGapBetweenLines", || {
-        TestTraceRecorder::new("CoreLayoutQueriesGapsTest").section(&"getLineForOffsetUsesNearestLineWhenGapBetweenLines");
-        let result = CoreLayoutQueriesGapsTestHelpers::core_layout_queries_gaps_test_helpers_result_with(&"abcde", 100.0f64, None, Size::new(10.0f64, 40.0f64), &vec![
-    (CoreLayoutQueriesGapsTestHelpers::core_layout_queries_gaps_test_helpers_cluster(TextRange::new(0u32, 1u32).unwrap(), &"a", &"cjk", 10.0f64)).clone(),
-    (CoreLayoutQueriesGapsTestHelpers::core_layout_queries_gaps_test_helpers_cluster(TextRange::new(1u32, 2u32).unwrap(), &"b", &"cjk", 10.0f64)).clone(),
-    (CoreLayoutQueriesGapsTestHelpers::core_layout_queries_gaps_test_helpers_cluster(TextRange::new(2u32, 3u32).unwrap(), &"c", &"cjk", 10.0f64)).clone(),
-    (CoreLayoutQueriesGapsTestHelpers::core_layout_queries_gaps_test_helpers_cluster(TextRange::new(4u32, 5u32).unwrap(), &"e", &"cjk", 10.0f64)).clone(),
+        TestTraceRecorder::new(&(UStr::new(&[67,111,114,101,76,97,121,111,117,116,81,117,101,114,105,101,115,71,97,112,115,84,101,115,116]))).section(UStr::new(&[103,101,116,76,105,110,101,70,111,114,79,102,102,115,101,116,85,115,101,115,78,101,97,114,101,115,116,76,105,110,101,87,104,101,110,71,97,112,66,101,116,119,101,101,110,76,105,110,101,115]));
+        let result = CoreLayoutQueriesGapsTestHelpers::core_layout_queries_gaps_test_helpers_result_with(UStr::new(&[97,98,99,100,101]), 100.0f64, None, Size::new(10.0f64, 40.0f64), &vec![
+    (CoreLayoutQueriesGapsTestHelpers::core_layout_queries_gaps_test_helpers_cluster(TextRange::new(0u32, 1u32).unwrap(), UStr::new(&[97]), UStr::new(&[99,106,107]), 10.0f64)).clone(),
+    (CoreLayoutQueriesGapsTestHelpers::core_layout_queries_gaps_test_helpers_cluster(TextRange::new(1u32, 2u32).unwrap(), UStr::new(&[98]), UStr::new(&[99,106,107]), 10.0f64)).clone(),
+    (CoreLayoutQueriesGapsTestHelpers::core_layout_queries_gaps_test_helpers_cluster(TextRange::new(2u32, 3u32).unwrap(), UStr::new(&[99]), UStr::new(&[99,106,107]), 10.0f64)).clone(),
+    (CoreLayoutQueriesGapsTestHelpers::core_layout_queries_gaps_test_helpers_cluster(TextRange::new(4u32, 5u32).unwrap(), UStr::new(&[101]), UStr::new(&[99,106,107]), 10.0f64)).clone(),
 ], &vec![], &vec![
     (CoreLayoutQueriesGapsTestHelpers::core_layout_queries_gaps_test_helpers_line(TextRange::new(0u32, 2u32).unwrap(), 0, 1, 15.0f64, 0.0f64, 20.0f64, 20.0f64, None)).clone(),
     (CoreLayoutQueriesGapsTestHelpers::core_layout_queries_gaps_test_helpers_line(TextRange::new(4u32, 5u32).unwrap(), 2, 3, 35.0f64, 25.0f64, 45.0f64, 10.0f64, None)).clone(),
@@ -1168,27 +1348,25 @@ fn get_line_for_offset_uses_nearest_line_when_gap_between_lines() {
 #[test]
 fn get_bounding_boxes_int_delegates_to_text_range() {
     testlib::run("org.tiqian.core.CoreLayoutQueriesGapsTest.getBoundingBoxesIntDelegatesToTextRange", "org.tiqian.core.CoreLayoutQueriesGapsTest.getBoundingBoxesIntDelegatesToTextRange", || {
-        TestTraceRecorder::new("CoreLayoutQueriesGapsTest").section(&"getBoundingBoxesIntDelegatesToTextRange");
+        TestTraceRecorder::new(&(UStr::new(&[67,111,114,101,76,97,121,111,117,116,81,117,101,114,105,101,115,71,97,112,115,84,101,115,116]))).section(UStr::new(&[103,101,116,66,111,117,110,100,105,110,103,66,111,120,101,115,73,110,116,68,101,108,101,103,97,116,101,115,84,111,84,101,120,116,82,97,110,103,101]));
         let result = CoreLayoutQueriesGapsTestHelpers::core_layout_queries_gaps_test_helpers_sample_result().unwrap();
         let from_int = LayoutQueries::layout_queries_get_bounding_boxes_int((result).clone(), 2, 4).unwrap();
         let from_range = LayoutQueries::layout_queries_get_bounding_boxes((result).clone(), TextRange::new(2u32, 4u32).unwrap());
-        let _ = TracedAssertions::traced_assertions_assert_equals_rendered(CoreLayoutQueriesGapsTestHelpers::core_layout_queries_gaps_test_helpers_render_rects(&from_range).unwrap().as_str(),
-CoreLayoutQueriesGapsTestHelpers::core_layout_queries_gaps_test_helpers_render_rects(&from_int).unwrap().as_str(), None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_equals_rendered(CoreLayoutQueriesGapsTestHelpers::core_layout_queries_gaps_test_helpers_render_rects(&from_range).unwrap().as_ustr(), CoreLayoutQueriesGapsTestHelpers::core_layout_queries_gaps_test_helpers_render_rects(&from_int).unwrap().as_ustr(), None).unwrap();
     });
 }
 
 #[test]
 fn rich_text_background_uses_horizontal_padding() {
     testlib::run("org.tiqian.core.CoreLayoutQueriesGapsTest.richTextBackgroundUsesHorizontalPadding", "org.tiqian.core.CoreLayoutQueriesGapsTest.richTextBackgroundUsesHorizontalPadding", || {
-        TestTraceRecorder::new("CoreLayoutQueriesGapsTest").section(&"richTextBackgroundUsesHorizontalPadding");
-        let result = CoreLayoutQueriesGapsTestHelpers::core_layout_queries_gaps_test_helpers_result_with(&"AB", 100.0f64, Some(CoreLayoutQueriesGapsTestHelpers::core_layout_queries_gaps_test_helpers_style(10.0f64)), Size::new(20.0f64, 20.0f64), &vec![
-    (CoreLayoutQueriesGapsTestHelpers::core_layout_queries_gaps_test_helpers_cluster(TextRange::new(0u32, 1u32).unwrap(), &"A", &"latin", 10.0f64)).clone(),
-    (CoreLayoutQueriesGapsTestHelpers::core_layout_queries_gaps_test_helpers_cluster(TextRange::new(1u32, 2u32).unwrap(), &"B", &"latin", 10.0f64)).clone(),
+        TestTraceRecorder::new(&(UStr::new(&[67,111,114,101,76,97,121,111,117,116,81,117,101,114,105,101,115,71,97,112,115,84,101,115,116]))).section(UStr::new(&[114,105,99,104,84,101,120,116,66,97,99,107,103,114,111,117,110,100,85,115,101,115,72,111,114,105,122,111,110,116,97,108,80,97,100,100,105,110,103]));
+        let result = CoreLayoutQueriesGapsTestHelpers::core_layout_queries_gaps_test_helpers_result_with(UStr::new(&[65,66]), 100.0f64, Some(CoreLayoutQueriesGapsTestHelpers::core_layout_queries_gaps_test_helpers_style(10.0f64)), Size::new(20.0f64, 20.0f64), &vec![
+    (CoreLayoutQueriesGapsTestHelpers::core_layout_queries_gaps_test_helpers_cluster(TextRange::new(0u32, 1u32).unwrap(), UStr::new(&[65]), UStr::new(&[108,97,116,105,110]), 10.0f64)).clone(),
+    (CoreLayoutQueriesGapsTestHelpers::core_layout_queries_gaps_test_helpers_cluster(TextRange::new(1u32, 2u32).unwrap(), UStr::new(&[66]), UStr::new(&[108,97,116,105,110]), 10.0f64)).clone(),
 ], &vec![], &vec![
     (CoreLayoutQueriesGapsTestHelpers::core_layout_queries_gaps_test_helpers_line(TextRange::new(0u32, 2u32).unwrap(), 0, 1, 15.0f64, 0.0f64, 20.0f64, 20.0f64, None)).clone(),
 ], Some(CoreLayoutQueriesGapsTestHelpers::core_layout_queries_gaps_test_helpers_empty_debug())).unwrap();
-        let span = RichTextSpan::new(TextRange::new(0u32, 2u32).unwrap(), Box::new({ let __guard = crate::org::tiqian::core::rich_text_role::BACKGROUND_INSTANCE.lock().unwrap_or_else(|e| e.into_inner()); __guard.clone() }),
-RichTextPaint::rich_text_paint_with_background(RichTextBackgroundPaint::rich_text_background_paint_with_horizontal_padding(5.0f64).unwrap()).unwrap());
+        let span = RichTextSpan::new(TextRange::new(0u32, 2u32).unwrap(), Box::new({ let __guard = crate::org::tiqian::core::rich_text_role::BACKGROUND_INSTANCE.lock().unwrap_or_else(|e| e.into_inner()); __guard.clone() }), RichTextPaint::rich_text_paint_with_background(RichTextBackgroundPaint::rich_text_background_paint_with_horizontal_padding(5.0f64).unwrap()).unwrap());
         let occupied = LayoutQueries::layout_queries_positioned_rich_text_segments((result).clone(), &vec![(span).clone()]).unwrap();
         let segments = LayoutQueries::layout_queries_rich_text_background_segments((result).clone(), &occupied);
         let _ = TracedAssertions::traced_assertions_assert_equals_int(1, u32::try_from((segments.len()) & 0xFFFF_FFFF).unwrap_or(0), None).unwrap();
@@ -1198,15 +1376,14 @@ RichTextPaint::rich_text_paint_with_background(RichTextBackgroundPaint::rich_tex
 #[test]
 fn rich_text_background_trailing_padding_when_span_ends_at_segment_end() {
     testlib::run("org.tiqian.core.CoreLayoutQueriesGapsTest.richTextBackgroundTrailingPaddingWhenSpanEndsAtSegmentEnd", "org.tiqian.core.CoreLayoutQueriesGapsTest.richTextBackgroundTrailingPaddingWhenSpanEndsAtSegmentEnd", || {
-        TestTraceRecorder::new("CoreLayoutQueriesGapsTest").section(&"richTextBackgroundTrailingPaddingWhenSpanEndsAtSegmentEnd");
-        let result = CoreLayoutQueriesGapsTestHelpers::core_layout_queries_gaps_test_helpers_result_with(&"AB", 100.0f64, Some(CoreLayoutQueriesGapsTestHelpers::core_layout_queries_gaps_test_helpers_style(10.0f64)), Size::new(20.0f64, 20.0f64), &vec![
-    (CoreLayoutQueriesGapsTestHelpers::core_layout_queries_gaps_test_helpers_cluster(TextRange::new(0u32, 1u32).unwrap(), &"A", &"latin", 10.0f64)).clone(),
-    (CoreLayoutQueriesGapsTestHelpers::core_layout_queries_gaps_test_helpers_cluster(TextRange::new(1u32, 2u32).unwrap(), &"B", &"latin", 10.0f64)).clone(),
+        TestTraceRecorder::new(&(UStr::new(&[67,111,114,101,76,97,121,111,117,116,81,117,101,114,105,101,115,71,97,112,115,84,101,115,116]))).section(UStr::new(&[114,105,99,104,84,101,120,116,66,97,99,107,103,114,111,117,110,100,84,114,97,105,108,105,110,103,80,97,100,100,105,110,103,87,104,101,110,83,112,97,110,69,110,100,115,65,116,83,101,103,109,101,110,116,69,110,100]));
+        let result = CoreLayoutQueriesGapsTestHelpers::core_layout_queries_gaps_test_helpers_result_with(UStr::new(&[65,66]), 100.0f64, Some(CoreLayoutQueriesGapsTestHelpers::core_layout_queries_gaps_test_helpers_style(10.0f64)), Size::new(20.0f64, 20.0f64), &vec![
+    (CoreLayoutQueriesGapsTestHelpers::core_layout_queries_gaps_test_helpers_cluster(TextRange::new(0u32, 1u32).unwrap(), UStr::new(&[65]), UStr::new(&[108,97,116,105,110]), 10.0f64)).clone(),
+    (CoreLayoutQueriesGapsTestHelpers::core_layout_queries_gaps_test_helpers_cluster(TextRange::new(1u32, 2u32).unwrap(), UStr::new(&[66]), UStr::new(&[108,97,116,105,110]), 10.0f64)).clone(),
 ], &vec![], &vec![
     (CoreLayoutQueriesGapsTestHelpers::core_layout_queries_gaps_test_helpers_line(TextRange::new(0u32, 2u32).unwrap(), 0, 1, 15.0f64, 0.0f64, 20.0f64, 20.0f64, None)).clone(),
 ], Some(CoreLayoutQueriesGapsTestHelpers::core_layout_queries_gaps_test_helpers_empty_debug())).unwrap();
-        let span = RichTextSpan::new(TextRange::new(0u32, 2u32).unwrap(), Box::new({ let __guard = crate::org::tiqian::core::rich_text_role::BACKGROUND_INSTANCE.lock().unwrap_or_else(|e| e.into_inner()); __guard.clone() }),
-RichTextPaint::rich_text_paint_with_background(RichTextBackgroundPaint::rich_text_background_paint_with_horizontal_padding(5.0f64).unwrap()).unwrap());
+        let span = RichTextSpan::new(TextRange::new(0u32, 2u32).unwrap(), Box::new({ let __guard = crate::org::tiqian::core::rich_text_role::BACKGROUND_INSTANCE.lock().unwrap_or_else(|e| e.into_inner()); __guard.clone() }), RichTextPaint::rich_text_paint_with_background(RichTextBackgroundPaint::rich_text_background_paint_with_horizontal_padding(5.0f64).unwrap()).unwrap());
         let occupied = LayoutQueries::layout_queries_positioned_rich_text_segments((result).clone(), &vec![(span).clone()]).unwrap();
         let segments = LayoutQueries::layout_queries_rich_text_background_segments((result).clone(), &occupied);
         let _ = TracedAssertions::traced_assertions_assert_equals_int(1, u32::try_from((segments.len()) & 0xFFFF_FFFF).unwrap_or(0), None).unwrap();
@@ -1217,16 +1394,15 @@ RichTextPaint::rich_text_paint_with_background(RichTextBackgroundPaint::rich_tex
 #[test]
 fn rich_text_background_uniform_paragraph_style_uses_paragraph_style() {
     testlib::run("org.tiqian.core.CoreLayoutQueriesGapsTest.richTextBackgroundUniformParagraphStyleUsesParagraphStyle", "org.tiqian.core.CoreLayoutQueriesGapsTest.richTextBackgroundUniformParagraphStyleUsesParagraphStyle", || {
-        TestTraceRecorder::new("CoreLayoutQueriesGapsTest").section(&"richTextBackgroundUniformParagraphStyleUsesParagraphStyle");
-        let result = CoreLayoutQueriesGapsTestHelpers::core_layout_queries_gaps_test_helpers_result_with(&"AB", 100.0f64, Some(CoreLayoutQueriesGapsTestHelpers::core_layout_queries_gaps_test_helpers_style(12.0f64)), Size::new(20.0f64, 20.0f64), &vec![
-    (CoreLayoutQueriesGapsTestHelpers::core_layout_queries_gaps_test_helpers_cluster(TextRange::new(0u32, 1u32).unwrap(), &"A", &"latin", 10.0f64)).clone(),
-    (CoreLayoutQueriesGapsTestHelpers::core_layout_queries_gaps_test_helpers_cluster(TextRange::new(1u32, 2u32).unwrap(), &"B", &"latin", 10.0f64)).clone(),
+        TestTraceRecorder::new(&(UStr::new(&[67,111,114,101,76,97,121,111,117,116,81,117,101,114,105,101,115,71,97,112,115,84,101,115,116]))).section(UStr::new(&[114,105,99,104,84,101,120,116,66,97,99,107,103,114,111,117,110,100,85,110,105,102,111,114,109,80,97,114,97,103,114,97,112,104,83,116,121,108,101,85,115,101,115,80,97,114,97,103,114,97,112,104,83,116,121,108,101]));
+        let result = CoreLayoutQueriesGapsTestHelpers::core_layout_queries_gaps_test_helpers_result_with(UStr::new(&[65,66]), 100.0f64, Some(CoreLayoutQueriesGapsTestHelpers::core_layout_queries_gaps_test_helpers_style(12.0f64)), Size::new(20.0f64, 20.0f64), &vec![
+    (CoreLayoutQueriesGapsTestHelpers::core_layout_queries_gaps_test_helpers_cluster(TextRange::new(0u32, 1u32).unwrap(), UStr::new(&[65]), UStr::new(&[108,97,116,105,110]), 10.0f64)).clone(),
+    (CoreLayoutQueriesGapsTestHelpers::core_layout_queries_gaps_test_helpers_cluster(TextRange::new(1u32, 2u32).unwrap(), UStr::new(&[66]), UStr::new(&[108,97,116,105,110]), 10.0f64)).clone(),
 ], &vec![], &vec![
     (CoreLayoutQueriesGapsTestHelpers::core_layout_queries_gaps_test_helpers_line(TextRange::new(0u32, 2u32).unwrap(), 0, 1, 15.0f64, 0.0f64, 20.0f64, 20.0f64, None)).clone(),
-], Some(LayoutDebugInfo::new(None, Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), None, None, None,
-None, Some(vec![]), None, None, Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![])))).unwrap();
-        let paint = RichTextPaint::rich_text_paint_with_background(RichTextBackgroundPaint::new(Some(0.0f64), Some(0.0f64), Some(0.0f64), Some(0.0f64), Some(RichTextBackgroundMetricPolicy::UniformParagraphStyle),
-Some(Box::new((*crate::org::tiqian::core::rich_text_background_draw_style::FILL_INSTANCE).clone()))).unwrap()).unwrap();
+],
+Some(LayoutDebugInfo::new(None, Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), None, None, None, None, Some(vec![]), None, None, Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![])))).unwrap();
+        let paint = RichTextPaint::rich_text_paint_with_background(RichTextBackgroundPaint::new(Some(0.0f64), Some(0.0f64), Some(0.0f64), Some(0.0f64), Some(RichTextBackgroundMetricPolicy::UniformParagraphStyle), Some(Box::new((*crate::org::tiqian::core::rich_text_background_draw_style::FILL_INSTANCE).clone()))).unwrap()).unwrap();
         let span = RichTextSpan::new(TextRange::new(0u32, 2u32).unwrap(), Box::new({ let __guard = crate::org::tiqian::core::rich_text_role::BACKGROUND_INSTANCE.lock().unwrap_or_else(|e| e.into_inner()); __guard.clone() }), (paint).clone());
         let occupied = LayoutQueries::layout_queries_positioned_rich_text_segments((result).clone(), &vec![(span).clone()]).unwrap();
         let segments = LayoutQueries::layout_queries_rich_text_background_segments((result).clone(), &occupied);
@@ -1237,17 +1413,15 @@ Some(Box::new((*crate::org::tiqian::core::rich_text_background_draw_style::FILL_
 #[test]
 fn marked_face_vertical_bounds_uses_fallback_when_no_metric_matches() {
     testlib::run("org.tiqian.core.CoreLayoutQueriesGapsTest.markedFaceVerticalBoundsUsesFallbackWhenNoMetricMatches", "org.tiqian.core.CoreLayoutQueriesGapsTest.markedFaceVerticalBoundsUsesFallbackWhenNoMetricMatches", || {
-        TestTraceRecorder::new("CoreLayoutQueriesGapsTest").section(&"markedFaceVerticalBoundsUsesFallbackWhenNoMetricMatches");
-        let metric = MetricDecisionInfo::new(TextRange::new(0u32, 1u32).unwrap(), "test", "test", "test", 8.0f64, 2.0f64, 0.0f64, "test", 8.0f64, 2.0f64, "test", "test", "test", "test");
-        let result = CoreLayoutQueriesGapsTestHelpers::core_layout_queries_gaps_test_helpers_result_with(&"AB", 100.0f64, Some(CoreLayoutQueriesGapsTestHelpers::core_layout_queries_gaps_test_helpers_style(10.0f64)), Size::new(20.0f64, 20.0f64), &vec![
-    (CoreLayoutQueriesGapsTestHelpers::core_layout_queries_gaps_test_helpers_cluster(TextRange::new(0u32, 2u32).unwrap(), &"AB", &"latin", 20.0f64)).clone(),
+        TestTraceRecorder::new(&(UStr::new(&[67,111,114,101,76,97,121,111,117,116,81,117,101,114,105,101,115,71,97,112,115,84,101,115,116]))).section(UStr::new(&[109,97,114,107,101,100,70,97,99,101,86,101,114,116,105,99,97,108,66,111,117,110,100,115,85,115,101,115,70,97,108,108,98,97,99,107,87,104,101,110,78,111,77,101,116,114,105,99,77,97,116,99,104,101,115]));
+        let metric = MetricDecisionInfo::new(TextRange::new(0u32, 1u32).unwrap(), &(UStr::new(&[116,101,115,116])), &(UStr::new(&[116,101,115,116])), &(UStr::new(&[116,101,115,116])), 8.0f64, 2.0f64, 0.0f64, &(UStr::new(&[116,101,115,116])), 8.0f64, 2.0f64, &(UStr::new(&[116,101,115,116])), &(UStr::new(&[116,101,115,116])), &(UStr::new(&[116,101,115,116])), &(UStr::new(&[116,101,115,116])));
+        let result = CoreLayoutQueriesGapsTestHelpers::core_layout_queries_gaps_test_helpers_result_with(UStr::new(&[65,66]), 100.0f64, Some(CoreLayoutQueriesGapsTestHelpers::core_layout_queries_gaps_test_helpers_style(10.0f64)), Size::new(20.0f64, 20.0f64), &vec![
+    (CoreLayoutQueriesGapsTestHelpers::core_layout_queries_gaps_test_helpers_cluster(TextRange::new(0u32, 2u32).unwrap(), UStr::new(&[65,66]), UStr::new(&[108,97,116,105,110]), 20.0f64)).clone(),
 ], &vec![], &vec![
     (CoreLayoutQueriesGapsTestHelpers::core_layout_queries_gaps_test_helpers_line(TextRange::new(0u32, 2u32).unwrap(), 0, 0, 15.0f64, 0.0f64, 20.0f64, 20.0f64, None)).clone(),
-], Some(LayoutDebugInfo::new(None, Some(vec![(metric).clone()]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), None,
-None, None, None, Some(vec![]), None, None, Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![])))).unwrap();
-        let span = RichTextSpan::new(TextRange::new(0u32, 2u32).unwrap(), Box::new({ let __guard = crate::org::tiqian::core::rich_text_role::BACKGROUND_INSTANCE.lock().unwrap_or_else(|e| e.into_inner()); __guard.clone() }), RichTextPaint::new(None,
-Some(Box::new((*crate::org::tiqian::core::rich_text_line_pattern::SOLID_INSTANCE).clone())), RichTextBackgroundPaint::new(Some(0.0f64), Some(0.0f64), Some(0.0f64), Some(0.0f64), Some(RichTextBackgroundMetricPolicy::MarkedFaces),
-Some(Box::new((*crate::org::tiqian::core::rich_text_background_draw_style::FILL_INSTANCE).clone()))).unwrap(), Some(0.0f64)).unwrap());
+],
+Some(LayoutDebugInfo::new(None, Some(vec![(metric).clone()]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), None, None, None, None, Some(vec![]), None, None, Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![])))).unwrap();
+        let span = RichTextSpan::new(TextRange::new(0u32, 2u32).unwrap(), Box::new({ let __guard = crate::org::tiqian::core::rich_text_role::BACKGROUND_INSTANCE.lock().unwrap_or_else(|e| e.into_inner()); __guard.clone() }), RichTextPaint::new(None, Some(Box::new((*crate::org::tiqian::core::rich_text_line_pattern::SOLID_INSTANCE).clone())), RichTextBackgroundPaint::new(Some(0.0f64), Some(0.0f64), Some(0.0f64), Some(0.0f64), Some(RichTextBackgroundMetricPolicy::MarkedFaces), Some(Box::new((*crate::org::tiqian::core::rich_text_background_draw_style::FILL_INSTANCE).clone()))).unwrap(), Some(0.0f64)).unwrap());
         let occupied = LayoutQueries::layout_queries_positioned_rich_text_segments((result).clone(), &vec![(span).clone()]).unwrap();
         let segments = LayoutQueries::layout_queries_rich_text_background_segments((result).clone(), &occupied);
         let _ = TracedAssertions::traced_assertions_assert_equals_int(1, u32::try_from((segments.len()) & 0xFFFF_FFFF).unwrap_or(0), None).unwrap();
@@ -1257,7 +1431,7 @@ Some(Box::new((*crate::org::tiqian::core::rich_text_background_draw_style::FILL_
 #[test]
 fn get_selection_offset_for_position_returns_nearest_when_before_first_cluster() {
     testlib::run("org.tiqian.core.CoreLayoutQueriesGapsTest.getSelectionOffsetForPositionReturnsNearestWhenBeforeFirstCluster", "org.tiqian.core.CoreLayoutQueriesGapsTest.getSelectionOffsetForPositionReturnsNearestWhenBeforeFirstCluster", || {
-        TestTraceRecorder::new("CoreLayoutQueriesGapsTest").section(&"getSelectionOffsetForPositionReturnsNearestWhenBeforeFirstCluster");
+        TestTraceRecorder::new(&(UStr::new(&[67,111,114,101,76,97,121,111,117,116,81,117,101,114,105,101,115,71,97,112,115,84,101,115,116]))).section(UStr::new(&[103,101,116,83,101,108,101,99,116,105,111,110,79,102,102,115,101,116,70,111,114,80,111,115,105,116,105,111,110,82,101,116,117,114,110,115,78,101,97,114,101,115,116,87,104,101,110,66,101,102,111,114,101,70,105,114,115,116,67,108,117,115,116,101,114]));
         let result = CoreLayoutQueriesGapsTestHelpers::core_layout_queries_gaps_test_helpers_sample_result().unwrap();
         let _ = TracedAssertions::traced_assertions_assert_equals_int(0, LayoutQueries::layout_queries_get_selection_offset_for_position((result).clone(), 3.0f64, 5.0f64).unwrap(), None).unwrap();
     });
@@ -1266,7 +1440,7 @@ fn get_selection_offset_for_position_returns_nearest_when_before_first_cluster()
 #[test]
 fn get_selection_offset_for_position_returns_nearest_when_after_last_cluster() {
     testlib::run("org.tiqian.core.CoreLayoutQueriesGapsTest.getSelectionOffsetForPositionReturnsNearestWhenAfterLastCluster", "org.tiqian.core.CoreLayoutQueriesGapsTest.getSelectionOffsetForPositionReturnsNearestWhenAfterLastCluster", || {
-        TestTraceRecorder::new("CoreLayoutQueriesGapsTest").section(&"getSelectionOffsetForPositionReturnsNearestWhenAfterLastCluster");
+        TestTraceRecorder::new(&(UStr::new(&[67,111,114,101,76,97,121,111,117,116,81,117,101,114,105,101,115,71,97,112,115,84,101,115,116]))).section(UStr::new(&[103,101,116,83,101,108,101,99,116,105,111,110,79,102,102,115,101,116,70,111,114,80,111,115,105,116,105,111,110,82,101,116,117,114,110,115,78,101,97,114,101,115,116,87,104,101,110,65,102,116,101,114,76,97,115,116,67,108,117,115,116,101,114]));
         let result = CoreLayoutQueriesGapsTestHelpers::core_layout_queries_gaps_test_helpers_sample_result().unwrap();
         let _ = TracedAssertions::traced_assertions_assert_equals_int(4, LayoutQueries::layout_queries_get_selection_offset_for_position((result).clone(), 35.0f64, 25.0f64).unwrap(), None).unwrap();
     });
@@ -1275,8 +1449,8 @@ fn get_selection_offset_for_position_returns_nearest_when_after_last_cluster() {
 #[test]
 fn get_selection_offset_for_position_returns_start_of_line_when_clusters_empty() {
     testlib::run("org.tiqian.core.CoreLayoutQueriesGapsTest.getSelectionOffsetForPositionReturnsStartOfLineWhenClustersEmpty", "org.tiqian.core.CoreLayoutQueriesGapsTest.getSelectionOffsetForPositionReturnsStartOfLineWhenClustersEmpty", || {
-        TestTraceRecorder::new("CoreLayoutQueriesGapsTest").section(&"getSelectionOffsetForPositionReturnsStartOfLineWhenClustersEmpty");
-        let result = CoreLayoutQueriesGapsTestHelpers::core_layout_queries_gaps_test_helpers_result_with(&"", 100.0f64, None, Size::new(0.0f64, 20.0f64), &vec![], &vec![], &vec![
+        TestTraceRecorder::new(&(UStr::new(&[67,111,114,101,76,97,121,111,117,116,81,117,101,114,105,101,115,71,97,112,115,84,101,115,116]))).section(UStr::new(&[103,101,116,83,101,108,101,99,116,105,111,110,79,102,102,115,101,116,70,111,114,80,111,115,105,116,105,111,110,82,101,116,117,114,110,115,83,116,97,114,116,79,102,76,105,110,101,87,104,101,110,67,108,117,115,116,101,114,115,69,109,112,116,121]));
+        let result = CoreLayoutQueriesGapsTestHelpers::core_layout_queries_gaps_test_helpers_result_with(UStr::new(&[]), 100.0f64, None, Size::new(0.0f64, 20.0f64), &vec![], &vec![], &vec![
     (CoreLayoutQueriesGapsTestHelpers::core_layout_queries_gaps_test_helpers_line(TextRange::new(0u32, 0u32).unwrap(), 0, 4294967295u32, 15.0f64, 0.0f64, 20.0f64, 0.0f64, None)).clone(),
 ], None).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_equals_int(0, LayoutQueries::layout_queries_get_selection_offset_for_position((result).clone(), 5.0f64, 10.0f64).unwrap(), None).unwrap();
@@ -1286,54 +1460,53 @@ fn get_selection_offset_for_position_returns_start_of_line_when_clusters_empty()
 #[test]
 fn get_selection_word_boundary_for_emoji_zwj_sequence() {
     testlib::run("org.tiqian.core.CoreLayoutQueriesGapsTest.getSelectionWordBoundaryForEmojiZwjSequence", "org.tiqian.core.CoreLayoutQueriesGapsTest.getSelectionWordBoundaryForEmojiZwjSequence", || {
-        TestTraceRecorder::new("CoreLayoutQueriesGapsTest").section(&"getSelectionWordBoundaryForEmojiZwjSequence");
+        TestTraceRecorder::new(&(UStr::new(&[67,111,114,101,76,97,121,111,117,116,81,117,101,114,105,101,115,71,97,112,115,84,101,115,116]))).section(UStr::new(&[103,101,116,83,101,108,101,99,116,105,111,110,87,111,114,100,66,111,117,110,100,97,114,121,70,111,114,69,109,111,106,105,90,119,106,83,101,113,117,101,110,99,101]));
         let text = TestHelpers::test_helpers_surrogate_text(&vec![55357, 56425, 8205, 55357, 56425]);
-        let result = CoreLayoutQueriesGapsTestHelpers::core_layout_queries_gaps_test_helpers_result_with(text.as_str(), 100.0f64, None, Size::new(50.0f64, 20.0f64), &vec![
-    (CoreLayoutQueriesGapsTestHelpers::core_layout_queries_gaps_test_helpers_cluster(TextRange::new(0u32, 5u32).unwrap(), text.as_str(), &"emoji", 50.0f64)).clone(),
+        let result = CoreLayoutQueriesGapsTestHelpers::core_layout_queries_gaps_test_helpers_result_with(text.as_ustr(), 100.0f64, None, Size::new(50.0f64, 20.0f64), &vec![
+    (CoreLayoutQueriesGapsTestHelpers::core_layout_queries_gaps_test_helpers_cluster(TextRange::new(0u32, 5u32).unwrap(), text.as_ustr(), UStr::new(&[101,109,111,106,105]), 50.0f64)).clone(),
 ], &vec![], &vec![
     (CoreLayoutQueriesGapsTestHelpers::core_layout_queries_gaps_test_helpers_line(TextRange::new(0u32, 5u32).unwrap(), 0, 0, 15.0f64, 0.0f64, 20.0f64, 50.0f64, None)).clone(),
 ], None).unwrap();
         let boundary = LayoutQueries::layout_queries_get_selection_word_boundary((result).clone(), 5).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_equals_rendered(TextRange::new(0u32, 5u32).unwrap().to_string().as_str(), boundary.to_string().as_str(), None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_equals_rendered(UString::from(format!("{}", TextRange::new(0u32, 5u32).unwrap().to_string()).as_str()).as_ustr(), UString::from(format!("{}", boundary.to_string()).as_str()).as_ustr(), None).unwrap();
     });
 }
 
 #[test]
 fn get_selection_word_boundary_for_punctuation_returns_single() {
     testlib::run("org.tiqian.core.CoreLayoutQueriesGapsTest.getSelectionWordBoundaryForPunctuationReturnsSingle", "org.tiqian.core.CoreLayoutQueriesGapsTest.getSelectionWordBoundaryForPunctuationReturnsSingle", || {
-        TestTraceRecorder::new("CoreLayoutQueriesGapsTest").section(&"getSelectionWordBoundaryForPunctuationReturnsSingle");
-        let result = CoreLayoutQueriesGapsTestHelpers::core_layout_queries_gaps_test_helpers_result_with(&"A,B", 100.0f64, None, Size::new(30.0f64, 20.0f64), &vec![
-    (CoreLayoutQueriesGapsTestHelpers::core_layout_queries_gaps_test_helpers_cluster(TextRange::new(0u32, 1u32).unwrap(), &"A", &"latin", 10.0f64)).clone(),
-    (CoreLayoutQueriesGapsTestHelpers::core_layout_queries_gaps_test_helpers_cluster(TextRange::new(1u32, 2u32).unwrap(), &",", &"latin", 10.0f64)).clone(),
-    (CoreLayoutQueriesGapsTestHelpers::core_layout_queries_gaps_test_helpers_cluster(TextRange::new(2u32, 3u32).unwrap(), &"B", &"latin", 10.0f64)).clone(),
+        TestTraceRecorder::new(&(UStr::new(&[67,111,114,101,76,97,121,111,117,116,81,117,101,114,105,101,115,71,97,112,115,84,101,115,116]))).section(UStr::new(&[103,101,116,83,101,108,101,99,116,105,111,110,87,111,114,100,66,111,117,110,100,97,114,121,70,111,114,80,117,110,99,116,117,97,116,105,111,110,82,101,116,117,114,110,115,83,105,110,103,108,101]));
+        let result = CoreLayoutQueriesGapsTestHelpers::core_layout_queries_gaps_test_helpers_result_with(UStr::new(&[65,44,66]), 100.0f64, None, Size::new(30.0f64, 20.0f64), &vec![
+    (CoreLayoutQueriesGapsTestHelpers::core_layout_queries_gaps_test_helpers_cluster(TextRange::new(0u32, 1u32).unwrap(), UStr::new(&[65]), UStr::new(&[108,97,116,105,110]), 10.0f64)).clone(),
+    (CoreLayoutQueriesGapsTestHelpers::core_layout_queries_gaps_test_helpers_cluster(TextRange::new(1u32, 2u32).unwrap(), UStr::new(&[44]), UStr::new(&[108,97,116,105,110]), 10.0f64)).clone(),
+    (CoreLayoutQueriesGapsTestHelpers::core_layout_queries_gaps_test_helpers_cluster(TextRange::new(2u32, 3u32).unwrap(), UStr::new(&[66]), UStr::new(&[108,97,116,105,110]), 10.0f64)).clone(),
 ], &vec![], &vec![
     (CoreLayoutQueriesGapsTestHelpers::core_layout_queries_gaps_test_helpers_line(TextRange::new(0u32, 3u32).unwrap(), 0, 2, 15.0f64, 0.0f64, 20.0f64, 30.0f64, None)).clone(),
 ], None).unwrap();
         let boundary = LayoutQueries::layout_queries_get_selection_word_boundary((result).clone(), 1).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_equals_rendered(TextRange::new(1u32, 2u32).unwrap().to_string().as_str(), boundary.to_string().as_str(), None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_equals_rendered(UString::from(format!("{}", TextRange::new(1u32, 2u32).unwrap().to_string()).as_str()).as_ustr(), UString::from(format!("{}", boundary.to_string()).as_str()).as_ustr(), None).unwrap();
     });
 }
 
 #[test]
 fn positioned_clusters_produces_source_stops_for_latin_run() {
     testlib::run("org.tiqian.core.CoreLayoutQueriesGapsTest.positionedClustersProducesSourceStopsForLatinRun", "org.tiqian.core.CoreLayoutQueriesGapsTest.positionedClustersProducesSourceStopsForLatinRun", || {
-        TestTraceRecorder::new("CoreLayoutQueriesGapsTest").section(&"positionedClustersProducesSourceStopsForLatinRun");
-        let text = "Hi".to_string();
+        TestTraceRecorder::new(&(UStr::new(&[67,111,114,101,76,97,121,111,117,116,81,117,101,114,105,101,115,71,97,112,115,84,101,115,116]))).section(UStr::new(&[112,111,115,105,116,105,111,110,101,100,67,108,117,115,116,101,114,115,80,114,111,100,117,99,101,115,83,111,117,114,99,101,83,116,111,112,115,70,111,114,76,97,116,105,110,82,117,110]));
+        let text = UString::from("Hi").to_ustring();
         let glyph_range = TextRange::new(0u32, 2u32).unwrap();
         let glyphs = vec![
     (Glyph::new(1u32, (glyph_range).clone(), 10.0f64, Some(0.0f64), Some(0.0f64), None, None, None, None)).clone(),
     (Glyph::new(2u32, (glyph_range).clone(), 10.0f64, Some(0.0f64), Some(0.0f64), None, None, None, None)).clone(),
 ];
-        let result = CoreLayoutQueriesGapsTestHelpers::core_layout_queries_gaps_test_helpers_result_with(text.as_str(), 100.0f64, Some(CoreLayoutQueriesGapsTestHelpers::core_layout_queries_gaps_test_helpers_style(10.0f64)), Size::new(20.0f64, 20.0f64), &vec![
-    (CoreLayoutQueriesGapsTestHelpers::core_layout_queries_gaps_test_helpers_cluster((glyph_range).clone(), text.as_str(), &"latin", 20.0f64)).clone(),
+        let result = CoreLayoutQueriesGapsTestHelpers::core_layout_queries_gaps_test_helpers_result_with(text.as_ustr(), 100.0f64, Some(CoreLayoutQueriesGapsTestHelpers::core_layout_queries_gaps_test_helpers_style(10.0f64)), Size::new(20.0f64, 20.0f64), &vec![
+    (CoreLayoutQueriesGapsTestHelpers::core_layout_queries_gaps_test_helpers_cluster((glyph_range).clone(), text.as_ustr(), UStr::new(&[108,97,116,105,110]), 20.0f64)).clone(),
 ], &vec![
-    (GlyphRun::new((glyph_range).clone(), "latin", glyphs.to_vec(), 20.0f64, Some(vec![]))).clone(),
+    (GlyphRun::new((glyph_range).clone(), &(UStr::new(&[108,97,116,105,110])), glyphs.to_vec(), 20.0f64, Some(vec![]))).clone(),
 ], &vec![
     (CoreLayoutQueriesGapsTestHelpers::core_layout_queries_gaps_test_helpers_line((glyph_range).clone(), 0, 0, 15.0f64, 0.0f64, 20.0f64, 20.0f64, None)).clone(),
 ], None).unwrap();
         let positioned = LayoutQueries::layout_queries_positioned_clusters((result).clone());
-        let _ = TracedAssertions::traced_assertions_assert_equals_int(3, u32::from_ne_bytes((match &((positioned[0usize]).clone().source_stops) { None => 0, Some(__option1) => u32::try_from(((*__option1).clone().len()) & 0xFFFF_FFFF).unwrap_or(0) }).to_ne_bytes()),
-None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_equals_int(3, u32::from_ne_bytes(((match &((positioned[0usize]).clone().source_stops) { None => 0, Some(__option1) => u32::try_from(((*__option1).clone().len()) & 0xFFFF_FFFF).unwrap_or(0) }) as u32).to_ne_bytes()), None).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_true((positioned[0usize]).clone().source_stops.is_some(), None).unwrap();
     });
 }
@@ -1341,17 +1514,17 @@ None).unwrap();
 #[test]
 fn offset_for_x_uses_source_stops_when_available() {
     testlib::run("org.tiqian.core.CoreLayoutQueriesGapsTest.offsetForXUsesSourceStopsWhenAvailable", "org.tiqian.core.CoreLayoutQueriesGapsTest.offsetForXUsesSourceStopsWhenAvailable", || {
-        TestTraceRecorder::new("CoreLayoutQueriesGapsTest").section(&"offsetForXUsesSourceStopsWhenAvailable");
-        let text = "Hi".to_string();
+        TestTraceRecorder::new(&(UStr::new(&[67,111,114,101,76,97,121,111,117,116,81,117,101,114,105,101,115,71,97,112,115,84,101,115,116]))).section(UStr::new(&[111,102,102,115,101,116,70,111,114,88,85,115,101,115,83,111,117,114,99,101,83,116,111,112,115,87,104,101,110,65,118,97,105,108,97,98,108,101]));
+        let text = UString::from("Hi").to_ustring();
         let glyph_range = TextRange::new(0u32, 2u32).unwrap();
         let glyphs = vec![
     (Glyph::new(1u32, (glyph_range).clone(), 10.0f64, Some(5.0f64), Some(0.0f64), None, None, None, None)).clone(),
     (Glyph::new(2u32, (glyph_range).clone(), 10.0f64, Some(15.0f64), Some(0.0f64), None, None, None, None)).clone(),
 ];
-        let result = CoreLayoutQueriesGapsTestHelpers::core_layout_queries_gaps_test_helpers_result_with(text.as_str(), 100.0f64, Some(CoreLayoutQueriesGapsTestHelpers::core_layout_queries_gaps_test_helpers_style(10.0f64)), Size::new(20.0f64, 20.0f64), &vec![
-    (CoreLayoutQueriesGapsTestHelpers::core_layout_queries_gaps_test_helpers_cluster((glyph_range).clone(), text.as_str(), &"latin", 20.0f64)).clone(),
+        let result = CoreLayoutQueriesGapsTestHelpers::core_layout_queries_gaps_test_helpers_result_with(text.as_ustr(), 100.0f64, Some(CoreLayoutQueriesGapsTestHelpers::core_layout_queries_gaps_test_helpers_style(10.0f64)), Size::new(20.0f64, 20.0f64), &vec![
+    (CoreLayoutQueriesGapsTestHelpers::core_layout_queries_gaps_test_helpers_cluster((glyph_range).clone(), text.as_ustr(), UStr::new(&[108,97,116,105,110]), 20.0f64)).clone(),
 ], &vec![
-    (GlyphRun::new((glyph_range).clone(), "latin", glyphs.to_vec(), 20.0f64, Some(vec![]))).clone(),
+    (GlyphRun::new((glyph_range).clone(), &(UStr::new(&[108,97,116,105,110])), glyphs.to_vec(), 20.0f64, Some(vec![]))).clone(),
 ], &vec![
     (CoreLayoutQueriesGapsTestHelpers::core_layout_queries_gaps_test_helpers_line((glyph_range).clone(), 0, 0, 15.0f64, 0.0f64, 20.0f64, 20.0f64, None)).clone(),
 ], Some(CoreLayoutQueriesGapsTestHelpers::core_layout_queries_gaps_test_helpers_empty_debug())).unwrap();
@@ -1364,31 +1537,31 @@ fn offset_for_x_uses_source_stops_when_available() {
 #[test]
 fn get_bounding_boxes_empty_range_returns_empty_list() {
     testlib::run("org.tiqian.core.CoreLayoutQueriesGapsTest.getBoundingBoxesEmptyRangeReturnsEmptyList", "org.tiqian.core.CoreLayoutQueriesGapsTest.getBoundingBoxesEmptyRangeReturnsEmptyList", || {
-        TestTraceRecorder::new("CoreLayoutQueriesGapsTest").section(&"getBoundingBoxesEmptyRangeReturnsEmptyList");
+        TestTraceRecorder::new(&(UStr::new(&[67,111,114,101,76,97,121,111,117,116,81,117,101,114,105,101,115,71,97,112,115,84,101,115,116]))).section(UStr::new(&[103,101,116,66,111,117,110,100,105,110,103,66,111,120,101,115,69,109,112,116,121,82,97,110,103,101,82,101,116,117,114,110,115,69,109,112,116,121,76,105,115,116]));
         let result = CoreLayoutQueriesGapsTestHelpers::core_layout_queries_gaps_test_helpers_sample_result().unwrap();
         let boxes = LayoutQueries::layout_queries_get_bounding_boxes((result).clone(), TextRange::new(2u32, 2u32).unwrap());
-        let mut rendered_boxes = "[".to_string();
+        let mut rendered_boxes = UString::from("[").to_ustring();
         let mut box_index = 0u32;
-        while (i32::from_ne_bytes((box_index).to_ne_bytes())) < (i32::from_ne_bytes((u32::try_from((boxes.len()) & 0xFFFF_FFFF).unwrap_or(0)).to_ne_bytes())) {
-            if i32::from_ne_bytes((box_index).to_ne_bytes()) > (0) {
-                rendered_boxes += &(", ");
+        while (i32::from_ne_bytes(((box_index) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((boxes.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
+            if i32::from_ne_bytes(((box_index) as i32).to_ne_bytes()) > (0) {
+                rendered_boxes += &(UString::from(", "));
             }
             rendered_boxes += &((boxes[usize::try_from(box_index).unwrap_or(0)]).clone().to_string());
             box_index = u32::wrapping_add(box_index, 1);
         }
-        rendered_boxes += &("]");
-        let _ = TracedAssertions::traced_assertions_assert_equals_rendered(&"[]", rendered_boxes.as_str(), None).unwrap();
+        rendered_boxes += &(UString::from("]"));
+        let _ = TracedAssertions::traced_assertions_assert_equals_rendered(UStr::new(&[91,93]), rendered_boxes.as_ustr(), None).unwrap();
     });
 }
 
 #[test]
 fn get_line_for_offset_returns_nearest_line() {
     testlib::run("org.tiqian.core.CoreLayoutQueriesGapsTest.getLineForOffsetReturnsNearestLine", "org.tiqian.core.CoreLayoutQueriesGapsTest.getLineForOffsetReturnsNearestLine", || {
-        TestTraceRecorder::new("CoreLayoutQueriesGapsTest").section(&"getLineForOffsetReturnsNearestLine");
-        let result = CoreLayoutQueriesGapsTestHelpers::core_layout_queries_gaps_test_helpers_result_with(&"abc", 100.0f64, None, Size::new(30.0f64, 40.0f64), &vec![
-    (CoreLayoutQueriesGapsTestHelpers::core_layout_queries_gaps_test_helpers_cluster(TextRange::new(0u32, 1u32).unwrap(), &"a", &"cjk", 10.0f64)).clone(),
-    (CoreLayoutQueriesGapsTestHelpers::core_layout_queries_gaps_test_helpers_cluster(TextRange::new(1u32, 2u32).unwrap(), &"b", &"cjk", 10.0f64)).clone(),
-    (CoreLayoutQueriesGapsTestHelpers::core_layout_queries_gaps_test_helpers_cluster(TextRange::new(2u32, 3u32).unwrap(), &"c", &"cjk", 10.0f64)).clone(),
+        TestTraceRecorder::new(&(UStr::new(&[67,111,114,101,76,97,121,111,117,116,81,117,101,114,105,101,115,71,97,112,115,84,101,115,116]))).section(UStr::new(&[103,101,116,76,105,110,101,70,111,114,79,102,102,115,101,116,82,101,116,117,114,110,115,78,101,97,114,101,115,116,76,105,110,101]));
+        let result = CoreLayoutQueriesGapsTestHelpers::core_layout_queries_gaps_test_helpers_result_with(UStr::new(&[97,98,99]), 100.0f64, None, Size::new(30.0f64, 40.0f64), &vec![
+    (CoreLayoutQueriesGapsTestHelpers::core_layout_queries_gaps_test_helpers_cluster(TextRange::new(0u32, 1u32).unwrap(), UStr::new(&[97]), UStr::new(&[99,106,107]), 10.0f64)).clone(),
+    (CoreLayoutQueriesGapsTestHelpers::core_layout_queries_gaps_test_helpers_cluster(TextRange::new(1u32, 2u32).unwrap(), UStr::new(&[98]), UStr::new(&[99,106,107]), 10.0f64)).clone(),
+    (CoreLayoutQueriesGapsTestHelpers::core_layout_queries_gaps_test_helpers_cluster(TextRange::new(2u32, 3u32).unwrap(), UStr::new(&[99]), UStr::new(&[99,106,107]), 10.0f64)).clone(),
 ], &vec![], &vec![
     (CoreLayoutQueriesGapsTestHelpers::core_layout_queries_gaps_test_helpers_line(TextRange::new(0u32, 1u32).unwrap(), 0, 0, 15.0f64, 0.0f64, 20.0f64, 10.0f64, None)).clone(),
     (CoreLayoutQueriesGapsTestHelpers::core_layout_queries_gaps_test_helpers_line(TextRange::new(1u32, 2u32).unwrap(), 1, 1, 35.0f64, 25.0f64, 45.0f64, 10.0f64, None)).clone(),
@@ -1400,16 +1573,16 @@ fn get_line_for_offset_returns_nearest_line() {
 #[test]
 fn get_cursor_rect_returns_caret_in_cluster() {
     testlib::run("org.tiqian.core.CoreLayoutQueriesGapsTest.getCursorRectReturnsCaretInCluster", "org.tiqian.core.CoreLayoutQueriesGapsTest.getCursorRectReturnsCaretInCluster", || {
-        TestTraceRecorder::new("CoreLayoutQueriesGapsTest").section(&"getCursorRectReturnsCaretInCluster");
+        TestTraceRecorder::new(&(UStr::new(&[67,111,114,101,76,97,121,111,117,116,81,117,101,114,105,101,115,71,97,112,115,84,101,115,116]))).section(UStr::new(&[103,101,116,67,117,114,115,111,114,82,101,99,116,82,101,116,117,114,110,115,67,97,114,101,116,73,110,67,108,117,115,116,101,114]));
         let rect = LayoutQueries::layout_queries_get_cursor_rect(CoreLayoutQueriesGapsTestHelpers::core_layout_queries_gaps_test_helpers_sample_result().unwrap(), 2).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_equals_rendered(Rect::new(24.0f64, 0.0f64, 25.0f64, 20.0f64).to_string().as_str(), rect.to_string().as_str(), None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_equals_rendered(UString::from(format!("{}", Rect::new(24.0f64, 0.0f64, 25.0f64, 20.0f64).to_string()).as_str()).as_ustr(), UString::from(format!("{}", rect.to_string()).as_str()).as_ustr(), None).unwrap();
     });
 }
 
 #[test]
 fn get_offset_for_position_uses_min_by_when_outside_clusters() {
     testlib::run("org.tiqian.core.CoreLayoutQueriesGapsTest.getOffsetForPositionUsesMinByWhenOutsideClusters", "org.tiqian.core.CoreLayoutQueriesGapsTest.getOffsetForPositionUsesMinByWhenOutsideClusters", || {
-        TestTraceRecorder::new("CoreLayoutQueriesGapsTest").section(&"getOffsetForPositionUsesMinByWhenOutsideClusters");
+        TestTraceRecorder::new(&(UStr::new(&[67,111,114,101,76,97,121,111,117,116,81,117,101,114,105,101,115,71,97,112,115,84,101,115,116]))).section(UStr::new(&[103,101,116,79,102,102,115,101,116,70,111,114,80,111,115,105,116,105,111,110,85,115,101,115,77,105,110,66,121,87,104,101,110,79,117,116,115,105,100,101,67,108,117,115,116,101,114,115]));
         let _ = TracedAssertions::traced_assertions_assert_equals_int(1, LayoutQueries::layout_queries_get_offset_for_position(CoreLayoutQueriesGapsTestHelpers::core_layout_queries_gaps_test_helpers_sample_result().unwrap(), 12.0f64, 5.0f64), None).unwrap();
     });
 }
@@ -1417,10 +1590,10 @@ fn get_offset_for_position_uses_min_by_when_outside_clusters() {
 #[test]
 fn get_selection_word_boundary_returns_empty_for_empty_text() {
     testlib::run("org.tiqian.core.CoreLayoutQueriesGapsTest.getSelectionWordBoundaryReturnsEmptyForEmptyText", "org.tiqian.core.CoreLayoutQueriesGapsTest.getSelectionWordBoundaryReturnsEmptyForEmptyText", || {
-        TestTraceRecorder::new("CoreLayoutQueriesGapsTest").section(&"getSelectionWordBoundaryReturnsEmptyForEmptyText");
-        let result = CoreLayoutQueriesGapsTestHelpers::core_layout_queries_gaps_test_helpers_result_with(&"", 100.0f64, None, Size::new(0.0f64, 20.0f64), &vec![], &vec![], &vec![], None).unwrap();
+        TestTraceRecorder::new(&(UStr::new(&[67,111,114,101,76,97,121,111,117,116,81,117,101,114,105,101,115,71,97,112,115,84,101,115,116]))).section(UStr::new(&[103,101,116,83,101,108,101,99,116,105,111,110,87,111,114,100,66,111,117,110,100,97,114,121,82,101,116,117,114,110,115,69,109,112,116,121,70,111,114,69,109,112,116,121,84,101,120,116]));
+        let result = CoreLayoutQueriesGapsTestHelpers::core_layout_queries_gaps_test_helpers_result_with(UStr::new(&[]), 100.0f64, None, Size::new(0.0f64, 20.0f64), &vec![], &vec![], &vec![], None).unwrap();
         let boundary = LayoutQueries::layout_queries_get_selection_word_boundary((result).clone(), 0).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_equals_rendered(TextRange::new(0u32, 0u32).unwrap().to_string().as_str(), boundary.to_string().as_str(), None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_equals_rendered(UString::from(format!("{}", TextRange::new(0u32, 0u32).unwrap().to_string()).as_str()).as_ustr(), UString::from(format!("{}", boundary.to_string()).as_str()).as_ustr(), None).unwrap();
     });
 }
 
@@ -1428,7 +1601,7 @@ fn get_selection_word_boundary_returns_empty_for_empty_text() {
 pub struct CoreLayoutQueriesGapsTestHelpers;
 
 impl CoreLayoutQueriesGapsTestHelpers {
-    pub fn core_layout_queries_gaps_test_helpers_content(text: &str) -> TiqianTextContent {
+    pub fn core_layout_queries_gaps_test_helpers_content(text: &UStr) -> TiqianTextContent {
         return TiqianTextContent::new(text, Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]));
     }
 
@@ -1437,23 +1610,20 @@ impl CoreLayoutQueriesGapsTestHelpers {
     }
 
     pub fn core_layout_queries_gaps_test_helpers_style(font_size: f64) -> TextStyle {
-        return TextStyle::new(Some(vec![]), Some(font_size), Some("zh-Hans".to_string()), Some(400), Some(false), Some(0.0f64), Some(InlineAttachment::None));
+        return TextStyle::new(Some(vec![]), Some(font_size), Some(UString::from("zh-Hans")), Some(400), Some(false), Some(0.0f64), Some(InlineAttachment::None));
     }
 
-    pub fn core_layout_queries_gaps_test_helpers_input(text: &str, max_width: f64, text_style: Option<TextStyle>) -> Result<LayoutInput, TextRangeError> {
-        let style = match &(text_style) { None => TextStyle::new(Some(vec![]), Some(16.0f64), Some("zh-Hans".to_string()), Some(400), Some(false), Some(0.0f64), Some(InlineAttachment::None)), Some(__option2) => (*__option2).clone() };
-        return Ok(LayoutInput::new(CoreLayoutQueriesGapsTestHelpers::core_layout_queries_gaps_test_helpers_content(text), Some((style).clone()), Some(ParagraphStyle::new(Some(LastLineAlignment::Start), Some(WritingMode::HorizontalTb), None, None, Some((Ic::zero()).clone()),
-Some(MeasureAdaptiveFirstLineIndent::new(Some(14.0f64), Some(1.0f64), Some(2.0f64))), Some(LineLengthGrid::new(Some(true), None)), Some(RubyLineHeightMode::PerLine), Some(ParagraphStyle::PARAGRAPH_STYLE_DEFAULT_INLINE_OBJECT_MINIMUM_CLEARANCE_EM),
-Some(ParagraphStyle::PARAGRAPH_STYLE_DEFAULT_EMPHASIS_DOT_GAP_EM))), CoreLayoutQueriesGapsTestHelpers::core_layout_queries_gaps_test_helpers_constraints(max_width)?, Some((*crate::org::tiqian::core::built_in_layout_profiles::BUILT_IN_LAYOUT_PROFILES_CLREQ_HORIZONTAL).clone()),
-Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![])));
+    pub fn core_layout_queries_gaps_test_helpers_input(text: &UStr, max_width: f64, text_style: Option<TextStyle>) -> Result<LayoutInput, TextRangeError> {
+        let style = match &(text_style) { None => TextStyle::new(Some(vec![]), Some(16.0f64), Some(UString::from("zh-Hans")), Some(400), Some(false), Some(0.0f64), Some(InlineAttachment::None)), Some(__option2) => (*__option2).clone() };
+        return Ok(LayoutInput::new(CoreLayoutQueriesGapsTestHelpers::core_layout_queries_gaps_test_helpers_content(text), Some((style).clone()), Some(ParagraphStyle::new(Some(LastLineAlignment::Start), Some(WritingMode::HorizontalTb), None, None, Some((Ic::zero()).clone()), Some(MeasureAdaptiveFirstLineIndent::new(Some(14.0f64), Some(1.0f64), Some(2.0f64))), Some(LineLengthGrid::new(Some(true), None)), Some(RubyLineHeightMode::PerLine), Some(ParagraphStyle::PARAGRAPH_STYLE_DEFAULT_INLINE_OBJECT_MINIMUM_CLEARANCE_EM), Some(ParagraphStyle::PARAGRAPH_STYLE_DEFAULT_EMPHASIS_DOT_GAP_EM))), CoreLayoutQueriesGapsTestHelpers::core_layout_queries_gaps_test_helpers_constraints(max_width)?, Some((*crate::org::tiqian::core::built_in_layout_profiles::BUILT_IN_LAYOUT_PROFILES_CLREQ_HORIZONTAL).clone()), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![])));
     }
 
-    pub fn core_layout_queries_gaps_test_helpers_cluster(range: TextRange, text: &str, font_key: &str, advance: f64) -> Cluster {
-        return Cluster::new((range).clone(), text, font_key, advance, Some((text).to_string()), Some(0.0f64), Some(0.0f64), Some(0.0f64));
+    pub fn core_layout_queries_gaps_test_helpers_cluster(range: TextRange, text: &UStr, font_key: &UStr, advance: f64) -> Cluster {
+        return Cluster::new((range).clone(), text, font_key, advance, Some((text).to_ustring()), Some(0.0f64), Some(0.0f64), Some(0.0f64));
     }
 
-    pub fn core_layout_queries_gaps_test_helpers_substituted_cluster(range: TextRange, text: &str, display_text: &str, font_key: &str, advance: f64) -> Cluster {
-        return Cluster::new((range).clone(), text, font_key, advance, Some((display_text).to_string()), Some(0.0f64), Some(0.0f64), Some(0.0f64));
+    pub fn core_layout_queries_gaps_test_helpers_substituted_cluster(range: TextRange, text: &UStr, display_text: &UStr, font_key: &UStr, advance: f64) -> Cluster {
+        return Cluster::new((range).clone(), text, font_key, advance, Some((display_text).to_ustring()), Some(0.0f64), Some(0.0f64), Some(0.0f64));
     }
 
     pub fn core_layout_queries_gaps_test_helpers_line(range: TextRange, cluster_start: u32, cluster_end: u32, baseline: f64, top: f64, bottom: f64, width: f64, indent: Option<f64>) -> LineBox {
@@ -1461,57 +1631,64 @@ Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![])));
     }
 
     pub fn core_layout_queries_gaps_test_helpers_empty_debug() -> LayoutDebugInfo {
-        return LayoutDebugInfo::new(None, Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), None, None,
-None, None, Some(vec![]), None, None, Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]));
+        return LayoutDebugInfo::new(None, Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), None, None, None, None, Some(vec![]), None, None, Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]));
     }
 
-    pub fn core_layout_queries_gaps_test_helpers_render_rects(values: &Vec<Rect>) -> Result<String, UStringFault> {
+    pub fn core_layout_queries_gaps_test_helpers_render_rects(values: &Vec<Rect>) -> Result<UString, UStringFault> {
         let mut output = Vec::<u16>::new();
         if let Some(&unit) = output.last() {
-            if unit >= 55296 && unit <= 56319 && !"[".is_empty() {
-                return Err(UStringFault::UnpairedSurrogate { unit: u32::from(unit) });
+            if unit >= 55296 && unit <= 56319 && !UString::from("[").is_empty() {
+                if !UString::from("[").encode_utf16().next().map_or(false, |head| head >= 56320 && head <= 57343) {
+                    return Err(UStringFault::UnpairedSurrogate { unit: u32::from(unit) });
+                }
             }
         }
-        output.extend("[".encode_utf16());
+        output.extend(UString::from("[").encode_utf16());
         let mut index = 0u32;
-        while (i32::from_ne_bytes((index).to_ne_bytes())) < (i32::from_ne_bytes((u32::try_from((values.len()) & 0xFFFF_FFFF).unwrap_or(0)).to_ne_bytes())) {
-            if i32::from_ne_bytes((index).to_ne_bytes()) > (0) {
+        while (i32::from_ne_bytes(((index) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((values.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
+            if i32::from_ne_bytes(((index) as i32).to_ne_bytes()) > (0) {
                 if let Some(&unit) = output.last() {
-                    if unit >= 55296 && unit <= 56319 && !", ".is_empty() {
-                        return Err(UStringFault::UnpairedSurrogate { unit: u32::from(unit) });
+                    if unit >= 55296 && unit <= 56319 && !UString::from(", ").is_empty() {
+                        if !UString::from(", ").encode_utf16().next().map_or(false, |head| head >= 56320 && head <= 57343) {
+                            return Err(UStringFault::UnpairedSurrogate { unit: u32::from(unit) });
+                        }
                     }
                 }
-                output.extend(", ".encode_utf16());
+                output.extend(UString::from(", ").encode_utf16());
             }
             if let Some(&unit) = output.last() {
                 if unit >= 55296 && unit <= 56319 && !(values[usize::try_from(index).unwrap_or(0)]).clone().to_string().is_empty() {
-                    return Err(UStringFault::UnpairedSurrogate { unit: u32::from(unit) });
+                    if !(values[usize::try_from(index).unwrap_or(0)]).clone().to_string().encode_utf16().next().map_or(false, |head| head >= 56320 && head <= 57343) {
+                        return Err(UStringFault::UnpairedSurrogate { unit: u32::from(unit) });
+                    }
                 }
             }
             output.extend((values[usize::try_from(index).unwrap_or(0)]).clone().to_string().encode_utf16());
             index = u32::wrapping_add(index, 1);
         }
         if let Some(&unit) = output.last() {
-            if unit >= 55296 && unit <= 56319 && !"]".is_empty() {
-                return Err(UStringFault::UnpairedSurrogate { unit: u32::from(unit) });
+            if unit >= 55296 && unit <= 56319 && !UString::from("]").is_empty() {
+                if !UString::from("]").encode_utf16().next().map_or(false, |head| head >= 56320 && head <= 57343) {
+                    return Err(UStringFault::UnpairedSurrogate { unit: u32::from(unit) });
+                }
             }
         }
-        output.extend("]".encode_utf16());
-        return Ok(String::from_utf16(output.as_slice()).map_err(|_| UStringFault::UnpairedSurrogate { unit: u32::from(output[output.len() - 1]) })?);
+        output.extend(UString::from("]").encode_utf16());
+        return Ok(UString::from_utf16(output.as_slice()).map_err(|_| UStringFault::UnpairedSurrogate { unit: u32::from(output[output.len() - 1]) })?);
     }
 
-    pub fn core_layout_queries_gaps_test_helpers_result_with(text: &str, max_width: f64, text_style: Option<TextStyle>, size: Size, clusters: &Vec<Cluster>, glyph_runs: &Vec<GlyphRun>, lines: &Vec<LineBox>, debug: Option<LayoutDebugInfo>) -> Result<LayoutResult, TextRangeError> {
-        return Ok(LayoutResult::new(CoreLayoutQueriesGapsTestHelpers::core_layout_queries_gaps_test_helpers_input(text, max_width, (text_style).clone())?, (size).clone(), (clusters).clone(), (glyph_runs).clone(), (lines).clone(), match &(debug) { None =>
-CoreLayoutQueriesGapsTestHelpers::core_layout_queries_gaps_test_helpers_empty_debug(), Some(__option3) => (*__option3).clone() }));
+    pub fn core_layout_queries_gaps_test_helpers_result_with(text: &UStr, max_width: f64, text_style: Option<TextStyle>, size: Size, clusters: &Vec<Cluster>, glyph_runs: &Vec<GlyphRun>, lines: &Vec<LineBox>, debug: Option<LayoutDebugInfo>) -> Result<LayoutResult,
+TextRangeError> {
+        return Ok(LayoutResult::new(CoreLayoutQueriesGapsTestHelpers::core_layout_queries_gaps_test_helpers_input(text, max_width, (text_style).clone())?, (size).clone(), (clusters).clone(), (glyph_runs).clone(), (lines).clone(), match &(debug) { None => CoreLayoutQueriesGapsTestHelpers::core_layout_queries_gaps_test_helpers_empty_debug(), Some(__option3) => (*__option3).clone() }));
     }
 
     pub fn core_layout_queries_gaps_test_helpers_sample_result() -> Result<LayoutResult, TextRangeError> {
-        let text = "甲——乙".to_string();
+        let text = UString::from("甲——乙").to_ustring();
         let dash_range = TextRange::new(1u32, 3u32)?;
-        return Ok(CoreLayoutQueriesGapsTestHelpers::core_layout_queries_gaps_test_helpers_result_with(text.as_str(), 40.0f64, Some(CoreLayoutQueriesGapsTestHelpers::core_layout_queries_gaps_test_helpers_style(10.0f64)), Size::new(34.0f64, 40.0f64), &vec![
-    (CoreLayoutQueriesGapsTestHelpers::core_layout_queries_gaps_test_helpers_cluster(TextRange::new(0u32, 1u32)?, &"甲", &"cjk", 10.0f64)).clone(),
-    (CoreLayoutQueriesGapsTestHelpers::core_layout_queries_gaps_test_helpers_substituted_cluster((dash_range).clone(), &"——", &"⸺", &"cjk", 20.0f64)).clone(),
-    (CoreLayoutQueriesGapsTestHelpers::core_layout_queries_gaps_test_helpers_cluster(TextRange::new(3u32, 4u32)?, &"乙", &"cjk", 10.0f64)).clone(),
+        return Ok(CoreLayoutQueriesGapsTestHelpers::core_layout_queries_gaps_test_helpers_result_with(text.as_ustr(), 40.0f64, Some(CoreLayoutQueriesGapsTestHelpers::core_layout_queries_gaps_test_helpers_style(10.0f64)), Size::new(34.0f64, 40.0f64), &vec![
+    (CoreLayoutQueriesGapsTestHelpers::core_layout_queries_gaps_test_helpers_cluster(TextRange::new(0u32, 1u32)?, UStr::new(&[30002]), UStr::new(&[99,106,107]), 10.0f64)).clone(),
+    (CoreLayoutQueriesGapsTestHelpers::core_layout_queries_gaps_test_helpers_substituted_cluster((dash_range).clone(), UStr::new(&[8212,8212]), UStr::new(&[11834]), UStr::new(&[99,106,107]), 20.0f64)).clone(),
+    (CoreLayoutQueriesGapsTestHelpers::core_layout_queries_gaps_test_helpers_cluster(TextRange::new(3u32, 4u32)?, UStr::new(&[20057]), UStr::new(&[99,106,107]), 10.0f64)).clone(),
 ], &vec![], &vec![
     (CoreLayoutQueriesGapsTestHelpers::core_layout_queries_gaps_test_helpers_line(TextRange::new(0u32, 3u32)?, 0, 1, 15.0f64, 0.0f64, 20.0f64, 30.0f64, Some(4.0f64))).clone(),
     (CoreLayoutQueriesGapsTestHelpers::core_layout_queries_gaps_test_helpers_line(TextRange::new(3u32, 4u32)?, 2, 2, 35.0f64, 20.0f64, 40.0f64, 10.0f64, None)).clone(),

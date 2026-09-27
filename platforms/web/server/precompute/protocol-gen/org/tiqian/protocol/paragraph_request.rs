@@ -3,17 +3,18 @@ use crate::org::tiqian::protocol::inline_box_input::InlineBoxInput;
 use crate::org::tiqian::protocol::inline_object_input::InlineObjectInput;
 use crate::org::tiqian::protocol::line_break_span_input::LineBreakSpanInput;
 use crate::org::tiqian::protocol::text_span_input::TextSpanInput;
+use crate::runtime::u_string::UString;
 
 
 #[derive(Debug, Clone, PartialEq)]
 pub struct ParagraphRequest {
-    pub font_session_id: String,
-    pub text: String,
+    pub font_session_id: UString,
+    pub text: UString,
     pub max_width_px: f64,
-    pub font_families: Vec<String>,
+    pub font_families: Vec<UString>,
     pub font_size_px: f64,
     pub line_height_px: f64,
-    pub locale: String,
+    pub locale: UString,
     pub font_weight: u32,
     pub italic: bool,
     pub first_line_indent_ic: f64,

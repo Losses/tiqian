@@ -2,6 +2,7 @@ use crate::org::tiqian::clreq::clreq_punctuation_policies::ClreqPunctuationPolic
 use crate::org::tiqian::clreq::kinsoku_level::KinsokuLevel;
 use crate::org::tiqian::core::cluster::Cluster;
 use crate::runtime::u_string;
+use crate::runtime::u_string::UString;
 
 
 pub trait KinsokuRule: Send + Sync {
@@ -37,26 +38,22 @@ impl ClreqKinsokuRule {
         }
     }
 
-    pub fn to_string(&self) -> String {
-        return format!("{}{}{}",
-            "ClreqKinsokuRule(level=",
-            self.level.name(),
-            ")"
-        );
+    pub fn to_string(&self) -> UString {
+        return UString::from(format!("{}", { let mut __s = UString::new(); __s += &(UString::from("ClreqKinsokuRule(level=")); __s += UString::from(self.level.name()).as_ustr(); __s += &(UString::from(")")); __s }).as_str());
     }
 
     pub fn forbidden_at_line_start(&self, cluster: Cluster) -> bool {
-        if u_string::unit_count(&((cluster.display_text).to_string())) == 0 {
+        if u_string::unit_count(&((cluster.display_text).to_ustring())) == 0 {
             return false;
         }
-        return ClreqPunctuationPolicies::clreq_punctuation_policies_forbidden_at_line_start(u_string::substring(&(cluster.display_text).to_string(), 0i32, 1i32).as_str(), self.level);
+        return ClreqPunctuationPolicies::clreq_punctuation_policies_forbidden_at_line_start(u_string::substring(&(cluster.display_text).to_ustring(), 0i32, 1i32).as_ustr(), self.level);
     }
 
     pub fn forbidden_at_line_end(&self, cluster: Cluster) -> bool {
-        if u_string::unit_count(&((cluster.display_text).to_string())) == 0 {
+        if u_string::unit_count(&((cluster.display_text).to_ustring())) == 0 {
             return false;
         }
-        return ClreqPunctuationPolicies::clreq_punctuation_policies_forbidden_at_line_end(u_string::substring(&(cluster.display_text).to_string(), 0i32, 1i32).as_str(), self.level);
+        return ClreqPunctuationPolicies::clreq_punctuation_policies_forbidden_at_line_end(u_string::substring(&(cluster.display_text).to_ustring(), 0i32, 1i32).as_ustr(), self.level);
     }
 }
 
@@ -72,16 +69,16 @@ impl KinsokuRule for ClreqKinsokuRule {
     }
 
     fn forbidden_at_line_start(&self, cluster: Cluster) -> bool {
-        if u_string::unit_count(&((cluster.display_text).to_string())) == 0 {
+        if u_string::unit_count(&((cluster.display_text).to_ustring())) == 0 {
             return false;
         }
-        return ClreqPunctuationPolicies::clreq_punctuation_policies_forbidden_at_line_start(u_string::substring(&(cluster.display_text).to_string(), 0i32, 1i32).as_str(), self.level);
+        return ClreqPunctuationPolicies::clreq_punctuation_policies_forbidden_at_line_start(u_string::substring(&(cluster.display_text).to_ustring(), 0i32, 1i32).as_ustr(), self.level);
     }
 
     fn forbidden_at_line_end(&self, cluster: Cluster) -> bool {
-        if u_string::unit_count(&((cluster.display_text).to_string())) == 0 {
+        if u_string::unit_count(&((cluster.display_text).to_ustring())) == 0 {
             return false;
         }
-        return ClreqPunctuationPolicies::clreq_punctuation_policies_forbidden_at_line_end(u_string::substring(&(cluster.display_text).to_string(), 0i32, 1i32).as_str(), self.level);
+        return ClreqPunctuationPolicies::clreq_punctuation_policies_forbidden_at_line_end(u_string::substring(&(cluster.display_text).to_ustring(), 0i32, 1i32).as_ustr(), self.level);
     }
 }

@@ -7,6 +7,8 @@ use crate::org::tiqian::linebreak::break_kind::BreakKind;
 use crate::runtime::sorted_table::SortedSetTable;
 use crate::runtime::sorted_table::SortedSetTableBuilder;
 use crate::runtime::sorted_table::SortedTable;
+use crate::runtime::u_string::UStr;
+use crate::runtime::u_string::UString;
 use std::fmt::Write;
 use std::sync::Arc;
 
@@ -18,12 +20,12 @@ pub struct BreakCandidate {
     pub natural_width: f64,
     pub compressed_width: f64,
     pub expanded_width: f64,
-    pub forbidden_reason: Option<String>,
+    pub forbidden_reason: Option<UString>,
     pub repair_options: Vec<RepairOption>,
 }
 
 impl BreakCandidate {
-    pub fn new(index: u32, kind: BreakKind, natural_width: f64, compressed_width: f64, expanded_width: f64, forbidden_reason: Option<String>, repair_options: Option<Vec<RepairOption>>) -> Result<Self, TextRangeError> {
+    pub fn new(index: u32, kind: BreakKind, natural_width: f64, compressed_width: f64, expanded_width: f64, forbidden_reason: Option<UString>, repair_options: Option<Vec<RepairOption>>) -> Result<Self, TextRangeError> {
         let repair_options = repair_options.unwrap_or_else(|| vec![]);
         Ok(Self {
             index,
@@ -31,34 +33,13 @@ impl BreakCandidate {
             natural_width,
             compressed_width,
             expanded_width,
-            forbidden_reason: match forbidden_reason { Some(v) => Some(v.to_string()), None => None },
+            forbidden_reason,
             repair_options: repair_options,
         })
     }
 
-    pub fn to_string(&self) -> String {
-        return format!("{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}",
-            "BreakCandidate(",
-            "index=",
-            crate::runtime::int_text::IntText::int_text(self.index),
-            ", ",
-            "kind=",
-            self.kind.name(),
-            ", ",
-            "naturalWidth=",
-            self.natural_width,
-            ", ",
-            "compressedWidth=",
-            self.compressed_width,
-            ", ",
-            "expandedWidth=",
-            self.expanded_width,
-            ", ",
-            "forbiddenReason=",
-            match (self.forbidden_reason).clone() { Some(ref v) => v.to_string(), None => "null".to_string() },
-            ", ",
-            "repairOptions=",
-            {
+    pub fn to_string(&self) -> UString {
+        return UString::from(format!("{}", { let mut __s = UString::new(); __s += &(UString::from("BreakCandidate(")); __s += &(UString::from("index=")); __s += &(UString::from(format!("{}", crate::runtime::int_text::IntText::int_text(self.index)).as_str())); __s += &(UString::from(", ")); __s += &(UString::from("kind=")); __s += UString::from(self.kind.name()).as_ustr(); __s += &(UString::from(", ")); __s += &(UString::from("naturalWidth=")); __s += &(crate::runtime::fp_helper::FPHelper::format_float(self.natural_width)); __s += &(UString::from(", ")); __s += &(UString::from("compressedWidth=")); __s += &(crate::runtime::fp_helper::FPHelper::format_float(self.compressed_width)); __s += &(UString::from(", ")); __s += &(UString::from("expandedWidth=")); __s += &(crate::runtime::fp_helper::FPHelper::format_float(self.expanded_width)); __s += &(UString::from(", ")); __s += &(UString::from("forbiddenReason=")); __s += match &((self.forbidden_reason).clone()) { Some(v) => v.as_ustr(), None => UStr::new(&[]) }; __s += &(UString::from(", ")); __s += &(UString::from("repairOptions=")); __s += UString::from(format!("{}", {
         let mut out = String::new();
         out.push('[');
         let arr = (self.repair_options).clone();
@@ -71,9 +52,7 @@ impl BreakCandidate {
         }
         out.push(']');
         out
-    },
-            ")"
-        );
+    }).as_str()).as_ustr(); __s += &(UString::from(")")); __s }).as_str());
     }
 }
 
@@ -91,7 +70,7 @@ impl RepairOptions {
         };
     }
 
-    pub fn repair_options_reason(o: RepairOption) -> String {
+    pub fn repair_options_reason(o: RepairOption) -> UString {
         return match o {
             RepairOption::PushIn { penalty: _p0, reason: _p1, .. } => _p1,
             RepairOption::Hang { penalty: _p0, reason: _p1, .. } => _p1,
@@ -111,7 +90,7 @@ impl RepairOptions {
         };
     }
 
-    pub fn repair_options_push_in_reason_of(o: RepairOption) -> Option<String> {
+    pub fn repair_options_push_in_reason_of(o: RepairOption) -> Option<UString> {
         return match o {
             RepairOption::PushIn { penalty: _p0, reason: _p1, .. } => Some(_p1),
             RepairOption::Hang { .. } => None,
@@ -151,22 +130,8 @@ impl PushInAllocation {
         })
     }
 
-    pub fn to_string(&self) -> String {
-        return format!("{}{}{}{}{}{}{}{}{}{}{}{}{}",
-            "PushInAllocation(",
-            "clusterIndex=",
-            crate::runtime::int_text::IntText::int_text(self.cluster_index),
-            ", ",
-            "shrink=",
-            self.shrink,
-            ", ",
-            "availableCapacity=",
-            self.available_capacity,
-            ", ",
-            "channel=",
-            self.channel.name(),
-            ")"
-        );
+    pub fn to_string(&self) -> UString {
+        return UString::from(format!("{}", { let mut __s = UString::new(); __s += &(UString::from("PushInAllocation(")); __s += &(UString::from("clusterIndex=")); __s += &(UString::from(format!("{}", crate::runtime::int_text::IntText::int_text(self.cluster_index)).as_str())); __s += &(UString::from(", ")); __s += &(UString::from("shrink=")); __s += &(crate::runtime::fp_helper::FPHelper::format_float(self.shrink)); __s += &(UString::from(", ")); __s += &(UString::from("availableCapacity=")); __s += &(crate::runtime::fp_helper::FPHelper::format_float(self.available_capacity)); __s += &(UString::from(", ")); __s += &(UString::from("channel=")); __s += UString::from(self.channel.name()).as_ustr(); __s += &(UString::from(")")); __s }).as_str());
     }
 }
 
@@ -183,55 +148,42 @@ pub struct LineCandidate {
 }
 
 impl LineCandidate {
-    pub fn new(cluster_range: IntRange, source_range: TextRange, natural_width: f64, adjusted_width: f64, end_reason: Option<LineEndReason>, repair: Option<RepairOption>, repair_candidates: Option<Vec<RepairCandidate>>, hanging_cluster_indices: Option<SortedSetTable<u32>>) ->
-Result<Self, TextRangeError> {
+    pub fn new(cluster_range: IntRange, source_range: TextRange, natural_width: f64, adjusted_width: f64, end_reason: Option<LineEndReason>, repair: Option<RepairOption>, repair_candidates: Option<Vec<RepairCandidate>>, hanging_cluster_indices: Option<SortedSetTable<u32>>) -> Result<Self, TextRangeError> {
         let end_reason = end_reason.unwrap_or_else(|| LineEndReason::AutoWrap);
         let repair_candidates = repair_candidates.unwrap_or_else(|| vec![]);
         let hanging_cluster_indices = hanging_cluster_indices.unwrap_or_else(|| LineCandidate::line_candidate_empty_hanging());
-        if i32::from_ne_bytes((u32::from_ne_bytes((hanging_cluster_indices.size()).to_ne_bytes())).to_ne_bytes()) > (0) {
+        if i32::from_ne_bytes(((u32::from_ne_bytes(((hanging_cluster_indices.size()) as u32).to_ne_bytes())) as i32).to_ne_bytes()) > (0) {
             let first_hanging = hanging_cluster_indices.at(0i32);
-            let last_hanging = hanging_cluster_indices.at(i32::from_ne_bytes((u32::wrapping_sub(u32::from_ne_bytes((hanging_cluster_indices.size()).to_ne_bytes()), 1)).to_ne_bytes()));
-            if !((i32::from_ne_bytes((cluster_range.start).to_ne_bytes())) <= i32::from_ne_bytes((first_hanging).to_ne_bytes()) && (i32::from_ne_bytes((first_hanging).to_ne_bytes())) <= i32::from_ne_bytes((cluster_range.end).to_ne_bytes()) && last_hanging == cluster_range.end) {
-                return Err(TextRangeError::Message { text: format!("{}{}{}{}",
-            "Hanging clusters must be a trailing line suffix: line=",
-            LineCandidates::line_candidates_render_range((cluster_range).clone()),
-            " hanging=",
-            {
+            let last_hanging = hanging_cluster_indices.at(i32::from_ne_bytes(((u32::wrapping_sub(u32::from_ne_bytes(((hanging_cluster_indices.size()) as u32).to_ne_bytes()), 1)) as i32).to_ne_bytes()));
+            if !((i32::from_ne_bytes(((cluster_range.start) as i32).to_ne_bytes())) <= i32::from_ne_bytes(((first_hanging) as i32).to_ne_bytes()) && (i32::from_ne_bytes(((first_hanging) as i32).to_ne_bytes())) <= i32::from_ne_bytes(((cluster_range.end) as i32).to_ne_bytes()) && last_hanging == cluster_range.end) {
+                return Err(TextRangeError::Message { text: UString::from(format!("{}", { let mut __s = UString::new(); __s += &(UString::from("Hanging clusters must be a trailing line suffix: line=")); __s += LineCandidates::line_candidates_render_range((cluster_range).clone()).as_ustr(); __s += &(UString::from(" hanging=")); __s += UString::from(format!("{}", {
         let mut out = String::new();
         out.push('[');
-        let set = hanging_cluster_indices;
-        let n = set.size();
+        let n = hanging_cluster_indices.size();
         let mut i = 0;
         while i < n {
             if i > 0 { out.push_str(", "); }
-            let _ = write!(out, "{}", crate::runtime::int_text::IntText::int_text(set.at(i)));
+            let _ = write!(out, "{}", i32::from_ne_bytes(((hanging_cluster_indices.at(i)) as i32).to_ne_bytes()));
             i += 1;
         }
         out.push(']');
         out
-    }
-        ).to_string() });
+    }).as_str()).as_ustr(); __s }).as_str()) });
             }
-            if u32::from_ne_bytes((hanging_cluster_indices.size()).to_ne_bytes()) != u32::wrapping_add(u32::wrapping_sub(cluster_range.end, first_hanging), 1) {
-                return Err(TextRangeError::Message { text: format!("{}{}{}{}",
-            "Hanging clusters must be contiguous: line=",
-            LineCandidates::line_candidates_render_range((cluster_range).clone()),
-            " hanging=",
-            {
+            if u32::from_ne_bytes(((hanging_cluster_indices.size()) as u32).to_ne_bytes()) != u32::wrapping_add(u32::wrapping_sub(cluster_range.end, first_hanging), 1) {
+                return Err(TextRangeError::Message { text: UString::from(format!("{}", { let mut __s = UString::new(); __s += &(UString::from("Hanging clusters must be contiguous: line=")); __s += LineCandidates::line_candidates_render_range((cluster_range).clone()).as_ustr(); __s += &(UString::from(" hanging=")); __s += UString::from(format!("{}", {
         let mut out = String::new();
         out.push('[');
-        let set = hanging_cluster_indices;
-        let n = set.size();
+        let n = hanging_cluster_indices.size();
         let mut i = 0;
         while i < n {
             if i > 0 { out.push_str(", "); }
-            let _ = write!(out, "{}", crate::runtime::int_text::IntText::int_text(set.at(i)));
+            let _ = write!(out, "{}", i32::from_ne_bytes(((hanging_cluster_indices.at(i)) as i32).to_ne_bytes()));
             i += 1;
         }
         out.push(']');
         out
-    }
-        ).to_string() });
+    }).as_str()).as_ustr(); __s }).as_str()) });
             }
         }
         Ok(Self {
@@ -248,39 +200,17 @@ Result<Self, TextRangeError> {
 
     pub fn get_hanging_cluster_index(&self) -> Option<u32> {
         let from_repair = match &(self.repair) { None => None, Some(__option) => RepairOptions::repair_options_hang_offender((*__option).clone()) };
-        let last = if u32::from_ne_bytes(((self.hanging_cluster_indices).clone().size()).to_ne_bytes()) == 0 { None } else {
-Some((self.hanging_cluster_indices).clone().at(i32::from_ne_bytes((u32::wrapping_sub(u32::from_ne_bytes(((self.hanging_cluster_indices).clone().size()).to_ne_bytes()), 1)).to_ne_bytes()))) };
+        let last = if u32::from_ne_bytes((((self.hanging_cluster_indices).clone().size()) as u32).to_ne_bytes()) == 0 { None } else { Some((self.hanging_cluster_indices).clone().at(i32::from_ne_bytes(((u32::wrapping_sub(u32::from_ne_bytes((((self.hanging_cluster_indices).clone().size()) as u32).to_ne_bytes()), 1)) as i32).to_ne_bytes()))) };
         return match &(from_repair) { Some(__option1) => Some(*__option1), None => last };
     }
 
     pub fn get_in_measure_cluster_range(&self) -> IntRange {
-        let first_hanging = if u32::from_ne_bytes(((self.hanging_cluster_indices).clone().size()).to_ne_bytes()) == 0 { None } else { Some((self.hanging_cluster_indices).clone().at(0i32)) };
+        let first_hanging = if u32::from_ne_bytes((((self.hanging_cluster_indices).clone().size()) as u32).to_ne_bytes()) == 0 { None } else { Some((self.hanging_cluster_indices).clone().at(0i32)) };
         return match &(first_hanging) { None => (self.cluster_range).clone(), Some(__option2) => IntRange::new((self.cluster_range).clone().start, u32::wrapping_sub(*__option2, 1)) };
     }
 
-    pub fn to_string(&self) -> String {
-        return format!("{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}",
-            "LineCandidate(",
-            "clusterRange=",
-            (self.cluster_range).clone().to_string(),
-            ", ",
-            "sourceRange=",
-            (self.source_range).clone().to_string(),
-            ", ",
-            "naturalWidth=",
-            self.natural_width,
-            ", ",
-            "adjustedWidth=",
-            self.adjusted_width,
-            ", ",
-            "endReason=",
-            self.end_reason.name(),
-            ", ",
-            "repair=",
-            (match &(self.repair) { None => "null".to_string(), Some(__option3) => (*__option3).clone().to_string() }),
-            ", ",
-            "repairCandidates=",
-            {
+    pub fn to_string(&self) -> UString {
+        return UString::from(format!("{}", { let mut __s = UString::new(); __s += &(UString::from("LineCandidate(")); __s += &(UString::from("clusterRange=")); __s += UString::from(format!("{}", (self.cluster_range).clone().to_string()).as_str()).as_ustr(); __s += &(UString::from(", ")); __s += &(UString::from("sourceRange=")); __s += UString::from(format!("{}", (self.source_range).clone().to_string()).as_str()).as_ustr(); __s += &(UString::from(", ")); __s += &(UString::from("naturalWidth=")); __s += &(crate::runtime::fp_helper::FPHelper::format_float(self.natural_width)); __s += &(UString::from(", ")); __s += &(UString::from("adjustedWidth=")); __s += &(crate::runtime::fp_helper::FPHelper::format_float(self.adjusted_width)); __s += &(UString::from(", ")); __s += &(UString::from("endReason=")); __s += UString::from(self.end_reason.name()).as_ustr(); __s += &(UString::from(", ")); __s += &(UString::from("repair=")); __s += (match &(self.repair) { None => UString::from("null"), Some(__option3) => UString::from(format!("{}", (*__option3).clone().to_string()).as_str()) }).as_ustr(); __s += &(UString::from(", ")); __s += &(UString::from("repairCandidates=")); __s += UString::from(format!("{}", {
         let mut out = String::new();
         out.push('[');
         let arr = (self.repair_candidates).clone();
@@ -293,29 +223,23 @@ Some((self.hanging_cluster_indices).clone().at(i32::from_ne_bytes((u32::wrapping
         }
         out.push(']');
         out
-    },
-            ", ",
-            "hangingClusterIndices=",
-            {
+    }).as_str()).as_ustr(); __s += &(UString::from(", ")); __s += &(UString::from("hangingClusterIndices=")); __s += UString::from(format!("{}", {
         let mut out = String::new();
         out.push('[');
-        let set = (self.hanging_cluster_indices).clone();
-        let n = set.size();
+        let n = (self.hanging_cluster_indices).clone().size();
         let mut i = 0;
         while i < n {
             if i > 0 { out.push_str(", "); }
-            let _ = write!(out, "{}", crate::runtime::int_text::IntText::int_text(set.at(i)));
+            let _ = write!(out, "{}", i32::from_ne_bytes((((self.hanging_cluster_indices).clone().at(i)) as i32).to_ne_bytes()));
             i += 1;
         }
         out.push(']');
         out
-    },
-            ")"
-        );
+    }).as_str()).as_ustr(); __s += &(UString::from(")")); __s }).as_str());
     }
 
     pub fn line_candidate_empty_hanging() -> SortedSetTable<u32> {
-        let b: SortedSetTableBuilder<u32> = SortedTable::sorted_table_set_builder::<u32>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_bytes((*a).to_ne_bytes()), i32::from_ne_bytes((*b).to_ne_bytes()))));
+        let b: SortedSetTableBuilder<u32> = SortedTable::sorted_table_set_builder::<u32>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_bytes(((*a) as i32).to_ne_bytes()), i32::from_ne_bytes(((*b) as i32).to_ne_bytes()))));
         return b.clone().build();
     }
 }
@@ -324,23 +248,19 @@ Some((self.hanging_cluster_indices).clone().at(i32::from_ne_bytes((u32::wrapping
 pub struct LineCandidates;
 
 impl LineCandidates {
-    pub fn line_candidates_render_range(r: IntRange) -> String {
-        return format!("{}{}{}",
-            crate::runtime::int_text::IntText::int_text(r.start),
-            "..",
-            crate::runtime::int_text::IntText::int_text(r.end)
-        );
+    pub fn line_candidates_render_range(r: IntRange) -> UString {
+        return UString::from(format!("{}", { let mut __s = UString::new(); __s += &(UString::from(format!("{}", crate::runtime::int_text::IntText::int_text(r.start)).as_str())); __s += &(UString::from("..")); __s += &(UString::from(format!("{}", crate::runtime::int_text::IntText::int_text(r.end)).as_str())); __s }).as_str());
     }
 }
 
 #[derive(Debug, Clone, PartialEq)]
 pub struct RepairCandidate {
-    pub kind: String,
-    pub reason_code: String,
+    pub kind: UString,
+    pub reason_code: UString,
     pub offender_cluster_index: u32,
     pub penalty: u32,
     pub accepted: bool,
-    pub rejection_reason: Option<String>,
+    pub rejection_reason: Option<UString>,
     pub target_cluster_index: Option<u32>,
     pub carried_cluster_index: Option<u32>,
     pub shrink: f64,
@@ -349,18 +269,17 @@ pub struct RepairCandidate {
 }
 
 impl RepairCandidate {
-    pub fn new(kind: &str, reason_code: &str, offender_cluster_index: u32, penalty: u32, accepted: bool, rejection_reason: Option<String>, target_cluster_index: Option<u32>, carried_cluster_index: Option<u32>, shrink: Option<f64>, required_shrink: Option<f64>, available_capacity:
-Option<f64>) -> Result<Self, TextRangeError> {
+    pub fn new(kind: &UStr, reason_code: &UStr, offender_cluster_index: u32, penalty: u32, accepted: bool, rejection_reason: Option<UString>, target_cluster_index: Option<u32>, carried_cluster_index: Option<u32>, shrink: Option<f64>, required_shrink: Option<f64>, available_capacity: Option<f64>) -> Result<Self, TextRangeError> {
         let shrink = shrink.unwrap_or_else(|| 0 as f64);
         let required_shrink = required_shrink.unwrap_or_else(|| 0 as f64);
         let available_capacity = available_capacity.unwrap_or_else(|| 0 as f64);
         Ok(Self {
-            kind: kind.to_string(),
-            reason_code: reason_code.to_string(),
+            kind: kind.to_ustring(),
+            reason_code: reason_code.to_ustring(),
             offender_cluster_index,
             penalty,
             accepted,
-            rejection_reason: match rejection_reason { Some(v) => Some(v.to_string()), None => None },
+            rejection_reason,
             target_cluster_index,
             carried_cluster_index,
             shrink: shrink,
@@ -369,43 +288,8 @@ Option<f64>) -> Result<Self, TextRangeError> {
         })
     }
 
-    pub fn to_string(&self) -> String {
-        return format!("{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}",
-            "RepairCandidate(",
-            "kind=",
-            (self.kind).to_string(),
-            ", ",
-            "reasonCode=",
-            (self.reason_code).to_string(),
-            ", ",
-            "offenderClusterIndex=",
-            crate::runtime::int_text::IntText::int_text(self.offender_cluster_index),
-            ", ",
-            "penalty=",
-            crate::runtime::int_text::IntText::int_text(self.penalty),
-            ", ",
-            "accepted=",
-            self.accepted,
-            ", ",
-            "rejectionReason=",
-            match (self.rejection_reason).clone() { Some(ref v) => v.to_string(), None => "null".to_string() },
-            ", ",
-            "targetClusterIndex=",
-            match self.target_cluster_index { Some(v) => crate::runtime::int_text::IntText::int_text(v), None => "null".to_string() },
-            ", ",
-            "carriedClusterIndex=",
-            match self.carried_cluster_index { Some(v) => crate::runtime::int_text::IntText::int_text(v), None => "null".to_string() },
-            ", ",
-            "shrink=",
-            self.shrink,
-            ", ",
-            "requiredShrink=",
-            self.required_shrink,
-            ", ",
-            "availableCapacity=",
-            self.available_capacity,
-            ")"
-        );
+    pub fn to_string(&self) -> UString {
+        return UString::from(format!("{}", { let mut __s = UString::new(); __s += &(UString::from("RepairCandidate(")); __s += &(UString::from("kind=")); __s += (self.kind).to_ustring().as_ustr(); __s += &(UString::from(", ")); __s += &(UString::from("reasonCode=")); __s += (self.reason_code).to_ustring().as_ustr(); __s += &(UString::from(", ")); __s += &(UString::from("offenderClusterIndex=")); __s += &(UString::from(format!("{}", crate::runtime::int_text::IntText::int_text(self.offender_cluster_index)).as_str())); __s += &(UString::from(", ")); __s += &(UString::from("penalty=")); __s += &(UString::from(format!("{}", crate::runtime::int_text::IntText::int_text(self.penalty)).as_str())); __s += &(UString::from(", ")); __s += &(UString::from("accepted=")); __s += UString::from(format!("{}", (self.accepted).to_string()).as_str()).as_ustr(); __s += &(UString::from(", ")); __s += &(UString::from("rejectionReason=")); __s += match &((self.rejection_reason).clone()) { Some(v) => v.as_ustr(), None => UStr::new(&[]) }; __s += &(UString::from(", ")); __s += &(UString::from("targetClusterIndex=")); __s += &(match self.target_cluster_index { Some(v) => UString::from(format!("{}", crate::runtime::int_text::IntText::int_text(v)).as_str()), None => UString::from("null") }); __s += &(UString::from(", ")); __s += &(UString::from("carriedClusterIndex=")); __s += &(match self.carried_cluster_index { Some(v) => UString::from(format!("{}", crate::runtime::int_text::IntText::int_text(v)).as_str()), None => UString::from("null") }); __s += &(UString::from(", ")); __s += &(UString::from("shrink=")); __s += &(crate::runtime::fp_helper::FPHelper::format_float(self.shrink)); __s += &(UString::from(", ")); __s += &(UString::from("requiredShrink=")); __s += &(crate::runtime::fp_helper::FPHelper::format_float(self.required_shrink)); __s += &(UString::from(", ")); __s += &(UString::from("availableCapacity=")); __s += &(crate::runtime::fp_helper::FPHelper::format_float(self.available_capacity)); __s += &(UString::from(")")); __s }).as_str());
     }
 }
 
@@ -425,11 +309,8 @@ impl LineSolution {
         })
     }
 
-    pub fn to_string(&self) -> String {
-        return format!("{}{}{}{}{}{}{}",
-            "LineSolution(",
-            "lines=",
-            {
+    pub fn to_string(&self) -> UString {
+        return UString::from(format!("{}", { let mut __s = UString::new(); __s += &(UString::from("LineSolution(")); __s += &(UString::from("lines=")); __s += UString::from(format!("{}", {
         let mut out = String::new();
         out.push('[');
         let arr = (self.lines).clone();
@@ -442,29 +323,24 @@ impl LineSolution {
         }
         out.push(']');
         out
-    },
-            ", ",
-            "totalBadness=",
-            self.total_badness,
-            ")"
-        );
+    }).as_str()).as_ustr(); __s += &(UString::from(", ")); __s += &(UString::from("totalBadness=")); __s += &(crate::runtime::fp_helper::FPHelper::format_float(self.total_badness)); __s += &(UString::from(")")); __s }).as_str());
     }
 }
 
 #[derive(Debug, Clone, PartialEq)]
 pub enum RepairOption {
-    PushIn { penalty: u32, reason: String, offender_cluster_index: u32, allocations: Vec<PushInAllocation>, total_shrink: f64, total_available_capacity: f64 },
-    Hang { penalty: u32, reason: String, offender_cluster_index: u32 },
-    CarryPrevious { penalty: u32, reason: String, offender_cluster_index: u32, carried_cluster_index: u32 },
-    CarryNext { penalty: u32, reason: String, moved_cluster_index: u32 },
-    LeaveRagged { penalty: u32, reason: String, offender_cluster_index: u32 },
+    PushIn { penalty: u32, reason: UString, offender_cluster_index: u32, allocations: Vec<PushInAllocation>, total_shrink: f64, total_available_capacity: f64 },
+    Hang { penalty: u32, reason: UString, offender_cluster_index: u32 },
+    CarryPrevious { penalty: u32, reason: UString, offender_cluster_index: u32, carried_cluster_index: u32 },
+    CarryNext { penalty: u32, reason: UString, moved_cluster_index: u32 },
+    LeaveRagged { penalty: u32, reason: UString, offender_cluster_index: u32 },
 }
 
 impl RepairOption {
     pub fn to_string(&self) -> String {
         match self {
-            RepairOption::PushIn { penalty, reason, offender_cluster_index, allocations, total_shrink, total_available_capacity } => format!("PushIn(penalty={}, reason={}, offender_cluster_index={}, allocations={}, total_shrink={}, total_available_capacity={})",
-(penalty).to_string(), (reason).clone(), (offender_cluster_index).to_string(), {
+            RepairOption::PushIn { penalty, reason, offender_cluster_index, allocations, total_shrink,
+total_available_capacity } => format!("PushIn(penalty={}, reason={}, offender_cluster_index={}, allocations={}, total_shrink={}, total_available_capacity={})", (penalty).to_string(), (reason).clone(), (offender_cluster_index).to_string(), {
             let mut out = String::new();
             out.push('[');
             let mut j0 = 0usize;
@@ -477,8 +353,8 @@ impl RepairOption {
             out
         }, (total_shrink).to_string(), (total_available_capacity).to_string()),
             RepairOption::Hang { penalty, reason, offender_cluster_index } => format!("Hang(penalty={}, reason={}, offender_cluster_index={})", (penalty).to_string(), (reason).clone(), (offender_cluster_index).to_string()),
-            RepairOption::CarryPrevious { penalty, reason, offender_cluster_index, carried_cluster_index } => format!("CarryPrevious(penalty={}, reason={}, offender_cluster_index={}, carried_cluster_index={})", (penalty).to_string(), (reason).clone(),
-(offender_cluster_index).to_string(), (carried_cluster_index).to_string()),
+            RepairOption::CarryPrevious { penalty, reason, offender_cluster_index,
+carried_cluster_index } => format!("CarryPrevious(penalty={}, reason={}, offender_cluster_index={}, carried_cluster_index={})", (penalty).to_string(), (reason).clone(), (offender_cluster_index).to_string(), (carried_cluster_index).to_string()),
             RepairOption::CarryNext { penalty, reason, moved_cluster_index } => format!("CarryNext(penalty={}, reason={}, moved_cluster_index={})", (penalty).to_string(), (reason).clone(), (moved_cluster_index).to_string()),
             RepairOption::LeaveRagged { penalty, reason, offender_cluster_index } => format!("LeaveRagged(penalty={}, reason={}, offender_cluster_index={})", (penalty).to_string(), (reason).clone(), (offender_cluster_index).to_string()),
         }

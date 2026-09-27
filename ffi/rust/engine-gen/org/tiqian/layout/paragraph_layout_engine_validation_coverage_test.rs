@@ -17,6 +17,7 @@ use crate::org::tiqian::core::writing_mode::WritingMode;
 use crate::org::tiqian::layout::paragraph_layout_engine_validation_coverage_support::ParagraphLayoutEngineValidationCoverageSupport;
 use crate::org::tiqian::test::trace::test_trace_recorder::TestTraceRecorder;
 use crate::runtime::test as testlib;
+use crate::runtime::u_string::UStr;
 
 
 #[derive(Debug, Clone, PartialEq)]
@@ -24,6 +25,15 @@ pub enum ParagraphLayoutEngineValidationCoverageTestSourceTextMustNotContainUnpa
     TraceAssertionErrorFault(crate::org::tiqian::test::trace::trace_assertion_exception::TraceAssertionError),
     TextRangeErrorFault(crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError),
     ParagraphLayoutEngineValidationCoverageSupportRejectFaultFault(crate::org::tiqian::layout::paragraph_layout_engine_validation_coverage_support::ParagraphLayoutEngineValidationCoverageSupportRejectFault),
+}
+impl std::fmt::Display for ParagraphLayoutEngineValidationCoverageTestSourceTextMustNotContainUnpairedSurrogatesFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            ParagraphLayoutEngineValidationCoverageTestSourceTextMustNotContainUnpairedSurrogatesFault::TraceAssertionErrorFault(value) => write!(formatter, "{}", value),
+            ParagraphLayoutEngineValidationCoverageTestSourceTextMustNotContainUnpairedSurrogatesFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            ParagraphLayoutEngineValidationCoverageTestSourceTextMustNotContainUnpairedSurrogatesFault::ParagraphLayoutEngineValidationCoverageSupportRejectFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
 }
 
 impl From<ParagraphLayoutEngineValidationCoverageTestSourceTextMustNotContainUnpairedSurrogatesFault> for crate::org::tiqian::test::trace::trace_assertion_exception::TraceAssertionError {
@@ -77,6 +87,15 @@ pub enum ParagraphLayoutEngineValidationCoverageTestLineBreakSpansMustBeNonEmpty
     TextRangeErrorFault(crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError),
     ParagraphLayoutEngineValidationCoverageSupportRejectFaultFault(crate::org::tiqian::layout::paragraph_layout_engine_validation_coverage_support::ParagraphLayoutEngineValidationCoverageSupportRejectFault),
 }
+impl std::fmt::Display for ParagraphLayoutEngineValidationCoverageTestLineBreakSpansMustBeNonEmptyInBoundsRangesFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            ParagraphLayoutEngineValidationCoverageTestLineBreakSpansMustBeNonEmptyInBoundsRangesFault::TraceAssertionErrorFault(value) => write!(formatter, "{}", value),
+            ParagraphLayoutEngineValidationCoverageTestLineBreakSpansMustBeNonEmptyInBoundsRangesFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            ParagraphLayoutEngineValidationCoverageTestLineBreakSpansMustBeNonEmptyInBoundsRangesFault::ParagraphLayoutEngineValidationCoverageSupportRejectFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
+}
 
 impl From<ParagraphLayoutEngineValidationCoverageTestLineBreakSpansMustBeNonEmptyInBoundsRangesFault> for crate::org::tiqian::test::trace::trace_assertion_exception::TraceAssertionError {
     fn from(value: ParagraphLayoutEngineValidationCoverageTestLineBreakSpansMustBeNonEmptyInBoundsRangesFault) -> Self {
@@ -128,6 +147,15 @@ pub enum ParagraphLayoutEngineValidationCoverageTestInlineObjectTrailingBoundary
     TraceAssertionErrorFault(crate::org::tiqian::test::trace::trace_assertion_exception::TraceAssertionError),
     TextRangeErrorFault(crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError),
     ParagraphLayoutEngineValidationCoverageSupportRejectFaultFault(crate::org::tiqian::layout::paragraph_layout_engine_validation_coverage_support::ParagraphLayoutEngineValidationCoverageSupportRejectFault),
+}
+impl std::fmt::Display for ParagraphLayoutEngineValidationCoverageTestInlineObjectTrailingBoundaryMustNotExceedAdvanceFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            ParagraphLayoutEngineValidationCoverageTestInlineObjectTrailingBoundaryMustNotExceedAdvanceFault::TraceAssertionErrorFault(value) => write!(formatter, "{}", value),
+            ParagraphLayoutEngineValidationCoverageTestInlineObjectTrailingBoundaryMustNotExceedAdvanceFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            ParagraphLayoutEngineValidationCoverageTestInlineObjectTrailingBoundaryMustNotExceedAdvanceFault::ParagraphLayoutEngineValidationCoverageSupportRejectFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
 }
 
 impl From<ParagraphLayoutEngineValidationCoverageTestInlineObjectTrailingBoundaryMustNotExceedAdvanceFault> for crate::org::tiqian::test::trace::trace_assertion_exception::TraceAssertionError {
@@ -181,6 +209,15 @@ pub enum ParagraphLayoutEngineValidationCoverageTestInlineObjectRangesMustNotOve
     TextRangeErrorFault(crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError),
     ParagraphLayoutEngineValidationCoverageSupportRejectFaultFault(crate::org::tiqian::layout::paragraph_layout_engine_validation_coverage_support::ParagraphLayoutEngineValidationCoverageSupportRejectFault),
 }
+impl std::fmt::Display for ParagraphLayoutEngineValidationCoverageTestInlineObjectRangesMustNotOverlapFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            ParagraphLayoutEngineValidationCoverageTestInlineObjectRangesMustNotOverlapFault::TraceAssertionErrorFault(value) => write!(formatter, "{}", value),
+            ParagraphLayoutEngineValidationCoverageTestInlineObjectRangesMustNotOverlapFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            ParagraphLayoutEngineValidationCoverageTestInlineObjectRangesMustNotOverlapFault::ParagraphLayoutEngineValidationCoverageSupportRejectFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
+}
 
 impl From<ParagraphLayoutEngineValidationCoverageTestInlineObjectRangesMustNotOverlapFault> for crate::org::tiqian::test::trace::trace_assertion_exception::TraceAssertionError {
     fn from(value: ParagraphLayoutEngineValidationCoverageTestInlineObjectRangesMustNotOverlapFault) -> Self {
@@ -232,6 +269,15 @@ pub enum ParagraphLayoutEngineValidationCoverageTestInlineObjectRangesMustBeUniq
     TraceAssertionErrorFault(crate::org::tiqian::test::trace::trace_assertion_exception::TraceAssertionError),
     TextRangeErrorFault(crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError),
     ParagraphLayoutEngineValidationCoverageSupportRejectFaultFault(crate::org::tiqian::layout::paragraph_layout_engine_validation_coverage_support::ParagraphLayoutEngineValidationCoverageSupportRejectFault),
+}
+impl std::fmt::Display for ParagraphLayoutEngineValidationCoverageTestInlineObjectRangesMustBeUniqueFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            ParagraphLayoutEngineValidationCoverageTestInlineObjectRangesMustBeUniqueFault::TraceAssertionErrorFault(value) => write!(formatter, "{}", value),
+            ParagraphLayoutEngineValidationCoverageTestInlineObjectRangesMustBeUniqueFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            ParagraphLayoutEngineValidationCoverageTestInlineObjectRangesMustBeUniqueFault::ParagraphLayoutEngineValidationCoverageSupportRejectFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
 }
 
 impl From<ParagraphLayoutEngineValidationCoverageTestInlineObjectRangesMustBeUniqueFault> for crate::org::tiqian::test::trace::trace_assertion_exception::TraceAssertionError {
@@ -285,6 +331,15 @@ pub enum ParagraphLayoutEngineValidationCoverageTestInlineObjectMustHaveFinitePo
     TextRangeErrorFault(crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError),
     ParagraphLayoutEngineValidationCoverageSupportRejectFaultFault(crate::org::tiqian::layout::paragraph_layout_engine_validation_coverage_support::ParagraphLayoutEngineValidationCoverageSupportRejectFault),
 }
+impl std::fmt::Display for ParagraphLayoutEngineValidationCoverageTestInlineObjectMustHaveFinitePositiveGeometryFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            ParagraphLayoutEngineValidationCoverageTestInlineObjectMustHaveFinitePositiveGeometryFault::TraceAssertionErrorFault(value) => write!(formatter, "{}", value),
+            ParagraphLayoutEngineValidationCoverageTestInlineObjectMustHaveFinitePositiveGeometryFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            ParagraphLayoutEngineValidationCoverageTestInlineObjectMustHaveFinitePositiveGeometryFault::ParagraphLayoutEngineValidationCoverageSupportRejectFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
+}
 
 impl From<ParagraphLayoutEngineValidationCoverageTestInlineObjectMustHaveFinitePositiveGeometryFault> for crate::org::tiqian::test::trace::trace_assertion_exception::TraceAssertionError {
     fn from(value: ParagraphLayoutEngineValidationCoverageTestInlineObjectMustHaveFinitePositiveGeometryFault) -> Self {
@@ -336,6 +391,15 @@ pub enum ParagraphLayoutEngineValidationCoverageTestInlineObjectMustCoverANonEmp
     TraceAssertionErrorFault(crate::org::tiqian::test::trace::trace_assertion_exception::TraceAssertionError),
     TextRangeErrorFault(crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError),
     ParagraphLayoutEngineValidationCoverageSupportRejectFaultFault(crate::org::tiqian::layout::paragraph_layout_engine_validation_coverage_support::ParagraphLayoutEngineValidationCoverageSupportRejectFault),
+}
+impl std::fmt::Display for ParagraphLayoutEngineValidationCoverageTestInlineObjectMustCoverANonEmptyInBoundsRangeFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            ParagraphLayoutEngineValidationCoverageTestInlineObjectMustCoverANonEmptyInBoundsRangeFault::TraceAssertionErrorFault(value) => write!(formatter, "{}", value),
+            ParagraphLayoutEngineValidationCoverageTestInlineObjectMustCoverANonEmptyInBoundsRangeFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            ParagraphLayoutEngineValidationCoverageTestInlineObjectMustCoverANonEmptyInBoundsRangeFault::ParagraphLayoutEngineValidationCoverageSupportRejectFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
 }
 
 impl From<ParagraphLayoutEngineValidationCoverageTestInlineObjectMustCoverANonEmptyInBoundsRangeFault> for crate::org::tiqian::test::trace::trace_assertion_exception::TraceAssertionError {
@@ -389,6 +453,15 @@ pub enum ParagraphLayoutEngineValidationCoverageTestInlineObjectMinimumClearance
     TextRangeErrorFault(crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError),
     ParagraphLayoutEngineValidationCoverageSupportRejectFaultFault(crate::org::tiqian::layout::paragraph_layout_engine_validation_coverage_support::ParagraphLayoutEngineValidationCoverageSupportRejectFault),
 }
+impl std::fmt::Display for ParagraphLayoutEngineValidationCoverageTestInlineObjectMinimumClearanceEmMustBeFiniteAndNonNegativeFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            ParagraphLayoutEngineValidationCoverageTestInlineObjectMinimumClearanceEmMustBeFiniteAndNonNegativeFault::TraceAssertionErrorFault(value) => write!(formatter, "{}", value),
+            ParagraphLayoutEngineValidationCoverageTestInlineObjectMinimumClearanceEmMustBeFiniteAndNonNegativeFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            ParagraphLayoutEngineValidationCoverageTestInlineObjectMinimumClearanceEmMustBeFiniteAndNonNegativeFault::ParagraphLayoutEngineValidationCoverageSupportRejectFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
+}
 
 impl From<ParagraphLayoutEngineValidationCoverageTestInlineObjectMinimumClearanceEmMustBeFiniteAndNonNegativeFault> for crate::org::tiqian::test::trace::trace_assertion_exception::TraceAssertionError {
     fn from(value: ParagraphLayoutEngineValidationCoverageTestInlineObjectMinimumClearanceEmMustBeFiniteAndNonNegativeFault) -> Self {
@@ -440,6 +513,15 @@ pub enum ParagraphLayoutEngineValidationCoverageTestInlineObjectLeadingBoundaryM
     TraceAssertionErrorFault(crate::org::tiqian::test::trace::trace_assertion_exception::TraceAssertionError),
     TextRangeErrorFault(crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError),
     ParagraphLayoutEngineValidationCoverageSupportRejectFaultFault(crate::org::tiqian::layout::paragraph_layout_engine_validation_coverage_support::ParagraphLayoutEngineValidationCoverageSupportRejectFault),
+}
+impl std::fmt::Display for ParagraphLayoutEngineValidationCoverageTestInlineObjectLeadingBoundaryMustBeFixedFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            ParagraphLayoutEngineValidationCoverageTestInlineObjectLeadingBoundaryMustBeFixedFault::TraceAssertionErrorFault(value) => write!(formatter, "{}", value),
+            ParagraphLayoutEngineValidationCoverageTestInlineObjectLeadingBoundaryMustBeFixedFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            ParagraphLayoutEngineValidationCoverageTestInlineObjectLeadingBoundaryMustBeFixedFault::ParagraphLayoutEngineValidationCoverageSupportRejectFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
 }
 
 impl From<ParagraphLayoutEngineValidationCoverageTestInlineObjectLeadingBoundaryMustBeFixedFault> for crate::org::tiqian::test::trace::trace_assertion_exception::TraceAssertionError {
@@ -493,6 +575,15 @@ pub enum ParagraphLayoutEngineValidationCoverageTestInlineBoxSpanMustHaveFiniteI
     TextRangeErrorFault(crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError),
     ParagraphLayoutEngineValidationCoverageSupportRejectFaultFault(crate::org::tiqian::layout::paragraph_layout_engine_validation_coverage_support::ParagraphLayoutEngineValidationCoverageSupportRejectFault),
 }
+impl std::fmt::Display for ParagraphLayoutEngineValidationCoverageTestInlineBoxSpanMustHaveFiniteInlineEdgesFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            ParagraphLayoutEngineValidationCoverageTestInlineBoxSpanMustHaveFiniteInlineEdgesFault::TraceAssertionErrorFault(value) => write!(formatter, "{}", value),
+            ParagraphLayoutEngineValidationCoverageTestInlineBoxSpanMustHaveFiniteInlineEdgesFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            ParagraphLayoutEngineValidationCoverageTestInlineBoxSpanMustHaveFiniteInlineEdgesFault::ParagraphLayoutEngineValidationCoverageSupportRejectFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
+}
 
 impl From<ParagraphLayoutEngineValidationCoverageTestInlineBoxSpanMustHaveFiniteInlineEdgesFault> for crate::org::tiqian::test::trace::trace_assertion_exception::TraceAssertionError {
     fn from(value: ParagraphLayoutEngineValidationCoverageTestInlineBoxSpanMustHaveFiniteInlineEdgesFault) -> Self {
@@ -544,6 +635,15 @@ pub enum ParagraphLayoutEngineValidationCoverageTestInlineBoxSpanMustBeANonEmpty
     TraceAssertionErrorFault(crate::org::tiqian::test::trace::trace_assertion_exception::TraceAssertionError),
     TextRangeErrorFault(crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError),
     ParagraphLayoutEngineValidationCoverageSupportRejectFaultFault(crate::org::tiqian::layout::paragraph_layout_engine_validation_coverage_support::ParagraphLayoutEngineValidationCoverageSupportRejectFault),
+}
+impl std::fmt::Display for ParagraphLayoutEngineValidationCoverageTestInlineBoxSpanMustBeANonEmptyInBoundsRangeFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            ParagraphLayoutEngineValidationCoverageTestInlineBoxSpanMustBeANonEmptyInBoundsRangeFault::TraceAssertionErrorFault(value) => write!(formatter, "{}", value),
+            ParagraphLayoutEngineValidationCoverageTestInlineBoxSpanMustBeANonEmptyInBoundsRangeFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            ParagraphLayoutEngineValidationCoverageTestInlineBoxSpanMustBeANonEmptyInBoundsRangeFault::ParagraphLayoutEngineValidationCoverageSupportRejectFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
 }
 
 impl From<ParagraphLayoutEngineValidationCoverageTestInlineBoxSpanMustBeANonEmptyInBoundsRangeFault> for crate::org::tiqian::test::trace::trace_assertion_exception::TraceAssertionError {
@@ -597,6 +697,15 @@ pub enum ParagraphLayoutEngineValidationCoverageTestEmphasisDotGapEmMustBeFinite
     TextRangeErrorFault(crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError),
     ParagraphLayoutEngineValidationCoverageSupportRejectFaultFault(crate::org::tiqian::layout::paragraph_layout_engine_validation_coverage_support::ParagraphLayoutEngineValidationCoverageSupportRejectFault),
 }
+impl std::fmt::Display for ParagraphLayoutEngineValidationCoverageTestEmphasisDotGapEmMustBeFiniteAndNonNegativeFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            ParagraphLayoutEngineValidationCoverageTestEmphasisDotGapEmMustBeFiniteAndNonNegativeFault::TraceAssertionErrorFault(value) => write!(formatter, "{}", value),
+            ParagraphLayoutEngineValidationCoverageTestEmphasisDotGapEmMustBeFiniteAndNonNegativeFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            ParagraphLayoutEngineValidationCoverageTestEmphasisDotGapEmMustBeFiniteAndNonNegativeFault::ParagraphLayoutEngineValidationCoverageSupportRejectFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
+}
 
 impl From<ParagraphLayoutEngineValidationCoverageTestEmphasisDotGapEmMustBeFiniteAndNonNegativeFault> for crate::org::tiqian::test::trace::trace_assertion_exception::TraceAssertionError {
     fn from(value: ParagraphLayoutEngineValidationCoverageTestEmphasisDotGapEmMustBeFiniteAndNonNegativeFault) -> Self {
@@ -649,6 +758,15 @@ pub enum ParagraphLayoutEngineValidationCoverageTestAutoSpaceSuppressedRangesMus
     TextRangeErrorFault(crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError),
     ParagraphLayoutEngineValidationCoverageSupportRejectFaultFault(crate::org::tiqian::layout::paragraph_layout_engine_validation_coverage_support::ParagraphLayoutEngineValidationCoverageSupportRejectFault),
 }
+impl std::fmt::Display for ParagraphLayoutEngineValidationCoverageTestAutoSpaceSuppressedRangesMustBeNonEmptyInBoundsFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            ParagraphLayoutEngineValidationCoverageTestAutoSpaceSuppressedRangesMustBeNonEmptyInBoundsFault::TraceAssertionErrorFault(value) => write!(formatter, "{}", value),
+            ParagraphLayoutEngineValidationCoverageTestAutoSpaceSuppressedRangesMustBeNonEmptyInBoundsFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            ParagraphLayoutEngineValidationCoverageTestAutoSpaceSuppressedRangesMustBeNonEmptyInBoundsFault::ParagraphLayoutEngineValidationCoverageSupportRejectFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
+}
 
 impl From<ParagraphLayoutEngineValidationCoverageTestAutoSpaceSuppressedRangesMustBeNonEmptyInBoundsFault> for crate::org::tiqian::test::trace::trace_assertion_exception::TraceAssertionError {
     fn from(value: ParagraphLayoutEngineValidationCoverageTestAutoSpaceSuppressedRangesMustBeNonEmptyInBoundsFault) -> Self {
@@ -698,32 +816,20 @@ impl From<crate::org::tiqian::layout::paragraph_layout_engine_validation_coverag
 #[test]
 fn emphasis_dot_gap_em_must_be_finite_and_non_negative() {
     testlib::run("org.tiqian.layout.ParagraphLayoutEngineValidationCoverageTest.emphasisDotGapEmMustBeFiniteAndNonNegative", "org.tiqian.layout.ParagraphLayoutEngineValidationCoverageTest.emphasisDotGapEmMustBeFiniteAndNonNegative", || {
-        let mut t = TestTraceRecorder::new("ParagraphLayoutEngineValidationCoverageTest");
-        t.section(&"emphasisDotGapEmMustBeFiniteAndNonNegative");
-        let _ =
-ParagraphLayoutEngineValidationCoverageSupport::paragraph_layout_engine_validation_coverage_support_reject(ParagraphLayoutEngineValidationCoverageSupport::paragraph_layout_engine_validation_coverage_support_input(Some(ParagraphStyle::new(Some(LastLineAlignment::Start),
-Some(WritingMode::HorizontalTb), None, None, Some(Ic::zero()), Some(MeasureAdaptiveFirstLineIndent::new(Some(14.0), Some(1.0), Some(2.0))), Some(LineLengthGrid::new(Some(true), None)), Some(RubyLineHeightMode::PerLine),
-Some(ParagraphStyle::PARAGRAPH_STYLE_DEFAULT_INLINE_OBJECT_MINIMUM_CLEARANCE_EM), Some(f64::NAN))), None, None, None).unwrap(), &"emphasisDotGapEm").unwrap();
-        let _ =
-ParagraphLayoutEngineValidationCoverageSupport::paragraph_layout_engine_validation_coverage_support_reject(ParagraphLayoutEngineValidationCoverageSupport::paragraph_layout_engine_validation_coverage_support_input(Some(ParagraphStyle::new(Some(LastLineAlignment::Start),
-Some(WritingMode::HorizontalTb), None, None, Some(Ic::zero()), Some(MeasureAdaptiveFirstLineIndent::new(Some(14.0), Some(1.0), Some(2.0))), Some(LineLengthGrid::new(Some(true), None)), Some(RubyLineHeightMode::PerLine),
-Some(ParagraphStyle::PARAGRAPH_STYLE_DEFAULT_INLINE_OBJECT_MINIMUM_CLEARANCE_EM), Some(-0.1f64))), None, None, None).unwrap(), &"emphasisDotGapEm").unwrap();
+        let mut t = TestTraceRecorder::new(&(UStr::new(&[80,97,114,97,103,114,97,112,104,76,97,121,111,117,116,69,110,103,105,110,101,86,97,108,105,100,97,116,105,111,110,67,111,118,101,114,97,103,101,84,101,115,116])));
+        t.section(UStr::new(&[101,109,112,104,97,115,105,115,68,111,116,71,97,112,69,109,77,117,115,116,66,101,70,105,110,105,116,101,65,110,100,78,111,110,78,101,103,97,116,105,118,101]));
+        let _ = ParagraphLayoutEngineValidationCoverageSupport::paragraph_layout_engine_validation_coverage_support_reject(ParagraphLayoutEngineValidationCoverageSupport::paragraph_layout_engine_validation_coverage_support_input(Some(ParagraphStyle::new(Some(LastLineAlignment::Start), Some(WritingMode::HorizontalTb), None, None, Some(Ic::zero()), Some(MeasureAdaptiveFirstLineIndent::new(Some(14.0), Some(1.0), Some(2.0))), Some(LineLengthGrid::new(Some(true), None)), Some(RubyLineHeightMode::PerLine), Some(ParagraphStyle::PARAGRAPH_STYLE_DEFAULT_INLINE_OBJECT_MINIMUM_CLEARANCE_EM), Some(f64::NAN))), None, None, None).unwrap(), UStr::new(&[101,109,112,104,97,115,105,115,68,111,116,71,97,112,69,109])).unwrap();
+        let _ = ParagraphLayoutEngineValidationCoverageSupport::paragraph_layout_engine_validation_coverage_support_reject(ParagraphLayoutEngineValidationCoverageSupport::paragraph_layout_engine_validation_coverage_support_input(Some(ParagraphStyle::new(Some(LastLineAlignment::Start), Some(WritingMode::HorizontalTb), None, None, Some(Ic::zero()), Some(MeasureAdaptiveFirstLineIndent::new(Some(14.0), Some(1.0), Some(2.0))), Some(LineLengthGrid::new(Some(true), None)), Some(RubyLineHeightMode::PerLine), Some(ParagraphStyle::PARAGRAPH_STYLE_DEFAULT_INLINE_OBJECT_MINIMUM_CLEARANCE_EM), Some(-0.1f64))), None, None, None).unwrap(), UStr::new(&[101,109,112,104,97,115,105,115,68,111,116,71,97,112,69,109])).unwrap();
     });
 }
 
 #[test]
 fn inline_object_minimum_clearance_em_must_be_finite_and_non_negative() {
     testlib::run("org.tiqian.layout.ParagraphLayoutEngineValidationCoverageTest.inlineObjectMinimumClearanceEmMustBeFiniteAndNonNegative", "org.tiqian.layout.ParagraphLayoutEngineValidationCoverageTest.inlineObjectMinimumClearanceEmMustBeFiniteAndNonNegative", || {
-        let mut t = TestTraceRecorder::new("ParagraphLayoutEngineValidationCoverageTest");
-        t.section(&"inlineObjectMinimumClearanceEmMustBeFiniteAndNonNegative");
-        let _ =
-ParagraphLayoutEngineValidationCoverageSupport::paragraph_layout_engine_validation_coverage_support_reject(ParagraphLayoutEngineValidationCoverageSupport::paragraph_layout_engine_validation_coverage_support_input(Some(ParagraphStyle::new(Some(LastLineAlignment::Start),
-Some(WritingMode::HorizontalTb), None, None, Some(Ic::zero()), Some(MeasureAdaptiveFirstLineIndent::new(Some(14.0), Some(1.0), Some(2.0))), Some(LineLengthGrid::new(Some(true), None)), Some(RubyLineHeightMode::PerLine), Some(f64::NAN),
-Some(ParagraphStyle::PARAGRAPH_STYLE_DEFAULT_EMPHASIS_DOT_GAP_EM))), None, None, None).unwrap(), &"inlineObjectMinimumClearanceEm").unwrap();
-        let _ =
-ParagraphLayoutEngineValidationCoverageSupport::paragraph_layout_engine_validation_coverage_support_reject(ParagraphLayoutEngineValidationCoverageSupport::paragraph_layout_engine_validation_coverage_support_input(Some(ParagraphStyle::new(Some(LastLineAlignment::Start),
-Some(WritingMode::HorizontalTb), None, None, Some(Ic::zero()), Some(MeasureAdaptiveFirstLineIndent::new(Some(14.0), Some(1.0), Some(2.0))), Some(LineLengthGrid::new(Some(true), None)), Some(RubyLineHeightMode::PerLine), Some(i32::from_ne_bytes((4294967295u32).to_ne_bytes()) as
-f64), Some(ParagraphStyle::PARAGRAPH_STYLE_DEFAULT_EMPHASIS_DOT_GAP_EM))), None, None, None).unwrap(), &"inlineObjectMinimumClearanceEm").unwrap();
+        let mut t = TestTraceRecorder::new(&(UStr::new(&[80,97,114,97,103,114,97,112,104,76,97,121,111,117,116,69,110,103,105,110,101,86,97,108,105,100,97,116,105,111,110,67,111,118,101,114,97,103,101,84,101,115,116])));
+        t.section(UStr::new(&[105,110,108,105,110,101,79,98,106,101,99,116,77,105,110,105,109,117,109,67,108,101,97,114,97,110,99,101,69,109,77,117,115,116,66,101,70,105,110,105,116,101,65,110,100,78,111,110,78,101,103,97,116,105,118,101]));
+        let _ = ParagraphLayoutEngineValidationCoverageSupport::paragraph_layout_engine_validation_coverage_support_reject(ParagraphLayoutEngineValidationCoverageSupport::paragraph_layout_engine_validation_coverage_support_input(Some(ParagraphStyle::new(Some(LastLineAlignment::Start), Some(WritingMode::HorizontalTb), None, None, Some(Ic::zero()), Some(MeasureAdaptiveFirstLineIndent::new(Some(14.0), Some(1.0), Some(2.0))), Some(LineLengthGrid::new(Some(true), None)), Some(RubyLineHeightMode::PerLine), Some(f64::NAN), Some(ParagraphStyle::PARAGRAPH_STYLE_DEFAULT_EMPHASIS_DOT_GAP_EM))), None, None, None).unwrap(), UStr::new(&[105,110,108,105,110,101,79,98,106,101,99,116,77,105,110,105,109,117,109,67,108,101,97,114,97,110,99,101,69,109])).unwrap();
+        let _ = ParagraphLayoutEngineValidationCoverageSupport::paragraph_layout_engine_validation_coverage_support_reject(ParagraphLayoutEngineValidationCoverageSupport::paragraph_layout_engine_validation_coverage_support_input(Some(ParagraphStyle::new(Some(LastLineAlignment::Start), Some(WritingMode::HorizontalTb), None, None, Some(Ic::zero()), Some(MeasureAdaptiveFirstLineIndent::new(Some(14.0), Some(1.0), Some(2.0))), Some(LineLengthGrid::new(Some(true), None)), Some(RubyLineHeightMode::PerLine), Some(i32::from_ne_bytes(((4294967295u32) as i32).to_ne_bytes()) as f64), Some(ParagraphStyle::PARAGRAPH_STYLE_DEFAULT_EMPHASIS_DOT_GAP_EM))), None, None, None).unwrap(), UStr::new(&[105,110,108,105,110,101,79,98,106,101,99,116,77,105,110,105,109,117,109,67,108,101,97,114,97,110,99,101,69,109])).unwrap();
     });
 }
 
@@ -735,147 +841,143 @@ fn source_text_must_not_contain_unpaired_surrogates() {
 #[test]
 fn inline_box_span_must_be_a_non_empty_in_bounds_range() {
     testlib::run("org.tiqian.layout.ParagraphLayoutEngineValidationCoverageTest.inlineBoxSpanMustBeANonEmptyInBoundsRange", "org.tiqian.layout.ParagraphLayoutEngineValidationCoverageTest.inlineBoxSpanMustBeANonEmptyInBoundsRange", || {
-        let mut t = TestTraceRecorder::new("ParagraphLayoutEngineValidationCoverageTest");
-        t.section(&"inlineBoxSpanMustBeANonEmptyInBoundsRange");
+        let mut t = TestTraceRecorder::new(&(UStr::new(&[80,97,114,97,103,114,97,112,104,76,97,121,111,117,116,69,110,103,105,110,101,86,97,108,105,100,97,116,105,111,110,67,111,118,101,114,97,103,101,84,101,115,116])));
+        t.section(UStr::new(&[105,110,108,105,110,101,66,111,120,83,112,97,110,77,117,115,116,66,101,65,78,111,110,69,109,112,116,121,73,110,66,111,117,110,100,115,82,97,110,103,101]));
         let _ = ParagraphLayoutEngineValidationCoverageSupport::paragraph_layout_engine_validation_coverage_support_reject(ParagraphLayoutEngineValidationCoverageSupport::paragraph_layout_engine_validation_coverage_support_input(None, Some(vec![
     (InlineBoxSpan::new(TextRange::new(0u32, 0u32).unwrap(), Some(0.0), Some(0.0), Some(InlineBoxOuterSpacing::Narrow))).clone(),
-]), None, None).unwrap(), &"non-empty source range").unwrap();
+]), None, None).unwrap(), UStr::new(&[110,111,110,45,101,109,112,116,121,32,115,111,117,114,99,101,32,114,97,110,103,101])).unwrap();
         let _ = ParagraphLayoutEngineValidationCoverageSupport::paragraph_layout_engine_validation_coverage_support_reject(ParagraphLayoutEngineValidationCoverageSupport::paragraph_layout_engine_validation_coverage_support_input(None, Some(vec![
     (InlineBoxSpan::new(TextRange::new(1u32, 9u32).unwrap(), Some(0.0), Some(0.0), Some(InlineBoxOuterSpacing::Narrow))).clone(),
-]), None, None).unwrap(), &"non-empty source range").unwrap();
+]), None, None).unwrap(), UStr::new(&[110,111,110,45,101,109,112,116,121,32,115,111,117,114,99,101,32,114,97,110,103,101])).unwrap();
     });
 }
 
 #[test]
 fn inline_box_span_must_have_finite_inline_edges() {
     testlib::run("org.tiqian.layout.ParagraphLayoutEngineValidationCoverageTest.inlineBoxSpanMustHaveFiniteInlineEdges", "org.tiqian.layout.ParagraphLayoutEngineValidationCoverageTest.inlineBoxSpanMustHaveFiniteInlineEdges", || {
-        let mut t = TestTraceRecorder::new("ParagraphLayoutEngineValidationCoverageTest");
-        t.section(&"inlineBoxSpanMustHaveFiniteInlineEdges");
+        let mut t = TestTraceRecorder::new(&(UStr::new(&[80,97,114,97,103,114,97,112,104,76,97,121,111,117,116,69,110,103,105,110,101,86,97,108,105,100,97,116,105,111,110,67,111,118,101,114,97,103,101,84,101,115,116])));
+        t.section(UStr::new(&[105,110,108,105,110,101,66,111,120,83,112,97,110,77,117,115,116,72,97,118,101,70,105,110,105,116,101,73,110,108,105,110,101,69,100,103,101,115]));
         let _ = ParagraphLayoutEngineValidationCoverageSupport::paragraph_layout_engine_validation_coverage_support_reject(ParagraphLayoutEngineValidationCoverageSupport::paragraph_layout_engine_validation_coverage_support_input(None, Some(vec![
     (InlineBoxSpan::new(TextRange::new(0u32, 1u32).unwrap(), Some(f64::NAN), Some(0.0), Some(InlineBoxOuterSpacing::Narrow))).clone(),
-]), None, None).unwrap(), &"finite inline edges").unwrap();
+]), None, None).unwrap(), UStr::new(&[102,105,110,105,116,101,32,105,110,108,105,110,101,32,101,100,103,101,115])).unwrap();
         let _ = ParagraphLayoutEngineValidationCoverageSupport::paragraph_layout_engine_validation_coverage_support_reject(ParagraphLayoutEngineValidationCoverageSupport::paragraph_layout_engine_validation_coverage_support_input(None, Some(vec![
     (InlineBoxSpan::new(TextRange::new(0u32, 1u32).unwrap(), Some(f64::INFINITY), Some(0.0), Some(InlineBoxOuterSpacing::Narrow))).clone(),
-]), None, None).unwrap(), &"finite inline edges").unwrap();
+]), None, None).unwrap(), UStr::new(&[102,105,110,105,116,101,32,105,110,108,105,110,101,32,101,100,103,101,115])).unwrap();
     });
 }
 
 #[test]
 fn line_break_spans_must_be_non_empty_in_bounds_ranges() {
     testlib::run("org.tiqian.layout.ParagraphLayoutEngineValidationCoverageTest.lineBreakSpansMustBeNonEmptyInBoundsRanges", "org.tiqian.layout.ParagraphLayoutEngineValidationCoverageTest.lineBreakSpansMustBeNonEmptyInBoundsRanges", || {
-        let mut t = TestTraceRecorder::new("ParagraphLayoutEngineValidationCoverageTest");
-        t.section(&"lineBreakSpansMustBeNonEmptyInBoundsRanges");
-        let _ = ParagraphLayoutEngineValidationCoverageSupport::paragraph_layout_engine_validation_coverage_support_reject(ParagraphLayoutEngineValidationCoverageSupport::paragraph_layout_engine_validation_coverage_support_input(None, None, None, Some(TiqianTextContent::new("甲乙",
-Some(vec![]), Some(vec![]), Some(vec![
+        let mut t = TestTraceRecorder::new(&(UStr::new(&[80,97,114,97,103,114,97,112,104,76,97,121,111,117,116,69,110,103,105,110,101,86,97,108,105,100,97,116,105,111,110,67,111,118,101,114,97,103,101,84,101,115,116])));
+        t.section(UStr::new(&[108,105,110,101,66,114,101,97,107,83,112,97,110,115,77,117,115,116,66,101,78,111,110,69,109,112,116,121,73,110,66,111,117,110,100,115,82,97,110,103,101,115]));
+        let _ = ParagraphLayoutEngineValidationCoverageSupport::paragraph_layout_engine_validation_coverage_support_reject(ParagraphLayoutEngineValidationCoverageSupport::paragraph_layout_engine_validation_coverage_support_input(None, None, None, Some(TiqianTextContent::new(&(UStr::new(&[30002,20057])), Some(vec![]), Some(vec![]), Some(vec![
     (LineBreakSpan::new(TextRange::new(0u32, 0u32).unwrap(), LineBreakPolicy::ProgressiveTechnical)).clone(),
-]), Some(vec![])))).unwrap(), &"LineBreakSpan").unwrap();
-        let _ = ParagraphLayoutEngineValidationCoverageSupport::paragraph_layout_engine_validation_coverage_support_reject(ParagraphLayoutEngineValidationCoverageSupport::paragraph_layout_engine_validation_coverage_support_input(None, None, None, Some(TiqianTextContent::new("甲乙",
-Some(vec![]), Some(vec![]), Some(vec![
+]), Some(vec![])))).unwrap(), UStr::new(&[76,105,110,101,66,114,101,97,107,83,112,97,110])).unwrap();
+        let _ = ParagraphLayoutEngineValidationCoverageSupport::paragraph_layout_engine_validation_coverage_support_reject(ParagraphLayoutEngineValidationCoverageSupport::paragraph_layout_engine_validation_coverage_support_input(None, None, None, Some(TiqianTextContent::new(&(UStr::new(&[30002,20057])), Some(vec![]), Some(vec![]), Some(vec![
     (LineBreakSpan::new(TextRange::new(2u32, 3u32).unwrap(), LineBreakPolicy::ProgressiveTechnical)).clone(),
-]), Some(vec![])))).unwrap(), &"LineBreakSpan").unwrap();
+]), Some(vec![])))).unwrap(), UStr::new(&[76,105,110,101,66,114,101,97,107,83,112,97,110])).unwrap();
     });
 }
 
 #[test]
 fn auto_space_suppressed_ranges_must_be_non_empty_in_bounds() {
     testlib::run("org.tiqian.layout.ParagraphLayoutEngineValidationCoverageTest.autoSpaceSuppressedRangesMustBeNonEmptyInBounds", "org.tiqian.layout.ParagraphLayoutEngineValidationCoverageTest.autoSpaceSuppressedRangesMustBeNonEmptyInBounds", || {
-        let mut t = TestTraceRecorder::new("ParagraphLayoutEngineValidationCoverageTest");
-        t.section(&"autoSpaceSuppressedRangesMustBeNonEmptyInBounds");
-        let _ = ParagraphLayoutEngineValidationCoverageSupport::paragraph_layout_engine_validation_coverage_support_reject(ParagraphLayoutEngineValidationCoverageSupport::paragraph_layout_engine_validation_coverage_support_input(None, None, None, Some(TiqianTextContent::new("甲乙",
-Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![(TextRange::new(1u32, 1u32).unwrap()).clone()])))).unwrap(), &"Auto-space suppressed range").unwrap();
-        let _ = ParagraphLayoutEngineValidationCoverageSupport::paragraph_layout_engine_validation_coverage_support_reject(ParagraphLayoutEngineValidationCoverageSupport::paragraph_layout_engine_validation_coverage_support_input(None, None, None, Some(TiqianTextContent::new("甲乙",
-Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![(TextRange::new(0u32, 8u32).unwrap()).clone()])))).unwrap(), &"Auto-space suppressed range").unwrap();
+        let mut t = TestTraceRecorder::new(&(UStr::new(&[80,97,114,97,103,114,97,112,104,76,97,121,111,117,116,69,110,103,105,110,101,86,97,108,105,100,97,116,105,111,110,67,111,118,101,114,97,103,101,84,101,115,116])));
+        t.section(UStr::new(&[97,117,116,111,83,112,97,99,101,83,117,112,112,114,101,115,115,101,100,82,97,110,103,101,115,77,117,115,116,66,101,78,111,110,69,109,112,116,121,73,110,66,111,117,110,100,115]));
+        let _ = ParagraphLayoutEngineValidationCoverageSupport::paragraph_layout_engine_validation_coverage_support_reject(ParagraphLayoutEngineValidationCoverageSupport::paragraph_layout_engine_validation_coverage_support_input(None, None, None, Some(TiqianTextContent::new(&(UStr::new(&[30002,20057])), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![(TextRange::new(1u32, 1u32).unwrap()).clone()])))).unwrap(), UStr::new(&[65,117,116,111,45,115,112,97,99,101,32,115,117,112,112,114,101,115,115,101,100,32,114,97,110,103,101])).unwrap();
+        let _ = ParagraphLayoutEngineValidationCoverageSupport::paragraph_layout_engine_validation_coverage_support_reject(ParagraphLayoutEngineValidationCoverageSupport::paragraph_layout_engine_validation_coverage_support_input(None, None, None, Some(TiqianTextContent::new(&(UStr::new(&[30002,20057])), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![(TextRange::new(0u32, 8u32).unwrap()).clone()])))).unwrap(), UStr::new(&[65,117,116,111,45,115,112,97,99,101,32,115,117,112,112,114,101,115,115,101,100,32,114,97,110,103,101])).unwrap();
     });
 }
 
 #[test]
 fn inline_object_ranges_must_be_unique() {
     testlib::run("org.tiqian.layout.ParagraphLayoutEngineValidationCoverageTest.inlineObjectRangesMustBeUnique", "org.tiqian.layout.ParagraphLayoutEngineValidationCoverageTest.inlineObjectRangesMustBeUnique", || {
-        let mut t = TestTraceRecorder::new("ParagraphLayoutEngineValidationCoverageTest");
-        t.section(&"inlineObjectRangesMustBeUnique");
+        let mut t = TestTraceRecorder::new(&(UStr::new(&[80,97,114,97,103,114,97,112,104,76,97,121,111,117,116,69,110,103,105,110,101,86,97,108,105,100,97,116,105,111,110,67,111,118,101,114,97,103,101,84,101,115,116])));
+        t.section(UStr::new(&[105,110,108,105,110,101,79,98,106,101,99,116,82,97,110,103,101,115,77,117,115,116,66,101,85,110,105,113,117,101]));
         let _ = ParagraphLayoutEngineValidationCoverageSupport::paragraph_layout_engine_validation_coverage_support_reject(ParagraphLayoutEngineValidationCoverageSupport::paragraph_layout_engine_validation_coverage_support_input(None, None, Some(vec![
     (ParagraphLayoutEngineValidationCoverageSupport::paragraph_layout_engine_validation_coverage_support_obj(Some(TextRange::new(0u32, 1u32).unwrap()), None, None, None, None, None).unwrap()).clone(),
     (ParagraphLayoutEngineValidationCoverageSupport::paragraph_layout_engine_validation_coverage_support_obj(Some(TextRange::new(0u32, 1u32).unwrap()), None, None, None, None, None).unwrap()).clone(),
-]), None).unwrap(), &"unique").unwrap();
+]), None).unwrap(), UStr::new(&[117,110,105,113,117,101])).unwrap();
     });
 }
 
 #[test]
 fn inline_object_ranges_must_not_overlap() {
     testlib::run("org.tiqian.layout.ParagraphLayoutEngineValidationCoverageTest.inlineObjectRangesMustNotOverlap", "org.tiqian.layout.ParagraphLayoutEngineValidationCoverageTest.inlineObjectRangesMustNotOverlap", || {
-        let mut t = TestTraceRecorder::new("ParagraphLayoutEngineValidationCoverageTest");
-        t.section(&"inlineObjectRangesMustNotOverlap");
+        let mut t = TestTraceRecorder::new(&(UStr::new(&[80,97,114,97,103,114,97,112,104,76,97,121,111,117,116,69,110,103,105,110,101,86,97,108,105,100,97,116,105,111,110,67,111,118,101,114,97,103,101,84,101,115,116])));
+        t.section(UStr::new(&[105,110,108,105,110,101,79,98,106,101,99,116,82,97,110,103,101,115,77,117,115,116,78,111,116,79,118,101,114,108,97,112]));
         let _ = ParagraphLayoutEngineValidationCoverageSupport::paragraph_layout_engine_validation_coverage_support_reject(ParagraphLayoutEngineValidationCoverageSupport::paragraph_layout_engine_validation_coverage_support_input(None, None, Some(vec![
     (ParagraphLayoutEngineValidationCoverageSupport::paragraph_layout_engine_validation_coverage_support_obj(Some(TextRange::new(0u32, 2u32).unwrap()), None, None, None, None, None).unwrap()).clone(),
     (ParagraphLayoutEngineValidationCoverageSupport::paragraph_layout_engine_validation_coverage_support_obj(Some(TextRange::new(1u32, 2u32).unwrap()), None, None, None, None, None).unwrap()).clone(),
-]), None).unwrap(), &"overlap").unwrap();
+]), None).unwrap(), UStr::new(&[111,118,101,114,108,97,112])).unwrap();
     });
 }
 
 #[test]
 fn inline_object_must_cover_a_non_empty_in_bounds_range() {
     testlib::run("org.tiqian.layout.ParagraphLayoutEngineValidationCoverageTest.inlineObjectMustCoverANonEmptyInBoundsRange", "org.tiqian.layout.ParagraphLayoutEngineValidationCoverageTest.inlineObjectMustCoverANonEmptyInBoundsRange", || {
-        let mut t = TestTraceRecorder::new("ParagraphLayoutEngineValidationCoverageTest");
-        t.section(&"inlineObjectMustCoverANonEmptyInBoundsRange");
+        let mut t = TestTraceRecorder::new(&(UStr::new(&[80,97,114,97,103,114,97,112,104,76,97,121,111,117,116,69,110,103,105,110,101,86,97,108,105,100,97,116,105,111,110,67,111,118,101,114,97,103,101,84,101,115,116])));
+        t.section(UStr::new(&[105,110,108,105,110,101,79,98,106,101,99,116,77,117,115,116,67,111,118,101,114,65,78,111,110,69,109,112,116,121,73,110,66,111,117,110,100,115,82,97,110,103,101]));
         let _ = ParagraphLayoutEngineValidationCoverageSupport::paragraph_layout_engine_validation_coverage_support_reject(ParagraphLayoutEngineValidationCoverageSupport::paragraph_layout_engine_validation_coverage_support_input(None, None, Some(vec![
     (ParagraphLayoutEngineValidationCoverageSupport::paragraph_layout_engine_validation_coverage_support_obj(Some(TextRange::new(1u32, 1u32).unwrap()), None, None, None, None, None).unwrap()).clone(),
-]), None).unwrap(), &"non-empty source range").unwrap();
+]), None).unwrap(), UStr::new(&[110,111,110,45,101,109,112,116,121,32,115,111,117,114,99,101,32,114,97,110,103,101])).unwrap();
         let _ = ParagraphLayoutEngineValidationCoverageSupport::paragraph_layout_engine_validation_coverage_support_reject(ParagraphLayoutEngineValidationCoverageSupport::paragraph_layout_engine_validation_coverage_support_input(None, None, Some(vec![
     (ParagraphLayoutEngineValidationCoverageSupport::paragraph_layout_engine_validation_coverage_support_obj(Some(TextRange::new(0u32, 9u32).unwrap()), None, None, None, None, None).unwrap()).clone(),
-]), None).unwrap(), &"non-empty source range").unwrap();
+]), None).unwrap(), UStr::new(&[110,111,110,45,101,109,112,116,121,32,115,111,117,114,99,101,32,114,97,110,103,101])).unwrap();
     });
 }
 
 #[test]
 fn inline_object_must_have_finite_positive_geometry() {
     testlib::run("org.tiqian.layout.ParagraphLayoutEngineValidationCoverageTest.inlineObjectMustHaveFinitePositiveGeometry", "org.tiqian.layout.ParagraphLayoutEngineValidationCoverageTest.inlineObjectMustHaveFinitePositiveGeometry", || {
-        let mut t = TestTraceRecorder::new("ParagraphLayoutEngineValidationCoverageTest");
-        t.section(&"inlineObjectMustHaveFinitePositiveGeometry");
+        let mut t = TestTraceRecorder::new(&(UStr::new(&[80,97,114,97,103,114,97,112,104,76,97,121,111,117,116,69,110,103,105,110,101,86,97,108,105,100,97,116,105,111,110,67,111,118,101,114,97,103,101,84,101,115,116])));
+        t.section(UStr::new(&[105,110,108,105,110,101,79,98,106,101,99,116,77,117,115,116,72,97,118,101,70,105,110,105,116,101,80,111,115,105,116,105,118,101,71,101,111,109,101,116,114,121]));
         let _ = ParagraphLayoutEngineValidationCoverageSupport::paragraph_layout_engine_validation_coverage_support_reject(ParagraphLayoutEngineValidationCoverageSupport::paragraph_layout_engine_validation_coverage_support_input(None, None, Some(vec![
     (ParagraphLayoutEngineValidationCoverageSupport::paragraph_layout_engine_validation_coverage_support_obj(None, Some(0 as f64 as f64), None, None, None, None).unwrap()).clone(),
-]), None).unwrap(), &"finite positive geometry").unwrap();
+]), None).unwrap(), UStr::new(&[102,105,110,105,116,101,32,112,111,115,105,116,105,118,101,32,103,101,111,109,101,116,114,121])).unwrap();
         let _ = ParagraphLayoutEngineValidationCoverageSupport::paragraph_layout_engine_validation_coverage_support_reject(ParagraphLayoutEngineValidationCoverageSupport::paragraph_layout_engine_validation_coverage_support_input(None, None, Some(vec![
     (ParagraphLayoutEngineValidationCoverageSupport::paragraph_layout_engine_validation_coverage_support_obj(None, Some(f64::NAN), None, None, None, None).unwrap()).clone(),
-]), None).unwrap(), &"finite positive geometry").unwrap();
+]), None).unwrap(), UStr::new(&[102,105,110,105,116,101,32,112,111,115,105,116,105,118,101,32,103,101,111,109,101,116,114,121])).unwrap();
         let _ = ParagraphLayoutEngineValidationCoverageSupport::paragraph_layout_engine_validation_coverage_support_reject(ParagraphLayoutEngineValidationCoverageSupport::paragraph_layout_engine_validation_coverage_support_input(None, None, Some(vec![
-    (ParagraphLayoutEngineValidationCoverageSupport::paragraph_layout_engine_validation_coverage_support_obj(None, None, Some(i32::from_ne_bytes((4294967295u32).to_ne_bytes()) as f64 as f64), None, None, None).unwrap()).clone(),
-]), None).unwrap(), &"finite positive geometry").unwrap();
+    (ParagraphLayoutEngineValidationCoverageSupport::paragraph_layout_engine_validation_coverage_support_obj(None, None, Some(i32::from_ne_bytes(((4294967295u32) as i32).to_ne_bytes()) as f64 as f64), None, None, None).unwrap()).clone(),
+]), None).unwrap(), UStr::new(&[102,105,110,105,116,101,32,112,111,115,105,116,105,118,101,32,103,101,111,109,101,116,114,121])).unwrap();
         let _ = ParagraphLayoutEngineValidationCoverageSupport::paragraph_layout_engine_validation_coverage_support_reject(ParagraphLayoutEngineValidationCoverageSupport::paragraph_layout_engine_validation_coverage_support_input(None, None, Some(vec![
     (ParagraphLayoutEngineValidationCoverageSupport::paragraph_layout_engine_validation_coverage_support_obj(None, None, Some(f64::NAN), None, None, None).unwrap()).clone(),
-]), None).unwrap(), &"finite positive geometry").unwrap();
+]), None).unwrap(), UStr::new(&[102,105,110,105,116,101,32,112,111,115,105,116,105,118,101,32,103,101,111,109,101,116,114,121])).unwrap();
         let _ = ParagraphLayoutEngineValidationCoverageSupport::paragraph_layout_engine_validation_coverage_support_reject(ParagraphLayoutEngineValidationCoverageSupport::paragraph_layout_engine_validation_coverage_support_input(None, None, Some(vec![
     (ParagraphLayoutEngineValidationCoverageSupport::paragraph_layout_engine_validation_coverage_support_obj(None, None, None, Some(f64::NAN), None, None).unwrap()).clone(),
-]), None).unwrap(), &"finite positive geometry").unwrap();
+]), None).unwrap(), UStr::new(&[102,105,110,105,116,101,32,112,111,115,105,116,105,118,101,32,103,101,111,109,101,116,114,121])).unwrap();
         let _ = ParagraphLayoutEngineValidationCoverageSupport::paragraph_layout_engine_validation_coverage_support_reject(ParagraphLayoutEngineValidationCoverageSupport::paragraph_layout_engine_validation_coverage_support_input(None, None, Some(vec![
-    (ParagraphLayoutEngineValidationCoverageSupport::paragraph_layout_engine_validation_coverage_support_obj(None, None, None, Some(i32::from_ne_bytes((4294967295u32).to_ne_bytes()) as f64 as f64), None, None).unwrap()).clone(),
-]), None).unwrap(), &"finite positive geometry").unwrap();
+    (ParagraphLayoutEngineValidationCoverageSupport::paragraph_layout_engine_validation_coverage_support_obj(None, None, None, Some(i32::from_ne_bytes(((4294967295u32) as i32).to_ne_bytes()) as f64 as f64), None, None).unwrap()).clone(),
+]), None).unwrap(), UStr::new(&[102,105,110,105,116,101,32,112,111,115,105,116,105,118,101,32,103,101,111,109,101,116,114,121])).unwrap();
     });
 }
 
 #[test]
 fn inline_object_leading_boundary_must_be_fixed() {
     testlib::run("org.tiqian.layout.ParagraphLayoutEngineValidationCoverageTest.inlineObjectLeadingBoundaryMustBeFixed", "org.tiqian.layout.ParagraphLayoutEngineValidationCoverageTest.inlineObjectLeadingBoundaryMustBeFixed", || {
-        let mut t = TestTraceRecorder::new("ParagraphLayoutEngineValidationCoverageTest");
-        t.section(&"inlineObjectLeadingBoundaryMustBeFixed");
+        let mut t = TestTraceRecorder::new(&(UStr::new(&[80,97,114,97,103,114,97,112,104,76,97,121,111,117,116,69,110,103,105,110,101,86,97,108,105,100,97,116,105,111,110,67,111,118,101,114,97,103,101,84,101,115,116])));
+        t.section(UStr::new(&[105,110,108,105,110,101,79,98,106,101,99,116,76,101,97,100,105,110,103,66,111,117,110,100,97,114,121,77,117,115,116,66,101,70,105,120,101,100]));
         let _ = ParagraphLayoutEngineValidationCoverageSupport::paragraph_layout_engine_validation_coverage_support_reject(ParagraphLayoutEngineValidationCoverageSupport::paragraph_layout_engine_validation_coverage_support_input(None, None, Some(vec![
     (ParagraphLayoutEngineValidationCoverageSupport::paragraph_layout_engine_validation_coverage_support_obj(None, None, None, None, Some(InlineObjectBoundaryAdjustment::new(Some(false), None, Some(0.5f64), Some(0.0), Some(false)).unwrap()), None).unwrap()).clone(),
-]), None).unwrap(), &"cannot shrink its leading boundary").unwrap();
+]), None).unwrap(), UStr::new(&[99,97,110,110,111,116,32,115,104,114,105,110,107,32,105,116,115,32,108,101,97,100,105,110,103,32,98,111,117,110,100,97,114,121])).unwrap();
         let _ = ParagraphLayoutEngineValidationCoverageSupport::paragraph_layout_engine_validation_coverage_support_reject(ParagraphLayoutEngineValidationCoverageSupport::paragraph_layout_engine_validation_coverage_support_input(None, None, Some(vec![
     (ParagraphLayoutEngineValidationCoverageSupport::paragraph_layout_engine_validation_coverage_support_obj(None, None, None, None, Some(InlineObjectBoundaryAdjustment::new(Some(false), None, Some(0.0), Some(0.5f64), Some(false)).unwrap()), None).unwrap()).clone(),
-]), None).unwrap(), &"cannot discard advance at its leading boundary").unwrap();
+]), None).unwrap(), UStr::new(&[99,97,110,110,111,116,32,100,105,115,99,97,114,100,32,97,100,118,97,110,99,101,32,97,116,32,105,116,115,32,108,101,97,100,105,110,103,32,98,111,117,110,100,97,114,121])).unwrap();
     });
 }
 
 #[test]
 fn inline_object_trailing_boundary_must_not_exceed_advance() {
     testlib::run("org.tiqian.layout.ParagraphLayoutEngineValidationCoverageTest.inlineObjectTrailingBoundaryMustNotExceedAdvance", "org.tiqian.layout.ParagraphLayoutEngineValidationCoverageTest.inlineObjectTrailingBoundaryMustNotExceedAdvance", || {
-        let mut t = TestTraceRecorder::new("ParagraphLayoutEngineValidationCoverageTest");
-        t.section(&"inlineObjectTrailingBoundaryMustNotExceedAdvance");
+        let mut t = TestTraceRecorder::new(&(UStr::new(&[80,97,114,97,103,114,97,112,104,76,97,121,111,117,116,69,110,103,105,110,101,86,97,108,105,100,97,116,105,111,110,67,111,118,101,114,97,103,101,84,101,115,116])));
+        t.section(UStr::new(&[105,110,108,105,110,101,79,98,106,101,99,116,84,114,97,105,108,105,110,103,66,111,117,110,100,97,114,121,77,117,115,116,78,111,116,69,120,99,101,101,100,65,100,118,97,110,99,101]));
         let _ = ParagraphLayoutEngineValidationCoverageSupport::paragraph_layout_engine_validation_coverage_support_reject(ParagraphLayoutEngineValidationCoverageSupport::paragraph_layout_engine_validation_coverage_support_input(None, None, Some(vec![
     (ParagraphLayoutEngineValidationCoverageSupport::paragraph_layout_engine_validation_coverage_support_obj(None, None, None, None, None, Some(InlineObjectBoundaryAdjustment::new(Some(false), None, Some(10.5f64), Some(0.0), Some(false)).unwrap())).unwrap()).clone(),
-]), None).unwrap(), &"trailing shrink capacity").unwrap();
+]), None).unwrap(), UStr::new(&[116,114,97,105,108,105,110,103,32,115,104,114,105,110,107,32,99,97,112,97,99,105,116,121])).unwrap();
         let _ = ParagraphLayoutEngineValidationCoverageSupport::paragraph_layout_engine_validation_coverage_support_reject(ParagraphLayoutEngineValidationCoverageSupport::paragraph_layout_engine_validation_coverage_support_input(None, None, Some(vec![
     (ParagraphLayoutEngineValidationCoverageSupport::paragraph_layout_engine_validation_coverage_support_obj(None, None, None, None, None, Some(InlineObjectBoundaryAdjustment::new(Some(false), None, Some(0.0), Some(10.5f64), Some(false)).unwrap())).unwrap()).clone(),
-]), None).unwrap(), &"trailing line-end discard").unwrap();
+]), None).unwrap(), UStr::new(&[116,114,97,105,108,105,110,103,32,108,105,110,101,45,101,110,100,32,100,105,115,99,97,114,100])).unwrap();
     });
 }

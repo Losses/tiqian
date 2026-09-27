@@ -1,6 +1,9 @@
+use crate::runtime::u_string::UString;
+
+
 #[derive(Debug, Clone, PartialEq)]
 pub enum TraceAssertionError {
-    AssertionFailed { message: String },
+    AssertionFailed { message: UString },
 }
 
 impl std::fmt::Display for TraceAssertionError {

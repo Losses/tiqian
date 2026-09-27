@@ -19,6 +19,8 @@ use crate::org::tiqian::layout::punctuation_model::PunctuationSpacingCompressor;
 use crate::org::tiqian::layout::quote_pair_analyzer::QuotePairAnalyzer;
 use crate::org::tiqian::layout::width_independent_annotation_cache::LruWidthIndependentAnnotationCache;
 use crate::org::tiqian::shaping::text_shaper::ExplainableStubTextShaper;
+use crate::runtime::u_string::UString;
+use std::sync::Arc;
 use std::sync::Mutex;
 
 
@@ -26,6 +28,14 @@ use std::sync::Mutex;
 pub enum FontInstanceMetricsRequestTestSupportRecordingEngineFault {
     TextRangeErrorFault(crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError),
     UStringFaultFault(crate::std::u_string_exception::UStringFault),
+}
+impl std::fmt::Display for FontInstanceMetricsRequestTestSupportRecordingEngineFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            FontInstanceMetricsRequestTestSupportRecordingEngineFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            FontInstanceMetricsRequestTestSupportRecordingEngineFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
 }
 
 impl From<FontInstanceMetricsRequestTestSupportRecordingEngineFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
@@ -67,14 +77,11 @@ impl FontInstanceMetricsRequestTestSupport {
 
     pub fn font_instance_metrics_request_test_support_recording_engine() -> Result<ExplainableStubParagraphLayoutEngine, ParagraphLayoutEngineNewFault> {
         *FONT_INSTANCE_METRICS_REQUEST_TEST_SUPPORT_RECORDED.lock().unwrap_or_else(|e| e.into_inner()) = vec![];
-        return Ok(ExplainableStubParagraphLayoutEngine::new(Some(Box::new(CjkFontRoleClassifier::new())), Some(Box::new(ParagraphLayoutFallbackResolver::new(Some("cjk-primary".to_string()), Some("latin-primary".to_string()), Some("symbol-fallback".to_string()))?)),
-Some(Box::new(BuiltInClreqProfileResolver::new())), Some(Box::new(RecordingResolver::new())), Some(Box::new(ScriptAwareFontMetricsNormalizer::new())), Some((PunctuationAtomBuilder::new(None, None)?).clone()), Some((PunctuationSpacingCompressor::new()?).clone()),
-Some(QuotePairAnalyzer::new()), Some(Box::new(GreedyLineBreaker::new(None, None, None, None))), Some(Justifier::new(Some(0.5), Some(0.25))), Some(Box::new(ExplainableStubTextShaper::new())), Some((DefaultHyphenator::default_hyphenator_default_hyphenator()?).clone()),
-Some(Box::new(LruWidthIndependentAnnotationCache::new(512))))?);
+        return Ok(ExplainableStubParagraphLayoutEngine::new(Some(Box::new(CjkFontRoleClassifier::new())), Some(Box::new(ParagraphLayoutFallbackResolver::new(Some(UString::from("cjk-primary")), Some(UString::from("latin-primary")), Some(UString::from("symbol-fallback")))?)), Some(Box::new(BuiltInClreqProfileResolver::new())), Some(Box::new(RecordingResolver::new())), Some(Box::new(ScriptAwareFontMetricsNormalizer::new())), Some((PunctuationAtomBuilder::new(None, None)?).clone()), Some((PunctuationSpacingCompressor::new()?).clone()), Some(QuotePairAnalyzer::new()), Some(Box::new(GreedyLineBreaker::new(None, None, None, None))), Some(Justifier::new(Some(0.5), Some(0.25))), Some(Arc::new(Mutex::new(ExplainableStubTextShaper::new()))), Some((DefaultHyphenator::default_hyphenator_default_hyphenator()?).clone()), Some(Arc::new(Mutex::new(LruWidthIndependentAnnotationCache::new(512)))))?);
     }
 
     pub fn font_instance_metrics_request_test_support_base_style() -> TextStyle {
-        return TextStyle::new(Some(vec!["Fixture Sans".to_string()]), Some(18.0f64), Some("zh-Hans".to_string()), Some(400), Some(false), Some(0.0), Some(InlineAttachment::None));
+        return TextStyle::new(Some(vec![UString::from("Fixture Sans").to_ustring()]), Some(18.0f64), Some(UString::from("zh-Hans")), Some(400), Some(false), Some(0.0), Some(InlineAttachment::None));
     }
 }
 

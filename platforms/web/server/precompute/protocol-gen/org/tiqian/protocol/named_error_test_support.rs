@@ -1,4 +1,5 @@
 use crate::org::tiqian::protocol::paragraph_request_exception::NamedError;
+use crate::runtime::u_string::UString;
 
 
 #[derive(Clone, Copy)]
@@ -95,29 +96,29 @@ impl NamedErrorTestSupport {
         return v;
     }
 
-    pub fn named_error_test_support_golden() -> Vec<String> {
+    pub fn named_error_test_support_golden() -> Vec<UString> {
         return vec![
-    "EmptyParagraph".to_string(),
-    "InvalidMaximumMeasure".to_string(),
-    "InvalidFontSize".to_string(),
-    "InvalidLineHeight".to_string(),
-    "InvalidFirstLineIndent".to_string(),
-    "InvalidFontWeight".to_string(),
-    "InvalidEmphasisDotGapEm".to_string(),
-    "MissingExplicitFontFamilies".to_string(),
-    "InvalidTextSpanRange".to_string(),
-    "MissingTextSpanFontFamilies".to_string(),
-    "InvalidTextSpanFontSize".to_string(),
-    "InvalidTextSpanFontWeight".to_string(),
-    "InvalidTextSpanBaselineShift".to_string(),
-    "InvalidSourceBoundary".to_string(),
-    "InvalidLineBreakSpanRange".to_string(),
-    "InvalidInlineBoxRange".to_string(),
-    "InvalidInlineBoxGeometry".to_string(),
-    "InvalidInlineObjectRange".to_string(),
-    "InvalidInlineObjectAdvance".to_string(),
-    "InvalidInlineObjectVerticalGeometry".to_string(),
-    "InvalidDecorationRange".to_string(),
+    UString::from("EmptyParagraph").to_ustring(),
+    UString::from("InvalidMaximumMeasure").to_ustring(),
+    UString::from("InvalidFontSize").to_ustring(),
+    UString::from("InvalidLineHeight").to_ustring(),
+    UString::from("InvalidFirstLineIndent").to_ustring(),
+    UString::from("InvalidFontWeight").to_ustring(),
+    UString::from("InvalidEmphasisDotGapEm").to_ustring(),
+    UString::from("MissingExplicitFontFamilies").to_ustring(),
+    UString::from("InvalidTextSpanRange").to_ustring(),
+    UString::from("MissingTextSpanFontFamilies").to_ustring(),
+    UString::from("InvalidTextSpanFontSize").to_ustring(),
+    UString::from("InvalidTextSpanFontWeight").to_ustring(),
+    UString::from("InvalidTextSpanBaselineShift").to_ustring(),
+    UString::from("InvalidSourceBoundary").to_ustring(),
+    UString::from("InvalidLineBreakSpanRange").to_ustring(),
+    UString::from("InvalidInlineBoxRange").to_ustring(),
+    UString::from("InvalidInlineBoxGeometry").to_ustring(),
+    UString::from("InvalidInlineObjectRange").to_ustring(),
+    UString::from("InvalidInlineObjectAdvance").to_ustring(),
+    UString::from("InvalidInlineObjectVerticalGeometry").to_ustring(),
+    UString::from("InvalidDecorationRange").to_ustring(),
 ];
     }
 }

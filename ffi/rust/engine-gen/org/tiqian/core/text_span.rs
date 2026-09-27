@@ -1,5 +1,6 @@
 use crate::org::tiqian::core::text_range::TextRange;
 use crate::org::tiqian::core::text_style::TextStyle;
+use crate::runtime::u_string::UString;
 
 
 #[derive(Debug, Clone, PartialEq)]
@@ -16,15 +17,7 @@ impl TextSpan {
         }
     }
 
-    pub fn to_string(&self) -> String {
-        return format!("{}{}{}{}{}{}{}",
-            "TextSpan(",
-            "range=",
-            (self.range).clone().to_string(),
-            ", ",
-            "style=",
-            (self.style).clone().to_string(),
-            ")"
-        );
+    pub fn to_string(&self) -> UString {
+        return UString::from(format!("{}", { let mut __s = UString::new(); __s += &(UString::from("TextSpan(")); __s += &(UString::from("range=")); __s += UString::from(format!("{}", (self.range).clone().to_string()).as_str()).as_ustr(); __s += &(UString::from(", ")); __s += &(UString::from("style=")); __s += UString::from(format!("{}", (self.style).clone().to_string()).as_str()).as_ustr(); __s += &(UString::from(")")); __s }).as_str());
     }
 }

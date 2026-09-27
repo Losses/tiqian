@@ -53,7 +53,7 @@ pub fn run<F: FnOnce()>(id: &str, name: &str, body: F) {
                 // through the same path as a failed assertion: the fail
                 // line carries the timeout message and the raise travels
                 // on, so the runner reports the test as failed too.
-                let msg = format!("this test timed out after {}ms", budget_ms);
+                let msg = format!("this test timed out after {}ms (body took {}ms)", budget_ms, started_at.elapsed().as_millis());
                 record_result(id, name, "fail", Some(&msg));
                 std::panic::resume_unwind(Box::new(msg));
             }
@@ -76,13 +76,13 @@ pub fn run<F: FnOnce()>(id: &str, name: &str, body: F) {
 fn record_result(id: &str, name: &str, verdict: &str, message: Option<&str>) {
     // The resident builds the record line; this module only writes it.
     let json_line = if verdict == "not_applicable" {
-        crate::runtime::test_core::TestCore::test_core_not_applicable_line(id, name)
+        crate::runtime::test_core::TestCore::test_core_not_applicable_line(crate::runtime::u_string::UString::from(id).as_ustr(), crate::runtime::u_string::UString::from(name).as_ustr())
     } else {
         crate::runtime::test_core::TestCore::test_core_result_line(
-            id,
-            name,
+            crate::runtime::u_string::UString::from(id).as_ustr(),
+            crate::runtime::u_string::UString::from(name).as_ustr(),
             verdict == "fail",
-            message.unwrap_or(""),
+            crate::runtime::u_string::UString::from(message.unwrap_or("")).as_ustr(),
         )
     };
     let file_path = std::env::var("BORING_TEST_RESULTS").unwrap_or_else(|_| "out/test-results/rust.jsonl".to_string());
@@ -90,6 +90,6 @@ fn record_result(id: &str, name: &str, verdict: &str, message: Option<&str>) {
         let _ = std::fs::create_dir_all(parent);
     }
     if let Ok(mut file) = OpenOptions::new().create(true).append(true).open(&file_path) {
-        let _ = file.write_all(json_line.as_bytes());
+        let _ = file.write_all(&json_line.as_bytes());
     }
 }

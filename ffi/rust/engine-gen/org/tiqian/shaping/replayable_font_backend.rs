@@ -4,6 +4,8 @@ use crate::runtime::sorted_table::SortedMapTable;
 use crate::runtime::sorted_table::SortedSetTable;
 use crate::runtime::sorted_table::SortedTable;
 use crate::runtime::u_string;
+use crate::runtime::u_string::UStr;
+use crate::runtime::u_string::UString;
 use std::sync::Arc;
 
 
@@ -11,42 +13,42 @@ use std::sync::Arc;
 pub struct FontFaceIdImpl;
 
 impl FontFaceIdImpl {
-    pub fn font_face_id_impl_of(value: &str) -> Result<String, TextRangeError> {
+    pub fn font_face_id_impl_of(value: &UStr) -> Result<UString, TextRangeError> {
         if false || u_string::unit_count(&(value.trim())) == 0 {
-            return Err(TextRangeError::Message { text: "FontFaceId must not be blank".to_string() });
+            return Err(TextRangeError::Message { text: UString::from("FontFaceId must not be blank") });
         }
-        return Ok((value).to_string());
+        return Ok((value).to_ustring());
     }
 
-    pub fn font_face_id_impl_from_string(value: &str) -> Result<String, TextRangeError> {
+    pub fn font_face_id_impl_from_string(value: &UStr) -> Result<UString, TextRangeError> {
         return Ok(FontFaceIdImpl::font_face_id_impl_of(value)?);
     }
 
-    pub fn font_face_id_impl_to_string(this1: &str) -> String {
-        return this1.to_string();
+    pub fn font_face_id_impl_to_string(this1: &UStr) -> UString {
+        return this1.to_ustring();
     }
 }
 
 #[derive(Clone)]
 pub struct ReplayableFontFaceDescriptor {
-    pub id: String,
-    pub family_aliases: SortedSetTable<String>,
+    pub id: UString,
+    pub family_aliases: SortedSetTable<UString>,
     pub roles: Vec<FontRole>,
     pub weight: u32,
     pub italic: bool,
     pub collection_index: u32,
-    pub source_label: String,
-    pub variation_axes: SortedMapTable<String, f64>,
+    pub source_label: UString,
+    pub variation_axes: SortedMapTable<UString, f64>,
 }
 
 impl ReplayableFontFaceDescriptor {
-    pub fn new(id: &str, family_aliases: SortedSetTable<String>, roles: Vec<FontRole>, source_label: &str, weight: Option<u32>, italic: Option<bool>, collection_index: Option<u32>, variation_axes: Option<SortedMapTable<String, f64>>) -> Result<Self, TextRangeError> {
-        let variation_axes = variation_axes.unwrap_or_else(|| SortedTable::sorted_table_map_builder::<String, f64>(Arc::new(|a, b| SortedTable::sorted_table_compare_strings(a.as_str(), b.as_str()))).build());
+    pub fn new(id: &UStr, family_aliases: SortedSetTable<UString>, roles: Vec<FontRole>, source_label: &UStr, weight: Option<u32>, italic: Option<bool>, collection_index: Option<u32>, variation_axes: Option<SortedMapTable<UString, f64>>) -> Result<Self, TextRangeError> {
+        let variation_axes = variation_axes.unwrap_or_else(|| SortedTable::sorted_table_map_builder::<UString, f64>(Arc::new(|a, b| SortedTable::sorted_table_compare_strings(a.as_ustr(), b.as_ustr()))).build());
         Ok(Self {
-            id: id.to_string(),
+            id: id.to_ustring(),
             family_aliases,
             roles,
-            source_label: source_label.to_string(),
+            source_label: source_label.to_ustring(),
             weight: weight.unwrap_or_default(),
             italic: italic.unwrap_or_default(),
             collection_index: collection_index.unwrap_or_default(),
@@ -58,18 +60,18 @@ impl ReplayableFontFaceDescriptor {
 #[derive(Clone, PartialEq)]
 pub struct ReplayableFontFaceRequest {
     pub role: FontRole,
-    pub preferred_families: Vec<String>,
+    pub preferred_families: Vec<UString>,
     pub font_size: f64,
     pub weight: u32,
     pub italic: bool,
-    pub locale: String,
-    pub selection_text: String,
+    pub locale: UString,
+    pub selection_text: UString,
 }
 
 impl ReplayableFontFaceRequest {
-    pub fn new(role: FontRole, preferred_families: Vec<String>, font_size: f64, weight: u32, italic: bool, locale: &str, selection_text: &str) -> Result<Self, TextRangeError> {
+    pub fn new(role: FontRole, preferred_families: Vec<UString>, font_size: f64, weight: u32, italic: bool, locale: &UStr, selection_text: &UStr) -> Result<Self, TextRangeError> {
         if !((font_size) > (0 as f64) && (font_size).is_finite()) {
-            return Err(TextRangeError::Message { text: "fontSize must be positive and finite".to_string() });
+            return Err(TextRangeError::Message { text: UString::from("fontSize must be positive and finite") });
         }
         Ok(Self {
             role,
@@ -77,41 +79,41 @@ impl ReplayableFontFaceRequest {
             font_size,
             weight,
             italic,
-            locale: locale.to_string(),
-            selection_text: selection_text.to_string(),
+            locale: locale.to_ustring(),
+            selection_text: selection_text.to_ustring(),
         })
     }
 }
 
 #[derive(Clone, PartialEq)]
 pub struct FontBackendCapabilityIssue {
-    pub code: String,
-    pub detail: String,
+    pub code: UString,
+    pub detail: UString,
 }
 
 impl FontBackendCapabilityIssue {
-    pub fn new(code: &str, detail: &str) -> Result<Self, TextRangeError> {
+    pub fn new(code: &UStr, detail: &UStr) -> Result<Self, TextRangeError> {
         Ok(Self {
-            code: code.to_string(),
-            detail: detail.to_string(),
+            code: code.to_ustring(),
+            detail: detail.to_ustring(),
         })
     }
 }
 
 #[derive(Clone)]
 pub struct FontBackendCapabilityReport {
-    pub backend: String,
-    pub source_kind: String,
+    pub backend: UString,
+    pub source_kind: UString,
     pub faces: Vec<ReplayableFontFaceDescriptor>,
     pub issues: Vec<FontBackendCapabilityIssue>,
 }
 
 impl FontBackendCapabilityReport {
-    pub fn new(backend: &str, source_kind: &str, faces: Vec<ReplayableFontFaceDescriptor>, issues: Option<Vec<FontBackendCapabilityIssue>>) -> Result<Self, TextRangeError> {
+    pub fn new(backend: &UStr, source_kind: &UStr, faces: Vec<ReplayableFontFaceDescriptor>, issues: Option<Vec<FontBackendCapabilityIssue>>) -> Result<Self, TextRangeError> {
         let issues = issues.unwrap_or_else(|| vec![]);
         Ok(Self {
-            backend: backend.to_string(),
-            source_kind: source_kind.to_string(),
+            backend: backend.to_ustring(),
+            source_kind: source_kind.to_ustring(),
             faces,
             issues: issues,
         })
@@ -124,7 +126,7 @@ impl FontBackendCapabilityReport {
         {
             let _g1 = (self.issues).clone();
             for issue in &_g1 {
-                if issue.code.to_string() == "MissingControlledFontFace" {
+                if issue.code.to_ustring() == UString::from("MissingControlledFontFace") {
                     return false;
                 }
             }

@@ -4,6 +4,7 @@ use crate::org::tiqian::core::layout_debug_info::LayoutDebugInfo;
 use crate::org::tiqian::core::layout_input::LayoutInput;
 use crate::org::tiqian::core::line_box::LineBox;
 use crate::org::tiqian::core::size::Size;
+use crate::runtime::u_string::UString;
 use std::fmt::Write;
 
 
@@ -29,17 +30,8 @@ impl LayoutResult {
         }
     }
 
-    pub fn to_string(&self) -> String {
-        return format!("{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}",
-            "LayoutResult(",
-            "input=",
-            (self.input).clone().to_string(),
-            ", ",
-            "size=",
-            (self.size).clone().to_string(),
-            ", ",
-            "clusters=",
-            {
+    pub fn to_string(&self) -> UString {
+        return UString::from(format!("{}", { let mut __s = UString::new(); __s += &(UString::from("LayoutResult(")); __s += &(UString::from("input=")); __s += UString::from(format!("{}", (self.input).clone().to_string()).as_str()).as_ustr(); __s += &(UString::from(", ")); __s += &(UString::from("size=")); __s += UString::from(format!("{}", (self.size).clone().to_string()).as_str()).as_ustr(); __s += &(UString::from(", ")); __s += &(UString::from("clusters=")); __s += UString::from(format!("{}", {
         let mut out = String::new();
         out.push('[');
         let arr = (self.clusters).clone();
@@ -52,10 +44,7 @@ impl LayoutResult {
         }
         out.push(']');
         out
-    },
-            ", ",
-            "glyphRuns=",
-            {
+    }).as_str()).as_ustr(); __s += &(UString::from(", ")); __s += &(UString::from("glyphRuns=")); __s += UString::from(format!("{}", {
         let mut out = String::new();
         out.push('[');
         let arr = (self.glyph_runs).clone();
@@ -68,10 +57,7 @@ impl LayoutResult {
         }
         out.push(']');
         out
-    },
-            ", ",
-            "lines=",
-            {
+    }).as_str()).as_ustr(); __s += &(UString::from(", ")); __s += &(UString::from("lines=")); __s += UString::from(format!("{}", {
         let mut out = String::new();
         out.push('[');
         let arr = (self.lines).clone();
@@ -84,11 +70,6 @@ impl LayoutResult {
         }
         out.push(']');
         out
-    },
-            ", ",
-            "debug=",
-            (self.debug).clone().to_string(),
-            ")"
-        );
+    }).as_str()).as_ustr(); __s += &(UString::from(", ")); __s += &(UString::from("debug=")); __s += UString::from(format!("{}", (self.debug).clone().to_string()).as_str()).as_ustr(); __s += &(UString::from(")")); __s }).as_str());
     }
 }

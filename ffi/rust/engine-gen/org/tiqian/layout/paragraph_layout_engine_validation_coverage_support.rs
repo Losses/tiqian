@@ -32,7 +32,10 @@ use crate::org::tiqian::layout::width_independent_annotation_cache::LruWidthInde
 use crate::org::tiqian::shaping::text_shaper::ExplainableStubTextShaper;
 use crate::org::tiqian::test::trace::traced_assertions::TracedAssertions;
 use crate::runtime::u_string;
+use crate::runtime::u_string::UStr;
+use crate::runtime::u_string::UString;
 use std::sync::Arc;
+use std::sync::Mutex;
 
 
 #[derive(Debug, Clone, PartialEq)]
@@ -45,6 +48,20 @@ pub enum ParagraphLayoutEngineValidationCoverageSupportRejectFault {
     TracedAssertionsAssertTrueFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsAssertTrueFault),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
     ParagraphLayoutEngineLayoutWithRejectedTechnicalTiersFaultFault(crate::org::tiqian::layout::paragraph_layout_engine::ParagraphLayoutEngineLayoutWithRejectedTechnicalTiersFault),
+}
+impl std::fmt::Display for ParagraphLayoutEngineValidationCoverageSupportRejectFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            ParagraphLayoutEngineValidationCoverageSupportRejectFault::TraceAssertionErrorFault(value) => write!(formatter, "{}", value),
+            ParagraphLayoutEngineValidationCoverageSupportRejectFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            ParagraphLayoutEngineValidationCoverageSupportRejectFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            ParagraphLayoutEngineValidationCoverageSupportRejectFault::TracedAssertionsAssertFailsWithFaultFault(value) => write!(formatter, "{}", value),
+            ParagraphLayoutEngineValidationCoverageSupportRejectFault::ParagraphLayoutEngineNewFaultFault(value) => write!(formatter, "{}", value),
+            ParagraphLayoutEngineValidationCoverageSupportRejectFault::TracedAssertionsAssertTrueFaultFault(value) => write!(formatter, "{}", value),
+            ParagraphLayoutEngineValidationCoverageSupportRejectFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+            ParagraphLayoutEngineValidationCoverageSupportRejectFault::ParagraphLayoutEngineLayoutWithRejectedTechnicalTiersFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
 }
 
 impl From<ParagraphLayoutEngineValidationCoverageSupportRejectFault> for crate::org::tiqian::test::trace::trace_assertion_exception::TraceAssertionError {
@@ -171,37 +188,26 @@ impl From<crate::org::tiqian::layout::paragraph_layout_engine::ParagraphLayoutEn
 pub struct ParagraphLayoutEngineValidationCoverageSupport;
 
 impl ParagraphLayoutEngineValidationCoverageSupport {
-    pub fn paragraph_layout_engine_validation_coverage_support_code(n: u32) -> String {
-        let mut b_b = String::new();
-        b_b += &(if n > 0xFFFF { String::from_utf16(&[0xD800 + (((n) - 0x10000) >> 10) as u16, 0xDC00 + (((n) - 0x10000) & 0x3FF) as u16]).unwrap() } else { String::from_utf16_lossy(&[(n) as u16]) });
+    pub fn paragraph_layout_engine_validation_coverage_support_code(n: u32) -> UString {
+        let mut b_b = UString::new();
+        b_b += &(if n > 0xFFFF { u_string::from_units(&[0xD800 + (((n) - 0x10000) >> 10) as u16, 0xDC00 + (((n) - 0x10000) & 0x3FF) as u16]) } else { u_string::from_units(&[(n) as u16]) });
         return b_b;
     }
 
     pub fn paragraph_layout_engine_validation_coverage_support_input(style: Option<ParagraphStyle>, boxes: Option<Vec<InlineBoxSpan>>, objects: Option<Vec<InlineObjectSpan>>, content: Option<TiqianTextContent>) -> Result<LayoutInput, TextRangeError> {
-        return Ok(LayoutInput::new(match &(content) { None => TiqianTextContent::new("甲乙", Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![])), Some(__option) => (*__option).clone() }, Some(TextStyle::new(Some(vec![]), Some(16.0), Some("zh-Hans".to_string()), Some(400),
-Some(false), Some(0.0), Some(InlineAttachment::None))), Some((match &(style) { None => ParagraphStyle::new(Some(LastLineAlignment::Start), Some(WritingMode::HorizontalTb), None, None, Some(Ic::zero()), Some(MeasureAdaptiveFirstLineIndent::new(Some(14.0), Some(1.0), Some(2.0))),
-Some(LineLengthGrid::new(Some(true), None)), Some(RubyLineHeightMode::PerLine), Some(ParagraphStyle::PARAGRAPH_STYLE_DEFAULT_INLINE_OBJECT_MINIMUM_CLEARANCE_EM), Some(ParagraphStyle::PARAGRAPH_STYLE_DEFAULT_EMPHASIS_DOT_GAP_EM)), Some(__option3) => (*__option3).clone()
-}).clone()), LayoutConstraints::new(100 as f64 as f64, Some(f64::INFINITY), Some(2147483647))?, Some((*crate::org::tiqian::core::built_in_layout_profiles::BUILT_IN_LAYOUT_PROFILES_CLREQ_HORIZONTAL).clone()), Some(vec![]), Some(vec![]), (boxes).clone(), (objects).clone()));
+        return Ok(LayoutInput::new(match &(content) { None => TiqianTextContent::new(&(UStr::new(&[30002,20057])), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![])), Some(__option) => (*__option).clone() }, Some(TextStyle::new(Some(vec![]), Some(16.0), Some(UString::from("zh-Hans")), Some(400), Some(false), Some(0.0), Some(InlineAttachment::None))), Some((match &(style) { None => ParagraphStyle::new(Some(LastLineAlignment::Start), Some(WritingMode::HorizontalTb), None, None, Some(Ic::zero()), Some(MeasureAdaptiveFirstLineIndent::new(Some(14.0), Some(1.0), Some(2.0))), Some(LineLengthGrid::new(Some(true), None)), Some(RubyLineHeightMode::PerLine), Some(ParagraphStyle::PARAGRAPH_STYLE_DEFAULT_INLINE_OBJECT_MINIMUM_CLEARANCE_EM), Some(ParagraphStyle::PARAGRAPH_STYLE_DEFAULT_EMPHASIS_DOT_GAP_EM)), Some(__option3) => (*__option3).clone() }).clone()), LayoutConstraints::new(100 as f64 as f64, Some(f64::INFINITY), Some(2147483647))?, Some((*crate::org::tiqian::core::built_in_layout_profiles::BUILT_IN_LAYOUT_PROFILES_CLREQ_HORIZONTAL).clone()), Some(vec![]), Some(vec![]), (boxes).clone(), (objects).clone()));
     }
 
-    pub fn paragraph_layout_engine_validation_coverage_support_obj(range: Option<TextRange>, advance: Option<f64>, ascent: Option<f64>, descent: Option<f64>, leading: Option<InlineObjectBoundaryAdjustment>, trailing: Option<InlineObjectBoundaryAdjustment>) ->
-Result<InlineObjectSpan, TextRangeError> {
-        return Ok(InlineObjectSpan::new(match &(range) { None => TextRange::new(0u32, 1u32)?, Some(__option10) => (*__option10).clone() }, match &(advance) { None => 10 as f64, Some(__option11) => *__option11 }, match &(ascent) { None => 8 as f64, Some(__option12) => *__option12
-}, match &(descent) { None => 2 as f64, Some(__option13) => *__option13 }, Some((match &(leading) { None => InlineObjectBoundaryAdjustment::new(Some(false), None, Some(0.0), Some(0.0), Some(false))?, Some(__option14) => (*__option14).clone() }).clone()), Some((match &(trailing) {
-None => InlineObjectBoundaryAdjustment::new(Some(false), None, Some(0.0), Some(0.0), Some(false))?, Some(__option15) => (*__option15).clone() }).clone()))?);
+    pub fn paragraph_layout_engine_validation_coverage_support_obj(range: Option<TextRange>, advance: Option<f64>, ascent: Option<f64>, descent: Option<f64>, leading: Option<InlineObjectBoundaryAdjustment>, trailing: Option<InlineObjectBoundaryAdjustment>) -> Result<InlineObjectSpan, TextRangeError> {
+        return Ok(InlineObjectSpan::new(match &(range) { None => TextRange::new(0u32, 1u32)?, Some(__option10) => (*__option10).clone() }, match &(advance) { None => 10 as f64, Some(__option11) => *__option11 }, match &(ascent) { None => 8 as f64, Some(__option12) => *__option12 }, match &(descent) { None => 2 as f64, Some(__option13) => *__option13 }, Some((match &(leading) { None => InlineObjectBoundaryAdjustment::new(Some(false), None, Some(0.0), Some(0.0), Some(false))?, Some(__option14) => (*__option14).clone() }).clone()), Some((match &(trailing) { None => InlineObjectBoundaryAdjustment::new(Some(false), None, Some(0.0), Some(0.0), Some(false))?, Some(__option15) => (*__option15).clone() }).clone()))?);
     }
 
-    pub fn paragraph_layout_engine_validation_coverage_support_reject(bad: LayoutInput, fragment: &str) -> Result<(), ParagraphLayoutEngineValidationCoverageSupportRejectFault> {
+    pub fn paragraph_layout_engine_validation_coverage_support_reject(bad: LayoutInput, fragment: &UStr) -> Result<(), ParagraphLayoutEngineValidationCoverageSupportRejectFault> {
         let e = TracedAssertions::traced_assertions_assert_fails_with(None.clone(), { let bad = (bad).clone(); Arc::new(move || {
-        ExplainableStubParagraphLayoutEngine::new(Some(Box::new(CjkFontRoleClassifier::new())), Some(Box::new(ParagraphLayoutFallbackResolver::new(Some("cjk-primary".to_string()), Some("latin-primary".to_string()), Some("symbol-fallback".to_string())).map_err(|e|
-IllegalStateException::new(&format!("{:?}", e)))?)), Some(Box::new(BuiltInClreqProfileResolver::new())), Some(Box::new(StubFontMetricsResolver::new())), Some(Box::new(ScriptAwareFontMetricsNormalizer::new())), Some((PunctuationAtomBuilder::new(None, None).map_err(|e|
-IllegalStateException::new(&format!("{}", e)))?).clone()), Some((PunctuationSpacingCompressor::new().map_err(|e| IllegalStateException::new(&format!("{}", e)))?).clone()), Some(QuotePairAnalyzer::new()), Some(Box::new(GreedyLineBreaker::new(None, None, None, None))),
-Some(Justifier::new(Some(0.5), Some(0.25))), Some(Box::new(ExplainableStubTextShaper::new())), Some((DefaultHyphenator::default_hyphenator_default_hyphenator().map_err(|e| IllegalStateException::new(&format!("{:?}", e)))?).clone()),
-Some(Box::new(LruWidthIndependentAnnotationCache::new(512)))).map_err(|e| IllegalStateException::new(&format!("{:?}", e)))?.layout((bad).clone()).map_err(|e| IllegalStateException::new(&format!("{:?}", e)))?;
+        ExplainableStubParagraphLayoutEngine::new(Some(Box::new(CjkFontRoleClassifier::new())), Some(Box::new(ParagraphLayoutFallbackResolver::new(Some(UString::from("cjk-primary")), Some(UString::from("latin-primary")), Some(UString::from("symbol-fallback"))).map_err(|e| IllegalStateException::new(&format!("{}", e)))?)), Some(Box::new(BuiltInClreqProfileResolver::new())), Some(Box::new(StubFontMetricsResolver::new())), Some(Box::new(ScriptAwareFontMetricsNormalizer::new())), Some((PunctuationAtomBuilder::new(None, None).map_err(|e| IllegalStateException::new(&format!("{}", e)))?).clone()), Some((PunctuationSpacingCompressor::new().map_err(|e| IllegalStateException::new(&format!("{}", e)))?).clone()), Some(QuotePairAnalyzer::new()), Some(Box::new(GreedyLineBreaker::new(None, None, None, None))), Some(Justifier::new(Some(0.5), Some(0.25))), Some(Arc::new(Mutex::new(ExplainableStubTextShaper::new()))), Some((DefaultHyphenator::default_hyphenator_default_hyphenator().map_err(|e| IllegalStateException::new(&format!("{}", e)))?).clone()), Some(Arc::new(Mutex::new(LruWidthIndependentAnnotationCache::new(512))))).map_err(|e| IllegalStateException::new(&format!("{}", e)))?.layout((bad).clone()).map_err(|e| IllegalStateException::new(&format!("{}", e)))?;
         Ok(())
 }) }).map_err(|e| ParagraphLayoutEngineValidationCoverageSupportRejectFault::TracedAssertionsAssertFailsWithFaultFault(e))?;
-        let _ = TracedAssertions::traced_assertions_assert_true((u32::from_ne_bytes((u_string::find_from(&format!("{}", e), fragment, 0)).to_ne_bytes())) <= 2147483647, Some((format!("{}", e)).to_string())).map_err(|e|
-ParagraphLayoutEngineValidationCoverageSupportRejectFault::TracedAssertionsFailFaultFault(e))?;
+        let _ = TracedAssertions::traced_assertions_assert_true((u32::from_ne_bytes(((u_string::find_from(&UString::from(format!("{}", format!("{}", e)).as_str()), fragment, 0)) as u32).to_ne_bytes())) <= 2147483647, Some(UString::from(format!("{}", format!("{}", e)).as_str()))).map_err(|e| ParagraphLayoutEngineValidationCoverageSupportRejectFault::TracedAssertionsFailFaultFault(e))?;
         Ok(())
     }
 }

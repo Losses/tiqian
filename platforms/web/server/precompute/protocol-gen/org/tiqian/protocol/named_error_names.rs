@@ -1,4 +1,5 @@
 use crate::org::tiqian::protocol::paragraph_request_exception::NamedError;
+use crate::runtime::u_string::UString;
 
 
 #[derive(Clone, Copy)]
@@ -31,29 +32,29 @@ impl NamedErrorNames {
 ];
     }
 
-    pub fn named_error_names_describe(error: NamedError) -> String {
+    pub fn named_error_names_describe(error: NamedError) -> UString {
         return match error {
-            NamedError::EmptyParagraph => "EmptyParagraph".to_string().to_string(),
-            NamedError::InvalidMaximumMeasure => "InvalidMaximumMeasure".to_string().to_string(),
-            NamedError::InvalidFontSize => "InvalidFontSize".to_string().to_string(),
-            NamedError::InvalidLineHeight => "InvalidLineHeight".to_string().to_string(),
-            NamedError::InvalidFirstLineIndent => "InvalidFirstLineIndent".to_string().to_string(),
-            NamedError::InvalidFontWeight => "InvalidFontWeight".to_string().to_string(),
-            NamedError::InvalidEmphasisDotGapEm => "InvalidEmphasisDotGapEm".to_string().to_string(),
-            NamedError::MissingExplicitFontFamilies => "MissingExplicitFontFamilies".to_string().to_string(),
-            NamedError::InvalidTextSpanRange => "InvalidTextSpanRange".to_string().to_string(),
-            NamedError::MissingTextSpanFontFamilies => "MissingTextSpanFontFamilies".to_string().to_string(),
-            NamedError::InvalidTextSpanFontSize => "InvalidTextSpanFontSize".to_string().to_string(),
-            NamedError::InvalidTextSpanFontWeight => "InvalidTextSpanFontWeight".to_string().to_string(),
-            NamedError::InvalidTextSpanBaselineShift => "InvalidTextSpanBaselineShift".to_string().to_string(),
-            NamedError::InvalidSourceBoundary => "InvalidSourceBoundary".to_string().to_string(),
-            NamedError::InvalidLineBreakSpanRange => "InvalidLineBreakSpanRange".to_string().to_string(),
-            NamedError::InvalidInlineBoxRange => "InvalidInlineBoxRange".to_string().to_string(),
-            NamedError::InvalidInlineBoxGeometry => "InvalidInlineBoxGeometry".to_string().to_string(),
-            NamedError::InvalidInlineObjectRange => "InvalidInlineObjectRange".to_string().to_string(),
-            NamedError::InvalidInlineObjectAdvance => "InvalidInlineObjectAdvance".to_string().to_string(),
-            NamedError::InvalidInlineObjectVerticalGeometry => "InvalidInlineObjectVerticalGeometry".to_string().to_string(),
-            NamedError::InvalidDecorationRange => "InvalidDecorationRange".to_string().to_string(),
+            NamedError::EmptyParagraph => UString::from("EmptyParagraph").to_ustring().to_ustring(),
+            NamedError::InvalidMaximumMeasure => UString::from("InvalidMaximumMeasure").to_ustring().to_ustring(),
+            NamedError::InvalidFontSize => UString::from("InvalidFontSize").to_ustring().to_ustring(),
+            NamedError::InvalidLineHeight => UString::from("InvalidLineHeight").to_ustring().to_ustring(),
+            NamedError::InvalidFirstLineIndent => UString::from("InvalidFirstLineIndent").to_ustring().to_ustring(),
+            NamedError::InvalidFontWeight => UString::from("InvalidFontWeight").to_ustring().to_ustring(),
+            NamedError::InvalidEmphasisDotGapEm => UString::from("InvalidEmphasisDotGapEm").to_ustring().to_ustring(),
+            NamedError::MissingExplicitFontFamilies => UString::from("MissingExplicitFontFamilies").to_ustring().to_ustring(),
+            NamedError::InvalidTextSpanRange => UString::from("InvalidTextSpanRange").to_ustring().to_ustring(),
+            NamedError::MissingTextSpanFontFamilies => UString::from("MissingTextSpanFontFamilies").to_ustring().to_ustring(),
+            NamedError::InvalidTextSpanFontSize => UString::from("InvalidTextSpanFontSize").to_ustring().to_ustring(),
+            NamedError::InvalidTextSpanFontWeight => UString::from("InvalidTextSpanFontWeight").to_ustring().to_ustring(),
+            NamedError::InvalidTextSpanBaselineShift => UString::from("InvalidTextSpanBaselineShift").to_ustring().to_ustring(),
+            NamedError::InvalidSourceBoundary => UString::from("InvalidSourceBoundary").to_ustring().to_ustring(),
+            NamedError::InvalidLineBreakSpanRange => UString::from("InvalidLineBreakSpanRange").to_ustring().to_ustring(),
+            NamedError::InvalidInlineBoxRange => UString::from("InvalidInlineBoxRange").to_ustring().to_ustring(),
+            NamedError::InvalidInlineBoxGeometry => UString::from("InvalidInlineBoxGeometry").to_ustring().to_ustring(),
+            NamedError::InvalidInlineObjectRange => UString::from("InvalidInlineObjectRange").to_ustring().to_ustring(),
+            NamedError::InvalidInlineObjectAdvance => UString::from("InvalidInlineObjectAdvance").to_ustring().to_ustring(),
+            NamedError::InvalidInlineObjectVerticalGeometry => UString::from("InvalidInlineObjectVerticalGeometry").to_ustring().to_ustring(),
+            NamedError::InvalidDecorationRange => UString::from("InvalidDecorationRange").to_ustring().to_ustring(),
         };
     }
 }

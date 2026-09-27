@@ -55,13 +55,24 @@ use crate::runtime::sorted_table::SortedSetTable;
 use crate::runtime::sorted_table::SortedSetTableBuilder;
 use crate::runtime::sorted_table::SortedTable;
 use crate::runtime::u_string;
+use crate::runtime::u_string::UStr;
+use crate::runtime::u_string::UString;
 use std::sync::Arc;
+use std::sync::Mutex;
 
 
 #[derive(Debug, Clone, PartialEq)]
 pub enum WidthIndependentAnnotationCacheCoverageTestSupportEngineFault {
     TextRangeErrorFault(crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError),
     UStringFaultFault(crate::std::u_string_exception::UStringFault),
+}
+impl std::fmt::Display for WidthIndependentAnnotationCacheCoverageTestSupportEngineFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            WidthIndependentAnnotationCacheCoverageTestSupportEngineFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            WidthIndependentAnnotationCacheCoverageTestSupportEngineFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
 }
 
 impl From<WidthIndependentAnnotationCacheCoverageTestSupportEngineFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
@@ -100,6 +111,16 @@ pub enum WidthIndependentAnnotationCacheCoverageTestSupportAnnotationForTextFaul
     TextShaperShapeFaultFault(crate::org::tiqian::shaping::text_shaper::TextShaperShapeFault),
     ParagraphShapingStageShapeParagraphFaultFault(crate::org::tiqian::layout::paragraph_shaping_stage::ParagraphShapingStageShapeParagraphFault),
     ParagraphLayoutEngineNewFaultFault(crate::org::tiqian::layout::paragraph_layout_engine::ParagraphLayoutEngineNewFault),
+}
+impl std::fmt::Display for WidthIndependentAnnotationCacheCoverageTestSupportAnnotationForTextFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            WidthIndependentAnnotationCacheCoverageTestSupportAnnotationForTextFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            WidthIndependentAnnotationCacheCoverageTestSupportAnnotationForTextFault::TextShaperShapeFaultFault(value) => write!(formatter, "{}", value),
+            WidthIndependentAnnotationCacheCoverageTestSupportAnnotationForTextFault::ParagraphShapingStageShapeParagraphFaultFault(value) => write!(formatter, "{}", value),
+            WidthIndependentAnnotationCacheCoverageTestSupportAnnotationForTextFault::ParagraphLayoutEngineNewFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
 }
 
 impl From<WidthIndependentAnnotationCacheCoverageTestSupportAnnotationForTextFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
@@ -170,10 +191,8 @@ impl WidthIndependentAnnotationCacheCoverageTestSupport {
         return SortedTable::sorted_table_map_builder::<TextRange, SortedSetTable<u32>>(Arc::new(compare_text_range)).clone().build();
     }
 
-    pub fn width_independent_annotation_cache_coverage_test_support_engine(clreq_profile_resolver: Option<Box<dyn ClreqProfileResolver>>, text_shaper: Option<Box<dyn ITextShaper>>) -> Result<ExplainableStubParagraphLayoutEngine, ParagraphLayoutEngineNewFault> {
-        return Ok(ExplainableStubParagraphLayoutEngine::new(Some(Box::new(CjkFontRoleClassifier::new())), Some(Box::new(ParagraphLayoutFallbackResolver::new(Some("cjk-primary".to_string()), Some("latin-primary".to_string()), Some("symbol-fallback".to_string()))?)),
-clreq_profile_resolver, Some(Box::new(StubFontMetricsResolver::new())), Some(Box::new(ScriptAwareFontMetricsNormalizer::new())), Some((PunctuationAtomBuilder::new(None, None)?).clone()), Some((PunctuationSpacingCompressor::new()?).clone()), Some(QuotePairAnalyzer::new()),
-Some(Box::new(GreedyLineBreaker::new(None, None, None, None))), Some(Justifier::new(Some(0.5), Some(0.25))), text_shaper, Some((DefaultHyphenator::default_hyphenator_default_hyphenator()?).clone()), Some(Box::new(LruWidthIndependentAnnotationCache::new(512))))?);
+    pub fn width_independent_annotation_cache_coverage_test_support_engine(clreq_profile_resolver: Option<Box<dyn ClreqProfileResolver>>, text_shaper: Option<Arc<Mutex<dyn ITextShaper>>>) -> Result<ExplainableStubParagraphLayoutEngine, ParagraphLayoutEngineNewFault> {
+        return Ok(ExplainableStubParagraphLayoutEngine::new(Some(Box::new(CjkFontRoleClassifier::new())), Some(Box::new(ParagraphLayoutFallbackResolver::new(Some(UString::from("cjk-primary")), Some(UString::from("latin-primary")), Some(UString::from("symbol-fallback")))?)), clreq_profile_resolver, Some(Box::new(StubFontMetricsResolver::new())), Some(Box::new(ScriptAwareFontMetricsNormalizer::new())), Some((PunctuationAtomBuilder::new(None, None)?).clone()), Some((PunctuationSpacingCompressor::new()?).clone()), Some(QuotePairAnalyzer::new()), Some(Box::new(GreedyLineBreaker::new(None, None, None, None))), Some(Justifier::new(Some(0.5), Some(0.25))), text_shaper, Some((DefaultHyphenator::default_hyphenator_default_hyphenator()?).clone()), Some(Arc::new(Mutex::new(LruWidthIndependentAnnotationCache::new(512)))))?);
     }
 
     pub fn width_independent_annotation_cache_coverage_test_support_key(input: LayoutInput) -> WidthIndependentAnnotationKey {
@@ -181,7 +200,7 @@ Some(Box::new(GreedyLineBreaker::new(None, None, None, None))), Some(Justifier::
     }
 
     pub fn width_independent_annotation_cache_coverage_test_support_tier_set(tiers: &Vec<ProgressiveBreakTier>) -> SortedSetTable<u32> {
-        let mut b: SortedSetTableBuilder<u32> = SortedTable::sorted_table_set_builder::<u32>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_bytes((*a).to_ne_bytes()), i32::from_ne_bytes((*b).to_ne_bytes()))));
+        let mut b: SortedSetTableBuilder<u32> = SortedTable::sorted_table_set_builder::<u32>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_bytes(((*a) as i32).to_ne_bytes()), i32::from_ne_bytes(((*b) as i32).to_ne_bytes()))));
         for i in 0..match u32::try_from(tiers.len()) { Ok(value) => value, Err(_) => u32::MAX } {
             b.put(&(ProgressiveBreakTierPriority::progressive_break_tier_priority_priority(tiers[usize::try_from(i).unwrap_or(0)])));
         }
@@ -194,25 +213,23 @@ Some(Box::new(GreedyLineBreaker::new(None, None, None, None))), Some(Justifier::
         return b.clone().build();
     }
 
-    pub fn width_independent_annotation_cache_coverage_test_support_render_nullable_range(v: Option<TextRange>) -> String {
-        return match &(v) { None => "null".to_string(), Some(__option) => WidthIndependentAnnotationCacheCoverageTestSupport::width_independent_annotation_cache_coverage_test_support_render_range(((*__option).clone()).clone()).to_string() };
+    pub fn width_independent_annotation_cache_coverage_test_support_render_nullable_range(v: Option<TextRange>) -> UString {
+        return match &(v) { None => UString::from("null"), Some(__option) => WidthIndependentAnnotationCacheCoverageTestSupport::width_independent_annotation_cache_coverage_test_support_render_range(((*__option).clone()).clone()).to_ustring() };
     }
 
-    pub fn width_independent_annotation_cache_coverage_test_support_render_range(v: TextRange) -> String {
-        return v.to_string();
+    pub fn width_independent_annotation_cache_coverage_test_support_render_range(v: TextRange) -> UString {
+        return UString::from(format!("{}", v.to_string()).as_str());
     }
 
     pub fn width_independent_annotation_cache_coverage_test_support_containing_items(clusters: &Vec<Cluster>, items: &Vec<TextRange>) -> Vec<Option<TextRange>> {
         let mut out: Vec<Option<TextRange>> = vec![];
         let mut item_index = 0u32;
         for cluster in clusters {
-            while (i32::from_ne_bytes((item_index).to_ne_bytes())) < (i32::from_ne_bytes((u32::try_from((items.len()) & 0xFFFF_FFFF).unwrap_or(0)).to_ne_bytes())) && (i32::from_ne_bytes((items[usize::try_from(item_index).unwrap_or(0)].end).to_ne_bytes())) <=
-i32::from_ne_bytes(((cluster.range).clone().start).to_ne_bytes()) {
+            while (i32::from_ne_bytes(((item_index) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((items.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) && (i32::from_ne_bytes(((items[usize::try_from(item_index).unwrap_or(0)].end) as i32).to_ne_bytes())) <= i32::from_ne_bytes((((cluster.range).clone().start) as i32).to_ne_bytes()) {
                 item_index = u32::wrapping_add(item_index, 1);
             }
-            let item = if i32::from_ne_bytes((item_index).to_ne_bytes()) < (i32::from_ne_bytes((u32::try_from((items.len()) & 0xFFFF_FFFF).unwrap_or(0)).to_ne_bytes())) { Some((items[usize::try_from(item_index).unwrap_or(0)]).clone()) } else { None };
-            let candidate = if match &(item) { Some(__option2) => i32::from_ne_bytes(((cluster.range).clone().start).to_ne_bytes()) >= i32::from_ne_bytes((__option2.start).to_ne_bytes()) && (i32::from_ne_bytes(((cluster.range).clone().end).to_ne_bytes())) <=
-i32::from_ne_bytes((__option2.end).to_ne_bytes()), None => false } { item } else { None };
+            let item = if i32::from_ne_bytes(((item_index) as i32).to_ne_bytes()) < (i32::from_ne_bytes(((u32::try_from((items.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) { Some((items[usize::try_from(item_index).unwrap_or(0)]).clone()) } else { None };
+            let candidate = if match &(item) { Some(__option2) => i32::from_ne_bytes((((cluster.range).clone().start) as i32).to_ne_bytes()) >= i32::from_ne_bytes(((__option2.start) as i32).to_ne_bytes()) && (i32::from_ne_bytes((((cluster.range).clone().end) as i32).to_ne_bytes())) <= i32::from_ne_bytes(((__option2.end) as i32).to_ne_bytes()), None => false } { item } else { None };
             out.push(candidate.clone());
         }
         return out;
@@ -222,31 +239,24 @@ i32::from_ne_bytes((__option2.end).to_ne_bytes()), None => false } { item } else
         let mut out: Vec<Option<TextRange>> = vec![];
         let mut item_index = 0u32;
         for cluster in clusters {
-            while (i32::from_ne_bytes((item_index).to_ne_bytes())) < (i32::from_ne_bytes((u32::try_from((items.len()) & 0xFFFF_FFFF).unwrap_or(0)).to_ne_bytes())) && (i32::from_ne_bytes((items[usize::try_from(item_index).unwrap_or(0)].end).to_ne_bytes())) <=
-i32::from_ne_bytes(((cluster.range).clone().start).to_ne_bytes()) {
+            while (i32::from_ne_bytes(((item_index) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((items.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) && (i32::from_ne_bytes(((items[usize::try_from(item_index).unwrap_or(0)].end) as i32).to_ne_bytes())) <= i32::from_ne_bytes((((cluster.range).clone().start) as i32).to_ne_bytes()) {
                 item_index = u32::wrapping_add(item_index, 1);
             }
-            let item = if i32::from_ne_bytes((item_index).to_ne_bytes()) < (i32::from_ne_bytes((u32::try_from((items.len()) & 0xFFFF_FFFF).unwrap_or(0)).to_ne_bytes())) { Some((items[usize::try_from(item_index).unwrap_or(0)]).clone()) } else { None };
-            let candidate = if match &(item) { Some(__option4) => i32::from_ne_bytes((__option4.start).to_ne_bytes()) >= i32::from_ne_bytes(((cluster.range).clone().start).to_ne_bytes()) && (i32::from_ne_bytes((__option4.end).to_ne_bytes())) <=
-i32::from_ne_bytes(((cluster.range).clone().end).to_ne_bytes()), None => false } { item } else { None };
+            let item = if i32::from_ne_bytes(((item_index) as i32).to_ne_bytes()) < (i32::from_ne_bytes(((u32::try_from((items.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) { Some((items[usize::try_from(item_index).unwrap_or(0)]).clone()) } else { None };
+            let candidate = if match &(item) { Some(__option4) => i32::from_ne_bytes(((__option4.start) as i32).to_ne_bytes()) >= i32::from_ne_bytes((((cluster.range).clone().start) as i32).to_ne_bytes()) && (i32::from_ne_bytes(((__option4.end) as i32).to_ne_bytes())) <= i32::from_ne_bytes((((cluster.range).clone().end) as i32).to_ne_bytes()), None => false } { item } else { None };
             out.push(candidate.clone());
         }
         return out;
     }
 
-    pub(crate) fn width_independent_annotation_cache_coverage_test_support_copy_annotation(a: WidthIndependentParagraphAnnotation, clreq_profile: Option<ClreqProfile>, font_decisions: Option<Vec<FontDecision>>, segment_shaping_cache: Option<SortedMapTable<TextRange,
-ShapingResult>>) -> WidthIndependentParagraphAnnotation {
-        return WidthIndependentParagraphAnnotation::new((a.text).to_string().as_str(), a.font_size, (a.style_at).clone(), (a.font_size_at).clone(), (a.bopomofo_font_weight_at).clone(), a.ruby_font_size, a.ruby_stack_gap, a.ruby_font_weight, a.pinyin_spans.to_vec(), match
-&(clreq_profile) { None => (a.clreq_profile).clone(), Some(__option5) => (*__option5).clone() }, (a.punctuation_glyph_substitutor).clone(), a.quote_pairs.to_vec(), a.role_override_infos.to_vec(), match &(font_decisions) { None => (a.font_decisions).clone(), Some(__option6) =>
-(*__option6).clone() }.to_vec(), a.cluster_ranges.to_vec(), (a.font_decision_by_range).clone(), (a.inline_object_by_range).clone(), match &(segment_shaping_cache) { None => (a.segment_shaping_cache).clone(), Some(__option7) => (*__option7).clone() },
-(a.substitution_rollbacks).clone(), (a.ruby_font_geometry_by_span).clone(), (a.base_shaping_stage).clone());
+    pub(crate) fn width_independent_annotation_cache_coverage_test_support_copy_annotation(a: WidthIndependentParagraphAnnotation, clreq_profile: Option<ClreqProfile>, font_decisions: Option<Vec<FontDecision>>, segment_shaping_cache: Option<SortedMapTable<TextRange, ShapingResult>>) -> WidthIndependentParagraphAnnotation {
+        return WidthIndependentParagraphAnnotation::new((a.text).to_ustring().as_ustr(), a.font_size, (a.style_at).clone(), (a.font_size_at).clone(), (a.bopomofo_font_weight_at).clone(), a.ruby_font_size, a.ruby_stack_gap, a.ruby_font_weight, a.pinyin_spans.to_vec(), match &(clreq_profile) { None => (a.clreq_profile).clone(), Some(__option5) => (*__option5).clone() }, (a.punctuation_glyph_substitutor).clone(), a.quote_pairs.to_vec(), a.role_override_infos.to_vec(), match &(font_decisions) { None => (a.font_decisions).clone(), Some(__option6) => (*__option6).clone() }.to_vec(), a.cluster_ranges.to_vec(), (a.font_decision_by_range).clone(), (a.inline_object_by_range).clone(), match &(segment_shaping_cache) { None => (a.segment_shaping_cache).clone(), Some(__option7) => (*__option7).clone() }, (a.substitution_rollbacks).clone(), (a.ruby_font_geometry_by_span).clone(), (a.base_shaping_stage).clone());
     }
 
     pub fn width_independent_annotation_cache_coverage_test_support_with_adjusted_profile(annotation: WidthIndependentParagraphAnnotation, allow_inline_stop_compression: bool, allow_sino_western_gap_adjustment: bool) -> WidthIndependentParagraphAnnotation {
         let source = (annotation.clreq_profile).clone().clone();
         let custom_adjustment = AdjustmentStylePolicy::new(Some((source.adjustment).clone().line_end_punctuation), Some(allow_inline_stop_compression), Some(allow_sino_western_gap_adjustment), Some((source.adjustment).clone().line_adjustment));
-        let custom_profile = ClreqProfile::new((source.id).to_string().as_str(), source.strictness, source.region, Some(source.punctuation_glyph_policy), Some((source.coalesce_repeatable_punctuation).clone()), Some((source.auto_space).clone()), Some(source.glue_placement),
-(custom_adjustment).clone(), (source.kinsoku_mode).clone(), (source.punctuation_width).clone());
+        let custom_profile = ClreqProfile::new((source.id).to_ustring().as_ustr(), source.strictness, source.region, Some(source.punctuation_glyph_policy), Some((source.coalesce_repeatable_punctuation).clone()), Some((source.auto_space).clone()), Some(source.glue_placement), (custom_adjustment).clone(), (source.kinsoku_mode).clone(), (source.punctuation_width).clone());
         return WidthIndependentAnnotationCacheCoverageTestSupport::width_independent_annotation_cache_coverage_test_support_copy_annotation((annotation).clone(), Some((custom_profile).clone()), None, None);
     }
 
@@ -261,15 +271,14 @@ ShapingResult>>) -> WidthIndependentParagraphAnnotation {
     }
 
     pub fn width_independent_annotation_cache_coverage_test_support_with_empty_shaping_cache(annotation: WidthIndependentParagraphAnnotation) -> WidthIndependentParagraphAnnotation {
-        return WidthIndependentAnnotationCacheCoverageTestSupport::width_independent_annotation_cache_coverage_test_support_copy_annotation((annotation).clone(), None, None, Some(SortedTable::sorted_table_map_builder::<TextRange,
-ShapingResult>(Arc::new(compare_text_range)).clone().build()));
+        return WidthIndependentAnnotationCacheCoverageTestSupport::width_independent_annotation_cache_coverage_test_support_copy_annotation((annotation).clone(), None, None, Some(SortedTable::sorted_table_map_builder::<TextRange, ShapingResult>(Arc::new(compare_text_range)).clone().build()));
     }
 
     pub fn width_independent_annotation_cache_coverage_test_support_non_gb_resolver() -> Box<dyn ClreqProfileResolver> {
         return Box::new(TiqianClreqFixedResolver::new((*crate::org::tiqian::clreq::clreq_profile::CLREQ_PROFILE_TAIWAN_HORIZONTAL).clone()));
     }
 
-    pub fn width_independent_annotation_cache_coverage_test_support_ruby(range: TextRange, text: &str, kind: RubyKind, locale: Option<String>) -> RubySpan {
+    pub fn width_independent_annotation_cache_coverage_test_support_ruby(range: TextRange, text: &UStr, kind: RubyKind, locale: Option<UString>) -> RubySpan {
         return RubySpan::new((range).clone(), text, Some(vec![]), kind, locale.clone());
     }
 
@@ -277,32 +286,27 @@ ShapingResult>(Arc::new(compare_text_range)).clone().build()));
         return Ok(InlineObjectBoundaryAdjustment::new(Some(false), None, Some(shrink_capacity), Some(0.0f64), Some(false))?);
     }
 
-    pub fn width_independent_annotation_cache_coverage_test_support_annotation_for_text(label: &str) -> Result<WidthIndependentParagraphAnnotation, WidthIndependentAnnotationCacheCoverageTestSupportAnnotationForTextFault> {
-        let input = LayoutInput::new(TiqianTextContent::new(label, Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![])), Some(TextStyle::new(Some(vec![]), Some(16.0), Some("zh-Hans".to_string()), Some(400), Some(false), Some(0.0), Some(InlineAttachment::None))),
-Some(ParagraphStyle::new(Some(LastLineAlignment::Start), Some(WritingMode::HorizontalTb), None, Some((Ic::zero()).clone()), Some(Ic::zero()), Some(MeasureAdaptiveFirstLineIndent::new(Some(14.0), Some(1.0), Some(2.0))), Some(LineLengthGrid::new(Some(true), None)),
-Some(RubyLineHeightMode::PerLine), Some(ParagraphStyle::PARAGRAPH_STYLE_DEFAULT_INLINE_OBJECT_MINIMUM_CLEARANCE_EM), Some(ParagraphStyle::PARAGRAPH_STYLE_DEFAULT_EMPHASIS_DOT_GAP_EM))), LayoutConstraints::new(300 as f64 as f64, Some(f64::INFINITY), Some(2147483647)).map_err(|e|
-WidthIndependentAnnotationCacheCoverageTestSupportAnnotationForTextFault::TextRangeErrorFault(e))?, Some((*crate::org::tiqian::core::built_in_layout_profiles::BUILT_IN_LAYOUT_PROFILES_CLREQ_HORIZONTAL).clone()), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]));
-        return Ok(WidthIndependentAnnotationCacheFns::width_independent_annotation_cache_fns_prepare_width_independent_annotation(&mut WidthIndependentAnnotationCacheCoverageTestSupport::width_independent_annotation_cache_coverage_test_support_engine(None, None).map_err(|e|
-WidthIndependentAnnotationCacheCoverageTestSupportAnnotationForTextFault::ParagraphLayoutEngineNewFaultFault(e))?, (input).clone(), WidthIndependentAnnotationCacheCoverageTestSupport::width_independent_annotation_cache_coverage_test_support_empty_tiers()).map_err(|e|
-WidthIndependentAnnotationCacheCoverageTestSupportAnnotationForTextFault::ParagraphShapingStageShapeParagraphFaultFault(e))?);
+    pub fn width_independent_annotation_cache_coverage_test_support_annotation_for_text(label: &UStr) -> Result<WidthIndependentParagraphAnnotation, WidthIndependentAnnotationCacheCoverageTestSupportAnnotationForTextFault> {
+        let input = LayoutInput::new(TiqianTextContent::new(label, Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![])), Some(TextStyle::new(Some(vec![]), Some(16.0), Some(UString::from("zh-Hans")), Some(400), Some(false), Some(0.0), Some(InlineAttachment::None))), Some(ParagraphStyle::new(Some(LastLineAlignment::Start), Some(WritingMode::HorizontalTb), None, Some((Ic::zero()).clone()), Some(Ic::zero()), Some(MeasureAdaptiveFirstLineIndent::new(Some(14.0), Some(1.0), Some(2.0))), Some(LineLengthGrid::new(Some(true), None)), Some(RubyLineHeightMode::PerLine), Some(ParagraphStyle::PARAGRAPH_STYLE_DEFAULT_INLINE_OBJECT_MINIMUM_CLEARANCE_EM), Some(ParagraphStyle::PARAGRAPH_STYLE_DEFAULT_EMPHASIS_DOT_GAP_EM))), LayoutConstraints::new(300 as f64 as f64, Some(f64::INFINITY), Some(2147483647)).map_err(|e| WidthIndependentAnnotationCacheCoverageTestSupportAnnotationForTextFault::TextRangeErrorFault(e))?, Some((*crate::org::tiqian::core::built_in_layout_profiles::BUILT_IN_LAYOUT_PROFILES_CLREQ_HORIZONTAL).clone()), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]));
+        return Ok(WidthIndependentAnnotationCacheFns::width_independent_annotation_cache_fns_prepare_width_independent_annotation(&mut WidthIndependentAnnotationCacheCoverageTestSupport::width_independent_annotation_cache_coverage_test_support_engine(None, None).map_err(|e| WidthIndependentAnnotationCacheCoverageTestSupportAnnotationForTextFault::ParagraphLayoutEngineNewFaultFault(e))?, (input).clone(), WidthIndependentAnnotationCacheCoverageTestSupport::width_independent_annotation_cache_coverage_test_support_empty_tiers()).map_err(|e| WidthIndependentAnnotationCacheCoverageTestSupportAnnotationForTextFault::ParagraphShapingStageShapeParagraphFaultFault(e))?);
     }
 
-    pub fn width_independent_annotation_cache_coverage_test_support_text_span_list(text: &str, font_size: f64) -> Result<Vec<TextSpan>, TextRangeError> {
+    pub fn width_independent_annotation_cache_coverage_test_support_text_span_list(text: &UStr, font_size: f64) -> Result<Vec<TextSpan>, TextRangeError> {
         let mut spans: Vec<TextSpan> = vec![];
         for i in 0..match u32::try_from(u_string::unit_count(&(text))) { Ok(value) => value, Err(_) => u32::MAX } {
-            spans.push(TextSpan::new(TextRange::new(i, u32::wrapping_add(i, 1))?, TextStyle::new(Some(vec![]), Some(font_size), Some("zh-Hans".to_string()), Some(400), Some(false), Some(0.0), Some(InlineAttachment::None))));
+            spans.push(TextSpan::new(TextRange::new(i, u32::wrapping_add(i, 1))?, TextStyle::new(Some(vec![]), Some(font_size), Some(UString::from("zh-Hans")), Some(400), Some(false), Some(0.0), Some(InlineAttachment::None))));
         }
         return Ok(spans);
     }
 
-    pub fn width_independent_annotation_cache_coverage_test_support_index_of(text: &str, needle: &str) -> u32 {
+    pub fn width_independent_annotation_cache_coverage_test_support_index_of(text: &UStr, needle: &UStr) -> u32 {
         let nl = u_string::unit_count(&(needle));
         let limit = u32::wrapping_add(u32::wrapping_sub(u_string::unit_count(&(text)), nl), 1);
         let mut i = 0u32;
-        while (i32::from_ne_bytes((i).to_ne_bytes())) < (i32::from_ne_bytes((limit).to_ne_bytes())) {
+        while (i32::from_ne_bytes(((i) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((limit) as i32).to_ne_bytes())) {
             let mut r#match = true;
             let mut j = 0u32;
-            while (i32::from_ne_bytes((j).to_ne_bytes())) < (i32::from_ne_bytes((nl).to_ne_bytes())) {
+            while (i32::from_ne_bytes(((j) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((nl) as i32).to_ne_bytes())) {
                 if u_string::at(text, u32::wrapping_add(i, j)) != u_string::at(needle, j) {
                     r#match = false;
                     break;
@@ -362,12 +366,11 @@ impl ConflictingOpenTypeFeaturesShaper {
     }
 
     pub fn shape(&self, input: ShapingInput) -> Result<ShapingResult, TextShaperShapeFault> {
-        let cluster = Cluster::new((input.range).clone(), u_string::substring(&(input.text).to_string(), i32::from_ne_bytes(((input.range).clone().start).to_ne_bytes()), i32::from_ne_bytes(((input.range).clone().end).to_ne_bytes())).as_str(), "test", 16.0f64,
-Some((input.display_text).to_string()), Some(0.0), Some(0.0), Some(0.0));
+        let cluster = Cluster::new((input.range).clone(), u_string::substring(&(input.text).to_ustring(), i32::from_ne_bytes((((input.range).clone().start) as i32).to_ne_bytes()), i32::from_ne_bytes((((input.range).clone().end) as i32).to_ne_bytes())).as_ustr(), &(UStr::new(&[116,101,115,116])), 16.0f64, Some((input.display_text).to_ustring()), Some(0.0), Some(0.0), Some(0.0));
         let glyph1 = Glyph::new(1u32, (input.range).clone(), 8.0f64, Some(0.0f64), Some(0.0), None, None, None, None);
         let glyph2 = Glyph::new(2u32, (input.range).clone(), 8.0f64, Some(8.0f64), Some(0.0), None, None, None, None);
-        let run1 = GlyphRun::new((input.range).clone(), "test", vec![(glyph1).clone()].to_vec(), 8.0f64, Some(vec!["feat1".to_string()]));
-        let run2 = GlyphRun::new((input.range).clone(), "test", vec![(glyph2).clone()].to_vec(), 8.0f64, Some(vec!["feat2".to_string()]));
+        let run1 = GlyphRun::new((input.range).clone(), &(UStr::new(&[116,101,115,116])), vec![(glyph1).clone()].to_vec(), 8.0f64, Some(vec![UString::from("feat1").to_ustring()]));
+        let run2 = GlyphRun::new((input.range).clone(), &(UStr::new(&[116,101,115,116])), vec![(glyph2).clone()].to_vec(), 8.0f64, Some(vec![UString::from("feat2").to_ustring()]));
         return Ok(ShapingResult::new(vec![(cluster).clone()].to_vec(), vec![(run1).clone(), (run2).clone()].to_vec(), Some(vec![])));
     }
 }
@@ -384,30 +387,29 @@ impl ITextShaper for ConflictingOpenTypeFeaturesShaper {
     }
 
     fn shape(&mut self, input: ShapingInput) -> Result<ShapingResult, TextShaperShapeFault> {
-        let cluster = Cluster::new((input.range).clone(), u_string::substring(&(input.text).to_string(), i32::from_ne_bytes(((input.range).clone().start).to_ne_bytes()), i32::from_ne_bytes(((input.range).clone().end).to_ne_bytes())).as_str(), "test", 16.0f64,
-Some((input.display_text).to_string()), Some(0.0), Some(0.0), Some(0.0));
+        let cluster = Cluster::new((input.range).clone(), u_string::substring(&(input.text).to_ustring(), i32::from_ne_bytes((((input.range).clone().start) as i32).to_ne_bytes()), i32::from_ne_bytes((((input.range).clone().end) as i32).to_ne_bytes())).as_ustr(), &(UStr::new(&[116,101,115,116])), 16.0f64, Some((input.display_text).to_ustring()), Some(0.0), Some(0.0), Some(0.0));
         let glyph1 = Glyph::new(1u32, (input.range).clone(), 8.0f64, Some(0.0f64), Some(0.0), None, None, None, None);
         let glyph2 = Glyph::new(2u32, (input.range).clone(), 8.0f64, Some(8.0f64), Some(0.0), None, None, None, None);
-        let run1 = GlyphRun::new((input.range).clone(), "test", vec![(glyph1).clone()].to_vec(), 8.0f64, Some(vec!["feat1".to_string()]));
-        let run2 = GlyphRun::new((input.range).clone(), "test", vec![(glyph2).clone()].to_vec(), 8.0f64, Some(vec!["feat2".to_string()]));
+        let run1 = GlyphRun::new((input.range).clone(), &(UStr::new(&[116,101,115,116])), vec![(glyph1).clone()].to_vec(), 8.0f64, Some(vec![UString::from("feat1").to_ustring()]));
+        let run2 = GlyphRun::new((input.range).clone(), &(UStr::new(&[116,101,115,116])), vec![(glyph2).clone()].to_vec(), 8.0f64, Some(vec![UString::from("feat2").to_ustring()]));
         return Ok(ShapingResult::new(vec![(cluster).clone()].to_vec(), vec![(run1).clone(), (run2).clone()].to_vec(), Some(vec![])));
     }
 }
 
-#[derive(Clone, PartialEq)]
+#[derive(Clone)]
 pub struct NarrowInkShaper {
-    pub(crate) delegate: ExplainableStubTextShaper,
+    pub(crate) delegate: Arc<Mutex<ExplainableStubTextShaper>>,
 }
 
 impl NarrowInkShaper {
     pub fn new() -> Self {
         Self {
-            delegate: ExplainableStubTextShaper::new(),
+            delegate: Arc::new(Mutex::new(ExplainableStubTextShaper::new())),
         }
     }
 
     pub fn shape(&self, input: ShapingInput) -> Result<ShapingResult, TextShaperShapeFault> {
-        let r = self.delegate.shape((input).clone())?;
+        let r = self.delegate.lock().unwrap().shape((input).clone())?;
         let mut runs: Vec<GlyphRun> = vec![];
         for ri in 0..match u32::try_from(r.glyph_runs.len()) { Ok(value) => value, Err(_) => u32::MAX } {
             let run = (r.glyph_runs[usize::try_from(ri).unwrap_or(0)]).clone();
@@ -416,7 +418,7 @@ impl NarrowInkShaper {
                 let g = (run.glyphs[usize::try_from(gi).unwrap_or(0)]).clone();
                 glyphs.push(Glyph::new(g.id, (g.cluster_range).clone(), g.advance, Some(g.x), Some(g.y), g.render_font_key.clone(), Some(Rect::new(4.0f64, 2.0f64, 12.0f64, 10.0f64)), g.halt_advance, g.halt_placement_x));
             }
-            runs.push(GlyphRun::new((run.range).clone(), (run.font_key).to_string().as_str(), glyphs.to_vec(), run.advance, Some(vec![])));
+            runs.push(GlyphRun::new((run.range).clone(), (run.font_key).to_ustring().as_ustr(), glyphs.to_vec(), run.advance, Some(vec![])));
         }
         return Ok(ShapingResult::new(r.clusters.to_vec(), runs.to_vec(), Some((r.decisions).clone())));
     }
@@ -434,7 +436,7 @@ impl ITextShaper for NarrowInkShaper {
     }
 
     fn shape(&mut self, input: ShapingInput) -> Result<ShapingResult, TextShaperShapeFault> {
-        let r = self.delegate.shape((input).clone())?;
+        let r = self.delegate.lock().unwrap().shape((input).clone())?;
         let mut runs: Vec<GlyphRun> = vec![];
         for ri in 0..match u32::try_from(r.glyph_runs.len()) { Ok(value) => value, Err(_) => u32::MAX } {
             let run = (r.glyph_runs[usize::try_from(ri).unwrap_or(0)]).clone();
@@ -443,7 +445,7 @@ impl ITextShaper for NarrowInkShaper {
                 let g = (run.glyphs[usize::try_from(gi).unwrap_or(0)]).clone();
                 glyphs.push(Glyph::new(g.id, (g.cluster_range).clone(), g.advance, Some(g.x), Some(g.y), g.render_font_key.clone(), Some(Rect::new(4.0f64, 2.0f64, 12.0f64, 10.0f64)), g.halt_advance, g.halt_placement_x));
             }
-            runs.push(GlyphRun::new((run.range).clone(), (run.font_key).to_string().as_str(), glyphs.to_vec(), run.advance, Some(vec![])));
+            runs.push(GlyphRun::new((run.range).clone(), (run.font_key).to_ustring().as_ustr(), glyphs.to_vec(), run.advance, Some(vec![])));
         }
         return Ok(ShapingResult::new(r.clusters.to_vec(), runs.to_vec(), Some((r.decisions).clone())));
     }

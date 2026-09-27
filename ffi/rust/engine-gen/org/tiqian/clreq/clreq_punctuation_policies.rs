@@ -4,6 +4,7 @@ use crate::org::tiqian::clreq::punctuation_class::PunctuationClass;
 use crate::org::tiqian::clreq::punctuation_policy::PunctuationPolicy;
 use crate::org::tiqian::clreq::punctuation_width_policy::PunctuationWidthPolicy;
 use crate::runtime::u_string;
+use crate::runtime::u_string::UStr;
 
 
 static CLREQ_PUNCTUATION_POLICIES_OPENING_UNITS: [u32; 12] = [8220, 8216, 65288, 12298, 12296, 12300, 12302, 12304, 12308, 12310, 12312, 12314];
@@ -23,11 +24,11 @@ pub struct ClreqPunctuationPolicies;
 
 impl ClreqPunctuationPolicies {
 
-    pub fn clreq_punctuation_policies_is_ascii_point_mark(char: &str) -> bool {
+    pub fn clreq_punctuation_policies_is_ascii_point_mark(char: &UStr) -> bool {
         return ClreqPunctuationPolicies::clreq_punctuation_policies_contains_unit(&CLREQ_PUNCTUATION_POLICIES_ASCII_POINT_MARKS, u_string::unit_at(&char, 0u32));
     }
 
-    pub fn clreq_punctuation_policies_classify(char: &str) -> PunctuationClass {
+    pub fn clreq_punctuation_policies_classify(char: &UStr) -> PunctuationClass {
         let unit = u_string::unit_at(&char, 0u32).unwrap_or(0);
         if ClreqPunctuationPolicies::clreq_punctuation_policies_contains_unit(&CLREQ_PUNCTUATION_POLICIES_OPENING_UNITS, Some(unit)) {
             return PunctuationClass::Opening;
@@ -59,7 +60,7 @@ impl ClreqPunctuationPolicies {
         return PunctuationClass::Other;
     }
 
-    pub fn clreq_punctuation_policies_forced_half_width(char: &str, policy: PunctuationWidthPolicy) -> bool {
+    pub fn clreq_punctuation_policies_forced_half_width(char: &UStr, policy: PunctuationWidthPolicy) -> bool {
         let unit = u_string::unit_at(&char, 0u32).unwrap_or(0);
         if ClreqPunctuationPolicies::clreq_punctuation_policies_contains_unit(&CLREQ_PUNCTUATION_POLICIES_SHORT_HYPHEN_CONNECTORS, Some(unit)) {
             return true;
@@ -79,16 +80,14 @@ impl ClreqPunctuationPolicies {
         return false;
     }
 
-    pub fn clreq_punctuation_policies_policy_for(char: &str) -> PunctuationPolicy {
+    pub fn clreq_punctuation_policies_policy_for(char: &UStr) -> PunctuationPolicy {
     let __units = u_string::units(&char);
     let __count = u_string::unit_count(&char);
         let punctuation_class = ClreqPunctuationPolicies::clreq_punctuation_policies_classify(char);
-        return PunctuationPolicy::new(punctuation_class, !ClreqPunctuationPolicies::clreq_punctuation_policies_forbidden_at_line_start(char, KinsokuLevel::Basic), !ClreqPunctuationPolicies::clreq_punctuation_policies_forbidden_at_line_end(char, KinsokuLevel::Basic),
-ClreqPunctuationPolicies::clreq_punctuation_policies_default_punctuation_body_em(u_string::unit_at_from(&__units, 0u32), punctuation_class), Some(ClreqPunctuationPolicies::clreq_punctuation_policies_default_punctuation_advance_em(u_string::unit_at_from(&__units, 0u32),
-punctuation_class)));
+        return PunctuationPolicy::new(punctuation_class, !ClreqPunctuationPolicies::clreq_punctuation_policies_forbidden_at_line_start(char, KinsokuLevel::Basic), !ClreqPunctuationPolicies::clreq_punctuation_policies_forbidden_at_line_end(char, KinsokuLevel::Basic), ClreqPunctuationPolicies::clreq_punctuation_policies_default_punctuation_body_em(u_string::unit_at_from(&__units, 0u32), punctuation_class), Some(ClreqPunctuationPolicies::clreq_punctuation_policies_default_punctuation_advance_em(u_string::unit_at_from(&__units, 0u32), punctuation_class)));
     }
 
-    pub fn clreq_punctuation_policies_forbidden_at_line_start(char: &str, level: KinsokuLevel) -> bool {
+    pub fn clreq_punctuation_policies_forbidden_at_line_start(char: &UStr, level: KinsokuLevel) -> bool {
         if level == KinsokuLevel::None {
             return false;
         }
@@ -102,7 +101,7 @@ punctuation_class)));
         return false;
     }
 
-    pub fn clreq_punctuation_policies_forbidden_at_line_end(char: &str, level: KinsokuLevel) -> bool {
+    pub fn clreq_punctuation_policies_forbidden_at_line_end(char: &UStr, level: KinsokuLevel) -> bool {
         if level == KinsokuLevel::None {
             return false;
         }
@@ -147,7 +146,7 @@ punctuation_class)));
 
     pub(crate) fn clreq_punctuation_policies_contains_unit(units: &[u32], unit: Option<u32>) -> bool {
         let mut index = 0u32;
-        while (i32::from_ne_bytes((index).to_ne_bytes())) < (i32::from_ne_bytes((u32::try_from((units.len()) & 0xFFFF_FFFF).unwrap_or(0)).to_ne_bytes())) {
+        while (i32::from_ne_bytes(((index) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((units.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
             if unit.as_ref().map_or(false, |v| v == &(units[usize::try_from(index).unwrap_or(0)])) {
                 return true;
             }

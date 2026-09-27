@@ -43,8 +43,11 @@ use crate::org::tiqian::shaping::text_shaper::ExplainableStubTextShaper;
 use crate::org::tiqian::test::trace::traced_assertions::TracedAssertions;
 use crate::runtime::test as testlib;
 use crate::runtime::u_string;
+use crate::runtime::u_string::UStr;
+use crate::runtime::u_string::UString;
 use std::fmt::Write;
 use std::sync::Arc;
+use std::sync::Mutex;
 
 
 #[derive(Debug, Clone, PartialEq)]
@@ -52,6 +55,15 @@ pub enum ExplainableStubParagraphLayoutEngineTestSourceGraphemeBoundariesDoNotJo
     UStringFaultFault(crate::std::u_string_exception::UStringFault),
     TextRangeErrorFault(crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
+}
+impl std::fmt::Display for ExplainableStubParagraphLayoutEngineTestSourceGraphemeBoundariesDoNotJoinZwJWithOrdinaryTextFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            ExplainableStubParagraphLayoutEngineTestSourceGraphemeBoundariesDoNotJoinZwJWithOrdinaryTextFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            ExplainableStubParagraphLayoutEngineTestSourceGraphemeBoundariesDoNotJoinZwJWithOrdinaryTextFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            ExplainableStubParagraphLayoutEngineTestSourceGraphemeBoundariesDoNotJoinZwJWithOrdinaryTextFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
 }
 
 impl From<ExplainableStubParagraphLayoutEngineTestSourceGraphemeBoundariesDoNotJoinZwJWithOrdinaryTextFault> for crate::std::u_string_exception::UStringFault {
@@ -106,6 +118,17 @@ pub enum ExplainableStubParagraphLayoutEngineTestSingleMandatoryBreakAfterWrappe
     ParagraphLayoutEngineNewFaultFault(crate::org::tiqian::layout::paragraph_layout_engine::ParagraphLayoutEngineNewFault),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
     ParagraphLayoutEngineLayoutWithRejectedTechnicalTiersFaultFault(crate::org::tiqian::layout::paragraph_layout_engine::ParagraphLayoutEngineLayoutWithRejectedTechnicalTiersFault),
+}
+impl std::fmt::Display for ExplainableStubParagraphLayoutEngineTestSingleMandatoryBreakAfterWrappedLineDoesNotCreateEmptyLineFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            ExplainableStubParagraphLayoutEngineTestSingleMandatoryBreakAfterWrappedLineDoesNotCreateEmptyLineFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            ExplainableStubParagraphLayoutEngineTestSingleMandatoryBreakAfterWrappedLineDoesNotCreateEmptyLineFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            ExplainableStubParagraphLayoutEngineTestSingleMandatoryBreakAfterWrappedLineDoesNotCreateEmptyLineFault::ParagraphLayoutEngineNewFaultFault(value) => write!(formatter, "{}", value),
+            ExplainableStubParagraphLayoutEngineTestSingleMandatoryBreakAfterWrappedLineDoesNotCreateEmptyLineFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+            ExplainableStubParagraphLayoutEngineTestSingleMandatoryBreakAfterWrappedLineDoesNotCreateEmptyLineFault::ParagraphLayoutEngineLayoutWithRejectedTechnicalTiersFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
 }
 
 impl From<ExplainableStubParagraphLayoutEngineTestSingleMandatoryBreakAfterWrappedLineDoesNotCreateEmptyLineFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
@@ -191,6 +214,17 @@ pub enum ExplainableStubParagraphLayoutEngineTestReturnsDebuggableSingleLineResu
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
     ParagraphLayoutEngineLayoutWithRejectedTechnicalTiersFaultFault(crate::org::tiqian::layout::paragraph_layout_engine::ParagraphLayoutEngineLayoutWithRejectedTechnicalTiersFault),
 }
+impl std::fmt::Display for ExplainableStubParagraphLayoutEngineTestReturnsDebuggableSingleLineResultFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            ExplainableStubParagraphLayoutEngineTestReturnsDebuggableSingleLineResultFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            ExplainableStubParagraphLayoutEngineTestReturnsDebuggableSingleLineResultFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            ExplainableStubParagraphLayoutEngineTestReturnsDebuggableSingleLineResultFault::ParagraphLayoutEngineNewFaultFault(value) => write!(formatter, "{}", value),
+            ExplainableStubParagraphLayoutEngineTestReturnsDebuggableSingleLineResultFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+            ExplainableStubParagraphLayoutEngineTestReturnsDebuggableSingleLineResultFault::ParagraphLayoutEngineLayoutWithRejectedTechnicalTiersFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
+}
 
 impl From<ExplainableStubParagraphLayoutEngineTestReturnsDebuggableSingleLineResultFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
     fn from(value: ExplainableStubParagraphLayoutEngineTestReturnsDebuggableSingleLineResultFault) -> Self {
@@ -274,6 +308,17 @@ pub enum ExplainableStubParagraphLayoutEngineTestRejectsShaperClustersThatDoNotC
     ParagraphLayoutEngineNewFaultFault(crate::org::tiqian::layout::paragraph_layout_engine::ParagraphLayoutEngineNewFault),
     TracedAssertionsAssertFailsWithFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsAssertFailsWithFault),
     ParagraphLayoutEngineLayoutWithRejectedTechnicalTiersFaultFault(crate::org::tiqian::layout::paragraph_layout_engine::ParagraphLayoutEngineLayoutWithRejectedTechnicalTiersFault),
+}
+impl std::fmt::Display for ExplainableStubParagraphLayoutEngineTestRejectsShaperClustersThatDoNotCoverFontDecisionRangeFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            ExplainableStubParagraphLayoutEngineTestRejectsShaperClustersThatDoNotCoverFontDecisionRangeFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            ExplainableStubParagraphLayoutEngineTestRejectsShaperClustersThatDoNotCoverFontDecisionRangeFault::TraceAssertionErrorFault(value) => write!(formatter, "{}", value),
+            ExplainableStubParagraphLayoutEngineTestRejectsShaperClustersThatDoNotCoverFontDecisionRangeFault::ParagraphLayoutEngineNewFaultFault(value) => write!(formatter, "{}", value),
+            ExplainableStubParagraphLayoutEngineTestRejectsShaperClustersThatDoNotCoverFontDecisionRangeFault::TracedAssertionsAssertFailsWithFaultFault(value) => write!(formatter, "{}", value),
+            ExplainableStubParagraphLayoutEngineTestRejectsShaperClustersThatDoNotCoverFontDecisionRangeFault::ParagraphLayoutEngineLayoutWithRejectedTechnicalTiersFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
 }
 
 impl From<ExplainableStubParagraphLayoutEngineTestRejectsShaperClustersThatDoNotCoverFontDecisionRangeFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
@@ -359,6 +404,17 @@ pub enum ExplainableStubParagraphLayoutEngineTestRecordsUnicodeEmojiSequenceRole
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
     ParagraphLayoutEngineLayoutWithRejectedTechnicalTiersFaultFault(crate::org::tiqian::layout::paragraph_layout_engine::ParagraphLayoutEngineLayoutWithRejectedTechnicalTiersFault),
 }
+impl std::fmt::Display for ExplainableStubParagraphLayoutEngineTestRecordsUnicodeEmojiSequenceRolePromotionsFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            ExplainableStubParagraphLayoutEngineTestRecordsUnicodeEmojiSequenceRolePromotionsFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            ExplainableStubParagraphLayoutEngineTestRecordsUnicodeEmojiSequenceRolePromotionsFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            ExplainableStubParagraphLayoutEngineTestRecordsUnicodeEmojiSequenceRolePromotionsFault::ParagraphLayoutEngineNewFaultFault(value) => write!(formatter, "{}", value),
+            ExplainableStubParagraphLayoutEngineTestRecordsUnicodeEmojiSequenceRolePromotionsFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+            ExplainableStubParagraphLayoutEngineTestRecordsUnicodeEmojiSequenceRolePromotionsFault::ParagraphLayoutEngineLayoutWithRejectedTechnicalTiersFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
+}
 
 impl From<ExplainableStubParagraphLayoutEngineTestRecordsUnicodeEmojiSequenceRolePromotionsFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
     fn from(value: ExplainableStubParagraphLayoutEngineTestRecordsUnicodeEmojiSequenceRolePromotionsFault) -> Self {
@@ -442,6 +498,17 @@ pub enum ExplainableStubParagraphLayoutEngineTestRecordsInjectedLineBreakerStrat
     ParagraphLayoutEngineNewFaultFault(crate::org::tiqian::layout::paragraph_layout_engine::ParagraphLayoutEngineNewFault),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
     ParagraphLayoutEngineLayoutWithRejectedTechnicalTiersFaultFault(crate::org::tiqian::layout::paragraph_layout_engine::ParagraphLayoutEngineLayoutWithRejectedTechnicalTiersFault),
+}
+impl std::fmt::Display for ExplainableStubParagraphLayoutEngineTestRecordsInjectedLineBreakerStrategyInDebugDecisionsFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            ExplainableStubParagraphLayoutEngineTestRecordsInjectedLineBreakerStrategyInDebugDecisionsFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            ExplainableStubParagraphLayoutEngineTestRecordsInjectedLineBreakerStrategyInDebugDecisionsFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            ExplainableStubParagraphLayoutEngineTestRecordsInjectedLineBreakerStrategyInDebugDecisionsFault::ParagraphLayoutEngineNewFaultFault(value) => write!(formatter, "{}", value),
+            ExplainableStubParagraphLayoutEngineTestRecordsInjectedLineBreakerStrategyInDebugDecisionsFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+            ExplainableStubParagraphLayoutEngineTestRecordsInjectedLineBreakerStrategyInDebugDecisionsFault::ParagraphLayoutEngineLayoutWithRejectedTechnicalTiersFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
 }
 
 impl From<ExplainableStubParagraphLayoutEngineTestRecordsInjectedLineBreakerStrategyInDebugDecisionsFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
@@ -527,6 +594,17 @@ pub enum ExplainableStubParagraphLayoutEngineTestRecordsFallbackDecisionsPerClus
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
     ParagraphLayoutEngineLayoutWithRejectedTechnicalTiersFaultFault(crate::org::tiqian::layout::paragraph_layout_engine::ParagraphLayoutEngineLayoutWithRejectedTechnicalTiersFault),
 }
+impl std::fmt::Display for ExplainableStubParagraphLayoutEngineTestRecordsFallbackDecisionsPerClusterFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            ExplainableStubParagraphLayoutEngineTestRecordsFallbackDecisionsPerClusterFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            ExplainableStubParagraphLayoutEngineTestRecordsFallbackDecisionsPerClusterFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            ExplainableStubParagraphLayoutEngineTestRecordsFallbackDecisionsPerClusterFault::ParagraphLayoutEngineNewFaultFault(value) => write!(formatter, "{}", value),
+            ExplainableStubParagraphLayoutEngineTestRecordsFallbackDecisionsPerClusterFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+            ExplainableStubParagraphLayoutEngineTestRecordsFallbackDecisionsPerClusterFault::ParagraphLayoutEngineLayoutWithRejectedTechnicalTiersFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
+}
 
 impl From<ExplainableStubParagraphLayoutEngineTestRecordsFallbackDecisionsPerClusterFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
     fn from(value: ExplainableStubParagraphLayoutEngineTestRecordsFallbackDecisionsPerClusterFault) -> Self {
@@ -610,6 +688,17 @@ pub enum ExplainableStubParagraphLayoutEngineTestPreservesShaperGlyphBoundsInLay
     ParagraphLayoutEngineNewFaultFault(crate::org::tiqian::layout::paragraph_layout_engine::ParagraphLayoutEngineNewFault),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
     ParagraphLayoutEngineLayoutWithRejectedTechnicalTiersFaultFault(crate::org::tiqian::layout::paragraph_layout_engine::ParagraphLayoutEngineLayoutWithRejectedTechnicalTiersFault),
+}
+impl std::fmt::Display for ExplainableStubParagraphLayoutEngineTestPreservesShaperGlyphBoundsInLayoutGlyphRunsFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            ExplainableStubParagraphLayoutEngineTestPreservesShaperGlyphBoundsInLayoutGlyphRunsFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            ExplainableStubParagraphLayoutEngineTestPreservesShaperGlyphBoundsInLayoutGlyphRunsFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            ExplainableStubParagraphLayoutEngineTestPreservesShaperGlyphBoundsInLayoutGlyphRunsFault::ParagraphLayoutEngineNewFaultFault(value) => write!(formatter, "{}", value),
+            ExplainableStubParagraphLayoutEngineTestPreservesShaperGlyphBoundsInLayoutGlyphRunsFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+            ExplainableStubParagraphLayoutEngineTestPreservesShaperGlyphBoundsInLayoutGlyphRunsFault::ParagraphLayoutEngineLayoutWithRejectedTechnicalTiersFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
 }
 
 impl From<ExplainableStubParagraphLayoutEngineTestPreservesShaperGlyphBoundsInLayoutGlyphRunsFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
@@ -695,6 +784,17 @@ pub enum ExplainableStubParagraphLayoutEngineTestMandatoryLineBreakClustersAreZe
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
     ParagraphLayoutEngineLayoutWithRejectedTechnicalTiersFaultFault(crate::org::tiqian::layout::paragraph_layout_engine::ParagraphLayoutEngineLayoutWithRejectedTechnicalTiersFault),
 }
+impl std::fmt::Display for ExplainableStubParagraphLayoutEngineTestMandatoryLineBreakClustersAreZeroWidthAndNotShapedFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            ExplainableStubParagraphLayoutEngineTestMandatoryLineBreakClustersAreZeroWidthAndNotShapedFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            ExplainableStubParagraphLayoutEngineTestMandatoryLineBreakClustersAreZeroWidthAndNotShapedFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            ExplainableStubParagraphLayoutEngineTestMandatoryLineBreakClustersAreZeroWidthAndNotShapedFault::ParagraphLayoutEngineNewFaultFault(value) => write!(formatter, "{}", value),
+            ExplainableStubParagraphLayoutEngineTestMandatoryLineBreakClustersAreZeroWidthAndNotShapedFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+            ExplainableStubParagraphLayoutEngineTestMandatoryLineBreakClustersAreZeroWidthAndNotShapedFault::ParagraphLayoutEngineLayoutWithRejectedTechnicalTiersFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
+}
 
 impl From<ExplainableStubParagraphLayoutEngineTestMandatoryLineBreakClustersAreZeroWidthAndNotShapedFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
     fn from(value: ExplainableStubParagraphLayoutEngineTestMandatoryLineBreakClustersAreZeroWidthAndNotShapedFault) -> Self {
@@ -778,6 +878,17 @@ pub enum ExplainableStubParagraphLayoutEngineTestMandatoryBreakLineIsNotJustifie
     ParagraphLayoutEngineNewFaultFault(crate::org::tiqian::layout::paragraph_layout_engine::ParagraphLayoutEngineNewFault),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
     ParagraphLayoutEngineLayoutWithRejectedTechnicalTiersFaultFault(crate::org::tiqian::layout::paragraph_layout_engine::ParagraphLayoutEngineLayoutWithRejectedTechnicalTiersFault),
+}
+impl std::fmt::Display for ExplainableStubParagraphLayoutEngineTestMandatoryBreakLineIsNotJustifiedFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            ExplainableStubParagraphLayoutEngineTestMandatoryBreakLineIsNotJustifiedFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            ExplainableStubParagraphLayoutEngineTestMandatoryBreakLineIsNotJustifiedFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            ExplainableStubParagraphLayoutEngineTestMandatoryBreakLineIsNotJustifiedFault::ParagraphLayoutEngineNewFaultFault(value) => write!(formatter, "{}", value),
+            ExplainableStubParagraphLayoutEngineTestMandatoryBreakLineIsNotJustifiedFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+            ExplainableStubParagraphLayoutEngineTestMandatoryBreakLineIsNotJustifiedFault::ParagraphLayoutEngineLayoutWithRejectedTechnicalTiersFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
 }
 
 impl From<ExplainableStubParagraphLayoutEngineTestMandatoryBreakLineIsNotJustifiedFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
@@ -863,6 +974,17 @@ pub enum ExplainableStubParagraphLayoutEngineTestEmojiRoleMatrixSeparatesSupport
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
     ParagraphLayoutEngineLayoutWithRejectedTechnicalTiersFaultFault(crate::org::tiqian::layout::paragraph_layout_engine::ParagraphLayoutEngineLayoutWithRejectedTechnicalTiersFault),
 }
+impl std::fmt::Display for ExplainableStubParagraphLayoutEngineTestEmojiRoleMatrixSeparatesSupportedSequencesFromAdjacentAndUnrelatedTextFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            ExplainableStubParagraphLayoutEngineTestEmojiRoleMatrixSeparatesSupportedSequencesFromAdjacentAndUnrelatedTextFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            ExplainableStubParagraphLayoutEngineTestEmojiRoleMatrixSeparatesSupportedSequencesFromAdjacentAndUnrelatedTextFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            ExplainableStubParagraphLayoutEngineTestEmojiRoleMatrixSeparatesSupportedSequencesFromAdjacentAndUnrelatedTextFault::ParagraphLayoutEngineNewFaultFault(value) => write!(formatter, "{}", value),
+            ExplainableStubParagraphLayoutEngineTestEmojiRoleMatrixSeparatesSupportedSequencesFromAdjacentAndUnrelatedTextFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+            ExplainableStubParagraphLayoutEngineTestEmojiRoleMatrixSeparatesSupportedSequencesFromAdjacentAndUnrelatedTextFault::ParagraphLayoutEngineLayoutWithRejectedTechnicalTiersFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
+}
 
 impl From<ExplainableStubParagraphLayoutEngineTestEmojiRoleMatrixSeparatesSupportedSequencesFromAdjacentAndUnrelatedTextFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
     fn from(value: ExplainableStubParagraphLayoutEngineTestEmojiRoleMatrixSeparatesSupportedSequencesFromAdjacentAndUnrelatedTextFault) -> Self {
@@ -946,6 +1068,17 @@ pub enum ExplainableStubParagraphLayoutEngineTestCrlfIsOneMandatoryBreakClusterF
     ParagraphLayoutEngineNewFaultFault(crate::org::tiqian::layout::paragraph_layout_engine::ParagraphLayoutEngineNewFault),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
     ParagraphLayoutEngineLayoutWithRejectedTechnicalTiersFaultFault(crate::org::tiqian::layout::paragraph_layout_engine::ParagraphLayoutEngineLayoutWithRejectedTechnicalTiersFault),
+}
+impl std::fmt::Display for ExplainableStubParagraphLayoutEngineTestCrlfIsOneMandatoryBreakClusterFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            ExplainableStubParagraphLayoutEngineTestCrlfIsOneMandatoryBreakClusterFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            ExplainableStubParagraphLayoutEngineTestCrlfIsOneMandatoryBreakClusterFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            ExplainableStubParagraphLayoutEngineTestCrlfIsOneMandatoryBreakClusterFault::ParagraphLayoutEngineNewFaultFault(value) => write!(formatter, "{}", value),
+            ExplainableStubParagraphLayoutEngineTestCrlfIsOneMandatoryBreakClusterFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+            ExplainableStubParagraphLayoutEngineTestCrlfIsOneMandatoryBreakClusterFault::ParagraphLayoutEngineLayoutWithRejectedTechnicalTiersFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
 }
 
 impl From<ExplainableStubParagraphLayoutEngineTestCrlfIsOneMandatoryBreakClusterFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
@@ -1031,6 +1164,17 @@ pub enum ExplainableStubParagraphLayoutEngineTestConsecutiveMandatoryLineBreaksC
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
     ParagraphLayoutEngineLayoutWithRejectedTechnicalTiersFaultFault(crate::org::tiqian::layout::paragraph_layout_engine::ParagraphLayoutEngineLayoutWithRejectedTechnicalTiersFault),
 }
+impl std::fmt::Display for ExplainableStubParagraphLayoutEngineTestConsecutiveMandatoryLineBreaksCreateOneEmptyLineBoxFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            ExplainableStubParagraphLayoutEngineTestConsecutiveMandatoryLineBreaksCreateOneEmptyLineBoxFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            ExplainableStubParagraphLayoutEngineTestConsecutiveMandatoryLineBreaksCreateOneEmptyLineBoxFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            ExplainableStubParagraphLayoutEngineTestConsecutiveMandatoryLineBreaksCreateOneEmptyLineBoxFault::ParagraphLayoutEngineNewFaultFault(value) => write!(formatter, "{}", value),
+            ExplainableStubParagraphLayoutEngineTestConsecutiveMandatoryLineBreaksCreateOneEmptyLineBoxFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+            ExplainableStubParagraphLayoutEngineTestConsecutiveMandatoryLineBreaksCreateOneEmptyLineBoxFault::ParagraphLayoutEngineLayoutWithRejectedTechnicalTiersFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
+}
 
 impl From<ExplainableStubParagraphLayoutEngineTestConsecutiveMandatoryLineBreaksCreateOneEmptyLineBoxFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
     fn from(value: ExplainableStubParagraphLayoutEngineTestConsecutiveMandatoryLineBreaksCreateOneEmptyLineBoxFault) -> Self {
@@ -1114,6 +1258,17 @@ pub enum ExplainableStubParagraphLayoutEngineTestConsecutiveAndTrailingMandatory
     ParagraphLayoutEngineNewFaultFault(crate::org::tiqian::layout::paragraph_layout_engine::ParagraphLayoutEngineNewFault),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
     ParagraphLayoutEngineLayoutWithRejectedTechnicalTiersFaultFault(crate::org::tiqian::layout::paragraph_layout_engine::ParagraphLayoutEngineLayoutWithRejectedTechnicalTiersFault),
+}
+impl std::fmt::Display for ExplainableStubParagraphLayoutEngineTestConsecutiveAndTrailingMandatoryBreaksPreserveBlankLinesFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            ExplainableStubParagraphLayoutEngineTestConsecutiveAndTrailingMandatoryBreaksPreserveBlankLinesFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            ExplainableStubParagraphLayoutEngineTestConsecutiveAndTrailingMandatoryBreaksPreserveBlankLinesFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            ExplainableStubParagraphLayoutEngineTestConsecutiveAndTrailingMandatoryBreaksPreserveBlankLinesFault::ParagraphLayoutEngineNewFaultFault(value) => write!(formatter, "{}", value),
+            ExplainableStubParagraphLayoutEngineTestConsecutiveAndTrailingMandatoryBreaksPreserveBlankLinesFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+            ExplainableStubParagraphLayoutEngineTestConsecutiveAndTrailingMandatoryBreaksPreserveBlankLinesFault::ParagraphLayoutEngineLayoutWithRejectedTechnicalTiersFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
 }
 
 impl From<ExplainableStubParagraphLayoutEngineTestConsecutiveAndTrailingMandatoryBreaksPreserveBlankLinesFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
@@ -1199,6 +1354,17 @@ pub enum ExplainableStubParagraphLayoutEngineTestComplexEmojiSequencesReachTheSh
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
     ParagraphLayoutEngineLayoutWithRejectedTechnicalTiersFaultFault(crate::org::tiqian::layout::paragraph_layout_engine::ParagraphLayoutEngineLayoutWithRejectedTechnicalTiersFault),
 }
+impl std::fmt::Display for ExplainableStubParagraphLayoutEngineTestComplexEmojiSequencesReachTheShaperAsCompleteEmojiRangesFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            ExplainableStubParagraphLayoutEngineTestComplexEmojiSequencesReachTheShaperAsCompleteEmojiRangesFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            ExplainableStubParagraphLayoutEngineTestComplexEmojiSequencesReachTheShaperAsCompleteEmojiRangesFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            ExplainableStubParagraphLayoutEngineTestComplexEmojiSequencesReachTheShaperAsCompleteEmojiRangesFault::ParagraphLayoutEngineNewFaultFault(value) => write!(formatter, "{}", value),
+            ExplainableStubParagraphLayoutEngineTestComplexEmojiSequencesReachTheShaperAsCompleteEmojiRangesFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+            ExplainableStubParagraphLayoutEngineTestComplexEmojiSequencesReachTheShaperAsCompleteEmojiRangesFault::ParagraphLayoutEngineLayoutWithRejectedTechnicalTiersFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
+}
 
 impl From<ExplainableStubParagraphLayoutEngineTestComplexEmojiSequencesReachTheShaperAsCompleteEmojiRangesFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
     fn from(value: ExplainableStubParagraphLayoutEngineTestComplexEmojiSequencesReachTheShaperAsCompleteEmojiRangesFault) -> Self {
@@ -1282,6 +1448,17 @@ pub enum ExplainableStubParagraphLayoutEngineTestComplexEmojiGraphemesStayAtomic
     ParagraphLayoutEngineNewFaultFault(crate::org::tiqian::layout::paragraph_layout_engine::ParagraphLayoutEngineNewFault),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
     ParagraphLayoutEngineLayoutWithRejectedTechnicalTiersFaultFault(crate::org::tiqian::layout::paragraph_layout_engine::ParagraphLayoutEngineLayoutWithRejectedTechnicalTiersFault),
+}
+impl std::fmt::Display for ExplainableStubParagraphLayoutEngineTestComplexEmojiGraphemesStayAtomicAcrossGeometryOnlyBoundariesFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            ExplainableStubParagraphLayoutEngineTestComplexEmojiGraphemesStayAtomicAcrossGeometryOnlyBoundariesFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            ExplainableStubParagraphLayoutEngineTestComplexEmojiGraphemesStayAtomicAcrossGeometryOnlyBoundariesFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            ExplainableStubParagraphLayoutEngineTestComplexEmojiGraphemesStayAtomicAcrossGeometryOnlyBoundariesFault::ParagraphLayoutEngineNewFaultFault(value) => write!(formatter, "{}", value),
+            ExplainableStubParagraphLayoutEngineTestComplexEmojiGraphemesStayAtomicAcrossGeometryOnlyBoundariesFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+            ExplainableStubParagraphLayoutEngineTestComplexEmojiGraphemesStayAtomicAcrossGeometryOnlyBoundariesFault::ParagraphLayoutEngineLayoutWithRejectedTechnicalTiersFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
 }
 
 impl From<ExplainableStubParagraphLayoutEngineTestComplexEmojiGraphemesStayAtomicAcrossGeometryOnlyBoundariesFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
@@ -1367,6 +1544,17 @@ pub enum ExplainableStubParagraphLayoutEngineTestComplexEmojiGraphemesHonorTextS
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
     ParagraphLayoutEngineLayoutWithRejectedTechnicalTiersFaultFault(crate::org::tiqian::layout::paragraph_layout_engine::ParagraphLayoutEngineLayoutWithRejectedTechnicalTiersFault),
 }
+impl std::fmt::Display for ExplainableStubParagraphLayoutEngineTestComplexEmojiGraphemesHonorTextSpanStyleBoundariesFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            ExplainableStubParagraphLayoutEngineTestComplexEmojiGraphemesHonorTextSpanStyleBoundariesFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            ExplainableStubParagraphLayoutEngineTestComplexEmojiGraphemesHonorTextSpanStyleBoundariesFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            ExplainableStubParagraphLayoutEngineTestComplexEmojiGraphemesHonorTextSpanStyleBoundariesFault::ParagraphLayoutEngineNewFaultFault(value) => write!(formatter, "{}", value),
+            ExplainableStubParagraphLayoutEngineTestComplexEmojiGraphemesHonorTextSpanStyleBoundariesFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+            ExplainableStubParagraphLayoutEngineTestComplexEmojiGraphemesHonorTextSpanStyleBoundariesFault::ParagraphLayoutEngineLayoutWithRejectedTechnicalTiersFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
+}
 
 impl From<ExplainableStubParagraphLayoutEngineTestComplexEmojiGraphemesHonorTextSpanStyleBoundariesFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
     fn from(value: ExplainableStubParagraphLayoutEngineTestComplexEmojiGraphemesHonorTextSpanStyleBoundariesFault) -> Self {
@@ -1451,6 +1639,17 @@ pub enum ExplainableStubParagraphLayoutEngineTestCombiningMarksStayInTheirBaseSh
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
     ParagraphLayoutEngineLayoutWithRejectedTechnicalTiersFaultFault(crate::org::tiqian::layout::paragraph_layout_engine::ParagraphLayoutEngineLayoutWithRejectedTechnicalTiersFault),
 }
+impl std::fmt::Display for ExplainableStubParagraphLayoutEngineTestCombiningMarksStayInTheirBaseShapingRunsFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            ExplainableStubParagraphLayoutEngineTestCombiningMarksStayInTheirBaseShapingRunsFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            ExplainableStubParagraphLayoutEngineTestCombiningMarksStayInTheirBaseShapingRunsFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            ExplainableStubParagraphLayoutEngineTestCombiningMarksStayInTheirBaseShapingRunsFault::ParagraphLayoutEngineNewFaultFault(value) => write!(formatter, "{}", value),
+            ExplainableStubParagraphLayoutEngineTestCombiningMarksStayInTheirBaseShapingRunsFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+            ExplainableStubParagraphLayoutEngineTestCombiningMarksStayInTheirBaseShapingRunsFault::ParagraphLayoutEngineLayoutWithRejectedTechnicalTiersFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
+}
 
 impl From<ExplainableStubParagraphLayoutEngineTestCombiningMarksStayInTheirBaseShapingRunsFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
     fn from(value: ExplainableStubParagraphLayoutEngineTestCombiningMarksStayInTheirBaseShapingRunsFault) -> Self {
@@ -1530,46 +1729,40 @@ impl From<crate::org::tiqian::layout::paragraph_layout_engine::ParagraphLayoutEn
 #[test]
 fn returns_debuggable_single_line_result() {
     testlib::run("org.tiqian.layout.ExplainableStubParagraphLayoutEngineTest.returnsDebuggableSingleLineResult", "org.tiqian.layout.ExplainableStubParagraphLayoutEngineTest.returnsDebuggableSingleLineResult", || {
-        let _ = ExplainableStubParagraphLayoutEngineTestSupport::explainable_stub_paragraph_layout_engine_test_support_start(&"returnsDebuggableSingleLineResult");
-        let r = ExplainableStubParagraphLayoutEngine::new(Some(Box::new(CjkFontRoleClassifier::new())), Some(Box::new(ParagraphLayoutFallbackResolver::new(Some("cjk-primary".to_string()), Some("latin-primary".to_string()), Some("symbol-fallback".to_string())).unwrap())),
-Some(Box::new(BuiltInClreqProfileResolver::new())), Some(Box::new(StubFontMetricsResolver::new())), Some(Box::new(ScriptAwareFontMetricsNormalizer::new())), Some(PunctuationAtomBuilder::new(None, None).unwrap()), Some(PunctuationSpacingCompressor::new().unwrap()),
-Some(QuotePairAnalyzer::new()), Some(Box::new(GreedyLineBreaker::new(None, None, None, None))), Some(Justifier::new(Some(0.5), Some(0.25))), Some(Box::new(ExplainableStubTextShaper::new())), Some(DefaultHyphenator::default_hyphenator_default_hyphenator().unwrap()),
-Some(Box::new(LruWidthIndependentAnnotationCache::new(512)))).unwrap().layout(ExplainableStubParagraphLayoutEngineTestSupport::explainable_stub_paragraph_layout_engine_test_support_input(&"提椠", 240 as f64, None, None, None).unwrap()).unwrap();
+        let _ = ExplainableStubParagraphLayoutEngineTestSupport::explainable_stub_paragraph_layout_engine_test_support_start(UStr::new(&[114,101,116,117,114,110,115,68,101,98,117,103,103,97,98,108,101,83,105,110,103,108,101,76,105,110,101,82,101,115,117,108,116]));
+        let r = ExplainableStubParagraphLayoutEngine::new(Some(Box::new(CjkFontRoleClassifier::new())), Some(Box::new(ParagraphLayoutFallbackResolver::new(Some(UString::from("cjk-primary")), Some(UString::from("latin-primary")), Some(UString::from("symbol-fallback"))).unwrap())), Some(Box::new(BuiltInClreqProfileResolver::new())), Some(Box::new(StubFontMetricsResolver::new())), Some(Box::new(ScriptAwareFontMetricsNormalizer::new())), Some(PunctuationAtomBuilder::new(None, None).unwrap()), Some(PunctuationSpacingCompressor::new().unwrap()), Some(QuotePairAnalyzer::new()), Some(Box::new(GreedyLineBreaker::new(None, None, None, None))), Some(Justifier::new(Some(0.5), Some(0.25))), Some(Arc::new(Mutex::new(ExplainableStubTextShaper::new()))), Some(DefaultHyphenator::default_hyphenator_default_hyphenator().unwrap()), Some(Arc::new(Mutex::new(LruWidthIndependentAnnotationCache::new(512))))).unwrap().layout(ExplainableStubParagraphLayoutEngineTestSupport::explainable_stub_paragraph_layout_engine_test_support_input(UStr::new(&[25552,26912]), 240 as f64, None, None, None).unwrap()).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_equals_int(2, u32::try_from((r.clusters.len()) & 0xFFFF_FFFF).unwrap_or(0), None).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_equals_int(1, u32::try_from((r.lines.len()) & 0xFFFF_FFFF).unwrap_or(0), None).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_equals_string(&"greedy", (((r.debug).clone().line_decisions[0usize]).clone().kind).to_string().as_str(), None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_equals_string(UStr::new(&[103,114,101,101,100,121]), (((r.debug).clone().line_decisions[0usize]).clone().kind).to_ustring().as_ustr(), None).unwrap();
     });
 }
 
 #[test]
 fn records_injected_line_breaker_strategy_in_debug_decisions() {
     testlib::run("org.tiqian.layout.ExplainableStubParagraphLayoutEngineTest.recordsInjectedLineBreakerStrategyInDebugDecisions", "org.tiqian.layout.ExplainableStubParagraphLayoutEngineTest.recordsInjectedLineBreakerStrategyInDebugDecisions", || {
-        let _ = ExplainableStubParagraphLayoutEngineTestSupport::explainable_stub_paragraph_layout_engine_test_support_start(&"recordsInjectedLineBreakerStrategyInDebugDecisions");
-        let r = ExplainableStubParagraphLayoutEngineTestSupport::explainable_stub_paragraph_layout_engine_test_support_engine(None, Some(Box::new(LookaheadLineBreaker::new(Some(2), Some(2), Some(0.5), Some(Box::new(ClreqKinsokuRule::new(Some(KinsokuLevel::Basic)))), Some(2),
-Some(10), Some(20), Some(12.0))))).unwrap().layout(ExplainableStubParagraphLayoutEngineTestSupport::explainable_stub_paragraph_layout_engine_test_support_input(&"提椠", 240 as f64, None, None, None).unwrap()).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_equals_string(&"lookahead", (((r.debug).clone().line_decisions[0usize]).clone().kind).to_string().as_str(), None).unwrap();
+        let _ = ExplainableStubParagraphLayoutEngineTestSupport::explainable_stub_paragraph_layout_engine_test_support_start(UStr::new(&[114,101,99,111,114,100,115,73,110,106,101,99,116,101,100,76,105,110,101,66,114,101,97,107,101,114,83,116,114,97,116,101,103,121,73,110,68,101,98,117,103,68,101,99,105,115,105,111,110,115]));
+        let r = ExplainableStubParagraphLayoutEngineTestSupport::explainable_stub_paragraph_layout_engine_test_support_engine(None, Some(Box::new(LookaheadLineBreaker::new(Some(2), Some(2), Some(0.5), Some(Box::new(ClreqKinsokuRule::new(Some(KinsokuLevel::Basic)))), Some(2), Some(10), Some(20), Some(12.0))))).unwrap().layout(ExplainableStubParagraphLayoutEngineTestSupport::explainable_stub_paragraph_layout_engine_test_support_input(UStr::new(&[25552,26912]), 240 as f64, None, None, None).unwrap()).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_equals_string(UStr::new(&[108,111,111,107,97,104,101,97,100]), (((r.debug).clone().line_decisions[0usize]).clone().kind).to_ustring().as_ustr(), None).unwrap();
     });
 }
 
 #[test]
 fn mandatory_line_break_clusters_are_zero_width_and_not_shaped() {
     testlib::run("org.tiqian.layout.ExplainableStubParagraphLayoutEngineTest.mandatoryLineBreakClustersAreZeroWidthAndNotShaped", "org.tiqian.layout.ExplainableStubParagraphLayoutEngineTest.mandatoryLineBreakClustersAreZeroWidthAndNotShaped", || {
-        let _ = ExplainableStubParagraphLayoutEngineTestSupport::explainable_stub_paragraph_layout_engine_test_support_start(&"mandatoryLineBreakClustersAreZeroWidthAndNotShaped");
-        let r = ExplainableStubParagraphLayoutEngineTestSupport::explainable_stub_paragraph_layout_engine_test_support_engine(None, Some(Box::new(LookaheadLineBreaker::new(Some(2), Some(2), Some(0.5), Some(Box::new(ClreqKinsokuRule::new(Some(KinsokuLevel::Basic)))), Some(2),
-Some(10), Some(20), Some(12.0))))).unwrap().layout(ExplainableStubParagraphLayoutEngineTestSupport::explainable_stub_paragraph_layout_engine_test_support_input(&concat!("第一行\n",
-"第二行"), 240 as f64, None, None, None).unwrap()).unwrap();
+        let _ = ExplainableStubParagraphLayoutEngineTestSupport::explainable_stub_paragraph_layout_engine_test_support_start(UStr::new(&[109,97,110,100,97,116,111,114,121,76,105,110,101,66,114,101,97,107,67,108,117,115,116,101,114,115,65,114,101,90,101,114,111,87,105,100,116,104,65,110,100,78,111,116,83,104,97,112,101,100]));
+        let r = ExplainableStubParagraphLayoutEngineTestSupport::explainable_stub_paragraph_layout_engine_test_support_engine(None, Some(Box::new(LookaheadLineBreaker::new(Some(2), Some(2), Some(0.5), Some(Box::new(ClreqKinsokuRule::new(Some(KinsokuLevel::Basic)))), Some(2), Some(10), Some(20), Some(12.0))))).unwrap().layout(ExplainableStubParagraphLayoutEngineTestSupport::explainable_stub_paragraph_layout_engine_test_support_input(UStr::new(&[31532,19968,34892,10,31532,20108,34892]), 240 as f64, None, None, None).unwrap()).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_equals_int(2, u32::try_from((r.lines.len()) & 0xFFFF_FFFF).unwrap_or(0), None).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_equals_enum(&(LineEndReason::MandatoryBreak), &(r.lines[0usize].end_reason), None).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_equals_enum(&(LineEndReason::ParagraphEnd), &(r.lines[1usize].end_reason), None).unwrap();
         let mut b: Option<Cluster> = None;
         for _g_index in 0..match u32::try_from(r.clusters.len()) { Ok(value) => value, Err(_) => u32::MAX } {
             let c = (r.clusters[usize::try_from(_g_index).unwrap_or(0)]).clone();
-            if c.text.to_string() == concat!("\n",
-"") {
+            if c.text.to_ustring() == UString::from(concat!("\n",
+"")) {
                 b = Some(c.clone());
             }
         }
-        let _ = TracedAssertions::traced_assertions_assert_equals_string(&"", (b.as_ref().unwrap().display_text).to_string().as_str(), None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_equals_string(UStr::new(&[]), (b.as_ref().unwrap().display_text).to_ustring().as_ustr(), None).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_equals_float(0 as f64, b.as_ref().unwrap().advance, None).unwrap();
         let mut found = false;
         for ri in 0..match u32::try_from(r.glyph_runs.len()) { Ok(value) => value, Err(_) => u32::MAX } {
@@ -1584,28 +1777,22 @@ Some(10), Some(20), Some(12.0))))).unwrap().layout(ExplainableStubParagraphLayou
         let _ = TracedAssertions::traced_assertions_assert_true(!found, None).unwrap();
         let pair = vec![((r.glyph_runs[0usize]).clone().range).clone(), ((r.glyph_runs[1usize]).clone().range).clone()];
         let _ = TracedAssertions::traced_assertions_assert_equals_text_range_array(&vec![(TextRange::new(0u32, 3u32).unwrap()).clone(), (TextRange::new(4u32, 7u32).unwrap()).clone()], &pair, None).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_equals_rendered((b.as_ref().unwrap().range).clone().to_string().as_str(), (((r.debug).clone().mandatory_break_decisions[0usize]).clone().range).clone().to_string().as_str(), None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_equals_rendered(UString::from(format!("{}", (b.as_ref().unwrap().range).clone().to_string()).as_str()).as_ustr(), UString::from(format!("{}", (((r.debug).clone().mandatory_break_decisions[0usize]).clone().range).clone().to_string()).as_str()).as_ustr(), None).unwrap();
     });
 }
 
 #[test]
 fn consecutive_mandatory_line_breaks_create_one_empty_line_box() {
     testlib::run("org.tiqian.layout.ExplainableStubParagraphLayoutEngineTest.consecutiveMandatoryLineBreaksCreateOneEmptyLineBox", "org.tiqian.layout.ExplainableStubParagraphLayoutEngineTest.consecutiveMandatoryLineBreaksCreateOneEmptyLineBox", || {
-        let _ = ExplainableStubParagraphLayoutEngineTestSupport::explainable_stub_paragraph_layout_engine_test_support_start(&"consecutiveMandatoryLineBreaksCreateOneEmptyLineBox");
-        let r = ExplainableStubParagraphLayoutEngine::new(Some(Box::new(CjkFontRoleClassifier::new())), Some(Box::new(ParagraphLayoutFallbackResolver::new(Some("cjk-primary".to_string()), Some("latin-primary".to_string()), Some("symbol-fallback".to_string())).unwrap())),
-Some(Box::new(BuiltInClreqProfileResolver::new())), Some(Box::new(StubFontMetricsResolver::new())), Some(Box::new(ScriptAwareFontMetricsNormalizer::new())), Some(PunctuationAtomBuilder::new(None, None).unwrap()), Some(PunctuationSpacingCompressor::new().unwrap()),
-Some(QuotePairAnalyzer::new()), Some(Box::new(GreedyLineBreaker::new(None, None, None, None))), Some(Justifier::new(Some(0.5), Some(0.25))), Some(Box::new(ExplainableStubTextShaper::new())), Some(DefaultHyphenator::default_hyphenator_default_hyphenator().unwrap()),
-Some(Box::new(LruWidthIndependentAnnotationCache::new(512)))).unwrap().layout(ExplainableStubParagraphLayoutEngineTestSupport::explainable_stub_paragraph_layout_engine_test_support_input(&concat!("第一行\n",
-"\n",
-"第二行"), 240 as f64, None, None, None).unwrap()).unwrap();
+        let _ = ExplainableStubParagraphLayoutEngineTestSupport::explainable_stub_paragraph_layout_engine_test_support_start(UStr::new(&[99,111,110,115,101,99,117,116,105,118,101,77,97,110,100,97,116,111,114,121,76,105,110,101,66,114,101,97,107,115,67,114,101,97,116,101,79,110,101,69,109,112,116,121,76,105,110,101,66,111,120]));
+        let r = ExplainableStubParagraphLayoutEngine::new(Some(Box::new(CjkFontRoleClassifier::new())), Some(Box::new(ParagraphLayoutFallbackResolver::new(Some(UString::from("cjk-primary")), Some(UString::from("latin-primary")), Some(UString::from("symbol-fallback"))).unwrap())), Some(Box::new(BuiltInClreqProfileResolver::new())), Some(Box::new(StubFontMetricsResolver::new())), Some(Box::new(ScriptAwareFontMetricsNormalizer::new())), Some(PunctuationAtomBuilder::new(None, None).unwrap()), Some(PunctuationSpacingCompressor::new().unwrap()), Some(QuotePairAnalyzer::new()), Some(Box::new(GreedyLineBreaker::new(None, None, None, None))), Some(Justifier::new(Some(0.5), Some(0.25))), Some(Arc::new(Mutex::new(ExplainableStubTextShaper::new()))), Some(DefaultHyphenator::default_hyphenator_default_hyphenator().unwrap()), Some(Arc::new(Mutex::new(LruWidthIndependentAnnotationCache::new(512))))).unwrap().layout(ExplainableStubParagraphLayoutEngineTestSupport::explainable_stub_paragraph_layout_engine_test_support_input(UStr::new(&[31532,19968,34892,10,10,31532,20108,34892]), 240 as f64, None, None, None).unwrap()).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_equals_int(3, u32::try_from((r.lines.len()) & 0xFFFF_FFFF).unwrap_or(0), None).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_equals_enum(&(LineEndReason::MandatoryBreak), &(r.lines[0usize].end_reason), None).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_equals_enum(&(LineEndReason::MandatoryBreak), &(r.lines[1usize].end_reason), None).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_equals_enum(&(LineEndReason::ParagraphEnd), &(r.lines[2usize].end_reason), None).unwrap();
         let c = (r.clusters[usize::try_from((r.lines[1usize]).clone().cluster_range.start).unwrap_or(0)]).clone();
-        let _ = TracedAssertions::traced_assertions_assert_equals_string(&concat!("\n",
-""), (c.text).to_string().as_str(), None).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_equals_string(&"", (c.display_text).to_string().as_str(), None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_equals_string(UStr::new(&[10]), (c.text).to_ustring().as_ustr(), None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_equals_string(UStr::new(&[]), (c.display_text).to_ustring().as_ustr(), None).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_equals_float(0 as f64, c.advance, None).unwrap();
         let h = (r.debug).clone().line_spacing_decision.as_ref().unwrap().resolved_height;
         let _ = TracedAssertions::traced_assertions_assert_equals_float_tolerance(h, r.lines[1usize].bottom - r.lines[1usize].top, 0.001f64, None).unwrap();
@@ -1617,49 +1804,38 @@ Some(Box::new(LruWidthIndependentAnnotationCache::new(512)))).unwrap().layout(Ex
 #[test]
 fn single_mandatory_break_after_wrapped_line_does_not_create_empty_line() {
     testlib::run("org.tiqian.layout.ExplainableStubParagraphLayoutEngineTest.singleMandatoryBreakAfterWrappedLineDoesNotCreateEmptyLine", "org.tiqian.layout.ExplainableStubParagraphLayoutEngineTest.singleMandatoryBreakAfterWrappedLineDoesNotCreateEmptyLine", || {
-        let _ = ExplainableStubParagraphLayoutEngineTestSupport::explainable_stub_paragraph_layout_engine_test_support_start(&"singleMandatoryBreakAfterWrappedLineDoesNotCreateEmptyLine");
-        let text = concat!("很久以前，曾经有一个名叫小红帽的孩子，生活在大森林的边上，大森林里充满了濒临灭绝的猫头鹰和珍稀植物，如果有人愿意花时间研究它们，就会发现癌症的治疗方法。\n",
-"小红帽和一位称为母亲的养育者一起生活").to_string();
-        let r = ExplainableStubParagraphLayoutEngineTestSupport::explainable_stub_paragraph_layout_engine_test_support_engine(None, Some(Box::new(LookaheadLineBreaker::new(Some(2), Some(2), Some(0.5), Some(Box::new(ClreqKinsokuRule::new(Some(KinsokuLevel::Basic)))), Some(2),
-Some(10), Some(20), Some(12.0))))).unwrap().layout(ExplainableStubParagraphLayoutEngineTestSupport::explainable_stub_paragraph_layout_engine_test_support_input(text.as_str(), 1200 as f64, None, None, Some(TextStyle::new(Some(vec![]), Some(48 as f64), Some("zh-Hans".to_string()),
-Some(400), Some(false), Some(0.0), Some(InlineAttachment::None)))).unwrap()).unwrap();
-        let mut dbg_lines: Vec<String> = vec![];
+        let _ = ExplainableStubParagraphLayoutEngineTestSupport::explainable_stub_paragraph_layout_engine_test_support_start(UStr::new(&[115,105,110,103,108,101,77,97,110,100,97,116,111,114,121,66,114,101,97,107,65,102,116,101,114,87,114,97,112,112,101,100,76,105,110,101,68,111,101,115,78,111,116,67,114,101,97,116,101,69,109,112,116,121,76,105,110,101]));
+        let text = UString::from(concat!("很久以前，曾经有一个名叫小红帽的孩子，生活在大森林的边上，大森林里充满了濒临灭绝的猫头鹰和珍稀植物，如果有人愿意花时间研究它们，就会发现癌症的治疗方法。\n",
+"小红帽和一位称为母亲的养育者一起生活")).to_ustring();
+        let r = ExplainableStubParagraphLayoutEngineTestSupport::explainable_stub_paragraph_layout_engine_test_support_engine(None, Some(Box::new(LookaheadLineBreaker::new(Some(2), Some(2), Some(0.5), Some(Box::new(ClreqKinsokuRule::new(Some(KinsokuLevel::Basic)))), Some(2), Some(10), Some(20), Some(12.0))))).unwrap().layout(ExplainableStubParagraphLayoutEngineTestSupport::explainable_stub_paragraph_layout_engine_test_support_input(text.as_ustr(), 1200 as f64, None, None, Some(TextStyle::new(Some(vec![]), Some(48 as f64), Some(UString::from("zh-Hans")), Some(400), Some(false), Some(0.0), Some(InlineAttachment::None)))).unwrap()).unwrap();
+        let mut dbg_lines: Vec<UString> = vec![];
         for _g_index in 0..match u32::try_from(r.lines.len()) { Ok(value) => value, Err(_) => u32::MAX } {
             let l = (r.lines[usize::try_from(_g_index).unwrap_or(0)]).clone();
-            dbg_lines.push(format!("{}{}{}{}{}{}{}{}",
-            l.cluster_range.to_string(),
-            " ",
-            (l.range).clone().to_string(),
-            " ",
-            l.end_reason.name(),
-            " \"",
-            {
+            dbg_lines.push(UString::from(format!("{}", { let mut __s = UString::new(); __s += UString::from(format!("{}", l.cluster_range.to_string()).as_str()).as_ustr(); __s += &(UString::from(" ")); __s += UString::from(format!("{}", (l.range).clone().to_string()).as_str()).as_ustr(); __s += &(UString::from(" ")); __s += UString::from(l.end_reason.name()).as_ustr(); __s += &(UString::from(" \"")); __s += UString::from(format!("{}", {
     let from = (l.range).clone().start;
     let to = (l.range).clone().end;
-    u_string::slice(text.as_str(), i32::from_ne_bytes((from).to_ne_bytes()), i32::from_ne_bytes((to).to_ne_bytes()))
-},
-            "\""
-        ));
+    u_string::slice(text.as_ustr(), i32::from_ne_bytes(((from) as i32).to_ne_bytes()), i32::from_ne_bytes(((to) as i32).to_ne_bytes()))
+}).as_str()).as_ustr(); __s += &(UString::from("\"")); __s }).as_str()));
         }
-        let dbg = { let joined = dbg_lines; let mut out = String::new(); let n = joined.len(); let mut index = 0usize; while index < n { if index > 0 { out.push_str(&(concat!("\n",
-""))); } let _ = write!(out, "{}", joined[index]); index += 1; } out };
-        let _ = TracedAssertions::traced_assertions_assert_true((i32::from_ne_bytes((u32::try_from((r.lines.len()) & 0xFFFF_FFFF).unwrap_or(0)).to_ne_bytes())) >= 4, None).unwrap();
+        let dbg = { let joined = dbg_lines; let mut out = String::new(); let n = joined.len(); let mut index = 0usize; while index < n { if index > 0 { out.push_str(concat!("\n",
+"")); } let _ = write!(out, "{}", joined[index]); index += 1; } UString::from(out.as_str()) };
+        let _ = TracedAssertions::traced_assertions_assert_true((i32::from_ne_bytes(((u32::try_from((r.lines.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) >= 4, None).unwrap();
         let mut no = false;
         for _g_index1 in 0..match u32::try_from(r.lines.len()) { Ok(value) => value, Err(_) => u32::MAX } {
             let l = (r.lines[usize::try_from(_g_index1).unwrap_or(0)]).clone();
             if {
     let from = (l.range).clone().start;
     let to = (l.range).clone().end;
-    u_string::slice(text.as_str(), i32::from_ne_bytes((from).to_ne_bytes()), i32::from_ne_bytes((to).to_ne_bytes()))
-} == concat!("\n",
-"") {
+    u_string::slice(text.as_ustr(), i32::from_ne_bytes(((from) as i32).to_ne_bytes()), i32::from_ne_bytes(((to) as i32).to_ne_bytes()))
+} == UString::from(concat!("\n",
+"")) {
                 no = true;
             }
         }
-        let _ = TracedAssertions::traced_assertions_assert_true(!no, Some((dbg).to_string())).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_true(!no, Some((dbg).to_ustring())).unwrap();
         let mut idx = 0u32;
-        for i in 0..u_string::count(text.as_str()) {
-            if u_string::at(text.as_str(), i).as_ref().map_or(false, |v| v == &(10)) {
+        for i in 0..u_string::count(text.as_ustr()) {
+            if u_string::at(text.as_ustr(), i).as_ref().map_or(false, |v| v == &(10)) {
                 idx = u32::wrapping_add(i, 1);
             }
         }
@@ -1681,15 +1857,13 @@ Some(400), Some(false), Some(0.0), Some(InlineAttachment::None)))).unwrap()).unw
 #[test]
 fn crlf_is_one_mandatory_break_cluster() {
     testlib::run("org.tiqian.layout.ExplainableStubParagraphLayoutEngineTest.crlfIsOneMandatoryBreakCluster", "org.tiqian.layout.ExplainableStubParagraphLayoutEngineTest.crlfIsOneMandatoryBreakCluster", || {
-        let _ = ExplainableStubParagraphLayoutEngineTestSupport::explainable_stub_paragraph_layout_engine_test_support_start(&"crlfIsOneMandatoryBreakCluster");
-        let r = ExplainableStubParagraphLayoutEngineTestSupport::explainable_stub_paragraph_layout_engine_test_support_engine(None, Some(Box::new(LookaheadLineBreaker::new(Some(2), Some(2), Some(0.5), Some(Box::new(ClreqKinsokuRule::new(Some(KinsokuLevel::Basic)))), Some(2),
-Some(10), Some(20), Some(12.0))))).unwrap().layout(ExplainableStubParagraphLayoutEngineTestSupport::explainable_stub_paragraph_layout_engine_test_support_input(&concat!("甲\r\n",
-"乙"), 240 as f64, None, None, None).unwrap()).unwrap();
+        let _ = ExplainableStubParagraphLayoutEngineTestSupport::explainable_stub_paragraph_layout_engine_test_support_start(UStr::new(&[99,114,108,102,73,115,79,110,101,77,97,110,100,97,116,111,114,121,66,114,101,97,107,67,108,117,115,116,101,114]));
+        let r = ExplainableStubParagraphLayoutEngineTestSupport::explainable_stub_paragraph_layout_engine_test_support_engine(None, Some(Box::new(LookaheadLineBreaker::new(Some(2), Some(2), Some(0.5), Some(Box::new(ClreqKinsokuRule::new(Some(KinsokuLevel::Basic)))), Some(2), Some(10), Some(20), Some(12.0))))).unwrap().layout(ExplainableStubParagraphLayoutEngineTestSupport::explainable_stub_paragraph_layout_engine_test_support_input(UStr::new(&[30002,13,10,20057]), 240 as f64, None, None, None).unwrap()).unwrap();
         let mut b: Option<Cluster> = None;
         for _g_index in 0..match u32::try_from(r.clusters.len()) { Ok(value) => value, Err(_) => u32::MAX } {
             let c = (r.clusters[usize::try_from(_g_index).unwrap_or(0)]).clone();
-            if c.text.to_string() == concat!("\r\n",
-"") {
+            if c.text.to_ustring() == UString::from(concat!("\r\n",
+"")) {
                 b = Some(c.clone());
             }
         }
@@ -1703,12 +1877,8 @@ Some(10), Some(20), Some(12.0))))).unwrap().layout(ExplainableStubParagraphLayou
 #[test]
 fn consecutive_and_trailing_mandatory_breaks_preserve_blank_lines() {
     testlib::run("org.tiqian.layout.ExplainableStubParagraphLayoutEngineTest.consecutiveAndTrailingMandatoryBreaksPreserveBlankLines", "org.tiqian.layout.ExplainableStubParagraphLayoutEngineTest.consecutiveAndTrailingMandatoryBreaksPreserveBlankLines", || {
-        let _ = ExplainableStubParagraphLayoutEngineTestSupport::explainable_stub_paragraph_layout_engine_test_support_start(&"consecutiveAndTrailingMandatoryBreaksPreserveBlankLines");
-        let r = ExplainableStubParagraphLayoutEngineTestSupport::explainable_stub_paragraph_layout_engine_test_support_engine(None, Some(Box::new(LookaheadLineBreaker::new(Some(2), Some(2), Some(0.5), Some(Box::new(ClreqKinsokuRule::new(Some(KinsokuLevel::Basic)))), Some(2),
-Some(10), Some(20), Some(12.0))))).unwrap().layout(ExplainableStubParagraphLayoutEngineTestSupport::explainable_stub_paragraph_layout_engine_test_support_input(&concat!("甲\n",
-"\n",
-"乙\n",
-""), 240 as f64, None, None, None).unwrap()).unwrap();
+        let _ = ExplainableStubParagraphLayoutEngineTestSupport::explainable_stub_paragraph_layout_engine_test_support_start(UStr::new(&[99,111,110,115,101,99,117,116,105,118,101,65,110,100,84,114,97,105,108,105,110,103,77,97,110,100,97,116,111,114,121,66,114,101,97,107,115,80,114,101,115,101,114,118,101,66,108,97,110,107,76,105,110,101,115]));
+        let r = ExplainableStubParagraphLayoutEngineTestSupport::explainable_stub_paragraph_layout_engine_test_support_engine(None, Some(Box::new(LookaheadLineBreaker::new(Some(2), Some(2), Some(0.5), Some(Box::new(ClreqKinsokuRule::new(Some(KinsokuLevel::Basic)))), Some(2), Some(10), Some(20), Some(12.0))))).unwrap().layout(ExplainableStubParagraphLayoutEngineTestSupport::explainable_stub_paragraph_layout_engine_test_support_input(UStr::new(&[30002,10,10,20057,10]), 240 as f64, None, None, None).unwrap()).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_equals_int(4, u32::try_from((r.lines.len()) & 0xFFFF_FFFF).unwrap_or(0), None).unwrap();
         {
             let _ = TracedAssertions::traced_assertions_assert_equals_enum(&(LineEndReason::MandatoryBreak), &(r.lines[0usize].end_reason), None).unwrap();
@@ -1717,17 +1887,15 @@ Some(10), Some(20), Some(12.0))))).unwrap().layout(ExplainableStubParagraphLayou
         }
         let _ = TracedAssertions::traced_assertions_assert_equals_enum(&(LineEndReason::ParagraphEnd), &(r.lines[3usize].end_reason), None).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_equals_float(0 as f64, r.lines[1usize].visual_width, None).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_equals_rendered(&"TextRange(start=5, end=5)", ((r.lines[3usize]).clone().range).clone().to_string().as_str(), None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_equals_rendered(UStr::new(&[84,101,120,116,82,97,110,103,101,40,115,116,97,114,116,61,53,44,32,101,110,100,61,53,41]), UString::from(format!("{}", ((r.lines[3usize]).clone().range).clone().to_string()).as_str()).as_ustr(), None).unwrap();
     });
 }
 
 #[test]
 fn mandatory_break_line_is_not_justified() {
     testlib::run("org.tiqian.layout.ExplainableStubParagraphLayoutEngineTest.mandatoryBreakLineIsNotJustified", "org.tiqian.layout.ExplainableStubParagraphLayoutEngineTest.mandatoryBreakLineIsNotJustified", || {
-        let _ = ExplainableStubParagraphLayoutEngineTestSupport::explainable_stub_paragraph_layout_engine_test_support_start(&"mandatoryBreakLineIsNotJustified");
-        let r = ExplainableStubParagraphLayoutEngineTestSupport::explainable_stub_paragraph_layout_engine_test_support_engine(None, Some(Box::new(LookaheadLineBreaker::new(Some(2), Some(2), Some(0.5), Some(Box::new(ClreqKinsokuRule::new(Some(KinsokuLevel::Basic)))), Some(2),
-Some(10), Some(20), Some(12.0))))).unwrap().layout(ExplainableStubParagraphLayoutEngineTestSupport::explainable_stub_paragraph_layout_engine_test_support_input(&concat!("短\n",
-"中文中文中文中文中文"), 128 as f64, None, None, None).unwrap()).unwrap();
+        let _ = ExplainableStubParagraphLayoutEngineTestSupport::explainable_stub_paragraph_layout_engine_test_support_start(UStr::new(&[109,97,110,100,97,116,111,114,121,66,114,101,97,107,76,105,110,101,73,115,78,111,116,74,117,115,116,105,102,105,101,100]));
+        let r = ExplainableStubParagraphLayoutEngineTestSupport::explainable_stub_paragraph_layout_engine_test_support_engine(None, Some(Box::new(LookaheadLineBreaker::new(Some(2), Some(2), Some(0.5), Some(Box::new(ClreqKinsokuRule::new(Some(KinsokuLevel::Basic)))), Some(2), Some(10), Some(20), Some(12.0))))).unwrap().layout(ExplainableStubParagraphLayoutEngineTestSupport::explainable_stub_paragraph_layout_engine_test_support_input(UStr::new(&[30701,10,20013,25991,20013,25991,20013,25991,20013,25991,20013,25991]), 128 as f64, None, None, None).unwrap()).unwrap();
         let l = (r.lines[0usize]).clone();
         let _ = TracedAssertions::traced_assertions_assert_equals_enum(&(LineEndReason::MandatoryBreak), &(l.end_reason), None).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_equals_float(l.natural_width, l.adjusted_width, None).unwrap();
@@ -1738,11 +1906,9 @@ Some(10), Some(20), Some(12.0))))).unwrap().layout(ExplainableStubParagraphLayou
 #[test]
 fn rejects_shaper_clusters_that_do_not_cover_font_decision_range() {
     testlib::run("org.tiqian.layout.ExplainableStubParagraphLayoutEngineTest.rejectsShaperClustersThatDoNotCoverFontDecisionRange", "org.tiqian.layout.ExplainableStubParagraphLayoutEngineTest.rejectsShaperClustersThatDoNotCoverFontDecisionRange", || {
-        let _ = ExplainableStubParagraphLayoutEngineTestSupport::explainable_stub_paragraph_layout_engine_test_support_start(&"rejectsShaperClustersThatDoNotCoverFontDecisionRange");
+        let _ = ExplainableStubParagraphLayoutEngineTestSupport::explainable_stub_paragraph_layout_engine_test_support_start(UStr::new(&[114,101,106,101,99,116,115,83,104,97,112,101,114,67,108,117,115,116,101,114,115,84,104,97,116,68,111,78,111,116,67,111,118,101,114,70,111,110,116,68,101,99,105,115,105,111,110,82,97,110,103,101]));
         let f: Arc<dyn Fn() -> Result<(), IllegalStateException> + Send + Sync + 'static> = {  Arc::new(move || {
-        ExplainableStubParagraphLayoutEngineTestSupport::explainable_stub_paragraph_layout_engine_test_support_engine(Some(Box::new(EmptyTextShaper::new())), None).map_err(|e| IllegalStateException::new(&format!("{:?}",
-e)))?.layout(ExplainableStubParagraphLayoutEngineTestSupport::explainable_stub_paragraph_layout_engine_test_support_input(&"提椠", 240 as f64, None, None, None).map_err(|e| IllegalStateException::new(&format!("{}", e)))?).map_err(|e| IllegalStateException::new(&format!("{:?}",
-e)))?;
+        ExplainableStubParagraphLayoutEngineTestSupport::explainable_stub_paragraph_layout_engine_test_support_engine(Some(Arc::new(Mutex::new(EmptyTextShaper::new()))), None).map_err(|e| IllegalStateException::new(&format!("{}", e)))?.layout(ExplainableStubParagraphLayoutEngineTestSupport::explainable_stub_paragraph_layout_engine_test_support_input(UStr::new(&[25552,26912]), 240 as f64, None, None, None).map_err(|e| IllegalStateException::new(&format!("{}", e)))?).map_err(|e| IllegalStateException::new(&format!("{}", e)))?;
         Ok(())
 }) };
         TracedAssertions::traced_assertions_assert_fails_with(None.clone(), (f).clone()).unwrap();
@@ -1752,13 +1918,11 @@ e)))?;
 #[test]
 fn preserves_shaper_glyph_bounds_in_layout_glyph_runs() {
     testlib::run("org.tiqian.layout.ExplainableStubParagraphLayoutEngineTest.preservesShaperGlyphBoundsInLayoutGlyphRuns", "org.tiqian.layout.ExplainableStubParagraphLayoutEngineTest.preservesShaperGlyphBoundsInLayoutGlyphRuns", || {
-        let _ = ExplainableStubParagraphLayoutEngineTestSupport::explainable_stub_paragraph_layout_engine_test_support_start(&"preservesShaperGlyphBoundsInLayoutGlyphRuns");
-        let r = ExplainableStubParagraphLayoutEngineTestSupport::explainable_stub_paragraph_layout_engine_test_support_engine(Some(Box::new(FixedBoundsTextShaper::new())),
-None).unwrap().layout(ExplainableStubParagraphLayoutEngineTestSupport::explainable_stub_paragraph_layout_engine_test_support_input(&"A", 240 as f64, None, None, None).unwrap()).unwrap();
+        let _ = ExplainableStubParagraphLayoutEngineTestSupport::explainable_stub_paragraph_layout_engine_test_support_start(UStr::new(&[112,114,101,115,101,114,118,101,115,83,104,97,112,101,114,71,108,121,112,104,66,111,117,110,100,115,73,110,76,97,121,111,117,116,71,108,121,112,104,82,117,110,115]));
+        let r = ExplainableStubParagraphLayoutEngineTestSupport::explainable_stub_paragraph_layout_engine_test_support_engine(Some(Arc::new(Mutex::new(FixedBoundsTextShaper::new()))), None).unwrap().layout(ExplainableStubParagraphLayoutEngineTestSupport::explainable_stub_paragraph_layout_engine_test_support_input(UStr::new(&[65]), 240 as f64, None, None, None).unwrap()).unwrap();
         let g = ((r.glyph_runs[0usize]).clone().glyphs[0usize]).clone();
         let _ = TracedAssertions::traced_assertions_assert_equals_int(42, g.id, None).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_equals_rendered(Rect::new(1 as f64 as f64, i32::from_ne_bytes((4294967286u32).to_ne_bytes()) as f64 as f64, 12 as f64 as f64, 2 as f64 as f64).to_string().as_str(),
-ExplainableStubParagraphLayoutEngineTestSupport::explainable_stub_paragraph_layout_engine_test_support_render_nullable_bounds((g.bounds).clone()).as_str(), None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_equals_rendered(UString::from(format!("{}", Rect::new(1 as f64 as f64, i32::from_ne_bytes(((4294967286u32) as i32).to_ne_bytes()) as f64 as f64, 12 as f64 as f64, 2 as f64 as f64).to_string()).as_str()).as_ustr(), ExplainableStubParagraphLayoutEngineTestSupport::explainable_stub_paragraph_layout_engine_test_support_render_nullable_bounds((g.bounds).clone()).as_ustr(), None).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_equals_float(20 as f64, g.advance, None).unwrap();
     });
 }
@@ -1766,15 +1930,12 @@ ExplainableStubParagraphLayoutEngineTestSupport::explainable_stub_paragraph_layo
 #[test]
 fn records_fallback_decisions_per_cluster() {
     testlib::run("org.tiqian.layout.ExplainableStubParagraphLayoutEngineTest.recordsFallbackDecisionsPerCluster", "org.tiqian.layout.ExplainableStubParagraphLayoutEngineTest.recordsFallbackDecisionsPerCluster", || {
-        let _ = ExplainableStubParagraphLayoutEngineTestSupport::explainable_stub_paragraph_layout_engine_test_support_start(&"recordsFallbackDecisionsPerCluster");
-        let r = ExplainableStubParagraphLayoutEngine::new(Some(Box::new(CjkFontRoleClassifier::new())), Some(Box::new(ParagraphLayoutFallbackResolver::new(Some("cjk-primary".to_string()), Some("latin-primary".to_string()), Some("symbol-fallback".to_string())).unwrap())),
-Some(Box::new(BuiltInClreqProfileResolver::new())), Some(Box::new(StubFontMetricsResolver::new())), Some(Box::new(ScriptAwareFontMetricsNormalizer::new())), Some(PunctuationAtomBuilder::new(None, None).unwrap()), Some(PunctuationSpacingCompressor::new().unwrap()),
-Some(QuotePairAnalyzer::new()), Some(Box::new(GreedyLineBreaker::new(None, None, None, None))), Some(Justifier::new(Some(0.5), Some(0.25))), Some(Box::new(ExplainableStubTextShaper::new())), Some(Box::new(NoHyphenator::new())),
-Some(Box::new(LruWidthIndependentAnnotationCache::new(512)))).unwrap().layout(ExplainableStubParagraphLayoutEngineTestSupport::explainable_stub_paragraph_layout_engine_test_support_input(&"提椠……English——世界。", 320 as f64, None, None, None).unwrap()).unwrap();
+        let _ = ExplainableStubParagraphLayoutEngineTestSupport::explainable_stub_paragraph_layout_engine_test_support_start(UStr::new(&[114,101,99,111,114,100,115,70,97,108,108,98,97,99,107,68,101,99,105,115,105,111,110,115,80,101,114,67,108,117,115,116,101,114]));
+        let r = ExplainableStubParagraphLayoutEngine::new(Some(Box::new(CjkFontRoleClassifier::new())), Some(Box::new(ParagraphLayoutFallbackResolver::new(Some(UString::from("cjk-primary")), Some(UString::from("latin-primary")), Some(UString::from("symbol-fallback"))).unwrap())), Some(Box::new(BuiltInClreqProfileResolver::new())), Some(Box::new(StubFontMetricsResolver::new())), Some(Box::new(ScriptAwareFontMetricsNormalizer::new())), Some(PunctuationAtomBuilder::new(None, None).unwrap()), Some(PunctuationSpacingCompressor::new().unwrap()), Some(QuotePairAnalyzer::new()), Some(Box::new(GreedyLineBreaker::new(None, None, None, None))), Some(Justifier::new(Some(0.5), Some(0.25))), Some(Arc::new(Mutex::new(ExplainableStubTextShaper::new()))), Some(Box::new(NoHyphenator::new())), Some(Arc::new(Mutex::new(LruWidthIndependentAnnotationCache::new(512))))).unwrap().layout(ExplainableStubParagraphLayoutEngineTestSupport::explainable_stub_paragraph_layout_engine_test_support_input(UStr::new(&[25552,26912,8230,8230,69,110,103,108,105,115,104,8212,8212,19990,30028,12290]), 320 as f64, None, None, None).unwrap()).unwrap();
         let mut a = false;
         for _g_index in 0..match u32::try_from((r.debug).clone().font_decisions.len()) { Ok(value) => value, Err(_) => u32::MAX } {
             let d = ((r.debug).clone().font_decisions[usize::try_from(_g_index).unwrap_or(0)]).clone();
-            if d.source_text.to_string() == "……" && (d.display_text).to_string() == "⋯⋯" && (d.role).to_string() == "CjkPunctuation" && (d.font_key).to_string() == "cjk-primary" {
+            if d.source_text.to_ustring() == UString::from("……") && (d.display_text).to_ustring() == UString::from("⋯⋯") && (d.role).to_ustring() == UString::from("CjkPunctuation") && (d.font_key).to_ustring() == UString::from("cjk-primary") {
                 a = true;
             }
         }
@@ -1782,7 +1943,7 @@ Some(Box::new(LruWidthIndependentAnnotationCache::new(512)))).unwrap().layout(Ex
         a = false;
         for _g_index1 in 0..match u32::try_from((r.debug).clone().font_decisions.len()) { Ok(value) => value, Err(_) => u32::MAX } {
             let d = ((r.debug).clone().font_decisions[usize::try_from(_g_index1).unwrap_or(0)]).clone();
-            if d.source_text.to_string() == "——" && (d.display_text).to_string() == "⸺" {
+            if d.source_text.to_ustring() == UString::from("——") && (d.display_text).to_ustring() == UString::from("⸺") {
                 a = true;
             }
         }
@@ -1790,7 +1951,7 @@ Some(Box::new(LruWidthIndependentAnnotationCache::new(512)))).unwrap().layout(Ex
         a = false;
         for _g_index2 in 0..match u32::try_from((r.debug).clone().shaping_decisions.len()) { Ok(value) => value, Err(_) => u32::MAX } {
             let d = ((r.debug).clone().shaping_decisions[usize::try_from(_g_index2).unwrap_or(0)]).clone();
-            if d.source_text.to_string() == "——" && (d.display_text).to_string() == "⸺" && d.advance == 32 as f64 && (d.source).to_string() == "Stub" {
+            if d.source_text.to_ustring() == UString::from("——") && (d.display_text).to_ustring() == UString::from("⸺") && d.advance == 32 as f64 && (d.source).to_ustring() == UString::from("Stub") {
                 a = true;
             }
         }
@@ -1798,7 +1959,7 @@ Some(Box::new(LruWidthIndependentAnnotationCache::new(512)))).unwrap().layout(Ex
         a = false;
         for _g_index3 in 0..match u32::try_from((r.debug).clone().font_decisions.len()) { Ok(value) => value, Err(_) => u32::MAX } {
             let d = ((r.debug).clone().font_decisions[usize::try_from(_g_index3).unwrap_or(0)]).clone();
-            if d.source_text.to_string() == "English" && (d.role).to_string() == "LatinText" && (d.font_key).to_string() == "latin-primary" {
+            if d.source_text.to_ustring() == UString::from("English") && (d.role).to_ustring() == UString::from("LatinText") && (d.font_key).to_ustring() == UString::from("latin-primary") {
                 a = true;
             }
         }
@@ -1806,26 +1967,23 @@ Some(Box::new(LruWidthIndependentAnnotationCache::new(512)))).unwrap().layout(Ex
         let mut c: Option<Cluster> = None;
         for _g_index4 in 0..match u32::try_from(r.clusters.len()) { Ok(value) => value, Err(_) => u32::MAX } {
             let x = (r.clusters[usize::try_from(_g_index4).unwrap_or(0)]).clone();
-            if x.text.to_string() == "English" {
+            if x.text.to_ustring() == UString::from("English") {
                 c = Some(x.clone());
             }
         }
-        let _ = TracedAssertions::traced_assertions_assert_equals_string(&"English", (c.as_ref().unwrap().text).to_string().as_str(), None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_equals_string(UStr::new(&[69,110,103,108,105,115,104]), (c.as_ref().unwrap().text).to_ustring().as_ustr(), None).unwrap();
     });
 }
 
 #[test]
 fn combining_marks_stay_in_their_base_shaping_runs() {
     testlib::run("org.tiqian.layout.ExplainableStubParagraphLayoutEngineTest.combiningMarksStayInTheirBaseShapingRuns", "org.tiqian.layout.ExplainableStubParagraphLayoutEngineTest.combiningMarksStayInTheirBaseShapingRuns", || {
-        let _ = ExplainableStubParagraphLayoutEngineTestSupport::explainable_stub_paragraph_layout_engine_test_support_start(&"combiningMarksStayInTheirBaseShapingRuns");
-        let r = ExplainableStubParagraphLayoutEngine::new(Some(Box::new(CjkFontRoleClassifier::new())), Some(Box::new(ParagraphLayoutFallbackResolver::new(Some("cjk-primary".to_string()), Some("latin-primary".to_string()), Some("symbol-fallback".to_string())).unwrap())),
-Some(Box::new(BuiltInClreqProfileResolver::new())), Some(Box::new(StubFontMetricsResolver::new())), Some(Box::new(ScriptAwareFontMetricsNormalizer::new())), Some(PunctuationAtomBuilder::new(None, None).unwrap()), Some(PunctuationSpacingCompressor::new().unwrap()),
-Some(QuotePairAnalyzer::new()), Some(Box::new(GreedyLineBreaker::new(None, None, None, None))), Some(Justifier::new(Some(0.5), Some(0.25))), Some(Box::new(ExplainableStubTextShaper::new())), Some(Box::new(NoHyphenator::new())),
-Some(Box::new(LruWidthIndependentAnnotationCache::new(512)))).unwrap().layout(ExplainableStubParagraphLayoutEngineTestSupport::explainable_stub_paragraph_layout_engine_test_support_input(&"༎ຶ Ỏ̷", 320 as f64, None, None, None).unwrap()).unwrap();
+        let _ = ExplainableStubParagraphLayoutEngineTestSupport::explainable_stub_paragraph_layout_engine_test_support_start(UStr::new(&[99,111,109,98,105,110,105,110,103,77,97,114,107,115,83,116,97,121,73,110,84,104,101,105,114,66,97,115,101,83,104,97,112,105,110,103,82,117,110,115]));
+        let r = ExplainableStubParagraphLayoutEngine::new(Some(Box::new(CjkFontRoleClassifier::new())), Some(Box::new(ParagraphLayoutFallbackResolver::new(Some(UString::from("cjk-primary")), Some(UString::from("latin-primary")), Some(UString::from("symbol-fallback"))).unwrap())), Some(Box::new(BuiltInClreqProfileResolver::new())), Some(Box::new(StubFontMetricsResolver::new())), Some(Box::new(ScriptAwareFontMetricsNormalizer::new())), Some(PunctuationAtomBuilder::new(None, None).unwrap()), Some(PunctuationSpacingCompressor::new().unwrap()), Some(QuotePairAnalyzer::new()), Some(Box::new(GreedyLineBreaker::new(None, None, None, None))), Some(Justifier::new(Some(0.5), Some(0.25))), Some(Arc::new(Mutex::new(ExplainableStubTextShaper::new()))), Some(Box::new(NoHyphenator::new())), Some(Arc::new(Mutex::new(LruWidthIndependentAnnotationCache::new(512))))).unwrap().layout(ExplainableStubParagraphLayoutEngineTestSupport::explainable_stub_paragraph_layout_engine_test_support_input(UStr::new(&[3854,3766,32,7886,823]), 320 as f64, None, None, None).unwrap()).unwrap();
         let mut a = false;
         for _g_index in 0..match u32::try_from((r.debug).clone().shaping_decisions.len()) { Ok(value) => value, Err(_) => u32::MAX } {
             let d = ((r.debug).clone().shaping_decisions[usize::try_from(_g_index).unwrap_or(0)]).clone();
-            if d.source_text.to_string() == "༎ຶ" {
+            if d.source_text.to_ustring() == UString::from("༎ຶ") {
                 a = true;
             }
         }
@@ -1833,7 +1991,7 @@ Some(Box::new(LruWidthIndependentAnnotationCache::new(512)))).unwrap().layout(Ex
         a = false;
         for _g_index1 in 0..match u32::try_from((r.debug).clone().shaping_decisions.len()) { Ok(value) => value, Err(_) => u32::MAX } {
             let d = ((r.debug).clone().shaping_decisions[usize::try_from(_g_index1).unwrap_or(0)]).clone();
-            if d.source_text.to_string() == "Ỏ̷" {
+            if d.source_text.to_ustring() == UString::from("Ỏ̷") {
                 a = true;
             }
         }
@@ -1841,7 +1999,7 @@ Some(Box::new(LruWidthIndependentAnnotationCache::new(512)))).unwrap().layout(Ex
         a = false;
         for _g_index2 in 0..match u32::try_from((r.debug).clone().shaping_decisions.len()) { Ok(value) => value, Err(_) => u32::MAX } {
             let d = ((r.debug).clone().shaping_decisions[usize::try_from(_g_index2).unwrap_or(0)]).clone();
-            if d.source_text.to_string() == "ຶ" || (d.source_text).to_string() == "̷" {
+            if d.source_text.to_ustring() == UString::from("ຶ") || (d.source_text).to_ustring() == UString::from("̷") {
                 a = true;
             }
         }
@@ -1852,138 +2010,110 @@ Some(Box::new(LruWidthIndependentAnnotationCache::new(512)))).unwrap().layout(Ex
 #[test]
 fn complex_emoji_graphemes_stay_atomic_across_geometry_only_boundaries() {
     testlib::run("org.tiqian.layout.ExplainableStubParagraphLayoutEngineTest.complexEmojiGraphemesStayAtomicAcrossGeometryOnlyBoundaries", "org.tiqian.layout.ExplainableStubParagraphLayoutEngineTest.complexEmojiGraphemesStayAtomicAcrossGeometryOnlyBoundaries", || {
-        let _ = ExplainableStubParagraphLayoutEngineTestSupport::explainable_stub_paragraph_layout_engine_test_support_start(&"complexEmojiGraphemesStayAtomicAcrossGeometryOnlyBoundaries");
-        let text = "👩🏽‍💻".to_string();
-        let content = TiqianTextContent::new(text.as_str(), Some(vec![]), Some(vec![2]), Some(vec![]), Some(vec![]));
-        let r = ExplainableStubParagraphLayoutEngine::new(Some(Box::new(CjkFontRoleClassifier::new())), Some(Box::new(ParagraphLayoutFallbackResolver::new(Some("cjk-primary".to_string()), Some("latin-primary".to_string()), Some("symbol-fallback".to_string())).unwrap())),
-Some(Box::new(BuiltInClreqProfileResolver::new())), Some(Box::new(StubFontMetricsResolver::new())), Some(Box::new(ScriptAwareFontMetricsNormalizer::new())), Some(PunctuationAtomBuilder::new(None, None).unwrap()), Some(PunctuationSpacingCompressor::new().unwrap()),
-Some(QuotePairAnalyzer::new()), Some(Box::new(GreedyLineBreaker::new(None, None, None, None))), Some(Justifier::new(Some(0.5), Some(0.25))), Some(Box::new(ExplainableStubTextShaper::new())), Some(DefaultHyphenator::default_hyphenator_default_hyphenator().unwrap()),
-Some(Box::new(LruWidthIndependentAnnotationCache::new(512)))).unwrap().layout(LayoutInput::new((content).clone(), Some(TextStyle::new(Some(vec![]), Some(16.0), Some("zh-Hans".to_string()), Some(400), Some(false), Some(0.0), Some(InlineAttachment::None))),
-Some(ParagraphStyle::new(Some(LastLineAlignment::Start), Some(WritingMode::HorizontalTb), None, Some((Ic::zero()).clone()), Some(Ic::zero()), Some(MeasureAdaptiveFirstLineIndent::new(Some(14.0), Some(1.0), Some(2.0))), Some(LineLengthGrid::new(Some(true), None)),
-Some(RubyLineHeightMode::PerLine), Some(ParagraphStyle::PARAGRAPH_STYLE_DEFAULT_INLINE_OBJECT_MINIMUM_CLEARANCE_EM), Some(ParagraphStyle::PARAGRAPH_STYLE_DEFAULT_EMPHASIS_DOT_GAP_EM))), LayoutConstraints::new(320 as f64 as f64, Some(f64::INFINITY), Some(2147483647)).unwrap(),
-Some((*crate::org::tiqian::core::built_in_layout_profiles::BUILT_IN_LAYOUT_PROFILES_CLREQ_HORIZONTAL).clone()), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]))).unwrap();
+        let _ = ExplainableStubParagraphLayoutEngineTestSupport::explainable_stub_paragraph_layout_engine_test_support_start(UStr::new(&[99,111,109,112,108,101,120,69,109,111,106,105,71,114,97,112,104,101,109,101,115,83,116,97,121,65,116,111,109,105,99,65,99,114,111,115,115,71,101,111,109,101,116,114,121,79,110,108,121,66,111,117,110,100,97,114,105,101,115]));
+        let text = UString::from("👩🏽‍💻").to_ustring();
+        let content = TiqianTextContent::new(text.as_ustr(), Some(vec![]), Some(vec![2]), Some(vec![]), Some(vec![]));
+        let r = ExplainableStubParagraphLayoutEngine::new(Some(Box::new(CjkFontRoleClassifier::new())), Some(Box::new(ParagraphLayoutFallbackResolver::new(Some(UString::from("cjk-primary")), Some(UString::from("latin-primary")), Some(UString::from("symbol-fallback"))).unwrap())), Some(Box::new(BuiltInClreqProfileResolver::new())), Some(Box::new(StubFontMetricsResolver::new())), Some(Box::new(ScriptAwareFontMetricsNormalizer::new())), Some(PunctuationAtomBuilder::new(None, None).unwrap()), Some(PunctuationSpacingCompressor::new().unwrap()), Some(QuotePairAnalyzer::new()), Some(Box::new(GreedyLineBreaker::new(None, None, None, None))), Some(Justifier::new(Some(0.5), Some(0.25))), Some(Arc::new(Mutex::new(ExplainableStubTextShaper::new()))), Some(DefaultHyphenator::default_hyphenator_default_hyphenator().unwrap()), Some(Arc::new(Mutex::new(LruWidthIndependentAnnotationCache::new(512))))).unwrap().layout(LayoutInput::new((content).clone(), Some(TextStyle::new(Some(vec![]), Some(16.0), Some(UString::from("zh-Hans")), Some(400), Some(false), Some(0.0), Some(InlineAttachment::None))), Some(ParagraphStyle::new(Some(LastLineAlignment::Start), Some(WritingMode::HorizontalTb), None, Some((Ic::zero()).clone()), Some(Ic::zero()), Some(MeasureAdaptiveFirstLineIndent::new(Some(14.0), Some(1.0), Some(2.0))), Some(LineLengthGrid::new(Some(true), None)), Some(RubyLineHeightMode::PerLine), Some(ParagraphStyle::PARAGRAPH_STYLE_DEFAULT_INLINE_OBJECT_MINIMUM_CLEARANCE_EM), Some(ParagraphStyle::PARAGRAPH_STYLE_DEFAULT_EMPHASIS_DOT_GAP_EM))), LayoutConstraints::new(320 as f64 as f64, Some(f64::INFINITY), Some(2147483647)).unwrap(), Some((*crate::org::tiqian::core::built_in_layout_profiles::BUILT_IN_LAYOUT_PROFILES_CLREQ_HORIZONTAL).clone()), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]))).unwrap();
         let mut a: Vec<TextRange> = vec![];
         for _g_index in 0..match u32::try_from((r.debug).clone().font_decisions.len()) { Ok(value) => value, Err(_) => u32::MAX } {
             let d = ((r.debug).clone().font_decisions[usize::try_from(_g_index).unwrap_or(0)]).clone();
-            if d.role.to_string() == "Emoji" {
+            if d.role.to_ustring() == UString::from("Emoji") {
                 a.push((d.range).clone());
             }
         }
-        let _ = TracedAssertions::traced_assertions_assert_equals_rendered(&"[TextRange(start=0, end=7)]", ExplainableStubParagraphLayoutEngineTestSupport::explainable_stub_paragraph_layout_engine_test_support_render_ranges(&a).as_str(), None).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_equals_rendered(format!("{}{}{}",
-            "['",
-            text,
-            "']"
-        ).as_str(), ExplainableStubParagraphLayoutEngineTestSupport::explainable_stub_paragraph_layout_engine_test_support_render_strings(&vec![(((r.debug).clone().shaping_decisions[0usize]).clone().source_text).to_string().clone()]).as_str(), None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_equals_rendered(UStr::new(&[91,84,101,120,116,82,97,110,103,101,40,115,116,97,114,116,61,48,44,32,101,110,100,61,55,41,93]), ExplainableStubParagraphLayoutEngineTestSupport::explainable_stub_paragraph_layout_engine_test_support_render_ranges(&a).as_ustr(), None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_equals_rendered(UString::from(format!("{}", { let mut __s = UString::new(); __s += &(UString::from("['")); __s += text.as_ustr(); __s += &(UString::from("']")); __s }).as_str()).as_ustr(), ExplainableStubParagraphLayoutEngineTestSupport::explainable_stub_paragraph_layout_engine_test_support_render_strings(&vec![(((r.debug).clone().shaping_decisions[0usize]).clone().source_text).to_ustring().clone()]).as_ustr(), None).unwrap();
     });
 }
 
 #[test]
 fn complex_emoji_sequences_reach_the_shaper_as_complete_emoji_ranges() {
     testlib::run("org.tiqian.layout.ExplainableStubParagraphLayoutEngineTest.complexEmojiSequencesReachTheShaperAsCompleteEmojiRanges", "org.tiqian.layout.ExplainableStubParagraphLayoutEngineTest.complexEmojiSequencesReachTheShaperAsCompleteEmojiRanges", || {
-        let _ = ExplainableStubParagraphLayoutEngineTestSupport::explainable_stub_paragraph_layout_engine_test_support_start(&"complexEmojiSequencesReachTheShaperAsCompleteEmojiRanges");
-        let r = ExplainableStubParagraphLayoutEngine::new(Some(Box::new(CjkFontRoleClassifier::new())), Some(Box::new(ParagraphLayoutFallbackResolver::new(Some("cjk-primary".to_string()), Some("latin-primary".to_string()), Some("symbol-fallback".to_string())).unwrap())),
-Some(Box::new(BuiltInClreqProfileResolver::new())), Some(Box::new(StubFontMetricsResolver::new())), Some(Box::new(ScriptAwareFontMetricsNormalizer::new())), Some(PunctuationAtomBuilder::new(None, None).unwrap()), Some(PunctuationSpacingCompressor::new().unwrap()),
-Some(QuotePairAnalyzer::new()), Some(Box::new(GreedyLineBreaker::new(None, None, None, None))), Some(Justifier::new(Some(0.5), Some(0.25))), Some(Box::new(ExplainableStubTextShaper::new())), Some(DefaultHyphenator::default_hyphenator_default_hyphenator().unwrap()),
-Some(Box::new(LruWidthIndependentAnnotationCache::new(512)))).unwrap().layout(ExplainableStubParagraphLayoutEngineTestSupport::explainable_stub_paragraph_layout_engine_test_support_input(&"前👩🏽‍💻后🇨🇳与1️⃣和❤️。", 320 as f64, None, None, None).unwrap()).unwrap();
-        let mut a: Vec<String> = vec![];
+        let _ = ExplainableStubParagraphLayoutEngineTestSupport::explainable_stub_paragraph_layout_engine_test_support_start(UStr::new(&[99,111,109,112,108,101,120,69,109,111,106,105,83,101,113,117,101,110,99,101,115,82,101,97,99,104,84,104,101,83,104,97,112,101,114,65,115,67,111,109,112,108,101,116,101,69,109,111,106,105,82,97,110,103,101,115]));
+        let r = ExplainableStubParagraphLayoutEngine::new(Some(Box::new(CjkFontRoleClassifier::new())), Some(Box::new(ParagraphLayoutFallbackResolver::new(Some(UString::from("cjk-primary")), Some(UString::from("latin-primary")), Some(UString::from("symbol-fallback"))).unwrap())), Some(Box::new(BuiltInClreqProfileResolver::new())), Some(Box::new(StubFontMetricsResolver::new())), Some(Box::new(ScriptAwareFontMetricsNormalizer::new())), Some(PunctuationAtomBuilder::new(None, None).unwrap()), Some(PunctuationSpacingCompressor::new().unwrap()), Some(QuotePairAnalyzer::new()), Some(Box::new(GreedyLineBreaker::new(None, None, None, None))), Some(Justifier::new(Some(0.5), Some(0.25))), Some(Arc::new(Mutex::new(ExplainableStubTextShaper::new()))), Some(DefaultHyphenator::default_hyphenator_default_hyphenator().unwrap()), Some(Arc::new(Mutex::new(LruWidthIndependentAnnotationCache::new(512))))).unwrap().layout(ExplainableStubParagraphLayoutEngineTestSupport::explainable_stub_paragraph_layout_engine_test_support_input(UStr::new(&[21069,55357,56425,55356,57341,8205,55357,56507,21518,55356,56808,55356,56819,19982,49,65039,8419,21644,10084,65039,12290]), 320 as f64, None, None, None).unwrap()).unwrap();
+        let mut a: Vec<UString> = vec![];
         for _g_index in 0..match u32::try_from((r.debug).clone().shaping_decisions.len()) { Ok(value) => value, Err(_) => u32::MAX } {
             let d = ((r.debug).clone().shaping_decisions[usize::try_from(_g_index).unwrap_or(0)]).clone();
-            if d.font_key.to_string() == "symbol-fallback" {
-                a.push((d.source_text).to_string());
+            if d.font_key.to_ustring() == UString::from("symbol-fallback") {
+                a.push((d.source_text).to_ustring());
             }
         }
-        let _ = TracedAssertions::traced_assertions_assert_equals_rendered(&"['👩🏽‍💻', '🇨🇳', '1️⃣', '❤️']", ExplainableStubParagraphLayoutEngineTestSupport::explainable_stub_paragraph_layout_engine_test_support_render_strings(&a).as_str(), None).unwrap();
-        let mut b: Vec<String> = vec![];
+        let _ = TracedAssertions::traced_assertions_assert_equals_rendered(UStr::new(&[91,39,55357,56425,55356,57341,8205,55357,56507,39,44,32,39,55356,56808,55356,56819,39,44,32,39,49,65039,8419,39,44,32,39,10084,65039,39,93]), ExplainableStubParagraphLayoutEngineTestSupport::explainable_stub_paragraph_layout_engine_test_support_render_strings(&a).as_ustr(), None).unwrap();
+        let mut b: Vec<UString> = vec![];
         for _g_index1 in 0..match u32::try_from((r.debug).clone().font_decisions.len()) { Ok(value) => value, Err(_) => u32::MAX } {
             let d = ((r.debug).clone().font_decisions[usize::try_from(_g_index1).unwrap_or(0)]).clone();
-            if d.role.to_string() == "Emoji" {
-                b.push((d.source_text).to_string());
+            if d.role.to_ustring() == UString::from("Emoji") {
+                b.push((d.source_text).to_ustring());
             }
         }
-        let _ = TracedAssertions::traced_assertions_assert_equals_rendered(&"['👩🏽‍💻', '🇨🇳', '1️⃣', '❤️']", ExplainableStubParagraphLayoutEngineTestSupport::explainable_stub_paragraph_layout_engine_test_support_render_strings(&b).as_str(), None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_equals_rendered(UStr::new(&[91,39,55357,56425,55356,57341,8205,55357,56507,39,44,32,39,55356,56808,55356,56819,39,44,32,39,49,65039,8419,39,44,32,39,10084,65039,39,93]), ExplainableStubParagraphLayoutEngineTestSupport::explainable_stub_paragraph_layout_engine_test_support_render_strings(&b).as_ustr(), None).unwrap();
     });
 }
 
 #[test]
 fn emoji_role_matrix_separates_supported_sequences_from_adjacent_and_unrelated_text() {
-    testlib::run("org.tiqian.layout.ExplainableStubParagraphLayoutEngineTest.emojiRoleMatrixSeparatesSupportedSequencesFromAdjacentAndUnrelatedText",
-"org.tiqian.layout.ExplainableStubParagraphLayoutEngineTest.emojiRoleMatrixSeparatesSupportedSequencesFromAdjacentAndUnrelatedText", || {
-        let _ = ExplainableStubParagraphLayoutEngineTestSupport::explainable_stub_paragraph_layout_engine_test_support_start(&"emojiRoleMatrixSeparatesSupportedSequencesFromAdjacentAndUnrelatedText");
+    testlib::run("org.tiqian.layout.ExplainableStubParagraphLayoutEngineTest.emojiRoleMatrixSeparatesSupportedSequencesFromAdjacentAndUnrelatedText", "org.tiqian.layout.ExplainableStubParagraphLayoutEngineTest.emojiRoleMatrixSeparatesSupportedSequencesFromAdjacentAndUnrelatedText", || {
+        let _ = ExplainableStubParagraphLayoutEngineTestSupport::explainable_stub_paragraph_layout_engine_test_support_start(UStr::new(&[101,109,111,106,105,82,111,108,101,77,97,116,114,105,120,83,101,112,97,114,97,116,101,115,83,117,112,112,111,114,116,101,100,83,101,113,117,101,110,99,101,115,70,114,111,109,65,100,106,97,99,101,110,116,65,110,100,85,110,114,101,108,97,116,101,100,84,101,120,116]));
         let cases = vec![
-    "a1️⃣".to_string(),
-    "1️⃣a".to_string(),
-    "a😀中".to_string(),
-    "a❤️中".to_string(),
-    "a©️中".to_string(),
-    "a⌚︎中".to_string(),
-    "a1⃣中".to_string(),
-    "a👍🏽中".to_string(),
-    "a👩🏽‍💻中".to_string(),
-    "a🏳️‍⚧️中".to_string(),
-    "a🇨🇳中".to_string(),
-    "a🏴🏴👧👢👥👮👧🏿中".to_string(),
-    "中️".to_string(),
-    "a️".to_string(),
-    "a⃣中".to_string(),
-    "a1️中".to_string(),
-    "中🏽".to_string(),
-    "a👩‍中".to_string(),
-    "中‍👩a".to_string(),
+    UString::from("a1️⃣").to_ustring(),
+    UString::from("1️⃣a").to_ustring(),
+    UString::from("a😀中").to_ustring(),
+    UString::from("a❤️中").to_ustring(),
+    UString::from("a©️中").to_ustring(),
+    UString::from("a⌚︎中").to_ustring(),
+    UString::from("a1⃣中").to_ustring(),
+    UString::from("a👍🏽中").to_ustring(),
+    UString::from("a👩🏽‍💻中").to_ustring(),
+    UString::from("a🏳️‍⚧️中").to_ustring(),
+    UString::from("a🇨🇳中").to_ustring(),
+    UString::from("a🏴🏴👧👢👥👮👧🏿中").to_ustring(),
+    UString::from("中️").to_ustring(),
+    UString::from("a️").to_ustring(),
+    UString::from("a⃣中").to_ustring(),
+    UString::from("a1️中").to_ustring(),
+    UString::from("中🏽").to_ustring(),
+    UString::from("a👩‍中").to_ustring(),
+    UString::from("中‍👩a").to_ustring(),
 ];
-        let mut mismatches: Vec<String> = vec![];
+        let mut mismatches: Vec<UString> = vec![];
         for text in &cases {
-            let r = ExplainableStubParagraphLayoutEngine::new(Some(Box::new(CjkFontRoleClassifier::new())), Some(Box::new(ParagraphLayoutFallbackResolver::new(Some("cjk-primary".to_string()), Some("latin-primary".to_string()), Some("symbol-fallback".to_string())).unwrap())),
-Some(Box::new(BuiltInClreqProfileResolver::new())), Some(Box::new(StubFontMetricsResolver::new())), Some(Box::new(ScriptAwareFontMetricsNormalizer::new())), Some(PunctuationAtomBuilder::new(None, None).unwrap()), Some(PunctuationSpacingCompressor::new().unwrap()),
-Some(QuotePairAnalyzer::new()), Some(Box::new(GreedyLineBreaker::new(None, None, None, None))), Some(Justifier::new(Some(0.5), Some(0.25))), Some(Box::new(ExplainableStubTextShaper::new())), Some(DefaultHyphenator::default_hyphenator_default_hyphenator().unwrap()),
-Some(Box::new(LruWidthIndependentAnnotationCache::new(512)))).unwrap().layout(ExplainableStubParagraphLayoutEngineTestSupport::explainable_stub_paragraph_layout_engine_test_support_input(text.as_str(), 320 as f64, None, None, None).unwrap()).unwrap();
+            let r = ExplainableStubParagraphLayoutEngine::new(Some(Box::new(CjkFontRoleClassifier::new())), Some(Box::new(ParagraphLayoutFallbackResolver::new(Some(UString::from("cjk-primary")), Some(UString::from("latin-primary")), Some(UString::from("symbol-fallback"))).unwrap())), Some(Box::new(BuiltInClreqProfileResolver::new())), Some(Box::new(StubFontMetricsResolver::new())), Some(Box::new(ScriptAwareFontMetricsNormalizer::new())), Some(PunctuationAtomBuilder::new(None, None).unwrap()), Some(PunctuationSpacingCompressor::new().unwrap()), Some(QuotePairAnalyzer::new()), Some(Box::new(GreedyLineBreaker::new(None, None, None, None))), Some(Justifier::new(Some(0.5), Some(0.25))), Some(Arc::new(Mutex::new(ExplainableStubTextShaper::new()))), Some(DefaultHyphenator::default_hyphenator_default_hyphenator().unwrap()), Some(Arc::new(Mutex::new(LruWidthIndependentAnnotationCache::new(512))))).unwrap().layout(ExplainableStubParagraphLayoutEngineTestSupport::explainable_stub_paragraph_layout_engine_test_support_input(text.as_ustr(), 320 as f64, None, None, None).unwrap()).unwrap();
             if u32::try_from(((r.debug).clone().font_decisions.len()) & 0xFFFF_FFFF).unwrap_or(0) == 0 {
                 mismatches.push(text.clone());
             }
         }
-        let _ = TracedAssertions::traced_assertions_assert_equals_rendered(&"[]", ExplainableStubParagraphLayoutEngineTestSupport::explainable_stub_paragraph_layout_engine_test_support_render_strings(&mismatches).as_str(), None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_equals_rendered(UStr::new(&[91,93]), ExplainableStubParagraphLayoutEngineTestSupport::explainable_stub_paragraph_layout_engine_test_support_render_strings(&mismatches).as_ustr(), None).unwrap();
     });
 }
 
 #[test]
 fn source_grapheme_boundaries_do_not_join_zw_j_with_ordinary_text() {
     testlib::run("org.tiqian.layout.ExplainableStubParagraphLayoutEngineTest.sourceGraphemeBoundariesDoNotJoinZwJWithOrdinaryText", "org.tiqian.layout.ExplainableStubParagraphLayoutEngineTest.sourceGraphemeBoundariesDoNotJoinZwJWithOrdinaryText", || {
-        let _ = ExplainableStubParagraphLayoutEngineTestSupport::explainable_stub_paragraph_layout_engine_test_support_start(&"sourceGraphemeBoundariesDoNotJoinZwJWithOrdinaryText");
-        let _ = TracedAssertions::traced_assertions_assert_equals_int_array(&vec![0, 3, 4], &ExplainableStubParagraphLayoutEngineTestSupport::explainable_stub_paragraph_layout_engine_test_support_grapheme_boundaries(&"👩‍中").unwrap(), None).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_equals_int_array(&vec![0, 2, 4], &ExplainableStubParagraphLayoutEngineTestSupport::explainable_stub_paragraph_layout_engine_test_support_grapheme_boundaries(&"中‍👩").unwrap(), None).unwrap();
+        let _ = ExplainableStubParagraphLayoutEngineTestSupport::explainable_stub_paragraph_layout_engine_test_support_start(UStr::new(&[115,111,117,114,99,101,71,114,97,112,104,101,109,101,66,111,117,110,100,97,114,105,101,115,68,111,78,111,116,74,111,105,110,90,119,74,87,105,116,104,79,114,100,105,110,97,114,121,84,101,120,116]));
+        let _ = TracedAssertions::traced_assertions_assert_equals_int_array(&vec![0, 3, 4], &ExplainableStubParagraphLayoutEngineTestSupport::explainable_stub_paragraph_layout_engine_test_support_grapheme_boundaries(UStr::new(&[55357,56425,8205,20013])).unwrap(), None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_equals_int_array(&vec![0, 2, 4], &ExplainableStubParagraphLayoutEngineTestSupport::explainable_stub_paragraph_layout_engine_test_support_grapheme_boundaries(UStr::new(&[20013,8205,55357,56425])).unwrap(), None).unwrap();
     });
 }
 
 #[test]
 fn records_unicode_emoji_sequence_role_promotions() {
     testlib::run("org.tiqian.layout.ExplainableStubParagraphLayoutEngineTest.recordsUnicodeEmojiSequenceRolePromotions", "org.tiqian.layout.ExplainableStubParagraphLayoutEngineTest.recordsUnicodeEmojiSequenceRolePromotions", || {
-        let _ = ExplainableStubParagraphLayoutEngineTestSupport::explainable_stub_paragraph_layout_engine_test_support_start(&"recordsUnicodeEmojiSequenceRolePromotions");
-        let r = ExplainableStubParagraphLayoutEngine::new(Some(Box::new(CjkFontRoleClassifier::new())), Some(Box::new(ParagraphLayoutFallbackResolver::new(Some("cjk-primary".to_string()), Some("latin-primary".to_string()), Some("symbol-fallback".to_string())).unwrap())),
-Some(Box::new(BuiltInClreqProfileResolver::new())), Some(Box::new(StubFontMetricsResolver::new())), Some(Box::new(ScriptAwareFontMetricsNormalizer::new())), Some(PunctuationAtomBuilder::new(None, None).unwrap()), Some(PunctuationSpacingCompressor::new().unwrap()),
-Some(QuotePairAnalyzer::new()), Some(Box::new(GreedyLineBreaker::new(None, None, None, None))), Some(Justifier::new(Some(0.5), Some(0.25))), Some(Box::new(ExplainableStubTextShaper::new())), Some(DefaultHyphenator::default_hyphenator_default_hyphenator().unwrap()),
-Some(Box::new(LruWidthIndependentAnnotationCache::new(512)))).unwrap().layout(ExplainableStubParagraphLayoutEngineTestSupport::explainable_stub_paragraph_layout_engine_test_support_input(&"❤️与1️⃣", 320 as f64, None, None, None).unwrap()).unwrap();
-        let mut a: Vec<String> = vec![];
-        let mut b: Vec<String> = vec![];
+        let _ = ExplainableStubParagraphLayoutEngineTestSupport::explainable_stub_paragraph_layout_engine_test_support_start(UStr::new(&[114,101,99,111,114,100,115,85,110,105,99,111,100,101,69,109,111,106,105,83,101,113,117,101,110,99,101,82,111,108,101,80,114,111,109,111,116,105,111,110,115]));
+        let r = ExplainableStubParagraphLayoutEngine::new(Some(Box::new(CjkFontRoleClassifier::new())), Some(Box::new(ParagraphLayoutFallbackResolver::new(Some(UString::from("cjk-primary")), Some(UString::from("latin-primary")), Some(UString::from("symbol-fallback"))).unwrap())), Some(Box::new(BuiltInClreqProfileResolver::new())), Some(Box::new(StubFontMetricsResolver::new())), Some(Box::new(ScriptAwareFontMetricsNormalizer::new())), Some(PunctuationAtomBuilder::new(None, None).unwrap()), Some(PunctuationSpacingCompressor::new().unwrap()), Some(QuotePairAnalyzer::new()), Some(Box::new(GreedyLineBreaker::new(None, None, None, None))), Some(Justifier::new(Some(0.5), Some(0.25))), Some(Arc::new(Mutex::new(ExplainableStubTextShaper::new()))), Some(DefaultHyphenator::default_hyphenator_default_hyphenator().unwrap()), Some(Arc::new(Mutex::new(LruWidthIndependentAnnotationCache::new(512))))).unwrap().layout(ExplainableStubParagraphLayoutEngineTestSupport::explainable_stub_paragraph_layout_engine_test_support_input(UStr::new(&[10084,65039,19982,49,65039,8419]), 320 as f64, None, None, None).unwrap()).unwrap();
+        let mut a: Vec<UString> = vec![];
+        let mut b: Vec<UString> = vec![];
         for _g_index in 0..match u32::try_from((r.debug).clone().role_overrides.len()) { Ok(value) => value, Err(_) => u32::MAX } {
             let d = ((r.debug).clone().role_overrides[usize::try_from(_g_index).unwrap_or(0)]).clone();
-            if d.source.to_string() == "UnicodeEmojiSequenceRolePromotion" {
-                a.push(format!("{}{}{}",
-            "'",
-            (d.source_text).to_string(),
-            "'"
-        ));
-                b.push(format!("{}{}{}",
-            "'",
-            (d.original_role).to_string(),
-            "'"
-        ));
+            if d.source.to_ustring() == UString::from("UnicodeEmojiSequenceRolePromotion") {
+                a.push(UString::from(format!("{}", { let mut __s = UString::new(); __s += &(UString::from("'")); __s += (d.source_text).to_ustring().as_ustr(); __s += &(UString::from("'")); __s }).as_str()));
+                b.push(UString::from(format!("{}", { let mut __s = UString::new(); __s += &(UString::from("'")); __s += (d.original_role).to_ustring().as_ustr(); __s += &(UString::from("'")); __s }).as_str()));
             }
         }
-        let _ = TracedAssertions::traced_assertions_assert_equals_rendered(&"[('❤️', 'Symbol'), ('1️⃣', 'LatinText')]", ExplainableStubParagraphLayoutEngineTestSupport::explainable_stub_paragraph_layout_engine_test_support_render_pairs(&a, &b).as_str(), None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_equals_rendered(UStr::new(&[91,40,39,10084,65039,39,44,32,39,83,121,109,98,111,108,39,41,44,32,40,39,49,65039,8419,39,44,32,39,76,97,116,105,110,84,101,120,116,39,41,93]), ExplainableStubParagraphLayoutEngineTestSupport::explainable_stub_paragraph_layout_engine_test_support_render_pairs(&a, &b).as_ustr(), None).unwrap();
         let mut ok = true;
         for _g_index1 in 0..match u32::try_from((r.debug).clone().role_overrides.len()) { Ok(value) => value, Err(_) => u32::MAX } {
             let d = ((r.debug).clone().role_overrides[usize::try_from(_g_index1).unwrap_or(0)]).clone();
-            if d.source.to_string() == "UnicodeEmojiSequenceRolePromotion" && ((d.overridden_role).to_string() != "Emoji" || (d.reason).to_string() != "EmojiStyleVariationSequence" && (d.reason).to_string() != "KeycapSequence") {
+            if d.source.to_ustring() == UString::from("UnicodeEmojiSequenceRolePromotion") && ((d.overridden_role).to_ustring() != UString::from("Emoji") || (d.reason).to_ustring() != UString::from("EmojiStyleVariationSequence") && (d.reason).to_ustring() != UString::from("KeycapSequence")) {
                 ok = false;
             }
         }
@@ -1994,30 +2124,23 @@ Some(Box::new(LruWidthIndependentAnnotationCache::new(512)))).unwrap().layout(Ex
 #[test]
 fn complex_emoji_graphemes_honor_text_span_style_boundaries() {
     testlib::run("org.tiqian.layout.ExplainableStubParagraphLayoutEngineTest.complexEmojiGraphemesHonorTextSpanStyleBoundaries", "org.tiqian.layout.ExplainableStubParagraphLayoutEngineTest.complexEmojiGraphemesHonorTextSpanStyleBoundaries", || {
-        let _ = ExplainableStubParagraphLayoutEngineTestSupport::explainable_stub_paragraph_layout_engine_test_support_start(&"complexEmojiGraphemesHonorTextSpanStyleBoundaries");
-        let text = "👩🏽‍💻".to_string();
-        let content = TiqianTextContent::new(text.as_str(), Some(vec![
-    (TextSpan::new(TextRange::new(2u32, ExplainableStubParagraphLayoutEngineTestSupport::explainable_stub_paragraph_layout_engine_test_support_text_length(text.as_str())).unwrap(), TextStyle::new(Some(vec![]), Some(16.0), Some("zh-Hans".to_string()), Some(700), Some(false),
-Some(0.0), Some(InlineAttachment::None)))).clone(),
+        let _ = ExplainableStubParagraphLayoutEngineTestSupport::explainable_stub_paragraph_layout_engine_test_support_start(UStr::new(&[99,111,109,112,108,101,120,69,109,111,106,105,71,114,97,112,104,101,109,101,115,72,111,110,111,114,84,101,120,116,83,112,97,110,83,116,121,108,101,66,111,117,110,100,97,114,105,101,115]));
+        let text = UString::from("👩🏽‍💻").to_ustring();
+        let content = TiqianTextContent::new(text.as_ustr(), Some(vec![
+    (TextSpan::new(TextRange::new(2u32, ExplainableStubParagraphLayoutEngineTestSupport::explainable_stub_paragraph_layout_engine_test_support_text_length(text.as_ustr())).unwrap(), TextStyle::new(Some(vec![]), Some(16.0), Some(UString::from("zh-Hans")), Some(700), Some(false), Some(0.0), Some(InlineAttachment::None)))).clone(),
 ]), Some(vec![2]), Some(vec![]), Some(vec![]));
-        let r = ExplainableStubParagraphLayoutEngine::new(Some(Box::new(CjkFontRoleClassifier::new())), Some(Box::new(ParagraphLayoutFallbackResolver::new(Some("cjk-primary".to_string()), Some("latin-primary".to_string()), Some("symbol-fallback".to_string())).unwrap())),
-Some(Box::new(BuiltInClreqProfileResolver::new())), Some(Box::new(StubFontMetricsResolver::new())), Some(Box::new(ScriptAwareFontMetricsNormalizer::new())), Some(PunctuationAtomBuilder::new(None, None).unwrap()), Some(PunctuationSpacingCompressor::new().unwrap()),
-Some(QuotePairAnalyzer::new()), Some(Box::new(GreedyLineBreaker::new(None, None, None, None))), Some(Justifier::new(Some(0.5), Some(0.25))), Some(Box::new(ExplainableStubTextShaper::new())), Some(DefaultHyphenator::default_hyphenator_default_hyphenator().unwrap()),
-Some(Box::new(LruWidthIndependentAnnotationCache::new(512)))).unwrap().layout(LayoutInput::new((content).clone(), Some(TextStyle::new(Some(vec![]), Some(16.0), Some("zh-Hans".to_string()), Some(400), Some(false), Some(0.0), Some(InlineAttachment::None))),
-Some(ParagraphStyle::new(Some(LastLineAlignment::Start), Some(WritingMode::HorizontalTb), None, Some((Ic::zero()).clone()), Some(Ic::zero()), Some(MeasureAdaptiveFirstLineIndent::new(Some(14.0), Some(1.0), Some(2.0))), Some(LineLengthGrid::new(Some(true), None)),
-Some(RubyLineHeightMode::PerLine), Some(ParagraphStyle::PARAGRAPH_STYLE_DEFAULT_INLINE_OBJECT_MINIMUM_CLEARANCE_EM), Some(ParagraphStyle::PARAGRAPH_STYLE_DEFAULT_EMPHASIS_DOT_GAP_EM))), LayoutConstraints::new(320 as f64 as f64, Some(f64::INFINITY), Some(2147483647)).unwrap(),
-Some((*crate::org::tiqian::core::built_in_layout_profiles::BUILT_IN_LAYOUT_PROFILES_CLREQ_HORIZONTAL).clone()), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]))).unwrap();
+        let r = ExplainableStubParagraphLayoutEngine::new(Some(Box::new(CjkFontRoleClassifier::new())), Some(Box::new(ParagraphLayoutFallbackResolver::new(Some(UString::from("cjk-primary")), Some(UString::from("latin-primary")), Some(UString::from("symbol-fallback"))).unwrap())), Some(Box::new(BuiltInClreqProfileResolver::new())), Some(Box::new(StubFontMetricsResolver::new())), Some(Box::new(ScriptAwareFontMetricsNormalizer::new())), Some(PunctuationAtomBuilder::new(None, None).unwrap()), Some(PunctuationSpacingCompressor::new().unwrap()), Some(QuotePairAnalyzer::new()), Some(Box::new(GreedyLineBreaker::new(None, None, None, None))), Some(Justifier::new(Some(0.5), Some(0.25))), Some(Arc::new(Mutex::new(ExplainableStubTextShaper::new()))), Some(DefaultHyphenator::default_hyphenator_default_hyphenator().unwrap()), Some(Arc::new(Mutex::new(LruWidthIndependentAnnotationCache::new(512))))).unwrap().layout(LayoutInput::new((content).clone(), Some(TextStyle::new(Some(vec![]), Some(16.0), Some(UString::from("zh-Hans")), Some(400), Some(false), Some(0.0), Some(InlineAttachment::None))), Some(ParagraphStyle::new(Some(LastLineAlignment::Start), Some(WritingMode::HorizontalTb), None, Some((Ic::zero()).clone()), Some(Ic::zero()), Some(MeasureAdaptiveFirstLineIndent::new(Some(14.0), Some(1.0), Some(2.0))), Some(LineLengthGrid::new(Some(true), None)), Some(RubyLineHeightMode::PerLine), Some(ParagraphStyle::PARAGRAPH_STYLE_DEFAULT_INLINE_OBJECT_MINIMUM_CLEARANCE_EM), Some(ParagraphStyle::PARAGRAPH_STYLE_DEFAULT_EMPHASIS_DOT_GAP_EM))), LayoutConstraints::new(320 as f64 as f64, Some(f64::INFINITY), Some(2147483647)).unwrap(), Some((*crate::org::tiqian::core::built_in_layout_profiles::BUILT_IN_LAYOUT_PROFILES_CLREQ_HORIZONTAL).clone()), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]))).unwrap();
         let mut a: Vec<TextRange> = vec![];
         for _g_index in 0..match u32::try_from((r.debug).clone().font_decisions.len()) { Ok(value) => value, Err(_) => u32::MAX } {
             let d = ((r.debug).clone().font_decisions[usize::try_from(_g_index).unwrap_or(0)]).clone();
-            if d.role.to_string() == "Emoji" {
+            if d.role.to_ustring() == UString::from("Emoji") {
                 a.push((d.range).clone());
             }
         }
-        let _ = TracedAssertions::traced_assertions_assert_equals_rendered(&"[TextRange(start=0, end=2), TextRange(start=2, end=7)]", ExplainableStubParagraphLayoutEngineTestSupport::explainable_stub_paragraph_layout_engine_test_support_render_ranges(&a).as_str(), None).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_equals_rendered(&"['👩', '🏽‍💻']", ExplainableStubParagraphLayoutEngineTestSupport::explainable_stub_paragraph_layout_engine_test_support_render_strings(&vec![
-    (((r.debug).clone().shaping_decisions[0usize]).clone().source_text).to_string().clone(),
-    (((r.debug).clone().shaping_decisions[1usize]).clone().source_text).to_string().clone(),
-]).as_str(), None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_equals_rendered(UStr::new(&[91,84,101,120,116,82,97,110,103,101,40,115,116,97,114,116,61,48,44,32,101,110,100,61,50,41,44,32,84,101,120,116,82,97,110,103,101,40,115,116,97,114,116,61,50,44,32,101,110,100,61,55,41,93]), ExplainableStubParagraphLayoutEngineTestSupport::explainable_stub_paragraph_layout_engine_test_support_render_ranges(&a).as_ustr(), None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_equals_rendered(UStr::new(&[91,39,55357,56425,39,44,32,39,55356,57341,8205,55357,56507,39,93]), ExplainableStubParagraphLayoutEngineTestSupport::explainable_stub_paragraph_layout_engine_test_support_render_strings(&vec![
+    (((r.debug).clone().shaping_decisions[0usize]).clone().source_text).to_ustring().clone(),
+    (((r.debug).clone().shaping_decisions[1usize]).clone().source_text).to_ustring().clone(),
+]).as_ustr(), None).unwrap();
     });
 }

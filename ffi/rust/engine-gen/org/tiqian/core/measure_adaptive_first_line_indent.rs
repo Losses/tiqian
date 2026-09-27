@@ -1,3 +1,6 @@
+use crate::runtime::u_string::UString;
+
+
 #[derive(Debug, Clone, PartialEq)]
 pub struct MeasureAdaptiveFirstLineIndent {
     pub short_below_em: f64,
@@ -21,18 +24,7 @@ impl MeasureAdaptiveFirstLineIndent {
         return if measure_em < (self.short_below_em) { self.short_em } else { self.long_em };
     }
 
-    pub fn to_string(&self) -> String {
-        return format!("{}{}{}{}{}{}{}{}{}{}",
-            "MeasureAdaptiveFirstLineIndent(",
-            "shortBelowEm=",
-            self.short_below_em,
-            ", ",
-            "shortEm=",
-            self.short_em,
-            ", ",
-            "longEm=",
-            self.long_em,
-            ")"
-        );
+    pub fn to_string(&self) -> UString {
+        return UString::from(format!("{}", { let mut __s = UString::new(); __s += &(UString::from("MeasureAdaptiveFirstLineIndent(")); __s += &(UString::from("shortBelowEm=")); __s += &(crate::runtime::fp_helper::FPHelper::format_float(self.short_below_em)); __s += &(UString::from(", ")); __s += &(UString::from("shortEm=")); __s += &(crate::runtime::fp_helper::FPHelper::format_float(self.short_em)); __s += &(UString::from(", ")); __s += &(UString::from("longEm=")); __s += &(crate::runtime::fp_helper::FPHelper::format_float(self.long_em)); __s += &(UString::from(")")); __s }).as_str());
     }
 }

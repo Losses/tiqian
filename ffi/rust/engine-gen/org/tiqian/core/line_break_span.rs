@@ -1,6 +1,7 @@
 use crate::org::tiqian::core::line_break_policy::LineBreakPolicy;
 use crate::org::tiqian::core::text_range::TextRange;
 use crate::org::tiqian::core::text_range::compare_text_range;
+use crate::runtime::u_string::UString;
 
 
 #[derive(Debug, Clone, PartialEq)]
@@ -17,16 +18,8 @@ impl LineBreakSpan {
         }
     }
 
-    pub fn to_string(&self) -> String {
-        return format!("{}{}{}{}{}{}{}",
-            "LineBreakSpan(",
-            "range=",
-            (self.range).clone().to_string(),
-            ", ",
-            "policy=",
-            self.policy.name(),
-            ")"
-        );
+    pub fn to_string(&self) -> UString {
+        return UString::from(format!("{}", { let mut __s = UString::new(); __s += &(UString::from("LineBreakSpan(")); __s += &(UString::from("range=")); __s += UString::from(format!("{}", (self.range).clone().to_string()).as_str()).as_ustr(); __s += &(UString::from(", ")); __s += &(UString::from("policy=")); __s += UString::from(self.policy.name()).as_ustr(); __s += &(UString::from(")")); __s }).as_str());
     }
 }
 

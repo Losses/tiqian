@@ -1,6 +1,9 @@
+use crate::runtime::u_string::UString;
+
+
 #[derive(Debug, Clone, PartialEq)]
 pub enum NoSuchElementError {
-    Message { text: String },
+    Message { text: UString },
 }
 
 impl std::fmt::Display for NoSuchElementError {

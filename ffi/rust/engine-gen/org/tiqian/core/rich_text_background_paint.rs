@@ -2,6 +2,7 @@ use crate::org::tiqian::core::rich_text_background_draw_style::Border;
 use crate::org::tiqian::core::rich_text_background_draw_style::RichTextBackgroundDrawStyle;
 use crate::org::tiqian::core::rich_text_background_metric_policy::RichTextBackgroundMetricPolicy;
 use crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError;
+use crate::runtime::u_string::UString;
 
 
 #[derive(Debug, Clone)]
@@ -23,9 +24,8 @@ TextRangeError> {
         let continuation_corner_radius = continuation_corner_radius.unwrap_or_else(|| corner_radius);
         let metric_policy = metric_policy.unwrap_or_else(|| RichTextBackgroundMetricPolicy::MarkedFaces);
         let draw_style = draw_style.unwrap_or_else(|| Box::new((*crate::org::tiqian::core::rich_text_background_draw_style::FILL_INSTANCE).clone()));
-        if !RichTextBackgroundPaint::rich_text_background_paint_is_finite(horizontal_padding) || (horizontal_padding) < (0.0f64) || !RichTextBackgroundPaint::rich_text_background_paint_is_finite(vertical_padding) || (vertical_padding) < (0.0f64) ||
-!RichTextBackgroundPaint::rich_text_background_paint_is_finite(corner_radius) || (corner_radius) < (0.0f64) || !RichTextBackgroundPaint::rich_text_background_paint_is_finite(continuation_corner_radius) || (continuation_corner_radius) < (0.0f64) {
-            return Err(TextRangeError::Message { text: "Failed requirement.".to_string() });
+        if !RichTextBackgroundPaint::rich_text_background_paint_is_finite(horizontal_padding) || (horizontal_padding) < (0.0f64) || !RichTextBackgroundPaint::rich_text_background_paint_is_finite(vertical_padding) || (vertical_padding) < (0.0f64) || !RichTextBackgroundPaint::rich_text_background_paint_is_finite(corner_radius) || (corner_radius) < (0.0f64) || !RichTextBackgroundPaint::rich_text_background_paint_is_finite(continuation_corner_radius) || (continuation_corner_radius) < (0.0f64) {
+            return Err(TextRangeError::Message { text: UString::from("Failed requirement.") });
         }
         Ok(Self {
             horizontal_padding: horizontal_padding,
@@ -37,28 +37,8 @@ TextRangeError> {
         })
     }
 
-    pub fn to_string(&self) -> String {
-        return format!("{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}",
-            "RichTextBackgroundPaint(",
-            "horizontalPadding=",
-            self.horizontal_padding,
-            ", ",
-            "verticalPadding=",
-            self.vertical_padding,
-            ", ",
-            "cornerRadius=",
-            self.corner_radius,
-            ", ",
-            "continuationCornerRadius=",
-            self.continuation_corner_radius,
-            ", ",
-            "metricPolicy=",
-            self.metric_policy.name(),
-            ", ",
-            "drawStyle=",
-            self.draw_style.to_string(),
-            ")"
-        );
+    pub fn to_string(&self) -> UString {
+        return UString::from(format!("{}", { let mut __s = UString::new(); __s += &(UString::from("RichTextBackgroundPaint(")); __s += &(UString::from("horizontalPadding=")); __s += &(crate::runtime::fp_helper::FPHelper::format_float(self.horizontal_padding)); __s += &(UString::from(", ")); __s += &(UString::from("verticalPadding=")); __s += &(crate::runtime::fp_helper::FPHelper::format_float(self.vertical_padding)); __s += &(UString::from(", ")); __s += &(UString::from("cornerRadius=")); __s += &(crate::runtime::fp_helper::FPHelper::format_float(self.corner_radius)); __s += &(UString::from(", ")); __s += &(UString::from("continuationCornerRadius=")); __s += &(crate::runtime::fp_helper::FPHelper::format_float(self.continuation_corner_radius)); __s += &(UString::from(", ")); __s += &(UString::from("metricPolicy=")); __s += UString::from(self.metric_policy.name()).as_ustr(); __s += &(UString::from(", ")); __s += &(UString::from("drawStyle=")); __s += UString::from(format!("{}", self.draw_style.to_string()).as_str()).as_ustr(); __s += &(UString::from(")")); __s }).as_str());
     }
 
     pub fn rich_text_background_paint_with_horizontal_padding(value: f64) -> Result<RichTextBackgroundPaint, TextRangeError> {
@@ -74,14 +54,12 @@ TextRangeError> {
     }
 
     pub(crate) fn rich_text_background_paint_same_values(a: RichTextBackgroundPaint, b: RichTextBackgroundPaint) -> bool {
-        return a.horizontal_padding == b.horizontal_padding && a.vertical_padding == b.vertical_padding && a.corner_radius == b.corner_radius && a.continuation_corner_radius == b.continuation_corner_radius && a.metric_policy == b.metric_policy &&
-RichTextBackgroundPaint::rich_text_background_paint_same_draw_style(a.draw_style.clone(), b.draw_style.clone());
+        return a.horizontal_padding == b.horizontal_padding && a.vertical_padding == b.vertical_padding && a.corner_radius == b.corner_radius && a.continuation_corner_radius == b.continuation_corner_radius && a.metric_policy == b.metric_policy && RichTextBackgroundPaint::rich_text_background_paint_same_draw_style(a.draw_style.clone(), b.draw_style.clone());
     }
 
     pub(crate) fn rich_text_background_paint_same_draw_style(a: Box<dyn RichTextBackgroundDrawStyle>, b: Box<dyn RichTextBackgroundDrawStyle>) -> bool {
         if a.__haxe_type_name() == "org.tiqian.core.RichTextBackgroundDrawStyle.Fill" || b.__haxe_type_name() == "org.tiqian.core.RichTextBackgroundDrawStyle.Fill" {
-            return a.__haxe_type_name() == "org.tiqian.core.RichTextBackgroundDrawStyle.Fill" && b.__haxe_type_name() == "org.tiqian.core.RichTextBackgroundDrawStyle.Fill" && (*crate::org::tiqian::core::rich_text_background_draw_style::FILL_INSTANCE).clone().__haxe_type_name() ==
-a.__haxe_type_name() && (*crate::org::tiqian::core::rich_text_background_draw_style::FILL_INSTANCE).clone().__haxe_type_name() == b.__haxe_type_name();
+            return a.__haxe_type_name() == "org.tiqian.core.RichTextBackgroundDrawStyle.Fill" && b.__haxe_type_name() == "org.tiqian.core.RichTextBackgroundDrawStyle.Fill" && (*crate::org::tiqian::core::rich_text_background_draw_style::FILL_INSTANCE).clone().__haxe_type_name() == a.__haxe_type_name() && (*crate::org::tiqian::core::rich_text_background_draw_style::FILL_INSTANCE).clone().__haxe_type_name() == b.__haxe_type_name();
         }
         if a.__haxe_type_name() == "org.tiqian.core.RichTextBackgroundDrawStyle.Border" && b.__haxe_type_name() == "org.tiqian.core.RichTextBackgroundDrawStyle.Border" {
             return ((a).as_any().downcast_ref::<Border>().unwrap()).stroke_width == ((b).as_any().downcast_ref::<Border>().unwrap()).stroke_width;

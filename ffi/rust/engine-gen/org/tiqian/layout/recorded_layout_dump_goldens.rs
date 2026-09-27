@@ -1,6 +1,7 @@
 use crate::runtime::sorted_table::SortedMapTable;
 use crate::runtime::sorted_table::SortedMapTableBuilder;
 use crate::runtime::sorted_table::SortedTable;
+use crate::runtime::u_string::UString;
 use std::sync::Arc;
 
 
@@ -8,9 +9,9 @@ use std::sync::Arc;
 pub struct RecordedLayoutDumpGoldens;
 
 impl RecordedLayoutDumpGoldens {
-    pub fn recorded_layout_dump_goldens_by_id() -> SortedMapTable<String, String> {
-        let mut b: SortedMapTableBuilder<String, String> = SortedTable::sorted_table_map_builder::<String, String>(Arc::new(|a, b| SortedTable::sorted_table_compare_strings(a.as_str(), b.as_str())));
-        b.put(&("adaptive-short-line-indent").to_string().to_string(), &(concat!("fixture: adaptive-short-line-indent\n",
+    pub fn recorded_layout_dump_goldens_by_id() -> SortedMapTable<UString, UString> {
+        let mut b: SortedMapTableBuilder<UString, UString> = SortedTable::sorted_table_map_builder::<UString, UString>(Arc::new(|a, b| SortedTable::sorted_table_compare_strings(a.as_ustr(), b.as_ustr())));
+        b.put(&(UString::from("adaptive-short-line-indent")).to_ustring().to_ustring(), &(UString::from(concat!("fixture: adaptive-short-line-indent\n",
 "text: 提椠是一个面向中文正文的排版引擎\n",
 "maxWidth: 160.0\n",
 "== greedy ==\n",
@@ -130,8 +131,8 @@ impl RecordedLayoutDumpGoldens {
 "font 14-15 role=CjkText key=cjk-primary display='引' sub=CjkPunctuationGlyphPolicy:PreferClreqRecommendedCodepoints:preserve\n",
 "font 15-16 role=CjkText key=cjk-primary display='擎' sub=CjkPunctuationGlyphPolicy:PreferClreqRecommendedCodepoints:preserve\n",
 "linespacing natural=16.0 requested=- resolved=24.0 floor=0.0 applied=false reason=CjkBodyLineHeightDefault\n",
-"")).to_string());
-        b.put(&("adjacent-curly-quote-list-context").to_string().to_string(), &(concat!("fixture: adjacent-curly-quote-list-context\n",
+""))).to_ustring());
+        b.put(&(UString::from("adjacent-curly-quote-list-context")).to_ustring().to_ustring(), &(UString::from(concat!("fixture: adjacent-curly-quote-list-context\n",
 "text: 中文“对A”“波霸”；中文“欧派”“double”“double may”呢\n",
 "maxWidth: 320.0\n",
 "== greedy ==\n",
@@ -416,8 +417,8 @@ impl RecordedLayoutDumpGoldens {
 "autospace 4-5 side=leading boundary=EastAsianSpacing.Wide reduction=-2.0\n",
 "edgetrim 25-26 side=leading trim=8.0 reason=LineStartHalfWidthPunctuation\n",
 "linespacing natural=16.0 requested=- resolved=24.0 floor=0.0 applied=false reason=CjkBodyLineHeightDefault\n",
-"")).to_string());
-        b.put(&("adjacent-punctuation-spacing").to_string().to_string(), &(concat!("fixture: adjacent-punctuation-spacing\n",
+""))).to_ustring());
+        b.put(&(UString::from("adjacent-punctuation-spacing")).to_ustring().to_ustring(), &(UString::from(concat!("fixture: adjacent-punctuation-spacing\n",
 "text: 他说：“你好，世界。”！！\n",
 "maxWidth: 220.0\n",
 "== greedy ==\n",
@@ -579,8 +580,8 @@ impl RecordedLayoutDumpGoldens {
 "spacing 11-13 '！！' inner=8.0->0.0 target=11-12\n",
 "edgetrim 12-13 side=trailing trim=8.0 reason=LineEndHalfWidthPunctuation\n",
 "linespacing natural=16.0 requested=- resolved=24.0 floor=0.0 applied=false reason=CjkBodyLineHeightDefault\n",
-"")).to_string());
-        b.put(&("ascii-brackets-in-cjk").to_string().to_string(), &(concat!("fixture: ascii-brackets-in-cjk\n",
+""))).to_ustring());
+        b.put(&(UString::from("ascii-brackets-in-cjk")).to_ustring().to_ustring(), &(UString::from(concat!("fixture: ascii-brackets-in-cjk\n",
 "text: 中文段落(English)和[mixed]说明。\n",
 "maxWidth: 240.0\n",
 "== greedy ==\n",
@@ -670,8 +671,8 @@ impl RecordedLayoutDumpGoldens {
 "geom 23-24 body=8.0 lead=0.0/0.0 trail=8.0/8.0 justify=0.0 resolved=8.0\n",
 "edgetrim 23-24 side=trailing trim=8.0 reason=LineEndHalfWidthPunctuation\n",
 "linespacing natural=16.0 requested=- resolved=24.0 floor=0.0 applied=false reason=CjkBodyLineHeightDefault\n",
-"")).to_string());
-        b.put(&("ascii-point-mark-impossible-measure").to_string().to_string(), &(concat!("fixture: ascii-point-mark-impossible-measure\n",
+""))).to_ustring());
+        b.put(&(UString::from("ascii-point-mark-impossible-measure")).to_ustring().to_ustring(), &(UString::from(concat!("fixture: ascii-point-mark-impossible-measure\n",
 "text: 中,文\n",
 "maxWidth: 15.0\n",
 "== greedy ==\n",
@@ -713,8 +714,8 @@ impl RecordedLayoutDumpGoldens {
 "font 1-2 role=LatinText key=latin-primary display=',' sub=CjkPunctuationGlyphPolicy:PreferClreqRecommendedCodepoints:preserve\n",
 "font 2-3 role=CjkText key=cjk-primary display='文' sub=CjkPunctuationGlyphPolicy:PreferClreqRecommendedCodepoints:preserve\n",
 "linespacing natural=16.0 requested=- resolved=24.0 floor=0.0 applied=false reason=CjkBodyLineHeightDefault\n",
-"")).to_string());
-        b.put(&("ascii-point-mark-in-cjk").to_string().to_string(), &(concat!("fixture: ascii-point-mark-in-cjk\n",
+""))).to_ustring());
+        b.put(&(UString::from("ascii-point-mark-in-cjk")).to_ustring().to_ustring(), &(UString::from(concat!("fixture: ascii-point-mark-in-cjk\n",
 "text: 中文中文,中文\n",
 "maxWidth: 64.0\n",
 "== greedy ==\n",
@@ -780,8 +781,8 @@ impl RecordedLayoutDumpGoldens {
 "font 5-6 role=CjkText key=cjk-primary display='中' sub=CjkPunctuationGlyphPolicy:PreferClreqRecommendedCodepoints:preserve\n",
 "font 6-7 role=CjkText key=cjk-primary display='文' sub=CjkPunctuationGlyphPolicy:PreferClreqRecommendedCodepoints:preserve\n",
 "linespacing natural=16.0 requested=- resolved=24.0 floor=0.0 applied=false reason=CjkBodyLineHeightDefault\n",
-"")).to_string());
-        b.put(&("basic-pause-stop").to_string().to_string(), &(concat!("fixture: basic-pause-stop\n",
+""))).to_ustring());
+        b.put(&(UString::from("basic-pause-stop")).to_ustring().to_ustring(), &(UString::from(concat!("fixture: basic-pause-stop\n",
 "text: 中文，中文。\n",
 "maxWidth: 160.0\n",
 "== greedy ==\n",
@@ -850,8 +851,8 @@ impl RecordedLayoutDumpGoldens {
 "geom 5-6 body=8.0 lead=0.0/0.0 trail=8.0/8.0 justify=0.0 resolved=8.0\n",
 "edgetrim 5-6 side=trailing trim=8.0 reason=LineEndHalfWidthPunctuation\n",
 "linespacing natural=16.0 requested=- resolved=24.0 floor=0.0 applied=false reason=CjkBodyLineHeightDefault\n",
-"")).to_string());
-        b.put(&("bibliographic-numeric-locator-break").to_string().to_string(), &(concat!("fixture: bibliographic-numeric-locator-break\n",
+""))).to_ustring());
+        b.put(&(UString::from("bibliographic-numeric-locator-break")).to_ustring().to_ustring(), &(UString::from(concat!("fixture: bibliographic-numeric-locator-break\n",
 "text: 中文中文中文44(10):21-38.\n",
 "maxWidth: 224.0\n",
 "== greedy ==\n",
@@ -923,8 +924,8 @@ impl RecordedLayoutDumpGoldens {
 "font 6-19 role=LatinText key=latin-primary display='44(10):21-38.' sub=CjkPunctuationGlyphPolicy:PreferClreqRecommendedCodepoints:preserve\n",
 "autospace 6-8 side=leading boundary=EastAsianSpacing.Wide reduction=-2.0\n",
 "linespacing natural=16.0 requested=- resolved=24.0 floor=0.0 applied=false reason=CjkBodyLineHeightDefault\n",
-"")).to_string());
-        b.put(&("bopomofo-tone-em-box").to_string().to_string(), &(concat!("fixture: bopomofo-tone-em-box\n",
+""))).to_ustring());
+        b.put(&(UString::from("bopomofo-tone-em-box")).to_ustring().to_ustring(), &(UString::from(concat!("fixture: bopomofo-tone-em-box\n",
 "text: 好\n",
 "maxWidth: 64.0\n",
 "== greedy ==\n",
@@ -960,8 +961,8 @@ impl RecordedLayoutDumpGoldens {
 "  Symbol 'ㄏ' rect=16.5,7.2,4.8,4.8 draw=16.4,11.4 size=4.8\n",
 "  Symbol 'ㄠ' rect=16.5,13.1,4.8,4.8 draw=16.4,17.3 size=4.8\n",
 "  Tone 'ˇ' rect=21.3,12.0,2.7,2.7 draw=21.2,15.8 size=4.8\n",
-"")).to_string());
-        b.put(&("contextual-curly-quotes").to_string().to_string(), &(concat!("fixture: contextual-curly-quotes\n",
+""))).to_ustring());
+        b.put(&(UString::from("contextual-curly-quotes")).to_ustring().to_ustring(), &(UString::from(concat!("fixture: contextual-curly-quotes\n",
 "text: 中‘that’s’中’，‘\n",
 "maxWidth: 192.0\n",
 "== greedy ==\n",
@@ -1078,8 +1079,8 @@ impl RecordedLayoutDumpGoldens {
 "spacing 10-12 '’，' inner=8.0->0.0 target=10-11\n",
 "spacing 11-13 '，‘' inner=16.0->8.0 target=11-12\n",
 "linespacing natural=16.0 requested=- resolved=24.0 floor=0.0 applied=false reason=CjkBodyLineHeightDefault\n",
-"")).to_string());
-        b.put(&("contextual-dash-ellipsis").to_string().to_string(), &(concat!("fixture: contextual-dash-ellipsis\n",
+""))).to_ustring());
+        b.put(&(UString::from("contextual-dash-ellipsis")).to_ustring().to_ustring(), &(UString::from(concat!("fixture: contextual-dash-ellipsis\n",
 "text: 中文—下句；等…真。 English — next; ellipsis… / slash. A——B; Wait……what? 中文—English\\n——中文\\n……\n",
 "maxWidth: 1024.0\n",
 "== greedy ==\n",
@@ -1391,8 +1392,8 @@ impl RecordedLayoutDumpGoldens {
 "mandatorybreak 74-75 afterCluster=36 reason=MandatoryBreakNoShape\n",
 "mandatorybreak 79-80 afterCluster=40 reason=MandatoryBreakNoShape\n",
 "linespacing natural=16.0 requested=- resolved=24.0 floor=0.0 applied=false reason=CjkBodyLineHeightDefault\n",
-"")).to_string());
-        b.put(&("ellipsis-and-dash").to_string().to_string(), &(concat!("fixture: ellipsis-and-dash\n",
+""))).to_ustring());
+        b.put(&(UString::from("ellipsis-and-dash")).to_ustring().to_ustring(), &(UString::from(concat!("fixture: ellipsis-and-dash\n",
 "text: 中文……English——中文。\n",
 "maxWidth: 220.0\n",
 "== greedy ==\n",
@@ -1491,8 +1492,8 @@ impl RecordedLayoutDumpGoldens {
 "geom 15-16 body=8.0 lead=0.0/0.0 trail=8.0/8.0 justify=0.0 resolved=8.0\n",
 "edgetrim 15-16 side=trailing trim=8.0 reason=LineEndHalfWidthPunctuation\n",
 "linespacing natural=16.0 requested=- resolved=24.0 floor=0.0 applied=false reason=CjkBodyLineHeightDefault\n",
-"")).to_string());
-        b.put(&("emphasis-marks").to_string().to_string(), &(concat!("fixture: emphasis-marks\n",
+""))).to_ustring());
+        b.put(&(UString::from("emphasis-marks")).to_ustring().to_ustring(), &(UString::from(concat!("fixture: emphasis-marks\n",
 "text: 他强调：豆子新鲜最要紧，烘焙其次。\n",
 "maxWidth: 128.0\n",
 "== greedy ==\n",
@@ -1669,8 +1670,8 @@ impl RecordedLayoutDumpGoldens {
 "deco 14-15 '其' kind=Emphasis applied=true anchor=96.0,49.5 diameter=3.0 reason=EmphasisDotOnHanText\n",
 "deco 15-16 '次' kind=Emphasis applied=true anchor=112.0,49.5 diameter=3.0 reason=EmphasisDotOnHanText\n",
 "linespacing natural=16.0 requested=25.6 resolved=25.6 floor=8.0 applied=false reason=ExplicitLineHeight\n",
-"")).to_string());
-        b.put(&("fallback-roles").to_string().to_string(), &(concat!("fixture: fallback-roles\n",
+""))).to_ustring());
+        b.put(&(UString::from("fallback-roles")).to_ustring().to_ustring(), &(UString::from(concat!("fixture: fallback-roles\n",
 "text: 提椠……Hello——世界。\n",
 "maxWidth: 240.0\n",
 "== greedy ==\n",
@@ -1766,8 +1767,8 @@ impl RecordedLayoutDumpGoldens {
 "geom 13-14 body=8.0 lead=0.0/0.0 trail=8.0/8.0 justify=0.0 resolved=8.0\n",
 "edgetrim 13-14 side=trailing trim=8.0 reason=LineEndHalfWidthPunctuation\n",
 "linespacing natural=16.0 requested=- resolved=24.0 floor=0.0 applied=false reason=CjkBodyLineHeightDefault\n",
-"")).to_string());
-        b.put(&("first-line-indent").to_string().to_string(), &(concat!("fixture: first-line-indent\n",
+""))).to_ustring());
+        b.put(&(UString::from("first-line-indent")).to_ustring().to_ustring(), &(UString::from(concat!("fixture: first-line-indent\n",
 "text: 咖啡的风味因产地而各异，烘焙的深浅同样会改变口感与香气。\n",
 "maxWidth: 200.0\n",
 "== greedy ==\n",
@@ -1977,8 +1978,8 @@ impl RecordedLayoutDumpGoldens {
 "geom 27-28 body=8.0 lead=0.0/0.0 trail=8.0/8.0 justify=0.0 resolved=8.0\n",
 "edgetrim 27-28 side=trailing trim=8.0 reason=LineEndHalfWidthPunctuation\n",
 "linespacing natural=16.0 requested=- resolved=24.0 floor=0.0 applied=false reason=CjkBodyLineHeightDefault\n",
-"")).to_string());
-        b.put(&("greedy-multi-line").to_string().to_string(), &(concat!("fixture: greedy-multi-line\n",
+""))).to_ustring());
+        b.put(&(UString::from("greedy-multi-line")).to_ustring().to_ustring(), &(UString::from(concat!("fixture: greedy-multi-line\n",
 "text: 咖啡馆比咖啡更早地改变了城里人的作息与谈吐。\n",
 "maxWidth: 144.0\n",
 "== greedy ==\n",
@@ -2143,8 +2144,8 @@ impl RecordedLayoutDumpGoldens {
 "geom 21-22 body=8.0 lead=0.0/0.0 trail=8.0/8.0 justify=0.0 resolved=8.0\n",
 "edgetrim 21-22 side=trailing trim=8.0 reason=LineEndHalfWidthPunctuation\n",
 "linespacing natural=16.0 requested=- resolved=24.0 floor=0.0 applied=false reason=CjkBodyLineHeightDefault\n",
-"")).to_string());
-        b.put(&("indent-opening-quote").to_string().to_string(), &(concat!("fixture: indent-opening-quote\n",
+""))).to_ustring());
+        b.put(&(UString::from("indent-opening-quote")).to_ustring().to_ustring(), &(UString::from(concat!("fixture: indent-opening-quote\n",
 "text: “好咖啡要趁热喝。”他说完便把杯子推了过来，让大家依次尝一口。\n",
 "maxWidth: 192.0\n",
 "== greedy ==\n",
@@ -2405,8 +2406,8 @@ impl RecordedLayoutDumpGoldens {
 "edgetrim 21-22 side=trailing trim=8.0 reason=LineEndHalfWidthPunctuation\n",
 "edgetrim 30-31 side=trailing trim=8.0 reason=LineEndHalfWidthPunctuation\n",
 "linespacing natural=16.0 requested=- resolved=24.0 floor=0.0 applied=false reason=CjkBodyLineHeightDefault\n",
-"")).to_string());
-        b.put(&("interlinear-lines").to_string().to_string(), &(concat!("fixture: interlinear-lines\n",
+""))).to_ustring());
+        b.put(&(UString::from("interlinear-lines")).to_ustring().to_ustring(), &(UString::from(concat!("fixture: interlinear-lines\n",
 "text: 屈原写下离骚，顾炎武王夫之并称。\n",
 "maxWidth: 224.0\n",
 "== greedy ==\n",
@@ -2550,8 +2551,8 @@ impl RecordedLayoutDumpGoldens {
 "decobox 4-6 kind=BookTitle line=0 rect=64.0,21.9,96.0,21.9 open=-/- reason=InterlinearLinePerAnnotatedItem\n",
 "decobox 7-10 kind=ProperNoun line=0 rect=112.0,21.0,159.0,21.0 open=-/- reason=InterlinearLinePerAnnotatedItem;AdjacentInterlinearLineShortening\n",
 "decobox 10-13 kind=ProperNoun line=0 rect=161.0,21.0,208.0,21.0 open=-/- reason=InterlinearLinePerAnnotatedItem;AdjacentInterlinearLineShortening\n",
-"")).to_string());
-        b.put(&("justify-cjk-paragraph").to_string().to_string(), &(concat!("fixture: justify-cjk-paragraph\n",
+""))).to_ustring());
+        b.put(&(UString::from("justify-cjk-paragraph")).to_ustring().to_ustring(), &(UString::from(concat!("fixture: justify-cjk-paragraph\n",
 "text: 中文中文中文中文中文中文\n",
 "maxWidth: 100.0\n",
 "== greedy ==\n",
@@ -2647,8 +2648,8 @@ impl RecordedLayoutDumpGoldens {
 "font 10-11 role=CjkText key=cjk-primary display='中' sub=CjkPunctuationGlyphPolicy:PreferClreqRecommendedCodepoints:preserve\n",
 "font 11-12 role=CjkText key=cjk-primary display='文' sub=CjkPunctuationGlyphPolicy:PreferClreqRecommendedCodepoints:preserve\n",
 "linespacing natural=16.0 requested=- resolved=24.0 floor=0.0 applied=false reason=CjkBodyLineHeightDefault\n",
-"")).to_string());
-        b.put(&("justify-mixed-paragraph").to_string().to_string(), &(concat!("fixture: justify-mixed-paragraph\n",
+""))).to_ustring());
+        b.put(&(UString::from("justify-mixed-paragraph")).to_ustring().to_ustring(), &(UString::from(concat!("fixture: justify-mixed-paragraph\n",
 "text: 中文Hello中文，世界。\n",
 "maxWidth: 144.0\n",
 "== greedy ==\n",
@@ -2744,8 +2745,8 @@ impl RecordedLayoutDumpGoldens {
 "autospace 2-7 side=trailing boundary=EastAsianSpacing.Wide reduction=-2.0\n",
 "edgetrim 12-13 side=trailing trim=8.0 reason=LineEndHalfWidthPunctuation\n",
 "linespacing natural=16.0 requested=- resolved=24.0 floor=0.0 applied=false reason=CjkBodyLineHeightDefault\n",
-"")).to_string());
-        b.put(&("justify-unbreakable-number-symbol").to_string().to_string(), &(concat!("fixture: justify-unbreakable-number-symbol\n",
+""))).to_ustring());
+        b.put(&(UString::from("justify-unbreakable-number-symbol")).to_ustring().to_ustring(), &(UString::from(concat!("fixture: justify-unbreakable-number-symbol\n",
 "text: 中文50℃中文中文中文Example\n",
 "maxWidth: 128.0\n",
 "== greedy ==\n",
@@ -2838,8 +2839,8 @@ impl RecordedLayoutDumpGoldens {
 "autospace 2-4 side=leading boundary=EastAsianSpacing.Wide reduction=-2.0\n",
 "autospace 11-18 side=leading boundary=EastAsianSpacing.Wide reduction=-2.0\n",
 "linespacing natural=16.0 requested=- resolved=24.0 floor=0.0 applied=false reason=CjkBodyLineHeightDefault\n",
-"")).to_string());
-        b.put(&("kinsoku-carry-previous").to_string().to_string(), &(concat!("fixture: kinsoku-carry-previous\n",
+""))).to_ustring());
+        b.put(&(UString::from("kinsoku-carry-previous")).to_ustring().to_ustring(), &(UString::from(concat!("fixture: kinsoku-carry-previous\n",
 "text: 提椠中文中文中文。\n",
 "maxWidth: 64.0\n",
 "== greedy ==\n",
@@ -2926,8 +2927,8 @@ impl RecordedLayoutDumpGoldens {
 "geom 8-9 body=8.0 lead=0.0/0.0 trail=8.0/8.0 justify=0.0 resolved=8.0\n",
 "edgetrim 8-9 side=trailing trim=8.0 reason=LineEndHalfWidthPunctuation\n",
 "linespacing natural=16.0 requested=- resolved=24.0 floor=0.0 applied=false reason=CjkBodyLineHeightDefault\n",
-"")).to_string());
-        b.put(&("kinsoku-push-in").to_string().to_string(), &(concat!("fixture: kinsoku-push-in\n",
+""))).to_ustring());
+        b.put(&(UString::from("kinsoku-push-in")).to_ustring().to_ustring(), &(UString::from(concat!("fixture: kinsoku-push-in\n",
 "text: 中文中。\n",
 "maxWidth: 60.0\n",
 "== greedy ==\n",
@@ -2984,8 +2985,8 @@ impl RecordedLayoutDumpGoldens {
 "geom 3-4 body=8.0 lead=0.0/0.0 trail=8.0/8.0 justify=0.0 resolved=8.0\n",
 "edgetrim 3-4 side=trailing trim=8.0 reason=LineEndHalfWidthPunctuation\n",
 "linespacing natural=16.0 requested=- resolved=24.0 floor=0.0 applied=false reason=CjkBodyLineHeightDefault\n",
-"")).to_string());
-        b.put(&("latin-camelcase").to_string().to_string(), &(concat!("fixture: latin-camelcase\n",
+""))).to_ustring());
+        b.put(&(UString::from("latin-camelcase")).to_ustring().to_ustring(), &(UString::from(concat!("fixture: latin-camelcase\n",
 "text: 用PowerPoint做\n",
 "maxWidth: 128.0\n",
 "== greedy ==\n",
@@ -3030,8 +3031,8 @@ impl RecordedLayoutDumpGoldens {
 "autospace 1-6 side=leading boundary=EastAsianSpacing.Wide reduction=-2.0\n",
 "autospace 6-11 side=trailing boundary=EastAsianSpacing.Wide reduction=-2.0\n",
 "linespacing natural=16.0 requested=- resolved=24.0 floor=0.0 applied=false reason=CjkBodyLineHeightDefault\n",
-"")).to_string());
-        b.put(&("latin-existing-hyphen").to_string().to_string(), &(concat!("fixture: latin-existing-hyphen\n",
+""))).to_ustring());
+        b.put(&(UString::from("latin-existing-hyphen")).to_ustring().to_ustring(), &(UString::from(concat!("fixture: latin-existing-hyphen\n",
 "text: out-of-the-way\n",
 "maxWidth: 128.0\n",
 "== greedy ==\n",
@@ -3064,8 +3065,8 @@ impl RecordedLayoutDumpGoldens {
 "cluster 11-14 'way' adv=30.8\n",
 "font 0-14 role=LatinText key=latin-primary display='out-of-the-way' sub=CjkPunctuationGlyphPolicy:PreferClreqRecommendedCodepoints:preserve\n",
 "linespacing natural=19.4 requested=- resolved=24.0 floor=0.0 applied=false reason=CjkBodyLineHeightDefault\n",
-"")).to_string());
-        b.put(&("latin-hard-break").to_string().to_string(), &(concat!("fixture: latin-hard-break\n",
+""))).to_ustring());
+        b.put(&(UString::from("latin-hard-break")).to_ustring().to_ustring(), &(UString::from(concat!("fixture: latin-hard-break\n",
 "text: 中Network\n",
 "maxWidth: 64.0\n",
 "== greedy ==\n",
@@ -3110,8 +3111,8 @@ impl RecordedLayoutDumpGoldens {
 "font 1-8 role=LatinText key=latin-primary display='Network' sub=CjkPunctuationGlyphPolicy:PreferClreqRecommendedCodepoints:preserve\n",
 "autospace 1-3 side=leading boundary=EastAsianSpacing.Wide reduction=-2.0\n",
 "linespacing natural=16.0 requested=- resolved=24.0 floor=0.0 applied=false reason=CjkBodyLineHeightDefault\n",
-"")).to_string());
-        b.put(&("latin-opaque-url-token").to_string().to_string(), &(concat!("fixture: latin-opaque-url-token\n",
+""))).to_ustring());
+        b.put(&(UString::from("latin-opaque-url-token")).to_ustring().to_ustring(), &(UString::from(concat!("fixture: latin-opaque-url-token\n",
 "text: 链接 https://example.com/path/to/abc123def456ghi789\n",
 "maxWidth: 160.0\n",
 "== greedy ==\n",
@@ -3174,8 +3175,8 @@ impl RecordedLayoutDumpGoldens {
 "font 2-49 role=LatinText key=latin-primary display=' https://example.com/path/to/abc123def456ghi789' sub=CjkPunctuationGlyphPolicy:PreferClreqRecommendedCodepoints:preserve\n",
 "autospace 2-3 side=gap boundary=EastAsianSpacing.Wide reduction=3.0\n",
 "linespacing natural=16.0 requested=- resolved=24.0 floor=0.0 applied=false reason=CjkBodyLineHeightDefault\n",
-"")).to_string());
-        b.put(&("latin-word-wrap").to_string().to_string(), &(concat!("fixture: latin-word-wrap\n",
+""))).to_ustring());
+        b.put(&(UString::from("latin-word-wrap")).to_ustring().to_ustring(), &(UString::from(concat!("fixture: latin-word-wrap\n",
 "text: 他引用了一句话：The quick brown fox jumps over the lazy dog，然后继续讲。\n",
 "maxWidth: 240.0\n",
 "== greedy ==\n",
@@ -3370,8 +3371,8 @@ impl RecordedLayoutDumpGoldens {
 "edgetrim 47-48 side=trailing trim=5.0 reason=LineEdgeWordSpaceCollapse\n",
 "edgetrim 17-18 side=leading trim=5.0 reason=LineEdgeWordSpaceCollapse\n",
 "linespacing natural=16.0 requested=- resolved=24.0 floor=0.0 applied=false reason=CjkBodyLineHeightDefault\n",
-"")).to_string());
-        b.put(&("line-end-kinsoku").to_string().to_string(), &(concat!("fixture: line-end-kinsoku\n",
+""))).to_ustring());
+        b.put(&(UString::from("line-end-kinsoku")).to_ustring().to_ustring(), &(UString::from(concat!("fixture: line-end-kinsoku\n",
 "text: 中文中文（中文）中文\n",
 "maxWidth: 80.0\n",
 "== greedy ==\n",
@@ -3470,8 +3471,8 @@ impl RecordedLayoutDumpGoldens {
 "geom 7-8 body=8.0 lead=0.0/0.0 trail=0.5/8.0 justify=1.9 resolved=17.4\n",
 "edgetrim 4-5 side=leading trim=7.5 reason=LineStartHalfWidthPunctuation\n",
 "linespacing natural=16.0 requested=- resolved=24.0 floor=0.0 applied=false reason=CjkBodyLineHeightDefault\n",
-"")).to_string());
-        b.put(&("lookahead-avoids-repair").to_string().to_string(), &(concat!("fixture: lookahead-avoids-repair\n",
+""))).to_ustring());
+        b.put(&(UString::from("lookahead-avoids-repair")).to_ustring().to_ustring(), &(UString::from(concat!("fixture: lookahead-avoids-repair\n",
 "text: 中文中文中文。\n",
 "maxWidth: 48.0\n",
 "== greedy ==\n",
@@ -3546,8 +3547,8 @@ impl RecordedLayoutDumpGoldens {
 "geom 6-7 body=8.0 lead=0.0/0.0 trail=8.0/8.0 justify=0.0 resolved=8.0\n",
 "edgetrim 6-7 side=trailing trim=8.0 reason=LineEndHalfWidthPunctuation\n",
 "linespacing natural=16.0 requested=- resolved=24.0 floor=0.0 applied=false reason=CjkBodyLineHeightDefault\n",
-"")).to_string());
-        b.put(&("lookahead-future-push-in").to_string().to_string(), &(concat!("fixture: lookahead-future-push-in\n",
+""))).to_ustring());
+        b.put(&(UString::from("lookahead-future-push-in")).to_ustring().to_ustring(), &(UString::from(concat!("fixture: lookahead-future-push-in\n",
 "text: 中文中文中文。\n",
 "maxWidth: 60.0\n",
 "== greedy ==\n",
@@ -3625,8 +3626,8 @@ impl RecordedLayoutDumpGoldens {
 "geom 6-7 body=8.0 lead=0.0/0.0 trail=8.0/8.0 justify=0.0 resolved=8.0\n",
 "edgetrim 6-7 side=trailing trim=8.0 reason=LineEndHalfWidthPunctuation\n",
 "linespacing natural=16.0 requested=- resolved=24.0 floor=0.0 applied=false reason=CjkBodyLineHeightDefault\n",
-"")).to_string());
-        b.put(&("mandatory-blank-lines").to_string().to_string(), &(concat!("fixture: mandatory-blank-lines\n",
+""))).to_ustring());
+        b.put(&(UString::from("mandatory-blank-lines")).to_ustring().to_ustring(), &(UString::from(concat!("fixture: mandatory-blank-lines\n",
 "text: 甲\\n\\n乙\\n\n",
 "maxWidth: 160.0\n",
 "== greedy ==\n",
@@ -3683,8 +3684,8 @@ impl RecordedLayoutDumpGoldens {
 "mandatorybreak 2-3 afterCluster=2 reason=MandatoryBreakNoShape\n",
 "mandatorybreak 4-5 afterCluster=4 reason=MandatoryBreakNoShape\n",
 "linespacing natural=16.0 requested=- resolved=24.0 floor=0.0 applied=false reason=CjkBodyLineHeightDefault\n",
-"")).to_string());
-        b.put(&("mandatory-crlf").to_string().to_string(), &(concat!("fixture: mandatory-crlf\n",
+""))).to_ustring());
+        b.put(&(UString::from("mandatory-crlf")).to_ustring().to_ustring(), &(UString::from(concat!("fixture: mandatory-crlf\n",
 "text: 甲\\r\\n乙\n",
 "maxWidth: 160.0\n",
 "== greedy ==\n",
@@ -3723,8 +3724,8 @@ impl RecordedLayoutDumpGoldens {
 "font 3-4 role=CjkText key=cjk-primary display='乙' sub=CjkPunctuationGlyphPolicy:PreferClreqRecommendedCodepoints:preserve\n",
 "mandatorybreak 1-3 afterCluster=1 reason=MandatoryBreakNoShape\n",
 "linespacing natural=16.0 requested=- resolved=24.0 floor=0.0 applied=false reason=CjkBodyLineHeightDefault\n",
-"")).to_string());
-        b.put(&("mandatory-leading-trailing-newline").to_string().to_string(), &(concat!("fixture: mandatory-leading-trailing-newline\n",
+""))).to_ustring());
+        b.put(&(UString::from("mandatory-leading-trailing-newline")).to_ustring().to_ustring(), &(UString::from(concat!("fixture: mandatory-leading-trailing-newline\n",
 "text: \\n开头和结尾\\n\n",
 "maxWidth: 160.0\n",
 "== greedy ==\n",
@@ -3790,8 +3791,8 @@ impl RecordedLayoutDumpGoldens {
 "mandatorybreak 0-1 afterCluster=0 reason=MandatoryBreakNoShape\n",
 "mandatorybreak 6-7 afterCluster=6 reason=MandatoryBreakNoShape\n",
 "linespacing natural=16.0 requested=- resolved=24.0 floor=0.0 applied=false reason=CjkBodyLineHeightDefault\n",
-"")).to_string());
-        b.put(&("mandatory-single-newline").to_string().to_string(), &(concat!("fixture: mandatory-single-newline\n",
+""))).to_ustring());
+        b.put(&(UString::from("mandatory-single-newline")).to_ustring().to_ustring(), &(UString::from(concat!("fixture: mandatory-single-newline\n",
 "text: 第一行\\n第二行\n",
 "maxWidth: 160.0\n",
 "== greedy ==\n",
@@ -3854,8 +3855,8 @@ impl RecordedLayoutDumpGoldens {
 "font 6-7 role=CjkText key=cjk-primary display='行' sub=CjkPunctuationGlyphPolicy:PreferClreqRecommendedCodepoints:preserve\n",
 "mandatorybreak 3-4 afterCluster=3 reason=MandatoryBreakNoShape\n",
 "linespacing natural=16.0 requested=- resolved=24.0 floor=0.0 applied=false reason=CjkBodyLineHeightDefault\n",
-"")).to_string());
-        b.put(&("mandatory-wraps-long-line").to_string().to_string(), &(concat!("fixture: mandatory-wraps-long-line\n",
+""))).to_ustring());
+        b.put(&(UString::from("mandatory-wraps-long-line")).to_ustring().to_ustring(), &(UString::from(concat!("fixture: mandatory-wraps-long-line\n",
 "text: 中文中文中文中文中文\\n尾行\n",
 "maxWidth: 64.0\n",
 "== greedy ==\n",
@@ -3960,8 +3961,8 @@ impl RecordedLayoutDumpGoldens {
 "font 12-13 role=CjkText key=cjk-primary display='行' sub=CjkPunctuationGlyphPolicy:PreferClreqRecommendedCodepoints:preserve\n",
 "mandatorybreak 10-11 afterCluster=10 reason=MandatoryBreakNoShape\n",
 "linespacing natural=16.0 requested=- resolved=24.0 floor=0.0 applied=false reason=CjkBodyLineHeightDefault\n",
-"")).to_string());
-        b.put(&("mi10s-adjacent-curly-quote-wrap").to_string().to_string(), &(concat!("fixture: mi10s-adjacent-curly-quote-wrap\n",
+""))).to_ustring());
+        b.put(&(UString::from("mi10s-adjacent-curly-quote-wrap")).to_ustring().to_ustring(), &(UString::from(concat!("fixture: mi10s-adjacent-curly-quote-wrap\n",
 "text: 所以这个和 “骑ji” “说shui”“斜xiá”不一样，港台是从众的，大陆读音大多数源自韵书。\n",
 "maxWidth: 160.0\n",
 "== greedy ==\n",
@@ -4339,8 +4340,8 @@ impl RecordedLayoutDumpGoldens {
 "edgetrim 47-48 side=trailing trim=8.0 reason=LineEndHalfWidthPunctuation\n",
 "edgetrim 11-12 side=trailing trim=5.0 reason=LineEdgeWordSpaceCollapse\n",
 "linespacing natural=16.0 requested=- resolved=24.0 floor=0.0 applied=false reason=CjkBodyLineHeightDefault\n",
-"")).to_string());
-        b.put(&("mi10s-western-bracket-citation-wrap").to_string().to_string(), &(concat!("fixture: mi10s-western-bracket-citation-wrap\n",
+""))).to_ustring());
+        b.put(&(UString::from("mi10s-western-bracket-citation-wrap")).to_ustring().to_ustring(), &(UString::from(concat!("fixture: mi10s-western-bracket-citation-wrap\n",
 "text: 史力军,姚晨,杨国玉,等.常见有机化合物中文词汇的读音详解[J].化学教育(中英文), 2023, 44(10):21-38.\n",
 "maxWidth: 272.0\n",
 "== greedy ==\n",
@@ -4640,8 +4641,8 @@ impl RecordedLayoutDumpGoldens {
 "font 41-63 role=LatinText key=latin-primary display='), 2023, 44(10):21-38.' sub=CjkPunctuationGlyphPolicy:PreferClreqRecommendedCodepoints:preserve\n",
 "autospace 29-33 side=trailing boundary=EastAsianSpacing.Wide reduction=-2.0\n",
 "linespacing natural=16.0 requested=- resolved=24.0 floor=0.0 applied=false reason=CjkBodyLineHeightDefault\n",
-"")).to_string());
-        b.put(&("mixed-script-quote-paragraph-language").to_string().to_string(), &(concat!("fixture: mixed-script-quote-paragraph-language\n",
+""))).to_ustring());
+        b.put(&(UString::from("mixed-script-quote-paragraph-language")).to_ustring().to_ustring(), &(UString::from(concat!("fixture: mixed-script-quote-paragraph-language\n",
 "text: “Json是谁？”\n",
 "maxWidth: 192.0\n",
 "== greedy ==\n",
@@ -4731,8 +4732,8 @@ impl RecordedLayoutDumpGoldens {
 "edgetrim 8-9 side=trailing trim=8.0 reason=LineEndHalfWidthPunctuation\n",
 "edgetrim 0-1 side=leading trim=8.0 reason=LineStartHalfWidthPunctuation\n",
 "linespacing natural=16.0 requested=- resolved=24.0 floor=0.0 applied=false reason=CjkBodyLineHeightDefault\n",
-"")).to_string());
-        b.put(&("mourning-frame").to_string().to_string(), &(concat!("fixture: mourning-frame\n",
+""))).to_ustring());
+        b.put(&(UString::from("mourning-frame")).to_ustring().to_ustring(), &(UString::from(concat!("fixture: mourning-frame\n",
 "text: 悼念：王小明同志、张大同同志。\n",
 "maxWidth: 72.0\n",
 "== greedy ==\n",
@@ -4888,8 +4889,8 @@ impl RecordedLayoutDumpGoldens {
 "linespacing natural=16.0 requested=- resolved=24.0 floor=8.0 applied=false reason=CjkBodyLineHeightDefault\n",
 "decobox 3-6 kind=Mourning line=1 rect=0.0,28.0,64.0,44.0 open=-/- reason=MourningSpanKeptUnbroken\n",
 "decobox 9-12 kind=Mourning line=3 rect=0.0,76.0,48.0,92.0 open=-/- reason=MourningSpanKeptUnbroken\n",
-"")).to_string());
-        b.put(&("nested-quotes").to_string().to_string(), &(concat!("fixture: nested-quotes\n",
+""))).to_ustring());
+        b.put(&(UString::from("nested-quotes")).to_ustring().to_ustring(), &(UString::from(concat!("fixture: nested-quotes\n",
 "text: 他说：“你好，世界。”\n",
 "maxWidth: 180.0\n",
 "== greedy ==\n",
@@ -5021,8 +5022,8 @@ impl RecordedLayoutDumpGoldens {
 "spacing 9-11 '。”' inner=8.0->0.0 target=9-10\n",
 "edgetrim 10-11 side=trailing trim=8.0 reason=LineEndHalfWidthPunctuation\n",
 "linespacing natural=16.0 requested=- resolved=24.0 floor=0.0 applied=false reason=CjkBodyLineHeightDefault\n",
-"")).to_string());
-        b.put(&("parenthetical-dash-pairs").to_string().to_string(), &(concat!("fixture: parenthetical-dash-pairs\n",
+""))).to_ustring());
+        b.put(&(UString::from("parenthetical-dash-pairs")).to_ustring().to_ustring(), &(UString::from(concat!("fixture: parenthetical-dash-pairs\n",
 "text: 他彻夜想Jessica——Jessica是他的前女友——睡不着觉。地点——北京，时间——明天。\n",
 "maxWidth: 1024.0\n",
 "== greedy ==\n",
@@ -5289,8 +5290,8 @@ impl RecordedLayoutDumpGoldens {
 "autospace 13-20 side=trailing boundary=EastAsianSpacing.Wide reduction=-2.0\n",
 "edgetrim 46-47 side=trailing trim=8.0 reason=LineEndHalfWidthPunctuation\n",
 "linespacing natural=16.0 requested=- resolved=24.0 floor=0.0 applied=false reason=CjkBodyLineHeightDefault\n",
-"")).to_string());
-        b.put(&("progressive-technical-alpha-numeric").to_string().to_string(), &(concat!("fixture: progressive-technical-alpha-numeric\n",
+""))).to_ustring());
+        b.put(&(UString::from("progressive-technical-alpha-numeric")).to_ustring().to_ustring(), &(UString::from(concat!("fixture: progressive-technical-alpha-numeric\n",
 "text: Machine2Machine\n",
 "maxWidth: 76.0\n",
 "== greedy ==\n",
@@ -5371,8 +5372,8 @@ impl RecordedLayoutDumpGoldens {
 "cluster 14-15 'e' adv=9.0\n",
 "font 0-15 role=LatinText key=latin-primary display='Machine2Machine' sub=CjkPunctuationGlyphPolicy:PreferClreqRecommendedCodepoints:preserve\n",
 "linespacing natural=19.4 requested=- resolved=24.0 floor=0.0 applied=false reason=CjkBodyLineHeightDefault\n",
-"")).to_string());
-        b.put(&("progressive-technical-current-line-emergency").to_string().to_string(), &(concat!("fixture: progressive-technical-current-line-emergency\n",
+""))).to_ustring());
+        b.put(&(UString::from("progressive-technical-current-line-emergency")).to_ustring().to_ustring(), &(UString::from(concat!("fixture: progressive-technical-current-line-emergency\n",
 "text: Swift 这边是我最有体感的。JSONDecoder 慢是个老问题，SR-6252[36] 那个 issue 里挖出的根因是底层走 NSJSONSerialization 再桥接回 Objective-C，swift_dynamicCast 吃掉大量时间。\n",
 "maxWidth: 579.0\n",
 "== greedy ==\n",
@@ -5807,8 +5808,8 @@ impl RecordedLayoutDumpGoldens {
 "edgetrim 128-129 side=trailing trim=8.0 reason=LineEndHalfWidthPunctuation\n",
 "edgetrim 49-50 side=leading trim=2.0 reason=LineEdgeWordSpaceCollapse\n",
 "linespacing natural=16.0 requested=- resolved=24.0 floor=0.0 applied=false reason=CjkBodyLineHeightDefault\n",
-"")).to_string());
-        b.put(&("progressive-technical-hash-fill").to_string().to_string(), &(concat!("fixture: progressive-technical-hash-fill\n",
+""))).to_ustring());
+        b.put(&(UString::from("progressive-technical-hash-fill")).to_ustring().to_ustring(), &(UString::from(concat!("fixture: progressive-technical-hash-fill\n",
 "text: deadbeefcafebabefeedfaceabcdefabcdef\n",
 "maxWidth: 173.0\n",
 "== greedy ==\n",
@@ -5949,8 +5950,8 @@ impl RecordedLayoutDumpGoldens {
 "cluster 35-36 'f' adv=6.0\n",
 "font 0-36 role=LatinText key=latin-primary display='deadbeefcafebabefeedfaceabcdefabcdef' sub=CjkPunctuationGlyphPolicy:PreferClreqRecommendedCodepoints:preserve\n",
 "linespacing natural=19.4 requested=- resolved=24.0 floor=0.0 applied=false reason=CjkBodyLineHeightDefault\n",
-"")).to_string());
-        b.put(&("progressive-technical-inline").to_string().to_string(), &(concat!("fixture: progressive-technical-inline\n",
+""))).to_ustring());
+        b.put(&(UString::from("progressive-technical-inline")).to_ustring().to_ustring(), &(UString::from(concat!("fixture: progressive-technical-inline\n",
 "text: 中文 internationalization 命令\n",
 "maxWidth: 160.0\n",
 "== greedy ==\n",
@@ -6085,8 +6086,8 @@ impl RecordedLayoutDumpGoldens {
 "autospace 2-3 side=gap boundary=EastAsianSpacing.Wide reduction=3.0\n",
 "autospace 23-24 side=gap boundary=EastAsianSpacing.Wide reduction=3.0\n",
 "linespacing natural=16.0 requested=- resolved=24.0 floor=0.0 applied=false reason=CjkBodyLineHeightDefault\n",
-"")).to_string());
-        b.put(&("quote-digit-boundaries").to_string().to_string(), &(concat!("fixture: quote-digit-boundaries\n",
+""))).to_ustring());
+        b.put(&(UString::from("quote-digit-boundaries")).to_ustring().to_ustring(), &(UString::from(concat!("fixture: quote-digit-boundaries\n",
 "text: 中文 le“t”ters 中1“1”2文；中Ａ“Ｂ”Ｃ文。尾号是“1‘2’3”，用时1’30”。\n",
 "maxWidth: 1024.0\n",
 "== greedy ==\n",
@@ -6443,8 +6444,8 @@ impl RecordedLayoutDumpGoldens {
 "autospace 42-47 side=leading boundary=EastAsianSpacing.Wide reduction=-2.0\n",
 "edgetrim 47-48 side=trailing trim=8.0 reason=LineEndHalfWidthPunctuation\n",
 "linespacing natural=16.0 requested=- resolved=24.0 floor=0.0 applied=false reason=CjkBodyLineHeightDefault\n",
-"")).to_string());
-        b.put(&("real-paragraph-1").to_string().to_string(), &(concat!("fixture: real-paragraph-1\n",
+""))).to_ustring());
+        b.put(&(UString::from("real-paragraph-1")).to_ustring().to_ustring(), &(UString::from(concat!("fixture: real-paragraph-1\n",
 "text: 咖啡（coffee）在十七世纪经威尼斯传入欧洲。最初它被当作药物出售，价格高得吓人，真正让它流行起来的是随后遍地开花的咖啡馆——读报、辩论、下棋、写作——城市生活忽然多出一个公共客厅。意大利人做出了 espresso，维也纳人往杯里加奶油，土耳其人坚持连渣同煮……每座城市都相信自己手里那一杯才是正统。有人说：「先有咖啡馆，后有启蒙运动」。这话说得夸张，但也不算太离谱。\n",
 "maxWidth: 320.0\n",
 "== greedy ==\n",
@@ -7660,8 +7661,8 @@ impl RecordedLayoutDumpGoldens {
 "edgetrim 184-185 side=trailing trim=8.0 reason=LineEndHalfWidthPunctuation\n",
 "edgetrim 99-100 side=trailing trim=2.0 reason=LineEdgeWordSpaceCollapse\n",
 "linespacing natural=16.0 requested=- resolved=24.0 floor=0.0 applied=false reason=CjkBodyLineHeightDefault\n",
-"")).to_string());
-        b.put(&("ruby-line-height").to_string().to_string(), &(concat!("fixture: ruby-line-height\n",
+""))).to_ustring());
+        b.put(&(UString::from("ruby-line-height")).to_ustring().to_ustring(), &(UString::from(concat!("fixture: ruby-line-height\n",
 "text: 甲乙丙丁戊己庚辛壬癸子丑\n",
 "maxWidth: 64.0\n",
 "== greedy ==\n",
@@ -7763,8 +7764,8 @@ impl RecordedLayoutDumpGoldens {
 "linespacing natural=16.0 requested=18.0 resolved=18.0 floor=0.0 applied=false reason=ExplicitLineHeight\n",
 "rubylineheight mode=PerLine base=18.0 face=16.0 ruby=9.7 available=2.0 maxExtra=7.7 extras=0.0,7.7,0.0 lines=1 reason=ConditionalRubyLineHeight\n",
 "ruby 4-5 'wù' line=1 centerX=8.0 baselineY=24.8 size=8.0 box=7.8/1.9 width=12.0 overhang=0.0 locale=zh-Hans\n",
-"")).to_string());
-        b.put(&("unmatched-curly-quotes").to_string().to_string(), &(concat!("fixture: unmatched-curly-quotes\n",
+""))).to_ustring());
+        b.put(&(UString::from("unmatched-curly-quotes")).to_ustring().to_ustring(), &(UString::from(concat!("fixture: unmatched-curly-quotes\n",
 "text: ’90s James’； “truncated；中文“未闭\n",
 "maxWidth: 240.0\n",
 "== greedy ==\n",
@@ -7881,8 +7882,8 @@ impl RecordedLayoutDumpGoldens {
 "geom 26-27 body=9.0 lead=8.0/8.0 trail=0.0/0.0 justify=0.0 resolved=9.0\n",
 "edgetrim 26-27 side=leading trim=8.0 reason=LineStartHalfWidthPunctuation\n",
 "linespacing natural=16.0 requested=- resolved=24.0 floor=0.0 applied=false reason=CjkBodyLineHeightDefault\n",
-"")).to_string());
-        b.put(&("western-hyphenation").to_string().to_string(), &(concat!("fixture: western-hyphenation\n",
+""))).to_ustring());
+        b.put(&(UString::from("western-hyphenation")).to_ustring().to_ustring(), &(UString::from(concat!("fixture: western-hyphenation\n",
 "text: 请运行 internationalization 命令\n",
 "maxWidth: 160.0\n",
 "== greedy ==\n",
@@ -7969,8 +7970,8 @@ impl RecordedLayoutDumpGoldens {
 "autospace 3-4 side=gap boundary=EastAsianSpacing.Wide reduction=3.0\n",
 "autospace 24-25 side=gap boundary=EastAsianSpacing.Wide reduction=3.0\n",
 "linespacing natural=16.0 requested=- resolved=24.0 floor=0.0 applied=false reason=CjkBodyLineHeightDefault\n",
-"")).to_string());
-        b.put(&("zero-width-space-soft-break").to_string().to_string(), &(concat!("fixture: zero-width-space-soft-break\n",
+""))).to_ustring());
+        b.put(&(UString::from("zero-width-space-soft-break")).to_ustring().to_ustring(), &(UString::from(concat!("fixture: zero-width-space-soft-break\n",
 "text: A.\\u200B.\\u200B.Complete？AaFont？\n",
 "maxWidth: 96.0\n",
 "== greedy ==\n",
@@ -8063,7 +8064,7 @@ impl RecordedLayoutDumpGoldens {
 "edgetrim 14-15 side=trailing trim=7.0 reason=LineEndHalfWidthPunctuation\n",
 "edgetrim 21-22 side=trailing trim=7.0 reason=LineEndHalfWidthPunctuation\n",
 "linespacing natural=16.0 requested=- resolved=24.0 floor=0.0 applied=false reason=CjkBodyLineHeightDefault\n",
-"")).to_string());
+""))).to_ustring());
         return b.clone().build();
     }
 }

@@ -1,11 +1,12 @@
 use crate::org::tiqian::protocol::metric_entry::MetricEntry;
 use crate::org::tiqian::protocol::value_row::ValueRow;
+use crate::runtime::u_string::UString;
 
 
 #[derive(Clone, PartialEq)]
 pub struct TableData {
     pub replay_string_count: u32,
-    pub strings: Vec<String>,
+    pub strings: Vec<UString>,
     pub metric_rows: Vec<MetricEntry>,
     pub value_pool: Vec<ValueRow>,
     pub probe_text_refs: Vec<u32>,
@@ -19,11 +20,11 @@ pub struct TableData {
     pub style_script_refs: Vec<u32>,
     pub style_language_refs: Vec<u32>,
     pub features_pool: Vec<Vec<u32>>,
-    pub face_texts: Vec<String>,
-    pub typography_texts: Vec<String>,
-    pub value_style_texts: Vec<String>,
-    pub font_preload_texts: Vec<String>,
-    pub revision_text: String,
+    pub face_texts: Vec<UString>,
+    pub typography_texts: Vec<UString>,
+    pub value_style_texts: Vec<UString>,
+    pub font_preload_texts: Vec<UString>,
+    pub revision_text: UString,
 }
 
 impl TableData {
@@ -48,7 +49,7 @@ impl TableData {
             typography_texts: Vec::new(),
             value_style_texts: Vec::new(),
             font_preload_texts: Vec::new(),
-            revision_text: "".to_string(),
+            revision_text: UString::from(""),
         }
     }
 }
