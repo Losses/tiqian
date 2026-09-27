@@ -228,4 +228,10 @@
 
 ## 比对读数（pin f1b28bd3，ts 束本机驱动器 gen RC=0）
 - 同 fixture 矩阵 diff 旧 bundle 与新适配器：48 行中 16 行有差异，全部是 metrics 数值的 f32→f64 位（如 16.1 尺寸 ascent 18.676000595092773→18.676000000000002），fallback 6 行与错误行为（THROW:IllegalArgumentException）逐字节一致。
+- f64 精确值注意点：18*0.288 的 f64 最短表示是 5.183999999999999（非 5.184），迁移金值按实际最短表示钉（font-facade.test.mjs）。
 
+## 入口接线（rebase 到 e5b2b6b5 后，照 LineBreak 形态）
+- src/font-facade.mjs：纯 JS 线翻译（JSON 进出、IllegalArgumentException 名字保真），import 编译产物 ./engine-gen/**.js；src/fontFunctions.ts（TS 版适配器，提交 c4f31b4b 内）被此形态取代后删除。
+- facade.mjs/facade.d.mts：font 两名从 Kotlin 束解绑改由 font-facade 提供，12 名与顺序不变；build-runtime.ts 的 facade 拷贝清单加 font-facade.mjs。
+- Kotlin 侧删除：FontExports.kt 整文件；WireJson.kt 的 parseFontMetricsRequestJson/parseFontRequestJson（唯一使用方是 FontExports.kt；appendFontMetricsRequestJson 留守，JsCallbackAdapters/WireJsonTest 仍用）；FontExportsTest.kt 删两条 metrics 用例，classifyFontRole 两条留守（对象是 LoweringHelper 导出，属 js-lh 席）。
+- 发射端偏差（vendored 副本就地修正并记录）：TiqianIllegalArgumentException.ts 的 import 语句对 TextRangeError 取值导入，而 TextRangeError.ts 只发射类型联合，Node 类型剥离无法链接；vendored 副本改 import type。boring 里程碑侧已知的同类发射端缺口，发射端修复后可回退。
