@@ -45,3 +45,25 @@
 ## TS 目标两个已取证的形态前提（调试取证四步见 AGENTS.md）
 - Bytes.get 降级条件：reflaxe/ts/tscompiler/TsExpr.hx:2191-2192 `if (name == "get" && isBytes(stripCast(subj)))`；isBytes(:3622-3626) 要求静态类型恰为 `haxe.io.Bytes`。传 `Null<Bytes>` 不命中、退化为普通字段调用。fix：switch 分支绑定非空 Bytes 后再调 get。
 - samples 类的源范围过滤：TS 模块发射拒绝项在 tscompiler/Compiler.hx:500（`value-referenced but emits no declarations`），根因是类不在 Intercept.run 声明的源范围；按 rust-common.hxml 对 samples/std 的先例把 samples 路径加进源范围。
+
+## 表二进制读写（Stage1-P2 补记，生成器修订 4f412c6a）
+
+### BytesInput/BytesOutput 与端序（stdlib/02-haxe-io-buffers-and-inputs.md）
+- :11 `haxe.io.BytesBuffer ... carries no built-in multi-byte endianness dispatch`。
+- :12-13 API 面：BytesInput 提供 readByte/readInt32/readDouble/readString 与 bigEndian 属性；BytesOutput 提供 writeInt32/writeDouble。
+- :15 裁定原文：`To maintain strict IEEE 754 bit-identical float representations across all targets, this repository bypasses BytesInput/BytesOutput endian methods in favor of explicit bitwise operations and haxe.io.FPHelper conversions`。
+- :215 Ruling：统一原语集 `readU16/writeU16, readU32/writeU32, readF64/writeF64`，加固定长 ASCII 读写。
+- :217 边界检查位置：`Bounds checking lives in reader slice extraction ... and writer capacity growth (ensure in TypeScript, growable BytesBuffer in Haxe, Vec::extend_from_slice in Rust)`。
+- :24-38 样例形态：writer 手拆字节 addByte，f64 经 `FPHelper.doubleToI64` 取 high/low 两个 u32；reader 用 Bytes.get 逐字节组装。该样例是大端；TIQTBL03 全小端，出参顺序反转即可。
+
+结论：P2 的 Reader/Writer 不用 BytesInput/BytesOutput，用 BytesBuffer.addByte + Bytes.get + FPHelper（stdlib/05:89-92 `FPHelper continues to carry binary64 bit patterns through high and low words`），与 Canonical.hx 的 Writer 同形态。
+
+### haxe.Json 不在子集内（stdlib/ 全目录检索）
+- docs/specs/ 下 grep `haxe.Json` 与 `Json.parse` 零命中；stdlib/06-std-modules.md、stdlib/12-std-string.md 均未列 JSON。
+- 结论：face/typography/valueStyle/revision 四个 JSON 文本区，Haxe 侧只做字节区搬运（写入方收已序列化的 canonical JSON 文本，读取方交回原始文本），JSON.parse/stable_stringify 留平台壳；这符合 6.2 节「出口语言零手写读写代码」——JSON 解析不属于字节读写。
+
+### TIQTBL03 布局与语义权威（既有实现）
+- snapshot_table_binary.rs:9-35 布局注释：magic "TIQTBL03" 8 字节 + 12 个 u32 计数（56 字节头），string/delta 区 u32 增量自隐式零累加。
+- snapshot-table-binary.ts:8-13 常量：HEADER_U32_COUNT=12、METRIC_POOL_ROW_BYTES=40、PROBE_STYLE_ROW_BYTES=25、ABSENT_METRIC_BITS=0x7ff8000000000000n。
+- table-binary-writer.ts:200-253 region 顺序逐项：strings(delta+bytes)、metric 六列、valuePool(5xf64)、probe 三列、advancePool(f64)、stylePool(25B)、features(delta+bytes, 行=u16 count+count x u32)、face/typography/valueStyle/fontPreload 四个 delta+bytes、revisionText 尾区。
+- metric 行排序键 (familiesRef, weight, italic, roleRef, faceSelectionRef)：snapshot_table_binary.rs:109-118 total_cmp；table-binary-writer.ts:132-137 数值比较。f64 排序比较在 Haxe 侧的形态待取证（total_cmp 与 JS < 的 NaN 行为不同；表内容 weight 为正常值时等价）。
