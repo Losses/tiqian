@@ -23,6 +23,14 @@ import org.tiqian.layout.ExplainableStubParagraphLayoutEngine
 import org.tiqian.layout.LookaheadLineBreaker
 import org.tiqian.layout.toPlanWithDiagnosticsJson
 import org.tiqian.layout.toPreparedParagraphJson
+import org.tiqian.protocol.DecorationInput
+import org.tiqian.protocol.InlineBoxInput
+import org.tiqian.protocol.InlineObjectInput
+import org.tiqian.protocol.LineBreakSpanInput
+import org.tiqian.protocol.ParagraphRequest
+import org.tiqian.protocol.ParagraphRequestChecks
+import org.tiqian.protocol.ParagraphRequestException
+import org.tiqian.protocol.TextSpanInput
 import org.tiqian.shaping.TextShaper
 
 /**
@@ -35,115 +43,149 @@ import org.tiqian.shaping.TextShaper
  * This file now also provides DTO-based entry points (corrective wave 5/#106).
  * The legacy string-based entry points are retained temporarily for tests;
  * they are deleted when the last test migrates to DTO fixtures.
+ *
+ * Domain validation is the generated single-source request model
+ * (Stage1-P5b): the parse functions only decode the wire packing and keep
+ * the wire-shape issue names (Invalid*Wire, InvalidTextSpanItalic); every
+ * domain check runs once through [ParagraphRequestChecks.validate] on the
+ * generated [ParagraphRequest], and the caught
+ * [ParagraphRequestException] is rethrown as an
+ * [IllegalArgumentException] whose message is the published issue name —
+ * the same message channel the replaced handwritten require blocks used.
  */
 
 private const val RECORD_SEPARATOR = "\u001e"
 private const val FIELD_SEPARATOR = "\u001d"
 private const val FAMILY_SEPARATOR = "\u001f"
 
-private fun parseBoundaries(value: String, textLength: Int): Set<Int> =
+/** Validates the generated request and keeps the name-as-message channel. */
+private fun validateRequest(request: ParagraphRequest) {
+    try {
+        ParagraphRequestChecks.validate(request)
+    } catch (error: ParagraphRequestException) {
+        throw IllegalArgumentException(error.message)
+    }
+}
+
+private fun parseBoundaries(value: String): List<Int> =
     value.split(',')
         .filter(String::isNotBlank)
         .map { it.toInt() }
-        .onEach { require(it in 0..textLength) { "InvalidSourceBoundary" } }
-        .toSet()
 
-private fun parseDecorations(value: String, textLength: Int): List<DecorationSpan> =
+private fun parseDecorations(value: String): List<DecorationInput> =
     value.split(RECORD_SEPARATOR)
         .filter(String::isNotBlank)
         .map { record ->
             val fields = record.split(FIELD_SEPARATOR)
             require(fields.size == 3) { "InvalidDecorationWire" }
-            val start = fields[0].toInt()
-            val end = fields[1].toInt()
-            require(start in 0 until end && end <= textLength) { "InvalidDecorationRange" }
-            DecorationSpan(
-                range = TextRange(start, end),
-                kind = DecorationKind.valueOf(fields[2]),
+            DecorationInput(
+                start = fields[0].toInt(),
+                end = fields[1].toInt(),
+                kind = fields[2],
             )
         }
 
-private fun parseTextSpans(value: String, locale: String, textLength: Int): List<TextSpan> =
+private fun parseTextSpans(value: String): List<TextSpanInput> =
     value.split(RECORD_SEPARATOR)
         .filter(String::isNotBlank)
         .map { record ->
             val fields = record.split(FIELD_SEPARATOR)
             require(fields.size == 7) { "InvalidTextSpanWire" }
-            val start = fields[0].toInt()
-            val end = fields[1].toInt()
-            require(start in 0 until end && end <= textLength) { "InvalidTextSpanRange" }
-            val families = fields[2].split(FAMILY_SEPARATOR).filter(String::isNotBlank)
-            require(families.isNotEmpty()) { "MissingTextSpanFontFamilies" }
-            val fontSize = fields[3].toFloat()
-            val fontWeight = fields[4].toInt()
-            val italic = when (fields[5]) {
-                "true" -> true
-                "false" -> false
-                else -> error("InvalidTextSpanItalic")
-            }
-            val baselineShift = fields[6].toFloat()
-            require(fontSize.isFinite() && fontSize > 0f) { "InvalidTextSpanFontSize" }
-            require(fontWeight in 1..1000) { "InvalidTextSpanFontWeight" }
-            require(baselineShift.isFinite()) { "InvalidTextSpanBaselineShift" }
-            TextSpan(
-                range = TextRange(start, end),
-                style = TextStyle(
-                    fontFamilies = families,
-                    fontSize = fontSize,
-                    locale = locale,
-                    fontWeight = fontWeight,
-                    italic = italic,
-                    baselineShift = baselineShift,
-                ),
+            TextSpanInput(
+                start = fields[0].toInt(),
+                end = fields[1].toInt(),
+                families = fields[2].split(FAMILY_SEPARATOR).filter(String::isNotBlank).toMutableList(),
+                fontSizePx = fields[3].toDouble(),
+                fontWeight = fields[4].toInt(),
+                italic = when (fields[5]) {
+                    "true" -> true
+                    "false" -> false
+                    else -> error("InvalidTextSpanItalic")
+                },
+                baselineShift = fields[6].toDouble(),
             )
         }
 
-private fun parseInlineBoxes(value: String, textLength: Int): List<InlineBoxSpan> =
+private fun parseInlineBoxes(value: String): List<InlineBoxInput> =
     value.split(RECORD_SEPARATOR)
         .filter(String::isNotBlank)
         .map { record ->
             val fields = record.split(FIELD_SEPARATOR)
             require(fields.size == 4 || fields.size == 5) { "InvalidInlineBoxWire" }
-            val start = fields[0].toInt()
-            val end = fields[1].toInt()
-            val inlineStart = fields[2].toFloat()
-            val inlineEnd = fields[3].toFloat()
-            require(start in 0 until end && end <= textLength) { "InvalidInlineBoxRange" }
-            require(inlineStart.isFinite() && inlineEnd.isFinite()) { "InvalidInlineBoxGeometry" }
-            val outerSpacing = fields.getOrNull(4)
-                ?.let(InlineBoxOuterSpacing::valueOf)
-                ?: InlineBoxOuterSpacing.Narrow
-            InlineBoxSpan(TextRange(start, end), inlineStart, inlineEnd, outerSpacing)
+            InlineBoxInput(
+                start = fields[0].toInt(),
+                end = fields[1].toInt(),
+                inlineStart = fields[2].toDouble(),
+                inlineEnd = fields[3].toDouble(),
+                outerSpacing = fields.getOrNull(4) ?: "Narrow",
+            )
         }
 
-private fun parseLineBreakSpans(value: String, textLength: Int): List<LineBreakSpan> =
+private fun parseLineBreakSpans(value: String): List<LineBreakSpanInput> =
     value.split(RECORD_SEPARATOR)
         .filter(String::isNotBlank)
         .map { record ->
             val fields = record.split(FIELD_SEPARATOR)
             require(fields.size == 3) { "InvalidLineBreakSpanWire" }
-            val start = fields[0].toInt()
-            val end = fields[1].toInt()
-            require(start in 0 until end && end <= textLength) { "InvalidLineBreakSpanRange" }
-            LineBreakSpan(TextRange(start, end), LineBreakPolicy.valueOf(fields[2]))
+            LineBreakSpanInput(
+                start = fields[0].toInt(),
+                end = fields[1].toInt(),
+                policy = fields[2],
+            )
         }
 
-private fun parseInlineObjects(value: String, textLength: Int): List<InlineObjectSpan> =
+private fun parseInlineObjects(value: String): List<InlineObjectInput> =
     value.split(RECORD_SEPARATOR)
         .filter(String::isNotBlank)
         .map { record ->
             val fields = record.split(FIELD_SEPARATOR)
             require(fields.size == 5) { "InvalidInlineObjectWire" }
-            val start = fields[0].toInt()
-            val end = fields[1].toInt()
-            val advance = fields[2].toFloat()
-            val ascent = fields[3].toFloat()
-            val descent = fields[4].toFloat()
-            require(start in 0 until end && end <= textLength) { "InvalidInlineObjectRange" }
-            require(advance.isFinite() && advance >= 0f) { "InvalidInlineObjectAdvance" }
-            require(ascent.isFinite() && descent.isFinite()) { "InvalidInlineObjectVerticalGeometry" }
-            InlineObjectSpan(TextRange(start, end), advance, ascent, descent)
+            InlineObjectInput(
+                start = fields[0].toInt(),
+                end = fields[1].toInt(),
+                advance = fields[2].toDouble(),
+                ascent = fields[3].toDouble(),
+                descent = fields[4].toDouble(),
+            )
         }
+
+private fun toInternal(span: TextSpanInput, locale: String): TextSpan =
+    TextSpan(
+        range = TextRange(span.start, span.end),
+        style = TextStyle(
+            fontFamilies = span.families.filter(String::isNotBlank),
+            fontSize = span.fontSizePx.toFloat(),
+            locale = locale,
+            fontWeight = span.fontWeight,
+            italic = span.italic,
+            baselineShift = span.baselineShift.toFloat(),
+        ),
+    )
+
+private fun toInternal(span: LineBreakSpanInput): LineBreakSpan =
+    LineBreakSpan(TextRange(span.start, span.end), LineBreakPolicy.valueOf(span.policy))
+
+private fun toInternal(box: InlineBoxInput): InlineBoxSpan =
+    InlineBoxSpan(
+        TextRange(box.start, box.end),
+        box.inlineStart.toFloat(),
+        box.inlineEnd.toFloat(),
+        InlineBoxOuterSpacing.valueOf(box.outerSpacing),
+    )
+
+private fun toInternal(objectInput: InlineObjectInput): InlineObjectSpan =
+    InlineObjectSpan(
+        TextRange(objectInput.start, objectInput.end),
+        objectInput.advance.toFloat(),
+        objectInput.ascent.toFloat(),
+        objectInput.descent.toFloat(),
+    )
+
+private fun toInternal(decoration: DecorationInput): DecorationSpan =
+    DecorationSpan(
+        range = TextRange(decoration.start, decoration.end),
+        kind = DecorationKind.valueOf(decoration.kind),
+    )
 
 class ParagraphWireCodec(
     private val textShaper: TextShaper,
@@ -276,36 +318,45 @@ class ParagraphWireCodec(
         decorations: String = "",
         emphasisDotGapEm: Double? = null,
     ): LayoutResult {
-        require(text.isNotBlank()) { "EmptyParagraph" }
-        require(maxWidthPx.isFinite() && maxWidthPx > 0.0) { "InvalidMaximumMeasure" }
-        require(fontSizePx.isFinite() && fontSizePx > 0.0) { "InvalidFontSize" }
-        require(lineHeightPx.isFinite() && lineHeightPx > 0.0) { "InvalidLineHeight" }
-        require(firstLineIndentIc.isFinite()) { "InvalidFirstLineIndent" }
-        require(fontWeight in 1..1000) { "InvalidFontWeight" }
-
-        val gapEm = emphasisDotGapEm ?: DEFAULT_EMPHASIS_DOT_GAP_EM.toDouble()
-        require(gapEm.isFinite() && gapEm >= 0.0) { "InvalidEmphasisDotGapEm" }
-
         val families = fontFamilies.split(FAMILY_SEPARATOR).filter(String::isNotBlank)
-        require(families.isNotEmpty()) { "MissingExplicitFontFamilies" }
-
-        val textStyle = TextStyle(
-            fontFamilies = families,
-            fontSize = fontSizePx.toFloat(),
+        val request = ParagraphRequest(
+            // The wire shape carries no font session id; the field exists in
+            // the shared model for the lanes that have one.
+            fontSessionId = "",
+            text = text,
+            maxWidthPx = maxWidthPx,
+            fontFamilies = families.toMutableList(),
+            fontSizePx = fontSizePx,
+            lineHeightPx = lineHeightPx,
             locale = locale,
             fontWeight = fontWeight,
             italic = italic,
+            firstLineIndentIc = firstLineIndentIc,
+            lineLengthGridEnabled = lineLengthGridEnabled,
+            emphasisDotGapEm = emphasisDotGapEm,
+            sourceBoundaries = parseBoundaries(sourceBoundaries).toMutableList(),
+            textSpans = parseTextSpans(textSpans).toMutableList(),
+            lineBreakSpans = parseLineBreakSpans(lineBreakSpans).toMutableList(),
+            inlineBoxes = parseInlineBoxes(inlineBoxes).toMutableList(),
+            inlineObjects = parseInlineObjects(inlineObjects).toMutableList(),
+            decorations = parseDecorations(decorations).toMutableList(),
         )
-        val parsedInlineObjects = parseInlineObjects(inlineObjects, text.length)
-        val parsedDecorations = parseDecorations(decorations, text.length)
+        validateRequest(request)
+        val gapEm = emphasisDotGapEm ?: DEFAULT_EMPHASIS_DOT_GAP_EM.toDouble()
         val input = LayoutInput(
             content = TiqianTextContent(
                 text = text,
-                spans = parseTextSpans(textSpans, locale, text.length),
-                sourceBoundaries = parseBoundaries(sourceBoundaries, text.length),
-                lineBreakSpans = parseLineBreakSpans(lineBreakSpans, text.length),
+                spans = request.textSpans.map { toInternal(it, locale) },
+                sourceBoundaries = request.sourceBoundaries.toSet(),
+                lineBreakSpans = request.lineBreakSpans.map { toInternal(it) },
             ),
-            textStyle = textStyle,
+            textStyle = TextStyle(
+                fontFamilies = families,
+                fontSize = fontSizePx.toFloat(),
+                locale = locale,
+                fontWeight = fontWeight,
+                italic = italic,
+            ),
             paragraphStyle = ParagraphStyle(
                 lineHeight = lineHeightPx.toFloat(),
                 firstLineIndent = Ic(firstLineIndentIc.toFloat()),
@@ -313,9 +364,9 @@ class ParagraphWireCodec(
                 emphasisDotGapEm = gapEm.toFloat(),
             ),
             constraints = LayoutConstraints(maxWidth = maxWidthPx.toFloat()),
-            decorations = parsedDecorations,
-            inlineBoxes = parseInlineBoxes(inlineBoxes, text.length),
-            inlineObjects = parsedInlineObjects,
+            decorations = request.decorations.map { toInternal(it) },
+            inlineBoxes = request.inlineBoxes.map { toInternal(it) },
+            inlineObjects = request.inlineObjects.map { toInternal(it) },
         )
         return ExplainableStubParagraphLayoutEngine(
             lineBreaker = LookaheadLineBreaker(),
@@ -383,62 +434,72 @@ class ParagraphWireCodec(
     }
 
     private fun layout(request: PrepareParagraphRequestDto): LayoutResult {
-        require(request.text.isNotBlank()) { "EmptyParagraph" }
-        require(request.maxWidthPx.isFinite() && request.maxWidthPx > 0.0) { "InvalidMaximumMeasure" }
-        require(request.fontSizePx.isFinite() && request.fontSizePx > 0.0) { "InvalidFontSize" }
-        require(request.lineHeightPx.isFinite() && request.lineHeightPx > 0.0) { "InvalidLineHeight" }
-        require(request.firstLineIndentIc.isFinite()) { "InvalidFirstLineIndent" }
-        require(request.fontWeight in 1..1000) { "InvalidFontWeight" }
-
-        val gapEm = request.emphasisDotGapEm ?: DEFAULT_EMPHASIS_DOT_GAP_EM.toDouble()
-        require(gapEm.isFinite() && gapEm >= 0.0) { "InvalidEmphasisDotGapEm" }
-
-        val families = request.fontFamilies.filter(String::isNotBlank)
-        require(families.isNotEmpty()) { "MissingExplicitFontFamilies" }
-
-        val textStyle = TextStyle(
-            fontFamilies = families,
-            fontSize = request.fontSizePx.toFloat(),
+        val model = ParagraphRequest(
+            fontSessionId = "",
+            text = request.text,
+            maxWidthPx = request.maxWidthPx,
+            fontFamilies = request.fontFamilies.toMutableList(),
+            fontSizePx = request.fontSizePx,
+            lineHeightPx = request.lineHeightPx,
             locale = request.locale,
             fontWeight = request.fontWeight,
             italic = request.italic,
+            firstLineIndentIc = request.firstLineIndentIc,
+            lineLengthGridEnabled = request.lineLengthGridEnabled,
+            emphasisDotGapEm = request.emphasisDotGapEm,
+            sourceBoundaries = request.sourceBoundaries.toMutableList(),
+            textSpans = request.textSpans.map { span ->
+                TextSpanInput(
+                    start = span.start,
+                    end = span.end,
+                    families = span.fontFamilies.toMutableList(),
+                    fontSizePx = span.fontSize,
+                    fontWeight = span.fontWeight,
+                    italic = span.italic,
+                    baselineShift = span.baselineShift,
+                )
+            }.toMutableList(),
+            lineBreakSpans = request.lineBreakSpans.map { span ->
+                LineBreakSpanInput(start = span.start, end = span.end, policy = span.policy)
+            }.toMutableList(),
+            inlineBoxes = request.inlineBoxes.map { box ->
+                InlineBoxInput(
+                    start = box.start,
+                    end = box.end,
+                    inlineStart = box.inlineStart,
+                    inlineEnd = box.inlineEnd,
+                    outerSpacing = box.outerSpacing,
+                )
+            }.toMutableList(),
+            inlineObjects = request.inlineObjects.map { obj ->
+                InlineObjectInput(
+                    start = obj.start,
+                    end = obj.end,
+                    advance = obj.advance,
+                    ascent = obj.ascent,
+                    descent = obj.descent,
+                )
+            }.toMutableList(),
+            decorations = request.decorations.map { deco ->
+                DecorationInput(start = deco.start, end = deco.end, kind = deco.kind)
+            }.toMutableList(),
         )
-        val parsedInlineObjects = request.inlineObjects.map { obj ->
-            InlineObjectSpan(
-                TextRange(obj.start, obj.end),
-                obj.advance.toFloat(),
-                obj.ascent.toFloat(),
-                obj.descent.toFloat(),
-            )
-        }
-        val parsedDecorations = request.decorations.map { deco ->
-            DecorationSpan(
-                range = TextRange(deco.start, deco.end),
-                kind = DecorationKind.valueOf(deco.kind),
-            )
-        }
+        validateRequest(model)
+        val gapEm = request.emphasisDotGapEm ?: DEFAULT_EMPHASIS_DOT_GAP_EM.toDouble()
         val input = LayoutInput(
             content = TiqianTextContent(
                 text = request.text,
-                spans = request.textSpans.map { span ->
-                    TextSpan(
-                        range = TextRange(span.start, span.end),
-                        style = TextStyle(
-                            fontFamilies = span.fontFamilies.filter(String::isNotBlank).toList(),
-                            fontSize = span.fontSize.toFloat(),
-                            locale = request.locale,
-                            fontWeight = span.fontWeight,
-                            italic = span.italic,
-                            baselineShift = span.baselineShift.toFloat(),
-                        ),
-                    )
-                },
-                sourceBoundaries = request.sourceBoundaries.toSet(),
-                lineBreakSpans = request.lineBreakSpans.map { span ->
-                    LineBreakSpan(TextRange(span.start, span.end), LineBreakPolicy.valueOf(span.policy))
-                },
+                spans = model.textSpans.map { toInternal(it, request.locale) },
+                sourceBoundaries = model.sourceBoundaries.toSet(),
+                lineBreakSpans = model.lineBreakSpans.map { toInternal(it) },
             ),
-            textStyle = textStyle,
+            textStyle = TextStyle(
+                fontFamilies = model.fontFamilies.filter(String::isNotBlank),
+                fontSize = request.fontSizePx.toFloat(),
+                locale = request.locale,
+                fontWeight = request.fontWeight,
+                italic = request.italic,
+            ),
             paragraphStyle = ParagraphStyle(
                 lineHeight = request.lineHeightPx.toFloat(),
                 firstLineIndent = Ic(request.firstLineIndentIc.toFloat()),
@@ -446,16 +507,9 @@ class ParagraphWireCodec(
                 emphasisDotGapEm = gapEm.toFloat(),
             ),
             constraints = LayoutConstraints(maxWidth = request.maxWidthPx.toFloat()),
-            decorations = parsedDecorations,
-            inlineBoxes = request.inlineBoxes.map { box ->
-                InlineBoxSpan(
-                    TextRange(box.start, box.end),
-                    box.inlineStart.toFloat(),
-                    box.inlineEnd.toFloat(),
-                    InlineBoxOuterSpacing.valueOf(box.outerSpacing),
-                )
-            },
-            inlineObjects = parsedInlineObjects,
+            decorations = model.decorations.map { toInternal(it) },
+            inlineBoxes = model.inlineBoxes.map { toInternal(it) },
+            inlineObjects = model.inlineObjects.map { toInternal(it) },
         )
         return ExplainableStubParagraphLayoutEngine(
             lineBreaker = LookaheadLineBreaker(),
