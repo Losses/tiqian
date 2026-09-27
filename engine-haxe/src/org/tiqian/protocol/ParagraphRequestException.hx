@@ -1,10 +1,15 @@
 package org.tiqian.protocol;
 
-/** The exception class carries the enum instance (features/06:44-51); the
- * message function lives in the class, as the VectorException sample
- * (.haxelib/boring/git/samples/boring/VectorException.hx:18) rules. The
- * message is the published issue name, so no consumer reads it for
- * identity (features/06:397). */
+/**
+ * The exception class carries the enum instance (features/06:44-51) and its
+ * static describe is the message function of features/06: the Rust target
+ * lowers it into the Display impl of the payload enum inside the error
+ * module (boring/reference/rust/gen/boring/vector_exception.rs) and the
+ * TypeScript target keeps the class. Messages are display text derived
+ * from the variant and no consumer reads them for identity
+ * (features/06:397); the string of every variant is the published issue
+ * name.
+ */
 class ParagraphRequestException extends haxe.Exception {
     public final error:ParagraphRequestError;
 

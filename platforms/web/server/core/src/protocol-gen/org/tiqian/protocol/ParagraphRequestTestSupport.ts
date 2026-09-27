@@ -15,7 +15,7 @@ export class ParagraphRequestTestSupport {
       ParagraphRequestChecks.validate(request);
     } catch (error) {
       if (error instanceof ParagraphRequestException) {
-        name = ParagraphRequestChecks.issueName(error.error);
+        name = ParagraphRequestException.describe(error.error);
       } else {
         throw error;
       }

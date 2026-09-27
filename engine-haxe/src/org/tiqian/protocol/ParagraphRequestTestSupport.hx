@@ -31,7 +31,7 @@ class ParagraphRequestTestSupport {
         try {
             ParagraphRequestChecks.validate(request);
         } catch (error:ParagraphRequestException) {
-            name = ParagraphRequestChecks.issueName(error.error);
+            name = ParagraphRequestException.describe(error.error);
         }
         return name;
     }
