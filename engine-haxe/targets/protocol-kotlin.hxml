@@ -25,3 +25,6 @@ org.tiqian.protocol.ParagraphRequest
 org.tiqian.protocol.ParagraphRequestTest
 runtime.UString
 runtime.TestCore
+org.tiqian.protocol.Plan
+org.tiqian.protocol.PlanJsonNumber
+org.tiqian.protocol.PlanJson
