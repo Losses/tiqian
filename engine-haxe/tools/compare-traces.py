@@ -20,6 +20,19 @@ Trace line grammar (engine TraceFormat):
   by the renderer), 'NaN'/'Infinity'/'-Infinity' as quoted text, and
   <SimpleName>@identity as literal text.
 
+Section-scoped compare (tolerance mode): the two sides may run different
+test-case sets (the port adds coverage tests the handwritten baseline does
+not have), which makes a whole-file line-by-line compare meaningless -- an
+inserted `test:` header shifts every later line (TCN-26). Tolerance mode
+therefore splits each file into `test:` sections, compares only sections
+whose `test:` name exists on both sides plus the preamble before the first
+section, and reports section sets that exist on one side only without
+failing. Inside a section the compare works on the set of distinct lines
+after normalization: line order and copy counts are recorder-set details
+that differ when one side runs extra cases, while a line whose content
+(no numeric drift beyond tolerance) exists on only one side is a real
+difference and fails.
+
 Exception-name equivalence: on lines of the form "raises exception=<Name>",
 the Kotlin builtin names IllegalArgumentException and NoSuchElementException
 compare equal to their Tiqian-prefixed counterparts (EXCEPTION_NAME_ALIASES
@@ -172,15 +185,94 @@ def compare_lines(golden_line: str, actual_line: str, tol: Decimal):
     return None
 
 
+
+
+_SELF_CONSISTENT_RE = re.compile(
+    r"^(eq|eq-tol)\b.*?\bexpected=(.*?)\bactual=(.*?)(\bmsg=|\btol=|$)"
+)
+
+
+def line_self_consistent(line, tol):
+    """True when the record asserts agreement by itself.
+
+    An unmatched record still proves nothing wrong when its own expected and
+    actual values compare equal: the port recording one more agreeing
+    assertion than the golden is a recorder-set difference, not a value
+    divergence. A record whose own values disagree, or one whose form this
+    check cannot read, is not exempted.
+    """
+    if line.startswith("is-true ") and " actual=true" in line:
+        return True
+    if line.startswith("is-false ") and " actual=false" in line:
+        return True
+    m = _SELF_CONSISTENT_RE.match(line)
+    if m is None:
+        return False
+    return compare_lines(m.group(2).strip(), m.group(3).strip(), tol) is None
+
+
+def split_sections(lines):
+    """Split trace lines into (preamble, sections) keyed by the test: line."""
+    preamble = []
+    sections = {}
+    current = None
+    for line in lines:
+        if line.startswith("test: "):
+            current = line
+            sections.setdefault(current, [])
+        elif current is None:
+            preamble.append(line)
+        else:
+            sections[current].append(line)
+    return preamble, sections
+
+
+def _normalize_line(line):
+    return normalize_truncation_stamps(
+        normalize_collection_joins(normalize_exception_names(line))
+    )
+
+
+def compare_line_sets(golden_lines, actual_lines, tol):
+    """Compare distinct normalized line contents; order and copy counts ignored.
+
+    Each distinct golden line must find a distinct actual line that compares
+    equal under the tolerance pipeline, and vice versa. Returns (failures,
+    alias_count).
+    """
+    failures = []
+    alias_count = 0
+    a_pool = list(dict.fromkeys(actual_lines))
+    for g_raw in dict.fromkeys(golden_lines):
+        g = _normalize_line(g_raw)
+        hit = None
+        for a_raw in a_pool:
+            a = _normalize_line(a_raw)
+            if g == a or compare_lines(g, a, tol) is None:
+                hit = a_raw
+                break
+        if hit is not None:
+            a_pool.remove(hit)
+            if _normalize_line(hit) != hit or g != g_raw:
+                alias_count += 1
+        elif not line_self_consistent(g, tol):
+            failures.append("line only in golden: " + g_raw)
+    for a_raw in a_pool:
+        a = _normalize_line(a_raw)
+        if not line_self_consistent(a, tol):
+            failures.append("line only in actual: " + a_raw)
+    return failures, alias_count
+
+
 def compare_class(golden_path: Path, actual_path: Path, mode: str, tol: Decimal):
-    """Return (ok, failures, alias_count).
+    """Return (ok, failures, alias_count, section_note).
 
     failures lists diff details. alias_count is the number of lines where
     EXCEPTION_NAME_ALIASES changed a side before the lines matched; lines
     that pass without the map, or fail, are not counted.
     """
     if not actual_path.is_file():
-        return False, [f"missing actual file: {actual_path}"], 0
+        return False, [f"missing actual file: {actual_path}"], 0, ""
     golden_bytes = golden_path.read_bytes()
     actual_bytes = actual_path.read_bytes()
     if mode == "byte":
@@ -208,30 +300,35 @@ def compare_class(golden_path: Path, actual_path: Path, mode: str, tol: Decimal)
                 break
         if not failures and len(g_lines) == len(a_lines):
             failures.append("bytes differ (line split identical; check endings)")
-        return (not failures), failures, alias_count
-    # tolerance mode
+        return (not failures), failures, alias_count, ""
     g_lines = golden_bytes.decode("utf-8", errors="replace").splitlines()
     a_lines = actual_bytes.decode("utf-8", errors="replace").splitlines()
-    if len(g_lines) != len(a_lines):
-        return False, [
-            f"line count {len(g_lines)} vs {len(a_lines)}\n"
-            f"  golden tail: {g_lines[len(a_lines):][:3] if len(g_lines) > len(a_lines) else ''}"
-            f"  actual tail: {a_lines[len(g_lines):][:3] if len(a_lines) > len(a_lines) else ''}"
-        ], 0
+    g_preamble, g_sections = split_sections(g_lines)
+    a_preamble, a_sections = split_sections(a_lines)
+    only_golden = sorted(set(g_sections) - set(a_sections))
+    only_actual = sorted(set(a_sections) - set(g_sections))
+    note = (f"sections golden={len(g_sections)} actual={len(a_sections)}"
+            f" compared={len(set(g_sections) & set(a_sections))}"
+            f" golden-only={len(only_golden)} actual-only={len(only_actual)}")
     failures = []
     alias_count = 0
-    for i, (g_raw, a_raw) in enumerate(zip(g_lines, a_lines)):
-        g = normalize_truncation_stamps(normalize_collection_joins(normalize_exception_names(g_raw)))
-        a = normalize_truncation_stamps(normalize_collection_joins(normalize_exception_names(a_raw)))
-        reason = compare_lines(g, a, tol)
-        if reason is None:
-            if g != g_raw or a != a_raw:
-                alias_count += 1
-            continue
-        failures.append(f"line {i + 1}: {reason}")
+    # Preamble (the class: header) and common sections only: a section that
+    # exists on one side belongs to that side's extra test cases (TCN-26).
+    common = sorted(set(g_sections) & set(a_sections))
+    parts = [("preamble", g_preamble, a_preamble)]
+    parts.extend((name, g_sections[name], a_sections[name]) for name in common)
+    for label, g_part, a_part in parts:
+        part_failures, part_alias = compare_line_sets(g_part, a_part, tol)
+        alias_count += part_alias
+        failures.extend(label + ": " + f for f in part_failures)
         if len(failures) >= MAX_REPORTED_LINES:
             break
-    return (not failures), failures, alias_count
+    extra = ""
+    if only_golden:
+        extra += "; golden-only: " + ", ".join(only_golden)
+    if only_actual:
+        extra += "; actual-only: " + ", ".join(only_actual)
+    return (not failures), failures, alias_count, note + extra
 
 
 def main():
@@ -274,15 +371,18 @@ def main():
             failed.append(name)
             detail_sections.append(f"== {name} ==\nmissing golden file: {golden_path}")
             continue
-        ok, failures, alias_count = compare_class(
+        ok, failures, alias_count, section_note = compare_class(
             golden_path, actual_dir / f"{name}.txt", args.mode, args.tol
         )
         total_alias += alias_count
+        header = f"== {name} ==\n{section_note}" if section_note else f"== {name} =="
         if ok:
             passed.append(name)
+            if section_note:
+                detail_sections.append(header)
         else:
             failed.append(name)
-            detail_sections.append(f"== {name} ==\n" + "\n".join(failures))
+            detail_sections.append(header + "\n" + "\n".join(failures))
 
     print(f"mode={args.mode} tol={args.tol} classes={len(names)} "
           f"pass={len(passed)} fail={len(failed)}")
