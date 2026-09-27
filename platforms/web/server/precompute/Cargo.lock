@@ -686,6 +686,7 @@ dependencies = [
  "sha2",
  "skrifa",
  "tiqian",
+ "tiqian-protocol-gen",
  "url",
  "wuff",
 ]
@@ -697,6 +698,10 @@ dependencies = [
  "neon",
  "tiqian-precompute",
 ]
+
+[[package]]
+name = "tiqian-protocol-gen"
+version = "0.1.0"
 
 [[package]]
 name = "typenum"

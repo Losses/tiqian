@@ -1,30 +1,42 @@
 //! Revision constants and `stableStringify` of `snapshot-schema.js`
 //! (ADR 0050). The constants stay byte-identical to the js oracle for the
 //! whole parity period; `stableStringify` feeds every artifact hash.
+//!
+//! The constants are single-sourced in the generated crate (boring cutover
+//! Stage1-P4): every declaration below re-exports the associated constant
+//! of the `Revision` type of `tiqian-protocol-gen`, so the Haxe source
+//! (engine-haxe/src/org/tiqian/protocol/Revision.hx) is the one place the
+//! family is written.
 
 use crate::js_compat::{cmp_utf16, js_number_string};
 use crate::json::{json_string, Json};
+// The single-sourced revision family (generated crate); the constants below
+// and the C ABI mirrors re-export its associated constants.
+pub use tiqian_protocol_gen::org::tiqian::protocol::revision::Revision as RevisionFamily;
 
 /// `SNAPSHOT_SCHEMA` of every snapshot this revision understands.
-pub const SNAPSHOT_SCHEMA: i64 = 1;
+pub const SNAPSHOT_SCHEMA: i64 = RevisionFamily::REVISION_SNAPSHOT_SCHEMA as i64;
+
+/// `SNAPSHOT_TABLES_SCHEMA` of the manifest schema this revision reads and writes.
+pub const SNAPSHOT_TABLES_SCHEMA: i64 = RevisionFamily::REVISION_SNAPSHOT_TABLES_SCHEMA as i64;
 
 /// `LAYOUT_REVISION` of every snapshot this revision understands.
-pub const LAYOUT_REVISION: &str = "tiqian-layout-v2";
+pub const LAYOUT_REVISION: &str = RevisionFamily::REVISION_LAYOUT_REVISION;
 
 /// `RENDER_REVISION` of the prepared DOM lowering.
-pub const RENDER_REVISION: &str = "prebroken-dom-v16";
+pub const RENDER_REVISION: &str = RevisionFamily::REVISION_RENDER_REVISION;
 
 /// `FONT_SOURCE_POLICY` of the snapshot font evidence.
-pub const FONT_SOURCE_POLICY: &str = "host-compatible-stylesheet-v1";
+pub const FONT_SOURCE_POLICY: &str = RevisionFamily::REVISION_FONT_SOURCE_POLICY;
 
 /// `FONT_BACKEND_REVISION` of the shared shaping backend.
-pub const FONT_BACKEND_REVISION: &str = "tiqian-shared-harfbuzz-v5";
+pub const FONT_BACKEND_REVISION: &str = RevisionFamily::REVISION_FONT_BACKEND_REVISION;
 
 /// `FONT_REPLAY_REVISION` of the replay tables.
-pub const FONT_REPLAY_REVISION: &str = "tiqian-server-shaping-replay-v1";
+pub const FONT_REPLAY_REVISION: &str = RevisionFamily::REVISION_FONT_REPLAY_REVISION;
 
 /// `FONT_REPLAY_TRANSPORT` of the compact replay encoding.
-pub const FONT_REPLAY_TRANSPORT: &str = "shared-strings-v1";
+pub const FONT_REPLAY_TRANSPORT: &str = RevisionFamily::REVISION_FONT_REPLAY_TRANSPORT;
 
 /// `stableStringify`: primitives render through `JSON.stringify`, arrays
 /// keep element order, object keys sort by UTF-16 code units.
@@ -62,16 +74,60 @@ mod tests {
 
     #[test]
     fn revision_constants_match_the_js_oracle() {
+        // The module constants now re-export the generated crate's
+        // constants (Stage1-P4 single source), so asserting the literals
+        // pins the generated values item by item.
         assert_eq!(SNAPSHOT_SCHEMA, 1);
+        assert_eq!(SNAPSHOT_TABLES_SCHEMA, 2);
         assert_eq!(LAYOUT_REVISION, "tiqian-layout-v2");
         assert_eq!(RENDER_REVISION, "prebroken-dom-v16");
         assert_eq!(FONT_SOURCE_POLICY, "host-compatible-stylesheet-v1");
         assert_eq!(FONT_BACKEND_REVISION, "tiqian-shared-harfbuzz-v5");
         assert_eq!(FONT_REPLAY_REVISION, "tiqian-server-shaping-replay-v1");
         assert_eq!(FONT_REPLAY_TRANSPORT, "shared-strings-v1");
-        // The plan reader carries its own copy of the layout revision; the two
-        // declarations must not drift.
+        // The plan reader and the session constants re-export the same
+        // single source; the declarations must not drift.
         assert_eq!(LAYOUT_REVISION, crate::plan::PLAN_LAYOUT_REVISION);
+        assert_eq!(
+            crate::session::BACKEND_REVISION,
+            RevisionFamily::REVISION_FONT_BACKEND_REVISION
+        );
+        assert_eq!(
+            crate::session::FONT_REPLAY_REVISION,
+            RevisionFamily::REVISION_FONT_REPLAY_REVISION
+        );
+    }
+
+    #[test]
+    fn c_abi_mirrors_match_the_single_source() {
+        // Drift prevention (Stage1-P4, gate ruling S3): the pure-Rust ffi
+        // mirror and the generated C header both carry
+        // TIQIAN_FONT_BACKEND_PROTOCOL_REVISION; both must equal the
+        // single source. The header read is the vendored file cinterop
+        // compiles (engine/src/nativeInterop/cinterop/), not a fixture.
+        assert_eq!(
+            tiqian::font_backend::FONT_BACKEND_PROTOCOL_REVISION,
+            RevisionFamily::REVISION_FONT_BACKEND_PROTOCOL_REVISION
+        );
+        let header = std::fs::read_to_string(
+            concat!(
+                env!("CARGO_MANIFEST_DIR"),
+                "/../../../../..",
+                "/engine/src/nativeInterop/cinterop/tiqian_protocol_constants.h"
+            ),
+        )
+        .expect("read the generated C ABI header from the cinterop directory");
+        let line = header
+            .lines()
+            .find(|line| line.starts_with("#define TIQIAN_FONT_BACKEND_PROTOCOL_REVISION "))
+            .expect("the generated header declares the protocol revision #define");
+        let value = line
+            .trim_start_matches("#define TIQIAN_FONT_BACKEND_PROTOCOL_REVISION ")
+            .trim_end_matches("u")
+            .trim_end()
+            .parse::<u32>()
+            .expect("the #define value parses as an unsigned integer");
+        assert_eq!(value, RevisionFamily::REVISION_FONT_BACKEND_PROTOCOL_REVISION);
     }
 
     #[test]

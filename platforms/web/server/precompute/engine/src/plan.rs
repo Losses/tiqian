@@ -8,12 +8,14 @@
 use crate::js_compat::{trunc_sat_i32, trunc_sat_i64};
 use crate::json::{parse_json, Json};
 use tiqian::NamedError;
+use tiqian_protocol_gen::org::tiqian::protocol::revision::Revision as RevisionFamily;
 
 /// `schema` of every plan this revision understands.
 pub const PLAN_SCHEMA: i64 = 1;
 
-/// `layoutRevision` of every plan this revision understands.
-pub const PLAN_LAYOUT_REVISION: &str = "tiqian-layout-v2";
+/// `layoutRevision` of every plan this revision understands (single
+/// source: the generated `Revision` crate, boring cutover Stage1-P4).
+pub const PLAN_LAYOUT_REVISION: &str = RevisionFamily::REVISION_LAYOUT_REVISION;
 
 #[derive(Debug, Clone, PartialEq)]
 pub struct Plan {

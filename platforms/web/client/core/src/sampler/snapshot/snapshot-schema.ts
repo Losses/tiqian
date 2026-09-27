@@ -1,11 +1,18 @@
-export const SNAPSHOT_SCHEMA = 1;
-export const SNAPSHOT_TABLES_SCHEMA = 2;
-export const LAYOUT_REVISION = "tiqian-layout-v2";
-export const RENDER_REVISION = "prebroken-dom-v16";
-export const FONT_SOURCE_POLICY = "host-compatible-stylesheet-v1";
-export const FONT_BACKEND_REVISION = "tiqian-shared-harfbuzz-v5";
-export const FONT_REPLAY_REVISION = "tiqian-server-shaping-replay-v1";
-export const FONT_REPLAY_TRANSPORT = "shared-strings-v1";
+// The manifest schema numbers and the revision constant family are
+// single-sourced in engine-haxe/src/org/tiqian/protocol/Revision.hx and
+// vendored here as the generated module (boring cutover Stage1-P4); the
+// re-exports below keep the module API of this file unchanged for every
+// import site.
+import { Revision } from "./protocol-gen/Revision.js";
+
+export const SNAPSHOT_SCHEMA = Revision.SNAPSHOT_SCHEMA;
+export const SNAPSHOT_TABLES_SCHEMA = Revision.SNAPSHOT_TABLES_SCHEMA;
+export const LAYOUT_REVISION = Revision.LAYOUT_REVISION;
+export const RENDER_REVISION = Revision.RENDER_REVISION;
+export const FONT_SOURCE_POLICY = Revision.FONT_SOURCE_POLICY;
+export const FONT_BACKEND_REVISION = Revision.FONT_BACKEND_REVISION;
+export const FONT_REPLAY_REVISION = Revision.FONT_REPLAY_REVISION;
+export const FONT_REPLAY_TRANSPORT = Revision.FONT_REPLAY_TRANSPORT;
 
 /** The manifest schema this runtime build reads: snapshot tables. */
 export function readableSnapshotSchema(schema: unknown): boolean {

@@ -19,8 +19,12 @@ use crate::source_boundaries::{
     source_boundaries_for_selected_face, BoundaryStyle, BoundaryTextSpan,
 };
 
-pub const BACKEND_REVISION: &str = "tiqian-shared-harfbuzz-v5";
-pub const FONT_REPLAY_REVISION: &str = "tiqian-server-shaping-replay-v1";
+use tiqian_protocol_gen::org::tiqian::protocol::revision::Revision as RevisionFamily;
+
+/// The shared shaping backend revision (single source: the generated
+/// `Revision` crate; see crate::schema for the full family).
+pub const BACKEND_REVISION: &str = RevisionFamily::REVISION_FONT_BACKEND_REVISION;
+pub const FONT_REPLAY_REVISION: &str = RevisionFamily::REVISION_FONT_REPLAY_REVISION;
 
 /// Engine identity of the Rust stack; the JS session reports the wasm
 /// HarfBuzz version here. The field is an exempt engine-identity output.
