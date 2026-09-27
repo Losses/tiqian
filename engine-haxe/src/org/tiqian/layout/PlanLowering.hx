@@ -203,8 +203,8 @@ class PlanLowering {
                 rubyDecisions.push({
                     baseRangeStart: r.baseRange.start, baseRangeEnd: r.baseRange.end,
                     text: r.text, centerX: r.centerX, baselineY: r.baselineY,
-                    fontSize: r.fontSize, ascent: r.ascent, fontWeight: r.fontWeight,
-                    fontFamilies: toArray(r.fontFamilies),
+                    fontSize: r.fontSize, fontWeight: r.fontWeight,
+                    fontFamilies: toArray(r.fontFamilies), ascent: r.ascent,
                 });
             }
             final bopoSrc = result.debug.bopomofoDecisions;
