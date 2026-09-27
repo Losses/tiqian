@@ -5,6 +5,8 @@ import org.tiqian.core.LayoutResult;
 import org.tiqian.core.*;
 import org.tiqian.protocol.PlanJson;
 import org.tiqian.protocol.PlanJsonNumber;
+import org.tiqian.protocol.PlanPacked;
+import haxe.io.Bytes;
 
 /** Prepared paragraph JSON serialization functions. */
 class PreparedParagraphFns {
@@ -60,5 +62,10 @@ class PreparedParagraphFns {
         }
         out.add("]}}");
         return out.toString();
+    }
+
+    public static function toPackedPlanBytes(result:LayoutResult):Bytes {
+        final plan = PlanLowering.toPlan(result, false);
+        return PlanPacked.encode(plan);
     }
 }
