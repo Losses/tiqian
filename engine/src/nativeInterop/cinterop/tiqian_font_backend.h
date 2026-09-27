@@ -3,6 +3,11 @@
 
 #include <stdint.h>
 
+/* The C ABI revision constant is single-sourced in the generated header
+   (boring cutover Stage1-P4): engine-haxe/src/org/tiqian/protocol/Revision.hx
+   is written once, and the generated file is vendored next to this header. */
+#include "tiqian_protocol_constants.h"
+
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -18,9 +23,6 @@ extern "C" {
  * of truth for both sides: cinterop compiles it into Kotlin, and the Rust
  * binding compiles it directly.
  */
-
-/* Versions the packed buffer layout and the vtable shape, not the engine. */
-#define TIQIAN_FONT_BACKEND_PROTOCOL_REVISION 2u
 
 /* Shape buffer starts with "TQPS" in native endianness (all targets LE). */
 #define TIQIAN_SHAPE_BUFFER_MAGIC 0x54515053u

@@ -94,8 +94,12 @@ class LayoutAbiTest {
     }
 }
 
-// Must equal FONT_BACKEND_PROTOCOL_REVISION in tiqian's font_backend.rs.
-private const val FONT_BACKEND_PROTOCOL_REVISION: UInt = 2u
+// Single-sourced through the cinterop binding of the generated header
+// tiqian_protocol_constants.h (boring cutover Stage1-P4); it must equal
+// FONT_BACKEND_PROTOCOL_REVISION in tiqian's font_backend.rs, which the
+// precompute engine crate pins against the same generated value.
+private const val FONT_BACKEND_PROTOCOL_REVISION: UInt =
+    org.tiqian.shaping.backend.TIQIAN_FONT_BACKEND_PROTOCOL_REVISION
 
 private fun fakeVtable(): CPointer<tiqian_font_backend_vtable_t> {
     val layout = nativeHeap.alloc<tiqian_font_backend_vtable_t>()

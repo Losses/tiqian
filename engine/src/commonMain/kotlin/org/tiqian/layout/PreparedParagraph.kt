@@ -10,10 +10,13 @@ import org.tiqian.core.TextRange
 import org.tiqian.core.TextStyle
 import org.tiqian.core.positionedClusters
 import org.tiqian.font.FontRole
+import org.tiqian.protocol.Revision
 
-/** Wire fields of the prepared-paragraph plan; readers reject other values. */
+/** Wire fields of the prepared-paragraph plan; readers reject other values.
+ * The layout revision is single-sourced in the generated [Revision] object
+ * (boring cutover Stage1-P4); only the plan schema number stays local. */
 public const val PREPARED_PARAGRAPH_SCHEMA: Int = 1
-public const val PREPARED_PARAGRAPH_LAYOUT_REVISION: String = "tiqian-layout-v2"
+public const val PREPARED_PARAGRAPH_LAYOUT_REVISION: String = Revision.LAYOUT_REVISION
 
 /**
  * Canonical plain-paragraph render plan shared by build-time snapshots and the
