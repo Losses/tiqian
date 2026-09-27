@@ -14,10 +14,26 @@
   "resultsDir": "engine-haxe/out/test-results",
   "baseline": "kotlin-f32",
   "sourceRoots": ["engine-haxe/src", "engine-haxe/macros"],
+  "sourceSets": {
+    "engine": {
+      "types": ["runtime.UString", "runtime.TestCore"],
+      "discover": [
+        {
+          "root": "engine-haxe/src",
+          "packages": [
+            "org.tiqian.core", "org.tiqian.layout", "org.tiqian.font",
+            "org.tiqian.clreq", "org.tiqian.shaping", "org.tiqian.linebreak"
+          ],
+          "suffix": "Test"
+        }
+      ]
+    }
+  },
   "bundles": [
     {
       "id": "kotlin-f32",
       "target": "kotlin",
+      "sourceSet": "engine",
       "rootsFile": "engine-haxe/targets/kotlin-f32.hxml",
       "run": {
         "env": { "BORING_TEST_TIMEOUT_MS": "600000" }
@@ -26,6 +42,7 @@
     {
       "id": "kotlin-f64",
       "target": "kotlin",
+      "sourceSet": "engine",
       "rootsFile": "engine-haxe/targets/kotlin-f64.hxml",
       "run": {
         "env": { "BORING_TEST_TIMEOUT_MS": "600000" }
@@ -34,6 +51,7 @@
     {
       "id": "ts",
       "target": "ts",
+      "sourceSet": "engine",
       "rootsFile": "engine-haxe/targets/ts.hxml",
       "run": {
         "env": { "BORING_TEST_TIMEOUT_MS": "600000" }
@@ -42,6 +60,7 @@
     {
       "id": "swift-f32",
       "target": "swift",
+      "sourceSet": "engine",
       "rootsFile": "engine-haxe/targets/swift-f32.hxml",
       "run": {
         "env": { "BORING_TEST_TIMEOUT_MS": "600000" }
@@ -50,6 +69,7 @@
     {
       "id": "swift-f64",
       "target": "swift",
+      "sourceSet": "engine",
       "rootsFile": "engine-haxe/targets/swift-f64.hxml",
       "run": {
         "env": { "BORING_TEST_TIMEOUT_MS": "600000" }
@@ -58,6 +78,7 @@
     {
       "id": "dart",
       "target": "dart",
+      "sourceSet": "engine",
       "rootsFile": "engine-haxe/targets/dart.hxml",
       "run": {
         "env": { "BORING_TEST_TIMEOUT_MS": "600000" }
@@ -106,6 +127,7 @@
     {
       "id": "engine-rust-f32",
       "target": "rust",
+      "sourceSet": "engine",
       "rootsFile": "engine-haxe/targets/rust-f32.hxml",
       "package": { "name": "tiqian-engine-gen", "version": "0.1.0", "license": "MPL-2.0" },
       "run": {
@@ -115,6 +137,7 @@
     {
       "id": "engine-rust-f64",
       "target": "rust",
+      "sourceSet": "engine",
       "rootsFile": "engine-haxe/targets/rust-f64.hxml",
       "package": { "name": "tiqian-engine-gen", "version": "0.1.0", "license": "MPL-2.0" },
       "run": {

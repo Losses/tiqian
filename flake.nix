@@ -8,7 +8,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     boring = {
-      url = "github:Losses/boring/011dd739a153c1526d044b52503adad4690317cb";
+      url = "github:Losses/boring/ab9cb652db1466ebef08c4628a9465e3b804259d";
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.rust-overlay.follows = "rust-overlay";
     };
@@ -108,7 +108,7 @@
               mkdir -p "$HAXELIB_PATH/boring"
               boring_git="$HAXELIB_PATH/boring/git"
               if [ ! -f "$boring_git/.boring-flake-revision" ] || \
-                 [ "$(cat "$boring_git/.boring-flake-revision")" != "011dd739a153c1526d044b52503adad4690317cb" ]; then
+                 [ "$(cat "$boring_git/.boring-flake-revision")" != "ab9cb652db1466ebef08c4628a9465e3b804259d" ]; then
                 if [ -e "$boring_git" ] || [ -L "$boring_git" ]; then
                   boring_backup="$boring_git.pre-flake-$(date +%Y%m%d%H%M%S)"
                   mv "$boring_git" "$boring_backup"
@@ -117,12 +117,16 @@
                 mkdir -p "$boring_git"
                 cp -a "${boring}/." "$boring_git/"
                 chmod -R u+w "$boring_git"
-                printf '%s\n' "011dd739a153c1526d044b52503adad4690317cb" > "$boring_git/.boring-flake-revision"
+                printf '%s\n' "ab9cb652db1466ebef08c4628a9465e3b804259d" > "$boring_git/.boring-flake-revision"
               fi
+              printf '%s\n' "${boring}" > "$boring_git/.boring-flake-source"
               haxelib dev boring "$boring_git" >/dev/null
               haxelib dev reflaxe "${boring.inputs.reflaxe}" >/dev/null
               haxelib install format 3.8.0 >/dev/null
               haxelib install formatter 1.18.0 >/dev/null
+              if [ -f "$PWD/boring.json" ] && [ -d "$PWD/engine-haxe/targets" ]; then
+                boring roots engine --project boring.json --output engine-haxe/targets/classes.hxml >/dev/null
+              fi
             '';
           };
         }
