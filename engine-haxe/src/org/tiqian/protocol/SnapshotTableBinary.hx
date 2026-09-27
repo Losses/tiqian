@@ -124,7 +124,12 @@ class SnapshotTableBinary {
         }
         indexIdx = 0;
         while (indexIdx < data.featuresPool.length) {
-            writeFeatureRow(writer, data.featuresPool[indexIdx]);
+            writer.u32(featureRowBytes(data.featuresPool[indexIdx]).length);
+            indexIdx++;
+        }
+        indexIdx = 0;
+        while (indexIdx < data.featuresPool.length) {
+            writer.raw(featureRowBytes(data.featuresPool[indexIdx]));
             indexIdx++;
         }
         writeTextRegion(writer, data.faceTexts);
@@ -145,7 +150,7 @@ class SnapshotTableBinary {
         }
         final data = new TableData();
         data.replayStringCount = reader.u32();
-        data.strings = reader.textRegion();
+        final stringCount = reader.u32();
         final metricCount = reader.u32();
         final valuePoolCount = reader.u32();
         final probeCount = reader.u32();
@@ -156,6 +161,7 @@ class SnapshotTableBinary {
         final typographyCount = reader.u32();
         final valueStyleCount = reader.u32();
         final fontPreloadCount = reader.u32();
+        data.strings = reader.textRegion(stringCount);
         var indexIdx:Int = 0;
         while (indexIdx < metricCount) {
             final row = new MetricEntry(reader.u32(), 0, 0, 0, 0, 0);
@@ -229,13 +235,18 @@ class SnapshotTableBinary {
         }
         indexIdx = 0;
         while (indexIdx < featuresPoolCount) {
+            reader.u32();
+            indexIdx++;
+        }
+        indexIdx = 0;
+        while (indexIdx < featuresPoolCount) {
             data.featuresPool.push(reader.featureRow());
             indexIdx++;
         }
-        data.faceTexts = reader.textRegion();
-        data.typographyTexts = reader.textRegion();
-        data.valueStyleTexts = reader.textRegion();
-        data.fontPreloadTexts = reader.textRegion();
+        data.faceTexts = reader.textRegion(faceCount);
+        data.typographyTexts = reader.textRegion(typographyCount);
+        data.valueStyleTexts = reader.textRegion(valueStyleCount);
+        data.fontPreloadTexts = reader.textRegion(fontPreloadCount);
         if (reader.failed) {
             return DecodeResult.TErr(reader.issue);
         }
@@ -251,7 +262,7 @@ class SnapshotTableBinary {
         while (writeIdx < rows.length) {
             final record = rows[writeIdx];
             var readIdx:Int = writeIdx - 1;
-            while (readIdx >= 0 && metricBefore(rows[readIdx], record)) {
+            while (readIdx >= 0 && metricBefore(record, rows[readIdx])) {
                 rows[readIdx + 1] = rows[readIdx];
                 readIdx--;
             }
@@ -494,7 +505,7 @@ class SnapshotTableBinary {
         }
     }
 
-    static function writeFeatureRow(writer:TableWriter, refs:Array<Int>):Void {
+    static function featureRowBytes(refs:Array<Int>):Bytes {
         final row = new TableWriter();
         row.u16(refs.length);
         var indexIdx:Int = 0;
@@ -502,9 +513,7 @@ class SnapshotTableBinary {
             row.u32(refs[indexIdx]);
             indexIdx++;
         }
-        final rowBytes = row.finish();
-        writer.u32(rowBytes.length);
-        writer.raw(rowBytes);
+        return row.finish();
     }
 
     static function readValueRow(reader:TableReader):ValueRow {
@@ -677,9 +686,8 @@ private class TableReader {
         return refs;
     }
 
-    public function textRegion():Array<String> {
+    public function textRegion(count:Int):Array<String> {
         final texts = new Array<String>();
-        final count = u32();
         if (failed) {
             return texts;
         }
