@@ -8,8 +8,8 @@ import {
   snapshotTablesFromBytes,
 } from "../src/sampler/snapshot/snapshot-tables.js";
 import type { LoadedSnapshotTable } from "../src/sampler/snapshot/snapshot-tables.js";
-import { writeBinaryTable } from "../src/sampler/snapshot/table-binary-writer.js";
-import type { BinaryTableInput } from "../src/sampler/snapshot/table-binary-writer.js";
+import { writeBinaryTable } from "../src/sampler/snapshot/table-binary-encode.js";
+import type { BinaryTableInput } from "../src/sampler/snapshot/table-binary-encode.js";
 
 interface RootWithAttribute {
   getAttribute: GetAttributeFn;
