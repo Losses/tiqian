@@ -4,6 +4,7 @@ package org.tiqian.shaping
 
 import kotlinx.cinterop.CPointer
 import kotlinx.cinterop.pointed
+import org.tiqian.shaping.backend.TIQIAN_FONT_BACKEND_PROTOCOL_REVISION
 import org.tiqian.shaping.backend.tiqian_font_backend_vtable_t
 
 /**
@@ -12,10 +13,11 @@ import org.tiqian.shaping.backend.tiqian_font_backend_vtable_t
  * a different revision is a named collision instead of a silent override.
  */
 internal object NativeFontBackendRegistry {
-    // Must equal TIQIAN_FONT_BACKEND_PROTOCOL_REVISION in
-    // tiqian_font_backend.h; the install check reports a mismatch as a named
-    // error instead of trusting the number.
-    internal const val PROTOCOL_REVISION: UInt = 2u
+    // Single-sourced through the cinterop binding of the generated header
+    // tiqian_protocol_constants.h (boring cutover Stage1-P4); the install
+    // check reports a mismatch as a named error instead of trusting the
+    // number.
+    internal const val PROTOCOL_REVISION: UInt = TIQIAN_FONT_BACKEND_PROTOCOL_REVISION
 
     private var installedRevision: UInt = 0u
     private var installed: CPointer<tiqian_font_backend_vtable_t>? = null
