@@ -525,7 +525,8 @@ class SnapshotTableBinary {
             if (high == ABSENT_HIGH && low == ABSENT_LOW) {
                 values.push(null);
             } else {
-                values.push(FPHelper.i64ToDouble(high, low));
+                // i64ToDouble(low, high) is the required form (samples/boring/BinaryReader.hx:40-44).
+                values.push(FPHelper.i64ToDouble(low, high));
             }
             slotIdx++;
         }
@@ -660,7 +661,8 @@ private class TableReader {
         if (failed) {
             return 0.0;
         }
-        return FPHelper.i64ToDouble(high, low);
+        // i64ToDouble(low, high) is the required form (samples/boring/BinaryReader.hx:40-44).
+        return FPHelper.i64ToDouble(low, high);
     }
 
     public function takeRaw(length:Int):Bytes {
