@@ -229,6 +229,42 @@ class ParagraphWireCodecTest {
     }
 
     @Test
+    fun inlineObjectsNegativeAdvanceThrowsInvalidInlineObjectAdvance() {
+        val e = assertFailsWith<IllegalArgumentException> {
+            codec.plan(workerRequest {
+                text = "中文"
+                inlineObjects = arrayOf(inlineObject(start = 0, end = 1, advance = -1.0, ascent = 14.4, descent = 4.32))
+            })
+        }
+        assertContains(e.message ?: "", "InvalidInlineObjectAdvance")
+    }
+
+    @Test
+    fun inlineObjectsNaNAscendsThrowsInvalidInlineObjectVerticalGeometry() {
+        val e = assertFailsWith<IllegalArgumentException> {
+            codec.plan(workerRequest {
+                text = "中文"
+                inlineObjects = arrayOf(inlineObject(start = 0, end = 1, advance = 18.0, ascent = Double.NaN, descent = 4.32))
+            })
+        }
+        assertContains(e.message ?: "", "InvalidInlineObjectVerticalGeometry")
+    }
+
+    @Test
+    fun decorationsReversedRangeThrowsInvalidDecorationRange() {
+        val e = assertFailsWith<IllegalArgumentException> {
+            codec.planWithDiagnostics(
+                prepareRequest {
+                    text = "你好世界"
+                    decorations = arrayOf(decoration(start = 3, end = 2, kind = "Underline"))
+                },
+                zeroAdvanceEpsilonPx = 0.01,
+            )
+        }
+        assertContains(e.message ?: "", "InvalidDecorationRange")
+    }
+
+    @Test
     fun planWithDiagnosticsEmbedsTheExactPlanJson() {
         val text = "你好世界"
         val plan = codec.plan(workerRequest { this.text = text })
