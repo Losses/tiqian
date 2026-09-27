@@ -263,3 +263,26 @@
 - facade.mjs/facade.d.mts：font 两名从 Kotlin 束解绑改由 font-facade 提供，12 名与顺序不变；build-runtime.ts 的 facade 拷贝清单加 font-facade.mjs。
 - Kotlin 侧删除：FontExports.kt 整文件；WireJson.kt 的 parseFontMetricsRequestJson/parseFontRequestJson（唯一使用方是 FontExports.kt；appendFontMetricsRequestJson 留守，JsCallbackAdapters/WireJsonTest 仍用）；FontExportsTest.kt 删两条 metrics 用例，classifyFontRole 两条留守（对象是 LoweringHelper 导出，属 js-lh 席）。
 - 发射端偏差（vendored 副本就地修正并记录）：TiqianIllegalArgumentException.ts 的 import 语句对 TextRangeError 取值导入，而 TextRangeError.ts 只发射类型联合，Node 类型剥离无法链接；vendored 副本改 import type。boring 里程碑侧已知的同类发射端缺口，发射端修复后可回退。
+
+## Stage1-P3 plan 模型与序列化（生成器修订 256d06bd）
+
+### 模块名与文件名的解析（Haxe 主类型规则）
+- 现象：`org.tiqian.protocol.Plan` 作为 root 报「Type not found : org.tiqian.protocol.Plan」——因为 Plan 是 typedef，定义在 PlanModel.hx 里，Haxe 按文件名解析主类型。
+- 规则：一个 .hx 文件里的类型，只有与文件名同名的是主类型（`org.tiqian.protocol.Foo` 直连）；其余是子类型，全名为 `org.tiqian.protocol.Foo.Bar`，需用 `Plan.PlanLine` 引用或 import 模块。
+- fix：Plan 系 typedef 都塞进 Plan.hx（Plan 是主类型），证据类（PlanLine/PlanCell/PlanInlineEdge/…）以 `Plan.PlanLine` 形式引用；PlanSchema 独立成 PlanSchema.hx 才能作为 root。
+
+### Null<T> 收窄（Haxe 4.3 编译器，非 boring 发射端）
+- 现象：protocol 束 struct 字段 Null<T> 绑到 local final 后 `if (v != null)` 再传 `Std.string(v)` 仍报「Std.string does not accept Null<T> operands」。Pin 256d06bd 含 Kotlin var smart cast 修复，但错误依旧——这是 Haxe 4.3 自身的 null-safety，final 局部不做流式收窄。
+- fix：显式 `(v : T)` 转换（ParagraphRequestChecks.hx:43 先例）。
+- 配套：struct 数组 `arr[i]` 返回 Null<T>，用 `for (x in arr)` for-each + first 标志替代下标循环。
+
+### static 字段初始化限制
+- `public static inline var X = Revision.Y` 报「Inline variable initialization must be a constant value」；改 `static final` 后报「static field initializers accept null, literal, array, and construction forms only」。fix：字面量 + 漂移断言（PlanSchemaTest.planSchemaConstantsAlignWithRevision）。
+
+### PlanJson.encode 架构
+- encode(plan:Plan):String 从 Plan typedef 直接串行化；renderEvidence 的 gating 在 lowering（LayoutResult→Plan）阶段完成，Plan 的 Null/空数组即「省略」。
+- 字段序照 PreparedParagraph.kt:73-154：schema/layoutRevision/width/height/lines → 每行 rangeStart…endReason/cells → 每 cell rangeStart…leadingLayoutAdvance/shapingBoundary?/openTypeFeatures? → evidence（inlineObject/advance/renderFontFamily/dashStrategy 块/punctuation 块/latin/style）→ 段级 evidence（fontSize/overlayWidth/emphasisRanges/inlineEdges/rubyDecisions/bopomofoDecisions/decorationSegments/emphasisDots）。
+- endReason 用 switch 转字符串（NamedErrorNames.describe 先例），不用 Type.enumConstructor。
+
+### 闸门（tq-vendor-check.sh 双向）
+- 新增闸门：vendored 生成树 ↔ 驱动器产物双向比对，extras 与 full 挂载的 missing 都必须为零。engine/src/commonMain/kotlin/org/tiqian/protocol/ 是尚未登记进闸门的挂载（只有 rust 与两棵 TS 登记了），搬运必须逐字节等于 engine-haxe/out/protocol-kotlin 产物。
