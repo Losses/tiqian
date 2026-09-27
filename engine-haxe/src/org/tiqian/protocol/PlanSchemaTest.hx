@@ -11,7 +11,7 @@ import org.tiqian.test.trace.TracedAssertions;
  * catches any accidental desync between the two so the cutover stays
  * single-sourced at the Revision level.
  */
-class PlanJsonTest {
+class PlanSchemaTest {
     @:test
     public static function planSchemaConstantsAlignWithRevision():Void {
         TracedAssertions.assertEqualsString(
