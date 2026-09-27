@@ -20,6 +20,9 @@ pub mod paragraph_request_test;
 pub mod paragraph_request_test_support;
 pub mod revision;
 pub mod snapshot_table_binary;
+#[cfg(test)]
+pub mod snapshot_table_binary_test;
+pub mod snapshot_table_test_support;
 pub mod style_row;
 pub mod table_data;
 pub mod table_input;
@@ -50,6 +53,9 @@ pub use paragraph_request_test::*;
 pub use paragraph_request_test_support::*;
 pub use revision::*;
 pub use snapshot_table_binary::*;
+#[cfg(test)]
+pub use snapshot_table_binary_test::*;
+pub use snapshot_table_test_support::*;
 pub use style_row::*;
 pub use table_data::*;
 pub use table_input::*;

@@ -18,9 +18,9 @@ impl TestHelpers {
         let mut index = 0u32;
         while (i32::from_ne_bytes((index).to_ne_bytes())) < (i32::from_ne_bytes((u32::try_from((code_units.len()) & 0xFFFF_FFFF).unwrap_or(0)).to_ne_bytes())) {
             let unit = code_units[usize::try_from(index).unwrap_or(0)];
-            if i32::from_ne_bytes((unit).to_ne_bytes()) >= 55296 && (i32::from_ne_bytes((unit).to_ne_bytes())) <= 56319 && (i32::from_ne_bytes((u32::wrapping_add(index, 1)).to_ne_bytes())) < (i32::from_ne_bytes((u32::try_from((code_units.len()) &
-0xFFFF_FFFF).unwrap_or(0)).to_ne_bytes())) && (i32::from_ne_bytes((code_units[usize::try_from(u32::wrapping_add(index, 1)).unwrap_or(0)]).to_ne_bytes())) >= 56320 && (i32::from_ne_bytes((code_units[usize::try_from(u32::wrapping_add(index, 1)).unwrap_or(0)]).to_ne_bytes())) <=
-57343 {
+            if ({ let v: u32 = unit; i32::from_ne_bytes(v.to_ne_bytes()) }) >= 55296 && ({ let v: u32 = unit; i32::from_ne_bytes(v.to_ne_bytes()) }) <= 56319 && (i32::from_ne_bytes((u32::wrapping_add(index, 1)).to_ne_bytes())) <
+(i32::from_ne_bytes((u32::try_from((code_units.len()) & 0xFFFF_FFFF).unwrap_or(0)).to_ne_bytes())) && ({ let v: u32 = code_units[usize::try_from(u32::wrapping_add(index, 1)).unwrap_or(0)]; i32::from_ne_bytes(v.to_ne_bytes()) }) >= 56320 && ({ let v: u32 =
+code_units[usize::try_from(u32::wrapping_add(index, 1)).unwrap_or(0)]; i32::from_ne_bytes(v.to_ne_bytes()) }) <= 57343 {
                 let low = code_units[usize::try_from(u32::wrapping_add(index, 1)).unwrap_or(0)];
                 output += &(if u32::wrapping_add(u32::wrapping_add(65536, (u32::wrapping_sub(unit, 55296)) << (10)), u32::wrapping_sub(low, 56320)) > 0xFFFF { String::from_utf16(&[0xD800 + (((u32::wrapping_add(u32::wrapping_add(65536, (u32::wrapping_sub(unit, 55296)) << (10)),
 u32::wrapping_sub(low, 56320))) - 0x10000) >> 10) as u16, 0xDC00 + (((u32::wrapping_add(u32::wrapping_add(65536, (u32::wrapping_sub(unit, 55296)) << (10)), u32::wrapping_sub(low, 56320))) - 0x10000) & 0x3FF) as u16]).unwrap() } else {
