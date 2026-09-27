@@ -209,7 +209,7 @@ class PunctuationModelCoverageTest {
         assertNull(builder.build("，", 5, em))
         val atom = builder.build("，", 0, em)
         assertNotNull(atom)
-        assertEquals(TextRange(0, 1), atom!!.range)
+        assertEquals(TextRange(0, 1), atom.range)
         assertEquals('，', atom.char)
     }
 
