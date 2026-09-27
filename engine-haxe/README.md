@@ -13,13 +13,15 @@
 - `tools/compare-traces.py`：把 Haxe 测试记录的执行轨迹与引擎 golden
   逐行比对。golden 指引擎测试留下的基准轨迹文件，位于
   `engine/src/jvmTest/resources/golden/test-traces/`（本地生成，不入库）。
-- `targets/`：每个目标×精度一个生成入口，只含 include、输出目录与精度
-  define。`common.hxml` 存五目标共享的类路径与宏，`classes.hxml` 存全部
-  根类清单。以 `rust-` 与 `common-` 开头的其余文件是 Rust 目标调查期间的
-  临时入口，不属于常规流程。
-- `boring.json`：束驱动器（boring feature spec 59）的项目文件，声明本目录
-  有哪几个目标束。生成与测试以它为准，不再逐个手敲 hxml。
-- `tools/setup-haxe-env.sh`：把三个不入库的输入同步进当前检出，见下节。
+- `targets/`：各 HXML 提供目标编译参数和显式编译根类。`classes.hxml`
+  列出引擎配置需要编译的类；Haxe 不会仅凭 `-cp` 编译目录下全部类，
+  测试生成器只收集进入编译的测试类。`common.hxml` 提供引擎配置共用的
+  类路径与宏，`kotlin-common.hxml` 等文件补充各目标的编译器与运行时
+  参数，精度入口沿用这些设置。`protocol-*.hxml` 单列协议根类；
+  `rust-f32.hxml` 和 `rust-f64.hxml` 是 `boring.json` 正在使用的配置。
+- `boring.json`：生成与测试配置驱动器（boring feature spec 59）的项目文件，声明本目录
+  有哪些目标及精度配置。生成与测试以它为准，不再逐个手敲 hxml。
+- `tools/setup-haxe-env.sh`：把两组不入库的数据同步进当前检出，见下节。
 - `textrange-kotlin.hxml`、`smoke-kotlin.hxml`：独立用途的 Kotlin
   生成清单。
 - `data/`：生成 Unicode 数据类所需的区间数据。
@@ -33,50 +35,60 @@
 
 | 输入 | 谁读它 | 缺了会怎样 |
 |---|---|---|
-| `.haxelib/` | `-lib boring` 与 `-lib reflaxe` 的解析 | `Type not found : Intercept` |
 | `engine-haxe/baseline-goldens/` | `GoldenDataMacros.init()` | `Golden data directory not found: engine-haxe/baseline-goldens/layout-dumps` |
 | `tools/unicode-data/` | 各 Unicode 数据类在编译期读取 | `pinned Unicode data file is missing: tools/unicode-data/GraphemeBreakProperty-17.0.0.txt` |
 
-在检出根目录执行一次即可补齐（已存在的一律不动）：
+在检出根目录执行一次即可补齐（已存在的一律不动）。脚本默认选择主 worktree
+作为已准备输入的源检出；目录布局不同时显式传入源检出。复制前会逐项检查输入：
 
 ```shell
-bash tools/setup-haxe-env.sh                  # 源检出自动从同级目录里找
-bash tools/setup-haxe-env.sh /path/to/tiqian  # 或者显式指定
+bash tools/setup-haxe-env.sh
+bash tools/setup-haxe-env.sh /path/to/prepared/tiqian
 ```
 
-`.haxelib/` 用符号链接接过来，因为 `targets/` 下的入口以相对路径引用它。
-`.haxelib/boring/git` 的检出修订就是生成器修订，它决定生成的代码里有什么；
-换修订会换掉全部目标的产物。
+flake 把 boring 的 driver 与编译器固定在同一修订，并在进入开发 shell 时配置
+`.haxelib/`。已有的本地 boring 检出会先备份，再由固定修订的可写副本接替，
+以兼容现有 HXML 的相对路径及编译期诊断输出。`baseline-goldens/` 来自原 Kotlin 引擎记录的
+本地基准输出；`tools/unicode-data/` 包含 Unicode 17.0.0 的数据文件。两组
+输入目前都不入库，因此新 worktree 仍需要从已准备的检出获取它们。
 
 ## 生成与测试
 
-束驱动器的实现在 boring 检出里，先把它编成 js：
+tiqian 的 flake 从固定的 boring 修订安装 `boring` 命令，并配置相同修订的
+Haxe 编译器与 reflaxe。进入开发 shell 后直接调用命令即可。
 
-```shell
-cd /path/to/boring
-nix develop -c bash -c 'haxe tools/bundle/driver.hxml'
-```
-
-之后在 tiqian 检出根目录执行。驱动器按 `boring.json` 派生每个束的输出目录
+之后在 tiqian 检出根目录执行。驱动器按 `boring.json` 派生每个目标配置的输出目录
 （`engine-haxe/out/<id>/gen` 与 `engine-haxe/out/<id>/gen-tests`）与结果文件
 （`engine-haxe/out/test-results/<id>.jsonl`）：
 
 ```shell
 cd /path/to/tiqian
-nix develop -c bash -c 'bun /path/to/boring/out/bundle/driver.js gen ts --project boring.json'
-nix develop -c bash -c 'bun /path/to/boring/out/bundle/driver.js test kotlin-f32 --project boring.json'
-nix develop -c bash -c 'bun /path/to/boring/out/bundle/driver.js compare --project boring.json'
+nix develop -c boring gen kotlin-f32 --project boring.json
+nix develop -c boring test kotlin-f32 --project boring.json
 ```
 
-五个动作：`gen` 生成该束的两棵源码树，`test` 把该束已生成的树编译并运行、留下结果文件（它不生成，跑 test 之前先对该束跑 gen；`verify` 会自动先做全部 gen），`pack` 打发布包，
-`compare` 按 `boring.json` 的 `baseline` 逐用例比对各束的结果文件，
-`verify` 依次做完全部束的 gen、test、compare（加 `--with-pack` 连 pack）。
-束的清单与精度写在 `boring.json` 里，当前六个束是 `kotlin-f32`、`kotlin-f64`、
-`ts`、`swift-f32`、`swift-f64`、`dart`。
+已从 tiqian 根目录验证 `nix develop -c boring gen protocol-c`
+能完成 Haxe 生成和 `afterGen`，写出 `tiqian_protocol_constants.h`。上述
+`kotlin-f32` 的 `gen` 也已通过；该配置的 `test` 尚未在当前检出运行。
 
-## Haxe-JS 参照束
+五个动作：`gen` 生成该目标配置的两棵源码树；`test` 把已生成的树编译并运行，
+留下结果文件（先对同一配置运行 `gen`）；`pack` 为声明了 `package` 的配置打发布包；
+`compare` 按 `boring.json` 的 `baseline` 逐用例比对参与比较的配置的结果文件；
+`verify` 依次对所有配置运行 `gen`，对可测试配置运行 `test`，然后运行 `compare`。
+`verify --with-pack` 只打包声明了 `package` 的配置。显式对无测试配置运行 `test`
+会报错；显式对没有 `package` 的配置运行 `pack` 也会报错。
+`boring gen protocol-c --project boring.json` 先编译 Haxe 得到 JavaScript，
+再按该配置的 `afterGen` 运行 JavaScript，写出 C 头文件。
+该配置在 `boring.json` 中声明 `"test": false`，因此不参与 `compare`。完整
+`verify` 是否通过，需要对当前检出实际运行后确认。
+目标与精度配置写在 `boring.json` 里，当前十二个配置是 `kotlin-f32`、`kotlin-f64`、
+`ts`、`swift-f32`、`swift-f64`、`dart`、`protocol-ts`、`protocol-rust`、
+`protocol-kotlin`、`protocol-c`、`engine-rust-f32`、`engine-rust-f64`。
 
-f64 层的比对参照是 Haxe 自己跑出来的 JS 束，它不经过任何目标后端：
+## Haxe-JS f32 参照输出
+
+f32 层的比对参照由 Haxe 自己运行后生成的 JS 输出提供；`tests/compile.hxml` 将
+`float-precision` 设为 `f32`，该入口不经过任何目标后端：
 
 ```shell
 nix develop -c bash -c 'haxe engine-haxe/tests/compile.hxml'

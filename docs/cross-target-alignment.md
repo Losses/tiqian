@@ -10,7 +10,7 @@
    golden 轨迹（`engine/src/jvmTest/resources/golden/test-traces/`）逐类一致。
    这条判据回答「Haxe Kotlin 与原本 Kotlin 行为是否相同」。
 2. 五目标 f64 相互比对：五个目标（ts、kotlin、rust、swift、dart）在全精度
-   模式下各自运行测试束，产出的逐测试记录（jsonl，一行一事件）逐行比对后
+   模式下各自运行同一组测试，产出的逐测试记录（jsonl，一行一事件）逐行比对后
    完全一致。这条判据回答「所有输出语言的全精度行为是否相同」。
 3. rust 与 kotlin 的 f64 比对：第 2 项的第一步验收只做这两个目标，判据是
    两目标的 jsonl 逐行一致。
@@ -28,7 +28,7 @@ JS oracle 比对，用 Haxe 原生运行时对 golden 逐字节核对。第 1 �
 |---|---|---|
 | 生成 | 五目标入口各 RC=0 | `nix develop -c haxe engine-haxe/core-<t>.hxml` |
 | 编译 | 各目标自身工具链无错误 | kotlinc 2.4.10（boring nix shell）、cargo、bun/tsc、swift build、dart analyze |
-| 运行 | TestMain 无失败并写 jsonl | `BORING_TEST_RESULTS=<路径>` 后运行各目标测试束 |
+| 运行 | TestMain 无失败并写 jsonl | 设置 `BORING_TEST_RESULTS=<路径>` 后运行各目标测试 |
 | f32 对照 | kotlin（f32）运行轨迹对 golden 逐类一致 | 复用 `engine-haxe/tools/compare-traces.py`，数值相对容差 1e-6 |
 | f64 对照 | 五目标 f64 jsonl 逐行一致 | boring 的 `tools/test-consistency/manager.hxml` 加 `manager.js` 范式 |
 
@@ -41,7 +41,7 @@ f32 对照的容差说明：两边数值都是单精度；golden 文本由 JVM �
 生成与测试入口的 defines 取值与 boring 仓库 `examples/<t>.hxml` 相同：
 `<t>-output`、`<t>-test-output`、`runtime-import`、`runtime-emit`，ts 另带
 `package-shell=none` 并经仓库根 tsconfig 的 paths 解析 runtime；rust 另带
-`package-name` 与 `package-license`。jsonl 的写入机制与 boring 相同：测试束
+`package-name` 与 `package-license`。jsonl 的写入机制与 boring 相同：目标测试
 运行时读 `BORING_TEST_RESULTS` 环境变量并按行写事件。
 
 ## 当前状态（2026-09-05，vendored boring 副本 5034e98）
