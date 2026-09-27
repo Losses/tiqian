@@ -207,3 +207,25 @@
 - InvalidInlineObjectAdvance：plan(workerRequest { text="中文"; inlineObjects=[{0,1,-1.0,14.4,4.32}] })，advance<0，新测试 inlineObjectsNegativeAdvanceThrowsInvalidInlineObjectAdvance。
 - InvalidInlineObjectVerticalGeometry：plan(workerRequest { text="中文"; inlineObjects=[{0,1,18.0,Double.NaN,4.32}] })，ascent NaN，新测试 inlineObjectsNaNAscendsThrowsInvalidInlineObjectVerticalGeometry。
 - InvalidDecorationRange：planWithDiagnostics(prepareRequest { text="你好世界"; decorations=[{3,2,"Underline"}] })，start≥end，新测试 decorationsReversedRangeThrowsInvalidDecorationRange。
+## Stage1-落地JS-Font（FontExports 消费 ts 束生成物，pin f1b28bd3）
+
+## font 类如何进 TS 产物（队长裁决 (c) 的取证链）
+- 束与根：引擎 ts 束（boring.json `ts`，rootsFile engine-haxe/targets/ts.hxml，include engine-haxe/targets/classes.hxml）。classes.hxml 是六条引擎束共用的根清单（:75、:155-:165 只列 font 的数据与测试类），font 的能力类本体（CjkFontRoleClassifier/FontPolicy/FontMetrics 等）未列为根。
+- 进入方式：靠根类的引用闭包传递编译进产物。实测（本工作树，rm -rf engine-haxe/out 后 driver gen ts，RC=0，405 个 .ts）：engine-haxe/out/ts/gen/org/tiqian/font/ 24 文件，含本席所需的 FontMetrics.ts（FontMetricsRequest/StubFontMetricsResolver）、FontPolicy.ts（FontRequest/FontCandidate/FontDecision/FallbackResolver）、PreferCjkForAmbiguousPunctuationResolver.ts、FontRole.ts、FontMetricSource.ts、core/TextRange.ts。
+- 改法：不加根、不动 classes.hxml、不动 protocol 束（队长裁决）；直接消费既有 ts 束产物，vendored 只搬所需闭包。
+
+## vendored 闭包与打包约束
+- 闭包（14 文件，import 全部相对 .ts 范式，零 @tiqian/runtime 依赖）：org/tiqian/font/ 11 个（FontMetrics/RawFontMetrics/BaselineClass/BaselinePolicy/FontMetricSource/FontMetricsPolicy/FontRole/LayoutFontMetrics/MetricBox/FontPolicy/PreferCjkForAmbiguousPunctuationResolver）+ org/tiqian/core/ 3 个（TextRange/TiqianIllegalArgumentException/TextRangeError）。落点 ffi/js/npm/engine-gen/。
+- 硬约束（实测）：`./gradlew :ffi:js:assembleNpmPackage` 会清空重建 ffi/js/npm/runtime/（先放的 vendored 文件被抹掉），vendored 生成物与 TS 源不能放 runtime/ 下；package.json files 只发布 runtime/，facade 须把 engine-gen 打进 runtime 产物——入口机制归 LineBreak 席统一落地。
+
+## 对外数值口径（TCN-45，队长 2026-09-27 裁决）
+- 旧 Kotlin/JS 出口数值带 f32 网格伪影：FontExportsTest.kt:43 钉 descent=5.184000015258789（f64 应为 18*0.288=5.184）。基线 dump 48 用例（/tmp/font-dump.mjs 对旧 bundle，/tmp/font-baseline.txt）证实小数尺寸输入普遍带伪影。
+- 新判据：JSON 形状（字段名/序/可空省略规则）、错误名与错误类型、f64 语义数值与旧产物一致；不模拟 f32。依据：引擎几何本身 binary32（研究文档第 7 节第 1 条），喂回引擎后得同一 f32 结果，可观察排版行为不变。
+- 迁移断言：FontExportsTest.kt 两条 metrics 用例随迁 TS 侧，保留输入与结构，仅期望数值按 f64 改写。
+
+## 请求模型解析：仍是手写壳
+- FontMetricsRequest/FontRequest 的 JSON 解析本轮保留为手写薄壳（ffi/js/npm/src/fontFunctions.ts 内 parse*，语义逐条对照 WireJson.kt:28-58/82-90），未进任何协议束；请求模型单源化留给后续模块。此壳迁移时语义保真点：字段缺省（fontKey=""/fontSize=NaN/role=Unknown/locale=""/fontWeight=400/italic=false）、role 非法串抛 IllegalArgumentException（Kotlin FontRole.valueOf）、数组元素非串填空串。
+
+## 比对读数（pin f1b28bd3，ts 束本机驱动器 gen RC=0）
+- 同 fixture 矩阵 diff 旧 bundle 与新适配器：48 行中 16 行有差异，全部是 metrics 数值的 f32→f64 位（如 16.1 尺寸 ascent 18.676000595092773→18.676000000000002），fallback 6 行与错误行为（THROW:IllegalArgumentException）逐字节一致。
+
