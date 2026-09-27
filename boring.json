@@ -6,9 +6,9 @@
 //   (600000 ms): the boring runtime falls back to a 6 s budget when
 //   BORING_TEST_TIMEOUT_MS is unset, and eleven cases of this suite run longer
 //   than that on this machine, so they would be reported as timeouts.
-// The generator revision is the checkout at tiqian/.haxelib/boring/git: the
-// driver only decides which defines and which toolchain commands run, and the
-// code it emits is whatever that revision contains.
+// The flake pins the boring compiler and driver to one revision. Each Rust
+// package declares its own metadata below; the generator does not borrow
+// tiqian's license from the boring repository.
 {
   "outRoot": "engine-haxe/out",
   "resultsDir": "engine-haxe/out/test-results",
@@ -75,6 +75,7 @@
       "id": "protocol-rust",
       "target": "rust",
       "rootsFile": "engine-haxe/targets/protocol-rust.hxml",
+      "package": { "name": "tiqian-protocol-gen", "version": "0.1.0", "license": "MPL-2.0" },
       "run": {
         "env": { "BORING_TEST_TIMEOUT_MS": "600000" }
       }
@@ -95,12 +96,18 @@
       // No test step: the entry is a writer, not a test.
       "id": "protocol-c",
       "target": "haxe",
+      "test": false,
+      "afterGen": {
+        "command": "bun",
+        "args": ["engine-haxe/out/protocol-c/gen/c-header.js"]
+      },
       "rootsFile": "engine-haxe/targets/protocol-c.hxml"
     },
     {
       "id": "engine-rust-f32",
       "target": "rust",
       "rootsFile": "engine-haxe/targets/rust-f32.hxml",
+      "package": { "name": "tiqian-engine-gen", "version": "0.1.0", "license": "MPL-2.0" },
       "run": {
         "env": { "BORING_TEST_TIMEOUT_MS": "600000" }
       }
@@ -109,6 +116,7 @@
       "id": "engine-rust-f64",
       "target": "rust",
       "rootsFile": "engine-haxe/targets/rust-f64.hxml",
+      "package": { "name": "tiqian-engine-gen", "version": "0.1.0", "license": "MPL-2.0" },
       "run": {
         "env": { "BORING_TEST_TIMEOUT_MS": "600000" }
       }

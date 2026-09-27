@@ -1,7 +1,7 @@
 # protocol 单源化的 boring spec 阅读笔记（Stage1-P4：manifest 结构与 revision 常量族）
 
 生成器修订：tiqian-wt-p4/.haxelib/boring/git @ 4f412c6a（clean）。每条记录「文件:行 + 原文片段」。
-闸门裁决记录：范围（S1 常量族=9 常量、S2 新束、S3 C 头保守+防漂移断言、S4 工作树本地 git 提交）见 2026-09-27 闸门回话。
+闸门裁决记录：范围（S1 常量族=9 常量、S2 新目标配置、S3 C 头保守+防漂移断言、S4 工作树本地 git 提交）见 2026-09-27 闸门回话。
 
 ## 常量形态（features/30-static-fields.md）
 - :27-30 现形表：TS 声明被丢弃（缺陷）/ Kotlin "renders correctly as `const val limit: Int = 4096`" / Rust "renders correctly as `pub const limit: u32 = 4096`"。
@@ -12,7 +12,7 @@
 ## 静态访问（features/16-static-object-access.md）
 - :53-54："Type.staticMember is legal on every target"——消费侧直读 Revision.X（TS Revision.LAYOUT_REVISION、Rust Revision::LAYOUT_REVISION、Kotlin Revision.LAYOUT_REVISION）。
 
-## 束与输出目录（features/59-bundle-driver.md）
+## 目标配置与输出目录（features/59-bundle-driver.md）
 - :42-50 字段表：id/target/haxeArgs/build/run/package；:45 "One of `haxe`, `ts`, `kotlin`, `rust`, `swift`, `dart`."。
 - :58-62 输出目录由驱动器派生 `<outRoot>/<id>/gen` 与 `<outRoot>/<id>/gen-tests`，项目文件不得命名。
 - :63-64 generation defines `<target>-output` / `<target>-test-output`。
@@ -25,7 +25,7 @@
 ## 平台模块与子集边界（stdlib/06-std-modules.md、stdlib/17-platform-modules.md）
 - 06:17-32：保留命名空间 haxe.*（子集翻译的 std 面）与 std.*（samples/std/ 自有模块）；06:49-62 平台模块是第三类（extern 类、调用点内联发射、宿主无该能力时发射抛错桩）。
 - 17:36-55 std.Fs 面：exists/readText/writeText/appendText/makeDirs/readDir/isDirectory；17:225-228 失败契约（抛 haxe.Exception 映射）。
-- 结论：四语言子集约束的是五个生成目标（reflaxe 编译器）编译的源；target=haxe 束走 stock Haxe，不受子集约束。CHeader.hx 用 sys.io.File（stock Haxe js 宿主面），只作 protocol-c（haxe 目标）的根类，五个生成束的根类列表都不含它。std.Fs 在 stock Haxe 下是 extern 无实现（js 端运行期 ReferenceError），故 haxe 目标入口用 sys.io.File 而非 std.Fs。
+- 结论：四语言子集约束的是五个生成目标（reflaxe 编译器）编译的源；target=haxe 配置走 stock Haxe，不受子集约束。CHeader.hx 用 sys.io.File（stock Haxe js 宿主面），只作 protocol-c（haxe 目标）的根类，五个生成目标配置的根类列表都不含它。std.Fs 在 stock Haxe 下是 extern 无实现（js 端运行期 ReferenceError），故 haxe 目标入口用 sys.io.File 而非 std.Fs。
 
 ## Kotlin 发射端取证（packages/compiler/reflaxe/kotlin/kotlincompiler/KotlinDecl.hx @ 4f412c6a）
 - :1216 `final kw = field.isFinal && StaticFieldHelper.isConstValue(field) ? "const val" : (field.isFinal ? "val" : "var");`——static final + 常量值 → const val（与 30:74 一致）；静态字段在类声明体内发射（object/companion 由类声明发射决定，以生成文本为准）。
@@ -55,7 +55,7 @@
 - Kotlin：./gradlew :engine:compileKotlinJvm（最小）至 :engine:jvmTest。
 - 防漂移断言：precompute engine 测试（schema.rs 测试块扩展）钉「生成 crate 常量 == 字面」与「tiqian ffi 镜像 == 生成值」，并解析 cinterop 目录的 tiqian_font_backend.h 断言 #define 值与生成值相等。
 
-## 生成形态实测（4f412c6a，本轮 gen 四束后读取 engine-haxe/out/protocol-{ts,rust,kotlin}/gen 与 out/protocol-c/gen）
+## 生成形态实测（4f412c6a，本轮 gen 四个目标配置后读取 engine-haxe/out/protocol-{ts,rust,kotlin}/gen 与 out/protocol-c/gen）
 - TS（out/protocol-ts/gen/org/tiqian/protocol/Revision.ts）：`export class Revision { public static readonly SNAPSHOT_SCHEMA: number = 1; ... public static readonly FONT_BACKEND_PROTOCOL_REVISION: number = 2; }`——与 30 Ruling 1 表逐行一致；消费侧 Revision.LAYOUT_REVISION 直读（16:53-54）。
 - Rust（out/protocol-rust/gen/org/tiqian/protocol/revision.rs）：`#[derive(Clone, Copy)] pub struct Revision;` + `impl Revision { pub const REVISION_SNAPSHOT_SCHEMA: u32 = 1; ... }`——**关联 const 带小写类名前缀 REVISION_（与函数发射 canonical_digest 同一约定）**；Haxe Int 映到 u32、String 映到 &str。消费侧用 Revision::REVISION_LAYOUT_REVISION；crate 名 tiqian-protocol-gen（-D package-name，Cargo.toml 自带 autotests=false 与 lints.clippy as-conversions=deny）。
 - Kotlin（out/protocol-kotlin/gen/org/tiqian/protocol/Revision.kt）：`object Revision { const val SNAPSHOT_SCHEMA: Int = 1; ... }`——object + const val，与 30 Ruling 1（:74）一致；消费侧 Revision.LAYOUT_REVISION 直读。
@@ -73,7 +73,7 @@
 #endif
 ```
 - haxe 目标写文件的宿主通道取证：haxe 4.3.7 对 js 目标拒绝 sys（"You cannot access the sys package while targeting js"，CHeader.hx:35 编译错）；haxe.io.File 在 js 平台不存在（"Type not found : haxe.io.File"，CHeader.hx:38 编译错）；最终用 @:jsRequire("node:fs") private extern（同文件），先例 engine-haxe/src/org/tiqian/test/trace/TestTracePlatform.hx:7-11。std.Fs 是生成目标的平台模块（stdlib/17），stock Haxe 下是 extern 无实现，haxe 目标不可用。
-- 四束 gen 命令（工作树根，XDG_CACHE_HOME 指工作区内目录）：
+- 四个目标配置的 gen 命令（工作树根，XDG_CACHE_HOME 指工作区内目录）：
   nix develop --offline -c bash -c 'node /home/losses/Development/tq-workspace/boring/out/bundle/driver.js gen protocol-ts protocol-rust protocol-kotlin protocol-c --project boring.json'
-  前一步 rm -rf engine-haxe/out/protocol-{ts,rust,kotlin,c}。protocol-ts / protocol-rust / protocol-kotlin / protocol-c 四束 DRIVER_RC=0；C 头写出 BUN_RC=0（读数含生成器修订 4f412c6a）。
+  前一步 rm -rf engine-haxe/out/protocol-{ts,rust,kotlin,c}。protocol-ts / protocol-rust / protocol-kotlin / protocol-c 四个目标配置 DRIVER_RC=0；C 头写出 BUN_RC=0（读数含生成器修订 4f412c6a）。
 - gen 树是超集（Intercept.run 覆盖 engine-haxe/src 全体被引用类，含 TracedAssertions 拉入的 clreq/core/layout/linebreak 面）；vendor 只拷消费侧 import 需要的文件（P1 先例：protocol-gen 目录只含 canonical 子集）。
