@@ -24,15 +24,15 @@ export class Canonical {
       Canonical.numberField(writer, Canonical.numberMember(input, "maxWidthPx"));
     }
     const semantics = Canonical.encodeSemantics(writer, Canonical.member(input, "semantics"));
-    if (semantics !== null) {
+    if (semantics !== "") {
       return ({ kind: "CErr", issue: semantics } as EncodeResult);
     }
     const spans = Canonical.encodeTextSpans(writer, Canonical.member(input, "textSpans"));
-    if (spans !== null) {
+    if (spans !== "") {
       return ({ kind: "CErr", issue: spans } as EncodeResult);
     }
     const boxes = Canonical.encodeInlineBoxes(writer, Canonical.member(input, "inlineBoxes"));
-    if (boxes !== null) {
+    if (boxes !== "") {
       return ({ kind: "CErr", issue: boxes } as EncodeResult);
     }
     const boundaries = Canonical.arrOfNullable(Canonical.member(input, "sourceBoundaries"));
@@ -75,7 +75,10 @@ export class Canonical {
 
   private static numberMember(input: WireValue, name: string): number | null {
     const resolved = Canonical.member(input, name);
-    return (resolved.kind === "WNull" ? null : Canonical.canonicalF64(JsCoerce.toNumber(resolved)));
+    if (resolved.kind === "WNull") {
+      return null;
+    }
+    return Canonical.canonicalF64(JsCoerce.toNumber(resolved));
   }
 
   private static numberField(writer: Writer, value: number | null): void {
@@ -266,7 +269,7 @@ export class Canonical {
       }
       spanIndexIdx++;
     }
-    return null;
+    return "";
   }
 
   private static encodeTextSpans(writer: Writer, value: WireValue): string {
@@ -279,13 +282,15 @@ export class Canonical {
     let spanIndexIdx = 0;
     while (spanIndexIdx < items.length) {
       const span = items[spanIndexIdx]!;
+      const hasFamilies = Canonical.familiesPresent(span);
       const families = Canonical.familiesOf(span);
       const fontSizePx = Canonical.numberMember(span, "fontSizePx");
       const fontWeight = Canonical.numberMember(span, "fontWeight");
-      const italic = Canonical.italicOf(span);
+      const hasItalic = Canonical.italicPresent(span);
+      const italicValue = Canonical.italicValueOf(span);
       const baselineShiftPx = Canonical.numberMember(span, "baselineShiftPx");
       let flags = 0;
-      if (families !== null) {
+      if (hasFamilies) {
         flags |= 1;
       }
       if (fontSizePx !== null) {
@@ -294,7 +299,7 @@ export class Canonical {
       if (fontWeight !== null) {
         flags |= 4;
       }
-      if (italic !== null) {
+      if (hasItalic) {
         flags |= 8;
       }
       if (baselineShiftPx !== null) {
@@ -303,7 +308,7 @@ export class Canonical {
       writer.u8(flags);
       Canonical.numberField(writer, Canonical.numberMember(span, "start"));
       Canonical.numberField(writer, Canonical.numberMember(span, "end"));
-      if (families !== null) {
+      if (hasFamilies) {
         writer.u32(families.length);
         let nameIndexIdx = 0;
         while (nameIndexIdx < families.length) {
@@ -317,15 +322,15 @@ export class Canonical {
       if (fontWeight !== null) {
         writer.f64(fontWeight);
       }
-      if (italic !== null) {
-        writer.u8((italic ? 1 : 0));
+      if (hasItalic) {
+        writer.u8((italicValue ? 1 : 0));
       }
       if (baselineShiftPx !== null) {
         writer.f64(baselineShiftPx);
       }
       spanIndexIdx++;
     }
-    return null;
+    return "";
   }
 
   private static encodeInlineBoxes(writer: Writer, value: WireValue): string {
@@ -365,15 +370,15 @@ export class Canonical {
       }
       itemIndexIdx++;
     }
-    return null;
+    return "";
   }
 
-  private static familiesOf(span: WireValue): string[] | null {
-    const raw = Canonical.member(span, "fontFamilies");
-    if (Canonical.isWireArr(raw)) {
-      return Canonical.familiesFromList(Canonical.arrOf(raw));
-    }
-    return null;
+  private static familiesPresent(span: WireValue): boolean {
+    return Canonical.isWireArr(Canonical.member(span, "fontFamilies"));
+  }
+
+  private static familiesOf(span: WireValue): string[] {
+    return Canonical.familiesFromList(Canonical.arrOf(Canonical.member(span, "fontFamilies")));
   }
 
   private static familiesFromList(list: WireValue[]): string[] {
@@ -386,12 +391,12 @@ export class Canonical {
     return names;
   }
 
-  private static italicOf(span: WireValue): boolean | null {
-    const raw = Canonical.member(span, "italic");
-    if (Canonical.isWireBool(raw)) {
-      return Canonical.boolOf(raw);
-    }
-    return null;
+  private static italicPresent(span: WireValue): boolean {
+    return Canonical.isWireBool(Canonical.member(span, "italic"));
+  }
+
+  private static italicValueOf(span: WireValue): boolean {
+    return Canonical.boolOf(Canonical.member(span, "italic"));
   }
 
   private static isWireBool(value: WireValue): boolean {
@@ -437,7 +442,7 @@ export class Canonical {
     }
     if (Canonical.isWireArr(value)) {
       writer.u8(2);
-      writer.bytes(new TextEncoder().encode(JsCoerce.renderJson(value)));
+      writer.str(JsCoerce.renderJson(value));
       return;
     }
     writer.u8(0);
@@ -488,12 +493,9 @@ export class Writer {
   }
 
   public str(value: string): void {
-    this.bytes(new TextEncoder().encode(value));
-  }
-
-  public bytes(value: Uint8Array): void {
-    this.u32(value.length);
-    this.buf.add(value);
+    const encoded = new TextEncoder().encode(value);
+    this.u32(encoded.length);
+    this.buf.add(encoded);
   }
 
   public finish(): Uint8Array {

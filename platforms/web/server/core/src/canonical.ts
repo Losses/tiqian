@@ -14,9 +14,9 @@
 
 import { createHash } from "node:crypto";
 
-import { Canonical } from "./protocol-gen/gen/org/tiqian/protocol/Canonical.js";
-import type { WireField } from "./protocol-gen/gen/org/tiqian/protocol/WireField.js";
-import type { WireValue } from "./protocol-gen/gen/org/tiqian/protocol/WireValue.js";
+import { Canonical } from "./protocol-gen/org/tiqian/protocol/Canonical.js";
+import type { WireField } from "./protocol-gen/org/tiqian/protocol/WireField.js";
+import type { WireValue } from "./protocol-gen/org/tiqian/protocol/WireValue.js";
 
 /** Snapshot paragraph submission: carries `maxWidthPx`. */
 export const KIND_SNAPSHOT = 0;
