@@ -342,6 +342,13 @@ class TestTraceRender {
         while (i < s.length && isDigit(s.charCodeAt(i))) {
             i += 1;
         }
+        // Operand text is arbitrary; only number text reaches this transform
+        // in practice, and a real float's exponent stays within three digits
+        // plus sign. Longer digit runs are ordinary text (hex hashes, ids)
+        // and must not expand.
+        if (end - digitsStart > 3) {
+            return null;
+        }
         if (i == digitsStart) {
             return null;
         }
@@ -415,6 +422,11 @@ class TestTraceRender {
         var digits = dotIndex < 0 ? value : value.substring(0, dotIndex) + value.substring(dotIndex + 1);
         while (digits.length > 1 && digits.charCodeAt(digits.length - 1) == 48) {
             digits = digits.substring(0, digits.length - 1);
+        }
+        // Backstop: a real float's exponent stays within a few hundred;
+        // anything larger means the text was not number text at all.
+        if (exponent > 400 || exponent < -400) {
+            return sign + value;
         }
         final decimalPosition = (dotIndex < 0 ? value.length : dotIndex) + exponent;
         if (decimalPosition <= 0) {
