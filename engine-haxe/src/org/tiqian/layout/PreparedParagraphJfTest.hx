@@ -28,21 +28,21 @@ class PreparedParagraphJfTest {
     @:test public static function ecmaJsonNumberEdgeCases():Void {
         final t = new TestTraceRecorder("PreparedParagraphJfTest");
         t.section("ecmaJsonNumberEdgeCases");
-        TracedAssertions.assertTrue(PreparedParagraphFns.ecmaJsonNumber(TestHelpers.f32Bits(1)).length > 0);
-        TracedAssertions.assertTrue(PreparedParagraphFns.ecmaJsonNumber(TestHelpers.f32Bits(0x007FFFFF)).length > 0);
-        TracedAssertions.assertEqualsString("8.999999688540309e-17", PreparedParagraphFns.ecmaJsonNumber(TestHelpers.f32Literal(9.000000000000001e-17)));
+        TracedAssertions.assertTrue(PlanJsonNumber.ecmaJsonNumber(TestHelpers.f32Bits(1)).length > 0);
+        TracedAssertions.assertTrue(PlanJsonNumber.ecmaJsonNumber(TestHelpers.f32Bits(0x007FFFFF)).length > 0);
+        TracedAssertions.assertEqualsString("8.999999688540309e-17", PlanJsonNumber.ecmaJsonNumber(TestHelpers.f32Literal(9.000000000000001e-17)));
         for (i in 1...2001) {
-            PreparedParagraphFns.ecmaJsonNumber(TestHelpers.f32Literal(i * 1e-17));
-            PreparedParagraphFns.ecmaJsonNumber(TestHelpers.f32Literal(i * 1e-15));
-            PreparedParagraphFns.ecmaJsonNumber(TestHelpers.f32Literal(i * 1e-20));
+            PlanJsonNumber.ecmaJsonNumber(TestHelpers.f32Literal(i * 1e-17));
+            PlanJsonNumber.ecmaJsonNumber(TestHelpers.f32Literal(i * 1e-15));
+            PlanJsonNumber.ecmaJsonNumber(TestHelpers.f32Literal(i * 1e-20));
         }
         for (shift in 1...61) {
             final v = TestHelpers.f32Literal(Math.pow(2, shift));
-            TracedAssertions.assertTrue(PreparedParagraphFns.ecmaJsonNumber(v).length > 0);
-            TracedAssertions.assertTrue(PreparedParagraphFns.ecmaJsonNumber(-v).length > 0);
+            TracedAssertions.assertTrue(PlanJsonNumber.ecmaJsonNumber(v).length > 0);
+            TracedAssertions.assertTrue(PlanJsonNumber.ecmaJsonNumber(-v).length > 0);
             final inv = TestHelpers.f32Literal(1.0 / v);
-            TracedAssertions.assertTrue(PreparedParagraphFns.ecmaJsonNumber(inv).length > 0);
-            TracedAssertions.assertTrue(PreparedParagraphFns.ecmaJsonNumber(-inv).length > 0);
+            TracedAssertions.assertTrue(PlanJsonNumber.ecmaJsonNumber(inv).length > 0);
+            TracedAssertions.assertTrue(PlanJsonNumber.ecmaJsonNumber(-inv).length > 0);
         }
         final edgeValues = [
             0.9999999999999999,
@@ -62,8 +62,8 @@ class PreparedParagraphJfTest {
         ];
         for (raw in edgeValues) {
             final v = TestHelpers.f32Literal(raw);
-            TracedAssertions.assertTrue(PreparedParagraphFns.ecmaJsonNumber(v).length > 0);
-            TracedAssertions.assertTrue(PreparedParagraphFns.ecmaJsonNumber(-v).length > 0);
+            TracedAssertions.assertTrue(PlanJsonNumber.ecmaJsonNumber(v).length > 0);
+            TracedAssertions.assertTrue(PlanJsonNumber.ecmaJsonNumber(-v).length > 0);
         }
     }
 

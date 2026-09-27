@@ -10,5 +10,5 @@ class PreparedParagraphJsonNumberTestSupport {
         new TestTraceRecorder("PreparedParagraphJsonNumberTest").section(name);
 
     public static function eq(expected:String, value:Float):Void
-        TracedAssertions.assertEqualsString(expected, PreparedParagraphFns.ecmaJsonNumber(value));
+        TracedAssertions.assertEqualsString(expected, PlanJsonNumber.ecmaJsonNumber(value));
 }
