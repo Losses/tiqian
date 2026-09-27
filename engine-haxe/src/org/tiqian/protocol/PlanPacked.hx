@@ -587,35 +587,54 @@ class PlanPacked {
                 inlineStart: Math.isNaN(s) ? null : s,
                 inlineEnd: Math.isNaN(e) ? null : e});
         }
-        // Ruby
+        // Ruby columns (column-major), then family pool
+        final rbS:Array<Int> = []; for (i in 0...rc) rbS.push(r.u32());
+        final rbE:Array<Int> = []; for (i in 0...rc) rbE.push(r.u32());
+        final rbT:Array<Int> = []; for (i in 0...rc) rbT.push(r.u32());
+        final rbCx:Array<Float> = []; for (i in 0...rc) rbCx.push(r.f64());
+        final rbBy:Array<Float> = []; for (i in 0...rc) rbBy.push(r.f64());
+        final rbFs:Array<Float> = []; for (i in 0...rc) rbFs.push(r.f64());
+        final rbFw:Array<Int> = []; for (i in 0...rc) rbFw.push(r.u32());
+        final rbFo:Array<Int> = []; for (i in 0...rc) rbFo.push(r.u32());
+        final rbFc:Array<Int> = []; for (i in 0...rc) rbFc.push(r.u32());
+        final rbAs:Array<Float> = []; for (i in 0...rc) rbAs.push(r.f64());
+        final rubyFam:Array<Int> = []; for (i in 0...rft) rubyFam.push(r.u32());
         final rubys:Array<Plan.PlanRuby> = [];
         for (i in 0...rc) {
-            final bs = r.u32(); final be = r.u32(); final tr = r.u32();
-            final cx = r.f64(); final by = r.f64(); final fs = r.f64();
-            final fw = r.u32(); final fo2 = r.u32(); final fc2 = r.u32();
-            final asc = r.f64();
             final fams:Array<String> = [];
-            for (k in 0...fc2) fams.push(pool[r.u32()]); // families inline after ruby columns
-            rubys.push({baseRangeStart: bs, baseRangeEnd: be, text: pool[tr],
-                centerX: cx, baselineY: by, fontSize: fs, fontWeight: fw,
-                fontFamilies: fams, ascent: Math.isNaN(asc) ? null : asc});
+            for (k in 0...rbFc[i]) fams.push(pool[rubyFam[rbFo[i] + k]]);
+            rubys.push({baseRangeStart: rbS[i], baseRangeEnd: rbE[i], text: pool[rbT[i]],
+                centerX: rbCx[i], baselineY: rbBy[i], fontSize: rbFs[i], fontWeight: rbFw[i],
+                fontFamilies: fams, ascent: Math.isNaN(rbAs[i]) ? null : rbAs[i]});
         }
-        // Bopomofo
+        // Bopomofo columns (column-major), family pool, then placement columns
+        final bbS:Array<Int> = []; for (i in 0...bc) bbS.push(r.u32());
+        final bbE:Array<Int> = []; for (i in 0...bc) bbE.push(r.u32());
+        final bbT:Array<Int> = []; for (i in 0...bc) bbT.push(r.u32());
+        final bbFw:Array<Int> = []; for (i in 0...bc) bbFw.push(r.u32());
+        final bbFo:Array<Int> = []; for (i in 0...bc) bbFo.push(r.u32());
+        final bbFc:Array<Int> = []; for (i in 0...bc) bbFc.push(r.u32());
+        final bbPo:Array<Int> = []; for (i in 0...bc) bbPo.push(r.u32());
+        final bbPc:Array<Int> = []; for (i in 0...bc) bbPc.push(r.u32());
+        final bopoFam:Array<Int> = []; for (i in 0...bft) bopoFam.push(r.u32());
+        final bpT:Array<Int> = []; for (i in 0...bpt) bpT.push(r.u32());
+        final bpR:Array<Int> = []; for (i in 0...bpt) bpR.push(r.u32());
+        final bpL:Array<Float> = []; for (i in 0...bpt) bpL.push(r.f64());
+        final bpT2:Array<Float> = []; for (i in 0...bpt) bpT2.push(r.f64());
+        final bpW:Array<Float> = []; for (i in 0...bpt) bpW.push(r.f64());
+        final bpH:Array<Float> = []; for (i in 0...bpt) bpH.push(r.f64());
         final bopos:Array<Plan.PlanBopomofo> = [];
         for (i in 0...bc) {
-            final bbs = r.u32(); final bbe = r.u32(); final btr = r.u32();
-            final bfw = r.u32(); final bfo = r.u32(); final bfc = r.u32();
-            final bpo = r.u32(); final bpc = r.u32();
             final fams:Array<String> = [];
-            for (k in 0...bfc) fams.push(pool[r.u32()]); // families
+            for (k in 0...bbFc[i]) fams.push(pool[bopoFam[bbFo[i] + k]]);
             final placements:Array<Plan.PlanBopomofoPlacement> = [];
-            for (k in 0...bpc) {
-                final ptr = r.u32(); final prr = r.u32();
-                placements.push({text: pool[ptr], role: pool[prr],
-                    left: r.f64(), top: r.f64(), width: r.f64(), height: r.f64()});
+            for (k in 0...bbPc[i]) {
+                final pidx = bbPo[i] + k;
+                placements.push({text: pool[bpT[pidx]], role: pool[bpR[pidx]],
+                    left: bpL[pidx], top: bpT2[pidx], width: bpW[pidx], height: bpH[pidx]});
             }
-            bopos.push({baseRangeStart: bbs, baseRangeEnd: bbe, text: pool[btr],
-                fontWeight: bfw, fontFamilies: fams, placements: placements});
+            bopos.push({baseRangeStart: bbS[i], baseRangeEnd: bbE[i], text: pool[bbT[i]],
+                fontWeight: bbFw[i], fontFamilies: fams, placements: placements});
         }
         // Decoration
         final decos:Array<Plan.PlanDecorationSegment> = [];
