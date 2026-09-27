@@ -13,14 +13,16 @@
 - `tools/compare-traces.py`：把 Haxe 测试记录的执行轨迹与引擎 golden
   逐行比对。golden 指引擎测试留下的基准轨迹文件，位于
   `engine/src/jvmTest/resources/golden/test-traces/`（本地生成，不入库）。
-- `targets/`：各 HXML 提供目标编译参数和显式编译根类。`classes.hxml`
-  列出引擎配置需要编译的类；Haxe 不会仅凭 `-cp` 编译目录下全部类，
-  测试生成器只收集进入编译的测试类。`common.hxml` 提供引擎配置共用的
+- `targets/`：各 HXML 提供目标编译参数。进入 flake 开发环境时，driver 按
+  `boring.json` 的 `engine` source set 生成忽略入库的 `classes.hxml`，供直接
+  调用 HXML 的脚本使用；Haxe 不会仅凭 `-cp` 编译目录下全部类。
+  `common.hxml` 提供引擎配置共用的
   类路径与宏，`kotlin-common.hxml` 等文件补充各目标的编译器与运行时
   参数，精度入口沿用这些设置。`protocol-*.hxml` 单列协议根类；
   `rust-f32.hxml` 和 `rust-f64.hxml` 是 `boring.json` 正在使用的配置。
 - `boring.json`：生成与测试配置驱动器（boring feature spec 59）的项目文件，声明本目录
-  有哪些目标及精度配置。生成与测试以它为准，不再逐个手敲 hxml。
+  的目标、精度及命名源码范围。`engine` 范围从六个包发现 `*Test.hx`，加上两个
+  runtime 根类型；八个引擎配置共用它。生成与测试以此文件为准。
 - `tools/setup-haxe-env.sh`：把两组不入库的数据同步进当前检出，见下节。
 - `textrange-kotlin.hxml`、`smoke-kotlin.hxml`：独立用途的 Kotlin
   生成清单。
@@ -30,7 +32,7 @@
 
 ## 首次准备
 
-生成阶段要读三个不入库的输入，新建的检出或 git worktree 里一个都没有，
+生成阶段要读两组不入库的数据，新建的检出或 git worktree 里可能没有，
 缺任何一个都会在生成时报出与准备无关的错误：
 
 | 输入 | 谁读它 | 缺了会怎样 |
@@ -67,11 +69,18 @@ nix develop -c boring gen kotlin-f32 --project boring.json
 nix develop -c boring test kotlin-f32 --project boring.json
 ```
 
+进入开发 shell 会更新 `engine-haxe/targets/classes.hxml`。如果在同一个 shell 内
+新增测试类，重新生成入口文件，再直接调用 HXML：
+
+```shell
+boring roots engine --project boring.json --output engine-haxe/targets/classes.hxml
+```
+
 已从 tiqian 根目录验证 `nix develop -c boring gen protocol-c`
 能完成 Haxe 生成和 `afterGen`，写出 `tiqian_protocol_constants.h`。上述
 `kotlin-f32` 的 `gen` 也已通过；该配置的 `test` 尚未在当前检出运行。
 
-五个动作：`gen` 生成该目标配置的两棵源码树；`test` 把已生成的树编译并运行，
+六个动作：`roots` 从命名源码范围生成供直接 HXML 使用的入口文件；`gen` 生成该目标配置的两棵源码树；`test` 把已生成的树编译并运行，
 留下结果文件（先对同一配置运行 `gen`）；`pack` 为声明了 `package` 的配置打发布包；
 `compare` 按 `boring.json` 的 `baseline` 逐用例比对参与比较的配置的结果文件；
 `verify` 依次对所有配置运行 `gen`，对可测试配置运行 `test`，然后运行 `compare`。
