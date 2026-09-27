@@ -78,6 +78,14 @@
       "run": {
         "env": { "BORING_TEST_TIMEOUT_MS": "600000" }
       }
+    },
+    {
+      "id": "protocol-kotlin",
+      "target": "kotlin",
+      "rootsFile": "engine-haxe/targets/protocol-kotlin.hxml",
+      "run": {
+        "env": { "BORING_TEST_TIMEOUT_MS": "600000" }
+      }
     }
   ]
 }
