@@ -17,7 +17,7 @@ impl Canonical {
     }
 
     pub fn canonical_encode(input: WireValue, kind: u32) -> EncodeResult {
-        let mut writer = Writer::new(kind);
+        let mut writer = Writer::new();
         writer.begin(kind);
         let text = Canonical::canonical_member((input).clone(), &"text");
         let mut text_value = String::new();
@@ -434,7 +434,7 @@ pub struct Writer {
 }
 
 impl Writer {
-    pub fn new(kind: u32) -> Self {
+    pub fn new() -> Self {
         Self {
             buf: BytesBuffer::new(),
         }
