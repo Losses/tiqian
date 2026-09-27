@@ -27,3 +27,6 @@ org.tiqian.protocol.NamedError
 org.tiqian.protocol.NamedErrorTest
 org.tiqian.protocol.SnapshotTableBinary
 org.tiqian.protocol.SnapshotTableBinaryTest
+org.tiqian.protocol.Plan
+org.tiqian.protocol.PlanJsonNumber
+org.tiqian.protocol.PlanJson
