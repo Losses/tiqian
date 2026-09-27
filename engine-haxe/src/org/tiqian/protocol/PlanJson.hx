@@ -342,6 +342,10 @@ class PlanJson {
                 out.add(PlanJsonNumber.ecmaJsonNumber(seg.top));
                 out.add(",\"right\":");
                 out.add(PlanJsonNumber.ecmaJsonNumber(seg.right));
+                out.add(",\"sourceRangeStart\":");
+                out.add(Std.string(seg.sourceRangeStart));
+                out.add(",\"sourceRangeEnd\":");
+                out.add(Std.string(seg.sourceRangeEnd));
                 out.add("}");
             }
             out.add("]");
