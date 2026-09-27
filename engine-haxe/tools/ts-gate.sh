@@ -8,6 +8,13 @@ set -euo pipefail
 TI_ROOT="$(cd "$(dirname "$0")/../.." && pwd)"
 OUT="$TI_ROOT/engine-haxe/out/ts"
 [ -d "$OUT/gen" ] || { echo "ts-gate: $OUT/gen missing; run the bundle driver gen ts first" >&2; exit 2; }
+# The profile needs @types/bun for the `types: ["bun"]` entry. Without it
+# tsc silently type-checks nothing that matters; fail loudly instead of
+# reporting a zero-diagnostic read nobody ran.
+if [ ! -d "$TI_ROOT/node_modules/@types/bun" ]; then
+  echo "ts-gate: $TI_ROOT/node_modules/@types/bun missing; run 'bun install' at the tiqian root first" >&2
+  exit 2
+fi
 
 cat > "$OUT/tsconfig.json" <<'JSON'
 {
@@ -30,4 +37,5 @@ cat > "$OUT/tsconfig.json" <<'JSON'
 JSON
 
 cd "$OUT"
-exec bun x tsc -p tsconfig.json
+# Bound the run: a wedged resolver must read as a failed gate, not a hang.
+exec timeout 900 bun x tsc -p tsconfig.json
