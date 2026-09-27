@@ -67,3 +67,11 @@
 - snapshot-table-binary.ts:8-13 常量：HEADER_U32_COUNT=12、METRIC_POOL_ROW_BYTES=40、PROBE_STYLE_ROW_BYTES=25、ABSENT_METRIC_BITS=0x7ff8000000000000n。
 - table-binary-writer.ts:200-253 region 顺序逐项：strings(delta+bytes)、metric 六列、valuePool(5xf64)、probe 三列、advancePool(f64)、stylePool(25B)、features(delta+bytes, 行=u16 count+count x u32)、face/typography/valueStyle/fontPreload 四个 delta+bytes、revisionText 尾区。
 - metric 行排序键 (familiesRef, weight, italic, roleRef, faceSelectionRef)：snapshot_table_binary.rs:109-118 total_cmp；table-binary-writer.ts:132-137 数值比较。f64 排序比较在 Haxe 侧的形态待取证（total_cmp 与 JS < 的 NaN 行为不同；表内容 weight 为正常值时等价）。
+
+## FPHelper.i64ToDouble 在 TS 发射端的参数序缺陷（P2 取证，pin 4f412c6a）
+- ① 被编译源：engine-haxe/src/org/tiqian/protocol/SnapshotTableBinary.hx TableReader.f64：`final low = reader.u32(); final high = reader.u32(); return FPHelper.i64ToDouble(high, low);`（Haxe std 签名 FPHelper.hx i64ToDouble(high:Int, low:Int)，高字在前）。
+- ② 发射端：packages/compiler/reflaxe/ts 对 FPHelper.i64ToDouble 的降级按源参数序原样改名转发（低字仍落在第二个实参），未按运行时签名交换。
+- ③ 生成文本：engine-haxe/out/protocol-ts/gen/org/tiqian/protocol/SnapshotTableBinary.ts f64() 尾行 `return i64ToDouble(high, low);`，而 gen/runtime.ts:14 声明 `export function i64ToDouble(low: number, high: number)`（低位在前）。
+- ④ 运行时失败：bun 实测 400.0 的 f64 解码得 5.34416817e-315（位形 0x0000000040790000，即高低字互换后的值）。
+- 结论：TS 侧 f64 读取路径在 pin 4f412c6a 上不可用，修复属 boring TS 发射端（在 FPHelper 降级处交换两参），P2 席不改源码形态绕行；写路径 doubleToI64 不受影响（P1 golden 全过）。
+
