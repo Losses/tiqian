@@ -82,6 +82,7 @@ org.tiqian.layout.LineGeometryDirectTailTest
 org.tiqian.layout.PunctuationGeometryLedgerCoverageTest
 org.tiqian.layout.PunctuationSpacingRuleTest
 org.tiqian.layout.PreparedParagraph
+org.tiqian.layout.PlanLowering
 org.tiqian.layout.PreparedParagraphJsonNumberTest
 org.tiqian.shaping.ReplayableFontBackend
 org.tiqian.shaping.ReplayableFontBackendCoverageTest
