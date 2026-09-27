@@ -25,15 +25,32 @@ class JsCoerce {
             case WNum(inner): numberToString(inner);
             case WBool(inner): inner ? "true" : "false";
             case WNull: "null";
-            case WArr(items):
-                final parts = new Array<String>();
-                for (item in items) {
-                    // JavaScript's Array.prototype.join turns null and
-                    // absent into the empty string.
-                    parts.push(item == WNull ? "" : toString(item));
-                }
-                parts.join(",");
+            case WArr(items): joinItems(items);
             case WObj(_): "[object Object]";
+        };
+    }
+
+    static function joinItems(items:Array<WireValue>):String {
+        final parts = new Array<String>();
+        var itemIndexIdx:Int = 0;
+        while (itemIndexIdx < items.length) {
+            final item = items[itemIndexIdx];
+            // JavaScript's Array.prototype.join turns null and
+            // absent into the empty string.
+            parts.push(itemText(item));
+            itemIndexIdx++;
+        }
+        return parts.join(",");
+    }
+
+    static function itemText(item:WireValue):String {
+        return switch (item) {
+            case WNull: "";
+            case WBool(_): toString(item);
+            case WNum(_): toString(item);
+            case WStr(_): toString(item);
+            case WArr(_): toString(item);
+            case WObj(_): toString(item);
         };
     }
 
@@ -96,12 +113,14 @@ class JsCoerce {
         if (radix > 0) {
             final digits = body.substr(2);
             var value = 0.0;
-            for (index in 0...digits.length) {
-                final digit = hexDigit(digits.charCodeAt(index));
+            var indexIdx:Int = 0;
+            while (indexIdx < digits.length) {
+                final digit = hexDigit(digits.charCodeAt(indexIdx));
                 if (digit < 0) {
                     return Math.NaN;
                 }
                 value = value * radix + digit;
+                indexIdx++;
             }
             return negative ? -value : value;
         }
@@ -208,43 +227,61 @@ class JsCoerce {
             case WBool(inner): inner ? "true" : "false";
             case WNum(inner): numberToString(inner);
             case WStr(inner): quoteJson(inner);
-            case WArr(items):
-                final parts = new Array<String>();
-                for (item in items) {
-                    parts.push(renderJson(item));
-                }
-                "[" + parts.join(",") + "]";
-            case WObj(fields):
-                final parts = new Array<String>();
-                for (field in fields) {
-                    parts.push(quoteJson(field.name) + ":" + renderJson(field.value));
-                }
-                "{" + parts.join(",") + "}";
+            case WArr(items): renderArray(items);
+            case WObj(fields): renderObject(fields);
         };
+    }
+
+    static function renderArray(items:Array<WireValue>):String {
+        final parts = new Array<String>();
+        var itemIndexIdx:Int = 0;
+        while (itemIndexIdx < items.length) {
+            final item = items[itemIndexIdx];
+            parts.push(renderJson(item));
+            itemIndexIdx++;
+        }
+        return "[" + parts.join(",") + "]";
+    }
+
+    static function renderObject(fields:Array<WireField>):String {
+        final parts = new Array<String>();
+        var fieldIndexIdx:Int = 0;
+        while (fieldIndexIdx < fields.length) {
+            final field = fields[fieldIndexIdx];
+            parts.push(quoteJson(field.name) + ":" + renderJson(field.value));
+            fieldIndexIdx++;
+        }
+        return "{" + parts.join(",") + "}";
     }
 
     static function quoteJson(text:String):String {
         final out = new StringBuf();
         out.add('"');
-        for (index in 0...text.length) {
-            final code = text.charCodeAt(index);
-            switch (code) {
-                case 34: out.add('\\\"');
-                case 92: out.add('\\\\');
-                case 8: out.add('\\b');
-                case 12: out.add('\\f');
-                case 10: out.add('\\n');
-                case 13: out.add('\\r');
-                case 9: out.add('\\t');
-                default:
-                    if (code < 32) {
-                        out.add('\\u00');
-                        out.add("0123456789abcdef".charAt((code >> 4) & 15));
-                        out.add("0123456789abcdef".charAt(code & 15));
-                    } else {
-                        out.addChar(code);
-                    }
+        var indexIdx:Int = 0;
+        while (indexIdx < text.length) {
+            final code = text.charCodeAt(indexIdx);
+            if (code == 34) {
+                out.add('\\\"');
+            } else if (code == 92) {
+                out.add('\\\\');
+            } else if (code == 8) {
+                out.add('\\b');
+            } else if (code == 12) {
+                out.add('\\f');
+            } else if (code == 10) {
+                out.add('\\n');
+            } else if (code == 13) {
+                out.add('\\r');
+            } else if (code == 9) {
+                out.add('\\t');
+            } else if (code < 32) {
+                out.add('\\u00');
+                out.add("0123456789abcdef".charAt((code >> 4) & 15));
+                out.add("0123456789abcdef".charAt(code & 15));
+            } else {
+                out.addChar(code);
             }
+            indexIdx++;
         }
         out.add('"');
         return out.toString();

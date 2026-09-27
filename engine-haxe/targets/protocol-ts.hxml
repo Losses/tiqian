@@ -4,7 +4,7 @@
 engine-haxe/targets/common.hxml
 -cp .haxelib/boring/git/packages/compiler/reflaxe/ts/std-shadow
 -cp .haxelib/boring/git/packages/compiler/reflaxe/ts
---macro Intercept.run(['engine-haxe/src'])
+--macro Intercept.run(['engine-haxe/src', '.haxelib/boring/git/samples'])
 --macro tscompiler.Compiler.use()
 -D ts-output=engine-haxe/out/protocol-ts/gen
 -D ts-test-output=engine-haxe/out/protocol-ts/gen-tests
@@ -12,6 +12,6 @@ engine-haxe/targets/common.hxml
 -D runtime-import=@tiqian/runtime
 -D runtime-emit=.
 -D package-shell=none
-org.tiqian.protocol.Wire
+org.tiqian.protocol.WireValue
 org.tiqian.protocol.Canonical
 org.tiqian.protocol.CanonicalTest
