@@ -29,6 +29,7 @@ cat > "$OUT/tsconfig.json" <<'JSON'
     "allowImportingTsExtensions": true,
     "erasableSyntaxOnly": true,
     "types": ["bun"],
+    "typeRoots": ["../../../node_modules/@types"],
     "noEmit": true,
     "skipLibCheck": true
   },
