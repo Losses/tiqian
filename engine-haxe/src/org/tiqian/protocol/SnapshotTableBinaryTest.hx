@@ -24,22 +24,20 @@ class SnapshotTableBinaryTest {
         final recorder = new org.tiqian.test.trace.TestTraceRecorder("SnapshotTableBinaryTest");
         recorder.section("readThenWriteReproducesTheBytes");
         final encoded = SnapshotTableBinary.encode(SnapshotTableTestSupport.goldenInput());
-        switch (SnapshotTableBinary.decode(encoded)) {
-            case DecodeResult.TOk(data):
-                SnapshotTableTestSupport.assertHexBytes(recorder, "reencode", SnapshotTableTestSupport.hexBytes(encoded),
-                    SnapshotTableBinary.encodeData(data));
-            case DecodeResult.TErr(issue):
-                recorder.record("decode unexpectedly failed: " + issue);
-                org.tiqian.test.trace.TracedAssertions.assertTrue(false, "decode of a fresh encoding must succeed");
-        }
+        final data = new TableData();
+        final issue = SnapshotTableBinary.decodeInto(encoded, data);
+        org.tiqian.test.trace.TracedAssertions.assertEqualsString("", issue);
+        SnapshotTableTestSupport.assertHexBytes(recorder, "reencode", SnapshotTableTestSupport.hexBytes(encoded),
+            SnapshotTableBinary.encodeData(data));
     }
 
     @:test
     public static function writeThenReadRestoresTheContent():Void {
         final recorder = new org.tiqian.test.trace.TestTraceRecorder("SnapshotTableBinaryTest");
         recorder.section("writeThenReadRestoresTheContent");
-        switch (SnapshotTableBinary.decode(SnapshotTableBinary.encode(SnapshotTableTestSupport.goldenInput()))) {
-            case DecodeResult.TOk(data):
+        final data = new TableData();
+        final issue = SnapshotTableBinary.decodeInto(SnapshotTableBinary.encode(SnapshotTableTestSupport.goldenInput()), data);
+        org.tiqian.test.trace.TracedAssertions.assertEqualsString("", issue);
                 org.tiqian.test.trace.TracedAssertions.assertEqualsInt(1, data.replayStringCount);
                 org.tiqian.test.trace.TracedAssertions.assertEqualsInt(10, data.strings.length);
                 org.tiqian.test.trace.TracedAssertions.assertEqualsString("replay-a", data.strings[0]);
@@ -56,50 +54,35 @@ class SnapshotTableBinaryTest {
                 org.tiqian.test.trace.TracedAssertions.assertEqualsString("{\"family\":\"F\"}", data.faceTexts[0]);
                 org.tiqian.test.trace.TracedAssertions.assertEqualsString("vs-0", data.valueStyleTexts[0]);
                 org.tiqian.test.trace.TracedAssertions.assertEqualsString("{\"backendRevision\":\"r1\"}", data.revisionText);
-            case DecodeResult.TErr(issue):
-                recorder.record("decode unexpectedly failed: " + issue);
-                org.tiqian.test.trace.TracedAssertions.assertTrue(false, "decode of a fresh encoding must succeed");
-        }
     }
 
     @:test
     public static function poolDeduplicationCollapsesEqualRows():Void {
         final recorder = new org.tiqian.test.trace.TestTraceRecorder("SnapshotTableBinaryTest");
         recorder.section("poolDeduplicationCollapsesEqualRows");
-        switch (SnapshotTableBinary.decode(SnapshotTableBinary.encode(SnapshotTableTestSupport.goldenInput()))) {
-            case DecodeResult.TOk(data):
+        final data = new TableData();
+        final issue = SnapshotTableBinary.decodeInto(SnapshotTableBinary.encode(SnapshotTableTestSupport.goldenInput()), data);
+        org.tiqian.test.trace.TracedAssertions.assertEqualsString("", issue);
                 org.tiqian.test.trace.TracedAssertions.assertEqualsInt(1, data.valuePool.length);
                 org.tiqian.test.trace.TracedAssertions.assertEqualsInt(1, data.advancePool.length);
                 org.tiqian.test.trace.TracedAssertions.assertEqualsInt(1, data.styleFontSize.length);
                 org.tiqian.test.trace.TracedAssertions.assertEqualsInt(1, data.featuresPool.length);
                 org.tiqian.test.trace.TracedAssertions.assertEqualsInt(0, data.probeStyleRefs[0]);
                 org.tiqian.test.trace.TracedAssertions.assertEqualsInt(0, data.probeStyleRefs[1]);
-            case DecodeResult.TErr(issue):
-                recorder.record("decode unexpectedly failed: " + issue);
-                org.tiqian.test.trace.TracedAssertions.assertTrue(false, "decode must succeed");
-        }
     }
 
     @:test
     public static function damagedFilesComeBackAsTheNamedIssue():Void {
         final recorder = new org.tiqian.test.trace.TestTraceRecorder("SnapshotTableBinaryTest");
         recorder.section("damagedFilesComeBackAsTheNamedIssue");
-        switch (SnapshotTableBinary.decode(Bytes.ofString("TIQ"))) {
-            case DecodeResult.TErr(issue):
-                org.tiqian.test.trace.TracedAssertions.assertEqualsString("SnapshotTablesInvalid", issue);
-            case DecodeResult.TOk(_):
-                recorder.record("decode unexpectedly succeeded");
-                org.tiqian.test.trace.TracedAssertions.assertTrue(false, "a short file must fail");
-        }
+        final short = new TableData();
+        org.tiqian.test.trace.TracedAssertions.assertEqualsString("SnapshotTablesInvalid",
+            SnapshotTableBinary.decodeInto(Bytes.ofString("TIQ"), short));
         final corrupted = SnapshotTableBinary.encode(SnapshotTableTestSupport.goldenInput());
         corrupted.set(3, 0x58);
-        switch (SnapshotTableBinary.decode(corrupted)) {
-            case DecodeResult.TErr(issue):
-                org.tiqian.test.trace.TracedAssertions.assertEqualsString("SnapshotTablesInvalid", issue);
-            case DecodeResult.TOk(_):
-                recorder.record("decode unexpectedly succeeded");
-                org.tiqian.test.trace.TracedAssertions.assertTrue(false, "a corrupted magic must fail");
-        }
+        final badMagic = new TableData();
+        org.tiqian.test.trace.TracedAssertions.assertEqualsString("SnapshotTablesInvalid",
+            SnapshotTableBinary.decodeInto(corrupted, badMagic));
     }
 
 }
