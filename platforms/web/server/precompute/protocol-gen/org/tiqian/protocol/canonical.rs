@@ -18,6 +18,7 @@ impl Canonical {
 
     pub fn canonical_encode(input: WireValue, kind: u32) -> EncodeResult {
         let mut writer = Writer::new(kind);
+        writer.begin(kind);
         let text = Canonical::canonical_member((input).clone(), &"text");
         let mut text_value = String::new();
         if !Canonical::canonical_is_wire_null((text).clone()) {
@@ -434,14 +435,15 @@ pub struct Writer {
 
 impl Writer {
     pub fn new(kind: u32) -> Self {
-        let mut __self = Self {
-            buf: Default::default(),
-        };
-        __self.write_magic();
-        __self.u8(1);
-        __self.u8(kind);
-            __self.buf = BytesBuffer::new();
-        return __self;
+        Self {
+            buf: BytesBuffer::new(),
+        }
+    }
+
+    pub fn begin(&mut self, kind: u32) {
+        self.write_magic();
+        self.u8(1);
+        self.u8(kind);
     }
 
     fn write_magic(&mut self) {
