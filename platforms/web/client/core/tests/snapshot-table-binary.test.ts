@@ -1,8 +1,8 @@
 import assert from "node:assert/strict";
 import test from "node:test";
 
-import { writeBinaryTable } from "../src/sampler/snapshot/table-binary-writer.js";
-import type { BinaryTableInput } from "../src/sampler/snapshot/table-binary-writer.js";
+import { writeBinaryTable } from "../src/sampler/snapshot/table-binary-encode.js";
+import type { BinaryTableInput } from "../src/sampler/snapshot/table-binary-encode.js";
 import { decodeSnapshotTableBinary } from "../src/sampler/snapshot/snapshot-table-binary.js";
 import { snapshotTablesForRoot, snapshotTablesFromBytes } from "../src/sampler/snapshot/snapshot-tables.js";
 import { expandSnapshotManifest } from "../src/sampler/snapshot/snapshot-manifest.js";
