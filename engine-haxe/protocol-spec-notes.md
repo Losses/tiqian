@@ -68,10 +68,8 @@
 - table-binary-writer.ts:200-253 region 顺序逐项：strings(delta+bytes)、metric 六列、valuePool(5xf64)、probe 三列、advancePool(f64)、stylePool(25B)、features(delta+bytes, 行=u16 count+count x u32)、face/typography/valueStyle/fontPreload 四个 delta+bytes、revisionText 尾区。
 - metric 行排序键 (familiesRef, weight, italic, roleRef, faceSelectionRef)：snapshot_table_binary.rs:109-118 total_cmp；table-binary-writer.ts:132-137 数值比较。f64 排序比较在 Haxe 侧的形态待取证（total_cmp 与 JS < 的 NaN 行为不同；表内容 weight 为正常值时等价）。
 
-## FPHelper.i64ToDouble 在 TS 发射端的参数序缺陷（P2 取证，pin 4f412c6a）
-- ① 被编译源：engine-haxe/src/org/tiqian/protocol/SnapshotTableBinary.hx TableReader.f64：`final low = reader.u32(); final high = reader.u32(); return FPHelper.i64ToDouble(high, low);`（Haxe std 签名 FPHelper.hx i64ToDouble(high:Int, low:Int)，高字在前）。
-- ② 发射端：packages/compiler/reflaxe/ts 对 FPHelper.i64ToDouble 的降级按源参数序原样改名转发（低字仍落在第二个实参），未按运行时签名交换。
-- ③ 生成文本：engine-haxe/out/protocol-ts/gen/org/tiqian/protocol/SnapshotTableBinary.ts f64() 尾行 `return i64ToDouble(high, low);`，而 gen/runtime.ts:14 声明 `export function i64ToDouble(low: number, high: number)`（低位在前）。
-- ④ 运行时失败：bun 实测 400.0 的 f64 解码得 5.34416817e-315（位形 0x0000000040790000，即高低字互换后的值）。
-- 结论：TS 侧 f64 读取路径在 pin 4f412c6a 上不可用，修复属 boring TS 发射端（在 FPHelper 降级处交换两参），P2 席不改源码形态绕行；写路径 doubleToI64 不受影响（P1 golden 全过）。
-
+## FPHelper.i64ToDouble 调用形态（P2 补记，修正版，pin 4f412c6a）
+- 规定签名以 boring 仓库样品为准：samples/boring/BinaryReader.hx:40-44 `return haxe.io.FPHelper.i64ToDouble(low, high);`（低位字在前），同族 samples/boring/Fp32.hx:35/:52/:56 一致。
+- 运行时互逆性：gen/runtime.ts doubleToI64 返回 {high: getUint32(0), low: getUint32(4)}（DataView 默认大端），i64ToDouble(low, high) 做 setUint32(0, high); setUint32(4, low)，两者严格互逆。
+- 撤回：本文件早前一版把「生成出 i64ToDouble(high, low)」判为发射端缺陷，实为 P2 源码自身把参数序写反（400.0 解成 5.34416817e-315 正是高低字互换位形）；发射端按源序转发行为正确，不向 boring 提修复。
+- 手册新增比对规则（队长 2026-09-27 落 PIT）：凡「目标侧签名/参数序不符」结论，第四步之前必须先从 samples/boring/** 与对应 spec 抄下同一调用的签名做比对，不得以对 std 的印象为基准。
