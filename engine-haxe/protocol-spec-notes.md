@@ -174,3 +174,36 @@
 - 现象：同一份冻结字节（weight=400.0，LE 字节 00 00 00 00 00 00 79 40 已核在位），TS decodeInto 解出 400，Rust decodeInto 解出 0.0（27/28 快照测试，唯一失败 restore_keeps_rows_and_the_url_stable）。
 - 已排除：壳层 Json 降级与字符串表映射（instrument 证实进入 decode_into 前文件字节正确、之后 TableData.metric_rows[0].weight=0.0）。
 - 待办：按四步取证追 Rust 目标 TableReader.f64 的降级与 FPHelper::i64_to_double 调用（Rust 运行时签名 (low, high) 与 TS 一致，但需核对 Rust 发射端参数转发与 u32 组装路径），并核对 cutover 席 f1b28bd3 之后的发射端修正是否覆盖。
+
+## Stage1-P5b Kotlin 侧替换的记录（pin f1b28bd3）
+
+### rawGapEm 局部绑定（Kotlin 收窄，可回退）
+- ParagraphRequestChecks.hx 的 `emphasisDotGapEm` null 检查改绑到局部 `rawGapEm` 再三元（:37-42）。
+- 触发原因：Kotlin 发射端 KotlinExpr.hx:821 的 expression-if 不能对 `var` 类属性 smart-cast（`request.emphasisDotGapEm` 为 `Double?` var 属性，`if (request.emphasisDotGapEm == null) else request.emphasisDotGapEm` 中 else 分支不能把 Double? 收窄到 Double）。绑到局部 val 后 `val rawGapEm: Double?` 在条件分支内可收窄。
+- 证据四步：① 源结构=ParagraphRequestChecks.hx:37-42 的 null-coalesce；② 发射端=KotlinExpr.hx:821 的 expression-if 渲染；③ 生成物=ParagraphRequestChecks.kt 的 `val rawGapEm = request.emphasisDotGapEm; val gapEm = (if ((rawGapEm == null)) 0.1 else rawGapEm)`（:5-6，else 分支 rawGapEm 收窄为 Double）；④ 失败点=不带局部绑定时代码 kotlinc 报 smart-cast impossible。
+- 可回退标记：boring 里程碑下已单开条目（「var 类属性的空值收窄不发 smart cast」），发射端修好后允许回退此处形态，届时直接把 `rawGapEm` 与 `: Float` 还原为单表达式。
+- 涟漪：TS vendored ParagraphRequestChecks.ts 与 Rust vendored paragraph_request_checks.rs 同为局部绑定形态，语义等价（多一个局部变量）。
+
+### 跨字段并存坏输入的次序变化
+- 13 处区段错误名从 parse* 内联 require 挪到 ParagraphRequestChecks.validate 单入口后，跨字段并存坏输入的命中名字会变。
+- 具体例：`plan(workerRequest { text="中文" (2 单元); textSpans=[{start=0,end=5,...}]; inlineObjects=[{start=1,end=3,advance=18.0,ascent=14.4,descent=4.32}] })`——textSpans end 越界（5>2）且 inlineObjects end 越界（3>2）。
+  - 改前（旧代码）：plan() 中先 `parseInlineObjects(inlineObjects, text.length)`（行 :168 后）再在 LayoutInput 构造中 `parseTextSpans(textSpans, locale, text.length)`。inlineObjects range 检查触发 InvalidInlineObjectRange，不进入 parseTextSpans。
+  - 改后（新代码）：parse* 仅组 Input 无校验，validate 按固定序（标量 → textSpans → sourceBoundaries → lineBreakSpans → inlineBoxes → inlineObjects → decorations）。textSpans loop 先触发 InvalidTextSpanRange。
+  - 名前后的变化：InvalidInlineObjectRange → InvalidTextSpanRange。
+  - 仅跨字段并存时可见差异；现有 6 个错误断言测试各只触发单字段，单字段命中名不变。
+- 对比表（现有 Kotlin 测试能触发的单字段坏输入，名前名后一致）：
+  | 测试 | 坏输入 | 改前名 | 改后名 | 变？ |
+  |------|--------|--------|--------|------|
+  | emptyTextThrowsEmptyParagraph | text="" | EmptyParagraph | EmptyParagraph | 否 |
+  | textSpansRangeOutOfBoundsThrowsInvalidTextSpanRange | textSpans=[{0,5}] text="你好"(2) | InvalidTextSpanRange | InvalidTextSpanRange | 否 |
+  | inlineObjectsRangeOutOfBoundsThrowsInvalidInlineObjectRange | inlineObjects=[{1,5,...}] text="中文"(2) | InvalidInlineObjectRange | InvalidInlineObjectRange | 否 |
+  | invalidEmphasisDotGapEmThrows(neg) | emphasisDotGapEm=-0.1 | InvalidEmphasisDotGapEm | InvalidEmphasisDotGapEm | 否 |
+  | invalidEmphasisDotGapEmThrows(NaN) | emphasisDotGapEm=NaN | InvalidEmphasisDotGapEm | InvalidEmphasisDotGapEm | 否 |
+  | invalidDecorationWireUnknownKindThrows | decoration kind="UnknownKind" | IllegalArgumentException(valueOf) | IllegalArgumentException(valueOf) | 否 |
+
+### 5 个 Kotlin 独有名的触发（pin f1b28bd3，经对外入口可达）
+- InvalidEmphasisDotGapEm：planWithDiagnostics(prepareRequest { emphasisDotGapEm=-0.1 })，已有测试无效。
+- InvalidInlineObjectRange：plan(workerRequest { text="中文"; inlineObjects=[{1,5,18.0,14.4,4.32}] })，已有测试无效。
+- InvalidInlineObjectAdvance：plan(workerRequest { text="中文"; inlineObjects=[{0,1,-1.0,14.4,4.32}] })，advance<0，新测试 inlineObjectsNegativeAdvanceThrowsInvalidInlineObjectAdvance。
+- InvalidInlineObjectVerticalGeometry：plan(workerRequest { text="中文"; inlineObjects=[{0,1,18.0,Double.NaN,4.32}] })，ascent NaN，新测试 inlineObjectsNaNAscendsThrowsInvalidInlineObjectVerticalGeometry。
+- InvalidDecorationRange：planWithDiagnostics(prepareRequest { text="你好世界"; decorations=[{3,2,"Underline"}] })，start≥end，新测试 decorationsReversedRangeThrowsInvalidDecorationRange。

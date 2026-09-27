@@ -26,7 +26,8 @@ impl ParagraphRequestChecks {
         if i32::from_ne_bytes((request.font_weight).to_ne_bytes()) < (1) || (i32::from_ne_bytes((request.font_weight).to_ne_bytes())) > (1000) {
             return Err(NamedError::InvalidFontWeight);
         }
-        let gap_em = match &(request.emphasis_dot_gap_em) { None => 0.1f64, Some(__option) => *__option };
+        let raw_gap_em = request.emphasis_dot_gap_em;
+        let gap_em = match &(raw_gap_em) { None => 0.1f64, Some(__option) => *__option };
         if !(gap_em).is_finite() || (gap_em) < (0.0f64) {
             return Err(NamedError::InvalidEmphasisDotGapEm);
         }
