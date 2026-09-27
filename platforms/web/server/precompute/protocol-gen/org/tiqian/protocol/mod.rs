@@ -18,6 +18,19 @@ pub mod paragraph_request_exception;
 #[cfg(test)]
 pub mod paragraph_request_test;
 pub mod paragraph_request_test_support;
+pub mod plan;
+pub mod plan_end_reason;
+pub mod plan_json;
+pub mod plan_json_number;
+#[cfg(test)]
+pub mod plan_json_test;
+pub mod plan_packed;
+#[cfg(test)]
+pub mod plan_packed_test;
+pub mod plan_schema;
+#[cfg(test)]
+pub mod plan_schema_test;
+pub mod plan_style_delta;
 pub mod revision;
 pub mod snapshot_table_binary;
 #[cfg(test)]
@@ -51,6 +64,19 @@ pub use paragraph_request_exception::*;
 #[cfg(test)]
 pub use paragraph_request_test::*;
 pub use paragraph_request_test_support::*;
+pub use plan::*;
+pub use plan_end_reason::*;
+pub use plan_json::*;
+pub use plan_json_number::*;
+#[cfg(test)]
+pub use plan_json_test::*;
+pub use plan_packed::*;
+#[cfg(test)]
+pub use plan_packed_test::*;
+pub use plan_schema::*;
+#[cfg(test)]
+pub use plan_schema_test::*;
+pub use plan_style_delta::*;
 pub use revision::*;
 pub use snapshot_table_binary::*;
 #[cfg(test)]
