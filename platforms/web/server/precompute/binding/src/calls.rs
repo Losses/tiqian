@@ -8,11 +8,9 @@ use neon::types::buffer::TypedArray;
 
 use tiqian_precompute::emit;
 use tiqian_precompute::font_record::{FontFaceSpec, FontWeightSpec};
-#[cfg(tiqian_engine_link)]
 use tiqian_precompute::js_compat::trunc_sat_i32;
 use tiqian_precompute::js_compat::trunc_sat_usize;
 use tiqian_precompute::json::Json;
-#[cfg(tiqian_engine_link)]
 use tiqian_precompute::session::CaptureEvidence;
 use tiqian_precompute::session::{
     create_font_session as create_session_impl, MetricsInput, SessionFaceSpec, SessionOptions,
@@ -20,9 +18,7 @@ use tiqian_precompute::session::{
 };
 use tiqian_precompute::source_boundaries::{BoundaryStyle, BoundaryTextSpan};
 
-#[cfg(tiqian_engine_link)]
 use tiqian_precompute::engine_bridge;
-#[cfg(tiqian_engine_link)]
 use tiqian_precompute::paragraph::{
     InlineBoxInput, InlineBoxOuterSpacingCode, LineBreakPolicyCode, LineBreakSpanInput,
     ParagraphRequest, TextSpanInput,
@@ -315,31 +311,21 @@ fn read_boundary_style(
 /// lineLengthGridEnabled, sourceBoundaries, textSpans, inlineBoxes,
 /// lineBreakSpans)`: the structured form of the js facade call. Arrays and
 /// span objects arrive as themselves; the delimiter wire encoding stays on
-/// the js side. Returns the plan JSON. The engine link is a build time
-/// property; an addon built without the archive reports `EngineNotLinked`.
+/// the js side. Returns the plan JSON.
 pub fn precompute_paragraph(mut cx: FunctionContext) -> JsResult<JsString> {
-    #[cfg(not(tiqian_engine_link))]
-    {
-        return cx.throw_error("EngineNotLinked");
-    }
-    #[cfg(tiqian_engine_link)]
-    {
-        let session_id = cx.argument::<JsString>(0)?.value(&mut cx);
-        let request = read_paragraph_request(&mut cx, session_id.clone())?;
-        match registry::with_session(&session_id, |session| {
-            // One capture window per call. The singular entries keep this
-            // shape.
-            let mut evidence_window = CaptureEvidence::new();
-            engine_bridge::precompute_paragraph(session, &mut evidence_window, &request)
-        }) {
-            Ok(Ok(plan)) => Ok(cx.string(plan.to_json_value().render())),
-            Ok(Err(error)) => cx.throw_error(error),
-            Err(error) => cx.throw_error(error),
-        }
+    let session_id = cx.argument::<JsString>(0)?.value(&mut cx);
+    let request = read_paragraph_request(&mut cx, session_id.clone())?;
+    match registry::with_session(&session_id, |session| {
+        // One capture window per call. The singular entries keep this shape.
+        let mut evidence_window = CaptureEvidence::new();
+        engine_bridge::precompute_paragraph(session, &mut evidence_window, &request)
+    }) {
+        Ok(Ok(plan)) => Ok(cx.string(plan.to_json_value().render())),
+        Ok(Err(error)) => cx.throw_error(error),
+        Err(error) => cx.throw_error(error),
     }
 }
 
-#[cfg(tiqian_engine_link)]
 fn read_paragraph_request(
     cx: &mut FunctionContext,
     session_id: String,
@@ -380,7 +366,6 @@ fn read_paragraph_request(
 
 /// Index and boundary values are integers on the js side. The conversion
 /// truncates toward zero, maps NaN to 0, and saturates at the i32 bounds.
-#[cfg(tiqian_engine_link)]
 fn read_int_elements(cx: &mut FunctionContext, array: &Handle<JsArray>) -> NeonResult<Vec<i32>> {
     let mut items = Vec::with_capacity(array_capacity(array.len(&mut *cx)));
     for value in array.to_vec(&mut *cx)? {
@@ -392,7 +377,6 @@ fn read_int_elements(cx: &mut FunctionContext, array: &Handle<JsArray>) -> NeonR
     Ok(items)
 }
 
-#[cfg(tiqian_engine_link)]
 fn read_text_spans(
     cx: &mut FunctionContext,
     spans: &Handle<JsArray>,
@@ -414,7 +398,6 @@ fn read_text_spans(
     Ok(parsed)
 }
 
-#[cfg(tiqian_engine_link)]
 fn read_inline_boxes(
     cx: &mut FunctionContext,
     boxes: &Handle<JsArray>,
@@ -440,7 +423,6 @@ fn read_inline_boxes(
     Ok(parsed)
 }
 
-#[cfg(tiqian_engine_link)]
 fn read_line_break_spans(
     cx: &mut FunctionContext,
     spans: &Handle<JsArray>,

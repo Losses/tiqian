@@ -12,7 +12,6 @@ pub mod cache;
 pub mod canonical;
 pub mod context;
 pub mod emit;
-#[cfg(tiqian_engine_link)]
 pub mod engine_bridge;
 pub mod font_contract;
 pub mod font_face;

@@ -1,18 +1,17 @@
-//! Paragraph precompute over the engine ABI (ADR 0050 amendment
+//! Paragraph request lane of the precompute port (ADR 0050 amendment
 //! `PrecomputeInRust`).
 //!
-//! The typed request and the LayoutInput packing are the Rust port of
-//! `PrecomputeWire.kt`. Domain validation is single-sourced in the
-//! generated protocol model (tiqian_protocol_gen ParagraphRequestChecks,
-//! Stage1-P5): this module only adapts its lane request into the
-//! generated one and maps the generated issue variants to NamedError
-//! through the generated Display, whose strings are the published issue
-//! names. The f64 to f32 narrowing of the packing matches the Kotlin
-//! toFloat() casts; the validation runs on the f64 values the caller
-//! passed. The engine call exists only when build.rs linked the engine
-//! archive.
+//! The typed request is the Rust port of `PrecomputeWire.kt`. Domain
+//! validation is single-sourced in the generated protocol model
+//! (tiqian_protocol_gen ParagraphRequestChecks, Stage1-P5): this module
+//! adapts its lane request into the generated one and maps the generated
+//! issue variants to NamedError through the generated Display, whose
+//! strings are the published issue names. The engine consumes the
+//! generated Rust types directly (crate tiqian, module engine); the
+//! f64 to f32 narrowing at the engine boundary matches the Kotlin
+//! toFloat() casts of the packed ABI era, and the validation runs on
+//! the f64 values the caller passed.
 
-use tiqian::layout_request::{InlineBoxSpec, LayoutRequest, LineBreakSpanSpec, TextSpanSpec};
 use tiqian::NamedError;
 use tiqian_protocol_gen::org::tiqian::protocol::inline_box_input::InlineBoxInput as GenInlineBoxInput;
 use tiqian_protocol_gen::org::tiqian::protocol::line_break_span_input::LineBreakSpanInput as GenLineBreakSpanInput;
@@ -20,14 +19,23 @@ use tiqian_protocol_gen::org::tiqian::protocol::paragraph_request::ParagraphRequ
 use tiqian_protocol_gen::org::tiqian::protocol::paragraph_request_checks::ParagraphRequestChecks;
 use tiqian_protocol_gen::org::tiqian::protocol::text_span_input::TextSpanInput as GenTextSpanInput;
 
-// The request lane keeps the code types of the packed engine ABI; callers
-// building a ParagraphRequest take the codes from here.
-pub use tiqian::layout_request::{InlineBoxOuterSpacingCode, LineBreakPolicyCode};
+// The request lane keeps the code types of the former packed engine ABI;
+// callers building a ParagraphRequest take the codes from here. The
+// generated engine model carries the same codes as enums
+// (org.tiqian.core.{LineBreakPolicy, InlineBoxOuterSpacing}); the lane
+// keeps its own copies so the wire contract of this module stays stable.
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub enum LineBreakPolicyCode {
+    ProgressiveTechnical,
+}
 
-use crate::js_compat::kotlin_to_float;
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub enum InlineBoxOuterSpacingCode {
+    Narrow,
+    Source,
+}
 
-#[cfg(tiqian_engine_link)]
-use crate::plan::Plan;
+
 
 #[derive(Debug, Clone, PartialEq)]
 pub struct ParagraphRequest {
@@ -151,68 +159,6 @@ impl ParagraphRequest {
             decorations: Vec::new(),
         }
     }
-
-    /// Validates, then builds the engine-level packed request.
-    pub fn to_layout_request(&self) -> Result<LayoutRequest, NamedError> {
-        self.validate()?;
-        Ok(LayoutRequest {
-            max_width_px: kotlin_to_float(self.max_width_px),
-            font_size_px: kotlin_to_float(self.font_size_px),
-            line_height_px: kotlin_to_float(self.line_height_px),
-            first_line_indent_ic: kotlin_to_float(self.first_line_indent_ic),
-            font_weight: self.font_weight,
-            italic: self.italic,
-            line_length_grid_enabled: self.line_length_grid_enabled,
-            locale: self.locale.clone(),
-            families: self.font_families.clone(),
-            text: self.text.clone(),
-            text_spans: self
-                .text_spans
-                .iter()
-                .map(|span| TextSpanSpec {
-                    start: span.start,
-                    end: span.end,
-                    font_size_px: kotlin_to_float(span.font_size_px),
-                    font_weight: span.font_weight,
-                    italic: span.italic,
-                    baseline_shift: kotlin_to_float(span.baseline_shift),
-                    families: span.families.clone(),
-                })
-                .collect(),
-            source_boundaries: self.source_boundaries.clone(),
-            line_break_spans: self
-                .line_break_spans
-                .iter()
-                .map(|span| LineBreakSpanSpec {
-                    start: span.start,
-                    end: span.end,
-                    policy: span.policy,
-                })
-                .collect(),
-            inline_boxes: self
-                .inline_boxes
-                .iter()
-                .map(|inline_box| InlineBoxSpec {
-                    start: inline_box.start,
-                    end: inline_box.end,
-                    inline_start: kotlin_to_float(inline_box.inline_start),
-                    inline_end: kotlin_to_float(inline_box.inline_end),
-                    outer_spacing: inline_box.outer_spacing,
-                })
-                .collect(),
-            font_session_id: self.font_session_id.clone(),
-        })
-    }
-}
-
-/// Packs, calls the engine over the ABI and deserializes the packed plan.
-/// Exists only when the engine archive is linked (`TIQIAN_NATIVE_LIB_DIR` at
-/// build time); the font backend must already be installed.
-#[cfg(tiqian_engine_link)]
-pub fn precompute_paragraph(request: &ParagraphRequest) -> Result<Plan, NamedError> {
-    let packed = request.to_layout_request()?.pack()?;
-    let bytes = tiqian::engine::layout_paragraph(&packed)?;
-    Plan::from_packed_bytes(&bytes)
 }
 
 /// Kotlin `String.length`: UTF-16 code units. Every engine range and boundary
