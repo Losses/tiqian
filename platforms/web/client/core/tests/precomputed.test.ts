@@ -30,7 +30,7 @@ import {
 } from "../src/sampler/snapshot/precomputed.js";
 import { FONT_REPLAY_REVISION, stableStringify } from "../src/sampler/snapshot/snapshot-schema.js";
 import { snapshotTablesForRoot } from "../src/sampler/snapshot/snapshot-tables.js";
-import { writeBinaryTable } from "../src/sampler/snapshot/table-binary-writer.js";
+import { writeBinaryTable } from "../src/sampler/snapshot/table-binary-encode.js";
 import { createEnhanceContext, type EnhancedElementContext } from "../src/engine/context/enhance-context.js";
 import { initializeGlobalServices } from "../src/services/global-services.js";
 import type {
