@@ -3,60 +3,9 @@ use crate::org::tiqian::protocol::table_metric_row::TableMetricRow;
 use crate::org::tiqian::protocol::table_probe::TableProbe;
 use crate::org::tiqian::test::trace::test_trace_recorder::TestTraceRecorder;
 use crate::org::tiqian::test::trace::traced_assertions::TracedAssertions;
+use crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault;
 use crate::runtime::u_string;
 
-
-#[derive(Debug, Clone, PartialEq)]
-pub enum SnapshotTableTestSupportAssertHexBytesFault {
-    UStringFaultFault(crate::std::u_string_exception::UStringFault),
-    TracedAssertionsAssertEqualsStringFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsAssertEqualsStringFault),
-    TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
-}
-
-impl From<SnapshotTableTestSupportAssertHexBytesFault> for crate::std::u_string_exception::UStringFault {
-    fn from(value: SnapshotTableTestSupportAssertHexBytesFault) -> Self {
-        match value {
-            SnapshotTableTestSupportAssertHexBytesFault::UStringFaultFault(value) => value,
-            _ => panic!("fault union converted to an unrelated fault"),
-        }
-    }
-}
-
-impl From<SnapshotTableTestSupportAssertHexBytesFault> for crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsAssertEqualsStringFault {
-    fn from(value: SnapshotTableTestSupportAssertHexBytesFault) -> Self {
-        match value {
-            SnapshotTableTestSupportAssertHexBytesFault::TracedAssertionsAssertEqualsStringFaultFault(value) => value,
-            _ => panic!("fault union converted to an unrelated fault"),
-        }
-    }
-}
-
-impl From<SnapshotTableTestSupportAssertHexBytesFault> for crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault {
-    fn from(value: SnapshotTableTestSupportAssertHexBytesFault) -> Self {
-        match value {
-            SnapshotTableTestSupportAssertHexBytesFault::TracedAssertionsFailFaultFault(value) => value,
-            _ => panic!("fault union converted to an unrelated fault"),
-        }
-    }
-}
-
-impl From<crate::std::u_string_exception::UStringFault> for SnapshotTableTestSupportAssertHexBytesFault {
-    fn from(value: crate::std::u_string_exception::UStringFault) -> Self {
-        SnapshotTableTestSupportAssertHexBytesFault::UStringFaultFault(value)
-    }
-}
-
-impl From<crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsAssertEqualsStringFault> for SnapshotTableTestSupportAssertHexBytesFault {
-    fn from(value: crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsAssertEqualsStringFault) -> Self {
-        SnapshotTableTestSupportAssertHexBytesFault::TracedAssertionsAssertEqualsStringFaultFault(value)
-    }
-}
-
-impl From<crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault> for SnapshotTableTestSupportAssertHexBytesFault {
-    fn from(value: crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault) -> Self {
-        SnapshotTableTestSupportAssertHexBytesFault::TracedAssertionsFailFaultFault(value)
-    }
-}
 
 #[derive(Clone, Copy)]
 pub struct SnapshotTableTestSupport;
@@ -81,10 +30,9 @@ impl SnapshotTableTestSupport {
         return out_b;
     }
 
-    pub fn snapshot_table_test_support_assert_hex_bytes(recorder: TestTraceRecorder, label: &str, expected: &str, bytes: &[u8]) -> Result<(), SnapshotTableTestSupportAssertHexBytesFault> {
-        let _ = recorder.record(label).map_err(|e| SnapshotTableTestSupportAssertHexBytesFault::UStringFaultFault(e))?;
-        let _ = TracedAssertions::traced_assertions_assert_equals_string(expected, SnapshotTableTestSupport::snapshot_table_test_support_hex_bytes(&bytes).as_str(), Some((label).to_string())).map_err(|e|
-SnapshotTableTestSupportAssertHexBytesFault::TracedAssertionsFailFaultFault(e))?;
+    pub fn snapshot_table_test_support_assert_hex_bytes(recorder: TestTraceRecorder, label: &str, expected: &str, bytes: &[u8]) -> Result<(), TracedAssertionsFailFault> {
+        let _ = recorder.record(label).map_err(|e| TracedAssertionsFailFault::UStringFaultFault(e))?;
+        let _ = TracedAssertions::traced_assertions_assert_equals_string(expected, SnapshotTableTestSupport::snapshot_table_test_support_hex_bytes(&bytes).as_str(), Some((label).to_string()))?;
         Ok(())
     }
 
@@ -124,5 +72,16 @@ SnapshotTableTestSupportAssertHexBytesFault::TracedAssertionsFailFaultFault(e))?
         out.push(None);
         out.push(None);
         return out;
+    }
+
+    pub fn snapshot_table_test_support_two_pool_input() -> TableInput {
+        let mut metrics: Vec<TableMetricRow> = Vec::new();
+        metrics.push(TableMetricRow::new("Arial", 400.0f64, false, "sans", "fs-1", SnapshotTableTestSupport::snapshot_table_test_support_five_values(1.5f64, None, 2.0f64).to_vec()));
+        metrics.push(TableMetricRow::new("宋体", 500.0f64, true, "sans", "fs-1", SnapshotTableTestSupport::snapshot_table_test_support_five_values(3.5f64, Some(4.0f64), 5.0f64).to_vec()));
+        let probes: Vec<TableProbe> = Vec::new();
+        let empty: Vec<String> = Vec::new();
+        let mut texts: Vec<String> = Vec::new();
+        texts.push("{}".to_string());
+        return TableInput::new(texts.to_vec(), metrics.to_vec(), probes.to_vec(), empty.to_vec(), empty.to_vec(), empty.to_vec(), empty.to_vec(), "{}");
     }
 }

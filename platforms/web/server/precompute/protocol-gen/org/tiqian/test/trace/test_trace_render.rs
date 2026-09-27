@@ -478,6 +478,9 @@ i32::from_ne_bytes(((r#match).as_ref().unwrap().mantissa_end).to_ne_bytes())).as
         while (i32::from_ne_bytes((i).to_ne_bytes())) < (i32::from_ne_bytes((__count12).to_ne_bytes())) && TestTraceRender::test_trace_render_is_digit(*(u_string::unit_at_from(&__units12, i)).as_ref().unwrap()) {
             i = u32::wrapping_add(i, 1);
         }
+        if i32::from_ne_bytes((u32::wrapping_sub(i, digits_start)).to_ne_bytes()) > (3) {
+            return None;
+        }
         if i == digits_start {
             return None;
         }
@@ -558,6 +561,12 @@ TestTraceRender::test_trace_render_is_digit(*(u_string::unit_at_from(&__units12,
         ).to_string() };
         while (i32::from_ne_bytes((u_string::unit_count(&(digits))).to_ne_bytes())) > (1) && u_string::unit_at(&digits, u32::wrapping_sub(u_string::unit_count(&(digits)), 1)).as_ref().map_or(false, |v| v == &(48)) {
             digits = u_string::substring(&digits, 0i32, i32::from_ne_bytes((u32::wrapping_sub(u_string::unit_count(&(digits)), 1)).to_ne_bytes()));
+        }
+        if i32::from_ne_bytes((exponent).to_ne_bytes()) > (400) || (i32::from_ne_bytes((exponent).to_ne_bytes())) < (i32::from_ne_bytes((4294966896u32).to_ne_bytes())) {
+            return Ok(format!("{}{}",
+            sign,
+            value
+        ));
         }
         let decimal_position = i32::wrapping_add(i32::from_ne_bytes((if dot_index > 2147483647 { u_string::unit_count(&(value)) } else { dot_index }).to_ne_bytes()), i32::from_ne_bytes((exponent).to_ne_bytes()));
         if decimal_position <= 0 {

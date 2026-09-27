@@ -30,3 +30,4 @@ runtime.UString
 org.tiqian.protocol.Revision
 std.UStringException
 org.tiqian.protocol.SnapshotTableBinary
+org.tiqian.protocol.SnapshotTableBinaryTest
