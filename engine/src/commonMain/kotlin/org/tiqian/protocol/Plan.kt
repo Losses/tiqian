@@ -17,20 +17,20 @@ fun compare(a: PlanEmphasisRange, b: PlanEmphasisRange): Int {
 
 data class PlanInlineEdge(
     var offset: Int,
-    var inlineStart: Double?,
-    var inlineEnd: Double?
+    var inlineStart: Float?,
+    var inlineEnd: Float?
 )
 
 data class PlanRuby(
     var baseRangeStart: Int,
     var baseRangeEnd: Int,
     var text: String,
-    var centerX: Double,
-    var baselineY: Double,
-    var fontSize: Double,
+    var centerX: Float,
+    var baselineY: Float,
+    var fontSize: Float,
     var fontWeight: Int,
     var fontFamilies: MutableList<String>,
-    var ascent: Double?
+    var ascent: Float?
 )
 
 data class PlanBopomofo(
@@ -45,37 +45,37 @@ data class PlanBopomofo(
 data class PlanBopomofoPlacement(
     var text: String,
     var role: String,
-    var left: Double,
-    var top: Double,
-    var width: Double,
-    var height: Double
+    var left: Float,
+    var top: Float,
+    var width: Float,
+    var height: Float
 )
 
 data class PlanDecorationSegment(
     var kind: String,
-    var left: Double,
-    var top: Double,
-    var right: Double,
+    var left: Float,
+    var top: Float,
+    var right: Float,
     var sourceRangeStart: Int,
     var sourceRangeEnd: Int
 )
 
 data class PlanEmphasisDot(
-    var clusterRangeStart: Double?,
-    var anchorX: Double,
-    var anchorY: Double,
-    var dotDiameter: Double
+    var clusterRangeStart: Float?,
+    var anchorX: Float,
+    var anchorY: Float,
+    var dotDiameter: Float
 )
 
 data class PlanLine(
     var rangeStart: Int,
     var rangeEnd: Int,
-    var top: Double,
-    var bottom: Double,
-    var baseline: Double,
-    var indent: Double,
-    var visualWidth: Double,
-    var hyphenAdvance: Double,
+    var top: Float,
+    var bottom: Float,
+    var baseline: Float,
+    var indent: Float,
+    var visualWidth: Float,
+    var hyphenAdvance: Float,
     var endReason: PlanEndReason,
     var cells: MutableList<PlanCell>
 )
@@ -85,9 +85,9 @@ data class PlanCell(
     var rangeEnd: Int,
     var source: String,
     var display: String,
-    var drawX: Double,
-    var naturalWidth: Double,
-    var leadingLayoutAdvance: Double,
+    var drawX: Float,
+    var naturalWidth: Float,
+    var leadingLayoutAdvance: Float,
     var shapingBoundary: Boolean,
     var openTypeFeatures: MutableList<String>,
     var renderFontFamily: String?,
@@ -96,24 +96,24 @@ data class PlanCell(
     var resolvedFace: String?,
     var glyphIds: String?,
     var shapingEvidence: String?,
-    var punctuationInkFloor: Double?,
-    var punctuationBodyWidth: Double?,
+    var punctuationInkFloor: Float?,
+    var punctuationBodyWidth: Float?,
     var latin: Boolean,
-    var advance: Double?,
-    var inlineObject: Double?,
+    var advance: Float?,
+    var inlineObject: Float?,
     var styleDelta: PlanStyleDelta?
 )
 
 data class Plan(
-    var width: Double,
-    var height: Double,
+    var width: Float,
+    var height: Float,
     var lines: MutableList<PlanLine>,
     var emphasisRanges: MutableList<PlanEmphasisRange>,
     var inlineEdges: MutableList<PlanInlineEdge>,
     var rubyDecisions: MutableList<PlanRuby>,
     var bopomofoDecisions: MutableList<PlanBopomofo>,
-    var fontSize: Double?,
-    var overlayWidth: Double?,
+    var fontSize: Float?,
+    var overlayWidth: Float?,
     var decorationSegments: MutableList<PlanDecorationSegment>,
     var emphasisDots: MutableList<PlanEmphasisDot>
 )

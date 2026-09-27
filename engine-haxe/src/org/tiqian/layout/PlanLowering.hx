@@ -13,6 +13,10 @@ import std.ReadOnlyArray;
  * PlanPacked.encode.
  */
 class PlanLowering {
+    /** Identity on Float; gives the Kotlin emitter an argument position so a
+     * Haxe Int coerces to Float with an explicit .toFloat() (a plain
+     * assignment emits no conversion and fails Kotlin typing). */
+    static function f32(v:Float):Float return v;
     static function rangeKey(r:TextRange):String
         return Std.string(r.start) + ":" + Std.string(r.end);
 
@@ -125,8 +129,10 @@ class PlanLowering {
                     gIds = glyphIds.has(ck) && glyphIds.get(ck).length > 0 ? glyphIds.get(ck).join(",") : null;
                     ev = sd != null ? sd.reason : null;
                     final pd = punct.get(ck);
-                    inkFloor = (pd != null && pd.inkContainmentApplied && pd.inkContainmentBodyFloor != null) ? pd.inkContainmentBodyFloor : null;
-                    bodyW = (inkFloor != null) ? pd.bodyWidth : null;
+                    if (pd != null && pd.inkContainmentApplied && pd.inkContainmentBodyFloor != null) {
+                        inkFloor = pd.inkContainmentBodyFloor;
+                        bodyW = pd.bodyWidth;
+                    }
                     final fdSrc = result.debug.fontDecisions;
                     for (fi in 0...fdSrc.length) {
                         final fd = fdSrc[fi];
@@ -140,12 +146,13 @@ class PlanLowering {
                         italic: cs.italic != result.input.textStyle.italic ? cs.italic : null,
                     } else null;
                 }
+                final feats = features.get(ck);
                 cells.push({
                     rangeStart: c.range.start, rangeEnd: c.range.end,
                     source: c.text, display: c.displayText,
                     drawX: p.drawX, naturalWidth: natW, leadingLayoutAdvance: c.leadingLayoutAdvance,
                     shapingBoundary: c.range.end - c.range.start > 1,
-                    openTypeFeatures: features.has(ck) ? features.get(ck) : [],
+                    openTypeFeatures: feats != null ? feats : [],
                     renderFontFamily: renderFam, dashStrategy: dash,
                     shapingLanguage: lang, resolvedFace: face,
                     glyphIds: gIds, shapingEvidence: ev,
@@ -240,7 +247,7 @@ class PlanLowering {
             for (di in 0...dotSrc.length) {
                 final d = dotSrc[di];
                 if (d.applied && d.kind == Type.enumConstructor(DecorationKind.Emphasis) && d.dotDiameter > 0)
-                    emphasisDots.push({clusterRangeStart: d.clusterRange.start, anchorX: d.anchorX, anchorY: d.anchorY, dotDiameter: d.dotDiameter});
+                    emphasisDots.push({clusterRangeStart: f32(d.clusterRange.start), anchorX: d.anchorX, anchorY: d.anchorY, dotDiameter: d.dotDiameter});
             }
         }
         return {

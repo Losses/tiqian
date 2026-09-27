@@ -97,9 +97,7 @@ private class PlanPackedReader {
 private class StringPool {
     public final ordered:Array<String> = [];
 
-    public function new() {
-        ordered = [];
-    }
+    public function new() {}
 
     public function intern(value:String):Int {
         for (i in 0...ordered.length) {
@@ -122,6 +120,11 @@ class PlanPacked {
     static inline var PLAN_MAGIC:Int = 0x54515050;
     static inline var PLAN_PROTOCOL_REVISION:Int = 1;
     static inline var PLAN_STRING_ABSENT:Int = 0xFFFFFFFF;
+
+    /** Identity on Float; gives the Kotlin emitter an argument position so a
+     * Haxe Int coerces to Float with an explicit .toFloat() (a plain
+     * assignment emits no conversion and fails Kotlin typing). */
+    static function f32(v:Float):Float return v;
 
     /**
      * Encodes one Plan into its column-major packed bytes. Every string
@@ -183,10 +186,14 @@ class PlanPacked {
                 cellResolvedFaceRef.push(cell.resolvedFace != null ? pool.intern(cell.resolvedFace) : PLAN_STRING_ABSENT);
                 cellGlyphIdsRef.push(cell.glyphIds != null ? pool.intern(cell.glyphIds) : PLAN_STRING_ABSENT);
                 cellEvidenceRef.push(cell.shapingEvidence != null ? pool.intern(cell.shapingEvidence) : PLAN_STRING_ABSENT);
-                cellInkFloor.push(cell.punctuationInkFloor != null ? cell.punctuationInkFloor : Math.NaN);
-                cellBodyWidth.push(cell.punctuationBodyWidth != null ? cell.punctuationBodyWidth : Math.NaN);
-                cellAdvance.push(cell.advance != null ? cell.advance : Math.NaN);
-                cellInlineObject.push(cell.inlineObject != null ? cell.inlineObject : Math.NaN);
+                final ink = cell.punctuationInkFloor;
+                cellInkFloor.push(ink != null ? ink : Math.NaN);
+                final bw = cell.punctuationBodyWidth;
+                cellBodyWidth.push(bw != null ? bw : Math.NaN);
+                final adv = cell.advance;
+                cellAdvance.push(adv != null ? adv : Math.NaN);
+                final inl = cell.inlineObject;
+                cellInlineObject.push(inl != null ? inl : Math.NaN);
                 final style = cell.styleDelta;
                 var styleFontSize = Math.NaN;
                 var styleFontWeight = Math.NaN;
@@ -195,7 +202,7 @@ class PlanPacked {
                     final fs = style.fontSize;
                     if (fs != null) styleFontSize = (fs : Float);
                     final fw = style.fontWeight;
-                    if (fw != null) styleFontWeight = (fw : Float);
+                    if (fw != null) styleFontWeight = f32(fw);
                     final it = style.italic;
                     if (it != null) styleItalic = it ? 1 : 0;
                 }
@@ -236,7 +243,8 @@ class PlanPacked {
             rubyFontWeight.push(ruby.fontWeight);
             rubyFamilyOffset.push(rubyFamilyPool.length);
             rubyFamilyCount.push(ruby.fontFamilies.length);
-            rubyAscent.push(ruby.ascent != null ? (ruby.ascent : Float) : Math.NaN);
+            final ascent = ruby.ascent;
+            rubyAscent.push(ascent != null ? ascent : Math.NaN);
             for (fam in ruby.fontFamilies) rubyFamilyPool.push(pool.indexOf(fam));
         }
 
@@ -391,8 +399,8 @@ class PlanPacked {
 
         // === INLINE EDGES ===
         for (edge in plan.inlineEdges) writer.f64(edge.offset);
-        for (edge in plan.inlineEdges) writer.f64(edge.inlineStart != null ? (edge.inlineStart : Float) : Math.NaN);
-        for (edge in plan.inlineEdges) writer.f64(edge.inlineEnd != null ? (edge.inlineEnd : Float) : Math.NaN);
+        for (edge in plan.inlineEdges) { final s = edge.inlineStart; writer.f64(s != null ? s : Math.NaN); }
+        for (edge in plan.inlineEdges) { final e = edge.inlineEnd; writer.f64(e != null ? e : Math.NaN); }
 
         // === RUBY ===
         for (v in rubyBaseStart) writer.u32(v);
