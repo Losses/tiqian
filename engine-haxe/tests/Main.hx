@@ -447,6 +447,7 @@ class Main {
         run("testEastAsianSpacingDataAndValues", EastAsianSpacingCoverageTest.testEastAsianSpacingDataAndValues);
         run("testEastAsianSpacingEdgesModel", EastAsianSpacingCoverageTest.testEastAsianSpacingEdgesModel);
         run("testUnicodeEastAsianSpacing", EastAsianSpacingCoverageTest.testUnicodeEastAsianSpacing);
+        run("testUnicodeEastAsianSpacingLoneHighSurrogates", EastAsianSpacingCoverageTest.testUnicodeEastAsianSpacingLoneHighSurrogates);
         TestTraceRecorder.flushClass("EastAsianSpacingCoverageTest");
         run("lookupCoversEveryGeneratedValueAndBothMissDirections", EastAsianSpacingLookupCoverageTest.lookupCoversEveryGeneratedValueAndBothMissDirections);
         TestTraceRecorder.flushClass("EastAsianSpacingLookupCoverageTest");
@@ -530,6 +531,7 @@ class Main {
             CjkFontRoleClassifierTest.classifiesUnicodeEmojiPresentationWithoutReclassifyingPlainKeycapBases);
         TestTraceRecorder.flushClass("CjkFontRoleClassifierTest");
         run("testCjkFontRoleClassifierAllRanges", FontPolicyCoverageTest.testCjkFontRoleClassifierAllRanges);
+        run("testCjkFontRoleClassifierLoneHighSurrogates", FontPolicyCoverageTest.testCjkFontRoleClassifierLoneHighSurrogates);
         run("testFontEnumsAndModels", FontPolicyCoverageTest.testFontEnumsAndModels);
         run("testFontMetricsRequestAndResolvers", FontPolicyCoverageTest.testFontMetricsRequestAndResolvers);
         run("testFontRequestAndRoles", FontPolicyCoverageTest.testFontRequestAndRoles);
