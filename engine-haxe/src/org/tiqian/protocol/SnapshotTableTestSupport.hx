@@ -59,4 +59,16 @@ class SnapshotTableTestSupport {
         out.push(null);
         return out;
     }
+
+    /** Two metrics with distinct values so the pool must hold two rows. */
+    public static function twoPoolInput():TableInput {
+        final metrics = new Array<TableMetricRow>();
+        metrics.push(new TableMetricRow("Arial", 400.0, false, "sans", "fs-1", fiveValues(1.5, null, 2.0)));
+        metrics.push(new TableMetricRow("宋体", 500.0, true, "sans", "fs-1", fiveValues(3.5, 4.0, 5.0)));
+        final probes = new Array<TableProbe>();
+        final empty = new Array<String>();
+        final texts = new Array<String>();
+        texts.push("{}");
+        return new TableInput(texts, metrics, probes, empty, empty, empty, empty, "{}");
+    }
 }

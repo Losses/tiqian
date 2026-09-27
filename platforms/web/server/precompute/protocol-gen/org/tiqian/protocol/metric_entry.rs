@@ -6,6 +6,7 @@ pub struct MetricEntry {
     pub role_ref: u32,
     pub face_selection_ref: u32,
     pub value_pool_ref: u32,
+    pub values_em: Vec<Option<f64>>,
     pub stored: bool,
 }
 
@@ -18,6 +19,7 @@ impl MetricEntry {
             role_ref,
             face_selection_ref,
             value_pool_ref,
+            values_em: Default::default(),
             stored: false,
         }
     }

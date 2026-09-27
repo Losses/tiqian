@@ -314,18 +314,21 @@ class SnapshotTableBinary {
             final row = table.metrics[indexIdx];
             final entry = new MetricEntry(interner.intern(row.serializedFamilies), row.fontWeight,
                 row.italic ? 1 : 0, interner.intern(row.role), interner.intern(row.faceSelectionText), 0);
+            entry.valuesEm = row.valuesEm;
             metricEntries.push(entry);
             indexIdx++;
         }
         sortMetricRows(metricEntries);
         final valuePool = new Array<ValueRow>();
+        final pooled = new Array<MetricEntry>();
         indexIdx = 0;
         while (indexIdx < metricEntries.length) {
-            final values = table.metrics[indexIdx].valuesEm;
-            metricEntries[indexIdx].valuePoolRef = poolRefOf(valuePool, values);
+            final sorted = metricEntries[indexIdx];
+            pooled.push(new MetricEntry(sorted.familiesRef, sorted.weight, sorted.italic,
+                sorted.roleRef, sorted.faceSelectionRef, poolRefOf(valuePool, sorted.valuesEm)));
             indexIdx++;
         }
-        data.metricRows = metricEntries;
+        data.metricRows = pooled;
         data.valuePool = valuePool;
         final advancePool = new Array<Float>();
         final stylePool = new Array<StyleRow>();

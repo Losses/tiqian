@@ -7,6 +7,7 @@ export class MetricEntry {
   public roleRef: number;
   public faceSelectionRef: number;
   public valuePoolRef: number;
+  public valuesEm: (number | null)[];
   public stored: boolean;
 
   constructor(familiesRef: number, weight: number, italic: number, roleRef: number, faceSelectionRef: number, valuePoolRef: number) {

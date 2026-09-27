@@ -85,4 +85,29 @@ class SnapshotTableBinaryTest {
             SnapshotTableBinary.decodeInto(corrupted, badMagic));
     }
 
+
+    /**
+     * Regression for the dropped value-pool ref write: a table whose two
+     * metric rows fall into two distinct pool rows must decode with refs 0
+     * and 1, and re-encoding must reproduce the bytes exactly. Both checks
+     * fail if the pool ref assignment is silently lost (the ref collapses
+     * to 0 and the pool collapses to one row).
+     */
+    @:test
+    public static function poolRefsSurviveDecodeReencode():Void {
+        final recorder = new org.tiqian.test.trace.TestTraceRecorder("SnapshotTableBinaryTest");
+        recorder.section("poolRefsSurviveDecodeReencode");
+        final input = SnapshotTableTestSupport.twoPoolInput();
+        final bytes = SnapshotTableBinary.encode(input);
+        final data = new TableData();
+        final issue = SnapshotTableBinary.decodeInto(bytes, data);
+        org.tiqian.test.trace.TracedAssertions.assertEqualsString("", issue);
+        org.tiqian.test.trace.TracedAssertions.assertEqualsInt(2, data.valuePool.length);
+        org.tiqian.test.trace.TracedAssertions.assertEqualsInt(0, data.metricRows[0].valuePoolRef);
+        org.tiqian.test.trace.TracedAssertions.assertEqualsInt(1, data.metricRows[1].valuePoolRef);
+        SnapshotTableTestSupport.assertHexBytes(recorder, "refreeze",
+            SnapshotTableTestSupport.hexBytes(bytes),
+            SnapshotTableBinary.encodeData(data));
+    }
+
 }

@@ -6,7 +6,10 @@ class MetricEntry {
     public var italic:Int;
     public var roleRef:Int;
     public var faceSelectionRef:Int;
+    /** Semantic values kept so pooling can run after the sort. */
     public var valuePoolRef:Int;
+    /** Semantic values carried through lowering (decode leaves these empty). */
+    public var valuesEm:Array<Null<Float>>;
     public var stored:Bool;
 
     public function new(familiesRef:Int, weight:Float, italic:Int, roleRef:Int, faceSelectionRef:Int, valuePoolRef:Int) {

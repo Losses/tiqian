@@ -282,19 +282,21 @@ face_sel_refs[usize::try_from(col_idx).unwrap_or(0)], pool_refs[usize::try_from(
         let mut metric_entries: Vec<MetricEntry> = Vec::new();
         while (i32::from_ne_bytes((index_idx).to_ne_bytes())) < (i32::from_ne_bytes((u32::try_from((table.metrics.len()) & 0xFFFF_FFFF).unwrap_or(0)).to_ne_bytes())) {
             let row = (table.metrics[usize::try_from(index_idx).unwrap_or(0)]).clone();
-            let entry = MetricEntry::new(interner.intern((row.serialized_families).to_string().as_str()), row.font_weight, if row.italic { 1 } else { 0 }, interner.intern((row.role).to_string().as_str()), interner.intern((row.face_selection_text).to_string().as_str()), 0u32);
+            let mut entry = MetricEntry::new(interner.intern((row.serialized_families).to_string().as_str()), row.font_weight, if row.italic { 1 } else { 0 }, interner.intern((row.role).to_string().as_str()), interner.intern((row.face_selection_text).to_string().as_str()), 0u32);
+            entry.values_em = row.values_em;
             metric_entries.push(entry.clone());
             index_idx = u32::wrapping_add(index_idx, 1);
         }
         SnapshotTableBinary::snapshot_table_binary_sort_metric_rows(&mut metric_entries);
         let mut value_pool: Vec<ValueRow> = Vec::new();
+        let mut pooled: Vec<MetricEntry> = Vec::new();
         index_idx = 0u32;
         while (i32::from_ne_bytes((index_idx).to_ne_bytes())) < (i32::from_ne_bytes((u32::try_from((metric_entries.len()) & 0xFFFF_FFFF).unwrap_or(0)).to_ne_bytes())) {
-            let values = ((table.metrics[usize::try_from(index_idx).unwrap_or(0)]).clone().values_em).clone();
-            (metric_entries[usize::try_from(index_idx).unwrap_or(0)]).clone().value_pool_ref = SnapshotTableBinary::snapshot_table_binary_pool_ref_of(&mut value_pool, &values);
+            let sorted = (metric_entries[usize::try_from(index_idx).unwrap_or(0)]).clone();
+            pooled.push(MetricEntry::new(sorted.families_ref, sorted.weight, sorted.italic, sorted.role_ref, sorted.face_selection_ref, SnapshotTableBinary::snapshot_table_binary_pool_ref_of(&mut value_pool, &sorted.values_em)));
             index_idx = u32::wrapping_add(index_idx, 1);
         }
-        data.metric_rows = metric_entries;
+        data.metric_rows = pooled;
         data.value_pool = value_pool;
         let mut advance_pool: Vec<f64> = Vec::new();
         let mut style_pool: Vec<StyleRow> = Vec::new();
