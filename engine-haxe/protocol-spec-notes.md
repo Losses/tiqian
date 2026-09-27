@@ -207,3 +207,31 @@
 - InvalidInlineObjectAdvance：plan(workerRequest { text="中文"; inlineObjects=[{0,1,-1.0,14.4,4.32}] })，advance<0，新测试 inlineObjectsNegativeAdvanceThrowsInvalidInlineObjectAdvance。
 - InvalidInlineObjectVerticalGeometry：plan(workerRequest { text="中文"; inlineObjects=[{0,1,18.0,Double.NaN,4.32}] })，ascent NaN，新测试 inlineObjectsNaNAscendsThrowsInvalidInlineObjectVerticalGeometry。
 - InvalidDecorationRange：planWithDiagnostics(prepareRequest { text="你好世界"; decorations=[{3,2,"Underline"}] })，start≥end，新测试 decorationsReversedRangeThrowsInvalidDecorationRange。
+
+## Stage1-C LoweringHelper 席（JS 侧四导出消费 ts 束生成物，pin f1b28bd3 @ tiqian 45e65d51）
+
+### 生成与闭包
+- 驱动器：`rm -rf engine-haxe/out/ts && nix develop -c bash -c 'node <workspace>/boring/out/bundle/driver.js gen ts --project boring.json'` → `bundle driver: ok`，gen 树 282 个 `.ts`；所需九类（CjkFontRoleClassifier / FontRole / FontRoleContext / InlineShapingStylePolicy / TextRange / QuotePairAnalyzer / ContextualDashEllipsisRoleResolver / UnicodeEmojiPresentationData / UnicodeSymbolData）全部在场——靠测试入口传递编译进 ts 束，无需加根（队长主检出实测同结论，405 个 .ts 口径含 gen-tests）。
+- 闭包 31 文件 / 201.5 KB（import 闭包脚本实测，含 `runtime.ts`）；vendored 落 `ffi/js/npm/engine-gen/`。与 Font 席已落文件 cmp 逐字节相同 → 生成确定性成立，合并 add/add 无冲突。
+
+### Node 直载失败（为什么必须 tsc 编译路线）
+- `engine-gen/org/tiqian/core/TextRangeError.ts`（1-17 行）整体为 interface/type 别名，零运行时导出；`TiqianIllegalArgumentException.ts:3` `import { TextRangeError } from "./TextRangeError.ts"` 是值导入形态。
+- Node v22.23.1：`--experimental-strip-types` 与 `--experimental-transform-types` 下 import 均报 `The requested module './TextRangeError.ts' does not provide an export named 'TextRangeError'` → 生成 TS 不经 tsc 编译无法被 Node 链接；故 npm 包走 tsc（`rewriteRelativeImportExtensions` 把 `.ts` 规范式重写为 `.js`，P6 server-core 先例）。
+- 同因排除「Kotlin/JS @JsModule 引 .ts」路线：需要额外 TS→JS 编译步骤（Clreq 席闸门同判）。
+
+### tsc 配方与有界放宽（出口：T1/T2）
+- 配方（LineBreak 落地后的共享配置 `ffi/js/npm/tsconfig.engine-gen.json`）：tsc 5.9.3，`target es2022 / module nodenext / rewriteRelativeImportExtensions / outDir runtime/engine-gen / rootDir engine-gen / include engine-gen/**/*.ts`，由 `build-runtime.ts` 在 Gradle Sync 之后对全闭包（四席并集）一次编译；tsc 默认档无 strict 键（即 strictNullChecks 未开）。
+- 唯一放宽：`strictNullChecks: false` 以显式键仅落在 vendored 目录自身配置 `ffi/js/npm/engine-gen/tsconfig.json`（包级/工作区级 tsconfig 不写显式放宽键，闸门裁定；该局部配置即本目录的 strict 姿态与放宽记录的规范位置）。命中的具体诊断：TS2322 @ `engine-gen/org/tiqian/font/FontRoleContext.ts:13`（`this.regionHint = regionHint;`，参数 `regionHint?: string | null` 的 `undefined` 可能不可赋给字段 `readonly regionHint: string | null`）——生成代码不可手改，放宽有界。取消条件：T1/T2（tiqian TypeScript 严格档清零与 boring 自身 TS 严格档转绿）落地、发射端产出 strict 干净构造器后，删掉该键并以 strict 重编验证。
+
+### 旧产物 JS 可见错误名（旧 runtime 实测，47 例 fixture dump 基线）
+- TextRange 校验抛 Kotlin data object，JS `error.name` 是对象名：`NegativeStart` / `StartGreaterThanEnd`（非 sealed 基类名）；消息与生成物 `TiqianIllegalArgumentException.describe`（`TiqianIllegalArgumentException.ts:14-25`）逐字一致："TextRange start must be non-negative." / "TextRange start must not be greater than end."
+- `classifyFontRoles` size 不符：`require` → JS `error.name = IllegalArgumentException`，消息 "starts and ends must have the same size"。
+- 越界输入（`("中", 5, 7)`）：旧产物返回 `"other"`（Kotlin/JS `String[index]` 越界得 NUL，`codePointAtCompat`（FontPolicy.kt:161-169）回 0 → Unknown），生成 TS 同（`charCodeAt` NaN → Unknown，`CjkFontRoleClassifier.ts` classify 首行）——一致，facade 无需补 guard。
+- facade 归一：catch 生成 `TiqianIllegalArgumentException`（`error.error.kind`）按对象名重抛；size 校验按 `IllegalArgumentException` 重抛（`ffi/js/npm/src/loweringhelper-facade.mjs`）。
+
+### 生成物 contextual 链入口（调用形态）
+- `QuotePairAwareFontRoleClassifier.withContextualQuoteRoles(base, text, context)`（`QuotePairAnalyzer.ts:216-243`，静态在 Aware 包装类上，不在 QuotePairAnalyzer 上）；`ContextualDashEllipsisRoles.withContextualDashEllipsisRoles(base, text, context)`（`ContextualDashEllipsisRoleResolver.ts:209-236`，静态在 `ContextualDashEllipsisRoles` 载体类上）。与 Haxe 测试调用形态一致（`ContextualRoleExtensionCoverageTest.hx:27-36`）；链序 quote → dash/ellipsis 同 Kotlin facade（LoweringHelperExports.kt:86-89 改前序）。
+
+### 验收读数
+- 47 例 fixture dump（`node .tq-logs/js-lh/dump.mjs <module> <out.json>`）：旧产物 `runtime/Tiqian-tiqian-ffi-js.mjs` 与改后 facade（`tsc -p engine-gen/tsconfig.json` 后 `runtime/loweringhelper-facade.mjs`）`diff` 为空，逐字节一致（含 16 属性清单顺序、diverge@0..15、clamp、全部错误名与消息）。
+- `./gradlew :ffi:js:jsNodeTest`（GRADLE_USER_HOME=<工作树>/.gradle-home，nix develop 内 JDK 25）：改 Kotlin 后 BUILD SUCCESSFUL。`assembleNpmPackage` 的 Sync 会清 runtime/（与 Font 席互证）——vendored 在 engine-gen/、构建经 build-runtime.ts 在 Sync 后复制（LineBreak 席机制）。`f32` 口径不适用：四导出零数值输出。
