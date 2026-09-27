@@ -19,12 +19,12 @@
   },
   "license": "MPL-2.0",
   "type": "module",
-  "main": "./runtime/Tiqian-tiqian-ffi-js.mjs",
-  "types": "./runtime/Tiqian-tiqian-ffi-js.d.mts",
+  "main": "./runtime/facade.mjs",
+  "types": "./runtime/facade.d.mts",
   "exports": {
     ".": {
-      "types": "./runtime/Tiqian-tiqian-ffi-js.d.mts",
-      "default": "./runtime/Tiqian-tiqian-ffi-js.mjs"
+      "types": "./runtime/facade.d.mts",
+      "default": "./runtime/facade.mjs"
     }
   },
   "engines": {
@@ -50,6 +50,7 @@
   "files": [
     "LICENSE",
     "README.md",
-    "runtime/"
+    "runtime/",
+    "engine-gen/"
   ]
 }

@@ -112,11 +112,11 @@ test("the manifest ships the generated engine runtime and nothing else", async (
   assert.equal(manifest.license, "MPL-2.0");
   assert.equal(manifest.engines.node, ">=22");
   assert.deepEqual(manifest.publishConfig, { access: "public", tag: "alpha" });
-  assert.deepEqual(manifest.files, ["LICENSE", "README.md", "runtime/"]);
+  assert.deepEqual(manifest.files, ["LICENSE", "README.md", "runtime/", "engine-gen/"]);
   assert.deepEqual(manifest.exports, {
     ".": {
-      types: "./runtime/Tiqian-tiqian-ffi-js.d.mts",
-      default: "./runtime/Tiqian-tiqian-ffi-js.mjs",
+      types: "./runtime/facade.d.mts",
+      default: "./runtime/facade.mjs",
     },
   });
   assert.equal(manifest.dependencies, undefined);
@@ -127,15 +127,18 @@ test("the manifest ships the generated engine runtime and nothing else", async (
   );
 });
 
-test("the generated declarations name the whole export surface", async () => {
-  const declarations = await readFile(
-    new URL("./runtime/Tiqian-tiqian-ffi-js.d.mts", import.meta.url),
-    "utf8",
-  );
+test("the package export surface names all twelve capabilities in order", async () => {
+  // Cutover mechanism note: the entry used to be the Kotlin-generated module
+  // whose .d.mts this test scanned; it is now the aggregate facade, so the
+  // pinned surface is read off the facade's export block. The runtime module
+  // namespace cannot carry the order (its keys are sorted by spec), and the
+  // order is part of the contract. The pinned list — twelve names and their
+  // order — is unchanged.
+  const facade = await readFile(new URL("./runtime/facade.mjs", import.meta.url), "utf8");
+  const exportBlock = facade.match(/export \{([^}]+)\};/u)?.[1];
+  assert.ok(exportBlock, "facade.mjs carries a single export block");
 
-  const exported = [...declarations.matchAll(/export declare function (\w+)\(/gu)].map(
-    (match) => match[1],
-  );
+  const exported = exportBlock.split(",").map((name) => name.trim()).filter(Boolean);
   assert.deepEqual(exported, [
     "bopomofoParse",
     "numberSymbolCohesionUnbreakableRanges",
@@ -160,7 +163,12 @@ test("every engine module ships a source map with embedded sources", async () =>
     modules.length >= 4,
     "the runtime keeps the full module set (engine is a single published module)",
   );
+  // Cutover mechanism note: the facade and the line-break wire translation
+  // are hand-written entry shims, not engine modules; the embedded-sources
+  // contract keeps applying to the Kotlin-generated engine modules.
+  const entryShims = new Set(["facade.mjs", "linebreak-facade.mjs"]);
   for (const module of modules) {
+    if (entryShims.has(module)) continue;
     const map = `${module}.map`;
     assert.ok(entries.includes(map), `runtime/${module} has no source map`);
     if (MAPS_WITHOUT_SOURCES.has(map)) continue;
@@ -190,7 +198,7 @@ test("the engine entry loads from the package exports surface", async () => {
   assert.equal(typeof ffi.firstDivergentInlineShapingProperty, "function");
   assert.equal(typeof ffi.precomputeParagraphWithDiagnostics, "function");
   assert.equal(typeof ffi.precomputeParagraphWithBrowserMetrics, "function");
-  assert.match(import.meta.resolve("@tiqian/ffi"), /Tiqian-tiqian-ffi-js\.mjs$/u);
+  assert.match(import.meta.resolve("@tiqian/ffi"), /facade\.mjs$/u);
 });
 
 test("classifyFontRole maps classifier roles to lowering role strings", async () => {
