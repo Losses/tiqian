@@ -23,3 +23,5 @@ org.tiqian.protocol.ParagraphRequest
 org.tiqian.protocol.ParagraphRequestTest
 org.tiqian.protocol.Revision
 org.tiqian.protocol.RevisionTest
+org.tiqian.protocol.NamedError
+org.tiqian.protocol.NamedErrorTest

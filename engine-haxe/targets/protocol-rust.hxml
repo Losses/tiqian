@@ -22,7 +22,10 @@ org.tiqian.protocol.WireValue
 org.tiqian.protocol.Canonical
 org.tiqian.protocol.ParagraphRequest
 org.tiqian.protocol.ParagraphRequestTest
+org.tiqian.protocol.NamedError
+org.tiqian.protocol.NamedErrorTest
 runtime.SortedTable
+runtime.TestCore
 runtime.UString
 org.tiqian.protocol.Revision
 std.UStringException

@@ -6,6 +6,7 @@
 //! face specs.
 
 use tiqian::NamedError;
+use tiqian_protocol_gen::org::tiqian::protocol::paragraph_request_exception::NamedError as ProtocolNamedError;
 
 use crate::cache::{CacheAdapter, LayeredCacheStore, NoCache, WriteBudgetTier};
 use crate::emit::evidence_json;
@@ -283,7 +284,7 @@ impl Precomputer {
             )
         };
         if !max_width_px.is_finite() || max_width_px <= 0.0 {
-            return Err(named("InvalidMaximumMeasure"));
+            return Err(named(&ProtocolNamedError::InvalidMaximumMeasure.to_string()));
         }
 
         let captured = capture(
@@ -438,7 +439,7 @@ fn capture(
     }
     for value in &boundaries {
         if !is_safe_integer(*value) || *value < 0.0 || *value > f64::from(text_length) {
-            return Err(named("InvalidSourceBoundary"));
+            return Err(named(&ProtocolNamedError::InvalidSourceBoundary.to_string()));
         }
     }
     // The gate above passed every boundary as a safe integer, so partial_cmp

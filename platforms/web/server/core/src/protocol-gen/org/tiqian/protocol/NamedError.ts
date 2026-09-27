@@ -84,7 +84,7 @@ export interface InvalidDecorationRange {
   readonly kind: "InvalidDecorationRange"
 }
 
-export type ParagraphRequestError =
+export type NamedError =
   | EmptyParagraph
   | InvalidMaximumMeasure
   | InvalidFontSize
@@ -107,7 +107,7 @@ export type ParagraphRequestError =
   | InvalidInlineObjectVerticalGeometry
   | InvalidDecorationRange;
 
-export const ParagraphRequestError = Object.freeze({
+export const NamedError = Object.freeze({
   EmptyParagraph: Object.freeze({ kind: "EmptyParagraph" } as EmptyParagraph),
   InvalidMaximumMeasure: Object.freeze({ kind: "InvalidMaximumMeasure" } as InvalidMaximumMeasure),
   InvalidFontSize: Object.freeze({ kind: "InvalidFontSize" } as InvalidFontSize),
@@ -131,7 +131,7 @@ export const ParagraphRequestError = Object.freeze({
   InvalidDecorationRange: Object.freeze({ kind: "InvalidDecorationRange" } as InvalidDecorationRange)
 });
 
-export function compareParagraphRequestError(a: ParagraphRequestError, b: ParagraphRequestError): number {
+export function compareNamedError(a: NamedError, b: NamedError): number {
   if (a === b) return 0;
   if (a.kind === "EmptyParagraph") return 0 - (b.kind === "EmptyParagraph" ? 0 : 0);
   if (a.kind === "InvalidMaximumMeasure") return 1 - (b.kind === "InvalidMaximumMeasure" ? 1 : 0);

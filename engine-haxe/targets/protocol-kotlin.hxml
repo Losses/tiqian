@@ -1,4 +1,5 @@
 # Stage A protocol Kotlin generation entry (revision constants only).
+# Stage A protocol Kotlin generation entry (NamedError family).
 # Run from the worktree root:
 #   nix develop -c bash -c 'haxe engine-haxe/targets/protocol-kotlin.hxml'
 # Shared compiler configuration for every engine-haxe generation entry.
@@ -16,3 +17,9 @@
 -D runtime-emit=runtime
 org.tiqian.protocol.Revision
 org.tiqian.protocol.RevisionTest
+--macro Intercept.run(['engine-haxe/src'])
+-D runtime-import=org.tiqian.boring.runtime
+org.tiqian.protocol.NamedError
+org.tiqian.protocol.NamedErrorTest
+runtime.UString
+runtime.TestCore

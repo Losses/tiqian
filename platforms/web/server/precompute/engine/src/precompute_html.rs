@@ -11,6 +11,7 @@
 use std::collections::HashSet;
 
 use tiqian::NamedError;
+use tiqian_protocol_gen::org::tiqian::protocol::paragraph_request_exception::NamedError as ProtocolNamedError;
 
 use crate::font_source::sha256_hex;
 use crate::html_parse::{
@@ -579,7 +580,7 @@ impl HtmlPreparer {
         if let Some(width) = snapshot_width {
             let number = js_number_value(width);
             if !number.is_finite() || number <= 0.0 {
-                return Err(named("InvalidMaximumMeasure"));
+                return Err(named(&ProtocolNamedError::InvalidMaximumMeasure.to_string()));
             }
         }
         let id = match options.id {

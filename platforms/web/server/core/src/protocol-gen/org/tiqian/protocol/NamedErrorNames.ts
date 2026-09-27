@@ -2,13 +2,9 @@
 
 import { NamedError } from "./NamedError.ts";
 
-export class ParagraphRequestException extends Error {
-  public readonly error: NamedError;
-
-  constructor(error: NamedError) {
-    super(ParagraphRequestException.describe(error));
-    this.name = "ParagraphRequestException";
-    this.error = error;
+export class NamedErrorNames {
+  public static variants(): NamedError[] {
+    return [NamedError.EmptyParagraph, NamedError.InvalidMaximumMeasure, NamedError.InvalidFontSize, NamedError.InvalidLineHeight, NamedError.InvalidFirstLineIndent, NamedError.InvalidFontWeight, NamedError.InvalidEmphasisDotGapEm, NamedError.MissingExplicitFontFamilies, NamedError.InvalidTextSpanRange, NamedError.MissingTextSpanFontFamilies, NamedError.InvalidTextSpanFontSize, NamedError.InvalidTextSpanFontWeight, NamedError.InvalidTextSpanBaselineShift, NamedError.InvalidSourceBoundary, NamedError.InvalidLineBreakSpanRange, NamedError.InvalidInlineBoxRange, NamedError.InvalidInlineBoxGeometry, NamedError.InvalidInlineObjectRange, NamedError.InvalidInlineObjectAdvance, NamedError.InvalidInlineObjectVerticalGeometry, NamedError.InvalidDecorationRange];
   }
 
   public static describe(error: NamedError): string {

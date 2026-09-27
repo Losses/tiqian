@@ -1,5 +1,5 @@
 #[derive(Debug, Clone, PartialEq)]
-pub enum ParagraphRequestError {
+pub enum NamedError {
     EmptyParagraph,
     InvalidMaximumMeasure,
     InvalidFontSize,
@@ -23,32 +23,32 @@ pub enum ParagraphRequestError {
     InvalidDecorationRange,
 }
 
-impl std::fmt::Display for ParagraphRequestError {
+impl std::fmt::Display for NamedError {
     fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         match self {
-            ParagraphRequestError::EmptyParagraph => write!(formatter, "{}", "EmptyParagraph"),
-            ParagraphRequestError::InvalidMaximumMeasure => write!(formatter, "{}", "InvalidMaximumMeasure"),
-            ParagraphRequestError::InvalidFontSize => write!(formatter, "{}", "InvalidFontSize"),
-            ParagraphRequestError::InvalidLineHeight => write!(formatter, "{}", "InvalidLineHeight"),
-            ParagraphRequestError::InvalidFirstLineIndent => write!(formatter, "{}", "InvalidFirstLineIndent"),
-            ParagraphRequestError::InvalidFontWeight => write!(formatter, "{}", "InvalidFontWeight"),
-            ParagraphRequestError::InvalidEmphasisDotGapEm => write!(formatter, "{}", "InvalidEmphasisDotGapEm"),
-            ParagraphRequestError::MissingExplicitFontFamilies => write!(formatter, "{}", "MissingExplicitFontFamilies"),
-            ParagraphRequestError::InvalidTextSpanRange => write!(formatter, "{}", "InvalidTextSpanRange"),
-            ParagraphRequestError::MissingTextSpanFontFamilies => write!(formatter, "{}", "MissingTextSpanFontFamilies"),
-            ParagraphRequestError::InvalidTextSpanFontSize => write!(formatter, "{}", "InvalidTextSpanFontSize"),
-            ParagraphRequestError::InvalidTextSpanFontWeight => write!(formatter, "{}", "InvalidTextSpanFontWeight"),
-            ParagraphRequestError::InvalidTextSpanBaselineShift => write!(formatter, "{}", "InvalidTextSpanBaselineShift"),
-            ParagraphRequestError::InvalidSourceBoundary => write!(formatter, "{}", "InvalidSourceBoundary"),
-            ParagraphRequestError::InvalidLineBreakSpanRange => write!(formatter, "{}", "InvalidLineBreakSpanRange"),
-            ParagraphRequestError::InvalidInlineBoxRange => write!(formatter, "{}", "InvalidInlineBoxRange"),
-            ParagraphRequestError::InvalidInlineBoxGeometry => write!(formatter, "{}", "InvalidInlineBoxGeometry"),
-            ParagraphRequestError::InvalidInlineObjectRange => write!(formatter, "{}", "InvalidInlineObjectRange"),
-            ParagraphRequestError::InvalidInlineObjectAdvance => write!(formatter, "{}", "InvalidInlineObjectAdvance"),
-            ParagraphRequestError::InvalidInlineObjectVerticalGeometry => write!(formatter, "{}", "InvalidInlineObjectVerticalGeometry"),
-            ParagraphRequestError::InvalidDecorationRange => write!(formatter, "{}", "InvalidDecorationRange"),
+            NamedError::EmptyParagraph => write!(formatter, "{}", "EmptyParagraph"),
+            NamedError::InvalidMaximumMeasure => write!(formatter, "{}", "InvalidMaximumMeasure"),
+            NamedError::InvalidFontSize => write!(formatter, "{}", "InvalidFontSize"),
+            NamedError::InvalidLineHeight => write!(formatter, "{}", "InvalidLineHeight"),
+            NamedError::InvalidFirstLineIndent => write!(formatter, "{}", "InvalidFirstLineIndent"),
+            NamedError::InvalidFontWeight => write!(formatter, "{}", "InvalidFontWeight"),
+            NamedError::InvalidEmphasisDotGapEm => write!(formatter, "{}", "InvalidEmphasisDotGapEm"),
+            NamedError::MissingExplicitFontFamilies => write!(formatter, "{}", "MissingExplicitFontFamilies"),
+            NamedError::InvalidTextSpanRange => write!(formatter, "{}", "InvalidTextSpanRange"),
+            NamedError::MissingTextSpanFontFamilies => write!(formatter, "{}", "MissingTextSpanFontFamilies"),
+            NamedError::InvalidTextSpanFontSize => write!(formatter, "{}", "InvalidTextSpanFontSize"),
+            NamedError::InvalidTextSpanFontWeight => write!(formatter, "{}", "InvalidTextSpanFontWeight"),
+            NamedError::InvalidTextSpanBaselineShift => write!(formatter, "{}", "InvalidTextSpanBaselineShift"),
+            NamedError::InvalidSourceBoundary => write!(formatter, "{}", "InvalidSourceBoundary"),
+            NamedError::InvalidLineBreakSpanRange => write!(formatter, "{}", "InvalidLineBreakSpanRange"),
+            NamedError::InvalidInlineBoxRange => write!(formatter, "{}", "InvalidInlineBoxRange"),
+            NamedError::InvalidInlineBoxGeometry => write!(formatter, "{}", "InvalidInlineBoxGeometry"),
+            NamedError::InvalidInlineObjectRange => write!(formatter, "{}", "InvalidInlineObjectRange"),
+            NamedError::InvalidInlineObjectAdvance => write!(formatter, "{}", "InvalidInlineObjectAdvance"),
+            NamedError::InvalidInlineObjectVerticalGeometry => write!(formatter, "{}", "InvalidInlineObjectVerticalGeometry"),
+            NamedError::InvalidDecorationRange => write!(formatter, "{}", "InvalidDecorationRange"),
         }
     }
 }
 
-impl std::error::Error for ParagraphRequestError {}
+impl std::error::Error for NamedError {}

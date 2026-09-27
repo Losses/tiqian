@@ -1,23 +1,43 @@
 package org.tiqian.protocol;
 
 /**
- * The exception class carries the enum instance (features/06:44-51) and its
- * static describe is the message function of features/06: the Rust target
- * lowers it into the Display impl of the payload enum inside the error
- * module (boring/reference/rust/gen/boring/vector_exception.rs) and the
- * TypeScript target keeps the class. Messages are display text derived
- * from the variant and no consumer reads them for identity
- * (features/06:397); the string of every variant is the published issue
- * name.
+ * The single-source name accessors of the NamedError family. The published
+ * issue name of a variant is the variant's own name (the two replaced lanes
+ * publish the names as written: paragraph.rs:74-131,
+ * ParagraphWireCodec.kt:279-297), so describe is the identity of the
+ * variant names and the ordered list carries the declaration order.
+ * Consumers read the name of a variant from these accessors; none of the
+ * three lanes keeps its own copy of the strings.
  */
-class ParagraphRequestException extends haxe.Exception {
-    public final error:NamedError;
-
-    public function new(error:NamedError) {
-        this.error = error;
-        super(ParagraphRequestException.describe(error));
+class NamedErrorNames {
+    /** The variants in declaration order (NamedError.hx header rules the order). */
+    public static function variants():Array<NamedError> {
+        return [
+            EmptyParagraph,
+            InvalidMaximumMeasure,
+            InvalidFontSize,
+            InvalidLineHeight,
+            InvalidFirstLineIndent,
+            InvalidFontWeight,
+            InvalidEmphasisDotGapEm,
+            MissingExplicitFontFamilies,
+            InvalidTextSpanRange,
+            MissingTextSpanFontFamilies,
+            InvalidTextSpanFontSize,
+            InvalidTextSpanFontWeight,
+            InvalidTextSpanBaselineShift,
+            InvalidSourceBoundary,
+            InvalidLineBreakSpanRange,
+            InvalidInlineBoxRange,
+            InvalidInlineBoxGeometry,
+            InvalidInlineObjectRange,
+            InvalidInlineObjectAdvance,
+            InvalidInlineObjectVerticalGeometry,
+            InvalidDecorationRange,
+        ];
     }
 
+    /** The published issue name of one variant. */
     public static function describe(error:NamedError):String {
         return switch (error) {
             case EmptyParagraph: "EmptyParagraph";
