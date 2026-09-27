@@ -68,8 +68,10 @@ class ParagraphRequestTest {
         span.end = 9;
         org.tiqian.test.trace.TracedAssertions.assertEqualsString("InvalidTextSpanRange", ParagraphRequestTestSupport.issueOf(base));
         span.end = 2;
-        span.families = [std.UString.fromCodePoint(0x200B)];
+        span.families = [" "];
         org.tiqian.test.trace.TracedAssertions.assertEqualsString("MissingTextSpanFontFamilies", ParagraphRequestTestSupport.issueOf(base));
+        span.families = [std.UString.fromCodePoint(0x200B)];
+        ParagraphRequestChecks.validate(base);
         span.families = ["Fake CJK"];
         span.fontSizePx = 0.0;
         org.tiqian.test.trace.TracedAssertions.assertEqualsString("InvalidTextSpanFontSize", ParagraphRequestTestSupport.issueOf(base));
