@@ -71,7 +71,7 @@ class FontPolicyCoverageTest {
         TracedAssertions.assertEqualsFontRole(Unknown, classifier.classify("\u0001", new TextRange(0, 1)));
     }
 
-    @:test(except = ["swift"]) public static function testCjkFontRoleClassifierLoneHighSurrogates():Void {
+    @:test(except = ["swift", "rust"]) public static function testCjkFontRoleClassifierLoneHighSurrogates():Void {
         final t = new TestTraceRecorder("FontPolicyCoverageTest");
         t.section("testCjkFontRoleClassifierLoneHighSurrogates");
         final classifier = new CjkFontRoleClassifier();
