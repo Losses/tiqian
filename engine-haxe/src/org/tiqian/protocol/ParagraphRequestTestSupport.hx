@@ -26,12 +26,42 @@ class ParagraphRequestTestSupport {
         };
     }
 
+    /** The published issue name of one caught variant. Kept local to the
+     * test support so no target sees a call into the exception class,
+     * which the Rust target does not land; the literals mirror
+     * ParagraphRequestException.describe, the message function of
+     * features/06. */
+    public static function issueNameOf(error:ParagraphRequestError):String {
+        return switch (error) {
+            case EmptyParagraph: "EmptyParagraph";
+            case InvalidMaximumMeasure: "InvalidMaximumMeasure";
+            case InvalidFontSize: "InvalidFontSize";
+            case InvalidLineHeight: "InvalidLineHeight";
+            case InvalidFirstLineIndent: "InvalidFirstLineIndent";
+            case InvalidFontWeight: "InvalidFontWeight";
+            case InvalidEmphasisDotGapEm: "InvalidEmphasisDotGapEm";
+            case MissingExplicitFontFamilies: "MissingExplicitFontFamilies";
+            case InvalidTextSpanRange: "InvalidTextSpanRange";
+            case MissingTextSpanFontFamilies: "MissingTextSpanFontFamilies";
+            case InvalidTextSpanFontSize: "InvalidTextSpanFontSize";
+            case InvalidTextSpanFontWeight: "InvalidTextSpanFontWeight";
+            case InvalidTextSpanBaselineShift: "InvalidTextSpanBaselineShift";
+            case InvalidSourceBoundary: "InvalidSourceBoundary";
+            case InvalidLineBreakSpanRange: "InvalidLineBreakSpanRange";
+            case InvalidInlineBoxRange: "InvalidInlineBoxRange";
+            case InvalidInlineBoxGeometry: "InvalidInlineBoxGeometry";
+            case InvalidInlineObjectRange: "InvalidInlineObjectRange";
+            case InvalidInlineObjectAdvance: "InvalidInlineObjectAdvance";
+            case InvalidInlineObjectVerticalGeometry: "InvalidInlineObjectVerticalGeometry";
+            case InvalidDecorationRange: "InvalidDecorationRange";
+        };
+    }
     public static function issueOf(request:ParagraphRequest):String {
         var name = "";
         try {
             ParagraphRequestChecks.validate(request);
         } catch (error:ParagraphRequestException) {
-            name = ParagraphRequestException.describe(error.error);
+            name = issueNameOf(error.error);
         }
         return name;
     }
