@@ -13,7 +13,7 @@ export class Canonical {
   }
 
   public static encode(input: WireValue, kind: number): EncodeResult {
-    const writer = new Writer(kind);
+    const writer = new Writer();
     writer.begin(kind);
     const text = Canonical.member(input, "text");
     let textValue = "";
@@ -465,7 +465,7 @@ export class Canonical {
 export class Writer {
   private readonly buf: BytesBuffer;
 
-  constructor(kind: number) {
+  constructor() {
     this.buf = new BytesBuffer();
   }
 

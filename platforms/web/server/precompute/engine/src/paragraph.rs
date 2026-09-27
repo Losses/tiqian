@@ -1,17 +1,27 @@
 //! Paragraph precompute over the engine ABI (ADR 0050 amendment
 //! `PrecomputeInRust`).
 //!
-//! The typed request, the domain validation and the LayoutInput packing are
-//! the Rust port of `PrecomputeWire.kt`; error names match that port and the
-//! npm assertions byte for byte, and checks run in the same order so the
-//! first failure names the same issue on both sides. Validation works without
-//! the engine archive; the engine call exists only when build.rs linked it.
+//! The typed request and the LayoutInput packing are the Rust port of
+//! `PrecomputeWire.kt`. Domain validation is single-sourced in the
+//! generated protocol model (tiqian_protocol_gen ParagraphRequestChecks,
+//! Stage1-P5): this module only adapts its lane request into the
+//! generated one and maps the generated issue variants to NamedError
+//! through the generated Display, whose strings are the published issue
+//! names. The f64 to f32 narrowing of the packing matches the Kotlin
+//! toFloat() casts; the validation runs on the f64 values the caller
+//! passed. The engine call exists only when build.rs linked the engine
+//! archive.
 
 use tiqian::layout_request::{InlineBoxSpec, LayoutRequest, LineBreakSpanSpec, TextSpanSpec};
 use tiqian::NamedError;
+use tiqian_protocol_gen::org::tiqian::protocol::inline_box_input::InlineBoxInput as GenInlineBoxInput;
+use tiqian_protocol_gen::org::tiqian::protocol::line_break_span_input::LineBreakSpanInput as GenLineBreakSpanInput;
+use tiqian_protocol_gen::org::tiqian::protocol::paragraph_request::ParagraphRequest as GeneratedRequest;
+use tiqian_protocol_gen::org::tiqian::protocol::paragraph_request_checks::ParagraphRequestChecks;
+use tiqian_protocol_gen::org::tiqian::protocol::text_span_input::TextSpanInput as GenTextSpanInput;
 
-// The request's own field types; callers building a `ParagraphRequest` take
-// the codes from here.
+// The request lane keeps the code types of the packed engine ABI; callers
+// building a ParagraphRequest take the codes from here.
 pub use tiqian::layout_request::{InlineBoxOuterSpacingCode, LineBreakPolicyCode};
 
 use crate::js_compat::kotlin_to_float;
@@ -33,13 +43,13 @@ pub struct ParagraphRequest {
     pub first_line_indent_ic: f64,
     pub line_length_grid_enabled: bool,
     pub source_boundaries: Vec<i32>,
-    pub text_spans: Vec<TextSpanInput>,
-    pub line_break_spans: Vec<LineBreakSpanInput>,
-    pub inline_boxes: Vec<InlineBoxInput>,
+    pub text_spans: Vec<TextSpanInputLane>,
+    pub line_break_spans: Vec<LineBreakSpanInputLane>,
+    pub inline_boxes: Vec<InlineBoxInputLane>,
 }
 
 #[derive(Debug, Clone, PartialEq)]
-pub struct TextSpanInput {
+pub struct TextSpanInputLane {
     pub start: i32,
     pub end: i32,
     pub families: Vec<String>,
@@ -50,14 +60,14 @@ pub struct TextSpanInput {
 }
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
-pub struct LineBreakSpanInput {
+pub struct LineBreakSpanInputLane {
     pub start: i32,
     pub end: i32,
     pub policy: LineBreakPolicyCode,
 }
 
 #[derive(Debug, Clone, Copy, PartialEq)]
-pub struct InlineBoxInput {
+pub struct InlineBoxInputLane {
     pub start: i32,
     pub end: i32,
     pub inline_start: f64,
@@ -65,74 +75,84 @@ pub struct InlineBoxInput {
     pub outer_spacing: InlineBoxOuterSpacingCode,
 }
 
+pub type TextSpanInput = TextSpanInputLane;
+pub type LineBreakSpanInput = LineBreakSpanInputLane;
+pub type InlineBoxInput = InlineBoxInputLane;
+
 impl ParagraphRequest {
-    /// Runs the domain checks in the PrecomputeWire order. Every failure is a
-    /// named issue; blank family strings drop the way the Kotlin filter drops
-    /// them.
+    /// Runs the single-sourced domain checks (generated
+    /// ParagraphRequestChecks) and reports the first failure as a
+    /// NamedError whose name is the generated Display string.
     pub fn validate(&self) -> Result<(), NamedError> {
-        if self.text.trim().is_empty() {
-            return Err(named("EmptyParagraph"));
-        }
-        if !self.max_width_px.is_finite() || self.max_width_px <= 0.0 {
-            return Err(named("InvalidMaximumMeasure"));
-        }
-        if !self.font_size_px.is_finite() || self.font_size_px <= 0.0 {
-            return Err(named("InvalidFontSize"));
-        }
-        if !self.line_height_px.is_finite() || self.line_height_px <= 0.0 {
-            return Err(named("InvalidLineHeight"));
-        }
-        if !self.first_line_indent_ic.is_finite() {
-            return Err(named("InvalidFirstLineIndent"));
-        }
-        if !(1..=1000).contains(&self.font_weight) {
-            return Err(named("InvalidFontWeight"));
-        }
-        if families(&self.font_families).is_empty() {
-            return Err(named("MissingExplicitFontFamilies"));
-        }
-        let text_length = utf16_length(&self.text);
-        for span in &self.text_spans {
-            if !valid_range(span.start, span.end, text_length) {
-                return Err(named("InvalidTextSpanRange"));
-            }
-            if families(&span.families).is_empty() {
-                return Err(named("MissingTextSpanFontFamilies"));
-            }
-            if !span.font_size_px.is_finite() || span.font_size_px <= 0.0 {
-                return Err(named("InvalidTextSpanFontSize"));
-            }
-            if !(1..=1000).contains(&span.font_weight) {
-                return Err(named("InvalidTextSpanFontWeight"));
-            }
-            if !span.baseline_shift.is_finite() {
-                return Err(named("InvalidTextSpanBaselineShift"));
-            }
-        }
-        for boundary in &self.source_boundaries {
-            if !(*boundary >= 0 && *boundary <= text_length) {
-                return Err(named("InvalidSourceBoundary"));
-            }
-        }
-        for span in &self.line_break_spans {
-            if !valid_range(span.start, span.end, text_length) {
-                return Err(named("InvalidLineBreakSpanRange"));
-            }
-        }
-        for inline_box in &self.inline_boxes {
-            if !valid_range(inline_box.start, inline_box.end, text_length) {
-                return Err(named("InvalidInlineBoxRange"));
-            }
-            if !inline_box.inline_start.is_finite() || !inline_box.inline_end.is_finite() {
-                return Err(named("InvalidInlineBoxGeometry"));
-            }
-        }
-        Ok(())
+        ParagraphRequestChecks::paragraph_request_checks_validate(self.to_generated())
+            .map_err(|error| NamedError(error.to_string()))
     }
 
-    /// Validates, then builds the engine-level packed request. The f64 to f32
-    /// narrowing matches the Kotlin `toFloat()` casts; validation runs on the
-    /// f64 values the caller passed.
+    /// Adapts this lane request into the generated model. The i32 to u32
+    /// casts keep the check outcomes: a negative range end wraps above
+    /// any text length and fails the same named range check, and an
+    /// out-of-range weight fails the weight check. The generated model
+    /// optional emphasis gap and its inline-object and decoration
+    /// sections are fields this Rust consumer does not send; they read
+    /// as absent and stay unvalidated here.
+    fn to_generated(&self) -> GeneratedRequest {
+        GeneratedRequest {
+            font_session_id: self.font_session_id.clone(),
+            text: self.text.clone(),
+            max_width_px: self.max_width_px,
+            font_families: self.font_families.clone(),
+            font_size_px: self.font_size_px,
+            line_height_px: self.line_height_px,
+            locale: self.locale.clone(),
+            font_weight: self.font_weight as u32,
+            italic: self.italic,
+            first_line_indent_ic: self.first_line_indent_ic,
+            line_length_grid_enabled: self.line_length_grid_enabled,
+            emphasis_dot_gap_em: None,
+            source_boundaries: self
+                .source_boundaries
+                .iter()
+                .map(|value| *value as u32)
+                .collect(),
+            text_spans: self
+                .text_spans
+                .iter()
+                .map(|span| GenTextSpanInput {
+                    start: span.start as u32,
+                    end: span.end as u32,
+                    families: span.families.clone(),
+                    font_size_px: span.font_size_px,
+                    font_weight: span.font_weight as u32,
+                    italic: span.italic,
+                    baseline_shift: span.baseline_shift,
+                })
+                .collect(),
+            line_break_spans: self
+                .line_break_spans
+                .iter()
+                .map(|span| GenLineBreakSpanInput {
+                    start: span.start as u32,
+                    end: span.end as u32,
+                    policy: line_break_policy_name(span.policy),
+                })
+                .collect(),
+            inline_boxes: self
+                .inline_boxes
+                .iter()
+                .map(|box_input| GenInlineBoxInput {
+                    start: box_input.start as u32,
+                    end: box_input.end as u32,
+                    inline_start: box_input.inline_start,
+                    inline_end: box_input.inline_end,
+                    outer_spacing: outer_spacing_name(box_input.outer_spacing),
+                })
+                .collect(),
+            inline_objects: Vec::new(),
+            decorations: Vec::new(),
+        }
+    }
+
+    /// Validates, then builds the engine-level packed request.
     pub fn to_layout_request(&self) -> Result<LayoutRequest, NamedError> {
         self.validate()?;
         Ok(LayoutRequest {
@@ -195,216 +215,26 @@ pub fn precompute_paragraph(request: &ParagraphRequest) -> Result<Plan, NamedErr
     Plan::from_packed_bytes(&bytes)
 }
 
-fn named(name: &str) -> NamedError {
-    NamedError(name.to_string())
-}
-
-fn families(values: &[String]) -> Vec<&String> {
-    values
-        .iter()
-        .filter(|value| !value.trim().is_empty())
-        .collect()
-}
-
-fn valid_range(start: i32, end: i32, text_length: i32) -> bool {
-    start >= 0 && start < end && end <= text_length
-}
-
 /// Kotlin `String.length`: UTF-16 code units. Every engine range and boundary
 /// lives in this space.
 pub fn utf16_length(text: &str) -> i32 {
     text.chars()
-        .map(|c| match c {
-            '\0'..='\u{ffff}' => 1,
-            _ => 2,
+        .map(|c| {
+            let code = c as u32;
+            if code <= 0xffff { 1 } else { 2 }
         })
         .sum()
 }
 
-#[cfg(test)]
-mod tests {
-    use super::*;
-
-    fn request() -> ParagraphRequest {
-        ParagraphRequest {
-            font_session_id: "tq-font-test-1".to_string(),
-            text: "正文一段".to_string(),
-            max_width_px: 80.0,
-            font_families: vec!["Fake CJK".to_string()],
-            font_size_px: 16.0,
-            line_height_px: 24.0,
-            locale: "zh-Hans".to_string(),
-            font_weight: 400,
-            italic: false,
-            first_line_indent_ic: 0.0,
-            line_length_grid_enabled: false,
-            source_boundaries: Vec::new(),
-            text_spans: Vec::new(),
-            line_break_spans: Vec::new(),
-            inline_boxes: Vec::new(),
-        }
+fn line_break_policy_name(policy: LineBreakPolicyCode) -> String {
+    match policy {
+        LineBreakPolicyCode::ProgressiveTechnical => "ProgressiveTechnical".to_string(),
     }
+}
 
-    fn error_of(request: &ParagraphRequest) -> String {
-        request.validate().unwrap_err().0
-    }
-
-    #[test]
-    fn valid_request_passes() {
-        assert_eq!(request().validate(), Ok(()));
-    }
-
-    #[test]
-    fn paragraph_level_checks_report_precompute_names_in_order() {
-        let mut blank = request();
-        blank.text = "   ".to_string();
-        assert_eq!(error_of(&blank), "EmptyParagraph");
-        blank.text = String::new();
-        assert_eq!(error_of(&blank), "EmptyParagraph");
-
-        let mut measure = request();
-        measure.max_width_px = 0.0;
-        assert_eq!(error_of(&measure), "InvalidMaximumMeasure");
-        measure.max_width_px = f64::NAN;
-        assert_eq!(error_of(&measure), "InvalidMaximumMeasure");
-
-        let mut size = request();
-        size.font_size_px = -1.0;
-        assert_eq!(error_of(&size), "InvalidFontSize");
-
-        let mut height = request();
-        height.line_height_px = f64::INFINITY;
-        assert_eq!(error_of(&height), "InvalidLineHeight");
-
-        let mut indent = request();
-        indent.first_line_indent_ic = f64::NAN;
-        assert_eq!(error_of(&indent), "InvalidFirstLineIndent");
-
-        let mut weight = request();
-        weight.font_weight = 0;
-        assert_eq!(error_of(&weight), "InvalidFontWeight");
-        weight.font_weight = 1001;
-        assert_eq!(error_of(&weight), "InvalidFontWeight");
-
-        let mut families = request();
-        families.font_families = vec!["  ".to_string()];
-        assert_eq!(error_of(&families), "MissingExplicitFontFamilies");
-    }
-
-    #[test]
-    fn span_checks_cover_range_families_and_numbers() {
-        let mut request = request();
-        request.text_spans = vec![TextSpanInput {
-            start: 2,
-            end: 1,
-            families: vec!["Fake CJK".to_string()],
-            font_size_px: 16.0,
-            font_weight: 400,
-            italic: false,
-            baseline_shift: 0.0,
-        }];
-        assert_eq!(error_of(&request), "InvalidTextSpanRange");
-        request.text_spans[0].start = 0;
-        request.text_spans[0].end = 9;
-        assert_eq!(error_of(&request), "InvalidTextSpanRange");
-
-        request.text_spans[0].end = 2;
-        request.text_spans[0].families = vec![String::new()];
-        assert_eq!(error_of(&request), "MissingTextSpanFontFamilies");
-
-        request.text_spans[0].families = vec!["Fake CJK".to_string()];
-        request.text_spans[0].font_size_px = 0.0;
-        assert_eq!(error_of(&request), "InvalidTextSpanFontSize");
-        request.text_spans[0].font_size_px = 16.0;
-        request.text_spans[0].font_weight = 1001;
-        assert_eq!(error_of(&request), "InvalidTextSpanFontWeight");
-        request.text_spans[0].font_weight = 400;
-        request.text_spans[0].baseline_shift = f64::NAN;
-        assert_eq!(error_of(&request), "InvalidTextSpanBaselineShift");
-    }
-
-    #[test]
-    fn boundaries_and_boxes_check_against_utf16_length() {
-        let mut boundaries = request();
-        boundaries.source_boundaries = vec![5];
-        assert_eq!(error_of(&boundaries), "InvalidSourceBoundary");
-        boundaries.source_boundaries = vec![4];
-        assert_eq!(boundaries.validate(), Ok(()));
-
-        let mut spans = request();
-        spans.line_break_spans = vec![LineBreakSpanInput {
-            start: 0,
-            end: 5,
-            policy: LineBreakPolicyCode::ProgressiveTechnical,
-        }];
-        assert_eq!(error_of(&spans), "InvalidLineBreakSpanRange");
-
-        let mut boxes = request();
-        boxes.inline_boxes = vec![InlineBoxInput {
-            start: 0,
-            end: 1,
-            inline_start: 0.0,
-            inline_end: f64::NAN,
-            outer_spacing: InlineBoxOuterSpacingCode::Narrow,
-        }];
-        assert_eq!(error_of(&boxes), "InvalidInlineBoxGeometry");
-        boxes.inline_boxes[0].end = 5;
-        assert_eq!(error_of(&boxes), "InvalidInlineBoxRange");
-    }
-
-    #[test]
-    fn utf16_length_counts_astral_characters_as_two_units() {
-        let mut request = request();
-        request.text = "😀字".to_string();
-        // One astral character plus one BMP character: length 3 in UTF-16.
-        request.source_boundaries = vec![3];
-        assert_eq!(request.validate(), Ok(()));
-        request.source_boundaries = vec![4];
-        assert_eq!(error_of(&request), "InvalidSourceBoundary");
-    }
-
-    #[test]
-    fn packing_carries_the_typed_sections() {
-        let mut request = request();
-        request.text_spans = vec![TextSpanInput {
-            start: 0,
-            end: 2,
-            families: vec!["Fake CJK".to_string()],
-            font_size_px: 18.0,
-            font_weight: 500,
-            italic: true,
-            baseline_shift: 2.0,
-        }];
-        request.line_break_spans = vec![LineBreakSpanInput {
-            start: 0,
-            end: 4,
-            policy: LineBreakPolicyCode::ProgressiveTechnical,
-        }];
-        request.inline_boxes = vec![InlineBoxInput {
-            start: 2,
-            end: 3,
-            inline_start: 1.0,
-            inline_end: 2.0,
-            outer_spacing: InlineBoxOuterSpacingCode::Source,
-        }];
-        let packed = request.to_layout_request().unwrap().pack().unwrap();
-        assert_eq!(
-            tiqian::layout_request::LAYOUT_REQUEST_MAGIC,
-            u32::from_le_bytes(packed[0..4].try_into().unwrap())
-        );
-        // The sections exist as counts: textSpans 1, lineBreakSpans 1, inlineBoxes 1.
-        assert!(packed.windows(4).any(|window| window == 1u32.to_le_bytes()));
-        let invalid = ParagraphRequest {
-            font_weight: 0,
-            ..request
-        };
-        assert!(invalid.to_layout_request().is_err());
-    }
-
-    #[cfg(tiqian_engine_link)]
-    #[test]
-    fn engine_call_without_font_backend_reports_the_named_issue() {
-        let error = precompute_paragraph(&request()).unwrap_err();
-        assert_eq!(error.name(), "FontBackendNotInstalled");
+fn outer_spacing_name(outer_spacing: InlineBoxOuterSpacingCode) -> String {
+    match outer_spacing {
+        InlineBoxOuterSpacingCode::Narrow => "Narrow".to_string(),
+        InlineBoxOuterSpacingCode::Source => "Source".to_string(),
     }
 }

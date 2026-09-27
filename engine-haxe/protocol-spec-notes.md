@@ -42,6 +42,30 @@
 - canonical.rs:54 `canonical_f64`（非有限值丢弃、±0 折 +0）；canonical.ts:303 同义；可选数值字段 = 存在标志 + f64 位（canonical.rs:382、canonical.ts:113）。
 - 验收 golden：canonical.test.ts:16 起 vector0-vector3 四条 hex，Rust 单测钉同一组。
 
+## Stage1-P5 宿主请求模型与校验（生成器修订 pin 4f412c6a）
+
+## 结构与 typedef（features/03-structures-and-typedefs.md）
+- :180 `Haxe anonymous structure typedefs translate to named `struct` declarations in Rust with public fields and derived traits (`Debug`, `Clone`, `Copy`, `PartialEq`), to named `interface` declarations in TypeScript with `readonly` properties, and to `data class` declarations in Kotlin with `val` properties.`
+
+结论：ParagraphRequest/TextSpanInput/LineBreakSpanInput/InlineBoxInput 用 typedef 匿名结构声明，DTO 字段单源。
+
+## 错误与结果（features/06-errors-and-results.md）
+- :34 `The failure identity is a Haxe enum as ruled in docs/specs/features/01-enums-and-pattern-matching.md; the exception class carries the enum instance`（:37-51 给出 enum + `class VectorException extends haxe.Exception` 样板）。
+- :314-318 Ruling：`Failure identity is a closed variant set defined once per domain and shared by all four trees`；Rust `all fallible operations return Result<T, DomainError>`；TS `throw sites construct one exception class carrying the error union value`。
+- :397 `tests assert variant identity, never message content`。
+
+结论：ParagraphRequestError 枚举逐变体承载领域错误名（EmptyParagraph/InvalidMaximumMeasure/…，名字照 paragraph.rs:72-131 validate 顺序），ParagraphRequestException 包装抛出；字节协议错误名不进来。
+
+## 字符串长度（stdlib/06-std-modules.md）
+- :318 `String.length and codeUnitAt are constant-time UTF-16 unit access;`
+
+结论：范围与 boundary 检查直接用 text.length，对应 paragraph.rs:213-222 utf16_length 的 UTF-16 语义与 Kotlin String.length。
+
+## 待取证（动手改 validate 形态前）
+- 空白判定：Kotlin ParagraphWireCodec.kt:279 `text.isNotBlank()` 与 Rust paragraph.rs:73 `text.trim().is_empty()` 空白集不同；取证对象为 pin 内 StringTools/字符串降级发射端与 Rust 生成侧 UString trim 语义。
+- throwing 方法在 rust 发射端的 fallibility 传播：取证对象为 pin 内 rust 发射端 TThrow 处理函数与生成文本。
+- 字段集：decorations/inlineObjects/emphasisDotGapEm 仅在 Kotlin DTO，Rust ParagraphRequest 没有；单源取并集还是交集待队长定。
+
 ## TS 目标两个已取证的形态前提（调试取证四步见 AGENTS.md）
 - Bytes.get 降级条件：reflaxe/ts/tscompiler/TsExpr.hx:2191-2192 `if (name == "get" && isBytes(stripCast(subj)))`；isBytes(:3622-3626) 要求静态类型恰为 `haxe.io.Bytes`。传 `Null<Bytes>` 不命中、退化为普通字段调用。fix：switch 分支绑定非空 Bytes 后再调 get。
 - samples 类的源范围过滤：TS 模块发射拒绝项在 tscompiler/Compiler.hx:500（`value-referenced but emits no declarations`），根因是类不在 Intercept.run 声明的源范围；按 rust-common.hxml 对 samples/std 的先例把 samples 路径加进源范围。
