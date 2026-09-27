@@ -4,6 +4,7 @@
 //! paragraph request, the cache key and the snapshot artifact hashes.
 
 use tiqian::NamedError;
+use tiqian_protocol_gen::org::tiqian::protocol::named_error::NamedError as ProtocolNamedError;
 
 use crate::js_compat::{trunc_sat_i32, trunc_sat_i64};
 use crate::json::{member, Json};
@@ -140,18 +141,18 @@ pub struct InlineBoxRaw {
 pub fn normalize_typography(value: TypographyInput) -> Result<SnapshotTypography, NamedError> {
     let font_families = normalized_families(value.font_families.as_deref().unwrap_or(&[]));
     if font_families.is_empty() {
-        return Err(named("MissingExplicitFontFamilies"));
+        return Err(named(&ProtocolNamedError::MissingExplicitFontFamilies.to_string()));
     }
     let font_size_px = value.font_size_px.unwrap_or(f64::NAN);
     if !font_size_px.is_finite() || font_size_px <= 0.0 {
-        return Err(named("InvalidFontSize"));
+        return Err(named(&ProtocolNamedError::InvalidFontSize.to_string()));
     }
     let line_height_px = value.line_height_px.unwrap_or(f64::NAN);
     if !line_height_px.is_finite() || line_height_px <= 0.0 {
-        return Err(named("InvalidLineHeight"));
+        return Err(named(&ProtocolNamedError::InvalidLineHeight.to_string()));
     }
     let font_weight = safe_integer_weight(value.font_weight.unwrap_or(400.0))
-        .ok_or_else(|| named("InvalidFontWeight"))?;
+        .ok_or_else(|| named(&ProtocolNamedError::InvalidFontWeight.to_string()))?;
     let first_line_indent_ic = value.first_line_indent_ic.unwrap_or(0.0);
     if !first_line_indent_ic.is_finite() || first_line_indent_ic != 0.0 {
         return Err(named("UnsupportedSnapshotFirstLineIndent"));
