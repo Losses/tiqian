@@ -69,6 +69,16 @@ org/tiqian/protocol/paragraph_request_checks.rs
 org/tiqian/protocol/paragraph_request_exception.rs
 org/tiqian/protocol/paragraph_request_test.rs
 org/tiqian/protocol/paragraph_request_test_support.rs
+org/tiqian/protocol/plan.rs
+org/tiqian/protocol/plan_end_reason.rs
+org/tiqian/protocol/plan_json.rs
+org/tiqian/protocol/plan_json_number.rs
+org/tiqian/protocol/plan_json_test.rs
+org/tiqian/protocol/plan_packed.rs
+org/tiqian/protocol/plan_packed_test.rs
+org/tiqian/protocol/plan_schema.rs
+org/tiqian/protocol/plan_schema_test.rs
+org/tiqian/protocol/plan_style_delta.rs
 org/tiqian/protocol/revision.rs
 org/tiqian/protocol/snapshot_table_binary.rs
 org/tiqian/protocol/snapshot_table_binary_test.rs
