@@ -96,10 +96,10 @@ impl UnicodeCombiningMarkData {
             let base = u32::wrapping_mul(middle, 2);
             let start = RANGES[usize::try_from(base).unwrap_or(0)];
             let end = RANGES[usize::try_from(u32::wrapping_add(base, 1)).unwrap_or(0)];
-            if i32::from_ne_bytes((code_point).to_ne_bytes()) < (i32::from_ne_bytes((start).to_ne_bytes())) {
+            if i32::from_ne_bytes((code_point).to_ne_bytes()) < ({ let v: u32 = start; i32::from_ne_bytes(v.to_ne_bytes()) }) {
                 high = u32::wrapping_sub(middle, 1);
             } else {
-                if i32::from_ne_bytes((code_point).to_ne_bytes()) > (i32::from_ne_bytes((end).to_ne_bytes())) {
+                if i32::from_ne_bytes((code_point).to_ne_bytes()) > ({ let v: u32 = end; i32::from_ne_bytes(v.to_ne_bytes()) }) {
                     low = u32::wrapping_add(middle, 1);
                 } else {
                     return true;
