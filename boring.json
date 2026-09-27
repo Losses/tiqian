@@ -62,6 +62,22 @@
       "run": {
         "env": { "BORING_TEST_TIMEOUT_MS": "600000" }
       }
+    },
+    {
+      "id": "protocol-ts",
+      "target": "ts",
+      "rootsFile": "engine-haxe/targets/protocol-ts.hxml",
+      "run": {
+        "env": { "BORING_TEST_TIMEOUT_MS": "600000" }
+      }
+    },
+    {
+      "id": "protocol-rust",
+      "target": "rust",
+      "rootsFile": "engine-haxe/targets/protocol-rust.hxml",
+      "run": {
+        "env": { "BORING_TEST_TIMEOUT_MS": "600000" }
+      }
     }
   ]
 }
