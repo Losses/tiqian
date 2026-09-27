@@ -428,13 +428,13 @@ __min_b5.is_nan() { f64::NAN } else { if __min_a5 > __min_b5 { __min_a5 } else i
         let mut high = u32::try_from(((self.starts_sorted).clone().len()) & 0xFFFF_FFFF).unwrap_or(0);
         while (i32::from_ne_bytes((low).to_ne_bytes())) < (i32::from_ne_bytes((high).to_ne_bytes())) {
             let mid = u32::wrapping_add(low, high) >> 1;
-            if i32::from_ne_bytes((self.starts_sorted[usize::try_from(mid).unwrap_or(0)]).to_ne_bytes()) < (i32::from_ne_bytes((candidate).to_ne_bytes())) {
+            if ({ let v: u32 = self.starts_sorted[usize::try_from(mid).unwrap_or(0)]; i32::from_ne_bytes(v.to_ne_bytes()) }) < (i32::from_ne_bytes((candidate).to_ne_bytes())) {
                 low = u32::wrapping_add(mid, 1);
             } else {
                 high = mid;
             }
         }
-        return (i32::from_ne_bytes((low).to_ne_bytes())) > (0) && (i32::from_ne_bytes((self.prefix_max_last[usize::try_from(u32::wrapping_sub(low, 1)).unwrap_or(0)]).to_ne_bytes())) >= i32::from_ne_bytes((candidate).to_ne_bytes());
+        return (i32::from_ne_bytes((low).to_ne_bytes())) > (0) && ({ let v: u32 = self.prefix_max_last[usize::try_from(u32::wrapping_sub(low, 1)).unwrap_or(0)]; i32::from_ne_bytes(v.to_ne_bytes()) }) >= i32::from_ne_bytes((candidate).to_ne_bytes());
     }
 
     pub fn containing_or_null(&self, candidate: u32) -> Option<IntRange> {
@@ -457,13 +457,13 @@ __min_b5.is_nan() { f64::NAN } else { if __min_a5 > __min_b5 { __min_a5 } else i
         let mut high = u32::try_from(((self.starts_sorted).clone().len()) & 0xFFFF_FFFF).unwrap_or(0);
         while (i32::from_ne_bytes((low).to_ne_bytes())) < (i32::from_ne_bytes((high).to_ne_bytes())) {
             let mid = u32::wrapping_add(low, high) >> 1;
-            if i32::from_ne_bytes((self.starts_sorted[usize::try_from(mid).unwrap_or(0)]).to_ne_bytes()) <= i32::from_ne_bytes((index).to_ne_bytes()) {
+            if ({ let v: u32 = self.starts_sorted[usize::try_from(mid).unwrap_or(0)]; i32::from_ne_bytes(v.to_ne_bytes()) }) <= i32::from_ne_bytes((index).to_ne_bytes()) {
                 low = u32::wrapping_add(mid, 1);
             } else {
                 high = mid;
             }
         }
-        if low == 0 || (i32::from_ne_bytes((self.prefix_max_last[usize::try_from(u32::wrapping_sub(low, 1)).unwrap_or(0)]).to_ne_bytes())) <= i32::from_ne_bytes((index).to_ne_bytes()) {
+        if low == 0 || ({ let v: u32 = self.prefix_max_last[usize::try_from(u32::wrapping_sub(low, 1)).unwrap_or(0)]; i32::from_ne_bytes(v.to_ne_bytes()) }) <= i32::from_ne_bytes((index).to_ne_bytes()) {
             return None;
         }
         let mut rj = 0u32;
