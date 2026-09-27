@@ -73,3 +73,7 @@
 - 运行时互逆性：gen/runtime.ts doubleToI64 返回 {high: getUint32(0), low: getUint32(4)}（DataView 默认大端），i64ToDouble(low, high) 做 setUint32(0, high); setUint32(4, low)，两者严格互逆。
 - 撤回：本文件早前一版把「生成出 i64ToDouble(high, low)」判为发射端缺陷，实为 P2 源码自身把参数序写反（400.0 解成 5.34416817e-315 正是高低字互换位形）；发射端按源序转发行为正确，不向 boring 提修复。
 - 手册新增比对规则（队长 2026-09-27 落 PIT）：凡「目标侧签名/参数序不符」结论，第四步之前必须先从 samples/boring/** 与对应 spec 抄下同一调用的签名做比对，不得以对 std 的印象为基准。
+
+## assembly-record 冻结产物标注（P2，提交 5d366296）
+
+- tools/schema 两个生成器已删除，ffi/schema 的 assembly-record TS/Rust DTO 产物在 5d366296 冻结；ffi/schema/FROZEN.md 就地标注，P5 接线前不得当作可重生成产物。
