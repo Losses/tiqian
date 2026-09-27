@@ -87,19 +87,19 @@ class FontPolicyCoverageTest {
         final metricsPolicies = Type.allEnums(FontMetricsPolicy);
         var i = 0;
         while (i < metricsPolicies.length) {
-            TracedAssertions.assertNotNullRendered(true, Std.string(metricsPolicies[i]));
+            TracedAssertions.recordRenderedNotNull(Std.string(metricsPolicies[i]));
             i++;
         }
         final baselinePolicies = Type.allEnums(BaselinePolicy);
         i = 0;
         while (i < baselinePolicies.length) {
-            TracedAssertions.assertNotNullRendered(true, Std.string(baselinePolicies[i]));
+            TracedAssertions.recordRenderedNotNull(Std.string(baselinePolicies[i]));
             i++;
         }
         final punctuationPolicies = Type.allEnums(PunctuationFontPolicy);
         i = 0;
         while (i < punctuationPolicies.length) {
-            TracedAssertions.assertNotNullRendered(true, Std.string(punctuationPolicies[i]));
+            TracedAssertions.recordRenderedNotNull(Std.string(punctuationPolicies[i]));
             i++;
         }
         final raw = new RawFontMetrics(16, 4, 2, RawTables, 14, 2);
@@ -170,7 +170,7 @@ class FontPolicyCoverageTest {
         final roles = Type.allEnums(FontRole);
         var i = 0;
         while (i < roles.length) {
-            TracedAssertions.assertNotNullRendered(true, Std.string(roles[i]));
+            TracedAssertions.recordRenderedNotNull(Std.string(roles[i]));
             i++;
         }
         TracedAssertions.assertTrue(FontRoleFns.usesLatinFace(LatinText));
