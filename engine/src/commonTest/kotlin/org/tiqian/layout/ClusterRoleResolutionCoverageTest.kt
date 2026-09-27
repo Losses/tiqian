@@ -570,7 +570,7 @@ class ClusterRoleResolutionCoverageTest {
         val result = clusterRoleRanges(text, classifier, context, profile, emptySet(), emptySet())
         val crlfCluster = result.find { it.range.start == 1 && it.range.end == 3 }
         assertNotNull(crlfCluster)
-        assertTrue(crlfCluster!!.mandatoryBreak)
+        assertTrue(crlfCluster.mandatoryBreak)
     }
 
     @Test
