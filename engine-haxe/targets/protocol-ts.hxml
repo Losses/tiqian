@@ -29,4 +29,5 @@ org.tiqian.protocol.SnapshotTableBinary
 org.tiqian.protocol.SnapshotTableBinaryTest
 org.tiqian.protocol.Plan
 org.tiqian.protocol.PlanJsonNumber
-org.tiqian.protocol.PlanJson
+org.tiqian.protocol.PlanSchema
+org.tiqian.protocol.PlanJsonTest
