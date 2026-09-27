@@ -22,4 +22,6 @@ org.tiqian.protocol.WireValue
 org.tiqian.protocol.Canonical
 org.tiqian.protocol.ParagraphRequest
 org.tiqian.protocol.ParagraphRequestTest
+runtime.SortedTable
+runtime.UString
 std.UStringException
