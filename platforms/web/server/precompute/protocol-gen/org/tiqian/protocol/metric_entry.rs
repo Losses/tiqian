@@ -19,7 +19,7 @@ impl MetricEntry {
             role_ref,
             face_selection_ref,
             value_pool_ref,
-            values_em: Default::default(),
+            values_em: vec![],
             stored: false,
         }
     }

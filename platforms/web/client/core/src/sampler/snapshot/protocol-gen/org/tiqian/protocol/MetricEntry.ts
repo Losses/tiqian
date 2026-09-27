@@ -17,6 +17,7 @@ export class MetricEntry {
     this.roleRef = roleRef;
     this.faceSelectionRef = faceSelectionRef;
     this.valuePoolRef = valuePoolRef;
+    this.valuesEm = [];
     this.stored = false;
   }
 }
