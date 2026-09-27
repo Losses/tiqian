@@ -71,6 +71,7 @@ class Canonical {
      */
     public static function encode(input:WireValue, kind:Int):EncodeResult {
         final writer = new Writer(kind);
+        writer.begin(kind);
         final text = member(input, "text");
         var textValue = "";
         if (!isWireNull(text)) {
@@ -486,9 +487,14 @@ private enum ListShape {
  * canonical.rs:93).
  */
 private class Writer {
-    final buf:BytesBuffer = new BytesBuffer();
+    final buf:BytesBuffer;
 
     public function new(kind:Int) {
+        buf = new BytesBuffer();
+    }
+
+    /** Writes the header bytes; call exactly once, right after new. */
+    public function begin(kind:Int):Void {
         writeMagic();
         u8(Canonical.VERSION);
         u8(kind);
