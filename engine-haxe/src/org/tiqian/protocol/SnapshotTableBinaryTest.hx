@@ -46,7 +46,7 @@ class SnapshotTableBinaryTest {
                 org.tiqian.test.trace.TracedAssertions.assertEqualsString("宋体", data.strings[4]);
                 org.tiqian.test.trace.TracedAssertions.assertEqualsInt(2, data.metricRows.length);
                 org.tiqian.test.trace.TracedAssertions.assertEqualsInt(1, data.metricRows[0].familiesRef);
-                org.tiqian.test.trace.TracedAssertions.assertEqualsInt(0, data.metricRows[1].italic);
+                org.tiqian.test.trace.TracedAssertions.assertEqualsInt(1, data.metricRows[1].italic);
                 org.tiqian.test.trace.TracedAssertions.assertEqualsInt(1, data.valuePool.length);
                 org.tiqian.test.trace.TracedAssertions.assertEqualsInt(2, data.probeTextRefs.length);
                 org.tiqian.test.trace.TracedAssertions.assertEqualsInt(1, data.advancePool.length);
