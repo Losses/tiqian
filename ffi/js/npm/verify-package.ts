@@ -23,17 +23,15 @@ interface PackageManifest {
   readonly files: readonly string[];
 }
 
-interface SourceMapManifest {
-  readonly sources?: readonly string[];
-  readonly sourcesContent?: readonly string[];
-}
-
 const EXPECTED_NAME: string = "@tiqian/ffi";
+// The published entry is the aggregate facade over the generated tree; the
+// retired Kotlin/JS runtime marker list (precomputePlainParagraph and
+// friends) named exports that the precompute cutover wave removed.
 const RUNTIMES: readonly RuntimeSpec[] = [
   {
     directory: "runtime/",
-    path: "runtime/Tiqian-tiqian-ffi-js.mjs",
-    marker: "precomputePlainParagraph",
+    path: "runtime/facade.mjs",
+    marker: "precomputeParagraphWithDiagnostics",
   },
 ];
 
@@ -84,7 +82,7 @@ export async function verifyPackage(packageRoot: URL = new URL("./", import.meta
   }
 
   const declarations: string = await readFile(
-    new URL("runtime/Tiqian-tiqian-ffi-js.d.mts", packageRoot),
+    new URL("runtime/facade.d.mts", packageRoot),
     "utf8",
   );
   for (const name of [
@@ -98,33 +96,30 @@ export async function verifyPackage(packageRoot: URL = new URL("./", import.meta
     "classifyFontRoles",
     "unsupportedInlineShapingProperties",
     "firstDivergentInlineShapingProperty",
-    "precomputePlainParagraph",
-    "precomputeParagraph",
     "precomputeParagraphWithDiagnostics",
     "precomputeParagraphWithBrowserMetrics",
   ]) {
-    if (!new RegExp(`export declare function ${name}\\(`).test(declarations)) {
-      fail(`runtime/Tiqian-tiqian-ffi-js.d.mts does not declare ${name}`);
+    if (!new RegExp(`declare function ${name}\\(`).test(declarations)) {
+      fail(`runtime/facade.d.mts does not declare ${name}`);
     }
   }
 
+  // Every shipped runtime module is now a hand-written entry shim over the
+  // compiled engine-gen tree; the Kotlin-generated engine modules (and their
+  // embedded-sources maps) left the package with the precompute cutover. Pin
+  // the exact shim set so no retired Kotlin artifact can re-enter runtime/.
   const runtimeEntries: readonly string[] = await readdir(new URL("runtime/", packageRoot));
-  const modules: readonly string[] = runtimeEntries.filter((entry: string): boolean => entry.endsWith(".mjs"));
-  const mapsWithoutSources: ReadonlySet<string> = new Set([
-    "kotlin_org_jetbrains_kotlin_kotlin_dom_api_compat.mjs.map",
-  ]);
-  for (const module of modules) {
-    const map: string = `${module}.map`;
-    if (!runtimeEntries.includes(map)) {
-      fail(`runtime/${module} has no source map`);
-    }
-    if (mapsWithoutSources.has(map)) continue;
-    const parsed: SourceMapManifest = JSON.parse(await readFile(new URL(`runtime/${map}`, packageRoot), "utf8")) as SourceMapManifest;
-    const sources: readonly string[] = parsed.sources ?? [];
-    const contents: readonly string[] = parsed.sourcesContent ?? [];
-    if (sources.length === 0 || contents.length < sources.length) {
-      fail(`runtime/${map} does not embed its sources`);
-    }
+  const modules: readonly string[] = runtimeEntries.filter((entry: string): boolean => entry.endsWith(".mjs")).sort();
+  const expectedModules: readonly string[] = [
+    "clreq-facade.mjs",
+    "facade.mjs",
+    "font-facade.mjs",
+    "linebreak-facade.mjs",
+    "loweringhelper-facade.mjs",
+    "precompute-facade.mjs",
+  ];
+  if (modules.length !== expectedModules.length || expectedModules.some((name: string, index: number): boolean => modules[index] !== name)) {
+    fail(`runtime/ module set is ${modules.join(", ")} instead of the six entry shims ${expectedModules.join(", ")}`);
   }
 
   return verified;

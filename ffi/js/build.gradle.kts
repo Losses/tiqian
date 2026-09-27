@@ -31,11 +31,10 @@ kotlin {
 tasks.register<Sync>("assembleNpmPackage") {
     group = "distribution"
     description = "Builds the @tiqian/ffi ESM package runtime."
-    dependsOn("jsProductionExecutableCompileSync")
-    from(layout.buildDirectory.dir("compileSync/js/main/productionExecutable/kotlin")) {
-        include("*.mjs")
-        include("*.mjs.map")
-        include("*.d.mts")
-    }
+    // The Kotlin/JS runtime no longer contributes to the published package:
+    // since the precompute cutover every capability is served by the
+    // generated TypeScript tree, and the facade artifacts are copied in
+    // afterwards by npm/build-runtime.ts. The Sync still owns runtime/ and
+    // wipes anything it does not carry.
     into(layout.projectDirectory.dir("npm/runtime"))
 }

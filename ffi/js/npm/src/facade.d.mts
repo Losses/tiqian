@@ -1,20 +1,61 @@
-// Type surface of the public entry (src/facade.mjs). The two Kotlin-runtime
-// exports reuse the generated declarations; the line-break, clreq, font and
-// lowering-helper exports are declared here beside their JavaScript
-// implementations. The export order matches src/facade.mjs and the
+// Type surface of the public entry (src/facade.mjs). All twelve exports are
+// declared here beside their JavaScript implementations in the facade
+// modules; every value is served by the single-source generated tree
+// (./engine-gen). The export order matches src/facade.mjs and the
 // compatibility contract in package.test.mts.
 
-import {
-  precomputeParagraphWithDiagnostics,
-  precomputeParagraphWithBrowserMetrics,
-} from "./Tiqian-tiqian-ffi-js.d.mts";
-
-// The Kotlin-runtime declaration file stays the type surface for everything the
-// generated tree did not take over: the wire DTOs (TextSpanWire, InlineBoxWire,
-// WorkerLayoutRequest, PrepareParagraphRequest …) and the two precompute
-// entries. Only the values of the ten generated exports are re-pointed by this
-// file; consumers that import the wire types keep compiling.
-export * from "./Tiqian-tiqian-ffi-js.d.mts";
+// The published request shape of the two precompute entries: the field set
+// the retired Kotlin/JS @JsExport interface PrepareParagraphRequest carried
+// (LayoutRequestDtos.kt), now validated by the generated protocol model
+// (org/tiqian/protocol ParagraphRequestChecks).
+export interface PrepareParagraphRequest {
+  text: string;
+  maxWidthPx: number;
+  fontFamilies: string[];
+  fontSizePx: number;
+  lineHeightPx: number;
+  locale: string;
+  fontWeight: number;
+  italic: boolean;
+  firstLineIndentIc: number;
+  lineLengthGridEnabled: boolean;
+  sourceBoundaries: number[];
+  textSpans: Array<{
+    start: number;
+    end: number;
+    fontFamilies: string[];
+    fontSize: number;
+    fontWeight: number;
+    italic: boolean;
+    baselineShift: number;
+  }>;
+  inlineBoxes: Array<{
+    start: number;
+    end: number;
+    inlineStart: number;
+    inlineEnd: number;
+    outerSpacing: string;
+  }>;
+  lineBreakSpans: Array<{
+    start: number;
+    end: number;
+    policy: string;
+  }>;
+  inlineObjects: Array<{
+    start: number;
+    end: number;
+    advance: number;
+    ascent: number;
+    descent: number;
+  }>;
+  decorations: Array<{
+    start: number;
+    end: number;
+    kind: string;
+  }>;
+  emphasisDotGapEm: number | null;
+  renderEvidenceOverride: boolean | null;
+}
 
 declare function liangHyphenate(
   word: string,
@@ -46,6 +87,18 @@ declare function firstDivergentInlineShapingProperty(
   paragraphValues: string[],
 ): string | null;
 
+declare function precomputeParagraphWithDiagnostics(
+  request: PrepareParagraphRequest,
+  zeroAdvanceEpsilonPx: number,
+  shapeJson: (requestJson: string) => string,
+  metricsJson: (requestJson: string) => string,
+): string;
+declare function precomputeParagraphWithBrowserMetrics(
+  request: PrepareParagraphRequest,
+  zeroAdvanceEpsilonPx: number,
+  callbacks: { shapeJson: (requestJson: string) => string; metricsJson: (requestJson: string) => string },
+): string;
+
 export {
   bopomofoParse,
   numberSymbolCohesionUnbreakableRanges,
@@ -60,3 +113,4 @@ export {
   precomputeParagraphWithDiagnostics,
   precomputeParagraphWithBrowserMetrics,
 };
+
