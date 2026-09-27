@@ -1144,7 +1144,7 @@ bb_fw[usize::try_from(i).unwrap_or(0)], font_families: fams, placements: placeme
         let mut __loop_guard3 = pool.lock().unwrap();
         for _ in 0..dsc {
             let kr = r.u32();
-            decos.push(PlanDecorationSegment { kind: (__loop_guard3[usize::try_from(kr).unwrap_or(0)]).clone().clone(), left: r.f64(), top: r.f64(), right: r.f64() });
+            decos.push(PlanDecorationSegment { kind: (__loop_guard3[usize::try_from(kr).unwrap_or(0)]).clone().clone(), left: r.f64(), top: r.f64(), right: r.f64(), source_range_start: 0, source_range_end: 0 });
         }
         drop(__loop_guard3);
         let mut dots: Vec<PlanEmphasisDot> = vec![];
