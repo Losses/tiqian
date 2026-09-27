@@ -1,33 +1,33 @@
 package org.tiqian.protocol
 
 object NamedErrorNames {
-    fun variants(): MutableList<NamedError> {
-        return mutableListOf<NamedError>(NamedError.EmptyParagraph, NamedError.InvalidMaximumMeasure, NamedError.InvalidFontSize, NamedError.InvalidLineHeight, NamedError.InvalidFirstLineIndent, NamedError.InvalidFontWeight, NamedError.InvalidEmphasisDotGapEm, NamedError.MissingExplicitFontFamilies, NamedError.InvalidTextSpanRange, NamedError.MissingTextSpanFontFamilies, NamedError.InvalidTextSpanFontSize, NamedError.InvalidTextSpanFontWeight, NamedError.InvalidTextSpanBaselineShift, NamedError.InvalidSourceBoundary, NamedError.InvalidLineBreakSpanRange, NamedError.InvalidInlineBoxRange, NamedError.InvalidInlineBoxGeometry, NamedError.InvalidInlineObjectRange, NamedError.InvalidInlineObjectAdvance, NamedError.InvalidInlineObjectVerticalGeometry, NamedError.InvalidDecorationRange)
+    fun variants(): MutableList<ParagraphRequestException> {
+        return mutableListOf<ParagraphRequestException>(ParagraphRequestException.EmptyParagraph, ParagraphRequestException.InvalidMaximumMeasure, ParagraphRequestException.InvalidFontSize, ParagraphRequestException.InvalidLineHeight, ParagraphRequestException.InvalidFirstLineIndent, ParagraphRequestException.InvalidFontWeight, ParagraphRequestException.InvalidEmphasisDotGapEm, ParagraphRequestException.MissingExplicitFontFamilies, ParagraphRequestException.InvalidTextSpanRange, ParagraphRequestException.MissingTextSpanFontFamilies, ParagraphRequestException.InvalidTextSpanFontSize, ParagraphRequestException.InvalidTextSpanFontWeight, ParagraphRequestException.InvalidTextSpanBaselineShift, ParagraphRequestException.InvalidSourceBoundary, ParagraphRequestException.InvalidLineBreakSpanRange, ParagraphRequestException.InvalidInlineBoxRange, ParagraphRequestException.InvalidInlineBoxGeometry, ParagraphRequestException.InvalidInlineObjectRange, ParagraphRequestException.InvalidInlineObjectAdvance, ParagraphRequestException.InvalidInlineObjectVerticalGeometry, ParagraphRequestException.InvalidDecorationRange)
     }
 
-    fun describe(error: NamedError): String {
+    fun describe(error: ParagraphRequestException): String {
         return when (error) {
-            NamedError.EmptyParagraph -> "EmptyParagraph"
-            NamedError.InvalidMaximumMeasure -> "InvalidMaximumMeasure"
-            NamedError.InvalidFontSize -> "InvalidFontSize"
-            NamedError.InvalidLineHeight -> "InvalidLineHeight"
-            NamedError.InvalidFirstLineIndent -> "InvalidFirstLineIndent"
-            NamedError.InvalidFontWeight -> "InvalidFontWeight"
-            NamedError.InvalidEmphasisDotGapEm -> "InvalidEmphasisDotGapEm"
-            NamedError.MissingExplicitFontFamilies -> "MissingExplicitFontFamilies"
-            NamedError.InvalidTextSpanRange -> "InvalidTextSpanRange"
-            NamedError.MissingTextSpanFontFamilies -> "MissingTextSpanFontFamilies"
-            NamedError.InvalidTextSpanFontSize -> "InvalidTextSpanFontSize"
-            NamedError.InvalidTextSpanFontWeight -> "InvalidTextSpanFontWeight"
-            NamedError.InvalidTextSpanBaselineShift -> "InvalidTextSpanBaselineShift"
-            NamedError.InvalidSourceBoundary -> "InvalidSourceBoundary"
-            NamedError.InvalidLineBreakSpanRange -> "InvalidLineBreakSpanRange"
-            NamedError.InvalidInlineBoxRange -> "InvalidInlineBoxRange"
-            NamedError.InvalidInlineBoxGeometry -> "InvalidInlineBoxGeometry"
-            NamedError.InvalidInlineObjectRange -> "InvalidInlineObjectRange"
-            NamedError.InvalidInlineObjectAdvance -> "InvalidInlineObjectAdvance"
-            NamedError.InvalidInlineObjectVerticalGeometry -> "InvalidInlineObjectVerticalGeometry"
-            NamedError.InvalidDecorationRange -> "InvalidDecorationRange"
+            ParagraphRequestException.EmptyParagraph -> "EmptyParagraph"
+            ParagraphRequestException.InvalidMaximumMeasure -> "InvalidMaximumMeasure"
+            ParagraphRequestException.InvalidFontSize -> "InvalidFontSize"
+            ParagraphRequestException.InvalidLineHeight -> "InvalidLineHeight"
+            ParagraphRequestException.InvalidFirstLineIndent -> "InvalidFirstLineIndent"
+            ParagraphRequestException.InvalidFontWeight -> "InvalidFontWeight"
+            ParagraphRequestException.InvalidEmphasisDotGapEm -> "InvalidEmphasisDotGapEm"
+            ParagraphRequestException.MissingExplicitFontFamilies -> "MissingExplicitFontFamilies"
+            ParagraphRequestException.InvalidTextSpanRange -> "InvalidTextSpanRange"
+            ParagraphRequestException.MissingTextSpanFontFamilies -> "MissingTextSpanFontFamilies"
+            ParagraphRequestException.InvalidTextSpanFontSize -> "InvalidTextSpanFontSize"
+            ParagraphRequestException.InvalidTextSpanFontWeight -> "InvalidTextSpanFontWeight"
+            ParagraphRequestException.InvalidTextSpanBaselineShift -> "InvalidTextSpanBaselineShift"
+            ParagraphRequestException.InvalidSourceBoundary -> "InvalidSourceBoundary"
+            ParagraphRequestException.InvalidLineBreakSpanRange -> "InvalidLineBreakSpanRange"
+            ParagraphRequestException.InvalidInlineBoxRange -> "InvalidInlineBoxRange"
+            ParagraphRequestException.InvalidInlineBoxGeometry -> "InvalidInlineBoxGeometry"
+            ParagraphRequestException.InvalidInlineObjectRange -> "InvalidInlineObjectRange"
+            ParagraphRequestException.InvalidInlineObjectAdvance -> "InvalidInlineObjectAdvance"
+            ParagraphRequestException.InvalidInlineObjectVerticalGeometry -> "InvalidInlineObjectVerticalGeometry"
+            ParagraphRequestException.InvalidDecorationRange -> "InvalidDecorationRange"
         }
     }
 }

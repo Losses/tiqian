@@ -34,9 +34,13 @@ class ParagraphRequestChecks {
         if (request.fontWeight < 1 || request.fontWeight > 1000) {
             throw new ParagraphRequestException(InvalidFontWeight);
         }
-        final gapEm = request.emphasisDotGapEm == null
+        // The field is bound to a local before the null test: the Kotlin
+        // emitter's expression-if (KotlinExpr.hx:821) cannot smart-cast a
+        // var class property, and a local val admits the cast (Stage1-P5b).
+        final rawGapEm = request.emphasisDotGapEm;
+        final gapEm = rawGapEm == null
             ? DEFAULT_EMPHASIS_DOT_GAP_EM
-            : (request.emphasisDotGapEm : Float);
+            : (rawGapEm : Float);
         if (!Math.isFinite(gapEm) || gapEm < 0.0) {
             throw new ParagraphRequestException(InvalidEmphasisDotGapEm);
         }
