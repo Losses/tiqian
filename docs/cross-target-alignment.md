@@ -1,7 +1,7 @@
 # 跨目标行为对齐判据
 
 本文定义 engine-haxe（Haxe 版引擎）在五个目标语言上的行为对齐判据，以及
-判定用的命令入口。当前状态数字见文末表格；表格随整改进度更新。
+判定用的命令入口。文末表格是 2026-09-05 的历史测量，不能代表当前检出。
 
 ## 三项目标对齐
 
@@ -10,7 +10,7 @@
    golden 轨迹（`engine/src/jvmTest/resources/golden/test-traces/`）逐类一致。
    这条判据回答「Haxe Kotlin 与原本 Kotlin 行为是否相同」。
 2. 五目标 f64 相互比对：五个目标（ts、kotlin、rust、swift、dart）在全精度
-   模式下各自运行测试束，产出的逐测试记录（jsonl，一行一事件）逐行比对后
+   模式下各自运行同一组测试，产出的逐测试记录（jsonl，一行一事件）逐行比对后
    完全一致。这条判据回答「所有输出语言的全精度行为是否相同」。
 3. rust 与 kotlin 的 f64 比对：第 2 项的第一步验收只做这两个目标，判据是
    两目标的 jsonl 逐行一致。
@@ -26,25 +26,27 @@ JS oracle 比对，用 Haxe 原生运行时对 golden 逐字节核对。第 1 �
 
 | 层 | 判据 | 命令入口 |
 |---|---|---|
-| 生成 | 五目标入口各 RC=0 | `nix develop -c haxe engine-haxe/core-<t>.hxml` |
-| 编译 | 各目标自身工具链无错误 | kotlinc 2.4.10（boring nix shell）、cargo、bun/tsc、swift build、dart analyze |
-| 运行 | TestMain 无失败并写 jsonl | `BORING_TEST_RESULTS=<路径>` 后运行各目标测试束 |
+| 生成 | 各配置生成成功 | `nix develop -c boring gen <配置 ID> --project boring.json` |
+| 编译与运行 | 目标工具链编译测试、运行成功并写 jsonl | 先运行对应配置的 `gen`，再运行 `nix develop -c boring test <配置 ID> --project boring.json` |
 | f32 对照 | kotlin（f32）运行轨迹对 golden 逐类一致 | 复用 `engine-haxe/tools/compare-traces.py`，数值相对容差 1e-6 |
-| f64 对照 | 五目标 f64 jsonl 逐行一致 | boring 的 `tools/test-consistency/manager.hxml` 加 `manager.js` 范式 |
+| 跨目标对照 | 参与比较的配置逐测试结果一致 | `nix develop -c boring compare --project boring.json`；完整生成、测试与比较用 `nix develop -c boring verify --project boring.json` |
+
+当前 `boring.json` 的比较基准是 `kotlin-f32`。上表的 `compare` 命令按这个
+配置运行；第 2、3 项要求的纯 f64 比对，还需在项目配置中指定同精度的
+比较基准与参与配置，再运行该命令。
 
 f32 对照的容差说明：两边数值都是单精度；golden 文本由 JVM 的
 `Float.toString` 写出，被比较一侧的文本由另一套运行时的浮点转十进制规则
 写出，同样的单精度位模式会打印成位数不同的十进制文本，且 sin/cos/pow 在
-不同运行时的实现有末位差。1e-6 的相对容差（约一个单精度 ulp）只吸收这些
+不同运行时的实现有末位差。1e-6 的相对容差主要吸收这些
 文本化末位差，不放宽数值本身。
 
-生成与测试入口的 defines 取值与 boring 仓库 `examples/<t>.hxml` 相同：
-`<t>-output`、`<t>-test-output`、`runtime-import`、`runtime-emit`，ts 另带
-`package-shell=none` 并经仓库根 tsconfig 的 paths 解析 runtime；rust 另带
-`package-name` 与 `package-license`。jsonl 的写入机制与 boring 相同：测试束
-运行时读 `BORING_TEST_RESULTS` 环境变量并按行写事件。
+配置 ID、入口 HXML、输出目录和打包元信息由仓库根目录的 `boring.json`
+指定。driver 为测试运行设置结果文件路径；手动运行生成物时才需要自行设置
+`BORING_TEST_RESULTS`。具体生成与测试步骤见
+[engine-haxe/README.md](../engine-haxe/README.md#生成与测试)。
 
-## 当前状态（2026-09-05，vendored boring 副本 5034e98）
+## 历史测量（2026-09-05，vendored boring 副本 5034e98）
 
 | 目标 | 生成 | 编译 | 运行 |
 |---|---|---|---|
@@ -53,9 +55,8 @@ f32 对照的容差说明：两边数值都是单精度；golden 文本由 JVM �
 | ts / swift / dart | 生成拒绝（Std.string 不接受纯 class 的元素类型） | 未达 | 未达 |
 | rust | 生成拒绝（每函数只支持一个 error enum） | 未达 | 未达 |
 
-三个阻塞的修复位置都在 boring 仓库 `packages/compiler/reflaxe/**`：
-Std.string 拒绝＝记录合成 toString 时，对声明了 toString 的普通 class 元素缺少
-对应的 case 分支；rust 限制＝一个函数的调用路径到达两个 error enum 时没有
-union 合成；kotlin 编译错误集中在 null 赋给非空参数、参数默认值缺失等几类
-原因（错误来自生成的代码），按原因分批整改。f32 行为比对的既有结论不受
-影响：`gates.sh all` 四项检查 121 类全过、比对全部一致。
+当时的三个阻塞位于 boring 仓库 `packages/compiler/reflaxe/**`：记录合成
+`toString` 时，缺少普通 class 元素的处理；Rust 函数的调用路径到达两个
+error enum 时，缺少 union 合成；Kotlin 生成代码中还有 null 赋给非空参数、
+参数默认值缺失等错误。这些是当时的诊断，不能据此判断当前编译器状态。
+当时 `gates.sh all` 的四项检查覆盖 121 类，均已通过。
