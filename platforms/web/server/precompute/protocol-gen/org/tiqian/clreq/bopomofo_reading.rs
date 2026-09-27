@@ -1,16 +1,17 @@
 use crate::org::tiqian::clreq::bopomofo_tone::BopomofoTone;
 use crate::runtime::u_string;
+use crate::runtime::u_string::UString;
 use std::fmt::Write;
 
 
 #[derive(Debug, Clone, PartialEq)]
 pub struct BopomofoReading {
-    pub symbols: Vec<String>,
+    pub symbols: Vec<UString>,
     pub tone: BopomofoTone,
 }
 
 impl BopomofoReading {
-    pub fn new(symbols: Vec<String>, tone: BopomofoTone) -> Self {
+    pub fn new(symbols: Vec<UString>, tone: BopomofoTone) -> Self {
         Self {
             symbols,
             tone,
@@ -18,9 +19,9 @@ impl BopomofoReading {
     }
 
     pub fn copy(&self) -> BopomofoReading {
-        let mut copied_symbols: Vec<String> = vec![];
+        let mut copied_symbols: Vec<UString> = vec![];
         let mut index = 0u32;
-        while (i32::from_ne_bytes((index).to_ne_bytes())) < (i32::from_ne_bytes((u32::try_from(((self.symbols).clone().len()) & 0xFFFF_FFFF).unwrap_or(0)).to_ne_bytes())) {
+        while (i32::from_ne_bytes(((index) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from(((self.symbols).clone().len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
             copied_symbols.push((self.symbols[usize::try_from(index).unwrap_or(0)]).clone());
             index = u32::wrapping_add(index, 1);
         }
@@ -31,12 +32,12 @@ impl BopomofoReading {
         let mut hash = 17u32;
         hash = u32::wrapping_add(u32::wrapping_mul(hash, 31), self.tone_index());
         let mut index = 0u32;
-        while (i32::from_ne_bytes((index).to_ne_bytes())) < (i32::from_ne_bytes((u32::try_from(((self.symbols).clone().len()) & 0xFFFF_FFFF).unwrap_or(0)).to_ne_bytes())) {
+        while (i32::from_ne_bytes(((index) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from(((self.symbols).clone().len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
             let symbol = (self.symbols[usize::try_from(index).unwrap_or(0)]).clone();
             let mut unit_index = 0u32;
             let __units = u_string::units(&symbol);
             let __count = u_string::unit_count(&symbol);
-            while (i32::from_ne_bytes((unit_index).to_ne_bytes())) < (i32::from_ne_bytes((__count).to_ne_bytes())) {
+            while (i32::from_ne_bytes(((unit_index) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((__count) as i32).to_ne_bytes())) {
                 hash = u32::wrapping_add(u32::wrapping_mul(hash, 31), u_string::unit_at_from(&__units, unit_index).unwrap_or(0));
                 unit_index = u32::wrapping_add(unit_index, 1);
             }
@@ -57,11 +58,8 @@ impl BopomofoReading {
         };
     }
 
-    pub fn to_string(&self) -> String {
-        return format!("{}{}{}{}{}{}{}",
-            "BopomofoReading(",
-            "symbols=",
-            {
+    pub fn to_string(&self) -> UString {
+        return UString::from(format!("{}", { let mut __s = UString::new(); __s += &(UString::from("BopomofoReading(")); __s += &(UString::from("symbols=")); __s += UString::from(format!("{}", {
         let mut out = String::new();
         out.push('[');
         let arr = (self.symbols).clone();
@@ -74,12 +72,7 @@ impl BopomofoReading {
         }
         out.push(']');
         out
-    },
-            ", ",
-            "tone=",
-            self.tone.name(),
-            ")"
-        );
+    }).as_str()).as_ustr(); __s += &(UString::from(", ")); __s += &(UString::from("tone=")); __s += UString::from(self.tone.name()).as_ustr(); __s += &(UString::from(")")); __s }).as_str());
     }
 }
 

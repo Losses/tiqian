@@ -17,6 +17,10 @@ use crate::org::tiqian::layout::display_glyph_substitution_engine_test_support::
 use crate::org::tiqian::test::trace::test_trace_recorder::TestTraceRecorder;
 use crate::org::tiqian::test::trace::traced_assertions::TracedAssertions;
 use crate::runtime::test as testlib;
+use crate::runtime::u_string::UStr;
+use crate::runtime::u_string::UString;
+use std::sync::Arc;
+use std::sync::Mutex;
 
 
 #[derive(Debug, Clone, PartialEq)]
@@ -29,6 +33,20 @@ pub enum DisplayGlyphSubstitutionEngineTestUsesTwoEmAdvanceForRecommendedDashCod
     ParagraphLayoutEngineNewFaultFault(crate::org::tiqian::layout::paragraph_layout_engine::ParagraphLayoutEngineNewFault),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
     ParagraphLayoutEngineLayoutWithRejectedTechnicalTiersFaultFault(crate::org::tiqian::layout::paragraph_layout_engine::ParagraphLayoutEngineLayoutWithRejectedTechnicalTiersFault),
+}
+impl std::fmt::Display for DisplayGlyphSubstitutionEngineTestUsesTwoEmAdvanceForRecommendedDashCodepointFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            DisplayGlyphSubstitutionEngineTestUsesTwoEmAdvanceForRecommendedDashCodepointFault::IllegalStateExceptionFault(value) => write!(formatter, "{}", value),
+            DisplayGlyphSubstitutionEngineTestUsesTwoEmAdvanceForRecommendedDashCodepointFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            DisplayGlyphSubstitutionEngineTestUsesTwoEmAdvanceForRecommendedDashCodepointFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            DisplayGlyphSubstitutionEngineTestUsesTwoEmAdvanceForRecommendedDashCodepointFault::SupportDefaultEngineFault(value) => write!(formatter, "{}", value),
+            DisplayGlyphSubstitutionEngineTestUsesTwoEmAdvanceForRecommendedDashCodepointFault::TracedAssertionsAssertEqualsFloatFaultFault(value) => write!(formatter, "{}", value),
+            DisplayGlyphSubstitutionEngineTestUsesTwoEmAdvanceForRecommendedDashCodepointFault::ParagraphLayoutEngineNewFaultFault(value) => write!(formatter, "{}", value),
+            DisplayGlyphSubstitutionEngineTestUsesTwoEmAdvanceForRecommendedDashCodepointFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+            DisplayGlyphSubstitutionEngineTestUsesTwoEmAdvanceForRecommendedDashCodepointFault::ParagraphLayoutEngineLayoutWithRejectedTechnicalTiersFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
 }
 
 impl From<DisplayGlyphSubstitutionEngineTestUsesTwoEmAdvanceForRecommendedDashCodepointFault> for crate::org::tiqian::core::illegal_state_exception::IllegalStateException {
@@ -162,6 +180,21 @@ pub enum DisplayGlyphSubstitutionEngineTestSubstitutionRollsBackToSourceTextWhen
     ParagraphLayoutEngineNewFaultFault(crate::org::tiqian::layout::paragraph_layout_engine::ParagraphLayoutEngineNewFault),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
     ParagraphLayoutEngineLayoutWithRejectedTechnicalTiersFaultFault(crate::org::tiqian::layout::paragraph_layout_engine::ParagraphLayoutEngineLayoutWithRejectedTechnicalTiersFault),
+}
+impl std::fmt::Display for DisplayGlyphSubstitutionEngineTestSubstitutionRollsBackToSourceTextWhenFontLacksTheGlyphFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            DisplayGlyphSubstitutionEngineTestSubstitutionRollsBackToSourceTextWhenFontLacksTheGlyphFault::IllegalStateExceptionFault(value) => write!(formatter, "{}", value),
+            DisplayGlyphSubstitutionEngineTestSubstitutionRollsBackToSourceTextWhenFontLacksTheGlyphFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            DisplayGlyphSubstitutionEngineTestSubstitutionRollsBackToSourceTextWhenFontLacksTheGlyphFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            DisplayGlyphSubstitutionEngineTestSubstitutionRollsBackToSourceTextWhenFontLacksTheGlyphFault::SupportShaperEngineFault(value) => write!(formatter, "{}", value),
+            DisplayGlyphSubstitutionEngineTestSubstitutionRollsBackToSourceTextWhenFontLacksTheGlyphFault::TracedAssertionsAssertEqualsStringFaultFault(value) => write!(formatter, "{}", value),
+            DisplayGlyphSubstitutionEngineTestSubstitutionRollsBackToSourceTextWhenFontLacksTheGlyphFault::TracedAssertionsAssertTrueFaultFault(value) => write!(formatter, "{}", value),
+            DisplayGlyphSubstitutionEngineTestSubstitutionRollsBackToSourceTextWhenFontLacksTheGlyphFault::ParagraphLayoutEngineNewFaultFault(value) => write!(formatter, "{}", value),
+            DisplayGlyphSubstitutionEngineTestSubstitutionRollsBackToSourceTextWhenFontLacksTheGlyphFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+            DisplayGlyphSubstitutionEngineTestSubstitutionRollsBackToSourceTextWhenFontLacksTheGlyphFault::ParagraphLayoutEngineLayoutWithRejectedTechnicalTiersFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
 }
 
 impl From<DisplayGlyphSubstitutionEngineTestSubstitutionRollsBackToSourceTextWhenFontLacksTheGlyphFault> for crate::org::tiqian::core::illegal_state_exception::IllegalStateException {
@@ -310,6 +343,20 @@ pub enum DisplayGlyphSubstitutionEngineTestSubstitutionIsKeptWhenFontCoversTheGl
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
     ParagraphLayoutEngineLayoutWithRejectedTechnicalTiersFaultFault(crate::org::tiqian::layout::paragraph_layout_engine::ParagraphLayoutEngineLayoutWithRejectedTechnicalTiersFault),
 }
+impl std::fmt::Display for DisplayGlyphSubstitutionEngineTestSubstitutionIsKeptWhenFontCoversTheGlyphFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            DisplayGlyphSubstitutionEngineTestSubstitutionIsKeptWhenFontCoversTheGlyphFault::IllegalStateExceptionFault(value) => write!(formatter, "{}", value),
+            DisplayGlyphSubstitutionEngineTestSubstitutionIsKeptWhenFontCoversTheGlyphFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            DisplayGlyphSubstitutionEngineTestSubstitutionIsKeptWhenFontCoversTheGlyphFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            DisplayGlyphSubstitutionEngineTestSubstitutionIsKeptWhenFontCoversTheGlyphFault::SupportDefaultEngineFault(value) => write!(formatter, "{}", value),
+            DisplayGlyphSubstitutionEngineTestSubstitutionIsKeptWhenFontCoversTheGlyphFault::TracedAssertionsAssertEqualsStringFaultFault(value) => write!(formatter, "{}", value),
+            DisplayGlyphSubstitutionEngineTestSubstitutionIsKeptWhenFontCoversTheGlyphFault::ParagraphLayoutEngineNewFaultFault(value) => write!(formatter, "{}", value),
+            DisplayGlyphSubstitutionEngineTestSubstitutionIsKeptWhenFontCoversTheGlyphFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+            DisplayGlyphSubstitutionEngineTestSubstitutionIsKeptWhenFontCoversTheGlyphFault::ParagraphLayoutEngineLayoutWithRejectedTechnicalTiersFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
+}
 
 impl From<DisplayGlyphSubstitutionEngineTestSubstitutionIsKeptWhenFontCoversTheGlyphFault> for crate::org::tiqian::core::illegal_state_exception::IllegalStateException {
     fn from(value: DisplayGlyphSubstitutionEngineTestSubstitutionIsKeptWhenFontCoversTheGlyphFault) -> Self {
@@ -442,6 +489,21 @@ pub enum DisplayGlyphSubstitutionEngineTestStubShaperReportsProfileFallbackWhenI
     ParagraphLayoutEngineNewFaultFault(crate::org::tiqian::layout::paragraph_layout_engine::ParagraphLayoutEngineNewFault),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
     ParagraphLayoutEngineLayoutWithRejectedTechnicalTiersFaultFault(crate::org::tiqian::layout::paragraph_layout_engine::ParagraphLayoutEngineLayoutWithRejectedTechnicalTiersFault),
+}
+impl std::fmt::Display for DisplayGlyphSubstitutionEngineTestStubShaperReportsProfileFallbackWhenInkBoundsAreUnavailableFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            DisplayGlyphSubstitutionEngineTestStubShaperReportsProfileFallbackWhenInkBoundsAreUnavailableFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            DisplayGlyphSubstitutionEngineTestStubShaperReportsProfileFallbackWhenInkBoundsAreUnavailableFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            DisplayGlyphSubstitutionEngineTestStubShaperReportsProfileFallbackWhenInkBoundsAreUnavailableFault::SupportDefaultEngineFault(value) => write!(formatter, "{}", value),
+            DisplayGlyphSubstitutionEngineTestStubShaperReportsProfileFallbackWhenInkBoundsAreUnavailableFault::TracedAssertionsAssertTrueFaultFault(value) => write!(formatter, "{}", value),
+            DisplayGlyphSubstitutionEngineTestStubShaperReportsProfileFallbackWhenInkBoundsAreUnavailableFault::TracedAssertionsAssertEqualsStringFaultFault(value) => write!(formatter, "{}", value),
+            DisplayGlyphSubstitutionEngineTestStubShaperReportsProfileFallbackWhenInkBoundsAreUnavailableFault::TracedAssertionsAssertEqualsFloatFaultFault(value) => write!(formatter, "{}", value),
+            DisplayGlyphSubstitutionEngineTestStubShaperReportsProfileFallbackWhenInkBoundsAreUnavailableFault::ParagraphLayoutEngineNewFaultFault(value) => write!(formatter, "{}", value),
+            DisplayGlyphSubstitutionEngineTestStubShaperReportsProfileFallbackWhenInkBoundsAreUnavailableFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+            DisplayGlyphSubstitutionEngineTestStubShaperReportsProfileFallbackWhenInkBoundsAreUnavailableFault::ParagraphLayoutEngineLayoutWithRejectedTechnicalTiersFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
 }
 
 impl From<DisplayGlyphSubstitutionEngineTestStubShaperReportsProfileFallbackWhenInkBoundsAreUnavailableFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
@@ -591,6 +653,21 @@ pub enum DisplayGlyphSubstitutionEngineTestShapingWithoutBoundsProducesNamedProf
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
     ParagraphLayoutEngineLayoutWithRejectedTechnicalTiersFaultFault(crate::org::tiqian::layout::paragraph_layout_engine::ParagraphLayoutEngineLayoutWithRejectedTechnicalTiersFault),
 }
+impl std::fmt::Display for DisplayGlyphSubstitutionEngineTestShapingWithoutBoundsProducesNamedProfileFallbackFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            DisplayGlyphSubstitutionEngineTestShapingWithoutBoundsProducesNamedProfileFallbackFault::IllegalStateExceptionFault(value) => write!(formatter, "{}", value),
+            DisplayGlyphSubstitutionEngineTestShapingWithoutBoundsProducesNamedProfileFallbackFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            DisplayGlyphSubstitutionEngineTestShapingWithoutBoundsProducesNamedProfileFallbackFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            DisplayGlyphSubstitutionEngineTestShapingWithoutBoundsProducesNamedProfileFallbackFault::SupportShaperEngineFault(value) => write!(formatter, "{}", value),
+            DisplayGlyphSubstitutionEngineTestShapingWithoutBoundsProducesNamedProfileFallbackFault::TracedAssertionsAssertEqualsStringFaultFault(value) => write!(formatter, "{}", value),
+            DisplayGlyphSubstitutionEngineTestShapingWithoutBoundsProducesNamedProfileFallbackFault::TracedAssertionsAssertEqualsFloatFaultFault(value) => write!(formatter, "{}", value),
+            DisplayGlyphSubstitutionEngineTestShapingWithoutBoundsProducesNamedProfileFallbackFault::ParagraphLayoutEngineNewFaultFault(value) => write!(formatter, "{}", value),
+            DisplayGlyphSubstitutionEngineTestShapingWithoutBoundsProducesNamedProfileFallbackFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+            DisplayGlyphSubstitutionEngineTestShapingWithoutBoundsProducesNamedProfileFallbackFault::ParagraphLayoutEngineLayoutWithRejectedTechnicalTiersFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
+}
 
 impl From<DisplayGlyphSubstitutionEngineTestShapingWithoutBoundsProducesNamedProfileFallbackFault> for crate::org::tiqian::core::illegal_state_exception::IllegalStateException {
     fn from(value: DisplayGlyphSubstitutionEngineTestShapingWithoutBoundsProducesNamedProfileFallbackFault) -> Self {
@@ -739,6 +816,21 @@ pub enum DisplayGlyphSubstitutionEngineTestRolledBackDashStillKeepsItsBoundaries
     ParagraphLayoutEngineNewFaultFault(crate::org::tiqian::layout::paragraph_layout_engine::ParagraphLayoutEngineNewFault),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
 }
+impl std::fmt::Display for DisplayGlyphSubstitutionEngineTestRolledBackDashStillKeepsItsBoundariesClosedUnderJustificationFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            DisplayGlyphSubstitutionEngineTestRolledBackDashStillKeepsItsBoundariesClosedUnderJustificationFault::IllegalStateExceptionFault(value) => write!(formatter, "{}", value),
+            DisplayGlyphSubstitutionEngineTestRolledBackDashStillKeepsItsBoundariesClosedUnderJustificationFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            DisplayGlyphSubstitutionEngineTestRolledBackDashStillKeepsItsBoundariesClosedUnderJustificationFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            DisplayGlyphSubstitutionEngineTestRolledBackDashStillKeepsItsBoundariesClosedUnderJustificationFault::SupportLookaheadShaperEngineFault(value) => write!(formatter, "{}", value),
+            DisplayGlyphSubstitutionEngineTestRolledBackDashStillKeepsItsBoundariesClosedUnderJustificationFault::SupportFindJustifiedDashHitFault(value) => write!(formatter, "{}", value),
+            DisplayGlyphSubstitutionEngineTestRolledBackDashStillKeepsItsBoundariesClosedUnderJustificationFault::TracedAssertionsAssertEqualsStringFaultFault(value) => write!(formatter, "{}", value),
+            DisplayGlyphSubstitutionEngineTestRolledBackDashStillKeepsItsBoundariesClosedUnderJustificationFault::TracedAssertionsAssertTrueFaultFault(value) => write!(formatter, "{}", value),
+            DisplayGlyphSubstitutionEngineTestRolledBackDashStillKeepsItsBoundariesClosedUnderJustificationFault::ParagraphLayoutEngineNewFaultFault(value) => write!(formatter, "{}", value),
+            DisplayGlyphSubstitutionEngineTestRolledBackDashStillKeepsItsBoundariesClosedUnderJustificationFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
+}
 
 impl From<DisplayGlyphSubstitutionEngineTestRolledBackDashStillKeepsItsBoundariesClosedUnderJustificationFault> for crate::org::tiqian::core::illegal_state_exception::IllegalStateException {
     fn from(value: DisplayGlyphSubstitutionEngineTestRolledBackDashStillKeepsItsBoundariesClosedUnderJustificationFault) -> Self {
@@ -886,6 +978,20 @@ pub enum DisplayGlyphSubstitutionEngineTestPreservesSourceTextWhenUsingClreqReco
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
     ParagraphLayoutEngineLayoutWithRejectedTechnicalTiersFaultFault(crate::org::tiqian::layout::paragraph_layout_engine::ParagraphLayoutEngineLayoutWithRejectedTechnicalTiersFault),
 }
+impl std::fmt::Display for DisplayGlyphSubstitutionEngineTestPreservesSourceTextWhenUsingClreqRecommendedDisplayGlyphsFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            DisplayGlyphSubstitutionEngineTestPreservesSourceTextWhenUsingClreqRecommendedDisplayGlyphsFault::IllegalStateExceptionFault(value) => write!(formatter, "{}", value),
+            DisplayGlyphSubstitutionEngineTestPreservesSourceTextWhenUsingClreqRecommendedDisplayGlyphsFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            DisplayGlyphSubstitutionEngineTestPreservesSourceTextWhenUsingClreqRecommendedDisplayGlyphsFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            DisplayGlyphSubstitutionEngineTestPreservesSourceTextWhenUsingClreqRecommendedDisplayGlyphsFault::SupportDefaultEngineFault(value) => write!(formatter, "{}", value),
+            DisplayGlyphSubstitutionEngineTestPreservesSourceTextWhenUsingClreqRecommendedDisplayGlyphsFault::TracedAssertionsAssertEqualsStringFaultFault(value) => write!(formatter, "{}", value),
+            DisplayGlyphSubstitutionEngineTestPreservesSourceTextWhenUsingClreqRecommendedDisplayGlyphsFault::ParagraphLayoutEngineNewFaultFault(value) => write!(formatter, "{}", value),
+            DisplayGlyphSubstitutionEngineTestPreservesSourceTextWhenUsingClreqRecommendedDisplayGlyphsFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+            DisplayGlyphSubstitutionEngineTestPreservesSourceTextWhenUsingClreqRecommendedDisplayGlyphsFault::ParagraphLayoutEngineLayoutWithRejectedTechnicalTiersFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
+}
 
 impl From<DisplayGlyphSubstitutionEngineTestPreservesSourceTextWhenUsingClreqRecommendedDisplayGlyphsFault> for crate::org::tiqian::core::illegal_state_exception::IllegalStateException {
     fn from(value: DisplayGlyphSubstitutionEngineTestPreservesSourceTextWhenUsingClreqRecommendedDisplayGlyphsFault) -> Self {
@@ -1017,6 +1123,20 @@ pub enum DisplayGlyphSubstitutionEngineTestPreservesOpenTypeFeaturesAsFinalGlyph
     ParagraphLayoutEngineNewFaultFault(crate::org::tiqian::layout::paragraph_layout_engine::ParagraphLayoutEngineNewFault),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
     ParagraphLayoutEngineLayoutWithRejectedTechnicalTiersFaultFault(crate::org::tiqian::layout::paragraph_layout_engine::ParagraphLayoutEngineLayoutWithRejectedTechnicalTiersFault),
+}
+impl std::fmt::Display for DisplayGlyphSubstitutionEngineTestPreservesOpenTypeFeaturesAsFinalGlyphRunBoundariesFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            DisplayGlyphSubstitutionEngineTestPreservesOpenTypeFeaturesAsFinalGlyphRunBoundariesFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            DisplayGlyphSubstitutionEngineTestPreservesOpenTypeFeaturesAsFinalGlyphRunBoundariesFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            DisplayGlyphSubstitutionEngineTestPreservesOpenTypeFeaturesAsFinalGlyphRunBoundariesFault::SupportShaperEngineFault(value) => write!(formatter, "{}", value),
+            DisplayGlyphSubstitutionEngineTestPreservesOpenTypeFeaturesAsFinalGlyphRunBoundariesFault::TracedAssertionsAssertEqualsTextRangeArrayFaultFault(value) => write!(formatter, "{}", value),
+            DisplayGlyphSubstitutionEngineTestPreservesOpenTypeFeaturesAsFinalGlyphRunBoundariesFault::TracedAssertionsAssertEqualsRenderedFaultFault(value) => write!(formatter, "{}", value),
+            DisplayGlyphSubstitutionEngineTestPreservesOpenTypeFeaturesAsFinalGlyphRunBoundariesFault::ParagraphLayoutEngineNewFaultFault(value) => write!(formatter, "{}", value),
+            DisplayGlyphSubstitutionEngineTestPreservesOpenTypeFeaturesAsFinalGlyphRunBoundariesFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+            DisplayGlyphSubstitutionEngineTestPreservesOpenTypeFeaturesAsFinalGlyphRunBoundariesFault::ParagraphLayoutEngineLayoutWithRejectedTechnicalTiersFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
 }
 
 impl From<DisplayGlyphSubstitutionEngineTestPreservesOpenTypeFeaturesAsFinalGlyphRunBoundariesFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
@@ -1150,6 +1270,20 @@ pub enum DisplayGlyphSubstitutionEngineTestMultiCharacterPunctuationUsesCharacte
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
     ParagraphLayoutEngineLayoutWithRejectedTechnicalTiersFaultFault(crate::org::tiqian::layout::paragraph_layout_engine::ParagraphLayoutEngineLayoutWithRejectedTechnicalTiersFault),
 }
+impl std::fmt::Display for DisplayGlyphSubstitutionEngineTestMultiCharacterPunctuationUsesCharacterLocalInkBoundsFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            DisplayGlyphSubstitutionEngineTestMultiCharacterPunctuationUsesCharacterLocalInkBoundsFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            DisplayGlyphSubstitutionEngineTestMultiCharacterPunctuationUsesCharacterLocalInkBoundsFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            DisplayGlyphSubstitutionEngineTestMultiCharacterPunctuationUsesCharacterLocalInkBoundsFault::SupportShaperEngineFault(value) => write!(formatter, "{}", value),
+            DisplayGlyphSubstitutionEngineTestMultiCharacterPunctuationUsesCharacterLocalInkBoundsFault::TracedAssertionsAssertEqualsIntFaultFault(value) => write!(formatter, "{}", value),
+            DisplayGlyphSubstitutionEngineTestMultiCharacterPunctuationUsesCharacterLocalInkBoundsFault::TracedAssertionsAssertEqualsRenderedFaultFault(value) => write!(formatter, "{}", value),
+            DisplayGlyphSubstitutionEngineTestMultiCharacterPunctuationUsesCharacterLocalInkBoundsFault::ParagraphLayoutEngineNewFaultFault(value) => write!(formatter, "{}", value),
+            DisplayGlyphSubstitutionEngineTestMultiCharacterPunctuationUsesCharacterLocalInkBoundsFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+            DisplayGlyphSubstitutionEngineTestMultiCharacterPunctuationUsesCharacterLocalInkBoundsFault::ParagraphLayoutEngineLayoutWithRejectedTechnicalTiersFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
+}
 
 impl From<DisplayGlyphSubstitutionEngineTestMultiCharacterPunctuationUsesCharacterLocalInkBoundsFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
     fn from(value: DisplayGlyphSubstitutionEngineTestMultiCharacterPunctuationUsesCharacterLocalInkBoundsFault) -> Self {
@@ -1281,6 +1415,20 @@ pub enum DisplayGlyphSubstitutionEngineTestHonorsProfilePunctuationGlyphPolicyFa
     ParagraphLayoutEngineNewFaultFault(crate::org::tiqian::layout::paragraph_layout_engine::ParagraphLayoutEngineNewFault),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
     ParagraphLayoutEngineLayoutWithRejectedTechnicalTiersFaultFault(crate::org::tiqian::layout::paragraph_layout_engine::ParagraphLayoutEngineLayoutWithRejectedTechnicalTiersFault),
+}
+impl std::fmt::Display for DisplayGlyphSubstitutionEngineTestHonorsProfilePunctuationGlyphPolicyFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            DisplayGlyphSubstitutionEngineTestHonorsProfilePunctuationGlyphPolicyFault::IllegalStateExceptionFault(value) => write!(formatter, "{}", value),
+            DisplayGlyphSubstitutionEngineTestHonorsProfilePunctuationGlyphPolicyFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            DisplayGlyphSubstitutionEngineTestHonorsProfilePunctuationGlyphPolicyFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            DisplayGlyphSubstitutionEngineTestHonorsProfilePunctuationGlyphPolicyFault::SupportProfileEngineFault(value) => write!(formatter, "{}", value),
+            DisplayGlyphSubstitutionEngineTestHonorsProfilePunctuationGlyphPolicyFault::TracedAssertionsAssertEqualsStringFaultFault(value) => write!(formatter, "{}", value),
+            DisplayGlyphSubstitutionEngineTestHonorsProfilePunctuationGlyphPolicyFault::ParagraphLayoutEngineNewFaultFault(value) => write!(formatter, "{}", value),
+            DisplayGlyphSubstitutionEngineTestHonorsProfilePunctuationGlyphPolicyFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+            DisplayGlyphSubstitutionEngineTestHonorsProfilePunctuationGlyphPolicyFault::ParagraphLayoutEngineLayoutWithRejectedTechnicalTiersFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
 }
 
 impl From<DisplayGlyphSubstitutionEngineTestHonorsProfilePunctuationGlyphPolicyFault> for crate::org::tiqian::core::illegal_state_exception::IllegalStateException {
@@ -1414,6 +1562,21 @@ pub enum DisplayGlyphSubstitutionEngineTestEllipsisSubstitutionRollsBackWhenCove
     ParagraphLayoutEngineNewFaultFault(crate::org::tiqian::layout::paragraph_layout_engine::ParagraphLayoutEngineNewFault),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
     ParagraphLayoutEngineLayoutWithRejectedTechnicalTiersFaultFault(crate::org::tiqian::layout::paragraph_layout_engine::ParagraphLayoutEngineLayoutWithRejectedTechnicalTiersFault),
+}
+impl std::fmt::Display for DisplayGlyphSubstitutionEngineTestEllipsisSubstitutionRollsBackWhenCoverageCannotBeVerifiedFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            DisplayGlyphSubstitutionEngineTestEllipsisSubstitutionRollsBackWhenCoverageCannotBeVerifiedFault::IllegalStateExceptionFault(value) => write!(formatter, "{}", value),
+            DisplayGlyphSubstitutionEngineTestEllipsisSubstitutionRollsBackWhenCoverageCannotBeVerifiedFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            DisplayGlyphSubstitutionEngineTestEllipsisSubstitutionRollsBackWhenCoverageCannotBeVerifiedFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            DisplayGlyphSubstitutionEngineTestEllipsisSubstitutionRollsBackWhenCoverageCannotBeVerifiedFault::SupportShaperEngineFault(value) => write!(formatter, "{}", value),
+            DisplayGlyphSubstitutionEngineTestEllipsisSubstitutionRollsBackWhenCoverageCannotBeVerifiedFault::TracedAssertionsAssertEqualsStringFaultFault(value) => write!(formatter, "{}", value),
+            DisplayGlyphSubstitutionEngineTestEllipsisSubstitutionRollsBackWhenCoverageCannotBeVerifiedFault::TracedAssertionsAssertTrueFaultFault(value) => write!(formatter, "{}", value),
+            DisplayGlyphSubstitutionEngineTestEllipsisSubstitutionRollsBackWhenCoverageCannotBeVerifiedFault::ParagraphLayoutEngineNewFaultFault(value) => write!(formatter, "{}", value),
+            DisplayGlyphSubstitutionEngineTestEllipsisSubstitutionRollsBackWhenCoverageCannotBeVerifiedFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+            DisplayGlyphSubstitutionEngineTestEllipsisSubstitutionRollsBackWhenCoverageCannotBeVerifiedFault::ParagraphLayoutEngineLayoutWithRejectedTechnicalTiersFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
 }
 
 impl From<DisplayGlyphSubstitutionEngineTestEllipsisSubstitutionRollsBackWhenCoverageCannotBeVerifiedFault> for crate::org::tiqian::core::illegal_state_exception::IllegalStateException {
@@ -1563,6 +1726,21 @@ pub enum DisplayGlyphSubstitutionEngineTestDashSubstitutionRollsBackWhenInkDoesN
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
     ParagraphLayoutEngineLayoutWithRejectedTechnicalTiersFaultFault(crate::org::tiqian::layout::paragraph_layout_engine::ParagraphLayoutEngineLayoutWithRejectedTechnicalTiersFault),
 }
+impl std::fmt::Display for DisplayGlyphSubstitutionEngineTestDashSubstitutionRollsBackWhenInkDoesNotFillTheTwoEmAdvanceFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            DisplayGlyphSubstitutionEngineTestDashSubstitutionRollsBackWhenInkDoesNotFillTheTwoEmAdvanceFault::IllegalStateExceptionFault(value) => write!(formatter, "{}", value),
+            DisplayGlyphSubstitutionEngineTestDashSubstitutionRollsBackWhenInkDoesNotFillTheTwoEmAdvanceFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            DisplayGlyphSubstitutionEngineTestDashSubstitutionRollsBackWhenInkDoesNotFillTheTwoEmAdvanceFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            DisplayGlyphSubstitutionEngineTestDashSubstitutionRollsBackWhenInkDoesNotFillTheTwoEmAdvanceFault::SupportShaperEngineFault(value) => write!(formatter, "{}", value),
+            DisplayGlyphSubstitutionEngineTestDashSubstitutionRollsBackWhenInkDoesNotFillTheTwoEmAdvanceFault::TracedAssertionsAssertEqualsStringFaultFault(value) => write!(formatter, "{}", value),
+            DisplayGlyphSubstitutionEngineTestDashSubstitutionRollsBackWhenInkDoesNotFillTheTwoEmAdvanceFault::TracedAssertionsAssertTrueFaultFault(value) => write!(formatter, "{}", value),
+            DisplayGlyphSubstitutionEngineTestDashSubstitutionRollsBackWhenInkDoesNotFillTheTwoEmAdvanceFault::ParagraphLayoutEngineNewFaultFault(value) => write!(formatter, "{}", value),
+            DisplayGlyphSubstitutionEngineTestDashSubstitutionRollsBackWhenInkDoesNotFillTheTwoEmAdvanceFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+            DisplayGlyphSubstitutionEngineTestDashSubstitutionRollsBackWhenInkDoesNotFillTheTwoEmAdvanceFault::ParagraphLayoutEngineLayoutWithRejectedTechnicalTiersFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
+}
 
 impl From<DisplayGlyphSubstitutionEngineTestDashSubstitutionRollsBackWhenInkDoesNotFillTheTwoEmAdvanceFault> for crate::org::tiqian::core::illegal_state_exception::IllegalStateException {
     fn from(value: DisplayGlyphSubstitutionEngineTestDashSubstitutionRollsBackWhenInkDoesNotFillTheTwoEmAdvanceFault) -> Self {
@@ -1711,6 +1889,21 @@ pub enum DisplayGlyphSubstitutionEngineTestDashSubstitutionRollsBackWhenFallback
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
     ParagraphLayoutEngineLayoutWithRejectedTechnicalTiersFaultFault(crate::org::tiqian::layout::paragraph_layout_engine::ParagraphLayoutEngineLayoutWithRejectedTechnicalTiersFault),
 }
+impl std::fmt::Display for DisplayGlyphSubstitutionEngineTestDashSubstitutionRollsBackWhenFallbackReportsAFullOneEmGlyphFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            DisplayGlyphSubstitutionEngineTestDashSubstitutionRollsBackWhenFallbackReportsAFullOneEmGlyphFault::IllegalStateExceptionFault(value) => write!(formatter, "{}", value),
+            DisplayGlyphSubstitutionEngineTestDashSubstitutionRollsBackWhenFallbackReportsAFullOneEmGlyphFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            DisplayGlyphSubstitutionEngineTestDashSubstitutionRollsBackWhenFallbackReportsAFullOneEmGlyphFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            DisplayGlyphSubstitutionEngineTestDashSubstitutionRollsBackWhenFallbackReportsAFullOneEmGlyphFault::SupportShaperEngineFault(value) => write!(formatter, "{}", value),
+            DisplayGlyphSubstitutionEngineTestDashSubstitutionRollsBackWhenFallbackReportsAFullOneEmGlyphFault::TracedAssertionsAssertEqualsStringFaultFault(value) => write!(formatter, "{}", value),
+            DisplayGlyphSubstitutionEngineTestDashSubstitutionRollsBackWhenFallbackReportsAFullOneEmGlyphFault::TracedAssertionsAssertTrueFaultFault(value) => write!(formatter, "{}", value),
+            DisplayGlyphSubstitutionEngineTestDashSubstitutionRollsBackWhenFallbackReportsAFullOneEmGlyphFault::ParagraphLayoutEngineNewFaultFault(value) => write!(formatter, "{}", value),
+            DisplayGlyphSubstitutionEngineTestDashSubstitutionRollsBackWhenFallbackReportsAFullOneEmGlyphFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+            DisplayGlyphSubstitutionEngineTestDashSubstitutionRollsBackWhenFallbackReportsAFullOneEmGlyphFault::ParagraphLayoutEngineLayoutWithRejectedTechnicalTiersFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
+}
 
 impl From<DisplayGlyphSubstitutionEngineTestDashSubstitutionRollsBackWhenFallbackReportsAFullOneEmGlyphFault> for crate::org::tiqian::core::illegal_state_exception::IllegalStateException {
     fn from(value: DisplayGlyphSubstitutionEngineTestDashSubstitutionRollsBackWhenFallbackReportsAFullOneEmGlyphFault) -> Self {
@@ -1858,6 +2051,20 @@ pub enum DisplayGlyphSubstitutionEngineTestDashSubstitutionIsKeptWhenInkFillsThe
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
     ParagraphLayoutEngineLayoutWithRejectedTechnicalTiersFaultFault(crate::org::tiqian::layout::paragraph_layout_engine::ParagraphLayoutEngineLayoutWithRejectedTechnicalTiersFault),
 }
+impl std::fmt::Display for DisplayGlyphSubstitutionEngineTestDashSubstitutionIsKeptWhenInkFillsTheTwoEmAdvanceFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            DisplayGlyphSubstitutionEngineTestDashSubstitutionIsKeptWhenInkFillsTheTwoEmAdvanceFault::IllegalStateExceptionFault(value) => write!(formatter, "{}", value),
+            DisplayGlyphSubstitutionEngineTestDashSubstitutionIsKeptWhenInkFillsTheTwoEmAdvanceFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            DisplayGlyphSubstitutionEngineTestDashSubstitutionIsKeptWhenInkFillsTheTwoEmAdvanceFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            DisplayGlyphSubstitutionEngineTestDashSubstitutionIsKeptWhenInkFillsTheTwoEmAdvanceFault::SupportShaperEngineFault(value) => write!(formatter, "{}", value),
+            DisplayGlyphSubstitutionEngineTestDashSubstitutionIsKeptWhenInkFillsTheTwoEmAdvanceFault::TracedAssertionsAssertEqualsStringFaultFault(value) => write!(formatter, "{}", value),
+            DisplayGlyphSubstitutionEngineTestDashSubstitutionIsKeptWhenInkFillsTheTwoEmAdvanceFault::ParagraphLayoutEngineNewFaultFault(value) => write!(formatter, "{}", value),
+            DisplayGlyphSubstitutionEngineTestDashSubstitutionIsKeptWhenInkFillsTheTwoEmAdvanceFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+            DisplayGlyphSubstitutionEngineTestDashSubstitutionIsKeptWhenInkFillsTheTwoEmAdvanceFault::ParagraphLayoutEngineLayoutWithRejectedTechnicalTiersFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
+}
 
 impl From<DisplayGlyphSubstitutionEngineTestDashSubstitutionIsKeptWhenInkFillsTheTwoEmAdvanceFault> for crate::org::tiqian::core::illegal_state_exception::IllegalStateException {
     fn from(value: DisplayGlyphSubstitutionEngineTestDashSubstitutionIsKeptWhenInkFillsTheTwoEmAdvanceFault) -> Self {
@@ -1990,6 +2197,21 @@ pub enum DisplayGlyphSubstitutionEngineTestDashInkCentersWithinTheTwoEmBodyWhenT
     ParagraphLayoutEngineNewFaultFault(crate::org::tiqian::layout::paragraph_layout_engine::ParagraphLayoutEngineNewFault),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
     ParagraphLayoutEngineLayoutWithRejectedTechnicalTiersFaultFault(crate::org::tiqian::layout::paragraph_layout_engine::ParagraphLayoutEngineLayoutWithRejectedTechnicalTiersFault),
+}
+impl std::fmt::Display for DisplayGlyphSubstitutionEngineTestDashInkCentersWithinTheTwoEmBodyWhenTheFontRuleUnderfillsFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            DisplayGlyphSubstitutionEngineTestDashInkCentersWithinTheTwoEmBodyWhenTheFontRuleUnderfillsFault::IllegalStateExceptionFault(value) => write!(formatter, "{}", value),
+            DisplayGlyphSubstitutionEngineTestDashInkCentersWithinTheTwoEmBodyWhenTheFontRuleUnderfillsFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            DisplayGlyphSubstitutionEngineTestDashInkCentersWithinTheTwoEmBodyWhenTheFontRuleUnderfillsFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            DisplayGlyphSubstitutionEngineTestDashInkCentersWithinTheTwoEmBodyWhenTheFontRuleUnderfillsFault::SupportShaperEngineFault(value) => write!(formatter, "{}", value),
+            DisplayGlyphSubstitutionEngineTestDashInkCentersWithinTheTwoEmBodyWhenTheFontRuleUnderfillsFault::TracedAssertionsAssertEqualsStringFaultFault(value) => write!(formatter, "{}", value),
+            DisplayGlyphSubstitutionEngineTestDashInkCentersWithinTheTwoEmBodyWhenTheFontRuleUnderfillsFault::TracedAssertionsAssertEqualsFloatToleranceFaultFault(value) => write!(formatter, "{}", value),
+            DisplayGlyphSubstitutionEngineTestDashInkCentersWithinTheTwoEmBodyWhenTheFontRuleUnderfillsFault::ParagraphLayoutEngineNewFaultFault(value) => write!(formatter, "{}", value),
+            DisplayGlyphSubstitutionEngineTestDashInkCentersWithinTheTwoEmBodyWhenTheFontRuleUnderfillsFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+            DisplayGlyphSubstitutionEngineTestDashInkCentersWithinTheTwoEmBodyWhenTheFontRuleUnderfillsFault::ParagraphLayoutEngineLayoutWithRejectedTechnicalTiersFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
 }
 
 impl From<DisplayGlyphSubstitutionEngineTestDashInkCentersWithinTheTwoEmBodyWhenTheFontRuleUnderfillsFault> for crate::org::tiqian::core::illegal_state_exception::IllegalStateException {
@@ -2138,6 +2360,20 @@ pub enum DisplayGlyphSubstitutionEngineTestDashCoverageTargetUsesTheDashSpanFont
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
     ParagraphLayoutEngineLayoutWithRejectedTechnicalTiersFaultFault(crate::org::tiqian::layout::paragraph_layout_engine::ParagraphLayoutEngineLayoutWithRejectedTechnicalTiersFault),
 }
+impl std::fmt::Display for DisplayGlyphSubstitutionEngineTestDashCoverageTargetUsesTheDashSpanFontSizeFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            DisplayGlyphSubstitutionEngineTestDashCoverageTargetUsesTheDashSpanFontSizeFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            DisplayGlyphSubstitutionEngineTestDashCoverageTargetUsesTheDashSpanFontSizeFault::IllegalStateExceptionFault(value) => write!(formatter, "{}", value),
+            DisplayGlyphSubstitutionEngineTestDashCoverageTargetUsesTheDashSpanFontSizeFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            DisplayGlyphSubstitutionEngineTestDashCoverageTargetUsesTheDashSpanFontSizeFault::SupportShaperEngineFault(value) => write!(formatter, "{}", value),
+            DisplayGlyphSubstitutionEngineTestDashCoverageTargetUsesTheDashSpanFontSizeFault::TracedAssertionsAssertEqualsStringFaultFault(value) => write!(formatter, "{}", value),
+            DisplayGlyphSubstitutionEngineTestDashCoverageTargetUsesTheDashSpanFontSizeFault::ParagraphLayoutEngineNewFaultFault(value) => write!(formatter, "{}", value),
+            DisplayGlyphSubstitutionEngineTestDashCoverageTargetUsesTheDashSpanFontSizeFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+            DisplayGlyphSubstitutionEngineTestDashCoverageTargetUsesTheDashSpanFontSizeFault::ParagraphLayoutEngineLayoutWithRejectedTechnicalTiersFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
+}
 
 impl From<DisplayGlyphSubstitutionEngineTestDashCoverageTargetUsesTheDashSpanFontSizeFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
     fn from(value: DisplayGlyphSubstitutionEngineTestDashCoverageTargetUsesTheDashSpanFontSizeFault) -> Self {
@@ -2270,6 +2506,21 @@ pub enum DisplayGlyphSubstitutionEngineTestCoalesceSetIsDrivenByProfileFault {
     ParagraphLayoutEngineNewFaultFault(crate::org::tiqian::layout::paragraph_layout_engine::ParagraphLayoutEngineNewFault),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
     ParagraphLayoutEngineLayoutWithRejectedTechnicalTiersFaultFault(crate::org::tiqian::layout::paragraph_layout_engine::ParagraphLayoutEngineLayoutWithRejectedTechnicalTiersFault),
+}
+impl std::fmt::Display for DisplayGlyphSubstitutionEngineTestCoalesceSetIsDrivenByProfileFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            DisplayGlyphSubstitutionEngineTestCoalesceSetIsDrivenByProfileFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            DisplayGlyphSubstitutionEngineTestCoalesceSetIsDrivenByProfileFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            DisplayGlyphSubstitutionEngineTestCoalesceSetIsDrivenByProfileFault::SupportProfileEngineFault(value) => write!(formatter, "{}", value),
+            DisplayGlyphSubstitutionEngineTestCoalesceSetIsDrivenByProfileFault::TracedAssertionsAssertEqualsIntFaultFault(value) => write!(formatter, "{}", value),
+            DisplayGlyphSubstitutionEngineTestCoalesceSetIsDrivenByProfileFault::TracedAssertionsAssertEqualsStringFaultFault(value) => write!(formatter, "{}", value),
+            DisplayGlyphSubstitutionEngineTestCoalesceSetIsDrivenByProfileFault::TracedAssertionsAssertEqualsStringArrayFaultFault(value) => write!(formatter, "{}", value),
+            DisplayGlyphSubstitutionEngineTestCoalesceSetIsDrivenByProfileFault::ParagraphLayoutEngineNewFaultFault(value) => write!(formatter, "{}", value),
+            DisplayGlyphSubstitutionEngineTestCoalesceSetIsDrivenByProfileFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+            DisplayGlyphSubstitutionEngineTestCoalesceSetIsDrivenByProfileFault::ParagraphLayoutEngineLayoutWithRejectedTechnicalTiersFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
 }
 
 impl From<DisplayGlyphSubstitutionEngineTestCoalesceSetIsDrivenByProfileFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
@@ -2418,6 +2669,20 @@ pub enum DisplayGlyphSubstitutionEngineTestAmbiguousGlyphClusterMappingFallsBack
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
     ParagraphLayoutEngineLayoutWithRejectedTechnicalTiersFaultFault(crate::org::tiqian::layout::paragraph_layout_engine::ParagraphLayoutEngineLayoutWithRejectedTechnicalTiersFault),
 }
+impl std::fmt::Display for DisplayGlyphSubstitutionEngineTestAmbiguousGlyphClusterMappingFallsBackToPolicyWithRecordedReasonFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            DisplayGlyphSubstitutionEngineTestAmbiguousGlyphClusterMappingFallsBackToPolicyWithRecordedReasonFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            DisplayGlyphSubstitutionEngineTestAmbiguousGlyphClusterMappingFallsBackToPolicyWithRecordedReasonFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            DisplayGlyphSubstitutionEngineTestAmbiguousGlyphClusterMappingFallsBackToPolicyWithRecordedReasonFault::SupportShaperEngineFault(value) => write!(formatter, "{}", value),
+            DisplayGlyphSubstitutionEngineTestAmbiguousGlyphClusterMappingFallsBackToPolicyWithRecordedReasonFault::TracedAssertionsAssertEqualsIntFaultFault(value) => write!(formatter, "{}", value),
+            DisplayGlyphSubstitutionEngineTestAmbiguousGlyphClusterMappingFallsBackToPolicyWithRecordedReasonFault::TracedAssertionsAssertEqualsStringFaultFault(value) => write!(formatter, "{}", value),
+            DisplayGlyphSubstitutionEngineTestAmbiguousGlyphClusterMappingFallsBackToPolicyWithRecordedReasonFault::ParagraphLayoutEngineNewFaultFault(value) => write!(formatter, "{}", value),
+            DisplayGlyphSubstitutionEngineTestAmbiguousGlyphClusterMappingFallsBackToPolicyWithRecordedReasonFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+            DisplayGlyphSubstitutionEngineTestAmbiguousGlyphClusterMappingFallsBackToPolicyWithRecordedReasonFault::ParagraphLayoutEngineLayoutWithRejectedTechnicalTiersFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
+}
 
 impl From<DisplayGlyphSubstitutionEngineTestAmbiguousGlyphClusterMappingFallsBackToPolicyWithRecordedReasonFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
     fn from(value: DisplayGlyphSubstitutionEngineTestAmbiguousGlyphClusterMappingFallsBackToPolicyWithRecordedReasonFault) -> Self {
@@ -2542,23 +2807,15 @@ impl From<crate::org::tiqian::layout::paragraph_layout_engine::ParagraphLayoutEn
 #[test]
 fn ambiguous_glyph_cluster_mapping_falls_back_to_policy_with_recorded_reason() {
     testlib::run("org.tiqian.layout.DisplayGlyphSubstitutionEngineTest.ambiguousGlyphClusterMappingFallsBackToPolicyWithRecordedReason", "org.tiqian.layout.DisplayGlyphSubstitutionEngineTest.ambiguousGlyphClusterMappingFallsBackToPolicyWithRecordedReason", || {
-        let mut t = TestTraceRecorder::new("DisplayGlyphSubstitutionEngineTest");
-        t.section(&"ambiguousGlyphClusterMappingFallsBackToPolicyWithRecordedReason");
-        let mut engine = DisplayGlyphSubstitutionEngineTestSupport::display_glyph_substitution_engine_test_support_shaper_engine(Box::new(SingleClusterAmbiguousShaper::new())).unwrap();
-        let result = DisplayGlyphSubstitutionEngineTestSupport::display_glyph_substitution_engine_test_support_layout320(&mut engine, &"……").unwrap();
+        let mut t = TestTraceRecorder::new(&(UStr::new(&[68,105,115,112,108,97,121,71,108,121,112,104,83,117,98,115,116,105,116,117,116,105,111,110,69,110,103,105,110,101,84,101,115,116])));
+        t.section(UStr::new(&[97,109,98,105,103,117,111,117,115,71,108,121,112,104,67,108,117,115,116,101,114,77,97,112,112,105,110,103,70,97,108,108,115,66,97,99,107,84,111,80,111,108,105,99,121,87,105,116,104,82,101,99,111,114,100,101,100,82,101,97,115,111,110]));
+        let mut engine = DisplayGlyphSubstitutionEngineTestSupport::display_glyph_substitution_engine_test_support_shaper_engine(Arc::new(Mutex::new(SingleClusterAmbiguousShaper::new()))).unwrap();
+        let result = DisplayGlyphSubstitutionEngineTestSupport::display_glyph_substitution_engine_test_support_layout320(&mut engine, UStr::new(&[8230,8230])).unwrap();
         let punctuation_decisions = ((result.debug).clone().punctuation_decisions).clone();
         let _ = TracedAssertions::traced_assertions_assert_equals_int(2, u32::try_from((punctuation_decisions.len()) & 0xFFFF_FFFF).unwrap_or(0), None).unwrap();
         for p in &punctuation_decisions {
-            let _ = TracedAssertions::traced_assertions_assert_equals_string(&"ProfileGlueFallbackWithoutFontGeometry", (p.geometry_source).to_string().as_str(), Some((format!("{}{}{}",
-            "source for '",
-            (p.char).to_string(),
-            "'"
-        )).to_string())).unwrap();
-            let _ = TracedAssertions::traced_assertions_assert_equals_string(&"glyph-cluster-mapping-ambiguous", ((p.ink_bounds_fallback).clone()).as_deref().unwrap_or(""), Some((format!("{}{}{}",
-            "fallback for '",
-            (p.char).to_string(),
-            "'"
-        )).to_string())).unwrap();
+            let _ = TracedAssertions::traced_assertions_assert_equals_string(UStr::new(&[80,114,111,102,105,108,101,71,108,117,101,70,97,108,108,98,97,99,107,87,105,116,104,111,117,116,70,111,110,116,71,101,111,109,101,116,114,121]), (p.geometry_source).to_ustring().as_ustr(), Some(UString::from(format!("{}", { let mut __s = UString::new(); __s += &(UString::from("source for '")); __s += (p.char).to_ustring().as_ustr(); __s += &(UString::from("'")); __s }).as_str()))).unwrap();
+            let _ = TracedAssertions::traced_assertions_assert_equals_string(UStr::new(&[103,108,121,112,104,45,99,108,117,115,116,101,114,45,109,97,112,112,105,110,103,45,97,109,98,105,103,117,111,117,115]), ((p.ink_bounds_fallback).clone()).as_deref().unwrap_or(UStr::new(&[])), Some(UString::from(format!("{}", { let mut __s = UString::new(); __s += &(UString::from("fallback for '")); __s += (p.char).to_ustring().as_ustr(); __s += &(UString::from("'")); __s }).as_str()))).unwrap();
         }
     });
 }
@@ -2566,47 +2823,49 @@ fn ambiguous_glyph_cluster_mapping_falls_back_to_policy_with_recorded_reason() {
 #[test]
 fn coalesce_set_is_driven_by_profile() {
     testlib::run("org.tiqian.layout.DisplayGlyphSubstitutionEngineTest.coalesceSetIsDrivenByProfile", "org.tiqian.layout.DisplayGlyphSubstitutionEngineTest.coalesceSetIsDrivenByProfile", || {
-        let mut t = TestTraceRecorder::new("DisplayGlyphSubstitutionEngineTest");
-        t.section(&"coalesceSetIsDrivenByProfile");
+        let mut t = TestTraceRecorder::new(&(UStr::new(&[68,105,115,112,108,97,121,71,108,121,112,104,83,117,98,115,116,105,116,117,116,105,111,110,69,110,103,105,110,101,84,101,115,116])));
+        t.section(UStr::new(&[99,111,97,108,101,115,99,101,83,101,116,73,115,68,114,105,118,101,110,66,121,80,114,111,102,105,108,101]));
         let mut engine = DisplayGlyphSubstitutionEngineTestSupport::display_glyph_substitution_engine_test_support_profile_engine(CjkPunctuationGlyphPolicy::PreserveInput, Some(vec![])).unwrap();
-        let result = DisplayGlyphSubstitutionEngineTestSupport::display_glyph_substitution_engine_test_support_layout320(&mut engine, &"——").unwrap();
+        let result = DisplayGlyphSubstitutionEngineTestSupport::display_glyph_substitution_engine_test_support_layout320(&mut engine, UStr::new(&[8212,8212])).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_equals_int(2, u32::try_from((result.clusters.len()) & 0xFFFF_FFFF).unwrap_or(0), None).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_equals_string(&"—", ((result.clusters[0usize]).clone().text).to_string().as_str(), None).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_equals_string(&"—", ((result.clusters[1usize]).clone().text).to_string().as_str(), None).unwrap();
-        let latin = DisplayGlyphSubstitutionEngineTestSupport::display_glyph_substitution_engine_test_support_layout320(&mut engine, &"A——B").unwrap();
-        let mut latin_texts: Vec<String> = vec![];
+        let _ = TracedAssertions::traced_assertions_assert_equals_string(UStr::new(&[8212]), ((result.clusters[0usize]).clone().text).to_ustring().as_ustr(), None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_equals_string(UStr::new(&[8212]), ((result.clusters[1usize]).clone().text).to_ustring().as_ustr(), None).unwrap();
+        let latin = DisplayGlyphSubstitutionEngineTestSupport::display_glyph_substitution_engine_test_support_layout320(&mut engine, UStr::new(&[65,8212,8212,66])).unwrap();
+        let mut latin_texts: Vec<UString> = vec![];
         for i in 0..match u32::try_from(latin.clusters.len()) { Ok(value) => value, Err(_) => u32::MAX } {
-            latin_texts.push(((latin.clusters[usize::try_from(i).unwrap_or(0)]).clone().text).to_string());
+            latin_texts.push(((latin.clusters[usize::try_from(i).unwrap_or(0)]).clone().text).to_ustring());
         }
-        let _ = TracedAssertions::traced_assertions_assert_equals_string_array(&vec!["A".to_string(), "—".to_string(), "—".to_string(), "B".to_string()], &latin_texts, None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_equals_string_array(&vec![
+    UString::from("A").to_ustring(),
+    UString::from("—").to_ustring(),
+    UString::from("—").to_ustring(),
+    UString::from("B").to_ustring(),
+], &latin_texts, None).unwrap();
     });
 }
 
 #[test]
 fn dash_coverage_target_uses_the_dash_span_font_size() {
     testlib::run("org.tiqian.layout.DisplayGlyphSubstitutionEngineTest.dashCoverageTargetUsesTheDashSpanFontSize", "org.tiqian.layout.DisplayGlyphSubstitutionEngineTest.dashCoverageTargetUsesTheDashSpanFontSize", || {
-        let mut t = TestTraceRecorder::new("DisplayGlyphSubstitutionEngineTest");
-        t.section(&"dashCoverageTargetUsesTheDashSpanFontSize");
-        let mut engine = DisplayGlyphSubstitutionEngineTestSupport::display_glyph_substitution_engine_test_support_shaper_engine(Box::new(DashInkOverrideShaper::new(32 as f64 as f64, Rect::new(1 as f64 as f64, i32::from_ne_bytes((4294967278u32).to_ne_bytes()) as f64 as f64, 31 as
-f64 as f64, i32::from_ne_bytes((4294967282u32).to_ne_bytes()) as f64 as f64), true))).unwrap();
-        let result = DisplayGlyphSubstitutionEngineTestSupport::display_glyph_substitution_engine_test_support_layout320_with_spans(&mut engine, &"中——文", &vec![
-    (TextSpan::new(TextRange::new(1u32, 3u32).unwrap(), TextStyle::new(Some(vec![]), Some(32 as f64), Some("zh-Hans".to_string()), Some(400), Some(false), Some(0.0), Some(InlineAttachment::None)))).clone(),
+        let mut t = TestTraceRecorder::new(&(UStr::new(&[68,105,115,112,108,97,121,71,108,121,112,104,83,117,98,115,116,105,116,117,116,105,111,110,69,110,103,105,110,101,84,101,115,116])));
+        t.section(UStr::new(&[100,97,115,104,67,111,118,101,114,97,103,101,84,97,114,103,101,116,85,115,101,115,84,104,101,68,97,115,104,83,112,97,110,70,111,110,116,83,105,122,101]));
+        let mut engine = DisplayGlyphSubstitutionEngineTestSupport::display_glyph_substitution_engine_test_support_shaper_engine(Arc::new(Mutex::new(DashInkOverrideShaper::new(32 as f64 as f64, Rect::new(1 as f64 as f64, i32::from_ne_bytes(((4294967278u32) as i32).to_ne_bytes()) as f64 as f64, 31 as f64 as f64, i32::from_ne_bytes(((4294967282u32) as i32).to_ne_bytes()) as f64 as f64), true)))).unwrap();
+        let result = DisplayGlyphSubstitutionEngineTestSupport::display_glyph_substitution_engine_test_support_layout320_with_spans(&mut engine, UStr::new(&[20013,8212,8212,25991]), &vec![
+    (TextSpan::new(TextRange::new(1u32, 3u32).unwrap(), TextStyle::new(Some(vec![]), Some(32 as f64), Some(UString::from("zh-Hans")), Some(400), Some(false), Some(0.0), Some(InlineAttachment::None)))).clone(),
 ]).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_equals_string(&"——", (DisplayGlyphSubstitutionEngineTestSupport::display_glyph_substitution_engine_test_support_single_cluster_with_text((result).clone(), &"——").unwrap().display_text).to_string().as_str(),
-None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_equals_string(UStr::new(&[8212,8212]), (DisplayGlyphSubstitutionEngineTestSupport::display_glyph_substitution_engine_test_support_single_cluster_with_text((result).clone(), UStr::new(&[8212,8212])).unwrap().display_text).to_ustring().as_ustr(), None).unwrap();
     });
 }
 
 #[test]
 fn dash_ink_centers_within_the_two_em_body_when_the_font_rule_underfills() {
     testlib::run("org.tiqian.layout.DisplayGlyphSubstitutionEngineTest.dashInkCentersWithinTheTwoEmBodyWhenTheFontRuleUnderfills", "org.tiqian.layout.DisplayGlyphSubstitutionEngineTest.dashInkCentersWithinTheTwoEmBodyWhenTheFontRuleUnderfills", || {
-        let mut t = TestTraceRecorder::new("DisplayGlyphSubstitutionEngineTest");
-        t.section(&"dashInkCentersWithinTheTwoEmBodyWhenTheFontRuleUnderfills");
-        let mut engine = DisplayGlyphSubstitutionEngineTestSupport::display_glyph_substitution_engine_test_support_shaper_engine(Box::new(DashInkOverrideShaper::new(32 as f64 as f64, Rect::new(0.5f64, i32::from_ne_bytes((4294967286u32).to_ne_bytes()) as f64 as f64, 28 as f64 as
-f64, i32::from_ne_bytes((4294967288u32).to_ne_bytes()) as f64 as f64), false))).unwrap();
-        let result = DisplayGlyphSubstitutionEngineTestSupport::display_glyph_substitution_engine_test_support_layout320(&mut engine, &"中——文").unwrap();
-        let dash = DisplayGlyphSubstitutionEngineTestSupport::display_glyph_substitution_engine_test_support_single_cluster_with_text((result).clone(), &"——").unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_equals_string(&"⸺", (dash.display_text).to_string().as_str(), None).unwrap();
+        let mut t = TestTraceRecorder::new(&(UStr::new(&[68,105,115,112,108,97,121,71,108,121,112,104,83,117,98,115,116,105,116,117,116,105,111,110,69,110,103,105,110,101,84,101,115,116])));
+        t.section(UStr::new(&[100,97,115,104,73,110,107,67,101,110,116,101,114,115,87,105,116,104,105,110,84,104,101,84,119,111,69,109,66,111,100,121,87,104,101,110,84,104,101,70,111,110,116,82,117,108,101,85,110,100,101,114,102,105,108,108,115]));
+        let mut engine = DisplayGlyphSubstitutionEngineTestSupport::display_glyph_substitution_engine_test_support_shaper_engine(Arc::new(Mutex::new(DashInkOverrideShaper::new(32 as f64 as f64, Rect::new(0.5f64, i32::from_ne_bytes(((4294967286u32) as i32).to_ne_bytes()) as f64 as f64, 28 as f64 as f64, i32::from_ne_bytes(((4294967288u32) as i32).to_ne_bytes()) as f64 as f64), false)))).unwrap();
+        let result = DisplayGlyphSubstitutionEngineTestSupport::display_glyph_substitution_engine_test_support_layout320(&mut engine, UStr::new(&[20013,8212,8212,25991])).unwrap();
+        let dash = DisplayGlyphSubstitutionEngineTestSupport::display_glyph_substitution_engine_test_support_single_cluster_with_text((result).clone(), UStr::new(&[8212,8212])).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_equals_string(UStr::new(&[11834]), (dash.display_text).to_ustring().as_ustr(), None).unwrap();
         let glyph = DisplayGlyphSubstitutionEngineTestSupport::display_glyph_substitution_engine_test_support_single_glyph_with_cluster_range((result).clone(), (dash.range).clone()).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_equals_float_tolerance(1.75f64, glyph.x, 0.01f64, None).unwrap();
     });
@@ -2615,78 +2874,69 @@ f64, i32::from_ne_bytes((4294967288u32).to_ne_bytes()) as f64 as f64), false))).
 #[test]
 fn dash_substitution_is_kept_when_ink_fills_the_two_em_advance() {
     testlib::run("org.tiqian.layout.DisplayGlyphSubstitutionEngineTest.dashSubstitutionIsKeptWhenInkFillsTheTwoEmAdvance", "org.tiqian.layout.DisplayGlyphSubstitutionEngineTest.dashSubstitutionIsKeptWhenInkFillsTheTwoEmAdvance", || {
-        let mut t = TestTraceRecorder::new("DisplayGlyphSubstitutionEngineTest");
-        t.section(&"dashSubstitutionIsKeptWhenInkFillsTheTwoEmAdvance");
-        let mut engine = DisplayGlyphSubstitutionEngineTestSupport::display_glyph_substitution_engine_test_support_shaper_engine(Box::new(DashInkOverrideShaper::new(32 as f64 as f64, Rect::new(1 as f64 as f64, i32::from_ne_bytes((4294967286u32).to_ne_bytes()) as f64 as f64, 31 as
-f64 as f64, i32::from_ne_bytes((4294967288u32).to_ne_bytes()) as f64 as f64), false))).unwrap();
-        let result = DisplayGlyphSubstitutionEngineTestSupport::display_glyph_substitution_engine_test_support_layout320(&mut engine, &"中——文").unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_equals_string(&"⸺", (DisplayGlyphSubstitutionEngineTestSupport::display_glyph_substitution_engine_test_support_single_cluster_with_text((result).clone(), &"——").unwrap().display_text).to_string().as_str(), None).unwrap();
+        let mut t = TestTraceRecorder::new(&(UStr::new(&[68,105,115,112,108,97,121,71,108,121,112,104,83,117,98,115,116,105,116,117,116,105,111,110,69,110,103,105,110,101,84,101,115,116])));
+        t.section(UStr::new(&[100,97,115,104,83,117,98,115,116,105,116,117,116,105,111,110,73,115,75,101,112,116,87,104,101,110,73,110,107,70,105,108,108,115,84,104,101,84,119,111,69,109,65,100,118,97,110,99,101]));
+        let mut engine = DisplayGlyphSubstitutionEngineTestSupport::display_glyph_substitution_engine_test_support_shaper_engine(Arc::new(Mutex::new(DashInkOverrideShaper::new(32 as f64 as f64, Rect::new(1 as f64 as f64, i32::from_ne_bytes(((4294967286u32) as i32).to_ne_bytes()) as f64 as f64, 31 as f64 as f64, i32::from_ne_bytes(((4294967288u32) as i32).to_ne_bytes()) as f64 as f64), false)))).unwrap();
+        let result = DisplayGlyphSubstitutionEngineTestSupport::display_glyph_substitution_engine_test_support_layout320(&mut engine, UStr::new(&[20013,8212,8212,25991])).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_equals_string(UStr::new(&[11834]), (DisplayGlyphSubstitutionEngineTestSupport::display_glyph_substitution_engine_test_support_single_cluster_with_text((result).clone(), UStr::new(&[8212,8212])).unwrap().display_text).to_ustring().as_ustr(), None).unwrap();
     });
 }
 
 #[test]
 fn dash_substitution_rolls_back_when_fallback_reports_a_full_one_em_glyph() {
     testlib::run("org.tiqian.layout.DisplayGlyphSubstitutionEngineTest.dashSubstitutionRollsBackWhenFallbackReportsAFullOneEmGlyph", "org.tiqian.layout.DisplayGlyphSubstitutionEngineTest.dashSubstitutionRollsBackWhenFallbackReportsAFullOneEmGlyph", || {
-        let mut t = TestTraceRecorder::new("DisplayGlyphSubstitutionEngineTest");
-        t.section(&"dashSubstitutionRollsBackWhenFallbackReportsAFullOneEmGlyph");
-        let mut engine = DisplayGlyphSubstitutionEngineTestSupport::display_glyph_substitution_engine_test_support_shaper_engine(Box::new(DashInkOverrideShaper::new(16 as f64 as f64, Rect::new(0.5f64, i32::from_ne_bytes((4294967287u32).to_ne_bytes()) as f64 as f64, 15.7f64,
-i32::from_ne_bytes((4294967289u32).to_ne_bytes()) as f64 as f64), true))).unwrap();
-        let result = DisplayGlyphSubstitutionEngineTestSupport::display_glyph_substitution_engine_test_support_layout320(&mut engine, &"中——文").unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_equals_string(&"——", (DisplayGlyphSubstitutionEngineTestSupport::display_glyph_substitution_engine_test_support_single_cluster_with_text((result).clone(), &"——").unwrap().display_text).to_string().as_str(),
-None).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_true(((DisplayGlyphSubstitutionEngineTestSupport::display_glyph_substitution_engine_test_support_single_font_decision_with_source_text((result).clone(),
-&"——").unwrap().substitution_reason).to_string()).ends_with(&"DashSubstitutionInkCoverageRollback"), None).unwrap();
+        let mut t = TestTraceRecorder::new(&(UStr::new(&[68,105,115,112,108,97,121,71,108,121,112,104,83,117,98,115,116,105,116,117,116,105,111,110,69,110,103,105,110,101,84,101,115,116])));
+        t.section(UStr::new(&[100,97,115,104,83,117,98,115,116,105,116,117,116,105,111,110,82,111,108,108,115,66,97,99,107,87,104,101,110,70,97,108,108,98,97,99,107,82,101,112,111,114,116,115,65,70,117,108,108,79,110,101,69,109,71,108,121,112,104]));
+        let mut engine = DisplayGlyphSubstitutionEngineTestSupport::display_glyph_substitution_engine_test_support_shaper_engine(Arc::new(Mutex::new(DashInkOverrideShaper::new(16 as f64 as f64, Rect::new(0.5f64, i32::from_ne_bytes(((4294967287u32) as i32).to_ne_bytes()) as f64 as f64, 15.7f64, i32::from_ne_bytes(((4294967289u32) as i32).to_ne_bytes()) as f64 as f64), true)))).unwrap();
+        let result = DisplayGlyphSubstitutionEngineTestSupport::display_glyph_substitution_engine_test_support_layout320(&mut engine, UStr::new(&[20013,8212,8212,25991])).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_equals_string(UStr::new(&[8212,8212]), (DisplayGlyphSubstitutionEngineTestSupport::display_glyph_substitution_engine_test_support_single_cluster_with_text((result).clone(), UStr::new(&[8212,8212])).unwrap().display_text).to_ustring().as_ustr(), None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_true(((DisplayGlyphSubstitutionEngineTestSupport::display_glyph_substitution_engine_test_support_single_font_decision_with_source_text((result).clone(), UStr::new(&[8212,8212])).unwrap().substitution_reason).to_ustring()).ends_with(&UString::from("DashSubstitutionInkCoverageRollback")), None).unwrap();
     });
 }
 
 #[test]
 fn dash_substitution_rolls_back_when_ink_does_not_fill_the_two_em_advance() {
     testlib::run("org.tiqian.layout.DisplayGlyphSubstitutionEngineTest.dashSubstitutionRollsBackWhenInkDoesNotFillTheTwoEmAdvance", "org.tiqian.layout.DisplayGlyphSubstitutionEngineTest.dashSubstitutionRollsBackWhenInkDoesNotFillTheTwoEmAdvance", || {
-        let mut t = TestTraceRecorder::new("DisplayGlyphSubstitutionEngineTest");
-        t.section(&"dashSubstitutionRollsBackWhenInkDoesNotFillTheTwoEmAdvance");
-        let mut engine = DisplayGlyphSubstitutionEngineTestSupport::display_glyph_substitution_engine_test_support_shaper_engine(Box::new(DashInkOverrideShaper::new(32 as f64 as f64, Rect::new(1 as f64 as f64, i32::from_ne_bytes((4294967286u32).to_ne_bytes()) as f64 as f64, 26 as
-f64 as f64, i32::from_ne_bytes((4294967288u32).to_ne_bytes()) as f64 as f64), false))).unwrap();
-        let result = DisplayGlyphSubstitutionEngineTestSupport::display_glyph_substitution_engine_test_support_layout320(&mut engine, &"中——文").unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_equals_string(&"——", (DisplayGlyphSubstitutionEngineTestSupport::display_glyph_substitution_engine_test_support_single_cluster_with_text((result).clone(), &"——").unwrap().display_text).to_string().as_str(),
-None).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_true(((DisplayGlyphSubstitutionEngineTestSupport::display_glyph_substitution_engine_test_support_single_font_decision_with_source_text((result).clone(),
-&"——").unwrap().substitution_reason).to_string()).ends_with(&"DashSubstitutionInkCoverageRollback"), None).unwrap();
+        let mut t = TestTraceRecorder::new(&(UStr::new(&[68,105,115,112,108,97,121,71,108,121,112,104,83,117,98,115,116,105,116,117,116,105,111,110,69,110,103,105,110,101,84,101,115,116])));
+        t.section(UStr::new(&[100,97,115,104,83,117,98,115,116,105,116,117,116,105,111,110,82,111,108,108,115,66,97,99,107,87,104,101,110,73,110,107,68,111,101,115,78,111,116,70,105,108,108,84,104,101,84,119,111,69,109,65,100,118,97,110,99,101]));
+        let mut engine = DisplayGlyphSubstitutionEngineTestSupport::display_glyph_substitution_engine_test_support_shaper_engine(Arc::new(Mutex::new(DashInkOverrideShaper::new(32 as f64 as f64, Rect::new(1 as f64 as f64, i32::from_ne_bytes(((4294967286u32) as i32).to_ne_bytes()) as f64 as f64, 26 as f64 as f64, i32::from_ne_bytes(((4294967288u32) as i32).to_ne_bytes()) as f64 as f64), false)))).unwrap();
+        let result = DisplayGlyphSubstitutionEngineTestSupport::display_glyph_substitution_engine_test_support_layout320(&mut engine, UStr::new(&[20013,8212,8212,25991])).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_equals_string(UStr::new(&[8212,8212]), (DisplayGlyphSubstitutionEngineTestSupport::display_glyph_substitution_engine_test_support_single_cluster_with_text((result).clone(), UStr::new(&[8212,8212])).unwrap().display_text).to_ustring().as_ustr(), None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_true(((DisplayGlyphSubstitutionEngineTestSupport::display_glyph_substitution_engine_test_support_single_font_decision_with_source_text((result).clone(), UStr::new(&[8212,8212])).unwrap().substitution_reason).to_ustring()).ends_with(&UString::from("DashSubstitutionInkCoverageRollback")), None).unwrap();
     });
 }
 
 #[test]
 fn ellipsis_substitution_rolls_back_when_coverage_cannot_be_verified() {
     testlib::run("org.tiqian.layout.DisplayGlyphSubstitutionEngineTest.ellipsisSubstitutionRollsBackWhenCoverageCannotBeVerified", "org.tiqian.layout.DisplayGlyphSubstitutionEngineTest.ellipsisSubstitutionRollsBackWhenCoverageCannotBeVerified", || {
-        let mut t = TestTraceRecorder::new("DisplayGlyphSubstitutionEngineTest");
-        t.section(&"ellipsisSubstitutionRollsBackWhenCoverageCannotBeVerified");
-        let mut engine = DisplayGlyphSubstitutionEngineTestSupport::display_glyph_substitution_engine_test_support_shaper_engine(Box::new(UnverifiedCoverageReportingShaper::new())).unwrap();
-        let result = DisplayGlyphSubstitutionEngineTestSupport::display_glyph_substitution_engine_test_support_layout320(&mut engine, &"中……文").unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_equals_string(&"……", (DisplayGlyphSubstitutionEngineTestSupport::display_glyph_substitution_engine_test_support_single_cluster_with_text((result).clone(), &"……").unwrap().display_text).to_string().as_str(),
-None).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_true(((DisplayGlyphSubstitutionEngineTestSupport::display_glyph_substitution_engine_test_support_single_font_decision_with_source_text((result).clone(),
-&"……").unwrap().substitution_reason).to_string()).ends_with(&"SubstitutionRollbackOnUnverifiedGlyphCoverage"), None).unwrap();
+        let mut t = TestTraceRecorder::new(&(UStr::new(&[68,105,115,112,108,97,121,71,108,121,112,104,83,117,98,115,116,105,116,117,116,105,111,110,69,110,103,105,110,101,84,101,115,116])));
+        t.section(UStr::new(&[101,108,108,105,112,115,105,115,83,117,98,115,116,105,116,117,116,105,111,110,82,111,108,108,115,66,97,99,107,87,104,101,110,67,111,118,101,114,97,103,101,67,97,110,110,111,116,66,101,86,101,114,105,102,105,101,100]));
+        let mut engine = DisplayGlyphSubstitutionEngineTestSupport::display_glyph_substitution_engine_test_support_shaper_engine(Arc::new(Mutex::new(UnverifiedCoverageReportingShaper::new()))).unwrap();
+        let result = DisplayGlyphSubstitutionEngineTestSupport::display_glyph_substitution_engine_test_support_layout320(&mut engine, UStr::new(&[20013,8230,8230,25991])).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_equals_string(UStr::new(&[8230,8230]), (DisplayGlyphSubstitutionEngineTestSupport::display_glyph_substitution_engine_test_support_single_cluster_with_text((result).clone(), UStr::new(&[8230,8230])).unwrap().display_text).to_ustring().as_ustr(), None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_true(((DisplayGlyphSubstitutionEngineTestSupport::display_glyph_substitution_engine_test_support_single_font_decision_with_source_text((result).clone(), UStr::new(&[8230,8230])).unwrap().substitution_reason).to_ustring()).ends_with(&UString::from("SubstitutionRollbackOnUnverifiedGlyphCoverage")), None).unwrap();
     });
 }
 
 #[test]
 fn honors_profile_punctuation_glyph_policy() {
     testlib::run("org.tiqian.layout.DisplayGlyphSubstitutionEngineTest.honorsProfilePunctuationGlyphPolicy", "org.tiqian.layout.DisplayGlyphSubstitutionEngineTest.honorsProfilePunctuationGlyphPolicy", || {
-        let mut t = TestTraceRecorder::new("DisplayGlyphSubstitutionEngineTest");
-        t.section(&"honorsProfilePunctuationGlyphPolicy");
+        let mut t = TestTraceRecorder::new(&(UStr::new(&[68,105,115,112,108,97,121,71,108,121,112,104,83,117,98,115,116,105,116,117,116,105,111,110,69,110,103,105,110,101,84,101,115,116])));
+        t.section(UStr::new(&[104,111,110,111,114,115,80,114,111,102,105,108,101,80,117,110,99,116,117,97,116,105,111,110,71,108,121,112,104,80,111,108,105,99,121]));
         let mut engine = DisplayGlyphSubstitutionEngineTestSupport::display_glyph_substitution_engine_test_support_profile_engine(CjkPunctuationGlyphPolicy::PreserveInput, None).unwrap();
-        let result = DisplayGlyphSubstitutionEngineTestSupport::display_glyph_substitution_engine_test_support_layout320(&mut engine, &"……——").unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_equals_string(&"……", (DisplayGlyphSubstitutionEngineTestSupport::display_glyph_substitution_engine_test_support_first_cluster_with_text((result).clone(), &"……").unwrap().display_text).to_string().as_str(), None).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_equals_string(&"——", (DisplayGlyphSubstitutionEngineTestSupport::display_glyph_substitution_engine_test_support_first_cluster_with_text((result).clone(), &"——").unwrap().display_text).to_string().as_str(), None).unwrap();
+        let result = DisplayGlyphSubstitutionEngineTestSupport::display_glyph_substitution_engine_test_support_layout320(&mut engine, UStr::new(&[8230,8230,8212,8212])).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_equals_string(UStr::new(&[8230,8230]), (DisplayGlyphSubstitutionEngineTestSupport::display_glyph_substitution_engine_test_support_first_cluster_with_text((result).clone(), UStr::new(&[8230,8230])).unwrap().display_text).to_ustring().as_ustr(), None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_equals_string(UStr::new(&[8212,8212]), (DisplayGlyphSubstitutionEngineTestSupport::display_glyph_substitution_engine_test_support_first_cluster_with_text((result).clone(), UStr::new(&[8212,8212])).unwrap().display_text).to_ustring().as_ustr(), None).unwrap();
     });
 }
 
 #[test]
 fn multi_character_punctuation_uses_character_local_ink_bounds() {
     testlib::run("org.tiqian.layout.DisplayGlyphSubstitutionEngineTest.multiCharacterPunctuationUsesCharacterLocalInkBounds", "org.tiqian.layout.DisplayGlyphSubstitutionEngineTest.multiCharacterPunctuationUsesCharacterLocalInkBounds", || {
-        let mut t = TestTraceRecorder::new("DisplayGlyphSubstitutionEngineTest");
-        t.section(&"multiCharacterPunctuationUsesCharacterLocalInkBounds");
-        let mut engine = DisplayGlyphSubstitutionEngineTestSupport::display_glyph_substitution_engine_test_support_shaper_engine(Box::new(TwoGlyphEllipsisShaper::new())).unwrap();
-        let result = DisplayGlyphSubstitutionEngineTestSupport::display_glyph_substitution_engine_test_support_layout320(&mut engine, &"……").unwrap();
+        let mut t = TestTraceRecorder::new(&(UStr::new(&[68,105,115,112,108,97,121,71,108,121,112,104,83,117,98,115,116,105,116,117,116,105,111,110,69,110,103,105,110,101,84,101,115,116])));
+        t.section(UStr::new(&[109,117,108,116,105,67,104,97,114,97,99,116,101,114,80,117,110,99,116,117,97,116,105,111,110,85,115,101,115,67,104,97,114,97,99,116,101,114,76,111,99,97,108,73,110,107,66,111,117,110,100,115]));
+        let mut engine = DisplayGlyphSubstitutionEngineTestSupport::display_glyph_substitution_engine_test_support_shaper_engine(Arc::new(Mutex::new(TwoGlyphEllipsisShaper::new()))).unwrap();
+        let result = DisplayGlyphSubstitutionEngineTestSupport::display_glyph_substitution_engine_test_support_layout320(&mut engine, UStr::new(&[8230,8230])).unwrap();
         let decisions = ((result.debug).clone().punctuation_decisions).clone();
         let _ = TracedAssertions::traced_assertions_assert_equals_int(2, u32::try_from((decisions.len()) & 0xFFFF_FFFF).unwrap_or(0), None).unwrap();
         let mut ink_centers: Vec<Option<f64>> = vec![];
@@ -2695,23 +2945,21 @@ fn multi_character_punctuation_uses_character_local_ink_bounds() {
             ink_centers.push(decisions[usize::try_from(i).unwrap_or(0)].ink_center);
             advances.push(Some(decisions[usize::try_from(i).unwrap_or(0)].advance));
         }
-        let _ = TracedAssertions::traced_assertions_assert_equals_rendered(DisplayGlyphSubstitutionEngineTestSupport::display_glyph_substitution_engine_test_support_render_nullable_floats(&vec![Some(8.0f64), Some(8.0f64)]).unwrap().as_str(),
-DisplayGlyphSubstitutionEngineTestSupport::display_glyph_substitution_engine_test_support_render_nullable_floats(&ink_centers).unwrap().as_str(), None).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_equals_rendered(DisplayGlyphSubstitutionEngineTestSupport::display_glyph_substitution_engine_test_support_render_nullable_floats(&vec![Some(16.0f64), Some(16.0f64)]).unwrap().as_str(),
-DisplayGlyphSubstitutionEngineTestSupport::display_glyph_substitution_engine_test_support_render_nullable_floats(&advances).unwrap().as_str(), None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_equals_rendered(DisplayGlyphSubstitutionEngineTestSupport::display_glyph_substitution_engine_test_support_render_nullable_floats(&vec![Some(8.0f64), Some(8.0f64)]).unwrap().as_ustr(), DisplayGlyphSubstitutionEngineTestSupport::display_glyph_substitution_engine_test_support_render_nullable_floats(&ink_centers).unwrap().as_ustr(), None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_equals_rendered(DisplayGlyphSubstitutionEngineTestSupport::display_glyph_substitution_engine_test_support_render_nullable_floats(&vec![Some(16.0f64), Some(16.0f64)]).unwrap().as_ustr(), DisplayGlyphSubstitutionEngineTestSupport::display_glyph_substitution_engine_test_support_render_nullable_floats(&advances).unwrap().as_ustr(), None).unwrap();
     });
 }
 
 #[test]
 fn preserves_open_type_features_as_final_glyph_run_boundaries() {
     testlib::run("org.tiqian.layout.DisplayGlyphSubstitutionEngineTest.preservesOpenTypeFeaturesAsFinalGlyphRunBoundaries", "org.tiqian.layout.DisplayGlyphSubstitutionEngineTest.preservesOpenTypeFeaturesAsFinalGlyphRunBoundaries", || {
-        let mut t = TestTraceRecorder::new("DisplayGlyphSubstitutionEngineTest");
-        t.section(&"preservesOpenTypeFeaturesAsFinalGlyphRunBoundaries");
-        let proportional_quote_features = vec!["pwid".to_string(), "palt".to_string()];
-        let mut engine = DisplayGlyphSubstitutionEngineTestSupport::display_glyph_substitution_engine_test_support_shaper_engine(Box::new(PerGlyphQuoteRunShaper::new())).unwrap();
-        let result = DisplayGlyphSubstitutionEngineTestSupport::display_glyph_substitution_engine_test_support_layout320(&mut engine, &"A’B").unwrap();
+        let mut t = TestTraceRecorder::new(&(UStr::new(&[68,105,115,112,108,97,121,71,108,121,112,104,83,117,98,115,116,105,116,117,116,105,111,110,69,110,103,105,110,101,84,101,115,116])));
+        t.section(UStr::new(&[112,114,101,115,101,114,118,101,115,79,112,101,110,84,121,112,101,70,101,97,116,117,114,101,115,65,115,70,105,110,97,108,71,108,121,112,104,82,117,110,66,111,117,110,100,97,114,105,101,115]));
+        let proportional_quote_features = vec![UString::from("pwid").to_ustring(), UString::from("palt").to_ustring()];
+        let mut engine = DisplayGlyphSubstitutionEngineTestSupport::display_glyph_substitution_engine_test_support_shaper_engine(Arc::new(Mutex::new(PerGlyphQuoteRunShaper::new()))).unwrap();
+        let result = DisplayGlyphSubstitutionEngineTestSupport::display_glyph_substitution_engine_test_support_layout320(&mut engine, UStr::new(&[65,8217,66])).unwrap();
         let mut ranges: Vec<TextRange> = vec![];
-        let mut feature_lists: Vec<Vec<String>> = vec![];
+        let mut feature_lists: Vec<Vec<UString>> = vec![];
         for i in 0..match u32::try_from(result.glyph_runs.len()) { Ok(value) => value, Err(_) => u32::MAX } {
             ranges.push(((result.glyph_runs[usize::try_from(i).unwrap_or(0)]).clone().range).clone());
             feature_lists.push((result.glyph_runs[usize::try_from(i).unwrap_or(0)]).clone().open_type_features.clone());
@@ -2721,70 +2969,68 @@ fn preserves_open_type_features_as_final_glyph_run_boundaries() {
     (TextRange::new(1u32, 2u32).unwrap()).clone(),
     (TextRange::new(2u32, 3u32).unwrap()).clone(),
 ], &ranges, None).unwrap();
-        let empty_features: Vec<String> = vec![];
-        let _ = TracedAssertions::traced_assertions_assert_equals_rendered(DisplayGlyphSubstitutionEngineTestSupport::display_glyph_substitution_engine_test_support_render_string_list_array(&vec![(empty_features).clone(), (proportional_quote_features).clone(),
-(empty_features).clone()]).unwrap().as_str(), DisplayGlyphSubstitutionEngineTestSupport::display_glyph_substitution_engine_test_support_render_string_list_array(&feature_lists).unwrap().as_str(), None).unwrap();
+        let empty_features: Vec<UString> = vec![];
+        let _ = TracedAssertions::traced_assertions_assert_equals_rendered(DisplayGlyphSubstitutionEngineTestSupport::display_glyph_substitution_engine_test_support_render_string_list_array(&vec![(empty_features).clone(), (proportional_quote_features).clone(), (empty_features).clone()]).unwrap().as_ustr(), DisplayGlyphSubstitutionEngineTestSupport::display_glyph_substitution_engine_test_support_render_string_list_array(&feature_lists).unwrap().as_ustr(), None).unwrap();
     });
 }
 
 #[test]
 fn preserves_source_text_when_using_clreq_recommended_display_glyphs() {
     testlib::run("org.tiqian.layout.DisplayGlyphSubstitutionEngineTest.preservesSourceTextWhenUsingClreqRecommendedDisplayGlyphs", "org.tiqian.layout.DisplayGlyphSubstitutionEngineTest.preservesSourceTextWhenUsingClreqRecommendedDisplayGlyphs", || {
-        let mut t = TestTraceRecorder::new("DisplayGlyphSubstitutionEngineTest");
-        t.section(&"preservesSourceTextWhenUsingClreqRecommendedDisplayGlyphs");
-        let result = DisplayGlyphSubstitutionEngineTestSupport::display_glyph_substitution_engine_test_support_layout320(&mut DisplayGlyphSubstitutionEngineTestSupport::display_glyph_substitution_engine_test_support_default_engine().unwrap(), &"……——・／").unwrap();
-        let ellipsis = DisplayGlyphSubstitutionEngineTestSupport::display_glyph_substitution_engine_test_support_first_cluster_with_text((result).clone(), &"……").unwrap();
-        let dash = DisplayGlyphSubstitutionEngineTestSupport::display_glyph_substitution_engine_test_support_first_cluster_with_text((result).clone(), &"——").unwrap();
-        let interpunct = DisplayGlyphSubstitutionEngineTestSupport::display_glyph_substitution_engine_test_support_first_cluster_with_text((result).clone(), &"・").unwrap();
-        let solidus = DisplayGlyphSubstitutionEngineTestSupport::display_glyph_substitution_engine_test_support_first_cluster_with_text((result).clone(), &"／").unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_equals_string(&"……", (ellipsis.text).to_string().as_str(), None).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_equals_string(&"⋯⋯", (ellipsis.display_text).to_string().as_str(), None).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_equals_string(&"——", (dash.text).to_string().as_str(), None).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_equals_string(&"⸺", (dash.display_text).to_string().as_str(), None).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_equals_string(&"・", (interpunct.text).to_string().as_str(), None).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_equals_string(&"·", (interpunct.display_text).to_string().as_str(), None).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_equals_string(&"／", (solidus.text).to_string().as_str(), None).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_equals_string(&"／", (solidus.display_text).to_string().as_str(), None).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_equals_string(&"cjk-primary", (ellipsis.font_key).to_string().as_str(), None).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_equals_string(&"cjk-primary", (dash.font_key).to_string().as_str(), None).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_equals_string(&"cjk-primary", (interpunct.font_key).to_string().as_str(), None).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_equals_string(&"cjk-primary", (solidus.font_key).to_string().as_str(), None).unwrap();
+        let mut t = TestTraceRecorder::new(&(UStr::new(&[68,105,115,112,108,97,121,71,108,121,112,104,83,117,98,115,116,105,116,117,116,105,111,110,69,110,103,105,110,101,84,101,115,116])));
+        t.section(UStr::new(&[112,114,101,115,101,114,118,101,115,83,111,117,114,99,101,84,101,120,116,87,104,101,110,85,115,105,110,103,67,108,114,101,113,82,101,99,111,109,109,101,110,100,101,100,68,105,115,112,108,97,121,71,108,121,112,104,115]));
+        let result = DisplayGlyphSubstitutionEngineTestSupport::display_glyph_substitution_engine_test_support_layout320(&mut DisplayGlyphSubstitutionEngineTestSupport::display_glyph_substitution_engine_test_support_default_engine().unwrap(), UStr::new(&[8230,8230,8212,8212,12539,65295])).unwrap();
+        let ellipsis = DisplayGlyphSubstitutionEngineTestSupport::display_glyph_substitution_engine_test_support_first_cluster_with_text((result).clone(), UStr::new(&[8230,8230])).unwrap();
+        let dash = DisplayGlyphSubstitutionEngineTestSupport::display_glyph_substitution_engine_test_support_first_cluster_with_text((result).clone(), UStr::new(&[8212,8212])).unwrap();
+        let interpunct = DisplayGlyphSubstitutionEngineTestSupport::display_glyph_substitution_engine_test_support_first_cluster_with_text((result).clone(), UStr::new(&[12539])).unwrap();
+        let solidus = DisplayGlyphSubstitutionEngineTestSupport::display_glyph_substitution_engine_test_support_first_cluster_with_text((result).clone(), UStr::new(&[65295])).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_equals_string(UStr::new(&[8230,8230]), (ellipsis.text).to_ustring().as_ustr(), None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_equals_string(UStr::new(&[8943,8943]), (ellipsis.display_text).to_ustring().as_ustr(), None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_equals_string(UStr::new(&[8212,8212]), (dash.text).to_ustring().as_ustr(), None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_equals_string(UStr::new(&[11834]), (dash.display_text).to_ustring().as_ustr(), None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_equals_string(UStr::new(&[12539]), (interpunct.text).to_ustring().as_ustr(), None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_equals_string(UStr::new(&[183]), (interpunct.display_text).to_ustring().as_ustr(), None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_equals_string(UStr::new(&[65295]), (solidus.text).to_ustring().as_ustr(), None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_equals_string(UStr::new(&[65295]), (solidus.display_text).to_ustring().as_ustr(), None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_equals_string(UStr::new(&[99,106,107,45,112,114,105,109,97,114,121]), (ellipsis.font_key).to_ustring().as_ustr(), None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_equals_string(UStr::new(&[99,106,107,45,112,114,105,109,97,114,121]), (dash.font_key).to_ustring().as_ustr(), None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_equals_string(UStr::new(&[99,106,107,45,112,114,105,109,97,114,121]), (interpunct.font_key).to_ustring().as_ustr(), None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_equals_string(UStr::new(&[99,106,107,45,112,114,105,109,97,114,121]), (solidus.font_key).to_ustring().as_ustr(), None).unwrap();
     });
 }
 
 #[test]
 fn rolled_back_dash_still_keeps_its_boundaries_closed_under_justification() {
     testlib::run("org.tiqian.layout.DisplayGlyphSubstitutionEngineTest.rolledBackDashStillKeepsItsBoundariesClosedUnderJustification", "org.tiqian.layout.DisplayGlyphSubstitutionEngineTest.rolledBackDashStillKeepsItsBoundariesClosedUnderJustification", || {
-        let mut t = TestTraceRecorder::new("DisplayGlyphSubstitutionEngineTest");
-        t.section(&"rolledBackDashStillKeepsItsBoundariesClosedUnderJustification");
-        let mut engine = DisplayGlyphSubstitutionEngineTestSupport::display_glyph_substitution_engine_test_support_lookahead_shaper_engine(Box::new(DashInkOverrideShaper::new(32 as f64 as f64, Rect::new(1 as f64 as f64, i32::from_ne_bytes((4294967286u32).to_ne_bytes()) as f64 as
-f64, 26 as f64 as f64, i32::from_ne_bytes((4294967288u32).to_ne_bytes()) as f64 as f64), false))).unwrap();
-        let hit = DisplayGlyphSubstitutionEngineTestSupport::display_glyph_substitution_engine_test_support_find_justified_dash_hit(&mut engine, &"在所谓中文语境下——不如说中文中文中文中文").unwrap();
+        let mut t = TestTraceRecorder::new(&(UStr::new(&[68,105,115,112,108,97,121,71,108,121,112,104,83,117,98,115,116,105,116,117,116,105,111,110,69,110,103,105,110,101,84,101,115,116])));
+        t.section(UStr::new(&[114,111,108,108,101,100,66,97,99,107,68,97,115,104,83,116,105,108,108,75,101,101,112,115,73,116,115,66,111,117,110,100,97,114,105,101,115,67,108,111,115,101,100,85,110,100,101,114,74,117,115,116,105,102,105,99,97,116,105,111,110]));
+        let mut engine = DisplayGlyphSubstitutionEngineTestSupport::display_glyph_substitution_engine_test_support_lookahead_shaper_engine(Arc::new(Mutex::new(DashInkOverrideShaper::new(32 as f64 as f64, Rect::new(1 as f64 as f64, i32::from_ne_bytes(((4294967286u32) as i32).to_ne_bytes()) as f64 as f64, 26 as f64 as f64, i32::from_ne_bytes(((4294967288u32) as i32).to_ne_bytes()) as f64 as f64), false)))).unwrap();
+        let hit = DisplayGlyphSubstitutionEngineTestSupport::display_glyph_substitution_engine_test_support_find_justified_dash_hit(&mut engine, UStr::new(&[22312,25152,35859,20013,25991,35821,22659,19979,8212,8212,19981,22914,35828,20013,25991,20013,25991,20013,25991,20013,25991])).unwrap();
         let dash = (hit.dash).clone().clone();
         let decision = (hit.decision).clone().clone();
-        let _ = TracedAssertions::traced_assertions_assert_equals_string(&"——", (dash.display_text).to_string().as_str(), None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_equals_string(UStr::new(&[8212,8212]), (dash.display_text).to_ustring().as_ustr(), None).unwrap();
         let mut opened = false;
         for i in 0..match u32::try_from(decision.allocations.len()) { Ok(value) => value, Err(_) => u32::MAX } {
             let allocation = (decision.allocations[usize::try_from(i).unwrap_or(0)]).clone();
-            if allocation.kind.to_string() == "CjkInterChar" && (allocation.cluster_range).clone().start == (dash.range).clone().start && (allocation.cluster_range).clone().end == (dash.range).clone().end {
+            if allocation.kind.to_ustring() == UString::from("CjkInterChar") && (allocation.cluster_range).clone().start == (dash.range).clone().start && (allocation.cluster_range).clone().end == (dash.range).clone().end {
                 opened = true;
                 break;
             }
         }
-        let _ = TracedAssertions::traced_assertions_assert_true(!opened, Some("boundary after a rolled-back dash must stay closed: ${decision.allocations}".to_string())).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_true(!opened, Some(UString::from("boundary after a rolled-back dash must stay closed: ${decision.allocations}"))).unwrap();
     });
 }
 
 #[test]
 fn shaping_without_bounds_produces_named_profile_fallback() {
     testlib::run("org.tiqian.layout.DisplayGlyphSubstitutionEngineTest.shapingWithoutBoundsProducesNamedProfileFallback", "org.tiqian.layout.DisplayGlyphSubstitutionEngineTest.shapingWithoutBoundsProducesNamedProfileFallback", || {
-        let mut t = TestTraceRecorder::new("DisplayGlyphSubstitutionEngineTest");
-        t.section(&"shapingWithoutBoundsProducesNamedProfileFallback");
-        let mut engine = DisplayGlyphSubstitutionEngineTestSupport::display_glyph_substitution_engine_test_support_shaper_engine(Box::new(SingleClusterNoBoundsShaper::new())).unwrap();
-        let result = DisplayGlyphSubstitutionEngineTestSupport::display_glyph_substitution_engine_test_support_layout320(&mut engine, &"。").unwrap();
+        let mut t = TestTraceRecorder::new(&(UStr::new(&[68,105,115,112,108,97,121,71,108,121,112,104,83,117,98,115,116,105,116,117,116,105,111,110,69,110,103,105,110,101,84,101,115,116])));
+        t.section(UStr::new(&[115,104,97,112,105,110,103,87,105,116,104,111,117,116,66,111,117,110,100,115,80,114,111,100,117,99,101,115,78,97,109,101,100,80,114,111,102,105,108,101,70,97,108,108,98,97,99,107]));
+        let mut engine = DisplayGlyphSubstitutionEngineTestSupport::display_glyph_substitution_engine_test_support_shaper_engine(Arc::new(Mutex::new(SingleClusterNoBoundsShaper::new()))).unwrap();
+        let result = DisplayGlyphSubstitutionEngineTestSupport::display_glyph_substitution_engine_test_support_layout320(&mut engine, UStr::new(&[12290])).unwrap();
         let punctuation = DisplayGlyphSubstitutionEngineTestSupport::display_glyph_substitution_engine_test_support_single_punctuation_decision((result).clone()).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_equals_string(&"ProfileGlueFallbackWithoutFontGeometry", (punctuation.geometry_source).to_string().as_str(), None).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_equals_string(&"shaper-no-ink-bounds", (punctuation.ink_bounds_fallback).as_deref().unwrap_or(""), None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_equals_string(UStr::new(&[80,114,111,102,105,108,101,71,108,117,101,70,97,108,108,98,97,99,107,87,105,116,104,111,117,116,70,111,110,116,71,101,111,109,101,116,114,121]), (punctuation.geometry_source).to_ustring().as_ustr(), None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_equals_string(UStr::new(&[115,104,97,112,101,114,45,110,111,45,105,110,107,45,98,111,117,110,100,115]), (punctuation.ink_bounds_fallback).as_deref().unwrap_or(UStr::new(&[])), None).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_equals_float(8 as f64, punctuation.body_width, None).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_equals_float(0 as f64, punctuation.leading_glue_natural, None).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_equals_float(8 as f64, punctuation.trailing_glue_natural, None).unwrap();
@@ -2794,32 +3040,16 @@ fn shaping_without_bounds_produces_named_profile_fallback() {
 #[test]
 fn stub_shaper_reports_profile_fallback_when_ink_bounds_are_unavailable() {
     testlib::run("org.tiqian.layout.DisplayGlyphSubstitutionEngineTest.stubShaperReportsProfileFallbackWhenInkBoundsAreUnavailable", "org.tiqian.layout.DisplayGlyphSubstitutionEngineTest.stubShaperReportsProfileFallbackWhenInkBoundsAreUnavailable", || {
-        let mut t = TestTraceRecorder::new("DisplayGlyphSubstitutionEngineTest");
-        t.section(&"stubShaperReportsProfileFallbackWhenInkBoundsAreUnavailable");
-        let result = DisplayGlyphSubstitutionEngineTestSupport::display_glyph_substitution_engine_test_support_layout320(&mut DisplayGlyphSubstitutionEngineTestSupport::display_glyph_substitution_engine_test_support_default_engine().unwrap(), &"中文，世界。").unwrap();
+        let mut t = TestTraceRecorder::new(&(UStr::new(&[68,105,115,112,108,97,121,71,108,121,112,104,83,117,98,115,116,105,116,117,116,105,111,110,69,110,103,105,110,101,84,101,115,116])));
+        t.section(UStr::new(&[115,116,117,98,83,104,97,112,101,114,82,101,112,111,114,116,115,80,114,111,102,105,108,101,70,97,108,108,98,97,99,107,87,104,101,110,73,110,107,66,111,117,110,100,115,65,114,101,85,110,97,118,97,105,108,97,98,108,101]));
+        let result = DisplayGlyphSubstitutionEngineTestSupport::display_glyph_substitution_engine_test_support_layout320(&mut DisplayGlyphSubstitutionEngineTestSupport::display_glyph_substitution_engine_test_support_default_engine().unwrap(), UStr::new(&[20013,25991,65292,19990,30028,12290])).unwrap();
         let punctuation_decisions = ((result.debug).clone().punctuation_decisions).clone();
-        let _ = TracedAssertions::traced_assertions_assert_true((i32::from_ne_bytes((u32::try_from((punctuation_decisions.len()) & 0xFFFF_FFFF).unwrap_or(0)).to_ne_bytes())) > (0), None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_true((i32::from_ne_bytes(((u32::try_from((punctuation_decisions.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) > (0), None).unwrap();
         for p in &punctuation_decisions {
-            let _ = TracedAssertions::traced_assertions_assert_equals_string(&"ProfileGlueFallbackWithoutFontGeometry", (p.geometry_source).to_string().as_str(), Some((format!("{}{}{}",
-            "Stub shaper provides advance but no bounds for '",
-            (p.char).to_string(),
-            "'"
-        )).to_string())).unwrap();
-            let _ = TracedAssertions::traced_assertions_assert_equals_string(&"shaper-no-ink-bounds", ((p.ink_bounds_fallback).clone()).as_deref().unwrap_or(""), Some((format!("{}{}{}",
-            "fallback for '",
-            (p.char).to_string(),
-            "'"
-        )).to_string())).unwrap();
-            let _ = TracedAssertions::traced_assertions_assert_equals_float(0 as f64, p.leading_glue_natural, Some((format!("{}{}{}",
-            "leading glue for '",
-            (p.char).to_string(),
-            "'"
-        )).to_string())).unwrap();
-            let _ = TracedAssertions::traced_assertions_assert_equals_float(8 as f64, p.trailing_glue_natural, Some((format!("{}{}{}",
-            "trailing glue for '",
-            (p.char).to_string(),
-            "'"
-        )).to_string())).unwrap();
+            let _ = TracedAssertions::traced_assertions_assert_equals_string(UStr::new(&[80,114,111,102,105,108,101,71,108,117,101,70,97,108,108,98,97,99,107,87,105,116,104,111,117,116,70,111,110,116,71,101,111,109,101,116,114,121]), (p.geometry_source).to_ustring().as_ustr(), Some(UString::from(format!("{}", { let mut __s = UString::new(); __s += &(UString::from("Stub shaper provides advance but no bounds for '")); __s += (p.char).to_ustring().as_ustr(); __s += &(UString::from("'")); __s }).as_str()))).unwrap();
+            let _ = TracedAssertions::traced_assertions_assert_equals_string(UStr::new(&[115,104,97,112,101,114,45,110,111,45,105,110,107,45,98,111,117,110,100,115]), ((p.ink_bounds_fallback).clone()).as_deref().unwrap_or(UStr::new(&[])), Some(UString::from(format!("{}", { let mut __s = UString::new(); __s += &(UString::from("fallback for '")); __s += (p.char).to_ustring().as_ustr(); __s += &(UString::from("'")); __s }).as_str()))).unwrap();
+            let _ = TracedAssertions::traced_assertions_assert_equals_float(0 as f64, p.leading_glue_natural, Some(UString::from(format!("{}", { let mut __s = UString::new(); __s += &(UString::from("leading glue for '")); __s += (p.char).to_ustring().as_ustr(); __s += &(UString::from("'")); __s }).as_str()))).unwrap();
+            let _ = TracedAssertions::traced_assertions_assert_equals_float(8 as f64, p.trailing_glue_natural, Some(UString::from(format!("{}", { let mut __s = UString::new(); __s += &(UString::from("trailing glue for '")); __s += (p.char).to_ustring().as_ustr(); __s += &(UString::from("'")); __s }).as_str()))).unwrap();
         }
     });
 }
@@ -2827,34 +3057,34 @@ fn stub_shaper_reports_profile_fallback_when_ink_bounds_are_unavailable() {
 #[test]
 fn substitution_is_kept_when_font_covers_the_glyph() {
     testlib::run("org.tiqian.layout.DisplayGlyphSubstitutionEngineTest.substitutionIsKeptWhenFontCoversTheGlyph", "org.tiqian.layout.DisplayGlyphSubstitutionEngineTest.substitutionIsKeptWhenFontCoversTheGlyph", || {
-        let mut t = TestTraceRecorder::new("DisplayGlyphSubstitutionEngineTest");
-        t.section(&"substitutionIsKeptWhenFontCoversTheGlyph");
-        let result = DisplayGlyphSubstitutionEngineTestSupport::display_glyph_substitution_engine_test_support_layout320(&mut DisplayGlyphSubstitutionEngineTestSupport::display_glyph_substitution_engine_test_support_default_engine().unwrap(), &"中——文").unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_equals_string(&"⸺", (DisplayGlyphSubstitutionEngineTestSupport::display_glyph_substitution_engine_test_support_single_cluster_with_text((result).clone(), &"——").unwrap().display_text).to_string().as_str(), None).unwrap();
+        let mut t = TestTraceRecorder::new(&(UStr::new(&[68,105,115,112,108,97,121,71,108,121,112,104,83,117,98,115,116,105,116,117,116,105,111,110,69,110,103,105,110,101,84,101,115,116])));
+        t.section(UStr::new(&[115,117,98,115,116,105,116,117,116,105,111,110,73,115,75,101,112,116,87,104,101,110,70,111,110,116,67,111,118,101,114,115,84,104,101,71,108,121,112,104]));
+        let result = DisplayGlyphSubstitutionEngineTestSupport::display_glyph_substitution_engine_test_support_layout320(&mut DisplayGlyphSubstitutionEngineTestSupport::display_glyph_substitution_engine_test_support_default_engine().unwrap(), UStr::new(&[20013,8212,8212,25991])).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_equals_string(UStr::new(&[11834]), (DisplayGlyphSubstitutionEngineTestSupport::display_glyph_substitution_engine_test_support_single_cluster_with_text((result).clone(), UStr::new(&[8212,8212])).unwrap().display_text).to_ustring().as_ustr(), None).unwrap();
     });
 }
 
 #[test]
 fn substitution_rolls_back_to_source_text_when_font_lacks_the_glyph() {
     testlib::run("org.tiqian.layout.DisplayGlyphSubstitutionEngineTest.substitutionRollsBackToSourceTextWhenFontLacksTheGlyph", "org.tiqian.layout.DisplayGlyphSubstitutionEngineTest.substitutionRollsBackToSourceTextWhenFontLacksTheGlyph", || {
-        let mut t = TestTraceRecorder::new("DisplayGlyphSubstitutionEngineTest");
-        t.section(&"substitutionRollsBackToSourceTextWhenFontLacksTheGlyph");
-        let mut engine = DisplayGlyphSubstitutionEngineTestSupport::display_glyph_substitution_engine_test_support_shaper_engine(Box::new(MissingGlyphReportingShaper::new())).unwrap();
-        let result = DisplayGlyphSubstitutionEngineTestSupport::display_glyph_substitution_engine_test_support_layout320(&mut engine, &"中——文").unwrap();
-        let dash_cluster = DisplayGlyphSubstitutionEngineTestSupport::display_glyph_substitution_engine_test_support_single_cluster_with_text((result).clone(), &"——").unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_equals_string(&"——", (dash_cluster.display_text).to_string().as_str(), None).unwrap();
-        let dash_decision = DisplayGlyphSubstitutionEngineTestSupport::display_glyph_substitution_engine_test_support_single_font_decision_with_source_text((result).clone(), &"——").unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_equals_string(&"——", (dash_decision.display_text).to_string().as_str(), None).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_true(((dash_decision.substitution_reason).to_string()).ends_with(&"SubstitutionRollbackOnMissingGlyph"), None).unwrap();
+        let mut t = TestTraceRecorder::new(&(UStr::new(&[68,105,115,112,108,97,121,71,108,121,112,104,83,117,98,115,116,105,116,117,116,105,111,110,69,110,103,105,110,101,84,101,115,116])));
+        t.section(UStr::new(&[115,117,98,115,116,105,116,117,116,105,111,110,82,111,108,108,115,66,97,99,107,84,111,83,111,117,114,99,101,84,101,120,116,87,104,101,110,70,111,110,116,76,97,99,107,115,84,104,101,71,108,121,112,104]));
+        let mut engine = DisplayGlyphSubstitutionEngineTestSupport::display_glyph_substitution_engine_test_support_shaper_engine(Arc::new(Mutex::new(MissingGlyphReportingShaper::new()))).unwrap();
+        let result = DisplayGlyphSubstitutionEngineTestSupport::display_glyph_substitution_engine_test_support_layout320(&mut engine, UStr::new(&[20013,8212,8212,25991])).unwrap();
+        let dash_cluster = DisplayGlyphSubstitutionEngineTestSupport::display_glyph_substitution_engine_test_support_single_cluster_with_text((result).clone(), UStr::new(&[8212,8212])).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_equals_string(UStr::new(&[8212,8212]), (dash_cluster.display_text).to_ustring().as_ustr(), None).unwrap();
+        let dash_decision = DisplayGlyphSubstitutionEngineTestSupport::display_glyph_substitution_engine_test_support_single_font_decision_with_source_text((result).clone(), UStr::new(&[8212,8212])).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_equals_string(UStr::new(&[8212,8212]), (dash_decision.display_text).to_ustring().as_ustr(), None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_true(((dash_decision.substitution_reason).to_ustring()).ends_with(&UString::from("SubstitutionRollbackOnMissingGlyph")), None).unwrap();
     });
 }
 
 #[test]
 fn uses_two_em_advance_for_recommended_dash_codepoint() {
     testlib::run("org.tiqian.layout.DisplayGlyphSubstitutionEngineTest.usesTwoEmAdvanceForRecommendedDashCodepoint", "org.tiqian.layout.DisplayGlyphSubstitutionEngineTest.usesTwoEmAdvanceForRecommendedDashCodepoint", || {
-        let mut t = TestTraceRecorder::new("DisplayGlyphSubstitutionEngineTest");
-        t.section(&"usesTwoEmAdvanceForRecommendedDashCodepoint");
-        let result = DisplayGlyphSubstitutionEngineTestSupport::display_glyph_substitution_engine_test_support_layout320(&mut DisplayGlyphSubstitutionEngineTestSupport::display_glyph_substitution_engine_test_support_default_engine().unwrap(), &"⸺").unwrap();
+        let mut t = TestTraceRecorder::new(&(UStr::new(&[68,105,115,112,108,97,121,71,108,121,112,104,83,117,98,115,116,105,116,117,116,105,111,110,69,110,103,105,110,101,84,101,115,116])));
+        t.section(UStr::new(&[117,115,101,115,84,119,111,69,109,65,100,118,97,110,99,101,70,111,114,82,101,99,111,109,109,101,110,100,101,100,68,97,115,104,67,111,100,101,112,111,105,110,116]));
+        let result = DisplayGlyphSubstitutionEngineTestSupport::display_glyph_substitution_engine_test_support_layout320(&mut DisplayGlyphSubstitutionEngineTestSupport::display_glyph_substitution_engine_test_support_default_engine().unwrap(), UStr::new(&[11834])).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_equals_float(32 as f64, DisplayGlyphSubstitutionEngineTestSupport::display_glyph_substitution_engine_test_support_single_cluster((result).clone()).unwrap().advance, None).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_equals_float(32 as f64, (result.size).clone().width, None).unwrap();
     });

@@ -1,4 +1,5 @@
 use crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError;
+use crate::runtime::u_string::UString;
 use std::sync::LazyLock;
 
 
@@ -6,7 +7,7 @@ pub trait RichTextBackgroundDrawStyle: Send + Sync {
     fn __haxe_type_name(&self) -> &'static str;
     fn as_any(&self) -> &dyn std::any::Any;
     fn clone_box(&self) -> Box<dyn RichTextBackgroundDrawStyle>;
-    fn to_string(&self) -> String;
+    fn to_string(&self) -> UString;
 }
 
 impl Clone for Box<dyn RichTextBackgroundDrawStyle> {
@@ -33,8 +34,8 @@ impl Fill {
         })
     }
 
-    pub fn to_string(&self) -> String {
-        return "Fill".to_string();
+    pub fn to_string(&self) -> UString {
+        return UString::from("Fill").to_ustring();
     }
 }
 
@@ -49,8 +50,8 @@ impl RichTextBackgroundDrawStyle for Fill {
         Box::new(self.clone())
     }
 
-    fn to_string(&self) -> String {
-        return "Fill".to_string();
+    fn to_string(&self) -> UString {
+        return UString::from("Fill").to_ustring();
     }
 }
 
@@ -62,20 +63,15 @@ pub struct Border {
 impl Border {
     pub fn new(stroke_width: f64) -> Result<Self, TextRangeError> {
         if !Border::border_is_finite(stroke_width) || (stroke_width) <= 0.0f64 {
-            return Err(TextRangeError::Message { text: "Failed requirement.".to_string() });
+            return Err(TextRangeError::Message { text: UString::from("Failed requirement.") });
         }
         Ok(Self {
             stroke_width,
         })
     }
 
-    pub fn to_string(&self) -> String {
-        return format!("{}{}{}{}",
-            "Border(",
-            "strokeWidth=",
-            self.stroke_width,
-            ")"
-        );
+    pub fn to_string(&self) -> UString {
+        return UString::from(format!("{}", { let mut __s = UString::new(); __s += &(UString::from("Border(")); __s += &(UString::from("strokeWidth=")); __s += &(crate::runtime::fp_helper::FPHelper::format_float(self.stroke_width)); __s += &(UString::from(")")); __s }).as_str());
     }
 
     pub(crate) fn border_is_finite(value: f64) -> bool {
@@ -94,12 +90,7 @@ impl RichTextBackgroundDrawStyle for Border {
         Box::new(self.clone())
     }
 
-    fn to_string(&self) -> String {
-        return format!("{}{}{}{}",
-            "Border(",
-            "strokeWidth=",
-            self.stroke_width,
-            ")"
-        );
+    fn to_string(&self) -> UString {
+        return UString::from(format!("{}", { let mut __s = UString::new(); __s += &(UString::from("Border(")); __s += &(UString::from("strokeWidth=")); __s += &(crate::runtime::fp_helper::FPHelper::format_float(self.stroke_width)); __s += &(UString::from(")")); __s }).as_str());
     }
 }

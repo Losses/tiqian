@@ -48,6 +48,8 @@ use crate::org::tiqian::test::trace::test_trace_render::TestTraceRender;
 use crate::org::tiqian::test::trace::traced_assertions::TracedAssertions;
 use crate::runtime::test as testlib;
 use crate::runtime::u_string;
+use crate::runtime::u_string::UStr;
+use crate::runtime::u_string::UString;
 use crate::std::u_string_exception::UStringFault;
 use std::fmt::Write;
 use std::sync::Arc;
@@ -58,6 +60,15 @@ pub enum LayoutQueriesResidualCoverageTestZeroWidthClustersReturnTheirStartInHit
     TextRangeErrorFault(crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError),
     UStringFaultFault(crate::std::u_string_exception::UStringFault),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
+}
+impl std::fmt::Display for LayoutQueriesResidualCoverageTestZeroWidthClustersReturnTheirStartInHitTestsFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            LayoutQueriesResidualCoverageTestZeroWidthClustersReturnTheirStartInHitTestsFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            LayoutQueriesResidualCoverageTestZeroWidthClustersReturnTheirStartInHitTestsFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            LayoutQueriesResidualCoverageTestZeroWidthClustersReturnTheirStartInHitTestsFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
 }
 
 impl From<LayoutQueriesResidualCoverageTestZeroWidthClustersReturnTheirStartInHitTestsFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
@@ -111,6 +122,15 @@ pub enum LayoutQueriesResidualCoverageTestWordBoundaryForPositionHandlesANonFini
     UStringFaultFault(crate::std::u_string_exception::UStringFault),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
 }
+impl std::fmt::Display for LayoutQueriesResidualCoverageTestWordBoundaryForPositionHandlesANonFiniteYFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            LayoutQueriesResidualCoverageTestWordBoundaryForPositionHandlesANonFiniteYFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            LayoutQueriesResidualCoverageTestWordBoundaryForPositionHandlesANonFiniteYFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            LayoutQueriesResidualCoverageTestWordBoundaryForPositionHandlesANonFiniteYFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
+}
 
 impl From<LayoutQueriesResidualCoverageTestWordBoundaryForPositionHandlesANonFiniteYFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
     fn from(value: LayoutQueriesResidualCoverageTestWordBoundaryForPositionHandlesANonFiniteYFault) -> Self {
@@ -162,6 +182,15 @@ pub enum LayoutQueriesResidualCoverageTestUniformTextStylePrefersIdeographicMetr
     TextRangeErrorFault(crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError),
     UStringFaultFault(crate::std::u_string_exception::UStringFault),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
+}
+impl std::fmt::Display for LayoutQueriesResidualCoverageTestUniformTextStylePrefersIdeographicMetricsThenAnyMatchingFaceFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            LayoutQueriesResidualCoverageTestUniformTextStylePrefersIdeographicMetricsThenAnyMatchingFaceFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            LayoutQueriesResidualCoverageTestUniformTextStylePrefersIdeographicMetricsThenAnyMatchingFaceFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            LayoutQueriesResidualCoverageTestUniformTextStylePrefersIdeographicMetricsThenAnyMatchingFaceFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
 }
 
 impl From<LayoutQueriesResidualCoverageTestUniformTextStylePrefersIdeographicMetricsThenAnyMatchingFaceFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
@@ -215,6 +244,15 @@ pub enum LayoutQueriesResidualCoverageTestUniformTextStylePolicyResolvesSpanStyl
     UStringFaultFault(crate::std::u_string_exception::UStringFault),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
 }
+impl std::fmt::Display for LayoutQueriesResidualCoverageTestUniformTextStylePolicyResolvesSpanStyleOrParagraphStyleFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            LayoutQueriesResidualCoverageTestUniformTextStylePolicyResolvesSpanStyleOrParagraphStyleFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            LayoutQueriesResidualCoverageTestUniformTextStylePolicyResolvesSpanStyleOrParagraphStyleFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            LayoutQueriesResidualCoverageTestUniformTextStylePolicyResolvesSpanStyleOrParagraphStyleFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
+}
 
 impl From<LayoutQueriesResidualCoverageTestUniformTextStylePolicyResolvesSpanStyleOrParagraphStyleFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
     fn from(value: LayoutQueriesResidualCoverageTestUniformTextStylePolicyResolvesSpanStyleOrParagraphStyleFault) -> Self {
@@ -266,6 +304,15 @@ pub enum LayoutQueriesResidualCoverageTestUniformTextStylePolicyPicksTheLastMatc
     TextRangeErrorFault(crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError),
     UStringFaultFault(crate::std::u_string_exception::UStringFault),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
+}
+impl std::fmt::Display for LayoutQueriesResidualCoverageTestUniformTextStylePolicyPicksTheLastMatchingSpanFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            LayoutQueriesResidualCoverageTestUniformTextStylePolicyPicksTheLastMatchingSpanFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            LayoutQueriesResidualCoverageTestUniformTextStylePolicyPicksTheLastMatchingSpanFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            LayoutQueriesResidualCoverageTestUniformTextStylePolicyPicksTheLastMatchingSpanFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
 }
 
 impl From<LayoutQueriesResidualCoverageTestUniformTextStylePolicyPicksTheLastMatchingSpanFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
@@ -319,6 +366,15 @@ pub enum LayoutQueriesResidualCoverageTestUniformTextStylePolicyKeepsTheEarlierS
     UStringFaultFault(crate::std::u_string_exception::UStringFault),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
 }
+impl std::fmt::Display for LayoutQueriesResidualCoverageTestUniformTextStylePolicyKeepsTheEarlierSpanWhenALaterOneMissesFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            LayoutQueriesResidualCoverageTestUniformTextStylePolicyKeepsTheEarlierSpanWhenALaterOneMissesFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            LayoutQueriesResidualCoverageTestUniformTextStylePolicyKeepsTheEarlierSpanWhenALaterOneMissesFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            LayoutQueriesResidualCoverageTestUniformTextStylePolicyKeepsTheEarlierSpanWhenALaterOneMissesFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
+}
 
 impl From<LayoutQueriesResidualCoverageTestUniformTextStylePolicyKeepsTheEarlierSpanWhenALaterOneMissesFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
     fn from(value: LayoutQueriesResidualCoverageTestUniformTextStylePolicyKeepsTheEarlierSpanWhenALaterOneMissesFault) -> Self {
@@ -370,6 +426,15 @@ pub enum LayoutQueriesResidualCoverageTestUniformTextStyleFallsBackWhenEveryMetr
     TextRangeErrorFault(crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError),
     UStringFaultFault(crate::std::u_string_exception::UStringFault),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
+}
+impl std::fmt::Display for LayoutQueriesResidualCoverageTestUniformTextStyleFallsBackWhenEveryMetricFieldDiffersFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            LayoutQueriesResidualCoverageTestUniformTextStyleFallsBackWhenEveryMetricFieldDiffersFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            LayoutQueriesResidualCoverageTestUniformTextStyleFallsBackWhenEveryMetricFieldDiffersFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            LayoutQueriesResidualCoverageTestUniformTextStyleFallsBackWhenEveryMetricFieldDiffersFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
 }
 
 impl From<LayoutQueriesResidualCoverageTestUniformTextStyleFallsBackWhenEveryMetricFieldDiffersFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
@@ -423,6 +488,15 @@ pub enum LayoutQueriesResidualCoverageTestTrimmedDecorationSegmentsKeepOnlyDecor
     UStringFaultFault(crate::std::u_string_exception::UStringFault),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
 }
+impl std::fmt::Display for LayoutQueriesResidualCoverageTestTrimmedDecorationSegmentsKeepOnlyDecorationRolesFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            LayoutQueriesResidualCoverageTestTrimmedDecorationSegmentsKeepOnlyDecorationRolesFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            LayoutQueriesResidualCoverageTestTrimmedDecorationSegmentsKeepOnlyDecorationRolesFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            LayoutQueriesResidualCoverageTestTrimmedDecorationSegmentsKeepOnlyDecorationRolesFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
+}
 
 impl From<LayoutQueriesResidualCoverageTestTrimmedDecorationSegmentsKeepOnlyDecorationRolesFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
     fn from(value: LayoutQueriesResidualCoverageTestTrimmedDecorationSegmentsKeepOnlyDecorationRolesFault) -> Self {
@@ -474,6 +548,15 @@ pub enum LayoutQueriesResidualCoverageTestTrailingGlueIsSkippedWhenNoClusterEnds
     TextRangeErrorFault(crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError),
     UStringFaultFault(crate::std::u_string_exception::UStringFault),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
+}
+impl std::fmt::Display for LayoutQueriesResidualCoverageTestTrailingGlueIsSkippedWhenNoClusterEndsBeforeTheSegmentEndFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            LayoutQueriesResidualCoverageTestTrailingGlueIsSkippedWhenNoClusterEndsBeforeTheSegmentEndFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            LayoutQueriesResidualCoverageTestTrailingGlueIsSkippedWhenNoClusterEndsBeforeTheSegmentEndFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            LayoutQueriesResidualCoverageTestTrailingGlueIsSkippedWhenNoClusterEndsBeforeTheSegmentEndFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
 }
 
 impl From<LayoutQueriesResidualCoverageTestTrailingGlueIsSkippedWhenNoClusterEndsBeforeTheSegmentEndFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
@@ -527,6 +610,15 @@ pub enum LayoutQueriesResidualCoverageTestSupplementaryIdeographBeyondTheHanRang
     UStringFaultFault(crate::std::u_string_exception::UStringFault),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
 }
+impl std::fmt::Display for LayoutQueriesResidualCoverageTestSupplementaryIdeographBeyondTheHanRangesIsItsOwnUnitFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            LayoutQueriesResidualCoverageTestSupplementaryIdeographBeyondTheHanRangesIsItsOwnUnitFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            LayoutQueriesResidualCoverageTestSupplementaryIdeographBeyondTheHanRangesIsItsOwnUnitFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            LayoutQueriesResidualCoverageTestSupplementaryIdeographBeyondTheHanRangesIsItsOwnUnitFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
+}
 
 impl From<LayoutQueriesResidualCoverageTestSupplementaryIdeographBeyondTheHanRangesIsItsOwnUnitFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
     fn from(value: LayoutQueriesResidualCoverageTestSupplementaryIdeographBeyondTheHanRangesIsItsOwnUnitFault) -> Self {
@@ -578,6 +670,15 @@ pub enum LayoutQueriesResidualCoverageTestSelectionWordKindCoversEveryHanBlockFa
     TextRangeErrorFault(crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError),
     UStringFaultFault(crate::std::u_string_exception::UStringFault),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
+}
+impl std::fmt::Display for LayoutQueriesResidualCoverageTestSelectionWordKindCoversEveryHanBlockFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            LayoutQueriesResidualCoverageTestSelectionWordKindCoversEveryHanBlockFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            LayoutQueriesResidualCoverageTestSelectionWordKindCoversEveryHanBlockFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            LayoutQueriesResidualCoverageTestSelectionWordKindCoversEveryHanBlockFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
 }
 
 impl From<LayoutQueriesResidualCoverageTestSelectionWordKindCoversEveryHanBlockFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
@@ -631,6 +732,15 @@ pub enum LayoutQueriesResidualCoverageTestSelectionWordBoundarySkipsInlineObject
     UStringFaultFault(crate::std::u_string_exception::UStringFault),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
 }
+impl std::fmt::Display for LayoutQueriesResidualCoverageTestSelectionWordBoundarySkipsInlineObjectsItDoesNotContainFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            LayoutQueriesResidualCoverageTestSelectionWordBoundarySkipsInlineObjectsItDoesNotContainFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            LayoutQueriesResidualCoverageTestSelectionWordBoundarySkipsInlineObjectsItDoesNotContainFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            LayoutQueriesResidualCoverageTestSelectionWordBoundarySkipsInlineObjectsItDoesNotContainFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
+}
 
 impl From<LayoutQueriesResidualCoverageTestSelectionWordBoundarySkipsInlineObjectsItDoesNotContainFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
     fn from(value: LayoutQueriesResidualCoverageTestSelectionWordBoundarySkipsInlineObjectsItDoesNotContainFault) -> Self {
@@ -682,6 +792,15 @@ pub enum LayoutQueriesResidualCoverageTestSelectionWordBoundaryForPositionReject
     TextRangeErrorFault(crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError),
     UStringFaultFault(crate::std::u_string_exception::UStringFault),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
+}
+impl std::fmt::Display for LayoutQueriesResidualCoverageTestSelectionWordBoundaryForPositionRejectsDegenerateContentFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            LayoutQueriesResidualCoverageTestSelectionWordBoundaryForPositionRejectsDegenerateContentFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            LayoutQueriesResidualCoverageTestSelectionWordBoundaryForPositionRejectsDegenerateContentFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            LayoutQueriesResidualCoverageTestSelectionWordBoundaryForPositionRejectsDegenerateContentFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
 }
 
 impl From<LayoutQueriesResidualCoverageTestSelectionWordBoundaryForPositionRejectsDegenerateContentFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
@@ -735,6 +854,15 @@ pub enum LayoutQueriesResidualCoverageTestSelectionWordBoundaryForPositionPrefer
     UStringFaultFault(crate::std::u_string_exception::UStringFault),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
 }
+impl std::fmt::Display for LayoutQueriesResidualCoverageTestSelectionWordBoundaryForPositionPrefersTheCloserLaterLineFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            LayoutQueriesResidualCoverageTestSelectionWordBoundaryForPositionPrefersTheCloserLaterLineFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            LayoutQueriesResidualCoverageTestSelectionWordBoundaryForPositionPrefersTheCloserLaterLineFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            LayoutQueriesResidualCoverageTestSelectionWordBoundaryForPositionPrefersTheCloserLaterLineFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
+}
 
 impl From<LayoutQueriesResidualCoverageTestSelectionWordBoundaryForPositionPrefersTheCloserLaterLineFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
     fn from(value: LayoutQueriesResidualCoverageTestSelectionWordBoundaryForPositionPrefersTheCloserLaterLineFault) -> Self {
@@ -787,6 +915,15 @@ pub enum LayoutQueriesResidualCoverageTestSelectionWordBoundaryForPositionCovers
     UStringFaultFault(crate::std::u_string_exception::UStringFault),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
 }
+impl std::fmt::Display for LayoutQueriesResidualCoverageTestSelectionWordBoundaryForPositionCoversDistancesAndFallbacksFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            LayoutQueriesResidualCoverageTestSelectionWordBoundaryForPositionCoversDistancesAndFallbacksFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            LayoutQueriesResidualCoverageTestSelectionWordBoundaryForPositionCoversDistancesAndFallbacksFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            LayoutQueriesResidualCoverageTestSelectionWordBoundaryForPositionCoversDistancesAndFallbacksFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
+}
 
 impl From<LayoutQueriesResidualCoverageTestSelectionWordBoundaryForPositionCoversDistancesAndFallbacksFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
     fn from(value: LayoutQueriesResidualCoverageTestSelectionWordBoundaryForPositionCoversDistancesAndFallbacksFault) -> Self {
@@ -838,6 +975,15 @@ pub enum LayoutQueriesResidualCoverageTestSelectionWordBoundaryExpandsWordsAndHo
     TextRangeErrorFault(crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError),
     UStringFaultFault(crate::std::u_string_exception::UStringFault),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
+}
+impl std::fmt::Display for LayoutQueriesResidualCoverageTestSelectionWordBoundaryExpandsWordsAndHonoursInlineObjectsFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            LayoutQueriesResidualCoverageTestSelectionWordBoundaryExpandsWordsAndHonoursInlineObjectsFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            LayoutQueriesResidualCoverageTestSelectionWordBoundaryExpandsWordsAndHonoursInlineObjectsFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            LayoutQueriesResidualCoverageTestSelectionWordBoundaryExpandsWordsAndHonoursInlineObjectsFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
 }
 
 impl From<LayoutQueriesResidualCoverageTestSelectionWordBoundaryExpandsWordsAndHonoursInlineObjectsFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
@@ -892,6 +1038,17 @@ pub enum LayoutQueriesResidualCoverageTestSelectionSnapPrefersTheCloserInlineObj
     NoSuchElementErrorFault(crate::org::tiqian::core::tiqian_no_such_element_exception::NoSuchElementError),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
     LayoutQueriesGetSelectionOffsetForPositionFaultFault(crate::org::tiqian::core::layout_queries::LayoutQueriesGetSelectionOffsetForPositionFault),
+}
+impl std::fmt::Display for LayoutQueriesResidualCoverageTestSelectionSnapPrefersTheCloserInlineObjectBoundaryFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            LayoutQueriesResidualCoverageTestSelectionSnapPrefersTheCloserInlineObjectBoundaryFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            LayoutQueriesResidualCoverageTestSelectionSnapPrefersTheCloserInlineObjectBoundaryFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            LayoutQueriesResidualCoverageTestSelectionSnapPrefersTheCloserInlineObjectBoundaryFault::NoSuchElementErrorFault(value) => write!(formatter, "{}", value),
+            LayoutQueriesResidualCoverageTestSelectionSnapPrefersTheCloserInlineObjectBoundaryFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+            LayoutQueriesResidualCoverageTestSelectionSnapPrefersTheCloserInlineObjectBoundaryFault::LayoutQueriesGetSelectionOffsetForPositionFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
 }
 
 impl From<LayoutQueriesResidualCoverageTestSelectionSnapPrefersTheCloserInlineObjectBoundaryFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
@@ -975,6 +1132,15 @@ pub enum LayoutQueriesResidualCoverageTestSameSpanSlicesAcrossASourceBoundaryMer
     UStringFaultFault(crate::std::u_string_exception::UStringFault),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
 }
+impl std::fmt::Display for LayoutQueriesResidualCoverageTestSameSpanSlicesAcrossASourceBoundaryMergeIntoOneSegmentFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            LayoutQueriesResidualCoverageTestSameSpanSlicesAcrossASourceBoundaryMergeIntoOneSegmentFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            LayoutQueriesResidualCoverageTestSameSpanSlicesAcrossASourceBoundaryMergeIntoOneSegmentFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            LayoutQueriesResidualCoverageTestSameSpanSlicesAcrossASourceBoundaryMergeIntoOneSegmentFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
+}
 
 impl From<LayoutQueriesResidualCoverageTestSameSpanSlicesAcrossASourceBoundaryMergeIntoOneSegmentFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
     fn from(value: LayoutQueriesResidualCoverageTestSameSpanSlicesAcrossASourceBoundaryMergeIntoOneSegmentFault) -> Self {
@@ -1026,6 +1192,15 @@ pub enum LayoutQueriesResidualCoverageTestRubySpreadShiftsSelectionBoxesAndZeroW
     TextRangeErrorFault(crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError),
     UStringFaultFault(crate::std::u_string_exception::UStringFault),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
+}
+impl std::fmt::Display for LayoutQueriesResidualCoverageTestRubySpreadShiftsSelectionBoxesAndZeroWidthRubiesAreIgnoredFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            LayoutQueriesResidualCoverageTestRubySpreadShiftsSelectionBoxesAndZeroWidthRubiesAreIgnoredFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            LayoutQueriesResidualCoverageTestRubySpreadShiftsSelectionBoxesAndZeroWidthRubiesAreIgnoredFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            LayoutQueriesResidualCoverageTestRubySpreadShiftsSelectionBoxesAndZeroWidthRubiesAreIgnoredFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
 }
 
 impl From<LayoutQueriesResidualCoverageTestRubySpreadShiftsSelectionBoxesAndZeroWidthRubiesAreIgnoredFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
@@ -1079,6 +1254,15 @@ pub enum LayoutQueriesResidualCoverageTestRubyGeometryRedistributesSelectionBoxe
     UStringFaultFault(crate::std::u_string_exception::UStringFault),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
 }
+impl std::fmt::Display for LayoutQueriesResidualCoverageTestRubyGeometryRedistributesSelectionBoxesAndDropsSourceStopsFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            LayoutQueriesResidualCoverageTestRubyGeometryRedistributesSelectionBoxesAndDropsSourceStopsFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            LayoutQueriesResidualCoverageTestRubyGeometryRedistributesSelectionBoxesAndDropsSourceStopsFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            LayoutQueriesResidualCoverageTestRubyGeometryRedistributesSelectionBoxesAndDropsSourceStopsFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
+}
 
 impl From<LayoutQueriesResidualCoverageTestRubyGeometryRedistributesSelectionBoxesAndDropsSourceStopsFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
     fn from(value: LayoutQueriesResidualCoverageTestRubyGeometryRedistributesSelectionBoxesAndDropsSourceStopsFault) -> Self {
@@ -1130,6 +1314,15 @@ pub enum LayoutQueriesResidualCoverageTestRubiesOnOtherLinesDoNotAffectThisLineG
     TextRangeErrorFault(crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError),
     UStringFaultFault(crate::std::u_string_exception::UStringFault),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
+}
+impl std::fmt::Display for LayoutQueriesResidualCoverageTestRubiesOnOtherLinesDoNotAffectThisLineGeometryFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            LayoutQueriesResidualCoverageTestRubiesOnOtherLinesDoNotAffectThisLineGeometryFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            LayoutQueriesResidualCoverageTestRubiesOnOtherLinesDoNotAffectThisLineGeometryFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            LayoutQueriesResidualCoverageTestRubiesOnOtherLinesDoNotAffectThisLineGeometryFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
 }
 
 impl From<LayoutQueriesResidualCoverageTestRubiesOnOtherLinesDoNotAffectThisLineGeometryFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
@@ -1183,6 +1376,15 @@ pub enum LayoutQueriesResidualCoverageTestRichTextSegmentsSplitOnLineBreaksAndCl
     UStringFaultFault(crate::std::u_string_exception::UStringFault),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
 }
+impl std::fmt::Display for LayoutQueriesResidualCoverageTestRichTextSegmentsSplitOnLineBreaksAndClusterGapsFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            LayoutQueriesResidualCoverageTestRichTextSegmentsSplitOnLineBreaksAndClusterGapsFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            LayoutQueriesResidualCoverageTestRichTextSegmentsSplitOnLineBreaksAndClusterGapsFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            LayoutQueriesResidualCoverageTestRichTextSegmentsSplitOnLineBreaksAndClusterGapsFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
+}
 
 impl From<LayoutQueriesResidualCoverageTestRichTextSegmentsSplitOnLineBreaksAndClusterGapsFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
     fn from(value: LayoutQueriesResidualCoverageTestRichTextSegmentsSplitOnLineBreaksAndClusterGapsFault) -> Self {
@@ -1234,6 +1436,15 @@ pub enum LayoutQueriesResidualCoverageTestRichTextSegmentsSkipZeroLengthClusters
     TextRangeErrorFault(crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError),
     UStringFaultFault(crate::std::u_string_exception::UStringFault),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
+}
+impl std::fmt::Display for LayoutQueriesResidualCoverageTestRichTextSegmentsSkipZeroLengthClustersBetweenSlicesFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            LayoutQueriesResidualCoverageTestRichTextSegmentsSkipZeroLengthClustersBetweenSlicesFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            LayoutQueriesResidualCoverageTestRichTextSegmentsSkipZeroLengthClustersBetweenSlicesFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            LayoutQueriesResidualCoverageTestRichTextSegmentsSkipZeroLengthClustersBetweenSlicesFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
 }
 
 impl From<LayoutQueriesResidualCoverageTestRichTextSegmentsSkipZeroLengthClustersBetweenSlicesFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
@@ -1288,6 +1499,17 @@ pub enum LayoutQueriesResidualCoverageTestResolvedCornerRadiiRejectsInvalidInset
     UStringFaultFault(crate::std::u_string_exception::UStringFault),
     TracedAssertionsAssertFailsWithFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsAssertFailsWithFault),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
+}
+impl std::fmt::Display for LayoutQueriesResidualCoverageTestResolvedCornerRadiiRejectsInvalidInsetsAndResolvesContinuationsFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            LayoutQueriesResidualCoverageTestResolvedCornerRadiiRejectsInvalidInsetsAndResolvesContinuationsFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            LayoutQueriesResidualCoverageTestResolvedCornerRadiiRejectsInvalidInsetsAndResolvesContinuationsFault::TraceAssertionErrorFault(value) => write!(formatter, "{}", value),
+            LayoutQueriesResidualCoverageTestResolvedCornerRadiiRejectsInvalidInsetsAndResolvesContinuationsFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            LayoutQueriesResidualCoverageTestResolvedCornerRadiiRejectsInvalidInsetsAndResolvesContinuationsFault::TracedAssertionsAssertFailsWithFaultFault(value) => write!(formatter, "{}", value),
+            LayoutQueriesResidualCoverageTestResolvedCornerRadiiRejectsInvalidInsetsAndResolvesContinuationsFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
 }
 
 impl From<LayoutQueriesResidualCoverageTestResolvedCornerRadiiRejectsInvalidInsetsAndResolvesContinuationsFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
@@ -1373,6 +1595,17 @@ pub enum LayoutQueriesResidualCoverageTestPositionedClustersByLineRejectsForeign
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
     TracedAssertionsAssertFailsWithFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsAssertFailsWithFault),
 }
+impl std::fmt::Display for LayoutQueriesResidualCoverageTestPositionedClustersByLineRejectsForeignLinesFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            LayoutQueriesResidualCoverageTestPositionedClustersByLineRejectsForeignLinesFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            LayoutQueriesResidualCoverageTestPositionedClustersByLineRejectsForeignLinesFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            LayoutQueriesResidualCoverageTestPositionedClustersByLineRejectsForeignLinesFault::TraceAssertionErrorFault(value) => write!(formatter, "{}", value),
+            LayoutQueriesResidualCoverageTestPositionedClustersByLineRejectsForeignLinesFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+            LayoutQueriesResidualCoverageTestPositionedClustersByLineRejectsForeignLinesFault::TracedAssertionsAssertFailsWithFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
+}
 
 impl From<LayoutQueriesResidualCoverageTestPositionedClustersByLineRejectsForeignLinesFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
     fn from(value: LayoutQueriesResidualCoverageTestPositionedClustersByLineRejectsForeignLinesFault) -> Self {
@@ -1455,6 +1688,15 @@ pub enum LayoutQueriesResidualCoverageTestPositionedClustersAndSegmentsReturnEmp
     UStringFaultFault(crate::std::u_string_exception::UStringFault),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
 }
+impl std::fmt::Display for LayoutQueriesResidualCoverageTestPositionedClustersAndSegmentsReturnEmptyWithoutLinesFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            LayoutQueriesResidualCoverageTestPositionedClustersAndSegmentsReturnEmptyWithoutLinesFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            LayoutQueriesResidualCoverageTestPositionedClustersAndSegmentsReturnEmptyWithoutLinesFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            LayoutQueriesResidualCoverageTestPositionedClustersAndSegmentsReturnEmptyWithoutLinesFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
+}
 
 impl From<LayoutQueriesResidualCoverageTestPositionedClustersAndSegmentsReturnEmptyWithoutLinesFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
     fn from(value: LayoutQueriesResidualCoverageTestPositionedClustersAndSegmentsReturnEmptyWithoutLinesFault) -> Self {
@@ -1506,6 +1748,15 @@ pub enum LayoutQueriesResidualCoverageTestPlaneFourCodepointAboveTheHanBandsIsIt
     TextRangeErrorFault(crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError),
     UStringFaultFault(crate::std::u_string_exception::UStringFault),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
+}
+impl std::fmt::Display for LayoutQueriesResidualCoverageTestPlaneFourCodepointAboveTheHanBandsIsItsOwnUnitFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            LayoutQueriesResidualCoverageTestPlaneFourCodepointAboveTheHanBandsIsItsOwnUnitFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            LayoutQueriesResidualCoverageTestPlaneFourCodepointAboveTheHanBandsIsItsOwnUnitFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            LayoutQueriesResidualCoverageTestPlaneFourCodepointAboveTheHanBandsIsItsOwnUnitFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
 }
 
 impl From<LayoutQueriesResidualCoverageTestPlaneFourCodepointAboveTheHanBandsIsItsOwnUnitFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
@@ -1560,6 +1811,17 @@ pub enum LayoutQueriesResidualCoverageTestOffsetForPositionCoversVerticalDistanc
     NoSuchElementErrorFault(crate::org::tiqian::core::tiqian_no_such_element_exception::NoSuchElementError),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
     LayoutQueriesGetSelectionOffsetForPositionFaultFault(crate::org::tiqian::core::layout_queries::LayoutQueriesGetSelectionOffsetForPositionFault),
+}
+impl std::fmt::Display for LayoutQueriesResidualCoverageTestOffsetForPositionCoversVerticalDistancesAndNaNPointsFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            LayoutQueriesResidualCoverageTestOffsetForPositionCoversVerticalDistancesAndNaNPointsFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            LayoutQueriesResidualCoverageTestOffsetForPositionCoversVerticalDistancesAndNaNPointsFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            LayoutQueriesResidualCoverageTestOffsetForPositionCoversVerticalDistancesAndNaNPointsFault::NoSuchElementErrorFault(value) => write!(formatter, "{}", value),
+            LayoutQueriesResidualCoverageTestOffsetForPositionCoversVerticalDistancesAndNaNPointsFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+            LayoutQueriesResidualCoverageTestOffsetForPositionCoversVerticalDistancesAndNaNPointsFault::LayoutQueriesGetSelectionOffsetForPositionFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
 }
 
 impl From<LayoutQueriesResidualCoverageTestOffsetForPositionCoversVerticalDistancesAndNaNPointsFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
@@ -1643,6 +1905,15 @@ pub enum LayoutQueriesResidualCoverageTestNoArgPositionedClustersWalksEveryLineF
     UStringFaultFault(crate::std::u_string_exception::UStringFault),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
 }
+impl std::fmt::Display for LayoutQueriesResidualCoverageTestNoArgPositionedClustersWalksEveryLineFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            LayoutQueriesResidualCoverageTestNoArgPositionedClustersWalksEveryLineFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            LayoutQueriesResidualCoverageTestNoArgPositionedClustersWalksEveryLineFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            LayoutQueriesResidualCoverageTestNoArgPositionedClustersWalksEveryLineFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
+}
 
 impl From<LayoutQueriesResidualCoverageTestNoArgPositionedClustersWalksEveryLineFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
     fn from(value: LayoutQueriesResidualCoverageTestNoArgPositionedClustersWalksEveryLineFault) -> Self {
@@ -1695,6 +1966,16 @@ pub enum LayoutQueriesResidualCoverageTestNearestLineSearchUpdatesToAStrictlyClo
     UStringFaultFault(crate::std::u_string_exception::UStringFault),
     NoSuchElementErrorFault(crate::org::tiqian::core::tiqian_no_such_element_exception::NoSuchElementError),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
+}
+impl std::fmt::Display for LayoutQueriesResidualCoverageTestNearestLineSearchUpdatesToAStrictlyCloserLaterLineFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            LayoutQueriesResidualCoverageTestNearestLineSearchUpdatesToAStrictlyCloserLaterLineFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            LayoutQueriesResidualCoverageTestNearestLineSearchUpdatesToAStrictlyCloserLaterLineFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            LayoutQueriesResidualCoverageTestNearestLineSearchUpdatesToAStrictlyCloserLaterLineFault::NoSuchElementErrorFault(value) => write!(formatter, "{}", value),
+            LayoutQueriesResidualCoverageTestNearestLineSearchUpdatesToAStrictlyCloserLaterLineFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
 }
 
 impl From<LayoutQueriesResidualCoverageTestNearestLineSearchUpdatesToAStrictlyCloserLaterLineFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
@@ -1764,6 +2045,16 @@ pub enum LayoutQueriesResidualCoverageTestNearestLineSearchCoversBothLambdaCopie
     NoSuchElementErrorFault(crate::org::tiqian::core::tiqian_no_such_element_exception::NoSuchElementError),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
 }
+impl std::fmt::Display for LayoutQueriesResidualCoverageTestNearestLineSearchCoversBothLambdaCopiesOfEachArmFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            LayoutQueriesResidualCoverageTestNearestLineSearchCoversBothLambdaCopiesOfEachArmFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            LayoutQueriesResidualCoverageTestNearestLineSearchCoversBothLambdaCopiesOfEachArmFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            LayoutQueriesResidualCoverageTestNearestLineSearchCoversBothLambdaCopiesOfEachArmFault::NoSuchElementErrorFault(value) => write!(formatter, "{}", value),
+            LayoutQueriesResidualCoverageTestNearestLineSearchCoversBothLambdaCopiesOfEachArmFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
+}
 
 impl From<LayoutQueriesResidualCoverageTestNearestLineSearchCoversBothLambdaCopiesOfEachArmFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
     fn from(value: LayoutQueriesResidualCoverageTestNearestLineSearchCoversBothLambdaCopiesOfEachArmFault) -> Self {
@@ -1832,6 +2123,16 @@ pub enum LayoutQueriesResidualCoverageTestNearestLineSearchCoversAllThreeDistanc
     NoSuchElementErrorFault(crate::org::tiqian::core::tiqian_no_such_element_exception::NoSuchElementError),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
 }
+impl std::fmt::Display for LayoutQueriesResidualCoverageTestNearestLineSearchCoversAllThreeDistanceArmsFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            LayoutQueriesResidualCoverageTestNearestLineSearchCoversAllThreeDistanceArmsFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            LayoutQueriesResidualCoverageTestNearestLineSearchCoversAllThreeDistanceArmsFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            LayoutQueriesResidualCoverageTestNearestLineSearchCoversAllThreeDistanceArmsFault::NoSuchElementErrorFault(value) => write!(formatter, "{}", value),
+            LayoutQueriesResidualCoverageTestNearestLineSearchCoversAllThreeDistanceArmsFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
+}
 
 impl From<LayoutQueriesResidualCoverageTestNearestLineSearchCoversAllThreeDistanceArmsFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
     fn from(value: LayoutQueriesResidualCoverageTestNearestLineSearchCoversAllThreeDistanceArmsFault) -> Self {
@@ -1899,6 +2200,15 @@ pub enum LayoutQueriesResidualCoverageTestNearestLineFallsBackToTheOnlyLineAtIts
     UStringFaultFault(crate::std::u_string_exception::UStringFault),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
 }
+impl std::fmt::Display for LayoutQueriesResidualCoverageTestNearestLineFallsBackToTheOnlyLineAtItsEndOffsetFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            LayoutQueriesResidualCoverageTestNearestLineFallsBackToTheOnlyLineAtItsEndOffsetFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            LayoutQueriesResidualCoverageTestNearestLineFallsBackToTheOnlyLineAtItsEndOffsetFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            LayoutQueriesResidualCoverageTestNearestLineFallsBackToTheOnlyLineAtItsEndOffsetFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
+}
 
 impl From<LayoutQueriesResidualCoverageTestNearestLineFallsBackToTheOnlyLineAtItsEndOffsetFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
     fn from(value: LayoutQueriesResidualCoverageTestNearestLineFallsBackToTheOnlyLineAtItsEndOffsetFault) -> Self {
@@ -1950,6 +2260,15 @@ pub enum LayoutQueriesResidualCoverageTestMetricDecisionsMustFullyContainTheClus
     TextRangeErrorFault(crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError),
     UStringFaultFault(crate::std::u_string_exception::UStringFault),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
+}
+impl std::fmt::Display for LayoutQueriesResidualCoverageTestMetricDecisionsMustFullyContainTheClusterFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            LayoutQueriesResidualCoverageTestMetricDecisionsMustFullyContainTheClusterFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            LayoutQueriesResidualCoverageTestMetricDecisionsMustFullyContainTheClusterFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            LayoutQueriesResidualCoverageTestMetricDecisionsMustFullyContainTheClusterFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
 }
 
 impl From<LayoutQueriesResidualCoverageTestMetricDecisionsMustFullyContainTheClusterFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
@@ -2003,6 +2322,15 @@ pub enum LayoutQueriesResidualCoverageTestMarkedFacesUseMetricDecisionsWhenTheyC
     UStringFaultFault(crate::std::u_string_exception::UStringFault),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
 }
+impl std::fmt::Display for LayoutQueriesResidualCoverageTestMarkedFacesUseMetricDecisionsWhenTheyCoverTheClusterFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            LayoutQueriesResidualCoverageTestMarkedFacesUseMetricDecisionsWhenTheyCoverTheClusterFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            LayoutQueriesResidualCoverageTestMarkedFacesUseMetricDecisionsWhenTheyCoverTheClusterFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            LayoutQueriesResidualCoverageTestMarkedFacesUseMetricDecisionsWhenTheyCoverTheClusterFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
+}
 
 impl From<LayoutQueriesResidualCoverageTestMarkedFacesUseMetricDecisionsWhenTheyCoverTheClusterFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
     fn from(value: LayoutQueriesResidualCoverageTestMarkedFacesUseMetricDecisionsWhenTheyCoverTheClusterFault) -> Self {
@@ -2054,6 +2382,15 @@ pub enum LayoutQueriesResidualCoverageTestLineForOffsetInsideARangeTakesTheZeroD
     TextRangeErrorFault(crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError),
     UStringFaultFault(crate::std::u_string_exception::UStringFault),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
+}
+impl std::fmt::Display for LayoutQueriesResidualCoverageTestLineForOffsetInsideARangeTakesTheZeroDistanceArmFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            LayoutQueriesResidualCoverageTestLineForOffsetInsideARangeTakesTheZeroDistanceArmFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            LayoutQueriesResidualCoverageTestLineForOffsetInsideARangeTakesTheZeroDistanceArmFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            LayoutQueriesResidualCoverageTestLineForOffsetInsideARangeTakesTheZeroDistanceArmFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
 }
 
 impl From<LayoutQueriesResidualCoverageTestLineForOffsetInsideARangeTakesTheZeroDistanceArmFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
@@ -2107,6 +2444,15 @@ pub enum LayoutQueriesResidualCoverageTestGlyphInkBoundsSkipsUnusableGlyphsAndRe
     UStringFaultFault(crate::std::u_string_exception::UStringFault),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
 }
+impl std::fmt::Display for LayoutQueriesResidualCoverageTestGlyphInkBoundsSkipsUnusableGlyphsAndReportsNullFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            LayoutQueriesResidualCoverageTestGlyphInkBoundsSkipsUnusableGlyphsAndReportsNullFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            LayoutQueriesResidualCoverageTestGlyphInkBoundsSkipsUnusableGlyphsAndReportsNullFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            LayoutQueriesResidualCoverageTestGlyphInkBoundsSkipsUnusableGlyphsAndReportsNullFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
+}
 
 impl From<LayoutQueriesResidualCoverageTestGlyphInkBoundsSkipsUnusableGlyphsAndReportsNullFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
     fn from(value: LayoutQueriesResidualCoverageTestGlyphInkBoundsSkipsUnusableGlyphsAndReportsNullFault) -> Self {
@@ -2158,6 +2504,15 @@ pub enum LayoutQueriesResidualCoverageTestGlyphInkBoundsSkipsUnmatchedGlyphsAndR
     TextRangeErrorFault(crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError),
     UStringFaultFault(crate::std::u_string_exception::UStringFault),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
+}
+impl std::fmt::Display for LayoutQueriesResidualCoverageTestGlyphInkBoundsSkipsUnmatchedGlyphsAndReturnsNullWithoutInkFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            LayoutQueriesResidualCoverageTestGlyphInkBoundsSkipsUnmatchedGlyphsAndReturnsNullWithoutInkFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            LayoutQueriesResidualCoverageTestGlyphInkBoundsSkipsUnmatchedGlyphsAndReturnsNullWithoutInkFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            LayoutQueriesResidualCoverageTestGlyphInkBoundsSkipsUnmatchedGlyphsAndReturnsNullWithoutInkFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
 }
 
 impl From<LayoutQueriesResidualCoverageTestGlyphInkBoundsSkipsUnmatchedGlyphsAndReturnsNullWithoutInkFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
@@ -2211,6 +2566,15 @@ pub enum LayoutQueriesResidualCoverageTestGlyphInkBoundsRejectsEachNonFiniteEdge
     TextRangeErrorFault(crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
 }
+impl std::fmt::Display for LayoutQueriesResidualCoverageTestGlyphInkBoundsRejectsEachNonFiniteEdgeIndependentlyFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            LayoutQueriesResidualCoverageTestGlyphInkBoundsRejectsEachNonFiniteEdgeIndependentlyFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            LayoutQueriesResidualCoverageTestGlyphInkBoundsRejectsEachNonFiniteEdgeIndependentlyFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            LayoutQueriesResidualCoverageTestGlyphInkBoundsRejectsEachNonFiniteEdgeIndependentlyFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
+}
 
 impl From<LayoutQueriesResidualCoverageTestGlyphInkBoundsRejectsEachNonFiniteEdgeIndependentlyFault> for crate::std::u_string_exception::UStringFault {
     fn from(value: LayoutQueriesResidualCoverageTestGlyphInkBoundsRejectsEachNonFiniteEdgeIndependentlyFault) -> Self {
@@ -2262,6 +2626,15 @@ pub enum LayoutQueriesResidualCoverageTestGlueTrimSkipsInteriorSegmentEdgesFault
     TextRangeErrorFault(crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError),
     UStringFaultFault(crate::std::u_string_exception::UStringFault),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
+}
+impl std::fmt::Display for LayoutQueriesResidualCoverageTestGlueTrimSkipsInteriorSegmentEdgesFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            LayoutQueriesResidualCoverageTestGlueTrimSkipsInteriorSegmentEdgesFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            LayoutQueriesResidualCoverageTestGlueTrimSkipsInteriorSegmentEdgesFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            LayoutQueriesResidualCoverageTestGlueTrimSkipsInteriorSegmentEdgesFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
 }
 
 impl From<LayoutQueriesResidualCoverageTestGlueTrimSkipsInteriorSegmentEdgesFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
@@ -2315,6 +2688,16 @@ pub enum LayoutQueriesResidualCoverageTestEmptyMidClusterHoldsTheCaretAndSlicesK
     UStringFaultFault(crate::std::u_string_exception::UStringFault),
     NoSuchElementErrorFault(crate::org::tiqian::core::tiqian_no_such_element_exception::NoSuchElementError),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
+}
+impl std::fmt::Display for LayoutQueriesResidualCoverageTestEmptyMidClusterHoldsTheCaretAndSlicesKeepDegenerateRectsFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            LayoutQueriesResidualCoverageTestEmptyMidClusterHoldsTheCaretAndSlicesKeepDegenerateRectsFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            LayoutQueriesResidualCoverageTestEmptyMidClusterHoldsTheCaretAndSlicesKeepDegenerateRectsFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            LayoutQueriesResidualCoverageTestEmptyMidClusterHoldsTheCaretAndSlicesKeepDegenerateRectsFault::NoSuchElementErrorFault(value) => write!(formatter, "{}", value),
+            LayoutQueriesResidualCoverageTestEmptyMidClusterHoldsTheCaretAndSlicesKeepDegenerateRectsFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
 }
 
 impl From<LayoutQueriesResidualCoverageTestEmptyMidClusterHoldsTheCaretAndSlicesKeepDegenerateRectsFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
@@ -2384,6 +2767,17 @@ pub enum LayoutQueriesResidualCoverageTestEmptyLineResultsShortCircuitEveryQuery
     TextRangeErrorFault(crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
     LayoutQueriesGetSelectionOffsetForPositionFaultFault(crate::org::tiqian::core::layout_queries::LayoutQueriesGetSelectionOffsetForPositionFault),
+}
+impl std::fmt::Display for LayoutQueriesResidualCoverageTestEmptyLineResultsShortCircuitEveryQueryFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            LayoutQueriesResidualCoverageTestEmptyLineResultsShortCircuitEveryQueryFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            LayoutQueriesResidualCoverageTestEmptyLineResultsShortCircuitEveryQueryFault::NoSuchElementErrorFault(value) => write!(formatter, "{}", value),
+            LayoutQueriesResidualCoverageTestEmptyLineResultsShortCircuitEveryQueryFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            LayoutQueriesResidualCoverageTestEmptyLineResultsShortCircuitEveryQueryFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+            LayoutQueriesResidualCoverageTestEmptyLineResultsShortCircuitEveryQueryFault::LayoutQueriesGetSelectionOffsetForPositionFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
 }
 
 impl From<LayoutQueriesResidualCoverageTestEmptyLineResultsShortCircuitEveryQueryFault> for crate::std::u_string_exception::UStringFault {
@@ -2467,6 +2861,15 @@ pub enum LayoutQueriesResidualCoverageTestDecorationStyleResolvesInsideSpansAndA
     UStringFaultFault(crate::std::u_string_exception::UStringFault),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
 }
+impl std::fmt::Display for LayoutQueriesResidualCoverageTestDecorationStyleResolvesInsideSpansAndAtTheirEdgesFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            LayoutQueriesResidualCoverageTestDecorationStyleResolvesInsideSpansAndAtTheirEdgesFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            LayoutQueriesResidualCoverageTestDecorationStyleResolvesInsideSpansAndAtTheirEdgesFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            LayoutQueriesResidualCoverageTestDecorationStyleResolvesInsideSpansAndAtTheirEdgesFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
+}
 
 impl From<LayoutQueriesResidualCoverageTestDecorationStyleResolvesInsideSpansAndAtTheirEdgesFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
     fn from(value: LayoutQueriesResidualCoverageTestDecorationStyleResolvesInsideSpansAndAtTheirEdgesFault) -> Self {
@@ -2518,6 +2921,15 @@ pub enum LayoutQueriesResidualCoverageTestDecorationLineYWithoutSpansUsesThePara
     TextRangeErrorFault(crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError),
     UStringFaultFault(crate::std::u_string_exception::UStringFault),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
+}
+impl std::fmt::Display for LayoutQueriesResidualCoverageTestDecorationLineYWithoutSpansUsesTheParagraphStyleFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            LayoutQueriesResidualCoverageTestDecorationLineYWithoutSpansUsesTheParagraphStyleFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            LayoutQueriesResidualCoverageTestDecorationLineYWithoutSpansUsesTheParagraphStyleFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            LayoutQueriesResidualCoverageTestDecorationLineYWithoutSpansUsesTheParagraphStyleFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
 }
 
 impl From<LayoutQueriesResidualCoverageTestDecorationLineYWithoutSpansUsesTheParagraphStyleFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
@@ -2572,6 +2984,17 @@ pub enum LayoutQueriesResidualCoverageTestDecorationLineYRequiresValidStrokeAndD
     UStringFaultFault(crate::std::u_string_exception::UStringFault),
     TracedAssertionsAssertFailsWithFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsAssertFailsWithFault),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
+}
+impl std::fmt::Display for LayoutQueriesResidualCoverageTestDecorationLineYRequiresValidStrokeAndDecorationRolesFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            LayoutQueriesResidualCoverageTestDecorationLineYRequiresValidStrokeAndDecorationRolesFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            LayoutQueriesResidualCoverageTestDecorationLineYRequiresValidStrokeAndDecorationRolesFault::TraceAssertionErrorFault(value) => write!(formatter, "{}", value),
+            LayoutQueriesResidualCoverageTestDecorationLineYRequiresValidStrokeAndDecorationRolesFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            LayoutQueriesResidualCoverageTestDecorationLineYRequiresValidStrokeAndDecorationRolesFault::TracedAssertionsAssertFailsWithFaultFault(value) => write!(formatter, "{}", value),
+            LayoutQueriesResidualCoverageTestDecorationLineYRequiresValidStrokeAndDecorationRolesFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
 }
 
 impl From<LayoutQueriesResidualCoverageTestDecorationLineYRequiresValidStrokeAndDecorationRolesFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
@@ -2655,6 +3078,15 @@ pub enum LayoutQueriesResidualCoverageTestDecorationLineYPicksTheLastMatchingSpa
     UStringFaultFault(crate::std::u_string_exception::UStringFault),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
 }
+impl std::fmt::Display for LayoutQueriesResidualCoverageTestDecorationLineYPicksTheLastMatchingSpanFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            LayoutQueriesResidualCoverageTestDecorationLineYPicksTheLastMatchingSpanFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            LayoutQueriesResidualCoverageTestDecorationLineYPicksTheLastMatchingSpanFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            LayoutQueriesResidualCoverageTestDecorationLineYPicksTheLastMatchingSpanFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
+}
 
 impl From<LayoutQueriesResidualCoverageTestDecorationLineYPicksTheLastMatchingSpanFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
     fn from(value: LayoutQueriesResidualCoverageTestDecorationLineYPicksTheLastMatchingSpanFault) -> Self {
@@ -2706,6 +3138,15 @@ pub enum LayoutQueriesResidualCoverageTestDecorationLineYKeepsTheEarlierSpanWhen
     TextRangeErrorFault(crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError),
     UStringFaultFault(crate::std::u_string_exception::UStringFault),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
+}
+impl std::fmt::Display for LayoutQueriesResidualCoverageTestDecorationLineYKeepsTheEarlierSpanWhenALaterOneMissesFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            LayoutQueriesResidualCoverageTestDecorationLineYKeepsTheEarlierSpanWhenALaterOneMissesFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            LayoutQueriesResidualCoverageTestDecorationLineYKeepsTheEarlierSpanWhenALaterOneMissesFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            LayoutQueriesResidualCoverageTestDecorationLineYKeepsTheEarlierSpanWhenALaterOneMissesFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
 }
 
 impl From<LayoutQueriesResidualCoverageTestDecorationLineYKeepsTheEarlierSpanWhenALaterOneMissesFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
@@ -2761,6 +3202,18 @@ pub enum LayoutQueriesResidualCoverageTestCursorRectFindsLaterClustersAndRejects
     TraceAssertionErrorFault(crate::org::tiqian::test::trace::trace_assertion_exception::TraceAssertionError),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
     TracedAssertionsAssertFailsWithNoSuchElementFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsAssertFailsWithNoSuchElementFault),
+}
+impl std::fmt::Display for LayoutQueriesResidualCoverageTestCursorRectFindsLaterClustersAndRejectsGappedRangesFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            LayoutQueriesResidualCoverageTestCursorRectFindsLaterClustersAndRejectsGappedRangesFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            LayoutQueriesResidualCoverageTestCursorRectFindsLaterClustersAndRejectsGappedRangesFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            LayoutQueriesResidualCoverageTestCursorRectFindsLaterClustersAndRejectsGappedRangesFault::NoSuchElementErrorFault(value) => write!(formatter, "{}", value),
+            LayoutQueriesResidualCoverageTestCursorRectFindsLaterClustersAndRejectsGappedRangesFault::TraceAssertionErrorFault(value) => write!(formatter, "{}", value),
+            LayoutQueriesResidualCoverageTestCursorRectFindsLaterClustersAndRejectsGappedRangesFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+            LayoutQueriesResidualCoverageTestCursorRectFindsLaterClustersAndRejectsGappedRangesFault::TracedAssertionsAssertFailsWithNoSuchElementFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
 }
 
 impl From<LayoutQueriesResidualCoverageTestCursorRectFindsLaterClustersAndRejectsGappedRangesFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
@@ -2860,6 +3313,16 @@ pub enum LayoutQueriesResidualCoverageTestCursorRectCoversEmptyLinesEmptyCluster
     NoSuchElementErrorFault(crate::org::tiqian::core::tiqian_no_such_element_exception::NoSuchElementError),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
 }
+impl std::fmt::Display for LayoutQueriesResidualCoverageTestCursorRectCoversEmptyLinesEmptyClustersAndMultiUnitClustersFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            LayoutQueriesResidualCoverageTestCursorRectCoversEmptyLinesEmptyClustersAndMultiUnitClustersFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            LayoutQueriesResidualCoverageTestCursorRectCoversEmptyLinesEmptyClustersAndMultiUnitClustersFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            LayoutQueriesResidualCoverageTestCursorRectCoversEmptyLinesEmptyClustersAndMultiUnitClustersFault::NoSuchElementErrorFault(value) => write!(formatter, "{}", value),
+            LayoutQueriesResidualCoverageTestCursorRectCoversEmptyLinesEmptyClustersAndMultiUnitClustersFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
+}
 
 impl From<LayoutQueriesResidualCoverageTestCursorRectCoversEmptyLinesEmptyClustersAndMultiUnitClustersFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
     fn from(value: LayoutQueriesResidualCoverageTestCursorRectCoversEmptyLinesEmptyClustersAndMultiUnitClustersFault) -> Self {
@@ -2927,6 +3390,15 @@ pub enum LayoutQueriesResidualCoverageTestCopyProjectionAppendsFullySelectedAnno
     UStringFaultFault(crate::std::u_string_exception::UStringFault),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
 }
+impl std::fmt::Display for LayoutQueriesResidualCoverageTestCopyProjectionAppendsFullySelectedAnnotationsOnlyFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            LayoutQueriesResidualCoverageTestCopyProjectionAppendsFullySelectedAnnotationsOnlyFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            LayoutQueriesResidualCoverageTestCopyProjectionAppendsFullySelectedAnnotationsOnlyFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            LayoutQueriesResidualCoverageTestCopyProjectionAppendsFullySelectedAnnotationsOnlyFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
+}
 
 impl From<LayoutQueriesResidualCoverageTestCopyProjectionAppendsFullySelectedAnnotationsOnlyFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
     fn from(value: LayoutQueriesResidualCoverageTestCopyProjectionAppendsFullySelectedAnnotationsOnlyFault) -> Self {
@@ -2978,6 +3450,15 @@ pub enum LayoutQueriesResidualCoverageTestCompatibilityIdeographsFormIndividualW
     TextRangeErrorFault(crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError),
     UStringFaultFault(crate::std::u_string_exception::UStringFault),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
+}
+impl std::fmt::Display for LayoutQueriesResidualCoverageTestCompatibilityIdeographsFormIndividualWordUnitsFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            LayoutQueriesResidualCoverageTestCompatibilityIdeographsFormIndividualWordUnitsFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            LayoutQueriesResidualCoverageTestCompatibilityIdeographsFormIndividualWordUnitsFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            LayoutQueriesResidualCoverageTestCompatibilityIdeographsFormIndividualWordUnitsFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
 }
 
 impl From<LayoutQueriesResidualCoverageTestCompatibilityIdeographsFormIndividualWordUnitsFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
@@ -3031,6 +3512,15 @@ pub enum LayoutQueriesResidualCoverageTestCoerceSelectionOffsetHonoursInlineObje
     UStringFaultFault(crate::std::u_string_exception::UStringFault),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
 }
+impl std::fmt::Display for LayoutQueriesResidualCoverageTestCoerceSelectionOffsetHonoursInlineObjectBoundariesFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            LayoutQueriesResidualCoverageTestCoerceSelectionOffsetHonoursInlineObjectBoundariesFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            LayoutQueriesResidualCoverageTestCoerceSelectionOffsetHonoursInlineObjectBoundariesFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            LayoutQueriesResidualCoverageTestCoerceSelectionOffsetHonoursInlineObjectBoundariesFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
+}
 
 impl From<LayoutQueriesResidualCoverageTestCoerceSelectionOffsetHonoursInlineObjectBoundariesFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
     fn from(value: LayoutQueriesResidualCoverageTestCoerceSelectionOffsetHonoursInlineObjectBoundariesFault) -> Self {
@@ -3082,6 +3572,15 @@ pub enum LayoutQueriesResidualCoverageTestClearanceTakesTheSmallerSideWhicheverS
     TextRangeErrorFault(crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError),
     UStringFaultFault(crate::std::u_string_exception::UStringFault),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
+}
+impl std::fmt::Display for LayoutQueriesResidualCoverageTestClearanceTakesTheSmallerSideWhicheverSegmentOwnsItFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            LayoutQueriesResidualCoverageTestClearanceTakesTheSmallerSideWhicheverSegmentOwnsItFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            LayoutQueriesResidualCoverageTestClearanceTakesTheSmallerSideWhicheverSegmentOwnsItFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            LayoutQueriesResidualCoverageTestClearanceTakesTheSmallerSideWhicheverSegmentOwnsItFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
 }
 
 impl From<LayoutQueriesResidualCoverageTestClearanceTakesTheSmallerSideWhicheverSegmentOwnsItFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
@@ -3135,6 +3634,15 @@ pub enum LayoutQueriesResidualCoverageTestClearanceNeedsSameRoleAndUsesTheSmalle
     UStringFaultFault(crate::std::u_string_exception::UStringFault),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
 }
+impl std::fmt::Display for LayoutQueriesResidualCoverageTestClearanceNeedsSameRoleAndUsesTheSmallerSideFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            LayoutQueriesResidualCoverageTestClearanceNeedsSameRoleAndUsesTheSmallerSideFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            LayoutQueriesResidualCoverageTestClearanceNeedsSameRoleAndUsesTheSmallerSideFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            LayoutQueriesResidualCoverageTestClearanceNeedsSameRoleAndUsesTheSmallerSideFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
+}
 
 impl From<LayoutQueriesResidualCoverageTestClearanceNeedsSameRoleAndUsesTheSmallerSideFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
     fn from(value: LayoutQueriesResidualCoverageTestClearanceNeedsSameRoleAndUsesTheSmallerSideFault) -> Self {
@@ -3186,6 +3694,15 @@ pub enum LayoutQueriesResidualCoverageTestBoundingBoxesSliceZeroWidthAndEmptyClu
     TextRangeErrorFault(crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError),
     UStringFaultFault(crate::std::u_string_exception::UStringFault),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
+}
+impl std::fmt::Display for LayoutQueriesResidualCoverageTestBoundingBoxesSliceZeroWidthAndEmptyClustersFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            LayoutQueriesResidualCoverageTestBoundingBoxesSliceZeroWidthAndEmptyClustersFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            LayoutQueriesResidualCoverageTestBoundingBoxesSliceZeroWidthAndEmptyClustersFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            LayoutQueriesResidualCoverageTestBoundingBoxesSliceZeroWidthAndEmptyClustersFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
 }
 
 impl From<LayoutQueriesResidualCoverageTestBoundingBoxesSliceZeroWidthAndEmptyClustersFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
@@ -3239,6 +3756,16 @@ pub enum LayoutQueriesResidualCoverageTestBoundingBoxFallsBackToTheCursorRectAtC
     UStringFaultFault(crate::std::u_string_exception::UStringFault),
     NoSuchElementErrorFault(crate::org::tiqian::core::tiqian_no_such_element_exception::NoSuchElementError),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
+}
+impl std::fmt::Display for LayoutQueriesResidualCoverageTestBoundingBoxFallsBackToTheCursorRectAtClusterGapsFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            LayoutQueriesResidualCoverageTestBoundingBoxFallsBackToTheCursorRectAtClusterGapsFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            LayoutQueriesResidualCoverageTestBoundingBoxFallsBackToTheCursorRectAtClusterGapsFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            LayoutQueriesResidualCoverageTestBoundingBoxFallsBackToTheCursorRectAtClusterGapsFault::NoSuchElementErrorFault(value) => write!(formatter, "{}", value),
+            LayoutQueriesResidualCoverageTestBoundingBoxFallsBackToTheCursorRectAtClusterGapsFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
 }
 
 impl From<LayoutQueriesResidualCoverageTestBoundingBoxFallsBackToTheCursorRectAtClusterGapsFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
@@ -3307,6 +3834,15 @@ pub enum LayoutQueriesResidualCoverageTestBackgroundTrailingEdgeUsesGlyphAdvance
     UStringFaultFault(crate::std::u_string_exception::UStringFault),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
 }
+impl std::fmt::Display for LayoutQueriesResidualCoverageTestBackgroundTrailingEdgeUsesGlyphAdvancesWhenAvailableFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            LayoutQueriesResidualCoverageTestBackgroundTrailingEdgeUsesGlyphAdvancesWhenAvailableFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            LayoutQueriesResidualCoverageTestBackgroundTrailingEdgeUsesGlyphAdvancesWhenAvailableFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            LayoutQueriesResidualCoverageTestBackgroundTrailingEdgeUsesGlyphAdvancesWhenAvailableFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
+}
 
 impl From<LayoutQueriesResidualCoverageTestBackgroundTrailingEdgeUsesGlyphAdvancesWhenAvailableFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
     fn from(value: LayoutQueriesResidualCoverageTestBackgroundTrailingEdgeUsesGlyphAdvancesWhenAvailableFault) -> Self {
@@ -3358,6 +3894,15 @@ pub enum LayoutQueriesResidualCoverageTestBackgroundTrailingEdgePicksTheLargestG
     TextRangeErrorFault(crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError),
     UStringFaultFault(crate::std::u_string_exception::UStringFault),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
+}
+impl std::fmt::Display for LayoutQueriesResidualCoverageTestBackgroundTrailingEdgePicksTheLargestGlyphAdvanceFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            LayoutQueriesResidualCoverageTestBackgroundTrailingEdgePicksTheLargestGlyphAdvanceFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            LayoutQueriesResidualCoverageTestBackgroundTrailingEdgePicksTheLargestGlyphAdvanceFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            LayoutQueriesResidualCoverageTestBackgroundTrailingEdgePicksTheLargestGlyphAdvanceFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
 }
 
 impl From<LayoutQueriesResidualCoverageTestBackgroundTrailingEdgePicksTheLargestGlyphAdvanceFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
@@ -3411,6 +3956,15 @@ pub enum LayoutQueriesResidualCoverageTestBackgroundTrailingEdgeKeepsTheFirstGly
     UStringFaultFault(crate::std::u_string_exception::UStringFault),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
 }
+impl std::fmt::Display for LayoutQueriesResidualCoverageTestBackgroundTrailingEdgeKeepsTheFirstGlyphWhenItIsLargestFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            LayoutQueriesResidualCoverageTestBackgroundTrailingEdgeKeepsTheFirstGlyphWhenItIsLargestFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            LayoutQueriesResidualCoverageTestBackgroundTrailingEdgeKeepsTheFirstGlyphWhenItIsLargestFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            LayoutQueriesResidualCoverageTestBackgroundTrailingEdgeKeepsTheFirstGlyphWhenItIsLargestFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
+}
 
 impl From<LayoutQueriesResidualCoverageTestBackgroundTrailingEdgeKeepsTheFirstGlyphWhenItIsLargestFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
     fn from(value: LayoutQueriesResidualCoverageTestBackgroundTrailingEdgeKeepsTheFirstGlyphWhenItIsLargestFault) -> Self {
@@ -3462,6 +4016,15 @@ pub enum LayoutQueriesResidualCoverageTestBackgroundSegmentsTrimGlueApplyPadding
     TextRangeErrorFault(crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError),
     UStringFaultFault(crate::std::u_string_exception::UStringFault),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
+}
+impl std::fmt::Display for LayoutQueriesResidualCoverageTestBackgroundSegmentsTrimGlueApplyPaddingAndUseGlyphAdvancesFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            LayoutQueriesResidualCoverageTestBackgroundSegmentsTrimGlueApplyPaddingAndUseGlyphAdvancesFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            LayoutQueriesResidualCoverageTestBackgroundSegmentsTrimGlueApplyPaddingAndUseGlyphAdvancesFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            LayoutQueriesResidualCoverageTestBackgroundSegmentsTrimGlueApplyPaddingAndUseGlyphAdvancesFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
 }
 
 impl From<LayoutQueriesResidualCoverageTestBackgroundSegmentsTrimGlueApplyPaddingAndUseGlyphAdvancesFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
@@ -3515,6 +4078,15 @@ pub enum LayoutQueriesResidualCoverageTestBackgroundSegmentsPassThroughUnmatchab
     UStringFaultFault(crate::std::u_string_exception::UStringFault),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
 }
+impl std::fmt::Display for LayoutQueriesResidualCoverageTestBackgroundSegmentsPassThroughUnmatchableSegmentsFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            LayoutQueriesResidualCoverageTestBackgroundSegmentsPassThroughUnmatchableSegmentsFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            LayoutQueriesResidualCoverageTestBackgroundSegmentsPassThroughUnmatchableSegmentsFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            LayoutQueriesResidualCoverageTestBackgroundSegmentsPassThroughUnmatchableSegmentsFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
+}
 
 impl From<LayoutQueriesResidualCoverageTestBackgroundSegmentsPassThroughUnmatchableSegmentsFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
     fn from(value: LayoutQueriesResidualCoverageTestBackgroundSegmentsPassThroughUnmatchableSegmentsFault) -> Self {
@@ -3566,6 +4138,15 @@ pub enum LayoutQueriesResidualCoverageTestBackgroundSegmentOutsideEverySpanUsesT
     TextRangeErrorFault(crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError),
     UStringFaultFault(crate::std::u_string_exception::UStringFault),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
+}
+impl std::fmt::Display for LayoutQueriesResidualCoverageTestBackgroundSegmentOutsideEverySpanUsesTheParagraphStyleFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            LayoutQueriesResidualCoverageTestBackgroundSegmentOutsideEverySpanUsesTheParagraphStyleFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            LayoutQueriesResidualCoverageTestBackgroundSegmentOutsideEverySpanUsesTheParagraphStyleFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            LayoutQueriesResidualCoverageTestBackgroundSegmentOutsideEverySpanUsesTheParagraphStyleFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
 }
 
 impl From<LayoutQueriesResidualCoverageTestBackgroundSegmentOutsideEverySpanUsesTheParagraphStyleFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
@@ -3619,6 +4200,15 @@ pub enum LayoutQueriesResidualCoverageTestAdjacentSameStyleSegmentsShareClearanc
     UStringFaultFault(crate::std::u_string_exception::UStringFault),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
 }
+impl std::fmt::Display for LayoutQueriesResidualCoverageTestAdjacentSameStyleSegmentsShareClearanceFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            LayoutQueriesResidualCoverageTestAdjacentSameStyleSegmentsShareClearanceFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            LayoutQueriesResidualCoverageTestAdjacentSameStyleSegmentsShareClearanceFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            LayoutQueriesResidualCoverageTestAdjacentSameStyleSegmentsShareClearanceFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
+}
 
 impl From<LayoutQueriesResidualCoverageTestAdjacentSameStyleSegmentsShareClearanceFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
     fn from(value: LayoutQueriesResidualCoverageTestAdjacentSameStyleSegmentsShareClearanceFault) -> Self {
@@ -3668,7 +4258,7 @@ impl From<crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFa
 #[test]
 fn corner_radii_predicates_cover_every_comparison() {
     testlib::run("org.tiqian.core.LayoutQueriesResidualCoverageTest.cornerRadiiPredicatesCoverEveryComparison", "org.tiqian.core.LayoutQueriesResidualCoverageTest.cornerRadiiPredicatesCoverEveryComparison", || {
-        TestTraceRecorder::new("LayoutQueriesResidualCoverageTest").section(&"cornerRadiiPredicatesCoverEveryComparison");
+        TestTraceRecorder::new(&(UStr::new(&[76,97,121,111,117,116,81,117,101,114,105,101,115,82,101,115,105,100,117,97,108,67,111,118,101,114,97,103,101,84,101,115,116]))).section(UStr::new(&[99,111,114,110,101,114,82,97,100,105,105,80,114,101,100,105,99,97,116,101,115,67,111,118,101,114,69,118,101,114,121,67,111,109,112,97,114,105,115,111,110]));
         let _ = TracedAssertions::traced_assertions_assert_true(RichTextCornerRadii::new(0.0f64, 0.0f64, 0.0f64, 0.0f64).get_is_square(), None).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_true(!RichTextCornerRadii::new(1.0f64, 0.0f64, 0.0f64, 0.0f64).get_is_square(), None).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_true(!RichTextCornerRadii::new(0.0f64, 1.0f64, 0.0f64, 0.0f64).get_is_square(), None).unwrap();
@@ -3685,10 +4275,8 @@ fn corner_radii_predicates_cover_every_comparison() {
 #[test]
 fn resolved_corner_radii_rejects_invalid_insets_and_resolves_continuations() {
     testlib::run("org.tiqian.core.LayoutQueriesResidualCoverageTest.resolvedCornerRadiiRejectsInvalidInsetsAndResolvesContinuations", "org.tiqian.core.LayoutQueriesResidualCoverageTest.resolvedCornerRadiiRejectsInvalidInsetsAndResolvesContinuations", || {
-        TestTraceRecorder::new("LayoutQueriesResidualCoverageTest").section(&"resolvedCornerRadiiRejectsInvalidInsetsAndResolvesContinuations");
-        let continuing = LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_segment(TextRange::new(1u32, 2u32).unwrap(), (Box::new({ let __guard = crate::org::tiqian::core::rich_text_role::BACKGROUND_INSTANCE.lock().unwrap_or_else(|e|
-e.into_inner()); __guard.clone() })).clone(), RichTextPaint::new(None, Some(Box::new((*crate::org::tiqian::core::rich_text_line_pattern::SOLID_INSTANCE).clone())), RichTextBackgroundPaint::new(Some(0.0f64), Some(0.0f64), Some(6.0f64), Some(2.0f64),
-Some(RichTextBackgroundMetricPolicy::MarkedFaces), Some(Box::new((*crate::org::tiqian::core::rich_text_background_draw_style::FILL_INSTANCE).clone()))).unwrap(), Some(0.0f64)).unwrap(), 0, TextRange::new(0u32, 3u32).unwrap(), 0.0f64, 0.0f64, 30.0f64, 10.0f64, 15.0f64);
+        TestTraceRecorder::new(&(UStr::new(&[76,97,121,111,117,116,81,117,101,114,105,101,115,82,101,115,105,100,117,97,108,67,111,118,101,114,97,103,101,84,101,115,116]))).section(UStr::new(&[114,101,115,111,108,118,101,100,67,111,114,110,101,114,82,97,100,105,105,82,101,106,101,99,116,115,73,110,118,97,108,105,100,73,110,115,101,116,115,65,110,100,82,101,115,111,108,118,101,115,67,111,110,116,105,110,117,97,116,105,111,110,115]));
+        let continuing = LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_segment(TextRange::new(1u32, 2u32).unwrap(), (Box::new({ let __guard = crate::org::tiqian::core::rich_text_role::BACKGROUND_INSTANCE.lock().unwrap_or_else(|e| e.into_inner()); __guard.clone() })).clone(), RichTextPaint::new(None, Some(Box::new((*crate::org::tiqian::core::rich_text_line_pattern::SOLID_INSTANCE).clone())), RichTextBackgroundPaint::new(Some(0.0f64), Some(0.0f64), Some(6.0f64), Some(2.0f64), Some(RichTextBackgroundMetricPolicy::MarkedFaces), Some(Box::new((*crate::org::tiqian::core::rich_text_background_draw_style::FILL_INSTANCE).clone()))).unwrap(), Some(0.0f64)).unwrap(), 0, TextRange::new(0u32, 3u32).unwrap(), 0.0f64, 0.0f64, 30.0f64, 10.0f64, 15.0f64);
         TracedAssertions::traced_assertions_assert_fails_with(None.clone(), { let continuing = (continuing).clone(); Arc::new(move || {
         LayoutQueries::layout_queries_resolved_background_corner_radii((continuing).clone(), -1.0f64).map_err(|e| IllegalStateException::new(&format!("{}", e)))?;
         Ok(())
@@ -3708,138 +4296,126 @@ Some(RichTextBackgroundMetricPolicy::MarkedFaces), Some(Box::new((*crate::org::t
 #[test]
 fn copy_projection_appends_fully_selected_annotations_only() {
     testlib::run("org.tiqian.core.LayoutQueriesResidualCoverageTest.copyProjectionAppendsFullySelectedAnnotationsOnly", "org.tiqian.core.LayoutQueriesResidualCoverageTest.copyProjectionAppendsFullySelectedAnnotationsOnly", || {
-        TestTraceRecorder::new("LayoutQueriesResidualCoverageTest").section(&"copyProjectionAppendsFullySelectedAnnotationsOnly");
+        TestTraceRecorder::new(&(UStr::new(&[76,97,121,111,117,116,81,117,101,114,105,101,115,82,101,115,105,100,117,97,108,67,111,118,101,114,97,103,101,84,101,115,116]))).section(UStr::new(&[99,111,112,121,80,114,111,106,101,99,116,105,111,110,65,112,112,101,110,100,115,70,117,108,108,121,83,101,108,101,99,116,101,100,65,110,110,111,116,97,116,105,111,110,115,79,110,108,121]));
         let debug = LayoutDebugInfo::new(None, Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![
-    (RubyDecisionInfo::new(TextRange::new(0u32, 2u32).unwrap(), "zhù", 0u32, 10.0f64, 12.0f64, 6.0f64, 0.0f64, Some(0.0f64), Some(0.0f64), Some(12.0f64), Some(vec![]), Some(400), Some("zh-Hans".to_string()), Some(vec![]))).clone(),
+    (RubyDecisionInfo::new(TextRange::new(0u32, 2u32).unwrap(), &(UStr::new(&[122,104,249])), 0u32, 10.0f64, 12.0f64, 6.0f64, 0.0f64, Some(0.0f64), Some(0.0f64), Some(12.0f64), Some(vec![]), Some(400), Some(UString::from("zh-Hans")), Some(vec![]))).clone(),
 ]), Some(vec![
-    (BopomofoDecisionInfo::new(TextRange::new(2u32, 4u32).unwrap(), "ㄋㄧˇ", 0u32, vec![].to_vec(), Some(vec![]), Some(400), Some("zh-Hans".to_string()))).clone(),
+    (BopomofoDecisionInfo::new(TextRange::new(2u32, 4u32).unwrap(), &(UStr::new(&[12555,12583,711])), 0u32, vec![].to_vec(), Some(vec![]), Some(400), Some(UString::from("zh-Hans")))).clone(),
 ]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), None, None, None, None, Some(vec![]), None, None, Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]),
 Some(vec![]));
-        let content = LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_result(&"abcd", &vec![], &vec![], &vec![], &vec![], &vec![], (debug).clone(),
-LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_style(10.0f64)).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_equals_string(&"", LayoutQueries::layout_queries_get_text_for_copy((content).clone(), TextRange::new(1u32, 1u32).unwrap()).unwrap().as_str(), None).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_equals_string(&"ab（zhù）c", LayoutQueries::layout_queries_get_text_for_copy((content).clone(), TextRange::new(0u32, 3u32).unwrap()).unwrap().as_str(), None).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_equals_string(&"ab（zhù）cd（ㄋㄧˇ）", LayoutQueries::layout_queries_get_text_for_copy((content).clone(), TextRange::new(0u32, 4u32).unwrap()).unwrap().as_str(), None).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_equals_string(&"d", LayoutQueries::layout_queries_get_text_for_copy((content).clone(), TextRange::new(3u32, 4u32).unwrap()).unwrap().as_str(), None).unwrap();
+        let content = LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_result(UStr::new(&[97,98,99,100]), &vec![], &vec![], &vec![], &vec![], &vec![], (debug).clone(), LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_style(10.0f64)).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_equals_string(UStr::new(&[]), LayoutQueries::layout_queries_get_text_for_copy((content).clone(), TextRange::new(1u32, 1u32).unwrap()).unwrap().as_ustr(), None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_equals_string(UStr::new(&[97,98,65288,122,104,249,65289,99]), LayoutQueries::layout_queries_get_text_for_copy((content).clone(), TextRange::new(0u32, 3u32).unwrap()).unwrap().as_ustr(), None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_equals_string(UStr::new(&[97,98,65288,122,104,249,65289,99,100,65288,12555,12583,711,65289]), LayoutQueries::layout_queries_get_text_for_copy((content).clone(), TextRange::new(0u32, 4u32).unwrap()).unwrap().as_ustr(), None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_equals_string(UStr::new(&[100]), LayoutQueries::layout_queries_get_text_for_copy((content).clone(), TextRange::new(3u32, 4u32).unwrap()).unwrap().as_ustr(), None).unwrap();
     });
 }
 
 #[test]
 fn positioned_clusters_by_line_rejects_foreign_lines() {
     testlib::run("org.tiqian.core.LayoutQueriesResidualCoverageTest.positionedClustersByLineRejectsForeignLines", "org.tiqian.core.LayoutQueriesResidualCoverageTest.positionedClustersByLineRejectsForeignLines", || {
-        TestTraceRecorder::new("LayoutQueriesResidualCoverageTest").section(&"positionedClustersByLineRejectsForeignLines");
+        TestTraceRecorder::new(&(UStr::new(&[76,97,121,111,117,116,81,117,101,114,105,101,115,82,101,115,105,100,117,97,108,67,111,118,101,114,97,103,101,84,101,115,116]))).section(UStr::new(&[112,111,115,105,116,105,111,110,101,100,67,108,117,115,116,101,114,115,66,121,76,105,110,101,82,101,106,101,99,116,115,70,111,114,101,105,103,110,76,105,110,101,115]));
         let owned = LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_line(TextRange::new(0u32, 2u32).unwrap(), 0, 0, 0.0f64, 20.0f64, 15.0f64, 0.0f64, 10.0f64);
         let foreign = LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_line(TextRange::new(0u32, 2u32).unwrap(), 0, 0, 99.0f64, 119.0f64, 114.0f64, 0.0f64, 10.0f64);
-        let content = LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_result(&"ab", &vec![
-    (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_cluster(TextRange::new(0u32, 2u32).unwrap(), &"ab", 20.0f64)).clone(),
+        let content = LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_result(UStr::new(&[97,98]), &vec![
+    (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_cluster(TextRange::new(0u32, 2u32).unwrap(), UStr::new(&[97,98]), 20.0f64)).clone(),
 ], &vec![(owned).clone()], &vec![], &vec![], &vec![], LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_empty_debug(), LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_style(10.0f64)).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_equals_int(1, u32::try_from((LayoutQueries::layout_queries_positioned_clusters_for_line((content).clone(), (owned).clone()).unwrap().len()) & 0xFFFF_FFFF).unwrap_or(0), None).unwrap();
         let error = TracedAssertions::traced_assertions_assert_fails_with(None.clone(), { let content = (content).clone(); let foreign = (foreign).clone(); Arc::new(move || {
         LayoutQueries::layout_queries_positioned_clusters_for_line((content).clone(), (foreign).clone()).map_err(|e| IllegalStateException::new(&format!("{}", e)))?;
         Ok(())
 }) }).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_true((u32::from_ne_bytes((u_string::find_from(&format!("{}", error), "must belong", 0)).to_ne_bytes())) <= 2147483647, Some((format!("{}", error)).to_string())).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_true((u32::from_ne_bytes(((u_string::find_from(&UString::from(format!("{}", format!("{}", error)).as_str()), UString::from("must belong").as_ustr(), 0)) as u32).to_ne_bytes())) <= 2147483647, Some(UString::from(format!("{}", format!("{}", error)).as_str()))).unwrap();
     });
 }
 
 #[test]
 fn glyph_ink_bounds_skips_unmatched_glyphs_and_returns_null_without_ink() {
     testlib::run("org.tiqian.core.LayoutQueriesResidualCoverageTest.glyphInkBoundsSkipsUnmatchedGlyphsAndReturnsNullWithoutInk", "org.tiqian.core.LayoutQueriesResidualCoverageTest.glyphInkBoundsSkipsUnmatchedGlyphsAndReturnsNullWithoutInk", || {
-        TestTraceRecorder::new("LayoutQueriesResidualCoverageTest").section(&"glyphInkBoundsSkipsUnmatchedGlyphsAndReturnsNullWithoutInk");
+        TestTraceRecorder::new(&(UStr::new(&[76,97,121,111,117,116,81,117,101,114,105,101,115,82,101,115,105,100,117,97,108,67,111,118,101,114,97,103,101,84,101,115,116]))).section(UStr::new(&[103,108,121,112,104,73,110,107,66,111,117,110,100,115,83,107,105,112,115,85,110,109,97,116,99,104,101,100,71,108,121,112,104,115,65,110,100,82,101,116,117,114,110,115,78,117,108,108,87,105,116,104,111,117,116,73,110,107]));
         let clusters = vec![
-    (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_cluster(TextRange::new(0u32, 1u32).unwrap(), &"a", 10.0f64)).clone(),
-    (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_cluster(TextRange::new(1u32, 2u32).unwrap(), &"b", 10.0f64)).clone(),
+    (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_cluster(TextRange::new(0u32, 1u32).unwrap(), UStr::new(&[97]), 10.0f64)).clone(),
+    (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_cluster(TextRange::new(1u32, 2u32).unwrap(), UStr::new(&[98]), 10.0f64)).clone(),
 ];
         let runs = vec![
-    (GlyphRun::new(TextRange::new(0u32, 2u32).unwrap(), "test", vec![
+    (GlyphRun::new(TextRange::new(0u32, 2u32).unwrap(), &(UStr::new(&[116,101,115,116])), vec![
     (Glyph::new(1u32, TextRange::new(0u32, 1u32).unwrap(), 10.0f64, Some(0.0f64), Some(0.0f64), None, Some(Rect::new(0.0f64, 2.0f64, 8.0f64, 12.0f64)), None, None)).clone(),
     (Glyph::new(2u32, TextRange::new(0u32, 1u32).unwrap(), 10.0f64, Some(0.0f64), Some(0.0f64), None, None, None, None)).clone(),
     (Glyph::new(3u32, TextRange::new(5u32, 6u32).unwrap(), 10.0f64, Some(0.0f64), Some(0.0f64), None, Some(Rect::new(0.0f64, 0.0f64, 1.0f64, 1.0f64)), None, None)).clone(),
 ].to_vec(), 20.0f64, Some(vec![]))).clone(),
 ];
-        let content = LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_result(&"ab", &clusters, &vec![
+        let content = LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_result(UStr::new(&[97,98]), &clusters, &vec![
     (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_line(TextRange::new(0u32, 2u32).unwrap(), 0, 1, 0.0f64, 20.0f64, 15.0f64, 0.0f64, 20.0f64)).clone(),
 ], &runs, &vec![], &vec![], LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_empty_debug(), LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_style(10.0f64)).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_equals_rendered(Rect::new(0.0f64, 17.0f64, 8.0f64, 27.0f64).to_string().as_str(), LayoutQueries::layout_queries_glyph_ink_bounds((content).clone()).as_ref().unwrap().to_string().as_str(), None).unwrap();
-        let no_ink = LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_result(&"ab", &clusters, &vec![
+        let _ = TracedAssertions::traced_assertions_assert_equals_rendered(UString::from(format!("{}", Rect::new(0.0f64, 17.0f64, 8.0f64, 27.0f64).to_string()).as_str()).as_ustr(), UString::from(format!("{}", LayoutQueries::layout_queries_glyph_ink_bounds((content).clone()).as_ref().unwrap().to_string()).as_str()).as_ustr(), None).unwrap();
+        let no_ink = LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_result(UStr::new(&[97,98]), &clusters, &vec![
     (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_line(TextRange::new(0u32, 2u32).unwrap(), 0, 1, 0.0f64, 20.0f64, 15.0f64, 0.0f64, 20.0f64)).clone(),
 ], &vec![], &vec![], &vec![], LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_empty_debug(), LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_style(10.0f64)).unwrap();
         let no_ink_bounds = LayoutQueries::layout_queries_glyph_ink_bounds((no_ink).clone());
-        let _ = TracedAssertions::traced_assertions_assert_null_rendered(no_ink_bounds.is_none(), match &(no_ink_bounds) { None => "-".to_string(), Some(__option2) => __option2.to_string() }.as_str(), None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_null_rendered(no_ink_bounds.is_none(), match &(no_ink_bounds) { None => UString::from("-"), Some(__option2) => UString::from(format!("{}", __option2.to_string()).as_str()) }.as_ustr(), None).unwrap();
     });
 }
 
 #[test]
 fn empty_line_results_short_circuit_every_query() {
     testlib::run("org.tiqian.core.LayoutQueriesResidualCoverageTest.emptyLineResultsShortCircuitEveryQuery", "org.tiqian.core.LayoutQueriesResidualCoverageTest.emptyLineResultsShortCircuitEveryQuery", || {
-        TestTraceRecorder::new("LayoutQueriesResidualCoverageTest").section(&"emptyLineResultsShortCircuitEveryQuery");
-        let content = LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_result(&"ab", &vec![], &vec![], &vec![], &vec![], &vec![], LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_empty_debug(),
-LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_style(10.0f64)).unwrap();
+        TestTraceRecorder::new(&(UStr::new(&[76,97,121,111,117,116,81,117,101,114,105,101,115,82,101,115,105,100,117,97,108,67,111,118,101,114,97,103,101,84,101,115,116]))).section(UStr::new(&[101,109,112,116,121,76,105,110,101,82,101,115,117,108,116,115,83,104,111,114,116,67,105,114,99,117,105,116,69,118,101,114,121,81,117,101,114,121]));
+        let content = LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_result(UStr::new(&[97,98]), &vec![], &vec![], &vec![], &vec![], &vec![], LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_empty_debug(), LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_style(10.0f64)).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_equals_int(4294967295u32, LayoutQueries::layout_queries_get_line_for_offset((content).clone(), 0), None).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_equals_rendered(Rect::new(0.0f64, 0.0f64, 0.0f64, 0.0f64).to_string().as_str(), LayoutQueries::layout_queries_get_bounding_box((content).clone(), 0).unwrap().to_string().as_str(), None).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_equals_rendered(Rect::new(0.0f64, 0.0f64, 0.0f64, 0.0f64).to_string().as_str(), LayoutQueries::layout_queries_get_cursor_rect((content).clone(), 0).unwrap().to_string().as_str(), None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_equals_rendered(UString::from(format!("{}", Rect::new(0.0f64, 0.0f64, 0.0f64, 0.0f64).to_string()).as_str()).as_ustr(), UString::from(format!("{}", LayoutQueries::layout_queries_get_bounding_box((content).clone(), 0).unwrap().to_string()).as_str()).as_ustr(), None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_equals_rendered(UString::from(format!("{}", Rect::new(0.0f64, 0.0f64, 0.0f64, 0.0f64).to_string()).as_str()).as_ustr(), UString::from(format!("{}", LayoutQueries::layout_queries_get_cursor_rect((content).clone(), 0).unwrap().to_string()).as_str()).as_ustr(), None).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_equals_int(0, LayoutQueries::layout_queries_get_offset_for_position((content).clone(), 5.0f64, 5.0f64), None).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_equals_int(0, LayoutQueries::layout_queries_get_selection_offset_for_position((content).clone(), 5.0f64, 5.0f64).unwrap(), None).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_equals_rendered(&"[]", LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_render_rects(&LayoutQueries::layout_queries_get_bounding_boxes((content).clone(), TextRange::new(0u32,
-2u32).unwrap())).unwrap().as_str(), None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_equals_rendered(UStr::new(&[91,93]), LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_render_rects(&LayoutQueries::layout_queries_get_bounding_boxes((content).clone(), TextRange::new(0u32, 2u32).unwrap())).unwrap().as_ustr(), None).unwrap();
         let no_word_boundary = LayoutQueries::layout_queries_get_selection_word_boundary_for_position((content).clone(), 5.0f64, 5.0f64).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_null_rendered(no_word_boundary.is_none(), match &(no_word_boundary) { None => "-".to_string(), Some(__option5) => __option5.to_string() }.as_str(), None).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_equals_rendered(&"[]", LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_render_segments(&LayoutQueries::layout_queries_positioned_rich_text_segments((content).clone(), &vec![
-    (RichTextSpan::new(TextRange::new(0u32, 1u32).unwrap(), Box::new({ let __guard = crate::org::tiqian::core::rich_text_role::BACKGROUND_INSTANCE.lock().unwrap_or_else(|e| e.into_inner()); __guard.clone() }), RichTextPaint::new(None,
-Some(Box::new((*crate::org::tiqian::core::rich_text_line_pattern::SOLID_INSTANCE).clone())), RichTextBackgroundPaint::new(Some(0.0f64), Some(0.0f64), Some(0.0f64), Some(0.0f64), Some(RichTextBackgroundMetricPolicy::MarkedFaces),
-Some(Box::new((*crate::org::tiqian::core::rich_text_background_draw_style::FILL_INSTANCE).clone()))).unwrap(), Some(0.0f64)).unwrap())).clone(),
-]).unwrap()).unwrap().as_str(), None).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_equals_rendered(&"[]", LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_render_segments(&LayoutQueries::layout_queries_trimmed_rich_text_decoration_segments((content).clone(),
-&vec![])).unwrap().as_str(), None).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_equals_rendered(&"[]", LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_render_segments(&LayoutQueries::layout_queries_rich_text_background_segments((content).clone(),
-&vec![])).unwrap().as_str(), None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_null_rendered(no_word_boundary.is_none(), match &(no_word_boundary) { None => UString::from("-"), Some(__option5) => UString::from(format!("{}", __option5.to_string()).as_str()) }.as_ustr(), None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_equals_rendered(UStr::new(&[91,93]), LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_render_segments(&LayoutQueries::layout_queries_positioned_rich_text_segments((content).clone(), &vec![
+    (RichTextSpan::new(TextRange::new(0u32, 1u32).unwrap(), Box::new({ let __guard = crate::org::tiqian::core::rich_text_role::BACKGROUND_INSTANCE.lock().unwrap_or_else(|e| e.into_inner()); __guard.clone() }), RichTextPaint::new(None, Some(Box::new((*crate::org::tiqian::core::rich_text_line_pattern::SOLID_INSTANCE).clone())), RichTextBackgroundPaint::new(Some(0.0f64), Some(0.0f64), Some(0.0f64), Some(0.0f64), Some(RichTextBackgroundMetricPolicy::MarkedFaces), Some(Box::new((*crate::org::tiqian::core::rich_text_background_draw_style::FILL_INSTANCE).clone()))).unwrap(), Some(0.0f64)).unwrap())).clone(),
+]).unwrap()).unwrap().as_ustr(), None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_equals_rendered(UStr::new(&[91,93]), LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_render_segments(&LayoutQueries::layout_queries_trimmed_rich_text_decoration_segments((content).clone(), &vec![])).unwrap().as_ustr(), None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_equals_rendered(UStr::new(&[91,93]), LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_render_segments(&LayoutQueries::layout_queries_rich_text_background_segments((content).clone(), &vec![])).unwrap().as_ustr(), None).unwrap();
     });
 }
 
 #[test]
 fn bounding_box_falls_back_to_the_cursor_rect_at_cluster_gaps() {
     testlib::run("org.tiqian.core.LayoutQueriesResidualCoverageTest.boundingBoxFallsBackToTheCursorRectAtClusterGaps", "org.tiqian.core.LayoutQueriesResidualCoverageTest.boundingBoxFallsBackToTheCursorRectAtClusterGaps", || {
-        TestTraceRecorder::new("LayoutQueriesResidualCoverageTest").section(&"boundingBoxFallsBackToTheCursorRectAtClusterGaps");
-        let content = LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_result(&"abc", &vec![
-    (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_cluster(TextRange::new(0u32, 1u32).unwrap(), &"a", 10.0f64)).clone(),
-    (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_cluster(TextRange::new(2u32, 3u32).unwrap(), &"c", 10.0f64)).clone(),
+        TestTraceRecorder::new(&(UStr::new(&[76,97,121,111,117,116,81,117,101,114,105,101,115,82,101,115,105,100,117,97,108,67,111,118,101,114,97,103,101,84,101,115,116]))).section(UStr::new(&[98,111,117,110,100,105,110,103,66,111,120,70,97,108,108,115,66,97,99,107,84,111,84,104,101,67,117,114,115,111,114,82,101,99,116,65,116,67,108,117,115,116,101,114,71,97,112,115]));
+        let content = LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_result(UStr::new(&[97,98,99]), &vec![
+    (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_cluster(TextRange::new(0u32, 1u32).unwrap(), UStr::new(&[97]), 10.0f64)).clone(),
+    (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_cluster(TextRange::new(2u32, 3u32).unwrap(), UStr::new(&[99]), 10.0f64)).clone(),
 ], &vec![
     (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_line(TextRange::new(0u32, 3u32).unwrap(), 0, 1, 0.0f64, 20.0f64, 15.0f64, 0.0f64, 10.0f64)).clone(),
 ], &vec![], &vec![], &vec![], LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_empty_debug(), LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_style(10.0f64)).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_equals_rendered(Rect::new(10.0f64, 0.0f64, 11.0f64, 20.0f64).to_string().as_str(), LayoutQueries::layout_queries_get_bounding_box((content).clone(), 1).unwrap().to_string().as_str(), None).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_equals_rendered(Rect::new(20.0f64, 0.0f64, 21.0f64, 20.0f64).to_string().as_str(), LayoutQueries::layout_queries_get_bounding_box((content).clone(), 3).unwrap().to_string().as_str(), None).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_equals_rendered(&"[]", LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_render_rects(&LayoutQueries::layout_queries_get_bounding_boxes((content).clone(), TextRange::new(3u32,
-5u32).unwrap())).unwrap().as_str(), None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_equals_rendered(UString::from(format!("{}", Rect::new(10.0f64, 0.0f64, 11.0f64, 20.0f64).to_string()).as_str()).as_ustr(), UString::from(format!("{}", LayoutQueries::layout_queries_get_bounding_box((content).clone(), 1).unwrap().to_string()).as_str()).as_ustr(), None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_equals_rendered(UString::from(format!("{}", Rect::new(20.0f64, 0.0f64, 21.0f64, 20.0f64).to_string()).as_str()).as_ustr(), UString::from(format!("{}", LayoutQueries::layout_queries_get_bounding_box((content).clone(), 3).unwrap().to_string()).as_str()).as_ustr(), None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_equals_rendered(UStr::new(&[91,93]), LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_render_rects(&LayoutQueries::layout_queries_get_bounding_boxes((content).clone(), TextRange::new(3u32, 5u32).unwrap())).unwrap().as_ustr(), None).unwrap();
     });
 }
 
 #[test]
 fn rich_text_segments_split_on_line_breaks_and_cluster_gaps() {
     testlib::run("org.tiqian.core.LayoutQueriesResidualCoverageTest.richTextSegmentsSplitOnLineBreaksAndClusterGaps", "org.tiqian.core.LayoutQueriesResidualCoverageTest.richTextSegmentsSplitOnLineBreaksAndClusterGaps", || {
-        TestTraceRecorder::new("LayoutQueriesResidualCoverageTest").section(&"richTextSegmentsSplitOnLineBreaksAndClusterGaps");
-        let content = LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_result(&"abcd", &vec![
-    (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_cluster(TextRange::new(0u32, 1u32).unwrap(), &"a", 10.0f64)).clone(),
-    (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_cluster(TextRange::new(2u32, 3u32).unwrap(), &"c", 10.0f64)).clone(),
-    (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_cluster(TextRange::new(3u32, 4u32).unwrap(), &"d", 10.0f64)).clone(),
+        TestTraceRecorder::new(&(UStr::new(&[76,97,121,111,117,116,81,117,101,114,105,101,115,82,101,115,105,100,117,97,108,67,111,118,101,114,97,103,101,84,101,115,116]))).section(UStr::new(&[114,105,99,104,84,101,120,116,83,101,103,109,101,110,116,115,83,112,108,105,116,79,110,76,105,110,101,66,114,101,97,107,115,65,110,100,67,108,117,115,116,101,114,71,97,112,115]));
+        let content = LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_result(UStr::new(&[97,98,99,100]), &vec![
+    (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_cluster(TextRange::new(0u32, 1u32).unwrap(), UStr::new(&[97]), 10.0f64)).clone(),
+    (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_cluster(TextRange::new(2u32, 3u32).unwrap(), UStr::new(&[99]), 10.0f64)).clone(),
+    (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_cluster(TextRange::new(3u32, 4u32).unwrap(), UStr::new(&[100]), 10.0f64)).clone(),
 ], &vec![
     (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_line(TextRange::new(0u32, 3u32).unwrap(), 0, 1, 0.0f64, 20.0f64, 15.0f64, 0.0f64, 20.0f64)).clone(),
     (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_line(TextRange::new(3u32, 4u32).unwrap(), 2, 2, 20.0f64, 40.0f64, 35.0f64, 0.0f64, 10.0f64)).clone(),
 ], &vec![], &vec![], &vec![], LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_empty_debug(), LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_style(10.0f64)).unwrap();
-        let span = RichTextSpan::new(TextRange::new(0u32, 4u32).unwrap(), Box::new({ let __guard = crate::org::tiqian::core::rich_text_role::UNDERLINE_INSTANCE.lock().unwrap_or_else(|e| e.into_inner()); __guard.clone() }), RichTextPaint::new(None,
-Some(Box::new((*crate::org::tiqian::core::rich_text_line_pattern::SOLID_INSTANCE).clone())), RichTextBackgroundPaint::new(Some(0.0f64), Some(0.0f64), Some(0.0f64), Some(0.0f64), Some(RichTextBackgroundMetricPolicy::MarkedFaces),
-Some(Box::new((*crate::org::tiqian::core::rich_text_background_draw_style::FILL_INSTANCE).clone()))).unwrap(), Some(0.0f64)).unwrap());
+        let span = RichTextSpan::new(TextRange::new(0u32, 4u32).unwrap(), Box::new({ let __guard = crate::org::tiqian::core::rich_text_role::UNDERLINE_INSTANCE.lock().unwrap_or_else(|e| e.into_inner()); __guard.clone() }), RichTextPaint::new(None, Some(Box::new((*crate::org::tiqian::core::rich_text_line_pattern::SOLID_INSTANCE).clone())), RichTextBackgroundPaint::new(Some(0.0f64), Some(0.0f64), Some(0.0f64), Some(0.0f64), Some(RichTextBackgroundMetricPolicy::MarkedFaces), Some(Box::new((*crate::org::tiqian::core::rich_text_background_draw_style::FILL_INSTANCE).clone()))).unwrap(), Some(0.0f64)).unwrap());
         let split = LayoutQueries::layout_queries_positioned_rich_text_segments((content).clone(), &vec![(span).clone()]).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_equals_int(3, u32::try_from((split.len()) & 0xFFFF_FFFF).unwrap_or(0), None).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_equals_rendered(TextRange::new(0u32, 1u32).unwrap().to_string().as_str(), ((split[0usize]).clone().range).clone().to_string().as_str(), None).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_equals_rendered(TextRange::new(2u32, 3u32).unwrap().to_string().as_str(), ((split[1usize]).clone().range).clone().to_string().as_str(), None).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_equals_rendered(TextRange::new(3u32, 4u32).unwrap().to_string().as_str(), ((split[2usize]).clone().range).clone().to_string().as_str(), None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_equals_rendered(UString::from(format!("{}", TextRange::new(0u32, 1u32).unwrap().to_string()).as_str()).as_ustr(), UString::from(format!("{}", ((split[0usize]).clone().range).clone().to_string()).as_str()).as_ustr(), None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_equals_rendered(UString::from(format!("{}", TextRange::new(2u32, 3u32).unwrap().to_string()).as_str()).as_ustr(), UString::from(format!("{}", ((split[1usize]).clone().range).clone().to_string()).as_str()).as_ustr(), None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_equals_rendered(UString::from(format!("{}", TextRange::new(3u32, 4u32).unwrap().to_string()).as_str()).as_ustr(), UString::from(format!("{}", ((split[2usize]).clone().range).clone().to_string()).as_str()).as_ustr(), None).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_equals_int(0, split[0usize].line_index, None).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_equals_int(0, split[1usize].line_index, None).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_equals_int(1, split[2usize].line_index, None).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_true(u32::try_from((LayoutQueries::layout_queries_positioned_rich_text_segments((content).clone(), &vec![
-    (RichTextSpan::new(TextRange::new(5u32, 8u32).unwrap(), Box::new({ let __guard = crate::org::tiqian::core::rich_text_role::UNDERLINE_INSTANCE.lock().unwrap_or_else(|e| e.into_inner()); __guard.clone() }), RichTextPaint::new(None,
-Some(Box::new((*crate::org::tiqian::core::rich_text_line_pattern::SOLID_INSTANCE).clone())), RichTextBackgroundPaint::new(Some(0.0f64), Some(0.0f64), Some(0.0f64), Some(0.0f64), Some(RichTextBackgroundMetricPolicy::MarkedFaces),
-Some(Box::new((*crate::org::tiqian::core::rich_text_background_draw_style::FILL_INSTANCE).clone()))).unwrap(), Some(0.0f64)).unwrap())).clone(),
+    (RichTextSpan::new(TextRange::new(5u32, 8u32).unwrap(), Box::new({ let __guard = crate::org::tiqian::core::rich_text_role::UNDERLINE_INSTANCE.lock().unwrap_or_else(|e| e.into_inner()); __guard.clone() }), RichTextPaint::new(None, Some(Box::new((*crate::org::tiqian::core::rich_text_line_pattern::SOLID_INSTANCE).clone())), RichTextBackgroundPaint::new(Some(0.0f64), Some(0.0f64), Some(0.0f64), Some(0.0f64), Some(RichTextBackgroundMetricPolicy::MarkedFaces), Some(Box::new((*crate::org::tiqian::core::rich_text_background_draw_style::FILL_INSTANCE).clone()))).unwrap(), Some(0.0f64)).unwrap())).clone(),
 ]).unwrap().len()) & 0xFFFF_FFFF).unwrap_or(0) == 0, None).unwrap();
     });
 }
@@ -3847,21 +4423,19 @@ Some(Box::new((*crate::org::tiqian::core::rich_text_background_draw_style::FILL_
 #[test]
 fn rich_text_segments_skip_zero_length_clusters_between_slices() {
     testlib::run("org.tiqian.core.LayoutQueriesResidualCoverageTest.richTextSegmentsSkipZeroLengthClustersBetweenSlices", "org.tiqian.core.LayoutQueriesResidualCoverageTest.richTextSegmentsSkipZeroLengthClustersBetweenSlices", || {
-        TestTraceRecorder::new("LayoutQueriesResidualCoverageTest").section(&"richTextSegmentsSkipZeroLengthClustersBetweenSlices");
-        let content = LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_result(&"ab", &vec![
-    (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_cluster(TextRange::new(0u32, 1u32).unwrap(), &"a", 10.0f64)).clone(),
-    (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_cluster(TextRange::new(1u32, 1u32).unwrap(), &"", 0.0f64)).clone(),
-    (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_cluster(TextRange::new(1u32, 2u32).unwrap(), &"b", 10.0f64)).clone(),
+        TestTraceRecorder::new(&(UStr::new(&[76,97,121,111,117,116,81,117,101,114,105,101,115,82,101,115,105,100,117,97,108,67,111,118,101,114,97,103,101,84,101,115,116]))).section(UStr::new(&[114,105,99,104,84,101,120,116,83,101,103,109,101,110,116,115,83,107,105,112,90,101,114,111,76,101,110,103,116,104,67,108,117,115,116,101,114,115,66,101,116,119,101,101,110,83,108,105,99,101,115]));
+        let content = LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_result(UStr::new(&[97,98]), &vec![
+    (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_cluster(TextRange::new(0u32, 1u32).unwrap(), UStr::new(&[97]), 10.0f64)).clone(),
+    (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_cluster(TextRange::new(1u32, 1u32).unwrap(), UStr::new(&[]), 0.0f64)).clone(),
+    (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_cluster(TextRange::new(1u32, 2u32).unwrap(), UStr::new(&[98]), 10.0f64)).clone(),
 ], &vec![
     (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_line(TextRange::new(0u32, 2u32).unwrap(), 0, 2, 0.0f64, 20.0f64, 15.0f64, 0.0f64, 20.0f64)).clone(),
 ], &vec![], &vec![], &vec![], LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_empty_debug(), LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_style(10.0f64)).unwrap();
         let segments = LayoutQueries::layout_queries_positioned_rich_text_segments((content).clone(), &vec![
-    (RichTextSpan::new(TextRange::new(0u32, 2u32).unwrap(), Box::new({ let __guard = crate::org::tiqian::core::rich_text_role::UNDERLINE_INSTANCE.lock().unwrap_or_else(|e| e.into_inner()); __guard.clone() }), RichTextPaint::new(None,
-Some(Box::new((*crate::org::tiqian::core::rich_text_line_pattern::SOLID_INSTANCE).clone())), RichTextBackgroundPaint::new(Some(0.0f64), Some(0.0f64), Some(0.0f64), Some(0.0f64), Some(RichTextBackgroundMetricPolicy::MarkedFaces),
-Some(Box::new((*crate::org::tiqian::core::rich_text_background_draw_style::FILL_INSTANCE).clone()))).unwrap(), Some(0.0f64)).unwrap())).clone(),
+    (RichTextSpan::new(TextRange::new(0u32, 2u32).unwrap(), Box::new({ let __guard = crate::org::tiqian::core::rich_text_role::UNDERLINE_INSTANCE.lock().unwrap_or_else(|e| e.into_inner()); __guard.clone() }), RichTextPaint::new(None, Some(Box::new((*crate::org::tiqian::core::rich_text_line_pattern::SOLID_INSTANCE).clone())), RichTextBackgroundPaint::new(Some(0.0f64), Some(0.0f64), Some(0.0f64), Some(0.0f64), Some(RichTextBackgroundMetricPolicy::MarkedFaces), Some(Box::new((*crate::org::tiqian::core::rich_text_background_draw_style::FILL_INSTANCE).clone()))).unwrap(), Some(0.0f64)).unwrap())).clone(),
 ]).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_equals_int(1, u32::try_from((segments.len()) & 0xFFFF_FFFF).unwrap_or(0), None).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_equals_rendered(TextRange::new(0u32, 2u32).unwrap().to_string().as_str(), ((segments[0usize]).clone().range).clone().to_string().as_str(), None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_equals_rendered(UString::from(format!("{}", TextRange::new(0u32, 2u32).unwrap().to_string()).as_str()).as_ustr(), UString::from(format!("{}", ((segments[0usize]).clone().range).clone().to_string()).as_str()).as_ustr(), None).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_equals_float(0.0f64, segments[0usize].left, None).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_equals_float(20.0f64, segments[0usize].right, None).unwrap();
     });
@@ -3870,14 +4444,10 @@ Some(Box::new((*crate::org::tiqian::core::rich_text_background_draw_style::FILL_
 #[test]
 fn trimmed_decoration_segments_keep_only_decoration_roles() {
     testlib::run("org.tiqian.core.LayoutQueriesResidualCoverageTest.trimmedDecorationSegmentsKeepOnlyDecorationRoles", "org.tiqian.core.LayoutQueriesResidualCoverageTest.trimmedDecorationSegmentsKeepOnlyDecorationRoles", || {
-        TestTraceRecorder::new("LayoutQueriesResidualCoverageTest").section(&"trimmedDecorationSegmentsKeepOnlyDecorationRoles");
-        let content = LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_result(&"ab", &vec![], &vec![], &vec![], &vec![], &vec![], LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_empty_debug(),
-LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_style(10.0f64)).unwrap();
-        let decoration = LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_segment(TextRange::new(0u32, 2u32).unwrap(), (Box::new({ let __guard = crate::org::tiqian::core::rich_text_role::UNDERLINE_INSTANCE.lock().unwrap_or_else(|e|
-e.into_inner()); __guard.clone() })).clone(), RichTextPaint::new(None, Some(Box::new((*crate::org::tiqian::core::rich_text_line_pattern::SOLID_INSTANCE).clone())), RichTextBackgroundPaint::new(Some(0.0f64), Some(0.0f64), Some(0.0f64), Some(0.0f64),
-Some(RichTextBackgroundMetricPolicy::MarkedFaces), Some(Box::new((*crate::org::tiqian::core::rich_text_background_draw_style::FILL_INSTANCE).clone()))).unwrap(), Some(0.0f64)).unwrap(), 0, TextRange::new(0u32, 2u32).unwrap(), 0.0f64, 0.0f64, 20.0f64, 20.0f64, 15.0f64);
-        let _ = TracedAssertions::traced_assertions_assert_equals_rendered(LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_render_segments(&vec![(decoration).clone()]).unwrap().as_str(),
-LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_render_segments(&LayoutQueries::layout_queries_trimmed_rich_text_decoration_segments((content).clone(), &vec![(decoration).clone()])).unwrap().as_str(), None).unwrap();
+        TestTraceRecorder::new(&(UStr::new(&[76,97,121,111,117,116,81,117,101,114,105,101,115,82,101,115,105,100,117,97,108,67,111,118,101,114,97,103,101,84,101,115,116]))).section(UStr::new(&[116,114,105,109,109,101,100,68,101,99,111,114,97,116,105,111,110,83,101,103,109,101,110,116,115,75,101,101,112,79,110,108,121,68,101,99,111,114,97,116,105,111,110,82,111,108,101,115]));
+        let content = LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_result(UStr::new(&[97,98]), &vec![], &vec![], &vec![], &vec![], &vec![], LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_empty_debug(), LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_style(10.0f64)).unwrap();
+        let decoration = LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_segment(TextRange::new(0u32, 2u32).unwrap(), (Box::new({ let __guard = crate::org::tiqian::core::rich_text_role::UNDERLINE_INSTANCE.lock().unwrap_or_else(|e| e.into_inner()); __guard.clone() })).clone(), RichTextPaint::new(None, Some(Box::new((*crate::org::tiqian::core::rich_text_line_pattern::SOLID_INSTANCE).clone())), RichTextBackgroundPaint::new(Some(0.0f64), Some(0.0f64), Some(0.0f64), Some(0.0f64), Some(RichTextBackgroundMetricPolicy::MarkedFaces), Some(Box::new((*crate::org::tiqian::core::rich_text_background_draw_style::FILL_INSTANCE).clone()))).unwrap(), Some(0.0f64)).unwrap(), 0, TextRange::new(0u32, 2u32).unwrap(), 0.0f64, 0.0f64, 20.0f64, 20.0f64, 15.0f64);
+        let _ = TracedAssertions::traced_assertions_assert_equals_rendered(LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_render_segments(&vec![(decoration).clone()]).unwrap().as_ustr(), LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_render_segments(&LayoutQueries::layout_queries_trimmed_rich_text_decoration_segments((content).clone(), &vec![(decoration).clone()])).unwrap().as_ustr(), None).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_true(u32::try_from((LayoutQueries::layout_queries_trimmed_rich_text_decoration_segments((content).clone(), &vec![
     (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_plain_segment(TextRange::new(0u32, 2u32).unwrap()).unwrap()).clone(),
 ]).len()) & 0xFFFF_FFFF).unwrap_or(0) == 0, None).unwrap();
@@ -3887,23 +4457,17 @@ LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_
 #[test]
 fn background_segments_pass_through_unmatchable_segments() {
     testlib::run("org.tiqian.core.LayoutQueriesResidualCoverageTest.backgroundSegmentsPassThroughUnmatchableSegments", "org.tiqian.core.LayoutQueriesResidualCoverageTest.backgroundSegmentsPassThroughUnmatchableSegments", || {
-        TestTraceRecorder::new("LayoutQueriesResidualCoverageTest").section(&"backgroundSegmentsPassThroughUnmatchableSegments");
-        let content = LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_result(&"ab", &vec![
-    (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_cluster(TextRange::new(0u32, 1u32).unwrap(), &"a", 10.0f64)).clone(),
+        TestTraceRecorder::new(&(UStr::new(&[76,97,121,111,117,116,81,117,101,114,105,101,115,82,101,115,105,100,117,97,108,67,111,118,101,114,97,103,101,84,101,115,116]))).section(UStr::new(&[98,97,99,107,103,114,111,117,110,100,83,101,103,109,101,110,116,115,80,97,115,115,84,104,114,111,117,103,104,85,110,109,97,116,99,104,97,98,108,101,83,101,103,109,101,110,116,115]));
+        let content = LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_result(UStr::new(&[97,98]), &vec![
+    (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_cluster(TextRange::new(0u32, 1u32).unwrap(), UStr::new(&[97]), 10.0f64)).clone(),
 ], &vec![
     (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_line(TextRange::new(0u32, 2u32).unwrap(), 0, 0, 0.0f64, 20.0f64, 15.0f64, 0.0f64, 10.0f64)).clone(),
 ], &vec![], &vec![], &vec![], LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_empty_debug(), LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_style(10.0f64)).unwrap();
         let far = LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_plain_segment(TextRange::new(10u32, 12u32).unwrap()).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_equals_rendered(LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_render_segments(&vec![(far).clone()]).unwrap().as_str(),
-LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_render_segments(&LayoutQueries::layout_queries_rich_text_background_segments((content).clone(), &vec![(far).clone()])).unwrap().as_str(), None).unwrap();
-        let orphan = LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_segment(TextRange::new(0u32, 1u32).unwrap(), (Box::new({ let __guard = crate::org::tiqian::core::rich_text_role::BACKGROUND_INSTANCE.lock().unwrap_or_else(|e|
-e.into_inner()); __guard.clone() })).clone(), RichTextPaint::new(None, Some(Box::new((*crate::org::tiqian::core::rich_text_line_pattern::SOLID_INSTANCE).clone())), RichTextBackgroundPaint::new(Some(0.0f64), Some(0.0f64), Some(0.0f64), Some(0.0f64),
-Some(RichTextBackgroundMetricPolicy::MarkedFaces), Some(Box::new((*crate::org::tiqian::core::rich_text_background_draw_style::FILL_INSTANCE).clone()))).unwrap(), Some(0.0f64)).unwrap(), 5, TextRange::new(0u32, 1u32).unwrap(), 0.0f64, 0.0f64, 20.0f64, 20.0f64, 15.0f64);
-        let _ = TracedAssertions::traced_assertions_assert_equals_rendered(LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_render_segments(&vec![(orphan).clone()]).unwrap().as_str(),
-LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_render_segments(&LayoutQueries::layout_queries_rich_text_background_segments((content).clone(), &vec![(orphan).clone()])).unwrap().as_str(), None).unwrap();
-        let underline = LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_segment(TextRange::new(0u32, 1u32).unwrap(), (Box::new({ let __guard = crate::org::tiqian::core::rich_text_role::UNDERLINE_INSTANCE.lock().unwrap_or_else(|e|
-e.into_inner()); __guard.clone() })).clone(), RichTextPaint::new(None, Some(Box::new((*crate::org::tiqian::core::rich_text_line_pattern::SOLID_INSTANCE).clone())), RichTextBackgroundPaint::new(Some(0.0f64), Some(0.0f64), Some(0.0f64), Some(0.0f64),
-Some(RichTextBackgroundMetricPolicy::MarkedFaces), Some(Box::new((*crate::org::tiqian::core::rich_text_background_draw_style::FILL_INSTANCE).clone()))).unwrap(), Some(0.0f64)).unwrap(), 0, TextRange::new(0u32, 1u32).unwrap(), 0.0f64, 0.0f64, 20.0f64, 20.0f64, 15.0f64);
+        let _ = TracedAssertions::traced_assertions_assert_equals_rendered(LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_render_segments(&vec![(far).clone()]).unwrap().as_ustr(), LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_render_segments(&LayoutQueries::layout_queries_rich_text_background_segments((content).clone(), &vec![(far).clone()])).unwrap().as_ustr(), None).unwrap();
+        let orphan = LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_segment(TextRange::new(0u32, 1u32).unwrap(), (Box::new({ let __guard = crate::org::tiqian::core::rich_text_role::BACKGROUND_INSTANCE.lock().unwrap_or_else(|e| e.into_inner()); __guard.clone() })).clone(), RichTextPaint::new(None, Some(Box::new((*crate::org::tiqian::core::rich_text_line_pattern::SOLID_INSTANCE).clone())), RichTextBackgroundPaint::new(Some(0.0f64), Some(0.0f64), Some(0.0f64), Some(0.0f64), Some(RichTextBackgroundMetricPolicy::MarkedFaces), Some(Box::new((*crate::org::tiqian::core::rich_text_background_draw_style::FILL_INSTANCE).clone()))).unwrap(), Some(0.0f64)).unwrap(), 5, TextRange::new(0u32, 1u32).unwrap(), 0.0f64, 0.0f64, 20.0f64, 20.0f64, 15.0f64);
+        let _ = TracedAssertions::traced_assertions_assert_equals_rendered(LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_render_segments(&vec![(orphan).clone()]).unwrap().as_ustr(), LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_render_segments(&LayoutQueries::layout_queries_rich_text_background_segments((content).clone(), &vec![(orphan).clone()])).unwrap().as_ustr(), None).unwrap();
+        let underline = LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_segment(TextRange::new(0u32, 1u32).unwrap(), (Box::new({ let __guard = crate::org::tiqian::core::rich_text_role::UNDERLINE_INSTANCE.lock().unwrap_or_else(|e| e.into_inner()); __guard.clone() })).clone(), RichTextPaint::new(None, Some(Box::new((*crate::org::tiqian::core::rich_text_line_pattern::SOLID_INSTANCE).clone())), RichTextBackgroundPaint::new(Some(0.0f64), Some(0.0f64), Some(0.0f64), Some(0.0f64), Some(RichTextBackgroundMetricPolicy::MarkedFaces), Some(Box::new((*crate::org::tiqian::core::rich_text_background_draw_style::FILL_INSTANCE).clone()))).unwrap(), Some(0.0f64)).unwrap(), 0, TextRange::new(0u32, 1u32).unwrap(), 0.0f64, 0.0f64, 20.0f64, 20.0f64, 15.0f64);
         let _ = TracedAssertions::traced_assertions_assert_true(u32::try_from((LayoutQueries::layout_queries_rich_text_background_segments((content).clone(), &vec![(underline).clone()]).len()) & 0xFFFF_FFFF).unwrap_or(0) == 0, None).unwrap();
     });
 }
@@ -3911,41 +4475,36 @@ Some(RichTextBackgroundMetricPolicy::MarkedFaces), Some(Box::new((*crate::org::t
 #[test]
 fn background_segments_trim_glue_apply_padding_and_use_glyph_advances() {
     testlib::run("org.tiqian.core.LayoutQueriesResidualCoverageTest.backgroundSegmentsTrimGlueApplyPaddingAndUseGlyphAdvances", "org.tiqian.core.LayoutQueriesResidualCoverageTest.backgroundSegmentsTrimGlueApplyPaddingAndUseGlyphAdvances", || {
-        TestTraceRecorder::new("LayoutQueriesResidualCoverageTest").section(&"backgroundSegmentsTrimGlueApplyPaddingAndUseGlyphAdvances");
+        TestTraceRecorder::new(&(UStr::new(&[76,97,121,111,117,116,81,117,101,114,105,101,115,82,101,115,105,100,117,97,108,67,111,118,101,114,97,103,101,84,101,115,116]))).section(UStr::new(&[98,97,99,107,103,114,111,117,110,100,83,101,103,109,101,110,116,115,84,114,105,109,71,108,117,101,65,112,112,108,121,80,97,100,100,105,110,103,65,110,100,85,115,101,71,108,121,112,104,65,100,118,97,110,99,101,115]));
         let clusters = vec![
-    (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_cluster(TextRange::new(0u32, 1u32).unwrap(), &"，", 10.0f64)).clone(),
-    (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_cluster(TextRange::new(1u32, 2u32).unwrap(), &"字", 10.0f64)).clone(),
+    (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_cluster(TextRange::new(0u32, 1u32).unwrap(), UStr::new(&[65292]), 10.0f64)).clone(),
+    (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_cluster(TextRange::new(1u32, 2u32).unwrap(), UStr::new(&[23383]), 10.0f64)).clone(),
 ];
-        let glue = ClusterGeometryDecisionInfo::new(TextRange::new(0u32, 1u32).unwrap(), "，", "，", 10.0f64, 5.0f64, 4.0f64, 1.0f64, 4.0f64, 1.0f64, 0.0f64, 10.0f64, "test", "test", Some(0.0f64), Some(0.0f64), None);
+        let glue = ClusterGeometryDecisionInfo::new(TextRange::new(0u32, 1u32).unwrap(), &(UStr::new(&[65292])), &(UStr::new(&[65292])), 10.0f64, 5.0f64, 4.0f64, 1.0f64, 4.0f64, 1.0f64, 0.0f64, 10.0f64, &(UStr::new(&[116,101,115,116])), &(UStr::new(&[116,101,115,116])), Some(0.0f64), Some(0.0f64), None);
         let runs = vec![
-    (GlyphRun::new(TextRange::new(1u32, 2u32).unwrap(), "test", vec![
+    (GlyphRun::new(TextRange::new(1u32, 2u32).unwrap(), &(UStr::new(&[116,101,115,116])), vec![
     (Glyph::new(9u32, TextRange::new(1u32, 2u32).unwrap(), 9.0f64, Some(1.0f64), Some(0.0f64), None, None, None, None)).clone(),
 ].to_vec(), 10.0f64, Some(vec![]))).clone(),
 ];
-        let content = LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_result(&"，字", &clusters, &vec![
+        let content = LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_result(UStr::new(&[65292,23383]), &clusters, &vec![
     (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_line(TextRange::new(0u32, 2u32).unwrap(), 0, 1, 0.0f64, 20.0f64, 15.0f64, 0.0f64, 20.0f64)).clone(),
-], &runs, &vec![], &vec![], LayoutDebugInfo::new(None, Some(vec![]), Some(vec![(glue).clone()]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]),
-Some(vec![]), None, None, None, None, Some(vec![]), None, None, Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![])), LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_style(10.0f64)).unwrap();
+], &runs, &vec![], &vec![],
+LayoutDebugInfo::new(None, Some(vec![]), Some(vec![(glue).clone()]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), None, None, None, None, Some(vec![]), None, None, Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![])), LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_style(10.0f64)).unwrap();
         let full = LayoutQueries::layout_queries_rich_text_background_segments((content).clone(), &vec![
-    (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_segment(TextRange::new(0u32, 2u32).unwrap(), (Box::new({ let __guard = crate::org::tiqian::core::rich_text_role::BACKGROUND_INSTANCE.lock().unwrap_or_else(|e| e.into_inner());
-__guard.clone() })).clone(), RichTextPaint::new(None, Some(Box::new((*crate::org::tiqian::core::rich_text_line_pattern::SOLID_INSTANCE).clone())), RichTextBackgroundPaint::new(Some(0.0f64), Some(0.0f64), Some(0.0f64), Some(0.0f64),
-Some(RichTextBackgroundMetricPolicy::MarkedFaces), Some(Box::new((*crate::org::tiqian::core::rich_text_background_draw_style::FILL_INSTANCE).clone()))).unwrap(), Some(0.0f64)).unwrap(), 0, TextRange::new(0u32, 2u32).unwrap(), 0.0f64, 0.0f64, 20.0f64, 20.0f64, 15.0f64)).clone(),
+    (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_segment(TextRange::new(0u32, 2u32).unwrap(), (Box::new({ let __guard = crate::org::tiqian::core::rich_text_role::BACKGROUND_INSTANCE.lock().unwrap_or_else(|e| e.into_inner()); __guard.clone() })).clone(), RichTextPaint::new(None, Some(Box::new((*crate::org::tiqian::core::rich_text_line_pattern::SOLID_INSTANCE).clone())), RichTextBackgroundPaint::new(Some(0.0f64), Some(0.0f64), Some(0.0f64), Some(0.0f64), Some(RichTextBackgroundMetricPolicy::MarkedFaces), Some(Box::new((*crate::org::tiqian::core::rich_text_background_draw_style::FILL_INSTANCE).clone()))).unwrap(), Some(0.0f64)).unwrap(), 0, TextRange::new(0u32, 2u32).unwrap(), 0.0f64, 0.0f64, 20.0f64, 20.0f64, 15.0f64)).clone(),
 ]);
         let _ = TracedAssertions::traced_assertions_assert_equals_float(3.0f64, full[0usize].left, None).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_equals_float(20.0f64, full[0usize].right, None).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_equals_float(6.19999999999999929f64, full[0usize].top, None).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_equals_float(16.2f64, full[0usize].bottom, None).unwrap();
-        let head_paint = RichTextPaint::new(None, Some(Box::new((*crate::org::tiqian::core::rich_text_line_pattern::SOLID_INSTANCE).clone())), RichTextBackgroundPaint::new(Some(5.0f64), Some(0.0f64), Some(0.0f64), Some(0.0f64), Some(RichTextBackgroundMetricPolicy::MarkedFaces),
-Some(Box::new((*crate::org::tiqian::core::rich_text_background_draw_style::FILL_INSTANCE).clone()))).unwrap(), Some(0.0f64)).unwrap();
+        let head_paint = RichTextPaint::new(None, Some(Box::new((*crate::org::tiqian::core::rich_text_line_pattern::SOLID_INSTANCE).clone())), RichTextBackgroundPaint::new(Some(5.0f64), Some(0.0f64), Some(0.0f64), Some(0.0f64), Some(RichTextBackgroundMetricPolicy::MarkedFaces), Some(Box::new((*crate::org::tiqian::core::rich_text_background_draw_style::FILL_INSTANCE).clone()))).unwrap(), Some(0.0f64)).unwrap();
         let head = LayoutQueries::layout_queries_rich_text_background_segments((content).clone(), &vec![
-    (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_segment(TextRange::new(0u32, 2u32).unwrap(), (Box::new({ let __guard = crate::org::tiqian::core::rich_text_role::BACKGROUND_INSTANCE.lock().unwrap_or_else(|e| e.into_inner());
-__guard.clone() })).clone(), (head_paint).clone(), 0, TextRange::new(0u32, 3u32).unwrap(), 0.0f64, 0.0f64, 20.0f64, 20.0f64, 15.0f64)).clone(),
+    (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_segment(TextRange::new(0u32, 2u32).unwrap(), (Box::new({ let __guard = crate::org::tiqian::core::rich_text_role::BACKGROUND_INSTANCE.lock().unwrap_or_else(|e| e.into_inner()); __guard.clone() })).clone(), (head_paint).clone(), 0, TextRange::new(0u32, 3u32).unwrap(), 0.0f64, 0.0f64, 20.0f64, 20.0f64, 15.0f64)).clone(),
 ]);
         let _ = TracedAssertions::traced_assertions_assert_equals_float(3.0f64, head[0usize].left, None).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_equals_float(20.0f64, head[0usize].right, None).unwrap();
         let continuation = LayoutQueries::layout_queries_rich_text_background_segments((content).clone(), &vec![
-    (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_segment(TextRange::new(1u32, 2u32).unwrap(), (Box::new({ let __guard = crate::org::tiqian::core::rich_text_role::BACKGROUND_INSTANCE.lock().unwrap_or_else(|e| e.into_inner());
-__guard.clone() })).clone(), (head_paint).clone(), 0, TextRange::new(0u32, 3u32).unwrap(), 10.0f64, 0.0f64, 20.0f64, 20.0f64, 15.0f64)).clone(),
+    (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_segment(TextRange::new(1u32, 2u32).unwrap(), (Box::new({ let __guard = crate::org::tiqian::core::rich_text_role::BACKGROUND_INSTANCE.lock().unwrap_or_else(|e| e.into_inner()); __guard.clone() })).clone(), (head_paint).clone(), 0, TextRange::new(0u32, 3u32).unwrap(), 10.0f64, 0.0f64, 20.0f64, 20.0f64, 15.0f64)).clone(),
 ]);
         let _ = TracedAssertions::traced_assertions_assert_equals_float(10.0f64, continuation[0usize].left, None).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_equals_float(20.0f64, continuation[0usize].right, None).unwrap();
@@ -3955,19 +4514,17 @@ __guard.clone() })).clone(), (head_paint).clone(), 0, TextRange::new(0u32, 3u32)
 #[test]
 fn marked_faces_use_metric_decisions_when_they_cover_the_cluster() {
     testlib::run("org.tiqian.core.LayoutQueriesResidualCoverageTest.markedFacesUseMetricDecisionsWhenTheyCoverTheCluster", "org.tiqian.core.LayoutQueriesResidualCoverageTest.markedFacesUseMetricDecisionsWhenTheyCoverTheCluster", || {
-        TestTraceRecorder::new("LayoutQueriesResidualCoverageTest").section(&"markedFacesUseMetricDecisionsWhenTheyCoverTheCluster");
-        let decision = LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_metric(TextRange::new(0u32, 2u32).unwrap(), &"IdeographicEmBox", 7.0f64, 3.0f64, &"ideographic");
-        let content = LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_result(&"ab", &vec![
-    (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_cluster(TextRange::new(0u32, 1u32).unwrap(), &"a", 10.0f64)).clone(),
-    (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_cluster(TextRange::new(1u32, 2u32).unwrap(), &"b", 10.0f64)).clone(),
+        TestTraceRecorder::new(&(UStr::new(&[76,97,121,111,117,116,81,117,101,114,105,101,115,82,101,115,105,100,117,97,108,67,111,118,101,114,97,103,101,84,101,115,116]))).section(UStr::new(&[109,97,114,107,101,100,70,97,99,101,115,85,115,101,77,101,116,114,105,99,68,101,99,105,115,105,111,110,115,87,104,101,110,84,104,101,121,67,111,118,101,114,84,104,101,67,108,117,115,116,101,114]));
+        let decision = LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_metric(TextRange::new(0u32, 2u32).unwrap(), UStr::new(&[73,100,101,111,103,114,97,112,104,105,99,69,109,66,111,120]), 7.0f64, 3.0f64, UStr::new(&[105,100,101,111,103,114,97,112,104,105,99]));
+        let content = LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_result(UStr::new(&[97,98]), &vec![
+    (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_cluster(TextRange::new(0u32, 1u32).unwrap(), UStr::new(&[97]), 10.0f64)).clone(),
+    (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_cluster(TextRange::new(1u32, 2u32).unwrap(), UStr::new(&[98]), 10.0f64)).clone(),
 ], &vec![
     (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_line(TextRange::new(0u32, 2u32).unwrap(), 0, 1, 0.0f64, 20.0f64, 15.0f64, 0.0f64, 20.0f64)).clone(),
-], &vec![], &vec![], &vec![], LayoutDebugInfo::new(None, Some(vec![(decision).clone()]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]),
-Some(vec![]), Some(vec![]), None, None, None, None, Some(vec![]), None, None, Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![])), LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_style(10.0f64)).unwrap();
+], &vec![], &vec![], &vec![],
+LayoutDebugInfo::new(None, Some(vec![(decision).clone()]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), None, None, None, None, Some(vec![]), None, None, Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![])), LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_style(10.0f64)).unwrap();
         let r#box = LayoutQueries::layout_queries_rich_text_background_segments((content).clone(), &vec![
-    (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_segment(TextRange::new(0u32, 2u32).unwrap(), (Box::new({ let __guard = crate::org::tiqian::core::rich_text_role::BACKGROUND_INSTANCE.lock().unwrap_or_else(|e| e.into_inner());
-__guard.clone() })).clone(), RichTextPaint::new(None, Some(Box::new((*crate::org::tiqian::core::rich_text_line_pattern::SOLID_INSTANCE).clone())), RichTextBackgroundPaint::new(Some(0.0f64), Some(0.0f64), Some(0.0f64), Some(0.0f64),
-Some(RichTextBackgroundMetricPolicy::MarkedFaces), Some(Box::new((*crate::org::tiqian::core::rich_text_background_draw_style::FILL_INSTANCE).clone()))).unwrap(), Some(0.0f64)).unwrap(), 0, TextRange::new(0u32, 2u32).unwrap(), 0.0f64, 0.0f64, 20.0f64, 20.0f64, 15.0f64)).clone(),
+    (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_segment(TextRange::new(0u32, 2u32).unwrap(), (Box::new({ let __guard = crate::org::tiqian::core::rich_text_role::BACKGROUND_INSTANCE.lock().unwrap_or_else(|e| e.into_inner()); __guard.clone() })).clone(), RichTextPaint::new(None, Some(Box::new((*crate::org::tiqian::core::rich_text_line_pattern::SOLID_INSTANCE).clone())), RichTextBackgroundPaint::new(Some(0.0f64), Some(0.0f64), Some(0.0f64), Some(0.0f64), Some(RichTextBackgroundMetricPolicy::MarkedFaces), Some(Box::new((*crate::org::tiqian::core::rich_text_background_draw_style::FILL_INSTANCE).clone()))).unwrap(), Some(0.0f64)).unwrap(), 0, TextRange::new(0u32, 2u32).unwrap(), 0.0f64, 0.0f64, 20.0f64, 20.0f64, 15.0f64)).clone(),
 ]);
         let _ = TracedAssertions::traced_assertions_assert_equals_float(8.0f64, r#box[0usize].top, None).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_equals_float(18.0f64, r#box[0usize].bottom, None).unwrap();
@@ -3977,40 +4534,35 @@ Some(RichTextBackgroundMetricPolicy::MarkedFaces), Some(Box::new((*crate::org::t
 #[test]
 fn uniform_text_style_falls_back_when_every_metric_field_differs() {
     testlib::run("org.tiqian.core.LayoutQueriesResidualCoverageTest.uniformTextStyleFallsBackWhenEveryMetricFieldDiffers", "org.tiqian.core.LayoutQueriesResidualCoverageTest.uniformTextStyleFallsBackWhenEveryMetricFieldDiffers", || {
-        TestTraceRecorder::new("LayoutQueriesResidualCoverageTest").section(&"uniformTextStyleFallsBackWhenEveryMetricFieldDiffers");
+        TestTraceRecorder::new(&(UStr::new(&[76,97,121,111,117,116,81,117,101,114,105,101,115,82,101,115,105,100,117,97,108,67,111,118,101,114,97,103,101,84,101,115,116]))).section(UStr::new(&[117,110,105,102,111,114,109,84,101,120,116,83,116,121,108,101,70,97,108,108,115,66,97,99,107,87,104,101,110,69,118,101,114,121,77,101,116,114,105,99,70,105,101,108,100,68,105,102,102,101,114,115]));
         let base = LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_style(10.0f64);
         let variants = vec![
-    (TextStyle::new(Some(vec!["other".to_string()]), Some(10.0f64), Some("zh-Hans".to_string()), Some(400), Some(false), Some(0.0f64), Some(InlineAttachment::None))).clone(),
-    (TextStyle::new(Some(vec![]), Some(11.0f64), Some("zh-Hans".to_string()), Some(400), Some(false), Some(0.0f64), Some(InlineAttachment::None))).clone(),
-    (TextStyle::new(Some(vec![]), Some(10.0f64), Some("ja-JP".to_string()), Some(400), Some(false), Some(0.0f64), Some(InlineAttachment::None))).clone(),
-    (TextStyle::new(Some(vec![]), Some(10.0f64), Some("zh-Hans".to_string()), Some(700), Some(false), Some(0.0f64), Some(InlineAttachment::None))).clone(),
-    (TextStyle::new(Some(vec![]), Some(10.0f64), Some("zh-Hans".to_string()), Some(400), Some(true), Some(0.0f64), Some(InlineAttachment::None))).clone(),
-    (TextStyle::new(Some(vec![]), Some(10.0f64), Some("zh-Hans".to_string()), Some(400), Some(false), Some(2.0f64), Some(InlineAttachment::None))).clone(),
+    (TextStyle::new(Some(vec![UString::from("other").to_ustring()]), Some(10.0f64), Some(UString::from("zh-Hans")), Some(400), Some(false), Some(0.0f64), Some(InlineAttachment::None))).clone(),
+    (TextStyle::new(Some(vec![]), Some(11.0f64), Some(UString::from("zh-Hans")), Some(400), Some(false), Some(0.0f64), Some(InlineAttachment::None))).clone(),
+    (TextStyle::new(Some(vec![]), Some(10.0f64), Some(UString::from("ja-JP")), Some(400), Some(false), Some(0.0f64), Some(InlineAttachment::None))).clone(),
+    (TextStyle::new(Some(vec![]), Some(10.0f64), Some(UString::from("zh-Hans")), Some(700), Some(false), Some(0.0f64), Some(InlineAttachment::None))).clone(),
+    (TextStyle::new(Some(vec![]), Some(10.0f64), Some(UString::from("zh-Hans")), Some(400), Some(true), Some(0.0f64), Some(InlineAttachment::None))).clone(),
+    (TextStyle::new(Some(vec![]), Some(10.0f64), Some(UString::from("zh-Hans")), Some(400), Some(false), Some(2.0f64), Some(InlineAttachment::None))).clone(),
 ];
         let clusters = vec![
-    (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_cluster(TextRange::new(0u32, 1u32).unwrap(), &"a", 10.0f64)).clone(),
-    (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_cluster(TextRange::new(1u32, 2u32).unwrap(), &"b", 10.0f64)).clone(),
+    (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_cluster(TextRange::new(0u32, 1u32).unwrap(), UStr::new(&[97]), 10.0f64)).clone(),
+    (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_cluster(TextRange::new(1u32, 2u32).unwrap(), UStr::new(&[98]), 10.0f64)).clone(),
 ];
-        let decision = LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_metric(TextRange::new(1u32, 2u32).unwrap(), &"LatinBox", 9.0f64, 1.0f64, &"latin");
-        let paint = RichTextPaint::new(None, Some(Box::new((*crate::org::tiqian::core::rich_text_line_pattern::SOLID_INSTANCE).clone())), RichTextBackgroundPaint::new(Some(0.0f64), Some(0.0f64), Some(0.0f64), Some(0.0f64), Some(RichTextBackgroundMetricPolicy::UniformTextStyle),
-Some(Box::new((*crate::org::tiqian::core::rich_text_background_draw_style::FILL_INSTANCE).clone()))).unwrap(), Some(0.0f64)).unwrap();
+        let decision = LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_metric(TextRange::new(1u32, 2u32).unwrap(), UStr::new(&[76,97,116,105,110,66,111,120]), 9.0f64, 1.0f64, UStr::new(&[108,97,116,105,110]));
+        let paint = RichTextPaint::new(None, Some(Box::new((*crate::org::tiqian::core::rich_text_line_pattern::SOLID_INSTANCE).clone())), RichTextBackgroundPaint::new(Some(0.0f64), Some(0.0f64), Some(0.0f64), Some(0.0f64), Some(RichTextBackgroundMetricPolicy::UniformTextStyle), Some(Box::new((*crate::org::tiqian::core::rich_text_background_draw_style::FILL_INSTANCE).clone()))).unwrap(), Some(0.0f64)).unwrap();
         let mut index = 0u32;
-        while (i32::from_ne_bytes((index).to_ne_bytes())) < (i32::from_ne_bytes((u32::try_from((variants.len()) & 0xFFFF_FFFF).unwrap_or(0)).to_ne_bytes())) {
+        while (i32::from_ne_bytes(((index) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((variants.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
             let variant = (variants[usize::try_from(index).unwrap_or(0)]).clone();
-            let content = LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_result(&"ab", &clusters, &vec![
+            let content = LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_result(UStr::new(&[97,98]), &clusters, &vec![
     (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_line(TextRange::new(0u32, 2u32).unwrap(), 0, 1, 0.0f64, 20.0f64, 15.0f64, 0.0f64, 20.0f64)).clone(),
-], &vec![], &vec![(TextSpan::new(TextRange::new(0u32, 1u32).unwrap(), (variant).clone())).clone()], &vec![], LayoutDebugInfo::new(None, Some(vec![(decision).clone()]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]),
-Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), None, None, None, None, Some(vec![]), None, None, Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![])), (base).clone()).unwrap();
+], &vec![], &vec![(TextSpan::new(TextRange::new(0u32, 1u32).unwrap(), (variant).clone())).clone()], &vec![],
+LayoutDebugInfo::new(None, Some(vec![(decision).clone()]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), None, None, None, None, Some(vec![]), None, None, Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![])), (base).clone()).unwrap();
             let r#box = LayoutQueries::layout_queries_rich_text_background_segments((content).clone(), &vec![
-    (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_segment(TextRange::new(0u32, 2u32).unwrap(), (Box::new({ let __guard = crate::org::tiqian::core::rich_text_role::BACKGROUND_INSTANCE.lock().unwrap_or_else(|e| e.into_inner());
-__guard.clone() })).clone(), (paint).clone(), 0, TextRange::new(0u32, 2u32).unwrap(), 0.0f64, 0.0f64, 20.0f64, 20.0f64, 15.0f64)).clone(),
+    (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_segment(TextRange::new(0u32, 2u32).unwrap(), (Box::new({ let __guard = crate::org::tiqian::core::rich_text_role::BACKGROUND_INSTANCE.lock().unwrap_or_else(|e| e.into_inner()); __guard.clone() })).clone(), (paint).clone(), 0, TextRange::new(0u32, 2u32).unwrap(), 0.0f64, 0.0f64, 20.0f64, 20.0f64, 15.0f64)).clone(),
 ]);
-            let message = format!("{}{}",
-            "variant=",
-            variant.to_string()
-        );
-            let _ = TracedAssertions::traced_assertions_assert_equals_float(15.0f64 - variant.font_size * 0.88f64, r#box[0usize].top, Some((message).to_string())).unwrap();
-            let _ = TracedAssertions::traced_assertions_assert_equals_float(15.0f64 + variant.font_size * 0.12f64, r#box[0usize].bottom, Some((message).to_string())).unwrap();
+            let message = { let mut __s = UString::new(); __s += &(UString::from("variant=")); __s += UString::from(format!("{}", variant.to_string()).as_str()).as_ustr(); __s };
+            let _ = TracedAssertions::traced_assertions_assert_equals_float(15.0f64 - variant.font_size * 0.88f64, r#box[0usize].top, Some((message).to_ustring())).unwrap();
+            let _ = TracedAssertions::traced_assertions_assert_equals_float(15.0f64 + variant.font_size * 0.12f64, r#box[0usize].bottom, Some((message).to_ustring())).unwrap();
             index = u32::wrapping_add(index, 1);
         }
     });
@@ -4019,34 +4571,29 @@ __guard.clone() })).clone(), (paint).clone(), 0, TextRange::new(0u32, 2u32).unwr
 #[test]
 fn uniform_text_style_prefers_ideographic_metrics_then_any_matching_face() {
     testlib::run("org.tiqian.core.LayoutQueriesResidualCoverageTest.uniformTextStylePrefersIdeographicMetricsThenAnyMatchingFace", "org.tiqian.core.LayoutQueriesResidualCoverageTest.uniformTextStylePrefersIdeographicMetricsThenAnyMatchingFace", || {
-        TestTraceRecorder::new("LayoutQueriesResidualCoverageTest").section(&"uniformTextStylePrefersIdeographicMetricsThenAnyMatchingFace");
-        let paint = RichTextPaint::new(None, Some(Box::new((*crate::org::tiqian::core::rich_text_line_pattern::SOLID_INSTANCE).clone())), RichTextBackgroundPaint::new(Some(0.0f64), Some(0.0f64), Some(0.0f64), Some(0.0f64), Some(RichTextBackgroundMetricPolicy::UniformTextStyle),
-Some(Box::new((*crate::org::tiqian::core::rich_text_background_draw_style::FILL_INSTANCE).clone()))).unwrap(), Some(0.0f64)).unwrap();
+        TestTraceRecorder::new(&(UStr::new(&[76,97,121,111,117,116,81,117,101,114,105,101,115,82,101,115,105,100,117,97,108,67,111,118,101,114,97,103,101,84,101,115,116]))).section(UStr::new(&[117,110,105,102,111,114,109,84,101,120,116,83,116,121,108,101,80,114,101,102,101,114,115,73,100,101,111,103,114,97,112,104,105,99,77,101,116,114,105,99,115,84,104,101,110,65,110,121,77,97,116,99,104,105,110,103,70,97,99,101]));
+        let paint = RichTextPaint::new(None, Some(Box::new((*crate::org::tiqian::core::rich_text_line_pattern::SOLID_INSTANCE).clone())), RichTextBackgroundPaint::new(Some(0.0f64), Some(0.0f64), Some(0.0f64), Some(0.0f64), Some(RichTextBackgroundMetricPolicy::UniformTextStyle), Some(Box::new((*crate::org::tiqian::core::rich_text_background_draw_style::FILL_INSTANCE).clone()))).unwrap(), Some(0.0f64)).unwrap();
         let clusters = vec![
-    (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_cluster(TextRange::new(0u32, 1u32).unwrap(), &"a", 10.0f64)).clone(),
-    (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_cluster(TextRange::new(1u32, 2u32).unwrap(), &"b", 10.0f64)).clone(),
+    (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_cluster(TextRange::new(0u32, 1u32).unwrap(), UStr::new(&[97]), 10.0f64)).clone(),
+    (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_cluster(TextRange::new(1u32, 2u32).unwrap(), UStr::new(&[98]), 10.0f64)).clone(),
 ];
         let line_value = LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_line(TextRange::new(0u32, 2u32).unwrap(), 0, 1, 0.0f64, 20.0f64, 15.0f64, 0.0f64, 20.0f64);
-        let latin = LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_result(&"ab", &clusters, &vec![(line_value).clone()], &vec![], &vec![], &vec![], LayoutDebugInfo::new(None, Some(vec![
-    (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_metric(TextRange::new(0u32, 2u32).unwrap(), &"LatinBox", 9.0f64, 1.0f64, &"latin")).clone(),
+        let latin = LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_result(UStr::new(&[97,98]), &clusters, &vec![(line_value).clone()], &vec![], &vec![], &vec![], LayoutDebugInfo::new(None, Some(vec![
+    (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_metric(TextRange::new(0u32, 2u32).unwrap(), UStr::new(&[76,97,116,105,110,66,111,120]), 9.0f64, 1.0f64, UStr::new(&[108,97,116,105,110]))).clone(),
 ]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), None, None, None, None, Some(vec![]), None, None, Some(vec![]),
 Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![])), LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_style(10.0f64)).unwrap();
         let latin_box = LayoutQueries::layout_queries_rich_text_background_segments((latin).clone(), &vec![
-    (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_segment(TextRange::new(0u32, 2u32).unwrap(), (Box::new({ let __guard = crate::org::tiqian::core::rich_text_role::BACKGROUND_INSTANCE.lock().unwrap_or_else(|e| e.into_inner());
-__guard.clone() })).clone(), (paint).clone(), 0, TextRange::new(0u32, 2u32).unwrap(), 0.0f64, 0.0f64, 20.0f64, 20.0f64, 15.0f64)).clone(),
+    (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_segment(TextRange::new(0u32, 2u32).unwrap(), (Box::new({ let __guard = crate::org::tiqian::core::rich_text_role::BACKGROUND_INSTANCE.lock().unwrap_or_else(|e| e.into_inner()); __guard.clone() })).clone(), (paint).clone(), 0, TextRange::new(0u32, 2u32).unwrap(), 0.0f64, 0.0f64, 20.0f64, 20.0f64, 15.0f64)).clone(),
 ]);
         let _ = TracedAssertions::traced_assertions_assert_equals_float(6.0f64, latin_box[0usize].top, None).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_equals_float(16.0f64, latin_box[0usize].bottom, None).unwrap();
         let both_metrics = vec![
-    (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_metric(TextRange::new(0u32, 1u32).unwrap(), &"LatinBox", 9.0f64, 1.0f64, &"latin")).clone(),
-    (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_metric(TextRange::new(0u32, 2u32).unwrap(), &"IdeographicEmBox", 8.0f64, 2.0f64, &"ideographic")).clone(),
+    (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_metric(TextRange::new(0u32, 1u32).unwrap(), UStr::new(&[76,97,116,105,110,66,111,120]), 9.0f64, 1.0f64, UStr::new(&[108,97,116,105,110]))).clone(),
+    (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_metric(TextRange::new(0u32, 2u32).unwrap(), UStr::new(&[73,100,101,111,103,114,97,112,104,105,99,69,109,66,111,120]), 8.0f64, 2.0f64, UStr::new(&[105,100,101,111,103,114,97,112,104,105,99]))).clone(),
 ];
-        let both = LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_result(&"ab", &clusters, &vec![(line_value).clone()], &vec![], &vec![], &vec![], LayoutDebugInfo::new(None, Some((both_metrics).clone()), Some(vec![]), Some(vec![]),
-Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), None, None, None, None, Some(vec![]), None, None, Some(vec![]), Some(vec![]), Some(vec![]),
-Some(vec![]), Some(vec![]), Some(vec![])), LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_style(10.0f64)).unwrap();
+        let both = LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_result(UStr::new(&[97,98]), &clusters, &vec![(line_value).clone()], &vec![], &vec![], &vec![], LayoutDebugInfo::new(None, Some((both_metrics).clone()), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), None, None, None, None, Some(vec![]), None, None, Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![])), LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_style(10.0f64)).unwrap();
         let ideographic_box = LayoutQueries::layout_queries_rich_text_background_segments((both).clone(), &vec![
-    (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_segment(TextRange::new(0u32, 2u32).unwrap(), (Box::new({ let __guard = crate::org::tiqian::core::rich_text_role::BACKGROUND_INSTANCE.lock().unwrap_or_else(|e| e.into_inner());
-__guard.clone() })).clone(), (paint).clone(), 0, TextRange::new(0u32, 2u32).unwrap(), 0.0f64, 0.0f64, 20.0f64, 20.0f64, 15.0f64)).clone(),
+    (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_segment(TextRange::new(0u32, 2u32).unwrap(), (Box::new({ let __guard = crate::org::tiqian::core::rich_text_role::BACKGROUND_INSTANCE.lock().unwrap_or_else(|e| e.into_inner()); __guard.clone() })).clone(), (paint).clone(), 0, TextRange::new(0u32, 2u32).unwrap(), 0.0f64, 0.0f64, 20.0f64, 20.0f64, 15.0f64)).clone(),
 ]);
         let _ = TracedAssertions::traced_assertions_assert_equals_float(7.0f64, ideographic_box[0usize].top, None).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_equals_float(17.0f64, ideographic_box[0usize].bottom, None).unwrap();
@@ -4056,26 +4603,21 @@ __guard.clone() })).clone(), (paint).clone(), 0, TextRange::new(0u32, 2u32).unwr
 #[test]
 fn adjacent_same_style_segments_share_clearance() {
     testlib::run("org.tiqian.core.LayoutQueriesResidualCoverageTest.adjacentSameStyleSegmentsShareClearance", "org.tiqian.core.LayoutQueriesResidualCoverageTest.adjacentSameStyleSegmentsShareClearance", || {
-        TestTraceRecorder::new("LayoutQueriesResidualCoverageTest").section(&"adjacentSameStyleSegmentsShareClearance");
-        let content = LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_result(&"ab", &vec![
-    (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_cluster(TextRange::new(0u32, 1u32).unwrap(), &"a", 10.0f64)).clone(),
-    (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_cluster(TextRange::new(1u32, 2u32).unwrap(), &"b", 10.0f64)).clone(),
+        TestTraceRecorder::new(&(UStr::new(&[76,97,121,111,117,116,81,117,101,114,105,101,115,82,101,115,105,100,117,97,108,67,111,118,101,114,97,103,101,84,101,115,116]))).section(UStr::new(&[97,100,106,97,99,101,110,116,83,97,109,101,83,116,121,108,101,83,101,103,109,101,110,116,115,83,104,97,114,101,67,108,101,97,114,97,110,99,101]));
+        let content = LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_result(UStr::new(&[97,98]), &vec![
+    (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_cluster(TextRange::new(0u32, 1u32).unwrap(), UStr::new(&[97]), 10.0f64)).clone(),
+    (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_cluster(TextRange::new(1u32, 2u32).unwrap(), UStr::new(&[98]), 10.0f64)).clone(),
 ], &vec![
     (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_line(TextRange::new(0u32, 2u32).unwrap(), 0, 1, 0.0f64, 20.0f64, 15.0f64, 0.0f64, 20.0f64)).clone(),
 ], &vec![], &vec![], &vec![], LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_empty_debug(), LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_style(10.0f64)).unwrap();
-        let paint = RichTextPaint::new(None, Some(Box::new((*crate::org::tiqian::core::rich_text_line_pattern::SOLID_INSTANCE).clone())), RichTextBackgroundPaint::new(Some(0.0f64), Some(0.0f64), Some(0.0f64), Some(0.0f64), Some(RichTextBackgroundMetricPolicy::MarkedFaces),
-Some(Box::new((*crate::org::tiqian::core::rich_text_background_draw_style::FILL_INSTANCE).clone()))).unwrap(), Some(4.0f64)).unwrap();
-        let first = LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_segment(TextRange::new(0u32, 1u32).unwrap(), (Box::new({ let __guard = crate::org::tiqian::core::rich_text_role::BACKGROUND_INSTANCE.lock().unwrap_or_else(|e|
-e.into_inner()); __guard.clone() })).clone(), (paint).clone(), 0, TextRange::new(0u32, 1u32).unwrap(), 0.0f64, 0.0f64, 10.0f64, 20.0f64, 15.0f64);
-        let second = LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_segment(TextRange::new(1u32, 2u32).unwrap(), (Box::new({ let __guard = crate::org::tiqian::core::rich_text_role::BACKGROUND_INSTANCE.lock().unwrap_or_else(|e|
-e.into_inner()); __guard.clone() })).clone(), (paint).clone(), 0, TextRange::new(1u32, 2u32).unwrap(), 10.0f64, 0.0f64, 20.0f64, 20.0f64, 15.0f64);
+        let paint = RichTextPaint::new(None, Some(Box::new((*crate::org::tiqian::core::rich_text_line_pattern::SOLID_INSTANCE).clone())), RichTextBackgroundPaint::new(Some(0.0f64), Some(0.0f64), Some(0.0f64), Some(0.0f64), Some(RichTextBackgroundMetricPolicy::MarkedFaces), Some(Box::new((*crate::org::tiqian::core::rich_text_background_draw_style::FILL_INSTANCE).clone()))).unwrap(), Some(4.0f64)).unwrap();
+        let first = LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_segment(TextRange::new(0u32, 1u32).unwrap(), (Box::new({ let __guard = crate::org::tiqian::core::rich_text_role::BACKGROUND_INSTANCE.lock().unwrap_or_else(|e| e.into_inner()); __guard.clone() })).clone(), (paint).clone(), 0, TextRange::new(0u32, 1u32).unwrap(), 0.0f64, 0.0f64, 10.0f64, 20.0f64, 15.0f64);
+        let second = LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_segment(TextRange::new(1u32, 2u32).unwrap(), (Box::new({ let __guard = crate::org::tiqian::core::rich_text_role::BACKGROUND_INSTANCE.lock().unwrap_or_else(|e| e.into_inner()); __guard.clone() })).clone(), (paint).clone(), 0, TextRange::new(1u32, 2u32).unwrap(), 10.0f64, 0.0f64, 20.0f64, 20.0f64, 15.0f64);
         let cleared = LayoutQueries::layout_queries_rich_text_background_segments((content).clone(), &vec![(first).clone(), (second).clone()]);
         let _ = TracedAssertions::traced_assertions_assert_equals_int(2, u32::try_from((cleared.len()) & 0xFFFF_FFFF).unwrap_or(0), None).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_equals_float(8.0f64, cleared[0usize].right, None).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_equals_float(12.0f64, cleared[1usize].left, None).unwrap();
-        let other = LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_segment(TextRange::new(1u32, 2u32).unwrap(), (Box::new({ let __guard = crate::org::tiqian::core::rich_text_role::BACKGROUND_INSTANCE.lock().unwrap_or_else(|e|
-e.into_inner()); __guard.clone() })).clone(), RichTextPaint::new(None, Some(Box::new((*crate::org::tiqian::core::rich_text_line_pattern::SOLID_INSTANCE).clone())), RichTextBackgroundPaint::new(Some(0.0f64), Some(0.0f64), Some(3.0f64), Some(3.0f64),
-Some(RichTextBackgroundMetricPolicy::MarkedFaces), Some(Box::new((*crate::org::tiqian::core::rich_text_background_draw_style::FILL_INSTANCE).clone()))).unwrap(), Some(0.0f64)).unwrap(), 0, TextRange::new(1u32, 2u32).unwrap(), 10.0f64, 0.0f64, 20.0f64, 20.0f64, 15.0f64);
+        let other = LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_segment(TextRange::new(1u32, 2u32).unwrap(), (Box::new({ let __guard = crate::org::tiqian::core::rich_text_role::BACKGROUND_INSTANCE.lock().unwrap_or_else(|e| e.into_inner()); __guard.clone() })).clone(), RichTextPaint::new(None, Some(Box::new((*crate::org::tiqian::core::rich_text_line_pattern::SOLID_INSTANCE).clone())), RichTextBackgroundPaint::new(Some(0.0f64), Some(0.0f64), Some(3.0f64), Some(3.0f64), Some(RichTextBackgroundMetricPolicy::MarkedFaces), Some(Box::new((*crate::org::tiqian::core::rich_text_background_draw_style::FILL_INSTANCE).clone()))).unwrap(), Some(0.0f64)).unwrap(), 0, TextRange::new(1u32, 2u32).unwrap(), 10.0f64, 0.0f64, 20.0f64, 20.0f64, 15.0f64);
         let untouched = LayoutQueries::layout_queries_rich_text_background_segments((content).clone(), &vec![(first).clone(), (other).clone()]);
         let _ = TracedAssertions::traced_assertions_assert_equals_int(2, u32::try_from((untouched.len()) & 0xFFFF_FFFF).unwrap_or(0), None).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_equals_float(10.0f64, untouched[0usize].right, None).unwrap();
@@ -4086,13 +4628,11 @@ Some(RichTextBackgroundMetricPolicy::MarkedFaces), Some(Box::new((*crate::org::t
 #[test]
 fn decoration_line_y_requires_valid_stroke_and_decoration_roles() {
     testlib::run("org.tiqian.core.LayoutQueriesResidualCoverageTest.decorationLineYRequiresValidStrokeAndDecorationRoles", "org.tiqian.core.LayoutQueriesResidualCoverageTest.decorationLineYRequiresValidStrokeAndDecorationRoles", || {
-        TestTraceRecorder::new("LayoutQueriesResidualCoverageTest").section(&"decorationLineYRequiresValidStrokeAndDecorationRoles");
-        let content = LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_result(&"ab", &vec![], &vec![
+        TestTraceRecorder::new(&(UStr::new(&[76,97,121,111,117,116,81,117,101,114,105,101,115,82,101,115,105,100,117,97,108,67,111,118,101,114,97,103,101,84,101,115,116]))).section(UStr::new(&[100,101,99,111,114,97,116,105,111,110,76,105,110,101,89,82,101,113,117,105,114,101,115,86,97,108,105,100,83,116,114,111,107,101,65,110,100,68,101,99,111,114,97,116,105,111,110,82,111,108,101,115]));
+        let content = LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_result(UStr::new(&[97,98]), &vec![], &vec![
     (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_line(TextRange::new(0u32, 2u32).unwrap(), 0, 0, 0.0f64, 20.0f64, 15.0f64, 0.0f64, 10.0f64)).clone(),
 ], &vec![], &vec![], &vec![], LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_empty_debug(), LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_style(10.0f64)).unwrap();
-        let underline = LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_segment(TextRange::new(0u32, 1u32).unwrap(), (Box::new({ let __guard = crate::org::tiqian::core::rich_text_role::UNDERLINE_INSTANCE.lock().unwrap_or_else(|e|
-e.into_inner()); __guard.clone() })).clone(), RichTextPaint::new(None, Some(Box::new((*crate::org::tiqian::core::rich_text_line_pattern::SOLID_INSTANCE).clone())), RichTextBackgroundPaint::new(Some(0.0f64), Some(0.0f64), Some(0.0f64), Some(0.0f64),
-Some(RichTextBackgroundMetricPolicy::MarkedFaces), Some(Box::new((*crate::org::tiqian::core::rich_text_background_draw_style::FILL_INSTANCE).clone()))).unwrap(), Some(0.0f64)).unwrap(), 0, TextRange::new(0u32, 1u32).unwrap(), 0.0f64, 0.0f64, 20.0f64, 20.0f64, 15.0f64);
+        let underline = LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_segment(TextRange::new(0u32, 1u32).unwrap(), (Box::new({ let __guard = crate::org::tiqian::core::rich_text_role::UNDERLINE_INSTANCE.lock().unwrap_or_else(|e| e.into_inner()); __guard.clone() })).clone(), RichTextPaint::new(None, Some(Box::new((*crate::org::tiqian::core::rich_text_line_pattern::SOLID_INSTANCE).clone())), RichTextBackgroundPaint::new(Some(0.0f64), Some(0.0f64), Some(0.0f64), Some(0.0f64), Some(RichTextBackgroundMetricPolicy::MarkedFaces), Some(Box::new((*crate::org::tiqian::core::rich_text_background_draw_style::FILL_INSTANCE).clone()))).unwrap(), Some(0.0f64)).unwrap(), 0, TextRange::new(0u32, 1u32).unwrap(), 0.0f64, 0.0f64, 20.0f64, 20.0f64, 15.0f64);
         TracedAssertions::traced_assertions_assert_fails_with(None.clone(), { let content = (content).clone(); let underline = (underline).clone(); Arc::new(move || {
         LayoutQueries::layout_queries_rich_text_decoration_line_y((content).clone(), (underline).clone(), -1.0f64).map_err(|e| IllegalStateException::new(&format!("{}", e)))?;
         Ok(())
@@ -4102,23 +4642,20 @@ Some(RichTextBackgroundMetricPolicy::MarkedFaces), Some(Box::new((*crate::org::t
         Ok(())
 }) }).unwrap();
         let error = TracedAssertions::traced_assertions_assert_fails_with(None.clone(), { let content = (content).clone(); Arc::new(move || {
-        LayoutQueries::layout_queries_rich_text_decoration_line_y((content).clone(), LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_plain_segment(TextRange::new(0u32, 1u32).map_err(|e| IllegalStateException::new(&format!("{}",
-e)))?).map_err(|e| IllegalStateException::new(&format!("{}", e)))?, 1.0f64).map_err(|e| IllegalStateException::new(&format!("{}", e)))?;
+        LayoutQueries::layout_queries_rich_text_decoration_line_y((content).clone(), LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_plain_segment(TextRange::new(0u32, 1u32).map_err(|e| IllegalStateException::new(&format!("{}", e)))?).map_err(|e| IllegalStateException::new(&format!("{}", e)))?, 1.0f64).map_err(|e| IllegalStateException::new(&format!("{}", e)))?;
         Ok(())
 }) }).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_true((u32::from_ne_bytes((u_string::find_from(&format!("{}", error), "underline and line-through", 0)).to_ne_bytes())) <= 2147483647, Some((format!("{}", error)).to_string())).unwrap();
-        let with_span_style = LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_result(&"ab", &vec![
-    (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_cluster(TextRange::new(0u32, 1u32).unwrap(), &"a", 10.0f64)).clone(),
+        let _ = TracedAssertions::traced_assertions_assert_true((u32::from_ne_bytes(((u_string::find_from(&UString::from(format!("{}", format!("{}", error)).as_str()), UString::from("underline and line-through").as_ustr(), 0)) as u32).to_ne_bytes())) <= 2147483647, Some(UString::from(format!("{}", format!("{}", error)).as_str()))).unwrap();
+        let with_span_style = LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_result(UStr::new(&[97,98]), &vec![
+    (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_cluster(TextRange::new(0u32, 1u32).unwrap(), UStr::new(&[97]), 10.0f64)).clone(),
 ], &vec![
     (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_line(TextRange::new(0u32, 2u32).unwrap(), 0, 0, 0.0f64, 20.0f64, 15.0f64, 0.0f64, 10.0f64)).clone(),
 ], &vec![], &vec![
     (TextSpan::new(TextRange::new(0u32, 1u32).unwrap(), LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_style(10.0f64))).clone(),
 ], &vec![], LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_empty_debug(), LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_style(10.0f64)).unwrap();
         let y = LayoutQueries::layout_queries_rich_text_decoration_line_y((with_span_style).clone(), (underline).clone(), 1.0f64).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_true((y) >= underline.top && (y) <= underline.bottom, Some((crate::runtime::fp_helper::FPHelper::format_float(y)).to_string())).unwrap();
-        let line_through = LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_segment(TextRange::new(0u32, 1u32).unwrap(), (Box::new({ let __guard = crate::org::tiqian::core::rich_text_role::LINE_THROUGH_INSTANCE.lock().unwrap_or_else(|e|
-e.into_inner()); __guard.clone() })).clone(), RichTextPaint::new(None, Some(Box::new((*crate::org::tiqian::core::rich_text_line_pattern::SOLID_INSTANCE).clone())), RichTextBackgroundPaint::new(Some(0.0f64), Some(0.0f64), Some(0.0f64), Some(0.0f64),
-Some(RichTextBackgroundMetricPolicy::MarkedFaces), Some(Box::new((*crate::org::tiqian::core::rich_text_background_draw_style::FILL_INSTANCE).clone()))).unwrap(), Some(0.0f64)).unwrap(), 0, TextRange::new(0u32, 1u32).unwrap(), 0.0f64, 0.0f64, 20.0f64, 20.0f64, 15.0f64);
+        let _ = TracedAssertions::traced_assertions_assert_true((y) >= underline.top && (y) <= underline.bottom, Some(UString::from(format!("{}", crate::runtime::fp_helper::FPHelper::format_float(y)).as_str()))).unwrap();
+        let line_through = LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_segment(TextRange::new(0u32, 1u32).unwrap(), (Box::new({ let __guard = crate::org::tiqian::core::rich_text_role::LINE_THROUGH_INSTANCE.lock().unwrap_or_else(|e| e.into_inner()); __guard.clone() })).clone(), RichTextPaint::new(None, Some(Box::new((*crate::org::tiqian::core::rich_text_line_pattern::SOLID_INSTANCE).clone())), RichTextBackgroundPaint::new(Some(0.0f64), Some(0.0f64), Some(0.0f64), Some(0.0f64), Some(RichTextBackgroundMetricPolicy::MarkedFaces), Some(Box::new((*crate::org::tiqian::core::rich_text_background_draw_style::FILL_INSTANCE).clone()))).unwrap(), Some(0.0f64)).unwrap(), 0, TextRange::new(0u32, 1u32).unwrap(), 0.0f64, 0.0f64, 20.0f64, 20.0f64, 15.0f64);
         let strike = LayoutQueries::layout_queries_rich_text_decoration_line_y((with_span_style).clone(), (line_through).clone(), 1.0f64).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_equals_float_tolerance(11.2f64, strike, 0.001f64, None).unwrap();
     });
@@ -4127,23 +4664,22 @@ Some(RichTextBackgroundMetricPolicy::MarkedFaces), Some(Box::new((*crate::org::t
 #[test]
 fn cursor_rect_covers_empty_lines_empty_clusters_and_multi_unit_clusters() {
     testlib::run("org.tiqian.core.LayoutQueriesResidualCoverageTest.cursorRectCoversEmptyLinesEmptyClustersAndMultiUnitClusters", "org.tiqian.core.LayoutQueriesResidualCoverageTest.cursorRectCoversEmptyLinesEmptyClustersAndMultiUnitClusters", || {
-        TestTraceRecorder::new("LayoutQueriesResidualCoverageTest").section(&"cursorRectCoversEmptyLinesEmptyClustersAndMultiUnitClusters");
+        TestTraceRecorder::new(&(UStr::new(&[76,97,121,111,117,116,81,117,101,114,105,101,115,82,101,115,105,100,117,97,108,67,111,118,101,114,97,103,101,84,101,115,116]))).section(UStr::new(&[99,117,114,115,111,114,82,101,99,116,67,111,118,101,114,115,69,109,112,116,121,76,105,110,101,115,69,109,112,116,121,67,108,117,115,116,101,114,115,65,110,100,77,117,108,116,105,85,110,105,116,67,108,117,115,116,101,114,115]));
         let empty_cluster_line = LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_line(TextRange::new(0u32, 0u32).unwrap(), 0, 4294967295u32, 0.0f64, 20.0f64, 15.0f64, 6.0f64, 10.0f64);
-        let with_empty_line = LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_result(&"a", &vec![], &vec![(empty_cluster_line).clone()], &vec![], &vec![], &vec![],
-LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_empty_debug(), LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_style(10.0f64)).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_equals_rendered(Rect::new(6.0f64, 0.0f64, 7.0f64, 20.0f64).to_string().as_str(), LayoutQueries::layout_queries_get_cursor_rect((with_empty_line).clone(), 0).unwrap().to_string().as_str(), None).unwrap();
-        let linear = LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_result(&"ab", &vec![
-    (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_cluster(TextRange::new(0u32, 2u32).unwrap(), &"ab", 20.0f64)).clone(),
+        let with_empty_line = LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_result(UStr::new(&[97]), &vec![], &vec![(empty_cluster_line).clone()], &vec![], &vec![], &vec![], LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_empty_debug(), LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_style(10.0f64)).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_equals_rendered(UString::from(format!("{}", Rect::new(6.0f64, 0.0f64, 7.0f64, 20.0f64).to_string()).as_str()).as_ustr(), UString::from(format!("{}", LayoutQueries::layout_queries_get_cursor_rect((with_empty_line).clone(), 0).unwrap().to_string()).as_str()).as_ustr(), None).unwrap();
+        let linear = LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_result(UStr::new(&[97,98]), &vec![
+    (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_cluster(TextRange::new(0u32, 2u32).unwrap(), UStr::new(&[97,98]), 20.0f64)).clone(),
 ], &vec![
     (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_line(TextRange::new(0u32, 2u32).unwrap(), 0, 0, 0.0f64, 20.0f64, 15.0f64, 0.0f64, 20.0f64)).clone(),
 ], &vec![], &vec![], &vec![], LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_empty_debug(), LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_style(10.0f64)).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_equals_float(10.0f64, LayoutQueries::layout_queries_get_cursor_rect((linear).clone(), 1).unwrap().left, None).unwrap();
-        let stops = LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_result(&"ab", &vec![
-    (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_cluster(TextRange::new(0u32, 2u32).unwrap(), &"ab", 20.0f64)).clone(),
+        let stops = LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_result(UStr::new(&[97,98]), &vec![
+    (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_cluster(TextRange::new(0u32, 2u32).unwrap(), UStr::new(&[97,98]), 20.0f64)).clone(),
 ], &vec![
     (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_line(TextRange::new(0u32, 2u32).unwrap(), 0, 0, 0.0f64, 20.0f64, 15.0f64, 0.0f64, 20.0f64)).clone(),
 ], &vec![
-    (GlyphRun::new(TextRange::new(0u32, 2u32).unwrap(), "test", vec![
+    (GlyphRun::new(TextRange::new(0u32, 2u32).unwrap(), &(UStr::new(&[116,101,115,116])), vec![
     (Glyph::new(1u32, TextRange::new(0u32, 2u32).unwrap(), 10.0f64, Some(0.0f64), Some(0.0f64), None, None, None, None)).clone(),
     (Glyph::new(2u32, TextRange::new(0u32, 2u32).unwrap(), 10.0f64, Some(12.0f64), Some(0.0f64), None, None, None, None)).clone(),
 ].to_vec(), 20.0f64, Some(vec![]))).clone(),
@@ -4155,10 +4691,10 @@ LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_
 #[test]
 fn offset_for_position_covers_vertical_distances_and_na_n_points() {
     testlib::run("org.tiqian.core.LayoutQueriesResidualCoverageTest.offsetForPositionCoversVerticalDistancesAndNaNPoints", "org.tiqian.core.LayoutQueriesResidualCoverageTest.offsetForPositionCoversVerticalDistancesAndNaNPoints", || {
-        TestTraceRecorder::new("LayoutQueriesResidualCoverageTest").section(&"offsetForPositionCoversVerticalDistancesAndNaNPoints");
-        let content = LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_result(&"ab", &vec![
-    (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_cluster(TextRange::new(0u32, 1u32).unwrap(), &"a", 10.0f64)).clone(),
-    (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_cluster(TextRange::new(1u32, 2u32).unwrap(), &"b", 10.0f64)).clone(),
+        TestTraceRecorder::new(&(UStr::new(&[76,97,121,111,117,116,81,117,101,114,105,101,115,82,101,115,105,100,117,97,108,67,111,118,101,114,97,103,101,84,101,115,116]))).section(UStr::new(&[111,102,102,115,101,116,70,111,114,80,111,115,105,116,105,111,110,67,111,118,101,114,115,86,101,114,116,105,99,97,108,68,105,115,116,97,110,99,101,115,65,110,100,78,97,78,80,111,105,110,116,115]));
+        let content = LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_result(UStr::new(&[97,98]), &vec![
+    (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_cluster(TextRange::new(0u32, 1u32).unwrap(), UStr::new(&[97]), 10.0f64)).clone(),
+    (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_cluster(TextRange::new(1u32, 2u32).unwrap(), UStr::new(&[98]), 10.0f64)).clone(),
 ], &vec![
     (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_line(TextRange::new(0u32, 2u32).unwrap(), 0, 1, 0.0f64, 20.0f64, 15.0f64, 0.0f64, 20.0f64)).clone(),
     (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_line(TextRange::new(2u32, 2u32).unwrap(), 2, 4294967295u32, 20.0f64, 40.0f64, 35.0f64, 0.0f64, 0.0f64)).clone(),
@@ -4168,30 +4704,28 @@ fn offset_for_position_covers_vertical_distances_and_na_n_points() {
         let _ = TracedAssertions::traced_assertions_assert_equals_int(2, LayoutQueries::layout_queries_get_offset_for_position((content).clone(), 5.0f64, 30.0f64), None).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_equals_int(0, LayoutQueries::layout_queries_get_selection_offset_for_position((content).clone(), 2.0f64, -50.0f64).unwrap(), None).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_equals_int(2, LayoutQueries::layout_queries_get_selection_offset_for_position((content).clone(), 5.0f64, 90.0f64).unwrap(), None).unwrap();
-        let with_stops = LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_result(&"ab", &vec![
-    (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_cluster(TextRange::new(0u32, 2u32).unwrap(), &"ab", 20.0f64)).clone(),
+        let with_stops = LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_result(UStr::new(&[97,98]), &vec![
+    (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_cluster(TextRange::new(0u32, 2u32).unwrap(), UStr::new(&[97,98]), 20.0f64)).clone(),
 ], &vec![
     (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_line(TextRange::new(0u32, 2u32).unwrap(), 0, 0, 0.0f64, 20.0f64, 15.0f64, 0.0f64, 20.0f64)).clone(),
 ], &vec![
-    (GlyphRun::new(TextRange::new(0u32, 2u32).unwrap(), "test", vec![
+    (GlyphRun::new(TextRange::new(0u32, 2u32).unwrap(), &(UStr::new(&[116,101,115,116])), vec![
     (Glyph::new(1u32, TextRange::new(0u32, 2u32).unwrap(), 10.0f64, Some(0.0f64), Some(0.0f64), None, None, None, None)).clone(),
     (Glyph::new(2u32, TextRange::new(0u32, 2u32).unwrap(), 10.0f64, Some(10.0f64), Some(0.0f64), None, None, None, None)).clone(),
 ].to_vec(), 20.0f64, Some(vec![]))).clone(),
 ], &vec![], &vec![], LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_empty_debug(), LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_style(10.0f64)).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_equals_int(0, LayoutQueries::layout_queries_get_offset_for_position((with_stops).clone(), LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_nan(), 5.0f64), None).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_equals_int(0, LayoutQueries::layout_queries_get_selection_offset_for_position((with_stops).clone(), LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_nan(), 5.0f64).unwrap(),
-None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_equals_int(0, LayoutQueries::layout_queries_get_selection_offset_for_position((with_stops).clone(), LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_nan(), 5.0f64).unwrap(), None).unwrap();
     });
 }
 
 #[test]
 fn selection_snap_prefers_the_closer_inline_object_boundary() {
     testlib::run("org.tiqian.core.LayoutQueriesResidualCoverageTest.selectionSnapPrefersTheCloserInlineObjectBoundary", "org.tiqian.core.LayoutQueriesResidualCoverageTest.selectionSnapPrefersTheCloserInlineObjectBoundary", || {
-        TestTraceRecorder::new("LayoutQueriesResidualCoverageTest").section(&"selectionSnapPrefersTheCloserInlineObjectBoundary");
-        let object = InlineObjectSpan::new(TextRange::new(1u32, 3u32).unwrap(), 8.0f64, 4.0f64, 4.0f64, Some(InlineObjectBoundaryAdjustment::inline_object_boundary_adjustment_fixed().unwrap()),
-Some(InlineObjectBoundaryAdjustment::inline_object_boundary_adjustment_fixed().unwrap())).unwrap();
-        let content = LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_result(&"abb", &vec![
-    (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_cluster(TextRange::new(0u32, 3u32).unwrap(), &"abb", 30.0f64)).clone(),
+        TestTraceRecorder::new(&(UStr::new(&[76,97,121,111,117,116,81,117,101,114,105,101,115,82,101,115,105,100,117,97,108,67,111,118,101,114,97,103,101,84,101,115,116]))).section(UStr::new(&[115,101,108,101,99,116,105,111,110,83,110,97,112,80,114,101,102,101,114,115,84,104,101,67,108,111,115,101,114,73,110,108,105,110,101,79,98,106,101,99,116,66,111,117,110,100,97,114,121]));
+        let object = InlineObjectSpan::new(TextRange::new(1u32, 3u32).unwrap(), 8.0f64, 4.0f64, 4.0f64, Some(InlineObjectBoundaryAdjustment::inline_object_boundary_adjustment_fixed().unwrap()), Some(InlineObjectBoundaryAdjustment::inline_object_boundary_adjustment_fixed().unwrap())).unwrap();
+        let content = LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_result(UStr::new(&[97,98,98]), &vec![
+    (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_cluster(TextRange::new(0u32, 3u32).unwrap(), UStr::new(&[97,98,98]), 30.0f64)).clone(),
 ], &vec![
     (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_line(TextRange::new(0u32, 3u32).unwrap(), 0, 0, 0.0f64, 20.0f64, 15.0f64, 0.0f64, 30.0f64)).clone(),
 ], &vec![], &vec![], &vec![(object).clone()], LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_empty_debug(), LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_style(10.0f64)).unwrap();
@@ -4203,62 +4737,59 @@ Some(InlineObjectBoundaryAdjustment::inline_object_boundary_adjustment_fixed().u
 #[test]
 fn selection_word_boundary_for_position_rejects_degenerate_content() {
     testlib::run("org.tiqian.core.LayoutQueriesResidualCoverageTest.selectionWordBoundaryForPositionRejectsDegenerateContent", "org.tiqian.core.LayoutQueriesResidualCoverageTest.selectionWordBoundaryForPositionRejectsDegenerateContent", || {
-        TestTraceRecorder::new("LayoutQueriesResidualCoverageTest").section(&"selectionWordBoundaryForPositionRejectsDegenerateContent");
-        let empty_text = LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_result(&"", &vec![], &vec![
+        TestTraceRecorder::new(&(UStr::new(&[76,97,121,111,117,116,81,117,101,114,105,101,115,82,101,115,105,100,117,97,108,67,111,118,101,114,97,103,101,84,101,115,116]))).section(UStr::new(&[115,101,108,101,99,116,105,111,110,87,111,114,100,66,111,117,110,100,97,114,121,70,111,114,80,111,115,105,116,105,111,110,82,101,106,101,99,116,115,68,101,103,101,110,101,114,97,116,101,67,111,110,116,101,110,116]));
+        let empty_text = LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_result(UStr::new(&[]), &vec![], &vec![
     (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_line(TextRange::new(0u32, 0u32).unwrap(), 0, 4294967295u32, 0.0f64, 20.0f64, 15.0f64, 0.0f64, 0.0f64)).clone(),
 ], &vec![], &vec![], &vec![], LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_empty_debug(), LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_style(10.0f64)).unwrap();
         let empty_text_boundary = LayoutQueries::layout_queries_get_selection_word_boundary_for_position((empty_text).clone(), 0.0f64, 0.0f64).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_null_rendered(empty_text_boundary.is_none(), match &(empty_text_boundary) { None => "-".to_string(), Some(__option8) => __option8.to_string() }.as_str(), None).unwrap();
-        let empty_line = LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_result(&"a", &vec![
-    (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_cluster(TextRange::new(0u32, 1u32).unwrap(), &"a", 10.0f64)).clone(),
+        let _ = TracedAssertions::traced_assertions_assert_null_rendered(empty_text_boundary.is_none(), match &(empty_text_boundary) { None => UString::from("-"), Some(__option8) => UString::from(format!("{}", __option8.to_string()).as_str()) }.as_ustr(), None).unwrap();
+        let empty_line = LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_result(UStr::new(&[97]), &vec![
+    (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_cluster(TextRange::new(0u32, 1u32).unwrap(), UStr::new(&[97]), 10.0f64)).clone(),
 ], &vec![
     (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_line(TextRange::new(0u32, 1u32).unwrap(), 0, 0, 0.0f64, 20.0f64, 15.0f64, 0.0f64, 10.0f64)).clone(),
     (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_line(TextRange::new(1u32, 1u32).unwrap(), 1, 4294967295u32, 20.0f64, 40.0f64, 35.0f64, 0.0f64, 0.0f64)).clone(),
 ], &vec![], &vec![], &vec![], LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_empty_debug(), LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_style(10.0f64)).unwrap();
         let empty_line_boundary = LayoutQueries::layout_queries_get_selection_word_boundary_for_position((empty_line).clone(), 5.0f64, 30.0f64).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_null_rendered(empty_line_boundary.is_none(), match &(empty_line_boundary) { None => "-".to_string(), Some(__option11) => __option11.to_string() }.as_str(), None).unwrap();
-        let leading_empty = LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_result(&"a", &vec![
-    (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_cluster(TextRange::new(0u32, 0u32).unwrap(), &"", 0.0f64)).clone(),
-    (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_cluster(TextRange::new(0u32, 1u32).unwrap(), &"a", 10.0f64)).clone(),
+        let _ = TracedAssertions::traced_assertions_assert_null_rendered(empty_line_boundary.is_none(), match &(empty_line_boundary) { None => UString::from("-"), Some(__option11) => UString::from(format!("{}", __option11.to_string()).as_str()) }.as_ustr(), None).unwrap();
+        let leading_empty = LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_result(UStr::new(&[97]), &vec![
+    (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_cluster(TextRange::new(0u32, 0u32).unwrap(), UStr::new(&[]), 0.0f64)).clone(),
+    (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_cluster(TextRange::new(0u32, 1u32).unwrap(), UStr::new(&[97]), 10.0f64)).clone(),
 ], &vec![
     (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_line(TextRange::new(0u32, 1u32).unwrap(), 0, 1, 0.0f64, 20.0f64, 15.0f64, 0.0f64, 10.0f64)).clone(),
 ], &vec![], &vec![], &vec![], LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_empty_debug(), LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_style(10.0f64)).unwrap();
         let leading_empty_boundary = LayoutQueries::layout_queries_get_selection_word_boundary_for_position((leading_empty).clone(), 0.0f64, 5.0f64).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_null_rendered(leading_empty_boundary.is_none(), match &(leading_empty_boundary) { None => "-".to_string(), Some(__option14) => __option14.to_string() }.as_str(), None).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_equals_rendered(TextRange::new(0u32, 1u32).unwrap().to_string().as_str(), LayoutQueries::layout_queries_get_selection_word_boundary_for_position((leading_empty).clone(), 5.0f64,
-5.0f64).unwrap().as_ref().unwrap().to_string().as_str(), None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_null_rendered(leading_empty_boundary.is_none(), match &(leading_empty_boundary) { None => UString::from("-"), Some(__option14) => UString::from(format!("{}", __option14.to_string()).as_str()) }.as_ustr(), None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_equals_rendered(UString::from(format!("{}", TextRange::new(0u32, 1u32).unwrap().to_string()).as_str()).as_ustr(), UString::from(format!("{}", LayoutQueries::layout_queries_get_selection_word_boundary_for_position((leading_empty).clone(), 5.0f64, 5.0f64).unwrap().as_ref().unwrap().to_string()).as_str()).as_ustr(), None).unwrap();
     });
 }
 
 #[test]
 fn zero_width_clusters_return_their_start_in_hit_tests() {
     testlib::run("org.tiqian.core.LayoutQueriesResidualCoverageTest.zeroWidthClustersReturnTheirStartInHitTests", "org.tiqian.core.LayoutQueriesResidualCoverageTest.zeroWidthClustersReturnTheirStartInHitTests", || {
-        TestTraceRecorder::new("LayoutQueriesResidualCoverageTest").section(&"zeroWidthClustersReturnTheirStartInHitTests");
-        let empty_range = LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_result(&"", &vec![
-    (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_cluster(TextRange::new(0u32, 0u32).unwrap(), &"", 5.0f64)).clone(),
+        TestTraceRecorder::new(&(UStr::new(&[76,97,121,111,117,116,81,117,101,114,105,101,115,82,101,115,105,100,117,97,108,67,111,118,101,114,97,103,101,84,101,115,116]))).section(UStr::new(&[122,101,114,111,87,105,100,116,104,67,108,117,115,116,101,114,115,82,101,116,117,114,110,84,104,101,105,114,83,116,97,114,116,73,110,72,105,116,84,101,115,116,115]));
+        let empty_range = LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_result(UStr::new(&[]), &vec![
+    (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_cluster(TextRange::new(0u32, 0u32).unwrap(), UStr::new(&[]), 5.0f64)).clone(),
 ], &vec![
     (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_line(TextRange::new(0u32, 0u32).unwrap(), 0, 0, 0.0f64, 20.0f64, 15.0f64, 0.0f64, 5.0f64)).clone(),
 ], &vec![], &vec![], &vec![], LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_empty_debug(), LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_style(10.0f64)).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_equals_int(0, LayoutQueries::layout_queries_get_offset_for_position((empty_range).clone(), 2.0f64, 5.0f64), None).unwrap();
-        let zero_advance = LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_result(&"ab", &vec![
-    (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_cluster(TextRange::new(0u32, 1u32).unwrap(), &"a", 10.0f64)).clone(),
-    (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_cluster(TextRange::new(1u32, 2u32).unwrap(), &"b", 0.0f64)).clone(),
+        let zero_advance = LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_result(UStr::new(&[97,98]), &vec![
+    (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_cluster(TextRange::new(0u32, 1u32).unwrap(), UStr::new(&[97]), 10.0f64)).clone(),
+    (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_cluster(TextRange::new(1u32, 2u32).unwrap(), UStr::new(&[98]), 0.0f64)).clone(),
 ], &vec![
     (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_line(TextRange::new(0u32, 1u32).unwrap(), 0, 0, 0.0f64, 20.0f64, 15.0f64, 0.0f64, 10.0f64)).clone(),
     (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_line(TextRange::new(1u32, 2u32).unwrap(), 1, 1, 20.0f64, 40.0f64, 35.0f64, 0.0f64, 0.0f64)).clone(),
 ], &vec![], &vec![], &vec![], LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_empty_debug(), LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_style(10.0f64)).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_equals_rendered(TextRange::new(0u32, 2u32).unwrap().to_string().as_str(), LayoutQueries::layout_queries_get_selection_word_boundary_for_position((zero_advance).clone(), 0.0f64,
-30.0f64).unwrap().as_ref().unwrap().to_string().as_str(), None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_equals_rendered(UString::from(format!("{}", TextRange::new(0u32, 2u32).unwrap().to_string()).as_str()).as_ustr(), UString::from(format!("{}", LayoutQueries::layout_queries_get_selection_word_boundary_for_position((zero_advance).clone(), 0.0f64, 30.0f64).unwrap().as_ref().unwrap().to_string()).as_str()).as_ustr(), None).unwrap();
     });
 }
 
 #[test]
 fn coerce_selection_offset_honours_inline_object_boundaries() {
     testlib::run("org.tiqian.core.LayoutQueriesResidualCoverageTest.coerceSelectionOffsetHonoursInlineObjectBoundaries", "org.tiqian.core.LayoutQueriesResidualCoverageTest.coerceSelectionOffsetHonoursInlineObjectBoundaries", || {
-        TestTraceRecorder::new("LayoutQueriesResidualCoverageTest").section(&"coerceSelectionOffsetHonoursInlineObjectBoundaries");
-        let object = InlineObjectSpan::new(TextRange::new(1u32, 3u32).unwrap(), 8.0f64, 4.0f64, 4.0f64, Some(InlineObjectBoundaryAdjustment::inline_object_boundary_adjustment_fixed().unwrap()),
-Some(InlineObjectBoundaryAdjustment::inline_object_boundary_adjustment_fixed().unwrap())).unwrap();
-        let content = LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_result(&"abb", &vec![], &vec![
+        TestTraceRecorder::new(&(UStr::new(&[76,97,121,111,117,116,81,117,101,114,105,101,115,82,101,115,105,100,117,97,108,67,111,118,101,114,97,103,101,84,101,115,116]))).section(UStr::new(&[99,111,101,114,99,101,83,101,108,101,99,116,105,111,110,79,102,102,115,101,116,72,111,110,111,117,114,115,73,110,108,105,110,101,79,98,106,101,99,116,66,111,117,110,100,97,114,105,101,115]));
+        let object = InlineObjectSpan::new(TextRange::new(1u32, 3u32).unwrap(), 8.0f64, 4.0f64, 4.0f64, Some(InlineObjectBoundaryAdjustment::inline_object_boundary_adjustment_fixed().unwrap()), Some(InlineObjectBoundaryAdjustment::inline_object_boundary_adjustment_fixed().unwrap())).unwrap();
+        let content = LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_result(UStr::new(&[97,98,98]), &vec![], &vec![
     (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_line(TextRange::new(0u32, 3u32).unwrap(), 0, 0, 0.0f64, 20.0f64, 15.0f64, 0.0f64, 0.0f64)).clone(),
 ], &vec![], &vec![], &vec![(object).clone()], LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_empty_debug(), LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_style(10.0f64)).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_equals_int(1, LayoutQueries::layout_queries_coerce_selection_offset((content).clone(), 2, SourceBoundaryBias::Backward).unwrap(), None).unwrap();
@@ -4272,56 +4803,55 @@ Some(InlineObjectBoundaryAdjustment::inline_object_boundary_adjustment_fixed().u
 #[test]
 fn selection_word_boundary_expands_words_and_honours_inline_objects() {
     testlib::run("org.tiqian.core.LayoutQueriesResidualCoverageTest.selectionWordBoundaryExpandsWordsAndHonoursInlineObjects", "org.tiqian.core.LayoutQueriesResidualCoverageTest.selectionWordBoundaryExpandsWordsAndHonoursInlineObjects", || {
-        TestTraceRecorder::new("LayoutQueriesResidualCoverageTest").section(&"selectionWordBoundaryExpandsWordsAndHonoursInlineObjects");
-        let content = LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_result(&"hello", &vec![], &vec![
+        TestTraceRecorder::new(&(UStr::new(&[76,97,121,111,117,116,81,117,101,114,105,101,115,82,101,115,105,100,117,97,108,67,111,118,101,114,97,103,101,84,101,115,116]))).section(UStr::new(&[115,101,108,101,99,116,105,111,110,87,111,114,100,66,111,117,110,100,97,114,121,69,120,112,97,110,100,115,87,111,114,100,115,65,110,100,72,111,110,111,117,114,115,73,110,108,105,110,101,79,98,106,101,99,116,115]));
+        let content = LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_result(UStr::new(&[104,101,108,108,111]), &vec![], &vec![
     (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_line(TextRange::new(0u32, 5u32).unwrap(), 0, 0, 0.0f64, 20.0f64, 15.0f64, 0.0f64, 0.0f64)).clone(),
 ], &vec![], &vec![], &vec![], LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_empty_debug(), LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_style(10.0f64)).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_equals_rendered(TextRange::new(0u32, 5u32).unwrap().to_string().as_str(), LayoutQueries::layout_queries_get_selection_word_boundary((content).clone(), 2).unwrap().to_string().as_str(), None).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_equals_rendered(TextRange::new(0u32, 5u32).unwrap().to_string().as_str(), LayoutQueries::layout_queries_get_selection_word_boundary((content).clone(), 5).unwrap().to_string().as_str(), None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_equals_rendered(UString::from(format!("{}", TextRange::new(0u32, 5u32).unwrap().to_string()).as_str()).as_ustr(), UString::from(format!("{}", LayoutQueries::layout_queries_get_selection_word_boundary((content).clone(), 2).unwrap().to_string()).as_str()).as_ustr(), None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_equals_rendered(UString::from(format!("{}", TextRange::new(0u32, 5u32).unwrap().to_string()).as_str()).as_ustr(), UString::from(format!("{}", LayoutQueries::layout_queries_get_selection_word_boundary((content).clone(), 5).unwrap().to_string()).as_str()).as_ustr(), None).unwrap();
         let emoji_text = TestHelpers::test_helpers_surrogate_text(&vec![55357, 56832]);
-        let emoji = LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_result(emoji_text.as_str(), &vec![], &vec![
+        let emoji = LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_result(emoji_text.as_ustr(), &vec![], &vec![
     (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_line(TextRange::new(0u32, 2u32).unwrap(), 0, 0, 0.0f64, 20.0f64, 15.0f64, 0.0f64, 0.0f64)).clone(),
 ], &vec![], &vec![], &vec![], LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_empty_debug(), LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_style(10.0f64)).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_equals_rendered(TextRange::new(0u32, 2u32).unwrap().to_string().as_str(), LayoutQueries::layout_queries_get_selection_word_boundary((emoji).clone(), 1).unwrap().to_string().as_str(), None).unwrap();
-        let object = InlineObjectSpan::new(TextRange::new(1u32, 3u32).unwrap(), 8.0f64, 4.0f64, 4.0f64, Some(InlineObjectBoundaryAdjustment::inline_object_boundary_adjustment_fixed().unwrap()),
-Some(InlineObjectBoundaryAdjustment::inline_object_boundary_adjustment_fixed().unwrap())).unwrap();
-        let with_object = LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_result(&"abb", &vec![], &vec![
+        let _ = TracedAssertions::traced_assertions_assert_equals_rendered(UString::from(format!("{}", TextRange::new(0u32, 2u32).unwrap().to_string()).as_str()).as_ustr(), UString::from(format!("{}", LayoutQueries::layout_queries_get_selection_word_boundary((emoji).clone(), 1).unwrap().to_string()).as_str()).as_ustr(), None).unwrap();
+        let object = InlineObjectSpan::new(TextRange::new(1u32, 3u32).unwrap(), 8.0f64, 4.0f64, 4.0f64, Some(InlineObjectBoundaryAdjustment::inline_object_boundary_adjustment_fixed().unwrap()), Some(InlineObjectBoundaryAdjustment::inline_object_boundary_adjustment_fixed().unwrap())).unwrap();
+        let with_object = LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_result(UStr::new(&[97,98,98]), &vec![], &vec![
     (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_line(TextRange::new(0u32, 3u32).unwrap(), 0, 0, 0.0f64, 20.0f64, 15.0f64, 0.0f64, 0.0f64)).clone(),
 ], &vec![], &vec![], &vec![(object).clone()], LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_empty_debug(), LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_style(10.0f64)).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_equals_rendered(TextRange::new(1u32, 3u32).unwrap().to_string().as_str(), LayoutQueries::layout_queries_get_selection_word_boundary((with_object).clone(), 2).unwrap().to_string().as_str(), None).unwrap();
-        let mandatory = LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_result(&concat!("a\n",
-"b"), &vec![], &vec![
+        let _ = TracedAssertions::traced_assertions_assert_equals_rendered(UString::from(format!("{}", TextRange::new(1u32, 3u32).unwrap().to_string()).as_str()).as_ustr(), UString::from(format!("{}", LayoutQueries::layout_queries_get_selection_word_boundary((with_object).clone(), 2).unwrap().to_string()).as_str()).as_ustr(), None).unwrap();
+        let mandatory = LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_result(UStr::new(&[97,10,98]), &vec![], &vec![
     (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_line(TextRange::new(0u32, 3u32).unwrap(), 0, 0, 0.0f64, 20.0f64, 15.0f64, 0.0f64, 0.0f64)).clone(),
 ], &vec![], &vec![], &vec![], LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_empty_debug(), LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_style(10.0f64)).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_equals_rendered(TextRange::new(1u32, 2u32).unwrap().to_string().as_str(), LayoutQueries::layout_queries_get_selection_word_boundary((mandatory).clone(), 1).unwrap().to_string().as_str(), None).unwrap();
-        let connectors = LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_result(&"a_b", &vec![], &vec![
+        let _ = TracedAssertions::traced_assertions_assert_equals_rendered(UString::from(format!("{}", TextRange::new(1u32, 2u32).unwrap().to_string()).as_str()).as_ustr(), UString::from(format!("{}", LayoutQueries::layout_queries_get_selection_word_boundary((mandatory).clone(), 1).unwrap().to_string()).as_str()).as_ustr(), None).unwrap();
+        let connectors = LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_result(UStr::new(&[97,95,98]), &vec![], &vec![
     (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_line(TextRange::new(0u32, 3u32).unwrap(), 0, 0, 0.0f64, 20.0f64, 15.0f64, 0.0f64, 0.0f64)).clone(),
 ], &vec![], &vec![], &vec![], LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_empty_debug(), LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_style(10.0f64)).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_equals_rendered(TextRange::new(0u32, 3u32).unwrap().to_string().as_str(), LayoutQueries::layout_queries_get_selection_word_boundary((connectors).clone(), 1).unwrap().to_string().as_str(), None).unwrap();
-        let empty = LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_result(&"", &vec![], &vec![
+        let _ = TracedAssertions::traced_assertions_assert_equals_rendered(UString::from(format!("{}", TextRange::new(0u32, 3u32).unwrap().to_string()).as_str()).as_ustr(), UString::from(format!("{}", LayoutQueries::layout_queries_get_selection_word_boundary((connectors).clone(), 1).unwrap().to_string()).as_str()).as_ustr(), None).unwrap();
+        let empty = LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_result(UStr::new(&[]), &vec![], &vec![
     (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_line(TextRange::new(0u32, 0u32).unwrap(), 0, 4294967295u32, 0.0f64, 20.0f64, 15.0f64, 0.0f64, 0.0f64)).clone(),
 ], &vec![], &vec![], &vec![], LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_empty_debug(), LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_style(10.0f64)).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_equals_rendered(TextRange::new(0u32, 0u32).unwrap().to_string().as_str(), LayoutQueries::layout_queries_get_selection_word_boundary((empty).clone(), 0).unwrap().to_string().as_str(), None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_equals_rendered(UString::from(format!("{}", TextRange::new(0u32, 0u32).unwrap().to_string()).as_str()).as_ustr(), UString::from(format!("{}", LayoutQueries::layout_queries_get_selection_word_boundary((empty).clone(), 0).unwrap().to_string()).as_str()).as_ustr(), None).unwrap();
     });
 }
 
 #[test]
 fn selection_word_kind_covers_every_han_block() {
     testlib::run("org.tiqian.core.LayoutQueriesResidualCoverageTest.selectionWordKindCoversEveryHanBlock", "org.tiqian.core.LayoutQueriesResidualCoverageTest.selectionWordKindCoversEveryHanBlock", || {
-        TestTraceRecorder::new("LayoutQueriesResidualCoverageTest").section(&"selectionWordKindCoversEveryHanBlock");
+        TestTraceRecorder::new(&(UStr::new(&[76,97,121,111,117,116,81,117,101,114,105,101,115,82,101,115,105,100,117,97,108,67,111,118,101,114,97,103,101,84,101,115,116]))).section(UStr::new(&[115,101,108,101,99,116,105,111,110,87,111,114,100,75,105,110,100,67,111,118,101,114,115,69,118,101,114,121,72,97,110,66,108,111,99,107]));
         let supplementary = TestHelpers::test_helpers_surrogate_text(&vec![55360, 56320]);
-        let values = vec!["㐀".to_string(), "一".to_string(), "豈".to_string(), supplementary.clone()];
+        let values = vec![
+    UString::from("㐀").to_ustring(),
+    UString::from("一").to_ustring(),
+    UString::from("豈").to_ustring(),
+    supplementary.clone(),
+];
         let mut index = 0u32;
-        while (i32::from_ne_bytes((index).to_ne_bytes())) < (i32::from_ne_bytes((u32::try_from((values.len()) & 0xFFFF_FFFF).unwrap_or(0)).to_ne_bytes())) {
+        while (i32::from_ne_bytes(((index) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((values.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
             let text = (values[usize::try_from(index).unwrap_or(0)]).clone();
-            let content = LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_result(text.as_str(), &vec![], &vec![
+            let content = LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_result(text.as_ustr(), &vec![], &vec![
     (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_line(TextRange::new(0u32, u_string::unit_count(&(text))).unwrap(), 0, 0, 0.0f64, 20.0f64, 15.0f64, 0.0f64, 0.0f64)).clone(),
 ], &vec![], &vec![], &vec![], LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_empty_debug(), LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_style(10.0f64)).unwrap();
-            let _ = TracedAssertions::traced_assertions_assert_equals_rendered(TextRange::new(0u32, u_string::unit_count(&(text))).unwrap().to_string().as_str(), LayoutQueries::layout_queries_get_selection_word_boundary((content).clone(), 0).unwrap().to_string().as_str(),
-Some((format!("{}{}",
-            "text=",
-            text
-        )).to_string())).unwrap();
+            let _ = TracedAssertions::traced_assertions_assert_equals_rendered(UString::from(format!("{}", TextRange::new(0u32, u_string::unit_count(&(text))).unwrap().to_string()).as_str()).as_ustr(), UString::from(format!("{}", LayoutQueries::layout_queries_get_selection_word_boundary((content).clone(), 0).unwrap().to_string()).as_str()).as_ustr(), Some(UString::from(format!("{}", { let mut __s = UString::new(); __s += &(UString::from("text=")); __s += text.as_ustr(); __s }).as_str()))).unwrap();
             index = u32::wrapping_add(index, 1);
         }
     });
@@ -4330,9 +4860,9 @@ Some((format!("{}{}",
 #[test]
 fn nearest_line_falls_back_to_the_only_line_at_its_end_offset() {
     testlib::run("org.tiqian.core.LayoutQueriesResidualCoverageTest.nearestLineFallsBackToTheOnlyLineAtItsEndOffset", "org.tiqian.core.LayoutQueriesResidualCoverageTest.nearestLineFallsBackToTheOnlyLineAtItsEndOffset", || {
-        TestTraceRecorder::new("LayoutQueriesResidualCoverageTest").section(&"nearestLineFallsBackToTheOnlyLineAtItsEndOffset");
-        let content = LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_result(&"abc", &vec![
-    (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_cluster(TextRange::new(0u32, 2u32).unwrap(), &"ab", 20.0f64)).clone(),
+        TestTraceRecorder::new(&(UStr::new(&[76,97,121,111,117,116,81,117,101,114,105,101,115,82,101,115,105,100,117,97,108,67,111,118,101,114,97,103,101,84,101,115,116]))).section(UStr::new(&[110,101,97,114,101,115,116,76,105,110,101,70,97,108,108,115,66,97,99,107,84,111,84,104,101,79,110,108,121,76,105,110,101,65,116,73,116,115,69,110,100,79,102,102,115,101,116]));
+        let content = LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_result(UStr::new(&[97,98,99]), &vec![
+    (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_cluster(TextRange::new(0u32, 2u32).unwrap(), UStr::new(&[97,98]), 20.0f64)).clone(),
 ], &vec![
     (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_line(TextRange::new(0u32, 2u32).unwrap(), 0, 0, 0.0f64, 20.0f64, 15.0f64, 0.0f64, 20.0f64)).clone(),
 ], &vec![], &vec![], &vec![], LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_empty_debug(), LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_style(10.0f64)).unwrap();
@@ -4343,30 +4873,29 @@ fn nearest_line_falls_back_to_the_only_line_at_its_end_offset() {
 #[test]
 fn ruby_geometry_redistributes_selection_boxes_and_drops_source_stops() {
     testlib::run("org.tiqian.core.LayoutQueriesResidualCoverageTest.rubyGeometryRedistributesSelectionBoxesAndDropsSourceStops", "org.tiqian.core.LayoutQueriesResidualCoverageTest.rubyGeometryRedistributesSelectionBoxesAndDropsSourceStops", || {
-        TestTraceRecorder::new("LayoutQueriesResidualCoverageTest").section(&"rubyGeometryRedistributesSelectionBoxesAndDropsSourceStops");
+        TestTraceRecorder::new(&(UStr::new(&[76,97,121,111,117,116,81,117,101,114,105,101,115,82,101,115,105,100,117,97,108,67,111,118,101,114,97,103,101,84,101,115,116]))).section(UStr::new(&[114,117,98,121,71,101,111,109,101,116,114,121,82,101,100,105,115,116,114,105,98,117,116,101,115,83,101,108,101,99,116,105,111,110,66,111,120,101,115,65,110,100,68,114,111,112,115,83,111,117,114,99,101,83,116,111,112,115]));
         let clusters = vec![
-    (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_cluster(TextRange::new(0u32, 2u32).unwrap(), &"ab", 20.0f64)).clone(),
-    (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_cluster(TextRange::new(2u32, 3u32).unwrap(), &"c", 10.0f64)).clone(),
+    (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_cluster(TextRange::new(0u32, 2u32).unwrap(), UStr::new(&[97,98]), 20.0f64)).clone(),
+    (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_cluster(TextRange::new(2u32, 3u32).unwrap(), UStr::new(&[99]), 10.0f64)).clone(),
 ];
         let runs = vec![
-    (GlyphRun::new(TextRange::new(0u32, 2u32).unwrap(), "test", vec![
+    (GlyphRun::new(TextRange::new(0u32, 2u32).unwrap(), &(UStr::new(&[116,101,115,116])), vec![
     (Glyph::new(1u32, TextRange::new(0u32, 2u32).unwrap(), 10.0f64, Some(0.0f64), Some(0.0f64), None, None, None, None)).clone(),
     (Glyph::new(2u32, TextRange::new(0u32, 2u32).unwrap(), 10.0f64, Some(10.0f64), Some(0.0f64), None, None, None, None)).clone(),
 ].to_vec(), 20.0f64, Some(vec![]))).clone(),
 ];
-        let matching = RubyDecisionInfo::new(TextRange::new(0u32, 3u32).unwrap(), "zhù", 0u32, 15.0f64, 4.0f64, 6.0f64, 0.0f64, Some(0.0f64), Some(0.0f64), Some(30.0f64), Some(vec![]), Some(400), Some("zh-Hans".to_string()), Some(vec![]));
-        let stray = RubyDecisionInfo::new(TextRange::new(5u32, 6u32).unwrap(), "x", 0u32, 0.0f64, 4.0f64, 6.0f64, 0.0f64, Some(0.0f64), Some(0.0f64), Some(6.0f64), Some(vec![]), Some(400), Some("zh-Hans".to_string()), Some(vec![]));
-        let content = LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_result(&"abc", &clusters, &vec![
+        let matching = RubyDecisionInfo::new(TextRange::new(0u32, 3u32).unwrap(), &(UStr::new(&[122,104,249])), 0u32, 15.0f64, 4.0f64, 6.0f64, 0.0f64, Some(0.0f64), Some(0.0f64), Some(30.0f64), Some(vec![]), Some(400), Some(UString::from("zh-Hans")), Some(vec![]));
+        let stray = RubyDecisionInfo::new(TextRange::new(5u32, 6u32).unwrap(), &(UStr::new(&[120])), 0u32, 0.0f64, 4.0f64, 6.0f64, 0.0f64, Some(0.0f64), Some(0.0f64), Some(6.0f64), Some(vec![]), Some(400), Some(UString::from("zh-Hans")), Some(vec![]));
+        let content = LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_result(UStr::new(&[97,98,99]), &clusters, &vec![
     (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_line(TextRange::new(0u32, 3u32).unwrap(), 0, 1, 0.0f64, 20.0f64, 15.0f64, 0.0f64, 30.0f64)).clone(),
-], &runs, &vec![], &vec![], LayoutDebugInfo::new(None, Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![(matching).clone(), (stray).clone()]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]),
-Some(vec![]), Some(vec![]), Some(vec![]), None, None, None, None, Some(vec![]), None, None, Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![])),
-LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_style(10.0f64)).unwrap();
+], &runs, &vec![], &vec![],
+LayoutDebugInfo::new(None, Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![(matching).clone(), (stray).clone()]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), None, None, None, None, Some(vec![]), None, None, Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![])), LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_style(10.0f64)).unwrap();
         let positioned = LayoutQueries::layout_queries_positioned_clusters((content).clone());
         let _ = TracedAssertions::traced_assertions_assert_equals_int(2, u32::try_from((positioned.len()) & 0xFFFF_FFFF).unwrap_or(0), None).unwrap();
-        let first_stops = (positioned[0usize]).clone().source_stops;
-        let _ = TracedAssertions::traced_assertions_assert_null_rendered(first_stops.is_none(), LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_render_nullable_source_stops((first_stops).clone()).as_str(), None).unwrap();
-        let second_stops = (positioned[1usize]).clone().source_stops;
-        let _ = TracedAssertions::traced_assertions_assert_null_rendered(second_stops.is_none(), LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_render_nullable_source_stops((second_stops).clone()).as_str(), None).unwrap();
+        let first_stops = ((positioned[0usize]).clone().source_stops).clone();
+        let _ = TracedAssertions::traced_assertions_assert_null_rendered(first_stops.is_none(), LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_render_nullable_source_stops((first_stops).clone()).as_ustr(), None).unwrap();
+        let second_stops = ((positioned[1usize]).clone().source_stops).clone();
+        let _ = TracedAssertions::traced_assertions_assert_null_rendered(second_stops.is_none(), LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_render_nullable_source_stops((second_stops).clone()).as_ustr(), None).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_equals_float(0.0f64, positioned[0usize].left, None).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_equals_float(17.5f64, positioned[0usize].right, None).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_equals_float(17.5f64, positioned[1usize].left, None).unwrap();
@@ -4377,10 +4906,10 @@ LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_
 #[test]
 fn bounding_boxes_slice_zero_width_and_empty_clusters() {
     testlib::run("org.tiqian.core.LayoutQueriesResidualCoverageTest.boundingBoxesSliceZeroWidthAndEmptyClusters", "org.tiqian.core.LayoutQueriesResidualCoverageTest.boundingBoxesSliceZeroWidthAndEmptyClusters", || {
-        TestTraceRecorder::new("LayoutQueriesResidualCoverageTest").section(&"boundingBoxesSliceZeroWidthAndEmptyClusters");
-        let content = LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_result(&"ab", &vec![
-    (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_cluster(TextRange::new(0u32, 1u32).unwrap(), &"a", 10.0f64)).clone(),
-    (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_cluster(TextRange::new(1u32, 2u32).unwrap(), &"b", 0.0f64)).clone(),
+        TestTraceRecorder::new(&(UStr::new(&[76,97,121,111,117,116,81,117,101,114,105,101,115,82,101,115,105,100,117,97,108,67,111,118,101,114,97,103,101,84,101,115,116]))).section(UStr::new(&[98,111,117,110,100,105,110,103,66,111,120,101,115,83,108,105,99,101,90,101,114,111,87,105,100,116,104,65,110,100,69,109,112,116,121,67,108,117,115,116,101,114,115]));
+        let content = LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_result(UStr::new(&[97,98]), &vec![
+    (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_cluster(TextRange::new(0u32, 1u32).unwrap(), UStr::new(&[97]), 10.0f64)).clone(),
+    (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_cluster(TextRange::new(1u32, 2u32).unwrap(), UStr::new(&[98]), 0.0f64)).clone(),
 ], &vec![
     (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_line(TextRange::new(0u32, 2u32).unwrap(), 0, 1, 0.0f64, 20.0f64, 15.0f64, 0.0f64, 10.0f64)).clone(),
 ], &vec![], &vec![], &vec![], LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_empty_debug(), LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_style(10.0f64)).unwrap();
@@ -4397,18 +4926,16 @@ fn bounding_boxes_slice_zero_width_and_empty_clusters() {
 #[test]
 fn positioned_clusters_and_segments_return_empty_without_lines() {
     testlib::run("org.tiqian.core.LayoutQueriesResidualCoverageTest.positionedClustersAndSegmentsReturnEmptyWithoutLines", "org.tiqian.core.LayoutQueriesResidualCoverageTest.positionedClustersAndSegmentsReturnEmptyWithoutLines", || {
-        TestTraceRecorder::new("LayoutQueriesResidualCoverageTest").section(&"positionedClustersAndSegmentsReturnEmptyWithoutLines");
-        let no_lines = LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_result(&"ab", &vec![
-    (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_cluster(TextRange::new(0u32, 1u32).unwrap(), &"a", 10.0f64)).clone(),
+        TestTraceRecorder::new(&(UStr::new(&[76,97,121,111,117,116,81,117,101,114,105,101,115,82,101,115,105,100,117,97,108,67,111,118,101,114,97,103,101,84,101,115,116]))).section(UStr::new(&[112,111,115,105,116,105,111,110,101,100,67,108,117,115,116,101,114,115,65,110,100,83,101,103,109,101,110,116,115,82,101,116,117,114,110,69,109,112,116,121,87,105,116,104,111,117,116,76,105,110,101,115]));
+        let no_lines = LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_result(UStr::new(&[97,98]), &vec![
+    (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_cluster(TextRange::new(0u32, 1u32).unwrap(), UStr::new(&[97]), 10.0f64)).clone(),
 ], &vec![], &vec![], &vec![], &vec![], LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_empty_debug(), LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_style(10.0f64)).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_true(u32::try_from((LayoutQueries::layout_queries_positioned_clusters((no_lines).clone()).len()) & 0xFFFF_FFFF).unwrap_or(0) == 0, None).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_true(u32::try_from((LayoutQueries::layout_queries_positioned_rich_text_segments((no_lines).clone(), &vec![
-    (RichTextSpan::new(TextRange::new(0u32, 2u32).unwrap(), Box::new({ let __guard = crate::org::tiqian::core::rich_text_role::BACKGROUND_INSTANCE.lock().unwrap_or_else(|e| e.into_inner()); __guard.clone() }), RichTextPaint::new(None,
-Some(Box::new((*crate::org::tiqian::core::rich_text_line_pattern::SOLID_INSTANCE).clone())), RichTextBackgroundPaint::new(Some(0.0f64), Some(0.0f64), Some(0.0f64), Some(0.0f64), Some(RichTextBackgroundMetricPolicy::MarkedFaces),
-Some(Box::new((*crate::org::tiqian::core::rich_text_background_draw_style::FILL_INSTANCE).clone()))).unwrap(), Some(0.0f64)).unwrap())).clone(),
+    (RichTextSpan::new(TextRange::new(0u32, 2u32).unwrap(), Box::new({ let __guard = crate::org::tiqian::core::rich_text_role::BACKGROUND_INSTANCE.lock().unwrap_or_else(|e| e.into_inner()); __guard.clone() }), RichTextPaint::new(None, Some(Box::new((*crate::org::tiqian::core::rich_text_line_pattern::SOLID_INSTANCE).clone())), RichTextBackgroundPaint::new(Some(0.0f64), Some(0.0f64), Some(0.0f64), Some(0.0f64), Some(RichTextBackgroundMetricPolicy::MarkedFaces), Some(Box::new((*crate::org::tiqian::core::rich_text_background_draw_style::FILL_INSTANCE).clone()))).unwrap(), Some(0.0f64)).unwrap())).clone(),
 ]).unwrap().len()) & 0xFFFF_FFFF).unwrap_or(0) == 0, None).unwrap();
-        let no_spans = LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_result(&"ab", &vec![
-    (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_cluster(TextRange::new(0u32, 1u32).unwrap(), &"a", 10.0f64)).clone(),
+        let no_spans = LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_result(UStr::new(&[97,98]), &vec![
+    (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_cluster(TextRange::new(0u32, 1u32).unwrap(), UStr::new(&[97]), 10.0f64)).clone(),
 ], &vec![
     (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_line(TextRange::new(0u32, 1u32).unwrap(), 0, 0, 0.0f64, 20.0f64, 15.0f64, 0.0f64, 10.0f64)).clone(),
 ], &vec![], &vec![], &vec![], LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_empty_debug(), LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_style(10.0f64)).unwrap();
@@ -4419,25 +4946,20 @@ Some(Box::new((*crate::org::tiqian::core::rich_text_background_draw_style::FILL_
 #[test]
 fn same_span_slices_across_a_source_boundary_merge_into_one_segment() {
     testlib::run("org.tiqian.core.LayoutQueriesResidualCoverageTest.sameSpanSlicesAcrossASourceBoundaryMergeIntoOneSegment", "org.tiqian.core.LayoutQueriesResidualCoverageTest.sameSpanSlicesAcrossASourceBoundaryMergeIntoOneSegment", || {
-        TestTraceRecorder::new("LayoutQueriesResidualCoverageTest").section(&"sameSpanSlicesAcrossASourceBoundaryMergeIntoOneSegment");
-        let input_content = TiqianTextContent::new("ab", Some(vec![]), Some(vec![1]), Some(vec![]), Some(vec![]));
-        let input = LayoutInput::new((input_content).clone(), Some(LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_style(10.0f64)), Some(ParagraphStyle::new(Some(LastLineAlignment::Start), Some(WritingMode::HorizontalTb), None, None,
-Some((Ic::zero()).clone()), Some(MeasureAdaptiveFirstLineIndent::new(Some(14.0f64), Some(1.0f64), Some(2.0f64))), Some(LineLengthGrid::new(Some(true), None)), Some(RubyLineHeightMode::PerLine), Some(ParagraphStyle::PARAGRAPH_STYLE_DEFAULT_INLINE_OBJECT_MINIMUM_CLEARANCE_EM),
-Some(ParagraphStyle::PARAGRAPH_STYLE_DEFAULT_EMPHASIS_DOT_GAP_EM))), LayoutConstraints::new(100.0f64, Some(f64::INFINITY), Some(2147483647)).unwrap(), Some((*crate::org::tiqian::core::built_in_layout_profiles::BUILT_IN_LAYOUT_PROFILES_CLREQ_HORIZONTAL).clone()), Some(vec![]),
-Some(vec![]), Some(vec![]), Some(vec![]));
+        TestTraceRecorder::new(&(UStr::new(&[76,97,121,111,117,116,81,117,101,114,105,101,115,82,101,115,105,100,117,97,108,67,111,118,101,114,97,103,101,84,101,115,116]))).section(UStr::new(&[115,97,109,101,83,112,97,110,83,108,105,99,101,115,65,99,114,111,115,115,65,83,111,117,114,99,101,66,111,117,110,100,97,114,121,77,101,114,103,101,73,110,116,111,79,110,101,83,101,103,109,101,110,116]));
+        let input_content = TiqianTextContent::new(&(UStr::new(&[97,98])), Some(vec![]), Some(vec![1]), Some(vec![]), Some(vec![]));
+        let input = LayoutInput::new((input_content).clone(), Some(LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_style(10.0f64)), Some(ParagraphStyle::new(Some(LastLineAlignment::Start), Some(WritingMode::HorizontalTb), None, None, Some((Ic::zero()).clone()), Some(MeasureAdaptiveFirstLineIndent::new(Some(14.0f64), Some(1.0f64), Some(2.0f64))), Some(LineLengthGrid::new(Some(true), None)), Some(RubyLineHeightMode::PerLine), Some(ParagraphStyle::PARAGRAPH_STYLE_DEFAULT_INLINE_OBJECT_MINIMUM_CLEARANCE_EM), Some(ParagraphStyle::PARAGRAPH_STYLE_DEFAULT_EMPHASIS_DOT_GAP_EM))), LayoutConstraints::new(100.0f64, Some(f64::INFINITY), Some(2147483647)).unwrap(), Some((*crate::org::tiqian::core::built_in_layout_profiles::BUILT_IN_LAYOUT_PROFILES_CLREQ_HORIZONTAL).clone()), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]));
         let content = LayoutResult::new((input).clone(), Size::new(20.0f64, 20.0f64), vec![
-    (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_cluster(TextRange::new(0u32, 1u32).unwrap(), &"a", 10.0f64)).clone(),
-    (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_cluster(TextRange::new(1u32, 2u32).unwrap(), &"b", 10.0f64)).clone(),
+    (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_cluster(TextRange::new(0u32, 1u32).unwrap(), UStr::new(&[97]), 10.0f64)).clone(),
+    (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_cluster(TextRange::new(1u32, 2u32).unwrap(), UStr::new(&[98]), 10.0f64)).clone(),
 ], vec![], vec![
     (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_line(TextRange::new(0u32, 2u32).unwrap(), 0, 1, 0.0f64, 20.0f64, 15.0f64, 0.0f64, 20.0f64)).clone(),
 ], LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_empty_debug());
         let segments = LayoutQueries::layout_queries_positioned_rich_text_segments((content).clone(), &vec![
-    (RichTextSpan::new(TextRange::new(0u32, 2u32).unwrap(), Box::new({ let __guard = crate::org::tiqian::core::rich_text_role::BACKGROUND_INSTANCE.lock().unwrap_or_else(|e| e.into_inner()); __guard.clone() }), RichTextPaint::new(None,
-Some(Box::new((*crate::org::tiqian::core::rich_text_line_pattern::SOLID_INSTANCE).clone())), RichTextBackgroundPaint::new(Some(0.0f64), Some(0.0f64), Some(0.0f64), Some(0.0f64), Some(RichTextBackgroundMetricPolicy::MarkedFaces),
-Some(Box::new((*crate::org::tiqian::core::rich_text_background_draw_style::FILL_INSTANCE).clone()))).unwrap(), Some(0.0f64)).unwrap())).clone(),
+    (RichTextSpan::new(TextRange::new(0u32, 2u32).unwrap(), Box::new({ let __guard = crate::org::tiqian::core::rich_text_role::BACKGROUND_INSTANCE.lock().unwrap_or_else(|e| e.into_inner()); __guard.clone() }), RichTextPaint::new(None, Some(Box::new((*crate::org::tiqian::core::rich_text_line_pattern::SOLID_INSTANCE).clone())), RichTextBackgroundPaint::new(Some(0.0f64), Some(0.0f64), Some(0.0f64), Some(0.0f64), Some(RichTextBackgroundMetricPolicy::MarkedFaces), Some(Box::new((*crate::org::tiqian::core::rich_text_background_draw_style::FILL_INSTANCE).clone()))).unwrap(), Some(0.0f64)).unwrap())).clone(),
 ]).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_equals_int(1, u32::try_from((segments.len()) & 0xFFFF_FFFF).unwrap_or(0), None).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_equals_rendered(TextRange::new(0u32, 2u32).unwrap().to_string().as_str(), ((segments[0usize]).clone().range).clone().to_string().as_str(), None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_equals_rendered(UString::from(format!("{}", TextRange::new(0u32, 2u32).unwrap().to_string()).as_str()).as_ustr(), UString::from(format!("{}", ((segments[0usize]).clone().range).clone().to_string()).as_str()).as_ustr(), None).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_equals_float(0.0f64, segments[0usize].left, None).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_equals_float(20.0f64, segments[0usize].right, None).unwrap();
     });
@@ -4446,30 +4968,30 @@ Some(Box::new((*crate::org::tiqian::core::rich_text_background_draw_style::FILL_
 #[test]
 fn glyph_ink_bounds_skips_unusable_glyphs_and_reports_null() {
     testlib::run("org.tiqian.core.LayoutQueriesResidualCoverageTest.glyphInkBoundsSkipsUnusableGlyphsAndReportsNull", "org.tiqian.core.LayoutQueriesResidualCoverageTest.glyphInkBoundsSkipsUnusableGlyphsAndReportsNull", || {
-        TestTraceRecorder::new("LayoutQueriesResidualCoverageTest").section(&"glyphInkBoundsSkipsUnusableGlyphsAndReportsNull");
+        TestTraceRecorder::new(&(UStr::new(&[76,97,121,111,117,116,81,117,101,114,105,101,115,82,101,115,105,100,117,97,108,67,111,118,101,114,97,103,101,84,101,115,116]))).section(UStr::new(&[103,108,121,112,104,73,110,107,66,111,117,110,100,115,83,107,105,112,115,85,110,117,115,97,98,108,101,71,108,121,112,104,115,65,110,100,82,101,112,111,114,116,115,78,117,108,108]));
         let clusters = vec![
-    (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_cluster(TextRange::new(0u32, 1u32).unwrap(), &"a", 10.0f64)).clone(),
-    (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_cluster(TextRange::new(1u32, 2u32).unwrap(), &"b", 10.0f64)).clone(),
+    (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_cluster(TextRange::new(0u32, 1u32).unwrap(), UStr::new(&[97]), 10.0f64)).clone(),
+    (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_cluster(TextRange::new(1u32, 2u32).unwrap(), UStr::new(&[98]), 10.0f64)).clone(),
 ];
         let lines = vec![
     (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_line(TextRange::new(0u32, 2u32).unwrap(), 0, 1, 0.0f64, 20.0f64, 15.0f64, 0.0f64, 20.0f64)).clone(),
 ];
-        let no_bounds = LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_result(&"ab", &clusters, &lines, &vec![
-    (GlyphRun::new(TextRange::new(0u32, 2u32).unwrap(), "test", vec![
+        let no_bounds = LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_result(UStr::new(&[97,98]), &clusters, &lines, &vec![
+    (GlyphRun::new(TextRange::new(0u32, 2u32).unwrap(), &(UStr::new(&[116,101,115,116])), vec![
     (Glyph::new(1u32, TextRange::new(0u32, 1u32).unwrap(), 10.0f64, Some(0.0f64), Some(0.0f64), None, None, None, None)).clone(),
 ].to_vec(), 20.0f64, Some(vec![]))).clone(),
 ], &vec![], &vec![], LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_empty_debug(), LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_style(10.0f64)).unwrap();
         let absent_bounds = LayoutQueries::layout_queries_glyph_ink_bounds((no_bounds).clone());
-        let _ = TracedAssertions::traced_assertions_assert_null_rendered(absent_bounds.is_none(), match &(absent_bounds) { None => "-".to_string(), Some(__option17) => __option17.to_string() }.as_str(), None).unwrap();
-        let nan_placed = LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_result(&"ab", &clusters, &lines, &vec![
-    (GlyphRun::new(TextRange::new(1u32, 2u32).unwrap(), "test", vec![
+        let _ = TracedAssertions::traced_assertions_assert_null_rendered(absent_bounds.is_none(), match &(absent_bounds) { None => UString::from("-"), Some(__option17) => UString::from(format!("{}", __option17.to_string()).as_str()) }.as_ustr(), None).unwrap();
+        let nan_placed = LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_result(UStr::new(&[97,98]), &clusters, &lines, &vec![
+    (GlyphRun::new(TextRange::new(1u32, 2u32).unwrap(), &(UStr::new(&[116,101,115,116])), vec![
     (Glyph::new(9u32, TextRange::new(1u32, 2u32).unwrap(), 9.0f64, Some(LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_nan()), Some(0.0f64), None, Some(Rect::new(1.0f64, 2.0f64, 8.0f64, 4.0f64)), None, None)).clone(),
 ].to_vec(), 10.0f64, Some(vec![]))).clone(),
 ], &vec![], &vec![], LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_empty_debug(), LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_style(10.0f64)).unwrap();
         let nan_placed_bounds = LayoutQueries::layout_queries_glyph_ink_bounds((nan_placed).clone());
-        let _ = TracedAssertions::traced_assertions_assert_null_rendered(nan_placed_bounds.is_none(), match &(nan_placed_bounds) { None => "-".to_string(), Some(__option20) => __option20.to_string() }.as_str(), None).unwrap();
-        let usable = LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_result(&"ab", &clusters, &lines, &vec![
-    (GlyphRun::new(TextRange::new(0u32, 2u32).unwrap(), "test", vec![
+        let _ = TracedAssertions::traced_assertions_assert_null_rendered(nan_placed_bounds.is_none(), match &(nan_placed_bounds) { None => UString::from("-"), Some(__option20) => UString::from(format!("{}", __option20.to_string()).as_str()) }.as_ustr(), None).unwrap();
+        let usable = LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_result(UStr::new(&[97,98]), &clusters, &lines, &vec![
+    (GlyphRun::new(TextRange::new(0u32, 2u32).unwrap(), &(UStr::new(&[116,101,115,116])), vec![
     (Glyph::new(1u32, TextRange::new(0u32, 1u32).unwrap(), 10.0f64, Some(2.0f64), Some(1.0f64), None, Some(Rect::new(1.0f64, 2.0f64, 8.0f64, 4.0f64)), None, None)).clone(),
     (Glyph::new(2u32, TextRange::new(1u32, 2u32).unwrap(), 10.0f64, Some(1.0f64), Some(0.0f64), None, Some(Rect::new(0.0f64, 1.0f64, 9.0f64, 3.0f64)), None, None)).clone(),
 ].to_vec(), 20.0f64, Some(vec![]))).clone(),
@@ -4485,32 +5007,28 @@ fn glyph_ink_bounds_skips_unusable_glyphs_and_reports_null() {
 #[test]
 fn background_trailing_edge_uses_glyph_advances_when_available() {
     testlib::run("org.tiqian.core.LayoutQueriesResidualCoverageTest.backgroundTrailingEdgeUsesGlyphAdvancesWhenAvailable", "org.tiqian.core.LayoutQueriesResidualCoverageTest.backgroundTrailingEdgeUsesGlyphAdvancesWhenAvailable", || {
-        TestTraceRecorder::new("LayoutQueriesResidualCoverageTest").section(&"backgroundTrailingEdgeUsesGlyphAdvancesWhenAvailable");
+        TestTraceRecorder::new(&(UStr::new(&[76,97,121,111,117,116,81,117,101,114,105,101,115,82,101,115,105,100,117,97,108,67,111,118,101,114,97,103,101,84,101,115,116]))).section(UStr::new(&[98,97,99,107,103,114,111,117,110,100,84,114,97,105,108,105,110,103,69,100,103,101,85,115,101,115,71,108,121,112,104,65,100,118,97,110,99,101,115,87,104,101,110,65,118,97,105,108,97,98,108,101]));
         let clusters = vec![
-    (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_cluster(TextRange::new(0u32, 1u32).unwrap(), &"a", 10.0f64)).clone(),
-    (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_cluster(TextRange::new(1u32, 2u32).unwrap(), &"b", 10.0f64)).clone(),
+    (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_cluster(TextRange::new(0u32, 1u32).unwrap(), UStr::new(&[97]), 10.0f64)).clone(),
+    (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_cluster(TextRange::new(1u32, 2u32).unwrap(), UStr::new(&[98]), 10.0f64)).clone(),
 ];
         let lines = vec![
     (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_line(TextRange::new(0u32, 2u32).unwrap(), 0, 1, 0.0f64, 20.0f64, 15.0f64, 0.0f64, 20.0f64)).clone(),
 ];
-        let short_glyph = LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_result(&"ab", &clusters, &lines, &vec![
-    (GlyphRun::new(TextRange::new(1u32, 2u32).unwrap(), "test", vec![
+        let short_glyph = LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_result(UStr::new(&[97,98]), &clusters, &lines, &vec![
+    (GlyphRun::new(TextRange::new(1u32, 2u32).unwrap(), &(UStr::new(&[116,101,115,116])), vec![
     (Glyph::new(2u32, TextRange::new(1u32, 2u32).unwrap(), 5.0f64, Some(0.0f64), Some(0.0f64), None, None, None, None)).clone(),
 ].to_vec(), 10.0f64, Some(vec![]))).clone(),
 ], &vec![], &vec![], LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_empty_debug(), LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_style(10.0f64)).unwrap();
         let short_segments = LayoutQueries::layout_queries_rich_text_background_segments((short_glyph).clone(), &vec![
-    (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_segment(TextRange::new(0u32, 2u32).unwrap(), (Box::new({ let __guard = crate::org::tiqian::core::rich_text_role::BACKGROUND_INSTANCE.lock().unwrap_or_else(|e| e.into_inner());
-__guard.clone() })).clone(), RichTextPaint::new(None, Some(Box::new((*crate::org::tiqian::core::rich_text_line_pattern::SOLID_INSTANCE).clone())), RichTextBackgroundPaint::new(Some(0.0f64), Some(0.0f64), Some(0.0f64), Some(0.0f64),
-Some(RichTextBackgroundMetricPolicy::MarkedFaces), Some(Box::new((*crate::org::tiqian::core::rich_text_background_draw_style::FILL_INSTANCE).clone()))).unwrap(), Some(0.0f64)).unwrap(), 0, TextRange::new(0u32, 2u32).unwrap(), 0.0f64, 0.0f64, 20.0f64, 20.0f64, 15.0f64)).clone(),
+    (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_segment(TextRange::new(0u32, 2u32).unwrap(), (Box::new({ let __guard = crate::org::tiqian::core::rich_text_role::BACKGROUND_INSTANCE.lock().unwrap_or_else(|e| e.into_inner()); __guard.clone() })).clone(), RichTextPaint::new(None, Some(Box::new((*crate::org::tiqian::core::rich_text_line_pattern::SOLID_INSTANCE).clone())), RichTextBackgroundPaint::new(Some(0.0f64), Some(0.0f64), Some(0.0f64), Some(0.0f64), Some(RichTextBackgroundMetricPolicy::MarkedFaces), Some(Box::new((*crate::org::tiqian::core::rich_text_background_draw_style::FILL_INSTANCE).clone()))).unwrap(), Some(0.0f64)).unwrap(), 0, TextRange::new(0u32, 2u32).unwrap(), 0.0f64, 0.0f64, 20.0f64, 20.0f64, 15.0f64)).clone(),
 ]);
         let _ = TracedAssertions::traced_assertions_assert_equals_float(15.0f64, short_segments[0usize].right, None).unwrap();
-        let empty_glyph_run = LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_result(&"ab", &clusters, &lines, &vec![
-    (GlyphRun::new(TextRange::new(1u32, 2u32).unwrap(), "test", vec![].to_vec(), 10.0f64, Some(vec![]))).clone(),
+        let empty_glyph_run = LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_result(UStr::new(&[97,98]), &clusters, &lines, &vec![
+    (GlyphRun::new(TextRange::new(1u32, 2u32).unwrap(), &(UStr::new(&[116,101,115,116])), vec![].to_vec(), 10.0f64, Some(vec![]))).clone(),
 ], &vec![], &vec![], LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_empty_debug(), LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_style(10.0f64)).unwrap();
         let empty_segments = LayoutQueries::layout_queries_rich_text_background_segments((empty_glyph_run).clone(), &vec![
-    (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_segment(TextRange::new(0u32, 2u32).unwrap(), (Box::new({ let __guard = crate::org::tiqian::core::rich_text_role::BACKGROUND_INSTANCE.lock().unwrap_or_else(|e| e.into_inner());
-__guard.clone() })).clone(), RichTextPaint::new(None, Some(Box::new((*crate::org::tiqian::core::rich_text_line_pattern::SOLID_INSTANCE).clone())), RichTextBackgroundPaint::new(Some(0.0f64), Some(0.0f64), Some(0.0f64), Some(0.0f64),
-Some(RichTextBackgroundMetricPolicy::MarkedFaces), Some(Box::new((*crate::org::tiqian::core::rich_text_background_draw_style::FILL_INSTANCE).clone()))).unwrap(), Some(0.0f64)).unwrap(), 0, TextRange::new(0u32, 2u32).unwrap(), 0.0f64, 0.0f64, 20.0f64, 20.0f64, 15.0f64)).clone(),
+    (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_segment(TextRange::new(0u32, 2u32).unwrap(), (Box::new({ let __guard = crate::org::tiqian::core::rich_text_role::BACKGROUND_INSTANCE.lock().unwrap_or_else(|e| e.into_inner()); __guard.clone() })).clone(), RichTextPaint::new(None, Some(Box::new((*crate::org::tiqian::core::rich_text_line_pattern::SOLID_INSTANCE).clone())), RichTextBackgroundPaint::new(Some(0.0f64), Some(0.0f64), Some(0.0f64), Some(0.0f64), Some(RichTextBackgroundMetricPolicy::MarkedFaces), Some(Box::new((*crate::org::tiqian::core::rich_text_background_draw_style::FILL_INSTANCE).clone()))).unwrap(), Some(0.0f64)).unwrap(), 0, TextRange::new(0u32, 2u32).unwrap(), 0.0f64, 0.0f64, 20.0f64, 20.0f64, 15.0f64)).clone(),
 ]);
         let _ = TracedAssertions::traced_assertions_assert_equals_float(20.0f64, empty_segments[0usize].right, None).unwrap();
     });
@@ -4519,28 +5037,20 @@ Some(RichTextBackgroundMetricPolicy::MarkedFaces), Some(Box::new((*crate::org::t
 #[test]
 fn clearance_needs_same_role_and_uses_the_smaller_side() {
     testlib::run("org.tiqian.core.LayoutQueriesResidualCoverageTest.clearanceNeedsSameRoleAndUsesTheSmallerSide", "org.tiqian.core.LayoutQueriesResidualCoverageTest.clearanceNeedsSameRoleAndUsesTheSmallerSide", || {
-        TestTraceRecorder::new("LayoutQueriesResidualCoverageTest").section(&"clearanceNeedsSameRoleAndUsesTheSmallerSide");
-        let content = LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_result(&"ab", &vec![
-    (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_cluster(TextRange::new(0u32, 1u32).unwrap(), &"a", 10.0f64)).clone(),
-    (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_cluster(TextRange::new(1u32, 2u32).unwrap(), &"b", 10.0f64)).clone(),
+        TestTraceRecorder::new(&(UStr::new(&[76,97,121,111,117,116,81,117,101,114,105,101,115,82,101,115,105,100,117,97,108,67,111,118,101,114,97,103,101,84,101,115,116]))).section(UStr::new(&[99,108,101,97,114,97,110,99,101,78,101,101,100,115,83,97,109,101,82,111,108,101,65,110,100,85,115,101,115,84,104,101,83,109,97,108,108,101,114,83,105,100,101]));
+        let content = LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_result(UStr::new(&[97,98]), &vec![
+    (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_cluster(TextRange::new(0u32, 1u32).unwrap(), UStr::new(&[97]), 10.0f64)).clone(),
+    (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_cluster(TextRange::new(1u32, 2u32).unwrap(), UStr::new(&[98]), 10.0f64)).clone(),
 ], &vec![
     (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_line(TextRange::new(0u32, 2u32).unwrap(), 0, 1, 0.0f64, 20.0f64, 15.0f64, 0.0f64, 20.0f64)).clone(),
 ], &vec![], &vec![], &vec![], LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_empty_debug(), LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_style(10.0f64)).unwrap();
-        let background = LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_segment(TextRange::new(0u32, 1u32).unwrap(), (Box::new({ let __guard = crate::org::tiqian::core::rich_text_role::BACKGROUND_INSTANCE.lock().unwrap_or_else(|e|
-e.into_inner()); __guard.clone() })).clone(), RichTextPaint::new(None, Some(Box::new((*crate::org::tiqian::core::rich_text_line_pattern::SOLID_INSTANCE).clone())), RichTextBackgroundPaint::new(Some(0.0f64), Some(0.0f64), Some(0.0f64), Some(0.0f64),
-Some(RichTextBackgroundMetricPolicy::MarkedFaces), Some(Box::new((*crate::org::tiqian::core::rich_text_background_draw_style::FILL_INSTANCE).clone()))).unwrap(), Some(4.0f64)).unwrap(), 0, TextRange::new(0u32, 1u32).unwrap(), 0.0f64, 0.0f64, 10.0f64, 20.0f64, 15.0f64);
-        let inline_code = LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_segment(TextRange::new(1u32, 2u32).unwrap(), (Box::new({ let __guard = crate::org::tiqian::core::rich_text_role::INLINE_CODE_INSTANCE.lock().unwrap_or_else(|e|
-e.into_inner()); __guard.clone() })).clone(), RichTextPaint::new(None, Some(Box::new((*crate::org::tiqian::core::rich_text_line_pattern::SOLID_INSTANCE).clone())), RichTextBackgroundPaint::new(Some(0.0f64), Some(0.0f64), Some(0.0f64), Some(0.0f64),
-Some(RichTextBackgroundMetricPolicy::MarkedFaces), Some(Box::new((*crate::org::tiqian::core::rich_text_background_draw_style::FILL_INSTANCE).clone()))).unwrap(), Some(4.0f64)).unwrap(), 0, TextRange::new(1u32, 2u32).unwrap(), 10.0f64, 0.0f64, 20.0f64, 20.0f64, 15.0f64);
+        let background = LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_segment(TextRange::new(0u32, 1u32).unwrap(), (Box::new({ let __guard = crate::org::tiqian::core::rich_text_role::BACKGROUND_INSTANCE.lock().unwrap_or_else(|e| e.into_inner()); __guard.clone() })).clone(), RichTextPaint::new(None, Some(Box::new((*crate::org::tiqian::core::rich_text_line_pattern::SOLID_INSTANCE).clone())), RichTextBackgroundPaint::new(Some(0.0f64), Some(0.0f64), Some(0.0f64), Some(0.0f64), Some(RichTextBackgroundMetricPolicy::MarkedFaces), Some(Box::new((*crate::org::tiqian::core::rich_text_background_draw_style::FILL_INSTANCE).clone()))).unwrap(), Some(4.0f64)).unwrap(), 0, TextRange::new(0u32, 1u32).unwrap(), 0.0f64, 0.0f64, 10.0f64, 20.0f64, 15.0f64);
+        let inline_code = LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_segment(TextRange::new(1u32, 2u32).unwrap(), (Box::new({ let __guard = crate::org::tiqian::core::rich_text_role::INLINE_CODE_INSTANCE.lock().unwrap_or_else(|e| e.into_inner()); __guard.clone() })).clone(), RichTextPaint::new(None, Some(Box::new((*crate::org::tiqian::core::rich_text_line_pattern::SOLID_INSTANCE).clone())), RichTextBackgroundPaint::new(Some(0.0f64), Some(0.0f64), Some(0.0f64), Some(0.0f64), Some(RichTextBackgroundMetricPolicy::MarkedFaces), Some(Box::new((*crate::org::tiqian::core::rich_text_background_draw_style::FILL_INSTANCE).clone()))).unwrap(), Some(4.0f64)).unwrap(), 0, TextRange::new(1u32, 2u32).unwrap(), 10.0f64, 0.0f64, 20.0f64, 20.0f64, 15.0f64);
         let by_role = LayoutQueries::layout_queries_rich_text_background_segments((content).clone(), &vec![(background).clone(), (inline_code).clone()]);
         let _ = TracedAssertions::traced_assertions_assert_equals_float(10.0f64, by_role[0usize].right, None).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_equals_float(10.0f64, by_role[1usize].left, None).unwrap();
-        let weak = LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_segment(TextRange::new(0u32, 1u32).unwrap(), (Box::new({ let __guard = crate::org::tiqian::core::rich_text_role::BACKGROUND_INSTANCE.lock().unwrap_or_else(|e|
-e.into_inner()); __guard.clone() })).clone(), RichTextPaint::new(None, Some(Box::new((*crate::org::tiqian::core::rich_text_line_pattern::SOLID_INSTANCE).clone())), RichTextBackgroundPaint::new(Some(0.0f64), Some(0.0f64), Some(0.0f64), Some(0.0f64),
-Some(RichTextBackgroundMetricPolicy::MarkedFaces), Some(Box::new((*crate::org::tiqian::core::rich_text_background_draw_style::FILL_INSTANCE).clone()))).unwrap(), Some(2.0f64)).unwrap(), 0, TextRange::new(0u32, 1u32).unwrap(), 0.0f64, 0.0f64, 10.0f64, 20.0f64, 15.0f64);
-        let strong = LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_segment(TextRange::new(1u32, 2u32).unwrap(), (Box::new({ let __guard = crate::org::tiqian::core::rich_text_role::BACKGROUND_INSTANCE.lock().unwrap_or_else(|e|
-e.into_inner()); __guard.clone() })).clone(), RichTextPaint::new(None, Some(Box::new((*crate::org::tiqian::core::rich_text_line_pattern::SOLID_INSTANCE).clone())), RichTextBackgroundPaint::new(Some(0.0f64), Some(0.0f64), Some(0.0f64), Some(0.0f64),
-Some(RichTextBackgroundMetricPolicy::MarkedFaces), Some(Box::new((*crate::org::tiqian::core::rich_text_background_draw_style::FILL_INSTANCE).clone()))).unwrap(), Some(6.0f64)).unwrap(), 0, TextRange::new(1u32, 2u32).unwrap(), 10.0f64, 0.0f64, 20.0f64, 20.0f64, 15.0f64);
+        let weak = LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_segment(TextRange::new(0u32, 1u32).unwrap(), (Box::new({ let __guard = crate::org::tiqian::core::rich_text_role::BACKGROUND_INSTANCE.lock().unwrap_or_else(|e| e.into_inner()); __guard.clone() })).clone(), RichTextPaint::new(None, Some(Box::new((*crate::org::tiqian::core::rich_text_line_pattern::SOLID_INSTANCE).clone())), RichTextBackgroundPaint::new(Some(0.0f64), Some(0.0f64), Some(0.0f64), Some(0.0f64), Some(RichTextBackgroundMetricPolicy::MarkedFaces), Some(Box::new((*crate::org::tiqian::core::rich_text_background_draw_style::FILL_INSTANCE).clone()))).unwrap(), Some(2.0f64)).unwrap(), 0, TextRange::new(0u32, 1u32).unwrap(), 0.0f64, 0.0f64, 10.0f64, 20.0f64, 15.0f64);
+        let strong = LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_segment(TextRange::new(1u32, 2u32).unwrap(), (Box::new({ let __guard = crate::org::tiqian::core::rich_text_role::BACKGROUND_INSTANCE.lock().unwrap_or_else(|e| e.into_inner()); __guard.clone() })).clone(), RichTextPaint::new(None, Some(Box::new((*crate::org::tiqian::core::rich_text_line_pattern::SOLID_INSTANCE).clone())), RichTextBackgroundPaint::new(Some(0.0f64), Some(0.0f64), Some(0.0f64), Some(0.0f64), Some(RichTextBackgroundMetricPolicy::MarkedFaces), Some(Box::new((*crate::org::tiqian::core::rich_text_background_draw_style::FILL_INSTANCE).clone()))).unwrap(), Some(6.0f64)).unwrap(), 0, TextRange::new(1u32, 2u32).unwrap(), 10.0f64, 0.0f64, 20.0f64, 20.0f64, 15.0f64);
         let cleared = LayoutQueries::layout_queries_rich_text_background_segments((content).clone(), &vec![(weak).clone(), (strong).clone()]);
         let _ = TracedAssertions::traced_assertions_assert_equals_float(9.0f64, cleared[0usize].right, None).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_equals_float(11.0f64, cleared[1usize].left, None).unwrap();
@@ -4550,7 +5060,7 @@ Some(RichTextBackgroundMetricPolicy::MarkedFaces), Some(Box::new((*crate::org::t
 #[test]
 fn metric_decisions_must_fully_contain_the_cluster() {
     testlib::run("org.tiqian.core.LayoutQueriesResidualCoverageTest.metricDecisionsMustFullyContainTheCluster", "org.tiqian.core.LayoutQueriesResidualCoverageTest.metricDecisionsMustFullyContainTheCluster", || {
-        TestTraceRecorder::new("LayoutQueriesResidualCoverageTest").section(&"metricDecisionsMustFullyContainTheCluster");
+        TestTraceRecorder::new(&(UStr::new(&[76,97,121,111,117,116,81,117,101,114,105,101,115,82,101,115,105,100,117,97,108,67,111,118,101,114,97,103,101,84,101,115,116]))).section(UStr::new(&[109,101,116,114,105,99,68,101,99,105,115,105,111,110,115,77,117,115,116,70,117,108,108,121,67,111,110,116,97,105,110,84,104,101,67,108,117,115,116,101,114]));
         let first = LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_metric_bounds(TextRange::new(1u32, 2u32).unwrap()).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_equals_float(6.19999999999999929f64, first[0usize], None).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_equals_float(16.2f64, first[1usize], None).unwrap();
@@ -4562,25 +5072,19 @@ fn metric_decisions_must_fully_contain_the_cluster() {
 #[test]
 fn decoration_style_resolves_inside_spans_and_at_their_edges() {
     testlib::run("org.tiqian.core.LayoutQueriesResidualCoverageTest.decorationStyleResolvesInsideSpansAndAtTheirEdges", "org.tiqian.core.LayoutQueriesResidualCoverageTest.decorationStyleResolvesInsideSpansAndAtTheirEdges", || {
-        TestTraceRecorder::new("LayoutQueriesResidualCoverageTest").section(&"decorationStyleResolvesInsideSpansAndAtTheirEdges");
-        let content = LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_result(&"abc", &vec![
-    (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_cluster(TextRange::new(0u32, 1u32).unwrap(), &"a", 10.0f64)).clone(),
-    (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_cluster(TextRange::new(1u32, 2u32).unwrap(), &"b", 10.0f64)).clone(),
-    (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_cluster(TextRange::new(2u32, 3u32).unwrap(), &"c", 10.0f64)).clone(),
+        TestTraceRecorder::new(&(UStr::new(&[76,97,121,111,117,116,81,117,101,114,105,101,115,82,101,115,105,100,117,97,108,67,111,118,101,114,97,103,101,84,101,115,116]))).section(UStr::new(&[100,101,99,111,114,97,116,105,111,110,83,116,121,108,101,82,101,115,111,108,118,101,115,73,110,115,105,100,101,83,112,97,110,115,65,110,100,65,116,84,104,101,105,114,69,100,103,101,115]));
+        let content = LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_result(UStr::new(&[97,98,99]), &vec![
+    (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_cluster(TextRange::new(0u32, 1u32).unwrap(), UStr::new(&[97]), 10.0f64)).clone(),
+    (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_cluster(TextRange::new(1u32, 2u32).unwrap(), UStr::new(&[98]), 10.0f64)).clone(),
+    (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_cluster(TextRange::new(2u32, 3u32).unwrap(), UStr::new(&[99]), 10.0f64)).clone(),
 ], &vec![
     (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_line(TextRange::new(0u32, 3u32).unwrap(), 0, 2, 0.0f64, 20.0f64, 15.0f64, 0.0f64, 30.0f64)).clone(),
 ], &vec![], &vec![
     (TextSpan::new(TextRange::new(0u32, 1u32).unwrap(), LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_style(10.0f64))).clone(),
     (TextSpan::new(TextRange::new(2u32, 3u32).unwrap(), LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_style(20.0f64))).clone(),
 ], &vec![], LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_empty_debug(), LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_style(10.0f64)).unwrap();
-        let between = LayoutQueries::layout_queries_rich_text_decoration_line_y((content).clone(), LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_segment(TextRange::new(1u32, 2u32).unwrap(), (Box::new({ let __guard =
-crate::org::tiqian::core::rich_text_role::UNDERLINE_INSTANCE.lock().unwrap_or_else(|e| e.into_inner()); __guard.clone() })).clone(), RichTextPaint::new(None, Some(Box::new((*crate::org::tiqian::core::rich_text_line_pattern::SOLID_INSTANCE).clone())),
-RichTextBackgroundPaint::new(Some(0.0f64), Some(0.0f64), Some(0.0f64), Some(0.0f64), Some(RichTextBackgroundMetricPolicy::MarkedFaces), Some(Box::new((*crate::org::tiqian::core::rich_text_background_draw_style::FILL_INSTANCE).clone()))).unwrap(), Some(0.0f64)).unwrap(), 0,
-TextRange::new(1u32, 2u32).unwrap(), 10.0f64, 0.0f64, 20.0f64, 20.0f64, 15.0f64), 1.0f64).unwrap();
-        let inside = LayoutQueries::layout_queries_rich_text_decoration_line_y((content).clone(), LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_segment(TextRange::new(2u32, 3u32).unwrap(), (Box::new({ let __guard =
-crate::org::tiqian::core::rich_text_role::UNDERLINE_INSTANCE.lock().unwrap_or_else(|e| e.into_inner()); __guard.clone() })).clone(), RichTextPaint::new(None, Some(Box::new((*crate::org::tiqian::core::rich_text_line_pattern::SOLID_INSTANCE).clone())),
-RichTextBackgroundPaint::new(Some(0.0f64), Some(0.0f64), Some(0.0f64), Some(0.0f64), Some(RichTextBackgroundMetricPolicy::MarkedFaces), Some(Box::new((*crate::org::tiqian::core::rich_text_background_draw_style::FILL_INSTANCE).clone()))).unwrap(), Some(0.0f64)).unwrap(), 0,
-TextRange::new(2u32, 3u32).unwrap(), 20.0f64, 0.0f64, 30.0f64, 20.0f64, 15.0f64), 1.0f64).unwrap();
+        let between = LayoutQueries::layout_queries_rich_text_decoration_line_y((content).clone(), LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_segment(TextRange::new(1u32, 2u32).unwrap(), (Box::new({ let __guard = crate::org::tiqian::core::rich_text_role::UNDERLINE_INSTANCE.lock().unwrap_or_else(|e| e.into_inner()); __guard.clone() })).clone(), RichTextPaint::new(None, Some(Box::new((*crate::org::tiqian::core::rich_text_line_pattern::SOLID_INSTANCE).clone())), RichTextBackgroundPaint::new(Some(0.0f64), Some(0.0f64), Some(0.0f64), Some(0.0f64), Some(RichTextBackgroundMetricPolicy::MarkedFaces), Some(Box::new((*crate::org::tiqian::core::rich_text_background_draw_style::FILL_INSTANCE).clone()))).unwrap(), Some(0.0f64)).unwrap(), 0, TextRange::new(1u32, 2u32).unwrap(), 10.0f64, 0.0f64, 20.0f64, 20.0f64, 15.0f64), 1.0f64).unwrap();
+        let inside = LayoutQueries::layout_queries_rich_text_decoration_line_y((content).clone(), LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_segment(TextRange::new(2u32, 3u32).unwrap(), (Box::new({ let __guard = crate::org::tiqian::core::rich_text_role::UNDERLINE_INSTANCE.lock().unwrap_or_else(|e| e.into_inner()); __guard.clone() })).clone(), RichTextPaint::new(None, Some(Box::new((*crate::org::tiqian::core::rich_text_line_pattern::SOLID_INSTANCE).clone())), RichTextBackgroundPaint::new(Some(0.0f64), Some(0.0f64), Some(0.0f64), Some(0.0f64), Some(RichTextBackgroundMetricPolicy::MarkedFaces), Some(Box::new((*crate::org::tiqian::core::rich_text_background_draw_style::FILL_INSTANCE).clone()))).unwrap(), Some(0.0f64)).unwrap(), 0, TextRange::new(2u32, 3u32).unwrap(), 20.0f64, 0.0f64, 30.0f64, 20.0f64, 15.0f64), 1.0f64).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_equals_float(16.8f64, between, None).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_equals_float(18.6f64, inside, None).unwrap();
     });
@@ -4589,24 +5093,20 @@ TextRange::new(2u32, 3u32).unwrap(), 20.0f64, 0.0f64, 30.0f64, 20.0f64, 15.0f64)
 #[test]
 fn glue_trim_skips_interior_segment_edges() {
     testlib::run("org.tiqian.core.LayoutQueriesResidualCoverageTest.glueTrimSkipsInteriorSegmentEdges", "org.tiqian.core.LayoutQueriesResidualCoverageTest.glueTrimSkipsInteriorSegmentEdges", || {
-        TestTraceRecorder::new("LayoutQueriesResidualCoverageTest").section(&"glueTrimSkipsInteriorSegmentEdges");
-        let glue = ClusterGeometryDecisionInfo::new(TextRange::new(0u32, 2u32).unwrap(), "ab", "ab", 20.0f64, 10.0f64, 4.0f64, 1.0f64, 4.0f64, 1.0f64, 0.0f64, 20.0f64, "test", "test", Some(0.0f64), Some(0.0f64), None);
-        let content = LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_result(&"ab", &vec![
-    (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_cluster(TextRange::new(0u32, 2u32).unwrap(), &"ab", 20.0f64)).clone(),
+        TestTraceRecorder::new(&(UStr::new(&[76,97,121,111,117,116,81,117,101,114,105,101,115,82,101,115,105,100,117,97,108,67,111,118,101,114,97,103,101,84,101,115,116]))).section(UStr::new(&[103,108,117,101,84,114,105,109,83,107,105,112,115,73,110,116,101,114,105,111,114,83,101,103,109,101,110,116,69,100,103,101,115]));
+        let glue = ClusterGeometryDecisionInfo::new(TextRange::new(0u32, 2u32).unwrap(), &(UStr::new(&[97,98])), &(UStr::new(&[97,98])), 20.0f64, 10.0f64, 4.0f64, 1.0f64, 4.0f64, 1.0f64, 0.0f64, 20.0f64, &(UStr::new(&[116,101,115,116])), &(UStr::new(&[116,101,115,116])), Some(0.0f64), Some(0.0f64), None);
+        let content = LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_result(UStr::new(&[97,98]), &vec![
+    (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_cluster(TextRange::new(0u32, 2u32).unwrap(), UStr::new(&[97,98]), 20.0f64)).clone(),
 ], &vec![
     (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_line(TextRange::new(0u32, 2u32).unwrap(), 0, 0, 0.0f64, 20.0f64, 15.0f64, 0.0f64, 20.0f64)).clone(),
-], &vec![], &vec![], &vec![], LayoutDebugInfo::new(None, Some(vec![]), Some(vec![(glue).clone()]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]),
-Some(vec![]), None, None, None, None, Some(vec![]), None, None, Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![])), LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_style(10.0f64)).unwrap();
+], &vec![], &vec![], &vec![],
+LayoutDebugInfo::new(None, Some(vec![]), Some(vec![(glue).clone()]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), None, None, None, None, Some(vec![]), None, None, Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![])), LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_style(10.0f64)).unwrap();
         let interior_start = LayoutQueries::layout_queries_rich_text_background_segments((content).clone(), &vec![
-    (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_segment(TextRange::new(1u32, 2u32).unwrap(), (Box::new({ let __guard = crate::org::tiqian::core::rich_text_role::BACKGROUND_INSTANCE.lock().unwrap_or_else(|e| e.into_inner());
-__guard.clone() })).clone(), RichTextPaint::new(None, Some(Box::new((*crate::org::tiqian::core::rich_text_line_pattern::SOLID_INSTANCE).clone())), RichTextBackgroundPaint::new(Some(0.0f64), Some(0.0f64), Some(0.0f64), Some(0.0f64),
-Some(RichTextBackgroundMetricPolicy::MarkedFaces), Some(Box::new((*crate::org::tiqian::core::rich_text_background_draw_style::FILL_INSTANCE).clone()))).unwrap(), Some(0.0f64)).unwrap(), 0, TextRange::new(1u32, 2u32).unwrap(), 10.0f64, 0.0f64, 20.0f64, 20.0f64, 15.0f64)).clone(),
+    (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_segment(TextRange::new(1u32, 2u32).unwrap(), (Box::new({ let __guard = crate::org::tiqian::core::rich_text_role::BACKGROUND_INSTANCE.lock().unwrap_or_else(|e| e.into_inner()); __guard.clone() })).clone(), RichTextPaint::new(None, Some(Box::new((*crate::org::tiqian::core::rich_text_line_pattern::SOLID_INSTANCE).clone())), RichTextBackgroundPaint::new(Some(0.0f64), Some(0.0f64), Some(0.0f64), Some(0.0f64), Some(RichTextBackgroundMetricPolicy::MarkedFaces), Some(Box::new((*crate::org::tiqian::core::rich_text_background_draw_style::FILL_INSTANCE).clone()))).unwrap(), Some(0.0f64)).unwrap(), 0, TextRange::new(1u32, 2u32).unwrap(), 10.0f64, 0.0f64, 20.0f64, 20.0f64, 15.0f64)).clone(),
 ]);
         let _ = TracedAssertions::traced_assertions_assert_equals_float(10.0f64, interior_start[0usize].left, None).unwrap();
         let interior_end = LayoutQueries::layout_queries_rich_text_background_segments((content).clone(), &vec![
-    (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_segment(TextRange::new(0u32, 1u32).unwrap(), (Box::new({ let __guard = crate::org::tiqian::core::rich_text_role::BACKGROUND_INSTANCE.lock().unwrap_or_else(|e| e.into_inner());
-__guard.clone() })).clone(), RichTextPaint::new(None, Some(Box::new((*crate::org::tiqian::core::rich_text_line_pattern::SOLID_INSTANCE).clone())), RichTextBackgroundPaint::new(Some(0.0f64), Some(0.0f64), Some(0.0f64), Some(0.0f64),
-Some(RichTextBackgroundMetricPolicy::MarkedFaces), Some(Box::new((*crate::org::tiqian::core::rich_text_background_draw_style::FILL_INSTANCE).clone()))).unwrap(), Some(0.0f64)).unwrap(), 0, TextRange::new(0u32, 1u32).unwrap(), 0.0f64, 0.0f64, 10.0f64, 20.0f64, 15.0f64)).clone(),
+    (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_segment(TextRange::new(0u32, 1u32).unwrap(), (Box::new({ let __guard = crate::org::tiqian::core::rich_text_role::BACKGROUND_INSTANCE.lock().unwrap_or_else(|e| e.into_inner()); __guard.clone() })).clone(), RichTextPaint::new(None, Some(Box::new((*crate::org::tiqian::core::rich_text_line_pattern::SOLID_INSTANCE).clone())), RichTextBackgroundPaint::new(Some(0.0f64), Some(0.0f64), Some(0.0f64), Some(0.0f64), Some(RichTextBackgroundMetricPolicy::MarkedFaces), Some(Box::new((*crate::org::tiqian::core::rich_text_background_draw_style::FILL_INSTANCE).clone()))).unwrap(), Some(0.0f64)).unwrap(), 0, TextRange::new(0u32, 1u32).unwrap(), 0.0f64, 0.0f64, 10.0f64, 20.0f64, 15.0f64)).clone(),
 ]);
         let _ = TracedAssertions::traced_assertions_assert_equals_float(10.0f64, interior_end[0usize].right, None).unwrap();
     });
@@ -4615,26 +5115,22 @@ Some(RichTextBackgroundMetricPolicy::MarkedFaces), Some(Box::new((*crate::org::t
 #[test]
 fn background_segment_outside_every_span_uses_the_paragraph_style() {
     testlib::run("org.tiqian.core.LayoutQueriesResidualCoverageTest.backgroundSegmentOutsideEverySpanUsesTheParagraphStyle", "org.tiqian.core.LayoutQueriesResidualCoverageTest.backgroundSegmentOutsideEverySpanUsesTheParagraphStyle", || {
-        TestTraceRecorder::new("LayoutQueriesResidualCoverageTest").section(&"backgroundSegmentOutsideEverySpanUsesTheParagraphStyle");
-        let content = LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_result(&"abc", &vec![
-    (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_cluster(TextRange::new(0u32, 1u32).unwrap(), &"a", 10.0f64)).clone(),
-    (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_cluster(TextRange::new(1u32, 2u32).unwrap(), &"b", 10.0f64)).clone(),
-    (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_cluster(TextRange::new(2u32, 3u32).unwrap(), &"c", 10.0f64)).clone(),
+        TestTraceRecorder::new(&(UStr::new(&[76,97,121,111,117,116,81,117,101,114,105,101,115,82,101,115,105,100,117,97,108,67,111,118,101,114,97,103,101,84,101,115,116]))).section(UStr::new(&[98,97,99,107,103,114,111,117,110,100,83,101,103,109,101,110,116,79,117,116,115,105,100,101,69,118,101,114,121,83,112,97,110,85,115,101,115,84,104,101,80,97,114,97,103,114,97,112,104,83,116,121,108,101]));
+        let content = LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_result(UStr::new(&[97,98,99]), &vec![
+    (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_cluster(TextRange::new(0u32, 1u32).unwrap(), UStr::new(&[97]), 10.0f64)).clone(),
+    (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_cluster(TextRange::new(1u32, 2u32).unwrap(), UStr::new(&[98]), 10.0f64)).clone(),
+    (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_cluster(TextRange::new(2u32, 3u32).unwrap(), UStr::new(&[99]), 10.0f64)).clone(),
 ], &vec![
     (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_line(TextRange::new(0u32, 3u32).unwrap(), 0, 2, 0.0f64, 20.0f64, 15.0f64, 0.0f64, 30.0f64)).clone(),
 ], &vec![], &vec![
     (TextSpan::new(TextRange::new(1u32, 2u32).unwrap(), LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_style(40.0f64))).clone(),
 ], &vec![], LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_empty_debug(), LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_style(10.0f64)).unwrap();
         let before = LayoutQueries::layout_queries_rich_text_background_segments((content).clone(), &vec![
-    (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_segment(TextRange::new(0u32, 1u32).unwrap(), (Box::new({ let __guard = crate::org::tiqian::core::rich_text_role::BACKGROUND_INSTANCE.lock().unwrap_or_else(|e| e.into_inner());
-__guard.clone() })).clone(), RichTextPaint::new(None, Some(Box::new((*crate::org::tiqian::core::rich_text_line_pattern::SOLID_INSTANCE).clone())), RichTextBackgroundPaint::new(Some(0.0f64), Some(0.0f64), Some(0.0f64), Some(0.0f64),
-Some(RichTextBackgroundMetricPolicy::MarkedFaces), Some(Box::new((*crate::org::tiqian::core::rich_text_background_draw_style::FILL_INSTANCE).clone()))).unwrap(), Some(0.0f64)).unwrap(), 0, TextRange::new(0u32, 1u32).unwrap(), 0.0f64, 0.0f64, 10.0f64, 20.0f64, 15.0f64)).clone(),
+    (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_segment(TextRange::new(0u32, 1u32).unwrap(), (Box::new({ let __guard = crate::org::tiqian::core::rich_text_role::BACKGROUND_INSTANCE.lock().unwrap_or_else(|e| e.into_inner()); __guard.clone() })).clone(), RichTextPaint::new(None, Some(Box::new((*crate::org::tiqian::core::rich_text_line_pattern::SOLID_INSTANCE).clone())), RichTextBackgroundPaint::new(Some(0.0f64), Some(0.0f64), Some(0.0f64), Some(0.0f64), Some(RichTextBackgroundMetricPolicy::MarkedFaces), Some(Box::new((*crate::org::tiqian::core::rich_text_background_draw_style::FILL_INSTANCE).clone()))).unwrap(), Some(0.0f64)).unwrap(), 0, TextRange::new(0u32, 1u32).unwrap(), 0.0f64, 0.0f64, 10.0f64, 20.0f64, 15.0f64)).clone(),
 ]);
         let _ = TracedAssertions::traced_assertions_assert_equals_float(6.19999999999999929f64, before[0usize].top, None).unwrap();
         let at_end = LayoutQueries::layout_queries_rich_text_background_segments((content).clone(), &vec![
-    (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_segment(TextRange::new(2u32, 3u32).unwrap(), (Box::new({ let __guard = crate::org::tiqian::core::rich_text_role::BACKGROUND_INSTANCE.lock().unwrap_or_else(|e| e.into_inner());
-__guard.clone() })).clone(), RichTextPaint::new(None, Some(Box::new((*crate::org::tiqian::core::rich_text_line_pattern::SOLID_INSTANCE).clone())), RichTextBackgroundPaint::new(Some(0.0f64), Some(0.0f64), Some(0.0f64), Some(0.0f64),
-Some(RichTextBackgroundMetricPolicy::MarkedFaces), Some(Box::new((*crate::org::tiqian::core::rich_text_background_draw_style::FILL_INSTANCE).clone()))).unwrap(), Some(0.0f64)).unwrap(), 0, TextRange::new(2u32, 3u32).unwrap(), 20.0f64, 0.0f64, 30.0f64, 20.0f64, 15.0f64)).clone(),
+    (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_segment(TextRange::new(2u32, 3u32).unwrap(), (Box::new({ let __guard = crate::org::tiqian::core::rich_text_role::BACKGROUND_INSTANCE.lock().unwrap_or_else(|e| e.into_inner()); __guard.clone() })).clone(), RichTextPaint::new(None, Some(Box::new((*crate::org::tiqian::core::rich_text_line_pattern::SOLID_INSTANCE).clone())), RichTextBackgroundPaint::new(Some(0.0f64), Some(0.0f64), Some(0.0f64), Some(0.0f64), Some(RichTextBackgroundMetricPolicy::MarkedFaces), Some(Box::new((*crate::org::tiqian::core::rich_text_background_draw_style::FILL_INSTANCE).clone()))).unwrap(), Some(0.0f64)).unwrap(), 0, TextRange::new(2u32, 3u32).unwrap(), 20.0f64, 0.0f64, 30.0f64, 20.0f64, 15.0f64)).clone(),
 ]);
         let _ = TracedAssertions::traced_assertions_assert_equals_float(6.19999999999999929f64, at_end[0usize].top, None).unwrap();
     });
@@ -4643,18 +5139,18 @@ Some(RichTextBackgroundMetricPolicy::MarkedFaces), Some(Box::new((*crate::org::t
 #[test]
 fn cursor_rect_finds_later_clusters_and_rejects_gapped_ranges() {
     testlib::run("org.tiqian.core.LayoutQueriesResidualCoverageTest.cursorRectFindsLaterClustersAndRejectsGappedRanges", "org.tiqian.core.LayoutQueriesResidualCoverageTest.cursorRectFindsLaterClustersAndRejectsGappedRanges", || {
-        TestTraceRecorder::new("LayoutQueriesResidualCoverageTest").section(&"cursorRectFindsLaterClustersAndRejectsGappedRanges");
-        let content = LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_result(&"abc", &vec![
-    (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_cluster(TextRange::new(0u32, 1u32).unwrap(), &"a", 10.0f64)).clone(),
-    (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_cluster(TextRange::new(1u32, 2u32).unwrap(), &"b", 10.0f64)).clone(),
-    (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_cluster(TextRange::new(2u32, 3u32).unwrap(), &"c", 10.0f64)).clone(),
+        TestTraceRecorder::new(&(UStr::new(&[76,97,121,111,117,116,81,117,101,114,105,101,115,82,101,115,105,100,117,97,108,67,111,118,101,114,97,103,101,84,101,115,116]))).section(UStr::new(&[99,117,114,115,111,114,82,101,99,116,70,105,110,100,115,76,97,116,101,114,67,108,117,115,116,101,114,115,65,110,100,82,101,106,101,99,116,115,71,97,112,112,101,100,82,97,110,103,101,115]));
+        let content = LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_result(UStr::new(&[97,98,99]), &vec![
+    (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_cluster(TextRange::new(0u32, 1u32).unwrap(), UStr::new(&[97]), 10.0f64)).clone(),
+    (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_cluster(TextRange::new(1u32, 2u32).unwrap(), UStr::new(&[98]), 10.0f64)).clone(),
+    (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_cluster(TextRange::new(2u32, 3u32).unwrap(), UStr::new(&[99]), 10.0f64)).clone(),
 ], &vec![
     (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_line(TextRange::new(0u32, 3u32).unwrap(), 0, 2, 0.0f64, 20.0f64, 15.0f64, 0.0f64, 30.0f64)).clone(),
 ], &vec![], &vec![], &vec![], LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_empty_debug(), LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_style(10.0f64)).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_equals_float(20.0f64, LayoutQueries::layout_queries_get_cursor_rect((content).clone(), 2).unwrap().left, None).unwrap();
-        let gapped = LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_result(&"abcde", &vec![
-    (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_cluster(TextRange::new(0u32, 1u32).unwrap(), &"a", 10.0f64)).clone(),
-    (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_cluster(TextRange::new(4u32, 5u32).unwrap(), &"e", 10.0f64)).clone(),
+        let gapped = LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_result(UStr::new(&[97,98,99,100,101]), &vec![
+    (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_cluster(TextRange::new(0u32, 1u32).unwrap(), UStr::new(&[97]), 10.0f64)).clone(),
+    (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_cluster(TextRange::new(4u32, 5u32).unwrap(), UStr::new(&[101]), 10.0f64)).clone(),
 ], &vec![
     (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_line(TextRange::new(0u32, 5u32).unwrap(), 0, 1, 0.0f64, 20.0f64, 15.0f64, 0.0f64, 20.0f64)).clone(),
 ], &vec![], &vec![], &vec![], LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_empty_debug(), LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_style(10.0f64)).unwrap();
@@ -4668,19 +5164,19 @@ fn cursor_rect_finds_later_clusters_and_rejects_gapped_ranges() {
 #[test]
 fn empty_mid_cluster_holds_the_caret_and_slices_keep_degenerate_rects() {
     testlib::run("org.tiqian.core.LayoutQueriesResidualCoverageTest.emptyMidClusterHoldsTheCaretAndSlicesKeepDegenerateRects", "org.tiqian.core.LayoutQueriesResidualCoverageTest.emptyMidClusterHoldsTheCaretAndSlicesKeepDegenerateRects", || {
-        TestTraceRecorder::new("LayoutQueriesResidualCoverageTest").section(&"emptyMidClusterHoldsTheCaretAndSlicesKeepDegenerateRects");
-        let content = LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_result(&"abc", &vec![
-    (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_cluster(TextRange::new(0u32, 1u32).unwrap(), &"a", 10.0f64)).clone(),
-    (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_cluster(TextRange::new(2u32, 2u32).unwrap(), &"", 0.0f64)).clone(),
-    (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_cluster(TextRange::new(2u32, 3u32).unwrap(), &"c", 10.0f64)).clone(),
+        TestTraceRecorder::new(&(UStr::new(&[76,97,121,111,117,116,81,117,101,114,105,101,115,82,101,115,105,100,117,97,108,67,111,118,101,114,97,103,101,84,101,115,116]))).section(UStr::new(&[101,109,112,116,121,77,105,100,67,108,117,115,116,101,114,72,111,108,100,115,84,104,101,67,97,114,101,116,65,110,100,83,108,105,99,101,115,75,101,101,112,68,101,103,101,110,101,114,97,116,101,82,101,99,116,115]));
+        let content = LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_result(UStr::new(&[97,98,99]), &vec![
+    (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_cluster(TextRange::new(0u32, 1u32).unwrap(), UStr::new(&[97]), 10.0f64)).clone(),
+    (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_cluster(TextRange::new(2u32, 2u32).unwrap(), UStr::new(&[]), 0.0f64)).clone(),
+    (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_cluster(TextRange::new(2u32, 3u32).unwrap(), UStr::new(&[99]), 10.0f64)).clone(),
 ], &vec![
     (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_line(TextRange::new(0u32, 3u32).unwrap(), 0, 2, 0.0f64, 20.0f64, 15.0f64, 0.0f64, 20.0f64)).clone(),
 ], &vec![], &vec![], &vec![], LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_empty_debug(), LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_style(10.0f64)).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_equals_float(10.0f64, LayoutQueries::layout_queries_get_cursor_rect((content).clone(), 2).unwrap().left, None).unwrap();
-        let with_empty = LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_result(&"ab", &vec![
-    (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_cluster(TextRange::new(0u32, 1u32).unwrap(), &"a", 10.0f64)).clone(),
-    (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_cluster(TextRange::new(1u32, 1u32).unwrap(), &"", 0.0f64)).clone(),
-    (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_cluster(TextRange::new(1u32, 2u32).unwrap(), &"b", 10.0f64)).clone(),
+        let with_empty = LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_result(UStr::new(&[97,98]), &vec![
+    (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_cluster(TextRange::new(0u32, 1u32).unwrap(), UStr::new(&[97]), 10.0f64)).clone(),
+    (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_cluster(TextRange::new(1u32, 1u32).unwrap(), UStr::new(&[]), 0.0f64)).clone(),
+    (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_cluster(TextRange::new(1u32, 2u32).unwrap(), UStr::new(&[98]), 10.0f64)).clone(),
 ], &vec![
     (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_line(TextRange::new(0u32, 2u32).unwrap(), 0, 2, 0.0f64, 20.0f64, 15.0f64, 0.0f64, 20.0f64)).clone(),
 ], &vec![], &vec![], &vec![], LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_empty_debug(), LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_style(10.0f64)).unwrap();
@@ -4690,10 +5186,10 @@ fn empty_mid_cluster_holds_the_caret_and_slices_keep_degenerate_rects() {
         let _ = TracedAssertions::traced_assertions_assert_equals_float(10.0f64, boxes[0usize].right, None).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_equals_float(10.0f64, boxes[1usize].left, None).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_equals_float(20.0f64, boxes[1usize].right, None).unwrap();
-        let zero_advance = LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_result(&"abc", &vec![
-    (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_cluster(TextRange::new(0u32, 1u32).unwrap(), &"a", 10.0f64)).clone(),
-    (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_cluster(TextRange::new(1u32, 2u32).unwrap(), &"b", 0.0f64)).clone(),
-    (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_cluster(TextRange::new(2u32, 3u32).unwrap(), &"c", 10.0f64)).clone(),
+        let zero_advance = LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_result(UStr::new(&[97,98,99]), &vec![
+    (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_cluster(TextRange::new(0u32, 1u32).unwrap(), UStr::new(&[97]), 10.0f64)).clone(),
+    (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_cluster(TextRange::new(1u32, 2u32).unwrap(), UStr::new(&[98]), 0.0f64)).clone(),
+    (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_cluster(TextRange::new(2u32, 3u32).unwrap(), UStr::new(&[99]), 10.0f64)).clone(),
 ], &vec![
     (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_line(TextRange::new(0u32, 3u32).unwrap(), 0, 2, 0.0f64, 20.0f64, 15.0f64, 0.0f64, 20.0f64)).clone(),
 ], &vec![], &vec![], &vec![], LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_empty_debug(), LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_style(10.0f64)).unwrap();
@@ -4707,53 +5203,46 @@ fn empty_mid_cluster_holds_the_caret_and_slices_keep_degenerate_rects() {
 #[test]
 fn selection_word_boundary_skips_inline_objects_it_does_not_contain() {
     testlib::run("org.tiqian.core.LayoutQueriesResidualCoverageTest.selectionWordBoundarySkipsInlineObjectsItDoesNotContain", "org.tiqian.core.LayoutQueriesResidualCoverageTest.selectionWordBoundarySkipsInlineObjectsItDoesNotContain", || {
-        TestTraceRecorder::new("LayoutQueriesResidualCoverageTest").section(&"selectionWordBoundarySkipsInlineObjectsItDoesNotContain");
+        TestTraceRecorder::new(&(UStr::new(&[76,97,121,111,117,116,81,117,101,114,105,101,115,82,101,115,105,100,117,97,108,67,111,118,101,114,97,103,101,84,101,115,116]))).section(UStr::new(&[115,101,108,101,99,116,105,111,110,87,111,114,100,66,111,117,110,100,97,114,121,83,107,105,112,115,73,110,108,105,110,101,79,98,106,101,99,116,115,73,116,68,111,101,115,78,111,116,67,111,110,116,97,105,110]));
         let objects = vec![
-    (InlineObjectSpan::new(TextRange::new(1u32, 3u32).unwrap(), 8.0f64, 4.0f64, 4.0f64, Some(InlineObjectBoundaryAdjustment::inline_object_boundary_adjustment_fixed().unwrap()),
-Some(InlineObjectBoundaryAdjustment::inline_object_boundary_adjustment_fixed().unwrap())).unwrap()).clone(),
-    (InlineObjectSpan::new(TextRange::new(5u32, 7u32).unwrap(), 8.0f64, 4.0f64, 4.0f64, Some(InlineObjectBoundaryAdjustment::inline_object_boundary_adjustment_fixed().unwrap()),
-Some(InlineObjectBoundaryAdjustment::inline_object_boundary_adjustment_fixed().unwrap())).unwrap()).clone(),
+    (InlineObjectSpan::new(TextRange::new(1u32, 3u32).unwrap(), 8.0f64, 4.0f64, 4.0f64, Some(InlineObjectBoundaryAdjustment::inline_object_boundary_adjustment_fixed().unwrap()), Some(InlineObjectBoundaryAdjustment::inline_object_boundary_adjustment_fixed().unwrap())).unwrap()).clone(),
+    (InlineObjectSpan::new(TextRange::new(5u32, 7u32).unwrap(), 8.0f64, 4.0f64, 4.0f64, Some(InlineObjectBoundaryAdjustment::inline_object_boundary_adjustment_fixed().unwrap()), Some(InlineObjectBoundaryAdjustment::inline_object_boundary_adjustment_fixed().unwrap())).unwrap()).clone(),
 ];
-        let content = LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_result(&"abcdefg", &vec![
-    (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_cluster(TextRange::new(0u32, 7u32).unwrap(), &"abcdefg", 70.0f64)).clone(),
+        let content = LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_result(UStr::new(&[97,98,99,100,101,102,103]), &vec![
+    (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_cluster(TextRange::new(0u32, 7u32).unwrap(), UStr::new(&[97,98,99,100,101,102,103]), 70.0f64)).clone(),
 ], &vec![
     (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_line(TextRange::new(0u32, 7u32).unwrap(), 0, 0, 0.0f64, 20.0f64, 15.0f64, 0.0f64, 70.0f64)).clone(),
 ], &vec![], &vec![], &objects, LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_empty_debug(), LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_style(10.0f64)).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_equals_rendered(TextRange::new(0u32, 7u32).unwrap().to_string().as_str(), LayoutQueries::layout_queries_get_selection_word_boundary((content).clone(), 4).unwrap().to_string().as_str(), None).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_equals_rendered(TextRange::new(1u32, 3u32).unwrap().to_string().as_str(), LayoutQueries::layout_queries_get_selection_word_boundary((content).clone(), 2).unwrap().to_string().as_str(), None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_equals_rendered(UString::from(format!("{}", TextRange::new(0u32, 7u32).unwrap().to_string()).as_str()).as_ustr(), UString::from(format!("{}", LayoutQueries::layout_queries_get_selection_word_boundary((content).clone(), 4).unwrap().to_string()).as_str()).as_ustr(), None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_equals_rendered(UString::from(format!("{}", TextRange::new(1u32, 3u32).unwrap().to_string()).as_str()).as_ustr(), UString::from(format!("{}", LayoutQueries::layout_queries_get_selection_word_boundary((content).clone(), 2).unwrap().to_string()).as_str()).as_ustr(), None).unwrap();
     });
 }
 
 #[test]
 fn selection_word_boundary_for_position_covers_distances_and_fallbacks() {
     testlib::run("org.tiqian.core.LayoutQueriesResidualCoverageTest.selectionWordBoundaryForPositionCoversDistancesAndFallbacks", "org.tiqian.core.LayoutQueriesResidualCoverageTest.selectionWordBoundaryForPositionCoversDistancesAndFallbacks", || {
-        TestTraceRecorder::new("LayoutQueriesResidualCoverageTest").section(&"selectionWordBoundaryForPositionCoversDistancesAndFallbacks");
-        let content = LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_result(&"甲乙", &vec![
-    (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_cluster(TextRange::new(0u32, 1u32).unwrap(), &"甲", 10.0f64)).clone(),
-    (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_cluster(TextRange::new(1u32, 2u32).unwrap(), &"乙", 10.0f64)).clone(),
+        TestTraceRecorder::new(&(UStr::new(&[76,97,121,111,117,116,81,117,101,114,105,101,115,82,101,115,105,100,117,97,108,67,111,118,101,114,97,103,101,84,101,115,116]))).section(UStr::new(&[115,101,108,101,99,116,105,111,110,87,111,114,100,66,111,117,110,100,97,114,121,70,111,114,80,111,115,105,116,105,111,110,67,111,118,101,114,115,68,105,115,116,97,110,99,101,115,65,110,100,70,97,108,108,98,97,99,107,115]));
+        let content = LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_result(UStr::new(&[30002,20057]), &vec![
+    (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_cluster(TextRange::new(0u32, 1u32).unwrap(), UStr::new(&[30002]), 10.0f64)).clone(),
+    (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_cluster(TextRange::new(1u32, 2u32).unwrap(), UStr::new(&[20057]), 10.0f64)).clone(),
 ], &vec![
     (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_line(TextRange::new(0u32, 2u32).unwrap(), 0, 1, 0.0f64, 20.0f64, 15.0f64, 0.0f64, 20.0f64)).clone(),
 ], &vec![], &vec![], &vec![], LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_empty_debug(), LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_style(10.0f64)).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_equals_rendered(TextRange::new(0u32, 1u32).unwrap().to_string().as_str(), LayoutQueries::layout_queries_get_selection_word_boundary_for_position((content).clone(), 5.0f64,
-10.0f64).unwrap().as_ref().unwrap().to_string().as_str(), None).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_equals_rendered(TextRange::new(0u32, 1u32).unwrap().to_string().as_str(), LayoutQueries::layout_queries_get_selection_word_boundary_for_position((content).clone(), 5.0f64,
--10.0f64).unwrap().as_ref().unwrap().to_string().as_str(), None).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_equals_rendered(TextRange::new(0u32, 1u32).unwrap().to_string().as_str(), LayoutQueries::layout_queries_get_selection_word_boundary_for_position((content).clone(), 5.0f64,
-60.0f64).unwrap().as_ref().unwrap().to_string().as_str(), None).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_equals_rendered(TextRange::new(0u32, 1u32).unwrap().to_string().as_str(), LayoutQueries::layout_queries_get_selection_word_boundary_for_position((content).clone(), -50.0f64,
-10.0f64).unwrap().as_ref().unwrap().to_string().as_str(), None).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_equals_rendered(TextRange::new(1u32, 2u32).unwrap().to_string().as_str(), LayoutQueries::layout_queries_get_selection_word_boundary_for_position((content).clone(), 500.0f64,
-10.0f64).unwrap().as_ref().unwrap().to_string().as_str(), None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_equals_rendered(UString::from(format!("{}", TextRange::new(0u32, 1u32).unwrap().to_string()).as_str()).as_ustr(), UString::from(format!("{}", LayoutQueries::layout_queries_get_selection_word_boundary_for_position((content).clone(), 5.0f64, 10.0f64).unwrap().as_ref().unwrap().to_string()).as_str()).as_ustr(), None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_equals_rendered(UString::from(format!("{}", TextRange::new(0u32, 1u32).unwrap().to_string()).as_str()).as_ustr(), UString::from(format!("{}", LayoutQueries::layout_queries_get_selection_word_boundary_for_position((content).clone(), 5.0f64, -10.0f64).unwrap().as_ref().unwrap().to_string()).as_str()).as_ustr(), None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_equals_rendered(UString::from(format!("{}", TextRange::new(0u32, 1u32).unwrap().to_string()).as_str()).as_ustr(), UString::from(format!("{}", LayoutQueries::layout_queries_get_selection_word_boundary_for_position((content).clone(), 5.0f64, 60.0f64).unwrap().as_ref().unwrap().to_string()).as_str()).as_ustr(), None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_equals_rendered(UString::from(format!("{}", TextRange::new(0u32, 1u32).unwrap().to_string()).as_str()).as_ustr(), UString::from(format!("{}", LayoutQueries::layout_queries_get_selection_word_boundary_for_position((content).clone(), -50.0f64, 10.0f64).unwrap().as_ref().unwrap().to_string()).as_str()).as_ustr(), None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_equals_rendered(UString::from(format!("{}", TextRange::new(1u32, 2u32).unwrap().to_string()).as_str()).as_ustr(), UString::from(format!("{}", LayoutQueries::layout_queries_get_selection_word_boundary_for_position((content).clone(), 500.0f64, 10.0f64).unwrap().as_ref().unwrap().to_string()).as_str()).as_ustr(), None).unwrap();
     });
 }
 
 #[test]
 fn line_for_offset_inside_a_range_takes_the_zero_distance_arm() {
     testlib::run("org.tiqian.core.LayoutQueriesResidualCoverageTest.lineForOffsetInsideARangeTakesTheZeroDistanceArm", "org.tiqian.core.LayoutQueriesResidualCoverageTest.lineForOffsetInsideARangeTakesTheZeroDistanceArm", || {
-        TestTraceRecorder::new("LayoutQueriesResidualCoverageTest").section(&"lineForOffsetInsideARangeTakesTheZeroDistanceArm");
-        let content = LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_result(&"abcde", &vec![
-    (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_cluster(TextRange::new(0u32, 1u32).unwrap(), &"a", 10.0f64)).clone(),
-    (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_cluster(TextRange::new(4u32, 5u32).unwrap(), &"e", 10.0f64)).clone(),
+        TestTraceRecorder::new(&(UStr::new(&[76,97,121,111,117,116,81,117,101,114,105,101,115,82,101,115,105,100,117,97,108,67,111,118,101,114,97,103,101,84,101,115,116]))).section(UStr::new(&[108,105,110,101,70,111,114,79,102,102,115,101,116,73,110,115,105,100,101,65,82,97,110,103,101,84,97,107,101,115,84,104,101,90,101,114,111,68,105,115,116,97,110,99,101,65,114,109]));
+        let content = LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_result(UStr::new(&[97,98,99,100,101]), &vec![
+    (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_cluster(TextRange::new(0u32, 1u32).unwrap(), UStr::new(&[97]), 10.0f64)).clone(),
+    (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_cluster(TextRange::new(4u32, 5u32).unwrap(), UStr::new(&[101]), 10.0f64)).clone(),
 ], &vec![
     (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_line(TextRange::new(0u32, 2u32).unwrap(), 0, 0, 0.0f64, 20.0f64, 15.0f64, 0.0f64, 10.0f64)).clone(),
     (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_line(TextRange::new(4u32, 5u32).unwrap(), 1, 1, 20.0f64, 40.0f64, 35.0f64, 0.0f64, 10.0f64)).clone(),
@@ -4765,61 +5254,58 @@ fn line_for_offset_inside_a_range_takes_the_zero_distance_arm() {
 #[test]
 fn compatibility_ideographs_form_individual_word_units() {
     testlib::run("org.tiqian.core.LayoutQueriesResidualCoverageTest.compatibilityIdeographsFormIndividualWordUnits", "org.tiqian.core.LayoutQueriesResidualCoverageTest.compatibilityIdeographsFormIndividualWordUnits", || {
-        TestTraceRecorder::new("LayoutQueriesResidualCoverageTest").section(&"compatibilityIdeographsFormIndividualWordUnits");
-        let text = format!("{}{}",
-            TestHelpers::test_helpers_surrogate_text(&vec![55360, 56320]),
-            "豈"
-        );
-        let content = LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_result(text.as_str(), &vec![
-    (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_cluster(TextRange::new(0u32, 2u32).unwrap(), TestHelpers::test_helpers_surrogate_text(&vec![55360, 56320]).as_str(), 10.0f64)).clone(),
-    (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_cluster(TextRange::new(2u32, 3u32).unwrap(), &"豈", 10.0f64)).clone(),
+        TestTraceRecorder::new(&(UStr::new(&[76,97,121,111,117,116,81,117,101,114,105,101,115,82,101,115,105,100,117,97,108,67,111,118,101,114,97,103,101,84,101,115,116]))).section(UStr::new(&[99,111,109,112,97,116,105,98,105,108,105,116,121,73,100,101,111,103,114,97,112,104,115,70,111,114,109,73,110,100,105,118,105,100,117,97,108,87,111,114,100,85,110,105,116,115]));
+        let text = { let mut __s = UString::new(); __s += TestHelpers::test_helpers_surrogate_text(&vec![55360, 56320]).as_ustr(); __s += &(UString::from("豈")); __s };
+        let content = LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_result(text.as_ustr(), &vec![
+    (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_cluster(TextRange::new(0u32, 2u32).unwrap(), TestHelpers::test_helpers_surrogate_text(&vec![55360, 56320]).as_ustr(), 10.0f64)).clone(),
+    (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_cluster(TextRange::new(2u32, 3u32).unwrap(), UStr::new(&[63744]), 10.0f64)).clone(),
 ], &vec![
     (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_line(TextRange::new(0u32, 3u32).unwrap(), 0, 1, 0.0f64, 20.0f64, 15.0f64, 0.0f64, 20.0f64)).clone(),
 ], &vec![], &vec![], &vec![], LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_empty_debug(), LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_style(10.0f64)).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_equals_rendered(TextRange::new(0u32, 2u32).unwrap().to_string().as_str(), LayoutQueries::layout_queries_get_selection_word_boundary((content).clone(), 0).unwrap().to_string().as_str(), None).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_equals_rendered(TextRange::new(2u32, 3u32).unwrap().to_string().as_str(), LayoutQueries::layout_queries_get_selection_word_boundary((content).clone(), 2).unwrap().to_string().as_str(), None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_equals_rendered(UString::from(format!("{}", TextRange::new(0u32, 2u32).unwrap().to_string()).as_str()).as_ustr(), UString::from(format!("{}", LayoutQueries::layout_queries_get_selection_word_boundary((content).clone(), 0).unwrap().to_string()).as_str()).as_ustr(), None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_equals_rendered(UString::from(format!("{}", TextRange::new(2u32, 3u32).unwrap().to_string()).as_str()).as_ustr(), UString::from(format!("{}", LayoutQueries::layout_queries_get_selection_word_boundary((content).clone(), 2).unwrap().to_string()).as_str()).as_ustr(), None).unwrap();
     });
 }
 
 #[test]
 fn ruby_spread_shifts_selection_boxes_and_zero_width_rubies_are_ignored() {
     testlib::run("org.tiqian.core.LayoutQueriesResidualCoverageTest.rubySpreadShiftsSelectionBoxesAndZeroWidthRubiesAreIgnored", "org.tiqian.core.LayoutQueriesResidualCoverageTest.rubySpreadShiftsSelectionBoxesAndZeroWidthRubiesAreIgnored", || {
-        TestTraceRecorder::new("LayoutQueriesResidualCoverageTest").section(&"rubySpreadShiftsSelectionBoxesAndZeroWidthRubiesAreIgnored");
+        TestTraceRecorder::new(&(UStr::new(&[76,97,121,111,117,116,81,117,101,114,105,101,115,82,101,115,105,100,117,97,108,67,111,118,101,114,97,103,101,84,101,115,116]))).section(UStr::new(&[114,117,98,121,83,112,114,101,97,100,83,104,105,102,116,115,83,101,108,101,99,116,105,111,110,66,111,120,101,115,65,110,100,90,101,114,111,87,105,100,116,104,82,117,98,105,101,115,65,114,101,73,103,110,111,114,101,100]));
         let clusters = vec![
-    (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_cluster(TextRange::new(0u32, 2u32).unwrap(), &"ab", 20.0f64)).clone(),
-    (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_cluster(TextRange::new(2u32, 3u32).unwrap(), &"c", 10.0f64)).clone(),
+    (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_cluster(TextRange::new(0u32, 2u32).unwrap(), UStr::new(&[97,98]), 20.0f64)).clone(),
+    (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_cluster(TextRange::new(2u32, 3u32).unwrap(), UStr::new(&[99]), 10.0f64)).clone(),
 ];
         let mut geometries = vec![
-    (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_geometry(TextRange::new(0u32, 2u32).unwrap(), &"ab", 0.0f64, 0.0f64, 0.0f64, 0.0f64)).clone(),
-    (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_geometry(TextRange::new(2u32, 3u32).unwrap(), &"c", 0.0f64, 0.0f64, 0.0f64, 0.0f64)).clone(),
+    (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_geometry(TextRange::new(0u32, 2u32).unwrap(), UStr::new(&[97,98]), 0.0f64, 0.0f64, 0.0f64, 0.0f64)).clone(),
+    (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_geometry(TextRange::new(2u32, 3u32).unwrap(), UStr::new(&[99]), 0.0f64, 0.0f64, 0.0f64, 0.0f64)).clone(),
 ];
-        let first_geometry = ClusterGeometryDecisionInfo::new(TextRange::new(0u32, 2u32).unwrap(), "ab", "ab", 20.0f64, 10.0f64, 0.0f64, 0.0f64, 0.0f64, 0.0f64, 0.0f64, 20.0f64, "test", "test", Some(5.0f64), Some(0.0f64), None);
-        let second_geometry = ClusterGeometryDecisionInfo::new(TextRange::new(2u32, 3u32).unwrap(), "c", "c", 10.0f64, 10.0f64, 0.0f64, 0.0f64, 0.0f64, 0.0f64, 0.0f64, 10.0f64, "test", "test", Some(2.0f64), Some(0.0f64), None);
+        let first_geometry = ClusterGeometryDecisionInfo::new(TextRange::new(0u32, 2u32).unwrap(), &(UStr::new(&[97,98])), &(UStr::new(&[97,98])), 20.0f64, 10.0f64, 0.0f64, 0.0f64, 0.0f64, 0.0f64, 0.0f64, 20.0f64, &(UStr::new(&[116,101,115,116])), &(UStr::new(&[116,101,115,116])), Some(5.0f64), Some(0.0f64), None);
+        let second_geometry = ClusterGeometryDecisionInfo::new(TextRange::new(2u32, 3u32).unwrap(), &(UStr::new(&[99])), &(UStr::new(&[99])), 10.0f64, 10.0f64, 0.0f64, 0.0f64, 0.0f64, 0.0f64, 0.0f64, 10.0f64, &(UStr::new(&[116,101,115,116])), &(UStr::new(&[116,101,115,116])), Some(2.0f64), Some(0.0f64), None);
         geometries[0usize] = first_geometry;
         geometries[1usize] = second_geometry;
         let rubies = vec![
-    (RubyDecisionInfo::new(TextRange::new(0u32, 3u32).unwrap(), "zhù", 0u32, 15.0f64, 4.0f64, 6.0f64, 0.0f64, Some(0.0f64), Some(0.0f64), Some(30.0f64), Some(vec![]), Some(400), Some("zh-Hans".to_string()), Some(vec![]))).clone(),
-    (RubyDecisionInfo::new(TextRange::new(2u32, 3u32).unwrap(), "x", 0u32, 25.0f64, 4.0f64, 6.0f64, 0.0f64, Some(0.0f64), Some(0.0f64), Some(0.0f64), Some(vec![]), Some(400), Some("zh-Hans".to_string()), Some(vec![]))).clone(),
-    (RubyDecisionInfo::new(TextRange::new(5u32, 6u32).unwrap(), "y", 0u32, 25.0f64, 4.0f64, 6.0f64, 0.0f64, Some(0.0f64), Some(0.0f64), Some(6.0f64), Some(vec![]), Some(400), Some("zh-Hans".to_string()), Some(vec![]))).clone(),
+    (RubyDecisionInfo::new(TextRange::new(0u32, 3u32).unwrap(), &(UStr::new(&[122,104,249])), 0u32, 15.0f64, 4.0f64, 6.0f64, 0.0f64, Some(0.0f64), Some(0.0f64), Some(30.0f64), Some(vec![]), Some(400), Some(UString::from("zh-Hans")), Some(vec![]))).clone(),
+    (RubyDecisionInfo::new(TextRange::new(2u32, 3u32).unwrap(), &(UStr::new(&[120])), 0u32, 25.0f64, 4.0f64, 6.0f64, 0.0f64, Some(0.0f64), Some(0.0f64), Some(0.0f64), Some(vec![]), Some(400), Some(UString::from("zh-Hans")), Some(vec![]))).clone(),
+    (RubyDecisionInfo::new(TextRange::new(5u32, 6u32).unwrap(), &(UStr::new(&[121])), 0u32, 25.0f64, 4.0f64, 6.0f64, 0.0f64, Some(0.0f64), Some(0.0f64), Some(6.0f64), Some(vec![]), Some(400), Some(UString::from("zh-Hans")), Some(vec![]))).clone(),
 ];
-        let content = LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_result(&"abc", &clusters, &vec![
+        let content = LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_result(UStr::new(&[97,98,99]), &clusters, &vec![
     (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_line(TextRange::new(0u32, 3u32).unwrap(), 0, 1, 0.0f64, 20.0f64, 15.0f64, 0.0f64, 30.0f64)).clone(),
-], &vec![], &vec![], &vec![], LayoutDebugInfo::new(None, Some(vec![]), Some((geometries).clone()), Some(vec![]), Some((rubies).clone()), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]),
-Some(vec![]), Some(vec![]), None, None, None, None, Some(vec![]), None, None, Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![])), LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_style(10.0f64)).unwrap();
+], &vec![], &vec![], &vec![],
+LayoutDebugInfo::new(None, Some(vec![]), Some((geometries).clone()), Some(vec![]), Some((rubies).clone()), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), None, None, None, None, Some(vec![]), None, None, Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![])), LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_style(10.0f64)).unwrap();
         let positioned = LayoutQueries::layout_queries_positioned_clusters((content).clone());
         let _ = TracedAssertions::traced_assertions_assert_equals_float(0.0f64, positioned[0usize].left, None).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_equals_float(15.75f64, positioned[0usize].right, None).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_equals_float(15.75f64, positioned[1usize].left, None).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_equals_float(30.0f64, positioned[1usize].right, None).unwrap();
-        let glyph_result = LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_result(&"abc", &clusters, &vec![
+        let glyph_result = LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_result(UStr::new(&[97,98,99]), &clusters, &vec![
     (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_line(TextRange::new(0u32, 3u32).unwrap(), 0, 1, 0.0f64, 20.0f64, 15.0f64, 0.0f64, 30.0f64)).clone(),
 ], &vec![
-    (GlyphRun::new(TextRange::new(0u32, 3u32).unwrap(), "test", vec![
+    (GlyphRun::new(TextRange::new(0u32, 3u32).unwrap(), &(UStr::new(&[116,101,115,116])), vec![
     (Glyph::new(1u32, TextRange::new(0u32, 2u32).unwrap(), 16.0f64, Some(0.0f64), Some(0.0f64), None, None, None, None)).clone(),
     (Glyph::new(2u32, TextRange::new(2u32, 3u32).unwrap(), 8.0f64, Some(0.0f64), Some(0.0f64), None, None, None, None)).clone(),
 ].to_vec(), 30.0f64, Some(vec![]))).clone(),
-], &vec![], &vec![], LayoutDebugInfo::new(None, Some(vec![]), Some((geometries).clone()), Some(vec![]), Some((rubies).clone()), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]),
-Some(vec![]), None, None, None, None, Some(vec![]), None, None, Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![])), LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_style(10.0f64)).unwrap();
+], &vec![], &vec![],
+LayoutDebugInfo::new(None, Some(vec![]), Some((geometries).clone()), Some(vec![]), Some((rubies).clone()), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), None, None, None, None, Some(vec![]), None, None, Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![])), LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_style(10.0f64)).unwrap();
         let glyph_positioned = LayoutQueries::layout_queries_positioned_clusters((glyph_result).clone());
         let _ = TracedAssertions::traced_assertions_assert_equals_float(0.0f64, glyph_positioned[0usize].left, None).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_equals_float(16.0f64, glyph_positioned[0usize].right, None).unwrap();
@@ -4831,12 +5317,12 @@ Some(vec![]), None, None, None, None, Some(vec![]), None, None, Some(vec![]), So
 #[test]
 fn no_arg_positioned_clusters_walks_every_line() {
     testlib::run("org.tiqian.core.LayoutQueriesResidualCoverageTest.noArgPositionedClustersWalksEveryLine", "org.tiqian.core.LayoutQueriesResidualCoverageTest.noArgPositionedClustersWalksEveryLine", || {
-        TestTraceRecorder::new("LayoutQueriesResidualCoverageTest").section(&"noArgPositionedClustersWalksEveryLine");
-        let content = LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_result(&"abcd", &vec![
-    (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_cluster(TextRange::new(0u32, 1u32).unwrap(), &"a", 10.0f64)).clone(),
-    (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_cluster(TextRange::new(1u32, 2u32).unwrap(), &"b", 10.0f64)).clone(),
-    (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_cluster(TextRange::new(2u32, 3u32).unwrap(), &"c", 10.0f64)).clone(),
-    (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_cluster(TextRange::new(3u32, 4u32).unwrap(), &"d", 10.0f64)).clone(),
+        TestTraceRecorder::new(&(UStr::new(&[76,97,121,111,117,116,81,117,101,114,105,101,115,82,101,115,105,100,117,97,108,67,111,118,101,114,97,103,101,84,101,115,116]))).section(UStr::new(&[110,111,65,114,103,80,111,115,105,116,105,111,110,101,100,67,108,117,115,116,101,114,115,87,97,108,107,115,69,118,101,114,121,76,105,110,101]));
+        let content = LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_result(UStr::new(&[97,98,99,100]), &vec![
+    (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_cluster(TextRange::new(0u32, 1u32).unwrap(), UStr::new(&[97]), 10.0f64)).clone(),
+    (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_cluster(TextRange::new(1u32, 2u32).unwrap(), UStr::new(&[98]), 10.0f64)).clone(),
+    (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_cluster(TextRange::new(2u32, 3u32).unwrap(), UStr::new(&[99]), 10.0f64)).clone(),
+    (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_cluster(TextRange::new(3u32, 4u32).unwrap(), UStr::new(&[100]), 10.0f64)).clone(),
 ], &vec![
     (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_line(TextRange::new(0u32, 2u32).unwrap(), 0, 1, 0.0f64, 20.0f64, 15.0f64, 0.0f64, 20.0f64)).clone(),
     (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_line(TextRange::new(2u32, 4u32).unwrap(), 2, 3, 20.0f64, 40.0f64, 35.0f64, 0.0f64, 20.0f64)).clone(),
@@ -4853,47 +5339,37 @@ fn no_arg_positioned_clusters_walks_every_line() {
 #[test]
 fn glyph_ink_bounds_rejects_each_non_finite_edge_independently() {
     testlib::run("org.tiqian.core.LayoutQueriesResidualCoverageTest.glyphInkBoundsRejectsEachNonFiniteEdgeIndependently", "org.tiqian.core.LayoutQueriesResidualCoverageTest.glyphInkBoundsRejectsEachNonFiniteEdgeIndependently", || {
-        TestTraceRecorder::new("LayoutQueriesResidualCoverageTest").section(&"glyphInkBoundsRejectsEachNonFiniteEdgeIndependently");
+        TestTraceRecorder::new(&(UStr::new(&[76,97,121,111,117,116,81,117,101,114,105,101,115,82,101,115,105,100,117,97,108,67,111,118,101,114,97,103,101,84,101,115,116]))).section(UStr::new(&[103,108,121,112,104,73,110,107,66,111,117,110,100,115,82,101,106,101,99,116,115,69,97,99,104,78,111,110,70,105,110,105,116,101,69,100,103,101,73,110,100,101,112,101,110,100,101,110,116,108,121]));
         let non_finite_left = LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_ink_with_bounds(Rect::new(LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_nan(), 2.0f64, 8.0f64, 4.0f64)).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_null_rendered(non_finite_left.is_none(), match &(non_finite_left) { None => "-".to_string(), Some(__option23) => __option23.to_string() }.as_str(), None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_null_rendered(non_finite_left.is_none(), match &(non_finite_left) { None => UString::from("-"), Some(__option23) => UString::from(format!("{}", __option23.to_string()).as_str()) }.as_ustr(), None).unwrap();
         let non_finite_top = LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_ink_with_bounds(Rect::new(1.0f64, LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_nan(), 8.0f64, 4.0f64)).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_null_rendered(non_finite_top.is_none(), match &(non_finite_top) { None => "-".to_string(), Some(__option26) => __option26.to_string() }.as_str(), None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_null_rendered(non_finite_top.is_none(), match &(non_finite_top) { None => UString::from("-"), Some(__option26) => UString::from(format!("{}", __option26.to_string()).as_str()) }.as_ustr(), None).unwrap();
         let non_finite_right = LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_ink_with_bounds(Rect::new(1.0f64, 2.0f64, LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_nan(), 4.0f64)).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_null_rendered(non_finite_right.is_none(), match &(non_finite_right) { None => "-".to_string(), Some(__option29) => __option29.to_string() }.as_str(), None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_null_rendered(non_finite_right.is_none(), match &(non_finite_right) { None => UString::from("-"), Some(__option29) => UString::from(format!("{}", __option29.to_string()).as_str()) }.as_ustr(), None).unwrap();
         let non_finite_bottom = LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_ink_with_bounds(Rect::new(1.0f64, 2.0f64, 8.0f64, LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_nan())).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_null_rendered(non_finite_bottom.is_none(), match &(non_finite_bottom) { None => "-".to_string(), Some(__option32) => __option32.to_string() }.as_str(), None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_null_rendered(non_finite_bottom.is_none(), match &(non_finite_bottom) { None => UString::from("-"), Some(__option32) => UString::from(format!("{}", __option32.to_string()).as_str()) }.as_ustr(), None).unwrap();
     });
 }
 
 #[test]
 fn clearance_takes_the_smaller_side_whichever_segment_owns_it() {
     testlib::run("org.tiqian.core.LayoutQueriesResidualCoverageTest.clearanceTakesTheSmallerSideWhicheverSegmentOwnsIt", "org.tiqian.core.LayoutQueriesResidualCoverageTest.clearanceTakesTheSmallerSideWhicheverSegmentOwnsIt", || {
-        TestTraceRecorder::new("LayoutQueriesResidualCoverageTest").section(&"clearanceTakesTheSmallerSideWhicheverSegmentOwnsIt");
-        let content = LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_result(&"ab", &vec![
-    (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_cluster(TextRange::new(0u32, 1u32).unwrap(), &"a", 10.0f64)).clone(),
-    (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_cluster(TextRange::new(1u32, 2u32).unwrap(), &"b", 10.0f64)).clone(),
+        TestTraceRecorder::new(&(UStr::new(&[76,97,121,111,117,116,81,117,101,114,105,101,115,82,101,115,105,100,117,97,108,67,111,118,101,114,97,103,101,84,101,115,116]))).section(UStr::new(&[99,108,101,97,114,97,110,99,101,84,97,107,101,115,84,104,101,83,109,97,108,108,101,114,83,105,100,101,87,104,105,99,104,101,118,101,114,83,101,103,109,101,110,116,79,119,110,115,73,116]));
+        let content = LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_result(UStr::new(&[97,98]), &vec![
+    (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_cluster(TextRange::new(0u32, 1u32).unwrap(), UStr::new(&[97]), 10.0f64)).clone(),
+    (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_cluster(TextRange::new(1u32, 2u32).unwrap(), UStr::new(&[98]), 10.0f64)).clone(),
 ], &vec![
     (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_line(TextRange::new(0u32, 2u32).unwrap(), 0, 1, 0.0f64, 20.0f64, 15.0f64, 0.0f64, 20.0f64)).clone(),
 ], &vec![], &vec![], &vec![], LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_empty_debug(), LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_style(10.0f64)).unwrap();
-        let weak_first = LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_segment(TextRange::new(0u32, 1u32).unwrap(), (Box::new({ let __guard = crate::org::tiqian::core::rich_text_role::BACKGROUND_INSTANCE.lock().unwrap_or_else(|e|
-e.into_inner()); __guard.clone() })).clone(), RichTextPaint::new(None, Some(Box::new((*crate::org::tiqian::core::rich_text_line_pattern::SOLID_INSTANCE).clone())), RichTextBackgroundPaint::new(Some(0.0f64), Some(0.0f64), Some(0.0f64), Some(0.0f64),
-Some(RichTextBackgroundMetricPolicy::MarkedFaces), Some(Box::new((*crate::org::tiqian::core::rich_text_background_draw_style::FILL_INSTANCE).clone()))).unwrap(), Some(6.0f64)).unwrap(), 0, TextRange::new(0u32, 1u32).unwrap(), 0.0f64, 0.0f64, 10.0f64, 20.0f64, 15.0f64);
-        let strong_second = LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_segment(TextRange::new(1u32, 2u32).unwrap(), (Box::new({ let __guard = crate::org::tiqian::core::rich_text_role::BACKGROUND_INSTANCE.lock().unwrap_or_else(|e|
-e.into_inner()); __guard.clone() })).clone(), RichTextPaint::new(None, Some(Box::new((*crate::org::tiqian::core::rich_text_line_pattern::SOLID_INSTANCE).clone())), RichTextBackgroundPaint::new(Some(0.0f64), Some(0.0f64), Some(0.0f64), Some(0.0f64),
-Some(RichTextBackgroundMetricPolicy::MarkedFaces), Some(Box::new((*crate::org::tiqian::core::rich_text_background_draw_style::FILL_INSTANCE).clone()))).unwrap(), Some(2.0f64)).unwrap(), 0, TextRange::new(1u32, 2u32).unwrap(), 10.0f64, 0.0f64, 20.0f64, 20.0f64, 15.0f64);
+        let weak_first = LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_segment(TextRange::new(0u32, 1u32).unwrap(), (Box::new({ let __guard = crate::org::tiqian::core::rich_text_role::BACKGROUND_INSTANCE.lock().unwrap_or_else(|e| e.into_inner()); __guard.clone() })).clone(), RichTextPaint::new(None, Some(Box::new((*crate::org::tiqian::core::rich_text_line_pattern::SOLID_INSTANCE).clone())), RichTextBackgroundPaint::new(Some(0.0f64), Some(0.0f64), Some(0.0f64), Some(0.0f64), Some(RichTextBackgroundMetricPolicy::MarkedFaces), Some(Box::new((*crate::org::tiqian::core::rich_text_background_draw_style::FILL_INSTANCE).clone()))).unwrap(), Some(6.0f64)).unwrap(), 0, TextRange::new(0u32, 1u32).unwrap(), 0.0f64, 0.0f64, 10.0f64, 20.0f64, 15.0f64);
+        let strong_second = LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_segment(TextRange::new(1u32, 2u32).unwrap(), (Box::new({ let __guard = crate::org::tiqian::core::rich_text_role::BACKGROUND_INSTANCE.lock().unwrap_or_else(|e| e.into_inner()); __guard.clone() })).clone(), RichTextPaint::new(None, Some(Box::new((*crate::org::tiqian::core::rich_text_line_pattern::SOLID_INSTANCE).clone())), RichTextBackgroundPaint::new(Some(0.0f64), Some(0.0f64), Some(0.0f64), Some(0.0f64), Some(RichTextBackgroundMetricPolicy::MarkedFaces), Some(Box::new((*crate::org::tiqian::core::rich_text_background_draw_style::FILL_INSTANCE).clone()))).unwrap(), Some(2.0f64)).unwrap(), 0, TextRange::new(1u32, 2u32).unwrap(), 10.0f64, 0.0f64, 20.0f64, 20.0f64, 15.0f64);
         let cleared = LayoutQueries::layout_queries_rich_text_background_segments((content).clone(), &vec![(weak_first).clone(), (strong_second).clone()]);
         let _ = TracedAssertions::traced_assertions_assert_equals_float(9.0f64, cleared[0usize].right, None).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_equals_float(11.0f64, cleared[1usize].left, None).unwrap();
-        let styled_a = LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_segment(TextRange::new(1u32, 2u32).unwrap(), (Box::new({ let __guard = crate::org::tiqian::core::rich_text_role::BACKGROUND_INSTANCE.lock().unwrap_or_else(|e|
-e.into_inner()); __guard.clone() })).clone(), RichTextPaint::new(None, Some(Box::new((*crate::org::tiqian::core::rich_text_line_pattern::SOLID_INSTANCE).clone())), RichTextBackgroundPaint::new(Some(0.0f64), Some(0.0f64), Some(0.0f64), Some(0.0f64),
-Some(RichTextBackgroundMetricPolicy::MarkedFaces), Some(Box::new((*crate::org::tiqian::core::rich_text_background_draw_style::FILL_INSTANCE).clone()))).unwrap(), Some(4.0f64)).unwrap(), 0, TextRange::new(1u32, 2u32).unwrap(), 10.0f64, 0.0f64, 20.0f64, 20.0f64, 15.0f64);
+        let styled_a = LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_segment(TextRange::new(1u32, 2u32).unwrap(), (Box::new({ let __guard = crate::org::tiqian::core::rich_text_role::BACKGROUND_INSTANCE.lock().unwrap_or_else(|e| e.into_inner()); __guard.clone() })).clone(), RichTextPaint::new(None, Some(Box::new((*crate::org::tiqian::core::rich_text_line_pattern::SOLID_INSTANCE).clone())), RichTextBackgroundPaint::new(Some(0.0f64), Some(0.0f64), Some(0.0f64), Some(0.0f64), Some(RichTextBackgroundMetricPolicy::MarkedFaces), Some(Box::new((*crate::org::tiqian::core::rich_text_background_draw_style::FILL_INSTANCE).clone()))).unwrap(), Some(4.0f64)).unwrap(), 0, TextRange::new(1u32, 2u32).unwrap(), 10.0f64, 0.0f64, 20.0f64, 20.0f64, 15.0f64);
         let scan_past = LayoutQueries::layout_queries_rich_text_background_segments((content).clone(), &vec![
-    (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_segment(TextRange::new(1u32, 2u32).unwrap(), (Box::new({ let __guard = crate::org::tiqian::core::rich_text_role::INLINE_CODE_INSTANCE.lock().unwrap_or_else(|e| e.into_inner());
-__guard.clone() })).clone(), RichTextPaint::new(None, Some(Box::new((*crate::org::tiqian::core::rich_text_line_pattern::SOLID_INSTANCE).clone())), RichTextBackgroundPaint::new(Some(0.0f64), Some(0.0f64), Some(0.0f64), Some(0.0f64),
-Some(RichTextBackgroundMetricPolicy::MarkedFaces), Some(Box::new((*crate::org::tiqian::core::rich_text_background_draw_style::FILL_INSTANCE).clone()))).unwrap(), Some(4.0f64)).unwrap(), 0, TextRange::new(1u32, 2u32).unwrap(), 10.0f64, 0.0f64, 20.0f64, 20.0f64, 15.0f64)).clone(),
-    (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_segment(TextRange::new(0u32, 1u32).unwrap(), (Box::new({ let __guard = crate::org::tiqian::core::rich_text_role::BACKGROUND_INSTANCE.lock().unwrap_or_else(|e| e.into_inner());
-__guard.clone() })).clone(), RichTextPaint::new(None, Some(Box::new((*crate::org::tiqian::core::rich_text_line_pattern::SOLID_INSTANCE).clone())), RichTextBackgroundPaint::new(Some(0.0f64), Some(0.0f64), Some(0.0f64), Some(0.0f64),
-Some(RichTextBackgroundMetricPolicy::MarkedFaces), Some(Box::new((*crate::org::tiqian::core::rich_text_background_draw_style::FILL_INSTANCE).clone()))).unwrap(), Some(4.0f64)).unwrap(), 0, TextRange::new(0u32, 1u32).unwrap(), 0.0f64, 0.0f64, 10.0f64, 20.0f64, 15.0f64)).clone(),
+    (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_segment(TextRange::new(1u32, 2u32).unwrap(), (Box::new({ let __guard = crate::org::tiqian::core::rich_text_role::INLINE_CODE_INSTANCE.lock().unwrap_or_else(|e| e.into_inner()); __guard.clone() })).clone(), RichTextPaint::new(None, Some(Box::new((*crate::org::tiqian::core::rich_text_line_pattern::SOLID_INSTANCE).clone())), RichTextBackgroundPaint::new(Some(0.0f64), Some(0.0f64), Some(0.0f64), Some(0.0f64), Some(RichTextBackgroundMetricPolicy::MarkedFaces), Some(Box::new((*crate::org::tiqian::core::rich_text_background_draw_style::FILL_INSTANCE).clone()))).unwrap(), Some(4.0f64)).unwrap(), 0, TextRange::new(1u32, 2u32).unwrap(), 10.0f64, 0.0f64, 20.0f64, 20.0f64, 15.0f64)).clone(),
+    (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_segment(TextRange::new(0u32, 1u32).unwrap(), (Box::new({ let __guard = crate::org::tiqian::core::rich_text_role::BACKGROUND_INSTANCE.lock().unwrap_or_else(|e| e.into_inner()); __guard.clone() })).clone(), RichTextPaint::new(None, Some(Box::new((*crate::org::tiqian::core::rich_text_line_pattern::SOLID_INSTANCE).clone())), RichTextBackgroundPaint::new(Some(0.0f64), Some(0.0f64), Some(0.0f64), Some(0.0f64), Some(RichTextBackgroundMetricPolicy::MarkedFaces), Some(Box::new((*crate::org::tiqian::core::rich_text_background_draw_style::FILL_INSTANCE).clone()))).unwrap(), Some(4.0f64)).unwrap(), 0, TextRange::new(0u32, 1u32).unwrap(), 0.0f64, 0.0f64, 10.0f64, 20.0f64, 15.0f64)).clone(),
     (styled_a).clone(),
 ]);
         let _ = TracedAssertions::traced_assertions_assert_equals_int(3, u32::try_from((scan_past.len()) & 0xFFFF_FFFF).unwrap_or(0), None).unwrap();
@@ -4905,26 +5381,23 @@ Some(RichTextBackgroundMetricPolicy::MarkedFaces), Some(Box::new((*crate::org::t
 #[test]
 fn uniform_text_style_policy_resolves_span_style_or_paragraph_style() {
     testlib::run("org.tiqian.core.LayoutQueriesResidualCoverageTest.uniformTextStylePolicyResolvesSpanStyleOrParagraphStyle", "org.tiqian.core.LayoutQueriesResidualCoverageTest.uniformTextStylePolicyResolvesSpanStyleOrParagraphStyle", || {
-        TestTraceRecorder::new("LayoutQueriesResidualCoverageTest").section(&"uniformTextStylePolicyResolvesSpanStyleOrParagraphStyle");
-        let uniform = RichTextPaint::new(None, Some(Box::new((*crate::org::tiqian::core::rich_text_line_pattern::SOLID_INSTANCE).clone())), RichTextBackgroundPaint::new(Some(0.0f64), Some(0.0f64), Some(0.0f64), Some(0.0f64), Some(RichTextBackgroundMetricPolicy::UniformTextStyle),
-Some(Box::new((*crate::org::tiqian::core::rich_text_background_draw_style::FILL_INSTANCE).clone()))).unwrap(), Some(0.0f64)).unwrap();
-        let content = LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_result(&"abc", &vec![
-    (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_cluster(TextRange::new(0u32, 1u32).unwrap(), &"a", 10.0f64)).clone(),
-    (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_cluster(TextRange::new(1u32, 2u32).unwrap(), &"b", 10.0f64)).clone(),
-    (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_cluster(TextRange::new(2u32, 3u32).unwrap(), &"c", 10.0f64)).clone(),
+        TestTraceRecorder::new(&(UStr::new(&[76,97,121,111,117,116,81,117,101,114,105,101,115,82,101,115,105,100,117,97,108,67,111,118,101,114,97,103,101,84,101,115,116]))).section(UStr::new(&[117,110,105,102,111,114,109,84,101,120,116,83,116,121,108,101,80,111,108,105,99,121,82,101,115,111,108,118,101,115,83,112,97,110,83,116,121,108,101,79,114,80,97,114,97,103,114,97,112,104,83,116,121,108,101]));
+        let uniform = RichTextPaint::new(None, Some(Box::new((*crate::org::tiqian::core::rich_text_line_pattern::SOLID_INSTANCE).clone())), RichTextBackgroundPaint::new(Some(0.0f64), Some(0.0f64), Some(0.0f64), Some(0.0f64), Some(RichTextBackgroundMetricPolicy::UniformTextStyle), Some(Box::new((*crate::org::tiqian::core::rich_text_background_draw_style::FILL_INSTANCE).clone()))).unwrap(), Some(0.0f64)).unwrap();
+        let content = LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_result(UStr::new(&[97,98,99]), &vec![
+    (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_cluster(TextRange::new(0u32, 1u32).unwrap(), UStr::new(&[97]), 10.0f64)).clone(),
+    (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_cluster(TextRange::new(1u32, 2u32).unwrap(), UStr::new(&[98]), 10.0f64)).clone(),
+    (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_cluster(TextRange::new(2u32, 3u32).unwrap(), UStr::new(&[99]), 10.0f64)).clone(),
 ], &vec![
     (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_line(TextRange::new(0u32, 3u32).unwrap(), 0, 2, 0.0f64, 20.0f64, 15.0f64, 0.0f64, 30.0f64)).clone(),
 ], &vec![], &vec![
     (TextSpan::new(TextRange::new(1u32, 2u32).unwrap(), LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_style(40.0f64))).clone(),
 ], &vec![], LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_empty_debug(), LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_style(10.0f64)).unwrap();
         let outside = LayoutQueries::layout_queries_rich_text_background_segments((content).clone(), &vec![
-    (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_segment(TextRange::new(0u32, 1u32).unwrap(), (Box::new({ let __guard = crate::org::tiqian::core::rich_text_role::BACKGROUND_INSTANCE.lock().unwrap_or_else(|e| e.into_inner());
-__guard.clone() })).clone(), (uniform).clone(), 0, TextRange::new(0u32, 1u32).unwrap(), 0.0f64, 0.0f64, 10.0f64, 20.0f64, 15.0f64)).clone(),
+    (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_segment(TextRange::new(0u32, 1u32).unwrap(), (Box::new({ let __guard = crate::org::tiqian::core::rich_text_role::BACKGROUND_INSTANCE.lock().unwrap_or_else(|e| e.into_inner()); __guard.clone() })).clone(), (uniform).clone(), 0, TextRange::new(0u32, 1u32).unwrap(), 0.0f64, 0.0f64, 10.0f64, 20.0f64, 15.0f64)).clone(),
 ]);
         let _ = TracedAssertions::traced_assertions_assert_equals_float(6.19999999999999929f64, outside[0usize].top, None).unwrap();
         let inside = LayoutQueries::layout_queries_rich_text_background_segments((content).clone(), &vec![
-    (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_segment(TextRange::new(1u32, 2u32).unwrap(), (Box::new({ let __guard = crate::org::tiqian::core::rich_text_role::BACKGROUND_INSTANCE.lock().unwrap_or_else(|e| e.into_inner());
-__guard.clone() })).clone(), (uniform).clone(), 0, TextRange::new(1u32, 2u32).unwrap(), 10.0f64, 0.0f64, 20.0f64, 20.0f64, 15.0f64)).clone(),
+    (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_segment(TextRange::new(1u32, 2u32).unwrap(), (Box::new({ let __guard = crate::org::tiqian::core::rich_text_role::BACKGROUND_INSTANCE.lock().unwrap_or_else(|e| e.into_inner()); __guard.clone() })).clone(), (uniform).clone(), 0, TextRange::new(1u32, 2u32).unwrap(), 10.0f64, 0.0f64, 20.0f64, 20.0f64, 15.0f64)).clone(),
 ]);
         let _ = TracedAssertions::traced_assertions_assert_equals_float(0.0f64, inside[0usize].top, None).unwrap();
     });
@@ -4933,16 +5406,14 @@ __guard.clone() })).clone(), (uniform).clone(), 0, TextRange::new(1u32, 2u32).un
 #[test]
 fn trailing_glue_is_skipped_when_no_cluster_ends_before_the_segment_end() {
     testlib::run("org.tiqian.core.LayoutQueriesResidualCoverageTest.trailingGlueIsSkippedWhenNoClusterEndsBeforeTheSegmentEnd", "org.tiqian.core.LayoutQueriesResidualCoverageTest.trailingGlueIsSkippedWhenNoClusterEndsBeforeTheSegmentEnd", || {
-        TestTraceRecorder::new("LayoutQueriesResidualCoverageTest").section(&"trailingGlueIsSkippedWhenNoClusterEndsBeforeTheSegmentEnd");
-        let content = LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_result(&"ab", &vec![
-    (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_cluster(TextRange::new(1u32, 2u32).unwrap(), &"b", 10.0f64)).clone(),
+        TestTraceRecorder::new(&(UStr::new(&[76,97,121,111,117,116,81,117,101,114,105,101,115,82,101,115,105,100,117,97,108,67,111,118,101,114,97,103,101,84,101,115,116]))).section(UStr::new(&[116,114,97,105,108,105,110,103,71,108,117,101,73,115,83,107,105,112,112,101,100,87,104,101,110,78,111,67,108,117,115,116,101,114,69,110,100,115,66,101,102,111,114,101,84,104,101,83,101,103,109,101,110,116,69,110,100]));
+        let content = LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_result(UStr::new(&[97,98]), &vec![
+    (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_cluster(TextRange::new(1u32, 2u32).unwrap(), UStr::new(&[98]), 10.0f64)).clone(),
 ], &vec![
     (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_line(TextRange::new(0u32, 2u32).unwrap(), 0, 0, 0.0f64, 20.0f64, 15.0f64, 0.0f64, 10.0f64)).clone(),
 ], &vec![], &vec![], &vec![], LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_empty_debug(), LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_style(10.0f64)).unwrap();
         let out = LayoutQueries::layout_queries_rich_text_background_segments((content).clone(), &vec![
-    (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_segment(TextRange::new(0u32, 1u32).unwrap(), (Box::new({ let __guard = crate::org::tiqian::core::rich_text_role::BACKGROUND_INSTANCE.lock().unwrap_or_else(|e| e.into_inner());
-__guard.clone() })).clone(), RichTextPaint::new(None, Some(Box::new((*crate::org::tiqian::core::rich_text_line_pattern::SOLID_INSTANCE).clone())), RichTextBackgroundPaint::new(Some(0.0f64), Some(0.0f64), Some(0.0f64), Some(0.0f64),
-Some(RichTextBackgroundMetricPolicy::MarkedFaces), Some(Box::new((*crate::org::tiqian::core::rich_text_background_draw_style::FILL_INSTANCE).clone()))).unwrap(), Some(0.0f64)).unwrap(), 0, TextRange::new(0u32, 1u32).unwrap(), 0.0f64, 0.0f64, 10.0f64, 20.0f64, 15.0f64)).clone(),
+    (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_segment(TextRange::new(0u32, 1u32).unwrap(), (Box::new({ let __guard = crate::org::tiqian::core::rich_text_role::BACKGROUND_INSTANCE.lock().unwrap_or_else(|e| e.into_inner()); __guard.clone() })).clone(), RichTextPaint::new(None, Some(Box::new((*crate::org::tiqian::core::rich_text_line_pattern::SOLID_INSTANCE).clone())), RichTextBackgroundPaint::new(Some(0.0f64), Some(0.0f64), Some(0.0f64), Some(0.0f64), Some(RichTextBackgroundMetricPolicy::MarkedFaces), Some(Box::new((*crate::org::tiqian::core::rich_text_background_draw_style::FILL_INSTANCE).clone()))).unwrap(), Some(0.0f64)).unwrap(), 0, TextRange::new(0u32, 1u32).unwrap(), 0.0f64, 0.0f64, 10.0f64, 20.0f64, 15.0f64)).clone(),
 ]);
         let _ = TracedAssertions::traced_assertions_assert_equals_float(10.0f64, out[0usize].right, None).unwrap();
     });
@@ -4951,16 +5422,13 @@ Some(RichTextBackgroundMetricPolicy::MarkedFaces), Some(Box::new((*crate::org::t
 #[test]
 fn decoration_line_y_without_spans_uses_the_paragraph_style() {
     testlib::run("org.tiqian.core.LayoutQueriesResidualCoverageTest.decorationLineYWithoutSpansUsesTheParagraphStyle", "org.tiqian.core.LayoutQueriesResidualCoverageTest.decorationLineYWithoutSpansUsesTheParagraphStyle", || {
-        TestTraceRecorder::new("LayoutQueriesResidualCoverageTest").section(&"decorationLineYWithoutSpansUsesTheParagraphStyle");
-        let content = LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_result(&"ab", &vec![
-    (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_cluster(TextRange::new(0u32, 2u32).unwrap(), &"ab", 20.0f64)).clone(),
+        TestTraceRecorder::new(&(UStr::new(&[76,97,121,111,117,116,81,117,101,114,105,101,115,82,101,115,105,100,117,97,108,67,111,118,101,114,97,103,101,84,101,115,116]))).section(UStr::new(&[100,101,99,111,114,97,116,105,111,110,76,105,110,101,89,87,105,116,104,111,117,116,83,112,97,110,115,85,115,101,115,84,104,101,80,97,114,97,103,114,97,112,104,83,116,121,108,101]));
+        let content = LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_result(UStr::new(&[97,98]), &vec![
+    (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_cluster(TextRange::new(0u32, 2u32).unwrap(), UStr::new(&[97,98]), 20.0f64)).clone(),
 ], &vec![
     (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_line(TextRange::new(0u32, 2u32).unwrap(), 0, 0, 0.0f64, 20.0f64, 15.0f64, 0.0f64, 20.0f64)).clone(),
 ], &vec![], &vec![], &vec![], LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_empty_debug(), LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_style(10.0f64)).unwrap();
-        let value = LayoutQueries::layout_queries_rich_text_decoration_line_y((content).clone(), LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_segment(TextRange::new(0u32, 2u32).unwrap(), (Box::new({ let __guard =
-crate::org::tiqian::core::rich_text_role::UNDERLINE_INSTANCE.lock().unwrap_or_else(|e| e.into_inner()); __guard.clone() })).clone(), RichTextPaint::new(None, Some(Box::new((*crate::org::tiqian::core::rich_text_line_pattern::SOLID_INSTANCE).clone())),
-RichTextBackgroundPaint::new(Some(0.0f64), Some(0.0f64), Some(0.0f64), Some(0.0f64), Some(RichTextBackgroundMetricPolicy::MarkedFaces), Some(Box::new((*crate::org::tiqian::core::rich_text_background_draw_style::FILL_INSTANCE).clone()))).unwrap(), Some(0.0f64)).unwrap(), 0,
-TextRange::new(0u32, 2u32).unwrap(), 0.0f64, 0.0f64, 20.0f64, 20.0f64, 15.0f64), 1.0f64).unwrap();
+        let value = LayoutQueries::layout_queries_rich_text_decoration_line_y((content).clone(), LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_segment(TextRange::new(0u32, 2u32).unwrap(), (Box::new({ let __guard = crate::org::tiqian::core::rich_text_role::UNDERLINE_INSTANCE.lock().unwrap_or_else(|e| e.into_inner()); __guard.clone() })).clone(), RichTextPaint::new(None, Some(Box::new((*crate::org::tiqian::core::rich_text_line_pattern::SOLID_INSTANCE).clone())), RichTextBackgroundPaint::new(Some(0.0f64), Some(0.0f64), Some(0.0f64), Some(0.0f64), Some(RichTextBackgroundMetricPolicy::MarkedFaces), Some(Box::new((*crate::org::tiqian::core::rich_text_background_draw_style::FILL_INSTANCE).clone()))).unwrap(), Some(0.0f64)).unwrap(), 0, TextRange::new(0u32, 2u32).unwrap(), 0.0f64, 0.0f64, 20.0f64, 20.0f64, 15.0f64), 1.0f64).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_equals_float(16.8f64, value, None).unwrap();
     });
 }
@@ -4968,53 +5436,52 @@ TextRange::new(0u32, 2u32).unwrap(), 0.0f64, 0.0f64, 20.0f64, 20.0f64, 15.0f64),
 #[test]
 fn word_boundary_for_position_handles_a_non_finite_y() {
     testlib::run("org.tiqian.core.LayoutQueriesResidualCoverageTest.wordBoundaryForPositionHandlesANonFiniteY", "org.tiqian.core.LayoutQueriesResidualCoverageTest.wordBoundaryForPositionHandlesANonFiniteY", || {
-        TestTraceRecorder::new("LayoutQueriesResidualCoverageTest").section(&"wordBoundaryForPositionHandlesANonFiniteY");
-        let content = LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_result(&"甲乙", &vec![
-    (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_cluster(TextRange::new(0u32, 1u32).unwrap(), &"甲", 10.0f64)).clone(),
-    (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_cluster(TextRange::new(1u32, 2u32).unwrap(), &"乙", 10.0f64)).clone(),
+        TestTraceRecorder::new(&(UStr::new(&[76,97,121,111,117,116,81,117,101,114,105,101,115,82,101,115,105,100,117,97,108,67,111,118,101,114,97,103,101,84,101,115,116]))).section(UStr::new(&[119,111,114,100,66,111,117,110,100,97,114,121,70,111,114,80,111,115,105,116,105,111,110,72,97,110,100,108,101,115,65,78,111,110,70,105,110,105,116,101,89]));
+        let content = LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_result(UStr::new(&[30002,20057]), &vec![
+    (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_cluster(TextRange::new(0u32, 1u32).unwrap(), UStr::new(&[30002]), 10.0f64)).clone(),
+    (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_cluster(TextRange::new(1u32, 2u32).unwrap(), UStr::new(&[20057]), 10.0f64)).clone(),
 ], &vec![
     (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_line(TextRange::new(0u32, 2u32).unwrap(), 0, 1, 0.0f64, 20.0f64, 15.0f64, 0.0f64, 20.0f64)).clone(),
 ], &vec![], &vec![], &vec![], LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_empty_debug(), LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_style(10.0f64)).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_equals_rendered(TextRange::new(0u32, 1u32).unwrap().to_string().as_str(), LayoutQueries::layout_queries_get_selection_word_boundary_for_position((content).clone(), 5.0f64,
-LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_nan()).unwrap().as_ref().unwrap().to_string().as_str(), None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_equals_rendered(UString::from(format!("{}", TextRange::new(0u32, 1u32).unwrap().to_string()).as_str()).as_ustr(), UString::from(format!("{}", LayoutQueries::layout_queries_get_selection_word_boundary_for_position((content).clone(), 5.0f64, LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_nan()).unwrap().as_ref().unwrap().to_string()).as_str()).as_ustr(), None).unwrap();
     });
 }
 
 #[test]
 fn supplementary_ideograph_beyond_the_han_ranges_is_its_own_unit() {
     testlib::run("org.tiqian.core.LayoutQueriesResidualCoverageTest.supplementaryIdeographBeyondTheHanRangesIsItsOwnUnit", "org.tiqian.core.LayoutQueriesResidualCoverageTest.supplementaryIdeographBeyondTheHanRangesIsItsOwnUnit", || {
-        TestTraceRecorder::new("LayoutQueriesResidualCoverageTest").section(&"supplementaryIdeographBeyondTheHanRangesIsItsOwnUnit");
+        TestTraceRecorder::new(&(UStr::new(&[76,97,121,111,117,116,81,117,101,114,105,101,115,82,101,115,105,100,117,97,108,67,111,118,101,114,97,103,101,84,101,115,116]))).section(UStr::new(&[115,117,112,112,108,101,109,101,110,116,97,114,121,73,100,101,111,103,114,97,112,104,66,101,121,111,110,100,84,104,101,72,97,110,82,97,110,103,101,115,73,115,73,116,115,79,119,110,85,110,105,116]));
         let text = TestHelpers::test_helpers_surrogate_text(&vec![55424, 56320]);
-        let content = LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_result(text.as_str(), &vec![
-    (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_cluster(TextRange::new(0u32, 2u32).unwrap(), text.as_str(), 10.0f64)).clone(),
+        let content = LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_result(text.as_ustr(), &vec![
+    (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_cluster(TextRange::new(0u32, 2u32).unwrap(), text.as_ustr(), 10.0f64)).clone(),
 ], &vec![
     (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_line(TextRange::new(0u32, 2u32).unwrap(), 0, 0, 0.0f64, 20.0f64, 15.0f64, 0.0f64, 10.0f64)).clone(),
 ], &vec![], &vec![], &vec![], LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_empty_debug(), LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_style(10.0f64)).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_equals_rendered(TextRange::new(0u32, 2u32).unwrap().to_string().as_str(), LayoutQueries::layout_queries_get_selection_word_boundary((content).clone(), 0).unwrap().to_string().as_str(), None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_equals_rendered(UString::from(format!("{}", TextRange::new(0u32, 2u32).unwrap().to_string()).as_str()).as_ustr(), UString::from(format!("{}", LayoutQueries::layout_queries_get_selection_word_boundary((content).clone(), 0).unwrap().to_string()).as_str()).as_ustr(), None).unwrap();
     });
 }
 
 #[test]
 fn plane_four_codepoint_above_the_han_bands_is_its_own_unit() {
     testlib::run("org.tiqian.core.LayoutQueriesResidualCoverageTest.planeFourCodepointAboveTheHanBandsIsItsOwnUnit", "org.tiqian.core.LayoutQueriesResidualCoverageTest.planeFourCodepointAboveTheHanBandsIsItsOwnUnit", || {
-        TestTraceRecorder::new("LayoutQueriesResidualCoverageTest").section(&"planeFourCodepointAboveTheHanBandsIsItsOwnUnit");
+        TestTraceRecorder::new(&(UStr::new(&[76,97,121,111,117,116,81,117,101,114,105,101,115,82,101,115,105,100,117,97,108,67,111,118,101,114,97,103,101,84,101,115,116]))).section(UStr::new(&[112,108,97,110,101,70,111,117,114,67,111,100,101,112,111,105,110,116,65,98,111,118,101,84,104,101,72,97,110,66,97,110,100,115,73,115,73,116,115,79,119,110,85,110,105,116]));
         let text = TestHelpers::test_helpers_surrogate_text(&vec![55552, 56320]);
-        let content = LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_result(text.as_str(), &vec![
-    (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_cluster(TextRange::new(0u32, 2u32).unwrap(), text.as_str(), 10.0f64)).clone(),
+        let content = LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_result(text.as_ustr(), &vec![
+    (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_cluster(TextRange::new(0u32, 2u32).unwrap(), text.as_ustr(), 10.0f64)).clone(),
 ], &vec![
     (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_line(TextRange::new(0u32, 2u32).unwrap(), 0, 0, 0.0f64, 20.0f64, 15.0f64, 0.0f64, 10.0f64)).clone(),
 ], &vec![], &vec![], &vec![], LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_empty_debug(), LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_style(10.0f64)).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_equals_rendered(TextRange::new(0u32, 2u32).unwrap().to_string().as_str(), LayoutQueries::layout_queries_get_selection_word_boundary((content).clone(), 0).unwrap().to_string().as_str(), None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_equals_rendered(UString::from(format!("{}", TextRange::new(0u32, 2u32).unwrap().to_string()).as_str()).as_ustr(), UString::from(format!("{}", LayoutQueries::layout_queries_get_selection_word_boundary((content).clone(), 0).unwrap().to_string()).as_str()).as_ustr(), None).unwrap();
     });
 }
 
 #[test]
 fn nearest_line_search_covers_all_three_distance_arms() {
     testlib::run("org.tiqian.core.LayoutQueriesResidualCoverageTest.nearestLineSearchCoversAllThreeDistanceArms", "org.tiqian.core.LayoutQueriesResidualCoverageTest.nearestLineSearchCoversAllThreeDistanceArms", || {
-        TestTraceRecorder::new("LayoutQueriesResidualCoverageTest").section(&"nearestLineSearchCoversAllThreeDistanceArms");
-        let content = LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_result(&"abcde", &vec![
-    (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_cluster(TextRange::new(0u32, 1u32).unwrap(), &"a", 10.0f64)).clone(),
-    (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_cluster(TextRange::new(4u32, 5u32).unwrap(), &"e", 10.0f64)).clone(),
+        TestTraceRecorder::new(&(UStr::new(&[76,97,121,111,117,116,81,117,101,114,105,101,115,82,101,115,105,100,117,97,108,67,111,118,101,114,97,103,101,84,101,115,116]))).section(UStr::new(&[110,101,97,114,101,115,116,76,105,110,101,83,101,97,114,99,104,67,111,118,101,114,115,65,108,108,84,104,114,101,101,68,105,115,116,97,110,99,101,65,114,109,115]));
+        let content = LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_result(UStr::new(&[97,98,99,100,101]), &vec![
+    (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_cluster(TextRange::new(0u32, 1u32).unwrap(), UStr::new(&[97]), 10.0f64)).clone(),
+    (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_cluster(TextRange::new(4u32, 5u32).unwrap(), UStr::new(&[101]), 10.0f64)).clone(),
 ], &vec![
     (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_line(TextRange::new(0u32, 2u32).unwrap(), 0, 0, 0.0f64, 20.0f64, 15.0f64, 0.0f64, 10.0f64)).clone(),
     (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_line(TextRange::new(4u32, 5u32).unwrap(), 1, 1, 20.0f64, 40.0f64, 35.0f64, 0.0f64, 10.0f64)).clone(),
@@ -5027,14 +5494,14 @@ fn nearest_line_search_covers_all_three_distance_arms() {
 #[test]
 fn rubies_on_other_lines_do_not_affect_this_line_geometry() {
     testlib::run("org.tiqian.core.LayoutQueriesResidualCoverageTest.rubiesOnOtherLinesDoNotAffectThisLineGeometry", "org.tiqian.core.LayoutQueriesResidualCoverageTest.rubiesOnOtherLinesDoNotAffectThisLineGeometry", || {
-        TestTraceRecorder::new("LayoutQueriesResidualCoverageTest").section(&"rubiesOnOtherLinesDoNotAffectThisLineGeometry");
-        let content = LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_result(&"ab", &vec![
-    (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_cluster(TextRange::new(0u32, 1u32).unwrap(), &"a", 10.0f64)).clone(),
-    (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_cluster(TextRange::new(1u32, 2u32).unwrap(), &"b", 10.0f64)).clone(),
+        TestTraceRecorder::new(&(UStr::new(&[76,97,121,111,117,116,81,117,101,114,105,101,115,82,101,115,105,100,117,97,108,67,111,118,101,114,97,103,101,84,101,115,116]))).section(UStr::new(&[114,117,98,105,101,115,79,110,79,116,104,101,114,76,105,110,101,115,68,111,78,111,116,65,102,102,101,99,116,84,104,105,115,76,105,110,101,71,101,111,109,101,116,114,121]));
+        let content = LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_result(UStr::new(&[97,98]), &vec![
+    (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_cluster(TextRange::new(0u32, 1u32).unwrap(), UStr::new(&[97]), 10.0f64)).clone(),
+    (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_cluster(TextRange::new(1u32, 2u32).unwrap(), UStr::new(&[98]), 10.0f64)).clone(),
 ], &vec![
     (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_line(TextRange::new(0u32, 2u32).unwrap(), 0, 1, 0.0f64, 20.0f64, 15.0f64, 0.0f64, 20.0f64)).clone(),
 ], &vec![], &vec![], &vec![], LayoutDebugInfo::new(None, Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![
-    (RubyDecisionInfo::new(TextRange::new(0u32, 2u32).unwrap(), "zhù", 1u32, 10.0f64, 4.0f64, 6.0f64, 0.0f64, Some(0.0f64), Some(0.0f64), Some(30.0f64), Some(vec![]), Some(400), Some("zh-Hans".to_string()), Some(vec![]))).clone(),
+    (RubyDecisionInfo::new(TextRange::new(0u32, 2u32).unwrap(), &(UStr::new(&[122,104,249])), 1u32, 10.0f64, 4.0f64, 6.0f64, 0.0f64, Some(0.0f64), Some(0.0f64), Some(30.0f64), Some(vec![]), Some(400), Some(UString::from("zh-Hans")), Some(vec![]))).clone(),
 ]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), None, None, None, None, Some(vec![]), None, None, Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]),
 Some(vec![]), Some(vec![])), LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_style(10.0f64)).unwrap();
         let positioned = LayoutQueries::layout_queries_positioned_clusters((content).clone());
@@ -5048,24 +5515,22 @@ Some(vec![]), Some(vec![])), LayoutQueriesResidualCoverageTestHelpers::layout_qu
 #[test]
 fn background_trailing_edge_picks_the_largest_glyph_advance() {
     testlib::run("org.tiqian.core.LayoutQueriesResidualCoverageTest.backgroundTrailingEdgePicksTheLargestGlyphAdvance", "org.tiqian.core.LayoutQueriesResidualCoverageTest.backgroundTrailingEdgePicksTheLargestGlyphAdvance", || {
-        TestTraceRecorder::new("LayoutQueriesResidualCoverageTest").section(&"backgroundTrailingEdgePicksTheLargestGlyphAdvance");
+        TestTraceRecorder::new(&(UStr::new(&[76,97,121,111,117,116,81,117,101,114,105,101,115,82,101,115,105,100,117,97,108,67,111,118,101,114,97,103,101,84,101,115,116]))).section(UStr::new(&[98,97,99,107,103,114,111,117,110,100,84,114,97,105,108,105,110,103,69,100,103,101,80,105,99,107,115,84,104,101,76,97,114,103,101,115,116,71,108,121,112,104,65,100,118,97,110,99,101]));
         let clusters = vec![
-    (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_cluster(TextRange::new(0u32, 1u32).unwrap(), &"a", 10.0f64)).clone(),
-    (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_cluster(TextRange::new(1u32, 2u32).unwrap(), &"b", 10.0f64)).clone(),
+    (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_cluster(TextRange::new(0u32, 1u32).unwrap(), UStr::new(&[97]), 10.0f64)).clone(),
+    (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_cluster(TextRange::new(1u32, 2u32).unwrap(), UStr::new(&[98]), 10.0f64)).clone(),
 ];
         let runs = vec![
-    (GlyphRun::new(TextRange::new(1u32, 2u32).unwrap(), "test", vec![
+    (GlyphRun::new(TextRange::new(1u32, 2u32).unwrap(), &(UStr::new(&[116,101,115,116])), vec![
     (Glyph::new(1u32, TextRange::new(1u32, 2u32).unwrap(), 5.0f64, Some(0.0f64), Some(0.0f64), None, None, None, None)).clone(),
     (Glyph::new(2u32, TextRange::new(1u32, 2u32).unwrap(), 6.0f64, Some(0.0f64), Some(0.0f64), None, None, None, None)).clone(),
 ].to_vec(), 10.0f64, Some(vec![]))).clone(),
 ];
-        let content = LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_result(&"ab", &clusters, &vec![
+        let content = LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_result(UStr::new(&[97,98]), &clusters, &vec![
     (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_line(TextRange::new(0u32, 2u32).unwrap(), 0, 1, 0.0f64, 20.0f64, 15.0f64, 0.0f64, 20.0f64)).clone(),
 ], &runs, &vec![], &vec![], LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_empty_debug(), LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_style(10.0f64)).unwrap();
         let output = LayoutQueries::layout_queries_rich_text_background_segments((content).clone(), &vec![
-    (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_segment(TextRange::new(0u32, 2u32).unwrap(), (Box::new({ let __guard = crate::org::tiqian::core::rich_text_role::BACKGROUND_INSTANCE.lock().unwrap_or_else(|e| e.into_inner());
-__guard.clone() })).clone(), RichTextPaint::new(None, Some(Box::new((*crate::org::tiqian::core::rich_text_line_pattern::SOLID_INSTANCE).clone())), RichTextBackgroundPaint::new(Some(0.0f64), Some(0.0f64), Some(0.0f64), Some(0.0f64),
-Some(RichTextBackgroundMetricPolicy::MarkedFaces), Some(Box::new((*crate::org::tiqian::core::rich_text_background_draw_style::FILL_INSTANCE).clone()))).unwrap(), Some(0.0f64)).unwrap(), 0, TextRange::new(0u32, 2u32).unwrap(), 0.0f64, 0.0f64, 20.0f64, 20.0f64, 15.0f64)).clone(),
+    (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_segment(TextRange::new(0u32, 2u32).unwrap(), (Box::new({ let __guard = crate::org::tiqian::core::rich_text_role::BACKGROUND_INSTANCE.lock().unwrap_or_else(|e| e.into_inner()); __guard.clone() })).clone(), RichTextPaint::new(None, Some(Box::new((*crate::org::tiqian::core::rich_text_line_pattern::SOLID_INSTANCE).clone())), RichTextBackgroundPaint::new(Some(0.0f64), Some(0.0f64), Some(0.0f64), Some(0.0f64), Some(RichTextBackgroundMetricPolicy::MarkedFaces), Some(Box::new((*crate::org::tiqian::core::rich_text_background_draw_style::FILL_INSTANCE).clone()))).unwrap(), Some(0.0f64)).unwrap(), 0, TextRange::new(0u32, 2u32).unwrap(), 0.0f64, 0.0f64, 20.0f64, 20.0f64, 15.0f64)).clone(),
 ]);
         let _ = TracedAssertions::traced_assertions_assert_equals_float(16.0f64, output[0usize].right, None).unwrap();
     });
@@ -5074,24 +5539,22 @@ Some(RichTextBackgroundMetricPolicy::MarkedFaces), Some(Box::new((*crate::org::t
 #[test]
 fn background_trailing_edge_keeps_the_first_glyph_when_it_is_largest() {
     testlib::run("org.tiqian.core.LayoutQueriesResidualCoverageTest.backgroundTrailingEdgeKeepsTheFirstGlyphWhenItIsLargest", "org.tiqian.core.LayoutQueriesResidualCoverageTest.backgroundTrailingEdgeKeepsTheFirstGlyphWhenItIsLargest", || {
-        TestTraceRecorder::new("LayoutQueriesResidualCoverageTest").section(&"backgroundTrailingEdgeKeepsTheFirstGlyphWhenItIsLargest");
+        TestTraceRecorder::new(&(UStr::new(&[76,97,121,111,117,116,81,117,101,114,105,101,115,82,101,115,105,100,117,97,108,67,111,118,101,114,97,103,101,84,101,115,116]))).section(UStr::new(&[98,97,99,107,103,114,111,117,110,100,84,114,97,105,108,105,110,103,69,100,103,101,75,101,101,112,115,84,104,101,70,105,114,115,116,71,108,121,112,104,87,104,101,110,73,116,73,115,76,97,114,103,101,115,116]));
         let clusters = vec![
-    (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_cluster(TextRange::new(0u32, 1u32).unwrap(), &"a", 10.0f64)).clone(),
-    (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_cluster(TextRange::new(1u32, 2u32).unwrap(), &"b", 10.0f64)).clone(),
+    (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_cluster(TextRange::new(0u32, 1u32).unwrap(), UStr::new(&[97]), 10.0f64)).clone(),
+    (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_cluster(TextRange::new(1u32, 2u32).unwrap(), UStr::new(&[98]), 10.0f64)).clone(),
 ];
         let runs = vec![
-    (GlyphRun::new(TextRange::new(1u32, 2u32).unwrap(), "test", vec![
+    (GlyphRun::new(TextRange::new(1u32, 2u32).unwrap(), &(UStr::new(&[116,101,115,116])), vec![
     (Glyph::new(1u32, TextRange::new(1u32, 2u32).unwrap(), 6.0f64, Some(0.0f64), Some(0.0f64), None, None, None, None)).clone(),
     (Glyph::new(2u32, TextRange::new(1u32, 2u32).unwrap(), 5.0f64, Some(0.0f64), Some(0.0f64), None, None, None, None)).clone(),
 ].to_vec(), 10.0f64, Some(vec![]))).clone(),
 ];
-        let content = LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_result(&"ab", &clusters, &vec![
+        let content = LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_result(UStr::new(&[97,98]), &clusters, &vec![
     (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_line(TextRange::new(0u32, 2u32).unwrap(), 0, 1, 0.0f64, 20.0f64, 15.0f64, 0.0f64, 20.0f64)).clone(),
 ], &runs, &vec![], &vec![], LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_empty_debug(), LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_style(10.0f64)).unwrap();
         let output = LayoutQueries::layout_queries_rich_text_background_segments((content).clone(), &vec![
-    (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_segment(TextRange::new(0u32, 2u32).unwrap(), (Box::new({ let __guard = crate::org::tiqian::core::rich_text_role::BACKGROUND_INSTANCE.lock().unwrap_or_else(|e| e.into_inner());
-__guard.clone() })).clone(), RichTextPaint::new(None, Some(Box::new((*crate::org::tiqian::core::rich_text_line_pattern::SOLID_INSTANCE).clone())), RichTextBackgroundPaint::new(Some(0.0f64), Some(0.0f64), Some(0.0f64), Some(0.0f64),
-Some(RichTextBackgroundMetricPolicy::MarkedFaces), Some(Box::new((*crate::org::tiqian::core::rich_text_background_draw_style::FILL_INSTANCE).clone()))).unwrap(), Some(0.0f64)).unwrap(), 0, TextRange::new(0u32, 2u32).unwrap(), 0.0f64, 0.0f64, 20.0f64, 20.0f64, 15.0f64)).clone(),
+    (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_segment(TextRange::new(0u32, 2u32).unwrap(), (Box::new({ let __guard = crate::org::tiqian::core::rich_text_role::BACKGROUND_INSTANCE.lock().unwrap_or_else(|e| e.into_inner()); __guard.clone() })).clone(), RichTextPaint::new(None, Some(Box::new((*crate::org::tiqian::core::rich_text_line_pattern::SOLID_INSTANCE).clone())), RichTextBackgroundPaint::new(Some(0.0f64), Some(0.0f64), Some(0.0f64), Some(0.0f64), Some(RichTextBackgroundMetricPolicy::MarkedFaces), Some(Box::new((*crate::org::tiqian::core::rich_text_background_draw_style::FILL_INSTANCE).clone()))).unwrap(), Some(0.0f64)).unwrap(), 0, TextRange::new(0u32, 2u32).unwrap(), 0.0f64, 0.0f64, 20.0f64, 20.0f64, 15.0f64)).clone(),
 ]);
         let _ = TracedAssertions::traced_assertions_assert_equals_float(16.0f64, output[0usize].right, None).unwrap();
     });
@@ -5100,36 +5563,31 @@ Some(RichTextBackgroundMetricPolicy::MarkedFaces), Some(Box::new((*crate::org::t
 #[test]
 fn selection_word_boundary_for_position_prefers_the_closer_later_line() {
     testlib::run("org.tiqian.core.LayoutQueriesResidualCoverageTest.selectionWordBoundaryForPositionPrefersTheCloserLaterLine", "org.tiqian.core.LayoutQueriesResidualCoverageTest.selectionWordBoundaryForPositionPrefersTheCloserLaterLine", || {
-        TestTraceRecorder::new("LayoutQueriesResidualCoverageTest").section(&"selectionWordBoundaryForPositionPrefersTheCloserLaterLine");
-        let content = LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_result(&"甲乙丙丁", &vec![
-    (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_cluster(TextRange::new(0u32, 1u32).unwrap(), &"甲", 10.0f64)).clone(),
-    (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_cluster(TextRange::new(1u32, 2u32).unwrap(), &"乙", 10.0f64)).clone(),
-    (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_cluster(TextRange::new(2u32, 3u32).unwrap(), &"丙", 10.0f64)).clone(),
-    (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_cluster(TextRange::new(3u32, 4u32).unwrap(), &"丁", 10.0f64)).clone(),
+        TestTraceRecorder::new(&(UStr::new(&[76,97,121,111,117,116,81,117,101,114,105,101,115,82,101,115,105,100,117,97,108,67,111,118,101,114,97,103,101,84,101,115,116]))).section(UStr::new(&[115,101,108,101,99,116,105,111,110,87,111,114,100,66,111,117,110,100,97,114,121,70,111,114,80,111,115,105,116,105,111,110,80,114,101,102,101,114,115,84,104,101,67,108,111,115,101,114,76,97,116,101,114,76,105,110,101]));
+        let content = LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_result(UStr::new(&[30002,20057,19993,19969]), &vec![
+    (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_cluster(TextRange::new(0u32, 1u32).unwrap(), UStr::new(&[30002]), 10.0f64)).clone(),
+    (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_cluster(TextRange::new(1u32, 2u32).unwrap(), UStr::new(&[20057]), 10.0f64)).clone(),
+    (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_cluster(TextRange::new(2u32, 3u32).unwrap(), UStr::new(&[19993]), 10.0f64)).clone(),
+    (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_cluster(TextRange::new(3u32, 4u32).unwrap(), UStr::new(&[19969]), 10.0f64)).clone(),
 ], &vec![
     (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_line(TextRange::new(0u32, 2u32).unwrap(), 0, 1, 0.0f64, 20.0f64, 15.0f64, 0.0f64, 20.0f64)).clone(),
     (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_line(TextRange::new(2u32, 4u32).unwrap(), 2, 3, 40.0f64, 60.0f64, 55.0f64, 0.0f64, 20.0f64)).clone(),
 ], &vec![], &vec![], &vec![], LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_empty_debug(), LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_style(10.0f64)).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_equals_rendered(TextRange::new(2u32, 3u32).unwrap().to_string().as_str(), LayoutQueries::layout_queries_get_selection_word_boundary_for_position((content).clone(), 5.0f64,
-50.0f64).unwrap().as_ref().unwrap().to_string().as_str(), None).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_equals_rendered(TextRange::new(0u32, 1u32).unwrap().to_string().as_str(), LayoutQueries::layout_queries_get_selection_word_boundary_for_position((content).clone(), 5.0f64,
-30.0f64).unwrap().as_ref().unwrap().to_string().as_str(), None).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_equals_rendered(TextRange::new(0u32, 1u32).unwrap().to_string().as_str(), LayoutQueries::layout_queries_get_selection_word_boundary_for_position((content).clone(), 5.0f64,
--10.0f64).unwrap().as_ref().unwrap().to_string().as_str(), None).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_equals_rendered(TextRange::new(0u32, 1u32).unwrap().to_string().as_str(), LayoutQueries::layout_queries_get_selection_word_boundary_for_position((content).clone(), 5.0f64,
-10.0f64).unwrap().as_ref().unwrap().to_string().as_str(), None).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_equals_rendered(TextRange::new(2u32, 3u32).unwrap().to_string().as_str(), LayoutQueries::layout_queries_get_selection_word_boundary_for_position((content).clone(), 5.0f64,
-100.0f64).unwrap().as_ref().unwrap().to_string().as_str(), None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_equals_rendered(UString::from(format!("{}", TextRange::new(2u32, 3u32).unwrap().to_string()).as_str()).as_ustr(), UString::from(format!("{}", LayoutQueries::layout_queries_get_selection_word_boundary_for_position((content).clone(), 5.0f64, 50.0f64).unwrap().as_ref().unwrap().to_string()).as_str()).as_ustr(), None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_equals_rendered(UString::from(format!("{}", TextRange::new(0u32, 1u32).unwrap().to_string()).as_str()).as_ustr(), UString::from(format!("{}", LayoutQueries::layout_queries_get_selection_word_boundary_for_position((content).clone(), 5.0f64, 30.0f64).unwrap().as_ref().unwrap().to_string()).as_str()).as_ustr(), None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_equals_rendered(UString::from(format!("{}", TextRange::new(0u32, 1u32).unwrap().to_string()).as_str()).as_ustr(), UString::from(format!("{}", LayoutQueries::layout_queries_get_selection_word_boundary_for_position((content).clone(), 5.0f64, -10.0f64).unwrap().as_ref().unwrap().to_string()).as_str()).as_ustr(), None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_equals_rendered(UString::from(format!("{}", TextRange::new(0u32, 1u32).unwrap().to_string()).as_str()).as_ustr(), UString::from(format!("{}", LayoutQueries::layout_queries_get_selection_word_boundary_for_position((content).clone(), 5.0f64, 10.0f64).unwrap().as_ref().unwrap().to_string()).as_str()).as_ustr(), None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_equals_rendered(UString::from(format!("{}", TextRange::new(2u32, 3u32).unwrap().to_string()).as_str()).as_ustr(), UString::from(format!("{}", LayoutQueries::layout_queries_get_selection_word_boundary_for_position((content).clone(), 5.0f64, 100.0f64).unwrap().as_ref().unwrap().to_string()).as_str()).as_ustr(), None).unwrap();
     });
 }
 
 #[test]
 fn nearest_line_search_updates_to_a_strictly_closer_later_line() {
     testlib::run("org.tiqian.core.LayoutQueriesResidualCoverageTest.nearestLineSearchUpdatesToAStrictlyCloserLaterLine", "org.tiqian.core.LayoutQueriesResidualCoverageTest.nearestLineSearchUpdatesToAStrictlyCloserLaterLine", || {
-        TestTraceRecorder::new("LayoutQueriesResidualCoverageTest").section(&"nearestLineSearchUpdatesToAStrictlyCloserLaterLine");
-        let content = LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_result(&"abcde", &vec![
-    (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_cluster(TextRange::new(0u32, 1u32).unwrap(), &"a", 10.0f64)).clone(),
-    (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_cluster(TextRange::new(5u32, 6u32).unwrap(), &"e", 10.0f64)).clone(),
+        TestTraceRecorder::new(&(UStr::new(&[76,97,121,111,117,116,81,117,101,114,105,101,115,82,101,115,105,100,117,97,108,67,111,118,101,114,97,103,101,84,101,115,116]))).section(UStr::new(&[110,101,97,114,101,115,116,76,105,110,101,83,101,97,114,99,104,85,112,100,97,116,101,115,84,111,65,83,116,114,105,99,116,108,121,67,108,111,115,101,114,76,97,116,101,114,76,105,110,101]));
+        let content = LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_result(UStr::new(&[97,98,99,100,101]), &vec![
+    (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_cluster(TextRange::new(0u32, 1u32).unwrap(), UStr::new(&[97]), 10.0f64)).clone(),
+    (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_cluster(TextRange::new(5u32, 6u32).unwrap(), UStr::new(&[101]), 10.0f64)).clone(),
 ], &vec![
     (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_line(TextRange::new(0u32, 2u32).unwrap(), 0, 0, 0.0f64, 20.0f64, 15.0f64, 0.0f64, 10.0f64)).clone(),
     (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_line(TextRange::new(5u32, 7u32).unwrap(), 1, 1, 20.0f64, 40.0f64, 35.0f64, 10.0f64, 10.0f64)).clone(),
@@ -5141,12 +5599,12 @@ fn nearest_line_search_updates_to_a_strictly_closer_later_line() {
 #[test]
 fn nearest_line_search_covers_both_lambda_copies_of_each_arm() {
     testlib::run("org.tiqian.core.LayoutQueriesResidualCoverageTest.nearestLineSearchCoversBothLambdaCopiesOfEachArm", "org.tiqian.core.LayoutQueriesResidualCoverageTest.nearestLineSearchCoversBothLambdaCopiesOfEachArm", || {
-        TestTraceRecorder::new("LayoutQueriesResidualCoverageTest").section(&"nearestLineSearchCoversBothLambdaCopiesOfEachArm");
-        let content = LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_result(&"abcdefghij", &vec![
-    (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_cluster(TextRange::new(2u32, 3u32).unwrap(), &"c", 10.0f64)).clone(),
-    (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_cluster(TextRange::new(3u32, 4u32).unwrap(), &"d", 10.0f64)).clone(),
-    (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_cluster(TextRange::new(6u32, 7u32).unwrap(), &"g", 10.0f64)).clone(),
-    (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_cluster(TextRange::new(7u32, 8u32).unwrap(), &"h", 10.0f64)).clone(),
+        TestTraceRecorder::new(&(UStr::new(&[76,97,121,111,117,116,81,117,101,114,105,101,115,82,101,115,105,100,117,97,108,67,111,118,101,114,97,103,101,84,101,115,116]))).section(UStr::new(&[110,101,97,114,101,115,116,76,105,110,101,83,101,97,114,99,104,67,111,118,101,114,115,66,111,116,104,76,97,109,98,100,97,67,111,112,105,101,115,79,102,69,97,99,104,65,114,109]));
+        let content = LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_result(UStr::new(&[97,98,99,100,101,102,103,104,105,106]), &vec![
+    (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_cluster(TextRange::new(2u32, 3u32).unwrap(), UStr::new(&[99]), 10.0f64)).clone(),
+    (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_cluster(TextRange::new(3u32, 4u32).unwrap(), UStr::new(&[100]), 10.0f64)).clone(),
+    (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_cluster(TextRange::new(6u32, 7u32).unwrap(), UStr::new(&[103]), 10.0f64)).clone(),
+    (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_cluster(TextRange::new(7u32, 8u32).unwrap(), UStr::new(&[104]), 10.0f64)).clone(),
 ], &vec![
     (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_line(TextRange::new(2u32, 4u32).unwrap(), 0, 1, 0.0f64, 20.0f64, 15.0f64, 0.0f64, 20.0f64)).clone(),
     (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_line(TextRange::new(6u32, 8u32).unwrap(), 2, 3, 20.0f64, 40.0f64, 35.0f64, 0.0f64, 20.0f64)).clone(),
@@ -5160,13 +5618,12 @@ fn nearest_line_search_covers_both_lambda_copies_of_each_arm() {
 #[test]
 fn uniform_text_style_policy_picks_the_last_matching_span() {
     testlib::run("org.tiqian.core.LayoutQueriesResidualCoverageTest.uniformTextStylePolicyPicksTheLastMatchingSpan", "org.tiqian.core.LayoutQueriesResidualCoverageTest.uniformTextStylePolicyPicksTheLastMatchingSpan", || {
-        TestTraceRecorder::new("LayoutQueriesResidualCoverageTest").section(&"uniformTextStylePolicyPicksTheLastMatchingSpan");
-        let uniform = RichTextPaint::new(None, Some(Box::new((*crate::org::tiqian::core::rich_text_line_pattern::SOLID_INSTANCE).clone())), RichTextBackgroundPaint::new(Some(0.0f64), Some(0.0f64), Some(0.0f64), Some(0.0f64), Some(RichTextBackgroundMetricPolicy::UniformTextStyle),
-Some(Box::new((*crate::org::tiqian::core::rich_text_background_draw_style::FILL_INSTANCE).clone()))).unwrap(), Some(0.0f64)).unwrap();
-        let content = LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_result(&"abc", &vec![
-    (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_cluster(TextRange::new(0u32, 1u32).unwrap(), &"a", 10.0f64)).clone(),
-    (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_cluster(TextRange::new(1u32, 2u32).unwrap(), &"b", 10.0f64)).clone(),
-    (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_cluster(TextRange::new(2u32, 3u32).unwrap(), &"c", 10.0f64)).clone(),
+        TestTraceRecorder::new(&(UStr::new(&[76,97,121,111,117,116,81,117,101,114,105,101,115,82,101,115,105,100,117,97,108,67,111,118,101,114,97,103,101,84,101,115,116]))).section(UStr::new(&[117,110,105,102,111,114,109,84,101,120,116,83,116,121,108,101,80,111,108,105,99,121,80,105,99,107,115,84,104,101,76,97,115,116,77,97,116,99,104,105,110,103,83,112,97,110]));
+        let uniform = RichTextPaint::new(None, Some(Box::new((*crate::org::tiqian::core::rich_text_line_pattern::SOLID_INSTANCE).clone())), RichTextBackgroundPaint::new(Some(0.0f64), Some(0.0f64), Some(0.0f64), Some(0.0f64), Some(RichTextBackgroundMetricPolicy::UniformTextStyle), Some(Box::new((*crate::org::tiqian::core::rich_text_background_draw_style::FILL_INSTANCE).clone()))).unwrap(), Some(0.0f64)).unwrap();
+        let content = LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_result(UStr::new(&[97,98,99]), &vec![
+    (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_cluster(TextRange::new(0u32, 1u32).unwrap(), UStr::new(&[97]), 10.0f64)).clone(),
+    (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_cluster(TextRange::new(1u32, 2u32).unwrap(), UStr::new(&[98]), 10.0f64)).clone(),
+    (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_cluster(TextRange::new(2u32, 3u32).unwrap(), UStr::new(&[99]), 10.0f64)).clone(),
 ], &vec![
     (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_line(TextRange::new(0u32, 3u32).unwrap(), 0, 2, 0.0f64, 20.0f64, 15.0f64, 0.0f64, 30.0f64)).clone(),
 ], &vec![], &vec![
@@ -5174,8 +5631,7 @@ Some(Box::new((*crate::org::tiqian::core::rich_text_background_draw_style::FILL_
     (TextSpan::new(TextRange::new(1u32, 3u32).unwrap(), LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_style(40.0f64))).clone(),
 ], &vec![], LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_empty_debug(), LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_style(10.0f64)).unwrap();
         let inside = LayoutQueries::layout_queries_rich_text_background_segments((content).clone(), &vec![
-    (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_segment(TextRange::new(2u32, 3u32).unwrap(), (Box::new({ let __guard = crate::org::tiqian::core::rich_text_role::BACKGROUND_INSTANCE.lock().unwrap_or_else(|e| e.into_inner());
-__guard.clone() })).clone(), (uniform).clone(), 0, TextRange::new(2u32, 3u32).unwrap(), 20.0f64, 0.0f64, 30.0f64, 20.0f64, 15.0f64)).clone(),
+    (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_segment(TextRange::new(2u32, 3u32).unwrap(), (Box::new({ let __guard = crate::org::tiqian::core::rich_text_role::BACKGROUND_INSTANCE.lock().unwrap_or_else(|e| e.into_inner()); __guard.clone() })).clone(), (uniform).clone(), 0, TextRange::new(2u32, 3u32).unwrap(), 20.0f64, 0.0f64, 30.0f64, 20.0f64, 15.0f64)).clone(),
 ]);
         let _ = TracedAssertions::traced_assertions_assert_equals_float(0.0f64, inside[0usize].top, None).unwrap();
     });
@@ -5184,21 +5640,18 @@ __guard.clone() })).clone(), (uniform).clone(), 0, TextRange::new(2u32, 3u32).un
 #[test]
 fn decoration_line_y_picks_the_last_matching_span() {
     testlib::run("org.tiqian.core.LayoutQueriesResidualCoverageTest.decorationLineYPicksTheLastMatchingSpan", "org.tiqian.core.LayoutQueriesResidualCoverageTest.decorationLineYPicksTheLastMatchingSpan", || {
-        TestTraceRecorder::new("LayoutQueriesResidualCoverageTest").section(&"decorationLineYPicksTheLastMatchingSpan");
-        let content = LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_result(&"abc", &vec![
-    (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_cluster(TextRange::new(0u32, 1u32).unwrap(), &"a", 10.0f64)).clone(),
-    (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_cluster(TextRange::new(1u32, 2u32).unwrap(), &"b", 10.0f64)).clone(),
-    (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_cluster(TextRange::new(2u32, 3u32).unwrap(), &"c", 10.0f64)).clone(),
+        TestTraceRecorder::new(&(UStr::new(&[76,97,121,111,117,116,81,117,101,114,105,101,115,82,101,115,105,100,117,97,108,67,111,118,101,114,97,103,101,84,101,115,116]))).section(UStr::new(&[100,101,99,111,114,97,116,105,111,110,76,105,110,101,89,80,105,99,107,115,84,104,101,76,97,115,116,77,97,116,99,104,105,110,103,83,112,97,110]));
+        let content = LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_result(UStr::new(&[97,98,99]), &vec![
+    (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_cluster(TextRange::new(0u32, 1u32).unwrap(), UStr::new(&[97]), 10.0f64)).clone(),
+    (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_cluster(TextRange::new(1u32, 2u32).unwrap(), UStr::new(&[98]), 10.0f64)).clone(),
+    (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_cluster(TextRange::new(2u32, 3u32).unwrap(), UStr::new(&[99]), 10.0f64)).clone(),
 ], &vec![
     (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_line(TextRange::new(0u32, 3u32).unwrap(), 0, 2, 0.0f64, 20.0f64, 15.0f64, 0.0f64, 30.0f64)).clone(),
 ], &vec![], &vec![
     (TextSpan::new(TextRange::new(0u32, 2u32).unwrap(), LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_style(10.0f64))).clone(),
     (TextSpan::new(TextRange::new(1u32, 3u32).unwrap(), LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_style(20.0f64))).clone(),
 ], &vec![], LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_empty_debug(), LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_style(10.0f64)).unwrap();
-        let value = LayoutQueries::layout_queries_rich_text_decoration_line_y((content).clone(), LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_segment(TextRange::new(2u32, 3u32).unwrap(), (Box::new({ let __guard =
-crate::org::tiqian::core::rich_text_role::UNDERLINE_INSTANCE.lock().unwrap_or_else(|e| e.into_inner()); __guard.clone() })).clone(), RichTextPaint::new(None, Some(Box::new((*crate::org::tiqian::core::rich_text_line_pattern::SOLID_INSTANCE).clone())),
-RichTextBackgroundPaint::new(Some(0.0f64), Some(0.0f64), Some(0.0f64), Some(0.0f64), Some(RichTextBackgroundMetricPolicy::MarkedFaces), Some(Box::new((*crate::org::tiqian::core::rich_text_background_draw_style::FILL_INSTANCE).clone()))).unwrap(), Some(0.0f64)).unwrap(), 0,
-TextRange::new(2u32, 3u32).unwrap(), 20.0f64, 0.0f64, 30.0f64, 20.0f64, 15.0f64), 1.0f64).unwrap();
+        let value = LayoutQueries::layout_queries_rich_text_decoration_line_y((content).clone(), LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_segment(TextRange::new(2u32, 3u32).unwrap(), (Box::new({ let __guard = crate::org::tiqian::core::rich_text_role::UNDERLINE_INSTANCE.lock().unwrap_or_else(|e| e.into_inner()); __guard.clone() })).clone(), RichTextPaint::new(None, Some(Box::new((*crate::org::tiqian::core::rich_text_line_pattern::SOLID_INSTANCE).clone())), RichTextBackgroundPaint::new(Some(0.0f64), Some(0.0f64), Some(0.0f64), Some(0.0f64), Some(RichTextBackgroundMetricPolicy::MarkedFaces), Some(Box::new((*crate::org::tiqian::core::rich_text_background_draw_style::FILL_INSTANCE).clone()))).unwrap(), Some(0.0f64)).unwrap(), 0, TextRange::new(2u32, 3u32).unwrap(), 20.0f64, 0.0f64, 30.0f64, 20.0f64, 15.0f64), 1.0f64).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_equals_float(18.6f64, value, None).unwrap();
     });
 }
@@ -5206,13 +5659,12 @@ TextRange::new(2u32, 3u32).unwrap(), 20.0f64, 0.0f64, 30.0f64, 20.0f64, 15.0f64)
 #[test]
 fn uniform_text_style_policy_keeps_the_earlier_span_when_a_later_one_misses() {
     testlib::run("org.tiqian.core.LayoutQueriesResidualCoverageTest.uniformTextStylePolicyKeepsTheEarlierSpanWhenALaterOneMisses", "org.tiqian.core.LayoutQueriesResidualCoverageTest.uniformTextStylePolicyKeepsTheEarlierSpanWhenALaterOneMisses", || {
-        TestTraceRecorder::new("LayoutQueriesResidualCoverageTest").section(&"uniformTextStylePolicyKeepsTheEarlierSpanWhenALaterOneMisses");
-        let uniform = RichTextPaint::new(None, Some(Box::new((*crate::org::tiqian::core::rich_text_line_pattern::SOLID_INSTANCE).clone())), RichTextBackgroundPaint::new(Some(0.0f64), Some(0.0f64), Some(0.0f64), Some(0.0f64), Some(RichTextBackgroundMetricPolicy::UniformTextStyle),
-Some(Box::new((*crate::org::tiqian::core::rich_text_background_draw_style::FILL_INSTANCE).clone()))).unwrap(), Some(0.0f64)).unwrap();
-        let content = LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_result(&"abc", &vec![
-    (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_cluster(TextRange::new(0u32, 1u32).unwrap(), &"a", 10.0f64)).clone(),
-    (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_cluster(TextRange::new(1u32, 2u32).unwrap(), &"b", 10.0f64)).clone(),
-    (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_cluster(TextRange::new(2u32, 3u32).unwrap(), &"c", 10.0f64)).clone(),
+        TestTraceRecorder::new(&(UStr::new(&[76,97,121,111,117,116,81,117,101,114,105,101,115,82,101,115,105,100,117,97,108,67,111,118,101,114,97,103,101,84,101,115,116]))).section(UStr::new(&[117,110,105,102,111,114,109,84,101,120,116,83,116,121,108,101,80,111,108,105,99,121,75,101,101,112,115,84,104,101,69,97,114,108,105,101,114,83,112,97,110,87,104,101,110,65,76,97,116,101,114,79,110,101,77,105,115,115,101,115]));
+        let uniform = RichTextPaint::new(None, Some(Box::new((*crate::org::tiqian::core::rich_text_line_pattern::SOLID_INSTANCE).clone())), RichTextBackgroundPaint::new(Some(0.0f64), Some(0.0f64), Some(0.0f64), Some(0.0f64), Some(RichTextBackgroundMetricPolicy::UniformTextStyle), Some(Box::new((*crate::org::tiqian::core::rich_text_background_draw_style::FILL_INSTANCE).clone()))).unwrap(), Some(0.0f64)).unwrap();
+        let content = LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_result(UStr::new(&[97,98,99]), &vec![
+    (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_cluster(TextRange::new(0u32, 1u32).unwrap(), UStr::new(&[97]), 10.0f64)).clone(),
+    (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_cluster(TextRange::new(1u32, 2u32).unwrap(), UStr::new(&[98]), 10.0f64)).clone(),
+    (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_cluster(TextRange::new(2u32, 3u32).unwrap(), UStr::new(&[99]), 10.0f64)).clone(),
 ], &vec![
     (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_line(TextRange::new(0u32, 3u32).unwrap(), 0, 2, 0.0f64, 20.0f64, 15.0f64, 0.0f64, 30.0f64)).clone(),
 ], &vec![], &vec![
@@ -5220,8 +5672,7 @@ Some(Box::new((*crate::org::tiqian::core::rich_text_background_draw_style::FILL_
     (TextSpan::new(TextRange::new(1u32, 2u32).unwrap(), LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_style(10.0f64))).clone(),
 ], &vec![], LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_empty_debug(), LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_style(10.0f64)).unwrap();
         let output = LayoutQueries::layout_queries_rich_text_background_segments((content).clone(), &vec![
-    (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_segment(TextRange::new(0u32, 1u32).unwrap(), (Box::new({ let __guard = crate::org::tiqian::core::rich_text_role::BACKGROUND_INSTANCE.lock().unwrap_or_else(|e| e.into_inner());
-__guard.clone() })).clone(), (uniform).clone(), 0, TextRange::new(0u32, 1u32).unwrap(), 0.0f64, 0.0f64, 10.0f64, 20.0f64, 15.0f64)).clone(),
+    (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_segment(TextRange::new(0u32, 1u32).unwrap(), (Box::new({ let __guard = crate::org::tiqian::core::rich_text_role::BACKGROUND_INSTANCE.lock().unwrap_or_else(|e| e.into_inner()); __guard.clone() })).clone(), (uniform).clone(), 0, TextRange::new(0u32, 1u32).unwrap(), 0.0f64, 0.0f64, 10.0f64, 20.0f64, 15.0f64)).clone(),
 ]);
         let _ = TracedAssertions::traced_assertions_assert_equals_float(0.0f64, output[0usize].top, None).unwrap();
     });
@@ -5230,21 +5681,18 @@ __guard.clone() })).clone(), (uniform).clone(), 0, TextRange::new(0u32, 1u32).un
 #[test]
 fn decoration_line_y_keeps_the_earlier_span_when_a_later_one_misses() {
     testlib::run("org.tiqian.core.LayoutQueriesResidualCoverageTest.decorationLineYKeepsTheEarlierSpanWhenALaterOneMisses", "org.tiqian.core.LayoutQueriesResidualCoverageTest.decorationLineYKeepsTheEarlierSpanWhenALaterOneMisses", || {
-        TestTraceRecorder::new("LayoutQueriesResidualCoverageTest").section(&"decorationLineYKeepsTheEarlierSpanWhenALaterOneMisses");
-        let content = LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_result(&"abc", &vec![
-    (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_cluster(TextRange::new(0u32, 1u32).unwrap(), &"a", 10.0f64)).clone(),
-    (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_cluster(TextRange::new(1u32, 2u32).unwrap(), &"b", 10.0f64)).clone(),
-    (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_cluster(TextRange::new(2u32, 3u32).unwrap(), &"c", 10.0f64)).clone(),
+        TestTraceRecorder::new(&(UStr::new(&[76,97,121,111,117,116,81,117,101,114,105,101,115,82,101,115,105,100,117,97,108,67,111,118,101,114,97,103,101,84,101,115,116]))).section(UStr::new(&[100,101,99,111,114,97,116,105,111,110,76,105,110,101,89,75,101,101,112,115,84,104,101,69,97,114,108,105,101,114,83,112,97,110,87,104,101,110,65,76,97,116,101,114,79,110,101,77,105,115,115,101,115]));
+        let content = LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_result(UStr::new(&[97,98,99]), &vec![
+    (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_cluster(TextRange::new(0u32, 1u32).unwrap(), UStr::new(&[97]), 10.0f64)).clone(),
+    (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_cluster(TextRange::new(1u32, 2u32).unwrap(), UStr::new(&[98]), 10.0f64)).clone(),
+    (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_cluster(TextRange::new(2u32, 3u32).unwrap(), UStr::new(&[99]), 10.0f64)).clone(),
 ], &vec![
     (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_line(TextRange::new(0u32, 3u32).unwrap(), 0, 2, 0.0f64, 20.0f64, 15.0f64, 0.0f64, 30.0f64)).clone(),
 ], &vec![], &vec![
     (TextSpan::new(TextRange::new(0u32, 3u32).unwrap(), LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_style(20.0f64))).clone(),
     (TextSpan::new(TextRange::new(1u32, 2u32).unwrap(), LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_style(10.0f64))).clone(),
 ], &vec![], LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_empty_debug(), LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_style(10.0f64)).unwrap();
-        let value = LayoutQueries::layout_queries_rich_text_decoration_line_y((content).clone(), LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_segment(TextRange::new(0u32, 1u32).unwrap(), (Box::new({ let __guard =
-crate::org::tiqian::core::rich_text_role::UNDERLINE_INSTANCE.lock().unwrap_or_else(|e| e.into_inner()); __guard.clone() })).clone(), RichTextPaint::new(None, Some(Box::new((*crate::org::tiqian::core::rich_text_line_pattern::SOLID_INSTANCE).clone())),
-RichTextBackgroundPaint::new(Some(0.0f64), Some(0.0f64), Some(0.0f64), Some(0.0f64), Some(RichTextBackgroundMetricPolicy::MarkedFaces), Some(Box::new((*crate::org::tiqian::core::rich_text_background_draw_style::FILL_INSTANCE).clone()))).unwrap(), Some(0.0f64)).unwrap(), 0,
-TextRange::new(0u32, 1u32).unwrap(), 0.0f64, 0.0f64, 10.0f64, 20.0f64, 15.0f64), 1.0f64).unwrap();
+        let value = LayoutQueries::layout_queries_rich_text_decoration_line_y((content).clone(), LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_segment(TextRange::new(0u32, 1u32).unwrap(), (Box::new({ let __guard = crate::org::tiqian::core::rich_text_role::UNDERLINE_INSTANCE.lock().unwrap_or_else(|e| e.into_inner()); __guard.clone() })).clone(), RichTextPaint::new(None, Some(Box::new((*crate::org::tiqian::core::rich_text_line_pattern::SOLID_INSTANCE).clone())), RichTextBackgroundPaint::new(Some(0.0f64), Some(0.0f64), Some(0.0f64), Some(0.0f64), Some(RichTextBackgroundMetricPolicy::MarkedFaces), Some(Box::new((*crate::org::tiqian::core::rich_text_background_draw_style::FILL_INSTANCE).clone()))).unwrap(), Some(0.0f64)).unwrap(), 0, TextRange::new(0u32, 1u32).unwrap(), 0.0f64, 0.0f64, 10.0f64, 20.0f64, 15.0f64), 1.0f64).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_equals_float(18.6f64, value, None).unwrap();
     });
 }
@@ -5253,12 +5701,12 @@ TextRange::new(0u32, 1u32).unwrap(), 0.0f64, 0.0f64, 10.0f64, 20.0f64, 15.0f64),
 pub struct LayoutQueriesResidualCoverageTestHelpers;
 
 impl LayoutQueriesResidualCoverageTestHelpers {
-    pub fn layout_queries_residual_coverage_test_helpers_render_nullable_source_stops(v: Option<Vec<f64>>) -> String {
-        return match &(v) { None => "-".to_string(), Some(__option33) => LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_render_source_stops(&(*__option33).clone()).to_string() };
+    pub fn layout_queries_residual_coverage_test_helpers_render_nullable_source_stops(v: Option<Vec<f64>>) -> UString {
+        return match &(v) { None => UString::from("-"), Some(__option33) => LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_render_source_stops(&(*__option33).clone()).to_ustring() };
     }
 
-    pub fn layout_queries_residual_coverage_test_helpers_render_source_stops(v: &[f64]) -> String {
-        return {
+    pub fn layout_queries_residual_coverage_test_helpers_render_source_stops(v: &[f64]) -> UString {
+        return UString::from(format!("{}", {
         let mut out = String::new();
         out.push('[');
         let arr = v;
@@ -5271,11 +5719,11 @@ impl LayoutQueriesResidualCoverageTestHelpers {
         }
         out.push(']');
         out
-    };
+    }).as_str());
     }
 
-    pub fn layout_queries_residual_coverage_test_helpers_cluster(range: TextRange, text: &str, advance: f64) -> Cluster {
-        return Cluster::new((range).clone(), text, "test", advance, Some((text).to_string()), Some(0.0f64), Some(0.0f64), Some(0.0f64));
+    pub fn layout_queries_residual_coverage_test_helpers_cluster(range: TextRange, text: &UStr, advance: f64) -> Cluster {
+        return Cluster::new((range).clone(), text, &(UStr::new(&[116,101,115,116])), advance, Some((text).to_ustring()), Some(0.0f64), Some(0.0f64), Some(0.0f64));
     }
 
     pub fn layout_queries_residual_coverage_test_helpers_line(range: TextRange, cluster_start: u32, cluster_end: u32, top: f64, bottom: f64, baseline: f64, indent: f64, width: f64) -> LineBox {
@@ -5283,20 +5731,16 @@ impl LayoutQueriesResidualCoverageTestHelpers {
     }
 
     pub fn layout_queries_residual_coverage_test_helpers_style(font_size: f64) -> TextStyle {
-        return TextStyle::new(Some(vec![]), Some(font_size), Some("zh-Hans".to_string()), Some(400), Some(false), Some(0.0f64), Some(InlineAttachment::None));
+        return TextStyle::new(Some(vec![]), Some(font_size), Some(UString::from("zh-Hans")), Some(400), Some(false), Some(0.0f64), Some(InlineAttachment::None));
     }
 
     pub fn layout_queries_residual_coverage_test_helpers_empty_debug() -> LayoutDebugInfo {
-        return LayoutDebugInfo::new(None, Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), None, None,
-None, None, Some(vec![]), None, None, Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]));
+        return LayoutDebugInfo::new(None, Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), None, None, None, None, Some(vec![]), None, None, Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]));
     }
 
-    pub fn layout_queries_residual_coverage_test_helpers_result(text: &str, clusters: &Vec<Cluster>, lines: &Vec<LineBox>, glyph_runs: &Vec<GlyphRun>, spans: &Vec<TextSpan>, inline_objects: &Vec<InlineObjectSpan>, debug: LayoutDebugInfo, text_style: TextStyle) ->
-Result<LayoutResult, TextRangeError> {
+    pub fn layout_queries_residual_coverage_test_helpers_result(text: &UStr, clusters: &Vec<Cluster>, lines: &Vec<LineBox>, glyph_runs: &Vec<GlyphRun>, spans: &Vec<TextSpan>, inline_objects: &Vec<InlineObjectSpan>, debug: LayoutDebugInfo, text_style: TextStyle) -> Result<LayoutResult, TextRangeError> {
         let content = TiqianTextContent::new(text, Some((spans).clone()), Some(vec![]), Some(vec![]), Some(vec![]));
-        let input = LayoutInput::new((content).clone(), Some((text_style).clone()), Some(ParagraphStyle::new(Some(LastLineAlignment::Start), Some(WritingMode::HorizontalTb), None, None, Some((Ic::zero()).clone()), Some(MeasureAdaptiveFirstLineIndent::new(Some(14.0f64),
-Some(1.0f64), Some(2.0f64))), Some(LineLengthGrid::new(Some(true), None)), Some(RubyLineHeightMode::PerLine), Some(ParagraphStyle::PARAGRAPH_STYLE_DEFAULT_INLINE_OBJECT_MINIMUM_CLEARANCE_EM), Some(ParagraphStyle::PARAGRAPH_STYLE_DEFAULT_EMPHASIS_DOT_GAP_EM))),
-LayoutConstraints::new(100.0f64, Some(f64::INFINITY), Some(2147483647))?, Some((*crate::org::tiqian::core::built_in_layout_profiles::BUILT_IN_LAYOUT_PROFILES_CLREQ_HORIZONTAL).clone()), Some(vec![]), Some(vec![]), Some(vec![]), Some((inline_objects).clone()));
+        let input = LayoutInput::new((content).clone(), Some((text_style).clone()), Some(ParagraphStyle::new(Some(LastLineAlignment::Start), Some(WritingMode::HorizontalTb), None, None, Some((Ic::zero()).clone()), Some(MeasureAdaptiveFirstLineIndent::new(Some(14.0f64), Some(1.0f64), Some(2.0f64))), Some(LineLengthGrid::new(Some(true), None)), Some(RubyLineHeightMode::PerLine), Some(ParagraphStyle::PARAGRAPH_STYLE_DEFAULT_INLINE_OBJECT_MINIMUM_CLEARANCE_EM), Some(ParagraphStyle::PARAGRAPH_STYLE_DEFAULT_EMPHASIS_DOT_GAP_EM))), LayoutConstraints::new(100.0f64, Some(f64::INFINITY), Some(2147483647))?, Some((*crate::org::tiqian::core::built_in_layout_profiles::BUILT_IN_LAYOUT_PROFILES_CLREQ_HORIZONTAL).clone()), Some(vec![]), Some(vec![]), Some(vec![]), Some((inline_objects).clone()));
         return Ok(LayoutResult::new((input).clone(), Size::new(30.0f64, 40.0f64), (clusters).clone(), (glyph_runs).clone(), (lines).clone(), (debug).clone()));
     }
 
@@ -5305,118 +5749,130 @@ LayoutConstraints::new(100.0f64, Some(f64::INFINITY), Some(2147483647))?, Some((
     }
 
     pub fn layout_queries_residual_coverage_test_helpers_plain_segment(range: TextRange) -> Result<RichTextLineSegment, TextRangeError> {
-        return Ok(LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_segment((range).clone(), (Box::new({ let __guard = crate::org::tiqian::core::rich_text_role::BACKGROUND_INSTANCE.lock().unwrap_or_else(|e| e.into_inner()); __guard.clone()
-})).clone(), RichTextPaint::new(None, Some(Box::new((*crate::org::tiqian::core::rich_text_line_pattern::SOLID_INSTANCE).clone())), RichTextBackgroundPaint::new(Some(0.0f64), Some(0.0f64), Some(0.0f64), Some(0.0f64), Some(RichTextBackgroundMetricPolicy::MarkedFaces),
-Some(Box::new((*crate::org::tiqian::core::rich_text_background_draw_style::FILL_INSTANCE).clone())))?, Some(0.0f64))?, 0, (range).clone(), 0.0f64, 0.0f64, 20.0f64, 20.0f64, 15.0f64));
+        return Ok(LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_segment((range).clone(), (Box::new({ let __guard = crate::org::tiqian::core::rich_text_role::BACKGROUND_INSTANCE.lock().unwrap_or_else(|e| e.into_inner()); __guard.clone() })).clone(), RichTextPaint::new(None, Some(Box::new((*crate::org::tiqian::core::rich_text_line_pattern::SOLID_INSTANCE).clone())), RichTextBackgroundPaint::new(Some(0.0f64), Some(0.0f64), Some(0.0f64), Some(0.0f64), Some(RichTextBackgroundMetricPolicy::MarkedFaces), Some(Box::new((*crate::org::tiqian::core::rich_text_background_draw_style::FILL_INSTANCE).clone())))?, Some(0.0f64))?, 0, (range).clone(), 0.0f64, 0.0f64, 20.0f64, 20.0f64, 15.0f64));
     }
 
-    pub fn layout_queries_residual_coverage_test_helpers_render_segments(values: &Vec<RichTextLineSegment>) -> Result<String, UStringFault> {
+    pub fn layout_queries_residual_coverage_test_helpers_render_segments(values: &Vec<RichTextLineSegment>) -> Result<UString, UStringFault> {
         let mut output = Vec::<u16>::new();
         if let Some(&unit) = output.last() {
-            if unit >= 55296 && unit <= 56319 && !"[".is_empty() {
-                return Err(UStringFault::UnpairedSurrogate { unit: u32::from(unit) });
-            }
-        }
-        output.extend("[".encode_utf16());
-        let mut index = 0u32;
-        while (i32::from_ne_bytes((index).to_ne_bytes())) < (i32::from_ne_bytes((u32::try_from((values.len()) & 0xFFFF_FFFF).unwrap_or(0)).to_ne_bytes())) {
-            if i32::from_ne_bytes((index).to_ne_bytes()) > (0) {
-                if let Some(&unit) = output.last() {
-                    if unit >= 55296 && unit <= 56319 && !", ".is_empty() {
-                        return Err(UStringFault::UnpairedSurrogate { unit: u32::from(unit) });
-                    }
-                }
-                output.extend(", ".encode_utf16());
-            }
-            if let Some(&unit) = output.last() {
-                if unit >= 55296 && unit <= 56319 && !TestTraceRender::test_trace_render_cap((values[usize::try_from(index).unwrap_or(0)]).clone().to_string().as_str())?.is_empty() {
+            if unit >= 55296 && unit <= 56319 && !UString::from("[").is_empty() {
+                if !UString::from("[").encode_utf16().next().map_or(false, |head| head >= 56320 && head <= 57343) {
                     return Err(UStringFault::UnpairedSurrogate { unit: u32::from(unit) });
                 }
             }
-            output.extend(TestTraceRender::test_trace_render_cap((values[usize::try_from(index).unwrap_or(0)]).clone().to_string().as_str())?.encode_utf16());
+        }
+        output.extend(UString::from("[").encode_utf16());
+        let mut index = 0u32;
+        while (i32::from_ne_bytes(((index) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((values.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
+            if i32::from_ne_bytes(((index) as i32).to_ne_bytes()) > (0) {
+                if let Some(&unit) = output.last() {
+                    if unit >= 55296 && unit <= 56319 && !UString::from(", ").is_empty() {
+                        if !UString::from(", ").encode_utf16().next().map_or(false, |head| head >= 56320 && head <= 57343) {
+                            return Err(UStringFault::UnpairedSurrogate { unit: u32::from(unit) });
+                        }
+                    }
+                }
+                output.extend(UString::from(", ").encode_utf16());
+            }
+            if let Some(&unit) = output.last() {
+                if unit >= 55296 && unit <= 56319 && !TestTraceRender::test_trace_render_cap(UString::from(format!("{}", (values[usize::try_from(index).unwrap_or(0)]).clone().to_string()).as_str()).as_ustr())?.is_empty() {
+                    if !TestTraceRender::test_trace_render_cap(UString::from(format!("{}", (values[usize::try_from(index).unwrap_or(0)]).clone().to_string()).as_str()).as_ustr())?.encode_utf16().next().map_or(false, |head| head >= 56320 && head <= 57343) {
+                        return Err(UStringFault::UnpairedSurrogate { unit: u32::from(unit) });
+                    }
+                }
+            }
+            output.extend(TestTraceRender::test_trace_render_cap(UString::from(format!("{}", (values[usize::try_from(index).unwrap_or(0)]).clone().to_string()).as_str()).as_ustr())?.encode_utf16());
             index = u32::wrapping_add(index, 1);
         }
         if let Some(&unit) = output.last() {
-            if unit >= 55296 && unit <= 56319 && !"]".is_empty() {
-                return Err(UStringFault::UnpairedSurrogate { unit: u32::from(unit) });
+            if unit >= 55296 && unit <= 56319 && !UString::from("]").is_empty() {
+                if !UString::from("]").encode_utf16().next().map_or(false, |head| head >= 56320 && head <= 57343) {
+                    return Err(UStringFault::UnpairedSurrogate { unit: u32::from(unit) });
+                }
             }
         }
-        output.extend("]".encode_utf16());
-        return Ok(String::from_utf16(output.as_slice()).map_err(|_| UStringFault::UnpairedSurrogate { unit: u32::from(output[output.len() - 1]) })?);
+        output.extend(UString::from("]").encode_utf16());
+        return Ok(UString::from_utf16(output.as_slice()).map_err(|_| UStringFault::UnpairedSurrogate { unit: u32::from(output[output.len() - 1]) })?);
     }
 
-    pub fn layout_queries_residual_coverage_test_helpers_render_rects(values: &Vec<Rect>) -> Result<String, UStringFault> {
+    pub fn layout_queries_residual_coverage_test_helpers_render_rects(values: &Vec<Rect>) -> Result<UString, UStringFault> {
         let mut output = Vec::<u16>::new();
         if let Some(&unit) = output.last() {
-            if unit >= 55296 && unit <= 56319 && !"[".is_empty() {
-                return Err(UStringFault::UnpairedSurrogate { unit: u32::from(unit) });
+            if unit >= 55296 && unit <= 56319 && !UString::from("[").is_empty() {
+                if !UString::from("[").encode_utf16().next().map_or(false, |head| head >= 56320 && head <= 57343) {
+                    return Err(UStringFault::UnpairedSurrogate { unit: u32::from(unit) });
+                }
             }
         }
-        output.extend("[".encode_utf16());
+        output.extend(UString::from("[").encode_utf16());
         let mut index = 0u32;
-        while (i32::from_ne_bytes((index).to_ne_bytes())) < (i32::from_ne_bytes((u32::try_from((values.len()) & 0xFFFF_FFFF).unwrap_or(0)).to_ne_bytes())) {
-            if i32::from_ne_bytes((index).to_ne_bytes()) > (0) {
+        while (i32::from_ne_bytes(((index) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((values.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
+            if i32::from_ne_bytes(((index) as i32).to_ne_bytes()) > (0) {
                 if let Some(&unit) = output.last() {
-                    if unit >= 55296 && unit <= 56319 && !", ".is_empty() {
-                        return Err(UStringFault::UnpairedSurrogate { unit: u32::from(unit) });
+                    if unit >= 55296 && unit <= 56319 && !UString::from(", ").is_empty() {
+                        if !UString::from(", ").encode_utf16().next().map_or(false, |head| head >= 56320 && head <= 57343) {
+                            return Err(UStringFault::UnpairedSurrogate { unit: u32::from(unit) });
+                        }
                     }
                 }
-                output.extend(", ".encode_utf16());
+                output.extend(UString::from(", ").encode_utf16());
             }
             if let Some(&unit) = output.last() {
                 if unit >= 55296 && unit <= 56319 && !(values[usize::try_from(index).unwrap_or(0)]).clone().to_string().is_empty() {
-                    return Err(UStringFault::UnpairedSurrogate { unit: u32::from(unit) });
+                    if !(values[usize::try_from(index).unwrap_or(0)]).clone().to_string().encode_utf16().next().map_or(false, |head| head >= 56320 && head <= 57343) {
+                        return Err(UStringFault::UnpairedSurrogate { unit: u32::from(unit) });
+                    }
                 }
             }
             output.extend((values[usize::try_from(index).unwrap_or(0)]).clone().to_string().encode_utf16());
             index = u32::wrapping_add(index, 1);
         }
         if let Some(&unit) = output.last() {
-            if unit >= 55296 && unit <= 56319 && !"]".is_empty() {
-                return Err(UStringFault::UnpairedSurrogate { unit: u32::from(unit) });
+            if unit >= 55296 && unit <= 56319 && !UString::from("]").is_empty() {
+                if !UString::from("]").encode_utf16().next().map_or(false, |head| head >= 56320 && head <= 57343) {
+                    return Err(UStringFault::UnpairedSurrogate { unit: u32::from(unit) });
+                }
             }
         }
-        output.extend("]".encode_utf16());
-        return Ok(String::from_utf16(output.as_slice()).map_err(|_| UStringFault::UnpairedSurrogate { unit: u32::from(output[output.len() - 1]) })?);
+        output.extend(UString::from("]").encode_utf16());
+        return Ok(UString::from_utf16(output.as_slice()).map_err(|_| UStringFault::UnpairedSurrogate { unit: u32::from(output[output.len() - 1]) })?);
     }
 
     pub fn layout_queries_residual_coverage_test_helpers_nan() -> f64 {
         return 0.0f64 / 0.0f64;
     }
 
-    pub fn layout_queries_residual_coverage_test_helpers_metric(range: TextRange, metric_box: &str, ascent: f64, descent: f64, baseline_class: &str) -> MetricDecisionInfo {
-        return MetricDecisionInfo::new((range).clone(), "ab", "body", "test", 8.0f64, 2.0f64, 0.0f64, "stub", ascent, descent, baseline_class, metric_box, "normalized", "test");
+    pub fn layout_queries_residual_coverage_test_helpers_metric(range: TextRange, metric_box: &UStr, ascent: f64, descent: f64, baseline_class: &UStr) -> MetricDecisionInfo {
+        return MetricDecisionInfo::new((range).clone(), &(UStr::new(&[97,98])), &(UStr::new(&[98,111,100,121])), &(UStr::new(&[116,101,115,116])), 8.0f64, 2.0f64, 0.0f64, &(UStr::new(&[115,116,117,98])), ascent, descent, baseline_class, metric_box, &(UStr::new(&[110,111,114,109,97,108,105,122,101,100])), &(UStr::new(&[116,101,115,116])));
     }
 
-    pub fn layout_queries_residual_coverage_test_helpers_geometry(range: TextRange, source_text: &str, leading: f64, leading_consumed: f64, trailing: f64, trailing_consumed: f64) -> ClusterGeometryDecisionInfo {
-        return ClusterGeometryDecisionInfo::new((range).clone(), source_text, source_text, 10.0f64, (10.0f64 - leading) - trailing, leading, leading_consumed, trailing, trailing_consumed, 0.0f64, 10.0f64, "test", "test", Some(0.0f64), Some(0.0f64), None);
+    pub fn layout_queries_residual_coverage_test_helpers_geometry(range: TextRange, source_text: &UStr, leading: f64, leading_consumed: f64, trailing: f64, trailing_consumed: f64) -> ClusterGeometryDecisionInfo {
+        return ClusterGeometryDecisionInfo::new((range).clone(), source_text, source_text, 10.0f64, (10.0f64 - leading) - trailing, leading, leading_consumed, trailing, trailing_consumed, 0.0f64, 10.0f64, &(UStr::new(&[116,101,115,116])), &(UStr::new(&[116,101,115,116])), Some(0.0f64), Some(0.0f64), None);
     }
 
     pub fn layout_queries_residual_coverage_test_helpers_metric_bounds(decision_range: TextRange) -> Result<Vec<f64>, TextRangeError> {
-        let decision = LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_metric((decision_range).clone(), &"IdeographicEmBox", 7.0f64, 3.0f64, &"ideographic");
-        let content = LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_result(&"ab", &vec![
-    (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_cluster(TextRange::new(0u32, 2u32)?, &"ab", 20.0f64)).clone(),
+        let decision = LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_metric((decision_range).clone(), UStr::new(&[73,100,101,111,103,114,97,112,104,105,99,69,109,66,111,120]), 7.0f64, 3.0f64, UStr::new(&[105,100,101,111,103,114,97,112,104,105,99]));
+        let content = LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_result(UStr::new(&[97,98]), &vec![
+    (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_cluster(TextRange::new(0u32, 2u32)?, UStr::new(&[97,98]), 20.0f64)).clone(),
 ], &vec![
     (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_line(TextRange::new(0u32, 2u32)?, 0, 0, 0.0f64, 20.0f64, 15.0f64, 0.0f64, 20.0f64)).clone(),
-], &vec![], &vec![], &vec![], LayoutDebugInfo::new(None, Some(vec![(decision).clone()]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]),
-Some(vec![]), Some(vec![]), None, None, None, None, Some(vec![]), None, None, Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![])), LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_style(10.0f64))?;
+], &vec![], &vec![], &vec![],
+LayoutDebugInfo::new(None, Some(vec![(decision).clone()]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), None, None, None, None, Some(vec![]), None, None, Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![])), LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_style(10.0f64))?;
         let r#box = LayoutQueries::layout_queries_rich_text_background_segments((content).clone(), &vec![
-    (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_segment(TextRange::new(0u32, 2u32)?, (Box::new({ let __guard = crate::org::tiqian::core::rich_text_role::BACKGROUND_INSTANCE.lock().unwrap_or_else(|e| e.into_inner()); __guard.clone()
-})).clone(), RichTextPaint::new(None, Some(Box::new((*crate::org::tiqian::core::rich_text_line_pattern::SOLID_INSTANCE).clone())), RichTextBackgroundPaint::new(Some(0.0f64), Some(0.0f64), Some(0.0f64), Some(0.0f64), Some(RichTextBackgroundMetricPolicy::MarkedFaces),
-Some(Box::new((*crate::org::tiqian::core::rich_text_background_draw_style::FILL_INSTANCE).clone())))?, Some(0.0f64))?, 0, TextRange::new(0u32, 2u32)?, 0.0f64, 0.0f64, 20.0f64, 20.0f64, 15.0f64)).clone(),
+    (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_segment(TextRange::new(0u32, 2u32)?, (Box::new({ let __guard = crate::org::tiqian::core::rich_text_role::BACKGROUND_INSTANCE.lock().unwrap_or_else(|e| e.into_inner()); __guard.clone() })).clone(), RichTextPaint::new(None, Some(Box::new((*crate::org::tiqian::core::rich_text_line_pattern::SOLID_INSTANCE).clone())), RichTextBackgroundPaint::new(Some(0.0f64), Some(0.0f64), Some(0.0f64), Some(0.0f64), Some(RichTextBackgroundMetricPolicy::MarkedFaces), Some(Box::new((*crate::org::tiqian::core::rich_text_background_draw_style::FILL_INSTANCE).clone())))?, Some(0.0f64))?, 0, TextRange::new(0u32, 2u32)?, 0.0f64, 0.0f64, 20.0f64, 20.0f64, 15.0f64)).clone(),
 ]);
         return Ok(vec![r#box[0usize].top, r#box[0usize].bottom]);
     }
 
     pub fn layout_queries_residual_coverage_test_helpers_ink_with_bounds(bounds: Rect) -> Result<Option<Rect>, TextRangeError> {
         let clusters = vec![
-    (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_cluster(TextRange::new(0u32, 1u32)?, &"a", 10.0f64)).clone(),
-    (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_cluster(TextRange::new(1u32, 2u32)?, &"b", 10.0f64)).clone(),
+    (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_cluster(TextRange::new(0u32, 1u32)?, UStr::new(&[97]), 10.0f64)).clone(),
+    (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_cluster(TextRange::new(1u32, 2u32)?, UStr::new(&[98]), 10.0f64)).clone(),
 ];
-        let content = LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_result(&"ab", &clusters, &vec![
+        let content = LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_result(UStr::new(&[97,98]), &clusters, &vec![
     (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_line(TextRange::new(0u32, 2u32)?, 0, 1, 0.0f64, 20.0f64, 15.0f64, 0.0f64, 20.0f64)).clone(),
 ], &vec![
-    (GlyphRun::new(TextRange::new(0u32, 2u32)?, "test", vec![
+    (GlyphRun::new(TextRange::new(0u32, 2u32)?, &(UStr::new(&[116,101,115,116])), vec![
     (Glyph::new(1u32, TextRange::new(0u32, 1u32)?, 10.0f64, Some(0.0f64), Some(0.0f64), None, Some((bounds).clone()), None, None)).clone(),
 ].to_vec(), 20.0f64, Some(vec![]))).clone(),
 ], &vec![], &vec![], LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_empty_debug(), LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_style(10.0f64))?;

@@ -31,6 +31,10 @@ use crate::org::tiqian::shaping::text_shaper::ExplainableStubTextShaper;
 use crate::org::tiqian::test::trace::test_trace_recorder::TestTraceRecorder;
 use crate::org::tiqian::test::trace::traced_assertions::TracedAssertions;
 use crate::runtime::test as testlib;
+use crate::runtime::u_string::UStr;
+use crate::runtime::u_string::UString;
+use std::sync::Arc;
+use std::sync::Mutex;
 
 
 #[derive(Debug, Clone, PartialEq)]
@@ -40,6 +44,17 @@ pub enum BaselineAlignmentTestLatinInsideCjkUsesSharedRomanBaselineFault {
     ParagraphLayoutEngineNewFaultFault(crate::org::tiqian::layout::paragraph_layout_engine::ParagraphLayoutEngineNewFault),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
     ParagraphLayoutEngineLayoutWithRejectedTechnicalTiersFaultFault(crate::org::tiqian::layout::paragraph_layout_engine::ParagraphLayoutEngineLayoutWithRejectedTechnicalTiersFault),
+}
+impl std::fmt::Display for BaselineAlignmentTestLatinInsideCjkUsesSharedRomanBaselineFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            BaselineAlignmentTestLatinInsideCjkUsesSharedRomanBaselineFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            BaselineAlignmentTestLatinInsideCjkUsesSharedRomanBaselineFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            BaselineAlignmentTestLatinInsideCjkUsesSharedRomanBaselineFault::ParagraphLayoutEngineNewFaultFault(value) => write!(formatter, "{}", value),
+            BaselineAlignmentTestLatinInsideCjkUsesSharedRomanBaselineFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+            BaselineAlignmentTestLatinInsideCjkUsesSharedRomanBaselineFault::ParagraphLayoutEngineLayoutWithRejectedTechnicalTiersFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
 }
 
 impl From<BaselineAlignmentTestLatinInsideCjkUsesSharedRomanBaselineFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
@@ -125,6 +140,17 @@ pub enum BaselineAlignmentTestExplicitBaselineShiftAppliesToRomanClustersFault {
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
     ParagraphLayoutEngineLayoutWithRejectedTechnicalTiersFaultFault(crate::org::tiqian::layout::paragraph_layout_engine::ParagraphLayoutEngineLayoutWithRejectedTechnicalTiersFault),
 }
+impl std::fmt::Display for BaselineAlignmentTestExplicitBaselineShiftAppliesToRomanClustersFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            BaselineAlignmentTestExplicitBaselineShiftAppliesToRomanClustersFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            BaselineAlignmentTestExplicitBaselineShiftAppliesToRomanClustersFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            BaselineAlignmentTestExplicitBaselineShiftAppliesToRomanClustersFault::ParagraphLayoutEngineNewFaultFault(value) => write!(formatter, "{}", value),
+            BaselineAlignmentTestExplicitBaselineShiftAppliesToRomanClustersFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+            BaselineAlignmentTestExplicitBaselineShiftAppliesToRomanClustersFault::ParagraphLayoutEngineLayoutWithRejectedTechnicalTiersFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
+}
 
 impl From<BaselineAlignmentTestExplicitBaselineShiftAppliesToRomanClustersFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
     fn from(value: BaselineAlignmentTestExplicitBaselineShiftAppliesToRomanClustersFault) -> Self {
@@ -208,6 +234,17 @@ pub enum BaselineAlignmentTestCjkPunctuationProvidesIdeographicReferenceWithoutH
     ParagraphLayoutEngineNewFaultFault(crate::org::tiqian::layout::paragraph_layout_engine::ParagraphLayoutEngineNewFault),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
     ParagraphLayoutEngineLayoutWithRejectedTechnicalTiersFaultFault(crate::org::tiqian::layout::paragraph_layout_engine::ParagraphLayoutEngineLayoutWithRejectedTechnicalTiersFault),
+}
+impl std::fmt::Display for BaselineAlignmentTestCjkPunctuationProvidesIdeographicReferenceWithoutHanBodyFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            BaselineAlignmentTestCjkPunctuationProvidesIdeographicReferenceWithoutHanBodyFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            BaselineAlignmentTestCjkPunctuationProvidesIdeographicReferenceWithoutHanBodyFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            BaselineAlignmentTestCjkPunctuationProvidesIdeographicReferenceWithoutHanBodyFault::ParagraphLayoutEngineNewFaultFault(value) => write!(formatter, "{}", value),
+            BaselineAlignmentTestCjkPunctuationProvidesIdeographicReferenceWithoutHanBodyFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+            BaselineAlignmentTestCjkPunctuationProvidesIdeographicReferenceWithoutHanBodyFault::ParagraphLayoutEngineLayoutWithRejectedTechnicalTiersFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
 }
 
 impl From<BaselineAlignmentTestCjkPunctuationProvidesIdeographicReferenceWithoutHanBodyFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
@@ -293,6 +330,17 @@ pub enum BaselineAlignmentTestCjkMixedSizesAlignByIdeographicBoxBottomFault {
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
     ParagraphLayoutEngineLayoutWithRejectedTechnicalTiersFaultFault(crate::org::tiqian::layout::paragraph_layout_engine::ParagraphLayoutEngineLayoutWithRejectedTechnicalTiersFault),
 }
+impl std::fmt::Display for BaselineAlignmentTestCjkMixedSizesAlignByIdeographicBoxBottomFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            BaselineAlignmentTestCjkMixedSizesAlignByIdeographicBoxBottomFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            BaselineAlignmentTestCjkMixedSizesAlignByIdeographicBoxBottomFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            BaselineAlignmentTestCjkMixedSizesAlignByIdeographicBoxBottomFault::ParagraphLayoutEngineNewFaultFault(value) => write!(formatter, "{}", value),
+            BaselineAlignmentTestCjkMixedSizesAlignByIdeographicBoxBottomFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+            BaselineAlignmentTestCjkMixedSizesAlignByIdeographicBoxBottomFault::ParagraphLayoutEngineLayoutWithRejectedTechnicalTiersFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
+}
 
 impl From<BaselineAlignmentTestCjkMixedSizesAlignByIdeographicBoxBottomFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
     fn from(value: BaselineAlignmentTestCjkMixedSizesAlignByIdeographicBoxBottomFault) -> Self {
@@ -372,18 +420,13 @@ impl From<crate::org::tiqian::layout::paragraph_layout_engine::ParagraphLayoutEn
 #[test]
 fn cjk_mixed_sizes_align_by_ideographic_box_bottom() {
     testlib::run("org.tiqian.layout.BaselineAlignmentTest.cjkMixedSizesAlignByIdeographicBoxBottom", "org.tiqian.layout.BaselineAlignmentTest.cjkMixedSizesAlignByIdeographicBoxBottom", || {
-        let mut t = TestTraceRecorder::new("BaselineAlignmentTest");
-        t.section(&"cjkMixedSizesAlignByIdeographicBoxBottom");
-        let result = ExplainableStubParagraphLayoutEngine::new(Some(Box::new(CjkFontRoleClassifier::new())), Some(Box::new(ParagraphLayoutFallbackResolver::new(Some("cjk-primary".to_string()), Some("latin-primary".to_string()), Some("symbol-fallback".to_string())).unwrap())),
-Some(Box::new(BuiltInClreqProfileResolver::new())), Some(Box::new(StubFontMetricsResolver::new())), Some(Box::new(ScriptAwareFontMetricsNormalizer::new())), Some(PunctuationAtomBuilder::new(None, None).unwrap()), Some(PunctuationSpacingCompressor::new().unwrap()),
-Some(QuotePairAnalyzer::new()), Some(Box::new(GreedyLineBreaker::new(None, None, None, None))), Some(Justifier::new(Some(0.5), Some(0.25))), Some(Box::new(ExplainableStubTextShaper::new())), Some(DefaultHyphenator::default_hyphenator_default_hyphenator().unwrap()),
-Some(Box::new(LruWidthIndependentAnnotationCache::new(512)))).unwrap().layout(LayoutInput::new(TiqianTextContent::new("中小大", Some(vec![
-    (TextSpan::new(TextRange::new(1u32, 2u32).unwrap(), TextStyle::new(Some(vec![]), Some(12.0f64), Some("zh-Hans".to_string()), Some(400), Some(false), Some(0.0), Some(InlineAttachment::None)))).clone(),
-    (TextSpan::new(TextRange::new(2u32, 3u32).unwrap(), TextStyle::new(Some(vec![]), Some(20.0f64), Some("zh-Hans".to_string()), Some(400), Some(false), Some(0.0), Some(InlineAttachment::None)))).clone(),
-]), Some(vec![]), Some(vec![]), Some(vec![])), Some(TextStyle::new(Some(vec![]), Some(16.0), Some("zh-Hans".to_string()), Some(400), Some(false), Some(0.0), Some(InlineAttachment::None))), Some(ParagraphStyle::new(Some(LastLineAlignment::Start), Some(WritingMode::HorizontalTb),
-None, Some((Ic::zero()).clone()), Some(Ic::zero()), Some(MeasureAdaptiveFirstLineIndent::new(Some(14.0), Some(1.0), Some(2.0))), Some(LineLengthGrid::new(Some(true), None)), Some(RubyLineHeightMode::PerLine),
-Some(ParagraphStyle::PARAGRAPH_STYLE_DEFAULT_INLINE_OBJECT_MINIMUM_CLEARANCE_EM), Some(ParagraphStyle::PARAGRAPH_STYLE_DEFAULT_EMPHASIS_DOT_GAP_EM))), LayoutConstraints::new(400.0f64, Some(f64::INFINITY), Some(2147483647)).unwrap(),
-Some((*crate::org::tiqian::core::built_in_layout_profiles::BUILT_IN_LAYOUT_PROFILES_CLREQ_HORIZONTAL).clone()), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]))).unwrap();
+        let mut t = TestTraceRecorder::new(&(UStr::new(&[66,97,115,101,108,105,110,101,65,108,105,103,110,109,101,110,116,84,101,115,116])));
+        t.section(UStr::new(&[99,106,107,77,105,120,101,100,83,105,122,101,115,65,108,105,103,110,66,121,73,100,101,111,103,114,97,112,104,105,99,66,111,120,66,111,116,116,111,109]));
+        let result = ExplainableStubParagraphLayoutEngine::new(Some(Box::new(CjkFontRoleClassifier::new())), Some(Box::new(ParagraphLayoutFallbackResolver::new(Some(UString::from("cjk-primary")), Some(UString::from("latin-primary")), Some(UString::from("symbol-fallback"))).unwrap())), Some(Box::new(BuiltInClreqProfileResolver::new())), Some(Box::new(StubFontMetricsResolver::new())), Some(Box::new(ScriptAwareFontMetricsNormalizer::new())), Some(PunctuationAtomBuilder::new(None, None).unwrap()), Some(PunctuationSpacingCompressor::new().unwrap()), Some(QuotePairAnalyzer::new()), Some(Box::new(GreedyLineBreaker::new(None, None, None, None))), Some(Justifier::new(Some(0.5), Some(0.25))), Some(Arc::new(Mutex::new(ExplainableStubTextShaper::new()))), Some(DefaultHyphenator::default_hyphenator_default_hyphenator().unwrap()), Some(Arc::new(Mutex::new(LruWidthIndependentAnnotationCache::new(512))))).unwrap().layout(LayoutInput::new(TiqianTextContent::new(&(UStr::new(&[20013,23567,22823])), Some(vec![
+    (TextSpan::new(TextRange::new(1u32, 2u32).unwrap(), TextStyle::new(Some(vec![]), Some(12.0f64), Some(UString::from("zh-Hans")), Some(400), Some(false), Some(0.0), Some(InlineAttachment::None)))).clone(),
+    (TextSpan::new(TextRange::new(2u32, 3u32).unwrap(), TextStyle::new(Some(vec![]), Some(20.0f64), Some(UString::from("zh-Hans")), Some(400), Some(false), Some(0.0), Some(InlineAttachment::None)))).clone(),
+]), Some(vec![]), Some(vec![]), Some(vec![])), Some(TextStyle::new(Some(vec![]), Some(16.0), Some(UString::from("zh-Hans")), Some(400), Some(false), Some(0.0), Some(InlineAttachment::None))),
+Some(ParagraphStyle::new(Some(LastLineAlignment::Start), Some(WritingMode::HorizontalTb), None, Some((Ic::zero()).clone()), Some(Ic::zero()), Some(MeasureAdaptiveFirstLineIndent::new(Some(14.0), Some(1.0), Some(2.0))), Some(LineLengthGrid::new(Some(true), None)), Some(RubyLineHeightMode::PerLine), Some(ParagraphStyle::PARAGRAPH_STYLE_DEFAULT_INLINE_OBJECT_MINIMUM_CLEARANCE_EM), Some(ParagraphStyle::PARAGRAPH_STYLE_DEFAULT_EMPHASIS_DOT_GAP_EM))), LayoutConstraints::new(400.0f64, Some(f64::INFINITY), Some(2147483647)).unwrap(), Some((*crate::org::tiqian::core::built_in_layout_profiles::BUILT_IN_LAYOUT_PROFILES_CLREQ_HORIZONTAL).clone()), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]))).unwrap();
         let base = (result.clusters[0usize]).clone();
         let small = (result.clusters[1usize]).clone();
         let large = (result.clusters[2usize]).clone();
@@ -396,34 +439,23 @@ Some((*crate::org::tiqian::core::built_in_layout_profiles::BUILT_IN_LAYOUT_PROFI
 #[test]
 fn cjk_punctuation_provides_ideographic_reference_without_han_body() {
     testlib::run("org.tiqian.layout.BaselineAlignmentTest.cjkPunctuationProvidesIdeographicReferenceWithoutHanBody", "org.tiqian.layout.BaselineAlignmentTest.cjkPunctuationProvidesIdeographicReferenceWithoutHanBody", || {
-        let mut t = TestTraceRecorder::new("BaselineAlignmentTest");
-        t.section(&"cjkPunctuationProvidesIdeographicReferenceWithoutHanBody");
-        let result = ExplainableStubParagraphLayoutEngine::new(Some(Box::new(CjkFontRoleClassifier::new())), Some(Box::new(ParagraphLayoutFallbackResolver::new(Some("cjk-primary".to_string()), Some("latin-primary".to_string()), Some("symbol-fallback".to_string())).unwrap())),
-Some(Box::new(BuiltInClreqProfileResolver::new())), Some(Box::new(StubFontMetricsResolver::new())), Some(Box::new(ScriptAwareFontMetricsNormalizer::new())), Some(PunctuationAtomBuilder::new(None, None).unwrap()), Some(PunctuationSpacingCompressor::new().unwrap()),
-Some(QuotePairAnalyzer::new()), Some(Box::new(GreedyLineBreaker::new(None, None, None, None))), Some(Justifier::new(Some(0.5), Some(0.25))), Some(Box::new(ExplainableStubTextShaper::new())), Some(DefaultHyphenator::default_hyphenator_default_hyphenator().unwrap()),
-Some(Box::new(LruWidthIndependentAnnotationCache::new(512)))).unwrap().layout(LayoutInput::new(TiqianTextContent::new("MacBook。", Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![])), Some(TextStyle::new(Some(vec![]), Some(16.0), Some("zh-Hans".to_string()), Some(400),
-Some(false), Some(0.0), Some(InlineAttachment::None))), Some(ParagraphStyle::new(Some(LastLineAlignment::Start), Some(WritingMode::HorizontalTb), None, Some((Ic::zero()).clone()), Some(Ic::zero()), Some(MeasureAdaptiveFirstLineIndent::new(Some(14.0), Some(1.0), Some(2.0))),
-Some(LineLengthGrid::new(Some(true), None)), Some(RubyLineHeightMode::PerLine), Some(ParagraphStyle::PARAGRAPH_STYLE_DEFAULT_INLINE_OBJECT_MINIMUM_CLEARANCE_EM), Some(ParagraphStyle::PARAGRAPH_STYLE_DEFAULT_EMPHASIS_DOT_GAP_EM))), LayoutConstraints::new(400.0f64,
-Some(f64::INFINITY), Some(2147483647)).unwrap(), Some((*crate::org::tiqian::core::built_in_layout_profiles::BUILT_IN_LAYOUT_PROFILES_CLREQ_HORIZONTAL).clone()), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]))).unwrap();
+        let mut t = TestTraceRecorder::new(&(UStr::new(&[66,97,115,101,108,105,110,101,65,108,105,103,110,109,101,110,116,84,101,115,116])));
+        t.section(UStr::new(&[99,106,107,80,117,110,99,116,117,97,116,105,111,110,80,114,111,118,105,100,101,115,73,100,101,111,103,114,97,112,104,105,99,82,101,102,101,114,101,110,99,101,87,105,116,104,111,117,116,72,97,110,66,111,100,121]));
+        let result = ExplainableStubParagraphLayoutEngine::new(Some(Box::new(CjkFontRoleClassifier::new())), Some(Box::new(ParagraphLayoutFallbackResolver::new(Some(UString::from("cjk-primary")), Some(UString::from("latin-primary")), Some(UString::from("symbol-fallback"))).unwrap())), Some(Box::new(BuiltInClreqProfileResolver::new())), Some(Box::new(StubFontMetricsResolver::new())), Some(Box::new(ScriptAwareFontMetricsNormalizer::new())), Some(PunctuationAtomBuilder::new(None, None).unwrap()), Some(PunctuationSpacingCompressor::new().unwrap()), Some(QuotePairAnalyzer::new()), Some(Box::new(GreedyLineBreaker::new(None, None, None, None))), Some(Justifier::new(Some(0.5), Some(0.25))), Some(Arc::new(Mutex::new(ExplainableStubTextShaper::new()))), Some(DefaultHyphenator::default_hyphenator_default_hyphenator().unwrap()), Some(Arc::new(Mutex::new(LruWidthIndependentAnnotationCache::new(512))))).unwrap().layout(LayoutInput::new(TiqianTextContent::new(&(UStr::new(&[77,97,99,66,111,111,107,12290])), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![])), Some(TextStyle::new(Some(vec![]), Some(16.0), Some(UString::from("zh-Hans")), Some(400), Some(false), Some(0.0), Some(InlineAttachment::None))), Some(ParagraphStyle::new(Some(LastLineAlignment::Start), Some(WritingMode::HorizontalTb), None, Some((Ic::zero()).clone()), Some(Ic::zero()), Some(MeasureAdaptiveFirstLineIndent::new(Some(14.0), Some(1.0), Some(2.0))), Some(LineLengthGrid::new(Some(true), None)), Some(RubyLineHeightMode::PerLine), Some(ParagraphStyle::PARAGRAPH_STYLE_DEFAULT_INLINE_OBJECT_MINIMUM_CLEARANCE_EM), Some(ParagraphStyle::PARAGRAPH_STYLE_DEFAULT_EMPHASIS_DOT_GAP_EM))), LayoutConstraints::new(400.0f64, Some(f64::INFINITY), Some(2147483647)).unwrap(), Some((*crate::org::tiqian::core::built_in_layout_profiles::BUILT_IN_LAYOUT_PROFILES_CLREQ_HORIZONTAL).clone()), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]))).unwrap();
         let punctuation = (result.clusters[usize::try_from(u32::wrapping_sub(u32::try_from((result.clusters.len()) & 0xFFFF_FFFF).unwrap_or(0), 1)).unwrap_or(0)]).clone();
-        let _ = TracedAssertions::traced_assertions_assert_equals_float(0.0f64, punctuation.baseline_shift, Some("CJK punctuation carries an IdeographicEmBox and must not be aligned to Latin raw descent".to_string())).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_equals_float(0.0f64, punctuation.baseline_shift, Some(UString::from("CJK punctuation carries an IdeographicEmBox and must not be aligned to Latin raw descent"))).unwrap();
     });
 }
 
 #[test]
 fn explicit_baseline_shift_applies_to_roman_clusters() {
     testlib::run("org.tiqian.layout.BaselineAlignmentTest.explicitBaselineShiftAppliesToRomanClusters", "org.tiqian.layout.BaselineAlignmentTest.explicitBaselineShiftAppliesToRomanClusters", || {
-        let mut t = TestTraceRecorder::new("BaselineAlignmentTest");
-        t.section(&"explicitBaselineShiftAppliesToRomanClusters");
-        let result = ExplainableStubParagraphLayoutEngine::new(Some(Box::new(CjkFontRoleClassifier::new())), Some(Box::new(ParagraphLayoutFallbackResolver::new(Some("cjk-primary".to_string()), Some("latin-primary".to_string()), Some("symbol-fallback".to_string())).unwrap())),
-Some(Box::new(BuiltInClreqProfileResolver::new())), Some(Box::new(StubFontMetricsResolver::new())), Some(Box::new(ScriptAwareFontMetricsNormalizer::new())), Some(PunctuationAtomBuilder::new(None, None).unwrap()), Some(PunctuationSpacingCompressor::new().unwrap()),
-Some(QuotePairAnalyzer::new()), Some(Box::new(GreedyLineBreaker::new(None, None, None, None))), Some(Justifier::new(Some(0.5), Some(0.25))), Some(Box::new(ExplainableStubTextShaper::new())), Some(DefaultHyphenator::default_hyphenator_default_hyphenator().unwrap()),
-Some(Box::new(LruWidthIndependentAnnotationCache::new(512)))).unwrap().layout(LayoutInput::new(TiqianTextContent::new("中A文", Some(vec![
-    (TextSpan::new(TextRange::new(1u32, 2u32).unwrap(), TextStyle::new(Some(vec![]), Some(16.0), Some("zh-Hans".to_string()), Some(400), Some(false), Some(-6.0f64), Some(InlineAttachment::None)))).clone(),
-]), Some(vec![]), Some(vec![]), Some(vec![])), Some(TextStyle::new(Some(vec![]), Some(16.0), Some("zh-Hans".to_string()), Some(400), Some(false), Some(0.0), Some(InlineAttachment::None))), Some(ParagraphStyle::new(Some(LastLineAlignment::Start), Some(WritingMode::HorizontalTb),
-None, Some((Ic::zero()).clone()), Some(Ic::zero()), Some(MeasureAdaptiveFirstLineIndent::new(Some(14.0), Some(1.0), Some(2.0))), Some(LineLengthGrid::new(Some(true), None)), Some(RubyLineHeightMode::PerLine),
-Some(ParagraphStyle::PARAGRAPH_STYLE_DEFAULT_INLINE_OBJECT_MINIMUM_CLEARANCE_EM), Some(ParagraphStyle::PARAGRAPH_STYLE_DEFAULT_EMPHASIS_DOT_GAP_EM))), LayoutConstraints::new(400.0f64, Some(f64::INFINITY), Some(2147483647)).unwrap(),
-Some((*crate::org::tiqian::core::built_in_layout_profiles::BUILT_IN_LAYOUT_PROFILES_CLREQ_HORIZONTAL).clone()), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]))).unwrap();
+        let mut t = TestTraceRecorder::new(&(UStr::new(&[66,97,115,101,108,105,110,101,65,108,105,103,110,109,101,110,116,84,101,115,116])));
+        t.section(UStr::new(&[101,120,112,108,105,99,105,116,66,97,115,101,108,105,110,101,83,104,105,102,116,65,112,112,108,105,101,115,84,111,82,111,109,97,110,67,108,117,115,116,101,114,115]));
+        let result = ExplainableStubParagraphLayoutEngine::new(Some(Box::new(CjkFontRoleClassifier::new())), Some(Box::new(ParagraphLayoutFallbackResolver::new(Some(UString::from("cjk-primary")), Some(UString::from("latin-primary")), Some(UString::from("symbol-fallback"))).unwrap())), Some(Box::new(BuiltInClreqProfileResolver::new())), Some(Box::new(StubFontMetricsResolver::new())), Some(Box::new(ScriptAwareFontMetricsNormalizer::new())), Some(PunctuationAtomBuilder::new(None, None).unwrap()), Some(PunctuationSpacingCompressor::new().unwrap()), Some(QuotePairAnalyzer::new()), Some(Box::new(GreedyLineBreaker::new(None, None, None, None))), Some(Justifier::new(Some(0.5), Some(0.25))), Some(Arc::new(Mutex::new(ExplainableStubTextShaper::new()))), Some(DefaultHyphenator::default_hyphenator_default_hyphenator().unwrap()), Some(Arc::new(Mutex::new(LruWidthIndependentAnnotationCache::new(512))))).unwrap().layout(LayoutInput::new(TiqianTextContent::new(&(UStr::new(&[20013,65,25991])), Some(vec![
+    (TextSpan::new(TextRange::new(1u32, 2u32).unwrap(), TextStyle::new(Some(vec![]), Some(16.0), Some(UString::from("zh-Hans")), Some(400), Some(false), Some(-6.0f64), Some(InlineAttachment::None)))).clone(),
+]), Some(vec![]), Some(vec![]), Some(vec![])), Some(TextStyle::new(Some(vec![]), Some(16.0), Some(UString::from("zh-Hans")), Some(400), Some(false), Some(0.0), Some(InlineAttachment::None))),
+Some(ParagraphStyle::new(Some(LastLineAlignment::Start), Some(WritingMode::HorizontalTb), None, Some((Ic::zero()).clone()), Some(Ic::zero()), Some(MeasureAdaptiveFirstLineIndent::new(Some(14.0), Some(1.0), Some(2.0))), Some(LineLengthGrid::new(Some(true), None)), Some(RubyLineHeightMode::PerLine), Some(ParagraphStyle::PARAGRAPH_STYLE_DEFAULT_INLINE_OBJECT_MINIMUM_CLEARANCE_EM), Some(ParagraphStyle::PARAGRAPH_STYLE_DEFAULT_EMPHASIS_DOT_GAP_EM))), LayoutConstraints::new(400.0f64, Some(f64::INFINITY), Some(2147483647)).unwrap(), Some((*crate::org::tiqian::core::built_in_layout_profiles::BUILT_IN_LAYOUT_PROFILES_CLREQ_HORIZONTAL).clone()), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]))).unwrap();
         let latin = (result.clusters[1usize]).clone();
         let _ = TracedAssertions::traced_assertions_assert_equals_float_tolerance(-6.0f64, latin.baseline_shift, TracedAssertions::traced_assertions_f32_literal(0.001f64), None).unwrap();
     });
@@ -432,16 +464,10 @@ Some((*crate::org::tiqian::core::built_in_layout_profiles::BUILT_IN_LAYOUT_PROFI
 #[test]
 fn latin_inside_cjk_uses_shared_roman_baseline() {
     testlib::run("org.tiqian.layout.BaselineAlignmentTest.latinInsideCjkUsesSharedRomanBaseline", "org.tiqian.layout.BaselineAlignmentTest.latinInsideCjkUsesSharedRomanBaseline", || {
-        let mut t = TestTraceRecorder::new("BaselineAlignmentTest");
-        t.section(&"latinInsideCjkUsesSharedRomanBaseline");
-        let result = ExplainableStubParagraphLayoutEngine::new(Some(Box::new(CjkFontRoleClassifier::new())), Some(Box::new(ParagraphLayoutFallbackResolver::new(Some("cjk-primary".to_string()), Some("latin-primary".to_string()), Some("symbol-fallback".to_string())).unwrap())),
-Some(Box::new(BuiltInClreqProfileResolver::new())), Some(Box::new(StubFontMetricsResolver::new())), Some(Box::new(ScriptAwareFontMetricsNormalizer::new())), Some(PunctuationAtomBuilder::new(None, None).unwrap()), Some(PunctuationSpacingCompressor::new().unwrap()),
-Some(QuotePairAnalyzer::new()), Some(Box::new(GreedyLineBreaker::new(None, None, None, None))), Some(Justifier::new(Some(0.5), Some(0.25))), Some(Box::new(ExplainableStubTextShaper::new())), Some(DefaultHyphenator::default_hyphenator_default_hyphenator().unwrap()),
-Some(Box::new(LruWidthIndependentAnnotationCache::new(512)))).unwrap().layout(LayoutInput::new(TiqianTextContent::new("中A文", Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![])), Some(TextStyle::new(Some(vec![]), Some(16.0), Some("zh-Hans".to_string()), Some(400), Some(false),
-Some(0.0), Some(InlineAttachment::None))), Some(ParagraphStyle::new(Some(LastLineAlignment::Start), Some(WritingMode::HorizontalTb), None, Some((Ic::zero()).clone()), Some(Ic::zero()), Some(MeasureAdaptiveFirstLineIndent::new(Some(14.0), Some(1.0), Some(2.0))),
-Some(LineLengthGrid::new(Some(true), None)), Some(RubyLineHeightMode::PerLine), Some(ParagraphStyle::PARAGRAPH_STYLE_DEFAULT_INLINE_OBJECT_MINIMUM_CLEARANCE_EM), Some(ParagraphStyle::PARAGRAPH_STYLE_DEFAULT_EMPHASIS_DOT_GAP_EM))), LayoutConstraints::new(400.0f64,
-Some(f64::INFINITY), Some(2147483647)).unwrap(), Some((*crate::org::tiqian::core::built_in_layout_profiles::BUILT_IN_LAYOUT_PROFILES_CLREQ_HORIZONTAL).clone()), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]))).unwrap();
+        let mut t = TestTraceRecorder::new(&(UStr::new(&[66,97,115,101,108,105,110,101,65,108,105,103,110,109,101,110,116,84,101,115,116])));
+        t.section(UStr::new(&[108,97,116,105,110,73,110,115,105,100,101,67,106,107,85,115,101,115,83,104,97,114,101,100,82,111,109,97,110,66,97,115,101,108,105,110,101]));
+        let result = ExplainableStubParagraphLayoutEngine::new(Some(Box::new(CjkFontRoleClassifier::new())), Some(Box::new(ParagraphLayoutFallbackResolver::new(Some(UString::from("cjk-primary")), Some(UString::from("latin-primary")), Some(UString::from("symbol-fallback"))).unwrap())), Some(Box::new(BuiltInClreqProfileResolver::new())), Some(Box::new(StubFontMetricsResolver::new())), Some(Box::new(ScriptAwareFontMetricsNormalizer::new())), Some(PunctuationAtomBuilder::new(None, None).unwrap()), Some(PunctuationSpacingCompressor::new().unwrap()), Some(QuotePairAnalyzer::new()), Some(Box::new(GreedyLineBreaker::new(None, None, None, None))), Some(Justifier::new(Some(0.5), Some(0.25))), Some(Arc::new(Mutex::new(ExplainableStubTextShaper::new()))), Some(DefaultHyphenator::default_hyphenator_default_hyphenator().unwrap()), Some(Arc::new(Mutex::new(LruWidthIndependentAnnotationCache::new(512))))).unwrap().layout(LayoutInput::new(TiqianTextContent::new(&(UStr::new(&[20013,65,25991])), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![])), Some(TextStyle::new(Some(vec![]), Some(16.0), Some(UString::from("zh-Hans")), Some(400), Some(false), Some(0.0), Some(InlineAttachment::None))), Some(ParagraphStyle::new(Some(LastLineAlignment::Start), Some(WritingMode::HorizontalTb), None, Some((Ic::zero()).clone()), Some(Ic::zero()), Some(MeasureAdaptiveFirstLineIndent::new(Some(14.0), Some(1.0), Some(2.0))), Some(LineLengthGrid::new(Some(true), None)), Some(RubyLineHeightMode::PerLine), Some(ParagraphStyle::PARAGRAPH_STYLE_DEFAULT_INLINE_OBJECT_MINIMUM_CLEARANCE_EM), Some(ParagraphStyle::PARAGRAPH_STYLE_DEFAULT_EMPHASIS_DOT_GAP_EM))), LayoutConstraints::new(400.0f64, Some(f64::INFINITY), Some(2147483647)).unwrap(), Some((*crate::org::tiqian::core::built_in_layout_profiles::BUILT_IN_LAYOUT_PROFILES_CLREQ_HORIZONTAL).clone()), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]))).unwrap();
         let latin = (result.clusters[1usize]).clone();
-        let _ = TracedAssertions::traced_assertions_assert_equals_float(0.0f64, latin.baseline_shift, Some("Latin mixed into CJK should use the shared Roman baseline".to_string())).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_equals_float(0.0f64, latin.baseline_shift, Some(UString::from("Latin mixed into CJK should use the shared Roman baseline"))).unwrap();
     });
 }

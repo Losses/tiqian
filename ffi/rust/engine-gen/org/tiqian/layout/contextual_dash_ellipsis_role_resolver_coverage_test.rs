@@ -7,6 +7,9 @@ use crate::org::tiqian::layout::contextual_dash_ellipsis_role_resolver::DashElli
 use crate::org::tiqian::test::trace::test_trace_recorder::TestTraceRecorder;
 use crate::org::tiqian::test::trace::traced_assertions::TracedAssertions;
 use crate::runtime::test as testlib;
+use crate::runtime::u_string;
+use crate::runtime::u_string::UStr;
+use crate::runtime::u_string::UString;
 use std::fmt::Write;
 
 
@@ -15,6 +18,15 @@ pub enum ContextualDashEllipsisRoleResolverCoverageTestParentheticalPairWithoutO
     TraceAssertionErrorFault(crate::org::tiqian::test::trace::trace_assertion_exception::TraceAssertionError),
     TextRangeErrorFault(crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
+}
+impl std::fmt::Display for ContextualDashEllipsisRoleResolverCoverageTestParentheticalPairWithoutOuterScriptFallsBackToParagraphLanguageFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            ContextualDashEllipsisRoleResolverCoverageTestParentheticalPairWithoutOuterScriptFallsBackToParagraphLanguageFault::TraceAssertionErrorFault(value) => write!(formatter, "{}", value),
+            ContextualDashEllipsisRoleResolverCoverageTestParentheticalPairWithoutOuterScriptFallsBackToParagraphLanguageFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            ContextualDashEllipsisRoleResolverCoverageTestParentheticalPairWithoutOuterScriptFallsBackToParagraphLanguageFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
 }
 
 impl From<ContextualDashEllipsisRoleResolverCoverageTestParentheticalPairWithoutOuterScriptFallsBackToParagraphLanguageFault> for crate::org::tiqian::test::trace::trace_assertion_exception::TraceAssertionError {
@@ -68,6 +80,15 @@ pub enum ContextualDashEllipsisRoleResolverCoverageTestParentheticalPairWithOnly
     TextRangeErrorFault(crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
 }
+impl std::fmt::Display for ContextualDashEllipsisRoleResolverCoverageTestParentheticalPairWithOnlyRightOuterScriptTakesTheRightRoleFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            ContextualDashEllipsisRoleResolverCoverageTestParentheticalPairWithOnlyRightOuterScriptTakesTheRightRoleFault::TraceAssertionErrorFault(value) => write!(formatter, "{}", value),
+            ContextualDashEllipsisRoleResolverCoverageTestParentheticalPairWithOnlyRightOuterScriptTakesTheRightRoleFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            ContextualDashEllipsisRoleResolverCoverageTestParentheticalPairWithOnlyRightOuterScriptTakesTheRightRoleFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
+}
 
 impl From<ContextualDashEllipsisRoleResolverCoverageTestParentheticalPairWithOnlyRightOuterScriptTakesTheRightRoleFault> for crate::org::tiqian::test::trace::trace_assertion_exception::TraceAssertionError {
     fn from(value: ContextualDashEllipsisRoleResolverCoverageTestParentheticalPairWithOnlyRightOuterScriptTakesTheRightRoleFault) -> Self {
@@ -119,6 +140,15 @@ pub enum ContextualDashEllipsisRoleResolverCoverageTestParentheticalPairWithOnly
     TraceAssertionErrorFault(crate::org::tiqian::test::trace::trace_assertion_exception::TraceAssertionError),
     TextRangeErrorFault(crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
+}
+impl std::fmt::Display for ContextualDashEllipsisRoleResolverCoverageTestParentheticalPairWithOnlyLeftOuterScriptTakesTheLeftRoleFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            ContextualDashEllipsisRoleResolverCoverageTestParentheticalPairWithOnlyLeftOuterScriptTakesTheLeftRoleFault::TraceAssertionErrorFault(value) => write!(formatter, "{}", value),
+            ContextualDashEllipsisRoleResolverCoverageTestParentheticalPairWithOnlyLeftOuterScriptTakesTheLeftRoleFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            ContextualDashEllipsisRoleResolverCoverageTestParentheticalPairWithOnlyLeftOuterScriptTakesTheLeftRoleFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
 }
 
 impl From<ContextualDashEllipsisRoleResolverCoverageTestParentheticalPairWithOnlyLeftOuterScriptTakesTheLeftRoleFault> for crate::org::tiqian::test::trace::trace_assertion_exception::TraceAssertionError {
@@ -172,6 +202,15 @@ pub enum ContextualDashEllipsisRoleResolverCoverageTestForwardPassWalkerArmsRunB
     TextRangeErrorFault(crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError),
     TracedAssertionsAssertFailsWithFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsAssertFailsWithFault),
 }
+impl std::fmt::Display for ContextualDashEllipsisRoleResolverCoverageTestForwardPassWalkerArmsRunBeforeTheClassifierRejectsLoneSurrogatesFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            ContextualDashEllipsisRoleResolverCoverageTestForwardPassWalkerArmsRunBeforeTheClassifierRejectsLoneSurrogatesFault::TraceAssertionErrorFault(value) => write!(formatter, "{}", value),
+            ContextualDashEllipsisRoleResolverCoverageTestForwardPassWalkerArmsRunBeforeTheClassifierRejectsLoneSurrogatesFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            ContextualDashEllipsisRoleResolverCoverageTestForwardPassWalkerArmsRunBeforeTheClassifierRejectsLoneSurrogatesFault::TracedAssertionsAssertFailsWithFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
+}
 
 impl From<ContextualDashEllipsisRoleResolverCoverageTestForwardPassWalkerArmsRunBeforeTheClassifierRejectsLoneSurrogatesFault> for crate::org::tiqian::test::trace::trace_assertion_exception::TraceAssertionError {
     fn from(value: ContextualDashEllipsisRoleResolverCoverageTestForwardPassWalkerArmsRunBeforeTheClassifierRejectsLoneSurrogatesFault) -> Self {
@@ -222,28 +261,27 @@ impl From<crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsAs
 pub struct ContextualDashEllipsisRoleResolverCoverageSupport;
 
 impl ContextualDashEllipsisRoleResolverCoverageSupport {
-    pub fn contextual_dash_ellipsis_role_resolver_coverage_support_start(n: &str) {
-        TestTraceRecorder::new("ContextualDashEllipsisRoleResolverCoverageTest").section(n);
+    pub fn contextual_dash_ellipsis_role_resolver_coverage_support_start(n: &UStr) {
+        TestTraceRecorder::new(&(UStr::new(&[67,111,110,116,101,120,116,117,97,108,68,97,115,104,69,108,108,105,112,115,105,115,82,111,108,101,82,101,115,111,108,118,101,114,67,111,118,101,114,97,103,101,84,101,115,116]))).section(n);
     }
 
-    pub fn contextual_dash_ellipsis_role_resolver_coverage_support_surrogate_text(c: &Vec<u32>) -> String {
-        let mut s = String::new();
+    pub fn contextual_dash_ellipsis_role_resolver_coverage_support_surrogate_text(c: &Vec<u32>) -> UString {
+        let mut s = UString::new();
         let mut i = 0u32;
-        while (i32::from_ne_bytes((i).to_ne_bytes())) < (i32::from_ne_bytes((u32::try_from((c.len()) & 0xFFFF_FFFF).unwrap_or(0)).to_ne_bytes())) {
-            s += &(if c[usize::try_from(i).unwrap_or(0)] > 0xFFFF { String::from_utf16(&[0xD800 + (((c[usize::try_from(i).unwrap_or(0)]) - 0x10000) >> 10) as u16, 0xDC00 + (((c[usize::try_from(i).unwrap_or(0)]) - 0x10000) & 0x3FF) as u16]).unwrap() } else {
-String::from_utf16_lossy(&[(c[usize::try_from(i).unwrap_or(0)]) as u16]) });
+        while (i32::from_ne_bytes(((i) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((c.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
+            s += &(if c[usize::try_from(i).unwrap_or(0)] > 0xFFFF { u_string::from_units(&[0xD800 + (((c[usize::try_from(i).unwrap_or(0)]) - 0x10000) >> 10) as u16, 0xDC00 + (((c[usize::try_from(i).unwrap_or(0)]) - 0x10000) & 0x3FF) as u16]) } else { u_string::from_units(&[(c[usize::try_from(i).unwrap_or(0)]) as u16]) });
             i = u32::wrapping_add(i, 1);
         }
         return s;
     }
 
-    pub fn contextual_dash_ellipsis_role_resolver_coverage_support_valid(d: &Vec<DashEllipsisRoleDecision>, source: &str, prefix: &str) -> bool {
+    pub fn contextual_dash_ellipsis_role_resolver_coverage_support_valid(d: &Vec<DashEllipsisRoleDecision>, source: &UStr, prefix: &UStr) -> bool {
         if u32::try_from((d.len()) & 0xFFFF_FFFF).unwrap_or(0) != 2 {
             return false;
         }
         let mut i = 0u32;
-        while (i32::from_ne_bytes((i).to_ne_bytes())) < (i32::from_ne_bytes((u32::try_from((d.len()) & 0xFFFF_FFFF).unwrap_or(0)).to_ne_bytes())) {
-            if d[usize::try_from(i).unwrap_or(0)].role != FontRole::CjkPunctuation || ((d[usize::try_from(i).unwrap_or(0)]).clone().source).to_string() != source || !(((d[usize::try_from(i).unwrap_or(0)]).clone().reason).to_string()).starts_with(&prefix) {
+        while (i32::from_ne_bytes(((i) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((d.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
+            if d[usize::try_from(i).unwrap_or(0)].role != FontRole::CjkPunctuation || ((d[usize::try_from(i).unwrap_or(0)]).clone().source).to_ustring() != source || !(((d[usize::try_from(i).unwrap_or(0)]).clone().reason).to_ustring()).starts_with(&prefix) {
                 return false;
             }
             i = u32::wrapping_add(i, 1);
@@ -255,10 +293,10 @@ String::from_utf16_lossy(&[(c[usize::try_from(i).unwrap_or(0)]) as u16]) });
 #[test]
 fn parenthetical_pair_with_only_left_outer_script_takes_the_left_role() {
     testlib::run("org.tiqian.layout.ContextualDashEllipsisRoleResolverCoverageTest.parentheticalPairWithOnlyLeftOuterScriptTakesTheLeftRole", "org.tiqian.layout.ContextualDashEllipsisRoleResolverCoverageTest.parentheticalPairWithOnlyLeftOuterScriptTakesTheLeftRole", || {
-        ContextualDashEllipsisRoleResolverCoverageSupport::contextual_dash_ellipsis_role_resolver_coverage_support_start(&"parentheticalPairWithOnlyLeftOuterScriptTakesTheLeftRole");
-        let d = ContextualDashEllipsisRoleResolver::new().unwrap().resolve(&"中文——word——", Some(FontRoleContext::new(Some("zh-Hans".to_string()), None))).unwrap();
-        if !ContextualDashEllipsisRoleResolverCoverageSupport::contextual_dash_ellipsis_role_resolver_coverage_support_valid(&d, &"ParentheticalDashPairContext", &"only-left-outer-script") {
-            let _ = TracedAssertions::traced_assertions_fail(Some({
+        ContextualDashEllipsisRoleResolverCoverageSupport::contextual_dash_ellipsis_role_resolver_coverage_support_start(UStr::new(&[112,97,114,101,110,116,104,101,116,105,99,97,108,80,97,105,114,87,105,116,104,79,110,108,121,76,101,102,116,79,117,116,101,114,83,99,114,105,112,116,84,97,107,101,115,84,104,101,76,101,102,116,82,111,108,101]));
+        let d = ContextualDashEllipsisRoleResolver::new().unwrap().resolve(UStr::new(&[20013,25991,8212,8212,119,111,114,100,8212,8212]), Some(FontRoleContext::new(Some(UString::from("zh-Hans")), None))).unwrap();
+        if !ContextualDashEllipsisRoleResolverCoverageSupport::contextual_dash_ellipsis_role_resolver_coverage_support_valid(&d, UStr::new(&[80,97,114,101,110,116,104,101,116,105,99,97,108,68,97,115,104,80,97,105,114,67,111,110,116,101,120,116]), UStr::new(&[111,110,108,121,45,108,101,102,116,45,111,117,116,101,114,45,115,99,114,105,112,116])) {
+            let _ = TracedAssertions::traced_assertions_fail(Some(UString::from(format!("{}", {
         let mut out = String::new();
         out.push('[');
         let arr = d;
@@ -271,7 +309,7 @@ fn parenthetical_pair_with_only_left_outer_script_takes_the_left_role() {
         }
         out.push(']');
         out
-    }.to_string()), None).unwrap();
+    }).as_str())), None).unwrap();
         }
     });
 }
@@ -279,10 +317,10 @@ fn parenthetical_pair_with_only_left_outer_script_takes_the_left_role() {
 #[test]
 fn parenthetical_pair_with_only_right_outer_script_takes_the_right_role() {
     testlib::run("org.tiqian.layout.ContextualDashEllipsisRoleResolverCoverageTest.parentheticalPairWithOnlyRightOuterScriptTakesTheRightRole", "org.tiqian.layout.ContextualDashEllipsisRoleResolverCoverageTest.parentheticalPairWithOnlyRightOuterScriptTakesTheRightRole", || {
-        ContextualDashEllipsisRoleResolverCoverageSupport::contextual_dash_ellipsis_role_resolver_coverage_support_start(&"parentheticalPairWithOnlyRightOuterScriptTakesTheRightRole");
-        let d = ContextualDashEllipsisRoleResolver::new().unwrap().resolve(&"——word——中文", Some(FontRoleContext::new(Some("zh-Hans".to_string()), None))).unwrap();
-        if !ContextualDashEllipsisRoleResolverCoverageSupport::contextual_dash_ellipsis_role_resolver_coverage_support_valid(&d, &"ParentheticalDashPairContext", &"only-right-outer-script") {
-            let _ = TracedAssertions::traced_assertions_fail(Some({
+        ContextualDashEllipsisRoleResolverCoverageSupport::contextual_dash_ellipsis_role_resolver_coverage_support_start(UStr::new(&[112,97,114,101,110,116,104,101,116,105,99,97,108,80,97,105,114,87,105,116,104,79,110,108,121,82,105,103,104,116,79,117,116,101,114,83,99,114,105,112,116,84,97,107,101,115,84,104,101,82,105,103,104,116,82,111,108,101]));
+        let d = ContextualDashEllipsisRoleResolver::new().unwrap().resolve(UStr::new(&[8212,8212,119,111,114,100,8212,8212,20013,25991]), Some(FontRoleContext::new(Some(UString::from("zh-Hans")), None))).unwrap();
+        if !ContextualDashEllipsisRoleResolverCoverageSupport::contextual_dash_ellipsis_role_resolver_coverage_support_valid(&d, UStr::new(&[80,97,114,101,110,116,104,101,116,105,99,97,108,68,97,115,104,80,97,105,114,67,111,110,116,101,120,116]), UStr::new(&[111,110,108,121,45,114,105,103,104,116,45,111,117,116,101,114,45,115,99,114,105,112,116])) {
+            let _ = TracedAssertions::traced_assertions_fail(Some(UString::from(format!("{}", {
         let mut out = String::new();
         out.push('[');
         let arr = d;
@@ -295,19 +333,18 @@ fn parenthetical_pair_with_only_right_outer_script_takes_the_right_role() {
         }
         out.push(']');
         out
-    }.to_string()), None).unwrap();
+    }).as_str())), None).unwrap();
         }
     });
 }
 
 #[test]
 fn parenthetical_pair_without_outer_script_falls_back_to_paragraph_language() {
-    testlib::run("org.tiqian.layout.ContextualDashEllipsisRoleResolverCoverageTest.parentheticalPairWithoutOuterScriptFallsBackToParagraphLanguage", "org.tiqian.layout.ContextualDashEllipsisRoleResolverCoverageTest.parentheticalPairWithoutOuterScriptFallsBackToParagraphLanguage",
-|| {
-        ContextualDashEllipsisRoleResolverCoverageSupport::contextual_dash_ellipsis_role_resolver_coverage_support_start(&"parentheticalPairWithoutOuterScriptFallsBackToParagraphLanguage");
-        let d = ContextualDashEllipsisRoleResolver::new().unwrap().resolve(&"——word——", Some(FontRoleContext::new(Some("zh-Hans".to_string()), None))).unwrap();
-        if !ContextualDashEllipsisRoleResolverCoverageSupport::contextual_dash_ellipsis_role_resolver_coverage_support_valid(&d, &"ParagraphLanguageDashEllipsisContext", &"parenthetical-pair-no-outer-context") {
-            let _ = TracedAssertions::traced_assertions_fail(Some({
+    testlib::run("org.tiqian.layout.ContextualDashEllipsisRoleResolverCoverageTest.parentheticalPairWithoutOuterScriptFallsBackToParagraphLanguage", "org.tiqian.layout.ContextualDashEllipsisRoleResolverCoverageTest.parentheticalPairWithoutOuterScriptFallsBackToParagraphLanguage", || {
+        ContextualDashEllipsisRoleResolverCoverageSupport::contextual_dash_ellipsis_role_resolver_coverage_support_start(UStr::new(&[112,97,114,101,110,116,104,101,116,105,99,97,108,80,97,105,114,87,105,116,104,111,117,116,79,117,116,101,114,83,99,114,105,112,116,70,97,108,108,115,66,97,99,107,84,111,80,97,114,97,103,114,97,112,104,76,97,110,103,117,97,103,101]));
+        let d = ContextualDashEllipsisRoleResolver::new().unwrap().resolve(UStr::new(&[8212,8212,119,111,114,100,8212,8212]), Some(FontRoleContext::new(Some(UString::from("zh-Hans")), None))).unwrap();
+        if !ContextualDashEllipsisRoleResolverCoverageSupport::contextual_dash_ellipsis_role_resolver_coverage_support_valid(&d, UStr::new(&[80,97,114,97,103,114,97,112,104,76,97,110,103,117,97,103,101,68,97,115,104,69,108,108,105,112,115,105,115,67,111,110,116,101,120,116]), UStr::new(&[112,97,114,101,110,116,104,101,116,105,99,97,108,45,112,97,105,114,45,110,111,45,111,117,116,101,114,45,99,111,110,116,101,120,116])) {
+            let _ = TracedAssertions::traced_assertions_fail(Some(UString::from(format!("{}", {
         let mut out = String::new();
         out.push('[');
         let arr = d;
@@ -320,13 +357,12 @@ fn parenthetical_pair_without_outer_script_falls_back_to_paragraph_language() {
         }
         out.push(']');
         out
-    }.to_string()), None).unwrap();
+    }).as_str())), None).unwrap();
         }
     });
 }
 
 #[test]
 fn forward_pass_walker_arms_run_before_the_classifier_rejects_lone_surrogates() {
-    testlib::record_not_applicable("org.tiqian.layout.ContextualDashEllipsisRoleResolverCoverageTest.forwardPassWalkerArmsRunBeforeTheClassifierRejectsLoneSurrogates",
-"org.tiqian.layout.ContextualDashEllipsisRoleResolverCoverageTest.forwardPassWalkerArmsRunBeforeTheClassifierRejectsLoneSurrogates");
+    testlib::record_not_applicable("org.tiqian.layout.ContextualDashEllipsisRoleResolverCoverageTest.forwardPassWalkerArmsRunBeforeTheClassifierRejectsLoneSurrogates", "org.tiqian.layout.ContextualDashEllipsisRoleResolverCoverageTest.forwardPassWalkerArmsRunBeforeTheClassifierRejectsLoneSurrogates");
 }

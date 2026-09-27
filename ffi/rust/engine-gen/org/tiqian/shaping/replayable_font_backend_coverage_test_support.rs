@@ -4,6 +4,8 @@ use crate::runtime::sorted_table::SortedMapTableBuilder;
 use crate::runtime::sorted_table::SortedSetTable;
 use crate::runtime::sorted_table::SortedSetTableBuilder;
 use crate::runtime::sorted_table::SortedTable;
+use crate::runtime::u_string::UStr;
+use crate::runtime::u_string::UString;
 use std::sync::Arc;
 
 
@@ -11,10 +13,10 @@ use std::sync::Arc;
 pub struct ReplayableFontBackendCoverageTestSupport;
 
 impl ReplayableFontBackendCoverageTestSupport {
-    pub fn replayable_font_backend_coverage_test_support_strings(values: &Vec<String>) -> SortedSetTable<String> {
-        let mut b: SortedSetTableBuilder<String> = SortedTable::sorted_table_set_builder::<String>(Arc::new(|a, b| SortedTable::sorted_table_compare_strings(a.as_str(), b.as_str())));
+    pub fn replayable_font_backend_coverage_test_support_strings(values: &Vec<UString>) -> SortedSetTable<UString> {
+        let mut b: SortedSetTableBuilder<UString> = SortedTable::sorted_table_set_builder::<UString>(Arc::new(|a, b| SortedTable::sorted_table_compare_strings(a.as_ustr(), b.as_ustr())));
         for value in values {
-            b.put(&(value).to_string());
+            b.put(&(value).to_ustring());
         }
         return b.clone().build();
     }
@@ -23,9 +25,9 @@ impl ReplayableFontBackendCoverageTestSupport {
         return values;
     }
 
-    pub fn replayable_font_backend_coverage_test_support_axes(key: &str, value: f64) -> SortedMapTable<String, f64> {
-        let mut b: SortedMapTableBuilder<String, f64> = SortedTable::sorted_table_map_builder::<String, f64>(Arc::new(|a, b| SortedTable::sorted_table_compare_strings(a.as_str(), b.as_str())));
-        b.put(&(key).to_string(), &(value));
+    pub fn replayable_font_backend_coverage_test_support_axes(key: &UStr, value: f64) -> SortedMapTable<UString, f64> {
+        let mut b: SortedMapTableBuilder<UString, f64> = SortedTable::sorted_table_map_builder::<UString, f64>(Arc::new(|a, b| SortedTable::sorted_table_compare_strings(a.as_ustr(), b.as_ustr())));
+        b.put(&(key).to_ustring(), &(value));
         return b.clone().build();
     }
 }

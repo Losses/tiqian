@@ -42,6 +42,8 @@ use crate::runtime::sorted_table::SortedMapTable;
 use crate::runtime::sorted_table::SortedSetTable;
 use crate::runtime::test as testlib;
 use crate::runtime::u_string;
+use crate::runtime::u_string::UStr;
+use crate::runtime::u_string::UString;
 use std::sync::Arc;
 use std::sync::Mutex;
 
@@ -55,6 +57,19 @@ pub enum WidthIndependentAnnotationCacheCoverageTestVerbatimRangesAndAutoSpaceDe
     WidthIndependentAnnotationCacheBuildParagraphLayoutPrepFaultFault(crate::org::tiqian::layout::width_independent_annotation_cache::WidthIndependentAnnotationCacheBuildParagraphLayoutPrepFault),
     ParagraphLayoutEngineNewFaultFault(crate::org::tiqian::layout::paragraph_layout_engine::ParagraphLayoutEngineNewFault),
     ParagraphShapingStageShapeParagraphFaultFault(crate::org::tiqian::layout::paragraph_shaping_stage::ParagraphShapingStageShapeParagraphFault),
+}
+impl std::fmt::Display for WidthIndependentAnnotationCacheCoverageTestVerbatimRangesAndAutoSpaceDecisionsFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            WidthIndependentAnnotationCacheCoverageTestVerbatimRangesAndAutoSpaceDecisionsFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            WidthIndependentAnnotationCacheCoverageTestVerbatimRangesAndAutoSpaceDecisionsFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            WidthIndependentAnnotationCacheCoverageTestVerbatimRangesAndAutoSpaceDecisionsFault::SupportEngineFault(value) => write!(formatter, "{}", value),
+            WidthIndependentAnnotationCacheCoverageTestVerbatimRangesAndAutoSpaceDecisionsFault::WidthIndependentAnnotationCachePrepareWidthIndependentAnnotationFaultFault(value) => write!(formatter, "{}", value),
+            WidthIndependentAnnotationCacheCoverageTestVerbatimRangesAndAutoSpaceDecisionsFault::WidthIndependentAnnotationCacheBuildParagraphLayoutPrepFaultFault(value) => write!(formatter, "{}", value),
+            WidthIndependentAnnotationCacheCoverageTestVerbatimRangesAndAutoSpaceDecisionsFault::ParagraphLayoutEngineNewFaultFault(value) => write!(formatter, "{}", value),
+            WidthIndependentAnnotationCacheCoverageTestVerbatimRangesAndAutoSpaceDecisionsFault::ParagraphShapingStageShapeParagraphFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
 }
 
 impl From<WidthIndependentAnnotationCacheCoverageTestVerbatimRangesAndAutoSpaceDecisionsFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
@@ -172,6 +187,20 @@ pub enum WidthIndependentAnnotationCacheCoverageTestStyleAtAndEmphasisItalicAtAn
     WidthIndependentAnnotationCacheBuildParagraphLayoutPrepFaultFault(crate::org::tiqian::layout::width_independent_annotation_cache::WidthIndependentAnnotationCacheBuildParagraphLayoutPrepFault),
     ParagraphLayoutEngineNewFaultFault(crate::org::tiqian::layout::paragraph_layout_engine::ParagraphLayoutEngineNewFault),
     ParagraphShapingStageShapeParagraphFaultFault(crate::org::tiqian::layout::paragraph_shaping_stage::ParagraphShapingStageShapeParagraphFault),
+}
+impl std::fmt::Display for WidthIndependentAnnotationCacheCoverageTestStyleAtAndEmphasisItalicAtAndDynamicShapingBranchesFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            WidthIndependentAnnotationCacheCoverageTestStyleAtAndEmphasisItalicAtAndDynamicShapingBranchesFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            WidthIndependentAnnotationCacheCoverageTestStyleAtAndEmphasisItalicAtAndDynamicShapingBranchesFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            WidthIndependentAnnotationCacheCoverageTestStyleAtAndEmphasisItalicAtAndDynamicShapingBranchesFault::SupportEngineFault(value) => write!(formatter, "{}", value),
+            WidthIndependentAnnotationCacheCoverageTestStyleAtAndEmphasisItalicAtAndDynamicShapingBranchesFault::WidthIndependentAnnotationCachePrepareWidthIndependentAnnotationFaultFault(value) => write!(formatter, "{}", value),
+            WidthIndependentAnnotationCacheCoverageTestStyleAtAndEmphasisItalicAtAndDynamicShapingBranchesFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+            WidthIndependentAnnotationCacheCoverageTestStyleAtAndEmphasisItalicAtAndDynamicShapingBranchesFault::WidthIndependentAnnotationCacheBuildParagraphLayoutPrepFaultFault(value) => write!(formatter, "{}", value),
+            WidthIndependentAnnotationCacheCoverageTestStyleAtAndEmphasisItalicAtAndDynamicShapingBranchesFault::ParagraphLayoutEngineNewFaultFault(value) => write!(formatter, "{}", value),
+            WidthIndependentAnnotationCacheCoverageTestStyleAtAndEmphasisItalicAtAndDynamicShapingBranchesFault::ParagraphShapingStageShapeParagraphFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
 }
 
 impl From<WidthIndependentAnnotationCacheCoverageTestStyleAtAndEmphasisItalicAtAndDynamicShapingBranchesFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
@@ -305,6 +334,20 @@ pub enum WidthIndependentAnnotationCacheCoverageTestShrinkOpportunitiesCoverAllP
     ParagraphLayoutEngineNewFaultFault(crate::org::tiqian::layout::paragraph_layout_engine::ParagraphLayoutEngineNewFault),
     ParagraphShapingStageShapeParagraphFaultFault(crate::org::tiqian::layout::paragraph_shaping_stage::ParagraphShapingStageShapeParagraphFault),
 }
+impl std::fmt::Display for WidthIndependentAnnotationCacheCoverageTestShrinkOpportunitiesCoverAllPunctuationClassesAndSpacesFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            WidthIndependentAnnotationCacheCoverageTestShrinkOpportunitiesCoverAllPunctuationClassesAndSpacesFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            WidthIndependentAnnotationCacheCoverageTestShrinkOpportunitiesCoverAllPunctuationClassesAndSpacesFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            WidthIndependentAnnotationCacheCoverageTestShrinkOpportunitiesCoverAllPunctuationClassesAndSpacesFault::SupportEngineFault(value) => write!(formatter, "{}", value),
+            WidthIndependentAnnotationCacheCoverageTestShrinkOpportunitiesCoverAllPunctuationClassesAndSpacesFault::WidthIndependentAnnotationCachePrepareWidthIndependentAnnotationFaultFault(value) => write!(formatter, "{}", value),
+            WidthIndependentAnnotationCacheCoverageTestShrinkOpportunitiesCoverAllPunctuationClassesAndSpacesFault::WidthIndependentAnnotationCacheBuildParagraphLayoutPrepFaultFault(value) => write!(formatter, "{}", value),
+            WidthIndependentAnnotationCacheCoverageTestShrinkOpportunitiesCoverAllPunctuationClassesAndSpacesFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+            WidthIndependentAnnotationCacheCoverageTestShrinkOpportunitiesCoverAllPunctuationClassesAndSpacesFault::ParagraphLayoutEngineNewFaultFault(value) => write!(formatter, "{}", value),
+            WidthIndependentAnnotationCacheCoverageTestShrinkOpportunitiesCoverAllPunctuationClassesAndSpacesFault::ParagraphShapingStageShapeParagraphFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
+}
 
 impl From<WidthIndependentAnnotationCacheCoverageTestShrinkOpportunitiesCoverAllPunctuationClassesAndSpacesFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
     fn from(value: WidthIndependentAnnotationCacheCoverageTestShrinkOpportunitiesCoverAllPunctuationClassesAndSpacesFault) -> Self {
@@ -436,6 +479,19 @@ pub enum WidthIndependentAnnotationCacheCoverageTestRubySpreadSecondVisitAndZero
     ParagraphLayoutEngineNewFaultFault(crate::org::tiqian::layout::paragraph_layout_engine::ParagraphLayoutEngineNewFault),
     ParagraphShapingStageShapeParagraphFaultFault(crate::org::tiqian::layout::paragraph_shaping_stage::ParagraphShapingStageShapeParagraphFault),
 }
+impl std::fmt::Display for WidthIndependentAnnotationCacheCoverageTestRubySpreadSecondVisitAndZeroFirstClusterFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            WidthIndependentAnnotationCacheCoverageTestRubySpreadSecondVisitAndZeroFirstClusterFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            WidthIndependentAnnotationCacheCoverageTestRubySpreadSecondVisitAndZeroFirstClusterFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            WidthIndependentAnnotationCacheCoverageTestRubySpreadSecondVisitAndZeroFirstClusterFault::SupportEngineFault(value) => write!(formatter, "{}", value),
+            WidthIndependentAnnotationCacheCoverageTestRubySpreadSecondVisitAndZeroFirstClusterFault::WidthIndependentAnnotationCachePrepareWidthIndependentAnnotationFaultFault(value) => write!(formatter, "{}", value),
+            WidthIndependentAnnotationCacheCoverageTestRubySpreadSecondVisitAndZeroFirstClusterFault::WidthIndependentAnnotationCacheBuildParagraphLayoutPrepFaultFault(value) => write!(formatter, "{}", value),
+            WidthIndependentAnnotationCacheCoverageTestRubySpreadSecondVisitAndZeroFirstClusterFault::ParagraphLayoutEngineNewFaultFault(value) => write!(formatter, "{}", value),
+            WidthIndependentAnnotationCacheCoverageTestRubySpreadSecondVisitAndZeroFirstClusterFault::ParagraphShapingStageShapeParagraphFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
+}
 
 impl From<WidthIndependentAnnotationCacheCoverageTestRubySpreadSecondVisitAndZeroFirstClusterFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
     fn from(value: WidthIndependentAnnotationCacheCoverageTestRubySpreadSecondVisitAndZeroFirstClusterFault) -> Self {
@@ -551,6 +607,19 @@ pub enum WidthIndependentAnnotationCacheCoverageTestRubySpreadAccumulationAndEdg
     WidthIndependentAnnotationCacheBuildParagraphLayoutPrepFaultFault(crate::org::tiqian::layout::width_independent_annotation_cache::WidthIndependentAnnotationCacheBuildParagraphLayoutPrepFault),
     ParagraphLayoutEngineNewFaultFault(crate::org::tiqian::layout::paragraph_layout_engine::ParagraphLayoutEngineNewFault),
     ParagraphShapingStageShapeParagraphFaultFault(crate::org::tiqian::layout::paragraph_shaping_stage::ParagraphShapingStageShapeParagraphFault),
+}
+impl std::fmt::Display for WidthIndependentAnnotationCacheCoverageTestRubySpreadAccumulationAndEdgesFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            WidthIndependentAnnotationCacheCoverageTestRubySpreadAccumulationAndEdgesFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            WidthIndependentAnnotationCacheCoverageTestRubySpreadAccumulationAndEdgesFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            WidthIndependentAnnotationCacheCoverageTestRubySpreadAccumulationAndEdgesFault::SupportEngineFault(value) => write!(formatter, "{}", value),
+            WidthIndependentAnnotationCacheCoverageTestRubySpreadAccumulationAndEdgesFault::WidthIndependentAnnotationCachePrepareWidthIndependentAnnotationFaultFault(value) => write!(formatter, "{}", value),
+            WidthIndependentAnnotationCacheCoverageTestRubySpreadAccumulationAndEdgesFault::WidthIndependentAnnotationCacheBuildParagraphLayoutPrepFaultFault(value) => write!(formatter, "{}", value),
+            WidthIndependentAnnotationCacheCoverageTestRubySpreadAccumulationAndEdgesFault::ParagraphLayoutEngineNewFaultFault(value) => write!(formatter, "{}", value),
+            WidthIndependentAnnotationCacheCoverageTestRubySpreadAccumulationAndEdgesFault::ParagraphShapingStageShapeParagraphFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
 }
 
 impl From<WidthIndependentAnnotationCacheCoverageTestRubySpreadAccumulationAndEdgesFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
@@ -668,6 +737,20 @@ pub enum WidthIndependentAnnotationCacheCoverageTestPrepareWidthIndependentAnnot
     WidthIndependentAnnotationCacheBuildParagraphLayoutPrepFaultFault(crate::org::tiqian::layout::width_independent_annotation_cache::WidthIndependentAnnotationCacheBuildParagraphLayoutPrepFault),
     ParagraphLayoutEngineNewFaultFault(crate::org::tiqian::layout::paragraph_layout_engine::ParagraphLayoutEngineNewFault),
     ParagraphShapingStageShapeParagraphFaultFault(crate::org::tiqian::layout::paragraph_shaping_stage::ParagraphShapingStageShapeParagraphFault),
+}
+impl std::fmt::Display for WidthIndependentAnnotationCacheCoverageTestPrepareWidthIndependentAnnotationBranchesFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            WidthIndependentAnnotationCacheCoverageTestPrepareWidthIndependentAnnotationBranchesFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            WidthIndependentAnnotationCacheCoverageTestPrepareWidthIndependentAnnotationBranchesFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            WidthIndependentAnnotationCacheCoverageTestPrepareWidthIndependentAnnotationBranchesFault::SupportEngineFault(value) => write!(formatter, "{}", value),
+            WidthIndependentAnnotationCacheCoverageTestPrepareWidthIndependentAnnotationBranchesFault::WidthIndependentAnnotationCachePrepareWidthIndependentAnnotationFaultFault(value) => write!(formatter, "{}", value),
+            WidthIndependentAnnotationCacheCoverageTestPrepareWidthIndependentAnnotationBranchesFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+            WidthIndependentAnnotationCacheCoverageTestPrepareWidthIndependentAnnotationBranchesFault::WidthIndependentAnnotationCacheBuildParagraphLayoutPrepFaultFault(value) => write!(formatter, "{}", value),
+            WidthIndependentAnnotationCacheCoverageTestPrepareWidthIndependentAnnotationBranchesFault::ParagraphLayoutEngineNewFaultFault(value) => write!(formatter, "{}", value),
+            WidthIndependentAnnotationCacheCoverageTestPrepareWidthIndependentAnnotationBranchesFault::ParagraphShapingStageShapeParagraphFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
 }
 
 impl From<WidthIndependentAnnotationCacheCoverageTestPrepareWidthIndependentAnnotationBranchesFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
@@ -800,6 +883,19 @@ pub enum WidthIndependentAnnotationCacheCoverageTestPairedPunctuationWithZeroCap
     ParagraphLayoutEngineNewFaultFault(crate::org::tiqian::layout::paragraph_layout_engine::ParagraphLayoutEngineNewFault),
     ParagraphShapingStageShapeParagraphFaultFault(crate::org::tiqian::layout::paragraph_shaping_stage::ParagraphShapingStageShapeParagraphFault),
 }
+impl std::fmt::Display for WidthIndependentAnnotationCacheCoverageTestPairedPunctuationWithZeroCapacityFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            WidthIndependentAnnotationCacheCoverageTestPairedPunctuationWithZeroCapacityFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            WidthIndependentAnnotationCacheCoverageTestPairedPunctuationWithZeroCapacityFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            WidthIndependentAnnotationCacheCoverageTestPairedPunctuationWithZeroCapacityFault::SupportEngineFault(value) => write!(formatter, "{}", value),
+            WidthIndependentAnnotationCacheCoverageTestPairedPunctuationWithZeroCapacityFault::WidthIndependentAnnotationCachePrepareWidthIndependentAnnotationFaultFault(value) => write!(formatter, "{}", value),
+            WidthIndependentAnnotationCacheCoverageTestPairedPunctuationWithZeroCapacityFault::WidthIndependentAnnotationCacheBuildParagraphLayoutPrepFaultFault(value) => write!(formatter, "{}", value),
+            WidthIndependentAnnotationCacheCoverageTestPairedPunctuationWithZeroCapacityFault::ParagraphLayoutEngineNewFaultFault(value) => write!(formatter, "{}", value),
+            WidthIndependentAnnotationCacheCoverageTestPairedPunctuationWithZeroCapacityFault::ParagraphShapingStageShapeParagraphFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
+}
 
 impl From<WidthIndependentAnnotationCacheCoverageTestPairedPunctuationWithZeroCapacityFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
     fn from(value: WidthIndependentAnnotationCacheCoverageTestPairedPunctuationWithZeroCapacityFault) -> Self {
@@ -913,6 +1009,16 @@ pub enum WidthIndependentAnnotationCacheCoverageTestLruCacheUpdateExistingKeyAnd
     SupportAnnotationForTextFault(crate::org::tiqian::layout::width_independent_annotation_cache_coverage_test_support::WidthIndependentAnnotationCacheCoverageTestSupportAnnotationForTextFault),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
 }
+impl std::fmt::Display for WidthIndependentAnnotationCacheCoverageTestLruCacheUpdateExistingKeyAndClearFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            WidthIndependentAnnotationCacheCoverageTestLruCacheUpdateExistingKeyAndClearFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            WidthIndependentAnnotationCacheCoverageTestLruCacheUpdateExistingKeyAndClearFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            WidthIndependentAnnotationCacheCoverageTestLruCacheUpdateExistingKeyAndClearFault::SupportAnnotationForTextFault(value) => write!(formatter, "{}", value),
+            WidthIndependentAnnotationCacheCoverageTestLruCacheUpdateExistingKeyAndClearFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
+}
 
 impl From<WidthIndependentAnnotationCacheCoverageTestLruCacheUpdateExistingKeyAndClearFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
     fn from(value: WidthIndependentAnnotationCacheCoverageTestLruCacheUpdateExistingKeyAndClearFault) -> Self {
@@ -984,6 +1090,20 @@ pub enum WidthIndependentAnnotationCacheCoverageTestLineLengthGridBodyAlignmentB
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
     ParagraphLayoutEngineNewFaultFault(crate::org::tiqian::layout::paragraph_layout_engine::ParagraphLayoutEngineNewFault),
     ParagraphShapingStageShapeParagraphFaultFault(crate::org::tiqian::layout::paragraph_shaping_stage::ParagraphShapingStageShapeParagraphFault),
+}
+impl std::fmt::Display for WidthIndependentAnnotationCacheCoverageTestLineLengthGridBodyAlignmentBranchesFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            WidthIndependentAnnotationCacheCoverageTestLineLengthGridBodyAlignmentBranchesFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            WidthIndependentAnnotationCacheCoverageTestLineLengthGridBodyAlignmentBranchesFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            WidthIndependentAnnotationCacheCoverageTestLineLengthGridBodyAlignmentBranchesFault::SupportEngineFault(value) => write!(formatter, "{}", value),
+            WidthIndependentAnnotationCacheCoverageTestLineLengthGridBodyAlignmentBranchesFault::WidthIndependentAnnotationCachePrepareWidthIndependentAnnotationFaultFault(value) => write!(formatter, "{}", value),
+            WidthIndependentAnnotationCacheCoverageTestLineLengthGridBodyAlignmentBranchesFault::WidthIndependentAnnotationCacheBuildParagraphLayoutPrepFaultFault(value) => write!(formatter, "{}", value),
+            WidthIndependentAnnotationCacheCoverageTestLineLengthGridBodyAlignmentBranchesFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+            WidthIndependentAnnotationCacheCoverageTestLineLengthGridBodyAlignmentBranchesFault::ParagraphLayoutEngineNewFaultFault(value) => write!(formatter, "{}", value),
+            WidthIndependentAnnotationCacheCoverageTestLineLengthGridBodyAlignmentBranchesFault::ParagraphShapingStageShapeParagraphFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
 }
 
 impl From<WidthIndependentAnnotationCacheCoverageTestLineLengthGridBodyAlignmentBranchesFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
@@ -1116,6 +1236,19 @@ pub enum WidthIndependentAnnotationCacheCoverageTestDynamicShapingTriggersAndEmp
     ParagraphLayoutEngineNewFaultFault(crate::org::tiqian::layout::paragraph_layout_engine::ParagraphLayoutEngineNewFault),
     ParagraphShapingStageShapeParagraphFaultFault(crate::org::tiqian::layout::paragraph_shaping_stage::ParagraphShapingStageShapeParagraphFault),
 }
+impl std::fmt::Display for WidthIndependentAnnotationCacheCoverageTestDynamicShapingTriggersAndEmphasisItalicFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            WidthIndependentAnnotationCacheCoverageTestDynamicShapingTriggersAndEmphasisItalicFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            WidthIndependentAnnotationCacheCoverageTestDynamicShapingTriggersAndEmphasisItalicFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            WidthIndependentAnnotationCacheCoverageTestDynamicShapingTriggersAndEmphasisItalicFault::SupportEngineFault(value) => write!(formatter, "{}", value),
+            WidthIndependentAnnotationCacheCoverageTestDynamicShapingTriggersAndEmphasisItalicFault::WidthIndependentAnnotationCachePrepareWidthIndependentAnnotationFaultFault(value) => write!(formatter, "{}", value),
+            WidthIndependentAnnotationCacheCoverageTestDynamicShapingTriggersAndEmphasisItalicFault::WidthIndependentAnnotationCacheBuildParagraphLayoutPrepFaultFault(value) => write!(formatter, "{}", value),
+            WidthIndependentAnnotationCacheCoverageTestDynamicShapingTriggersAndEmphasisItalicFault::ParagraphLayoutEngineNewFaultFault(value) => write!(formatter, "{}", value),
+            WidthIndependentAnnotationCacheCoverageTestDynamicShapingTriggersAndEmphasisItalicFault::ParagraphShapingStageShapeParagraphFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
+}
 
 impl From<WidthIndependentAnnotationCacheCoverageTestDynamicShapingTriggersAndEmphasisItalicFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
     fn from(value: WidthIndependentAnnotationCacheCoverageTestDynamicShapingTriggersAndEmphasisItalicFault) -> Self {
@@ -1232,6 +1365,19 @@ pub enum WidthIndependentAnnotationCacheCoverageTestDynamicShapingEmphasisItalic
     ParagraphLayoutEngineNewFaultFault(crate::org::tiqian::layout::paragraph_layout_engine::ParagraphLayoutEngineNewFault),
     ParagraphShapingStageShapeParagraphFaultFault(crate::org::tiqian::layout::paragraph_shaping_stage::ParagraphShapingStageShapeParagraphFault),
 }
+impl std::fmt::Display for WidthIndependentAnnotationCacheCoverageTestDynamicShapingEmphasisItalicAtAndZeroPairedCapacityBranchesFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            WidthIndependentAnnotationCacheCoverageTestDynamicShapingEmphasisItalicAtAndZeroPairedCapacityBranchesFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            WidthIndependentAnnotationCacheCoverageTestDynamicShapingEmphasisItalicAtAndZeroPairedCapacityBranchesFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            WidthIndependentAnnotationCacheCoverageTestDynamicShapingEmphasisItalicAtAndZeroPairedCapacityBranchesFault::SupportEngineFault(value) => write!(formatter, "{}", value),
+            WidthIndependentAnnotationCacheCoverageTestDynamicShapingEmphasisItalicAtAndZeroPairedCapacityBranchesFault::WidthIndependentAnnotationCachePrepareWidthIndependentAnnotationFaultFault(value) => write!(formatter, "{}", value),
+            WidthIndependentAnnotationCacheCoverageTestDynamicShapingEmphasisItalicAtAndZeroPairedCapacityBranchesFault::WidthIndependentAnnotationCacheBuildParagraphLayoutPrepFaultFault(value) => write!(formatter, "{}", value),
+            WidthIndependentAnnotationCacheCoverageTestDynamicShapingEmphasisItalicAtAndZeroPairedCapacityBranchesFault::ParagraphLayoutEngineNewFaultFault(value) => write!(formatter, "{}", value),
+            WidthIndependentAnnotationCacheCoverageTestDynamicShapingEmphasisItalicAtAndZeroPairedCapacityBranchesFault::ParagraphShapingStageShapeParagraphFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
+}
 
 impl From<WidthIndependentAnnotationCacheCoverageTestDynamicShapingEmphasisItalicAtAndZeroPairedCapacityBranchesFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
     fn from(value: WidthIndependentAnnotationCacheCoverageTestDynamicShapingEmphasisItalicAtAndZeroPairedCapacityBranchesFault) -> Self {
@@ -1344,6 +1490,15 @@ pub enum WidthIndependentAnnotationCacheCoverageTestContainingItemsAndFirstConta
     UStringFaultFault(crate::std::u_string_exception::UStringFault),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
 }
+impl std::fmt::Display for WidthIndependentAnnotationCacheCoverageTestContainingItemsAndFirstContainedItemBranchesFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            WidthIndependentAnnotationCacheCoverageTestContainingItemsAndFirstContainedItemBranchesFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            WidthIndependentAnnotationCacheCoverageTestContainingItemsAndFirstContainedItemBranchesFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            WidthIndependentAnnotationCacheCoverageTestContainingItemsAndFirstContainedItemBranchesFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
+}
 
 impl From<WidthIndependentAnnotationCacheCoverageTestContainingItemsAndFirstContainedItemBranchesFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
     fn from(value: WidthIndependentAnnotationCacheCoverageTestContainingItemsAndFirstContainedItemBranchesFault) -> Self {
@@ -1402,6 +1557,22 @@ pub enum WidthIndependentAnnotationCacheCoverageTestConflictingOpenTypeFeaturesT
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
     ParagraphLayoutEngineNewFaultFault(crate::org::tiqian::layout::paragraph_layout_engine::ParagraphLayoutEngineNewFault),
     ParagraphShapingStageShapeParagraphFaultFault(crate::org::tiqian::layout::paragraph_shaping_stage::ParagraphShapingStageShapeParagraphFault),
+}
+impl std::fmt::Display for WidthIndependentAnnotationCacheCoverageTestConflictingOpenTypeFeaturesThrowsFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            WidthIndependentAnnotationCacheCoverageTestConflictingOpenTypeFeaturesThrowsFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            WidthIndependentAnnotationCacheCoverageTestConflictingOpenTypeFeaturesThrowsFault::TraceAssertionErrorFault(value) => write!(formatter, "{}", value),
+            WidthIndependentAnnotationCacheCoverageTestConflictingOpenTypeFeaturesThrowsFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            WidthIndependentAnnotationCacheCoverageTestConflictingOpenTypeFeaturesThrowsFault::SupportEngineFault(value) => write!(formatter, "{}", value),
+            WidthIndependentAnnotationCacheCoverageTestConflictingOpenTypeFeaturesThrowsFault::WidthIndependentAnnotationCachePrepareWidthIndependentAnnotationFaultFault(value) => write!(formatter, "{}", value),
+            WidthIndependentAnnotationCacheCoverageTestConflictingOpenTypeFeaturesThrowsFault::TracedAssertionsAssertFailsWithFaultFault(value) => write!(formatter, "{}", value),
+            WidthIndependentAnnotationCacheCoverageTestConflictingOpenTypeFeaturesThrowsFault::WidthIndependentAnnotationCacheBuildParagraphLayoutPrepFaultFault(value) => write!(formatter, "{}", value),
+            WidthIndependentAnnotationCacheCoverageTestConflictingOpenTypeFeaturesThrowsFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+            WidthIndependentAnnotationCacheCoverageTestConflictingOpenTypeFeaturesThrowsFault::ParagraphLayoutEngineNewFaultFault(value) => write!(formatter, "{}", value),
+            WidthIndependentAnnotationCacheCoverageTestConflictingOpenTypeFeaturesThrowsFault::ParagraphShapingStageShapeParagraphFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
 }
 
 impl From<WidthIndependentAnnotationCacheCoverageTestConflictingOpenTypeFeaturesThrowsFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
@@ -1563,6 +1734,18 @@ pub enum WidthIndependentAnnotationCacheCoverageTestCenteredPunctBeforeAttachedR
     ParagraphLayoutEngineNewFaultFault(crate::org::tiqian::layout::paragraph_layout_engine::ParagraphLayoutEngineNewFault),
     ParagraphLayoutEngineLayoutWithRejectedTechnicalTiersFaultFault(crate::org::tiqian::layout::paragraph_layout_engine::ParagraphLayoutEngineLayoutWithRejectedTechnicalTiersFault),
 }
+impl std::fmt::Display for WidthIndependentAnnotationCacheCoverageTestCenteredPunctBeforeAttachedReferenceKeepsLeadingGlueOnlyFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            WidthIndependentAnnotationCacheCoverageTestCenteredPunctBeforeAttachedReferenceKeepsLeadingGlueOnlyFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            WidthIndependentAnnotationCacheCoverageTestCenteredPunctBeforeAttachedReferenceKeepsLeadingGlueOnlyFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            WidthIndependentAnnotationCacheCoverageTestCenteredPunctBeforeAttachedReferenceKeepsLeadingGlueOnlyFault::SupportEngineFault(value) => write!(formatter, "{}", value),
+            WidthIndependentAnnotationCacheCoverageTestCenteredPunctBeforeAttachedReferenceKeepsLeadingGlueOnlyFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+            WidthIndependentAnnotationCacheCoverageTestCenteredPunctBeforeAttachedReferenceKeepsLeadingGlueOnlyFault::ParagraphLayoutEngineNewFaultFault(value) => write!(formatter, "{}", value),
+            WidthIndependentAnnotationCacheCoverageTestCenteredPunctBeforeAttachedReferenceKeepsLeadingGlueOnlyFault::ParagraphLayoutEngineLayoutWithRejectedTechnicalTiersFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
+}
 
 impl From<WidthIndependentAnnotationCacheCoverageTestCenteredPunctBeforeAttachedReferenceKeepsLeadingGlueOnlyFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
     fn from(value: WidthIndependentAnnotationCacheCoverageTestCenteredPunctBeforeAttachedReferenceKeepsLeadingGlueOnlyFault) -> Self {
@@ -1666,6 +1849,22 @@ pub enum WidthIndependentAnnotationCacheCoverageTestAdjacentInlineObjectBoundari
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
     ParagraphLayoutEngineNewFaultFault(crate::org::tiqian::layout::paragraph_layout_engine::ParagraphLayoutEngineNewFault),
     ParagraphShapingStageShapeParagraphFaultFault(crate::org::tiqian::layout::paragraph_shaping_stage::ParagraphShapingStageShapeParagraphFault),
+}
+impl std::fmt::Display for WidthIndependentAnnotationCacheCoverageTestAdjacentInlineObjectBoundariesMergingAndConflictsFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            WidthIndependentAnnotationCacheCoverageTestAdjacentInlineObjectBoundariesMergingAndConflictsFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            WidthIndependentAnnotationCacheCoverageTestAdjacentInlineObjectBoundariesMergingAndConflictsFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            WidthIndependentAnnotationCacheCoverageTestAdjacentInlineObjectBoundariesMergingAndConflictsFault::TraceAssertionErrorFault(value) => write!(formatter, "{}", value),
+            WidthIndependentAnnotationCacheCoverageTestAdjacentInlineObjectBoundariesMergingAndConflictsFault::SupportEngineFault(value) => write!(formatter, "{}", value),
+            WidthIndependentAnnotationCacheCoverageTestAdjacentInlineObjectBoundariesMergingAndConflictsFault::WidthIndependentAnnotationCachePrepareWidthIndependentAnnotationFaultFault(value) => write!(formatter, "{}", value),
+            WidthIndependentAnnotationCacheCoverageTestAdjacentInlineObjectBoundariesMergingAndConflictsFault::WidthIndependentAnnotationCacheBuildParagraphLayoutPrepFaultFault(value) => write!(formatter, "{}", value),
+            WidthIndependentAnnotationCacheCoverageTestAdjacentInlineObjectBoundariesMergingAndConflictsFault::TracedAssertionsAssertFailsWithFaultFault(value) => write!(formatter, "{}", value),
+            WidthIndependentAnnotationCacheCoverageTestAdjacentInlineObjectBoundariesMergingAndConflictsFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+            WidthIndependentAnnotationCacheCoverageTestAdjacentInlineObjectBoundariesMergingAndConflictsFault::ParagraphLayoutEngineNewFaultFault(value) => write!(formatter, "{}", value),
+            WidthIndependentAnnotationCacheCoverageTestAdjacentInlineObjectBoundariesMergingAndConflictsFault::ParagraphShapingStageShapeParagraphFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
 }
 
 impl From<WidthIndependentAnnotationCacheCoverageTestAdjacentInlineObjectBoundariesMergingAndConflictsFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
@@ -1821,50 +2020,43 @@ impl From<crate::org::tiqian::layout::paragraph_shaping_stage::ParagraphShapingS
 #[test]
 fn lru_cache_update_existing_key_and_clear() {
     testlib::run("org.tiqian.layout.WidthIndependentAnnotationCacheCoverageTest.lruCacheUpdateExistingKeyAndClear", "org.tiqian.layout.WidthIndependentAnnotationCacheCoverageTest.lruCacheUpdateExistingKeyAndClear", || {
-        let mut t = TestTraceRecorder::new("WidthIndependentAnnotationCacheCoverageTest");
-        t.section(&"lruCacheUpdateExistingKeyAndClear");
-        let mut cache = LruWidthIndependentAnnotationCache::new(2u32);
-        let dummy_input = LayoutInput::new(TiqianTextContent::new("测试缓存", Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![])), Some(TextStyle::new(Some(vec![]), Some(16.0), Some("zh-Hans".to_string()), Some(400), Some(false), Some(0.0), Some(InlineAttachment::None))),
-Some(ParagraphStyle::new(Some(LastLineAlignment::Start), Some(WritingMode::HorizontalTb), None, None, Some(Ic::zero()), Some(MeasureAdaptiveFirstLineIndent::new(Some(14.0), Some(1.0), Some(2.0))), Some(LineLengthGrid::new(Some(true), None)), Some(RubyLineHeightMode::PerLine),
-Some(ParagraphStyle::PARAGRAPH_STYLE_DEFAULT_INLINE_OBJECT_MINIMUM_CLEARANCE_EM), Some(ParagraphStyle::PARAGRAPH_STYLE_DEFAULT_EMPHASIS_DOT_GAP_EM))), LayoutConstraints::new(300 as f64 as f64, Some(f64::INFINITY), Some(2147483647)).unwrap(),
-Some((*crate::org::tiqian::core::built_in_layout_profiles::BUILT_IN_LAYOUT_PROFILES_CLREQ_HORIZONTAL).clone()), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]));
+        let mut t = TestTraceRecorder::new(&(UStr::new(&[87,105,100,116,104,73,110,100,101,112,101,110,100,101,110,116,65,110,110,111,116,97,116,105,111,110,67,97,99,104,101,67,111,118,101,114,97,103,101,84,101,115,116])));
+        t.section(UStr::new(&[108,114,117,67,97,99,104,101,85,112,100,97,116,101,69,120,105,115,116,105,110,103,75,101,121,65,110,100,67,108,101,97,114]));
+        let mut cache = Arc::new(Mutex::new(LruWidthIndependentAnnotationCache::new(2u32)));
+        let dummy_input = LayoutInput::new(TiqianTextContent::new(&(UStr::new(&[27979,35797,32531,23384])), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![])), Some(TextStyle::new(Some(vec![]), Some(16.0), Some(UString::from("zh-Hans")), Some(400), Some(false), Some(0.0), Some(InlineAttachment::None))), Some(ParagraphStyle::new(Some(LastLineAlignment::Start), Some(WritingMode::HorizontalTb), None, None, Some(Ic::zero()), Some(MeasureAdaptiveFirstLineIndent::new(Some(14.0), Some(1.0), Some(2.0))), Some(LineLengthGrid::new(Some(true), None)), Some(RubyLineHeightMode::PerLine), Some(ParagraphStyle::PARAGRAPH_STYLE_DEFAULT_INLINE_OBJECT_MINIMUM_CLEARANCE_EM), Some(ParagraphStyle::PARAGRAPH_STYLE_DEFAULT_EMPHASIS_DOT_GAP_EM))), LayoutConstraints::new(300 as f64 as f64, Some(f64::INFINITY), Some(2147483647)).unwrap(), Some((*crate::org::tiqian::core::built_in_layout_profiles::BUILT_IN_LAYOUT_PROFILES_CLREQ_HORIZONTAL).clone()), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]));
         let key = WidthIndependentAnnotationCacheCoverageTestSupport::width_independent_annotation_cache_coverage_test_support_key((dummy_input).clone());
-        cache.put((key).clone(), WidthIndependentAnnotationCacheCoverageTestSupport::width_independent_annotation_cache_coverage_test_support_annotation_for_text(&"v1").unwrap());
-        let _ = TracedAssertions::traced_assertions_assert_equals_int(1, cache.get_size(), None).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_equals_string(&"v1", (cache.get((key).clone()).as_ref().unwrap().text).to_string().as_str(), None).unwrap();
-        cache.put((key).clone(), WidthIndependentAnnotationCacheCoverageTestSupport::width_independent_annotation_cache_coverage_test_support_annotation_for_text(&"v2").unwrap());
-        let _ = TracedAssertions::traced_assertions_assert_equals_int(1, cache.get_size(), None).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_equals_string(&"v2", (cache.get((key).clone()).as_ref().unwrap().text).to_string().as_str(), None).unwrap();
-        let key2 = WidthIndependentAnnotationCacheCoverageTestSupport::width_independent_annotation_cache_coverage_test_support_key(LayoutInput::new((dummy_input.content).clone(), Some(TextStyle::new(Some(vec![]), Some(20.0f64), Some("zh-Hans".to_string()), Some(400), Some(false),
-Some(0.0), Some(InlineAttachment::None))), Some((dummy_input.paragraph_style).clone()), (dummy_input.constraints).clone(), Some((dummy_input.profile_id).clone()), Some((dummy_input.decorations).clone()), Some((dummy_input.ruby_spans).clone()),
-Some((dummy_input.inline_boxes).clone()), Some((dummy_input.inline_objects).clone())));
-        cache.put((key2).clone(), WidthIndependentAnnotationCacheCoverageTestSupport::width_independent_annotation_cache_coverage_test_support_annotation_for_text(&"v3").unwrap());
-        let _ = TracedAssertions::traced_assertions_assert_equals_int(2, cache.get_size(), None).unwrap();
-        let key3 = WidthIndependentAnnotationCacheCoverageTestSupport::width_independent_annotation_cache_coverage_test_support_key(LayoutInput::new((dummy_input.content).clone(), Some(TextStyle::new(Some(vec![]), Some(30.0f64), Some("zh-Hans".to_string()), Some(400), Some(false),
-Some(0.0), Some(InlineAttachment::None))), Some((dummy_input.paragraph_style).clone()), (dummy_input.constraints).clone(), Some((dummy_input.profile_id).clone()), Some((dummy_input.decorations).clone()), Some((dummy_input.ruby_spans).clone()),
-Some((dummy_input.inline_boxes).clone()), Some((dummy_input.inline_objects).clone())));
-        cache.put((key3).clone(), WidthIndependentAnnotationCacheCoverageTestSupport::width_independent_annotation_cache_coverage_test_support_annotation_for_text(&"v4").unwrap());
-        let _ = TracedAssertions::traced_assertions_assert_equals_int(2, cache.get_size(), None).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_null_rendered(cache.get((key).clone()).is_none(), &"-", None).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_equals_string(&"v3", (cache.get((key2).clone()).as_ref().unwrap().text).to_string().as_str(), None).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_equals_string(&"v4", (cache.get((key3).clone()).as_ref().unwrap().text).to_string().as_str(), None).unwrap();
-        cache.clear();
-        let _ = TracedAssertions::traced_assertions_assert_equals_int(0, cache.get_size(), None).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_null_rendered(cache.get((key2).clone()).is_none(), &"-", None).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_null_rendered(cache.get((key3).clone()).is_none(), &"-", None).unwrap();
+        cache.lock().unwrap().put((key).clone(), WidthIndependentAnnotationCacheCoverageTestSupport::width_independent_annotation_cache_coverage_test_support_annotation_for_text(UStr::new(&[118,49])).unwrap());
+        let _ = TracedAssertions::traced_assertions_assert_equals_int(1, cache.lock().unwrap().get_size(), None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_equals_string(UStr::new(&[118,49]), (cache.lock().unwrap().get((key).clone()).as_ref().unwrap().text).to_ustring().as_ustr(), None).unwrap();
+        cache.lock().unwrap().put((key).clone(), WidthIndependentAnnotationCacheCoverageTestSupport::width_independent_annotation_cache_coverage_test_support_annotation_for_text(UStr::new(&[118,50])).unwrap());
+        let _ = TracedAssertions::traced_assertions_assert_equals_int(1, cache.lock().unwrap().get_size(), None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_equals_string(UStr::new(&[118,50]), (cache.lock().unwrap().get((key).clone()).as_ref().unwrap().text).to_ustring().as_ustr(), None).unwrap();
+        let key2 = WidthIndependentAnnotationCacheCoverageTestSupport::width_independent_annotation_cache_coverage_test_support_key(LayoutInput::new((dummy_input.content).clone(), Some(TextStyle::new(Some(vec![]), Some(20.0f64), Some(UString::from("zh-Hans")), Some(400), Some(false), Some(0.0), Some(InlineAttachment::None))), Some((dummy_input.paragraph_style).clone()), (dummy_input.constraints).clone(), Some((dummy_input.profile_id).clone()), Some((dummy_input.decorations).clone()), Some((dummy_input.ruby_spans).clone()), Some((dummy_input.inline_boxes).clone()), Some((dummy_input.inline_objects).clone())));
+        cache.lock().unwrap().put((key2).clone(), WidthIndependentAnnotationCacheCoverageTestSupport::width_independent_annotation_cache_coverage_test_support_annotation_for_text(UStr::new(&[118,51])).unwrap());
+        let _ = TracedAssertions::traced_assertions_assert_equals_int(2, cache.lock().unwrap().get_size(), None).unwrap();
+        let key3 = WidthIndependentAnnotationCacheCoverageTestSupport::width_independent_annotation_cache_coverage_test_support_key(LayoutInput::new((dummy_input.content).clone(), Some(TextStyle::new(Some(vec![]), Some(30.0f64), Some(UString::from("zh-Hans")), Some(400), Some(false), Some(0.0), Some(InlineAttachment::None))), Some((dummy_input.paragraph_style).clone()), (dummy_input.constraints).clone(), Some((dummy_input.profile_id).clone()), Some((dummy_input.decorations).clone()), Some((dummy_input.ruby_spans).clone()), Some((dummy_input.inline_boxes).clone()), Some((dummy_input.inline_objects).clone())));
+        cache.lock().unwrap().put((key3).clone(), WidthIndependentAnnotationCacheCoverageTestSupport::width_independent_annotation_cache_coverage_test_support_annotation_for_text(UStr::new(&[118,52])).unwrap());
+        let _ = TracedAssertions::traced_assertions_assert_equals_int(2, cache.lock().unwrap().get_size(), None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_null_rendered(cache.lock().unwrap().get((key).clone()).is_none(), UStr::new(&[45]), None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_equals_string(UStr::new(&[118,51]), (cache.lock().unwrap().get((key2).clone()).as_ref().unwrap().text).to_ustring().as_ustr(), None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_equals_string(UStr::new(&[118,52]), (cache.lock().unwrap().get((key3).clone()).as_ref().unwrap().text).to_ustring().as_ustr(), None).unwrap();
+        cache.lock().unwrap().clear();
+        let _ = TracedAssertions::traced_assertions_assert_equals_int(0, cache.lock().unwrap().get_size(), None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_null_rendered(cache.lock().unwrap().get((key2).clone()).is_none(), UStr::new(&[45]), None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_null_rendered(cache.lock().unwrap().get((key3).clone()).is_none(), UStr::new(&[45]), None).unwrap();
     });
 }
 
 #[test]
 fn containing_items_and_first_contained_item_branches() {
     testlib::run("org.tiqian.layout.WidthIndependentAnnotationCacheCoverageTest.containingItemsAndFirstContainedItemBranches", "org.tiqian.layout.WidthIndependentAnnotationCacheCoverageTest.containingItemsAndFirstContainedItemBranches", || {
-        let mut t = TestTraceRecorder::new("WidthIndependentAnnotationCacheCoverageTest");
-        t.section(&"containingItemsAndFirstContainedItemBranches");
+        let mut t = TestTraceRecorder::new(&(UStr::new(&[87,105,100,116,104,73,110,100,101,112,101,110,100,101,110,116,65,110,110,111,116,97,116,105,111,110,67,97,99,104,101,67,111,118,101,114,97,103,101,84,101,115,116])));
+        t.section(UStr::new(&[99,111,110,116,97,105,110,105,110,103,73,116,101,109,115,65,110,100,70,105,114,115,116,67,111,110,116,97,105,110,101,100,73,116,101,109,66,114,97,110,99,104,101,115]));
         let clusters = vec![
-    (Cluster::new(TextRange::new(0u32, 2u32).unwrap(), "aa", "k", 10.0f64, Some("aa".to_string()), Some(0.0), Some(0.0), Some(0.0))).clone(),
-    (Cluster::new(TextRange::new(2u32, 5u32).unwrap(), "bbb", "k", 15.0f64, Some("bbb".to_string()), Some(0.0), Some(0.0), Some(0.0))).clone(),
-    (Cluster::new(TextRange::new(5u32, 7u32).unwrap(), "cc", "k", 10.0f64, Some("cc".to_string()), Some(0.0), Some(0.0), Some(0.0))).clone(),
-    (Cluster::new(TextRange::new(7u32, 9u32).unwrap(), "dd", "k", 10.0f64, Some("dd".to_string()), Some(0.0), Some(0.0), Some(0.0))).clone(),
+    (Cluster::new(TextRange::new(0u32, 2u32).unwrap(), &(UStr::new(&[97,97])), &(UStr::new(&[107])), 10.0f64, Some(UString::from("aa")), Some(0.0), Some(0.0), Some(0.0))).clone(),
+    (Cluster::new(TextRange::new(2u32, 5u32).unwrap(), &(UStr::new(&[98,98,98])), &(UStr::new(&[107])), 15.0f64, Some(UString::from("bbb")), Some(0.0), Some(0.0), Some(0.0))).clone(),
+    (Cluster::new(TextRange::new(5u32, 7u32).unwrap(), &(UStr::new(&[99,99])), &(UStr::new(&[107])), 10.0f64, Some(UString::from("cc")), Some(0.0), Some(0.0), Some(0.0))).clone(),
+    (Cluster::new(TextRange::new(7u32, 9u32).unwrap(), &(UStr::new(&[100,100])), &(UStr::new(&[107])), 10.0f64, Some(UString::from("dd")), Some(0.0), Some(0.0), Some(0.0))).clone(),
 ];
         let items = vec![
     (TextRange::new(0u32, 2u32).unwrap()).clone(),
@@ -1874,59 +2066,52 @@ fn containing_items_and_first_contained_item_branches() {
 ];
         let contained = WidthIndependentAnnotationCacheCoverageTestSupport::width_independent_annotation_cache_coverage_test_support_containing_items(&clusters, &items);
         let _ = TracedAssertions::traced_assertions_assert_equals_int(4, u32::try_from((contained.len()) & 0xFFFF_FFFF).unwrap_or(0), None).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_equals_rendered(&"TextRange(start=0, end=2)", WidthIndependentAnnotationCacheCoverageTestSupport::width_independent_annotation_cache_coverage_test_support_render_nullable_range((contained[0usize]).clone()).as_str(),
-None).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_null_rendered((contained[1usize]).clone().is_none(), &"-", None).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_equals_rendered(&"TextRange(start=5, end=8)", WidthIndependentAnnotationCacheCoverageTestSupport::width_independent_annotation_cache_coverage_test_support_render_nullable_range((contained[2usize]).clone()).as_str(),
-None).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_null_rendered((contained[3usize]).clone().is_none(), &"-", None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_equals_rendered(UStr::new(&[84,101,120,116,82,97,110,103,101,40,115,116,97,114,116,61,48,44,32,101,110,100,61,50,41]), WidthIndependentAnnotationCacheCoverageTestSupport::width_independent_annotation_cache_coverage_test_support_render_nullable_range((contained[0usize]).clone()).as_ustr(), None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_null_rendered((contained[1usize]).clone().is_none(), UStr::new(&[45]), None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_equals_rendered(UStr::new(&[84,101,120,116,82,97,110,103,101,40,115,116,97,114,116,61,53,44,32,101,110,100,61,56,41]), WidthIndependentAnnotationCacheCoverageTestSupport::width_independent_annotation_cache_coverage_test_support_render_nullable_range((contained[2usize]).clone()).as_ustr(), None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_null_rendered((contained[3usize]).clone().is_none(), UStr::new(&[45]), None).unwrap();
         let first_contained = WidthIndependentAnnotationCacheCoverageTestSupport::width_independent_annotation_cache_coverage_test_support_first_contained_item(&clusters, &items);
         let _ = TracedAssertions::traced_assertions_assert_equals_int(4, u32::try_from((first_contained.len()) & 0xFFFF_FFFF).unwrap_or(0), None).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_equals_rendered(&"TextRange(start=0, end=2)", WidthIndependentAnnotationCacheCoverageTestSupport::width_independent_annotation_cache_coverage_test_support_render_nullable_range((first_contained[0usize]).clone()).as_str(),
-None).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_null_rendered((first_contained[1usize]).clone().is_none(), &"-", None).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_null_rendered((first_contained[2usize]).clone().is_none(), &"-", None).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_null_rendered((first_contained[3usize]).clone().is_none(), &"-", None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_equals_rendered(UStr::new(&[84,101,120,116,82,97,110,103,101,40,115,116,97,114,116,61,48,44,32,101,110,100,61,50,41]), WidthIndependentAnnotationCacheCoverageTestSupport::width_independent_annotation_cache_coverage_test_support_render_nullable_range((first_contained[0usize]).clone()).as_ustr(), None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_null_rendered((first_contained[1usize]).clone().is_none(), UStr::new(&[45]), None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_null_rendered((first_contained[2usize]).clone().is_none(), UStr::new(&[45]), None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_null_rendered((first_contained[3usize]).clone().is_none(), UStr::new(&[45]), None).unwrap();
     });
 }
 
 #[test]
 fn prepare_width_independent_annotation_branches() {
     testlib::run("org.tiqian.layout.WidthIndependentAnnotationCacheCoverageTest.prepareWidthIndependentAnnotationBranches", "org.tiqian.layout.WidthIndependentAnnotationCacheCoverageTest.prepareWidthIndependentAnnotationBranches", || {
-        let mut t = TestTraceRecorder::new("WidthIndependentAnnotationCacheCoverageTest");
-        t.section(&"prepareWidthIndependentAnnotationBranches");
+        let mut t = TestTraceRecorder::new(&(UStr::new(&[87,105,100,116,104,73,110,100,101,112,101,110,100,101,110,116,65,110,110,111,116,97,116,105,111,110,67,97,99,104,101,67,111,118,101,114,97,103,101,84,101,115,116])));
+        t.section(UStr::new(&[112,114,101,112,97,114,101,87,105,100,116,104,73,110,100,101,112,101,110,100,101,110,116,65,110,110,111,116,97,116,105,111,110,66,114,97,110,99,104,101,115]));
         let mut engine = WidthIndependentAnnotationCacheCoverageTestSupport::width_independent_annotation_cache_coverage_test_support_engine(None, None).unwrap();
-        let input = LayoutInput::new(TiqianTextContent::new("测试文本【中文】与English，以及注音与行内框。", Some(vec![
-    (TextSpan::new(TextRange::new(0u32, 0u32).unwrap(), TextStyle::new(Some(vec![]), Some(10.0f64), Some("zh-Hans".to_string()), Some(400), Some(false), Some(0.0), Some(InlineAttachment::None)))).clone(),
-    (TextSpan::new(TextRange::new(0u32, 1u32).unwrap(), TextStyle::new(Some(vec![]), Some(18.0f64), Some("zh-Hans".to_string()), Some(500), Some(false), Some(0.0), Some(InlineAttachment::None)))).clone(),
-    (TextSpan::new(TextRange::new(1u32, 4u32).unwrap(), TextStyle::new(Some(vec![]), Some(18.0f64), Some("zh-Hans".to_string()), Some(500), Some(false), Some(0.0), Some(InlineAttachment::None)))).clone(),
-    (TextSpan::new(TextRange::new(4u32, 8u32).unwrap(), TextStyle::new(Some(vec![]), Some(14.0f64), Some("zh-Hans".to_string()), Some(300), Some(false), Some(0.0), Some(InlineAttachment::None)))).clone(),
+        let input = LayoutInput::new(TiqianTextContent::new(&(UStr::new(&[27979,35797,25991,26412,12304,20013,25991,12305,19982,69,110,103,108,105,115,104,65292,20197,21450,27880,38899,19982,34892,20869,26694,12290])), Some(vec![
+    (TextSpan::new(TextRange::new(0u32, 0u32).unwrap(), TextStyle::new(Some(vec![]), Some(10.0f64), Some(UString::from("zh-Hans")), Some(400), Some(false), Some(0.0), Some(InlineAttachment::None)))).clone(),
+    (TextSpan::new(TextRange::new(0u32, 1u32).unwrap(), TextStyle::new(Some(vec![]), Some(18.0f64), Some(UString::from("zh-Hans")), Some(500), Some(false), Some(0.0), Some(InlineAttachment::None)))).clone(),
+    (TextSpan::new(TextRange::new(1u32, 4u32).unwrap(), TextStyle::new(Some(vec![]), Some(18.0f64), Some(UString::from("zh-Hans")), Some(500), Some(false), Some(0.0), Some(InlineAttachment::None)))).clone(),
+    (TextSpan::new(TextRange::new(4u32, 8u32).unwrap(), TextStyle::new(Some(vec![]), Some(14.0f64), Some(UString::from("zh-Hans")), Some(300), Some(false), Some(0.0), Some(InlineAttachment::None)))).clone(),
 ]), Some(vec![1, 2, 3, 4, 6]), Some(vec![
     (LineBreakSpan::new(TextRange::new(8u32, 15u32).unwrap(), LineBreakPolicy::ProgressiveTechnical)).clone(),
-]), Some(vec![])), Some(TextStyle::new(Some(vec![]), Some(16.0f64), Some("zh-CN".to_string()), Some(400), Some(false), Some(0.0), Some(InlineAttachment::None))), Some(ParagraphStyle::new(Some(LastLineAlignment::Start), Some(WritingMode::HorizontalTb), None, None, Some(Ic::zero()),
-Some(MeasureAdaptiveFirstLineIndent::new(Some(14.0), Some(1.0), Some(2.0))), Some(LineLengthGrid::new(Some(true), None)), Some(RubyLineHeightMode::PerLine), Some(ParagraphStyle::PARAGRAPH_STYLE_DEFAULT_INLINE_OBJECT_MINIMUM_CLEARANCE_EM),
-Some(ParagraphStyle::PARAGRAPH_STYLE_DEFAULT_EMPHASIS_DOT_GAP_EM))), LayoutConstraints::new(300 as f64 as f64, Some(f64::INFINITY), Some(2147483647)).unwrap(), Some((*crate::org::tiqian::core::built_in_layout_profiles::BUILT_IN_LAYOUT_PROFILES_CLREQ_HORIZONTAL).clone()),
-Some(vec![
+]), Some(vec![])), Some(TextStyle::new(Some(vec![]), Some(16.0f64), Some(UString::from("zh-CN")), Some(400), Some(false), Some(0.0), Some(InlineAttachment::None))),
+Some(ParagraphStyle::new(Some(LastLineAlignment::Start), Some(WritingMode::HorizontalTb), None, None, Some(Ic::zero()), Some(MeasureAdaptiveFirstLineIndent::new(Some(14.0), Some(1.0), Some(2.0))), Some(LineLengthGrid::new(Some(true), None)), Some(RubyLineHeightMode::PerLine), Some(ParagraphStyle::PARAGRAPH_STYLE_DEFAULT_INLINE_OBJECT_MINIMUM_CLEARANCE_EM), Some(ParagraphStyle::PARAGRAPH_STYLE_DEFAULT_EMPHASIS_DOT_GAP_EM))), LayoutConstraints::new(300 as f64 as f64, Some(f64::INFINITY), Some(2147483647)).unwrap(), Some((*crate::org::tiqian::core::built_in_layout_profiles::BUILT_IN_LAYOUT_PROFILES_CLREQ_HORIZONTAL).clone()), Some(vec![
     (DecorationSpan::new(TextRange::new(0u32, 4u32).unwrap(), DecorationKind::Emphasis)).clone(),
     (DecorationSpan::new(TextRange::new(4u32, 8u32).unwrap(), DecorationKind::ProperNoun)).clone(),
 ]), Some(vec![
-    (RubySpan::new(TextRange::new(0u32, 2u32).unwrap(), "cèshì", Some(vec![]), RubyKind::Pinyin, Some("zh-Latn".to_string()))).clone(),
-    (RubySpan::new(TextRange::new(2u32, 4u32).unwrap(), "", Some(vec![]), RubyKind::Pinyin, None)).clone(),
-    (RubySpan::new(TextRange::new(0u32, 1u32).unwrap(), "˙ㄅ", Some(vec![]), RubyKind::Bopomofo, Some("zh-TW".to_string()))).clone(),
-    (RubySpan::new(TextRange::new(0u32, 1u32).unwrap(), "ㄆ", Some(vec![]), RubyKind::Bopomofo, Some("zh-TW".to_string()))).clone(),
-    (RubySpan::new(TextRange::new(99u32, 100u32).unwrap(), "invalid", Some(vec![]), RubyKind::Bopomofo, Some("zh-TW".to_string()))).clone(),
+    (RubySpan::new(TextRange::new(0u32, 2u32).unwrap(), &(UStr::new(&[99,232,115,104,236])), Some(vec![]), RubyKind::Pinyin, Some(UString::from("zh-Latn")))).clone(),
+    (RubySpan::new(TextRange::new(2u32, 4u32).unwrap(), &(UStr::new(&[])), Some(vec![]), RubyKind::Pinyin, None)).clone(),
+    (RubySpan::new(TextRange::new(0u32, 1u32).unwrap(), &(UStr::new(&[729,12549])), Some(vec![]), RubyKind::Bopomofo, Some(UString::from("zh-TW")))).clone(),
+    (RubySpan::new(TextRange::new(0u32, 1u32).unwrap(), &(UStr::new(&[12550])), Some(vec![]), RubyKind::Bopomofo, Some(UString::from("zh-TW")))).clone(),
+    (RubySpan::new(TextRange::new(99u32, 100u32).unwrap(), &(UStr::new(&[105,110,118,97,108,105,100])), Some(vec![]), RubyKind::Bopomofo, Some(UString::from("zh-TW")))).clone(),
 ]), Some(vec![
     (InlineBoxSpan::new(TextRange::new(15u32, 17u32).unwrap(), Some(4.0f64), Some(0.0f64), Some(InlineBoxOuterSpacing::Narrow))).clone(),
     (InlineBoxSpan::new(TextRange::new(17u32, 19u32).unwrap(), Some(0.0f64), Some(4.0f64), Some(InlineBoxOuterSpacing::Narrow))).clone(),
     (InlineBoxSpan::new(TextRange::new(19u32, 21u32).unwrap(), Some(0.0), Some(0.0), Some(InlineBoxOuterSpacing::Narrow))).clone(),
     (InlineBoxSpan::new(TextRange::new(21u32, 23u32).unwrap(), Some(0.0f64), Some(0.0f64), Some(InlineBoxOuterSpacing::Source))).clone(),
 ]), Some(vec![
-    (InlineObjectSpan::new(TextRange::new(23u32, 24u32).unwrap(), 20.0f64, 12.0f64, 4.0f64, Some(InlineObjectBoundaryAdjustment::inline_object_boundary_adjustment_fixed().unwrap()),
-Some(InlineObjectBoundaryAdjustment::inline_object_boundary_adjustment_fixed().unwrap())).unwrap()).clone(),
+    (InlineObjectSpan::new(TextRange::new(23u32, 24u32).unwrap(), 20.0f64, 12.0f64, 4.0f64, Some(InlineObjectBoundaryAdjustment::inline_object_boundary_adjustment_fixed().unwrap()), Some(InlineObjectBoundaryAdjustment::inline_object_boundary_adjustment_fixed().unwrap())).unwrap()).clone(),
 ]));
-        let annotation = WidthIndependentAnnotationCacheFns::width_independent_annotation_cache_fns_prepare_width_independent_annotation(&mut engine, (input).clone(),
-WidthIndependentAnnotationCacheCoverageTestSupport::width_independent_annotation_cache_coverage_test_support_empty_tiers()).unwrap();
-        let _ = TracedAssertions::traced_assertions_record_rendered_not_null(if false { "null".to_string() } else { "WidthIndependentParagraphAnnotation@identity".to_string() }.as_str(), None).unwrap();
+        let annotation = WidthIndependentAnnotationCacheFns::width_independent_annotation_cache_fns_prepare_width_independent_annotation(&mut engine, (input).clone(), WidthIndependentAnnotationCacheCoverageTestSupport::width_independent_annotation_cache_coverage_test_support_empty_tiers()).unwrap();
+        let _ = TracedAssertions::traced_assertions_record_rendered_not_null(if false { UString::from("null") } else { UString::from("WidthIndependentParagraphAnnotation@identity") }.as_ustr(), None).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_equals_float(18.0f64, (annotation.font_size_at)(0), None).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_equals_float(14.0f64, (annotation.font_size_at)(5), None).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_equals_float(16.0f64, (annotation.font_size_at)(24), None).unwrap();
@@ -1939,32 +2124,26 @@ WidthIndependentAnnotationCacheCoverageTestSupport::width_independent_annotation
         let _ = TracedAssertions::traced_assertions_assert_equals_float(14.0f64, (annotation.style_at)(7).font_size, None).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_equals_float(16.0f64, (annotation.style_at)(8).font_size, None).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_equals_float(16.0f64, (annotation.style_at)(25).font_size, None).unwrap();
-        let prep = WidthIndependentAnnotationCacheFns::width_independent_annotation_cache_fns_build_paragraph_layout_prep(&mut engine, (input).clone(), (annotation).clone(),
-WidthIndependentAnnotationCacheCoverageTestSupport::width_independent_annotation_cache_coverage_test_support_empty_tiers()).unwrap();
-        let _ = TracedAssertions::traced_assertions_record_rendered_not_null(if false { "null".to_string() } else { "ParagraphLayoutPrep@identity".to_string() }.as_str(), None).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_true((i32::from_ne_bytes((u32::from_ne_bytes((prep.ruby_and_bopomofo_spread.size()).to_ne_bytes())).to_ne_bytes())) > (0), None).unwrap();
+        let prep = WidthIndependentAnnotationCacheFns::width_independent_annotation_cache_fns_build_paragraph_layout_prep(&mut engine, (input).clone(), (annotation).clone(), WidthIndependentAnnotationCacheCoverageTestSupport::width_independent_annotation_cache_coverage_test_support_empty_tiers()).unwrap();
+        let _ = TracedAssertions::traced_assertions_record_rendered_not_null(if false { UString::from("null") } else { UString::from("ParagraphLayoutPrep@identity") }.as_ustr(), None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_true((i32::from_ne_bytes(((u32::from_ne_bytes(((prep.ruby_and_bopomofo_spread.size()) as u32).to_ne_bytes())) as i32).to_ne_bytes())) > (0), None).unwrap();
     });
 }
 
 #[test]
 fn line_length_grid_body_alignment_branches() {
     testlib::run("org.tiqian.layout.WidthIndependentAnnotationCacheCoverageTest.lineLengthGridBodyAlignmentBranches", "org.tiqian.layout.WidthIndependentAnnotationCacheCoverageTest.lineLengthGridBodyAlignmentBranches", || {
-        let mut t = TestTraceRecorder::new("WidthIndependentAnnotationCacheCoverageTest");
-        t.section(&"lineLengthGridBodyAlignmentBranches");
+        let mut t = TestTraceRecorder::new(&(UStr::new(&[87,105,100,116,104,73,110,100,101,112,101,110,100,101,110,116,65,110,110,111,116,97,116,105,111,110,67,97,99,104,101,67,111,118,101,114,97,103,101,84,101,115,116])));
+        t.section(UStr::new(&[108,105,110,101,76,101,110,103,116,104,71,114,105,100,66,111,100,121,65,108,105,103,110,109,101,110,116,66,114,97,110,99,104,101,115]));
         let mut engine = WidthIndependentAnnotationCacheCoverageTestSupport::width_independent_annotation_cache_coverage_test_support_engine(None, None).unwrap();
-        let text = "一二三四五六七八九十".to_string();
+        let text = UString::from("一二三四五六七八九十").to_ustring();
         {
             {
                 let align = LastLineAlignment::Start;
-                let input = LayoutInput::new(TiqianTextContent::new(text.as_str(), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![])), Some(TextStyle::new(Some(vec![]), Some(16.0f64), Some("zh-Hans".to_string()), Some(400), Some(false), Some(0.0),
-Some(InlineAttachment::None))), Some(ParagraphStyle::new(Some(LastLineAlignment::Start), Some(WritingMode::HorizontalTb), None, Some((Ic::zero()).clone()), Some(Ic::zero()), Some(MeasureAdaptiveFirstLineIndent::new(Some(14.0), Some(1.0), Some(2.0))),
-Some(LineLengthGrid::new(Some(true), Some(align))), Some(RubyLineHeightMode::PerLine), Some(ParagraphStyle::PARAGRAPH_STYLE_DEFAULT_INLINE_OBJECT_MINIMUM_CLEARANCE_EM), Some(ParagraphStyle::PARAGRAPH_STYLE_DEFAULT_EMPHASIS_DOT_GAP_EM))), LayoutConstraints::new(100 as f64 as f64,
-Some(f64::INFINITY), Some(2147483647)).unwrap(), Some((*crate::org::tiqian::core::built_in_layout_profiles::BUILT_IN_LAYOUT_PROFILES_CLREQ_HORIZONTAL).clone()), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]));
-                let annotation = WidthIndependentAnnotationCacheFns::width_independent_annotation_cache_fns_prepare_width_independent_annotation(&mut engine, (input).clone(),
-WidthIndependentAnnotationCacheCoverageTestSupport::width_independent_annotation_cache_coverage_test_support_empty_tiers()).unwrap();
-                let prep = WidthIndependentAnnotationCacheFns::width_independent_annotation_cache_fns_build_paragraph_layout_prep(&mut engine, (input).clone(), (annotation).clone(),
-WidthIndependentAnnotationCacheCoverageTestSupport::width_independent_annotation_cache_coverage_test_support_empty_tiers()).unwrap();
-                let _ = TracedAssertions::traced_assertions_record_rendered_not_null(if false { "null".to_string() } else { "ParagraphLayoutPrep@identity".to_string() }.as_str(), None).unwrap();
+                let input = LayoutInput::new(TiqianTextContent::new(text.as_ustr(), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![])), Some(TextStyle::new(Some(vec![]), Some(16.0f64), Some(UString::from("zh-Hans")), Some(400), Some(false), Some(0.0), Some(InlineAttachment::None))), Some(ParagraphStyle::new(Some(LastLineAlignment::Start), Some(WritingMode::HorizontalTb), None, Some((Ic::zero()).clone()), Some(Ic::zero()), Some(MeasureAdaptiveFirstLineIndent::new(Some(14.0), Some(1.0), Some(2.0))), Some(LineLengthGrid::new(Some(true), Some(align))), Some(RubyLineHeightMode::PerLine), Some(ParagraphStyle::PARAGRAPH_STYLE_DEFAULT_INLINE_OBJECT_MINIMUM_CLEARANCE_EM), Some(ParagraphStyle::PARAGRAPH_STYLE_DEFAULT_EMPHASIS_DOT_GAP_EM))), LayoutConstraints::new(100 as f64 as f64, Some(f64::INFINITY), Some(2147483647)).unwrap(), Some((*crate::org::tiqian::core::built_in_layout_profiles::BUILT_IN_LAYOUT_PROFILES_CLREQ_HORIZONTAL).clone()), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]));
+                let annotation = WidthIndependentAnnotationCacheFns::width_independent_annotation_cache_fns_prepare_width_independent_annotation(&mut engine, (input).clone(), WidthIndependentAnnotationCacheCoverageTestSupport::width_independent_annotation_cache_coverage_test_support_empty_tiers()).unwrap();
+                let prep = WidthIndependentAnnotationCacheFns::width_independent_annotation_cache_fns_build_paragraph_layout_prep(&mut engine, (input).clone(), (annotation).clone(), WidthIndependentAnnotationCacheCoverageTestSupport::width_independent_annotation_cache_coverage_test_support_empty_tiers()).unwrap();
+                let _ = TracedAssertions::traced_assertions_record_rendered_not_null(if false { UString::from("null") } else { UString::from("ParagraphLayoutPrep@identity") }.as_ustr(), None).unwrap();
                 if align == LastLineAlignment::Start {
                     let _ = TracedAssertions::traced_assertions_assert_equals_float(0.0f64, prep.grid_body_offset, None).unwrap();
                 } else {
@@ -1977,15 +2156,10 @@ WidthIndependentAnnotationCacheCoverageTestSupport::width_independent_annotation
             }
             {
                 let align = LastLineAlignment::Center;
-                let input = LayoutInput::new(TiqianTextContent::new(text.as_str(), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![])), Some(TextStyle::new(Some(vec![]), Some(16.0f64), Some("zh-Hans".to_string()), Some(400), Some(false), Some(0.0),
-Some(InlineAttachment::None))), Some(ParagraphStyle::new(Some(LastLineAlignment::Start), Some(WritingMode::HorizontalTb), None, Some((Ic::zero()).clone()), Some(Ic::zero()), Some(MeasureAdaptiveFirstLineIndent::new(Some(14.0), Some(1.0), Some(2.0))),
-Some(LineLengthGrid::new(Some(true), Some(align))), Some(RubyLineHeightMode::PerLine), Some(ParagraphStyle::PARAGRAPH_STYLE_DEFAULT_INLINE_OBJECT_MINIMUM_CLEARANCE_EM), Some(ParagraphStyle::PARAGRAPH_STYLE_DEFAULT_EMPHASIS_DOT_GAP_EM))), LayoutConstraints::new(100 as f64 as f64,
-Some(f64::INFINITY), Some(2147483647)).unwrap(), Some((*crate::org::tiqian::core::built_in_layout_profiles::BUILT_IN_LAYOUT_PROFILES_CLREQ_HORIZONTAL).clone()), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]));
-                let annotation = WidthIndependentAnnotationCacheFns::width_independent_annotation_cache_fns_prepare_width_independent_annotation(&mut engine, (input).clone(),
-WidthIndependentAnnotationCacheCoverageTestSupport::width_independent_annotation_cache_coverage_test_support_empty_tiers()).unwrap();
-                let prep = WidthIndependentAnnotationCacheFns::width_independent_annotation_cache_fns_build_paragraph_layout_prep(&mut engine, (input).clone(), (annotation).clone(),
-WidthIndependentAnnotationCacheCoverageTestSupport::width_independent_annotation_cache_coverage_test_support_empty_tiers()).unwrap();
-                let _ = TracedAssertions::traced_assertions_record_rendered_not_null(if false { "null".to_string() } else { "ParagraphLayoutPrep@identity".to_string() }.as_str(), None).unwrap();
+                let input = LayoutInput::new(TiqianTextContent::new(text.as_ustr(), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![])), Some(TextStyle::new(Some(vec![]), Some(16.0f64), Some(UString::from("zh-Hans")), Some(400), Some(false), Some(0.0), Some(InlineAttachment::None))), Some(ParagraphStyle::new(Some(LastLineAlignment::Start), Some(WritingMode::HorizontalTb), None, Some((Ic::zero()).clone()), Some(Ic::zero()), Some(MeasureAdaptiveFirstLineIndent::new(Some(14.0), Some(1.0), Some(2.0))), Some(LineLengthGrid::new(Some(true), Some(align))), Some(RubyLineHeightMode::PerLine), Some(ParagraphStyle::PARAGRAPH_STYLE_DEFAULT_INLINE_OBJECT_MINIMUM_CLEARANCE_EM), Some(ParagraphStyle::PARAGRAPH_STYLE_DEFAULT_EMPHASIS_DOT_GAP_EM))), LayoutConstraints::new(100 as f64 as f64, Some(f64::INFINITY), Some(2147483647)).unwrap(), Some((*crate::org::tiqian::core::built_in_layout_profiles::BUILT_IN_LAYOUT_PROFILES_CLREQ_HORIZONTAL).clone()), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]));
+                let annotation = WidthIndependentAnnotationCacheFns::width_independent_annotation_cache_fns_prepare_width_independent_annotation(&mut engine, (input).clone(), WidthIndependentAnnotationCacheCoverageTestSupport::width_independent_annotation_cache_coverage_test_support_empty_tiers()).unwrap();
+                let prep = WidthIndependentAnnotationCacheFns::width_independent_annotation_cache_fns_build_paragraph_layout_prep(&mut engine, (input).clone(), (annotation).clone(), WidthIndependentAnnotationCacheCoverageTestSupport::width_independent_annotation_cache_coverage_test_support_empty_tiers()).unwrap();
+                let _ = TracedAssertions::traced_assertions_record_rendered_not_null(if false { UString::from("null") } else { UString::from("ParagraphLayoutPrep@identity") }.as_ustr(), None).unwrap();
                 if align == LastLineAlignment::Start {
                     let _ = TracedAssertions::traced_assertions_assert_equals_float(0.0f64, prep.grid_body_offset, None).unwrap();
                 } else {
@@ -1998,15 +2172,10 @@ WidthIndependentAnnotationCacheCoverageTestSupport::width_independent_annotation
             }
             {
                 let align = LastLineAlignment::End;
-                let input = LayoutInput::new(TiqianTextContent::new(text.as_str(), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![])), Some(TextStyle::new(Some(vec![]), Some(16.0f64), Some("zh-Hans".to_string()), Some(400), Some(false), Some(0.0),
-Some(InlineAttachment::None))), Some(ParagraphStyle::new(Some(LastLineAlignment::Start), Some(WritingMode::HorizontalTb), None, Some((Ic::zero()).clone()), Some(Ic::zero()), Some(MeasureAdaptiveFirstLineIndent::new(Some(14.0), Some(1.0), Some(2.0))),
-Some(LineLengthGrid::new(Some(true), Some(align))), Some(RubyLineHeightMode::PerLine), Some(ParagraphStyle::PARAGRAPH_STYLE_DEFAULT_INLINE_OBJECT_MINIMUM_CLEARANCE_EM), Some(ParagraphStyle::PARAGRAPH_STYLE_DEFAULT_EMPHASIS_DOT_GAP_EM))), LayoutConstraints::new(100 as f64 as f64,
-Some(f64::INFINITY), Some(2147483647)).unwrap(), Some((*crate::org::tiqian::core::built_in_layout_profiles::BUILT_IN_LAYOUT_PROFILES_CLREQ_HORIZONTAL).clone()), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]));
-                let annotation = WidthIndependentAnnotationCacheFns::width_independent_annotation_cache_fns_prepare_width_independent_annotation(&mut engine, (input).clone(),
-WidthIndependentAnnotationCacheCoverageTestSupport::width_independent_annotation_cache_coverage_test_support_empty_tiers()).unwrap();
-                let prep = WidthIndependentAnnotationCacheFns::width_independent_annotation_cache_fns_build_paragraph_layout_prep(&mut engine, (input).clone(), (annotation).clone(),
-WidthIndependentAnnotationCacheCoverageTestSupport::width_independent_annotation_cache_coverage_test_support_empty_tiers()).unwrap();
-                let _ = TracedAssertions::traced_assertions_record_rendered_not_null(if false { "null".to_string() } else { "ParagraphLayoutPrep@identity".to_string() }.as_str(), None).unwrap();
+                let input = LayoutInput::new(TiqianTextContent::new(text.as_ustr(), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![])), Some(TextStyle::new(Some(vec![]), Some(16.0f64), Some(UString::from("zh-Hans")), Some(400), Some(false), Some(0.0), Some(InlineAttachment::None))), Some(ParagraphStyle::new(Some(LastLineAlignment::Start), Some(WritingMode::HorizontalTb), None, Some((Ic::zero()).clone()), Some(Ic::zero()), Some(MeasureAdaptiveFirstLineIndent::new(Some(14.0), Some(1.0), Some(2.0))), Some(LineLengthGrid::new(Some(true), Some(align))), Some(RubyLineHeightMode::PerLine), Some(ParagraphStyle::PARAGRAPH_STYLE_DEFAULT_INLINE_OBJECT_MINIMUM_CLEARANCE_EM), Some(ParagraphStyle::PARAGRAPH_STYLE_DEFAULT_EMPHASIS_DOT_GAP_EM))), LayoutConstraints::new(100 as f64 as f64, Some(f64::INFINITY), Some(2147483647)).unwrap(), Some((*crate::org::tiqian::core::built_in_layout_profiles::BUILT_IN_LAYOUT_PROFILES_CLREQ_HORIZONTAL).clone()), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]));
+                let annotation = WidthIndependentAnnotationCacheFns::width_independent_annotation_cache_fns_prepare_width_independent_annotation(&mut engine, (input).clone(), WidthIndependentAnnotationCacheCoverageTestSupport::width_independent_annotation_cache_coverage_test_support_empty_tiers()).unwrap();
+                let prep = WidthIndependentAnnotationCacheFns::width_independent_annotation_cache_fns_build_paragraph_layout_prep(&mut engine, (input).clone(), (annotation).clone(), WidthIndependentAnnotationCacheCoverageTestSupport::width_independent_annotation_cache_coverage_test_support_empty_tiers()).unwrap();
+                let _ = TracedAssertions::traced_assertions_record_rendered_not_null(if false { UString::from("null") } else { UString::from("ParagraphLayoutPrep@identity") }.as_ustr(), None).unwrap();
                 if align == LastLineAlignment::Start {
                     let _ = TracedAssertions::traced_assertions_assert_equals_float(0.0f64, prep.grid_body_offset, None).unwrap();
                 } else {
@@ -2024,73 +2193,53 @@ WidthIndependentAnnotationCacheCoverageTestSupport::width_independent_annotation
 #[test]
 fn dynamic_shaping_triggers_and_emphasis_italic() {
     testlib::run("org.tiqian.layout.WidthIndependentAnnotationCacheCoverageTest.dynamicShapingTriggersAndEmphasisItalic", "org.tiqian.layout.WidthIndependentAnnotationCacheCoverageTest.dynamicShapingTriggersAndEmphasisItalic", || {
-        let mut t = TestTraceRecorder::new("WidthIndependentAnnotationCacheCoverageTest");
-        t.section(&"dynamicShapingTriggersAndEmphasisItalic");
+        let mut t = TestTraceRecorder::new(&(UStr::new(&[87,105,100,116,104,73,110,100,101,112,101,110,100,101,110,116,65,110,110,111,116,97,116,105,111,110,67,97,99,104,101,67,111,118,101,114,97,103,101,84,101,115,116])));
+        t.section(UStr::new(&[100,121,110,97,109,105,99,83,104,97,112,105,110,103,84,114,105,103,103,101,114,115,65,110,100,69,109,112,104,97,115,105,115,73,116,97,108,105,99]));
         let mut engine = WidthIndependentAnnotationCacheCoverageTestSupport::width_independent_annotation_cache_coverage_test_support_engine(None, None).unwrap();
-        let simple_input = LayoutInput::new(TiqianTextContent::new("中文正文排版", Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![])), Some(TextStyle::new(Some(vec![]), Some(16.0), Some("zh-Hans".to_string()), Some(400), Some(false), Some(0.0), Some(InlineAttachment::None))),
-Some(ParagraphStyle::new(Some(LastLineAlignment::Start), Some(WritingMode::HorizontalTb), None, None, Some(Ic::zero()), Some(MeasureAdaptiveFirstLineIndent::new(Some(14.0), Some(1.0), Some(2.0))), Some(LineLengthGrid::new(Some(true), None)), Some(RubyLineHeightMode::PerLine),
-Some(ParagraphStyle::PARAGRAPH_STYLE_DEFAULT_INLINE_OBJECT_MINIMUM_CLEARANCE_EM), Some(ParagraphStyle::PARAGRAPH_STYLE_DEFAULT_EMPHASIS_DOT_GAP_EM))), LayoutConstraints::new(500 as f64 as f64, Some(f64::INFINITY), Some(2147483647)).unwrap(),
-Some((*crate::org::tiqian::core::built_in_layout_profiles::BUILT_IN_LAYOUT_PROFILES_CLREQ_HORIZONTAL).clone()), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]));
-        let simple_annotation = WidthIndependentAnnotationCacheFns::width_independent_annotation_cache_fns_prepare_width_independent_annotation(&mut engine, (simple_input).clone(),
-WidthIndependentAnnotationCacheCoverageTestSupport::width_independent_annotation_cache_coverage_test_support_empty_tiers()).unwrap();
-        let simple_prep = WidthIndependentAnnotationCacheFns::width_independent_annotation_cache_fns_build_paragraph_layout_prep(&mut engine, (simple_input).clone(), (simple_annotation).clone(),
-WidthIndependentAnnotationCacheCoverageTestSupport::width_independent_annotation_cache_coverage_test_support_empty_tiers()).unwrap();
-        let _ = TracedAssertions::traced_assertions_record_rendered_not_null(if false { "null".to_string() } else { "ParagraphLayoutPrep@identity".to_string() }.as_str(), None).unwrap();
-        let input = LayoutInput::new(TiqianTextContent::new("Hello World with English Words", Some(vec![]), Some(vec![]), Some(vec![
+        let simple_input = LayoutInput::new(TiqianTextContent::new(&(UStr::new(&[20013,25991,27491,25991,25490,29256])), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![])), Some(TextStyle::new(Some(vec![]), Some(16.0), Some(UString::from("zh-Hans")), Some(400), Some(false), Some(0.0), Some(InlineAttachment::None))), Some(ParagraphStyle::new(Some(LastLineAlignment::Start), Some(WritingMode::HorizontalTb), None, None, Some(Ic::zero()), Some(MeasureAdaptiveFirstLineIndent::new(Some(14.0), Some(1.0), Some(2.0))), Some(LineLengthGrid::new(Some(true), None)), Some(RubyLineHeightMode::PerLine), Some(ParagraphStyle::PARAGRAPH_STYLE_DEFAULT_INLINE_OBJECT_MINIMUM_CLEARANCE_EM), Some(ParagraphStyle::PARAGRAPH_STYLE_DEFAULT_EMPHASIS_DOT_GAP_EM))), LayoutConstraints::new(500 as f64 as f64, Some(f64::INFINITY), Some(2147483647)).unwrap(), Some((*crate::org::tiqian::core::built_in_layout_profiles::BUILT_IN_LAYOUT_PROFILES_CLREQ_HORIZONTAL).clone()), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]));
+        let simple_annotation = WidthIndependentAnnotationCacheFns::width_independent_annotation_cache_fns_prepare_width_independent_annotation(&mut engine, (simple_input).clone(), WidthIndependentAnnotationCacheCoverageTestSupport::width_independent_annotation_cache_coverage_test_support_empty_tiers()).unwrap();
+        let simple_prep = WidthIndependentAnnotationCacheFns::width_independent_annotation_cache_fns_build_paragraph_layout_prep(&mut engine, (simple_input).clone(), (simple_annotation).clone(), WidthIndependentAnnotationCacheCoverageTestSupport::width_independent_annotation_cache_coverage_test_support_empty_tiers()).unwrap();
+        let _ = TracedAssertions::traced_assertions_record_rendered_not_null(if false { UString::from("null") } else { UString::from("ParagraphLayoutPrep@identity") }.as_ustr(), None).unwrap();
+        let input = LayoutInput::new(TiqianTextContent::new(&(UStr::new(&[72,101,108,108,111,32,87,111,114,108,100,32,119,105,116,104,32,69,110,103,108,105,115,104,32,87,111,114,100,115])), Some(vec![]), Some(vec![]), Some(vec![
     (LineBreakSpan::new(TextRange::new(0u32, 11u32).unwrap(), LineBreakPolicy::ProgressiveTechnical)).clone(),
-]), Some(vec![])), Some(TextStyle::new(Some(vec![]), Some(16.0), Some("zh-Hans".to_string()), Some(400), Some(false), Some(0.0), Some(InlineAttachment::None))), Some(ParagraphStyle::new(Some(LastLineAlignment::Start), Some(WritingMode::HorizontalTb), None, None, Some(Ic::zero()),
-Some(MeasureAdaptiveFirstLineIndent::new(Some(14.0), Some(1.0), Some(2.0))), Some(LineLengthGrid::new(Some(true), None)), Some(RubyLineHeightMode::PerLine), Some(ParagraphStyle::PARAGRAPH_STYLE_DEFAULT_INLINE_OBJECT_MINIMUM_CLEARANCE_EM),
-Some(ParagraphStyle::PARAGRAPH_STYLE_DEFAULT_EMPHASIS_DOT_GAP_EM))), LayoutConstraints::new(50 as f64 as f64, Some(f64::INFINITY), Some(2147483647)).unwrap(), Some((*crate::org::tiqian::core::built_in_layout_profiles::BUILT_IN_LAYOUT_PROFILES_CLREQ_HORIZONTAL).clone()),
-Some(vec![
+]), Some(vec![])), Some(TextStyle::new(Some(vec![]), Some(16.0), Some(UString::from("zh-Hans")), Some(400), Some(false), Some(0.0), Some(InlineAttachment::None))),
+Some(ParagraphStyle::new(Some(LastLineAlignment::Start), Some(WritingMode::HorizontalTb), None, None, Some(Ic::zero()), Some(MeasureAdaptiveFirstLineIndent::new(Some(14.0), Some(1.0), Some(2.0))), Some(LineLengthGrid::new(Some(true), None)), Some(RubyLineHeightMode::PerLine), Some(ParagraphStyle::PARAGRAPH_STYLE_DEFAULT_INLINE_OBJECT_MINIMUM_CLEARANCE_EM), Some(ParagraphStyle::PARAGRAPH_STYLE_DEFAULT_EMPHASIS_DOT_GAP_EM))), LayoutConstraints::new(50 as f64 as f64, Some(f64::INFINITY), Some(2147483647)).unwrap(), Some((*crate::org::tiqian::core::built_in_layout_profiles::BUILT_IN_LAYOUT_PROFILES_CLREQ_HORIZONTAL).clone()), Some(vec![
     (DecorationSpan::new(TextRange::new(0u32, 5u32).unwrap(), DecorationKind::Emphasis)).clone(),
     (DecorationSpan::new(TextRange::new(6u32, 11u32).unwrap(), DecorationKind::ProperNoun)).clone(),
 ]), Some(vec![]), Some(vec![]), Some(vec![]));
-        let annotation = WidthIndependentAnnotationCacheFns::width_independent_annotation_cache_fns_prepare_width_independent_annotation(&mut engine, (input).clone(),
-WidthIndependentAnnotationCacheCoverageTestSupport::width_independent_annotation_cache_coverage_test_support_empty_tiers()).unwrap();
-        let prep = WidthIndependentAnnotationCacheFns::width_independent_annotation_cache_fns_build_paragraph_layout_prep(&mut engine, (input).clone(), (annotation).clone(),
-WidthIndependentAnnotationCacheCoverageTestSupport::width_independent_annotation_cache_coverage_test_support_tier_map(TextRange::new(0u32, 11u32).unwrap(), &vec![ProgressiveBreakTier::Structural])).unwrap();
-        let _ = TracedAssertions::traced_assertions_record_rendered_not_null(if false { "null".to_string() } else { "ParagraphLayoutPrep@identity".to_string() }.as_str(), None).unwrap();
-        let over_measure_input = LayoutInput::new(TiqianTextContent::new("VeryLongEnglishWordThatExceedsMeasure", Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![])), Some(TextStyle::new(Some(vec![]), Some(16.0), Some("zh-Hans".to_string()), Some(400), Some(false), Some(0.0),
-Some(InlineAttachment::None))), Some(ParagraphStyle::new(Some(LastLineAlignment::Start), Some(WritingMode::HorizontalTb), None, None, Some(Ic::zero()), Some(MeasureAdaptiveFirstLineIndent::new(Some(14.0), Some(1.0), Some(2.0))), Some(LineLengthGrid::new(Some(true), None)),
-Some(RubyLineHeightMode::PerLine), Some(ParagraphStyle::PARAGRAPH_STYLE_DEFAULT_INLINE_OBJECT_MINIMUM_CLEARANCE_EM), Some(ParagraphStyle::PARAGRAPH_STYLE_DEFAULT_EMPHASIS_DOT_GAP_EM))), LayoutConstraints::new(30 as f64 as f64, Some(f64::INFINITY), Some(2147483647)).unwrap(),
-Some((*crate::org::tiqian::core::built_in_layout_profiles::BUILT_IN_LAYOUT_PROFILES_CLREQ_HORIZONTAL).clone()), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]));
-        let over_measure_annotation = WidthIndependentAnnotationCacheFns::width_independent_annotation_cache_fns_prepare_width_independent_annotation(&mut engine, (over_measure_input).clone(),
-WidthIndependentAnnotationCacheCoverageTestSupport::width_independent_annotation_cache_coverage_test_support_empty_tiers()).unwrap();
-        let over_measure_prep = WidthIndependentAnnotationCacheFns::width_independent_annotation_cache_fns_build_paragraph_layout_prep(&mut engine, (over_measure_input).clone(), (over_measure_annotation).clone(),
-WidthIndependentAnnotationCacheCoverageTestSupport::width_independent_annotation_cache_coverage_test_support_empty_tiers()).unwrap();
-        let _ = TracedAssertions::traced_assertions_record_rendered_not_null(if false { "null".to_string() } else { "ParagraphLayoutPrep@identity".to_string() }.as_str(), None).unwrap();
+        let annotation = WidthIndependentAnnotationCacheFns::width_independent_annotation_cache_fns_prepare_width_independent_annotation(&mut engine, (input).clone(), WidthIndependentAnnotationCacheCoverageTestSupport::width_independent_annotation_cache_coverage_test_support_empty_tiers()).unwrap();
+        let prep = WidthIndependentAnnotationCacheFns::width_independent_annotation_cache_fns_build_paragraph_layout_prep(&mut engine, (input).clone(), (annotation).clone(), WidthIndependentAnnotationCacheCoverageTestSupport::width_independent_annotation_cache_coverage_test_support_tier_map(TextRange::new(0u32, 11u32).unwrap(), &vec![ProgressiveBreakTier::Structural])).unwrap();
+        let _ = TracedAssertions::traced_assertions_record_rendered_not_null(if false { UString::from("null") } else { UString::from("ParagraphLayoutPrep@identity") }.as_ustr(), None).unwrap();
+        let over_measure_input = LayoutInput::new(TiqianTextContent::new(&(UStr::new(&[86,101,114,121,76,111,110,103,69,110,103,108,105,115,104,87,111,114,100,84,104,97,116,69,120,99,101,101,100,115,77,101,97,115,117,114,101])), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![])), Some(TextStyle::new(Some(vec![]), Some(16.0), Some(UString::from("zh-Hans")), Some(400), Some(false), Some(0.0), Some(InlineAttachment::None))), Some(ParagraphStyle::new(Some(LastLineAlignment::Start), Some(WritingMode::HorizontalTb), None, None, Some(Ic::zero()), Some(MeasureAdaptiveFirstLineIndent::new(Some(14.0), Some(1.0), Some(2.0))), Some(LineLengthGrid::new(Some(true), None)), Some(RubyLineHeightMode::PerLine), Some(ParagraphStyle::PARAGRAPH_STYLE_DEFAULT_INLINE_OBJECT_MINIMUM_CLEARANCE_EM), Some(ParagraphStyle::PARAGRAPH_STYLE_DEFAULT_EMPHASIS_DOT_GAP_EM))), LayoutConstraints::new(30 as f64 as f64, Some(f64::INFINITY), Some(2147483647)).unwrap(), Some((*crate::org::tiqian::core::built_in_layout_profiles::BUILT_IN_LAYOUT_PROFILES_CLREQ_HORIZONTAL).clone()), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]));
+        let over_measure_annotation = WidthIndependentAnnotationCacheFns::width_independent_annotation_cache_fns_prepare_width_independent_annotation(&mut engine, (over_measure_input).clone(), WidthIndependentAnnotationCacheCoverageTestSupport::width_independent_annotation_cache_coverage_test_support_empty_tiers()).unwrap();
+        let over_measure_prep = WidthIndependentAnnotationCacheFns::width_independent_annotation_cache_fns_build_paragraph_layout_prep(&mut engine, (over_measure_input).clone(), (over_measure_annotation).clone(), WidthIndependentAnnotationCacheCoverageTestSupport::width_independent_annotation_cache_coverage_test_support_empty_tiers()).unwrap();
+        let _ = TracedAssertions::traced_assertions_record_rendered_not_null(if false { UString::from("null") } else { UString::from("ParagraphLayoutPrep@identity") }.as_ustr(), None).unwrap();
     });
 }
 
 #[test]
 fn conflicting_open_type_features_throws() {
     testlib::run("org.tiqian.layout.WidthIndependentAnnotationCacheCoverageTest.conflictingOpenTypeFeaturesThrows", "org.tiqian.layout.WidthIndependentAnnotationCacheCoverageTest.conflictingOpenTypeFeaturesThrows", || {
-        let mut t = TestTraceRecorder::new("WidthIndependentAnnotationCacheCoverageTest");
-        t.section(&"conflictingOpenTypeFeaturesThrows");
-        let engine: Arc<Mutex<ExplainableStubParagraphLayoutEngine>> = Arc::new(Mutex::new(WidthIndependentAnnotationCacheCoverageTestSupport::width_independent_annotation_cache_coverage_test_support_engine(None,
-Some(Box::new(ConflictingOpenTypeFeaturesShaper::new()))).unwrap()));
-        let input = LayoutInput::new(TiqianTextContent::new("测试", Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![])), Some(TextStyle::new(Some(vec![]), Some(16.0), Some("zh-Hans".to_string()), Some(400), Some(false), Some(0.0), Some(InlineAttachment::None))),
-Some(ParagraphStyle::new(Some(LastLineAlignment::Start), Some(WritingMode::HorizontalTb), None, None, Some(Ic::zero()), Some(MeasureAdaptiveFirstLineIndent::new(Some(14.0), Some(1.0), Some(2.0))), Some(LineLengthGrid::new(Some(true), None)), Some(RubyLineHeightMode::PerLine),
-Some(ParagraphStyle::PARAGRAPH_STYLE_DEFAULT_INLINE_OBJECT_MINIMUM_CLEARANCE_EM), Some(ParagraphStyle::PARAGRAPH_STYLE_DEFAULT_EMPHASIS_DOT_GAP_EM))), LayoutConstraints::new(300 as f64 as f64, Some(f64::INFINITY), Some(2147483647)).unwrap(),
-Some((*crate::org::tiqian::core::built_in_layout_profiles::BUILT_IN_LAYOUT_PROFILES_CLREQ_HORIZONTAL).clone()), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]));
-        let annotation = WidthIndependentAnnotationCacheFns::width_independent_annotation_cache_fns_prepare_width_independent_annotation(&mut engine.lock().unwrap(), (input).clone(),
-WidthIndependentAnnotationCacheCoverageTestSupport::width_independent_annotation_cache_coverage_test_support_empty_tiers()).unwrap();
+        let mut t = TestTraceRecorder::new(&(UStr::new(&[87,105,100,116,104,73,110,100,101,112,101,110,100,101,110,116,65,110,110,111,116,97,116,105,111,110,67,97,99,104,101,67,111,118,101,114,97,103,101,84,101,115,116])));
+        t.section(UStr::new(&[99,111,110,102,108,105,99,116,105,110,103,79,112,101,110,84,121,112,101,70,101,97,116,117,114,101,115,84,104,114,111,119,115]));
+        let engine: Arc<Mutex<ExplainableStubParagraphLayoutEngine>> = Arc::new(Mutex::new(WidthIndependentAnnotationCacheCoverageTestSupport::width_independent_annotation_cache_coverage_test_support_engine(None, Some(Arc::new(Mutex::new(ConflictingOpenTypeFeaturesShaper::new())))).unwrap()));
+        let input = LayoutInput::new(TiqianTextContent::new(&(UStr::new(&[27979,35797])), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![])), Some(TextStyle::new(Some(vec![]), Some(16.0), Some(UString::from("zh-Hans")), Some(400), Some(false), Some(0.0), Some(InlineAttachment::None))), Some(ParagraphStyle::new(Some(LastLineAlignment::Start), Some(WritingMode::HorizontalTb), None, None, Some(Ic::zero()), Some(MeasureAdaptiveFirstLineIndent::new(Some(14.0), Some(1.0), Some(2.0))), Some(LineLengthGrid::new(Some(true), None)), Some(RubyLineHeightMode::PerLine), Some(ParagraphStyle::PARAGRAPH_STYLE_DEFAULT_INLINE_OBJECT_MINIMUM_CLEARANCE_EM), Some(ParagraphStyle::PARAGRAPH_STYLE_DEFAULT_EMPHASIS_DOT_GAP_EM))), LayoutConstraints::new(300 as f64 as f64, Some(f64::INFINITY), Some(2147483647)).unwrap(), Some((*crate::org::tiqian::core::built_in_layout_profiles::BUILT_IN_LAYOUT_PROFILES_CLREQ_HORIZONTAL).clone()), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]));
+        let annotation = WidthIndependentAnnotationCacheFns::width_independent_annotation_cache_fns_prepare_width_independent_annotation(&mut engine.lock().unwrap(), (input).clone(), WidthIndependentAnnotationCacheCoverageTestSupport::width_independent_annotation_cache_coverage_test_support_empty_tiers()).unwrap();
         let error = TracedAssertions::traced_assertions_assert_fails_with(None.clone(), { let engine = (engine).clone(); let input = (input).clone(); let annotation = (annotation).clone(); Arc::new({ let engine = Arc::clone(&engine); move || {
-        WidthIndependentAnnotationCacheFns::width_independent_annotation_cache_fns_build_paragraph_layout_prep(&mut engine.lock().unwrap(), (input).clone(), (annotation).clone(),
-WidthIndependentAnnotationCacheCoverageTestSupport::width_independent_annotation_cache_coverage_test_support_empty_tiers()).map_err(|e| IllegalStateException::new(&format!("{:?}", e)))?;
+        WidthIndependentAnnotationCacheFns::width_independent_annotation_cache_fns_build_paragraph_layout_prep(&mut engine.lock().unwrap(), (input).clone(), (annotation).clone(), WidthIndependentAnnotationCacheCoverageTestSupport::width_independent_annotation_cache_coverage_test_support_empty_tiers()).map_err(|e| IllegalStateException::new(&format!("{}", e)))?;
         Ok(())
 } }) }).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_true((u32::from_ne_bytes((u_string::find_from(&format!("{}", error), "Conflicting OpenType features", 0)).to_ne_bytes())) <= 2147483647, None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_true((u32::from_ne_bytes(((u_string::find_from(&UString::from(format!("{}", format!("{}", error)).as_str()), UString::from("Conflicting OpenType features").as_ustr(), 0)) as u32).to_ne_bytes())) <= 2147483647, None).unwrap();
     });
 }
 
 #[test]
 fn adjacent_inline_object_boundaries_merging_and_conflicts() {
     testlib::run("org.tiqian.layout.WidthIndependentAnnotationCacheCoverageTest.adjacentInlineObjectBoundariesMergingAndConflicts", "org.tiqian.layout.WidthIndependentAnnotationCacheCoverageTest.adjacentInlineObjectBoundariesMergingAndConflicts", || {
-        let mut t = TestTraceRecorder::new("WidthIndependentAnnotationCacheCoverageTest");
-        t.section(&"adjacentInlineObjectBoundariesMergingAndConflicts");
+        let mut t = TestTraceRecorder::new(&(UStr::new(&[87,105,100,116,104,73,110,100,101,112,101,110,100,101,110,116,65,110,110,111,116,97,116,105,111,110,67,97,99,104,101,67,111,118,101,114,97,103,101,84,101,115,116])));
+        t.section(UStr::new(&[97,100,106,97,99,101,110,116,73,110,108,105,110,101,79,98,106,101,99,116,66,111,117,110,100,97,114,105,101,115,77,101,114,103,105,110,103,65,110,100,67,111,110,102,108,105,99,116,115]));
         let engine: Arc<Mutex<ExplainableStubParagraphLayoutEngine>> = Arc::new(Mutex::new(WidthIndependentAnnotationCacheCoverageTestSupport::width_independent_annotation_cache_coverage_test_support_engine(None, None).unwrap()));
-        let text = "一二三四".to_string();
+        let text = UString::from("一二三四").to_ustring();
         {
             {
                 let uniform1 = true;
@@ -2103,35 +2252,21 @@ fn adjacent_inline_object_boundaries_merging_and_conflicts() {
                                 {
                                     {
                                         let prevent2 = true;
-                                        let obj1 = InlineObjectSpan::new(TextRange::new(1u32, 2u32).unwrap(), 20.0f64, 12.0f64, 4.0f64, Some(InlineObjectBoundaryAdjustment::inline_object_boundary_adjustment_fixed().unwrap()),
-Some(InlineObjectBoundaryAdjustment::new(Some(uniform1), Some(InlineObjectPreferredStretch::new(InlineObjectPreferredStretchKind::PunctuationTrailing, 10.0f64, 15.0f64).unwrap()), Some(2.0f64), Some(1.0f64), Some(prevent1)).unwrap())).unwrap();
-                                        let obj2 = InlineObjectSpan::new(TextRange::new(2u32, 3u32).unwrap(), 20.0f64, 12.0f64, 4.0f64, Some(InlineObjectBoundaryAdjustment::new(Some(uniform2),
-Some(InlineObjectPreferredStretch::new(InlineObjectPreferredStretchKind::PunctuationTrailing, 10.0f64, 20.0f64).unwrap()), Some(0.0), Some(0.0f64), Some(prevent2)).unwrap()), Some(InlineObjectBoundaryAdjustment::inline_object_boundary_adjustment_fixed().unwrap())).unwrap();
-                                        let input = LayoutInput::new(TiqianTextContent::new(text.as_str(), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![])), Some(TextStyle::new(Some(vec![]), Some(16.0), Some("zh-Hans".to_string()), Some(400), Some(false), Some(0.0),
-Some(InlineAttachment::None))), Some(ParagraphStyle::new(Some(LastLineAlignment::Start), Some(WritingMode::HorizontalTb), None, None, Some(Ic::zero()), Some(MeasureAdaptiveFirstLineIndent::new(Some(14.0), Some(1.0), Some(2.0))), Some(LineLengthGrid::new(Some(true), None)),
-Some(RubyLineHeightMode::PerLine), Some(ParagraphStyle::PARAGRAPH_STYLE_DEFAULT_INLINE_OBJECT_MINIMUM_CLEARANCE_EM), Some(ParagraphStyle::PARAGRAPH_STYLE_DEFAULT_EMPHASIS_DOT_GAP_EM))), LayoutConstraints::new(300 as f64 as f64, Some(f64::INFINITY), Some(2147483647)).unwrap(),
-Some((*crate::org::tiqian::core::built_in_layout_profiles::BUILT_IN_LAYOUT_PROFILES_CLREQ_HORIZONTAL).clone()), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![(obj1).clone(), (obj2).clone()]));
-                                        let annotation = WidthIndependentAnnotationCacheFns::width_independent_annotation_cache_fns_prepare_width_independent_annotation(&mut engine.lock().unwrap(), (input).clone(),
-WidthIndependentAnnotationCacheCoverageTestSupport::width_independent_annotation_cache_coverage_test_support_empty_tiers()).unwrap();
-                                        let prep = WidthIndependentAnnotationCacheFns::width_independent_annotation_cache_fns_build_paragraph_layout_prep(&mut engine.lock().unwrap(), (input).clone(), (annotation).clone(),
-WidthIndependentAnnotationCacheCoverageTestSupport::width_independent_annotation_cache_coverage_test_support_empty_tiers()).unwrap();
-                                        let _ = TracedAssertions::traced_assertions_record_rendered_not_null(if false { "null".to_string() } else { "ParagraphLayoutPrep@identity".to_string() }.as_str(), None).unwrap();
+                                        let obj1 = InlineObjectSpan::new(TextRange::new(1u32, 2u32).unwrap(), 20.0f64, 12.0f64, 4.0f64, Some(InlineObjectBoundaryAdjustment::inline_object_boundary_adjustment_fixed().unwrap()), Some(InlineObjectBoundaryAdjustment::new(Some(uniform1), Some(InlineObjectPreferredStretch::new(InlineObjectPreferredStretchKind::PunctuationTrailing, 10.0f64, 15.0f64).unwrap()), Some(2.0f64), Some(1.0f64), Some(prevent1)).unwrap())).unwrap();
+                                        let obj2 = InlineObjectSpan::new(TextRange::new(2u32, 3u32).unwrap(), 20.0f64, 12.0f64, 4.0f64, Some(InlineObjectBoundaryAdjustment::new(Some(uniform2), Some(InlineObjectPreferredStretch::new(InlineObjectPreferredStretchKind::PunctuationTrailing, 10.0f64, 20.0f64).unwrap()), Some(0.0), Some(0.0f64), Some(prevent2)).unwrap()), Some(InlineObjectBoundaryAdjustment::inline_object_boundary_adjustment_fixed().unwrap())).unwrap();
+                                        let input = LayoutInput::new(TiqianTextContent::new(text.as_ustr(), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![])), Some(TextStyle::new(Some(vec![]), Some(16.0), Some(UString::from("zh-Hans")), Some(400), Some(false), Some(0.0), Some(InlineAttachment::None))), Some(ParagraphStyle::new(Some(LastLineAlignment::Start), Some(WritingMode::HorizontalTb), None, None, Some(Ic::zero()), Some(MeasureAdaptiveFirstLineIndent::new(Some(14.0), Some(1.0), Some(2.0))), Some(LineLengthGrid::new(Some(true), None)), Some(RubyLineHeightMode::PerLine), Some(ParagraphStyle::PARAGRAPH_STYLE_DEFAULT_INLINE_OBJECT_MINIMUM_CLEARANCE_EM), Some(ParagraphStyle::PARAGRAPH_STYLE_DEFAULT_EMPHASIS_DOT_GAP_EM))), LayoutConstraints::new(300 as f64 as f64, Some(f64::INFINITY), Some(2147483647)).unwrap(), Some((*crate::org::tiqian::core::built_in_layout_profiles::BUILT_IN_LAYOUT_PROFILES_CLREQ_HORIZONTAL).clone()), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![(obj1).clone(), (obj2).clone()]));
+                                        let annotation = WidthIndependentAnnotationCacheFns::width_independent_annotation_cache_fns_prepare_width_independent_annotation(&mut engine.lock().unwrap(), (input).clone(), WidthIndependentAnnotationCacheCoverageTestSupport::width_independent_annotation_cache_coverage_test_support_empty_tiers()).unwrap();
+                                        let prep = WidthIndependentAnnotationCacheFns::width_independent_annotation_cache_fns_build_paragraph_layout_prep(&mut engine.lock().unwrap(), (input).clone(), (annotation).clone(), WidthIndependentAnnotationCacheCoverageTestSupport::width_independent_annotation_cache_coverage_test_support_empty_tiers()).unwrap();
+                                        let _ = TracedAssertions::traced_assertions_record_rendered_not_null(if false { UString::from("null") } else { UString::from("ParagraphLayoutPrep@identity") }.as_ustr(), None).unwrap();
                                     }
                                     {
                                         let prevent2 = false;
-                                        let obj1 = InlineObjectSpan::new(TextRange::new(1u32, 2u32).unwrap(), 20.0f64, 12.0f64, 4.0f64, Some(InlineObjectBoundaryAdjustment::inline_object_boundary_adjustment_fixed().unwrap()),
-Some(InlineObjectBoundaryAdjustment::new(Some(uniform1), Some(InlineObjectPreferredStretch::new(InlineObjectPreferredStretchKind::PunctuationTrailing, 10.0f64, 15.0f64).unwrap()), Some(2.0f64), Some(1.0f64), Some(prevent1)).unwrap())).unwrap();
-                                        let obj2 = InlineObjectSpan::new(TextRange::new(2u32, 3u32).unwrap(), 20.0f64, 12.0f64, 4.0f64, Some(InlineObjectBoundaryAdjustment::new(Some(uniform2),
-Some(InlineObjectPreferredStretch::new(InlineObjectPreferredStretchKind::PunctuationTrailing, 10.0f64, 20.0f64).unwrap()), Some(0.0), Some(0.0f64), Some(prevent2)).unwrap()), Some(InlineObjectBoundaryAdjustment::inline_object_boundary_adjustment_fixed().unwrap())).unwrap();
-                                        let input = LayoutInput::new(TiqianTextContent::new(text.as_str(), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![])), Some(TextStyle::new(Some(vec![]), Some(16.0), Some("zh-Hans".to_string()), Some(400), Some(false), Some(0.0),
-Some(InlineAttachment::None))), Some(ParagraphStyle::new(Some(LastLineAlignment::Start), Some(WritingMode::HorizontalTb), None, None, Some(Ic::zero()), Some(MeasureAdaptiveFirstLineIndent::new(Some(14.0), Some(1.0), Some(2.0))), Some(LineLengthGrid::new(Some(true), None)),
-Some(RubyLineHeightMode::PerLine), Some(ParagraphStyle::PARAGRAPH_STYLE_DEFAULT_INLINE_OBJECT_MINIMUM_CLEARANCE_EM), Some(ParagraphStyle::PARAGRAPH_STYLE_DEFAULT_EMPHASIS_DOT_GAP_EM))), LayoutConstraints::new(300 as f64 as f64, Some(f64::INFINITY), Some(2147483647)).unwrap(),
-Some((*crate::org::tiqian::core::built_in_layout_profiles::BUILT_IN_LAYOUT_PROFILES_CLREQ_HORIZONTAL).clone()), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![(obj1).clone(), (obj2).clone()]));
-                                        let annotation = WidthIndependentAnnotationCacheFns::width_independent_annotation_cache_fns_prepare_width_independent_annotation(&mut engine.lock().unwrap(), (input).clone(),
-WidthIndependentAnnotationCacheCoverageTestSupport::width_independent_annotation_cache_coverage_test_support_empty_tiers()).unwrap();
-                                        let prep = WidthIndependentAnnotationCacheFns::width_independent_annotation_cache_fns_build_paragraph_layout_prep(&mut engine.lock().unwrap(), (input).clone(), (annotation).clone(),
-WidthIndependentAnnotationCacheCoverageTestSupport::width_independent_annotation_cache_coverage_test_support_empty_tiers()).unwrap();
-                                        let _ = TracedAssertions::traced_assertions_record_rendered_not_null(if false { "null".to_string() } else { "ParagraphLayoutPrep@identity".to_string() }.as_str(), None).unwrap();
+                                        let obj1 = InlineObjectSpan::new(TextRange::new(1u32, 2u32).unwrap(), 20.0f64, 12.0f64, 4.0f64, Some(InlineObjectBoundaryAdjustment::inline_object_boundary_adjustment_fixed().unwrap()), Some(InlineObjectBoundaryAdjustment::new(Some(uniform1), Some(InlineObjectPreferredStretch::new(InlineObjectPreferredStretchKind::PunctuationTrailing, 10.0f64, 15.0f64).unwrap()), Some(2.0f64), Some(1.0f64), Some(prevent1)).unwrap())).unwrap();
+                                        let obj2 = InlineObjectSpan::new(TextRange::new(2u32, 3u32).unwrap(), 20.0f64, 12.0f64, 4.0f64, Some(InlineObjectBoundaryAdjustment::new(Some(uniform2), Some(InlineObjectPreferredStretch::new(InlineObjectPreferredStretchKind::PunctuationTrailing, 10.0f64, 20.0f64).unwrap()), Some(0.0), Some(0.0f64), Some(prevent2)).unwrap()), Some(InlineObjectBoundaryAdjustment::inline_object_boundary_adjustment_fixed().unwrap())).unwrap();
+                                        let input = LayoutInput::new(TiqianTextContent::new(text.as_ustr(), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![])), Some(TextStyle::new(Some(vec![]), Some(16.0), Some(UString::from("zh-Hans")), Some(400), Some(false), Some(0.0), Some(InlineAttachment::None))), Some(ParagraphStyle::new(Some(LastLineAlignment::Start), Some(WritingMode::HorizontalTb), None, None, Some(Ic::zero()), Some(MeasureAdaptiveFirstLineIndent::new(Some(14.0), Some(1.0), Some(2.0))), Some(LineLengthGrid::new(Some(true), None)), Some(RubyLineHeightMode::PerLine), Some(ParagraphStyle::PARAGRAPH_STYLE_DEFAULT_INLINE_OBJECT_MINIMUM_CLEARANCE_EM), Some(ParagraphStyle::PARAGRAPH_STYLE_DEFAULT_EMPHASIS_DOT_GAP_EM))), LayoutConstraints::new(300 as f64 as f64, Some(f64::INFINITY), Some(2147483647)).unwrap(), Some((*crate::org::tiqian::core::built_in_layout_profiles::BUILT_IN_LAYOUT_PROFILES_CLREQ_HORIZONTAL).clone()), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![(obj1).clone(), (obj2).clone()]));
+                                        let annotation = WidthIndependentAnnotationCacheFns::width_independent_annotation_cache_fns_prepare_width_independent_annotation(&mut engine.lock().unwrap(), (input).clone(), WidthIndependentAnnotationCacheCoverageTestSupport::width_independent_annotation_cache_coverage_test_support_empty_tiers()).unwrap();
+                                        let prep = WidthIndependentAnnotationCacheFns::width_independent_annotation_cache_fns_build_paragraph_layout_prep(&mut engine.lock().unwrap(), (input).clone(), (annotation).clone(), WidthIndependentAnnotationCacheCoverageTestSupport::width_independent_annotation_cache_coverage_test_support_empty_tiers()).unwrap();
+                                        let _ = TracedAssertions::traced_assertions_record_rendered_not_null(if false { UString::from("null") } else { UString::from("ParagraphLayoutPrep@identity") }.as_ustr(), None).unwrap();
                                     }
                                 }
                             }
@@ -2140,35 +2275,21 @@ WidthIndependentAnnotationCacheCoverageTestSupport::width_independent_annotation
                                 {
                                     {
                                         let prevent2 = true;
-                                        let obj1 = InlineObjectSpan::new(TextRange::new(1u32, 2u32).unwrap(), 20.0f64, 12.0f64, 4.0f64, Some(InlineObjectBoundaryAdjustment::inline_object_boundary_adjustment_fixed().unwrap()),
-Some(InlineObjectBoundaryAdjustment::new(Some(uniform1), Some(InlineObjectPreferredStretch::new(InlineObjectPreferredStretchKind::PunctuationTrailing, 10.0f64, 15.0f64).unwrap()), Some(2.0f64), Some(1.0f64), Some(prevent1)).unwrap())).unwrap();
-                                        let obj2 = InlineObjectSpan::new(TextRange::new(2u32, 3u32).unwrap(), 20.0f64, 12.0f64, 4.0f64, Some(InlineObjectBoundaryAdjustment::new(Some(uniform2),
-Some(InlineObjectPreferredStretch::new(InlineObjectPreferredStretchKind::PunctuationTrailing, 10.0f64, 20.0f64).unwrap()), Some(0.0), Some(0.0f64), Some(prevent2)).unwrap()), Some(InlineObjectBoundaryAdjustment::inline_object_boundary_adjustment_fixed().unwrap())).unwrap();
-                                        let input = LayoutInput::new(TiqianTextContent::new(text.as_str(), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![])), Some(TextStyle::new(Some(vec![]), Some(16.0), Some("zh-Hans".to_string()), Some(400), Some(false), Some(0.0),
-Some(InlineAttachment::None))), Some(ParagraphStyle::new(Some(LastLineAlignment::Start), Some(WritingMode::HorizontalTb), None, None, Some(Ic::zero()), Some(MeasureAdaptiveFirstLineIndent::new(Some(14.0), Some(1.0), Some(2.0))), Some(LineLengthGrid::new(Some(true), None)),
-Some(RubyLineHeightMode::PerLine), Some(ParagraphStyle::PARAGRAPH_STYLE_DEFAULT_INLINE_OBJECT_MINIMUM_CLEARANCE_EM), Some(ParagraphStyle::PARAGRAPH_STYLE_DEFAULT_EMPHASIS_DOT_GAP_EM))), LayoutConstraints::new(300 as f64 as f64, Some(f64::INFINITY), Some(2147483647)).unwrap(),
-Some((*crate::org::tiqian::core::built_in_layout_profiles::BUILT_IN_LAYOUT_PROFILES_CLREQ_HORIZONTAL).clone()), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![(obj1).clone(), (obj2).clone()]));
-                                        let annotation = WidthIndependentAnnotationCacheFns::width_independent_annotation_cache_fns_prepare_width_independent_annotation(&mut engine.lock().unwrap(), (input).clone(),
-WidthIndependentAnnotationCacheCoverageTestSupport::width_independent_annotation_cache_coverage_test_support_empty_tiers()).unwrap();
-                                        let prep = WidthIndependentAnnotationCacheFns::width_independent_annotation_cache_fns_build_paragraph_layout_prep(&mut engine.lock().unwrap(), (input).clone(), (annotation).clone(),
-WidthIndependentAnnotationCacheCoverageTestSupport::width_independent_annotation_cache_coverage_test_support_empty_tiers()).unwrap();
-                                        let _ = TracedAssertions::traced_assertions_record_rendered_not_null(if false { "null".to_string() } else { "ParagraphLayoutPrep@identity".to_string() }.as_str(), None).unwrap();
+                                        let obj1 = InlineObjectSpan::new(TextRange::new(1u32, 2u32).unwrap(), 20.0f64, 12.0f64, 4.0f64, Some(InlineObjectBoundaryAdjustment::inline_object_boundary_adjustment_fixed().unwrap()), Some(InlineObjectBoundaryAdjustment::new(Some(uniform1), Some(InlineObjectPreferredStretch::new(InlineObjectPreferredStretchKind::PunctuationTrailing, 10.0f64, 15.0f64).unwrap()), Some(2.0f64), Some(1.0f64), Some(prevent1)).unwrap())).unwrap();
+                                        let obj2 = InlineObjectSpan::new(TextRange::new(2u32, 3u32).unwrap(), 20.0f64, 12.0f64, 4.0f64, Some(InlineObjectBoundaryAdjustment::new(Some(uniform2), Some(InlineObjectPreferredStretch::new(InlineObjectPreferredStretchKind::PunctuationTrailing, 10.0f64, 20.0f64).unwrap()), Some(0.0), Some(0.0f64), Some(prevent2)).unwrap()), Some(InlineObjectBoundaryAdjustment::inline_object_boundary_adjustment_fixed().unwrap())).unwrap();
+                                        let input = LayoutInput::new(TiqianTextContent::new(text.as_ustr(), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![])), Some(TextStyle::new(Some(vec![]), Some(16.0), Some(UString::from("zh-Hans")), Some(400), Some(false), Some(0.0), Some(InlineAttachment::None))), Some(ParagraphStyle::new(Some(LastLineAlignment::Start), Some(WritingMode::HorizontalTb), None, None, Some(Ic::zero()), Some(MeasureAdaptiveFirstLineIndent::new(Some(14.0), Some(1.0), Some(2.0))), Some(LineLengthGrid::new(Some(true), None)), Some(RubyLineHeightMode::PerLine), Some(ParagraphStyle::PARAGRAPH_STYLE_DEFAULT_INLINE_OBJECT_MINIMUM_CLEARANCE_EM), Some(ParagraphStyle::PARAGRAPH_STYLE_DEFAULT_EMPHASIS_DOT_GAP_EM))), LayoutConstraints::new(300 as f64 as f64, Some(f64::INFINITY), Some(2147483647)).unwrap(), Some((*crate::org::tiqian::core::built_in_layout_profiles::BUILT_IN_LAYOUT_PROFILES_CLREQ_HORIZONTAL).clone()), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![(obj1).clone(), (obj2).clone()]));
+                                        let annotation = WidthIndependentAnnotationCacheFns::width_independent_annotation_cache_fns_prepare_width_independent_annotation(&mut engine.lock().unwrap(), (input).clone(), WidthIndependentAnnotationCacheCoverageTestSupport::width_independent_annotation_cache_coverage_test_support_empty_tiers()).unwrap();
+                                        let prep = WidthIndependentAnnotationCacheFns::width_independent_annotation_cache_fns_build_paragraph_layout_prep(&mut engine.lock().unwrap(), (input).clone(), (annotation).clone(), WidthIndependentAnnotationCacheCoverageTestSupport::width_independent_annotation_cache_coverage_test_support_empty_tiers()).unwrap();
+                                        let _ = TracedAssertions::traced_assertions_record_rendered_not_null(if false { UString::from("null") } else { UString::from("ParagraphLayoutPrep@identity") }.as_ustr(), None).unwrap();
                                     }
                                     {
                                         let prevent2 = false;
-                                        let obj1 = InlineObjectSpan::new(TextRange::new(1u32, 2u32).unwrap(), 20.0f64, 12.0f64, 4.0f64, Some(InlineObjectBoundaryAdjustment::inline_object_boundary_adjustment_fixed().unwrap()),
-Some(InlineObjectBoundaryAdjustment::new(Some(uniform1), Some(InlineObjectPreferredStretch::new(InlineObjectPreferredStretchKind::PunctuationTrailing, 10.0f64, 15.0f64).unwrap()), Some(2.0f64), Some(1.0f64), Some(prevent1)).unwrap())).unwrap();
-                                        let obj2 = InlineObjectSpan::new(TextRange::new(2u32, 3u32).unwrap(), 20.0f64, 12.0f64, 4.0f64, Some(InlineObjectBoundaryAdjustment::new(Some(uniform2),
-Some(InlineObjectPreferredStretch::new(InlineObjectPreferredStretchKind::PunctuationTrailing, 10.0f64, 20.0f64).unwrap()), Some(0.0), Some(0.0f64), Some(prevent2)).unwrap()), Some(InlineObjectBoundaryAdjustment::inline_object_boundary_adjustment_fixed().unwrap())).unwrap();
-                                        let input = LayoutInput::new(TiqianTextContent::new(text.as_str(), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![])), Some(TextStyle::new(Some(vec![]), Some(16.0), Some("zh-Hans".to_string()), Some(400), Some(false), Some(0.0),
-Some(InlineAttachment::None))), Some(ParagraphStyle::new(Some(LastLineAlignment::Start), Some(WritingMode::HorizontalTb), None, None, Some(Ic::zero()), Some(MeasureAdaptiveFirstLineIndent::new(Some(14.0), Some(1.0), Some(2.0))), Some(LineLengthGrid::new(Some(true), None)),
-Some(RubyLineHeightMode::PerLine), Some(ParagraphStyle::PARAGRAPH_STYLE_DEFAULT_INLINE_OBJECT_MINIMUM_CLEARANCE_EM), Some(ParagraphStyle::PARAGRAPH_STYLE_DEFAULT_EMPHASIS_DOT_GAP_EM))), LayoutConstraints::new(300 as f64 as f64, Some(f64::INFINITY), Some(2147483647)).unwrap(),
-Some((*crate::org::tiqian::core::built_in_layout_profiles::BUILT_IN_LAYOUT_PROFILES_CLREQ_HORIZONTAL).clone()), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![(obj1).clone(), (obj2).clone()]));
-                                        let annotation = WidthIndependentAnnotationCacheFns::width_independent_annotation_cache_fns_prepare_width_independent_annotation(&mut engine.lock().unwrap(), (input).clone(),
-WidthIndependentAnnotationCacheCoverageTestSupport::width_independent_annotation_cache_coverage_test_support_empty_tiers()).unwrap();
-                                        let prep = WidthIndependentAnnotationCacheFns::width_independent_annotation_cache_fns_build_paragraph_layout_prep(&mut engine.lock().unwrap(), (input).clone(), (annotation).clone(),
-WidthIndependentAnnotationCacheCoverageTestSupport::width_independent_annotation_cache_coverage_test_support_empty_tiers()).unwrap();
-                                        let _ = TracedAssertions::traced_assertions_record_rendered_not_null(if false { "null".to_string() } else { "ParagraphLayoutPrep@identity".to_string() }.as_str(), None).unwrap();
+                                        let obj1 = InlineObjectSpan::new(TextRange::new(1u32, 2u32).unwrap(), 20.0f64, 12.0f64, 4.0f64, Some(InlineObjectBoundaryAdjustment::inline_object_boundary_adjustment_fixed().unwrap()), Some(InlineObjectBoundaryAdjustment::new(Some(uniform1), Some(InlineObjectPreferredStretch::new(InlineObjectPreferredStretchKind::PunctuationTrailing, 10.0f64, 15.0f64).unwrap()), Some(2.0f64), Some(1.0f64), Some(prevent1)).unwrap())).unwrap();
+                                        let obj2 = InlineObjectSpan::new(TextRange::new(2u32, 3u32).unwrap(), 20.0f64, 12.0f64, 4.0f64, Some(InlineObjectBoundaryAdjustment::new(Some(uniform2), Some(InlineObjectPreferredStretch::new(InlineObjectPreferredStretchKind::PunctuationTrailing, 10.0f64, 20.0f64).unwrap()), Some(0.0), Some(0.0f64), Some(prevent2)).unwrap()), Some(InlineObjectBoundaryAdjustment::inline_object_boundary_adjustment_fixed().unwrap())).unwrap();
+                                        let input = LayoutInput::new(TiqianTextContent::new(text.as_ustr(), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![])), Some(TextStyle::new(Some(vec![]), Some(16.0), Some(UString::from("zh-Hans")), Some(400), Some(false), Some(0.0), Some(InlineAttachment::None))), Some(ParagraphStyle::new(Some(LastLineAlignment::Start), Some(WritingMode::HorizontalTb), None, None, Some(Ic::zero()), Some(MeasureAdaptiveFirstLineIndent::new(Some(14.0), Some(1.0), Some(2.0))), Some(LineLengthGrid::new(Some(true), None)), Some(RubyLineHeightMode::PerLine), Some(ParagraphStyle::PARAGRAPH_STYLE_DEFAULT_INLINE_OBJECT_MINIMUM_CLEARANCE_EM), Some(ParagraphStyle::PARAGRAPH_STYLE_DEFAULT_EMPHASIS_DOT_GAP_EM))), LayoutConstraints::new(300 as f64 as f64, Some(f64::INFINITY), Some(2147483647)).unwrap(), Some((*crate::org::tiqian::core::built_in_layout_profiles::BUILT_IN_LAYOUT_PROFILES_CLREQ_HORIZONTAL).clone()), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![(obj1).clone(), (obj2).clone()]));
+                                        let annotation = WidthIndependentAnnotationCacheFns::width_independent_annotation_cache_fns_prepare_width_independent_annotation(&mut engine.lock().unwrap(), (input).clone(), WidthIndependentAnnotationCacheCoverageTestSupport::width_independent_annotation_cache_coverage_test_support_empty_tiers()).unwrap();
+                                        let prep = WidthIndependentAnnotationCacheFns::width_independent_annotation_cache_fns_build_paragraph_layout_prep(&mut engine.lock().unwrap(), (input).clone(), (annotation).clone(), WidthIndependentAnnotationCacheCoverageTestSupport::width_independent_annotation_cache_coverage_test_support_empty_tiers()).unwrap();
+                                        let _ = TracedAssertions::traced_assertions_record_rendered_not_null(if false { UString::from("null") } else { UString::from("ParagraphLayoutPrep@identity") }.as_ustr(), None).unwrap();
                                     }
                                 }
                             }
@@ -2182,35 +2303,21 @@ WidthIndependentAnnotationCacheCoverageTestSupport::width_independent_annotation
                                 {
                                     {
                                         let prevent2 = true;
-                                        let obj1 = InlineObjectSpan::new(TextRange::new(1u32, 2u32).unwrap(), 20.0f64, 12.0f64, 4.0f64, Some(InlineObjectBoundaryAdjustment::inline_object_boundary_adjustment_fixed().unwrap()),
-Some(InlineObjectBoundaryAdjustment::new(Some(uniform1), Some(InlineObjectPreferredStretch::new(InlineObjectPreferredStretchKind::PunctuationTrailing, 10.0f64, 15.0f64).unwrap()), Some(2.0f64), Some(1.0f64), Some(prevent1)).unwrap())).unwrap();
-                                        let obj2 = InlineObjectSpan::new(TextRange::new(2u32, 3u32).unwrap(), 20.0f64, 12.0f64, 4.0f64, Some(InlineObjectBoundaryAdjustment::new(Some(uniform2),
-Some(InlineObjectPreferredStretch::new(InlineObjectPreferredStretchKind::PunctuationTrailing, 10.0f64, 20.0f64).unwrap()), Some(0.0), Some(0.0f64), Some(prevent2)).unwrap()), Some(InlineObjectBoundaryAdjustment::inline_object_boundary_adjustment_fixed().unwrap())).unwrap();
-                                        let input = LayoutInput::new(TiqianTextContent::new(text.as_str(), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![])), Some(TextStyle::new(Some(vec![]), Some(16.0), Some("zh-Hans".to_string()), Some(400), Some(false), Some(0.0),
-Some(InlineAttachment::None))), Some(ParagraphStyle::new(Some(LastLineAlignment::Start), Some(WritingMode::HorizontalTb), None, None, Some(Ic::zero()), Some(MeasureAdaptiveFirstLineIndent::new(Some(14.0), Some(1.0), Some(2.0))), Some(LineLengthGrid::new(Some(true), None)),
-Some(RubyLineHeightMode::PerLine), Some(ParagraphStyle::PARAGRAPH_STYLE_DEFAULT_INLINE_OBJECT_MINIMUM_CLEARANCE_EM), Some(ParagraphStyle::PARAGRAPH_STYLE_DEFAULT_EMPHASIS_DOT_GAP_EM))), LayoutConstraints::new(300 as f64 as f64, Some(f64::INFINITY), Some(2147483647)).unwrap(),
-Some((*crate::org::tiqian::core::built_in_layout_profiles::BUILT_IN_LAYOUT_PROFILES_CLREQ_HORIZONTAL).clone()), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![(obj1).clone(), (obj2).clone()]));
-                                        let annotation = WidthIndependentAnnotationCacheFns::width_independent_annotation_cache_fns_prepare_width_independent_annotation(&mut engine.lock().unwrap(), (input).clone(),
-WidthIndependentAnnotationCacheCoverageTestSupport::width_independent_annotation_cache_coverage_test_support_empty_tiers()).unwrap();
-                                        let prep = WidthIndependentAnnotationCacheFns::width_independent_annotation_cache_fns_build_paragraph_layout_prep(&mut engine.lock().unwrap(), (input).clone(), (annotation).clone(),
-WidthIndependentAnnotationCacheCoverageTestSupport::width_independent_annotation_cache_coverage_test_support_empty_tiers()).unwrap();
-                                        let _ = TracedAssertions::traced_assertions_record_rendered_not_null(if false { "null".to_string() } else { "ParagraphLayoutPrep@identity".to_string() }.as_str(), None).unwrap();
+                                        let obj1 = InlineObjectSpan::new(TextRange::new(1u32, 2u32).unwrap(), 20.0f64, 12.0f64, 4.0f64, Some(InlineObjectBoundaryAdjustment::inline_object_boundary_adjustment_fixed().unwrap()), Some(InlineObjectBoundaryAdjustment::new(Some(uniform1), Some(InlineObjectPreferredStretch::new(InlineObjectPreferredStretchKind::PunctuationTrailing, 10.0f64, 15.0f64).unwrap()), Some(2.0f64), Some(1.0f64), Some(prevent1)).unwrap())).unwrap();
+                                        let obj2 = InlineObjectSpan::new(TextRange::new(2u32, 3u32).unwrap(), 20.0f64, 12.0f64, 4.0f64, Some(InlineObjectBoundaryAdjustment::new(Some(uniform2), Some(InlineObjectPreferredStretch::new(InlineObjectPreferredStretchKind::PunctuationTrailing, 10.0f64, 20.0f64).unwrap()), Some(0.0), Some(0.0f64), Some(prevent2)).unwrap()), Some(InlineObjectBoundaryAdjustment::inline_object_boundary_adjustment_fixed().unwrap())).unwrap();
+                                        let input = LayoutInput::new(TiqianTextContent::new(text.as_ustr(), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![])), Some(TextStyle::new(Some(vec![]), Some(16.0), Some(UString::from("zh-Hans")), Some(400), Some(false), Some(0.0), Some(InlineAttachment::None))), Some(ParagraphStyle::new(Some(LastLineAlignment::Start), Some(WritingMode::HorizontalTb), None, None, Some(Ic::zero()), Some(MeasureAdaptiveFirstLineIndent::new(Some(14.0), Some(1.0), Some(2.0))), Some(LineLengthGrid::new(Some(true), None)), Some(RubyLineHeightMode::PerLine), Some(ParagraphStyle::PARAGRAPH_STYLE_DEFAULT_INLINE_OBJECT_MINIMUM_CLEARANCE_EM), Some(ParagraphStyle::PARAGRAPH_STYLE_DEFAULT_EMPHASIS_DOT_GAP_EM))), LayoutConstraints::new(300 as f64 as f64, Some(f64::INFINITY), Some(2147483647)).unwrap(), Some((*crate::org::tiqian::core::built_in_layout_profiles::BUILT_IN_LAYOUT_PROFILES_CLREQ_HORIZONTAL).clone()), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![(obj1).clone(), (obj2).clone()]));
+                                        let annotation = WidthIndependentAnnotationCacheFns::width_independent_annotation_cache_fns_prepare_width_independent_annotation(&mut engine.lock().unwrap(), (input).clone(), WidthIndependentAnnotationCacheCoverageTestSupport::width_independent_annotation_cache_coverage_test_support_empty_tiers()).unwrap();
+                                        let prep = WidthIndependentAnnotationCacheFns::width_independent_annotation_cache_fns_build_paragraph_layout_prep(&mut engine.lock().unwrap(), (input).clone(), (annotation).clone(), WidthIndependentAnnotationCacheCoverageTestSupport::width_independent_annotation_cache_coverage_test_support_empty_tiers()).unwrap();
+                                        let _ = TracedAssertions::traced_assertions_record_rendered_not_null(if false { UString::from("null") } else { UString::from("ParagraphLayoutPrep@identity") }.as_ustr(), None).unwrap();
                                     }
                                     {
                                         let prevent2 = false;
-                                        let obj1 = InlineObjectSpan::new(TextRange::new(1u32, 2u32).unwrap(), 20.0f64, 12.0f64, 4.0f64, Some(InlineObjectBoundaryAdjustment::inline_object_boundary_adjustment_fixed().unwrap()),
-Some(InlineObjectBoundaryAdjustment::new(Some(uniform1), Some(InlineObjectPreferredStretch::new(InlineObjectPreferredStretchKind::PunctuationTrailing, 10.0f64, 15.0f64).unwrap()), Some(2.0f64), Some(1.0f64), Some(prevent1)).unwrap())).unwrap();
-                                        let obj2 = InlineObjectSpan::new(TextRange::new(2u32, 3u32).unwrap(), 20.0f64, 12.0f64, 4.0f64, Some(InlineObjectBoundaryAdjustment::new(Some(uniform2),
-Some(InlineObjectPreferredStretch::new(InlineObjectPreferredStretchKind::PunctuationTrailing, 10.0f64, 20.0f64).unwrap()), Some(0.0), Some(0.0f64), Some(prevent2)).unwrap()), Some(InlineObjectBoundaryAdjustment::inline_object_boundary_adjustment_fixed().unwrap())).unwrap();
-                                        let input = LayoutInput::new(TiqianTextContent::new(text.as_str(), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![])), Some(TextStyle::new(Some(vec![]), Some(16.0), Some("zh-Hans".to_string()), Some(400), Some(false), Some(0.0),
-Some(InlineAttachment::None))), Some(ParagraphStyle::new(Some(LastLineAlignment::Start), Some(WritingMode::HorizontalTb), None, None, Some(Ic::zero()), Some(MeasureAdaptiveFirstLineIndent::new(Some(14.0), Some(1.0), Some(2.0))), Some(LineLengthGrid::new(Some(true), None)),
-Some(RubyLineHeightMode::PerLine), Some(ParagraphStyle::PARAGRAPH_STYLE_DEFAULT_INLINE_OBJECT_MINIMUM_CLEARANCE_EM), Some(ParagraphStyle::PARAGRAPH_STYLE_DEFAULT_EMPHASIS_DOT_GAP_EM))), LayoutConstraints::new(300 as f64 as f64, Some(f64::INFINITY), Some(2147483647)).unwrap(),
-Some((*crate::org::tiqian::core::built_in_layout_profiles::BUILT_IN_LAYOUT_PROFILES_CLREQ_HORIZONTAL).clone()), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![(obj1).clone(), (obj2).clone()]));
-                                        let annotation = WidthIndependentAnnotationCacheFns::width_independent_annotation_cache_fns_prepare_width_independent_annotation(&mut engine.lock().unwrap(), (input).clone(),
-WidthIndependentAnnotationCacheCoverageTestSupport::width_independent_annotation_cache_coverage_test_support_empty_tiers()).unwrap();
-                                        let prep = WidthIndependentAnnotationCacheFns::width_independent_annotation_cache_fns_build_paragraph_layout_prep(&mut engine.lock().unwrap(), (input).clone(), (annotation).clone(),
-WidthIndependentAnnotationCacheCoverageTestSupport::width_independent_annotation_cache_coverage_test_support_empty_tiers()).unwrap();
-                                        let _ = TracedAssertions::traced_assertions_record_rendered_not_null(if false { "null".to_string() } else { "ParagraphLayoutPrep@identity".to_string() }.as_str(), None).unwrap();
+                                        let obj1 = InlineObjectSpan::new(TextRange::new(1u32, 2u32).unwrap(), 20.0f64, 12.0f64, 4.0f64, Some(InlineObjectBoundaryAdjustment::inline_object_boundary_adjustment_fixed().unwrap()), Some(InlineObjectBoundaryAdjustment::new(Some(uniform1), Some(InlineObjectPreferredStretch::new(InlineObjectPreferredStretchKind::PunctuationTrailing, 10.0f64, 15.0f64).unwrap()), Some(2.0f64), Some(1.0f64), Some(prevent1)).unwrap())).unwrap();
+                                        let obj2 = InlineObjectSpan::new(TextRange::new(2u32, 3u32).unwrap(), 20.0f64, 12.0f64, 4.0f64, Some(InlineObjectBoundaryAdjustment::new(Some(uniform2), Some(InlineObjectPreferredStretch::new(InlineObjectPreferredStretchKind::PunctuationTrailing, 10.0f64, 20.0f64).unwrap()), Some(0.0), Some(0.0f64), Some(prevent2)).unwrap()), Some(InlineObjectBoundaryAdjustment::inline_object_boundary_adjustment_fixed().unwrap())).unwrap();
+                                        let input = LayoutInput::new(TiqianTextContent::new(text.as_ustr(), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![])), Some(TextStyle::new(Some(vec![]), Some(16.0), Some(UString::from("zh-Hans")), Some(400), Some(false), Some(0.0), Some(InlineAttachment::None))), Some(ParagraphStyle::new(Some(LastLineAlignment::Start), Some(WritingMode::HorizontalTb), None, None, Some(Ic::zero()), Some(MeasureAdaptiveFirstLineIndent::new(Some(14.0), Some(1.0), Some(2.0))), Some(LineLengthGrid::new(Some(true), None)), Some(RubyLineHeightMode::PerLine), Some(ParagraphStyle::PARAGRAPH_STYLE_DEFAULT_INLINE_OBJECT_MINIMUM_CLEARANCE_EM), Some(ParagraphStyle::PARAGRAPH_STYLE_DEFAULT_EMPHASIS_DOT_GAP_EM))), LayoutConstraints::new(300 as f64 as f64, Some(f64::INFINITY), Some(2147483647)).unwrap(), Some((*crate::org::tiqian::core::built_in_layout_profiles::BUILT_IN_LAYOUT_PROFILES_CLREQ_HORIZONTAL).clone()), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![(obj1).clone(), (obj2).clone()]));
+                                        let annotation = WidthIndependentAnnotationCacheFns::width_independent_annotation_cache_fns_prepare_width_independent_annotation(&mut engine.lock().unwrap(), (input).clone(), WidthIndependentAnnotationCacheCoverageTestSupport::width_independent_annotation_cache_coverage_test_support_empty_tiers()).unwrap();
+                                        let prep = WidthIndependentAnnotationCacheFns::width_independent_annotation_cache_fns_build_paragraph_layout_prep(&mut engine.lock().unwrap(), (input).clone(), (annotation).clone(), WidthIndependentAnnotationCacheCoverageTestSupport::width_independent_annotation_cache_coverage_test_support_empty_tiers()).unwrap();
+                                        let _ = TracedAssertions::traced_assertions_record_rendered_not_null(if false { UString::from("null") } else { UString::from("ParagraphLayoutPrep@identity") }.as_ustr(), None).unwrap();
                                     }
                                 }
                             }
@@ -2219,35 +2326,21 @@ WidthIndependentAnnotationCacheCoverageTestSupport::width_independent_annotation
                                 {
                                     {
                                         let prevent2 = true;
-                                        let obj1 = InlineObjectSpan::new(TextRange::new(1u32, 2u32).unwrap(), 20.0f64, 12.0f64, 4.0f64, Some(InlineObjectBoundaryAdjustment::inline_object_boundary_adjustment_fixed().unwrap()),
-Some(InlineObjectBoundaryAdjustment::new(Some(uniform1), Some(InlineObjectPreferredStretch::new(InlineObjectPreferredStretchKind::PunctuationTrailing, 10.0f64, 15.0f64).unwrap()), Some(2.0f64), Some(1.0f64), Some(prevent1)).unwrap())).unwrap();
-                                        let obj2 = InlineObjectSpan::new(TextRange::new(2u32, 3u32).unwrap(), 20.0f64, 12.0f64, 4.0f64, Some(InlineObjectBoundaryAdjustment::new(Some(uniform2),
-Some(InlineObjectPreferredStretch::new(InlineObjectPreferredStretchKind::PunctuationTrailing, 10.0f64, 20.0f64).unwrap()), Some(0.0), Some(0.0f64), Some(prevent2)).unwrap()), Some(InlineObjectBoundaryAdjustment::inline_object_boundary_adjustment_fixed().unwrap())).unwrap();
-                                        let input = LayoutInput::new(TiqianTextContent::new(text.as_str(), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![])), Some(TextStyle::new(Some(vec![]), Some(16.0), Some("zh-Hans".to_string()), Some(400), Some(false), Some(0.0),
-Some(InlineAttachment::None))), Some(ParagraphStyle::new(Some(LastLineAlignment::Start), Some(WritingMode::HorizontalTb), None, None, Some(Ic::zero()), Some(MeasureAdaptiveFirstLineIndent::new(Some(14.0), Some(1.0), Some(2.0))), Some(LineLengthGrid::new(Some(true), None)),
-Some(RubyLineHeightMode::PerLine), Some(ParagraphStyle::PARAGRAPH_STYLE_DEFAULT_INLINE_OBJECT_MINIMUM_CLEARANCE_EM), Some(ParagraphStyle::PARAGRAPH_STYLE_DEFAULT_EMPHASIS_DOT_GAP_EM))), LayoutConstraints::new(300 as f64 as f64, Some(f64::INFINITY), Some(2147483647)).unwrap(),
-Some((*crate::org::tiqian::core::built_in_layout_profiles::BUILT_IN_LAYOUT_PROFILES_CLREQ_HORIZONTAL).clone()), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![(obj1).clone(), (obj2).clone()]));
-                                        let annotation = WidthIndependentAnnotationCacheFns::width_independent_annotation_cache_fns_prepare_width_independent_annotation(&mut engine.lock().unwrap(), (input).clone(),
-WidthIndependentAnnotationCacheCoverageTestSupport::width_independent_annotation_cache_coverage_test_support_empty_tiers()).unwrap();
-                                        let prep = WidthIndependentAnnotationCacheFns::width_independent_annotation_cache_fns_build_paragraph_layout_prep(&mut engine.lock().unwrap(), (input).clone(), (annotation).clone(),
-WidthIndependentAnnotationCacheCoverageTestSupport::width_independent_annotation_cache_coverage_test_support_empty_tiers()).unwrap();
-                                        let _ = TracedAssertions::traced_assertions_record_rendered_not_null(if false { "null".to_string() } else { "ParagraphLayoutPrep@identity".to_string() }.as_str(), None).unwrap();
+                                        let obj1 = InlineObjectSpan::new(TextRange::new(1u32, 2u32).unwrap(), 20.0f64, 12.0f64, 4.0f64, Some(InlineObjectBoundaryAdjustment::inline_object_boundary_adjustment_fixed().unwrap()), Some(InlineObjectBoundaryAdjustment::new(Some(uniform1), Some(InlineObjectPreferredStretch::new(InlineObjectPreferredStretchKind::PunctuationTrailing, 10.0f64, 15.0f64).unwrap()), Some(2.0f64), Some(1.0f64), Some(prevent1)).unwrap())).unwrap();
+                                        let obj2 = InlineObjectSpan::new(TextRange::new(2u32, 3u32).unwrap(), 20.0f64, 12.0f64, 4.0f64, Some(InlineObjectBoundaryAdjustment::new(Some(uniform2), Some(InlineObjectPreferredStretch::new(InlineObjectPreferredStretchKind::PunctuationTrailing, 10.0f64, 20.0f64).unwrap()), Some(0.0), Some(0.0f64), Some(prevent2)).unwrap()), Some(InlineObjectBoundaryAdjustment::inline_object_boundary_adjustment_fixed().unwrap())).unwrap();
+                                        let input = LayoutInput::new(TiqianTextContent::new(text.as_ustr(), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![])), Some(TextStyle::new(Some(vec![]), Some(16.0), Some(UString::from("zh-Hans")), Some(400), Some(false), Some(0.0), Some(InlineAttachment::None))), Some(ParagraphStyle::new(Some(LastLineAlignment::Start), Some(WritingMode::HorizontalTb), None, None, Some(Ic::zero()), Some(MeasureAdaptiveFirstLineIndent::new(Some(14.0), Some(1.0), Some(2.0))), Some(LineLengthGrid::new(Some(true), None)), Some(RubyLineHeightMode::PerLine), Some(ParagraphStyle::PARAGRAPH_STYLE_DEFAULT_INLINE_OBJECT_MINIMUM_CLEARANCE_EM), Some(ParagraphStyle::PARAGRAPH_STYLE_DEFAULT_EMPHASIS_DOT_GAP_EM))), LayoutConstraints::new(300 as f64 as f64, Some(f64::INFINITY), Some(2147483647)).unwrap(), Some((*crate::org::tiqian::core::built_in_layout_profiles::BUILT_IN_LAYOUT_PROFILES_CLREQ_HORIZONTAL).clone()), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![(obj1).clone(), (obj2).clone()]));
+                                        let annotation = WidthIndependentAnnotationCacheFns::width_independent_annotation_cache_fns_prepare_width_independent_annotation(&mut engine.lock().unwrap(), (input).clone(), WidthIndependentAnnotationCacheCoverageTestSupport::width_independent_annotation_cache_coverage_test_support_empty_tiers()).unwrap();
+                                        let prep = WidthIndependentAnnotationCacheFns::width_independent_annotation_cache_fns_build_paragraph_layout_prep(&mut engine.lock().unwrap(), (input).clone(), (annotation).clone(), WidthIndependentAnnotationCacheCoverageTestSupport::width_independent_annotation_cache_coverage_test_support_empty_tiers()).unwrap();
+                                        let _ = TracedAssertions::traced_assertions_record_rendered_not_null(if false { UString::from("null") } else { UString::from("ParagraphLayoutPrep@identity") }.as_ustr(), None).unwrap();
                                     }
                                     {
                                         let prevent2 = false;
-                                        let obj1 = InlineObjectSpan::new(TextRange::new(1u32, 2u32).unwrap(), 20.0f64, 12.0f64, 4.0f64, Some(InlineObjectBoundaryAdjustment::inline_object_boundary_adjustment_fixed().unwrap()),
-Some(InlineObjectBoundaryAdjustment::new(Some(uniform1), Some(InlineObjectPreferredStretch::new(InlineObjectPreferredStretchKind::PunctuationTrailing, 10.0f64, 15.0f64).unwrap()), Some(2.0f64), Some(1.0f64), Some(prevent1)).unwrap())).unwrap();
-                                        let obj2 = InlineObjectSpan::new(TextRange::new(2u32, 3u32).unwrap(), 20.0f64, 12.0f64, 4.0f64, Some(InlineObjectBoundaryAdjustment::new(Some(uniform2),
-Some(InlineObjectPreferredStretch::new(InlineObjectPreferredStretchKind::PunctuationTrailing, 10.0f64, 20.0f64).unwrap()), Some(0.0), Some(0.0f64), Some(prevent2)).unwrap()), Some(InlineObjectBoundaryAdjustment::inline_object_boundary_adjustment_fixed().unwrap())).unwrap();
-                                        let input = LayoutInput::new(TiqianTextContent::new(text.as_str(), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![])), Some(TextStyle::new(Some(vec![]), Some(16.0), Some("zh-Hans".to_string()), Some(400), Some(false), Some(0.0),
-Some(InlineAttachment::None))), Some(ParagraphStyle::new(Some(LastLineAlignment::Start), Some(WritingMode::HorizontalTb), None, None, Some(Ic::zero()), Some(MeasureAdaptiveFirstLineIndent::new(Some(14.0), Some(1.0), Some(2.0))), Some(LineLengthGrid::new(Some(true), None)),
-Some(RubyLineHeightMode::PerLine), Some(ParagraphStyle::PARAGRAPH_STYLE_DEFAULT_INLINE_OBJECT_MINIMUM_CLEARANCE_EM), Some(ParagraphStyle::PARAGRAPH_STYLE_DEFAULT_EMPHASIS_DOT_GAP_EM))), LayoutConstraints::new(300 as f64 as f64, Some(f64::INFINITY), Some(2147483647)).unwrap(),
-Some((*crate::org::tiqian::core::built_in_layout_profiles::BUILT_IN_LAYOUT_PROFILES_CLREQ_HORIZONTAL).clone()), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![(obj1).clone(), (obj2).clone()]));
-                                        let annotation = WidthIndependentAnnotationCacheFns::width_independent_annotation_cache_fns_prepare_width_independent_annotation(&mut engine.lock().unwrap(), (input).clone(),
-WidthIndependentAnnotationCacheCoverageTestSupport::width_independent_annotation_cache_coverage_test_support_empty_tiers()).unwrap();
-                                        let prep = WidthIndependentAnnotationCacheFns::width_independent_annotation_cache_fns_build_paragraph_layout_prep(&mut engine.lock().unwrap(), (input).clone(), (annotation).clone(),
-WidthIndependentAnnotationCacheCoverageTestSupport::width_independent_annotation_cache_coverage_test_support_empty_tiers()).unwrap();
-                                        let _ = TracedAssertions::traced_assertions_record_rendered_not_null(if false { "null".to_string() } else { "ParagraphLayoutPrep@identity".to_string() }.as_str(), None).unwrap();
+                                        let obj1 = InlineObjectSpan::new(TextRange::new(1u32, 2u32).unwrap(), 20.0f64, 12.0f64, 4.0f64, Some(InlineObjectBoundaryAdjustment::inline_object_boundary_adjustment_fixed().unwrap()), Some(InlineObjectBoundaryAdjustment::new(Some(uniform1), Some(InlineObjectPreferredStretch::new(InlineObjectPreferredStretchKind::PunctuationTrailing, 10.0f64, 15.0f64).unwrap()), Some(2.0f64), Some(1.0f64), Some(prevent1)).unwrap())).unwrap();
+                                        let obj2 = InlineObjectSpan::new(TextRange::new(2u32, 3u32).unwrap(), 20.0f64, 12.0f64, 4.0f64, Some(InlineObjectBoundaryAdjustment::new(Some(uniform2), Some(InlineObjectPreferredStretch::new(InlineObjectPreferredStretchKind::PunctuationTrailing, 10.0f64, 20.0f64).unwrap()), Some(0.0), Some(0.0f64), Some(prevent2)).unwrap()), Some(InlineObjectBoundaryAdjustment::inline_object_boundary_adjustment_fixed().unwrap())).unwrap();
+                                        let input = LayoutInput::new(TiqianTextContent::new(text.as_ustr(), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![])), Some(TextStyle::new(Some(vec![]), Some(16.0), Some(UString::from("zh-Hans")), Some(400), Some(false), Some(0.0), Some(InlineAttachment::None))), Some(ParagraphStyle::new(Some(LastLineAlignment::Start), Some(WritingMode::HorizontalTb), None, None, Some(Ic::zero()), Some(MeasureAdaptiveFirstLineIndent::new(Some(14.0), Some(1.0), Some(2.0))), Some(LineLengthGrid::new(Some(true), None)), Some(RubyLineHeightMode::PerLine), Some(ParagraphStyle::PARAGRAPH_STYLE_DEFAULT_INLINE_OBJECT_MINIMUM_CLEARANCE_EM), Some(ParagraphStyle::PARAGRAPH_STYLE_DEFAULT_EMPHASIS_DOT_GAP_EM))), LayoutConstraints::new(300 as f64 as f64, Some(f64::INFINITY), Some(2147483647)).unwrap(), Some((*crate::org::tiqian::core::built_in_layout_profiles::BUILT_IN_LAYOUT_PROFILES_CLREQ_HORIZONTAL).clone()), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![(obj1).clone(), (obj2).clone()]));
+                                        let annotation = WidthIndependentAnnotationCacheFns::width_independent_annotation_cache_fns_prepare_width_independent_annotation(&mut engine.lock().unwrap(), (input).clone(), WidthIndependentAnnotationCacheCoverageTestSupport::width_independent_annotation_cache_coverage_test_support_empty_tiers()).unwrap();
+                                        let prep = WidthIndependentAnnotationCacheFns::width_independent_annotation_cache_fns_build_paragraph_layout_prep(&mut engine.lock().unwrap(), (input).clone(), (annotation).clone(), WidthIndependentAnnotationCacheCoverageTestSupport::width_independent_annotation_cache_coverage_test_support_empty_tiers()).unwrap();
+                                        let _ = TracedAssertions::traced_assertions_record_rendered_not_null(if false { UString::from("null") } else { UString::from("ParagraphLayoutPrep@identity") }.as_ustr(), None).unwrap();
                                     }
                                 }
                             }
@@ -2266,35 +2359,21 @@ WidthIndependentAnnotationCacheCoverageTestSupport::width_independent_annotation
                                 {
                                     {
                                         let prevent2 = true;
-                                        let obj1 = InlineObjectSpan::new(TextRange::new(1u32, 2u32).unwrap(), 20.0f64, 12.0f64, 4.0f64, Some(InlineObjectBoundaryAdjustment::inline_object_boundary_adjustment_fixed().unwrap()),
-Some(InlineObjectBoundaryAdjustment::new(Some(uniform1), Some(InlineObjectPreferredStretch::new(InlineObjectPreferredStretchKind::PunctuationTrailing, 10.0f64, 15.0f64).unwrap()), Some(2.0f64), Some(1.0f64), Some(prevent1)).unwrap())).unwrap();
-                                        let obj2 = InlineObjectSpan::new(TextRange::new(2u32, 3u32).unwrap(), 20.0f64, 12.0f64, 4.0f64, Some(InlineObjectBoundaryAdjustment::new(Some(uniform2),
-Some(InlineObjectPreferredStretch::new(InlineObjectPreferredStretchKind::PunctuationTrailing, 10.0f64, 20.0f64).unwrap()), Some(0.0), Some(0.0f64), Some(prevent2)).unwrap()), Some(InlineObjectBoundaryAdjustment::inline_object_boundary_adjustment_fixed().unwrap())).unwrap();
-                                        let input = LayoutInput::new(TiqianTextContent::new(text.as_str(), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![])), Some(TextStyle::new(Some(vec![]), Some(16.0), Some("zh-Hans".to_string()), Some(400), Some(false), Some(0.0),
-Some(InlineAttachment::None))), Some(ParagraphStyle::new(Some(LastLineAlignment::Start), Some(WritingMode::HorizontalTb), None, None, Some(Ic::zero()), Some(MeasureAdaptiveFirstLineIndent::new(Some(14.0), Some(1.0), Some(2.0))), Some(LineLengthGrid::new(Some(true), None)),
-Some(RubyLineHeightMode::PerLine), Some(ParagraphStyle::PARAGRAPH_STYLE_DEFAULT_INLINE_OBJECT_MINIMUM_CLEARANCE_EM), Some(ParagraphStyle::PARAGRAPH_STYLE_DEFAULT_EMPHASIS_DOT_GAP_EM))), LayoutConstraints::new(300 as f64 as f64, Some(f64::INFINITY), Some(2147483647)).unwrap(),
-Some((*crate::org::tiqian::core::built_in_layout_profiles::BUILT_IN_LAYOUT_PROFILES_CLREQ_HORIZONTAL).clone()), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![(obj1).clone(), (obj2).clone()]));
-                                        let annotation = WidthIndependentAnnotationCacheFns::width_independent_annotation_cache_fns_prepare_width_independent_annotation(&mut engine.lock().unwrap(), (input).clone(),
-WidthIndependentAnnotationCacheCoverageTestSupport::width_independent_annotation_cache_coverage_test_support_empty_tiers()).unwrap();
-                                        let prep = WidthIndependentAnnotationCacheFns::width_independent_annotation_cache_fns_build_paragraph_layout_prep(&mut engine.lock().unwrap(), (input).clone(), (annotation).clone(),
-WidthIndependentAnnotationCacheCoverageTestSupport::width_independent_annotation_cache_coverage_test_support_empty_tiers()).unwrap();
-                                        let _ = TracedAssertions::traced_assertions_record_rendered_not_null(if false { "null".to_string() } else { "ParagraphLayoutPrep@identity".to_string() }.as_str(), None).unwrap();
+                                        let obj1 = InlineObjectSpan::new(TextRange::new(1u32, 2u32).unwrap(), 20.0f64, 12.0f64, 4.0f64, Some(InlineObjectBoundaryAdjustment::inline_object_boundary_adjustment_fixed().unwrap()), Some(InlineObjectBoundaryAdjustment::new(Some(uniform1), Some(InlineObjectPreferredStretch::new(InlineObjectPreferredStretchKind::PunctuationTrailing, 10.0f64, 15.0f64).unwrap()), Some(2.0f64), Some(1.0f64), Some(prevent1)).unwrap())).unwrap();
+                                        let obj2 = InlineObjectSpan::new(TextRange::new(2u32, 3u32).unwrap(), 20.0f64, 12.0f64, 4.0f64, Some(InlineObjectBoundaryAdjustment::new(Some(uniform2), Some(InlineObjectPreferredStretch::new(InlineObjectPreferredStretchKind::PunctuationTrailing, 10.0f64, 20.0f64).unwrap()), Some(0.0), Some(0.0f64), Some(prevent2)).unwrap()), Some(InlineObjectBoundaryAdjustment::inline_object_boundary_adjustment_fixed().unwrap())).unwrap();
+                                        let input = LayoutInput::new(TiqianTextContent::new(text.as_ustr(), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![])), Some(TextStyle::new(Some(vec![]), Some(16.0), Some(UString::from("zh-Hans")), Some(400), Some(false), Some(0.0), Some(InlineAttachment::None))), Some(ParagraphStyle::new(Some(LastLineAlignment::Start), Some(WritingMode::HorizontalTb), None, None, Some(Ic::zero()), Some(MeasureAdaptiveFirstLineIndent::new(Some(14.0), Some(1.0), Some(2.0))), Some(LineLengthGrid::new(Some(true), None)), Some(RubyLineHeightMode::PerLine), Some(ParagraphStyle::PARAGRAPH_STYLE_DEFAULT_INLINE_OBJECT_MINIMUM_CLEARANCE_EM), Some(ParagraphStyle::PARAGRAPH_STYLE_DEFAULT_EMPHASIS_DOT_GAP_EM))), LayoutConstraints::new(300 as f64 as f64, Some(f64::INFINITY), Some(2147483647)).unwrap(), Some((*crate::org::tiqian::core::built_in_layout_profiles::BUILT_IN_LAYOUT_PROFILES_CLREQ_HORIZONTAL).clone()), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![(obj1).clone(), (obj2).clone()]));
+                                        let annotation = WidthIndependentAnnotationCacheFns::width_independent_annotation_cache_fns_prepare_width_independent_annotation(&mut engine.lock().unwrap(), (input).clone(), WidthIndependentAnnotationCacheCoverageTestSupport::width_independent_annotation_cache_coverage_test_support_empty_tiers()).unwrap();
+                                        let prep = WidthIndependentAnnotationCacheFns::width_independent_annotation_cache_fns_build_paragraph_layout_prep(&mut engine.lock().unwrap(), (input).clone(), (annotation).clone(), WidthIndependentAnnotationCacheCoverageTestSupport::width_independent_annotation_cache_coverage_test_support_empty_tiers()).unwrap();
+                                        let _ = TracedAssertions::traced_assertions_record_rendered_not_null(if false { UString::from("null") } else { UString::from("ParagraphLayoutPrep@identity") }.as_ustr(), None).unwrap();
                                     }
                                     {
                                         let prevent2 = false;
-                                        let obj1 = InlineObjectSpan::new(TextRange::new(1u32, 2u32).unwrap(), 20.0f64, 12.0f64, 4.0f64, Some(InlineObjectBoundaryAdjustment::inline_object_boundary_adjustment_fixed().unwrap()),
-Some(InlineObjectBoundaryAdjustment::new(Some(uniform1), Some(InlineObjectPreferredStretch::new(InlineObjectPreferredStretchKind::PunctuationTrailing, 10.0f64, 15.0f64).unwrap()), Some(2.0f64), Some(1.0f64), Some(prevent1)).unwrap())).unwrap();
-                                        let obj2 = InlineObjectSpan::new(TextRange::new(2u32, 3u32).unwrap(), 20.0f64, 12.0f64, 4.0f64, Some(InlineObjectBoundaryAdjustment::new(Some(uniform2),
-Some(InlineObjectPreferredStretch::new(InlineObjectPreferredStretchKind::PunctuationTrailing, 10.0f64, 20.0f64).unwrap()), Some(0.0), Some(0.0f64), Some(prevent2)).unwrap()), Some(InlineObjectBoundaryAdjustment::inline_object_boundary_adjustment_fixed().unwrap())).unwrap();
-                                        let input = LayoutInput::new(TiqianTextContent::new(text.as_str(), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![])), Some(TextStyle::new(Some(vec![]), Some(16.0), Some("zh-Hans".to_string()), Some(400), Some(false), Some(0.0),
-Some(InlineAttachment::None))), Some(ParagraphStyle::new(Some(LastLineAlignment::Start), Some(WritingMode::HorizontalTb), None, None, Some(Ic::zero()), Some(MeasureAdaptiveFirstLineIndent::new(Some(14.0), Some(1.0), Some(2.0))), Some(LineLengthGrid::new(Some(true), None)),
-Some(RubyLineHeightMode::PerLine), Some(ParagraphStyle::PARAGRAPH_STYLE_DEFAULT_INLINE_OBJECT_MINIMUM_CLEARANCE_EM), Some(ParagraphStyle::PARAGRAPH_STYLE_DEFAULT_EMPHASIS_DOT_GAP_EM))), LayoutConstraints::new(300 as f64 as f64, Some(f64::INFINITY), Some(2147483647)).unwrap(),
-Some((*crate::org::tiqian::core::built_in_layout_profiles::BUILT_IN_LAYOUT_PROFILES_CLREQ_HORIZONTAL).clone()), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![(obj1).clone(), (obj2).clone()]));
-                                        let annotation = WidthIndependentAnnotationCacheFns::width_independent_annotation_cache_fns_prepare_width_independent_annotation(&mut engine.lock().unwrap(), (input).clone(),
-WidthIndependentAnnotationCacheCoverageTestSupport::width_independent_annotation_cache_coverage_test_support_empty_tiers()).unwrap();
-                                        let prep = WidthIndependentAnnotationCacheFns::width_independent_annotation_cache_fns_build_paragraph_layout_prep(&mut engine.lock().unwrap(), (input).clone(), (annotation).clone(),
-WidthIndependentAnnotationCacheCoverageTestSupport::width_independent_annotation_cache_coverage_test_support_empty_tiers()).unwrap();
-                                        let _ = TracedAssertions::traced_assertions_record_rendered_not_null(if false { "null".to_string() } else { "ParagraphLayoutPrep@identity".to_string() }.as_str(), None).unwrap();
+                                        let obj1 = InlineObjectSpan::new(TextRange::new(1u32, 2u32).unwrap(), 20.0f64, 12.0f64, 4.0f64, Some(InlineObjectBoundaryAdjustment::inline_object_boundary_adjustment_fixed().unwrap()), Some(InlineObjectBoundaryAdjustment::new(Some(uniform1), Some(InlineObjectPreferredStretch::new(InlineObjectPreferredStretchKind::PunctuationTrailing, 10.0f64, 15.0f64).unwrap()), Some(2.0f64), Some(1.0f64), Some(prevent1)).unwrap())).unwrap();
+                                        let obj2 = InlineObjectSpan::new(TextRange::new(2u32, 3u32).unwrap(), 20.0f64, 12.0f64, 4.0f64, Some(InlineObjectBoundaryAdjustment::new(Some(uniform2), Some(InlineObjectPreferredStretch::new(InlineObjectPreferredStretchKind::PunctuationTrailing, 10.0f64, 20.0f64).unwrap()), Some(0.0), Some(0.0f64), Some(prevent2)).unwrap()), Some(InlineObjectBoundaryAdjustment::inline_object_boundary_adjustment_fixed().unwrap())).unwrap();
+                                        let input = LayoutInput::new(TiqianTextContent::new(text.as_ustr(), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![])), Some(TextStyle::new(Some(vec![]), Some(16.0), Some(UString::from("zh-Hans")), Some(400), Some(false), Some(0.0), Some(InlineAttachment::None))), Some(ParagraphStyle::new(Some(LastLineAlignment::Start), Some(WritingMode::HorizontalTb), None, None, Some(Ic::zero()), Some(MeasureAdaptiveFirstLineIndent::new(Some(14.0), Some(1.0), Some(2.0))), Some(LineLengthGrid::new(Some(true), None)), Some(RubyLineHeightMode::PerLine), Some(ParagraphStyle::PARAGRAPH_STYLE_DEFAULT_INLINE_OBJECT_MINIMUM_CLEARANCE_EM), Some(ParagraphStyle::PARAGRAPH_STYLE_DEFAULT_EMPHASIS_DOT_GAP_EM))), LayoutConstraints::new(300 as f64 as f64, Some(f64::INFINITY), Some(2147483647)).unwrap(), Some((*crate::org::tiqian::core::built_in_layout_profiles::BUILT_IN_LAYOUT_PROFILES_CLREQ_HORIZONTAL).clone()), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![(obj1).clone(), (obj2).clone()]));
+                                        let annotation = WidthIndependentAnnotationCacheFns::width_independent_annotation_cache_fns_prepare_width_independent_annotation(&mut engine.lock().unwrap(), (input).clone(), WidthIndependentAnnotationCacheCoverageTestSupport::width_independent_annotation_cache_coverage_test_support_empty_tiers()).unwrap();
+                                        let prep = WidthIndependentAnnotationCacheFns::width_independent_annotation_cache_fns_build_paragraph_layout_prep(&mut engine.lock().unwrap(), (input).clone(), (annotation).clone(), WidthIndependentAnnotationCacheCoverageTestSupport::width_independent_annotation_cache_coverage_test_support_empty_tiers()).unwrap();
+                                        let _ = TracedAssertions::traced_assertions_record_rendered_not_null(if false { UString::from("null") } else { UString::from("ParagraphLayoutPrep@identity") }.as_ustr(), None).unwrap();
                                     }
                                 }
                             }
@@ -2303,35 +2382,21 @@ WidthIndependentAnnotationCacheCoverageTestSupport::width_independent_annotation
                                 {
                                     {
                                         let prevent2 = true;
-                                        let obj1 = InlineObjectSpan::new(TextRange::new(1u32, 2u32).unwrap(), 20.0f64, 12.0f64, 4.0f64, Some(InlineObjectBoundaryAdjustment::inline_object_boundary_adjustment_fixed().unwrap()),
-Some(InlineObjectBoundaryAdjustment::new(Some(uniform1), Some(InlineObjectPreferredStretch::new(InlineObjectPreferredStretchKind::PunctuationTrailing, 10.0f64, 15.0f64).unwrap()), Some(2.0f64), Some(1.0f64), Some(prevent1)).unwrap())).unwrap();
-                                        let obj2 = InlineObjectSpan::new(TextRange::new(2u32, 3u32).unwrap(), 20.0f64, 12.0f64, 4.0f64, Some(InlineObjectBoundaryAdjustment::new(Some(uniform2),
-Some(InlineObjectPreferredStretch::new(InlineObjectPreferredStretchKind::PunctuationTrailing, 10.0f64, 20.0f64).unwrap()), Some(0.0), Some(0.0f64), Some(prevent2)).unwrap()), Some(InlineObjectBoundaryAdjustment::inline_object_boundary_adjustment_fixed().unwrap())).unwrap();
-                                        let input = LayoutInput::new(TiqianTextContent::new(text.as_str(), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![])), Some(TextStyle::new(Some(vec![]), Some(16.0), Some("zh-Hans".to_string()), Some(400), Some(false), Some(0.0),
-Some(InlineAttachment::None))), Some(ParagraphStyle::new(Some(LastLineAlignment::Start), Some(WritingMode::HorizontalTb), None, None, Some(Ic::zero()), Some(MeasureAdaptiveFirstLineIndent::new(Some(14.0), Some(1.0), Some(2.0))), Some(LineLengthGrid::new(Some(true), None)),
-Some(RubyLineHeightMode::PerLine), Some(ParagraphStyle::PARAGRAPH_STYLE_DEFAULT_INLINE_OBJECT_MINIMUM_CLEARANCE_EM), Some(ParagraphStyle::PARAGRAPH_STYLE_DEFAULT_EMPHASIS_DOT_GAP_EM))), LayoutConstraints::new(300 as f64 as f64, Some(f64::INFINITY), Some(2147483647)).unwrap(),
-Some((*crate::org::tiqian::core::built_in_layout_profiles::BUILT_IN_LAYOUT_PROFILES_CLREQ_HORIZONTAL).clone()), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![(obj1).clone(), (obj2).clone()]));
-                                        let annotation = WidthIndependentAnnotationCacheFns::width_independent_annotation_cache_fns_prepare_width_independent_annotation(&mut engine.lock().unwrap(), (input).clone(),
-WidthIndependentAnnotationCacheCoverageTestSupport::width_independent_annotation_cache_coverage_test_support_empty_tiers()).unwrap();
-                                        let prep = WidthIndependentAnnotationCacheFns::width_independent_annotation_cache_fns_build_paragraph_layout_prep(&mut engine.lock().unwrap(), (input).clone(), (annotation).clone(),
-WidthIndependentAnnotationCacheCoverageTestSupport::width_independent_annotation_cache_coverage_test_support_empty_tiers()).unwrap();
-                                        let _ = TracedAssertions::traced_assertions_record_rendered_not_null(if false { "null".to_string() } else { "ParagraphLayoutPrep@identity".to_string() }.as_str(), None).unwrap();
+                                        let obj1 = InlineObjectSpan::new(TextRange::new(1u32, 2u32).unwrap(), 20.0f64, 12.0f64, 4.0f64, Some(InlineObjectBoundaryAdjustment::inline_object_boundary_adjustment_fixed().unwrap()), Some(InlineObjectBoundaryAdjustment::new(Some(uniform1), Some(InlineObjectPreferredStretch::new(InlineObjectPreferredStretchKind::PunctuationTrailing, 10.0f64, 15.0f64).unwrap()), Some(2.0f64), Some(1.0f64), Some(prevent1)).unwrap())).unwrap();
+                                        let obj2 = InlineObjectSpan::new(TextRange::new(2u32, 3u32).unwrap(), 20.0f64, 12.0f64, 4.0f64, Some(InlineObjectBoundaryAdjustment::new(Some(uniform2), Some(InlineObjectPreferredStretch::new(InlineObjectPreferredStretchKind::PunctuationTrailing, 10.0f64, 20.0f64).unwrap()), Some(0.0), Some(0.0f64), Some(prevent2)).unwrap()), Some(InlineObjectBoundaryAdjustment::inline_object_boundary_adjustment_fixed().unwrap())).unwrap();
+                                        let input = LayoutInput::new(TiqianTextContent::new(text.as_ustr(), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![])), Some(TextStyle::new(Some(vec![]), Some(16.0), Some(UString::from("zh-Hans")), Some(400), Some(false), Some(0.0), Some(InlineAttachment::None))), Some(ParagraphStyle::new(Some(LastLineAlignment::Start), Some(WritingMode::HorizontalTb), None, None, Some(Ic::zero()), Some(MeasureAdaptiveFirstLineIndent::new(Some(14.0), Some(1.0), Some(2.0))), Some(LineLengthGrid::new(Some(true), None)), Some(RubyLineHeightMode::PerLine), Some(ParagraphStyle::PARAGRAPH_STYLE_DEFAULT_INLINE_OBJECT_MINIMUM_CLEARANCE_EM), Some(ParagraphStyle::PARAGRAPH_STYLE_DEFAULT_EMPHASIS_DOT_GAP_EM))), LayoutConstraints::new(300 as f64 as f64, Some(f64::INFINITY), Some(2147483647)).unwrap(), Some((*crate::org::tiqian::core::built_in_layout_profiles::BUILT_IN_LAYOUT_PROFILES_CLREQ_HORIZONTAL).clone()), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![(obj1).clone(), (obj2).clone()]));
+                                        let annotation = WidthIndependentAnnotationCacheFns::width_independent_annotation_cache_fns_prepare_width_independent_annotation(&mut engine.lock().unwrap(), (input).clone(), WidthIndependentAnnotationCacheCoverageTestSupport::width_independent_annotation_cache_coverage_test_support_empty_tiers()).unwrap();
+                                        let prep = WidthIndependentAnnotationCacheFns::width_independent_annotation_cache_fns_build_paragraph_layout_prep(&mut engine.lock().unwrap(), (input).clone(), (annotation).clone(), WidthIndependentAnnotationCacheCoverageTestSupport::width_independent_annotation_cache_coverage_test_support_empty_tiers()).unwrap();
+                                        let _ = TracedAssertions::traced_assertions_record_rendered_not_null(if false { UString::from("null") } else { UString::from("ParagraphLayoutPrep@identity") }.as_ustr(), None).unwrap();
                                     }
                                     {
                                         let prevent2 = false;
-                                        let obj1 = InlineObjectSpan::new(TextRange::new(1u32, 2u32).unwrap(), 20.0f64, 12.0f64, 4.0f64, Some(InlineObjectBoundaryAdjustment::inline_object_boundary_adjustment_fixed().unwrap()),
-Some(InlineObjectBoundaryAdjustment::new(Some(uniform1), Some(InlineObjectPreferredStretch::new(InlineObjectPreferredStretchKind::PunctuationTrailing, 10.0f64, 15.0f64).unwrap()), Some(2.0f64), Some(1.0f64), Some(prevent1)).unwrap())).unwrap();
-                                        let obj2 = InlineObjectSpan::new(TextRange::new(2u32, 3u32).unwrap(), 20.0f64, 12.0f64, 4.0f64, Some(InlineObjectBoundaryAdjustment::new(Some(uniform2),
-Some(InlineObjectPreferredStretch::new(InlineObjectPreferredStretchKind::PunctuationTrailing, 10.0f64, 20.0f64).unwrap()), Some(0.0), Some(0.0f64), Some(prevent2)).unwrap()), Some(InlineObjectBoundaryAdjustment::inline_object_boundary_adjustment_fixed().unwrap())).unwrap();
-                                        let input = LayoutInput::new(TiqianTextContent::new(text.as_str(), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![])), Some(TextStyle::new(Some(vec![]), Some(16.0), Some("zh-Hans".to_string()), Some(400), Some(false), Some(0.0),
-Some(InlineAttachment::None))), Some(ParagraphStyle::new(Some(LastLineAlignment::Start), Some(WritingMode::HorizontalTb), None, None, Some(Ic::zero()), Some(MeasureAdaptiveFirstLineIndent::new(Some(14.0), Some(1.0), Some(2.0))), Some(LineLengthGrid::new(Some(true), None)),
-Some(RubyLineHeightMode::PerLine), Some(ParagraphStyle::PARAGRAPH_STYLE_DEFAULT_INLINE_OBJECT_MINIMUM_CLEARANCE_EM), Some(ParagraphStyle::PARAGRAPH_STYLE_DEFAULT_EMPHASIS_DOT_GAP_EM))), LayoutConstraints::new(300 as f64 as f64, Some(f64::INFINITY), Some(2147483647)).unwrap(),
-Some((*crate::org::tiqian::core::built_in_layout_profiles::BUILT_IN_LAYOUT_PROFILES_CLREQ_HORIZONTAL).clone()), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![(obj1).clone(), (obj2).clone()]));
-                                        let annotation = WidthIndependentAnnotationCacheFns::width_independent_annotation_cache_fns_prepare_width_independent_annotation(&mut engine.lock().unwrap(), (input).clone(),
-WidthIndependentAnnotationCacheCoverageTestSupport::width_independent_annotation_cache_coverage_test_support_empty_tiers()).unwrap();
-                                        let prep = WidthIndependentAnnotationCacheFns::width_independent_annotation_cache_fns_build_paragraph_layout_prep(&mut engine.lock().unwrap(), (input).clone(), (annotation).clone(),
-WidthIndependentAnnotationCacheCoverageTestSupport::width_independent_annotation_cache_coverage_test_support_empty_tiers()).unwrap();
-                                        let _ = TracedAssertions::traced_assertions_record_rendered_not_null(if false { "null".to_string() } else { "ParagraphLayoutPrep@identity".to_string() }.as_str(), None).unwrap();
+                                        let obj1 = InlineObjectSpan::new(TextRange::new(1u32, 2u32).unwrap(), 20.0f64, 12.0f64, 4.0f64, Some(InlineObjectBoundaryAdjustment::inline_object_boundary_adjustment_fixed().unwrap()), Some(InlineObjectBoundaryAdjustment::new(Some(uniform1), Some(InlineObjectPreferredStretch::new(InlineObjectPreferredStretchKind::PunctuationTrailing, 10.0f64, 15.0f64).unwrap()), Some(2.0f64), Some(1.0f64), Some(prevent1)).unwrap())).unwrap();
+                                        let obj2 = InlineObjectSpan::new(TextRange::new(2u32, 3u32).unwrap(), 20.0f64, 12.0f64, 4.0f64, Some(InlineObjectBoundaryAdjustment::new(Some(uniform2), Some(InlineObjectPreferredStretch::new(InlineObjectPreferredStretchKind::PunctuationTrailing, 10.0f64, 20.0f64).unwrap()), Some(0.0), Some(0.0f64), Some(prevent2)).unwrap()), Some(InlineObjectBoundaryAdjustment::inline_object_boundary_adjustment_fixed().unwrap())).unwrap();
+                                        let input = LayoutInput::new(TiqianTextContent::new(text.as_ustr(), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![])), Some(TextStyle::new(Some(vec![]), Some(16.0), Some(UString::from("zh-Hans")), Some(400), Some(false), Some(0.0), Some(InlineAttachment::None))), Some(ParagraphStyle::new(Some(LastLineAlignment::Start), Some(WritingMode::HorizontalTb), None, None, Some(Ic::zero()), Some(MeasureAdaptiveFirstLineIndent::new(Some(14.0), Some(1.0), Some(2.0))), Some(LineLengthGrid::new(Some(true), None)), Some(RubyLineHeightMode::PerLine), Some(ParagraphStyle::PARAGRAPH_STYLE_DEFAULT_INLINE_OBJECT_MINIMUM_CLEARANCE_EM), Some(ParagraphStyle::PARAGRAPH_STYLE_DEFAULT_EMPHASIS_DOT_GAP_EM))), LayoutConstraints::new(300 as f64 as f64, Some(f64::INFINITY), Some(2147483647)).unwrap(), Some((*crate::org::tiqian::core::built_in_layout_profiles::BUILT_IN_LAYOUT_PROFILES_CLREQ_HORIZONTAL).clone()), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![(obj1).clone(), (obj2).clone()]));
+                                        let annotation = WidthIndependentAnnotationCacheFns::width_independent_annotation_cache_fns_prepare_width_independent_annotation(&mut engine.lock().unwrap(), (input).clone(), WidthIndependentAnnotationCacheCoverageTestSupport::width_independent_annotation_cache_coverage_test_support_empty_tiers()).unwrap();
+                                        let prep = WidthIndependentAnnotationCacheFns::width_independent_annotation_cache_fns_build_paragraph_layout_prep(&mut engine.lock().unwrap(), (input).clone(), (annotation).clone(), WidthIndependentAnnotationCacheCoverageTestSupport::width_independent_annotation_cache_coverage_test_support_empty_tiers()).unwrap();
+                                        let _ = TracedAssertions::traced_assertions_record_rendered_not_null(if false { UString::from("null") } else { UString::from("ParagraphLayoutPrep@identity") }.as_ustr(), None).unwrap();
                                     }
                                 }
                             }
@@ -2345,35 +2410,21 @@ WidthIndependentAnnotationCacheCoverageTestSupport::width_independent_annotation
                                 {
                                     {
                                         let prevent2 = true;
-                                        let obj1 = InlineObjectSpan::new(TextRange::new(1u32, 2u32).unwrap(), 20.0f64, 12.0f64, 4.0f64, Some(InlineObjectBoundaryAdjustment::inline_object_boundary_adjustment_fixed().unwrap()),
-Some(InlineObjectBoundaryAdjustment::new(Some(uniform1), Some(InlineObjectPreferredStretch::new(InlineObjectPreferredStretchKind::PunctuationTrailing, 10.0f64, 15.0f64).unwrap()), Some(2.0f64), Some(1.0f64), Some(prevent1)).unwrap())).unwrap();
-                                        let obj2 = InlineObjectSpan::new(TextRange::new(2u32, 3u32).unwrap(), 20.0f64, 12.0f64, 4.0f64, Some(InlineObjectBoundaryAdjustment::new(Some(uniform2),
-Some(InlineObjectPreferredStretch::new(InlineObjectPreferredStretchKind::PunctuationTrailing, 10.0f64, 20.0f64).unwrap()), Some(0.0), Some(0.0f64), Some(prevent2)).unwrap()), Some(InlineObjectBoundaryAdjustment::inline_object_boundary_adjustment_fixed().unwrap())).unwrap();
-                                        let input = LayoutInput::new(TiqianTextContent::new(text.as_str(), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![])), Some(TextStyle::new(Some(vec![]), Some(16.0), Some("zh-Hans".to_string()), Some(400), Some(false), Some(0.0),
-Some(InlineAttachment::None))), Some(ParagraphStyle::new(Some(LastLineAlignment::Start), Some(WritingMode::HorizontalTb), None, None, Some(Ic::zero()), Some(MeasureAdaptiveFirstLineIndent::new(Some(14.0), Some(1.0), Some(2.0))), Some(LineLengthGrid::new(Some(true), None)),
-Some(RubyLineHeightMode::PerLine), Some(ParagraphStyle::PARAGRAPH_STYLE_DEFAULT_INLINE_OBJECT_MINIMUM_CLEARANCE_EM), Some(ParagraphStyle::PARAGRAPH_STYLE_DEFAULT_EMPHASIS_DOT_GAP_EM))), LayoutConstraints::new(300 as f64 as f64, Some(f64::INFINITY), Some(2147483647)).unwrap(),
-Some((*crate::org::tiqian::core::built_in_layout_profiles::BUILT_IN_LAYOUT_PROFILES_CLREQ_HORIZONTAL).clone()), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![(obj1).clone(), (obj2).clone()]));
-                                        let annotation = WidthIndependentAnnotationCacheFns::width_independent_annotation_cache_fns_prepare_width_independent_annotation(&mut engine.lock().unwrap(), (input).clone(),
-WidthIndependentAnnotationCacheCoverageTestSupport::width_independent_annotation_cache_coverage_test_support_empty_tiers()).unwrap();
-                                        let prep = WidthIndependentAnnotationCacheFns::width_independent_annotation_cache_fns_build_paragraph_layout_prep(&mut engine.lock().unwrap(), (input).clone(), (annotation).clone(),
-WidthIndependentAnnotationCacheCoverageTestSupport::width_independent_annotation_cache_coverage_test_support_empty_tiers()).unwrap();
-                                        let _ = TracedAssertions::traced_assertions_record_rendered_not_null(if false { "null".to_string() } else { "ParagraphLayoutPrep@identity".to_string() }.as_str(), None).unwrap();
+                                        let obj1 = InlineObjectSpan::new(TextRange::new(1u32, 2u32).unwrap(), 20.0f64, 12.0f64, 4.0f64, Some(InlineObjectBoundaryAdjustment::inline_object_boundary_adjustment_fixed().unwrap()), Some(InlineObjectBoundaryAdjustment::new(Some(uniform1), Some(InlineObjectPreferredStretch::new(InlineObjectPreferredStretchKind::PunctuationTrailing, 10.0f64, 15.0f64).unwrap()), Some(2.0f64), Some(1.0f64), Some(prevent1)).unwrap())).unwrap();
+                                        let obj2 = InlineObjectSpan::new(TextRange::new(2u32, 3u32).unwrap(), 20.0f64, 12.0f64, 4.0f64, Some(InlineObjectBoundaryAdjustment::new(Some(uniform2), Some(InlineObjectPreferredStretch::new(InlineObjectPreferredStretchKind::PunctuationTrailing, 10.0f64, 20.0f64).unwrap()), Some(0.0), Some(0.0f64), Some(prevent2)).unwrap()), Some(InlineObjectBoundaryAdjustment::inline_object_boundary_adjustment_fixed().unwrap())).unwrap();
+                                        let input = LayoutInput::new(TiqianTextContent::new(text.as_ustr(), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![])), Some(TextStyle::new(Some(vec![]), Some(16.0), Some(UString::from("zh-Hans")), Some(400), Some(false), Some(0.0), Some(InlineAttachment::None))), Some(ParagraphStyle::new(Some(LastLineAlignment::Start), Some(WritingMode::HorizontalTb), None, None, Some(Ic::zero()), Some(MeasureAdaptiveFirstLineIndent::new(Some(14.0), Some(1.0), Some(2.0))), Some(LineLengthGrid::new(Some(true), None)), Some(RubyLineHeightMode::PerLine), Some(ParagraphStyle::PARAGRAPH_STYLE_DEFAULT_INLINE_OBJECT_MINIMUM_CLEARANCE_EM), Some(ParagraphStyle::PARAGRAPH_STYLE_DEFAULT_EMPHASIS_DOT_GAP_EM))), LayoutConstraints::new(300 as f64 as f64, Some(f64::INFINITY), Some(2147483647)).unwrap(), Some((*crate::org::tiqian::core::built_in_layout_profiles::BUILT_IN_LAYOUT_PROFILES_CLREQ_HORIZONTAL).clone()), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![(obj1).clone(), (obj2).clone()]));
+                                        let annotation = WidthIndependentAnnotationCacheFns::width_independent_annotation_cache_fns_prepare_width_independent_annotation(&mut engine.lock().unwrap(), (input).clone(), WidthIndependentAnnotationCacheCoverageTestSupport::width_independent_annotation_cache_coverage_test_support_empty_tiers()).unwrap();
+                                        let prep = WidthIndependentAnnotationCacheFns::width_independent_annotation_cache_fns_build_paragraph_layout_prep(&mut engine.lock().unwrap(), (input).clone(), (annotation).clone(), WidthIndependentAnnotationCacheCoverageTestSupport::width_independent_annotation_cache_coverage_test_support_empty_tiers()).unwrap();
+                                        let _ = TracedAssertions::traced_assertions_record_rendered_not_null(if false { UString::from("null") } else { UString::from("ParagraphLayoutPrep@identity") }.as_ustr(), None).unwrap();
                                     }
                                     {
                                         let prevent2 = false;
-                                        let obj1 = InlineObjectSpan::new(TextRange::new(1u32, 2u32).unwrap(), 20.0f64, 12.0f64, 4.0f64, Some(InlineObjectBoundaryAdjustment::inline_object_boundary_adjustment_fixed().unwrap()),
-Some(InlineObjectBoundaryAdjustment::new(Some(uniform1), Some(InlineObjectPreferredStretch::new(InlineObjectPreferredStretchKind::PunctuationTrailing, 10.0f64, 15.0f64).unwrap()), Some(2.0f64), Some(1.0f64), Some(prevent1)).unwrap())).unwrap();
-                                        let obj2 = InlineObjectSpan::new(TextRange::new(2u32, 3u32).unwrap(), 20.0f64, 12.0f64, 4.0f64, Some(InlineObjectBoundaryAdjustment::new(Some(uniform2),
-Some(InlineObjectPreferredStretch::new(InlineObjectPreferredStretchKind::PunctuationTrailing, 10.0f64, 20.0f64).unwrap()), Some(0.0), Some(0.0f64), Some(prevent2)).unwrap()), Some(InlineObjectBoundaryAdjustment::inline_object_boundary_adjustment_fixed().unwrap())).unwrap();
-                                        let input = LayoutInput::new(TiqianTextContent::new(text.as_str(), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![])), Some(TextStyle::new(Some(vec![]), Some(16.0), Some("zh-Hans".to_string()), Some(400), Some(false), Some(0.0),
-Some(InlineAttachment::None))), Some(ParagraphStyle::new(Some(LastLineAlignment::Start), Some(WritingMode::HorizontalTb), None, None, Some(Ic::zero()), Some(MeasureAdaptiveFirstLineIndent::new(Some(14.0), Some(1.0), Some(2.0))), Some(LineLengthGrid::new(Some(true), None)),
-Some(RubyLineHeightMode::PerLine), Some(ParagraphStyle::PARAGRAPH_STYLE_DEFAULT_INLINE_OBJECT_MINIMUM_CLEARANCE_EM), Some(ParagraphStyle::PARAGRAPH_STYLE_DEFAULT_EMPHASIS_DOT_GAP_EM))), LayoutConstraints::new(300 as f64 as f64, Some(f64::INFINITY), Some(2147483647)).unwrap(),
-Some((*crate::org::tiqian::core::built_in_layout_profiles::BUILT_IN_LAYOUT_PROFILES_CLREQ_HORIZONTAL).clone()), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![(obj1).clone(), (obj2).clone()]));
-                                        let annotation = WidthIndependentAnnotationCacheFns::width_independent_annotation_cache_fns_prepare_width_independent_annotation(&mut engine.lock().unwrap(), (input).clone(),
-WidthIndependentAnnotationCacheCoverageTestSupport::width_independent_annotation_cache_coverage_test_support_empty_tiers()).unwrap();
-                                        let prep = WidthIndependentAnnotationCacheFns::width_independent_annotation_cache_fns_build_paragraph_layout_prep(&mut engine.lock().unwrap(), (input).clone(), (annotation).clone(),
-WidthIndependentAnnotationCacheCoverageTestSupport::width_independent_annotation_cache_coverage_test_support_empty_tiers()).unwrap();
-                                        let _ = TracedAssertions::traced_assertions_record_rendered_not_null(if false { "null".to_string() } else { "ParagraphLayoutPrep@identity".to_string() }.as_str(), None).unwrap();
+                                        let obj1 = InlineObjectSpan::new(TextRange::new(1u32, 2u32).unwrap(), 20.0f64, 12.0f64, 4.0f64, Some(InlineObjectBoundaryAdjustment::inline_object_boundary_adjustment_fixed().unwrap()), Some(InlineObjectBoundaryAdjustment::new(Some(uniform1), Some(InlineObjectPreferredStretch::new(InlineObjectPreferredStretchKind::PunctuationTrailing, 10.0f64, 15.0f64).unwrap()), Some(2.0f64), Some(1.0f64), Some(prevent1)).unwrap())).unwrap();
+                                        let obj2 = InlineObjectSpan::new(TextRange::new(2u32, 3u32).unwrap(), 20.0f64, 12.0f64, 4.0f64, Some(InlineObjectBoundaryAdjustment::new(Some(uniform2), Some(InlineObjectPreferredStretch::new(InlineObjectPreferredStretchKind::PunctuationTrailing, 10.0f64, 20.0f64).unwrap()), Some(0.0), Some(0.0f64), Some(prevent2)).unwrap()), Some(InlineObjectBoundaryAdjustment::inline_object_boundary_adjustment_fixed().unwrap())).unwrap();
+                                        let input = LayoutInput::new(TiqianTextContent::new(text.as_ustr(), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![])), Some(TextStyle::new(Some(vec![]), Some(16.0), Some(UString::from("zh-Hans")), Some(400), Some(false), Some(0.0), Some(InlineAttachment::None))), Some(ParagraphStyle::new(Some(LastLineAlignment::Start), Some(WritingMode::HorizontalTb), None, None, Some(Ic::zero()), Some(MeasureAdaptiveFirstLineIndent::new(Some(14.0), Some(1.0), Some(2.0))), Some(LineLengthGrid::new(Some(true), None)), Some(RubyLineHeightMode::PerLine), Some(ParagraphStyle::PARAGRAPH_STYLE_DEFAULT_INLINE_OBJECT_MINIMUM_CLEARANCE_EM), Some(ParagraphStyle::PARAGRAPH_STYLE_DEFAULT_EMPHASIS_DOT_GAP_EM))), LayoutConstraints::new(300 as f64 as f64, Some(f64::INFINITY), Some(2147483647)).unwrap(), Some((*crate::org::tiqian::core::built_in_layout_profiles::BUILT_IN_LAYOUT_PROFILES_CLREQ_HORIZONTAL).clone()), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![(obj1).clone(), (obj2).clone()]));
+                                        let annotation = WidthIndependentAnnotationCacheFns::width_independent_annotation_cache_fns_prepare_width_independent_annotation(&mut engine.lock().unwrap(), (input).clone(), WidthIndependentAnnotationCacheCoverageTestSupport::width_independent_annotation_cache_coverage_test_support_empty_tiers()).unwrap();
+                                        let prep = WidthIndependentAnnotationCacheFns::width_independent_annotation_cache_fns_build_paragraph_layout_prep(&mut engine.lock().unwrap(), (input).clone(), (annotation).clone(), WidthIndependentAnnotationCacheCoverageTestSupport::width_independent_annotation_cache_coverage_test_support_empty_tiers()).unwrap();
+                                        let _ = TracedAssertions::traced_assertions_record_rendered_not_null(if false { UString::from("null") } else { UString::from("ParagraphLayoutPrep@identity") }.as_ustr(), None).unwrap();
                                     }
                                 }
                             }
@@ -2382,35 +2433,21 @@ WidthIndependentAnnotationCacheCoverageTestSupport::width_independent_annotation
                                 {
                                     {
                                         let prevent2 = true;
-                                        let obj1 = InlineObjectSpan::new(TextRange::new(1u32, 2u32).unwrap(), 20.0f64, 12.0f64, 4.0f64, Some(InlineObjectBoundaryAdjustment::inline_object_boundary_adjustment_fixed().unwrap()),
-Some(InlineObjectBoundaryAdjustment::new(Some(uniform1), Some(InlineObjectPreferredStretch::new(InlineObjectPreferredStretchKind::PunctuationTrailing, 10.0f64, 15.0f64).unwrap()), Some(2.0f64), Some(1.0f64), Some(prevent1)).unwrap())).unwrap();
-                                        let obj2 = InlineObjectSpan::new(TextRange::new(2u32, 3u32).unwrap(), 20.0f64, 12.0f64, 4.0f64, Some(InlineObjectBoundaryAdjustment::new(Some(uniform2),
-Some(InlineObjectPreferredStretch::new(InlineObjectPreferredStretchKind::PunctuationTrailing, 10.0f64, 20.0f64).unwrap()), Some(0.0), Some(0.0f64), Some(prevent2)).unwrap()), Some(InlineObjectBoundaryAdjustment::inline_object_boundary_adjustment_fixed().unwrap())).unwrap();
-                                        let input = LayoutInput::new(TiqianTextContent::new(text.as_str(), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![])), Some(TextStyle::new(Some(vec![]), Some(16.0), Some("zh-Hans".to_string()), Some(400), Some(false), Some(0.0),
-Some(InlineAttachment::None))), Some(ParagraphStyle::new(Some(LastLineAlignment::Start), Some(WritingMode::HorizontalTb), None, None, Some(Ic::zero()), Some(MeasureAdaptiveFirstLineIndent::new(Some(14.0), Some(1.0), Some(2.0))), Some(LineLengthGrid::new(Some(true), None)),
-Some(RubyLineHeightMode::PerLine), Some(ParagraphStyle::PARAGRAPH_STYLE_DEFAULT_INLINE_OBJECT_MINIMUM_CLEARANCE_EM), Some(ParagraphStyle::PARAGRAPH_STYLE_DEFAULT_EMPHASIS_DOT_GAP_EM))), LayoutConstraints::new(300 as f64 as f64, Some(f64::INFINITY), Some(2147483647)).unwrap(),
-Some((*crate::org::tiqian::core::built_in_layout_profiles::BUILT_IN_LAYOUT_PROFILES_CLREQ_HORIZONTAL).clone()), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![(obj1).clone(), (obj2).clone()]));
-                                        let annotation = WidthIndependentAnnotationCacheFns::width_independent_annotation_cache_fns_prepare_width_independent_annotation(&mut engine.lock().unwrap(), (input).clone(),
-WidthIndependentAnnotationCacheCoverageTestSupport::width_independent_annotation_cache_coverage_test_support_empty_tiers()).unwrap();
-                                        let prep = WidthIndependentAnnotationCacheFns::width_independent_annotation_cache_fns_build_paragraph_layout_prep(&mut engine.lock().unwrap(), (input).clone(), (annotation).clone(),
-WidthIndependentAnnotationCacheCoverageTestSupport::width_independent_annotation_cache_coverage_test_support_empty_tiers()).unwrap();
-                                        let _ = TracedAssertions::traced_assertions_record_rendered_not_null(if false { "null".to_string() } else { "ParagraphLayoutPrep@identity".to_string() }.as_str(), None).unwrap();
+                                        let obj1 = InlineObjectSpan::new(TextRange::new(1u32, 2u32).unwrap(), 20.0f64, 12.0f64, 4.0f64, Some(InlineObjectBoundaryAdjustment::inline_object_boundary_adjustment_fixed().unwrap()), Some(InlineObjectBoundaryAdjustment::new(Some(uniform1), Some(InlineObjectPreferredStretch::new(InlineObjectPreferredStretchKind::PunctuationTrailing, 10.0f64, 15.0f64).unwrap()), Some(2.0f64), Some(1.0f64), Some(prevent1)).unwrap())).unwrap();
+                                        let obj2 = InlineObjectSpan::new(TextRange::new(2u32, 3u32).unwrap(), 20.0f64, 12.0f64, 4.0f64, Some(InlineObjectBoundaryAdjustment::new(Some(uniform2), Some(InlineObjectPreferredStretch::new(InlineObjectPreferredStretchKind::PunctuationTrailing, 10.0f64, 20.0f64).unwrap()), Some(0.0), Some(0.0f64), Some(prevent2)).unwrap()), Some(InlineObjectBoundaryAdjustment::inline_object_boundary_adjustment_fixed().unwrap())).unwrap();
+                                        let input = LayoutInput::new(TiqianTextContent::new(text.as_ustr(), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![])), Some(TextStyle::new(Some(vec![]), Some(16.0), Some(UString::from("zh-Hans")), Some(400), Some(false), Some(0.0), Some(InlineAttachment::None))), Some(ParagraphStyle::new(Some(LastLineAlignment::Start), Some(WritingMode::HorizontalTb), None, None, Some(Ic::zero()), Some(MeasureAdaptiveFirstLineIndent::new(Some(14.0), Some(1.0), Some(2.0))), Some(LineLengthGrid::new(Some(true), None)), Some(RubyLineHeightMode::PerLine), Some(ParagraphStyle::PARAGRAPH_STYLE_DEFAULT_INLINE_OBJECT_MINIMUM_CLEARANCE_EM), Some(ParagraphStyle::PARAGRAPH_STYLE_DEFAULT_EMPHASIS_DOT_GAP_EM))), LayoutConstraints::new(300 as f64 as f64, Some(f64::INFINITY), Some(2147483647)).unwrap(), Some((*crate::org::tiqian::core::built_in_layout_profiles::BUILT_IN_LAYOUT_PROFILES_CLREQ_HORIZONTAL).clone()), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![(obj1).clone(), (obj2).clone()]));
+                                        let annotation = WidthIndependentAnnotationCacheFns::width_independent_annotation_cache_fns_prepare_width_independent_annotation(&mut engine.lock().unwrap(), (input).clone(), WidthIndependentAnnotationCacheCoverageTestSupport::width_independent_annotation_cache_coverage_test_support_empty_tiers()).unwrap();
+                                        let prep = WidthIndependentAnnotationCacheFns::width_independent_annotation_cache_fns_build_paragraph_layout_prep(&mut engine.lock().unwrap(), (input).clone(), (annotation).clone(), WidthIndependentAnnotationCacheCoverageTestSupport::width_independent_annotation_cache_coverage_test_support_empty_tiers()).unwrap();
+                                        let _ = TracedAssertions::traced_assertions_record_rendered_not_null(if false { UString::from("null") } else { UString::from("ParagraphLayoutPrep@identity") }.as_ustr(), None).unwrap();
                                     }
                                     {
                                         let prevent2 = false;
-                                        let obj1 = InlineObjectSpan::new(TextRange::new(1u32, 2u32).unwrap(), 20.0f64, 12.0f64, 4.0f64, Some(InlineObjectBoundaryAdjustment::inline_object_boundary_adjustment_fixed().unwrap()),
-Some(InlineObjectBoundaryAdjustment::new(Some(uniform1), Some(InlineObjectPreferredStretch::new(InlineObjectPreferredStretchKind::PunctuationTrailing, 10.0f64, 15.0f64).unwrap()), Some(2.0f64), Some(1.0f64), Some(prevent1)).unwrap())).unwrap();
-                                        let obj2 = InlineObjectSpan::new(TextRange::new(2u32, 3u32).unwrap(), 20.0f64, 12.0f64, 4.0f64, Some(InlineObjectBoundaryAdjustment::new(Some(uniform2),
-Some(InlineObjectPreferredStretch::new(InlineObjectPreferredStretchKind::PunctuationTrailing, 10.0f64, 20.0f64).unwrap()), Some(0.0), Some(0.0f64), Some(prevent2)).unwrap()), Some(InlineObjectBoundaryAdjustment::inline_object_boundary_adjustment_fixed().unwrap())).unwrap();
-                                        let input = LayoutInput::new(TiqianTextContent::new(text.as_str(), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![])), Some(TextStyle::new(Some(vec![]), Some(16.0), Some("zh-Hans".to_string()), Some(400), Some(false), Some(0.0),
-Some(InlineAttachment::None))), Some(ParagraphStyle::new(Some(LastLineAlignment::Start), Some(WritingMode::HorizontalTb), None, None, Some(Ic::zero()), Some(MeasureAdaptiveFirstLineIndent::new(Some(14.0), Some(1.0), Some(2.0))), Some(LineLengthGrid::new(Some(true), None)),
-Some(RubyLineHeightMode::PerLine), Some(ParagraphStyle::PARAGRAPH_STYLE_DEFAULT_INLINE_OBJECT_MINIMUM_CLEARANCE_EM), Some(ParagraphStyle::PARAGRAPH_STYLE_DEFAULT_EMPHASIS_DOT_GAP_EM))), LayoutConstraints::new(300 as f64 as f64, Some(f64::INFINITY), Some(2147483647)).unwrap(),
-Some((*crate::org::tiqian::core::built_in_layout_profiles::BUILT_IN_LAYOUT_PROFILES_CLREQ_HORIZONTAL).clone()), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![(obj1).clone(), (obj2).clone()]));
-                                        let annotation = WidthIndependentAnnotationCacheFns::width_independent_annotation_cache_fns_prepare_width_independent_annotation(&mut engine.lock().unwrap(), (input).clone(),
-WidthIndependentAnnotationCacheCoverageTestSupport::width_independent_annotation_cache_coverage_test_support_empty_tiers()).unwrap();
-                                        let prep = WidthIndependentAnnotationCacheFns::width_independent_annotation_cache_fns_build_paragraph_layout_prep(&mut engine.lock().unwrap(), (input).clone(), (annotation).clone(),
-WidthIndependentAnnotationCacheCoverageTestSupport::width_independent_annotation_cache_coverage_test_support_empty_tiers()).unwrap();
-                                        let _ = TracedAssertions::traced_assertions_record_rendered_not_null(if false { "null".to_string() } else { "ParagraphLayoutPrep@identity".to_string() }.as_str(), None).unwrap();
+                                        let obj1 = InlineObjectSpan::new(TextRange::new(1u32, 2u32).unwrap(), 20.0f64, 12.0f64, 4.0f64, Some(InlineObjectBoundaryAdjustment::inline_object_boundary_adjustment_fixed().unwrap()), Some(InlineObjectBoundaryAdjustment::new(Some(uniform1), Some(InlineObjectPreferredStretch::new(InlineObjectPreferredStretchKind::PunctuationTrailing, 10.0f64, 15.0f64).unwrap()), Some(2.0f64), Some(1.0f64), Some(prevent1)).unwrap())).unwrap();
+                                        let obj2 = InlineObjectSpan::new(TextRange::new(2u32, 3u32).unwrap(), 20.0f64, 12.0f64, 4.0f64, Some(InlineObjectBoundaryAdjustment::new(Some(uniform2), Some(InlineObjectPreferredStretch::new(InlineObjectPreferredStretchKind::PunctuationTrailing, 10.0f64, 20.0f64).unwrap()), Some(0.0), Some(0.0f64), Some(prevent2)).unwrap()), Some(InlineObjectBoundaryAdjustment::inline_object_boundary_adjustment_fixed().unwrap())).unwrap();
+                                        let input = LayoutInput::new(TiqianTextContent::new(text.as_ustr(), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![])), Some(TextStyle::new(Some(vec![]), Some(16.0), Some(UString::from("zh-Hans")), Some(400), Some(false), Some(0.0), Some(InlineAttachment::None))), Some(ParagraphStyle::new(Some(LastLineAlignment::Start), Some(WritingMode::HorizontalTb), None, None, Some(Ic::zero()), Some(MeasureAdaptiveFirstLineIndent::new(Some(14.0), Some(1.0), Some(2.0))), Some(LineLengthGrid::new(Some(true), None)), Some(RubyLineHeightMode::PerLine), Some(ParagraphStyle::PARAGRAPH_STYLE_DEFAULT_INLINE_OBJECT_MINIMUM_CLEARANCE_EM), Some(ParagraphStyle::PARAGRAPH_STYLE_DEFAULT_EMPHASIS_DOT_GAP_EM))), LayoutConstraints::new(300 as f64 as f64, Some(f64::INFINITY), Some(2147483647)).unwrap(), Some((*crate::org::tiqian::core::built_in_layout_profiles::BUILT_IN_LAYOUT_PROFILES_CLREQ_HORIZONTAL).clone()), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![(obj1).clone(), (obj2).clone()]));
+                                        let annotation = WidthIndependentAnnotationCacheFns::width_independent_annotation_cache_fns_prepare_width_independent_annotation(&mut engine.lock().unwrap(), (input).clone(), WidthIndependentAnnotationCacheCoverageTestSupport::width_independent_annotation_cache_coverage_test_support_empty_tiers()).unwrap();
+                                        let prep = WidthIndependentAnnotationCacheFns::width_independent_annotation_cache_fns_build_paragraph_layout_prep(&mut engine.lock().unwrap(), (input).clone(), (annotation).clone(), WidthIndependentAnnotationCacheCoverageTestSupport::width_independent_annotation_cache_coverage_test_support_empty_tiers()).unwrap();
+                                        let _ = TracedAssertions::traced_assertions_record_rendered_not_null(if false { UString::from("null") } else { UString::from("ParagraphLayoutPrep@identity") }.as_ustr(), None).unwrap();
                                     }
                                 }
                             }
@@ -2419,79 +2456,60 @@ WidthIndependentAnnotationCacheCoverageTestSupport::width_independent_annotation
                 }
             }
         }
-        let obj1 = InlineObjectSpan::new(TextRange::new(1u32, 2u32).unwrap(), 20.0f64, 12.0f64, 4.0f64, Some(InlineObjectBoundaryAdjustment::inline_object_boundary_adjustment_fixed().unwrap()), Some(InlineObjectBoundaryAdjustment::new(Some(false),
-Some(InlineObjectPreferredStretch::new(InlineObjectPreferredStretchKind::PunctuationTrailing, 10.0f64, 15.0f64).unwrap()), Some(0.0), Some(0.0f64), Some(false)).unwrap())).unwrap();
-        let conflicting_obj2 = InlineObjectSpan::new(TextRange::new(2u32, 3u32).unwrap(), 20.0f64, 12.0f64, 4.0f64, Some(InlineObjectBoundaryAdjustment::new(Some(false), Some(InlineObjectPreferredStretch::new(InlineObjectPreferredStretchKind::Relation, 10.0f64, 20.0f64).unwrap()),
-Some(0.0), Some(0.0f64), Some(false)).unwrap()), Some(InlineObjectBoundaryAdjustment::inline_object_boundary_adjustment_fixed().unwrap())).unwrap();
-        let conflict_input = LayoutInput::new(TiqianTextContent::new(text.as_str(), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![])), Some(TextStyle::new(Some(vec![]), Some(16.0), Some("zh-Hans".to_string()), Some(400), Some(false), Some(0.0),
-Some(InlineAttachment::None))), Some(ParagraphStyle::new(Some(LastLineAlignment::Start), Some(WritingMode::HorizontalTb), None, None, Some(Ic::zero()), Some(MeasureAdaptiveFirstLineIndent::new(Some(14.0), Some(1.0), Some(2.0))), Some(LineLengthGrid::new(Some(true), None)),
-Some(RubyLineHeightMode::PerLine), Some(ParagraphStyle::PARAGRAPH_STYLE_DEFAULT_INLINE_OBJECT_MINIMUM_CLEARANCE_EM), Some(ParagraphStyle::PARAGRAPH_STYLE_DEFAULT_EMPHASIS_DOT_GAP_EM))), LayoutConstraints::new(300 as f64 as f64, Some(f64::INFINITY), Some(2147483647)).unwrap(),
-Some((*crate::org::tiqian::core::built_in_layout_profiles::BUILT_IN_LAYOUT_PROFILES_CLREQ_HORIZONTAL).clone()), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![(obj1).clone(), (conflicting_obj2).clone()]));
-        let conflict_annotation = WidthIndependentAnnotationCacheFns::width_independent_annotation_cache_fns_prepare_width_independent_annotation(&mut engine.lock().unwrap(), (conflict_input).clone(),
-WidthIndependentAnnotationCacheCoverageTestSupport::width_independent_annotation_cache_coverage_test_support_empty_tiers()).unwrap();
-        let conflict_error = TracedAssertions::traced_assertions_assert_fails_with(None.clone(), { let engine = (engine).clone(); let conflict_input = (conflict_input).clone(); let conflict_annotation = (conflict_annotation).clone(); Arc::new({ let engine = Arc::clone(&engine);
-move || {
-        WidthIndependentAnnotationCacheFns::width_independent_annotation_cache_fns_build_paragraph_layout_prep(&mut engine.lock().unwrap(), (conflict_input).clone(), (conflict_annotation).clone(),
-WidthIndependentAnnotationCacheCoverageTestSupport::width_independent_annotation_cache_coverage_test_support_empty_tiers()).map_err(|e| IllegalStateException::new(&format!("{:?}", e)))?;
+        let obj1 = InlineObjectSpan::new(TextRange::new(1u32, 2u32).unwrap(), 20.0f64, 12.0f64, 4.0f64, Some(InlineObjectBoundaryAdjustment::inline_object_boundary_adjustment_fixed().unwrap()), Some(InlineObjectBoundaryAdjustment::new(Some(false), Some(InlineObjectPreferredStretch::new(InlineObjectPreferredStretchKind::PunctuationTrailing, 10.0f64, 15.0f64).unwrap()), Some(0.0), Some(0.0f64), Some(false)).unwrap())).unwrap();
+        let conflicting_obj2 = InlineObjectSpan::new(TextRange::new(2u32, 3u32).unwrap(), 20.0f64, 12.0f64, 4.0f64, Some(InlineObjectBoundaryAdjustment::new(Some(false), Some(InlineObjectPreferredStretch::new(InlineObjectPreferredStretchKind::Relation, 10.0f64, 20.0f64).unwrap()), Some(0.0), Some(0.0f64), Some(false)).unwrap()), Some(InlineObjectBoundaryAdjustment::inline_object_boundary_adjustment_fixed().unwrap())).unwrap();
+        let conflict_input = LayoutInput::new(TiqianTextContent::new(text.as_ustr(), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![])), Some(TextStyle::new(Some(vec![]), Some(16.0), Some(UString::from("zh-Hans")), Some(400), Some(false), Some(0.0), Some(InlineAttachment::None))), Some(ParagraphStyle::new(Some(LastLineAlignment::Start), Some(WritingMode::HorizontalTb), None, None, Some(Ic::zero()), Some(MeasureAdaptiveFirstLineIndent::new(Some(14.0), Some(1.0), Some(2.0))), Some(LineLengthGrid::new(Some(true), None)), Some(RubyLineHeightMode::PerLine), Some(ParagraphStyle::PARAGRAPH_STYLE_DEFAULT_INLINE_OBJECT_MINIMUM_CLEARANCE_EM), Some(ParagraphStyle::PARAGRAPH_STYLE_DEFAULT_EMPHASIS_DOT_GAP_EM))), LayoutConstraints::new(300 as f64 as f64, Some(f64::INFINITY), Some(2147483647)).unwrap(), Some((*crate::org::tiqian::core::built_in_layout_profiles::BUILT_IN_LAYOUT_PROFILES_CLREQ_HORIZONTAL).clone()), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![(obj1).clone(), (conflicting_obj2).clone()]));
+        let conflict_annotation = WidthIndependentAnnotationCacheFns::width_independent_annotation_cache_fns_prepare_width_independent_annotation(&mut engine.lock().unwrap(), (conflict_input).clone(), WidthIndependentAnnotationCacheCoverageTestSupport::width_independent_annotation_cache_coverage_test_support_empty_tiers()).unwrap();
+        let conflict_error = TracedAssertions::traced_assertions_assert_fails_with(None.clone(), { let engine = (engine).clone(); let conflict_input = (conflict_input).clone(); let conflict_annotation = (conflict_annotation).clone(); Arc::new({ let engine = Arc::clone(&engine); move || {
+        WidthIndependentAnnotationCacheFns::width_independent_annotation_cache_fns_build_paragraph_layout_prep(&mut engine.lock().unwrap(), (conflict_input).clone(), (conflict_annotation).clone(), WidthIndependentAnnotationCacheCoverageTestSupport::width_independent_annotation_cache_coverage_test_support_empty_tiers()).map_err(|e| IllegalStateException::new(&format!("{}", e)))?;
         Ok(())
 } }) }).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_true((u32::from_ne_bytes((u_string::find_from(&format!("{}", conflict_error), "Conflicting inline-object stretch classes", 0)).to_ne_bytes())) <= 2147483647, None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_true((u32::from_ne_bytes(((u_string::find_from(&UString::from(format!("{}", format!("{}", conflict_error)).as_str()), UString::from("Conflicting inline-object stretch classes").as_ustr(), 0)) as u32).to_ne_bytes())) <= 2147483647, None).unwrap();
     });
 }
 
 #[test]
 fn verbatim_ranges_and_auto_space_decisions() {
     testlib::run("org.tiqian.layout.WidthIndependentAnnotationCacheCoverageTest.verbatimRangesAndAutoSpaceDecisions", "org.tiqian.layout.WidthIndependentAnnotationCacheCoverageTest.verbatimRangesAndAutoSpaceDecisions", || {
-        let mut t = TestTraceRecorder::new("WidthIndependentAnnotationCacheCoverageTest");
-        t.section(&"verbatimRangesAndAutoSpaceDecisions");
+        let mut t = TestTraceRecorder::new(&(UStr::new(&[87,105,100,116,104,73,110,100,101,112,101,110,100,101,110,116,65,110,110,111,116,97,116,105,111,110,67,97,99,104,101,67,111,118,101,114,97,103,101,84,101,115,116])));
+        t.section(UStr::new(&[118,101,114,98,97,116,105,109,82,97,110,103,101,115,65,110,100,65,117,116,111,83,112,97,99,101,68,101,99,105,115,105,111,110,115]));
         let mut engine = WidthIndependentAnnotationCacheCoverageTestSupport::width_independent_annotation_cache_coverage_test_support_engine(None, None).unwrap();
-        let text = "中文 English 混排测试 12345".to_string();
-        let input = LayoutInput::new(TiqianTextContent::new(text.as_str(), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![(TextRange::new(0u32, 15u32).unwrap()).clone()])), Some(TextStyle::new(Some(vec![]), Some(16.0), Some("zh-Hans".to_string()), Some(400), Some(false),
-Some(0.0), Some(InlineAttachment::None))), Some(ParagraphStyle::new(Some(LastLineAlignment::Start), Some(WritingMode::HorizontalTb), None, None, Some(Ic::zero()), Some(MeasureAdaptiveFirstLineIndent::new(Some(14.0), Some(1.0), Some(2.0))), Some(LineLengthGrid::new(Some(true),
-None)), Some(RubyLineHeightMode::PerLine), Some(ParagraphStyle::PARAGRAPH_STYLE_DEFAULT_INLINE_OBJECT_MINIMUM_CLEARANCE_EM), Some(ParagraphStyle::PARAGRAPH_STYLE_DEFAULT_EMPHASIS_DOT_GAP_EM))), LayoutConstraints::new(300 as f64 as f64, Some(f64::INFINITY),
-Some(2147483647)).unwrap(), Some((*crate::org::tiqian::core::built_in_layout_profiles::BUILT_IN_LAYOUT_PROFILES_CLREQ_HORIZONTAL).clone()), Some(vec![]), Some(vec![]), Some(vec![
+        let text = UString::from("中文 English 混排测试 12345").to_ustring();
+        let input = LayoutInput::new(TiqianTextContent::new(text.as_ustr(), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![(TextRange::new(0u32, 15u32).unwrap()).clone()])), Some(TextStyle::new(Some(vec![]), Some(16.0), Some(UString::from("zh-Hans")), Some(400), Some(false), Some(0.0), Some(InlineAttachment::None))), Some(ParagraphStyle::new(Some(LastLineAlignment::Start), Some(WritingMode::HorizontalTb), None, None, Some(Ic::zero()), Some(MeasureAdaptiveFirstLineIndent::new(Some(14.0), Some(1.0), Some(2.0))), Some(LineLengthGrid::new(Some(true), None)), Some(RubyLineHeightMode::PerLine), Some(ParagraphStyle::PARAGRAPH_STYLE_DEFAULT_INLINE_OBJECT_MINIMUM_CLEARANCE_EM), Some(ParagraphStyle::PARAGRAPH_STYLE_DEFAULT_EMPHASIS_DOT_GAP_EM))), LayoutConstraints::new(300 as f64 as f64, Some(f64::INFINITY), Some(2147483647)).unwrap(), Some((*crate::org::tiqian::core::built_in_layout_profiles::BUILT_IN_LAYOUT_PROFILES_CLREQ_HORIZONTAL).clone()), Some(vec![]), Some(vec![]), Some(vec![
     (InlineBoxSpan::new(TextRange::new(2u32, 9u32).unwrap(), Some(0.0), Some(0.0), Some(InlineBoxOuterSpacing::Narrow))).clone(),
 ]), Some(vec![]));
-        let annotation = WidthIndependentAnnotationCacheFns::width_independent_annotation_cache_fns_prepare_width_independent_annotation(&mut engine, (input).clone(),
-WidthIndependentAnnotationCacheCoverageTestSupport::width_independent_annotation_cache_coverage_test_support_empty_tiers()).unwrap();
-        let prep = WidthIndependentAnnotationCacheFns::width_independent_annotation_cache_fns_build_paragraph_layout_prep(&mut engine, (input).clone(), (annotation).clone(),
-WidthIndependentAnnotationCacheCoverageTestSupport::width_independent_annotation_cache_coverage_test_support_empty_tiers()).unwrap();
-        let _ = TracedAssertions::traced_assertions_record_rendered_not_null(if false { "null".to_string() } else { "ParagraphLayoutPrep@identity".to_string() }.as_str(), None).unwrap();
+        let annotation = WidthIndependentAnnotationCacheFns::width_independent_annotation_cache_fns_prepare_width_independent_annotation(&mut engine, (input).clone(), WidthIndependentAnnotationCacheCoverageTestSupport::width_independent_annotation_cache_coverage_test_support_empty_tiers()).unwrap();
+        let prep = WidthIndependentAnnotationCacheFns::width_independent_annotation_cache_fns_build_paragraph_layout_prep(&mut engine, (input).clone(), (annotation).clone(), WidthIndependentAnnotationCacheCoverageTestSupport::width_independent_annotation_cache_coverage_test_support_empty_tiers()).unwrap();
+        let _ = TracedAssertions::traced_assertions_record_rendered_not_null(if false { UString::from("null") } else { UString::from("ParagraphLayoutPrep@identity") }.as_ustr(), None).unwrap();
     });
 }
 
 #[test]
 fn ruby_spread_accumulation_and_edges() {
     testlib::run("org.tiqian.layout.WidthIndependentAnnotationCacheCoverageTest.rubySpreadAccumulationAndEdges", "org.tiqian.layout.WidthIndependentAnnotationCacheCoverageTest.rubySpreadAccumulationAndEdges", || {
-        let mut t = TestTraceRecorder::new("WidthIndependentAnnotationCacheCoverageTest");
-        t.section(&"rubySpreadAccumulationAndEdges");
+        let mut t = TestTraceRecorder::new(&(UStr::new(&[87,105,100,116,104,73,110,100,101,112,101,110,100,101,110,116,65,110,110,111,116,97,116,105,111,110,67,97,99,104,101,67,111,118,101,114,97,103,101,84,101,115,116])));
+        t.section(UStr::new(&[114,117,98,121,83,112,114,101,97,100,65,99,99,117,109,117,108,97,116,105,111,110,65,110,100,69,100,103,101,115]));
         let mut engine = WidthIndependentAnnotationCacheCoverageTestSupport::width_independent_annotation_cache_coverage_test_support_engine(None, None).unwrap();
-        let text = "中文测试段落".to_string();
-        let ruby0 = RubySpan::new(TextRange::new(0u32, 2u32).unwrap(), "zhōngwén", Some(vec![]), RubyKind::Pinyin, None);
-        let ruby1 = RubySpan::new(TextRange::new(2u32, 4u32).unwrap(), "cèshìchángdà", Some(vec![]), RubyKind::Pinyin, None);
-        let ruby2 = RubySpan::new(TextRange::new(4u32, 6u32).unwrap(), "duànluòchángdà", Some(vec![]), RubyKind::Pinyin, None);
-        let ruby_invalid = RubySpan::new(TextRange::new(99u32, 100u32).unwrap(), "invalid", Some(vec![]), RubyKind::Pinyin, None);
-        let input = LayoutInput::new(TiqianTextContent::new(text.as_str(), Some(vec![]), Some(vec![1, 2, 3, 4, 5]), Some(vec![]), Some(vec![])), Some(TextStyle::new(Some(vec![]), Some(16.0), Some("zh-Hans".to_string()), Some(400), Some(false), Some(0.0),
-Some(InlineAttachment::None))), Some(ParagraphStyle::new(Some(LastLineAlignment::Start), Some(WritingMode::HorizontalTb), None, None, Some(Ic::zero()), Some(MeasureAdaptiveFirstLineIndent::new(Some(14.0), Some(1.0), Some(2.0))), Some(LineLengthGrid::new(Some(true), None)),
-Some(RubyLineHeightMode::PerLine), Some(ParagraphStyle::PARAGRAPH_STYLE_DEFAULT_INLINE_OBJECT_MINIMUM_CLEARANCE_EM), Some(ParagraphStyle::PARAGRAPH_STYLE_DEFAULT_EMPHASIS_DOT_GAP_EM))), LayoutConstraints::new(300 as f64 as f64, Some(f64::INFINITY), Some(2147483647)).unwrap(),
-Some((*crate::org::tiqian::core::built_in_layout_profiles::BUILT_IN_LAYOUT_PROFILES_CLREQ_HORIZONTAL).clone()), Some(vec![]), Some(vec![(ruby0).clone(), (ruby1).clone(), (ruby2).clone(), (ruby_invalid).clone()]), Some(vec![]), Some(vec![]));
-        let annotation = WidthIndependentAnnotationCacheFns::width_independent_annotation_cache_fns_prepare_width_independent_annotation(&mut engine, (input).clone(),
-WidthIndependentAnnotationCacheCoverageTestSupport::width_independent_annotation_cache_coverage_test_support_empty_tiers()).unwrap();
-        let prep = WidthIndependentAnnotationCacheFns::width_independent_annotation_cache_fns_build_paragraph_layout_prep(&mut engine, (input).clone(), (annotation).clone(),
-WidthIndependentAnnotationCacheCoverageTestSupport::width_independent_annotation_cache_coverage_test_support_empty_tiers()).unwrap();
-        let _ = TracedAssertions::traced_assertions_record_rendered_not_null(if false { "null".to_string() } else { "ParagraphLayoutPrep@identity".to_string() }.as_str(), None).unwrap();
+        let text = UString::from("中文测试段落").to_ustring();
+        let ruby0 = RubySpan::new(TextRange::new(0u32, 2u32).unwrap(), &(UStr::new(&[122,104,333,110,103,119,233,110])), Some(vec![]), RubyKind::Pinyin, None);
+        let ruby1 = RubySpan::new(TextRange::new(2u32, 4u32).unwrap(), &(UStr::new(&[99,232,115,104,236,99,104,225,110,103,100,224])), Some(vec![]), RubyKind::Pinyin, None);
+        let ruby2 = RubySpan::new(TextRange::new(4u32, 6u32).unwrap(), &(UStr::new(&[100,117,224,110,108,117,242,99,104,225,110,103,100,224])), Some(vec![]), RubyKind::Pinyin, None);
+        let ruby_invalid = RubySpan::new(TextRange::new(99u32, 100u32).unwrap(), &(UStr::new(&[105,110,118,97,108,105,100])), Some(vec![]), RubyKind::Pinyin, None);
+        let input = LayoutInput::new(TiqianTextContent::new(text.as_ustr(), Some(vec![]), Some(vec![1, 2, 3, 4, 5]), Some(vec![]), Some(vec![])), Some(TextStyle::new(Some(vec![]), Some(16.0), Some(UString::from("zh-Hans")), Some(400), Some(false), Some(0.0), Some(InlineAttachment::None))), Some(ParagraphStyle::new(Some(LastLineAlignment::Start), Some(WritingMode::HorizontalTb), None, None, Some(Ic::zero()), Some(MeasureAdaptiveFirstLineIndent::new(Some(14.0), Some(1.0), Some(2.0))), Some(LineLengthGrid::new(Some(true), None)), Some(RubyLineHeightMode::PerLine), Some(ParagraphStyle::PARAGRAPH_STYLE_DEFAULT_INLINE_OBJECT_MINIMUM_CLEARANCE_EM), Some(ParagraphStyle::PARAGRAPH_STYLE_DEFAULT_EMPHASIS_DOT_GAP_EM))), LayoutConstraints::new(300 as f64 as f64, Some(f64::INFINITY), Some(2147483647)).unwrap(), Some((*crate::org::tiqian::core::built_in_layout_profiles::BUILT_IN_LAYOUT_PROFILES_CLREQ_HORIZONTAL).clone()), Some(vec![]), Some(vec![(ruby0).clone(), (ruby1).clone(), (ruby2).clone(), (ruby_invalid).clone()]), Some(vec![]), Some(vec![]));
+        let annotation = WidthIndependentAnnotationCacheFns::width_independent_annotation_cache_fns_prepare_width_independent_annotation(&mut engine, (input).clone(), WidthIndependentAnnotationCacheCoverageTestSupport::width_independent_annotation_cache_coverage_test_support_empty_tiers()).unwrap();
+        let prep = WidthIndependentAnnotationCacheFns::width_independent_annotation_cache_fns_build_paragraph_layout_prep(&mut engine, (input).clone(), (annotation).clone(), WidthIndependentAnnotationCacheCoverageTestSupport::width_independent_annotation_cache_coverage_test_support_empty_tiers()).unwrap();
+        let _ = TracedAssertions::traced_assertions_record_rendered_not_null(if false { UString::from("null") } else { UString::from("ParagraphLayoutPrep@identity") }.as_ustr(), None).unwrap();
     });
 }
 
 #[test]
 fn shrink_opportunities_cover_all_punctuation_classes_and_spaces() {
     testlib::run("org.tiqian.layout.WidthIndependentAnnotationCacheCoverageTest.shrinkOpportunitiesCoverAllPunctuationClassesAndSpaces", "org.tiqian.layout.WidthIndependentAnnotationCacheCoverageTest.shrinkOpportunitiesCoverAllPunctuationClassesAndSpaces", || {
-        let mut t = TestTraceRecorder::new("WidthIndependentAnnotationCacheCoverageTest");
-        t.section(&"shrinkOpportunitiesCoverAllPunctuationClassesAndSpaces");
-        let mut engine = WidthIndependentAnnotationCacheCoverageTestSupport::width_independent_annotation_cache_coverage_test_support_engine(Some(WidthIndependentAnnotationCacheCoverageTestSupport::width_independent_annotation_cache_coverage_test_support_non_gb_resolver()),
-None).unwrap();
-        let text = "「引用」·中点‧间隔•中点，逗号。句号！问号？．点号、顿号以及 English words 间距".to_string();
-        let spans = WidthIndependentAnnotationCacheCoverageTestSupport::width_independent_annotation_cache_coverage_test_support_text_span_list(text.as_str(), 16.0f64).unwrap();
+        let mut t = TestTraceRecorder::new(&(UStr::new(&[87,105,100,116,104,73,110,100,101,112,101,110,100,101,110,116,65,110,110,111,116,97,116,105,111,110,67,97,99,104,101,67,111,118,101,114,97,103,101,84,101,115,116])));
+        t.section(UStr::new(&[115,104,114,105,110,107,79,112,112,111,114,116,117,110,105,116,105,101,115,67,111,118,101,114,65,108,108,80,117,110,99,116,117,97,116,105,111,110,67,108,97,115,115,101,115,65,110,100,83,112,97,99,101,115]));
+        let mut engine = WidthIndependentAnnotationCacheCoverageTestSupport::width_independent_annotation_cache_coverage_test_support_engine(Some(WidthIndependentAnnotationCacheCoverageTestSupport::width_independent_annotation_cache_coverage_test_support_non_gb_resolver()), None).unwrap();
+        let text = UString::from("「引用」·中点‧间隔•中点，逗号。句号！问号？．点号、顿号以及 English words 间距").to_ustring();
+        let spans = WidthIndependentAnnotationCacheCoverageTestSupport::width_independent_annotation_cache_coverage_test_support_text_span_list(text.as_ustr(), 16.0f64).unwrap();
         {
             {
                 let allow_inline_stop = true;
@@ -2499,44 +2517,32 @@ None).unwrap();
                     {
                         let allow_sino_western = true;
                         let mut sbs: Vec<u32> = vec![];
-                        for i in 0..u_string::count(text.as_str()) {
+                        for i in 0..u_string::count(text.as_ustr()) {
                             sbs.push(i);
                         }
-                        let input = LayoutInput::new(TiqianTextContent::new(text.as_str(), Some((spans).clone()), Some((sbs).clone()), Some(vec![]), Some(vec![])), Some(TextStyle::new(Some(vec![]), Some(16.0), Some("zh-Hans".to_string()), Some(400), Some(false), Some(0.0),
-Some(InlineAttachment::None))), Some(ParagraphStyle::new(Some(LastLineAlignment::Start), Some(WritingMode::HorizontalTb), None, None, Some(Ic::zero()), Some(MeasureAdaptiveFirstLineIndent::new(Some(14.0), Some(1.0), Some(2.0))), Some(LineLengthGrid::new(Some(true), None)),
-Some(RubyLineHeightMode::PerLine), Some(ParagraphStyle::PARAGRAPH_STYLE_DEFAULT_INLINE_OBJECT_MINIMUM_CLEARANCE_EM), Some(ParagraphStyle::PARAGRAPH_STYLE_DEFAULT_EMPHASIS_DOT_GAP_EM))), LayoutConstraints::new(300 as f64 as f64, Some(f64::INFINITY), Some(2147483647)).unwrap(),
-Some((*crate::org::tiqian::core::built_in_layout_profiles::BUILT_IN_LAYOUT_PROFILES_CLREQ_HORIZONTAL).clone()), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![
-    (InlineObjectSpan::new(TextRange::new(0u32, 1u32).unwrap(), 20.0f64, 12.0f64, 4.0f64, Some(InlineObjectBoundaryAdjustment::inline_object_boundary_adjustment_fixed().unwrap()), Some(InlineObjectBoundaryAdjustment::new(Some(false), None, Some(5.0f64), Some(0.0f64),
-Some(false)).unwrap())).unwrap()).clone(),
+                        let input = LayoutInput::new(TiqianTextContent::new(text.as_ustr(), Some((spans).clone()), Some((sbs).clone()), Some(vec![]), Some(vec![])), Some(TextStyle::new(Some(vec![]), Some(16.0), Some(UString::from("zh-Hans")), Some(400), Some(false), Some(0.0), Some(InlineAttachment::None))), Some(ParagraphStyle::new(Some(LastLineAlignment::Start), Some(WritingMode::HorizontalTb), None, None, Some(Ic::zero()), Some(MeasureAdaptiveFirstLineIndent::new(Some(14.0), Some(1.0), Some(2.0))), Some(LineLengthGrid::new(Some(true), None)), Some(RubyLineHeightMode::PerLine), Some(ParagraphStyle::PARAGRAPH_STYLE_DEFAULT_INLINE_OBJECT_MINIMUM_CLEARANCE_EM), Some(ParagraphStyle::PARAGRAPH_STYLE_DEFAULT_EMPHASIS_DOT_GAP_EM))), LayoutConstraints::new(300 as f64 as f64, Some(f64::INFINITY), Some(2147483647)).unwrap(), Some((*crate::org::tiqian::core::built_in_layout_profiles::BUILT_IN_LAYOUT_PROFILES_CLREQ_HORIZONTAL).clone()), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![
+    (InlineObjectSpan::new(TextRange::new(0u32, 1u32).unwrap(), 20.0f64, 12.0f64, 4.0f64, Some(InlineObjectBoundaryAdjustment::inline_object_boundary_adjustment_fixed().unwrap()), Some(InlineObjectBoundaryAdjustment::new(Some(false), None, Some(5.0f64), Some(0.0f64), Some(false)).unwrap())).unwrap()).clone(),
 ]));
-                        let annotation = WidthIndependentAnnotationCacheFns::width_independent_annotation_cache_fns_prepare_width_independent_annotation(&mut engine, (input).clone(),
-WidthIndependentAnnotationCacheCoverageTestSupport::width_independent_annotation_cache_coverage_test_support_empty_tiers()).unwrap();
+                        let annotation = WidthIndependentAnnotationCacheFns::width_independent_annotation_cache_fns_prepare_width_independent_annotation(&mut engine, (input).clone(), WidthIndependentAnnotationCacheCoverageTestSupport::width_independent_annotation_cache_coverage_test_support_empty_tiers()).unwrap();
                         let modified_annotation = WidthIndependentAnnotationCacheCoverageTestSupport::width_independent_annotation_cache_coverage_test_support_with_adjusted_profile((annotation).clone(), allow_inline_stop, allow_sino_western);
-                        let prep = WidthIndependentAnnotationCacheFns::width_independent_annotation_cache_fns_build_paragraph_layout_prep(&mut engine, (input).clone(), (modified_annotation).clone(),
-WidthIndependentAnnotationCacheCoverageTestSupport::width_independent_annotation_cache_coverage_test_support_empty_tiers()).unwrap();
-                        let _ = TracedAssertions::traced_assertions_record_rendered_not_null(if false { "null".to_string() } else { "ParagraphLayoutPrep@identity".to_string() }.as_str(), None).unwrap();
-                        let _ = TracedAssertions::traced_assertions_assert_true((i32::from_ne_bytes((u32::try_from((prep.shrink_opportunities.len()) & 0xFFFF_FFFF).unwrap_or(0)).to_ne_bytes())) > (0), None).unwrap();
+                        let prep = WidthIndependentAnnotationCacheFns::width_independent_annotation_cache_fns_build_paragraph_layout_prep(&mut engine, (input).clone(), (modified_annotation).clone(), WidthIndependentAnnotationCacheCoverageTestSupport::width_independent_annotation_cache_coverage_test_support_empty_tiers()).unwrap();
+                        let _ = TracedAssertions::traced_assertions_record_rendered_not_null(if false { UString::from("null") } else { UString::from("ParagraphLayoutPrep@identity") }.as_ustr(), None).unwrap();
+                        let _ = TracedAssertions::traced_assertions_assert_true((i32::from_ne_bytes(((u32::try_from((prep.shrink_opportunities.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) > (0), None).unwrap();
                     }
                     {
                         let allow_sino_western = false;
                         let mut sbs: Vec<u32> = vec![];
-                        for i in 0..u_string::count(text.as_str()) {
+                        for i in 0..u_string::count(text.as_ustr()) {
                             sbs.push(i);
                         }
-                        let input = LayoutInput::new(TiqianTextContent::new(text.as_str(), Some((spans).clone()), Some((sbs).clone()), Some(vec![]), Some(vec![])), Some(TextStyle::new(Some(vec![]), Some(16.0), Some("zh-Hans".to_string()), Some(400), Some(false), Some(0.0),
-Some(InlineAttachment::None))), Some(ParagraphStyle::new(Some(LastLineAlignment::Start), Some(WritingMode::HorizontalTb), None, None, Some(Ic::zero()), Some(MeasureAdaptiveFirstLineIndent::new(Some(14.0), Some(1.0), Some(2.0))), Some(LineLengthGrid::new(Some(true), None)),
-Some(RubyLineHeightMode::PerLine), Some(ParagraphStyle::PARAGRAPH_STYLE_DEFAULT_INLINE_OBJECT_MINIMUM_CLEARANCE_EM), Some(ParagraphStyle::PARAGRAPH_STYLE_DEFAULT_EMPHASIS_DOT_GAP_EM))), LayoutConstraints::new(300 as f64 as f64, Some(f64::INFINITY), Some(2147483647)).unwrap(),
-Some((*crate::org::tiqian::core::built_in_layout_profiles::BUILT_IN_LAYOUT_PROFILES_CLREQ_HORIZONTAL).clone()), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![
-    (InlineObjectSpan::new(TextRange::new(0u32, 1u32).unwrap(), 20.0f64, 12.0f64, 4.0f64, Some(InlineObjectBoundaryAdjustment::inline_object_boundary_adjustment_fixed().unwrap()), Some(InlineObjectBoundaryAdjustment::new(Some(false), None, Some(5.0f64), Some(0.0f64),
-Some(false)).unwrap())).unwrap()).clone(),
+                        let input = LayoutInput::new(TiqianTextContent::new(text.as_ustr(), Some((spans).clone()), Some((sbs).clone()), Some(vec![]), Some(vec![])), Some(TextStyle::new(Some(vec![]), Some(16.0), Some(UString::from("zh-Hans")), Some(400), Some(false), Some(0.0), Some(InlineAttachment::None))), Some(ParagraphStyle::new(Some(LastLineAlignment::Start), Some(WritingMode::HorizontalTb), None, None, Some(Ic::zero()), Some(MeasureAdaptiveFirstLineIndent::new(Some(14.0), Some(1.0), Some(2.0))), Some(LineLengthGrid::new(Some(true), None)), Some(RubyLineHeightMode::PerLine), Some(ParagraphStyle::PARAGRAPH_STYLE_DEFAULT_INLINE_OBJECT_MINIMUM_CLEARANCE_EM), Some(ParagraphStyle::PARAGRAPH_STYLE_DEFAULT_EMPHASIS_DOT_GAP_EM))), LayoutConstraints::new(300 as f64 as f64, Some(f64::INFINITY), Some(2147483647)).unwrap(), Some((*crate::org::tiqian::core::built_in_layout_profiles::BUILT_IN_LAYOUT_PROFILES_CLREQ_HORIZONTAL).clone()), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![
+    (InlineObjectSpan::new(TextRange::new(0u32, 1u32).unwrap(), 20.0f64, 12.0f64, 4.0f64, Some(InlineObjectBoundaryAdjustment::inline_object_boundary_adjustment_fixed().unwrap()), Some(InlineObjectBoundaryAdjustment::new(Some(false), None, Some(5.0f64), Some(0.0f64), Some(false)).unwrap())).unwrap()).clone(),
 ]));
-                        let annotation = WidthIndependentAnnotationCacheFns::width_independent_annotation_cache_fns_prepare_width_independent_annotation(&mut engine, (input).clone(),
-WidthIndependentAnnotationCacheCoverageTestSupport::width_independent_annotation_cache_coverage_test_support_empty_tiers()).unwrap();
+                        let annotation = WidthIndependentAnnotationCacheFns::width_independent_annotation_cache_fns_prepare_width_independent_annotation(&mut engine, (input).clone(), WidthIndependentAnnotationCacheCoverageTestSupport::width_independent_annotation_cache_coverage_test_support_empty_tiers()).unwrap();
                         let modified_annotation = WidthIndependentAnnotationCacheCoverageTestSupport::width_independent_annotation_cache_coverage_test_support_with_adjusted_profile((annotation).clone(), allow_inline_stop, allow_sino_western);
-                        let prep = WidthIndependentAnnotationCacheFns::width_independent_annotation_cache_fns_build_paragraph_layout_prep(&mut engine, (input).clone(), (modified_annotation).clone(),
-WidthIndependentAnnotationCacheCoverageTestSupport::width_independent_annotation_cache_coverage_test_support_empty_tiers()).unwrap();
-                        let _ = TracedAssertions::traced_assertions_record_rendered_not_null(if false { "null".to_string() } else { "ParagraphLayoutPrep@identity".to_string() }.as_str(), None).unwrap();
-                        let _ = TracedAssertions::traced_assertions_assert_true((i32::from_ne_bytes((u32::try_from((prep.shrink_opportunities.len()) & 0xFFFF_FFFF).unwrap_or(0)).to_ne_bytes())) > (0), None).unwrap();
+                        let prep = WidthIndependentAnnotationCacheFns::width_independent_annotation_cache_fns_build_paragraph_layout_prep(&mut engine, (input).clone(), (modified_annotation).clone(), WidthIndependentAnnotationCacheCoverageTestSupport::width_independent_annotation_cache_coverage_test_support_empty_tiers()).unwrap();
+                        let _ = TracedAssertions::traced_assertions_record_rendered_not_null(if false { UString::from("null") } else { UString::from("ParagraphLayoutPrep@identity") }.as_ustr(), None).unwrap();
+                        let _ = TracedAssertions::traced_assertions_assert_true((i32::from_ne_bytes(((u32::try_from((prep.shrink_opportunities.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) > (0), None).unwrap();
                     }
                 }
             }
@@ -2546,44 +2552,32 @@ WidthIndependentAnnotationCacheCoverageTestSupport::width_independent_annotation
                     {
                         let allow_sino_western = true;
                         let mut sbs: Vec<u32> = vec![];
-                        for i in 0..u_string::count(text.as_str()) {
+                        for i in 0..u_string::count(text.as_ustr()) {
                             sbs.push(i);
                         }
-                        let input = LayoutInput::new(TiqianTextContent::new(text.as_str(), Some((spans).clone()), Some((sbs).clone()), Some(vec![]), Some(vec![])), Some(TextStyle::new(Some(vec![]), Some(16.0), Some("zh-Hans".to_string()), Some(400), Some(false), Some(0.0),
-Some(InlineAttachment::None))), Some(ParagraphStyle::new(Some(LastLineAlignment::Start), Some(WritingMode::HorizontalTb), None, None, Some(Ic::zero()), Some(MeasureAdaptiveFirstLineIndent::new(Some(14.0), Some(1.0), Some(2.0))), Some(LineLengthGrid::new(Some(true), None)),
-Some(RubyLineHeightMode::PerLine), Some(ParagraphStyle::PARAGRAPH_STYLE_DEFAULT_INLINE_OBJECT_MINIMUM_CLEARANCE_EM), Some(ParagraphStyle::PARAGRAPH_STYLE_DEFAULT_EMPHASIS_DOT_GAP_EM))), LayoutConstraints::new(300 as f64 as f64, Some(f64::INFINITY), Some(2147483647)).unwrap(),
-Some((*crate::org::tiqian::core::built_in_layout_profiles::BUILT_IN_LAYOUT_PROFILES_CLREQ_HORIZONTAL).clone()), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![
-    (InlineObjectSpan::new(TextRange::new(0u32, 1u32).unwrap(), 20.0f64, 12.0f64, 4.0f64, Some(InlineObjectBoundaryAdjustment::inline_object_boundary_adjustment_fixed().unwrap()), Some(InlineObjectBoundaryAdjustment::new(Some(false), None, Some(5.0f64), Some(0.0f64),
-Some(false)).unwrap())).unwrap()).clone(),
+                        let input = LayoutInput::new(TiqianTextContent::new(text.as_ustr(), Some((spans).clone()), Some((sbs).clone()), Some(vec![]), Some(vec![])), Some(TextStyle::new(Some(vec![]), Some(16.0), Some(UString::from("zh-Hans")), Some(400), Some(false), Some(0.0), Some(InlineAttachment::None))), Some(ParagraphStyle::new(Some(LastLineAlignment::Start), Some(WritingMode::HorizontalTb), None, None, Some(Ic::zero()), Some(MeasureAdaptiveFirstLineIndent::new(Some(14.0), Some(1.0), Some(2.0))), Some(LineLengthGrid::new(Some(true), None)), Some(RubyLineHeightMode::PerLine), Some(ParagraphStyle::PARAGRAPH_STYLE_DEFAULT_INLINE_OBJECT_MINIMUM_CLEARANCE_EM), Some(ParagraphStyle::PARAGRAPH_STYLE_DEFAULT_EMPHASIS_DOT_GAP_EM))), LayoutConstraints::new(300 as f64 as f64, Some(f64::INFINITY), Some(2147483647)).unwrap(), Some((*crate::org::tiqian::core::built_in_layout_profiles::BUILT_IN_LAYOUT_PROFILES_CLREQ_HORIZONTAL).clone()), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![
+    (InlineObjectSpan::new(TextRange::new(0u32, 1u32).unwrap(), 20.0f64, 12.0f64, 4.0f64, Some(InlineObjectBoundaryAdjustment::inline_object_boundary_adjustment_fixed().unwrap()), Some(InlineObjectBoundaryAdjustment::new(Some(false), None, Some(5.0f64), Some(0.0f64), Some(false)).unwrap())).unwrap()).clone(),
 ]));
-                        let annotation = WidthIndependentAnnotationCacheFns::width_independent_annotation_cache_fns_prepare_width_independent_annotation(&mut engine, (input).clone(),
-WidthIndependentAnnotationCacheCoverageTestSupport::width_independent_annotation_cache_coverage_test_support_empty_tiers()).unwrap();
+                        let annotation = WidthIndependentAnnotationCacheFns::width_independent_annotation_cache_fns_prepare_width_independent_annotation(&mut engine, (input).clone(), WidthIndependentAnnotationCacheCoverageTestSupport::width_independent_annotation_cache_coverage_test_support_empty_tiers()).unwrap();
                         let modified_annotation = WidthIndependentAnnotationCacheCoverageTestSupport::width_independent_annotation_cache_coverage_test_support_with_adjusted_profile((annotation).clone(), allow_inline_stop, allow_sino_western);
-                        let prep = WidthIndependentAnnotationCacheFns::width_independent_annotation_cache_fns_build_paragraph_layout_prep(&mut engine, (input).clone(), (modified_annotation).clone(),
-WidthIndependentAnnotationCacheCoverageTestSupport::width_independent_annotation_cache_coverage_test_support_empty_tiers()).unwrap();
-                        let _ = TracedAssertions::traced_assertions_record_rendered_not_null(if false { "null".to_string() } else { "ParagraphLayoutPrep@identity".to_string() }.as_str(), None).unwrap();
-                        let _ = TracedAssertions::traced_assertions_assert_true((i32::from_ne_bytes((u32::try_from((prep.shrink_opportunities.len()) & 0xFFFF_FFFF).unwrap_or(0)).to_ne_bytes())) > (0), None).unwrap();
+                        let prep = WidthIndependentAnnotationCacheFns::width_independent_annotation_cache_fns_build_paragraph_layout_prep(&mut engine, (input).clone(), (modified_annotation).clone(), WidthIndependentAnnotationCacheCoverageTestSupport::width_independent_annotation_cache_coverage_test_support_empty_tiers()).unwrap();
+                        let _ = TracedAssertions::traced_assertions_record_rendered_not_null(if false { UString::from("null") } else { UString::from("ParagraphLayoutPrep@identity") }.as_ustr(), None).unwrap();
+                        let _ = TracedAssertions::traced_assertions_assert_true((i32::from_ne_bytes(((u32::try_from((prep.shrink_opportunities.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) > (0), None).unwrap();
                     }
                     {
                         let allow_sino_western = false;
                         let mut sbs: Vec<u32> = vec![];
-                        for i in 0..u_string::count(text.as_str()) {
+                        for i in 0..u_string::count(text.as_ustr()) {
                             sbs.push(i);
                         }
-                        let input = LayoutInput::new(TiqianTextContent::new(text.as_str(), Some((spans).clone()), Some((sbs).clone()), Some(vec![]), Some(vec![])), Some(TextStyle::new(Some(vec![]), Some(16.0), Some("zh-Hans".to_string()), Some(400), Some(false), Some(0.0),
-Some(InlineAttachment::None))), Some(ParagraphStyle::new(Some(LastLineAlignment::Start), Some(WritingMode::HorizontalTb), None, None, Some(Ic::zero()), Some(MeasureAdaptiveFirstLineIndent::new(Some(14.0), Some(1.0), Some(2.0))), Some(LineLengthGrid::new(Some(true), None)),
-Some(RubyLineHeightMode::PerLine), Some(ParagraphStyle::PARAGRAPH_STYLE_DEFAULT_INLINE_OBJECT_MINIMUM_CLEARANCE_EM), Some(ParagraphStyle::PARAGRAPH_STYLE_DEFAULT_EMPHASIS_DOT_GAP_EM))), LayoutConstraints::new(300 as f64 as f64, Some(f64::INFINITY), Some(2147483647)).unwrap(),
-Some((*crate::org::tiqian::core::built_in_layout_profiles::BUILT_IN_LAYOUT_PROFILES_CLREQ_HORIZONTAL).clone()), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![
-    (InlineObjectSpan::new(TextRange::new(0u32, 1u32).unwrap(), 20.0f64, 12.0f64, 4.0f64, Some(InlineObjectBoundaryAdjustment::inline_object_boundary_adjustment_fixed().unwrap()), Some(InlineObjectBoundaryAdjustment::new(Some(false), None, Some(5.0f64), Some(0.0f64),
-Some(false)).unwrap())).unwrap()).clone(),
+                        let input = LayoutInput::new(TiqianTextContent::new(text.as_ustr(), Some((spans).clone()), Some((sbs).clone()), Some(vec![]), Some(vec![])), Some(TextStyle::new(Some(vec![]), Some(16.0), Some(UString::from("zh-Hans")), Some(400), Some(false), Some(0.0), Some(InlineAttachment::None))), Some(ParagraphStyle::new(Some(LastLineAlignment::Start), Some(WritingMode::HorizontalTb), None, None, Some(Ic::zero()), Some(MeasureAdaptiveFirstLineIndent::new(Some(14.0), Some(1.0), Some(2.0))), Some(LineLengthGrid::new(Some(true), None)), Some(RubyLineHeightMode::PerLine), Some(ParagraphStyle::PARAGRAPH_STYLE_DEFAULT_INLINE_OBJECT_MINIMUM_CLEARANCE_EM), Some(ParagraphStyle::PARAGRAPH_STYLE_DEFAULT_EMPHASIS_DOT_GAP_EM))), LayoutConstraints::new(300 as f64 as f64, Some(f64::INFINITY), Some(2147483647)).unwrap(), Some((*crate::org::tiqian::core::built_in_layout_profiles::BUILT_IN_LAYOUT_PROFILES_CLREQ_HORIZONTAL).clone()), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![
+    (InlineObjectSpan::new(TextRange::new(0u32, 1u32).unwrap(), 20.0f64, 12.0f64, 4.0f64, Some(InlineObjectBoundaryAdjustment::inline_object_boundary_adjustment_fixed().unwrap()), Some(InlineObjectBoundaryAdjustment::new(Some(false), None, Some(5.0f64), Some(0.0f64), Some(false)).unwrap())).unwrap()).clone(),
 ]));
-                        let annotation = WidthIndependentAnnotationCacheFns::width_independent_annotation_cache_fns_prepare_width_independent_annotation(&mut engine, (input).clone(),
-WidthIndependentAnnotationCacheCoverageTestSupport::width_independent_annotation_cache_coverage_test_support_empty_tiers()).unwrap();
+                        let annotation = WidthIndependentAnnotationCacheFns::width_independent_annotation_cache_fns_prepare_width_independent_annotation(&mut engine, (input).clone(), WidthIndependentAnnotationCacheCoverageTestSupport::width_independent_annotation_cache_coverage_test_support_empty_tiers()).unwrap();
                         let modified_annotation = WidthIndependentAnnotationCacheCoverageTestSupport::width_independent_annotation_cache_coverage_test_support_with_adjusted_profile((annotation).clone(), allow_inline_stop, allow_sino_western);
-                        let prep = WidthIndependentAnnotationCacheFns::width_independent_annotation_cache_fns_build_paragraph_layout_prep(&mut engine, (input).clone(), (modified_annotation).clone(),
-WidthIndependentAnnotationCacheCoverageTestSupport::width_independent_annotation_cache_coverage_test_support_empty_tiers()).unwrap();
-                        let _ = TracedAssertions::traced_assertions_record_rendered_not_null(if false { "null".to_string() } else { "ParagraphLayoutPrep@identity".to_string() }.as_str(), None).unwrap();
-                        let _ = TracedAssertions::traced_assertions_assert_true((i32::from_ne_bytes((u32::try_from((prep.shrink_opportunities.len()) & 0xFFFF_FFFF).unwrap_or(0)).to_ne_bytes())) > (0), None).unwrap();
+                        let prep = WidthIndependentAnnotationCacheFns::width_independent_annotation_cache_fns_build_paragraph_layout_prep(&mut engine, (input).clone(), (modified_annotation).clone(), WidthIndependentAnnotationCacheCoverageTestSupport::width_independent_annotation_cache_coverage_test_support_empty_tiers()).unwrap();
+                        let _ = TracedAssertions::traced_assertions_record_rendered_not_null(if false { UString::from("null") } else { UString::from("ParagraphLayoutPrep@identity") }.as_ustr(), None).unwrap();
+                        let _ = TracedAssertions::traced_assertions_assert_true((i32::from_ne_bytes(((u32::try_from((prep.shrink_opportunities.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) > (0), None).unwrap();
                     }
                 }
             }
@@ -2594,12 +2588,12 @@ WidthIndependentAnnotationCacheCoverageTestSupport::width_independent_annotation
 #[test]
 fn style_at_and_emphasis_italic_at_and_dynamic_shaping_branches() {
     testlib::run("org.tiqian.layout.WidthIndependentAnnotationCacheCoverageTest.styleAtAndEmphasisItalicAtAndDynamicShapingBranches", "org.tiqian.layout.WidthIndependentAnnotationCacheCoverageTest.styleAtAndEmphasisItalicAtAndDynamicShapingBranches", || {
-        let mut t = TestTraceRecorder::new("WidthIndependentAnnotationCacheCoverageTest");
-        t.section(&"styleAtAndEmphasisItalicAtAndDynamicShapingBranches");
+        let mut t = TestTraceRecorder::new(&(UStr::new(&[87,105,100,116,104,73,110,100,101,112,101,110,100,101,110,116,65,110,110,111,116,97,116,105,111,110,67,97,99,104,101,67,111,118,101,114,97,103,101,84,101,115,116])));
+        t.section(UStr::new(&[115,116,121,108,101,65,116,65,110,100,69,109,112,104,97,115,105,115,73,116,97,108,105,99,65,116,65,110,100,68,121,110,97,109,105,99,83,104,97,112,105,110,103,66,114,97,110,99,104,101,115]));
         let mut engine = WidthIndependentAnnotationCacheCoverageTestSupport::width_independent_annotation_cache_coverage_test_support_engine(None, None).unwrap();
-        let text = "English 中文 混排 Latin 测试 样式".to_string();
+        let text = UString::from("English 中文 混排 Latin 测试 样式").to_ustring();
         let spans = vec![
-    (TextSpan::new(TextRange::new(8u32, 10u32).unwrap(), TextStyle::new(Some(vec![]), Some(24.0f64), Some("zh-Hans".to_string()), Some(400), Some(false), Some(0.0), Some(InlineAttachment::None)))).clone(),
+    (TextSpan::new(TextRange::new(8u32, 10u32).unwrap(), TextStyle::new(Some(vec![]), Some(24.0f64), Some(UString::from("zh-Hans")), Some(400), Some(false), Some(0.0), Some(InlineAttachment::None)))).clone(),
 ];
         let decorations = vec![
     (DecorationSpan::new(TextRange::new(0u32, 7u32).unwrap(), DecorationKind::Emphasis)).clone(),
@@ -2608,12 +2602,8 @@ fn style_at_and_emphasis_italic_at_and_dynamic_shaping_branches() {
         let line_break_spans = vec![
     (LineBreakSpan::new(TextRange::new(0u32, 7u32).unwrap(), LineBreakPolicy::ProgressiveTechnical)).clone(),
 ];
-        let input = LayoutInput::new(TiqianTextContent::new(text.as_str(), Some((spans).clone()), Some(vec![]), Some((line_break_spans).clone()), Some(vec![])), Some(TextStyle::new(Some(vec![]), Some(16.0), Some("zh-Hans".to_string()), Some(400), Some(false), Some(0.0),
-Some(InlineAttachment::None))), Some(ParagraphStyle::new(Some(LastLineAlignment::Start), Some(WritingMode::HorizontalTb), None, None, Some(Ic::zero()), Some(MeasureAdaptiveFirstLineIndent::new(Some(14.0), Some(1.0), Some(2.0))), Some(LineLengthGrid::new(Some(true), None)),
-Some(RubyLineHeightMode::PerLine), Some(ParagraphStyle::PARAGRAPH_STYLE_DEFAULT_INLINE_OBJECT_MINIMUM_CLEARANCE_EM), Some(ParagraphStyle::PARAGRAPH_STYLE_DEFAULT_EMPHASIS_DOT_GAP_EM))), LayoutConstraints::new(50 as f64 as f64, Some(f64::INFINITY), Some(2147483647)).unwrap(),
-Some((*crate::org::tiqian::core::built_in_layout_profiles::BUILT_IN_LAYOUT_PROFILES_CLREQ_HORIZONTAL).clone()), Some((decorations).clone()), Some(vec![]), Some(vec![]), Some(vec![]));
-        let annotation = WidthIndependentAnnotationCacheFns::width_independent_annotation_cache_fns_prepare_width_independent_annotation(&mut engine, (input).clone(),
-WidthIndependentAnnotationCacheCoverageTestSupport::width_independent_annotation_cache_coverage_test_support_empty_tiers()).unwrap();
+        let input = LayoutInput::new(TiqianTextContent::new(text.as_ustr(), Some((spans).clone()), Some(vec![]), Some((line_break_spans).clone()), Some(vec![])), Some(TextStyle::new(Some(vec![]), Some(16.0), Some(UString::from("zh-Hans")), Some(400), Some(false), Some(0.0), Some(InlineAttachment::None))), Some(ParagraphStyle::new(Some(LastLineAlignment::Start), Some(WritingMode::HorizontalTb), None, None, Some(Ic::zero()), Some(MeasureAdaptiveFirstLineIndent::new(Some(14.0), Some(1.0), Some(2.0))), Some(LineLengthGrid::new(Some(true), None)), Some(RubyLineHeightMode::PerLine), Some(ParagraphStyle::PARAGRAPH_STYLE_DEFAULT_INLINE_OBJECT_MINIMUM_CLEARANCE_EM), Some(ParagraphStyle::PARAGRAPH_STYLE_DEFAULT_EMPHASIS_DOT_GAP_EM))), LayoutConstraints::new(50 as f64 as f64, Some(f64::INFINITY), Some(2147483647)).unwrap(), Some((*crate::org::tiqian::core::built_in_layout_profiles::BUILT_IN_LAYOUT_PROFILES_CLREQ_HORIZONTAL).clone()), Some((decorations).clone()), Some(vec![]), Some(vec![]), Some(vec![]));
+        let annotation = WidthIndependentAnnotationCacheFns::width_independent_annotation_cache_fns_prepare_width_independent_annotation(&mut engine, (input).clone(), WidthIndependentAnnotationCacheCoverageTestSupport::width_independent_annotation_cache_coverage_test_support_empty_tiers()).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_equals_float(24.0f64, (annotation.font_size_at)(8), None).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_equals_float(24.0f64, (annotation.font_size_at)(9), None).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_equals_float((input.text_style).clone().font_size, (annotation.font_size_at)(4294967295u32), None).unwrap();
@@ -2624,130 +2614,103 @@ WidthIndependentAnnotationCacheCoverageTestSupport::width_independent_annotation
         let _ = TracedAssertions::traced_assertions_assert_equals_float((input.text_style).clone().font_size, (annotation.font_size_at)(100), None).unwrap();
         let rejected: SortedMapTable<TextRange, SortedSetTable<u32>> = WidthIndependentAnnotationCacheCoverageTestSupport::width_independent_annotation_cache_coverage_test_support_tier_map(TextRange::new(0u32, 7u32).unwrap(), &vec![ProgressiveBreakTier::Structural]);
         let prep = WidthIndependentAnnotationCacheFns::width_independent_annotation_cache_fns_build_paragraph_layout_prep(&mut engine, (input).clone(), (annotation).clone(), (rejected).clone()).unwrap();
-        let _ = TracedAssertions::traced_assertions_record_rendered_not_null(if false { "null".to_string() } else { "ParagraphLayoutPrep@identity".to_string() }.as_str(), None).unwrap();
-        let no_break_input = LayoutInput::new(TiqianTextContent::new("English", Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![])), Some(TextStyle::new(Some(vec![]), Some(16.0), Some("zh-Hans".to_string()), Some(400), Some(false), Some(0.0), Some(InlineAttachment::None))),
-Some(ParagraphStyle::new(Some(LastLineAlignment::Start), Some(WritingMode::HorizontalTb), None, None, Some(Ic::zero()), Some(MeasureAdaptiveFirstLineIndent::new(Some(14.0), Some(1.0), Some(2.0))), Some(LineLengthGrid::new(Some(true), None)), Some(RubyLineHeightMode::PerLine),
-Some(ParagraphStyle::PARAGRAPH_STYLE_DEFAULT_INLINE_OBJECT_MINIMUM_CLEARANCE_EM), Some(ParagraphStyle::PARAGRAPH_STYLE_DEFAULT_EMPHASIS_DOT_GAP_EM))), LayoutConstraints::new(500 as f64 as f64, Some(f64::INFINITY), Some(2147483647)).unwrap(),
-Some((*crate::org::tiqian::core::built_in_layout_profiles::BUILT_IN_LAYOUT_PROFILES_CLREQ_HORIZONTAL).clone()), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]));
-        let no_break_annotation = WidthIndependentAnnotationCacheFns::width_independent_annotation_cache_fns_prepare_width_independent_annotation(&mut engine, (no_break_input).clone(),
-WidthIndependentAnnotationCacheCoverageTestSupport::width_independent_annotation_cache_coverage_test_support_empty_tiers()).unwrap();
-        let prep_no_dynamic = WidthIndependentAnnotationCacheFns::width_independent_annotation_cache_fns_build_paragraph_layout_prep(&mut engine, (no_break_input).clone(), (no_break_annotation).clone(),
-WidthIndependentAnnotationCacheCoverageTestSupport::width_independent_annotation_cache_coverage_test_support_empty_tiers()).unwrap();
-        let _ = TracedAssertions::traced_assertions_record_rendered_not_null(if false { "null".to_string() } else { "ParagraphLayoutPrep@identity".to_string() }.as_str(), None).unwrap();
-        let small_measure_input = LayoutInput::new(TiqianTextContent::new("English", Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![])), Some(TextStyle::new(Some(vec![]), Some(16.0), Some("zh-Hans".to_string()), Some(400), Some(false), Some(0.0),
-Some(InlineAttachment::None))), Some(ParagraphStyle::new(Some(LastLineAlignment::Start), Some(WritingMode::HorizontalTb), None, None, Some(Ic::zero()), Some(MeasureAdaptiveFirstLineIndent::new(Some(14.0), Some(1.0), Some(2.0))), Some(LineLengthGrid::new(Some(true), None)),
-Some(RubyLineHeightMode::PerLine), Some(ParagraphStyle::PARAGRAPH_STYLE_DEFAULT_INLINE_OBJECT_MINIMUM_CLEARANCE_EM), Some(ParagraphStyle::PARAGRAPH_STYLE_DEFAULT_EMPHASIS_DOT_GAP_EM))), LayoutConstraints::new(1 as f64 as f64, Some(f64::INFINITY), Some(2147483647)).unwrap(),
-Some((*crate::org::tiqian::core::built_in_layout_profiles::BUILT_IN_LAYOUT_PROFILES_CLREQ_HORIZONTAL).clone()), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]));
-        let small_annotation = WidthIndependentAnnotationCacheFns::width_independent_annotation_cache_fns_prepare_width_independent_annotation(&mut engine, (small_measure_input).clone(),
-WidthIndependentAnnotationCacheCoverageTestSupport::width_independent_annotation_cache_coverage_test_support_empty_tiers()).unwrap();
-        let prep_small = WidthIndependentAnnotationCacheFns::width_independent_annotation_cache_fns_build_paragraph_layout_prep(&mut engine, (small_measure_input).clone(), (small_annotation).clone(),
-WidthIndependentAnnotationCacheCoverageTestSupport::width_independent_annotation_cache_coverage_test_support_empty_tiers()).unwrap();
-        let _ = TracedAssertions::traced_assertions_record_rendered_not_null(if false { "null".to_string() } else { "ParagraphLayoutPrep@identity".to_string() }.as_str(), None).unwrap();
+        let _ = TracedAssertions::traced_assertions_record_rendered_not_null(if false { UString::from("null") } else { UString::from("ParagraphLayoutPrep@identity") }.as_ustr(), None).unwrap();
+        let no_break_input = LayoutInput::new(TiqianTextContent::new(&(UStr::new(&[69,110,103,108,105,115,104])), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![])), Some(TextStyle::new(Some(vec![]), Some(16.0), Some(UString::from("zh-Hans")), Some(400), Some(false), Some(0.0), Some(InlineAttachment::None))), Some(ParagraphStyle::new(Some(LastLineAlignment::Start), Some(WritingMode::HorizontalTb), None, None, Some(Ic::zero()), Some(MeasureAdaptiveFirstLineIndent::new(Some(14.0), Some(1.0), Some(2.0))), Some(LineLengthGrid::new(Some(true), None)), Some(RubyLineHeightMode::PerLine), Some(ParagraphStyle::PARAGRAPH_STYLE_DEFAULT_INLINE_OBJECT_MINIMUM_CLEARANCE_EM), Some(ParagraphStyle::PARAGRAPH_STYLE_DEFAULT_EMPHASIS_DOT_GAP_EM))), LayoutConstraints::new(500 as f64 as f64, Some(f64::INFINITY), Some(2147483647)).unwrap(), Some((*crate::org::tiqian::core::built_in_layout_profiles::BUILT_IN_LAYOUT_PROFILES_CLREQ_HORIZONTAL).clone()), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]));
+        let no_break_annotation = WidthIndependentAnnotationCacheFns::width_independent_annotation_cache_fns_prepare_width_independent_annotation(&mut engine, (no_break_input).clone(), WidthIndependentAnnotationCacheCoverageTestSupport::width_independent_annotation_cache_coverage_test_support_empty_tiers()).unwrap();
+        let prep_no_dynamic = WidthIndependentAnnotationCacheFns::width_independent_annotation_cache_fns_build_paragraph_layout_prep(&mut engine, (no_break_input).clone(), (no_break_annotation).clone(), WidthIndependentAnnotationCacheCoverageTestSupport::width_independent_annotation_cache_coverage_test_support_empty_tiers()).unwrap();
+        let _ = TracedAssertions::traced_assertions_record_rendered_not_null(if false { UString::from("null") } else { UString::from("ParagraphLayoutPrep@identity") }.as_ustr(), None).unwrap();
+        let small_measure_input = LayoutInput::new(TiqianTextContent::new(&(UStr::new(&[69,110,103,108,105,115,104])), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![])), Some(TextStyle::new(Some(vec![]), Some(16.0), Some(UString::from("zh-Hans")), Some(400), Some(false), Some(0.0), Some(InlineAttachment::None))), Some(ParagraphStyle::new(Some(LastLineAlignment::Start), Some(WritingMode::HorizontalTb), None, None, Some(Ic::zero()), Some(MeasureAdaptiveFirstLineIndent::new(Some(14.0), Some(1.0), Some(2.0))), Some(LineLengthGrid::new(Some(true), None)), Some(RubyLineHeightMode::PerLine), Some(ParagraphStyle::PARAGRAPH_STYLE_DEFAULT_INLINE_OBJECT_MINIMUM_CLEARANCE_EM), Some(ParagraphStyle::PARAGRAPH_STYLE_DEFAULT_EMPHASIS_DOT_GAP_EM))), LayoutConstraints::new(1 as f64 as f64, Some(f64::INFINITY), Some(2147483647)).unwrap(), Some((*crate::org::tiqian::core::built_in_layout_profiles::BUILT_IN_LAYOUT_PROFILES_CLREQ_HORIZONTAL).clone()), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]));
+        let small_annotation = WidthIndependentAnnotationCacheFns::width_independent_annotation_cache_fns_prepare_width_independent_annotation(&mut engine, (small_measure_input).clone(), WidthIndependentAnnotationCacheCoverageTestSupport::width_independent_annotation_cache_coverage_test_support_empty_tiers()).unwrap();
+        let prep_small = WidthIndependentAnnotationCacheFns::width_independent_annotation_cache_fns_build_paragraph_layout_prep(&mut engine, (small_measure_input).clone(), (small_annotation).clone(), WidthIndependentAnnotationCacheCoverageTestSupport::width_independent_annotation_cache_coverage_test_support_empty_tiers()).unwrap();
+        let _ = TracedAssertions::traced_assertions_record_rendered_not_null(if false { UString::from("null") } else { UString::from("ParagraphLayoutPrep@identity") }.as_ustr(), None).unwrap();
         let modified_annotation = WidthIndependentAnnotationCacheCoverageTestSupport::width_independent_annotation_cache_coverage_test_support_with_first_font_decision_only((annotation).clone());
-        let prep_unknown_roles = WidthIndependentAnnotationCacheFns::width_independent_annotation_cache_fns_build_paragraph_layout_prep(&mut engine, (input).clone(), (modified_annotation).clone(),
-WidthIndependentAnnotationCacheCoverageTestSupport::width_independent_annotation_cache_coverage_test_support_empty_tiers()).unwrap();
-        let _ = TracedAssertions::traced_assertions_record_rendered_not_null(if false { "null".to_string() } else { "ParagraphLayoutPrep@identity".to_string() }.as_str(), None).unwrap();
+        let prep_unknown_roles = WidthIndependentAnnotationCacheFns::width_independent_annotation_cache_fns_build_paragraph_layout_prep(&mut engine, (input).clone(), (modified_annotation).clone(), WidthIndependentAnnotationCacheCoverageTestSupport::width_independent_annotation_cache_coverage_test_support_empty_tiers()).unwrap();
+        let _ = TracedAssertions::traced_assertions_record_rendered_not_null(if false { UString::from("null") } else { UString::from("ParagraphLayoutPrep@identity") }.as_ustr(), None).unwrap();
     });
 }
 
 #[test]
 fn ruby_spread_second_visit_and_zero_first_cluster() {
     testlib::run("org.tiqian.layout.WidthIndependentAnnotationCacheCoverageTest.rubySpreadSecondVisitAndZeroFirstCluster", "org.tiqian.layout.WidthIndependentAnnotationCacheCoverageTest.rubySpreadSecondVisitAndZeroFirstCluster", || {
-        let mut t = TestTraceRecorder::new("WidthIndependentAnnotationCacheCoverageTest");
-        t.section(&"rubySpreadSecondVisitAndZeroFirstCluster");
+        let mut t = TestTraceRecorder::new(&(UStr::new(&[87,105,100,116,104,73,110,100,101,112,101,110,100,101,110,116,65,110,110,111,116,97,116,105,111,110,67,97,99,104,101,67,111,118,101,114,97,103,101,84,101,115,116])));
+        t.section(UStr::new(&[114,117,98,121,83,112,114,101,97,100,83,101,99,111,110,100,86,105,115,105,116,65,110,100,90,101,114,111,70,105,114,115,116,67,108,117,115,116,101,114]));
         let mut engine = WidthIndependentAnnotationCacheCoverageTestSupport::width_independent_annotation_cache_coverage_test_support_engine(None, None).unwrap();
-        let text = "一二三四五六七八".to_string();
-        let ruby0a = RubySpan::new(TextRange::new(0u32, 1u32).unwrap(), "chángdàchángdà", Some(vec![]), RubyKind::Pinyin, None);
-        let ruby0b = RubySpan::new(TextRange::new(0u32, 1u32).unwrap(), "chángdàchángdà", Some(vec![]), RubyKind::Pinyin, None);
-        let ruby1 = RubySpan::new(TextRange::new(2u32, 3u32).unwrap(), "chángdàchángdàchángdà", Some(vec![]), RubyKind::Pinyin, None);
-        let ruby2 = RubySpan::new(TextRange::new(2u32, 3u32).unwrap(), "chángdàchángdàchángdà", Some(vec![]), RubyKind::Pinyin, None);
+        let text = UString::from("一二三四五六七八").to_ustring();
+        let ruby0a = RubySpan::new(TextRange::new(0u32, 1u32).unwrap(), &(UStr::new(&[99,104,225,110,103,100,224,99,104,225,110,103,100,224])), Some(vec![]), RubyKind::Pinyin, None);
+        let ruby0b = RubySpan::new(TextRange::new(0u32, 1u32).unwrap(), &(UStr::new(&[99,104,225,110,103,100,224,99,104,225,110,103,100,224])), Some(vec![]), RubyKind::Pinyin, None);
+        let ruby1 = RubySpan::new(TextRange::new(2u32, 3u32).unwrap(), &(UStr::new(&[99,104,225,110,103,100,224,99,104,225,110,103,100,224,99,104,225,110,103,100,224])), Some(vec![]), RubyKind::Pinyin, None);
+        let ruby2 = RubySpan::new(TextRange::new(2u32, 3u32).unwrap(), &(UStr::new(&[99,104,225,110,103,100,224,99,104,225,110,103,100,224,99,104,225,110,103,100,224])), Some(vec![]), RubyKind::Pinyin, None);
         let mut sbs: Vec<u32> = vec![];
-        for i in 0..u_string::count(text.as_str()) {
+        for i in 0..u_string::count(text.as_ustr()) {
             sbs.push(i);
         }
-        let input = LayoutInput::new(TiqianTextContent::new(text.as_str(), Some(vec![]), Some((sbs).clone()), Some(vec![]), Some(vec![])), Some(TextStyle::new(Some(vec![]), Some(16.0), Some("zh-Hans".to_string()), Some(400), Some(false), Some(0.0), Some(InlineAttachment::None))),
-Some(ParagraphStyle::new(Some(LastLineAlignment::Start), Some(WritingMode::HorizontalTb), None, None, Some(Ic::zero()), Some(MeasureAdaptiveFirstLineIndent::new(Some(14.0), Some(1.0), Some(2.0))), Some(LineLengthGrid::new(Some(true), None)), Some(RubyLineHeightMode::PerLine),
-Some(ParagraphStyle::PARAGRAPH_STYLE_DEFAULT_INLINE_OBJECT_MINIMUM_CLEARANCE_EM), Some(ParagraphStyle::PARAGRAPH_STYLE_DEFAULT_EMPHASIS_DOT_GAP_EM))), LayoutConstraints::new(300 as f64 as f64, Some(f64::INFINITY), Some(2147483647)).unwrap(),
-Some((*crate::org::tiqian::core::built_in_layout_profiles::BUILT_IN_LAYOUT_PROFILES_CLREQ_HORIZONTAL).clone()), Some(vec![]), Some(vec![(ruby0a).clone(), (ruby0b).clone(), (ruby1).clone(), (ruby2).clone()]), Some(vec![]), Some(vec![]));
-        let annotation = WidthIndependentAnnotationCacheFns::width_independent_annotation_cache_fns_prepare_width_independent_annotation(&mut engine, (input).clone(),
-WidthIndependentAnnotationCacheCoverageTestSupport::width_independent_annotation_cache_coverage_test_support_empty_tiers()).unwrap();
-        let prep = WidthIndependentAnnotationCacheFns::width_independent_annotation_cache_fns_build_paragraph_layout_prep(&mut engine, (input).clone(), (annotation).clone(),
-WidthIndependentAnnotationCacheCoverageTestSupport::width_independent_annotation_cache_coverage_test_support_empty_tiers()).unwrap();
-        let _ = TracedAssertions::traced_assertions_record_rendered_not_null(if false { "null".to_string() } else { "ParagraphLayoutPrep@identity".to_string() }.as_str(), None).unwrap();
+        let input = LayoutInput::new(TiqianTextContent::new(text.as_ustr(), Some(vec![]), Some((sbs).clone()), Some(vec![]), Some(vec![])), Some(TextStyle::new(Some(vec![]), Some(16.0), Some(UString::from("zh-Hans")), Some(400), Some(false), Some(0.0), Some(InlineAttachment::None))), Some(ParagraphStyle::new(Some(LastLineAlignment::Start), Some(WritingMode::HorizontalTb), None, None, Some(Ic::zero()), Some(MeasureAdaptiveFirstLineIndent::new(Some(14.0), Some(1.0), Some(2.0))), Some(LineLengthGrid::new(Some(true), None)), Some(RubyLineHeightMode::PerLine), Some(ParagraphStyle::PARAGRAPH_STYLE_DEFAULT_INLINE_OBJECT_MINIMUM_CLEARANCE_EM), Some(ParagraphStyle::PARAGRAPH_STYLE_DEFAULT_EMPHASIS_DOT_GAP_EM))), LayoutConstraints::new(300 as f64 as f64, Some(f64::INFINITY), Some(2147483647)).unwrap(), Some((*crate::org::tiqian::core::built_in_layout_profiles::BUILT_IN_LAYOUT_PROFILES_CLREQ_HORIZONTAL).clone()), Some(vec![]), Some(vec![(ruby0a).clone(), (ruby0b).clone(), (ruby1).clone(), (ruby2).clone()]), Some(vec![]), Some(vec![]));
+        let annotation = WidthIndependentAnnotationCacheFns::width_independent_annotation_cache_fns_prepare_width_independent_annotation(&mut engine, (input).clone(), WidthIndependentAnnotationCacheCoverageTestSupport::width_independent_annotation_cache_coverage_test_support_empty_tiers()).unwrap();
+        let prep = WidthIndependentAnnotationCacheFns::width_independent_annotation_cache_fns_build_paragraph_layout_prep(&mut engine, (input).clone(), (annotation).clone(), WidthIndependentAnnotationCacheCoverageTestSupport::width_independent_annotation_cache_coverage_test_support_empty_tiers()).unwrap();
+        let _ = TracedAssertions::traced_assertions_record_rendered_not_null(if false { UString::from("null") } else { UString::from("ParagraphLayoutPrep@identity") }.as_ustr(), None).unwrap();
     });
 }
 
 #[test]
 fn paired_punctuation_with_zero_capacity() {
     testlib::run("org.tiqian.layout.WidthIndependentAnnotationCacheCoverageTest.pairedPunctuationWithZeroCapacity", "org.tiqian.layout.WidthIndependentAnnotationCacheCoverageTest.pairedPunctuationWithZeroCapacity", || {
-        let mut t = TestTraceRecorder::new("WidthIndependentAnnotationCacheCoverageTest");
-        t.section(&"pairedPunctuationWithZeroCapacity");
+        let mut t = TestTraceRecorder::new(&(UStr::new(&[87,105,100,116,104,73,110,100,101,112,101,110,100,101,110,116,65,110,110,111,116,97,116,105,111,110,67,97,99,104,101,67,111,118,101,114,97,103,101,84,101,115,116])));
+        t.section(UStr::new(&[112,97,105,114,101,100,80,117,110,99,116,117,97,116,105,111,110,87,105,116,104,90,101,114,111,67,97,112,97,99,105,116,121]));
         let mut engine = WidthIndependentAnnotationCacheCoverageTestSupport::width_independent_annotation_cache_coverage_test_support_engine(None, None).unwrap();
-        let text = "（括号）".to_string();
-        let input = LayoutInput::new(TiqianTextContent::new(text.as_str(), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![])), Some(TextStyle::new(Some(vec![]), Some(16.0), Some("zh-Hans".to_string()), Some(400), Some(false), Some(0.0), Some(InlineAttachment::None))),
-Some(ParagraphStyle::new(Some(LastLineAlignment::Start), Some(WritingMode::HorizontalTb), None, None, Some(Ic::zero()), Some(MeasureAdaptiveFirstLineIndent::new(Some(14.0), Some(1.0), Some(2.0))), Some(LineLengthGrid::new(Some(true), None)), Some(RubyLineHeightMode::PerLine),
-Some(ParagraphStyle::PARAGRAPH_STYLE_DEFAULT_INLINE_OBJECT_MINIMUM_CLEARANCE_EM), Some(ParagraphStyle::PARAGRAPH_STYLE_DEFAULT_EMPHASIS_DOT_GAP_EM))), LayoutConstraints::new(300 as f64 as f64, Some(f64::INFINITY), Some(2147483647)).unwrap(),
-Some((*crate::org::tiqian::core::built_in_layout_profiles::BUILT_IN_LAYOUT_PROFILES_CLREQ_HORIZONTAL).clone()), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]));
-        let annotation = WidthIndependentAnnotationCacheFns::width_independent_annotation_cache_fns_prepare_width_independent_annotation(&mut engine, (input).clone(),
-WidthIndependentAnnotationCacheCoverageTestSupport::width_independent_annotation_cache_coverage_test_support_empty_tiers()).unwrap();
-        let prep = WidthIndependentAnnotationCacheFns::width_independent_annotation_cache_fns_build_paragraph_layout_prep(&mut engine, (input).clone(), (annotation).clone(),
-WidthIndependentAnnotationCacheCoverageTestSupport::width_independent_annotation_cache_coverage_test_support_empty_tiers()).unwrap();
-        let _ = TracedAssertions::traced_assertions_record_rendered_not_null(if false { "null".to_string() } else { "ParagraphLayoutPrep@identity".to_string() }.as_str(), None).unwrap();
+        let text = UString::from("（括号）").to_ustring();
+        let input = LayoutInput::new(TiqianTextContent::new(text.as_ustr(), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![])), Some(TextStyle::new(Some(vec![]), Some(16.0), Some(UString::from("zh-Hans")), Some(400), Some(false), Some(0.0), Some(InlineAttachment::None))), Some(ParagraphStyle::new(Some(LastLineAlignment::Start), Some(WritingMode::HorizontalTb), None, None, Some(Ic::zero()), Some(MeasureAdaptiveFirstLineIndent::new(Some(14.0), Some(1.0), Some(2.0))), Some(LineLengthGrid::new(Some(true), None)), Some(RubyLineHeightMode::PerLine), Some(ParagraphStyle::PARAGRAPH_STYLE_DEFAULT_INLINE_OBJECT_MINIMUM_CLEARANCE_EM), Some(ParagraphStyle::PARAGRAPH_STYLE_DEFAULT_EMPHASIS_DOT_GAP_EM))), LayoutConstraints::new(300 as f64 as f64, Some(f64::INFINITY), Some(2147483647)).unwrap(), Some((*crate::org::tiqian::core::built_in_layout_profiles::BUILT_IN_LAYOUT_PROFILES_CLREQ_HORIZONTAL).clone()), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]));
+        let annotation = WidthIndependentAnnotationCacheFns::width_independent_annotation_cache_fns_prepare_width_independent_annotation(&mut engine, (input).clone(), WidthIndependentAnnotationCacheCoverageTestSupport::width_independent_annotation_cache_coverage_test_support_empty_tiers()).unwrap();
+        let prep = WidthIndependentAnnotationCacheFns::width_independent_annotation_cache_fns_build_paragraph_layout_prep(&mut engine, (input).clone(), (annotation).clone(), WidthIndependentAnnotationCacheCoverageTestSupport::width_independent_annotation_cache_coverage_test_support_empty_tiers()).unwrap();
+        let _ = TracedAssertions::traced_assertions_record_rendered_not_null(if false { UString::from("null") } else { UString::from("ParagraphLayoutPrep@identity") }.as_ustr(), None).unwrap();
     });
 }
 
 #[test]
 fn dynamic_shaping_emphasis_italic_at_and_zero_paired_capacity_branches() {
     testlib::run("org.tiqian.layout.WidthIndependentAnnotationCacheCoverageTest.dynamicShapingEmphasisItalicAtAndZeroPairedCapacityBranches", "org.tiqian.layout.WidthIndependentAnnotationCacheCoverageTest.dynamicShapingEmphasisItalicAtAndZeroPairedCapacityBranches", || {
-        let mut t = TestTraceRecorder::new("WidthIndependentAnnotationCacheCoverageTest");
-        t.section(&"dynamicShapingEmphasisItalicAtAndZeroPairedCapacityBranches");
+        let mut t = TestTraceRecorder::new(&(UStr::new(&[87,105,100,116,104,73,110,100,101,112,101,110,100,101,110,116,65,110,110,111,116,97,116,105,111,110,67,97,99,104,101,67,111,118,101,114,97,103,101,84,101,115,116])));
+        t.section(UStr::new(&[100,121,110,97,109,105,99,83,104,97,112,105,110,103,69,109,112,104,97,115,105,115,73,116,97,108,105,99,65,116,65,110,100,90,101,114,111,80,97,105,114,101,100,67,97,112,97,99,105,116,121,66,114,97,110,99,104,101,115]));
         let mut engine = WidthIndependentAnnotationCacheCoverageTestSupport::width_independent_annotation_cache_coverage_test_support_engine(None, None).unwrap();
-        let text = "Hello World Latin".to_string();
-        let input = LayoutInput::new(TiqianTextContent::new(text.as_str(), Some(vec![]), Some(vec![]), Some(vec![
+        let text = UString::from("Hello World Latin").to_ustring();
+        let input = LayoutInput::new(TiqianTextContent::new(text.as_ustr(), Some(vec![]), Some(vec![]), Some(vec![
     (LineBreakSpan::new(TextRange::new(0u32, 17u32).unwrap(), LineBreakPolicy::ProgressiveTechnical)).clone(),
-]), Some(vec![])), Some(TextStyle::new(Some(vec![]), Some(16.0), Some("zh-Hans".to_string()), Some(400), Some(false), Some(0.0), Some(InlineAttachment::None))), Some(ParagraphStyle::new(Some(LastLineAlignment::Start), Some(WritingMode::HorizontalTb), None, None, Some(Ic::zero()),
-Some(MeasureAdaptiveFirstLineIndent::new(Some(14.0), Some(1.0), Some(2.0))), Some(LineLengthGrid::new(Some(true), None)), Some(RubyLineHeightMode::PerLine), Some(ParagraphStyle::PARAGRAPH_STYLE_DEFAULT_INLINE_OBJECT_MINIMUM_CLEARANCE_EM),
-Some(ParagraphStyle::PARAGRAPH_STYLE_DEFAULT_EMPHASIS_DOT_GAP_EM))), LayoutConstraints::new(100 as f64 as f64, Some(f64::INFINITY), Some(2147483647)).unwrap(), Some((*crate::org::tiqian::core::built_in_layout_profiles::BUILT_IN_LAYOUT_PROFILES_CLREQ_HORIZONTAL).clone()),
-Some(vec![
+]), Some(vec![])), Some(TextStyle::new(Some(vec![]), Some(16.0), Some(UString::from("zh-Hans")), Some(400), Some(false), Some(0.0), Some(InlineAttachment::None))),
+Some(ParagraphStyle::new(Some(LastLineAlignment::Start), Some(WritingMode::HorizontalTb), None, None, Some(Ic::zero()), Some(MeasureAdaptiveFirstLineIndent::new(Some(14.0), Some(1.0), Some(2.0))), Some(LineLengthGrid::new(Some(true), None)), Some(RubyLineHeightMode::PerLine), Some(ParagraphStyle::PARAGRAPH_STYLE_DEFAULT_INLINE_OBJECT_MINIMUM_CLEARANCE_EM), Some(ParagraphStyle::PARAGRAPH_STYLE_DEFAULT_EMPHASIS_DOT_GAP_EM))), LayoutConstraints::new(100 as f64 as f64, Some(f64::INFINITY), Some(2147483647)).unwrap(), Some((*crate::org::tiqian::core::built_in_layout_profiles::BUILT_IN_LAYOUT_PROFILES_CLREQ_HORIZONTAL).clone()), Some(vec![
     (DecorationSpan::new(TextRange::new(0u32, 5u32).unwrap(), DecorationKind::ProperNoun)).clone(),
     (DecorationSpan::new(TextRange::new(6u32, 11u32).unwrap(), DecorationKind::Emphasis)).clone(),
 ]), Some(vec![]), Some(vec![]), Some(vec![]));
-        let annotation = WidthIndependentAnnotationCacheFns::width_independent_annotation_cache_fns_prepare_width_independent_annotation(&mut engine, (input).clone(),
-WidthIndependentAnnotationCacheCoverageTestSupport::width_independent_annotation_cache_coverage_test_support_empty_tiers()).unwrap();
+        let annotation = WidthIndependentAnnotationCacheFns::width_independent_annotation_cache_fns_prepare_width_independent_annotation(&mut engine, (input).clone(), WidthIndependentAnnotationCacheCoverageTestSupport::width_independent_annotation_cache_coverage_test_support_empty_tiers()).unwrap();
         let uncached_annotation = WidthIndependentAnnotationCacheCoverageTestSupport::width_independent_annotation_cache_coverage_test_support_with_empty_shaping_cache((annotation).clone());
         let rejected: SortedMapTable<TextRange, SortedSetTable<u32>> = WidthIndependentAnnotationCacheCoverageTestSupport::width_independent_annotation_cache_coverage_test_support_tier_map(TextRange::new(0u32, 17u32).unwrap(), &vec![ProgressiveBreakTier::Structural]);
         let prep = WidthIndependentAnnotationCacheFns::width_independent_annotation_cache_fns_build_paragraph_layout_prep(&mut engine, (input).clone(), (uncached_annotation).clone(), (rejected).clone()).unwrap();
-        let _ = TracedAssertions::traced_assertions_record_rendered_not_null(if false { "null".to_string() } else { "ParagraphLayoutPrep@identity".to_string() }.as_str(), None).unwrap();
+        let _ = TracedAssertions::traced_assertions_record_rendered_not_null(if false { UString::from("null") } else { UString::from("ParagraphLayoutPrep@identity") }.as_ustr(), None).unwrap();
     });
 }
 
 #[test]
 fn centered_punct_before_attached_reference_keeps_leading_glue_only() {
     testlib::run("org.tiqian.layout.WidthIndependentAnnotationCacheCoverageTest.centeredPunctBeforeAttachedReferenceKeepsLeadingGlueOnly", "org.tiqian.layout.WidthIndependentAnnotationCacheCoverageTest.centeredPunctBeforeAttachedReferenceKeepsLeadingGlueOnly", || {
-        let mut t = TestTraceRecorder::new("WidthIndependentAnnotationCacheCoverageTest");
-        t.section(&"centeredPunctBeforeAttachedReferenceKeepsLeadingGlueOnly");
-        let text = "正文：“内容·[1]，后文".to_string();
-        let attach_at = WidthIndependentAnnotationCacheCoverageTestSupport::width_independent_annotation_cache_coverage_test_support_index_of(text.as_str(), &"[1]");
-        let result = WidthIndependentAnnotationCacheCoverageTestSupport::width_independent_annotation_cache_coverage_test_support_engine(None, Some(Box::new(NarrowInkShaper::new()))).unwrap().layout(LayoutInput::new(TiqianTextContent::new(text.as_str(), Some(vec![
-    (TextSpan::new(TextRange::new(attach_at, u32::wrapping_add(attach_at, 3)).unwrap(), TextStyle::new(Some(vec![]), Some(16.0), Some("zh-Hans".to_string()), Some(400), Some(false), Some(0.0), Some(InlineAttachment::Previous)))).clone(),
-]), Some(vec![]), Some(vec![]), Some(vec![])), Some(TextStyle::new(Some(vec![]), Some(16.0), Some("zh-Hans".to_string()), Some(400), Some(false), Some(0.0), Some(InlineAttachment::None))), Some(ParagraphStyle::new(Some(LastLineAlignment::Start), Some(WritingMode::HorizontalTb),
-None, Some((Ic::zero()).clone()), Some(Ic::zero()), Some(MeasureAdaptiveFirstLineIndent::new(Some(14.0), Some(1.0), Some(2.0))), Some(LineLengthGrid::new(Some(true), None)), Some(RubyLineHeightMode::PerLine),
-Some(ParagraphStyle::PARAGRAPH_STYLE_DEFAULT_INLINE_OBJECT_MINIMUM_CLEARANCE_EM), Some(ParagraphStyle::PARAGRAPH_STYLE_DEFAULT_EMPHASIS_DOT_GAP_EM))), LayoutConstraints::new(320 as f64 as f64, Some(f64::INFINITY), Some(2147483647)).unwrap(),
-Some((*crate::org::tiqian::core::built_in_layout_profiles::BUILT_IN_LAYOUT_PROFILES_CLREQ_HORIZONTAL).clone()), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]))).unwrap();
+        let mut t = TestTraceRecorder::new(&(UStr::new(&[87,105,100,116,104,73,110,100,101,112,101,110,100,101,110,116,65,110,110,111,116,97,116,105,111,110,67,97,99,104,101,67,111,118,101,114,97,103,101,84,101,115,116])));
+        t.section(UStr::new(&[99,101,110,116,101,114,101,100,80,117,110,99,116,66,101,102,111,114,101,65,116,116,97,99,104,101,100,82,101,102,101,114,101,110,99,101,75,101,101,112,115,76,101,97,100,105,110,103,71,108,117,101,79,110,108,121]));
+        let text = UString::from("正文：“内容·[1]，后文").to_ustring();
+        let attach_at = WidthIndependentAnnotationCacheCoverageTestSupport::width_independent_annotation_cache_coverage_test_support_index_of(text.as_ustr(), UStr::new(&[91,49,93]));
+        let result = WidthIndependentAnnotationCacheCoverageTestSupport::width_independent_annotation_cache_coverage_test_support_engine(None, Some(Arc::new(Mutex::new(NarrowInkShaper::new())))).unwrap().layout(LayoutInput::new(TiqianTextContent::new(text.as_ustr(), Some(vec![
+    (TextSpan::new(TextRange::new(attach_at, u32::wrapping_add(attach_at, 3)).unwrap(), TextStyle::new(Some(vec![]), Some(16.0), Some(UString::from("zh-Hans")), Some(400), Some(false), Some(0.0), Some(InlineAttachment::Previous)))).clone(),
+]), Some(vec![]), Some(vec![]), Some(vec![])), Some(TextStyle::new(Some(vec![]), Some(16.0), Some(UString::from("zh-Hans")), Some(400), Some(false), Some(0.0), Some(InlineAttachment::None))),
+Some(ParagraphStyle::new(Some(LastLineAlignment::Start), Some(WritingMode::HorizontalTb), None, Some((Ic::zero()).clone()), Some(Ic::zero()), Some(MeasureAdaptiveFirstLineIndent::new(Some(14.0), Some(1.0), Some(2.0))), Some(LineLengthGrid::new(Some(true), None)), Some(RubyLineHeightMode::PerLine), Some(ParagraphStyle::PARAGRAPH_STYLE_DEFAULT_INLINE_OBJECT_MINIMUM_CLEARANCE_EM), Some(ParagraphStyle::PARAGRAPH_STYLE_DEFAULT_EMPHASIS_DOT_GAP_EM))), LayoutConstraints::new(320 as f64 as f64, Some(f64::INFINITY), Some(2147483647)).unwrap(), Some((*crate::org::tiqian::core::built_in_layout_profiles::BUILT_IN_LAYOUT_PROFILES_CLREQ_HORIZONTAL).clone()), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]))).unwrap();
         let mut boundary: Option<SpacingDecisionInfo> = None;
         for i in 0..match u32::try_from((result.debug).clone().spacing_decisions.len()) { Ok(value) => value, Err(_) => u32::MAX } {
             let d = ((result.debug).clone().spacing_decisions[usize::try_from(i).unwrap_or(0)]).clone();
-            if u32::from_ne_bytes((u_string::find_from(&(d.reason).to_string(), "AttachedInlineVirtualPunctuationBoundary", 0)).to_ne_bytes()) == 0 {
+            if u32::from_ne_bytes(((u_string::find_from(&((d.reason).to_ustring()), UString::from("AttachedInlineVirtualPunctuationBoundary").as_ustr(), 0)) as u32).to_ne_bytes()) == 0 {
                 boundary = Some(d.clone());
                 break;
             }
         }
-        let _ = TracedAssertions::traced_assertions_assert_equals_string(&"AttachedInlineVirtualPunctuationBoundary:adjacent-punctuation", (boundary.as_ref().unwrap().reason).to_string().as_str(), None).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_equals_string(&"·", (boundary.as_ref().unwrap().left_char).to_string().as_str(), None).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_equals_string(&"，", (boundary.as_ref().unwrap().right_char).to_string().as_str(), None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_equals_string(UStr::new(&[65,116,116,97,99,104,101,100,73,110,108,105,110,101,86,105,114,116,117,97,108,80,117,110,99,116,117,97,116,105,111,110,66,111,117,110,100,97,114,121,58,97,100,106,97,99,101,110,116,45,112,117,110,99,116,117,97,116,105,111,110]), (boundary.as_ref().unwrap().reason).to_ustring().as_ustr(), None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_equals_string(UStr::new(&[183]), (boundary.as_ref().unwrap().left_char).to_ustring().as_ustr(), None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_equals_string(UStr::new(&[65292]), (boundary.as_ref().unwrap().right_char).to_ustring().as_ustr(), None).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_true((boundary.as_ref().unwrap().natural_inner_glue) > (0.0f64), None).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_true((boundary.as_ref().unwrap().reduction) > (0.0f64), None).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_equals_int(WidthIndependentAnnotationCacheCoverageTestSupport::width_independent_annotation_cache_coverage_test_support_index_of(text.as_str(), &"·"), (boundary.as_ref().unwrap().reduction_target_range).clone().start,
-None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_equals_int(WidthIndependentAnnotationCacheCoverageTestSupport::width_independent_annotation_cache_coverage_test_support_index_of(text.as_ustr(), UStr::new(&[183])), (boundary.as_ref().unwrap().reduction_target_range).clone().start, None).unwrap();
     });
 }

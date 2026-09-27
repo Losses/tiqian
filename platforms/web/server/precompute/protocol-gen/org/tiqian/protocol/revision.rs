@@ -1,14 +1,17 @@
+use crate::runtime::u_string::UStr;
+
+
 #[derive(Clone, Copy)]
 pub struct Revision;
 
 impl Revision {
     pub const REVISION_SNAPSHOT_SCHEMA: u32 = 1;
     pub const REVISION_SNAPSHOT_TABLES_SCHEMA: u32 = 2;
-    pub const REVISION_LAYOUT_REVISION: &str = "tiqian-layout-v2";
-    pub const REVISION_RENDER_REVISION: &str = "prebroken-dom-v16";
-    pub const REVISION_FONT_SOURCE_POLICY: &str = "host-compatible-stylesheet-v1";
-    pub const REVISION_FONT_BACKEND_REVISION: &str = "tiqian-shared-harfbuzz-v5";
-    pub const REVISION_FONT_REPLAY_REVISION: &str = "tiqian-server-shaping-replay-v1";
-    pub const REVISION_FONT_REPLAY_TRANSPORT: &str = "shared-strings-v1";
+    pub const REVISION_LAYOUT_REVISION: &UStr = unsafe { &*(&[0x0074u16, 0x0069u16, 0x0071u16, 0x0069u16, 0x0061u16, 0x006Eu16, 0x002Du16, 0x006Cu16, 0x0061u16, 0x0079u16, 0x006Fu16, 0x0075u16, 0x0074u16, 0x002Du16, 0x0076u16, 0x0032u16] as *const [u16] as *const crate::runtime::u_string::UStr) };
+    pub const REVISION_RENDER_REVISION: &UStr = unsafe { &*(&[0x0070u16, 0x0072u16, 0x0065u16, 0x0062u16, 0x0072u16, 0x006Fu16, 0x006Bu16, 0x0065u16, 0x006Eu16, 0x002Du16, 0x0064u16, 0x006Fu16, 0x006Du16, 0x002Du16, 0x0076u16, 0x0031u16, 0x0036u16] as *const [u16] as *const crate::runtime::u_string::UStr) };
+    pub const REVISION_FONT_SOURCE_POLICY: &UStr = unsafe { &*(&[0x0068u16, 0x006Fu16, 0x0073u16, 0x0074u16, 0x002Du16, 0x0063u16, 0x006Fu16, 0x006Du16, 0x0070u16, 0x0061u16, 0x0074u16, 0x0069u16, 0x0062u16, 0x006Cu16, 0x0065u16, 0x002Du16, 0x0073u16, 0x0074u16, 0x0079u16, 0x006Cu16, 0x0065u16, 0x0073u16, 0x0068u16, 0x0065u16, 0x0065u16, 0x0074u16, 0x002Du16, 0x0076u16, 0x0031u16] as *const [u16] as *const crate::runtime::u_string::UStr) };
+    pub const REVISION_FONT_BACKEND_REVISION: &UStr = unsafe { &*(&[0x0074u16, 0x0069u16, 0x0071u16, 0x0069u16, 0x0061u16, 0x006Eu16, 0x002Du16, 0x0073u16, 0x0068u16, 0x0061u16, 0x0072u16, 0x0065u16, 0x0064u16, 0x002Du16, 0x0068u16, 0x0061u16, 0x0072u16, 0x0066u16, 0x0062u16, 0x0075u16, 0x007Au16, 0x007Au16, 0x002Du16, 0x0076u16, 0x0035u16] as *const [u16] as *const crate::runtime::u_string::UStr) };
+    pub const REVISION_FONT_REPLAY_REVISION: &UStr = unsafe { &*(&[0x0074u16, 0x0069u16, 0x0071u16, 0x0069u16, 0x0061u16, 0x006Eu16, 0x002Du16, 0x0073u16, 0x0065u16, 0x0072u16, 0x0076u16, 0x0065u16, 0x0072u16, 0x002Du16, 0x0073u16, 0x0068u16, 0x0061u16, 0x0070u16, 0x0069u16, 0x006Eu16, 0x0067u16, 0x002Du16, 0x0072u16, 0x0065u16, 0x0070u16, 0x006Cu16, 0x0061u16, 0x0079u16, 0x002Du16, 0x0076u16, 0x0031u16] as *const [u16] as *const crate::runtime::u_string::UStr) };
+    pub const REVISION_FONT_REPLAY_TRANSPORT: &UStr = unsafe { &*(&[0x0073u16, 0x0068u16, 0x0061u16, 0x0072u16, 0x0065u16, 0x0064u16, 0x002Du16, 0x0073u16, 0x0074u16, 0x0072u16, 0x0069u16, 0x006Eu16, 0x0067u16, 0x0073u16, 0x002Du16, 0x0076u16, 0x0031u16] as *const [u16] as *const crate::runtime::u_string::UStr) };
     pub const REVISION_FONT_BACKEND_PROTOCOL_REVISION: u32 = 2;
 }

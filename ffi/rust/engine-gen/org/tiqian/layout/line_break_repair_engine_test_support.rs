@@ -43,7 +43,11 @@ use crate::org::tiqian::test::trace::test_trace_recorder::TestTraceRecorder;
 use crate::org::tiqian::test::trace::traced_assertions::TracedAssertions;
 use crate::runtime::string_tools;
 use crate::runtime::u_string;
+use crate::runtime::u_string::UStr;
+use crate::runtime::u_string::UString;
 use std::fmt::Write;
+use std::sync::Arc;
+use std::sync::Mutex;
 
 
 #[derive(Debug, Clone, PartialEq)]
@@ -52,6 +56,16 @@ pub enum LineBreakRepairEngineTestSupportBlobTestTailFault {
     UStringFaultFault(crate::std::u_string_exception::UStringFault),
     ParagraphLayoutEngineNewFaultFault(crate::org::tiqian::layout::paragraph_layout_engine::ParagraphLayoutEngineNewFault),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
+}
+impl std::fmt::Display for LineBreakRepairEngineTestSupportBlobTestTailFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            LineBreakRepairEngineTestSupportBlobTestTailFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            LineBreakRepairEngineTestSupportBlobTestTailFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            LineBreakRepairEngineTestSupportBlobTestTailFault::ParagraphLayoutEngineNewFaultFault(value) => write!(formatter, "{}", value),
+            LineBreakRepairEngineTestSupportBlobTestTailFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
 }
 
 impl From<LineBreakRepairEngineTestSupportBlobTestTailFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
@@ -121,6 +135,16 @@ pub enum LineBreakRepairEngineTestSupportBlobTestNonLexicalFault {
     ParagraphLayoutEngineNewFaultFault(crate::org::tiqian::layout::paragraph_layout_engine::ParagraphLayoutEngineNewFault),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
 }
+impl std::fmt::Display for LineBreakRepairEngineTestSupportBlobTestNonLexicalFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            LineBreakRepairEngineTestSupportBlobTestNonLexicalFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            LineBreakRepairEngineTestSupportBlobTestNonLexicalFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            LineBreakRepairEngineTestSupportBlobTestNonLexicalFault::ParagraphLayoutEngineNewFaultFault(value) => write!(formatter, "{}", value),
+            LineBreakRepairEngineTestSupportBlobTestNonLexicalFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
+}
 
 impl From<LineBreakRepairEngineTestSupportBlobTestNonLexicalFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
     fn from(value: LineBreakRepairEngineTestSupportBlobTestNonLexicalFault) -> Self {
@@ -188,6 +212,16 @@ pub enum LineBreakRepairEngineTestSupportBlobTestFitsAloneFault {
     UStringFaultFault(crate::std::u_string_exception::UStringFault),
     ParagraphLayoutEngineNewFaultFault(crate::org::tiqian::layout::paragraph_layout_engine::ParagraphLayoutEngineNewFault),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
+}
+impl std::fmt::Display for LineBreakRepairEngineTestSupportBlobTestFitsAloneFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            LineBreakRepairEngineTestSupportBlobTestFitsAloneFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            LineBreakRepairEngineTestSupportBlobTestFitsAloneFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            LineBreakRepairEngineTestSupportBlobTestFitsAloneFault::ParagraphLayoutEngineNewFaultFault(value) => write!(formatter, "{}", value),
+            LineBreakRepairEngineTestSupportBlobTestFitsAloneFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
 }
 
 impl From<LineBreakRepairEngineTestSupportBlobTestFitsAloneFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
@@ -257,6 +291,16 @@ pub enum LineBreakRepairEngineTestSupportBlobTestFault {
     ParagraphLayoutEngineNewFaultFault(crate::org::tiqian::layout::paragraph_layout_engine::ParagraphLayoutEngineNewFault),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
 }
+impl std::fmt::Display for LineBreakRepairEngineTestSupportBlobTestFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            LineBreakRepairEngineTestSupportBlobTestFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            LineBreakRepairEngineTestSupportBlobTestFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            LineBreakRepairEngineTestSupportBlobTestFault::ParagraphLayoutEngineNewFaultFault(value) => write!(formatter, "{}", value),
+            LineBreakRepairEngineTestSupportBlobTestFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
+}
 
 impl From<LineBreakRepairEngineTestSupportBlobTestFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
     fn from(value: LineBreakRepairEngineTestSupportBlobTestFault) -> Self {
@@ -322,45 +366,31 @@ impl From<crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFa
 pub struct LineBreakRepairEngineTestSupport;
 
 impl LineBreakRepairEngineTestSupport {
-    pub fn line_break_repair_engine_test_support_input(text: &str, width: f64, spans: Option<Vec<LineBreakSpan>>) -> Result<LayoutInput, TextRangeError> {
-        return Ok(LayoutInput::new(TiqianTextContent::new(text, Some(vec![]), Some(vec![]), Some((match &(spans) { None => vec![], Some(__option2) => (*__option2).clone() }).clone()), Some(vec![])), Some(TextStyle::new(Some(vec![]), Some(16.0), Some("zh-Hans".to_string()),
-Some(400), Some(false), Some(0.0), Some(InlineAttachment::None))), Some(ParagraphStyle::new(Some(LastLineAlignment::Start), Some(WritingMode::HorizontalTb), None, Some((Ic::zero()).clone()), Some(Ic::zero()), Some(MeasureAdaptiveFirstLineIndent::new(Some(14.0), Some(1.0),
-Some(2.0))), Some(LineLengthGrid::new(Some(true), None)), Some(RubyLineHeightMode::PerLine), Some(ParagraphStyle::PARAGRAPH_STYLE_DEFAULT_INLINE_OBJECT_MINIMUM_CLEARANCE_EM), Some(ParagraphStyle::PARAGRAPH_STYLE_DEFAULT_EMPHASIS_DOT_GAP_EM))), LayoutConstraints::new(width,
-Some(f64::INFINITY), Some(2147483647))?, Some((*crate::org::tiqian::core::built_in_layout_profiles::BUILT_IN_LAYOUT_PROFILES_CLREQ_HORIZONTAL).clone()), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![])));
+    pub fn line_break_repair_engine_test_support_input(text: &UStr, width: f64, spans: Option<Vec<LineBreakSpan>>) -> Result<LayoutInput, TextRangeError> {
+        return Ok(LayoutInput::new(TiqianTextContent::new(text, Some(vec![]), Some(vec![]), Some((match &(spans) { None => vec![], Some(__option2) => (*__option2).clone() }).clone()), Some(vec![])), Some(TextStyle::new(Some(vec![]), Some(16.0), Some(UString::from("zh-Hans")), Some(400), Some(false), Some(0.0), Some(InlineAttachment::None))), Some(ParagraphStyle::new(Some(LastLineAlignment::Start), Some(WritingMode::HorizontalTb), None, Some((Ic::zero()).clone()), Some(Ic::zero()), Some(MeasureAdaptiveFirstLineIndent::new(Some(14.0), Some(1.0), Some(2.0))), Some(LineLengthGrid::new(Some(true), None)), Some(RubyLineHeightMode::PerLine), Some(ParagraphStyle::PARAGRAPH_STYLE_DEFAULT_INLINE_OBJECT_MINIMUM_CLEARANCE_EM), Some(ParagraphStyle::PARAGRAPH_STYLE_DEFAULT_EMPHASIS_DOT_GAP_EM))), LayoutConstraints::new(width, Some(f64::INFINITY), Some(2147483647))?, Some((*crate::org::tiqian::core::built_in_layout_profiles::BUILT_IN_LAYOUT_PROFILES_CLREQ_HORIZONTAL).clone()), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![])));
     }
 
-    pub fn line_break_repair_engine_test_support_layout(text: &str, width: f64, breaker: Option<Box<dyn LineBreaker>>, hyphenator: Option<Box<dyn Hyphenator>>, spans: Option<Vec<LineBreakSpan>>) -> Result<LayoutResult, ParagraphLayoutEngineNewFault> {
-        return Ok(ExplainableStubParagraphLayoutEngine::new(Some(Box::new(CjkFontRoleClassifier::new())), Some(Box::new(ParagraphLayoutFallbackResolver::new(Some("cjk-primary".to_string()), Some("latin-primary".to_string()), Some("symbol-fallback".to_string()))?)),
-Some(Box::new(BuiltInClreqProfileResolver::new())), Some(Box::new(StubFontMetricsResolver::new())), Some(Box::new(ScriptAwareFontMetricsNormalizer::new())), Some((PunctuationAtomBuilder::new(None, None)?).clone()), Some((PunctuationSpacingCompressor::new()?).clone()),
-Some(QuotePairAnalyzer::new()), breaker, Some(Justifier::new(Some(0.5), Some(0.25))), Some(Box::new(ExplainableStubTextShaper::new())), hyphenator,
-Some(Box::new(LruWidthIndependentAnnotationCache::new(512))))?.layout(LineBreakRepairEngineTestSupport::line_break_repair_engine_test_support_input(text, width, (spans).clone()).map_err(|e| ParagraphLayoutEngineNewFault::TextRangeErrorFault(e))?).map_err(|e|
-ParagraphLayoutEngineNewFault::LayoutWithRejectedTechnicalTiersFault(e))?);
+    pub fn line_break_repair_engine_test_support_layout(text: &UStr, width: f64, breaker: Option<Box<dyn LineBreaker>>, hyphenator: Option<Box<dyn Hyphenator>>, spans: Option<Vec<LineBreakSpan>>) -> Result<LayoutResult, ParagraphLayoutEngineNewFault> {
+        return Ok(ExplainableStubParagraphLayoutEngine::new(Some(Box::new(CjkFontRoleClassifier::new())), Some(Box::new(ParagraphLayoutFallbackResolver::new(Some(UString::from("cjk-primary")), Some(UString::from("latin-primary")), Some(UString::from("symbol-fallback")))?)), Some(Box::new(BuiltInClreqProfileResolver::new())), Some(Box::new(StubFontMetricsResolver::new())), Some(Box::new(ScriptAwareFontMetricsNormalizer::new())), Some((PunctuationAtomBuilder::new(None, None)?).clone()), Some((PunctuationSpacingCompressor::new()?).clone()), Some(QuotePairAnalyzer::new()), breaker, Some(Justifier::new(Some(0.5), Some(0.25))), Some(Arc::new(Mutex::new(ExplainableStubTextShaper::new()))), hyphenator, Some(Arc::new(Mutex::new(LruWidthIndependentAnnotationCache::new(512)))))?.layout(LineBreakRepairEngineTestSupport::line_break_repair_engine_test_support_input(text, width, (spans).clone()).map_err(|e| ParagraphLayoutEngineNewFault::TextRangeErrorFault(e))?).map_err(|e| ParagraphLayoutEngineNewFault::LayoutWithRejectedTechnicalTiersFault(e))?);
     }
 
-    pub fn line_break_repair_engine_test_support_layout_with_grid(text: &str, width: f64, grid_enabled: bool, breaker: Option<Box<dyn LineBreaker>>, hyphenator: Option<Box<dyn Hyphenator>>, spans: Option<Vec<LineBreakSpan>>) -> Result<LayoutResult, ParagraphLayoutEngineNewFault>
-{
-        return Ok(ExplainableStubParagraphLayoutEngine::new(Some(Box::new(CjkFontRoleClassifier::new())), Some(Box::new(ParagraphLayoutFallbackResolver::new(Some("cjk-primary".to_string()), Some("latin-primary".to_string()), Some("symbol-fallback".to_string()))?)),
-Some(Box::new(BuiltInClreqProfileResolver::new())), Some(Box::new(StubFontMetricsResolver::new())), Some(Box::new(ScriptAwareFontMetricsNormalizer::new())), Some((PunctuationAtomBuilder::new(None, None)?).clone()), Some((PunctuationSpacingCompressor::new()?).clone()),
-Some(QuotePairAnalyzer::new()), breaker, Some(Justifier::new(Some(0.5), Some(0.25))), Some(Box::new(ExplainableStubTextShaper::new())), hyphenator, Some(Box::new(LruWidthIndependentAnnotationCache::new(512))))?.layout(LayoutInput::new(TiqianTextContent::new(text, Some(vec![]),
-Some(vec![]), Some((match &(spans) { None => vec![], Some(__option58) => (*__option58).clone() }).clone()), Some(vec![])), Some(TextStyle::new(Some(vec![]), Some(16.0), Some("zh-Hans".to_string()), Some(400), Some(false), Some(0.0), Some(InlineAttachment::None))),
-Some(ParagraphStyle::new(Some(LastLineAlignment::Start), Some(WritingMode::HorizontalTb), None, Some((Ic::zero()).clone()), Some(Ic::zero()), Some(MeasureAdaptiveFirstLineIndent::new(Some(14.0), Some(1.0), Some(2.0))), Some(LineLengthGrid::new(Some(grid_enabled), None)),
-Some(RubyLineHeightMode::PerLine), Some(ParagraphStyle::PARAGRAPH_STYLE_DEFAULT_INLINE_OBJECT_MINIMUM_CLEARANCE_EM), Some(ParagraphStyle::PARAGRAPH_STYLE_DEFAULT_EMPHASIS_DOT_GAP_EM))), LayoutConstraints::new(width, Some(f64::INFINITY), Some(2147483647)).map_err(|e|
-ParagraphLayoutEngineNewFault::TextRangeErrorFault(e))?, Some((*crate::org::tiqian::core::built_in_layout_profiles::BUILT_IN_LAYOUT_PROFILES_CLREQ_HORIZONTAL).clone()), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]))).map_err(|e|
-ParagraphLayoutEngineNewFault::LayoutWithRejectedTechnicalTiersFault(e))?);
+    pub fn line_break_repair_engine_test_support_layout_with_grid(text: &UStr, width: f64, grid_enabled: bool, breaker: Option<Box<dyn LineBreaker>>, hyphenator: Option<Box<dyn Hyphenator>>, spans: Option<Vec<LineBreakSpan>>) -> Result<LayoutResult,
+ParagraphLayoutEngineNewFault> {
+        return Ok(ExplainableStubParagraphLayoutEngine::new(Some(Box::new(CjkFontRoleClassifier::new())), Some(Box::new(ParagraphLayoutFallbackResolver::new(Some(UString::from("cjk-primary")), Some(UString::from("latin-primary")), Some(UString::from("symbol-fallback")))?)), Some(Box::new(BuiltInClreqProfileResolver::new())), Some(Box::new(StubFontMetricsResolver::new())), Some(Box::new(ScriptAwareFontMetricsNormalizer::new())), Some((PunctuationAtomBuilder::new(None, None)?).clone()), Some((PunctuationSpacingCompressor::new()?).clone()), Some(QuotePairAnalyzer::new()), breaker, Some(Justifier::new(Some(0.5), Some(0.25))), Some(Arc::new(Mutex::new(ExplainableStubTextShaper::new()))), hyphenator, Some(Arc::new(Mutex::new(LruWidthIndependentAnnotationCache::new(512)))))?.layout(LayoutInput::new(TiqianTextContent::new(text, Some(vec![]), Some(vec![]), Some((match &(spans) { None => vec![], Some(__option58) => (*__option58).clone() }).clone()), Some(vec![])), Some(TextStyle::new(Some(vec![]), Some(16.0), Some(UString::from("zh-Hans")), Some(400), Some(false), Some(0.0), Some(InlineAttachment::None))), Some(ParagraphStyle::new(Some(LastLineAlignment::Start), Some(WritingMode::HorizontalTb), None, Some((Ic::zero()).clone()), Some(Ic::zero()), Some(MeasureAdaptiveFirstLineIndent::new(Some(14.0), Some(1.0), Some(2.0))), Some(LineLengthGrid::new(Some(grid_enabled), None)), Some(RubyLineHeightMode::PerLine), Some(ParagraphStyle::PARAGRAPH_STYLE_DEFAULT_INLINE_OBJECT_MINIMUM_CLEARANCE_EM), Some(ParagraphStyle::PARAGRAPH_STYLE_DEFAULT_EMPHASIS_DOT_GAP_EM))), LayoutConstraints::new(width, Some(f64::INFINITY), Some(2147483647)).map_err(|e| ParagraphLayoutEngineNewFault::TextRangeErrorFault(e))?, Some((*crate::org::tiqian::core::built_in_layout_profiles::BUILT_IN_LAYOUT_PROFILES_CLREQ_HORIZONTAL).clone()), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]))).map_err(|e| ParagraphLayoutEngineNewFault::LayoutWithRejectedTechnicalTiersFault(e))?);
     }
 
-    pub fn line_break_repair_engine_test_support_line_text(r: LayoutResult, n: u32) -> String {
+    pub fn line_break_repair_engine_test_support_line_text(r: LayoutResult, n: u32) -> UString {
         let l = (r.lines[usize::try_from(n).unwrap_or(0)]).clone();
-        let mut s = String::new();
+        let mut s = UString::new();
         for i in l.cluster_range.start..u32::wrapping_add(l.cluster_range.end, 1) {
-            s += &(((r.clusters[usize::try_from(i).unwrap_or(0)]).clone().text).to_string());
+            s += &(((r.clusters[usize::try_from(i).unwrap_or(0)]).clone().text).to_ustring());
         }
         return s;
     }
 
-    pub fn line_break_repair_engine_test_support_has_text(r: LayoutResult, s: &str) -> bool {
+    pub fn line_break_repair_engine_test_support_has_text(r: LayoutResult, s: &UStr) -> bool {
         for i in 0..match u32::try_from(r.clusters.len()) { Ok(value) => value, Err(_) => u32::MAX } {
-            if r.clusters[usize::try_from(i).unwrap_or(0)].clone().text.to_string() == s {
+            if r.clusters[usize::try_from(i).unwrap_or(0)].clone().text.to_ustring() == s {
                 return true;
             }
         }
@@ -377,126 +407,70 @@ ParagraphLayoutEngineNewFault::LayoutWithRejectedTechnicalTiersFault(e))?);
     }
 
     pub fn line_break_repair_engine_test_support_fixed(level: Option<KinsokuLevel>, hanging: Option<HangingPunctuationStyle>) -> Result<ExplainableStubParagraphLayoutEngine, ParagraphLayoutEngineNewFault> {
-        return Ok(ExplainableStubParagraphLayoutEngine::new(Some(Box::new(CjkFontRoleClassifier::new())), Some(Box::new(ParagraphLayoutFallbackResolver::new(Some("cjk-primary".to_string()), Some("latin-primary".to_string()), Some("symbol-fallback".to_string()))?)),
-Some(Box::new(FixedProfileResolver::new(level, hanging))), Some(Box::new(StubFontMetricsResolver::new())), Some(Box::new(ScriptAwareFontMetricsNormalizer::new())), Some((PunctuationAtomBuilder::new(None, None)?).clone()), Some((PunctuationSpacingCompressor::new()?).clone()),
-Some(QuotePairAnalyzer::new()), Some(Box::new(GreedyLineBreaker::new(None, None, None, None))), Some(Justifier::new(Some(0.5), Some(0.25))), Some(Box::new(ExplainableStubTextShaper::new())), Some(Box::new(NoHyphenator::new())),
-Some(Box::new(LruWidthIndependentAnnotationCache::new(512))))?);
+        return Ok(ExplainableStubParagraphLayoutEngine::new(Some(Box::new(CjkFontRoleClassifier::new())), Some(Box::new(ParagraphLayoutFallbackResolver::new(Some(UString::from("cjk-primary")), Some(UString::from("latin-primary")), Some(UString::from("symbol-fallback")))?)), Some(Box::new(FixedProfileResolver::new(level, hanging))), Some(Box::new(StubFontMetricsResolver::new())), Some(Box::new(ScriptAwareFontMetricsNormalizer::new())), Some((PunctuationAtomBuilder::new(None, None)?).clone()), Some((PunctuationSpacingCompressor::new()?).clone()), Some(QuotePairAnalyzer::new()), Some(Box::new(GreedyLineBreaker::new(None, None, None, None))), Some(Justifier::new(Some(0.5), Some(0.25))), Some(Arc::new(Mutex::new(ExplainableStubTextShaper::new()))), Some(Box::new(NoHyphenator::new())), Some(Arc::new(Mutex::new(LruWidthIndependentAnnotationCache::new(512)))))?);
     }
 
-    pub fn line_break_repair_engine_test_support_render_strings(a: &[String]) -> String {
-        let mut parts: Vec<String> = vec![];
+    pub fn line_break_repair_engine_test_support_render_strings(a: &[UString]) -> UString {
+        let mut parts: Vec<UString> = vec![];
         for i in 0..match u32::try_from(a.len()) { Ok(value) => value, Err(_) => u32::MAX } {
             parts.push((a[usize::try_from(i).unwrap_or(0)]).clone());
         }
-        return format!("{}{}{}",
-            "[",
-            { let joined = parts; let mut out = String::new(); let n = joined.len(); let mut index = 0usize; while index < n { if index > 0 { out.push_str(&(", ")); } let _ = write!(out, "{}", joined[index]); index += 1; } out },
-            "]"
-        );
+        return UString::from(format!("{}", { let mut __s = UString::new(); __s += &(UString::from("[")); __s += UString::from(format!("{}", { let joined = parts; let mut out = String::new(); let n = joined.len(); let mut index = 0usize; while index < n { if index > 0 { out.push_str(", "); } let _ = write!(out, "{}", joined[index]); index += 1; } UString::from(out.as_str()) }).as_str()).as_ustr(); __s += &(UString::from("]")); __s }).as_str());
     }
 
-    pub fn line_break_repair_engine_test_support_render_list<T: Clone + std::fmt::Debug>(a: &[T]) -> String {
-        let mut parts: Vec<String> = vec![];
+    pub fn line_break_repair_engine_test_support_render_list<T: Clone + std::fmt::Debug>(a: &[T]) -> UString {
+        let mut parts: Vec<UString> = vec![];
         for i in 0..match u32::try_from(a.len()) { Ok(value) => value, Err(_) => u32::MAX } {
-            parts.push(format!("{:?}", (a[usize::try_from(i).unwrap_or(0)]).clone()));
+            parts.push(UString::from(format!("{}", format!("{:?}", (a[usize::try_from(i).unwrap_or(0)]).clone())).as_str()));
         }
-        return format!("{}{}{}",
-            "[",
-            { let joined1 = parts; let mut out = String::new(); let n = joined1.len(); let mut index1 = 0usize; while index1 < n { if index1 > 0 { out.push_str(&(", ")); } let _ = write!(out, "{}", joined1[index1]); index1 += 1; } out },
-            "]"
-        );
+        return UString::from(format!("{}", { let mut __s = UString::new(); __s += &(UString::from("[")); __s += UString::from(format!("{}", { let joined1 = parts; let mut out = String::new(); let n = joined1.len(); let mut index1 = 0usize; while index1 < n { if index1 > 0 { out.push_str(", "); } let _ = write!(out, "{}", joined1[index1]); index1 += 1; } UString::from(out.as_str()) }).as_str()).as_ustr(); __s += &(UString::from("]")); __s }).as_str());
     }
 
     pub fn line_break_repair_engine_test_support_blob_test_tail(_t: TestTraceRecorder) -> Result<(), LineBreakRepairEngineTestSupportBlobTestTailFault> {
-        let p = "为什么历史是 ".to_string();
-        let s = format!("{}{}",
-            string_tools::StringTools::string_tools_lpad(&"", &"s", 40i32),
-            "herstory"
-        );
-        let r = LineBreakRepairEngineTestSupport::line_break_repair_engine_test_support_layout(format!("{}{}",
-            p,
-            s
-        ).as_str(), 160 as f64, Some(Box::new(LookaheadLineBreaker::new(Some(2), Some(2), Some(0.5), Some(Box::new(ClreqKinsokuRule::new(Some(KinsokuLevel::Basic)))), Some(2), Some(10), Some(20), Some(12.0)))), Some(Box::new(TailHyphenator::new())), None).map_err(|e|
-LineBreakRepairEngineTestSupportBlobTestTailFault::ParagraphLayoutEngineNewFaultFault(e))?;
+        let p = UString::from("为什么历史是 ").to_ustring();
+        let s = { let mut __s = UString::new(); __s += string_tools::StringTools::string_tools_lpad(UStr::new(&[]), UStr::new(&[115]), 40i32).as_ustr(); __s += &(UString::from("herstory")); __s };
+        let r = LineBreakRepairEngineTestSupport::line_break_repair_engine_test_support_layout(UString::from(format!("{}", { let mut __s = UString::new(); __s += p.as_ustr(); __s += s.as_ustr(); __s }).as_str()).as_ustr(), 160 as f64, Some(Box::new(LookaheadLineBreaker::new(Some(2), Some(2), Some(0.5), Some(Box::new(ClreqKinsokuRule::new(Some(KinsokuLevel::Basic)))), Some(2), Some(10), Some(20), Some(12.0)))), Some(Box::new(TailHyphenator::new())), None).map_err(|e| LineBreakRepairEngineTestSupportBlobTestTailFault::ParagraphLayoutEngineNewFaultFault(e))?;
         let x = LineBreakRepairEngineTestSupport::line_break_repair_engine_test_support_line_text((r).clone(), 0);
-        let _ = TracedAssertions::traced_assertions_assert_true((i32::from_ne_bytes((u_string::unit_count(&(x))).to_ne_bytes())) > (7), Some((format!("{}{}",
-            "first line should carry part of the opaque letter blob: ",
-            x
-        )).to_string())).map_err(|e| LineBreakRepairEngineTestSupportBlobTestTailFault::TracedAssertionsFailFaultFault(e))?;
+        let _ = TracedAssertions::traced_assertions_assert_true((i32::from_ne_bytes(((u_string::unit_count(&(x))) as i32).to_ne_bytes())) > (7), Some(UString::from(format!("{}", { let mut __s = UString::new(); __s += &(UString::from("first line should carry part of the opaque letter blob: ")); __s += x.as_ustr(); __s }).as_str()))).map_err(|e| LineBreakRepairEngineTestSupportBlobTestTailFault::TracedAssertionsFailFaultFault(e))?;
         let _ = TracedAssertions::traced_assertions_assert_true(LineBreakRepairEngineTestSupport::line_break_repair_engine_test_support_no_hyphen((r).clone()), None).map_err(|e| LineBreakRepairEngineTestSupportBlobTestTailFault::TracedAssertionsFailFaultFault(e))?;
-        let _ = TracedAssertions::traced_assertions_assert_true(!LineBreakRepairEngineTestSupport::line_break_repair_engine_test_support_has_text((r).clone(), s.as_str()), None).map_err(|e| LineBreakRepairEngineTestSupportBlobTestTailFault::TracedAssertionsFailFaultFault(e))?;
+        let _ = TracedAssertions::traced_assertions_assert_true(!LineBreakRepairEngineTestSupport::line_break_repair_engine_test_support_has_text((r).clone(), s.as_ustr()), None).map_err(|e| LineBreakRepairEngineTestSupportBlobTestTailFault::TracedAssertionsFailFaultFault(e))?;
         Ok(())
     }
 
     pub fn line_break_repair_engine_test_support_blob_test_fits_alone(_t: TestTraceRecorder) -> Result<(), LineBreakRepairEngineTestSupportBlobTestFitsAloneFault> {
-        let p = "为什么历史是 ".to_string();
-        let s = format!("{}{}",
-            string_tools::StringTools::string_tools_lpad(&"", &"s", 40i32),
-            "herstory"
-        );
-        let r = LineBreakRepairEngineTestSupport::line_break_repair_engine_test_support_layout(format!("{}{}",
-            p,
-            s
-        ).as_str(), 800 as f64, Some(Box::new(LookaheadLineBreaker::new(Some(2), Some(2), Some(0.5), Some(Box::new(ClreqKinsokuRule::new(Some(KinsokuLevel::Basic)))), Some(2), Some(10), Some(20), Some(12.0)))), Some(Box::new(TailHyphenator::new())), None).map_err(|e|
-LineBreakRepairEngineTestSupportBlobTestFitsAloneFault::ParagraphLayoutEngineNewFaultFault(e))?;
+        let p = UString::from("为什么历史是 ").to_ustring();
+        let s = { let mut __s = UString::new(); __s += string_tools::StringTools::string_tools_lpad(UStr::new(&[]), UStr::new(&[115]), 40i32).as_ustr(); __s += &(UString::from("herstory")); __s };
+        let r = LineBreakRepairEngineTestSupport::line_break_repair_engine_test_support_layout(UString::from(format!("{}", { let mut __s = UString::new(); __s += p.as_ustr(); __s += s.as_ustr(); __s }).as_str()).as_ustr(), 800 as f64, Some(Box::new(LookaheadLineBreaker::new(Some(2), Some(2), Some(0.5), Some(Box::new(ClreqKinsokuRule::new(Some(KinsokuLevel::Basic)))), Some(2), Some(10), Some(20), Some(12.0)))), Some(Box::new(TailHyphenator::new())), None).map_err(|e| LineBreakRepairEngineTestSupportBlobTestFitsAloneFault::ParagraphLayoutEngineNewFaultFault(e))?;
         let x = LineBreakRepairEngineTestSupport::line_break_repair_engine_test_support_line_text((r).clone(), 0);
-        let _ = TracedAssertions::traced_assertions_assert_true((i32::from_ne_bytes((u_string::unit_count(&(x))).to_ne_bytes())) > (7), Some((format!("{}{}{}{}",
-            "first line should carry part of the long opaque token instead of stretching only '",
-            p,
-            "': ",
-            x
-        )).to_string())).map_err(|e| LineBreakRepairEngineTestSupportBlobTestFitsAloneFault::TracedAssertionsFailFaultFault(e))?;
-        let _ = TracedAssertions::traced_assertions_assert_true(!LineBreakRepairEngineTestSupport::line_break_repair_engine_test_support_has_text((r).clone(), s.as_str()), None).map_err(|e|
-LineBreakRepairEngineTestSupportBlobTestFitsAloneFault::TracedAssertionsFailFaultFault(e))?;
+        let _ = TracedAssertions::traced_assertions_assert_true((i32::from_ne_bytes(((u_string::unit_count(&(x))) as i32).to_ne_bytes())) > (7), Some(UString::from(format!("{}", { let mut __s = UString::new(); __s += &(UString::from("first line should carry part of the long opaque token instead of stretching only '")); __s += p.as_ustr(); __s += &(UString::from("': ")); __s += x.as_ustr(); __s }).as_str()))).map_err(|e| LineBreakRepairEngineTestSupportBlobTestFitsAloneFault::TracedAssertionsFailFaultFault(e))?;
+        let _ = TracedAssertions::traced_assertions_assert_true(!LineBreakRepairEngineTestSupport::line_break_repair_engine_test_support_has_text((r).clone(), s.as_ustr()), None).map_err(|e| LineBreakRepairEngineTestSupportBlobTestFitsAloneFault::TracedAssertionsFailFaultFault(e))?;
         let _ = TracedAssertions::traced_assertions_assert_true(LineBreakRepairEngineTestSupport::line_break_repair_engine_test_support_no_hyphen((r).clone()), None).map_err(|e| LineBreakRepairEngineTestSupportBlobTestFitsAloneFault::TracedAssertionsFailFaultFault(e))?;
         Ok(())
     }
 
     pub fn line_break_repair_engine_test_support_blob_test_non_lexical(_t: TestTraceRecorder) -> Result<(), LineBreakRepairEngineTestSupportBlobTestNonLexicalFault> {
-        let p = "为什么历史是 ".to_string();
-        let s = format!("{}{}",
-            string_tools::StringTools::string_tools_lpad(&"", &"s", 40i32),
-            "herstory"
-        );
-        let r = LineBreakRepairEngineTestSupport::line_break_repair_engine_test_support_layout(format!("{}{}",
-            p,
-            s
-        ).as_str(), 160 as f64, Some(Box::new(LookaheadLineBreaker::new(Some(2), Some(2), Some(0.5), Some(Box::new(ClreqKinsokuRule::new(Some(KinsokuLevel::Basic)))), Some(2), Some(10), Some(20), Some(12.0)))), Some(Box::new(NoHyphenator::new())), None).map_err(|e|
-LineBreakRepairEngineTestSupportBlobTestNonLexicalFault::ParagraphLayoutEngineNewFaultFault(e))?;
+        let p = UString::from("为什么历史是 ").to_ustring();
+        let s = { let mut __s = UString::new(); __s += string_tools::StringTools::string_tools_lpad(UStr::new(&[]), UStr::new(&[115]), 40i32).as_ustr(); __s += &(UString::from("herstory")); __s };
+        let r = LineBreakRepairEngineTestSupport::line_break_repair_engine_test_support_layout(UString::from(format!("{}", { let mut __s = UString::new(); __s += p.as_ustr(); __s += s.as_ustr(); __s }).as_str()).as_ustr(), 160 as f64, Some(Box::new(LookaheadLineBreaker::new(Some(2), Some(2), Some(0.5), Some(Box::new(ClreqKinsokuRule::new(Some(KinsokuLevel::Basic)))), Some(2), Some(10), Some(20), Some(12.0)))), Some(Box::new(NoHyphenator::new())), None).map_err(|e| LineBreakRepairEngineTestSupportBlobTestNonLexicalFault::ParagraphLayoutEngineNewFaultFault(e))?;
         let x = LineBreakRepairEngineTestSupport::line_break_repair_engine_test_support_line_text((r).clone(), 0);
-        let _ = TracedAssertions::traced_assertions_assert_true((i32::from_ne_bytes((u_string::unit_count(&(x))).to_ne_bytes())) > (7), Some((format!("{}{}",
-            "first line should carry part of the non-lexical letter run: ",
-            x
-        )).to_string())).map_err(|e| LineBreakRepairEngineTestSupportBlobTestNonLexicalFault::TracedAssertionsFailFaultFault(e))?;
+        let _ = TracedAssertions::traced_assertions_assert_true((i32::from_ne_bytes(((u_string::unit_count(&(x))) as i32).to_ne_bytes())) > (7), Some(UString::from(format!("{}", { let mut __s = UString::new(); __s += &(UString::from("first line should carry part of the non-lexical letter run: ")); __s += x.as_ustr(); __s }).as_str()))).map_err(|e| LineBreakRepairEngineTestSupportBlobTestNonLexicalFault::TracedAssertionsFailFaultFault(e))?;
         let _ = TracedAssertions::traced_assertions_assert_true(LineBreakRepairEngineTestSupport::line_break_repair_engine_test_support_no_hyphen((r).clone()), None).map_err(|e| LineBreakRepairEngineTestSupportBlobTestNonLexicalFault::TracedAssertionsFailFaultFault(e))?;
         Ok(())
     }
 
     pub fn line_break_repair_engine_test_support_blob_test(_t: TestTraceRecorder, w: f64, _ignored: bool) -> Result<(), LineBreakRepairEngineTestSupportBlobTestFault> {
-        let p = "为什么历史是 ".to_string();
-        let s = format!("{}{}",
-            string_tools::StringTools::string_tools_lpad(&"", &"s", 40i32),
-            "herstory"
-        );
-        let r = LineBreakRepairEngineTestSupport::line_break_repair_engine_test_support_layout(format!("{}{}",
-            p,
-            s
-        ).as_str(), w, Some(Box::new(LookaheadLineBreaker::new(Some(2), Some(2), Some(0.5), Some(Box::new(ClreqKinsokuRule::new(Some(KinsokuLevel::Basic)))), Some(2), Some(10), Some(20), Some(12.0)))), Some(Box::new(NoHyphenator::new())), None).map_err(|e|
-LineBreakRepairEngineTestSupportBlobTestFault::ParagraphLayoutEngineNewFaultFault(e))?;
+        let p = UString::from("为什么历史是 ").to_ustring();
+        let s = { let mut __s = UString::new(); __s += string_tools::StringTools::string_tools_lpad(UStr::new(&[]), UStr::new(&[115]), 40i32).as_ustr(); __s += &(UString::from("herstory")); __s };
+        let r = LineBreakRepairEngineTestSupport::line_break_repair_engine_test_support_layout(UString::from(format!("{}", { let mut __s = UString::new(); __s += p.as_ustr(); __s += s.as_ustr(); __s }).as_str()).as_ustr(), w, Some(Box::new(LookaheadLineBreaker::new(Some(2), Some(2), Some(0.5), Some(Box::new(ClreqKinsokuRule::new(Some(KinsokuLevel::Basic)))), Some(2), Some(10), Some(20), Some(12.0)))), Some(Box::new(NoHyphenator::new())), None).map_err(|e| LineBreakRepairEngineTestSupportBlobTestFault::ParagraphLayoutEngineNewFaultFault(e))?;
         let x = LineBreakRepairEngineTestSupport::line_break_repair_engine_test_support_line_text((r).clone(), 0);
-        let _ = TracedAssertions::traced_assertions_assert_true((i32::from_ne_bytes((u_string::unit_count(&(x))).to_ne_bytes())) > (7), Some((format!("{}{}{}{}",
-            "first line should carry part of the long opaque token instead of stretching only '",
-            p,
-            "': ",
-            x
-        )).to_string())).map_err(|e| LineBreakRepairEngineTestSupportBlobTestFault::TracedAssertionsFailFaultFault(e))?;
+        let _ = TracedAssertions::traced_assertions_assert_true((i32::from_ne_bytes(((u_string::unit_count(&(x))) as i32).to_ne_bytes())) > (7), Some(UString::from(format!("{}", { let mut __s = UString::new(); __s += &(UString::from("first line should carry part of the long opaque token instead of stretching only '")); __s += p.as_ustr(); __s += &(UString::from("': ")); __s += x.as_ustr(); __s }).as_str()))).map_err(|e| LineBreakRepairEngineTestSupportBlobTestFault::TracedAssertionsFailFaultFault(e))?;
         let _ = TracedAssertions::traced_assertions_assert_true(LineBreakRepairEngineTestSupport::line_break_repair_engine_test_support_no_hyphen((r).clone()), None).map_err(|e| LineBreakRepairEngineTestSupportBlobTestFault::TracedAssertionsFailFaultFault(e))?;
-        let _ = TracedAssertions::traced_assertions_assert_true(!LineBreakRepairEngineTestSupport::line_break_repair_engine_test_support_has_text((r).clone(), s.as_str()), None).map_err(|e| LineBreakRepairEngineTestSupportBlobTestFault::TracedAssertionsFailFaultFault(e))?;
+        let _ = TracedAssertions::traced_assertions_assert_true(!LineBreakRepairEngineTestSupport::line_break_repair_engine_test_support_has_text((r).clone(), s.as_ustr()), None).map_err(|e| LineBreakRepairEngineTestSupportBlobTestFault::TracedAssertionsFailFaultFault(e))?;
         Ok(())
     }
 
-    pub fn line_break_repair_engine_test_support_kinsoku_start(n: &str) -> TestTraceRecorder {
-        let mut t = TestTraceRecorder::new("KinsokuAndCohesionRepairEngineTest");
+    pub fn line_break_repair_engine_test_support_kinsoku_start(n: &UStr) -> TestTraceRecorder {
+        let mut t = TestTraceRecorder::new(&(UStr::new(&[75,105,110,115,111,107,117,65,110,100,67,111,104,101,115,105,111,110,82,101,112,97,105,114,69,110,103,105,110,101,84,101,115,116])));
         t.section(n);
         return t;
     }
@@ -520,8 +494,7 @@ impl FixedProfileResolver {
 
     pub fn resolve(&self, _id: LayoutProfileId) -> ClreqProfile {
         let b = (*crate::org::tiqian::clreq::clreq_profile::CLREQ_PROFILE_MAINLAND_HORIZONTAL).clone();
-        return ClreqProfile::new((b.id).to_string().as_str(), b.strictness, b.region, Some(b.punctuation_glyph_policy), Some(crate::org::tiqian::clreq::clreq_profile::CLREQ_PROFILE_DEFAULT_COALESCE_REPEATABLE_PUNCTUATION.to_vec()), Some((b.auto_space).clone()),
-Some(b.glue_placement), (b.adjustment).clone(), KinsokuMode::Fixed { level: self.level, hanging: self.hanging }, (b.punctuation_width).clone());
+        return ClreqProfile::new((b.id).to_ustring().as_ustr(), b.strictness, b.region, Some(b.punctuation_glyph_policy), Some(crate::org::tiqian::clreq::clreq_profile::CLREQ_PROFILE_DEFAULT_COALESCE_REPEATABLE_PUNCTUATION.to_vec()), Some((b.auto_space).clone()), Some(b.glue_placement), (b.adjustment).clone(), KinsokuMode::Fixed { level: self.level, hanging: self.hanging }, (b.punctuation_width).clone());
     }
 }
 
@@ -538,7 +511,6 @@ impl ClreqProfileResolver for FixedProfileResolver {
 
     fn resolve(&self, _id: LayoutProfileId) -> ClreqProfile {
         let b = (*crate::org::tiqian::clreq::clreq_profile::CLREQ_PROFILE_MAINLAND_HORIZONTAL).clone();
-        return ClreqProfile::new((b.id).to_string().as_str(), b.strictness, b.region, Some(b.punctuation_glyph_policy), Some(crate::org::tiqian::clreq::clreq_profile::CLREQ_PROFILE_DEFAULT_COALESCE_REPEATABLE_PUNCTUATION.to_vec()), Some((b.auto_space).clone()),
-Some(b.glue_placement), (b.adjustment).clone(), KinsokuMode::Fixed { level: self.level, hanging: self.hanging }, (b.punctuation_width).clone());
+        return ClreqProfile::new((b.id).to_ustring().as_ustr(), b.strictness, b.region, Some(b.punctuation_glyph_policy), Some(crate::org::tiqian::clreq::clreq_profile::CLREQ_PROFILE_DEFAULT_COALESCE_REPEATABLE_PUNCTUATION.to_vec()), Some((b.auto_space).clone()), Some(b.glue_placement), (b.adjustment).clone(), KinsokuMode::Fixed { level: self.level, hanging: self.hanging }, (b.punctuation_width).clone());
     }
 }

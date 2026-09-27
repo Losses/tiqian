@@ -1,4 +1,5 @@
 use crate::org::tiqian::protocol::wire_field::WireField;
+use crate::runtime::u_string::UString;
 use std::fmt::Write;
 
 
@@ -7,7 +8,7 @@ pub enum WireValue {
     WNull,
     WBool { value: bool },
     WNum { value: f64 },
-    WStr { value: String },
+    WStr { value: UString },
     WArr { items: Vec<WireValue> },
     WObj { fields: Vec<WireField> },
 }

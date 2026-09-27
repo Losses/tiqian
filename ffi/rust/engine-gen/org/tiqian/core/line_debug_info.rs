@@ -1,29 +1,25 @@
+use crate::runtime::u_string::UStr;
+use crate::runtime::u_string::UString;
 use std::fmt::Write;
 
 
 #[derive(Debug, Clone, PartialEq)]
 pub struct LineDebugInfo {
-    pub repair: Option<String>,
-    pub notes: Vec<String>,
+    pub repair: Option<UString>,
+    pub notes: Vec<UString>,
 }
 
 impl LineDebugInfo {
-    pub fn new(repair: Option<String>, notes: Option<Vec<String>>) -> Self {
+    pub fn new(repair: Option<UString>, notes: Option<Vec<UString>>) -> Self {
         let notes = notes.unwrap_or_else(|| vec![]);
         Self {
-            repair: match repair { Some(v) => Some(v.to_string()), None => None },
+            repair,
             notes: notes,
         }
     }
 
-    pub fn to_string(&self) -> String {
-        return format!("{}{}{}{}{}{}{}",
-            "LineDebugInfo(",
-            "repair=",
-            match (self.repair).clone() { Some(ref v) => v.to_string(), None => "null".to_string() },
-            ", ",
-            "notes=",
-            {
+    pub fn to_string(&self) -> UString {
+        return UString::from(format!("{}", { let mut __s = UString::new(); __s += &(UString::from("LineDebugInfo(")); __s += &(UString::from("repair=")); __s += match &((self.repair).clone()) { Some(v) => v.as_ustr(), None => UStr::new(&[]) }; __s += &(UString::from(", ")); __s += &(UString::from("notes=")); __s += UString::from(format!("{}", {
         let mut out = String::new();
         out.push('[');
         let arr = (self.notes).clone();
@@ -36,8 +32,6 @@ impl LineDebugInfo {
         }
         out.push(']');
         out
-    },
-            ")"
-        );
+    }).as_str()).as_ustr(); __s += &(UString::from(")")); __s }).as_str());
     }
 }

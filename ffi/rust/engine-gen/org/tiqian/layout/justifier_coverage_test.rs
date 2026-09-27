@@ -28,6 +28,8 @@ use crate::runtime::sorted_table::SortedSetTableBuilder;
 use crate::runtime::sorted_table::SortedTable;
 use crate::runtime::test as testlib;
 use crate::runtime::u_string;
+use crate::runtime::u_string::UStr;
+use crate::runtime::u_string::UString;
 use std::sync::Arc;
 use std::sync::Mutex;
 
@@ -38,6 +40,16 @@ pub enum JustifierCoverageTestZeroTechnicalStretchCapacityProducesNoOpportunityF
     UStringFaultFault(crate::std::u_string_exception::UStringFault),
     TracedAssertionsAssertEqualsRenderedFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsAssertEqualsRenderedFault),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
+}
+impl std::fmt::Display for JustifierCoverageTestZeroTechnicalStretchCapacityProducesNoOpportunityFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            JustifierCoverageTestZeroTechnicalStretchCapacityProducesNoOpportunityFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            JustifierCoverageTestZeroTechnicalStretchCapacityProducesNoOpportunityFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            JustifierCoverageTestZeroTechnicalStretchCapacityProducesNoOpportunityFault::TracedAssertionsAssertEqualsRenderedFaultFault(value) => write!(formatter, "{}", value),
+            JustifierCoverageTestZeroTechnicalStretchCapacityProducesNoOpportunityFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
 }
 
 impl From<JustifierCoverageTestZeroTechnicalStretchCapacityProducesNoOpportunityFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
@@ -108,6 +120,18 @@ pub enum JustifierCoverageTestZeroDeficitReturnsAnEmptyPlanWithoutReasonFault {
     TracedAssertionsAssertTrueFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsAssertTrueFault),
     TracedAssertionsAssertNullRenderedFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsAssertNullRenderedFault),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
+}
+impl std::fmt::Display for JustifierCoverageTestZeroDeficitReturnsAnEmptyPlanWithoutReasonFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            JustifierCoverageTestZeroDeficitReturnsAnEmptyPlanWithoutReasonFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            JustifierCoverageTestZeroDeficitReturnsAnEmptyPlanWithoutReasonFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            JustifierCoverageTestZeroDeficitReturnsAnEmptyPlanWithoutReasonFault::TracedAssertionsAssertEqualsFloatFaultFault(value) => write!(formatter, "{}", value),
+            JustifierCoverageTestZeroDeficitReturnsAnEmptyPlanWithoutReasonFault::TracedAssertionsAssertTrueFaultFault(value) => write!(formatter, "{}", value),
+            JustifierCoverageTestZeroDeficitReturnsAnEmptyPlanWithoutReasonFault::TracedAssertionsAssertNullRenderedFaultFault(value) => write!(formatter, "{}", value),
+            JustifierCoverageTestZeroDeficitReturnsAnEmptyPlanWithoutReasonFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
 }
 
 impl From<JustifierCoverageTestZeroDeficitReturnsAnEmptyPlanWithoutReasonFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
@@ -208,6 +232,17 @@ pub enum JustifierCoverageTestZeroCapacitySinoWesternTierDefersEverythingDownwar
     TracedAssertionsAssertEqualsRenderedFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsAssertEqualsRenderedFault),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
 }
+impl std::fmt::Display for JustifierCoverageTestZeroCapacitySinoWesternTierDefersEverythingDownwardFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            JustifierCoverageTestZeroCapacitySinoWesternTierDefersEverythingDownwardFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            JustifierCoverageTestZeroCapacitySinoWesternTierDefersEverythingDownwardFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            JustifierCoverageTestZeroCapacitySinoWesternTierDefersEverythingDownwardFault::TracedAssertionsAssertEqualsFloatFaultFault(value) => write!(formatter, "{}", value),
+            JustifierCoverageTestZeroCapacitySinoWesternTierDefersEverythingDownwardFault::TracedAssertionsAssertEqualsRenderedFaultFault(value) => write!(formatter, "{}", value),
+            JustifierCoverageTestZeroCapacitySinoWesternTierDefersEverythingDownwardFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
+}
 
 impl From<JustifierCoverageTestZeroCapacitySinoWesternTierDefersEverythingDownwardFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
     fn from(value: JustifierCoverageTestZeroCapacitySinoWesternTierDefersEverythingDownwardFault) -> Self {
@@ -293,6 +328,19 @@ pub enum JustifierCoverageTestWordSpaceStretchesWithinItsCapFault {
     TracedAssertionsAssertEqualsFloatFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsAssertEqualsFloatFault),
     TracedAssertionsAssertEqualsStringFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsAssertEqualsStringFault),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
+}
+impl std::fmt::Display for JustifierCoverageTestWordSpaceStretchesWithinItsCapFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            JustifierCoverageTestWordSpaceStretchesWithinItsCapFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            JustifierCoverageTestWordSpaceStretchesWithinItsCapFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            JustifierCoverageTestWordSpaceStretchesWithinItsCapFault::TracedAssertionsAssertEqualsRenderedFaultFault(value) => write!(formatter, "{}", value),
+            JustifierCoverageTestWordSpaceStretchesWithinItsCapFault::TracedAssertionsAssertEqualsFaultFault(value) => write!(formatter, "{}", value),
+            JustifierCoverageTestWordSpaceStretchesWithinItsCapFault::TracedAssertionsAssertEqualsFloatFaultFault(value) => write!(formatter, "{}", value),
+            JustifierCoverageTestWordSpaceStretchesWithinItsCapFault::TracedAssertionsAssertEqualsStringFaultFault(value) => write!(formatter, "{}", value),
+            JustifierCoverageTestWordSpaceStretchesWithinItsCapFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
 }
 
 impl From<JustifierCoverageTestWordSpaceStretchesWithinItsCapFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
@@ -408,6 +456,17 @@ pub enum JustifierCoverageTestWordSpaceAtTheCapOrCollapsedIsSkippedFault {
     TracedAssertionsAssertEqualsStringFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsAssertEqualsStringFault),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
 }
+impl std::fmt::Display for JustifierCoverageTestWordSpaceAtTheCapOrCollapsedIsSkippedFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            JustifierCoverageTestWordSpaceAtTheCapOrCollapsedIsSkippedFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            JustifierCoverageTestWordSpaceAtTheCapOrCollapsedIsSkippedFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            JustifierCoverageTestWordSpaceAtTheCapOrCollapsedIsSkippedFault::TracedAssertionsAssertTrueFaultFault(value) => write!(formatter, "{}", value),
+            JustifierCoverageTestWordSpaceAtTheCapOrCollapsedIsSkippedFault::TracedAssertionsAssertEqualsStringFaultFault(value) => write!(formatter, "{}", value),
+            JustifierCoverageTestWordSpaceAtTheCapOrCollapsedIsSkippedFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
+}
 
 impl From<JustifierCoverageTestWordSpaceAtTheCapOrCollapsedIsSkippedFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
     fn from(value: JustifierCoverageTestWordSpaceAtTheCapOrCollapsedIsSkippedFault) -> Self {
@@ -491,6 +550,17 @@ pub enum JustifierCoverageTestWesternDominantLineStaysRaggedFault {
     TracedAssertionsAssertEqualsStringFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsAssertEqualsStringFault),
     TracedAssertionsAssertTrueFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsAssertTrueFault),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
+}
+impl std::fmt::Display for JustifierCoverageTestWesternDominantLineStaysRaggedFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            JustifierCoverageTestWesternDominantLineStaysRaggedFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            JustifierCoverageTestWesternDominantLineStaysRaggedFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            JustifierCoverageTestWesternDominantLineStaysRaggedFault::TracedAssertionsAssertEqualsStringFaultFault(value) => write!(formatter, "{}", value),
+            JustifierCoverageTestWesternDominantLineStaysRaggedFault::TracedAssertionsAssertTrueFaultFault(value) => write!(formatter, "{}", value),
+            JustifierCoverageTestWesternDominantLineStaysRaggedFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
 }
 
 impl From<JustifierCoverageTestWesternDominantLineStaysRaggedFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
@@ -576,6 +646,18 @@ pub enum JustifierCoverageTestVirtualSinoWesternGapSkipsProtectedAndTypedEdgesFa
     TracedAssertionsAssertEqualsFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsAssertEqualsFault),
     TracedAssertionsAssertTrueFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsAssertTrueFault),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
+}
+impl std::fmt::Display for JustifierCoverageTestVirtualSinoWesternGapSkipsProtectedAndTypedEdgesFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            JustifierCoverageTestVirtualSinoWesternGapSkipsProtectedAndTypedEdgesFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            JustifierCoverageTestVirtualSinoWesternGapSkipsProtectedAndTypedEdgesFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            JustifierCoverageTestVirtualSinoWesternGapSkipsProtectedAndTypedEdgesFault::TracedAssertionsAssertEqualsRenderedFaultFault(value) => write!(formatter, "{}", value),
+            JustifierCoverageTestVirtualSinoWesternGapSkipsProtectedAndTypedEdgesFault::TracedAssertionsAssertEqualsFaultFault(value) => write!(formatter, "{}", value),
+            JustifierCoverageTestVirtualSinoWesternGapSkipsProtectedAndTypedEdgesFault::TracedAssertionsAssertTrueFaultFault(value) => write!(formatter, "{}", value),
+            JustifierCoverageTestVirtualSinoWesternGapSkipsProtectedAndTypedEdgesFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
 }
 
 impl From<JustifierCoverageTestVirtualSinoWesternGapSkipsProtectedAndTypedEdgesFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
@@ -677,6 +759,18 @@ pub enum JustifierCoverageTestUniformTextBoundariesExcludeProtectedClassesFault 
     TracedAssertionsAssertEqualsFloatFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsAssertEqualsFloatFault),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
 }
+impl std::fmt::Display for JustifierCoverageTestUniformTextBoundariesExcludeProtectedClassesFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            JustifierCoverageTestUniformTextBoundariesExcludeProtectedClassesFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            JustifierCoverageTestUniformTextBoundariesExcludeProtectedClassesFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            JustifierCoverageTestUniformTextBoundariesExcludeProtectedClassesFault::TracedAssertionsAssertEqualsRenderedFaultFault(value) => write!(formatter, "{}", value),
+            JustifierCoverageTestUniformTextBoundariesExcludeProtectedClassesFault::TracedAssertionsAssertEqualsStringFaultFault(value) => write!(formatter, "{}", value),
+            JustifierCoverageTestUniformTextBoundariesExcludeProtectedClassesFault::TracedAssertionsAssertEqualsFloatFaultFault(value) => write!(formatter, "{}", value),
+            JustifierCoverageTestUniformTextBoundariesExcludeProtectedClassesFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
+}
 
 impl From<JustifierCoverageTestUniformTextBoundariesExcludeProtectedClassesFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
     fn from(value: JustifierCoverageTestUniformTextBoundariesExcludeProtectedClassesFault) -> Self {
@@ -776,6 +870,18 @@ pub enum JustifierCoverageTestUniformObjectBoundaryOpensTheGateAndFillsFault {
     TracedAssertionsAssertTrueFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsAssertTrueFault),
     TracedAssertionsAssertEqualsFloatFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsAssertEqualsFloatFault),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
+}
+impl std::fmt::Display for JustifierCoverageTestUniformObjectBoundaryOpensTheGateAndFillsFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            JustifierCoverageTestUniformObjectBoundaryOpensTheGateAndFillsFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            JustifierCoverageTestUniformObjectBoundaryOpensTheGateAndFillsFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            JustifierCoverageTestUniformObjectBoundaryOpensTheGateAndFillsFault::TracedAssertionsAssertNullRenderedFaultFault(value) => write!(formatter, "{}", value),
+            JustifierCoverageTestUniformObjectBoundaryOpensTheGateAndFillsFault::TracedAssertionsAssertTrueFaultFault(value) => write!(formatter, "{}", value),
+            JustifierCoverageTestUniformObjectBoundaryOpensTheGateAndFillsFault::TracedAssertionsAssertEqualsFloatFaultFault(value) => write!(formatter, "{}", value),
+            JustifierCoverageTestUniformObjectBoundaryOpensTheGateAndFillsFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
 }
 
 impl From<JustifierCoverageTestUniformObjectBoundaryOpensTheGateAndFillsFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
@@ -877,6 +983,19 @@ pub enum JustifierCoverageTestTypedSinoWesternSpaceStretchesFromItsBaseFault {
     TracedAssertionsAssertEqualsFloatFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsAssertEqualsFloatFault),
     TracedAssertionsAssertTrueFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsAssertTrueFault),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
+}
+impl std::fmt::Display for JustifierCoverageTestTypedSinoWesternSpaceStretchesFromItsBaseFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            JustifierCoverageTestTypedSinoWesternSpaceStretchesFromItsBaseFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            JustifierCoverageTestTypedSinoWesternSpaceStretchesFromItsBaseFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            JustifierCoverageTestTypedSinoWesternSpaceStretchesFromItsBaseFault::TracedAssertionsAssertEqualsRenderedFaultFault(value) => write!(formatter, "{}", value),
+            JustifierCoverageTestTypedSinoWesternSpaceStretchesFromItsBaseFault::TracedAssertionsAssertEqualsFaultFault(value) => write!(formatter, "{}", value),
+            JustifierCoverageTestTypedSinoWesternSpaceStretchesFromItsBaseFault::TracedAssertionsAssertEqualsFloatFaultFault(value) => write!(formatter, "{}", value),
+            JustifierCoverageTestTypedSinoWesternSpaceStretchesFromItsBaseFault::TracedAssertionsAssertTrueFaultFault(value) => write!(formatter, "{}", value),
+            JustifierCoverageTestTypedSinoWesternSpaceStretchesFromItsBaseFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
 }
 
 impl From<JustifierCoverageTestTypedSinoWesternSpaceStretchesFromItsBaseFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
@@ -992,6 +1111,17 @@ pub enum JustifierCoverageTestTypedSinoWesternSpaceNeedsBothEdgesToPairFault {
     TracedAssertionsAssertEqualsFloatFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsAssertEqualsFloatFault),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
 }
+impl std::fmt::Display for JustifierCoverageTestTypedSinoWesternSpaceNeedsBothEdgesToPairFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            JustifierCoverageTestTypedSinoWesternSpaceNeedsBothEdgesToPairFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            JustifierCoverageTestTypedSinoWesternSpaceNeedsBothEdgesToPairFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            JustifierCoverageTestTypedSinoWesternSpaceNeedsBothEdgesToPairFault::TracedAssertionsAssertTrueFaultFault(value) => write!(formatter, "{}", value),
+            JustifierCoverageTestTypedSinoWesternSpaceNeedsBothEdgesToPairFault::TracedAssertionsAssertEqualsFloatFaultFault(value) => write!(formatter, "{}", value),
+            JustifierCoverageTestTypedSinoWesternSpaceNeedsBothEdgesToPairFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
+}
 
 impl From<JustifierCoverageTestTypedSinoWesternSpaceNeedsBothEdgesToPairFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
     fn from(value: JustifierCoverageTestTypedSinoWesternSpaceNeedsBothEdgesToPairFault) -> Self {
@@ -1077,6 +1207,19 @@ pub enum JustifierCoverageTestTechnicalWhitespaceStretchFillsAndStopsTheTierChai
     TracedAssertionsAssertEqualsStringFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsAssertEqualsStringFault),
     TracedAssertionsAssertEqualsFloatFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsAssertEqualsFloatFault),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
+}
+impl std::fmt::Display for JustifierCoverageTestTechnicalWhitespaceStretchFillsAndStopsTheTierChainFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            JustifierCoverageTestTechnicalWhitespaceStretchFillsAndStopsTheTierChainFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            JustifierCoverageTestTechnicalWhitespaceStretchFillsAndStopsTheTierChainFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            JustifierCoverageTestTechnicalWhitespaceStretchFillsAndStopsTheTierChainFault::TracedAssertionsAssertEqualsFaultFault(value) => write!(formatter, "{}", value),
+            JustifierCoverageTestTechnicalWhitespaceStretchFillsAndStopsTheTierChainFault::TracedAssertionsAssertEqualsRenderedFaultFault(value) => write!(formatter, "{}", value),
+            JustifierCoverageTestTechnicalWhitespaceStretchFillsAndStopsTheTierChainFault::TracedAssertionsAssertEqualsStringFaultFault(value) => write!(formatter, "{}", value),
+            JustifierCoverageTestTechnicalWhitespaceStretchFillsAndStopsTheTierChainFault::TracedAssertionsAssertEqualsFloatFaultFault(value) => write!(formatter, "{}", value),
+            JustifierCoverageTestTechnicalWhitespaceStretchFillsAndStopsTheTierChainFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
 }
 
 impl From<JustifierCoverageTestTechnicalWhitespaceStretchFillsAndStopsTheTierChainFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
@@ -1191,6 +1334,16 @@ pub enum JustifierCoverageTestTechnicalWhitespaceRequiresTheWhitespaceTierAndASo
     TracedAssertionsAssertEqualsRenderedFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsAssertEqualsRenderedFault),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
 }
+impl std::fmt::Display for JustifierCoverageTestTechnicalWhitespaceRequiresTheWhitespaceTierAndASourceSpaceFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            JustifierCoverageTestTechnicalWhitespaceRequiresTheWhitespaceTierAndASourceSpaceFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            JustifierCoverageTestTechnicalWhitespaceRequiresTheWhitespaceTierAndASourceSpaceFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            JustifierCoverageTestTechnicalWhitespaceRequiresTheWhitespaceTierAndASourceSpaceFault::TracedAssertionsAssertEqualsRenderedFaultFault(value) => write!(formatter, "{}", value),
+            JustifierCoverageTestTechnicalWhitespaceRequiresTheWhitespaceTierAndASourceSpaceFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
+}
 
 impl From<JustifierCoverageTestTechnicalWhitespaceRequiresTheWhitespaceTierAndASourceSpaceFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
     fn from(value: JustifierCoverageTestTechnicalWhitespaceRequiresTheWhitespaceTierAndASourceSpaceFault) -> Self {
@@ -1259,6 +1412,17 @@ pub enum JustifierCoverageTestSpaceGapProtectionCoversAllFourDisjunctsFault {
     TracedAssertionsAssertTrueFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsAssertTrueFault),
     TracedAssertionsAssertEqualsFloatFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsAssertEqualsFloatFault),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
+}
+impl std::fmt::Display for JustifierCoverageTestSpaceGapProtectionCoversAllFourDisjunctsFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            JustifierCoverageTestSpaceGapProtectionCoversAllFourDisjunctsFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            JustifierCoverageTestSpaceGapProtectionCoversAllFourDisjunctsFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            JustifierCoverageTestSpaceGapProtectionCoversAllFourDisjunctsFault::TracedAssertionsAssertTrueFaultFault(value) => write!(formatter, "{}", value),
+            JustifierCoverageTestSpaceGapProtectionCoversAllFourDisjunctsFault::TracedAssertionsAssertEqualsFloatFaultFault(value) => write!(formatter, "{}", value),
+            JustifierCoverageTestSpaceGapProtectionCoversAllFourDisjunctsFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
 }
 
 impl From<JustifierCoverageTestSpaceGapProtectionCoversAllFourDisjunctsFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
@@ -1344,6 +1508,18 @@ pub enum JustifierCoverageTestSkipKeepsTheDeficitAndRecordsTheReasonFault {
     TracedAssertionsAssertTrueFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsAssertTrueFault),
     TracedAssertionsAssertEqualsStringFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsAssertEqualsStringFault),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
+}
+impl std::fmt::Display for JustifierCoverageTestSkipKeepsTheDeficitAndRecordsTheReasonFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            JustifierCoverageTestSkipKeepsTheDeficitAndRecordsTheReasonFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            JustifierCoverageTestSkipKeepsTheDeficitAndRecordsTheReasonFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            JustifierCoverageTestSkipKeepsTheDeficitAndRecordsTheReasonFault::TracedAssertionsAssertEqualsFloatFaultFault(value) => write!(formatter, "{}", value),
+            JustifierCoverageTestSkipKeepsTheDeficitAndRecordsTheReasonFault::TracedAssertionsAssertTrueFaultFault(value) => write!(formatter, "{}", value),
+            JustifierCoverageTestSkipKeepsTheDeficitAndRecordsTheReasonFault::TracedAssertionsAssertEqualsStringFaultFault(value) => write!(formatter, "{}", value),
+            JustifierCoverageTestSkipKeepsTheDeficitAndRecordsTheReasonFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
 }
 
 impl From<JustifierCoverageTestSkipKeepsTheDeficitAndRecordsTheReasonFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
@@ -1444,6 +1620,17 @@ pub enum JustifierCoverageTestSinoWesternStretchDisabledSkipsTierTwoAndItsVirtua
     TracedAssertionsAssertEqualsFloatFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsAssertEqualsFloatFault),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
 }
+impl std::fmt::Display for JustifierCoverageTestSinoWesternStretchDisabledSkipsTierTwoAndItsVirtualTrackingFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            JustifierCoverageTestSinoWesternStretchDisabledSkipsTierTwoAndItsVirtualTrackingFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            JustifierCoverageTestSinoWesternStretchDisabledSkipsTierTwoAndItsVirtualTrackingFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            JustifierCoverageTestSinoWesternStretchDisabledSkipsTierTwoAndItsVirtualTrackingFault::TracedAssertionsAssertTrueFaultFault(value) => write!(formatter, "{}", value),
+            JustifierCoverageTestSinoWesternStretchDisabledSkipsTierTwoAndItsVirtualTrackingFault::TracedAssertionsAssertEqualsFloatFaultFault(value) => write!(formatter, "{}", value),
+            JustifierCoverageTestSinoWesternStretchDisabledSkipsTierTwoAndItsVirtualTrackingFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
+}
 
 impl From<JustifierCoverageTestSinoWesternStretchDisabledSkipsTierTwoAndItsVirtualTrackingFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
     fn from(value: JustifierCoverageTestSinoWesternStretchDisabledSkipsTierTwoAndItsVirtualTrackingFault) -> Self {
@@ -1530,6 +1717,20 @@ pub enum JustifierCoverageTestPreferredInlineObjectStretchRunsBySemanticKindFaul
     TracedAssertionsAssertEqualsFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsAssertEqualsFault),
     TracedAssertionsAssertTrueFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsAssertTrueFault),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
+}
+impl std::fmt::Display for JustifierCoverageTestPreferredInlineObjectStretchRunsBySemanticKindFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            JustifierCoverageTestPreferredInlineObjectStretchRunsBySemanticKindFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            JustifierCoverageTestPreferredInlineObjectStretchRunsBySemanticKindFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            JustifierCoverageTestPreferredInlineObjectStretchRunsBySemanticKindFault::TracedAssertionsAssertEqualsRenderedFaultFault(value) => write!(formatter, "{}", value),
+            JustifierCoverageTestPreferredInlineObjectStretchRunsBySemanticKindFault::TracedAssertionsAssertEqualsStringFaultFault(value) => write!(formatter, "{}", value),
+            JustifierCoverageTestPreferredInlineObjectStretchRunsBySemanticKindFault::TracedAssertionsAssertEqualsFloatFaultFault(value) => write!(formatter, "{}", value),
+            JustifierCoverageTestPreferredInlineObjectStretchRunsBySemanticKindFault::TracedAssertionsAssertEqualsFaultFault(value) => write!(formatter, "{}", value),
+            JustifierCoverageTestPreferredInlineObjectStretchRunsBySemanticKindFault::TracedAssertionsAssertTrueFaultFault(value) => write!(formatter, "{}", value),
+            JustifierCoverageTestPreferredInlineObjectStretchRunsBySemanticKindFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
 }
 
 impl From<JustifierCoverageTestPreferredInlineObjectStretchRunsBySemanticKindFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
@@ -1661,6 +1862,18 @@ pub enum JustifierCoverageTestPreferredInlineObjectKindsChainUntilFilledFault {
     TracedAssertionsAssertTrueFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsAssertTrueFault),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
 }
+impl std::fmt::Display for JustifierCoverageTestPreferredInlineObjectKindsChainUntilFilledFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            JustifierCoverageTestPreferredInlineObjectKindsChainUntilFilledFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            JustifierCoverageTestPreferredInlineObjectKindsChainUntilFilledFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            JustifierCoverageTestPreferredInlineObjectKindsChainUntilFilledFault::TracedAssertionsAssertEqualsFaultFault(value) => write!(formatter, "{}", value),
+            JustifierCoverageTestPreferredInlineObjectKindsChainUntilFilledFault::TracedAssertionsAssertEqualsFloatFaultFault(value) => write!(formatter, "{}", value),
+            JustifierCoverageTestPreferredInlineObjectKindsChainUntilFilledFault::TracedAssertionsAssertTrueFaultFault(value) => write!(formatter, "{}", value),
+            JustifierCoverageTestPreferredInlineObjectKindsChainUntilFilledFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
+}
 
 impl From<JustifierCoverageTestPreferredInlineObjectKindsChainUntilFilledFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
     fn from(value: JustifierCoverageTestPreferredInlineObjectKindsChainUntilFilledFault) -> Self {
@@ -1760,6 +1973,17 @@ pub enum JustifierCoverageTestParagraphEdgeSpaceLinesCoverTheBoundaryGuardsFault
     TracedAssertionsAssertEqualsFloatFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsAssertEqualsFloatFault),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
 }
+impl std::fmt::Display for JustifierCoverageTestParagraphEdgeSpaceLinesCoverTheBoundaryGuardsFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            JustifierCoverageTestParagraphEdgeSpaceLinesCoverTheBoundaryGuardsFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            JustifierCoverageTestParagraphEdgeSpaceLinesCoverTheBoundaryGuardsFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            JustifierCoverageTestParagraphEdgeSpaceLinesCoverTheBoundaryGuardsFault::TracedAssertionsAssertEqualsFaultFault(value) => write!(formatter, "{}", value),
+            JustifierCoverageTestParagraphEdgeSpaceLinesCoverTheBoundaryGuardsFault::TracedAssertionsAssertEqualsFloatFaultFault(value) => write!(formatter, "{}", value),
+            JustifierCoverageTestParagraphEdgeSpaceLinesCoverTheBoundaryGuardsFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
+}
 
 impl From<JustifierCoverageTestParagraphEdgeSpaceLinesCoverTheBoundaryGuardsFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
     fn from(value: JustifierCoverageTestParagraphEdgeSpaceLinesCoverTheBoundaryGuardsFault) -> Self {
@@ -1844,6 +2068,17 @@ pub enum JustifierCoverageTestMixedCapacitySinoWesternOppsSkipZeroCapacityInOver
     TracedAssertionsAssertEqualsFloatFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsAssertEqualsFloatFault),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
 }
+impl std::fmt::Display for JustifierCoverageTestMixedCapacitySinoWesternOppsSkipZeroCapacityInOverflowFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            JustifierCoverageTestMixedCapacitySinoWesternOppsSkipZeroCapacityInOverflowFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            JustifierCoverageTestMixedCapacitySinoWesternOppsSkipZeroCapacityInOverflowFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            JustifierCoverageTestMixedCapacitySinoWesternOppsSkipZeroCapacityInOverflowFault::TracedAssertionsAssertEqualsIntArrayFaultFault(value) => write!(formatter, "{}", value),
+            JustifierCoverageTestMixedCapacitySinoWesternOppsSkipZeroCapacityInOverflowFault::TracedAssertionsAssertEqualsFloatFaultFault(value) => write!(formatter, "{}", value),
+            JustifierCoverageTestMixedCapacitySinoWesternOppsSkipZeroCapacityInOverflowFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
+}
 
 impl From<JustifierCoverageTestMixedCapacitySinoWesternOppsSkipZeroCapacityInOverflowFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
     fn from(value: JustifierCoverageTestMixedCapacitySinoWesternOppsSkipZeroCapacityInOverflowFault) -> Self {
@@ -1926,6 +2161,15 @@ pub enum JustifierCoverageTestMisalignedRoleAndSpacingListsAreRejectedFault {
     TraceAssertionErrorFault(crate::org::tiqian::test::trace::trace_assertion_exception::TraceAssertionError),
     TracedAssertionsAssertFailsWithFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsAssertFailsWithFault),
 }
+impl std::fmt::Display for JustifierCoverageTestMisalignedRoleAndSpacingListsAreRejectedFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            JustifierCoverageTestMisalignedRoleAndSpacingListsAreRejectedFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            JustifierCoverageTestMisalignedRoleAndSpacingListsAreRejectedFault::TraceAssertionErrorFault(value) => write!(formatter, "{}", value),
+            JustifierCoverageTestMisalignedRoleAndSpacingListsAreRejectedFault::TracedAssertionsAssertFailsWithFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
+}
 
 impl From<JustifierCoverageTestMisalignedRoleAndSpacingListsAreRejectedFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
     fn from(value: JustifierCoverageTestMisalignedRoleAndSpacingListsAreRejectedFault) -> Self {
@@ -1980,6 +2224,18 @@ pub enum JustifierCoverageTestEmptyClusterRangeDefersEveryTierLoopFault {
     TracedAssertionsAssertEqualsFloatFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsAssertEqualsFloatFault),
     TracedAssertionsAssertEqualsStringFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsAssertEqualsStringFault),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
+}
+impl std::fmt::Display for JustifierCoverageTestEmptyClusterRangeDefersEveryTierLoopFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            JustifierCoverageTestEmptyClusterRangeDefersEveryTierLoopFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            JustifierCoverageTestEmptyClusterRangeDefersEveryTierLoopFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            JustifierCoverageTestEmptyClusterRangeDefersEveryTierLoopFault::TracedAssertionsAssertTrueFaultFault(value) => write!(formatter, "{}", value),
+            JustifierCoverageTestEmptyClusterRangeDefersEveryTierLoopFault::TracedAssertionsAssertEqualsFloatFaultFault(value) => write!(formatter, "{}", value),
+            JustifierCoverageTestEmptyClusterRangeDefersEveryTierLoopFault::TracedAssertionsAssertEqualsStringFaultFault(value) => write!(formatter, "{}", value),
+            JustifierCoverageTestEmptyClusterRangeDefersEveryTierLoopFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
 }
 
 impl From<JustifierCoverageTestEmptyClusterRangeDefersEveryTierLoopFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
@@ -2081,6 +2337,18 @@ pub enum JustifierCoverageTestEmergencyTrackingFillsTheResidualForAuthorizedBoun
     TracedAssertionsAssertEqualsFloatFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsAssertEqualsFloatFault),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
 }
+impl std::fmt::Display for JustifierCoverageTestEmergencyTrackingFillsTheResidualForAuthorizedBoundariesFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            JustifierCoverageTestEmergencyTrackingFillsTheResidualForAuthorizedBoundariesFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            JustifierCoverageTestEmergencyTrackingFillsTheResidualForAuthorizedBoundariesFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            JustifierCoverageTestEmergencyTrackingFillsTheResidualForAuthorizedBoundariesFault::TracedAssertionsAssertEqualsRenderedFaultFault(value) => write!(formatter, "{}", value),
+            JustifierCoverageTestEmergencyTrackingFillsTheResidualForAuthorizedBoundariesFault::TracedAssertionsAssertEqualsStringFaultFault(value) => write!(formatter, "{}", value),
+            JustifierCoverageTestEmergencyTrackingFillsTheResidualForAuthorizedBoundariesFault::TracedAssertionsAssertEqualsFloatFaultFault(value) => write!(formatter, "{}", value),
+            JustifierCoverageTestEmergencyTrackingFillsTheResidualForAuthorizedBoundariesFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
+}
 
 impl From<JustifierCoverageTestEmergencyTrackingFillsTheResidualForAuthorizedBoundariesFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
     fn from(value: JustifierCoverageTestEmergencyTrackingFillsTheResidualForAuthorizedBoundariesFault) -> Self {
@@ -2181,6 +2449,19 @@ pub enum JustifierCoverageTestCompressEarlyExitsAndFiltersDegenerateInputsFault 
     TracedAssertionsAssertEqualsFloatFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsAssertEqualsFloatFault),
     TracedAssertionsAssertEqualsPushInAllocationArrayFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsAssertEqualsPushInAllocationArrayFault),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
+}
+impl std::fmt::Display for JustifierCoverageTestCompressEarlyExitsAndFiltersDegenerateInputsFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            JustifierCoverageTestCompressEarlyExitsAndFiltersDegenerateInputsFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            JustifierCoverageTestCompressEarlyExitsAndFiltersDegenerateInputsFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            JustifierCoverageTestCompressEarlyExitsAndFiltersDegenerateInputsFault::TracedAssertionsAssertEqualsRenderedFaultFault(value) => write!(formatter, "{}", value),
+            JustifierCoverageTestCompressEarlyExitsAndFiltersDegenerateInputsFault::TracedAssertionsAssertTrueFaultFault(value) => write!(formatter, "{}", value),
+            JustifierCoverageTestCompressEarlyExitsAndFiltersDegenerateInputsFault::TracedAssertionsAssertEqualsFloatFaultFault(value) => write!(formatter, "{}", value),
+            JustifierCoverageTestCompressEarlyExitsAndFiltersDegenerateInputsFault::TracedAssertionsAssertEqualsPushInAllocationArrayFaultFault(value) => write!(formatter, "{}", value),
+            JustifierCoverageTestCompressEarlyExitsAndFiltersDegenerateInputsFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
 }
 
 impl From<JustifierCoverageTestCompressEarlyExitsAndFiltersDegenerateInputsFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
@@ -2296,6 +2577,17 @@ pub enum JustifierCoverageTestCompressDistributesTierByTierFault {
     TracedAssertionsAssertEqualsPushInAllocationArrayFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsAssertEqualsPushInAllocationArrayFault),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
 }
+impl std::fmt::Display for JustifierCoverageTestCompressDistributesTierByTierFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            JustifierCoverageTestCompressDistributesTierByTierFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            JustifierCoverageTestCompressDistributesTierByTierFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            JustifierCoverageTestCompressDistributesTierByTierFault::TracedAssertionsAssertEqualsFloatFaultFault(value) => write!(formatter, "{}", value),
+            JustifierCoverageTestCompressDistributesTierByTierFault::TracedAssertionsAssertEqualsPushInAllocationArrayFaultFault(value) => write!(formatter, "{}", value),
+            JustifierCoverageTestCompressDistributesTierByTierFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
+}
 
 impl From<JustifierCoverageTestCompressDistributesTierByTierFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
     fn from(value: JustifierCoverageTestCompressDistributesTierByTierFault) -> Self {
@@ -2380,6 +2672,18 @@ pub enum JustifierCoverageTestCjkLineWithNoOpportunitiesReportsUnfilledWithoutFa
     TracedAssertionsAssertEqualsFloatFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsAssertEqualsFloatFault),
     TracedAssertionsAssertNullRenderedFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsAssertNullRenderedFault),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
+}
+impl std::fmt::Display for JustifierCoverageTestCjkLineWithNoOpportunitiesReportsUnfilledWithoutFallbackFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            JustifierCoverageTestCjkLineWithNoOpportunitiesReportsUnfilledWithoutFallbackFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            JustifierCoverageTestCjkLineWithNoOpportunitiesReportsUnfilledWithoutFallbackFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            JustifierCoverageTestCjkLineWithNoOpportunitiesReportsUnfilledWithoutFallbackFault::TracedAssertionsAssertTrueFaultFault(value) => write!(formatter, "{}", value),
+            JustifierCoverageTestCjkLineWithNoOpportunitiesReportsUnfilledWithoutFallbackFault::TracedAssertionsAssertEqualsFloatFaultFault(value) => write!(formatter, "{}", value),
+            JustifierCoverageTestCjkLineWithNoOpportunitiesReportsUnfilledWithoutFallbackFault::TracedAssertionsAssertNullRenderedFaultFault(value) => write!(formatter, "{}", value),
+            JustifierCoverageTestCjkLineWithNoOpportunitiesReportsUnfilledWithoutFallbackFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
 }
 
 impl From<JustifierCoverageTestCjkLineWithNoOpportunitiesReportsUnfilledWithoutFallbackFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
@@ -2479,6 +2783,16 @@ pub enum JustifierCoverageTestAttachedInlineVirtualSinoWesternNeedsStretchEnable
     TracedAssertionsAssertTrueFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsAssertTrueFault),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
 }
+impl std::fmt::Display for JustifierCoverageTestAttachedInlineVirtualSinoWesternNeedsStretchEnabledFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            JustifierCoverageTestAttachedInlineVirtualSinoWesternNeedsStretchEnabledFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            JustifierCoverageTestAttachedInlineVirtualSinoWesternNeedsStretchEnabledFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            JustifierCoverageTestAttachedInlineVirtualSinoWesternNeedsStretchEnabledFault::TracedAssertionsAssertTrueFaultFault(value) => write!(formatter, "{}", value),
+            JustifierCoverageTestAttachedInlineVirtualSinoWesternNeedsStretchEnabledFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
+}
 
 impl From<JustifierCoverageTestAttachedInlineVirtualSinoWesternNeedsStretchEnabledFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
     fn from(value: JustifierCoverageTestAttachedInlineVirtualSinoWesternNeedsStretchEnabledFault) -> Self {
@@ -2549,6 +2863,19 @@ pub enum JustifierCoverageTestAttachedInlineVirtualInterCharHonoursNoStretchProt
     TracedAssertionsAssertTrueFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsAssertTrueFault),
     TracedAssertionsAssertEqualsRenderedFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsAssertEqualsRenderedFault),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
+}
+impl std::fmt::Display for JustifierCoverageTestAttachedInlineVirtualInterCharHonoursNoStretchProtectionFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            JustifierCoverageTestAttachedInlineVirtualInterCharHonoursNoStretchProtectionFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            JustifierCoverageTestAttachedInlineVirtualInterCharHonoursNoStretchProtectionFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            JustifierCoverageTestAttachedInlineVirtualInterCharHonoursNoStretchProtectionFault::TracedAssertionsAssertEqualsStringFaultFault(value) => write!(formatter, "{}", value),
+            JustifierCoverageTestAttachedInlineVirtualInterCharHonoursNoStretchProtectionFault::TracedAssertionsAssertEqualsFloatFaultFault(value) => write!(formatter, "{}", value),
+            JustifierCoverageTestAttachedInlineVirtualInterCharHonoursNoStretchProtectionFault::TracedAssertionsAssertTrueFaultFault(value) => write!(formatter, "{}", value),
+            JustifierCoverageTestAttachedInlineVirtualInterCharHonoursNoStretchProtectionFault::TracedAssertionsAssertEqualsRenderedFaultFault(value) => write!(formatter, "{}", value),
+            JustifierCoverageTestAttachedInlineVirtualInterCharHonoursNoStretchProtectionFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
 }
 
 impl From<JustifierCoverageTestAttachedInlineVirtualInterCharHonoursNoStretchProtectionFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
@@ -2666,6 +2993,20 @@ pub enum JustifierCoverageTestAttachedInlineVirtualAutoSpaceJoinsTierTwoFault {
     TracedAssertionsAssertEqualsFloatFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsAssertEqualsFloatFault),
     TracedAssertionsAssertTrueFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsAssertTrueFault),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
+}
+impl std::fmt::Display for JustifierCoverageTestAttachedInlineVirtualAutoSpaceJoinsTierTwoFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            JustifierCoverageTestAttachedInlineVirtualAutoSpaceJoinsTierTwoFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            JustifierCoverageTestAttachedInlineVirtualAutoSpaceJoinsTierTwoFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            JustifierCoverageTestAttachedInlineVirtualAutoSpaceJoinsTierTwoFault::TracedAssertionsAssertEqualsRenderedFaultFault(value) => write!(formatter, "{}", value),
+            JustifierCoverageTestAttachedInlineVirtualAutoSpaceJoinsTierTwoFault::TracedAssertionsAssertEqualsStringFaultFault(value) => write!(formatter, "{}", value),
+            JustifierCoverageTestAttachedInlineVirtualAutoSpaceJoinsTierTwoFault::TracedAssertionsAssertEqualsFaultFault(value) => write!(formatter, "{}", value),
+            JustifierCoverageTestAttachedInlineVirtualAutoSpaceJoinsTierTwoFault::TracedAssertionsAssertEqualsFloatFaultFault(value) => write!(formatter, "{}", value),
+            JustifierCoverageTestAttachedInlineVirtualAutoSpaceJoinsTierTwoFault::TracedAssertionsAssertTrueFaultFault(value) => write!(formatter, "{}", value),
+            JustifierCoverageTestAttachedInlineVirtualAutoSpaceJoinsTierTwoFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
 }
 
 impl From<JustifierCoverageTestAttachedInlineVirtualAutoSpaceJoinsTierTwoFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
@@ -2795,9 +3136,8 @@ pub struct JustifierCoverageTestSupport;
 
 impl JustifierCoverageTestSupport {
 
-    pub fn justifier_coverage_test_support_c(t: &str, i: u32, a: Option<f64>, f: Option<String>) -> Result<Cluster, TextRangeError> {
-        return Ok(Cluster::new(TextRange::new(i, u32::wrapping_add(i, u_string::unit_count(&(t))))?, t, match &(f) { None => "k".to_string(), Some(__option) => __option.to_string() }.as_str(), match &(a) { None => { let __guard =
-JUSTIFIER_COVERAGE_TEST_SUPPORT_EM.lock().unwrap_or_else(|e| e.into_inner()); __guard.clone() }, Some(__option1) => *__option1 }, Some(t.to_string()), Some(0.0), Some(0.0), Some(0.0)));
+    pub fn justifier_coverage_test_support_c(t: &UStr, i: u32, a: Option<f64>, f: Option<UString>) -> Result<Cluster, TextRangeError> {
+        return Ok(Cluster::new(TextRange::new(i, u32::wrapping_add(i, u_string::unit_count(&(t))))?, t, match &(f) { None => UString::from("k"), Some(__option) => __option.to_ustring() }.as_ustr(), match &(a) { None => { let __guard = JUSTIFIER_COVERAGE_TEST_SUPPORT_EM.lock().unwrap_or_else(|e| e.into_inner()); __guard.clone() }, Some(__option1) => *__option1 }, Some(t.to_ustring()), Some(0.0), Some(0.0), Some(0.0)));
     }
 
     pub fn justifier_coverage_test_support_e(l: Option<EastAsianSpacingValue>, tr: Option<EastAsianSpacingValue>, w: Option<bool>) -> EastAsianSpacingEdges {
@@ -2805,9 +3145,9 @@ JUSTIFIER_COVERAGE_TEST_SUPPORT_EM.lock().unwrap_or_else(|e| e.into_inner()); __
     }
 
     pub fn justifier_coverage_test_support_set(xs: &Vec<u32>) -> SortedSetTable<u32> {
-        let mut b: SortedSetTableBuilder<u32> = SortedTable::sorted_table_set_builder::<u32>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_bytes((*a).to_ne_bytes()), i32::from_ne_bytes((*b).to_ne_bytes()))));
+        let mut b: SortedSetTableBuilder<u32> = SortedTable::sorted_table_set_builder::<u32>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_bytes(((*a) as i32).to_ne_bytes()), i32::from_ne_bytes(((*b) as i32).to_ne_bytes()))));
         let mut i = 0u32;
-        while (i32::from_ne_bytes((i).to_ne_bytes())) < (i32::from_ne_bytes((u32::try_from((xs.len()) & 0xFFFF_FFFF).unwrap_or(0)).to_ne_bytes())) {
+        while (i32::from_ne_bytes(((i) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((xs.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
             b.put(&(xs[usize::try_from(i).unwrap_or(0)]));
             i = u32::wrapping_add(i, 1);
         }
@@ -2815,9 +3155,9 @@ JUSTIFIER_COVERAGE_TEST_SUPPORT_EM.lock().unwrap_or_else(|e| e.into_inner()); __
     }
 
     pub fn justifier_coverage_test_support_int_map(xs: &Vec<u32>, ys: &Vec<u32>) -> SortedMapTable<u32, u32> {
-        let mut b: SortedMapTableBuilder<u32, u32> = SortedTable::sorted_table_map_builder::<u32, u32>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_bytes((*a).to_ne_bytes()), i32::from_ne_bytes((*b).to_ne_bytes()))));
+        let mut b: SortedMapTableBuilder<u32, u32> = SortedTable::sorted_table_map_builder::<u32, u32>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_bytes(((*a) as i32).to_ne_bytes()), i32::from_ne_bytes(((*b) as i32).to_ne_bytes()))));
         let mut i = 0u32;
-        while (i32::from_ne_bytes((i).to_ne_bytes())) < (i32::from_ne_bytes((u32::try_from((xs.len()) & 0xFFFF_FFFF).unwrap_or(0)).to_ne_bytes())) {
+        while (i32::from_ne_bytes(((i) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((xs.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
             b.put(&(xs[usize::try_from(i).unwrap_or(0)]), &(ys[usize::try_from(i).unwrap_or(0)]));
             i = u32::wrapping_add(i, 1);
         }
@@ -2825,38 +3165,35 @@ JUSTIFIER_COVERAGE_TEST_SUPPORT_EM.lock().unwrap_or_else(|e| e.into_inner()); __
     }
 
     pub fn justifier_coverage_test_support_tier_map(xs: &Vec<u32>, ys: &Vec<ProgressiveBreakTier>) -> SortedMapTable<u32, ProgressiveBreakTier> {
-        let mut b: SortedMapTableBuilder<u32, ProgressiveBreakTier> = SortedTable::sorted_table_map_builder::<u32, ProgressiveBreakTier>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_bytes((*a).to_ne_bytes()), i32::from_ne_bytes((*b).to_ne_bytes()))));
+        let mut b: SortedMapTableBuilder<u32, ProgressiveBreakTier> = SortedTable::sorted_table_map_builder::<u32,
+ProgressiveBreakTier>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_bytes(((*a) as i32).to_ne_bytes()), i32::from_ne_bytes(((*b) as i32).to_ne_bytes()))));
         let mut i = 0u32;
-        while (i32::from_ne_bytes((i).to_ne_bytes())) < (i32::from_ne_bytes((u32::try_from((xs.len()) & 0xFFFF_FFFF).unwrap_or(0)).to_ne_bytes())) {
+        while (i32::from_ne_bytes(((i) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((xs.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
             b.put(&(xs[usize::try_from(i).unwrap_or(0)]), &(ys[usize::try_from(i).unwrap_or(0)]));
             i = u32::wrapping_add(i, 1);
         }
         return b.clone().build();
     }
 
-    pub fn justifier_coverage_test_support_str_map(xs: &Vec<u32>, ys: &Vec<String>) -> SortedMapTable<u32, String> {
-        let mut b: SortedMapTableBuilder<u32, String> = SortedTable::sorted_table_map_builder::<u32, String>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_bytes((*a).to_ne_bytes()), i32::from_ne_bytes((*b).to_ne_bytes()))));
+    pub fn justifier_coverage_test_support_str_map(xs: &Vec<u32>, ys: &Vec<UString>) -> SortedMapTable<u32, UString> {
+        let mut b: SortedMapTableBuilder<u32, UString> = SortedTable::sorted_table_map_builder::<u32, UString>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_bytes(((*a) as i32).to_ne_bytes()), i32::from_ne_bytes(((*b) as i32).to_ne_bytes()))));
         let mut i = 0u32;
-        while (i32::from_ne_bytes((i).to_ne_bytes())) < (i32::from_ne_bytes((u32::try_from((xs.len()) & 0xFFFF_FFFF).unwrap_or(0)).to_ne_bytes())) {
+        while (i32::from_ne_bytes(((i) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((xs.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
             b.put(&(xs[usize::try_from(i).unwrap_or(0)]), &(ys[usize::try_from(i).unwrap_or(0)]).clone());
             i = u32::wrapping_add(i, 1);
         }
         return b.clone().build();
     }
 
-    pub fn justifier_coverage_test_support_justify(c: &Vec<Cluster>, r: &Vec<FontRole>, e: &Vec<EastAsianSpacingEdges>, ir: IntRange, m: f64, fs: Option<f64>, sk: Option<bool>, sr: Option<String>, al: Option<bool>, ba: Option<f64>, mx: Option<f64>, ns: Option<SortedSetTable<u32>>,
-nsa: Option<SortedSetTable<u32>>, br: Option<SortedSetTable<u32>>, ph: Option<SortedSetTable<u32>>, v: Option<SortedMapTable<u32, u32>>, vs: Option<SortedSetTable<u32>>, uo: Option<SortedSetTable<u32>>, pr: Option<SortedMapTable<u32, InlineObjectPreferredStretch>>, te:
-Option<SortedMapTable<u32, ProgressiveBreakTier>>, emg: Option<SortedMapTable<u32, String>>, pem: Option<SortedMapTable<u32, String>>) -> Result<JustificationPlan, TextRangeError> {
+    pub fn justifier_coverage_test_support_justify(c: &Vec<Cluster>, r: &Vec<FontRole>, e: &Vec<EastAsianSpacingEdges>, ir: IntRange, m: f64, fs: Option<f64>, sk: Option<bool>, sr: Option<UString>, al: Option<bool>, ba: Option<f64>, mx: Option<f64>, ns: Option<SortedSetTable<u32>>, nsa: Option<SortedSetTable<u32>>, br: Option<SortedSetTable<u32>>, ph: Option<SortedSetTable<u32>>, v: Option<SortedMapTable<u32, u32>>, vs: Option<SortedSetTable<u32>>, uo: Option<SortedSetTable<u32>>, pr: Option<SortedMapTable<u32, InlineObjectPreferredStretch>>, te: Option<SortedMapTable<u32, ProgressiveBreakTier>>, emg: Option<SortedMapTable<u32, UString>>, pem: Option<SortedMapTable<u32, UString>>) -> Result<JustificationPlan, TextRangeError> {
         let x = Justifier::new(Some(0.5), Some(0.25));
-        return Ok(x.justify(&c, &r, &e, (ir).clone(), m, match &(fs) { None => { let __guard = JUSTIFIER_COVERAGE_TEST_SUPPORT_EM.lock().unwrap_or_else(|e| e.into_inner()); __guard.clone() }, Some(__option18) => *__option18 }, match &(sk) { None => false, Some(__option19) =>
-*__option19 }, match &(sr) { Some(v) => Some(v.to_string()), None => None }.clone(), Some(match &(al) { None => true, Some(__option20) => *__option20 }), match &(ba) { None => 0.25f64, Some(__option21) => *__option21 }, match &(mx) { None => 0.5f64, Some(__option22) =>
-*__option22 }, (ns).clone(), (nsa).clone(), (br).clone(), (ph).clone(), (v).clone(), (vs).clone(), (uo).clone(), (pr).clone(), (te).clone(), (emg).clone(), (pem).clone())?);
+        return Ok(x.justify(&c, &r, &e, (ir).clone(), m, match &(fs) { None => { let __guard = JUSTIFIER_COVERAGE_TEST_SUPPORT_EM.lock().unwrap_or_else(|e| e.into_inner()); __guard.clone() }, Some(__option18) => *__option18 }, match &(sk) { None => false, Some(__option19) => *__option19 }, match &(sr) { Some(v) => Some(v.to_ustring()), None => None }.clone(), Some(match &(al) { None => true, Some(__option20) => *__option20 }), match &(ba) { None => 0.25f64, Some(__option21) => *__option21 }, match &(mx) { None => 0.5f64, Some(__option22) => *__option22 }, (ns).clone(), (nsa).clone(), (br).clone(), (ph).clone(), (v).clone(), (vs).clone(), (uo).clone(), (pr).clone(), (te).clone(), (emg).clone(), (pem).clone())?);
     }
 
     pub fn justifier_coverage_test_support_cjk_cjk() -> Result<JustifierFixture, TextRangeError> {
         return Ok(JustifierFixture { c: vec![
-    (JustifierCoverageTestSupport::justifier_coverage_test_support_c(&"中", 0, None, None)?).clone(),
-    (JustifierCoverageTestSupport::justifier_coverage_test_support_c(&"中", 1, None, None)?).clone(),
+    (JustifierCoverageTestSupport::justifier_coverage_test_support_c(UStr::new(&[20013]), 0, None, None)?).clone(),
+    (JustifierCoverageTestSupport::justifier_coverage_test_support_c(UStr::new(&[20013]), 1, None, None)?).clone(),
 ], r: vec![FontRole::CjkText, FontRole::CjkText], e: vec![
     (JustifierCoverageTestSupport::justifier_coverage_test_support_e(Some(EastAsianSpacingValue::Wide), Some(EastAsianSpacingValue::Wide), Some(true))).clone(),
     (JustifierCoverageTestSupport::justifier_coverage_test_support_e(Some(EastAsianSpacingValue::Wide), Some(EastAsianSpacingValue::Wide), Some(true))).clone(),
@@ -2865,8 +3202,8 @@ Option<SortedMapTable<u32, ProgressiveBreakTier>>, emg: Option<SortedMapTable<u3
 
     pub fn justifier_coverage_test_support_cjk_latin() -> Result<JustifierFixture, TextRangeError> {
         return Ok(JustifierFixture { c: vec![
-    (JustifierCoverageTestSupport::justifier_coverage_test_support_c(&"中", 0, None, None)?).clone(),
-    (JustifierCoverageTestSupport::justifier_coverage_test_support_c(&"a", 1, Some({ let __guard = JUSTIFIER_COVERAGE_TEST_SUPPORT_EM.lock().unwrap_or_else(|e| e.into_inner()); __guard.clone() }), Some("lat".to_string()))?).clone(),
+    (JustifierCoverageTestSupport::justifier_coverage_test_support_c(UStr::new(&[20013]), 0, None, None)?).clone(),
+    (JustifierCoverageTestSupport::justifier_coverage_test_support_c(UStr::new(&[97]), 1, Some({ let __guard = JUSTIFIER_COVERAGE_TEST_SUPPORT_EM.lock().unwrap_or_else(|e| e.into_inner()); __guard.clone() }), Some(UString::from("lat")))?).clone(),
 ], r: vec![FontRole::CjkText, FontRole::LatinText], e: vec![
     (JustifierCoverageTestSupport::justifier_coverage_test_support_e(Some(EastAsianSpacingValue::Wide), Some(EastAsianSpacingValue::Wide), Some(true))).clone(),
     (JustifierCoverageTestSupport::justifier_coverage_test_support_e(Some(EastAsianSpacingValue::Narrow), Some(EastAsianSpacingValue::Narrow), None)).clone(),
@@ -2875,11 +3212,9 @@ Option<SortedMapTable<u32, ProgressiveBreakTier>>, emg: Option<SortedMapTable<u3
 
     pub fn justifier_coverage_test_support_latin_space_latin(s: Option<f64>, a: Option<f64>, b: Option<f64>) -> Result<JustifierFixture, TextRangeError> {
         return Ok(JustifierFixture { c: vec![
-    (JustifierCoverageTestSupport::justifier_coverage_test_support_c(&"a", 0, Some(match &(a) { None => { let __guard = JUSTIFIER_COVERAGE_TEST_SUPPORT_EM.lock().unwrap_or_else(|e| e.into_inner()); __guard.clone() }, Some(__option24) => *__option24 }),
-Some("lat".to_string()))?).clone(),
-    (JustifierCoverageTestSupport::justifier_coverage_test_support_c(&" ", 1, Some(match &(s) { None => 4 as f64, Some(__option26) => *__option26 }), Some("lat".to_string()))?).clone(),
-    (JustifierCoverageTestSupport::justifier_coverage_test_support_c(&"b", 2, Some(match &(b) { None => { let __guard = JUSTIFIER_COVERAGE_TEST_SUPPORT_EM.lock().unwrap_or_else(|e| e.into_inner()); __guard.clone() }, Some(__option28) => *__option28 }),
-Some("lat".to_string()))?).clone(),
+    (JustifierCoverageTestSupport::justifier_coverage_test_support_c(UStr::new(&[97]), 0, Some(match &(a) { None => { let __guard = JUSTIFIER_COVERAGE_TEST_SUPPORT_EM.lock().unwrap_or_else(|e| e.into_inner()); __guard.clone() }, Some(__option24) => *__option24 }), Some(UString::from("lat")))?).clone(),
+    (JustifierCoverageTestSupport::justifier_coverage_test_support_c(UStr::new(&[32]), 1, Some(match &(s) { None => 4 as f64, Some(__option26) => *__option26 }), Some(UString::from("lat")))?).clone(),
+    (JustifierCoverageTestSupport::justifier_coverage_test_support_c(UStr::new(&[98]), 2, Some(match &(b) { None => { let __guard = JUSTIFIER_COVERAGE_TEST_SUPPORT_EM.lock().unwrap_or_else(|e| e.into_inner()); __guard.clone() }, Some(__option28) => *__option28 }), Some(UString::from("lat")))?).clone(),
 ], r: vec![FontRole::LatinText, FontRole::LatinText, FontRole::LatinText], e: vec![
     (JustifierCoverageTestSupport::justifier_coverage_test_support_e(Some(EastAsianSpacingValue::Narrow), Some(EastAsianSpacingValue::Narrow), None)).clone(),
     (JustifierCoverageTestSupport::justifier_coverage_test_support_e(Some(EastAsianSpacingValue::Narrow), Some(EastAsianSpacingValue::Narrow), None)).clone(),
@@ -2891,7 +3226,7 @@ Some("lat".to_string()))?).clone(),
 #[test]
 fn misaligned_role_and_spacing_lists_are_rejected() {
     testlib::run("org.tiqian.layout.JustifierCoverageTest.misalignedRoleAndSpacingListsAreRejected", "org.tiqian.layout.JustifierCoverageTest.misalignedRoleAndSpacingListsAreRejected", || {
-        TestTraceRecorder::new("JustifierCoverageTest").section(&"misalignedRoleAndSpacingListsAreRejected");
+        TestTraceRecorder::new(&(UStr::new(&[74,117,115,116,105,102,105,101,114,67,111,118,101,114,97,103,101,84,101,115,116]))).section(UStr::new(&[109,105,115,97,108,105,103,110,101,100,82,111,108,101,65,110,100,83,112,97,99,105,110,103,76,105,115,116,115,65,114,101,82,101,106,101,99,116,101,100]));
         let f = JustifierCoverageTestSupport::justifier_coverage_test_support_cjk_cjk().unwrap();
         let roles3 = vec![f.r[0usize], f.r[1usize], FontRole::LatinText];
         let edges3 = vec![
@@ -2900,13 +3235,11 @@ fn misaligned_role_and_spacing_lists_are_rejected() {
     (JustifierCoverageTestSupport::justifier_coverage_test_support_e(None, None, None)).clone(),
 ];
         TracedAssertions::traced_assertions_assert_fails_with(None.clone(), { let f = (f).clone(); let roles3 = (roles3).clone(); Arc::new(move || {
-        JustifierCoverageTestSupport::justifier_coverage_test_support_justify(&f.c, &roles3, &f.e, IntRange::new(0u32, 1u32), 64 as f64, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None).map_err(|e|
-IllegalStateException::new(&format!("{}", e)))?;
+        JustifierCoverageTestSupport::justifier_coverage_test_support_justify(&f.c, &roles3, &f.e, IntRange::new(0u32, 1u32), 64 as f64, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None).map_err(|e| IllegalStateException::new(&format!("{}", e)))?;
         Ok(())
 }) }).unwrap();
         TracedAssertions::traced_assertions_assert_fails_with(None.clone(), { let f = (f).clone(); let edges3 = (edges3).clone(); Arc::new(move || {
-        JustifierCoverageTestSupport::justifier_coverage_test_support_justify(&f.c, &f.r, &edges3, IntRange::new(0u32, 1u32), 64 as f64, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None).map_err(|e|
-IllegalStateException::new(&format!("{}", e)))?;
+        JustifierCoverageTestSupport::justifier_coverage_test_support_justify(&f.c, &f.r, &edges3, IntRange::new(0u32, 1u32), 64 as f64, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None).map_err(|e| IllegalStateException::new(&format!("{}", e)))?;
         Ok(())
 }) }).unwrap();
     });
@@ -2915,42 +3248,40 @@ IllegalStateException::new(&format!("{}", e)))?;
 #[test]
 fn skip_keeps_the_deficit_and_records_the_reason() {
     testlib::run("org.tiqian.layout.JustifierCoverageTest.skipKeepsTheDeficitAndRecordsTheReason", "org.tiqian.layout.JustifierCoverageTest.skipKeepsTheDeficitAndRecordsTheReason", || {
-        TestTraceRecorder::new("JustifierCoverageTest").section(&"skipKeepsTheDeficitAndRecordsTheReason");
+        TestTraceRecorder::new(&(UStr::new(&[74,117,115,116,105,102,105,101,114,67,111,118,101,114,97,103,101,84,101,115,116]))).section(UStr::new(&[115,107,105,112,75,101,101,112,115,84,104,101,68,101,102,105,99,105,116,65,110,100,82,101,99,111,114,100,115,84,104,101,82,101,97,115,111,110]));
         let f = JustifierCoverageTestSupport::justifier_coverage_test_support_cjk_cjk().unwrap();
-        let p = JustifierCoverageTestSupport::justifier_coverage_test_support_justify(&f.c, &f.r, &f.e, IntRange::new(0u32, 1u32), 64 as f64, Some({ let __guard = JUSTIFIER_COVERAGE_TEST_SUPPORT_EM.lock().unwrap_or_else(|e| e.into_inner()); __guard.clone() }), Some(true),
-Some("RaggedRight".to_string()), None, None, None, None, None, None, None, None, None, None, None, None, None, None).unwrap();
+        let p = JustifierCoverageTestSupport::justifier_coverage_test_support_justify(&f.c, &f.r, &f.e, IntRange::new(0u32, 1u32), 64 as f64, Some({ let __guard = JUSTIFIER_COVERAGE_TEST_SUPPORT_EM.lock().unwrap_or_else(|e| e.into_inner()); __guard.clone() }), Some(true), Some(UString::from("RaggedRight")), None, None, None, None, None, None, None, None, None, None, None, None, None, None).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_equals_float(32 as f64, p.deficit_before, None).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_equals_float(32 as f64, p.unfilled_deficit, None).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_true(u32::try_from((p.allocations.len()) & 0xFFFF_FFFF).unwrap_or(0) == 0, None).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_equals_string(&"RaggedRight", (p.fallback_reason).as_deref().unwrap_or(""), None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_equals_string(UStr::new(&[82,97,103,103,101,100,82,105,103,104,116]), (p.fallback_reason).as_deref().unwrap_or(UStr::new(&[])), None).unwrap();
     });
 }
 
 #[test]
 fn zero_deficit_returns_an_empty_plan_without_reason() {
     testlib::run("org.tiqian.layout.JustifierCoverageTest.zeroDeficitReturnsAnEmptyPlanWithoutReason", "org.tiqian.layout.JustifierCoverageTest.zeroDeficitReturnsAnEmptyPlanWithoutReason", || {
-        TestTraceRecorder::new("JustifierCoverageTest").section(&"zeroDeficitReturnsAnEmptyPlanWithoutReason");
+        TestTraceRecorder::new(&(UStr::new(&[74,117,115,116,105,102,105,101,114,67,111,118,101,114,97,103,101,84,101,115,116]))).section(UStr::new(&[122,101,114,111,68,101,102,105,99,105,116,82,101,116,117,114,110,115,65,110,69,109,112,116,121,80,108,97,110,87,105,116,104,111,117,116,82,101,97,115,111,110]));
         let f = JustifierCoverageTestSupport::justifier_coverage_test_support_cjk_cjk().unwrap();
         let p = JustifierCoverageTestSupport::justifier_coverage_test_support_justify(&f.c, &f.r, &f.e, IntRange::new(0u32, 1u32), 32 as f64, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_equals_float(0 as f64, p.deficit_before, None).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_equals_float(0 as f64, p.unfilled_deficit, None).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_true(u32::try_from((p.allocations.len()) & 0xFFFF_FFFF).unwrap_or(0) == 0, None).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_null_rendered(p.fallback_reason.is_none(), &"-", None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_null_rendered(p.fallback_reason.is_none(), UStr::new(&[45]), None).unwrap();
     });
 }
 
 #[test]
 fn technical_whitespace_stretch_fills_and_stops_the_tier_chain() {
     testlib::run("org.tiqian.layout.JustifierCoverageTest.technicalWhitespaceStretchFillsAndStopsTheTierChain", "org.tiqian.layout.JustifierCoverageTest.technicalWhitespaceStretchFillsAndStopsTheTierChain", || {
-        TestTraceRecorder::new("JustifierCoverageTest").section(&"technicalWhitespaceStretchFillsAndStopsTheTierChain");
+        TestTraceRecorder::new(&(UStr::new(&[74,117,115,116,105,102,105,101,114,67,111,118,101,114,97,103,101,84,101,115,116]))).section(UStr::new(&[116,101,99,104,110,105,99,97,108,87,104,105,116,101,115,112,97,99,101,83,116,114,101,116,99,104,70,105,108,108,115,65,110,100,83,116,111,112,115,84,104,101,84,105,101,114,67,104,97,105,110]));
         let f = JustifierCoverageTestSupport::justifier_coverage_test_support_latin_space_latin(Some(2 as f64 as f64), None, None).unwrap();
         let j = Justifier::new(Some(0.5), Some(0.25f64));
-        let p = j.justify(&f.c, &f.r, &f.e, IntRange::new(0u32, 2u32), 38 as f64, 16 as f64, false, None.clone(), Some(true), 0.25f64, 0.5f64, None, None, None, None, None, None, None, None, Some(JustifierCoverageTestSupport::justifier_coverage_test_support_tier_map(&vec![1],
-&vec![ProgressiveBreakTier::Whitespace])), None, None).unwrap();
+        let p = j.justify(&f.c, &f.r, &f.e, IntRange::new(0u32, 2u32), 38 as f64, 16 as f64, false, None.clone(), Some(true), 0.25f64, 0.5f64, None, None, None, None, None, None, None, None, Some(JustifierCoverageTestSupport::justifier_coverage_test_support_tier_map(&vec![1], &vec![ProgressiveBreakTier::Whitespace])), None, None).unwrap();
         let a = (p.allocations[0usize]).clone();
         let _ = TracedAssertions::traced_assertions_assert_equals(1, a.target_cluster_index, None).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_equals_rendered(&"ProgressiveTechnical", a.kind.name().to_string().as_str(), None).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_equals_string(&"ProgressiveTechnicalWhitespaceStretch", (a.reason).to_string().as_str(), None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_equals_rendered(UStr::new(&[80,114,111,103,114,101,115,115,105,118,101,84,101,99,104,110,105,99,97,108]), UString::from(a.kind.name()).as_ustr(), None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_equals_string(UStr::new(&[80,114,111,103,114,101,115,115,105,118,101,84,101,99,104,110,105,99,97,108,87,104,105,116,101,115,112,97,99,101,83,116,114,101,116,99,104]), (a.reason).to_ustring().as_ustr(), None).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_equals_float(4 as f64, a.delta, None).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_equals_float(0 as f64, p.unfilled_deficit, None).unwrap();
     });
@@ -2959,54 +3290,50 @@ fn technical_whitespace_stretch_fills_and_stops_the_tier_chain() {
 #[test]
 fn technical_whitespace_requires_the_whitespace_tier_and_a_source_space() {
     testlib::run("org.tiqian.layout.JustifierCoverageTest.technicalWhitespaceRequiresTheWhitespaceTierAndASourceSpace", "org.tiqian.layout.JustifierCoverageTest.technicalWhitespaceRequiresTheWhitespaceTierAndASourceSpace", || {
-        TestTraceRecorder::new("JustifierCoverageTest").section(&"technicalWhitespaceRequiresTheWhitespaceTierAndASourceSpace");
+        TestTraceRecorder::new(&(UStr::new(&[74,117,115,116,105,102,105,101,114,67,111,118,101,114,97,103,101,84,101,115,116]))).section(UStr::new(&[116,101,99,104,110,105,99,97,108,87,104,105,116,101,115,112,97,99,101,82,101,113,117,105,114,101,115,84,104,101,87,104,105,116,101,115,112,97,99,101,84,105,101,114,65,110,100,65,83,111,117,114,99,101,83,112,97,99,101]));
         let f = JustifierCoverageTestSupport::justifier_coverage_test_support_latin_space_latin(Some(4 as f64 as f64), None, None).unwrap();
-        let wrong_tier = JustifierCoverageTestSupport::justifier_coverage_test_support_justify(&f.c, &f.r, &f.e, IntRange::new(0u32, 2u32), 40 as f64, None, None, None.clone(), None, None, None, None, None, None, None, None, None, None, None,
-Some(JustifierCoverageTestSupport::justifier_coverage_test_support_tier_map(&vec![1], &vec![ProgressiveBreakTier::Structural])), None, None).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_equals_rendered(&"WordSpace", wrong_tier.allocations[0usize].kind.name().to_string().as_str(), None).unwrap();
-        let wrong_cluster = JustifierCoverageTestSupport::justifier_coverage_test_support_justify(&f.c, &f.r, &f.e, IntRange::new(0u32, 2u32), 40 as f64, None, None, None.clone(), None, None, None, None, None, None, None, None, None, None, None,
-Some(JustifierCoverageTestSupport::justifier_coverage_test_support_tier_map(&vec![0], &vec![ProgressiveBreakTier::Whitespace])), None, None).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_equals_rendered(&"WordSpace", wrong_cluster.allocations[0usize].kind.name().to_string().as_str(), None).unwrap();
+        let wrong_tier = JustifierCoverageTestSupport::justifier_coverage_test_support_justify(&f.c, &f.r, &f.e, IntRange::new(0u32, 2u32), 40 as f64, None, None, None.clone(), None, None, None, None, None, None, None, None, None, None, None, Some(JustifierCoverageTestSupport::justifier_coverage_test_support_tier_map(&vec![1], &vec![ProgressiveBreakTier::Structural])), None, None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_equals_rendered(UStr::new(&[87,111,114,100,83,112,97,99,101]), UString::from(wrong_tier.allocations[0usize].kind.name()).as_ustr(), None).unwrap();
+        let wrong_cluster = JustifierCoverageTestSupport::justifier_coverage_test_support_justify(&f.c, &f.r, &f.e, IntRange::new(0u32, 2u32), 40 as f64, None, None, None.clone(), None, None, None, None, None, None, None, None, None, None, None, Some(JustifierCoverageTestSupport::justifier_coverage_test_support_tier_map(&vec![0], &vec![ProgressiveBreakTier::Whitespace])), None, None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_equals_rendered(UStr::new(&[87,111,114,100,83,112,97,99,101]), UString::from(wrong_cluster.allocations[0usize].kind.name()).as_ustr(), None).unwrap();
     });
 }
 
 #[test]
 fn zero_technical_stretch_capacity_produces_no_opportunity() {
     testlib::run("org.tiqian.layout.JustifierCoverageTest.zeroTechnicalStretchCapacityProducesNoOpportunity", "org.tiqian.layout.JustifierCoverageTest.zeroTechnicalStretchCapacityProducesNoOpportunity", || {
-        TestTraceRecorder::new("JustifierCoverageTest").section(&"zeroTechnicalStretchCapacityProducesNoOpportunity");
+        TestTraceRecorder::new(&(UStr::new(&[74,117,115,116,105,102,105,101,114,67,111,118,101,114,97,103,101,84,101,115,116]))).section(UStr::new(&[122,101,114,111,84,101,99,104,110,105,99,97,108,83,116,114,101,116,99,104,67,97,112,97,99,105,116,121,80,114,111,100,117,99,101,115,78,111,79,112,112,111,114,116,117,110,105,116,121]));
         let f = JustifierCoverageTestSupport::justifier_coverage_test_support_latin_space_latin(Some(4 as f64 as f64), None, None).unwrap();
         let j = Justifier::new(Some(0.5), Some(0 as f64));
-        let p = j.justify(&f.c, &f.r, &f.e, IntRange::new(0u32, 2u32), 40 as f64, 16 as f64, false, None.clone(), Some(true), 0.25f64, 0.5f64, None, None, None, None, None, None, None, None, Some(JustifierCoverageTestSupport::justifier_coverage_test_support_tier_map(&vec![1],
-&vec![ProgressiveBreakTier::Whitespace])), None, None).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_equals_rendered(&"WordSpace", p.allocations[0usize].kind.name().to_string().as_str(), None).unwrap();
+        let p = j.justify(&f.c, &f.r, &f.e, IntRange::new(0u32, 2u32), 40 as f64, 16 as f64, false, None.clone(), Some(true), 0.25f64, 0.5f64, None, None, None, None, None, None, None, None, Some(JustifierCoverageTestSupport::justifier_coverage_test_support_tier_map(&vec![1], &vec![ProgressiveBreakTier::Whitespace])), None, None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_equals_rendered(UStr::new(&[87,111,114,100,83,112,97,99,101]), UString::from(p.allocations[0usize].kind.name()).as_ustr(), None).unwrap();
     });
 }
 
 #[test]
 fn word_space_stretches_within_its_cap() {
     testlib::run("org.tiqian.layout.JustifierCoverageTest.wordSpaceStretchesWithinItsCap", "org.tiqian.layout.JustifierCoverageTest.wordSpaceStretchesWithinItsCap", || {
-        TestTraceRecorder::new("JustifierCoverageTest").section(&"wordSpaceStretchesWithinItsCap");
+        TestTraceRecorder::new(&(UStr::new(&[74,117,115,116,105,102,105,101,114,67,111,118,101,114,97,103,101,84,101,115,116]))).section(UStr::new(&[119,111,114,100,83,112,97,99,101,83,116,114,101,116,99,104,101,115,87,105,116,104,105,110,73,116,115,67,97,112]));
         let f = JustifierCoverageTestSupport::justifier_coverage_test_support_latin_space_latin(Some(4 as f64 as f64), None, None).unwrap();
         let p = JustifierCoverageTestSupport::justifier_coverage_test_support_justify(&f.c, &f.r, &f.e, IntRange::new(0u32, 2u32), 38 as f64, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None).unwrap();
         let a = (p.allocations[0usize]).clone();
-        let _ = TracedAssertions::traced_assertions_assert_equals_rendered(&"WordSpace", a.kind.name().to_string().as_str(), None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_equals_rendered(UStr::new(&[87,111,114,100,83,112,97,99,101]), UString::from(a.kind.name()).as_ustr(), None).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_equals(1, a.target_cluster_index, None).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_equals_float(2 as f64, a.delta, None).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_equals_string(&"WordSpace", (a.reason).to_string().as_str(), None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_equals_string(UStr::new(&[87,111,114,100,83,112,97,99,101]), (a.reason).to_ustring().as_ustr(), None).unwrap();
     });
 }
 
 #[test]
 fn word_space_at_the_cap_or_collapsed_is_skipped() {
     testlib::run("org.tiqian.layout.JustifierCoverageTest.wordSpaceAtTheCapOrCollapsedIsSkipped", "org.tiqian.layout.JustifierCoverageTest.wordSpaceAtTheCapOrCollapsedIsSkipped", || {
-        TestTraceRecorder::new("JustifierCoverageTest").section(&"wordSpaceAtTheCapOrCollapsedIsSkipped");
+        TestTraceRecorder::new(&(UStr::new(&[74,117,115,116,105,102,105,101,114,67,111,118,101,114,97,103,101,84,101,115,116]))).section(UStr::new(&[119,111,114,100,83,112,97,99,101,65,116,84,104,101,67,97,112,79,114,67,111,108,108,97,112,115,101,100,73,115,83,107,105,112,112,101,100]));
         let at_cap = JustifierCoverageTestSupport::justifier_coverage_test_support_latin_space_latin(Some(8 as f64 as f64), None, None).unwrap();
         let at_cap_plan = JustifierCoverageTestSupport::justifier_coverage_test_support_justify(&at_cap.c, &at_cap.r, &at_cap.e, IntRange::new(0u32, 2u32), 48 as f64, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_true(u32::try_from((at_cap_plan.allocations.len()) & 0xFFFF_FFFF).unwrap_or(0) == 0, None).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_equals_string(&"WesternDominantLineNaturalSpacing", (at_cap_plan.fallback_reason).as_deref().unwrap_or(""), None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_equals_string(UStr::new(&[87,101,115,116,101,114,110,68,111,109,105,110,97,110,116,76,105,110,101,78,97,116,117,114,97,108,83,112,97,99,105,110,103]), (at_cap_plan.fallback_reason).as_deref().unwrap_or(UStr::new(&[])), None).unwrap();
         let collapsed = JustifierCoverageTestSupport::justifier_coverage_test_support_latin_space_latin(Some(0 as f64 as f64), None, None).unwrap();
-        let collapsed_plan = JustifierCoverageTestSupport::justifier_coverage_test_support_justify(&collapsed.c, &collapsed.r, &collapsed.e, IntRange::new(0u32, 2u32), 40 as f64, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None,
-None).unwrap();
+        let collapsed_plan = JustifierCoverageTestSupport::justifier_coverage_test_support_justify(&collapsed.c, &collapsed.r, &collapsed.e, IntRange::new(0u32, 2u32), 40 as f64, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_true(u32::try_from((collapsed_plan.allocations.len()) & 0xFFFF_FFFF).unwrap_or(0) == 0, None).unwrap();
     });
 }
@@ -3014,14 +3341,14 @@ None).unwrap();
 #[test]
 fn space_gap_protection_covers_all_four_disjuncts() {
     testlib::run("org.tiqian.layout.JustifierCoverageTest.spaceGapProtectionCoversAllFourDisjuncts", "org.tiqian.layout.JustifierCoverageTest.spaceGapProtectionCoversAllFourDisjuncts", || {
-        TestTraceRecorder::new("JustifierCoverageTest").section(&"spaceGapProtectionCoversAllFourDisjuncts");
+        TestTraceRecorder::new(&(UStr::new(&[74,117,115,116,105,102,105,101,114,67,111,118,101,114,97,103,101,84,101,115,116]))).section(UStr::new(&[115,112,97,99,101,71,97,112,80,114,111,116,101,99,116,105,111,110,67,111,118,101,114,115,65,108,108,70,111,117,114,68,105,115,106,117,110,99,116,115]));
         let base = JustifierCoverageTestSupport::justifier_coverage_test_support_latin_space_latin(Some(4 as f64 as f64), None, None).unwrap();
         let c = vec![
     (base.c[0usize]).clone(),
     (base.c[1usize]).clone(),
     (base.c[2usize]).clone(),
-    (JustifierCoverageTestSupport::justifier_coverage_test_support_c(&"中", 3, None, None).unwrap()).clone(),
-    (JustifierCoverageTestSupport::justifier_coverage_test_support_c(&"x", 4, Some({ let __guard = JUSTIFIER_COVERAGE_TEST_SUPPORT_EM.lock().unwrap_or_else(|e| e.into_inner()); __guard.clone() }), Some("lat".to_string())).unwrap()).clone(),
+    (JustifierCoverageTestSupport::justifier_coverage_test_support_c(UStr::new(&[20013]), 3, None, None).unwrap()).clone(),
+    (JustifierCoverageTestSupport::justifier_coverage_test_support_c(UStr::new(&[120]), 4, Some({ let __guard = JUSTIFIER_COVERAGE_TEST_SUPPORT_EM.lock().unwrap_or_else(|e| e.into_inner()); __guard.clone() }), Some(UString::from("lat"))).unwrap()).clone(),
 ];
         let r = vec![base.r[0usize], base.r[1usize], base.r[2usize], FontRole::CjkText, FontRole::LatinText];
         let e = vec![
@@ -3031,53 +3358,49 @@ fn space_gap_protection_covers_all_four_disjuncts() {
     (JustifierCoverageTestSupport::justifier_coverage_test_support_e(Some(EastAsianSpacingValue::Wide), Some(EastAsianSpacingValue::Wide), Some(true))).clone(),
     (JustifierCoverageTestSupport::justifier_coverage_test_support_e(Some(EastAsianSpacingValue::Narrow), Some(EastAsianSpacingValue::Narrow), None)).clone(),
 ];
-        let v1 = JustifierCoverageTestSupport::justifier_coverage_test_support_justify(&c, &r, &e, IntRange::new(0u32, 4u32), 72 as f64, None, None, None.clone(), None, None, None, None, Some(JustifierCoverageTestSupport::justifier_coverage_test_support_set(&vec![0])), None, None,
-None, None, None, None, None, None, None).unwrap();
+        let v1 = JustifierCoverageTestSupport::justifier_coverage_test_support_justify(&c, &r, &e, IntRange::new(0u32, 4u32), 72 as f64, None, None, None.clone(), None, None, None, None, Some(JustifierCoverageTestSupport::justifier_coverage_test_support_set(&vec![0])), None, None, None, None, None, None, None, None, None).unwrap();
         let mut h1 = true;
         let mut i = 0u32;
-        while (i32::from_ne_bytes((i).to_ne_bytes())) < (i32::from_ne_bytes((u32::try_from((v1.allocations.len()) & 0xFFFF_FFFF).unwrap_or(0)).to_ne_bytes())) {
+        while (i32::from_ne_bytes(((i) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((v1.allocations.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
             if v1.allocations[usize::try_from(i).unwrap_or(0)].kind == GlueKind::WordSpace {
                 h1 = false;
             }
             i = u32::wrapping_add(i, 1);
         }
-        let _ = TracedAssertions::traced_assertions_assert_true(h1, Some("expected no word-space allocation for [0]/[]".to_string())).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_true(h1, Some(UString::from("expected no word-space allocation for [0]/[]"))).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_equals_float(0 as f64, v1.unfilled_deficit, None).unwrap();
-        let v2 = JustifierCoverageTestSupport::justifier_coverage_test_support_justify(&c, &r, &e, IntRange::new(0u32, 4u32), 72 as f64, None, None, None.clone(), None, None, None, None, Some(JustifierCoverageTestSupport::justifier_coverage_test_support_set(&vec![1])), None, None,
-None, None, None, None, None, None, None).unwrap();
+        let v2 = JustifierCoverageTestSupport::justifier_coverage_test_support_justify(&c, &r, &e, IntRange::new(0u32, 4u32), 72 as f64, None, None, None.clone(), None, None, None, None, Some(JustifierCoverageTestSupport::justifier_coverage_test_support_set(&vec![1])), None, None, None, None, None, None, None, None, None).unwrap();
         let mut h2 = true;
         let mut i2 = 0u32;
-        while (i32::from_ne_bytes((i2).to_ne_bytes())) < (i32::from_ne_bytes((u32::try_from((v2.allocations.len()) & 0xFFFF_FFFF).unwrap_or(0)).to_ne_bytes())) {
+        while (i32::from_ne_bytes(((i2) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((v2.allocations.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
             if v2.allocations[usize::try_from(i2).unwrap_or(0)].kind == GlueKind::WordSpace {
                 h2 = false;
             }
             i2 = u32::wrapping_add(i2, 1);
         }
-        let _ = TracedAssertions::traced_assertions_assert_true(h2, Some("expected no word-space allocation for [1]/[]".to_string())).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_true(h2, Some(UString::from("expected no word-space allocation for [1]/[]"))).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_equals_float(0 as f64, v2.unfilled_deficit, None).unwrap();
-        let v3 = JustifierCoverageTestSupport::justifier_coverage_test_support_justify(&c, &r, &e, IntRange::new(0u32, 4u32), 72 as f64, None, None, None.clone(), None, None, None, Some(JustifierCoverageTestSupport::justifier_coverage_test_support_set(&vec![0])), None, None, None,
-None, None, None, None, None, None, None).unwrap();
+        let v3 = JustifierCoverageTestSupport::justifier_coverage_test_support_justify(&c, &r, &e, IntRange::new(0u32, 4u32), 72 as f64, None, None, None.clone(), None, None, None, Some(JustifierCoverageTestSupport::justifier_coverage_test_support_set(&vec![0])), None, None, None, None, None, None, None, None, None, None).unwrap();
         let mut h3 = true;
         let mut i3 = 0u32;
-        while (i32::from_ne_bytes((i3).to_ne_bytes())) < (i32::from_ne_bytes((u32::try_from((v3.allocations.len()) & 0xFFFF_FFFF).unwrap_or(0)).to_ne_bytes())) {
+        while (i32::from_ne_bytes(((i3) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((v3.allocations.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
             if v3.allocations[usize::try_from(i3).unwrap_or(0)].kind == GlueKind::WordSpace {
                 h3 = false;
             }
             i3 = u32::wrapping_add(i3, 1);
         }
-        let _ = TracedAssertions::traced_assertions_assert_true(h3, Some("expected no word-space allocation for []/[0]".to_string())).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_true(h3, Some(UString::from("expected no word-space allocation for []/[0]"))).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_equals_float(0 as f64, v3.unfilled_deficit, None).unwrap();
-        let v4 = JustifierCoverageTestSupport::justifier_coverage_test_support_justify(&c, &r, &e, IntRange::new(0u32, 4u32), 72 as f64, None, None, None.clone(), None, None, None, Some(JustifierCoverageTestSupport::justifier_coverage_test_support_set(&vec![2])), None, None, None,
-None, None, None, None, None, None, None).unwrap();
+        let v4 = JustifierCoverageTestSupport::justifier_coverage_test_support_justify(&c, &r, &e, IntRange::new(0u32, 4u32), 72 as f64, None, None, None.clone(), None, None, None, Some(JustifierCoverageTestSupport::justifier_coverage_test_support_set(&vec![2])), None, None, None, None, None, None, None, None, None, None).unwrap();
         let mut h4 = true;
         let mut i4 = 0u32;
-        while (i32::from_ne_bytes((i4).to_ne_bytes())) < (i32::from_ne_bytes((u32::try_from((v4.allocations.len()) & 0xFFFF_FFFF).unwrap_or(0)).to_ne_bytes())) {
+        while (i32::from_ne_bytes(((i4) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((v4.allocations.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
             if v4.allocations[usize::try_from(i4).unwrap_or(0)].kind == GlueKind::WordSpace {
                 h4 = false;
             }
             i4 = u32::wrapping_add(i4, 1);
         }
-        let _ = TracedAssertions::traced_assertions_assert_true(h4, Some("expected no word-space allocation for []/[2]".to_string())).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_true(h4, Some(UString::from("expected no word-space allocation for []/[2]"))).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_equals_float(0 as f64, v4.unfilled_deficit, None).unwrap();
     });
 }
@@ -3085,11 +3408,11 @@ None, None, None, None, None, None, None).unwrap();
 #[test]
 fn virtual_sino_western_gap_skips_protected_and_typed_edges() {
     testlib::run("org.tiqian.layout.JustifierCoverageTest.virtualSinoWesternGapSkipsProtectedAndTypedEdges", "org.tiqian.layout.JustifierCoverageTest.virtualSinoWesternGapSkipsProtectedAndTypedEdges", || {
-        TestTraceRecorder::new("JustifierCoverageTest").section(&"virtualSinoWesternGapSkipsProtectedAndTypedEdges");
+        TestTraceRecorder::new(&(UStr::new(&[74,117,115,116,105,102,105,101,114,67,111,118,101,114,97,103,101,84,101,115,116]))).section(UStr::new(&[118,105,114,116,117,97,108,83,105,110,111,87,101,115,116,101,114,110,71,97,112,83,107,105,112,115,80,114,111,116,101,99,116,101,100,65,110,100,84,121,112,101,100,69,100,103,101,115]));
         let tlc = vec![
-    (JustifierCoverageTestSupport::justifier_coverage_test_support_c(&"中", 0, None, None).unwrap()).clone(),
-    (JustifierCoverageTestSupport::justifier_coverage_test_support_c(&" ", 1, Some(4 as f64 as f64), None).unwrap()).clone(),
-    (JustifierCoverageTestSupport::justifier_coverage_test_support_c(&"a", 2, Some({ let __guard = JUSTIFIER_COVERAGE_TEST_SUPPORT_EM.lock().unwrap_or_else(|e| e.into_inner()); __guard.clone() }), Some("lat".to_string())).unwrap()).clone(),
+    (JustifierCoverageTestSupport::justifier_coverage_test_support_c(UStr::new(&[20013]), 0, None, None).unwrap()).clone(),
+    (JustifierCoverageTestSupport::justifier_coverage_test_support_c(UStr::new(&[32]), 1, Some(4 as f64 as f64), None).unwrap()).clone(),
+    (JustifierCoverageTestSupport::justifier_coverage_test_support_c(UStr::new(&[97]), 2, Some({ let __guard = JUSTIFIER_COVERAGE_TEST_SUPPORT_EM.lock().unwrap_or_else(|e| e.into_inner()); __guard.clone() }), Some(UString::from("lat"))).unwrap()).clone(),
 ];
         let tlr = vec![FontRole::CjkText, FontRole::LatinText, FontRole::LatinText];
         let tle = vec![
@@ -3098,12 +3421,12 @@ fn virtual_sino_western_gap_skips_protected_and_typed_edges() {
     (JustifierCoverageTestSupport::justifier_coverage_test_support_e(Some(EastAsianSpacingValue::Narrow), Some(EastAsianSpacingValue::Narrow), None)).clone(),
 ];
         let typed_left = JustifierCoverageTestSupport::justifier_coverage_test_support_justify(&tlc, &tlr, &tle, IntRange::new(0u32, 2u32), 40 as f64, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_equals_rendered(&"CjkLatinSpace", typed_left.allocations[0usize].kind.name().to_string().as_str(), None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_equals_rendered(UStr::new(&[67,106,107,76,97,116,105,110,83,112,97,99,101]), UString::from(typed_left.allocations[0usize].kind.name()).as_ustr(), None).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_equals(1, typed_left.allocations[0usize].target_cluster_index, None).unwrap();
         let trc = vec![
-    (JustifierCoverageTestSupport::justifier_coverage_test_support_c(&"中", 0, None, None).unwrap()).clone(),
-    (JustifierCoverageTestSupport::justifier_coverage_test_support_c(&" a", 1, Some({ let __guard = JUSTIFIER_COVERAGE_TEST_SUPPORT_EM.lock().unwrap_or_else(|e| e.into_inner()); __guard.clone() }), Some("lat".to_string())).unwrap()).clone(),
-    (JustifierCoverageTestSupport::justifier_coverage_test_support_c(&"b", 2, Some({ let __guard = JUSTIFIER_COVERAGE_TEST_SUPPORT_EM.lock().unwrap_or_else(|e| e.into_inner()); __guard.clone() }), Some("lat".to_string())).unwrap()).clone(),
+    (JustifierCoverageTestSupport::justifier_coverage_test_support_c(UStr::new(&[20013]), 0, None, None).unwrap()).clone(),
+    (JustifierCoverageTestSupport::justifier_coverage_test_support_c(UStr::new(&[32,97]), 1, Some({ let __guard = JUSTIFIER_COVERAGE_TEST_SUPPORT_EM.lock().unwrap_or_else(|e| e.into_inner()); __guard.clone() }), Some(UString::from("lat"))).unwrap()).clone(),
+    (JustifierCoverageTestSupport::justifier_coverage_test_support_c(UStr::new(&[98]), 2, Some({ let __guard = JUSTIFIER_COVERAGE_TEST_SUPPORT_EM.lock().unwrap_or_else(|e| e.into_inner()); __guard.clone() }), Some(UString::from("lat"))).unwrap()).clone(),
 ];
         let tre = vec![
     (JustifierCoverageTestSupport::justifier_coverage_test_support_e(Some(EastAsianSpacingValue::Wide), Some(EastAsianSpacingValue::Wide), Some(true))).clone(),
@@ -3113,7 +3436,7 @@ fn virtual_sino_western_gap_skips_protected_and_typed_edges() {
         let typed_right = JustifierCoverageTestSupport::justifier_coverage_test_support_justify(&trc, &tlr, &tre, IntRange::new(0u32, 2u32), 52 as f64, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None).unwrap();
         let mut ok1 = true;
         let mut i1 = 0u32;
-        while (i32::from_ne_bytes((i1).to_ne_bytes())) < (i32::from_ne_bytes((u32::try_from((typed_right.allocations.len()) & 0xFFFF_FFFF).unwrap_or(0)).to_ne_bytes())) {
+        while (i32::from_ne_bytes(((i1) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((typed_right.allocations.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
             if typed_right.allocations[usize::try_from(i1).unwrap_or(0)].kind == GlueKind::CjkLatinSpace {
                 ok1 = false;
             }
@@ -3121,22 +3444,20 @@ fn virtual_sino_western_gap_skips_protected_and_typed_edges() {
         }
         let _ = TracedAssertions::traced_assertions_assert_true(ok1, None).unwrap();
         let f = JustifierCoverageTestSupport::justifier_coverage_test_support_cjk_latin().unwrap();
-        let physical = JustifierCoverageTestSupport::justifier_coverage_test_support_justify(&f.c, &f.r, &f.e, IntRange::new(0u32, 1u32), 36 as f64, None, None, None.clone(), None, None, None, None, None, None,
-Some(JustifierCoverageTestSupport::justifier_coverage_test_support_set(&vec![0])), None, None, None, None, None, None, None).unwrap();
+        let physical = JustifierCoverageTestSupport::justifier_coverage_test_support_justify(&f.c, &f.r, &f.e, IntRange::new(0u32, 1u32), 36 as f64, None, None, None.clone(), None, None, None, None, None, None, Some(JustifierCoverageTestSupport::justifier_coverage_test_support_set(&vec![0])), None, None, None, None, None, None, None).unwrap();
         let mut ok2 = true;
         let mut i2 = 0u32;
-        while (i32::from_ne_bytes((i2).to_ne_bytes())) < (i32::from_ne_bytes((u32::try_from((physical.allocations.len()) & 0xFFFF_FFFF).unwrap_or(0)).to_ne_bytes())) {
+        while (i32::from_ne_bytes(((i2) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((physical.allocations.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
             if physical.allocations[usize::try_from(i2).unwrap_or(0)].kind == GlueKind::CjkLatinSpace {
                 ok2 = false;
             }
             i2 = u32::wrapping_add(i2, 1);
         }
         let _ = TracedAssertions::traced_assertions_assert_true(ok2, None).unwrap();
-        let closed = JustifierCoverageTestSupport::justifier_coverage_test_support_justify(&f.c, &f.r, &f.e, IntRange::new(0u32, 1u32), 36 as f64, None, None, None.clone(), None, None, None, None, Some(JustifierCoverageTestSupport::justifier_coverage_test_support_set(&vec![0])),
-None, None, None, None, None, None, None, None, None).unwrap();
+        let closed = JustifierCoverageTestSupport::justifier_coverage_test_support_justify(&f.c, &f.r, &f.e, IntRange::new(0u32, 1u32), 36 as f64, None, None, None.clone(), None, None, None, None, Some(JustifierCoverageTestSupport::justifier_coverage_test_support_set(&vec![0])), None, None, None, None, None, None, None, None, None).unwrap();
         let mut ok3 = true;
         let mut i3 = 0u32;
-        while (i32::from_ne_bytes((i3).to_ne_bytes())) < (i32::from_ne_bytes((u32::try_from((closed.allocations.len()) & 0xFFFF_FFFF).unwrap_or(0)).to_ne_bytes())) {
+        while (i32::from_ne_bytes(((i3) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((closed.allocations.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
             if closed.allocations[usize::try_from(i3).unwrap_or(0)].kind == GlueKind::CjkLatinSpace {
                 ok3 = false;
             }
@@ -3150,12 +3471,12 @@ None, None, None, None, None, None, None, None, None).unwrap();
 #[test]
 fn attached_inline_virtual_auto_space_joins_tier_two() {
     testlib::run("org.tiqian.layout.JustifierCoverageTest.attachedInlineVirtualAutoSpaceJoinsTierTwo", "org.tiqian.layout.JustifierCoverageTest.attachedInlineVirtualAutoSpaceJoinsTierTwo", || {
-        TestTraceRecorder::new("JustifierCoverageTest").section(&"attachedInlineVirtualAutoSpaceJoinsTierTwo");
+        TestTraceRecorder::new(&(UStr::new(&[74,117,115,116,105,102,105,101,114,67,111,118,101,114,97,103,101,84,101,115,116]))).section(UStr::new(&[97,116,116,97,99,104,101,100,73,110,108,105,110,101,86,105,114,116,117,97,108,65,117,116,111,83,112,97,99,101,74,111,105,110,115,84,105,101,114,84,119,111]));
         let c = vec![
-    (JustifierCoverageTestSupport::justifier_coverage_test_support_c(&"中", 0, None, None).unwrap()).clone(),
-    (JustifierCoverageTestSupport::justifier_coverage_test_support_c(&"", 1, Some(0 as f64 as f64), Some("obj".to_string())).unwrap()).clone(),
-    (JustifierCoverageTestSupport::justifier_coverage_test_support_c(&"a", 2, Some({ let __guard = JUSTIFIER_COVERAGE_TEST_SUPPORT_EM.lock().unwrap_or_else(|e| e.into_inner()); __guard.clone() }), Some("lat".to_string())).unwrap()).clone(),
-    (JustifierCoverageTestSupport::justifier_coverage_test_support_c(&"b", 3, Some({ let __guard = JUSTIFIER_COVERAGE_TEST_SUPPORT_EM.lock().unwrap_or_else(|e| e.into_inner()); __guard.clone() }), Some("lat".to_string())).unwrap()).clone(),
+    (JustifierCoverageTestSupport::justifier_coverage_test_support_c(UStr::new(&[20013]), 0, None, None).unwrap()).clone(),
+    (JustifierCoverageTestSupport::justifier_coverage_test_support_c(UStr::new(&[]), 1, Some(0 as f64 as f64), Some(UString::from("obj"))).unwrap()).clone(),
+    (JustifierCoverageTestSupport::justifier_coverage_test_support_c(UStr::new(&[97]), 2, Some({ let __guard = JUSTIFIER_COVERAGE_TEST_SUPPORT_EM.lock().unwrap_or_else(|e| e.into_inner()); __guard.clone() }), Some(UString::from("lat"))).unwrap()).clone(),
+    (JustifierCoverageTestSupport::justifier_coverage_test_support_c(UStr::new(&[98]), 3, Some({ let __guard = JUSTIFIER_COVERAGE_TEST_SUPPORT_EM.lock().unwrap_or_else(|e| e.into_inner()); __guard.clone() }), Some(UString::from("lat"))).unwrap()).clone(),
 ];
         let r = vec![FontRole::CjkText, FontRole::Unknown, FontRole::LatinText, FontRole::LatinText];
         let e = vec![
@@ -3164,80 +3485,74 @@ fn attached_inline_virtual_auto_space_joins_tier_two() {
     (JustifierCoverageTestSupport::justifier_coverage_test_support_e(Some(EastAsianSpacingValue::Narrow), Some(EastAsianSpacingValue::Narrow), None)).clone(),
     (JustifierCoverageTestSupport::justifier_coverage_test_support_e(Some(EastAsianSpacingValue::Narrow), Some(EastAsianSpacingValue::Narrow), None)).clone(),
 ];
-        let happy = JustifierCoverageTestSupport::justifier_coverage_test_support_justify(&c, &r, &e, IntRange::new(0u32, 3u32), 52 as f64, None, None, None.clone(), None, None, None, None, None, None, None,
-Some(JustifierCoverageTestSupport::justifier_coverage_test_support_int_map(&vec![2], &vec![0])), Some(JustifierCoverageTestSupport::justifier_coverage_test_support_set(&vec![2])), None, None, None, None, None).unwrap();
+        let happy = JustifierCoverageTestSupport::justifier_coverage_test_support_justify(&c, &r, &e, IntRange::new(0u32, 3u32), 52 as f64, None, None, None.clone(), None, None, None, None, None, None, None, Some(JustifierCoverageTestSupport::justifier_coverage_test_support_int_map(&vec![2], &vec![0])), Some(JustifierCoverageTestSupport::justifier_coverage_test_support_set(&vec![2])), None, None, None, None, None).unwrap();
         let a = (happy.allocations[0usize]).clone();
-        let _ = TracedAssertions::traced_assertions_assert_equals_rendered(&"CjkLatinSpace", a.kind.name().to_string().as_str(), None).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_equals_string(&"AttachedInlineVirtualAutoSpace", (a.reason).to_string().as_str(), None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_equals_rendered(UStr::new(&[67,106,107,76,97,116,105,110,83,112,97,99,101]), UString::from(a.kind.name()).as_ustr(), None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_equals_string(UStr::new(&[65,116,116,97,99,104,101,100,73,110,108,105,110,101,86,105,114,116,117,97,108,65,117,116,111,83,112,97,99,101]), (a.reason).to_ustring().as_ustr(), None).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_equals(2, a.target_cluster_index, None).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_equals_float(4 as f64, a.delta, None).unwrap();
-        let no_previous = JustifierCoverageTestSupport::justifier_coverage_test_support_justify(&c, &r, &e, IntRange::new(0u32, 3u32), 52 as f64, None, None, None.clone(), None, None, None, None, None, None, None, None,
-Some(JustifierCoverageTestSupport::justifier_coverage_test_support_set(&vec![2])), None, None, None, None, None).unwrap();
+        let no_previous = JustifierCoverageTestSupport::justifier_coverage_test_support_justify(&c, &r, &e, IntRange::new(0u32, 3u32), 52 as f64, None, None, None.clone(), None, None, None, None, None, None, None, None, Some(JustifierCoverageTestSupport::justifier_coverage_test_support_set(&vec![2])), None, None, None, None, None).unwrap();
         let mut ok1 = true;
         let mut i1 = 0u32;
-        while (i32::from_ne_bytes((i1).to_ne_bytes())) < (i32::from_ne_bytes((u32::try_from((no_previous.allocations.len()) & 0xFFFF_FFFF).unwrap_or(0)).to_ne_bytes())) {
-            if no_previous.allocations[usize::try_from(i1).unwrap_or(0)].clone().reason.to_string() == "AttachedInlineVirtualAutoSpace" {
+        while (i32::from_ne_bytes(((i1) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((no_previous.allocations.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
+            if no_previous.allocations[usize::try_from(i1).unwrap_or(0)].clone().reason.to_ustring() == UString::from("AttachedInlineVirtualAutoSpace") {
                 ok1 = false;
             }
             i1 = u32::wrapping_add(i1, 1);
         }
         let _ = TracedAssertions::traced_assertions_assert_true(ok1, None).unwrap();
-        let target_out_of_range = JustifierCoverageTestSupport::justifier_coverage_test_support_justify(&c, &r, &e, IntRange::new(0u32, 2u32), 36 as f64, None, None, None.clone(), None, None, None, None, None, None, None,
-Some(JustifierCoverageTestSupport::justifier_coverage_test_support_int_map(&vec![3], &vec![0])), Some(JustifierCoverageTestSupport::justifier_coverage_test_support_set(&vec![3])), None, None, None, None, None).unwrap();
+        let target_out_of_range = JustifierCoverageTestSupport::justifier_coverage_test_support_justify(&c, &r, &e, IntRange::new(0u32, 2u32), 36 as f64, None, None, None.clone(), None, None, None, None, None, None, None, Some(JustifierCoverageTestSupport::justifier_coverage_test_support_int_map(&vec![3], &vec![0])), Some(JustifierCoverageTestSupport::justifier_coverage_test_support_set(&vec![3])), None, None, None, None, None).unwrap();
         let mut ok2 = true;
         let mut i2 = 0u32;
-        while (i32::from_ne_bytes((i2).to_ne_bytes())) < (i32::from_ne_bytes((u32::try_from((target_out_of_range.allocations.len()) & 0xFFFF_FFFF).unwrap_or(0)).to_ne_bytes())) {
-            if target_out_of_range.allocations[usize::try_from(i2).unwrap_or(0)].clone().reason.to_string() == "AttachedInlineVirtualAutoSpace" {
+        while (i32::from_ne_bytes(((i2) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((target_out_of_range.allocations.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
+            if target_out_of_range.allocations[usize::try_from(i2).unwrap_or(0)].clone().reason.to_ustring() == UString::from("AttachedInlineVirtualAutoSpace") {
                 ok2 = false;
             }
             i2 = u32::wrapping_add(i2, 1);
         }
         let _ = TracedAssertions::traced_assertions_assert_true(ok2, None).unwrap();
-        let next_out_of_range = JustifierCoverageTestSupport::justifier_coverage_test_support_justify(&c, &r, &e, IntRange::new(0u32, 2u32), 36 as f64, None, None, None.clone(), None, None, None, None, None, None, None,
-Some(JustifierCoverageTestSupport::justifier_coverage_test_support_int_map(&vec![2], &vec![0])), Some(JustifierCoverageTestSupport::justifier_coverage_test_support_set(&vec![2])), None, None, None, None, None).unwrap();
+        let next_out_of_range = JustifierCoverageTestSupport::justifier_coverage_test_support_justify(&c, &r, &e, IntRange::new(0u32, 2u32), 36 as f64, None, None, None.clone(), None, None, None, None, None, None, None, Some(JustifierCoverageTestSupport::justifier_coverage_test_support_int_map(&vec![2], &vec![0])), Some(JustifierCoverageTestSupport::justifier_coverage_test_support_set(&vec![2])), None, None, None, None, None).unwrap();
         let mut ok3 = true;
         let mut i3 = 0u32;
-        while (i32::from_ne_bytes((i3).to_ne_bytes())) < (i32::from_ne_bytes((u32::try_from((next_out_of_range.allocations.len()) & 0xFFFF_FFFF).unwrap_or(0)).to_ne_bytes())) {
-            if next_out_of_range.allocations[usize::try_from(i3).unwrap_or(0)].clone().reason.to_string() == "AttachedInlineVirtualAutoSpace" {
+        while (i32::from_ne_bytes(((i3) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((next_out_of_range.allocations.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
+            if next_out_of_range.allocations[usize::try_from(i3).unwrap_or(0)].clone().reason.to_ustring() == UString::from("AttachedInlineVirtualAutoSpace") {
                 ok3 = false;
             }
             i3 = u32::wrapping_add(i3, 1);
         }
         let _ = TracedAssertions::traced_assertions_assert_true(ok3, None).unwrap();
-        let p0 = JustifierCoverageTestSupport::justifier_coverage_test_support_justify(&c, &r, &e, IntRange::new(0u32, 3u32), 52 as f64, None, None, None.clone(), None, None, None, Some(JustifierCoverageTestSupport::justifier_coverage_test_support_set(&vec![0])), None, None, None,
-Some(JustifierCoverageTestSupport::justifier_coverage_test_support_int_map(&vec![2], &vec![0])), Some(JustifierCoverageTestSupport::justifier_coverage_test_support_set(&vec![2])), None, None, None, None, None).unwrap();
+        let p0 = JustifierCoverageTestSupport::justifier_coverage_test_support_justify(&c, &r, &e, IntRange::new(0u32, 3u32), 52 as f64, None, None, None.clone(), None, None, None, Some(JustifierCoverageTestSupport::justifier_coverage_test_support_set(&vec![0])), None, None, None, Some(JustifierCoverageTestSupport::justifier_coverage_test_support_int_map(&vec![2], &vec![0])), Some(JustifierCoverageTestSupport::justifier_coverage_test_support_set(&vec![2])), None, None, None, None, None).unwrap();
         let mut ok4 = true;
         let mut i4 = 0u32;
-        while (i32::from_ne_bytes((i4).to_ne_bytes())) < (i32::from_ne_bytes((u32::try_from((p0.allocations.len()) & 0xFFFF_FFFF).unwrap_or(0)).to_ne_bytes())) {
-            if p0.allocations[usize::try_from(i4).unwrap_or(0)].clone().reason.to_string() == "AttachedInlineVirtualAutoSpace" {
+        while (i32::from_ne_bytes(((i4) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((p0.allocations.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
+            if p0.allocations[usize::try_from(i4).unwrap_or(0)].clone().reason.to_ustring() == UString::from("AttachedInlineVirtualAutoSpace") {
                 ok4 = false;
             }
             i4 = u32::wrapping_add(i4, 1);
         }
-        let _ = TracedAssertions::traced_assertions_assert_true(ok4, Some("expected skip for protected [0]".to_string())).unwrap();
-        let p3 = JustifierCoverageTestSupport::justifier_coverage_test_support_justify(&c, &r, &e, IntRange::new(0u32, 3u32), 52 as f64, None, None, None.clone(), None, None, None, Some(JustifierCoverageTestSupport::justifier_coverage_test_support_set(&vec![3])), None, None, None,
-Some(JustifierCoverageTestSupport::justifier_coverage_test_support_int_map(&vec![2], &vec![0])), Some(JustifierCoverageTestSupport::justifier_coverage_test_support_set(&vec![2])), None, None, None, None, None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_true(ok4, Some(UString::from("expected skip for protected [0]"))).unwrap();
+        let p3 = JustifierCoverageTestSupport::justifier_coverage_test_support_justify(&c, &r, &e, IntRange::new(0u32, 3u32), 52 as f64, None, None, None.clone(), None, None, None, Some(JustifierCoverageTestSupport::justifier_coverage_test_support_set(&vec![3])), None, None, None, Some(JustifierCoverageTestSupport::justifier_coverage_test_support_int_map(&vec![2], &vec![0])), Some(JustifierCoverageTestSupport::justifier_coverage_test_support_set(&vec![2])), None, None, None, None, None).unwrap();
         let mut ok5 = true;
         let mut i5 = 0u32;
-        while (i32::from_ne_bytes((i5).to_ne_bytes())) < (i32::from_ne_bytes((u32::try_from((p3.allocations.len()) & 0xFFFF_FFFF).unwrap_or(0)).to_ne_bytes())) {
-            if p3.allocations[usize::try_from(i5).unwrap_or(0)].clone().reason.to_string() == "AttachedInlineVirtualAutoSpace" {
+        while (i32::from_ne_bytes(((i5) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((p3.allocations.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
+            if p3.allocations[usize::try_from(i5).unwrap_or(0)].clone().reason.to_ustring() == UString::from("AttachedInlineVirtualAutoSpace") {
                 ok5 = false;
             }
             i5 = u32::wrapping_add(i5, 1);
         }
-        let _ = TracedAssertions::traced_assertions_assert_true(ok5, Some("expected skip for protected [3]".to_string())).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_true(ok5, Some(UString::from("expected skip for protected [3]"))).unwrap();
     });
 }
 
 #[test]
 fn attached_inline_virtual_inter_char_honours_no_stretch_protection() {
     testlib::run("org.tiqian.layout.JustifierCoverageTest.attachedInlineVirtualInterCharHonoursNoStretchProtection", "org.tiqian.layout.JustifierCoverageTest.attachedInlineVirtualInterCharHonoursNoStretchProtection", || {
-        TestTraceRecorder::new("JustifierCoverageTest").section(&"attachedInlineVirtualInterCharHonoursNoStretchProtection");
+        TestTraceRecorder::new(&(UStr::new(&[74,117,115,116,105,102,105,101,114,67,111,118,101,114,97,103,101,84,101,115,116]))).section(UStr::new(&[97,116,116,97,99,104,101,100,73,110,108,105,110,101,86,105,114,116,117,97,108,73,110,116,101,114,67,104,97,114,72,111,110,111,117,114,115,78,111,83,116,114,101,116,99,104,80,114,111,116,101,99,116,105,111,110]));
         let c = vec![
-    (JustifierCoverageTestSupport::justifier_coverage_test_support_c(&"a", 0, Some({ let __guard = JUSTIFIER_COVERAGE_TEST_SUPPORT_EM.lock().unwrap_or_else(|e| e.into_inner()); __guard.clone() }), Some("lat".to_string())).unwrap()).clone(),
-    (JustifierCoverageTestSupport::justifier_coverage_test_support_c(&"", 1, Some(0 as f64 as f64), Some("obj".to_string())).unwrap()).clone(),
-    (JustifierCoverageTestSupport::justifier_coverage_test_support_c(&"b", 2, Some({ let __guard = JUSTIFIER_COVERAGE_TEST_SUPPORT_EM.lock().unwrap_or_else(|e| e.into_inner()); __guard.clone() }), Some("lat".to_string())).unwrap()).clone(),
-    (JustifierCoverageTestSupport::justifier_coverage_test_support_c(&"中", 3, None, None).unwrap()).clone(),
+    (JustifierCoverageTestSupport::justifier_coverage_test_support_c(UStr::new(&[97]), 0, Some({ let __guard = JUSTIFIER_COVERAGE_TEST_SUPPORT_EM.lock().unwrap_or_else(|e| e.into_inner()); __guard.clone() }), Some(UString::from("lat"))).unwrap()).clone(),
+    (JustifierCoverageTestSupport::justifier_coverage_test_support_c(UStr::new(&[]), 1, Some(0 as f64 as f64), Some(UString::from("obj"))).unwrap()).clone(),
+    (JustifierCoverageTestSupport::justifier_coverage_test_support_c(UStr::new(&[98]), 2, Some({ let __guard = JUSTIFIER_COVERAGE_TEST_SUPPORT_EM.lock().unwrap_or_else(|e| e.into_inner()); __guard.clone() }), Some(UString::from("lat"))).unwrap()).clone(),
+    (JustifierCoverageTestSupport::justifier_coverage_test_support_c(UStr::new(&[20013]), 3, None, None).unwrap()).clone(),
 ];
         let r = vec![FontRole::LatinText, FontRole::Unknown, FontRole::LatinText, FontRole::CjkText];
         let e = vec![
@@ -3246,69 +3561,64 @@ fn attached_inline_virtual_inter_char_honours_no_stretch_protection() {
     (JustifierCoverageTestSupport::justifier_coverage_test_support_e(Some(EastAsianSpacingValue::Narrow), Some(EastAsianSpacingValue::Narrow), None)).clone(),
     (JustifierCoverageTestSupport::justifier_coverage_test_support_e(Some(EastAsianSpacingValue::Other), Some(EastAsianSpacingValue::Wide), Some(true))).clone(),
 ];
-        let happy = JustifierCoverageTestSupport::justifier_coverage_test_support_justify(&c, &r, &e, IntRange::new(0u32, 3u32), 60 as f64, None, None, None.clone(), None, None, None, None, None, None, None,
-Some(JustifierCoverageTestSupport::justifier_coverage_test_support_int_map(&vec![1], &vec![0])), None, None, None, None, None, None).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_equals_string(&"AttachedInlineVirtualInterChar", ((happy.allocations[0usize]).clone().reason).to_string().as_str(), None).unwrap();
+        let happy = JustifierCoverageTestSupport::justifier_coverage_test_support_justify(&c, &r, &e, IntRange::new(0u32, 3u32), 60 as f64, None, None, None.clone(), None, None, None, None, None, None, None, Some(JustifierCoverageTestSupport::justifier_coverage_test_support_int_map(&vec![1], &vec![0])), None, None, None, None, None, None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_equals_string(UStr::new(&[65,116,116,97,99,104,101,100,73,110,108,105,110,101,86,105,114,116,117,97,108,73,110,116,101,114,67,104,97,114]), ((happy.allocations[0usize]).clone().reason).to_ustring().as_ustr(), None).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_equals_float(0 as f64, happy.unfilled_deficit, None).unwrap();
-        let v1 = JustifierCoverageTestSupport::justifier_coverage_test_support_justify(&c, &r, &e, IntRange::new(0u32, 3u32), 60 as f64, None, None, None.clone(), None, None, None, Some(JustifierCoverageTestSupport::justifier_coverage_test_support_set(&vec![0])), None, None, None,
-Some(JustifierCoverageTestSupport::justifier_coverage_test_support_int_map(&vec![1], &vec![0])), None, None, None, None, None, None).unwrap();
+        let v1 = JustifierCoverageTestSupport::justifier_coverage_test_support_justify(&c, &r, &e, IntRange::new(0u32, 3u32), 60 as f64, None, None, None.clone(), None, None, None, Some(JustifierCoverageTestSupport::justifier_coverage_test_support_set(&vec![0])), None, None, None, Some(JustifierCoverageTestSupport::justifier_coverage_test_support_int_map(&vec![1], &vec![0])), None, None, None, None, None, None).unwrap();
         let mut ok1 = true;
         let mut i1 = 0u32;
-        while (i32::from_ne_bytes((i1).to_ne_bytes())) < (i32::from_ne_bytes((u32::try_from((v1.allocations.len()) & 0xFFFF_FFFF).unwrap_or(0)).to_ne_bytes())) {
-            if v1.allocations[usize::try_from(i1).unwrap_or(0)].clone().reason.to_string() == "AttachedInlineVirtualInterChar" {
+        while (i32::from_ne_bytes(((i1) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((v1.allocations.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
+            if v1.allocations[usize::try_from(i1).unwrap_or(0)].clone().reason.to_ustring() == UString::from("AttachedInlineVirtualInterChar") {
                 ok1 = false;
             }
             i1 = u32::wrapping_add(i1, 1);
         }
-        let _ = TracedAssertions::traced_assertions_assert_true(ok1, Some("expected skip for [0]/[]".to_string())).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_true(ok1, Some(UString::from("expected skip for [0]/[]"))).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_true((v1.unfilled_deficit) > (0 as f64), None).unwrap();
-        let v2 = JustifierCoverageTestSupport::justifier_coverage_test_support_justify(&c, &r, &e, IntRange::new(0u32, 3u32), 60 as f64, None, None, None.clone(), None, None, None, Some(JustifierCoverageTestSupport::justifier_coverage_test_support_set(&vec![2])), None, None, None,
-Some(JustifierCoverageTestSupport::justifier_coverage_test_support_int_map(&vec![1], &vec![0])), None, None, None, None, None, None).unwrap();
+        let v2 = JustifierCoverageTestSupport::justifier_coverage_test_support_justify(&c, &r, &e, IntRange::new(0u32, 3u32), 60 as f64, None, None, None.clone(), None, None, None, Some(JustifierCoverageTestSupport::justifier_coverage_test_support_set(&vec![2])), None, None, None, Some(JustifierCoverageTestSupport::justifier_coverage_test_support_int_map(&vec![1], &vec![0])), None, None, None, None, None, None).unwrap();
         let mut ok2 = true;
         let mut i2 = 0u32;
-        while (i32::from_ne_bytes((i2).to_ne_bytes())) < (i32::from_ne_bytes((u32::try_from((v2.allocations.len()) & 0xFFFF_FFFF).unwrap_or(0)).to_ne_bytes())) {
-            if v2.allocations[usize::try_from(i2).unwrap_or(0)].clone().reason.to_string() == "AttachedInlineVirtualInterChar" {
+        while (i32::from_ne_bytes(((i2) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((v2.allocations.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
+            if v2.allocations[usize::try_from(i2).unwrap_or(0)].clone().reason.to_ustring() == UString::from("AttachedInlineVirtualInterChar") {
                 ok2 = false;
             }
             i2 = u32::wrapping_add(i2, 1);
         }
-        let _ = TracedAssertions::traced_assertions_assert_true(ok2, Some("expected skip for [2]/[]".to_string())).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_true(ok2, Some(UString::from("expected skip for [2]/[]"))).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_true((v2.unfilled_deficit) > (0 as f64), None).unwrap();
-        let v3 = JustifierCoverageTestSupport::justifier_coverage_test_support_justify(&c, &r, &e, IntRange::new(0u32, 3u32), 60 as f64, None, None, None.clone(), None, None, None, None, Some(JustifierCoverageTestSupport::justifier_coverage_test_support_set(&vec![0])), None, None,
-Some(JustifierCoverageTestSupport::justifier_coverage_test_support_int_map(&vec![1], &vec![0])), None, None, None, None, None, None).unwrap();
+        let v3 = JustifierCoverageTestSupport::justifier_coverage_test_support_justify(&c, &r, &e, IntRange::new(0u32, 3u32), 60 as f64, None, None, None.clone(), None, None, None, None, Some(JustifierCoverageTestSupport::justifier_coverage_test_support_set(&vec![0])), None, None, Some(JustifierCoverageTestSupport::justifier_coverage_test_support_int_map(&vec![1], &vec![0])), None, None, None, None, None, None).unwrap();
         let mut ok3 = true;
         let mut i3 = 0u32;
-        while (i32::from_ne_bytes((i3).to_ne_bytes())) < (i32::from_ne_bytes((u32::try_from((v3.allocations.len()) & 0xFFFF_FFFF).unwrap_or(0)).to_ne_bytes())) {
-            if v3.allocations[usize::try_from(i3).unwrap_or(0)].clone().reason.to_string() == "AttachedInlineVirtualInterChar" {
+        while (i32::from_ne_bytes(((i3) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((v3.allocations.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
+            if v3.allocations[usize::try_from(i3).unwrap_or(0)].clone().reason.to_ustring() == UString::from("AttachedInlineVirtualInterChar") {
                 ok3 = false;
             }
             i3 = u32::wrapping_add(i3, 1);
         }
-        let _ = TracedAssertions::traced_assertions_assert_true(ok3, Some("expected skip for []/[0]".to_string())).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_true(ok3, Some(UString::from("expected skip for []/[0]"))).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_true((v3.unfilled_deficit) > (0 as f64), None).unwrap();
-        let promoted = JustifierCoverageTestSupport::justifier_coverage_test_support_justify(&c, &r, &e, IntRange::new(0u32, 3u32), 60 as f64, None, None, None.clone(), None, None, None, None, None, None, None,
-Some(JustifierCoverageTestSupport::justifier_coverage_test_support_int_map(&vec![1], &vec![0])), None, Some(JustifierCoverageTestSupport::justifier_coverage_test_support_set(&vec![1])), None, None, None, None).unwrap();
+        let promoted = JustifierCoverageTestSupport::justifier_coverage_test_support_justify(&c, &r, &e, IntRange::new(0u32, 3u32), 60 as f64, None, None, None.clone(), None, None, None, None, None, None, None, Some(JustifierCoverageTestSupport::justifier_coverage_test_support_int_map(&vec![1], &vec![0])), None, Some(JustifierCoverageTestSupport::justifier_coverage_test_support_set(&vec![1])), None, None, None, None).unwrap();
         let mut found: Option<JustificationAllocation> = None;
         let mut i4 = 0u32;
-        while (i32::from_ne_bytes((i4).to_ne_bytes())) < (i32::from_ne_bytes((u32::try_from((promoted.allocations.len()) & 0xFFFF_FFFF).unwrap_or(0)).to_ne_bytes())) {
+        while (i32::from_ne_bytes(((i4) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((promoted.allocations.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
             if promoted.allocations[usize::try_from(i4).unwrap_or(0)].target_cluster_index == 1 {
                 found = Some((promoted.allocations[usize::try_from(i4).unwrap_or(0)]).clone());
             }
             i4 = u32::wrapping_add(i4, 1);
         }
-        let _ = TracedAssertions::traced_assertions_assert_equals_rendered(&"InlineObjectBoundary", found.as_ref().unwrap().kind.name().to_string().as_str(), None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_equals_rendered(UStr::new(&[73,110,108,105,110,101,79,98,106,101,99,116,66,111,117,110,100,97,114,121]), UString::from(found.as_ref().unwrap().kind.name()).as_ustr(), None).unwrap();
     });
 }
 
 #[test]
 fn attached_inline_virtual_sino_western_needs_stretch_enabled() {
     testlib::run("org.tiqian.layout.JustifierCoverageTest.attachedInlineVirtualSinoWesternNeedsStretchEnabled", "org.tiqian.layout.JustifierCoverageTest.attachedInlineVirtualSinoWesternNeedsStretchEnabled", || {
-        TestTraceRecorder::new("JustifierCoverageTest").section(&"attachedInlineVirtualSinoWesternNeedsStretchEnabled");
+        TestTraceRecorder::new(&(UStr::new(&[74,117,115,116,105,102,105,101,114,67,111,118,101,114,97,103,101,84,101,115,116]))).section(UStr::new(&[97,116,116,97,99,104,101,100,73,110,108,105,110,101,86,105,114,116,117,97,108,83,105,110,111,87,101,115,116,101,114,110,78,101,101,100,115,83,116,114,101,116,99,104,69,110,97,98,108,101,100]));
         let c = vec![
-    (JustifierCoverageTestSupport::justifier_coverage_test_support_c(&"a", 0, Some({ let __guard = JUSTIFIER_COVERAGE_TEST_SUPPORT_EM.lock().unwrap_or_else(|e| e.into_inner()); __guard.clone() }), Some("lat".to_string())).unwrap()).clone(),
-    (JustifierCoverageTestSupport::justifier_coverage_test_support_c(&"", 1, Some(0 as f64 as f64), Some("obj".to_string())).unwrap()).clone(),
-    (JustifierCoverageTestSupport::justifier_coverage_test_support_c(&"b", 2, Some({ let __guard = JUSTIFIER_COVERAGE_TEST_SUPPORT_EM.lock().unwrap_or_else(|e| e.into_inner()); __guard.clone() }), Some("lat".to_string())).unwrap()).clone(),
-    (JustifierCoverageTestSupport::justifier_coverage_test_support_c(&"中", 3, None, None).unwrap()).clone(),
+    (JustifierCoverageTestSupport::justifier_coverage_test_support_c(UStr::new(&[97]), 0, Some({ let __guard = JUSTIFIER_COVERAGE_TEST_SUPPORT_EM.lock().unwrap_or_else(|e| e.into_inner()); __guard.clone() }), Some(UString::from("lat"))).unwrap()).clone(),
+    (JustifierCoverageTestSupport::justifier_coverage_test_support_c(UStr::new(&[]), 1, Some(0 as f64 as f64), Some(UString::from("obj"))).unwrap()).clone(),
+    (JustifierCoverageTestSupport::justifier_coverage_test_support_c(UStr::new(&[98]), 2, Some({ let __guard = JUSTIFIER_COVERAGE_TEST_SUPPORT_EM.lock().unwrap_or_else(|e| e.into_inner()); __guard.clone() }), Some(UString::from("lat"))).unwrap()).clone(),
+    (JustifierCoverageTestSupport::justifier_coverage_test_support_c(UStr::new(&[20013]), 3, None, None).unwrap()).clone(),
 ];
         let r = vec![FontRole::LatinText, FontRole::Unknown, FontRole::LatinText, FontRole::CjkText];
         let e = vec![
@@ -3317,12 +3627,11 @@ fn attached_inline_virtual_sino_western_needs_stretch_enabled() {
     (JustifierCoverageTestSupport::justifier_coverage_test_support_e(Some(EastAsianSpacingValue::Narrow), Some(EastAsianSpacingValue::Narrow), None)).clone(),
     (JustifierCoverageTestSupport::justifier_coverage_test_support_e(Some(EastAsianSpacingValue::Other), Some(EastAsianSpacingValue::Wide), Some(true))).clone(),
 ];
-        let p = JustifierCoverageTestSupport::justifier_coverage_test_support_justify(&c, &r, &e, IntRange::new(0u32, 3u32), 60 as f64, None, None, None.clone(), Some(false), None, None, None, None, None, None,
-Some(JustifierCoverageTestSupport::justifier_coverage_test_support_int_map(&vec![1], &vec![0])), Some(JustifierCoverageTestSupport::justifier_coverage_test_support_set(&vec![1])), None, None, None, None, None).unwrap();
+        let p = JustifierCoverageTestSupport::justifier_coverage_test_support_justify(&c, &r, &e, IntRange::new(0u32, 3u32), 60 as f64, None, None, None.clone(), Some(false), None, None, None, None, None, None, Some(JustifierCoverageTestSupport::justifier_coverage_test_support_int_map(&vec![1], &vec![0])), Some(JustifierCoverageTestSupport::justifier_coverage_test_support_set(&vec![1])), None, None, None, None, None).unwrap();
         let mut ok = true;
         let mut i = 0u32;
-        while (i32::from_ne_bytes((i).to_ne_bytes())) < (i32::from_ne_bytes((u32::try_from((p.allocations.len()) & 0xFFFF_FFFF).unwrap_or(0)).to_ne_bytes())) {
-            if p.allocations[usize::try_from(i).unwrap_or(0)].clone().reason.to_string() == "AttachedInlineVirtualInterChar" {
+        while (i32::from_ne_bytes(((i) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((p.allocations.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
+            if p.allocations[usize::try_from(i).unwrap_or(0)].clone().reason.to_ustring() == UString::from("AttachedInlineVirtualInterChar") {
                 ok = false;
             }
             i = u32::wrapping_add(i, 1);
@@ -3335,9 +3644,9 @@ Some(JustifierCoverageTestSupport::justifier_coverage_test_support_int_map(&vec!
 #[test]
 fn cjk_line_with_no_opportunities_reports_unfilled_without_fallback() {
     testlib::run("org.tiqian.layout.JustifierCoverageTest.cjkLineWithNoOpportunitiesReportsUnfilledWithoutFallback", "org.tiqian.layout.JustifierCoverageTest.cjkLineWithNoOpportunitiesReportsUnfilledWithoutFallback", || {
-        TestTraceRecorder::new("JustifierCoverageTest").section(&"cjkLineWithNoOpportunitiesReportsUnfilledWithoutFallback");
+        TestTraceRecorder::new(&(UStr::new(&[74,117,115,116,105,102,105,101,114,67,111,118,101,114,97,103,101,84,101,115,116]))).section(UStr::new(&[99,106,107,76,105,110,101,87,105,116,104,78,111,79,112,112,111,114,116,117,110,105,116,105,101,115,82,101,112,111,114,116,115,85,110,102,105,108,108,101,100,87,105,116,104,111,117,116,70,97,108,108,98,97,99,107]));
         let c = vec![
-    (JustifierCoverageTestSupport::justifier_coverage_test_support_c(&"中", 0, None, None).unwrap()).clone(),
+    (JustifierCoverageTestSupport::justifier_coverage_test_support_c(UStr::new(&[20013]), 0, None, None).unwrap()).clone(),
 ];
         let r = vec![FontRole::CjkText];
         let e = vec![
@@ -3346,14 +3655,14 @@ fn cjk_line_with_no_opportunities_reports_unfilled_without_fallback() {
         let p = JustifierCoverageTestSupport::justifier_coverage_test_support_justify(&c, &r, &e, IntRange::new(0u32, 0u32), 20 as f64, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_true(u32::try_from((p.allocations.len()) & 0xFFFF_FFFF).unwrap_or(0) == 0, None).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_equals_float(4 as f64, p.unfilled_deficit, None).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_null_rendered(p.fallback_reason.is_none(), &"-", None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_null_rendered(p.fallback_reason.is_none(), UStr::new(&[45]), None).unwrap();
     });
 }
 
 #[test]
 fn compress_distributes_tier_by_tier() {
     testlib::run("org.tiqian.layout.JustifierCoverageTest.compressDistributesTierByTier", "org.tiqian.layout.JustifierCoverageTest.compressDistributesTierByTier", || {
-        TestTraceRecorder::new("JustifierCoverageTest").section(&"compressDistributesTierByTier");
+        TestTraceRecorder::new(&(UStr::new(&[74,117,115,116,105,102,105,101,114,67,111,118,101,114,97,103,101,84,101,115,116]))).section(UStr::new(&[99,111,109,112,114,101,115,115,68,105,115,116,114,105,98,117,116,101,115,84,105,101,114,66,121,84,105,101,114]));
         let j = Justifier::new(Some(0.5), Some(0.25));
         let t1 = ShrinkOpportunity::new(0u32, 1u32, 4 as f64 as f64, ShrinkChannel::TrailingGlue, Some(false));
         let t2 = ShrinkOpportunity::new(1u32, 2u32, 16 as f64 as f64, ShrinkChannel::LeadingGlue, Some(false));
@@ -3369,9 +3678,9 @@ fn compress_distributes_tier_by_tier() {
 #[test]
 fn compress_early_exits_and_filters_degenerate_inputs() {
     testlib::run("org.tiqian.layout.JustifierCoverageTest.compressEarlyExitsAndFiltersDegenerateInputs", "org.tiqian.layout.JustifierCoverageTest.compressEarlyExitsAndFiltersDegenerateInputs", || {
-        TestTraceRecorder::new("JustifierCoverageTest").section(&"compressEarlyExitsAndFiltersDegenerateInputs");
+        TestTraceRecorder::new(&(UStr::new(&[74,117,115,116,105,102,105,101,114,67,111,118,101,114,97,103,101,84,101,115,116]))).section(UStr::new(&[99,111,109,112,114,101,115,115,69,97,114,108,121,69,120,105,116,115,65,110,100,70,105,108,116,101,114,115,68,101,103,101,110,101,114,97,116,101,73,110,112,117,116,115]));
         let j = Justifier::new(Some(0.5), Some(0.25));
-        let _ = TracedAssertions::traced_assertions_assert_equals_rendered(CompressionPlan::new(vec![].to_vec(), 0 as f64 as f64, 0 as f64 as f64).to_string().as_str(), j.compress(0 as f64, &vec![]).unwrap().to_string().as_str(), None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_equals_rendered(UString::from(format!("{}", CompressionPlan::new(vec![].to_vec(), 0 as f64 as f64, 0 as f64 as f64).to_string()).as_str()).as_ustr(), UString::from(format!("{}", j.compress(0 as f64, &vec![]).unwrap().to_string()).as_str()).as_ustr(), None).unwrap();
         let zero = ShrinkOpportunity::new(0u32, 1u32, 0 as f64 as f64, ShrinkChannel::TrailingGlue, Some(false));
         let unfilled = j.compress(8 as f64, &vec![(zero).clone()]).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_true(u32::try_from((unfilled.allocations.len()) & 0xFFFF_FFFF).unwrap_or(0) == 0, None).unwrap();
@@ -3389,51 +3698,49 @@ fn compress_early_exits_and_filters_degenerate_inputs() {
 #[test]
 fn emergency_tracking_fills_the_residual_for_authorized_boundaries() {
     testlib::run("org.tiqian.layout.JustifierCoverageTest.emergencyTrackingFillsTheResidualForAuthorizedBoundaries", "org.tiqian.layout.JustifierCoverageTest.emergencyTrackingFillsTheResidualForAuthorizedBoundaries", || {
-        TestTraceRecorder::new("JustifierCoverageTest").section(&"emergencyTrackingFillsTheResidualForAuthorizedBoundaries");
+        TestTraceRecorder::new(&(UStr::new(&[74,117,115,116,105,102,105,101,114,67,111,118,101,114,97,103,101,84,101,115,116]))).section(UStr::new(&[101,109,101,114,103,101,110,99,121,84,114,97,99,107,105,110,103,70,105,108,108,115,84,104,101,82,101,115,105,100,117,97,108,70,111,114,65,117,116,104,111,114,105,122,101,100,66,111,117,110,100,97,114,105,101,115]));
         let c = vec![
-    (JustifierCoverageTestSupport::justifier_coverage_test_support_c(&"a", 0, Some({ let __guard = JUSTIFIER_COVERAGE_TEST_SUPPORT_EM.lock().unwrap_or_else(|e| e.into_inner()); __guard.clone() }), Some("lat".to_string())).unwrap()).clone(),
-    (JustifierCoverageTestSupport::justifier_coverage_test_support_c(&"b", 1, Some({ let __guard = JUSTIFIER_COVERAGE_TEST_SUPPORT_EM.lock().unwrap_or_else(|e| e.into_inner()); __guard.clone() }), Some("lat".to_string())).unwrap()).clone(),
+    (JustifierCoverageTestSupport::justifier_coverage_test_support_c(UStr::new(&[97]), 0, Some({ let __guard = JUSTIFIER_COVERAGE_TEST_SUPPORT_EM.lock().unwrap_or_else(|e| e.into_inner()); __guard.clone() }), Some(UString::from("lat"))).unwrap()).clone(),
+    (JustifierCoverageTestSupport::justifier_coverage_test_support_c(UStr::new(&[98]), 1, Some({ let __guard = JUSTIFIER_COVERAGE_TEST_SUPPORT_EM.lock().unwrap_or_else(|e| e.into_inner()); __guard.clone() }), Some(UString::from("lat"))).unwrap()).clone(),
 ];
         let r = vec![FontRole::LatinText, FontRole::LatinText];
         let e = vec![
     (JustifierCoverageTestSupport::justifier_coverage_test_support_e(Some(EastAsianSpacingValue::Narrow), Some(EastAsianSpacingValue::Narrow), None)).clone(),
     (JustifierCoverageTestSupport::justifier_coverage_test_support_e(Some(EastAsianSpacingValue::Narrow), Some(EastAsianSpacingValue::Narrow), None)).clone(),
 ];
-        let p = JustifierCoverageTestSupport::justifier_coverage_test_support_justify(&c, &r, &e, IntRange::new(0u32, 1u32), 36 as f64, None, None, None.clone(), None, None, None, None, None, None, None, None, None, None, None, None,
-Some(JustifierCoverageTestSupport::justifier_coverage_test_support_str_map(&vec![0], &vec!["token".to_string()])), None).unwrap();
+        let p = JustifierCoverageTestSupport::justifier_coverage_test_support_justify(&c, &r, &e, IntRange::new(0u32, 1u32), 36 as f64, None, None, None.clone(), None, None, None, None, None, None, None, None, None, None, None, None, Some(JustifierCoverageTestSupport::justifier_coverage_test_support_str_map(&vec![0], &vec![UString::from("token").to_ustring()])), None).unwrap();
         let a = (p.allocations[0usize]).clone();
-        let _ = TracedAssertions::traced_assertions_assert_equals_rendered(&"EmergencyGraphemeTracking", a.kind.name().to_string().as_str(), None).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_equals_string(&"EmergencyGraphemeTracking:token", (a.reason).to_string().as_str(), None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_equals_rendered(UStr::new(&[69,109,101,114,103,101,110,99,121,71,114,97,112,104,101,109,101,84,114,97,99,107,105,110,103]), UString::from(a.kind.name()).as_ustr(), None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_equals_string(UStr::new(&[69,109,101,114,103,101,110,99,121,71,114,97,112,104,101,109,101,84,114,97,99,107,105,110,103,58,116,111,107,101,110]), (a.reason).to_ustring().as_ustr(), None).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_equals_float(4 as f64, a.delta, None).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_equals_float(0 as f64, p.unfilled_deficit, None).unwrap();
-        let preferred = JustifierCoverageTestSupport::justifier_coverage_test_support_justify(&c, &r, &e, IntRange::new(0u32, 1u32), 36 as f64, None, None, None.clone(), None, None, None, None, None, None, None, None, None, None, None, None,
-Some(JustifierCoverageTestSupport::justifier_coverage_test_support_str_map(&vec![0], &vec!["token".to_string()])), Some(JustifierCoverageTestSupport::justifier_coverage_test_support_str_map(&vec![0], &vec!["code".to_string()]))).unwrap();
+        let preferred = JustifierCoverageTestSupport::justifier_coverage_test_support_justify(&c, &r, &e, IntRange::new(0u32, 1u32), 36 as f64, None, None, None.clone(), None, None, None, None, None, None, None, None, None, None, None, None, Some(JustifierCoverageTestSupport::justifier_coverage_test_support_str_map(&vec![0], &vec![UString::from("token").to_ustring()])), Some(JustifierCoverageTestSupport::justifier_coverage_test_support_str_map(&vec![0], &vec![UString::from("code").to_ustring()]))).unwrap();
         let pa = (preferred.allocations[0usize]).clone();
-        let _ = TracedAssertions::traced_assertions_assert_equals_string(&"TerminalTechnicalEmergencyTracking:code", (pa.reason).to_string().as_str(), None).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_equals_rendered(&"EmergencyGraphemeTracking", pa.kind.name().to_string().as_str(), None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_equals_string(UStr::new(&[84,101,114,109,105,110,97,108,84,101,99,104,110,105,99,97,108,69,109,101,114,103,101,110,99,121,84,114,97,99,107,105,110,103,58,99,111,100,101]), (pa.reason).to_ustring().as_ustr(), None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_equals_rendered(UStr::new(&[69,109,101,114,103,101,110,99,121,71,114,97,112,104,101,109,101,84,114,97,99,107,105,110,103]), UString::from(pa.kind.name()).as_ustr(), None).unwrap();
     });
 }
 
 #[test]
 fn empty_cluster_range_defers_every_tier_loop() {
     testlib::run("org.tiqian.layout.JustifierCoverageTest.emptyClusterRangeDefersEveryTierLoop", "org.tiqian.layout.JustifierCoverageTest.emptyClusterRangeDefersEveryTierLoop", || {
-        TestTraceRecorder::new("JustifierCoverageTest").section(&"emptyClusterRangeDefersEveryTierLoop");
+        TestTraceRecorder::new(&(UStr::new(&[74,117,115,116,105,102,105,101,114,67,111,118,101,114,97,103,101,84,101,115,116]))).section(UStr::new(&[101,109,112,116,121,67,108,117,115,116,101,114,82,97,110,103,101,68,101,102,101,114,115,69,118,101,114,121,84,105,101,114,76,111,111,112]));
         let f = JustifierCoverageTestSupport::justifier_coverage_test_support_cjk_latin().unwrap();
         let p = JustifierCoverageTestSupport::justifier_coverage_test_support_justify(&f.c, &f.r, &f.e, IntRange::new(1u32, 0u32), 16 as f64, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_true(u32::try_from((p.allocations.len()) & 0xFFFF_FFFF).unwrap_or(0) == 0, None).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_equals_float(16 as f64, p.unfilled_deficit, None).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_equals_string(&"WesternDominantLineNaturalSpacing", (p.fallback_reason).as_deref().unwrap_or(""), None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_equals_string(UStr::new(&[87,101,115,116,101,114,110,68,111,109,105,110,97,110,116,76,105,110,101,78,97,116,117,114,97,108,83,112,97,99,105,110,103]), (p.fallback_reason).as_deref().unwrap_or(UStr::new(&[])), None).unwrap();
     });
 }
 
 #[test]
 fn paragraph_edge_space_lines_cover_the_boundary_guards() {
     testlib::run("org.tiqian.layout.JustifierCoverageTest.paragraphEdgeSpaceLinesCoverTheBoundaryGuards", "org.tiqian.layout.JustifierCoverageTest.paragraphEdgeSpaceLinesCoverTheBoundaryGuards", || {
-        TestTraceRecorder::new("JustifierCoverageTest").section(&"paragraphEdgeSpaceLinesCoverTheBoundaryGuards");
+        TestTraceRecorder::new(&(UStr::new(&[74,117,115,116,105,102,105,101,114,67,111,118,101,114,97,103,101,84,101,115,116]))).section(UStr::new(&[112,97,114,97,103,114,97,112,104,69,100,103,101,83,112,97,99,101,76,105,110,101,115,67,111,118,101,114,84,104,101,66,111,117,110,100,97,114,121,71,117,97,114,100,115]));
         let leading = vec![
-    (JustifierCoverageTestSupport::justifier_coverage_test_support_c(&" ", 0, Some(4 as f64 as f64), None).unwrap()).clone(),
-    (JustifierCoverageTestSupport::justifier_coverage_test_support_c(&"中", 1, None, None).unwrap()).clone(),
-    (JustifierCoverageTestSupport::justifier_coverage_test_support_c(&"x", 2, Some({ let __guard = JUSTIFIER_COVERAGE_TEST_SUPPORT_EM.lock().unwrap_or_else(|e| e.into_inner()); __guard.clone() }), Some("lat".to_string())).unwrap()).clone(),
+    (JustifierCoverageTestSupport::justifier_coverage_test_support_c(UStr::new(&[32]), 0, Some(4 as f64 as f64), None).unwrap()).clone(),
+    (JustifierCoverageTestSupport::justifier_coverage_test_support_c(UStr::new(&[20013]), 1, None, None).unwrap()).clone(),
+    (JustifierCoverageTestSupport::justifier_coverage_test_support_c(UStr::new(&[120]), 2, Some({ let __guard = JUSTIFIER_COVERAGE_TEST_SUPPORT_EM.lock().unwrap_or_else(|e| e.into_inner()); __guard.clone() }), Some(UString::from("lat"))).unwrap()).clone(),
 ];
         let lr = vec![FontRole::LatinText, FontRole::CjkText, FontRole::LatinText];
         let le = vec![
@@ -3444,7 +3751,7 @@ fn paragraph_edge_space_lines_cover_the_boundary_guards() {
         let lp = JustifierCoverageTestSupport::justifier_coverage_test_support_justify(&leading, &lr, &le, IntRange::new(0u32, 2u32), 40 as f64, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None).unwrap();
         let mut wc1 = 0u32;
         let mut i1 = 0u32;
-        while (i32::from_ne_bytes((i1).to_ne_bytes())) < (i32::from_ne_bytes((u32::try_from((lp.allocations.len()) & 0xFFFF_FFFF).unwrap_or(0)).to_ne_bytes())) {
+        while (i32::from_ne_bytes(((i1) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((lp.allocations.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
             if lp.allocations[usize::try_from(i1).unwrap_or(0)].kind == GlueKind::WordSpace {
                 wc1 = u32::wrapping_add(wc1, 1);
             }
@@ -3453,7 +3760,7 @@ fn paragraph_edge_space_lines_cover_the_boundary_guards() {
         let _ = TracedAssertions::traced_assertions_assert_equals(0, wc1, None).unwrap();
         let mut lg: Option<JustificationAllocation> = None;
         let mut i2 = 0u32;
-        while (i32::from_ne_bytes((i2).to_ne_bytes())) < (i32::from_ne_bytes((u32::try_from((lp.allocations.len()) & 0xFFFF_FFFF).unwrap_or(0)).to_ne_bytes())) {
+        while (i32::from_ne_bytes(((i2) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((lp.allocations.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
             if lp.allocations[usize::try_from(i2).unwrap_or(0)].kind == GlueKind::CjkLatinSpace {
                 lg = Some((lp.allocations[usize::try_from(i2).unwrap_or(0)]).clone());
             }
@@ -3462,14 +3769,14 @@ fn paragraph_edge_space_lines_cover_the_boundary_guards() {
         let _ = TracedAssertions::traced_assertions_assert_equals(1, lg.as_ref().unwrap().target_cluster_index, None).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_equals_float(0 as f64, lp.unfilled_deficit, None).unwrap();
         let trailing = vec![
-    (JustifierCoverageTestSupport::justifier_coverage_test_support_c(&"中", 0, None, None).unwrap()).clone(),
-    (JustifierCoverageTestSupport::justifier_coverage_test_support_c(&"x", 1, Some({ let __guard = JUSTIFIER_COVERAGE_TEST_SUPPORT_EM.lock().unwrap_or_else(|e| e.into_inner()); __guard.clone() }), Some("lat".to_string())).unwrap()).clone(),
-    (JustifierCoverageTestSupport::justifier_coverage_test_support_c(&" ", 2, Some(4 as f64 as f64), None).unwrap()).clone(),
+    (JustifierCoverageTestSupport::justifier_coverage_test_support_c(UStr::new(&[20013]), 0, None, None).unwrap()).clone(),
+    (JustifierCoverageTestSupport::justifier_coverage_test_support_c(UStr::new(&[120]), 1, Some({ let __guard = JUSTIFIER_COVERAGE_TEST_SUPPORT_EM.lock().unwrap_or_else(|e| e.into_inner()); __guard.clone() }), Some(UString::from("lat"))).unwrap()).clone(),
+    (JustifierCoverageTestSupport::justifier_coverage_test_support_c(UStr::new(&[32]), 2, Some(4 as f64 as f64), None).unwrap()).clone(),
 ];
         let tp = JustifierCoverageTestSupport::justifier_coverage_test_support_justify(&trailing, &lr, &le, IntRange::new(0u32, 2u32), 40 as f64, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None).unwrap();
         let mut wc2 = 0u32;
         let mut i3 = 0u32;
-        while (i32::from_ne_bytes((i3).to_ne_bytes())) < (i32::from_ne_bytes((u32::try_from((tp.allocations.len()) & 0xFFFF_FFFF).unwrap_or(0)).to_ne_bytes())) {
+        while (i32::from_ne_bytes(((i3) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((tp.allocations.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
             if tp.allocations[usize::try_from(i3).unwrap_or(0)].kind == GlueKind::WordSpace {
                 wc2 = u32::wrapping_add(wc2, 1);
             }
@@ -3478,7 +3785,7 @@ fn paragraph_edge_space_lines_cover_the_boundary_guards() {
         let _ = TracedAssertions::traced_assertions_assert_equals(0, wc2, None).unwrap();
         let mut tg: Option<JustificationAllocation> = None;
         let mut i4 = 0u32;
-        while (i32::from_ne_bytes((i4).to_ne_bytes())) < (i32::from_ne_bytes((u32::try_from((tp.allocations.len()) & 0xFFFF_FFFF).unwrap_or(0)).to_ne_bytes())) {
+        while (i32::from_ne_bytes(((i4) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((tp.allocations.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
             if tp.allocations[usize::try_from(i4).unwrap_or(0)].kind == GlueKind::CjkLatinSpace {
                 tg = Some((tp.allocations[usize::try_from(i4).unwrap_or(0)]).clone());
             }
@@ -3492,11 +3799,11 @@ fn paragraph_edge_space_lines_cover_the_boundary_guards() {
 #[test]
 fn preferred_inline_object_kinds_chain_until_filled() {
     testlib::run("org.tiqian.layout.JustifierCoverageTest.preferredInlineObjectKindsChainUntilFilled", "org.tiqian.layout.JustifierCoverageTest.preferredInlineObjectKindsChainUntilFilled", || {
-        TestTraceRecorder::new("JustifierCoverageTest").section(&"preferredInlineObjectKindsChainUntilFilled");
+        TestTraceRecorder::new(&(UStr::new(&[74,117,115,116,105,102,105,101,114,67,111,118,101,114,97,103,101,84,101,115,116]))).section(UStr::new(&[112,114,101,102,101,114,114,101,100,73,110,108,105,110,101,79,98,106,101,99,116,75,105,110,100,115,67,104,97,105,110,85,110,116,105,108,70,105,108,108,101,100]));
         let c = vec![
-    (JustifierCoverageTestSupport::justifier_coverage_test_support_c(&"中", 0, None, None).unwrap()).clone(),
-    (JustifierCoverageTestSupport::justifier_coverage_test_support_c(&"", 1, Some(0 as f64 as f64), Some("obj".to_string())).unwrap()).clone(),
-    (JustifierCoverageTestSupport::justifier_coverage_test_support_c(&"中", 2, None, None).unwrap()).clone(),
+    (JustifierCoverageTestSupport::justifier_coverage_test_support_c(UStr::new(&[20013]), 0, None, None).unwrap()).clone(),
+    (JustifierCoverageTestSupport::justifier_coverage_test_support_c(UStr::new(&[]), 1, Some(0 as f64 as f64), Some(UString::from("obj"))).unwrap()).clone(),
+    (JustifierCoverageTestSupport::justifier_coverage_test_support_c(UStr::new(&[20013]), 2, None, None).unwrap()).clone(),
 ];
         let r = vec![FontRole::CjkText, FontRole::Unknown, FontRole::CjkText];
         let e = vec![
@@ -3504,8 +3811,8 @@ fn preferred_inline_object_kinds_chain_until_filled() {
     (JustifierCoverageTestSupport::justifier_coverage_test_support_e(None, None, None)).clone(),
     (JustifierCoverageTestSupport::justifier_coverage_test_support_e(Some(EastAsianSpacingValue::Wide), Some(EastAsianSpacingValue::Wide), Some(true))).clone(),
 ];
-        let mut pb: SortedMapTableBuilder<u32, InlineObjectPreferredStretch> = SortedTable::sorted_table_map_builder::<u32, InlineObjectPreferredStretch>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_bytes((*a).to_ne_bytes()),
-i32::from_ne_bytes((*b).to_ne_bytes()))));
+        let mut pb: SortedMapTableBuilder<u32, InlineObjectPreferredStretch> = SortedTable::sorted_table_map_builder::<u32,
+InlineObjectPreferredStretch>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_bytes(((*a) as i32).to_ne_bytes()), i32::from_ne_bytes(((*b) as i32).to_ne_bytes()))));
         pb.put(&(1), &(InlineObjectPreferredStretch::new(InlineObjectPreferredStretchKind::PunctuationTrailing, 4 as f64 as f64, 6 as f64 as f64).unwrap()));
         pb.put(&(0), &(InlineObjectPreferredStretch::new(InlineObjectPreferredStretchKind::Relation, 4 as f64 as f64, 6 as f64 as f64).unwrap()));
         let p = JustifierCoverageTestSupport::justifier_coverage_test_support_justify(&c, &r, &e, IntRange::new(0u32, 2u32), 36 as f64, None, None, None.clone(), None, None, None, None, None, None, None, None, None, None, Some(pb.clone().build()), None, None, None).unwrap();
@@ -3513,7 +3820,7 @@ i32::from_ne_bytes((*b).to_ne_bytes()))));
         let _ = TracedAssertions::traced_assertions_assert_equals_float(0 as f64, p.unfilled_deficit, None).unwrap();
         let mut all = true;
         let mut i = 0u32;
-        while (i32::from_ne_bytes((i).to_ne_bytes())) < (i32::from_ne_bytes((u32::try_from((p.allocations.len()) & 0xFFFF_FFFF).unwrap_or(0)).to_ne_bytes())) {
+        while (i32::from_ne_bytes(((i) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((p.allocations.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
             if p.allocations[usize::try_from(i).unwrap_or(0)].kind != GlueKind::InlineObjectPunctuationTrailing && p.allocations[usize::try_from(i).unwrap_or(0)].kind != GlueKind::InlineObjectRelation {
                 all = false;
             }
@@ -3526,11 +3833,11 @@ i32::from_ne_bytes((*b).to_ne_bytes()))));
 #[test]
 fn preferred_inline_object_stretch_runs_by_semantic_kind() {
     testlib::run("org.tiqian.layout.JustifierCoverageTest.preferredInlineObjectStretchRunsBySemanticKind", "org.tiqian.layout.JustifierCoverageTest.preferredInlineObjectStretchRunsBySemanticKind", || {
-        TestTraceRecorder::new("JustifierCoverageTest").section(&"preferredInlineObjectStretchRunsBySemanticKind");
+        TestTraceRecorder::new(&(UStr::new(&[74,117,115,116,105,102,105,101,114,67,111,118,101,114,97,103,101,84,101,115,116]))).section(UStr::new(&[112,114,101,102,101,114,114,101,100,73,110,108,105,110,101,79,98,106,101,99,116,83,116,114,101,116,99,104,82,117,110,115,66,121,83,101,109,97,110,116,105,99,75,105,110,100]));
         let c = vec![
-    (JustifierCoverageTestSupport::justifier_coverage_test_support_c(&"中", 0, None, None).unwrap()).clone(),
-    (JustifierCoverageTestSupport::justifier_coverage_test_support_c(&"", 1, Some(0 as f64 as f64), Some("obj".to_string())).unwrap()).clone(),
-    (JustifierCoverageTestSupport::justifier_coverage_test_support_c(&"中", 2, None, None).unwrap()).clone(),
+    (JustifierCoverageTestSupport::justifier_coverage_test_support_c(UStr::new(&[20013]), 0, None, None).unwrap()).clone(),
+    (JustifierCoverageTestSupport::justifier_coverage_test_support_c(UStr::new(&[]), 1, Some(0 as f64 as f64), Some(UString::from("obj"))).unwrap()).clone(),
+    (JustifierCoverageTestSupport::justifier_coverage_test_support_c(UStr::new(&[20013]), 2, None, None).unwrap()).clone(),
 ];
         let r = vec![FontRole::CjkText, FontRole::Unknown, FontRole::CjkText];
         let e = vec![
@@ -3544,44 +3851,42 @@ fn preferred_inline_object_stretch_runs_by_semantic_kind() {
     InlineObjectPreferredStretchKind::BinaryOperator,
 ];
         let reasons = vec![
-    "InlineObjectPunctuationTrailing".to_string(),
-    "InlineObjectRelation".to_string(),
-    "InlineObjectBinaryOperator".to_string(),
+    UString::from("InlineObjectPunctuationTrailing").to_ustring(),
+    UString::from("InlineObjectRelation").to_ustring(),
+    UString::from("InlineObjectBinaryOperator").to_ustring(),
 ];
         let glues = vec![
-    "InlineObjectPunctuationTrailing".to_string(),
-    "InlineObjectRelation".to_string(),
-    "InlineObjectBinaryOperator".to_string(),
+    UString::from("InlineObjectPunctuationTrailing").to_ustring(),
+    UString::from("InlineObjectRelation").to_ustring(),
+    UString::from("InlineObjectBinaryOperator").to_ustring(),
 ];
         let mut i = 0u32;
-        while (i32::from_ne_bytes((i).to_ne_bytes())) < (3) {
-            let mut pb: SortedMapTableBuilder<u32, InlineObjectPreferredStretch> = SortedTable::sorted_table_map_builder::<u32, InlineObjectPreferredStretch>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_bytes((*a).to_ne_bytes()),
-i32::from_ne_bytes((*b).to_ne_bytes()))));
+        while (i32::from_ne_bytes(((i) as i32).to_ne_bytes())) < (3) {
+            let mut pb: SortedMapTableBuilder<u32, InlineObjectPreferredStretch> = SortedTable::sorted_table_map_builder::<u32,
+InlineObjectPreferredStretch>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_bytes(((*a) as i32).to_ne_bytes()), i32::from_ne_bytes(((*b) as i32).to_ne_bytes()))));
             pb.put(&(1), &(InlineObjectPreferredStretch::new(kinds[usize::try_from(i).unwrap_or(0)], 4 as f64 as f64, 8 as f64 as f64).unwrap()));
             let p = JustifierCoverageTestSupport::justifier_coverage_test_support_justify(&c, &r, &e, IntRange::new(0u32, 2u32), 36 as f64, None, None, None.clone(), None, None, None, None, None, None, None, None, None, None, Some(pb.clone().build()), None, None, None).unwrap();
             let a = (p.allocations[0usize]).clone();
-            let _ = TracedAssertions::traced_assertions_assert_equals_rendered((glues[usize::try_from(i).unwrap_or(0)]).clone().as_str(), a.kind.name().to_string().as_str(), None).unwrap();
-            let _ = TracedAssertions::traced_assertions_assert_equals_string((reasons[usize::try_from(i).unwrap_or(0)]).clone().as_str(), (a.reason).to_string().as_str(), None).unwrap();
+            let _ = TracedAssertions::traced_assertions_assert_equals_rendered((glues[usize::try_from(i).unwrap_or(0)]).clone().as_ustr(), UString::from(a.kind.name()).as_ustr(), None).unwrap();
+            let _ = TracedAssertions::traced_assertions_assert_equals_string((reasons[usize::try_from(i).unwrap_or(0)]).clone().as_ustr(), (a.reason).to_ustring().as_ustr(), None).unwrap();
             let _ = TracedAssertions::traced_assertions_assert_equals_float(4 as f64, a.delta, None).unwrap();
             let _ = TracedAssertions::traced_assertions_assert_equals(2, a.priority, None).unwrap();
             i = u32::wrapping_add(i, 1);
         }
-        let mut pb2: SortedMapTableBuilder<u32, InlineObjectPreferredStretch> = SortedTable::sorted_table_map_builder::<u32, InlineObjectPreferredStretch>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_bytes((*a).to_ne_bytes()),
-i32::from_ne_bytes((*b).to_ne_bytes()))));
+        let mut pb2: SortedMapTableBuilder<u32, InlineObjectPreferredStretch> = SortedTable::sorted_table_map_builder::<u32,
+InlineObjectPreferredStretch>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_bytes(((*a) as i32).to_ne_bytes()), i32::from_ne_bytes(((*b) as i32).to_ne_bytes()))));
         pb2.put(&(1), &(InlineObjectPreferredStretch::new(InlineObjectPreferredStretchKind::Relation, 4 as f64 as f64, 8 as f64 as f64).unwrap()));
-        let at_end = JustifierCoverageTestSupport::justifier_coverage_test_support_justify(&c, &r, &e, IntRange::new(0u32, 1u32), 20 as f64, None, None, None.clone(), None, None, None, None, None, None, None, None, None, None, Some(pb2.clone().build()), None, None,
-None).unwrap();
+        let at_end = JustifierCoverageTestSupport::justifier_coverage_test_support_justify(&c, &r, &e, IntRange::new(0u32, 1u32), 20 as f64, None, None, None.clone(), None, None, None, None, None, None, None, None, None, None, Some(pb2.clone().build()), None, None, None).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_true(u32::try_from((at_end.allocations.len()) & 0xFFFF_FFFF).unwrap_or(0) == 0, None).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_equals_float(4 as f64, at_end.unfilled_deficit, None).unwrap();
-        let mut pb3: SortedMapTableBuilder<u32, InlineObjectPreferredStretch> = SortedTable::sorted_table_map_builder::<u32, InlineObjectPreferredStretch>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_bytes((*a).to_ne_bytes()),
-i32::from_ne_bytes((*b).to_ne_bytes()))));
+        let mut pb3: SortedMapTableBuilder<u32, InlineObjectPreferredStretch> = SortedTable::sorted_table_map_builder::<u32,
+InlineObjectPreferredStretch>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_bytes(((*a) as i32).to_ne_bytes()), i32::from_ne_bytes(((*b) as i32).to_ne_bytes()))));
         pb3.put(&(1), &(InlineObjectPreferredStretch::new(InlineObjectPreferredStretchKind::Relation, 4 as f64 as f64, 8 as f64 as f64).unwrap()));
-        let closed = JustifierCoverageTestSupport::justifier_coverage_test_support_justify(&c, &r, &e, IntRange::new(0u32, 2u32), 36 as f64, None, None, None.clone(), None, None, None, None, Some(JustifierCoverageTestSupport::justifier_coverage_test_support_set(&vec![1])), None,
-None, None, None, None, Some(pb3.clone().build()), None, None, None).unwrap();
+        let closed = JustifierCoverageTestSupport::justifier_coverage_test_support_justify(&c, &r, &e, IntRange::new(0u32, 2u32), 36 as f64, None, None, None.clone(), None, None, None, None, Some(JustifierCoverageTestSupport::justifier_coverage_test_support_set(&vec![1])), None, None, None, None, None, Some(pb3.clone().build()), None, None, None).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_equals_float(4 as f64, closed.unfilled_deficit, None).unwrap();
         let mut ok = true;
         let mut i5 = 0u32;
-        while (i32::from_ne_bytes((i5).to_ne_bytes())) < (i32::from_ne_bytes((u32::try_from((closed.allocations.len()) & 0xFFFF_FFFF).unwrap_or(0)).to_ne_bytes())) {
+        while (i32::from_ne_bytes(((i5) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((closed.allocations.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
             if closed.allocations[usize::try_from(i5).unwrap_or(0)].kind == GlueKind::InlineObjectRelation {
                 ok = false;
             }
@@ -3594,7 +3899,7 @@ None, None, None, None, Some(pb3.clone().build()), None, None, None).unwrap();
 #[test]
 fn sino_western_stretch_disabled_skips_tier_two_and_its_virtual_tracking() {
     testlib::run("org.tiqian.layout.JustifierCoverageTest.sinoWesternStretchDisabledSkipsTierTwoAndItsVirtualTracking", "org.tiqian.layout.JustifierCoverageTest.sinoWesternStretchDisabledSkipsTierTwoAndItsVirtualTracking", || {
-        TestTraceRecorder::new("JustifierCoverageTest").section(&"sinoWesternStretchDisabledSkipsTierTwoAndItsVirtualTracking");
+        TestTraceRecorder::new(&(UStr::new(&[74,117,115,116,105,102,105,101,114,67,111,118,101,114,97,103,101,84,101,115,116]))).section(UStr::new(&[115,105,110,111,87,101,115,116,101,114,110,83,116,114,101,116,99,104,68,105,115,97,98,108,101,100,83,107,105,112,115,84,105,101,114,84,119,111,65,110,100,73,116,115,86,105,114,116,117,97,108,84,114,97,99,107,105,110,103]));
         let f = JustifierCoverageTestSupport::justifier_coverage_test_support_cjk_latin().unwrap();
         let p = JustifierCoverageTestSupport::justifier_coverage_test_support_justify(&f.c, &f.r, &f.e, IntRange::new(0u32, 1u32), 36 as f64, None, None, None.clone(), Some(false), None, None, None, None, None, None, None, None, None, None, None, None, None).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_true(u32::try_from((p.allocations.len()) & 0xFFFF_FFFF).unwrap_or(0) == 0, None).unwrap();
@@ -3605,11 +3910,11 @@ fn sino_western_stretch_disabled_skips_tier_two_and_its_virtual_tracking() {
 #[test]
 fn typed_sino_western_space_needs_both_edges_to_pair() {
     testlib::run("org.tiqian.layout.JustifierCoverageTest.typedSinoWesternSpaceNeedsBothEdgesToPair", "org.tiqian.layout.JustifierCoverageTest.typedSinoWesternSpaceNeedsBothEdgesToPair", || {
-        TestTraceRecorder::new("JustifierCoverageTest").section(&"typedSinoWesternSpaceNeedsBothEdgesToPair");
+        TestTraceRecorder::new(&(UStr::new(&[74,117,115,116,105,102,105,101,114,67,111,118,101,114,97,103,101,84,101,115,116]))).section(UStr::new(&[116,121,112,101,100,83,105,110,111,87,101,115,116,101,114,110,83,112,97,99,101,78,101,101,100,115,66,111,116,104,69,100,103,101,115,84,111,80,97,105,114]));
         let c = vec![
-    (JustifierCoverageTestSupport::justifier_coverage_test_support_c(&"中", 0, None, None).unwrap()).clone(),
-    (JustifierCoverageTestSupport::justifier_coverage_test_support_c(&" ", 1, Some(4 as f64 as f64), None).unwrap()).clone(),
-    (JustifierCoverageTestSupport::justifier_coverage_test_support_c(&"中", 2, None, None).unwrap()).clone(),
+    (JustifierCoverageTestSupport::justifier_coverage_test_support_c(UStr::new(&[20013]), 0, None, None).unwrap()).clone(),
+    (JustifierCoverageTestSupport::justifier_coverage_test_support_c(UStr::new(&[32]), 1, Some(4 as f64 as f64), None).unwrap()).clone(),
+    (JustifierCoverageTestSupport::justifier_coverage_test_support_c(UStr::new(&[20013]), 2, None, None).unwrap()).clone(),
 ];
         let r = vec![FontRole::CjkText, FontRole::LatinText, FontRole::CjkText];
         let e = vec![
@@ -3620,7 +3925,7 @@ fn typed_sino_western_space_needs_both_edges_to_pair() {
         let p = JustifierCoverageTestSupport::justifier_coverage_test_support_justify(&c, &r, &e, IntRange::new(0u32, 2u32), 40 as f64, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None).unwrap();
         let mut ok = true;
         let mut i = 0u32;
-        while (i32::from_ne_bytes((i).to_ne_bytes())) < (i32::from_ne_bytes((u32::try_from((p.allocations.len()) & 0xFFFF_FFFF).unwrap_or(0)).to_ne_bytes())) {
+        while (i32::from_ne_bytes(((i) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((p.allocations.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
             if p.allocations[usize::try_from(i).unwrap_or(0)].kind == GlueKind::WordSpace || p.allocations[usize::try_from(i).unwrap_or(0)].kind == GlueKind::CjkLatinSpace {
                 ok = false;
             }
@@ -3634,11 +3939,11 @@ fn typed_sino_western_space_needs_both_edges_to_pair() {
 #[test]
 fn typed_sino_western_space_stretches_from_its_base() {
     testlib::run("org.tiqian.layout.JustifierCoverageTest.typedSinoWesternSpaceStretchesFromItsBase", "org.tiqian.layout.JustifierCoverageTest.typedSinoWesternSpaceStretchesFromItsBase", || {
-        TestTraceRecorder::new("JustifierCoverageTest").section(&"typedSinoWesternSpaceStretchesFromItsBase");
+        TestTraceRecorder::new(&(UStr::new(&[74,117,115,116,105,102,105,101,114,67,111,118,101,114,97,103,101,84,101,115,116]))).section(UStr::new(&[116,121,112,101,100,83,105,110,111,87,101,115,116,101,114,110,83,112,97,99,101,83,116,114,101,116,99,104,101,115,70,114,111,109,73,116,115,66,97,115,101]));
         let c = vec![
-    (JustifierCoverageTestSupport::justifier_coverage_test_support_c(&"中", 0, None, None).unwrap()).clone(),
-    (JustifierCoverageTestSupport::justifier_coverage_test_support_c(&" ", 1, Some(2 as f64 as f64), None).unwrap()).clone(),
-    (JustifierCoverageTestSupport::justifier_coverage_test_support_c(&"b", 2, Some({ let __guard = JUSTIFIER_COVERAGE_TEST_SUPPORT_EM.lock().unwrap_or_else(|e| e.into_inner()); __guard.clone() }), Some("lat".to_string())).unwrap()).clone(),
+    (JustifierCoverageTestSupport::justifier_coverage_test_support_c(UStr::new(&[20013]), 0, None, None).unwrap()).clone(),
+    (JustifierCoverageTestSupport::justifier_coverage_test_support_c(UStr::new(&[32]), 1, Some(2 as f64 as f64), None).unwrap()).clone(),
+    (JustifierCoverageTestSupport::justifier_coverage_test_support_c(UStr::new(&[98]), 2, Some({ let __guard = JUSTIFIER_COVERAGE_TEST_SUPPORT_EM.lock().unwrap_or_else(|e| e.into_inner()); __guard.clone() }), Some(UString::from("lat"))).unwrap()).clone(),
 ];
         let r = vec![FontRole::CjkText, FontRole::LatinText, FontRole::LatinText];
         let e = vec![
@@ -3648,19 +3953,19 @@ fn typed_sino_western_space_stretches_from_its_base() {
 ];
         let p = JustifierCoverageTestSupport::justifier_coverage_test_support_justify(&c, &r, &e, IntRange::new(0u32, 2u32), 38 as f64, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None).unwrap();
         let a = (p.allocations[0usize]).clone();
-        let _ = TracedAssertions::traced_assertions_assert_equals_rendered(&"CjkLatinSpace", a.kind.name().to_string().as_str(), None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_equals_rendered(UStr::new(&[67,106,107,76,97,116,105,110,83,112,97,99,101]), UString::from(a.kind.name()).as_ustr(), None).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_equals(1, a.target_cluster_index, None).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_equals_float(4 as f64, a.delta, None).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_equals_float(0 as f64, p.unfilled_deficit, None).unwrap();
         let at_cap = vec![
-    (JustifierCoverageTestSupport::justifier_coverage_test_support_c(&"中", 0, None, None).unwrap()).clone(),
-    (JustifierCoverageTestSupport::justifier_coverage_test_support_c(&" ", 1, Some(8 as f64 as f64), None).unwrap()).clone(),
-    (JustifierCoverageTestSupport::justifier_coverage_test_support_c(&"b", 2, Some({ let __guard = JUSTIFIER_COVERAGE_TEST_SUPPORT_EM.lock().unwrap_or_else(|e| e.into_inner()); __guard.clone() }), Some("lat".to_string())).unwrap()).clone(),
+    (JustifierCoverageTestSupport::justifier_coverage_test_support_c(UStr::new(&[20013]), 0, None, None).unwrap()).clone(),
+    (JustifierCoverageTestSupport::justifier_coverage_test_support_c(UStr::new(&[32]), 1, Some(8 as f64 as f64), None).unwrap()).clone(),
+    (JustifierCoverageTestSupport::justifier_coverage_test_support_c(UStr::new(&[98]), 2, Some({ let __guard = JUSTIFIER_COVERAGE_TEST_SUPPORT_EM.lock().unwrap_or_else(|e| e.into_inner()); __guard.clone() }), Some(UString::from("lat"))).unwrap()).clone(),
 ];
         let ap = JustifierCoverageTestSupport::justifier_coverage_test_support_justify(&at_cap, &r, &e, IntRange::new(0u32, 2u32), 44 as f64, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None).unwrap();
         let mut n1 = 0u32;
         let mut i1 = 0u32;
-        while (i32::from_ne_bytes((i1).to_ne_bytes())) < (i32::from_ne_bytes((u32::try_from((ap.allocations.len()) & 0xFFFF_FFFF).unwrap_or(0)).to_ne_bytes())) {
+        while (i32::from_ne_bytes(((i1) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((ap.allocations.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
             if ap.allocations[usize::try_from(i1).unwrap_or(0)].kind == GlueKind::CjkLatinSpace {
                 n1 = u32::wrapping_add(n1, 1);
             }
@@ -3669,7 +3974,7 @@ fn typed_sino_western_space_stretches_from_its_base() {
         let _ = TracedAssertions::traced_assertions_assert_equals(0, n1, None).unwrap();
         let mut n2 = 0u32;
         let mut i2 = 0u32;
-        while (i32::from_ne_bytes((i2).to_ne_bytes())) < (i32::from_ne_bytes((u32::try_from((ap.allocations.len()) & 0xFFFF_FFFF).unwrap_or(0)).to_ne_bytes())) {
+        while (i32::from_ne_bytes(((i2) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((ap.allocations.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
             if ap.allocations[usize::try_from(i2).unwrap_or(0)].kind == GlueKind::CjkInterChar {
                 n2 = u32::wrapping_add(n2, 1);
             }
@@ -3678,15 +3983,14 @@ fn typed_sino_western_space_stretches_from_its_base() {
         let _ = TracedAssertions::traced_assertions_assert_equals(2, n2, None).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_equals_float(0 as f64, ap.unfilled_deficit, None).unwrap();
         let collapsed = vec![
-    (JustifierCoverageTestSupport::justifier_coverage_test_support_c(&"中", 0, None, None).unwrap()).clone(),
-    (JustifierCoverageTestSupport::justifier_coverage_test_support_c(&" ", 1, Some(0 as f64 as f64), None).unwrap()).clone(),
-    (JustifierCoverageTestSupport::justifier_coverage_test_support_c(&"b", 2, Some({ let __guard = JUSTIFIER_COVERAGE_TEST_SUPPORT_EM.lock().unwrap_or_else(|e| e.into_inner()); __guard.clone() }), Some("lat".to_string())).unwrap()).clone(),
+    (JustifierCoverageTestSupport::justifier_coverage_test_support_c(UStr::new(&[20013]), 0, None, None).unwrap()).clone(),
+    (JustifierCoverageTestSupport::justifier_coverage_test_support_c(UStr::new(&[32]), 1, Some(0 as f64 as f64), None).unwrap()).clone(),
+    (JustifierCoverageTestSupport::justifier_coverage_test_support_c(UStr::new(&[98]), 2, Some({ let __guard = JUSTIFIER_COVERAGE_TEST_SUPPORT_EM.lock().unwrap_or_else(|e| e.into_inner()); __guard.clone() }), Some(UString::from("lat"))).unwrap()).clone(),
 ];
-        let cp = JustifierCoverageTestSupport::justifier_coverage_test_support_justify(&collapsed, &r, &e, IntRange::new(0u32, 2u32), 36 as f64, None, None, None.clone(), None, Some(0.25f64), Some(0.25f64), None, None, None, None, None, None, None, None, None, None,
-None).unwrap();
+        let cp = JustifierCoverageTestSupport::justifier_coverage_test_support_justify(&collapsed, &r, &e, IntRange::new(0u32, 2u32), 36 as f64, None, None, None.clone(), None, Some(0.25f64), Some(0.25f64), None, None, None, None, None, None, None, None, None, None, None).unwrap();
         let mut ok = true;
         let mut i3 = 0u32;
-        while (i32::from_ne_bytes((i3).to_ne_bytes())) < (i32::from_ne_bytes((u32::try_from((cp.allocations.len()) & 0xFFFF_FFFF).unwrap_or(0)).to_ne_bytes())) {
+        while (i32::from_ne_bytes(((i3) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((cp.allocations.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
             if cp.allocations[usize::try_from(i3).unwrap_or(0)].target_cluster_index == 1 && (cp.allocations[usize::try_from(i3).unwrap_or(0)].delta) > (0 as f64) {
                 ok = false;
             }
@@ -3699,14 +4003,13 @@ None).unwrap();
 #[test]
 fn uniform_object_boundary_opens_the_gate_and_fills() {
     testlib::run("org.tiqian.layout.JustifierCoverageTest.uniformObjectBoundaryOpensTheGateAndFills", "org.tiqian.layout.JustifierCoverageTest.uniformObjectBoundaryOpensTheGateAndFills", || {
-        TestTraceRecorder::new("JustifierCoverageTest").section(&"uniformObjectBoundaryOpensTheGateAndFills");
+        TestTraceRecorder::new(&(UStr::new(&[74,117,115,116,105,102,105,101,114,67,111,118,101,114,97,103,101,84,101,115,116]))).section(UStr::new(&[117,110,105,102,111,114,109,79,98,106,101,99,116,66,111,117,110,100,97,114,121,79,112,101,110,115,84,104,101,71,97,116,101,65,110,100,70,105,108,108,115]));
         let f = JustifierCoverageTestSupport::justifier_coverage_test_support_latin_space_latin(Some(8 as f64 as f64), None, None).unwrap();
-        let p = JustifierCoverageTestSupport::justifier_coverage_test_support_justify(&f.c, &f.r, &f.e, IntRange::new(0u32, 2u32), 64 as f64, None, None, None.clone(), None, None, None, None, None, None, None, None, None,
-Some(JustifierCoverageTestSupport::justifier_coverage_test_support_set(&vec![0])), None, None, None, None).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_null_rendered(p.fallback_reason.is_none(), &"-", None).unwrap();
+        let p = JustifierCoverageTestSupport::justifier_coverage_test_support_justify(&f.c, &f.r, &f.e, IntRange::new(0u32, 2u32), 64 as f64, None, None, None.clone(), None, None, None, None, None, None, None, None, None, Some(JustifierCoverageTestSupport::justifier_coverage_test_support_set(&vec![0])), None, None, None, None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_null_rendered(p.fallback_reason.is_none(), UStr::new(&[45]), None).unwrap();
         let mut has = false;
         let mut i = 0u32;
-        while (i32::from_ne_bytes((i).to_ne_bytes())) < (i32::from_ne_bytes((u32::try_from((p.allocations.len()) & 0xFFFF_FFFF).unwrap_or(0)).to_ne_bytes())) {
+        while (i32::from_ne_bytes(((i) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((p.allocations.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
             if p.allocations[usize::try_from(i).unwrap_or(0)].kind == GlueKind::InlineObjectBoundary {
                 has = true;
             }
@@ -3720,53 +4023,46 @@ Some(JustifierCoverageTestSupport::justifier_coverage_test_support_set(&vec![0])
 #[test]
 fn uniform_text_boundaries_exclude_protected_classes() {
     testlib::run("org.tiqian.layout.JustifierCoverageTest.uniformTextBoundariesExcludeProtectedClasses", "org.tiqian.layout.JustifierCoverageTest.uniformTextBoundariesExcludeProtectedClasses", || {
-        TestTraceRecorder::new("JustifierCoverageTest").section(&"uniformTextBoundariesExcludeProtectedClasses");
+        TestTraceRecorder::new(&(UStr::new(&[74,117,115,116,105,102,105,101,114,67,111,118,101,114,97,103,101,84,101,115,116]))).section(UStr::new(&[117,110,105,102,111,114,109,84,101,120,116,66,111,117,110,100,97,114,105,101,115,69,120,99,108,117,100,101,80,114,111,116,101,99,116,101,100,67,108,97,115,115,101,115]));
         let f = JustifierCoverageTestSupport::justifier_coverage_test_support_cjk_latin().unwrap();
         let plain = JustifierCoverageTestSupport::justifier_coverage_test_support_justify(&f.c, &f.r, &f.e, IntRange::new(0u32, 1u32), 36 as f64, None, None, None.clone(), None, None, Some(0.25f64), None, None, None, None, None, None, None, None, None, None, None).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_equals_rendered(&"CjkInterChar", plain.allocations[0usize].kind.name().to_string().as_str(), None).unwrap();
-        let bracket = JustifierCoverageTestSupport::justifier_coverage_test_support_justify(&f.c, &f.r, &f.e, IntRange::new(0u32, 1u32), 36 as f64, None, None, None.clone(), None, None, Some(0.25f64), None, None,
-Some(JustifierCoverageTestSupport::justifier_coverage_test_support_set(&vec![0])), None, None, None, None, None, None, None, None).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_equals_string(&"WesternBracketCjkInterChar", ((bracket.allocations[0usize]).clone().reason).to_string().as_str(), None).unwrap();
-        let physical = JustifierCoverageTestSupport::justifier_coverage_test_support_justify(&f.c, &f.r, &f.e, IntRange::new(0u32, 1u32), 36 as f64, None, None, None.clone(), None, None, Some(0.25f64), None, None, None,
-Some(JustifierCoverageTestSupport::justifier_coverage_test_support_set(&vec![0])), None, None, None, None, None, None, None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_equals_rendered(UStr::new(&[67,106,107,73,110,116,101,114,67,104,97,114]), UString::from(plain.allocations[0usize].kind.name()).as_ustr(), None).unwrap();
+        let bracket = JustifierCoverageTestSupport::justifier_coverage_test_support_justify(&f.c, &f.r, &f.e, IntRange::new(0u32, 1u32), 36 as f64, None, None, None.clone(), None, None, Some(0.25f64), None, None, Some(JustifierCoverageTestSupport::justifier_coverage_test_support_set(&vec![0])), None, None, None, None, None, None, None, None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_equals_string(UStr::new(&[87,101,115,116,101,114,110,66,114,97,99,107,101,116,67,106,107,73,110,116,101,114,67,104,97,114]), ((bracket.allocations[0usize]).clone().reason).to_ustring().as_ustr(), None).unwrap();
+        let physical = JustifierCoverageTestSupport::justifier_coverage_test_support_justify(&f.c, &f.r, &f.e, IntRange::new(0u32, 1u32), 36 as f64, None, None, None.clone(), None, None, Some(0.25f64), None, None, None, Some(JustifierCoverageTestSupport::justifier_coverage_test_support_set(&vec![0])), None, None, None, None, None, None, None).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_equals_float(4 as f64, physical.unfilled_deficit, None).unwrap();
-        let virtual_owned = JustifierCoverageTestSupport::justifier_coverage_test_support_justify(&f.c, &f.r, &f.e, IntRange::new(0u32, 1u32), 36 as f64, None, None, None.clone(), None, None, Some(0.25f64), None, None, None, None,
-Some(JustifierCoverageTestSupport::justifier_coverage_test_support_int_map(&vec![0], &vec![4294967295u32])), None, None, None, None, None, None).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_equals_string(&"AttachedInlineVirtualInterChar", ((virtual_owned.allocations[0usize]).clone().reason).to_string().as_str(), None).unwrap();
-        let uniform_object = JustifierCoverageTestSupport::justifier_coverage_test_support_justify(&f.c, &f.r, &f.e, IntRange::new(0u32, 1u32), 36 as f64, None, None, None.clone(), None, None, Some(0.25f64), None, None, None, None, None, None,
-Some(JustifierCoverageTestSupport::justifier_coverage_test_support_set(&vec![0])), None, None, None, None).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_equals_rendered(&"InlineObjectBoundary", uniform_object.allocations[0usize].kind.name().to_string().as_str(), None).unwrap();
-        let bracket_physical = JustifierCoverageTestSupport::justifier_coverage_test_support_justify(&f.c, &f.r, &f.e, IntRange::new(0u32, 1u32), 36 as f64, None, None, None.clone(), None, None, Some(0.25f64), None, None,
-Some(JustifierCoverageTestSupport::justifier_coverage_test_support_set(&vec![0])), Some(JustifierCoverageTestSupport::justifier_coverage_test_support_set(&vec![0])), None, None, None, None, None, None, None).unwrap();
+        let virtual_owned = JustifierCoverageTestSupport::justifier_coverage_test_support_justify(&f.c, &f.r, &f.e, IntRange::new(0u32, 1u32), 36 as f64, None, None, None.clone(), None, None, Some(0.25f64), None, None, None, None, Some(JustifierCoverageTestSupport::justifier_coverage_test_support_int_map(&vec![0], &vec![4294967295u32])), None, None, None, None, None, None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_equals_string(UStr::new(&[65,116,116,97,99,104,101,100,73,110,108,105,110,101,86,105,114,116,117,97,108,73,110,116,101,114,67,104,97,114]), ((virtual_owned.allocations[0usize]).clone().reason).to_ustring().as_ustr(), None).unwrap();
+        let uniform_object = JustifierCoverageTestSupport::justifier_coverage_test_support_justify(&f.c, &f.r, &f.e, IntRange::new(0u32, 1u32), 36 as f64, None, None, None.clone(), None, None, Some(0.25f64), None, None, None, None, None, None, Some(JustifierCoverageTestSupport::justifier_coverage_test_support_set(&vec![0])), None, None, None, None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_equals_rendered(UStr::new(&[73,110,108,105,110,101,79,98,106,101,99,116,66,111,117,110,100,97,114,121]), UString::from(uniform_object.allocations[0usize].kind.name()).as_ustr(), None).unwrap();
+        let bracket_physical = JustifierCoverageTestSupport::justifier_coverage_test_support_justify(&f.c, &f.r, &f.e, IntRange::new(0u32, 1u32), 36 as f64, None, None, None.clone(), None, None, Some(0.25f64), None, None, Some(JustifierCoverageTestSupport::justifier_coverage_test_support_set(&vec![0])), Some(JustifierCoverageTestSupport::justifier_coverage_test_support_set(&vec![0])), None, None, None, None, None, None, None).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_equals_float(4 as f64, bracket_physical.unfilled_deficit, None).unwrap();
-        let bracket_object = JustifierCoverageTestSupport::justifier_coverage_test_support_justify(&f.c, &f.r, &f.e, IntRange::new(0u32, 1u32), 36 as f64, None, None, None.clone(), None, None, Some(0.25f64), None, None,
-Some(JustifierCoverageTestSupport::justifier_coverage_test_support_set(&vec![0])), None, None, None, Some(JustifierCoverageTestSupport::justifier_coverage_test_support_set(&vec![0])), None, None, None, None).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_equals_rendered(&"InlineObjectBoundary", bracket_object.allocations[0usize].kind.name().to_string().as_str(), None).unwrap();
+        let bracket_object = JustifierCoverageTestSupport::justifier_coverage_test_support_justify(&f.c, &f.r, &f.e, IntRange::new(0u32, 1u32), 36 as f64, None, None, None.clone(), None, None, Some(0.25f64), None, None, Some(JustifierCoverageTestSupport::justifier_coverage_test_support_set(&vec![0])), None, None, None, Some(JustifierCoverageTestSupport::justifier_coverage_test_support_set(&vec![0])), None, None, None, None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_equals_rendered(UStr::new(&[73,110,108,105,110,101,79,98,106,101,99,116,66,111,117,110,100,97,114,121]), UString::from(bracket_object.allocations[0usize].kind.name()).as_ustr(), None).unwrap();
     });
 }
 
 #[test]
 fn western_dominant_line_stays_ragged() {
     testlib::run("org.tiqian.layout.JustifierCoverageTest.westernDominantLineStaysRagged", "org.tiqian.layout.JustifierCoverageTest.westernDominantLineStaysRagged", || {
-        TestTraceRecorder::new("JustifierCoverageTest").section(&"westernDominantLineStaysRagged");
+        TestTraceRecorder::new(&(UStr::new(&[74,117,115,116,105,102,105,101,114,67,111,118,101,114,97,103,101,84,101,115,116]))).section(UStr::new(&[119,101,115,116,101,114,110,68,111,109,105,110,97,110,116,76,105,110,101,83,116,97,121,115,82,97,103,103,101,100]));
         let f = JustifierCoverageTestSupport::justifier_coverage_test_support_latin_space_latin(Some(8 as f64 as f64), None, None).unwrap();
         let p = JustifierCoverageTestSupport::justifier_coverage_test_support_justify(&f.c, &f.r, &f.e, IntRange::new(0u32, 2u32), 64 as f64, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_equals_string(&"WesternDominantLineNaturalSpacing", (p.fallback_reason).as_deref().unwrap_or(""), None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_equals_string(UStr::new(&[87,101,115,116,101,114,110,68,111,109,105,110,97,110,116,76,105,110,101,78,97,116,117,114,97,108,83,112,97,99,105,110,103]), (p.fallback_reason).as_deref().unwrap_or(UStr::new(&[])), None).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_true((p.unfilled_deficit) > (0 as f64), None).unwrap();
-        let closed_object = JustifierCoverageTestSupport::justifier_coverage_test_support_justify(&f.c, &f.r, &f.e, IntRange::new(0u32, 2u32), 64 as f64, None, None, None.clone(), None, None, None, None,
-Some(JustifierCoverageTestSupport::justifier_coverage_test_support_set(&vec![0])), None, None, None, None, Some(JustifierCoverageTestSupport::justifier_coverage_test_support_set(&vec![0])), None, None, None, None).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_equals_string(&"WesternDominantLineNaturalSpacing", (closed_object.fallback_reason).as_deref().unwrap_or(""), None).unwrap();
+        let closed_object = JustifierCoverageTestSupport::justifier_coverage_test_support_justify(&f.c, &f.r, &f.e, IntRange::new(0u32, 2u32), 64 as f64, None, None, None.clone(), None, None, None, None, Some(JustifierCoverageTestSupport::justifier_coverage_test_support_set(&vec![0])), None, None, None, None, Some(JustifierCoverageTestSupport::justifier_coverage_test_support_set(&vec![0])), None, None, None, None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_equals_string(UStr::new(&[87,101,115,116,101,114,110,68,111,109,105,110,97,110,116,76,105,110,101,78,97,116,117,114,97,108,83,112,97,99,105,110,103]), (closed_object.fallback_reason).as_deref().unwrap_or(UStr::new(&[])), None).unwrap();
     });
 }
 
 #[test]
 fn mixed_capacity_sino_western_opps_skip_zero_capacity_in_overflow() {
     testlib::run("org.tiqian.layout.JustifierCoverageTest.mixedCapacitySinoWesternOppsSkipZeroCapacityInOverflow", "org.tiqian.layout.JustifierCoverageTest.mixedCapacitySinoWesternOppsSkipZeroCapacityInOverflow", || {
-        TestTraceRecorder::new("JustifierCoverageTest").section(&"mixedCapacitySinoWesternOppsSkipZeroCapacityInOverflow");
+        TestTraceRecorder::new(&(UStr::new(&[74,117,115,116,105,102,105,101,114,67,111,118,101,114,97,103,101,84,101,115,116]))).section(UStr::new(&[109,105,120,101,100,67,97,112,97,99,105,116,121,83,105,110,111,87,101,115,116,101,114,110,79,112,112,115,83,107,105,112,90,101,114,111,67,97,112,97,99,105,116,121,73,110,79,118,101,114,102,108,111,119]));
         let c = vec![
-    (JustifierCoverageTestSupport::justifier_coverage_test_support_c(&"中", 0, None, None).unwrap()).clone(),
-    (JustifierCoverageTestSupport::justifier_coverage_test_support_c(&" ", 1, Some(2 as f64 as f64), None).unwrap()).clone(),
-    (JustifierCoverageTestSupport::justifier_coverage_test_support_c(&"a", 2, Some({ let __guard = JUSTIFIER_COVERAGE_TEST_SUPPORT_EM.lock().unwrap_or_else(|e| e.into_inner()); __guard.clone() }), Some("lat".to_string())).unwrap()).clone(),
+    (JustifierCoverageTestSupport::justifier_coverage_test_support_c(UStr::new(&[20013]), 0, None, None).unwrap()).clone(),
+    (JustifierCoverageTestSupport::justifier_coverage_test_support_c(UStr::new(&[32]), 1, Some(2 as f64 as f64), None).unwrap()).clone(),
+    (JustifierCoverageTestSupport::justifier_coverage_test_support_c(UStr::new(&[97]), 2, Some({ let __guard = JUSTIFIER_COVERAGE_TEST_SUPPORT_EM.lock().unwrap_or_else(|e| e.into_inner()); __guard.clone() }), Some(UString::from("lat"))).unwrap()).clone(),
 ];
         let r = vec![FontRole::CjkText, FontRole::LatinText, FontRole::LatinText];
         let e = vec![
@@ -3777,7 +4073,7 @@ fn mixed_capacity_sino_western_opps_skip_zero_capacity_in_overflow() {
         let p = JustifierCoverageTestSupport::justifier_coverage_test_support_justify(&c, &r, &e, IntRange::new(0u32, 2u32), 40 as f64, None, None, None.clone(), None, None, Some(0.25f64), None, None, None, None, None, None, None, None, None, None, None).unwrap();
         let mut tier2: Vec<JustificationAllocation> = vec![];
         let mut i = 0u32;
-        while (i32::from_ne_bytes((i).to_ne_bytes())) < (i32::from_ne_bytes((u32::try_from((p.allocations.len()) & 0xFFFF_FFFF).unwrap_or(0)).to_ne_bytes())) {
+        while (i32::from_ne_bytes(((i) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((p.allocations.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
             if p.allocations[usize::try_from(i).unwrap_or(0)].kind == GlueKind::CjkLatinSpace {
                 tier2.push((p.allocations[usize::try_from(i).unwrap_or(0)]).clone());
             }
@@ -3785,7 +4081,7 @@ fn mixed_capacity_sino_western_opps_skip_zero_capacity_in_overflow() {
         }
         let mut idxs: Vec<u32> = vec![];
         let mut i2 = 0u32;
-        while (i32::from_ne_bytes((i2).to_ne_bytes())) < (i32::from_ne_bytes((u32::try_from((tier2.len()) & 0xFFFF_FFFF).unwrap_or(0)).to_ne_bytes())) {
+        while (i32::from_ne_bytes(((i2) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((tier2.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
             idxs.push(tier2[usize::try_from(i2).unwrap_or(0)].target_cluster_index);
             i2 = u32::wrapping_add(i2, 1);
         }
@@ -3798,12 +4094,12 @@ fn mixed_capacity_sino_western_opps_skip_zero_capacity_in_overflow() {
 #[test]
 fn zero_capacity_sino_western_tier_defers_everything_downward() {
     testlib::run("org.tiqian.layout.JustifierCoverageTest.zeroCapacitySinoWesternTierDefersEverythingDownward", "org.tiqian.layout.JustifierCoverageTest.zeroCapacitySinoWesternTierDefersEverythingDownward", || {
-        TestTraceRecorder::new("JustifierCoverageTest").section(&"zeroCapacitySinoWesternTierDefersEverythingDownward");
+        TestTraceRecorder::new(&(UStr::new(&[74,117,115,116,105,102,105,101,114,67,111,118,101,114,97,103,101,84,101,115,116]))).section(UStr::new(&[122,101,114,111,67,97,112,97,99,105,116,121,83,105,110,111,87,101,115,116,101,114,110,84,105,101,114,68,101,102,101,114,115,69,118,101,114,121,116,104,105,110,103,68,111,119,110,119,97,114,100]));
         let f = JustifierCoverageTestSupport::justifier_coverage_test_support_cjk_latin().unwrap();
         let p = JustifierCoverageTestSupport::justifier_coverage_test_support_justify(&f.c, &f.r, &f.e, IntRange::new(0u32, 1u32), 36 as f64, None, None, None.clone(), None, None, Some(0.25f64), None, None, None, None, None, None, None, None, None, None, None).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_equals_float(0 as f64, p.unfilled_deficit, None).unwrap();
         let a = (p.allocations[0usize]).clone();
-        let _ = TracedAssertions::traced_assertions_assert_equals_rendered(&"CjkInterChar", a.kind.name().to_string().as_str(), None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_equals_rendered(UStr::new(&[67,106,107,73,110,116,101,114,67,104,97,114]), UString::from(a.kind.name()).as_ustr(), None).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_equals_float(4 as f64, a.delta, None).unwrap();
     });
 }

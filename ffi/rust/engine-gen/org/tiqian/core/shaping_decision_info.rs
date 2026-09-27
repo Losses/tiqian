@@ -1,29 +1,30 @@
 use crate::org::tiqian::core::text_range::TextRange;
+use crate::runtime::u_string::UStr;
+use crate::runtime::u_string::UString;
 
 
 #[derive(Debug, Clone, PartialEq)]
 pub struct ShapingDecisionInfo {
     pub range: TextRange,
-    pub source_text: String,
-    pub display_text: String,
-    pub font_key: String,
+    pub source_text: UString,
+    pub display_text: UString,
+    pub font_key: UString,
     pub glyph_count: u32,
     pub advance: f64,
-    pub source: String,
-    pub reason: String,
+    pub source: UString,
+    pub reason: UString,
     pub glyphs_without_ink_bounds: u32,
     pub missing_glyphs: u32,
-    pub resolved_face: Option<String>,
-    pub script: Option<String>,
-    pub language: Option<String>,
-    pub strategy: Option<String>,
-    pub feature_evidence: Option<String>,
-    pub capability_issue: Option<String>,
+    pub resolved_face: Option<UString>,
+    pub script: Option<UString>,
+    pub language: Option<UString>,
+    pub strategy: Option<UString>,
+    pub feature_evidence: Option<UString>,
+    pub capability_issue: Option<UString>,
 }
 
 impl ShapingDecisionInfo {
-    pub fn new(range: TextRange, source_text: &str, display_text: &str, font_key: &str, glyph_count: u32, advance: f64, source: &str, reason: &str, glyphs_without_ink_bounds: Option<u32>, missing_glyphs: Option<u32>, resolved_face: Option<String>, script: Option<String>,
-language: Option<String>, strategy: Option<String>, feature_evidence: Option<String>, capability_issue: Option<String>) -> Self {
+    pub fn new(range: TextRange, source_text: &UStr, display_text: &UStr, font_key: &UStr, glyph_count: u32, advance: f64, source: &UStr, reason: &UStr, glyphs_without_ink_bounds: Option<u32>, missing_glyphs: Option<u32>, resolved_face: Option<UString>, script: Option<UString>, language: Option<UString>, strategy: Option<UString>, feature_evidence: Option<UString>, capability_issue: Option<UString>) -> Self {
         let glyphs_without_ink_bounds = glyphs_without_ink_bounds.unwrap_or_else(|| 0);
         let missing_glyphs = missing_glyphs.unwrap_or_else(|| 0);
         let resolved_face = resolved_face.or_else(|| None);
@@ -34,13 +35,13 @@ language: Option<String>, strategy: Option<String>, feature_evidence: Option<Str
         let capability_issue = capability_issue.or_else(|| None);
         Self {
             range,
-            source_text: source_text.to_string(),
-            display_text: display_text.to_string(),
-            font_key: font_key.to_string(),
+            source_text: source_text.to_ustring(),
+            display_text: display_text.to_ustring(),
+            font_key: font_key.to_ustring(),
             glyph_count,
             advance,
-            source: source.to_string(),
-            reason: reason.to_string(),
+            source: source.to_ustring(),
+            reason: reason.to_ustring(),
             glyphs_without_ink_bounds: glyphs_without_ink_bounds,
             missing_glyphs: missing_glyphs,
             resolved_face: resolved_face,
@@ -52,57 +53,7 @@ language: Option<String>, strategy: Option<String>, feature_evidence: Option<Str
         }
     }
 
-    pub fn to_string(&self) -> String {
-        return format!("{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}",
-            "ShapingDecisionInfo(",
-            "range=",
-            (self.range).clone().to_string(),
-            ", ",
-            "sourceText=",
-            (self.source_text).to_string(),
-            ", ",
-            "displayText=",
-            (self.display_text).to_string(),
-            ", ",
-            "fontKey=",
-            (self.font_key).to_string(),
-            ", ",
-            "glyphCount=",
-            crate::runtime::int_text::IntText::int_text(self.glyph_count),
-            ", ",
-            "advance=",
-            self.advance,
-            ", ",
-            "source=",
-            (self.source).to_string(),
-            ", ",
-            "reason=",
-            (self.reason).to_string(),
-            ", ",
-            "glyphsWithoutInkBounds=",
-            crate::runtime::int_text::IntText::int_text(self.glyphs_without_ink_bounds),
-            ", ",
-            "missingGlyphs=",
-            crate::runtime::int_text::IntText::int_text(self.missing_glyphs),
-            ", ",
-            "resolvedFace=",
-            match (self.resolved_face).clone() { Some(ref v) => v.to_string(), None => "null".to_string() },
-            ", ",
-            "script=",
-            match (self.script).clone() { Some(ref v) => v.to_string(), None => "null".to_string() },
-            ", ",
-            "language=",
-            match (self.language).clone() { Some(ref v) => v.to_string(), None => "null".to_string() },
-            ", ",
-            "strategy=",
-            match (self.strategy).clone() { Some(ref v) => v.to_string(), None => "null".to_string() },
-            ", ",
-            "featureEvidence=",
-            match (self.feature_evidence).clone() { Some(ref v) => v.to_string(), None => "null".to_string() },
-            ", ",
-            "capabilityIssue=",
-            match (self.capability_issue).clone() { Some(ref v) => v.to_string(), None => "null".to_string() },
-            ")"
-        );
+    pub fn to_string(&self) -> UString {
+        return UString::from(format!("{}", { let mut __s = UString::new(); __s += &(UString::from("ShapingDecisionInfo(")); __s += &(UString::from("range=")); __s += UString::from(format!("{}", (self.range).clone().to_string()).as_str()).as_ustr(); __s += &(UString::from(", ")); __s += &(UString::from("sourceText=")); __s += (self.source_text).to_ustring().as_ustr(); __s += &(UString::from(", ")); __s += &(UString::from("displayText=")); __s += (self.display_text).to_ustring().as_ustr(); __s += &(UString::from(", ")); __s += &(UString::from("fontKey=")); __s += (self.font_key).to_ustring().as_ustr(); __s += &(UString::from(", ")); __s += &(UString::from("glyphCount=")); __s += &(UString::from(format!("{}", crate::runtime::int_text::IntText::int_text(self.glyph_count)).as_str())); __s += &(UString::from(", ")); __s += &(UString::from("advance=")); __s += &(crate::runtime::fp_helper::FPHelper::format_float(self.advance)); __s += &(UString::from(", ")); __s += &(UString::from("source=")); __s += (self.source).to_ustring().as_ustr(); __s += &(UString::from(", ")); __s += &(UString::from("reason=")); __s += (self.reason).to_ustring().as_ustr(); __s += &(UString::from(", ")); __s += &(UString::from("glyphsWithoutInkBounds=")); __s += &(UString::from(format!("{}", crate::runtime::int_text::IntText::int_text(self.glyphs_without_ink_bounds)).as_str())); __s += &(UString::from(", ")); __s += &(UString::from("missingGlyphs=")); __s += &(UString::from(format!("{}", crate::runtime::int_text::IntText::int_text(self.missing_glyphs)).as_str())); __s += &(UString::from(", ")); __s += &(UString::from("resolvedFace=")); __s += match &((self.resolved_face).clone()) { Some(v) => v.as_ustr(), None => UStr::new(&[]) }; __s += &(UString::from(", ")); __s += &(UString::from("script=")); __s += match &((self.script).clone()) { Some(v) => v.as_ustr(), None => UStr::new(&[]) }; __s += &(UString::from(", ")); __s += &(UString::from("language=")); __s += match &((self.language).clone()) { Some(v) => v.as_ustr(), None => UStr::new(&[]) }; __s += &(UString::from(", ")); __s += &(UString::from("strategy=")); __s += match &((self.strategy).clone()) { Some(v) => v.as_ustr(), None => UStr::new(&[]) }; __s += &(UString::from(", ")); __s += &(UString::from("featureEvidence=")); __s += match &((self.feature_evidence).clone()) { Some(v) => v.as_ustr(), None => UStr::new(&[]) }; __s += &(UString::from(", ")); __s += &(UString::from("capabilityIssue=")); __s += match &((self.capability_issue).clone()) { Some(v) => v.as_ustr(), None => UStr::new(&[]) }; __s += &(UString::from(")")); __s }).as_str());
     }
 }

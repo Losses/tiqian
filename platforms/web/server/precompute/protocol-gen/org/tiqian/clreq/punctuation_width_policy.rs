@@ -1,4 +1,5 @@
 use crate::org::tiqian::clreq::interior_punctuation_style::InteriorPunctuationStyle;
+use crate::runtime::u_string::UString;
 
 
 #[derive(Debug, Clone, PartialEq)]
@@ -17,16 +18,8 @@ impl PunctuationWidthPolicy {
         }
     }
 
-    pub fn to_string(&self) -> String {
-        return format!("{}{}{}{}{}{}{}",
-            "PunctuationWidthPolicy(",
-            "interior=",
-            self.interior.name(),
-            ", ",
-            "gbFixedSeparators=",
-            self.gb_fixed_separators,
-            ")"
-        );
+    pub fn to_string(&self) -> UString {
+        return UString::from(format!("{}", { let mut __s = UString::new(); __s += &(UString::from("PunctuationWidthPolicy(")); __s += &(UString::from("interior=")); __s += UString::from(self.interior.name()).as_ustr(); __s += &(UString::from(", ")); __s += &(UString::from("gbFixedSeparators=")); __s += UString::from(format!("{}", (self.gb_fixed_separators).to_string()).as_str()).as_ustr(); __s += &(UString::from(")")); __s }).as_str());
     }
 
     pub fn punctuation_width_policy_same_policy(a: PunctuationWidthPolicy, b: PunctuationWidthPolicy) -> bool {

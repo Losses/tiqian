@@ -1,5 +1,6 @@
 use crate::org::tiqian::core::inline_object_preferred_stretch::InlineObjectPreferredStretch;
 use crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError;
+use crate::runtime::u_string::UString;
 
 
 #[derive(Debug, Clone, PartialEq)]
@@ -19,10 +20,10 @@ impl InlineObjectBoundaryAdjustment {
         let line_end_discardable_advance = line_end_discardable_advance.unwrap_or_else(|| 0.0);
         let prevents_line_break = prevents_line_break.unwrap_or_else(|| false);
         if !InlineObjectBoundaryAdjustment::inline_object_boundary_adjustment_is_finite(shrink_capacity) || (shrink_capacity) < (0.0f64) {
-            return Err(TextRangeError::Message { text: "Inline-object boundary shrink capacity must be finite and non-negative".to_string() });
+            return Err(TextRangeError::Message { text: UString::from("Inline-object boundary shrink capacity must be finite and non-negative") });
         }
         if !InlineObjectBoundaryAdjustment::inline_object_boundary_adjustment_is_finite(line_end_discardable_advance) || (line_end_discardable_advance) < (0.0f64) {
-            return Err(TextRangeError::Message { text: "Inline-object line-end discardable advance must be finite and non-negative".to_string() });
+            return Err(TextRangeError::Message { text: UString::from("Inline-object line-end discardable advance must be finite and non-negative") });
         }
         Ok(Self {
             participates_in_uniform_stretch: participates_in_uniform_stretch,
@@ -33,25 +34,8 @@ impl InlineObjectBoundaryAdjustment {
         })
     }
 
-    pub fn to_string(&self) -> String {
-        return format!("{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}",
-            "InlineObjectBoundaryAdjustment(",
-            "participatesInUniformStretch=",
-            self.participates_in_uniform_stretch,
-            ", ",
-            "preferredStretch=",
-            (match &(self.preferred_stretch) { None => "null".to_string(), Some(__option) => __option.to_string() }),
-            ", ",
-            "shrinkCapacity=",
-            self.shrink_capacity,
-            ", ",
-            "lineEndDiscardableAdvance=",
-            self.line_end_discardable_advance,
-            ", ",
-            "preventsLineBreak=",
-            self.prevents_line_break,
-            ")"
-        );
+    pub fn to_string(&self) -> UString {
+        return UString::from(format!("{}", { let mut __s = UString::new(); __s += &(UString::from("InlineObjectBoundaryAdjustment(")); __s += &(UString::from("participatesInUniformStretch=")); __s += UString::from(format!("{}", (self.participates_in_uniform_stretch).to_string()).as_str()).as_ustr(); __s += &(UString::from(", ")); __s += &(UString::from("preferredStretch=")); __s += (match &(self.preferred_stretch) { None => UString::from("null"), Some(__option) => UString::from(format!("{}", __option.to_string()).as_str()) }).as_ustr(); __s += &(UString::from(", ")); __s += &(UString::from("shrinkCapacity=")); __s += &(crate::runtime::fp_helper::FPHelper::format_float(self.shrink_capacity)); __s += &(UString::from(", ")); __s += &(UString::from("lineEndDiscardableAdvance=")); __s += &(crate::runtime::fp_helper::FPHelper::format_float(self.line_end_discardable_advance)); __s += &(UString::from(", ")); __s += &(UString::from("preventsLineBreak=")); __s += UString::from(format!("{}", (self.prevents_line_break).to_string()).as_str()).as_ustr(); __s += &(UString::from(")")); __s }).as_str());
     }
 
     pub fn inline_object_boundary_adjustment_fixed() -> Result<InlineObjectBoundaryAdjustment, TextRangeError> {

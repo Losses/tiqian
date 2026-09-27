@@ -1,5 +1,6 @@
 use crate::org::tiqian::protocol::plan_end_reason::PlanEndReason;
 use crate::org::tiqian::protocol::plan_style_delta::PlanStyleDelta;
+use crate::runtime::u_string::UString;
 
 
 #[derive(Debug, Clone, Copy, PartialEq)]
@@ -27,12 +28,12 @@ pub struct PlanInlineEdge {
 pub struct PlanRuby {
     pub base_range_start: u32,
     pub base_range_end: u32,
-    pub text: String,
+    pub text: UString,
     pub center_x: f64,
     pub baseline_y: f64,
     pub font_size: f64,
     pub font_weight: u32,
-    pub font_families: Vec<String>,
+    pub font_families: Vec<UString>,
     pub ascent: Option<f64>,
 }
 
@@ -40,16 +41,16 @@ pub struct PlanRuby {
 pub struct PlanBopomofo {
     pub base_range_start: u32,
     pub base_range_end: u32,
-    pub text: String,
+    pub text: UString,
     pub font_weight: u32,
-    pub font_families: Vec<String>,
+    pub font_families: Vec<UString>,
     pub placements: Vec<PlanBopomofoPlacement>,
 }
 
 #[derive(Debug, Clone, PartialEq)]
 pub struct PlanBopomofoPlacement {
-    pub text: String,
-    pub role: String,
+    pub text: UString,
+    pub role: UString,
     pub left: f64,
     pub top: f64,
     pub width: f64,
@@ -58,7 +59,7 @@ pub struct PlanBopomofoPlacement {
 
 #[derive(Debug, Clone, PartialEq)]
 pub struct PlanDecorationSegment {
-    pub kind: String,
+    pub kind: UString,
     pub left: f64,
     pub top: f64,
     pub right: f64,
@@ -92,19 +93,19 @@ pub struct PlanLine {
 pub struct PlanCell {
     pub range_start: u32,
     pub range_end: u32,
-    pub source: String,
-    pub display: String,
+    pub source: UString,
+    pub display: UString,
     pub draw_x: f64,
     pub natural_width: f64,
     pub leading_layout_advance: f64,
     pub shaping_boundary: bool,
-    pub open_type_features: Vec<String>,
-    pub render_font_family: Option<String>,
-    pub dash_strategy: Option<String>,
-    pub shaping_language: Option<String>,
-    pub resolved_face: Option<String>,
-    pub glyph_ids: Option<String>,
-    pub shaping_evidence: Option<String>,
+    pub open_type_features: Vec<UString>,
+    pub render_font_family: Option<UString>,
+    pub dash_strategy: Option<UString>,
+    pub shaping_language: Option<UString>,
+    pub resolved_face: Option<UString>,
+    pub glyph_ids: Option<UString>,
+    pub shaping_evidence: Option<UString>,
     pub punctuation_ink_floor: Option<f64>,
     pub punctuation_body_width: Option<f64>,
     pub latin: bool,

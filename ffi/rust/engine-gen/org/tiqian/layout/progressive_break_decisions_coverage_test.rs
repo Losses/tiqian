@@ -10,6 +10,8 @@ use crate::runtime::sorted_table::SortedMapTable;
 use crate::runtime::sorted_table::SortedMapTableBuilder;
 use crate::runtime::sorted_table::SortedTable;
 use crate::runtime::test as testlib;
+use crate::runtime::u_string::UStr;
+use crate::runtime::u_string::UString;
 use std::sync::Arc;
 
 
@@ -18,6 +20,15 @@ pub enum ProgressiveBreakDecisionsCoverageTestVisiblyLooseCleanTiersFallThroughT
     TextRangeErrorFault(crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError),
     UStringFaultFault(crate::std::u_string_exception::UStringFault),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
+}
+impl std::fmt::Display for ProgressiveBreakDecisionsCoverageTestVisiblyLooseCleanTiersFallThroughToEmergencyFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            ProgressiveBreakDecisionsCoverageTestVisiblyLooseCleanTiersFallThroughToEmergencyFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            ProgressiveBreakDecisionsCoverageTestVisiblyLooseCleanTiersFallThroughToEmergencyFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            ProgressiveBreakDecisionsCoverageTestVisiblyLooseCleanTiersFallThroughToEmergencyFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
 }
 
 impl From<ProgressiveBreakDecisionsCoverageTestVisiblyLooseCleanTiersFallThroughToEmergencyFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
@@ -71,6 +82,15 @@ pub enum ProgressiveBreakDecisionsCoverageTestTwoSameTierBoundariesPickTheRightm
     UStringFaultFault(crate::std::u_string_exception::UStringFault),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
 }
+impl std::fmt::Display for ProgressiveBreakDecisionsCoverageTestTwoSameTierBoundariesPickTheRightmostFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            ProgressiveBreakDecisionsCoverageTestTwoSameTierBoundariesPickTheRightmostFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            ProgressiveBreakDecisionsCoverageTestTwoSameTierBoundariesPickTheRightmostFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            ProgressiveBreakDecisionsCoverageTestTwoSameTierBoundariesPickTheRightmostFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
+}
 
 impl From<ProgressiveBreakDecisionsCoverageTestTwoSameTierBoundariesPickTheRightmostFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
     fn from(value: ProgressiveBreakDecisionsCoverageTestTwoSameTierBoundariesPickTheRightmostFault) -> Self {
@@ -122,6 +142,15 @@ pub enum ProgressiveBreakDecisionsCoverageTestSpanEdgeAndWhitespaceClustersDoNot
     TextRangeErrorFault(crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError),
     UStringFaultFault(crate::std::u_string_exception::UStringFault),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
+}
+impl std::fmt::Display for ProgressiveBreakDecisionsCoverageTestSpanEdgeAndWhitespaceClustersDoNotCountAsTechnicalUnitsFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            ProgressiveBreakDecisionsCoverageTestSpanEdgeAndWhitespaceClustersDoNotCountAsTechnicalUnitsFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            ProgressiveBreakDecisionsCoverageTestSpanEdgeAndWhitespaceClustersDoNotCountAsTechnicalUnitsFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            ProgressiveBreakDecisionsCoverageTestSpanEdgeAndWhitespaceClustersDoNotCountAsTechnicalUnitsFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
 }
 
 impl From<ProgressiveBreakDecisionsCoverageTestSpanEdgeAndWhitespaceClustersDoNotCountAsTechnicalUnitsFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
@@ -175,6 +204,15 @@ pub enum ProgressiveBreakDecisionsCoverageTestSinoWesternGapsAbsorbingTheDeficit
     TextRangeErrorFault(crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
 }
+impl std::fmt::Display for ProgressiveBreakDecisionsCoverageTestSinoWesternGapsAbsorbingTheDeficitKeepTheWholeWordFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            ProgressiveBreakDecisionsCoverageTestSinoWesternGapsAbsorbingTheDeficitKeepTheWholeWordFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            ProgressiveBreakDecisionsCoverageTestSinoWesternGapsAbsorbingTheDeficitKeepTheWholeWordFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            ProgressiveBreakDecisionsCoverageTestSinoWesternGapsAbsorbingTheDeficitKeepTheWholeWordFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
+}
 
 impl From<ProgressiveBreakDecisionsCoverageTestSinoWesternGapsAbsorbingTheDeficitKeepTheWholeWordFault> for crate::std::u_string_exception::UStringFault {
     fn from(value: ProgressiveBreakDecisionsCoverageTestSinoWesternGapsAbsorbingTheDeficitKeepTheWholeWordFault) -> Self {
@@ -226,6 +264,15 @@ pub enum ProgressiveBreakDecisionsCoverageTestSingleTechnicalUnitFallsBackToTheC
     TextRangeErrorFault(crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError),
     UStringFaultFault(crate::std::u_string_exception::UStringFault),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
+}
+impl std::fmt::Display for ProgressiveBreakDecisionsCoverageTestSingleTechnicalUnitFallsBackToTheCjkGapDensityFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            ProgressiveBreakDecisionsCoverageTestSingleTechnicalUnitFallsBackToTheCjkGapDensityFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            ProgressiveBreakDecisionsCoverageTestSingleTechnicalUnitFallsBackToTheCjkGapDensityFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            ProgressiveBreakDecisionsCoverageTestSingleTechnicalUnitFallsBackToTheCjkGapDensityFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
 }
 
 impl From<ProgressiveBreakDecisionsCoverageTestSingleTechnicalUnitFallsBackToTheCjkGapDensityFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
@@ -279,6 +326,15 @@ pub enum ProgressiveBreakDecisionsCoverageTestSameTierPastTheRawGreedyIsAllowedA
     UStringFaultFault(crate::std::u_string_exception::UStringFault),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
 }
+impl std::fmt::Display for ProgressiveBreakDecisionsCoverageTestSameTierPastTheRawGreedyIsAllowedAndWorseTiersAreNotFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            ProgressiveBreakDecisionsCoverageTestSameTierPastTheRawGreedyIsAllowedAndWorseTiersAreNotFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            ProgressiveBreakDecisionsCoverageTestSameTierPastTheRawGreedyIsAllowedAndWorseTiersAreNotFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            ProgressiveBreakDecisionsCoverageTestSameTierPastTheRawGreedyIsAllowedAndWorseTiersAreNotFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
+}
 
 impl From<ProgressiveBreakDecisionsCoverageTestSameTierPastTheRawGreedyIsAllowedAndWorseTiersAreNotFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
     fn from(value: ProgressiveBreakDecisionsCoverageTestSameTierPastTheRawGreedyIsAllowedAndWorseTiersAreNotFault) -> Self {
@@ -330,6 +386,15 @@ pub enum ProgressiveBreakDecisionsCoverageTestOverLongWordsMustHyphenateFromTheL
     UStringFaultFault(crate::std::u_string_exception::UStringFault),
     TextRangeErrorFault(crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
+}
+impl std::fmt::Display for ProgressiveBreakDecisionsCoverageTestOverLongWordsMustHyphenateFromTheLineStartFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            ProgressiveBreakDecisionsCoverageTestOverLongWordsMustHyphenateFromTheLineStartFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            ProgressiveBreakDecisionsCoverageTestOverLongWordsMustHyphenateFromTheLineStartFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            ProgressiveBreakDecisionsCoverageTestOverLongWordsMustHyphenateFromTheLineStartFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
 }
 
 impl From<ProgressiveBreakDecisionsCoverageTestOverLongWordsMustHyphenateFromTheLineStartFault> for crate::std::u_string_exception::UStringFault {
@@ -383,6 +448,15 @@ pub enum ProgressiveBreakDecisionsCoverageTestLineStartAtTheOverflowBoundaryScan
     UStringFaultFault(crate::std::u_string_exception::UStringFault),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
 }
+impl std::fmt::Display for ProgressiveBreakDecisionsCoverageTestLineStartAtTheOverflowBoundaryScansAnEmptyRangeFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            ProgressiveBreakDecisionsCoverageTestLineStartAtTheOverflowBoundaryScansAnEmptyRangeFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            ProgressiveBreakDecisionsCoverageTestLineStartAtTheOverflowBoundaryScansAnEmptyRangeFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            ProgressiveBreakDecisionsCoverageTestLineStartAtTheOverflowBoundaryScansAnEmptyRangeFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
+}
 
 impl From<ProgressiveBreakDecisionsCoverageTestLineStartAtTheOverflowBoundaryScansAnEmptyRangeFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
     fn from(value: ProgressiveBreakDecisionsCoverageTestLineStartAtTheOverflowBoundaryScansAnEmptyRangeFault) -> Self {
@@ -434,6 +508,15 @@ pub enum ProgressiveBreakDecisionsCoverageTestHyphenBreakReturnsOverflowAtPlainW
     UStringFaultFault(crate::std::u_string_exception::UStringFault),
     TextRangeErrorFault(crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
+}
+impl std::fmt::Display for ProgressiveBreakDecisionsCoverageTestHyphenBreakReturnsOverflowAtPlainWordBoundariesFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            ProgressiveBreakDecisionsCoverageTestHyphenBreakReturnsOverflowAtPlainWordBoundariesFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            ProgressiveBreakDecisionsCoverageTestHyphenBreakReturnsOverflowAtPlainWordBoundariesFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            ProgressiveBreakDecisionsCoverageTestHyphenBreakReturnsOverflowAtPlainWordBoundariesFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
 }
 
 impl From<ProgressiveBreakDecisionsCoverageTestHyphenBreakReturnsOverflowAtPlainWordBoundariesFault> for crate::std::u_string_exception::UStringFault {
@@ -487,6 +570,15 @@ pub enum ProgressiveBreakDecisionsCoverageTestGaplessOrTooLooseLinesHyphenateIns
     TextRangeErrorFault(crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
 }
+impl std::fmt::Display for ProgressiveBreakDecisionsCoverageTestGaplessOrTooLooseLinesHyphenateInsteadFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            ProgressiveBreakDecisionsCoverageTestGaplessOrTooLooseLinesHyphenateInsteadFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            ProgressiveBreakDecisionsCoverageTestGaplessOrTooLooseLinesHyphenateInsteadFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            ProgressiveBreakDecisionsCoverageTestGaplessOrTooLooseLinesHyphenateInsteadFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
+}
 
 impl From<ProgressiveBreakDecisionsCoverageTestGaplessOrTooLooseLinesHyphenateInsteadFault> for crate::std::u_string_exception::UStringFault {
     fn from(value: ProgressiveBreakDecisionsCoverageTestGaplessOrTooLooseLinesHyphenateInsteadFault) -> Self {
@@ -538,6 +630,15 @@ pub enum ProgressiveBreakDecisionsCoverageTestDefaultsAdmitTheCleanTierWithoutGe
     TextRangeErrorFault(crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError),
     UStringFaultFault(crate::std::u_string_exception::UStringFault),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
+}
+impl std::fmt::Display for ProgressiveBreakDecisionsCoverageTestDefaultsAdmitTheCleanTierWithoutGeometryInputsFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            ProgressiveBreakDecisionsCoverageTestDefaultsAdmitTheCleanTierWithoutGeometryInputsFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            ProgressiveBreakDecisionsCoverageTestDefaultsAdmitTheCleanTierWithoutGeometryInputsFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            ProgressiveBreakDecisionsCoverageTestDefaultsAdmitTheCleanTierWithoutGeometryInputsFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
 }
 
 impl From<ProgressiveBreakDecisionsCoverageTestDefaultsAdmitTheCleanTierWithoutGeometryInputsFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
@@ -591,6 +692,15 @@ pub enum ProgressiveBreakDecisionsCoverageTestCandidatesOutsideTheActiveSpanAreA
     UStringFaultFault(crate::std::u_string_exception::UStringFault),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
 }
+impl std::fmt::Display for ProgressiveBreakDecisionsCoverageTestCandidatesOutsideTheActiveSpanAreAllowedFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            ProgressiveBreakDecisionsCoverageTestCandidatesOutsideTheActiveSpanAreAllowedFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            ProgressiveBreakDecisionsCoverageTestCandidatesOutsideTheActiveSpanAreAllowedFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            ProgressiveBreakDecisionsCoverageTestCandidatesOutsideTheActiveSpanAreAllowedFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
+}
 
 impl From<ProgressiveBreakDecisionsCoverageTestCandidatesOutsideTheActiveSpanAreAllowedFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
     fn from(value: ProgressiveBreakDecisionsCoverageTestCandidatesOutsideTheActiveSpanAreAllowedFault) -> Self {
@@ -642,6 +752,15 @@ pub enum ProgressiveBreakDecisionsCoverageTestCandidatesOfADifferentSpanAreAllow
     TextRangeErrorFault(crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError),
     UStringFaultFault(crate::std::u_string_exception::UStringFault),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
+}
+impl std::fmt::Display for ProgressiveBreakDecisionsCoverageTestCandidatesOfADifferentSpanAreAllowedFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            ProgressiveBreakDecisionsCoverageTestCandidatesOfADifferentSpanAreAllowedFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            ProgressiveBreakDecisionsCoverageTestCandidatesOfADifferentSpanAreAllowedFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            ProgressiveBreakDecisionsCoverageTestCandidatesOfADifferentSpanAreAllowedFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
 }
 
 impl From<ProgressiveBreakDecisionsCoverageTestCandidatesOfADifferentSpanAreAllowedFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
@@ -695,6 +814,15 @@ pub enum ProgressiveBreakDecisionsCoverageTestCandidatesBeforeTheRawGreedyMustMa
     UStringFaultFault(crate::std::u_string_exception::UStringFault),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
 }
+impl std::fmt::Display for ProgressiveBreakDecisionsCoverageTestCandidatesBeforeTheRawGreedyMustMatchTheSelectedBoundaryFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            ProgressiveBreakDecisionsCoverageTestCandidatesBeforeTheRawGreedyMustMatchTheSelectedBoundaryFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            ProgressiveBreakDecisionsCoverageTestCandidatesBeforeTheRawGreedyMustMatchTheSelectedBoundaryFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            ProgressiveBreakDecisionsCoverageTestCandidatesBeforeTheRawGreedyMustMatchTheSelectedBoundaryFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
+}
 
 impl From<ProgressiveBreakDecisionsCoverageTestCandidatesBeforeTheRawGreedyMustMatchTheSelectedBoundaryFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
     fn from(value: ProgressiveBreakDecisionsCoverageTestCandidatesBeforeTheRawGreedyMustMatchTheSelectedBoundaryFault) -> Self {
@@ -746,6 +874,15 @@ pub enum ProgressiveBreakDecisionsCoverageTestCandidateOutsideTheClusterListIsAl
     TextRangeErrorFault(crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError),
     UStringFaultFault(crate::std::u_string_exception::UStringFault),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
+}
+impl std::fmt::Display for ProgressiveBreakDecisionsCoverageTestCandidateOutsideTheClusterListIsAllowedFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            ProgressiveBreakDecisionsCoverageTestCandidateOutsideTheClusterListIsAllowedFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            ProgressiveBreakDecisionsCoverageTestCandidateOutsideTheClusterListIsAllowedFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            ProgressiveBreakDecisionsCoverageTestCandidateOutsideTheClusterListIsAllowedFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
 }
 
 impl From<ProgressiveBreakDecisionsCoverageTestCandidateOutsideTheClusterListIsAllowedFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
@@ -799,6 +936,15 @@ pub enum ProgressiveBreakDecisionsCoverageTestALeftwardEmergencyBoundaryKeepsThe
     UStringFaultFault(crate::std::u_string_exception::UStringFault),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
 }
+impl std::fmt::Display for ProgressiveBreakDecisionsCoverageTestALeftwardEmergencyBoundaryKeepsTheBestCleanTierFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            ProgressiveBreakDecisionsCoverageTestALeftwardEmergencyBoundaryKeepsTheBestCleanTierFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            ProgressiveBreakDecisionsCoverageTestALeftwardEmergencyBoundaryKeepsTheBestCleanTierFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            ProgressiveBreakDecisionsCoverageTestALeftwardEmergencyBoundaryKeepsTheBestCleanTierFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
+}
 
 impl From<ProgressiveBreakDecisionsCoverageTestALeftwardEmergencyBoundaryKeepsTheBestCleanTierFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
     fn from(value: ProgressiveBreakDecisionsCoverageTestALeftwardEmergencyBoundaryKeepsTheBestCleanTierFault) -> Self {
@@ -851,6 +997,15 @@ pub enum ProgressiveBreakDecisionsCoverageTestAFittingWholeWordBreaksThereFault 
     TextRangeErrorFault(crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
 }
+impl std::fmt::Display for ProgressiveBreakDecisionsCoverageTestAFittingWholeWordBreaksThereFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            ProgressiveBreakDecisionsCoverageTestAFittingWholeWordBreaksThereFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            ProgressiveBreakDecisionsCoverageTestAFittingWholeWordBreaksThereFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            ProgressiveBreakDecisionsCoverageTestAFittingWholeWordBreaksThereFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
+}
 
 impl From<ProgressiveBreakDecisionsCoverageTestAFittingWholeWordBreaksThereFault> for crate::std::u_string_exception::UStringFault {
     fn from(value: ProgressiveBreakDecisionsCoverageTestAFittingWholeWordBreaksThereFault) -> Self {
@@ -900,9 +1055,9 @@ impl From<crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFa
 #[test]
 fn defaults_admit_the_clean_tier_without_geometry_inputs() {
     testlib::run("org.tiqian.layout.ProgressiveBreakDecisionsCoverageTest.defaultsAdmitTheCleanTierWithoutGeometryInputs", "org.tiqian.layout.ProgressiveBreakDecisionsCoverageTest.defaultsAdmitTheCleanTierWithoutGeometryInputs", || {
-        ProgressiveBreakDecisionsCoverageTestSupport::progressive_break_decisions_coverage_test_support_run(&"defaultsAdmitTheCleanTierWithoutGeometryInputs", {  Arc::new(move || {
-        let mut bo: SortedMapTableBuilder<u32, ProgressiveBreakOpportunity> = SortedTable::sorted_table_map_builder::<u32, ProgressiveBreakOpportunity>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_bytes((*a).to_ne_bytes()),
-i32::from_ne_bytes((*b).to_ne_bytes()))));
+        ProgressiveBreakDecisionsCoverageTestSupport::progressive_break_decisions_coverage_test_support_run(UStr::new(&[100,101,102,97,117,108,116,115,65,100,109,105,116,84,104,101,67,108,101,97,110,84,105,101,114,87,105,116,104,111,117,116,71,101,111,109,101,116,114,121,73,110,112,117,116,115]), {  Arc::new(move || {
+        let mut bo: SortedMapTableBuilder<u32, ProgressiveBreakOpportunity> = SortedTable::sorted_table_map_builder::<u32,
+ProgressiveBreakOpportunity>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_bytes(((*a) as i32).to_ne_bytes()), i32::from_ne_bytes(((*b) as i32).to_ne_bytes()))));
         bo.put(&(1), &(ProgressiveBreakDecisionsCoverageTestSupport::progressive_break_decisions_coverage_test_support_op(ProgressiveBreakTier::Whitespace, ProgressiveBreakDecisionsCoverageTestSupport::progressive_break_decisions_coverage_test_support_span().unwrap(), None)));
         bo.put(&(2), &(ProgressiveBreakDecisionsCoverageTestSupport::progressive_break_decisions_coverage_test_support_op(ProgressiveBreakTier::Emergency, ProgressiveBreakDecisionsCoverageTestSupport::progressive_break_decisions_coverage_test_support_span().unwrap(), None)));
         let o: SortedMapTable<u32, ProgressiveBreakOpportunity> = bo.clone().build();
@@ -915,9 +1070,9 @@ i32::from_ne_bytes((*b).to_ne_bytes()))));
 #[test]
 fn line_start_at_the_overflow_boundary_scans_an_empty_range() {
     testlib::run("org.tiqian.layout.ProgressiveBreakDecisionsCoverageTest.lineStartAtTheOverflowBoundaryScansAnEmptyRange", "org.tiqian.layout.ProgressiveBreakDecisionsCoverageTest.lineStartAtTheOverflowBoundaryScansAnEmptyRange", || {
-        ProgressiveBreakDecisionsCoverageTestSupport::progressive_break_decisions_coverage_test_support_run(&"lineStartAtTheOverflowBoundaryScansAnEmptyRange", {  Arc::new(move || {
-        let mut bo: SortedMapTableBuilder<u32, ProgressiveBreakOpportunity> = SortedTable::sorted_table_map_builder::<u32, ProgressiveBreakOpportunity>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_bytes((*a).to_ne_bytes()),
-i32::from_ne_bytes((*b).to_ne_bytes()))));
+        ProgressiveBreakDecisionsCoverageTestSupport::progressive_break_decisions_coverage_test_support_run(UStr::new(&[108,105,110,101,83,116,97,114,116,65,116,84,104,101,79,118,101,114,102,108,111,119,66,111,117,110,100,97,114,121,83,99,97,110,115,65,110,69,109,112,116,121,82,97,110,103,101]), {  Arc::new(move || {
+        let mut bo: SortedMapTableBuilder<u32, ProgressiveBreakOpportunity> = SortedTable::sorted_table_map_builder::<u32,
+ProgressiveBreakOpportunity>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_bytes(((*a) as i32).to_ne_bytes()), i32::from_ne_bytes(((*b) as i32).to_ne_bytes()))));
         bo.put(&(2), &(ProgressiveBreakDecisionsCoverageTestSupport::progressive_break_decisions_coverage_test_support_op(ProgressiveBreakTier::Emergency, ProgressiveBreakDecisionsCoverageTestSupport::progressive_break_decisions_coverage_test_support_span().unwrap(), None)));
         let o: SortedMapTable<u32, ProgressiveBreakOpportunity> = bo.clone().build();
         let _ = TracedAssertions::traced_assertions_assert_equals_int(2, ProgressiveBreakDecisions::progressive_break_decisions_decide_progressive_break(2, 2, (o).clone(), None, None, None, None, None, None), None).unwrap();
@@ -928,9 +1083,9 @@ i32::from_ne_bytes((*b).to_ne_bytes()))));
 #[test]
 fn two_same_tier_boundaries_pick_the_rightmost() {
     testlib::run("org.tiqian.layout.ProgressiveBreakDecisionsCoverageTest.twoSameTierBoundariesPickTheRightmost", "org.tiqian.layout.ProgressiveBreakDecisionsCoverageTest.twoSameTierBoundariesPickTheRightmost", || {
-        ProgressiveBreakDecisionsCoverageTestSupport::progressive_break_decisions_coverage_test_support_run(&"twoSameTierBoundariesPickTheRightmost", {  Arc::new(move || {
-        let mut bo: SortedMapTableBuilder<u32, ProgressiveBreakOpportunity> = SortedTable::sorted_table_map_builder::<u32, ProgressiveBreakOpportunity>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_bytes((*a).to_ne_bytes()),
-i32::from_ne_bytes((*b).to_ne_bytes()))));
+        ProgressiveBreakDecisionsCoverageTestSupport::progressive_break_decisions_coverage_test_support_run(UStr::new(&[116,119,111,83,97,109,101,84,105,101,114,66,111,117,110,100,97,114,105,101,115,80,105,99,107,84,104,101,82,105,103,104,116,109,111,115,116]), {  Arc::new(move || {
+        let mut bo: SortedMapTableBuilder<u32, ProgressiveBreakOpportunity> = SortedTable::sorted_table_map_builder::<u32,
+ProgressiveBreakOpportunity>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_bytes(((*a) as i32).to_ne_bytes()), i32::from_ne_bytes(((*b) as i32).to_ne_bytes()))));
         bo.put(&(2), &(ProgressiveBreakDecisionsCoverageTestSupport::progressive_break_decisions_coverage_test_support_op(ProgressiveBreakTier::Whitespace, ProgressiveBreakDecisionsCoverageTestSupport::progressive_break_decisions_coverage_test_support_span().unwrap(), None)));
         bo.put(&(4), &(ProgressiveBreakDecisionsCoverageTestSupport::progressive_break_decisions_coverage_test_support_op(ProgressiveBreakTier::Whitespace, ProgressiveBreakDecisionsCoverageTestSupport::progressive_break_decisions_coverage_test_support_span().unwrap(), None)));
         let o: SortedMapTable<u32, ProgressiveBreakOpportunity> = bo.clone().build();
@@ -948,9 +1103,9 @@ i32::from_ne_bytes((*b).to_ne_bytes()))));
 #[test]
 fn visibly_loose_clean_tiers_fall_through_to_emergency() {
     testlib::run("org.tiqian.layout.ProgressiveBreakDecisionsCoverageTest.visiblyLooseCleanTiersFallThroughToEmergency", "org.tiqian.layout.ProgressiveBreakDecisionsCoverageTest.visiblyLooseCleanTiersFallThroughToEmergency", || {
-        ProgressiveBreakDecisionsCoverageTestSupport::progressive_break_decisions_coverage_test_support_run(&"visiblyLooseCleanTiersFallThroughToEmergency", {  Arc::new(move || {
-        let mut bo: SortedMapTableBuilder<u32, ProgressiveBreakOpportunity> = SortedTable::sorted_table_map_builder::<u32, ProgressiveBreakOpportunity>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_bytes((*a).to_ne_bytes()),
-i32::from_ne_bytes((*b).to_ne_bytes()))));
+        ProgressiveBreakDecisionsCoverageTestSupport::progressive_break_decisions_coverage_test_support_run(UStr::new(&[118,105,115,105,98,108,121,76,111,111,115,101,67,108,101,97,110,84,105,101,114,115,70,97,108,108,84,104,114,111,117,103,104,84,111,69,109,101,114,103,101,110,99,121]), {  Arc::new(move || {
+        let mut bo: SortedMapTableBuilder<u32, ProgressiveBreakOpportunity> = SortedTable::sorted_table_map_builder::<u32,
+ProgressiveBreakOpportunity>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_bytes(((*a) as i32).to_ne_bytes()), i32::from_ne_bytes(((*b) as i32).to_ne_bytes()))));
         bo.put(&(2), &(ProgressiveBreakDecisionsCoverageTestSupport::progressive_break_decisions_coverage_test_support_op(ProgressiveBreakTier::Whitespace, ProgressiveBreakDecisionsCoverageTestSupport::progressive_break_decisions_coverage_test_support_span().unwrap(), None)));
         bo.put(&(4), &(ProgressiveBreakDecisionsCoverageTestSupport::progressive_break_decisions_coverage_test_support_op(ProgressiveBreakTier::Emergency, ProgressiveBreakDecisionsCoverageTestSupport::progressive_break_decisions_coverage_test_support_span().unwrap(), None)));
         let o: SortedMapTable<u32, ProgressiveBreakOpportunity> = bo.clone().build();
@@ -968,9 +1123,9 @@ i32::from_ne_bytes((*b).to_ne_bytes()))));
 #[test]
 fn a_leftward_emergency_boundary_keeps_the_best_clean_tier() {
     testlib::run("org.tiqian.layout.ProgressiveBreakDecisionsCoverageTest.aLeftwardEmergencyBoundaryKeepsTheBestCleanTier", "org.tiqian.layout.ProgressiveBreakDecisionsCoverageTest.aLeftwardEmergencyBoundaryKeepsTheBestCleanTier", || {
-        ProgressiveBreakDecisionsCoverageTestSupport::progressive_break_decisions_coverage_test_support_run(&"aLeftwardEmergencyBoundaryKeepsTheBestCleanTier", {  Arc::new(move || {
-        let mut bo: SortedMapTableBuilder<u32, ProgressiveBreakOpportunity> = SortedTable::sorted_table_map_builder::<u32, ProgressiveBreakOpportunity>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_bytes((*a).to_ne_bytes()),
-i32::from_ne_bytes((*b).to_ne_bytes()))));
+        ProgressiveBreakDecisionsCoverageTestSupport::progressive_break_decisions_coverage_test_support_run(UStr::new(&[97,76,101,102,116,119,97,114,100,69,109,101,114,103,101,110,99,121,66,111,117,110,100,97,114,121,75,101,101,112,115,84,104,101,66,101,115,116,67,108,101,97,110,84,105,101,114]), {  Arc::new(move || {
+        let mut bo: SortedMapTableBuilder<u32, ProgressiveBreakOpportunity> = SortedTable::sorted_table_map_builder::<u32,
+ProgressiveBreakOpportunity>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_bytes(((*a) as i32).to_ne_bytes()), i32::from_ne_bytes(((*b) as i32).to_ne_bytes()))));
         bo.put(&(2), &(ProgressiveBreakDecisionsCoverageTestSupport::progressive_break_decisions_coverage_test_support_op(ProgressiveBreakTier::Emergency, ProgressiveBreakDecisionsCoverageTestSupport::progressive_break_decisions_coverage_test_support_span().unwrap(), None)));
         bo.put(&(4), &(ProgressiveBreakDecisionsCoverageTestSupport::progressive_break_decisions_coverage_test_support_op(ProgressiveBreakTier::Whitespace, ProgressiveBreakDecisionsCoverageTestSupport::progressive_break_decisions_coverage_test_support_span().unwrap(), None)));
         let o: SortedMapTable<u32, ProgressiveBreakOpportunity> = bo.clone().build();
@@ -988,18 +1143,18 @@ i32::from_ne_bytes((*b).to_ne_bytes()))));
 #[test]
 fn span_edge_and_whitespace_clusters_do_not_count_as_technical_units() {
     testlib::run("org.tiqian.layout.ProgressiveBreakDecisionsCoverageTest.spanEdgeAndWhitespaceClustersDoNotCountAsTechnicalUnits", "org.tiqian.layout.ProgressiveBreakDecisionsCoverageTest.spanEdgeAndWhitespaceClustersDoNotCountAsTechnicalUnits", || {
-        ProgressiveBreakDecisionsCoverageTestSupport::progressive_break_decisions_coverage_test_support_run(&"spanEdgeAndWhitespaceClustersDoNotCountAsTechnicalUnits", {  Arc::new(move || {
-        let mut bo: SortedMapTableBuilder<u32, ProgressiveBreakOpportunity> = SortedTable::sorted_table_map_builder::<u32, ProgressiveBreakOpportunity>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_bytes((*a).to_ne_bytes()),
-i32::from_ne_bytes((*b).to_ne_bytes()))));
+        ProgressiveBreakDecisionsCoverageTestSupport::progressive_break_decisions_coverage_test_support_run(UStr::new(&[115,112,97,110,69,100,103,101,65,110,100,87,104,105,116,101,115,112,97,99,101,67,108,117,115,116,101,114,115,68,111,78,111,116,67,111,117,110,116,65,115,84,101,99,104,110,105,99,97,108,85,110,105,116,115]), {  Arc::new(move || {
+        let mut bo: SortedMapTableBuilder<u32, ProgressiveBreakOpportunity> = SortedTable::sorted_table_map_builder::<u32,
+ProgressiveBreakOpportunity>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_bytes(((*a) as i32).to_ne_bytes()), i32::from_ne_bytes(((*b) as i32).to_ne_bytes()))));
         let s = TextRange::new(1u32, 4u32).unwrap();
         bo.put(&(2), &(ProgressiveBreakDecisionsCoverageTestSupport::progressive_break_decisions_coverage_test_support_op(ProgressiveBreakTier::Whitespace, (s).clone(), None)));
         bo.put(&(3), &(ProgressiveBreakDecisionsCoverageTestSupport::progressive_break_decisions_coverage_test_support_op(ProgressiveBreakTier::Emergency, (s).clone(), None)));
         let o: SortedMapTable<u32, ProgressiveBreakOpportunity> = bo.clone().build();
         let _ = TracedAssertions::traced_assertions_assert_equals_int(3, ProgressiveBreakDecisions::progressive_break_decisions_decide_progressive_break(0, 3, (o).clone(), Some(vec![
     (ProgressiveBreakDecisionsCoverageTestSupport::progressive_break_decisions_coverage_test_support_c(0, None, None).unwrap()).clone(),
-    (ProgressiveBreakDecisionsCoverageTestSupport::progressive_break_decisions_coverage_test_support_c(1, Some(" ".to_string()), None).unwrap()).clone(),
-    (ProgressiveBreakDecisionsCoverageTestSupport::progressive_break_decisions_coverage_test_support_c(2, Some("a".to_string()), None).unwrap()).clone(),
-    (ProgressiveBreakDecisionsCoverageTestSupport::progressive_break_decisions_coverage_test_support_c(3, Some("b".to_string()), None).unwrap()).clone(),
+    (ProgressiveBreakDecisionsCoverageTestSupport::progressive_break_decisions_coverage_test_support_c(1, Some(UString::from(" ")), None).unwrap()).clone(),
+    (ProgressiveBreakDecisionsCoverageTestSupport::progressive_break_decisions_coverage_test_support_c(2, Some(UString::from("a")), None).unwrap()).clone(),
+    (ProgressiveBreakDecisionsCoverageTestSupport::progressive_break_decisions_coverage_test_support_c(3, Some(UString::from("b")), None).unwrap()).clone(),
 ]), Some(200 as f64 as f64), None, Some(8 as f64 as f64), None, None), None).unwrap();
 }) });
     });
@@ -1008,17 +1163,17 @@ i32::from_ne_bytes((*b).to_ne_bytes()))));
 #[test]
 fn single_technical_unit_falls_back_to_the_cjk_gap_density() {
     testlib::run("org.tiqian.layout.ProgressiveBreakDecisionsCoverageTest.singleTechnicalUnitFallsBackToTheCjkGapDensity", "org.tiqian.layout.ProgressiveBreakDecisionsCoverageTest.singleTechnicalUnitFallsBackToTheCjkGapDensity", || {
-        ProgressiveBreakDecisionsCoverageTestSupport::progressive_break_decisions_coverage_test_support_run(&"singleTechnicalUnitFallsBackToTheCjkGapDensity", {  Arc::new(move || {
-        let mut bo: SortedMapTableBuilder<u32, ProgressiveBreakOpportunity> = SortedTable::sorted_table_map_builder::<u32, ProgressiveBreakOpportunity>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_bytes((*a).to_ne_bytes()),
-i32::from_ne_bytes((*b).to_ne_bytes()))));
+        ProgressiveBreakDecisionsCoverageTestSupport::progressive_break_decisions_coverage_test_support_run(UStr::new(&[115,105,110,103,108,101,84,101,99,104,110,105,99,97,108,85,110,105,116,70,97,108,108,115,66,97,99,107,84,111,84,104,101,67,106,107,71,97,112,68,101,110,115,105,116,121]), {  Arc::new(move || {
+        let mut bo: SortedMapTableBuilder<u32, ProgressiveBreakOpportunity> = SortedTable::sorted_table_map_builder::<u32,
+ProgressiveBreakOpportunity>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_bytes(((*a) as i32).to_ne_bytes()), i32::from_ne_bytes(((*b) as i32).to_ne_bytes()))));
         let s = TextRange::new(0u32, 1u32).unwrap();
         bo.put(&(1), &(ProgressiveBreakDecisionsCoverageTestSupport::progressive_break_decisions_coverage_test_support_op(ProgressiveBreakTier::Whitespace, (s).clone(), None)));
         bo.put(&(2), &(ProgressiveBreakDecisionsCoverageTestSupport::progressive_break_decisions_coverage_test_support_op(ProgressiveBreakTier::Emergency, (s).clone(), None)));
         let o: SortedMapTable<u32, ProgressiveBreakOpportunity> = bo.clone().build();
         let _ = TracedAssertions::traced_assertions_assert_equals_int(2, ProgressiveBreakDecisions::progressive_break_decisions_decide_progressive_break(0, 2, (o).clone(), Some(vec![
-    (ProgressiveBreakDecisionsCoverageTestSupport::progressive_break_decisions_coverage_test_support_c(0, Some("a".to_string()), None).unwrap()).clone(),
-    (ProgressiveBreakDecisionsCoverageTestSupport::progressive_break_decisions_coverage_test_support_c(1, Some("b".to_string()), None).unwrap()).clone(),
-    (ProgressiveBreakDecisionsCoverageTestSupport::progressive_break_decisions_coverage_test_support_c(2, Some("c".to_string()), None).unwrap()).clone(),
+    (ProgressiveBreakDecisionsCoverageTestSupport::progressive_break_decisions_coverage_test_support_c(0, Some(UString::from("a")), None).unwrap()).clone(),
+    (ProgressiveBreakDecisionsCoverageTestSupport::progressive_break_decisions_coverage_test_support_c(1, Some(UString::from("b")), None).unwrap()).clone(),
+    (ProgressiveBreakDecisionsCoverageTestSupport::progressive_break_decisions_coverage_test_support_c(2, Some(UString::from("c")), None).unwrap()).clone(),
 ]), Some(200 as f64 as f64), Some(ProgressiveBreakDecisionsCoverageTestSupport::progressive_break_decisions_coverage_test_support_m(&vec![1])), Some(8 as f64 as f64), None, None), None).unwrap();
 }) });
     });
@@ -1027,9 +1182,9 @@ i32::from_ne_bytes((*b).to_ne_bytes()))));
 #[test]
 fn candidate_outside_the_cluster_list_is_allowed() {
     testlib::run("org.tiqian.layout.ProgressiveBreakDecisionsCoverageTest.candidateOutsideTheClusterListIsAllowed", "org.tiqian.layout.ProgressiveBreakDecisionsCoverageTest.candidateOutsideTheClusterListIsAllowed", || {
-        ProgressiveBreakDecisionsCoverageTestSupport::progressive_break_decisions_coverage_test_support_run(&"candidateOutsideTheClusterListIsAllowed", {  Arc::new(move || {
-        let mut bo: SortedMapTableBuilder<u32, ProgressiveBreakOpportunity> = SortedTable::sorted_table_map_builder::<u32, ProgressiveBreakOpportunity>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_bytes((*a).to_ne_bytes()),
-i32::from_ne_bytes((*b).to_ne_bytes()))));
+        ProgressiveBreakDecisionsCoverageTestSupport::progressive_break_decisions_coverage_test_support_run(UStr::new(&[99,97,110,100,105,100,97,116,101,79,117,116,115,105,100,101,84,104,101,67,108,117,115,116,101,114,76,105,115,116,73,115,65,108,108,111,119,101,100]), {  Arc::new(move || {
+        let mut bo: SortedMapTableBuilder<u32, ProgressiveBreakOpportunity> = SortedTable::sorted_table_map_builder::<u32,
+ProgressiveBreakOpportunity>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_bytes(((*a) as i32).to_ne_bytes()), i32::from_ne_bytes(((*b) as i32).to_ne_bytes()))));
         bo.put(&(1), &(ProgressiveBreakDecisionsCoverageTestSupport::progressive_break_decisions_coverage_test_support_op(ProgressiveBreakTier::Emergency, ProgressiveBreakDecisionsCoverageTestSupport::progressive_break_decisions_coverage_test_support_span().unwrap(), None)));
         let o: SortedMapTable<u32, ProgressiveBreakOpportunity> = bo.clone().build();
         let _ = TracedAssertions::traced_assertions_assert_true(ProgressiveBreakDecisions::progressive_break_decisions_progressive_candidate_allowed(0, 1, 5, (o).clone(), Some(vec![
@@ -1042,7 +1197,7 @@ i32::from_ne_bytes((*b).to_ne_bytes()))));
 #[test]
 fn candidates_outside_the_active_span_are_allowed() {
     testlib::run("org.tiqian.layout.ProgressiveBreakDecisionsCoverageTest.candidatesOutsideTheActiveSpanAreAllowed", "org.tiqian.layout.ProgressiveBreakDecisionsCoverageTest.candidatesOutsideTheActiveSpanAreAllowed", || {
-        ProgressiveBreakDecisionsCoverageTestSupport::progressive_break_decisions_coverage_test_support_run(&"candidatesOutsideTheActiveSpanAreAllowed", {  Arc::new(move || {
+        ProgressiveBreakDecisionsCoverageTestSupport::progressive_break_decisions_coverage_test_support_run(UStr::new(&[99,97,110,100,105,100,97,116,101,115,79,117,116,115,105,100,101,84,104,101,65,99,116,105,118,101,83,112,97,110,65,114,101,65,108,108,111,119,101,100]), {  Arc::new(move || {
         let cs = vec![
     (ProgressiveBreakDecisionsCoverageTestSupport::progressive_break_decisions_coverage_test_support_c(0, None, None).unwrap()).clone(),
     (ProgressiveBreakDecisionsCoverageTestSupport::progressive_break_decisions_coverage_test_support_c(1, None, None).unwrap()).clone(),
@@ -1050,18 +1205,18 @@ fn candidates_outside_the_active_span_are_allowed() {
     (ProgressiveBreakDecisionsCoverageTestSupport::progressive_break_decisions_coverage_test_support_c(3, None, None).unwrap()).clone(),
 ];
         let a = TextRange::new(5u32, 10u32).unwrap();
-        let mut bo: SortedMapTableBuilder<u32, ProgressiveBreakOpportunity> = SortedTable::sorted_table_map_builder::<u32, ProgressiveBreakOpportunity>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_bytes((*a).to_ne_bytes()),
-i32::from_ne_bytes((*b).to_ne_bytes()))));
+        let mut bo: SortedMapTableBuilder<u32, ProgressiveBreakOpportunity> = SortedTable::sorted_table_map_builder::<u32,
+ProgressiveBreakOpportunity>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_bytes(((*a) as i32).to_ne_bytes()), i32::from_ne_bytes(((*b) as i32).to_ne_bytes()))));
         bo.put(&(1), &(ProgressiveBreakDecisionsCoverageTestSupport::progressive_break_decisions_coverage_test_support_op(ProgressiveBreakTier::Emergency, (a).clone(), None)));
         let o: SortedMapTable<u32, ProgressiveBreakOpportunity> = bo.clone().build();
         let _ = TracedAssertions::traced_assertions_assert_true(ProgressiveBreakDecisions::progressive_break_decisions_progressive_candidate_allowed(0, 1, 2, (o).clone(), Some((cs).clone()), None, None, None, None, None), None).unwrap();
-        let mut bt: SortedMapTableBuilder<u32, ProgressiveBreakOpportunity> = SortedTable::sorted_table_map_builder::<u32, ProgressiveBreakOpportunity>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_bytes((*a).to_ne_bytes()),
-i32::from_ne_bytes((*b).to_ne_bytes()))));
+        let mut bt: SortedMapTableBuilder<u32, ProgressiveBreakOpportunity> = SortedTable::sorted_table_map_builder::<u32,
+ProgressiveBreakOpportunity>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_bytes(((*a) as i32).to_ne_bytes()), i32::from_ne_bytes(((*b) as i32).to_ne_bytes()))));
         bt.put(&(1), &(ProgressiveBreakDecisionsCoverageTestSupport::progressive_break_decisions_coverage_test_support_op(ProgressiveBreakTier::Emergency, TextRange::new(0u32, 2u32).unwrap(), None)));
         let t: SortedMapTable<u32, ProgressiveBreakOpportunity> = bt.clone().build();
         let _ = TracedAssertions::traced_assertions_assert_true(ProgressiveBreakDecisions::progressive_break_decisions_progressive_candidate_allowed(0, 1, 2, (t).clone(), Some((cs).clone()), None, None, None, None, None), None).unwrap();
-        let mut bz: SortedMapTableBuilder<u32, ProgressiveBreakOpportunity> = SortedTable::sorted_table_map_builder::<u32, ProgressiveBreakOpportunity>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_bytes((*a).to_ne_bytes()),
-i32::from_ne_bytes((*b).to_ne_bytes()))));
+        let mut bz: SortedMapTableBuilder<u32, ProgressiveBreakOpportunity> = SortedTable::sorted_table_map_builder::<u32,
+ProgressiveBreakOpportunity>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_bytes(((*a) as i32).to_ne_bytes()), i32::from_ne_bytes(((*b) as i32).to_ne_bytes()))));
         bz.put(&(1), &(ProgressiveBreakDecisionsCoverageTestSupport::progressive_break_decisions_coverage_test_support_op(ProgressiveBreakTier::Emergency, TextRange::new(0u32, 4u32).unwrap(), None)));
         let z: SortedMapTable<u32, ProgressiveBreakOpportunity> = bz.clone().build();
         let _ = TracedAssertions::traced_assertions_assert_false(ProgressiveBreakDecisions::progressive_break_decisions_progressive_candidate_allowed(0, 1, 2, (z).clone(), Some((cs).clone()), None, None, None, None, None), None).unwrap();
@@ -1072,9 +1227,9 @@ i32::from_ne_bytes((*b).to_ne_bytes()))));
 #[test]
 fn candidates_of_a_different_span_are_allowed() {
     testlib::run("org.tiqian.layout.ProgressiveBreakDecisionsCoverageTest.candidatesOfADifferentSpanAreAllowed", "org.tiqian.layout.ProgressiveBreakDecisionsCoverageTest.candidatesOfADifferentSpanAreAllowed", || {
-        ProgressiveBreakDecisionsCoverageTestSupport::progressive_break_decisions_coverage_test_support_run(&"candidatesOfADifferentSpanAreAllowed", {  Arc::new(move || {
-        let mut bo: SortedMapTableBuilder<u32, ProgressiveBreakOpportunity> = SortedTable::sorted_table_map_builder::<u32, ProgressiveBreakOpportunity>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_bytes((*a).to_ne_bytes()),
-i32::from_ne_bytes((*b).to_ne_bytes()))));
+        ProgressiveBreakDecisionsCoverageTestSupport::progressive_break_decisions_coverage_test_support_run(UStr::new(&[99,97,110,100,105,100,97,116,101,115,79,102,65,68,105,102,102,101,114,101,110,116,83,112,97,110,65,114,101,65,108,108,111,119,101,100]), {  Arc::new(move || {
+        let mut bo: SortedMapTableBuilder<u32, ProgressiveBreakOpportunity> = SortedTable::sorted_table_map_builder::<u32,
+ProgressiveBreakOpportunity>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_bytes(((*a) as i32).to_ne_bytes()), i32::from_ne_bytes(((*b) as i32).to_ne_bytes()))));
         bo.put(&(1), &(ProgressiveBreakDecisionsCoverageTestSupport::progressive_break_decisions_coverage_test_support_op(ProgressiveBreakTier::Emergency, TextRange::new(0u32, 2u32).unwrap(), None)));
         bo.put(&(3), &(ProgressiveBreakDecisionsCoverageTestSupport::progressive_break_decisions_coverage_test_support_op(ProgressiveBreakTier::Whitespace, TextRange::new(2u32, 6u32).unwrap(), None)));
         let o: SortedMapTable<u32, ProgressiveBreakOpportunity> = bo.clone().build();
@@ -1086,9 +1241,9 @@ i32::from_ne_bytes((*b).to_ne_bytes()))));
 #[test]
 fn same_tier_past_the_raw_greedy_is_allowed_and_worse_tiers_are_not() {
     testlib::run("org.tiqian.layout.ProgressiveBreakDecisionsCoverageTest.sameTierPastTheRawGreedyIsAllowedAndWorseTiersAreNot", "org.tiqian.layout.ProgressiveBreakDecisionsCoverageTest.sameTierPastTheRawGreedyIsAllowedAndWorseTiersAreNot", || {
-        ProgressiveBreakDecisionsCoverageTestSupport::progressive_break_decisions_coverage_test_support_run(&"sameTierPastTheRawGreedyIsAllowedAndWorseTiersAreNot", {  Arc::new(move || {
-        let mut bo: SortedMapTableBuilder<u32, ProgressiveBreakOpportunity> = SortedTable::sorted_table_map_builder::<u32, ProgressiveBreakOpportunity>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_bytes((*a).to_ne_bytes()),
-i32::from_ne_bytes((*b).to_ne_bytes()))));
+        ProgressiveBreakDecisionsCoverageTestSupport::progressive_break_decisions_coverage_test_support_run(UStr::new(&[115,97,109,101,84,105,101,114,80,97,115,116,84,104,101,82,97,119,71,114,101,101,100,121,73,115,65,108,108,111,119,101,100,65,110,100,87,111,114,115,101,84,105,101,114,115,65,114,101,78,111,116]), {  Arc::new(move || {
+        let mut bo: SortedMapTableBuilder<u32, ProgressiveBreakOpportunity> = SortedTable::sorted_table_map_builder::<u32,
+ProgressiveBreakOpportunity>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_bytes(((*a) as i32).to_ne_bytes()), i32::from_ne_bytes(((*b) as i32).to_ne_bytes()))));
         bo.put(&(2), &(ProgressiveBreakDecisionsCoverageTestSupport::progressive_break_decisions_coverage_test_support_op(ProgressiveBreakTier::Whitespace, ProgressiveBreakDecisionsCoverageTestSupport::progressive_break_decisions_coverage_test_support_span().unwrap(), None)));
         bo.put(&(3), &(ProgressiveBreakDecisionsCoverageTestSupport::progressive_break_decisions_coverage_test_support_op(ProgressiveBreakTier::Whitespace, ProgressiveBreakDecisionsCoverageTestSupport::progressive_break_decisions_coverage_test_support_span().unwrap(), None)));
         bo.put(&(4), &(ProgressiveBreakDecisionsCoverageTestSupport::progressive_break_decisions_coverage_test_support_op(ProgressiveBreakTier::Emergency, ProgressiveBreakDecisionsCoverageTestSupport::progressive_break_decisions_coverage_test_support_span().unwrap(), None)));
@@ -1102,9 +1257,9 @@ i32::from_ne_bytes((*b).to_ne_bytes()))));
 #[test]
 fn candidates_before_the_raw_greedy_must_match_the_selected_boundary() {
     testlib::run("org.tiqian.layout.ProgressiveBreakDecisionsCoverageTest.candidatesBeforeTheRawGreedyMustMatchTheSelectedBoundary", "org.tiqian.layout.ProgressiveBreakDecisionsCoverageTest.candidatesBeforeTheRawGreedyMustMatchTheSelectedBoundary", || {
-        ProgressiveBreakDecisionsCoverageTestSupport::progressive_break_decisions_coverage_test_support_run(&"candidatesBeforeTheRawGreedyMustMatchTheSelectedBoundary", {  Arc::new(move || {
-        let mut bo: SortedMapTableBuilder<u32, ProgressiveBreakOpportunity> = SortedTable::sorted_table_map_builder::<u32, ProgressiveBreakOpportunity>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_bytes((*a).to_ne_bytes()),
-i32::from_ne_bytes((*b).to_ne_bytes()))));
+        ProgressiveBreakDecisionsCoverageTestSupport::progressive_break_decisions_coverage_test_support_run(UStr::new(&[99,97,110,100,105,100,97,116,101,115,66,101,102,111,114,101,84,104,101,82,97,119,71,114,101,101,100,121,77,117,115,116,77,97,116,99,104,84,104,101,83,101,108,101,99,116,101,100,66,111,117,110,100,97,114,121]), {  Arc::new(move || {
+        let mut bo: SortedMapTableBuilder<u32, ProgressiveBreakOpportunity> = SortedTable::sorted_table_map_builder::<u32,
+ProgressiveBreakOpportunity>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_bytes(((*a) as i32).to_ne_bytes()), i32::from_ne_bytes(((*b) as i32).to_ne_bytes()))));
         bo.put(&(1), &(ProgressiveBreakDecisionsCoverageTestSupport::progressive_break_decisions_coverage_test_support_op(ProgressiveBreakTier::Whitespace, ProgressiveBreakDecisionsCoverageTestSupport::progressive_break_decisions_coverage_test_support_span().unwrap(), None)));
         bo.put(&(2), &(ProgressiveBreakDecisionsCoverageTestSupport::progressive_break_decisions_coverage_test_support_op(ProgressiveBreakTier::Whitespace, ProgressiveBreakDecisionsCoverageTestSupport::progressive_break_decisions_coverage_test_support_span().unwrap(), None)));
         bo.put(&(3), &(ProgressiveBreakDecisionsCoverageTestSupport::progressive_break_decisions_coverage_test_support_op(ProgressiveBreakTier::Emergency, ProgressiveBreakDecisionsCoverageTestSupport::progressive_break_decisions_coverage_test_support_span().unwrap(), None)));
@@ -1118,7 +1273,7 @@ i32::from_ne_bytes((*b).to_ne_bytes()))));
 #[test]
 fn hyphen_break_returns_overflow_at_plain_word_boundaries() {
     testlib::run("org.tiqian.layout.ProgressiveBreakDecisionsCoverageTest.hyphenBreakReturnsOverflowAtPlainWordBoundaries", "org.tiqian.layout.ProgressiveBreakDecisionsCoverageTest.hyphenBreakReturnsOverflowAtPlainWordBoundaries", || {
-        ProgressiveBreakDecisionsCoverageTestSupport::progressive_break_decisions_coverage_test_support_run(&"hyphenBreakReturnsOverflowAtPlainWordBoundaries", {  Arc::new(move || {
+        ProgressiveBreakDecisionsCoverageTestSupport::progressive_break_decisions_coverage_test_support_run(UStr::new(&[104,121,112,104,101,110,66,114,101,97,107,82,101,116,117,114,110,115,79,118,101,114,102,108,111,119,65,116,80,108,97,105,110,87,111,114,100,66,111,117,110,100,97,114,105,101,115]), {  Arc::new(move || {
         let _ = TracedAssertions::traced_assertions_assert_equals_int(1, ProgressiveBreakDecisions::progressive_break_decisions_decide_hyphen_break(0, 1, &vec![
     (ProgressiveBreakDecisionsCoverageTestSupport::progressive_break_decisions_coverage_test_support_c(0, None, None).unwrap()).clone(),
     (ProgressiveBreakDecisionsCoverageTestSupport::progressive_break_decisions_coverage_test_support_c(1, None, None).unwrap()).clone(),
@@ -1131,7 +1286,7 @@ fn hyphen_break_returns_overflow_at_plain_word_boundaries() {
 #[test]
 fn over_long_words_must_hyphenate_from_the_line_start() {
     testlib::run("org.tiqian.layout.ProgressiveBreakDecisionsCoverageTest.overLongWordsMustHyphenateFromTheLineStart", "org.tiqian.layout.ProgressiveBreakDecisionsCoverageTest.overLongWordsMustHyphenateFromTheLineStart", || {
-        ProgressiveBreakDecisionsCoverageTestSupport::progressive_break_decisions_coverage_test_support_run(&"overLongWordsMustHyphenateFromTheLineStart", {  Arc::new(move || {
+        ProgressiveBreakDecisionsCoverageTestSupport::progressive_break_decisions_coverage_test_support_run(UStr::new(&[111,118,101,114,76,111,110,103,87,111,114,100,115,77,117,115,116,72,121,112,104,101,110,97,116,101,70,114,111,109,84,104,101,76,105,110,101,83,116,97,114,116]), {  Arc::new(move || {
         let _ = TracedAssertions::traced_assertions_assert_equals_int(2, ProgressiveBreakDecisions::progressive_break_decisions_decide_hyphen_break(0, 2, &vec![
     (ProgressiveBreakDecisionsCoverageTestSupport::progressive_break_decisions_coverage_test_support_c(0, None, None).unwrap()).clone(),
     (ProgressiveBreakDecisionsCoverageTestSupport::progressive_break_decisions_coverage_test_support_c(1, None, None).unwrap()).clone(),
@@ -1144,7 +1299,7 @@ fn over_long_words_must_hyphenate_from_the_line_start() {
 #[test]
 fn a_fitting_whole_word_breaks_there() {
     testlib::run("org.tiqian.layout.ProgressiveBreakDecisionsCoverageTest.aFittingWholeWordBreaksThere", "org.tiqian.layout.ProgressiveBreakDecisionsCoverageTest.aFittingWholeWordBreaksThere", || {
-        ProgressiveBreakDecisionsCoverageTestSupport::progressive_break_decisions_coverage_test_support_run(&"aFittingWholeWordBreaksThere", {  Arc::new(move || {
+        ProgressiveBreakDecisionsCoverageTestSupport::progressive_break_decisions_coverage_test_support_run(UStr::new(&[97,70,105,116,116,105,110,103,87,104,111,108,101,87,111,114,100,66,114,101,97,107,115,84,104,101,114,101]), {  Arc::new(move || {
         let _ = TracedAssertions::traced_assertions_assert_equals_int(1, ProgressiveBreakDecisions::progressive_break_decisions_decide_hyphen_break(0, 2, &vec![
     (ProgressiveBreakDecisionsCoverageTestSupport::progressive_break_decisions_coverage_test_support_c(0, None, None).unwrap()).clone(),
     (ProgressiveBreakDecisionsCoverageTestSupport::progressive_break_decisions_coverage_test_support_c(1, None, None).unwrap()).clone(),
@@ -1157,9 +1312,8 @@ fn a_fitting_whole_word_breaks_there() {
 #[test]
 fn sino_western_gaps_absorbing_the_deficit_keep_the_whole_word() {
     testlib::run("org.tiqian.layout.ProgressiveBreakDecisionsCoverageTest.sinoWesternGapsAbsorbingTheDeficitKeepTheWholeWord", "org.tiqian.layout.ProgressiveBreakDecisionsCoverageTest.sinoWesternGapsAbsorbingTheDeficitKeepTheWholeWord", || {
-        ProgressiveBreakDecisionsCoverageTestSupport::progressive_break_decisions_coverage_test_support_run(&"sinoWesternGapsAbsorbingTheDeficitKeepTheWholeWord", {  Arc::new(move || {
-        let _ = TracedAssertions::traced_assertions_assert_equals_int(2, ProgressiveBreakDecisionsCoverageTestSupport::progressive_break_decisions_coverage_test_support_hy(&"x", 40 as f64,
-ProgressiveBreakDecisionsCoverageTestSupport::progressive_break_decisions_coverage_test_support_m(&vec![1]), Some(ProgressiveBreakDecisionsCoverageTestSupport::progressive_break_decisions_coverage_test_support_m(&vec![1])), Some(8 as f64 as f64)).unwrap(), None).unwrap();
+        ProgressiveBreakDecisionsCoverageTestSupport::progressive_break_decisions_coverage_test_support_run(UStr::new(&[115,105,110,111,87,101,115,116,101,114,110,71,97,112,115,65,98,115,111,114,98,105,110,103,84,104,101,68,101,102,105,99,105,116,75,101,101,112,84,104,101,87,104,111,108,101,87,111,114,100]), {  Arc::new(move || {
+        let _ = TracedAssertions::traced_assertions_assert_equals_int(2, ProgressiveBreakDecisionsCoverageTestSupport::progressive_break_decisions_coverage_test_support_hy(UStr::new(&[120]), 40 as f64, ProgressiveBreakDecisionsCoverageTestSupport::progressive_break_decisions_coverage_test_support_m(&vec![1]), Some(ProgressiveBreakDecisionsCoverageTestSupport::progressive_break_decisions_coverage_test_support_m(&vec![1])), Some(8 as f64 as f64)).unwrap(), None).unwrap();
 }) });
     });
 }
@@ -1167,11 +1321,9 @@ ProgressiveBreakDecisionsCoverageTestSupport::progressive_break_decisions_covera
 #[test]
 fn gapless_or_too_loose_lines_hyphenate_instead() {
     testlib::run("org.tiqian.layout.ProgressiveBreakDecisionsCoverageTest.gaplessOrTooLooseLinesHyphenateInstead", "org.tiqian.layout.ProgressiveBreakDecisionsCoverageTest.gaplessOrTooLooseLinesHyphenateInstead", || {
-        ProgressiveBreakDecisionsCoverageTestSupport::progressive_break_decisions_coverage_test_support_run(&"gaplessOrTooLooseLinesHyphenateInstead", {  Arc::new(move || {
-        let _ = TracedAssertions::traced_assertions_assert_equals_int(3, ProgressiveBreakDecisionsCoverageTestSupport::progressive_break_decisions_coverage_test_support_hy(&"x", 60 as f64,
-ProgressiveBreakDecisionsCoverageTestSupport::progressive_break_decisions_coverage_test_support_m(&vec![2]), None, None).unwrap(), None).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_equals_int(3, ProgressiveBreakDecisionsCoverageTestSupport::progressive_break_decisions_coverage_test_support_hy(&"x", 100 as f64,
-ProgressiveBreakDecisionsCoverageTestSupport::progressive_break_decisions_coverage_test_support_m(&vec![1]), None, None).unwrap(), None).unwrap();
+        ProgressiveBreakDecisionsCoverageTestSupport::progressive_break_decisions_coverage_test_support_run(UStr::new(&[103,97,112,108,101,115,115,79,114,84,111,111,76,111,111,115,101,76,105,110,101,115,72,121,112,104,101,110,97,116,101,73,110,115,116,101,97,100]), {  Arc::new(move || {
+        let _ = TracedAssertions::traced_assertions_assert_equals_int(3, ProgressiveBreakDecisionsCoverageTestSupport::progressive_break_decisions_coverage_test_support_hy(UStr::new(&[120]), 60 as f64, ProgressiveBreakDecisionsCoverageTestSupport::progressive_break_decisions_coverage_test_support_m(&vec![2]), None, None).unwrap(), None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_equals_int(3, ProgressiveBreakDecisionsCoverageTestSupport::progressive_break_decisions_coverage_test_support_hy(UStr::new(&[120]), 100 as f64, ProgressiveBreakDecisionsCoverageTestSupport::progressive_break_decisions_coverage_test_support_m(&vec![1]), None, None).unwrap(), None).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_equals_int(2, ProgressiveBreakDecisions::progressive_break_decisions_decide_hyphen_break(0, 3, &vec![
     (ProgressiveBreakDecisionsCoverageTestSupport::progressive_break_decisions_coverage_test_support_c(0, None, None).unwrap()).clone(),
     (ProgressiveBreakDecisionsCoverageTestSupport::progressive_break_decisions_coverage_test_support_c(1, None, None).unwrap()).clone(),

@@ -1,3 +1,5 @@
+use crate::runtime::u_string::UString;
+
 pub struct FPHelper;
 
 pub struct Int64Halves {
@@ -6,18 +8,18 @@ pub struct Int64Halves {
 }
 
 impl FPHelper {
-    pub fn format_float(v: f64) -> String {
-        if v.is_nan() { return "NaN".to_string(); }
-        if v == f64::INFINITY { return "Infinity".to_string(); }
-        if v == f64::NEG_INFINITY { return "-Infinity".to_string(); }
-        Self::format_float_text(v.to_string())
+    pub fn format_float(v: f64) -> UString {
+        if v.is_nan() { return UString::from("NaN"); }
+        if v == f64::INFINITY { return UString::from("Infinity"); }
+        if v == f64::NEG_INFINITY { return UString::from("-Infinity"); }
+        UString::from(Self::format_float_text(v.to_string()).as_str())
     }
 
-    pub fn format_float_f32(v: f32) -> String {
-        if v.is_nan() { return "NaN".to_string(); }
-        if v == f32::INFINITY { return "Infinity".to_string(); }
-        if v == f32::NEG_INFINITY { return "-Infinity".to_string(); }
-        Self::format_float_text(v.to_string())
+    pub fn format_float_f32(v: f32) -> UString {
+        if v.is_nan() { return UString::from("NaN"); }
+        if v == f32::INFINITY { return UString::from("Infinity"); }
+        if v == f32::NEG_INFINITY { return UString::from("-Infinity"); }
+        UString::from(Self::format_float_text(v.to_string()).as_str())
     }
 
     fn format_float_text(mut text: String) -> String {
@@ -47,12 +49,17 @@ impl FPHelper {
         else { format!("{}e{}{}", mantissa, if sci >= 0 { "+" } else { "" }, sci) }
     }
 
+    // The two 64-bit FPHelper value edges carry the binary32 bit pattern,
+    // like every other backend: floatToI32 reads the f32 bit pattern
+    // instead of truncating toward zero, and i32ToFloat reinterprets
+    // the i32 as raw binary32 bits instead of widening numerically
+    // (feature spec 23; FpText round-trips compare bit patterns).
     pub fn float_to_i32(v: f64) -> i32 {
-        v as i32
+        (v as f32).to_bits() as i32
     }
 
     pub fn i32_to_float(v: i32) -> f64 {
-        v as f64
+        f32::from_bits(v as u32) as f64
     }
 
     pub fn f32_to_i32(v: f32) -> i32 {

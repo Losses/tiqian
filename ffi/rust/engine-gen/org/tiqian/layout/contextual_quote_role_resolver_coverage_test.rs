@@ -8,6 +8,9 @@ use crate::org::tiqian::layout::quote_pair_analyzer::QuoteRoleDecision;
 use crate::org::tiqian::test::trace::test_trace_recorder::TestTraceRecorder;
 use crate::org::tiqian::test::trace::traced_assertions::TracedAssertions;
 use crate::runtime::test as testlib;
+use crate::runtime::u_string;
+use crate::runtime::u_string::UStr;
+use crate::runtime::u_string::UString;
 
 
 #[derive(Debug, Clone, PartialEq)]
@@ -15,6 +18,15 @@ pub enum ContextualQuoteRoleResolverCoverageTestWhitespaceDelimitedWesternQuoteU
     UStringFaultFault(crate::std::u_string_exception::UStringFault),
     TextRangeErrorFault(crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
+}
+impl std::fmt::Display for ContextualQuoteRoleResolverCoverageTestWhitespaceDelimitedWesternQuoteUnmatchedFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            ContextualQuoteRoleResolverCoverageTestWhitespaceDelimitedWesternQuoteUnmatchedFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            ContextualQuoteRoleResolverCoverageTestWhitespaceDelimitedWesternQuoteUnmatchedFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            ContextualQuoteRoleResolverCoverageTestWhitespaceDelimitedWesternQuoteUnmatchedFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
 }
 
 impl From<ContextualQuoteRoleResolverCoverageTestWhitespaceDelimitedWesternQuoteUnmatchedFault> for crate::std::u_string_exception::UStringFault {
@@ -68,6 +80,15 @@ pub enum ContextualQuoteRoleResolverCoverageTestWhitespaceDelimitedWesternQuoteP
     TextRangeErrorFault(crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
 }
+impl std::fmt::Display for ContextualQuoteRoleResolverCoverageTestWhitespaceDelimitedWesternQuotePairedFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            ContextualQuoteRoleResolverCoverageTestWhitespaceDelimitedWesternQuotePairedFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            ContextualQuoteRoleResolverCoverageTestWhitespaceDelimitedWesternQuotePairedFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            ContextualQuoteRoleResolverCoverageTestWhitespaceDelimitedWesternQuotePairedFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
+}
 
 impl From<ContextualQuoteRoleResolverCoverageTestWhitespaceDelimitedWesternQuotePairedFault> for crate::std::u_string_exception::UStringFault {
     fn from(value: ContextualQuoteRoleResolverCoverageTestWhitespaceDelimitedWesternQuotePairedFault) -> Self {
@@ -119,6 +140,15 @@ pub enum ContextualQuoteRoleResolverCoverageTestUnmatchedRightSingleQuoteWithRig
     UStringFaultFault(crate::std::u_string_exception::UStringFault),
     TextRangeErrorFault(crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
+}
+impl std::fmt::Display for ContextualQuoteRoleResolverCoverageTestUnmatchedRightSingleQuoteWithRightRoleFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            ContextualQuoteRoleResolverCoverageTestUnmatchedRightSingleQuoteWithRightRoleFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            ContextualQuoteRoleResolverCoverageTestUnmatchedRightSingleQuoteWithRightRoleFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            ContextualQuoteRoleResolverCoverageTestUnmatchedRightSingleQuoteWithRightRoleFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
 }
 
 impl From<ContextualQuoteRoleResolverCoverageTestUnmatchedRightSingleQuoteWithRightRoleFault> for crate::std::u_string_exception::UStringFault {
@@ -172,6 +202,15 @@ pub enum ContextualQuoteRoleResolverCoverageTestUnmatchedRightSingleQuoteWithLef
     TextRangeErrorFault(crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
 }
+impl std::fmt::Display for ContextualQuoteRoleResolverCoverageTestUnmatchedRightSingleQuoteWithLeftRoleFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            ContextualQuoteRoleResolverCoverageTestUnmatchedRightSingleQuoteWithLeftRoleFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            ContextualQuoteRoleResolverCoverageTestUnmatchedRightSingleQuoteWithLeftRoleFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            ContextualQuoteRoleResolverCoverageTestUnmatchedRightSingleQuoteWithLeftRoleFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
+}
 
 impl From<ContextualQuoteRoleResolverCoverageTestUnmatchedRightSingleQuoteWithLeftRoleFault> for crate::std::u_string_exception::UStringFault {
     fn from(value: ContextualQuoteRoleResolverCoverageTestUnmatchedRightSingleQuoteWithLeftRoleFault) -> Self {
@@ -223,6 +262,15 @@ pub enum ContextualQuoteRoleResolverCoverageTestUnmatchedRightSingleQuoteUsesSur
     UStringFaultFault(crate::std::u_string_exception::UStringFault),
     TextRangeErrorFault(crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
+}
+impl std::fmt::Display for ContextualQuoteRoleResolverCoverageTestUnmatchedRightSingleQuoteUsesSurroundingScriptFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            ContextualQuoteRoleResolverCoverageTestUnmatchedRightSingleQuoteUsesSurroundingScriptFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            ContextualQuoteRoleResolverCoverageTestUnmatchedRightSingleQuoteUsesSurroundingScriptFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            ContextualQuoteRoleResolverCoverageTestUnmatchedRightSingleQuoteUsesSurroundingScriptFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
 }
 
 impl From<ContextualQuoteRoleResolverCoverageTestUnmatchedRightSingleQuoteUsesSurroundingScriptFault> for crate::std::u_string_exception::UStringFault {
@@ -276,6 +324,15 @@ pub enum ContextualQuoteRoleResolverCoverageTestUnmatchedRightDoubleQuoteFault {
     TextRangeErrorFault(crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
 }
+impl std::fmt::Display for ContextualQuoteRoleResolverCoverageTestUnmatchedRightDoubleQuoteFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            ContextualQuoteRoleResolverCoverageTestUnmatchedRightDoubleQuoteFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            ContextualQuoteRoleResolverCoverageTestUnmatchedRightDoubleQuoteFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            ContextualQuoteRoleResolverCoverageTestUnmatchedRightDoubleQuoteFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
+}
 
 impl From<ContextualQuoteRoleResolverCoverageTestUnmatchedRightDoubleQuoteFault> for crate::std::u_string_exception::UStringFault {
     fn from(value: ContextualQuoteRoleResolverCoverageTestUnmatchedRightDoubleQuoteFault) -> Self {
@@ -327,6 +384,15 @@ pub enum ContextualQuoteRoleResolverCoverageTestUnmatchedQuoteWithWhitespaceBefo
     UStringFaultFault(crate::std::u_string_exception::UStringFault),
     TextRangeErrorFault(crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
+}
+impl std::fmt::Display for ContextualQuoteRoleResolverCoverageTestUnmatchedQuoteWithWhitespaceBeforeAndLatinRightFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            ContextualQuoteRoleResolverCoverageTestUnmatchedQuoteWithWhitespaceBeforeAndLatinRightFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            ContextualQuoteRoleResolverCoverageTestUnmatchedQuoteWithWhitespaceBeforeAndLatinRightFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            ContextualQuoteRoleResolverCoverageTestUnmatchedQuoteWithWhitespaceBeforeAndLatinRightFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
 }
 
 impl From<ContextualQuoteRoleResolverCoverageTestUnmatchedQuoteWithWhitespaceBeforeAndLatinRightFault> for crate::std::u_string_exception::UStringFault {
@@ -380,6 +446,15 @@ pub enum ContextualQuoteRoleResolverCoverageTestUnmatchedQuoteWithSurrogatePairC
     TextRangeErrorFault(crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
 }
+impl std::fmt::Display for ContextualQuoteRoleResolverCoverageTestUnmatchedQuoteWithSurrogatePairContentFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            ContextualQuoteRoleResolverCoverageTestUnmatchedQuoteWithSurrogatePairContentFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            ContextualQuoteRoleResolverCoverageTestUnmatchedQuoteWithSurrogatePairContentFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            ContextualQuoteRoleResolverCoverageTestUnmatchedQuoteWithSurrogatePairContentFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
+}
 
 impl From<ContextualQuoteRoleResolverCoverageTestUnmatchedQuoteWithSurrogatePairContentFault> for crate::std::u_string_exception::UStringFault {
     fn from(value: ContextualQuoteRoleResolverCoverageTestUnmatchedQuoteWithSurrogatePairContentFault) -> Self {
@@ -431,6 +506,15 @@ pub enum ContextualQuoteRoleResolverCoverageTestUnmatchedQuoteNonWhitespaceBefor
     UStringFaultFault(crate::std::u_string_exception::UStringFault),
     TextRangeErrorFault(crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
+}
+impl std::fmt::Display for ContextualQuoteRoleResolverCoverageTestUnmatchedQuoteNonWhitespaceBeforeFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            ContextualQuoteRoleResolverCoverageTestUnmatchedQuoteNonWhitespaceBeforeFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            ContextualQuoteRoleResolverCoverageTestUnmatchedQuoteNonWhitespaceBeforeFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            ContextualQuoteRoleResolverCoverageTestUnmatchedQuoteNonWhitespaceBeforeFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
 }
 
 impl From<ContextualQuoteRoleResolverCoverageTestUnmatchedQuoteNonWhitespaceBeforeFault> for crate::std::u_string_exception::UStringFault {
@@ -484,6 +568,15 @@ pub enum ContextualQuoteRoleResolverCoverageTestUnmatchedQuoteAtStartWithRightRo
     TextRangeErrorFault(crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
 }
+impl std::fmt::Display for ContextualQuoteRoleResolverCoverageTestUnmatchedQuoteAtStartWithRightRoleFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            ContextualQuoteRoleResolverCoverageTestUnmatchedQuoteAtStartWithRightRoleFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            ContextualQuoteRoleResolverCoverageTestUnmatchedQuoteAtStartWithRightRoleFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            ContextualQuoteRoleResolverCoverageTestUnmatchedQuoteAtStartWithRightRoleFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
+}
 
 impl From<ContextualQuoteRoleResolverCoverageTestUnmatchedQuoteAtStartWithRightRoleFault> for crate::std::u_string_exception::UStringFault {
     fn from(value: ContextualQuoteRoleResolverCoverageTestUnmatchedQuoteAtStartWithRightRoleFault) -> Self {
@@ -535,6 +628,15 @@ pub enum ContextualQuoteRoleResolverCoverageTestUnmatchedLeftSingleQuoteFault {
     UStringFaultFault(crate::std::u_string_exception::UStringFault),
     TextRangeErrorFault(crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
+}
+impl std::fmt::Display for ContextualQuoteRoleResolverCoverageTestUnmatchedLeftSingleQuoteFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            ContextualQuoteRoleResolverCoverageTestUnmatchedLeftSingleQuoteFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            ContextualQuoteRoleResolverCoverageTestUnmatchedLeftSingleQuoteFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            ContextualQuoteRoleResolverCoverageTestUnmatchedLeftSingleQuoteFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
 }
 
 impl From<ContextualQuoteRoleResolverCoverageTestUnmatchedLeftSingleQuoteFault> for crate::std::u_string_exception::UStringFault {
@@ -588,6 +690,15 @@ pub enum ContextualQuoteRoleResolverCoverageTestUnmatchedLeftDoubleQuoteFault {
     TextRangeErrorFault(crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
 }
+impl std::fmt::Display for ContextualQuoteRoleResolverCoverageTestUnmatchedLeftDoubleQuoteFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            ContextualQuoteRoleResolverCoverageTestUnmatchedLeftDoubleQuoteFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            ContextualQuoteRoleResolverCoverageTestUnmatchedLeftDoubleQuoteFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            ContextualQuoteRoleResolverCoverageTestUnmatchedLeftDoubleQuoteFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
+}
 
 impl From<ContextualQuoteRoleResolverCoverageTestUnmatchedLeftDoubleQuoteFault> for crate::std::u_string_exception::UStringFault {
     fn from(value: ContextualQuoteRoleResolverCoverageTestUnmatchedLeftDoubleQuoteFault) -> Self {
@@ -639,6 +750,15 @@ pub enum ContextualQuoteRoleResolverCoverageTestResolveUnmatchedWithBothSurround
     UStringFaultFault(crate::std::u_string_exception::UStringFault),
     TextRangeErrorFault(crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
+}
+impl std::fmt::Display for ContextualQuoteRoleResolverCoverageTestResolveUnmatchedWithBothSurroundingRolesNullFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            ContextualQuoteRoleResolverCoverageTestResolveUnmatchedWithBothSurroundingRolesNullFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            ContextualQuoteRoleResolverCoverageTestResolveUnmatchedWithBothSurroundingRolesNullFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            ContextualQuoteRoleResolverCoverageTestResolveUnmatchedWithBothSurroundingRolesNullFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
 }
 
 impl From<ContextualQuoteRoleResolverCoverageTestResolveUnmatchedWithBothSurroundingRolesNullFault> for crate::std::u_string_exception::UStringFault {
@@ -692,6 +812,15 @@ pub enum ContextualQuoteRoleResolverCoverageTestPairByOpenSkipInNearestStrongScr
     TextRangeErrorFault(crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
 }
+impl std::fmt::Display for ContextualQuoteRoleResolverCoverageTestPairByOpenSkipInNearestStrongScriptFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            ContextualQuoteRoleResolverCoverageTestPairByOpenSkipInNearestStrongScriptFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            ContextualQuoteRoleResolverCoverageTestPairByOpenSkipInNearestStrongScriptFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            ContextualQuoteRoleResolverCoverageTestPairByOpenSkipInNearestStrongScriptFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
+}
 
 impl From<ContextualQuoteRoleResolverCoverageTestPairByOpenSkipInNearestStrongScriptFault> for crate::std::u_string_exception::UStringFault {
     fn from(value: ContextualQuoteRoleResolverCoverageTestPairByOpenSkipInNearestStrongScriptFault) -> Self {
@@ -743,6 +872,15 @@ pub enum ContextualQuoteRoleResolverCoverageTestPairByCloseSkipInNearestStrongSc
     UStringFaultFault(crate::std::u_string_exception::UStringFault),
     TextRangeErrorFault(crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
+}
+impl std::fmt::Display for ContextualQuoteRoleResolverCoverageTestPairByCloseSkipInNearestStrongScriptFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            ContextualQuoteRoleResolverCoverageTestPairByCloseSkipInNearestStrongScriptFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            ContextualQuoteRoleResolverCoverageTestPairByCloseSkipInNearestStrongScriptFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            ContextualQuoteRoleResolverCoverageTestPairByCloseSkipInNearestStrongScriptFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
 }
 
 impl From<ContextualQuoteRoleResolverCoverageTestPairByCloseSkipInNearestStrongScriptFault> for crate::std::u_string_exception::UStringFault {
@@ -796,6 +934,15 @@ pub enum ContextualQuoteRoleResolverCoverageTestNonCjkInWordApostropheWithSurrog
     TextRangeErrorFault(crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
 }
+impl std::fmt::Display for ContextualQuoteRoleResolverCoverageTestNonCjkInWordApostropheWithSurrogateBeforeFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            ContextualQuoteRoleResolverCoverageTestNonCjkInWordApostropheWithSurrogateBeforeFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            ContextualQuoteRoleResolverCoverageTestNonCjkInWordApostropheWithSurrogateBeforeFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            ContextualQuoteRoleResolverCoverageTestNonCjkInWordApostropheWithSurrogateBeforeFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
+}
 
 impl From<ContextualQuoteRoleResolverCoverageTestNonCjkInWordApostropheWithSurrogateBeforeFault> for crate::std::u_string_exception::UStringFault {
     fn from(value: ContextualQuoteRoleResolverCoverageTestNonCjkInWordApostropheWithSurrogateBeforeFault) -> Self {
@@ -847,6 +994,15 @@ pub enum ContextualQuoteRoleResolverCoverageTestNonCjkInWordApostrophePairedFaul
     UStringFaultFault(crate::std::u_string_exception::UStringFault),
     TextRangeErrorFault(crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
+}
+impl std::fmt::Display for ContextualQuoteRoleResolverCoverageTestNonCjkInWordApostrophePairedFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            ContextualQuoteRoleResolverCoverageTestNonCjkInWordApostrophePairedFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            ContextualQuoteRoleResolverCoverageTestNonCjkInWordApostrophePairedFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            ContextualQuoteRoleResolverCoverageTestNonCjkInWordApostrophePairedFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
 }
 
 impl From<ContextualQuoteRoleResolverCoverageTestNonCjkInWordApostrophePairedFault> for crate::std::u_string_exception::UStringFault {
@@ -900,6 +1056,15 @@ pub enum ContextualQuoteRoleResolverCoverageTestNoUnmatchedQuoteContextFault {
     TextRangeErrorFault(crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
 }
+impl std::fmt::Display for ContextualQuoteRoleResolverCoverageTestNoUnmatchedQuoteContextFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            ContextualQuoteRoleResolverCoverageTestNoUnmatchedQuoteContextFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            ContextualQuoteRoleResolverCoverageTestNoUnmatchedQuoteContextFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            ContextualQuoteRoleResolverCoverageTestNoUnmatchedQuoteContextFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
+}
 
 impl From<ContextualQuoteRoleResolverCoverageTestNoUnmatchedQuoteContextFault> for crate::std::u_string_exception::UStringFault {
     fn from(value: ContextualQuoteRoleResolverCoverageTestNoUnmatchedQuoteContextFault) -> Self {
@@ -951,6 +1116,15 @@ pub enum ContextualQuoteRoleResolverCoverageTestNestedPairSkipsInnerInScriptEvid
     UStringFaultFault(crate::std::u_string_exception::UStringFault),
     TextRangeErrorFault(crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
+}
+impl std::fmt::Display for ContextualQuoteRoleResolverCoverageTestNestedPairSkipsInnerInScriptEvidenceFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            ContextualQuoteRoleResolverCoverageTestNestedPairSkipsInnerInScriptEvidenceFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            ContextualQuoteRoleResolverCoverageTestNestedPairSkipsInnerInScriptEvidenceFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            ContextualQuoteRoleResolverCoverageTestNestedPairSkipsInnerInScriptEvidenceFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
 }
 
 impl From<ContextualQuoteRoleResolverCoverageTestNestedPairSkipsInnerInScriptEvidenceFault> for crate::std::u_string_exception::UStringFault {
@@ -1004,6 +1178,15 @@ pub enum ContextualQuoteRoleResolverCoverageTestNestedPairLatinInnerInheritsCjkE
     TextRangeErrorFault(crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
 }
+impl std::fmt::Display for ContextualQuoteRoleResolverCoverageTestNestedPairLatinInnerInheritsCjkEnclosingFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            ContextualQuoteRoleResolverCoverageTestNestedPairLatinInnerInheritsCjkEnclosingFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            ContextualQuoteRoleResolverCoverageTestNestedPairLatinInnerInheritsCjkEnclosingFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            ContextualQuoteRoleResolverCoverageTestNestedPairLatinInnerInheritsCjkEnclosingFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
+}
 
 impl From<ContextualQuoteRoleResolverCoverageTestNestedPairLatinInnerInheritsCjkEnclosingFault> for crate::std::u_string_exception::UStringFault {
     fn from(value: ContextualQuoteRoleResolverCoverageTestNestedPairLatinInnerInheritsCjkEnclosingFault) -> Self {
@@ -1055,6 +1238,15 @@ pub enum ContextualQuoteRoleResolverCoverageTestNestedPairInheritsEnclosingQuote
     UStringFaultFault(crate::std::u_string_exception::UStringFault),
     TextRangeErrorFault(crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
+}
+impl std::fmt::Display for ContextualQuoteRoleResolverCoverageTestNestedPairInheritsEnclosingQuoteRoleFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            ContextualQuoteRoleResolverCoverageTestNestedPairInheritsEnclosingQuoteRoleFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            ContextualQuoteRoleResolverCoverageTestNestedPairInheritsEnclosingQuoteRoleFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            ContextualQuoteRoleResolverCoverageTestNestedPairInheritsEnclosingQuoteRoleFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
 }
 
 impl From<ContextualQuoteRoleResolverCoverageTestNestedPairInheritsEnclosingQuoteRoleFault> for crate::std::u_string_exception::UStringFault {
@@ -1108,6 +1300,15 @@ pub enum ContextualQuoteRoleResolverCoverageTestNearestStrongScriptRoleForwardTh
     TextRangeErrorFault(crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
 }
+impl std::fmt::Display for ContextualQuoteRoleResolverCoverageTestNearestStrongScriptRoleForwardThroughSurrogatePairFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            ContextualQuoteRoleResolverCoverageTestNearestStrongScriptRoleForwardThroughSurrogatePairFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            ContextualQuoteRoleResolverCoverageTestNearestStrongScriptRoleForwardThroughSurrogatePairFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            ContextualQuoteRoleResolverCoverageTestNearestStrongScriptRoleForwardThroughSurrogatePairFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
+}
 
 impl From<ContextualQuoteRoleResolverCoverageTestNearestStrongScriptRoleForwardThroughSurrogatePairFault> for crate::std::u_string_exception::UStringFault {
     fn from(value: ContextualQuoteRoleResolverCoverageTestNearestStrongScriptRoleForwardThroughSurrogatePairFault) -> Self {
@@ -1159,6 +1360,15 @@ pub enum ContextualQuoteRoleResolverCoverageTestNearestStrongScriptRoleForwardSk
     UStringFaultFault(crate::std::u_string_exception::UStringFault),
     TextRangeErrorFault(crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
+}
+impl std::fmt::Display for ContextualQuoteRoleResolverCoverageTestNearestStrongScriptRoleForwardSkipsPairedOpenQuoteFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            ContextualQuoteRoleResolverCoverageTestNearestStrongScriptRoleForwardSkipsPairedOpenQuoteFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            ContextualQuoteRoleResolverCoverageTestNearestStrongScriptRoleForwardSkipsPairedOpenQuoteFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            ContextualQuoteRoleResolverCoverageTestNearestStrongScriptRoleForwardSkipsPairedOpenQuoteFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
 }
 
 impl From<ContextualQuoteRoleResolverCoverageTestNearestStrongScriptRoleForwardSkipsPairedOpenQuoteFault> for crate::std::u_string_exception::UStringFault {
@@ -1212,6 +1422,15 @@ pub enum ContextualQuoteRoleResolverCoverageTestNearestStrongScriptRoleForwardHi
     TextRangeErrorFault(crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
 }
+impl std::fmt::Display for ContextualQuoteRoleResolverCoverageTestNearestStrongScriptRoleForwardHitsSupplementaryFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            ContextualQuoteRoleResolverCoverageTestNearestStrongScriptRoleForwardHitsSupplementaryFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            ContextualQuoteRoleResolverCoverageTestNearestStrongScriptRoleForwardHitsSupplementaryFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            ContextualQuoteRoleResolverCoverageTestNearestStrongScriptRoleForwardHitsSupplementaryFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
+}
 
 impl From<ContextualQuoteRoleResolverCoverageTestNearestStrongScriptRoleForwardHitsSupplementaryFault> for crate::std::u_string_exception::UStringFault {
     fn from(value: ContextualQuoteRoleResolverCoverageTestNearestStrongScriptRoleForwardHitsSupplementaryFault) -> Self {
@@ -1263,6 +1482,15 @@ pub enum ContextualQuoteRoleResolverCoverageTestNearestStrongScriptRoleBackwardT
     UStringFaultFault(crate::std::u_string_exception::UStringFault),
     TextRangeErrorFault(crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
+}
+impl std::fmt::Display for ContextualQuoteRoleResolverCoverageTestNearestStrongScriptRoleBackwardThroughSurrogatePairFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            ContextualQuoteRoleResolverCoverageTestNearestStrongScriptRoleBackwardThroughSurrogatePairFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            ContextualQuoteRoleResolverCoverageTestNearestStrongScriptRoleBackwardThroughSurrogatePairFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            ContextualQuoteRoleResolverCoverageTestNearestStrongScriptRoleBackwardThroughSurrogatePairFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
 }
 
 impl From<ContextualQuoteRoleResolverCoverageTestNearestStrongScriptRoleBackwardThroughSurrogatePairFault> for crate::std::u_string_exception::UStringFault {
@@ -1316,6 +1544,15 @@ pub enum ContextualQuoteRoleResolverCoverageTestNearestStrongScriptRoleBackwardS
     TextRangeErrorFault(crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
 }
+impl std::fmt::Display for ContextualQuoteRoleResolverCoverageTestNearestStrongScriptRoleBackwardSkipsPairedCloseQuoteFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            ContextualQuoteRoleResolverCoverageTestNearestStrongScriptRoleBackwardSkipsPairedCloseQuoteFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            ContextualQuoteRoleResolverCoverageTestNearestStrongScriptRoleBackwardSkipsPairedCloseQuoteFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            ContextualQuoteRoleResolverCoverageTestNearestStrongScriptRoleBackwardSkipsPairedCloseQuoteFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
+}
 
 impl From<ContextualQuoteRoleResolverCoverageTestNearestStrongScriptRoleBackwardSkipsPairedCloseQuoteFault> for crate::std::u_string_exception::UStringFault {
     fn from(value: ContextualQuoteRoleResolverCoverageTestNearestStrongScriptRoleBackwardSkipsPairedCloseQuoteFault) -> Self {
@@ -1367,6 +1604,15 @@ pub enum ContextualQuoteRoleResolverCoverageTestNearestStrongScriptRoleBackwardH
     UStringFaultFault(crate::std::u_string_exception::UStringFault),
     TextRangeErrorFault(crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
+}
+impl std::fmt::Display for ContextualQuoteRoleResolverCoverageTestNearestStrongScriptRoleBackwardHitsSupplementaryFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            ContextualQuoteRoleResolverCoverageTestNearestStrongScriptRoleBackwardHitsSupplementaryFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            ContextualQuoteRoleResolverCoverageTestNearestStrongScriptRoleBackwardHitsSupplementaryFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            ContextualQuoteRoleResolverCoverageTestNearestStrongScriptRoleBackwardHitsSupplementaryFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
 }
 
 impl From<ContextualQuoteRoleResolverCoverageTestNearestStrongScriptRoleBackwardHitsSupplementaryFault> for crate::std::u_string_exception::UStringFault {
@@ -1420,6 +1666,15 @@ pub enum ContextualQuoteRoleResolverCoverageTestMixedScriptEnclosingLevelUsesPar
     TextRangeErrorFault(crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
 }
+impl std::fmt::Display for ContextualQuoteRoleResolverCoverageTestMixedScriptEnclosingLevelUsesParagraphLanguageFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            ContextualQuoteRoleResolverCoverageTestMixedScriptEnclosingLevelUsesParagraphLanguageFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            ContextualQuoteRoleResolverCoverageTestMixedScriptEnclosingLevelUsesParagraphLanguageFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            ContextualQuoteRoleResolverCoverageTestMixedScriptEnclosingLevelUsesParagraphLanguageFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
+}
 
 impl From<ContextualQuoteRoleResolverCoverageTestMixedScriptEnclosingLevelUsesParagraphLanguageFault> for crate::std::u_string_exception::UStringFault {
     fn from(value: ContextualQuoteRoleResolverCoverageTestMixedScriptEnclosingLevelUsesParagraphLanguageFault) -> Self {
@@ -1471,6 +1726,15 @@ pub enum ContextualQuoteRoleResolverCoverageTestEnclosingPairUnresolvedFallsThro
     UStringFaultFault(crate::std::u_string_exception::UStringFault),
     TextRangeErrorFault(crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
+}
+impl std::fmt::Display for ContextualQuoteRoleResolverCoverageTestEnclosingPairUnresolvedFallsThroughToContentFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            ContextualQuoteRoleResolverCoverageTestEnclosingPairUnresolvedFallsThroughToContentFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            ContextualQuoteRoleResolverCoverageTestEnclosingPairUnresolvedFallsThroughToContentFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            ContextualQuoteRoleResolverCoverageTestEnclosingPairUnresolvedFallsThroughToContentFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
 }
 
 impl From<ContextualQuoteRoleResolverCoverageTestEnclosingPairUnresolvedFallsThroughToContentFault> for crate::std::u_string_exception::UStringFault {
@@ -1524,6 +1788,15 @@ pub enum ContextualQuoteRoleResolverCoverageTestEnclosingPairResolvedBeforeInner
     TextRangeErrorFault(crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
 }
+impl std::fmt::Display for ContextualQuoteRoleResolverCoverageTestEnclosingPairResolvedBeforeInnerPairFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            ContextualQuoteRoleResolverCoverageTestEnclosingPairResolvedBeforeInnerPairFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            ContextualQuoteRoleResolverCoverageTestEnclosingPairResolvedBeforeInnerPairFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            ContextualQuoteRoleResolverCoverageTestEnclosingPairResolvedBeforeInnerPairFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
+}
 
 impl From<ContextualQuoteRoleResolverCoverageTestEnclosingPairResolvedBeforeInnerPairFault> for crate::std::u_string_exception::UStringFault {
     fn from(value: ContextualQuoteRoleResolverCoverageTestEnclosingPairResolvedBeforeInnerPairFault) -> Self {
@@ -1575,6 +1848,15 @@ pub enum ContextualQuoteRoleResolverCoverageTestEnclosingPairResolvedBeforeInner
     UStringFaultFault(crate::std::u_string_exception::UStringFault),
     TextRangeErrorFault(crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
+}
+impl std::fmt::Display for ContextualQuoteRoleResolverCoverageTestEnclosingPairResolvedBeforeInnerFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            ContextualQuoteRoleResolverCoverageTestEnclosingPairResolvedBeforeInnerFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            ContextualQuoteRoleResolverCoverageTestEnclosingPairResolvedBeforeInnerFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            ContextualQuoteRoleResolverCoverageTestEnclosingPairResolvedBeforeInnerFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
 }
 
 impl From<ContextualQuoteRoleResolverCoverageTestEnclosingPairResolvedBeforeInnerFault> for crate::std::u_string_exception::UStringFault {
@@ -1628,6 +1910,15 @@ pub enum ContextualQuoteRoleResolverCoverageTestConflictingUnmatchedQuotesUsesPa
     TextRangeErrorFault(crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
 }
+impl std::fmt::Display for ContextualQuoteRoleResolverCoverageTestConflictingUnmatchedQuotesUsesParagraphLanguageFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            ContextualQuoteRoleResolverCoverageTestConflictingUnmatchedQuotesUsesParagraphLanguageFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            ContextualQuoteRoleResolverCoverageTestConflictingUnmatchedQuotesUsesParagraphLanguageFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            ContextualQuoteRoleResolverCoverageTestConflictingUnmatchedQuotesUsesParagraphLanguageFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
+}
 
 impl From<ContextualQuoteRoleResolverCoverageTestConflictingUnmatchedQuotesUsesParagraphLanguageFault> for crate::std::u_string_exception::UStringFault {
     fn from(value: ContextualQuoteRoleResolverCoverageTestConflictingUnmatchedQuotesUsesParagraphLanguageFault) -> Self {
@@ -1679,6 +1970,15 @@ pub enum ContextualQuoteRoleResolverCoverageTestConflictingUnmatchedQuotesLeftAn
     UStringFaultFault(crate::std::u_string_exception::UStringFault),
     TextRangeErrorFault(crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
+}
+impl std::fmt::Display for ContextualQuoteRoleResolverCoverageTestConflictingUnmatchedQuotesLeftAndRightNonNullFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            ContextualQuoteRoleResolverCoverageTestConflictingUnmatchedQuotesLeftAndRightNonNullFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            ContextualQuoteRoleResolverCoverageTestConflictingUnmatchedQuotesLeftAndRightNonNullFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            ContextualQuoteRoleResolverCoverageTestConflictingUnmatchedQuotesLeftAndRightNonNullFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
 }
 
 impl From<ContextualQuoteRoleResolverCoverageTestConflictingUnmatchedQuotesLeftAndRightNonNullFault> for crate::std::u_string_exception::UStringFault {
@@ -1732,6 +2032,15 @@ pub enum ContextualQuoteRoleResolverCoverageTestConflictingUnmatchedQuotesBothNo
     TextRangeErrorFault(crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
 }
+impl std::fmt::Display for ContextualQuoteRoleResolverCoverageTestConflictingUnmatchedQuotesBothNonNullFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            ContextualQuoteRoleResolverCoverageTestConflictingUnmatchedQuotesBothNonNullFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            ContextualQuoteRoleResolverCoverageTestConflictingUnmatchedQuotesBothNonNullFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            ContextualQuoteRoleResolverCoverageTestConflictingUnmatchedQuotesBothNonNullFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
+}
 
 impl From<ContextualQuoteRoleResolverCoverageTestConflictingUnmatchedQuotesBothNonNullFault> for crate::std::u_string_exception::UStringFault {
     fn from(value: ContextualQuoteRoleResolverCoverageTestConflictingUnmatchedQuotesBothNonNullFault) -> Self {
@@ -1783,6 +2092,15 @@ pub enum ContextualQuoteRoleResolverCoverageTestCodePointLengthAtSurrogatePairIn
     UStringFaultFault(crate::std::u_string_exception::UStringFault),
     TextRangeErrorFault(crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
+}
+impl std::fmt::Display for ContextualQuoteRoleResolverCoverageTestCodePointLengthAtSurrogatePairInContentFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            ContextualQuoteRoleResolverCoverageTestCodePointLengthAtSurrogatePairInContentFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            ContextualQuoteRoleResolverCoverageTestCodePointLengthAtSurrogatePairInContentFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            ContextualQuoteRoleResolverCoverageTestCodePointLengthAtSurrogatePairInContentFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
 }
 
 impl From<ContextualQuoteRoleResolverCoverageTestCodePointLengthAtSurrogatePairInContentFault> for crate::std::u_string_exception::UStringFault {
@@ -1836,6 +2154,15 @@ pub enum ContextualQuoteRoleResolverCoverageTestCodePointLengthAtSupplementaryIn
     TextRangeErrorFault(crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
 }
+impl std::fmt::Display for ContextualQuoteRoleResolverCoverageTestCodePointLengthAtSupplementaryInContentFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            ContextualQuoteRoleResolverCoverageTestCodePointLengthAtSupplementaryInContentFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            ContextualQuoteRoleResolverCoverageTestCodePointLengthAtSupplementaryInContentFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            ContextualQuoteRoleResolverCoverageTestCodePointLengthAtSupplementaryInContentFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
+}
 
 impl From<ContextualQuoteRoleResolverCoverageTestCodePointLengthAtSupplementaryInContentFault> for crate::std::u_string_exception::UStringFault {
     fn from(value: ContextualQuoteRoleResolverCoverageTestCodePointLengthAtSupplementaryInContentFault) -> Self {
@@ -1887,6 +2214,15 @@ pub enum ContextualQuoteRoleResolverCoverageTestCodePointAtCompatWithSupplementa
     UStringFaultFault(crate::std::u_string_exception::UStringFault),
     TextRangeErrorFault(crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
+}
+impl std::fmt::Display for ContextualQuoteRoleResolverCoverageTestCodePointAtCompatWithSupplementaryCharFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            ContextualQuoteRoleResolverCoverageTestCodePointAtCompatWithSupplementaryCharFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            ContextualQuoteRoleResolverCoverageTestCodePointAtCompatWithSupplementaryCharFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            ContextualQuoteRoleResolverCoverageTestCodePointAtCompatWithSupplementaryCharFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
 }
 
 impl From<ContextualQuoteRoleResolverCoverageTestCodePointAtCompatWithSupplementaryCharFault> for crate::std::u_string_exception::UStringFault {
@@ -1940,6 +2276,15 @@ pub enum ContextualQuoteRoleResolverCoverageTestCodePointAtCompatSupplementaryIn
     TextRangeErrorFault(crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
 }
+impl std::fmt::Display for ContextualQuoteRoleResolverCoverageTestCodePointAtCompatSupplementaryInOuterEvidenceFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            ContextualQuoteRoleResolverCoverageTestCodePointAtCompatSupplementaryInOuterEvidenceFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            ContextualQuoteRoleResolverCoverageTestCodePointAtCompatSupplementaryInOuterEvidenceFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            ContextualQuoteRoleResolverCoverageTestCodePointAtCompatSupplementaryInOuterEvidenceFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
+}
 
 impl From<ContextualQuoteRoleResolverCoverageTestCodePointAtCompatSupplementaryInOuterEvidenceFault> for crate::std::u_string_exception::UStringFault {
     fn from(value: ContextualQuoteRoleResolverCoverageTestCodePointAtCompatSupplementaryInOuterEvidenceFault) -> Self {
@@ -1992,6 +2337,15 @@ pub enum ContextualQuoteRoleResolverCoverageTestAmbiguousCurlyQuoteUnmatchedInTe
     TextRangeErrorFault(crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
 }
+impl std::fmt::Display for ContextualQuoteRoleResolverCoverageTestAmbiguousCurlyQuoteUnmatchedInTextFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            ContextualQuoteRoleResolverCoverageTestAmbiguousCurlyQuoteUnmatchedInTextFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            ContextualQuoteRoleResolverCoverageTestAmbiguousCurlyQuoteUnmatchedInTextFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            ContextualQuoteRoleResolverCoverageTestAmbiguousCurlyQuoteUnmatchedInTextFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
+}
 
 impl From<ContextualQuoteRoleResolverCoverageTestAmbiguousCurlyQuoteUnmatchedInTextFault> for crate::std::u_string_exception::UStringFault {
     fn from(value: ContextualQuoteRoleResolverCoverageTestAmbiguousCurlyQuoteUnmatchedInTextFault) -> Self {
@@ -2042,17 +2396,17 @@ impl From<crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFa
 pub struct ContextualQuoteRoleResolverCoverageSupport;
 
 impl ContextualQuoteRoleResolverCoverageSupport {
-    pub fn contextual_quote_role_resolver_coverage_support_start(n: &str) {
-        TestTraceRecorder::new("ContextualQuoteRoleResolverCoverageTest").section(n);
+    pub fn contextual_quote_role_resolver_coverage_support_start(n: &UStr) {
+        TestTraceRecorder::new(&(UStr::new(&[67,111,110,116,101,120,116,117,97,108,81,117,111,116,101,82,111,108,101,82,101,115,111,108,118,101,114,67,111,118,101,114,97,103,101,84,101,115,116]))).section(n);
     }
 
-    pub fn contextual_quote_role_resolver_coverage_support_decisions(text: &str, pairs: Option<Vec<QuotePair>>) -> Result<Vec<QuoteRoleDecision>, TextRangeError> {
+    pub fn contextual_quote_role_resolver_coverage_support_decisions(text: &UStr, pairs: Option<Vec<QuotePair>>) -> Result<Vec<QuoteRoleDecision>, TextRangeError> {
         return Ok(QuotePairAnalyzer::new().classify_quote_roles(text, &match &(pairs) { None => vec![], Some(__option1) => (*__option1).clone() }, None)?);
     }
 
     pub fn contextual_quote_role_resolver_coverage_support_any_role(ds: &Vec<QuoteRoleDecision>, role: FontRole) -> bool {
         let mut i = 0u32;
-        while (i32::from_ne_bytes((i).to_ne_bytes())) < (i32::from_ne_bytes((u32::try_from((ds.len()) & 0xFFFF_FFFF).unwrap_or(0)).to_ne_bytes())) {
+        while (i32::from_ne_bytes(((i) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((ds.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
             if ds[usize::try_from(i).unwrap_or(0)].role == role {
                 return true;
             }
@@ -2061,10 +2415,10 @@ impl ContextualQuoteRoleResolverCoverageSupport {
         return false;
     }
 
-    pub fn contextual_quote_role_resolver_coverage_support_any_source(ds: &Vec<QuoteRoleDecision>, source: &str) -> bool {
+    pub fn contextual_quote_role_resolver_coverage_support_any_source(ds: &Vec<QuoteRoleDecision>, source: &UStr) -> bool {
         let mut i = 0u32;
-        while (i32::from_ne_bytes((i).to_ne_bytes())) < (i32::from_ne_bytes((u32::try_from((ds.len()) & 0xFFFF_FFFF).unwrap_or(0)).to_ne_bytes())) {
-            if ds[usize::try_from(i).unwrap_or(0)].clone().source.to_string() == source {
+        while (i32::from_ne_bytes(((i) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((ds.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
+            if ds[usize::try_from(i).unwrap_or(0)].clone().source.to_ustring() == source {
                 return true;
             }
             i = u32::wrapping_add(i, 1);
@@ -2073,31 +2427,27 @@ impl ContextualQuoteRoleResolverCoverageSupport {
     }
 
     pub fn contextual_quote_role_resolver_coverage_support_non_empty(ds: &Vec<QuoteRoleDecision>) -> bool {
-        return (i32::from_ne_bytes((u32::try_from((ds.len()) & 0xFFFF_FFFF).unwrap_or(0)).to_ne_bytes())) > (0);
+        return (i32::from_ne_bytes(((u32::try_from((ds.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) > (0);
     }
 
-    pub fn contextual_quote_role_resolver_coverage_support_execute(n: &str, text: &str, paired: bool) -> Result<Vec<QuoteRoleDecision>, TextRangeError> {
+    pub fn contextual_quote_role_resolver_coverage_support_execute(n: &UStr, text: &UStr, paired: bool) -> Result<Vec<QuoteRoleDecision>, TextRangeError> {
         ContextualQuoteRoleResolverCoverageSupport::contextual_quote_role_resolver_coverage_support_start(n);
         let a = QuotePairAnalyzer::new();
         let p = if paired { a.analyze(text)? } else { vec![] };
         return Ok(a.classify_quote_roles(text, &p, None)?);
     }
 
-    pub fn contextual_quote_role_resolver_coverage_support_surrogate_text(codes: &Vec<u32>) -> String {
-        let mut s = String::new();
+    pub fn contextual_quote_role_resolver_coverage_support_surrogate_text(codes: &Vec<u32>) -> UString {
+        let mut s = UString::new();
         let mut i = 0u32;
-        while (i32::from_ne_bytes((i).to_ne_bytes())) < (i32::from_ne_bytes((u32::try_from((codes.len()) & 0xFFFF_FFFF).unwrap_or(0)).to_ne_bytes())) {
+        while (i32::from_ne_bytes(((i) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((codes.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
             let unit = codes[usize::try_from(i).unwrap_or(0)];
-            if ({ let v: u32 = unit; i32::from_ne_bytes(v.to_ne_bytes()) }) >= 55296 && ({ let v: u32 = unit; i32::from_ne_bytes(v.to_ne_bytes()) }) <= 56319 && (i32::from_ne_bytes((u32::wrapping_add(i, 1)).to_ne_bytes())) < (i32::from_ne_bytes((u32::try_from((codes.len()) &
-0xFFFF_FFFF).unwrap_or(0)).to_ne_bytes())) && ({ let v: u32 = codes[usize::try_from(u32::wrapping_add(i, 1)).unwrap_or(0)]; i32::from_ne_bytes(v.to_ne_bytes()) }) >= 56320 && ({ let v: u32 = codes[usize::try_from(u32::wrapping_add(i, 1)).unwrap_or(0)];
-i32::from_ne_bytes(v.to_ne_bytes()) }) <= 57343 {
+            if ({ let v: u32 = unit; i32::from_ne_bytes(v.to_ne_bytes()) }) >= 55296 && ({ let v: u32 = unit; i32::from_ne_bytes(v.to_ne_bytes()) }) <= 56319 && (i32::from_ne_bytes(((u32::wrapping_add(i, 1)) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((codes.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) && ({ let v: u32 = codes[usize::try_from(u32::wrapping_add(i, 1)).unwrap_or(0)]; i32::from_ne_bytes(v.to_ne_bytes()) }) >= 56320 && ({ let v: u32 = codes[usize::try_from(u32::wrapping_add(i, 1)).unwrap_or(0)]; i32::from_ne_bytes(v.to_ne_bytes()) }) <= 57343 {
                 let low = codes[usize::try_from(u32::wrapping_add(i, 1)).unwrap_or(0)];
-                s += &(if u32::wrapping_add(u32::wrapping_add(65536, (u32::wrapping_sub(unit, 55296)) << (10)), u32::wrapping_sub(low, 56320)) > 0xFFFF { String::from_utf16(&[0xD800 + (((u32::wrapping_add(u32::wrapping_add(65536, (u32::wrapping_sub(unit, 55296)) << (10)),
-u32::wrapping_sub(low, 56320))) - 0x10000) >> 10) as u16, 0xDC00 + (((u32::wrapping_add(u32::wrapping_add(65536, (u32::wrapping_sub(unit, 55296)) << (10)), u32::wrapping_sub(low, 56320))) - 0x10000) & 0x3FF) as u16]).unwrap() } else {
-String::from_utf16_lossy(&[(u32::wrapping_add(u32::wrapping_add(65536, (u32::wrapping_sub(unit, 55296)) << (10)), u32::wrapping_sub(low, 56320))) as u16]) });
+                s += &(if u32::wrapping_add(u32::wrapping_add(65536, (u32::wrapping_sub(unit, 55296)) << (10)), u32::wrapping_sub(low, 56320)) > 0xFFFF { u_string::from_units(&[0xD800 + (((u32::wrapping_add(u32::wrapping_add(65536, (u32::wrapping_sub(unit, 55296)) << (10)), u32::wrapping_sub(low, 56320))) - 0x10000) >> 10) as u16, 0xDC00 + (((u32::wrapping_add(u32::wrapping_add(65536, (u32::wrapping_sub(unit, 55296)) << (10)), u32::wrapping_sub(low, 56320))) - 0x10000) & 0x3FF) as u16]) } else { u_string::from_units(&[(u32::wrapping_add(u32::wrapping_add(65536, (u32::wrapping_sub(unit, 55296)) << (10)), u32::wrapping_sub(low, 56320))) as u16]) });
                 i = u32::wrapping_add(i, 2);
             } else {
-                s += &(if unit > 0xFFFF { String::from_utf16(&[0xD800 + (((unit) - 0x10000) >> 10) as u16, 0xDC00 + (((unit) - 0x10000) & 0x3FF) as u16]).unwrap() } else { String::from_utf16_lossy(&[(unit) as u16]) });
+                s += &(if unit > 0xFFFF { u_string::from_units(&[0xD800 + (((unit) - 0x10000) >> 10) as u16, 0xDC00 + (((unit) - 0x10000) & 0x3FF) as u16]) } else { u_string::from_units(&[(unit) as u16]) });
                 i = u32::wrapping_add(i, 1);
             }
         }
@@ -2106,7 +2456,7 @@ String::from_utf16_lossy(&[(u32::wrapping_add(u32::wrapping_add(65536, (u32::wra
 
     pub fn contextual_quote_role_resolver_coverage_support_locate(ds: &Vec<QuoteRoleDecision>, index: u32) -> Option<QuoteRoleDecision> {
         let mut i = 0u32;
-        while (i32::from_ne_bytes((i).to_ne_bytes())) < (i32::from_ne_bytes((u32::try_from((ds.len()) & 0xFFFF_FFFF).unwrap_or(0)).to_ne_bytes())) {
+        while (i32::from_ne_bytes(((i) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((ds.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
             if ds[usize::try_from(i).unwrap_or(0)].index == index {
                 return Some((ds[usize::try_from(i).unwrap_or(0)]).clone());
             }
@@ -2119,7 +2469,7 @@ String::from_utf16_lossy(&[(u32::wrapping_add(u32::wrapping_add(65536, (u32::wra
 #[test]
 fn nested_pair_inherits_enclosing_quote_role() {
     testlib::run("org.tiqian.layout.ContextualQuoteRoleResolverCoverageTest.nestedPairInheritsEnclosingQuoteRole", "org.tiqian.layout.ContextualQuoteRoleResolverCoverageTest.nestedPairInheritsEnclosingQuoteRole", || {
-        let d = ContextualQuoteRoleResolverCoverageSupport::contextual_quote_role_resolver_coverage_support_execute(&"nestedPairInheritsEnclosingQuoteRole", &"他说：“她说‘你好’。”", true).unwrap();
+        let d = ContextualQuoteRoleResolverCoverageSupport::contextual_quote_role_resolver_coverage_support_execute(UStr::new(&[110,101,115,116,101,100,80,97,105,114,73,110,104,101,114,105,116,115,69,110,99,108,111,115,105,110,103,81,117,111,116,101,82,111,108,101]), UStr::new(&[20182,35828,65306,8220,22905,35828,8216,20320,22909,8217,12290,8221]), true).unwrap();
         let a = ContextualQuoteRoleResolverCoverageSupport::contextual_quote_role_resolver_coverage_support_locate(&d, 6);
         match &(a) {
             Some(__option2) => {
@@ -2142,7 +2492,7 @@ fn nested_pair_inherits_enclosing_quote_role() {
 #[test]
 fn nested_pair_latin_inner_inherits_cjk_enclosing() {
     testlib::run("org.tiqian.layout.ContextualQuoteRoleResolverCoverageTest.nestedPairLatinInnerInheritsCjkEnclosing", "org.tiqian.layout.ContextualQuoteRoleResolverCoverageTest.nestedPairLatinInnerInheritsCjkEnclosing", || {
-        let d = ContextualQuoteRoleResolverCoverageSupport::contextual_quote_role_resolver_coverage_support_execute(&"nestedPairLatinInnerInheritsCjkEnclosing", &"他说：“hello”", true).unwrap();
+        let d = ContextualQuoteRoleResolverCoverageSupport::contextual_quote_role_resolver_coverage_support_execute(UStr::new(&[110,101,115,116,101,100,80,97,105,114,76,97,116,105,110,73,110,110,101,114,73,110,104,101,114,105,116,115,67,106,107,69,110,99,108,111,115,105,110,103]), UStr::new(&[20182,35828,65306,8220,104,101,108,108,111,8221]), true).unwrap();
         let a = ContextualQuoteRoleResolverCoverageSupport::contextual_quote_role_resolver_coverage_support_locate(&d, 3);
         match &(a) {
             Some(__option4) => {
@@ -2157,7 +2507,7 @@ fn nested_pair_latin_inner_inherits_cjk_enclosing() {
 #[test]
 fn unmatched_right_single_quote_uses_surrounding_script() {
     testlib::run("org.tiqian.layout.ContextualQuoteRoleResolverCoverageTest.unmatchedRightSingleQuoteUsesSurroundingScript", "org.tiqian.layout.ContextualQuoteRoleResolverCoverageTest.unmatchedRightSingleQuoteUsesSurroundingScript", || {
-        let d = ContextualQuoteRoleResolverCoverageSupport::contextual_quote_role_resolver_coverage_support_execute(&"unmatchedRightSingleQuoteUsesSurroundingScript", &"abc’def", false).unwrap();
+        let d = ContextualQuoteRoleResolverCoverageSupport::contextual_quote_role_resolver_coverage_support_execute(UStr::new(&[117,110,109,97,116,99,104,101,100,82,105,103,104,116,83,105,110,103,108,101,81,117,111,116,101,85,115,101,115,83,117,114,114,111,117,110,100,105,110,103,83,99,114,105,112,116]), UStr::new(&[97,98,99,8217,100,101,102]), false).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_true(ContextualQuoteRoleResolverCoverageSupport::contextual_quote_role_resolver_coverage_support_any_role(&d, FontRole::LatinText), None).unwrap();
     });
 }
@@ -2165,7 +2515,7 @@ fn unmatched_right_single_quote_uses_surrounding_script() {
 #[test]
 fn unmatched_right_double_quote() {
     testlib::run("org.tiqian.layout.ContextualQuoteRoleResolverCoverageTest.unmatchedRightDoubleQuote", "org.tiqian.layout.ContextualQuoteRoleResolverCoverageTest.unmatchedRightDoubleQuote", || {
-        let d = ContextualQuoteRoleResolverCoverageSupport::contextual_quote_role_resolver_coverage_support_execute(&"unmatchedRightDoubleQuote", &"abc”", false).unwrap();
+        let d = ContextualQuoteRoleResolverCoverageSupport::contextual_quote_role_resolver_coverage_support_execute(UStr::new(&[117,110,109,97,116,99,104,101,100,82,105,103,104,116,68,111,117,98,108,101,81,117,111,116,101]), UStr::new(&[97,98,99,8221]), false).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_true(ContextualQuoteRoleResolverCoverageSupport::contextual_quote_role_resolver_coverage_support_non_empty(&d), None).unwrap();
     });
 }
@@ -2173,7 +2523,7 @@ fn unmatched_right_double_quote() {
 #[test]
 fn unmatched_left_double_quote() {
     testlib::run("org.tiqian.layout.ContextualQuoteRoleResolverCoverageTest.unmatchedLeftDoubleQuote", "org.tiqian.layout.ContextualQuoteRoleResolverCoverageTest.unmatchedLeftDoubleQuote", || {
-        let d = ContextualQuoteRoleResolverCoverageSupport::contextual_quote_role_resolver_coverage_support_execute(&"unmatchedLeftDoubleQuote", &"“abc", false).unwrap();
+        let d = ContextualQuoteRoleResolverCoverageSupport::contextual_quote_role_resolver_coverage_support_execute(UStr::new(&[117,110,109,97,116,99,104,101,100,76,101,102,116,68,111,117,98,108,101,81,117,111,116,101]), UStr::new(&[8220,97,98,99]), false).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_true(ContextualQuoteRoleResolverCoverageSupport::contextual_quote_role_resolver_coverage_support_non_empty(&d), None).unwrap();
     });
 }
@@ -2181,7 +2531,7 @@ fn unmatched_left_double_quote() {
 #[test]
 fn unmatched_left_single_quote() {
     testlib::run("org.tiqian.layout.ContextualQuoteRoleResolverCoverageTest.unmatchedLeftSingleQuote", "org.tiqian.layout.ContextualQuoteRoleResolverCoverageTest.unmatchedLeftSingleQuote", || {
-        let d = ContextualQuoteRoleResolverCoverageSupport::contextual_quote_role_resolver_coverage_support_execute(&"unmatchedLeftSingleQuote", &"‘abc", false).unwrap();
+        let d = ContextualQuoteRoleResolverCoverageSupport::contextual_quote_role_resolver_coverage_support_execute(UStr::new(&[117,110,109,97,116,99,104,101,100,76,101,102,116,83,105,110,103,108,101,81,117,111,116,101]), UStr::new(&[8216,97,98,99]), false).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_true(ContextualQuoteRoleResolverCoverageSupport::contextual_quote_role_resolver_coverage_support_non_empty(&d), None).unwrap();
     });
 }
@@ -2189,7 +2539,7 @@ fn unmatched_left_single_quote() {
 #[test]
 fn conflicting_unmatched_quotes_uses_paragraph_language() {
     testlib::run("org.tiqian.layout.ContextualQuoteRoleResolverCoverageTest.conflictingUnmatchedQuotesUsesParagraphLanguage", "org.tiqian.layout.ContextualQuoteRoleResolverCoverageTest.conflictingUnmatchedQuotesUsesParagraphLanguage", || {
-        let d = ContextualQuoteRoleResolverCoverageSupport::contextual_quote_role_resolver_coverage_support_execute(&"conflictingUnmatchedQuotesUsesParagraphLanguage", &"α’中", false).unwrap();
+        let d = ContextualQuoteRoleResolverCoverageSupport::contextual_quote_role_resolver_coverage_support_execute(UStr::new(&[99,111,110,102,108,105,99,116,105,110,103,85,110,109,97,116,99,104,101,100,81,117,111,116,101,115,85,115,101,115,80,97,114,97,103,114,97,112,104,76,97,110,103,117,97,103,101]), UStr::new(&[945,8217,20013]), false).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_true(ContextualQuoteRoleResolverCoverageSupport::contextual_quote_role_resolver_coverage_support_non_empty(&d), None).unwrap();
     });
 }
@@ -2197,8 +2547,7 @@ fn conflicting_unmatched_quotes_uses_paragraph_language() {
 #[test]
 fn unmatched_quote_with_surrogate_pair_content() {
     testlib::run("org.tiqian.layout.ContextualQuoteRoleResolverCoverageTest.unmatchedQuoteWithSurrogatePairContent", "org.tiqian.layout.ContextualQuoteRoleResolverCoverageTest.unmatchedQuoteWithSurrogatePairContent", || {
-        let d = ContextualQuoteRoleResolverCoverageSupport::contextual_quote_role_resolver_coverage_support_execute(&"unmatchedQuoteWithSurrogatePairContent", ContextualQuoteRoleResolverCoverageSupport::contextual_quote_role_resolver_coverage_support_surrogate_text(&vec![55357,
-56832, 8217, 20013]).as_str(), false).unwrap();
+        let d = ContextualQuoteRoleResolverCoverageSupport::contextual_quote_role_resolver_coverage_support_execute(UStr::new(&[117,110,109,97,116,99,104,101,100,81,117,111,116,101,87,105,116,104,83,117,114,114,111,103,97,116,101,80,97,105,114,67,111,110,116,101,110,116]), ContextualQuoteRoleResolverCoverageSupport::contextual_quote_role_resolver_coverage_support_surrogate_text(&vec![55357, 56832, 8217, 20013]).as_ustr(), false).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_true(ContextualQuoteRoleResolverCoverageSupport::contextual_quote_role_resolver_coverage_support_non_empty(&d), None).unwrap();
     });
 }
@@ -2206,8 +2555,7 @@ fn unmatched_quote_with_surrogate_pair_content() {
 #[test]
 fn code_point_at_compat_with_supplementary_char() {
     testlib::run("org.tiqian.layout.ContextualQuoteRoleResolverCoverageTest.codePointAtCompatWithSupplementaryChar", "org.tiqian.layout.ContextualQuoteRoleResolverCoverageTest.codePointAtCompatWithSupplementaryChar", || {
-        let d = ContextualQuoteRoleResolverCoverageSupport::contextual_quote_role_resolver_coverage_support_execute(&"codePointAtCompatWithSupplementaryChar", ContextualQuoteRoleResolverCoverageSupport::contextual_quote_role_resolver_coverage_support_surrogate_text(&vec![55357,
-56832, 8220, 55357, 56832, 8221]).as_str(), true).unwrap();
+        let d = ContextualQuoteRoleResolverCoverageSupport::contextual_quote_role_resolver_coverage_support_execute(UStr::new(&[99,111,100,101,80,111,105,110,116,65,116,67,111,109,112,97,116,87,105,116,104,83,117,112,112,108,101,109,101,110,116,97,114,121,67,104,97,114]), ContextualQuoteRoleResolverCoverageSupport::contextual_quote_role_resolver_coverage_support_surrogate_text(&vec![55357, 56832, 8220, 55357, 56832, 8221]).as_ustr(), true).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_true(ContextualQuoteRoleResolverCoverageSupport::contextual_quote_role_resolver_coverage_support_non_empty(&d), None).unwrap();
     });
 }
@@ -2215,8 +2563,7 @@ fn code_point_at_compat_with_supplementary_char() {
 #[test]
 fn code_point_length_at_supplementary_in_content() {
     testlib::run("org.tiqian.layout.ContextualQuoteRoleResolverCoverageTest.codePointLengthAtSupplementaryInContent", "org.tiqian.layout.ContextualQuoteRoleResolverCoverageTest.codePointLengthAtSupplementaryInContent", || {
-        let d = ContextualQuoteRoleResolverCoverageSupport::contextual_quote_role_resolver_coverage_support_execute(&"codePointLengthAtSupplementaryInContent", ContextualQuoteRoleResolverCoverageSupport::contextual_quote_role_resolver_coverage_support_surrogate_text(&vec![8220,
-55357, 56832, 8221]).as_str(), true).unwrap();
+        let d = ContextualQuoteRoleResolverCoverageSupport::contextual_quote_role_resolver_coverage_support_execute(UStr::new(&[99,111,100,101,80,111,105,110,116,76,101,110,103,116,104,65,116,83,117,112,112,108,101,109,101,110,116,97,114,121,73,110,67,111,110,116,101,110,116]), ContextualQuoteRoleResolverCoverageSupport::contextual_quote_role_resolver_coverage_support_surrogate_text(&vec![8220, 55357, 56832, 8221]).as_ustr(), true).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_true(ContextualQuoteRoleResolverCoverageSupport::contextual_quote_role_resolver_coverage_support_non_empty(&d), None).unwrap();
     });
 }
@@ -2224,8 +2571,7 @@ fn code_point_length_at_supplementary_in_content() {
 #[test]
 fn non_cjk_in_word_apostrophe_with_surrogate_before() {
     testlib::run("org.tiqian.layout.ContextualQuoteRoleResolverCoverageTest.nonCjkInWordApostropheWithSurrogateBefore", "org.tiqian.layout.ContextualQuoteRoleResolverCoverageTest.nonCjkInWordApostropheWithSurrogateBefore", || {
-        let d = ContextualQuoteRoleResolverCoverageSupport::contextual_quote_role_resolver_coverage_support_execute(&"nonCjkInWordApostropheWithSurrogateBefore", ContextualQuoteRoleResolverCoverageSupport::contextual_quote_role_resolver_coverage_support_surrogate_text(&vec![55357,
-56832, 8217, 120]).as_str(), false).unwrap();
+        let d = ContextualQuoteRoleResolverCoverageSupport::contextual_quote_role_resolver_coverage_support_execute(UStr::new(&[110,111,110,67,106,107,73,110,87,111,114,100,65,112,111,115,116,114,111,112,104,101,87,105,116,104,83,117,114,114,111,103,97,116,101,66,101,102,111,114,101]), ContextualQuoteRoleResolverCoverageSupport::contextual_quote_role_resolver_coverage_support_surrogate_text(&vec![55357, 56832, 8217, 120]).as_ustr(), false).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_true(ContextualQuoteRoleResolverCoverageSupport::contextual_quote_role_resolver_coverage_support_non_empty(&d), None).unwrap();
     });
 }
@@ -2233,15 +2579,15 @@ fn non_cjk_in_word_apostrophe_with_surrogate_before() {
 #[test]
 fn whitespace_delimited_western_quote_unmatched() {
     testlib::run("org.tiqian.layout.ContextualQuoteRoleResolverCoverageTest.whitespaceDelimitedWesternQuoteUnmatched", "org.tiqian.layout.ContextualQuoteRoleResolverCoverageTest.whitespaceDelimitedWesternQuoteUnmatched", || {
-        let d = ContextualQuoteRoleResolverCoverageSupport::contextual_quote_role_resolver_coverage_support_execute(&"whitespaceDelimitedWesternQuoteUnmatched", &"中文 ’90s", false).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_true(ContextualQuoteRoleResolverCoverageSupport::contextual_quote_role_resolver_coverage_support_any_source(&d, &"DelimitedUnmatchedWesternQuote"), None).unwrap();
+        let d = ContextualQuoteRoleResolverCoverageSupport::contextual_quote_role_resolver_coverage_support_execute(UStr::new(&[119,104,105,116,101,115,112,97,99,101,68,101,108,105,109,105,116,101,100,87,101,115,116,101,114,110,81,117,111,116,101,85,110,109,97,116,99,104,101,100]), UStr::new(&[20013,25991,32,8217,57,48,115]), false).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_true(ContextualQuoteRoleResolverCoverageSupport::contextual_quote_role_resolver_coverage_support_any_source(&d, UStr::new(&[68,101,108,105,109,105,116,101,100,85,110,109,97,116,99,104,101,100,87,101,115,116,101,114,110,81,117,111,116,101])), None).unwrap();
     });
 }
 
 #[test]
 fn enclosing_pair_resolved_before_inner() {
     testlib::run("org.tiqian.layout.ContextualQuoteRoleResolverCoverageTest.enclosingPairResolvedBeforeInner", "org.tiqian.layout.ContextualQuoteRoleResolverCoverageTest.enclosingPairResolvedBeforeInner", || {
-        let d = ContextualQuoteRoleResolverCoverageSupport::contextual_quote_role_resolver_coverage_support_execute(&"enclosingPairResolvedBeforeInner", &"“‘中’”", true).unwrap();
+        let d = ContextualQuoteRoleResolverCoverageSupport::contextual_quote_role_resolver_coverage_support_execute(UStr::new(&[101,110,99,108,111,115,105,110,103,80,97,105,114,82,101,115,111,108,118,101,100,66,101,102,111,114,101,73,110,110,101,114]), UStr::new(&[8220,8216,20013,8217,8221]), true).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_true(ContextualQuoteRoleResolverCoverageSupport::contextual_quote_role_resolver_coverage_support_non_empty(&d), None).unwrap();
     });
 }
@@ -2249,7 +2595,7 @@ fn enclosing_pair_resolved_before_inner() {
 #[test]
 fn pair_by_close_skip_in_nearest_strong_script() {
     testlib::run("org.tiqian.layout.ContextualQuoteRoleResolverCoverageTest.pairByCloseSkipInNearestStrongScript", "org.tiqian.layout.ContextualQuoteRoleResolverCoverageTest.pairByCloseSkipInNearestStrongScript", || {
-        let d = ContextualQuoteRoleResolverCoverageSupport::contextual_quote_role_resolver_coverage_support_execute(&"pairByCloseSkipInNearestStrongScript", &"“‘abc’”", false).unwrap();
+        let d = ContextualQuoteRoleResolverCoverageSupport::contextual_quote_role_resolver_coverage_support_execute(UStr::new(&[112,97,105,114,66,121,67,108,111,115,101,83,107,105,112,73,110,78,101,97,114,101,115,116,83,116,114,111,110,103,83,99,114,105,112,116]), UStr::new(&[8220,8216,97,98,99,8217,8221]), false).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_true(ContextualQuoteRoleResolverCoverageSupport::contextual_quote_role_resolver_coverage_support_non_empty(&d), None).unwrap();
     });
 }
@@ -2257,7 +2603,7 @@ fn pair_by_close_skip_in_nearest_strong_script() {
 #[test]
 fn pair_by_open_skip_in_nearest_strong_script() {
     testlib::run("org.tiqian.layout.ContextualQuoteRoleResolverCoverageTest.pairByOpenSkipInNearestStrongScript", "org.tiqian.layout.ContextualQuoteRoleResolverCoverageTest.pairByOpenSkipInNearestStrongScript", || {
-        let d = ContextualQuoteRoleResolverCoverageSupport::contextual_quote_role_resolver_coverage_support_execute(&"pairByOpenSkipInNearestStrongScript", &"“‘abc’”", false).unwrap();
+        let d = ContextualQuoteRoleResolverCoverageSupport::contextual_quote_role_resolver_coverage_support_execute(UStr::new(&[112,97,105,114,66,121,79,112,101,110,83,107,105,112,73,110,78,101,97,114,101,115,116,83,116,114,111,110,103,83,99,114,105,112,116]), UStr::new(&[8220,8216,97,98,99,8217,8221]), false).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_true(ContextualQuoteRoleResolverCoverageSupport::contextual_quote_role_resolver_coverage_support_non_empty(&d), None).unwrap();
     });
 }
@@ -2265,7 +2611,7 @@ fn pair_by_open_skip_in_nearest_strong_script() {
 #[test]
 fn ambiguous_curly_quote_unmatched_in_text() {
     testlib::run("org.tiqian.layout.ContextualQuoteRoleResolverCoverageTest.ambiguousCurlyQuoteUnmatchedInText", "org.tiqian.layout.ContextualQuoteRoleResolverCoverageTest.ambiguousCurlyQuoteUnmatchedInText", || {
-        let d = ContextualQuoteRoleResolverCoverageSupport::contextual_quote_role_resolver_coverage_support_execute(&"ambiguousCurlyQuoteUnmatchedInText", &"abc’", false).unwrap();
+        let d = ContextualQuoteRoleResolverCoverageSupport::contextual_quote_role_resolver_coverage_support_execute(UStr::new(&[97,109,98,105,103,117,111,117,115,67,117,114,108,121,81,117,111,116,101,85,110,109,97,116,99,104,101,100,73,110,84,101,120,116]), UStr::new(&[97,98,99,8217]), false).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_true(ContextualQuoteRoleResolverCoverageSupport::contextual_quote_role_resolver_coverage_support_non_empty(&d), None).unwrap();
     });
 }
@@ -2273,7 +2619,7 @@ fn ambiguous_curly_quote_unmatched_in_text() {
 #[test]
 fn resolve_unmatched_with_both_surrounding_roles_null() {
     testlib::run("org.tiqian.layout.ContextualQuoteRoleResolverCoverageTest.resolveUnmatchedWithBothSurroundingRolesNull", "org.tiqian.layout.ContextualQuoteRoleResolverCoverageTest.resolveUnmatchedWithBothSurroundingRolesNull", || {
-        let d = ContextualQuoteRoleResolverCoverageSupport::contextual_quote_role_resolver_coverage_support_execute(&"resolveUnmatchedWithBothSurroundingRolesNull", &"’", false).unwrap();
+        let d = ContextualQuoteRoleResolverCoverageSupport::contextual_quote_role_resolver_coverage_support_execute(UStr::new(&[114,101,115,111,108,118,101,85,110,109,97,116,99,104,101,100,87,105,116,104,66,111,116,104,83,117,114,114,111,117,110,100,105,110,103,82,111,108,101,115,78,117,108,108]), UStr::new(&[8217]), false).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_true(ContextualQuoteRoleResolverCoverageSupport::contextual_quote_role_resolver_coverage_support_non_empty(&d), None).unwrap();
     });
 }
@@ -2281,7 +2627,7 @@ fn resolve_unmatched_with_both_surrounding_roles_null() {
 #[test]
 fn nearest_strong_script_role_backward_skips_paired_close_quote() {
     testlib::run("org.tiqian.layout.ContextualQuoteRoleResolverCoverageTest.nearestStrongScriptRoleBackwardSkipsPairedCloseQuote", "org.tiqian.layout.ContextualQuoteRoleResolverCoverageTest.nearestStrongScriptRoleBackwardSkipsPairedCloseQuote", || {
-        let d = ContextualQuoteRoleResolverCoverageSupport::contextual_quote_role_resolver_coverage_support_execute(&"nearestStrongScriptRoleBackwardSkipsPairedCloseQuote", &"“‘a’”’", true).unwrap();
+        let d = ContextualQuoteRoleResolverCoverageSupport::contextual_quote_role_resolver_coverage_support_execute(UStr::new(&[110,101,97,114,101,115,116,83,116,114,111,110,103,83,99,114,105,112,116,82,111,108,101,66,97,99,107,119,97,114,100,83,107,105,112,115,80,97,105,114,101,100,67,108,111,115,101,81,117,111,116,101]), UStr::new(&[8220,8216,97,8217,8221,8217]), true).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_true(ContextualQuoteRoleResolverCoverageSupport::contextual_quote_role_resolver_coverage_support_non_empty(&d), None).unwrap();
     });
 }
@@ -2289,7 +2635,7 @@ fn nearest_strong_script_role_backward_skips_paired_close_quote() {
 #[test]
 fn nearest_strong_script_role_forward_skips_paired_open_quote() {
     testlib::run("org.tiqian.layout.ContextualQuoteRoleResolverCoverageTest.nearestStrongScriptRoleForwardSkipsPairedOpenQuote", "org.tiqian.layout.ContextualQuoteRoleResolverCoverageTest.nearestStrongScriptRoleForwardSkipsPairedOpenQuote", || {
-        let d = ContextualQuoteRoleResolverCoverageSupport::contextual_quote_role_resolver_coverage_support_execute(&"nearestStrongScriptRoleForwardSkipsPairedOpenQuote", &"’“abc”", true).unwrap();
+        let d = ContextualQuoteRoleResolverCoverageSupport::contextual_quote_role_resolver_coverage_support_execute(UStr::new(&[110,101,97,114,101,115,116,83,116,114,111,110,103,83,99,114,105,112,116,82,111,108,101,70,111,114,119,97,114,100,83,107,105,112,115,80,97,105,114,101,100,79,112,101,110,81,117,111,116,101]), UStr::new(&[8217,8220,97,98,99,8221]), true).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_true(ContextualQuoteRoleResolverCoverageSupport::contextual_quote_role_resolver_coverage_support_non_empty(&d), None).unwrap();
     });
 }
@@ -2297,13 +2643,13 @@ fn nearest_strong_script_role_forward_skips_paired_open_quote() {
 #[test]
 fn enclosing_pair_resolved_before_inner_pair() {
     testlib::run("org.tiqian.layout.ContextualQuoteRoleResolverCoverageTest.enclosingPairResolvedBeforeInnerPair", "org.tiqian.layout.ContextualQuoteRoleResolverCoverageTest.enclosingPairResolvedBeforeInnerPair", || {
-        let d = ContextualQuoteRoleResolverCoverageSupport::contextual_quote_role_resolver_coverage_support_execute(&"enclosingPairResolvedBeforeInnerPair", &"“‘abc’”", true).unwrap();
+        let d = ContextualQuoteRoleResolverCoverageSupport::contextual_quote_role_resolver_coverage_support_execute(UStr::new(&[101,110,99,108,111,115,105,110,103,80,97,105,114,82,101,115,111,108,118,101,100,66,101,102,111,114,101,73,110,110,101,114,80,97,105,114]), UStr::new(&[8220,8216,97,98,99,8217,8221]), true).unwrap();
         let a = ContextualQuoteRoleResolverCoverageSupport::contextual_quote_role_resolver_coverage_support_locate(&d, 1);
-        let _ = TracedAssertions::traced_assertions_assert_not_null_rendered(a.is_some(), match &(a) { None => "null".to_string(), Some(__option7) => __option7.to_string() }.as_str(), None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_not_null_rendered(a.is_some(), match &(a) { None => UString::from("null"), Some(__option7) => UString::from(format!("{}", __option7.to_string()).as_str()) }.as_ustr(), None).unwrap();
         match &(a) {
             Some(__option8) => {
                 let _ = TracedAssertions::traced_assertions_assert_equals_font_role(FontRole::CjkPunctuation, Some(__option8.role.clone()), None).unwrap();
-                let _ = TracedAssertions::traced_assertions_assert_equals_string(&"PairedPunctuationEnclosingQuoteContext", (__option8.source).to_string().as_str(), None).unwrap();
+                let _ = TracedAssertions::traced_assertions_assert_equals_string(UStr::new(&[80,97,105,114,101,100,80,117,110,99,116,117,97,116,105,111,110,69,110,99,108,111,115,105,110,103,81,117,111,116,101,67,111,110,116,101,120,116]), (__option8.source).to_ustring().as_ustr(), None).unwrap();
             }
             None => {
             }
@@ -2314,7 +2660,7 @@ fn enclosing_pair_resolved_before_inner_pair() {
 #[test]
 fn whitespace_delimited_western_quote_paired() {
     testlib::run("org.tiqian.layout.ContextualQuoteRoleResolverCoverageTest.whitespaceDelimitedWesternQuotePaired", "org.tiqian.layout.ContextualQuoteRoleResolverCoverageTest.whitespaceDelimitedWesternQuotePaired", || {
-        let d = ContextualQuoteRoleResolverCoverageSupport::contextual_quote_role_resolver_coverage_support_execute(&"whitespaceDelimitedWesternQuotePaired", &"“ ‘hello’ ”", true).unwrap();
+        let d = ContextualQuoteRoleResolverCoverageSupport::contextual_quote_role_resolver_coverage_support_execute(UStr::new(&[119,104,105,116,101,115,112,97,99,101,68,101,108,105,109,105,116,101,100,87,101,115,116,101,114,110,81,117,111,116,101,80,97,105,114,101,100]), UStr::new(&[8220,32,8216,104,101,108,108,111,8217,32,8221]), true).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_true(ContextualQuoteRoleResolverCoverageSupport::contextual_quote_role_resolver_coverage_support_non_empty(&d), None).unwrap();
     });
 }
@@ -2322,7 +2668,7 @@ fn whitespace_delimited_western_quote_paired() {
 #[test]
 fn conflicting_unmatched_quotes_both_non_null() {
     testlib::run("org.tiqian.layout.ContextualQuoteRoleResolverCoverageTest.conflictingUnmatchedQuotesBothNonNull", "org.tiqian.layout.ContextualQuoteRoleResolverCoverageTest.conflictingUnmatchedQuotesBothNonNull", || {
-        let d = ContextualQuoteRoleResolverCoverageSupport::contextual_quote_role_resolver_coverage_support_execute(&"conflictingUnmatchedQuotesBothNonNull", &"α’中", false).unwrap();
+        let d = ContextualQuoteRoleResolverCoverageSupport::contextual_quote_role_resolver_coverage_support_execute(UStr::new(&[99,111,110,102,108,105,99,116,105,110,103,85,110,109,97,116,99,104,101,100,81,117,111,116,101,115,66,111,116,104,78,111,110,78,117,108,108]), UStr::new(&[945,8217,20013]), false).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_true(ContextualQuoteRoleResolverCoverageSupport::contextual_quote_role_resolver_coverage_support_non_empty(&d), None).unwrap();
     });
 }
@@ -2330,7 +2676,7 @@ fn conflicting_unmatched_quotes_both_non_null() {
 #[test]
 fn no_unmatched_quote_context() {
     testlib::run("org.tiqian.layout.ContextualQuoteRoleResolverCoverageTest.noUnmatchedQuoteContext", "org.tiqian.layout.ContextualQuoteRoleResolverCoverageTest.noUnmatchedQuoteContext", || {
-        let d = ContextualQuoteRoleResolverCoverageSupport::contextual_quote_role_resolver_coverage_support_execute(&"noUnmatchedQuoteContext", &"’", false).unwrap();
+        let d = ContextualQuoteRoleResolverCoverageSupport::contextual_quote_role_resolver_coverage_support_execute(UStr::new(&[110,111,85,110,109,97,116,99,104,101,100,81,117,111,116,101,67,111,110,116,101,120,116]), UStr::new(&[8217]), false).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_true(ContextualQuoteRoleResolverCoverageSupport::contextual_quote_role_resolver_coverage_support_non_empty(&d), None).unwrap();
     });
 }
@@ -2338,8 +2684,7 @@ fn no_unmatched_quote_context() {
 #[test]
 fn nearest_strong_script_role_backward_through_surrogate_pair() {
     testlib::run("org.tiqian.layout.ContextualQuoteRoleResolverCoverageTest.nearestStrongScriptRoleBackwardThroughSurrogatePair", "org.tiqian.layout.ContextualQuoteRoleResolverCoverageTest.nearestStrongScriptRoleBackwardThroughSurrogatePair", || {
-        let d = ContextualQuoteRoleResolverCoverageSupport::contextual_quote_role_resolver_coverage_support_execute(&"nearestStrongScriptRoleBackwardThroughSurrogatePair",
-ContextualQuoteRoleResolverCoverageSupport::contextual_quote_role_resolver_coverage_support_surrogate_text(&vec![55357, 56832, 8220, 97, 98, 99, 8221]).as_str(), true).unwrap();
+        let d = ContextualQuoteRoleResolverCoverageSupport::contextual_quote_role_resolver_coverage_support_execute(UStr::new(&[110,101,97,114,101,115,116,83,116,114,111,110,103,83,99,114,105,112,116,82,111,108,101,66,97,99,107,119,97,114,100,84,104,114,111,117,103,104,83,117,114,114,111,103,97,116,101,80,97,105,114]), ContextualQuoteRoleResolverCoverageSupport::contextual_quote_role_resolver_coverage_support_surrogate_text(&vec![55357, 56832, 8220, 97, 98, 99, 8221]).as_ustr(), true).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_true(ContextualQuoteRoleResolverCoverageSupport::contextual_quote_role_resolver_coverage_support_non_empty(&d), None).unwrap();
     });
 }
@@ -2347,8 +2692,7 @@ ContextualQuoteRoleResolverCoverageSupport::contextual_quote_role_resolver_cover
 #[test]
 fn nearest_strong_script_role_forward_through_surrogate_pair() {
     testlib::run("org.tiqian.layout.ContextualQuoteRoleResolverCoverageTest.nearestStrongScriptRoleForwardThroughSurrogatePair", "org.tiqian.layout.ContextualQuoteRoleResolverCoverageTest.nearestStrongScriptRoleForwardThroughSurrogatePair", || {
-        let d = ContextualQuoteRoleResolverCoverageSupport::contextual_quote_role_resolver_coverage_support_execute(&"nearestStrongScriptRoleForwardThroughSurrogatePair",
-ContextualQuoteRoleResolverCoverageSupport::contextual_quote_role_resolver_coverage_support_surrogate_text(&vec![8220, 97, 98, 99, 55357, 56832, 8221]).as_str(), true).unwrap();
+        let d = ContextualQuoteRoleResolverCoverageSupport::contextual_quote_role_resolver_coverage_support_execute(UStr::new(&[110,101,97,114,101,115,116,83,116,114,111,110,103,83,99,114,105,112,116,82,111,108,101,70,111,114,119,97,114,100,84,104,114,111,117,103,104,83,117,114,114,111,103,97,116,101,80,97,105,114]), ContextualQuoteRoleResolverCoverageSupport::contextual_quote_role_resolver_coverage_support_surrogate_text(&vec![8220, 97, 98, 99, 55357, 56832, 8221]).as_ustr(), true).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_true(ContextualQuoteRoleResolverCoverageSupport::contextual_quote_role_resolver_coverage_support_non_empty(&d), None).unwrap();
     });
 }
@@ -2356,7 +2700,7 @@ ContextualQuoteRoleResolverCoverageSupport::contextual_quote_role_resolver_cover
 #[test]
 fn nested_pair_skips_inner_in_script_evidence() {
     testlib::run("org.tiqian.layout.ContextualQuoteRoleResolverCoverageTest.nestedPairSkipsInnerInScriptEvidence", "org.tiqian.layout.ContextualQuoteRoleResolverCoverageTest.nestedPairSkipsInnerInScriptEvidence", || {
-        let d = ContextualQuoteRoleResolverCoverageSupport::contextual_quote_role_resolver_coverage_support_execute(&"nestedPairSkipsInnerInScriptEvidence", &"“‘中’”", true).unwrap();
+        let d = ContextualQuoteRoleResolverCoverageSupport::contextual_quote_role_resolver_coverage_support_execute(UStr::new(&[110,101,115,116,101,100,80,97,105,114,83,107,105,112,115,73,110,110,101,114,73,110,83,99,114,105,112,116,69,118,105,100,101,110,99,101]), UStr::new(&[8220,8216,20013,8217,8221]), true).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_true(ContextualQuoteRoleResolverCoverageSupport::contextual_quote_role_resolver_coverage_support_non_empty(&d), None).unwrap();
     });
 }
@@ -2364,7 +2708,7 @@ fn nested_pair_skips_inner_in_script_evidence() {
 #[test]
 fn mixed_script_enclosing_level_uses_paragraph_language() {
     testlib::run("org.tiqian.layout.ContextualQuoteRoleResolverCoverageTest.mixedScriptEnclosingLevelUsesParagraphLanguage", "org.tiqian.layout.ContextualQuoteRoleResolverCoverageTest.mixedScriptEnclosingLevelUsesParagraphLanguage", || {
-        let d = ContextualQuoteRoleResolverCoverageSupport::contextual_quote_role_resolver_coverage_support_execute(&"mixedScriptEnclosingLevelUsesParagraphLanguage", &"abc“中”", true).unwrap();
+        let d = ContextualQuoteRoleResolverCoverageSupport::contextual_quote_role_resolver_coverage_support_execute(UStr::new(&[109,105,120,101,100,83,99,114,105,112,116,69,110,99,108,111,115,105,110,103,76,101,118,101,108,85,115,101,115,80,97,114,97,103,114,97,112,104,76,97,110,103,117,97,103,101]), UStr::new(&[97,98,99,8220,20013,8221]), true).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_true(ContextualQuoteRoleResolverCoverageSupport::contextual_quote_role_resolver_coverage_support_non_empty(&d), None).unwrap();
     });
 }
@@ -2372,7 +2716,7 @@ fn mixed_script_enclosing_level_uses_paragraph_language() {
 #[test]
 fn unmatched_right_single_quote_with_left_role() {
     testlib::run("org.tiqian.layout.ContextualQuoteRoleResolverCoverageTest.unmatchedRightSingleQuoteWithLeftRole", "org.tiqian.layout.ContextualQuoteRoleResolverCoverageTest.unmatchedRightSingleQuoteWithLeftRole", || {
-        let d = ContextualQuoteRoleResolverCoverageSupport::contextual_quote_role_resolver_coverage_support_execute(&"unmatchedRightSingleQuoteWithLeftRole", &"中’", false).unwrap();
+        let d = ContextualQuoteRoleResolverCoverageSupport::contextual_quote_role_resolver_coverage_support_execute(UStr::new(&[117,110,109,97,116,99,104,101,100,82,105,103,104,116,83,105,110,103,108,101,81,117,111,116,101,87,105,116,104,76,101,102,116,82,111,108,101]), UStr::new(&[20013,8217]), false).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_true(ContextualQuoteRoleResolverCoverageSupport::contextual_quote_role_resolver_coverage_support_non_empty(&d), None).unwrap();
     });
 }
@@ -2380,7 +2724,7 @@ fn unmatched_right_single_quote_with_left_role() {
 #[test]
 fn unmatched_right_single_quote_with_right_role() {
     testlib::run("org.tiqian.layout.ContextualQuoteRoleResolverCoverageTest.unmatchedRightSingleQuoteWithRightRole", "org.tiqian.layout.ContextualQuoteRoleResolverCoverageTest.unmatchedRightSingleQuoteWithRightRole", || {
-        let d = ContextualQuoteRoleResolverCoverageSupport::contextual_quote_role_resolver_coverage_support_execute(&"unmatchedRightSingleQuoteWithRightRole", &"’中", false).unwrap();
+        let d = ContextualQuoteRoleResolverCoverageSupport::contextual_quote_role_resolver_coverage_support_execute(UStr::new(&[117,110,109,97,116,99,104,101,100,82,105,103,104,116,83,105,110,103,108,101,81,117,111,116,101,87,105,116,104,82,105,103,104,116,82,111,108,101]), UStr::new(&[8217,20013]), false).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_true(ContextualQuoteRoleResolverCoverageSupport::contextual_quote_role_resolver_coverage_support_non_empty(&d), None).unwrap();
     });
 }
@@ -2388,25 +2732,24 @@ fn unmatched_right_single_quote_with_right_role() {
 #[test]
 fn unmatched_quote_with_whitespace_before_and_latin_right() {
     testlib::run("org.tiqian.layout.ContextualQuoteRoleResolverCoverageTest.unmatchedQuoteWithWhitespaceBeforeAndLatinRight", "org.tiqian.layout.ContextualQuoteRoleResolverCoverageTest.unmatchedQuoteWithWhitespaceBeforeAndLatinRight", || {
-        let d = ContextualQuoteRoleResolverCoverageSupport::contextual_quote_role_resolver_coverage_support_execute(&"unmatchedQuoteWithWhitespaceBeforeAndLatinRight", &" ’abc", false).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_true(ContextualQuoteRoleResolverCoverageSupport::contextual_quote_role_resolver_coverage_support_any_source(&d, &"DelimitedUnmatchedWesternQuote"), None).unwrap();
+        let d = ContextualQuoteRoleResolverCoverageSupport::contextual_quote_role_resolver_coverage_support_execute(UStr::new(&[117,110,109,97,116,99,104,101,100,81,117,111,116,101,87,105,116,104,87,104,105,116,101,115,112,97,99,101,66,101,102,111,114,101,65,110,100,76,97,116,105,110,82,105,103,104,116]), UStr::new(&[32,8217,97,98,99]), false).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_true(ContextualQuoteRoleResolverCoverageSupport::contextual_quote_role_resolver_coverage_support_any_source(&d, UStr::new(&[68,101,108,105,109,105,116,101,100,85,110,109,97,116,99,104,101,100,87,101,115,116,101,114,110,81,117,111,116,101])), None).unwrap();
     });
 }
 
 #[test]
 fn non_cjk_in_word_apostrophe_paired() {
     testlib::run("org.tiqian.layout.ContextualQuoteRoleResolverCoverageTest.nonCjkInWordApostrophePaired", "org.tiqian.layout.ContextualQuoteRoleResolverCoverageTest.nonCjkInWordApostrophePaired", || {
-        let _ = ContextualQuoteRoleResolverCoverageSupport::contextual_quote_role_resolver_coverage_support_execute(&"nonCjkInWordApostrophePaired", &"‘it’s", true).unwrap();
+        let _ = ContextualQuoteRoleResolverCoverageSupport::contextual_quote_role_resolver_coverage_support_execute(UStr::new(&[110,111,110,67,106,107,73,110,87,111,114,100,65,112,111,115,116,114,111,112,104,101,80,97,105,114,101,100]), UStr::new(&[8216,105,116,8217,115]), true).unwrap();
         let a = QuotePairAnalyzer::new();
-        let _ = TracedAssertions::traced_assertions_assert_true(u32::try_from((a.analyze(&"‘it’s").unwrap().len()) & 0xFFFF_FFFF).unwrap_or(0) == 0, None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_true(u32::try_from((a.analyze(UStr::new(&[8216,105,116,8217,115])).unwrap().len()) & 0xFFFF_FFFF).unwrap_or(0) == 0, None).unwrap();
     });
 }
 
 #[test]
 fn code_point_length_at_surrogate_pair_in_content() {
     testlib::run("org.tiqian.layout.ContextualQuoteRoleResolverCoverageTest.codePointLengthAtSurrogatePairInContent", "org.tiqian.layout.ContextualQuoteRoleResolverCoverageTest.codePointLengthAtSurrogatePairInContent", || {
-        let d = ContextualQuoteRoleResolverCoverageSupport::contextual_quote_role_resolver_coverage_support_execute(&"codePointLengthAtSurrogatePairInContent", ContextualQuoteRoleResolverCoverageSupport::contextual_quote_role_resolver_coverage_support_surrogate_text(&vec![8220,
-55357, 56832, 8221]).as_str(), true).unwrap();
+        let d = ContextualQuoteRoleResolverCoverageSupport::contextual_quote_role_resolver_coverage_support_execute(UStr::new(&[99,111,100,101,80,111,105,110,116,76,101,110,103,116,104,65,116,83,117,114,114,111,103,97,116,101,80,97,105,114,73,110,67,111,110,116,101,110,116]), ContextualQuoteRoleResolverCoverageSupport::contextual_quote_role_resolver_coverage_support_surrogate_text(&vec![8220, 55357, 56832, 8221]).as_ustr(), true).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_true(ContextualQuoteRoleResolverCoverageSupport::contextual_quote_role_resolver_coverage_support_non_empty(&d), None).unwrap();
     });
 }
@@ -2414,8 +2757,7 @@ fn code_point_length_at_surrogate_pair_in_content() {
 #[test]
 fn code_point_at_compat_supplementary_in_outer_evidence() {
     testlib::run("org.tiqian.layout.ContextualQuoteRoleResolverCoverageTest.codePointAtCompatSupplementaryInOuterEvidence", "org.tiqian.layout.ContextualQuoteRoleResolverCoverageTest.codePointAtCompatSupplementaryInOuterEvidence", || {
-        let d = ContextualQuoteRoleResolverCoverageSupport::contextual_quote_role_resolver_coverage_support_execute(&"codePointAtCompatSupplementaryInOuterEvidence",
-ContextualQuoteRoleResolverCoverageSupport::contextual_quote_role_resolver_coverage_support_surrogate_text(&vec![55357, 56832, 8220, 97, 98, 99, 8221, 55357, 56832]).as_str(), true).unwrap();
+        let d = ContextualQuoteRoleResolverCoverageSupport::contextual_quote_role_resolver_coverage_support_execute(UStr::new(&[99,111,100,101,80,111,105,110,116,65,116,67,111,109,112,97,116,83,117,112,112,108,101,109,101,110,116,97,114,121,73,110,79,117,116,101,114,69,118,105,100,101,110,99,101]), ContextualQuoteRoleResolverCoverageSupport::contextual_quote_role_resolver_coverage_support_surrogate_text(&vec![55357, 56832, 8220, 97, 98, 99, 8221, 55357, 56832]).as_ustr(), true).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_true(ContextualQuoteRoleResolverCoverageSupport::contextual_quote_role_resolver_coverage_support_non_empty(&d), None).unwrap();
     });
 }
@@ -2423,7 +2765,7 @@ ContextualQuoteRoleResolverCoverageSupport::contextual_quote_role_resolver_cover
 #[test]
 fn conflicting_unmatched_quotes_left_and_right_non_null() {
     testlib::run("org.tiqian.layout.ContextualQuoteRoleResolverCoverageTest.conflictingUnmatchedQuotesLeftAndRightNonNull", "org.tiqian.layout.ContextualQuoteRoleResolverCoverageTest.conflictingUnmatchedQuotesLeftAndRightNonNull", || {
-        let d = ContextualQuoteRoleResolverCoverageSupport::contextual_quote_role_resolver_coverage_support_execute(&"conflictingUnmatchedQuotesLeftAndRightNonNull", &"a’b“c", true).unwrap();
+        let d = ContextualQuoteRoleResolverCoverageSupport::contextual_quote_role_resolver_coverage_support_execute(UStr::new(&[99,111,110,102,108,105,99,116,105,110,103,85,110,109,97,116,99,104,101,100,81,117,111,116,101,115,76,101,102,116,65,110,100,82,105,103,104,116,78,111,110,78,117,108,108]), UStr::new(&[97,8217,98,8220,99]), true).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_true(ContextualQuoteRoleResolverCoverageSupport::contextual_quote_role_resolver_coverage_support_non_empty(&d), None).unwrap();
     });
 }
@@ -2431,7 +2773,7 @@ fn conflicting_unmatched_quotes_left_and_right_non_null() {
 #[test]
 fn unmatched_quote_non_whitespace_before() {
     testlib::run("org.tiqian.layout.ContextualQuoteRoleResolverCoverageTest.unmatchedQuoteNonWhitespaceBefore", "org.tiqian.layout.ContextualQuoteRoleResolverCoverageTest.unmatchedQuoteNonWhitespaceBefore", || {
-        let d = ContextualQuoteRoleResolverCoverageSupport::contextual_quote_role_resolver_coverage_support_execute(&"unmatchedQuoteNonWhitespaceBefore", &"a“", true).unwrap();
+        let d = ContextualQuoteRoleResolverCoverageSupport::contextual_quote_role_resolver_coverage_support_execute(UStr::new(&[117,110,109,97,116,99,104,101,100,81,117,111,116,101,78,111,110,87,104,105,116,101,115,112,97,99,101,66,101,102,111,114,101]), UStr::new(&[97,8220]), true).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_true(ContextualQuoteRoleResolverCoverageSupport::contextual_quote_role_resolver_coverage_support_non_empty(&d), None).unwrap();
     });
 }
@@ -2439,8 +2781,7 @@ fn unmatched_quote_non_whitespace_before() {
 #[test]
 fn nearest_strong_script_role_backward_hits_supplementary() {
     testlib::run("org.tiqian.layout.ContextualQuoteRoleResolverCoverageTest.nearestStrongScriptRoleBackwardHitsSupplementary", "org.tiqian.layout.ContextualQuoteRoleResolverCoverageTest.nearestStrongScriptRoleBackwardHitsSupplementary", || {
-        let d = ContextualQuoteRoleResolverCoverageSupport::contextual_quote_role_resolver_coverage_support_execute(&"nearestStrongScriptRoleBackwardHitsSupplementary",
-ContextualQuoteRoleResolverCoverageSupport::contextual_quote_role_resolver_coverage_support_surrogate_text(&vec![55357, 56832, 8220]).as_str(), true).unwrap();
+        let d = ContextualQuoteRoleResolverCoverageSupport::contextual_quote_role_resolver_coverage_support_execute(UStr::new(&[110,101,97,114,101,115,116,83,116,114,111,110,103,83,99,114,105,112,116,82,111,108,101,66,97,99,107,119,97,114,100,72,105,116,115,83,117,112,112,108,101,109,101,110,116,97,114,121]), ContextualQuoteRoleResolverCoverageSupport::contextual_quote_role_resolver_coverage_support_surrogate_text(&vec![55357, 56832, 8220]).as_ustr(), true).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_true(ContextualQuoteRoleResolverCoverageSupport::contextual_quote_role_resolver_coverage_support_non_empty(&d), None).unwrap();
     });
 }
@@ -2448,8 +2789,7 @@ ContextualQuoteRoleResolverCoverageSupport::contextual_quote_role_resolver_cover
 #[test]
 fn nearest_strong_script_role_forward_hits_supplementary() {
     testlib::run("org.tiqian.layout.ContextualQuoteRoleResolverCoverageTest.nearestStrongScriptRoleForwardHitsSupplementary", "org.tiqian.layout.ContextualQuoteRoleResolverCoverageTest.nearestStrongScriptRoleForwardHitsSupplementary", || {
-        let d = ContextualQuoteRoleResolverCoverageSupport::contextual_quote_role_resolver_coverage_support_execute(&"nearestStrongScriptRoleForwardHitsSupplementary",
-ContextualQuoteRoleResolverCoverageSupport::contextual_quote_role_resolver_coverage_support_surrogate_text(&vec![8220, 55357, 56832]).as_str(), true).unwrap();
+        let d = ContextualQuoteRoleResolverCoverageSupport::contextual_quote_role_resolver_coverage_support_execute(UStr::new(&[110,101,97,114,101,115,116,83,116,114,111,110,103,83,99,114,105,112,116,82,111,108,101,70,111,114,119,97,114,100,72,105,116,115,83,117,112,112,108,101,109,101,110,116,97,114,121]), ContextualQuoteRoleResolverCoverageSupport::contextual_quote_role_resolver_coverage_support_surrogate_text(&vec![8220, 55357, 56832]).as_ustr(), true).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_true(ContextualQuoteRoleResolverCoverageSupport::contextual_quote_role_resolver_coverage_support_non_empty(&d), None).unwrap();
     });
 }
@@ -2457,7 +2797,7 @@ ContextualQuoteRoleResolverCoverageSupport::contextual_quote_role_resolver_cover
 #[test]
 fn enclosing_pair_unresolved_falls_through_to_content() {
     testlib::run("org.tiqian.layout.ContextualQuoteRoleResolverCoverageTest.enclosingPairUnresolvedFallsThroughToContent", "org.tiqian.layout.ContextualQuoteRoleResolverCoverageTest.enclosingPairUnresolvedFallsThroughToContent", || {
-        let d = ContextualQuoteRoleResolverCoverageSupport::contextual_quote_role_resolver_coverage_support_execute(&"enclosingPairUnresolvedFallsThroughToContent", &"“‘abc’”", true).unwrap();
+        let d = ContextualQuoteRoleResolverCoverageSupport::contextual_quote_role_resolver_coverage_support_execute(UStr::new(&[101,110,99,108,111,115,105,110,103,80,97,105,114,85,110,114,101,115,111,108,118,101,100,70,97,108,108,115,84,104,114,111,117,103,104,84,111,67,111,110,116,101,110,116]), UStr::new(&[8220,8216,97,98,99,8217,8221]), true).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_true(ContextualQuoteRoleResolverCoverageSupport::contextual_quote_role_resolver_coverage_support_non_empty(&d), None).unwrap();
     });
 }
@@ -2465,7 +2805,7 @@ fn enclosing_pair_unresolved_falls_through_to_content() {
 #[test]
 fn unmatched_quote_at_start_with_right_role() {
     testlib::run("org.tiqian.layout.ContextualQuoteRoleResolverCoverageTest.unmatchedQuoteAtStartWithRightRole", "org.tiqian.layout.ContextualQuoteRoleResolverCoverageTest.unmatchedQuoteAtStartWithRightRole", || {
-        let d = ContextualQuoteRoleResolverCoverageSupport::contextual_quote_role_resolver_coverage_support_execute(&"unmatchedQuoteAtStartWithRightRole", &"“abc", true).unwrap();
+        let d = ContextualQuoteRoleResolverCoverageSupport::contextual_quote_role_resolver_coverage_support_execute(UStr::new(&[117,110,109,97,116,99,104,101,100,81,117,111,116,101,65,116,83,116,97,114,116,87,105,116,104,82,105,103,104,116,82,111,108,101]), UStr::new(&[8220,97,98,99]), true).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_true(ContextualQuoteRoleResolverCoverageSupport::contextual_quote_role_resolver_coverage_support_non_empty(&d), None).unwrap();
     });
 }

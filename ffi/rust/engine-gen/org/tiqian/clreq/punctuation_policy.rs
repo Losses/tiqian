@@ -1,4 +1,5 @@
 use crate::org::tiqian::clreq::punctuation_class::PunctuationClass;
+use crate::runtime::u_string::UString;
 
 
 #[derive(Debug, Clone, PartialEq)]
@@ -22,24 +23,7 @@ impl PunctuationPolicy {
         }
     }
 
-    pub fn to_string(&self) -> String {
-        return format!("{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}",
-            "PunctuationPolicy(",
-            "punctuationClass=",
-            self.punctuation_class.name(),
-            ", ",
-            "allowAtLineStart=",
-            self.allow_at_line_start,
-            ", ",
-            "allowAtLineEnd=",
-            self.allow_at_line_end,
-            ", ",
-            "defaultBodyEm=",
-            self.default_body_em,
-            ", ",
-            "defaultAdvanceEm=",
-            self.default_advance_em,
-            ")"
-        );
+    pub fn to_string(&self) -> UString {
+        return UString::from(format!("{}", { let mut __s = UString::new(); __s += &(UString::from("PunctuationPolicy(")); __s += &(UString::from("punctuationClass=")); __s += UString::from(self.punctuation_class.name()).as_ustr(); __s += &(UString::from(", ")); __s += &(UString::from("allowAtLineStart=")); __s += UString::from(format!("{}", (self.allow_at_line_start).to_string()).as_str()).as_ustr(); __s += &(UString::from(", ")); __s += &(UString::from("allowAtLineEnd=")); __s += UString::from(format!("{}", (self.allow_at_line_end).to_string()).as_str()).as_ustr(); __s += &(UString::from(", ")); __s += &(UString::from("defaultBodyEm=")); __s += &(crate::runtime::fp_helper::FPHelper::format_float(self.default_body_em)); __s += &(UString::from(", ")); __s += &(UString::from("defaultAdvanceEm=")); __s += &(crate::runtime::fp_helper::FPHelper::format_float(self.default_advance_em)); __s += &(UString::from(")")); __s }).as_str());
     }
 }

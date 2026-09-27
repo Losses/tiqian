@@ -1,5 +1,6 @@
 use crate::org::tiqian::core::rect::Rect;
 use crate::org::tiqian::core::text_range::TextRange;
+use crate::runtime::u_string::UString;
 use std::fmt::Write;
 
 
@@ -45,38 +46,8 @@ impl PositionedCluster {
         return Rect::new(self.left, self.top, self.right, self.bottom);
     }
 
-    pub fn to_string(&self) -> String {
-        return format!("{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}",
-            "PositionedCluster(",
-            "lineIndex=",
-            crate::runtime::int_text::IntText::int_text(self.line_index),
-            ", ",
-            "clusterIndex=",
-            crate::runtime::int_text::IntText::int_text(self.cluster_index),
-            ", ",
-            "range=",
-            (self.range).clone().to_string(),
-            ", ",
-            "left=",
-            self.left,
-            ", ",
-            "top=",
-            self.top,
-            ", ",
-            "right=",
-            self.right,
-            ", ",
-            "bottom=",
-            self.bottom,
-            ", ",
-            "baseline=",
-            self.baseline,
-            ", ",
-            "drawX=",
-            self.draw_x,
-            ", ",
-            "sourceStops=",
-            (match &(self.source_stops) { None => "null".to_string(), Some(__option) => {
+    pub fn to_string(&self) -> UString {
+        return UString::from(format!("{}", { let mut __s = UString::new(); __s += &(UString::from("PositionedCluster(")); __s += &(UString::from("lineIndex=")); __s += &(UString::from(format!("{}", crate::runtime::int_text::IntText::int_text(self.line_index)).as_str())); __s += &(UString::from(", ")); __s += &(UString::from("clusterIndex=")); __s += &(UString::from(format!("{}", crate::runtime::int_text::IntText::int_text(self.cluster_index)).as_str())); __s += &(UString::from(", ")); __s += &(UString::from("range=")); __s += UString::from(format!("{}", (self.range).clone().to_string()).as_str()).as_ustr(); __s += &(UString::from(", ")); __s += &(UString::from("left=")); __s += &(crate::runtime::fp_helper::FPHelper::format_float(self.left)); __s += &(UString::from(", ")); __s += &(UString::from("top=")); __s += &(crate::runtime::fp_helper::FPHelper::format_float(self.top)); __s += &(UString::from(", ")); __s += &(UString::from("right=")); __s += &(crate::runtime::fp_helper::FPHelper::format_float(self.right)); __s += &(UString::from(", ")); __s += &(UString::from("bottom=")); __s += &(crate::runtime::fp_helper::FPHelper::format_float(self.bottom)); __s += &(UString::from(", ")); __s += &(UString::from("baseline=")); __s += &(crate::runtime::fp_helper::FPHelper::format_float(self.baseline)); __s += &(UString::from(", ")); __s += &(UString::from("drawX=")); __s += &(crate::runtime::fp_helper::FPHelper::format_float(self.draw_x)); __s += &(UString::from(", ")); __s += &(UString::from("sourceStops=")); __s += UString::from(format!("{}", (match &(self.source_stops) { None => UString::from("null"), Some(__option) => UString::from(format!("{}", {
         let mut out = String::new();
         out.push('[');
         let arr = &(*__option).clone();
@@ -89,8 +60,6 @@ impl PositionedCluster {
         }
         out.push(']');
         out
-    }.to_string() }),
-            ")"
-        );
+    }).as_str()) })).as_str()).as_ustr(); __s += &(UString::from(")")); __s }).as_str());
     }
 }

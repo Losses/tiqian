@@ -1,11 +1,12 @@
 use crate::runtime::u_string;
+use crate::runtime::u_string::UStr;
 
 
 pub trait Hyphenator: Send + Sync {
     fn __haxe_type_name(&self) -> &'static str;
     fn as_any(&self) -> &dyn std::any::Any;
     fn clone_box(&self) -> Box<dyn Hyphenator>;
-    fn hyphenate(&self, word: &str) -> Vec<u32>;
+    fn hyphenate(&self, word: &UStr) -> Vec<u32>;
 }
 
 impl Clone for Box<dyn Hyphenator> {
@@ -30,7 +31,7 @@ impl NoHyphenator {
         }
     }
 
-    pub fn hyphenate(&self, _word: &str) -> Vec<u32> {
+    pub fn hyphenate(&self, _word: &UStr) -> Vec<u32> {
         return vec![];
     }
 }
@@ -46,7 +47,7 @@ impl Hyphenator for NoHyphenator {
         Box::new(self.clone())
     }
 
-    fn hyphenate(&self, _word: &str) -> Vec<u32> {
+    fn hyphenate(&self, _word: &UStr) -> Vec<u32> {
         return vec![];
     }
 }
@@ -61,7 +62,7 @@ impl TailHyphenator {
         }
     }
 
-    pub fn hyphenate(&self, word: &str) -> Vec<u32> {
+    pub fn hyphenate(&self, word: &UStr) -> Vec<u32> {
         return vec![u32::wrapping_sub(u_string::unit_count(&(word)), 5)];
     }
 }
@@ -77,7 +78,7 @@ impl Hyphenator for TailHyphenator {
         Box::new(self.clone())
     }
 
-    fn hyphenate(&self, word: &str) -> Vec<u32> {
+    fn hyphenate(&self, word: &UStr) -> Vec<u32> {
         return vec![u32::wrapping_sub(u_string::unit_count(&(word)), 5)];
     }
 }
@@ -94,7 +95,7 @@ impl SyllableHyphenator {
         }
     }
 
-    pub fn hyphenate(&self, _word: &str) -> Vec<u32> {
+    pub fn hyphenate(&self, _word: &UStr) -> Vec<u32> {
         return ((self.points).clone()).clone();
     }
 }
@@ -110,7 +111,7 @@ impl Hyphenator for SyllableHyphenator {
         Box::new(self.clone())
     }
 
-    fn hyphenate(&self, _word: &str) -> Vec<u32> {
+    fn hyphenate(&self, _word: &UStr) -> Vec<u32> {
         return ((self.points).clone()).clone();
     }
 }

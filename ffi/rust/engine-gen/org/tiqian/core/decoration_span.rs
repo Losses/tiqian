@@ -1,6 +1,7 @@
 use crate::org::tiqian::core::decoration_kind::DecorationKind;
 use crate::org::tiqian::core::text_range::TextRange;
 use crate::org::tiqian::core::text_range::compare_text_range;
+use crate::runtime::u_string::UString;
 
 
 #[derive(Debug, Clone, PartialEq)]
@@ -17,16 +18,8 @@ impl DecorationSpan {
         }
     }
 
-    pub fn to_string(&self) -> String {
-        return format!("{}{}{}{}{}{}{}",
-            "DecorationSpan(",
-            "range=",
-            (self.range).clone().to_string(),
-            ", ",
-            "kind=",
-            self.kind.name(),
-            ")"
-        );
+    pub fn to_string(&self) -> UString {
+        return UString::from(format!("{}", { let mut __s = UString::new(); __s += &(UString::from("DecorationSpan(")); __s += &(UString::from("range=")); __s += UString::from(format!("{}", (self.range).clone().to_string()).as_str()).as_ustr(); __s += &(UString::from(", ")); __s += &(UString::from("kind=")); __s += UString::from(self.kind.name()).as_ustr(); __s += &(UString::from(")")); __s }).as_str());
     }
 }
 

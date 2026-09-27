@@ -1,4 +1,5 @@
 use crate::org::tiqian::clreq::auto_space_mode::AutoSpaceMode;
+use crate::runtime::u_string::UString;
 use std::sync::LazyLock;
 
 
@@ -30,22 +31,8 @@ impl AutoSpacePolicy {
         }
     }
 
-    pub fn to_string(&self) -> String {
-        return format!("{}{}{}{}{}{}{}{}{}{}{}{}{}",
-            "AutoSpacePolicy(",
-            "cjkLatin=",
-            self.cjk_latin.name(),
-            ", ",
-            "cjkDigit=",
-            self.cjk_digit.name(),
-            ", ",
-            "gapEm=",
-            self.gap_em,
-            ", ",
-            "stretchMaxEm=",
-            self.stretch_max_em,
-            ")"
-        );
+    pub fn to_string(&self) -> UString {
+        return UString::from(format!("{}", { let mut __s = UString::new(); __s += &(UString::from("AutoSpacePolicy(")); __s += &(UString::from("cjkLatin=")); __s += UString::from(self.cjk_latin.name()).as_ustr(); __s += &(UString::from(", ")); __s += &(UString::from("cjkDigit=")); __s += UString::from(self.cjk_digit.name()).as_ustr(); __s += &(UString::from(", ")); __s += &(UString::from("gapEm=")); __s += &(crate::runtime::fp_helper::FPHelper::format_float(self.gap_em)); __s += &(UString::from(", ")); __s += &(UString::from("stretchMaxEm=")); __s += &(crate::runtime::fp_helper::FPHelper::format_float(self.stretch_max_em)); __s += &(UString::from(")")); __s }).as_str());
     }
 
     pub fn auto_space_policy_same_policy(a: AutoSpacePolicy, b: AutoSpacePolicy) -> bool {

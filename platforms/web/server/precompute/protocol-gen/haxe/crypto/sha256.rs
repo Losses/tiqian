@@ -29,7 +29,7 @@ impl Sha256 {
 
     pub fn update(&mut self, data: &[u8]) {
         let mut source_pos = 0u32;
-        while (i32::from_ne_bytes((source_pos).to_ne_bytes())) < (i32::from_ne_bytes((u32::try_from((data.len()) & 0xFFFF_FFFF).unwrap_or(0)).to_ne_bytes())) {
+        while (i32::from_ne_bytes(((source_pos) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((data.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
             self.block[usize::try_from(self.block_pos).unwrap_or(0)] = u8::try_from((u32::from(data[usize::try_from(source_pos).unwrap_or(0)])) & 0xFF).unwrap_or(0);
             self.block_pos += 1;
             source_pos = u32::wrapping_add(source_pos, 1);
@@ -62,7 +62,7 @@ impl Sha256 {
         }
         final_block[usize::try_from(self.block_pos).unwrap_or(0)] = 128u8;
         let position = u32::wrapping_add(self.block_pos, 1);
-        if i32::from_ne_bytes((position).to_ne_bytes()) > (56) {
+        if i32::from_ne_bytes(((position) as i32).to_ne_bytes()) > (56) {
             Sha256::sha256_process_block(&mut final_state, &final_block);
             for i in 0..56 {
                 final_block[usize::try_from(i).unwrap_or(0)] = 0u8;
@@ -156,8 +156,7 @@ impl Sha256 {
 ]); };
         }
         for i in 16..64 {
-            { while words.len() <= usize::try_from(i).unwrap_or(0) { words.push(0); } words[usize::try_from(i).unwrap_or(0)] = Sha256::sha256_safe_add(Sha256::sha256_safe_add(Sha256::sha256_safe_add(Sha256::sha256_gamma1(words[usize::try_from(u32::wrapping_sub(i,
-2)).unwrap_or(0)]), words[usize::try_from(u32::wrapping_sub(i, 7)).unwrap_or(0)]), Sha256::sha256_gamma0(words[usize::try_from(u32::wrapping_sub(i, 15)).unwrap_or(0)])), words[usize::try_from(u32::wrapping_sub(i, 16)).unwrap_or(0)]); };
+            { while words.len() <= usize::try_from(i).unwrap_or(0) { words.push(0); } words[usize::try_from(i).unwrap_or(0)] = Sha256::sha256_safe_add(Sha256::sha256_safe_add(Sha256::sha256_safe_add(Sha256::sha256_gamma1(words[usize::try_from(u32::wrapping_sub(i, 2)).unwrap_or(0)]), words[usize::try_from(u32::wrapping_sub(i, 7)).unwrap_or(0)]), Sha256::sha256_gamma0(words[usize::try_from(u32::wrapping_sub(i, 15)).unwrap_or(0)])), words[usize::try_from(u32::wrapping_sub(i, 16)).unwrap_or(0)]); };
         }
         let mut a = hash[0usize];
         let mut b = hash[1usize];

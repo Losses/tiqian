@@ -17,7 +17,7 @@ impl EnglishHyphenation {
 
     pub fn english_hyphenation_en_us() -> Result<Box<dyn Hyphenator>, UStringFault> {
         if ENGLISH_HYPHENATION_EN_US_CACHE.with(|c| c.borrow().clone()).is_none() {
-            let parsed = ParseTexHyphenationPatterns::parse_tex_hyphenation_patterns_parse(EnglishHyphenationPatterns::english_hyphenation_patterns_load()?.as_str());
+            let parsed = ParseTexHyphenationPatterns::parse_tex_hyphenation_patterns_parse(EnglishHyphenationPatterns::english_hyphenation_patterns_load()?.as_ustr());
             ENGLISH_HYPHENATION_EN_US_CACHE.with(|c| *c.borrow_mut() = Some(Box::new(LiangHyphenator::new((parsed.patterns).clone(), Some((parsed.exceptions).clone()), Some(2), Some(3)))));
         }
         return Ok((ENGLISH_HYPHENATION_EN_US_CACHE.with(|c| c.borrow().clone())).as_ref().unwrap().clone());

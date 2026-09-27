@@ -7,6 +7,8 @@ use crate::org::tiqian::layout::ruby_layout_test_support::RubyLayoutTestSupport;
 use crate::org::tiqian::test::trace::test_trace_recorder::TestTraceRecorder;
 use crate::org::tiqian::test::trace::traced_assertions::TracedAssertions;
 use crate::runtime::test as testlib;
+use crate::runtime::u_string::UStr;
+use crate::runtime::u_string::UString;
 
 
 #[derive(Debug, Clone, PartialEq)]
@@ -15,6 +17,16 @@ pub enum RubyLayoutTestWideAdjacentReadingsSpreadButNarrowDoNotFault {
     TextRangeErrorFault(crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
     SupportTotalWidthFault(crate::org::tiqian::layout::ruby_layout_test_support::RubyLayoutTestSupportTotalWidthFault),
+}
+impl std::fmt::Display for RubyLayoutTestWideAdjacentReadingsSpreadButNarrowDoNotFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            RubyLayoutTestWideAdjacentReadingsSpreadButNarrowDoNotFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            RubyLayoutTestWideAdjacentReadingsSpreadButNarrowDoNotFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            RubyLayoutTestWideAdjacentReadingsSpreadButNarrowDoNotFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+            RubyLayoutTestWideAdjacentReadingsSpreadButNarrowDoNotFault::SupportTotalWidthFault(value) => write!(formatter, "{}", value),
+        }
+    }
 }
 
 impl From<RubyLayoutTestWideAdjacentReadingsSpreadButNarrowDoNotFault> for crate::std::u_string_exception::UStringFault {
@@ -84,6 +96,16 @@ pub enum RubyLayoutTestUniformModeAddsTheSameDeficitToEveryLineFault {
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
     ParagraphLayoutEngineNewFaultFault(crate::org::tiqian::layout::paragraph_layout_engine::ParagraphLayoutEngineNewFault),
 }
+impl std::fmt::Display for RubyLayoutTestUniformModeAddsTheSameDeficitToEveryLineFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            RubyLayoutTestUniformModeAddsTheSameDeficitToEveryLineFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            RubyLayoutTestUniformModeAddsTheSameDeficitToEveryLineFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            RubyLayoutTestUniformModeAddsTheSameDeficitToEveryLineFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+            RubyLayoutTestUniformModeAddsTheSameDeficitToEveryLineFault::ParagraphLayoutEngineNewFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
+}
 
 impl From<RubyLayoutTestUniformModeAddsTheSameDeficitToEveryLineFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
     fn from(value: RubyLayoutTestUniformModeAddsTheSameDeficitToEveryLineFault) -> Self {
@@ -151,6 +173,16 @@ pub enum RubyLayoutTestTightLineHeightRaisesOnlyTheAnnotatedLineByDefaultFault {
     UStringFaultFault(crate::std::u_string_exception::UStringFault),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
     ParagraphLayoutEngineNewFaultFault(crate::org::tiqian::layout::paragraph_layout_engine::ParagraphLayoutEngineNewFault),
+}
+impl std::fmt::Display for RubyLayoutTestTightLineHeightRaisesOnlyTheAnnotatedLineByDefaultFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            RubyLayoutTestTightLineHeightRaisesOnlyTheAnnotatedLineByDefaultFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            RubyLayoutTestTightLineHeightRaisesOnlyTheAnnotatedLineByDefaultFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            RubyLayoutTestTightLineHeightRaisesOnlyTheAnnotatedLineByDefaultFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+            RubyLayoutTestTightLineHeightRaisesOnlyTheAnnotatedLineByDefaultFault::ParagraphLayoutEngineNewFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
 }
 
 impl From<RubyLayoutTestTightLineHeightRaisesOnlyTheAnnotatedLineByDefaultFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
@@ -220,6 +252,17 @@ pub enum RubyLayoutTestRubyVerticalGeometryUsesLatinMetricsNotReadingInkFault {
     SupportLayoutContradictoryFault(crate::org::tiqian::layout::ruby_layout_test_support::RubyLayoutTestSupportLayoutContradictoryFault),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
     ParagraphLayoutEngineNewFaultFault(crate::org::tiqian::layout::paragraph_layout_engine::ParagraphLayoutEngineNewFault),
+}
+impl std::fmt::Display for RubyLayoutTestRubyVerticalGeometryUsesLatinMetricsNotReadingInkFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            RubyLayoutTestRubyVerticalGeometryUsesLatinMetricsNotReadingInkFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            RubyLayoutTestRubyVerticalGeometryUsesLatinMetricsNotReadingInkFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            RubyLayoutTestRubyVerticalGeometryUsesLatinMetricsNotReadingInkFault::SupportLayoutContradictoryFault(value) => write!(formatter, "{}", value),
+            RubyLayoutTestRubyVerticalGeometryUsesLatinMetricsNotReadingInkFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+            RubyLayoutTestRubyVerticalGeometryUsesLatinMetricsNotReadingInkFault::ParagraphLayoutEngineNewFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
 }
 
 impl From<RubyLayoutTestRubyVerticalGeometryUsesLatinMetricsNotReadingInkFault> for crate::std::u_string_exception::UStringFault {
@@ -304,6 +347,16 @@ pub enum RubyLayoutTestRubyOnOneLineKeepsTheWholeBaselineGridStableFault {
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
     ParagraphLayoutEngineNewFaultFault(crate::org::tiqian::layout::paragraph_layout_engine::ParagraphLayoutEngineNewFault),
 }
+impl std::fmt::Display for RubyLayoutTestRubyOnOneLineKeepsTheWholeBaselineGridStableFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            RubyLayoutTestRubyOnOneLineKeepsTheWholeBaselineGridStableFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            RubyLayoutTestRubyOnOneLineKeepsTheWholeBaselineGridStableFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            RubyLayoutTestRubyOnOneLineKeepsTheWholeBaselineGridStableFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+            RubyLayoutTestRubyOnOneLineKeepsTheWholeBaselineGridStableFault::ParagraphLayoutEngineNewFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
+}
 
 impl From<RubyLayoutTestRubyOnOneLineKeepsTheWholeBaselineGridStableFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
     fn from(value: RubyLayoutTestRubyOnOneLineKeepsTheWholeBaselineGridStableFault) -> Self {
@@ -371,6 +424,16 @@ pub enum RubyLayoutTestRubyDoesNotChangeLineBoxAndCentresOverBaseFault {
     UStringFaultFault(crate::std::u_string_exception::UStringFault),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
     ParagraphLayoutEngineNewFaultFault(crate::org::tiqian::layout::paragraph_layout_engine::ParagraphLayoutEngineNewFault),
+}
+impl std::fmt::Display for RubyLayoutTestRubyDoesNotChangeLineBoxAndCentresOverBaseFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            RubyLayoutTestRubyDoesNotChangeLineBoxAndCentresOverBaseFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            RubyLayoutTestRubyDoesNotChangeLineBoxAndCentresOverBaseFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            RubyLayoutTestRubyDoesNotChangeLineBoxAndCentresOverBaseFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+            RubyLayoutTestRubyDoesNotChangeLineBoxAndCentresOverBaseFault::ParagraphLayoutEngineNewFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
 }
 
 impl From<RubyLayoutTestRubyDoesNotChangeLineBoxAndCentresOverBaseFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
@@ -440,6 +503,16 @@ pub enum RubyLayoutTestNoRubyIsUnchangedFault {
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
     ParagraphLayoutEngineNewFaultFault(crate::org::tiqian::layout::paragraph_layout_engine::ParagraphLayoutEngineNewFault),
 }
+impl std::fmt::Display for RubyLayoutTestNoRubyIsUnchangedFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            RubyLayoutTestNoRubyIsUnchangedFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            RubyLayoutTestNoRubyIsUnchangedFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            RubyLayoutTestNoRubyIsUnchangedFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+            RubyLayoutTestNoRubyIsUnchangedFault::ParagraphLayoutEngineNewFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
+}
 
 impl From<RubyLayoutTestNoRubyIsUnchangedFault> for crate::std::u_string_exception::UStringFault {
     fn from(value: RubyLayoutTestNoRubyIsUnchangedFault) -> Self {
@@ -504,18 +577,18 @@ impl From<crate::org::tiqian::layout::paragraph_layout_engine::ParagraphLayoutEn
 #[test]
 fn ruby_does_not_change_line_box_and_centres_over_base() {
     testlib::run("org.tiqian.layout.RubyLayoutTest.rubyDoesNotChangeLineBoxAndCentresOverBase", "org.tiqian.layout.RubyLayoutTest.rubyDoesNotChangeLineBoxAndCentresOverBase", || {
-        let mut t = TestTraceRecorder::new("RubyLayoutTest");
-        t.section(&"rubyDoesNotChangeLineBoxAndCentresOverBase");
+        let mut t = TestTraceRecorder::new(&(UStr::new(&[82,117,98,121,76,97,121,111,117,116,84,101,115,116])));
+        t.section(UStr::new(&[114,117,98,121,68,111,101,115,78,111,116,67,104,97,110,103,101,76,105,110,101,66,111,120,65,110,100,67,101,110,116,114,101,115,79,118,101,114,66,97,115,101]));
         let plain = RubyLayoutTestSupport::ruby_layout_test_support_layout(&vec![]).unwrap();
         let ruby = RubyLayoutTestSupport::ruby_layout_test_support_layout(&vec![
-    (RubySpan::new(TextRange::new(0u32, 1u32).unwrap(), "zhōng", Some(vec![]), RubyKind::Pinyin, None)).clone(),
+    (RubySpan::new(TextRange::new(0u32, 1u32).unwrap(), &(UStr::new(&[122,104,333,110,103])), Some(vec![]), RubyKind::Pinyin, None)).clone(),
 ]).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_equals_float_tolerance(plain.lines[0usize].top, ruby.lines[0usize].top, 0.001f64, None).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_equals_float_tolerance(plain.lines[0usize].baseline, ruby.lines[0usize].baseline, 0.001f64, None).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_equals_float_tolerance(plain.lines[0usize].bottom, ruby.lines[0usize].bottom, 0.001f64, None).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_equals_float_tolerance((plain.size).clone().height, (ruby.size).clone().height, 0.001f64, None).unwrap();
         let line_height_decision = (ruby.debug).clone().ruby_line_height_decision;
-        let _ = TracedAssertions::traced_assertions_assert_equals_string(&"PerLine", (line_height_decision.as_ref().unwrap().mode).to_string().as_str(), None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_equals_string(UStr::new(&[80,101,114,76,105,110,101]), (line_height_decision.as_ref().unwrap().mode).to_ustring().as_ustr(), None).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_equals_float_tolerance(0 as f64, line_height_decision.as_ref().unwrap().max_extra, 0.001f64, None).unwrap();
         let mut all_zero = true;
         for i in 0..match u32::try_from((line_height_decision.as_ref().unwrap().line_extras).clone().len()) { Ok(value) => value, Err(_) => u32::MAX } {
@@ -525,30 +598,26 @@ fn ruby_does_not_change_line_box_and_centres_over_base() {
         }
         let _ = TracedAssertions::traced_assertions_assert_true(all_zero, None).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_true(u32::try_from(((line_height_decision.as_ref().unwrap().expanded_line_indices).clone().len()) & 0xFFFF_FFFF).unwrap_or(0) == 0, None).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_equals_string(&"ExistingInterlineSpaceFitsRuby", (line_height_decision.as_ref().unwrap().reason).to_string().as_str(), None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_equals_string(UStr::new(&[69,120,105,115,116,105,110,103,73,110,116,101,114,108,105,110,101,83,112,97,99,101,70,105,116,115,82,117,98,121]), (line_height_decision.as_ref().unwrap().reason).to_ustring().as_ustr(), None).unwrap();
         let decisions = ((ruby.debug).clone().ruby_decisions).clone();
         let _ = TracedAssertions::traced_assertions_assert_equals(1, u32::try_from((decisions.len()) & 0xFFFF_FFFF).unwrap_or(0), None).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_equals_string(&"zhōng", ((decisions[0usize]).clone().text).to_string().as_str(), None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_equals_string(UStr::new(&[122,104,333,110,103]), ((decisions[0usize]).clone().text).to_ustring().as_ustr(), None).unwrap();
         let first_advance = ruby.clusters[0usize].advance;
-        let _ = TracedAssertions::traced_assertions_assert_true((decisions[0usize].center_x) >= 0 as f64 && (decisions[0usize].center_x) <= first_advance, Some((format!("{}{}{}",
-            "centre ",
-            decisions[0usize].center_x,
-            " within 中's span"
-        )).to_string())).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_true((decisions[0usize].baseline_y) < (ruby.lines[0usize].baseline), Some("ruby baseline above base baseline".to_string())).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_true((decisions[0usize].center_x) >= 0 as f64 && (decisions[0usize].center_x) <= first_advance, Some(UString::from(format!("{}", { let mut __s = UString::new(); __s += &(UString::from("centre ")); __s += &(crate::runtime::fp_helper::FPHelper::format_float(decisions[0usize].center_x)); __s += &(UString::from(" within 中's span")); __s }).as_str()))).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_true((decisions[0usize].baseline_y) < (ruby.lines[0usize].baseline), Some(UString::from("ruby baseline above base baseline"))).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_equals_float_tolerance(ruby.lines[0usize].baseline - 14.08f64, decisions[0usize].baseline_y + decisions[0usize].font_size * 0.2f64, 0.001f64, None).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_equals(500, decisions[0usize].font_weight, Some("ruby defaults one weight step heavier than base".to_string())).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_equals(500, decisions[0usize].font_weight, Some(UString::from("ruby defaults one weight step heavier than base"))).unwrap();
     });
 }
 
 #[test]
 fn ruby_on_one_line_keeps_the_whole_baseline_grid_stable() {
     testlib::run("org.tiqian.layout.RubyLayoutTest.rubyOnOneLineKeepsTheWholeBaselineGridStable", "org.tiqian.layout.RubyLayoutTest.rubyOnOneLineKeepsTheWholeBaselineGridStable", || {
-        let mut t = TestTraceRecorder::new("RubyLayoutTest");
-        t.section(&"rubyOnOneLineKeepsTheWholeBaselineGridStable");
+        let mut t = TestTraceRecorder::new(&(UStr::new(&[82,117,98,121,76,97,121,111,117,116,84,101,115,116])));
+        t.section(UStr::new(&[114,117,98,121,79,110,79,110,101,76,105,110,101,75,101,101,112,115,84,104,101,87,104,111,108,101,66,97,115,101,108,105,110,101,71,114,105,100,83,116,97,98,108,101]));
         let plain = RubyLayoutTestSupport::ruby_layout_test_support_layout_eight(&vec![]).unwrap();
         let annotated = RubyLayoutTestSupport::ruby_layout_test_support_layout_eight(&vec![
-    (RubySpan::new(TextRange::new(4u32, 5u32).unwrap(), "wù", Some(vec![]), RubyKind::Pinyin, None)).clone(),
+    (RubySpan::new(TextRange::new(4u32, 5u32).unwrap(), &(UStr::new(&[119,249])), Some(vec![]), RubyKind::Pinyin, None)).clone(),
 ]).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_equals(u32::try_from((plain.lines.len()) & 0xFFFF_FFFF).unwrap_or(0), u32::try_from((annotated.lines.len()) & 0xFFFF_FFFF).unwrap_or(0), None).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_equals_float_tolerance((plain.size).clone().height, (annotated.size).clone().height, 0.001f64, None).unwrap();
@@ -566,11 +635,11 @@ fn ruby_on_one_line_keeps_the_whole_baseline_grid_stable() {
 #[test]
 fn tight_line_height_raises_only_the_annotated_line_by_default() {
     testlib::run("org.tiqian.layout.RubyLayoutTest.tightLineHeightRaisesOnlyTheAnnotatedLineByDefault", "org.tiqian.layout.RubyLayoutTest.tightLineHeightRaisesOnlyTheAnnotatedLineByDefault", || {
-        let mut t = TestTraceRecorder::new("RubyLayoutTest");
-        t.section(&"tightLineHeightRaisesOnlyTheAnnotatedLineByDefault");
+        let mut t = TestTraceRecorder::new(&(UStr::new(&[82,117,98,121,76,97,121,111,117,116,84,101,115,116])));
+        t.section(UStr::new(&[116,105,103,104,116,76,105,110,101,72,101,105,103,104,116,82,97,105,115,101,115,79,110,108,121,84,104,101,65,110,110,111,116,97,116,101,100,76,105,110,101,66,121,68,101,102,97,117,108,116]));
         let plain = RubyLayoutTestSupport::ruby_layout_test_support_layout_twelve(&vec![]).unwrap();
         let annotated = RubyLayoutTestSupport::ruby_layout_test_support_layout_twelve(&vec![
-    (RubySpan::new(TextRange::new(4u32, 5u32).unwrap(), "wù", Some(vec![]), RubyKind::Pinyin, None)).clone(),
+    (RubySpan::new(TextRange::new(4u32, 5u32).unwrap(), &(UStr::new(&[119,249])), Some(vec![]), RubyKind::Pinyin, None)).clone(),
 ]).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_equals(3, u32::try_from((annotated.lines.len()) & 0xFFFF_FFFF).unwrap_or(0), None).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_equals_float_tolerance((plain.size).clone().height + format!("{}", (6i32)).parse::<f64>().unwrap_or(0.0), (annotated.size).clone().height, 0.001f64, None).unwrap();
@@ -580,7 +649,7 @@ fn tight_line_height_raises_only_the_annotated_line_by_default() {
         let _ = TracedAssertions::traced_assertions_assert_equals_float_tolerance(24 as f64, annotated.lines[1usize].baseline - annotated.lines[0usize].baseline, 0.001f64, None).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_equals_float_tolerance(18 as f64, annotated.lines[2usize].baseline - annotated.lines[1usize].baseline, 0.001f64, None).unwrap();
         let decision = (annotated.debug).clone().ruby_line_height_decision;
-        let _ = TracedAssertions::traced_assertions_assert_equals_string(&"PerLine", (decision.as_ref().unwrap().mode).to_string().as_str(), None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_equals_string(UStr::new(&[80,101,114,76,105,110,101]), (decision.as_ref().unwrap().mode).to_ustring().as_ustr(), None).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_equals_float_tolerance(6 as f64, decision.as_ref().unwrap().max_extra, 0.001f64, None).unwrap();
         let _ = RubyLayoutTestSupport::ruby_layout_test_support_assert_float_list_equals(&vec![0 as f64, 6 as f64, 0 as f64], &(decision.as_ref().unwrap().line_extras).clone()).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_equals_int_array(&vec![1], &(decision.as_ref().unwrap().expanded_line_indices).clone(), None).unwrap();
@@ -590,10 +659,10 @@ fn tight_line_height_raises_only_the_annotated_line_by_default() {
 #[test]
 fn uniform_mode_adds_the_same_deficit_to_every_line() {
     testlib::run("org.tiqian.layout.RubyLayoutTest.uniformModeAddsTheSameDeficitToEveryLine", "org.tiqian.layout.RubyLayoutTest.uniformModeAddsTheSameDeficitToEveryLine", || {
-        let mut t = TestTraceRecorder::new("RubyLayoutTest");
-        t.section(&"uniformModeAddsTheSameDeficitToEveryLine");
+        let mut t = TestTraceRecorder::new(&(UStr::new(&[82,117,98,121,76,97,121,111,117,116,84,101,115,116])));
+        t.section(UStr::new(&[117,110,105,102,111,114,109,77,111,100,101,65,100,100,115,84,104,101,83,97,109,101,68,101,102,105,99,105,116,84,111,69,118,101,114,121,76,105,110,101]));
         let result = RubyLayoutTestSupport::ruby_layout_test_support_layout_uniform(&vec![
-    (RubySpan::new(TextRange::new(4u32, 5u32).unwrap(), "wù", Some(vec![]), RubyKind::Pinyin, None)).clone(),
+    (RubySpan::new(TextRange::new(4u32, 5u32).unwrap(), &(UStr::new(&[119,249])), Some(vec![]), RubyKind::Pinyin, None)).clone(),
 ]).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_equals(3, u32::try_from((result.lines.len()) & 0xFFFF_FFFF).unwrap_or(0), None).unwrap();
         for i in 0..match u32::try_from(result.lines.len()) { Ok(value) => value, Err(_) => u32::MAX } {
@@ -604,7 +673,7 @@ fn uniform_mode_adds_the_same_deficit_to_every_line() {
         let _ = TracedAssertions::traced_assertions_assert_equals_float_tolerance(24 as f64, result.lines[2usize].baseline - result.lines[1usize].baseline, 0.001f64, None).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_equals_float_tolerance(72 as f64, (result.size).clone().height, 0.001f64, None).unwrap();
         let decision = (result.debug).clone().ruby_line_height_decision;
-        let _ = TracedAssertions::traced_assertions_assert_equals_string(&"UniformParagraph", (decision.as_ref().unwrap().mode).to_string().as_str(), None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_equals_string(UStr::new(&[85,110,105,102,111,114,109,80,97,114,97,103,114,97,112,104]), (decision.as_ref().unwrap().mode).to_ustring().as_ustr(), None).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_equals_float_tolerance(6 as f64, decision.as_ref().unwrap().max_extra, 0.001f64, None).unwrap();
         let _ = RubyLayoutTestSupport::ruby_layout_test_support_assert_float_list_equals(&vec![6 as f64, 6 as f64, 6 as f64], &(decision.as_ref().unwrap().line_extras).clone()).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_equals_int_array(&vec![0, 1, 2], &(decision.as_ref().unwrap().expanded_line_indices).clone(), None).unwrap();
@@ -614,10 +683,10 @@ fn uniform_mode_adds_the_same_deficit_to_every_line() {
 #[test]
 fn ruby_vertical_geometry_uses_latin_metrics_not_reading_ink() {
     testlib::run("org.tiqian.layout.RubyLayoutTest.rubyVerticalGeometryUsesLatinMetricsNotReadingInk", "org.tiqian.layout.RubyLayoutTest.rubyVerticalGeometryUsesLatinMetricsNotReadingInk", || {
-        let mut t = TestTraceRecorder::new("RubyLayoutTest");
-        t.section(&"rubyVerticalGeometryUsesLatinMetricsNotReadingInk");
-        let shallow_ink = RubyLayoutTestSupport::ruby_layout_test_support_layout_contradictory(&"he").unwrap();
-        let extreme_ink = RubyLayoutTestSupport::ruby_layout_test_support_layout_contradictory(&"pg").unwrap();
+        let mut t = TestTraceRecorder::new(&(UStr::new(&[82,117,98,121,76,97,121,111,117,116,84,101,115,116])));
+        t.section(UStr::new(&[114,117,98,121,86,101,114,116,105,99,97,108,71,101,111,109,101,116,114,121,85,115,101,115,76,97,116,105,110,77,101,116,114,105,99,115,78,111,116,82,101,97,100,105,110,103,73,110,107]));
+        let shallow_ink = RubyLayoutTestSupport::ruby_layout_test_support_layout_contradictory(UStr::new(&[104,101])).unwrap();
+        let extreme_ink = RubyLayoutTestSupport::ruby_layout_test_support_layout_contradictory(UStr::new(&[112,103])).unwrap();
         let shallow_decision = ((shallow_ink.debug).clone().ruby_decisions[0usize]).clone();
         let extreme_decision = ((extreme_ink.debug).clone().ruby_decisions[0usize]).clone();
         let _ = TracedAssertions::traced_assertions_assert_equals_float_tolerance((shallow_ink.size).clone().height, (extreme_ink.size).clone().height, 0.001f64, None).unwrap();
@@ -634,8 +703,8 @@ fn ruby_vertical_geometry_uses_latin_metrics_not_reading_ink() {
 #[test]
 fn no_ruby_is_unchanged() {
     testlib::run("org.tiqian.layout.RubyLayoutTest.noRubyIsUnchanged", "org.tiqian.layout.RubyLayoutTest.noRubyIsUnchanged", || {
-        let mut t = TestTraceRecorder::new("RubyLayoutTest");
-        t.section(&"noRubyIsUnchanged");
+        let mut t = TestTraceRecorder::new(&(UStr::new(&[82,117,98,121,76,97,121,111,117,116,84,101,115,116])));
+        t.section(UStr::new(&[110,111,82,117,98,121,73,115,85,110,99,104,97,110,103,101,100]));
         let plain = RubyLayoutTestSupport::ruby_layout_test_support_layout(&vec![]).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_true(u32::try_from(((plain.debug).clone().ruby_decisions.len()) & 0xFFFF_FFFF).unwrap_or(0) == 0, None).unwrap();
     });
@@ -644,24 +713,27 @@ fn no_ruby_is_unchanged() {
 #[test]
 fn wide_adjacent_readings_spread_but_narrow_do_not() {
     testlib::run("org.tiqian.layout.RubyLayoutTest.wideAdjacentReadingsSpreadButNarrowDoNot", "org.tiqian.layout.RubyLayoutTest.wideAdjacentReadingsSpreadButNarrowDoNot", || {
-        let mut t = TestTraceRecorder::new("RubyLayoutTest");
-        t.section(&"wideAdjacentReadingsSpreadButNarrowDoNot");
-        let plain = RubyLayoutTestSupport::ruby_layout_test_support_total_width(&vec!["".to_string(), "".to_string(), "".to_string(), "".to_string()]).unwrap();
-        let narrow = RubyLayoutTestSupport::ruby_layout_test_support_total_width(&vec!["yī".to_string(), "rén".to_string(), "yī".to_string(), "rén".to_string()]).unwrap();
-        let wide = RubyLayoutTestSupport::ruby_layout_test_support_total_width(&vec!["zhuāng".to_string(), "chuáng".to_string(), "shuāng".to_string(), "guāng".to_string()]).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_true((narrow) >= plain, Some((format!("{}{}{}{}{}",
-            "spread never shrinks the line (",
-            narrow,
-            " vs ",
-            plain,
-            ")"
-        )).to_string())).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_true((wide) > (narrow), Some((format!("{}{}{}{}{}",
-            "wider readings spread more (",
-            wide,
-            " vs ",
-            narrow,
-            ")"
-        )).to_string())).unwrap();
+        let mut t = TestTraceRecorder::new(&(UStr::new(&[82,117,98,121,76,97,121,111,117,116,84,101,115,116])));
+        t.section(UStr::new(&[119,105,100,101,65,100,106,97,99,101,110,116,82,101,97,100,105,110,103,115,83,112,114,101,97,100,66,117,116,78,97,114,114,111,119,68,111,78,111,116]));
+        let plain = RubyLayoutTestSupport::ruby_layout_test_support_total_width(&vec![
+    UString::from("").to_ustring(),
+    UString::from("").to_ustring(),
+    UString::from("").to_ustring(),
+    UString::from("").to_ustring(),
+]).unwrap();
+        let narrow = RubyLayoutTestSupport::ruby_layout_test_support_total_width(&vec![
+    UString::from("yī").to_ustring(),
+    UString::from("rén").to_ustring(),
+    UString::from("yī").to_ustring(),
+    UString::from("rén").to_ustring(),
+]).unwrap();
+        let wide = RubyLayoutTestSupport::ruby_layout_test_support_total_width(&vec![
+    UString::from("zhuāng").to_ustring(),
+    UString::from("chuáng").to_ustring(),
+    UString::from("shuāng").to_ustring(),
+    UString::from("guāng").to_ustring(),
+]).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_true((narrow) >= plain, Some(UString::from(format!("{}", { let mut __s = UString::new(); __s += &(UString::from("spread never shrinks the line (")); __s += &(crate::runtime::fp_helper::FPHelper::format_float(narrow)); __s += &(UString::from(" vs ")); __s += &(crate::runtime::fp_helper::FPHelper::format_float(plain)); __s += &(UString::from(")")); __s }).as_str()))).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_true((wide) > (narrow), Some(UString::from(format!("{}", { let mut __s = UString::new(); __s += &(UString::from("wider readings spread more (")); __s += &(crate::runtime::fp_helper::FPHelper::format_float(wide)); __s += &(UString::from(" vs ")); __s += &(crate::runtime::fp_helper::FPHelper::format_float(narrow)); __s += &(UString::from(")")); __s }).as_str()))).unwrap();
     });
 }

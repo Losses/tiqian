@@ -10,18 +10,18 @@ use crate::org::tiqian::layout::progressive_break_decisions::ShrinkOpportunity;
 use crate::org::tiqian::layout::progressive_break_decisions::UnbreakableRanges;
 use crate::org::tiqian::test::trace::test_trace_recorder::TestTraceRecorder;
 use crate::runtime::sorted_table::SortedMapTable;
+use crate::runtime::u_string::UStr;
 
 
 #[derive(Clone, Copy)]
 pub struct ParagraphDpLineBreakerCoverageTestSupport;
 
 impl ParagraphDpLineBreakerCoverageTestSupport {
-    pub fn paragraph_dp_line_breaker_coverage_test_support_rec(n: &str) {
-        TestTraceRecorder::new("ParagraphDpLineBreakerCoverageTest").section(n);
+    pub fn paragraph_dp_line_breaker_coverage_test_support_rec(n: &UStr) {
+        TestTraceRecorder::new(&(UStr::new(&[80,97,114,97,103,114,97,112,104,68,112,76,105,110,101,66,114,101,97,107,101,114,67,111,118,101,114,97,103,101,84,101,115,116]))).section(n);
     }
 
-    pub fn paragraph_dp_line_breaker_coverage_test_support_solve(c: &Vec<Cluster>, width: f64, shrink: Option<Vec<ShrinkOpportunity>>, hard: Option<Vec<u32>>, push: Option<bool>, ranges: Option<UnbreakableRanges>, progressive: Option<SortedMapTable<u32,
-ProgressiveBreakOpportunity>>, window: Option<u32>, cjk: Option<Vec<u32>>) -> Result<LineSolution, TextRangeError> {
+    pub fn paragraph_dp_line_breaker_coverage_test_support_solve(c: &Vec<Cluster>, width: f64, shrink: Option<Vec<ShrinkOpportunity>>, hard: Option<Vec<u32>>, push: Option<bool>, ranges: Option<UnbreakableRanges>, progressive: Option<SortedMapTable<u32, ProgressiveBreakOpportunity>>, window: Option<u32>, cjk: Option<Vec<u32>>) -> Result<LineSolution, TextRangeError> {
         return Ok(ParagraphDpLineBreakerTestSupport::paragraph_dp_line_breaker_test_support_solve(&c, width, (shrink).clone(), (hard).clone(), push, (ranges).clone(), (progressive).clone(), window, (cjk).clone(), None, None)?);
     }
 
@@ -37,7 +37,7 @@ ProgressiveBreakOpportunity>>, window: Option<u32>, cjk: Option<Vec<u32>>) -> Re
         return ParagraphDpLineBreakerTestSupport::paragraph_dp_line_breaker_test_support_opportunities(&v, &spans, &tiers);
     }
 
-    pub fn paragraph_dp_line_breaker_coverage_test_support_push_in_reason_starts_with(repair: Option<RepairOption>, prefix: &str) -> bool {
+    pub fn paragraph_dp_line_breaker_coverage_test_support_push_in_reason_starts_with(repair: Option<RepairOption>, prefix: &UStr) -> bool {
         let r = ParagraphDpLineBreakerTestSupport::paragraph_dp_line_breaker_test_support_push_in_reason((repair).clone());
         return match &(r) { Some(__option) => (__option).starts_with(&prefix), None => false };
     }

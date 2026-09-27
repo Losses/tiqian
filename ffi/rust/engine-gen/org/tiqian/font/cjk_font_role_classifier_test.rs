@@ -5,6 +5,8 @@ use crate::org::tiqian::test::trace::test_trace_recorder::TestTraceRecorder;
 use crate::org::tiqian::test::trace::traced_assertions::TracedAssertions;
 use crate::runtime::test as testlib;
 use crate::runtime::u_string;
+use crate::runtime::u_string::UStr;
+use crate::runtime::u_string::UString;
 
 
 #[derive(Debug, Clone, PartialEq)]
@@ -12,6 +14,15 @@ pub enum CjkFontRoleClassifierTestClassifiesUnicodeEmojiPresentationWithoutRecla
     UStringFaultFault(crate::std::u_string_exception::UStringFault),
     TextRangeErrorFault(crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
+}
+impl std::fmt::Display for CjkFontRoleClassifierTestClassifiesUnicodeEmojiPresentationWithoutReclassifyingPlainKeycapBasesFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            CjkFontRoleClassifierTestClassifiesUnicodeEmojiPresentationWithoutReclassifyingPlainKeycapBasesFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            CjkFontRoleClassifierTestClassifiesUnicodeEmojiPresentationWithoutReclassifyingPlainKeycapBasesFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            CjkFontRoleClassifierTestClassifiesUnicodeEmojiPresentationWithoutReclassifyingPlainKeycapBasesFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
 }
 
 impl From<CjkFontRoleClassifierTestClassifiesUnicodeEmojiPresentationWithoutReclassifyingPlainKeycapBasesFault> for crate::std::u_string_exception::UStringFault {
@@ -65,6 +76,15 @@ pub enum CjkFontRoleClassifierTestClassifiesLatinTextFault {
     TextRangeErrorFault(crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
 }
+impl std::fmt::Display for CjkFontRoleClassifierTestClassifiesLatinTextFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            CjkFontRoleClassifierTestClassifiesLatinTextFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            CjkFontRoleClassifierTestClassifiesLatinTextFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            CjkFontRoleClassifierTestClassifiesLatinTextFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
+}
 
 impl From<CjkFontRoleClassifierTestClassifiesLatinTextFault> for crate::std::u_string_exception::UStringFault {
     fn from(value: CjkFontRoleClassifierTestClassifiesLatinTextFault) -> Self {
@@ -116,6 +136,15 @@ pub enum CjkFontRoleClassifierTestClassifiesCurlyQuotesAsLatinWhenSurroundedByLa
     UStringFaultFault(crate::std::u_string_exception::UStringFault),
     TextRangeErrorFault(crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
+}
+impl std::fmt::Display for CjkFontRoleClassifierTestClassifiesCurlyQuotesAsLatinWhenSurroundedByLatinFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            CjkFontRoleClassifierTestClassifiesCurlyQuotesAsLatinWhenSurroundedByLatinFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            CjkFontRoleClassifierTestClassifiesCurlyQuotesAsLatinWhenSurroundedByLatinFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            CjkFontRoleClassifierTestClassifiesCurlyQuotesAsLatinWhenSurroundedByLatinFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
 }
 
 impl From<CjkFontRoleClassifierTestClassifiesCurlyQuotesAsLatinWhenSurroundedByLatinFault> for crate::std::u_string_exception::UStringFault {
@@ -169,6 +198,15 @@ pub enum CjkFontRoleClassifierTestClassifiesCurlyQuotesAsCjkWhenSurroundedByCjkF
     TextRangeErrorFault(crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
 }
+impl std::fmt::Display for CjkFontRoleClassifierTestClassifiesCurlyQuotesAsCjkWhenSurroundedByCjkFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            CjkFontRoleClassifierTestClassifiesCurlyQuotesAsCjkWhenSurroundedByCjkFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            CjkFontRoleClassifierTestClassifiesCurlyQuotesAsCjkWhenSurroundedByCjkFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            CjkFontRoleClassifierTestClassifiesCurlyQuotesAsCjkWhenSurroundedByCjkFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
+}
 
 impl From<CjkFontRoleClassifierTestClassifiesCurlyQuotesAsCjkWhenSurroundedByCjkFault> for crate::std::u_string_exception::UStringFault {
     fn from(value: CjkFontRoleClassifierTestClassifiesCurlyQuotesAsCjkWhenSurroundedByCjkFault) -> Self {
@@ -220,6 +258,15 @@ pub enum CjkFontRoleClassifierTestClassifiesCurlyQuotesAsCjkInMixedContextFault 
     UStringFaultFault(crate::std::u_string_exception::UStringFault),
     TextRangeErrorFault(crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
+}
+impl std::fmt::Display for CjkFontRoleClassifierTestClassifiesCurlyQuotesAsCjkInMixedContextFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            CjkFontRoleClassifierTestClassifiesCurlyQuotesAsCjkInMixedContextFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            CjkFontRoleClassifierTestClassifiesCurlyQuotesAsCjkInMixedContextFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            CjkFontRoleClassifierTestClassifiesCurlyQuotesAsCjkInMixedContextFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
 }
 
 impl From<CjkFontRoleClassifierTestClassifiesCurlyQuotesAsCjkInMixedContextFault> for crate::std::u_string_exception::UStringFault {
@@ -273,6 +320,15 @@ pub enum CjkFontRoleClassifierTestClassifiesCurlyQuotesAsCjkAtTextBoundaryFault 
     TextRangeErrorFault(crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
 }
+impl std::fmt::Display for CjkFontRoleClassifierTestClassifiesCurlyQuotesAsCjkAtTextBoundaryFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            CjkFontRoleClassifierTestClassifiesCurlyQuotesAsCjkAtTextBoundaryFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            CjkFontRoleClassifierTestClassifiesCurlyQuotesAsCjkAtTextBoundaryFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            CjkFontRoleClassifierTestClassifiesCurlyQuotesAsCjkAtTextBoundaryFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
+}
 
 impl From<CjkFontRoleClassifierTestClassifiesCurlyQuotesAsCjkAtTextBoundaryFault> for crate::std::u_string_exception::UStringFault {
     fn from(value: CjkFontRoleClassifierTestClassifiesCurlyQuotesAsCjkAtTextBoundaryFault) -> Self {
@@ -324,6 +380,15 @@ pub enum CjkFontRoleClassifierTestClassifiesCjkTextFault {
     UStringFaultFault(crate::std::u_string_exception::UStringFault),
     TextRangeErrorFault(crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
+}
+impl std::fmt::Display for CjkFontRoleClassifierTestClassifiesCjkTextFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            CjkFontRoleClassifierTestClassifiesCjkTextFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            CjkFontRoleClassifierTestClassifiesCjkTextFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            CjkFontRoleClassifierTestClassifiesCjkTextFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
 }
 
 impl From<CjkFontRoleClassifierTestClassifiesCjkTextFault> for crate::std::u_string_exception::UStringFault {
@@ -377,6 +442,15 @@ pub enum CjkFontRoleClassifierTestClassifiesCjkPunctuationFault {
     TextRangeErrorFault(crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
 }
+impl std::fmt::Display for CjkFontRoleClassifierTestClassifiesCjkPunctuationFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            CjkFontRoleClassifierTestClassifiesCjkPunctuationFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            CjkFontRoleClassifierTestClassifiesCjkPunctuationFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            CjkFontRoleClassifierTestClassifiesCjkPunctuationFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
+}
 
 impl From<CjkFontRoleClassifierTestClassifiesCjkPunctuationFault> for crate::std::u_string_exception::UStringFault {
     fn from(value: CjkFontRoleClassifierTestClassifiesCjkPunctuationFault) -> Self {
@@ -428,6 +502,15 @@ pub enum CjkFontRoleClassifierTestClassifiesAsciiSymbolsAndPunctuationAsLatinFau
     UStringFaultFault(crate::std::u_string_exception::UStringFault),
     TextRangeErrorFault(crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
+}
+impl std::fmt::Display for CjkFontRoleClassifierTestClassifiesAsciiSymbolsAndPunctuationAsLatinFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            CjkFontRoleClassifierTestClassifiesAsciiSymbolsAndPunctuationAsLatinFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            CjkFontRoleClassifierTestClassifiesAsciiSymbolsAndPunctuationAsLatinFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            CjkFontRoleClassifierTestClassifiesAsciiSymbolsAndPunctuationAsLatinFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
 }
 
 impl From<CjkFontRoleClassifierTestClassifiesAsciiSymbolsAndPunctuationAsLatinFault> for crate::std::u_string_exception::UStringFault {
@@ -481,6 +564,15 @@ pub enum CjkFontRoleClassifierTestClassifiesAsciiHyphenSlashTildeAsLatinRegardle
     TextRangeErrorFault(crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
 }
+impl std::fmt::Display for CjkFontRoleClassifierTestClassifiesAsciiHyphenSlashTildeAsLatinRegardlessOfContextFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            CjkFontRoleClassifierTestClassifiesAsciiHyphenSlashTildeAsLatinRegardlessOfContextFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            CjkFontRoleClassifierTestClassifiesAsciiHyphenSlashTildeAsLatinRegardlessOfContextFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            CjkFontRoleClassifierTestClassifiesAsciiHyphenSlashTildeAsLatinRegardlessOfContextFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
+}
 
 impl From<CjkFontRoleClassifierTestClassifiesAsciiHyphenSlashTildeAsLatinRegardlessOfContextFault> for crate::std::u_string_exception::UStringFault {
     fn from(value: CjkFontRoleClassifierTestClassifiesAsciiHyphenSlashTildeAsLatinRegardlessOfContextFault) -> Self {
@@ -533,6 +625,15 @@ pub enum CjkFontRoleClassifierTestClassifiesAsciiBracketsAsLatinFault {
     TextRangeErrorFault(crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
 }
+impl std::fmt::Display for CjkFontRoleClassifierTestClassifiesAsciiBracketsAsLatinFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            CjkFontRoleClassifierTestClassifiesAsciiBracketsAsLatinFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            CjkFontRoleClassifierTestClassifiesAsciiBracketsAsLatinFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            CjkFontRoleClassifierTestClassifiesAsciiBracketsAsLatinFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
+}
 
 impl From<CjkFontRoleClassifierTestClassifiesAsciiBracketsAsLatinFault> for crate::std::u_string_exception::UStringFault {
     fn from(value: CjkFontRoleClassifierTestClassifiesAsciiBracketsAsLatinFault) -> Self {
@@ -582,21 +683,20 @@ impl From<crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFa
 #[test]
 fn classifies_ascii_brackets_as_latin() {
     testlib::run("org.tiqian.font.CjkFontRoleClassifierTest.classifiesAsciiBracketsAsLatin", "org.tiqian.font.CjkFontRoleClassifierTest.classifiesAsciiBracketsAsLatin", || {
-        TestTraceRecorder::new("CjkFontRoleClassifierTest").section(&"classifiesAsciiBracketsAsLatin");
+        TestTraceRecorder::new(&(UStr::new(&[67,106,107,70,111,110,116,82,111,108,101,67,108,97,115,115,105,102,105,101,114,84,101,115,116]))).section(UStr::new(&[99,108,97,115,115,105,102,105,101,115,65,115,99,105,105,66,114,97,99,107,101,116,115,65,115,76,97,116,105,110]));
         let xs = vec![
-    "(".to_string(),
-    ")".to_string(),
-    "[".to_string(),
-    "]".to_string(),
-    "{".to_string(),
-    "}".to_string(),
-    "中(文".to_string(),
+    UString::from("(").to_ustring(),
+    UString::from(")").to_ustring(),
+    UString::from("[").to_ustring(),
+    UString::from("]").to_ustring(),
+    UString::from("{").to_ustring(),
+    UString::from("}").to_ustring(),
+    UString::from("中(文").to_ustring(),
 ];
         let mut xi = 0u32;
-        while (i32::from_ne_bytes((xi).to_ne_bytes())) < (i32::from_ne_bytes((u32::try_from((xs.len()) & 0xFFFF_FFFF).unwrap_or(0)).to_ne_bytes())) {
+        while (i32::from_ne_bytes(((xi) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((xs.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
             let x = (xs[usize::try_from(xi).unwrap_or(0)]).clone();
-            let _ = TracedAssertions::traced_assertions_assert_equals_rendered(&"LatinText", CjkFontRoleClassifierTestSupport::cjk_font_role_classifier_test_support_c(x.as_str(), if x == "中(文" { 1 } else { 0 }, if x == "中(文" { 2 } else { 1 }).unwrap().name().to_string().as_str(),
-None).unwrap();
+            let _ = TracedAssertions::traced_assertions_assert_equals_rendered(UStr::new(&[76,97,116,105,110,84,101,120,116]), UString::from(CjkFontRoleClassifierTestSupport::cjk_font_role_classifier_test_support_c(x.as_ustr(), if x == UString::from("中(文") { 1 } else { 0 }, if x == UString::from("中(文") { 2 } else { 1 }).unwrap().name()).as_ustr(), None).unwrap();
             xi = u32::wrapping_add(xi, 1);
         }
     });
@@ -605,20 +705,20 @@ None).unwrap();
 #[test]
 fn classifies_ascii_hyphen_slash_tilde_as_latin_regardless_of_context() {
     testlib::run("org.tiqian.font.CjkFontRoleClassifierTest.classifiesAsciiHyphenSlashTildeAsLatinRegardlessOfContext", "org.tiqian.font.CjkFontRoleClassifierTest.classifiesAsciiHyphenSlashTildeAsLatinRegardlessOfContext", || {
-        TestTraceRecorder::new("CjkFontRoleClassifierTest").section(&"classifiesAsciiHyphenSlashTildeAsLatinRegardlessOfContext");
+        TestTraceRecorder::new(&(UStr::new(&[67,106,107,70,111,110,116,82,111,108,101,67,108,97,115,115,105,102,105,101,114,84,101,115,116]))).section(UStr::new(&[99,108,97,115,115,105,102,105,101,115,65,115,99,105,105,72,121,112,104,101,110,83,108,97,115,104,84,105,108,100,101,65,115,76,97,116,105,110,82,101,103,97,114,100,108,101,115,115,79,102,67,111,110,116,101,120,116]));
         let xs = vec![
-    "well-known".to_string(),
-    "https://example".to_string(),
-    "https://example".to_string(),
-    "中文/TERFism".to_string(),
-    "中文-中文".to_string(),
-    "中文~中文".to_string(),
+    UString::from("well-known").to_ustring(),
+    UString::from("https://example").to_ustring(),
+    UString::from("https://example").to_ustring(),
+    UString::from("中文/TERFism").to_ustring(),
+    UString::from("中文-中文").to_ustring(),
+    UString::from("中文~中文").to_ustring(),
 ];
         let mut xi = 0u32;
-        while (i32::from_ne_bytes((xi).to_ne_bytes())) < (i32::from_ne_bytes((u32::try_from((xs.len()) & 0xFFFF_FFFF).unwrap_or(0)).to_ne_bytes())) {
+        while (i32::from_ne_bytes(((xi) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((xs.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
             let x = (xs[usize::try_from(xi).unwrap_or(0)]).clone();
             let p = if xi == 0 { 4 } else { if xi == 1 { 6 } else { if xi == 2 { 7 } else { 2 } } };
-            let _ = TracedAssertions::traced_assertions_assert_equals_rendered(&"LatinText", CjkFontRoleClassifierTestSupport::cjk_font_role_classifier_test_support_c(x.as_str(), p, u32::wrapping_add(p, 1)).unwrap().name().to_string().as_str(), None).unwrap();
+            let _ = TracedAssertions::traced_assertions_assert_equals_rendered(UStr::new(&[76,97,116,105,110,84,101,120,116]), UString::from(CjkFontRoleClassifierTestSupport::cjk_font_role_classifier_test_support_c(x.as_ustr(), p, u32::wrapping_add(p, 1)).unwrap().name()).as_ustr(), None).unwrap();
             xi = u32::wrapping_add(xi, 1);
         }
     });
@@ -627,62 +727,59 @@ fn classifies_ascii_hyphen_slash_tilde_as_latin_regardless_of_context() {
 #[test]
 fn classifies_ascii_symbols_and_punctuation_as_latin() {
     testlib::run("org.tiqian.font.CjkFontRoleClassifierTest.classifiesAsciiSymbolsAndPunctuationAsLatin", "org.tiqian.font.CjkFontRoleClassifierTest.classifiesAsciiSymbolsAndPunctuationAsLatin", || {
-        TestTraceRecorder::new("CjkFontRoleClassifierTest").section(&"classifiesAsciiSymbolsAndPunctuationAsLatin");
+        TestTraceRecorder::new(&(UStr::new(&[67,106,107,70,111,110,116,82,111,108,101,67,108,97,115,115,105,102,105,101,114,84,101,115,116]))).section(UStr::new(&[99,108,97,115,115,105,102,105,101,115,65,115,99,105,105,83,121,109,98,111,108,115,65,110,100,80,117,110,99,116,117,97,116,105,111,110,65,115,76,97,116,105,110]));
         let xs = vec![
-    "%".to_string(),
-    ".".to_string(),
-    ",".to_string(),
-    ":".to_string(),
-    ";".to_string(),
-    "!".to_string(),
-    "?".to_string(),
-    "#".to_string(),
-    "@".to_string(),
-    "&".to_string(),
-    "*".to_string(),
-    "+".to_string(),
-    "=".to_string(),
-    "<".to_string(),
-    ">".to_string(),
-    "|".to_string(),
-    "^".to_string(),
-    "_".to_string(),
-    "$".to_string(),
-    "'".to_string(),
-    "\"".to_string(),
+    UString::from("%").to_ustring(),
+    UString::from(".").to_ustring(),
+    UString::from(",").to_ustring(),
+    UString::from(":").to_ustring(),
+    UString::from(";").to_ustring(),
+    UString::from("!").to_ustring(),
+    UString::from("?").to_ustring(),
+    UString::from("#").to_ustring(),
+    UString::from("@").to_ustring(),
+    UString::from("&").to_ustring(),
+    UString::from("*").to_ustring(),
+    UString::from("+").to_ustring(),
+    UString::from("=").to_ustring(),
+    UString::from("<").to_ustring(),
+    UString::from(">").to_ustring(),
+    UString::from("|").to_ustring(),
+    UString::from("^").to_ustring(),
+    UString::from("_").to_ustring(),
+    UString::from("$").to_ustring(),
+    UString::from("'").to_ustring(),
+    UString::from("\"").to_ustring(),
 ];
         let mut xi = 0u32;
-        while (i32::from_ne_bytes((xi).to_ne_bytes())) < (i32::from_ne_bytes((u32::try_from((xs.len()) & 0xFFFF_FFFF).unwrap_or(0)).to_ne_bytes())) {
+        while (i32::from_ne_bytes(((xi) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((xs.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
             let x = (xs[usize::try_from(xi).unwrap_or(0)]).clone();
-            let _ = TracedAssertions::traced_assertions_assert_equals_rendered(&"LatinText", CjkFontRoleClassifierTestSupport::cjk_font_role_classifier_test_support_c(x.as_str(), 0, 1).unwrap().name().to_string().as_str(), Some((format!("{}{}",
-            "char=",
-            x
-        )).to_string())).unwrap();
+            let _ = TracedAssertions::traced_assertions_assert_equals_rendered(UStr::new(&[76,97,116,105,110,84,101,120,116]), UString::from(CjkFontRoleClassifierTestSupport::cjk_font_role_classifier_test_support_c(x.as_ustr(), 0, 1).unwrap().name()).as_ustr(), Some(UString::from(format!("{}", { let mut __s = UString::new(); __s += &(UString::from("char=")); __s += x.as_ustr(); __s }).as_str()))).unwrap();
             xi = u32::wrapping_add(xi, 1);
         }
-        let _ = TracedAssertions::traced_assertions_assert_equals_rendered(&"LatinText", CjkFontRoleClassifierTestSupport::cjk_font_role_classifier_test_support_c(&"中%文", 1, 2).unwrap().name().to_string().as_str(), None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_equals_rendered(UStr::new(&[76,97,116,105,110,84,101,120,116]), UString::from(CjkFontRoleClassifierTestSupport::cjk_font_role_classifier_test_support_c(UStr::new(&[20013,37,25991]), 1, 2).unwrap().name()).as_ustr(), None).unwrap();
     });
 }
 
 #[test]
 fn classifies_cjk_punctuation() {
     testlib::run("org.tiqian.font.CjkFontRoleClassifierTest.classifiesCjkPunctuation", "org.tiqian.font.CjkFontRoleClassifierTest.classifiesCjkPunctuation", || {
-        TestTraceRecorder::new("CjkFontRoleClassifierTest").section(&"classifiesCjkPunctuation");
+        TestTraceRecorder::new(&(UStr::new(&[67,106,107,70,111,110,116,82,111,108,101,67,108,97,115,115,105,102,105,101,114,84,101,115,116]))).section(UStr::new(&[99,108,97,115,115,105,102,105,101,115,67,106,107,80,117,110,99,116,117,97,116,105,111,110]));
         let a = vec![
-    "……".to_string(),
-    "⋯⋯".to_string(),
-    "——".to_string(),
-    "⸺".to_string(),
-    "。".to_string(),
-    "・".to_string(),
-    "‧".to_string(),
-    "～".to_string(),
-    "／".to_string(),
+    UString::from("……").to_ustring(),
+    UString::from("⋯⋯").to_ustring(),
+    UString::from("——").to_ustring(),
+    UString::from("⸺").to_ustring(),
+    UString::from("。").to_ustring(),
+    UString::from("・").to_ustring(),
+    UString::from("‧").to_ustring(),
+    UString::from("～").to_ustring(),
+    UString::from("／").to_ustring(),
 ];
         let mut i = 0u32;
-        while (i32::from_ne_bytes((i).to_ne_bytes())) < (i32::from_ne_bytes((u32::try_from((a.len()) & 0xFFFF_FFFF).unwrap_or(0)).to_ne_bytes())) {
+        while (i32::from_ne_bytes(((i) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((a.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
             let x = (a[usize::try_from(i).unwrap_or(0)]).clone();
-            let _ = TracedAssertions::traced_assertions_assert_equals_rendered(&"CjkPunctuation", CjkFontRoleClassifierTestSupport::cjk_font_role_classifier_test_support_c(x.as_str(), 0, 1).unwrap().name().to_string().as_str(), None).unwrap();
+            let _ = TracedAssertions::traced_assertions_assert_equals_rendered(UStr::new(&[67,106,107,80,117,110,99,116,117,97,116,105,111,110]), UString::from(CjkFontRoleClassifierTestSupport::cjk_font_role_classifier_test_support_c(x.as_ustr(), 0, 1).unwrap().name()).as_ustr(), None).unwrap();
             i = u32::wrapping_add(i, 1);
         }
     });
@@ -691,70 +788,74 @@ fn classifies_cjk_punctuation() {
 #[test]
 fn classifies_cjk_text() {
     testlib::run("org.tiqian.font.CjkFontRoleClassifierTest.classifiesCjkText", "org.tiqian.font.CjkFontRoleClassifierTest.classifiesCjkText", || {
-        TestTraceRecorder::new("CjkFontRoleClassifierTest").section(&"classifiesCjkText");
-        let _ = TracedAssertions::traced_assertions_assert_equals_rendered(&"CjkText", CjkFontRoleClassifierTestSupport::cjk_font_role_classifier_test_support_c(&"提", 0, 1).unwrap().name().to_string().as_str(), None).unwrap();
+        TestTraceRecorder::new(&(UStr::new(&[67,106,107,70,111,110,116,82,111,108,101,67,108,97,115,115,105,102,105,101,114,84,101,115,116]))).section(UStr::new(&[99,108,97,115,115,105,102,105,101,115,67,106,107,84,101,120,116]));
+        let _ = TracedAssertions::traced_assertions_assert_equals_rendered(UStr::new(&[67,106,107,84,101,120,116]), UString::from(CjkFontRoleClassifierTestSupport::cjk_font_role_classifier_test_support_c(UStr::new(&[25552]), 0, 1).unwrap().name()).as_ustr(), None).unwrap();
     });
 }
 
 #[test]
 fn classifies_curly_quotes_as_cjk_at_text_boundary() {
     testlib::run("org.tiqian.font.CjkFontRoleClassifierTest.classifiesCurlyQuotesAsCjkAtTextBoundary", "org.tiqian.font.CjkFontRoleClassifierTest.classifiesCurlyQuotesAsCjkAtTextBoundary", || {
-        TestTraceRecorder::new("CjkFontRoleClassifierTest").section(&"classifiesCurlyQuotesAsCjkAtTextBoundary");
-        let _ = TracedAssertions::traced_assertions_assert_equals_rendered(&"CjkPunctuation", CjkFontRoleClassifierTestSupport::cjk_font_role_classifier_test_support_c(&"“你好”", 0, 1).unwrap().name().to_string().as_str(), None).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_equals_rendered(&"CjkPunctuation", CjkFontRoleClassifierTestSupport::cjk_font_role_classifier_test_support_c(&"“你好”", 3, 4).unwrap().name().to_string().as_str(), None).unwrap();
+        TestTraceRecorder::new(&(UStr::new(&[67,106,107,70,111,110,116,82,111,108,101,67,108,97,115,115,105,102,105,101,114,84,101,115,116]))).section(UStr::new(&[99,108,97,115,115,105,102,105,101,115,67,117,114,108,121,81,117,111,116,101,115,65,115,67,106,107,65,116,84,101,120,116,66,111,117,110,100,97,114,121]));
+        let _ = TracedAssertions::traced_assertions_assert_equals_rendered(UStr::new(&[67,106,107,80,117,110,99,116,117,97,116,105,111,110]), UString::from(CjkFontRoleClassifierTestSupport::cjk_font_role_classifier_test_support_c(UStr::new(&[8220,20320,22909,8221]), 0, 1).unwrap().name()).as_ustr(), None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_equals_rendered(UStr::new(&[67,106,107,80,117,110,99,116,117,97,116,105,111,110]), UString::from(CjkFontRoleClassifierTestSupport::cjk_font_role_classifier_test_support_c(UStr::new(&[8220,20320,22909,8221]), 3, 4).unwrap().name()).as_ustr(), None).unwrap();
     });
 }
 
 #[test]
 fn classifies_curly_quotes_as_cjk_in_mixed_context() {
     testlib::run("org.tiqian.font.CjkFontRoleClassifierTest.classifiesCurlyQuotesAsCjkInMixedContext", "org.tiqian.font.CjkFontRoleClassifierTest.classifiesCurlyQuotesAsCjkInMixedContext", || {
-        TestTraceRecorder::new("CjkFontRoleClassifierTest").section(&"classifiesCurlyQuotesAsCjkInMixedContext");
-        let _ = TracedAssertions::traced_assertions_assert_equals_rendered(&"CjkPunctuation", CjkFontRoleClassifierTestSupport::cjk_font_role_classifier_test_support_c(&"他说“hello”", 2, 3).unwrap().name().to_string().as_str(), None).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_equals_rendered(&"CjkPunctuation", CjkFontRoleClassifierTestSupport::cjk_font_role_classifier_test_support_c(&"他说“hello”", 8, 9).unwrap().name().to_string().as_str(), None).unwrap();
+        TestTraceRecorder::new(&(UStr::new(&[67,106,107,70,111,110,116,82,111,108,101,67,108,97,115,115,105,102,105,101,114,84,101,115,116]))).section(UStr::new(&[99,108,97,115,115,105,102,105,101,115,67,117,114,108,121,81,117,111,116,101,115,65,115,67,106,107,73,110,77,105,120,101,100,67,111,110,116,101,120,116]));
+        let _ = TracedAssertions::traced_assertions_assert_equals_rendered(UStr::new(&[67,106,107,80,117,110,99,116,117,97,116,105,111,110]), UString::from(CjkFontRoleClassifierTestSupport::cjk_font_role_classifier_test_support_c(UStr::new(&[20182,35828,8220,104,101,108,108,111,8221]), 2, 3).unwrap().name()).as_ustr(), None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_equals_rendered(UStr::new(&[67,106,107,80,117,110,99,116,117,97,116,105,111,110]), UString::from(CjkFontRoleClassifierTestSupport::cjk_font_role_classifier_test_support_c(UStr::new(&[20182,35828,8220,104,101,108,108,111,8221]), 8, 9).unwrap().name()).as_ustr(), None).unwrap();
     });
 }
 
 #[test]
 fn classifies_curly_quotes_as_cjk_when_surrounded_by_cjk() {
     testlib::run("org.tiqian.font.CjkFontRoleClassifierTest.classifiesCurlyQuotesAsCjkWhenSurroundedByCjk", "org.tiqian.font.CjkFontRoleClassifierTest.classifiesCurlyQuotesAsCjkWhenSurroundedByCjk", || {
-        TestTraceRecorder::new("CjkFontRoleClassifierTest").section(&"classifiesCurlyQuotesAsCjkWhenSurroundedByCjk");
-        let _ = TracedAssertions::traced_assertions_assert_equals_rendered(&"CjkPunctuation", CjkFontRoleClassifierTestSupport::cjk_font_role_classifier_test_support_c(&"他说“你好”", 2, 3).unwrap().name().to_string().as_str(), None).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_equals_rendered(&"CjkPunctuation", CjkFontRoleClassifierTestSupport::cjk_font_role_classifier_test_support_c(&"他说“你好”", 5, 6).unwrap().name().to_string().as_str(), None).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_equals_rendered(&"CjkPunctuation", CjkFontRoleClassifierTestSupport::cjk_font_role_classifier_test_support_c(&"他说‘你好’", 2, 3).unwrap().name().to_string().as_str(), None).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_equals_rendered(&"CjkPunctuation", CjkFontRoleClassifierTestSupport::cjk_font_role_classifier_test_support_c(&"他说‘你好’", 5, 6).unwrap().name().to_string().as_str(), None).unwrap();
+        TestTraceRecorder::new(&(UStr::new(&[67,106,107,70,111,110,116,82,111,108,101,67,108,97,115,115,105,102,105,101,114,84,101,115,116]))).section(UStr::new(&[99,108,97,115,115,105,102,105,101,115,67,117,114,108,121,81,117,111,116,101,115,65,115,67,106,107,87,104,101,110,83,117,114,114,111,117,110,100,101,100,66,121,67,106,107]));
+        let _ = TracedAssertions::traced_assertions_assert_equals_rendered(UStr::new(&[67,106,107,80,117,110,99,116,117,97,116,105,111,110]), UString::from(CjkFontRoleClassifierTestSupport::cjk_font_role_classifier_test_support_c(UStr::new(&[20182,35828,8220,20320,22909,8221]), 2, 3).unwrap().name()).as_ustr(), None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_equals_rendered(UStr::new(&[67,106,107,80,117,110,99,116,117,97,116,105,111,110]), UString::from(CjkFontRoleClassifierTestSupport::cjk_font_role_classifier_test_support_c(UStr::new(&[20182,35828,8220,20320,22909,8221]), 5, 6).unwrap().name()).as_ustr(), None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_equals_rendered(UStr::new(&[67,106,107,80,117,110,99,116,117,97,116,105,111,110]), UString::from(CjkFontRoleClassifierTestSupport::cjk_font_role_classifier_test_support_c(UStr::new(&[20182,35828,8216,20320,22909,8217]), 2, 3).unwrap().name()).as_ustr(), None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_equals_rendered(UStr::new(&[67,106,107,80,117,110,99,116,117,97,116,105,111,110]), UString::from(CjkFontRoleClassifierTestSupport::cjk_font_role_classifier_test_support_c(UStr::new(&[20182,35828,8216,20320,22909,8217]), 5, 6).unwrap().name()).as_ustr(), None).unwrap();
     });
 }
 
 #[test]
 fn classifies_curly_quotes_as_latin_when_surrounded_by_latin() {
     testlib::run("org.tiqian.font.CjkFontRoleClassifierTest.classifiesCurlyQuotesAsLatinWhenSurroundedByLatin", "org.tiqian.font.CjkFontRoleClassifierTest.classifiesCurlyQuotesAsLatinWhenSurroundedByLatin", || {
-        TestTraceRecorder::new("CjkFontRoleClassifierTest").section(&"classifiesCurlyQuotesAsLatinWhenSurroundedByLatin");
-        let _ = TracedAssertions::traced_assertions_assert_equals_rendered(&"LatinText", CjkFontRoleClassifierTestSupport::cjk_font_role_classifier_test_support_c(&"said “hello” end", 5, 6).unwrap().name().to_string().as_str(), None).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_equals_rendered(&"LatinText", CjkFontRoleClassifierTestSupport::cjk_font_role_classifier_test_support_c(&"said “hello” end", 11, 12).unwrap().name().to_string().as_str(), None).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_equals_rendered(&"LatinText", CjkFontRoleClassifierTestSupport::cjk_font_role_classifier_test_support_c(&"it’s", 2, 3).unwrap().name().to_string().as_str(), None).unwrap();
+        TestTraceRecorder::new(&(UStr::new(&[67,106,107,70,111,110,116,82,111,108,101,67,108,97,115,115,105,102,105,101,114,84,101,115,116]))).section(UStr::new(&[99,108,97,115,115,105,102,105,101,115,67,117,114,108,121,81,117,111,116,101,115,65,115,76,97,116,105,110,87,104,101,110,83,117,114,114,111,117,110,100,101,100,66,121,76,97,116,105,110]));
+        let _ = TracedAssertions::traced_assertions_assert_equals_rendered(UStr::new(&[76,97,116,105,110,84,101,120,116]), UString::from(CjkFontRoleClassifierTestSupport::cjk_font_role_classifier_test_support_c(UStr::new(&[115,97,105,100,32,8220,104,101,108,108,111,8221,32,101,110,100]), 5, 6).unwrap().name()).as_ustr(), None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_equals_rendered(UStr::new(&[76,97,116,105,110,84,101,120,116]), UString::from(CjkFontRoleClassifierTestSupport::cjk_font_role_classifier_test_support_c(UStr::new(&[115,97,105,100,32,8220,104,101,108,108,111,8221,32,101,110,100]), 11, 12).unwrap().name()).as_ustr(), None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_equals_rendered(UStr::new(&[76,97,116,105,110,84,101,120,116]), UString::from(CjkFontRoleClassifierTestSupport::cjk_font_role_classifier_test_support_c(UStr::new(&[105,116,8217,115]), 2, 3).unwrap().name()).as_ustr(), None).unwrap();
     });
 }
 
 #[test]
 fn classifies_latin_text() {
     testlib::run("org.tiqian.font.CjkFontRoleClassifierTest.classifiesLatinText", "org.tiqian.font.CjkFontRoleClassifierTest.classifiesLatinText", || {
-        TestTraceRecorder::new("CjkFontRoleClassifierTest").section(&"classifiesLatinText");
-        let _ = TracedAssertions::traced_assertions_assert_equals_rendered(&"LatinText", CjkFontRoleClassifierTestSupport::cjk_font_role_classifier_test_support_c(&"English", 0, 1).unwrap().name().to_string().as_str(), None).unwrap();
+        TestTraceRecorder::new(&(UStr::new(&[67,106,107,70,111,110,116,82,111,108,101,67,108,97,115,115,105,102,105,101,114,84,101,115,116]))).section(UStr::new(&[99,108,97,115,115,105,102,105,101,115,76,97,116,105,110,84,101,120,116]));
+        let _ = TracedAssertions::traced_assertions_assert_equals_rendered(UStr::new(&[76,97,116,105,110,84,101,120,116]), UString::from(CjkFontRoleClassifierTestSupport::cjk_font_role_classifier_test_support_c(UStr::new(&[69,110,103,108,105,115,104]), 0, 1).unwrap().name()).as_ustr(), None).unwrap();
     });
 }
 
 #[test]
 fn classifies_unicode_emoji_presentation_without_reclassifying_plain_keycap_bases() {
     testlib::run("org.tiqian.font.CjkFontRoleClassifierTest.classifiesUnicodeEmojiPresentationWithoutReclassifyingPlainKeycapBases", "org.tiqian.font.CjkFontRoleClassifierTest.classifiesUnicodeEmojiPresentationWithoutReclassifyingPlainKeycapBases", || {
-        TestTraceRecorder::new("CjkFontRoleClassifierTest").section(&"classifiesUnicodeEmojiPresentationWithoutReclassifyingPlainKeycapBases");
-        let xs = vec!["⌚".to_string(), "🀄".to_string(), "🫪".to_string()];
+        TestTraceRecorder::new(&(UStr::new(&[67,106,107,70,111,110,116,82,111,108,101,67,108,97,115,115,105,102,105,101,114,84,101,115,116]))).section(UStr::new(&[99,108,97,115,115,105,102,105,101,115,85,110,105,99,111,100,101,69,109,111,106,105,80,114,101,115,101,110,116,97,116,105,111,110,87,105,116,104,111,117,116,82,101,99,108,97,115,115,105,102,121,105,110,103,80,108,97,105,110,75,101,121,99,97,112,66,97,115,101,115]));
+        let xs = vec![
+    UString::from("⌚").to_ustring(),
+    UString::from("🀄").to_ustring(),
+    UString::from("🫪").to_ustring(),
+];
         let mut xi = 0u32;
-        while (i32::from_ne_bytes((xi).to_ne_bytes())) < (i32::from_ne_bytes((u32::try_from((xs.len()) & 0xFFFF_FFFF).unwrap_or(0)).to_ne_bytes())) {
+        while (i32::from_ne_bytes(((xi) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((xs.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
             let x = (xs[usize::try_from(xi).unwrap_or(0)]).clone();
-            let _ = TracedAssertions::traced_assertions_assert_equals_rendered(&"Emoji", CjkFontRoleClassifierTestSupport::cjk_font_role_classifier_test_support_c(x.as_str(), 0, u_string::unit_count(&(x))).unwrap().name().to_string().as_str(), Some((x).to_string())).unwrap();
+            let _ = TracedAssertions::traced_assertions_assert_equals_rendered(UStr::new(&[69,109,111,106,105]), UString::from(CjkFontRoleClassifierTestSupport::cjk_font_role_classifier_test_support_c(x.as_ustr(), 0, u_string::unit_count(&(x))).unwrap().name()).as_ustr(), Some((x).to_ustring())).unwrap();
             xi = u32::wrapping_add(xi, 1);
         }
-        let _ = TracedAssertions::traced_assertions_assert_equals_rendered(&"LatinText", CjkFontRoleClassifierTestSupport::cjk_font_role_classifier_test_support_c(&"1", 0, 1).unwrap().name().to_string().as_str(), None).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_equals_rendered(&"Symbol", CjkFontRoleClassifierTestSupport::cjk_font_role_classifier_test_support_c(&"❤", 0, 1).unwrap().name().to_string().as_str(), None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_equals_rendered(UStr::new(&[76,97,116,105,110,84,101,120,116]), UString::from(CjkFontRoleClassifierTestSupport::cjk_font_role_classifier_test_support_c(UStr::new(&[49]), 0, 1).unwrap().name()).as_ustr(), None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_equals_rendered(UStr::new(&[83,121,109,98,111,108]), UString::from(CjkFontRoleClassifierTestSupport::cjk_font_role_classifier_test_support_c(UStr::new(&[10084]), 0, 1).unwrap().name()).as_ustr(), None).unwrap();
     });
 }
