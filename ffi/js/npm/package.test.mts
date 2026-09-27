@@ -166,7 +166,7 @@ test("every engine module ships a source map with embedded sources", async () =>
   // Cutover mechanism note: the facade and the line-break wire translation
   // are hand-written entry shims, not engine modules; the embedded-sources
   // contract keeps applying to the Kotlin-generated engine modules.
-  const entryShims = new Set(["facade.mjs", "linebreak-facade.mjs", "clreq-facade.mjs", "loweringhelper-facade.mjs"]);
+  const entryShims = new Set(["facade.mjs", "linebreak-facade.mjs", "clreq-facade.mjs", "font-facade.mjs", "loweringhelper-facade.mjs"]);
   for (const module of modules) {
     if (entryShims.has(module)) continue;
     const map = `${module}.map`;

@@ -1,18 +1,13 @@
-// Type surface of the public entry (src/facade.mjs). The four Kotlin-runtime
-// exports reuse the generated declarations; the line-break, clreq and
+// Type surface of the public entry (src/facade.mjs). The two Kotlin-runtime
+// exports reuse the generated declarations; the line-break, clreq, font and
 // lowering-helper exports are declared here beside their JavaScript
 // implementations. The export order matches src/facade.mjs and the
 // compatibility contract in package.test.mts.
 
 import {
-  fontMetricsResolve,
-  fontFallbackResolve,
   precomputeParagraphWithDiagnostics,
   precomputeParagraphWithBrowserMetrics,
 } from "./Tiqian-tiqian-ffi-js.d.mts";
-
-declare function bopomofoParse(reading: string): string;
-declare function numberSymbolCohesionUnbreakableRanges(text: string): string;
 
 declare function liangHyphenate(
   word: string,
@@ -22,6 +17,15 @@ declare function liangHyphenate(
   rightMin?: number,
 ): string;
 declare function unicodePunctuationLineBreakClassOf(codePoint: number): string;
+declare function bopomofoParse(reading: string): string;
+declare function numberSymbolCohesionUnbreakableRanges(text: string): string;
+declare function fontMetricsResolve(requestJson: string): string;
+declare function fontFallbackResolve(
+  text: string,
+  start: number,
+  end: number,
+  requestJson: string,
+): string;
 declare function classifyFontRole(text: string, start: number, end: number, locale: string): string;
 declare function classifyFontRoles(
   text: string,
