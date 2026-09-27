@@ -21,5 +21,7 @@ org.tiqian.protocol.RevisionTest
 -D runtime-import=org.tiqian.boring.runtime
 org.tiqian.protocol.NamedError
 org.tiqian.protocol.NamedErrorTest
+org.tiqian.protocol.ParagraphRequest
+org.tiqian.protocol.ParagraphRequestTest
 runtime.UString
 runtime.TestCore
