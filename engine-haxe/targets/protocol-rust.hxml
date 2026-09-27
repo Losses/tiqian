@@ -1,7 +1,13 @@
 # Stage A protocol Rust generation entry (canonical byte form only).
 # Run from the worktree root:
 #   nix develop -c bash -c 'haxe engine-haxe/targets/protocol-rust.hxml'
-engine-haxe/targets/common.hxml
+# Shared compiler configuration for every engine-haxe generation entry.
+-lib reflaxe
+-lib boring
+-cp .haxelib/boring/git/samples
+-cp engine-haxe/src
+-cp engine-haxe/macros
+--macro haxe.macro.Compiler.addGlobalMetadata('org.tiqian', '@:build(std.RecordMember.build())')
 -cp .haxelib/boring/git/packages/compiler
 -cp .haxelib/boring/git/samples
 -cp .haxelib/boring/git/packages/compiler/reflaxe/rust/std-shadow
