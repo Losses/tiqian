@@ -640,7 +640,7 @@ class PlanPacked {
         final decos:Array<Plan.PlanDecorationSegment> = [];
         for (i in 0...dsc) {
             final kr = r.u32();
-            decos.push({kind: pool[kr], left: r.f64(), top: r.f64(), right: r.f64()});
+            decos.push({kind: pool[kr], left: r.f64(), top: r.f64(), right: r.f64(), sourceRangeStart: 0, sourceRangeEnd: 0});
         }
         // Emphasis dots
         final dots:Array<Plan.PlanEmphasisDot> = [];

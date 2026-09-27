@@ -106,34 +106,40 @@ class PlanLowering {
                 final ck = rangeKey(c.range);
                 if (!(c.displayText.length > 0 || zero.has(ck) || (renderEvidence && inlineAdvance.has(ck))))
                     continue;
-                // Build PlanCell
-                final inlineObj = inlineAdvance.has(ck) ? inlineAdvance.get(ck) : null;
                 final natW:Float = natural.has(ck) ? natural.get(ck) : c.advance;
-                final glyphW:Float = inlineObj == null ? natW : inlineObj;
-                final advOverride = (c.advance != glyphW) ? c.advance : null;
-                final renderFam = fonts.has(ck) ? fonts.get(ck) : null;
-                final sd = shaping.get(ck);
-                final dash = sd != null ? sd.strategy : null;
-                final lang = sd != null ? sd.language : null;
-                final face = sd != null ? sd.resolvedFace : null;
-                final gIds = glyphIds.has(ck) && glyphIds.get(ck).length > 0 ? glyphIds.get(ck).join(",") : null;
-                final ev = sd != null ? sd.reason : null;
-                final pd = punct.get(ck);
-                final inkFloor:Null<Float> = (pd != null && pd.inkContainmentApplied && pd.inkContainmentBodyFloor != null) ? pd.inkContainmentBodyFloor : null;
-                final bodyW:Null<Float> = (inkFloor != null) ? pd.bodyWidth : null;
-                var latin = false;
-                final fdSrc = result.debug.fontDecisions;
-                for (fi in 0...fdSrc.length) {
-                    final fd = fdSrc[fi];
-                    if (c.range.start >= fd.range.start && c.range.end <= fd.range.end && fd.role == Type.enumConstructor(FontRole.LatinText))
-                        latin = true;
+                var inlineObj:Null<Float> = null; var advOverride:Null<Float> = null;
+                var renderFam:Null<String> = null; var dash:Null<String> = null;
+                var lang:Null<String> = null; var face:Null<String> = null;
+                var gIds:Null<String> = null; var ev:Null<String> = null;
+                var inkFloor:Null<Float> = null; var bodyW:Null<Float> = null;
+                var latin = false; var styleDelta:Null<PlanStyleDelta> = null;
+                if (renderEvidence) {
+                    inlineObj = inlineAdvance.has(ck) ? inlineAdvance.get(ck) : null;
+                    final glyphW:Float = inlineObj == null ? natW : inlineObj;
+                    advOverride = (c.advance != glyphW) ? c.advance : null;
+                    renderFam = fonts.has(ck) ? fonts.get(ck) : null;
+                    final sd = shaping.get(ck);
+                    dash = sd != null ? sd.strategy : null;
+                    lang = sd != null ? sd.language : null;
+                    face = sd != null ? sd.resolvedFace : null;
+                    gIds = glyphIds.has(ck) && glyphIds.get(ck).length > 0 ? glyphIds.get(ck).join(",") : null;
+                    ev = sd != null ? sd.reason : null;
+                    final pd = punct.get(ck);
+                    inkFloor = (pd != null && pd.inkContainmentApplied && pd.inkContainmentBodyFloor != null) ? pd.inkContainmentBodyFloor : null;
+                    bodyW = (inkFloor != null) ? pd.bodyWidth : null;
+                    final fdSrc = result.debug.fontDecisions;
+                    for (fi in 0...fdSrc.length) {
+                        final fd = fdSrc[fi];
+                        if (c.range.start >= fd.range.start && c.range.end <= fd.range.end && fd.role == Type.enumConstructor(FontRole.LatinText))
+                            latin = true;
+                    }
+                    final cs = styleAt(result, c.range.start);
+                    styleDelta = if (cs != result.input.textStyle) {
+                        fontSize: cs.fontSize != result.input.textStyle.fontSize ? cs.fontSize : null,
+                        fontWeight: cs.fontWeight != result.input.textStyle.fontWeight ? cs.fontWeight : null,
+                        italic: cs.italic != result.input.textStyle.italic ? cs.italic : null,
+                    } else null;
                 }
-                final cs = styleAt(result, c.range.start);
-                final styleDelta:Null<PlanStyleDelta> = if (cs != result.input.textStyle) {
-                    fontSize: cs.fontSize != result.input.textStyle.fontSize ? cs.fontSize : null,
-                    fontWeight: cs.fontWeight != result.input.textStyle.fontWeight ? cs.fontWeight : null,
-                    italic: cs.italic != result.input.textStyle.italic ? cs.italic : null,
-                } else null;
                 cells.push({
                     rangeStart: c.range.start, rangeEnd: c.range.end,
                     source: c.text, display: c.displayText,
@@ -228,7 +234,7 @@ class PlanLowering {
             for (si in 0...segSrc.length) {
                 final s = segSrc[si];
                 if (s.kind == Type.enumConstructor(DecorationKind.ProperNoun) || s.kind == Type.enumConstructor(DecorationKind.BookTitle))
-                    decorationSegments.push({kind: s.kind, left: s.left, top: s.top, right: s.right});
+                    decorationSegments.push({kind: s.kind, left: s.left, top: s.top, right: s.right, sourceRangeStart: s.sourceRange.start, sourceRangeEnd: s.sourceRange.end});
             }
             final dotSrc = result.debug.decorationDecisions;
             for (di in 0...dotSrc.length) {
