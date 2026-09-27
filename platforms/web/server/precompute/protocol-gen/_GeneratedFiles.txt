@@ -71,6 +71,8 @@ org/tiqian/protocol/paragraph_request_test.rs
 org/tiqian/protocol/paragraph_request_test_support.rs
 org/tiqian/protocol/revision.rs
 org/tiqian/protocol/snapshot_table_binary.rs
+org/tiqian/protocol/snapshot_table_binary_test.rs
+org/tiqian/protocol/snapshot_table_test_support.rs
 org/tiqian/protocol/style_row.rs
 org/tiqian/protocol/table_data.rs
 org/tiqian/protocol/table_input.rs

@@ -22,10 +22,10 @@ impl UnicodeEmojiModifierBaseData {
         while (i32::from_ne_bytes((low).to_ne_bytes())) <= i32::from_ne_bytes((high).to_ne_bytes()) {
             let middle = u32::wrapping_add(low, high) >> 1;
             let base = u32::wrapping_mul(middle, 2);
-            if i32::from_ne_bytes((code_point).to_ne_bytes()) < (i32::from_ne_bytes((RANGES[usize::try_from(base).unwrap_or(0)]).to_ne_bytes())) {
+            if i32::from_ne_bytes((code_point).to_ne_bytes()) < ({ let v: u32 = RANGES[usize::try_from(base).unwrap_or(0)]; i32::from_ne_bytes(v.to_ne_bytes()) }) {
                 high = u32::wrapping_sub(middle, 1);
             } else {
-                if i32::from_ne_bytes((code_point).to_ne_bytes()) > (i32::from_ne_bytes((RANGES[usize::try_from(u32::wrapping_add(base, 1)).unwrap_or(0)]).to_ne_bytes())) {
+                if i32::from_ne_bytes((code_point).to_ne_bytes()) > ({ let v: u32 = RANGES[usize::try_from(u32::wrapping_add(base, 1)).unwrap_or(0)]; i32::from_ne_bytes(v.to_ne_bytes()) }) {
                     low = u32::wrapping_add(middle, 1);
                 } else {
                     return true;

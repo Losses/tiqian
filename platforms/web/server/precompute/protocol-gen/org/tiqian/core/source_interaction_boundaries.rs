@@ -37,7 +37,7 @@ impl SourceInteractionBoundaries {
             if boundary == target {
                 return target;
             }
-            if i32::from_ne_bytes((boundary).to_ne_bytes()) < (i32::from_ne_bytes((target).to_ne_bytes())) {
+            if ({ let v: u32 = boundary; i32::from_ne_bytes(v.to_ne_bytes()) }) < (i32::from_ne_bytes((target).to_ne_bytes())) {
                 previous = boundary;
             } else {
                 next = boundary;
