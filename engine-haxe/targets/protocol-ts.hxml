@@ -1,0 +1,21 @@
+# Stage A protocol TypeScript generation entry (canonical byte form only).
+# Run from the worktree root:
+#   nix develop -c bash -c 'haxe engine-haxe/targets/protocol-ts.hxml'
+# Shared compiler configuration for every engine-haxe generation entry.
+-lib reflaxe
+-lib boring
+-cp .haxelib/boring/git/samples
+-cp engine-haxe/src
+-cp engine-haxe/macros
+--macro haxe.macro.Compiler.addGlobalMetadata('org.tiqian', '@:build(std.RecordMember.build())')
+-cp .haxelib/boring/git/packages/compiler/reflaxe/ts/std-shadow
+-cp .haxelib/boring/git/packages/compiler/reflaxe/ts
+--macro Intercept.run(['engine-haxe/src', '.haxelib/boring/git/samples'])
+--macro tscompiler.Compiler.use()
+-D ts-test-runner=bun
+-D runtime-import=@tiqian/runtime
+-D runtime-emit=.
+-D package-shell=none
+org.tiqian.protocol.WireValue
+org.tiqian.protocol.Canonical
+org.tiqian.protocol.CanonicalTest
