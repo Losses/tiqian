@@ -19,3 +19,5 @@
 org.tiqian.protocol.WireValue
 org.tiqian.protocol.Canonical
 org.tiqian.protocol.CanonicalTest
+org.tiqian.protocol.SnapshotTableBinary
+org.tiqian.protocol.SnapshotTableBinaryTest
