@@ -137,3 +137,40 @@
 - npm 测试（cd platforms/web/server/core && npm test，Node v22.23.1）：13 pass / 3 fail / 57 skip。三处 fail 均为 main 既有（本席改动前后同一集合，逐一核对）：test/paragraph-request.test.ts 整文件 ERR_MODULE_NOT_FOUND——main 版（b7169e08 第 8-10 行）以 .js 规范式导入 .ts 源，Node ESM 不映射；改 .ts 规范式后可加载但 import { DecorationInput }（生成 typedef 仅 export type）在 Node 纯语法 strip-types 下保留为值导入报 SyntaxError（bun 全语义 lane 不受限）；test/transport.test.ts:123/:145 assert.ok(transport) 同源（.js 规范式导入 src 失败）。fonts.test.ts（FFI 错误名断言 :105-108）全部 SKIP——native addon 未在本工作树构建（build:native 需 mac/长链）。可跑的 npm 侧名字验证=驱动器 bun lane（test protocol-ts 跑 gen-tests，含 NamedErrorTest 与 ParagraphRequestTest）。
 - P5b 交接（t-mujjhdqh-a7h0）：protocol-kotlin 束已就绪（boring.json 第 83 行，root 现为 NamedError/NamedErrorTest）；Kotlin 出口=engine-haxe/out/protocol-kotlin/gen（驱动器派生，spec 59:62-67），vendored 出口=ffi/js/src/jsMain/kotlin/org/tiqian/protocol/（现含 NamedError.kt 与 NamedErrorNames.kt）。P5b 将请求模型类加入同一束 root 并从同一 gen 出口搬运。
 - C1 交接（不变）：TS client 三站点 markdown-lowering.ts:778/:815、lifecycle.ts:265、astro/integration.ts:110 属 C1 四条 JS 接线；生成物出口=platforms/web/server/core/src/protocol-gen/org/tiqian/protocol/NamedError.ts（kind 判别式 + NamedError 常量对象），消费侧从该 vendored 路径导入，不复制名字字面量。
+## 表二进制读写（Stage1-P2 补记，生成器修订 4f412c6a）
+
+### BytesInput/BytesOutput 与端序（stdlib/02-haxe-io-buffers-and-inputs.md）
+- :11 `haxe.io.BytesBuffer ... carries no built-in multi-byte endianness dispatch`。
+- :12-13 API 面：BytesInput 提供 readByte/readInt32/readDouble/readString 与 bigEndian 属性；BytesOutput 提供 writeInt32/writeDouble。
+- :15 裁定原文：`To maintain strict IEEE 754 bit-identical float representations across all targets, this repository bypasses BytesInput/BytesOutput endian methods in favor of explicit bitwise operations and haxe.io.FPHelper conversions`。
+- :215 Ruling：统一原语集 `readU16/writeU16, readU32/writeU32, readF64/writeF64`，加固定长 ASCII 读写。
+- :217 边界检查位置：`Bounds checking lives in reader slice extraction ... and writer capacity growth (ensure in TypeScript, growable BytesBuffer in Haxe, Vec::extend_from_slice in Rust)`。
+- :24-38 样例形态：writer 手拆字节 addByte，f64 经 `FPHelper.doubleToI64` 取 high/low 两个 u32；reader 用 Bytes.get 逐字节组装。该样例是大端；TIQTBL03 全小端，出参顺序反转即可。
+
+结论：P2 的 Reader/Writer 不用 BytesInput/BytesOutput，用 BytesBuffer.addByte + Bytes.get + FPHelper（stdlib/05:89-92 `FPHelper continues to carry binary64 bit patterns through high and low words`），与 Canonical.hx 的 Writer 同形态。
+
+### haxe.Json 不在子集内（stdlib/ 全目录检索）
+- docs/specs/ 下 grep `haxe.Json` 与 `Json.parse` 零命中；stdlib/06-std-modules.md、stdlib/12-std-string.md 均未列 JSON。
+- 结论：face/typography/valueStyle/revision 四个 JSON 文本区，Haxe 侧只做字节区搬运（写入方收已序列化的 canonical JSON 文本，读取方交回原始文本），JSON.parse/stable_stringify 留平台壳；这符合 6.2 节「出口语言零手写读写代码」——JSON 解析不属于字节读写。
+
+### TIQTBL03 布局与语义权威（既有实现）
+- snapshot_table_binary.rs:9-35 布局注释：magic "TIQTBL03" 8 字节 + 12 个 u32 计数（56 字节头），string/delta 区 u32 增量自隐式零累加。
+- snapshot-table-binary.ts:8-13 常量：HEADER_U32_COUNT=12、METRIC_POOL_ROW_BYTES=40、PROBE_STYLE_ROW_BYTES=25、ABSENT_METRIC_BITS=0x7ff8000000000000n。
+- table-binary-writer.ts:200-253 region 顺序逐项：strings(delta+bytes)、metric 六列、valuePool(5xf64)、probe 三列、advancePool(f64)、stylePool(25B)、features(delta+bytes, 行=u16 count+count x u32)、face/typography/valueStyle/fontPreload 四个 delta+bytes、revisionText 尾区。
+- metric 行排序键 (familiesRef, weight, italic, roleRef, faceSelectionRef)：snapshot_table_binary.rs:109-118 total_cmp；table-binary-writer.ts:132-137 数值比较。f64 排序比较在 Haxe 侧的形态待取证（total_cmp 与 JS < 的 NaN 行为不同；表内容 weight 为正常值时等价）。
+
+## FPHelper.i64ToDouble 调用形态（P2 补记，修正版，pin 4f412c6a）
+- 规定签名以 boring 仓库样品为准：samples/boring/BinaryReader.hx:40-44 `return haxe.io.FPHelper.i64ToDouble(low, high);`（低位字在前），同族 samples/boring/Fp32.hx:35/:52/:56 一致。
+- 运行时互逆性：gen/runtime.ts doubleToI64 返回 {high: getUint32(0), low: getUint32(4)}（DataView 默认大端），i64ToDouble(low, high) 做 setUint32(0, high); setUint32(4, low)，两者严格互逆。
+- 撤回：本文件早前一版把「生成出 i64ToDouble(high, low)」判为发射端缺陷，实为 P2 源码自身把参数序写反（400.0 解成 5.34416817e-315 正是高低字互换位形）；发射端按源序转发行为正确，不向 boring 提修复。
+- 手册新增比对规则（队长 2026-09-27 落 PIT）：凡「目标侧签名/参数序不符」结论，第四步之前必须先从 samples/boring/** 与对应 spec 抄下同一调用的签名做比对，不得以对 std 的印象为基准。
+
+## assembly-record 冻结产物标注（P2，提交 5d366296）
+
+- tools/schema 两个生成器已删除，ffi/schema 的 assembly-record TS/Rust DTO 产物在 5d366296 冻结；ffi/schema/FROZEN.md 就地标注，P5 接线前不得当作可重生成产物。
+
+## Rust decodeInto weight 读数待查（P2 遗留，pin 4f412c6a）
+
+- 现象：同一份冻结字节（weight=400.0，LE 字节 00 00 00 00 00 00 79 40 已核在位），TS decodeInto 解出 400，Rust decodeInto 解出 0.0（27/28 快照测试，唯一失败 restore_keeps_rows_and_the_url_stable）。
+- 已排除：壳层 Json 降级与字符串表映射（instrument 证实进入 decode_into 前文件字节正确、之后 TableData.metric_rows[0].weight=0.0）。
+- 待办：按四步取证追 Rust 目标 TableReader.f64 的降级与 FPHelper::i64_to_double 调用（Rust 运行时签名 (low, high) 与 TS 一致，但需核对 Rust 发射端参数转发与 u32 组装路径），并核对 cutover 席 f1b28bd3 之后的发射端修正是否覆盖。

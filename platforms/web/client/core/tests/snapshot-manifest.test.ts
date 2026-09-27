@@ -4,8 +4,8 @@ import test from "node:test";
 import { expandSnapshotManifest } from "../src/sampler/snapshot/snapshot-manifest.js";
 import type { SnapshotManifestWire, SnapshotTablesPin } from "../src/sampler/snapshot/snapshot-manifest.js";
 import { metricReplayKey, shapeReplayKey } from "../src/sampler/snapshot/snapshot-schema.js";
-import { writeBinaryTable } from "../src/sampler/snapshot/table-binary-writer.js";
-import type { BinaryTableInput } from "../src/sampler/snapshot/table-binary-writer.js";
+import { writeBinaryTable } from "../src/sampler/snapshot/table-binary-encode.js";
+import type { BinaryTableInput } from "../src/sampler/snapshot/table-binary-encode.js";
 import { decodeSnapshotTableBinary } from "../src/sampler/snapshot/snapshot-table-binary.js";
 
 /** Helper to create a valuesEm array with nulls */
