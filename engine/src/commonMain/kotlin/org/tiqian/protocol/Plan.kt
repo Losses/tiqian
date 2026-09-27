@@ -55,7 +55,9 @@ data class PlanDecorationSegment(
     var kind: String,
     var left: Double,
     var top: Double,
-    var right: Double
+    var right: Double,
+    var sourceRangeStart: Int,
+    var sourceRangeEnd: Int
 )
 
 data class PlanEmphasisDot(
