@@ -57,7 +57,7 @@ if (result.status === 0) {
   } else {
     const runtimeDirectory = fileURLToPath(new URL("./runtime/", import.meta.url));
     await mkdir(runtimeDirectory, { recursive: true });
-    for (const facadeFile of ["facade.mjs", "facade.d.mts", "linebreak-facade.mjs"]) {
+    for (const facadeFile of ["facade.mjs", "facade.d.mts", "linebreak-facade.mjs", "loweringhelper-facade.mjs"]) {
       await copyFile(fileURLToPath(new URL(`./src/${facadeFile}`, import.meta.url)), runtimeDirectory + facadeFile);
     }
   }
