@@ -24,7 +24,8 @@ export class ParagraphRequestChecks {
     if (request.fontWeight < 1 || request.fontWeight > 1000) {
       throw new ParagraphRequestException(NamedError.InvalidFontWeight);
     }
-    const gapEm = (request.emphasisDotGapEm === null ? 0.1 : request.emphasisDotGapEm);
+    const rawGapEm = request.emphasisDotGapEm;
+    const gapEm = (rawGapEm === null ? 0.1 : rawGapEm);
     if (!Number.isFinite(gapEm) || gapEm < 0.0) {
       throw new ParagraphRequestException(NamedError.InvalidEmphasisDotGapEm);
     }
