@@ -89,12 +89,12 @@ export class UnicodeCombiningMarkData {
 
   public static contains(codePoint: number): boolean {
     let low = 0;
-    let high = Math.trunc(Array.from(RANGES).length >> 1) - 1;
+    let high = Math.trunc(RANGES.length >> 1) - 1;
     while (low <= high) {
       const middle = low + high >> 1;
       const base = middle * 2;
-      const start = Array.from(RANGES)[base]!;
-      const end = Array.from(RANGES)[base + 1]!;
+      const start = RANGES[base]!;
+      const end = RANGES[base + 1]!;
       if (codePoint < start) {
         high = middle - 1;
       } else {

@@ -371,19 +371,19 @@ export class EastAsianSpacingData {
 
   public static lookup(codePoint: number): EastAsianSpacingValue {
     let low = 0;
-    let high = Math.trunc(Array.from(RANGES).length / 3) - 1;
+    let high = Math.trunc(RANGES.length / 3) - 1;
     while (low <= high) {
       const middle = low + high >> 1;
       const base = middle * 3;
-      const start = Array.from(RANGES)[base]!;
-      const end = Array.from(RANGES)[base + 1]!;
+      const start = RANGES[base]!;
+      const end = RANGES[base + 1]!;
       if (codePoint < start) {
         high = middle - 1;
       } else {
         if (codePoint > end) {
           low = middle + 1;
         } else {
-          const value = Array.from(RANGES)[base + 2]!;
+          const value = RANGES[base + 2]!;
           if (value === 0) {
             return EastAsianSpacingValue.Wide;
           }
