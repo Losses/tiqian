@@ -163,10 +163,11 @@ test("every engine module ships a source map with embedded sources", async () =>
     modules.length >= 4,
     "the runtime keeps the full module set (engine is a single published module)",
   );
-  // Cutover mechanism note: the facade and the line-break wire translation
-  // are hand-written entry shims, not engine modules; the embedded-sources
-  // contract keeps applying to the Kotlin-generated engine modules.
-  const entryShims = new Set(["facade.mjs", "linebreak-facade.mjs", "clreq-facade.mjs", "font-facade.mjs", "loweringhelper-facade.mjs"]);
+  // Cutover mechanism note: every shipped module is now a hand-written entry
+  // shim over the compiled engine-gen tree; the Kotlin-generated engine
+  // modules left the package with the precompute cutover, so the
+  // embedded-sources contract applies to the facades' own maps only.
+  const entryShims = new Set(["facade.mjs", "linebreak-facade.mjs", "clreq-facade.mjs", "font-facade.mjs", "loweringhelper-facade.mjs", "precompute-facade.mjs"]);
   for (const module of modules) {
     if (entryShims.has(module)) continue;
     const map = `${module}.map`;
@@ -200,6 +201,118 @@ test("the engine entry loads from the package exports surface", async () => {
   assert.equal(typeof ffi.precomputeParagraphWithBrowserMetrics, "function");
   assert.match(import.meta.resolve("@tiqian/ffi"), /facade\.mjs$/u);
 });
+
+test("precompute entries run the generated engine through host callbacks", async () => {
+  const ffi = (await import("@tiqian/ffi")) as unknown as FfiExports;
+
+  const shapeCalls: string[] = [];
+  const metricsCalls: string[] = [];
+  const shapeJson = (requestJson: string): string => {
+    shapeCalls.push(requestJson);
+    const raw = JSON.parse(requestJson) as { range?: { start: number; end: number } };
+    const start = raw.range?.start ?? 0;
+    const end = raw.range?.end ?? start;
+    return JSON.stringify({
+      clusters: [{ range: { start, end }, text: "字", displayText: "字", fontKey: "font", advance: 10 * (end - start), baselineShift: 0 }],
+      glyphRuns: [{ range: { start, end }, fontKey: "font", glyphs: [{ id: 65, clusterRange: { start, end }, advance: 10 * (end - start), x: 0, y: 0 }], advance: 10 * (end - start), openTypeFeatures: [] }],
+      decisions: [],
+    });
+  };
+  const metricsJson = (requestJson: string): string => {
+    metricsCalls.push(requestJson);
+    return JSON.stringify({ ascent: 0.8, descent: -0.2, leading: 0, source: "RawTables" });
+  };
+
+  const request: PrepareParagraphRequest = {
+    text: "汉字，",
+    maxWidthPx: 200,
+    fontFamilies: ["Test", "Fallback"],
+    fontSizePx: 16,
+    lineHeightPx: 24,
+    locale: "zh-Hans",
+    fontWeight: 400,
+    italic: false,
+    firstLineIndentIc: 0,
+    lineLengthGridEnabled: false,
+    sourceBoundaries: [],
+    textSpans: [],
+    inlineBoxes: [],
+    lineBreakSpans: [],
+    inlineObjects: [],
+    decorations: [],
+    emphasisDotGapEm: null,
+    renderEvidenceOverride: null,
+  };
+
+  const exact = ffi.precomputeParagraphWithDiagnostics(request, 0.05, shapeJson, metricsJson);
+  // The plan rides inside the plan-plus-diagnostics envelope as an escaped
+  // JSON string (the same wire shape the retired Kotlin codec produced), so
+  // the envelope is decoded before the plan body is inspected.
+  const exactEnvelope = JSON.parse(exact) as { plan: string; diagnostics: unknown };
+  assert.ok(exactEnvelope.plan.includes('"schema":1'), "the exact-session entry returns a plan envelope");
+  assert.ok(exactEnvelope.diagnostics !== undefined, "the exact-session entry carries the diagnostics object");
+  assert.equal(shapeCalls.length > 0, true, "the engine shaped through the host callback");
+  assert.equal(metricsCalls.length > 0, true, "the engine resolved metrics through the host callback");
+
+  shapeCalls.length = 0;
+  metricsCalls.length = 0;
+  const browser = ffi.precomputeParagraphWithBrowserMetrics(request, 0.05, {
+    shapeJson,
+    metricsJson,
+  });
+  const browserEnvelope = JSON.parse(browser) as { plan: string };
+  assert.ok(browserEnvelope.plan.includes('"schema":1'), "the browser-metrics entry returns a plan envelope");
+  assert.equal(shapeCalls.length > 0, true, "the callbacks-object form reaches the same engine");
+});
+
+test("precompute entries keep the domain validation error names", async () => {
+  const ffi = (await import("@tiqian/ffi")) as unknown as FfiExports;
+
+  const empty = { ...basePrecomputeRequest(), text: "" };
+  assert.throws(
+    () => ffi.precomputeParagraphWithDiagnostics(empty, 0.05, () => "{}", () => "{}"),
+    (error: Error) => error.name === "IllegalArgumentException" && error.message === "EmptyParagraph",
+  );
+  assert.throws(
+    () => ffi.precomputeParagraphWithBrowserMetrics({ ...empty }, 0.05, { shapeJson: () => "{}", metricsJson: () => "{}" }),
+    (error: Error) => error.name === "IllegalArgumentException" && error.message === "EmptyParagraph",
+  );
+
+  const zeroWidth = { ...basePrecomputeRequest(), maxWidthPx: 0 };
+  assert.throws(
+    () => ffi.precomputeParagraphWithDiagnostics(zeroWidth, 0.05, () => "{}", () => "{}"),
+    (error: Error) => error.name === "IllegalArgumentException" && error.message === "InvalidMaximumMeasure",
+  );
+
+  const zeroSize = { ...basePrecomputeRequest(), fontSizePx: 0 };
+  assert.throws(
+    () => ffi.precomputeParagraphWithBrowserMetrics(zeroSize, 0.05, { shapeJson: () => "{}", metricsJson: () => "{}" }),
+    (error: Error) => error.name === "IllegalArgumentException" && error.message === "InvalidFontSize",
+  );
+});
+
+function basePrecomputeRequest(): PrepareParagraphRequest {
+  return {
+    text: "汉字，",
+    maxWidthPx: 200,
+    fontFamilies: ["Test"],
+    fontSizePx: 16,
+    lineHeightPx: 24,
+    locale: "zh-Hans",
+    fontWeight: 400,
+    italic: false,
+    firstLineIndentIc: 0,
+    lineLengthGridEnabled: false,
+    sourceBoundaries: [],
+    textSpans: [],
+    inlineBoxes: [],
+    lineBreakSpans: [],
+    inlineObjects: [],
+    decorations: [],
+    emphasisDotGapEm: null,
+    renderEvidenceOverride: null,
+  };
+}
 
 test("classifyFontRole maps classifier roles to lowering role strings", async () => {
   const ffi = (await import("@tiqian/ffi")) as unknown as FfiExports;
