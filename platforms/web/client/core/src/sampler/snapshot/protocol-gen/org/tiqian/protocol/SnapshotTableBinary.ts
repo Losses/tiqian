@@ -279,18 +279,20 @@ export class SnapshotTableBinary {
     while (indexIdx < table.metrics.length) {
       const row = table.metrics[indexIdx]!;
       const entry = new MetricEntry(interner.intern(row.serializedFamilies), row.fontWeight, (row.italic ? 1 : 0), interner.intern(row.role), interner.intern(row.faceSelectionText), 0);
+      entry.valuesEm = row.valuesEm;
       metricEntries.push(entry);
       indexIdx++;
     }
     SnapshotTableBinary.sortMetricRows(metricEntries);
     const valuePool = new Array<ValueRow>();
+    const pooled = new Array<MetricEntry>();
     indexIdx = 0;
     while (indexIdx < metricEntries.length) {
-      const values = table.metrics[indexIdx]!.valuesEm;
-      metricEntries[indexIdx]!.valuePoolRef = SnapshotTableBinary.poolRefOf(valuePool, values);
+      const sorted = metricEntries[indexIdx]!;
+      pooled.push(new MetricEntry(sorted.familiesRef, sorted.weight, sorted.italic, sorted.roleRef, sorted.faceSelectionRef, SnapshotTableBinary.poolRefOf(valuePool, sorted.valuesEm)));
       indexIdx++;
     }
-    data.metricRows = metricEntries;
+    data.metricRows = pooled;
     data.valuePool = valuePool;
     const advancePool = new Array<number>();
     const stylePool = new Array<StyleRow>();
