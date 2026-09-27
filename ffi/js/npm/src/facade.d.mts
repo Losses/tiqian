@@ -57,6 +57,67 @@ export interface PrepareParagraphRequest {
   renderEvidenceOverride: boolean | null;
 }
 
+// Wire element types of the layout request channel. The Kotlin/JS @JsExport
+// interfaces they carried (ffi/js/src/jsMain/kotlin/org/tiqian/ffi/js/
+// LayoutRequestDtos.kt, retired with the JS cutover) keep their public field
+// names: precompute-facade.mjs translates these names onto the generated
+// engine-internal ones (span.fontFamilies -> families, span.fontSize ->
+// fontSizePx), so the wire names are the public protocol and must not be
+// aliased onto TextSpanInput and friends. The declarations above are the
+// single source: each type is derived from PrepareParagraphRequest instead
+// of repeating its field list.
+export type TextSpanWire = PrepareParagraphRequest["textSpans"][number];
+export type InlineBoxWire = PrepareParagraphRequest["inlineBoxes"][number];
+export type LineBreakSpanWire = PrepareParagraphRequest["lineBreakSpans"][number];
+export type InlineObjectWire = PrepareParagraphRequest["inlineObjects"][number];
+export type DecorationWire = PrepareParagraphRequest["decorations"][number];
+
+// Worker-only wire types. SemanticSpanWire and RenderInlineBoxWire never
+// entered the generated ParagraphRequest protocol model, so no generated
+// counterpart exists; their shapes are declared here as the single source,
+// matching the retired Kotlin/JS @JsExport interfaces field for field.
+export interface SemanticSpanWire {
+  start: number;
+  end: number;
+  tagName: string;
+  attributes: string[][];
+  sourceIndex: number;
+  order: number;
+}
+
+export interface RenderInlineBoxWire {
+  start: number;
+  end: number;
+  inlineStartPx: number;
+  inlineEndPx: number;
+  outerSpacing: string;
+}
+
+// The worker layout request: the shared paragraph fields plus the
+// worker-only extras (renderEvidence, semantics, renderInlineBoxes,
+// sourceTag). Mirrors the retired @JsExport interface WorkerLayoutRequest.
+export interface WorkerLayoutRequest {
+  text: string;
+  maxWidthPx: number;
+  fontFamilies: string[];
+  fontSizePx: number;
+  lineHeightPx: number;
+  locale: string;
+  fontWeight: number;
+  italic: boolean;
+  firstLineIndentIc: number;
+  lineLengthGridEnabled: boolean;
+  sourceBoundaries: number[];
+  textSpans: TextSpanWire[];
+  inlineBoxes: InlineBoxWire[];
+  lineBreakSpans: LineBreakSpanWire[];
+  inlineObjects: InlineObjectWire[];
+  renderEvidence: boolean;
+  semantics: SemanticSpanWire[];
+  renderInlineBoxes: RenderInlineBoxWire[];
+  sourceTag: string;
+}
+
 declare function liangHyphenate(
   word: string,
   patternsJson: string,
@@ -113,4 +174,3 @@ export {
   precomputeParagraphWithDiagnostics,
   precomputeParagraphWithBrowserMetrics,
 };
-
