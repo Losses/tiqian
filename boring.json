@@ -1,23 +1,39 @@
-// tiqian's bundle project (boring feature spec 59). The driver derives every
+// tiqian's Haxe build and test project (boring feature spec 59). The driver derives every
 // output directory (<outRoot>/<id>/gen and <outRoot>/<id>/gen-tests) and every
 // results path (<resultsDir>/<id>.jsonl) from this file; none is named here.
 //
-//   each bundle's run.env carries the per-test budget the repository records
+//   each configuration's run.env carries the per-test budget the repository records
 //   (600000 ms): the boring runtime falls back to a 6 s budget when
 //   BORING_TEST_TIMEOUT_MS is unset, and eleven cases of this suite run longer
 //   than that on this machine, so they would be reported as timeouts.
-// The generator revision is the checkout at tiqian/.haxelib/boring/git: the
-// driver only decides which defines and which toolchain commands run, and the
-// code it emits is whatever that revision contains.
+// The flake pins the boring compiler and driver to one revision. Each Rust
+// package declares its own metadata below; the generator does not borrow
+// tiqian's license from the boring repository.
 {
   "outRoot": "engine-haxe/out",
   "resultsDir": "engine-haxe/out/test-results",
   "baseline": "kotlin-f32",
   "sourceRoots": ["engine-haxe/src", "engine-haxe/macros"],
+  "sourceSets": {
+    "engine": {
+      "types": ["runtime.UString", "runtime.TestCore"],
+      "discover": [
+        {
+          "root": "engine-haxe/src",
+          "packages": [
+            "org.tiqian.core", "org.tiqian.layout", "org.tiqian.font",
+            "org.tiqian.clreq", "org.tiqian.shaping", "org.tiqian.linebreak"
+          ],
+          "suffix": "Test"
+        }
+      ]
+    }
+  },
   "bundles": [
     {
       "id": "kotlin-f32",
       "target": "kotlin",
+      "sourceSet": "engine",
       "rootsFile": "engine-haxe/targets/kotlin-f32.hxml",
       "run": {
         "env": { "BORING_TEST_TIMEOUT_MS": "600000" }
@@ -26,6 +42,7 @@
     {
       "id": "kotlin-f64",
       "target": "kotlin",
+      "sourceSet": "engine",
       "rootsFile": "engine-haxe/targets/kotlin-f64.hxml",
       "run": {
         "env": { "BORING_TEST_TIMEOUT_MS": "600000" }
@@ -34,6 +51,7 @@
     {
       "id": "ts",
       "target": "ts",
+      "sourceSet": "engine",
       "rootsFile": "engine-haxe/targets/ts.hxml",
       "run": {
         "env": { "BORING_TEST_TIMEOUT_MS": "600000" }
@@ -42,6 +60,7 @@
     {
       "id": "swift-f32",
       "target": "swift",
+      "sourceSet": "engine",
       "rootsFile": "engine-haxe/targets/swift-f32.hxml",
       "run": {
         "env": { "BORING_TEST_TIMEOUT_MS": "600000" }
@@ -50,6 +69,7 @@
     {
       "id": "swift-f64",
       "target": "swift",
+      "sourceSet": "engine",
       "rootsFile": "engine-haxe/targets/swift-f64.hxml",
       "run": {
         "env": { "BORING_TEST_TIMEOUT_MS": "600000" }
@@ -58,6 +78,7 @@
     {
       "id": "dart",
       "target": "dart",
+      "sourceSet": "engine",
       "rootsFile": "engine-haxe/targets/dart.hxml",
       "run": {
         "env": { "BORING_TEST_TIMEOUT_MS": "600000" }
@@ -75,6 +96,7 @@
       "id": "protocol-rust",
       "target": "rust",
       "rootsFile": "engine-haxe/targets/protocol-rust.hxml",
+      "package": { "name": "tiqian-protocol-gen", "version": "0.1.0", "license": "MPL-2.0" },
       "run": {
         "env": { "BORING_TEST_TIMEOUT_MS": "600000" }
       }
@@ -95,12 +117,19 @@
       // No test step: the entry is a writer, not a test.
       "id": "protocol-c",
       "target": "haxe",
+      "test": false,
+      "afterGen": {
+        "command": "bun",
+        "args": ["engine-haxe/out/protocol-c/gen/c-header.js"]
+      },
       "rootsFile": "engine-haxe/targets/protocol-c.hxml"
     },
     {
       "id": "engine-rust-f32",
       "target": "rust",
+      "sourceSet": "engine",
       "rootsFile": "engine-haxe/targets/rust-f32.hxml",
+      "package": { "name": "tiqian-engine-gen", "version": "0.1.0", "license": "MPL-2.0" },
       "run": {
         "env": { "BORING_TEST_TIMEOUT_MS": "600000" }
       }
@@ -108,7 +137,9 @@
     {
       "id": "engine-rust-f64",
       "target": "rust",
+      "sourceSet": "engine",
       "rootsFile": "engine-haxe/targets/rust-f64.hxml",
+      "package": { "name": "tiqian-engine-gen", "version": "0.1.0", "license": "MPL-2.0" },
       "run": {
         "env": { "BORING_TEST_TIMEOUT_MS": "600000" }
       }

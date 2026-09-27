@@ -1,21 +1,20 @@
 # 跨平台一致性修复经验（2026-09-20）
 
 本文记录 tiqian engine-haxe 生成到多语言目标（TypeScript/Kotlin/Rust/Swift/Dart）时，
-跨平台行为一致性调查与修复的经验。这些经验来自一次完整的调查：ts 测试束 499 个 fail
-按根因分类、派发子 Agent 并行修复、验证效果。
+跨平台行为一致性调查与修复的经验。这些经验来自一次调查：研究者将 ts 目标测试中的 499 个失败按根因分类，派发子 Agent 并行修复，再验证效果。
 
 ## 背景
 
 tiqian 的排版引擎用 Haxe 编写（engine-haxe/），通过 boring 编译器生成到
 Kotlin/TypeScript/Rust/Swift/Dart 五种目标。跨平台一致性的金标准是 Legacy Kotlin 引擎
-（engine/）生成的 golden 轨迹。boring 的 test-consistency 机制：每个目标运行同一套
-`@:test` 测试束，写 jsonl，manager 以 kotlin 为 baseline 比对 verdict 一致性。
+（engine/）生成的 golden 轨迹。boring 的 test-consistency 机制让每个目标运行同一组
+`@:test` 用例并写入 jsonl；manager 以 kotlin 为 baseline 比对 verdict 一致性。
 
 ## 核心经验
 
 ### 1. 跨平台不一致的根因大多在 boring 生成器，不在引擎
 
-ts 测试束 499 个 fail 中，95%（476 个）来自 boring ts 生成器的 3 个缺陷，不是引擎行为差异。
+boring ts 生成器的 3 个缺陷造成 476 个失败，占 499 个 ts 目标测试失败的 95%。
 修复位置都在 boring 的 `packages/compiler/reflaxe/ts/`。这印证了"金标准是 golden"——
 引擎行为正确，是生成器没正确翻译。
 

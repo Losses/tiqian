@@ -1,8 +1,7 @@
-# Stage A protocol Kotlin generation entry (revision constants only).
-# Stage A protocol Kotlin generation entry (NamedError family).
+# Protocol Kotlin generation entry for revision constants, errors, and requests.
 # Run from the worktree root:
 #   nix develop -c bash -c 'haxe engine-haxe/targets/protocol-kotlin.hxml'
-# Shared compiler configuration for every engine-haxe generation entry.
+# Protocol sources do not use the engine's golden-data macro or class roots.
 -lib reflaxe
 -lib boring
 -cp .haxelib/boring/git/samples
@@ -13,12 +12,10 @@
 -cp .haxelib/boring/git/packages/compiler/reflaxe/kotlin
 --macro Intercept.run(['engine-haxe/src', '.haxelib/boring/git/samples'])
 --macro kotlincompiler.Compiler.use()
--D runtime-import=org.tiqian.protocol.runtime
+-D runtime-import=org.tiqian.boring.runtime
 -D runtime-emit=runtime
 org.tiqian.protocol.Revision
 org.tiqian.protocol.RevisionTest
---macro Intercept.run(['engine-haxe/src'])
--D runtime-import=org.tiqian.boring.runtime
 org.tiqian.protocol.NamedError
 org.tiqian.protocol.NamedErrorTest
 org.tiqian.protocol.ParagraphRequest

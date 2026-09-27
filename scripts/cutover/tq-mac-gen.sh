@@ -1,10 +1,8 @@
 #!/usr/bin/env bash
 # tq-mac-gen.sh — run one whole generate+build round on Mac.
 #
-# Revision discipline (2026-09-27): the emitted code comes from the generator pin
-# tiqian/.haxelib/boring/git, so the default boring checkout IS that pin. The
-# sibling boring/ checkout on master is a different revision and must be passed
-# explicitly if it is really what this round tests.
+# Revision discipline: the default generator is the writable copy of the flake
+# pin at tiqian/.haxelib/boring/git. An explicit checkout is also supported.
 #
 # Mac memory discipline: the Mac has 8 cores and 16 GB. Only one round may run at
 # a time, which the flock below enforces; do not bypass this script to run a
@@ -36,10 +34,27 @@ command -v flock >/dev/null 2>&1 && flock 9
 exec >>"$LOG" 2>&1
 set -x
 
-PIN_DIRTY=$(git -C "$WS/tiqian/.haxelib/boring/git" status --porcelain | wc -l)
-[ "$PIN_DIRTY" != "0" ] && { echo "### 终止：vendored pin 有 $PIN_DIRTY 处改动，所有以 pin 为输入的读数作废（PIT-63）。"; exit 6; }
+if ! (cd "$WS/$TIQIAN" && nix develop -c true); then
+  echo "### 终止：无法准备 flake 固定的编译器与 HXML 根类型。"
+  exit 6
+fi
+
+if [ -f "$WS/$BORING/.boring-flake-revision" ]; then
+  BORING_REV=$(cat "$WS/$BORING/.boring-flake-revision")
+  BORING_SOURCE=$(cat "$WS/$BORING/.boring-flake-source")
+  if [ ! -d "$BORING_SOURCE" ] || \
+     ! diff -qr "$BORING_SOURCE/packages" "$WS/$BORING/packages" >/dev/null || \
+     ! diff -qr "$BORING_SOURCE/samples" "$WS/$BORING/samples" >/dev/null; then
+    echo "### 终止：flake 固定的 boring 副本与源修订不一致。"
+    exit 6
+  fi
+else
+  BORING_REV=$(git -C "$WS/$BORING" rev-parse --short HEAD)
+  PIN_DIRTY=$(git -C "$WS/$BORING" status --porcelain | wc -l)
+  [ "$PIN_DIRTY" != "0" ] && { echo "### 终止：boring 检出有 $PIN_DIRTY 处改动。"; exit 6; }
+fi
 DIRTY=$(cd "$WS/$TIQIAN" && git status --porcelain | grep -v '^??' | wc -l)
-echo "### [$LABEL] boring=$BORING($(cd $WS/$BORING && git rev-parse --short HEAD)) tiqian=$TIQIAN($(cd $WS/$TIQIAN && git rev-parse --short HEAD)) 未提交改动=${DIRTY}处"
+echo "### [$LABEL] boring=$BORING($BORING_REV) tiqian=$TIQIAN($(cd "$WS/$TIQIAN" && git rev-parse --short HEAD)) 未提交改动=${DIRTY}处"
 [ "$DIRTY" != "0" ] && { echo "### 终止：tiqian 工作树有未提交改动，读数会混入它们。"; exit 2; }
 
 rsync -a --delete "$WS/$BORING/packages/" "mac:~/tq-rust/$LABEL-boring/packages/"
@@ -63,7 +78,7 @@ engine-haxe/targets/classes.hxml
 -D runtime-import=crate::runtime
 -D runtime-emit=runtime
 -D package-name=tiqian-engine-gen
--D package-license=MIT
+-D package-license=MPL-2.0
 -D rust-output=$OUT/src
 -D float-precision=f32
 std.UStringException
