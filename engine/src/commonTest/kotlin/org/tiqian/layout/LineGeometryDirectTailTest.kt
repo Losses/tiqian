@@ -148,7 +148,7 @@ class LineGeometryDirectTailTest {
         // The span keeps the decision alive; zero lines leave every per-line
         // list empty, so the maxExtra elvis falls back to exactly zero.
         assertNotNull(decision)
-        assertEquals(0.0f, decision!!.maxExtra)
+        assertEquals(0.0f, decision.maxExtra)
     }
 
     private fun objectBoundaryCase(
