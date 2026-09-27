@@ -5,10 +5,6 @@ import { ParagraphRequestError } from "./ParagraphRequestError.js";
 import { ParagraphRequestException } from "./ParagraphRequestException.js";
 
 export class ParagraphRequestChecks {
-  public static issueName(error: ParagraphRequestError): string {
-    return ParagraphRequestException.describe(error);
-  }
-
   public static validate(request: ParagraphRequest): void {
     if (request.text.length === 0 || ParagraphRequestChecks.isBlankText(request.text)) {
       throw new ParagraphRequestException(ParagraphRequestError.EmptyParagraph);

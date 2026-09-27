@@ -10,11 +10,6 @@ class ParagraphRequestChecks {
     /** The Kotlin lane's default emphasis dot gap (TextModel.kt:421). */
     public static inline var DEFAULT_EMPHASIS_DOT_GAP_EM:Float = 0.1;
 
-    /** The published issue name of one domain variant. */
-    public static function issueName(error:ParagraphRequestError):String {
-        return ParagraphRequestException.describe(error);
-    }
-
     /**
      * Runs every domain check in the documented order and throws the
      * ParagraphRequestException of the first failure. A request that comes
