@@ -139,16 +139,16 @@ class SnapshotTableBinary {
         writer.raw(Bytes.ofString(data.revisionText));
         return writer.finish();
     }
-    public static function decode(bytes:Bytes):DecodeResult {
+    /**
+     * Decodes into the caller-provided stored form and returns "" on
+     * success, or the named issue. The out-parameter form keeps the enum
+     * payload out of the exit languages' derive/Debug surface.
+     */
+    public static function decodeInto(bytes:Bytes, data:TableData):String {
         final reader = new TableReader(bytes);
-        final magic = reader.takeRaw(8);
-        if (reader.failed) {
-            return DecodeResult.TErr(reader.issue);
+        if (!reader.matchMagic()) {
+            return reader.issue;
         }
-        if (!magicEquals(magic)) {
-            return DecodeResult.TErr("SnapshotTablesInvalid");
-        }
-        final data = new TableData();
         data.replayStringCount = reader.u32();
         final stringCount = reader.u32();
         final metricCount = reader.u32();
@@ -248,13 +248,13 @@ class SnapshotTableBinary {
         data.valueStyleTexts = reader.textRegion(valueStyleCount);
         data.fontPreloadTexts = reader.textRegion(fontPreloadCount);
         if (reader.failed) {
-            return DecodeResult.TErr(reader.issue);
+            return reader.issue;
         }
         data.revisionText = reader.restText();
         if (reader.failed) {
-            return DecodeResult.TErr(reader.issue);
+            return reader.issue;
         }
-        return DecodeResult.TOk(data);
+        return "";
     }
 
     public static function sortMetricRows(rows:Array<MetricEntry>):Array<MetricEntry> {
@@ -291,20 +291,6 @@ class SnapshotTableBinary {
         return a.faceSelectionRef < b.faceSelectionRef;
     }
 
-    static function magicEquals(magic:Bytes):Bool {
-        final expected = Bytes.ofString(MAGIC);
-        if (magic.length != expected.length) {
-            return false;
-        }
-        var indexIdx:Int = 0;
-        while (indexIdx < expected.length) {
-            if (magic.get(indexIdx) != expected.get(indexIdx)) {
-                return false;
-            }
-            indexIdx++;
-        }
-        return true;
-    }
     static function lower(table:TableInput):TableData {
         final data = new TableData();
         data.replayStringCount = table.replayStrings.length;
@@ -410,7 +396,7 @@ class SnapshotTableBinary {
             if (left == null || right == null) {
                 return false;
             }
-            if (!f64BitsEqual(left, right)) {
+            if (left != right) {
                 return false;
             }
             indexIdx++;
@@ -574,7 +560,11 @@ private class TableWriter {
     }
 
     public function raw(bytes:Bytes):Void {
-        buf.add(bytes);
+        var indexIdx:Int = 0;
+        while (indexIdx < bytes.length) {
+            buf.addByte(bytes.get(indexIdx));
+            indexIdx++;
+        }
     }
 
     public function u8(value:Int):Void {
@@ -665,13 +655,23 @@ private class TableReader {
         return FPHelper.i64ToDouble(low, high);
     }
 
-    public function takeRaw(length:Int):Bytes {
-        if (!need(length)) {
-            return Bytes.alloc(0);
+    /** Compares the next 8 bytes against the expected magic; consumes them on match. */
+    public function matchMagic():Bool {
+        if (!need(8)) {
+            return false;
         }
-        final value = bytes.sub(pos, length);
-        pos += length;
-        return value;
+        final expected = Bytes.ofString(SnapshotTableBinary.MAGIC);
+        var indexIdx:Int = 0;
+        while (indexIdx < 8) {
+            if (bytes.get(pos + indexIdx) != expected.get(indexIdx)) {
+                failed = true;
+                issue = "SnapshotTablesInvalid";
+                return false;
+            }
+            indexIdx++;
+        }
+        pos += 8;
+        return true;
     }
 
     public function featureRow():Array<Int> {
