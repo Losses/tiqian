@@ -11,14 +11,14 @@ package org.tiqian.protocol;
  * name.
  */
 class ParagraphRequestException extends haxe.Exception {
-    public final error:ParagraphRequestError;
+    public final error:NamedError;
 
-    public function new(error:ParagraphRequestError) {
+    public function new(error:NamedError) {
         this.error = error;
         super(ParagraphRequestException.describe(error));
     }
 
-    public static function describe(error:ParagraphRequestError):String {
+    public static function describe(error:NamedError):String {
         return switch (error) {
             case EmptyParagraph: "EmptyParagraph";
             case InvalidMaximumMeasure: "InvalidMaximumMeasure";

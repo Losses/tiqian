@@ -9,7 +9,7 @@ package org.tiqian.protocol;
  * (platforms/web/server/precompute/engine/src/paragraph.rs:23-66,
  * ParagraphRequest). A consumer ignores the fields its lane does not use.
  * Validation lives in ParagraphRequestChecks; the domain issue names in
- * ParagraphRequestError. The wire-parsing issue names of the separator
+ * NamedError. The wire-parsing issue names of the separator
  * encoding (InvalidDecorationWire, InvalidTextSpanWire and friends) are
  * deliberately absent: they named the string packing, which does not
  * exist in the typed model.

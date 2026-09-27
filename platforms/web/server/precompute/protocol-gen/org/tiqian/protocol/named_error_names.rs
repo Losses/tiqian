@@ -1,4 +1,4 @@
-use crate::org::tiqian::protocol::named_error::NamedError;
+use crate::org::tiqian::protocol::paragraph_request_exception::NamedError;
 
 
 #[derive(Clone, Copy)]

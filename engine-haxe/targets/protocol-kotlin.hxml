@@ -16,3 +16,5 @@
 -D runtime-emit=runtime
 org.tiqian.protocol.NamedError
 org.tiqian.protocol.NamedErrorTest
+runtime.UString
+runtime.TestCore

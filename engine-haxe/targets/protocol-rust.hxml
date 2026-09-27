@@ -25,5 +25,6 @@ org.tiqian.protocol.ParagraphRequestTest
 org.tiqian.protocol.NamedError
 org.tiqian.protocol.NamedErrorTest
 runtime.SortedTable
+runtime.TestCore
 runtime.UString
 std.UStringException
