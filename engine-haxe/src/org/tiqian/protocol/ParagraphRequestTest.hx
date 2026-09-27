@@ -52,35 +52,30 @@ class ParagraphRequestTest {
     public static function spanChecksCoverRangeFamiliesAndNumbers():Void {
         final recorder = new org.tiqian.test.trace.TestTraceRecorder("ParagraphRequestTest");
         recorder.section("spanChecksCoverRangeFamiliesAndNumbers");
-        final base = ParagraphRequestTestSupport.request();
-        final span:TextSpanInput = {
-            start: 2,
-            end: 1,
-            families: ["Fake CJK"],
-            fontSizePx: 16.0,
-            fontWeight: 400,
-            italic: false,
-            baselineShift: 0.0,
-        };
-        base.textSpans = [span];
-        org.tiqian.test.trace.TracedAssertions.assertEqualsString("InvalidTextSpanRange", ParagraphRequestTestSupport.issueOf(base));
-        span.start = 0;
-        span.end = 9;
-        org.tiqian.test.trace.TracedAssertions.assertEqualsString("InvalidTextSpanRange", ParagraphRequestTestSupport.issueOf(base));
-        span.end = 2;
-        span.families = [" "];
-        org.tiqian.test.trace.TracedAssertions.assertEqualsString("MissingTextSpanFontFamilies", ParagraphRequestTestSupport.issueOf(base));
-        span.families = [std.UString.fromCodePoint(0x200B)];
-        ParagraphRequestChecks.validate(base);
-        span.families = ["Fake CJK"];
-        span.fontSizePx = 0.0;
-        org.tiqian.test.trace.TracedAssertions.assertEqualsString("InvalidTextSpanFontSize", ParagraphRequestTestSupport.issueOf(base));
-        span.fontSizePx = 16.0;
-        span.fontWeight = 1001;
-        org.tiqian.test.trace.TracedAssertions.assertEqualsString("InvalidTextSpanFontWeight", ParagraphRequestTestSupport.issueOf(base));
-        span.fontWeight = 400;
-        span.baselineShift = Math.NaN;
-        org.tiqian.test.trace.TracedAssertions.assertEqualsString("InvalidTextSpanBaselineShift", ParagraphRequestTestSupport.issueOf(base));
+        // Each assertion rebuilds the request and the span literal: the
+        // Rust/Kotlin lanes clone the fixture into the request (value
+        // semantics), so in-place span mutation would not reach the checks.
+        final rangeBase = ParagraphRequestTestSupport.request();
+        rangeBase.textSpans = [{ start: 2, end: 1, families: ["Fake CJK"], fontSizePx: 16.0, fontWeight: 400, italic: false, baselineShift: 0.0 }];
+        org.tiqian.test.trace.TracedAssertions.assertEqualsString("InvalidTextSpanRange", ParagraphRequestTestSupport.issueOf(rangeBase));
+        final rangeBase2 = ParagraphRequestTestSupport.request();
+        rangeBase2.textSpans = [{ start: 0, end: 9, families: ["Fake CJK"], fontSizePx: 16.0, fontWeight: 400, italic: false, baselineShift: 0.0 }];
+        org.tiqian.test.trace.TracedAssertions.assertEqualsString("InvalidTextSpanRange", ParagraphRequestTestSupport.issueOf(rangeBase2));
+        final familiesBase = ParagraphRequestTestSupport.request();
+        familiesBase.textSpans = [{ start: 0, end: 2, families: [" "], fontSizePx: 16.0, fontWeight: 400, italic: false, baselineShift: 0.0 }];
+        org.tiqian.test.trace.TracedAssertions.assertEqualsString("MissingTextSpanFontFamilies", ParagraphRequestTestSupport.issueOf(familiesBase));
+        final zeroWidthBase = ParagraphRequestTestSupport.request();
+        zeroWidthBase.textSpans = [{ start: 0, end: 2, families: [std.UString.fromCodePoint(0x200B)], fontSizePx: 16.0, fontWeight: 400, italic: false, baselineShift: 0.0 }];
+        ParagraphRequestChecks.validate(zeroWidthBase);
+        final fontSizeBase = ParagraphRequestTestSupport.request();
+        fontSizeBase.textSpans = [{ start: 0, end: 2, families: ["Fake CJK"], fontSizePx: 0.0, fontWeight: 400, italic: false, baselineShift: 0.0 }];
+        org.tiqian.test.trace.TracedAssertions.assertEqualsString("InvalidTextSpanFontSize", ParagraphRequestTestSupport.issueOf(fontSizeBase));
+        final weightBase = ParagraphRequestTestSupport.request();
+        weightBase.textSpans = [{ start: 0, end: 2, families: ["Fake CJK"], fontSizePx: 16.0, fontWeight: 1001, italic: false, baselineShift: 0.0 }];
+        org.tiqian.test.trace.TracedAssertions.assertEqualsString("InvalidTextSpanFontWeight", ParagraphRequestTestSupport.issueOf(weightBase));
+        final baselineBase = ParagraphRequestTestSupport.request();
+        baselineBase.textSpans = [{ start: 0, end: 2, families: ["Fake CJK"], fontSizePx: 16.0, fontWeight: 400, italic: false, baselineShift: Math.NaN }];
+        org.tiqian.test.trace.TracedAssertions.assertEqualsString("InvalidTextSpanBaselineShift", ParagraphRequestTestSupport.issueOf(baselineBase));
     }
 
     @:test
@@ -97,12 +92,15 @@ class ParagraphRequestTest {
         final breaks = ParagraphRequestTestSupport.request();
         breaks.lineBreakSpans = [{ start: 0, end: 5, policy: "ProgressiveTechnical" }];
         org.tiqian.test.trace.TracedAssertions.assertEqualsString("InvalidLineBreakSpanRange", ParagraphRequestTestSupport.issueOf(breaks));
+        // Two independent fixtures: {2,3} is a legal range against the
+        // 4-unit default text, so the range and geometry assertions must
+        // not share one request (the range check runs first).
         final boxes = ParagraphRequestTestSupport.request();
-        boxes.inlineBoxes = [{ start: 2, end: 3, inlineStart: 1.0, inlineEnd: 2.0, outerSpacing: "Narrow" }];
+        boxes.inlineBoxes = [{ start: 2, end: 5, inlineStart: 1.0, inlineEnd: 2.0, outerSpacing: "Narrow" }];
         org.tiqian.test.trace.TracedAssertions.assertEqualsString("InvalidInlineBoxRange", ParagraphRequestTestSupport.issueOf(boxes));
-        boxes.inlineBoxes[0].start = 0;
-        boxes.inlineBoxes[0].inlineEnd = Math.NaN;
-        org.tiqian.test.trace.TracedAssertions.assertEqualsString("InvalidInlineBoxGeometry", ParagraphRequestTestSupport.issueOf(boxes));
+        final geometry = ParagraphRequestTestSupport.request();
+        geometry.inlineBoxes = [{ start: 0, end: 3, inlineStart: 1.0, inlineEnd: Math.NaN, outerSpacing: "Narrow" }];
+        org.tiqian.test.trace.TracedAssertions.assertEqualsString("InvalidInlineBoxGeometry", ParagraphRequestTestSupport.issueOf(geometry));
     }
 
     @:test
