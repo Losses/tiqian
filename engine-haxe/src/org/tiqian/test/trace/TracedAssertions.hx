@@ -634,7 +634,11 @@ class TracedAssertions {
         byte-identical to the caller-side ternary form.
     **/
     public static function recordRenderedNotNullValue<T>(value:Null<T>, nullText:String, renderedText:String, ?message:String):Void {
-        recordEvent("not-null", [field("actual", value == null ? nullText : renderedText), msgField(message)]);
+        final text:String = switch value {
+            case null: nullText;
+            case _: renderedText;
+        };
+        recordEvent("not-null", [field("actual", text), msgField(message)]);
     }
 
     /**
