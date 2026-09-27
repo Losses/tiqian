@@ -132,8 +132,10 @@ class CanonicalTestSupport {
         ]);
     }
 
-    public static function assertHex(recorder:org.tiqian.test.trace.TestTraceRecorder, label:String, expected:String, result:EncodeResult):Void {
-        recorder.record(label);
-        org.tiqian.test.trace.TracedAssertions.assertEqualsString(expected, hexOf(result), label);
+    public static function assertHex(label:String, expected:String, result:EncodeResult):Void {
+        final actual = hexOf(result);
+        if (actual != expected) {
+            throw new org.tiqian.core.IllegalStateException("golden mismatch " + label + ": actual " + actual + " expected " + expected);
+        }
     }
 }
