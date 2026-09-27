@@ -2167,10 +2167,10 @@ String::from_utf16_lossy(&[(u32::wrapping_sub(u_string::unit_at(&(a[usize::try_f
     }
 
     pub(crate) fn prepared_paragraph_fns_compare_digit_strings(a: &str, b: &str) -> u32 {
-    let __units10 = u_string::units(&b);
     let __units9 = u_string::units(&a);
-    let __count10 = u_string::unit_count(&b);
+    let __units10 = u_string::units(&b);
     let __count9 = u_string::unit_count(&a);
+    let __count10 = u_string::unit_count(&b);
         if __count9 != __count10 {
             return u32::wrapping_sub(__count9, __count10);
         }
