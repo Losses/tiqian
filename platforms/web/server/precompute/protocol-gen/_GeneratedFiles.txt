@@ -6,7 +6,6 @@ org/tiqian/protocol/inline_box_input.rs
 org/tiqian/protocol/inline_object_input.rs
 org/tiqian/protocol/js_coerce.rs
 org/tiqian/protocol/line_break_span_input.rs
-org/tiqian/protocol/named_error.rs
 org/tiqian/protocol/named_error_names.rs
 org/tiqian/protocol/wire_field.rs
 org/tiqian/protocol/paragraph_request_checks.rs

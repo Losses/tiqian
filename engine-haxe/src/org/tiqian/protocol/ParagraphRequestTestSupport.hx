@@ -31,7 +31,7 @@ class ParagraphRequestTestSupport {
      * which the Rust target does not land; the literals mirror
      * ParagraphRequestException.describe, the message function of
      * features/06. */
-    public static function issueNameOf(error:ParagraphRequestError):String {
+    public static function issueNameOf(error:NamedError):String {
         return switch (error) {
             case EmptyParagraph: "EmptyParagraph";
             case InvalidMaximumMeasure: "InvalidMaximumMeasure";
