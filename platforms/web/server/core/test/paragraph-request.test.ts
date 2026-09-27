@@ -5,9 +5,9 @@
 //   (cd platforms/web/server/core && npm test -- paragraph-request)
 import test from "node:test";
 import assert from "node:assert/strict";
-import { ParagraphRequestChecks } from "../src/protocol-gen/org/tiqian/protocol/ParagraphRequestChecks.js";
-import type { ParagraphRequest } from "../src/protocol-gen/org/tiqian/protocol/ParagraphRequest.js";
-import { ParagraphRequestException } from "../src/protocol-gen/org/tiqian/protocol/ParagraphRequestException.js";
+import { ParagraphRequestChecks } from "../lib/protocol-gen/org/tiqian/protocol/ParagraphRequestChecks.js";
+import type { ParagraphRequest } from "../lib/protocol-gen/org/tiqian/protocol/ParagraphRequest.js";
+import { ParagraphRequestException } from "../lib/protocol-gen/org/tiqian/protocol/ParagraphRequestException.js";
 
 const ideographicSpace = String.fromCodePoint(0x3000);
 const nbsp = String.fromCodePoint(0x00a0);
