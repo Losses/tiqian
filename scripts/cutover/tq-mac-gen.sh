@@ -63,7 +63,7 @@ engine-haxe/targets/classes.hxml
 -D runtime-import=crate::runtime
 -D runtime-emit=runtime
 -D package-name=tiqian-engine-gen
--D package-license=MIT
+-D package-license=MPL-2.0
 -D rust-output=$OUT/src
 -D float-precision=f32
 std.UStringException

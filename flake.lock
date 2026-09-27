@@ -1,5 +1,32 @@
 {
   "nodes": {
+    "boring": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ],
+        "nixpkgs-libxml2": "nixpkgs-libxml2",
+        "reflaxe": "reflaxe",
+        "rust-overlay": [
+          "rust-overlay"
+        ],
+        "swift-system": "swift-system"
+      },
+      "locked": {
+        "lastModified": 1790538532,
+        "narHash": "sha256-F5FBdj5bXK1vKh99fUZIDckWArkszGvYPNQHHzpVgc4=",
+        "owner": "Losses",
+        "repo": "boring",
+        "rev": "011dd739a153c1526d044b52503adad4690317cb",
+        "type": "github"
+      },
+      "original": {
+        "owner": "Losses",
+        "repo": "boring",
+        "rev": "011dd739a153c1526d044b52503adad4690317cb",
+        "type": "github"
+      }
+    },
     "nixpkgs": {
       "locked": {
         "lastModified": 1786719841,
@@ -13,8 +40,43 @@
         "type": "indirect"
       }
     },
+    "nixpkgs-libxml2": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1735563628,
+        "narHash": "sha256-OnSAY7XDSx7CtDoqNh8jwVwh4xNL/2HaJxGjryLWzX8=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "b134951a4c9f3c995fd7be05f3243f8ecd65d798",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NixOS",
+        "ref": "nixos-24.05",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
+    "reflaxe": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1695723412,
+        "narHash": "sha256-UcBYX/5iNmI0XoMCOD8d2HRBr/B3k5wRabODT0jhaK0=",
+        "owner": "SomeRanDev",
+        "repo": "reflaxe",
+        "rev": "9fa459a0b4436d1706db6495823b81f2947ff7a0",
+        "type": "github"
+      },
+      "original": {
+        "owner": "SomeRanDev",
+        "ref": "v3.0.0",
+        "repo": "reflaxe",
+        "type": "github"
+      }
+    },
     "root": {
       "inputs": {
+        "boring": "boring",
         "nixpkgs": "nixpkgs",
         "rust-overlay": "rust-overlay"
       }
@@ -36,6 +98,23 @@
       "original": {
         "owner": "oxalica",
         "repo": "rust-overlay",
+        "type": "github"
+      }
+    },
+    "swift-system": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1784232161,
+        "narHash": "sha256-lyreYu1Wwsqrvio3Y+FU28K0BmmiIMvKyCbqsF+oLZA=",
+        "owner": "apple",
+        "repo": "swift-system",
+        "rev": "0b30161977799fd949f7f6848586b82ff6764f73",
+        "type": "github"
+      },
+      "original": {
+        "owner": "apple",
+        "repo": "swift-system",
+        "rev": "0b30161977799fd949f7f6848586b82ff6764f73",
         "type": "github"
       }
     }

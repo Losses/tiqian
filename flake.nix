@@ -7,10 +7,15 @@
       url = "github:oxalica/rust-overlay";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    boring = {
+      url = "github:Losses/boring/011dd739a153c1526d044b52503adad4690317cb";
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.rust-overlay.follows = "rust-overlay";
+    };
   };
 
   outputs =
-    { self, nixpkgs, rust-overlay }:
+    { self, nixpkgs, rust-overlay, boring }:
     let
       systems = [
         "x86_64-linux"
@@ -60,15 +65,14 @@
               [
                 jdk
                 nodejs_22
+                bun
+                boring.packages.${pkgs.stdenv.hostPlatform.system}.driver
                 git
                 rustToolchain
                 haxe
-                # Toolchains the engine-haxe bundles compile and run with,
-                # so the driver finds them on PATH from this shell. Swift is
-                # the exception: its wrapper enters an FHS root through
-                # bubblewrap, which the sandbox refuses to nest, so a swift
-                # bundle is built through a swiftc shim placed on PATH (see
-                # engine-haxe/README.md).
+                # Toolchains used by engine-haxe generation and tests. Swift
+                # uses the swiftc wrapper described in
+                # engine-haxe/README.md.
                 dart
                 kotlin
               ]
@@ -99,6 +103,27 @@
                 pkgs.libxrender
               ]
             );
+            shellHook = ''
+              export HAXELIB_PATH="$PWD/.haxelib"
+              mkdir -p "$HAXELIB_PATH/boring"
+              boring_git="$HAXELIB_PATH/boring/git"
+              if [ ! -f "$boring_git/.boring-flake-revision" ] || \
+                 [ "$(cat "$boring_git/.boring-flake-revision")" != "011dd739a153c1526d044b52503adad4690317cb" ]; then
+                if [ -e "$boring_git" ] || [ -L "$boring_git" ]; then
+                  boring_backup="$boring_git.pre-flake-$(date +%Y%m%d%H%M%S)"
+                  mv "$boring_git" "$boring_backup"
+                  echo "tiqian devShell: saved previous boring checkout at $boring_backup" >&2
+                fi
+                mkdir -p "$boring_git"
+                cp -a "${boring}/." "$boring_git/"
+                chmod -R u+w "$boring_git"
+                printf '%s\n' "011dd739a153c1526d044b52503adad4690317cb" > "$boring_git/.boring-flake-revision"
+              fi
+              haxelib dev boring "$boring_git" >/dev/null
+              haxelib dev reflaxe "${boring.inputs.reflaxe}" >/dev/null
+              haxelib install format 3.8.0 >/dev/null
+              haxelib install formatter 1.18.0 >/dev/null
+            '';
           };
         }
       );
