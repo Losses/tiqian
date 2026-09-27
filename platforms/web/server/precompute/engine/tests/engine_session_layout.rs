@@ -2,7 +2,6 @@
 //! Slice C). The fixture font is the system font the session parity harness
 //! uses; the test skips with a reason when the file is absent.
 
-#![cfg(tiqian_engine_link)]
 
 use std::path::PathBuf;
 

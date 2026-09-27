@@ -17,7 +17,6 @@
 //! `<plaintext>` diverge between the two parsers; prose hosts do not produce
 //! them and the mismatch/order errors they induce stay out of parity scope.
 
-#![cfg(tiqian_engine_link)]
 
 use std::path::PathBuf;
 

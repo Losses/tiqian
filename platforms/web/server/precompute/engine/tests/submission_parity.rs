@@ -4,7 +4,6 @@
 //! same input, and the layered cache must serve the recorded artifact back
 //! through the hash-only marker. The engine archive must be linked.
 
-#![cfg(tiqian_engine_link)]
 
 use std::path::PathBuf;
 use std::sync::Arc;

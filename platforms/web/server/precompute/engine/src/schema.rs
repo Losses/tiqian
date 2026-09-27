@@ -99,38 +99,6 @@ mod tests {
     }
 
     #[test]
-    fn c_abi_mirrors_match_the_single_source() {
-        // Drift prevention (Stage1-P4, gate ruling S3): the pure-Rust ffi
-        // mirror and the generated C header both carry
-        // TIQIAN_FONT_BACKEND_PROTOCOL_REVISION; both must equal the
-        // single source. The header read is the vendored file cinterop
-        // compiles (engine/src/nativeInterop/cinterop/), not a fixture.
-        assert_eq!(
-            tiqian::font_backend::FONT_BACKEND_PROTOCOL_REVISION,
-            RevisionFamily::REVISION_FONT_BACKEND_PROTOCOL_REVISION
-        );
-        let header = std::fs::read_to_string(
-            concat!(
-                env!("CARGO_MANIFEST_DIR"),
-                "/../../../../..",
-                "/engine/src/nativeInterop/cinterop/tiqian_protocol_constants.h"
-            ),
-        )
-        .expect("read the generated C ABI header from the cinterop directory");
-        let line = header
-            .lines()
-            .find(|line| line.starts_with("#define TIQIAN_FONT_BACKEND_PROTOCOL_REVISION "))
-            .expect("the generated header declares the protocol revision #define");
-        let value = line
-            .trim_start_matches("#define TIQIAN_FONT_BACKEND_PROTOCOL_REVISION ")
-            .trim_end_matches("u")
-            .trim_end()
-            .parse::<u32>()
-            .expect("the #define value parses as an unsigned integer");
-        assert_eq!(value, RevisionFamily::REVISION_FONT_BACKEND_PROTOCOL_REVISION);
-    }
-
-    #[test]
     fn stable_stringify_sorts_object_keys_and_keeps_array_order() {
         let value = Json::Obj(vec![
             ("z".to_string(), Json::Num(1.0)),

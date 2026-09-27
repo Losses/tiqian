@@ -491,25 +491,14 @@ fn capture(
     Ok((plan, evidence))
 }
 
-/// `runtime.precomputeParagraph`: the engine runs with the session and the
-/// paragraph's capture window as its font backend. Without the linked
-/// archive no paragraph can be prepared.
-#[cfg(tiqian_engine_link)]
+/// `runtime.precomputeParagraph`: the generated engine runs with the session
+/// and the paragraph capture window as its shaping and metrics components.
 fn engine_call(
     session: &FontSession,
     evidence: &mut crate::session::CaptureEvidence,
     request: &ParagraphRequest,
 ) -> Result<crate::plan::Plan, NamedError> {
     crate::engine_bridge::precompute_paragraph(session, evidence, request).map_err(NamedError)
-}
-
-#[cfg(not(tiqian_engine_link))]
-fn engine_call(
-    _session: &FontSession,
-    _evidence: &mut crate::session::CaptureEvidence,
-    _request: &ParagraphRequest,
-) -> Result<crate::plan::Plan, NamedError> {
-    Err(named("PrecomputeEngineNotLinked"))
 }
 
 /// The catch of the js try blocks: a listed capability issue lowers to an
