@@ -65,7 +65,11 @@ class CanonicalTest {
             { name: "text", value: WStr("a") },
             { name: "maxWidthPx", value: WNum(-0.0) },
         ]), Canonical.KIND_SNAPSHOT);
-        CanonicalTestSupport.assertHex(recorder, "minusZero", CanonicalTestSupport.hexOf(withoutWidth), minusZero);
+        final plusZero = Canonical.encode(WObj([
+            { name: "text", value: WStr("a") },
+            { name: "maxWidthPx", value: WNum(0.0) },
+        ]), Canonical.KIND_SNAPSHOT);
+        CanonicalTestSupport.assertHex(recorder, "minusZero", CanonicalTestSupport.hexOf(plusZero), minusZero);
     }
 
     @:test
