@@ -4280,12 +4280,12 @@ export class EnglishHyphenationPatterns {
   public static load(): string {
     let output = "";
     let index = 0;
-    while (index < Array.from(TEX_UNITS).length) {
+    while (index < TEX_UNITS.length) {
       const tail = output.charCodeAt(output.length - 1);
-      if (tail >= 55296 && tail <= 56319 && String.fromCodePoint(Array.from(TEX_UNITS)[index]!).length > 0 && !(String.fromCodePoint(Array.from(TEX_UNITS)[index]!).charCodeAt(0) >= 56320 && String.fromCodePoint(Array.from(TEX_UNITS)[index]!).charCodeAt(0) <= 57343)) {
+      if (tail >= 55296 && tail <= 56319 && String.fromCodePoint(TEX_UNITS[index]!).length > 0 && !(String.fromCodePoint(TEX_UNITS[index]!).charCodeAt(0) >= 56320 && String.fromCodePoint(TEX_UNITS[index]!).charCodeAt(0) <= 57343)) {
         throw new UStringException({ kind: "UnpairedSurrogate", unit: tail });
       }
-      output += String.fromCodePoint(Array.from(TEX_UNITS)[index]!);
+      output += String.fromCodePoint(TEX_UNITS[index]!);
       index++;
     }
     const tail2 = output.charCodeAt(output.length - 1);
