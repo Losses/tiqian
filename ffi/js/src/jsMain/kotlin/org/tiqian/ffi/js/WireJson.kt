@@ -6,10 +6,8 @@ import org.tiqian.core.GlyphRun
 import org.tiqian.core.Rect
 import org.tiqian.core.ShapingDecisionInfo
 import org.tiqian.core.TextRange
-import org.tiqian.font.FontMetricsRequest
-import org.tiqian.font.FontRequest
-import org.tiqian.font.FontRole
 import org.tiqian.font.FontMetricSource
+import org.tiqian.font.FontMetricsRequest
 import org.tiqian.font.RawFontMetrics
 import org.tiqian.layout.ecmaJsonNumber
 import org.tiqian.shaping.ShapingInput
@@ -25,38 +23,6 @@ import org.tiqian.shaping.ShapingResult
  * Also encodes and decodes the shaping/metrics JSON for the JS callback
  * adapters ([JsCallbackTextShaper], [JsCallbackFontMetricsResolver]).
  */
-
-internal fun parseFontMetricsRequestJson(json: String): FontMetricsRequest {
-    val raw = kotlin.js.JSON.parse<dynamic>(json) ?: return FontMetricsRequest(
-        fontKey = "",
-        fontSize = Float.NaN,
-        role = FontRole.Unknown,
-        locale = "",
-    )
-    return FontMetricsRequest(
-        fontKey = (raw.fontKey as? String) ?: "",
-        fontSize = (raw.fontSize as? Double)?.toFloat() ?: Float.NaN,
-        role = (raw.role as? String)?.let { FontRole.valueOf(it) } ?: FontRole.Unknown,
-        locale = (raw.locale as? String) ?: "",
-        fontFamilies = parseDynamicStringList(raw.fontFamilies),
-        fontWeight = (raw.fontWeight as? Double)?.toInt() ?: 400,
-        italic = (raw.italic as? Boolean) ?: false,
-        faceSelectionText = (raw.faceSelectionText as? String) ?: "",
-    )
-}
-
-internal fun parseFontRequestJson(json: String): FontRequest {
-    val raw = kotlin.js.JSON.parse<dynamic>(json) ?: return FontRequest(
-        preferredFamilies = emptyList(),
-        locale = "",
-        role = FontRole.Unknown,
-    )
-    return FontRequest(
-        preferredFamilies = parseDynamicStringList(raw.preferredFamilies),
-        locale = (raw.locale as? String) ?: "",
-        role = (raw.role as? String)?.let { FontRole.valueOf(it) } ?: FontRole.Unknown,
-    )
-}
 
 internal fun parsePatternsJson(json: String): Map<String, IntArray> {
     val raw = kotlin.js.JSON.parse<dynamic>(json) ?: return emptyMap()
