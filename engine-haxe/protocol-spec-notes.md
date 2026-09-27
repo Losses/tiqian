@@ -69,3 +69,71 @@
 ## TS 目标两个已取证的形态前提（调试取证四步见 AGENTS.md）
 - Bytes.get 降级条件：reflaxe/ts/tscompiler/TsExpr.hx:2191-2192 `if (name == "get" && isBytes(stripCast(subj)))`；isBytes(:3622-3626) 要求静态类型恰为 `haxe.io.Bytes`。传 `Null<Bytes>` 不命中、退化为普通字段调用。fix：switch 分支绑定非空 Bytes 后再调 get。
 - samples 类的源范围过滤：TS 模块发射拒绝项在 tscompiler/Compiler.hx:500（`value-referenced but emits no declarations`），根因是类不在 Intercept.run 声明的源范围；按 rust-common.hxml 对 samples/std 的先例把 samples 路径加进源范围。
+
+## Stage1-P6 错误命名 NamedError 族（生成器修订 pin 4f412c6a）
+
+## 错误与结果（features/06-errors-and-results.md）
+- :314 Ruling：`Failure identity is a closed variant set defined once per domain and shared by all four trees. Each domain declares its variants in one commit touching every tree: the Haxe enum and its exception wrapper, the Rust error enum, the TypeScript error union and exception class, and the Kotlin sealed exception hierarchy.`
+- :397 `tests assert variant identity, never message content`。
+
+结论：NamedError 即领域验证错误名的跨四树闭包变体集；Haxe 枚举逐变体承载发布名，测试断言变体清单与名字逐项相等。
+
+## 枚举与模式匹配（features/01-enums-and-pattern-matching.md）
+- :5 Scope：`In the current codebase, algebraic sum types appear in Haxe as the `VectorError` enum carried by `VectorException` in `samples/boring/`, in Rust as `VectorError` in `reference/rust/src/lib.rs`, in TypeScript as the `VectorError` union carried by `VectorException` in `reference/ts/src/vector-error.ts`, and in Kotlin as the sealed `VectorException` hierarchy in `reference/kotlin/src/boring/VectorException.kt`.`
+- :335 TS 载荷访问（P1 已引）：`TypeScript branches on the discriminant and then reads the payload property (error.remaining), where narrowing supplies the type.`
+- 事实（pin 4f412c6a）：reference/ 目录只有 rust 与 ts，无 reference/kotlin；Kotlin 形态以 Kotlin 发射端实际生成物为准（引擎 kotlin 束生成物里的枚举是正例）。
+- Rust 参考形态：reference/rust/src/lib.rs:272 `pub enum VectorError`，显示文本渲染见本 spec :61-72 的 Display 实现。
+- TS 参考形态：reference/ts/src/vector-error.ts:26-31 `export type VectorError = | BadMagicError | ...` 判别联合 + :32 `describeError`。
+
+## 三 lane 名字站点（变体集与序的权威）
+- Rust：paragraph.rs:74-131 的 `named("...")` 16 名按 validate() 检查序（EmptyParagraph…InvalidInlineBoxGeometry）；main 树其余站点 normalize.rs:143/147/151/154、precomputer.rs:286/441、precompute_html.rs:582；normalize.rs:32 PARAGRAPH_CAPABILITY_ISSUES 列表含 "EmptyParagraph"。
+- Kotlin：ParagraphWireCodec.kt:279-297 与 :386-397 段级 8 名（含 Kotlin 独有的 InvalidEmphasisDotGapEm），:48-144 区段检查 13 名（含 Kotlin 独有的 InvalidInlineObjectRange/Advance/VerticalGeometry 与 InvalidDecorationRange）；:56/71/106/124/136 的 Invalid*Wire 是字符串打包名，随打包消失，不进枚举。
+- TS：markdown-lowering.ts:778/:815 EmptyParagraph、lifecycle.ts:265 InvalidFontSize、astro/integration.ts:110 InvalidMaximumMeasure——三处属消费侧接线（需重构建 @tiqian/ffi 包），队长裁定移交 C1 的四条 JS 接线；P6 只交付生成物（TS 束 publish 到 platforms/web/server/core/src/protocol-gen/）。
+- 字节协议名不进枚举：ffi/native/src/nativeMain/kotlin/org/tiqian/ffi/cabi/LayoutRequestReader.kt:40-228 的 InvalidLayoutRequest* 属打包机制，割接后随打包整体删除。
+
+## 变体集与声明序（21 名）
+- 序=paragraph.rs:74-131 检查序，Kotlin 独有名插到 Kotlin lane 对应检查位：InvalidEmphasisDotGapEm 在 InvalidFontWeight 后；InvalidInlineObjectRange/InvalidInlineObjectAdvance/InvalidInlineObjectVerticalGeometry 在 InvalidInlineBoxGeometry 后；InvalidDecorationRange 末位。
+- TS 三名为该集子集；与 P5 分支（cutover/stage1-p5-request-model）的 ParagraphRequestError 同名同序（P5 未并），队长裁定 (b)：P5 落地后本分支 rebase 到 main 并把 checks/exception 改指向 NamedError，退役 P5 的枚举；本阶段不碰 paragraph.rs 与 ParagraphWireCodec.kt。
+
+## 束接线
+- protocol-ts.hxml / protocol-rust.hxml 加 root org.tiqian.protocol.NamedError 与 NamedErrorTest。
+- 新 protocol-kotlin.hxml（按 protocol-ts.hxml 的 standalone 形态 + kotlin-common.hxml 的 kotlin 发射端行；输出目录不手抄 define，由驱动器按 spec 59:62-67 从 outRoot/<id> 派生）+ boring.json 加 protocol-kotlin 束（任务书要求生成 Kotlin/TS/Rust）。
+- 生成物 vendored（只从驱动器产物搬，结构与 gen 根逐项一致）：TS→platforms/web/server/core/src/protocol-gen/org/tiqian/protocol/；Rust→platforms/web/server/precompute/protocol-gen/org/tiqian/protocol/（crate tiqian-protocol-gen，engine 经 path 依赖）；Kotlin→ffi/js/src/jsMain/kotlin/org/tiqian/protocol/。
+
+## 待取证（动手改调用点前，取证对象为 pin 内发射端函数）
+- 无 exception 包装的纯枚举在三目标的渲染形态：TS 发射端为 .haxelib/boring/git/packages/compiler/reflaxe/ts/tscompiler/ 内渲染 VectorError 参考物的函数（模块发射拒绝点在 tscompiler/Compiler.hx:500）；Rust 发射端为 packages/compiler/reflaxe/rust/ 内枚举渲染函数；Kotlin 发射端为 Kotlin 编译器内枚举渲染函数。
+- 生成物是否已把变体名暴露为字符串（Rust Display/str、TS kind 判别式、Kotlin 枚举名）——决定是否补 describe 类。
+- Kotlin 渲染形态（enum class 还是 sealed class）——决定 Kotlin 调用点引用写法。
+- mac ssh 不可达（banner 前断连）：protocol-gen 小 crate 按本机例外编译（cp -a 到 /tmp/<label>-pg，XDG_CACHE_HOME=/tmp/tq-nix-cache nix develop 内 cargo build --lib --message-format=short，跑完删 target）；整棵 precompute engine 树仍只在 mac 上构建，本阶段 engine crate 改动只做机械字面量替换并以生成 crate 的本地编译+三侧名字 diff 佐证。
+
+## 取证结果（第一步，pin 4f412c6a；生成配置：驱动器 node boring/out/bundle/driver.js gen <bundle> --project boring.json，工作树根 nix develop 内执行，out 目录先清（PIT-54），输出目录由驱动器派生）
+
+## 测试 lane 阻塞与束根补齐（pin f1b28bd3）
+- Rust lane（test protocol-rust，cargo test --no-run）E0432：生成的测试文件（named_error_test.rs 与 P5 的 paragraph_request_test.rs 同形）`use crate::runtime::test as testlib;`（RustDecl.hx:2715、RustExpr.hx:9295/9339/9441 硬编码），而生成 crate 无 runtime/test 模块（gen/org/tiqian/test/trace/ 为 Haxe 测试支撑，gen/runtime/ 无 test.rs）。取证四步：源结构=protocol-rust.hxml root 缺 runtime.TestCore（packages/compiler/runtime/TestCore.hx，features/19-testing.md「Each target compiles this class into its test runtime package beside the host entry」）；发射端=RustDecl.hx:2715 的固定 import；生成物=named_error_test.rs:12；失败点=E0432。旧 pin 4f412c6a 的 RustDecl.hx:2715 同文（git show 比对）→ pin 无关的发射端/束根缺陷，P5 的 rust 测试 lane 同样不可编译（其 paragraph_request_test.rs 同形）。
+- Kotlin lane（test protocol-kotlin，kotlinc 独立编译 gen+gen-tests）：TracedAssertions.kt 报 unresolved `SortedTable`/`values.at(i)`——独立编译时 runtime 包缺失；kotlin-f32/f64 束的 classes.hxml 尾含 runtime.UString 与 runtime.TestCore 两个 root，本席 protocol-kotlin.hxml 独立形态漏了。
+- 修复（本席束接线范围内）：protocol-rust.hxml 补 root runtime.TestCore（P5 已加 SortedTable/UString）；protocol-kotlin.hxml 补 root runtime.UString 与 runtime.TestCore。清 out 目录重生成后重跑两 lane；若绿，vendored 树无变化（TestCore 属测试运行时，不进 vendored 库，P1 先例：vendored mod.rs 无测试模块）。
+- TS 形态（engine-haxe/out/protocol-ts/gen/org/tiqian/protocol/NamedError.ts）：每变体一个 `readonly kind: "<Name>"` interface（:3 起）+ 判别联合 `export type NamedError`（:87）+ `Object.freeze` 常量对象 `export const NamedError`（:110）+ `compareNamedError`（:134）；NamedErrorNames.ts 为 class，静态 `variants()`（21 项声明序）与 `describe(error)`（switch 返回发布名）。名字以 kind 判别式与 describe 双通道暴露，无需补 accessor。
+- Rust 形态（pin 4f412c6a，退役前）：named_error.rs `#[derive(Debug, Clone, Copy, PartialEq)] pub enum NamedError`（:2，21 变体）+ 固有 `pub fn to_string(&self) -> String`（:56-57，Display 文本即发布名）+ compare_named_error；named_error_names.rs 静态 `named_error_names_variants()`/`named_error_names_describe()`。
+- Kotlin 形态（③c）：NamedError.kt `enum class NamedError`（:3，21 项）+ 顶层 `compareNamedError`；NamedErrorNames.kt `object NamedErrorNames`（:3）`variants(): MutableList<NamedError>`（:4）与 `describe(error): String`（:8，when 分支）。enum class 而非 sealed class——调用点按枚举名引用。
+- 拦截器约束（pin 内 Intercept.hx）：方法名 `all` 在 CLOSED_LIST（:93），0 参调用即 fatal「collection pipeline methods accept inline function literals only」→ 访问器命名 `variants()`；测试类只许测试成员（non-test member 报「shared logic belongs in an ordinary class」）→ 黄金名单移入 NamedErrorTestSupport。
+- 三侧名字 diff（pin 4f412c6a 生成物，命令：对三个 NamedErrorNames 生成文件各取 describe 分支的 21 个名字成清单后两两 diff）：TS==Rust==Kotlin==黄金 21（paragraph.rs:74-131 检查序 + Kotlin 位），逐项相等。
+
+## 第二步（P5 落地后：rebase 到 b7169e08，pin 推进到 f1b28bd3，退役 P5 枚举）
+- 生成器修订：.haxelib/boring/git reflog 04:03:06 由 4f412c6a 切到 f1b28bd3（fix(rust): emit resident modules when their types are required）；第一步三目标生成均在 04:03 前完成（属 4f412c6a），第二步三目标全部清空重生成（f1b28bd3）。
+- 退役对照（对照物=变体名恒等映射，P5 枚举与 NamedError 的 21 名同名同序）：ParagraphRequestError.hx 删除；ParagraphRequestException.hx 载荷字段/构造/describe 签名 ParagraphRequestError→NamedError（switch 分支不变，变体名恒等）；ParagraphRequestTestSupport.hx:34 issueNameOf 参数→NamedError；ParagraphRequest.hx:12 文档指称→NamedError；ParagraphRequestChecks.hx 零改动（裸变体引用在枚举删除后解析到 NamedError）；hxml root 零改动（错误枚举从未是 root）。
+- Rust 发射端事实（pin f1b28bd3，取证四步之第 2 步）：exception 类（extends haxe.Exception）的载荷枚举一律并入所属 exception 模块发射——Compiler.hx:985-992（payloadEnumModules/exceptionPayloads 登记）、Compiler.hx:280（载荷枚举模块不单独发射）、RustDecl.hx:1988-1989（类型引用重定向）。后果：退役后 NamedError 在 Rust 侧定义于 paragraph_request_exception.rs（21 变体 + impl Display + impl Error），无独立 named_error 模块；named_error_names.rs 从 exception 模块 import。engine crate 七站点引用路径=tiqian_protocol_gen::org::tiqian::protocol::paragraph_request_exception::NamedError（别名 ProtocolNamedError），.to_string() 走生成的 Display。P5 的 paragraph.rs 零改动（不显式命名生成错误类型，经 .map_err(|error| NamedError(error.to_string())) 消费）。
+- TS 发射端事实：ParagraphRequestError.ts 不再发射（枚举源已删）→ vendored 树删除该文件；ParagraphRequestChecks.ts / ParagraphRequestException.t
+## 最终 lane 读数（pin f1b28bd3，测试源修复后重生成）
+- 束根修复后三目标 gen 全 RC=0（protocol-rust/protocol-kotlin/protocol-ts，驱动器 gen 动作）。
+- 子集约束取证：Haxe 表达式 switch（21 个整数字面 case）在受保护源内触发发射端 `Unmatched patterns: _`（pin f1b28bd3，三目标 gen 步骤均报）；改语句 switch 又触 V15「variant switch carries a default arm」（rust/kotlin）与 ts 目标「variant switch subject is not a variant value」——受保护源内 switch on Int 三目标均不可用。NamedErrorTestSupport.variantAt 最终形态为 if/else 语句链（21 分支，每分支新构造值，无集合索引取值），三目标 gen 通过。
+- Rust lane（test protocol-rust，cargo test，生成 crate 独立编译）：编译通过（TestCore root 补齐后 E0432 消除；E0507 经 variantAt 改造消除）。运行 9 条：7 过 2 挂。过含 NamedErrorTest 两条（theVariantListMatchesThePublishedNamesInCheckOrder、thePublishedNamesAreAllDistinct）与 ParagraphRequestTest.paragraphChecksReportTheDomainNamesInOrder（领域名序断言，rust lane 通过）。挂的两条均为主既有 P5 源级缺陷：(1) boundariesAndRangesUseTheUtf16Length（夹具 {2,3} 对 4 单元文本合法，已证）；(2) spanChecksCoverRangeFamiliesAndNumbers——四步取证：源结构=ParagraphRequestTest.hx:65 `base.textSpans = [span]` 后 :67-:82 原地变更 span 再断言；TS 生成物=gen-tests ParagraphRequestTest.test.ts:55 `base.textSpans = [span]`（引用语义，变更反映到请求，lane 过）；rust 生成物=gen paragraph_request_test.rs:365 `base.text_spans = vec![(span).clone()]`（值语义，变更不反映，base 恒为原始 {start:2,end:1} span，区间检查先行）；失败点=paragraph_request_test.rs:372 assertEqualsString("MissingTextSpanFontFamilies", issueOf(base)) 实得 InvalidTextSpanRange。Kotlin 同为值语义，同挂（lane 另有 resident 编译缺口）。两条缺陷已挂任务 t-mujl8hwo-g8cy。
+- TS lane（bun test 逐文件，新 gen）：NamedErrorTest 2/2 过；ParagraphRequestTest 6/7（失败仅 P5 夹具缺陷，引用语义使 span 用例在 TS 过）；CanonicalTest 独立跑 600s 超时（P1 测试，环境负载，非本席判据对象）。
+- Kotlin lane（test protocol-kotlin，kotlinc 独立编译 gen+gen-tests）：resident 运行时缺口（unreferenced residents write nothing，kotlincompiler/Compiler.hx:686-690；SortedTable 等 resident 未落 gen 树，TracedAssertions.kt 的 org.tiqian.boring.runtime.SortedTable 导入悬空，RC=1）。engine 束经 tests 源集 oracle 类引用 resident 而绕过，protocol 束束接线无法在不污染源的前提下触发同效果——发射端/宿主侧缺口，非本席束根问题（补 root runtime.UString/runtime.TestCore 后 TestCore 已落 gen/runtime/test/，缺口仅剩 SortedTable/UString 等未被引用 resident）。
+- 三侧名 diff（新 gen）：TS/Rust/Kotlin 的 NamedErrorNames 21 名逐位相等（各 21 行，diff 无差异），与 golden（paragraph.rs:74-131 检序 + Kotlin 位序）一致。
+- vendored 同步（新 gen 后复核）：rust 三件（named_error_names.rs、paragraph_request_checks.rs、paragraph_request_exception.rs）与 TS ParagraphRequestException.ts 逐字节 SAME，无需再搬；测试运行时（test_core.rs/test.rs）属生成树专属，不进 vendored（P1 先例：vendored mod.rs 无测试模块）。s 改从 ./NamedError.ts 导入并引用 NamedError.<Variant>。生成物 import 规范式在本 pin 为 .ts 后缀（P1/P5 旧 pin 产物为 .js 后缀）：server-core tsconfig 加 rewriteRelativeImportExtensions（tsc 5.9.3，build 门 noEmit=false 合法），tsc 构建通过且 lib/ 输出改写为 .js；Node 22.23.1 strip-types 直接解析 .ts 规范式（不映射 .js→.ts）。
+- vendored 刷新（f1b28bd3）：TS 8 文件刷新（Canonical/JsCoerce/WireField/WireValue/ParagraphRequest/ParagraphRequestChecks/ParagraphRequestException/ParagraphRequestTestSupport）+ ParagraphRequestError.ts 删除；Rust 3 文件刷新（named_error_names/paragraph_request_checks/paragraph_request_exception）+ named_error.rs 删除 + mod.rs 去掉 named_error 模块 + _GeneratedFiles.txt 去掉该行；Kotlin 两文件与旧 pin 逐字节相同（不变）。_GeneratedFiles.txt 另补 P5 落地漏登记的 13 个文件（8 个 protocol 输入/请求模型 + 5 个 runtime），rebase 提交内完成。
+- 本机例外编译（f1b28bd3 刷新后 vendored crate）：/tmp/p6-pg 复制 + XDG_CACHE_HOME=/tmp/tq-nix-cache nix develop 内 cargo build --lib --message-format=short → RC=0（Finished dev profile；既有 warning 一处在 canonical.rs:437 unused kind，P1 文件非本席改动）。
+- engine crate 七站点（normalize.rs:144/148/152/155、precomputer.rs:287/442、precompute_html.rs:583）：named("<Name>") → named(&ProtocolNamedError::<Variant>.to_string())，每文件加一行 use；normalize.rs:32 PARAGRAPH_CAPABILITY_ISSUES 常量列表保留字面量（const 上下文不能调用生成的非常量访问器；名单与生成枚举的恒等由 NamedErrorTest 黄金清单+三侧 diff 锁定）。mac ssh 不可达：engine crate 本阶段不本地编译，以上站点以生成 crate 本地编译 + 变体名恒等 + paragraph.rs 零改动佐证，mac 恢复后需 cargo build 复核。
+- npm 测试（cd platforms/web/server/core && npm test，Node v22.23.1）：13 pass / 3 fail / 57 skip。三处 fail 均为 main 既有（本席改动前后同一集合，逐一核对）：test/paragraph-request.test.ts 整文件 ERR_MODULE_NOT_FOUND——main 版（b7169e08 第 8-10 行）以 .js 规范式导入 .ts 源，Node ESM 不映射；改 .ts 规范式后可加载但 import { DecorationInput }（生成 typedef 仅 export type）在 Node 纯语法 strip-types 下保留为值导入报 SyntaxError（bun 全语义 lane 不受限）；test/transport.test.ts:123/:145 assert.ok(transport) 同源（.js 规范式导入 src 失败）。fonts.test.ts（FFI 错误名断言 :105-108）全部 SKIP——native addon 未在本工作树构建（build:native 需 mac/长链）。可跑的 npm 侧名字验证=驱动器 bun lane（test protocol-ts 跑 gen-tests，含 NamedErrorTest 与 ParagraphRequestTest）。
+- P5b 交接（t-mujjhdqh-a7h0）：protocol-kotlin 束已就绪（boring.json 第 83 行，root 现为 NamedError/NamedErrorTest）；Kotlin 出口=engine-haxe/out/protocol-kotlin/gen（驱动器派生，spec 59:62-67），vendored 出口=ffi/js/src/jsMain/kotlin/org/tiqian/protocol/（现含 NamedError.kt 与 NamedErrorNames.kt）。P5b 将请求模型类加入同一束 root 并从同一 gen 出口搬运。
+- C1 交接（不变）：TS client 三站点 markdown-lowering.ts:778/:815、lifecycle.ts:265、astro/integration.ts:110 属 C1 四条 JS 接线；生成物出口=platforms/web/server/core/src/protocol-gen/org/tiqian/protocol/NamedError.ts（kind 判别式 + NamedError 常量对象），消费侧从该 vendored 路径导入，不复制名字字面量。
