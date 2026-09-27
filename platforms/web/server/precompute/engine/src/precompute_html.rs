@@ -11,7 +11,7 @@
 use std::collections::HashSet;
 
 use tiqian::NamedError;
-use tiqian_protocol_gen::org::tiqian::protocol::named_error::NamedError as ProtocolNamedError;
+use tiqian_protocol_gen::org::tiqian::protocol::paragraph_request_exception::NamedError as ProtocolNamedError;
 
 use crate::font_source::sha256_hex;
 use crate::html_parse::{

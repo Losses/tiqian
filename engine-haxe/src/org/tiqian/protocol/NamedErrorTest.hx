@@ -3,10 +3,13 @@ package org.tiqian.protocol;
 /**
  * The NamedError family's golden name assertions (features/06-errors-and-
  * results.md:397: tests assert variant identity, never message content —
- * here the identity is the published name itself). The golden list lives in
- * NamedErrorTestSupport; the two tests pin that the generated variant list
- * and the describe mapping carry the published names, in check order, with
- * no duplicate.
+ * here the identity is the published name itself). The golden list and the
+ * position-to-variant mapping live in NamedErrorTestSupport; the two tests
+ * pin that the generated variant list and the describe mapping carry the
+ * published names, in check order, with no duplicate. The rust target
+ * renders the exception payload enum without the Copy derive, so the
+ * assertions pass fresh constructor values (variantAt) instead of moving
+ * them out of the variants vector index.
  */
 class NamedErrorTest {
     @:test
@@ -17,7 +20,10 @@ class NamedErrorTest {
         final names:Array<String> = [];
         var indexIdx:Int = 0;
         while (indexIdx < variants.length) {
-            names.push(NamedErrorNames.describe(variants[indexIdx]));
+            names.push(NamedErrorNames.describe(NamedErrorTestSupport.variantAt(indexIdx)));
+            org.tiqian.test.trace.TracedAssertions.assertTrue(
+                variants[indexIdx] == NamedErrorTestSupport.variantAt(indexIdx),
+                "the variant list order drifts from the declaration order");
             indexIdx++;
         }
         org.tiqian.test.trace.TracedAssertions.assertEquals(
@@ -37,7 +43,7 @@ class NamedErrorTest {
             var innerIdx:Int = outerIdx + 1;
             while (innerIdx < variants.length) {
                 org.tiqian.test.trace.TracedAssertions.assertTrue(
-                    NamedErrorNames.describe(variants[outerIdx]) != NamedErrorNames.describe(variants[innerIdx]),
+                    NamedErrorNames.describe(NamedErrorTestSupport.variantAt(outerIdx)) != NamedErrorNames.describe(NamedErrorTestSupport.variantAt(innerIdx)),
                     "two variants publish the same name");
                 innerIdx++;
             }
