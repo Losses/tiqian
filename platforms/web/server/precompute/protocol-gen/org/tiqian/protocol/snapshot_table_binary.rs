@@ -137,39 +137,49 @@ impl SnapshotTableBinary {
         let value_style_count = reader.u32();
         let font_preload_count = reader.u32();
         data.strings = reader.text_region(string_count);
+        let mut fam_refs: Vec<u32> = Vec::new();
+        let mut weights: Vec<f64> = Vec::new();
+        let mut italics: Vec<u32> = Vec::new();
+        let mut role_refs: Vec<u32> = Vec::new();
+        let mut face_sel_refs: Vec<u32> = Vec::new();
+        let mut pool_refs: Vec<u32> = Vec::new();
+        let mut col_idx = 0u32;
+        while (i32::from_ne_bytes((col_idx).to_ne_bytes())) < (i32::from_ne_bytes((metric_count).to_ne_bytes())) {
+            fam_refs.push(reader.u32());
+            col_idx = u32::wrapping_add(col_idx, 1);
+        }
+        col_idx = 0u32;
+        while (i32::from_ne_bytes((col_idx).to_ne_bytes())) < (i32::from_ne_bytes((metric_count).to_ne_bytes())) {
+            weights.push(reader.f64());
+            col_idx = u32::wrapping_add(col_idx, 1);
+        }
+        col_idx = 0u32;
+        while (i32::from_ne_bytes((col_idx).to_ne_bytes())) < (i32::from_ne_bytes((metric_count).to_ne_bytes())) {
+            italics.push(reader.u8());
+            col_idx = u32::wrapping_add(col_idx, 1);
+        }
+        col_idx = 0u32;
+        while (i32::from_ne_bytes((col_idx).to_ne_bytes())) < (i32::from_ne_bytes((metric_count).to_ne_bytes())) {
+            role_refs.push(reader.u32());
+            col_idx = u32::wrapping_add(col_idx, 1);
+        }
+        col_idx = 0u32;
+        while (i32::from_ne_bytes((col_idx).to_ne_bytes())) < (i32::from_ne_bytes((metric_count).to_ne_bytes())) {
+            face_sel_refs.push(reader.u32());
+            col_idx = u32::wrapping_add(col_idx, 1);
+        }
+        col_idx = 0u32;
+        while (i32::from_ne_bytes((col_idx).to_ne_bytes())) < (i32::from_ne_bytes((metric_count).to_ne_bytes())) {
+            pool_refs.push(reader.u32());
+            col_idx = u32::wrapping_add(col_idx, 1);
+        }
+        col_idx = 0u32;
+        while (i32::from_ne_bytes((col_idx).to_ne_bytes())) < (i32::from_ne_bytes((metric_count).to_ne_bytes())) {
+            data.metric_rows.push(MetricEntry::new(fam_refs[usize::try_from(col_idx).unwrap_or(0)], weights[usize::try_from(col_idx).unwrap_or(0)], italics[usize::try_from(col_idx).unwrap_or(0)], role_refs[usize::try_from(col_idx).unwrap_or(0)],
+face_sel_refs[usize::try_from(col_idx).unwrap_or(0)], pool_refs[usize::try_from(col_idx).unwrap_or(0)]));
+            col_idx = u32::wrapping_add(col_idx, 1);
+        }
         let mut index_idx = 0u32;
-        while (i32::from_ne_bytes((index_idx).to_ne_bytes())) < (i32::from_ne_bytes((metric_count).to_ne_bytes())) {
-            let mut row = MetricEntry::new(reader.u32(), 0 as f64 as f64, 0u32, 0u32, 0u32, 0u32);
-            row.stored = true;
-            data.metric_rows.push(row.clone());
-            index_idx = u32::wrapping_add(index_idx, 1);
-        }
-        index_idx = 0u32;
-        while (i32::from_ne_bytes((index_idx).to_ne_bytes())) < (i32::from_ne_bytes((metric_count).to_ne_bytes())) {
-            (data.metric_rows[usize::try_from(index_idx).unwrap_or(0)]).clone().weight = reader.f64();
-            index_idx = u32::wrapping_add(index_idx, 1);
-        }
-        index_idx = 0u32;
-        while (i32::from_ne_bytes((index_idx).to_ne_bytes())) < (i32::from_ne_bytes((metric_count).to_ne_bytes())) {
-            (data.metric_rows[usize::try_from(index_idx).unwrap_or(0)]).clone().italic = reader.u8();
-            index_idx = u32::wrapping_add(index_idx, 1);
-        }
-        index_idx = 0u32;
-        while (i32::from_ne_bytes((index_idx).to_ne_bytes())) < (i32::from_ne_bytes((metric_count).to_ne_bytes())) {
-            (data.metric_rows[usize::try_from(index_idx).unwrap_or(0)]).clone().role_ref = reader.u32();
-            index_idx = u32::wrapping_add(index_idx, 1);
-        }
-        index_idx = 0u32;
-        while (i32::from_ne_bytes((index_idx).to_ne_bytes())) < (i32::from_ne_bytes((metric_count).to_ne_bytes())) {
-            (data.metric_rows[usize::try_from(index_idx).unwrap_or(0)]).clone().face_selection_ref = reader.u32();
-            index_idx = u32::wrapping_add(index_idx, 1);
-        }
-        index_idx = 0u32;
-        while (i32::from_ne_bytes((index_idx).to_ne_bytes())) < (i32::from_ne_bytes((metric_count).to_ne_bytes())) {
-            (data.metric_rows[usize::try_from(index_idx).unwrap_or(0)]).clone().value_pool_ref = reader.u32();
-            index_idx = u32::wrapping_add(index_idx, 1);
-        }
-        index_idx = 0u32;
         while (i32::from_ne_bytes((index_idx).to_ne_bytes())) < (i32::from_ne_bytes((value_pool_count).to_ne_bytes())) {
             data.value_pool.push(SnapshotTableBinary::snapshot_table_binary_read_value_row(&mut reader));
             index_idx = u32::wrapping_add(index_idx, 1);

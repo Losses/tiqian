@@ -162,39 +162,52 @@ class SnapshotTableBinary {
         final valueStyleCount = reader.u32();
         final fontPreloadCount = reader.u32();
         data.strings = reader.textRegion(stringCount);
+        // Column-major reads into locals first, then one assembled row per
+        // metric: no in-place field mutation through array indexing (the
+        // Rust target lowers indexed field assignment to a discarded clone).
+        final famRefs = new Array<Int>();
+        final weights = new Array<Float>();
+        final italics = new Array<Int>();
+        final roleRefs = new Array<Int>();
+                final faceSelRefs = new Array<Int>();
+        final poolRefs = new Array<Int>();
+        var colIdx:Int = 0;
+        while (colIdx < metricCount) {
+            famRefs.push(reader.u32());
+            colIdx++;
+        }
+        colIdx = 0;
+        while (colIdx < metricCount) {
+            weights.push(reader.f64());
+            colIdx++;
+        }
+        colIdx = 0;
+        while (colIdx < metricCount) {
+            italics.push(reader.u8());
+            colIdx++;
+        }
+        colIdx = 0;
+        while (colIdx < metricCount) {
+            roleRefs.push(reader.u32());
+            colIdx++;
+        }
+        colIdx = 0;
+        while (colIdx < metricCount) {
+            faceSelRefs.push(reader.u32());
+            colIdx++;
+        }
+        colIdx = 0;
+        while (colIdx < metricCount) {
+            poolRefs.push(reader.u32());
+            colIdx++;
+        }
+        colIdx = 0;
+        while (colIdx < metricCount) {
+            data.metricRows.push(new MetricEntry(famRefs[colIdx], weights[colIdx], italics[colIdx],
+                roleRefs[colIdx], faceSelRefs[colIdx], poolRefs[colIdx]));
+            colIdx++;
+        }
         var indexIdx:Int = 0;
-        while (indexIdx < metricCount) {
-            final row = new MetricEntry(reader.u32(), 0, 0, 0, 0, 0);
-            row.stored = true;
-            data.metricRows.push(row);
-            indexIdx++;
-        }
-        indexIdx = 0;
-        while (indexIdx < metricCount) {
-            data.metricRows[indexIdx].weight = reader.f64();
-            indexIdx++;
-        }
-        indexIdx = 0;
-        while (indexIdx < metricCount) {
-            data.metricRows[indexIdx].italic = reader.u8();
-            indexIdx++;
-        }
-        indexIdx = 0;
-        while (indexIdx < metricCount) {
-            data.metricRows[indexIdx].roleRef = reader.u32();
-            indexIdx++;
-        }
-        indexIdx = 0;
-        while (indexIdx < metricCount) {
-            data.metricRows[indexIdx].faceSelectionRef = reader.u32();
-            indexIdx++;
-        }
-        indexIdx = 0;
-        while (indexIdx < metricCount) {
-            data.metricRows[indexIdx].valuePoolRef = reader.u32();
-            indexIdx++;
-        }
-        indexIdx = 0;
         while (indexIdx < valuePoolCount) {
             data.valuePool.push(readValueRow(reader));
             indexIdx++;

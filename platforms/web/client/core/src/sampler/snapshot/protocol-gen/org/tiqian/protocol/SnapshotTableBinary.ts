@@ -134,39 +134,48 @@ export class SnapshotTableBinary {
     const valueStyleCount = reader.u32();
     const fontPreloadCount = reader.u32();
     data.strings = reader.textRegion(stringCount);
+    const famRefs = new Array<number>();
+    const weights = new Array<number>();
+    const italics = new Array<number>();
+    const roleRefs = new Array<number>();
+    const faceSelRefs = new Array<number>();
+    const poolRefs = new Array<number>();
+    let colIdx = 0;
+    while (colIdx < metricCount) {
+      famRefs.push(reader.u32());
+      colIdx++;
+    }
+    colIdx = 0;
+    while (colIdx < metricCount) {
+      weights.push(reader.f64());
+      colIdx++;
+    }
+    colIdx = 0;
+    while (colIdx < metricCount) {
+      italics.push(reader.u8());
+      colIdx++;
+    }
+    colIdx = 0;
+    while (colIdx < metricCount) {
+      roleRefs.push(reader.u32());
+      colIdx++;
+    }
+    colIdx = 0;
+    while (colIdx < metricCount) {
+      faceSelRefs.push(reader.u32());
+      colIdx++;
+    }
+    colIdx = 0;
+    while (colIdx < metricCount) {
+      poolRefs.push(reader.u32());
+      colIdx++;
+    }
+    colIdx = 0;
+    while (colIdx < metricCount) {
+      data.metricRows.push(new MetricEntry(famRefs[colIdx]!, weights[colIdx]!, italics[colIdx]!, roleRefs[colIdx]!, faceSelRefs[colIdx]!, poolRefs[colIdx]!));
+      colIdx++;
+    }
     let indexIdx = 0;
-    while (indexIdx < metricCount) {
-      const row = new MetricEntry(reader.u32(), 0, 0, 0, 0, 0);
-      row.stored = true;
-      data.metricRows.push(row);
-      indexIdx++;
-    }
-    indexIdx = 0;
-    while (indexIdx < metricCount) {
-      data.metricRows[indexIdx]!.weight = reader.f64();
-      indexIdx++;
-    }
-    indexIdx = 0;
-    while (indexIdx < metricCount) {
-      data.metricRows[indexIdx]!.italic = reader.u8();
-      indexIdx++;
-    }
-    indexIdx = 0;
-    while (indexIdx < metricCount) {
-      data.metricRows[indexIdx]!.roleRef = reader.u32();
-      indexIdx++;
-    }
-    indexIdx = 0;
-    while (indexIdx < metricCount) {
-      data.metricRows[indexIdx]!.faceSelectionRef = reader.u32();
-      indexIdx++;
-    }
-    indexIdx = 0;
-    while (indexIdx < metricCount) {
-      data.metricRows[indexIdx]!.valuePoolRef = reader.u32();
-      indexIdx++;
-    }
-    indexIdx = 0;
     while (indexIdx < valuePoolCount) {
       data.valuePool.push(SnapshotTableBinary.readValueRow(reader));
       indexIdx++;
