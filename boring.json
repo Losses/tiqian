@@ -1,8 +1,8 @@
-// tiqian's bundle project (boring feature spec 59). The driver derives every
+// tiqian's Haxe build and test project (boring feature spec 59). The driver derives every
 // output directory (<outRoot>/<id>/gen and <outRoot>/<id>/gen-tests) and every
 // results path (<resultsDir>/<id>.jsonl) from this file; none is named here.
 //
-//   each bundle's run.env carries the per-test budget the repository records
+//   each configuration's run.env carries the per-test budget the repository records
 //   (600000 ms): the boring runtime falls back to a 6 s budget when
 //   BORING_TEST_TIMEOUT_MS is unset, and eleven cases of this suite run longer
 //   than that on this machine, so they would be reported as timeouts.

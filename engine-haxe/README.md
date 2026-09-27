@@ -59,15 +59,33 @@ flake 把 boring 的 driver 与编译器固定在同一修订，并在进入开�
 tiqian 的 flake 从固定的 boring 修订安装 `boring` 命令，并配置相同修订的
 Haxe 编译器与 reflaxe。进入开发 shell 后直接调用命令即可。
 
-之后在 tiqian 检出根目录执行。驱动器按 `boring.json` 派生每个目标配置的输出目录
-（`engine-haxe/out/<id>/gen` 与 `engine-haxe/out/<id>/gen-tests`）与结果文件
-（`engine-haxe/out/test-results/<id>.jsonl`）：
+在 tiqian 检出根目录执行。修改 Haxe 后，先生成一个目标，再编译并运行它的测试：
 
 ```shell
 cd /path/to/tiqian
 nix develop -c boring gen kotlin-f32 --project boring.json
 nix develop -c boring test kotlin-f32 --project boring.json
 ```
+
+生成的代码位于 `engine-haxe/out/kotlin-f32/gen` 和 `gen-tests`；测试结果写入
+`engine-haxe/out/test-results/kotlin-f32.jsonl`。换目标时，把命令中的
+`kotlin-f32` 换成 `boring.json` 里的配置 ID。`test` 使用已生成的代码，
+因此每次修改 Haxe 后要先运行该配置的 `gen`。
+
+需要检查全部配置及跨目标测试结果时，运行：
+
+```shell
+nix develop -c boring verify --project boring.json
+```
+
+它依次生成各配置，运行可测试配置，并与 `boring.json` 指定的基准配置比较。
+只想比较已有测试结果时运行 `boring compare --project boring.json`。
+要生成发布包，运行 `boring pack <配置 ID> --project boring.json`；只有声明了
+`package` 的配置可以打包。`verify --with-pack` 还会打包这些配置。
+
+`protocol-c` 用于生成 C 头文件：`boring gen protocol-c --project boring.json`
+先生成 JavaScript，再执行配置中的 `afterGen`，写出
+`tiqian_protocol_constants.h`。它没有测试，也不参与结果比较。
 
 进入开发 shell 会更新 `engine-haxe/targets/classes.hxml`。如果在同一个 shell 内
 新增测试类，重新生成入口文件，再直接调用 HXML：
@@ -76,23 +94,8 @@ nix develop -c boring test kotlin-f32 --project boring.json
 boring roots engine --project boring.json --output engine-haxe/targets/classes.hxml
 ```
 
-已从 tiqian 根目录验证 `nix develop -c boring gen protocol-c`
-能完成 Haxe 生成和 `afterGen`，写出 `tiqian_protocol_constants.h`。上述
-`kotlin-f32` 的 `gen` 也已通过；该配置的 `test` 尚未在当前检出运行。
-
-六个动作：`roots` 从命名源码范围生成供直接 HXML 使用的入口文件；`gen` 生成该目标配置的两棵源码树；`test` 把已生成的树编译并运行，
-留下结果文件（先对同一配置运行 `gen`）；`pack` 为声明了 `package` 的配置打发布包；
-`compare` 按 `boring.json` 的 `baseline` 逐用例比对参与比较的配置的结果文件；
-`verify` 依次对所有配置运行 `gen`，对可测试配置运行 `test`，然后运行 `compare`。
-`verify --with-pack` 只打包声明了 `package` 的配置。显式对无测试配置运行 `test`
-会报错；显式对没有 `package` 的配置运行 `pack` 也会报错。
-`boring gen protocol-c --project boring.json` 先编译 Haxe 得到 JavaScript，
-再按该配置的 `afterGen` 运行 JavaScript，写出 C 头文件。
-该配置在 `boring.json` 中声明 `"test": false`，因此不参与 `compare`。完整
-`verify` 是否通过，需要对当前检出实际运行后确认。
-目标与精度配置写在 `boring.json` 里，当前十二个配置是 `kotlin-f32`、`kotlin-f64`、
-`ts`、`swift-f32`、`swift-f64`、`dart`、`protocol-ts`、`protocol-rust`、
-`protocol-kotlin`、`protocol-c`、`engine-rust-f32`、`engine-rust-f64`。
+已验证 `protocol-c` 与 `kotlin-f32` 的 `gen`。`kotlin-f32` 的 `test` 和完整
+`verify` 尚未在当前检出运行；不能据此认定跨目标行为已经一致。
 
 ## Haxe-JS f32 参照输出
 
