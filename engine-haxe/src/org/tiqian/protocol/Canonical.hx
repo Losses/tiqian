@@ -1,5 +1,6 @@
 package org.tiqian.protocol;
 
+import haxe.crypto.Sha256;
 import haxe.io.Bytes;
 import haxe.io.BytesBuffer;
 import haxe.io.FPHelper;
@@ -8,22 +9,30 @@ import haxe.io.FPHelper;
  * The canonical byte form of one submission (ADR 0052), single-sourced in
  * Haxe and generated for TypeScript and Rust. The bytes are the hash
  * preimage of the Paragraph and FontContracts cache layers and the content
- * encoding of the binary bridge: hashing, sending and resupplying all
- * consume the same form, so every platform agrees on one identity per
- * input. Golden vectors live in CanonicalTest and pin the same hex strings
- * the platform-side unit tests carry.
+ * encoding of the binary bridge. Golden vectors live in CanonicalTest and
+ * pin the same hex strings the platform tests carry
+ * (platforms/web/server/core/test/canonical.test.ts:16 ff., Rust unit tests
+ * of canonical.rs).
  *
- * The identity contract is "decode(encode(x)) reads exactly like the JSON
- * lane's `JSON.stringify` round trip": every field is carried the way
- * `JSON.stringify` would carry it. Non-finite numbers become absent fields
- * and both zero signs collapse to +0. The caller's logical `key` is
- * deliberately absent. The digest itself stays platform-side (node:crypto
- * on TypeScript, the sha2 crate on Rust): only the preimage crosses this
- * module.
+ * Byte order and semantics follow the existing implementations, which are
+ * the authority: canonical.ts:18 magic "TQCS" ascii, canonical.ts:71
+ * setFloat64 little-endian, canonical.ts:76/:86 setUint32 little-endian;
+ * canonical.rs:89/:93 to_le_bytes. Every multi-byte integer is
+ * little-endian and every f64 rides its IEEE 754 bit pattern little-endian:
+ * the low u32 word goes out first, each u32 goes out low-byte first.
+ *
+ * Two semantic rules are carried explicitly (canonical.rs:54 canonical_f64,
+ * canonical.ts:303): a non-finite number drops out of the form, and both
+ * zero signs collapse to +0. Optional numeric fields are a present flag
+ * followed by the f64 bytes (canonical.rs:382, canonical.ts:113). The
+ * caller's logical `key` is deliberately absent. The digest itself stays
+ * platform-side in P1 (node:crypto, the sha2 crate); this module exposes
+ * the single-source entry through haxe.crypto.Sha256 for the follow-up
+ * task that rewires the consumers.
  */
 class Canonical {
     /** The canonical form's magic and version, shared with every encoder. */
-    public static final MAGIC:Bytes = Bytes.ofString("TQCS");
+    public static inline var MAGIC:String = "TQCS";
     public static inline var VERSION:Int = 1;
     /** Snapshot paragraph submission: carries `maxWidthPx`. */
     public static inline var KIND_SNAPSHOT:Int = 0;
@@ -45,15 +54,29 @@ class Canonical {
     static inline var BOX_OUTER_SPACING:Int = 0x04;
 
     /**
+     * The content hash of the canonical bytes, the single-source digest
+     * entry. P1 keeps the platform consumers (node:crypto, sha2 crate) on
+     * their own implementations; the golden vectors assert this entry
+     * agrees with them byte for byte.
+     */
+    public static function digest(data:Bytes):Bytes {
+        return Sha256.make(data);
+    }
+
+    /**
      * Encodes one wire input into its canonical bytes. `kind` selects the
      * snapshot or contract form; snapshot inputs carry `maxWidthPx`,
      * contract inputs never do. A named issue comes back as Err; the
      * platform adapters raise it in their own error type.
      */
     public static function encode(input:WireValue, kind:Int):EncodeResult {
-        final writer = new Writer();
+        final writer = new Writer(kind);
         final text = member(input, "text");
-        writer.str(text == WNull ? "" : JsCoerce.toString(text));
+        var textValue = "";
+        if (!isWireNull(text)) {
+            textValue = JsCoerce.toString(text);
+        }
+        writer.str(textValue);
         if (kind == KIND_SNAPSHOT) {
             numberField(writer, numberMember(input, "maxWidthPx"));
         }
@@ -70,33 +93,38 @@ class Canonical {
             return CErr(boxes);
         }
         // A non-array reads as absent boundaries, the capture loop's own rule.
-        final rawBoundaries = member(input, "sourceBoundaries");
-        final boundaries = switch (rawBoundaries) {
-            case WArr(items): items;
-            default: new Array<WireValue>();
-        };
+        final boundaries = arrOfNullable(member(input, "sourceBoundaries"));
         writer.u32(boundaries.length);
-        for (boundary in boundaries) {
+        var boundaryIndexIdx:Int = 0;
+        while (boundaryIndexIdx < boundaries.length) {
+            final boundary = boundaries[boundaryIndexIdx];
             final value = canonicalF64(JsCoerce.toNumber(boundary));
             // Non-finite boundaries keep the JSON lane's value: null, which
             // reads as zero through the loose number coercion.
             writer.f64(value == null ? 0.0 : value);
+            boundaryIndexIdx++;
         }
         return COk(writer.finish());
     }
 
     /** The coalesced member: absent and null both read as WNull. */
     public static function member(input:WireValue, name:String):WireValue {
-        return switch (input) {
-            case WObj(fields):
-                for (field in fields) {
-                    if (field.name == name) {
-                        return field.value;
-                    }
-                }
-                WNull;
-            default: WNull;
+        if (isWireObj(input)) {
+            return memberOfFields(objFields(input), name);
         }
+        return WNull;
+    }
+
+    static function memberOfFields(fields:Array<WireField>, name:String):WireValue {
+        var fieldIndexIdx:Int = 0;
+        while (fieldIndexIdx < fields.length) {
+            final field = fields[fieldIndexIdx];
+            if (field.name == name) {
+                return field.value;
+            }
+            fieldIndexIdx++;
+        }
+        return WNull;
     }
 
     /**
@@ -129,21 +157,107 @@ class Canonical {
 
     /** One list value: absent reads as empty, a non-array is a named issue. */
     static function listMember(value:WireValue):ListShape {
-        return switch (value) {
-            case WNull: LAbsent;
-            case WArr(items): LArr(items);
-            default: LBad;
+        if (isWireNull(value)) {
+            return LAbsent;
         }
+        if (isWireArr(value)) {
+            return LArr(arrOf(value));
+        }
+        return LBad;
+    }
+
+    static function isWireNull(value:WireValue):Bool {
+        return switch (value) {
+            case WNull: true;
+            case WBool(_): false;
+            case WNum(_): false;
+            case WStr(_): false;
+            case WArr(_): false;
+            case WObj(_): false;
+        };
+    }
+
+    static function isWireArr(value:WireValue):Bool {
+        return switch (value) {
+            case WArr(_): true;
+            case WNull: false;
+            case WBool(_): false;
+            case WNum(_): false;
+            case WStr(_): false;
+            case WObj(_): false;
+        };
+    }
+
+    static function isWireObj(value:WireValue):Bool {
+        return switch (value) {
+            case WObj(_): true;
+            case WNull: false;
+            case WBool(_): false;
+            case WNum(_): false;
+            case WStr(_): false;
+            case WArr(_): false;
+        };
+    }
+
+    static function arrOf(value:WireValue):Array<WireValue> {
+        return switch (value) {
+            case WArr(items): items;
+            case WNull: new Array<WireValue>();
+            case WBool(_): new Array<WireValue>();
+            case WNum(_): new Array<WireValue>();
+            case WStr(_): new Array<WireValue>();
+            case WObj(_): new Array<WireValue>();
+        };
+    }
+
+    static function arrOfNullable(value:WireValue):Array<WireValue> {
+        return switch (value) {
+            case WArr(items): items;
+            case WNull: new Array<WireValue>();
+            case WBool(_): new Array<WireValue>();
+            case WNum(_): new Array<WireValue>();
+            case WStr(_): new Array<WireValue>();
+            case WObj(_): new Array<WireValue>();
+        };
+    }
+
+    static function objFields(value:WireValue):Array<WireField> {
+        return switch (value) {
+            case WObj(fields): fields;
+            case WNull: new Array<WireField>();
+            case WBool(_): new Array<WireField>();
+            case WNum(_): new Array<WireField>();
+            case WStr(_): new Array<WireField>();
+            case WArr(_): new Array<WireField>();
+        };
+    }
+
+    static function isBadShape(shape:ListShape):Bool {
+        return switch (shape) {
+            case LBad: true;
+            case LAbsent: false;
+            case LArr(_): false;
+        };
+    }
+
+    static function shapeItems(shape:ListShape):Array<WireValue> {
+        return switch (shape) {
+            case LAbsent: new Array<WireValue>();
+            case LArr(items): items;
+            case LBad: new Array<WireValue>();
+        };
     }
 
     static function encodeSemantics(writer:Writer, value:WireValue):String {
-        final items = switch (listMember(value)) {
-            case LAbsent: new Array<WireValue>();
-            case LArr(items): items;
-            case LBad: return "InvalidSnapshotSemantics";
-        };
+        final shape = listMember(value);
+        if (isBadShape(shape)) {
+            return "InvalidSnapshotSemantics";
+        }
+        final items = shapeItems(shape);
         writer.u32(items.length);
-        for (span in items) {
+        var spanIndexIdx:Int = 0;
+        while (spanIndexIdx < items.length) {
+            final span = items[spanIndexIdx];
             final attributes = member(span, "attributes");
             final order = numberMember(span, "order");
             final tagName = member(span, "tagName");
@@ -169,33 +283,25 @@ class Canonical {
             if (attributes != WNull) {
                 encodeAttributes(writer, attributes);
             }
+            spanIndexIdx++;
         }
         return null;
     }
 
     static function encodeTextSpans(writer:Writer, value:WireValue):String {
-        final items = switch (listMember(value)) {
-            case LAbsent: new Array<WireValue>();
-            case LArr(items): items;
-            case LBad: return "InvalidSnapshotTextSpans";
-        };
+        final shape = listMember(value);
+        if (isBadShape(shape)) {
+            return "InvalidSnapshotTextSpans";
+        }
+        final items = shapeItems(shape);
         writer.u32(items.length);
-        for (span in items) {
-            final families = switch (member(span, "fontFamilies")) {
-                case WArr(list):
-                    final names = new Array<String>();
-                    for (item in list) {
-                        names.push(JsCoerce.toString(item));
-                    }
-                    names;
-                default: null;
-            };
+        var spanIndexIdx:Int = 0;
+        while (spanIndexIdx < items.length) {
+            final span = items[spanIndexIdx];
+            final families = familiesOf(span);
             final fontSizePx = numberMember(span, "fontSizePx");
             final fontWeight = numberMember(span, "fontWeight");
-            final italic = switch (member(span, "italic")) {
-                case WBool(inner): inner;
-                default: null;
-            };
+            final italic = italicOf(span);
             final baselineShiftPx = numberMember(span, "baselineShiftPx");
             var flags = 0;
             if (families != null) {
@@ -218,8 +324,10 @@ class Canonical {
             numberField(writer, numberMember(span, "end"));
             if (families != null) {
                 writer.u32(families.length);
-                for (name in families) {
-                    writer.str(name);
+                var nameIndexIdx:Int = 0;
+                while (nameIndexIdx < families.length) {
+                    writer.str(families[nameIndexIdx]);
+                    nameIndexIdx++;
                 }
             }
             if (fontSizePx != null) {
@@ -234,18 +342,21 @@ class Canonical {
             if (baselineShiftPx != null) {
                 writer.f64(baselineShiftPx);
             }
+            spanIndexIdx++;
         }
         return null;
     }
 
     static function encodeInlineBoxes(writer:Writer, value:WireValue):String {
-        final items = switch (listMember(value)) {
-            case LAbsent: new Array<WireValue>();
-            case LArr(items): items;
-            case LBad: return "InvalidSnapshotInlineBoxes";
-        };
+        final shape = listMember(value);
+        if (isBadShape(shape)) {
+            return "InvalidSnapshotInlineBoxes";
+        }
+        final items = shapeItems(shape);
         writer.u32(items.length);
-        for (item in items) {
+        var itemIndexIdx:Int = 0;
+        while (itemIndexIdx < items.length) {
+            final item = items[itemIndexIdx];
             final inlineStartPx = numberMember(item, "inlineStartPx");
             final inlineEndPx = numberMember(item, "inlineEndPx");
             final outerSpacing = member(item, "outerSpacing");
@@ -271,8 +382,57 @@ class Canonical {
             if (outerSpacing != WNull) {
                 writer.str(JsCoerce.toString(outerSpacing));
             }
+            itemIndexIdx++;
         }
         return null;
+    }
+
+    static function familiesOf(span:WireValue):Null<Array<String>> {
+        final raw = member(span, "fontFamilies");
+        if (isWireArr(raw)) {
+            return familiesFromList(arrOf(raw));
+        }
+        return null;
+    }
+
+    static function familiesFromList(list:Array<WireValue>):Array<String> {
+        final names = new Array<String>();
+        var itemIndexIdx:Int = 0;
+        while (itemIndexIdx < list.length) {
+            names.push(JsCoerce.toString(list[itemIndexIdx]));
+            itemIndexIdx++;
+        }
+        return names;
+    }
+
+    static function italicOf(span:WireValue):Null<Bool> {
+        final raw = member(span, "italic");
+        if (isWireBool(raw)) {
+            return boolOf(raw);
+        }
+        return null;
+    }
+
+    static function isWireBool(value:WireValue):Bool {
+        return switch (value) {
+            case WBool(_): true;
+            case WNull: false;
+            case WNum(_): false;
+            case WStr(_): false;
+            case WArr(_): false;
+            case WObj(_): false;
+        };
+    }
+
+    static function boolOf(value:WireValue):Bool {
+        return switch (value) {
+            case WBool(inner): inner;
+            case WNull: false;
+            case WNum(_): false;
+            case WStr(_): false;
+            case WArr(_): false;
+            case WObj(_): false;
+        };
     }
 
     /**
@@ -282,27 +442,29 @@ class Canonical {
      * other shape reads as empty attributes.
      */
     static function encodeAttributes(writer:Writer, value:WireValue):Void {
-        switch (value) {
-            case WObj(fields):
-                writer.u8(1);
-                writer.u32(fields.length);
-                for (field in fields) {
-                    writer.str(field.name);
-                    writer.str(JsCoerce.toString(field.value));
-                }
-            case WArr(_):
-                writer.u8(2);
-                writer.bytes(Bytes.ofString(JsCoerce.renderJson(value)));
-            default:
-                writer.u8(0);
+        if (isWireObj(value)) {
+            encodeObjectAttributes(writer, objFields(value));
+            return;
+        }
+        if (isWireArr(value)) {
+            writer.u8(2);
+            writer.bytes(Bytes.ofString(JsCoerce.renderJson(value)));
+            return;
+        }
+        writer.u8(0);
+    }
+
+    static function encodeObjectAttributes(writer:Writer, fields:Array<WireField>):Void {
+        writer.u8(1);
+        writer.u32(fields.length);
+        var fieldIndexIdx:Int = 0;
+        while (fieldIndexIdx < fields.length) {
+            final field = fields[fieldIndexIdx];
+            writer.str(field.name);
+            writer.str(JsCoerce.toString(field.value));
+            fieldIndexIdx++;
         }
     }
-}
-
-/** The encode outcome: bytes or the named issue the platform adapter raises. */
-enum EncodeResult {
-    COk(bytes:Bytes);
-    CErr(issue:String);
 }
 
 private enum ListShape {
@@ -313,15 +475,16 @@ private enum ListShape {
 
 /**
  * Grows the canonical buffer in chunks; every multi-byte integer is
- * little-endian and every f64 rides its IEEE 754 bit pattern.
+ * little-endian and every f64 rides its IEEE 754 bit pattern. The shape
+ * mirrors samples/boring/BinaryWriter.hx; the byte order differs on
+ * purpose, the canonical form is little-endian end to end (canonical.ts:71,
+ * canonical.rs:93).
  */
 private class Writer {
     final buf:BytesBuffer = new BytesBuffer();
 
     public function new(kind:Int) {
-        for (index in 0...Canonical.MAGIC.length) {
-            buf.addByte(Canonical.MAGIC.get(index));
-        }
+        buf.add(Bytes.ofString(Canonical.MAGIC));
         u8(Canonical.VERSION);
         u8(kind);
     }
@@ -336,7 +499,8 @@ private class Writer {
 
     public function f64(value:Float):Void {
         final bits = FPHelper.doubleToI64(value);
-        // Low four bytes first: the f64 form is little-endian end to end.
+        // Low word first, each word low byte first: together the little-
+        // endian f64 (144.0 reads back 0000000000006240 in vector0).
         emitBits(bits.low);
         emitBits(bits.high);
     }
