@@ -14,6 +14,7 @@ export class Canonical {
 
   public static encode(input: WireValue, kind: number): EncodeResult {
     const writer = new Writer(kind);
+    writer.begin(kind);
     const text = Canonical.member(input, "text");
     let textValue = "";
     if (!Canonical.isWireNull(text)) {
@@ -466,9 +467,16 @@ export class Writer {
 
   constructor(kind: number) {
     this.buf = new BytesBuffer();
-    this.buf.add(new TextEncoder().encode("TQCS"));
+  }
+
+  public begin(kind: number): void {
+    this.writeMagic();
     this.u8(1);
     this.u8(kind);
+  }
+
+  private writeMagic(): void {
+    this.buf.add(new TextEncoder().encode("TQCS"));
   }
 
   public u8(value: number): void {

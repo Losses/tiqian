@@ -14,38 +14,45 @@ package org.tiqian.protocol;
 class CanonicalTest {
     @:test
     public static function goldenVectorsMatchTheSharedBytes():Void {
-CanonicalTestSupport.assertHex("vector0", "54514353010006000000e4b8ade6968701000000000000624000000000000000000000000000000000",
+        final recorder = new org.tiqian.test.trace.TestTraceRecorder("CanonicalTest");
+        recorder.section("goldenVectorsMatchTheSharedBytes");
+        CanonicalTestSupport.assertHex(recorder, "vector0", "54514353010006000000e4b8ade6968701000000000000624000000000000000000000000000000000",
             Canonical.encode(CanonicalTestSupport.WireObj("p-1", "中文", WNum(144)), Canonical.KIND_SNAPSHOT));
-CanonicalTestSupport.assertHex("vector1", "54514353010106000000e4b8ade6968700000000000000000000000000000000",
+        CanonicalTestSupport.assertHex(recorder, "vector1", "54514353010106000000e4b8ade6968700000000000000000000000000000000",
             Canonical.encode(CanonicalTestSupport.WireObj("fc-1", "中文", null), Canonical.KIND_CONTRACT));
-CanonicalTestSupport.assertHex("vector2", "5451435301000f000000e4b8ade69687e5ad97e68e92e7898801000000000000624002000000070100000000000000400100000000000010400100000061000000000000f03f010200000004000000687265661300000068747470733a2f2f6578616d706c652e636f6d05000000636c617373040000006c696e6b0401000000000000000001000000000000f03f02000000656d020000001f010000000000000000010000000000000040010000000f00000044656c6120476f74686963204f6e650000000000003240000000000000794001000000000000e0bf0101000000000000004001000000000000104000000000020000000701000000000000f03f0100000000000000400000000000002040000000000000104006000000536f757263650001000000000000084001000000000000104003000000000000000000000000000000000032400000000000004240",
+        CanonicalTestSupport.assertHex(recorder, "vector2", "5451435301000f000000e4b8ade69687e5ad97e68e92e7898801000000000000624002000000070100000000000000400100000000000010400100000061000000000000f03f010200000004000000687265661300000068747470733a2f2f6578616d706c652e636f6d05000000636c617373040000006c696e6b0401000000000000000001000000000000f03f02000000656d020000001f010000000000000000010000000000000040010000000f00000044656c6120476f74686963204f6e650000000000003240000000000000794001000000000000e0bf0101000000000000004001000000000000104000000000020000000701000000000000f03f0100000000000000400000000000002040000000000000104006000000536f757263650001000000000000084001000000000000104003000000000000000000000000000000000032400000000000004240",
             Canonical.encode(CanonicalTestSupport.FULL_VECTOR_INPUT(), Canonical.KIND_SNAPSHOT));
     }
 
     @:test
     public static function looseCoercionsCarryTheJsonLane():Void {
-CanonicalTestSupport.assertHex("vector3", "5451435301000800000020636f6572636520010000000000106240010000000501000000000000f03f010000000000000040010000006902130000005b5b2261222c2231225d2c5b2262222c325d5d010000000001000000000000000001000000000000f03f010000000401000000000000000001000000000000f03f01000000370200000000000000000008400000000000000000",
+        final recorder = new org.tiqian.test.trace.TestTraceRecorder("CanonicalTest");
+        recorder.section("looseCoercionsCarryTheJsonLane");
+        CanonicalTestSupport.assertHex(recorder, "vector3", "5451435301000800000020636f6572636520010000000000106240010000000501000000000000f03f010000000000000040010000006902130000005b5b2261222c2231225d2c5b2262222c325d5d010000000001000000000000000001000000000000f03f010000000401000000000000000001000000000000f03f01000000370200000000000000000008400000000000000000",
             Canonical.encode(CanonicalTestSupport.LOOSE_VECTOR_INPUT(), Canonical.KIND_SNAPSHOT));
     }
 
     @:test
     public static function nonArraySemanticsIsTheNamedIssue():Void {
+        final recorder = new org.tiqian.test.trace.TestTraceRecorder("CanonicalTest");
+        recorder.section("nonArraySemanticsIsTheNamedIssue");
         final result = Canonical.encode(WObj([
             { name: "text", value: WStr("a") },
             { name: "semantics", value: WStr("no") },
         ]), Canonical.KIND_SNAPSHOT);
         switch (result) {
             case EncodeResult.CErr(issue):
-                if (issue != "InvalidSnapshotSemantics") {
-                    throw new org.tiqian.core.IllegalStateException("unexpected issue " + issue);
-                }
+                org.tiqian.test.trace.TracedAssertions.assertEqualsString("InvalidSnapshotSemantics", issue);
             case EncodeResult.COk(_):
-                throw new org.tiqian.core.IllegalStateException("non-array semantics must be the named issue");
+                recorder.record("encode unexpectedly succeeded");
+                org.tiqian.test.trace.TracedAssertions.assertTrue(false, "non-array semantics must be the named issue");
         }
     }
 
     @:test
     public static function nonFiniteAndMinusZeroCollapse():Void {
+        final recorder = new org.tiqian.test.trace.TestTraceRecorder("CanonicalTest");
+        recorder.section("nonFiniteAndMinusZeroCollapse");
         final withoutWidth = Canonical.encode(WObj([
             { name: "text", value: WStr("a") },
         ]), Canonical.KIND_SNAPSHOT);
@@ -53,19 +60,20 @@ CanonicalTestSupport.assertHex("vector3", "5451435301000800000020636f65726365200
             { name: "text", value: WStr("a") },
             { name: "maxWidthPx", value: WNum(Math.NaN) },
         ]), Canonical.KIND_SNAPSHOT);
-CanonicalTestSupport.assertHex("withNaN", CanonicalTestSupport.hexOf(withoutWidth), withNaN);
+        CanonicalTestSupport.assertHex(recorder, "withNaN", CanonicalTestSupport.hexOf(withoutWidth), withNaN);
         final minusZero = Canonical.encode(WObj([
             { name: "text", value: WStr("a") },
             { name: "maxWidthPx", value: WNum(-0.0) },
         ]), Canonical.KIND_SNAPSHOT);
-CanonicalTestSupport.assertHex("minusZero", CanonicalTestSupport.hexOf(withoutWidth), minusZero);
+        CanonicalTestSupport.assertHex(recorder, "minusZero", CanonicalTestSupport.hexOf(withoutWidth), minusZero);
     }
 
     @:test
     public static function digestMatchesThePlatformHash():Void {
+        final recorder = new org.tiqian.test.trace.TestTraceRecorder("CanonicalTest");
+        recorder.section("digestMatchesThePlatformHash");
         final encoded = Canonical.encode(CanonicalTestSupport.WireObj("p-1", "中文", WNum(144)), Canonical.KIND_SNAPSHOT);
-        if (CanonicalTestSupport.hexOfDigest(encoded) != "0884bb15dee00d579efe3a63fc65344ed80b1f753fa04a2cdd2ccc830bd69c60") {
-            throw new org.tiqian.core.IllegalStateException("digest golden mismatch");
-        }
+        org.tiqian.test.trace.TracedAssertions.assertEqualsString("0884bb15dee00d579efe3a63fc65344ed80b1f753fa04a2cdd2ccc830bd69c60",
+            CanonicalTestSupport.hexOfDigest(encoded));
     }
 }
