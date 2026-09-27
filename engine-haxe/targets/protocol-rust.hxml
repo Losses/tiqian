@@ -22,4 +22,3 @@ org.tiqian.protocol.WireValue
 org.tiqian.protocol.Canonical
 std.UStringException
 org.tiqian.protocol.SnapshotTableBinary
-org.tiqian.protocol.SnapshotTableBinaryTest

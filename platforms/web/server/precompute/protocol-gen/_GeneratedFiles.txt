@@ -2,8 +2,17 @@ haxe/crypto/sha256.rs
 org/tiqian/protocol/canonical.rs
 org/tiqian/protocol/encode_result.rs
 org/tiqian/protocol/js_coerce.rs
+org/tiqian/protocol/metric_entry.rs
+org/tiqian/protocol/snapshot_table_binary.rs
+org/tiqian/protocol/style_row.rs
+org/tiqian/protocol/table_data.rs
+org/tiqian/protocol/table_input.rs
+org/tiqian/protocol/table_metric_row.rs
+org/tiqian/protocol/table_probe.rs
+org/tiqian/protocol/value_row.rs
 org/tiqian/protocol/wire_field.rs
 org/tiqian/protocol/wire_value.rs
+runtime/string_tools.rs
 runtime/u_string.rs
 std/u_string_exception.rs
 std/mod.rs
