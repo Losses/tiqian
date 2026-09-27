@@ -1,21 +1,28 @@
-//! Rust bindings for the Tiqian layout engine's native C ABI (ADR 0050).
+//! Direct Rust consumption of the generated Tiqian layout engine (ADR 0050,
+//! Stage1 cutover to the boring engine-rust target).
 //!
-//! [`font_backend`] and [`shape_buffer`] carry the font session protocol and
-//! its packed buffer encoder as pure Rust. [`layout_request`] packs engine
-//! layout requests. [`engine`] holds the `extern` declarations and links only
-//! when `TIQIAN_NATIVE_LIB_DIR` points at the Gradle `linkReleaseStatic*`
-//! archive of `ffi/native`.
+//! The engine lives in the generated crate `tiqian-engine-gen` (bundle
+//! `engine-rust-f64`, sources under engine-haxe/out/engine-rust-f64/gen).
+//! The `engine` module adapts it into this crate's error surface and keeps
+//! the dependency-injection construction of the engine. The former C ABI
+//! layer (packed `LayoutRequest` bytes, `FontBackendVtable`, packed shape
+//! buffers, `TIQIAN_NATIVE_LIB_DIR` static linking) is gone; host code
+//! passes the generated Rust types directly.
+//!
+//! Domain validation names (`EmptyParagraph`, `InvalidMaximumMeasure`,
+//! `InvalidFontSize`, ...) stay single-sourced in the generated protocol
+//! model (platforms/web/server/precompute/protocol-gen,
+//! `ParagraphRequestChecks`); the Rust port of the web server wraps them in
+//! the `NamedError` type kept below. Byte-protocol error names
+//! (`InvalidLayoutRequestMagic`, ...) disappeared together with the packed
+//! request encoding.
 
-pub mod font_backend;
-pub mod layout_request;
-pub mod shape_buffer;
-
-#[cfg(tiqian_engine_link)]
 pub mod engine;
 
-/// A named issue reported across the C ABI. Domain validation names match the
-/// npm test assertions byte for byte (`InvalidMaximumMeasure`, ...); protocol
-/// error names match `ffi/native/tiqian_layout_abi.h`.
+/// A named issue reported to host applications. The web-server Rust port
+/// (platforms/web/server/precompute/engine/src/paragraph.rs) and the npm
+/// tests assert on these names, so the type and its string payload stay
+/// stable.
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub struct NamedError(pub String);
 

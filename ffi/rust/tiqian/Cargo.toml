@@ -1,11 +1,12 @@
+# ADR 0050: direct Rust consumption of the generated layout engine. The
+# generated crate comes from the boring engine-rust-f64 bundle; run
+# `nix develop -c node .haxelib/boring/git/out/bundle/driver.js gen engine-rust-f64 --project boring.json`
+# (or copy the checked-out bundle output) before building this crate.
 [package]
 name = "tiqian"
-description = "Neutral Rust bindings for the Tiqian CJK paragraph layout engine's native C ABI"
+description = "Direct Rust consumption of the generated Tiqian CJK paragraph layout engine"
 version.workspace = true
 edition.workspace = true
 
-[lints.rust]
-# build.rs emits this cfg when TIQIAN_NATIVE_LIB_DIR provides the engine archive.
-unexpected_cfgs = { level = "warn", check-cfg = ['cfg(tiqian_engine_link)'] }
-
 [dependencies]
+tiqian-engine-gen = { path = "../../../engine-haxe/out/engine-rust-f64/gen" }

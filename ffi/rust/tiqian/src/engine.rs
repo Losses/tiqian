@@ -1,134 +1,175 @@
-//! Engine entry points over the C ABI (ADR 0050 amendment `EngineLevelAbi`
-//! + corrective-2 packed plan).
+//! Engine entry points over the generated Rust engine (boring engine-rust
+//! target, crate `tiqian-engine-gen`).
 //!
-//! The `extern` declarations link the Kotlin/Native archive only when build.rs
-//! saw `TIQIAN_NATIVE_LIB_DIR` and emitted the `tiqian_engine_link` cfg;
-//! without the archive this module is compiled out and the crate stays pure
-//! Rust. Buffer protocol and status codes: `ffi/native/tiqian_layout_abi.h`
-//! and `ffi/native/tiqian_plan_abi.h`. Every `unsafe` below sits on this
-//! boundary; the obligation list lives in docs/rust-unsafe-inventory.md,
-//! section "engine.rs".
+//! The generated `ExplainableStubParagraphLayoutEngine` keeps the
+//! dependency-injection surface: every pipeline component arrives as a trait
+//! object (`ITextShaper`, `FontMetricsResolver`, `FallbackResolver`,
+//! `ClreqProfileResolver`, ...), and every slot defaults to the generated
+//! production implementation when the caller passes `None`. There is no
+//! `extern "C"` boundary left; the faults of the generated engine surface
+//! as `crate::NamedError`.
 
-use crate::font_backend::{FontBackendVtable, InstallOutcome};
 use crate::NamedError;
-use std::ffi::{c_char, c_int, CStr};
-use std::sync::Once;
+use tiqian_engine_gen::org::tiqian::clreq::clreq_profile_resolver::ClreqProfileResolver;
+use tiqian_engine_gen::org::tiqian::core::layout_input::LayoutInput;
+use tiqian_engine_gen::org::tiqian::core::layout_result::LayoutResult;
+use tiqian_engine_gen::org::tiqian::font::font_metrics::{FontMetricsNormalizer, FontMetricsResolver};
+use tiqian_engine_gen::org::tiqian::font::font_policy::FallbackResolver;
+use tiqian_engine_gen::org::tiqian::font::font_role_context::FontRoleClassifier;
+use tiqian_engine_gen::org::tiqian::layout::justifier::Justifier;
+use tiqian_engine_gen::org::tiqian::layout::line_breaker::LineBreaker;
+use tiqian_engine_gen::org::tiqian::layout::paragraph_layout_engine::{
+    ExplainableStubParagraphLayoutEngine,
+    ParagraphLayoutEngineLayoutWithRejectedTechnicalTiersFault,
+};
+use tiqian_engine_gen::org::tiqian::layout::punctuation_model::{
+    PunctuationAtomBuilder, PunctuationSpacingCompressor,
+};
+use tiqian_engine_gen::org::tiqian::layout::quote_pair_analyzer::QuotePairAnalyzer;
+use tiqian_engine_gen::org::tiqian::layout::width_independent_annotation_cache::WidthIndependentAnnotationCache;
+use tiqian_engine_gen::org::tiqian::linebreak::hyphenator::Hyphenator;
+use tiqian_engine_gen::org::tiqian::shaping::text_shaper::ITextShaper;
 
-extern "C" {
-    fn tiqian_layout_paragraph(
-        request: *const u8,
-        request_len: u64,
-        response_out: *mut *mut u8,
-        response_len: *mut u64,
-        error_out: *mut *mut c_char,
-    ) -> c_int;
-    fn tiqian_release_buffer(buffer: *mut std::ffi::c_void);
-    fn tiqian_install_font_backend(vtable: *const FontBackendVtable) -> c_int;
-    /// Forces the Kotlin/Native runtime to initialize before any engine call.
-    /// The name derives from the Gradle module name behind the archive;
-    /// `ffi/native` produces libnative.a.
-    fn libnative_symbols() -> *const u8;
+pub use tiqian_engine_gen::org::tiqian::core::layout_input::LayoutInput as EngineLayoutInput;
+pub use tiqian_engine_gen::org::tiqian::core::layout_result::LayoutResult as EngineLayoutResult;
+pub use tiqian_engine_gen::org::tiqian::shaping::replayable_font_backend::ReplayableFontCatalog;
+
+/// One slot per `ExplainableStubParagraphLayoutEngine::new` parameter;
+/// `None` keeps the generated default implementation. Hosts inject their
+/// shaping and metrics stack through the trait objects here.
+#[derive(Default)]
+pub struct EngineComponents {
+    pub font_role_classifier: Option<Box<dyn FontRoleClassifier>>,
+    pub fallback_resolver: Option<Box<dyn FallbackResolver>>,
+    pub clreq_profile_resolver: Option<Box<dyn ClreqProfileResolver>>,
+    pub font_metrics_resolver: Option<Box<dyn FontMetricsResolver>>,
+    pub font_metrics_normalizer: Option<Box<dyn FontMetricsNormalizer>>,
+    pub punctuation_atom_builder: Option<PunctuationAtomBuilder>,
+    pub punctuation_spacing_compressor: Option<PunctuationSpacingCompressor>,
+    pub quote_pair_analyzer: Option<QuotePairAnalyzer>,
+    pub line_breaker: Option<Box<dyn LineBreaker>>,
+    pub justifier: Option<Justifier>,
+    pub text_shaper: Option<Box<dyn ITextShaper>>,
+    pub hyphenator: Option<Box<dyn Hyphenator>>,
+    pub annotation_cache: Option<Box<dyn WidthIndependentAnnotationCache>>,
 }
 
-static RUNTIME_INIT: Once = Once::new();
-
-fn ensure_runtime() {
-    // unsafe: reference to keep the Kotlin/Native runtime symbols linked;
-    // obligations in docs/rust-unsafe-inventory.md, "engine.rs".
-    RUNTIME_INIT.call_once(|| unsafe {
-        libnative_symbols();
-    });
+/// Runs the full paragraph layout pipeline in-process. One engine instance
+/// owns its caches; hosts create one per font session or share one behind a
+/// lock, matching the generated `layout(&mut self)` signature.
+pub struct Engine {
+    inner: ExplainableStubParagraphLayoutEngine,
 }
 
-/// Installs the process-wide font backend. The vtable stays owned by the
-/// caller and must outlive the process. Reinstalling another vtable of the
-/// same revision reports [`InstallOutcome::Installed`] and keeps the first.
-pub fn install_font_backend(vtable: &FontBackendVtable) -> InstallOutcome {
-    ensure_runtime();
-    // unsafe: the C ABI takes the vtable as a raw pointer; the vtable is a
-    // process-wide static, see docs/rust-unsafe-inventory.md, "engine.rs".
-    let code = unsafe { tiqian_install_font_backend(std::ptr::from_ref(vtable)) };
-    InstallOutcome::from_code(code)
-}
-
-/// Runs the layout for one packed request ([`crate::layout_request`]) and
-/// returns the engine-produced packed plan bytes (tiqian_plan_abi.h). Named
-/// protocol errors and engine failures surface as [`NamedError`]; released
-/// buffers never leak across the boundary on either status.
-pub fn layout_paragraph(request: &[u8]) -> Result<Vec<u8>, NamedError> {
-    ensure_runtime();
-    if request.is_empty() {
-        return Err(NamedError("InvalidLayoutRequest".to_string()));
-    }
-    let mut response: *mut u8 = std::ptr::null_mut();
-    let mut response_len: u64 = 0;
-    let mut error: *mut c_char = std::ptr::null_mut();
-    let request_len = u64::try_from(request.len())
-        .map_err(|_| NamedError("InvalidLayoutRequestLength".to_string()))?;
-    // unsafe: the call crosses the C ABI; both out pointers are null before
-    // the call and the status decides which buffer to release, see
-    // docs/rust-unsafe-inventory.md, "engine.rs".
-    let status = unsafe {
-        tiqian_layout_paragraph(
-            request.as_ptr(),
-            request_len,
-            &mut response,
-            &mut response_len,
-            &mut error,
+impl Engine {
+    /// Builds the engine with the caller's components; every absent slot
+    /// keeps the generated default. Fails with a `NamedError` carrying the
+    /// generated constructor fault text when a component is rejected.
+    pub fn new(components: EngineComponents) -> Result<Self, NamedError> {
+        let inner = ExplainableStubParagraphLayoutEngine::new(
+            components.font_role_classifier,
+            components.fallback_resolver,
+            components.clreq_profile_resolver,
+            components.font_metrics_resolver,
+            components.font_metrics_normalizer,
+            components.punctuation_atom_builder,
+            components.punctuation_spacing_compressor,
+            components.quote_pair_analyzer,
+            components.line_breaker,
+            components.justifier,
+            components.text_shaper,
+            components.hyphenator,
+            components.annotation_cache,
         )
-    };
-    match status {
-        0 => {
-            // unsafe: the engine returns a packed buffer on status 0; copy once then release.
-            let len = usize::try_from(response_len)
-                .map_err(|_| NamedError("InvalidLayoutResponseLength".to_string()))?;
-            let bytes = unsafe { std::slice::from_raw_parts(response as *const u8, len) }.to_vec();
-            unsafe { tiqian_release_buffer(response as *mut std::ffi::c_void) };
-            Ok(bytes)
-        }
-        1 => {
-            // unsafe: the engine returns a NUL-terminated error name on status 1.
-            let name = unsafe { CStr::from_ptr(error) }
-                .to_string_lossy()
-                .into_owned();
-            unsafe { tiqian_release_buffer(error as *mut std::ffi::c_void) };
-            Err(NamedError(name))
-        }
-        code => Err(NamedError(format!("InvalidLayoutResponseStatus{code}"))),
+        .map_err(named_new)?;
+        Ok(Self { inner })
     }
+
+    /// Runs the layout for one generated `LayoutInput` and returns the
+    /// generated `LayoutResult`. Named errors surface as
+    /// `crate::NamedError` with the generated fault text.
+    pub fn layout(&mut self, input: LayoutInput) -> Result<LayoutResult, NamedError> {
+        self.inner.layout(input).map_err(named)
+    }
+}
+
+/// Flattens the generated fault unions into the named error surface. The
+/// range faults carry the engine's published sentences; the remaining stage
+/// faults render through their generated `Debug`.
+fn named_new(
+    fault: tiqian_engine_gen::org::tiqian::layout::paragraph_layout_engine::ParagraphLayoutEngineNewFault,
+) -> NamedError {
+    use tiqian_engine_gen::org::tiqian::layout::paragraph_layout_engine::ParagraphLayoutEngineNewFault;
+    match fault {
+        ParagraphLayoutEngineNewFault::TextRangeErrorFault(error) => NamedError(error.to_string()),
+        ParagraphLayoutEngineNewFault::UStringFaultFault(error) => NamedError(error.to_string()),
+        ParagraphLayoutEngineNewFault::LayoutWithRejectedTechnicalTiersFault(inner) => named(inner),
+    }
+}
+
+fn named(fault: ParagraphLayoutEngineLayoutWithRejectedTechnicalTiersFault) -> NamedError {
+    let text = match fault {
+        ParagraphLayoutEngineLayoutWithRejectedTechnicalTiersFault::TextRangeErrorFault(error) => {
+            error.to_string()
+        }
+        other => format!("{other:?}"),
+    };
+    NamedError(text)
 }
 
 #[cfg(test)]
 mod tests {
     use super::*;
+    use tiqian_engine_gen::org::tiqian::core::layout_constraints::LayoutConstraints;
+    use tiqian_engine_gen::org::tiqian::core::tiqian_text_content::TiqianTextContent;
+    use tiqian_engine_gen::org::tiqian::font::font_metrics::StubFontMetricsResolver;
+    use tiqian_engine_gen::org::tiqian::shaping::text_shaper::ExplainableStubTextShaper;
 
     #[test]
-    fn engine_reports_revision_mismatch_without_fonts() {
-        let vtable = FontBackendVtable {
-            size: u32::try_from(std::mem::size_of::<FontBackendVtable>())
-                .expect("vtable size fits u32"),
-            protocol_revision: 0,
-            shape: None,
-            metrics: None,
-            release_string: None,
+    fn engine_runs_a_stub_paragraph_end_to_end() {
+        let mut engine = Engine::new(EngineComponents::default())
+            .expect("default components satisfy the generated constructor");
+        let content = TiqianTextContent::new("正文", None, None, None, None);
+        let constraints = LayoutConstraints::new(320.0, None, None)
+            .expect("fixture width is positive");
+        let input =
+            LayoutInput::new(content, None, None, constraints, None, None, None, None, None);
+        let result = engine
+            .layout(input)
+            .expect("the stub pipeline lays out a plain paragraph");
+        assert!(!result.to_string().is_empty());
+    }
+
+    #[test]
+    fn injected_components_drive_the_pipeline() {
+        // Dependency injection stays: the host hands in trait objects and the
+        // engine uses them instead of its defaults.
+        let components = EngineComponents {
+            text_shaper: Some(Box::new(ExplainableStubTextShaper::new())),
+            font_metrics_resolver: Some(Box::new(StubFontMetricsResolver::new())),
+            ..EngineComponents::default()
         };
-        assert_eq!(
-            install_font_backend(&vtable),
-            InstallOutcome::RevisionMismatch
-        );
+        let mut engine = Engine::new(components)
+            .expect("injected components satisfy the generated constructor");
+        let content = TiqianTextContent::new("句号后换行。", None, None, None, None);
+        let constraints = LayoutConstraints::new(160.0, None, None)
+            .expect("fixture width is positive");
+        let input =
+            LayoutInput::new(content, None, None, constraints, None, None, None, None, None);
+        let result = engine
+            .layout(input)
+            .expect("the injected pipeline lays out a plain paragraph");
+        assert!(!result.to_string().is_empty());
     }
 
     #[test]
-    fn garbage_request_reports_magic_error_through_the_abi() {
-        let failure = layout_paragraph(&[0u8; 8]).expect_err("garbage must fail");
-        assert_eq!(failure.name(), "InvalidLayoutRequestMagic");
-    }
-
-    #[test]
-    fn empty_request_is_rejected_before_the_call() {
-        assert_eq!(
-            layout_paragraph(&[]),
-            Err(NamedError("InvalidLayoutRequest".to_string()))
-        );
+    fn rejection_message_flows_to_named_error_text() {
+        // The constraint constructor publishes the engine's rejection
+        // sentence; the same sentence reaches NamedError when a fault union
+        // carries it across the facade.
+        let error =
+            LayoutConstraints::new(0.0, None, None).expect_err("zero width is rejected");
+        let named = NamedError(error.to_string());
+        assert!(named.name().contains("maxWidth"));
     }
 }
