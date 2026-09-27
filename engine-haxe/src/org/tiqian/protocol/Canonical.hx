@@ -70,7 +70,7 @@ class Canonical {
      * platform adapters raise it in their own error type.
      */
     public static function encode(input:WireValue, kind:Int):EncodeResult {
-        final writer = new Writer(kind);
+        final writer = new Writer();
         writer.begin(kind);
         final text = member(input, "text");
         var textValue = "";
@@ -489,7 +489,7 @@ private enum ListShape {
 private class Writer {
     final buf:BytesBuffer;
 
-    public function new(kind:Int) {
+    public function new() {
         buf = new BytesBuffer();
     }
 

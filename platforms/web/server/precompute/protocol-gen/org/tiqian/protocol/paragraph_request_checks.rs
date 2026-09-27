@@ -1,6 +1,5 @@
 use crate::org::tiqian::protocol::paragraph_request::ParagraphRequest;
 use crate::org::tiqian::protocol::paragraph_request_exception::ParagraphRequestError;
-use crate::org::tiqian::protocol::paragraph_request_exception::ParagraphRequestException;
 use crate::runtime::u_string;
 
 
@@ -8,10 +7,6 @@ use crate::runtime::u_string;
 pub struct ParagraphRequestChecks;
 
 impl ParagraphRequestChecks {
-    pub fn paragraph_request_checks_issue_name(error: ParagraphRequestError) -> String {
-        return ParagraphRequestException::paragraph_request_exception_describe(error);
-    }
-
     pub fn paragraph_request_checks_validate(request: ParagraphRequest) -> Result<(), ParagraphRequestError> {
         if u_string::unit_count(&((request.text).to_string())) == 0 || ParagraphRequestChecks::paragraph_request_checks_is_blank_text((request.text).to_string().as_str()) {
             return Err(ParagraphRequestError::EmptyParagraph);

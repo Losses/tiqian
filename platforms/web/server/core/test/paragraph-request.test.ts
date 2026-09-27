@@ -42,7 +42,7 @@ function issueOf(modified: ParagraphRequest): string {
     ParagraphRequestChecks.validate(modified);
   } catch (error) {
     if (error instanceof ParagraphRequestException) {
-      return ParagraphRequestChecks.issueName(error.error);
+      return ParagraphRequestException.describe(error.error);
     }
     throw error;
   }
