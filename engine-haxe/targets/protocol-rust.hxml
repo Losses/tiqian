@@ -20,4 +20,6 @@
 -D package-license=MIT
 org.tiqian.protocol.WireValue
 org.tiqian.protocol.Canonical
+org.tiqian.protocol.ParagraphRequest
+org.tiqian.protocol.ParagraphRequestTest
 std.UStringException
