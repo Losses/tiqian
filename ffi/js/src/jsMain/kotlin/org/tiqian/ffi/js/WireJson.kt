@@ -17,7 +17,7 @@ import org.tiqian.shaping.ShapingResult
 
 /**
  * JSON decode helpers shared by the standalone capability exports
- * (`ClreqExports.kt`, `FontExports.kt`; the line-break exports moved to the
+ * (`FontExports.kt`; the line-break and clreq exports moved to the
  * generated TypeScript tree in `ffi/js/npm/engine-gen`). The wire is
  * JSON-through-JavaScript: every request arrives as a JSON string, so these
  * helpers reconstruct the engine value types without touching the engine.
