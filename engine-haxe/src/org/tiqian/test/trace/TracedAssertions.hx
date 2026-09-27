@@ -619,6 +619,25 @@ class TracedAssertions {
     }
 
     /**
+        Value-carrying sibling of recordRenderedNotNull: the null decision
+        lives in this function body instead of in the caller's argument
+        expression. Callers pass the checked value itself plus the two
+        rendered texts, so the recorded operand is exactly what the old
+        caller-side ternary produced (nullText when the value is null,
+        renderedText otherwise) while the call site no longer writes a
+        self-contradictory `== null` guard over a statically non-null
+        expression. Both text arguments are pure renders (string literals,
+        Std.string, TestTraceRender.cap), so eagerly evaluating renderedText
+        on the null path has no observable effect: its value is discarded
+        and the null branch text comes from nullText. The event kind
+        ("not-null"), the field list and the recorded text stay
+        byte-identical to the caller-side ternary form.
+    **/
+    public static function recordRenderedNotNullValue<T>(value:Null<T>, nullText:String, renderedText:String, ?message:String):Void {
+        recordEvent("not-null", [field("actual", value == null ? nullText : renderedText), msgField(message)]);
+    }
+
+    /**
         Records the reference name of the raised failure. The derived type
         gets its own nested try region: a runtime type test written as
         \`Std.isOfType(error, IllegalStateException)\` inside the base catch is
