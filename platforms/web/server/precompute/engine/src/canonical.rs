@@ -44,63 +44,39 @@ const BOX_OUTER_SPACING: u8 = 0x04;
 
 /// The `??` step shared with the wire readers: absent and null both read as
 /// absent.
-fn coalesce(value: Option<&Json>) -> Option<&Json> {
-    value.filter(|value| !matches!(value, Json::Null))
+/// Mirrors the parsed wire JSON into the generated wire value. Object field
+/// order is the parser's document order, the identity order of attribute
+/// pairs.
+fn json_to_wire(value: &Json) -> tiqian_protocol_gen::org::tiqian::protocol::wire_value::WireValue {
+    use tiqian_protocol_gen::org::tiqian::protocol::wire_field::WireField;
+    use tiqian_protocol_gen::org::tiqian::protocol::wire_value::WireValue;
+    match value {
+        Json::Null => WireValue::WNull,
+        Json::Bool(inner) => WireValue::WBool { value: *inner },
+        Json::Num(inner) => WireValue::WNum { value: *inner },
+        Json::Str(inner) => WireValue::WStr { value: inner.clone() },
+        Json::Arr(items) => WireValue::WArr {
+            items: items.iter().map(json_to_wire).collect(),
+        },
+        Json::Obj(fields) => WireValue::WObj {
+            fields: fields
+                .iter()
+                .map(|(name, value)| WireField { name: name.clone(), value: json_to_wire(value) })
+                .collect(),
+        },
+    }
 }
 
-/// A number the way `JSON.stringify` carries it: non-finite values drop out
-/// (they serialize as `null`, which readers coalesce away) and both zero
-/// signs collapse to `+0`.
-fn canonical_f64(value: f64) -> Option<f64> {
-    if !value.is_finite() {
-        return None;
-    }
-    if value == 0.0 {
-        return Some(0.0);
-    }
-    Some(value)
-}
-
-/// `Number(member)` when the member survives, absent otherwise.
-fn number_member(value: &Json, name: &str) -> Option<f64> {
-    coalesce(member(value, name))
-        .map(js_number_value)
-        .and_then(canonical_f64)
-}
-
-struct Writer {
-    bytes: Vec<u8>,
-}
-
-impl Writer {
-    fn new(kind: u8) -> Self {
-        let mut bytes = Vec::new();
-        bytes.extend_from_slice(CANONICAL_MAGIC);
-        bytes.push(CANONICAL_VERSION);
-        bytes.push(kind);
-        Writer { bytes }
-    }
-
-    fn u8(&mut self, value: u8) {
-        self.bytes.push(value);
-    }
-
-    fn u32(&mut self, value: u32) {
-        self.bytes.extend_from_slice(&value.to_le_bytes());
-    }
-
-    fn f64(&mut self, value: f64) {
-        self.bytes.extend_from_slice(&value.to_bits().to_le_bytes());
-    }
-
-    fn str(&mut self, value: &str) {
-        self.u32(u32::try_from(value.len()).unwrap_or(u32::MAX));
-        self.bytes.extend_from_slice(value.as_bytes());
-    }
-
-    fn bytes(&mut self, value: &[u8]) {
-        self.u32(u32::try_from(value.len()).unwrap_or(u32::MAX));
-        self.bytes.extend_from_slice(value);
+/// Encodes one wire input object (the shape `PrepareInput::from_json` reads)
+/// into its canonical bytes. The byte form is the generated single source
+/// (org.tiqian.protocol.Canonical); this function adapts the parsed JSON and
+/// raises the named issue the wire readers report.
+pub fn encode_input(value: &Json, kind: u8) -> Result<Vec<u8>, NamedError> {
+    use tiqian_protocol_gen::org::tiqian::protocol::canonical::Canonical;
+    use tiqian_protocol_gen::org::tiqian::protocol::encode_result::EncodeResult;
+    match Canonical::canonical_encode(json_to_wire(value), kind as u32) {
+        EncodeResult::COk { bytes } => Ok(bytes),
+        EncodeResult::CErr { issue } => Err(NamedError(issue)),
     }
 }
 
@@ -169,228 +145,6 @@ impl<'a> Reader<'a> {
 fn invalid() -> NamedError {
     NamedError("InvalidCanonicalForm".to_string())
 }
-
-/// Encodes one wire input object (the shape `PrepareInput::from_json` reads)
-/// into its canonical bytes. `kind` selects the snapshot or contract form.
-pub fn encode_input(value: &Json, kind: u8) -> Result<Vec<u8>, NamedError> {
-    let mut writer = Writer::new(kind);
-    writer.str(
-        &coalesce(member(value, "text"))
-            .map(crate::snapshot_source::js_string_value)
-            .unwrap_or_default(),
-    );
-    if kind == KIND_SNAPSHOT {
-        match number_member(value, "maxWidthPx") {
-            Some(width) => {
-                writer.u8(1);
-                writer.f64(width);
-            }
-            None => writer.u8(0),
-        }
-    }
-    encode_semantics(&mut writer, coalesce(member(value, "semantics")))?;
-    encode_text_spans(&mut writer, coalesce(member(value, "textSpans")))?;
-    encode_inline_boxes(&mut writer, coalesce(member(value, "inlineBoxes")))?;
-    let boundaries: &[Json] = match coalesce(member(value, "sourceBoundaries")) {
-        Some(Json::Arr(items)) => items,
-        // The capture loop only reads an array; any other shape contributes
-        // no boundaries and is carried as absent.
-        _ => &[],
-    };
-    writer.u32(u32::try_from(boundaries.len()).map_err(|_| invalid())?);
-    for item in boundaries {
-        if let Some(value) = canonical_f64(js_number_value(item)) {
-            writer.f64(value);
-        } else {
-            // Non-finite boundaries keep the JSON lane's value: `null`, which
-            // reads as zero through the loose number coercion.
-            writer.f64(0.0);
-        }
-    }
-    Ok(writer.bytes)
-}
-
-fn encode_semantics(writer: &mut Writer, value: Option<&Json>) -> Result<(), NamedError> {
-    let items: &[Json] = match value {
-        None => &[],
-        Some(Json::Arr(items)) => items,
-        // The normalizer reports this name for non-array semantics; the
-        // encoder rejects the same input with the same name so both lanes
-        // throw identically.
-        Some(_) => return Err(NamedError("InvalidSnapshotSemantics".to_string())),
-    };
-    writer.u32(u32::try_from(items.len()).map_err(|_| invalid())?);
-    for span in items {
-        let attributes = coalesce(member(span, "attributes"));
-        let order = number_member(span, "order");
-        let tag_name = coalesce(member(span, "tagName"));
-        let mut flags = 0u8;
-        if attributes.is_some() {
-            flags |= SEM_ATTRS;
-        }
-        if order.is_some() {
-            flags |= SEM_ORDER;
-        }
-        if tag_name.is_some() {
-            flags |= SEM_TAG_NAME;
-        }
-        writer.u8(flags);
-        encode_number_field(writer, number_member(span, "start"));
-        encode_number_field(writer, number_member(span, "end"));
-        if let Some(tag) = tag_name {
-            writer.str(&crate::snapshot_source::js_string_value(tag));
-        }
-        if let Some(order) = order {
-            writer.f64(order);
-        }
-        if let Some(attributes) = attributes {
-            encode_attributes(writer, attributes)?;
-        }
-    }
-    Ok(())
-}
-
-/// Attributes keep their two wire shapes: an object becomes its string pairs
-/// in insertion order, an array is carried as its JSON text so that invalid
-/// pair shapes reproduce the reader's named error on the other side. Any
-/// other shape reads as empty attributes, matching the normalizer.
-fn encode_attributes(writer: &mut Writer, value: &Json) -> Result<(), NamedError> {
-    match value {
-        Json::Obj(fields) => {
-            writer.u8(1);
-            writer.u32(u32::try_from(fields.len()).map_err(|_| invalid())?);
-            for (name, raw) in fields {
-                writer.str(name);
-                writer.str(&crate::snapshot_source::js_string_value(raw));
-            }
-        }
-        Json::Arr(_) => {
-            writer.u8(2);
-            writer.bytes(value.render().as_bytes());
-        }
-        _ => {
-            writer.u8(0);
-        }
-    }
-    Ok(())
-}
-
-fn encode_text_spans(writer: &mut Writer, value: Option<&Json>) -> Result<(), NamedError> {
-    let items: &[Json] = match value {
-        None => &[],
-        Some(Json::Arr(items)) => items,
-        Some(_) => return Err(NamedError("InvalidSnapshotTextSpans".to_string())),
-    };
-    writer.u32(u32::try_from(items.len()).map_err(|_| invalid())?);
-    for span in items {
-        let families = match coalesce(member(span, "fontFamilies")) {
-            Some(Json::Arr(list)) => {
-                let names: Vec<String> = list
-                    .iter()
-                    .map(crate::snapshot_source::js_string_value)
-                    .collect();
-                Some(names)
-            }
-            _ => None,
-        };
-        let font_size_px = number_member(span, "fontSizePx");
-        let font_weight = number_member(span, "fontWeight");
-        let italic = match coalesce(member(span, "italic")) {
-            Some(Json::Bool(value)) => Some(*value),
-            _ => None,
-        };
-        let baseline_shift_px = number_member(span, "baselineShiftPx");
-        let mut flags = 0u8;
-        if families.is_some() {
-            flags |= SPAN_FAMILIES;
-        }
-        if font_size_px.is_some() {
-            flags |= SPAN_FONT_SIZE_PX;
-        }
-        if font_weight.is_some() {
-            flags |= SPAN_FONT_WEIGHT;
-        }
-        if italic.is_some() {
-            flags |= SPAN_ITALIC;
-        }
-        if baseline_shift_px.is_some() {
-            flags |= SPAN_BASELINE_SHIFT_PX;
-        }
-        writer.u8(flags);
-        encode_number_field(writer, number_member(span, "start"));
-        encode_number_field(writer, number_member(span, "end"));
-        if let Some(names) = families {
-            writer.u32(u32::try_from(names.len()).map_err(|_| invalid())?);
-            for name in names {
-                writer.str(&name);
-            }
-        }
-        if let Some(value) = font_size_px {
-            writer.f64(value);
-        }
-        if let Some(value) = font_weight {
-            writer.f64(value);
-        }
-        if let Some(value) = italic {
-            writer.u8(u8::from(value));
-        }
-        if let Some(value) = baseline_shift_px {
-            writer.f64(value);
-        }
-    }
-    Ok(())
-}
-
-fn encode_inline_boxes(writer: &mut Writer, value: Option<&Json>) -> Result<(), NamedError> {
-    let items: &[Json] = match value {
-        None => &[],
-        Some(Json::Arr(items)) => items,
-        Some(_) => return Err(NamedError("InvalidSnapshotInlineBoxes".to_string())),
-    };
-    writer.u32(u32::try_from(items.len()).map_err(|_| invalid())?);
-    for item in items {
-        let inline_start_px = number_member(item, "inlineStartPx");
-        let inline_end_px = number_member(item, "inlineEndPx");
-        let outer_spacing =
-            coalesce(member(item, "outerSpacing")).map(crate::snapshot_source::js_string_value);
-        let mut flags = 0u8;
-        if inline_start_px.is_some() {
-            flags |= BOX_INLINE_START_PX;
-        }
-        if inline_end_px.is_some() {
-            flags |= BOX_INLINE_END_PX;
-        }
-        if outer_spacing.is_some() {
-            flags |= BOX_OUTER_SPACING;
-        }
-        writer.u8(flags);
-        encode_number_field(writer, number_member(item, "start"));
-        encode_number_field(writer, number_member(item, "end"));
-        if let Some(value) = inline_start_px {
-            writer.f64(value);
-        }
-        if let Some(value) = inline_end_px {
-            writer.f64(value);
-        }
-        if let Some(value) = outer_spacing {
-            writer.str(&value);
-        }
-    }
-    Ok(())
-}
-
-/// An optional numeric member: present flag plus the f64 bits, absent flag
-/// alone when the value dropped out.
-fn encode_number_field(writer: &mut Writer, value: Option<f64>) {
-    match value {
-        Some(value) => {
-            writer.u8(1);
-            writer.f64(value);
-        }
-        None => writer.u8(0),
-    }
-}
-
 fn read_number_field(reader: &mut Reader) -> Result<Option<f64>, NamedError> {
     if reader.u8()? == 1 {
         Ok(Some(reader.f64()?))
