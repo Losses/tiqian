@@ -17,7 +17,7 @@ on:
       - 'platforms/web/server/core/**'
       - '.github/workflows/build-neon-precompute.yml'
   push:
-    branches: [main]
+    branches: [master]
     paths:
       - 'platforms/web/server/precompute/**'
       - 'platforms/web/server/core/**'
