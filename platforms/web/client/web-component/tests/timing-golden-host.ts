@@ -67,7 +67,7 @@ import {
   styleDeclaration,
 } from "./snapshot-dom-fixtures.js";
 import { FONT_REPLAY_REVISION, stableStringify } from "@tiqian/core/snapshot-schema.js";
-import { writeBinaryTable } from "@tiqian/core/table-binary-writer";
+import { writeBinaryTable } from "@tiqian/core/table-binary-encode";
 import { INTERNAL_DISPATCH_MARKER } from "@tiqian/core/src/engine/enhance/event-channel.js";
 
 import { probe } from "./runtime-host.js";

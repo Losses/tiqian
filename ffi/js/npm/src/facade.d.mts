@@ -9,6 +9,13 @@ import {
   precomputeParagraphWithBrowserMetrics,
 } from "./Tiqian-tiqian-ffi-js.d.mts";
 
+// The Kotlin-runtime declaration file stays the type surface for everything the
+// generated tree did not take over: the wire DTOs (TextSpanWire, InlineBoxWire,
+// WorkerLayoutRequest, PrepareParagraphRequest …) and the two precompute
+// entries. Only the values of the ten generated exports are re-pointed by this
+// file; consumers that import the wire types keep compiling.
+export * from "./Tiqian-tiqian-ffi-js.d.mts";
+
 declare function liangHyphenate(
   word: string,
   patternsJson: string,
