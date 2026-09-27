@@ -52,9 +52,10 @@ function invalid(): Error {
 }
 
 function decodeOrThrow(bytes: Uint8Array): TableData {
-  const result = SnapshotTableBinary.decode(bytes);
-  if (result.kind === "TErr") throw invalid();
-  return result.data;
+  const data = new TableData();
+  const issue = SnapshotTableBinary.decodeInto(bytes, data);
+  if (issue !== "") throw invalid();
+  return data;
 }
 
 /** True when the bytes start with the snapshot-table magic. */
