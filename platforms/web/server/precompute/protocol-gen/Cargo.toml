@@ -10,4 +10,4 @@ autotests = false
 as-conversions = "deny"
 
 [lib]
-path = "src/lib.rs"
+path = "lib.rs"
