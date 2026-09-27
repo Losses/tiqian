@@ -346,7 +346,7 @@ class TestTraceRender {
         // in practice, and a real float's exponent stays within three digits
         // plus sign. Longer digit runs are ordinary text (hex hashes, ids)
         // and must not expand.
-        if (end - digitsStart > 3) {
+        if (i - digitsStart > 3) {
             return null;
         }
         if (i == digitsStart) {
