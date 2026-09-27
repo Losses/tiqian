@@ -6,6 +6,9 @@
 # today; tsc is run through bun x).
 set -euo pipefail
 TI_ROOT="$(cd "$(dirname "$0")/../.." && pwd)"
+# node_modules is a symlink in this worktree layout; resolve the real path
+# so tsc's typeRoots lookup does not stop at the symlink boundary.
+TYPES_ROOT="$(cd "$TI_ROOT" && pwd -P)/node_modules/@types"
 OUT="$TI_ROOT/engine-haxe/out/ts"
 [ -d "$OUT/gen" ] || { echo "ts-gate: $OUT/gen missing; run the bundle driver gen ts first" >&2; exit 2; }
 # The profile needs @types/bun for the `types: ["bun"]` entry. Without it
@@ -29,13 +32,14 @@ cat > "$OUT/tsconfig.json" <<'JSON'
     "allowImportingTsExtensions": true,
     "erasableSyntaxOnly": true,
     "types": ["bun"],
-    "typeRoots": ["../../../node_modules/@types"],
+    "typeRoots": ["$TYPES_ROOT"],
     "noEmit": true,
     "skipLibCheck": true
   },
   "include": ["gen", "gen-tests"]
 }
 JSON
+sed -i "s|\$TYPES_ROOT|$TYPES_ROOT|" "$OUT/tsconfig.json"
 
 cd "$OUT"
 # Pin the repo-local tsc (typescript 5.9.3): a fetched-latest tsc drifts the
