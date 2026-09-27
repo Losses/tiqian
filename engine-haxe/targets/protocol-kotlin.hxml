@@ -32,3 +32,4 @@ org.tiqian.protocol.PlanJson
 org.tiqian.protocol.PlanJsonTest
 org.tiqian.protocol.PlanSchemaTest
 org.tiqian.protocol.PlanPacked
+org.tiqian.protocol.PlanPackedTest
