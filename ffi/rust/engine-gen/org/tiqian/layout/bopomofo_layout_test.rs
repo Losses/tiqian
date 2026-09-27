@@ -12,6 +12,8 @@ use crate::org::tiqian::test::trace::test_trace_recorder::TestTraceRecorder;
 use crate::org::tiqian::test::trace::test_trace_render::TestTraceRender;
 use crate::org::tiqian::test::trace::traced_assertions::TracedAssertions;
 use crate::runtime::test as testlib;
+use crate::runtime::u_string::UStr;
+use crate::runtime::u_string::UString;
 use std::fmt::Write;
 
 
@@ -21,6 +23,16 @@ pub enum BopomofoLayoutTestSymbolsAndToneRightOfBaseFault {
     UStringFaultFault(crate::std::u_string_exception::UStringFault),
     ParagraphLayoutEngineNewFaultFault(crate::org::tiqian::layout::paragraph_layout_engine::ParagraphLayoutEngineNewFault),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
+}
+impl std::fmt::Display for BopomofoLayoutTestSymbolsAndToneRightOfBaseFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            BopomofoLayoutTestSymbolsAndToneRightOfBaseFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            BopomofoLayoutTestSymbolsAndToneRightOfBaseFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            BopomofoLayoutTestSymbolsAndToneRightOfBaseFault::ParagraphLayoutEngineNewFaultFault(value) => write!(formatter, "{}", value),
+            BopomofoLayoutTestSymbolsAndToneRightOfBaseFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
 }
 
 impl From<BopomofoLayoutTestSymbolsAndToneRightOfBaseFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
@@ -90,6 +102,16 @@ pub enum BopomofoLayoutTestFontWeightFollowsAnnotatedBasePlusThreeStepsFault {
     ParagraphLayoutEngineNewFaultFault(crate::org::tiqian::layout::paragraph_layout_engine::ParagraphLayoutEngineNewFault),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
 }
+impl std::fmt::Display for BopomofoLayoutTestFontWeightFollowsAnnotatedBasePlusThreeStepsFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            BopomofoLayoutTestFontWeightFollowsAnnotatedBasePlusThreeStepsFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            BopomofoLayoutTestFontWeightFollowsAnnotatedBasePlusThreeStepsFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            BopomofoLayoutTestFontWeightFollowsAnnotatedBasePlusThreeStepsFault::ParagraphLayoutEngineNewFaultFault(value) => write!(formatter, "{}", value),
+            BopomofoLayoutTestFontWeightFollowsAnnotatedBasePlusThreeStepsFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
+}
 
 impl From<BopomofoLayoutTestFontWeightFollowsAnnotatedBasePlusThreeStepsFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
     fn from(value: BopomofoLayoutTestFontWeightFollowsAnnotatedBasePlusThreeStepsFault) -> Self {
@@ -157,6 +179,16 @@ pub enum BopomofoLayoutTestDecisionKeepsSourceReadingForCopyFault {
     UStringFaultFault(crate::std::u_string_exception::UStringFault),
     ParagraphLayoutEngineNewFaultFault(crate::org::tiqian::layout::paragraph_layout_engine::ParagraphLayoutEngineNewFault),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
+}
+impl std::fmt::Display for BopomofoLayoutTestDecisionKeepsSourceReadingForCopyFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            BopomofoLayoutTestDecisionKeepsSourceReadingForCopyFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            BopomofoLayoutTestDecisionKeepsSourceReadingForCopyFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            BopomofoLayoutTestDecisionKeepsSourceReadingForCopyFault::ParagraphLayoutEngineNewFaultFault(value) => write!(formatter, "{}", value),
+            BopomofoLayoutTestDecisionKeepsSourceReadingForCopyFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
 }
 
 impl From<BopomofoLayoutTestDecisionKeepsSourceReadingForCopyFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
@@ -226,6 +258,16 @@ pub enum BopomofoLayoutTestAnnotationLocaleDoesNotReplaceSimplifiedBaseLocaleFau
     ParagraphLayoutEngineNewFaultFault(crate::org::tiqian::layout::paragraph_layout_engine::ParagraphLayoutEngineNewFault),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
 }
+impl std::fmt::Display for BopomofoLayoutTestAnnotationLocaleDoesNotReplaceSimplifiedBaseLocaleFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            BopomofoLayoutTestAnnotationLocaleDoesNotReplaceSimplifiedBaseLocaleFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            BopomofoLayoutTestAnnotationLocaleDoesNotReplaceSimplifiedBaseLocaleFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            BopomofoLayoutTestAnnotationLocaleDoesNotReplaceSimplifiedBaseLocaleFault::ParagraphLayoutEngineNewFaultFault(value) => write!(formatter, "{}", value),
+            BopomofoLayoutTestAnnotationLocaleDoesNotReplaceSimplifiedBaseLocaleFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
+}
 
 impl From<BopomofoLayoutTestAnnotationLocaleDoesNotReplaceSimplifiedBaseLocaleFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
     fn from(value: BopomofoLayoutTestAnnotationLocaleDoesNotReplaceSimplifiedBaseLocaleFault) -> Self {
@@ -294,6 +336,16 @@ pub enum BopomofoLayoutTestAnnotatedBaseReservesHalfEmOnlyFault {
     ParagraphLayoutEngineNewFaultFault(crate::org::tiqian::layout::paragraph_layout_engine::ParagraphLayoutEngineNewFault),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
 }
+impl std::fmt::Display for BopomofoLayoutTestAnnotatedBaseReservesHalfEmOnlyFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            BopomofoLayoutTestAnnotatedBaseReservesHalfEmOnlyFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            BopomofoLayoutTestAnnotatedBaseReservesHalfEmOnlyFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            BopomofoLayoutTestAnnotatedBaseReservesHalfEmOnlyFault::ParagraphLayoutEngineNewFaultFault(value) => write!(formatter, "{}", value),
+            BopomofoLayoutTestAnnotatedBaseReservesHalfEmOnlyFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
+}
 
 impl From<BopomofoLayoutTestAnnotatedBaseReservesHalfEmOnlyFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
     fn from(value: BopomofoLayoutTestAnnotatedBaseReservesHalfEmOnlyFault) -> Self {
@@ -358,14 +410,14 @@ impl From<crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFa
 #[test]
 fn symbols_and_tone_right_of_base() {
     testlib::run("org.tiqian.layout.BopomofoLayoutTest.symbolsAndToneRightOfBase", "org.tiqian.layout.BopomofoLayoutTest.symbolsAndToneRightOfBase", || {
-        let mut t = TestTraceRecorder::new("BopomofoLayoutTest");
-        t.section(&"symbolsAndToneRightOfBase");
+        let mut t = TestTraceRecorder::new(&(UStr::new(&[66,111,112,111,109,111,102,111,76,97,121,111,117,116,84,101,115,116])));
+        t.section(UStr::new(&[115,121,109,98,111,108,115,65,110,100,84,111,110,101,82,105,103,104,116,79,102,66,97,115,101]));
         let r = BopomofoLayoutTestSupport::bopomofo_layout_test_support_layout(&vec![
-    (RubySpan::new(TextRange::new(0u32, 1u32).unwrap(), "ㄓㄨㄥ", Some(vec![]), RubyKind::Bopomofo, Some("zh-TW".to_string()))).clone(),
-    (RubySpan::new(TextRange::new(1u32, 2u32).unwrap(), "ㄔㄤˊ", Some(vec![]), RubyKind::Bopomofo, Some("zh-TW".to_string()))).clone(),
+    (RubySpan::new(TextRange::new(0u32, 1u32).unwrap(), &(UStr::new(&[12563,12584,12581])), Some(vec![]), RubyKind::Bopomofo, Some(UString::from("zh-TW")))).clone(),
+    (RubySpan::new(TextRange::new(1u32, 2u32).unwrap(), &(UStr::new(&[12564,12580,714])), Some(vec![]), RubyKind::Bopomofo, Some(UString::from("zh-TW")))).clone(),
 ], None).unwrap();
         let z = ((r.debug).clone().bopomofo_decisions).clone();
-        if i32::from_ne_bytes((u32::try_from((z.len()) & 0xFFFF_FFFF).unwrap_or(0)).to_ne_bytes()) < (2) {
+        if i32::from_ne_bytes(((u32::try_from((z.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes()) < (2) {
             let _ = TracedAssertions::traced_assertions_assert_equals_int(2, u32::try_from((z.len()) & 0xFFFF_FFFF).unwrap_or(0), None).unwrap();
             return;
         }
@@ -374,7 +426,7 @@ fn symbols_and_tone_right_of_base() {
         let mut symbols_a = 0u32;
         let mut tone_a = 0u32;
         let mut right = true;
-        let mut lefts: Vec<String> = vec![];
+        let mut lefts: Vec<UString> = vec![];
         for _g_index in 0..match u32::try_from(a.placements.len()) { Ok(value) => value, Err(_) => u32::MAX } {
             let p = (a.placements[usize::try_from(_g_index).unwrap_or(0)]).clone();
             if p.role == BopomofoGlyphRole::Symbol {
@@ -400,14 +452,10 @@ fn symbols_and_tone_right_of_base() {
             }
         }
         let _ = TracedAssertions::traced_assertions_assert_equals_int(2, u32::try_from((z.len()) & 0xFFFF_FFFF).unwrap_or(0), None).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_equals_int(700, a.font_weight, Some("bopomofo defaults three weight steps heavier than base".to_string())).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_equals_int(700, a.font_weight, Some(UString::from("bopomofo defaults three weight steps heavier than base"))).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_equals_int(3, symbols_a, None).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_true(tone_a == 0, None).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_true(right, Some((format!("{}{}{}",
-            "symbols right of base: [",
-            { let joined1 = lefts; let mut out = String::new(); let n = joined1.len(); let mut index1 = 0usize; while index1 < n { if index1 > 0 { out.push_str(&(", ")); } let _ = write!(out, "{}", joined1[index1]); index1 += 1; } out },
-            "]"
-        )).to_string())).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_true(right, Some(UString::from(format!("{}", { let mut __s = UString::new(); __s += &(UString::from("symbols right of base: [")); __s += UString::from(format!("{}", { let joined1 = lefts; let mut out = String::new(); let n = joined1.len(); let mut index1 = 0usize; while index1 < n { if index1 > 0 { out.push_str(", "); } let _ = write!(out, "{}", joined1[index1]); index1 += 1; } UString::from(out.as_str()) }).as_str()).as_ustr(); __s += &(UString::from("]")); __s }).as_str()))).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_equals_int(2, symbols_b, None).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_equals_int(1, tone_b, None).unwrap();
     });
@@ -416,61 +464,59 @@ fn symbols_and_tone_right_of_base() {
 #[test]
 fn annotated_base_reserves_half_em_only() {
     testlib::run("org.tiqian.layout.BopomofoLayoutTest.annotatedBaseReservesHalfEmOnly", "org.tiqian.layout.BopomofoLayoutTest.annotatedBaseReservesHalfEmOnly", || {
-        let mut t = TestTraceRecorder::new("BopomofoLayoutTest");
-        t.section(&"annotatedBaseReservesHalfEmOnly");
+        let mut t = TestTraceRecorder::new(&(UStr::new(&[66,111,112,111,109,111,102,111,76,97,121,111,117,116,84,101,115,116])));
+        t.section(UStr::new(&[97,110,110,111,116,97,116,101,100,66,97,115,101,82,101,115,101,114,118,101,115,72,97,108,102,69,109,79,110,108,121]));
         let plain = BopomofoLayoutTestSupport::bopomofo_layout_test_support_plain().unwrap();
         let r = BopomofoLayoutTestSupport::bopomofo_layout_test_support_layout(&vec![
-    (RubySpan::new(TextRange::new(0u32, 1u32).unwrap(), "ㄓㄨㄥ", Some(vec![]), RubyKind::Bopomofo, Some("zh-TW".to_string()))).clone(),
+    (RubySpan::new(TextRange::new(0u32, 1u32).unwrap(), &(UStr::new(&[12563,12584,12581])), Some(vec![]), RubyKind::Bopomofo, Some(UString::from("zh-TW")))).clone(),
 ], None).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_true((r.clusters[0usize].advance) > (plain.clusters[0usize].advance), Some((format!("{}{}{}{}{}",
-            "bopomofo reserves advance on annotated base (",
-            r.clusters[0usize].advance,
-            " vs ",
-            plain.clusters[0usize].advance,
-            ")"
-        )).to_string())).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_equals_float(plain.clusters[1usize].advance, r.clusters[1usize].advance, Some("current v1 does not reserve the unannotated adjacent char".to_string())).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_true((r.clusters[0usize].advance) > (plain.clusters[0usize].advance), Some(UString::from(format!("{}", { let mut __s = UString::new(); __s += &(UString::from("bopomofo reserves advance on annotated base (")); __s += &(crate::runtime::fp_helper::FPHelper::format_float(r.clusters[0usize].advance)); __s += &(UString::from(" vs ")); __s += &(crate::runtime::fp_helper::FPHelper::format_float(plain.clusters[0usize].advance)); __s += &(UString::from(")")); __s }).as_str()))).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_equals_float(plain.clusters[1usize].advance, r.clusters[1usize].advance, Some(UString::from("current v1 does not reserve the unannotated adjacent char"))).unwrap();
     });
 }
 
 #[test]
 fn font_weight_follows_annotated_base_plus_three_steps() {
     testlib::run("org.tiqian.layout.BopomofoLayoutTest.fontWeightFollowsAnnotatedBasePlusThreeSteps", "org.tiqian.layout.BopomofoLayoutTest.fontWeightFollowsAnnotatedBasePlusThreeSteps", || {
-        let mut t = TestTraceRecorder::new("BopomofoLayoutTest");
-        t.section(&"fontWeightFollowsAnnotatedBasePlusThreeSteps");
+        let mut t = TestTraceRecorder::new(&(UStr::new(&[66,111,112,111,109,111,102,111,76,97,121,111,117,116,84,101,115,116])));
+        t.section(UStr::new(&[102,111,110,116,87,101,105,103,104,116,70,111,108,108,111,119,115,65,110,110,111,116,97,116,101,100,66,97,115,101,80,108,117,115,84,104,114,101,101,83,116,101,112,115]));
         let r = BopomofoLayoutTestSupport::bopomofo_layout_test_support_layout(&vec![
-    (RubySpan::new(TextRange::new(0u32, 1u32).unwrap(), "ㄓㄨㄥ", Some(vec![]), RubyKind::Bopomofo, Some("zh-TW".to_string()))).clone(),
-    (RubySpan::new(TextRange::new(1u32, 2u32).unwrap(), "ㄨㄣˊ", Some(vec![]), RubyKind::Bopomofo, Some("zh-TW".to_string()))).clone(),
+    (RubySpan::new(TextRange::new(0u32, 1u32).unwrap(), &(UStr::new(&[12563,12584,12581])), Some(vec![]), RubyKind::Bopomofo, Some(UString::from("zh-TW")))).clone(),
+    (RubySpan::new(TextRange::new(1u32, 2u32).unwrap(), &(UStr::new(&[12584,12579,714])), Some(vec![]), RubyKind::Bopomofo, Some(UString::from("zh-TW")))).clone(),
 ], Some(vec![
-    (TextSpan::new(TextRange::new(0u32, 1u32).unwrap(), TextStyle::new(Some(vec![]), Some(16.0), Some("zh-Hans".to_string()), Some(500), Some(false), Some(0.0), Some(InlineAttachment::None)))).clone(),
-    (TextSpan::new(TextRange::new(1u32, 2u32).unwrap(), TextStyle::new(Some(vec![]), Some(16.0), Some("zh-Hans".to_string()), Some(700), Some(false), Some(0.0), Some(InlineAttachment::None)))).clone(),
+    (TextSpan::new(TextRange::new(0u32, 1u32).unwrap(), TextStyle::new(Some(vec![]), Some(16.0), Some(UString::from("zh-Hans")), Some(500), Some(false), Some(0.0), Some(InlineAttachment::None)))).clone(),
+    (TextSpan::new(TextRange::new(1u32, 2u32).unwrap(), TextStyle::new(Some(vec![]), Some(16.0), Some(UString::from("zh-Hans")), Some(700), Some(false), Some(0.0), Some(InlineAttachment::None)))).clone(),
 ])).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_equals_int(800, (r.debug).clone().bopomofo_decisions[0usize].font_weight, None).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_equals_int(900, (r.debug).clone().bopomofo_decisions[1usize].font_weight, Some("bopomofo weight clamps at 900".to_string())).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_equals_int(900, (r.debug).clone().bopomofo_decisions[1usize].font_weight, Some(UString::from("bopomofo weight clamps at 900"))).unwrap();
     });
 }
 
 #[test]
 fn decision_keeps_source_reading_for_copy() {
     testlib::run("org.tiqian.layout.BopomofoLayoutTest.decisionKeepsSourceReadingForCopy", "org.tiqian.layout.BopomofoLayoutTest.decisionKeepsSourceReadingForCopy", || {
-        let mut t = TestTraceRecorder::new("BopomofoLayoutTest");
-        t.section(&"decisionKeepsSourceReadingForCopy");
+        let mut t = TestTraceRecorder::new(&(UStr::new(&[66,111,112,111,109,111,102,111,76,97,121,111,117,116,84,101,115,116])));
+        t.section(UStr::new(&[100,101,99,105,115,105,111,110,75,101,101,112,115,83,111,117,114,99,101,82,101,97,100,105,110,103,70,111,114,67,111,112,121]));
         let r = BopomofoLayoutTestSupport::bopomofo_layout_test_support_layout(&vec![
-    (RubySpan::new(TextRange::new(0u32, 1u32).unwrap(), "˙ㄉㄜ", Some(vec![]), RubyKind::Bopomofo, Some("zh-TW".to_string()))).clone(),
+    (RubySpan::new(TextRange::new(0u32, 1u32).unwrap(), &(UStr::new(&[729,12553,12572])), Some(vec![]), RubyKind::Bopomofo, Some(UString::from("zh-TW")))).clone(),
 ], None).unwrap();
         let d = ((r.debug).clone().bopomofo_decisions).clone();
         if u32::try_from((d.len()) & 0xFFFF_FFFF).unwrap_or(0) == 0 {
-            let _ = TracedAssertions::traced_assertions_assert_equals_string(&"˙ㄉㄜ", (((r.input).clone().ruby_spans[0usize]).clone().text).to_string().as_str(), None).unwrap();
+            let _ = TracedAssertions::traced_assertions_assert_equals_string(UStr::new(&[729,12553,12572]), (((r.input).clone().ruby_spans[0usize]).clone().text).to_ustring().as_ustr(), None).unwrap();
             return;
         }
         let decision = (d[0usize]).clone();
-        let mut texts: Vec<String> = vec![];
+        let mut texts: Vec<UString> = vec![];
         for _g_index in 0..match u32::try_from(decision.placements.len()) { Ok(value) => value, Err(_) => u32::MAX } {
             let p = (decision.placements[usize::try_from(_g_index).unwrap_or(0)]).clone();
-            texts.push((p.text).to_string());
+            texts.push((p.text).to_ustring());
         }
-        let _ = TracedAssertions::traced_assertions_assert_equals_string(&"˙ㄉㄜ", (decision.text).to_string().as_str(), None).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_equals_string_array(&vec!["˙".to_string(), "ㄉ".to_string(), "ㄜ".to_string()], &texts, None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_equals_string(UStr::new(&[729,12553,12572]), (decision.text).to_ustring().as_ustr(), None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_equals_string_array(&vec![
+    UString::from("˙").to_ustring(),
+    UString::from("ㄉ").to_ustring(),
+    UString::from("ㄜ").to_ustring(),
+], &texts, None).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_equals_enum(&(BopomofoGlyphRole::Neutral), &(decision.placements[0usize].role), None).unwrap();
     });
 }
@@ -478,16 +524,16 @@ fn decision_keeps_source_reading_for_copy() {
 #[test]
 fn annotation_locale_does_not_replace_simplified_base_locale() {
     testlib::run("org.tiqian.layout.BopomofoLayoutTest.annotationLocaleDoesNotReplaceSimplifiedBaseLocale", "org.tiqian.layout.BopomofoLayoutTest.annotationLocaleDoesNotReplaceSimplifiedBaseLocale", || {
-        let mut t = TestTraceRecorder::new("BopomofoLayoutTest");
-        t.section(&"annotationLocaleDoesNotReplaceSimplifiedBaseLocale");
+        let mut t = TestTraceRecorder::new(&(UStr::new(&[66,111,112,111,109,111,102,111,76,97,121,111,117,116,84,101,115,116])));
+        t.section(UStr::new(&[97,110,110,111,116,97,116,105,111,110,76,111,99,97,108,101,68,111,101,115,78,111,116,82,101,112,108,97,99,101,83,105,109,112,108,105,102,105,101,100,66,97,115,101,76,111,99,97,108,101]));
         let r = BopomofoLayoutTestSupport::bopomofo_layout_test_support_layout(&vec![
-    (RubySpan::new(TextRange::new(0u32, 1u32).unwrap(), "ㄓㄨㄥ", Some(vec![]), RubyKind::Bopomofo, Some("zh-TW".to_string()))).clone(),
+    (RubySpan::new(TextRange::new(0u32, 1u32).unwrap(), &(UStr::new(&[12563,12584,12581])), Some(vec![]), RubyKind::Bopomofo, Some(UString::from("zh-TW")))).clone(),
 ], None).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_equals_string(&"zh-Hans", (((r.input).clone().text_style).clone().locale).to_string().as_str(), None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_equals_string(UStr::new(&[122,104,45,72,97,110,115]), (((r.input).clone().text_style).clone().locale).to_ustring().as_ustr(), None).unwrap();
         if u32::try_from(((r.debug).clone().bopomofo_decisions.len()) & 0xFFFF_FFFF).unwrap_or(0) == 0 {
             let _ = TracedAssertions::traced_assertions_assert_equals_int(1, u32::try_from(((r.debug).clone().bopomofo_decisions.len()) & 0xFFFF_FFFF).unwrap_or(0), None).unwrap();
             return;
         }
-        let _ = TracedAssertions::traced_assertions_assert_equals_string(&"zh-TW", (((r.debug).clone().bopomofo_decisions[0usize]).clone().locale).to_string().as_str(), None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_equals_string(UStr::new(&[122,104,45,84,87]), (((r.debug).clone().bopomofo_decisions[0usize]).clone().locale).to_ustring().as_ustr(), None).unwrap();
     });
 }

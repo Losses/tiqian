@@ -1,4 +1,6 @@
 use crate::runtime::sorted_table::SortedTable;
+use crate::runtime::u_string::UStr;
+use crate::runtime::u_string::UString;
 use std::sync::Mutex;
 
 
@@ -6,7 +8,7 @@ pub trait RichTextRole: Send + Sync {
     fn __haxe_type_name(&self) -> &'static str;
     fn as_any(&self) -> &dyn std::any::Any;
     fn clone_box(&self) -> Box<dyn RichTextRole>;
-    fn to_string(&self) -> String;
+    fn to_string(&self) -> UString;
 }
 
 impl Clone for Box<dyn RichTextRole> {
@@ -33,8 +35,8 @@ impl Background {
         }
     }
 
-    pub fn to_string(&self) -> String {
-        return "Background".to_string();
+    pub fn to_string(&self) -> UString {
+        return UString::from("Background").to_ustring();
     }
 }
 
@@ -49,8 +51,8 @@ impl RichTextRole for Background {
         Box::new(self.clone())
     }
 
-    fn to_string(&self) -> String {
-        return "Background".to_string();
+    fn to_string(&self) -> UString {
+        return UString::from("Background").to_ustring();
     }
 }
 
@@ -66,8 +68,8 @@ impl Underline {
         }
     }
 
-    pub fn to_string(&self) -> String {
-        return "Underline".to_string();
+    pub fn to_string(&self) -> UString {
+        return UString::from("Underline").to_ustring();
     }
 }
 
@@ -82,8 +84,8 @@ impl RichTextRole for Underline {
         Box::new(self.clone())
     }
 
-    fn to_string(&self) -> String {
-        return "Underline".to_string();
+    fn to_string(&self) -> UString {
+        return UString::from("Underline").to_ustring();
     }
 }
 
@@ -99,8 +101,8 @@ impl LineThrough {
         }
     }
 
-    pub fn to_string(&self) -> String {
-        return "LineThrough".to_string();
+    pub fn to_string(&self) -> UString {
+        return UString::from("LineThrough").to_ustring();
     }
 }
 
@@ -115,30 +117,25 @@ impl RichTextRole for LineThrough {
         Box::new(self.clone())
     }
 
-    fn to_string(&self) -> String {
-        return "LineThrough".to_string();
+    fn to_string(&self) -> UString {
+        return UString::from("LineThrough").to_ustring();
     }
 }
 
 #[derive(Debug, Clone, PartialEq)]
 pub struct Link {
-    pub target: String,
+    pub target: UString,
 }
 
 impl Link {
-    pub fn new(target: &str) -> Self {
+    pub fn new(target: &UStr) -> Self {
         Self {
-            target: target.to_string(),
+            target: target.to_ustring(),
         }
     }
 
-    pub fn to_string(&self) -> String {
-        return format!("{}{}{}{}",
-            "Link(",
-            "target=",
-            (self.target).to_string(),
-            ")"
-        );
+    pub fn to_string(&self) -> UString {
+        return UString::from(format!("{}", { let mut __s = UString::new(); __s += &(UString::from("Link(")); __s += &(UString::from("target=")); __s += (self.target).to_ustring().as_ustr(); __s += &(UString::from(")")); __s }).as_str());
     }
 }
 
@@ -153,18 +150,13 @@ impl RichTextRole for Link {
         Box::new(self.clone())
     }
 
-    fn to_string(&self) -> String {
-        return format!("{}{}{}{}",
-            "Link(",
-            "target=",
-            (self.target).to_string(),
-            ")"
-        );
+    fn to_string(&self) -> UString {
+        return UString::from(format!("{}", { let mut __s = UString::new(); __s += &(UString::from("Link(")); __s += &(UString::from("target=")); __s += (self.target).to_ustring().as_ustr(); __s += &(UString::from(")")); __s }).as_str());
     }
 }
 
 pub fn compare_link(a: &Link, b: &Link) -> i32 {
-    let cmp_target = SortedTable::sorted_table_compare_strings(a.target.as_str(), b.target.as_str());
+    let cmp_target = SortedTable::sorted_table_compare_strings(a.target.as_ustr(), b.target.as_ustr());
     if cmp_target != 0 { return cmp_target; }
     0
 }
@@ -181,8 +173,8 @@ impl TechnicalInline {
         }
     }
 
-    pub fn to_string(&self) -> String {
-        return "TechnicalInline".to_string();
+    pub fn to_string(&self) -> UString {
+        return UString::from("TechnicalInline").to_ustring();
     }
 }
 
@@ -197,8 +189,8 @@ impl RichTextRole for TechnicalInline {
         Box::new(self.clone())
     }
 
-    fn to_string(&self) -> String {
-        return "TechnicalInline".to_string();
+    fn to_string(&self) -> UString {
+        return UString::from("TechnicalInline").to_ustring();
     }
 }
 
@@ -214,8 +206,8 @@ impl InlineCode {
         }
     }
 
-    pub fn to_string(&self) -> String {
-        return "InlineCode".to_string();
+    pub fn to_string(&self) -> UString {
+        return UString::from("InlineCode").to_ustring();
     }
 }
 
@@ -230,7 +222,7 @@ impl RichTextRole for InlineCode {
         Box::new(self.clone())
     }
 
-    fn to_string(&self) -> String {
-        return "InlineCode".to_string();
+    fn to_string(&self) -> UString {
+        return UString::from("InlineCode").to_ustring();
     }
 }

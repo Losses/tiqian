@@ -7,6 +7,8 @@ use crate::org::tiqian::layout::attached_inline_virtual_adjacency_test_support::
 use crate::org::tiqian::test::trace::test_trace_recorder::TestTraceRecorder;
 use crate::org::tiqian::test::trace::traced_assertions::TracedAssertions;
 use crate::runtime::test as testlib;
+use crate::runtime::u_string::UStr;
+use crate::runtime::u_string::UString;
 
 
 #[derive(Debug, Clone, PartialEq)]
@@ -15,6 +17,16 @@ pub enum AttachedInlineVirtualAdjacencyTestPunctuationAfterFootnoteIsJudgedAgain
     UStringFaultFault(crate::std::u_string_exception::UStringFault),
     SupportLayoutAttachedReferenceFault(crate::org::tiqian::layout::attached_inline_virtual_adjacency_test_support::AttachedInlineVirtualAdjacencyTestSupportLayoutAttachedReferenceFault),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
+}
+impl std::fmt::Display for AttachedInlineVirtualAdjacencyTestPunctuationAfterFootnoteIsJudgedAgainstThePrecedingPunctuationFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            AttachedInlineVirtualAdjacencyTestPunctuationAfterFootnoteIsJudgedAgainstThePrecedingPunctuationFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            AttachedInlineVirtualAdjacencyTestPunctuationAfterFootnoteIsJudgedAgainstThePrecedingPunctuationFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            AttachedInlineVirtualAdjacencyTestPunctuationAfterFootnoteIsJudgedAgainstThePrecedingPunctuationFault::SupportLayoutAttachedReferenceFault(value) => write!(formatter, "{}", value),
+            AttachedInlineVirtualAdjacencyTestPunctuationAfterFootnoteIsJudgedAgainstThePrecedingPunctuationFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
 }
 
 impl From<AttachedInlineVirtualAdjacencyTestPunctuationAfterFootnoteIsJudgedAgainstThePrecedingPunctuationFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
@@ -84,6 +96,16 @@ pub enum AttachedInlineVirtualAdjacencyTestClosingQuoteBeforeParagraphEndFootnot
     SupportLayoutAttachedReferenceFault(crate::org::tiqian::layout::attached_inline_virtual_adjacency_test_support::AttachedInlineVirtualAdjacencyTestSupportLayoutAttachedReferenceFault),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
 }
+impl std::fmt::Display for AttachedInlineVirtualAdjacencyTestClosingQuoteBeforeParagraphEndFootnoteHasNoTrailingGlueFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            AttachedInlineVirtualAdjacencyTestClosingQuoteBeforeParagraphEndFootnoteHasNoTrailingGlueFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            AttachedInlineVirtualAdjacencyTestClosingQuoteBeforeParagraphEndFootnoteHasNoTrailingGlueFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            AttachedInlineVirtualAdjacencyTestClosingQuoteBeforeParagraphEndFootnoteHasNoTrailingGlueFault::SupportLayoutAttachedReferenceFault(value) => write!(formatter, "{}", value),
+            AttachedInlineVirtualAdjacencyTestClosingQuoteBeforeParagraphEndFootnoteHasNoTrailingGlueFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
+}
 
 impl From<AttachedInlineVirtualAdjacencyTestClosingQuoteBeforeParagraphEndFootnoteHasNoTrailingGlueFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
     fn from(value: AttachedInlineVirtualAdjacencyTestClosingQuoteBeforeParagraphEndFootnoteHasNoTrailingGlueFault) -> Self {
@@ -151,6 +173,16 @@ pub enum AttachedInlineVirtualAdjacencyTestClosingQuoteBeforeFootnoteAndBodyKeep
     UStringFaultFault(crate::std::u_string_exception::UStringFault),
     SupportLayoutAttachedReferenceFault(crate::org::tiqian::layout::attached_inline_virtual_adjacency_test_support::AttachedInlineVirtualAdjacencyTestSupportLayoutAttachedReferenceFault),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
+}
+impl std::fmt::Display for AttachedInlineVirtualAdjacencyTestClosingQuoteBeforeFootnoteAndBodyKeepsItsNaturalTrailingGlueFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            AttachedInlineVirtualAdjacencyTestClosingQuoteBeforeFootnoteAndBodyKeepsItsNaturalTrailingGlueFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            AttachedInlineVirtualAdjacencyTestClosingQuoteBeforeFootnoteAndBodyKeepsItsNaturalTrailingGlueFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            AttachedInlineVirtualAdjacencyTestClosingQuoteBeforeFootnoteAndBodyKeepsItsNaturalTrailingGlueFault::SupportLayoutAttachedReferenceFault(value) => write!(formatter, "{}", value),
+            AttachedInlineVirtualAdjacencyTestClosingQuoteBeforeFootnoteAndBodyKeepsItsNaturalTrailingGlueFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
 }
 
 impl From<AttachedInlineVirtualAdjacencyTestClosingQuoteBeforeFootnoteAndBodyKeepsItsNaturalTrailingGlueFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
@@ -220,6 +252,16 @@ pub enum AttachedInlineVirtualAdjacencyTestAttachedReferenceNeverStartsAWrappedL
     SupportLayoutWithBreakerFault(crate::org::tiqian::layout::attached_inline_virtual_adjacency_test_support::AttachedInlineVirtualAdjacencyTestSupportLayoutWithBreakerFault),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
 }
+impl std::fmt::Display for AttachedInlineVirtualAdjacencyTestAttachedReferenceNeverStartsAWrappedLineFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            AttachedInlineVirtualAdjacencyTestAttachedReferenceNeverStartsAWrappedLineFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            AttachedInlineVirtualAdjacencyTestAttachedReferenceNeverStartsAWrappedLineFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            AttachedInlineVirtualAdjacencyTestAttachedReferenceNeverStartsAWrappedLineFault::SupportLayoutWithBreakerFault(value) => write!(formatter, "{}", value),
+            AttachedInlineVirtualAdjacencyTestAttachedReferenceNeverStartsAWrappedLineFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
+}
 
 impl From<AttachedInlineVirtualAdjacencyTestAttachedReferenceNeverStartsAWrappedLineFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
     fn from(value: AttachedInlineVirtualAdjacencyTestAttachedReferenceNeverStartsAWrappedLineFault) -> Self {
@@ -284,8 +326,8 @@ impl From<crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFa
 #[test]
 fn attached_run_exposes_the_prose_clusters_on_its_two_sides() {
     testlib::run("org.tiqian.layout.AttachedInlineVirtualAdjacencyTest.attachedRunExposesTheProseClustersOnItsTwoSides", "org.tiqian.layout.AttachedInlineVirtualAdjacencyTest.attachedRunExposesTheProseClustersOnItsTwoSides", || {
-        let mut t = TestTraceRecorder::new("AttachedInlineVirtualAdjacencyTest");
-        t.section(&"attachedRunExposesTheProseClustersOnItsTwoSides");
+        let mut t = TestTraceRecorder::new(&(UStr::new(&[65,116,116,97,99,104,101,100,73,110,108,105,110,101,86,105,114,116,117,97,108,65,100,106,97,99,101,110,99,121,84,101,115,116])));
+        t.section(UStr::new(&[97,116,116,97,99,104,101,100,82,117,110,69,120,112,111,115,101,115,84,104,101,80,114,111,115,101,67,108,117,115,116,101,114,115,79,110,73,116,115,84,119,111,83,105,100,101,115]));
         let result = AttachedInlineVirtualAdjacencyTestSupport::attached_inline_virtual_adjacency_test_support_resolve(&vec![
     InlineAttachment::None,
     InlineAttachment::None,
@@ -303,8 +345,8 @@ fn attached_run_exposes_the_prose_clusters_on_its_two_sides() {
 #[test]
 fn attached_run_at_paragraph_end_has_no_virtual_right_neighbor() {
     testlib::run("org.tiqian.layout.AttachedInlineVirtualAdjacencyTest.attachedRunAtParagraphEndHasNoVirtualRightNeighbor", "org.tiqian.layout.AttachedInlineVirtualAdjacencyTest.attachedRunAtParagraphEndHasNoVirtualRightNeighbor", || {
-        let mut t = TestTraceRecorder::new("AttachedInlineVirtualAdjacencyTest");
-        t.section(&"attachedRunAtParagraphEndHasNoVirtualRightNeighbor");
+        let mut t = TestTraceRecorder::new(&(UStr::new(&[65,116,116,97,99,104,101,100,73,110,108,105,110,101,86,105,114,116,117,97,108,65,100,106,97,99,101,110,99,121,84,101,115,116])));
+        t.section(UStr::new(&[97,116,116,97,99,104,101,100,82,117,110,65,116,80,97,114,97,103,114,97,112,104,69,110,100,72,97,115,78,111,86,105,114,116,117,97,108,82,105,103,104,116,78,101,105,103,104,98,111,114]));
         let result = AttachedInlineVirtualAdjacencyTestSupport::attached_inline_virtual_adjacency_test_support_resolve(&vec![
     InlineAttachment::None,
     InlineAttachment::None,
@@ -312,21 +354,18 @@ fn attached_run_at_paragraph_end_has_no_virtual_right_neighbor() {
     InlineAttachment::Previous,
     InlineAttachment::Previous,
 ]);
-        let _ = TracedAssertions::traced_assertions_assert_null_rendered(result[0usize].next_cluster_index.is_none(), if result[0usize].next_cluster_index.is_none() { "-".to_string() } else { format!("{}{}",
-            "",
-            match result[0usize].next_cluster_index { Some(v) => crate::runtime::int_text::IntText::int_text(v), None => "null".to_string() }
-        ).to_string() }.as_str(), None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_null_rendered(result[0usize].next_cluster_index.is_none(), if result[0usize].next_cluster_index.is_none() { UString::from("-") } else { UString::from(format!("{}", { let mut __s = UString::new(); __s += &(UString::from("")); __s += &(match result[0usize].next_cluster_index { Some(v) => UString::from(format!("{}", crate::runtime::int_text::IntText::int_text(v)).as_str()), None => UString::from("null") }); __s }).as_str()) }.as_ustr(), None).unwrap();
     });
 }
 
 #[test]
 fn punctuation_after_footnote_is_judged_against_the_preceding_punctuation() {
     testlib::run("org.tiqian.layout.AttachedInlineVirtualAdjacencyTest.punctuationAfterFootnoteIsJudgedAgainstThePrecedingPunctuation", "org.tiqian.layout.AttachedInlineVirtualAdjacencyTest.punctuationAfterFootnoteIsJudgedAgainstThePrecedingPunctuation", || {
-        let mut t = TestTraceRecorder::new("AttachedInlineVirtualAdjacencyTest");
-        t.section(&"punctuationAfterFootnoteIsJudgedAgainstThePrecedingPunctuation");
-        let result = AttachedInlineVirtualAdjacencyTestSupport::attached_inline_virtual_adjacency_test_support_layout_attached_reference(&"正文：“内容。”[1]，后文").unwrap();
+        let mut t = TestTraceRecorder::new(&(UStr::new(&[65,116,116,97,99,104,101,100,73,110,108,105,110,101,86,105,114,116,117,97,108,65,100,106,97,99,101,110,99,121,84,101,115,116])));
+        t.section(UStr::new(&[112,117,110,99,116,117,97,116,105,111,110,65,102,116,101,114,70,111,111,116,110,111,116,101,73,115,74,117,100,103,101,100,65,103,97,105,110,115,116,84,104,101,80,114,101,99,101,100,105,110,103,80,117,110,99,116,117,97,116,105,111,110]));
+        let result = AttachedInlineVirtualAdjacencyTestSupport::attached_inline_virtual_adjacency_test_support_layout_attached_reference(UStr::new(&[27491,25991,65306,8220,20869,23481,12290,8221,91,49,93,65292,21518,25991])).unwrap();
         let virtual_boundary = AttachedInlineVirtualAdjacencyTestSupport::attached_inline_virtual_adjacency_test_support_virtual_boundary((result).clone());
-        let _ = TracedAssertions::traced_assertions_assert_equals_string(&"AttachedInlineVirtualPunctuationBoundary:adjacent-punctuation", (virtual_boundary.reason).to_string().as_str(), None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_equals_string(UStr::new(&[65,116,116,97,99,104,101,100,73,110,108,105,110,101,86,105,114,116,117,97,108,80,117,110,99,116,117,97,116,105,111,110,66,111,117,110,100,97,114,121,58,97,100,106,97,99,101,110,116,45,112,117,110,99,116,117,97,116,105,111,110]), (virtual_boundary.reason).to_ustring().as_ustr(), None).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_true((virtual_boundary.natural_inner_glue) > (0 as f64), None).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_equals_float(0 as f64, virtual_boundary.adjusted_inner_glue, None).unwrap();
     });
@@ -335,11 +374,11 @@ fn punctuation_after_footnote_is_judged_against_the_preceding_punctuation() {
 #[test]
 fn closing_quote_before_footnote_and_body_keeps_its_natural_trailing_glue() {
     testlib::run("org.tiqian.layout.AttachedInlineVirtualAdjacencyTest.closingQuoteBeforeFootnoteAndBodyKeepsItsNaturalTrailingGlue", "org.tiqian.layout.AttachedInlineVirtualAdjacencyTest.closingQuoteBeforeFootnoteAndBodyKeepsItsNaturalTrailingGlue", || {
-        let mut t = TestTraceRecorder::new("AttachedInlineVirtualAdjacencyTest");
-        t.section(&"closingQuoteBeforeFootnoteAndBodyKeepsItsNaturalTrailingGlue");
-        let result = AttachedInlineVirtualAdjacencyTestSupport::attached_inline_virtual_adjacency_test_support_layout_attached_reference(&"正文：“内容。”[1]后文").unwrap();
+        let mut t = TestTraceRecorder::new(&(UStr::new(&[65,116,116,97,99,104,101,100,73,110,108,105,110,101,86,105,114,116,117,97,108,65,100,106,97,99,101,110,99,121,84,101,115,116])));
+        t.section(UStr::new(&[99,108,111,115,105,110,103,81,117,111,116,101,66,101,102,111,114,101,70,111,111,116,110,111,116,101,65,110,100,66,111,100,121,75,101,101,112,115,73,116,115,78,97,116,117,114,97,108,84,114,97,105,108,105,110,103,71,108,117,101]));
+        let result = AttachedInlineVirtualAdjacencyTestSupport::attached_inline_virtual_adjacency_test_support_layout_attached_reference(UStr::new(&[27491,25991,65306,8220,20869,23481,12290,8221,91,49,93,21518,25991])).unwrap();
         let virtual_boundary = AttachedInlineVirtualAdjacencyTestSupport::attached_inline_virtual_adjacency_test_support_virtual_boundary((result).clone());
-        let _ = TracedAssertions::traced_assertions_assert_equals_string(&"AttachedInlineVirtualPunctuationBoundary:natural", (virtual_boundary.reason).to_string().as_str(), None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_equals_string(UStr::new(&[65,116,116,97,99,104,101,100,73,110,108,105,110,101,86,105,114,116,117,97,108,80,117,110,99,116,117,97,116,105,111,110,66,111,117,110,100,97,114,121,58,110,97,116,117,114,97,108]), (virtual_boundary.reason).to_ustring().as_ustr(), None).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_equals_float(virtual_boundary.natural_inner_glue, virtual_boundary.adjusted_inner_glue, None).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_true((virtual_boundary.adjusted_inner_glue) > (0 as f64), None).unwrap();
     });
@@ -348,11 +387,11 @@ fn closing_quote_before_footnote_and_body_keeps_its_natural_trailing_glue() {
 #[test]
 fn closing_quote_before_paragraph_end_footnote_has_no_trailing_glue() {
     testlib::run("org.tiqian.layout.AttachedInlineVirtualAdjacencyTest.closingQuoteBeforeParagraphEndFootnoteHasNoTrailingGlue", "org.tiqian.layout.AttachedInlineVirtualAdjacencyTest.closingQuoteBeforeParagraphEndFootnoteHasNoTrailingGlue", || {
-        let mut t = TestTraceRecorder::new("AttachedInlineVirtualAdjacencyTest");
-        t.section(&"closingQuoteBeforeParagraphEndFootnoteHasNoTrailingGlue");
-        let result = AttachedInlineVirtualAdjacencyTestSupport::attached_inline_virtual_adjacency_test_support_layout_attached_reference(&"正文：“内容。”[1]").unwrap();
+        let mut t = TestTraceRecorder::new(&(UStr::new(&[65,116,116,97,99,104,101,100,73,110,108,105,110,101,86,105,114,116,117,97,108,65,100,106,97,99,101,110,99,121,84,101,115,116])));
+        t.section(UStr::new(&[99,108,111,115,105,110,103,81,117,111,116,101,66,101,102,111,114,101,80,97,114,97,103,114,97,112,104,69,110,100,70,111,111,116,110,111,116,101,72,97,115,78,111,84,114,97,105,108,105,110,103,71,108,117,101]));
+        let result = AttachedInlineVirtualAdjacencyTestSupport::attached_inline_virtual_adjacency_test_support_layout_attached_reference(UStr::new(&[27491,25991,65306,8220,20869,23481,12290,8221,91,49,93])).unwrap();
         let virtual_boundary = AttachedInlineVirtualAdjacencyTestSupport::attached_inline_virtual_adjacency_test_support_virtual_boundary((result).clone());
-        let _ = TracedAssertions::traced_assertions_assert_equals_string(&"AttachedInlineVirtualPunctuationBoundary:line-end", (virtual_boundary.reason).to_string().as_str(), None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_equals_string(UStr::new(&[65,116,116,97,99,104,101,100,73,110,108,105,110,101,86,105,114,116,117,97,108,80,117,110,99,116,117,97,116,105,111,110,66,111,117,110,100,97,114,121,58,108,105,110,101,45,101,110,100]), (virtual_boundary.reason).to_ustring().as_ustr(), None).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_equals_float(0 as f64, virtual_boundary.adjusted_inner_glue, None).unwrap();
     });
 }
@@ -360,42 +399,30 @@ fn closing_quote_before_paragraph_end_footnote_has_no_trailing_glue() {
 #[test]
 fn attached_reference_never_starts_a_wrapped_line() {
     testlib::run("org.tiqian.layout.AttachedInlineVirtualAdjacencyTest.attachedReferenceNeverStartsAWrappedLine", "org.tiqian.layout.AttachedInlineVirtualAdjacencyTest.attachedReferenceNeverStartsAWrappedLine", || {
-        let mut t = TestTraceRecorder::new("AttachedInlineVirtualAdjacencyTest");
-        t.section(&"attachedReferenceNeverStartsAWrappedLine");
-        let text = "甲乙1丙".to_string();
+        let mut t = TestTraceRecorder::new(&(UStr::new(&[65,116,116,97,99,104,101,100,73,110,108,105,110,101,86,105,114,116,117,97,108,65,100,106,97,99,101,110,99,121,84,101,115,116])));
+        t.section(UStr::new(&[97,116,116,97,99,104,101,100,82,101,102,101,114,101,110,99,101,78,101,118,101,114,83,116,97,114,116,115,65,87,114,97,112,112,101,100,76,105,110,101]));
+        let text = UString::from("甲乙1丙").to_ustring();
         let reference_range = TextRange::new(2u32, 3u32).unwrap();
         let breakers = AttachedInlineVirtualAdjacencyTestSupport::attached_inline_virtual_adjacency_test_support_breakers().unwrap();
         for choice in &breakers {
-            let result = AttachedInlineVirtualAdjacencyTestSupport::attached_inline_virtual_adjacency_test_support_layout_with_breaker(text.as_str(), (choice.breaker).clone()).unwrap();
-            let _ = TracedAssertions::traced_assertions_assert_true((i32::from_ne_bytes((u32::try_from((result.lines.len()) & 0xFFFF_FFFF).unwrap_or(0)).to_ne_bytes())) > (1), Some((format!("{}{}{}",
-            (choice.breaker).clone().get_strategy_name(),
-            ": test must wrap: ",
-            AttachedInlineVirtualAdjacencyTestSupport::attached_inline_virtual_adjacency_test_support_render_lines(&result.lines)
-        )).to_string())).unwrap();
+            let result = AttachedInlineVirtualAdjacencyTestSupport::attached_inline_virtual_adjacency_test_support_layout_with_breaker(text.as_ustr(), (choice.breaker).clone()).unwrap();
+            let _ = TracedAssertions::traced_assertions_assert_true((i32::from_ne_bytes(((u32::try_from((result.lines.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) > (1), Some(UString::from(format!("{}", { let mut __s = UString::new(); __s += (choice.breaker).clone().get_strategy_name().as_ustr(); __s += &(UString::from(": test must wrap: ")); __s += AttachedInlineVirtualAdjacencyTestSupport::attached_inline_virtual_adjacency_test_support_render_lines(&result.lines).as_ustr(); __s }).as_str()))).unwrap();
             let mut started = false;
             for i in 0..match u32::try_from(result.lines.len()) { Ok(value) => value, Err(_) => u32::MAX } {
                 let s = ((result.lines[usize::try_from(i).unwrap_or(0)]).clone().range).clone().start;
-                if i32::from_ne_bytes((s).to_ne_bytes()) >= i32::from_ne_bytes((reference_range.start).to_ne_bytes()) && (i32::from_ne_bytes((s).to_ne_bytes())) < (i32::from_ne_bytes((reference_range.end).to_ne_bytes())) {
+                if i32::from_ne_bytes(((s) as i32).to_ne_bytes()) >= i32::from_ne_bytes(((reference_range.start) as i32).to_ne_bytes()) && (i32::from_ne_bytes(((s) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((reference_range.end) as i32).to_ne_bytes())) {
                     started = true;
                 }
             }
-            let _ = TracedAssertions::traced_assertions_assert_true(!started, Some((format!("{}{}{}",
-            (choice.breaker).clone().get_strategy_name(),
-            ": attached reference started a line: ",
-            AttachedInlineVirtualAdjacencyTestSupport::attached_inline_virtual_adjacency_test_support_render_ranges(&result.lines)
-        )).to_string())).unwrap();
+            let _ = TracedAssertions::traced_assertions_assert_true(!started, Some(UString::from(format!("{}", { let mut __s = UString::new(); __s += (choice.breaker).clone().get_strategy_name().as_ustr(); __s += &(UString::from(": attached reference started a line: ")); __s += AttachedInlineVirtualAdjacencyTestSupport::attached_inline_virtual_adjacency_test_support_render_ranges(&result.lines).as_ustr(); __s }).as_str()))).unwrap();
             let mut attached = false;
             for i in 0..match u32::try_from(result.lines.len()) { Ok(value) => value, Err(_) => u32::MAX } {
                 let line = (result.lines[usize::try_from(i).unwrap_or(0)]).clone();
-                if i32::from_ne_bytes(((line.range).clone().start).to_ne_bytes()) < (i32::from_ne_bytes((reference_range.start).to_ne_bytes())) && (i32::from_ne_bytes(((line.range).clone().end).to_ne_bytes())) >= i32::from_ne_bytes((reference_range.end).to_ne_bytes()) {
+                if i32::from_ne_bytes((((line.range).clone().start) as i32).to_ne_bytes()) < (i32::from_ne_bytes(((reference_range.start) as i32).to_ne_bytes())) && (i32::from_ne_bytes((((line.range).clone().end) as i32).to_ne_bytes())) >= i32::from_ne_bytes(((reference_range.end) as i32).to_ne_bytes()) {
                     attached = true;
                 }
             }
-            let _ = TracedAssertions::traced_assertions_assert_true(attached, Some((format!("{}{}{}",
-            (choice.breaker).clone().get_strategy_name(),
-            ": reference detached from prose: ",
-            AttachedInlineVirtualAdjacencyTestSupport::attached_inline_virtual_adjacency_test_support_render_ranges(&result.lines)
-        )).to_string())).unwrap();
+            let _ = TracedAssertions::traced_assertions_assert_true(attached, Some(UString::from(format!("{}", { let mut __s = UString::new(); __s += (choice.breaker).clone().get_strategy_name().as_ustr(); __s += &(UString::from(": reference detached from prose: ")); __s += AttachedInlineVirtualAdjacencyTestSupport::attached_inline_virtual_adjacency_test_support_render_ranges(&result.lines).as_ustr(); __s }).as_str()))).unwrap();
         }
     });
 }

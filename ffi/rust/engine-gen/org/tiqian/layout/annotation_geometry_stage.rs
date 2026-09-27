@@ -32,6 +32,8 @@ use crate::runtime::sorted_table::SortedMapTableBuilder;
 use crate::runtime::sorted_table::SortedSetTable;
 use crate::runtime::sorted_table::SortedTable;
 use crate::runtime::u_string;
+use crate::runtime::u_string::UStr;
+use crate::runtime::u_string::UString;
 use std::fmt::Write;
 use std::sync::Arc;
 
@@ -56,23 +58,8 @@ impl RubyFontGeometry {
         }
     }
 
-    pub fn to_string(&self) -> String {
-        return format!("{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}",
-            "RubyFontGeometry(",
-            "width=",
-            self.width,
-            ", ",
-            "ascent=",
-            self.ascent,
-            ", ",
-            "descent=",
-            self.descent,
-            ", ",
-            "requiredExtent=",
-            self.required_extent,
-            ", ",
-            "glyphs=",
-            {
+    pub fn to_string(&self) -> UString {
+        return UString::from(format!("{}", { let mut __s = UString::new(); __s += &(UString::from("RubyFontGeometry(")); __s += &(UString::from("width=")); __s += &(crate::runtime::fp_helper::FPHelper::format_float(self.width)); __s += &(UString::from(", ")); __s += &(UString::from("ascent=")); __s += &(crate::runtime::fp_helper::FPHelper::format_float(self.ascent)); __s += &(UString::from(", ")); __s += &(UString::from("descent=")); __s += &(crate::runtime::fp_helper::FPHelper::format_float(self.descent)); __s += &(UString::from(", ")); __s += &(UString::from("requiredExtent=")); __s += &(crate::runtime::fp_helper::FPHelper::format_float(self.required_extent)); __s += &(UString::from(", ")); __s += &(UString::from("glyphs=")); __s += UString::from(format!("{}", {
         let mut out = String::new();
         out.push('[');
         let arr = (self.glyphs).clone();
@@ -85,9 +72,7 @@ impl RubyFontGeometry {
         }
         out.push(']');
         out
-    },
-            ")"
-        );
+    }).as_str()).as_ustr(); __s += &(UString::from(")")); __s }).as_str());
     }
 }
 
@@ -111,11 +96,8 @@ impl AnnotationGeometryStageResult {
         }
     }
 
-    pub fn to_string(&self) -> String {
-        return format!("{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}",
-            "AnnotationGeometryStageResult(",
-            "inlineObjectDecisions=",
-            {
+    pub fn to_string(&self) -> UString {
+        return UString::from(format!("{}", { let mut __s = UString::new(); __s += &(UString::from("AnnotationGeometryStageResult(")); __s += &(UString::from("inlineObjectDecisions=")); __s += UString::from(format!("{}", {
         let mut out = String::new();
         out.push('[');
         let arr = (self.inline_object_decisions).clone();
@@ -128,10 +110,7 @@ impl AnnotationGeometryStageResult {
         }
         out.push(']');
         out
-    },
-            ", ",
-            "decorationDecisions=",
-            {
+    }).as_str()).as_ustr(); __s += &(UString::from(", ")); __s += &(UString::from("decorationDecisions=")); __s += UString::from(format!("{}", {
         let mut out = String::new();
         out.push('[');
         let arr = (self.decoration_decisions).clone();
@@ -144,10 +123,7 @@ impl AnnotationGeometryStageResult {
         }
         out.push(']');
         out
-    },
-            ", ",
-            "decorationSegments=",
-            {
+    }).as_str()).as_ustr(); __s += &(UString::from(", ")); __s += &(UString::from("decorationSegments=")); __s += UString::from(format!("{}", {
         let mut out = String::new();
         out.push('[');
         let arr = (self.decoration_segments).clone();
@@ -160,10 +136,7 @@ impl AnnotationGeometryStageResult {
         }
         out.push(']');
         out
-    },
-            ", ",
-            "rubyDecisions=",
-            {
+    }).as_str()).as_ustr(); __s += &(UString::from(", ")); __s += &(UString::from("rubyDecisions=")); __s += UString::from(format!("{}", {
         let mut out = String::new();
         out.push('[');
         let arr = (self.ruby_decisions).clone();
@@ -176,10 +149,7 @@ impl AnnotationGeometryStageResult {
         }
         out.push(']');
         out
-    },
-            ", ",
-            "bopomofoDecisions=",
-            {
+    }).as_str()).as_ustr(); __s += &(UString::from(", ")); __s += &(UString::from("bopomofoDecisions=")); __s += UString::from(format!("{}", {
         let mut out = String::new();
         out.push('[');
         let arr = (self.bopomofo_decisions).clone();
@@ -192,9 +162,7 @@ impl AnnotationGeometryStageResult {
         }
         out.push(']');
         out
-    },
-            ")"
-        );
+    }).as_str()).as_ustr(); __s += &(UString::from(")")); __s }).as_str());
     }
 }
 
@@ -217,8 +185,7 @@ impl IndexedDecorationSegment {
 pub struct AnnotationGeometryStage;
 
 impl AnnotationGeometryStage {
-    pub fn annotation_geometry_stage_compute_decoration_decisions(decorations: &[DecorationSpan], line_ranges: &Vec<IntRange>, line_boxes: &Vec<LineBox>, final_clusters: &Vec<Cluster>, cluster_roles: &Vec<FontRole>, justify_delta_by_cluster: SortedMapTable<u32, f64>,
-ruby_spread_by_cluster: SortedMapTable<u32, f64>, metric_decisions: &Vec<ClusterMetricDecision>, font_size: f64, emphasis_dot_gap_em: f64) -> Vec<DecorationDecisionInfo> {
+    pub fn annotation_geometry_stage_compute_decoration_decisions(decorations: &[DecorationSpan], line_ranges: &Vec<IntRange>, line_boxes: &Vec<LineBox>, final_clusters: &Vec<Cluster>, cluster_roles: &Vec<FontRole>, justify_delta_by_cluster: SortedMapTable<u32, f64>, ruby_spread_by_cluster: SortedMapTable<u32, f64>, metric_decisions: &Vec<ClusterMetricDecision>, font_size: f64, emphasis_dot_gap_em: f64) -> Vec<DecorationDecisionInfo> {
         if u32::try_from((decorations.len()) & 0xFFFF_FFFF).unwrap_or(0) == 0 {
             return vec![];
         }
@@ -232,8 +199,7 @@ ruby_spread_by_cluster: SortedMapTable<u32, f64>, metric_decisions: &Vec<Cluster
                 let mut x = line_boxes[usize::try_from(line_index).unwrap_or(0)].indent;
                 for idx in cluster_range.start..u32::wrapping_add(cluster_range.end, 1) {
                     let cluster = (final_clusters[usize::try_from(idx).unwrap_or(0)]).clone();
-                    let covered_by_span = i32::from_ne_bytes(((cluster.range).clone().start).to_ne_bytes()) >= i32::from_ne_bytes(((span.range).clone().start).to_ne_bytes()) && (i32::from_ne_bytes(((cluster.range).clone().end).to_ne_bytes())) <=
-i32::from_ne_bytes(((span.range).clone().end).to_ne_bytes());
+                    let covered_by_span = i32::from_ne_bytes((((cluster.range).clone().start) as i32).to_ne_bytes()) >= i32::from_ne_bytes((((span.range).clone().start) as i32).to_ne_bytes()) && (i32::from_ne_bytes((((cluster.range).clone().end) as i32).to_ne_bytes())) <= i32::from_ne_bytes((((span.range).clone().end) as i32).to_ne_bytes());
                     if covered_by_span {
                         let role = cluster_roles[usize::try_from(idx).unwrap_or(0)];
                         let applied = role == FontRole::CjkText;
@@ -242,8 +208,7 @@ i32::from_ne_bytes(((span.range).clone().end).to_ne_bytes());
                         let glyph_advance = (cluster.advance - justify_delta) - ruby_spread;
                         let mut metric: Option<ClusterMetricDecision> = None;
                         for m in metric_decisions {
-                            if i32::from_ne_bytes(((cluster.range).clone().start).to_ne_bytes()) >= i32::from_ne_bytes(((m.range).clone().start).to_ne_bytes()) && (i32::from_ne_bytes(((cluster.range).clone().end).to_ne_bytes())) <=
-i32::from_ne_bytes(((m.range).clone().end).to_ne_bytes()) {
+                            if i32::from_ne_bytes((((cluster.range).clone().start) as i32).to_ne_bytes()) >= i32::from_ne_bytes((((m.range).clone().start) as i32).to_ne_bytes()) && (i32::from_ne_bytes((((cluster.range).clone().end) as i32).to_ne_bytes())) <= i32::from_ne_bytes((((m.range).clone().end) as i32).to_ne_bytes()) {
                                 metric = Some(m.clone());
                                 break;
                             }
@@ -252,9 +217,8 @@ i32::from_ne_bytes(((m.range).clone().end).to_ne_bytes()) {
                         let face_descent = match &(metric) { Some(__option3) => if true { __option3.layout_metrics.descent } else { cluster_em * 0.12f64 }, None => cluster_em * 0.12f64 };
                         let candidate_dot_diameter = cluster_em * 0.19f64;
                         let dot_diameter = if applied { candidate_dot_diameter } else { 0.0f64 };
-                        let reason = if applied { "EmphasisDotOnHanText".to_string() } else { if role == FontRole::CjkPunctuation { "clreq-no-dot-on-punctuation".to_string() } else { "no-dot-on-non-han".to_string() }.to_string() };
-                        decisions.push(DecorationDecisionInfo::new((cluster.range).clone(), (cluster.text).to_string().as_str(), span.kind.name().to_string().as_str(), applied, reason.as_str(), Some(x + glyph_advance / 2.0f64),
-Some(line_boxes[usize::try_from(line_index).unwrap_or(0)].baseline + cluster.baseline_shift + face_descent + cluster_em * emphasis_dot_gap_em + candidate_dot_diameter / 2.0f64), Some(dot_diameter)));
+                        let reason = if applied { UString::from("EmphasisDotOnHanText") } else { if role == FontRole::CjkPunctuation { UString::from("clreq-no-dot-on-punctuation") } else { UString::from("no-dot-on-non-han") }.to_ustring() };
+                        decisions.push(DecorationDecisionInfo::new((cluster.range).clone(), (cluster.text).to_ustring().as_ustr(), UString::from(span.kind.name()).as_ustr(), applied, reason.as_ustr(), Some(x + glyph_advance / 2.0f64), Some(line_boxes[usize::try_from(line_index).unwrap_or(0)].baseline + cluster.baseline_shift + face_descent + cluster_em * emphasis_dot_gap_em + candidate_dot_diameter / 2.0f64), Some(dot_diameter)));
                     }
                     x += cluster.advance;
                 }
@@ -264,19 +228,19 @@ Some(line_boxes[usize::try_from(line_index).unwrap_or(0)].baseline + cluster.bas
     }
 
     pub fn annotation_geometry_stage_shorten_adjacent_interlinear_lines(segments: &Vec<DecorationSegmentInfo>, font_size: f64) -> Vec<DecorationSegmentInfo> {
-        let proper_noun_name = DecorationKind::ProperNoun.name().to_string();
-        let book_title_name = DecorationKind::BookTitle.name().to_string();
+        let proper_noun_name = UString::from(DecorationKind::ProperNoun.name());
+        let book_title_name = UString::from(DecorationKind::BookTitle.name());
         let mut result = segments.clone();
-        let mut by_line_builder: SortedMapTableBuilder<u32, Vec<IndexedDecorationSegment>> = SortedTable::sorted_table_map_builder::<u32, Vec<IndexedDecorationSegment>>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_bytes((*a).to_ne_bytes()),
-i32::from_ne_bytes((*b).to_ne_bytes()))));
+        let mut by_line_builder: SortedMapTableBuilder<u32, Vec<IndexedDecorationSegment>> = SortedTable::sorted_table_map_builder::<u32,
+Vec<IndexedDecorationSegment>>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_bytes(((*a) as i32).to_ne_bytes()), i32::from_ne_bytes(((*b) as i32).to_ne_bytes()))));
         let mut line_keys: Vec<u32> = vec![];
         let mut line_groups: Vec<Vec<IndexedDecorationSegment>> = vec![];
         for i in 0..match u32::try_from(result.len()) { Ok(value) => value, Err(_) => u32::MAX } {
             let seg = (result[usize::try_from(i).unwrap_or(0)]).clone();
-            if seg.kind.to_string() == proper_noun_name || (seg.kind).to_string() == book_title_name {
+            if seg.kind.to_ustring() == proper_noun_name || (seg.kind).to_ustring() == book_title_name {
                 let mut slot = 4294967295u32;
                 let mut k = 0u32;
-                while (i32::from_ne_bytes((k).to_ne_bytes())) < (i32::from_ne_bytes((u32::try_from((line_keys.len()) & 0xFFFF_FFFF).unwrap_or(0)).to_ne_bytes())) {
+                while (i32::from_ne_bytes(((k) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((line_keys.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
                     if line_keys[usize::try_from(k).unwrap_or(0)] == seg.line_index {
                         slot = k;
                         break;
@@ -295,7 +259,7 @@ i32::from_ne_bytes((*b).to_ne_bytes()))));
             by_line_builder.put(&(line_keys[usize::try_from(k).unwrap_or(0)]), &((line_groups[usize::try_from(k).unwrap_or(0)]).clone()));
         }
         let by_line: SortedMapTable<u32, Vec<IndexedDecorationSegment>> = by_line_builder.clone().build();
-        for k in 0..u32::from_ne_bytes((by_line.size()).to_ne_bytes()) {
+        for k in 0..u32::from_ne_bytes(((by_line.size()) as u32).to_ne_bytes()) {
             let mut entries = by_line.value_at({ let v: u32 = k; i32::from_ne_bytes(v.to_ne_bytes()) });
             for p in 1..match u32::try_from(entries.len()) { Ok(value) => value, Err(_) => u32::MAX } {
                 let key = (entries[usize::try_from(p).unwrap_or(0)]).clone();
@@ -307,23 +271,15 @@ i32::from_ne_bytes((*b).to_ne_bytes()))));
                 entries[usize::try_from(q).unwrap_or(0)] = key;
             }
             let mut i = 0;
-            while (i) < (i32::wrapping_sub(i32::from_ne_bytes((i32::from_ne_bytes(u32::try_from(((entries).len()) & 4294967295).unwrap_or(0).to_ne_bytes())).to_ne_bytes()), 1)) {
+            while (i) < (i32::wrapping_sub(i32::from_ne_bytes(((i32::from_ne_bytes(u32::try_from(((entries).len()) & 4294967295).unwrap_or(0).to_ne_bytes())) as i32).to_ne_bytes()), 1)) {
                 let a = (entries[usize::try_from(i).unwrap_or(0)]).clone();
                 let b = (entries[usize::try_from(i32::wrapping_add(i, 1)).unwrap_or(0)]).clone();
                 if b.seg.clone().left - (a.seg).clone().right <= 0.01f64 * font_size {
                     let pullback = font_size * 0.0625f64;
                     let cur_a = (result[usize::try_from(a.index).unwrap_or(0)]).clone();
-                    result[usize::try_from(a.index).unwrap_or(0)] = DecorationSegmentInfo::new((cur_a.source_range).clone(), (cur_a.kind).to_string().as_str(), cur_a.line_index, cur_a.left, cur_a.top, cur_a.right - pullback, cur_a.bottom, cur_a.open_start, cur_a.open_end,
-format!("{}{}",
-            (cur_a.reason).to_string(),
-            ";AdjacentInterlinearLineShortening"
-        ).as_str());
+                    result[usize::try_from(a.index).unwrap_or(0)] = DecorationSegmentInfo::new((cur_a.source_range).clone(), (cur_a.kind).to_ustring().as_ustr(), cur_a.line_index, cur_a.left, cur_a.top, cur_a.right - pullback, cur_a.bottom, cur_a.open_start, cur_a.open_end, UString::from(format!("{}", { let mut __s = UString::new(); __s += (cur_a.reason).to_ustring().as_ustr(); __s += &(UString::from(";AdjacentInterlinearLineShortening")); __s }).as_str()).as_ustr());
                     let cur_b = (result[usize::try_from(b.index).unwrap_or(0)]).clone();
-                    result[usize::try_from(b.index).unwrap_or(0)] = DecorationSegmentInfo::new((cur_b.source_range).clone(), (cur_b.kind).to_string().as_str(), cur_b.line_index, cur_b.left + pullback, cur_b.top, cur_b.right, cur_b.bottom, cur_b.open_start, cur_b.open_end,
-format!("{}{}",
-            (cur_b.reason).to_string(),
-            ";AdjacentInterlinearLineShortening"
-        ).as_str());
+                    result[usize::try_from(b.index).unwrap_or(0)] = DecorationSegmentInfo::new((cur_b.source_range).clone(), (cur_b.kind).to_ustring().as_ustr(), cur_b.line_index, cur_b.left + pullback, cur_b.top, cur_b.right, cur_b.bottom, cur_b.open_start, cur_b.open_end, UString::from(format!("{}", { let mut __s = UString::new(); __s += (cur_b.reason).to_ustring().as_ustr(); __s += &(UString::from(";AdjacentInterlinearLineShortening")); __s }).as_str()).as_ustr());
                 }
                 i = i32::wrapping_add(i, 1);
             }
@@ -331,8 +287,7 @@ format!("{}{}",
         return result;
     }
 
-    pub fn annotation_geometry_stage_compute_decoration_segments(decorations: &[DecorationSpan], line_ranges: &Vec<IntRange>, line_boxes: &Vec<LineBox>, final_clusters: &Vec<Cluster>, justify_delta_by_cluster: SortedMapTable<u32, f64>, geometry_by_range: SortedMapTable<TextRange,
-ClusterGeometryDecisionInfo>, leading_gap_ranges: SortedSetTable<TextRange>, trailing_gap_ranges: SortedSetTable<TextRange>, auto_space_gap_px: f64, font_size: f64) -> Result<Vec<DecorationSegmentInfo>, TextRangeError> {
+    pub fn annotation_geometry_stage_compute_decoration_segments(decorations: &[DecorationSpan], line_ranges: &Vec<IntRange>, line_boxes: &Vec<LineBox>, final_clusters: &Vec<Cluster>, justify_delta_by_cluster: SortedMapTable<u32, f64>, geometry_by_range: SortedMapTable<TextRange, ClusterGeometryDecisionInfo>, leading_gap_ranges: SortedSetTable<TextRange>, trailing_gap_ranges: SortedSetTable<TextRange>, auto_space_gap_px: f64, font_size: f64) -> Result<Vec<DecorationSegmentInfo>, TextRangeError> {
         let leading_blank: Arc<dyn Fn(TextRange, bool) -> f64 + Send + Sync + 'static> = { let geometry_by_range = (geometry_by_range).clone(); let leading_gap_ranges = (leading_gap_ranges).clone(); Arc::new(move |range, at_line_start| {
         let g = if geometry_by_range.has(&(range)) { geometry_by_range.get(&(range)) } else { None };
         let glue = match &(g) { Some(__option4) => __option4.leading_glue_natural - __option4.leading_glue_consumed, None => 0.0f64 };
@@ -367,8 +322,7 @@ ClusterGeometryDecisionInfo>, leading_gap_ranges: SortedSetTable<TextRange>, tra
                 let mut seg_end = 4294967295u32;
                 for idx in cluster_range.start..u32::wrapping_add(cluster_range.end, 1) {
                     let cluster = (final_clusters[usize::try_from(idx).unwrap_or(0)]).clone();
-                    let covered = i32::from_ne_bytes(((cluster.range).clone().start).to_ne_bytes()) >= i32::from_ne_bytes(((span.range).clone().start).to_ne_bytes()) && (i32::from_ne_bytes(((cluster.range).clone().end).to_ne_bytes())) <=
-i32::from_ne_bytes(((span.range).clone().end).to_ne_bytes());
+                    let covered = i32::from_ne_bytes((((cluster.range).clone().start) as i32).to_ne_bytes()) >= i32::from_ne_bytes((((span.range).clone().start) as i32).to_ne_bytes()) && (i32::from_ne_bytes((((cluster.range).clone().end) as i32).to_ne_bytes())) <= i32::from_ne_bytes((((span.range).clone().end) as i32).to_ne_bytes());
                     if covered {
                         if left.is_none() {
                             left = Some(x + leading_blank((cluster.range).clone(), idx == cluster_range.start));
@@ -388,20 +342,17 @@ i32::from_ne_bytes(((span.range).clone().end).to_ne_bytes());
                 let is_line = span.kind != DecorationKind::Mourning;
                 let line_y_em = if span.kind == DecorationKind::BookTitle { 0.24f64 } else { 0.18f64 };
                 let line_y = baseline + font_size * line_y_em;
-                span_segments.push(DecorationSegmentInfo::new(TextRange::new(seg_start, seg_end)?, span.kind.name().to_string().as_str(), line_index, left_edge, if is_line { line_y } else { baseline - font_size * 0.88f64 }, right, if is_line { line_y } else { baseline + font_size
-* 0.12f64 }, (i32::from_ne_bytes((seg_start).to_ne_bytes())) > (i32::from_ne_bytes(((span.range).clone().start).to_ne_bytes())), (i32::from_ne_bytes((seg_end).to_ne_bytes())) < (i32::from_ne_bytes(((span.range).clone().end).to_ne_bytes())), ""));
+                span_segments.push(DecorationSegmentInfo::new(TextRange::new(seg_start, seg_end)?, UString::from(span.kind.name()).as_ustr(), line_index, left_edge, if is_line { line_y } else { baseline - font_size * 0.88f64 }, right, if is_line { line_y } else { baseline + font_size * 0.12f64 }, (i32::from_ne_bytes(((seg_start) as i32).to_ne_bytes())) > (i32::from_ne_bytes((((span.range).clone().start) as i32).to_ne_bytes())), (i32::from_ne_bytes(((seg_end) as i32).to_ne_bytes())) < (i32::from_ne_bytes((((span.range).clone().end) as i32).to_ne_bytes())), &(UStr::new(&[]))));
             }
-            let reason = if span.kind == DecorationKind::Mourning && (i32::from_ne_bytes((u32::try_from((span_segments.len()) & 0xFFFF_FFFF).unwrap_or(0)).to_ne_bytes())) <= 1 { "MourningSpanKeptUnbroken".to_string() } else { if span.kind == DecorationKind::Mourning {
-"mourning-span-split-across-lines".to_string() } else { "InterlinearLinePerAnnotatedItem".to_string() }.to_string() };
+            let reason = if span.kind == DecorationKind::Mourning && (i32::from_ne_bytes(((u32::try_from((span_segments.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) <= 1 { UString::from("MourningSpanKeptUnbroken") } else { if span.kind == DecorationKind::Mourning { UString::from("mourning-span-split-across-lines") } else { UString::from("InterlinearLinePerAnnotatedItem") }.to_ustring() };
             for seg in &span_segments {
-                segments.push(DecorationSegmentInfo::new((seg.source_range).clone(), (seg.kind).to_string().as_str(), seg.line_index, seg.left, seg.top, seg.right, seg.bottom, seg.open_start, seg.open_end, reason.as_str()));
+                segments.push(DecorationSegmentInfo::new((seg.source_range).clone(), (seg.kind).to_ustring().as_ustr(), seg.line_index, seg.left, seg.top, seg.right, seg.bottom, seg.open_start, seg.open_end, reason.as_ustr()));
             }
         }
         return Ok(AnnotationGeometryStage::annotation_geometry_stage_shorten_adjacent_interlinear_lines(&segments, font_size));
     }
 
-    pub fn annotation_geometry_stage_compute_ruby_decisions(ruby_spans: &Vec<RubySpan>, line_ranges: &Vec<IntRange>, line_boxes: &Vec<LineBox>, final_clusters: &Vec<Cluster>, natural_clusters: &Vec<Cluster>, metric_decisions: &Vec<ClusterMetricDecision>,
-ruby_font_geometry_by_span: SortedMapTable<RubySpan, RubyFontGeometry>, ruby_stack_gap: f64, fallback_base_ascent: f64, ruby_font_size: f64, ruby_font_weight: u32, base_locale: &str) -> Vec<RubyDecisionInfo> {
+    pub fn annotation_geometry_stage_compute_ruby_decisions(ruby_spans: &Vec<RubySpan>, line_ranges: &Vec<IntRange>, line_boxes: &Vec<LineBox>, final_clusters: &Vec<Cluster>, natural_clusters: &Vec<Cluster>, metric_decisions: &Vec<ClusterMetricDecision>, ruby_font_geometry_by_span: SortedMapTable<RubySpan, RubyFontGeometry>, ruby_stack_gap: f64, fallback_base_ascent: f64, ruby_font_size: f64, ruby_font_weight: u32, base_locale: &UStr) -> Vec<RubyDecisionInfo> {
         if u32::try_from((ruby_spans.len()) & 0xFFFF_FFFF).unwrap_or(0) == 0 {
             return vec![];
         }
@@ -417,8 +368,7 @@ ruby_font_geometry_by_span: SortedMapTable<RubySpan, RubyFontGeometry>, ruby_sta
                 let mut base_face_top = f64::INFINITY;
                 for idx in cluster_range.start..u32::wrapping_add(cluster_range.end, 1) {
                     let cluster = (final_clusters[usize::try_from(idx).unwrap_or(0)]).clone();
-                    if i32::from_ne_bytes(((cluster.range).clone().start).to_ne_bytes()) >= i32::from_ne_bytes(((ruby.base_range).clone().start).to_ne_bytes()) && (i32::from_ne_bytes(((cluster.range).clone().end).to_ne_bytes())) <=
-i32::from_ne_bytes(((ruby.base_range).clone().end).to_ne_bytes()) {
+                    if i32::from_ne_bytes((((cluster.range).clone().start) as i32).to_ne_bytes()) >= i32::from_ne_bytes((((ruby.base_range).clone().start) as i32).to_ne_bytes()) && (i32::from_ne_bytes((((cluster.range).clone().end) as i32).to_ne_bytes())) <= i32::from_ne_bytes((((ruby.base_range).clone().end) as i32).to_ne_bytes()) {
                         if !has_base_left {
                             base_left = x;
                             has_base_left = true;
@@ -426,8 +376,7 @@ i32::from_ne_bytes(((ruby.base_range).clone().end).to_ne_bytes()) {
                         content_width += natural_clusters[usize::try_from(idx).unwrap_or(0)].advance;
                         let mut metric: Option<ClusterMetricDecision> = None;
                         for m in metric_decisions {
-                            if i32::from_ne_bytes(((cluster.range).clone().start).to_ne_bytes()) >= i32::from_ne_bytes(((m.range).clone().start).to_ne_bytes()) && (i32::from_ne_bytes(((cluster.range).clone().end).to_ne_bytes())) <=
-i32::from_ne_bytes(((m.range).clone().end).to_ne_bytes()) {
+                            if i32::from_ne_bytes((((cluster.range).clone().start) as i32).to_ne_bytes()) >= i32::from_ne_bytes((((m.range).clone().start) as i32).to_ne_bytes()) && (i32::from_ne_bytes((((cluster.range).clone().end) as i32).to_ne_bytes())) <= i32::from_ne_bytes((((m.range).clone().end) as i32).to_ne_bytes()) {
                                 metric = Some(m.clone());
                                 break;
                             }
@@ -442,15 +391,12 @@ i32::from_ne_bytes(((m.range).clone().end).to_ne_bytes()) {
                 }
                 if has_base_left {
                     let ruby_width = ruby_geometry.as_ref().unwrap().width;
-                    let mut _g: Vec<String> = vec![];
+                    let mut _g: Vec<UString> = vec![];
                     for f in 0..match u32::try_from((ruby.font_families).clone().len()) { Ok(value) => value, Err(_) => u32::MAX } {
                         _g.push((ruby.font_families[usize::try_from(f).unwrap_or(0)]).clone());
                     }
                     let font_families = (_g).clone();
-                    out.push(RubyDecisionInfo::new((ruby.base_range).clone(), (ruby.text).to_string().as_str(), line_index, base_left + content_width / 2.0f64, (base_face_top - ruby_stack_gap) - ruby_geometry.as_ref().unwrap().descent, ruby_font_size, { let __min_a1 = 0.0f64 as
-f64; let __min_b1 = ((ruby_width - content_width) / 2.0f64) as f64; if __min_a1.is_nan() || __min_b1.is_nan() { f64::NAN } else { if __min_a1 > __min_b1 { __min_a1 } else if __min_b1 > __min_a1 { __min_b1 } else if __min_a1 == 0.0 && __min_b1 == 0.0 { if
-__min_a1.is_sign_negative() { __min_b1 } else { __min_a1 } } else { __min_a1 } } }, Some(ruby_geometry.as_ref().unwrap().ascent), Some(ruby_geometry.as_ref().unwrap().descent), Some(ruby_width), Some((font_families).clone()), Some(ruby_font_weight), Some(match &(ruby.locale) {
-Some(__option9) => (*__option9).clone(), None => base_locale.to_string() }.to_string()), Some((ruby_geometry.as_ref().unwrap().glyphs).clone())));
+                    out.push(RubyDecisionInfo::new((ruby.base_range).clone(), (ruby.text).to_ustring().as_ustr(), line_index, base_left + content_width / 2.0f64, (base_face_top - ruby_stack_gap) - ruby_geometry.as_ref().unwrap().descent, ruby_font_size, { let __min_a1 = 0.0f64 as f64; let __min_b1 = ((ruby_width - content_width) / 2.0f64) as f64; if __min_a1.is_nan() || __min_b1.is_nan() { f64::NAN } else { if __min_a1 > __min_b1 { __min_a1 } else if __min_b1 > __min_a1 { __min_b1 } else if __min_a1 == 0.0 && __min_b1 == 0.0 { if __min_a1.is_sign_negative() { __min_b1 } else { __min_a1 } } else { __min_a1 } } }, Some(ruby_geometry.as_ref().unwrap().ascent), Some(ruby_geometry.as_ref().unwrap().descent), Some(ruby_width), Some((font_families).clone()), Some(ruby_font_weight), Some((match &(ruby.locale) { Some(__option9) => (*__option9).clone(), None => base_locale.to_ustring() }).to_ustring()), Some((ruby_geometry.as_ref().unwrap().glyphs).clone())));
                 }
             }
         }
@@ -458,7 +404,7 @@ Some(__option9) => (*__option9).clone(), None => base_locale.to_string() }.to_st
     }
 
     pub fn annotation_geometry_stage_bopomofo_symbol_rows(n: u32, neutral: bool) -> Vec<IntRange> {
-        if i32::from_ne_bytes((n).to_ne_bytes()) <= 1 {
+        if i32::from_ne_bytes(((n) as i32).to_ne_bytes()) <= 1 {
             return vec![(IntRange::new(11u32, 20u32)).clone()];
         } else {
             if n == 2 {
@@ -517,18 +463,18 @@ Some(__option9) => (*__option9).clone(), None => base_locale.to_string() }.to_st
         }
     }
 
-    pub fn annotation_geometry_stage_bopomofo_tone_glyph(tone: BopomofoTone) -> String {
+    pub fn annotation_geometry_stage_bopomofo_tone_glyph(tone: BopomofoTone) -> UString {
         return match tone {
-            BopomofoTone::Yinping => "".to_string().to_string(),
-            BopomofoTone::Yangping => "ˊ".to_string().to_string(),
-            BopomofoTone::Shang => "ˇ".to_string().to_string(),
-            BopomofoTone::Qu => "ˋ".to_string().to_string(),
-            BopomofoTone::Neutral => "˙".to_string().to_string(),
-            BopomofoTone::Ru => "".to_string().to_string(),
+            BopomofoTone::Yinping => UString::from("").to_ustring().to_ustring(),
+            BopomofoTone::Yangping => UString::from("ˊ").to_ustring().to_ustring(),
+            BopomofoTone::Shang => UString::from("ˇ").to_ustring().to_ustring(),
+            BopomofoTone::Qu => UString::from("ˋ").to_ustring().to_ustring(),
+            BopomofoTone::Neutral => UString::from("˙").to_ustring().to_ustring(),
+            BopomofoTone::Ru => UString::from("").to_ustring().to_ustring(),
         };
     }
 
-    pub(crate) fn annotation_geometry_stage_copy_font_families(families: &[String]) -> Vec<String> {
+    pub(crate) fn annotation_geometry_stage_copy_font_families(families: &[UString]) -> Vec<UString> {
         let capacity = families.len();
         let mut result = Vec::with_capacity(capacity);
         for i in 0..match u32::try_from(families.len()) { Ok(value) => value, Err(_) => u32::MAX } {
@@ -537,11 +483,11 @@ Some(__option9) => (*__option9).clone(), None => base_locale.to_string() }.to_st
         return result;
     }
 
-    pub(crate) fn annotation_geometry_stage_bopomofo_box(zone_left: f64, box_top: f64, h_unit: f64, v_unit: f64, left_u: f64, width_u: f64, top_u: u32, bot_u: u32, role: BopomofoGlyphRole, text: &str) -> BopomofoGlyphPlacement {
+    pub(crate) fn annotation_geometry_stage_bopomofo_box(zone_left: f64, box_top: f64, h_unit: f64, v_unit: f64, left_u: f64, width_u: f64, top_u: u32, bot_u: u32, role: BopomofoGlyphRole, text: &UStr) -> BopomofoGlyphPlacement {
         let b_left = zone_left + left_u * h_unit;
-        let b_top = box_top + format!("{}", (i32::from_ne_bytes((top_u).to_ne_bytes()))).parse::<f64>().unwrap_or(0.0) * v_unit;
+        let b_top = box_top + format!("{}", (i32::from_ne_bytes(((top_u) as i32).to_ne_bytes()))).parse::<f64>().unwrap_or(0.0) * v_unit;
         let b_width = width_u * h_unit;
-        let b_height = format!("{}", (i32::from_ne_bytes((u32::wrapping_sub(bot_u, top_u)).to_ne_bytes()))).parse::<f64>().unwrap_or(0.0) * v_unit;
+        let b_height = format!("{}", (i32::from_ne_bytes(((u32::wrapping_sub(bot_u, top_u)) as i32).to_ne_bytes()))).parse::<f64>().unwrap_or(0.0) * v_unit;
         return BopomofoGlyphPlacement::new(text, b_left, b_top, b_width, b_height, role, Some(vec![]), b_left, b_top + b_height, b_height);
     }
 
@@ -587,8 +533,7 @@ Some(__option9) => (*__option9).clone(), None => base_locale.to_string() }.to_st
         return Some(Rect::new(min_left, min_top, max_right, max_bottom));
     }
 
-    pub fn annotation_geometry_stage_compute_bopomofo_decisions(engine: &mut ExplainableStubParagraphLayoutEngine, ruby_spans: &Vec<RubySpan>, line_ranges: &Vec<IntRange>, line_boxes: &Vec<LineBox>, final_clusters: &Vec<Cluster>, natural_clusters: &Vec<Cluster>, base_ascent: f64,
-base_descent: f64, font_size: f64, bopomofo_font_weight_at: Arc<dyn Fn(u32) -> u32 + Send + Sync>, base_text_style: TextStyle) -> Result<Vec<BopomofoDecisionInfo>, TextShaperShapeFault> {
+    pub fn annotation_geometry_stage_compute_bopomofo_decisions(engine: &mut ExplainableStubParagraphLayoutEngine, ruby_spans: &Vec<RubySpan>, line_ranges: &Vec<IntRange>, line_boxes: &Vec<LineBox>, final_clusters: &Vec<Cluster>, natural_clusters: &Vec<Cluster>, base_ascent: f64, base_descent: f64, font_size: f64, bopomofo_font_weight_at: Arc<dyn Fn(u32) -> u32 + Send + Sync>, base_text_style: TextStyle) -> Result<Vec<BopomofoDecisionInfo>, TextShaperShapeFault> {
         if u32::try_from((ruby_spans.len()) & 0xFFFF_FFFF).unwrap_or(0) == 0 {
             return Ok(vec![]);
         }
@@ -596,7 +541,7 @@ base_descent: f64, font_size: f64, bopomofo_font_weight_at: Arc<dyn Fn(u32) -> u
         let v_unit = (base_ascent + base_descent) / 30.0f64;
         let mut out: Vec<BopomofoDecisionInfo> = Vec::new();
         for ruby in ruby_spans {
-            let ruby_locale = match &(ruby.locale) { Some(__option11) => (*__option11).clone(), None => ((base_text_style.locale).to_string()).clone() };
+            let ruby_locale = match &(ruby.locale) { Some(__option11) => (*__option11).clone(), None => ((base_text_style.locale).to_ustring()).clone() };
             for line_index in 0..match u32::try_from(line_ranges.len()) { Ok(value) => value, Err(_) => u32::MAX } {
                 let cluster_range = (line_ranges[usize::try_from(line_index).unwrap_or(0)]).clone();
                 let mut x = line_boxes[usize::try_from(line_index).unwrap_or(0)].indent;
@@ -605,8 +550,7 @@ base_descent: f64, font_size: f64, bopomofo_font_weight_at: Arc<dyn Fn(u32) -> u
                 let mut content_width = 0.0f64;
                 for idx in cluster_range.start..u32::wrapping_add(cluster_range.end, 1) {
                     let cluster = (final_clusters[usize::try_from(idx).unwrap_or(0)]).clone();
-                    if i32::from_ne_bytes(((cluster.range).clone().start).to_ne_bytes()) >= i32::from_ne_bytes(((ruby.base_range).clone().start).to_ne_bytes()) && (i32::from_ne_bytes(((cluster.range).clone().end).to_ne_bytes())) <=
-i32::from_ne_bytes(((ruby.base_range).clone().end).to_ne_bytes()) {
+                    if i32::from_ne_bytes((((cluster.range).clone().start) as i32).to_ne_bytes()) >= i32::from_ne_bytes((((ruby.base_range).clone().start) as i32).to_ne_bytes()) && (i32::from_ne_bytes((((cluster.range).clone().end) as i32).to_ne_bytes())) <= i32::from_ne_bytes((((ruby.base_range).clone().end) as i32).to_ne_bytes()) {
                         if !has_content_left {
                             content_left = x;
                             has_content_left = true;
@@ -620,12 +564,12 @@ i32::from_ne_bytes(((ruby.base_range).clone().end).to_ne_bytes()) {
                 }
                 let zone_left = content_left + content_width;
                 let box_top = line_boxes[usize::try_from(line_index).unwrap_or(0)].baseline - base_ascent;
-                let parsed = BopomofoParser::bopomofo_parser_parse((ruby.text).to_string().as_str());
+                let parsed = BopomofoParser::bopomofo_parser_parse((ruby.text).to_ustring().as_ustr());
                 let mut n = u32::try_from((parsed.symbols.len()) & 0xFFFF_FFFF).unwrap_or(0);
-                if i32::from_ne_bytes((n).to_ne_bytes()) < (1) {
+                if i32::from_ne_bytes(((n) as i32).to_ne_bytes()) < (1) {
                     n = 1u32;
                 } else {
-                    if i32::from_ne_bytes((n).to_ne_bytes()) > (3) {
+                    if i32::from_ne_bytes(((n) as i32).to_ne_bytes()) > (3) {
                         n = 3u32;
                     }
                 }
@@ -633,14 +577,14 @@ i32::from_ne_bytes(((ruby.base_range).clone().end).to_ne_bytes()) {
                 let mut placements: Vec<BopomofoGlyphPlacement> = Vec::new();
                 if parsed.tone == BopomofoTone::Neutral {
                     let row = AnnotationGeometryStage::annotation_geometry_stage_bopomofo_neutral_row(n);
-                    placements.push(AnnotationGeometryStage::annotation_geometry_stage_bopomofo_box(zone_left, box_top, h_unit, v_unit, 1.0f64, 9.0f64, row.start, row.end, BopomofoGlyphRole::Neutral, &"˙"));
+                    placements.push(AnnotationGeometryStage::annotation_geometry_stage_bopomofo_box(zone_left, box_top, h_unit, v_unit, 1.0f64, 9.0f64, row.start, row.end, BopomofoGlyphRole::Neutral, UStr::new(&[729])));
                 }
                 let rows = AnnotationGeometryStage::annotation_geometry_stage_bopomofo_symbol_rows(n, neutral);
-                let sym_count = if i32::from_ne_bytes((u32::try_from((parsed.symbols.len()) & 0xFFFF_FFFF).unwrap_or(0)).to_ne_bytes()) < (3) { u32::try_from((parsed.symbols.len()) & 0xFFFF_FFFF).unwrap_or(0) } else { 3 };
+                let sym_count = if i32::from_ne_bytes(((u32::try_from((parsed.symbols.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes()) < (3) { u32::try_from((parsed.symbols.len()) & 0xFFFF_FFFF).unwrap_or(0) } else { 3 };
                 for i in 0..sym_count {
                     let sym = (parsed.symbols[usize::try_from(i).unwrap_or(0)]).clone();
                     let row = (rows[usize::try_from(i).unwrap_or(0)]).clone();
-                    placements.push(AnnotationGeometryStage::annotation_geometry_stage_bopomofo_box(zone_left, box_top, h_unit, v_unit, 1.0f64, 9.0f64, row.start, row.end, BopomofoGlyphRole::Symbol, sym.as_str()));
+                    placements.push(AnnotationGeometryStage::annotation_geometry_stage_bopomofo_box(zone_left, box_top, h_unit, v_unit, 1.0f64, 9.0f64, row.start, row.end, BopomofoGlyphRole::Symbol, sym.as_ustr()));
                 }
                 {
                     let _g = parsed.tone;
@@ -648,24 +592,24 @@ i32::from_ne_bytes(((ruby.base_range).clone().end).to_ne_bytes()) {
     BopomofoTone::Yinping => {},
     BopomofoTone::Yangping => {
     let row = AnnotationGeometryStage::annotation_geometry_stage_bopomofo_regular_tone_row(n);
-    placements.push(AnnotationGeometryStage::annotation_geometry_stage_bopomofo_box(zone_left, box_top, h_unit, v_unit, 10.0f64, 5.0f64, row.start, row.end, BopomofoGlyphRole::Tone, AnnotationGeometryStage::annotation_geometry_stage_bopomofo_tone_glyph(parsed.tone).as_str()))
+    placements.push(AnnotationGeometryStage::annotation_geometry_stage_bopomofo_box(zone_left, box_top, h_unit, v_unit, 10.0f64, 5.0f64, row.start, row.end, BopomofoGlyphRole::Tone, AnnotationGeometryStage::annotation_geometry_stage_bopomofo_tone_glyph(parsed.tone).as_ustr()))
 },
     BopomofoTone::Shang => {
     let row = AnnotationGeometryStage::annotation_geometry_stage_bopomofo_regular_tone_row(n);
-    placements.push(AnnotationGeometryStage::annotation_geometry_stage_bopomofo_box(zone_left, box_top, h_unit, v_unit, 10.0f64, 5.0f64, row.start, row.end, BopomofoGlyphRole::Tone, AnnotationGeometryStage::annotation_geometry_stage_bopomofo_tone_glyph(parsed.tone).as_str()))
+    placements.push(AnnotationGeometryStage::annotation_geometry_stage_bopomofo_box(zone_left, box_top, h_unit, v_unit, 10.0f64, 5.0f64, row.start, row.end, BopomofoGlyphRole::Tone, AnnotationGeometryStage::annotation_geometry_stage_bopomofo_tone_glyph(parsed.tone).as_ustr()))
 },
     BopomofoTone::Qu => {
     let row = AnnotationGeometryStage::annotation_geometry_stage_bopomofo_regular_tone_row(n);
-    placements.push(AnnotationGeometryStage::annotation_geometry_stage_bopomofo_box(zone_left, box_top, h_unit, v_unit, 10.0f64, 5.0f64, row.start, row.end, BopomofoGlyphRole::Tone, AnnotationGeometryStage::annotation_geometry_stage_bopomofo_tone_glyph(parsed.tone).as_str()))
+    placements.push(AnnotationGeometryStage::annotation_geometry_stage_bopomofo_box(zone_left, box_top, h_unit, v_unit, 10.0f64, 5.0f64, row.start, row.end, BopomofoGlyphRole::Tone, AnnotationGeometryStage::annotation_geometry_stage_bopomofo_tone_glyph(parsed.tone).as_ustr()))
 },
     BopomofoTone::Neutral => {},
     BopomofoTone::Ru => {
     let row = AnnotationGeometryStage::annotation_geometry_stage_bopomofo_ru_tone_row(n);
-    placements.push(AnnotationGeometryStage::annotation_geometry_stage_bopomofo_box(zone_left, box_top, h_unit, v_unit, 10.0f64, 5.0f64, row.start, row.end, BopomofoGlyphRole::Tone, AnnotationGeometryStage::annotation_geometry_stage_bopomofo_tone_glyph(parsed.tone).as_str()))
+    placements.push(AnnotationGeometryStage::annotation_geometry_stage_bopomofo_box(zone_left, box_top, h_unit, v_unit, 10.0f64, 5.0f64, row.start, row.end, BopomofoGlyphRole::Tone, AnnotationGeometryStage::annotation_geometry_stage_bopomofo_tone_glyph(parsed.tone).as_ustr()))
 },
 };
                 }
-                if i32::from_ne_bytes((u32::try_from((placements.len()) & 0xFFFF_FFFF).unwrap_or(0)).to_ne_bytes()) > (0) {
+                if i32::from_ne_bytes(((u32::try_from((placements.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes()) > (0) {
                     let placement_weight = bopomofo_font_weight_at((ruby.base_range).clone().start);
                     let capacity = placements.len();
                     let mut replay_placements = Vec::with_capacity(capacity);
@@ -680,11 +624,11 @@ i32::from_ne_bytes(((ruby.base_range).clone().end).to_ne_bytes()) {
     BopomofoGlyphRole::Neutral => replay_font_size = placement.width,
 };
                         }
-                        let range = TextRange::new(0u32, u_string::unit_count(&((placement.text).to_string()))).map_err(|e| TextShaperShapeFault::TextRangeErrorFault(e))?;
+                        let range = TextRange::new(0u32, u_string::unit_count(&((placement.text).to_ustring()))).map_err(|e| TextShaperShapeFault::TextRangeErrorFault(e))?;
                         let preferred_families = AnnotationGeometryStage::annotation_geometry_stage_copy_font_families(&(ruby.font_families).clone());
-                        let decision = engine.fallback_resolver.resolve((placement.text).to_string().as_str(), (range).clone(), FontRequest::new((preferred_families).clone(), ruby_locale.as_str(), FontRole::CjkText));
-                        let styled = TextStyle::new(Some((preferred_families).clone()), Some(replay_font_size), Some(ruby_locale.to_string()), Some(placement_weight), Some(false), Some(base_text_style.baseline_shift), Some(base_text_style.inline_attachment));
-                        let shaped = engine.text_shaper.shape(ShapingInput::new((placement.text).to_string().as_str(), (range).clone(), (styled).clone(), (decision).clone(), Some((placement.text).to_string()), Some(vec!["vert=1".to_string()])))?;
+                        let decision = engine.fallback_resolver.resolve((placement.text).to_ustring().as_ustr(), (range).clone(), FontRequest::new((preferred_families).clone(), ruby_locale.as_ustr(), FontRole::CjkText));
+                        let styled = TextStyle::new(Some((preferred_families).clone()), Some(replay_font_size), Some((ruby_locale).to_ustring()), Some(placement_weight), Some(false), Some(base_text_style.baseline_shift), Some(base_text_style.inline_attachment));
+                        let shaped = engine.text_shaper.lock().unwrap().shape(ShapingInput::new((placement.text).to_ustring().as_ustr(), (range).clone(), (styled).clone(), (decision).clone(), Some((placement.text).to_ustring()), Some(vec![UString::from("vert=1").to_ustring()])))?;
                         let mut glyphs: Vec<Glyph> = Vec::new();
                         for rri in 0..match u32::try_from(shaped.glyph_runs.len()) { Ok(value) => value, Err(_) => u32::MAX } {
                             let run = (shaped.glyph_runs[usize::try_from(rri).unwrap_or(0)]).clone();
@@ -728,11 +672,10 @@ i32::from_ne_bytes(((ruby.base_range).clone().end).to_ne_bytes()) {
 },
 };
                         }
-                        replay_placements.push(BopomofoGlyphPlacement::new((placement.text).to_string().as_str(), placement.left, placement.top, placement.width, placement.height, placement.role, Some((glyphs).clone()), draw_x, baseline_y, replay_font_size));
+                        replay_placements.push(BopomofoGlyphPlacement::new((placement.text).to_ustring().as_ustr(), placement.left, placement.top, placement.width, placement.height, placement.role, Some((glyphs).clone()), draw_x, baseline_y, replay_font_size));
                     }
                     let ruby_families = AnnotationGeometryStage::annotation_geometry_stage_copy_font_families(&(ruby.font_families).clone());
-                    out.push(BopomofoDecisionInfo::new((ruby.base_range).clone(), (ruby.text).to_string().as_str(), line_index, replay_placements.to_vec(), Some((ruby_families).clone()), Some(bopomofo_font_weight_at((ruby.base_range).clone().start)),
-Some(ruby_locale.to_string())));
+                    out.push(BopomofoDecisionInfo::new((ruby.base_range).clone(), (ruby.text).to_ustring().as_ustr(), line_index, replay_placements.to_vec(), Some((ruby_families).clone()), Some(bopomofo_font_weight_at((ruby.base_range).clone().start)), Some((ruby_locale).to_ustring())));
                 }
             }
         }

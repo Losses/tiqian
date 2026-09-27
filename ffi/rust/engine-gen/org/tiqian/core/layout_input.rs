@@ -14,6 +14,7 @@ use crate::org::tiqian::core::ruby_span::RubySpan;
 use crate::org::tiqian::core::text_style::TextStyle;
 use crate::org::tiqian::core::tiqian_text_content::TiqianTextContent;
 use crate::org::tiqian::core::writing_mode::WritingMode;
+use crate::runtime::u_string::UString;
 use std::fmt::Write;
 
 
@@ -31,11 +32,9 @@ pub struct LayoutInput {
 }
 
 impl LayoutInput {
-    pub fn new(content: TiqianTextContent, text_style: Option<TextStyle>, paragraph_style: Option<ParagraphStyle>, constraints: LayoutConstraints, profile_id: Option<LayoutProfileId>, decorations: Option<Vec<DecorationSpan>>, ruby_spans: Option<Vec<RubySpan>>, inline_boxes:
-Option<Vec<InlineBoxSpan>>, inline_objects: Option<Vec<InlineObjectSpan>>) -> Self {
-        let text_style = text_style.unwrap_or_else(|| TextStyle::new(Some(vec![]), Some(16.0), Some("zh-Hans".to_string()), Some(400), Some(false), Some(0.0), Some(InlineAttachment::None)));
-        let paragraph_style = paragraph_style.unwrap_or_else(|| ParagraphStyle::new(Some(LastLineAlignment::Start), Some(WritingMode::HorizontalTb), None, None, Some(Ic::zero()), Some(MeasureAdaptiveFirstLineIndent::new(Some(14.0), Some(1.0), Some(2.0))),
-Some(LineLengthGrid::new(Some(true), None)), Some(RubyLineHeightMode::PerLine), Some(ParagraphStyle::PARAGRAPH_STYLE_DEFAULT_INLINE_OBJECT_MINIMUM_CLEARANCE_EM), Some(ParagraphStyle::PARAGRAPH_STYLE_DEFAULT_EMPHASIS_DOT_GAP_EM)));
+    pub fn new(content: TiqianTextContent, text_style: Option<TextStyle>, paragraph_style: Option<ParagraphStyle>, constraints: LayoutConstraints, profile_id: Option<LayoutProfileId>, decorations: Option<Vec<DecorationSpan>>, ruby_spans: Option<Vec<RubySpan>>, inline_boxes: Option<Vec<InlineBoxSpan>>, inline_objects: Option<Vec<InlineObjectSpan>>) -> Self {
+        let text_style = text_style.unwrap_or_else(|| TextStyle::new(Some(vec![]), Some(16.0), Some(UString::from("zh-Hans")), Some(400), Some(false), Some(0.0), Some(InlineAttachment::None)));
+        let paragraph_style = paragraph_style.unwrap_or_else(|| ParagraphStyle::new(Some(LastLineAlignment::Start), Some(WritingMode::HorizontalTb), None, None, Some(Ic::zero()), Some(MeasureAdaptiveFirstLineIndent::new(Some(14.0), Some(1.0), Some(2.0))), Some(LineLengthGrid::new(Some(true), None)), Some(RubyLineHeightMode::PerLine), Some(ParagraphStyle::PARAGRAPH_STYLE_DEFAULT_INLINE_OBJECT_MINIMUM_CLEARANCE_EM), Some(ParagraphStyle::PARAGRAPH_STYLE_DEFAULT_EMPHASIS_DOT_GAP_EM)));
         let profile_id = profile_id.unwrap_or_else(|| (*crate::org::tiqian::core::built_in_layout_profiles::BUILT_IN_LAYOUT_PROFILES_CLREQ_HORIZONTAL).clone());
         let decorations = decorations.unwrap_or_else(|| vec![]);
         let ruby_spans = ruby_spans.unwrap_or_else(|| vec![]);
@@ -54,26 +53,8 @@ Some(LineLengthGrid::new(Some(true), None)), Some(RubyLineHeightMode::PerLine), 
         }
     }
 
-    pub fn to_string(&self) -> String {
-        return format!("{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}",
-            "LayoutInput(",
-            "content=",
-            (self.content).clone().to_string(),
-            ", ",
-            "textStyle=",
-            (self.text_style).clone().to_string(),
-            ", ",
-            "paragraphStyle=",
-            (self.paragraph_style).clone().to_string(),
-            ", ",
-            "constraints=",
-            (self.constraints).clone().to_string(),
-            ", ",
-            "profileId=",
-            (self.profile_id).clone().to_string(),
-            ", ",
-            "decorations=",
-            {
+    pub fn to_string(&self) -> UString {
+        return UString::from(format!("{}", { let mut __s = UString::new(); __s += &(UString::from("LayoutInput(")); __s += &(UString::from("content=")); __s += UString::from(format!("{}", (self.content).clone().to_string()).as_str()).as_ustr(); __s += &(UString::from(", ")); __s += &(UString::from("textStyle=")); __s += UString::from(format!("{}", (self.text_style).clone().to_string()).as_str()).as_ustr(); __s += &(UString::from(", ")); __s += &(UString::from("paragraphStyle=")); __s += UString::from(format!("{}", (self.paragraph_style).clone().to_string()).as_str()).as_ustr(); __s += &(UString::from(", ")); __s += &(UString::from("constraints=")); __s += UString::from(format!("{}", (self.constraints).clone().to_string()).as_str()).as_ustr(); __s += &(UString::from(", ")); __s += &(UString::from("profileId=")); __s += UString::from(format!("{}", (self.profile_id).clone().to_string()).as_str()).as_ustr(); __s += &(UString::from(", ")); __s += &(UString::from("decorations=")); __s += UString::from(format!("{}", {
         let mut out = String::new();
         out.push('[');
         let arr = (self.decorations).clone();
@@ -86,10 +67,7 @@ Some(LineLengthGrid::new(Some(true), None)), Some(RubyLineHeightMode::PerLine), 
         }
         out.push(']');
         out
-    },
-            ", ",
-            "rubySpans=",
-            {
+    }).as_str()).as_ustr(); __s += &(UString::from(", ")); __s += &(UString::from("rubySpans=")); __s += UString::from(format!("{}", {
         let mut out = String::new();
         out.push('[');
         let arr = (self.ruby_spans).clone();
@@ -102,10 +80,7 @@ Some(LineLengthGrid::new(Some(true), None)), Some(RubyLineHeightMode::PerLine), 
         }
         out.push(']');
         out
-    },
-            ", ",
-            "inlineBoxes=",
-            {
+    }).as_str()).as_ustr(); __s += &(UString::from(", ")); __s += &(UString::from("inlineBoxes=")); __s += UString::from(format!("{}", {
         let mut out = String::new();
         out.push('[');
         let arr = (self.inline_boxes).clone();
@@ -118,10 +93,7 @@ Some(LineLengthGrid::new(Some(true), None)), Some(RubyLineHeightMode::PerLine), 
         }
         out.push(']');
         out
-    },
-            ", ",
-            "inlineObjects=",
-            {
+    }).as_str()).as_ustr(); __s += &(UString::from(", ")); __s += &(UString::from("inlineObjects=")); __s += UString::from(format!("{}", {
         let mut out = String::new();
         out.push('[');
         let arr = (self.inline_objects).clone();
@@ -134,8 +106,6 @@ Some(LineLengthGrid::new(Some(true), None)), Some(RubyLineHeightMode::PerLine), 
         }
         out.push(']');
         out
-    },
-            ")"
-        );
+    }).as_str()).as_ustr(); __s += &(UString::from(")")); __s }).as_str());
     }
 }

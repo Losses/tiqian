@@ -5,6 +5,7 @@ use crate::org::tiqian::core::text_range::TextRange;
 use crate::org::tiqian::test::trace::test_trace_recorder::TestTraceRecorder;
 use crate::org::tiqian::test::trace::traced_assertions::TracedAssertions;
 use crate::runtime::test as testlib;
+use crate::runtime::u_string::UStr;
 use std::sync::Arc;
 
 
@@ -13,6 +14,15 @@ pub enum TextRangeTestRejectsNegativeStartFault {
     TraceAssertionErrorFault(crate::org::tiqian::test::trace::trace_assertion_exception::TraceAssertionError),
     TextRangeErrorFault(crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError),
     TracedAssertionsAssertFailsWithFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsAssertFailsWithFault),
+}
+impl std::fmt::Display for TextRangeTestRejectsNegativeStartFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            TextRangeTestRejectsNegativeStartFault::TraceAssertionErrorFault(value) => write!(formatter, "{}", value),
+            TextRangeTestRejectsNegativeStartFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            TextRangeTestRejectsNegativeStartFault::TracedAssertionsAssertFailsWithFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
 }
 
 impl From<TextRangeTestRejectsNegativeStartFault> for crate::org::tiqian::test::trace::trace_assertion_exception::TraceAssertionError {
@@ -66,6 +76,15 @@ pub enum TextRangeTestExposesLengthFault {
     TextRangeErrorFault(crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
 }
+impl std::fmt::Display for TextRangeTestExposesLengthFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            TextRangeTestExposesLengthFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            TextRangeTestExposesLengthFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            TextRangeTestExposesLengthFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
+}
 
 impl From<TextRangeTestExposesLengthFault> for crate::std::u_string_exception::UStringFault {
     fn from(value: TextRangeTestExposesLengthFault) -> Self {
@@ -115,7 +134,7 @@ impl From<crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFa
 #[test]
 fn exposes_length() {
     testlib::run("org.tiqian.core.TextRangeTest.exposesLength", "org.tiqian.core.TextRangeTest.exposesLength", || {
-        TestTraceRecorder::new("TextRangeTest").section(&"exposesLength");
+        TestTraceRecorder::new(&(UStr::new(&[84,101,120,116,82,97,110,103,101,84,101,115,116]))).section(UStr::new(&[101,120,112,111,115,101,115,76,101,110,103,116,104]));
         let _ = TracedAssertions::traced_assertions_assert_equals(3, TextRange::new(2u32, 5u32).unwrap().get_length(), None).unwrap();
     });
 }
@@ -123,7 +142,7 @@ fn exposes_length() {
 #[test]
 fn rejects_negative_start() {
     testlib::run("org.tiqian.core.TextRangeTest.rejectsNegativeStart", "org.tiqian.core.TextRangeTest.rejectsNegativeStart", || {
-        TestTraceRecorder::new("TextRangeTest").section(&"rejectsNegativeStart");
+        TestTraceRecorder::new(&(UStr::new(&[84,101,120,116,82,97,110,103,101,84,101,115,116]))).section(UStr::new(&[114,101,106,101,99,116,115,78,101,103,97,116,105,118,101,83,116,97,114,116]));
         TracedAssertions::traced_assertions_assert_fails_with(None.clone(), {  Arc::new(move || {
         TextRange::new(4294967295u32, 1u32).map_err(|e| IllegalStateException::new(&format!("{}", e)))?;
         Ok(())

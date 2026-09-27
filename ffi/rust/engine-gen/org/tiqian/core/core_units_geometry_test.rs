@@ -13,6 +13,8 @@ use crate::org::tiqian::test::trace::test_trace_recorder::TestTraceRecorder;
 use crate::org::tiqian::test::trace::traced_assertions::TracedAssertions;
 use crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsAssertFailsWithFault;
 use crate::runtime::test as testlib;
+use crate::runtime::u_string::UStr;
+use crate::runtime::u_string::UString;
 use std::sync::Arc;
 
 
@@ -21,6 +23,15 @@ pub enum CoreUnitsGeometryTestTextRangeRejectsStartGreaterThanEndFault {
     TextRangeErrorFault(crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError),
     TraceAssertionErrorFault(crate::org::tiqian::test::trace::trace_assertion_exception::TraceAssertionError),
     TracedAssertionsAssertFailsWithFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsAssertFailsWithFault),
+}
+impl std::fmt::Display for CoreUnitsGeometryTestTextRangeRejectsStartGreaterThanEndFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            CoreUnitsGeometryTestTextRangeRejectsStartGreaterThanEndFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            CoreUnitsGeometryTestTextRangeRejectsStartGreaterThanEndFault::TraceAssertionErrorFault(value) => write!(formatter, "{}", value),
+            CoreUnitsGeometryTestTextRangeRejectsStartGreaterThanEndFault::TracedAssertionsAssertFailsWithFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
 }
 
 impl From<CoreUnitsGeometryTestTextRangeRejectsStartGreaterThanEndFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
@@ -74,6 +85,15 @@ pub enum CoreUnitsGeometryTestTextRangeRejectsNegativeStartFault {
     TraceAssertionErrorFault(crate::org::tiqian::test::trace::trace_assertion_exception::TraceAssertionError),
     TracedAssertionsAssertFailsWithFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsAssertFailsWithFault),
 }
+impl std::fmt::Display for CoreUnitsGeometryTestTextRangeRejectsNegativeStartFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            CoreUnitsGeometryTestTextRangeRejectsNegativeStartFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            CoreUnitsGeometryTestTextRangeRejectsNegativeStartFault::TraceAssertionErrorFault(value) => write!(formatter, "{}", value),
+            CoreUnitsGeometryTestTextRangeRejectsNegativeStartFault::TracedAssertionsAssertFailsWithFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
+}
 
 impl From<CoreUnitsGeometryTestTextRangeRejectsNegativeStartFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
     fn from(value: CoreUnitsGeometryTestTextRangeRejectsNegativeStartFault) -> Self {
@@ -125,6 +145,14 @@ pub enum CoreUnitsGeometryTestLayoutDebugInfoAcceptsMaxLinesDecisionFault {
     TraceAssertionErrorFault(crate::org::tiqian::test::trace::trace_assertion_exception::TraceAssertionError),
     UStringFaultFault(crate::std::u_string_exception::UStringFault),
 }
+impl std::fmt::Display for CoreUnitsGeometryTestLayoutDebugInfoAcceptsMaxLinesDecisionFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            CoreUnitsGeometryTestLayoutDebugInfoAcceptsMaxLinesDecisionFault::TraceAssertionErrorFault(value) => write!(formatter, "{}", value),
+            CoreUnitsGeometryTestLayoutDebugInfoAcceptsMaxLinesDecisionFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
+}
 
 impl From<CoreUnitsGeometryTestLayoutDebugInfoAcceptsMaxLinesDecisionFault> for crate::org::tiqian::test::trace::trace_assertion_exception::TraceAssertionError {
     fn from(value: CoreUnitsGeometryTestLayoutDebugInfoAcceptsMaxLinesDecisionFault) -> Self {
@@ -161,6 +189,15 @@ pub enum CoreUnitsGeometryTestLayoutConstraintsRejectsNonPositiveMaxWidthFault {
     TextRangeErrorFault(crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError),
     TraceAssertionErrorFault(crate::org::tiqian::test::trace::trace_assertion_exception::TraceAssertionError),
     TracedAssertionsAssertFailsWithFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsAssertFailsWithFault),
+}
+impl std::fmt::Display for CoreUnitsGeometryTestLayoutConstraintsRejectsNonPositiveMaxWidthFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            CoreUnitsGeometryTestLayoutConstraintsRejectsNonPositiveMaxWidthFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            CoreUnitsGeometryTestLayoutConstraintsRejectsNonPositiveMaxWidthFault::TraceAssertionErrorFault(value) => write!(formatter, "{}", value),
+            CoreUnitsGeometryTestLayoutConstraintsRejectsNonPositiveMaxWidthFault::TracedAssertionsAssertFailsWithFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
 }
 
 impl From<CoreUnitsGeometryTestLayoutConstraintsRejectsNonPositiveMaxWidthFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
@@ -214,6 +251,15 @@ pub enum CoreUnitsGeometryTestLayoutConstraintsRejectsNonPositiveMaxLinesFault {
     TraceAssertionErrorFault(crate::org::tiqian::test::trace::trace_assertion_exception::TraceAssertionError),
     TracedAssertionsAssertFailsWithFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsAssertFailsWithFault),
 }
+impl std::fmt::Display for CoreUnitsGeometryTestLayoutConstraintsRejectsNonPositiveMaxLinesFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            CoreUnitsGeometryTestLayoutConstraintsRejectsNonPositiveMaxLinesFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            CoreUnitsGeometryTestLayoutConstraintsRejectsNonPositiveMaxLinesFault::TraceAssertionErrorFault(value) => write!(formatter, "{}", value),
+            CoreUnitsGeometryTestLayoutConstraintsRejectsNonPositiveMaxLinesFault::TracedAssertionsAssertFailsWithFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
+}
 
 impl From<CoreUnitsGeometryTestLayoutConstraintsRejectsNonPositiveMaxLinesFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
     fn from(value: CoreUnitsGeometryTestLayoutConstraintsRejectsNonPositiveMaxLinesFault) -> Self {
@@ -266,6 +312,15 @@ pub enum CoreUnitsGeometryTestLayoutConstraintsRejectsNonPositiveMaxHeightFault 
     TraceAssertionErrorFault(crate::org::tiqian::test::trace::trace_assertion_exception::TraceAssertionError),
     TracedAssertionsAssertFailsWithFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsAssertFailsWithFault),
 }
+impl std::fmt::Display for CoreUnitsGeometryTestLayoutConstraintsRejectsNonPositiveMaxHeightFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            CoreUnitsGeometryTestLayoutConstraintsRejectsNonPositiveMaxHeightFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            CoreUnitsGeometryTestLayoutConstraintsRejectsNonPositiveMaxHeightFault::TraceAssertionErrorFault(value) => write!(formatter, "{}", value),
+            CoreUnitsGeometryTestLayoutConstraintsRejectsNonPositiveMaxHeightFault::TracedAssertionsAssertFailsWithFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
+}
 
 impl From<CoreUnitsGeometryTestLayoutConstraintsRejectsNonPositiveMaxHeightFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
     fn from(value: CoreUnitsGeometryTestLayoutConstraintsRejectsNonPositiveMaxHeightFault) -> Self {
@@ -315,7 +370,7 @@ impl From<crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsAs
 #[test]
 fn ic_plus_returns_sum() {
     testlib::run("org.tiqian.core.CoreUnitsGeometryTest.icPlusReturnsSum", "org.tiqian.core.CoreUnitsGeometryTest.icPlusReturnsSum", || {
-        TestTraceRecorder::new("CoreUnitsGeometryTest").section(&"icPlusReturnsSum");
+        TestTraceRecorder::new(&(UStr::new(&[67,111,114,101,85,110,105,116,115,71,101,111,109,101,116,114,121,84,101,115,116]))).section(UStr::new(&[105,99,80,108,117,115,82,101,116,117,114,110,115,83,117,109]));
         let _ = TracedAssertions::traced_assertions_assert_equals_ic(Ic(5.0f64), Ic(2.0f64) + Ic(3.0f64), None).unwrap();
     });
 }
@@ -323,7 +378,7 @@ fn ic_plus_returns_sum() {
 #[test]
 fn ic_unary_minus_returns_negated() {
     testlib::run("org.tiqian.core.CoreUnitsGeometryTest.icUnaryMinusReturnsNegated", "org.tiqian.core.CoreUnitsGeometryTest.icUnaryMinusReturnsNegated", || {
-        TestTraceRecorder::new("CoreUnitsGeometryTest").section(&"icUnaryMinusReturnsNegated");
+        TestTraceRecorder::new(&(UStr::new(&[67,111,114,101,85,110,105,116,115,71,101,111,109,101,116,114,121,84,101,115,116]))).section(UStr::new(&[105,99,85,110,97,114,121,77,105,110,117,115,82,101,116,117,114,110,115,78,101,103,97,116,101,100]));
         let _ = TracedAssertions::traced_assertions_assert_equals_ic(Ic(-3.0f64), -Ic(3.0f64), None).unwrap();
     });
 }
@@ -331,7 +386,7 @@ fn ic_unary_minus_returns_negated() {
 #[test]
 fn float_ic_extension_creates_ic() {
     testlib::run("org.tiqian.core.CoreUnitsGeometryTest.floatIcExtensionCreatesIc", "org.tiqian.core.CoreUnitsGeometryTest.floatIcExtensionCreatesIc", || {
-        TestTraceRecorder::new("CoreUnitsGeometryTest").section(&"floatIcExtensionCreatesIc");
+        TestTraceRecorder::new(&(UStr::new(&[67,111,114,101,85,110,105,116,115,71,101,111,109,101,116,114,121,84,101,115,116]))).section(UStr::new(&[102,108,111,97,116,73,99,69,120,116,101,110,115,105,111,110,67,114,101,97,116,101,115,73,99]));
         let _ = TracedAssertions::traced_assertions_assert_equals_ic(Ic(2.0f64), FloatIc::float_ic_ic(2.0f64), None).unwrap();
     });
 }
@@ -339,7 +394,7 @@ fn float_ic_extension_creates_ic() {
 #[test]
 fn int_ic_extension_creates_ic() {
     testlib::run("org.tiqian.core.CoreUnitsGeometryTest.intIcExtensionCreatesIc", "org.tiqian.core.CoreUnitsGeometryTest.intIcExtensionCreatesIc", || {
-        TestTraceRecorder::new("CoreUnitsGeometryTest").section(&"intIcExtensionCreatesIc");
+        TestTraceRecorder::new(&(UStr::new(&[67,111,114,101,85,110,105,116,115,71,101,111,109,101,116,114,121,84,101,115,116]))).section(UStr::new(&[105,110,116,73,99,69,120,116,101,110,115,105,111,110,67,114,101,97,116,101,115,73,99]));
         let _ = TracedAssertions::traced_assertions_assert_equals_ic(Ic(5.0f64), IntIc::int_ic_ic(5), None).unwrap();
     });
 }
@@ -347,7 +402,7 @@ fn int_ic_extension_creates_ic() {
 #[test]
 fn ic_to_px_multiplies_by_em_size() {
     testlib::run("org.tiqian.core.CoreUnitsGeometryTest.icToPxMultipliesByEmSize", "org.tiqian.core.CoreUnitsGeometryTest.icToPxMultipliesByEmSize", || {
-        TestTraceRecorder::new("CoreUnitsGeometryTest").section(&"icToPxMultipliesByEmSize");
+        TestTraceRecorder::new(&(UStr::new(&[67,111,114,101,85,110,105,116,115,71,101,111,109,101,116,114,121,84,101,115,116]))).section(UStr::new(&[105,99,84,111,80,120,77,117,108,116,105,112,108,105,101,115,66,121,69,109,83,105,122,101]));
         let _ = TracedAssertions::traced_assertions_assert_equals_float(24.0f64, Ic(3.0f64).to_px(8.0f64), None).unwrap();
     });
 }
@@ -355,7 +410,7 @@ fn ic_to_px_multiplies_by_em_size() {
 #[test]
 fn rect_height_returns_difference() {
     testlib::run("org.tiqian.core.CoreUnitsGeometryTest.rectHeightReturnsDifference", "org.tiqian.core.CoreUnitsGeometryTest.rectHeightReturnsDifference", || {
-        TestTraceRecorder::new("CoreUnitsGeometryTest").section(&"rectHeightReturnsDifference");
+        TestTraceRecorder::new(&(UStr::new(&[67,111,114,101,85,110,105,116,115,71,101,111,109,101,116,114,121,84,101,115,116]))).section(UStr::new(&[114,101,99,116,72,101,105,103,104,116,82,101,116,117,114,110,115,68,105,102,102,101,114,101,110,99,101]));
         let _ = TracedAssertions::traced_assertions_assert_equals_float(20.0f64, Rect::new(0.0f64, 0.0f64, 10.0f64, 20.0f64).get_height(), None).unwrap();
     });
 }
@@ -363,7 +418,7 @@ fn rect_height_returns_difference() {
 #[test]
 fn rect_width_returns_difference() {
     testlib::run("org.tiqian.core.CoreUnitsGeometryTest.rectWidthReturnsDifference", "org.tiqian.core.CoreUnitsGeometryTest.rectWidthReturnsDifference", || {
-        TestTraceRecorder::new("CoreUnitsGeometryTest").section(&"rectWidthReturnsDifference");
+        TestTraceRecorder::new(&(UStr::new(&[67,111,114,101,85,110,105,116,115,71,101,111,109,101,116,114,121,84,101,115,116]))).section(UStr::new(&[114,101,99,116,87,105,100,116,104,82,101,116,117,114,110,115,68,105,102,102,101,114,101,110,99,101]));
         let _ = TracedAssertions::traced_assertions_assert_equals_float(10.0f64, Rect::new(0.0f64, 0.0f64, 10.0f64, 20.0f64).get_width(), None).unwrap();
     });
 }
@@ -371,7 +426,7 @@ fn rect_width_returns_difference() {
 #[test]
 fn text_range_rejects_start_greater_than_end() {
     testlib::run("org.tiqian.core.CoreUnitsGeometryTest.textRangeRejectsStartGreaterThanEnd", "org.tiqian.core.CoreUnitsGeometryTest.textRangeRejectsStartGreaterThanEnd", || {
-        TestTraceRecorder::new("CoreUnitsGeometryTest").section(&"textRangeRejectsStartGreaterThanEnd");
+        TestTraceRecorder::new(&(UStr::new(&[67,111,114,101,85,110,105,116,115,71,101,111,109,101,116,114,121,84,101,115,116]))).section(UStr::new(&[116,101,120,116,82,97,110,103,101,82,101,106,101,99,116,115,83,116,97,114,116,71,114,101,97,116,101,114,84,104,97,110,69,110,100]));
         let _ = CoreUnitsGeometryTestHelpers::core_units_geometry_test_helpers_expect_argument_failure({  Arc::new(move || {
         TextRange::new(5u32, 2u32).map_err(|e| IllegalStateException::new(&format!("{}", e)))?;
         Ok(())
@@ -382,7 +437,7 @@ fn text_range_rejects_start_greater_than_end() {
 #[test]
 fn text_range_rejects_negative_start() {
     testlib::run("org.tiqian.core.CoreUnitsGeometryTest.textRangeRejectsNegativeStart", "org.tiqian.core.CoreUnitsGeometryTest.textRangeRejectsNegativeStart", || {
-        TestTraceRecorder::new("CoreUnitsGeometryTest").section(&"textRangeRejectsNegativeStart");
+        TestTraceRecorder::new(&(UStr::new(&[67,111,114,101,85,110,105,116,115,71,101,111,109,101,116,114,121,84,101,115,116]))).section(UStr::new(&[116,101,120,116,82,97,110,103,101,82,101,106,101,99,116,115,78,101,103,97,116,105,118,101,83,116,97,114,116]));
         let _ = CoreUnitsGeometryTestHelpers::core_units_geometry_test_helpers_expect_argument_failure({  Arc::new(move || {
         TextRange::new(4294967295u32, 1u32).map_err(|e| IllegalStateException::new(&format!("{}", e)))?;
         Ok(())
@@ -393,7 +448,7 @@ fn text_range_rejects_negative_start() {
 #[test]
 fn layout_constraints_rejects_non_positive_max_width() {
     testlib::run("org.tiqian.core.CoreUnitsGeometryTest.layoutConstraintsRejectsNonPositiveMaxWidth", "org.tiqian.core.CoreUnitsGeometryTest.layoutConstraintsRejectsNonPositiveMaxWidth", || {
-        TestTraceRecorder::new("CoreUnitsGeometryTest").section(&"layoutConstraintsRejectsNonPositiveMaxWidth");
+        TestTraceRecorder::new(&(UStr::new(&[67,111,114,101,85,110,105,116,115,71,101,111,109,101,116,114,121,84,101,115,116]))).section(UStr::new(&[108,97,121,111,117,116,67,111,110,115,116,114,97,105,110,116,115,82,101,106,101,99,116,115,78,111,110,80,111,115,105,116,105,118,101,77,97,120,87,105,100,116,104]));
         let _ = CoreUnitsGeometryTestHelpers::core_units_geometry_test_helpers_expect_argument_failure({  Arc::new(move || {
         LayoutConstraints::new(-1.0f64, Some(f64::INFINITY), Some(2147483647)).map_err(|e| IllegalStateException::new(&format!("{}", e)))?;
         Ok(())
@@ -404,7 +459,7 @@ fn layout_constraints_rejects_non_positive_max_width() {
 #[test]
 fn layout_constraints_rejects_non_positive_max_height() {
     testlib::run("org.tiqian.core.CoreUnitsGeometryTest.layoutConstraintsRejectsNonPositiveMaxHeight", "org.tiqian.core.CoreUnitsGeometryTest.layoutConstraintsRejectsNonPositiveMaxHeight", || {
-        TestTraceRecorder::new("CoreUnitsGeometryTest").section(&"layoutConstraintsRejectsNonPositiveMaxHeight");
+        TestTraceRecorder::new(&(UStr::new(&[67,111,114,101,85,110,105,116,115,71,101,111,109,101,116,114,121,84,101,115,116]))).section(UStr::new(&[108,97,121,111,117,116,67,111,110,115,116,114,97,105,110,116,115,82,101,106,101,99,116,115,78,111,110,80,111,115,105,116,105,118,101,77,97,120,72,101,105,103,104,116]));
         let _ = CoreUnitsGeometryTestHelpers::core_units_geometry_test_helpers_expect_argument_failure({  Arc::new(move || {
         LayoutConstraints::new(100.0f64, Some(-1.0f64), Some(2147483647)).map_err(|e| IllegalStateException::new(&format!("{}", e)))?;
         Ok(())
@@ -415,7 +470,7 @@ fn layout_constraints_rejects_non_positive_max_height() {
 #[test]
 fn layout_constraints_rejects_non_positive_max_lines() {
     testlib::run("org.tiqian.core.CoreUnitsGeometryTest.layoutConstraintsRejectsNonPositiveMaxLines", "org.tiqian.core.CoreUnitsGeometryTest.layoutConstraintsRejectsNonPositiveMaxLines", || {
-        TestTraceRecorder::new("CoreUnitsGeometryTest").section(&"layoutConstraintsRejectsNonPositiveMaxLines");
+        TestTraceRecorder::new(&(UStr::new(&[67,111,114,101,85,110,105,116,115,71,101,111,109,101,116,114,121,84,101,115,116]))).section(UStr::new(&[108,97,121,111,117,116,67,111,110,115,116,114,97,105,110,116,115,82,101,106,101,99,116,115,78,111,110,80,111,115,105,116,105,118,101,77,97,120,76,105,110,101,115]));
         let _ = CoreUnitsGeometryTestHelpers::core_units_geometry_test_helpers_expect_argument_failure({  Arc::new(move || {
         LayoutConstraints::new(100.0f64, Some(100.0f64), Some(0)).map_err(|e| IllegalStateException::new(&format!("{}", e)))?;
         Ok(())
@@ -426,20 +481,19 @@ fn layout_constraints_rejects_non_positive_max_lines() {
 #[test]
 fn max_lines_decision_info_records_truncation_details() {
     testlib::run("org.tiqian.core.CoreUnitsGeometryTest.maxLinesDecisionInfoRecordsTruncationDetails", "org.tiqian.core.CoreUnitsGeometryTest.maxLinesDecisionInfoRecordsTruncationDetails", || {
-        TestTraceRecorder::new("CoreUnitsGeometryTest").section(&"maxLinesDecisionInfoRecordsTruncationDetails");
-        let info = MaxLinesDecisionInfo::new(5u32, 3u32, Some("MaxLinesLineTruncation".to_string()));
+        TestTraceRecorder::new(&(UStr::new(&[67,111,114,101,85,110,105,116,115,71,101,111,109,101,116,114,121,84,101,115,116]))).section(UStr::new(&[109,97,120,76,105,110,101,115,68,101,99,105,115,105,111,110,73,110,102,111,82,101,99,111,114,100,115,84,114,117,110,99,97,116,105,111,110,68,101,116,97,105,108,115]));
+        let info = MaxLinesDecisionInfo::new(5u32, 3u32, Some(UString::from("MaxLinesLineTruncation")));
         let _ = TracedAssertions::traced_assertions_assert_equals_int(5, info.laid_out_lines, None).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_equals_int(3, info.visible_lines, None).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_equals_string(&"MaxLinesLineTruncation", (info.reason).to_string().as_str(), None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_equals_string(UStr::new(&[77,97,120,76,105,110,101,115,76,105,110,101,84,114,117,110,99,97,116,105,111,110]), (info.reason).to_ustring().as_ustr(), None).unwrap();
     });
 }
 
 #[test]
 fn layout_debug_info_accepts_max_lines_decision() {
     testlib::run("org.tiqian.core.CoreUnitsGeometryTest.layoutDebugInfoAcceptsMaxLinesDecision", "org.tiqian.core.CoreUnitsGeometryTest.layoutDebugInfoAcceptsMaxLinesDecision", || {
-        TestTraceRecorder::new("CoreUnitsGeometryTest").section(&"layoutDebugInfoAcceptsMaxLinesDecision");
-        let debug = LayoutDebugInfo::new(Some(MaxLinesDecisionInfo::new(5u32, 3u32, Some("MaxLinesLineTruncation".to_string()))), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]),
-Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), None, None, None, None, Some(vec![]), None, None, Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]));
+        TestTraceRecorder::new(&(UStr::new(&[67,111,114,101,85,110,105,116,115,71,101,111,109,101,116,114,121,84,101,115,116]))).section(UStr::new(&[108,97,121,111,117,116,68,101,98,117,103,73,110,102,111,65,99,99,101,112,116,115,77,97,120,76,105,110,101,115,68,101,99,105,115,105,111,110]));
+        let debug = LayoutDebugInfo::new(Some(MaxLinesDecisionInfo::new(5u32, 3u32, Some(UString::from("MaxLinesLineTruncation")))), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), None, None, None, None, Some(vec![]), None, None, Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]));
         if debug.max_lines_decision.is_none() {
             let _ = TracedAssertions::traced_assertions_fail(None, None).unwrap();
             return;

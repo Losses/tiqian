@@ -5,25 +5,26 @@ use crate::org::tiqian::core::source_interaction_boundaries::SourceInteractionBo
 use crate::org::tiqian::core::text_range::TextRange;
 use crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError;
 use crate::runtime::u_string;
+use crate::runtime::u_string::UStr;
+use crate::runtime::u_string::UString;
 
 
 #[derive(Clone, Copy)]
 pub struct UnicodeEastAsianSpacing;
 
 impl UnicodeEastAsianSpacing {
-    pub const UNICODE_EAST_ASIAN_SPACING_DATA_REVISION: &str = "draft-2024-12-16";
-    pub const UNICODE_EAST_ASIAN_SPACING_DATA_SOURCE: &str = "https://www.unicode.org/reports/tr59/east-asian-spacing.txt";
-    pub const UNICODE_EAST_ASIAN_SPACING_DATA_SHA256: &str = "49fe340a964a6e8e0ebc30099709c665cc6138d444b5c36dc336604047f1010f";
-    pub const UNICODE_EAST_ASIAN_SPACING_LANGUAGE_REGISTRY_REVISION: &str = "2026-06-14";
-    pub const UNICODE_EAST_ASIAN_SPACING_LANGUAGE_REGISTRY_SOURCE: &str = "https://www.iana.org/assignments/language-subtag-registry/language-subtag-registry";
+    pub const UNICODE_EAST_ASIAN_SPACING_DATA_REVISION: &UStr = unsafe { &*(&[0x0064u16, 0x0072u16, 0x0061u16, 0x0066u16, 0x0074u16, 0x002Du16, 0x0032u16, 0x0030u16, 0x0032u16, 0x0034u16, 0x002Du16, 0x0031u16, 0x0032u16, 0x002Du16, 0x0031u16, 0x0036u16] as *const [u16] as *const crate::runtime::u_string::UStr) };
+    pub const UNICODE_EAST_ASIAN_SPACING_DATA_SOURCE: &UStr = unsafe { &*(&[0x0068u16, 0x0074u16, 0x0074u16, 0x0070u16, 0x0073u16, 0x003Au16, 0x002Fu16, 0x002Fu16, 0x0077u16, 0x0077u16, 0x0077u16, 0x002Eu16, 0x0075u16, 0x006Eu16, 0x0069u16, 0x0063u16, 0x006Fu16, 0x0064u16, 0x0065u16, 0x002Eu16, 0x006Fu16, 0x0072u16, 0x0067u16, 0x002Fu16, 0x0072u16, 0x0065u16, 0x0070u16, 0x006Fu16, 0x0072u16, 0x0074u16, 0x0073u16, 0x002Fu16, 0x0074u16, 0x0072u16, 0x0035u16, 0x0039u16, 0x002Fu16, 0x0065u16, 0x0061u16, 0x0073u16, 0x0074u16, 0x002Du16, 0x0061u16, 0x0073u16, 0x0069u16, 0x0061u16, 0x006Eu16, 0x002Du16, 0x0073u16, 0x0070u16, 0x0061u16, 0x0063u16, 0x0069u16, 0x006Eu16, 0x0067u16, 0x002Eu16, 0x0074u16, 0x0078u16, 0x0074u16] as *const [u16] as *const crate::runtime::u_string::UStr) };
+    pub const UNICODE_EAST_ASIAN_SPACING_DATA_SHA256: &UStr = unsafe { &*(&[0x0034u16, 0x0039u16, 0x0066u16, 0x0065u16, 0x0033u16, 0x0034u16, 0x0030u16, 0x0061u16, 0x0039u16, 0x0036u16, 0x0034u16, 0x0061u16, 0x0036u16, 0x0065u16, 0x0038u16, 0x0065u16, 0x0030u16, 0x0065u16, 0x0062u16, 0x0063u16, 0x0033u16, 0x0030u16, 0x0030u16, 0x0039u16, 0x0039u16, 0x0037u16, 0x0030u16, 0x0039u16, 0x0063u16, 0x0036u16, 0x0036u16, 0x0035u16, 0x0063u16, 0x0063u16, 0x0036u16, 0x0031u16, 0x0033u16, 0x0038u16, 0x0064u16, 0x0034u16, 0x0034u16, 0x0034u16, 0x0062u16, 0x0035u16, 0x0063u16, 0x0033u16, 0x0036u16, 0x0064u16, 0x0063u16, 0x0033u16, 0x0033u16, 0x0036u16, 0x0036u16, 0x0030u16, 0x0034u16, 0x0030u16, 0x0034u16, 0x0037u16, 0x0066u16, 0x0031u16, 0x0030u16, 0x0031u16, 0x0030u16, 0x0066u16] as *const [u16] as *const crate::runtime::u_string::UStr) };
+    pub const UNICODE_EAST_ASIAN_SPACING_LANGUAGE_REGISTRY_REVISION: &UStr = unsafe { &*(&[0x0032u16, 0x0030u16, 0x0032u16, 0x0036u16, 0x002Du16, 0x0030u16, 0x0036u16, 0x002Du16, 0x0031u16, 0x0034u16] as *const [u16] as *const crate::runtime::u_string::UStr) };
+    pub const UNICODE_EAST_ASIAN_SPACING_LANGUAGE_REGISTRY_SOURCE: &UStr = unsafe { &*(&[0x0068u16, 0x0074u16, 0x0074u16, 0x0070u16, 0x0073u16, 0x003Au16, 0x002Fu16, 0x002Fu16, 0x0077u16, 0x0077u16, 0x0077u16, 0x002Eu16, 0x0069u16, 0x0061u16, 0x006Eu16, 0x0061u16, 0x002Eu16, 0x006Fu16, 0x0072u16, 0x0067u16, 0x002Fu16, 0x0061u16, 0x0073u16, 0x0073u16, 0x0069u16, 0x0067u16, 0x006Eu16, 0x006Du16, 0x0065u16, 0x006Eu16, 0x0074u16, 0x0073u16, 0x002Fu16, 0x006Cu16, 0x0061u16, 0x006Eu16, 0x0067u16, 0x0075u16, 0x0061u16, 0x0067u16, 0x0065u16, 0x002Du16, 0x0073u16, 0x0075u16, 0x0062u16, 0x0074u16, 0x0061u16, 0x0067u16, 0x002Du16, 0x0072u16, 0x0065u16, 0x0067u16, 0x0069u16, 0x0073u16, 0x0074u16, 0x0072u16, 0x0079u16, 0x002Fu16, 0x006Cu16, 0x0061u16, 0x006Eu16, 0x0067u16, 0x0075u16, 0x0061u16, 0x0067u16, 0x0065u16, 0x002Du16, 0x0073u16, 0x0075u16, 0x0062u16, 0x0074u16, 0x0061u16, 0x0067u16, 0x002Du16, 0x0072u16, 0x0065u16, 0x0067u16, 0x0069u16, 0x0073u16, 0x0074u16, 0x0072u16, 0x0079u16] as *const [u16] as *const crate::runtime::u_string::UStr) };
 
-    pub fn unicode_east_asian_spacing_is_chinese_language_context(locale: &str) -> bool {
+    pub fn unicode_east_asian_spacing_is_chinese_language_context(locale: &UStr) -> bool {
         let language = UnicodeEastAsianSpacing::unicode_east_asian_spacing_language_subtag(locale);
-        if language == "zh" {
+        if language == UString::from("zh") {
             return true;
         }
-        return language == "cdo" || language == "cjy" || language == "cmn" || language == "cnp" || language == "cpx" || language == "csp" || language == "czh" || language == "czo" || language == "gan" || language == "hak" || language == "hnm" || language == "hsn" || language ==
-"luh" || language == "lzh" || language == "mnp" || language == "nan" || language == "sjc" || language == "wuu" || language == "yue";
+        return language == UString::from("cdo") || language == UString::from("cjy") || language == UString::from("cmn") || language == UString::from("cnp") || language == UString::from("cpx") || language == UString::from("csp") || language == UString::from("czh") || language == UString::from("czo") || language == UString::from("gan") || language == UString::from("hak") || language == UString::from("hnm") || language == UString::from("hsn") || language == UString::from("luh") || language == UString::from("lzh") || language == UString::from("mnp") || language == UString::from("nan") || language == UString::from("sjc") || language == UString::from("wuu") || language == UString::from("yue");
     }
 
     pub fn unicode_east_asian_spacing_property_of(code_point: u32) -> Result<EastAsianSpacingValue, TextRangeError> {
@@ -31,19 +32,19 @@ impl UnicodeEastAsianSpacing {
         return Ok(EastAsianSpacingData::east_asian_spacing_data_lookup(code_point)?);
     }
 
-    pub fn unicode_east_asian_spacing_resolved_for_grapheme_cluster(grapheme_cluster: &str, locale: &str) -> Result<EastAsianSpacingValue, TextRangeError> {
+    pub fn unicode_east_asian_spacing_resolved_for_grapheme_cluster(grapheme_cluster: &UStr, locale: &UStr) -> Result<EastAsianSpacingValue, TextRangeError> {
     let __units = u_string::units(&grapheme_cluster);
     let __count = u_string::unit_count(&grapheme_cluster);
         if __count == 0 {
             return Ok(EastAsianSpacingValue::Other);
         }
         let mut index = 0u32;
-        while (i32::from_ne_bytes((index).to_ne_bytes())) < (i32::from_ne_bytes((__count).to_ne_bytes())) {
+        while (i32::from_ne_bytes(((index) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((__count) as i32).to_ne_bytes())) {
             let code_point = SourceInteractionBoundaries::source_interaction_boundaries_code_point_at_compat(grapheme_cluster, index, __count);
             if UnicodeEastAsianSpacing::unicode_east_asian_spacing_is_enclosing_mark(code_point) {
                 return Ok(EastAsianSpacingValue::Other);
             }
-            let advance = if i32::from_ne_bytes((code_point).to_ne_bytes()) > (65535) { 2 } else { 1 };
+            let advance = if i32::from_ne_bytes(((code_point) as i32).to_ne_bytes()) > (65535) { 2 } else { 1 };
             index = u32::wrapping_add(index, advance);
         }
         let property = UnicodeEastAsianSpacing::unicode_east_asian_spacing_property_of(SourceInteractionBoundaries::source_interaction_boundaries_code_point_at_compat(grapheme_cluster, 0, __count))?;
@@ -53,7 +54,7 @@ impl UnicodeEastAsianSpacing {
         return Ok(property);
     }
 
-    pub fn unicode_east_asian_spacing_resolved_edges(text: &str, locale: &str) -> Result<EastAsianSpacingEdges, TextRangeError> {
+    pub fn unicode_east_asian_spacing_resolved_edges(text: &UStr, locale: &UStr) -> Result<EastAsianSpacingEdges, TextRangeError> {
     let __units1 = u_string::units(&text);
     let __count1 = u_string::unit_count(&text);
         if __count1 == 0 {
@@ -64,9 +65,8 @@ impl UnicodeEastAsianSpacing {
         let mut leading = EastAsianSpacingValue::Other;
         let mut trailing = EastAsianSpacingValue::Other;
         let mut contains_wide = false;
-        while (i32::from_ne_bytes((u32::wrapping_add(index, 1)).to_ne_bytes())) < (i32::from_ne_bytes((u32::try_from((boundaries.len()) & 0xFFFF_FFFF).unwrap_or(0)).to_ne_bytes())) {
-            let value = UnicodeEastAsianSpacing::unicode_east_asian_spacing_resolved_for_grapheme_cluster(u_string::substring(&text, { let v: u32 = boundaries[usize::try_from(index).unwrap_or(0)]; i32::from_ne_bytes(v.to_ne_bytes()) }, { let v: u32 =
-boundaries[usize::try_from(u32::wrapping_add(index, 1)).unwrap_or(0)]; i32::from_ne_bytes(v.to_ne_bytes()) }).as_str(), locale)?;
+        while (i32::from_ne_bytes(((u32::wrapping_add(index, 1)) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((boundaries.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
+            let value = UnicodeEastAsianSpacing::unicode_east_asian_spacing_resolved_for_grapheme_cluster(u_string::substring(&text, { let v: u32 = boundaries[usize::try_from(index).unwrap_or(0)]; i32::from_ne_bytes(v.to_ne_bytes()) }, { let v: u32 = boundaries[usize::try_from(u32::wrapping_add(index, 1)).unwrap_or(0)]; i32::from_ne_bytes(v.to_ne_bytes()) }).as_ustr(), locale)?;
             if index == 0 {
                 leading = value;
             }
@@ -80,37 +80,30 @@ boundaries[usize::try_from(u32::wrapping_add(index, 1)).unwrap_or(0)]; i32::from
     }
 
     pub(crate) fn unicode_east_asian_spacing_validate_scalar(code_point: u32) -> Result<(), TextRangeError> {
-        if code_point > 2147483647 || (i32::from_ne_bytes((code_point).to_ne_bytes())) > (1114111) {
-            return Err(TextRangeError::Message { text: format!("{}{}",
-            "Not a Unicode scalar value: ",
-            crate::runtime::int_text::IntText::int_text(code_point)
-        ).to_string() });
+        if code_point > 2147483647 || (i32::from_ne_bytes(((code_point) as i32).to_ne_bytes())) > (1114111) {
+            return Err(TextRangeError::Message { text: UString::from(format!("{}", { let mut __s = UString::new(); __s += &(UString::from("Not a Unicode scalar value: ")); __s += &(UString::from(format!("{}", crate::runtime::int_text::IntText::int_text(code_point)).as_str())); __s }).as_str()) });
         }
-        if i32::from_ne_bytes((code_point).to_ne_bytes()) >= 55296 && (i32::from_ne_bytes((code_point).to_ne_bytes())) <= 57343 {
-            return Err(TextRangeError::Message { text: format!("{}{}",
-            "Surrogate is not a Unicode scalar value: ",
-            crate::runtime::int_text::IntText::int_text(code_point)
-        ).to_string() });
+        if i32::from_ne_bytes(((code_point) as i32).to_ne_bytes()) >= 55296 && (i32::from_ne_bytes(((code_point) as i32).to_ne_bytes())) <= 57343 {
+            return Err(TextRangeError::Message { text: UString::from(format!("{}", { let mut __s = UString::new(); __s += &(UString::from("Surrogate is not a Unicode scalar value: ")); __s += &(UString::from(format!("{}", crate::runtime::int_text::IntText::int_text(code_point)).as_str())); __s }).as_str()) });
         }
         Ok(())
     }
 
-    pub(crate) fn unicode_east_asian_spacing_language_subtag(locale: &str) -> String {
+    pub(crate) fn unicode_east_asian_spacing_language_subtag(locale: &UStr) -> UString {
     let __units2 = u_string::units(&locale);
     let __count2 = u_string::unit_count(&locale);
-        let mut end = u_string::find_from(&locale, "-", 0);
-        let underscore = u_string::find_from(&locale, "_", 0);
+        let mut end = u_string::find_from(&(locale), UString::from("-").as_ustr(), 0);
+        let underscore = u_string::find_from(&(locale), UString::from("_").as_ustr(), 0);
         if end < (0) || (underscore) >= 0 && (underscore) < (end) {
             end = underscore;
         }
         if end < (0) {
-            end = i32::from_ne_bytes((__count2).to_ne_bytes());
+            end = i32::from_ne_bytes(((__count2) as i32).to_ne_bytes());
         }
-        return u_string::substring(&locale, 0i32, i32::from_ne_bytes((end).to_ne_bytes())).to_lowercase();
+        return u_string::substring(&locale, 0i32, i32::from_ne_bytes(((end) as i32).to_ne_bytes())).to_lowercase();
     }
 
     pub(crate) fn unicode_east_asian_spacing_is_enclosing_mark(code_point: u32) -> bool {
-        return code_point == 1160 || code_point == 1161 || code_point == 6846 || (i32::from_ne_bytes((code_point).to_ne_bytes())) >= 8413 && (i32::from_ne_bytes((code_point).to_ne_bytes())) <= 8416 || (i32::from_ne_bytes((code_point).to_ne_bytes())) >= 42608 &&
-(i32::from_ne_bytes((code_point).to_ne_bytes())) <= 42610 || (i32::from_ne_bytes((code_point).to_ne_bytes())) >= 42612 && (i32::from_ne_bytes((code_point).to_ne_bytes())) <= 42621;
+        return code_point == 1160 || code_point == 1161 || code_point == 6846 || (i32::from_ne_bytes(((code_point) as i32).to_ne_bytes())) >= 8413 && (i32::from_ne_bytes(((code_point) as i32).to_ne_bytes())) <= 8416 || (i32::from_ne_bytes(((code_point) as i32).to_ne_bytes())) >= 42608 && (i32::from_ne_bytes(((code_point) as i32).to_ne_bytes())) <= 42610 || (i32::from_ne_bytes(((code_point) as i32).to_ne_bytes())) >= 42612 && (i32::from_ne_bytes(((code_point) as i32).to_ne_bytes())) <= 42621;
     }
 }

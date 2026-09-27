@@ -1,5 +1,6 @@
 use crate::org::tiqian::core::inline_box_outer_spacing::InlineBoxOuterSpacing;
 use crate::org::tiqian::core::text_range::TextRange;
+use crate::runtime::u_string::UString;
 
 
 #[derive(Debug, Clone, PartialEq)]
@@ -23,21 +24,7 @@ impl InlineBoxSpan {
         }
     }
 
-    pub fn to_string(&self) -> String {
-        return format!("{}{}{}{}{}{}{}{}{}{}{}{}{}",
-            "InlineBoxSpan(",
-            "range=",
-            (self.range).clone().to_string(),
-            ", ",
-            "inlineStart=",
-            self.inline_start,
-            ", ",
-            "inlineEnd=",
-            self.inline_end,
-            ", ",
-            "outerSpacing=",
-            self.outer_spacing.name(),
-            ")"
-        );
+    pub fn to_string(&self) -> UString {
+        return UString::from(format!("{}", { let mut __s = UString::new(); __s += &(UString::from("InlineBoxSpan(")); __s += &(UString::from("range=")); __s += UString::from(format!("{}", (self.range).clone().to_string()).as_str()).as_ustr(); __s += &(UString::from(", ")); __s += &(UString::from("inlineStart=")); __s += &(crate::runtime::fp_helper::FPHelper::format_float(self.inline_start)); __s += &(UString::from(", ")); __s += &(UString::from("inlineEnd=")); __s += &(crate::runtime::fp_helper::FPHelper::format_float(self.inline_end)); __s += &(UString::from(", ")); __s += &(UString::from("outerSpacing=")); __s += UString::from(self.outer_spacing.name()).as_ustr(); __s += &(UString::from(")")); __s }).as_str());
     }
 }

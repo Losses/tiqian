@@ -155,6 +155,7 @@ pub mod paragraph_shaping_stage;
 #[cfg(test)]
 pub mod paragraph_shaping_stage_coverage_test;
 pub mod paragraph_shaping_stage_coverage_test_support;
+pub mod plan_lowering;
 pub mod prepared_paragraph;
 #[cfg(test)]
 pub mod prepared_paragraph_inline_edges_test;
@@ -409,6 +410,7 @@ pub use paragraph_shaping_stage::*;
 #[cfg(test)]
 pub use paragraph_shaping_stage_coverage_test::*;
 pub use paragraph_shaping_stage_coverage_test_support::*;
+pub use plan_lowering::*;
 pub use prepared_paragraph::*;
 #[cfg(test)]
 pub use prepared_paragraph_inline_edges_test::*;

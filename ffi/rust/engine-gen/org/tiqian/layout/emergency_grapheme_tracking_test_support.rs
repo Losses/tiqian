@@ -43,14 +43,26 @@ use crate::org::tiqian::test::trace::test_trace::TestTrace;
 use crate::org::tiqian::test::trace::test_trace_render::TestTraceRender;
 use crate::org::tiqian::test::trace::traced_assertions::TracedAssertions;
 use crate::runtime::u_string;
+use crate::runtime::u_string::UStr;
+use crate::runtime::u_string::UString;
 use std::fmt::Write;
+use std::sync::Arc;
 use std::sync::LazyLock;
+use std::sync::Mutex;
 
 
 #[derive(Debug, Clone, PartialEq)]
 pub enum EmergencyGraphemeTrackingTestSupportLayoutWithShaperFault {
     TextRangeErrorFault(crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError),
     UStringFaultFault(crate::std::u_string_exception::UStringFault),
+}
+impl std::fmt::Display for EmergencyGraphemeTrackingTestSupportLayoutWithShaperFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            EmergencyGraphemeTrackingTestSupportLayoutWithShaperFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            EmergencyGraphemeTrackingTestSupportLayoutWithShaperFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
 }
 
 impl From<EmergencyGraphemeTrackingTestSupportLayoutWithShaperFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
@@ -88,6 +100,14 @@ pub enum EmergencyGraphemeTrackingTestSupportLayoutWithObjectsFault {
     TextRangeErrorFault(crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError),
     UStringFaultFault(crate::std::u_string_exception::UStringFault),
 }
+impl std::fmt::Display for EmergencyGraphemeTrackingTestSupportLayoutWithObjectsFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            EmergencyGraphemeTrackingTestSupportLayoutWithObjectsFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            EmergencyGraphemeTrackingTestSupportLayoutWithObjectsFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
+}
 
 impl From<EmergencyGraphemeTrackingTestSupportLayoutWithObjectsFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
     fn from(value: EmergencyGraphemeTrackingTestSupportLayoutWithObjectsFault) -> Self {
@@ -123,6 +143,14 @@ impl From<crate::std::u_string_exception::UStringFault> for EmergencyGraphemeTra
 pub enum EmergencyGraphemeTrackingTestSupportLayoutFault {
     TextRangeErrorFault(crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError),
     UStringFaultFault(crate::std::u_string_exception::UStringFault),
+}
+impl std::fmt::Display for EmergencyGraphemeTrackingTestSupportLayoutFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            EmergencyGraphemeTrackingTestSupportLayoutFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            EmergencyGraphemeTrackingTestSupportLayoutFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
 }
 
 impl From<EmergencyGraphemeTrackingTestSupportLayoutFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
@@ -160,6 +188,15 @@ pub enum EmergencyGraphemeTrackingTestSupportAssertEqualsTextRangeFault {
     UStringFaultFault(crate::std::u_string_exception::UStringFault),
     TraceAssertionErrorFault(crate::org::tiqian::test::trace::trace_assertion_exception::TraceAssertionError),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
+}
+impl std::fmt::Display for EmergencyGraphemeTrackingTestSupportAssertEqualsTextRangeFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            EmergencyGraphemeTrackingTestSupportAssertEqualsTextRangeFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            EmergencyGraphemeTrackingTestSupportAssertEqualsTextRangeFault::TraceAssertionErrorFault(value) => write!(formatter, "{}", value),
+            EmergencyGraphemeTrackingTestSupportAssertEqualsTextRangeFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
 }
 
 impl From<EmergencyGraphemeTrackingTestSupportAssertEqualsTextRangeFault> for crate::std::u_string_exception::UStringFault {
@@ -207,92 +244,65 @@ impl From<crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFa
     }
 }
 
-pub static EMERGENCY_GRAPHEME_TRACKING_TEST_SUPPORT_NO_INDENT: LazyLock<ParagraphStyle> = LazyLock::new(|| ParagraphStyle::new(Some(LastLineAlignment::Start), Some(WritingMode::HorizontalTb), None, Some((Ic::zero()).clone()), Some(Ic::zero()),
-Some(MeasureAdaptiveFirstLineIndent::new(Some(14.0), Some(1.0), Some(2.0))), Some(LineLengthGrid::new(Some(false), None)), Some(RubyLineHeightMode::PerLine), Some(ParagraphStyle::PARAGRAPH_STYLE_DEFAULT_INLINE_OBJECT_MINIMUM_CLEARANCE_EM),
-Some(ParagraphStyle::PARAGRAPH_STYLE_DEFAULT_EMPHASIS_DOT_GAP_EM)));
+pub static EMERGENCY_GRAPHEME_TRACKING_TEST_SUPPORT_NO_INDENT: LazyLock<ParagraphStyle> = LazyLock::new(|| ParagraphStyle::new(Some(LastLineAlignment::Start), Some(WritingMode::HorizontalTb), None, Some((Ic::zero()).clone()), Some(Ic::zero()), Some(MeasureAdaptiveFirstLineIndent::new(Some(14.0), Some(1.0), Some(2.0))), Some(LineLengthGrid::new(Some(false), None)), Some(RubyLineHeightMode::PerLine), Some(ParagraphStyle::PARAGRAPH_STYLE_DEFAULT_INLINE_OBJECT_MINIMUM_CLEARANCE_EM), Some(ParagraphStyle::PARAGRAPH_STYLE_DEFAULT_EMPHASIS_DOT_GAP_EM)));
 
 #[derive(Clone, Copy)]
 pub struct EmergencyGraphemeTrackingTestSupport;
 
 impl EmergencyGraphemeTrackingTestSupport {
 
-    pub fn emergency_grapheme_tracking_test_support_engine(text_shaper: Option<Box<dyn ITextShaper>>, hyphenator: Option<Box<dyn Hyphenator>>) -> Result<ExplainableStubParagraphLayoutEngine, ParagraphLayoutEngineNewFault> {
-        return Ok(ExplainableStubParagraphLayoutEngine::new(Some(Box::new(CjkFontRoleClassifier::new())), Some(Box::new(ParagraphLayoutFallbackResolver::new(Some("cjk-primary".to_string()), Some("latin-primary".to_string()), Some("symbol-fallback".to_string()))?)),
-Some(Box::new(BuiltInClreqProfileResolver::new())), Some(Box::new(StubFontMetricsResolver::new())), Some(Box::new(ScriptAwareFontMetricsNormalizer::new())), Some((PunctuationAtomBuilder::new(None, None)?).clone()), Some((PunctuationSpacingCompressor::new()?).clone()),
-Some(QuotePairAnalyzer::new()), Some(Box::new(GreedyLineBreaker::new(None, None, None, None))), Some(Justifier::new(Some(0.5), Some(0.25))), text_shaper, hyphenator, Some(Box::new(LruWidthIndependentAnnotationCache::new(512))))?);
+    pub fn emergency_grapheme_tracking_test_support_engine(text_shaper: Option<Arc<Mutex<dyn ITextShaper>>>, hyphenator: Option<Box<dyn Hyphenator>>) -> Result<ExplainableStubParagraphLayoutEngine, ParagraphLayoutEngineNewFault> {
+        return Ok(ExplainableStubParagraphLayoutEngine::new(Some(Box::new(CjkFontRoleClassifier::new())), Some(Box::new(ParagraphLayoutFallbackResolver::new(Some(UString::from("cjk-primary")), Some(UString::from("latin-primary")), Some(UString::from("symbol-fallback")))?)), Some(Box::new(BuiltInClreqProfileResolver::new())), Some(Box::new(StubFontMetricsResolver::new())), Some(Box::new(ScriptAwareFontMetricsNormalizer::new())), Some((PunctuationAtomBuilder::new(None, None)?).clone()), Some((PunctuationSpacingCompressor::new()?).clone()), Some(QuotePairAnalyzer::new()), Some(Box::new(GreedyLineBreaker::new(None, None, None, None))), Some(Justifier::new(Some(0.5), Some(0.25))), text_shaper, hyphenator, Some(Arc::new(Mutex::new(LruWidthIndependentAnnotationCache::new(512)))))?);
     }
 
-    pub fn emergency_grapheme_tracking_test_support_render_ints(a: &Vec<u32>) -> String {
-        let mut parts: Vec<String> = vec![];
+    pub fn emergency_grapheme_tracking_test_support_render_ints(a: &Vec<u32>) -> UString {
+        let mut parts: Vec<UString> = vec![];
         for i in 0..match u32::try_from(a.len()) { Ok(value) => value, Err(_) => u32::MAX } {
-            parts.push(crate::runtime::int_text::IntText::int_text(a[usize::try_from(i).unwrap_or(0)]));
+            parts.push(UString::from(format!("{}", crate::runtime::int_text::IntText::int_text(a[usize::try_from(i).unwrap_or(0)])).as_str()));
         }
-        return format!("{}{}{}",
-            "[",
-            { let joined = parts; let mut out = String::new(); let n = joined.len(); let mut index = 0usize; while index < n { if index > 0 { out.push_str(&(", ")); } let _ = write!(out, "{}", joined[index]); index += 1; } out },
-            "]"
-        );
+        return UString::from(format!("{}", { let mut __s = UString::new(); __s += &(UString::from("[")); __s += UString::from(format!("{}", { let joined = parts; let mut out = String::new(); let n = joined.len(); let mut index = 0usize; while index < n { if index > 0 { out.push_str(", "); } let _ = write!(out, "{}", joined[index]); index += 1; } UString::from(out.as_str()) }).as_str()).as_ustr(); __s += &(UString::from("]")); __s }).as_str());
     }
 
-    pub fn emergency_grapheme_tracking_test_support_render_clusters(a: &[Cluster]) -> String {
-        let mut parts: Vec<String> = vec![];
+    pub fn emergency_grapheme_tracking_test_support_render_clusters(a: &[Cluster]) -> UString {
+        let mut parts: Vec<UString> = vec![];
         for i in 0..match u32::try_from(a.len()) { Ok(value) => value, Err(_) => u32::MAX } {
-            parts.push((a[usize::try_from(i).unwrap_or(0)]).clone().to_string());
+            parts.push(UString::from(format!("{}", (a[usize::try_from(i).unwrap_or(0)]).clone().to_string()).as_str()));
         }
-        return format!("{}{}{}",
-            "[",
-            { let joined1 = parts; let mut out = String::new(); let n = joined1.len(); let mut index1 = 0usize; while index1 < n { if index1 > 0 { out.push_str(&(", ")); } let _ = write!(out, "{}", joined1[index1]); index1 += 1; } out },
-            "]"
-        );
+        return UString::from(format!("{}", { let mut __s = UString::new(); __s += &(UString::from("[")); __s += UString::from(format!("{}", { let joined1 = parts; let mut out = String::new(); let n = joined1.len(); let mut index1 = 0usize; while index1 < n { if index1 > 0 { out.push_str(", "); } let _ = write!(out, "{}", joined1[index1]); index1 += 1; } UString::from(out.as_str()) }).as_str()).as_ustr(); __s += &(UString::from("]")); __s }).as_str());
     }
 
-    pub fn emergency_grapheme_tracking_test_support_join_text_ranges(a: &Vec<TextRange>) -> String {
-        let mut parts: Vec<String> = vec![];
+    pub fn emergency_grapheme_tracking_test_support_join_text_ranges(a: &Vec<TextRange>) -> UString {
+        let mut parts: Vec<UString> = vec![];
         for i in 0..match u32::try_from(a.len()) { Ok(value) => value, Err(_) => u32::MAX } {
-            parts.push((a[usize::try_from(i).unwrap_or(0)]).clone().to_string());
+            parts.push(UString::from(format!("{}", (a[usize::try_from(i).unwrap_or(0)]).clone().to_string()).as_str()));
         }
-        return { let joined2 = parts; let mut out = String::new(); let n = joined2.len(); let mut index2 = 0usize; while index2 < n { if index2 > 0 { out.push_str(&(", ")); } let _ = write!(out, "{}", joined2[index2]); index2 += 1; } out };
+        return UString::from(format!("{}", { let joined2 = parts; let mut out = String::new(); let n = joined2.len(); let mut index2 = 0usize; while index2 < n { if index2 > 0 { out.push_str(", "); } let _ = write!(out, "{}", joined2[index2]); index2 += 1; } UString::from(out.as_str()) }).as_str());
     }
 
-    pub fn emergency_grapheme_tracking_test_support_render_allocations(a: &Vec<JustificationAllocationInfo>) -> String {
-        let mut parts: Vec<String> = vec![];
+    pub fn emergency_grapheme_tracking_test_support_render_allocations(a: &Vec<JustificationAllocationInfo>) -> UString {
+        let mut parts: Vec<UString> = vec![];
         for i in 0..match u32::try_from(a.len()) { Ok(value) => value, Err(_) => u32::MAX } {
-            parts.push((a[usize::try_from(i).unwrap_or(0)]).clone().to_string());
+            parts.push(UString::from(format!("{}", (a[usize::try_from(i).unwrap_or(0)]).clone().to_string()).as_str()));
         }
-        return format!("{}{}{}",
-            "[",
-            { let joined3 = parts; let mut out = String::new(); let n = joined3.len(); let mut index3 = 0usize; while index3 < n { if index3 > 0 { out.push_str(&(", ")); } let _ = write!(out, "{}", joined3[index3]); index3 += 1; } out },
-            "]"
-        );
+        return UString::from(format!("{}", { let mut __s = UString::new(); __s += &(UString::from("[")); __s += UString::from(format!("{}", { let joined3 = parts; let mut out = String::new(); let n = joined3.len(); let mut index3 = 0usize; while index3 < n { if index3 > 0 { out.push_str(", "); } let _ = write!(out, "{}", joined3[index3]); index3 += 1; } UString::from(out.as_str()) }).as_str()).as_ustr(); __s += &(UString::from("]")); __s }).as_str());
     }
 
-    pub fn emergency_grapheme_tracking_test_support_layout(text: &str, max_width: f64, line_break_spans: Option<Vec<LineBreakSpan>>) -> Result<LayoutResult, ParagraphLayoutEngineNewFault> {
-        return Ok(EmergencyGraphemeTrackingTestSupport::emergency_grapheme_tracking_test_support_engine(None, Some(EnglishHyphenation::english_hyphenation_en_us().map_err(|e|
-ParagraphLayoutEngineNewFault::UStringFaultFault(e))?))?.layout(LayoutInput::new(TiqianTextContent::new(text, Some(vec![]), Some(vec![]), (line_break_spans).clone(), Some(vec![])), Some(TextStyle::new(Some(vec![]), Some(16.0), Some("zh-Hans".to_string()), Some(400), Some(false),
-Some(0.0), Some(InlineAttachment::None))), Some((*EMERGENCY_GRAPHEME_TRACKING_TEST_SUPPORT_NO_INDENT).clone()), LayoutConstraints::new(max_width, Some(f64::INFINITY), Some(2147483647)).map_err(|e| ParagraphLayoutEngineNewFault::TextRangeErrorFault(e))?,
-Some((*crate::org::tiqian::core::built_in_layout_profiles::BUILT_IN_LAYOUT_PROFILES_CLREQ_HORIZONTAL).clone()), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]))).map_err(|e| ParagraphLayoutEngineNewFault::LayoutWithRejectedTechnicalTiersFault(e))?);
+    pub fn emergency_grapheme_tracking_test_support_layout(text: &UStr, max_width: f64, line_break_spans: Option<Vec<LineBreakSpan>>) -> Result<LayoutResult, ParagraphLayoutEngineNewFault> {
+        return Ok(EmergencyGraphemeTrackingTestSupport::emergency_grapheme_tracking_test_support_engine(None, Some(EnglishHyphenation::english_hyphenation_en_us().map_err(|e| ParagraphLayoutEngineNewFault::UStringFaultFault(e))?))?.layout(LayoutInput::new(TiqianTextContent::new(text, Some(vec![]), Some(vec![]), (line_break_spans).clone(), Some(vec![])), Some(TextStyle::new(Some(vec![]), Some(16.0), Some(UString::from("zh-Hans")), Some(400), Some(false), Some(0.0), Some(InlineAttachment::None))), Some((*EMERGENCY_GRAPHEME_TRACKING_TEST_SUPPORT_NO_INDENT).clone()), LayoutConstraints::new(max_width, Some(f64::INFINITY), Some(2147483647)).map_err(|e| ParagraphLayoutEngineNewFault::TextRangeErrorFault(e))?, Some((*crate::org::tiqian::core::built_in_layout_profiles::BUILT_IN_LAYOUT_PROFILES_CLREQ_HORIZONTAL).clone()), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]))).map_err(|e| ParagraphLayoutEngineNewFault::LayoutWithRejectedTechnicalTiersFault(e))?);
     }
 
-    pub fn emergency_grapheme_tracking_test_support_layout_with_shaper(text: &str, max_width: f64, text_shaper: Box<dyn ITextShaper>, line_break_spans: Option<Vec<LineBreakSpan>>) -> Result<LayoutResult, ParagraphLayoutEngineNewFault> {
-        return Ok(EmergencyGraphemeTrackingTestSupport::emergency_grapheme_tracking_test_support_engine(Some(text_shaper), Some(EnglishHyphenation::english_hyphenation_en_us().map_err(|e|
-ParagraphLayoutEngineNewFault::UStringFaultFault(e))?))?.layout(LayoutInput::new(TiqianTextContent::new(text, Some(vec![]), Some(vec![]), (line_break_spans).clone(), Some(vec![])), Some(TextStyle::new(Some(vec![]), Some(16.0), Some("zh-Hans".to_string()), Some(400), Some(false),
-Some(0.0), Some(InlineAttachment::None))), Some((*EMERGENCY_GRAPHEME_TRACKING_TEST_SUPPORT_NO_INDENT).clone()), LayoutConstraints::new(max_width, Some(f64::INFINITY), Some(2147483647)).map_err(|e| ParagraphLayoutEngineNewFault::TextRangeErrorFault(e))?,
-Some((*crate::org::tiqian::core::built_in_layout_profiles::BUILT_IN_LAYOUT_PROFILES_CLREQ_HORIZONTAL).clone()), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]))).map_err(|e| ParagraphLayoutEngineNewFault::LayoutWithRejectedTechnicalTiersFault(e))?);
+    pub fn emergency_grapheme_tracking_test_support_layout_with_shaper(text: &UStr, max_width: f64, text_shaper: Arc<Mutex<dyn ITextShaper>>, line_break_spans: Option<Vec<LineBreakSpan>>) -> Result<LayoutResult, ParagraphLayoutEngineNewFault> {
+        return Ok(EmergencyGraphemeTrackingTestSupport::emergency_grapheme_tracking_test_support_engine(Some(text_shaper), Some(EnglishHyphenation::english_hyphenation_en_us().map_err(|e| ParagraphLayoutEngineNewFault::UStringFaultFault(e))?))?.layout(LayoutInput::new(TiqianTextContent::new(text, Some(vec![]), Some(vec![]), (line_break_spans).clone(), Some(vec![])), Some(TextStyle::new(Some(vec![]), Some(16.0), Some(UString::from("zh-Hans")), Some(400), Some(false), Some(0.0), Some(InlineAttachment::None))), Some((*EMERGENCY_GRAPHEME_TRACKING_TEST_SUPPORT_NO_INDENT).clone()), LayoutConstraints::new(max_width, Some(f64::INFINITY), Some(2147483647)).map_err(|e| ParagraphLayoutEngineNewFault::TextRangeErrorFault(e))?, Some((*crate::org::tiqian::core::built_in_layout_profiles::BUILT_IN_LAYOUT_PROFILES_CLREQ_HORIZONTAL).clone()), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]))).map_err(|e| ParagraphLayoutEngineNewFault::LayoutWithRejectedTechnicalTiersFault(e))?);
     }
 
-    pub fn emergency_grapheme_tracking_test_support_layout_with_objects(text: &str, max_width: f64, objects: &Vec<InlineObjectSpan>, line_break_spans: Option<Vec<LineBreakSpan>>) -> Result<LayoutResult, ParagraphLayoutEngineNewFault> {
-        return Ok(ExplainableStubParagraphLayoutEngine::new(Some(Box::new(CjkFontRoleClassifier::new())), Some(Box::new(ParagraphLayoutFallbackResolver::new(Some("cjk-primary".to_string()), Some("latin-primary".to_string()), Some("symbol-fallback".to_string()))?)),
-Some(Box::new(BuiltInClreqProfileResolver::new())), Some(Box::new(StubFontMetricsResolver::new())), Some(Box::new(ScriptAwareFontMetricsNormalizer::new())), Some((PunctuationAtomBuilder::new(None, None)?).clone()), Some((PunctuationSpacingCompressor::new()?).clone()),
-Some(QuotePairAnalyzer::new()), Some(Box::new(GreedyLineBreaker::new(None, None, None, None))), Some(Justifier::new(Some(0.5), Some(0.25))), Some(Box::new(ExplainableStubTextShaper::new())), Some((DefaultHyphenator::default_hyphenator_default_hyphenator()?).clone()),
-Some(Box::new(LruWidthIndependentAnnotationCache::new(512))))?.layout(LayoutInput::new(TiqianTextContent::new(text, Some(vec![]), Some(vec![]), (line_break_spans).clone(), Some(vec![])), Some(TextStyle::new(Some(vec![]), Some(16.0), Some("zh-Hans".to_string()), Some(400),
-Some(false), Some(0.0), Some(InlineAttachment::None))), Some((*EMERGENCY_GRAPHEME_TRACKING_TEST_SUPPORT_NO_INDENT).clone()), LayoutConstraints::new(max_width, Some(f64::INFINITY), Some(2147483647)).map_err(|e| ParagraphLayoutEngineNewFault::TextRangeErrorFault(e))?,
-Some((*crate::org::tiqian::core::built_in_layout_profiles::BUILT_IN_LAYOUT_PROFILES_CLREQ_HORIZONTAL).clone()), Some(vec![]), Some(vec![]), Some(vec![]), Some((objects).clone()))).map_err(|e| ParagraphLayoutEngineNewFault::LayoutWithRejectedTechnicalTiersFault(e))?);
+    pub fn emergency_grapheme_tracking_test_support_layout_with_objects(text: &UStr, max_width: f64, objects: &Vec<InlineObjectSpan>, line_break_spans: Option<Vec<LineBreakSpan>>) -> Result<LayoutResult, ParagraphLayoutEngineNewFault> {
+        return Ok(ExplainableStubParagraphLayoutEngine::new(Some(Box::new(CjkFontRoleClassifier::new())), Some(Box::new(ParagraphLayoutFallbackResolver::new(Some(UString::from("cjk-primary")), Some(UString::from("latin-primary")), Some(UString::from("symbol-fallback")))?)), Some(Box::new(BuiltInClreqProfileResolver::new())), Some(Box::new(StubFontMetricsResolver::new())), Some(Box::new(ScriptAwareFontMetricsNormalizer::new())), Some((PunctuationAtomBuilder::new(None, None)?).clone()), Some((PunctuationSpacingCompressor::new()?).clone()), Some(QuotePairAnalyzer::new()), Some(Box::new(GreedyLineBreaker::new(None, None, None, None))), Some(Justifier::new(Some(0.5), Some(0.25))), Some(Arc::new(Mutex::new(ExplainableStubTextShaper::new()))), Some((DefaultHyphenator::default_hyphenator_default_hyphenator()?).clone()), Some(Arc::new(Mutex::new(LruWidthIndependentAnnotationCache::new(512)))))?.layout(LayoutInput::new(TiqianTextContent::new(text, Some(vec![]), Some(vec![]), (line_break_spans).clone(), Some(vec![])), Some(TextStyle::new(Some(vec![]), Some(16.0), Some(UString::from("zh-Hans")), Some(400), Some(false), Some(0.0), Some(InlineAttachment::None))), Some((*EMERGENCY_GRAPHEME_TRACKING_TEST_SUPPORT_NO_INDENT).clone()), LayoutConstraints::new(max_width, Some(f64::INFINITY), Some(2147483647)).map_err(|e| ParagraphLayoutEngineNewFault::TextRangeErrorFault(e))?, Some((*crate::org::tiqian::core::built_in_layout_profiles::BUILT_IN_LAYOUT_PROFILES_CLREQ_HORIZONTAL).clone()), Some(vec![]), Some(vec![]), Some(vec![]), Some((objects).clone()))).map_err(|e| ParagraphLayoutEngineNewFault::LayoutWithRejectedTechnicalTiersFault(e))?);
     }
 
-    pub fn emergency_grapheme_tracking_test_support_break_offsets_for_tier(decisions: &[BreakOpportunityDecisionInfo], tier: &str) -> Vec<u32> {
+    pub fn emergency_grapheme_tracking_test_support_break_offsets_for_tier(decisions: &[BreakOpportunityDecisionInfo], tier: &UStr) -> Vec<u32> {
         let mut result: Vec<u32> = vec![];
         for i in 0..match u32::try_from(decisions.len()) { Ok(value) => value, Err(_) => u32::MAX } {
-            if decisions[usize::try_from(i).unwrap_or(0)].clone().tier.clone().as_ref().map_or(false, |v| v == &(tier.to_string())) {
+            if decisions[usize::try_from(i).unwrap_or(0)].clone().tier.clone().as_ref().map_or(false, |v| v == &(tier.to_ustring())) {
                 for j in 0..match u32::try_from(((decisions[usize::try_from(i).unwrap_or(0)]).clone().break_offsets).clone().len()) { Ok(value) => value, Err(_) => u32::MAX } {
                     result.push((decisions[usize::try_from(i).unwrap_or(0)]).clone().break_offsets[usize::try_from(j).unwrap_or(0)]);
                 }
@@ -301,11 +311,11 @@ Some((*crate::org::tiqian::core::built_in_layout_profiles::BUILT_IN_LAYOUT_PROFI
         return result;
     }
 
-    pub fn emergency_grapheme_tracking_test_support_allocations_for_kind(decisions: &[JustificationDecisionInfo], kind: &str) -> Vec<JustificationAllocationInfo> {
+    pub fn emergency_grapheme_tracking_test_support_allocations_for_kind(decisions: &[JustificationDecisionInfo], kind: &UStr) -> Vec<JustificationAllocationInfo> {
         let mut result: Vec<JustificationAllocationInfo> = vec![];
         for i in 0..match u32::try_from(decisions.len()) { Ok(value) => value, Err(_) => u32::MAX } {
             for j in 0..match u32::try_from(((decisions[usize::try_from(i).unwrap_or(0)]).clone().allocations).clone().len()) { Ok(value) => value, Err(_) => u32::MAX } {
-                if decisions[usize::try_from(i).unwrap_or(0)].clone().allocations[usize::try_from(j).unwrap_or(0)].clone().kind.to_string() == kind {
+                if decisions[usize::try_from(i).unwrap_or(0)].clone().allocations[usize::try_from(j).unwrap_or(0)].clone().kind.to_ustring() == kind {
                     result.push(((decisions[usize::try_from(i).unwrap_or(0)]).clone().allocations[usize::try_from(j).unwrap_or(0)]).clone());
                 }
             }
@@ -314,23 +324,18 @@ Some((*crate::org::tiqian::core::built_in_layout_profiles::BUILT_IN_LAYOUT_PROFI
     }
 
     pub fn emergency_grapheme_tracking_test_support_assert_equals_text_range(expected: TextRange, actual: TextRange) -> Result<(), EmergencyGraphemeTrackingTestSupportAssertEqualsTextRangeFault> {
-        let e = TestTraceRender::test_trace_render_canonical_numbers(expected.to_string().as_str()).map_err(|e| EmergencyGraphemeTrackingTestSupportAssertEqualsTextRangeFault::UStringFaultFault(e))?;
-        let a = TestTraceRender::test_trace_render_canonical_numbers(actual.to_string().as_str()).map_err(|e| EmergencyGraphemeTrackingTestSupportAssertEqualsTextRangeFault::UStringFaultFault(e))?;
+        let e = TestTraceRender::test_trace_render_canonical_numbers(UString::from(format!("{}", expected.to_string()).as_str()).as_ustr()).map_err(|e| EmergencyGraphemeTrackingTestSupportAssertEqualsTextRangeFault::UStringFaultFault(e))?;
+        let a = TestTraceRender::test_trace_render_canonical_numbers(UString::from(format!("{}", actual.to_string()).as_str()).as_ustr()).map_err(|e| EmergencyGraphemeTrackingTestSupportAssertEqualsTextRangeFault::UStringFaultFault(e))?;
         let recorder = TestTrace::test_trace_current_recorder();
         match &(recorder) {
             Some(__option) => {
-                let _ = __option.record(format!("{}{}{}{}",
-            "eq expected=",
-            e,
-            " actual=",
-            a
-        ).as_str()).map_err(|e| EmergencyGraphemeTrackingTestSupportAssertEqualsTextRangeFault::UStringFaultFault(e))?;
+                let _ = __option.record(UString::from(format!("{}", { let mut __s = UString::new(); __s += &(UString::from("eq expected=")); __s += e.as_ustr(); __s += &(UString::from(" actual=")); __s += a.as_ustr(); __s }).as_str()).as_ustr()).map_err(|e| EmergencyGraphemeTrackingTestSupportAssertEqualsTextRangeFault::UStringFaultFault(e))?;
             }
             None => {
             }
         }
         if expected.start != actual.start || expected.end != actual.end {
-            let _ = TracedAssertions::traced_assertions_fail(Some("TextRange mismatch".to_string()), None).map_err(|e| EmergencyGraphemeTrackingTestSupportAssertEqualsTextRangeFault::TracedAssertionsFailFaultFault(e))?;
+            let _ = TracedAssertions::traced_assertions_fail(Some(UString::from("TextRange mismatch")), None).map_err(|e| EmergencyGraphemeTrackingTestSupportAssertEqualsTextRangeFault::TracedAssertionsFailFaultFault(e))?;
         }
         Ok(())
     }
@@ -347,10 +352,9 @@ impl UniformAdvanceShaper {
     }
 
     pub fn shape(&self, input: ShapingInput) -> ShapingResult {
-        let source = u_string::substring(&(input.text).to_string(), i32::from_ne_bytes(((input.range).clone().start).to_ne_bytes()), i32::from_ne_bytes(((input.range).clone().end).to_ne_bytes()));
+        let source = u_string::substring(&(input.text).to_ustring(), i32::from_ne_bytes((((input.range).clone().start) as i32).to_ne_bytes()), i32::from_ne_bytes((((input.range).clone().end) as i32).to_ne_bytes()));
         return ShapingResult::new(vec![
-    (Cluster::new((input.range).clone(), source.as_str(), (((input.font_decision).clone().candidate).clone().key).to_string().as_str(), format!("{}", (i32::from_ne_bytes((u_string::unit_count(&(source))).to_ne_bytes()))).parse::<f64>().unwrap_or(0.0) * 10.0f64,
-Some((input.display_text).to_string()), Some(0.0), Some(0.0), Some(0.0))).clone(),
+    (Cluster::new((input.range).clone(), source.as_ustr(), (((input.font_decision).clone().candidate).clone().key).to_ustring().as_ustr(), format!("{}", (i32::from_ne_bytes(((u_string::unit_count(&(source))) as i32).to_ne_bytes()))).parse::<f64>().unwrap_or(0.0) * 10.0f64, Some((input.display_text).to_ustring()), Some(0.0), Some(0.0), Some(0.0))).clone(),
 ].to_vec(), vec![].to_vec(), Some(vec![]));
     }
 }
@@ -367,10 +371,9 @@ impl ITextShaper for UniformAdvanceShaper {
     }
 
     fn shape(&mut self, input: ShapingInput) -> Result<ShapingResult, TextShaperShapeFault> {
-        let source = u_string::substring(&(input.text).to_string(), i32::from_ne_bytes(((input.range).clone().start).to_ne_bytes()), i32::from_ne_bytes(((input.range).clone().end).to_ne_bytes()));
+        let source = u_string::substring(&(input.text).to_ustring(), i32::from_ne_bytes((((input.range).clone().start) as i32).to_ne_bytes()), i32::from_ne_bytes((((input.range).clone().end) as i32).to_ne_bytes()));
         return Ok(ShapingResult::new(vec![
-    (Cluster::new((input.range).clone(), source.as_str(), (((input.font_decision).clone().candidate).clone().key).to_string().as_str(), format!("{}", (i32::from_ne_bytes((u_string::unit_count(&(source))).to_ne_bytes()))).parse::<f64>().unwrap_or(0.0) * 10.0f64,
-Some((input.display_text).to_string()), Some(0.0), Some(0.0), Some(0.0))).clone(),
+    (Cluster::new((input.range).clone(), source.as_ustr(), (((input.font_decision).clone().candidate).clone().key).to_ustring().as_ustr(), format!("{}", (i32::from_ne_bytes(((u_string::unit_count(&(source))) as i32).to_ne_bytes()))).parse::<f64>().unwrap_or(0.0) * 10.0f64, Some((input.display_text).to_ustring()), Some(0.0), Some(0.0), Some(0.0))).clone(),
 ].to_vec(), vec![].to_vec(), Some(vec![])));
     }
 }

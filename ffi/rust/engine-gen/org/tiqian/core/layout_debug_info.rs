@@ -28,6 +28,7 @@ use crate::org::tiqian::core::ruby_line_height_decision_info::RubyLineHeightDeci
 use crate::org::tiqian::core::shaping_decision_info::ShapingDecisionInfo;
 use crate::org::tiqian::core::spacing_decision_info::SpacingDecisionInfo;
 use crate::org::tiqian::core::zero_width_break_decision_info::ZeroWidthBreakDecisionInfo;
+use crate::runtime::u_string::UString;
 use std::fmt::Write;
 
 
@@ -66,14 +67,7 @@ pub struct LayoutDebugInfo {
 }
 
 impl LayoutDebugInfo {
-    pub fn new(max_lines_decision: Option<MaxLinesDecisionInfo>, metric_decisions: Option<Vec<MetricDecisionInfo>>, geometry_decisions: Option<Vec<ClusterGeometryDecisionInfo>>, auto_space_decisions: Option<Vec<AutoSpaceDecisionInfo>>, ruby_decisions:
-Option<Vec<RubyDecisionInfo>>, bopomofo_decisions: Option<Vec<BopomofoDecisionInfo>>, font_decisions: Option<Vec<FontDecisionInfo>>, shaping_decisions: Option<Vec<ShapingDecisionInfo>>, punctuation_decisions: Option<Vec<PunctuationDecisionInfo>>, spacing_decisions:
-Option<Vec<SpacingDecisionInfo>>, role_overrides: Option<Vec<RoleOverrideInfo>>, line_decisions: Option<Vec<LineDecisionInfo>>, justification_decisions: Option<Vec<JustificationDecisionInfo>>, line_edge_trim_decisions: Option<Vec<LineEdgeTrimDecisionInfo>>, decoration_decisions:
-Option<Vec<DecorationDecisionInfo>>, decoration_segments: Option<Vec<DecorationSegmentInfo>>, mandatory_break_decisions: Option<Vec<MandatoryBreakDecisionInfo>>, line_spacing_decision: Option<LineSpacingDecisionInfo>, ruby_line_height_decision: Option<RubyLineHeightDecisionInfo>,
-inline_object_line_height_decision: Option<InlineObjectLineHeightDecisionInfo>, kinsoku_decision: Option<KinsokuDecisionInfo>, contextual_kinsoku_decisions: Option<Vec<ContextualKinsokuDecisionInfo>>, line_length_grid_decision: Option<LineLengthGridDecisionInfo>,
-first_line_indent_decision: Option<FirstLineIndentDecisionInfo>, inline_box_decisions: Option<Vec<InlineBoxDecisionInfo>>, inline_object_decisions: Option<Vec<InlineObjectDecisionInfo>>, inline_object_punctuation_attachment_decisions:
-Option<Vec<InlineObjectPunctuationAttachmentDecisionInfo>>, zero_width_break_decisions: Option<Vec<ZeroWidthBreakDecisionInfo>>, break_opportunity_decisions: Option<Vec<BreakOpportunityDecisionInfo>>, emergency_tracking_eligibility_decisions:
-Option<Vec<EmergencyTrackingEligibilityDecisionInfo>>) -> Self {
+    pub fn new(max_lines_decision: Option<MaxLinesDecisionInfo>, metric_decisions: Option<Vec<MetricDecisionInfo>>, geometry_decisions: Option<Vec<ClusterGeometryDecisionInfo>>, auto_space_decisions: Option<Vec<AutoSpaceDecisionInfo>>, ruby_decisions: Option<Vec<RubyDecisionInfo>>, bopomofo_decisions: Option<Vec<BopomofoDecisionInfo>>, font_decisions: Option<Vec<FontDecisionInfo>>, shaping_decisions: Option<Vec<ShapingDecisionInfo>>, punctuation_decisions: Option<Vec<PunctuationDecisionInfo>>, spacing_decisions: Option<Vec<SpacingDecisionInfo>>, role_overrides: Option<Vec<RoleOverrideInfo>>, line_decisions: Option<Vec<LineDecisionInfo>>, justification_decisions: Option<Vec<JustificationDecisionInfo>>, line_edge_trim_decisions: Option<Vec<LineEdgeTrimDecisionInfo>>, decoration_decisions: Option<Vec<DecorationDecisionInfo>>, decoration_segments: Option<Vec<DecorationSegmentInfo>>, mandatory_break_decisions: Option<Vec<MandatoryBreakDecisionInfo>>, line_spacing_decision: Option<LineSpacingDecisionInfo>, ruby_line_height_decision: Option<RubyLineHeightDecisionInfo>, inline_object_line_height_decision: Option<InlineObjectLineHeightDecisionInfo>, kinsoku_decision: Option<KinsokuDecisionInfo>, contextual_kinsoku_decisions: Option<Vec<ContextualKinsokuDecisionInfo>>, line_length_grid_decision: Option<LineLengthGridDecisionInfo>, first_line_indent_decision: Option<FirstLineIndentDecisionInfo>, inline_box_decisions: Option<Vec<InlineBoxDecisionInfo>>, inline_object_decisions: Option<Vec<InlineObjectDecisionInfo>>, inline_object_punctuation_attachment_decisions: Option<Vec<InlineObjectPunctuationAttachmentDecisionInfo>>, zero_width_break_decisions: Option<Vec<ZeroWidthBreakDecisionInfo>>, break_opportunity_decisions: Option<Vec<BreakOpportunityDecisionInfo>>, emergency_tracking_eligibility_decisions: Option<Vec<EmergencyTrackingEligibilityDecisionInfo>>) -> Self {
         let metric_decisions = metric_decisions.unwrap_or_else(|| vec![]);
         let geometry_decisions = geometry_decisions.unwrap_or_else(|| vec![]);
         let auto_space_decisions = auto_space_decisions.unwrap_or_else(|| vec![]);
@@ -131,11 +125,8 @@ Option<Vec<EmergencyTrackingEligibilityDecisionInfo>>) -> Self {
         }
     }
 
-    pub fn to_string(&self) -> String {
-        return format!("{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}",
-            "LayoutDebugInfo(",
-            "fontDecisions=",
-            {
+    pub fn to_string(&self) -> UString {
+        return UString::from(format!("{}", { let mut __s = UString::new(); __s += &(UString::from("LayoutDebugInfo(")); __s += &(UString::from("fontDecisions=")); __s += UString::from(format!("{}", {
         let mut out = String::new();
         out.push('[');
         let arr = (self.font_decisions).clone();
@@ -148,10 +139,7 @@ Option<Vec<EmergencyTrackingEligibilityDecisionInfo>>) -> Self {
         }
         out.push(']');
         out
-    },
-            ", ",
-            "shapingDecisions=",
-            {
+    }).as_str()).as_ustr(); __s += &(UString::from(", ")); __s += &(UString::from("shapingDecisions=")); __s += UString::from(format!("{}", {
         let mut out = String::new();
         out.push('[');
         let arr = (self.shaping_decisions).clone();
@@ -164,10 +152,7 @@ Option<Vec<EmergencyTrackingEligibilityDecisionInfo>>) -> Self {
         }
         out.push(']');
         out
-    },
-            ", ",
-            "metricDecisions=",
-            {
+    }).as_str()).as_ustr(); __s += &(UString::from(", ")); __s += &(UString::from("metricDecisions=")); __s += UString::from(format!("{}", {
         let mut out = String::new();
         out.push('[');
         let arr = (self.metric_decisions).clone();
@@ -180,10 +165,7 @@ Option<Vec<EmergencyTrackingEligibilityDecisionInfo>>) -> Self {
         }
         out.push(']');
         out
-    },
-            ", ",
-            "punctuationDecisions=",
-            {
+    }).as_str()).as_ustr(); __s += &(UString::from(", ")); __s += &(UString::from("punctuationDecisions=")); __s += UString::from(format!("{}", {
         let mut out = String::new();
         out.push('[');
         let arr = (self.punctuation_decisions).clone();
@@ -196,10 +178,7 @@ Option<Vec<EmergencyTrackingEligibilityDecisionInfo>>) -> Self {
         }
         out.push(']');
         out
-    },
-            ", ",
-            "geometryDecisions=",
-            {
+    }).as_str()).as_ustr(); __s += &(UString::from(", ")); __s += &(UString::from("geometryDecisions=")); __s += UString::from(format!("{}", {
         let mut out = String::new();
         out.push('[');
         let arr = (self.geometry_decisions).clone();
@@ -212,10 +191,7 @@ Option<Vec<EmergencyTrackingEligibilityDecisionInfo>>) -> Self {
         }
         out.push(']');
         out
-    },
-            ", ",
-            "spacingDecisions=",
-            {
+    }).as_str()).as_ustr(); __s += &(UString::from(", ")); __s += &(UString::from("spacingDecisions=")); __s += UString::from(format!("{}", {
         let mut out = String::new();
         out.push('[');
         let arr = (self.spacing_decisions).clone();
@@ -228,10 +204,7 @@ Option<Vec<EmergencyTrackingEligibilityDecisionInfo>>) -> Self {
         }
         out.push(']');
         out
-    },
-            ", ",
-            "roleOverrides=",
-            {
+    }).as_str()).as_ustr(); __s += &(UString::from(", ")); __s += &(UString::from("roleOverrides=")); __s += UString::from(format!("{}", {
         let mut out = String::new();
         out.push('[');
         let arr = (self.role_overrides).clone();
@@ -244,10 +217,7 @@ Option<Vec<EmergencyTrackingEligibilityDecisionInfo>>) -> Self {
         }
         out.push(']');
         out
-    },
-            ", ",
-            "lineDecisions=",
-            {
+    }).as_str()).as_ustr(); __s += &(UString::from(", ")); __s += &(UString::from("lineDecisions=")); __s += UString::from(format!("{}", {
         let mut out = String::new();
         out.push('[');
         let arr = (self.line_decisions).clone();
@@ -260,10 +230,7 @@ Option<Vec<EmergencyTrackingEligibilityDecisionInfo>>) -> Self {
         }
         out.push(']');
         out
-    },
-            ", ",
-            "justificationDecisions=",
-            {
+    }).as_str()).as_ustr(); __s += &(UString::from(", ")); __s += &(UString::from("justificationDecisions=")); __s += UString::from(format!("{}", {
         let mut out = String::new();
         out.push('[');
         let arr = (self.justification_decisions).clone();
@@ -276,10 +243,7 @@ Option<Vec<EmergencyTrackingEligibilityDecisionInfo>>) -> Self {
         }
         out.push(']');
         out
-    },
-            ", ",
-            "autoSpaceDecisions=",
-            {
+    }).as_str()).as_ustr(); __s += &(UString::from(", ")); __s += &(UString::from("autoSpaceDecisions=")); __s += UString::from(format!("{}", {
         let mut out = String::new();
         out.push('[');
         let arr = (self.auto_space_decisions).clone();
@@ -292,10 +256,7 @@ Option<Vec<EmergencyTrackingEligibilityDecisionInfo>>) -> Self {
         }
         out.push(']');
         out
-    },
-            ", ",
-            "lineEdgeTrimDecisions=",
-            {
+    }).as_str()).as_ustr(); __s += &(UString::from(", ")); __s += &(UString::from("lineEdgeTrimDecisions=")); __s += UString::from(format!("{}", {
         let mut out = String::new();
         out.push('[');
         let arr = (self.line_edge_trim_decisions).clone();
@@ -308,10 +269,7 @@ Option<Vec<EmergencyTrackingEligibilityDecisionInfo>>) -> Self {
         }
         out.push(']');
         out
-    },
-            ", ",
-            "decorationDecisions=",
-            {
+    }).as_str()).as_ustr(); __s += &(UString::from(", ")); __s += &(UString::from("decorationDecisions=")); __s += UString::from(format!("{}", {
         let mut out = String::new();
         out.push('[');
         let arr = (self.decoration_decisions).clone();
@@ -324,10 +282,7 @@ Option<Vec<EmergencyTrackingEligibilityDecisionInfo>>) -> Self {
         }
         out.push(']');
         out
-    },
-            ", ",
-            "decorationSegments=",
-            {
+    }).as_str()).as_ustr(); __s += &(UString::from(", ")); __s += &(UString::from("decorationSegments=")); __s += UString::from(format!("{}", {
         let mut out = String::new();
         out.push('[');
         let arr = (self.decoration_segments).clone();
@@ -340,10 +295,7 @@ Option<Vec<EmergencyTrackingEligibilityDecisionInfo>>) -> Self {
         }
         out.push(']');
         out
-    },
-            ", ",
-            "rubyDecisions=",
-            {
+    }).as_str()).as_ustr(); __s += &(UString::from(", ")); __s += &(UString::from("rubyDecisions=")); __s += UString::from(format!("{}", {
         let mut out = String::new();
         out.push('[');
         let arr = (self.ruby_decisions).clone();
@@ -356,10 +308,7 @@ Option<Vec<EmergencyTrackingEligibilityDecisionInfo>>) -> Self {
         }
         out.push(']');
         out
-    },
-            ", ",
-            "bopomofoDecisions=",
-            {
+    }).as_str()).as_ustr(); __s += &(UString::from(", ")); __s += &(UString::from("bopomofoDecisions=")); __s += UString::from(format!("{}", {
         let mut out = String::new();
         out.push('[');
         let arr = (self.bopomofo_decisions).clone();
@@ -372,10 +321,7 @@ Option<Vec<EmergencyTrackingEligibilityDecisionInfo>>) -> Self {
         }
         out.push(']');
         out
-    },
-            ", ",
-            "mandatoryBreakDecisions=",
-            {
+    }).as_str()).as_ustr(); __s += &(UString::from(", ")); __s += &(UString::from("mandatoryBreakDecisions=")); __s += UString::from(format!("{}", {
         let mut out = String::new();
         out.push('[');
         let arr = (self.mandatory_break_decisions).clone();
@@ -388,25 +334,7 @@ Option<Vec<EmergencyTrackingEligibilityDecisionInfo>>) -> Self {
         }
         out.push(']');
         out
-    },
-            ", ",
-            "maxLinesDecision=",
-            (match &(self.max_lines_decision) { None => "null".to_string(), Some(__option) => __option.to_string() }),
-            ", ",
-            "lineSpacingDecision=",
-            (match &(self.line_spacing_decision) { None => "null".to_string(), Some(__option1) => __option1.to_string() }),
-            ", ",
-            "rubyLineHeightDecision=",
-            (match &(self.ruby_line_height_decision) { None => "null".to_string(), Some(__option2) => __option2.to_string() }),
-            ", ",
-            "inlineObjectLineHeightDecision=",
-            (match &(self.inline_object_line_height_decision) { None => "null".to_string(), Some(__option3) => __option3.to_string() }),
-            ", ",
-            "kinsokuDecision=",
-            (match &(self.kinsoku_decision) { None => "null".to_string(), Some(__option4) => __option4.to_string() }),
-            ", ",
-            "contextualKinsokuDecisions=",
-            {
+    }).as_str()).as_ustr(); __s += &(UString::from(", ")); __s += &(UString::from("maxLinesDecision=")); __s += (match &(self.max_lines_decision) { None => UString::from("null"), Some(__option) => UString::from(format!("{}", __option.to_string()).as_str()) }).as_ustr(); __s += &(UString::from(", ")); __s += &(UString::from("lineSpacingDecision=")); __s += (match &(self.line_spacing_decision) { None => UString::from("null"), Some(__option1) => UString::from(format!("{}", __option1.to_string()).as_str()) }).as_ustr(); __s += &(UString::from(", ")); __s += &(UString::from("rubyLineHeightDecision=")); __s += (match &(self.ruby_line_height_decision) { None => UString::from("null"), Some(__option2) => UString::from(format!("{}", __option2.to_string()).as_str()) }).as_ustr(); __s += &(UString::from(", ")); __s += &(UString::from("inlineObjectLineHeightDecision=")); __s += (match &(self.inline_object_line_height_decision) { None => UString::from("null"), Some(__option3) => UString::from(format!("{}", __option3.to_string()).as_str()) }).as_ustr(); __s += &(UString::from(", ")); __s += &(UString::from("kinsokuDecision=")); __s += (match &(self.kinsoku_decision) { None => UString::from("null"), Some(__option4) => UString::from(format!("{}", __option4.to_string()).as_str()) }).as_ustr(); __s += &(UString::from(", ")); __s += &(UString::from("contextualKinsokuDecisions=")); __s += UString::from(format!("{}", {
         let mut out = String::new();
         out.push('[');
         let arr = (self.contextual_kinsoku_decisions).clone();
@@ -419,16 +347,7 @@ Option<Vec<EmergencyTrackingEligibilityDecisionInfo>>) -> Self {
         }
         out.push(']');
         out
-    },
-            ", ",
-            "lineLengthGridDecision=",
-            (match &(self.line_length_grid_decision) { None => "null".to_string(), Some(__option5) => __option5.to_string() }),
-            ", ",
-            "firstLineIndentDecision=",
-            (match &(self.first_line_indent_decision) { None => "null".to_string(), Some(__option6) => __option6.to_string() }),
-            ", ",
-            "inlineBoxDecisions=",
-            {
+    }).as_str()).as_ustr(); __s += &(UString::from(", ")); __s += &(UString::from("lineLengthGridDecision=")); __s += (match &(self.line_length_grid_decision) { None => UString::from("null"), Some(__option5) => UString::from(format!("{}", __option5.to_string()).as_str()) }).as_ustr(); __s += &(UString::from(", ")); __s += &(UString::from("firstLineIndentDecision=")); __s += (match &(self.first_line_indent_decision) { None => UString::from("null"), Some(__option6) => UString::from(format!("{}", __option6.to_string()).as_str()) }).as_ustr(); __s += &(UString::from(", ")); __s += &(UString::from("inlineBoxDecisions=")); __s += UString::from(format!("{}", {
         let mut out = String::new();
         out.push('[');
         let arr = (self.inline_box_decisions).clone();
@@ -441,10 +360,7 @@ Option<Vec<EmergencyTrackingEligibilityDecisionInfo>>) -> Self {
         }
         out.push(']');
         out
-    },
-            ", ",
-            "inlineObjectDecisions=",
-            {
+    }).as_str()).as_ustr(); __s += &(UString::from(", ")); __s += &(UString::from("inlineObjectDecisions=")); __s += UString::from(format!("{}", {
         let mut out = String::new();
         out.push('[');
         let arr = (self.inline_object_decisions).clone();
@@ -457,10 +373,7 @@ Option<Vec<EmergencyTrackingEligibilityDecisionInfo>>) -> Self {
         }
         out.push(']');
         out
-    },
-            ", ",
-            "inlineObjectPunctuationAttachmentDecisions=",
-            {
+    }).as_str()).as_ustr(); __s += &(UString::from(", ")); __s += &(UString::from("inlineObjectPunctuationAttachmentDecisions=")); __s += UString::from(format!("{}", {
         let mut out = String::new();
         out.push('[');
         let arr = (self.inline_object_punctuation_attachment_decisions).clone();
@@ -473,10 +386,7 @@ Option<Vec<EmergencyTrackingEligibilityDecisionInfo>>) -> Self {
         }
         out.push(']');
         out
-    },
-            ", ",
-            "zeroWidthBreakDecisions=",
-            {
+    }).as_str()).as_ustr(); __s += &(UString::from(", ")); __s += &(UString::from("zeroWidthBreakDecisions=")); __s += UString::from(format!("{}", {
         let mut out = String::new();
         out.push('[');
         let arr = (self.zero_width_break_decisions).clone();
@@ -489,10 +399,7 @@ Option<Vec<EmergencyTrackingEligibilityDecisionInfo>>) -> Self {
         }
         out.push(']');
         out
-    },
-            ", ",
-            "breakOpportunityDecisions=",
-            {
+    }).as_str()).as_ustr(); __s += &(UString::from(", ")); __s += &(UString::from("breakOpportunityDecisions=")); __s += UString::from(format!("{}", {
         let mut out = String::new();
         out.push('[');
         let arr = (self.break_opportunity_decisions).clone();
@@ -505,10 +412,7 @@ Option<Vec<EmergencyTrackingEligibilityDecisionInfo>>) -> Self {
         }
         out.push(']');
         out
-    },
-            ", ",
-            "emergencyTrackingEligibilityDecisions=",
-            {
+    }).as_str()).as_ustr(); __s += &(UString::from(", ")); __s += &(UString::from("emergencyTrackingEligibilityDecisions=")); __s += UString::from(format!("{}", {
         let mut out = String::new();
         out.push('[');
         let arr = (self.emergency_tracking_eligibility_decisions).clone();
@@ -521,33 +425,26 @@ Option<Vec<EmergencyTrackingEligibilityDecisionInfo>>) -> Self {
         }
         out.push(']');
         out
-    },
-            ")"
-        );
+    }).as_str()).as_ustr(); __s += &(UString::from(")")); __s }).as_str());
     }
 
     pub fn layout_debug_info_with_metric_decisions(values: &Vec<MetricDecisionInfo>) -> LayoutDebugInfo {
-        return LayoutDebugInfo::new(None, Some((values).clone()), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), None,
-None, None, None, Some(vec![]), None, None, Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]));
+        return LayoutDebugInfo::new(None, Some((values).clone()), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), None, None, None, None, Some(vec![]), None, None, Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]));
     }
 
     pub fn layout_debug_info_with_geometry_decisions(values: &Vec<ClusterGeometryDecisionInfo>) -> LayoutDebugInfo {
-        return LayoutDebugInfo::new(None, Some(vec![]), Some((values).clone()), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), None,
-None, None, None, Some(vec![]), None, None, Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]));
+        return LayoutDebugInfo::new(None, Some(vec![]), Some((values).clone()), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), None, None, None, None, Some(vec![]), None, None, Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]));
     }
 
     pub fn layout_debug_info_with_auto_space_decisions(values: &Vec<AutoSpaceDecisionInfo>) -> LayoutDebugInfo {
-        return LayoutDebugInfo::new(None, Some(vec![]), Some(vec![]), Some((values).clone()), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), None,
-None, None, None, Some(vec![]), None, None, Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]));
+        return LayoutDebugInfo::new(None, Some(vec![]), Some(vec![]), Some((values).clone()), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), None, None, None, None, Some(vec![]), None, None, Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]));
     }
 
     pub fn layout_debug_info_with_ruby_decisions(values: &Vec<RubyDecisionInfo>) -> LayoutDebugInfo {
-        return LayoutDebugInfo::new(None, Some(vec![]), Some(vec![]), Some(vec![]), Some((values).clone()), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), None,
-None, None, None, Some(vec![]), None, None, Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]));
+        return LayoutDebugInfo::new(None, Some(vec![]), Some(vec![]), Some(vec![]), Some((values).clone()), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), None, None, None, None, Some(vec![]), None, None, Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]));
     }
 
     pub fn layout_debug_info_with_bopomofo_decisions(values: &Vec<BopomofoDecisionInfo>) -> LayoutDebugInfo {
-        return LayoutDebugInfo::new(None, Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some((values).clone()), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), None,
-None, None, None, Some(vec![]), None, None, Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]));
+        return LayoutDebugInfo::new(None, Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some((values).clone()), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), None, None, None, None, Some(vec![]), None, None, Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]));
     }
 }

@@ -22,6 +22,8 @@ use crate::runtime::sorted_table::SortedMapTable;
 use crate::runtime::sorted_table::SortedSetTable;
 use crate::runtime::test as testlib;
 use crate::runtime::u_string;
+use crate::runtime::u_string::UStr;
+use crate::runtime::u_string::UString;
 use std::sync::Arc;
 
 
@@ -30,6 +32,15 @@ pub enum ParagraphDpLineBreakerCoverageTestTierPromotionRoutesTheRepairReasonThr
     TextRangeErrorFault(crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError),
     UStringFaultFault(crate::std::u_string_exception::UStringFault),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
+}
+impl std::fmt::Display for ParagraphDpLineBreakerCoverageTestTierPromotionRoutesTheRepairReasonThroughThePromotionCodeFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            ParagraphDpLineBreakerCoverageTestTierPromotionRoutesTheRepairReasonThroughThePromotionCodeFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            ParagraphDpLineBreakerCoverageTestTierPromotionRoutesTheRepairReasonThroughThePromotionCodeFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            ParagraphDpLineBreakerCoverageTestTierPromotionRoutesTheRepairReasonThroughThePromotionCodeFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
 }
 
 impl From<ParagraphDpLineBreakerCoverageTestTierPromotionRoutesTheRepairReasonThroughThePromotionCodeFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
@@ -83,6 +94,15 @@ pub enum ParagraphDpLineBreakerCoverageTestShrinkPrefixSkipsNonPositiveAndOutOfR
     TextRangeErrorFault(crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
 }
+impl std::fmt::Display for ParagraphDpLineBreakerCoverageTestShrinkPrefixSkipsNonPositiveAndOutOfRangeOpportunitiesFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            ParagraphDpLineBreakerCoverageTestShrinkPrefixSkipsNonPositiveAndOutOfRangeOpportunitiesFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            ParagraphDpLineBreakerCoverageTestShrinkPrefixSkipsNonPositiveAndOutOfRangeOpportunitiesFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            ParagraphDpLineBreakerCoverageTestShrinkPrefixSkipsNonPositiveAndOutOfRangeOpportunitiesFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
+}
 
 impl From<ParagraphDpLineBreakerCoverageTestShrinkPrefixSkipsNonPositiveAndOutOfRangeOpportunitiesFault> for crate::std::u_string_exception::UStringFault {
     fn from(value: ParagraphDpLineBreakerCoverageTestShrinkPrefixSkipsNonPositiveAndOutOfRangeOpportunitiesFault) -> Self {
@@ -134,6 +154,15 @@ pub enum ParagraphDpLineBreakerCoverageTestPromotionCheckReturnsFalseWhenTheCand
     TextRangeErrorFault(crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError),
     UStringFaultFault(crate::std::u_string_exception::UStringFault),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
+}
+impl std::fmt::Display for ParagraphDpLineBreakerCoverageTestPromotionCheckReturnsFalseWhenTheCandidateEndHasNoOpportunityFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            ParagraphDpLineBreakerCoverageTestPromotionCheckReturnsFalseWhenTheCandidateEndHasNoOpportunityFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            ParagraphDpLineBreakerCoverageTestPromotionCheckReturnsFalseWhenTheCandidateEndHasNoOpportunityFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            ParagraphDpLineBreakerCoverageTestPromotionCheckReturnsFalseWhenTheCandidateEndHasNoOpportunityFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
 }
 
 impl From<ParagraphDpLineBreakerCoverageTestPromotionCheckReturnsFalseWhenTheCandidateEndHasNoOpportunityFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
@@ -188,6 +217,17 @@ pub enum ParagraphDpLineBreakerCoverageTestNegativeCandidateWindowIsRejectedFaul
     UStringFaultFault(crate::std::u_string_exception::UStringFault),
     TracedAssertionsAssertFailsWithFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsAssertFailsWithFault),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
+}
+impl std::fmt::Display for ParagraphDpLineBreakerCoverageTestNegativeCandidateWindowIsRejectedFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            ParagraphDpLineBreakerCoverageTestNegativeCandidateWindowIsRejectedFault::TraceAssertionErrorFault(value) => write!(formatter, "{}", value),
+            ParagraphDpLineBreakerCoverageTestNegativeCandidateWindowIsRejectedFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            ParagraphDpLineBreakerCoverageTestNegativeCandidateWindowIsRejectedFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            ParagraphDpLineBreakerCoverageTestNegativeCandidateWindowIsRejectedFault::TracedAssertionsAssertFailsWithFaultFault(value) => write!(formatter, "{}", value),
+            ParagraphDpLineBreakerCoverageTestNegativeCandidateWindowIsRejectedFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
 }
 
 impl From<ParagraphDpLineBreakerCoverageTestNegativeCandidateWindowIsRejectedFault> for crate::org::tiqian::test::trace::trace_assertion_exception::TraceAssertionError {
@@ -271,6 +311,15 @@ pub enum ParagraphDpLineBreakerCoverageTestNarrowWindowsDropEndsAtOrBelowTheLine
     TextRangeErrorFault(crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
 }
+impl std::fmt::Display for ParagraphDpLineBreakerCoverageTestNarrowWindowsDropEndsAtOrBelowTheLineStartFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            ParagraphDpLineBreakerCoverageTestNarrowWindowsDropEndsAtOrBelowTheLineStartFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            ParagraphDpLineBreakerCoverageTestNarrowWindowsDropEndsAtOrBelowTheLineStartFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            ParagraphDpLineBreakerCoverageTestNarrowWindowsDropEndsAtOrBelowTheLineStartFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
+}
 
 impl From<ParagraphDpLineBreakerCoverageTestNarrowWindowsDropEndsAtOrBelowTheLineStartFault> for crate::std::u_string_exception::UStringFault {
     fn from(value: ParagraphDpLineBreakerCoverageTestNarrowWindowsDropEndsAtOrBelowTheLineStartFault) -> Self {
@@ -324,6 +373,17 @@ pub enum ParagraphDpLineBreakerCoverageTestMismatchedNaturalAndAdjustedSizesAreR
     UStringFaultFault(crate::std::u_string_exception::UStringFault),
     TracedAssertionsAssertFailsWithFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsAssertFailsWithFault),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
+}
+impl std::fmt::Display for ParagraphDpLineBreakerCoverageTestMismatchedNaturalAndAdjustedSizesAreRejectedFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            ParagraphDpLineBreakerCoverageTestMismatchedNaturalAndAdjustedSizesAreRejectedFault::TraceAssertionErrorFault(value) => write!(formatter, "{}", value),
+            ParagraphDpLineBreakerCoverageTestMismatchedNaturalAndAdjustedSizesAreRejectedFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            ParagraphDpLineBreakerCoverageTestMismatchedNaturalAndAdjustedSizesAreRejectedFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            ParagraphDpLineBreakerCoverageTestMismatchedNaturalAndAdjustedSizesAreRejectedFault::TracedAssertionsAssertFailsWithFaultFault(value) => write!(formatter, "{}", value),
+            ParagraphDpLineBreakerCoverageTestMismatchedNaturalAndAdjustedSizesAreRejectedFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
 }
 
 impl From<ParagraphDpLineBreakerCoverageTestMismatchedNaturalAndAdjustedSizesAreRejectedFault> for crate::org::tiqian::test::trace::trace_assertion_exception::TraceAssertionError {
@@ -407,6 +467,15 @@ pub enum ParagraphDpLineBreakerCoverageTestMandatorySegmentFiltersTheControlBoun
     TextRangeErrorFault(crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
 }
+impl std::fmt::Display for ParagraphDpLineBreakerCoverageTestMandatorySegmentFiltersTheControlBoundaryFromCandidatesFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            ParagraphDpLineBreakerCoverageTestMandatorySegmentFiltersTheControlBoundaryFromCandidatesFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            ParagraphDpLineBreakerCoverageTestMandatorySegmentFiltersTheControlBoundaryFromCandidatesFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            ParagraphDpLineBreakerCoverageTestMandatorySegmentFiltersTheControlBoundaryFromCandidatesFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
+}
 
 impl From<ParagraphDpLineBreakerCoverageTestMandatorySegmentFiltersTheControlBoundaryFromCandidatesFault> for crate::std::u_string_exception::UStringFault {
     fn from(value: ParagraphDpLineBreakerCoverageTestMandatorySegmentFiltersTheControlBoundaryFromCandidatesFault) -> Self {
@@ -458,6 +527,15 @@ pub enum ParagraphDpLineBreakerCoverageTestLineEndOnlyCapacityFeedsTheCompressed
     UStringFaultFault(crate::std::u_string_exception::UStringFault),
     TextRangeErrorFault(crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
+}
+impl std::fmt::Display for ParagraphDpLineBreakerCoverageTestLineEndOnlyCapacityFeedsTheCompressedEdgeAtTheLineEndFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            ParagraphDpLineBreakerCoverageTestLineEndOnlyCapacityFeedsTheCompressedEdgeAtTheLineEndFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            ParagraphDpLineBreakerCoverageTestLineEndOnlyCapacityFeedsTheCompressedEdgeAtTheLineEndFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            ParagraphDpLineBreakerCoverageTestLineEndOnlyCapacityFeedsTheCompressedEdgeAtTheLineEndFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
 }
 
 impl From<ParagraphDpLineBreakerCoverageTestLineEndOnlyCapacityFeedsTheCompressedEdgeAtTheLineEndFault> for crate::std::u_string_exception::UStringFault {
@@ -511,6 +589,15 @@ pub enum ParagraphDpLineBreakerCoverageTestEmptyClustersReturnAnEmptySolutionFau
     TextRangeErrorFault(crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
 }
+impl std::fmt::Display for ParagraphDpLineBreakerCoverageTestEmptyClustersReturnAnEmptySolutionFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            ParagraphDpLineBreakerCoverageTestEmptyClustersReturnAnEmptySolutionFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            ParagraphDpLineBreakerCoverageTestEmptyClustersReturnAnEmptySolutionFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            ParagraphDpLineBreakerCoverageTestEmptyClustersReturnAnEmptySolutionFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
+}
 
 impl From<ParagraphDpLineBreakerCoverageTestEmptyClustersReturnAnEmptySolutionFault> for crate::std::u_string_exception::UStringFault {
     fn from(value: ParagraphDpLineBreakerCoverageTestEmptyClustersReturnAnEmptySolutionFault) -> Self {
@@ -562,6 +649,15 @@ pub enum ParagraphDpLineBreakerCoverageTestCompressedFinalMandatoryLineUsesTheCo
     UStringFaultFault(crate::std::u_string_exception::UStringFault),
     TextRangeErrorFault(crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
+}
+impl std::fmt::Display for ParagraphDpLineBreakerCoverageTestCompressedFinalMandatoryLineUsesTheCompressedCommitBranchFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            ParagraphDpLineBreakerCoverageTestCompressedFinalMandatoryLineUsesTheCompressedCommitBranchFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            ParagraphDpLineBreakerCoverageTestCompressedFinalMandatoryLineUsesTheCompressedCommitBranchFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            ParagraphDpLineBreakerCoverageTestCompressedFinalMandatoryLineUsesTheCompressedCommitBranchFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
 }
 
 impl From<ParagraphDpLineBreakerCoverageTestCompressedFinalMandatoryLineUsesTheCompressedCommitBranchFault> for crate::std::u_string_exception::UStringFault {
@@ -615,6 +711,15 @@ pub enum ParagraphDpLineBreakerCoverageTestCompressedEndsMayReachTheSegmentEndFa
     TextRangeErrorFault(crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
 }
+impl std::fmt::Display for ParagraphDpLineBreakerCoverageTestCompressedEndsMayReachTheSegmentEndFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            ParagraphDpLineBreakerCoverageTestCompressedEndsMayReachTheSegmentEndFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            ParagraphDpLineBreakerCoverageTestCompressedEndsMayReachTheSegmentEndFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            ParagraphDpLineBreakerCoverageTestCompressedEndsMayReachTheSegmentEndFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
+}
 
 impl From<ParagraphDpLineBreakerCoverageTestCompressedEndsMayReachTheSegmentEndFault> for crate::std::u_string_exception::UStringFault {
     fn from(value: ParagraphDpLineBreakerCoverageTestCompressedEndsMayReachTheSegmentEndFault) -> Self {
@@ -664,53 +769,47 @@ impl From<crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFa
 #[test]
 fn empty_clusters_return_an_empty_solution() {
     testlib::run("org.tiqian.layout.ParagraphDpLineBreakerCoverageTest.emptyClustersReturnAnEmptySolution", "org.tiqian.layout.ParagraphDpLineBreakerCoverageTest.emptyClustersReturnAnEmptySolution", || {
-        ParagraphDpLineBreakerCoverageTestSupport::paragraph_dp_line_breaker_coverage_test_support_rec(&"emptyClustersReturnAnEmptySolution");
+        ParagraphDpLineBreakerCoverageTestSupport::paragraph_dp_line_breaker_coverage_test_support_rec(UStr::new(&[101,109,112,116,121,67,108,117,115,116,101,114,115,82,101,116,117,114,110,65,110,69,109,112,116,121,83,111,108,117,116,105,111,110]));
         let s = ParagraphDpLineBreakerCoverageTestSupport::paragraph_dp_line_breaker_coverage_test_support_solve(&vec![], 100 as f64, None, None, None, None, None, None, None).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_true(u32::try_from((s.lines.len()) & 0xFFFF_FFFF).unwrap_or(0) == 0, Some((ParagraphDpLineBreakerTestSupport::paragraph_dp_line_breaker_test_support_lines_string((s).clone())).to_string())).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_true(u32::try_from((s.lines.len()) & 0xFFFF_FFFF).unwrap_or(0) == 0, Some((ParagraphDpLineBreakerTestSupport::paragraph_dp_line_breaker_test_support_lines_string((s).clone())).to_ustring())).unwrap();
     });
 }
 
 #[test]
 fn mismatched_natural_and_adjusted_sizes_are_rejected() {
     testlib::run("org.tiqian.layout.ParagraphDpLineBreakerCoverageTest.mismatchedNaturalAndAdjustedSizesAreRejected", "org.tiqian.layout.ParagraphDpLineBreakerCoverageTest.mismatchedNaturalAndAdjustedSizesAreRejected", || {
-        ParagraphDpLineBreakerCoverageTestSupport::paragraph_dp_line_breaker_coverage_test_support_rec(&"mismatchedNaturalAndAdjustedSizesAreRejected");
+        ParagraphDpLineBreakerCoverageTestSupport::paragraph_dp_line_breaker_coverage_test_support_rec(UStr::new(&[109,105,115,109,97,116,99,104,101,100,78,97,116,117,114,97,108,65,110,100,65,100,106,117,115,116,101,100,83,105,122,101,115,65,114,101,82,101,106,101,99,116,101,100]));
         let e = TracedAssertions::traced_assertions_assert_fails_with(None.clone(), {  Arc::new(move || {
-        ParagraphDpLineBreaker::new(Some(8), Some(0.5), Some(Box::new(ClreqKinsokuRule::new(Some(KinsokuLevel::Basic)))), Some(2), Some(10), Some(20), Some(12 as f64), Some(12 as f64), Some(3 as f64), Some(1 as f64)).map_err(|e| IllegalStateException::new(&format!("{}",
-e)))?.break_lines(&ParagraphDpLineBreakerCoverageTestSupport::paragraph_dp_line_breaker_coverage_test_support_han(2, None).map_err(|e| IllegalStateException::new(&format!("{}", e)))?,
-&ParagraphDpLineBreakerCoverageTestSupport::paragraph_dp_line_breaker_coverage_test_support_han(1, None).map_err(|e| IllegalStateException::new(&format!("{}", e)))?, 100 as f64, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None,
-None).map_err(|e| IllegalStateException::new(&format!("{}", e)))?;
+        ParagraphDpLineBreaker::new(Some(8), Some(0.5), Some(Box::new(ClreqKinsokuRule::new(Some(KinsokuLevel::Basic)))), Some(2), Some(10), Some(20), Some(12 as f64), Some(12 as f64), Some(3 as f64), Some(1 as f64)).map_err(|e| IllegalStateException::new(&format!("{}", e)))?.break_lines(&ParagraphDpLineBreakerCoverageTestSupport::paragraph_dp_line_breaker_coverage_test_support_han(2, None).map_err(|e| IllegalStateException::new(&format!("{}", e)))?, &ParagraphDpLineBreakerCoverageTestSupport::paragraph_dp_line_breaker_coverage_test_support_han(1, None).map_err(|e| IllegalStateException::new(&format!("{}", e)))?, 100 as f64, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None).map_err(|e| IllegalStateException::new(&format!("{}", e)))?;
         Ok(())
 }) }).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_true((u32::from_ne_bytes((u_string::find_from(&format!("{}", e), "cluster-for-cluster", 0)).to_ne_bytes())) <= 2147483647, Some((format!("{}", e)).to_string())).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_true((u32::from_ne_bytes(((u_string::find_from(&UString::from(format!("{}", format!("{}", e)).as_str()), UString::from("cluster-for-cluster").as_ustr(), 0)) as u32).to_ne_bytes())) <= 2147483647, Some(UString::from(format!("{}", format!("{}", e)).as_str()))).unwrap();
     });
 }
 
 #[test]
 fn negative_candidate_window_is_rejected() {
     testlib::run("org.tiqian.layout.ParagraphDpLineBreakerCoverageTest.negativeCandidateWindowIsRejected", "org.tiqian.layout.ParagraphDpLineBreakerCoverageTest.negativeCandidateWindowIsRejected", || {
-        ParagraphDpLineBreakerCoverageTestSupport::paragraph_dp_line_breaker_coverage_test_support_rec(&"negativeCandidateWindowIsRejected");
+        ParagraphDpLineBreakerCoverageTestSupport::paragraph_dp_line_breaker_coverage_test_support_rec(UStr::new(&[110,101,103,97,116,105,118,101,67,97,110,100,105,100,97,116,101,87,105,110,100,111,119,73,115,82,101,106,101,99,116,101,100]));
         let e = TracedAssertions::traced_assertions_assert_fails_with(None.clone(), {  Arc::new(move || {
-        ParagraphDpLineBreaker::new(Some(4294967295u32), Some(0.5), Some(Box::new(ClreqKinsokuRule::new(Some(KinsokuLevel::Basic)))), Some(2), Some(10), Some(20), Some(12 as f64), Some(12 as f64), Some(3 as f64), Some(1 as f64)).map_err(|e|
-IllegalStateException::new(&format!("{}", e)))?.break_lines(&ParagraphDpLineBreakerCoverageTestSupport::paragraph_dp_line_breaker_coverage_test_support_han(2, None).map_err(|e| IllegalStateException::new(&format!("{}", e)))?,
-&ParagraphDpLineBreakerCoverageTestSupport::paragraph_dp_line_breaker_coverage_test_support_han(2, None).map_err(|e| IllegalStateException::new(&format!("{}", e)))?, 100 as f64, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None,
-None).map_err(|e| IllegalStateException::new(&format!("{}", e)))?;
+        ParagraphDpLineBreaker::new(Some(4294967295u32), Some(0.5), Some(Box::new(ClreqKinsokuRule::new(Some(KinsokuLevel::Basic)))), Some(2), Some(10), Some(20), Some(12 as f64), Some(12 as f64), Some(3 as f64), Some(1 as f64)).map_err(|e| IllegalStateException::new(&format!("{}", e)))?.break_lines(&ParagraphDpLineBreakerCoverageTestSupport::paragraph_dp_line_breaker_coverage_test_support_han(2, None).map_err(|e| IllegalStateException::new(&format!("{}", e)))?, &ParagraphDpLineBreakerCoverageTestSupport::paragraph_dp_line_breaker_coverage_test_support_han(2, None).map_err(|e| IllegalStateException::new(&format!("{}", e)))?, 100 as f64, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None).map_err(|e| IllegalStateException::new(&format!("{}", e)))?;
         Ok(())
 }) }).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_true((u32::from_ne_bytes((u_string::find_from(&format!("{}", e), "non-negative", 0)).to_ne_bytes())) <= 2147483647, Some((format!("{}", e)).to_string())).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_true((u32::from_ne_bytes(((u_string::find_from(&UString::from(format!("{}", format!("{}", e)).as_str()), UString::from("non-negative").as_ustr(), 0)) as u32).to_ne_bytes())) <= 2147483647, Some(UString::from(format!("{}", format!("{}", e)).as_str()))).unwrap();
     });
 }
 
 #[test]
 fn shrink_prefix_skips_non_positive_and_out_of_range_opportunities() {
     testlib::run("org.tiqian.layout.ParagraphDpLineBreakerCoverageTest.shrinkPrefixSkipsNonPositiveAndOutOfRangeOpportunities", "org.tiqian.layout.ParagraphDpLineBreakerCoverageTest.shrinkPrefixSkipsNonPositiveAndOutOfRangeOpportunities", || {
-        ParagraphDpLineBreakerCoverageTestSupport::paragraph_dp_line_breaker_coverage_test_support_rec(&"shrinkPrefixSkipsNonPositiveAndOutOfRangeOpportunities");
+        ParagraphDpLineBreakerCoverageTestSupport::paragraph_dp_line_breaker_coverage_test_support_rec(UStr::new(&[115,104,114,105,110,107,80,114,101,102,105,120,83,107,105,112,115,78,111,110,80,111,115,105,116,105,118,101,65,110,100,79,117,116,79,102,82,97,110,103,101,79,112,112,111,114,116,117,110,105,116,105,101,115]));
         let c = ParagraphDpLineBreakerCoverageTestSupport::paragraph_dp_line_breaker_coverage_test_support_han(4, None).unwrap();
         let s = ParagraphDpLineBreakerCoverageTestSupport::paragraph_dp_line_breaker_coverage_test_support_solve(&c, 100 as f64, Some(vec![
     (ShrinkOpportunity::new(1u32, 2u32, 0 as f64 as f64, ShrinkChannel::RawAdvance, Some(false))).clone(),
     (ShrinkOpportunity::new(4u32, 2u32, 8 as f64 as f64, ShrinkChannel::RawAdvance, Some(false))).clone(),
     (ShrinkOpportunity::new(1u32, 2u32, 8 as f64 as f64, ShrinkChannel::RawAdvance, Some(false))).clone(),
 ]), None, None, None, None, None, None).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_equals_int(1, u32::try_from((s.lines.len()) & 0xFFFF_FFFF).unwrap_or(0), Some((ParagraphDpLineBreakerTestSupport::paragraph_dp_line_breaker_test_support_lines_string((s).clone())).to_string())).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_equals_int(1, u32::try_from((s.lines.len()) & 0xFFFF_FFFF).unwrap_or(0), Some((ParagraphDpLineBreakerTestSupport::paragraph_dp_line_breaker_test_support_lines_string((s).clone())).to_ustring())).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_equals_int_range(IntRange::new(0u32, 3u32), ((s.lines[0usize]).clone().cluster_range).clone(), None).unwrap();
     });
 }
@@ -718,99 +817,86 @@ fn shrink_prefix_skips_non_positive_and_out_of_range_opportunities() {
 #[test]
 fn line_end_only_capacity_feeds_the_compressed_edge_at_the_line_end() {
     testlib::run("org.tiqian.layout.ParagraphDpLineBreakerCoverageTest.lineEndOnlyCapacityFeedsTheCompressedEdgeAtTheLineEnd", "org.tiqian.layout.ParagraphDpLineBreakerCoverageTest.lineEndOnlyCapacityFeedsTheCompressedEdgeAtTheLineEnd", || {
-        ParagraphDpLineBreakerCoverageTestSupport::paragraph_dp_line_breaker_coverage_test_support_rec(&"lineEndOnlyCapacityFeedsTheCompressedEdgeAtTheLineEnd");
+        ParagraphDpLineBreakerCoverageTestSupport::paragraph_dp_line_breaker_coverage_test_support_rec(UStr::new(&[108,105,110,101,69,110,100,79,110,108,121,67,97,112,97,99,105,116,121,70,101,101,100,115,84,104,101,67,111,109,112,114,101,115,115,101,100,69,100,103,101,65,116,84,104,101,76,105,110,101,69,110,100]));
         let c = ParagraphDpLineBreakerCoverageTestSupport::paragraph_dp_line_breaker_coverage_test_support_han(4, None).unwrap();
         let s = ParagraphDpLineBreakerCoverageTestSupport::paragraph_dp_line_breaker_coverage_test_support_solve(&c, 44 as f64, Some(vec![
     (ShrinkOpportunity::new(2u32, 1u32, 4 as f64 as f64, ShrinkChannel::TrailingGlue, Some(true))).clone(),
 ]), None, Some(true), None, None, None, Some(vec![1])).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_equals_int_range(IntRange::new(0u32, 2u32), ((s.lines[0usize]).clone().cluster_range).clone(),
-Some((ParagraphDpLineBreakerTestSupport::paragraph_dp_line_breaker_test_support_lines_string((s).clone())).to_string())).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_true(ParagraphDpLineBreakerCoverageTestSupport::paragraph_dp_line_breaker_coverage_test_support_push_in_reason_starts_with(((s.lines[0usize]).clone().repair).clone(), &"LineAdjustmentPushIn"),
-Some((ParagraphDpLineBreakerTestSupport::paragraph_dp_line_breaker_test_support_repairs_string((s).clone())).to_string())).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_equals_int_range(IntRange::new(0u32, 2u32), ((s.lines[0usize]).clone().cluster_range).clone(), Some((ParagraphDpLineBreakerTestSupport::paragraph_dp_line_breaker_test_support_lines_string((s).clone())).to_ustring())).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_true(ParagraphDpLineBreakerCoverageTestSupport::paragraph_dp_line_breaker_coverage_test_support_push_in_reason_starts_with(((s.lines[0usize]).clone().repair).clone(), UStr::new(&[76,105,110,101,65,100,106,117,115,116,109,101,110,116,80,117,115,104,73,110])), Some((ParagraphDpLineBreakerTestSupport::paragraph_dp_line_breaker_test_support_repairs_string((s).clone())).to_ustring())).unwrap();
     });
 }
 
 #[test]
 fn compressed_ends_may_reach_the_segment_end() {
     testlib::run("org.tiqian.layout.ParagraphDpLineBreakerCoverageTest.compressedEndsMayReachTheSegmentEnd", "org.tiqian.layout.ParagraphDpLineBreakerCoverageTest.compressedEndsMayReachTheSegmentEnd", || {
-        ParagraphDpLineBreakerCoverageTestSupport::paragraph_dp_line_breaker_coverage_test_support_rec(&"compressedEndsMayReachTheSegmentEnd");
+        ParagraphDpLineBreakerCoverageTestSupport::paragraph_dp_line_breaker_coverage_test_support_rec(UStr::new(&[99,111,109,112,114,101,115,115,101,100,69,110,100,115,77,97,121,82,101,97,99,104,84,104,101,83,101,103,109,101,110,116,69,110,100]));
         let s = ParagraphDpLineBreakerCoverageTestSupport::paragraph_dp_line_breaker_coverage_test_support_solve(&ParagraphDpLineBreakerCoverageTestSupport::paragraph_dp_line_breaker_coverage_test_support_han(3, None).unwrap(), 44 as f64, Some(vec![
     (ShrinkOpportunity::new(1u32, 2u32, 12 as f64 as f64, ShrinkChannel::RawAdvance, Some(false))).clone(),
 ]), None, Some(true), None, None, None, Some(vec![1])).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_equals_int_range(IntRange::new(0u32, 2u32), ((s.lines[0usize]).clone().cluster_range).clone(),
-Some((ParagraphDpLineBreakerTestSupport::paragraph_dp_line_breaker_test_support_lines_string((s).clone())).to_string())).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_true(ParagraphDpLineBreakerCoverageTestSupport::paragraph_dp_line_breaker_coverage_test_support_push_in_reason_starts_with(((s.lines[0usize]).clone().repair).clone(), &"LineAdjustmentPushIn"),
-Some((ParagraphDpLineBreakerTestSupport::paragraph_dp_line_breaker_test_support_repairs_string((s).clone())).to_string())).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_equals_rendered(&"ParagraphEnd", s.lines[usize::try_from(u32::wrapping_sub(u32::try_from((s.lines.len()) & 0xFFFF_FFFF).unwrap_or(0), 1)).unwrap_or(0)].end_reason.name().to_string().as_str(), None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_equals_int_range(IntRange::new(0u32, 2u32), ((s.lines[0usize]).clone().cluster_range).clone(), Some((ParagraphDpLineBreakerTestSupport::paragraph_dp_line_breaker_test_support_lines_string((s).clone())).to_ustring())).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_true(ParagraphDpLineBreakerCoverageTestSupport::paragraph_dp_line_breaker_coverage_test_support_push_in_reason_starts_with(((s.lines[0usize]).clone().repair).clone(), UStr::new(&[76,105,110,101,65,100,106,117,115,116,109,101,110,116,80,117,115,104,73,110])), Some((ParagraphDpLineBreakerTestSupport::paragraph_dp_line_breaker_test_support_repairs_string((s).clone())).to_ustring())).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_equals_rendered(UStr::new(&[80,97,114,97,103,114,97,112,104,69,110,100]), UString::from(s.lines[usize::try_from(u32::wrapping_sub(u32::try_from((s.lines.len()) & 0xFFFF_FFFF).unwrap_or(0), 1)).unwrap_or(0)].end_reason.name()).as_ustr(), None).unwrap();
     });
 }
 
 #[test]
 fn compressed_final_mandatory_line_uses_the_compressed_commit_branch() {
     testlib::run("org.tiqian.layout.ParagraphDpLineBreakerCoverageTest.compressedFinalMandatoryLineUsesTheCompressedCommitBranch", "org.tiqian.layout.ParagraphDpLineBreakerCoverageTest.compressedFinalMandatoryLineUsesTheCompressedCommitBranch", || {
-        ParagraphDpLineBreakerCoverageTestSupport::paragraph_dp_line_breaker_coverage_test_support_rec(&"compressedFinalMandatoryLineUsesTheCompressedCommitBranch");
+        ParagraphDpLineBreakerCoverageTestSupport::paragraph_dp_line_breaker_coverage_test_support_rec(UStr::new(&[99,111,109,112,114,101,115,115,101,100,70,105,110,97,108,77,97,110,100,97,116,111,114,121,76,105,110,101,85,115,101,115,84,104,101,67,111,109,112,114,101,115,115,101,100,67,111,109,109,105,116,66,114,97,110,99,104]));
         let s = ParagraphDpLineBreakerCoverageTestSupport::paragraph_dp_line_breaker_coverage_test_support_solve(&ParagraphDpLineBreakerCoverageTestSupport::paragraph_dp_line_breaker_coverage_test_support_han(4, None).unwrap(), 44 as f64, Some(vec![
     (ShrinkOpportunity::new(2u32, 1u32, 4 as f64 as f64, ShrinkChannel::TrailingGlue, Some(true))).clone(),
 ]), Some(vec![2]), Some(true), None, None, None, None).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_equals_int_range(IntRange::new(0u32, 2u32), ((s.lines[0usize]).clone().cluster_range).clone(),
-Some((ParagraphDpLineBreakerTestSupport::paragraph_dp_line_breaker_test_support_lines_string((s).clone())).to_string())).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_equals_rendered(&"MandatoryBreak", s.lines[0usize].end_reason.name().to_string().as_str(), None).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_true(ParagraphDpLineBreakerCoverageTestSupport::paragraph_dp_line_breaker_coverage_test_support_push_in_reason_starts_with(((s.lines[0usize]).clone().repair).clone(), &"LineAdjustmentPushIn"),
-Some((ParagraphDpLineBreakerTestSupport::paragraph_dp_line_breaker_test_support_repairs_string((s).clone())).to_string())).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_equals_int_range(IntRange::new(0u32, 2u32), ((s.lines[0usize]).clone().cluster_range).clone(), Some((ParagraphDpLineBreakerTestSupport::paragraph_dp_line_breaker_test_support_lines_string((s).clone())).to_ustring())).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_equals_rendered(UStr::new(&[77,97,110,100,97,116,111,114,121,66,114,101,97,107]), UString::from(s.lines[0usize].end_reason.name()).as_ustr(), None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_true(ParagraphDpLineBreakerCoverageTestSupport::paragraph_dp_line_breaker_coverage_test_support_push_in_reason_starts_with(((s.lines[0usize]).clone().repair).clone(), UStr::new(&[76,105,110,101,65,100,106,117,115,116,109,101,110,116,80,117,115,104,73,110])), Some((ParagraphDpLineBreakerTestSupport::paragraph_dp_line_breaker_test_support_repairs_string((s).clone())).to_ustring())).unwrap();
     });
 }
 
 #[test]
 fn tier_promotion_routes_the_repair_reason_through_the_promotion_code() {
     testlib::run("org.tiqian.layout.ParagraphDpLineBreakerCoverageTest.tierPromotionRoutesTheRepairReasonThroughThePromotionCode", "org.tiqian.layout.ParagraphDpLineBreakerCoverageTest.tierPromotionRoutesTheRepairReasonThroughThePromotionCode", || {
-        ParagraphDpLineBreakerCoverageTestSupport::paragraph_dp_line_breaker_coverage_test_support_rec(&"tierPromotionRoutesTheRepairReasonThroughThePromotionCode");
+        ParagraphDpLineBreakerCoverageTestSupport::paragraph_dp_line_breaker_coverage_test_support_rec(UStr::new(&[116,105,101,114,80,114,111,109,111,116,105,111,110,82,111,117,116,101,115,84,104,101,82,101,112,97,105,114,82,101,97,115,111,110,84,104,114,111,117,103,104,84,104,101,80,114,111,109,111,116,105,111,110,67,111,100,101]));
         let c = ParagraphDpLineBreakerCoverageTestSupport::paragraph_dp_line_breaker_coverage_test_support_latin().unwrap();
         let span = TextRange::new(0u32, 5u32).unwrap();
         let s = ParagraphDpLineBreakerCoverageTestSupport::paragraph_dp_line_breaker_coverage_test_support_solve(&c, 80 as f64, Some(vec![
     (ShrinkOpportunity::new(2u32, 2u32, 5 as f64 as f64, ShrinkChannel::RawAdvance, Some(false))).clone(),
 ]), None, Some(true), None, Some(ParagraphDpLineBreakerCoverageTestSupport::paragraph_dp_line_breaker_coverage_test_support_opp(&vec![2, 3], &vec![(span).clone(), (span).clone()], &vec![ProgressiveBreakTier::Emergency, ProgressiveBreakTier::Whitespace])), None, None).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_equals_int_range(IntRange::new(0u32, 2u32), ((s.lines[0usize]).clone().cluster_range).clone(),
-Some((ParagraphDpLineBreakerTestSupport::paragraph_dp_line_breaker_test_support_lines_string((s).clone())).to_string())).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_true(ParagraphDpLineBreakerCoverageTestSupport::paragraph_dp_line_breaker_coverage_test_support_push_in_reason_starts_with(((s.lines[0usize]).clone().repair).clone(), &"ProgressiveTechnicalTierPromotion"),
-Some((ParagraphDpLineBreakerTestSupport::paragraph_dp_line_breaker_test_support_repairs_string((s).clone())).to_string())).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_equals_int_range(IntRange::new(0u32, 2u32), ((s.lines[0usize]).clone().cluster_range).clone(), Some((ParagraphDpLineBreakerTestSupport::paragraph_dp_line_breaker_test_support_lines_string((s).clone())).to_ustring())).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_true(ParagraphDpLineBreakerCoverageTestSupport::paragraph_dp_line_breaker_coverage_test_support_push_in_reason_starts_with(((s.lines[0usize]).clone().repair).clone(), UStr::new(&[80,114,111,103,114,101,115,115,105,118,101,84,101,99,104,110,105,99,97,108,84,105,101,114,80,114,111,109,111,116,105,111,110])), Some((ParagraphDpLineBreakerTestSupport::paragraph_dp_line_breaker_test_support_repairs_string((s).clone())).to_ustring())).unwrap();
     });
 }
 
 #[test]
 fn promotion_check_returns_false_when_the_candidate_end_has_no_opportunity() {
     testlib::run("org.tiqian.layout.ParagraphDpLineBreakerCoverageTest.promotionCheckReturnsFalseWhenTheCandidateEndHasNoOpportunity", "org.tiqian.layout.ParagraphDpLineBreakerCoverageTest.promotionCheckReturnsFalseWhenTheCandidateEndHasNoOpportunity", || {
-        ParagraphDpLineBreakerCoverageTestSupport::paragraph_dp_line_breaker_coverage_test_support_rec(&"promotionCheckReturnsFalseWhenTheCandidateEndHasNoOpportunity");
+        ParagraphDpLineBreakerCoverageTestSupport::paragraph_dp_line_breaker_coverage_test_support_rec(UStr::new(&[112,114,111,109,111,116,105,111,110,67,104,101,99,107,82,101,116,117,114,110,115,70,97,108,115,101,87,104,101,110,84,104,101,67,97,110,100,105,100,97,116,101,69,110,100,72,97,115,78,111,79,112,112,111,114,116,117,110,105,116,121]));
         let c = ParagraphDpLineBreakerCoverageTestSupport::paragraph_dp_line_breaker_coverage_test_support_latin().unwrap();
         let s = ParagraphDpLineBreakerCoverageTestSupport::paragraph_dp_line_breaker_coverage_test_support_solve(&c, 80 as f64, Some(vec![
     (ShrinkOpportunity::new(2u32, 2u32, 5 as f64 as f64, ShrinkChannel::RawAdvance, Some(false))).clone(),
 ]), None, Some(true), None, Some(ParagraphDpLineBreakerCoverageTestSupport::paragraph_dp_line_breaker_coverage_test_support_opp(&vec![2], &vec![(TextRange::new(0u32, 5u32).unwrap()).clone()], &vec![ProgressiveBreakTier::Emergency])), None, None).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_equals_int_range(IntRange::new(0u32, 1u32), ((s.lines[0usize]).clone().cluster_range).clone(),
-Some((ParagraphDpLineBreakerTestSupport::paragraph_dp_line_breaker_test_support_lines_string((s).clone())).to_string())).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_true((s.lines[0usize]).clone().repair == None, Some((ParagraphDpLineBreakerTestSupport::paragraph_dp_line_breaker_test_support_repairs_string((s).clone())).to_string())).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_equals_int_range(IntRange::new(0u32, 1u32), ((s.lines[0usize]).clone().cluster_range).clone(), Some((ParagraphDpLineBreakerTestSupport::paragraph_dp_line_breaker_test_support_lines_string((s).clone())).to_ustring())).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_true((s.lines[0usize]).clone().repair == None, Some((ParagraphDpLineBreakerTestSupport::paragraph_dp_line_breaker_test_support_repairs_string((s).clone())).to_ustring())).unwrap();
     });
 }
 
 #[test]
 fn mandatory_segment_filters_the_control_boundary_from_candidates() {
     testlib::run("org.tiqian.layout.ParagraphDpLineBreakerCoverageTest.mandatorySegmentFiltersTheControlBoundaryFromCandidates", "org.tiqian.layout.ParagraphDpLineBreakerCoverageTest.mandatorySegmentFiltersTheControlBoundaryFromCandidates", || {
-        ParagraphDpLineBreakerCoverageTestSupport::paragraph_dp_line_breaker_coverage_test_support_rec(&"mandatorySegmentFiltersTheControlBoundaryFromCandidates");
-        let s = ParagraphDpLineBreakerCoverageTestSupport::paragraph_dp_line_breaker_coverage_test_support_solve(&ParagraphDpLineBreakerCoverageTestSupport::paragraph_dp_line_breaker_coverage_test_support_han(6, None).unwrap(), 32 as f64, None, Some(vec![2]), None, None, None,
-None, None).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_equals_int_range(IntRange::new(0u32, 2u32), ((s.lines[0usize]).clone().cluster_range).clone(),
-Some((ParagraphDpLineBreakerTestSupport::paragraph_dp_line_breaker_test_support_lines_string((s).clone())).to_string())).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_equals_rendered(&"MandatoryBreak", s.lines[0usize].end_reason.name().to_string().as_str(), None).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_equals_int(5, (s.lines[usize::try_from(u32::wrapping_sub(u32::try_from((s.lines.len()) & 0xFFFF_FFFF).unwrap_or(0), 1)).unwrap_or(0)]).clone().cluster_range.end,
-Some((ParagraphDpLineBreakerTestSupport::paragraph_dp_line_breaker_test_support_lines_string((s).clone())).to_string())).unwrap();
+        ParagraphDpLineBreakerCoverageTestSupport::paragraph_dp_line_breaker_coverage_test_support_rec(UStr::new(&[109,97,110,100,97,116,111,114,121,83,101,103,109,101,110,116,70,105,108,116,101,114,115,84,104,101,67,111,110,116,114,111,108,66,111,117,110,100,97,114,121,70,114,111,109,67,97,110,100,105,100,97,116,101,115]));
+        let s = ParagraphDpLineBreakerCoverageTestSupport::paragraph_dp_line_breaker_coverage_test_support_solve(&ParagraphDpLineBreakerCoverageTestSupport::paragraph_dp_line_breaker_coverage_test_support_han(6, None).unwrap(), 32 as f64, None, Some(vec![2]), None, None, None, None, None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_equals_int_range(IntRange::new(0u32, 2u32), ((s.lines[0usize]).clone().cluster_range).clone(), Some((ParagraphDpLineBreakerTestSupport::paragraph_dp_line_breaker_test_support_lines_string((s).clone())).to_ustring())).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_equals_rendered(UStr::new(&[77,97,110,100,97,116,111,114,121,66,114,101,97,107]), UString::from(s.lines[0usize].end_reason.name()).as_ustr(), None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_equals_int(5, (s.lines[usize::try_from(u32::wrapping_sub(u32::try_from((s.lines.len()) & 0xFFFF_FFFF).unwrap_or(0), 1)).unwrap_or(0)]).clone().cluster_range.end, Some((ParagraphDpLineBreakerTestSupport::paragraph_dp_line_breaker_test_support_lines_string((s).clone())).to_ustring())).unwrap();
     });
 }
 
 #[test]
 fn narrow_windows_drop_ends_at_or_below_the_line_start() {
     testlib::run("org.tiqian.layout.ParagraphDpLineBreakerCoverageTest.narrowWindowsDropEndsAtOrBelowTheLineStart", "org.tiqian.layout.ParagraphDpLineBreakerCoverageTest.narrowWindowsDropEndsAtOrBelowTheLineStart", || {
-        ParagraphDpLineBreakerCoverageTestSupport::paragraph_dp_line_breaker_coverage_test_support_rec(&"narrowWindowsDropEndsAtOrBelowTheLineStart");
-        let s = ParagraphDpLineBreakerCoverageTestSupport::paragraph_dp_line_breaker_coverage_test_support_solve(&ParagraphDpLineBreakerCoverageTestSupport::paragraph_dp_line_breaker_coverage_test_support_han(4, None).unwrap(), 20 as f64, None, None, None, None, None, None,
-None).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_equals_int(4, u32::try_from((s.lines.len()) & 0xFFFF_FFFF).unwrap_or(0), Some((ParagraphDpLineBreakerTestSupport::paragraph_dp_line_breaker_test_support_lines_string((s).clone())).to_string())).unwrap();
+        ParagraphDpLineBreakerCoverageTestSupport::paragraph_dp_line_breaker_coverage_test_support_rec(UStr::new(&[110,97,114,114,111,119,87,105,110,100,111,119,115,68,114,111,112,69,110,100,115,65,116,79,114,66,101,108,111,119,84,104,101,76,105,110,101,83,116,97,114,116]));
+        let s = ParagraphDpLineBreakerCoverageTestSupport::paragraph_dp_line_breaker_coverage_test_support_solve(&ParagraphDpLineBreakerCoverageTestSupport::paragraph_dp_line_breaker_coverage_test_support_han(4, None).unwrap(), 20 as f64, None, None, None, None, None, None, None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_equals_int(4, u32::try_from((s.lines.len()) & 0xFFFF_FFFF).unwrap_or(0), Some((ParagraphDpLineBreakerTestSupport::paragraph_dp_line_breaker_test_support_lines_string((s).clone())).to_ustring())).unwrap();
         let mut all = true;
         {
             let _g1 = s.lines.clone();
@@ -820,16 +906,16 @@ None).unwrap();
                 }
             }
         }
-        let _ = TracedAssertions::traced_assertions_assert_true(all, Some((ParagraphDpLineBreakerTestSupport::paragraph_dp_line_breaker_test_support_ranges_string((s).clone())).to_string())).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_true(all, Some((ParagraphDpLineBreakerTestSupport::paragraph_dp_line_breaker_test_support_ranges_string((s).clone())).to_ustring())).unwrap();
     });
 }
 
 #[test]
 fn interface_default_strategy_name_is_custom() {
     testlib::run("org.tiqian.layout.ParagraphDpLineBreakerCoverageTest.interfaceDefaultStrategyNameIsCustom", "org.tiqian.layout.ParagraphDpLineBreakerCoverageTest.interfaceDefaultStrategyNameIsCustom", || {
-        ParagraphDpLineBreakerCoverageTestSupport::paragraph_dp_line_breaker_coverage_test_support_rec(&"interfaceDefaultStrategyNameIsCustom");
+        ParagraphDpLineBreakerCoverageTestSupport::paragraph_dp_line_breaker_coverage_test_support_rec(UStr::new(&[105,110,116,101,114,102,97,99,101,68,101,102,97,117,108,116,83,116,114,97,116,101,103,121,78,97,109,101,73,115,67,117,115,116,111,109]));
         let b: Box<dyn LineBreaker> = Box::new(CustomBreaker::new());
-        let _ = TracedAssertions::traced_assertions_assert_equals_string(&"custom", b.get_strategy_name().as_str(), None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_equals_string(UStr::new(&[99,117,115,116,111,109]), b.get_strategy_name().as_ustr(), None).unwrap();
     });
 }
 
@@ -843,13 +929,11 @@ impl CustomBreaker {
         }
     }
 
-    pub fn get_strategy_name(&self) -> String {
-        return "custom".to_string();
+    pub fn get_strategy_name(&self) -> UString {
+        return UString::from("custom").to_ustring();
     }
 
-    pub fn break_lines(&self, _n: &Vec<Cluster>, _a: &Vec<Cluster>, _w: f64, _s: Option<Vec<ShrinkOpportunity>>, _u: Option<UnbreakableRanges>, _i: Option<f64>, _h: Option<SortedSetTable<u32>>, _e: Option<Vec<IntRange>>, _fs: Option<SortedSetTable<u32>>, _fe:
-Option<SortedSetTable<u32>>, _hy: Option<SortedSetTable<u32>>, _cj: Option<SortedSetTable<u32>>, _mc: Option<f64>, _sw: Option<SortedSetTable<u32>>, _sc: Option<f64>, _p: Option<bool>, _bias: Option<f64>, _hb: Option<SortedSetTable<u32>>, _nc: Option<SortedSetTable<u32>>, _pr:
-Option<SortedMapTable<u32, ProgressiveBreakOpportunity>>) -> Result<LineSolution, TextRangeError> {
+    pub fn break_lines(&self, _n: &Vec<Cluster>, _a: &Vec<Cluster>, _w: f64, _s: Option<Vec<ShrinkOpportunity>>, _u: Option<UnbreakableRanges>, _i: Option<f64>, _h: Option<SortedSetTable<u32>>, _e: Option<Vec<IntRange>>, _fs: Option<SortedSetTable<u32>>, _fe: Option<SortedSetTable<u32>>, _hy: Option<SortedSetTable<u32>>, _cj: Option<SortedSetTable<u32>>, _mc: Option<f64>, _sw: Option<SortedSetTable<u32>>, _sc: Option<f64>, _p: Option<bool>, _bias: Option<f64>, _hb: Option<SortedSetTable<u32>>, _nc: Option<SortedSetTable<u32>>, _pr: Option<SortedMapTable<u32, ProgressiveBreakOpportunity>>) -> Result<LineSolution, TextRangeError> {
         return Ok(LineSolution::new(Some(vec![]), Some(0 as f64))?);
     }
 }
@@ -865,13 +949,11 @@ impl LineBreaker for CustomBreaker {
         Box::new(self.clone())
     }
 
-    fn get_strategy_name(&self) -> String {
-        return "custom".to_string();
+    fn get_strategy_name(&self) -> UString {
+        return UString::from("custom").to_ustring();
     }
 
-    fn break_lines(&self, _n: &Vec<Cluster>, _a: &Vec<Cluster>, _w: f64, _s: Option<Vec<ShrinkOpportunity>>, _u: Option<UnbreakableRanges>, _i: Option<f64>, _h: Option<SortedSetTable<u32>>, _e: Option<Vec<IntRange>>, _fs: Option<SortedSetTable<u32>>, _fe:
-Option<SortedSetTable<u32>>, _hy: Option<SortedSetTable<u32>>, _cj: Option<SortedSetTable<u32>>, _mc: Option<f64>, _sw: Option<SortedSetTable<u32>>, _sc: Option<f64>, _p: Option<bool>, _bias: Option<f64>, _hb: Option<SortedSetTable<u32>>, _nc: Option<SortedSetTable<u32>>, _pr:
-Option<SortedMapTable<u32, ProgressiveBreakOpportunity>>) -> Result<LineSolution, TextRangeError> {
+    fn break_lines(&self, _n: &Vec<Cluster>, _a: &Vec<Cluster>, _w: f64, _s: Option<Vec<ShrinkOpportunity>>, _u: Option<UnbreakableRanges>, _i: Option<f64>, _h: Option<SortedSetTable<u32>>, _e: Option<Vec<IntRange>>, _fs: Option<SortedSetTable<u32>>, _fe: Option<SortedSetTable<u32>>, _hy: Option<SortedSetTable<u32>>, _cj: Option<SortedSetTable<u32>>, _mc: Option<f64>, _sw: Option<SortedSetTable<u32>>, _sc: Option<f64>, _p: Option<bool>, _bias: Option<f64>, _hb: Option<SortedSetTable<u32>>, _nc: Option<SortedSetTable<u32>>, _pr: Option<SortedMapTable<u32, ProgressiveBreakOpportunity>>) -> Result<LineSolution, TextRangeError> {
         return Ok(LineSolution::new(Some(vec![]), Some(0 as f64))?);
     }
 }

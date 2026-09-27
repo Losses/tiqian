@@ -1,4 +1,5 @@
 use crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError;
+use crate::runtime::u_string::UString;
 
 
 #[derive(Debug, Clone, PartialEq)]
@@ -9,7 +10,7 @@ pub struct TextRange {
 
 impl TextRange {
     pub fn new(start: u32, end: u32) -> Result<Self, TextRangeError> {
-        if i32::from_ne_bytes((start).to_ne_bytes()) > (i32::from_ne_bytes((end).to_ne_bytes())) {
+        if i32::from_ne_bytes(((start) as i32).to_ne_bytes()) > (i32::from_ne_bytes(((end) as i32).to_ne_bytes())) {
             return Err(TextRangeError::StartGreaterThanEnd);
         }
         if start > 2147483647 {
@@ -29,16 +30,8 @@ impl TextRange {
         return self.get_length() == 0;
     }
 
-    pub fn to_string(&self) -> String {
-        return format!("{}{}{}{}{}{}{}",
-            "TextRange(",
-            "start=",
-            crate::runtime::int_text::IntText::int_text(self.start),
-            ", ",
-            "end=",
-            crate::runtime::int_text::IntText::int_text(self.end),
-            ")"
-        );
+    pub fn to_string(&self) -> UString {
+        return UString::from(format!("{}", { let mut __s = UString::new(); __s += &(UString::from("TextRange(")); __s += &(UString::from("start=")); __s += &(UString::from(format!("{}", crate::runtime::int_text::IntText::int_text(self.start)).as_str())); __s += &(UString::from(", ")); __s += &(UString::from("end=")); __s += &(UString::from(format!("{}", crate::runtime::int_text::IntText::int_text(self.end)).as_str())); __s += &(UString::from(")")); __s }).as_str());
     }
 }
 

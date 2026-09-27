@@ -1,3 +1,5 @@
+use crate::runtime::u_string::UStr;
+use crate::runtime::u_string::UString;
 use std::sync::Arc;
 
 
@@ -15,14 +17,14 @@ impl SortedTable {
         return 0;
     }
 
-    pub fn sorted_table_compare_strings(a: &str, b: &str) -> i32 {
+    pub fn sorted_table_compare_strings(a: &UStr, b: &UStr) -> i32 {
         let end_a = i32::from_ne_bytes(u32::try_from(((a).len()) & 4294967295).unwrap_or(0).to_ne_bytes());
         let end_b = i32::from_ne_bytes(u32::try_from(((b).len()) & 4294967295).unwrap_or(0).to_ne_bytes());
         let mut index_a = 0i32;
         let mut index_b = 0i32;
         while (index_a) < (end_a) && (index_b) < (end_b) {
-            let code_a = i32::try_from(u32::from((a)[usize::try_from(index_a).unwrap_or(0)..].chars().next().unwrap_or('\0'))).unwrap_or(0);
-            let code_b = i32::try_from(u32::from((b)[usize::try_from(index_b).unwrap_or(0)..].chars().next().unwrap_or('\0'))).unwrap_or(0);
+            let code_a = i32::try_from(u32::from((a)[usize::try_from(index_a).unwrap_or(0)..].first().copied().unwrap_or(0))).unwrap_or(0);
+            let code_b = i32::try_from(u32::from((b)[usize::try_from(index_b).unwrap_or(0)..].first().copied().unwrap_or(0))).unwrap_or(0);
             if code_a != code_b {
                 if code_a >= 57344 && (code_a) < (65536) && (code_b) >= 65536 {
                     return 1;
@@ -35,8 +37,8 @@ impl SortedTable {
                 }
                 return 1;
             }
-            index_a = i32::from_ne_bytes(u32::try_from((usize::try_from(index_a).unwrap_or(0) + (a)[usize::try_from(index_a).unwrap_or(0)..].chars().next().unwrap_or('\0').len_utf8()) & 4294967295).unwrap_or(0).to_ne_bytes());
-            index_b = i32::from_ne_bytes(u32::try_from((usize::try_from(index_b).unwrap_or(0) + (b)[usize::try_from(index_b).unwrap_or(0)..].chars().next().unwrap_or('\0').len_utf8()) & 4294967295).unwrap_or(0).to_ne_bytes());
+            index_a = i32::from_ne_bytes(u32::try_from((usize::try_from(index_a).unwrap_or(0) + 1) & 4294967295).unwrap_or(0).to_ne_bytes());
+            index_b = i32::from_ne_bytes(u32::try_from((usize::try_from(index_b).unwrap_or(0) + 1) & 4294967295).unwrap_or(0).to_ne_bytes());
         }
         if index_a < (end_a) {
             return 1;
@@ -122,24 +124,17 @@ impl<K: Clone, V: Clone> SortedMapTable<K, V> {
 }
 
 impl<K: Clone + std::fmt::Debug, V: Clone + std::fmt::Debug> SortedMapTable<K, V> {
-    pub fn to_string(&self) -> String {
-        let mut out = "{".to_string();
+    pub fn to_string(&self) -> UString {
+        let mut out = UString::from("{").to_ustring();
         let mut i = 0i32;
         while (i) < (i32::from_ne_bytes(u32::try_from((((self.keys).clone()).len()) & 4294967295).unwrap_or(0).to_ne_bytes())) {
             if i > (0) {
-                out += &(", ");
+                out += &(UString::from(", "));
             }
-            out += &(format!("{}{}{}",
-            format!("{:?}", (self.keys[usize::try_from(i).unwrap_or(0)]).clone()),
-            "=",
-            format!("{:?}", (self.values[usize::try_from(i).unwrap_or(0)]).clone())
-        ));
+            out += &({ let mut __s = UString::new(); __s += UString::from(format!("{}", format!("{:?}", (self.keys[usize::try_from(i).unwrap_or(0)]).clone())).as_str()).as_ustr(); __s += &(UString::from("=")); __s += UString::from(format!("{}", format!("{:?}", (self.values[usize::try_from(i).unwrap_or(0)]).clone())).as_str()).as_ustr(); __s });
             i = i32::wrapping_add(i, 1);
         }
-        return format!("{}{}",
-            out,
-            "}"
-        );
+        return UString::from(format!("{}", { let mut __s = UString::new(); __s += out.as_ustr(); __s += &(UString::from("}")); __s }).as_str());
     }
 }
 
@@ -204,8 +199,7 @@ impl<K: Clone, V: Clone> SortedMapTableBuilder<K, V> {
         i = 0i32;
         while (i) < (total) {
             let mut run = i;
-            while (i32::wrapping_add(run, 1)) < (total) && (self.compare)(&((self.keys[usize::try_from(order[usize::try_from(i32::wrapping_add(run, 1)).unwrap_or(0)]).unwrap_or(0)]).clone()),
-&((self.keys[usize::try_from(order[usize::try_from(i).unwrap_or(0)]).unwrap_or(0)]).clone())) == 0 {
+            while (i32::wrapping_add(run, 1)) < (total) && (self.compare)(&((self.keys[usize::try_from(order[usize::try_from(i32::wrapping_add(run, 1)).unwrap_or(0)]).unwrap_or(0)]).clone()), &((self.keys[usize::try_from(order[usize::try_from(i).unwrap_or(0)]).unwrap_or(0)]).clone())) == 0 {
                 run = i32::wrapping_add(run, 1);
             }
             out_keys.push((self.keys[usize::try_from(order[usize::try_from(run).unwrap_or(0)]).unwrap_or(0)]).clone());
@@ -268,20 +262,17 @@ impl<K: Clone> SortedSetTable<K> {
 }
 
 impl<K: Clone + std::fmt::Debug> SortedSetTable<K> {
-    pub fn to_string(&self) -> String {
-        let mut out = "[".to_string();
+    pub fn to_string(&self) -> UString {
+        let mut out = UString::from("[").to_ustring();
         let mut i = 0i32;
         while (i) < (i32::from_ne_bytes(u32::try_from((((self.keys).clone()).len()) & 4294967295).unwrap_or(0).to_ne_bytes())) {
             if i > (0) {
-                out += &(", ");
+                out += &(UString::from(", "));
             }
             out += &(format!("{:?}", (self.keys[usize::try_from(i).unwrap_or(0)]).clone()));
             i = i32::wrapping_add(i, 1);
         }
-        return format!("{}{}",
-            out,
-            "]"
-        );
+        return UString::from(format!("{}", { let mut __s = UString::new(); __s += out.as_ustr(); __s += &(UString::from("]")); __s }).as_str());
     }
 }
 
@@ -331,8 +322,7 @@ impl<K: Clone> SortedSetTableBuilder<K> {
         i = 0i32;
         while (i) < (total) {
             let mut run = i;
-            while (i32::wrapping_add(run, 1)) < (total) && (self.compare)(&((self.keys[usize::try_from(order[usize::try_from(i32::wrapping_add(run, 1)).unwrap_or(0)]).unwrap_or(0)]).clone()),
-&((self.keys[usize::try_from(order[usize::try_from(i).unwrap_or(0)]).unwrap_or(0)]).clone())) == 0 {
+            while (i32::wrapping_add(run, 1)) < (total) && (self.compare)(&((self.keys[usize::try_from(order[usize::try_from(i32::wrapping_add(run, 1)).unwrap_or(0)]).unwrap_or(0)]).clone()), &((self.keys[usize::try_from(order[usize::try_from(i).unwrap_or(0)]).unwrap_or(0)]).clone())) == 0 {
                 run = i32::wrapping_add(run, 1);
             }
             out_keys.push((self.keys[usize::try_from(order[usize::try_from(run).unwrap_or(0)]).unwrap_or(0)]).clone());

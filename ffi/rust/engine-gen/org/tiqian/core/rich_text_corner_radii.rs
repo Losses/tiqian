@@ -1,3 +1,6 @@
+use crate::runtime::u_string::UString;
+
+
 #[derive(Debug, Clone, PartialEq)]
 pub struct RichTextCornerRadii {
     pub top_left: f64,
@@ -24,21 +27,7 @@ impl RichTextCornerRadii {
         return self.top_left == self.top_right && self.top_right == self.bottom_right && self.bottom_right == self.bottom_left;
     }
 
-    pub fn to_string(&self) -> String {
-        return format!("{}{}{}{}{}{}{}{}{}{}{}{}{}",
-            "RichTextCornerRadii(",
-            "topLeft=",
-            self.top_left,
-            ", ",
-            "topRight=",
-            self.top_right,
-            ", ",
-            "bottomRight=",
-            self.bottom_right,
-            ", ",
-            "bottomLeft=",
-            self.bottom_left,
-            ")"
-        );
+    pub fn to_string(&self) -> UString {
+        return UString::from(format!("{}", { let mut __s = UString::new(); __s += &(UString::from("RichTextCornerRadii(")); __s += &(UString::from("topLeft=")); __s += &(crate::runtime::fp_helper::FPHelper::format_float(self.top_left)); __s += &(UString::from(", ")); __s += &(UString::from("topRight=")); __s += &(crate::runtime::fp_helper::FPHelper::format_float(self.top_right)); __s += &(UString::from(", ")); __s += &(UString::from("bottomRight=")); __s += &(crate::runtime::fp_helper::FPHelper::format_float(self.bottom_right)); __s += &(UString::from(", ")); __s += &(UString::from("bottomLeft=")); __s += &(crate::runtime::fp_helper::FPHelper::format_float(self.bottom_left)); __s += &(UString::from(")")); __s }).as_str());
     }
 }

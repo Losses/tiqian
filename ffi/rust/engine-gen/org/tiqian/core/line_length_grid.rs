@@ -1,4 +1,5 @@
 use crate::org::tiqian::core::last_line_alignment::LastLineAlignment;
+use crate::runtime::u_string::UString;
 
 
 #[derive(Debug, Clone, PartialEq)]
@@ -17,15 +18,7 @@ impl LineLengthGrid {
         }
     }
 
-    pub fn to_string(&self) -> String {
-        return format!("{}{}{}{}{}{}{}",
-            "LineLengthGrid(",
-            "enabled=",
-            self.enabled,
-            ", ",
-            "bodyAlignment=",
-            (match &(self.body_alignment) { None => "null".to_string(), Some(__option) => (*__option).name().to_string() }),
-            ")"
-        );
+    pub fn to_string(&self) -> UString {
+        return UString::from(format!("{}", { let mut __s = UString::new(); __s += &(UString::from("LineLengthGrid(")); __s += &(UString::from("enabled=")); __s += UString::from(format!("{}", (self.enabled).to_string()).as_str()).as_ustr(); __s += &(UString::from(", ")); __s += &(UString::from("bodyAlignment=")); __s += (match &(self.body_alignment) { None => UString::from("null"), Some(__option) => UString::from((*__option).name()) }).as_ustr(); __s += &(UString::from(")")); __s }).as_str());
     }
 }

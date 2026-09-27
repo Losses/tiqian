@@ -22,12 +22,24 @@ use crate::org::tiqian::shaping::text_shaper::ExplainableStubTextShaper;
 use crate::org::tiqian::test::trace::traced_assertions::TracedAssertions;
 use crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault;
 use crate::runtime::u_string;
+use crate::runtime::u_string::UStr;
+use crate::runtime::u_string::UString;
+use std::sync::Arc;
+use std::sync::Mutex;
 
 
 #[derive(Debug, Clone, PartialEq)]
 pub enum PreparedParagraphRenderEvidenceTestSupportLayoutFault {
     TextRangeErrorFault(crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError),
     UStringFaultFault(crate::std::u_string_exception::UStringFault),
+}
+impl std::fmt::Display for PreparedParagraphRenderEvidenceTestSupportLayoutFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            PreparedParagraphRenderEvidenceTestSupportLayoutFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            PreparedParagraphRenderEvidenceTestSupportLayoutFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
 }
 
 impl From<PreparedParagraphRenderEvidenceTestSupportLayoutFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
@@ -65,24 +77,20 @@ pub struct PreparedParagraphRenderEvidenceTestSupport;
 
 impl PreparedParagraphRenderEvidenceTestSupport {
     pub fn prepared_paragraph_render_evidence_test_support_layout(input: LayoutInput) -> Result<LayoutResult, ParagraphLayoutEngineNewFault> {
-        return Ok(ExplainableStubParagraphLayoutEngine::new(Some(Box::new(CjkFontRoleClassifier::new())), Some(Box::new(ParagraphLayoutFallbackResolver::new(Some("cjk-primary".to_string()), Some("latin-primary".to_string()), Some("symbol-fallback".to_string()))?)),
-Some(Box::new(BuiltInClreqProfileResolver::new())), Some(Box::new(StubFontMetricsResolver::new())), Some(Box::new(ScriptAwareFontMetricsNormalizer::new())), Some((PunctuationAtomBuilder::new(None, None)?).clone()), Some((PunctuationSpacingCompressor::new()?).clone()),
-Some(QuotePairAnalyzer::new()), Some(Box::new(LookaheadLineBreaker::new(Some(2), Some(2), Some(0.5), Some(Box::new(ClreqKinsokuRule::new(Some(KinsokuLevel::Basic)))), Some(2), Some(10), Some(20), Some(12.0)))), Some(Justifier::new(Some(0.5), Some(0.25))),
-Some(Box::new(ExplainableStubTextShaper::new())), Some((DefaultHyphenator::default_hyphenator_default_hyphenator()?).clone()), Some(Box::new(LruWidthIndependentAnnotationCache::new(512))))?.layout((input).clone()).map_err(|e|
-ParagraphLayoutEngineNewFault::LayoutWithRejectedTechnicalTiersFault(e))?);
+        return Ok(ExplainableStubParagraphLayoutEngine::new(Some(Box::new(CjkFontRoleClassifier::new())), Some(Box::new(ParagraphLayoutFallbackResolver::new(Some(UString::from("cjk-primary")), Some(UString::from("latin-primary")), Some(UString::from("symbol-fallback")))?)), Some(Box::new(BuiltInClreqProfileResolver::new())), Some(Box::new(StubFontMetricsResolver::new())), Some(Box::new(ScriptAwareFontMetricsNormalizer::new())), Some((PunctuationAtomBuilder::new(None, None)?).clone()), Some((PunctuationSpacingCompressor::new()?).clone()), Some(QuotePairAnalyzer::new()), Some(Box::new(LookaheadLineBreaker::new(Some(2), Some(2), Some(0.5), Some(Box::new(ClreqKinsokuRule::new(Some(KinsokuLevel::Basic)))), Some(2), Some(10), Some(20), Some(12.0)))), Some(Justifier::new(Some(0.5), Some(0.25))), Some(Arc::new(Mutex::new(ExplainableStubTextShaper::new()))), Some((DefaultHyphenator::default_hyphenator_default_hyphenator()?).clone()), Some(Arc::new(Mutex::new(LruWidthIndependentAnnotationCache::new(512)))))?.layout((input).clone()).map_err(|e| ParagraphLayoutEngineNewFault::LayoutWithRejectedTechnicalTiersFault(e))?);
     }
 
-    pub fn prepared_paragraph_render_evidence_test_support_evidence(r: LayoutResult) -> Result<String, PreparedParagraphToPreparedParagraphJsonFault> {
+    pub fn prepared_paragraph_render_evidence_test_support_evidence(r: LayoutResult) -> Result<UString, PreparedParagraphToPreparedParagraphJsonFault> {
         return Ok(PreparedParagraphFns::prepared_paragraph_fns_to_prepared_paragraph_json((r).clone(), true)?);
     }
 
-    pub fn prepared_paragraph_render_evidence_test_support_plain(r: LayoutResult) -> Result<String, PreparedParagraphToPreparedParagraphJsonFault> {
+    pub fn prepared_paragraph_render_evidence_test_support_plain(r: LayoutResult) -> Result<UString, PreparedParagraphToPreparedParagraphJsonFault> {
         return Ok(PreparedParagraphFns::prepared_paragraph_fns_to_prepared_paragraph_json((r).clone(), false)?);
     }
 
-    pub fn prepared_paragraph_render_evidence_test_support_contains(s: &str, x: &str, msg: &str) -> Result<(), TracedAssertionsFailFault> {
-        if u32::from_ne_bytes((u_string::find_from(&s, x, 0)).to_ne_bytes()) > 2147483647 {
-            let _ = TracedAssertions::traced_assertions_fail(Some((msg).to_string()), None)?;
+    pub fn prepared_paragraph_render_evidence_test_support_contains(s: &UStr, x: &UStr, msg: &UStr) -> Result<(), TracedAssertionsFailFault> {
+        if u32::from_ne_bytes(((u_string::find_from(&(s), x, 0)) as u32).to_ne_bytes()) > 2147483647 {
+            let _ = TracedAssertions::traced_assertions_fail(Some((msg).to_ustring()), None)?;
         }
         Ok(())
     }

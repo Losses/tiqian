@@ -15,6 +15,10 @@ use crate::org::tiqian::test::test_helpers::TestHelpers;
 use crate::org::tiqian::test::trace::test_trace_recorder::TestTraceRecorder;
 use crate::org::tiqian::test::trace::traced_assertions::TracedAssertions;
 use crate::runtime::test as testlib;
+use crate::runtime::u_string::UStr;
+use crate::runtime::u_string::UString;
+use std::sync::Arc;
+use std::sync::Mutex;
 
 
 #[derive(Debug, Clone, PartialEq)]
@@ -25,6 +29,18 @@ pub enum LineAdjustmentStageCoverageTestZeroAdvanceEdgeSpaceIsNeverCollapsedFaul
     TracedAssertionsAssertEqualsFloatFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsAssertEqualsFloatFault),
     ParagraphLayoutEngineNewFaultFault(crate::org::tiqian::layout::paragraph_layout_engine::ParagraphLayoutEngineNewFault),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
+}
+impl std::fmt::Display for LineAdjustmentStageCoverageTestZeroAdvanceEdgeSpaceIsNeverCollapsedFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            LineAdjustmentStageCoverageTestZeroAdvanceEdgeSpaceIsNeverCollapsedFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            LineAdjustmentStageCoverageTestZeroAdvanceEdgeSpaceIsNeverCollapsedFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            LineAdjustmentStageCoverageTestZeroAdvanceEdgeSpaceIsNeverCollapsedFault::TracedAssertionsAssertTrueFaultFault(value) => write!(formatter, "{}", value),
+            LineAdjustmentStageCoverageTestZeroAdvanceEdgeSpaceIsNeverCollapsedFault::TracedAssertionsAssertEqualsFloatFaultFault(value) => write!(formatter, "{}", value),
+            LineAdjustmentStageCoverageTestZeroAdvanceEdgeSpaceIsNeverCollapsedFault::ParagraphLayoutEngineNewFaultFault(value) => write!(formatter, "{}", value),
+            LineAdjustmentStageCoverageTestZeroAdvanceEdgeSpaceIsNeverCollapsedFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
 }
 
 impl From<LineAdjustmentStageCoverageTestZeroAdvanceEdgeSpaceIsNeverCollapsedFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
@@ -126,6 +142,18 @@ pub enum LineAdjustmentStageCoverageTestTrailingMandatoryBreakEmitsTerminalEmpty
     ParagraphLayoutEngineNewFaultFault(crate::org::tiqian::layout::paragraph_layout_engine::ParagraphLayoutEngineNewFault),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
 }
+impl std::fmt::Display for LineAdjustmentStageCoverageTestTrailingMandatoryBreakEmitsTerminalEmptyLineWithoutHyphenFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            LineAdjustmentStageCoverageTestTrailingMandatoryBreakEmitsTerminalEmptyLineWithoutHyphenFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            LineAdjustmentStageCoverageTestTrailingMandatoryBreakEmitsTerminalEmptyLineWithoutHyphenFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            LineAdjustmentStageCoverageTestTrailingMandatoryBreakEmitsTerminalEmptyLineWithoutHyphenFault::TracedAssertionsAssertTrueFaultFault(value) => write!(formatter, "{}", value),
+            LineAdjustmentStageCoverageTestTrailingMandatoryBreakEmitsTerminalEmptyLineWithoutHyphenFault::TracedAssertionsAssertEqualsFloatFaultFault(value) => write!(formatter, "{}", value),
+            LineAdjustmentStageCoverageTestTrailingMandatoryBreakEmitsTerminalEmptyLineWithoutHyphenFault::ParagraphLayoutEngineNewFaultFault(value) => write!(formatter, "{}", value),
+            LineAdjustmentStageCoverageTestTrailingMandatoryBreakEmitsTerminalEmptyLineWithoutHyphenFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
+}
 
 impl From<LineAdjustmentStageCoverageTestTrailingMandatoryBreakEmitsTerminalEmptyLineWithoutHyphenFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
     fn from(value: LineAdjustmentStageCoverageTestTrailingMandatoryBreakEmitsTerminalEmptyLineWithoutHyphenFault) -> Self {
@@ -226,6 +254,18 @@ pub enum LineAdjustmentStageCoverageTestTinyTechnicalTrackingStaysBelowTheReject
     ParagraphLayoutEngineNewFaultFault(crate::org::tiqian::layout::paragraph_layout_engine::ParagraphLayoutEngineNewFault),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
 }
+impl std::fmt::Display for LineAdjustmentStageCoverageTestTinyTechnicalTrackingStaysBelowTheRejectionThresholdFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            LineAdjustmentStageCoverageTestTinyTechnicalTrackingStaysBelowTheRejectionThresholdFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            LineAdjustmentStageCoverageTestTinyTechnicalTrackingStaysBelowTheRejectionThresholdFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            LineAdjustmentStageCoverageTestTinyTechnicalTrackingStaysBelowTheRejectionThresholdFault::TracedAssertionsAssertEqualsIntRangeFaultFault(value) => write!(formatter, "{}", value),
+            LineAdjustmentStageCoverageTestTinyTechnicalTrackingStaysBelowTheRejectionThresholdFault::TracedAssertionsAssertTrueFaultFault(value) => write!(formatter, "{}", value),
+            LineAdjustmentStageCoverageTestTinyTechnicalTrackingStaysBelowTheRejectionThresholdFault::ParagraphLayoutEngineNewFaultFault(value) => write!(formatter, "{}", value),
+            LineAdjustmentStageCoverageTestTinyTechnicalTrackingStaysBelowTheRejectionThresholdFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
+}
 
 impl From<LineAdjustmentStageCoverageTestTinyTechnicalTrackingStaysBelowTheRejectionThresholdFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
     fn from(value: LineAdjustmentStageCoverageTestTinyTechnicalTrackingStaysBelowTheRejectionThresholdFault) -> Self {
@@ -325,6 +365,17 @@ pub enum LineAdjustmentStageCoverageTestTechnicalLineBodyStretchRejectsTheCleanT
     ParagraphLayoutEngineNewFaultFault(crate::org::tiqian::layout::paragraph_layout_engine::ParagraphLayoutEngineNewFault),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
 }
+impl std::fmt::Display for LineAdjustmentStageCoverageTestTechnicalLineBodyStretchRejectsTheCleanTierAndReplaysFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            LineAdjustmentStageCoverageTestTechnicalLineBodyStretchRejectsTheCleanTierAndReplaysFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            LineAdjustmentStageCoverageTestTechnicalLineBodyStretchRejectsTheCleanTierAndReplaysFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            LineAdjustmentStageCoverageTestTechnicalLineBodyStretchRejectsTheCleanTierAndReplaysFault::TracedAssertionsAssertTrueFaultFault(value) => write!(formatter, "{}", value),
+            LineAdjustmentStageCoverageTestTechnicalLineBodyStretchRejectsTheCleanTierAndReplaysFault::ParagraphLayoutEngineNewFaultFault(value) => write!(formatter, "{}", value),
+            LineAdjustmentStageCoverageTestTechnicalLineBodyStretchRejectsTheCleanTierAndReplaysFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
+}
 
 impl From<LineAdjustmentStageCoverageTestTechnicalLineBodyStretchRejectsTheCleanTierAndReplaysFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
     fn from(value: LineAdjustmentStageCoverageTestTechnicalLineBodyStretchRejectsTheCleanTierAndReplaysFault) -> Self {
@@ -410,6 +461,19 @@ pub enum LineAdjustmentStageCoverageTestMandatoryBreakMiddleLineSkipsItsJustific
     TracedAssertionsAssertTrueFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsAssertTrueFault),
     ParagraphLayoutEngineNewFaultFault(crate::org::tiqian::layout::paragraph_layout_engine::ParagraphLayoutEngineNewFault),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
+}
+impl std::fmt::Display for LineAdjustmentStageCoverageTestMandatoryBreakMiddleLineSkipsItsJustificationPlanFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            LineAdjustmentStageCoverageTestMandatoryBreakMiddleLineSkipsItsJustificationPlanFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            LineAdjustmentStageCoverageTestMandatoryBreakMiddleLineSkipsItsJustificationPlanFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            LineAdjustmentStageCoverageTestMandatoryBreakMiddleLineSkipsItsJustificationPlanFault::TracedAssertionsAssertEqualsFaultFault(value) => write!(formatter, "{}", value),
+            LineAdjustmentStageCoverageTestMandatoryBreakMiddleLineSkipsItsJustificationPlanFault::TracedAssertionsAssertEqualsIntRangeFaultFault(value) => write!(formatter, "{}", value),
+            LineAdjustmentStageCoverageTestMandatoryBreakMiddleLineSkipsItsJustificationPlanFault::TracedAssertionsAssertTrueFaultFault(value) => write!(formatter, "{}", value),
+            LineAdjustmentStageCoverageTestMandatoryBreakMiddleLineSkipsItsJustificationPlanFault::ParagraphLayoutEngineNewFaultFault(value) => write!(formatter, "{}", value),
+            LineAdjustmentStageCoverageTestMandatoryBreakMiddleLineSkipsItsJustificationPlanFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
 }
 
 impl From<LineAdjustmentStageCoverageTestMandatoryBreakMiddleLineSkipsItsJustificationPlanFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
@@ -526,6 +590,18 @@ pub enum LineAdjustmentStageCoverageTestLoneMandatoryBreakEmitsTwoZeroWidthLines
     ParagraphLayoutEngineNewFaultFault(crate::org::tiqian::layout::paragraph_layout_engine::ParagraphLayoutEngineNewFault),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
 }
+impl std::fmt::Display for LineAdjustmentStageCoverageTestLoneMandatoryBreakEmitsTwoZeroWidthLinesFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            LineAdjustmentStageCoverageTestLoneMandatoryBreakEmitsTwoZeroWidthLinesFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            LineAdjustmentStageCoverageTestLoneMandatoryBreakEmitsTwoZeroWidthLinesFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            LineAdjustmentStageCoverageTestLoneMandatoryBreakEmitsTwoZeroWidthLinesFault::TracedAssertionsAssertEqualsFaultFault(value) => write!(formatter, "{}", value),
+            LineAdjustmentStageCoverageTestLoneMandatoryBreakEmitsTwoZeroWidthLinesFault::TracedAssertionsAssertTrueFaultFault(value) => write!(formatter, "{}", value),
+            LineAdjustmentStageCoverageTestLoneMandatoryBreakEmitsTwoZeroWidthLinesFault::ParagraphLayoutEngineNewFaultFault(value) => write!(formatter, "{}", value),
+            LineAdjustmentStageCoverageTestLoneMandatoryBreakEmitsTwoZeroWidthLinesFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
+}
 
 impl From<LineAdjustmentStageCoverageTestLoneMandatoryBreakEmitsTwoZeroWidthLinesFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
     fn from(value: LineAdjustmentStageCoverageTestLoneMandatoryBreakEmitsTwoZeroWidthLinesFault) -> Self {
@@ -627,6 +703,20 @@ pub enum LineAdjustmentStageCoverageTestLoneLatinClusterMergesBothAutoSpaceEdgeT
     TracedAssertionsAssertEqualsFloatFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsAssertEqualsFloatFault),
     ParagraphLayoutEngineNewFaultFault(crate::org::tiqian::layout::paragraph_layout_engine::ParagraphLayoutEngineNewFault),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
+}
+impl std::fmt::Display for LineAdjustmentStageCoverageTestLoneLatinClusterMergesBothAutoSpaceEdgeTrimsIntoOneKeyFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            LineAdjustmentStageCoverageTestLoneLatinClusterMergesBothAutoSpaceEdgeTrimsIntoOneKeyFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            LineAdjustmentStageCoverageTestLoneLatinClusterMergesBothAutoSpaceEdgeTrimsIntoOneKeyFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            LineAdjustmentStageCoverageTestLoneLatinClusterMergesBothAutoSpaceEdgeTrimsIntoOneKeyFault::TracedAssertionsAssertEqualsIntRangeFaultFault(value) => write!(formatter, "{}", value),
+            LineAdjustmentStageCoverageTestLoneLatinClusterMergesBothAutoSpaceEdgeTrimsIntoOneKeyFault::TracedAssertionsAssertEqualsStringArrayFaultFault(value) => write!(formatter, "{}", value),
+            LineAdjustmentStageCoverageTestLoneLatinClusterMergesBothAutoSpaceEdgeTrimsIntoOneKeyFault::TracedAssertionsAssertTrueFaultFault(value) => write!(formatter, "{}", value),
+            LineAdjustmentStageCoverageTestLoneLatinClusterMergesBothAutoSpaceEdgeTrimsIntoOneKeyFault::TracedAssertionsAssertEqualsFloatFaultFault(value) => write!(formatter, "{}", value),
+            LineAdjustmentStageCoverageTestLoneLatinClusterMergesBothAutoSpaceEdgeTrimsIntoOneKeyFault::ParagraphLayoutEngineNewFaultFault(value) => write!(formatter, "{}", value),
+            LineAdjustmentStageCoverageTestLoneLatinClusterMergesBothAutoSpaceEdgeTrimsIntoOneKeyFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
 }
 
 impl From<LineAdjustmentStageCoverageTestLoneLatinClusterMergesBothAutoSpaceEdgeTrimsIntoOneKeyFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
@@ -759,6 +849,19 @@ pub enum LineAdjustmentStageCoverageTestHyphenSqueezeFallsBackToZeroUsedGlueWhen
     ParagraphLayoutEngineNewFaultFault(crate::org::tiqian::layout::paragraph_layout_engine::ParagraphLayoutEngineNewFault),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
 }
+impl std::fmt::Display for LineAdjustmentStageCoverageTestHyphenSqueezeFallsBackToZeroUsedGlueWhenTheLineAlreadyFitsFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            LineAdjustmentStageCoverageTestHyphenSqueezeFallsBackToZeroUsedGlueWhenTheLineAlreadyFitsFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            LineAdjustmentStageCoverageTestHyphenSqueezeFallsBackToZeroUsedGlueWhenTheLineAlreadyFitsFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            LineAdjustmentStageCoverageTestHyphenSqueezeFallsBackToZeroUsedGlueWhenTheLineAlreadyFitsFault::TracedAssertionsAssertEqualsIntRangeFaultFault(value) => write!(formatter, "{}", value),
+            LineAdjustmentStageCoverageTestHyphenSqueezeFallsBackToZeroUsedGlueWhenTheLineAlreadyFitsFault::TracedAssertionsAssertEqualsFloatFaultFault(value) => write!(formatter, "{}", value),
+            LineAdjustmentStageCoverageTestHyphenSqueezeFallsBackToZeroUsedGlueWhenTheLineAlreadyFitsFault::TracedAssertionsAssertTrueFaultFault(value) => write!(formatter, "{}", value),
+            LineAdjustmentStageCoverageTestHyphenSqueezeFallsBackToZeroUsedGlueWhenTheLineAlreadyFitsFault::ParagraphLayoutEngineNewFaultFault(value) => write!(formatter, "{}", value),
+            LineAdjustmentStageCoverageTestHyphenSqueezeFallsBackToZeroUsedGlueWhenTheLineAlreadyFitsFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
+}
 
 impl From<LineAdjustmentStageCoverageTestHyphenSqueezeFallsBackToZeroUsedGlueWhenTheLineAlreadyFitsFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
     fn from(value: LineAdjustmentStageCoverageTestHyphenSqueezeFallsBackToZeroUsedGlueWhenTheLineAlreadyFitsFault) -> Self {
@@ -874,6 +977,18 @@ pub enum LineAdjustmentStageCoverageTestHyphenSqueezeConsumesTheWordSpaceRawAdva
     ParagraphLayoutEngineNewFaultFault(crate::org::tiqian::layout::paragraph_layout_engine::ParagraphLayoutEngineNewFault),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
 }
+impl std::fmt::Display for LineAdjustmentStageCoverageTestHyphenSqueezeConsumesTheWordSpaceRawAdvanceChannelFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            LineAdjustmentStageCoverageTestHyphenSqueezeConsumesTheWordSpaceRawAdvanceChannelFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            LineAdjustmentStageCoverageTestHyphenSqueezeConsumesTheWordSpaceRawAdvanceChannelFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            LineAdjustmentStageCoverageTestHyphenSqueezeConsumesTheWordSpaceRawAdvanceChannelFault::TracedAssertionsAssertEqualsFloatFaultFault(value) => write!(formatter, "{}", value),
+            LineAdjustmentStageCoverageTestHyphenSqueezeConsumesTheWordSpaceRawAdvanceChannelFault::TracedAssertionsAssertEqualsFloatToleranceFaultFault(value) => write!(formatter, "{}", value),
+            LineAdjustmentStageCoverageTestHyphenSqueezeConsumesTheWordSpaceRawAdvanceChannelFault::ParagraphLayoutEngineNewFaultFault(value) => write!(formatter, "{}", value),
+            LineAdjustmentStageCoverageTestHyphenSqueezeConsumesTheWordSpaceRawAdvanceChannelFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
+}
 
 impl From<LineAdjustmentStageCoverageTestHyphenSqueezeConsumesTheWordSpaceRawAdvanceChannelFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
     fn from(value: LineAdjustmentStageCoverageTestHyphenSqueezeConsumesTheWordSpaceRawAdvanceChannelFault) -> Self {
@@ -973,6 +1088,18 @@ pub enum LineAdjustmentStageCoverageTestHyphenSqueezeConsumesTheInterpunctPaired
     TracedAssertionsAssertEqualsFloatFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsAssertEqualsFloatFault),
     ParagraphLayoutEngineNewFaultFault(crate::org::tiqian::layout::paragraph_layout_engine::ParagraphLayoutEngineNewFault),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
+}
+impl std::fmt::Display for LineAdjustmentStageCoverageTestHyphenSqueezeConsumesTheInterpunctPairedChannelFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            LineAdjustmentStageCoverageTestHyphenSqueezeConsumesTheInterpunctPairedChannelFault::NoSuchElementErrorFault(value) => write!(formatter, "{}", value),
+            LineAdjustmentStageCoverageTestHyphenSqueezeConsumesTheInterpunctPairedChannelFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            LineAdjustmentStageCoverageTestHyphenSqueezeConsumesTheInterpunctPairedChannelFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            LineAdjustmentStageCoverageTestHyphenSqueezeConsumesTheInterpunctPairedChannelFault::TracedAssertionsAssertEqualsFloatFaultFault(value) => write!(formatter, "{}", value),
+            LineAdjustmentStageCoverageTestHyphenSqueezeConsumesTheInterpunctPairedChannelFault::ParagraphLayoutEngineNewFaultFault(value) => write!(formatter, "{}", value),
+            LineAdjustmentStageCoverageTestHyphenSqueezeConsumesTheInterpunctPairedChannelFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
 }
 
 impl From<LineAdjustmentStageCoverageTestHyphenSqueezeConsumesTheInterpunctPairedChannelFault> for crate::org::tiqian::core::tiqian_no_such_element_exception::NoSuchElementError {
@@ -1074,6 +1201,18 @@ pub enum LineAdjustmentStageCoverageTestHyphenSqueezeConsumesOpeningAndClosingBr
     ParagraphLayoutEngineNewFaultFault(crate::org::tiqian::layout::paragraph_layout_engine::ParagraphLayoutEngineNewFault),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
 }
+impl std::fmt::Display for LineAdjustmentStageCoverageTestHyphenSqueezeConsumesOpeningAndClosingBracketGlueChannelsFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            LineAdjustmentStageCoverageTestHyphenSqueezeConsumesOpeningAndClosingBracketGlueChannelsFault::NoSuchElementErrorFault(value) => write!(formatter, "{}", value),
+            LineAdjustmentStageCoverageTestHyphenSqueezeConsumesOpeningAndClosingBracketGlueChannelsFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            LineAdjustmentStageCoverageTestHyphenSqueezeConsumesOpeningAndClosingBracketGlueChannelsFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            LineAdjustmentStageCoverageTestHyphenSqueezeConsumesOpeningAndClosingBracketGlueChannelsFault::TracedAssertionsAssertEqualsFloatFaultFault(value) => write!(formatter, "{}", value),
+            LineAdjustmentStageCoverageTestHyphenSqueezeConsumesOpeningAndClosingBracketGlueChannelsFault::ParagraphLayoutEngineNewFaultFault(value) => write!(formatter, "{}", value),
+            LineAdjustmentStageCoverageTestHyphenSqueezeConsumesOpeningAndClosingBracketGlueChannelsFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
+}
 
 impl From<LineAdjustmentStageCoverageTestHyphenSqueezeConsumesOpeningAndClosingBracketGlueChannelsFault> for crate::org::tiqian::core::tiqian_no_such_element_exception::NoSuchElementError {
     fn from(value: LineAdjustmentStageCoverageTestHyphenSqueezeConsumesOpeningAndClosingBracketGlueChannelsFault) -> Self {
@@ -1173,6 +1312,18 @@ pub enum LineAdjustmentStageCoverageTestFormulaObjectWithoutBoundaryDiscardsNoth
     TracedAssertionsAssertTrueFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsAssertTrueFault),
     ParagraphLayoutEngineNewFaultFault(crate::org::tiqian::layout::paragraph_layout_engine::ParagraphLayoutEngineNewFault),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
+}
+impl std::fmt::Display for LineAdjustmentStageCoverageTestFormulaObjectWithoutBoundaryDiscardsNothingAtLineEndFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            LineAdjustmentStageCoverageTestFormulaObjectWithoutBoundaryDiscardsNothingAtLineEndFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            LineAdjustmentStageCoverageTestFormulaObjectWithoutBoundaryDiscardsNothingAtLineEndFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            LineAdjustmentStageCoverageTestFormulaObjectWithoutBoundaryDiscardsNothingAtLineEndFault::TracedAssertionsAssertEqualsIntRangeFaultFault(value) => write!(formatter, "{}", value),
+            LineAdjustmentStageCoverageTestFormulaObjectWithoutBoundaryDiscardsNothingAtLineEndFault::TracedAssertionsAssertTrueFaultFault(value) => write!(formatter, "{}", value),
+            LineAdjustmentStageCoverageTestFormulaObjectWithoutBoundaryDiscardsNothingAtLineEndFault::ParagraphLayoutEngineNewFaultFault(value) => write!(formatter, "{}", value),
+            LineAdjustmentStageCoverageTestFormulaObjectWithoutBoundaryDiscardsNothingAtLineEndFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
 }
 
 impl From<LineAdjustmentStageCoverageTestFormulaObjectWithoutBoundaryDiscardsNothingAtLineEndFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
@@ -1275,6 +1426,20 @@ pub enum LineAdjustmentStageCoverageTestFormulaLineEndDiscardsTheTrailingBoundar
     TracedAssertionsAssertEqualsStringFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsAssertEqualsStringFault),
     ParagraphLayoutEngineNewFaultFault(crate::org::tiqian::layout::paragraph_layout_engine::ParagraphLayoutEngineNewFault),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
+}
+impl std::fmt::Display for LineAdjustmentStageCoverageTestFormulaLineEndDiscardsTheTrailingBoundaryAdvanceFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            LineAdjustmentStageCoverageTestFormulaLineEndDiscardsTheTrailingBoundaryAdvanceFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            LineAdjustmentStageCoverageTestFormulaLineEndDiscardsTheTrailingBoundaryAdvanceFault::NoSuchElementErrorFault(value) => write!(formatter, "{}", value),
+            LineAdjustmentStageCoverageTestFormulaLineEndDiscardsTheTrailingBoundaryAdvanceFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            LineAdjustmentStageCoverageTestFormulaLineEndDiscardsTheTrailingBoundaryAdvanceFault::TracedAssertionsAssertEqualsIntRangeFaultFault(value) => write!(formatter, "{}", value),
+            LineAdjustmentStageCoverageTestFormulaLineEndDiscardsTheTrailingBoundaryAdvanceFault::TracedAssertionsAssertEqualsFloatFaultFault(value) => write!(formatter, "{}", value),
+            LineAdjustmentStageCoverageTestFormulaLineEndDiscardsTheTrailingBoundaryAdvanceFault::TracedAssertionsAssertEqualsStringFaultFault(value) => write!(formatter, "{}", value),
+            LineAdjustmentStageCoverageTestFormulaLineEndDiscardsTheTrailingBoundaryAdvanceFault::ParagraphLayoutEngineNewFaultFault(value) => write!(formatter, "{}", value),
+            LineAdjustmentStageCoverageTestFormulaLineEndDiscardsTheTrailingBoundaryAdvanceFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
 }
 
 impl From<LineAdjustmentStageCoverageTestFormulaLineEndDiscardsTheTrailingBoundaryAdvanceFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
@@ -1406,6 +1571,18 @@ pub enum LineAdjustmentStageCoverageTestEmptyTextYieldsZeroHeightWithoutLinesFau
     ParagraphLayoutEngineNewFaultFault(crate::org::tiqian::layout::paragraph_layout_engine::ParagraphLayoutEngineNewFault),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
 }
+impl std::fmt::Display for LineAdjustmentStageCoverageTestEmptyTextYieldsZeroHeightWithoutLinesFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            LineAdjustmentStageCoverageTestEmptyTextYieldsZeroHeightWithoutLinesFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            LineAdjustmentStageCoverageTestEmptyTextYieldsZeroHeightWithoutLinesFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            LineAdjustmentStageCoverageTestEmptyTextYieldsZeroHeightWithoutLinesFault::TracedAssertionsAssertTrueFaultFault(value) => write!(formatter, "{}", value),
+            LineAdjustmentStageCoverageTestEmptyTextYieldsZeroHeightWithoutLinesFault::TracedAssertionsAssertEqualsFloatFaultFault(value) => write!(formatter, "{}", value),
+            LineAdjustmentStageCoverageTestEmptyTextYieldsZeroHeightWithoutLinesFault::ParagraphLayoutEngineNewFaultFault(value) => write!(formatter, "{}", value),
+            LineAdjustmentStageCoverageTestEmptyTextYieldsZeroHeightWithoutLinesFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
+}
 
 impl From<LineAdjustmentStageCoverageTestEmptyTextYieldsZeroHeightWithoutLinesFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
     fn from(value: LineAdjustmentStageCoverageTestEmptyTextYieldsZeroHeightWithoutLinesFault) -> Self {
@@ -1505,6 +1682,17 @@ pub enum LineAdjustmentStageCoverageTestEmergencySelectedBreakOpensThePreferredT
     ParagraphLayoutEngineNewFaultFault(crate::org::tiqian::layout::paragraph_layout_engine::ParagraphLayoutEngineNewFault),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
 }
+impl std::fmt::Display for LineAdjustmentStageCoverageTestEmergencySelectedBreakOpensThePreferredTrackingSpanFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            LineAdjustmentStageCoverageTestEmergencySelectedBreakOpensThePreferredTrackingSpanFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            LineAdjustmentStageCoverageTestEmergencySelectedBreakOpensThePreferredTrackingSpanFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            LineAdjustmentStageCoverageTestEmergencySelectedBreakOpensThePreferredTrackingSpanFault::TracedAssertionsAssertTrueFaultFault(value) => write!(formatter, "{}", value),
+            LineAdjustmentStageCoverageTestEmergencySelectedBreakOpensThePreferredTrackingSpanFault::ParagraphLayoutEngineNewFaultFault(value) => write!(formatter, "{}", value),
+            LineAdjustmentStageCoverageTestEmergencySelectedBreakOpensThePreferredTrackingSpanFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
+}
 
 impl From<LineAdjustmentStageCoverageTestEmergencySelectedBreakOpensThePreferredTrackingSpanFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
     fn from(value: LineAdjustmentStageCoverageTestEmergencySelectedBreakOpensThePreferredTrackingSpanFault) -> Self {
@@ -1590,6 +1778,19 @@ pub enum LineAdjustmentStageCoverageTestDashRunWithoutInkBoundsKeepsSyntheticGly
     TracedAssertionsAssertEqualsFloatFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsAssertEqualsFloatFault),
     ParagraphLayoutEngineNewFaultFault(crate::org::tiqian::layout::paragraph_layout_engine::ParagraphLayoutEngineNewFault),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
+}
+impl std::fmt::Display for LineAdjustmentStageCoverageTestDashRunWithoutInkBoundsKeepsSyntheticGlyphsFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            LineAdjustmentStageCoverageTestDashRunWithoutInkBoundsKeepsSyntheticGlyphsFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            LineAdjustmentStageCoverageTestDashRunWithoutInkBoundsKeepsSyntheticGlyphsFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            LineAdjustmentStageCoverageTestDashRunWithoutInkBoundsKeepsSyntheticGlyphsFault::TracedAssertionsAssertEqualsFaultFault(value) => write!(formatter, "{}", value),
+            LineAdjustmentStageCoverageTestDashRunWithoutInkBoundsKeepsSyntheticGlyphsFault::TracedAssertionsAssertTrueFaultFault(value) => write!(formatter, "{}", value),
+            LineAdjustmentStageCoverageTestDashRunWithoutInkBoundsKeepsSyntheticGlyphsFault::TracedAssertionsAssertEqualsFloatFaultFault(value) => write!(formatter, "{}", value),
+            LineAdjustmentStageCoverageTestDashRunWithoutInkBoundsKeepsSyntheticGlyphsFault::ParagraphLayoutEngineNewFaultFault(value) => write!(formatter, "{}", value),
+            LineAdjustmentStageCoverageTestDashRunWithoutInkBoundsKeepsSyntheticGlyphsFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
 }
 
 impl From<LineAdjustmentStageCoverageTestDashRunWithoutInkBoundsKeepsSyntheticGlyphsFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
@@ -1707,6 +1908,20 @@ pub enum LineAdjustmentStageCoverageTestBlankMiddleLineSkipsEveryEdgePassFault {
     TracedAssertionsAssertTrueFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsAssertTrueFault),
     ParagraphLayoutEngineNewFaultFault(crate::org::tiqian::layout::paragraph_layout_engine::ParagraphLayoutEngineNewFault),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
+}
+impl std::fmt::Display for LineAdjustmentStageCoverageTestBlankMiddleLineSkipsEveryEdgePassFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            LineAdjustmentStageCoverageTestBlankMiddleLineSkipsEveryEdgePassFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            LineAdjustmentStageCoverageTestBlankMiddleLineSkipsEveryEdgePassFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            LineAdjustmentStageCoverageTestBlankMiddleLineSkipsEveryEdgePassFault::TracedAssertionsAssertEqualsFaultFault(value) => write!(formatter, "{}", value),
+            LineAdjustmentStageCoverageTestBlankMiddleLineSkipsEveryEdgePassFault::TracedAssertionsAssertEqualsIntRangeFaultFault(value) => write!(formatter, "{}", value),
+            LineAdjustmentStageCoverageTestBlankMiddleLineSkipsEveryEdgePassFault::TracedAssertionsAssertEqualsFloatFaultFault(value) => write!(formatter, "{}", value),
+            LineAdjustmentStageCoverageTestBlankMiddleLineSkipsEveryEdgePassFault::TracedAssertionsAssertTrueFaultFault(value) => write!(formatter, "{}", value),
+            LineAdjustmentStageCoverageTestBlankMiddleLineSkipsEveryEdgePassFault::ParagraphLayoutEngineNewFaultFault(value) => write!(formatter, "{}", value),
+            LineAdjustmentStageCoverageTestBlankMiddleLineSkipsEveryEdgePassFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
 }
 
 impl From<LineAdjustmentStageCoverageTestBlankMiddleLineSkipsEveryEdgePassFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
@@ -1837,6 +2052,17 @@ pub enum LineAdjustmentStageCoverageTestBaselineShiftSpanRaisesTheFinalClusterSh
     ParagraphLayoutEngineNewFaultFault(crate::org::tiqian::layout::paragraph_layout_engine::ParagraphLayoutEngineNewFault),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
 }
+impl std::fmt::Display for LineAdjustmentStageCoverageTestBaselineShiftSpanRaisesTheFinalClusterShiftFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            LineAdjustmentStageCoverageTestBaselineShiftSpanRaisesTheFinalClusterShiftFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            LineAdjustmentStageCoverageTestBaselineShiftSpanRaisesTheFinalClusterShiftFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            LineAdjustmentStageCoverageTestBaselineShiftSpanRaisesTheFinalClusterShiftFault::TracedAssertionsAssertEqualsFloatFaultFault(value) => write!(formatter, "{}", value),
+            LineAdjustmentStageCoverageTestBaselineShiftSpanRaisesTheFinalClusterShiftFault::ParagraphLayoutEngineNewFaultFault(value) => write!(formatter, "{}", value),
+            LineAdjustmentStageCoverageTestBaselineShiftSpanRaisesTheFinalClusterShiftFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
+}
 
 impl From<LineAdjustmentStageCoverageTestBaselineShiftSpanRaisesTheFinalClusterShiftFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
     fn from(value: LineAdjustmentStageCoverageTestBaselineShiftSpanRaisesTheFinalClusterShiftFault) -> Self {
@@ -1921,6 +2147,18 @@ pub enum LineAdjustmentStageCoverageTestAttachedObjectMarkHangsInsteadOfLeavingT
     TracedAssertionsAssertTrueFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsAssertTrueFault),
     ParagraphLayoutEngineNewFaultFault(crate::org::tiqian::layout::paragraph_layout_engine::ParagraphLayoutEngineNewFault),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
+}
+impl std::fmt::Display for LineAdjustmentStageCoverageTestAttachedObjectMarkHangsInsteadOfLeavingTheSeparatorAtAnEdgeFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            LineAdjustmentStageCoverageTestAttachedObjectMarkHangsInsteadOfLeavingTheSeparatorAtAnEdgeFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            LineAdjustmentStageCoverageTestAttachedObjectMarkHangsInsteadOfLeavingTheSeparatorAtAnEdgeFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            LineAdjustmentStageCoverageTestAttachedObjectMarkHangsInsteadOfLeavingTheSeparatorAtAnEdgeFault::TracedAssertionsAssertEqualsIntRangeFaultFault(value) => write!(formatter, "{}", value),
+            LineAdjustmentStageCoverageTestAttachedObjectMarkHangsInsteadOfLeavingTheSeparatorAtAnEdgeFault::TracedAssertionsAssertTrueFaultFault(value) => write!(formatter, "{}", value),
+            LineAdjustmentStageCoverageTestAttachedObjectMarkHangsInsteadOfLeavingTheSeparatorAtAnEdgeFault::ParagraphLayoutEngineNewFaultFault(value) => write!(formatter, "{}", value),
+            LineAdjustmentStageCoverageTestAttachedObjectMarkHangsInsteadOfLeavingTheSeparatorAtAnEdgeFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
 }
 
 impl From<LineAdjustmentStageCoverageTestAttachedObjectMarkHangsInsteadOfLeavingTheSeparatorAtAnEdgeFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
@@ -2024,6 +2262,21 @@ pub enum LineAdjustmentStageCoverageTestAttachedFootnoteTrailingGlueTrimsWhenThe
     TracedAssertionsAssertEqualsStringFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsAssertEqualsStringFault),
     ParagraphLayoutEngineNewFaultFault(crate::org::tiqian::layout::paragraph_layout_engine::ParagraphLayoutEngineNewFault),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
+}
+impl std::fmt::Display for LineAdjustmentStageCoverageTestAttachedFootnoteTrailingGlueTrimsWhenTheLineEndsAtTheRunFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            LineAdjustmentStageCoverageTestAttachedFootnoteTrailingGlueTrimsWhenTheLineEndsAtTheRunFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            LineAdjustmentStageCoverageTestAttachedFootnoteTrailingGlueTrimsWhenTheLineEndsAtTheRunFault::NoSuchElementErrorFault(value) => write!(formatter, "{}", value),
+            LineAdjustmentStageCoverageTestAttachedFootnoteTrailingGlueTrimsWhenTheLineEndsAtTheRunFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            LineAdjustmentStageCoverageTestAttachedFootnoteTrailingGlueTrimsWhenTheLineEndsAtTheRunFault::TracedAssertionsAssertEqualsIntRangeFaultFault(value) => write!(formatter, "{}", value),
+            LineAdjustmentStageCoverageTestAttachedFootnoteTrailingGlueTrimsWhenTheLineEndsAtTheRunFault::TracedAssertionsAssertEqualsRenderedFaultFault(value) => write!(formatter, "{}", value),
+            LineAdjustmentStageCoverageTestAttachedFootnoteTrailingGlueTrimsWhenTheLineEndsAtTheRunFault::TracedAssertionsAssertEqualsFloatFaultFault(value) => write!(formatter, "{}", value),
+            LineAdjustmentStageCoverageTestAttachedFootnoteTrailingGlueTrimsWhenTheLineEndsAtTheRunFault::TracedAssertionsAssertEqualsStringFaultFault(value) => write!(formatter, "{}", value),
+            LineAdjustmentStageCoverageTestAttachedFootnoteTrailingGlueTrimsWhenTheLineEndsAtTheRunFault::ParagraphLayoutEngineNewFaultFault(value) => write!(formatter, "{}", value),
+            LineAdjustmentStageCoverageTestAttachedFootnoteTrailingGlueTrimsWhenTheLineEndsAtTheRunFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
 }
 
 impl From<LineAdjustmentStageCoverageTestAttachedFootnoteTrailingGlueTrimsWhenTheLineEndsAtTheRunFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
@@ -2164,34 +2417,28 @@ impl From<crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFa
 #[test]
 fn attached_footnote_trailing_glue_trims_when_the_line_ends_at_the_run() {
     testlib::run("org.tiqian.layout.LineAdjustmentStageCoverageTest.attachedFootnoteTrailingGlueTrimsWhenTheLineEndsAtTheRun", "org.tiqian.layout.LineAdjustmentStageCoverageTest.attachedFootnoteTrailingGlueTrimsWhenTheLineEndsAtTheRun", || {
-        let mut t = TestTraceRecorder::new("LineAdjustmentStageCoverageTest");
-        t.section(&"attachedFootnoteTrailingGlueTrimsWhenTheLineEndsAtTheRun");
-        let text = "正文：“内容。”[1]后文".to_string();
-        let r = LineAdjustmentStageCoverageTestSupport::line_adjustment_stage_coverage_test_support_layout(text.as_str(), 164.0f64, Some(vec![
-    (TextSpan::new(TextRange::new(8u32, 11u32).unwrap(), TextStyle::new(Some(vec![]), Some(16.0), Some("zh-Hans".to_string()), Some(400), Some(false), Some(0.0), Some(InlineAttachment::Previous)))).clone(),
+        let mut t = TestTraceRecorder::new(&(UStr::new(&[76,105,110,101,65,100,106,117,115,116,109,101,110,116,83,116,97,103,101,67,111,118,101,114,97,103,101,84,101,115,116])));
+        t.section(UStr::new(&[97,116,116,97,99,104,101,100,70,111,111,116,110,111,116,101,84,114,97,105,108,105,110,103,71,108,117,101,84,114,105,109,115,87,104,101,110,84,104,101,76,105,110,101,69,110,100,115,65,116,84,104,101,82,117,110]));
+        let text = UString::from("正文：“内容。”[1]后文").to_ustring();
+        let r = LineAdjustmentStageCoverageTestSupport::line_adjustment_stage_coverage_test_support_layout(text.as_ustr(), 164.0f64, Some(vec![
+    (TextSpan::new(TextRange::new(8u32, 11u32).unwrap(), TextStyle::new(Some(vec![]), Some(16.0), Some(UString::from("zh-Hans")), Some(400), Some(false), Some(0.0), Some(InlineAttachment::Previous)))).clone(),
 ]), None, None, None, None).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_equals_int_range(IntRange::new(0u32, 8u32), ((r.lines[0usize]).clone().cluster_range).clone(),
-Some((LineAdjustmentStageCoverageTestSupport::line_adjustment_stage_coverage_test_support_render_lines(&r.lines)).to_string())).unwrap();
-        let trim = LineAdjustmentStageCoverageTestSupport::line_adjustment_stage_coverage_test_support_trim_by_reason((r).clone(), &"AttachedInlineVirtualBoundaryLineEndTrim").unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_equals_rendered(TextRange::new(8u32, 11u32).unwrap().to_string().as_str(), (trim.cluster_range).clone().to_string().as_str(), None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_equals_int_range(IntRange::new(0u32, 8u32), ((r.lines[0usize]).clone().cluster_range).clone(), Some((LineAdjustmentStageCoverageTestSupport::line_adjustment_stage_coverage_test_support_render_lines(&r.lines)).to_ustring())).unwrap();
+        let trim = LineAdjustmentStageCoverageTestSupport::line_adjustment_stage_coverage_test_support_trim_by_reason((r).clone(), UStr::new(&[65,116,116,97,99,104,101,100,73,110,108,105,110,101,86,105,114,116,117,97,108,66,111,117,110,100,97,114,121,76,105,110,101,69,110,100,84,114,105,109])).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_equals_rendered(UString::from(format!("{}", TextRange::new(8u32, 11u32).unwrap().to_string()).as_str()).as_ustr(), UString::from(format!("{}", (trim.cluster_range).clone().to_string()).as_str()).as_ustr(), None).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_equals_float(8.0f64, trim.trim_amount, None).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_equals_string(&"trailing", (trim.side).to_string().as_str(), None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_equals_string(UStr::new(&[116,114,97,105,108,105,110,103]), (trim.side).to_ustring().as_ustr(), None).unwrap();
     });
 }
 
 #[test]
 fn attached_object_mark_hangs_instead_of_leaving_the_separator_at_an_edge() {
     testlib::run("org.tiqian.layout.LineAdjustmentStageCoverageTest.attachedObjectMarkHangsInsteadOfLeavingTheSeparatorAtAnEdge", "org.tiqian.layout.LineAdjustmentStageCoverageTest.attachedObjectMarkHangsInsteadOfLeavingTheSeparatorAtAnEdge", || {
-        let mut t = TestTraceRecorder::new("LineAdjustmentStageCoverageTest");
-        t.section(&"attachedObjectMarkHangsInsteadOfLeavingTheSeparatorAtAnEdge");
-        let text = format!("{}{}{}",
-            "中",
-            InlineObjectSpan::INLINE_OBJECT_SPAN_INLINE_OBJECT_REPLACEMENT_CHAR.to_string(),
-            " ，中"
-        );
-        let r = LineAdjustmentStageCoverageTestSupport::line_adjustment_stage_coverage_test_support_layout(text.as_str(), 48.0f64, None, Some(vec![
-    (InlineObjectSpan::new(TextRange::new(1u32, 2u32).unwrap(), 100.0f64, 12.0f64, 12.0f64, Some(InlineObjectBoundaryAdjustment::inline_object_boundary_adjustment_fixed().unwrap()),
-Some(InlineObjectBoundaryAdjustment::inline_object_boundary_adjustment_fixed().unwrap())).unwrap()).clone(),
+        let mut t = TestTraceRecorder::new(&(UStr::new(&[76,105,110,101,65,100,106,117,115,116,109,101,110,116,83,116,97,103,101,67,111,118,101,114,97,103,101,84,101,115,116])));
+        t.section(UStr::new(&[97,116,116,97,99,104,101,100,79,98,106,101,99,116,77,97,114,107,72,97,110,103,115,73,110,115,116,101,97,100,79,102,76,101,97,118,105,110,103,84,104,101,83,101,112,97,114,97,116,111,114,65,116,65,110,69,100,103,101]));
+        let text = { let mut __s = UString::new(); __s += &(UString::from("中")); __s += InlineObjectSpan::INLINE_OBJECT_SPAN_INLINE_OBJECT_REPLACEMENT_CHAR.to_ustring().as_ustr(); __s += &(UString::from(" ，中")); __s };
+        let r = LineAdjustmentStageCoverageTestSupport::line_adjustment_stage_coverage_test_support_layout(text.as_ustr(), 48.0f64, None, Some(vec![
+    (InlineObjectSpan::new(TextRange::new(1u32, 2u32).unwrap(), 100.0f64, 12.0f64, 12.0f64, Some(InlineObjectBoundaryAdjustment::inline_object_boundary_adjustment_fixed().unwrap()), Some(InlineObjectBoundaryAdjustment::inline_object_boundary_adjustment_fixed().unwrap())).unwrap()).clone(),
 ]), None, None, None).unwrap();
         let mut hung = (r.lines[0usize]).clone();
         for i in 0..match u32::try_from(r.lines.len()) { Ok(value) => value, Err(_) => u32::MAX } {
@@ -2200,25 +2447,25 @@ Some(InlineObjectBoundaryAdjustment::inline_object_boundary_adjustment_fixed().u
                 break;
             }
         }
-        let _ = TracedAssertions::traced_assertions_assert_equals_int_range(IntRange::new(1u32, 3u32), (hung.cluster_range).clone(), Some((LineAdjustmentStageCoverageTestSupport::line_adjustment_stage_coverage_test_support_render_lines(&r.lines)).to_string())).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_equals_int_range(IntRange::new(1u32, 3u32), (hung.cluster_range).clone(), Some((LineAdjustmentStageCoverageTestSupport::line_adjustment_stage_coverage_test_support_render_lines(&r.lines)).to_ustring())).unwrap();
         let mut none_collapse = true;
         for i in 0..match u32::try_from((r.debug).clone().line_edge_trim_decisions.len()) { Ok(value) => value, Err(_) => u32::MAX } {
-            if r.debug.clone().line_edge_trim_decisions[usize::try_from(i).unwrap_or(0)].clone().reason.to_string() == "LineEdgeWordSpaceCollapse" {
+            if r.debug.clone().line_edge_trim_decisions[usize::try_from(i).unwrap_or(0)].clone().reason.to_ustring() == UString::from("LineEdgeWordSpaceCollapse") {
                 none_collapse = false;
                 break;
             }
         }
-        let _ = TracedAssertions::traced_assertions_assert_true(none_collapse, Some((LineAdjustmentStageCoverageTestSupport::line_adjustment_stage_coverage_test_support_render_trims(&(r.debug).clone().line_edge_trim_decisions)).to_string())).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_true(none_collapse, Some((LineAdjustmentStageCoverageTestSupport::line_adjustment_stage_coverage_test_support_render_trims(&(r.debug).clone().line_edge_trim_decisions)).to_ustring())).unwrap();
     });
 }
 
 #[test]
 fn baseline_shift_span_raises_the_final_cluster_shift() {
     testlib::run("org.tiqian.layout.LineAdjustmentStageCoverageTest.baselineShiftSpanRaisesTheFinalClusterShift", "org.tiqian.layout.LineAdjustmentStageCoverageTest.baselineShiftSpanRaisesTheFinalClusterShift", || {
-        let mut t = TestTraceRecorder::new("LineAdjustmentStageCoverageTest");
-        t.section(&"baselineShiftSpanRaisesTheFinalClusterShift");
-        let r = LineAdjustmentStageCoverageTestSupport::line_adjustment_stage_coverage_test_support_layout(&"中文正文", 200.0f64, Some(vec![
-    (TextSpan::new(TextRange::new(0u32, 2u32).unwrap(), TextStyle::new(Some(vec![]), Some(16.0), Some("zh-Hans".to_string()), Some(400), Some(false), Some(4.0f64), Some(InlineAttachment::None)))).clone(),
+        let mut t = TestTraceRecorder::new(&(UStr::new(&[76,105,110,101,65,100,106,117,115,116,109,101,110,116,83,116,97,103,101,67,111,118,101,114,97,103,101,84,101,115,116])));
+        t.section(UStr::new(&[98,97,115,101,108,105,110,101,83,104,105,102,116,83,112,97,110,82,97,105,115,101,115,84,104,101,70,105,110,97,108,67,108,117,115,116,101,114,83,104,105,102,116]));
+        let r = LineAdjustmentStageCoverageTestSupport::line_adjustment_stage_coverage_test_support_layout(UStr::new(&[20013,25991,27491,25991]), 200.0f64, Some(vec![
+    (TextSpan::new(TextRange::new(0u32, 2u32).unwrap(), TextStyle::new(Some(vec![]), Some(16.0), Some(UString::from("zh-Hans")), Some(400), Some(false), Some(4.0f64), Some(InlineAttachment::None)))).clone(),
 ]), None, None, None, None).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_equals_float(4.0f64, r.clusters[0usize].baseline_shift, None).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_equals_float(4.0f64, r.clusters[1usize].baseline_shift, None).unwrap();
@@ -2229,14 +2476,11 @@ fn baseline_shift_span_raises_the_final_cluster_shift() {
 #[test]
 fn blank_middle_line_skips_every_edge_pass() {
     testlib::run("org.tiqian.layout.LineAdjustmentStageCoverageTest.blankMiddleLineSkipsEveryEdgePass", "org.tiqian.layout.LineAdjustmentStageCoverageTest.blankMiddleLineSkipsEveryEdgePass", || {
-        let mut t = TestTraceRecorder::new("LineAdjustmentStageCoverageTest");
-        t.section(&"blankMiddleLineSkipsEveryEdgePass");
-        let r = LineAdjustmentStageCoverageTestSupport::line_adjustment_stage_coverage_test_support_layout(&concat!("中文\n",
-"\n",
-"中文"), 80.0f64, None, None, None, None, None).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_equals(3, u32::try_from((r.lines.len()) & 0xFFFF_FFFF).unwrap_or(0), Some((LineAdjustmentStageCoverageTestSupport::line_adjustment_stage_coverage_test_support_render_lines(&r.lines)).to_string())).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_equals_int_range(IntRange::new(3u32, 3u32), ((r.lines[1usize]).clone().cluster_range).clone(),
-Some((LineAdjustmentStageCoverageTestSupport::line_adjustment_stage_coverage_test_support_render_lines(&r.lines)).to_string())).unwrap();
+        let mut t = TestTraceRecorder::new(&(UStr::new(&[76,105,110,101,65,100,106,117,115,116,109,101,110,116,83,116,97,103,101,67,111,118,101,114,97,103,101,84,101,115,116])));
+        t.section(UStr::new(&[98,108,97,110,107,77,105,100,100,108,101,76,105,110,101,83,107,105,112,115,69,118,101,114,121,69,100,103,101,80,97,115,115]));
+        let r = LineAdjustmentStageCoverageTestSupport::line_adjustment_stage_coverage_test_support_layout(UStr::new(&[20013,25991,10,10,20013,25991]), 80.0f64, None, None, None, None, None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_equals(3, u32::try_from((r.lines.len()) & 0xFFFF_FFFF).unwrap_or(0), Some((LineAdjustmentStageCoverageTestSupport::line_adjustment_stage_coverage_test_support_render_lines(&r.lines)).to_ustring())).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_equals_int_range(IntRange::new(3u32, 3u32), ((r.lines[1usize]).clone().cluster_range).clone(), Some((LineAdjustmentStageCoverageTestSupport::line_adjustment_stage_coverage_test_support_render_lines(&r.lines)).to_ustring())).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_equals_float(0.0f64, r.lines[1usize].natural_width, None).unwrap();
         let mut none_just = true;
         for i in 0..match u32::try_from((r.debug).clone().justification_decisions.len()) { Ok(value) => value, Err(_) => u32::MAX } {
@@ -2246,17 +2490,17 @@ Some((LineAdjustmentStageCoverageTestSupport::line_adjustment_stage_coverage_tes
                 break;
             }
         }
-        let _ = TracedAssertions::traced_assertions_assert_true(none_just, Some((LineAdjustmentStageCoverageTestSupport::line_adjustment_stage_coverage_test_support_render_justifications(&(r.debug).clone().justification_decisions)).to_string())).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_true(none_just, Some((LineAdjustmentStageCoverageTestSupport::line_adjustment_stage_coverage_test_support_render_justifications(&(r.debug).clone().justification_decisions)).to_ustring())).unwrap();
     });
 }
 
 #[test]
 fn dash_run_without_ink_bounds_keeps_synthetic_glyphs() {
     testlib::run("org.tiqian.layout.LineAdjustmentStageCoverageTest.dashRunWithoutInkBoundsKeepsSyntheticGlyphs", "org.tiqian.layout.LineAdjustmentStageCoverageTest.dashRunWithoutInkBoundsKeepsSyntheticGlyphs", || {
-        let mut t = TestTraceRecorder::new("LineAdjustmentStageCoverageTest");
-        t.section(&"dashRunWithoutInkBoundsKeepsSyntheticGlyphs");
-        let r = LineAdjustmentStageCoverageTestSupport::line_adjustment_stage_coverage_test_support_layout(&"中——中", 200.0f64, None, None, None, None, None).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_equals(1, u32::try_from((r.lines.len()) & 0xFFFF_FFFF).unwrap_or(0), Some((LineAdjustmentStageCoverageTestSupport::line_adjustment_stage_coverage_test_support_render_lines(&r.lines)).to_string())).unwrap();
+        let mut t = TestTraceRecorder::new(&(UStr::new(&[76,105,110,101,65,100,106,117,115,116,109,101,110,116,83,116,97,103,101,67,111,118,101,114,97,103,101,84,101,115,116])));
+        t.section(UStr::new(&[100,97,115,104,82,117,110,87,105,116,104,111,117,116,73,110,107,66,111,117,110,100,115,75,101,101,112,115,83,121,110,116,104,101,116,105,99,71,108,121,112,104,115]));
+        let r = LineAdjustmentStageCoverageTestSupport::line_adjustment_stage_coverage_test_support_layout(UStr::new(&[20013,8212,8212,20013]), 200.0f64, None, None, None, None, None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_equals(1, u32::try_from((r.lines.len()) & 0xFFFF_FFFF).unwrap_or(0), Some((LineAdjustmentStageCoverageTestSupport::line_adjustment_stage_coverage_test_support_render_lines(&r.lines)).to_ustring())).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_equals(1, u32::try_from((r.glyph_runs.len()) & 0xFFFF_FFFF).unwrap_or(0), None).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_equals(3, u32::try_from(((r.glyph_runs[0usize]).clone().glyphs.len()) & 0xFFFF_FFFF).unwrap_or(0), None).unwrap();
         let mut all_null = true;
@@ -2266,7 +2510,7 @@ fn dash_run_without_ink_bounds_keeps_synthetic_glyphs() {
                 break;
             }
         }
-        let _ = TracedAssertions::traced_assertions_assert_true(all_null, Some((LineAdjustmentStageCoverageTestSupport::line_adjustment_stage_coverage_test_support_render_glyphs(&(r.glyph_runs[0usize]).clone().glyphs)).to_string())).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_true(all_null, Some((LineAdjustmentStageCoverageTestSupport::line_adjustment_stage_coverage_test_support_render_glyphs(&(r.glyph_runs[0usize]).clone().glyphs)).to_ustring())).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_equals_float(64.0f64, r.glyph_runs[0usize].advance, None).unwrap();
     });
 }
@@ -2274,27 +2518,25 @@ fn dash_run_without_ink_bounds_keeps_synthetic_glyphs() {
 #[test]
 fn emergency_selected_break_opens_the_preferred_tracking_span() {
     testlib::run("org.tiqian.layout.LineAdjustmentStageCoverageTest.emergencySelectedBreakOpensThePreferredTrackingSpan", "org.tiqian.layout.LineAdjustmentStageCoverageTest.emergencySelectedBreakOpensThePreferredTrackingSpan", || {
-        let mut t = TestTraceRecorder::new("LineAdjustmentStageCoverageTest");
-        t.section(&"emergencySelectedBreakOpensThePreferredTrackingSpan");
-        let text = "deadbeefcafebabefeedfaceabcdefabcdef".to_string();
-        let r = LineAdjustmentStageCoverageTestSupport::line_adjustment_stage_coverage_test_support_layout(text.as_str(), 101.0f64, None, None, Some(vec![
-    (LineBreakSpan::new(TextRange::new(0u32, LineAdjustmentStageCoverageTestSupport::line_adjustment_stage_coverage_test_support_text_length(text.as_str())).unwrap(), LineBreakPolicy::ProgressiveTechnical)).clone(),
+        let mut t = TestTraceRecorder::new(&(UStr::new(&[76,105,110,101,65,100,106,117,115,116,109,101,110,116,83,116,97,103,101,67,111,118,101,114,97,103,101,84,101,115,116])));
+        t.section(UStr::new(&[101,109,101,114,103,101,110,99,121,83,101,108,101,99,116,101,100,66,114,101,97,107,79,112,101,110,115,84,104,101,80,114,101,102,101,114,114,101,100,84,114,97,99,107,105,110,103,83,112,97,110]));
+        let text = UString::from("deadbeefcafebabefeedfaceabcdefabcdef").to_ustring();
+        let r = LineAdjustmentStageCoverageTestSupport::line_adjustment_stage_coverage_test_support_layout(text.as_ustr(), 101.0f64, None, None, Some(vec![
+    (LineBreakSpan::new(TextRange::new(0u32, LineAdjustmentStageCoverageTestSupport::line_adjustment_stage_coverage_test_support_text_length(text.as_ustr())).unwrap(), LineBreakPolicy::ProgressiveTechnical)).clone(),
 ]), None, None).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_true((i32::from_ne_bytes((u32::try_from((r.lines.len()) & 0xFFFF_FFFF).unwrap_or(0)).to_ne_bytes())) > (1),
-Some((LineAdjustmentStageCoverageTestSupport::line_adjustment_stage_coverage_test_support_render_lines(&r.lines)).to_string())).unwrap();
-        let tracking = LineAdjustmentStageCoverageTestSupport::line_adjustment_stage_coverage_test_support_allocation_deltas((r).clone(), &"EmergencyGraphemeTracking");
-        let _ = TracedAssertions::traced_assertions_assert_true((i32::from_ne_bytes((u32::try_from((tracking.len()) & 0xFFFF_FFFF).unwrap_or(0)).to_ne_bytes())) > (0),
-Some((LineAdjustmentStageCoverageTestSupport::line_adjustment_stage_coverage_test_support_render_justifications(&(r.debug).clone().justification_decisions)).to_string())).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_true((i32::from_ne_bytes(((u32::try_from((r.lines.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) > (1), Some((LineAdjustmentStageCoverageTestSupport::line_adjustment_stage_coverage_test_support_render_lines(&r.lines)).to_ustring())).unwrap();
+        let tracking = LineAdjustmentStageCoverageTestSupport::line_adjustment_stage_coverage_test_support_allocation_deltas((r).clone(), UStr::new(&[69,109,101,114,103,101,110,99,121,71,114,97,112,104,101,109,101,84,114,97,99,107,105,110,103]));
+        let _ = TracedAssertions::traced_assertions_assert_true((i32::from_ne_bytes(((u32::try_from((tracking.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) > (0), Some((LineAdjustmentStageCoverageTestSupport::line_adjustment_stage_coverage_test_support_render_justifications(&(r.debug).clone().justification_decisions)).to_ustring())).unwrap();
     });
 }
 
 #[test]
 fn empty_text_yields_zero_height_without_lines() {
     testlib::run("org.tiqian.layout.LineAdjustmentStageCoverageTest.emptyTextYieldsZeroHeightWithoutLines", "org.tiqian.layout.LineAdjustmentStageCoverageTest.emptyTextYieldsZeroHeightWithoutLines", || {
-        let mut t = TestTraceRecorder::new("LineAdjustmentStageCoverageTest");
-        t.section(&"emptyTextYieldsZeroHeightWithoutLines");
-        let r = LineAdjustmentStageCoverageTestSupport::line_adjustment_stage_coverage_test_support_layout(&"", 100.0f64, None, None, None, None, None).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_true(u32::try_from((r.lines.len()) & 0xFFFF_FFFF).unwrap_or(0) == 0, Some((LineAdjustmentStageCoverageTestSupport::line_adjustment_stage_coverage_test_support_render_lines(&r.lines)).to_string())).unwrap();
+        let mut t = TestTraceRecorder::new(&(UStr::new(&[76,105,110,101,65,100,106,117,115,116,109,101,110,116,83,116,97,103,101,67,111,118,101,114,97,103,101,84,101,115,116])));
+        t.section(UStr::new(&[101,109,112,116,121,84,101,120,116,89,105,101,108,100,115,90,101,114,111,72,101,105,103,104,116,87,105,116,104,111,117,116,76,105,110,101,115]));
+        let r = LineAdjustmentStageCoverageTestSupport::line_adjustment_stage_coverage_test_support_layout(UStr::new(&[]), 100.0f64, None, None, None, None, None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_true(u32::try_from((r.lines.len()) & 0xFFFF_FFFF).unwrap_or(0) == 0, Some((LineAdjustmentStageCoverageTestSupport::line_adjustment_stage_coverage_test_support_render_lines(&r.lines)).to_ustring())).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_equals_float(0.0f64, (r.size).clone().height, None).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_equals_float(0.0f64, (r.size).clone().width, None).unwrap();
     });
@@ -2303,91 +2545,79 @@ fn empty_text_yields_zero_height_without_lines() {
 #[test]
 fn formula_line_end_discards_the_trailing_boundary_advance() {
     testlib::run("org.tiqian.layout.LineAdjustmentStageCoverageTest.formulaLineEndDiscardsTheTrailingBoundaryAdvance", "org.tiqian.layout.LineAdjustmentStageCoverageTest.formulaLineEndDiscardsTheTrailingBoundaryAdvance", || {
-        let mut t = TestTraceRecorder::new("LineAdjustmentStageCoverageTest");
-        t.section(&"formulaLineEndDiscardsTheTrailingBoundaryAdvance");
-        let text = format!("{}{}{}",
-            "甲",
-            InlineObjectSpan::INLINE_OBJECT_SPAN_INLINE_OBJECT_REPLACEMENT_CHAR.to_string(),
-            "乙丙丁戊"
-        );
-        let r = LineAdjustmentStageCoverageTestSupport::line_adjustment_stage_coverage_test_support_layout(text.as_str(), 48.0f64, None, Some(vec![
-    (InlineObjectSpan::new(TextRange::new(1u32, 2u32).unwrap(), 24.0f64, 12.0f64, 12.0f64, Some(InlineObjectBoundaryAdjustment::inline_object_boundary_adjustment_fixed().unwrap()), Some(InlineObjectBoundaryAdjustment::new(Some(false), None, Some(0.0), Some(6.0f64),
-Some(false)).unwrap())).unwrap()).clone(),
+        let mut t = TestTraceRecorder::new(&(UStr::new(&[76,105,110,101,65,100,106,117,115,116,109,101,110,116,83,116,97,103,101,67,111,118,101,114,97,103,101,84,101,115,116])));
+        t.section(UStr::new(&[102,111,114,109,117,108,97,76,105,110,101,69,110,100,68,105,115,99,97,114,100,115,84,104,101,84,114,97,105,108,105,110,103,66,111,117,110,100,97,114,121,65,100,118,97,110,99,101]));
+        let text = { let mut __s = UString::new(); __s += &(UString::from("甲")); __s += InlineObjectSpan::INLINE_OBJECT_SPAN_INLINE_OBJECT_REPLACEMENT_CHAR.to_ustring().as_ustr(); __s += &(UString::from("乙丙丁戊")); __s };
+        let r = LineAdjustmentStageCoverageTestSupport::line_adjustment_stage_coverage_test_support_layout(text.as_ustr(), 48.0f64, None, Some(vec![
+    (InlineObjectSpan::new(TextRange::new(1u32, 2u32).unwrap(), 24.0f64, 12.0f64, 12.0f64, Some(InlineObjectBoundaryAdjustment::inline_object_boundary_adjustment_fixed().unwrap()), Some(InlineObjectBoundaryAdjustment::new(Some(false), None, Some(0.0), Some(6.0f64), Some(false)).unwrap())).unwrap()).clone(),
 ]), None, None, None).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_equals_int_range(IntRange::new(0u32, 1u32), ((r.lines[0usize]).clone().cluster_range).clone(),
-Some((LineAdjustmentStageCoverageTestSupport::line_adjustment_stage_coverage_test_support_render_lines(&r.lines)).to_string())).unwrap();
-        let discard = LineAdjustmentStageCoverageTestSupport::line_adjustment_stage_coverage_test_support_trim_by_reason((r).clone(), &"InlineObjectLineEndDiscardableGlue").unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_equals_int_range(IntRange::new(0u32, 1u32), ((r.lines[0usize]).clone().cluster_range).clone(), Some((LineAdjustmentStageCoverageTestSupport::line_adjustment_stage_coverage_test_support_render_lines(&r.lines)).to_ustring())).unwrap();
+        let discard = LineAdjustmentStageCoverageTestSupport::line_adjustment_stage_coverage_test_support_trim_by_reason((r).clone(), UStr::new(&[73,110,108,105,110,101,79,98,106,101,99,116,76,105,110,101,69,110,100,68,105,115,99,97,114,100,97,98,108,101,71,108,117,101])).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_equals_float(6.0f64, discard.trim_amount, None).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_equals_float(0.0f64, discard.consumed_before, None).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_equals_string(&"trailing", (discard.side).to_string().as_str(), None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_equals_string(UStr::new(&[116,114,97,105,108,105,110,103]), (discard.side).to_ustring().as_ustr(), None).unwrap();
     });
 }
 
 #[test]
 fn formula_object_without_boundary_discards_nothing_at_line_end() {
     testlib::run("org.tiqian.layout.LineAdjustmentStageCoverageTest.formulaObjectWithoutBoundaryDiscardsNothingAtLineEnd", "org.tiqian.layout.LineAdjustmentStageCoverageTest.formulaObjectWithoutBoundaryDiscardsNothingAtLineEnd", || {
-        let mut t = TestTraceRecorder::new("LineAdjustmentStageCoverageTest");
-        t.section(&"formulaObjectWithoutBoundaryDiscardsNothingAtLineEnd");
-        let text = format!("{}{}{}",
-            "甲",
-            InlineObjectSpan::INLINE_OBJECT_SPAN_INLINE_OBJECT_REPLACEMENT_CHAR.to_string(),
-            "乙丙丁戊"
-        );
-        let r = LineAdjustmentStageCoverageTestSupport::line_adjustment_stage_coverage_test_support_layout(text.as_str(), 48.0f64, None, Some(vec![
-    (InlineObjectSpan::new(TextRange::new(1u32, 2u32).unwrap(), 24.0f64, 12.0f64, 12.0f64, Some(InlineObjectBoundaryAdjustment::inline_object_boundary_adjustment_fixed().unwrap()),
-Some(InlineObjectBoundaryAdjustment::inline_object_boundary_adjustment_fixed().unwrap())).unwrap()).clone(),
+        let mut t = TestTraceRecorder::new(&(UStr::new(&[76,105,110,101,65,100,106,117,115,116,109,101,110,116,83,116,97,103,101,67,111,118,101,114,97,103,101,84,101,115,116])));
+        t.section(UStr::new(&[102,111,114,109,117,108,97,79,98,106,101,99,116,87,105,116,104,111,117,116,66,111,117,110,100,97,114,121,68,105,115,99,97,114,100,115,78,111,116,104,105,110,103,65,116,76,105,110,101,69,110,100]));
+        let text = { let mut __s = UString::new(); __s += &(UString::from("甲")); __s += InlineObjectSpan::INLINE_OBJECT_SPAN_INLINE_OBJECT_REPLACEMENT_CHAR.to_ustring().as_ustr(); __s += &(UString::from("乙丙丁戊")); __s };
+        let r = LineAdjustmentStageCoverageTestSupport::line_adjustment_stage_coverage_test_support_layout(text.as_ustr(), 48.0f64, None, Some(vec![
+    (InlineObjectSpan::new(TextRange::new(1u32, 2u32).unwrap(), 24.0f64, 12.0f64, 12.0f64, Some(InlineObjectBoundaryAdjustment::inline_object_boundary_adjustment_fixed().unwrap()), Some(InlineObjectBoundaryAdjustment::inline_object_boundary_adjustment_fixed().unwrap())).unwrap()).clone(),
 ]), None, None, None).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_equals_int_range(IntRange::new(0u32, 1u32), ((r.lines[0usize]).clone().cluster_range).clone(),
-Some((LineAdjustmentStageCoverageTestSupport::line_adjustment_stage_coverage_test_support_render_lines(&r.lines)).to_string())).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_equals_int_range(IntRange::new(0u32, 1u32), ((r.lines[0usize]).clone().cluster_range).clone(), Some((LineAdjustmentStageCoverageTestSupport::line_adjustment_stage_coverage_test_support_render_lines(&r.lines)).to_ustring())).unwrap();
         let mut none_discard = true;
         for i in 0..match u32::try_from((r.debug).clone().line_edge_trim_decisions.len()) { Ok(value) => value, Err(_) => u32::MAX } {
-            if r.debug.clone().line_edge_trim_decisions[usize::try_from(i).unwrap_or(0)].clone().reason.to_string() == "InlineObjectLineEndDiscardableGlue" {
+            if r.debug.clone().line_edge_trim_decisions[usize::try_from(i).unwrap_or(0)].clone().reason.to_ustring() == UString::from("InlineObjectLineEndDiscardableGlue") {
                 none_discard = false;
                 break;
             }
         }
-        let _ = TracedAssertions::traced_assertions_assert_true(none_discard, Some((LineAdjustmentStageCoverageTestSupport::line_adjustment_stage_coverage_test_support_render_trims(&(r.debug).clone().line_edge_trim_decisions)).to_string())).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_true(none_discard, Some((LineAdjustmentStageCoverageTestSupport::line_adjustment_stage_coverage_test_support_render_trims(&(r.debug).clone().line_edge_trim_decisions)).to_ustring())).unwrap();
     });
 }
 
 #[test]
 fn hyphen_squeeze_consumes_opening_and_closing_bracket_glue_channels() {
     testlib::run("org.tiqian.layout.LineAdjustmentStageCoverageTest.hyphenSqueezeConsumesOpeningAndClosingBracketGlueChannels", "org.tiqian.layout.LineAdjustmentStageCoverageTest.hyphenSqueezeConsumesOpeningAndClosingBracketGlueChannels", || {
-        let mut t = TestTraceRecorder::new("LineAdjustmentStageCoverageTest");
-        t.section(&"hyphenSqueezeConsumesOpeningAndClosingBracketGlueChannels");
-        let r = LineAdjustmentStageCoverageTestSupport::line_adjustment_stage_coverage_test_support_layout(&"（中·文，internationalization", 112.0f64, None, None, None, Some(true), None).unwrap();
-        let opening = LineAdjustmentStageCoverageTestSupport::line_adjustment_stage_coverage_test_support_cluster_by_text((r).clone(), &"（").unwrap();
-        let comma = LineAdjustmentStageCoverageTestSupport::line_adjustment_stage_coverage_test_support_cluster_by_text((r).clone(), &"，").unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_equals_float(8.0f64, opening.advance, Some((LineAdjustmentStageCoverageTestSupport::line_adjustment_stage_coverage_test_support_render_cluster_text_advance(&r.clusters)).to_string())).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_equals_float(8.0f64, comma.advance, Some((LineAdjustmentStageCoverageTestSupport::line_adjustment_stage_coverage_test_support_render_cluster_text_advance(&r.clusters)).to_string())).unwrap();
+        let mut t = TestTraceRecorder::new(&(UStr::new(&[76,105,110,101,65,100,106,117,115,116,109,101,110,116,83,116,97,103,101,67,111,118,101,114,97,103,101,84,101,115,116])));
+        t.section(UStr::new(&[104,121,112,104,101,110,83,113,117,101,101,122,101,67,111,110,115,117,109,101,115,79,112,101,110,105,110,103,65,110,100,67,108,111,115,105,110,103,66,114,97,99,107,101,116,71,108,117,101,67,104,97,110,110,101,108,115]));
+        let r = LineAdjustmentStageCoverageTestSupport::line_adjustment_stage_coverage_test_support_layout(UStr::new(&[65288,20013,183,25991,65292,105,110,116,101,114,110,97,116,105,111,110,97,108,105,122,97,116,105,111,110]), 112.0f64, None, None, None, Some(true), None).unwrap();
+        let opening = LineAdjustmentStageCoverageTestSupport::line_adjustment_stage_coverage_test_support_cluster_by_text((r).clone(), UStr::new(&[65288])).unwrap();
+        let comma = LineAdjustmentStageCoverageTestSupport::line_adjustment_stage_coverage_test_support_cluster_by_text((r).clone(), UStr::new(&[65292])).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_equals_float(8.0f64, opening.advance, Some((LineAdjustmentStageCoverageTestSupport::line_adjustment_stage_coverage_test_support_render_cluster_text_advance(&r.clusters)).to_ustring())).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_equals_float(8.0f64, comma.advance, Some((LineAdjustmentStageCoverageTestSupport::line_adjustment_stage_coverage_test_support_render_cluster_text_advance(&r.clusters)).to_ustring())).unwrap();
     });
 }
 
 #[test]
 fn hyphen_squeeze_consumes_the_interpunct_paired_channel() {
     testlib::run("org.tiqian.layout.LineAdjustmentStageCoverageTest.hyphenSqueezeConsumesTheInterpunctPairedChannel", "org.tiqian.layout.LineAdjustmentStageCoverageTest.hyphenSqueezeConsumesTheInterpunctPairedChannel", || {
-        let mut t = TestTraceRecorder::new("LineAdjustmentStageCoverageTest");
-        t.section(&"hyphenSqueezeConsumesTheInterpunctPairedChannel");
-        let r = LineAdjustmentStageCoverageTestSupport::line_adjustment_stage_coverage_test_support_layout(&"中文，文internationalization", 112.0f64, None, None, None, Some(true), None).unwrap();
-        let comma = LineAdjustmentStageCoverageTestSupport::line_adjustment_stage_coverage_test_support_cluster_by_text((r).clone(), &"，").unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_equals_float(14.0f64, comma.advance, Some((LineAdjustmentStageCoverageTestSupport::line_adjustment_stage_coverage_test_support_render_cluster_text_advance(&r.clusters)).to_string())).unwrap();
+        let mut t = TestTraceRecorder::new(&(UStr::new(&[76,105,110,101,65,100,106,117,115,116,109,101,110,116,83,116,97,103,101,67,111,118,101,114,97,103,101,84,101,115,116])));
+        t.section(UStr::new(&[104,121,112,104,101,110,83,113,117,101,101,122,101,67,111,110,115,117,109,101,115,84,104,101,73,110,116,101,114,112,117,110,99,116,80,97,105,114,101,100,67,104,97,110,110,101,108]));
+        let r = LineAdjustmentStageCoverageTestSupport::line_adjustment_stage_coverage_test_support_layout(UStr::new(&[20013,25991,65292,25991,105,110,116,101,114,110,97,116,105,111,110,97,108,105,122,97,116,105,111,110]), 112.0f64, None, None, None, Some(true), None).unwrap();
+        let comma = LineAdjustmentStageCoverageTestSupport::line_adjustment_stage_coverage_test_support_cluster_by_text((r).clone(), UStr::new(&[65292])).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_equals_float(14.0f64, comma.advance, Some((LineAdjustmentStageCoverageTestSupport::line_adjustment_stage_coverage_test_support_render_cluster_text_advance(&r.clusters)).to_ustring())).unwrap();
     });
 }
 
 #[test]
 fn hyphen_squeeze_consumes_the_word_space_raw_advance_channel() {
     testlib::run("org.tiqian.layout.LineAdjustmentStageCoverageTest.hyphenSqueezeConsumesTheWordSpaceRawAdvanceChannel", "org.tiqian.layout.LineAdjustmentStageCoverageTest.hyphenSqueezeConsumesTheWordSpaceRawAdvanceChannel", || {
-        let mut t = TestTraceRecorder::new("LineAdjustmentStageCoverageTest");
-        t.section(&"hyphenSqueezeConsumesTheWordSpaceRawAdvanceChannel");
-        let r = LineAdjustmentStageCoverageTestSupport::line_adjustment_stage_coverage_test_support_layout(&"中文aa internationalization", 118.0f64, None, None, None, Some(true), None).unwrap();
+        let mut t = TestTraceRecorder::new(&(UStr::new(&[76,105,110,101,65,100,106,117,115,116,109,101,110,116,83,116,97,103,101,67,111,118,101,114,97,103,101,84,101,115,116])));
+        t.section(UStr::new(&[104,121,112,104,101,110,83,113,117,101,101,122,101,67,111,110,115,117,109,101,115,84,104,101,87,111,114,100,83,112,97,99,101,82,97,119,65,100,118,97,110,99,101,67,104,97,110,110,101,108]));
+        let r = LineAdjustmentStageCoverageTestSupport::line_adjustment_stage_coverage_test_support_layout(UStr::new(&[20013,25991,97,97,32,105,110,116,101,114,110,97,116,105,111,110,97,108,105,122,97,116,105,111,110]), 118.0f64, None, None, None, Some(true), None).unwrap();
         let mut space = (r.clusters[0usize]).clone();
         for i in 0..match u32::try_from(r.clusters.len()) { Ok(value) => value, Err(_) => u32::MAX } {
-            if r.clusters[usize::try_from(i).unwrap_or(0)].clone().text.to_string() == " " {
+            if r.clusters[usize::try_from(i).unwrap_or(0)].clone().text.to_ustring() == UString::from(" ") {
                 space = (r.clusters[usize::try_from(i).unwrap_or(0)]).clone();
                 break;
             }
         }
-        let _ = TracedAssertions::traced_assertions_assert_equals_float(4.0f64, space.advance, Some((LineAdjustmentStageCoverageTestSupport::line_adjustment_stage_coverage_test_support_render_cluster_text_advance(&r.clusters)).to_string())).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_equals_float(4.0f64, space.advance, Some((LineAdjustmentStageCoverageTestSupport::line_adjustment_stage_coverage_test_support_render_cluster_text_advance(&r.clusters)).to_ustring())).unwrap();
         let first = (r.lines[0usize]).clone();
         let _ = TracedAssertions::traced_assertions_assert_equals_float(16.0f64, first.hyphen_advance, None).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_equals_float_tolerance(118.0f64, first.adjusted_width + first.hyphen_advance, 1e-9f64, None).unwrap();
@@ -2397,35 +2627,32 @@ fn hyphen_squeeze_consumes_the_word_space_raw_advance_channel() {
 #[test]
 fn hyphen_squeeze_falls_back_to_zero_used_glue_when_the_line_already_fits() {
     testlib::run("org.tiqian.layout.LineAdjustmentStageCoverageTest.hyphenSqueezeFallsBackToZeroUsedGlueWhenTheLineAlreadyFits", "org.tiqian.layout.LineAdjustmentStageCoverageTest.hyphenSqueezeFallsBackToZeroUsedGlueWhenTheLineAlreadyFits", || {
-        let mut t = TestTraceRecorder::new("LineAdjustmentStageCoverageTest");
-        t.section(&"hyphenSqueezeFallsBackToZeroUsedGlueWhenTheLineAlreadyFits");
-        let comma = LineAdjustmentStageCoverageTestSupport::line_adjustment_stage_coverage_test_support_layout(&"中文，internationalization", 88.0f64, None, None, None, Some(true), None).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_equals_int_range(IntRange::new(0u32, 3u32), ((comma.lines[0usize]).clone().cluster_range).clone(),
-Some((LineAdjustmentStageCoverageTestSupport::line_adjustment_stage_coverage_test_support_render_lines(&comma.lines)).to_string())).unwrap();
+        let mut t = TestTraceRecorder::new(&(UStr::new(&[76,105,110,101,65,100,106,117,115,116,109,101,110,116,83,116,97,103,101,67,111,118,101,114,97,103,101,84,101,115,116])));
+        t.section(UStr::new(&[104,121,112,104,101,110,83,113,117,101,101,122,101,70,97,108,108,115,66,97,99,107,84,111,90,101,114,111,85,115,101,100,71,108,117,101,87,104,101,110,84,104,101,76,105,110,101,65,108,114,101,97,100,121,70,105,116,115]));
+        let comma = LineAdjustmentStageCoverageTestSupport::line_adjustment_stage_coverage_test_support_layout(UStr::new(&[20013,25991,65292,105,110,116,101,114,110,97,116,105,111,110,97,108,105,122,97,116,105,111,110]), 88.0f64, None, None, None, Some(true), None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_equals_int_range(IntRange::new(0u32, 3u32), ((comma.lines[0usize]).clone().cluster_range).clone(), Some((LineAdjustmentStageCoverageTestSupport::line_adjustment_stage_coverage_test_support_render_lines(&comma.lines)).to_ustring())).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_equals_float(16.0f64, comma.lines[0usize].hyphen_advance, None).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_equals_float(8.0f64, comma.clusters[2usize].advance, Some((LineAdjustmentStageCoverageTestSupport::line_adjustment_stage_coverage_test_support_render_advances(&comma.clusters)).to_string())).unwrap();
-        let bracket = LineAdjustmentStageCoverageTestSupport::line_adjustment_stage_coverage_test_support_layout(&"（中文internationalization", 84.0f64, None, None, None, Some(true), None).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_equals_int_range(IntRange::new(0u32, 3u32), ((bracket.lines[0usize]).clone().cluster_range).clone(),
-Some((LineAdjustmentStageCoverageTestSupport::line_adjustment_stage_coverage_test_support_render_lines(&bracket.lines)).to_string())).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_equals_float(8.0f64, comma.clusters[2usize].advance, Some((LineAdjustmentStageCoverageTestSupport::line_adjustment_stage_coverage_test_support_render_advances(&comma.clusters)).to_ustring())).unwrap();
+        let bracket = LineAdjustmentStageCoverageTestSupport::line_adjustment_stage_coverage_test_support_layout(UStr::new(&[65288,20013,25991,105,110,116,101,114,110,97,116,105,111,110,97,108,105,122,97,116,105,111,110]), 84.0f64, None, None, None, Some(true), None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_equals_int_range(IntRange::new(0u32, 3u32), ((bracket.lines[0usize]).clone().cluster_range).clone(), Some((LineAdjustmentStageCoverageTestSupport::line_adjustment_stage_coverage_test_support_render_lines(&bracket.lines)).to_ustring())).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_equals_float(16.0f64, bracket.lines[0usize].hyphen_advance, None).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_true((bracket.clusters[0usize].advance) <= 16.0f64, Some((LineAdjustmentStageCoverageTestSupport::line_adjustment_stage_coverage_test_support_render_advances(&bracket.clusters)).to_string())).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_true((bracket.clusters[0usize].advance) <= 16.0f64, Some((LineAdjustmentStageCoverageTestSupport::line_adjustment_stage_coverage_test_support_render_advances(&bracket.clusters)).to_ustring())).unwrap();
     });
 }
 
 #[test]
 fn lone_latin_cluster_merges_both_auto_space_edge_trims_into_one_key() {
     testlib::run("org.tiqian.layout.LineAdjustmentStageCoverageTest.loneLatinClusterMergesBothAutoSpaceEdgeTrimsIntoOneKey", "org.tiqian.layout.LineAdjustmentStageCoverageTest.loneLatinClusterMergesBothAutoSpaceEdgeTrimsIntoOneKey", || {
-        let mut t = TestTraceRecorder::new("LineAdjustmentStageCoverageTest");
-        t.section(&"loneLatinClusterMergesBothAutoSpaceEdgeTrimsIntoOneKey");
-        let r = LineAdjustmentStageCoverageTestSupport::line_adjustment_stage_coverage_test_support_layout(&"中A中", 24.0f64, None, None, None, None, None).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_equals_int_range(IntRange::new(1u32, 1u32), ((r.lines[1usize]).clone().cluster_range).clone(),
-Some((LineAdjustmentStageCoverageTestSupport::line_adjustment_stage_coverage_test_support_render_lines(&r.lines)).to_string())).unwrap();
-        let trims = LineAdjustmentStageCoverageTestSupport::line_adjustment_stage_coverage_test_support_trims_by_reason((r).clone(), &"TextAutoSpaceLineEdgeTrim");
-        let mut sides: Vec<String> = vec![];
+        let mut t = TestTraceRecorder::new(&(UStr::new(&[76,105,110,101,65,100,106,117,115,116,109,101,110,116,83,116,97,103,101,67,111,118,101,114,97,103,101,84,101,115,116])));
+        t.section(UStr::new(&[108,111,110,101,76,97,116,105,110,67,108,117,115,116,101,114,77,101,114,103,101,115,66,111,116,104,65,117,116,111,83,112,97,99,101,69,100,103,101,84,114,105,109,115,73,110,116,111,79,110,101,75,101,121]));
+        let r = LineAdjustmentStageCoverageTestSupport::line_adjustment_stage_coverage_test_support_layout(UStr::new(&[20013,65,20013]), 24.0f64, None, None, None, None, None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_equals_int_range(IntRange::new(1u32, 1u32), ((r.lines[1usize]).clone().cluster_range).clone(), Some((LineAdjustmentStageCoverageTestSupport::line_adjustment_stage_coverage_test_support_render_lines(&r.lines)).to_ustring())).unwrap();
+        let trims = LineAdjustmentStageCoverageTestSupport::line_adjustment_stage_coverage_test_support_trims_by_reason((r).clone(), UStr::new(&[84,101,120,116,65,117,116,111,83,112,97,99,101,76,105,110,101,69,100,103,101,84,114,105,109]));
+        let mut sides: Vec<UString> = vec![];
         for i in 0..match u32::try_from(trims.len()) { Ok(value) => value, Err(_) => u32::MAX } {
-            sides.push(((trims[usize::try_from(i).unwrap_or(0)]).clone().side).to_string());
+            sides.push(((trims[usize::try_from(i).unwrap_or(0)]).clone().side).to_ustring());
         }
-        let _ = TracedAssertions::traced_assertions_assert_equals_string_array(&vec!["trailing".to_string(), "leading".to_string()], &sides, None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_equals_string_array(&vec![UString::from("trailing").to_ustring(), UString::from("leading").to_ustring()], &sides, None).unwrap();
         let mut all_match = true;
         for d in &trims {
             if !((d.cluster_range).clone().start == 1 && (d.cluster_range).clone().end == 2 && d.trim_amount == 2.0f64) {
@@ -2433,7 +2660,7 @@ Some((LineAdjustmentStageCoverageTestSupport::line_adjustment_stage_coverage_tes
                 break;
             }
         }
-        let _ = TracedAssertions::traced_assertions_assert_true(all_match, Some((LineAdjustmentStageCoverageTestSupport::line_adjustment_stage_coverage_test_support_render_trims(&trims)).to_string())).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_true(all_match, Some((LineAdjustmentStageCoverageTestSupport::line_adjustment_stage_coverage_test_support_render_trims(&trims)).to_ustring())).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_equals_float(16.0f64, r.lines[1usize].adjusted_width, None).unwrap();
     });
 }
@@ -2441,11 +2668,10 @@ Some((LineAdjustmentStageCoverageTestSupport::line_adjustment_stage_coverage_tes
 #[test]
 fn lone_mandatory_break_emits_two_zero_width_lines() {
     testlib::run("org.tiqian.layout.LineAdjustmentStageCoverageTest.loneMandatoryBreakEmitsTwoZeroWidthLines", "org.tiqian.layout.LineAdjustmentStageCoverageTest.loneMandatoryBreakEmitsTwoZeroWidthLines", || {
-        let mut t = TestTraceRecorder::new("LineAdjustmentStageCoverageTest");
-        t.section(&"loneMandatoryBreakEmitsTwoZeroWidthLines");
-        let r = LineAdjustmentStageCoverageTestSupport::line_adjustment_stage_coverage_test_support_layout(&concat!("\n",
-""), 100.0f64, None, None, None, None, None).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_equals(2, u32::try_from((r.lines.len()) & 0xFFFF_FFFF).unwrap_or(0), Some((LineAdjustmentStageCoverageTestSupport::line_adjustment_stage_coverage_test_support_render_lines(&r.lines)).to_string())).unwrap();
+        let mut t = TestTraceRecorder::new(&(UStr::new(&[76,105,110,101,65,100,106,117,115,116,109,101,110,116,83,116,97,103,101,67,111,118,101,114,97,103,101,84,101,115,116])));
+        t.section(UStr::new(&[108,111,110,101,77,97,110,100,97,116,111,114,121,66,114,101,97,107,69,109,105,116,115,84,119,111,90,101,114,111,87,105,100,116,104,76,105,110,101,115]));
+        let r = LineAdjustmentStageCoverageTestSupport::line_adjustment_stage_coverage_test_support_layout(UStr::new(&[10]), 100.0f64, None, None, None, None, None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_equals(2, u32::try_from((r.lines.len()) & 0xFFFF_FFFF).unwrap_or(0), Some((LineAdjustmentStageCoverageTestSupport::line_adjustment_stage_coverage_test_support_render_lines(&r.lines)).to_ustring())).unwrap();
         let mut all_zero = true;
         for i in 0..match u32::try_from(r.lines.len()) { Ok(value) => value, Err(_) => u32::MAX } {
             if !(r.lines[usize::try_from(i).unwrap_or(0)].natural_width == 0.0f64 && r.lines[usize::try_from(i).unwrap_or(0)].visual_width == 0.0f64) {
@@ -2454,18 +2680,17 @@ fn lone_mandatory_break_emits_two_zero_width_lines() {
             }
         }
         let _ = TracedAssertions::traced_assertions_assert_true(all_zero, None).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_true(((r.size).clone().height) > (0.0f64), Some((crate::runtime::fp_helper::FPHelper::format_float((r.size).clone().height)).to_string())).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_true(((r.size).clone().height) > (0.0f64), Some(UString::from(format!("{}", crate::runtime::fp_helper::FPHelper::format_float((r.size).clone().height)).as_str()))).unwrap();
     });
 }
 
 #[test]
 fn mandatory_break_middle_line_skips_its_justification_plan() {
     testlib::run("org.tiqian.layout.LineAdjustmentStageCoverageTest.mandatoryBreakMiddleLineSkipsItsJustificationPlan", "org.tiqian.layout.LineAdjustmentStageCoverageTest.mandatoryBreakMiddleLineSkipsItsJustificationPlan", || {
-        let mut t = TestTraceRecorder::new("LineAdjustmentStageCoverageTest");
-        t.section(&"mandatoryBreakMiddleLineSkipsItsJustificationPlan");
-        let r = LineAdjustmentStageCoverageTestSupport::line_adjustment_stage_coverage_test_support_layout(&concat!("中文中文\n",
-"中文中文"), 80.0f64, None, None, None, None, None).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_equals(2, u32::try_from((r.lines.len()) & 0xFFFF_FFFF).unwrap_or(0), Some((LineAdjustmentStageCoverageTestSupport::line_adjustment_stage_coverage_test_support_render_lines(&r.lines)).to_string())).unwrap();
+        let mut t = TestTraceRecorder::new(&(UStr::new(&[76,105,110,101,65,100,106,117,115,116,109,101,110,116,83,116,97,103,101,67,111,118,101,114,97,103,101,84,101,115,116])));
+        t.section(UStr::new(&[109,97,110,100,97,116,111,114,121,66,114,101,97,107,77,105,100,100,108,101,76,105,110,101,83,107,105,112,115,73,116,115,74,117,115,116,105,102,105,99,97,116,105,111,110,80,108,97,110]));
+        let r = LineAdjustmentStageCoverageTestSupport::line_adjustment_stage_coverage_test_support_layout(UStr::new(&[20013,25991,20013,25991,10,20013,25991,20013,25991]), 80.0f64, None, None, None, None, None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_equals(2, u32::try_from((r.lines.len()) & 0xFFFF_FFFF).unwrap_or(0), Some((LineAdjustmentStageCoverageTestSupport::line_adjustment_stage_coverage_test_support_render_lines(&r.lines)).to_ustring())).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_equals_int_range(IntRange::new(0u32, 4u32), ((r.lines[0usize]).clone().cluster_range).clone(), None).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_equals_int_range(IntRange::new(5u32, 8u32), ((r.lines[1usize]).clone().cluster_range).clone(), None).unwrap();
         let mut all_adjusted = true;
@@ -2475,7 +2700,7 @@ fn mandatory_break_middle_line_skips_its_justification_plan() {
                 break;
             }
         }
-        let _ = TracedAssertions::traced_assertions_assert_true(all_adjusted, Some((LineAdjustmentStageCoverageTestSupport::line_adjustment_stage_coverage_test_support_line_range_widths(&r.lines)).to_string())).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_true(all_adjusted, Some((LineAdjustmentStageCoverageTestSupport::line_adjustment_stage_coverage_test_support_line_range_widths(&r.lines)).to_ustring())).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_true(u32::try_from(((r.debug).clone().justification_decisions.len()) & 0xFFFF_FFFF).unwrap_or(0) == 0, None).unwrap();
     });
 }
@@ -2483,50 +2708,47 @@ fn mandatory_break_middle_line_skips_its_justification_plan() {
 #[test]
 fn technical_line_body_stretch_rejects_the_clean_tier_and_replays() {
     testlib::run("org.tiqian.layout.LineAdjustmentStageCoverageTest.technicalLineBodyStretchRejectsTheCleanTierAndReplays", "org.tiqian.layout.LineAdjustmentStageCoverageTest.technicalLineBodyStretchRejectsTheCleanTierAndReplays", || {
-        let mut t = TestTraceRecorder::new("LineAdjustmentStageCoverageTest");
-        t.section(&"technicalLineBodyStretchRejectsTheCleanTierAndReplays");
-        let text = "中文中 aa bb 中文中文中文中文中文中文".to_string();
-        let r = LineAdjustmentStageCoverageTestSupport::line_adjustment_stage_coverage_test_support_layout(text.as_str(), 96.0f64, None, None, Some(vec![
-    (LineBreakSpan::new(TextRange::new(0u32, LineAdjustmentStageCoverageTestSupport::line_adjustment_stage_coverage_test_support_text_length(text.as_str())).unwrap(), LineBreakPolicy::ProgressiveTechnical)).clone(),
+        let mut t = TestTraceRecorder::new(&(UStr::new(&[76,105,110,101,65,100,106,117,115,116,109,101,110,116,83,116,97,103,101,67,111,118,101,114,97,103,101,84,101,115,116])));
+        t.section(UStr::new(&[116,101,99,104,110,105,99,97,108,76,105,110,101,66,111,100,121,83,116,114,101,116,99,104,82,101,106,101,99,116,115,84,104,101,67,108,101,97,110,84,105,101,114,65,110,100,82,101,112,108,97,121,115]));
+        let text = UString::from("中文中 aa bb 中文中文中文中文中文中文").to_ustring();
+        let r = LineAdjustmentStageCoverageTestSupport::line_adjustment_stage_coverage_test_support_layout(text.as_ustr(), 96.0f64, None, None, Some(vec![
+    (LineBreakSpan::new(TextRange::new(0u32, LineAdjustmentStageCoverageTestSupport::line_adjustment_stage_coverage_test_support_text_length(text.as_ustr())).unwrap(), LineBreakPolicy::ProgressiveTechnical)).clone(),
 ]), None, None).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_true((i32::from_ne_bytes((u32::try_from((r.lines.len()) & 0xFFFF_FFFF).unwrap_or(0)).to_ne_bytes())) > (1),
-Some((LineAdjustmentStageCoverageTestSupport::line_adjustment_stage_coverage_test_support_render_lines(&r.lines)).to_string())).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_true((i32::from_ne_bytes(((u32::try_from((r.lines.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) > (1), Some((LineAdjustmentStageCoverageTestSupport::line_adjustment_stage_coverage_test_support_render_lines(&r.lines)).to_ustring())).unwrap();
         let reasons = LineAdjustmentStageCoverageTestSupport::line_adjustment_stage_coverage_test_support_emergency_reasons((r).clone());
         let mut has_rejection = false;
         for i in 0..match u32::try_from(reasons.len()) { Ok(value) => value, Err(_) => u32::MAX } {
-            if reasons[usize::try_from(i).unwrap_or(0)].clone().starts_with(&"CurrentLineTechnicalTierRejection:") {
+            if reasons[usize::try_from(i).unwrap_or(0)].clone().starts_with(&UString::from("CurrentLineTechnicalTierRejection:")) {
                 has_rejection = true;
                 break;
             }
         }
-        let _ = TracedAssertions::traced_assertions_assert_true(has_rejection, Some((LineAdjustmentStageCoverageTestSupport::line_adjustment_stage_coverage_test_support_render_strings(&reasons)).to_string())).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_true(has_rejection, Some((LineAdjustmentStageCoverageTestSupport::line_adjustment_stage_coverage_test_support_render_strings(&reasons)).to_ustring())).unwrap();
         let b_reasons = LineAdjustmentStageCoverageTestSupport::line_adjustment_stage_coverage_test_support_break_reasons((r).clone());
         let mut has_emergency = false;
         for i in 0..match u32::try_from(b_reasons.len()) { Ok(value) => value, Err(_) => u32::MAX } {
-            if b_reasons[usize::try_from(i).unwrap_or(0)].clone() == "CurrentLineTechnicalEmergencyBreak" {
+            if b_reasons[usize::try_from(i).unwrap_or(0)].clone() == UString::from("CurrentLineTechnicalEmergencyBreak") {
                 has_emergency = true;
                 break;
             }
         }
-        let _ = TracedAssertions::traced_assertions_assert_true(has_emergency, Some((LineAdjustmentStageCoverageTestSupport::line_adjustment_stage_coverage_test_support_render_strings(&b_reasons)).to_string())).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_true(has_emergency, Some((LineAdjustmentStageCoverageTestSupport::line_adjustment_stage_coverage_test_support_render_strings(&b_reasons)).to_ustring())).unwrap();
     });
 }
 
 #[test]
 fn tiny_technical_tracking_stays_below_the_rejection_threshold() {
     testlib::run("org.tiqian.layout.LineAdjustmentStageCoverageTest.tinyTechnicalTrackingStaysBelowTheRejectionThreshold", "org.tiqian.layout.LineAdjustmentStageCoverageTest.tinyTechnicalTrackingStaysBelowTheRejectionThreshold", || {
-        let mut t = TestTraceRecorder::new("LineAdjustmentStageCoverageTest");
-        t.section(&"tinyTechnicalTrackingStaysBelowTheRejectionThreshold");
-        let text = "中中中中中中 aaaa".to_string();
+        let mut t = TestTraceRecorder::new(&(UStr::new(&[76,105,110,101,65,100,106,117,115,116,109,101,110,116,83,116,97,103,101,67,111,118,101,114,97,103,101,84,101,115,116])));
+        t.section(UStr::new(&[116,105,110,121,84,101,99,104,110,105,99,97,108,84,114,97,99,107,105,110,103,83,116,97,121,115,66,101,108,111,119,84,104,101,82,101,106,101,99,116,105,111,110,84,104,114,101,115,104,111,108,100]));
+        let text = UString::from("中中中中中中 aaaa").to_ustring();
         let span = vec![
-    (LineBreakSpan::new(TextRange::new(0u32, LineAdjustmentStageCoverageTestSupport::line_adjustment_stage_coverage_test_support_text_length(text.as_str())).unwrap(), LineBreakPolicy::ProgressiveTechnical)).clone(),
+    (LineBreakSpan::new(TextRange::new(0u32, LineAdjustmentStageCoverageTestSupport::line_adjustment_stage_coverage_test_support_text_length(text.as_ustr())).unwrap(), LineBreakPolicy::ProgressiveTechnical)).clone(),
 ];
-        let tiny = LineAdjustmentStageCoverageTestSupport::line_adjustment_stage_coverage_test_support_layout(text.as_str(), TestHelpers::test_helpers_f32_literal(96.004f64), None, None, Some((span).clone()), None, None).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_equals_int_range(IntRange::new(0u32, 5u32), ((tiny.lines[0usize]).clone().cluster_range).clone(),
-Some((LineAdjustmentStageCoverageTestSupport::line_adjustment_stage_coverage_test_support_render_lines(&tiny.lines)).to_string())).unwrap();
-        let deltas = LineAdjustmentStageCoverageTestSupport::line_adjustment_stage_coverage_test_support_allocation_deltas((tiny).clone(), &"CjkInterChar");
-        let _ = TracedAssertions::traced_assertions_assert_true((i32::from_ne_bytes((u32::try_from((deltas.len()) & 0xFFFF_FFFF).unwrap_or(0)).to_ne_bytes())) > (0),
-Some((LineAdjustmentStageCoverageTestSupport::line_adjustment_stage_coverage_test_support_render_justifications(&(tiny.debug).clone().justification_decisions)).to_string())).unwrap();
+        let tiny = LineAdjustmentStageCoverageTestSupport::line_adjustment_stage_coverage_test_support_layout(text.as_ustr(), TestHelpers::test_helpers_f32_literal(96.004f64), None, None, Some((span).clone()), None, None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_equals_int_range(IntRange::new(0u32, 5u32), ((tiny.lines[0usize]).clone().cluster_range).clone(), Some((LineAdjustmentStageCoverageTestSupport::line_adjustment_stage_coverage_test_support_render_lines(&tiny.lines)).to_ustring())).unwrap();
+        let deltas = LineAdjustmentStageCoverageTestSupport::line_adjustment_stage_coverage_test_support_allocation_deltas((tiny).clone(), UStr::new(&[67,106,107,73,110,116,101,114,67,104,97,114]));
+        let _ = TracedAssertions::traced_assertions_assert_true((i32::from_ne_bytes(((u32::try_from((deltas.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) > (0), Some((LineAdjustmentStageCoverageTestSupport::line_adjustment_stage_coverage_test_support_render_justifications(&(tiny.debug).clone().justification_decisions)).to_ustring())).unwrap();
         let mut all_small = true;
         for i in 0..match u32::try_from(deltas.len()) { Ok(value) => value, Err(_) => u32::MAX } {
             if !((deltas[usize::try_from(i).unwrap_or(0)]) <= 0.001f64) {
@@ -2534,41 +2756,40 @@ Some((LineAdjustmentStageCoverageTestSupport::line_adjustment_stage_coverage_tes
                 break;
             }
         }
-        let _ = TracedAssertions::traced_assertions_assert_true(all_small, Some((LineAdjustmentStageCoverageTestSupport::line_adjustment_stage_coverage_test_support_render_floats(&deltas)).to_string())).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_true(all_small, Some((LineAdjustmentStageCoverageTestSupport::line_adjustment_stage_coverage_test_support_render_floats(&deltas)).to_ustring())).unwrap();
         let tiny_reasons = LineAdjustmentStageCoverageTestSupport::line_adjustment_stage_coverage_test_support_emergency_reasons((tiny).clone());
         let mut none_rejection = true;
         for i in 0..match u32::try_from(tiny_reasons.len()) { Ok(value) => value, Err(_) => u32::MAX } {
-            if tiny_reasons[usize::try_from(i).unwrap_or(0)].clone().starts_with(&"CurrentLineTechnicalTierRejection:") {
+            if tiny_reasons[usize::try_from(i).unwrap_or(0)].clone().starts_with(&UString::from("CurrentLineTechnicalTierRejection:")) {
                 none_rejection = false;
                 break;
             }
         }
-        let _ = TracedAssertions::traced_assertions_assert_true(none_rejection, Some((LineAdjustmentStageCoverageTestSupport::line_adjustment_stage_coverage_test_support_render_strings(&tiny_reasons)).to_string())).unwrap();
-        let rejected = LineAdjustmentStageCoverageTestSupport::line_adjustment_stage_coverage_test_support_layout(text.as_str(), 96.4f64, None, None, Some((span).clone()), None, None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_true(none_rejection, Some((LineAdjustmentStageCoverageTestSupport::line_adjustment_stage_coverage_test_support_render_strings(&tiny_reasons)).to_ustring())).unwrap();
+        let rejected = LineAdjustmentStageCoverageTestSupport::line_adjustment_stage_coverage_test_support_layout(text.as_ustr(), 96.4f64, None, None, Some((span).clone()), None, None).unwrap();
         let rej_reasons = LineAdjustmentStageCoverageTestSupport::line_adjustment_stage_coverage_test_support_emergency_reasons((rejected).clone());
         let mut has_whole_token = false;
         for i in 0..match u32::try_from(rej_reasons.len()) { Ok(value) => value, Err(_) => u32::MAX } {
-            if rej_reasons[usize::try_from(i).unwrap_or(0)].clone() == "CurrentLineTechnicalTierRejection:WholeToken" {
+            if rej_reasons[usize::try_from(i).unwrap_or(0)].clone() == UString::from("CurrentLineTechnicalTierRejection:WholeToken") {
                 has_whole_token = true;
                 break;
             }
         }
-        let _ = TracedAssertions::traced_assertions_assert_true(has_whole_token, Some((LineAdjustmentStageCoverageTestSupport::line_adjustment_stage_coverage_test_support_render_strings(&rej_reasons)).to_string())).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_true(has_whole_token, Some((LineAdjustmentStageCoverageTestSupport::line_adjustment_stage_coverage_test_support_render_strings(&rej_reasons)).to_ustring())).unwrap();
     });
 }
 
 #[test]
 fn trailing_mandatory_break_emits_terminal_empty_line_without_hyphen() {
     testlib::run("org.tiqian.layout.LineAdjustmentStageCoverageTest.trailingMandatoryBreakEmitsTerminalEmptyLineWithoutHyphen", "org.tiqian.layout.LineAdjustmentStageCoverageTest.trailingMandatoryBreakEmitsTerminalEmptyLineWithoutHyphen", || {
-        let mut t = TestTraceRecorder::new("LineAdjustmentStageCoverageTest");
-        t.section(&"trailingMandatoryBreakEmitsTerminalEmptyLineWithoutHyphen");
-        let r = LineAdjustmentStageCoverageTestSupport::line_adjustment_stage_coverage_test_support_layout(&concat!("中文aa internationalization\n",
-""), 118.0f64, None, None, None, Some(true), None).unwrap();
+        let mut t = TestTraceRecorder::new(&(UStr::new(&[76,105,110,101,65,100,106,117,115,116,109,101,110,116,83,116,97,103,101,67,111,118,101,114,97,103,101,84,101,115,116])));
+        t.section(UStr::new(&[116,114,97,105,108,105,110,103,77,97,110,100,97,116,111,114,121,66,114,101,97,107,69,109,105,116,115,84,101,114,109,105,110,97,108,69,109,112,116,121,76,105,110,101,87,105,116,104,111,117,116,72,121,112,104,101,110]));
+        let r = LineAdjustmentStageCoverageTestSupport::line_adjustment_stage_coverage_test_support_layout(UStr::new(&[20013,25991,97,97,32,105,110,116,101,114,110,97,116,105,111,110,97,108,105,122,97,116,105,111,110,10]), 118.0f64, None, None, None, Some(true), None).unwrap();
         let last = (r.lines[usize::try_from(u32::wrapping_sub(u32::try_from((r.lines.len()) & 0xFFFF_FFFF).unwrap_or(0), 1)).unwrap_or(0)]).clone();
-        let _ = TracedAssertions::traced_assertions_assert_true(last.cluster_range.get_is_empty(), Some((LineAdjustmentStageCoverageTestSupport::line_adjustment_stage_coverage_test_support_render_lines(&r.lines)).to_string())).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_true(last.cluster_range.get_is_empty(), Some((LineAdjustmentStageCoverageTestSupport::line_adjustment_stage_coverage_test_support_render_lines(&r.lines)).to_ustring())).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_equals_float(0.0f64, last.hyphen_advance, None).unwrap();
         let before = (r.lines[usize::try_from(u32::wrapping_sub(u32::try_from((r.lines.len()) & 0xFFFF_FFFF).unwrap_or(0), 2)).unwrap_or(0)]).clone();
-        let _ = TracedAssertions::traced_assertions_assert_equals_float(0.0f64, before.hyphen_advance, Some((LineAdjustmentStageCoverageTestSupport::line_adjustment_stage_coverage_test_support_render_lines(&r.lines)).to_string())).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_equals_float(0.0f64, before.hyphen_advance, Some((LineAdjustmentStageCoverageTestSupport::line_adjustment_stage_coverage_test_support_render_lines(&r.lines)).to_ustring())).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_true(u32::try_from((before.hyphen_glyphs.len()) & 0xFFFF_FFFF).unwrap_or(0) == 0, None).unwrap();
     });
 }
@@ -2576,21 +2797,20 @@ fn trailing_mandatory_break_emits_terminal_empty_line_without_hyphen() {
 #[test]
 fn zero_advance_edge_space_is_never_collapsed() {
     testlib::run("org.tiqian.layout.LineAdjustmentStageCoverageTest.zeroAdvanceEdgeSpaceIsNeverCollapsed", "org.tiqian.layout.LineAdjustmentStageCoverageTest.zeroAdvanceEdgeSpaceIsNeverCollapsed", || {
-        let mut t = TestTraceRecorder::new("LineAdjustmentStageCoverageTest");
-        t.section(&"zeroAdvanceEdgeSpaceIsNeverCollapsed");
-        let r = LineAdjustmentStageCoverageTestSupport::line_adjustment_stage_coverage_test_support_layout(&"中中中中 aaa bbb", 114.0f64, None, None, None, None, Some(Box::new(ZeroSpaceShaper::new()))).unwrap();
+        let mut t = TestTraceRecorder::new(&(UStr::new(&[76,105,110,101,65,100,106,117,115,116,109,101,110,116,83,116,97,103,101,67,111,118,101,114,97,103,101,84,101,115,116])));
+        t.section(UStr::new(&[122,101,114,111,65,100,118,97,110,99,101,69,100,103,101,83,112,97,99,101,73,115,78,101,118,101,114,67,111,108,108,97,112,115,101,100]));
+        let r = LineAdjustmentStageCoverageTestSupport::line_adjustment_stage_coverage_test_support_layout(UStr::new(&[20013,20013,20013,20013,32,97,97,97,32,98,98,98]), 114.0f64, None, None, None, None, Some(Arc::new(Mutex::new(ZeroSpaceShaper::new())))).unwrap();
         let first = (r.lines[0usize]).clone();
         let edge = (r.clusters[usize::try_from(first.cluster_range.end).unwrap_or(0)]).clone();
-        let _ = TracedAssertions::traced_assertions_assert_true(LineAdjustmentStageCoverageTestSupport::line_adjustment_stage_coverage_test_support_is_all_spaces((edge.text).to_string().as_str()),
-Some((LineAdjustmentStageCoverageTestSupport::line_adjustment_stage_coverage_test_support_render_cluster_texts(&r.clusters)).to_string())).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_true(LineAdjustmentStageCoverageTestSupport::line_adjustment_stage_coverage_test_support_is_all_spaces((edge.text).to_ustring().as_ustr()), Some((LineAdjustmentStageCoverageTestSupport::line_adjustment_stage_coverage_test_support_render_cluster_texts(&r.clusters)).to_ustring())).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_equals_float(0.0f64, edge.advance, None).unwrap();
         let mut none_collapse = true;
         for i in 0..match u32::try_from((r.debug).clone().line_edge_trim_decisions.len()) { Ok(value) => value, Err(_) => u32::MAX } {
-            if r.debug.clone().line_edge_trim_decisions[usize::try_from(i).unwrap_or(0)].clone().reason.to_string() == "LineEdgeWordSpaceCollapse" {
+            if r.debug.clone().line_edge_trim_decisions[usize::try_from(i).unwrap_or(0)].clone().reason.to_ustring() == UString::from("LineEdgeWordSpaceCollapse") {
                 none_collapse = false;
                 break;
             }
         }
-        let _ = TracedAssertions::traced_assertions_assert_true(none_collapse, Some((LineAdjustmentStageCoverageTestSupport::line_adjustment_stage_coverage_test_support_render_trims(&(r.debug).clone().line_edge_trim_decisions)).to_string())).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_true(none_collapse, Some((LineAdjustmentStageCoverageTestSupport::line_adjustment_stage_coverage_test_support_render_trims(&(r.debug).clone().line_edge_trim_decisions)).to_ustring())).unwrap();
     });
 }

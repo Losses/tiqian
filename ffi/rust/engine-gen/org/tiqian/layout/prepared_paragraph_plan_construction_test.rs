@@ -8,6 +8,8 @@ use crate::org::tiqian::test::trace::test_trace_recorder::TestTraceRecorder;
 use crate::org::tiqian::test::trace::traced_assertions::TracedAssertions;
 use crate::runtime::test as testlib;
 use crate::runtime::u_string;
+use crate::runtime::u_string::UStr;
+use crate::runtime::u_string::UString;
 
 
 #[derive(Debug, Clone, PartialEq)]
@@ -16,6 +18,16 @@ pub enum PreparedParagraphPlanConstructionTestStyleDeltaListsOnlyPaintFieldsFaul
     TextRangeErrorFault(crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError),
     PreparedParagraphToPreparedParagraphJsonFaultFault(crate::org::tiqian::layout::prepared_paragraph::PreparedParagraphToPreparedParagraphJsonFault),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
+}
+impl std::fmt::Display for PreparedParagraphPlanConstructionTestStyleDeltaListsOnlyPaintFieldsFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            PreparedParagraphPlanConstructionTestStyleDeltaListsOnlyPaintFieldsFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            PreparedParagraphPlanConstructionTestStyleDeltaListsOnlyPaintFieldsFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            PreparedParagraphPlanConstructionTestStyleDeltaListsOnlyPaintFieldsFault::PreparedParagraphToPreparedParagraphJsonFaultFault(value) => write!(formatter, "{}", value),
+            PreparedParagraphPlanConstructionTestStyleDeltaListsOnlyPaintFieldsFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
 }
 
 impl From<PreparedParagraphPlanConstructionTestStyleDeltaListsOnlyPaintFieldsFault> for crate::std::u_string_exception::UStringFault {
@@ -85,6 +97,16 @@ pub enum PreparedParagraphPlanConstructionTestOpenTypeFeaturesAndRenderFontFamil
     PreparedParagraphToPreparedParagraphJsonFaultFault(crate::org::tiqian::layout::prepared_paragraph::PreparedParagraphToPreparedParagraphJsonFault),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
 }
+impl std::fmt::Display for PreparedParagraphPlanConstructionTestOpenTypeFeaturesAndRenderFontFamilyAttachPerClusterFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            PreparedParagraphPlanConstructionTestOpenTypeFeaturesAndRenderFontFamilyAttachPerClusterFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            PreparedParagraphPlanConstructionTestOpenTypeFeaturesAndRenderFontFamilyAttachPerClusterFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            PreparedParagraphPlanConstructionTestOpenTypeFeaturesAndRenderFontFamilyAttachPerClusterFault::PreparedParagraphToPreparedParagraphJsonFaultFault(value) => write!(formatter, "{}", value),
+            PreparedParagraphPlanConstructionTestOpenTypeFeaturesAndRenderFontFamilyAttachPerClusterFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
+}
 
 impl From<PreparedParagraphPlanConstructionTestOpenTypeFeaturesAndRenderFontFamilyAttachPerClusterFault> for crate::std::u_string_exception::UStringFault {
     fn from(value: PreparedParagraphPlanConstructionTestOpenTypeFeaturesAndRenderFontFamilyAttachPerClusterFault) -> Self {
@@ -152,6 +174,16 @@ pub enum PreparedParagraphPlanConstructionTestMultiUnitClusterMarksShapingBounda
     TextRangeErrorFault(crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError),
     PreparedParagraphToPreparedParagraphJsonFaultFault(crate::org::tiqian::layout::prepared_paragraph::PreparedParagraphToPreparedParagraphJsonFault),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
+}
+impl std::fmt::Display for PreparedParagraphPlanConstructionTestMultiUnitClusterMarksShapingBoundaryFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            PreparedParagraphPlanConstructionTestMultiUnitClusterMarksShapingBoundaryFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            PreparedParagraphPlanConstructionTestMultiUnitClusterMarksShapingBoundaryFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            PreparedParagraphPlanConstructionTestMultiUnitClusterMarksShapingBoundaryFault::PreparedParagraphToPreparedParagraphJsonFaultFault(value) => write!(formatter, "{}", value),
+            PreparedParagraphPlanConstructionTestMultiUnitClusterMarksShapingBoundaryFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
 }
 
 impl From<PreparedParagraphPlanConstructionTestMultiUnitClusterMarksShapingBoundaryFault> for crate::std::u_string_exception::UStringFault {
@@ -221,6 +253,16 @@ pub enum PreparedParagraphPlanConstructionTestInlineObjectCellEmitsAdvanceOverri
     PreparedParagraphToPreparedParagraphJsonFaultFault(crate::org::tiqian::layout::prepared_paragraph::PreparedParagraphToPreparedParagraphJsonFault),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
 }
+impl std::fmt::Display for PreparedParagraphPlanConstructionTestInlineObjectCellEmitsAdvanceOverrideFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            PreparedParagraphPlanConstructionTestInlineObjectCellEmitsAdvanceOverrideFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            PreparedParagraphPlanConstructionTestInlineObjectCellEmitsAdvanceOverrideFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            PreparedParagraphPlanConstructionTestInlineObjectCellEmitsAdvanceOverrideFault::PreparedParagraphToPreparedParagraphJsonFaultFault(value) => write!(formatter, "{}", value),
+            PreparedParagraphPlanConstructionTestInlineObjectCellEmitsAdvanceOverrideFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
+}
 
 impl From<PreparedParagraphPlanConstructionTestInlineObjectCellEmitsAdvanceOverrideFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
     fn from(value: PreparedParagraphPlanConstructionTestInlineObjectCellEmitsAdvanceOverrideFault) -> Self {
@@ -284,17 +326,18 @@ impl From<crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFa
 
 #[derive(Debug, Clone, PartialEq)]
 pub enum PreparedParagraphPlanConstructionTestDashClusterEmitsShapingEvidenceBlockFault {
-    UStringFaultFault(crate::std::u_string_exception::UStringFault),
     TextRangeErrorFault(crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError),
+    UStringFaultFault(crate::std::u_string_exception::UStringFault),
     PreparedParagraphToPreparedParagraphJsonFaultFault(crate::org::tiqian::layout::prepared_paragraph::PreparedParagraphToPreparedParagraphJsonFault),
     SupportRunEvidenceFault(crate::org::tiqian::layout::prepared_paragraph_plan_construction_test_support::PreparedParagraphPlanConstructionTestSupportRunEvidenceFault),
 }
-
-impl From<PreparedParagraphPlanConstructionTestDashClusterEmitsShapingEvidenceBlockFault> for crate::std::u_string_exception::UStringFault {
-    fn from(value: PreparedParagraphPlanConstructionTestDashClusterEmitsShapingEvidenceBlockFault) -> Self {
-        match value {
-            PreparedParagraphPlanConstructionTestDashClusterEmitsShapingEvidenceBlockFault::UStringFaultFault(value) => value,
-            _ => panic!("fault union converted to an unrelated fault"),
+impl std::fmt::Display for PreparedParagraphPlanConstructionTestDashClusterEmitsShapingEvidenceBlockFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            PreparedParagraphPlanConstructionTestDashClusterEmitsShapingEvidenceBlockFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            PreparedParagraphPlanConstructionTestDashClusterEmitsShapingEvidenceBlockFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            PreparedParagraphPlanConstructionTestDashClusterEmitsShapingEvidenceBlockFault::PreparedParagraphToPreparedParagraphJsonFaultFault(value) => write!(formatter, "{}", value),
+            PreparedParagraphPlanConstructionTestDashClusterEmitsShapingEvidenceBlockFault::SupportRunEvidenceFault(value) => write!(formatter, "{}", value),
         }
     }
 }
@@ -303,6 +346,15 @@ impl From<PreparedParagraphPlanConstructionTestDashClusterEmitsShapingEvidenceBl
     fn from(value: PreparedParagraphPlanConstructionTestDashClusterEmitsShapingEvidenceBlockFault) -> Self {
         match value {
             PreparedParagraphPlanConstructionTestDashClusterEmitsShapingEvidenceBlockFault::TextRangeErrorFault(value) => value,
+            _ => panic!("fault union converted to an unrelated fault"),
+        }
+    }
+}
+
+impl From<PreparedParagraphPlanConstructionTestDashClusterEmitsShapingEvidenceBlockFault> for crate::std::u_string_exception::UStringFault {
+    fn from(value: PreparedParagraphPlanConstructionTestDashClusterEmitsShapingEvidenceBlockFault) -> Self {
+        match value {
+            PreparedParagraphPlanConstructionTestDashClusterEmitsShapingEvidenceBlockFault::UStringFaultFault(value) => value,
             _ => panic!("fault union converted to an unrelated fault"),
         }
     }
@@ -326,15 +378,15 @@ impl From<PreparedParagraphPlanConstructionTestDashClusterEmitsShapingEvidenceBl
     }
 }
 
-impl From<crate::std::u_string_exception::UStringFault> for PreparedParagraphPlanConstructionTestDashClusterEmitsShapingEvidenceBlockFault {
-    fn from(value: crate::std::u_string_exception::UStringFault) -> Self {
-        PreparedParagraphPlanConstructionTestDashClusterEmitsShapingEvidenceBlockFault::UStringFaultFault(value)
-    }
-}
-
 impl From<crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError> for PreparedParagraphPlanConstructionTestDashClusterEmitsShapingEvidenceBlockFault {
     fn from(value: crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError) -> Self {
         PreparedParagraphPlanConstructionTestDashClusterEmitsShapingEvidenceBlockFault::TextRangeErrorFault(value)
+    }
+}
+
+impl From<crate::std::u_string_exception::UStringFault> for PreparedParagraphPlanConstructionTestDashClusterEmitsShapingEvidenceBlockFault {
+    fn from(value: crate::std::u_string_exception::UStringFault) -> Self {
+        PreparedParagraphPlanConstructionTestDashClusterEmitsShapingEvidenceBlockFault::UStringFaultFault(value)
     }
 }
 
@@ -353,66 +405,64 @@ impl From<crate::org::tiqian::layout::prepared_paragraph_plan_construction_test_
 #[test]
 fn open_type_features_and_render_font_family_attach_per_cluster() {
     testlib::run("org.tiqian.layout.PreparedParagraphPlanConstructionTest.openTypeFeaturesAndRenderFontFamilyAttachPerCluster", "org.tiqian.layout.PreparedParagraphPlanConstructionTest.openTypeFeaturesAndRenderFontFamilyAttachPerCluster", || {
-        let mut t = TestTraceRecorder::new("PreparedParagraphPlanConstructionTest");
-        t.section(&"openTypeFeaturesAndRenderFontFamilyAttachPerCluster");
+        let mut t = TestTraceRecorder::new(&(UStr::new(&[80,114,101,112,97,114,101,100,80,97,114,97,103,114,97,112,104,80,108,97,110,67,111,110,115,116,114,117,99,116,105,111,110,84,101,115,116])));
+        t.section(UStr::new(&[111,112,101,110,84,121,112,101,70,101,97,116,117,114,101,115,65,110,100,82,101,110,100,101,114,70,111,110,116,70,97,109,105,108,121,65,116,116,97,99,104,80,101,114,67,108,117,115,116,101,114]));
         let json = PreparedParagraphFns::prepared_paragraph_fns_to_prepared_paragraph_json(PreparedParagraphPlanConstructionTestSupport::prepared_paragraph_plan_construction_test_support_open_type_features_and_render_font_family_attach_per_cluster().unwrap(), true).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_true((u32::from_ne_bytes((u_string::find_from(&json, "\"openTypeFeatures\":[\"kern\",\"liga\"]", 0)).to_ne_bytes())) <= 2147483647, Some((json).to_string())).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_true((u32::from_ne_bytes((u_string::find_from(&json, "\"renderFontFamily\":\"Noto Serif CJK\"", 0)).to_ne_bytes())) <= 2147483647, Some((json).to_string())).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_false((u32::from_ne_bytes((u_string::find_from(&json, "shapingBoundary", 0)).to_ne_bytes())) <= 2147483647, Some((json).to_string())).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_true((u32::from_ne_bytes(((u_string::find_from(&(json), UString::from("\"openTypeFeatures\":[\"kern\",\"liga\"]").as_ustr(), 0)) as u32).to_ne_bytes())) <= 2147483647, Some((json).to_ustring())).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_true((u32::from_ne_bytes(((u_string::find_from(&(json), UString::from("\"renderFontFamily\":\"Noto Serif CJK\"").as_ustr(), 0)) as u32).to_ne_bytes())) <= 2147483647, Some((json).to_ustring())).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_false((u32::from_ne_bytes(((u_string::find_from(&(json), UString::from("shapingBoundary").as_ustr(), 0)) as u32).to_ne_bytes())) <= 2147483647, Some((json).to_ustring())).unwrap();
     });
 }
 
 #[test]
 fn multi_unit_cluster_marks_shaping_boundary() {
     testlib::run("org.tiqian.layout.PreparedParagraphPlanConstructionTest.multiUnitClusterMarksShapingBoundary", "org.tiqian.layout.PreparedParagraphPlanConstructionTest.multiUnitClusterMarksShapingBoundary", || {
-        let mut t = TestTraceRecorder::new("PreparedParagraphPlanConstructionTest");
-        t.section(&"multiUnitClusterMarksShapingBoundary");
+        let mut t = TestTraceRecorder::new(&(UStr::new(&[80,114,101,112,97,114,101,100,80,97,114,97,103,114,97,112,104,80,108,97,110,67,111,110,115,116,114,117,99,116,105,111,110,84,101,115,116])));
+        t.section(UStr::new(&[109,117,108,116,105,85,110,105,116,67,108,117,115,116,101,114,77,97,114,107,115,83,104,97,112,105,110,103,66,111,117,110,100,97,114,121]));
         let json = PreparedParagraphFns::prepared_paragraph_fns_to_prepared_paragraph_json(PreparedParagraphPlanConstructionTestSupport::prepared_paragraph_plan_construction_test_support_multi_unit_cluster_marks_shaping_boundary().unwrap(), false).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_true((u32::from_ne_bytes((u_string::find_from(&json, "\"shapingBoundary\":true", 0)).to_ne_bytes())) <= 2147483647, Some((json).to_string())).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_true((u32::from_ne_bytes(((u_string::find_from(&(json), UString::from("\"shapingBoundary\":true").as_ustr(), 0)) as u32).to_ne_bytes())) <= 2147483647, Some((json).to_ustring())).unwrap();
     });
 }
 
 #[test]
 fn inline_object_cell_emits_advance_override() {
     testlib::run("org.tiqian.layout.PreparedParagraphPlanConstructionTest.inlineObjectCellEmitsAdvanceOverride", "org.tiqian.layout.PreparedParagraphPlanConstructionTest.inlineObjectCellEmitsAdvanceOverride", || {
-        let mut t = TestTraceRecorder::new("PreparedParagraphPlanConstructionTest");
-        t.section(&"inlineObjectCellEmitsAdvanceOverride");
+        let mut t = TestTraceRecorder::new(&(UStr::new(&[80,114,101,112,97,114,101,100,80,97,114,97,103,114,97,112,104,80,108,97,110,67,111,110,115,116,114,117,99,116,105,111,110,84,101,115,116])));
+        t.section(UStr::new(&[105,110,108,105,110,101,79,98,106,101,99,116,67,101,108,108,69,109,105,116,115,65,100,118,97,110,99,101,79,118,101,114,114,105,100,101]));
         let r = PreparedParagraphPlanConstructionTestSupport::prepared_paragraph_plan_construction_test_support_inline_object_cell_emits_advance_override().unwrap();
         let json = PreparedParagraphFns::prepared_paragraph_fns_to_prepared_paragraph_json((r).clone(), true).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_true((u32::from_ne_bytes((u_string::find_from(&json, "\"inlineObject\":24", 0)).to_ne_bytes())) <= 2147483647, Some((json).to_string())).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_true((u32::from_ne_bytes((u_string::find_from(&json, "\"advance\":10", 0)).to_ne_bytes())) <= 2147483647, Some((json).to_string())).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_true((u32::from_ne_bytes(((u_string::find_from(&(json), UString::from("\"inlineObject\":24").as_ustr(), 0)) as u32).to_ne_bytes())) <= 2147483647, Some((json).to_ustring())).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_true((u32::from_ne_bytes(((u_string::find_from(&(json), UString::from("\"advance\":10").as_ustr(), 0)) as u32).to_ne_bytes())) <= 2147483647, Some((json).to_ustring())).unwrap();
         let mut empty_clusters: Vec<Cluster> = vec![];
         for i in 0..match u32::try_from(r.clusters.len()) { Ok(value) => value, Err(_) => u32::MAX } {
             let c = (r.clusters[usize::try_from(i).unwrap_or(0)]).clone();
-            empty_clusters.push(Cluster::new((c.range).clone(), (c.text).to_string().as_str(), (c.font_key).to_string().as_str(), c.advance, if c.range.clone().start == 1 { Some("".to_string()) } else { Some((c.display_text).to_string()) }.clone(), Some(0.0), Some(0.0),
-Some(0.0)));
+            empty_clusters.push(Cluster::new((c.range).clone(), (c.text).to_ustring().as_ustr(), (c.font_key).to_ustring().as_ustr(), c.advance, if c.range.clone().start == 1 { Some(UString::from("")) } else { Some((c.display_text).to_ustring()) }.clone(), Some(0.0), Some(0.0), Some(0.0)));
         }
         let empty_display = LayoutResult::new((r.input).clone(), (r.size).clone(), (empty_clusters).clone(), (r.glyph_runs).clone(), (r.lines).clone(), (r.debug).clone());
         let plain = PreparedParagraphFns::prepared_paragraph_fns_to_prepared_paragraph_json((empty_display).clone(), false).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_false((u32::from_ne_bytes((u_string::find_from(&plain, "\"inlineObject\"", 0)).to_ne_bytes())) <= 2147483647, Some((plain).to_string())).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_false((u32::from_ne_bytes((u_string::find_from(&plain, "\"rangeStart\":1", 0)).to_ne_bytes())) <= 2147483647, Some((plain).to_string())).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_false((u32::from_ne_bytes(((u_string::find_from(&(plain), UString::from("\"inlineObject\"").as_ustr(), 0)) as u32).to_ne_bytes())) <= 2147483647, Some((plain).to_ustring())).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_false((u32::from_ne_bytes(((u_string::find_from(&(plain), UString::from("\"rangeStart\":1").as_ustr(), 0)) as u32).to_ne_bytes())) <= 2147483647, Some((plain).to_ustring())).unwrap();
         let evidence = PreparedParagraphFns::prepared_paragraph_fns_to_prepared_paragraph_json((empty_display).clone(), true).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_true((u32::from_ne_bytes((u_string::find_from(&evidence, "\"inlineObject\":24", 0)).to_ne_bytes())) <= 2147483647, Some((evidence).to_string())).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_true((u32::from_ne_bytes(((u_string::find_from(&(evidence), UString::from("\"inlineObject\":24").as_ustr(), 0)) as u32).to_ne_bytes())) <= 2147483647, Some((evidence).to_ustring())).unwrap();
     });
 }
 
 #[test]
 fn style_delta_lists_only_paint_fields() {
     testlib::run("org.tiqian.layout.PreparedParagraphPlanConstructionTest.styleDeltaListsOnlyPaintFields", "org.tiqian.layout.PreparedParagraphPlanConstructionTest.styleDeltaListsOnlyPaintFields", || {
-        let mut t = TestTraceRecorder::new("PreparedParagraphPlanConstructionTest");
-        t.section(&"styleDeltaListsOnlyPaintFields");
+        let mut t = TestTraceRecorder::new(&(UStr::new(&[80,114,101,112,97,114,101,100,80,97,114,97,103,114,97,112,104,80,108,97,110,67,111,110,115,116,114,117,99,116,105,111,110,84,101,115,116])));
+        t.section(UStr::new(&[115,116,121,108,101,68,101,108,116,97,76,105,115,116,115,79,110,108,121,80,97,105,110,116,70,105,101,108,100,115]));
         let json = PreparedParagraphFns::prepared_paragraph_fns_to_prepared_paragraph_json(PreparedParagraphPlanConstructionTestSupport::prepared_paragraph_plan_construction_test_support_style_delta_lists_only_paint_fields().unwrap(), true).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_true((u32::from_ne_bytes((u_string::find_from(&json, "\"style\":{\"fontSize\":20,\"fontWeight\":700,\"italic\":true}", 0)).to_ne_bytes())) <= 2147483647, Some((json).to_string())).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_true((u32::from_ne_bytes((u_string::find_from(&json, "\"style\":{}", 0)).to_ne_bytes())) <= 2147483647, Some((json).to_string())).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_equals(2, u32::wrapping_sub(u32::try_from((u_string::split(&json, &"\"style\":").len()) & 0xFFFF_FFFF).unwrap_or(0), 1), None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_true((u32::from_ne_bytes(((u_string::find_from(&(json), UString::from("\"style\":{\"fontSize\":20,\"fontWeight\":700,\"italic\":true}").as_ustr(), 0)) as u32).to_ne_bytes())) <= 2147483647, Some((json).to_ustring())).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_true((u32::from_ne_bytes(((u_string::find_from(&(json), UString::from("\"style\":{}").as_ustr(), 0)) as u32).to_ne_bytes())) <= 2147483647, Some((json).to_ustring())).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_equals(2, u32::wrapping_sub(u32::try_from((u_string::split(&json, &UString::from("\"style\":")).len()) & 0xFFFF_FFFF).unwrap_or(0), 1), None).unwrap();
     });
 }
 
 #[test]
 fn dash_cluster_emits_shaping_evidence_block() {
     testlib::run("org.tiqian.layout.PreparedParagraphPlanConstructionTest.dashClusterEmitsShapingEvidenceBlock", "org.tiqian.layout.PreparedParagraphPlanConstructionTest.dashClusterEmitsShapingEvidenceBlock", || {
-        let _ = PreparedParagraphPlanConstructionTestSupport::prepared_paragraph_plan_construction_test_support_run_evidence(&"dashClusterEmitsShapingEvidenceBlock",
-PreparedParagraphPlanConstructionTestSupport::prepared_paragraph_plan_construction_test_support_dash_cluster_emits_shaping_evidence_block().unwrap()).unwrap();
+        let _ = PreparedParagraphPlanConstructionTestSupport::prepared_paragraph_plan_construction_test_support_run_evidence(UStr::new(&[100,97,115,104,67,108,117,115,116,101,114,69,109,105,116,115,83,104,97,112,105,110,103,69,118,105,100,101,110,99,101,66,108,111,99,107]), PreparedParagraphPlanConstructionTestSupport::prepared_paragraph_plan_construction_test_support_dash_cluster_emits_shaping_evidence_block().unwrap()).unwrap();
     });
 }
 

@@ -30,6 +30,8 @@ use crate::org::tiqian::test::trace::test_trace_recorder::TestTraceRecorder;
 use crate::org::tiqian::test::trace::traced_assertions::TracedAssertions;
 use crate::runtime::test as testlib;
 use crate::runtime::u_string;
+use crate::runtime::u_string::UStr;
+use crate::runtime::u_string::UString;
 
 
 #[derive(Debug, Clone, PartialEq)]
@@ -37,6 +39,15 @@ pub enum CoreBoundaryTestSourceGraphemeBoundariesWithRegionalIndicatorFault {
     TextRangeErrorFault(crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError),
     UStringFaultFault(crate::std::u_string_exception::UStringFault),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
+}
+impl std::fmt::Display for CoreBoundaryTestSourceGraphemeBoundariesWithRegionalIndicatorFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            CoreBoundaryTestSourceGraphemeBoundariesWithRegionalIndicatorFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            CoreBoundaryTestSourceGraphemeBoundariesWithRegionalIndicatorFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            CoreBoundaryTestSourceGraphemeBoundariesWithRegionalIndicatorFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
 }
 
 impl From<CoreBoundaryTestSourceGraphemeBoundariesWithRegionalIndicatorFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
@@ -90,6 +101,15 @@ pub enum CoreBoundaryTestSourceGraphemeBoundariesWithHangulSyllableFault {
     UStringFaultFault(crate::std::u_string_exception::UStringFault),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
 }
+impl std::fmt::Display for CoreBoundaryTestSourceGraphemeBoundariesWithHangulSyllableFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            CoreBoundaryTestSourceGraphemeBoundariesWithHangulSyllableFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            CoreBoundaryTestSourceGraphemeBoundariesWithHangulSyllableFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            CoreBoundaryTestSourceGraphemeBoundariesWithHangulSyllableFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
+}
 
 impl From<CoreBoundaryTestSourceGraphemeBoundariesWithHangulSyllableFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
     fn from(value: CoreBoundaryTestSourceGraphemeBoundariesWithHangulSyllableFault) -> Self {
@@ -141,6 +161,15 @@ pub enum CoreBoundaryTestSourceGraphemeBoundariesWithHangulLeadingJamoFault {
     TextRangeErrorFault(crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError),
     UStringFaultFault(crate::std::u_string_exception::UStringFault),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
+}
+impl std::fmt::Display for CoreBoundaryTestSourceGraphemeBoundariesWithHangulLeadingJamoFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            CoreBoundaryTestSourceGraphemeBoundariesWithHangulLeadingJamoFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            CoreBoundaryTestSourceGraphemeBoundariesWithHangulLeadingJamoFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            CoreBoundaryTestSourceGraphemeBoundariesWithHangulLeadingJamoFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
 }
 
 impl From<CoreBoundaryTestSourceGraphemeBoundariesWithHangulLeadingJamoFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
@@ -194,6 +223,15 @@ pub enum CoreBoundaryTestSourceGraphemeBoundariesWithEmojiZwjSequenceFault {
     UStringFaultFault(crate::std::u_string_exception::UStringFault),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
 }
+impl std::fmt::Display for CoreBoundaryTestSourceGraphemeBoundariesWithEmojiZwjSequenceFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            CoreBoundaryTestSourceGraphemeBoundariesWithEmojiZwjSequenceFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            CoreBoundaryTestSourceGraphemeBoundariesWithEmojiZwjSequenceFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            CoreBoundaryTestSourceGraphemeBoundariesWithEmojiZwjSequenceFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
+}
 
 impl From<CoreBoundaryTestSourceGraphemeBoundariesWithEmojiZwjSequenceFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
     fn from(value: CoreBoundaryTestSourceGraphemeBoundariesWithEmojiZwjSequenceFault) -> Self {
@@ -245,6 +283,15 @@ pub enum CoreBoundaryTestSourceGraphemeBoundariesWithEmojiModifierFault {
     TextRangeErrorFault(crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError),
     UStringFaultFault(crate::std::u_string_exception::UStringFault),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
+}
+impl std::fmt::Display for CoreBoundaryTestSourceGraphemeBoundariesWithEmojiModifierFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            CoreBoundaryTestSourceGraphemeBoundariesWithEmojiModifierFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            CoreBoundaryTestSourceGraphemeBoundariesWithEmojiModifierFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            CoreBoundaryTestSourceGraphemeBoundariesWithEmojiModifierFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
 }
 
 impl From<CoreBoundaryTestSourceGraphemeBoundariesWithEmojiModifierFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
@@ -298,6 +345,15 @@ pub enum CoreBoundaryTestSourceGraphemeBoundariesReturnsSingleBoundaryForEmptyTe
     UStringFaultFault(crate::std::u_string_exception::UStringFault),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
 }
+impl std::fmt::Display for CoreBoundaryTestSourceGraphemeBoundariesReturnsSingleBoundaryForEmptyTextFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            CoreBoundaryTestSourceGraphemeBoundariesReturnsSingleBoundaryForEmptyTextFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            CoreBoundaryTestSourceGraphemeBoundariesReturnsSingleBoundaryForEmptyTextFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            CoreBoundaryTestSourceGraphemeBoundariesReturnsSingleBoundaryForEmptyTextFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
+}
 
 impl From<CoreBoundaryTestSourceGraphemeBoundariesReturnsSingleBoundaryForEmptyTextFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
     fn from(value: CoreBoundaryTestSourceGraphemeBoundariesReturnsSingleBoundaryForEmptyTextFault) -> Self {
@@ -349,6 +405,15 @@ pub enum CoreBoundaryTestInteractionBoundariesWithTextRangeFault {
     TextRangeErrorFault(crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError),
     UStringFaultFault(crate::std::u_string_exception::UStringFault),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
+}
+impl std::fmt::Display for CoreBoundaryTestInteractionBoundariesWithTextRangeFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            CoreBoundaryTestInteractionBoundariesWithTextRangeFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            CoreBoundaryTestInteractionBoundariesWithTextRangeFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            CoreBoundaryTestInteractionBoundariesWithTextRangeFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
 }
 
 impl From<CoreBoundaryTestInteractionBoundariesWithTextRangeFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
@@ -403,6 +468,17 @@ pub enum CoreBoundaryTestGetSelectionOffsetForPositionReturnsStartOfLineWhenEmpt
     NoSuchElementErrorFault(crate::org::tiqian::core::tiqian_no_such_element_exception::NoSuchElementError),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
     LayoutQueriesGetSelectionOffsetForPositionFaultFault(crate::org::tiqian::core::layout_queries::LayoutQueriesGetSelectionOffsetForPositionFault),
+}
+impl std::fmt::Display for CoreBoundaryTestGetSelectionOffsetForPositionReturnsStartOfLineWhenEmptyClustersFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            CoreBoundaryTestGetSelectionOffsetForPositionReturnsStartOfLineWhenEmptyClustersFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            CoreBoundaryTestGetSelectionOffsetForPositionReturnsStartOfLineWhenEmptyClustersFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            CoreBoundaryTestGetSelectionOffsetForPositionReturnsStartOfLineWhenEmptyClustersFault::NoSuchElementErrorFault(value) => write!(formatter, "{}", value),
+            CoreBoundaryTestGetSelectionOffsetForPositionReturnsStartOfLineWhenEmptyClustersFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+            CoreBoundaryTestGetSelectionOffsetForPositionReturnsStartOfLineWhenEmptyClustersFault::LayoutQueriesGetSelectionOffsetForPositionFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
 }
 
 impl From<CoreBoundaryTestGetSelectionOffsetForPositionReturnsStartOfLineWhenEmptyClustersFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
@@ -488,6 +564,17 @@ pub enum CoreBoundaryTestGetSelectionOffsetForPositionReturnsStartOfFirstCluster
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
     LayoutQueriesGetSelectionOffsetForPositionFaultFault(crate::org::tiqian::core::layout_queries::LayoutQueriesGetSelectionOffsetForPositionFault),
 }
+impl std::fmt::Display for CoreBoundaryTestGetSelectionOffsetForPositionReturnsStartOfFirstClusterFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            CoreBoundaryTestGetSelectionOffsetForPositionReturnsStartOfFirstClusterFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            CoreBoundaryTestGetSelectionOffsetForPositionReturnsStartOfFirstClusterFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            CoreBoundaryTestGetSelectionOffsetForPositionReturnsStartOfFirstClusterFault::NoSuchElementErrorFault(value) => write!(formatter, "{}", value),
+            CoreBoundaryTestGetSelectionOffsetForPositionReturnsStartOfFirstClusterFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+            CoreBoundaryTestGetSelectionOffsetForPositionReturnsStartOfFirstClusterFault::LayoutQueriesGetSelectionOffsetForPositionFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
+}
 
 impl From<CoreBoundaryTestGetSelectionOffsetForPositionReturnsStartOfFirstClusterFault> for crate::std::u_string_exception::UStringFault {
     fn from(value: CoreBoundaryTestGetSelectionOffsetForPositionReturnsStartOfFirstClusterFault) -> Self {
@@ -570,6 +657,15 @@ pub enum CoreBoundaryTestCoerceToInteractionBoundaryWithSurrogatePairFault {
     TextRangeErrorFault(crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
 }
+impl std::fmt::Display for CoreBoundaryTestCoerceToInteractionBoundaryWithSurrogatePairFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            CoreBoundaryTestCoerceToInteractionBoundaryWithSurrogatePairFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            CoreBoundaryTestCoerceToInteractionBoundaryWithSurrogatePairFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            CoreBoundaryTestCoerceToInteractionBoundaryWithSurrogatePairFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
+}
 
 impl From<CoreBoundaryTestCoerceToInteractionBoundaryWithSurrogatePairFault> for crate::std::u_string_exception::UStringFault {
     fn from(value: CoreBoundaryTestCoerceToInteractionBoundaryWithSurrogatePairFault) -> Self {
@@ -621,6 +717,15 @@ pub enum CoreBoundaryTestCoerceToInteractionBoundaryWithInvalidSurrogatePairFaul
     UStringFaultFault(crate::std::u_string_exception::UStringFault),
     TextRangeErrorFault(crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
+}
+impl std::fmt::Display for CoreBoundaryTestCoerceToInteractionBoundaryWithInvalidSurrogatePairFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            CoreBoundaryTestCoerceToInteractionBoundaryWithInvalidSurrogatePairFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            CoreBoundaryTestCoerceToInteractionBoundaryWithInvalidSurrogatePairFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            CoreBoundaryTestCoerceToInteractionBoundaryWithInvalidSurrogatePairFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
 }
 
 impl From<CoreBoundaryTestCoerceToInteractionBoundaryWithInvalidSurrogatePairFault> for crate::std::u_string_exception::UStringFault {
@@ -674,6 +779,15 @@ pub enum CoreBoundaryTestCoerceToInteractionBoundaryNearestChoosesCloserFault {
     TextRangeErrorFault(crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
 }
+impl std::fmt::Display for CoreBoundaryTestCoerceToInteractionBoundaryNearestChoosesCloserFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            CoreBoundaryTestCoerceToInteractionBoundaryNearestChoosesCloserFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            CoreBoundaryTestCoerceToInteractionBoundaryNearestChoosesCloserFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            CoreBoundaryTestCoerceToInteractionBoundaryNearestChoosesCloserFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
+}
 
 impl From<CoreBoundaryTestCoerceToInteractionBoundaryNearestChoosesCloserFault> for crate::std::u_string_exception::UStringFault {
     fn from(value: CoreBoundaryTestCoerceToInteractionBoundaryNearestChoosesCloserFault) -> Self {
@@ -725,6 +839,15 @@ pub enum CoreBoundaryTestCoerceToInteractionBoundaryForwardReturnsNextBoundaryFa
     UStringFaultFault(crate::std::u_string_exception::UStringFault),
     TextRangeErrorFault(crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
+}
+impl std::fmt::Display for CoreBoundaryTestCoerceToInteractionBoundaryForwardReturnsNextBoundaryFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            CoreBoundaryTestCoerceToInteractionBoundaryForwardReturnsNextBoundaryFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            CoreBoundaryTestCoerceToInteractionBoundaryForwardReturnsNextBoundaryFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            CoreBoundaryTestCoerceToInteractionBoundaryForwardReturnsNextBoundaryFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
 }
 
 impl From<CoreBoundaryTestCoerceToInteractionBoundaryForwardReturnsNextBoundaryFault> for crate::std::u_string_exception::UStringFault {
@@ -778,6 +901,15 @@ pub enum CoreBoundaryTestCoerceToInteractionBoundaryBackwardReturnsBoundaryWhenA
     TextRangeErrorFault(crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
 }
+impl std::fmt::Display for CoreBoundaryTestCoerceToInteractionBoundaryBackwardReturnsBoundaryWhenAtEndFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            CoreBoundaryTestCoerceToInteractionBoundaryBackwardReturnsBoundaryWhenAtEndFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            CoreBoundaryTestCoerceToInteractionBoundaryBackwardReturnsBoundaryWhenAtEndFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            CoreBoundaryTestCoerceToInteractionBoundaryBackwardReturnsBoundaryWhenAtEndFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
+}
 
 impl From<CoreBoundaryTestCoerceToInteractionBoundaryBackwardReturnsBoundaryWhenAtEndFault> for crate::std::u_string_exception::UStringFault {
     fn from(value: CoreBoundaryTestCoerceToInteractionBoundaryBackwardReturnsBoundaryWhenAtEndFault) -> Self {
@@ -827,71 +959,62 @@ impl From<crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFa
 #[test]
 fn coerce_to_interaction_boundary_backward_returns_boundary_when_at_end() {
     testlib::run("org.tiqian.core.CoreBoundaryTest.coerceToInteractionBoundaryBackwardReturnsBoundaryWhenAtEnd", "org.tiqian.core.CoreBoundaryTest.coerceToInteractionBoundaryBackwardReturnsBoundaryWhenAtEnd", || {
-        TestTraceRecorder::new("CoreBoundaryTest").section(&"coerceToInteractionBoundaryBackwardReturnsBoundaryWhenAtEnd");
-        let _ = TracedAssertions::traced_assertions_assert_equals_int(3, SourceInteractionBoundaries::source_interaction_boundaries_coerce_to_interaction_boundary(&"abc", 3, TextRange::new(0u32, 3u32).unwrap(), SourceBoundaryBias::Backward), None).unwrap();
+        TestTraceRecorder::new(&(UStr::new(&[67,111,114,101,66,111,117,110,100,97,114,121,84,101,115,116]))).section(UStr::new(&[99,111,101,114,99,101,84,111,73,110,116,101,114,97,99,116,105,111,110,66,111,117,110,100,97,114,121,66,97,99,107,119,97,114,100,82,101,116,117,114,110,115,66,111,117,110,100,97,114,121,87,104,101,110,65,116,69,110,100]));
+        let _ = TracedAssertions::traced_assertions_assert_equals_int(3, SourceInteractionBoundaries::source_interaction_boundaries_coerce_to_interaction_boundary(UStr::new(&[97,98,99]), 3, TextRange::new(0u32, 3u32).unwrap(), SourceBoundaryBias::Backward), None).unwrap();
     });
 }
 
 #[test]
 fn coerce_to_interaction_boundary_forward_returns_next_boundary() {
     testlib::run("org.tiqian.core.CoreBoundaryTest.coerceToInteractionBoundaryForwardReturnsNextBoundary", "org.tiqian.core.CoreBoundaryTest.coerceToInteractionBoundaryForwardReturnsNextBoundary", || {
-        TestTraceRecorder::new("CoreBoundaryTest").section(&"coerceToInteractionBoundaryForwardReturnsNextBoundary");
-        let _ = TracedAssertions::traced_assertions_assert_equals_int(3, SourceInteractionBoundaries::source_interaction_boundaries_coerce_to_interaction_boundary(&"abc", 3, TextRange::new(0u32, 3u32).unwrap(), SourceBoundaryBias::Forward), None).unwrap();
+        TestTraceRecorder::new(&(UStr::new(&[67,111,114,101,66,111,117,110,100,97,114,121,84,101,115,116]))).section(UStr::new(&[99,111,101,114,99,101,84,111,73,110,116,101,114,97,99,116,105,111,110,66,111,117,110,100,97,114,121,70,111,114,119,97,114,100,82,101,116,117,114,110,115,78,101,120,116,66,111,117,110,100,97,114,121]));
+        let _ = TracedAssertions::traced_assertions_assert_equals_int(3, SourceInteractionBoundaries::source_interaction_boundaries_coerce_to_interaction_boundary(UStr::new(&[97,98,99]), 3, TextRange::new(0u32, 3u32).unwrap(), SourceBoundaryBias::Forward), None).unwrap();
     });
 }
 
 #[test]
 fn coerce_to_interaction_boundary_nearest_chooses_closer() {
     testlib::run("org.tiqian.core.CoreBoundaryTest.coerceToInteractionBoundaryNearestChoosesCloser", "org.tiqian.core.CoreBoundaryTest.coerceToInteractionBoundaryNearestChoosesCloser", || {
-        TestTraceRecorder::new("CoreBoundaryTest").section(&"coerceToInteractionBoundaryNearestChoosesCloser");
-        let _ = TracedAssertions::traced_assertions_assert_equals_int(3, SourceInteractionBoundaries::source_interaction_boundaries_coerce_to_interaction_boundary(&"abcdef", 3, TextRange::new(0u32, 6u32).unwrap(), SourceBoundaryBias::Nearest), None).unwrap();
+        TestTraceRecorder::new(&(UStr::new(&[67,111,114,101,66,111,117,110,100,97,114,121,84,101,115,116]))).section(UStr::new(&[99,111,101,114,99,101,84,111,73,110,116,101,114,97,99,116,105,111,110,66,111,117,110,100,97,114,121,78,101,97,114,101,115,116,67,104,111,111,115,101,115,67,108,111,115,101,114]));
+        let _ = TracedAssertions::traced_assertions_assert_equals_int(3, SourceInteractionBoundaries::source_interaction_boundaries_coerce_to_interaction_boundary(UStr::new(&[97,98,99,100,101,102]), 3, TextRange::new(0u32, 6u32).unwrap(), SourceBoundaryBias::Nearest), None).unwrap();
     });
 }
 
 #[test]
 fn coerce_to_interaction_boundary_with_surrogate_pair() {
     testlib::run("org.tiqian.core.CoreBoundaryTest.coerceToInteractionBoundaryWithSurrogatePair", "org.tiqian.core.CoreBoundaryTest.coerceToInteractionBoundaryWithSurrogatePair", || {
-        TestTraceRecorder::new("CoreBoundaryTest").section(&"coerceToInteractionBoundaryWithSurrogatePair");
+        TestTraceRecorder::new(&(UStr::new(&[67,111,114,101,66,111,117,110,100,97,114,121,84,101,115,116]))).section(UStr::new(&[99,111,101,114,99,101,84,111,73,110,116,101,114,97,99,116,105,111,110,66,111,117,110,100,97,114,121,87,105,116,104,83,117,114,114,111,103,97,116,101,80,97,105,114]));
         let emoji = TestHelpers::test_helpers_surrogate_text(&vec![55357, 56832]);
-        let text = format!("{}{}{}",
-            "a",
-            emoji,
-            "b"
-        );
-        let _ = TracedAssertions::traced_assertions_assert_equals_int(3, SourceInteractionBoundaries::source_interaction_boundaries_coerce_to_interaction_boundary(text.as_str(), 3, TextRange::new(0u32, u_string::unit_count(&(text))).unwrap(), SourceBoundaryBias::Nearest),
-None).unwrap();
+        let text = { let mut __s = UString::new(); __s += &(UString::from("a")); __s += emoji.as_ustr(); __s += &(UString::from("b")); __s };
+        let _ = TracedAssertions::traced_assertions_assert_equals_int(3, SourceInteractionBoundaries::source_interaction_boundaries_coerce_to_interaction_boundary(text.as_ustr(), 3, TextRange::new(0u32, u_string::unit_count(&(text))).unwrap(), SourceBoundaryBias::Nearest), None).unwrap();
     });
 }
 
 #[test]
 fn coerce_to_interaction_boundary_with_invalid_surrogate_pair() {
     testlib::run("org.tiqian.core.CoreBoundaryTest.coerceToInteractionBoundaryWithInvalidSurrogatePair", "org.tiqian.core.CoreBoundaryTest.coerceToInteractionBoundaryWithInvalidSurrogatePair", || {
-        TestTraceRecorder::new("CoreBoundaryTest").section(&"coerceToInteractionBoundaryWithInvalidSurrogatePair");
-        let text = format!("{}{}",
-            TestHelpers::test_helpers_surrogate_text(&vec![55296]),
-            "A"
-        );
-        let _ = TracedAssertions::traced_assertions_assert_equals_int(1, SourceInteractionBoundaries::source_interaction_boundaries_coerce_to_interaction_boundary(text.as_str(), 1, TextRange::new(0u32, u_string::unit_count(&(text))).unwrap(), SourceBoundaryBias::Nearest),
-None).unwrap();
+        TestTraceRecorder::new(&(UStr::new(&[67,111,114,101,66,111,117,110,100,97,114,121,84,101,115,116]))).section(UStr::new(&[99,111,101,114,99,101,84,111,73,110,116,101,114,97,99,116,105,111,110,66,111,117,110,100,97,114,121,87,105,116,104,73,110,118,97,108,105,100,83,117,114,114,111,103,97,116,101,80,97,105,114]));
+        let text = { let mut __s = UString::new(); __s += TestHelpers::test_helpers_surrogate_text(&vec![55296]).as_ustr(); __s += &(UString::from("A")); __s };
+        let _ = TracedAssertions::traced_assertions_assert_equals_int(1, SourceInteractionBoundaries::source_interaction_boundaries_coerce_to_interaction_boundary(text.as_ustr(), 1, TextRange::new(0u32, u_string::unit_count(&(text))).unwrap(), SourceBoundaryBias::Nearest), None).unwrap();
     });
 }
 
 #[test]
 fn source_grapheme_boundaries_with_hangul_leading_jamo() {
     testlib::run("org.tiqian.core.CoreBoundaryTest.sourceGraphemeBoundariesWithHangulLeadingJamo", "org.tiqian.core.CoreBoundaryTest.sourceGraphemeBoundariesWithHangulLeadingJamo", || {
-        TestTraceRecorder::new("CoreBoundaryTest").section(&"sourceGraphemeBoundariesWithHangulLeadingJamo");
-        let text = "각".to_string();
-        let boundaries = SourceInteractionBoundaries::source_interaction_boundaries_source_grapheme_boundaries(text.as_str(), TextRange::new(0u32, 3u32).unwrap());
-        let _ = TracedAssertions::traced_assertions_assert_true((u32::from_ne_bytes((match boundaries.iter().position(|e| e == &3) { Some(v) => i32::from_ne_bytes(u32::try_from(v).unwrap_or(0).to_ne_bytes()), None => -1 }).to_ne_bytes())) <= 2147483647, None).unwrap();
+        TestTraceRecorder::new(&(UStr::new(&[67,111,114,101,66,111,117,110,100,97,114,121,84,101,115,116]))).section(UStr::new(&[115,111,117,114,99,101,71,114,97,112,104,101,109,101,66,111,117,110,100,97,114,105,101,115,87,105,116,104,72,97,110,103,117,108,76,101,97,100,105,110,103,74,97,109,111]));
+        let text = UString::from("각").to_ustring();
+        let boundaries = SourceInteractionBoundaries::source_interaction_boundaries_source_grapheme_boundaries(text.as_ustr(), TextRange::new(0u32, 3u32).unwrap());
+        let _ = TracedAssertions::traced_assertions_assert_true((u32::from_ne_bytes(((match boundaries.iter().position(|e| e == &3) { Some(v) => i32::from_ne_bytes(u32::try_from(v).unwrap_or(0).to_ne_bytes()), None => -1 }) as u32).to_ne_bytes())) <= 2147483647, None).unwrap();
     });
 }
 
 #[test]
 fn source_grapheme_boundaries_with_hangul_syllable() {
     testlib::run("org.tiqian.core.CoreBoundaryTest.sourceGraphemeBoundariesWithHangulSyllable", "org.tiqian.core.CoreBoundaryTest.sourceGraphemeBoundariesWithHangulSyllable", || {
-        TestTraceRecorder::new("CoreBoundaryTest").section(&"sourceGraphemeBoundariesWithHangulSyllable");
-        let text = "가".to_string();
-        let boundaries = SourceInteractionBoundaries::source_interaction_boundaries_source_grapheme_boundaries(text.as_str(), TextRange::new(0u32, 1u32).unwrap());
+        TestTraceRecorder::new(&(UStr::new(&[67,111,114,101,66,111,117,110,100,97,114,121,84,101,115,116]))).section(UStr::new(&[115,111,117,114,99,101,71,114,97,112,104,101,109,101,66,111,117,110,100,97,114,105,101,115,87,105,116,104,72,97,110,103,117,108,83,121,108,108,97,98,108,101]));
+        let text = UString::from("가").to_ustring();
+        let boundaries = SourceInteractionBoundaries::source_interaction_boundaries_source_grapheme_boundaries(text.as_ustr(), TextRange::new(0u32, 1u32).unwrap());
         let _ = TracedAssertions::traced_assertions_assert_equals_int(2, u32::try_from((boundaries.len()) & 0xFFFF_FFFF).unwrap_or(0), None).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_equals_int(0, boundaries[0usize], None).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_equals_int(1, boundaries[usize::try_from(u32::wrapping_sub(u32::try_from((boundaries.len()) & 0xFFFF_FFFF).unwrap_or(0), 1)).unwrap_or(0)], None).unwrap();
@@ -901,20 +1024,19 @@ fn source_grapheme_boundaries_with_hangul_syllable() {
 #[test]
 fn source_grapheme_boundaries_with_regional_indicator() {
     testlib::run("org.tiqian.core.CoreBoundaryTest.sourceGraphemeBoundariesWithRegionalIndicator", "org.tiqian.core.CoreBoundaryTest.sourceGraphemeBoundariesWithRegionalIndicator", || {
-        TestTraceRecorder::new("CoreBoundaryTest").section(&"sourceGraphemeBoundariesWithRegionalIndicator");
+        TestTraceRecorder::new(&(UStr::new(&[67,111,114,101,66,111,117,110,100,97,114,121,84,101,115,116]))).section(UStr::new(&[115,111,117,114,99,101,71,114,97,112,104,101,109,101,66,111,117,110,100,97,114,105,101,115,87,105,116,104,82,101,103,105,111,110,97,108,73,110,100,105,99,97,116,111,114]));
         let text = TestHelpers::test_helpers_surrogate_text(&vec![55356, 56808, 55356, 56806]);
-        let boundaries = SourceInteractionBoundaries::source_interaction_boundaries_source_grapheme_boundaries(text.as_str(), TextRange::new(0u32, u_string::unit_count(&(text))).unwrap());
-        let _ = TracedAssertions::traced_assertions_assert_true((u32::from_ne_bytes((match boundaries.iter().position(|e| e == &u_string::unit_count(&(text))) { Some(v) => i32::from_ne_bytes(u32::try_from(v).unwrap_or(0).to_ne_bytes()), None => -1 }).to_ne_bytes())) <= 2147483647,
-None).unwrap();
+        let boundaries = SourceInteractionBoundaries::source_interaction_boundaries_source_grapheme_boundaries(text.as_ustr(), TextRange::new(0u32, u_string::unit_count(&(text))).unwrap());
+        let _ = TracedAssertions::traced_assertions_assert_true((u32::from_ne_bytes(((match boundaries.iter().position(|e| e == &u_string::unit_count(&(text))) { Some(v) => i32::from_ne_bytes(u32::try_from(v).unwrap_or(0).to_ne_bytes()), None => -1 }) as u32).to_ne_bytes())) <= 2147483647, None).unwrap();
     });
 }
 
 #[test]
 fn source_grapheme_boundaries_with_emoji_zwj_sequence() {
     testlib::run("org.tiqian.core.CoreBoundaryTest.sourceGraphemeBoundariesWithEmojiZwjSequence", "org.tiqian.core.CoreBoundaryTest.sourceGraphemeBoundariesWithEmojiZwjSequence", || {
-        TestTraceRecorder::new("CoreBoundaryTest").section(&"sourceGraphemeBoundariesWithEmojiZwjSequence");
+        TestTraceRecorder::new(&(UStr::new(&[67,111,114,101,66,111,117,110,100,97,114,121,84,101,115,116]))).section(UStr::new(&[115,111,117,114,99,101,71,114,97,112,104,101,109,101,66,111,117,110,100,97,114,105,101,115,87,105,116,104,69,109,111,106,105,90,119,106,83,101,113,117,101,110,99,101]));
         let text = TestHelpers::test_helpers_surrogate_text(&vec![55357, 56425, 8205, 55357, 56425]);
-        let boundaries = SourceInteractionBoundaries::source_interaction_boundaries_source_grapheme_boundaries(text.as_str(), TextRange::new(0u32, u_string::unit_count(&(text))).unwrap());
+        let boundaries = SourceInteractionBoundaries::source_interaction_boundaries_source_grapheme_boundaries(text.as_ustr(), TextRange::new(0u32, u_string::unit_count(&(text))).unwrap());
         let _ = TracedAssertions::traced_assertions_assert_equals_int(2, u32::try_from((boundaries.len()) & 0xFFFF_FFFF).unwrap_or(0), None).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_equals_int(0, boundaries[0usize], None).unwrap();
     });
@@ -923,19 +1045,18 @@ fn source_grapheme_boundaries_with_emoji_zwj_sequence() {
 #[test]
 fn source_grapheme_boundaries_with_emoji_modifier() {
     testlib::run("org.tiqian.core.CoreBoundaryTest.sourceGraphemeBoundariesWithEmojiModifier", "org.tiqian.core.CoreBoundaryTest.sourceGraphemeBoundariesWithEmojiModifier", || {
-        TestTraceRecorder::new("CoreBoundaryTest").section(&"sourceGraphemeBoundariesWithEmojiModifier");
+        TestTraceRecorder::new(&(UStr::new(&[67,111,114,101,66,111,117,110,100,97,114,121,84,101,115,116]))).section(UStr::new(&[115,111,117,114,99,101,71,114,97,112,104,101,109,101,66,111,117,110,100,97,114,105,101,115,87,105,116,104,69,109,111,106,105,77,111,100,105,102,105,101,114]));
         let text = TestHelpers::test_helpers_surrogate_text(&vec![55357, 56425, 55356, 57339]);
-        let boundaries = SourceInteractionBoundaries::source_interaction_boundaries_source_grapheme_boundaries(text.as_str(), TextRange::new(0u32, u_string::unit_count(&(text))).unwrap());
-        let _ = TracedAssertions::traced_assertions_assert_true((u32::from_ne_bytes((match boundaries.iter().position(|e| e == &u_string::unit_count(&(text))) { Some(v) => i32::from_ne_bytes(u32::try_from(v).unwrap_or(0).to_ne_bytes()), None => -1 }).to_ne_bytes())) <= 2147483647,
-None).unwrap();
+        let boundaries = SourceInteractionBoundaries::source_interaction_boundaries_source_grapheme_boundaries(text.as_ustr(), TextRange::new(0u32, u_string::unit_count(&(text))).unwrap());
+        let _ = TracedAssertions::traced_assertions_assert_true((u32::from_ne_bytes(((match boundaries.iter().position(|e| e == &u_string::unit_count(&(text))) { Some(v) => i32::from_ne_bytes(u32::try_from(v).unwrap_or(0).to_ne_bytes()), None => -1 }) as u32).to_ne_bytes())) <= 2147483647, None).unwrap();
     });
 }
 
 #[test]
 fn source_grapheme_boundaries_returns_single_boundary_for_empty_text() {
     testlib::run("org.tiqian.core.CoreBoundaryTest.sourceGraphemeBoundariesReturnsSingleBoundaryForEmptyText", "org.tiqian.core.CoreBoundaryTest.sourceGraphemeBoundariesReturnsSingleBoundaryForEmptyText", || {
-        TestTraceRecorder::new("CoreBoundaryTest").section(&"sourceGraphemeBoundariesReturnsSingleBoundaryForEmptyText");
-        let boundaries = SourceInteractionBoundaries::source_interaction_boundaries_source_grapheme_boundaries(&"", TextRange::new(0u32, 0u32).unwrap());
+        TestTraceRecorder::new(&(UStr::new(&[67,111,114,101,66,111,117,110,100,97,114,121,84,101,115,116]))).section(UStr::new(&[115,111,117,114,99,101,71,114,97,112,104,101,109,101,66,111,117,110,100,97,114,105,101,115,82,101,116,117,114,110,115,83,105,110,103,108,101,66,111,117,110,100,97,114,121,70,111,114,69,109,112,116,121,84,101,120,116]));
+        let boundaries = SourceInteractionBoundaries::source_interaction_boundaries_source_grapheme_boundaries(UStr::new(&[]), TextRange::new(0u32, 0u32).unwrap());
         let _ = TracedAssertions::traced_assertions_assert_equals_int(1, u32::try_from((boundaries.len()) & 0xFFFF_FFFF).unwrap_or(0), None).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_equals_int(0, boundaries[0usize], None).unwrap();
     });
@@ -944,17 +1065,17 @@ fn source_grapheme_boundaries_returns_single_boundary_for_empty_text() {
 #[test]
 fn interaction_boundaries_with_text_range() {
     testlib::run("org.tiqian.core.CoreBoundaryTest.interactionBoundariesWithTextRange", "org.tiqian.core.CoreBoundaryTest.interactionBoundariesWithTextRange", || {
-        TestTraceRecorder::new("CoreBoundaryTest").section(&"interactionBoundariesWithTextRange");
-        let boundaries = SourceInteractionBoundaries::source_interaction_boundaries_interaction_boundaries(&"abc", TextRange::new(1u32, 2u32).unwrap());
-        let _ = TracedAssertions::traced_assertions_assert_equals_rendered(&"[1, 2]", CoreBoundaryTestHelpers::core_boundary_test_helpers_render_ints(&boundaries).as_str(), None).unwrap();
+        TestTraceRecorder::new(&(UStr::new(&[67,111,114,101,66,111,117,110,100,97,114,121,84,101,115,116]))).section(UStr::new(&[105,110,116,101,114,97,99,116,105,111,110,66,111,117,110,100,97,114,105,101,115,87,105,116,104,84,101,120,116,82,97,110,103,101]));
+        let boundaries = SourceInteractionBoundaries::source_interaction_boundaries_interaction_boundaries(UStr::new(&[97,98,99]), TextRange::new(1u32, 2u32).unwrap());
+        let _ = TracedAssertions::traced_assertions_assert_equals_rendered(UStr::new(&[91,49,44,32,50,93]), CoreBoundaryTestHelpers::core_boundary_test_helpers_render_ints(&boundaries).as_ustr(), None).unwrap();
     });
 }
 
 #[test]
 fn get_selection_offset_for_position_returns_start_of_first_cluster() {
     testlib::run("org.tiqian.core.CoreBoundaryTest.getSelectionOffsetForPositionReturnsStartOfFirstCluster", "org.tiqian.core.CoreBoundaryTest.getSelectionOffsetForPositionReturnsStartOfFirstCluster", || {
-        TestTraceRecorder::new("CoreBoundaryTest").section(&"getSelectionOffsetForPositionReturnsStartOfFirstCluster");
-        let value = CoreBoundaryTestHelpers::core_boundary_test_helpers_interaction_result(&"abc").unwrap();
+        TestTraceRecorder::new(&(UStr::new(&[67,111,114,101,66,111,117,110,100,97,114,121,84,101,115,116]))).section(UStr::new(&[103,101,116,83,101,108,101,99,116,105,111,110,79,102,102,115,101,116,70,111,114,80,111,115,105,116,105,111,110,82,101,116,117,114,110,115,83,116,97,114,116,79,102,70,105,114,115,116,67,108,117,115,116,101,114]));
+        let value = CoreBoundaryTestHelpers::core_boundary_test_helpers_interaction_result(UStr::new(&[97,98,99])).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_equals_int(0, LayoutQueries::layout_queries_get_selection_offset_for_position((value).clone(), 0.0f64, 10.0f64).unwrap(), None).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_equals_int(1, LayoutQueries::layout_queries_get_selection_offset_for_position((value).clone(), 10.0f64, 10.0f64).unwrap(), None).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_equals_int(2, LayoutQueries::layout_queries_get_selection_offset_for_position((value).clone(), 20.0f64, 10.0f64).unwrap(), None).unwrap();
@@ -964,15 +1085,10 @@ fn get_selection_offset_for_position_returns_start_of_first_cluster() {
 #[test]
 fn get_selection_offset_for_position_returns_start_of_line_when_empty_clusters() {
     testlib::run("org.tiqian.core.CoreBoundaryTest.getSelectionOffsetForPositionReturnsStartOfLineWhenEmptyClusters", "org.tiqian.core.CoreBoundaryTest.getSelectionOffsetForPositionReturnsStartOfLineWhenEmptyClusters", || {
-        TestTraceRecorder::new("CoreBoundaryTest").section(&"getSelectionOffsetForPositionReturnsStartOfLineWhenEmptyClusters");
-        let input = LayoutInput::new(TiqianTextContent::new("", Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![])), Some(TextStyle::new(Some(vec![]), Some(16.0f64), Some("zh-Hans".to_string()), Some(400), Some(false), Some(0.0f64), Some(InlineAttachment::None))),
-Some(ParagraphStyle::new(Some(LastLineAlignment::Start), Some(WritingMode::HorizontalTb), None, None, Some((Ic::zero()).clone()), Some(MeasureAdaptiveFirstLineIndent::new(Some(14.0f64), Some(1.0f64), Some(2.0f64))), Some(LineLengthGrid::new(Some(true), None)),
-Some(RubyLineHeightMode::PerLine), Some(ParagraphStyle::PARAGRAPH_STYLE_DEFAULT_INLINE_OBJECT_MINIMUM_CLEARANCE_EM), Some(ParagraphStyle::PARAGRAPH_STYLE_DEFAULT_EMPHASIS_DOT_GAP_EM))), LayoutConstraints::new(100.0f64, Some(f64::INFINITY), Some(2147483647)).unwrap(),
-Some((*crate::org::tiqian::core::built_in_layout_profiles::BUILT_IN_LAYOUT_PROFILES_CLREQ_HORIZONTAL).clone()), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]));
-        let line = LineBox::new(TextRange::new(0u32, 0u32).unwrap(), IntRange::new(0u32, 4294967295u32), 15.0f64, 0.0f64, 20.0f64, 0.0f64, 0.0f64, 0.0f64, Some(0.0f64), Some(0.0f64), Some(LineEndReason::ParagraphEnd), Some(0.0f64), Some(vec![]), LineDebugInfo::new(None.clone(),
-Some(vec![])));
-        let value = LayoutResult::new((input).clone(), Size::new(0.0f64, 20.0f64), vec![], vec![], vec![(line).clone()], LayoutDebugInfo::new(None, Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]),
-Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), None, None, None, None, Some(vec![]), None, None, Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![])));
+        TestTraceRecorder::new(&(UStr::new(&[67,111,114,101,66,111,117,110,100,97,114,121,84,101,115,116]))).section(UStr::new(&[103,101,116,83,101,108,101,99,116,105,111,110,79,102,102,115,101,116,70,111,114,80,111,115,105,116,105,111,110,82,101,116,117,114,110,115,83,116,97,114,116,79,102,76,105,110,101,87,104,101,110,69,109,112,116,121,67,108,117,115,116,101,114,115]));
+        let input = LayoutInput::new(TiqianTextContent::new(&(UStr::new(&[])), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![])), Some(TextStyle::new(Some(vec![]), Some(16.0f64), Some(UString::from("zh-Hans")), Some(400), Some(false), Some(0.0f64), Some(InlineAttachment::None))), Some(ParagraphStyle::new(Some(LastLineAlignment::Start), Some(WritingMode::HorizontalTb), None, None, Some((Ic::zero()).clone()), Some(MeasureAdaptiveFirstLineIndent::new(Some(14.0f64), Some(1.0f64), Some(2.0f64))), Some(LineLengthGrid::new(Some(true), None)), Some(RubyLineHeightMode::PerLine), Some(ParagraphStyle::PARAGRAPH_STYLE_DEFAULT_INLINE_OBJECT_MINIMUM_CLEARANCE_EM), Some(ParagraphStyle::PARAGRAPH_STYLE_DEFAULT_EMPHASIS_DOT_GAP_EM))), LayoutConstraints::new(100.0f64, Some(f64::INFINITY), Some(2147483647)).unwrap(), Some((*crate::org::tiqian::core::built_in_layout_profiles::BUILT_IN_LAYOUT_PROFILES_CLREQ_HORIZONTAL).clone()), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]));
+        let line = LineBox::new(TextRange::new(0u32, 0u32).unwrap(), IntRange::new(0u32, 4294967295u32), 15.0f64, 0.0f64, 20.0f64, 0.0f64, 0.0f64, 0.0f64, Some(0.0f64), Some(0.0f64), Some(LineEndReason::ParagraphEnd), Some(0.0f64), Some(vec![]), LineDebugInfo::new(None.clone(), Some(vec![])));
+        let value = LayoutResult::new((input).clone(), Size::new(0.0f64, 20.0f64), vec![], vec![], vec![(line).clone()], LayoutDebugInfo::new(None, Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), None, None, None, None, Some(vec![]), None, None, Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![])));
         let _ = TracedAssertions::traced_assertions_assert_equals_int(0, LayoutQueries::layout_queries_get_selection_offset_for_position((value).clone(), 5.0f64, 10.0f64).unwrap(), None).unwrap();
     });
 }
@@ -981,34 +1097,27 @@ Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![
 pub struct CoreBoundaryTestHelpers;
 
 impl CoreBoundaryTestHelpers {
-    pub fn core_boundary_test_helpers_interaction_result(text: &str) -> Result<LayoutResult, TextRangeError> {
+    pub fn core_boundary_test_helpers_interaction_result(text: &UStr) -> Result<LayoutResult, TextRangeError> {
         let clusters = vec![
-    (Cluster::new(TextRange::new(0u32, 1u32)?, "a", "latin", 10.0f64, Some("a".to_string()), Some(0.0f64), Some(0.0f64), Some(0.0f64))).clone(),
-    (Cluster::new(TextRange::new(1u32, 2u32)?, "b", "latin", 10.0f64, Some("b".to_string()), Some(0.0f64), Some(0.0f64), Some(0.0f64))).clone(),
-    (Cluster::new(TextRange::new(2u32, 3u32)?, "c", "latin", 10.0f64, Some("c".to_string()), Some(0.0f64), Some(0.0f64), Some(0.0f64))).clone(),
+    (Cluster::new(TextRange::new(0u32, 1u32)?, &(UStr::new(&[97])), &(UStr::new(&[108,97,116,105,110])), 10.0f64, Some(UString::from("a")), Some(0.0f64), Some(0.0f64), Some(0.0f64))).clone(),
+    (Cluster::new(TextRange::new(1u32, 2u32)?, &(UStr::new(&[98])), &(UStr::new(&[108,97,116,105,110])), 10.0f64, Some(UString::from("b")), Some(0.0f64), Some(0.0f64), Some(0.0f64))).clone(),
+    (Cluster::new(TextRange::new(2u32, 3u32)?, &(UStr::new(&[99])), &(UStr::new(&[108,97,116,105,110])), 10.0f64, Some(UString::from("c")), Some(0.0f64), Some(0.0f64), Some(0.0f64))).clone(),
 ];
         let line = LineBox::new(TextRange::new(0u32, 3u32)?, IntRange::new(0u32, 2u32), 15.0f64, 0.0f64, 20.0f64, 30.0f64, 30.0f64, 30.0f64, Some(0.0f64), Some(0.0f64), Some(LineEndReason::ParagraphEnd), Some(0.0f64), Some(vec![]), LineDebugInfo::new(None.clone(), Some(vec![])));
-        let input = LayoutInput::new(TiqianTextContent::new(text, Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![])), Some(TextStyle::new(Some(vec![]), Some(16.0f64), Some("zh-Hans".to_string()), Some(400), Some(false), Some(0.0f64), Some(InlineAttachment::None))),
-Some(ParagraphStyle::new(Some(LastLineAlignment::Start), Some(WritingMode::HorizontalTb), None, None, Some((Ic::zero()).clone()), Some(MeasureAdaptiveFirstLineIndent::new(Some(14.0f64), Some(1.0f64), Some(2.0f64))), Some(LineLengthGrid::new(Some(true), None)),
-Some(RubyLineHeightMode::PerLine), Some(ParagraphStyle::PARAGRAPH_STYLE_DEFAULT_INLINE_OBJECT_MINIMUM_CLEARANCE_EM), Some(ParagraphStyle::PARAGRAPH_STYLE_DEFAULT_EMPHASIS_DOT_GAP_EM))), LayoutConstraints::new(100.0f64, Some(f64::INFINITY), Some(2147483647))?,
-Some((*crate::org::tiqian::core::built_in_layout_profiles::BUILT_IN_LAYOUT_PROFILES_CLREQ_HORIZONTAL).clone()), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]));
-        return Ok(LayoutResult::new((input).clone(), Size::new(30.0f64, 20.0f64), (clusters).clone(), vec![], vec![(line).clone()], LayoutDebugInfo::new(None, Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]),
-Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), None, None, None, None, Some(vec![]), None, None, Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]))));
+        let input = LayoutInput::new(TiqianTextContent::new(text, Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![])), Some(TextStyle::new(Some(vec![]), Some(16.0f64), Some(UString::from("zh-Hans")), Some(400), Some(false), Some(0.0f64), Some(InlineAttachment::None))), Some(ParagraphStyle::new(Some(LastLineAlignment::Start), Some(WritingMode::HorizontalTb), None, None, Some((Ic::zero()).clone()), Some(MeasureAdaptiveFirstLineIndent::new(Some(14.0f64), Some(1.0f64), Some(2.0f64))), Some(LineLengthGrid::new(Some(true), None)), Some(RubyLineHeightMode::PerLine), Some(ParagraphStyle::PARAGRAPH_STYLE_DEFAULT_INLINE_OBJECT_MINIMUM_CLEARANCE_EM), Some(ParagraphStyle::PARAGRAPH_STYLE_DEFAULT_EMPHASIS_DOT_GAP_EM))), LayoutConstraints::new(100.0f64, Some(f64::INFINITY), Some(2147483647))?, Some((*crate::org::tiqian::core::built_in_layout_profiles::BUILT_IN_LAYOUT_PROFILES_CLREQ_HORIZONTAL).clone()), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]));
+        return Ok(LayoutResult::new((input).clone(), Size::new(30.0f64, 20.0f64), (clusters).clone(), vec![], vec![(line).clone()], LayoutDebugInfo::new(None, Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), None, None, None, None, Some(vec![]), None, None, Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]))));
     }
 
-    pub fn core_boundary_test_helpers_render_ints(values: &Vec<u32>) -> String {
-        let mut output = "[".to_string();
+    pub fn core_boundary_test_helpers_render_ints(values: &Vec<u32>) -> UString {
+        let mut output = UString::from("[").to_ustring();
         let mut index = 0u32;
-        while (i32::from_ne_bytes((index).to_ne_bytes())) < (i32::from_ne_bytes((u32::try_from((values.len()) & 0xFFFF_FFFF).unwrap_or(0)).to_ne_bytes())) {
-            if i32::from_ne_bytes((index).to_ne_bytes()) > (0) {
-                output += &(", ");
+        while (i32::from_ne_bytes(((index) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((values.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
+            if i32::from_ne_bytes(((index) as i32).to_ne_bytes()) > (0) {
+                output += &(UString::from(", "));
             }
-            output += &(crate::runtime::int_text::IntText::int_text(values[usize::try_from(index).unwrap_or(0)]));
+            output += &(UString::from(format!("{}", crate::runtime::int_text::IntText::int_text(values[usize::try_from(index).unwrap_or(0)])).as_str()));
             index = u32::wrapping_add(index, 1);
         }
-        return format!("{}{}",
-            output,
-            "]"
-        );
+        return UString::from(format!("{}", { let mut __s = UString::new(); __s += output.as_ustr(); __s += &(UString::from("]")); __s }).as_str());
     }
 }

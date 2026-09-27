@@ -43,103 +43,83 @@ use crate::org::tiqian::layout::width_independent_annotation_cache::LruWidthInde
 use crate::org::tiqian::linebreak::hyphenator::NoHyphenator;
 use crate::org::tiqian::shaping::text_shaper::ExplainableStubTextShaper;
 use crate::runtime::u_string;
+use crate::runtime::u_string::UStr;
+use crate::runtime::u_string::UString;
 use std::fmt::Write;
+use std::sync::Arc;
+use std::sync::Mutex;
 
 
 #[derive(Clone, Copy)]
 pub struct AsciiPointMarkKinsokuTestSupport;
 
 impl AsciiPointMarkKinsokuTestSupport {
-    pub fn ascii_point_mark_kinsoku_test_support_render_strings(a: &[String]) -> String {
-        let mut x: Vec<String> = vec![];
+    pub fn ascii_point_mark_kinsoku_test_support_render_strings(a: &[UString]) -> UString {
+        let mut x: Vec<UString> = vec![];
         for i in 0..match u32::try_from(a.len()) { Ok(value) => value, Err(_) => u32::MAX } {
             x.push((a[usize::try_from(i).unwrap_or(0)]).clone());
         }
-        return format!("{}{}{}",
-            "[",
-            { let joined = x; let mut out = String::new(); let n = joined.len(); let mut index = 0usize; while index < n { if index > 0 { out.push_str(&(", ")); } let _ = write!(out, "{}", joined[index]); index += 1; } out },
-            "]"
-        );
+        return UString::from(format!("{}", { let mut __s = UString::new(); __s += &(UString::from("[")); __s += UString::from(format!("{}", { let joined = x; let mut out = String::new(); let n = joined.len(); let mut index = 0usize; while index < n { if index > 0 { out.push_str(", "); } let _ = write!(out, "{}", joined[index]); index += 1; } UString::from(out.as_str()) }).as_str()).as_ustr(); __s += &(UString::from("]")); __s }).as_str());
     }
 
-    pub fn ascii_point_mark_kinsoku_test_support_join_lines(a: &Vec<String>) -> String {
-        return { let joined1 = a; let mut out = String::new(); let n = joined1.len(); let mut index1 = 0usize; while index1 < n { if index1 > 0 { out.push_str(&(concat!("\n",
-""))); } let _ = write!(out, "{}", joined1[index1]); index1 += 1; } out };
+    pub fn ascii_point_mark_kinsoku_test_support_join_lines(a: &Vec<UString>) -> UString {
+        return UString::from(format!("{}", { let joined1 = a; let mut out = String::new(); let n = joined1.len(); let mut index1 = 0usize; while index1 < n { if index1 > 0 { out.push_str(concat!("\n",
+"")); } let _ = write!(out, "{}", joined1[index1]); index1 += 1; } UString::from(out.as_str()) }).as_str());
     }
 
-    pub fn ascii_point_mark_kinsoku_test_support_render_clusters(a: &[Cluster]) -> String {
-        let mut parts: Vec<String> = vec![];
+    pub fn ascii_point_mark_kinsoku_test_support_render_clusters(a: &[Cluster]) -> UString {
+        let mut parts: Vec<UString> = vec![];
         for i in 0..match u32::try_from(a.len()) { Ok(value) => value, Err(_) => u32::MAX } {
-            parts.push((a[usize::try_from(i).unwrap_or(0)]).clone().to_string());
+            parts.push(UString::from(format!("{}", (a[usize::try_from(i).unwrap_or(0)]).clone().to_string()).as_str()));
         }
-        return format!("{}{}{}",
-            "[",
-            { let joined2 = parts; let mut out = String::new(); let n = joined2.len(); let mut index2 = 0usize; while index2 < n { if index2 > 0 { out.push_str(&(", ")); } let _ = write!(out, "{}", joined2[index2]); index2 += 1; } out },
-            "]"
-        );
+        return UString::from(format!("{}", { let mut __s = UString::new(); __s += &(UString::from("[")); __s += UString::from(format!("{}", { let joined2 = parts; let mut out = String::new(); let n = joined2.len(); let mut index2 = 0usize; while index2 < n { if index2 > 0 { out.push_str(", "); } let _ = write!(out, "{}", joined2[index2]); index2 += 1; } UString::from(out.as_str()) }).as_str()).as_ustr(); __s += &(UString::from("]")); __s }).as_str());
     }
 
-    pub fn ascii_point_mark_kinsoku_test_support_render_fonts(a: &[FontDecisionInfo]) -> String {
-        let mut parts: Vec<String> = vec![];
+    pub fn ascii_point_mark_kinsoku_test_support_render_fonts(a: &[FontDecisionInfo]) -> UString {
+        let mut parts: Vec<UString> = vec![];
         for i in 0..match u32::try_from(a.len()) { Ok(value) => value, Err(_) => u32::MAX } {
-            parts.push((a[usize::try_from(i).unwrap_or(0)]).clone().to_string());
+            parts.push(UString::from(format!("{}", (a[usize::try_from(i).unwrap_or(0)]).clone().to_string()).as_str()));
         }
-        return format!("{}{}{}",
-            "[",
-            { let joined3 = parts; let mut out = String::new(); let n = joined3.len(); let mut index3 = 0usize; while index3 < n { if index3 > 0 { out.push_str(&(", ")); } let _ = write!(out, "{}", joined3[index3]); index3 += 1; } out },
-            "]"
-        );
+        return UString::from(format!("{}", { let mut __s = UString::new(); __s += &(UString::from("[")); __s += UString::from(format!("{}", { let joined3 = parts; let mut out = String::new(); let n = joined3.len(); let mut index3 = 0usize; while index3 < n { if index3 > 0 { out.push_str(", "); } let _ = write!(out, "{}", joined3[index3]); index3 += 1; } UString::from(out.as_str()) }).as_str()).as_ustr(); __s += &(UString::from("]")); __s }).as_str());
     }
 
-    pub fn ascii_point_mark_kinsoku_test_support_render_contextual(a: &[ContextualKinsokuDecisionInfo]) -> String {
-        let mut parts: Vec<String> = vec![];
+    pub fn ascii_point_mark_kinsoku_test_support_render_contextual(a: &[ContextualKinsokuDecisionInfo]) -> UString {
+        let mut parts: Vec<UString> = vec![];
         for i in 0..match u32::try_from(a.len()) { Ok(value) => value, Err(_) => u32::MAX } {
-            parts.push((a[usize::try_from(i).unwrap_or(0)]).clone().to_string());
+            parts.push(UString::from(format!("{}", (a[usize::try_from(i).unwrap_or(0)]).clone().to_string()).as_str()));
         }
-        return format!("{}{}{}",
-            "[",
-            { let joined4 = parts; let mut out = String::new(); let n = joined4.len(); let mut index4 = 0usize; while index4 < n { if index4 > 0 { out.push_str(&(", ")); } let _ = write!(out, "{}", joined4[index4]); index4 += 1; } out },
-            "]"
-        );
+        return UString::from(format!("{}", { let mut __s = UString::new(); __s += &(UString::from("[")); __s += UString::from(format!("{}", { let joined4 = parts; let mut out = String::new(); let n = joined4.len(); let mut index4 = 0usize; while index4 < n { if index4 > 0 { out.push_str(", "); } let _ = write!(out, "{}", joined4[index4]); index4 += 1; } UString::from(out.as_str()) }).as_str()).as_ustr(); __s += &(UString::from("]")); __s }).as_str());
     }
 
-    pub fn ascii_point_mark_kinsoku_test_support_render_lines(a: &[LineBox]) -> String {
-        let mut parts: Vec<String> = vec![];
+    pub fn ascii_point_mark_kinsoku_test_support_render_lines(a: &[LineBox]) -> UString {
+        let mut parts: Vec<UString> = vec![];
         for i in 0..match u32::try_from(a.len()) { Ok(value) => value, Err(_) => u32::MAX } {
-            parts.push((a[usize::try_from(i).unwrap_or(0)]).clone().to_string());
+            parts.push(UString::from(format!("{}", (a[usize::try_from(i).unwrap_or(0)]).clone().to_string()).as_str()));
         }
-        return format!("{}{}{}",
-            "[",
-            { let joined5 = parts; let mut out = String::new(); let n = joined5.len(); let mut index5 = 0usize; while index5 < n { if index5 > 0 { out.push_str(&(", ")); } let _ = write!(out, "{}", joined5[index5]); index5 += 1; } out },
-            "]"
-        );
+        return UString::from(format!("{}", { let mut __s = UString::new(); __s += &(UString::from("[")); __s += UString::from(format!("{}", { let joined5 = parts; let mut out = String::new(); let n = joined5.len(); let mut index5 = 0usize; while index5 < n { if index5 > 0 { out.push_str(", "); } let _ = write!(out, "{}", joined5[index5]); index5 += 1; } UString::from(out.as_str()) }).as_str()).as_ustr(); __s += &(UString::from("]")); __s }).as_str());
     }
 
-    pub fn ascii_point_mark_kinsoku_test_support_render_line_decisions(a: &[LineDecisionInfo]) -> String {
-        let mut parts: Vec<String> = vec![];
+    pub fn ascii_point_mark_kinsoku_test_support_render_line_decisions(a: &[LineDecisionInfo]) -> UString {
+        let mut parts: Vec<UString> = vec![];
         for i in 0..match u32::try_from(a.len()) { Ok(value) => value, Err(_) => u32::MAX } {
-            parts.push((a[usize::try_from(i).unwrap_or(0)]).clone().to_string());
+            parts.push(UString::from(format!("{}", (a[usize::try_from(i).unwrap_or(0)]).clone().to_string()).as_str()));
         }
-        return format!("{}{}{}",
-            "[",
-            { let joined6 = parts; let mut out = String::new(); let n = joined6.len(); let mut index6 = 0usize; while index6 < n { if index6 > 0 { out.push_str(&(", ")); } let _ = write!(out, "{}", joined6[index6]); index6 += 1; } out },
-            "]"
-        );
+        return UString::from(format!("{}", { let mut __s = UString::new(); __s += &(UString::from("[")); __s += UString::from(format!("{}", { let joined6 = parts; let mut out = String::new(); let n = joined6.len(); let mut index6 = 0usize; while index6 < n { if index6 > 0 { out.push_str(", "); } let _ = write!(out, "{}", joined6[index6]); index6 += 1; } UString::from(out.as_str()) }).as_str()).as_ustr(); __s += &(UString::from("]")); __s }).as_str());
     }
 
-    pub fn ascii_point_mark_kinsoku_test_support_has_cluster(r: LayoutResult, s: &str) -> bool {
+    pub fn ascii_point_mark_kinsoku_test_support_has_cluster(r: LayoutResult, s: &UStr) -> bool {
         for i in 0..match u32::try_from(r.clusters.len()) { Ok(value) => value, Err(_) => u32::MAX } {
-            if r.clusters[usize::try_from(i).unwrap_or(0)].clone().text.to_string() == s {
+            if r.clusters[usize::try_from(i).unwrap_or(0)].clone().text.to_ustring() == s {
                 return true;
             }
         }
         return false;
     }
 
-    pub fn ascii_point_mark_kinsoku_test_support_clusters_with_text(r: LayoutResult, s: &str) -> Vec<Cluster> {
+    pub fn ascii_point_mark_kinsoku_test_support_clusters_with_text(r: LayoutResult, s: &UStr) -> Vec<Cluster> {
         let mut x: Vec<Cluster> = vec![];
         for i in 0..match u32::try_from(r.clusters.len()) { Ok(value) => value, Err(_) => u32::MAX } {
-            if r.clusters[usize::try_from(i).unwrap_or(0)].clone().text.to_string() == s {
+            if r.clusters[usize::try_from(i).unwrap_or(0)].clone().text.to_ustring() == s {
                 x.push((r.clusters[usize::try_from(i).unwrap_or(0)]).clone());
             }
         }
@@ -159,18 +139,18 @@ impl AsciiPointMarkKinsokuTestSupport {
         return None;
     }
 
-    pub fn ascii_point_mark_kinsoku_test_support_has_font_source(r: LayoutResult, s: &str) -> bool {
+    pub fn ascii_point_mark_kinsoku_test_support_has_font_source(r: LayoutResult, s: &UStr) -> bool {
         for i in 0..match u32::try_from((r.debug).clone().font_decisions.len()) { Ok(value) => value, Err(_) => u32::MAX } {
-            if r.debug.clone().font_decisions[usize::try_from(i).unwrap_or(0)].clone().source_text.to_string() == s {
+            if r.debug.clone().font_decisions[usize::try_from(i).unwrap_or(0)].clone().source_text.to_ustring() == s {
                 return true;
             }
         }
         return false;
     }
 
-    pub fn ascii_point_mark_kinsoku_test_support_font_decision_by_text(r: LayoutResult, s: &str) -> Option<FontDecisionInfo> {
+    pub fn ascii_point_mark_kinsoku_test_support_font_decision_by_text(r: LayoutResult, s: &UStr) -> Option<FontDecisionInfo> {
         for i in 0..match u32::try_from((r.debug).clone().font_decisions.len()) { Ok(value) => value, Err(_) => u32::MAX } {
-            if r.debug.clone().font_decisions[usize::try_from(i).unwrap_or(0)].clone().source_text.to_string() == s {
+            if r.debug.clone().font_decisions[usize::try_from(i).unwrap_or(0)].clone().source_text.to_ustring() == s {
                 return Some(((r.debug).clone().font_decisions[usize::try_from(i).unwrap_or(0)]).clone());
             }
         }
@@ -188,93 +168,78 @@ impl AsciiPointMarkKinsokuTestSupport {
 
     pub fn ascii_point_mark_kinsoku_test_support_contextual(r: LayoutResult, range: Option<TextRange>) -> Option<ContextualKinsokuDecisionInfo> {
         for i in 0..match u32::try_from((r.debug).clone().contextual_kinsoku_decisions.len()) { Ok(value) => value, Err(_) => u32::MAX } {
-            if match &(range) { None => true, Some(__option) => AsciiPointMarkKinsokuTestSupport::ascii_point_mark_kinsoku_test_support_same_range((((r.debug).clone().contextual_kinsoku_decisions[usize::try_from(i).unwrap_or(0)]).clone().range).clone(),
-((*__option).clone()).clone()) } {
+            if match &(range) { None => true,
+Some(__option) => AsciiPointMarkKinsokuTestSupport::ascii_point_mark_kinsoku_test_support_same_range((((r.debug).clone().contextual_kinsoku_decisions[usize::try_from(i).unwrap_or(0)]).clone().range).clone(), ((*__option).clone()).clone()) } {
                 return Some(((r.debug).clone().contextual_kinsoku_decisions[usize::try_from(i).unwrap_or(0)]).clone());
             }
         }
         return None;
     }
 
-    pub fn ascii_point_mark_kinsoku_test_support_contextual_by_text(r: LayoutResult, s: &str) -> Option<ContextualKinsokuDecisionInfo> {
+    pub fn ascii_point_mark_kinsoku_test_support_contextual_by_text(r: LayoutResult, s: &UStr) -> Option<ContextualKinsokuDecisionInfo> {
         for i in 0..match u32::try_from((r.debug).clone().contextual_kinsoku_decisions.len()) { Ok(value) => value, Err(_) => u32::MAX } {
-            if r.debug.clone().contextual_kinsoku_decisions[usize::try_from(i).unwrap_or(0)].clone().source_text.to_string() == s {
+            if r.debug.clone().contextual_kinsoku_decisions[usize::try_from(i).unwrap_or(0)].clone().source_text.to_ustring() == s {
                 return Some(((r.debug).clone().contextual_kinsoku_decisions[usize::try_from(i).unwrap_or(0)]).clone());
             }
         }
         return None;
     }
 
-    pub fn ascii_point_mark_kinsoku_test_support_has_repair(r: LayoutResult, s: &str) -> bool {
+    pub fn ascii_point_mark_kinsoku_test_support_has_repair(r: LayoutResult, s: &UStr) -> bool {
         for i in 0..match u32::try_from((r.debug).clone().line_decisions.len()) { Ok(value) => value, Err(_) => u32::MAX } {
-            if r.debug.clone().line_decisions[usize::try_from(i).unwrap_or(0)].clone().repair.as_ref().map_or(false, |v| v == &(s.to_string())) {
+            if r.debug.clone().line_decisions[usize::try_from(i).unwrap_or(0)].clone().repair.as_ref().map_or(false, |v| v == &(s.to_ustring())) {
                 return true;
             }
         }
         return false;
     }
 
-    pub fn ascii_point_mark_kinsoku_test_support_forbidden_for(r: LayoutResult, s: &str) -> Vec<String> {
-        let mut x: Vec<String> = vec![];
+    pub fn ascii_point_mark_kinsoku_test_support_forbidden_for(r: LayoutResult, s: &UStr) -> Vec<UString> {
+        let mut x: Vec<UString> = vec![];
         for i in 0..match u32::try_from((r.debug).clone().contextual_kinsoku_decisions.len()) { Ok(value) => value, Err(_) => u32::MAX } {
-            if r.debug.clone().contextual_kinsoku_decisions[usize::try_from(i).unwrap_or(0)].clone().source_text.to_string() == s {
-                x.push((((r.debug).clone().contextual_kinsoku_decisions[usize::try_from(i).unwrap_or(0)]).clone().forbidden_position).to_string());
+            if r.debug.clone().contextual_kinsoku_decisions[usize::try_from(i).unwrap_or(0)].clone().source_text.to_ustring() == s {
+                x.push((((r.debug).clone().contextual_kinsoku_decisions[usize::try_from(i).unwrap_or(0)]).clone().forbidden_position).to_ustring());
             }
         }
         return x;
     }
 
-    pub fn ascii_point_mark_kinsoku_test_support_null_fallback(r: LayoutResult) -> String {
+    pub fn ascii_point_mark_kinsoku_test_support_null_fallback(r: LayoutResult) -> UString {
         let d = AsciiPointMarkKinsokuTestSupport::ascii_point_mark_kinsoku_test_support_contextual((r).clone(), None);
         if d.is_none() {
-            return String::new();
+            return UString::new();
         }
         let v = ((d).as_ref().unwrap().impossible_measure_fallback).clone().clone();
-        return match &(v) { None => "".to_string(), Some(__option1) => __option1.to_string() };
+        return match &(v) { None => UString::from(""), Some(__option1) => __option1.to_ustring() };
     }
 
-    pub fn ascii_point_mark_kinsoku_test_support_layout(text: &str, max_width: f64, breaker: Box<dyn LineBreaker>, level: Option<KinsokuLevel>, hanging: Option<HangingPunctuationStyle>, first_line_indent: Option<Ic>, ruby_spans: Option<Vec<RubySpan>>, spans: Option<Vec<TextSpan>>,
-line_length_grid: Option<LineLengthGrid>) -> Result<LayoutResult, ParagraphLayoutEngineNewFault> {
+    pub fn ascii_point_mark_kinsoku_test_support_layout(text: &UStr, max_width: f64, breaker: Box<dyn LineBreaker>, level: Option<KinsokuLevel>, hanging: Option<HangingPunctuationStyle>, first_line_indent: Option<Ic>, ruby_spans: Option<Vec<RubySpan>>, spans: Option<Vec<TextSpan>>, line_length_grid: Option<LineLengthGrid>) -> Result<LayoutResult, ParagraphLayoutEngineNewFault> {
         let resolved_level = match &(level) { None => KinsokuLevel::Basic, Some(__option2) => *__option2 };
         let resolved_hanging = match &(hanging) { None => HangingPunctuationStyle::Disabled, Some(__option3) => *__option3 };
         let resolved_indent = match &(first_line_indent) { None => Ic::zero(), Some(__option4) => (*__option4).clone() };
         let resolved_grid = match &(line_length_grid) { None => LineLengthGrid::new(Some(true), None), Some(__option5) => (*__option5).clone() };
-        let mut engine = ExplainableStubParagraphLayoutEngine::new(Some(Box::new(CjkFontRoleClassifier::new())), Some(Box::new(ParagraphLayoutFallbackResolver::new(Some("cjk-primary".to_string()), Some("latin-primary".to_string()), Some("symbol-fallback".to_string()))?)),
-Some(Box::new(AsciiKinsokuFixedResolver::new(resolved_level, resolved_hanging))), Some(Box::new(StubFontMetricsResolver::new())), Some(Box::new(ScriptAwareFontMetricsNormalizer::new())), Some((PunctuationAtomBuilder::new(None, None)?).clone()),
-Some((PunctuationSpacingCompressor::new()?).clone()), Some(QuotePairAnalyzer::new()), Some((breaker).clone()), Some(Justifier::new(Some(0.5), Some(0.25))), Some(Box::new(ExplainableStubTextShaper::new())), Some(Box::new(NoHyphenator::new())),
-Some(Box::new(LruWidthIndependentAnnotationCache::new(512))))?;
-        return Ok(engine.layout(LayoutInput::new(TiqianTextContent::new(text, (spans).clone(), Some(vec![]), Some(vec![]), Some(vec![])), Some(TextStyle::new(Some(vec![]), Some(16.0), Some("zh-Hans".to_string()), Some(400), Some(false), Some(0.0), Some(InlineAttachment::None))),
-Some(ParagraphStyle::new(Some(LastLineAlignment::Start), Some(WritingMode::HorizontalTb), None, Some((resolved_indent).clone()), Some(Ic::zero()), Some(MeasureAdaptiveFirstLineIndent::new(Some(14.0), Some(1.0), Some(2.0))), Some((resolved_grid).clone()),
-Some(RubyLineHeightMode::PerLine), Some(ParagraphStyle::PARAGRAPH_STYLE_DEFAULT_INLINE_OBJECT_MINIMUM_CLEARANCE_EM), Some(ParagraphStyle::PARAGRAPH_STYLE_DEFAULT_EMPHASIS_DOT_GAP_EM))), LayoutConstraints::new(max_width, Some(f64::INFINITY), Some(2147483647)).map_err(|e|
-ParagraphLayoutEngineNewFault::TextRangeErrorFault(e))?, Some((*crate::org::tiqian::core::built_in_layout_profiles::BUILT_IN_LAYOUT_PROFILES_CLREQ_HORIZONTAL).clone()), Some(vec![]), (ruby_spans).clone(), Some(vec![]), Some(vec![]))).map_err(|e|
-ParagraphLayoutEngineNewFault::LayoutWithRejectedTechnicalTiersFault(e))?);
+        let mut engine = ExplainableStubParagraphLayoutEngine::new(Some(Box::new(CjkFontRoleClassifier::new())), Some(Box::new(ParagraphLayoutFallbackResolver::new(Some(UString::from("cjk-primary")), Some(UString::from("latin-primary")), Some(UString::from("symbol-fallback")))?)), Some(Box::new(AsciiKinsokuFixedResolver::new(resolved_level, resolved_hanging))), Some(Box::new(StubFontMetricsResolver::new())), Some(Box::new(ScriptAwareFontMetricsNormalizer::new())), Some((PunctuationAtomBuilder::new(None, None)?).clone()), Some((PunctuationSpacingCompressor::new()?).clone()), Some(QuotePairAnalyzer::new()), Some((breaker).clone()), Some(Justifier::new(Some(0.5), Some(0.25))), Some(Arc::new(Mutex::new(ExplainableStubTextShaper::new()))), Some(Box::new(NoHyphenator::new())), Some(Arc::new(Mutex::new(LruWidthIndependentAnnotationCache::new(512)))))?;
+        return Ok(engine.layout(LayoutInput::new(TiqianTextContent::new(text, (spans).clone(), Some(vec![]), Some(vec![]), Some(vec![])), Some(TextStyle::new(Some(vec![]), Some(16.0), Some(UString::from("zh-Hans")), Some(400), Some(false), Some(0.0), Some(InlineAttachment::None))), Some(ParagraphStyle::new(Some(LastLineAlignment::Start), Some(WritingMode::HorizontalTb), None, Some((resolved_indent).clone()), Some(Ic::zero()), Some(MeasureAdaptiveFirstLineIndent::new(Some(14.0), Some(1.0), Some(2.0))), Some((resolved_grid).clone()), Some(RubyLineHeightMode::PerLine), Some(ParagraphStyle::PARAGRAPH_STYLE_DEFAULT_INLINE_OBJECT_MINIMUM_CLEARANCE_EM), Some(ParagraphStyle::PARAGRAPH_STYLE_DEFAULT_EMPHASIS_DOT_GAP_EM))), LayoutConstraints::new(max_width, Some(f64::INFINITY), Some(2147483647)).map_err(|e| ParagraphLayoutEngineNewFault::TextRangeErrorFault(e))?, Some((*crate::org::tiqian::core::built_in_layout_profiles::BUILT_IN_LAYOUT_PROFILES_CLREQ_HORIZONTAL).clone()), Some(vec![]), (ruby_spans).clone(), Some(vec![]), Some(vec![]))).map_err(|e| ParagraphLayoutEngineNewFault::LayoutWithRejectedTechnicalTiersFault(e))?);
     }
 
-    pub fn ascii_point_mark_kinsoku_test_support_layout_without_explicit_indent(text: &str, max_width: f64, breaker: Box<dyn LineBreaker>) -> Result<LayoutResult, ParagraphLayoutEngineNewFault> {
-        let mut engine = ExplainableStubParagraphLayoutEngine::new(Some(Box::new(CjkFontRoleClassifier::new())), Some(Box::new(ParagraphLayoutFallbackResolver::new(Some("cjk-primary".to_string()), Some("latin-primary".to_string()), Some("symbol-fallback".to_string()))?)),
-Some(Box::new(AsciiKinsokuFixedResolver::new(KinsokuLevel::Basic, HangingPunctuationStyle::Disabled))), Some(Box::new(StubFontMetricsResolver::new())), Some(Box::new(ScriptAwareFontMetricsNormalizer::new())), Some((PunctuationAtomBuilder::new(None, None)?).clone()),
-Some((PunctuationSpacingCompressor::new()?).clone()), Some(QuotePairAnalyzer::new()), Some((breaker).clone()), Some(Justifier::new(Some(0.5), Some(0.25))), Some(Box::new(ExplainableStubTextShaper::new())), Some(Box::new(NoHyphenator::new())),
-Some(Box::new(LruWidthIndependentAnnotationCache::new(512))))?;
-        return Ok(engine.layout(LayoutInput::new(TiqianTextContent::new(text, Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![])), Some(TextStyle::new(Some(vec![]), Some(16.0), Some("zh-Hans".to_string()), Some(400), Some(false), Some(0.0), Some(InlineAttachment::None))),
-Some(ParagraphStyle::new(Some(LastLineAlignment::Start), Some(WritingMode::HorizontalTb), None, None, Some(Ic::zero()), Some(MeasureAdaptiveFirstLineIndent::new(Some(14.0), Some(1.0), Some(2.0))), Some(LineLengthGrid::new(Some(true), None)), Some(RubyLineHeightMode::PerLine),
-Some(ParagraphStyle::PARAGRAPH_STYLE_DEFAULT_INLINE_OBJECT_MINIMUM_CLEARANCE_EM), Some(ParagraphStyle::PARAGRAPH_STYLE_DEFAULT_EMPHASIS_DOT_GAP_EM))), LayoutConstraints::new(max_width, Some(f64::INFINITY), Some(2147483647)).map_err(|e|
-ParagraphLayoutEngineNewFault::TextRangeErrorFault(e))?, Some((*crate::org::tiqian::core::built_in_layout_profiles::BUILT_IN_LAYOUT_PROFILES_CLREQ_HORIZONTAL).clone()), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]))).map_err(|e|
-ParagraphLayoutEngineNewFault::LayoutWithRejectedTechnicalTiersFault(e))?);
+    pub fn ascii_point_mark_kinsoku_test_support_layout_without_explicit_indent(text: &UStr, max_width: f64, breaker: Box<dyn LineBreaker>) -> Result<LayoutResult, ParagraphLayoutEngineNewFault> {
+        let mut engine = ExplainableStubParagraphLayoutEngine::new(Some(Box::new(CjkFontRoleClassifier::new())), Some(Box::new(ParagraphLayoutFallbackResolver::new(Some(UString::from("cjk-primary")), Some(UString::from("latin-primary")), Some(UString::from("symbol-fallback")))?)), Some(Box::new(AsciiKinsokuFixedResolver::new(KinsokuLevel::Basic, HangingPunctuationStyle::Disabled))), Some(Box::new(StubFontMetricsResolver::new())), Some(Box::new(ScriptAwareFontMetricsNormalizer::new())), Some((PunctuationAtomBuilder::new(None, None)?).clone()), Some((PunctuationSpacingCompressor::new()?).clone()), Some(QuotePairAnalyzer::new()), Some((breaker).clone()), Some(Justifier::new(Some(0.5), Some(0.25))), Some(Arc::new(Mutex::new(ExplainableStubTextShaper::new()))), Some(Box::new(NoHyphenator::new())), Some(Arc::new(Mutex::new(LruWidthIndependentAnnotationCache::new(512)))))?;
+        return Ok(engine.layout(LayoutInput::new(TiqianTextContent::new(text, Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![])), Some(TextStyle::new(Some(vec![]), Some(16.0), Some(UString::from("zh-Hans")), Some(400), Some(false), Some(0.0), Some(InlineAttachment::None))), Some(ParagraphStyle::new(Some(LastLineAlignment::Start), Some(WritingMode::HorizontalTb), None, None, Some(Ic::zero()), Some(MeasureAdaptiveFirstLineIndent::new(Some(14.0), Some(1.0), Some(2.0))), Some(LineLengthGrid::new(Some(true), None)), Some(RubyLineHeightMode::PerLine), Some(ParagraphStyle::PARAGRAPH_STYLE_DEFAULT_INLINE_OBJECT_MINIMUM_CLEARANCE_EM), Some(ParagraphStyle::PARAGRAPH_STYLE_DEFAULT_EMPHASIS_DOT_GAP_EM))), LayoutConstraints::new(max_width, Some(f64::INFINITY), Some(2147483647)).map_err(|e| ParagraphLayoutEngineNewFault::TextRangeErrorFault(e))?, Some((*crate::org::tiqian::core::built_in_layout_profiles::BUILT_IN_LAYOUT_PROFILES_CLREQ_HORIZONTAL).clone()), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]))).map_err(|e| ParagraphLayoutEngineNewFault::LayoutWithRejectedTechnicalTiersFault(e))?);
     }
 
-    pub fn ascii_point_mark_kinsoku_test_support_line_texts(result: LayoutResult, source: &str) -> Vec<String> {
-        let mut texts: Vec<String> = vec![];
+    pub fn ascii_point_mark_kinsoku_test_support_line_texts(result: LayoutResult, source: &UStr) -> Vec<UString> {
+        let mut texts: Vec<UString> = vec![];
         for i in 0..match u32::try_from(result.lines.len()) { Ok(value) => value, Err(_) => u32::MAX } {
             let line = (result.lines[usize::try_from(i).unwrap_or(0)]).clone();
-            texts.push(u_string::substring(&source, i32::from_ne_bytes(((line.range).clone().start).to_ne_bytes()), i32::from_ne_bytes(((line.range).clone().end).to_ne_bytes())));
+            texts.push(u_string::substring(&source, i32::from_ne_bytes((((line.range).clone().start) as i32).to_ne_bytes()), i32::from_ne_bytes((((line.range).clone().end) as i32).to_ne_bytes())));
         }
         return texts;
     }
 
     pub fn ascii_point_mark_kinsoku_test_support_breakers() -> Vec<BreakerChoice> {
         let choices = vec![
-    (BreakerChoice { label: "greedy".to_string(), breaker: Box::new(GreedyLineBreaker::new(None, None, None, None)) }).clone(),
-    (BreakerChoice { label: "lookahead".to_string(), breaker: Box::new(LookaheadLineBreaker::new(Some(2), Some(2), Some(0.5), Some(Box::new(ClreqKinsokuRule::new(Some(KinsokuLevel::Basic)))), Some(2), Some(10), Some(20), Some(12.0))) }).clone(),
+    (BreakerChoice { label: UString::from("greedy").to_ustring(), breaker: Box::new(GreedyLineBreaker::new(None, None, None, None)) }).clone(),
+    (BreakerChoice { label: UString::from("lookahead").to_ustring(), breaker: Box::new(LookaheadLineBreaker::new(Some(2), Some(2), Some(0.5), Some(Box::new(ClreqKinsokuRule::new(Some(KinsokuLevel::Basic)))), Some(2), Some(10), Some(20), Some(12.0))) }).clone(),
 ];
         return choices;
     }
@@ -296,8 +261,7 @@ impl AsciiKinsokuFixedResolver {
 
     pub fn resolve(&self, _profile_id: LayoutProfileId) -> ClreqProfile {
         let base = (*crate::org::tiqian::clreq::clreq_profile::CLREQ_PROFILE_MAINLAND_HORIZONTAL).clone();
-        return ClreqProfile::new((base.id).to_string().as_str(), base.strictness, base.region, Some(base.punctuation_glyph_policy), Some(crate::org::tiqian::clreq::clreq_profile::CLREQ_PROFILE_DEFAULT_COALESCE_REPEATABLE_PUNCTUATION.to_vec()),
-Some((*crate::org::tiqian::clreq::auto_space_policy::AUTO_SPACE_POLICY_DEFAULT).clone()), Some(base.glue_placement), (base.adjustment).clone(), KinsokuMode::Fixed { level: self.level, hanging: self.hanging }, (base.punctuation_width).clone());
+        return ClreqProfile::new((base.id).to_ustring().as_ustr(), base.strictness, base.region, Some(base.punctuation_glyph_policy), Some(crate::org::tiqian::clreq::clreq_profile::CLREQ_PROFILE_DEFAULT_COALESCE_REPEATABLE_PUNCTUATION.to_vec()), Some((*crate::org::tiqian::clreq::auto_space_policy::AUTO_SPACE_POLICY_DEFAULT).clone()), Some(base.glue_placement), (base.adjustment).clone(), KinsokuMode::Fixed { level: self.level, hanging: self.hanging }, (base.punctuation_width).clone());
     }
 }
 
@@ -314,13 +278,12 @@ impl ClreqProfileResolver for AsciiKinsokuFixedResolver {
 
     fn resolve(&self, _profile_id: LayoutProfileId) -> ClreqProfile {
         let base = (*crate::org::tiqian::clreq::clreq_profile::CLREQ_PROFILE_MAINLAND_HORIZONTAL).clone();
-        return ClreqProfile::new((base.id).to_string().as_str(), base.strictness, base.region, Some(base.punctuation_glyph_policy), Some(crate::org::tiqian::clreq::clreq_profile::CLREQ_PROFILE_DEFAULT_COALESCE_REPEATABLE_PUNCTUATION.to_vec()),
-Some((*crate::org::tiqian::clreq::auto_space_policy::AUTO_SPACE_POLICY_DEFAULT).clone()), Some(base.glue_placement), (base.adjustment).clone(), KinsokuMode::Fixed { level: self.level, hanging: self.hanging }, (base.punctuation_width).clone());
+        return ClreqProfile::new((base.id).to_ustring().as_ustr(), base.strictness, base.region, Some(base.punctuation_glyph_policy), Some(crate::org::tiqian::clreq::clreq_profile::CLREQ_PROFILE_DEFAULT_COALESCE_REPEATABLE_PUNCTUATION.to_vec()), Some((*crate::org::tiqian::clreq::auto_space_policy::AUTO_SPACE_POLICY_DEFAULT).clone()), Some(base.glue_placement), (base.adjustment).clone(), KinsokuMode::Fixed { level: self.level, hanging: self.hanging }, (base.punctuation_width).clone());
     }
 }
 
 #[derive(Debug, Clone)]
 pub struct BreakerChoice {
-    pub label: String,
+    pub label: UString,
     pub breaker: Box<dyn LineBreaker>,
 }

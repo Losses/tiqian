@@ -20,6 +20,8 @@ use crate::runtime::sorted_table::SortedSetTableBuilder;
 use crate::runtime::sorted_table::SortedTable;
 use crate::runtime::test as testlib;
 use crate::runtime::u_string;
+use crate::runtime::u_string::UStr;
+use crate::runtime::u_string::UString;
 use std::sync::Arc;
 
 
@@ -28,6 +30,15 @@ pub enum UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuation
     TextRangeErrorFault(crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError),
     UStringFaultFault(crate::std::u_string_exception::UStringFault),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
+}
+impl std::fmt::Display for UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundaryFullWidthCommaAfterSpaceStaysForbiddenFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundaryFullWidthCommaAfterSpaceStaysForbiddenFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundaryFullWidthCommaAfterSpaceStaysForbiddenFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundaryFullWidthCommaAfterSpaceStaysForbiddenFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
 }
 
 impl From<UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundaryFullWidthCommaAfterSpaceStaysForbiddenFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
@@ -81,6 +92,15 @@ pub enum UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuation
     UStringFaultFault(crate::std::u_string_exception::UStringFault),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
 }
+impl std::fmt::Display for UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesWithWordApostrophe2019Fault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesWithWordApostrophe2019Fault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesWithWordApostrophe2019Fault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesWithWordApostrophe2019Fault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
+}
 
 impl From<UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesWithWordApostrophe2019Fault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
     fn from(value: UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesWithWordApostrophe2019Fault) -> Self {
@@ -132,6 +152,15 @@ pub enum UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuation
     TextRangeErrorFault(crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError),
     UStringFaultFault(crate::std::u_string_exception::UStringFault),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
+}
+impl std::fmt::Display for UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesWithWesternClosingForbidLineStartFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesWithWesternClosingForbidLineStartFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesWithWesternClosingForbidLineStartFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesWithWesternClosingForbidLineStartFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
 }
 
 impl From<UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesWithWesternClosingForbidLineStartFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
@@ -185,6 +214,15 @@ pub enum UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuation
     UStringFaultFault(crate::std::u_string_exception::UStringFault),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
 }
+impl std::fmt::Display for UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesWithUnresolvedQuoteFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesWithUnresolvedQuoteFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesWithUnresolvedQuoteFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesWithUnresolvedQuoteFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
+}
 
 impl From<UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesWithUnresolvedQuoteFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
     fn from(value: UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesWithUnresolvedQuoteFault) -> Self {
@@ -236,6 +274,15 @@ pub enum UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuation
     TextRangeErrorFault(crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError),
     UStringFaultFault(crate::std::u_string_exception::UStringFault),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
+}
+impl std::fmt::Display for UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesWithUnmatchedClosingPunctuationFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesWithUnmatchedClosingPunctuationFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesWithUnmatchedClosingPunctuationFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesWithUnmatchedClosingPunctuationFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
 }
 
 impl From<UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesWithUnmatchedClosingPunctuationFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
@@ -289,6 +336,15 @@ pub enum UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuation
     UStringFaultFault(crate::std::u_string_exception::UStringFault),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
 }
+impl std::fmt::Display for UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesWithRuleForLineStartInfixFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesWithRuleForLineStartInfixFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesWithRuleForLineStartInfixFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesWithRuleForLineStartInfixFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
+}
 
 impl From<UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesWithRuleForLineStartInfixFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
     fn from(value: UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesWithRuleForLineStartInfixFault) -> Self {
@@ -340,6 +396,15 @@ pub enum UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuation
     TextRangeErrorFault(crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError),
     UStringFaultFault(crate::std::u_string_exception::UStringFault),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
+}
+impl std::fmt::Display for UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesWithRuleForLineStartElseFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesWithRuleForLineStartElseFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesWithRuleForLineStartElseFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesWithRuleForLineStartElseFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
 }
 
 impl From<UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesWithRuleForLineStartElseFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
@@ -393,6 +458,15 @@ pub enum UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuation
     UStringFaultFault(crate::std::u_string_exception::UStringFault),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
 }
+impl std::fmt::Display for UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesWithQuoteDirectionUnresolvedFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesWithQuoteDirectionUnresolvedFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesWithQuoteDirectionUnresolvedFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesWithQuoteDirectionUnresolvedFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
+}
 
 impl From<UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesWithQuoteDirectionUnresolvedFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
     fn from(value: UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesWithQuoteDirectionUnresolvedFault) -> Self {
@@ -444,6 +518,15 @@ pub enum UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuation
     TextRangeErrorFault(crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError),
     UStringFaultFault(crate::std::u_string_exception::UStringFault),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
+}
+impl std::fmt::Display for UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesWithQuoteDirectionInitialFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesWithQuoteDirectionInitialFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesWithQuoteDirectionInitialFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesWithQuoteDirectionInitialFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
 }
 
 impl From<UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesWithQuoteDirectionInitialFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
@@ -497,6 +580,15 @@ pub enum UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuation
     UStringFaultFault(crate::std::u_string_exception::UStringFault),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
 }
+impl std::fmt::Display for UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesWithQuoteDirectionFinalFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesWithQuoteDirectionFinalFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesWithQuoteDirectionFinalFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesWithQuoteDirectionFinalFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
+}
 
 impl From<UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesWithQuoteDirectionFinalFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
     fn from(value: UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesWithQuoteDirectionFinalFault) -> Self {
@@ -548,6 +640,15 @@ pub enum UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuation
     TextRangeErrorFault(crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError),
     UStringFaultFault(crate::std::u_string_exception::UStringFault),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
+}
+impl std::fmt::Display for UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesWithPunctuationAndSpaceFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesWithPunctuationAndSpaceFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesWithPunctuationAndSpaceFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesWithPunctuationAndSpaceFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
 }
 
 impl From<UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesWithPunctuationAndSpaceFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
@@ -601,6 +702,15 @@ pub enum UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuation
     UStringFaultFault(crate::std::u_string_exception::UStringFault),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
 }
+impl std::fmt::Display for UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesWithPreviousContentClusterHasContentFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesWithPreviousContentClusterHasContentFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesWithPreviousContentClusterHasContentFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesWithPreviousContentClusterHasContentFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
+}
 
 impl From<UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesWithPreviousContentClusterHasContentFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
     fn from(value: UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesWithPreviousContentClusterHasContentFault) -> Self {
@@ -652,6 +762,15 @@ pub enum UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuation
     TextRangeErrorFault(crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError),
     UStringFaultFault(crate::std::u_string_exception::UStringFault),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
+}
+impl std::fmt::Display for UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesWithPreviousContentClusterHasAuthoredBreakFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesWithPreviousContentClusterHasAuthoredBreakFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesWithPreviousContentClusterHasAuthoredBreakFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesWithPreviousContentClusterHasAuthoredBreakFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
 }
 
 impl From<UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesWithPreviousContentClusterHasAuthoredBreakFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
@@ -705,6 +824,15 @@ pub enum UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuation
     UStringFaultFault(crate::std::u_string_exception::UStringFault),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
 }
+impl std::fmt::Display for UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesWithPreviousContentClusterEmptyFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesWithPreviousContentClusterEmptyFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesWithPreviousContentClusterEmptyFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesWithPreviousContentClusterEmptyFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
+}
 
 impl From<UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesWithPreviousContentClusterEmptyFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
     fn from(value: UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesWithPreviousContentClusterEmptyFault) -> Self {
@@ -756,6 +884,15 @@ pub enum UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuation
     TextRangeErrorFault(crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError),
     UStringFaultFault(crate::std::u_string_exception::UStringFault),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
+}
+impl std::fmt::Display for UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesWithPairedQuotesFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesWithPairedQuotesFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesWithPairedQuotesFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesWithPairedQuotesFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
 }
 
 impl From<UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesWithPairedQuotesFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
@@ -809,6 +946,15 @@ pub enum UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuation
     UStringFaultFault(crate::std::u_string_exception::UStringFault),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
 }
+impl std::fmt::Display for UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesWithOpenPunctuationForbidLineEndFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesWithOpenPunctuationForbidLineEndFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesWithOpenPunctuationForbidLineEndFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesWithOpenPunctuationForbidLineEndFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
+}
 
 impl From<UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesWithOpenPunctuationForbidLineEndFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
     fn from(value: UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesWithOpenPunctuationForbidLineEndFault) -> Self {
@@ -860,6 +1006,15 @@ pub enum UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuation
     TextRangeErrorFault(crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError),
     UStringFaultFault(crate::std::u_string_exception::UStringFault),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
+}
+impl std::fmt::Display for UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesWithOpenPunctuationFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesWithOpenPunctuationFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesWithOpenPunctuationFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesWithOpenPunctuationFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
 }
 
 impl From<UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesWithOpenPunctuationFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
@@ -913,6 +1068,15 @@ pub enum UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuation
     UStringFaultFault(crate::std::u_string_exception::UStringFault),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
 }
+impl std::fmt::Display for UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesWithNextContentClusterHasAuthoredBreakFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesWithNextContentClusterHasAuthoredBreakFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesWithNextContentClusterHasAuthoredBreakFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesWithNextContentClusterHasAuthoredBreakFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
+}
 
 impl From<UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesWithNextContentClusterHasAuthoredBreakFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
     fn from(value: UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesWithNextContentClusterHasAuthoredBreakFault) -> Self {
@@ -964,6 +1128,15 @@ pub enum UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuation
     TextRangeErrorFault(crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError),
     UStringFaultFault(crate::std::u_string_exception::UStringFault),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
+}
+impl std::fmt::Display for UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesWithNextContentClusterEmptyFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesWithNextContentClusterEmptyFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesWithNextContentClusterEmptyFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesWithNextContentClusterEmptyFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
 }
 
 impl From<UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesWithNextContentClusterEmptyFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
@@ -1017,6 +1190,15 @@ pub enum UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuation
     UStringFaultFault(crate::std::u_string_exception::UStringFault),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
 }
+impl std::fmt::Display for UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesWithNextContentClusterFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesWithNextContentClusterFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesWithNextContentClusterFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesWithNextContentClusterFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
+}
 
 impl From<UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesWithNextContentClusterFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
     fn from(value: UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesWithNextContentClusterFault) -> Self {
@@ -1068,6 +1250,15 @@ pub enum UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuation
     TextRangeErrorFault(crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError),
     UStringFaultFault(crate::std::u_string_exception::UStringFault),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
+}
+impl std::fmt::Display for UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesWithMultipleClustersFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesWithMultipleClustersFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesWithMultipleClustersFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesWithMultipleClustersFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
 }
 
 impl From<UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesWithMultipleClustersFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
@@ -1121,6 +1312,15 @@ pub enum UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuation
     UStringFaultFault(crate::std::u_string_exception::UStringFault),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
 }
+impl std::fmt::Display for UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesWithLatinWordCodePointFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesWithLatinWordCodePointFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesWithLatinWordCodePointFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesWithLatinWordCodePointFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
+}
 
 impl From<UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesWithLatinWordCodePointFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
     fn from(value: UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesWithLatinWordCodePointFault) -> Self {
@@ -1172,6 +1372,15 @@ pub enum UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuation
     TextRangeErrorFault(crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError),
     UStringFaultFault(crate::std::u_string_exception::UStringFault),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
+}
+impl std::fmt::Display for UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesWithLastSignificantCodePointFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesWithLastSignificantCodePointFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesWithLastSignificantCodePointFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesWithLastSignificantCodePointFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
 }
 
 impl From<UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesWithLastSignificantCodePointFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
@@ -1225,6 +1434,15 @@ pub enum UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuation
     UStringFaultFault(crate::std::u_string_exception::UStringFault),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
 }
+impl std::fmt::Display for UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesWithIsWhitespaceCodePointNonBmpFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesWithIsWhitespaceCodePointNonBmpFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesWithIsWhitespaceCodePointNonBmpFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesWithIsWhitespaceCodePointNonBmpFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
+}
 
 impl From<UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesWithIsWhitespaceCodePointNonBmpFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
     fn from(value: UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesWithIsWhitespaceCodePointNonBmpFault) -> Self {
@@ -1276,6 +1494,15 @@ pub enum UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuation
     TextRangeErrorFault(crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError),
     UStringFaultFault(crate::std::u_string_exception::UStringFault),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
+}
+impl std::fmt::Display for UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesWithIsWhitespaceCodePointFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesWithIsWhitespaceCodePointFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesWithIsWhitespaceCodePointFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesWithIsWhitespaceCodePointFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
 }
 
 impl From<UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesWithIsWhitespaceCodePointFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
@@ -1329,6 +1556,15 @@ pub enum UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuation
     UStringFaultFault(crate::std::u_string_exception::UStringFault),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
 }
+impl std::fmt::Display for UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesWithInitialQuoteForbidLineEndFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesWithInitialQuoteForbidLineEndFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesWithInitialQuoteForbidLineEndFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesWithInitialQuoteForbidLineEndFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
+}
 
 impl From<UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesWithInitialQuoteForbidLineEndFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
     fn from(value: UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesWithInitialQuoteForbidLineEndFault) -> Self {
@@ -1380,6 +1616,15 @@ pub enum UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuation
     TextRangeErrorFault(crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError),
     UStringFaultFault(crate::std::u_string_exception::UStringFault),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
+}
+impl std::fmt::Display for UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesWithInfixNumericSeparatorRuleFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesWithInfixNumericSeparatorRuleFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesWithInfixNumericSeparatorRuleFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesWithInfixNumericSeparatorRuleFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
 }
 
 impl From<UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesWithInfixNumericSeparatorRuleFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
@@ -1433,6 +1678,15 @@ pub enum UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuation
     UStringFaultFault(crate::std::u_string_exception::UStringFault),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
 }
+impl std::fmt::Display for UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesWithInfixNumericSeparatorNotDecimalMarkFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesWithInfixNumericSeparatorNotDecimalMarkFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesWithInfixNumericSeparatorNotDecimalMarkFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesWithInfixNumericSeparatorNotDecimalMarkFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
+}
 
 impl From<UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesWithInfixNumericSeparatorNotDecimalMarkFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
     fn from(value: UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesWithInfixNumericSeparatorNotDecimalMarkFault) -> Self {
@@ -1484,6 +1738,15 @@ pub enum UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuation
     TextRangeErrorFault(crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError),
     UStringFaultFault(crate::std::u_string_exception::UStringFault),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
+}
+impl std::fmt::Display for UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesWithInfixNumericSeparatorFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesWithInfixNumericSeparatorFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesWithInfixNumericSeparatorFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesWithInfixNumericSeparatorFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
 }
 
 impl From<UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesWithInfixNumericSeparatorFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
@@ -1537,6 +1800,15 @@ pub enum UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuation
     UStringFaultFault(crate::std::u_string_exception::UStringFault),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
 }
+impl std::fmt::Display for UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesWithHasAuthoredBreakMandatoryOnlyFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesWithHasAuthoredBreakMandatoryOnlyFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesWithHasAuthoredBreakMandatoryOnlyFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesWithHasAuthoredBreakMandatoryOnlyFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
+}
 
 impl From<UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesWithHasAuthoredBreakMandatoryOnlyFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
     fn from(value: UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesWithHasAuthoredBreakMandatoryOnlyFault) -> Self {
@@ -1588,6 +1860,15 @@ pub enum UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuation
     TextRangeErrorFault(crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError),
     UStringFaultFault(crate::std::u_string_exception::UStringFault),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
+}
+impl std::fmt::Display for UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesWithHasAuthoredBreakBothFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesWithHasAuthoredBreakBothFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesWithHasAuthoredBreakBothFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesWithHasAuthoredBreakBothFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
 }
 
 impl From<UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesWithHasAuthoredBreakBothFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
@@ -1641,6 +1922,15 @@ pub enum UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuation
     UStringFaultFault(crate::std::u_string_exception::UStringFault),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
 }
+impl std::fmt::Display for UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesWithHasAuthoredBreakFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesWithHasAuthoredBreakFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesWithHasAuthoredBreakFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesWithHasAuthoredBreakFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
+}
 
 impl From<UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesWithHasAuthoredBreakFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
     fn from(value: UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesWithHasAuthoredBreakFault) -> Self {
@@ -1692,6 +1982,15 @@ pub enum UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuation
     TextRangeErrorFault(crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError),
     UStringFaultFault(crate::std::u_string_exception::UStringFault),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
+}
+impl std::fmt::Display for UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesWithFollowsAuthoredBoundaryZwspFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesWithFollowsAuthoredBoundaryZwspFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesWithFollowsAuthoredBoundaryZwspFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesWithFollowsAuthoredBoundaryZwspFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
 }
 
 impl From<UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesWithFollowsAuthoredBoundaryZwspFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
@@ -1745,6 +2044,15 @@ pub enum UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuation
     UStringFaultFault(crate::std::u_string_exception::UStringFault),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
 }
+impl std::fmt::Display for UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesWithFollowsAuthoredBoundaryWhitespaceThenNonWhitespaceFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesWithFollowsAuthoredBoundaryWhitespaceThenNonWhitespaceFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesWithFollowsAuthoredBoundaryWhitespaceThenNonWhitespaceFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesWithFollowsAuthoredBoundaryWhitespaceThenNonWhitespaceFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
+}
 
 impl From<UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesWithFollowsAuthoredBoundaryWhitespaceThenNonWhitespaceFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
     fn from(value: UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesWithFollowsAuthoredBoundaryWhitespaceThenNonWhitespaceFault) -> Self {
@@ -1796,6 +2104,15 @@ pub enum UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuation
     TextRangeErrorFault(crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError),
     UStringFaultFault(crate::std::u_string_exception::UStringFault),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
+}
+impl std::fmt::Display for UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesWithFollowsAuthoredBoundaryWhitespaceFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesWithFollowsAuthoredBoundaryWhitespaceFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesWithFollowsAuthoredBoundaryWhitespaceFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesWithFollowsAuthoredBoundaryWhitespaceFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
 }
 
 impl From<UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesWithFollowsAuthoredBoundaryWhitespaceFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
@@ -1849,6 +2166,15 @@ pub enum UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuation
     UStringFaultFault(crate::std::u_string_exception::UStringFault),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
 }
+impl std::fmt::Display for UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesWithFollowsAuthoredBoundaryMandatoryFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesWithFollowsAuthoredBoundaryMandatoryFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesWithFollowsAuthoredBoundaryMandatoryFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesWithFollowsAuthoredBoundaryMandatoryFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
+}
 
 impl From<UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesWithFollowsAuthoredBoundaryMandatoryFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
     fn from(value: UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesWithFollowsAuthoredBoundaryMandatoryFault) -> Self {
@@ -1900,6 +2226,15 @@ pub enum UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuation
     TextRangeErrorFault(crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError),
     UStringFaultFault(crate::std::u_string_exception::UStringFault),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
+}
+impl std::fmt::Display for UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesWithFollowsAuthoredBoundaryFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesWithFollowsAuthoredBoundaryFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesWithFollowsAuthoredBoundaryFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesWithFollowsAuthoredBoundaryFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
 }
 
 impl From<UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesWithFollowsAuthoredBoundaryFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
@@ -1953,6 +2288,15 @@ pub enum UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuation
     UStringFaultFault(crate::std::u_string_exception::UStringFault),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
 }
+impl std::fmt::Display for UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesWithFirstSignificantCodePointFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesWithFirstSignificantCodePointFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesWithFirstSignificantCodePointFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesWithFirstSignificantCodePointFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
+}
 
 impl From<UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesWithFirstSignificantCodePointFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
     fn from(value: UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesWithFirstSignificantCodePointFault) -> Self {
@@ -2004,6 +2348,15 @@ pub enum UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuation
     TextRangeErrorFault(crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError),
     UStringFaultFault(crate::std::u_string_exception::UStringFault),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
+}
+impl std::fmt::Display for UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesWithFirstCodePointLengthFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesWithFirstCodePointLengthFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesWithFirstCodePointLengthFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesWithFirstCodePointLengthFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
 }
 
 impl From<UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesWithFirstCodePointLengthFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
@@ -2057,6 +2410,15 @@ pub enum UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuation
     UStringFaultFault(crate::std::u_string_exception::UStringFault),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
 }
+impl std::fmt::Display for UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesWithExclamationMarkFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesWithExclamationMarkFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesWithExclamationMarkFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesWithExclamationMarkFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
+}
 
 impl From<UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesWithExclamationMarkFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
     fn from(value: UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesWithExclamationMarkFault) -> Self {
@@ -2108,6 +2470,15 @@ pub enum UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuation
     TextRangeErrorFault(crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError),
     UStringFaultFault(crate::std::u_string_exception::UStringFault),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
+}
+impl std::fmt::Display for UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesWithExclamationClassFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesWithExclamationClassFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesWithExclamationClassFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesWithExclamationClassFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
 }
 
 impl From<UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesWithExclamationClassFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
@@ -2161,6 +2532,15 @@ pub enum UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuation
     UStringFaultFault(crate::std::u_string_exception::UStringFault),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
 }
+impl std::fmt::Display for UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesWithEmptyRangeFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesWithEmptyRangeFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesWithEmptyRangeFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesWithEmptyRangeFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
+}
 
 impl From<UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesWithEmptyRangeFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
     fn from(value: UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesWithEmptyRangeFault) -> Self {
@@ -2212,6 +2592,15 @@ pub enum UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuation
     TextRangeErrorFault(crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError),
     UStringFaultFault(crate::std::u_string_exception::UStringFault),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
+}
+impl std::fmt::Display for UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesWithEmptyClustersFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesWithEmptyClustersFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesWithEmptyClustersFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesWithEmptyClustersFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
 }
 
 impl From<UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesWithEmptyClustersFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
@@ -2265,6 +2654,15 @@ pub enum UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuation
     UStringFaultFault(crate::std::u_string_exception::UStringFault),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
 }
+impl std::fmt::Display for UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesWithDecimalMarkFollowingOutsideDigitFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesWithDecimalMarkFollowingOutsideDigitFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesWithDecimalMarkFollowingOutsideDigitFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesWithDecimalMarkFollowingOutsideDigitFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
+}
 
 impl From<UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesWithDecimalMarkFollowingOutsideDigitFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
     fn from(value: UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesWithDecimalMarkFollowingOutsideDigitFault) -> Self {
@@ -2316,6 +2714,15 @@ pub enum UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuation
     TextRangeErrorFault(crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError),
     UStringFaultFault(crate::std::u_string_exception::UStringFault),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
+}
+impl std::fmt::Display for UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesWithDecimalMarkFollowingInsideDigitFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesWithDecimalMarkFollowingInsideDigitFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesWithDecimalMarkFollowingInsideDigitFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesWithDecimalMarkFollowingInsideDigitFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
 }
 
 impl From<UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesWithDecimalMarkFollowingInsideDigitFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
@@ -2369,6 +2776,15 @@ pub enum UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuation
     UStringFaultFault(crate::std::u_string_exception::UStringFault),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
 }
+impl std::fmt::Display for UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesWithDecimalMarkAfterSpaceFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesWithDecimalMarkAfterSpaceFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesWithDecimalMarkAfterSpaceFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesWithDecimalMarkAfterSpaceFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
+}
 
 impl From<UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesWithDecimalMarkAfterSpaceFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
     fn from(value: UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesWithDecimalMarkAfterSpaceFault) -> Self {
@@ -2420,6 +2836,15 @@ pub enum UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuation
     TextRangeErrorFault(crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError),
     UStringFaultFault(crate::std::u_string_exception::UStringFault),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
+}
+impl std::fmt::Display for UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesWithDecimalMarkAfterNonSpaceFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesWithDecimalMarkAfterNonSpaceFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesWithDecimalMarkAfterNonSpaceFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesWithDecimalMarkAfterNonSpaceFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
 }
 
 impl From<UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesWithDecimalMarkAfterNonSpaceFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
@@ -2473,6 +2898,15 @@ pub enum UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuation
     UStringFaultFault(crate::std::u_string_exception::UStringFault),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
 }
+impl std::fmt::Display for UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesWithCodePointBeforeSurrogatePairFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesWithCodePointBeforeSurrogatePairFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesWithCodePointBeforeSurrogatePairFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesWithCodePointBeforeSurrogatePairFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
+}
 
 impl From<UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesWithCodePointBeforeSurrogatePairFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
     fn from(value: UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesWithCodePointBeforeSurrogatePairFault) -> Self {
@@ -2524,6 +2958,15 @@ pub enum UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuation
     TextRangeErrorFault(crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError),
     UStringFaultFault(crate::std::u_string_exception::UStringFault),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
+}
+impl std::fmt::Display for UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesWithCodePointBeforeSupplementaryFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesWithCodePointBeforeSupplementaryFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesWithCodePointBeforeSupplementaryFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesWithCodePointBeforeSupplementaryFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
 }
 
 impl From<UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesWithCodePointBeforeSupplementaryFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
@@ -2577,6 +3020,15 @@ pub enum UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuation
     UStringFaultFault(crate::std::u_string_exception::UStringFault),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
 }
+impl std::fmt::Display for UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesWithCodePointAtOrNullSurrogateFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesWithCodePointAtOrNullSurrogateFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesWithCodePointAtOrNullSurrogateFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesWithCodePointAtOrNullSurrogateFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
+}
 
 impl From<UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesWithCodePointAtOrNullSurrogateFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
     fn from(value: UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesWithCodePointAtOrNullSurrogateFault) -> Self {
@@ -2628,6 +3080,15 @@ pub enum UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuation
     TextRangeErrorFault(crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError),
     UStringFaultFault(crate::std::u_string_exception::UStringFault),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
+}
+impl std::fmt::Display for UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesWithCodePointAtOrNullSupplementaryFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesWithCodePointAtOrNullSupplementaryFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesWithCodePointAtOrNullSupplementaryFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesWithCodePointAtOrNullSupplementaryFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
 }
 
 impl From<UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesWithCodePointAtOrNullSupplementaryFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
@@ -2681,6 +3142,15 @@ pub enum UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuation
     UStringFaultFault(crate::std::u_string_exception::UStringFault),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
 }
+impl std::fmt::Display for UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesWithClosePunctuationClassFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesWithClosePunctuationClassFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesWithClosePunctuationClassFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesWithClosePunctuationClassFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
+}
 
 impl From<UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesWithClosePunctuationClassFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
     fn from(value: UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesWithClosePunctuationClassFault) -> Self {
@@ -2732,6 +3202,15 @@ pub enum UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuation
     TextRangeErrorFault(crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError),
     UStringFaultFault(crate::std::u_string_exception::UStringFault),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
+}
+impl std::fmt::Display for UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesWithClosePunctuationFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesWithClosePunctuationFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesWithClosePunctuationFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesWithClosePunctuationFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
 }
 
 impl From<UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesWithClosePunctuationFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
@@ -2785,6 +3264,15 @@ pub enum UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuation
     UStringFaultFault(crate::std::u_string_exception::UStringFault),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
 }
+impl std::fmt::Display for UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesWithCloseParenthesisClassFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesWithCloseParenthesisClassFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesWithCloseParenthesisClassFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesWithCloseParenthesisClassFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
+}
 
 impl From<UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesWithCloseParenthesisClassFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
     fn from(value: UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesWithCloseParenthesisClassFault) -> Self {
@@ -2836,6 +3324,15 @@ pub enum UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuation
     TextRangeErrorFault(crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError),
     UStringFaultFault(crate::std::u_string_exception::UStringFault),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
+}
+impl std::fmt::Display for UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesWithCjkClosingForbidLineStartFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesWithCjkClosingForbidLineStartFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesWithCjkClosingForbidLineStartFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesWithCjkClosingForbidLineStartFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
 }
 
 impl From<UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesWithCjkClosingForbidLineStartFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
@@ -2889,6 +3386,15 @@ pub enum UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuation
     UStringFaultFault(crate::std::u_string_exception::UStringFault),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
 }
+impl std::fmt::Display for UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesWithCjkClosingAtLineStartFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesWithCjkClosingAtLineStartFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesWithCjkClosingAtLineStartFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesWithCjkClosingAtLineStartFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
+}
 
 impl From<UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesWithCjkClosingAtLineStartFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
     fn from(value: UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesWithCjkClosingAtLineStartFault) -> Self {
@@ -2940,6 +3446,15 @@ pub enum UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuation
     TextRangeErrorFault(crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError),
     UStringFaultFault(crate::std::u_string_exception::UStringFault),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
+}
+impl std::fmt::Display for UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesWithAllCjkTextFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesWithAllCjkTextFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesWithAllCjkTextFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesWithAllCjkTextFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
 }
 
 impl From<UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesWithAllCjkTextFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
@@ -2993,6 +3508,15 @@ pub enum UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuation
     UStringFaultFault(crate::std::u_string_exception::UStringFault),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
 }
+impl std::fmt::Display for UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesSurrogateScanningVariationsFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesSurrogateScanningVariationsFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesSurrogateScanningVariationsFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesSurrogateScanningVariationsFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
+}
 
 impl From<UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesSurrogateScanningVariationsFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
     fn from(value: UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesSurrogateScanningVariationsFault) -> Self {
@@ -3044,6 +3568,15 @@ pub enum UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuation
     TextRangeErrorFault(crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError),
     UStringFaultFault(crate::std::u_string_exception::UStringFault),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
+}
+impl std::fmt::Display for UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesQuoteDirection2019SurrogateLeftFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesQuoteDirection2019SurrogateLeftFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesQuoteDirection2019SurrogateLeftFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesQuoteDirection2019SurrogateLeftFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
 }
 
 impl From<UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesQuoteDirection2019SurrogateLeftFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
@@ -3097,6 +3630,15 @@ pub enum UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuation
     UStringFaultFault(crate::std::u_string_exception::UStringFault),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
 }
+impl std::fmt::Display for UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesQuoteDirection2019RightWordOnlyFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesQuoteDirection2019RightWordOnlyFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesQuoteDirection2019RightWordOnlyFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesQuoteDirection2019RightWordOnlyFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
+}
 
 impl From<UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesQuoteDirection2019RightWordOnlyFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
     fn from(value: UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesQuoteDirection2019RightWordOnlyFault) -> Self {
@@ -3148,6 +3690,15 @@ pub enum UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuation
     TextRangeErrorFault(crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError),
     UStringFaultFault(crate::std::u_string_exception::UStringFault),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
+}
+impl std::fmt::Display for UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesQuoteDirection2019NeitherWordFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesQuoteDirection2019NeitherWordFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesQuoteDirection2019NeitherWordFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesQuoteDirection2019NeitherWordFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
 }
 
 impl From<UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesQuoteDirection2019NeitherWordFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
@@ -3201,6 +3752,15 @@ pub enum UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuation
     UStringFaultFault(crate::std::u_string_exception::UStringFault),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
 }
+impl std::fmt::Display for UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesQuoteDirection2019LeftWordOnlyFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesQuoteDirection2019LeftWordOnlyFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesQuoteDirection2019LeftWordOnlyFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesQuoteDirection2019LeftWordOnlyFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
+}
 
 impl From<UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesQuoteDirection2019LeftWordOnlyFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
     fn from(value: UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesQuoteDirection2019LeftWordOnlyFault) -> Self {
@@ -3252,6 +3812,15 @@ pub enum UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuation
     TextRangeErrorFault(crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError),
     UStringFaultFault(crate::std::u_string_exception::UStringFault),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
+}
+impl std::fmt::Display for UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesQuoteDirection2019BmpLeftFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesQuoteDirection2019BmpLeftFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesQuoteDirection2019BmpLeftFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesQuoteDirection2019BmpLeftFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
 }
 
 impl From<UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesQuoteDirection2019BmpLeftFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
@@ -3305,6 +3874,15 @@ pub enum UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuation
     UStringFaultFault(crate::std::u_string_exception::UStringFault),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
 }
+impl std::fmt::Display for UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesPreviousContentClusterReturnsNullFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesPreviousContentClusterReturnsNullFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesPreviousContentClusterReturnsNullFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesPreviousContentClusterReturnsNullFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
+}
 
 impl From<UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesPreviousContentClusterReturnsNullFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
     fn from(value: UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesPreviousContentClusterReturnsNullFault) -> Self {
@@ -3356,6 +3934,15 @@ pub enum UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuation
     TextRangeErrorFault(crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError),
     UStringFaultFault(crate::std::u_string_exception::UStringFault),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
+}
+impl std::fmt::Display for UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesPreviousContentClusterReturnsContentFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesPreviousContentClusterReturnsContentFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesPreviousContentClusterReturnsContentFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesPreviousContentClusterReturnsContentFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
 }
 
 impl From<UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesPreviousContentClusterReturnsContentFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
@@ -3409,6 +3996,15 @@ pub enum UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuation
     UStringFaultFault(crate::std::u_string_exception::UStringFault),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
 }
+impl std::fmt::Display for UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesPreviousContentClusterMultipleEmptyFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesPreviousContentClusterMultipleEmptyFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesPreviousContentClusterMultipleEmptyFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesPreviousContentClusterMultipleEmptyFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
+}
 
 impl From<UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesPreviousContentClusterMultipleEmptyFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
     fn from(value: UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesPreviousContentClusterMultipleEmptyFault) -> Self {
@@ -3460,6 +4056,15 @@ pub enum UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuation
     TextRangeErrorFault(crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError),
     UStringFaultFault(crate::std::u_string_exception::UStringFault),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
+}
+impl std::fmt::Display for UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesPreviousContentClusterEmptyOnlyFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesPreviousContentClusterEmptyOnlyFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesPreviousContentClusterEmptyOnlyFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesPreviousContentClusterEmptyOnlyFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
 }
 
 impl From<UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesPreviousContentClusterEmptyOnlyFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
@@ -3513,6 +4118,15 @@ pub enum UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuation
     UStringFaultFault(crate::std::u_string_exception::UStringFault),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
 }
+impl std::fmt::Display for UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesNextContentClusterReturnsContentFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesNextContentClusterReturnsContentFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesNextContentClusterReturnsContentFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesNextContentClusterReturnsContentFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
+}
 
 impl From<UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesNextContentClusterReturnsContentFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
     fn from(value: UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesNextContentClusterReturnsContentFault) -> Self {
@@ -3564,6 +4178,15 @@ pub enum UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuation
     TextRangeErrorFault(crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError),
     UStringFaultFault(crate::std::u_string_exception::UStringFault),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
+}
+impl std::fmt::Display for UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesLastSignificantCodePointSurrogateEndingFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesLastSignificantCodePointSurrogateEndingFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesLastSignificantCodePointSurrogateEndingFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesLastSignificantCodePointSurrogateEndingFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
 }
 
 impl From<UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesLastSignificantCodePointSurrogateEndingFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
@@ -3617,6 +4240,15 @@ pub enum UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuation
     UStringFaultFault(crate::std::u_string_exception::UStringFault),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
 }
+impl std::fmt::Display for UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesIsDecimalMarkAfterSpaceNonWhitespacePrevFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesIsDecimalMarkAfterSpaceNonWhitespacePrevFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesIsDecimalMarkAfterSpaceNonWhitespacePrevFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesIsDecimalMarkAfterSpaceNonWhitespacePrevFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
+}
 
 impl From<UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesIsDecimalMarkAfterSpaceNonWhitespacePrevFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
     fn from(value: UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesIsDecimalMarkAfterSpaceNonWhitespacePrevFault) -> Self {
@@ -3668,6 +4300,15 @@ pub enum UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuation
     TextRangeErrorFault(crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError),
     UStringFaultFault(crate::std::u_string_exception::UStringFault),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
+}
+impl std::fmt::Display for UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesIsDecimalMarkAfterSpaceIndexZeroFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesIsDecimalMarkAfterSpaceIndexZeroFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesIsDecimalMarkAfterSpaceIndexZeroFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesIsDecimalMarkAfterSpaceIndexZeroFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
 }
 
 impl From<UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesIsDecimalMarkAfterSpaceIndexZeroFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
@@ -3721,6 +4362,15 @@ pub enum UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuation
     UStringFaultFault(crate::std::u_string_exception::UStringFault),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
 }
+impl std::fmt::Display for UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesIsDecimalMarkAfterSpaceFollowingOutsideFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesIsDecimalMarkAfterSpaceFollowingOutsideFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesIsDecimalMarkAfterSpaceFollowingOutsideFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesIsDecimalMarkAfterSpaceFollowingOutsideFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
+}
 
 impl From<UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesIsDecimalMarkAfterSpaceFollowingOutsideFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
     fn from(value: UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesIsDecimalMarkAfterSpaceFollowingOutsideFault) -> Self {
@@ -3772,6 +4422,15 @@ pub enum UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuation
     TextRangeErrorFault(crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError),
     UStringFaultFault(crate::std::u_string_exception::UStringFault),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
+}
+impl std::fmt::Display for UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesIsDecimalMarkAfterSpaceFollowingInsideFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesIsDecimalMarkAfterSpaceFollowingInsideFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesIsDecimalMarkAfterSpaceFollowingInsideFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesIsDecimalMarkAfterSpaceFollowingInsideFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
 }
 
 impl From<UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesIsDecimalMarkAfterSpaceFollowingInsideFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
@@ -3825,6 +4484,15 @@ pub enum UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuation
     UStringFaultFault(crate::std::u_string_exception::UStringFault),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
 }
+impl std::fmt::Display for UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesIsDecimalMarkAfterSpaceEmptyPrevFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesIsDecimalMarkAfterSpaceEmptyPrevFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesIsDecimalMarkAfterSpaceEmptyPrevFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesIsDecimalMarkAfterSpaceEmptyPrevFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
+}
 
 impl From<UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesIsDecimalMarkAfterSpaceEmptyPrevFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
     fn from(value: UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesIsDecimalMarkAfterSpaceEmptyPrevFault) -> Self {
@@ -3876,6 +4544,15 @@ pub enum UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuation
     TextRangeErrorFault(crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError),
     UStringFaultFault(crate::std::u_string_exception::UStringFault),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
+}
+impl std::fmt::Display for UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesInfixNumericSeparatorWithSpaceAndNoSpaceFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesInfixNumericSeparatorWithSpaceAndNoSpaceFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesInfixNumericSeparatorWithSpaceAndNoSpaceFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesInfixNumericSeparatorWithSpaceAndNoSpaceFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
 }
 
 impl From<UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesInfixNumericSeparatorWithSpaceAndNoSpaceFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
@@ -3929,6 +4606,15 @@ pub enum UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuation
     UStringFaultFault(crate::std::u_string_exception::UStringFault),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
 }
+impl std::fmt::Display for UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesHasAuthoredBreakWithCodePointFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesHasAuthoredBreakWithCodePointFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesHasAuthoredBreakWithCodePointFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesHasAuthoredBreakWithCodePointFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
+}
 
 impl From<UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesHasAuthoredBreakWithCodePointFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
     fn from(value: UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesHasAuthoredBreakWithCodePointFault) -> Self {
@@ -3980,6 +4666,15 @@ pub enum UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuation
     TextRangeErrorFault(crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError),
     UStringFaultFault(crate::std::u_string_exception::UStringFault),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
+}
+impl std::fmt::Display for UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesHasAuthoredBreakNullCodePointFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesHasAuthoredBreakNullCodePointFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesHasAuthoredBreakNullCodePointFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesHasAuthoredBreakNullCodePointFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
 }
 
 impl From<UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesHasAuthoredBreakNullCodePointFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
@@ -4033,6 +4728,15 @@ pub enum UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuation
     UStringFaultFault(crate::std::u_string_exception::UStringFault),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
 }
+impl std::fmt::Display for UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesHasAuthoredBreakEmptyStringFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesHasAuthoredBreakEmptyStringFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesHasAuthoredBreakEmptyStringFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesHasAuthoredBreakEmptyStringFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
+}
 
 impl From<UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesHasAuthoredBreakEmptyStringFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
     fn from(value: UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesHasAuthoredBreakEmptyStringFault) -> Self {
@@ -4084,6 +4788,15 @@ pub enum UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuation
     TextRangeErrorFault(crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError),
     UStringFaultFault(crate::std::u_string_exception::UStringFault),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
+}
+impl std::fmt::Display for UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesFollowsAuthoredBoundaryZwspInMiddleFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesFollowsAuthoredBoundaryZwspInMiddleFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesFollowsAuthoredBoundaryZwspInMiddleFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesFollowsAuthoredBoundaryZwspInMiddleFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
 }
 
 impl From<UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesFollowsAuthoredBoundaryZwspInMiddleFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
@@ -4137,6 +4850,15 @@ pub enum UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuation
     UStringFaultFault(crate::std::u_string_exception::UStringFault),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
 }
+impl std::fmt::Display for UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesFollowsAuthoredBoundaryNonWhitespaceFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesFollowsAuthoredBoundaryNonWhitespaceFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesFollowsAuthoredBoundaryNonWhitespaceFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesFollowsAuthoredBoundaryNonWhitespaceFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
+}
 
 impl From<UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesFollowsAuthoredBoundaryNonWhitespaceFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
     fn from(value: UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesFollowsAuthoredBoundaryNonWhitespaceFault) -> Self {
@@ -4188,6 +4910,15 @@ pub enum UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuation
     TextRangeErrorFault(crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError),
     UStringFaultFault(crate::std::u_string_exception::UStringFault),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
+}
+impl std::fmt::Display for UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesFirstCodePointLengthSurrogateFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesFirstCodePointLengthSurrogateFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesFirstCodePointLengthSurrogateFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesFirstCodePointLengthSurrogateFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
 }
 
 impl From<UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesFirstCodePointLengthSurrogateFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
@@ -4241,6 +4972,15 @@ pub enum UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuation
     UStringFaultFault(crate::std::u_string_exception::UStringFault),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
 }
+impl std::fmt::Display for UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesFirstCodePointLengthBmpFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesFirstCodePointLengthBmpFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesFirstCodePointLengthBmpFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesFirstCodePointLengthBmpFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
+}
 
 impl From<UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesFirstCodePointLengthBmpFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
     fn from(value: UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesFirstCodePointLengthBmpFault) -> Self {
@@ -4292,6 +5032,15 @@ pub enum UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuation
     TextRangeErrorFault(crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError),
     UStringFaultFault(crate::std::u_string_exception::UStringFault),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
+}
+impl std::fmt::Display for UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesDecimalMarkFollowingVariationsFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesDecimalMarkFollowingVariationsFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesDecimalMarkFollowingVariationsFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesDecimalMarkFollowingVariationsFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
 }
 
 impl From<UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesDecimalMarkFollowingVariationsFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
@@ -4345,6 +5094,15 @@ pub enum UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuation
     UStringFaultFault(crate::std::u_string_exception::UStringFault),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
 }
+impl std::fmt::Display for UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesDecimalMarkFollowedByLetterForbiddenFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesDecimalMarkFollowedByLetterForbiddenFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesDecimalMarkFollowedByLetterForbiddenFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesDecimalMarkFollowedByLetterForbiddenFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
+}
 
 impl From<UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesDecimalMarkFollowedByLetterForbiddenFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
     fn from(value: UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesDecimalMarkFollowedByLetterForbiddenFault) -> Self {
@@ -4396,6 +5154,15 @@ pub enum UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuation
     TextRangeErrorFault(crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError),
     UStringFaultFault(crate::std::u_string_exception::UStringFault),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
+}
+impl std::fmt::Display for UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesDecimalMarkAtClusterZeroForbiddenFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesDecimalMarkAtClusterZeroForbiddenFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesDecimalMarkAtClusterZeroForbiddenFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesDecimalMarkAtClusterZeroForbiddenFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
 }
 
 impl From<UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesDecimalMarkAtClusterZeroForbiddenFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
@@ -4449,6 +5216,15 @@ pub enum UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuation
     UStringFaultFault(crate::std::u_string_exception::UStringFault),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
 }
+impl std::fmt::Display for UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesDecimalMarkAloneAfterSpaceForbiddenFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesDecimalMarkAloneAfterSpaceForbiddenFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesDecimalMarkAloneAfterSpaceForbiddenFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesDecimalMarkAloneAfterSpaceForbiddenFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
+}
 
 impl From<UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesDecimalMarkAloneAfterSpaceForbiddenFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
     fn from(value: UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesDecimalMarkAloneAfterSpaceForbiddenFault) -> Self {
@@ -4500,6 +5276,15 @@ pub enum UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuation
     TextRangeErrorFault(crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError),
     UStringFaultFault(crate::std::u_string_exception::UStringFault),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
+}
+impl std::fmt::Display for UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesDecimalMarkAfterLetterClusterForbiddenFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesDecimalMarkAfterLetterClusterForbiddenFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesDecimalMarkAfterLetterClusterForbiddenFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesDecimalMarkAfterLetterClusterForbiddenFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
 }
 
 impl From<UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesDecimalMarkAfterLetterClusterForbiddenFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
@@ -4553,6 +5338,15 @@ pub enum UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuation
     UStringFaultFault(crate::std::u_string_exception::UStringFault),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
 }
+impl std::fmt::Display for UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesDecimalMarkAfterEmptyClusterForbiddenFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesDecimalMarkAfterEmptyClusterForbiddenFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesDecimalMarkAfterEmptyClusterForbiddenFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesDecimalMarkAfterEmptyClusterForbiddenFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
+}
 
 impl From<UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesDecimalMarkAfterEmptyClusterForbiddenFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
     fn from(value: UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesDecimalMarkAfterEmptyClusterForbiddenFault) -> Self {
@@ -4604,6 +5398,15 @@ pub enum UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuation
     TextRangeErrorFault(crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError),
     UStringFaultFault(crate::std::u_string_exception::UStringFault),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
+}
+impl std::fmt::Display for UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesCodePointBeforeSurrogatePairFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesCodePointBeforeSurrogatePairFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesCodePointBeforeSurrogatePairFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesCodePointBeforeSurrogatePairFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
 }
 
 impl From<UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesCodePointBeforeSurrogatePairFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
@@ -4657,6 +5460,15 @@ pub enum UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuation
     UStringFaultFault(crate::std::u_string_exception::UStringFault),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
 }
+impl std::fmt::Display for UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesCodePointBeforeLowSurrogateSingleFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesCodePointBeforeLowSurrogateSingleFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesCodePointBeforeLowSurrogateSingleFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesCodePointBeforeLowSurrogateSingleFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
+}
 
 impl From<UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesCodePointBeforeLowSurrogateSingleFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
     fn from(value: UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesCodePointBeforeLowSurrogateSingleFault) -> Self {
@@ -4708,6 +5520,15 @@ pub enum UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuation
     TextRangeErrorFault(crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError),
     UStringFaultFault(crate::std::u_string_exception::UStringFault),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
+}
+impl std::fmt::Display for UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesCodePointBeforeLowSurrogateFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesCodePointBeforeLowSurrogateFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesCodePointBeforeLowSurrogateFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesCodePointBeforeLowSurrogateFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
 }
 
 impl From<UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesCodePointBeforeLowSurrogateFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
@@ -4761,6 +5582,15 @@ pub enum UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuation
     UStringFaultFault(crate::std::u_string_exception::UStringFault),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
 }
+impl std::fmt::Display for UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesCodePointAtOrNullSurrogatePairFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesCodePointAtOrNullSurrogatePairFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesCodePointAtOrNullSurrogatePairFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesCodePointAtOrNullSurrogatePairFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
+}
 
 impl From<UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesCodePointAtOrNullSurrogatePairFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
     fn from(value: UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesCodePointAtOrNullSurrogatePairFault) -> Self {
@@ -4812,6 +5642,15 @@ pub enum UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuation
     TextRangeErrorFault(crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError),
     UStringFaultFault(crate::std::u_string_exception::UStringFault),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
+}
+impl std::fmt::Display for UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesCodePointAtOrNullSupplementaryFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesCodePointAtOrNullSupplementaryFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesCodePointAtOrNullSupplementaryFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesCodePointAtOrNullSupplementaryFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
 }
 
 impl From<UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesCodePointAtOrNullSupplementaryFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
@@ -4865,6 +5704,15 @@ pub enum UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuation
     UStringFaultFault(crate::std::u_string_exception::UStringFault),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
 }
+impl std::fmt::Display for UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesAuthoredBreakInsidePreviousClusterDropsUnbreakableFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesAuthoredBreakInsidePreviousClusterDropsUnbreakableFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesAuthoredBreakInsidePreviousClusterDropsUnbreakableFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesAuthoredBreakInsidePreviousClusterDropsUnbreakableFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
+}
 
 impl From<UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesAuthoredBreakInsidePreviousClusterDropsUnbreakableFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
     fn from(value: UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesAuthoredBreakInsidePreviousClusterDropsUnbreakableFault) -> Self {
@@ -4916,6 +5764,15 @@ pub enum UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuation
     TextRangeErrorFault(crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError),
     UStringFaultFault(crate::std::u_string_exception::UStringFault),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
+}
+impl std::fmt::Display for UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesAstralTailKeepsPairAsLastSignificantFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesAstralTailKeepsPairAsLastSignificantFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesAstralTailKeepsPairAsLastSignificantFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesAstralTailKeepsPairAsLastSignificantFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
 }
 
 impl From<UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesAstralTailKeepsPairAsLastSignificantFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
@@ -4969,6 +5826,15 @@ pub enum UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuation
     UStringFaultFault(crate::std::u_string_exception::UStringFault),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
 }
+impl std::fmt::Display for UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesApostropheRightNeighbourUnpairedHighSurrogateFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesApostropheRightNeighbourUnpairedHighSurrogateFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesApostropheRightNeighbourUnpairedHighSurrogateFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesApostropheRightNeighbourUnpairedHighSurrogateFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
+}
 
 impl From<UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesApostropheRightNeighbourUnpairedHighSurrogateFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
     fn from(value: UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesApostropheRightNeighbourUnpairedHighSurrogateFault) -> Self {
@@ -5020,6 +5886,15 @@ pub enum UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuation
     TextRangeErrorFault(crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError),
     UStringFaultFault(crate::std::u_string_exception::UStringFault),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
+}
+impl std::fmt::Display for UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesApostropheRightNeighbourSupplementaryPairFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesApostropheRightNeighbourSupplementaryPairFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesApostropheRightNeighbourSupplementaryPairFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesApostropheRightNeighbourSupplementaryPairFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
 }
 
 impl From<UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesApostropheRightNeighbourSupplementaryPairFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
@@ -5073,6 +5948,15 @@ pub enum UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuation
     UStringFaultFault(crate::std::u_string_exception::UStringFault),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
 }
+impl std::fmt::Display for UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesApostropheLeftNeighbourSupplementaryPairFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesApostropheLeftNeighbourSupplementaryPairFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesApostropheLeftNeighbourSupplementaryPairFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesApostropheLeftNeighbourSupplementaryPairFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
+}
 
 impl From<UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesApostropheLeftNeighbourSupplementaryPairFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
     fn from(value: UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesApostropheLeftNeighbourSupplementaryPairFault) -> Self {
@@ -5124,6 +6008,15 @@ pub enum UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuation
     TextRangeErrorFault(crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError),
     UStringFaultFault(crate::std::u_string_exception::UStringFault),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
+}
+impl std::fmt::Display for UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesApostropheAtTextStartNoLeftContextFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesApostropheAtTextStartNoLeftContextFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesApostropheAtTextStartNoLeftContextFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesApostropheAtTextStartNoLeftContextFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
 }
 
 impl From<UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesApostropheAtTextStartNoLeftContextFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
@@ -5177,6 +6070,15 @@ pub enum UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuation
     UStringFaultFault(crate::std::u_string_exception::UStringFault),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
 }
+impl std::fmt::Display for UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesApostropheAndLatinWordBranchesFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesApostropheAndLatinWordBranchesFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesApostropheAndLatinWordBranchesFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesApostropheAndLatinWordBranchesFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
+}
 
 impl From<UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesApostropheAndLatinWordBranchesFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
     fn from(value: UnicodePunctuationBoundaryResolverCoverageTestResolveUnicodePunctuationBoundariesApostropheAndLatinWordBranchesFault) -> Self {
@@ -5228,6 +6130,15 @@ pub enum UnicodePunctuationBoundaryResolverCoverageTestResolveAttachedInlineInte
     TextRangeErrorFault(crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError),
     UStringFaultFault(crate::std::u_string_exception::UStringFault),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
+}
+impl std::fmt::Display for UnicodePunctuationBoundaryResolverCoverageTestResolveAttachedInlineInterCharBoundariesWithWesternBracketFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            UnicodePunctuationBoundaryResolverCoverageTestResolveAttachedInlineInterCharBoundariesWithWesternBracketFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            UnicodePunctuationBoundaryResolverCoverageTestResolveAttachedInlineInterCharBoundariesWithWesternBracketFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            UnicodePunctuationBoundaryResolverCoverageTestResolveAttachedInlineInterCharBoundariesWithWesternBracketFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
 }
 
 impl From<UnicodePunctuationBoundaryResolverCoverageTestResolveAttachedInlineInterCharBoundariesWithWesternBracketFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
@@ -5281,6 +6192,15 @@ pub enum UnicodePunctuationBoundaryResolverCoverageTestResolveAttachedInlineInte
     UStringFaultFault(crate::std::u_string_exception::UStringFault),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
 }
+impl std::fmt::Display for UnicodePunctuationBoundaryResolverCoverageTestResolveAttachedInlineInterCharBoundariesWithSinoWesternPairFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            UnicodePunctuationBoundaryResolverCoverageTestResolveAttachedInlineInterCharBoundariesWithSinoWesternPairFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            UnicodePunctuationBoundaryResolverCoverageTestResolveAttachedInlineInterCharBoundariesWithSinoWesternPairFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            UnicodePunctuationBoundaryResolverCoverageTestResolveAttachedInlineInterCharBoundariesWithSinoWesternPairFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
+}
 
 impl From<UnicodePunctuationBoundaryResolverCoverageTestResolveAttachedInlineInterCharBoundariesWithSinoWesternPairFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
     fn from(value: UnicodePunctuationBoundaryResolverCoverageTestResolveAttachedInlineInterCharBoundariesWithSinoWesternPairFault) -> Self {
@@ -5332,6 +6252,15 @@ pub enum UnicodePunctuationBoundaryResolverCoverageTestResolveAttachedInlineInte
     TextRangeErrorFault(crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError),
     UStringFaultFault(crate::std::u_string_exception::UStringFault),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
+}
+impl std::fmt::Display for UnicodePunctuationBoundaryResolverCoverageTestResolveAttachedInlineInterCharBoundariesWithCjkBothCjkFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            UnicodePunctuationBoundaryResolverCoverageTestResolveAttachedInlineInterCharBoundariesWithCjkBothCjkFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            UnicodePunctuationBoundaryResolverCoverageTestResolveAttachedInlineInterCharBoundariesWithCjkBothCjkFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            UnicodePunctuationBoundaryResolverCoverageTestResolveAttachedInlineInterCharBoundariesWithCjkBothCjkFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
 }
 
 impl From<UnicodePunctuationBoundaryResolverCoverageTestResolveAttachedInlineInterCharBoundariesWithCjkBothCjkFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
@@ -5385,6 +6314,15 @@ pub enum UnicodePunctuationBoundaryResolverCoverageTestResolveAttachedInlineInte
     UStringFaultFault(crate::std::u_string_exception::UStringFault),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
 }
+impl std::fmt::Display for UnicodePunctuationBoundaryResolverCoverageTestResolveAttachedInlineInterCharBoundariesWithCjkBodyWesternBracketFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            UnicodePunctuationBoundaryResolverCoverageTestResolveAttachedInlineInterCharBoundariesWithCjkBodyWesternBracketFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            UnicodePunctuationBoundaryResolverCoverageTestResolveAttachedInlineInterCharBoundariesWithCjkBodyWesternBracketFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            UnicodePunctuationBoundaryResolverCoverageTestResolveAttachedInlineInterCharBoundariesWithCjkBodyWesternBracketFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
+}
 
 impl From<UnicodePunctuationBoundaryResolverCoverageTestResolveAttachedInlineInterCharBoundariesWithCjkBodyWesternBracketFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
     fn from(value: UnicodePunctuationBoundaryResolverCoverageTestResolveAttachedInlineInterCharBoundariesWithCjkBodyWesternBracketFault) -> Self {
@@ -5436,6 +6374,15 @@ pub enum UnicodePunctuationBoundaryResolverCoverageTestResolveAttachedInlineInte
     TextRangeErrorFault(crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError),
     UStringFaultFault(crate::std::u_string_exception::UStringFault),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
+}
+impl std::fmt::Display for UnicodePunctuationBoundaryResolverCoverageTestResolveAttachedInlineInterCharBoundariesWithBothCjkPunctuationFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            UnicodePunctuationBoundaryResolverCoverageTestResolveAttachedInlineInterCharBoundariesWithBothCjkPunctuationFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            UnicodePunctuationBoundaryResolverCoverageTestResolveAttachedInlineInterCharBoundariesWithBothCjkPunctuationFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            UnicodePunctuationBoundaryResolverCoverageTestResolveAttachedInlineInterCharBoundariesWithBothCjkPunctuationFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
 }
 
 impl From<UnicodePunctuationBoundaryResolverCoverageTestResolveAttachedInlineInterCharBoundariesWithBothCjkPunctuationFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
@@ -5489,6 +6436,15 @@ pub enum UnicodePunctuationBoundaryResolverCoverageTestResolveAttachedInlineInte
     UStringFaultFault(crate::std::u_string_exception::UStringFault),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
 }
+impl std::fmt::Display for UnicodePunctuationBoundaryResolverCoverageTestResolveAttachedInlineInterCharBoundariesWesternBracketOnlyFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            UnicodePunctuationBoundaryResolverCoverageTestResolveAttachedInlineInterCharBoundariesWesternBracketOnlyFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            UnicodePunctuationBoundaryResolverCoverageTestResolveAttachedInlineInterCharBoundariesWesternBracketOnlyFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            UnicodePunctuationBoundaryResolverCoverageTestResolveAttachedInlineInterCharBoundariesWesternBracketOnlyFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
+}
 
 impl From<UnicodePunctuationBoundaryResolverCoverageTestResolveAttachedInlineInterCharBoundariesWesternBracketOnlyFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
     fn from(value: UnicodePunctuationBoundaryResolverCoverageTestResolveAttachedInlineInterCharBoundariesWesternBracketOnlyFault) -> Self {
@@ -5540,6 +6496,15 @@ pub enum UnicodePunctuationBoundaryResolverCoverageTestResolveAttachedInlineInte
     TextRangeErrorFault(crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError),
     UStringFaultFault(crate::std::u_string_exception::UStringFault),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
+}
+impl std::fmt::Display for UnicodePunctuationBoundaryResolverCoverageTestResolveAttachedInlineInterCharBoundariesVirtualFromCjkPunctuationLeftFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            UnicodePunctuationBoundaryResolverCoverageTestResolveAttachedInlineInterCharBoundariesVirtualFromCjkPunctuationLeftFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            UnicodePunctuationBoundaryResolverCoverageTestResolveAttachedInlineInterCharBoundariesVirtualFromCjkPunctuationLeftFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            UnicodePunctuationBoundaryResolverCoverageTestResolveAttachedInlineInterCharBoundariesVirtualFromCjkPunctuationLeftFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
 }
 
 impl From<UnicodePunctuationBoundaryResolverCoverageTestResolveAttachedInlineInterCharBoundariesVirtualFromCjkPunctuationLeftFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
@@ -5593,6 +6558,15 @@ pub enum UnicodePunctuationBoundaryResolverCoverageTestResolveAttachedInlineInte
     UStringFaultFault(crate::std::u_string_exception::UStringFault),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
 }
+impl std::fmt::Display for UnicodePunctuationBoundaryResolverCoverageTestResolveAttachedInlineInterCharBoundariesSinoWesternOnlyFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            UnicodePunctuationBoundaryResolverCoverageTestResolveAttachedInlineInterCharBoundariesSinoWesternOnlyFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            UnicodePunctuationBoundaryResolverCoverageTestResolveAttachedInlineInterCharBoundariesSinoWesternOnlyFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            UnicodePunctuationBoundaryResolverCoverageTestResolveAttachedInlineInterCharBoundariesSinoWesternOnlyFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
+}
 
 impl From<UnicodePunctuationBoundaryResolverCoverageTestResolveAttachedInlineInterCharBoundariesSinoWesternOnlyFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
     fn from(value: UnicodePunctuationBoundaryResolverCoverageTestResolveAttachedInlineInterCharBoundariesSinoWesternOnlyFault) -> Self {
@@ -5644,6 +6618,15 @@ pub enum UnicodePunctuationBoundaryResolverCoverageTestResolveAttachedInlineInte
     TextRangeErrorFault(crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError),
     TraceAssertionErrorFault(crate::org::tiqian::test::trace::trace_assertion_exception::TraceAssertionError),
     TracedAssertionsAssertFailsWithFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsAssertFailsWithFault),
+}
+impl std::fmt::Display for UnicodePunctuationBoundaryResolverCoverageTestResolveAttachedInlineInterCharBoundariesRequiresMatchingEdgesSizeFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            UnicodePunctuationBoundaryResolverCoverageTestResolveAttachedInlineInterCharBoundariesRequiresMatchingEdgesSizeFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            UnicodePunctuationBoundaryResolverCoverageTestResolveAttachedInlineInterCharBoundariesRequiresMatchingEdgesSizeFault::TraceAssertionErrorFault(value) => write!(formatter, "{}", value),
+            UnicodePunctuationBoundaryResolverCoverageTestResolveAttachedInlineInterCharBoundariesRequiresMatchingEdgesSizeFault::TracedAssertionsAssertFailsWithFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
 }
 
 impl From<UnicodePunctuationBoundaryResolverCoverageTestResolveAttachedInlineInterCharBoundariesRequiresMatchingEdgesSizeFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
@@ -5697,6 +6680,15 @@ pub enum UnicodePunctuationBoundaryResolverCoverageTestResolveAttachedInlineInte
     TraceAssertionErrorFault(crate::org::tiqian::test::trace::trace_assertion_exception::TraceAssertionError),
     TracedAssertionsAssertFailsWithFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsAssertFailsWithFault),
 }
+impl std::fmt::Display for UnicodePunctuationBoundaryResolverCoverageTestResolveAttachedInlineInterCharBoundariesRequiresMatchingClusterRoleEdgeSizesFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            UnicodePunctuationBoundaryResolverCoverageTestResolveAttachedInlineInterCharBoundariesRequiresMatchingClusterRoleEdgeSizesFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            UnicodePunctuationBoundaryResolverCoverageTestResolveAttachedInlineInterCharBoundariesRequiresMatchingClusterRoleEdgeSizesFault::TraceAssertionErrorFault(value) => write!(formatter, "{}", value),
+            UnicodePunctuationBoundaryResolverCoverageTestResolveAttachedInlineInterCharBoundariesRequiresMatchingClusterRoleEdgeSizesFault::TracedAssertionsAssertFailsWithFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
+}
 
 impl From<UnicodePunctuationBoundaryResolverCoverageTestResolveAttachedInlineInterCharBoundariesRequiresMatchingClusterRoleEdgeSizesFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
     fn from(value: UnicodePunctuationBoundaryResolverCoverageTestResolveAttachedInlineInterCharBoundariesRequiresMatchingClusterRoleEdgeSizesFault) -> Self {
@@ -5748,6 +6740,15 @@ pub enum UnicodePunctuationBoundaryResolverCoverageTestResolveAttachedInlineInte
     TextRangeErrorFault(crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError),
     TraceAssertionErrorFault(crate::org::tiqian::test::trace::trace_assertion_exception::TraceAssertionError),
     TracedAssertionsAssertFailsWithFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsAssertFailsWithFault),
+}
+impl std::fmt::Display for UnicodePunctuationBoundaryResolverCoverageTestResolveAttachedInlineInterCharBoundariesRequiresMatchingAttachmentSizeFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            UnicodePunctuationBoundaryResolverCoverageTestResolveAttachedInlineInterCharBoundariesRequiresMatchingAttachmentSizeFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            UnicodePunctuationBoundaryResolverCoverageTestResolveAttachedInlineInterCharBoundariesRequiresMatchingAttachmentSizeFault::TraceAssertionErrorFault(value) => write!(formatter, "{}", value),
+            UnicodePunctuationBoundaryResolverCoverageTestResolveAttachedInlineInterCharBoundariesRequiresMatchingAttachmentSizeFault::TracedAssertionsAssertFailsWithFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
 }
 
 impl From<UnicodePunctuationBoundaryResolverCoverageTestResolveAttachedInlineInterCharBoundariesRequiresMatchingAttachmentSizeFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
@@ -5801,6 +6802,15 @@ pub enum UnicodePunctuationBoundaryResolverCoverageTestResolveAttachedInlineInte
     UStringFaultFault(crate::std::u_string_exception::UStringFault),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
 }
+impl std::fmt::Display for UnicodePunctuationBoundaryResolverCoverageTestResolveAttachedInlineInterCharBoundariesPunctuationWesternTrailingNotNarrowFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            UnicodePunctuationBoundaryResolverCoverageTestResolveAttachedInlineInterCharBoundariesPunctuationWesternTrailingNotNarrowFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            UnicodePunctuationBoundaryResolverCoverageTestResolveAttachedInlineInterCharBoundariesPunctuationWesternTrailingNotNarrowFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            UnicodePunctuationBoundaryResolverCoverageTestResolveAttachedInlineInterCharBoundariesPunctuationWesternTrailingNotNarrowFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
+}
 
 impl From<UnicodePunctuationBoundaryResolverCoverageTestResolveAttachedInlineInterCharBoundariesPunctuationWesternTrailingNotNarrowFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
     fn from(value: UnicodePunctuationBoundaryResolverCoverageTestResolveAttachedInlineInterCharBoundariesPunctuationWesternTrailingNotNarrowFault) -> Self {
@@ -5852,6 +6862,15 @@ pub enum UnicodePunctuationBoundaryResolverCoverageTestResolveAttachedInlineInte
     TextRangeErrorFault(crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError),
     UStringFaultFault(crate::std::u_string_exception::UStringFault),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
+}
+impl std::fmt::Display for UnicodePunctuationBoundaryResolverCoverageTestResolveAttachedInlineInterCharBoundariesPunctuationWesternTrailingNarrowOnlyFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            UnicodePunctuationBoundaryResolverCoverageTestResolveAttachedInlineInterCharBoundariesPunctuationWesternTrailingNarrowOnlyFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            UnicodePunctuationBoundaryResolverCoverageTestResolveAttachedInlineInterCharBoundariesPunctuationWesternTrailingNarrowOnlyFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            UnicodePunctuationBoundaryResolverCoverageTestResolveAttachedInlineInterCharBoundariesPunctuationWesternTrailingNarrowOnlyFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
 }
 
 impl From<UnicodePunctuationBoundaryResolverCoverageTestResolveAttachedInlineInterCharBoundariesPunctuationWesternTrailingNarrowOnlyFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
@@ -5905,6 +6924,15 @@ pub enum UnicodePunctuationBoundaryResolverCoverageTestResolveAttachedInlineInte
     UStringFaultFault(crate::std::u_string_exception::UStringFault),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
 }
+impl std::fmt::Display for UnicodePunctuationBoundaryResolverCoverageTestResolveAttachedInlineInterCharBoundariesPunctuationWesternTrailingNarrowNotCjkPunctFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            UnicodePunctuationBoundaryResolverCoverageTestResolveAttachedInlineInterCharBoundariesPunctuationWesternTrailingNarrowNotCjkPunctFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            UnicodePunctuationBoundaryResolverCoverageTestResolveAttachedInlineInterCharBoundariesPunctuationWesternTrailingNarrowNotCjkPunctFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            UnicodePunctuationBoundaryResolverCoverageTestResolveAttachedInlineInterCharBoundariesPunctuationWesternTrailingNarrowNotCjkPunctFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
+}
 
 impl From<UnicodePunctuationBoundaryResolverCoverageTestResolveAttachedInlineInterCharBoundariesPunctuationWesternTrailingNarrowNotCjkPunctFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
     fn from(value: UnicodePunctuationBoundaryResolverCoverageTestResolveAttachedInlineInterCharBoundariesPunctuationWesternTrailingNarrowNotCjkPunctFault) -> Self {
@@ -5956,6 +6984,15 @@ pub enum UnicodePunctuationBoundaryResolverCoverageTestResolveAttachedInlineInte
     TextRangeErrorFault(crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError),
     UStringFaultFault(crate::std::u_string_exception::UStringFault),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
+}
+impl std::fmt::Display for UnicodePunctuationBoundaryResolverCoverageTestResolveAttachedInlineInterCharBoundariesPunctuationWesternNarrowTrailingFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            UnicodePunctuationBoundaryResolverCoverageTestResolveAttachedInlineInterCharBoundariesPunctuationWesternNarrowTrailingFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            UnicodePunctuationBoundaryResolverCoverageTestResolveAttachedInlineInterCharBoundariesPunctuationWesternNarrowTrailingFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            UnicodePunctuationBoundaryResolverCoverageTestResolveAttachedInlineInterCharBoundariesPunctuationWesternNarrowTrailingFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
 }
 
 impl From<UnicodePunctuationBoundaryResolverCoverageTestResolveAttachedInlineInterCharBoundariesPunctuationWesternNarrowTrailingFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
@@ -6009,6 +7046,15 @@ pub enum UnicodePunctuationBoundaryResolverCoverageTestResolveAttachedInlineInte
     UStringFaultFault(crate::std::u_string_exception::UStringFault),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
 }
+impl std::fmt::Display for UnicodePunctuationBoundaryResolverCoverageTestResolveAttachedInlineInterCharBoundariesPunctuationWesternLeadingNotNarrowFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            UnicodePunctuationBoundaryResolverCoverageTestResolveAttachedInlineInterCharBoundariesPunctuationWesternLeadingNotNarrowFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            UnicodePunctuationBoundaryResolverCoverageTestResolveAttachedInlineInterCharBoundariesPunctuationWesternLeadingNotNarrowFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            UnicodePunctuationBoundaryResolverCoverageTestResolveAttachedInlineInterCharBoundariesPunctuationWesternLeadingNotNarrowFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
+}
 
 impl From<UnicodePunctuationBoundaryResolverCoverageTestResolveAttachedInlineInterCharBoundariesPunctuationWesternLeadingNotNarrowFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
     fn from(value: UnicodePunctuationBoundaryResolverCoverageTestResolveAttachedInlineInterCharBoundariesPunctuationWesternLeadingNotNarrowFault) -> Self {
@@ -6060,6 +7106,15 @@ pub enum UnicodePunctuationBoundaryResolverCoverageTestResolveAttachedInlineInte
     TextRangeErrorFault(crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError),
     UStringFaultFault(crate::std::u_string_exception::UStringFault),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
+}
+impl std::fmt::Display for UnicodePunctuationBoundaryResolverCoverageTestResolveAttachedInlineInterCharBoundariesPunctuationWesternLeadingNarrowOnlyFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            UnicodePunctuationBoundaryResolverCoverageTestResolveAttachedInlineInterCharBoundariesPunctuationWesternLeadingNarrowOnlyFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            UnicodePunctuationBoundaryResolverCoverageTestResolveAttachedInlineInterCharBoundariesPunctuationWesternLeadingNarrowOnlyFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            UnicodePunctuationBoundaryResolverCoverageTestResolveAttachedInlineInterCharBoundariesPunctuationWesternLeadingNarrowOnlyFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
 }
 
 impl From<UnicodePunctuationBoundaryResolverCoverageTestResolveAttachedInlineInterCharBoundariesPunctuationWesternLeadingNarrowOnlyFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
@@ -6113,6 +7168,15 @@ pub enum UnicodePunctuationBoundaryResolverCoverageTestResolveAttachedInlineInte
     UStringFaultFault(crate::std::u_string_exception::UStringFault),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
 }
+impl std::fmt::Display for UnicodePunctuationBoundaryResolverCoverageTestResolveAttachedInlineInterCharBoundariesNarrowNarrowPairFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            UnicodePunctuationBoundaryResolverCoverageTestResolveAttachedInlineInterCharBoundariesNarrowNarrowPairFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            UnicodePunctuationBoundaryResolverCoverageTestResolveAttachedInlineInterCharBoundariesNarrowNarrowPairFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            UnicodePunctuationBoundaryResolverCoverageTestResolveAttachedInlineInterCharBoundariesNarrowNarrowPairFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
+}
 
 impl From<UnicodePunctuationBoundaryResolverCoverageTestResolveAttachedInlineInterCharBoundariesNarrowNarrowPairFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
     fn from(value: UnicodePunctuationBoundaryResolverCoverageTestResolveAttachedInlineInterCharBoundariesNarrowNarrowPairFault) -> Self {
@@ -6165,6 +7229,15 @@ pub enum UnicodePunctuationBoundaryResolverCoverageTestResolveAttachedInlineInte
     UStringFaultFault(crate::std::u_string_exception::UStringFault),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
 }
+impl std::fmt::Display for UnicodePunctuationBoundaryResolverCoverageTestResolveAttachedInlineInterCharBoundariesAllConditionsFalseFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            UnicodePunctuationBoundaryResolverCoverageTestResolveAttachedInlineInterCharBoundariesAllConditionsFalseFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            UnicodePunctuationBoundaryResolverCoverageTestResolveAttachedInlineInterCharBoundariesAllConditionsFalseFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            UnicodePunctuationBoundaryResolverCoverageTestResolveAttachedInlineInterCharBoundariesAllConditionsFalseFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
+}
 
 impl From<UnicodePunctuationBoundaryResolverCoverageTestResolveAttachedInlineInterCharBoundariesAllConditionsFalseFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
     fn from(value: UnicodePunctuationBoundaryResolverCoverageTestResolveAttachedInlineInterCharBoundariesAllConditionsFalseFault) -> Self {
@@ -6215,41 +7288,41 @@ impl From<crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFa
 pub struct UnicodePunctuationBoundaryResolverCoverageSupport;
 
 impl UnicodePunctuationBoundaryResolverCoverageSupport {
-    pub fn unicode_punctuation_boundary_resolver_coverage_support_start(n: &str) {
-        TestTraceRecorder::new("UnicodePunctuationBoundaryResolverCoverageTest").section(n);
+    pub fn unicode_punctuation_boundary_resolver_coverage_support_start(n: &UStr) {
+        TestTraceRecorder::new(&(UStr::new(&[85,110,105,99,111,100,101,80,117,110,99,116,117,97,116,105,111,110,66,111,117,110,100,97,114,121,82,101,115,111,108,118,101,114,67,111,118,101,114,97,103,101,84,101,115,116]))).section(n);
     }
 
-    pub fn unicode_punctuation_boundary_resolver_coverage_support_cjk_clusters(t: &str) -> Result<Vec<Cluster>, TextRangeError> {
+    pub fn unicode_punctuation_boundary_resolver_coverage_support_cjk_clusters(t: &UStr) -> Result<Vec<Cluster>, TextRangeError> {
     let __units = u_string::units(&t);
     let __count = u_string::unit_count(&t);
         let mut a: Vec<Cluster> = vec![];
         let mut i = 0u32;
         let __units1 = u_string::units(&t);
         let __count1 = u_string::unit_count(&t);
-        while (i32::from_ne_bytes((i).to_ne_bytes())) < (i32::from_ne_bytes((__count).to_ne_bytes())) {
+        while (i32::from_ne_bytes(((i) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((__count) as i32).to_ne_bytes())) {
             let s = u_string::char_at_from(&__units1, i);
-            a.push(Cluster::new(TextRange::new(i, u32::wrapping_add(i, 1))?, s.as_str(), "cjk", 16.0f64, Some(s.to_string()), Some(0.0), Some(0.0), Some(0.0)));
+            a.push(Cluster::new(TextRange::new(i, u32::wrapping_add(i, 1))?, s.as_ustr(), &(UStr::new(&[99,106,107])), 16.0f64, Some(s.to_ustring()), Some(0.0), Some(0.0), Some(0.0)));
             i = u32::wrapping_add(i, 1);
         }
         return Ok(a);
     }
 
-    pub fn unicode_punctuation_boundary_resolver_coverage_support_latin_clusters(t: &str) -> Result<Vec<Cluster>, TextRangeError> {
+    pub fn unicode_punctuation_boundary_resolver_coverage_support_latin_clusters(t: &UStr) -> Result<Vec<Cluster>, TextRangeError> {
     let __units2 = u_string::units(&t);
     let __count2 = u_string::unit_count(&t);
         let mut a: Vec<Cluster> = vec![];
         let mut i = 0u32;
         let __units3 = u_string::units(&t);
         let __count3 = u_string::unit_count(&t);
-        while (i32::from_ne_bytes((i).to_ne_bytes())) < (i32::from_ne_bytes((__count2).to_ne_bytes())) {
+        while (i32::from_ne_bytes(((i) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((__count2) as i32).to_ne_bytes())) {
             let s = u_string::char_at_from(&__units3, i);
-            a.push(Cluster::new(TextRange::new(i, u32::wrapping_add(i, 1))?, s.as_str(), "latin", 8.0f64, Some(s.to_string()), Some(0.0), Some(0.0), Some(0.0)));
+            a.push(Cluster::new(TextRange::new(i, u32::wrapping_add(i, 1))?, s.as_ustr(), &(UStr::new(&[108,97,116,105,110])), 8.0f64, Some(s.to_ustring()), Some(0.0), Some(0.0), Some(0.0)));
             i = u32::wrapping_add(i, 1);
         }
         return Ok(a);
     }
 
-    pub fn unicode_punctuation_boundary_resolver_coverage_support_cjk_roles(t: &str) -> Vec<FontRole> {
+    pub fn unicode_punctuation_boundary_resolver_coverage_support_cjk_roles(t: &UStr) -> Vec<FontRole> {
         let mut a: Vec<FontRole> = vec![];
         for _ in 0..match u32::try_from(u_string::unit_count(&(t))) { Ok(value) => value, Err(_) => u32::MAX } {
             a.push(FontRole::CjkText);
@@ -6257,7 +7330,7 @@ impl UnicodePunctuationBoundaryResolverCoverageSupport {
         return a;
     }
 
-    pub fn unicode_punctuation_boundary_resolver_coverage_support_latin_roles(t: &str) -> Vec<FontRole> {
+    pub fn unicode_punctuation_boundary_resolver_coverage_support_latin_roles(t: &UStr) -> Vec<FontRole> {
         let mut a: Vec<FontRole> = vec![];
         for _ in 0..match u32::try_from(u_string::unit_count(&(t))) { Ok(value) => value, Err(_) => u32::MAX } {
             a.push(FontRole::LatinText);
@@ -6265,52 +7338,41 @@ impl UnicodePunctuationBoundaryResolverCoverageSupport {
         return a;
     }
 
-    pub fn unicode_punctuation_boundary_resolver_coverage_support_surrogate(codes: &Vec<u32>) -> String {
-        let mut s = String::new();
+    pub fn unicode_punctuation_boundary_resolver_coverage_support_surrogate(codes: &Vec<u32>) -> UString {
+        let mut s = UString::new();
         let mut i = 0u32;
-        while (i32::from_ne_bytes((i).to_ne_bytes())) < (i32::from_ne_bytes((u32::try_from((codes.len()) & 0xFFFF_FFFF).unwrap_or(0)).to_ne_bytes())) {
+        while (i32::from_ne_bytes(((i) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((codes.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
             let unit = codes[usize::try_from(i).unwrap_or(0)];
-            if ({ let v: u32 = unit; i32::from_ne_bytes(v.to_ne_bytes()) }) >= 55296 && ({ let v: u32 = unit; i32::from_ne_bytes(v.to_ne_bytes()) }) <= 56319 && (i32::from_ne_bytes((u32::wrapping_add(i, 1)).to_ne_bytes())) < (i32::from_ne_bytes((u32::try_from((codes.len()) &
-0xFFFF_FFFF).unwrap_or(0)).to_ne_bytes())) && ({ let v: u32 = codes[usize::try_from(u32::wrapping_add(i, 1)).unwrap_or(0)]; i32::from_ne_bytes(v.to_ne_bytes()) }) >= 56320 && ({ let v: u32 = codes[usize::try_from(u32::wrapping_add(i, 1)).unwrap_or(0)];
-i32::from_ne_bytes(v.to_ne_bytes()) }) <= 57343 {
+            if ({ let v: u32 = unit; i32::from_ne_bytes(v.to_ne_bytes()) }) >= 55296 && ({ let v: u32 = unit; i32::from_ne_bytes(v.to_ne_bytes()) }) <= 56319 && (i32::from_ne_bytes(((u32::wrapping_add(i, 1)) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((codes.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) && ({ let v: u32 = codes[usize::try_from(u32::wrapping_add(i, 1)).unwrap_or(0)]; i32::from_ne_bytes(v.to_ne_bytes()) }) >= 56320 && ({ let v: u32 = codes[usize::try_from(u32::wrapping_add(i, 1)).unwrap_or(0)]; i32::from_ne_bytes(v.to_ne_bytes()) }) <= 57343 {
                 let low = codes[usize::try_from(u32::wrapping_add(i, 1)).unwrap_or(0)];
-                s += &(if u32::wrapping_add(u32::wrapping_add(65536, (u32::wrapping_sub(unit, 55296)) << (10)), u32::wrapping_sub(low, 56320)) > 0xFFFF { String::from_utf16(&[0xD800 + (((u32::wrapping_add(u32::wrapping_add(65536, (u32::wrapping_sub(unit, 55296)) << (10)),
-u32::wrapping_sub(low, 56320))) - 0x10000) >> 10) as u16, 0xDC00 + (((u32::wrapping_add(u32::wrapping_add(65536, (u32::wrapping_sub(unit, 55296)) << (10)), u32::wrapping_sub(low, 56320))) - 0x10000) & 0x3FF) as u16]).unwrap() } else {
-String::from_utf16_lossy(&[(u32::wrapping_add(u32::wrapping_add(65536, (u32::wrapping_sub(unit, 55296)) << (10)), u32::wrapping_sub(low, 56320))) as u16]) });
+                s += &(if u32::wrapping_add(u32::wrapping_add(65536, (u32::wrapping_sub(unit, 55296)) << (10)), u32::wrapping_sub(low, 56320)) > 0xFFFF { u_string::from_units(&[0xD800 + (((u32::wrapping_add(u32::wrapping_add(65536, (u32::wrapping_sub(unit, 55296)) << (10)), u32::wrapping_sub(low, 56320))) - 0x10000) >> 10) as u16, 0xDC00 + (((u32::wrapping_add(u32::wrapping_add(65536, (u32::wrapping_sub(unit, 55296)) << (10)), u32::wrapping_sub(low, 56320))) - 0x10000) & 0x3FF) as u16]) } else { u_string::from_units(&[(u32::wrapping_add(u32::wrapping_add(65536, (u32::wrapping_sub(unit, 55296)) << (10)), u32::wrapping_sub(low, 56320))) as u16]) });
                 i = u32::wrapping_add(i, 2);
             } else {
-                s += &(if unit > 0xFFFF { String::from_utf16(&[0xD800 + (((unit) - 0x10000) >> 10) as u16, 0xDC00 + (((unit) - 0x10000) & 0x3FF) as u16]).unwrap() } else { String::from_utf16_lossy(&[(unit) as u16]) });
+                s += &(if unit > 0xFFFF { u_string::from_units(&[0xD800 + (((unit) - 0x10000) >> 10) as u16, 0xDC00 + (((unit) - 0x10000) & 0x3FF) as u16]) } else { u_string::from_units(&[(unit) as u16]) });
                 i = u32::wrapping_add(i, 1);
             }
         }
         return s;
     }
 
-    pub fn unicode_punctuation_boundary_resolver_coverage_support_map_text(m: SortedMapTable<u32, u32>) -> String {
-        let mut s = "{".to_string();
+    pub fn unicode_punctuation_boundary_resolver_coverage_support_map_text(m: SortedMapTable<u32, u32>) -> UString {
+        let mut s = UString::from("{").to_ustring();
         let mut i = 0u32;
-        while (i32::from_ne_bytes((i).to_ne_bytes())) < (i32::from_ne_bytes((u32::from_ne_bytes((m.size()).to_ne_bytes())).to_ne_bytes())) {
-            if i32::from_ne_bytes((i).to_ne_bytes()) > (0) {
-                s += &(", ");
+        while (i32::from_ne_bytes(((i) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::from_ne_bytes(((m.size()) as u32).to_ne_bytes())) as i32).to_ne_bytes())) {
+            if i32::from_ne_bytes(((i) as i32).to_ne_bytes()) > (0) {
+                s += &(UString::from(", "));
             }
-            s += &(format!("{}{}{}",
-            crate::runtime::int_text::IntText::int_text(m.key_at(i32::from_ne_bytes((i).to_ne_bytes()))),
-            "=",
-            match m.get(&(m.key_at(i32::from_ne_bytes((i).to_ne_bytes())))) { Some(v) => crate::runtime::int_text::IntText::int_text(v), None => "null".to_string() }
-        ));
+            s += &({ let mut __s = UString::new(); __s += &(UString::from(format!("{}", crate::runtime::int_text::IntText::int_text(m.key_at(i32::from_ne_bytes(((i) as i32).to_ne_bytes())))).as_str())); __s += &(UString::from("=")); __s += &(match m.get(&(m.key_at(i32::from_ne_bytes(((i) as i32).to_ne_bytes())))) { Some(v) => UString::from(format!("{}", crate::runtime::int_text::IntText::int_text(v)).as_str()), None => UString::from("null") }); __s });
             i = u32::wrapping_add(i, 1);
         }
-        return format!("{}{}",
-            s,
-            "}"
-        );
+        return UString::from(format!("{}", { let mut __s = UString::new(); __s += s.as_ustr(); __s += &(UString::from("}")); __s }).as_str());
     }
 }
 
 #[test]
 fn resolve_attached_inline_virtual_boundaries_with_multiple_previous() {
     testlib::run("org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveAttachedInlineVirtualBoundariesWithMultiplePrevious", "org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveAttachedInlineVirtualBoundariesWithMultiplePrevious", || {
-        UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_start(&"resolveAttachedInlineVirtualBoundariesWithMultiplePrevious");
+        UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_start(UStr::new(&[114,101,115,111,108,118,101,65,116,116,97,99,104,101,100,73,110,108,105,110,101,86,105,114,116,117,97,108,66,111,117,110,100,97,114,105,101,115,87,105,116,104,77,117,108,116,105,112,108,101,80,114,101,118,105,111,117,115]));
         let attachments = vec![
     InlineAttachment::None,
     InlineAttachment::Previous,
@@ -6328,7 +7390,7 @@ fn resolve_attached_inline_virtual_boundaries_with_multiple_previous() {
 #[test]
 fn resolve_attached_inline_virtual_boundaries_with_no_previous() {
     testlib::run("org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveAttachedInlineVirtualBoundariesWithNoPrevious", "org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveAttachedInlineVirtualBoundariesWithNoPrevious", || {
-        UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_start(&"resolveAttachedInlineVirtualBoundariesWithNoPrevious");
+        UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_start(UStr::new(&[114,101,115,111,108,118,101,65,116,116,97,99,104,101,100,73,110,108,105,110,101,86,105,114,116,117,97,108,66,111,117,110,100,97,114,105,101,115,87,105,116,104,78,111,80,114,101,118,105,111,117,115]));
         let attachments = vec![InlineAttachment::None, InlineAttachment::None];
         let r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_attached_inline_virtual_boundaries(&attachments);
         let _ = TracedAssertions::traced_assertions_assert_equals(0, u32::try_from((r.len()) & 0xFFFF_FFFF).unwrap_or(0), None).unwrap();
@@ -6338,15 +7400,13 @@ fn resolve_attached_inline_virtual_boundaries_with_no_previous() {
 #[test]
 fn resolve_unicode_punctuation_boundaries_with_open_punctuation() {
     testlib::run("org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesWithOpenPunctuation", "org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesWithOpenPunctuation", || {
-        UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_start(&"resolveUnicodePunctuationBoundariesWithOpenPunctuation");
-        let text = "（中文）".to_string();
-        let r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_unicode_punctuation_boundaries(text.as_str(),
-&UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_cjk_clusters(text.as_str()).unwrap(), &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_cjk_roles(text.as_str()),
-&vec![]).unwrap();
+        UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_start(UStr::new(&[114,101,115,111,108,118,101,85,110,105,99,111,100,101,80,117,110,99,116,117,97,116,105,111,110,66,111,117,110,100,97,114,105,101,115,87,105,116,104,79,112,101,110,80,117,110,99,116,117,97,116,105,111,110]));
+        let text = UString::from("（中文）").to_ustring();
+        let r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_unicode_punctuation_boundaries(text.as_ustr(), &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_cjk_clusters(text.as_ustr()).unwrap(), &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_cjk_roles(text.as_ustr()), &vec![]).unwrap();
         let mut found = false;
         let mut i = 0u32;
-        while (i32::from_ne_bytes((i).to_ne_bytes())) < (i32::from_ne_bytes((u32::try_from((r.decisions.len()) & 0xFFFF_FFFF).unwrap_or(0)).to_ne_bytes())) {
-            if r.decisions[usize::try_from(i).unwrap_or(0)].clone().forbidden_position.to_string() == "LineEnd" {
+        while (i32::from_ne_bytes(((i) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((r.decisions.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
+            if r.decisions[usize::try_from(i).unwrap_or(0)].clone().forbidden_position.to_ustring() == UString::from("LineEnd") {
                 found = true;
                 break;
             }
@@ -6359,20 +7419,18 @@ fn resolve_unicode_punctuation_boundaries_with_open_punctuation() {
 #[test]
 fn resolve_unicode_punctuation_boundaries_with_paired_quotes() {
     testlib::run("org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesWithPairedQuotes", "org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesWithPairedQuotes", || {
-        UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_start(&"resolveUnicodePunctuationBoundariesWithPairedQuotes");
-        let text = "中文“你好”中文".to_string();
+        UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_start(UStr::new(&[114,101,115,111,108,118,101,85,110,105,99,111,100,101,80,117,110,99,116,117,97,116,105,111,110,66,111,117,110,100,97,114,105,101,115,87,105,116,104,80,97,105,114,101,100,81,117,111,116,101,115]));
+        let text = UString::from("中文“你好”中文").to_ustring();
         let pairs = vec![(QuotePair::new(2u32, 5u32, QuoteType::Double)).clone()];
-        let r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_unicode_punctuation_boundaries(text.as_str(),
-&UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_cjk_clusters(text.as_str()).unwrap(), &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_cjk_roles(text.as_str()),
-&pairs).unwrap();
+        let r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_unicode_punctuation_boundaries(text.as_ustr(), &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_cjk_clusters(text.as_ustr()).unwrap(), &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_cjk_roles(text.as_ustr()), &pairs).unwrap();
         let mut a = false;
         let mut b = false;
         let mut i = 0u32;
-        while (i32::from_ne_bytes((i).to_ne_bytes())) < (i32::from_ne_bytes((u32::try_from((r.decisions.len()) & 0xFFFF_FFFF).unwrap_or(0)).to_ne_bytes())) {
-            if r.decisions[usize::try_from(i).unwrap_or(0)].clone().reason.to_string() == "Uax14WesternPunctuationBoundary:PairedOpeningQuote" {
+        while (i32::from_ne_bytes(((i) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((r.decisions.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
+            if r.decisions[usize::try_from(i).unwrap_or(0)].clone().reason.to_ustring() == UString::from("Uax14WesternPunctuationBoundary:PairedOpeningQuote") {
                 a = true;
             }
-            if r.decisions[usize::try_from(i).unwrap_or(0)].clone().reason.to_string() == "Uax14WesternPunctuationBoundary:PairedClosingQuote" {
+            if r.decisions[usize::try_from(i).unwrap_or(0)].clone().reason.to_ustring() == UString::from("Uax14WesternPunctuationBoundary:PairedClosingQuote") {
                 b = true;
             }
             i = u32::wrapping_add(i, 1);
@@ -6384,30 +7442,25 @@ fn resolve_unicode_punctuation_boundaries_with_paired_quotes() {
 
 #[test]
 fn resolve_unicode_punctuation_boundaries_with_unmatched_closing_punctuation() {
-    testlib::run("org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesWithUnmatchedClosingPunctuation",
-"org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesWithUnmatchedClosingPunctuation", || {
-        UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_start(&"resolveUnicodePunctuationBoundariesWithUnmatchedClosingPunctuation");
-        let text = "中。".to_string();
-        let r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_unicode_punctuation_boundaries(text.as_str(),
-&UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_cjk_clusters(text.as_str()).unwrap(), &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_cjk_roles(text.as_str()),
-&vec![]).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_true((i32::from_ne_bytes((u32::from_ne_bytes((r.forbidden_line_start_clusters.size()).to_ne_bytes())).to_ne_bytes())) > (0), None).unwrap();
+    testlib::run("org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesWithUnmatchedClosingPunctuation", "org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesWithUnmatchedClosingPunctuation", || {
+        UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_start(UStr::new(&[114,101,115,111,108,118,101,85,110,105,99,111,100,101,80,117,110,99,116,117,97,116,105,111,110,66,111,117,110,100,97,114,105,101,115,87,105,116,104,85,110,109,97,116,99,104,101,100,67,108,111,115,105,110,103,80,117,110,99,116,117,97,116,105,111,110]));
+        let text = UString::from("中。").to_ustring();
+        let r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_unicode_punctuation_boundaries(text.as_ustr(), &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_cjk_clusters(text.as_ustr()).unwrap(), &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_cjk_roles(text.as_ustr()), &vec![]).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_true((i32::from_ne_bytes(((u32::from_ne_bytes(((r.forbidden_line_start_clusters.size()) as u32).to_ne_bytes())) as i32).to_ne_bytes())) > (0), None).unwrap();
     });
 }
 
 #[test]
 fn resolve_unicode_punctuation_boundaries_with_cjk_closing_at_line_start() {
     testlib::run("org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesWithCjkClosingAtLineStart", "org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesWithCjkClosingAtLineStart", || {
-        UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_start(&"resolveUnicodePunctuationBoundariesWithCjkClosingAtLineStart");
-        let text = "。，".to_string();
+        UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_start(UStr::new(&[114,101,115,111,108,118,101,85,110,105,99,111,100,101,80,117,110,99,116,117,97,116,105,111,110,66,111,117,110,100,97,114,105,101,115,87,105,116,104,67,106,107,67,108,111,115,105,110,103,65,116,76,105,110,101,83,116,97,114,116]));
+        let text = UString::from("。，").to_ustring();
         let pairs = vec![(QuotePair::new(0u32, 1u32, QuoteType::Single)).clone()];
-        let r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_unicode_punctuation_boundaries(text.as_str(),
-&UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_cjk_clusters(text.as_str()).unwrap(), &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_cjk_roles(text.as_str()),
-&pairs).unwrap();
+        let r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_unicode_punctuation_boundaries(text.as_ustr(), &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_cjk_clusters(text.as_ustr()).unwrap(), &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_cjk_roles(text.as_ustr()), &pairs).unwrap();
         let mut f = false;
         let mut i = 0u32;
-        while (i32::from_ne_bytes((i).to_ne_bytes())) < (i32::from_ne_bytes((u32::try_from((r.decisions.len()) & 0xFFFF_FFFF).unwrap_or(0)).to_ne_bytes())) {
-            if r.decisions[usize::try_from(i).unwrap_or(0)].clone().forbidden_position.to_string() == "LineEnd" {
+        while (i32::from_ne_bytes(((i) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((r.decisions.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
+            if r.decisions[usize::try_from(i).unwrap_or(0)].clone().forbidden_position.to_ustring() == UString::from("LineEnd") {
                 f = true;
             }
             i = u32::wrapping_add(i, 1);
@@ -6419,19 +7472,18 @@ fn resolve_unicode_punctuation_boundaries_with_cjk_closing_at_line_start() {
 #[test]
 fn resolve_unicode_punctuation_boundaries_with_exclamation_mark() {
     testlib::run("org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesWithExclamationMark", "org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesWithExclamationMark", || {
-        UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_start(&"resolveUnicodePunctuationBoundariesWithExclamationMark");
-        let text = "中!中".to_string();
+        UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_start(UStr::new(&[114,101,115,111,108,118,101,85,110,105,99,111,100,101,80,117,110,99,116,117,97,116,105,111,110,66,111,117,110,100,97,114,105,101,115,87,105,116,104,69,120,99,108,97,109,97,116,105,111,110,77,97,114,107]));
+        let text = UString::from("中!中").to_ustring();
         let clusters = vec![
-    (Cluster::new(TextRange::new(0u32, 1u32).unwrap(), "中", "cjk", 16.0f64, Some("中".to_string()), Some(0.0), Some(0.0), Some(0.0))).clone(),
-    (Cluster::new(TextRange::new(1u32, 2u32).unwrap(), "!", "latin", 16.0f64, Some("!".to_string()), Some(0.0), Some(0.0), Some(0.0))).clone(),
-    (Cluster::new(TextRange::new(2u32, 3u32).unwrap(), "中", "cjk", 16.0f64, Some("中".to_string()), Some(0.0), Some(0.0), Some(0.0))).clone(),
+    (Cluster::new(TextRange::new(0u32, 1u32).unwrap(), &(UStr::new(&[20013])), &(UStr::new(&[99,106,107])), 16.0f64, Some(UString::from("中")), Some(0.0), Some(0.0), Some(0.0))).clone(),
+    (Cluster::new(TextRange::new(1u32, 2u32).unwrap(), &(UStr::new(&[33])), &(UStr::new(&[108,97,116,105,110])), 16.0f64, Some(UString::from("!")), Some(0.0), Some(0.0), Some(0.0))).clone(),
+    (Cluster::new(TextRange::new(2u32, 3u32).unwrap(), &(UStr::new(&[20013])), &(UStr::new(&[99,106,107])), 16.0f64, Some(UString::from("中")), Some(0.0), Some(0.0), Some(0.0))).clone(),
 ];
-        let r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_unicode_punctuation_boundaries(text.as_str(), &clusters,
-&UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_cjk_roles(text.as_str()), &vec![]).unwrap();
+        let r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_unicode_punctuation_boundaries(text.as_ustr(), &clusters, &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_cjk_roles(text.as_ustr()), &vec![]).unwrap();
         let mut f = false;
         let mut i = 0u32;
-        while (i32::from_ne_bytes((i).to_ne_bytes())) < (i32::from_ne_bytes((u32::try_from((r.decisions.len()) & 0xFFFF_FFFF).unwrap_or(0)).to_ne_bytes())) {
-            if r.decisions[usize::try_from(i).unwrap_or(0)].clone().forbidden_position.to_string() == "LineStart" {
+        while (i32::from_ne_bytes(((i) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((r.decisions.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
+            if r.decisions[usize::try_from(i).unwrap_or(0)].clone().forbidden_position.to_ustring() == UString::from("LineStart") {
                 f = true;
             }
             i = u32::wrapping_add(i, 1);
@@ -6442,17 +7494,14 @@ fn resolve_unicode_punctuation_boundaries_with_exclamation_mark() {
 
 #[test]
 fn resolve_unicode_punctuation_boundaries_with_initial_quote_forbid_line_end() {
-    testlib::run("org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesWithInitialQuoteForbidLineEnd",
-"org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesWithInitialQuoteForbidLineEnd", || {
-        UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_start(&"resolveUnicodePunctuationBoundariesWithInitialQuoteForbidLineEnd");
-        let text = "中“中".to_string();
-        let r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_unicode_punctuation_boundaries(text.as_str(),
-&UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_cjk_clusters(text.as_str()).unwrap(), &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_cjk_roles(text.as_str()),
-&vec![]).unwrap();
+    testlib::run("org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesWithInitialQuoteForbidLineEnd", "org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesWithInitialQuoteForbidLineEnd", || {
+        UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_start(UStr::new(&[114,101,115,111,108,118,101,85,110,105,99,111,100,101,80,117,110,99,116,117,97,116,105,111,110,66,111,117,110,100,97,114,105,101,115,87,105,116,104,73,110,105,116,105,97,108,81,117,111,116,101,70,111,114,98,105,100,76,105,110,101,69,110,100]));
+        let text = UString::from("中“中").to_ustring();
+        let r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_unicode_punctuation_boundaries(text.as_ustr(), &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_cjk_clusters(text.as_ustr()).unwrap(), &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_cjk_roles(text.as_ustr()), &vec![]).unwrap();
         let mut f = false;
         let mut i = 0u32;
-        while (i32::from_ne_bytes((i).to_ne_bytes())) < (i32::from_ne_bytes((u32::try_from((r.decisions.len()) & 0xFFFF_FFFF).unwrap_or(0)).to_ne_bytes())) {
-            if r.decisions[usize::try_from(i).unwrap_or(0)].clone().forbidden_position.to_string() == "LineEnd" {
+        while (i32::from_ne_bytes(((i) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((r.decisions.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
+            if r.decisions[usize::try_from(i).unwrap_or(0)].clone().forbidden_position.to_ustring() == UString::from("LineEnd") {
                 f = true;
             }
             i = u32::wrapping_add(i, 1);
@@ -6464,15 +7513,13 @@ fn resolve_unicode_punctuation_boundaries_with_initial_quote_forbid_line_end() {
 #[test]
 fn resolve_unicode_punctuation_boundaries_with_unresolved_quote() {
     testlib::run("org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesWithUnresolvedQuote", "org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesWithUnresolvedQuote", || {
-        UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_start(&"resolveUnicodePunctuationBoundariesWithUnresolvedQuote");
-        let text = "中’中".to_string();
-        let r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_unicode_punctuation_boundaries(text.as_str(),
-&UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_cjk_clusters(text.as_str()).unwrap(), &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_cjk_roles(text.as_str()),
-&vec![]).unwrap();
+        UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_start(UStr::new(&[114,101,115,111,108,118,101,85,110,105,99,111,100,101,80,117,110,99,116,117,97,116,105,111,110,66,111,117,110,100,97,114,105,101,115,87,105,116,104,85,110,114,101,115,111,108,118,101,100,81,117,111,116,101]));
+        let text = UString::from("中’中").to_ustring();
+        let r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_unicode_punctuation_boundaries(text.as_ustr(), &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_cjk_clusters(text.as_ustr()).unwrap(), &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_cjk_roles(text.as_ustr()), &vec![]).unwrap();
         let mut f = false;
         let mut i = 0u32;
-        while (i32::from_ne_bytes((i).to_ne_bytes())) < (i32::from_ne_bytes((u32::try_from((r.decisions.len()) & 0xFFFF_FFFF).unwrap_or(0)).to_ne_bytes())) {
-            if r.decisions[usize::try_from(i).unwrap_or(0)].clone().forbidden_position.to_string() == "LineStart" {
+        while (i32::from_ne_bytes(((i) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((r.decisions.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
+            if r.decisions[usize::try_from(i).unwrap_or(0)].clone().forbidden_position.to_ustring() == UString::from("LineStart") {
                 f = true;
             }
             i = u32::wrapping_add(i, 1);
@@ -6484,15 +7531,13 @@ fn resolve_unicode_punctuation_boundaries_with_unresolved_quote() {
 #[test]
 fn resolve_unicode_punctuation_boundaries_with_multiple_clusters() {
     testlib::run("org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesWithMultipleClusters", "org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesWithMultipleClusters", || {
-        UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_start(&"resolveUnicodePunctuationBoundariesWithMultipleClusters");
-        let text = "中文，中文".to_string();
-        let r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_unicode_punctuation_boundaries(text.as_str(),
-&UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_cjk_clusters(text.as_str()).unwrap(), &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_cjk_roles(text.as_str()),
-&vec![]).unwrap();
+        UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_start(UStr::new(&[114,101,115,111,108,118,101,85,110,105,99,111,100,101,80,117,110,99,116,117,97,116,105,111,110,66,111,117,110,100,97,114,105,101,115,87,105,116,104,77,117,108,116,105,112,108,101,67,108,117,115,116,101,114,115]));
+        let text = UString::from("中文，中文").to_ustring();
+        let r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_unicode_punctuation_boundaries(text.as_ustr(), &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_cjk_clusters(text.as_ustr()).unwrap(), &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_cjk_roles(text.as_ustr()), &vec![]).unwrap();
         let mut f = false;
         let mut i = 0u32;
-        while (i32::from_ne_bytes((i).to_ne_bytes())) < (i32::from_ne_bytes((u32::try_from((r.decisions.len()) & 0xFFFF_FFFF).unwrap_or(0)).to_ne_bytes())) {
-            if r.decisions[usize::try_from(i).unwrap_or(0)].clone().forbidden_position.to_string() == "LineStart" {
+        while (i32::from_ne_bytes(((i) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((r.decisions.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
+            if r.decisions[usize::try_from(i).unwrap_or(0)].clone().forbidden_position.to_ustring() == UString::from("LineStart") {
                 f = true;
             }
             i = u32::wrapping_add(i, 1);
@@ -6504,67 +7549,57 @@ fn resolve_unicode_punctuation_boundaries_with_multiple_clusters() {
 #[test]
 fn resolve_unicode_punctuation_boundaries_with_empty_clusters() {
     testlib::run("org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesWithEmptyClusters", "org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesWithEmptyClusters", || {
-        UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_start(&"resolveUnicodePunctuationBoundariesWithEmptyClusters");
-        let r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_unicode_punctuation_boundaries(&"", &vec![], &vec![], &vec![]).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_equals(0, u32::from_ne_bytes((r.forbidden_line_start_clusters.size()).to_ne_bytes()), None).unwrap();
+        UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_start(UStr::new(&[114,101,115,111,108,118,101,85,110,105,99,111,100,101,80,117,110,99,116,117,97,116,105,111,110,66,111,117,110,100,97,114,105,101,115,87,105,116,104,69,109,112,116,121,67,108,117,115,116,101,114,115]));
+        let r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_unicode_punctuation_boundaries(UStr::new(&[]), &vec![], &vec![], &vec![]).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_equals(0, u32::from_ne_bytes(((r.forbidden_line_start_clusters.size()) as u32).to_ne_bytes()), None).unwrap();
     });
 }
 
 #[test]
 fn resolve_unicode_punctuation_boundaries_with_all_cjk_text() {
     testlib::run("org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesWithAllCjkText", "org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesWithAllCjkText", || {
-        UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_start(&"resolveUnicodePunctuationBoundariesWithAllCjkText");
-        let text = "中文文文".to_string();
-        let r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_unicode_punctuation_boundaries(text.as_str(),
-&UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_cjk_clusters(text.as_str()).unwrap(), &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_cjk_roles(text.as_str()),
-&vec![]).unwrap();
+        UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_start(UStr::new(&[114,101,115,111,108,118,101,85,110,105,99,111,100,101,80,117,110,99,116,117,97,116,105,111,110,66,111,117,110,100,97,114,105,101,115,87,105,116,104,65,108,108,67,106,107,84,101,120,116]));
+        let text = UString::from("中文文文").to_ustring();
+        let r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_unicode_punctuation_boundaries(text.as_ustr(), &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_cjk_clusters(text.as_ustr()).unwrap(), &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_cjk_roles(text.as_ustr()), &vec![]).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_equals(0, u32::try_from((r.decisions.len()) & 0xFFFF_FFFF).unwrap_or(0), None).unwrap();
     });
 }
 
 #[test]
 fn resolve_unicode_punctuation_boundaries_with_western_closing_forbid_line_start() {
-    testlib::run("org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesWithWesternClosingForbidLineStart",
-"org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesWithWesternClosingForbidLineStart", || {
-        UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_start(&"resolveUnicodePunctuationBoundariesWithWesternClosingForbidLineStart");
-        let text = "中)中".to_string();
+    testlib::run("org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesWithWesternClosingForbidLineStart", "org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesWithWesternClosingForbidLineStart", || {
+        UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_start(UStr::new(&[114,101,115,111,108,118,101,85,110,105,99,111,100,101,80,117,110,99,116,117,97,116,105,111,110,66,111,117,110,100,97,114,105,101,115,87,105,116,104,87,101,115,116,101,114,110,67,108,111,115,105,110,103,70,111,114,98,105,100,76,105,110,101,83,116,97,114,116]));
+        let text = UString::from("中)中").to_ustring();
         let c = vec![
-    (Cluster::new(TextRange::new(0u32, 1u32).unwrap(), "中", "cjk", 16.0f64, Some("中".to_string()), Some(0.0), Some(0.0), Some(0.0))).clone(),
-    (Cluster::new(TextRange::new(1u32, 2u32).unwrap(), ")", "latin", 16.0f64, Some(")".to_string()), Some(0.0), Some(0.0), Some(0.0))).clone(),
-    (Cluster::new(TextRange::new(2u32, 3u32).unwrap(), "中", "cjk", 16.0f64, Some("中".to_string()), Some(0.0), Some(0.0), Some(0.0))).clone(),
+    (Cluster::new(TextRange::new(0u32, 1u32).unwrap(), &(UStr::new(&[20013])), &(UStr::new(&[99,106,107])), 16.0f64, Some(UString::from("中")), Some(0.0), Some(0.0), Some(0.0))).clone(),
+    (Cluster::new(TextRange::new(1u32, 2u32).unwrap(), &(UStr::new(&[41])), &(UStr::new(&[108,97,116,105,110])), 16.0f64, Some(UString::from(")")), Some(0.0), Some(0.0), Some(0.0))).clone(),
+    (Cluster::new(TextRange::new(2u32, 3u32).unwrap(), &(UStr::new(&[20013])), &(UStr::new(&[99,106,107])), 16.0f64, Some(UString::from("中")), Some(0.0), Some(0.0), Some(0.0))).clone(),
 ];
-        let r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_unicode_punctuation_boundaries(text.as_str(), &c, &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_cjk_roles(text.as_str()),
-&vec![]).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_true((i32::from_ne_bytes((u32::from_ne_bytes((r.forbidden_line_start_clusters.size()).to_ne_bytes())).to_ne_bytes())) > (0), None).unwrap();
+        let r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_unicode_punctuation_boundaries(text.as_ustr(), &c, &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_cjk_roles(text.as_ustr()), &vec![]).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_true((i32::from_ne_bytes(((u32::from_ne_bytes(((r.forbidden_line_start_clusters.size()) as u32).to_ne_bytes())) as i32).to_ne_bytes())) > (0), None).unwrap();
     });
 }
 
 #[test]
 fn resolve_unicode_punctuation_boundaries_with_cjk_closing_forbid_line_start() {
-    testlib::run("org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesWithCjkClosingForbidLineStart",
-"org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesWithCjkClosingForbidLineStart", || {
-        UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_start(&"resolveUnicodePunctuationBoundariesWithCjkClosingForbidLineStart");
-        let text = "中。中".to_string();
-        let r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_unicode_punctuation_boundaries(text.as_str(),
-&UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_cjk_clusters(text.as_str()).unwrap(), &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_cjk_roles(text.as_str()),
-&vec![]).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_true((i32::from_ne_bytes((u32::from_ne_bytes((r.forbidden_line_start_clusters.size()).to_ne_bytes())).to_ne_bytes())) > (0), None).unwrap();
+    testlib::run("org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesWithCjkClosingForbidLineStart", "org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesWithCjkClosingForbidLineStart", || {
+        UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_start(UStr::new(&[114,101,115,111,108,118,101,85,110,105,99,111,100,101,80,117,110,99,116,117,97,116,105,111,110,66,111,117,110,100,97,114,105,101,115,87,105,116,104,67,106,107,67,108,111,115,105,110,103,70,111,114,98,105,100,76,105,110,101,83,116,97,114,116]));
+        let text = UString::from("中。中").to_ustring();
+        let r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_unicode_punctuation_boundaries(text.as_ustr(), &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_cjk_clusters(text.as_ustr()).unwrap(), &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_cjk_roles(text.as_ustr()), &vec![]).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_true((i32::from_ne_bytes(((u32::from_ne_bytes(((r.forbidden_line_start_clusters.size()) as u32).to_ne_bytes())) as i32).to_ne_bytes())) > (0), None).unwrap();
     });
 }
 
 #[test]
 fn resolve_unicode_punctuation_boundaries_with_open_punctuation_forbid_line_end() {
-    testlib::run("org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesWithOpenPunctuationForbidLineEnd",
-"org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesWithOpenPunctuationForbidLineEnd", || {
-        UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_start(&"resolveUnicodePunctuationBoundariesWithOpenPunctuationForbidLineEnd");
-        let text = "（中文".to_string();
-        let r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_unicode_punctuation_boundaries(text.as_str(),
-&UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_cjk_clusters(text.as_str()).unwrap(), &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_cjk_roles(text.as_str()),
-&vec![]).unwrap();
+    testlib::run("org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesWithOpenPunctuationForbidLineEnd", "org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesWithOpenPunctuationForbidLineEnd", || {
+        UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_start(UStr::new(&[114,101,115,111,108,118,101,85,110,105,99,111,100,101,80,117,110,99,116,117,97,116,105,111,110,66,111,117,110,100,97,114,105,101,115,87,105,116,104,79,112,101,110,80,117,110,99,116,117,97,116,105,111,110,70,111,114,98,105,100,76,105,110,101,69,110,100]));
+        let text = UString::from("（中文").to_ustring();
+        let r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_unicode_punctuation_boundaries(text.as_ustr(), &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_cjk_clusters(text.as_ustr()).unwrap(), &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_cjk_roles(text.as_ustr()), &vec![]).unwrap();
         let mut f = false;
         let mut i = 0u32;
-        while (i32::from_ne_bytes((i).to_ne_bytes())) < (i32::from_ne_bytes((u32::try_from((r.decisions.len()) & 0xFFFF_FFFF).unwrap_or(0)).to_ne_bytes())) {
-            if r.decisions[usize::try_from(i).unwrap_or(0)].clone().forbidden_position.to_string() == "LineEnd" {
+        while (i32::from_ne_bytes(((i) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((r.decisions.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
+            if r.decisions[usize::try_from(i).unwrap_or(0)].clone().forbidden_position.to_ustring() == UString::from("LineEnd") {
                 f = true;
             }
             i = u32::wrapping_add(i, 1);
@@ -6576,19 +7611,18 @@ fn resolve_unicode_punctuation_boundaries_with_open_punctuation_forbid_line_end(
 #[test]
 fn resolve_unicode_punctuation_boundaries_with_punctuation_and_space() {
     testlib::run("org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesWithPunctuationAndSpace", "org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesWithPunctuationAndSpace", || {
-        UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_start(&"resolveUnicodePunctuationBoundariesWithPunctuationAndSpace");
-        let text = "中 。".to_string();
+        UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_start(UStr::new(&[114,101,115,111,108,118,101,85,110,105,99,111,100,101,80,117,110,99,116,117,97,116,105,111,110,66,111,117,110,100,97,114,105,101,115,87,105,116,104,80,117,110,99,116,117,97,116,105,111,110,65,110,100,83,112,97,99,101]));
+        let text = UString::from("中 。").to_ustring();
         let c = vec![
-    (Cluster::new(TextRange::new(0u32, 1u32).unwrap(), "中", "cjk", 16.0f64, Some("中".to_string()), Some(0.0), Some(0.0), Some(0.0))).clone(),
-    (Cluster::new(TextRange::new(1u32, 2u32).unwrap(), " ", "latin", 16.0f64, Some(" ".to_string()), Some(0.0), Some(0.0), Some(0.0))).clone(),
-    (Cluster::new(TextRange::new(2u32, 3u32).unwrap(), "。", "cjk", 16.0f64, Some("。".to_string()), Some(0.0), Some(0.0), Some(0.0))).clone(),
+    (Cluster::new(TextRange::new(0u32, 1u32).unwrap(), &(UStr::new(&[20013])), &(UStr::new(&[99,106,107])), 16.0f64, Some(UString::from("中")), Some(0.0), Some(0.0), Some(0.0))).clone(),
+    (Cluster::new(TextRange::new(1u32, 2u32).unwrap(), &(UStr::new(&[32])), &(UStr::new(&[108,97,116,105,110])), 16.0f64, Some(UString::from(" ")), Some(0.0), Some(0.0), Some(0.0))).clone(),
+    (Cluster::new(TextRange::new(2u32, 3u32).unwrap(), &(UStr::new(&[12290])), &(UStr::new(&[99,106,107])), 16.0f64, Some(UString::from("。")), Some(0.0), Some(0.0), Some(0.0))).clone(),
 ];
-        let r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_unicode_punctuation_boundaries(text.as_str(), &c, &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_cjk_roles(text.as_str()),
-&vec![]).unwrap();
+        let r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_unicode_punctuation_boundaries(text.as_ustr(), &c, &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_cjk_roles(text.as_ustr()), &vec![]).unwrap();
         let mut f = false;
         let mut i = 0u32;
-        while (i32::from_ne_bytes((i).to_ne_bytes())) < (i32::from_ne_bytes((u32::try_from((r.decisions.len()) & 0xFFFF_FFFF).unwrap_or(0)).to_ne_bytes())) {
-            if r.decisions[usize::try_from(i).unwrap_or(0)].clone().forbidden_position.to_string() == "LineStart" {
+        while (i32::from_ne_bytes(((i) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((r.decisions.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
+            if r.decisions[usize::try_from(i).unwrap_or(0)].clone().forbidden_position.to_ustring() == UString::from("LineStart") {
                 f = true;
             }
             i = u32::wrapping_add(i, 1);
@@ -6599,119 +7633,110 @@ fn resolve_unicode_punctuation_boundaries_with_punctuation_and_space() {
 
 #[test]
 fn resolve_unicode_punctuation_boundaries_with_follows_authored_boundary() {
-    testlib::run("org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesWithFollowsAuthoredBoundary", "org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesWithFollowsAuthoredBoundary",
-|| {
-        UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_start(&"resolveUnicodePunctuationBoundariesWithFollowsAuthoredBoundary");
-        let text = concat!("\n",
-"（中文").to_string();
-        let r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_unicode_punctuation_boundaries(text.as_str(),
-&UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_cjk_clusters(text.as_str()).unwrap(), &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_cjk_roles(text.as_str()),
-&vec![]).unwrap();
+    testlib::run("org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesWithFollowsAuthoredBoundary", "org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesWithFollowsAuthoredBoundary", || {
+        UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_start(UStr::new(&[114,101,115,111,108,118,101,85,110,105,99,111,100,101,80,117,110,99,116,117,97,116,105,111,110,66,111,117,110,100,97,114,105,101,115,87,105,116,104,70,111,108,108,111,119,115,65,117,116,104,111,114,101,100,66,111,117,110,100,97,114,121]));
+        let text = UString::from(concat!("\n",
+"（中文")).to_ustring();
+        let r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_unicode_punctuation_boundaries(text.as_ustr(), &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_cjk_clusters(text.as_ustr()).unwrap(), &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_cjk_roles(text.as_ustr()), &vec![]).unwrap();
         let mut hit: Option<ContextualKinsokuDecisionInfo> = None;
         let mut i = 0u32;
-        while (i32::from_ne_bytes((i).to_ne_bytes())) < (i32::from_ne_bytes((u32::try_from((r.decisions.len()) & 0xFFFF_FFFF).unwrap_or(0)).to_ne_bytes())) {
-            if r.decisions[usize::try_from(i).unwrap_or(0)].clone().source_text.to_string() == "（" && ((r.decisions[usize::try_from(i).unwrap_or(0)]).clone().forbidden_position).to_string() == "LineStart" {
+        while (i32::from_ne_bytes(((i) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((r.decisions.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
+            if r.decisions[usize::try_from(i).unwrap_or(0)].clone().source_text.to_ustring() == UString::from("（") && ((r.decisions[usize::try_from(i).unwrap_or(0)]).clone().forbidden_position).to_ustring() == UString::from("LineStart") {
                 hit = Some((r.decisions[usize::try_from(i).unwrap_or(0)]).clone());
                 break;
             }
             i = u32::wrapping_add(i, 1);
         }
-        let _ = TracedAssertions::traced_assertions_assert_equals_rendered(&"-", match &(hit) { None => "-".to_string(), Some(__option2) => __option2.to_string() }.as_str(), None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_equals_rendered(UStr::new(&[45]), match &(hit) { None => UString::from("-"), Some(__option2) => UString::from(format!("{}", __option2.to_string()).as_str()) }.as_ustr(), None).unwrap();
     });
 }
 
 #[test]
 fn resolve_unicode_punctuation_boundaries_with_close_punctuation_class() {
     testlib::run("org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesWithClosePunctuationClass", "org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesWithClosePunctuationClass", || {
-        UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_start(&"resolveUnicodePunctuationBoundariesWithClosePunctuationClass");
-        let text = "中。".to_string();
-        let r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_unicode_punctuation_boundaries(text.as_str(),
-&UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_cjk_clusters(text.as_str()).unwrap(), &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_cjk_roles(text.as_str()),
-&vec![]).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_true((i32::from_ne_bytes((u32::from_ne_bytes((r.forbidden_line_start_clusters.size()).to_ne_bytes())).to_ne_bytes())) > (0), None).unwrap();
+        UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_start(UStr::new(&[114,101,115,111,108,118,101,85,110,105,99,111,100,101,80,117,110,99,116,117,97,116,105,111,110,66,111,117,110,100,97,114,105,101,115,87,105,116,104,67,108,111,115,101,80,117,110,99,116,117,97,116,105,111,110,67,108,97,115,115]));
+        let text = UString::from("中。").to_ustring();
+        let r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_unicode_punctuation_boundaries(text.as_ustr(), &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_cjk_clusters(text.as_ustr()).unwrap(), &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_cjk_roles(text.as_ustr()), &vec![]).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_true((i32::from_ne_bytes(((u32::from_ne_bytes(((r.forbidden_line_start_clusters.size()) as u32).to_ne_bytes())) as i32).to_ne_bytes())) > (0), None).unwrap();
     });
 }
 
 #[test]
 fn resolve_unicode_punctuation_boundaries_with_infix_numeric_separator() {
     testlib::run("org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesWithInfixNumericSeparator", "org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesWithInfixNumericSeparator", || {
-        UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_start(&"resolveUnicodePunctuationBoundariesWithInfixNumericSeparator");
-        let text = "1，2".to_string();
+        UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_start(UStr::new(&[114,101,115,111,108,118,101,85,110,105,99,111,100,101,80,117,110,99,116,117,97,116,105,111,110,66,111,117,110,100,97,114,105,101,115,87,105,116,104,73,110,102,105,120,78,117,109,101,114,105,99,83,101,112,97,114,97,116,111,114]));
+        let text = UString::from("1，2").to_ustring();
         let c = vec![
-    (Cluster::new(TextRange::new(0u32, 1u32).unwrap(), "1", "latin", 8.0f64, Some("1".to_string()), Some(0.0), Some(0.0), Some(0.0))).clone(),
-    (Cluster::new(TextRange::new(1u32, 2u32).unwrap(), "，", "cjk", 16.0f64, Some("，".to_string()), Some(0.0), Some(0.0), Some(0.0))).clone(),
-    (Cluster::new(TextRange::new(2u32, 3u32).unwrap(), "2", "latin", 8.0f64, Some("2".to_string()), Some(0.0), Some(0.0), Some(0.0))).clone(),
+    (Cluster::new(TextRange::new(0u32, 1u32).unwrap(), &(UStr::new(&[49])), &(UStr::new(&[108,97,116,105,110])), 8.0f64, Some(UString::from("1")), Some(0.0), Some(0.0), Some(0.0))).clone(),
+    (Cluster::new(TextRange::new(1u32, 2u32).unwrap(), &(UStr::new(&[65292])), &(UStr::new(&[99,106,107])), 16.0f64, Some(UString::from("，")), Some(0.0), Some(0.0), Some(0.0))).clone(),
+    (Cluster::new(TextRange::new(2u32, 3u32).unwrap(), &(UStr::new(&[50])), &(UStr::new(&[108,97,116,105,110])), 8.0f64, Some(UString::from("2")), Some(0.0), Some(0.0), Some(0.0))).clone(),
 ];
         let roles = vec![FontRole::LatinText, FontRole::CjkPunctuation, FontRole::LatinText];
-        let r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_unicode_punctuation_boundaries(text.as_str(), &c, &roles, &vec![]).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_equals(0, u32::from_ne_bytes((r.forbidden_line_start_clusters.size()).to_ne_bytes()), None).unwrap();
+        let r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_unicode_punctuation_boundaries(text.as_ustr(), &c, &roles, &vec![]).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_equals(0, u32::from_ne_bytes(((r.forbidden_line_start_clusters.size()) as u32).to_ne_bytes()), None).unwrap();
     });
 }
 
 #[test]
 fn resolve_unicode_punctuation_boundaries_with_decimal_mark_after_space() {
     testlib::run("org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesWithDecimalMarkAfterSpace", "org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesWithDecimalMarkAfterSpace", || {
-        UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_start(&"resolveUnicodePunctuationBoundariesWithDecimalMarkAfterSpace");
-        let text = "1 ，2".to_string();
+        UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_start(UStr::new(&[114,101,115,111,108,118,101,85,110,105,99,111,100,101,80,117,110,99,116,117,97,116,105,111,110,66,111,117,110,100,97,114,105,101,115,87,105,116,104,68,101,99,105,109,97,108,77,97,114,107,65,102,116,101,114,83,112,97,99,101]));
+        let text = UString::from("1 ，2").to_ustring();
         let c = vec![
-    (Cluster::new(TextRange::new(0u32, 1u32).unwrap(), "1", "latin", 8.0f64, Some("1".to_string()), Some(0.0), Some(0.0), Some(0.0))).clone(),
-    (Cluster::new(TextRange::new(1u32, 2u32).unwrap(), " ", "latin", 8.0f64, Some(" ".to_string()), Some(0.0), Some(0.0), Some(0.0))).clone(),
-    (Cluster::new(TextRange::new(2u32, 3u32).unwrap(), "，", "cjk", 16.0f64, Some("，".to_string()), Some(0.0), Some(0.0), Some(0.0))).clone(),
-    (Cluster::new(TextRange::new(3u32, 4u32).unwrap(), "2", "latin", 8.0f64, Some("2".to_string()), Some(0.0), Some(0.0), Some(0.0))).clone(),
+    (Cluster::new(TextRange::new(0u32, 1u32).unwrap(), &(UStr::new(&[49])), &(UStr::new(&[108,97,116,105,110])), 8.0f64, Some(UString::from("1")), Some(0.0), Some(0.0), Some(0.0))).clone(),
+    (Cluster::new(TextRange::new(1u32, 2u32).unwrap(), &(UStr::new(&[32])), &(UStr::new(&[108,97,116,105,110])), 8.0f64, Some(UString::from(" ")), Some(0.0), Some(0.0), Some(0.0))).clone(),
+    (Cluster::new(TextRange::new(2u32, 3u32).unwrap(), &(UStr::new(&[65292])), &(UStr::new(&[99,106,107])), 16.0f64, Some(UString::from("，")), Some(0.0), Some(0.0), Some(0.0))).clone(),
+    (Cluster::new(TextRange::new(3u32, 4u32).unwrap(), &(UStr::new(&[50])), &(UStr::new(&[108,97,116,105,110])), 8.0f64, Some(UString::from("2")), Some(0.0), Some(0.0), Some(0.0))).clone(),
 ];
         let roles = vec![FontRole::LatinText, FontRole::LatinText, FontRole::CjkPunctuation, FontRole::LatinText];
-        let r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_unicode_punctuation_boundaries(text.as_str(), &c, &roles, &vec![]).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_equals(0, u32::from_ne_bytes((r.forbidden_line_start_clusters.size()).to_ne_bytes()), None).unwrap();
+        let r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_unicode_punctuation_boundaries(text.as_ustr(), &c, &roles, &vec![]).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_equals(0, u32::from_ne_bytes(((r.forbidden_line_start_clusters.size()) as u32).to_ne_bytes()), None).unwrap();
     });
 }
 
 #[test]
 fn resolve_unicode_punctuation_boundaries_with_rule_for_line_start_infix() {
     testlib::run("org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesWithRuleForLineStartInfix", "org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesWithRuleForLineStartInfix", || {
-        UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_start(&"resolveUnicodePunctuationBoundariesWithRuleForLineStartInfix");
-        let text = "1,2".to_string();
-        let r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_unicode_punctuation_boundaries(text.as_str(),
-&UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_latin_clusters(text.as_str()).unwrap(), &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_latin_roles(text.as_str()),
-&vec![]).unwrap();
+        UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_start(UStr::new(&[114,101,115,111,108,118,101,85,110,105,99,111,100,101,80,117,110,99,116,117,97,116,105,111,110,66,111,117,110,100,97,114,105,101,115,87,105,116,104,82,117,108,101,70,111,114,76,105,110,101,83,116,97,114,116,73,110,102,105,120]));
+        let text = UString::from("1,2").to_ustring();
+        let r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_unicode_punctuation_boundaries(text.as_ustr(), &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_latin_clusters(text.as_ustr()).unwrap(), &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_latin_roles(text.as_ustr()), &vec![]).unwrap();
         let mut hit: Option<ContextualKinsokuDecisionInfo> = None;
         let mut i = 0u32;
-        while (i32::from_ne_bytes((i).to_ne_bytes())) < (i32::from_ne_bytes((u32::try_from((r.decisions.len()) & 0xFFFF_FFFF).unwrap_or(0)).to_ne_bytes())) {
-            if r.decisions[usize::try_from(i).unwrap_or(0)].clone().source_text.to_string() == "," {
+        while (i32::from_ne_bytes(((i) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((r.decisions.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
+            if r.decisions[usize::try_from(i).unwrap_or(0)].clone().source_text.to_ustring() == UString::from(",") {
                 hit = Some((r.decisions[usize::try_from(i).unwrap_or(0)]).clone());
                 break;
             }
             i = u32::wrapping_add(i, 1);
         }
-        let _ = TracedAssertions::traced_assertions_assert_not_null_rendered(hit != None, match &(hit) { None => "null".to_string(), Some(__option5) => __option5.to_string() }.as_str(), None).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_equals_string(&"Uax14WesternPunctuationBoundary:LB15d", match &(hit) { None => "".to_string(), Some(__option8) => ((__option8.reason).to_string()).clone() }.as_str(), None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_not_null_rendered(hit != None, match &(hit) { None => UString::from("null"), Some(__option5) => UString::from(format!("{}", __option5.to_string()).as_str()) }.as_ustr(), None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_equals_string(UStr::new(&[85,97,120,49,52,87,101,115,116,101,114,110,80,117,110,99,116,117,97,116,105,111,110,66,111,117,110,100,97,114,121,58,76,66,49,53,100]), match &(hit) { None => UString::from(""), Some(__option8) => ((__option8.reason).to_ustring()).clone() }.as_ustr(), None).unwrap();
     });
 }
 
 #[test]
 fn resolve_attached_inline_inter_char_boundaries_with_cjk_both_cjk() {
     testlib::run("org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveAttachedInlineInterCharBoundariesWithCjkBothCjk", "org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveAttachedInlineInterCharBoundariesWithCjkBothCjk", || {
-        UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_start(&"resolveAttachedInlineInterCharBoundariesWithCjkBothCjk");
-        let text = "中文".to_string();
+        UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_start(UStr::new(&[114,101,115,111,108,118,101,65,116,116,97,99,104,101,100,73,110,108,105,110,101,73,110,116,101,114,67,104,97,114,66,111,117,110,100,97,114,105,101,115,87,105,116,104,67,106,107,66,111,116,104,67,106,107]));
+        let text = UString::from("中文").to_ustring();
         let e = vec![
     (EastAsianSpacingEdges::new(EastAsianSpacingValue::Wide, EastAsianSpacingValue::Narrow, false)).clone(),
     (EastAsianSpacingEdges::new(EastAsianSpacingValue::Narrow, EastAsianSpacingValue::Wide, false)).clone(),
 ];
         let a = vec![InlineAttachment::None, InlineAttachment::None];
-        let r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_attached_inline_inter_char_boundaries(text.as_str(),
-&UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_cjk_clusters(text.as_str()).unwrap(), &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_cjk_roles(text.as_str()), &e,
-SortedTable::sorted_table_set_builder::<u32>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_bytes((*a).to_ne_bytes()), i32::from_ne_bytes((*b).to_ne_bytes())))).clone().build(), &a).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_equals(0, u32::from_ne_bytes((r.virtual_boundary_after_clusters.size()).to_ne_bytes()), None).unwrap();
+        let r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_attached_inline_inter_char_boundaries(text.as_ustr(), &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_cjk_clusters(text.as_ustr()).unwrap(), &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_cjk_roles(text.as_ustr()), &e, SortedTable::sorted_table_set_builder::<u32>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_bytes(((*a) as i32).to_ne_bytes()), i32::from_ne_bytes(((*b) as i32).to_ne_bytes())))).clone().build(), &a).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_equals(0, u32::from_ne_bytes(((r.virtual_boundary_after_clusters.size()) as u32).to_ne_bytes()), None).unwrap();
     });
 }
 
 #[test]
 fn resolve_attached_inline_inter_char_boundaries_with_western_bracket() {
     testlib::run("org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveAttachedInlineInterCharBoundariesWithWesternBracket", "org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveAttachedInlineInterCharBoundariesWithWesternBracket", || {
-        UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_start(&"resolveAttachedInlineInterCharBoundariesWithWesternBracket");
-        let text = "(中".to_string();
+        UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_start(UStr::new(&[114,101,115,111,108,118,101,65,116,116,97,99,104,101,100,73,110,108,105,110,101,73,110,116,101,114,67,104,97,114,66,111,117,110,100,97,114,105,101,115,87,105,116,104,87,101,115,116,101,114,110,66,114,97,99,107,101,116]));
+        let text = UString::from("(中").to_ustring();
         let c = vec![
-    (Cluster::new(TextRange::new(0u32, 1u32).unwrap(), "(", "latin", 8.0f64, Some("(".to_string()), Some(0.0), Some(0.0), Some(0.0))).clone(),
-    (Cluster::new(TextRange::new(1u32, 2u32).unwrap(), "中", "cjk", 16.0f64, Some("中".to_string()), Some(0.0), Some(0.0), Some(0.0))).clone(),
+    (Cluster::new(TextRange::new(0u32, 1u32).unwrap(), &(UStr::new(&[40])), &(UStr::new(&[108,97,116,105,110])), 8.0f64, Some(UString::from("(")), Some(0.0), Some(0.0), Some(0.0))).clone(),
+    (Cluster::new(TextRange::new(1u32, 2u32).unwrap(), &(UStr::new(&[20013])), &(UStr::new(&[99,106,107])), 16.0f64, Some(UString::from("中")), Some(0.0), Some(0.0), Some(0.0))).clone(),
 ];
         let roles = vec![FontRole::LatinText, FontRole::CjkText];
         let e = vec![
@@ -6719,21 +7744,19 @@ fn resolve_attached_inline_inter_char_boundaries_with_western_bracket() {
     (EastAsianSpacingEdges::new(EastAsianSpacingValue::Wide, EastAsianSpacingValue::Wide, false)).clone(),
 ];
         let a = vec![InlineAttachment::None, InlineAttachment::None];
-        let r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_attached_inline_inter_char_boundaries(text.as_str(), &c, &roles, &e, SortedTable::sorted_table_set_builder::<u32>(Arc::new(|a, b|
-SortedTable::sorted_table_compare_ints(i32::from_ne_bytes((*a).to_ne_bytes()), i32::from_ne_bytes((*b).to_ne_bytes())))).clone().build(), &a).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_equals(0, u32::from_ne_bytes((r.virtual_boundary_after_clusters.size()).to_ne_bytes()), None).unwrap();
+        let r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_attached_inline_inter_char_boundaries(text.as_ustr(), &c, &roles, &e, SortedTable::sorted_table_set_builder::<u32>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_bytes(((*a) as i32).to_ne_bytes()), i32::from_ne_bytes(((*b) as i32).to_ne_bytes())))).clone().build(), &a).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_equals(0, u32::from_ne_bytes(((r.virtual_boundary_after_clusters.size()) as u32).to_ne_bytes()), None).unwrap();
     });
 }
 
 #[test]
 fn resolve_attached_inline_inter_char_boundaries_with_cjk_body_western_bracket() {
-    testlib::run("org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveAttachedInlineInterCharBoundariesWithCjkBodyWesternBracket",
-"org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveAttachedInlineInterCharBoundariesWithCjkBodyWesternBracket", || {
-        UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_start(&"resolveAttachedInlineInterCharBoundariesWithCjkBodyWesternBracket");
-        let text = "中)".to_string();
+    testlib::run("org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveAttachedInlineInterCharBoundariesWithCjkBodyWesternBracket", "org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveAttachedInlineInterCharBoundariesWithCjkBodyWesternBracket", || {
+        UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_start(UStr::new(&[114,101,115,111,108,118,101,65,116,116,97,99,104,101,100,73,110,108,105,110,101,73,110,116,101,114,67,104,97,114,66,111,117,110,100,97,114,105,101,115,87,105,116,104,67,106,107,66,111,100,121,87,101,115,116,101,114,110,66,114,97,99,107,101,116]));
+        let text = UString::from("中)").to_ustring();
         let c = vec![
-    (Cluster::new(TextRange::new(0u32, 1u32).unwrap(), "中", "cjk", 16.0f64, Some("中".to_string()), Some(0.0), Some(0.0), Some(0.0))).clone(),
-    (Cluster::new(TextRange::new(1u32, 2u32).unwrap(), ")", "latin", 8.0f64, Some(")".to_string()), Some(0.0), Some(0.0), Some(0.0))).clone(),
+    (Cluster::new(TextRange::new(0u32, 1u32).unwrap(), &(UStr::new(&[20013])), &(UStr::new(&[99,106,107])), 16.0f64, Some(UString::from("中")), Some(0.0), Some(0.0), Some(0.0))).clone(),
+    (Cluster::new(TextRange::new(1u32, 2u32).unwrap(), &(UStr::new(&[41])), &(UStr::new(&[108,97,116,105,110])), 8.0f64, Some(UString::from(")")), Some(0.0), Some(0.0), Some(0.0))).clone(),
 ];
         let roles = vec![FontRole::CjkText, FontRole::LatinText];
         let e = vec![
@@ -6741,27 +7764,24 @@ fn resolve_attached_inline_inter_char_boundaries_with_cjk_body_western_bracket()
     (EastAsianSpacingEdges::new(EastAsianSpacingValue::Wide, EastAsianSpacingValue::Wide, false)).clone(),
 ];
         let a = vec![InlineAttachment::None, InlineAttachment::None];
-        let r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_attached_inline_inter_char_boundaries(text.as_str(), &c, &roles, &e, SortedTable::sorted_table_set_builder::<u32>(Arc::new(|a, b|
-SortedTable::sorted_table_compare_ints(i32::from_ne_bytes((*a).to_ne_bytes()), i32::from_ne_bytes((*b).to_ne_bytes())))).clone().build(), &a).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_equals(0, u32::from_ne_bytes((r.ordinary_western_boundary_after_clusters.size()).to_ne_bytes()), None).unwrap();
+        let r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_attached_inline_inter_char_boundaries(text.as_ustr(), &c, &roles, &e, SortedTable::sorted_table_set_builder::<u32>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_bytes(((*a) as i32).to_ne_bytes()), i32::from_ne_bytes(((*b) as i32).to_ne_bytes())))).clone().build(), &a).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_equals(0, u32::from_ne_bytes(((r.ordinary_western_boundary_after_clusters.size()) as u32).to_ne_bytes()), None).unwrap();
     });
 }
 
 #[test]
 fn resolve_attached_inline_inter_char_boundaries_requires_matching_cluster_role_edge_sizes() {
-    testlib::run("org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveAttachedInlineInterCharBoundariesRequiresMatchingClusterRoleEdgeSizes",
-"org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveAttachedInlineInterCharBoundariesRequiresMatchingClusterRoleEdgeSizes", || {
-        UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_start(&"resolveAttachedInlineInterCharBoundariesRequiresMatchingClusterRoleEdgeSizes");
+    testlib::run("org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveAttachedInlineInterCharBoundariesRequiresMatchingClusterRoleEdgeSizes", "org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveAttachedInlineInterCharBoundariesRequiresMatchingClusterRoleEdgeSizes", || {
+        UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_start(UStr::new(&[114,101,115,111,108,118,101,65,116,116,97,99,104,101,100,73,110,108,105,110,101,73,110,116,101,114,67,104,97,114,66,111,117,110,100,97,114,105,101,115,82,101,113,117,105,114,101,115,77,97,116,99,104,105,110,103,67,108,117,115,116,101,114,82,111,108,101,69,100,103,101,83,105,122,101,115]));
         let c = vec![
-    (Cluster::new(TextRange::new(0u32, 1u32).unwrap(), "a", "latin", 8.0f64, Some("a".to_string()), Some(0.0), Some(0.0), Some(0.0))).clone(),
+    (Cluster::new(TextRange::new(0u32, 1u32).unwrap(), &(UStr::new(&[97])), &(UStr::new(&[108,97,116,105,110])), 8.0f64, Some(UString::from("a")), Some(0.0), Some(0.0), Some(0.0))).clone(),
 ];
         let e = vec![
     (EastAsianSpacingEdges::new(EastAsianSpacingValue::Wide, EastAsianSpacingValue::Wide, false)).clone(),
 ];
         let a = vec![InlineAttachment::None];
         TracedAssertions::traced_assertions_assert_fails_with(None.clone(), { let c = (c).clone(); let e = (e).clone(); let a = (a).clone(); Arc::new(move || {
-        UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_attached_inline_inter_char_boundaries(&"ab", &c, &vec![FontRole::LatinText, FontRole::LatinText], &e, SortedTable::sorted_table_set_builder::<u32>(Arc::new(|a, b|
-SortedTable::sorted_table_compare_ints(i32::from_ne_bytes((*a).to_ne_bytes()), i32::from_ne_bytes((*b).to_ne_bytes())))).clone().build(), &a).map_err(|e| IllegalStateException::new(&format!("{}", e)))?;
+        UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_attached_inline_inter_char_boundaries(UStr::new(&[97,98]), &c, &vec![FontRole::LatinText, FontRole::LatinText], &e, SortedTable::sorted_table_set_builder::<u32>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_bytes(((*a) as i32).to_ne_bytes()), i32::from_ne_bytes(((*b) as i32).to_ne_bytes())))).clone().build(), &a).map_err(|e| IllegalStateException::new(&format!("{}", e)))?;
         Ok(())
 }) }).unwrap();
     });
@@ -6769,19 +7789,16 @@ SortedTable::sorted_table_compare_ints(i32::from_ne_bytes((*a).to_ne_bytes()), i
 
 #[test]
 fn resolve_attached_inline_inter_char_boundaries_requires_matching_attachment_size() {
-    testlib::run("org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveAttachedInlineInterCharBoundariesRequiresMatchingAttachmentSize",
-"org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveAttachedInlineInterCharBoundariesRequiresMatchingAttachmentSize", || {
-        UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_start(&"resolveAttachedInlineInterCharBoundariesRequiresMatchingAttachmentSize");
-        let text = "ab".to_string();
-        let c = UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_latin_clusters(text.as_str()).unwrap();
+    testlib::run("org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveAttachedInlineInterCharBoundariesRequiresMatchingAttachmentSize", "org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveAttachedInlineInterCharBoundariesRequiresMatchingAttachmentSize", || {
+        UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_start(UStr::new(&[114,101,115,111,108,118,101,65,116,116,97,99,104,101,100,73,110,108,105,110,101,73,110,116,101,114,67,104,97,114,66,111,117,110,100,97,114,105,101,115,82,101,113,117,105,114,101,115,77,97,116,99,104,105,110,103,65,116,116,97,99,104,109,101,110,116,83,105,122,101]));
+        let text = UString::from("ab").to_ustring();
+        let c = UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_latin_clusters(text.as_ustr()).unwrap();
         let e = vec![
     (EastAsianSpacingEdges::new(EastAsianSpacingValue::Wide, EastAsianSpacingValue::Wide, false)).clone(),
     (EastAsianSpacingEdges::new(EastAsianSpacingValue::Wide, EastAsianSpacingValue::Wide, false)).clone(),
 ];
         TracedAssertions::traced_assertions_assert_fails_with(None.clone(), { let text = (text).clone(); let c = (c).clone(); let e = (e).clone(); Arc::new(move || {
-        UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_attached_inline_inter_char_boundaries(text.as_str(), &c, &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_latin_roles(text.as_str()),
-&e, SortedTable::sorted_table_set_builder::<u32>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_bytes((*a).to_ne_bytes()), i32::from_ne_bytes((*b).to_ne_bytes())))).clone().build(), &vec![InlineAttachment::None]).map_err(|e|
-IllegalStateException::new(&format!("{}", e)))?;
+        UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_attached_inline_inter_char_boundaries(text.as_ustr(), &c, &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_latin_roles(text.as_ustr()), &e, SortedTable::sorted_table_set_builder::<u32>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_bytes(((*a) as i32).to_ne_bytes()), i32::from_ne_bytes(((*b) as i32).to_ne_bytes())))).clone().build(), &vec![InlineAttachment::None]).map_err(|e| IllegalStateException::new(&format!("{}", e)))?;
         Ok(())
 }) }).unwrap();
     });
@@ -6789,14 +7806,13 @@ IllegalStateException::new(&format!("{}", e)))?;
 
 #[test]
 fn resolve_attached_inline_inter_char_boundaries_punctuation_western_narrow_trailing() {
-    testlib::run("org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveAttachedInlineInterCharBoundariesPunctuationWesternNarrowTrailing",
-"org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveAttachedInlineInterCharBoundariesPunctuationWesternNarrowTrailing", || {
-        UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_start(&"resolveAttachedInlineInterCharBoundariesPunctuationWesternNarrowTrailing");
-        let text = "a,。".to_string();
+    testlib::run("org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveAttachedInlineInterCharBoundariesPunctuationWesternNarrowTrailing", "org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveAttachedInlineInterCharBoundariesPunctuationWesternNarrowTrailing", || {
+        UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_start(UStr::new(&[114,101,115,111,108,118,101,65,116,116,97,99,104,101,100,73,110,108,105,110,101,73,110,116,101,114,67,104,97,114,66,111,117,110,100,97,114,105,101,115,80,117,110,99,116,117,97,116,105,111,110,87,101,115,116,101,114,110,78,97,114,114,111,119,84,114,97,105,108,105,110,103]));
+        let text = UString::from("a,。").to_ustring();
         let c = vec![
-    (Cluster::new(TextRange::new(0u32, 1u32).unwrap(), "a", "latin", 8.0f64, Some("a".to_string()), Some(0.0), Some(0.0), Some(0.0))).clone(),
-    (Cluster::new(TextRange::new(1u32, 2u32).unwrap(), ",", "latin", 8.0f64, Some(",".to_string()), Some(0.0), Some(0.0), Some(0.0))).clone(),
-    (Cluster::new(TextRange::new(2u32, 3u32).unwrap(), "。", "cjk", 16.0f64, Some("。".to_string()), Some(0.0), Some(0.0), Some(0.0))).clone(),
+    (Cluster::new(TextRange::new(0u32, 1u32).unwrap(), &(UStr::new(&[97])), &(UStr::new(&[108,97,116,105,110])), 8.0f64, Some(UString::from("a")), Some(0.0), Some(0.0), Some(0.0))).clone(),
+    (Cluster::new(TextRange::new(1u32, 2u32).unwrap(), &(UStr::new(&[44])), &(UStr::new(&[108,97,116,105,110])), 8.0f64, Some(UString::from(",")), Some(0.0), Some(0.0), Some(0.0))).clone(),
+    (Cluster::new(TextRange::new(2u32, 3u32).unwrap(), &(UStr::new(&[12290])), &(UStr::new(&[99,106,107])), 16.0f64, Some(UString::from("。")), Some(0.0), Some(0.0), Some(0.0))).clone(),
 ];
         let roles = vec![FontRole::LatinText, FontRole::CjkPunctuation, FontRole::CjkPunctuation];
         let e = vec![
@@ -6805,39 +7821,35 @@ fn resolve_attached_inline_inter_char_boundaries_punctuation_western_narrow_trai
     (EastAsianSpacingEdges::new(EastAsianSpacingValue::Wide, EastAsianSpacingValue::Wide, false)).clone(),
 ];
         let a = vec![InlineAttachment::None, InlineAttachment::Previous, InlineAttachment::None];
-        let r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_attached_inline_inter_char_boundaries(text.as_str(), &c, &roles, &e, SortedTable::sorted_table_set_builder::<u32>(Arc::new(|a, b|
-SortedTable::sorted_table_compare_ints(i32::from_ne_bytes((*a).to_ne_bytes()), i32::from_ne_bytes((*b).to_ne_bytes())))).clone().build(), &a).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_true((i32::from_ne_bytes((u32::from_ne_bytes((r.virtual_boundary_after_clusters.size()).to_ne_bytes())).to_ne_bytes())) > (0), None).unwrap();
+        let r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_attached_inline_inter_char_boundaries(text.as_ustr(), &c, &roles, &e, SortedTable::sorted_table_set_builder::<u32>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_bytes(((*a) as i32).to_ne_bytes()), i32::from_ne_bytes(((*b) as i32).to_ne_bytes())))).clone().build(), &a).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_true((i32::from_ne_bytes(((u32::from_ne_bytes(((r.virtual_boundary_after_clusters.size()) as u32).to_ne_bytes())) as i32).to_ne_bytes())) > (0), None).unwrap();
     });
 }
 
 #[test]
 fn resolve_unicode_punctuation_boundaries_previous_content_cluster_returns_null() {
-    testlib::run("org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesPreviousContentClusterReturnsNull",
-"org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesPreviousContentClusterReturnsNull", || {
-        UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_start(&"resolveUnicodePunctuationBoundariesPreviousContentClusterReturnsNull");
-        let text = "  !".to_string();
+    testlib::run("org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesPreviousContentClusterReturnsNull", "org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesPreviousContentClusterReturnsNull", || {
+        UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_start(UStr::new(&[114,101,115,111,108,118,101,85,110,105,99,111,100,101,80,117,110,99,116,117,97,116,105,111,110,66,111,117,110,100,97,114,105,101,115,80,114,101,118,105,111,117,115,67,111,110,116,101,110,116,67,108,117,115,116,101,114,82,101,116,117,114,110,115,78,117,108,108]));
+        let text = UString::from("  !").to_ustring();
         let c = vec![
-    (Cluster::new(TextRange::new(0u32, 1u32).unwrap(), " ", "test", 8.0f64, Some(" ".to_string()), Some(0.0), Some(0.0), Some(0.0))).clone(),
-    (Cluster::new(TextRange::new(1u32, 2u32).unwrap(), " ", "test", 8.0f64, Some(" ".to_string()), Some(0.0), Some(0.0), Some(0.0))).clone(),
-    (Cluster::new(TextRange::new(2u32, 3u32).unwrap(), "!", "test", 8.0f64, Some("!".to_string()), Some(0.0), Some(0.0), Some(0.0))).clone(),
+    (Cluster::new(TextRange::new(0u32, 1u32).unwrap(), &(UStr::new(&[32])), &(UStr::new(&[116,101,115,116])), 8.0f64, Some(UString::from(" ")), Some(0.0), Some(0.0), Some(0.0))).clone(),
+    (Cluster::new(TextRange::new(1u32, 2u32).unwrap(), &(UStr::new(&[32])), &(UStr::new(&[116,101,115,116])), 8.0f64, Some(UString::from(" ")), Some(0.0), Some(0.0), Some(0.0))).clone(),
+    (Cluster::new(TextRange::new(2u32, 3u32).unwrap(), &(UStr::new(&[33])), &(UStr::new(&[116,101,115,116])), 8.0f64, Some(UString::from("!")), Some(0.0), Some(0.0), Some(0.0))).clone(),
 ];
-        let r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_unicode_punctuation_boundaries(text.as_str(), &c,
-&UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_latin_roles(text.as_str()), &vec![]).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_true(u32::from_ne_bytes((r.forbidden_line_start_clusters.size()).to_ne_bytes()) == 0, None).unwrap();
+        let r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_unicode_punctuation_boundaries(text.as_ustr(), &c, &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_latin_roles(text.as_ustr()), &vec![]).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_true(u32::from_ne_bytes(((r.forbidden_line_start_clusters.size()) as u32).to_ne_bytes()) == 0, None).unwrap();
     });
 }
 
 #[test]
 fn resolve_attached_inline_inter_char_boundaries_punctuation_western_trailing_not_narrow() {
-    testlib::run("org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveAttachedInlineInterCharBoundariesPunctuationWesternTrailingNotNarrow",
-"org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveAttachedInlineInterCharBoundariesPunctuationWesternTrailingNotNarrow", || {
-        UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_start(&"resolveAttachedInlineInterCharBoundariesPunctuationWesternTrailingNotNarrow");
-        let text = "a,中".to_string();
+    testlib::run("org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveAttachedInlineInterCharBoundariesPunctuationWesternTrailingNotNarrow", "org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveAttachedInlineInterCharBoundariesPunctuationWesternTrailingNotNarrow", || {
+        UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_start(UStr::new(&[114,101,115,111,108,118,101,65,116,116,97,99,104,101,100,73,110,108,105,110,101,73,110,116,101,114,67,104,97,114,66,111,117,110,100,97,114,105,101,115,80,117,110,99,116,117,97,116,105,111,110,87,101,115,116,101,114,110,84,114,97,105,108,105,110,103,78,111,116,78,97,114,114,111,119]));
+        let text = UString::from("a,中").to_ustring();
         let c = vec![
-    (Cluster::new(TextRange::new(0u32, 1u32).unwrap(), "a", "latin", 8.0f64, Some("a".to_string()), Some(0.0), Some(0.0), Some(0.0))).clone(),
-    (Cluster::new(TextRange::new(1u32, 2u32).unwrap(), ",", "latin", 8.0f64, Some(",".to_string()), Some(0.0), Some(0.0), Some(0.0))).clone(),
-    (Cluster::new(TextRange::new(2u32, 3u32).unwrap(), "中", "cjk", 16.0f64, Some("中".to_string()), Some(0.0), Some(0.0), Some(0.0))).clone(),
+    (Cluster::new(TextRange::new(0u32, 1u32).unwrap(), &(UStr::new(&[97])), &(UStr::new(&[108,97,116,105,110])), 8.0f64, Some(UString::from("a")), Some(0.0), Some(0.0), Some(0.0))).clone(),
+    (Cluster::new(TextRange::new(1u32, 2u32).unwrap(), &(UStr::new(&[44])), &(UStr::new(&[108,97,116,105,110])), 8.0f64, Some(UString::from(",")), Some(0.0), Some(0.0), Some(0.0))).clone(),
+    (Cluster::new(TextRange::new(2u32, 3u32).unwrap(), &(UStr::new(&[20013])), &(UStr::new(&[99,106,107])), 16.0f64, Some(UString::from("中")), Some(0.0), Some(0.0), Some(0.0))).clone(),
 ];
         let roles = vec![FontRole::CjkPunctuation, FontRole::CjkPunctuation, FontRole::CjkText];
         let e = vec![
@@ -6846,22 +7858,20 @@ fn resolve_attached_inline_inter_char_boundaries_punctuation_western_trailing_no
     (EastAsianSpacingEdges::new(EastAsianSpacingValue::Wide, EastAsianSpacingValue::Wide, false)).clone(),
 ];
         let a = vec![InlineAttachment::None, InlineAttachment::Previous, InlineAttachment::None];
-        let r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_attached_inline_inter_char_boundaries(text.as_str(), &c, &roles, &e, SortedTable::sorted_table_set_builder::<u32>(Arc::new(|a, b|
-SortedTable::sorted_table_compare_ints(i32::from_ne_bytes((*a).to_ne_bytes()), i32::from_ne_bytes((*b).to_ne_bytes())))).clone().build(), &a).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_true((i32::from_ne_bytes((u32::from_ne_bytes((r.virtual_boundary_after_clusters.size()).to_ne_bytes())).to_ne_bytes())) > (0), None).unwrap();
+        let r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_attached_inline_inter_char_boundaries(text.as_ustr(), &c, &roles, &e, SortedTable::sorted_table_set_builder::<u32>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_bytes(((*a) as i32).to_ne_bytes()), i32::from_ne_bytes(((*b) as i32).to_ne_bytes())))).clone().build(), &a).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_true((i32::from_ne_bytes(((u32::from_ne_bytes(((r.virtual_boundary_after_clusters.size()) as u32).to_ne_bytes())) as i32).to_ne_bytes())) > (0), None).unwrap();
     });
 }
 
 #[test]
 fn resolve_attached_inline_inter_char_boundaries_punctuation_western_trailing_narrow_not_cjk_punct() {
-    testlib::run("org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveAttachedInlineInterCharBoundariesPunctuationWesternTrailingNarrowNotCjkPunct",
-"org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveAttachedInlineInterCharBoundariesPunctuationWesternTrailingNarrowNotCjkPunct", || {
-        UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_start(&"resolveAttachedInlineInterCharBoundariesPunctuationWesternTrailingNarrowNotCjkPunct");
-        let text = "a,中".to_string();
+    testlib::run("org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveAttachedInlineInterCharBoundariesPunctuationWesternTrailingNarrowNotCjkPunct", "org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveAttachedInlineInterCharBoundariesPunctuationWesternTrailingNarrowNotCjkPunct", || {
+        UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_start(UStr::new(&[114,101,115,111,108,118,101,65,116,116,97,99,104,101,100,73,110,108,105,110,101,73,110,116,101,114,67,104,97,114,66,111,117,110,100,97,114,105,101,115,80,117,110,99,116,117,97,116,105,111,110,87,101,115,116,101,114,110,84,114,97,105,108,105,110,103,78,97,114,114,111,119,78,111,116,67,106,107,80,117,110,99,116]));
+        let text = UString::from("a,中").to_ustring();
         let c = vec![
-    (Cluster::new(TextRange::new(0u32, 1u32).unwrap(), "a", "latin", 8.0f64, Some("a".to_string()), Some(0.0), Some(0.0), Some(0.0))).clone(),
-    (Cluster::new(TextRange::new(1u32, 2u32).unwrap(), ",", "latin", 8.0f64, Some(",".to_string()), Some(0.0), Some(0.0), Some(0.0))).clone(),
-    (Cluster::new(TextRange::new(2u32, 3u32).unwrap(), "中", "cjk", 16.0f64, Some("中".to_string()), Some(0.0), Some(0.0), Some(0.0))).clone(),
+    (Cluster::new(TextRange::new(0u32, 1u32).unwrap(), &(UStr::new(&[97])), &(UStr::new(&[108,97,116,105,110])), 8.0f64, Some(UString::from("a")), Some(0.0), Some(0.0), Some(0.0))).clone(),
+    (Cluster::new(TextRange::new(1u32, 2u32).unwrap(), &(UStr::new(&[44])), &(UStr::new(&[108,97,116,105,110])), 8.0f64, Some(UString::from(",")), Some(0.0), Some(0.0), Some(0.0))).clone(),
+    (Cluster::new(TextRange::new(2u32, 3u32).unwrap(), &(UStr::new(&[20013])), &(UStr::new(&[99,106,107])), 16.0f64, Some(UString::from("中")), Some(0.0), Some(0.0), Some(0.0))).clone(),
 ];
         let roles = vec![FontRole::LatinText, FontRole::CjkPunctuation, FontRole::CjkText];
         let e = vec![
@@ -6870,57 +7880,52 @@ fn resolve_attached_inline_inter_char_boundaries_punctuation_western_trailing_na
     (EastAsianSpacingEdges::new(EastAsianSpacingValue::Wide, EastAsianSpacingValue::Wide, false)).clone(),
 ];
         let a = vec![InlineAttachment::None, InlineAttachment::Previous, InlineAttachment::None];
-        let r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_attached_inline_inter_char_boundaries(text.as_str(), &c, &roles, &e, SortedTable::sorted_table_set_builder::<u32>(Arc::new(|a, b|
-SortedTable::sorted_table_compare_ints(i32::from_ne_bytes((*a).to_ne_bytes()), i32::from_ne_bytes((*b).to_ne_bytes())))).clone().build(), &a).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_true((i32::from_ne_bytes((u32::from_ne_bytes((r.virtual_boundary_after_clusters.size()).to_ne_bytes())).to_ne_bytes())) > (0), None).unwrap();
+        let r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_attached_inline_inter_char_boundaries(text.as_ustr(), &c, &roles, &e, SortedTable::sorted_table_set_builder::<u32>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_bytes(((*a) as i32).to_ne_bytes()), i32::from_ne_bytes(((*b) as i32).to_ne_bytes())))).clone().build(), &a).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_true((i32::from_ne_bytes(((u32::from_ne_bytes(((r.virtual_boundary_after_clusters.size()) as u32).to_ne_bytes())) as i32).to_ne_bytes())) > (0), None).unwrap();
     });
 }
 
 #[test]
 fn resolve_unicode_punctuation_boundaries_with_infix_numeric_separator_not_decimal_mark() {
-    testlib::run("org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesWithInfixNumericSeparatorNotDecimalMark",
-"org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesWithInfixNumericSeparatorNotDecimalMark", || {
-        UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_start(&"resolveUnicodePunctuationBoundariesWithInfixNumericSeparatorNotDecimalMark");
-        let text = "1，".to_string();
+    testlib::run("org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesWithInfixNumericSeparatorNotDecimalMark", "org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesWithInfixNumericSeparatorNotDecimalMark", || {
+        UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_start(UStr::new(&[114,101,115,111,108,118,101,85,110,105,99,111,100,101,80,117,110,99,116,117,97,116,105,111,110,66,111,117,110,100,97,114,105,101,115,87,105,116,104,73,110,102,105,120,78,117,109,101,114,105,99,83,101,112,97,114,97,116,111,114,78,111,116,68,101,99,105,109,97,108,77,97,114,107]));
+        let text = UString::from("1，").to_ustring();
         let c = vec![
-    (Cluster::new(TextRange::new(0u32, 1u32).unwrap(), "1", "latin", 8.0f64, Some("1".to_string()), Some(0.0), Some(0.0), Some(0.0))).clone(),
-    (Cluster::new(TextRange::new(1u32, 2u32).unwrap(), "，", "cjk", 16.0f64, Some("，".to_string()), Some(0.0), Some(0.0), Some(0.0))).clone(),
+    (Cluster::new(TextRange::new(0u32, 1u32).unwrap(), &(UStr::new(&[49])), &(UStr::new(&[108,97,116,105,110])), 8.0f64, Some(UString::from("1")), Some(0.0), Some(0.0), Some(0.0))).clone(),
+    (Cluster::new(TextRange::new(1u32, 2u32).unwrap(), &(UStr::new(&[65292])), &(UStr::new(&[99,106,107])), 16.0f64, Some(UString::from("，")), Some(0.0), Some(0.0), Some(0.0))).clone(),
 ];
-        let r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_unicode_punctuation_boundaries(text.as_str(), &c, &vec![FontRole::LatinText, FontRole::LatinText], &vec![]).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_true((i32::from_ne_bytes((u32::from_ne_bytes((r.forbidden_line_start_clusters.size()).to_ne_bytes())).to_ne_bytes())) > (0), None).unwrap();
+        let r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_unicode_punctuation_boundaries(text.as_ustr(), &c, &vec![FontRole::LatinText, FontRole::LatinText], &vec![]).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_true((i32::from_ne_bytes(((u32::from_ne_bytes(((r.forbidden_line_start_clusters.size()) as u32).to_ne_bytes())) as i32).to_ne_bytes())) > (0), None).unwrap();
     });
 }
 
 #[test]
 fn resolve_unicode_punctuation_boundaries_with_decimal_mark_after_non_space() {
-    testlib::run("org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesWithDecimalMarkAfterNonSpace", "org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesWithDecimalMarkAfterNonSpace",
-|| {
-        UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_start(&"resolveUnicodePunctuationBoundariesWithDecimalMarkAfterNonSpace");
-        let text = "1,，2".to_string();
+    testlib::run("org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesWithDecimalMarkAfterNonSpace", "org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesWithDecimalMarkAfterNonSpace", || {
+        UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_start(UStr::new(&[114,101,115,111,108,118,101,85,110,105,99,111,100,101,80,117,110,99,116,117,97,116,105,111,110,66,111,117,110,100,97,114,105,101,115,87,105,116,104,68,101,99,105,109,97,108,77,97,114,107,65,102,116,101,114,78,111,110,83,112,97,99,101]));
+        let text = UString::from("1,，2").to_ustring();
         let c = vec![
-    (Cluster::new(TextRange::new(0u32, 1u32).unwrap(), "1", "latin", 8.0f64, Some("1".to_string()), Some(0.0), Some(0.0), Some(0.0))).clone(),
-    (Cluster::new(TextRange::new(1u32, 2u32).unwrap(), ",", "latin", 8.0f64, Some(",".to_string()), Some(0.0), Some(0.0), Some(0.0))).clone(),
-    (Cluster::new(TextRange::new(2u32, 3u32).unwrap(), "，", "cjk", 16.0f64, Some("，".to_string()), Some(0.0), Some(0.0), Some(0.0))).clone(),
-    (Cluster::new(TextRange::new(3u32, 4u32).unwrap(), "2", "latin", 8.0f64, Some("2".to_string()), Some(0.0), Some(0.0), Some(0.0))).clone(),
+    (Cluster::new(TextRange::new(0u32, 1u32).unwrap(), &(UStr::new(&[49])), &(UStr::new(&[108,97,116,105,110])), 8.0f64, Some(UString::from("1")), Some(0.0), Some(0.0), Some(0.0))).clone(),
+    (Cluster::new(TextRange::new(1u32, 2u32).unwrap(), &(UStr::new(&[44])), &(UStr::new(&[108,97,116,105,110])), 8.0f64, Some(UString::from(",")), Some(0.0), Some(0.0), Some(0.0))).clone(),
+    (Cluster::new(TextRange::new(2u32, 3u32).unwrap(), &(UStr::new(&[65292])), &(UStr::new(&[99,106,107])), 16.0f64, Some(UString::from("，")), Some(0.0), Some(0.0), Some(0.0))).clone(),
+    (Cluster::new(TextRange::new(3u32, 4u32).unwrap(), &(UStr::new(&[50])), &(UStr::new(&[108,97,116,105,110])), 8.0f64, Some(UString::from("2")), Some(0.0), Some(0.0), Some(0.0))).clone(),
 ];
         let roles = vec![FontRole::LatinText, FontRole::LatinText, FontRole::CjkPunctuation, FontRole::LatinText];
-        let r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_unicode_punctuation_boundaries(text.as_str(), &c, &roles, &vec![]).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_true((i32::from_ne_bytes((u32::from_ne_bytes((r.forbidden_line_start_clusters.size()).to_ne_bytes())).to_ne_bytes())) > (0), None).unwrap();
+        let r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_unicode_punctuation_boundaries(text.as_ustr(), &c, &roles, &vec![]).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_true((i32::from_ne_bytes(((u32::from_ne_bytes(((r.forbidden_line_start_clusters.size()) as u32).to_ne_bytes())) as i32).to_ne_bytes())) > (0), None).unwrap();
     });
 }
 
 #[test]
 fn resolve_unicode_punctuation_boundaries_with_quote_direction_final() {
     testlib::run("org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesWithQuoteDirectionFinal", "org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesWithQuoteDirectionFinal", || {
-        UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_start(&"resolveUnicodePunctuationBoundariesWithQuoteDirectionFinal");
-        let text = "中”中".to_string();
-        let r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_unicode_punctuation_boundaries(text.as_str(),
-&UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_cjk_clusters(text.as_str()).unwrap(), &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_cjk_roles(text.as_str()),
-&vec![]).unwrap();
+        UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_start(UStr::new(&[114,101,115,111,108,118,101,85,110,105,99,111,100,101,80,117,110,99,116,117,97,116,105,111,110,66,111,117,110,100,97,114,105,101,115,87,105,116,104,81,117,111,116,101,68,105,114,101,99,116,105,111,110,70,105,110,97,108]));
+        let text = UString::from("中”中").to_ustring();
+        let r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_unicode_punctuation_boundaries(text.as_ustr(), &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_cjk_clusters(text.as_ustr()).unwrap(), &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_cjk_roles(text.as_ustr()), &vec![]).unwrap();
         let mut f = false;
         let mut i = 0u32;
-        while (i32::from_ne_bytes((i).to_ne_bytes())) < (i32::from_ne_bytes((u32::try_from((r.decisions.len()) & 0xFFFF_FFFF).unwrap_or(0)).to_ne_bytes())) {
-            if r.decisions[usize::try_from(i).unwrap_or(0)].clone().forbidden_position.to_string() == "LineStart" {
+        while (i32::from_ne_bytes(((i) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((r.decisions.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
+            if r.decisions[usize::try_from(i).unwrap_or(0)].clone().forbidden_position.to_ustring() == UString::from("LineStart") {
                 f = true;
             }
             i = u32::wrapping_add(i, 1);
@@ -6932,15 +7937,13 @@ fn resolve_unicode_punctuation_boundaries_with_quote_direction_final() {
 #[test]
 fn resolve_unicode_punctuation_boundaries_with_quote_direction_initial() {
     testlib::run("org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesWithQuoteDirectionInitial", "org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesWithQuoteDirectionInitial", || {
-        UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_start(&"resolveUnicodePunctuationBoundariesWithQuoteDirectionInitial");
-        let text = "中“中".to_string();
-        let r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_unicode_punctuation_boundaries(text.as_str(),
-&UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_cjk_clusters(text.as_str()).unwrap(), &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_cjk_roles(text.as_str()),
-&vec![]).unwrap();
+        UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_start(UStr::new(&[114,101,115,111,108,118,101,85,110,105,99,111,100,101,80,117,110,99,116,117,97,116,105,111,110,66,111,117,110,100,97,114,105,101,115,87,105,116,104,81,117,111,116,101,68,105,114,101,99,116,105,111,110,73,110,105,116,105,97,108]));
+        let text = UString::from("中“中").to_ustring();
+        let r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_unicode_punctuation_boundaries(text.as_ustr(), &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_cjk_clusters(text.as_ustr()).unwrap(), &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_cjk_roles(text.as_ustr()), &vec![]).unwrap();
         let mut f = false;
         let mut i = 0u32;
-        while (i32::from_ne_bytes((i).to_ne_bytes())) < (i32::from_ne_bytes((u32::try_from((r.decisions.len()) & 0xFFFF_FFFF).unwrap_or(0)).to_ne_bytes())) {
-            if r.decisions[usize::try_from(i).unwrap_or(0)].clone().forbidden_position.to_string() == "LineEnd" {
+        while (i32::from_ne_bytes(((i) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((r.decisions.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
+            if r.decisions[usize::try_from(i).unwrap_or(0)].clone().forbidden_position.to_ustring() == UString::from("LineEnd") {
                 f = true;
             }
             i = u32::wrapping_add(i, 1);
@@ -6951,17 +7954,14 @@ fn resolve_unicode_punctuation_boundaries_with_quote_direction_initial() {
 
 #[test]
 fn resolve_unicode_punctuation_boundaries_with_quote_direction_unresolved() {
-    testlib::run("org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesWithQuoteDirectionUnresolved", "org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesWithQuoteDirectionUnresolved",
-|| {
-        UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_start(&"resolveUnicodePunctuationBoundariesWithQuoteDirectionUnresolved");
-        let text = "中«中".to_string();
-        let r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_unicode_punctuation_boundaries(text.as_str(),
-&UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_cjk_clusters(text.as_str()).unwrap(), &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_cjk_roles(text.as_str()),
-&vec![]).unwrap();
+    testlib::run("org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesWithQuoteDirectionUnresolved", "org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesWithQuoteDirectionUnresolved", || {
+        UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_start(UStr::new(&[114,101,115,111,108,118,101,85,110,105,99,111,100,101,80,117,110,99,116,117,97,116,105,111,110,66,111,117,110,100,97,114,105,101,115,87,105,116,104,81,117,111,116,101,68,105,114,101,99,116,105,111,110,85,110,114,101,115,111,108,118,101,100]));
+        let text = UString::from("中«中").to_ustring();
+        let r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_unicode_punctuation_boundaries(text.as_ustr(), &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_cjk_clusters(text.as_ustr()).unwrap(), &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_cjk_roles(text.as_ustr()), &vec![]).unwrap();
         let mut f = false;
         let mut i = 0u32;
-        while (i32::from_ne_bytes((i).to_ne_bytes())) < (i32::from_ne_bytes((u32::try_from((r.decisions.len()) & 0xFFFF_FFFF).unwrap_or(0)).to_ne_bytes())) {
-            if r.decisions[usize::try_from(i).unwrap_or(0)].clone().forbidden_position.to_string() == "LineEnd" {
+        while (i32::from_ne_bytes(((i) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((r.decisions.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
+            if r.decisions[usize::try_from(i).unwrap_or(0)].clone().forbidden_position.to_ustring() == UString::from("LineEnd") {
                 f = true;
             }
             i = u32::wrapping_add(i, 1);
@@ -6973,40 +7973,33 @@ fn resolve_unicode_punctuation_boundaries_with_quote_direction_unresolved() {
 #[test]
 fn resolve_unicode_punctuation_boundaries_with_word_apostrophe2019() {
     testlib::run("org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesWithWordApostrophe2019", "org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesWithWordApostrophe2019", || {
-        UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_start(&"resolveUnicodePunctuationBoundariesWithWordApostrophe2019");
-        let text = "it’s".to_string();
-        let r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_unicode_punctuation_boundaries(text.as_str(),
-&UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_latin_clusters(text.as_str()).unwrap(), &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_latin_roles(text.as_str()),
-&vec![]).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_equals(0, u32::from_ne_bytes((r.forbidden_line_start_clusters.size()).to_ne_bytes()), None).unwrap();
+        UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_start(UStr::new(&[114,101,115,111,108,118,101,85,110,105,99,111,100,101,80,117,110,99,116,117,97,116,105,111,110,66,111,117,110,100,97,114,105,101,115,87,105,116,104,87,111,114,100,65,112,111,115,116,114,111,112,104,101,50,48,49,57]));
+        let text = UString::from("it’s").to_ustring();
+        let r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_unicode_punctuation_boundaries(text.as_ustr(), &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_latin_clusters(text.as_ustr()).unwrap(), &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_latin_roles(text.as_ustr()), &vec![]).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_equals(0, u32::from_ne_bytes(((r.forbidden_line_start_clusters.size()) as u32).to_ne_bytes()), None).unwrap();
     });
 }
 
 #[test]
 fn resolve_unicode_punctuation_boundaries_with_latin_word_code_point() {
     testlib::run("org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesWithLatinWordCodePoint", "org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesWithLatinWordCodePoint", || {
-        UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_start(&"resolveUnicodePunctuationBoundariesWithLatinWordCodePoint");
-        let text = "café".to_string();
-        let r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_unicode_punctuation_boundaries(text.as_str(),
-&UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_latin_clusters(text.as_str()).unwrap(), &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_latin_roles(text.as_str()),
-&vec![]).unwrap();
+        UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_start(UStr::new(&[114,101,115,111,108,118,101,85,110,105,99,111,100,101,80,117,110,99,116,117,97,116,105,111,110,66,111,117,110,100,97,114,105,101,115,87,105,116,104,76,97,116,105,110,87,111,114,100,67,111,100,101,80,111,105,110,116]));
+        let text = UString::from("café").to_ustring();
+        let r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_unicode_punctuation_boundaries(text.as_ustr(), &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_latin_clusters(text.as_ustr()).unwrap(), &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_latin_roles(text.as_ustr()), &vec![]).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_equals(0, u32::try_from((r.decisions.len()) & 0xFFFF_FFFF).unwrap_or(0), None).unwrap();
     });
 }
 
 #[test]
 fn resolve_unicode_punctuation_boundaries_with_first_significant_code_point() {
-    testlib::run("org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesWithFirstSignificantCodePoint",
-"org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesWithFirstSignificantCodePoint", || {
-        UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_start(&"resolveUnicodePunctuationBoundariesWithFirstSignificantCodePoint");
-        let text = "  “".to_string();
-        let r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_unicode_punctuation_boundaries(text.as_str(),
-&UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_latin_clusters(text.as_str()).unwrap(), &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_latin_roles(text.as_str()),
-&vec![]).unwrap();
+    testlib::run("org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesWithFirstSignificantCodePoint", "org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesWithFirstSignificantCodePoint", || {
+        UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_start(UStr::new(&[114,101,115,111,108,118,101,85,110,105,99,111,100,101,80,117,110,99,116,117,97,116,105,111,110,66,111,117,110,100,97,114,105,101,115,87,105,116,104,70,105,114,115,116,83,105,103,110,105,102,105,99,97,110,116,67,111,100,101,80,111,105,110,116]));
+        let text = UString::from("  “").to_ustring();
+        let r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_unicode_punctuation_boundaries(text.as_ustr(), &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_latin_clusters(text.as_ustr()).unwrap(), &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_latin_roles(text.as_ustr()), &vec![]).unwrap();
         let mut f = false;
         let mut i = 0u32;
-        while (i32::from_ne_bytes((i).to_ne_bytes())) < (i32::from_ne_bytes((u32::try_from((r.decisions.len()) & 0xFFFF_FFFF).unwrap_or(0)).to_ne_bytes())) {
-            if r.decisions[usize::try_from(i).unwrap_or(0)].clone().forbidden_position.to_string() == "LineEnd" {
+        while (i32::from_ne_bytes(((i) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((r.decisions.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
+            if r.decisions[usize::try_from(i).unwrap_or(0)].clone().forbidden_position.to_ustring() == UString::from("LineEnd") {
                 f = true;
             }
             i = u32::wrapping_add(i, 1);
@@ -7017,17 +8010,14 @@ fn resolve_unicode_punctuation_boundaries_with_first_significant_code_point() {
 
 #[test]
 fn resolve_unicode_punctuation_boundaries_with_last_significant_code_point() {
-    testlib::run("org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesWithLastSignificantCodePoint", "org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesWithLastSignificantCodePoint",
-|| {
-        UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_start(&"resolveUnicodePunctuationBoundariesWithLastSignificantCodePoint");
-        let text = "a”  ".to_string();
-        let r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_unicode_punctuation_boundaries(text.as_str(),
-&UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_latin_clusters(text.as_str()).unwrap(), &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_latin_roles(text.as_str()),
-&vec![]).unwrap();
+    testlib::run("org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesWithLastSignificantCodePoint", "org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesWithLastSignificantCodePoint", || {
+        UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_start(UStr::new(&[114,101,115,111,108,118,101,85,110,105,99,111,100,101,80,117,110,99,116,117,97,116,105,111,110,66,111,117,110,100,97,114,105,101,115,87,105,116,104,76,97,115,116,83,105,103,110,105,102,105,99,97,110,116,67,111,100,101,80,111,105,110,116]));
+        let text = UString::from("a”  ").to_ustring();
+        let r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_unicode_punctuation_boundaries(text.as_ustr(), &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_latin_clusters(text.as_ustr()).unwrap(), &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_latin_roles(text.as_ustr()), &vec![]).unwrap();
         let mut f = false;
         let mut i = 0u32;
-        while (i32::from_ne_bytes((i).to_ne_bytes())) < (i32::from_ne_bytes((u32::try_from((r.decisions.len()) & 0xFFFF_FFFF).unwrap_or(0)).to_ne_bytes())) {
-            if r.decisions[usize::try_from(i).unwrap_or(0)].clone().forbidden_position.to_string() == "LineStart" {
+        while (i32::from_ne_bytes(((i) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((r.decisions.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
+            if r.decisions[usize::try_from(i).unwrap_or(0)].clone().forbidden_position.to_ustring() == UString::from("LineStart") {
                 f = true;
             }
             i = u32::wrapping_add(i, 1);
@@ -7039,77 +8029,64 @@ fn resolve_unicode_punctuation_boundaries_with_last_significant_code_point() {
 #[test]
 fn resolve_unicode_punctuation_boundaries_with_has_authored_break() {
     testlib::run("org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesWithHasAuthoredBreak", "org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesWithHasAuthoredBreak", || {
-        UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_start(&"resolveUnicodePunctuationBoundariesWithHasAuthoredBreak");
-        let text = concat!("\n",
-"“").to_string();
-        let r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_unicode_punctuation_boundaries(text.as_str(),
-&UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_latin_clusters(text.as_str()).unwrap(), &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_latin_roles(text.as_str()),
-&vec![]).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_equals(0, u32::from_ne_bytes((r.forbidden_line_start_clusters.size()).to_ne_bytes()), None).unwrap();
+        UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_start(UStr::new(&[114,101,115,111,108,118,101,85,110,105,99,111,100,101,80,117,110,99,116,117,97,116,105,111,110,66,111,117,110,100,97,114,105,101,115,87,105,116,104,72,97,115,65,117,116,104,111,114,101,100,66,114,101,97,107]));
+        let text = UString::from(concat!("\n",
+"“")).to_ustring();
+        let r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_unicode_punctuation_boundaries(text.as_ustr(), &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_latin_clusters(text.as_ustr()).unwrap(), &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_latin_roles(text.as_ustr()), &vec![]).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_equals(0, u32::from_ne_bytes(((r.forbidden_line_start_clusters.size()) as u32).to_ne_bytes()), None).unwrap();
     });
 }
 
 #[test]
 fn resolve_unicode_punctuation_boundaries_with_next_content_cluster() {
     testlib::run("org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesWithNextContentCluster", "org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesWithNextContentCluster", || {
-        UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_start(&"resolveUnicodePunctuationBoundariesWithNextContentCluster");
-        let text = "a”中".to_string();
-        let r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_unicode_punctuation_boundaries(text.as_str(),
-&UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_latin_clusters(text.as_str()).unwrap(), &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_latin_roles(text.as_str()),
-&vec![]).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_true((i32::from_ne_bytes((u32::try_from((r.unbreakable_ranges.len()) & 0xFFFF_FFFF).unwrap_or(0)).to_ne_bytes())) > (0), None).unwrap();
+        UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_start(UStr::new(&[114,101,115,111,108,118,101,85,110,105,99,111,100,101,80,117,110,99,116,117,97,116,105,111,110,66,111,117,110,100,97,114,105,101,115,87,105,116,104,78,101,120,116,67,111,110,116,101,110,116,67,108,117,115,116,101,114]));
+        let text = UString::from("a”中").to_ustring();
+        let r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_unicode_punctuation_boundaries(text.as_ustr(), &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_latin_clusters(text.as_ustr()).unwrap(), &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_latin_roles(text.as_ustr()), &vec![]).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_true((i32::from_ne_bytes(((u32::try_from((r.unbreakable_ranges.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) > (0), None).unwrap();
     });
 }
 
 #[test]
 fn resolve_unicode_punctuation_boundaries_with_previous_content_cluster_has_content() {
-    testlib::run("org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesWithPreviousContentClusterHasContent",
-"org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesWithPreviousContentClusterHasContent", || {
-        UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_start(&"resolveUnicodePunctuationBoundariesWithPreviousContentClusterHasContent");
-        let text = "中”".to_string();
-        let r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_unicode_punctuation_boundaries(text.as_str(),
-&UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_cjk_clusters(text.as_str()).unwrap(), &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_cjk_roles(text.as_str()),
-&vec![]).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_true((i32::from_ne_bytes((u32::try_from((r.unbreakable_ranges.len()) & 0xFFFF_FFFF).unwrap_or(0)).to_ne_bytes())) > (0), None).unwrap();
+    testlib::run("org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesWithPreviousContentClusterHasContent", "org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesWithPreviousContentClusterHasContent", || {
+        UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_start(UStr::new(&[114,101,115,111,108,118,101,85,110,105,99,111,100,101,80,117,110,99,116,117,97,116,105,111,110,66,111,117,110,100,97,114,105,101,115,87,105,116,104,80,114,101,118,105,111,117,115,67,111,110,116,101,110,116,67,108,117,115,116,101,114,72,97,115,67,111,110,116,101,110,116]));
+        let text = UString::from("中”").to_ustring();
+        let r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_unicode_punctuation_boundaries(text.as_ustr(), &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_cjk_clusters(text.as_ustr()).unwrap(), &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_cjk_roles(text.as_ustr()), &vec![]).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_true((i32::from_ne_bytes(((u32::try_from((r.unbreakable_ranges.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) > (0), None).unwrap();
     });
 }
 
 #[test]
 fn resolve_unicode_punctuation_boundaries_with_close_punctuation() {
     testlib::run("org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesWithClosePunctuation", "org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesWithClosePunctuation", || {
-        UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_start(&"resolveUnicodePunctuationBoundariesWithClosePunctuation");
-        let text = "中）".to_string();
-        let r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_unicode_punctuation_boundaries(text.as_str(),
-&UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_cjk_clusters(text.as_str()).unwrap(), &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_cjk_roles(text.as_str()),
-&vec![]).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_true((i32::from_ne_bytes((u32::from_ne_bytes((r.forbidden_line_start_clusters.size()).to_ne_bytes())).to_ne_bytes())) > (0), None).unwrap();
+        UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_start(UStr::new(&[114,101,115,111,108,118,101,85,110,105,99,111,100,101,80,117,110,99,116,117,97,116,105,111,110,66,111,117,110,100,97,114,105,101,115,87,105,116,104,67,108,111,115,101,80,117,110,99,116,117,97,116,105,111,110]));
+        let text = UString::from("中）").to_ustring();
+        let r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_unicode_punctuation_boundaries(text.as_ustr(), &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_cjk_clusters(text.as_ustr()).unwrap(), &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_cjk_roles(text.as_ustr()), &vec![]).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_true((i32::from_ne_bytes(((u32::from_ne_bytes(((r.forbidden_line_start_clusters.size()) as u32).to_ne_bytes())) as i32).to_ne_bytes())) > (0), None).unwrap();
     });
 }
 
 #[test]
 fn resolve_unicode_punctuation_boundaries_with_exclamation_class() {
     testlib::run("org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesWithExclamationClass", "org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesWithExclamationClass", || {
-        UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_start(&"resolveUnicodePunctuationBoundariesWithExclamationClass");
-        let text = "中！".to_string();
-        let r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_unicode_punctuation_boundaries(text.as_str(),
-&UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_cjk_clusters(text.as_str()).unwrap(), &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_cjk_roles(text.as_str()),
-&vec![]).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_true((i32::from_ne_bytes((u32::from_ne_bytes((r.forbidden_line_start_clusters.size()).to_ne_bytes())).to_ne_bytes())) > (0), None).unwrap();
+        UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_start(UStr::new(&[114,101,115,111,108,118,101,85,110,105,99,111,100,101,80,117,110,99,116,117,97,116,105,111,110,66,111,117,110,100,97,114,105,101,115,87,105,116,104,69,120,99,108,97,109,97,116,105,111,110,67,108,97,115,115]));
+        let text = UString::from("中！").to_ustring();
+        let r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_unicode_punctuation_boundaries(text.as_ustr(), &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_cjk_clusters(text.as_ustr()).unwrap(), &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_cjk_roles(text.as_ustr()), &vec![]).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_true((i32::from_ne_bytes(((u32::from_ne_bytes(((r.forbidden_line_start_clusters.size()) as u32).to_ne_bytes())) as i32).to_ne_bytes())) > (0), None).unwrap();
     });
 }
 
 #[test]
 fn resolve_unicode_punctuation_boundaries_with_close_parenthesis_class() {
     testlib::run("org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesWithCloseParenthesisClass", "org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesWithCloseParenthesisClass", || {
-        UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_start(&"resolveUnicodePunctuationBoundariesWithCloseParenthesisClass");
-        let text = "中）".to_string();
-        let r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_unicode_punctuation_boundaries(text.as_str(),
-&UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_cjk_clusters(text.as_str()).unwrap(), &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_cjk_roles(text.as_str()),
-&vec![]).unwrap();
+        UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_start(UStr::new(&[114,101,115,111,108,118,101,85,110,105,99,111,100,101,80,117,110,99,116,117,97,116,105,111,110,66,111,117,110,100,97,114,105,101,115,87,105,116,104,67,108,111,115,101,80,97,114,101,110,116,104,101,115,105,115,67,108,97,115,115]));
+        let text = UString::from("中）").to_ustring();
+        let r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_unicode_punctuation_boundaries(text.as_ustr(), &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_cjk_clusters(text.as_ustr()).unwrap(), &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_cjk_roles(text.as_ustr()), &vec![]).unwrap();
         let mut f = false;
         let mut i = 0u32;
-        while (i32::from_ne_bytes((i).to_ne_bytes())) < (i32::from_ne_bytes((u32::try_from((r.decisions.len()) & 0xFFFF_FFFF).unwrap_or(0)).to_ne_bytes())) {
-            if u32::from_ne_bytes((u_string::find_from(&((r.decisions[usize::try_from(i).unwrap_or(0)]).clone().reason).to_string(), "LB13", 0)).to_ne_bytes()) <= 2147483647 {
+        while (i32::from_ne_bytes(((i) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((r.decisions.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
+            if u32::from_ne_bytes(((u_string::find_from(&(((r.decisions[usize::try_from(i).unwrap_or(0)]).clone().reason).to_ustring()), UString::from("LB13").as_ustr(), 0)) as u32).to_ne_bytes()) <= 2147483647 {
                 f = true;
             }
             i = u32::wrapping_add(i, 1);
@@ -7120,48 +8097,44 @@ fn resolve_unicode_punctuation_boundaries_with_close_parenthesis_class() {
 
 #[test]
 fn resolve_unicode_punctuation_boundaries_with_infix_numeric_separator_rule() {
-    testlib::run("org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesWithInfixNumericSeparatorRule",
-"org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesWithInfixNumericSeparatorRule", || {
-        UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_start(&"resolveUnicodePunctuationBoundariesWithInfixNumericSeparatorRule");
-        let text = "1,2".to_string();
-        let c = UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_latin_clusters(text.as_str()).unwrap();
-        let r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_unicode_punctuation_boundaries(text.as_str(), &c,
-&UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_latin_roles(text.as_str()), &vec![]).unwrap();
+    testlib::run("org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesWithInfixNumericSeparatorRule", "org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesWithInfixNumericSeparatorRule", || {
+        UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_start(UStr::new(&[114,101,115,111,108,118,101,85,110,105,99,111,100,101,80,117,110,99,116,117,97,116,105,111,110,66,111,117,110,100,97,114,105,101,115,87,105,116,104,73,110,102,105,120,78,117,109,101,114,105,99,83,101,112,97,114,97,116,111,114,82,117,108,101]));
+        let text = UString::from("1,2").to_ustring();
+        let c = UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_latin_clusters(text.as_ustr()).unwrap();
+        let r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_unicode_punctuation_boundaries(text.as_ustr(), &c, &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_latin_roles(text.as_ustr()), &vec![]).unwrap();
         let mut hit: Option<ContextualKinsokuDecisionInfo> = None;
         let mut i = 0u32;
-        while (i32::from_ne_bytes((i).to_ne_bytes())) < (i32::from_ne_bytes((u32::try_from((r.decisions.len()) & 0xFFFF_FFFF).unwrap_or(0)).to_ne_bytes())) {
-            if r.decisions[usize::try_from(i).unwrap_or(0)].clone().source_text.to_string() == "," {
+        while (i32::from_ne_bytes(((i) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((r.decisions.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
+            if r.decisions[usize::try_from(i).unwrap_or(0)].clone().source_text.to_ustring() == UString::from(",") {
                 hit = Some((r.decisions[usize::try_from(i).unwrap_or(0)]).clone());
                 break;
             }
             i = u32::wrapping_add(i, 1);
         }
-        let _ = TracedAssertions::traced_assertions_assert_not_null_rendered(hit != None, match &(hit) { None => "null".to_string(), Some(__option11) => __option11.to_string() }.as_str(), None).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_true(match &(hit) { Some(__option13) => u32::from_ne_bytes((u_string::find_from(&(__option13.reason).to_string(), "LB15d", 0)).to_ne_bytes()) <= 2147483647, None => false }, None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_not_null_rendered(hit != None, match &(hit) { None => UString::from("null"), Some(__option11) => UString::from(format!("{}", __option11.to_string()).as_str()) }.as_ustr(), None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_true(match &(hit) { Some(__option13) => u32::from_ne_bytes(((u_string::find_from(&((__option13.reason).to_ustring()), UString::from("LB15d").as_ustr(), 0)) as u32).to_ne_bytes()) <= 2147483647, None => false }, None).unwrap();
     });
 }
 
 #[test]
 fn resolve_unicode_punctuation_boundaries_with_rule_for_line_start_else() {
     testlib::run("org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesWithRuleForLineStartElse", "org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesWithRuleForLineStartElse", || {
-        UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_start(&"resolveUnicodePunctuationBoundariesWithRuleForLineStartElse");
-        let text = "中、".to_string();
-        let r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_unicode_punctuation_boundaries(text.as_str(),
-&UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_cjk_clusters(text.as_str()).unwrap(), &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_cjk_roles(text.as_str()),
-&vec![]).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_true((i32::from_ne_bytes((u32::from_ne_bytes((r.forbidden_line_start_clusters.size()).to_ne_bytes())).to_ne_bytes())) > (0), None).unwrap();
+        UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_start(UStr::new(&[114,101,115,111,108,118,101,85,110,105,99,111,100,101,80,117,110,99,116,117,97,116,105,111,110,66,111,117,110,100,97,114,105,101,115,87,105,116,104,82,117,108,101,70,111,114,76,105,110,101,83,116,97,114,116,69,108,115,101]));
+        let text = UString::from("中、").to_ustring();
+        let r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_unicode_punctuation_boundaries(text.as_ustr(), &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_cjk_clusters(text.as_ustr()).unwrap(), &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_cjk_roles(text.as_ustr()), &vec![]).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_true((i32::from_ne_bytes(((u32::from_ne_bytes(((r.forbidden_line_start_clusters.size()) as u32).to_ne_bytes())) as i32).to_ne_bytes())) > (0), None).unwrap();
     });
 }
 
 #[test]
 fn resolve_attached_inline_inter_char_boundaries_with_sino_western_pair() {
     testlib::run("org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveAttachedInlineInterCharBoundariesWithSinoWesternPair", "org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveAttachedInlineInterCharBoundariesWithSinoWesternPair", || {
-        UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_start(&"resolveAttachedInlineInterCharBoundariesWithSinoWesternPair");
-        let text = "中，中".to_string();
+        UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_start(UStr::new(&[114,101,115,111,108,118,101,65,116,116,97,99,104,101,100,73,110,108,105,110,101,73,110,116,101,114,67,104,97,114,66,111,117,110,100,97,114,105,101,115,87,105,116,104,83,105,110,111,87,101,115,116,101,114,110,80,97,105,114]));
+        let text = UString::from("中，中").to_ustring();
         let c = vec![
-    (Cluster::new(TextRange::new(0u32, 1u32).unwrap(), "中", "cjk", 16.0f64, Some("中".to_string()), Some(0.0), Some(0.0), Some(0.0))).clone(),
-    (Cluster::new(TextRange::new(1u32, 2u32).unwrap(), "，", "cjk", 16.0f64, Some("，".to_string()), Some(0.0), Some(0.0), Some(0.0))).clone(),
-    (Cluster::new(TextRange::new(2u32, 3u32).unwrap(), "中", "cjk", 16.0f64, Some("中".to_string()), Some(0.0), Some(0.0), Some(0.0))).clone(),
+    (Cluster::new(TextRange::new(0u32, 1u32).unwrap(), &(UStr::new(&[20013])), &(UStr::new(&[99,106,107])), 16.0f64, Some(UString::from("中")), Some(0.0), Some(0.0), Some(0.0))).clone(),
+    (Cluster::new(TextRange::new(1u32, 2u32).unwrap(), &(UStr::new(&[65292])), &(UStr::new(&[99,106,107])), 16.0f64, Some(UString::from("，")), Some(0.0), Some(0.0), Some(0.0))).clone(),
+    (Cluster::new(TextRange::new(2u32, 3u32).unwrap(), &(UStr::new(&[20013])), &(UStr::new(&[99,106,107])), 16.0f64, Some(UString::from("中")), Some(0.0), Some(0.0), Some(0.0))).clone(),
 ];
         let roles = vec![FontRole::CjkText, FontRole::CjkPunctuation, FontRole::CjkText];
         let e = vec![
@@ -7170,35 +8143,31 @@ fn resolve_attached_inline_inter_char_boundaries_with_sino_western_pair() {
     (EastAsianSpacingEdges::new(EastAsianSpacingValue::Narrow, EastAsianSpacingValue::Wide, false)).clone(),
 ];
         let a = vec![InlineAttachment::None, InlineAttachment::Previous, InlineAttachment::None];
-        let r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_attached_inline_inter_char_boundaries(text.as_str(), &c, &roles, &e, SortedTable::sorted_table_set_builder::<u32>(Arc::new(|a, b|
-SortedTable::sorted_table_compare_ints(i32::from_ne_bytes((*a).to_ne_bytes()), i32::from_ne_bytes((*b).to_ne_bytes())))).clone().build(), &a).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_true((i32::from_ne_bytes((u32::from_ne_bytes((r.virtual_sino_western_boundary_after_clusters.size()).to_ne_bytes())).to_ne_bytes())) > (0), None).unwrap();
+        let r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_attached_inline_inter_char_boundaries(text.as_ustr(), &c, &roles, &e, SortedTable::sorted_table_set_builder::<u32>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_bytes(((*a) as i32).to_ne_bytes()), i32::from_ne_bytes(((*b) as i32).to_ne_bytes())))).clone().build(), &a).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_true((i32::from_ne_bytes(((u32::from_ne_bytes(((r.virtual_sino_western_boundary_after_clusters.size()) as u32).to_ne_bytes())) as i32).to_ne_bytes())) > (0), None).unwrap();
     });
 }
 
 #[test]
 fn resolve_unicode_punctuation_boundaries_with_code_point_before_supplementary() {
-    testlib::run("org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesWithCodePointBeforeSupplementary",
-"org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesWithCodePointBeforeSupplementary", || {
-        UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_start(&"resolveUnicodePunctuationBoundariesWithCodePointBeforeSupplementary");
-        let text = "中”".to_string();
-        let r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_unicode_punctuation_boundaries(text.as_str(),
-&UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_cjk_clusters(text.as_str()).unwrap(), &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_cjk_roles(text.as_str()),
-&vec![]).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_true((i32::from_ne_bytes((u32::try_from((r.decisions.len()) & 0xFFFF_FFFF).unwrap_or(0)).to_ne_bytes())) > (0), None).unwrap();
+    testlib::run("org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesWithCodePointBeforeSupplementary", "org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesWithCodePointBeforeSupplementary", || {
+        UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_start(UStr::new(&[114,101,115,111,108,118,101,85,110,105,99,111,100,101,80,117,110,99,116,117,97,116,105,111,110,66,111,117,110,100,97,114,105,101,115,87,105,116,104,67,111,100,101,80,111,105,110,116,66,101,102,111,114,101,83,117,112,112,108,101,109,101,110,116,97,114,121]));
+        let text = UString::from("中”").to_ustring();
+        let r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_unicode_punctuation_boundaries(text.as_ustr(), &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_cjk_clusters(text.as_ustr()).unwrap(), &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_cjk_roles(text.as_ustr()), &vec![]).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_true((i32::from_ne_bytes(((u32::try_from((r.decisions.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) > (0), None).unwrap();
     });
 }
 
 #[test]
 fn resolve_unicode_punctuation_boundaries_with_empty_range() {
     testlib::run("org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesWithEmptyRange", "org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesWithEmptyRange", || {
-        UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_start(&"resolveUnicodePunctuationBoundariesWithEmptyRange");
-        let text = "中".to_string();
+        UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_start(UStr::new(&[114,101,115,111,108,118,101,85,110,105,99,111,100,101,80,117,110,99,116,117,97,116,105,111,110,66,111,117,110,100,97,114,105,101,115,87,105,116,104,69,109,112,116,121,82,97,110,103,101]));
+        let text = UString::from("中").to_ustring();
         let c = vec![
-    (Cluster::new(TextRange::new(0u32, 0u32).unwrap(), "", "cjk", 0.0f64, Some("".to_string()), Some(0.0), Some(0.0), Some(0.0))).clone(),
-    (Cluster::new(TextRange::new(0u32, 1u32).unwrap(), "中", "cjk", 16.0f64, Some("中".to_string()), Some(0.0), Some(0.0), Some(0.0))).clone(),
+    (Cluster::new(TextRange::new(0u32, 0u32).unwrap(), &(UStr::new(&[])), &(UStr::new(&[99,106,107])), 0.0f64, Some(UString::from("")), Some(0.0), Some(0.0), Some(0.0))).clone(),
+    (Cluster::new(TextRange::new(0u32, 1u32).unwrap(), &(UStr::new(&[20013])), &(UStr::new(&[99,106,107])), 16.0f64, Some(UString::from("中")), Some(0.0), Some(0.0), Some(0.0))).clone(),
 ];
-        let r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_unicode_punctuation_boundaries(text.as_str(), &c, &vec![FontRole::CjkText, FontRole::CjkText], &vec![]).unwrap();
+        let r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_unicode_punctuation_boundaries(text.as_ustr(), &c, &vec![FontRole::CjkText, FontRole::CjkText], &vec![]).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_equals(0, u32::try_from((r.decisions.len()) & 0xFFFF_FFFF).unwrap_or(0), None).unwrap();
     });
 }
@@ -7206,11 +8175,9 @@ fn resolve_unicode_punctuation_boundaries_with_empty_range() {
 #[test]
 fn resolve_unicode_punctuation_boundaries_with_first_code_point_length() {
     testlib::run("org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesWithFirstCodePointLength", "org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesWithFirstCodePointLength", || {
-        UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_start(&"resolveUnicodePunctuationBoundariesWithFirstCodePointLength");
-        let text = "中".to_string();
-        let r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_unicode_punctuation_boundaries(text.as_str(),
-&UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_cjk_clusters(text.as_str()).unwrap(), &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_cjk_roles(text.as_str()),
-&vec![]).unwrap();
+        UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_start(UStr::new(&[114,101,115,111,108,118,101,85,110,105,99,111,100,101,80,117,110,99,116,117,97,116,105,111,110,66,111,117,110,100,97,114,105,101,115,87,105,116,104,70,105,114,115,116,67,111,100,101,80,111,105,110,116,76,101,110,103,116,104]));
+        let text = UString::from("中").to_ustring();
+        let r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_unicode_punctuation_boundaries(text.as_ustr(), &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_cjk_clusters(text.as_ustr()).unwrap(), &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_cjk_roles(text.as_ustr()), &vec![]).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_equals(0, u32::try_from((r.decisions.len()) & 0xFFFF_FFFF).unwrap_or(0), None).unwrap();
     });
 }
@@ -7218,15 +8185,13 @@ fn resolve_unicode_punctuation_boundaries_with_first_code_point_length() {
 #[test]
 fn resolve_unicode_punctuation_boundaries_with_is_whitespace_code_point() {
     testlib::run("org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesWithIsWhitespaceCodePoint", "org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesWithIsWhitespaceCodePoint", || {
-        UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_start(&"resolveUnicodePunctuationBoundariesWithIsWhitespaceCodePoint");
-        let text = " “".to_string();
-        let r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_unicode_punctuation_boundaries(text.as_str(),
-&UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_latin_clusters(text.as_str()).unwrap(), &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_latin_roles(text.as_str()),
-&vec![]).unwrap();
+        UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_start(UStr::new(&[114,101,115,111,108,118,101,85,110,105,99,111,100,101,80,117,110,99,116,117,97,116,105,111,110,66,111,117,110,100,97,114,105,101,115,87,105,116,104,73,115,87,104,105,116,101,115,112,97,99,101,67,111,100,101,80,111,105,110,116]));
+        let text = UString::from(" “").to_ustring();
+        let r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_unicode_punctuation_boundaries(text.as_ustr(), &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_latin_clusters(text.as_ustr()).unwrap(), &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_latin_roles(text.as_ustr()), &vec![]).unwrap();
         let mut f = false;
         let mut i = 0u32;
-        while (i32::from_ne_bytes((i).to_ne_bytes())) < (i32::from_ne_bytes((u32::try_from((r.decisions.len()) & 0xFFFF_FFFF).unwrap_or(0)).to_ne_bytes())) {
-            if r.decisions[usize::try_from(i).unwrap_or(0)].clone().forbidden_position.to_string() == "LineEnd" {
+        while (i32::from_ne_bytes(((i) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((r.decisions.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
+            if r.decisions[usize::try_from(i).unwrap_or(0)].clone().forbidden_position.to_ustring() == UString::from("LineEnd") {
                 f = true;
             }
             i = u32::wrapping_add(i, 1);
@@ -7237,105 +8202,89 @@ fn resolve_unicode_punctuation_boundaries_with_is_whitespace_code_point() {
 
 #[test]
 fn resolve_unicode_punctuation_boundaries_with_follows_authored_boundary_mandatory() {
-    testlib::run("org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesWithFollowsAuthoredBoundaryMandatory",
-"org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesWithFollowsAuthoredBoundaryMandatory", || {
-        UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_start(&"resolveUnicodePunctuationBoundariesWithFollowsAuthoredBoundaryMandatory");
-        let text = "\r“".to_string();
-        let r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_unicode_punctuation_boundaries(text.as_str(),
-&UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_latin_clusters(text.as_str()).unwrap(), &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_latin_roles(text.as_str()),
-&vec![]).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_equals(0, u32::from_ne_bytes((r.forbidden_line_start_clusters.size()).to_ne_bytes()), None).unwrap();
+    testlib::run("org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesWithFollowsAuthoredBoundaryMandatory", "org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesWithFollowsAuthoredBoundaryMandatory", || {
+        UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_start(UStr::new(&[114,101,115,111,108,118,101,85,110,105,99,111,100,101,80,117,110,99,116,117,97,116,105,111,110,66,111,117,110,100,97,114,105,101,115,87,105,116,104,70,111,108,108,111,119,115,65,117,116,104,111,114,101,100,66,111,117,110,100,97,114,121,77,97,110,100,97,116,111,114,121]));
+        let text = UString::from("\r“").to_ustring();
+        let r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_unicode_punctuation_boundaries(text.as_ustr(), &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_latin_clusters(text.as_ustr()).unwrap(), &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_latin_roles(text.as_ustr()), &vec![]).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_equals(0, u32::from_ne_bytes(((r.forbidden_line_start_clusters.size()) as u32).to_ne_bytes()), None).unwrap();
     });
 }
 
 #[test]
 fn resolve_unicode_punctuation_boundaries_with_follows_authored_boundary_zwsp() {
-    testlib::run("org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesWithFollowsAuthoredBoundaryZWSP",
-"org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesWithFollowsAuthoredBoundaryZWSP", || {
-        UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_start(&"resolveUnicodePunctuationBoundariesWithFollowsAuthoredBoundaryZWSP");
-        let text = "​“".to_string();
-        let r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_unicode_punctuation_boundaries(text.as_str(),
-&UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_latin_clusters(text.as_str()).unwrap(), &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_latin_roles(text.as_str()),
-&vec![]).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_equals(0, u32::from_ne_bytes((r.forbidden_line_start_clusters.size()).to_ne_bytes()), None).unwrap();
+    testlib::run("org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesWithFollowsAuthoredBoundaryZWSP", "org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesWithFollowsAuthoredBoundaryZWSP", || {
+        UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_start(UStr::new(&[114,101,115,111,108,118,101,85,110,105,99,111,100,101,80,117,110,99,116,117,97,116,105,111,110,66,111,117,110,100,97,114,105,101,115,87,105,116,104,70,111,108,108,111,119,115,65,117,116,104,111,114,101,100,66,111,117,110,100,97,114,121,90,87,83,80]));
+        let text = UString::from("​“").to_ustring();
+        let r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_unicode_punctuation_boundaries(text.as_ustr(), &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_latin_clusters(text.as_ustr()).unwrap(), &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_latin_roles(text.as_ustr()), &vec![]).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_equals(0, u32::from_ne_bytes(((r.forbidden_line_start_clusters.size()) as u32).to_ne_bytes()), None).unwrap();
     });
 }
 
 #[test]
 fn resolve_unicode_punctuation_boundaries_with_decimal_mark_following_inside_digit() {
-    testlib::run("org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesWithDecimalMarkFollowingInsideDigit",
-"org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesWithDecimalMarkFollowingInsideDigit", || {
-        UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_start(&"resolveUnicodePunctuationBoundariesWithDecimalMarkFollowingInsideDigit");
-        let text = " 1，23".to_string();
+    testlib::run("org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesWithDecimalMarkFollowingInsideDigit", "org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesWithDecimalMarkFollowingInsideDigit", || {
+        UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_start(UStr::new(&[114,101,115,111,108,118,101,85,110,105,99,111,100,101,80,117,110,99,116,117,97,116,105,111,110,66,111,117,110,100,97,114,105,101,115,87,105,116,104,68,101,99,105,109,97,108,77,97,114,107,70,111,108,108,111,119,105,110,103,73,110,115,105,100,101,68,105,103,105,116]));
+        let text = UString::from(" 1，23").to_ustring();
         let c = vec![
-    (Cluster::new(TextRange::new(0u32, 1u32).unwrap(), " ", "latin", 8.0f64, Some(" ".to_string()), Some(0.0), Some(0.0), Some(0.0))).clone(),
-    (Cluster::new(TextRange::new(1u32, 2u32).unwrap(), "1", "latin", 8.0f64, Some("1".to_string()), Some(0.0), Some(0.0), Some(0.0))).clone(),
-    (Cluster::new(TextRange::new(2u32, 3u32).unwrap(), "，", "cjk", 16.0f64, Some("，".to_string()), Some(0.0), Some(0.0), Some(0.0))).clone(),
-    (Cluster::new(TextRange::new(3u32, 5u32).unwrap(), "23", "latin", 8.0f64, Some("23".to_string()), Some(0.0), Some(0.0), Some(0.0))).clone(),
+    (Cluster::new(TextRange::new(0u32, 1u32).unwrap(), &(UStr::new(&[32])), &(UStr::new(&[108,97,116,105,110])), 8.0f64, Some(UString::from(" ")), Some(0.0), Some(0.0), Some(0.0))).clone(),
+    (Cluster::new(TextRange::new(1u32, 2u32).unwrap(), &(UStr::new(&[49])), &(UStr::new(&[108,97,116,105,110])), 8.0f64, Some(UString::from("1")), Some(0.0), Some(0.0), Some(0.0))).clone(),
+    (Cluster::new(TextRange::new(2u32, 3u32).unwrap(), &(UStr::new(&[65292])), &(UStr::new(&[99,106,107])), 16.0f64, Some(UString::from("，")), Some(0.0), Some(0.0), Some(0.0))).clone(),
+    (Cluster::new(TextRange::new(3u32, 5u32).unwrap(), &(UStr::new(&[50,51])), &(UStr::new(&[108,97,116,105,110])), 8.0f64, Some(UString::from("23")), Some(0.0), Some(0.0), Some(0.0))).clone(),
 ];
         let roles = vec![FontRole::LatinText, FontRole::LatinText, FontRole::CjkPunctuation, FontRole::LatinText];
-        let r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_unicode_punctuation_boundaries(text.as_str(), &c, &roles, &vec![]).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_equals(0, u32::from_ne_bytes((r.forbidden_line_start_clusters.size()).to_ne_bytes()), None).unwrap();
+        let r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_unicode_punctuation_boundaries(text.as_ustr(), &c, &roles, &vec![]).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_equals(0, u32::from_ne_bytes(((r.forbidden_line_start_clusters.size()) as u32).to_ne_bytes()), None).unwrap();
     });
 }
 
 #[test]
 fn resolve_unicode_punctuation_boundaries_with_decimal_mark_following_outside_digit() {
-    testlib::run("org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesWithDecimalMarkFollowingOutsideDigit",
-"org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesWithDecimalMarkFollowingOutsideDigit", || {
-        UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_start(&"resolveUnicodePunctuationBoundariesWithDecimalMarkFollowingOutsideDigit");
-        let text = " a，2".to_string();
+    testlib::run("org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesWithDecimalMarkFollowingOutsideDigit", "org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesWithDecimalMarkFollowingOutsideDigit", || {
+        UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_start(UStr::new(&[114,101,115,111,108,118,101,85,110,105,99,111,100,101,80,117,110,99,116,117,97,116,105,111,110,66,111,117,110,100,97,114,105,101,115,87,105,116,104,68,101,99,105,109,97,108,77,97,114,107,70,111,108,108,111,119,105,110,103,79,117,116,115,105,100,101,68,105,103,105,116]));
+        let text = UString::from(" a，2").to_ustring();
         let c = vec![
-    (Cluster::new(TextRange::new(0u32, 1u32).unwrap(), " ", "latin", 8.0f64, Some(" ".to_string()), Some(0.0), Some(0.0), Some(0.0))).clone(),
-    (Cluster::new(TextRange::new(1u32, 2u32).unwrap(), "a", "latin", 8.0f64, Some("a".to_string()), Some(0.0), Some(0.0), Some(0.0))).clone(),
-    (Cluster::new(TextRange::new(2u32, 3u32).unwrap(), "，", "cjk", 16.0f64, Some("，".to_string()), Some(0.0), Some(0.0), Some(0.0))).clone(),
-    (Cluster::new(TextRange::new(3u32, 4u32).unwrap(), "2", "latin", 8.0f64, Some("2".to_string()), Some(0.0), Some(0.0), Some(0.0))).clone(),
+    (Cluster::new(TextRange::new(0u32, 1u32).unwrap(), &(UStr::new(&[32])), &(UStr::new(&[108,97,116,105,110])), 8.0f64, Some(UString::from(" ")), Some(0.0), Some(0.0), Some(0.0))).clone(),
+    (Cluster::new(TextRange::new(1u32, 2u32).unwrap(), &(UStr::new(&[97])), &(UStr::new(&[108,97,116,105,110])), 8.0f64, Some(UString::from("a")), Some(0.0), Some(0.0), Some(0.0))).clone(),
+    (Cluster::new(TextRange::new(2u32, 3u32).unwrap(), &(UStr::new(&[65292])), &(UStr::new(&[99,106,107])), 16.0f64, Some(UString::from("，")), Some(0.0), Some(0.0), Some(0.0))).clone(),
+    (Cluster::new(TextRange::new(3u32, 4u32).unwrap(), &(UStr::new(&[50])), &(UStr::new(&[108,97,116,105,110])), 8.0f64, Some(UString::from("2")), Some(0.0), Some(0.0), Some(0.0))).clone(),
 ];
         let roles = vec![FontRole::LatinText, FontRole::LatinText, FontRole::LatinText, FontRole::LatinText];
-        let r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_unicode_punctuation_boundaries(text.as_str(), &c, &roles, &vec![]).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_true((i32::from_ne_bytes((u32::try_from((r.decisions.len()) & 0xFFFF_FFFF).unwrap_or(0)).to_ne_bytes())) > (0) ||
-(i32::from_ne_bytes((u32::from_ne_bytes((r.forbidden_line_start_clusters.size()).to_ne_bytes())).to_ne_bytes())) > (0), None).unwrap();
+        let r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_unicode_punctuation_boundaries(text.as_ustr(), &c, &roles, &vec![]).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_true((i32::from_ne_bytes(((u32::try_from((r.decisions.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) > (0) || (i32::from_ne_bytes(((u32::from_ne_bytes(((r.forbidden_line_start_clusters.size()) as u32).to_ne_bytes())) as i32).to_ne_bytes())) > (0), None).unwrap();
     });
 }
 
 #[test]
 fn resolve_unicode_punctuation_boundaries_with_previous_content_cluster_has_authored_break() {
-    testlib::run("org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesWithPreviousContentClusterHasAuthoredBreak",
-"org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesWithPreviousContentClusterHasAuthoredBreak", || {
-        UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_start(&"resolveUnicodePunctuationBoundariesWithPreviousContentClusterHasAuthoredBreak");
-        let text = concat!("\n",
-"（").to_string();
-        let r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_unicode_punctuation_boundaries(text.as_str(),
-&UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_latin_clusters(text.as_str()).unwrap(), &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_latin_roles(text.as_str()),
-&vec![]).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_true(u32::from_ne_bytes((r.forbidden_line_start_clusters.size()).to_ne_bytes()) == 0, None).unwrap();
+    testlib::run("org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesWithPreviousContentClusterHasAuthoredBreak", "org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesWithPreviousContentClusterHasAuthoredBreak", || {
+        UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_start(UStr::new(&[114,101,115,111,108,118,101,85,110,105,99,111,100,101,80,117,110,99,116,117,97,116,105,111,110,66,111,117,110,100,97,114,105,101,115,87,105,116,104,80,114,101,118,105,111,117,115,67,111,110,116,101,110,116,67,108,117,115,116,101,114,72,97,115,65,117,116,104,111,114,101,100,66,114,101,97,107]));
+        let text = UString::from(concat!("\n",
+"（")).to_ustring();
+        let r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_unicode_punctuation_boundaries(text.as_ustr(), &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_latin_clusters(text.as_ustr()).unwrap(), &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_latin_roles(text.as_ustr()), &vec![]).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_true(u32::from_ne_bytes(((r.forbidden_line_start_clusters.size()) as u32).to_ne_bytes()) == 0, None).unwrap();
     });
 }
 
 #[test]
 fn resolve_unicode_punctuation_boundaries_with_next_content_cluster_has_authored_break() {
-    testlib::run("org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesWithNextContentClusterHasAuthoredBreak",
-"org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesWithNextContentClusterHasAuthoredBreak", || {
-        UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_start(&"resolveUnicodePunctuationBoundariesWithNextContentClusterHasAuthoredBreak");
-        let text = concat!("”\n",
-"").to_string();
-        let r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_unicode_punctuation_boundaries(text.as_str(),
-&UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_latin_clusters(text.as_str()).unwrap(), &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_latin_roles(text.as_str()),
-&vec![]).unwrap();
+    testlib::run("org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesWithNextContentClusterHasAuthoredBreak", "org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesWithNextContentClusterHasAuthoredBreak", || {
+        UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_start(UStr::new(&[114,101,115,111,108,118,101,85,110,105,99,111,100,101,80,117,110,99,116,117,97,116,105,111,110,66,111,117,110,100,97,114,105,101,115,87,105,116,104,78,101,120,116,67,111,110,116,101,110,116,67,108,117,115,116,101,114,72,97,115,65,117,116,104,111,114,101,100,66,114,101,97,107]));
+        let text = UString::from(concat!("”\n",
+"")).to_ustring();
+        let r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_unicode_punctuation_boundaries(text.as_ustr(), &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_latin_clusters(text.as_ustr()).unwrap(), &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_latin_roles(text.as_ustr()), &vec![]).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_true(u32::try_from((r.unbreakable_ranges.len()) & 0xFFFF_FFFF).unwrap_or(0) == 0, None).unwrap();
     });
 }
 
 #[test]
 fn resolve_unicode_punctuation_boundaries_with_is_whitespace_code_point_non_bmp() {
-    testlib::run("org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesWithIsWhitespaceCodePointNonBmp",
-"org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesWithIsWhitespaceCodePointNonBmp", || {
-        UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_start(&"resolveUnicodePunctuationBoundariesWithIsWhitespaceCodePointNonBmp");
+    testlib::run("org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesWithIsWhitespaceCodePointNonBmp", "org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesWithIsWhitespaceCodePointNonBmp", || {
+        UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_start(UStr::new(&[114,101,115,111,108,118,101,85,110,105,99,111,100,101,80,117,110,99,116,117,97,116,105,111,110,66,111,117,110,100,97,114,105,101,115,87,105,116,104,73,115,87,104,105,116,101,115,112,97,99,101,67,111,100,101,80,111,105,110,116,78,111,110,66,109,112]));
         let text = UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_surrogate(&vec![55357, 56832]);
         let c = vec![
-    (Cluster::new(TextRange::new(0u32, 2u32).unwrap(), text.as_str(), "latin", 8.0f64, Some(text.to_string()), Some(0.0), Some(0.0), Some(0.0))).clone(),
+    (Cluster::new(TextRange::new(0u32, 2u32).unwrap(), text.as_ustr(), &(UStr::new(&[108,97,116,105,110])), 8.0f64, Some(text.to_ustring()), Some(0.0), Some(0.0), Some(0.0))).clone(),
 ];
-        let r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_unicode_punctuation_boundaries(text.as_str(), &c, &vec![FontRole::LatinText], &vec![]).unwrap();
+        let r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_unicode_punctuation_boundaries(text.as_ustr(), &c, &vec![FontRole::LatinText], &vec![]).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_equals(0, u32::try_from((r.decisions.len()) & 0xFFFF_FFFF).unwrap_or(0), None).unwrap();
     });
 }
@@ -7343,27 +8292,24 @@ fn resolve_unicode_punctuation_boundaries_with_is_whitespace_code_point_non_bmp(
 #[test]
 fn resolve_unicode_punctuation_boundaries_with_has_authored_break_both() {
     testlib::run("org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesWithHasAuthoredBreakBoth", "org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesWithHasAuthoredBreakBoth", || {
-        UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_start(&"resolveUnicodePunctuationBoundariesWithHasAuthoredBreakBoth");
-        let text = concat!("\n",
+        UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_start(UStr::new(&[114,101,115,111,108,118,101,85,110,105,99,111,100,101,80,117,110,99,116,117,97,116,105,111,110,66,111,117,110,100,97,114,105,101,115,87,105,116,104,72,97,115,65,117,116,104,111,114,101,100,66,114,101,97,107,66,111,116,104]));
+        let text = UString::from(concat!("\n",
 "“\n",
-"").to_string();
-        let r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_unicode_punctuation_boundaries(text.as_str(),
-&UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_latin_clusters(text.as_str()).unwrap(), &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_latin_roles(text.as_str()),
-&vec![]).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_true((i32::from_ne_bytes((u32::try_from((r.decisions.len()) & 0xFFFF_FFFF).unwrap_or(0)).to_ne_bytes())) > (0), None).unwrap();
+"")).to_ustring();
+        let r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_unicode_punctuation_boundaries(text.as_ustr(), &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_latin_clusters(text.as_ustr()).unwrap(), &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_latin_roles(text.as_ustr()), &vec![]).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_true((i32::from_ne_bytes(((u32::try_from((r.decisions.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) > (0), None).unwrap();
     });
 }
 
 #[test]
 fn resolve_attached_inline_inter_char_boundaries_with_both_cjk_punctuation() {
-    testlib::run("org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveAttachedInlineInterCharBoundariesWithBothCjkPunctuation", "org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveAttachedInlineInterCharBoundariesWithBothCjkPunctuation",
-|| {
-        UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_start(&"resolveAttachedInlineInterCharBoundariesWithBothCjkPunctuation");
-        let text = "、。中".to_string();
+    testlib::run("org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveAttachedInlineInterCharBoundariesWithBothCjkPunctuation", "org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveAttachedInlineInterCharBoundariesWithBothCjkPunctuation", || {
+        UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_start(UStr::new(&[114,101,115,111,108,118,101,65,116,116,97,99,104,101,100,73,110,108,105,110,101,73,110,116,101,114,67,104,97,114,66,111,117,110,100,97,114,105,101,115,87,105,116,104,66,111,116,104,67,106,107,80,117,110,99,116,117,97,116,105,111,110]));
+        let text = UString::from("、。中").to_ustring();
         let clusters = vec![
-    (Cluster::new(TextRange::new(0u32, 1u32).unwrap(), "、", "cjk", 16.0f64, Some("、".to_string()), Some(0.0), Some(0.0), Some(0.0))).clone(),
-    (Cluster::new(TextRange::new(1u32, 2u32).unwrap(), "。", "cjk", 16.0f64, Some("。".to_string()), Some(0.0), Some(0.0), Some(0.0))).clone(),
-    (Cluster::new(TextRange::new(2u32, 3u32).unwrap(), "中", "cjk", 16.0f64, Some("中".to_string()), Some(0.0), Some(0.0), Some(0.0))).clone(),
+    (Cluster::new(TextRange::new(0u32, 1u32).unwrap(), &(UStr::new(&[12289])), &(UStr::new(&[99,106,107])), 16.0f64, Some(UString::from("、")), Some(0.0), Some(0.0), Some(0.0))).clone(),
+    (Cluster::new(TextRange::new(1u32, 2u32).unwrap(), &(UStr::new(&[12290])), &(UStr::new(&[99,106,107])), 16.0f64, Some(UString::from("。")), Some(0.0), Some(0.0), Some(0.0))).clone(),
+    (Cluster::new(TextRange::new(2u32, 3u32).unwrap(), &(UStr::new(&[20013])), &(UStr::new(&[99,106,107])), 16.0f64, Some(UString::from("中")), Some(0.0), Some(0.0), Some(0.0))).clone(),
 ];
         let roles = vec![FontRole::CjkPunctuation, FontRole::CjkPunctuation, FontRole::CjkText];
         let edges = vec![
@@ -7371,145 +8317,110 @@ fn resolve_attached_inline_inter_char_boundaries_with_both_cjk_punctuation() {
     (EastAsianSpacingEdges::new(EastAsianSpacingValue::Wide, EastAsianSpacingValue::Wide, false)).clone(),
     (EastAsianSpacingEdges::new(EastAsianSpacingValue::Wide, EastAsianSpacingValue::Wide, false)).clone(),
 ];
-        let result = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_attached_inline_inter_char_boundaries(text.as_str(), &clusters, &roles, &edges, SortedTable::sorted_table_set_builder::<u32>(Arc::new(|a, b|
-SortedTable::sorted_table_compare_ints(i32::from_ne_bytes((*a).to_ne_bytes()), i32::from_ne_bytes((*b).to_ne_bytes())))).clone().build(), &vec![InlineAttachment::None, InlineAttachment::Previous, InlineAttachment::None]).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_true((i32::from_ne_bytes((u32::from_ne_bytes((result.virtual_boundary_after_clusters.size()).to_ne_bytes())).to_ne_bytes())) > (0), None).unwrap();
+        let result = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_attached_inline_inter_char_boundaries(text.as_ustr(), &clusters, &roles, &edges, SortedTable::sorted_table_set_builder::<u32>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_bytes(((*a) as i32).to_ne_bytes()), i32::from_ne_bytes(((*b) as i32).to_ne_bytes())))).clone().build(), &vec![InlineAttachment::None, InlineAttachment::Previous, InlineAttachment::None]).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_true((i32::from_ne_bytes(((u32::from_ne_bytes(((result.virtual_boundary_after_clusters.size()) as u32).to_ne_bytes())) as i32).to_ne_bytes())) > (0), None).unwrap();
     });
 }
 
 #[test]
 fn resolve_unicode_punctuation_boundaries_with_follows_authored_boundary_whitespace() {
-    testlib::run("org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesWithFollowsAuthoredBoundaryWhitespace",
-"org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesWithFollowsAuthoredBoundaryWhitespace", || {
-        UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_start(&"resolveUnicodePunctuationBoundariesWithFollowsAuthoredBoundaryWhitespace");
-        let text = " “".to_string();
-        let result = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_unicode_punctuation_boundaries(text.as_str(),
-&UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_latin_clusters(text.as_str()).unwrap(), &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_latin_roles(text.as_str()),
-&vec![]).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_equals(0, u32::from_ne_bytes((result.forbidden_line_start_clusters.size()).to_ne_bytes()), None).unwrap();
+    testlib::run("org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesWithFollowsAuthoredBoundaryWhitespace", "org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesWithFollowsAuthoredBoundaryWhitespace", || {
+        UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_start(UStr::new(&[114,101,115,111,108,118,101,85,110,105,99,111,100,101,80,117,110,99,116,117,97,116,105,111,110,66,111,117,110,100,97,114,105,101,115,87,105,116,104,70,111,108,108,111,119,115,65,117,116,104,111,114,101,100,66,111,117,110,100,97,114,121,87,104,105,116,101,115,112,97,99,101]));
+        let text = UString::from(" “").to_ustring();
+        let result = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_unicode_punctuation_boundaries(text.as_ustr(), &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_latin_clusters(text.as_ustr()).unwrap(), &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_latin_roles(text.as_ustr()), &vec![]).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_equals(0, u32::from_ne_bytes(((result.forbidden_line_start_clusters.size()) as u32).to_ne_bytes()), None).unwrap();
     });
 }
 
 #[test]
 fn resolve_unicode_punctuation_boundaries_with_follows_authored_boundary_whitespace_then_non_whitespace() {
-    testlib::run("org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesWithFollowsAuthoredBoundaryWhitespaceThenNonWhitespace",
-"org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesWithFollowsAuthoredBoundaryWhitespaceThenNonWhitespace", || {
-        UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_start(&"resolveUnicodePunctuationBoundariesWithFollowsAuthoredBoundaryWhitespaceThenNonWhitespace");
-        let text = " A“".to_string();
-        let result = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_unicode_punctuation_boundaries(text.as_str(),
-&UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_latin_clusters(text.as_str()).unwrap(), &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_latin_roles(text.as_str()),
-&vec![]).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_true((i32::from_ne_bytes((u32::try_from((result.decisions.len()) & 0xFFFF_FFFF).unwrap_or(0)).to_ne_bytes())) > (0) ||
-(i32::from_ne_bytes((u32::from_ne_bytes((result.forbidden_line_start_clusters.size()).to_ne_bytes())).to_ne_bytes())) > (0), None).unwrap();
+    testlib::run("org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesWithFollowsAuthoredBoundaryWhitespaceThenNonWhitespace", "org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesWithFollowsAuthoredBoundaryWhitespaceThenNonWhitespace", || {
+        UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_start(UStr::new(&[114,101,115,111,108,118,101,85,110,105,99,111,100,101,80,117,110,99,116,117,97,116,105,111,110,66,111,117,110,100,97,114,105,101,115,87,105,116,104,70,111,108,108,111,119,115,65,117,116,104,111,114,101,100,66,111,117,110,100,97,114,121,87,104,105,116,101,115,112,97,99,101,84,104,101,110,78,111,110,87,104,105,116,101,115,112,97,99,101]));
+        let text = UString::from(" A“").to_ustring();
+        let result = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_unicode_punctuation_boundaries(text.as_ustr(), &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_latin_clusters(text.as_ustr()).unwrap(), &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_latin_roles(text.as_ustr()), &vec![]).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_true((i32::from_ne_bytes(((u32::try_from((result.decisions.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) > (0) || (i32::from_ne_bytes(((u32::from_ne_bytes(((result.forbidden_line_start_clusters.size()) as u32).to_ne_bytes())) as i32).to_ne_bytes())) > (0), None).unwrap();
     });
 }
 
 #[test]
 fn resolve_unicode_punctuation_boundaries_with_previous_content_cluster_empty() {
-    testlib::run("org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesWithPreviousContentClusterEmpty",
-"org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesWithPreviousContentClusterEmpty", || {
-        UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_start(&"resolveUnicodePunctuationBoundariesWithPreviousContentClusterEmpty");
-        let text = "“".to_string();
+    testlib::run("org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesWithPreviousContentClusterEmpty", "org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesWithPreviousContentClusterEmpty", || {
+        UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_start(UStr::new(&[114,101,115,111,108,118,101,85,110,105,99,111,100,101,80,117,110,99,116,117,97,116,105,111,110,66,111,117,110,100,97,114,105,101,115,87,105,116,104,80,114,101,118,105,111,117,115,67,111,110,116,101,110,116,67,108,117,115,116,101,114,69,109,112,116,121]));
+        let text = UString::from("“").to_ustring();
         let clusters = vec![
-    (Cluster::new(TextRange::new(0u32, 1u32).unwrap(), "“", "latin", 16.0f64, Some("“".to_string()), Some(0.0), Some(0.0), Some(0.0))).clone(),
+    (Cluster::new(TextRange::new(0u32, 1u32).unwrap(), &(UStr::new(&[8220])), &(UStr::new(&[108,97,116,105,110])), 16.0f64, Some(UString::from("“")), Some(0.0), Some(0.0), Some(0.0))).clone(),
 ];
-        let result = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_unicode_punctuation_boundaries(text.as_str(), &clusters, &vec![FontRole::LatinText], &vec![]).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_true((i32::from_ne_bytes((u32::try_from((result.decisions.len()) & 0xFFFF_FFFF).unwrap_or(0)).to_ne_bytes())) > (0) ||
-(i32::from_ne_bytes((u32::from_ne_bytes((result.forbidden_line_start_clusters.size()).to_ne_bytes())).to_ne_bytes())) > (0) || (i32::from_ne_bytes((u32::try_from((result.unbreakable_ranges.len()) & 0xFFFF_FFFF).unwrap_or(0)).to_ne_bytes())) > (0), None).unwrap();
+        let result = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_unicode_punctuation_boundaries(text.as_ustr(), &clusters, &vec![FontRole::LatinText], &vec![]).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_true((i32::from_ne_bytes(((u32::try_from((result.decisions.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) > (0) || (i32::from_ne_bytes(((u32::from_ne_bytes(((result.forbidden_line_start_clusters.size()) as u32).to_ne_bytes())) as i32).to_ne_bytes())) > (0) || (i32::from_ne_bytes(((u32::try_from((result.unbreakable_ranges.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) > (0), None).unwrap();
     });
 }
 
 #[test]
 fn resolve_unicode_punctuation_boundaries_with_next_content_cluster_empty() {
-    testlib::run("org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesWithNextContentClusterEmpty", "org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesWithNextContentClusterEmpty",
-|| {
-        UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_start(&"resolveUnicodePunctuationBoundariesWithNextContentClusterEmpty");
-        let text = "a”b".to_string();
-        let result = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_unicode_punctuation_boundaries(text.as_str(),
-&UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_latin_clusters(text.as_str()).unwrap(), &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_latin_roles(text.as_str()),
-&vec![]).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_true((i32::from_ne_bytes((u32::from_ne_bytes((result.forbidden_line_start_clusters.size()).to_ne_bytes())).to_ne_bytes())) > (0) || (i32::from_ne_bytes((u32::try_from((result.unbreakable_ranges.len()) &
-0xFFFF_FFFF).unwrap_or(0)).to_ne_bytes())) > (0), None).unwrap();
+    testlib::run("org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesWithNextContentClusterEmpty", "org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesWithNextContentClusterEmpty", || {
+        UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_start(UStr::new(&[114,101,115,111,108,118,101,85,110,105,99,111,100,101,80,117,110,99,116,117,97,116,105,111,110,66,111,117,110,100,97,114,105,101,115,87,105,116,104,78,101,120,116,67,111,110,116,101,110,116,67,108,117,115,116,101,114,69,109,112,116,121]));
+        let text = UString::from("a”b").to_ustring();
+        let result = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_unicode_punctuation_boundaries(text.as_ustr(), &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_latin_clusters(text.as_ustr()).unwrap(), &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_latin_roles(text.as_ustr()), &vec![]).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_true((i32::from_ne_bytes(((u32::from_ne_bytes(((result.forbidden_line_start_clusters.size()) as u32).to_ne_bytes())) as i32).to_ne_bytes())) > (0) || (i32::from_ne_bytes(((u32::try_from((result.unbreakable_ranges.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) > (0), None).unwrap();
     });
 }
 
 #[test]
 fn resolve_unicode_punctuation_boundaries_with_code_point_at_or_null_surrogate() {
-    testlib::run("org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesWithCodePointAtOrNullSurrogate",
-"org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesWithCodePointAtOrNullSurrogate", || {
-        UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_start(&"resolveUnicodePunctuationBoundariesWithCodePointAtOrNullSurrogate");
-        let text = format!("{}{}",
-            "“",
-            UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_surrogate(&vec![55357, 56832])
-        );
+    testlib::run("org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesWithCodePointAtOrNullSurrogate", "org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesWithCodePointAtOrNullSurrogate", || {
+        UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_start(UStr::new(&[114,101,115,111,108,118,101,85,110,105,99,111,100,101,80,117,110,99,116,117,97,116,105,111,110,66,111,117,110,100,97,114,105,101,115,87,105,116,104,67,111,100,101,80,111,105,110,116,65,116,79,114,78,117,108,108,83,117,114,114,111,103,97,116,101]));
+        let text = { let mut __s = UString::new(); __s += &(UString::from("“")); __s += UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_surrogate(&vec![55357, 56832]).as_ustr(); __s };
         let clusters = vec![
-    (Cluster::new(TextRange::new(0u32, 1u32).unwrap(), "“", "latin", 16.0f64, Some("“".to_string()), Some(0.0), Some(0.0), Some(0.0))).clone(),
-    (Cluster::new(TextRange::new(1u32, 3u32).unwrap(), UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_surrogate(&vec![55357, 56832]).as_str(), "emoji", 16.0f64,
-Some(UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_surrogate(&vec![55357, 56832])), Some(0.0), Some(0.0), Some(0.0))).clone(),
+    (Cluster::new(TextRange::new(0u32, 1u32).unwrap(), &(UStr::new(&[8220])), &(UStr::new(&[108,97,116,105,110])), 16.0f64, Some(UString::from("“")), Some(0.0), Some(0.0), Some(0.0))).clone(),
+    (Cluster::new(TextRange::new(1u32, 3u32).unwrap(), UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_surrogate(&vec![55357, 56832]).as_ustr(), &(UStr::new(&[101,109,111,106,105])), 16.0f64, Some(UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_surrogate(&vec![55357, 56832])), Some(0.0), Some(0.0), Some(0.0))).clone(),
 ];
-        let result = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_unicode_punctuation_boundaries(text.as_str(), &clusters, &vec![FontRole::LatinText, FontRole::Emoji], &vec![]).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_true((i32::from_ne_bytes((u32::try_from((result.decisions.len()) & 0xFFFF_FFFF).unwrap_or(0)).to_ne_bytes())) > (0) ||
-(i32::from_ne_bytes((u32::from_ne_bytes((result.forbidden_line_start_clusters.size()).to_ne_bytes())).to_ne_bytes())) > (0), None).unwrap();
+        let result = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_unicode_punctuation_boundaries(text.as_ustr(), &clusters, &vec![FontRole::LatinText, FontRole::Emoji], &vec![]).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_true((i32::from_ne_bytes(((u32::try_from((result.decisions.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) > (0) || (i32::from_ne_bytes(((u32::from_ne_bytes(((result.forbidden_line_start_clusters.size()) as u32).to_ne_bytes())) as i32).to_ne_bytes())) > (0), None).unwrap();
     });
 }
 
 #[test]
 fn resolve_unicode_punctuation_boundaries_with_has_authored_break_mandatory_only() {
-    testlib::run("org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesWithHasAuthoredBreakMandatoryOnly",
-"org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesWithHasAuthoredBreakMandatoryOnly", || {
-        UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_start(&"resolveUnicodePunctuationBoundariesWithHasAuthoredBreakMandatoryOnly");
-        let text = "\r“".to_string();
-        let result = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_unicode_punctuation_boundaries(text.as_str(),
-&UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_latin_clusters(text.as_str()).unwrap(), &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_latin_roles(text.as_str()),
-&vec![]).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_equals(0, u32::from_ne_bytes((result.forbidden_line_start_clusters.size()).to_ne_bytes()), None).unwrap();
+    testlib::run("org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesWithHasAuthoredBreakMandatoryOnly", "org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesWithHasAuthoredBreakMandatoryOnly", || {
+        UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_start(UStr::new(&[114,101,115,111,108,118,101,85,110,105,99,111,100,101,80,117,110,99,116,117,97,116,105,111,110,66,111,117,110,100,97,114,105,101,115,87,105,116,104,72,97,115,65,117,116,104,111,114,101,100,66,114,101,97,107,77,97,110,100,97,116,111,114,121,79,110,108,121]));
+        let text = UString::from("\r“").to_ustring();
+        let result = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_unicode_punctuation_boundaries(text.as_ustr(), &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_latin_clusters(text.as_ustr()).unwrap(), &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_latin_roles(text.as_ustr()), &vec![]).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_equals(0, u32::from_ne_bytes(((result.forbidden_line_start_clusters.size()) as u32).to_ne_bytes()), None).unwrap();
     });
 }
 
 #[test]
 fn resolve_unicode_punctuation_boundaries_with_code_point_before_surrogate_pair() {
-    testlib::run("org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesWithCodePointBeforeSurrogatePair",
-"org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesWithCodePointBeforeSurrogatePair", || {
-        UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_start(&"resolveUnicodePunctuationBoundariesWithCodePointBeforeSurrogatePair");
-        let text = format!("{}{}",
-            UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_surrogate(&vec![55357, 56832]),
-            "”"
-        );
+    testlib::run("org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesWithCodePointBeforeSurrogatePair", "org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesWithCodePointBeforeSurrogatePair", || {
+        UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_start(UStr::new(&[114,101,115,111,108,118,101,85,110,105,99,111,100,101,80,117,110,99,116,117,97,116,105,111,110,66,111,117,110,100,97,114,105,101,115,87,105,116,104,67,111,100,101,80,111,105,110,116,66,101,102,111,114,101,83,117,114,114,111,103,97,116,101,80,97,105,114]));
+        let text = { let mut __s = UString::new(); __s += UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_surrogate(&vec![55357, 56832]).as_ustr(); __s += &(UString::from("”")); __s };
         let clusters = vec![
-    (Cluster::new(TextRange::new(0u32, 2u32).unwrap(), UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_surrogate(&vec![55357, 56832]).as_str(), "emoji", 16.0f64,
-Some(UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_surrogate(&vec![55357, 56832])), Some(0.0), Some(0.0), Some(0.0))).clone(),
-    (Cluster::new(TextRange::new(2u32, 3u32).unwrap(), "”", "latin", 16.0f64, Some("”".to_string()), Some(0.0), Some(0.0), Some(0.0))).clone(),
+    (Cluster::new(TextRange::new(0u32, 2u32).unwrap(), UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_surrogate(&vec![55357, 56832]).as_ustr(), &(UStr::new(&[101,109,111,106,105])), 16.0f64, Some(UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_surrogate(&vec![55357, 56832])), Some(0.0), Some(0.0), Some(0.0))).clone(),
+    (Cluster::new(TextRange::new(2u32, 3u32).unwrap(), &(UStr::new(&[8221])), &(UStr::new(&[108,97,116,105,110])), 16.0f64, Some(UString::from("”")), Some(0.0), Some(0.0), Some(0.0))).clone(),
 ];
-        let result = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_unicode_punctuation_boundaries(text.as_str(), &clusters, &vec![FontRole::Emoji, FontRole::LatinText], &vec![]).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_true((i32::from_ne_bytes((u32::try_from((result.decisions.len()) & 0xFFFF_FFFF).unwrap_or(0)).to_ne_bytes())) > (0) ||
-(i32::from_ne_bytes((u32::from_ne_bytes((result.forbidden_line_start_clusters.size()).to_ne_bytes())).to_ne_bytes())) > (0), None).unwrap();
+        let result = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_unicode_punctuation_boundaries(text.as_ustr(), &clusters, &vec![FontRole::Emoji, FontRole::LatinText], &vec![]).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_true((i32::from_ne_bytes(((u32::try_from((result.decisions.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) > (0) || (i32::from_ne_bytes(((u32::from_ne_bytes(((result.forbidden_line_start_clusters.size()) as u32).to_ne_bytes())) as i32).to_ne_bytes())) > (0), None).unwrap();
     });
 }
 
 #[test]
 fn resolve_unicode_punctuation_boundaries_with_code_point_at_or_null_supplementary() {
-    testlib::run("org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesWithCodePointAtOrNullSupplementary",
-"org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesWithCodePointAtOrNullSupplementary", || {
-        UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_start(&"resolveUnicodePunctuationBoundariesWithCodePointAtOrNullSupplementary");
-        let text = format!("{}{}",
-            UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_surrogate(&vec![55357, 56832]),
-            "“"
-        );
+    testlib::run("org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesWithCodePointAtOrNullSupplementary", "org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesWithCodePointAtOrNullSupplementary", || {
+        UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_start(UStr::new(&[114,101,115,111,108,118,101,85,110,105,99,111,100,101,80,117,110,99,116,117,97,116,105,111,110,66,111,117,110,100,97,114,105,101,115,87,105,116,104,67,111,100,101,80,111,105,110,116,65,116,79,114,78,117,108,108,83,117,112,112,108,101,109,101,110,116,97,114,121]));
+        let text = { let mut __s = UString::new(); __s += UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_surrogate(&vec![55357, 56832]).as_ustr(); __s += &(UString::from("“")); __s };
         let clusters = vec![
-    (Cluster::new(TextRange::new(0u32, 2u32).unwrap(), UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_surrogate(&vec![55357, 56832]).as_str(), "emoji", 16.0f64,
-Some(UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_surrogate(&vec![55357, 56832])), Some(0.0), Some(0.0), Some(0.0))).clone(),
-    (Cluster::new(TextRange::new(2u32, 3u32).unwrap(), "“", "latin", 16.0f64, Some("“".to_string()), Some(0.0), Some(0.0), Some(0.0))).clone(),
+    (Cluster::new(TextRange::new(0u32, 2u32).unwrap(), UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_surrogate(&vec![55357, 56832]).as_ustr(), &(UStr::new(&[101,109,111,106,105])), 16.0f64, Some(UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_surrogate(&vec![55357, 56832])), Some(0.0), Some(0.0), Some(0.0))).clone(),
+    (Cluster::new(TextRange::new(2u32, 3u32).unwrap(), &(UStr::new(&[8220])), &(UStr::new(&[108,97,116,105,110])), 16.0f64, Some(UString::from("“")), Some(0.0), Some(0.0), Some(0.0))).clone(),
 ];
-        let result = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_unicode_punctuation_boundaries(text.as_str(), &clusters, &vec![FontRole::Emoji, FontRole::LatinText], &vec![]).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_true((i32::from_ne_bytes((u32::try_from((result.decisions.len()) & 0xFFFF_FFFF).unwrap_or(0)).to_ne_bytes())) > (0) ||
-(i32::from_ne_bytes((u32::from_ne_bytes((result.forbidden_line_start_clusters.size()).to_ne_bytes())).to_ne_bytes())) > (0), None).unwrap();
+        let result = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_unicode_punctuation_boundaries(text.as_ustr(), &clusters, &vec![FontRole::Emoji, FontRole::LatinText], &vec![]).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_true((i32::from_ne_bytes(((u32::try_from((result.decisions.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) > (0) || (i32::from_ne_bytes(((u32::from_ne_bytes(((result.forbidden_line_start_clusters.size()) as u32).to_ne_bytes())) as i32).to_ne_bytes())) > (0), None).unwrap();
     });
 }
 
 #[test]
 fn resolve_attached_inline_virtual_boundaries_at_start() {
     testlib::run("org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveAttachedInlineVirtualBoundariesAtStart", "org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveAttachedInlineVirtualBoundariesAtStart", || {
-        UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_start(&"resolveAttachedInlineVirtualBoundariesAtStart");
+        UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_start(UStr::new(&[114,101,115,111,108,118,101,65,116,116,97,99,104,101,100,73,110,108,105,110,101,86,105,114,116,117,97,108,66,111,117,110,100,97,114,105,101,115,65,116,83,116,97,114,116]));
         let result = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_attached_inline_virtual_boundaries(&vec![InlineAttachment::Previous, InlineAttachment::None]);
         let _ = TracedAssertions::traced_assertions_assert_equals(0, u32::try_from((result.len()) & 0xFFFF_FFFF).unwrap_or(0), None).unwrap();
     });
@@ -7517,19 +8428,17 @@ fn resolve_attached_inline_virtual_boundaries_at_start() {
 
 #[test]
 fn resolve_attached_inline_inter_char_boundaries_requires_matching_edges_size() {
-    testlib::run("org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveAttachedInlineInterCharBoundariesRequiresMatchingEdgesSize",
-"org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveAttachedInlineInterCharBoundariesRequiresMatchingEdgesSize", || {
-        UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_start(&"resolveAttachedInlineInterCharBoundariesRequiresMatchingEdgesSize");
+    testlib::run("org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveAttachedInlineInterCharBoundariesRequiresMatchingEdgesSize", "org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveAttachedInlineInterCharBoundariesRequiresMatchingEdgesSize", || {
+        UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_start(UStr::new(&[114,101,115,111,108,118,101,65,116,116,97,99,104,101,100,73,110,108,105,110,101,73,110,116,101,114,67,104,97,114,66,111,117,110,100,97,114,105,101,115,82,101,113,117,105,114,101,115,77,97,116,99,104,105,110,103,69,100,103,101,115,83,105,122,101]));
         let clusters = vec![
-    (Cluster::new(TextRange::new(0u32, 1u32).unwrap(), "a", "latin", 8.0f64, Some("a".to_string()), Some(0.0), Some(0.0), Some(0.0))).clone(),
+    (Cluster::new(TextRange::new(0u32, 1u32).unwrap(), &(UStr::new(&[97])), &(UStr::new(&[108,97,116,105,110])), 8.0f64, Some(UString::from("a")), Some(0.0), Some(0.0), Some(0.0))).clone(),
 ];
         let edges = vec![
     (EastAsianSpacingEdges::new(EastAsianSpacingValue::Wide, EastAsianSpacingValue::Wide, false)).clone(),
     (EastAsianSpacingEdges::new(EastAsianSpacingValue::Wide, EastAsianSpacingValue::Wide, false)).clone(),
 ];
         TracedAssertions::traced_assertions_assert_fails_with(None.clone(), { let clusters = (clusters).clone(); let edges = (edges).clone(); Arc::new(move || {
-        UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_attached_inline_inter_char_boundaries(&"a", &clusters, &vec![FontRole::LatinText], &edges, SortedTable::sorted_table_set_builder::<u32>(Arc::new(|a, b|
-SortedTable::sorted_table_compare_ints(i32::from_ne_bytes((*a).to_ne_bytes()), i32::from_ne_bytes((*b).to_ne_bytes())))).clone().build(), &vec![InlineAttachment::None]).map_err(|e| IllegalStateException::new(&format!("{}", e)))?;
+        UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_attached_inline_inter_char_boundaries(UStr::new(&[97]), &clusters, &vec![FontRole::LatinText], &edges, SortedTable::sorted_table_set_builder::<u32>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_bytes(((*a) as i32).to_ne_bytes()), i32::from_ne_bytes(((*b) as i32).to_ne_bytes())))).clone().build(), &vec![InlineAttachment::None]).map_err(|e| IllegalStateException::new(&format!("{}", e)))?;
         Ok(())
 }) }).unwrap();
     });
@@ -7537,190 +8446,169 @@ SortedTable::sorted_table_compare_ints(i32::from_ne_bytes((*a).to_ne_bytes()), i
 
 #[test]
 fn resolve_attached_inline_inter_char_boundaries_punctuation_western_leading_not_narrow() {
-    testlib::run("org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveAttachedInlineInterCharBoundariesPunctuationWesternLeadingNotNarrow",
-"org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveAttachedInlineInterCharBoundariesPunctuationWesternLeadingNotNarrow", || {
-        UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_start(&"resolveAttachedInlineInterCharBoundariesPunctuationWesternLeadingNotNarrow");
-        let text = ",中a".to_string();
+    testlib::run("org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveAttachedInlineInterCharBoundariesPunctuationWesternLeadingNotNarrow", "org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveAttachedInlineInterCharBoundariesPunctuationWesternLeadingNotNarrow", || {
+        UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_start(UStr::new(&[114,101,115,111,108,118,101,65,116,116,97,99,104,101,100,73,110,108,105,110,101,73,110,116,101,114,67,104,97,114,66,111,117,110,100,97,114,105,101,115,80,117,110,99,116,117,97,116,105,111,110,87,101,115,116,101,114,110,76,101,97,100,105,110,103,78,111,116,78,97,114,114,111,119]));
+        let text = UString::from(",中a").to_ustring();
         let clusters = vec![
-    (Cluster::new(TextRange::new(0u32, 1u32).unwrap(), ",", "cjk", 16.0f64, Some(",".to_string()), Some(0.0), Some(0.0), Some(0.0))).clone(),
-    (Cluster::new(TextRange::new(1u32, 2u32).unwrap(), "中", "cjk", 16.0f64, Some("中".to_string()), Some(0.0), Some(0.0), Some(0.0))).clone(),
-    (Cluster::new(TextRange::new(2u32, 3u32).unwrap(), "a", "latin", 8.0f64, Some("a".to_string()), Some(0.0), Some(0.0), Some(0.0))).clone(),
+    (Cluster::new(TextRange::new(0u32, 1u32).unwrap(), &(UStr::new(&[44])), &(UStr::new(&[99,106,107])), 16.0f64, Some(UString::from(",")), Some(0.0), Some(0.0), Some(0.0))).clone(),
+    (Cluster::new(TextRange::new(1u32, 2u32).unwrap(), &(UStr::new(&[20013])), &(UStr::new(&[99,106,107])), 16.0f64, Some(UString::from("中")), Some(0.0), Some(0.0), Some(0.0))).clone(),
+    (Cluster::new(TextRange::new(2u32, 3u32).unwrap(), &(UStr::new(&[97])), &(UStr::new(&[108,97,116,105,110])), 8.0f64, Some(UString::from("a")), Some(0.0), Some(0.0), Some(0.0))).clone(),
 ];
         let edges = vec![
     (EastAsianSpacingEdges::new(EastAsianSpacingValue::Wide, EastAsianSpacingValue::Wide, false)).clone(),
     (EastAsianSpacingEdges::new(EastAsianSpacingValue::Wide, EastAsianSpacingValue::Wide, false)).clone(),
     (EastAsianSpacingEdges::new(EastAsianSpacingValue::Wide, EastAsianSpacingValue::Wide, false)).clone(),
 ];
-        let result = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_attached_inline_inter_char_boundaries(text.as_str(), &clusters, &vec![FontRole::CjkPunctuation, FontRole::CjkText, FontRole::LatinText], &edges,
-SortedTable::sorted_table_set_builder::<u32>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_bytes((*a).to_ne_bytes()), i32::from_ne_bytes((*b).to_ne_bytes())))).clone().build(), &vec![InlineAttachment::None, InlineAttachment::Previous,
-InlineAttachment::None]).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_equals(0, u32::from_ne_bytes((result.virtual_boundary_after_clusters.size()).to_ne_bytes()), None).unwrap();
+        let result = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_attached_inline_inter_char_boundaries(text.as_ustr(), &clusters, &vec![FontRole::CjkPunctuation, FontRole::CjkText, FontRole::LatinText], &edges, SortedTable::sorted_table_set_builder::<u32>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_bytes(((*a) as i32).to_ne_bytes()), i32::from_ne_bytes(((*b) as i32).to_ne_bytes())))).clone().build(), &vec![InlineAttachment::None, InlineAttachment::Previous, InlineAttachment::None]).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_equals(0, u32::from_ne_bytes(((result.virtual_boundary_after_clusters.size()) as u32).to_ne_bytes()), None).unwrap();
     });
 }
 
 #[test]
 fn resolve_attached_inline_inter_char_boundaries_all_conditions_false() {
     testlib::run("org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveAttachedInlineInterCharBoundariesAllConditionsFalse", "org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveAttachedInlineInterCharBoundariesAllConditionsFalse", || {
-        UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_start(&"resolveAttachedInlineInterCharBoundariesAllConditionsFalse");
-        let text = "a*b".to_string();
+        UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_start(UStr::new(&[114,101,115,111,108,118,101,65,116,116,97,99,104,101,100,73,110,108,105,110,101,73,110,116,101,114,67,104,97,114,66,111,117,110,100,97,114,105,101,115,65,108,108,67,111,110,100,105,116,105,111,110,115,70,97,108,115,101]));
+        let text = UString::from("a*b").to_ustring();
         let clusters = vec![
-    (Cluster::new(TextRange::new(0u32, 1u32).unwrap(), "a", "latin", 8.0f64, Some("a".to_string()), Some(0.0), Some(0.0), Some(0.0))).clone(),
-    (Cluster::new(TextRange::new(1u32, 2u32).unwrap(), "*", "latin", 8.0f64, Some("*".to_string()), Some(0.0), Some(0.0), Some(0.0))).clone(),
-    (Cluster::new(TextRange::new(2u32, 3u32).unwrap(), "b", "latin", 8.0f64, Some("b".to_string()), Some(0.0), Some(0.0), Some(0.0))).clone(),
+    (Cluster::new(TextRange::new(0u32, 1u32).unwrap(), &(UStr::new(&[97])), &(UStr::new(&[108,97,116,105,110])), 8.0f64, Some(UString::from("a")), Some(0.0), Some(0.0), Some(0.0))).clone(),
+    (Cluster::new(TextRange::new(1u32, 2u32).unwrap(), &(UStr::new(&[42])), &(UStr::new(&[108,97,116,105,110])), 8.0f64, Some(UString::from("*")), Some(0.0), Some(0.0), Some(0.0))).clone(),
+    (Cluster::new(TextRange::new(2u32, 3u32).unwrap(), &(UStr::new(&[98])), &(UStr::new(&[108,97,116,105,110])), 8.0f64, Some(UString::from("b")), Some(0.0), Some(0.0), Some(0.0))).clone(),
 ];
         let edges = vec![
     (EastAsianSpacingEdges::new(EastAsianSpacingValue::Wide, EastAsianSpacingValue::Wide, false)).clone(),
     (EastAsianSpacingEdges::new(EastAsianSpacingValue::Wide, EastAsianSpacingValue::Wide, false)).clone(),
     (EastAsianSpacingEdges::new(EastAsianSpacingValue::Wide, EastAsianSpacingValue::Wide, false)).clone(),
 ];
-        let result = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_attached_inline_inter_char_boundaries(text.as_str(), &clusters, &vec![FontRole::LatinText, FontRole::LatinText, FontRole::LatinText], &edges,
-SortedTable::sorted_table_set_builder::<u32>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_bytes((*a).to_ne_bytes()), i32::from_ne_bytes((*b).to_ne_bytes())))).clone().build(), &vec![InlineAttachment::None, InlineAttachment::Previous,
-InlineAttachment::None]).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_equals(0, u32::from_ne_bytes((result.virtual_boundary_after_clusters.size()).to_ne_bytes()), None).unwrap();
+        let result = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_attached_inline_inter_char_boundaries(text.as_ustr(), &clusters, &vec![FontRole::LatinText, FontRole::LatinText, FontRole::LatinText], &edges, SortedTable::sorted_table_set_builder::<u32>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_bytes(((*a) as i32).to_ne_bytes()), i32::from_ne_bytes(((*b) as i32).to_ne_bytes())))).clone().build(), &vec![InlineAttachment::None, InlineAttachment::Previous, InlineAttachment::None]).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_equals(0, u32::from_ne_bytes(((result.virtual_boundary_after_clusters.size()) as u32).to_ne_bytes()), None).unwrap();
     });
 }
 
 #[test]
 fn resolve_attached_inline_inter_char_boundaries_narrow_narrow_pair() {
     testlib::run("org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveAttachedInlineInterCharBoundariesNarrowNarrowPair", "org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveAttachedInlineInterCharBoundariesNarrowNarrowPair", || {
-        UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_start(&"resolveAttachedInlineInterCharBoundariesNarrowNarrowPair");
-        let text = "a*b".to_string();
+        UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_start(UStr::new(&[114,101,115,111,108,118,101,65,116,116,97,99,104,101,100,73,110,108,105,110,101,73,110,116,101,114,67,104,97,114,66,111,117,110,100,97,114,105,101,115,78,97,114,114,111,119,78,97,114,114,111,119,80,97,105,114]));
+        let text = UString::from("a*b").to_ustring();
         let clusters = vec![
-    (Cluster::new(TextRange::new(0u32, 1u32).unwrap(), "a", "latin", 8.0f64, Some("a".to_string()), Some(0.0), Some(0.0), Some(0.0))).clone(),
-    (Cluster::new(TextRange::new(1u32, 2u32).unwrap(), "*", "latin", 8.0f64, Some("*".to_string()), Some(0.0), Some(0.0), Some(0.0))).clone(),
-    (Cluster::new(TextRange::new(2u32, 3u32).unwrap(), "b", "latin", 8.0f64, Some("b".to_string()), Some(0.0), Some(0.0), Some(0.0))).clone(),
+    (Cluster::new(TextRange::new(0u32, 1u32).unwrap(), &(UStr::new(&[97])), &(UStr::new(&[108,97,116,105,110])), 8.0f64, Some(UString::from("a")), Some(0.0), Some(0.0), Some(0.0))).clone(),
+    (Cluster::new(TextRange::new(1u32, 2u32).unwrap(), &(UStr::new(&[42])), &(UStr::new(&[108,97,116,105,110])), 8.0f64, Some(UString::from("*")), Some(0.0), Some(0.0), Some(0.0))).clone(),
+    (Cluster::new(TextRange::new(2u32, 3u32).unwrap(), &(UStr::new(&[98])), &(UStr::new(&[108,97,116,105,110])), 8.0f64, Some(UString::from("b")), Some(0.0), Some(0.0), Some(0.0))).clone(),
 ];
         let edges = vec![
     (EastAsianSpacingEdges::new(EastAsianSpacingValue::Wide, EastAsianSpacingValue::Narrow, false)).clone(),
     (EastAsianSpacingEdges::new(EastAsianSpacingValue::Wide, EastAsianSpacingValue::Wide, false)).clone(),
     (EastAsianSpacingEdges::new(EastAsianSpacingValue::Narrow, EastAsianSpacingValue::Wide, false)).clone(),
 ];
-        let result = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_attached_inline_inter_char_boundaries(text.as_str(), &clusters, &vec![FontRole::LatinText, FontRole::LatinText, FontRole::LatinText], &edges,
-SortedTable::sorted_table_set_builder::<u32>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_bytes((*a).to_ne_bytes()), i32::from_ne_bytes((*b).to_ne_bytes())))).clone().build(), &vec![InlineAttachment::None, InlineAttachment::Previous,
-InlineAttachment::None]).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_equals(0, u32::from_ne_bytes((result.virtual_boundary_after_clusters.size()).to_ne_bytes()), None).unwrap();
+        let result = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_attached_inline_inter_char_boundaries(text.as_ustr(), &clusters, &vec![FontRole::LatinText, FontRole::LatinText, FontRole::LatinText], &edges, SortedTable::sorted_table_set_builder::<u32>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_bytes(((*a) as i32).to_ne_bytes()), i32::from_ne_bytes(((*b) as i32).to_ne_bytes())))).clone().build(), &vec![InlineAttachment::None, InlineAttachment::Previous, InlineAttachment::None]).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_equals(0, u32::from_ne_bytes(((result.virtual_boundary_after_clusters.size()) as u32).to_ne_bytes()), None).unwrap();
     });
 }
 
 #[test]
 fn resolve_unicode_punctuation_boundaries_infix_numeric_separator_with_space_and_no_space() {
-    testlib::run("org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesInfixNumericSeparatorWithSpaceAndNoSpace",
-"org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesInfixNumericSeparatorWithSpaceAndNoSpace", || {
-        UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_start(&"resolveUnicodePunctuationBoundariesInfixNumericSeparatorWithSpaceAndNoSpace");
-        let mut t = " .5".to_string();
-        let mut r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_unicode_punctuation_boundaries(t.as_str(),
-&UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_latin_clusters(t.as_str()).unwrap(), &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_latin_roles(t.as_str()),
-&vec![]).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_equals(0, u32::from_ne_bytes((r.forbidden_line_start_clusters.size()).to_ne_bytes()), None).unwrap();
-        t = " 1.5".to_string();
-        r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_unicode_punctuation_boundaries(t.as_str(), &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_latin_clusters(t.as_str()).unwrap(),
-&UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_latin_roles(t.as_str()), &vec![]).unwrap();
+    testlib::run("org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesInfixNumericSeparatorWithSpaceAndNoSpace", "org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesInfixNumericSeparatorWithSpaceAndNoSpace", || {
+        UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_start(UStr::new(&[114,101,115,111,108,118,101,85,110,105,99,111,100,101,80,117,110,99,116,117,97,116,105,111,110,66,111,117,110,100,97,114,105,101,115,73,110,102,105,120,78,117,109,101,114,105,99,83,101,112,97,114,97,116,111,114,87,105,116,104,83,112,97,99,101,65,110,100,78,111,83,112,97,99,101]));
+        let mut t = UString::from(" .5").to_ustring();
+        let mut r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_unicode_punctuation_boundaries(t.as_ustr(), &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_latin_clusters(t.as_ustr()).unwrap(), &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_latin_roles(t.as_ustr()), &vec![]).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_equals(0, u32::from_ne_bytes(((r.forbidden_line_start_clusters.size()) as u32).to_ne_bytes()), None).unwrap();
+        t = UString::from(" 1.5").to_ustring();
+        r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_unicode_punctuation_boundaries(t.as_ustr(), &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_latin_clusters(t.as_ustr()).unwrap(), &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_latin_roles(t.as_ustr()), &vec![]).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_true(r.forbidden_line_start_clusters.has(&(2)), None).unwrap();
         let mut found = false;
         let mut i = 0u32;
-        while (i32::from_ne_bytes((i).to_ne_bytes())) < (i32::from_ne_bytes((u32::try_from((r.decisions.len()) & 0xFFFF_FFFF).unwrap_or(0)).to_ne_bytes())) {
-            if r.decisions[usize::try_from(i).unwrap_or(0)].clone().reason.to_string() == "Uax14WesternPunctuationBoundary:LB15d" {
+        while (i32::from_ne_bytes(((i) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((r.decisions.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
+            if r.decisions[usize::try_from(i).unwrap_or(0)].clone().reason.to_ustring() == UString::from("Uax14WesternPunctuationBoundary:LB15d") {
                 found = true;
             }
             i = u32::wrapping_add(i, 1);
         }
         let _ = TracedAssertions::traced_assertions_assert_true(found, None).unwrap();
-        t = ".5".to_string();
-        r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_unicode_punctuation_boundaries(t.as_str(), &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_latin_clusters(t.as_str()).unwrap(),
-&UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_latin_roles(t.as_str()), &vec![]).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_equals(0, u32::from_ne_bytes((r.forbidden_line_start_clusters.size()).to_ne_bytes()), None).unwrap();
+        t = UString::from(".5").to_ustring();
+        r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_unicode_punctuation_boundaries(t.as_ustr(), &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_latin_clusters(t.as_ustr()).unwrap(), &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_latin_roles(t.as_ustr()), &vec![]).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_equals(0, u32::from_ne_bytes(((r.forbidden_line_start_clusters.size()) as u32).to_ne_bytes()), None).unwrap();
     });
 }
 
 #[test]
 fn resolve_unicode_punctuation_boundaries_decimal_mark_following_variations() {
-    testlib::run("org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesDecimalMarkFollowingVariations",
-"org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesDecimalMarkFollowingVariations", || {
-        UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_start(&"resolveUnicodePunctuationBoundariesDecimalMarkFollowingVariations");
-        let mut t = ".".to_string();
+    testlib::run("org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesDecimalMarkFollowingVariations", "org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesDecimalMarkFollowingVariations", || {
+        UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_start(UStr::new(&[114,101,115,111,108,118,101,85,110,105,99,111,100,101,80,117,110,99,116,117,97,116,105,111,110,66,111,117,110,100,97,114,105,101,115,68,101,99,105,109,97,108,77,97,114,107,70,111,108,108,111,119,105,110,103,86,97,114,105,97,116,105,111,110,115]));
+        let mut t = UString::from(".").to_ustring();
         let mut c = vec![
-    (Cluster::new(TextRange::new(0u32, 0u32).unwrap(), "", "latin", 0.0f64, Some("".to_string()), Some(0.0), Some(0.0), Some(0.0))).clone(),
-    (Cluster::new(TextRange::new(0u32, 1u32).unwrap(), ".", "latin", 8.0f64, Some(".".to_string()), Some(0.0), Some(0.0), Some(0.0))).clone(),
+    (Cluster::new(TextRange::new(0u32, 0u32).unwrap(), &(UStr::new(&[])), &(UStr::new(&[108,97,116,105,110])), 0.0f64, Some(UString::from("")), Some(0.0), Some(0.0), Some(0.0))).clone(),
+    (Cluster::new(TextRange::new(0u32, 1u32).unwrap(), &(UStr::new(&[46])), &(UStr::new(&[108,97,116,105,110])), 8.0f64, Some(UString::from(".")), Some(0.0), Some(0.0), Some(0.0))).clone(),
 ];
-        let mut r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_unicode_punctuation_boundaries(t.as_str(), &c, &vec![FontRole::LatinText, FontRole::LatinText], &vec![]).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_equals(0, u32::from_ne_bytes((r.forbidden_line_start_clusters.size()).to_ne_bytes()), None).unwrap();
-        t = "a .#".to_string();
-        r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_unicode_punctuation_boundaries(t.as_str(), &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_latin_clusters(t.as_str()).unwrap(),
-&UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_latin_roles(t.as_str()), &vec![]).unwrap();
+        let mut r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_unicode_punctuation_boundaries(t.as_ustr(), &c, &vec![FontRole::LatinText, FontRole::LatinText], &vec![]).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_equals(0, u32::from_ne_bytes(((r.forbidden_line_start_clusters.size()) as u32).to_ne_bytes()), None).unwrap();
+        t = UString::from("a .#").to_ustring();
+        r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_unicode_punctuation_boundaries(t.as_ustr(), &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_latin_clusters(t.as_ustr()).unwrap(), &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_latin_roles(t.as_ustr()), &vec![]).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_true(r.forbidden_line_start_clusters.has(&(2)), None).unwrap();
         let mut f = false;
         let mut i = 0u32;
-        while (i32::from_ne_bytes((i).to_ne_bytes())) < (i32::from_ne_bytes((u32::try_from((r.decisions.len()) & 0xFFFF_FFFF).unwrap_or(0)).to_ne_bytes())) {
-            if r.decisions[usize::try_from(i).unwrap_or(0)].clone().reason.to_string() == "Uax14WesternPunctuationBoundary:LB15d" {
+        while (i32::from_ne_bytes(((i) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((r.decisions.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
+            if r.decisions[usize::try_from(i).unwrap_or(0)].clone().reason.to_ustring() == UString::from("Uax14WesternPunctuationBoundary:LB15d") {
                 f = true;
             }
             i = u32::wrapping_add(i, 1);
         }
         let _ = TracedAssertions::traced_assertions_assert_true(f, None).unwrap();
-        t = "a .a".to_string();
-        r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_unicode_punctuation_boundaries(t.as_str(), &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_latin_clusters(t.as_str()).unwrap(),
-&UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_latin_roles(t.as_str()), &vec![]).unwrap();
+        t = UString::from("a .a").to_ustring();
+        r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_unicode_punctuation_boundaries(t.as_ustr(), &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_latin_clusters(t.as_ustr()).unwrap(), &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_latin_roles(t.as_ustr()), &vec![]).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_true(r.forbidden_line_start_clusters.has(&(2)), None).unwrap();
         f = false;
         i = 0u32;
-        while (i32::from_ne_bytes((i).to_ne_bytes())) < (i32::from_ne_bytes((u32::try_from((r.decisions.len()) & 0xFFFF_FFFF).unwrap_or(0)).to_ne_bytes())) {
-            if r.decisions[usize::try_from(i).unwrap_or(0)].clone().reason.to_string() == "Uax14WesternPunctuationBoundary:LB15d" {
+        while (i32::from_ne_bytes(((i) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((r.decisions.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
+            if r.decisions[usize::try_from(i).unwrap_or(0)].clone().reason.to_ustring() == UString::from("Uax14WesternPunctuationBoundary:LB15d") {
                 f = true;
             }
             i = u32::wrapping_add(i, 1);
         }
         let _ = TracedAssertions::traced_assertions_assert_true(f, None).unwrap();
-        t = " .5".to_string();
+        t = UString::from(" .5").to_ustring();
         c = vec![
-    (Cluster::new(TextRange::new(0u32, 1u32).unwrap(), " ", "latin", 8.0f64, Some(" ".to_string()), Some(0.0), Some(0.0), Some(0.0))).clone(),
-    (Cluster::new(TextRange::new(1u32, 3u32).unwrap(), ".5", "latin", 16.0f64, Some(".5".to_string()), Some(0.0), Some(0.0), Some(0.0))).clone(),
+    (Cluster::new(TextRange::new(0u32, 1u32).unwrap(), &(UStr::new(&[32])), &(UStr::new(&[108,97,116,105,110])), 8.0f64, Some(UString::from(" ")), Some(0.0), Some(0.0), Some(0.0))).clone(),
+    (Cluster::new(TextRange::new(1u32, 3u32).unwrap(), &(UStr::new(&[46,53])), &(UStr::new(&[108,97,116,105,110])), 16.0f64, Some(UString::from(".5")), Some(0.0), Some(0.0), Some(0.0))).clone(),
 ];
-        r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_unicode_punctuation_boundaries(t.as_str(), &c, &vec![FontRole::LatinText, FontRole::LatinText], &vec![]).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_equals(0, u32::from_ne_bytes((r.forbidden_line_start_clusters.size()).to_ne_bytes()), None).unwrap();
+        r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_unicode_punctuation_boundaries(t.as_ustr(), &c, &vec![FontRole::LatinText, FontRole::LatinText], &vec![]).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_equals(0, u32::from_ne_bytes(((r.forbidden_line_start_clusters.size()) as u32).to_ne_bytes()), None).unwrap();
     });
 }
 
 #[test]
 fn resolve_unicode_punctuation_boundaries_apostrophe_and_latin_word_branches() {
-    testlib::run("org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesApostropheAndLatinWordBranches",
-"org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesApostropheAndLatinWordBranches", || {
-        UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_start(&"resolveUnicodePunctuationBoundariesApostropheAndLatinWordBranches");
-        let mut t = "a’ ".to_string();
-        let mut r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_unicode_punctuation_boundaries(t.as_str(),
-&UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_latin_clusters(t.as_str()).unwrap(), &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_latin_roles(t.as_str()),
-&vec![]).unwrap();
+    testlib::run("org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesApostropheAndLatinWordBranches", "org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesApostropheAndLatinWordBranches", || {
+        UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_start(UStr::new(&[114,101,115,111,108,118,101,85,110,105,99,111,100,101,80,117,110,99,116,117,97,116,105,111,110,66,111,117,110,100,97,114,105,101,115,65,112,111,115,116,114,111,112,104,101,65,110,100,76,97,116,105,110,87,111,114,100,66,114,97,110,99,104,101,115]));
+        let mut t = UString::from("a’ ").to_ustring();
+        let mut r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_unicode_punctuation_boundaries(t.as_ustr(), &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_latin_clusters(t.as_ustr()).unwrap(), &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_latin_roles(t.as_ustr()), &vec![]).unwrap();
         let mut f = false;
         let mut i = 0u32;
-        while (i32::from_ne_bytes((i).to_ne_bytes())) < (i32::from_ne_bytes((u32::try_from((r.decisions.len()) & 0xFFFF_FFFF).unwrap_or(0)).to_ne_bytes())) {
-            if r.decisions[usize::try_from(i).unwrap_or(0)].clone().forbidden_position.to_string() == "LineStart" {
+        while (i32::from_ne_bytes(((i) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((r.decisions.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
+            if r.decisions[usize::try_from(i).unwrap_or(0)].clone().forbidden_position.to_ustring() == UString::from("LineStart") {
                 f = true;
             }
             i = u32::wrapping_add(i, 1);
         }
         let _ = TracedAssertions::traced_assertions_assert_true(f, None).unwrap();
-        t = " ’a".to_string();
-        r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_unicode_punctuation_boundaries(t.as_str(), &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_latin_clusters(t.as_str()).unwrap(),
-&UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_latin_roles(t.as_str()), &vec![]).unwrap();
+        t = UString::from(" ’a").to_ustring();
+        r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_unicode_punctuation_boundaries(t.as_ustr(), &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_latin_clusters(t.as_ustr()).unwrap(), &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_latin_roles(t.as_ustr()), &vec![]).unwrap();
         f = false;
         i = 0u32;
-        while (i32::from_ne_bytes((i).to_ne_bytes())) < (i32::from_ne_bytes((u32::try_from((r.decisions.len()) & 0xFFFF_FFFF).unwrap_or(0)).to_ne_bytes())) {
-            if r.decisions[usize::try_from(i).unwrap_or(0)].clone().forbidden_position.to_string() == "LineEnd" {
+        while (i32::from_ne_bytes(((i) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((r.decisions.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
+            if r.decisions[usize::try_from(i).unwrap_or(0)].clone().forbidden_position.to_ustring() == UString::from("LineEnd") {
                 f = true;
             }
             i = u32::wrapping_add(i, 1);
         }
         let _ = TracedAssertions::traced_assertions_assert_true(f, None).unwrap();
-        t = "À’ɏ".to_string();
-        r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_unicode_punctuation_boundaries(t.as_str(), &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_latin_clusters(t.as_str()).unwrap(),
-&UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_latin_roles(t.as_str()), &vec![]).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_equals(0, u32::from_ne_bytes((r.forbidden_line_start_clusters.size()).to_ne_bytes()), None).unwrap();
-        t = "¿’中".to_string();
-        r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_unicode_punctuation_boundaries(t.as_str(), &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_latin_clusters(t.as_str()).unwrap(),
-&vec![FontRole::LatinText, FontRole::LatinText, FontRole::CjkText], &vec![]).unwrap();
+        t = UString::from("À’ɏ").to_ustring();
+        r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_unicode_punctuation_boundaries(t.as_ustr(), &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_latin_clusters(t.as_ustr()).unwrap(), &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_latin_roles(t.as_ustr()), &vec![]).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_equals(0, u32::from_ne_bytes(((r.forbidden_line_start_clusters.size()) as u32).to_ne_bytes()), None).unwrap();
+        t = UString::from("¿’中").to_ustring();
+        r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_unicode_punctuation_boundaries(t.as_ustr(), &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_latin_clusters(t.as_ustr()).unwrap(), &vec![FontRole::LatinText, FontRole::LatinText, FontRole::CjkText], &vec![]).unwrap();
         f = false;
         i = 0u32;
-        while (i32::from_ne_bytes((i).to_ne_bytes())) < (i32::from_ne_bytes((u32::try_from((r.decisions.len()) & 0xFFFF_FFFF).unwrap_or(0)).to_ne_bytes())) {
-            if r.decisions[usize::try_from(i).unwrap_or(0)].clone().forbidden_position.to_string() == "LineStart" {
+        while (i32::from_ne_bytes(((i) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((r.decisions.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
+            if r.decisions[usize::try_from(i).unwrap_or(0)].clone().forbidden_position.to_ustring() == UString::from("LineStart") {
                 f = true;
             }
             i = u32::wrapping_add(i, 1);
@@ -7731,138 +8619,105 @@ fn resolve_unicode_punctuation_boundaries_apostrophe_and_latin_word_branches() {
 
 #[test]
 fn resolve_unicode_punctuation_boundaries_surrogate_scanning_variations() {
-    testlib::run("org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesSurrogateScanningVariations", "org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesSurrogateScanningVariations",
-|| {
-        UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_start(&"resolveUnicodePunctuationBoundariesSurrogateScanningVariations");
+    testlib::run("org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesSurrogateScanningVariations", "org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesSurrogateScanningVariations", || {
+        UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_start(UStr::new(&[114,101,115,111,108,118,101,85,110,105,99,111,100,101,80,117,110,99,116,117,97,116,105,111,110,66,111,117,110,100,97,114,105,101,115,83,117,114,114,111,103,97,116,101,83,99,97,110,110,105,110,103,86,97,114,105,97,116,105,111,110,115]));
         let strings = vec![
-    "a".to_string(),
+    UString::from("a").to_ustring(),
     UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_surrogate(&vec![55357, 56832]).clone(),
-    "中".to_string(),
-    "hello".to_string(),
+    UString::from("中").to_ustring(),
+    UString::from("hello").to_ustring(),
 ];
         let mut si = 0u32;
-        while (i32::from_ne_bytes((si).to_ne_bytes())) < (i32::from_ne_bytes((u32::try_from((strings.len()) & 0xFFFF_FFFF).unwrap_or(0)).to_ne_bytes())) {
+        while (i32::from_ne_bytes(((si) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((strings.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
             let s = (strings[usize::try_from(si).unwrap_or(0)]).clone();
-            let t = format!("{}{}{}",
-            " ",
-            s,
-            ")"
-        );
+            let t = { let mut __s = UString::new(); __s += &(UString::from(" ")); __s += s.as_ustr(); __s += &(UString::from(")")); __s };
             let c = vec![
-    (Cluster::new(TextRange::new(0u32, 1u32).unwrap(), " ", "latin", 8.0f64, Some(" ".to_string()), Some(0.0), Some(0.0), Some(0.0))).clone(),
-    (Cluster::new(TextRange::new(1u32, u32::wrapping_add(1, u_string::unit_count(&(s)))).unwrap(), s.as_str(), "latin", 16.0f64, Some(s.to_string()), Some(0.0), Some(0.0), Some(0.0))).clone(),
-    (Cluster::new(TextRange::new(u32::wrapping_add(1, u_string::unit_count(&(s))), u32::wrapping_add(2, u_string::unit_count(&(s)))).unwrap(), ")", "latin", 8.0f64, Some(")".to_string()), Some(0.0), Some(0.0), Some(0.0))).clone(),
+    (Cluster::new(TextRange::new(0u32, 1u32).unwrap(), &(UStr::new(&[32])), &(UStr::new(&[108,97,116,105,110])), 8.0f64, Some(UString::from(" ")), Some(0.0), Some(0.0), Some(0.0))).clone(),
+    (Cluster::new(TextRange::new(1u32, u32::wrapping_add(1, u_string::unit_count(&(s)))).unwrap(), s.as_ustr(), &(UStr::new(&[108,97,116,105,110])), 16.0f64, Some(s.to_ustring()), Some(0.0), Some(0.0), Some(0.0))).clone(),
+    (Cluster::new(TextRange::new(u32::wrapping_add(1, u_string::unit_count(&(s))), u32::wrapping_add(2, u_string::unit_count(&(s)))).unwrap(), &(UStr::new(&[41])), &(UStr::new(&[108,97,116,105,110])), 8.0f64, Some(UString::from(")")), Some(0.0), Some(0.0), Some(0.0))).clone(),
 ];
-            let r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_unicode_punctuation_boundaries(t.as_str(), &c, &vec![FontRole::LatinText, FontRole::LatinText, FontRole::LatinText], &vec![]).unwrap();
-            let _ = TracedAssertions::traced_assertions_assert_true((i32::from_ne_bytes((u32::from_ne_bytes((r.forbidden_line_start_clusters.size()).to_ne_bytes())).to_ne_bytes())) > (0) || (i32::from_ne_bytes((u32::try_from((r.decisions.len()) &
-0xFFFF_FFFF).unwrap_or(0)).to_ne_bytes())) > (0) || (i32::from_ne_bytes((u32::from_ne_bytes((r.forbidden_line_end_clusters.size()).to_ne_bytes())).to_ne_bytes())) > (0) || u32::try_from((r.unbreakable_ranges.len()) & 0xFFFF_FFFF).unwrap_or(0) == 0 ||
-(i32::from_ne_bytes((u32::try_from((r.unbreakable_ranges.len()) & 0xFFFF_FFFF).unwrap_or(0)).to_ne_bytes())) > (0), None).unwrap();
+            let r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_unicode_punctuation_boundaries(t.as_ustr(), &c, &vec![FontRole::LatinText, FontRole::LatinText, FontRole::LatinText], &vec![]).unwrap();
+            let _ = TracedAssertions::traced_assertions_assert_true((i32::from_ne_bytes(((u32::from_ne_bytes(((r.forbidden_line_start_clusters.size()) as u32).to_ne_bytes())) as i32).to_ne_bytes())) > (0) || (i32::from_ne_bytes(((u32::try_from((r.decisions.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) > (0) || (i32::from_ne_bytes(((u32::from_ne_bytes(((r.forbidden_line_end_clusters.size()) as u32).to_ne_bytes())) as i32).to_ne_bytes())) > (0) || u32::try_from((r.unbreakable_ranges.len()) & 0xFFFF_FFFF).unwrap_or(0) == 0 || (i32::from_ne_bytes(((u32::try_from((r.unbreakable_ranges.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) > (0), None).unwrap();
             si = u32::wrapping_add(si, 1);
         }
         let strings2 = vec![
-    "a’".to_string(),
-    format!("{}{}",
-            UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_surrogate(&vec![55357, 56832]),
-            "’"
-        ).clone(),
-    "中’".to_string(),
+    UString::from("a’").to_ustring(),
+    { let mut __s = UString::new(); __s += UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_surrogate(&vec![55357, 56832]).as_ustr(); __s += &(UString::from("’")); __s }.clone(),
+    UString::from("中’").to_ustring(),
 ];
         si = 0u32;
-        while (i32::from_ne_bytes((si).to_ne_bytes())) < (i32::from_ne_bytes((u32::try_from((strings2.len()) & 0xFFFF_FFFF).unwrap_or(0)).to_ne_bytes())) {
+        while (i32::from_ne_bytes(((si) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((strings2.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
             let s = (strings2[usize::try_from(si).unwrap_or(0)]).clone();
-            let t = format!("{}{}{}",
-            " ",
-            s,
-            " "
-        );
+            let t = { let mut __s = UString::new(); __s += &(UString::from(" ")); __s += s.as_ustr(); __s += &(UString::from(" ")); __s };
             let c = vec![
-    (Cluster::new(TextRange::new(0u32, 1u32).unwrap(), " ", "latin", 8.0f64, Some(" ".to_string()), Some(0.0), Some(0.0), Some(0.0))).clone(),
-    (Cluster::new(TextRange::new(1u32, u32::wrapping_add(1, u_string::unit_count(&(s)))).unwrap(), s.as_str(), "latin", 16.0f64, Some(s.to_string()), Some(0.0), Some(0.0), Some(0.0))).clone(),
-    (Cluster::new(TextRange::new(u32::wrapping_add(1, u_string::unit_count(&(s))), u32::wrapping_add(2, u_string::unit_count(&(s)))).unwrap(), " ", "latin", 8.0f64, Some(" ".to_string()), Some(0.0), Some(0.0), Some(0.0))).clone(),
+    (Cluster::new(TextRange::new(0u32, 1u32).unwrap(), &(UStr::new(&[32])), &(UStr::new(&[108,97,116,105,110])), 8.0f64, Some(UString::from(" ")), Some(0.0), Some(0.0), Some(0.0))).clone(),
+    (Cluster::new(TextRange::new(1u32, u32::wrapping_add(1, u_string::unit_count(&(s)))).unwrap(), s.as_ustr(), &(UStr::new(&[108,97,116,105,110])), 16.0f64, Some(s.to_ustring()), Some(0.0), Some(0.0), Some(0.0))).clone(),
+    (Cluster::new(TextRange::new(u32::wrapping_add(1, u_string::unit_count(&(s))), u32::wrapping_add(2, u_string::unit_count(&(s)))).unwrap(), &(UStr::new(&[32])), &(UStr::new(&[108,97,116,105,110])), 8.0f64, Some(UString::from(" ")), Some(0.0), Some(0.0), Some(0.0))).clone(),
 ];
-            let r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_unicode_punctuation_boundaries(t.as_str(), &c, &vec![FontRole::LatinText, FontRole::LatinText, FontRole::LatinText], &vec![]).unwrap();
-            let _ = TracedAssertions::traced_assertions_assert_equals(0, u32::from_ne_bytes((r.forbidden_line_start_clusters.size()).to_ne_bytes()), None).unwrap();
+            let r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_unicode_punctuation_boundaries(t.as_ustr(), &c, &vec![FontRole::LatinText, FontRole::LatinText, FontRole::LatinText], &vec![]).unwrap();
+            let _ = TracedAssertions::traced_assertions_assert_equals(0, u32::from_ne_bytes(((r.forbidden_line_start_clusters.size()) as u32).to_ne_bytes()), None).unwrap();
             si = u32::wrapping_add(si, 1);
         }
-        let mut t = format!("{}{}{}",
-            " ",
-            UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_surrogate(&vec![55357, 56832]),
-            ".5"
-        );
+        let mut t = { let mut __s = UString::new(); __s += &(UString::from(" ")); __s += UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_surrogate(&vec![55357, 56832]).as_ustr(); __s += &(UString::from(".5")); __s };
         let mut c = vec![
-    (Cluster::new(TextRange::new(0u32, 1u32).unwrap(), " ", "latin", 8.0f64, Some(" ".to_string()), Some(0.0), Some(0.0), Some(0.0))).clone(),
-    (Cluster::new(TextRange::new(1u32, 3u32).unwrap(), UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_surrogate(&vec![55357, 56832]).as_str(), "emoji", 16.0f64,
-Some(UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_surrogate(&vec![55357, 56832])), Some(0.0), Some(0.0), Some(0.0))).clone(),
-    (Cluster::new(TextRange::new(3u32, 5u32).unwrap(), ".5", "latin", 16.0f64, Some(".5".to_string()), Some(0.0), Some(0.0), Some(0.0))).clone(),
+    (Cluster::new(TextRange::new(0u32, 1u32).unwrap(), &(UStr::new(&[32])), &(UStr::new(&[108,97,116,105,110])), 8.0f64, Some(UString::from(" ")), Some(0.0), Some(0.0), Some(0.0))).clone(),
+    (Cluster::new(TextRange::new(1u32, 3u32).unwrap(), UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_surrogate(&vec![55357, 56832]).as_ustr(), &(UStr::new(&[101,109,111,106,105])), 16.0f64, Some(UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_surrogate(&vec![55357, 56832])), Some(0.0), Some(0.0), Some(0.0))).clone(),
+    (Cluster::new(TextRange::new(3u32, 5u32).unwrap(), &(UStr::new(&[46,53])), &(UStr::new(&[108,97,116,105,110])), 16.0f64, Some(UString::from(".5")), Some(0.0), Some(0.0), Some(0.0))).clone(),
 ];
-        let mut r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_unicode_punctuation_boundaries(t.as_str(), &c, &vec![FontRole::LatinText, FontRole::Emoji, FontRole::LatinText], &vec![]).unwrap();
+        let mut r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_unicode_punctuation_boundaries(t.as_ustr(), &c, &vec![FontRole::LatinText, FontRole::Emoji, FontRole::LatinText], &vec![]).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_true(r.forbidden_line_start_clusters.has(&(2)), None).unwrap();
-        t = "(​a".to_string();
-        c = UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_latin_clusters(t.as_str()).unwrap();
-        r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_unicode_punctuation_boundaries(t.as_str(), &c, &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_latin_roles(t.as_str()),
-&vec![]).unwrap();
+        t = UString::from("(​a").to_ustring();
+        c = UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_latin_clusters(t.as_ustr()).unwrap();
+        r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_unicode_punctuation_boundaries(t.as_ustr(), &c, &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_latin_roles(t.as_ustr()), &vec![]).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_true(r.forbidden_line_end_clusters.has(&(0)), None).unwrap();
-        t = concat!("(\n",
-"a").to_string();
-        c = UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_latin_clusters(t.as_str()).unwrap();
-        r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_unicode_punctuation_boundaries(t.as_str(), &c, &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_latin_roles(t.as_str()),
-&vec![]).unwrap();
+        t = UString::from(concat!("(\n",
+"a")).to_ustring();
+        c = UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_latin_clusters(t.as_ustr()).unwrap();
+        r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_unicode_punctuation_boundaries(t.as_ustr(), &c, &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_latin_roles(t.as_ustr()), &vec![]).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_true(r.forbidden_line_end_clusters.has(&(0)), None).unwrap();
     });
 }
 
 #[test]
 fn resolve_unicode_punctuation_boundaries_is_decimal_mark_after_space_index_zero() {
-    testlib::run("org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesIsDecimalMarkAfterSpaceIndexZero",
-"org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesIsDecimalMarkAfterSpaceIndexZero", || {
-        UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_start(&"resolveUnicodePunctuationBoundariesIsDecimalMarkAfterSpaceIndexZero");
-        let t = ".5".to_string();
-        let r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_unicode_punctuation_boundaries(t.as_str(),
-&UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_latin_clusters(t.as_str()).unwrap(), &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_latin_roles(t.as_str()),
-&vec![]).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_equals(0, u32::from_ne_bytes((r.forbidden_line_start_clusters.size()).to_ne_bytes()), None).unwrap();
+    testlib::run("org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesIsDecimalMarkAfterSpaceIndexZero", "org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesIsDecimalMarkAfterSpaceIndexZero", || {
+        UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_start(UStr::new(&[114,101,115,111,108,118,101,85,110,105,99,111,100,101,80,117,110,99,116,117,97,116,105,111,110,66,111,117,110,100,97,114,105,101,115,73,115,68,101,99,105,109,97,108,77,97,114,107,65,102,116,101,114,83,112,97,99,101,73,110,100,101,120,90,101,114,111]));
+        let t = UString::from(".5").to_ustring();
+        let r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_unicode_punctuation_boundaries(t.as_ustr(), &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_latin_clusters(t.as_ustr()).unwrap(), &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_latin_roles(t.as_ustr()), &vec![]).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_equals(0, u32::from_ne_bytes(((r.forbidden_line_start_clusters.size()) as u32).to_ne_bytes()), None).unwrap();
     });
 }
 
 #[test]
 fn resolve_unicode_punctuation_boundaries_is_decimal_mark_after_space_non_whitespace_prev() {
-    testlib::run("org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesIsDecimalMarkAfterSpaceNonWhitespacePrev",
-"org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesIsDecimalMarkAfterSpaceNonWhitespacePrev", || {
-        UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_start(&"resolveUnicodePunctuationBoundariesIsDecimalMarkAfterSpaceNonWhitespacePrev");
-        let t = "1，2".to_string();
-        let r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_unicode_punctuation_boundaries(t.as_str(),
-&UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_latin_clusters(t.as_str()).unwrap(), &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_latin_roles(t.as_str()),
-&vec![]).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_true((i32::from_ne_bytes((u32::from_ne_bytes((r.forbidden_line_start_clusters.size()).to_ne_bytes())).to_ne_bytes())) > (0), None).unwrap();
+    testlib::run("org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesIsDecimalMarkAfterSpaceNonWhitespacePrev", "org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesIsDecimalMarkAfterSpaceNonWhitespacePrev", || {
+        UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_start(UStr::new(&[114,101,115,111,108,118,101,85,110,105,99,111,100,101,80,117,110,99,116,117,97,116,105,111,110,66,111,117,110,100,97,114,105,101,115,73,115,68,101,99,105,109,97,108,77,97,114,107,65,102,116,101,114,83,112,97,99,101,78,111,110,87,104,105,116,101,115,112,97,99,101,80,114,101,118]));
+        let t = UString::from("1，2").to_ustring();
+        let r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_unicode_punctuation_boundaries(t.as_ustr(), &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_latin_clusters(t.as_ustr()).unwrap(), &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_latin_roles(t.as_ustr()), &vec![]).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_true((i32::from_ne_bytes(((u32::from_ne_bytes(((r.forbidden_line_start_clusters.size()) as u32).to_ne_bytes())) as i32).to_ne_bytes())) > (0), None).unwrap();
     });
 }
 
 #[test]
 fn resolve_unicode_punctuation_boundaries_is_decimal_mark_after_space_empty_prev() {
-    testlib::run("org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesIsDecimalMarkAfterSpaceEmptyPrev",
-"org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesIsDecimalMarkAfterSpaceEmptyPrev", || {
-        UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_start(&"resolveUnicodePunctuationBoundariesIsDecimalMarkAfterSpaceEmptyPrev");
-        let t = "a，5".to_string();
-        let r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_unicode_punctuation_boundaries(t.as_str(),
-&UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_latin_clusters(t.as_str()).unwrap(), &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_latin_roles(t.as_str()),
-&vec![]).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_true((i32::from_ne_bytes((u32::from_ne_bytes((r.forbidden_line_start_clusters.size()).to_ne_bytes())).to_ne_bytes())) > (0), None).unwrap();
+    testlib::run("org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesIsDecimalMarkAfterSpaceEmptyPrev", "org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesIsDecimalMarkAfterSpaceEmptyPrev", || {
+        UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_start(UStr::new(&[114,101,115,111,108,118,101,85,110,105,99,111,100,101,80,117,110,99,116,117,97,116,105,111,110,66,111,117,110,100,97,114,105,101,115,73,115,68,101,99,105,109,97,108,77,97,114,107,65,102,116,101,114,83,112,97,99,101,69,109,112,116,121,80,114,101,118]));
+        let t = UString::from("a，5").to_ustring();
+        let r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_unicode_punctuation_boundaries(t.as_ustr(), &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_latin_clusters(t.as_ustr()).unwrap(), &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_latin_roles(t.as_ustr()), &vec![]).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_true((i32::from_ne_bytes(((u32::from_ne_bytes(((r.forbidden_line_start_clusters.size()) as u32).to_ne_bytes())) as i32).to_ne_bytes())) > (0), None).unwrap();
     });
 }
 
 #[test]
 fn resolve_unicode_punctuation_boundaries_follows_authored_boundary_non_whitespace() {
-    testlib::run("org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesFollowsAuthoredBoundaryNonWhitespace",
-"org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesFollowsAuthoredBoundaryNonWhitespace", || {
-        UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_start(&"resolveUnicodePunctuationBoundariesFollowsAuthoredBoundaryNonWhitespace");
-        let t = "a“".to_string();
-        let r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_unicode_punctuation_boundaries(t.as_str(),
-&UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_latin_clusters(t.as_str()).unwrap(), &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_latin_roles(t.as_str()),
-&vec![]).unwrap();
+    testlib::run("org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesFollowsAuthoredBoundaryNonWhitespace", "org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesFollowsAuthoredBoundaryNonWhitespace", || {
+        UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_start(UStr::new(&[114,101,115,111,108,118,101,85,110,105,99,111,100,101,80,117,110,99,116,117,97,116,105,111,110,66,111,117,110,100,97,114,105,101,115,70,111,108,108,111,119,115,65,117,116,104,111,114,101,100,66,111,117,110,100,97,114,121,78,111,110,87,104,105,116,101,115,112,97,99,101]));
+        let t = UString::from("a“").to_ustring();
+        let r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_unicode_punctuation_boundaries(t.as_ustr(), &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_latin_clusters(t.as_ustr()).unwrap(), &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_latin_roles(t.as_ustr()), &vec![]).unwrap();
         let mut f = false;
         let mut i = 0u32;
-        while (i32::from_ne_bytes((i).to_ne_bytes())) < (i32::from_ne_bytes((u32::try_from((r.decisions.len()) & 0xFFFF_FFFF).unwrap_or(0)).to_ne_bytes())) {
-            if r.decisions[usize::try_from(i).unwrap_or(0)].clone().forbidden_position.to_string() == "LineEnd" {
+        while (i32::from_ne_bytes(((i) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((r.decisions.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
+            if r.decisions[usize::try_from(i).unwrap_or(0)].clone().forbidden_position.to_ustring() == UString::from("LineEnd") {
                 f = true;
             }
             i = u32::wrapping_add(i, 1);
@@ -7873,301 +8728,249 @@ fn resolve_unicode_punctuation_boundaries_follows_authored_boundary_non_whitespa
 
 #[test]
 fn resolve_unicode_punctuation_boundaries_previous_content_cluster_returns_content() {
-    testlib::run("org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesPreviousContentClusterReturnsContent",
-"org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesPreviousContentClusterReturnsContent", || {
-        UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_start(&"resolveUnicodePunctuationBoundariesPreviousContentClusterReturnsContent");
-        let t = "a ”".to_string();
-        let r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_unicode_punctuation_boundaries(t.as_str(),
-&UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_latin_clusters(t.as_str()).unwrap(), &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_latin_roles(t.as_str()),
-&vec![]).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_true((i32::from_ne_bytes((u32::try_from((r.unbreakable_ranges.len()) & 0xFFFF_FFFF).unwrap_or(0)).to_ne_bytes())) > (0), None).unwrap();
+    testlib::run("org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesPreviousContentClusterReturnsContent", "org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesPreviousContentClusterReturnsContent", || {
+        UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_start(UStr::new(&[114,101,115,111,108,118,101,85,110,105,99,111,100,101,80,117,110,99,116,117,97,116,105,111,110,66,111,117,110,100,97,114,105,101,115,80,114,101,118,105,111,117,115,67,111,110,116,101,110,116,67,108,117,115,116,101,114,82,101,116,117,114,110,115,67,111,110,116,101,110,116]));
+        let t = UString::from("a ”").to_ustring();
+        let r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_unicode_punctuation_boundaries(t.as_ustr(), &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_latin_clusters(t.as_ustr()).unwrap(), &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_latin_roles(t.as_ustr()), &vec![]).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_true((i32::from_ne_bytes(((u32::try_from((r.unbreakable_ranges.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) > (0), None).unwrap();
     });
 }
 
 #[test]
 fn resolve_unicode_punctuation_boundaries_previous_content_cluster_empty_only() {
-    testlib::run("org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesPreviousContentClusterEmptyOnly",
-"org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesPreviousContentClusterEmptyOnly", || {
-        UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_start(&"resolveUnicodePunctuationBoundariesPreviousContentClusterEmptyOnly");
-        let t = "“".to_string();
+    testlib::run("org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesPreviousContentClusterEmptyOnly", "org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesPreviousContentClusterEmptyOnly", || {
+        UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_start(UStr::new(&[114,101,115,111,108,118,101,85,110,105,99,111,100,101,80,117,110,99,116,117,97,116,105,111,110,66,111,117,110,100,97,114,105,101,115,80,114,101,118,105,111,117,115,67,111,110,116,101,110,116,67,108,117,115,116,101,114,69,109,112,116,121,79,110,108,121]));
+        let t = UString::from("“").to_ustring();
         let c = vec![
-    (Cluster::new(TextRange::new(0u32, 0u32).unwrap(), "", "latin", 0.0f64, Some("".to_string()), Some(0.0), Some(0.0), Some(0.0))).clone(),
-    (Cluster::new(TextRange::new(0u32, 1u32).unwrap(), "“", "latin", 16.0f64, Some("“".to_string()), Some(0.0), Some(0.0), Some(0.0))).clone(),
+    (Cluster::new(TextRange::new(0u32, 0u32).unwrap(), &(UStr::new(&[])), &(UStr::new(&[108,97,116,105,110])), 0.0f64, Some(UString::from("")), Some(0.0), Some(0.0), Some(0.0))).clone(),
+    (Cluster::new(TextRange::new(0u32, 1u32).unwrap(), &(UStr::new(&[8220])), &(UStr::new(&[108,97,116,105,110])), 16.0f64, Some(UString::from("“")), Some(0.0), Some(0.0), Some(0.0))).clone(),
 ];
-        let r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_unicode_punctuation_boundaries(t.as_str(), &c, &vec![FontRole::LatinText, FontRole::LatinText], &vec![]).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_true((i32::from_ne_bytes((u32::from_ne_bytes((r.forbidden_line_end_clusters.size()).to_ne_bytes())).to_ne_bytes())) > (0), None).unwrap();
+        let r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_unicode_punctuation_boundaries(t.as_ustr(), &c, &vec![FontRole::LatinText, FontRole::LatinText], &vec![]).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_true((i32::from_ne_bytes(((u32::from_ne_bytes(((r.forbidden_line_end_clusters.size()) as u32).to_ne_bytes())) as i32).to_ne_bytes())) > (0), None).unwrap();
     });
 }
 
 #[test]
 fn resolve_unicode_punctuation_boundaries_next_content_cluster_returns_content() {
-    testlib::run("org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesNextContentClusterReturnsContent",
-"org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesNextContentClusterReturnsContent", || {
-        UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_start(&"resolveUnicodePunctuationBoundariesNextContentClusterReturnsContent");
-        let t = ")”中".to_string();
+    testlib::run("org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesNextContentClusterReturnsContent", "org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesNextContentClusterReturnsContent", || {
+        UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_start(UStr::new(&[114,101,115,111,108,118,101,85,110,105,99,111,100,101,80,117,110,99,116,117,97,116,105,111,110,66,111,117,110,100,97,114,105,101,115,78,101,120,116,67,111,110,116,101,110,116,67,108,117,115,116,101,114,82,101,116,117,114,110,115,67,111,110,116,101,110,116]));
+        let t = UString::from(")”中").to_ustring();
         let c = vec![
-    (Cluster::new(TextRange::new(0u32, 1u32).unwrap(), ")", "latin", 8.0f64, Some(")".to_string()), Some(0.0), Some(0.0), Some(0.0))).clone(),
-    (Cluster::new(TextRange::new(1u32, 2u32).unwrap(), "”", "latin", 8.0f64, Some("”".to_string()), Some(0.0), Some(0.0), Some(0.0))).clone(),
-    (Cluster::new(TextRange::new(2u32, 3u32).unwrap(), "中", "cjk", 16.0f64, Some("中".to_string()), Some(0.0), Some(0.0), Some(0.0))).clone(),
+    (Cluster::new(TextRange::new(0u32, 1u32).unwrap(), &(UStr::new(&[41])), &(UStr::new(&[108,97,116,105,110])), 8.0f64, Some(UString::from(")")), Some(0.0), Some(0.0), Some(0.0))).clone(),
+    (Cluster::new(TextRange::new(1u32, 2u32).unwrap(), &(UStr::new(&[8221])), &(UStr::new(&[108,97,116,105,110])), 8.0f64, Some(UString::from("”")), Some(0.0), Some(0.0), Some(0.0))).clone(),
+    (Cluster::new(TextRange::new(2u32, 3u32).unwrap(), &(UStr::new(&[20013])), &(UStr::new(&[99,106,107])), 16.0f64, Some(UString::from("中")), Some(0.0), Some(0.0), Some(0.0))).clone(),
 ];
-        let r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_unicode_punctuation_boundaries(t.as_str(), &c, &vec![FontRole::LatinText, FontRole::LatinText, FontRole::CjkText], &vec![]).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_true((i32::from_ne_bytes((u32::try_from((r.unbreakable_ranges.len()) & 0xFFFF_FFFF).unwrap_or(0)).to_ne_bytes())) > (0), None).unwrap();
+        let r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_unicode_punctuation_boundaries(t.as_ustr(), &c, &vec![FontRole::LatinText, FontRole::LatinText, FontRole::CjkText], &vec![]).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_true((i32::from_ne_bytes(((u32::try_from((r.unbreakable_ranges.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) > (0), None).unwrap();
     });
 }
 
 #[test]
 fn resolve_unicode_punctuation_boundaries_has_authored_break_with_code_point() {
-    testlib::run("org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesHasAuthoredBreakWithCodePoint",
-"org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesHasAuthoredBreakWithCodePoint", || {
-        UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_start(&"resolveUnicodePunctuationBoundariesHasAuthoredBreakWithCodePoint");
-        let t = concat!("a\n",
-"“").to_string();
-        let r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_unicode_punctuation_boundaries(t.as_str(),
-&UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_latin_clusters(t.as_str()).unwrap(), &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_latin_roles(t.as_str()),
-&vec![]).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_true(u32::from_ne_bytes((r.forbidden_line_start_clusters.size()).to_ne_bytes()) == 0, None).unwrap();
+    testlib::run("org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesHasAuthoredBreakWithCodePoint", "org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesHasAuthoredBreakWithCodePoint", || {
+        UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_start(UStr::new(&[114,101,115,111,108,118,101,85,110,105,99,111,100,101,80,117,110,99,116,117,97,116,105,111,110,66,111,117,110,100,97,114,105,101,115,72,97,115,65,117,116,104,111,114,101,100,66,114,101,97,107,87,105,116,104,67,111,100,101,80,111,105,110,116]));
+        let t = UString::from(concat!("a\n",
+"“")).to_ustring();
+        let r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_unicode_punctuation_boundaries(t.as_ustr(), &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_latin_clusters(t.as_ustr()).unwrap(), &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_latin_roles(t.as_ustr()), &vec![]).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_true(u32::from_ne_bytes(((r.forbidden_line_start_clusters.size()) as u32).to_ne_bytes()) == 0, None).unwrap();
     });
 }
 
 #[test]
 fn resolve_unicode_punctuation_boundaries_has_authored_break_null_code_point() {
-    testlib::run("org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesHasAuthoredBreakNullCodePoint",
-"org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesHasAuthoredBreakNullCodePoint", || {
-        UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_start(&"resolveUnicodePunctuationBoundariesHasAuthoredBreakNullCodePoint");
-        let t = "“".to_string();
-        let r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_unicode_punctuation_boundaries(t.as_str(),
-&UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_latin_clusters(t.as_str()).unwrap(), &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_latin_roles(t.as_str()),
-&vec![]).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_true((i32::from_ne_bytes((u32::from_ne_bytes((r.forbidden_line_end_clusters.size()).to_ne_bytes())).to_ne_bytes())) > (0), None).unwrap();
+    testlib::run("org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesHasAuthoredBreakNullCodePoint", "org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesHasAuthoredBreakNullCodePoint", || {
+        UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_start(UStr::new(&[114,101,115,111,108,118,101,85,110,105,99,111,100,101,80,117,110,99,116,117,97,116,105,111,110,66,111,117,110,100,97,114,105,101,115,72,97,115,65,117,116,104,111,114,101,100,66,114,101,97,107,78,117,108,108,67,111,100,101,80,111,105,110,116]));
+        let t = UString::from("“").to_ustring();
+        let r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_unicode_punctuation_boundaries(t.as_ustr(), &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_latin_clusters(t.as_ustr()).unwrap(), &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_latin_roles(t.as_ustr()), &vec![]).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_true((i32::from_ne_bytes(((u32::from_ne_bytes(((r.forbidden_line_end_clusters.size()) as u32).to_ne_bytes())) as i32).to_ne_bytes())) > (0), None).unwrap();
     });
 }
 
 #[test]
 fn resolve_unicode_punctuation_boundaries_first_code_point_length_bmp() {
     testlib::run("org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesFirstCodePointLengthBmp", "org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesFirstCodePointLengthBmp", || {
-        UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_start(&"resolveUnicodePunctuationBoundariesFirstCodePointLengthBmp");
-        let t = "a“".to_string();
-        let r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_unicode_punctuation_boundaries(t.as_str(),
-&UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_latin_clusters(t.as_str()).unwrap(), &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_latin_roles(t.as_str()),
-&vec![]).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_true((i32::from_ne_bytes((u32::try_from((r.decisions.len()) & 0xFFFF_FFFF).unwrap_or(0)).to_ne_bytes())) > (0), None).unwrap();
+        UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_start(UStr::new(&[114,101,115,111,108,118,101,85,110,105,99,111,100,101,80,117,110,99,116,117,97,116,105,111,110,66,111,117,110,100,97,114,105,101,115,70,105,114,115,116,67,111,100,101,80,111,105,110,116,76,101,110,103,116,104,66,109,112]));
+        let t = UString::from("a“").to_ustring();
+        let r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_unicode_punctuation_boundaries(t.as_ustr(), &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_latin_clusters(t.as_ustr()).unwrap(), &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_latin_roles(t.as_ustr()), &vec![]).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_true((i32::from_ne_bytes(((u32::try_from((r.decisions.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) > (0), None).unwrap();
     });
 }
 
 #[test]
 fn resolve_unicode_punctuation_boundaries_first_code_point_length_surrogate() {
-    testlib::run("org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesFirstCodePointLengthSurrogate",
-"org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesFirstCodePointLengthSurrogate", || {
-        UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_start(&"resolveUnicodePunctuationBoundariesFirstCodePointLengthSurrogate");
-        let t = format!("{}{}",
-            UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_surrogate(&vec![55357, 56832]),
-            "“"
-        );
+    testlib::run("org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesFirstCodePointLengthSurrogate", "org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesFirstCodePointLengthSurrogate", || {
+        UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_start(UStr::new(&[114,101,115,111,108,118,101,85,110,105,99,111,100,101,80,117,110,99,116,117,97,116,105,111,110,66,111,117,110,100,97,114,105,101,115,70,105,114,115,116,67,111,100,101,80,111,105,110,116,76,101,110,103,116,104,83,117,114,114,111,103,97,116,101]));
+        let t = { let mut __s = UString::new(); __s += UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_surrogate(&vec![55357, 56832]).as_ustr(); __s += &(UString::from("“")); __s };
         let c = vec![
-    (Cluster::new(TextRange::new(0u32, 2u32).unwrap(), UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_surrogate(&vec![55357, 56832]).as_str(), "emoji", 16.0f64,
-Some(UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_surrogate(&vec![55357, 56832])), Some(0.0), Some(0.0), Some(0.0))).clone(),
-    (Cluster::new(TextRange::new(2u32, 3u32).unwrap(), "“", "latin", 16.0f64, Some("“".to_string()), Some(0.0), Some(0.0), Some(0.0))).clone(),
+    (Cluster::new(TextRange::new(0u32, 2u32).unwrap(), UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_surrogate(&vec![55357, 56832]).as_ustr(), &(UStr::new(&[101,109,111,106,105])), 16.0f64, Some(UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_surrogate(&vec![55357, 56832])), Some(0.0), Some(0.0), Some(0.0))).clone(),
+    (Cluster::new(TextRange::new(2u32, 3u32).unwrap(), &(UStr::new(&[8220])), &(UStr::new(&[108,97,116,105,110])), 16.0f64, Some(UString::from("“")), Some(0.0), Some(0.0), Some(0.0))).clone(),
 ];
-        let r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_unicode_punctuation_boundaries(t.as_str(), &c, &vec![FontRole::Emoji, FontRole::LatinText], &vec![]).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_true((i32::from_ne_bytes((u32::try_from((r.decisions.len()) & 0xFFFF_FFFF).unwrap_or(0)).to_ne_bytes())) > (0), None).unwrap();
+        let r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_unicode_punctuation_boundaries(t.as_ustr(), &c, &vec![FontRole::Emoji, FontRole::LatinText], &vec![]).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_true((i32::from_ne_bytes(((u32::try_from((r.decisions.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) > (0), None).unwrap();
     });
 }
 
 #[test]
 fn resolve_unicode_punctuation_boundaries_code_point_at_or_null_surrogate_pair() {
-    testlib::run("org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesCodePointAtOrNullSurrogatePair",
-"org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesCodePointAtOrNullSurrogatePair", || {
-        UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_start(&"resolveUnicodePunctuationBoundariesCodePointAtOrNullSurrogatePair");
-        let t = format!("{}{}",
-            UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_surrogate(&vec![55357, 56832]),
-            "“"
-        );
+    testlib::run("org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesCodePointAtOrNullSurrogatePair", "org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesCodePointAtOrNullSurrogatePair", || {
+        UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_start(UStr::new(&[114,101,115,111,108,118,101,85,110,105,99,111,100,101,80,117,110,99,116,117,97,116,105,111,110,66,111,117,110,100,97,114,105,101,115,67,111,100,101,80,111,105,110,116,65,116,79,114,78,117,108,108,83,117,114,114,111,103,97,116,101,80,97,105,114]));
+        let t = { let mut __s = UString::new(); __s += UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_surrogate(&vec![55357, 56832]).as_ustr(); __s += &(UString::from("“")); __s };
         let c = vec![
-    (Cluster::new(TextRange::new(0u32, 2u32).unwrap(), UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_surrogate(&vec![55357, 56832]).as_str(), "emoji", 16.0f64,
-Some(UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_surrogate(&vec![55357, 56832])), Some(0.0), Some(0.0), Some(0.0))).clone(),
-    (Cluster::new(TextRange::new(2u32, 3u32).unwrap(), "“", "latin", 16.0f64, Some("“".to_string()), Some(0.0), Some(0.0), Some(0.0))).clone(),
+    (Cluster::new(TextRange::new(0u32, 2u32).unwrap(), UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_surrogate(&vec![55357, 56832]).as_ustr(), &(UStr::new(&[101,109,111,106,105])), 16.0f64, Some(UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_surrogate(&vec![55357, 56832])), Some(0.0), Some(0.0), Some(0.0))).clone(),
+    (Cluster::new(TextRange::new(2u32, 3u32).unwrap(), &(UStr::new(&[8220])), &(UStr::new(&[108,97,116,105,110])), 16.0f64, Some(UString::from("“")), Some(0.0), Some(0.0), Some(0.0))).clone(),
 ];
-        let r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_unicode_punctuation_boundaries(t.as_str(), &c, &vec![FontRole::Emoji, FontRole::LatinText], &vec![]).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_true((i32::from_ne_bytes((u32::try_from((r.decisions.len()) & 0xFFFF_FFFF).unwrap_or(0)).to_ne_bytes())) > (0), None).unwrap();
+        let r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_unicode_punctuation_boundaries(t.as_ustr(), &c, &vec![FontRole::Emoji, FontRole::LatinText], &vec![]).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_true((i32::from_ne_bytes(((u32::try_from((r.decisions.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) > (0), None).unwrap();
     });
 }
 
 #[test]
 fn resolve_unicode_punctuation_boundaries_code_point_before_surrogate_pair() {
-    testlib::run("org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesCodePointBeforeSurrogatePair", "org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesCodePointBeforeSurrogatePair",
-|| {
-        UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_start(&"resolveUnicodePunctuationBoundariesCodePointBeforeSurrogatePair");
+    testlib::run("org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesCodePointBeforeSurrogatePair", "org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesCodePointBeforeSurrogatePair", || {
+        UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_start(UStr::new(&[114,101,115,111,108,118,101,85,110,105,99,111,100,101,80,117,110,99,116,117,97,116,105,111,110,66,111,117,110,100,97,114,105,101,115,67,111,100,101,80,111,105,110,116,66,101,102,111,114,101,83,117,114,114,111,103,97,116,101,80,97,105,114]));
         let text = UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_surrogate(&vec![55357, 56832]);
         let c = vec![
-    (Cluster::new(TextRange::new(0u32, 2u32).unwrap(), text.as_str(), "emoji", 16.0f64, Some(text.to_string()), Some(0.0), Some(0.0), Some(0.0))).clone(),
+    (Cluster::new(TextRange::new(0u32, 2u32).unwrap(), text.as_ustr(), &(UStr::new(&[101,109,111,106,105])), 16.0f64, Some(text.to_ustring()), Some(0.0), Some(0.0), Some(0.0))).clone(),
 ];
-        let r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_unicode_punctuation_boundaries(text.as_str(), &c, &vec![FontRole::Emoji], &vec![]).unwrap();
+        let r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_unicode_punctuation_boundaries(text.as_ustr(), &c, &vec![FontRole::Emoji], &vec![]).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_equals(0, u32::try_from((r.decisions.len()) & 0xFFFF_FFFF).unwrap_or(0), None).unwrap();
     });
 }
 
 #[test]
 fn resolve_unicode_punctuation_boundaries_code_point_before_low_surrogate() {
-    testlib::run("org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesCodePointBeforeLowSurrogate", "org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesCodePointBeforeLowSurrogate",
-|| {
-        UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_start(&"resolveUnicodePunctuationBoundariesCodePointBeforeLowSurrogate");
-        let text = format!("{}{}",
-            "a",
-            UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_surrogate(&vec![55357, 56832])
-        );
+    testlib::run("org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesCodePointBeforeLowSurrogate", "org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesCodePointBeforeLowSurrogate", || {
+        UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_start(UStr::new(&[114,101,115,111,108,118,101,85,110,105,99,111,100,101,80,117,110,99,116,117,97,116,105,111,110,66,111,117,110,100,97,114,105,101,115,67,111,100,101,80,111,105,110,116,66,101,102,111,114,101,76,111,119,83,117,114,114,111,103,97,116,101]));
+        let text = { let mut __s = UString::new(); __s += &(UString::from("a")); __s += UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_surrogate(&vec![55357, 56832]).as_ustr(); __s };
         let c = vec![
-    (Cluster::new(TextRange::new(0u32, 1u32).unwrap(), "a", "latin", 8.0f64, Some("a".to_string()), Some(0.0), Some(0.0), Some(0.0))).clone(),
-    (Cluster::new(TextRange::new(1u32, 3u32).unwrap(), UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_surrogate(&vec![55357, 56832]).as_str(), "emoji", 16.0f64,
-Some(UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_surrogate(&vec![55357, 56832])), Some(0.0), Some(0.0), Some(0.0))).clone(),
+    (Cluster::new(TextRange::new(0u32, 1u32).unwrap(), &(UStr::new(&[97])), &(UStr::new(&[108,97,116,105,110])), 8.0f64, Some(UString::from("a")), Some(0.0), Some(0.0), Some(0.0))).clone(),
+    (Cluster::new(TextRange::new(1u32, 3u32).unwrap(), UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_surrogate(&vec![55357, 56832]).as_ustr(), &(UStr::new(&[101,109,111,106,105])), 16.0f64, Some(UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_surrogate(&vec![55357, 56832])), Some(0.0), Some(0.0), Some(0.0))).clone(),
 ];
-        let r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_unicode_punctuation_boundaries(text.as_str(), &c, &vec![FontRole::LatinText, FontRole::Emoji], &vec![]).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_equals(0, u32::from_ne_bytes((r.forbidden_line_start_clusters.size()).to_ne_bytes()), None).unwrap();
+        let r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_unicode_punctuation_boundaries(text.as_ustr(), &c, &vec![FontRole::LatinText, FontRole::Emoji], &vec![]).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_equals(0, u32::from_ne_bytes(((r.forbidden_line_start_clusters.size()) as u32).to_ne_bytes()), None).unwrap();
     });
 }
 
 #[test]
 fn resolve_unicode_punctuation_boundaries_quote_direction2019_surrogate_left() {
-    testlib::run("org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesQuoteDirection2019SurrogateLeft",
-"org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesQuoteDirection2019SurrogateLeft", || {
-        UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_start(&"resolveUnicodePunctuationBoundariesQuoteDirection2019SurrogateLeft");
-        let text = format!("{}{}",
-            UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_surrogate(&vec![55357, 56832]),
-            "’"
-        );
+    testlib::run("org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesQuoteDirection2019SurrogateLeft", "org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesQuoteDirection2019SurrogateLeft", || {
+        UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_start(UStr::new(&[114,101,115,111,108,118,101,85,110,105,99,111,100,101,80,117,110,99,116,117,97,116,105,111,110,66,111,117,110,100,97,114,105,101,115,81,117,111,116,101,68,105,114,101,99,116,105,111,110,50,48,49,57,83,117,114,114,111,103,97,116,101,76,101,102,116]));
+        let text = { let mut __s = UString::new(); __s += UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_surrogate(&vec![55357, 56832]).as_ustr(); __s += &(UString::from("’")); __s };
         let c = vec![
-    (Cluster::new(TextRange::new(0u32, 2u32).unwrap(), UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_surrogate(&vec![55357, 56832]).as_str(), "emoji", 16.0f64,
-Some(UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_surrogate(&vec![55357, 56832])), Some(0.0), Some(0.0), Some(0.0))).clone(),
-    (Cluster::new(TextRange::new(2u32, 3u32).unwrap(), "’", "latin", 8.0f64, Some("’".to_string()), Some(0.0), Some(0.0), Some(0.0))).clone(),
+    (Cluster::new(TextRange::new(0u32, 2u32).unwrap(), UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_surrogate(&vec![55357, 56832]).as_ustr(), &(UStr::new(&[101,109,111,106,105])), 16.0f64, Some(UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_surrogate(&vec![55357, 56832])), Some(0.0), Some(0.0), Some(0.0))).clone(),
+    (Cluster::new(TextRange::new(2u32, 3u32).unwrap(), &(UStr::new(&[8217])), &(UStr::new(&[108,97,116,105,110])), 8.0f64, Some(UString::from("’")), Some(0.0), Some(0.0), Some(0.0))).clone(),
 ];
-        let r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_unicode_punctuation_boundaries(text.as_str(), &c, &vec![FontRole::Emoji, FontRole::LatinText], &vec![]).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_true((i32::from_ne_bytes((u32::try_from((r.decisions.len()) & 0xFFFF_FFFF).unwrap_or(0)).to_ne_bytes())) > (0), None).unwrap();
+        let r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_unicode_punctuation_boundaries(text.as_ustr(), &c, &vec![FontRole::Emoji, FontRole::LatinText], &vec![]).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_true((i32::from_ne_bytes(((u32::try_from((r.decisions.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) > (0), None).unwrap();
     });
 }
 
 #[test]
 fn resolve_unicode_punctuation_boundaries_previous_content_cluster_multiple_empty() {
-    testlib::run("org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesPreviousContentClusterMultipleEmpty",
-"org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesPreviousContentClusterMultipleEmpty", || {
-        UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_start(&"resolveUnicodePunctuationBoundariesPreviousContentClusterMultipleEmpty");
-        let text = "a ”".to_string();
+    testlib::run("org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesPreviousContentClusterMultipleEmpty", "org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesPreviousContentClusterMultipleEmpty", || {
+        UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_start(UStr::new(&[114,101,115,111,108,118,101,85,110,105,99,111,100,101,80,117,110,99,116,117,97,116,105,111,110,66,111,117,110,100,97,114,105,101,115,80,114,101,118,105,111,117,115,67,111,110,116,101,110,116,67,108,117,115,116,101,114,77,117,108,116,105,112,108,101,69,109,112,116,121]));
+        let text = UString::from("a ”").to_ustring();
         let c = vec![
-    (Cluster::new(TextRange::new(0u32, 0u32).unwrap(), "", "latin", 0.0f64, Some("".to_string()), Some(0.0), Some(0.0), Some(0.0))).clone(),
-    (Cluster::new(TextRange::new(1u32, 2u32).unwrap(), " ", "latin", 8.0f64, Some(" ".to_string()), Some(0.0), Some(0.0), Some(0.0))).clone(),
-    (Cluster::new(TextRange::new(2u32, 3u32).unwrap(), "”", "latin", 8.0f64, Some("”".to_string()), Some(0.0), Some(0.0), Some(0.0))).clone(),
+    (Cluster::new(TextRange::new(0u32, 0u32).unwrap(), &(UStr::new(&[])), &(UStr::new(&[108,97,116,105,110])), 0.0f64, Some(UString::from("")), Some(0.0), Some(0.0), Some(0.0))).clone(),
+    (Cluster::new(TextRange::new(1u32, 2u32).unwrap(), &(UStr::new(&[32])), &(UStr::new(&[108,97,116,105,110])), 8.0f64, Some(UString::from(" ")), Some(0.0), Some(0.0), Some(0.0))).clone(),
+    (Cluster::new(TextRange::new(2u32, 3u32).unwrap(), &(UStr::new(&[8221])), &(UStr::new(&[108,97,116,105,110])), 8.0f64, Some(UString::from("”")), Some(0.0), Some(0.0), Some(0.0))).clone(),
 ];
-        let r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_unicode_punctuation_boundaries(text.as_str(), &c, &vec![FontRole::LatinText, FontRole::LatinText, FontRole::LatinText], &vec![]).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_true((i32::from_ne_bytes((u32::from_ne_bytes((r.forbidden_line_start_clusters.size()).to_ne_bytes())).to_ne_bytes())) > (0), None).unwrap();
+        let r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_unicode_punctuation_boundaries(text.as_ustr(), &c, &vec![FontRole::LatinText, FontRole::LatinText, FontRole::LatinText], &vec![]).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_true((i32::from_ne_bytes(((u32::from_ne_bytes(((r.forbidden_line_start_clusters.size()) as u32).to_ne_bytes())) as i32).to_ne_bytes())) > (0), None).unwrap();
     });
 }
 
 #[test]
 fn resolve_unicode_punctuation_boundaries_follows_authored_boundary_zwsp_in_middle() {
-    testlib::run("org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesFollowsAuthoredBoundaryZWSPInMiddle",
-"org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesFollowsAuthoredBoundaryZWSPInMiddle", || {
-        UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_start(&"resolveUnicodePunctuationBoundariesFollowsAuthoredBoundaryZWSPInMiddle");
-        let text = " ​“".to_string();
-        let c = UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_latin_clusters(text.as_str()).unwrap();
-        let r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_unicode_punctuation_boundaries(text.as_str(), &c,
-&UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_latin_roles(text.as_str()), &vec![]).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_equals(0, u32::from_ne_bytes((r.forbidden_line_start_clusters.size()).to_ne_bytes()), None).unwrap();
+    testlib::run("org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesFollowsAuthoredBoundaryZWSPInMiddle", "org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesFollowsAuthoredBoundaryZWSPInMiddle", || {
+        UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_start(UStr::new(&[114,101,115,111,108,118,101,85,110,105,99,111,100,101,80,117,110,99,116,117,97,116,105,111,110,66,111,117,110,100,97,114,105,101,115,70,111,108,108,111,119,115,65,117,116,104,111,114,101,100,66,111,117,110,100,97,114,121,90,87,83,80,73,110,77,105,100,100,108,101]));
+        let text = UString::from(" ​“").to_ustring();
+        let c = UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_latin_clusters(text.as_ustr()).unwrap();
+        let r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_unicode_punctuation_boundaries(text.as_ustr(), &c, &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_latin_roles(text.as_ustr()), &vec![]).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_equals(0, u32::from_ne_bytes(((r.forbidden_line_start_clusters.size()) as u32).to_ne_bytes()), None).unwrap();
     });
 }
 
 #[test]
 fn resolve_unicode_punctuation_boundaries_last_significant_code_point_surrogate_ending() {
-    testlib::run("org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesLastSignificantCodePointSurrogateEnding",
-"org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesLastSignificantCodePointSurrogateEnding", || {
-        UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_start(&"resolveUnicodePunctuationBoundariesLastSignificantCodePointSurrogateEnding");
-        let text = format!("{}{}",
-            UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_surrogate(&vec![55357, 56832]),
-            "”"
-        );
+    testlib::run("org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesLastSignificantCodePointSurrogateEnding", "org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesLastSignificantCodePointSurrogateEnding", || {
+        UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_start(UStr::new(&[114,101,115,111,108,118,101,85,110,105,99,111,100,101,80,117,110,99,116,117,97,116,105,111,110,66,111,117,110,100,97,114,105,101,115,76,97,115,116,83,105,103,110,105,102,105,99,97,110,116,67,111,100,101,80,111,105,110,116,83,117,114,114,111,103,97,116,101,69,110,100,105,110,103]));
+        let text = { let mut __s = UString::new(); __s += UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_surrogate(&vec![55357, 56832]).as_ustr(); __s += &(UString::from("”")); __s };
         let c = vec![
-    (Cluster::new(TextRange::new(0u32, 2u32).unwrap(), UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_surrogate(&vec![55357, 56832]).as_str(), "emoji", 16.0f64,
-Some(UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_surrogate(&vec![55357, 56832])), Some(0.0), Some(0.0), Some(0.0))).clone(),
-    (Cluster::new(TextRange::new(2u32, 3u32).unwrap(), "”", "latin", 8.0f64, Some("”".to_string()), Some(0.0), Some(0.0), Some(0.0))).clone(),
+    (Cluster::new(TextRange::new(0u32, 2u32).unwrap(), UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_surrogate(&vec![55357, 56832]).as_ustr(), &(UStr::new(&[101,109,111,106,105])), 16.0f64, Some(UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_surrogate(&vec![55357, 56832])), Some(0.0), Some(0.0), Some(0.0))).clone(),
+    (Cluster::new(TextRange::new(2u32, 3u32).unwrap(), &(UStr::new(&[8221])), &(UStr::new(&[108,97,116,105,110])), 8.0f64, Some(UString::from("”")), Some(0.0), Some(0.0), Some(0.0))).clone(),
 ];
-        let r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_unicode_punctuation_boundaries(text.as_str(), &c, &vec![FontRole::Emoji, FontRole::LatinText], &vec![]).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_true((i32::from_ne_bytes((u32::from_ne_bytes((r.forbidden_line_end_clusters.size()).to_ne_bytes())).to_ne_bytes())) > (0) || (i32::from_ne_bytes((u32::try_from((r.unbreakable_ranges.len()) &
-0xFFFF_FFFF).unwrap_or(0)).to_ne_bytes())) > (0), None).unwrap();
+        let r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_unicode_punctuation_boundaries(text.as_ustr(), &c, &vec![FontRole::Emoji, FontRole::LatinText], &vec![]).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_true((i32::from_ne_bytes(((u32::from_ne_bytes(((r.forbidden_line_end_clusters.size()) as u32).to_ne_bytes())) as i32).to_ne_bytes())) > (0) || (i32::from_ne_bytes(((u32::try_from((r.unbreakable_ranges.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) > (0), None).unwrap();
     });
 }
 
 #[test]
 fn resolve_unicode_punctuation_boundaries_is_decimal_mark_after_space_following_inside() {
-    testlib::run("org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesIsDecimalMarkAfterSpaceFollowingInside",
-"org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesIsDecimalMarkAfterSpaceFollowingInside", || {
-        UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_start(&"resolveUnicodePunctuationBoundariesIsDecimalMarkAfterSpaceFollowingInside");
-        let text = "a .5".to_string();
+    testlib::run("org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesIsDecimalMarkAfterSpaceFollowingInside", "org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesIsDecimalMarkAfterSpaceFollowingInside", || {
+        UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_start(UStr::new(&[114,101,115,111,108,118,101,85,110,105,99,111,100,101,80,117,110,99,116,117,97,116,105,111,110,66,111,117,110,100,97,114,105,101,115,73,115,68,101,99,105,109,97,108,77,97,114,107,65,102,116,101,114,83,112,97,99,101,70,111,108,108,111,119,105,110,103,73,110,115,105,100,101]));
+        let text = UString::from("a .5").to_ustring();
         let c = vec![
-    (Cluster::new(TextRange::new(0u32, 1u32).unwrap(), "a", "latin", 8.0f64, Some("a".to_string()), Some(0.0), Some(0.0), Some(0.0))).clone(),
-    (Cluster::new(TextRange::new(1u32, 2u32).unwrap(), " ", "latin", 8.0f64, Some(" ".to_string()), Some(0.0), Some(0.0), Some(0.0))).clone(),
-    (Cluster::new(TextRange::new(2u32, 4u32).unwrap(), ".5", "latin", 16.0f64, Some(".5".to_string()), Some(0.0), Some(0.0), Some(0.0))).clone(),
+    (Cluster::new(TextRange::new(0u32, 1u32).unwrap(), &(UStr::new(&[97])), &(UStr::new(&[108,97,116,105,110])), 8.0f64, Some(UString::from("a")), Some(0.0), Some(0.0), Some(0.0))).clone(),
+    (Cluster::new(TextRange::new(1u32, 2u32).unwrap(), &(UStr::new(&[32])), &(UStr::new(&[108,97,116,105,110])), 8.0f64, Some(UString::from(" ")), Some(0.0), Some(0.0), Some(0.0))).clone(),
+    (Cluster::new(TextRange::new(2u32, 4u32).unwrap(), &(UStr::new(&[46,53])), &(UStr::new(&[108,97,116,105,110])), 16.0f64, Some(UString::from(".5")), Some(0.0), Some(0.0), Some(0.0))).clone(),
 ];
-        let r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_unicode_punctuation_boundaries(text.as_str(), &c, &vec![FontRole::LatinText, FontRole::LatinText, FontRole::CjkPunctuation], &vec![]).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_equals(0, u32::from_ne_bytes((r.forbidden_line_start_clusters.size()).to_ne_bytes()), None).unwrap();
+        let r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_unicode_punctuation_boundaries(text.as_ustr(), &c, &vec![FontRole::LatinText, FontRole::LatinText, FontRole::CjkPunctuation], &vec![]).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_equals(0, u32::from_ne_bytes(((r.forbidden_line_start_clusters.size()) as u32).to_ne_bytes()), None).unwrap();
     });
 }
 
 #[test]
 fn resolve_unicode_punctuation_boundary_full_width_comma_after_space_stays_forbidden() {
-    testlib::run("org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundaryFullWidthCommaAfterSpaceStaysForbidden",
-"org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundaryFullWidthCommaAfterSpaceStaysForbidden", || {
-        UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_start(&"resolveUnicodePunctuationBoundaryFullWidthCommaAfterSpaceStaysForbidden");
-        let text = "a ，5".to_string();
+    testlib::run("org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundaryFullWidthCommaAfterSpaceStaysForbidden", "org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundaryFullWidthCommaAfterSpaceStaysForbidden", || {
+        UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_start(UStr::new(&[114,101,115,111,108,118,101,85,110,105,99,111,100,101,80,117,110,99,116,117,97,116,105,111,110,66,111,117,110,100,97,114,121,70,117,108,108,87,105,100,116,104,67,111,109,109,97,65,102,116,101,114,83,112,97,99,101,83,116,97,121,115,70,111,114,98,105,100,100,101,110]));
+        let text = UString::from("a ，5").to_ustring();
         let c = vec![
-    (Cluster::new(TextRange::new(0u32, 1u32).unwrap(), "a", "latin", 8.0f64, Some("a".to_string()), Some(0.0), Some(0.0), Some(0.0))).clone(),
-    (Cluster::new(TextRange::new(1u32, 2u32).unwrap(), " ", "latin", 8.0f64, Some(" ".to_string()), Some(0.0), Some(0.0), Some(0.0))).clone(),
-    (Cluster::new(TextRange::new(2u32, 4u32).unwrap(), "，5", "latin", 16.0f64, Some("，5".to_string()), Some(0.0), Some(0.0), Some(0.0))).clone(),
+    (Cluster::new(TextRange::new(0u32, 1u32).unwrap(), &(UStr::new(&[97])), &(UStr::new(&[108,97,116,105,110])), 8.0f64, Some(UString::from("a")), Some(0.0), Some(0.0), Some(0.0))).clone(),
+    (Cluster::new(TextRange::new(1u32, 2u32).unwrap(), &(UStr::new(&[32])), &(UStr::new(&[108,97,116,105,110])), 8.0f64, Some(UString::from(" ")), Some(0.0), Some(0.0), Some(0.0))).clone(),
+    (Cluster::new(TextRange::new(2u32, 4u32).unwrap(), &(UStr::new(&[65292,53])), &(UStr::new(&[108,97,116,105,110])), 16.0f64, Some(UString::from("，5")), Some(0.0), Some(0.0), Some(0.0))).clone(),
 ];
-        let r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_unicode_punctuation_boundaries(text.as_str(), &c, &vec![FontRole::LatinText, FontRole::LatinText, FontRole::LatinText], &vec![]).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_equals(1, u32::from_ne_bytes((r.forbidden_line_start_clusters.size()).to_ne_bytes()), None).unwrap();
+        let r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_unicode_punctuation_boundaries(text.as_ustr(), &c, &vec![FontRole::LatinText, FontRole::LatinText, FontRole::LatinText], &vec![]).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_equals(1, u32::from_ne_bytes(((r.forbidden_line_start_clusters.size()) as u32).to_ne_bytes()), None).unwrap();
     });
 }
 
 #[test]
 fn resolve_unicode_punctuation_boundaries_is_decimal_mark_after_space_following_outside() {
-    testlib::run("org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesIsDecimalMarkAfterSpaceFollowingOutside",
-"org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesIsDecimalMarkAfterSpaceFollowingOutside", || {
-        UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_start(&"resolveUnicodePunctuationBoundariesIsDecimalMarkAfterSpaceFollowingOutside");
-        let text = "a .5".to_string();
+    testlib::run("org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesIsDecimalMarkAfterSpaceFollowingOutside", "org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesIsDecimalMarkAfterSpaceFollowingOutside", || {
+        UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_start(UStr::new(&[114,101,115,111,108,118,101,85,110,105,99,111,100,101,80,117,110,99,116,117,97,116,105,111,110,66,111,117,110,100,97,114,105,101,115,73,115,68,101,99,105,109,97,108,77,97,114,107,65,102,116,101,114,83,112,97,99,101,70,111,108,108,111,119,105,110,103,79,117,116,115,105,100,101]));
+        let text = UString::from("a .5").to_ustring();
         let c = vec![
-    (Cluster::new(TextRange::new(0u32, 1u32).unwrap(), "a", "latin", 8.0f64, Some("a".to_string()), Some(0.0), Some(0.0), Some(0.0))).clone(),
-    (Cluster::new(TextRange::new(1u32, 2u32).unwrap(), " ", "latin", 8.0f64, Some(" ".to_string()), Some(0.0), Some(0.0), Some(0.0))).clone(),
-    (Cluster::new(TextRange::new(2u32, 3u32).unwrap(), ".", "latin", 8.0f64, Some(".".to_string()), Some(0.0), Some(0.0), Some(0.0))).clone(),
-    (Cluster::new(TextRange::new(3u32, 4u32).unwrap(), "5", "latin", 8.0f64, Some("5".to_string()), Some(0.0), Some(0.0), Some(0.0))).clone(),
+    (Cluster::new(TextRange::new(0u32, 1u32).unwrap(), &(UStr::new(&[97])), &(UStr::new(&[108,97,116,105,110])), 8.0f64, Some(UString::from("a")), Some(0.0), Some(0.0), Some(0.0))).clone(),
+    (Cluster::new(TextRange::new(1u32, 2u32).unwrap(), &(UStr::new(&[32])), &(UStr::new(&[108,97,116,105,110])), 8.0f64, Some(UString::from(" ")), Some(0.0), Some(0.0), Some(0.0))).clone(),
+    (Cluster::new(TextRange::new(2u32, 3u32).unwrap(), &(UStr::new(&[46])), &(UStr::new(&[108,97,116,105,110])), 8.0f64, Some(UString::from(".")), Some(0.0), Some(0.0), Some(0.0))).clone(),
+    (Cluster::new(TextRange::new(3u32, 4u32).unwrap(), &(UStr::new(&[53])), &(UStr::new(&[108,97,116,105,110])), 8.0f64, Some(UString::from("5")), Some(0.0), Some(0.0), Some(0.0))).clone(),
 ];
-        let r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_unicode_punctuation_boundaries(text.as_str(), &c, &vec![FontRole::LatinText, FontRole::LatinText, FontRole::CjkPunctuation, FontRole::LatinText], &vec![]).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_equals(0, u32::from_ne_bytes((r.forbidden_line_start_clusters.size()).to_ne_bytes()), None).unwrap();
+        let r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_unicode_punctuation_boundaries(text.as_ustr(), &c, &vec![FontRole::LatinText, FontRole::LatinText, FontRole::CjkPunctuation, FontRole::LatinText], &vec![]).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_equals(0, u32::from_ne_bytes(((r.forbidden_line_start_clusters.size()) as u32).to_ne_bytes()), None).unwrap();
     });
 }
 
 #[test]
 fn resolve_unicode_punctuation_boundaries_quote_direction2019_bmp_left() {
     testlib::run("org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesQuoteDirection2019BmpLeft", "org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesQuoteDirection2019BmpLeft", || {
-        UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_start(&"resolveUnicodePunctuationBoundariesQuoteDirection2019BmpLeft");
-        let text = "A’".to_string();
-        let r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_unicode_punctuation_boundaries(text.as_str(),
-&UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_latin_clusters(text.as_str()).unwrap(), &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_latin_roles(text.as_str()),
-&vec![]).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_true((i32::from_ne_bytes((u32::try_from((r.decisions.len()) & 0xFFFF_FFFF).unwrap_or(0)).to_ne_bytes())) > (0) ||
-(i32::from_ne_bytes((u32::from_ne_bytes((r.forbidden_line_start_clusters.size()).to_ne_bytes())).to_ne_bytes())) > (0), None).unwrap();
+        UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_start(UStr::new(&[114,101,115,111,108,118,101,85,110,105,99,111,100,101,80,117,110,99,116,117,97,116,105,111,110,66,111,117,110,100,97,114,105,101,115,81,117,111,116,101,68,105,114,101,99,116,105,111,110,50,48,49,57,66,109,112,76,101,102,116]));
+        let text = UString::from("A’").to_ustring();
+        let r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_unicode_punctuation_boundaries(text.as_ustr(), &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_latin_clusters(text.as_ustr()).unwrap(), &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_latin_roles(text.as_ustr()), &vec![]).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_true((i32::from_ne_bytes(((u32::try_from((r.decisions.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) > (0) || (i32::from_ne_bytes(((u32::from_ne_bytes(((r.forbidden_line_start_clusters.size()) as u32).to_ne_bytes())) as i32).to_ne_bytes())) > (0), None).unwrap();
     });
 }
 
 #[test]
 fn resolve_unicode_punctuation_boundaries_quote_direction2019_right_word_only() {
-    testlib::run("org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesQuoteDirection2019RightWordOnly",
-"org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesQuoteDirection2019RightWordOnly", || {
-        UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_start(&"resolveUnicodePunctuationBoundariesQuoteDirection2019RightWordOnly");
-        let text = " ’a".to_string();
-        let r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_unicode_punctuation_boundaries(text.as_str(),
-&UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_latin_clusters(text.as_str()).unwrap(), &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_latin_roles(text.as_str()),
-&vec![]).unwrap();
+    testlib::run("org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesQuoteDirection2019RightWordOnly", "org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesQuoteDirection2019RightWordOnly", || {
+        UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_start(UStr::new(&[114,101,115,111,108,118,101,85,110,105,99,111,100,101,80,117,110,99,116,117,97,116,105,111,110,66,111,117,110,100,97,114,105,101,115,81,117,111,116,101,68,105,114,101,99,116,105,111,110,50,48,49,57,82,105,103,104,116,87,111,114,100,79,110,108,121]));
+        let text = UString::from(" ’a").to_ustring();
+        let r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_unicode_punctuation_boundaries(text.as_ustr(), &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_latin_clusters(text.as_ustr()).unwrap(), &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_latin_roles(text.as_ustr()), &vec![]).unwrap();
         let mut f = false;
         let mut i = 0u32;
-        while (i32::from_ne_bytes((i).to_ne_bytes())) < (i32::from_ne_bytes((u32::try_from((r.decisions.len()) & 0xFFFF_FFFF).unwrap_or(0)).to_ne_bytes())) {
-            if r.decisions[usize::try_from(i).unwrap_or(0)].clone().forbidden_position.to_string() == "LineEnd" {
+        while (i32::from_ne_bytes(((i) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((r.decisions.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
+            if r.decisions[usize::try_from(i).unwrap_or(0)].clone().forbidden_position.to_ustring() == UString::from("LineEnd") {
                 f = true;
             }
             i = u32::wrapping_add(i, 1);
@@ -8178,17 +8981,14 @@ fn resolve_unicode_punctuation_boundaries_quote_direction2019_right_word_only() 
 
 #[test]
 fn resolve_unicode_punctuation_boundaries_quote_direction2019_left_word_only() {
-    testlib::run("org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesQuoteDirection2019LeftWordOnly",
-"org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesQuoteDirection2019LeftWordOnly", || {
-        UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_start(&"resolveUnicodePunctuationBoundariesQuoteDirection2019LeftWordOnly");
-        let text = "a’ ".to_string();
-        let r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_unicode_punctuation_boundaries(text.as_str(),
-&UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_latin_clusters(text.as_str()).unwrap(), &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_latin_roles(text.as_str()),
-&vec![]).unwrap();
+    testlib::run("org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesQuoteDirection2019LeftWordOnly", "org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesQuoteDirection2019LeftWordOnly", || {
+        UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_start(UStr::new(&[114,101,115,111,108,118,101,85,110,105,99,111,100,101,80,117,110,99,116,117,97,116,105,111,110,66,111,117,110,100,97,114,105,101,115,81,117,111,116,101,68,105,114,101,99,116,105,111,110,50,48,49,57,76,101,102,116,87,111,114,100,79,110,108,121]));
+        let text = UString::from("a’ ").to_ustring();
+        let r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_unicode_punctuation_boundaries(text.as_ustr(), &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_latin_clusters(text.as_ustr()).unwrap(), &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_latin_roles(text.as_ustr()), &vec![]).unwrap();
         let mut f = false;
         let mut i = 0u32;
-        while (i32::from_ne_bytes((i).to_ne_bytes())) < (i32::from_ne_bytes((u32::try_from((r.decisions.len()) & 0xFFFF_FFFF).unwrap_or(0)).to_ne_bytes())) {
-            if r.decisions[usize::try_from(i).unwrap_or(0)].clone().forbidden_position.to_string() == "LineStart" {
+        while (i32::from_ne_bytes(((i) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((r.decisions.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
+            if r.decisions[usize::try_from(i).unwrap_or(0)].clone().forbidden_position.to_ustring() == UString::from("LineStart") {
                 f = true;
             }
             i = u32::wrapping_add(i, 1);
@@ -8199,17 +8999,14 @@ fn resolve_unicode_punctuation_boundaries_quote_direction2019_left_word_only() {
 
 #[test]
 fn resolve_unicode_punctuation_boundaries_quote_direction2019_neither_word() {
-    testlib::run("org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesQuoteDirection2019NeitherWord",
-"org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesQuoteDirection2019NeitherWord", || {
-        UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_start(&"resolveUnicodePunctuationBoundariesQuoteDirection2019NeitherWord");
-        let text = "!’!".to_string();
-        let r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_unicode_punctuation_boundaries(text.as_str(),
-&UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_latin_clusters(text.as_str()).unwrap(), &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_latin_roles(text.as_str()),
-&vec![]).unwrap();
+    testlib::run("org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesQuoteDirection2019NeitherWord", "org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesQuoteDirection2019NeitherWord", || {
+        UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_start(UStr::new(&[114,101,115,111,108,118,101,85,110,105,99,111,100,101,80,117,110,99,116,117,97,116,105,111,110,66,111,117,110,100,97,114,105,101,115,81,117,111,116,101,68,105,114,101,99,116,105,111,110,50,48,49,57,78,101,105,116,104,101,114,87,111,114,100]));
+        let text = UString::from("!’!").to_ustring();
+        let r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_unicode_punctuation_boundaries(text.as_ustr(), &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_latin_clusters(text.as_ustr()).unwrap(), &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_latin_roles(text.as_ustr()), &vec![]).unwrap();
         let mut f = false;
         let mut i = 0u32;
-        while (i32::from_ne_bytes((i).to_ne_bytes())) < (i32::from_ne_bytes((u32::try_from((r.decisions.len()) & 0xFFFF_FFFF).unwrap_or(0)).to_ne_bytes())) {
-            if r.decisions[usize::try_from(i).unwrap_or(0)].clone().forbidden_position.to_string() == "LineStart" {
+        while (i32::from_ne_bytes(((i) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((r.decisions.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
+            if r.decisions[usize::try_from(i).unwrap_or(0)].clone().forbidden_position.to_ustring() == UString::from("LineStart") {
                 f = true;
             }
             i = u32::wrapping_add(i, 1);
@@ -8220,281 +9017,236 @@ fn resolve_unicode_punctuation_boundaries_quote_direction2019_neither_word() {
 
 #[test]
 fn resolve_unicode_punctuation_boundaries_code_point_before_low_surrogate_single() {
-    testlib::run("org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesCodePointBeforeLowSurrogateSingle",
-"org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesCodePointBeforeLowSurrogateSingle", || {
-        UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_start(&"resolveUnicodePunctuationBoundariesCodePointBeforeLowSurrogateSingle");
+    testlib::run("org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesCodePointBeforeLowSurrogateSingle", "org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesCodePointBeforeLowSurrogateSingle", || {
+        UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_start(UStr::new(&[114,101,115,111,108,118,101,85,110,105,99,111,100,101,80,117,110,99,116,117,97,116,105,111,110,66,111,117,110,100,97,114,105,101,115,67,111,100,101,80,111,105,110,116,66,101,102,111,114,101,76,111,119,83,117,114,114,111,103,97,116,101,83,105,110,103,108,101]));
         let text = UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_surrogate(&vec![55357, 56832]);
         let c = vec![
-    (Cluster::new(TextRange::new(0u32, 2u32).unwrap(), text.as_str(), "emoji", 16.0f64, Some(text.to_string()), Some(0.0), Some(0.0), Some(0.0))).clone(),
+    (Cluster::new(TextRange::new(0u32, 2u32).unwrap(), text.as_ustr(), &(UStr::new(&[101,109,111,106,105])), 16.0f64, Some(text.to_ustring()), Some(0.0), Some(0.0), Some(0.0))).clone(),
 ];
-        let r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_unicode_punctuation_boundaries(text.as_str(), &c, &vec![FontRole::Emoji], &vec![]).unwrap();
+        let r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_unicode_punctuation_boundaries(text.as_ustr(), &c, &vec![FontRole::Emoji], &vec![]).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_equals(0, u32::try_from((r.decisions.len()) & 0xFFFF_FFFF).unwrap_or(0), None).unwrap();
     });
 }
 
 #[test]
 fn resolve_unicode_punctuation_boundaries_code_point_at_or_null_supplementary() {
-    testlib::run("org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesCodePointAtOrNullSupplementary",
-"org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesCodePointAtOrNullSupplementary", || {
-        UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_start(&"resolveUnicodePunctuationBoundariesCodePointAtOrNullSupplementary");
+    testlib::run("org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesCodePointAtOrNullSupplementary", "org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesCodePointAtOrNullSupplementary", || {
+        UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_start(UStr::new(&[114,101,115,111,108,118,101,85,110,105,99,111,100,101,80,117,110,99,116,117,97,116,105,111,110,66,111,117,110,100,97,114,105,101,115,67,111,100,101,80,111,105,110,116,65,116,79,114,78,117,108,108,83,117,112,112,108,101,109,101,110,116,97,114,121]));
         let text = UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_surrogate(&vec![55357, 56832]);
         let c = vec![
-    (Cluster::new(TextRange::new(0u32, 2u32).unwrap(), text.as_str(), "emoji", 16.0f64, Some(text.to_string()), Some(0.0), Some(0.0), Some(0.0))).clone(),
+    (Cluster::new(TextRange::new(0u32, 2u32).unwrap(), text.as_ustr(), &(UStr::new(&[101,109,111,106,105])), 16.0f64, Some(text.to_ustring()), Some(0.0), Some(0.0), Some(0.0))).clone(),
 ];
-        let r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_unicode_punctuation_boundaries(text.as_str(), &c, &vec![FontRole::Emoji], &vec![]).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_equals(0, u32::from_ne_bytes((r.forbidden_line_start_clusters.size()).to_ne_bytes()), None).unwrap();
+        let r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_unicode_punctuation_boundaries(text.as_ustr(), &c, &vec![FontRole::Emoji], &vec![]).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_equals(0, u32::from_ne_bytes(((r.forbidden_line_start_clusters.size()) as u32).to_ne_bytes()), None).unwrap();
     });
 }
 
 #[test]
 fn resolve_unicode_punctuation_boundaries_has_authored_break_empty_string() {
-    testlib::run("org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesHasAuthoredBreakEmptyString", "org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesHasAuthoredBreakEmptyString",
-|| {
-        UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_start(&"resolveUnicodePunctuationBoundariesHasAuthoredBreakEmptyString");
-        let text = "“".to_string();
-        let r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_unicode_punctuation_boundaries(text.as_str(),
-&UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_latin_clusters(text.as_str()).unwrap(), &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_latin_roles(text.as_str()),
-&vec![]).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_true((i32::from_ne_bytes((u32::from_ne_bytes((r.forbidden_line_end_clusters.size()).to_ne_bytes())).to_ne_bytes())) > (0), None).unwrap();
+    testlib::run("org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesHasAuthoredBreakEmptyString", "org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesHasAuthoredBreakEmptyString", || {
+        UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_start(UStr::new(&[114,101,115,111,108,118,101,85,110,105,99,111,100,101,80,117,110,99,116,117,97,116,105,111,110,66,111,117,110,100,97,114,105,101,115,72,97,115,65,117,116,104,111,114,101,100,66,114,101,97,107,69,109,112,116,121,83,116,114,105,110,103]));
+        let text = UString::from("“").to_ustring();
+        let r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_unicode_punctuation_boundaries(text.as_ustr(), &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_latin_clusters(text.as_ustr()).unwrap(), &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_latin_roles(text.as_ustr()), &vec![]).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_true((i32::from_ne_bytes(((u32::from_ne_bytes(((r.forbidden_line_end_clusters.size()) as u32).to_ne_bytes())) as i32).to_ne_bytes())) > (0), None).unwrap();
     });
 }
 
 #[test]
 fn resolve_attached_inline_inter_char_boundaries_virtual_from_cjk_punctuation_left() {
-    testlib::run("org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveAttachedInlineInterCharBoundariesVirtualFromCjkPunctuationLeft",
-"org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveAttachedInlineInterCharBoundariesVirtualFromCjkPunctuationLeft", || {
-        UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_start(&"resolveAttachedInlineInterCharBoundariesVirtualFromCjkPunctuationLeft");
-        let text = "，x汉".to_string();
+    testlib::run("org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveAttachedInlineInterCharBoundariesVirtualFromCjkPunctuationLeft", "org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveAttachedInlineInterCharBoundariesVirtualFromCjkPunctuationLeft", || {
+        UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_start(UStr::new(&[114,101,115,111,108,118,101,65,116,116,97,99,104,101,100,73,110,108,105,110,101,73,110,116,101,114,67,104,97,114,66,111,117,110,100,97,114,105,101,115,86,105,114,116,117,97,108,70,114,111,109,67,106,107,80,117,110,99,116,117,97,116,105,111,110,76,101,102,116]));
+        let text = UString::from("，x汉").to_ustring();
         let c = vec![
-    (Cluster::new(TextRange::new(0u32, 1u32).unwrap(), "，", "cjk", 16.0f64, Some("，".to_string()), Some(0.0), Some(0.0), Some(0.0))).clone(),
-    (Cluster::new(TextRange::new(1u32, 2u32).unwrap(), "x", "latin", 8.0f64, Some("x".to_string()), Some(0.0), Some(0.0), Some(0.0))).clone(),
-    (Cluster::new(TextRange::new(2u32, 3u32).unwrap(), "汉", "cjk", 16.0f64, Some("汉".to_string()), Some(0.0), Some(0.0), Some(0.0))).clone(),
+    (Cluster::new(TextRange::new(0u32, 1u32).unwrap(), &(UStr::new(&[65292])), &(UStr::new(&[99,106,107])), 16.0f64, Some(UString::from("，")), Some(0.0), Some(0.0), Some(0.0))).clone(),
+    (Cluster::new(TextRange::new(1u32, 2u32).unwrap(), &(UStr::new(&[120])), &(UStr::new(&[108,97,116,105,110])), 8.0f64, Some(UString::from("x")), Some(0.0), Some(0.0), Some(0.0))).clone(),
+    (Cluster::new(TextRange::new(2u32, 3u32).unwrap(), &(UStr::new(&[27721])), &(UStr::new(&[99,106,107])), 16.0f64, Some(UString::from("汉")), Some(0.0), Some(0.0), Some(0.0))).clone(),
 ];
         let e = vec![
     (EastAsianSpacingEdges::new(EastAsianSpacingValue::Wide, EastAsianSpacingValue::Wide, false)).clone(),
     (EastAsianSpacingEdges::new(EastAsianSpacingValue::Other, EastAsianSpacingValue::Other, false)).clone(),
     (EastAsianSpacingEdges::new(EastAsianSpacingValue::Narrow, EastAsianSpacingValue::Wide, false)).clone(),
 ];
-        let r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_attached_inline_inter_char_boundaries(text.as_str(), &c, &vec![FontRole::CjkPunctuation, FontRole::LatinText, FontRole::CjkText], &e,
-SortedTable::sorted_table_set_builder::<u32>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_bytes((*a).to_ne_bytes()), i32::from_ne_bytes((*b).to_ne_bytes())))).clone().build(), &vec![InlineAttachment::None, InlineAttachment::Previous,
-InlineAttachment::None]).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_equals_rendered(&"{1=0}", UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_map_text((r.virtual_boundary_after_clusters).clone()).as_str(), None).unwrap();
+        let r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_attached_inline_inter_char_boundaries(text.as_ustr(), &c, &vec![FontRole::CjkPunctuation, FontRole::LatinText, FontRole::CjkText], &e, SortedTable::sorted_table_set_builder::<u32>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_bytes(((*a) as i32).to_ne_bytes()), i32::from_ne_bytes(((*b) as i32).to_ne_bytes())))).clone().build(), &vec![InlineAttachment::None, InlineAttachment::Previous, InlineAttachment::None]).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_equals_rendered(UStr::new(&[123,49,61,48,125]), UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_map_text((r.virtual_boundary_after_clusters).clone()).as_ustr(), None).unwrap();
     });
 }
 
 #[test]
 fn resolve_unicode_punctuation_boundaries_decimal_mark_at_cluster_zero_forbidden() {
-    testlib::run("org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesDecimalMarkAtClusterZeroForbidden",
-"org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesDecimalMarkAtClusterZeroForbidden", || {
-        UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_start(&"resolveUnicodePunctuationBoundariesDecimalMarkAtClusterZeroForbidden");
-        let text = "a.5".to_string();
+    testlib::run("org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesDecimalMarkAtClusterZeroForbidden", "org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesDecimalMarkAtClusterZeroForbidden", || {
+        UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_start(UStr::new(&[114,101,115,111,108,118,101,85,110,105,99,111,100,101,80,117,110,99,116,117,97,116,105,111,110,66,111,117,110,100,97,114,105,101,115,68,101,99,105,109,97,108,77,97,114,107,65,116,67,108,117,115,116,101,114,90,101,114,111,70,111,114,98,105,100,100,101,110]));
+        let text = UString::from("a.5").to_ustring();
         let c = vec![
-    (Cluster::new(TextRange::new(1u32, 3u32).unwrap(), ".5", "latin", 16.0f64, Some(".5".to_string()), Some(0.0), Some(0.0), Some(0.0))).clone(),
+    (Cluster::new(TextRange::new(1u32, 3u32).unwrap(), &(UStr::new(&[46,53])), &(UStr::new(&[108,97,116,105,110])), 16.0f64, Some(UString::from(".5")), Some(0.0), Some(0.0), Some(0.0))).clone(),
 ];
-        let r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_unicode_punctuation_boundaries(text.as_str(), &c, &vec![FontRole::LatinText], &vec![]).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_equals(1, u32::from_ne_bytes((r.forbidden_line_start_clusters.size()).to_ne_bytes()), None).unwrap();
+        let r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_unicode_punctuation_boundaries(text.as_ustr(), &c, &vec![FontRole::LatinText], &vec![]).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_equals(1, u32::from_ne_bytes(((r.forbidden_line_start_clusters.size()) as u32).to_ne_bytes()), None).unwrap();
     });
 }
 
 #[test]
 fn resolve_unicode_punctuation_boundaries_decimal_mark_after_letter_cluster_forbidden() {
-    testlib::run("org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesDecimalMarkAfterLetterClusterForbidden",
-"org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesDecimalMarkAfterLetterClusterForbidden", || {
-        UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_start(&"resolveUnicodePunctuationBoundariesDecimalMarkAfterLetterClusterForbidden");
-        let text = "a.5".to_string();
+    testlib::run("org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesDecimalMarkAfterLetterClusterForbidden", "org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesDecimalMarkAfterLetterClusterForbidden", || {
+        UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_start(UStr::new(&[114,101,115,111,108,118,101,85,110,105,99,111,100,101,80,117,110,99,116,117,97,116,105,111,110,66,111,117,110,100,97,114,105,101,115,68,101,99,105,109,97,108,77,97,114,107,65,102,116,101,114,76,101,116,116,101,114,67,108,117,115,116,101,114,70,111,114,98,105,100,100,101,110]));
+        let text = UString::from("a.5").to_ustring();
         let c = vec![
-    (Cluster::new(TextRange::new(0u32, 1u32).unwrap(), "a", "latin", 8.0f64, Some("a".to_string()), Some(0.0), Some(0.0), Some(0.0))).clone(),
-    (Cluster::new(TextRange::new(1u32, 3u32).unwrap(), ".5", "latin", 16.0f64, Some(".5".to_string()), Some(0.0), Some(0.0), Some(0.0))).clone(),
+    (Cluster::new(TextRange::new(0u32, 1u32).unwrap(), &(UStr::new(&[97])), &(UStr::new(&[108,97,116,105,110])), 8.0f64, Some(UString::from("a")), Some(0.0), Some(0.0), Some(0.0))).clone(),
+    (Cluster::new(TextRange::new(1u32, 3u32).unwrap(), &(UStr::new(&[46,53])), &(UStr::new(&[108,97,116,105,110])), 16.0f64, Some(UString::from(".5")), Some(0.0), Some(0.0), Some(0.0))).clone(),
 ];
-        let r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_unicode_punctuation_boundaries(text.as_str(), &c, &vec![FontRole::LatinText, FontRole::LatinText], &vec![]).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_equals(1, u32::from_ne_bytes((r.forbidden_line_start_clusters.size()).to_ne_bytes()), None).unwrap();
+        let r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_unicode_punctuation_boundaries(text.as_ustr(), &c, &vec![FontRole::LatinText, FontRole::LatinText], &vec![]).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_equals(1, u32::from_ne_bytes(((r.forbidden_line_start_clusters.size()) as u32).to_ne_bytes()), None).unwrap();
     });
 }
 
 #[test]
 fn resolve_unicode_punctuation_boundaries_decimal_mark_followed_by_letter_forbidden() {
-    testlib::run("org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesDecimalMarkFollowedByLetterForbidden",
-"org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesDecimalMarkFollowedByLetterForbidden", || {
-        UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_start(&"resolveUnicodePunctuationBoundariesDecimalMarkFollowedByLetterForbidden");
-        let text = "a .x".to_string();
-        let r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_unicode_punctuation_boundaries(text.as_str(),
-&UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_latin_clusters(text.as_str()).unwrap(), &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_latin_roles(text.as_str()),
-&vec![]).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_equals(1, u32::from_ne_bytes((r.forbidden_line_start_clusters.size()).to_ne_bytes()), None).unwrap();
+    testlib::run("org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesDecimalMarkFollowedByLetterForbidden", "org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesDecimalMarkFollowedByLetterForbidden", || {
+        UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_start(UStr::new(&[114,101,115,111,108,118,101,85,110,105,99,111,100,101,80,117,110,99,116,117,97,116,105,111,110,66,111,117,110,100,97,114,105,101,115,68,101,99,105,109,97,108,77,97,114,107,70,111,108,108,111,119,101,100,66,121,76,101,116,116,101,114,70,111,114,98,105,100,100,101,110]));
+        let text = UString::from("a .x").to_ustring();
+        let r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_unicode_punctuation_boundaries(text.as_ustr(), &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_latin_clusters(text.as_ustr()).unwrap(), &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_latin_roles(text.as_ustr()), &vec![]).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_equals(1, u32::from_ne_bytes(((r.forbidden_line_start_clusters.size()) as u32).to_ne_bytes()), None).unwrap();
     });
 }
 
 #[test]
 fn resolve_unicode_punctuation_boundaries_decimal_mark_alone_after_space_forbidden() {
-    testlib::run("org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesDecimalMarkAloneAfterSpaceForbidden",
-"org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesDecimalMarkAloneAfterSpaceForbidden", || {
-        UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_start(&"resolveUnicodePunctuationBoundariesDecimalMarkAloneAfterSpaceForbidden");
-        let text = "a .".to_string();
-        let r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_unicode_punctuation_boundaries(text.as_str(),
-&UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_latin_clusters(text.as_str()).unwrap(), &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_latin_roles(text.as_str()),
-&vec![]).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_equals(1, u32::from_ne_bytes((r.forbidden_line_start_clusters.size()).to_ne_bytes()), None).unwrap();
+    testlib::run("org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesDecimalMarkAloneAfterSpaceForbidden", "org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesDecimalMarkAloneAfterSpaceForbidden", || {
+        UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_start(UStr::new(&[114,101,115,111,108,118,101,85,110,105,99,111,100,101,80,117,110,99,116,117,97,116,105,111,110,66,111,117,110,100,97,114,105,101,115,68,101,99,105,109,97,108,77,97,114,107,65,108,111,110,101,65,102,116,101,114,83,112,97,99,101,70,111,114,98,105,100,100,101,110]));
+        let text = UString::from("a .").to_ustring();
+        let r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_unicode_punctuation_boundaries(text.as_ustr(), &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_latin_clusters(text.as_ustr()).unwrap(), &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_latin_roles(text.as_ustr()), &vec![]).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_equals(1, u32::from_ne_bytes(((r.forbidden_line_start_clusters.size()) as u32).to_ne_bytes()), None).unwrap();
     });
 }
 
 #[test]
 fn resolve_unicode_punctuation_boundaries_astral_tail_keeps_pair_as_last_significant() {
-    testlib::run("org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesAstralTailKeepsPairAsLastSignificant",
-"org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesAstralTailKeepsPairAsLastSignificant", || {
-        UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_start(&"resolveUnicodePunctuationBoundariesAstralTailKeepsPairAsLastSignificant");
-        let text = format!("{}{}",
-            "a .",
-            UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_surrogate(&vec![55357, 56832])
-        );
+    testlib::run("org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesAstralTailKeepsPairAsLastSignificant", "org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesAstralTailKeepsPairAsLastSignificant", || {
+        UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_start(UStr::new(&[114,101,115,111,108,118,101,85,110,105,99,111,100,101,80,117,110,99,116,117,97,116,105,111,110,66,111,117,110,100,97,114,105,101,115,65,115,116,114,97,108,84,97,105,108,75,101,101,112,115,80,97,105,114,65,115,76,97,115,116,83,105,103,110,105,102,105,99,97,110,116]));
+        let text = { let mut __s = UString::new(); __s += &(UString::from("a .")); __s += UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_surrogate(&vec![55357, 56832]).as_ustr(); __s };
         let c = vec![
-    (Cluster::new(TextRange::new(0u32, 1u32).unwrap(), "a", "latin", 8.0f64, Some("a".to_string()), Some(0.0), Some(0.0), Some(0.0))).clone(),
-    (Cluster::new(TextRange::new(1u32, 2u32).unwrap(), " ", "latin", 8.0f64, Some(" ".to_string()), Some(0.0), Some(0.0), Some(0.0))).clone(),
-    (Cluster::new(TextRange::new(2u32, 5u32).unwrap(), format!("{}{}",
-            ".",
-            UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_surrogate(&vec![55357, 56832])
-        ).as_str(), "latin", 16.0f64, Some(format!("{}{}",
-            ".",
-            UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_surrogate(&vec![55357, 56832])
-        )), Some(0.0), Some(0.0), Some(0.0))).clone(),
+    (Cluster::new(TextRange::new(0u32, 1u32).unwrap(), &(UStr::new(&[97])), &(UStr::new(&[108,97,116,105,110])), 8.0f64, Some(UString::from("a")), Some(0.0), Some(0.0), Some(0.0))).clone(),
+    (Cluster::new(TextRange::new(1u32, 2u32).unwrap(), &(UStr::new(&[32])), &(UStr::new(&[108,97,116,105,110])), 8.0f64, Some(UString::from(" ")), Some(0.0), Some(0.0), Some(0.0))).clone(),
+    (Cluster::new(TextRange::new(2u32, 5u32).unwrap(), UString::from(format!("{}", { let mut __s = UString::new(); __s += &(UString::from(".")); __s += UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_surrogate(&vec![55357, 56832]).as_ustr(); __s }).as_str()).as_ustr(), &(UStr::new(&[108,97,116,105,110])), 16.0f64, Some({ let mut __s = UString::new(); __s += &(UString::from(".")); __s += UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_surrogate(&vec![55357, 56832]).as_ustr(); __s }), Some(0.0), Some(0.0), Some(0.0))).clone(),
 ];
-        let r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_unicode_punctuation_boundaries(text.as_str(), &c, &vec![FontRole::LatinText, FontRole::LatinText, FontRole::LatinText], &vec![]).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_equals(1, u32::from_ne_bytes((r.forbidden_line_start_clusters.size()).to_ne_bytes()), None).unwrap();
+        let r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_unicode_punctuation_boundaries(text.as_ustr(), &c, &vec![FontRole::LatinText, FontRole::LatinText, FontRole::LatinText], &vec![]).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_equals(1, u32::from_ne_bytes(((r.forbidden_line_start_clusters.size()) as u32).to_ne_bytes()), None).unwrap();
     });
 }
 
 #[test]
 fn resolve_unicode_punctuation_boundaries_authored_break_inside_previous_cluster_drops_unbreakable() {
-    testlib::run("org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesAuthoredBreakInsidePreviousClusterDropsUnbreakable",
-"org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesAuthoredBreakInsidePreviousClusterDropsUnbreakable", || {
-        UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_start(&"resolveUnicodePunctuationBoundariesAuthoredBreakInsidePreviousClusterDropsUnbreakable");
-        let text = concat!("a\n",
-"b，").to_string();
+    testlib::run("org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesAuthoredBreakInsidePreviousClusterDropsUnbreakable", "org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesAuthoredBreakInsidePreviousClusterDropsUnbreakable", || {
+        UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_start(UStr::new(&[114,101,115,111,108,118,101,85,110,105,99,111,100,101,80,117,110,99,116,117,97,116,105,111,110,66,111,117,110,100,97,114,105,101,115,65,117,116,104,111,114,101,100,66,114,101,97,107,73,110,115,105,100,101,80,114,101,118,105,111,117,115,67,108,117,115,116,101,114,68,114,111,112,115,85,110,98,114,101,97,107,97,98,108,101]));
+        let text = UString::from(concat!("a\n",
+"b，")).to_ustring();
         let c = vec![
-    (Cluster::new(TextRange::new(0u32, 3u32).unwrap(), concat!("a\n",
-"b"), "latin", 24.0f64, Some(concat!("a\n",
-"b").to_string()), Some(0.0), Some(0.0), Some(0.0))).clone(),
-    (Cluster::new(TextRange::new(3u32, 4u32).unwrap(), "，", "latin", 16.0f64, Some("，".to_string()), Some(0.0), Some(0.0), Some(0.0))).clone(),
+    (Cluster::new(TextRange::new(0u32, 3u32).unwrap(), &(UStr::new(&[97,10,98])), &(UStr::new(&[108,97,116,105,110])), 24.0f64, Some(UString::from(concat!("a\n",
+"b"))), Some(0.0), Some(0.0), Some(0.0))).clone(),
+    (Cluster::new(TextRange::new(3u32, 4u32).unwrap(), &(UStr::new(&[65292])), &(UStr::new(&[108,97,116,105,110])), 16.0f64, Some(UString::from("，")), Some(0.0), Some(0.0), Some(0.0))).clone(),
 ];
-        let r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_unicode_punctuation_boundaries(text.as_str(), &c, &vec![FontRole::LatinText, FontRole::LatinText], &vec![]).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_equals(1, u32::from_ne_bytes((r.forbidden_line_start_clusters.size()).to_ne_bytes()), None).unwrap();
+        let r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_unicode_punctuation_boundaries(text.as_ustr(), &c, &vec![FontRole::LatinText, FontRole::LatinText], &vec![]).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_equals(1, u32::from_ne_bytes(((r.forbidden_line_start_clusters.size()) as u32).to_ne_bytes()), None).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_true(u32::try_from((r.unbreakable_ranges.len()) & 0xFFFF_FFFF).unwrap_or(0) == 0, None).unwrap();
     });
 }
 
 #[test]
 fn resolve_unicode_punctuation_boundaries_apostrophe_at_text_start_no_left_context() {
-    testlib::run("org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesApostropheAtTextStartNoLeftContext",
-"org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesApostropheAtTextStartNoLeftContext", || {
-        UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_start(&"resolveUnicodePunctuationBoundariesApostropheAtTextStartNoLeftContext");
-        let text = "’s".to_string();
-        let r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_unicode_punctuation_boundaries(text.as_str(),
-&UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_latin_clusters(text.as_str()).unwrap(), &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_latin_roles(text.as_str()),
-&vec![]).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_equals(0, u32::from_ne_bytes((r.forbidden_line_start_clusters.size()).to_ne_bytes()), None).unwrap();
+    testlib::run("org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesApostropheAtTextStartNoLeftContext", "org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesApostropheAtTextStartNoLeftContext", || {
+        UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_start(UStr::new(&[114,101,115,111,108,118,101,85,110,105,99,111,100,101,80,117,110,99,116,117,97,116,105,111,110,66,111,117,110,100,97,114,105,101,115,65,112,111,115,116,114,111,112,104,101,65,116,84,101,120,116,83,116,97,114,116,78,111,76,101,102,116,67,111,110,116,101,120,116]));
+        let text = UString::from("’s").to_ustring();
+        let r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_unicode_punctuation_boundaries(text.as_ustr(), &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_latin_clusters(text.as_ustr()).unwrap(), &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_latin_roles(text.as_ustr()), &vec![]).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_equals(0, u32::from_ne_bytes(((r.forbidden_line_start_clusters.size()) as u32).to_ne_bytes()), None).unwrap();
     });
 }
 
 #[test]
 fn resolve_unicode_punctuation_boundaries_apostrophe_right_neighbour_unpaired_high_surrogate() {
-    testlib::run("org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesApostropheRightNeighbourUnpairedHighSurrogate",
-"org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesApostropheRightNeighbourUnpairedHighSurrogate", || {
-        UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_start(&"resolveUnicodePunctuationBoundariesApostropheRightNeighbourUnpairedHighSurrogate");
+    testlib::run("org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesApostropheRightNeighbourUnpairedHighSurrogate", "org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesApostropheRightNeighbourUnpairedHighSurrogate", || {
+        UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_start(UStr::new(&[114,101,115,111,108,118,101,85,110,105,99,111,100,101,80,117,110,99,116,117,97,116,105,111,110,66,111,117,110,100,97,114,105,101,115,65,112,111,115,116,114,111,112,104,101,82,105,103,104,116,78,101,105,103,104,98,111,117,114,85,110,112,97,105,114,101,100,72,105,103,104,83,117,114,114,111,103,97,116,101]));
         let text = UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_surrogate(&vec![8217, 55296, 20013]);
         let c = vec![
-    (Cluster::new(TextRange::new(0u32, 3u32).unwrap(), text.as_str(), "latin", 24.0f64, Some(text.to_string()), Some(0.0), Some(0.0), Some(0.0))).clone(),
+    (Cluster::new(TextRange::new(0u32, 3u32).unwrap(), text.as_ustr(), &(UStr::new(&[108,97,116,105,110])), 24.0f64, Some(text.to_ustring()), Some(0.0), Some(0.0), Some(0.0))).clone(),
 ];
-        let r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_unicode_punctuation_boundaries(text.as_str(), &c, &vec![FontRole::LatinText], &vec![]).unwrap();
+        let r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_unicode_punctuation_boundaries(text.as_ustr(), &c, &vec![FontRole::LatinText], &vec![]).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_equals(0, u32::try_from((r.decisions.len()) & 0xFFFF_FFFF).unwrap_or(0), None).unwrap();
     });
 }
 
 #[test]
 fn resolve_unicode_punctuation_boundaries_apostrophe_left_neighbour_supplementary_pair() {
-    testlib::run("org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesApostropheLeftNeighbourSupplementaryPair",
-"org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesApostropheLeftNeighbourSupplementaryPair", || {
-        UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_start(&"resolveUnicodePunctuationBoundariesApostropheLeftNeighbourSupplementaryPair");
-        let text = format!("{}{}",
-            UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_surrogate(&vec![55357, 56832]),
-            "’"
-        );
+    testlib::run("org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesApostropheLeftNeighbourSupplementaryPair", "org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesApostropheLeftNeighbourSupplementaryPair", || {
+        UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_start(UStr::new(&[114,101,115,111,108,118,101,85,110,105,99,111,100,101,80,117,110,99,116,117,97,116,105,111,110,66,111,117,110,100,97,114,105,101,115,65,112,111,115,116,114,111,112,104,101,76,101,102,116,78,101,105,103,104,98,111,117,114,83,117,112,112,108,101,109,101,110,116,97,114,121,80,97,105,114]));
+        let text = { let mut __s = UString::new(); __s += UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_surrogate(&vec![55357, 56832]).as_ustr(); __s += &(UString::from("’")); __s };
         let c = vec![
-    (Cluster::new(TextRange::new(0u32, 2u32).unwrap(), UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_surrogate(&vec![55357, 56832]).as_str(), "emoji", 16.0f64,
-Some(UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_surrogate(&vec![55357, 56832])), Some(0.0), Some(0.0), Some(0.0))).clone(),
-    (Cluster::new(TextRange::new(2u32, 3u32).unwrap(), "’", "latin", 16.0f64, Some("’".to_string()), Some(0.0), Some(0.0), Some(0.0))).clone(),
+    (Cluster::new(TextRange::new(0u32, 2u32).unwrap(), UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_surrogate(&vec![55357, 56832]).as_ustr(), &(UStr::new(&[101,109,111,106,105])), 16.0f64, Some(UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_surrogate(&vec![55357, 56832])), Some(0.0), Some(0.0), Some(0.0))).clone(),
+    (Cluster::new(TextRange::new(2u32, 3u32).unwrap(), &(UStr::new(&[8217])), &(UStr::new(&[108,97,116,105,110])), 16.0f64, Some(UString::from("’")), Some(0.0), Some(0.0), Some(0.0))).clone(),
 ];
-        let r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_unicode_punctuation_boundaries(text.as_str(), &c, &vec![FontRole::Emoji, FontRole::LatinText], &vec![]).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_true((i32::from_ne_bytes((u32::try_from((r.decisions.len()) & 0xFFFF_FFFF).unwrap_or(0)).to_ne_bytes())) > (0), None).unwrap();
+        let r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_unicode_punctuation_boundaries(text.as_ustr(), &c, &vec![FontRole::Emoji, FontRole::LatinText], &vec![]).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_true((i32::from_ne_bytes(((u32::try_from((r.decisions.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) > (0), None).unwrap();
     });
 }
 
 #[test]
 fn resolve_attached_inline_inter_char_boundaries_punctuation_western_leading_narrow_only() {
-    testlib::run("org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveAttachedInlineInterCharBoundariesPunctuationWesternLeadingNarrowOnly",
-"org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveAttachedInlineInterCharBoundariesPunctuationWesternLeadingNarrowOnly", || {
-        UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_start(&"resolveAttachedInlineInterCharBoundariesPunctuationWesternLeadingNarrowOnly");
-        let text = "，xa".to_string();
+    testlib::run("org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveAttachedInlineInterCharBoundariesPunctuationWesternLeadingNarrowOnly", "org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveAttachedInlineInterCharBoundariesPunctuationWesternLeadingNarrowOnly", || {
+        UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_start(UStr::new(&[114,101,115,111,108,118,101,65,116,116,97,99,104,101,100,73,110,108,105,110,101,73,110,116,101,114,67,104,97,114,66,111,117,110,100,97,114,105,101,115,80,117,110,99,116,117,97,116,105,111,110,87,101,115,116,101,114,110,76,101,97,100,105,110,103,78,97,114,114,111,119,79,110,108,121]));
+        let text = UString::from("，xa").to_ustring();
         let c = vec![
-    (Cluster::new(TextRange::new(0u32, 1u32).unwrap(), "，", "cjk", 16.0f64, Some("，".to_string()), Some(0.0), Some(0.0), Some(0.0))).clone(),
-    (Cluster::new(TextRange::new(1u32, 2u32).unwrap(), "x", "latin", 8.0f64, Some("x".to_string()), Some(0.0), Some(0.0), Some(0.0))).clone(),
-    (Cluster::new(TextRange::new(2u32, 3u32).unwrap(), "a", "latin", 8.0f64, Some("a".to_string()), Some(0.0), Some(0.0), Some(0.0))).clone(),
+    (Cluster::new(TextRange::new(0u32, 1u32).unwrap(), &(UStr::new(&[65292])), &(UStr::new(&[99,106,107])), 16.0f64, Some(UString::from("，")), Some(0.0), Some(0.0), Some(0.0))).clone(),
+    (Cluster::new(TextRange::new(1u32, 2u32).unwrap(), &(UStr::new(&[120])), &(UStr::new(&[108,97,116,105,110])), 8.0f64, Some(UString::from("x")), Some(0.0), Some(0.0), Some(0.0))).clone(),
+    (Cluster::new(TextRange::new(2u32, 3u32).unwrap(), &(UStr::new(&[97])), &(UStr::new(&[108,97,116,105,110])), 8.0f64, Some(UString::from("a")), Some(0.0), Some(0.0), Some(0.0))).clone(),
 ];
         let e = vec![
     (EastAsianSpacingEdges::new(EastAsianSpacingValue::Wide, EastAsianSpacingValue::Other, false)).clone(),
     (EastAsianSpacingEdges::new(EastAsianSpacingValue::Other, EastAsianSpacingValue::Other, false)).clone(),
     (EastAsianSpacingEdges::new(EastAsianSpacingValue::Narrow, EastAsianSpacingValue::Other, false)).clone(),
 ];
-        let r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_attached_inline_inter_char_boundaries(text.as_str(), &c, &vec![FontRole::CjkPunctuation, FontRole::LatinText, FontRole::LatinText], &e,
-SortedTable::sorted_table_set_builder::<u32>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_bytes((*a).to_ne_bytes()), i32::from_ne_bytes((*b).to_ne_bytes())))).clone().build(), &vec![InlineAttachment::None, InlineAttachment::Previous,
-InlineAttachment::None]).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_equals_rendered(&"{1=0}", UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_map_text((r.virtual_boundary_after_clusters).clone()).as_str(), None).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_true(u32::from_ne_bytes((r.virtual_sino_western_boundary_after_clusters.size()).to_ne_bytes()) == 0, None).unwrap();
+        let r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_attached_inline_inter_char_boundaries(text.as_ustr(), &c, &vec![FontRole::CjkPunctuation, FontRole::LatinText, FontRole::LatinText], &e, SortedTable::sorted_table_set_builder::<u32>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_bytes(((*a) as i32).to_ne_bytes()), i32::from_ne_bytes(((*b) as i32).to_ne_bytes())))).clone().build(), &vec![InlineAttachment::None, InlineAttachment::Previous, InlineAttachment::None]).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_equals_rendered(UStr::new(&[123,49,61,48,125]), UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_map_text((r.virtual_boundary_after_clusters).clone()).as_ustr(), None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_true(u32::from_ne_bytes(((r.virtual_sino_western_boundary_after_clusters.size()) as u32).to_ne_bytes()) == 0, None).unwrap();
     });
 }
 
 #[test]
 fn resolve_attached_inline_inter_char_boundaries_punctuation_western_trailing_narrow_only() {
-    testlib::run("org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveAttachedInlineInterCharBoundariesPunctuationWesternTrailingNarrowOnly",
-"org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveAttachedInlineInterCharBoundariesPunctuationWesternTrailingNarrowOnly", || {
-        UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_start(&"resolveAttachedInlineInterCharBoundariesPunctuationWesternTrailingNarrowOnly");
-        let text = "xa，".to_string();
+    testlib::run("org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveAttachedInlineInterCharBoundariesPunctuationWesternTrailingNarrowOnly", "org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveAttachedInlineInterCharBoundariesPunctuationWesternTrailingNarrowOnly", || {
+        UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_start(UStr::new(&[114,101,115,111,108,118,101,65,116,116,97,99,104,101,100,73,110,108,105,110,101,73,110,116,101,114,67,104,97,114,66,111,117,110,100,97,114,105,101,115,80,117,110,99,116,117,97,116,105,111,110,87,101,115,116,101,114,110,84,114,97,105,108,105,110,103,78,97,114,114,111,119,79,110,108,121]));
+        let text = UString::from("xa，").to_ustring();
         let c = vec![
-    (Cluster::new(TextRange::new(0u32, 1u32).unwrap(), "x", "latin", 8.0f64, Some("x".to_string()), Some(0.0), Some(0.0), Some(0.0))).clone(),
-    (Cluster::new(TextRange::new(1u32, 2u32).unwrap(), "a", "latin", 8.0f64, Some("a".to_string()), Some(0.0), Some(0.0), Some(0.0))).clone(),
-    (Cluster::new(TextRange::new(2u32, 3u32).unwrap(), "，", "cjk", 16.0f64, Some("，".to_string()), Some(0.0), Some(0.0), Some(0.0))).clone(),
+    (Cluster::new(TextRange::new(0u32, 1u32).unwrap(), &(UStr::new(&[120])), &(UStr::new(&[108,97,116,105,110])), 8.0f64, Some(UString::from("x")), Some(0.0), Some(0.0), Some(0.0))).clone(),
+    (Cluster::new(TextRange::new(1u32, 2u32).unwrap(), &(UStr::new(&[97])), &(UStr::new(&[108,97,116,105,110])), 8.0f64, Some(UString::from("a")), Some(0.0), Some(0.0), Some(0.0))).clone(),
+    (Cluster::new(TextRange::new(2u32, 3u32).unwrap(), &(UStr::new(&[65292])), &(UStr::new(&[99,106,107])), 16.0f64, Some(UString::from("，")), Some(0.0), Some(0.0), Some(0.0))).clone(),
 ];
         let e = vec![
     (EastAsianSpacingEdges::new(EastAsianSpacingValue::Other, EastAsianSpacingValue::Narrow, false)).clone(),
     (EastAsianSpacingEdges::new(EastAsianSpacingValue::Other, EastAsianSpacingValue::Other, false)).clone(),
     (EastAsianSpacingEdges::new(EastAsianSpacingValue::Other, EastAsianSpacingValue::Other, false)).clone(),
 ];
-        let r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_attached_inline_inter_char_boundaries(text.as_str(), &c, &vec![FontRole::LatinText, FontRole::LatinText, FontRole::CjkPunctuation], &e,
-SortedTable::sorted_table_set_builder::<u32>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_bytes((*a).to_ne_bytes()), i32::from_ne_bytes((*b).to_ne_bytes())))).clone().build(), &vec![InlineAttachment::None, InlineAttachment::Previous,
-InlineAttachment::None]).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_equals_rendered(&"{1=0}", UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_map_text((r.virtual_boundary_after_clusters).clone()).as_str(), None).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_true(u32::from_ne_bytes((r.virtual_sino_western_boundary_after_clusters.size()).to_ne_bytes()) == 0, None).unwrap();
+        let r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_attached_inline_inter_char_boundaries(text.as_ustr(), &c, &vec![FontRole::LatinText, FontRole::LatinText, FontRole::CjkPunctuation], &e, SortedTable::sorted_table_set_builder::<u32>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_bytes(((*a) as i32).to_ne_bytes()), i32::from_ne_bytes(((*b) as i32).to_ne_bytes())))).clone().build(), &vec![InlineAttachment::None, InlineAttachment::Previous, InlineAttachment::None]).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_equals_rendered(UStr::new(&[123,49,61,48,125]), UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_map_text((r.virtual_boundary_after_clusters).clone()).as_ustr(), None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_true(u32::from_ne_bytes(((r.virtual_sino_western_boundary_after_clusters.size()) as u32).to_ne_bytes()) == 0, None).unwrap();
     });
 }
 
 #[test]
 fn resolve_attached_inline_inter_char_boundaries_sino_western_only() {
     testlib::run("org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveAttachedInlineInterCharBoundariesSinoWesternOnly", "org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveAttachedInlineInterCharBoundariesSinoWesternOnly", || {
-        UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_start(&"resolveAttachedInlineInterCharBoundariesSinoWesternOnly");
-        let text = "汉xa".to_string();
+        UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_start(UStr::new(&[114,101,115,111,108,118,101,65,116,116,97,99,104,101,100,73,110,108,105,110,101,73,110,116,101,114,67,104,97,114,66,111,117,110,100,97,114,105,101,115,83,105,110,111,87,101,115,116,101,114,110,79,110,108,121]));
+        let text = UString::from("汉xa").to_ustring();
         let c = vec![
-    (Cluster::new(TextRange::new(0u32, 1u32).unwrap(), "汉", "cjk", 16.0f64, Some("汉".to_string()), Some(0.0), Some(0.0), Some(0.0))).clone(),
-    (Cluster::new(TextRange::new(1u32, 2u32).unwrap(), "x", "latin", 8.0f64, Some("x".to_string()), Some(0.0), Some(0.0), Some(0.0))).clone(),
-    (Cluster::new(TextRange::new(2u32, 3u32).unwrap(), "a", "latin", 8.0f64, Some("a".to_string()), Some(0.0), Some(0.0), Some(0.0))).clone(),
+    (Cluster::new(TextRange::new(0u32, 1u32).unwrap(), &(UStr::new(&[27721])), &(UStr::new(&[99,106,107])), 16.0f64, Some(UString::from("汉")), Some(0.0), Some(0.0), Some(0.0))).clone(),
+    (Cluster::new(TextRange::new(1u32, 2u32).unwrap(), &(UStr::new(&[120])), &(UStr::new(&[108,97,116,105,110])), 8.0f64, Some(UString::from("x")), Some(0.0), Some(0.0), Some(0.0))).clone(),
+    (Cluster::new(TextRange::new(2u32, 3u32).unwrap(), &(UStr::new(&[97])), &(UStr::new(&[108,97,116,105,110])), 8.0f64, Some(UString::from("a")), Some(0.0), Some(0.0), Some(0.0))).clone(),
 ];
         let e = vec![
     (EastAsianSpacingEdges::new(EastAsianSpacingValue::Wide, EastAsianSpacingValue::Wide, false)).clone(),
     (EastAsianSpacingEdges::new(EastAsianSpacingValue::Other, EastAsianSpacingValue::Other, false)).clone(),
     (EastAsianSpacingEdges::new(EastAsianSpacingValue::Narrow, EastAsianSpacingValue::Other, false)).clone(),
 ];
-        let r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_attached_inline_inter_char_boundaries(text.as_str(), &c, &vec![FontRole::CjkText, FontRole::LatinText, FontRole::LatinText], &e,
-SortedTable::sorted_table_set_builder::<u32>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_bytes((*a).to_ne_bytes()), i32::from_ne_bytes((*b).to_ne_bytes())))).clone().build(), &vec![InlineAttachment::None, InlineAttachment::Previous,
-InlineAttachment::None]).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_equals_rendered(&"{1=0}", UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_map_text((r.virtual_boundary_after_clusters).clone()).as_str(), None).unwrap();
-        let mut expected: SortedSetTableBuilder<u32> = SortedTable::sorted_table_set_builder::<u32>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_bytes((*a).to_ne_bytes()), i32::from_ne_bytes((*b).to_ne_bytes()))));
+        let r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_attached_inline_inter_char_boundaries(text.as_ustr(), &c, &vec![FontRole::CjkText, FontRole::LatinText, FontRole::LatinText], &e, SortedTable::sorted_table_set_builder::<u32>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_bytes(((*a) as i32).to_ne_bytes()), i32::from_ne_bytes(((*b) as i32).to_ne_bytes())))).clone().build(), &vec![InlineAttachment::None, InlineAttachment::Previous, InlineAttachment::None]).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_equals_rendered(UStr::new(&[123,49,61,48,125]), UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_map_text((r.virtual_boundary_after_clusters).clone()).as_ustr(), None).unwrap();
+        let mut expected: SortedSetTableBuilder<u32> = SortedTable::sorted_table_set_builder::<u32>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_bytes(((*a) as i32).to_ne_bytes()), i32::from_ne_bytes(((*b) as i32).to_ne_bytes()))));
         expected.put(&(1));
         let _ = TracedAssertions::traced_assertions_assert_equals_int_set(expected.clone().build(), (r.virtual_sino_western_boundary_after_clusters).clone(), None).unwrap();
     });
@@ -8503,55 +9255,48 @@ InlineAttachment::None]).unwrap();
 #[test]
 fn resolve_attached_inline_inter_char_boundaries_western_bracket_only() {
     testlib::run("org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveAttachedInlineInterCharBoundariesWesternBracketOnly", "org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveAttachedInlineInterCharBoundariesWesternBracketOnly", || {
-        UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_start(&"resolveAttachedInlineInterCharBoundariesWesternBracketOnly");
-        let text = "(x汉".to_string();
+        UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_start(UStr::new(&[114,101,115,111,108,118,101,65,116,116,97,99,104,101,100,73,110,108,105,110,101,73,110,116,101,114,67,104,97,114,66,111,117,110,100,97,114,105,101,115,87,101,115,116,101,114,110,66,114,97,99,107,101,116,79,110,108,121]));
+        let text = UString::from("(x汉").to_ustring();
         let c = vec![
-    (Cluster::new(TextRange::new(0u32, 1u32).unwrap(), "(", "latin", 8.0f64, Some("(".to_string()), Some(0.0), Some(0.0), Some(0.0))).clone(),
-    (Cluster::new(TextRange::new(1u32, 2u32).unwrap(), "x", "latin", 8.0f64, Some("x".to_string()), Some(0.0), Some(0.0), Some(0.0))).clone(),
-    (Cluster::new(TextRange::new(2u32, 3u32).unwrap(), "汉", "cjk", 16.0f64, Some("汉".to_string()), Some(0.0), Some(0.0), Some(0.0))).clone(),
+    (Cluster::new(TextRange::new(0u32, 1u32).unwrap(), &(UStr::new(&[40])), &(UStr::new(&[108,97,116,105,110])), 8.0f64, Some(UString::from("(")), Some(0.0), Some(0.0), Some(0.0))).clone(),
+    (Cluster::new(TextRange::new(1u32, 2u32).unwrap(), &(UStr::new(&[120])), &(UStr::new(&[108,97,116,105,110])), 8.0f64, Some(UString::from("x")), Some(0.0), Some(0.0), Some(0.0))).clone(),
+    (Cluster::new(TextRange::new(2u32, 3u32).unwrap(), &(UStr::new(&[27721])), &(UStr::new(&[99,106,107])), 16.0f64, Some(UString::from("汉")), Some(0.0), Some(0.0), Some(0.0))).clone(),
 ];
         let e = vec![
     (EastAsianSpacingEdges::new(EastAsianSpacingValue::Other, EastAsianSpacingValue::Other, false)).clone(),
     (EastAsianSpacingEdges::new(EastAsianSpacingValue::Other, EastAsianSpacingValue::Other, false)).clone(),
     (EastAsianSpacingEdges::new(EastAsianSpacingValue::Other, EastAsianSpacingValue::Other, false)).clone(),
 ];
-        let r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_attached_inline_inter_char_boundaries(text.as_str(), &c, &vec![FontRole::LatinText, FontRole::LatinText, FontRole::CjkText], &e,
-SortedTable::sorted_table_set_builder::<u32>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_bytes((*a).to_ne_bytes()), i32::from_ne_bytes((*b).to_ne_bytes())))).clone().build(), &vec![InlineAttachment::None, InlineAttachment::Previous,
-InlineAttachment::None]).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_equals_rendered(&"{1=0}", UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_map_text((r.virtual_boundary_after_clusters).clone()).as_str(), None).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_true(u32::from_ne_bytes((r.virtual_sino_western_boundary_after_clusters.size()).to_ne_bytes()) == 0, None).unwrap();
+        let r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_attached_inline_inter_char_boundaries(text.as_ustr(), &c, &vec![FontRole::LatinText, FontRole::LatinText, FontRole::CjkText], &e, SortedTable::sorted_table_set_builder::<u32>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_bytes(((*a) as i32).to_ne_bytes()), i32::from_ne_bytes(((*b) as i32).to_ne_bytes())))).clone().build(), &vec![InlineAttachment::None, InlineAttachment::Previous, InlineAttachment::None]).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_equals_rendered(UStr::new(&[123,49,61,48,125]), UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_map_text((r.virtual_boundary_after_clusters).clone()).as_ustr(), None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_true(u32::from_ne_bytes(((r.virtual_sino_western_boundary_after_clusters.size()) as u32).to_ne_bytes()) == 0, None).unwrap();
     });
 }
 
 #[test]
 fn resolve_unicode_punctuation_boundaries_decimal_mark_after_empty_cluster_forbidden() {
-    testlib::run("org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesDecimalMarkAfterEmptyClusterForbidden",
-"org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesDecimalMarkAfterEmptyClusterForbidden", || {
-        UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_start(&"resolveUnicodePunctuationBoundariesDecimalMarkAfterEmptyClusterForbidden");
-        let text = "a.5".to_string();
+    testlib::run("org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesDecimalMarkAfterEmptyClusterForbidden", "org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesDecimalMarkAfterEmptyClusterForbidden", || {
+        UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_start(UStr::new(&[114,101,115,111,108,118,101,85,110,105,99,111,100,101,80,117,110,99,116,117,97,116,105,111,110,66,111,117,110,100,97,114,105,101,115,68,101,99,105,109,97,108,77,97,114,107,65,102,116,101,114,69,109,112,116,121,67,108,117,115,116,101,114,70,111,114,98,105,100,100,101,110]));
+        let text = UString::from("a.5").to_ustring();
         let c = vec![
-    (Cluster::new(TextRange::new(0u32, 1u32).unwrap(), "a", "latin", 8.0f64, Some("a".to_string()), Some(0.0), Some(0.0), Some(0.0))).clone(),
-    (Cluster::new(TextRange::new(1u32, 1u32).unwrap(), "", "latin", 0.0f64, Some("".to_string()), Some(0.0), Some(0.0), Some(0.0))).clone(),
-    (Cluster::new(TextRange::new(1u32, 3u32).unwrap(), ".5", "latin", 16.0f64, Some(".5".to_string()), Some(0.0), Some(0.0), Some(0.0))).clone(),
+    (Cluster::new(TextRange::new(0u32, 1u32).unwrap(), &(UStr::new(&[97])), &(UStr::new(&[108,97,116,105,110])), 8.0f64, Some(UString::from("a")), Some(0.0), Some(0.0), Some(0.0))).clone(),
+    (Cluster::new(TextRange::new(1u32, 1u32).unwrap(), &(UStr::new(&[])), &(UStr::new(&[108,97,116,105,110])), 0.0f64, Some(UString::from("")), Some(0.0), Some(0.0), Some(0.0))).clone(),
+    (Cluster::new(TextRange::new(1u32, 3u32).unwrap(), &(UStr::new(&[46,53])), &(UStr::new(&[108,97,116,105,110])), 16.0f64, Some(UString::from(".5")), Some(0.0), Some(0.0), Some(0.0))).clone(),
 ];
-        let r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_unicode_punctuation_boundaries(text.as_str(), &c, &vec![FontRole::LatinText, FontRole::LatinText, FontRole::LatinText], &vec![]).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_equals(1, u32::from_ne_bytes((r.forbidden_line_start_clusters.size()).to_ne_bytes()), None).unwrap();
+        let r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_unicode_punctuation_boundaries(text.as_ustr(), &c, &vec![FontRole::LatinText, FontRole::LatinText, FontRole::LatinText], &vec![]).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_equals(1, u32::from_ne_bytes(((r.forbidden_line_start_clusters.size()) as u32).to_ne_bytes()), None).unwrap();
     });
 }
 
 #[test]
 fn resolve_unicode_punctuation_boundaries_apostrophe_right_neighbour_supplementary_pair() {
-    testlib::run("org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesApostropheRightNeighbourSupplementaryPair",
-"org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesApostropheRightNeighbourSupplementaryPair", || {
-        UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_start(&"resolveUnicodePunctuationBoundariesApostropheRightNeighbourSupplementaryPair");
-        let text = format!("{}{}",
-            "’",
-            UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_surrogate(&vec![55357, 56832])
-        );
+    testlib::run("org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesApostropheRightNeighbourSupplementaryPair", "org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesApostropheRightNeighbourSupplementaryPair", || {
+        UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_start(UStr::new(&[114,101,115,111,108,118,101,85,110,105,99,111,100,101,80,117,110,99,116,117,97,116,105,111,110,66,111,117,110,100,97,114,105,101,115,65,112,111,115,116,114,111,112,104,101,82,105,103,104,116,78,101,105,103,104,98,111,117,114,83,117,112,112,108,101,109,101,110,116,97,114,121,80,97,105,114]));
+        let text = { let mut __s = UString::new(); __s += &(UString::from("’")); __s += UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_surrogate(&vec![55357, 56832]).as_ustr(); __s };
         let c = vec![
-    (Cluster::new(TextRange::new(0u32, 3u32).unwrap(), text.as_str(), "latin", 32.0f64, Some(text.to_string()), Some(0.0), Some(0.0), Some(0.0))).clone(),
+    (Cluster::new(TextRange::new(0u32, 3u32).unwrap(), text.as_ustr(), &(UStr::new(&[108,97,116,105,110])), 32.0f64, Some(text.to_ustring()), Some(0.0), Some(0.0), Some(0.0))).clone(),
 ];
-        let r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_unicode_punctuation_boundaries(text.as_str(), &c, &vec![FontRole::LatinText], &vec![]).unwrap();
+        let r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_unicode_punctuation_boundaries(text.as_ustr(), &c, &vec![FontRole::LatinText], &vec![]).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_equals(0, u32::try_from((r.decisions.len()) & 0xFFFF_FFFF).unwrap_or(0), None).unwrap();
     });
 }

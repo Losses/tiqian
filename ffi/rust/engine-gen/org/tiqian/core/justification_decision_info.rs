@@ -1,5 +1,6 @@
 use crate::org::tiqian::core::justification_allocation_info::JustificationAllocationInfo;
 use crate::org::tiqian::core::text_range::TextRange;
+use crate::runtime::u_string::UString;
 use std::fmt::Write;
 
 
@@ -21,20 +22,8 @@ impl JustificationDecisionInfo {
         }
     }
 
-    pub fn to_string(&self) -> String {
-        return format!("{}{}{}{}{}{}{}{}{}{}{}{}{}",
-            "JustificationDecisionInfo(",
-            "lineRange=",
-            (self.line_range).clone().to_string(),
-            ", ",
-            "deficitBefore=",
-            self.deficit_before,
-            ", ",
-            "deficitAfter=",
-            self.deficit_after,
-            ", ",
-            "allocations=",
-            {
+    pub fn to_string(&self) -> UString {
+        return UString::from(format!("{}", { let mut __s = UString::new(); __s += &(UString::from("JustificationDecisionInfo(")); __s += &(UString::from("lineRange=")); __s += UString::from(format!("{}", (self.line_range).clone().to_string()).as_str()).as_ustr(); __s += &(UString::from(", ")); __s += &(UString::from("deficitBefore=")); __s += &(crate::runtime::fp_helper::FPHelper::format_float(self.deficit_before)); __s += &(UString::from(", ")); __s += &(UString::from("deficitAfter=")); __s += &(crate::runtime::fp_helper::FPHelper::format_float(self.deficit_after)); __s += &(UString::from(", ")); __s += &(UString::from("allocations=")); __s += UString::from(format!("{}", {
         let mut out = String::new();
         out.push('[');
         let arr = (self.allocations).clone();
@@ -47,8 +36,6 @@ impl JustificationDecisionInfo {
         }
         out.push(']');
         out
-    },
-            ")"
-        );
+    }).as_str()).as_ustr(); __s += &(UString::from(")")); __s }).as_str());
     }
 }

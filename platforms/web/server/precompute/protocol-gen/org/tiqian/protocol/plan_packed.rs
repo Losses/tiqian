@@ -12,6 +12,8 @@ use crate::org::tiqian::protocol::plan_end_reason::PlanEndReason;
 use crate::org::tiqian::protocol::plan_style_delta::PlanStyleDelta;
 use crate::runtime::bytes_buffer::BytesBuffer;
 use crate::runtime::fp_helper::FPHelper;
+use crate::runtime::u_string::UStr;
+use crate::runtime::u_string::UString;
 use std::sync::Arc;
 use std::sync::Mutex;
 
@@ -88,8 +90,7 @@ impl<'a> PlanPackedReader<'a> {
         if !self.need(4) {
             return 0;
         }
-        let v = u32::wrapping_add(u32::from(self.bytes[usize::try_from(self.pos).unwrap_or(0)]) | (u32::from(self.bytes[usize::try_from(u32::wrapping_add(self.pos, 1)).unwrap_or(0)])) << (8) | (u32::from(self.bytes[usize::try_from(u32::wrapping_add(self.pos, 2)).unwrap_or(0)]))
-<< (16), u32::wrapping_mul(u32::from(self.bytes[usize::try_from(u32::wrapping_add(self.pos, 3)).unwrap_or(0)]), 16777216));
+        let v = u32::wrapping_add(u32::from(self.bytes[usize::try_from(self.pos).unwrap_or(0)]) | (u32::from(self.bytes[usize::try_from(u32::wrapping_add(self.pos, 1)).unwrap_or(0)])) << (8) | (u32::from(self.bytes[usize::try_from(u32::wrapping_add(self.pos, 2)).unwrap_or(0)])) << (16), u32::wrapping_mul(u32::from(self.bytes[usize::try_from(u32::wrapping_add(self.pos, 3)).unwrap_or(0)]), 16777216));
         self.pos += 4;
         return v;
     }
@@ -103,11 +104,11 @@ impl<'a> PlanPackedReader<'a> {
         return FPHelper::i64_to_double(low, high);
     }
 
-    pub fn string(&mut self, len: u32) -> String {
+    pub fn string(&mut self, len: u32) -> UString {
         if !self.need(len) {
-            return String::new();
+            return UString::new();
         }
-        let s = String::from_utf8_lossy(&self.bytes[usize::try_from(self.pos).unwrap_or(0)..usize::try_from(self.pos + len).unwrap_or(0)]).into_owned();
+        let s = UString::from(String::from_utf8_lossy(&self.bytes[usize::try_from(self.pos).unwrap_or(0)..usize::try_from(self.pos + len).unwrap_or(0)]).into_owned().as_str());
         self.pos += len;
         return s;
     }
@@ -116,7 +117,7 @@ impl<'a> PlanPackedReader<'a> {
         if self.failed {
             return false;
         }
-        if length > 2147483647 || (i32::from_ne_bytes((u32::wrapping_add(self.pos, length)).to_ne_bytes())) > (i32::from_ne_bytes((u32::try_from((self.bytes.len()) & 0xFFFF_FFFF).unwrap_or(0)).to_ne_bytes())) {
+        if length > 2147483647 || (i32::from_ne_bytes(((u32::wrapping_add(self.pos, length)) as i32).to_ne_bytes())) > (i32::from_ne_bytes(((u32::try_from((self.bytes.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
             self.failed = true;
             return false;
         }
@@ -126,7 +127,7 @@ impl<'a> PlanPackedReader<'a> {
 
 #[derive(Clone, PartialEq)]
 pub struct StringPool {
-    pub ordered: Vec<String>,
+    pub ordered: Vec<UString>,
 }
 
 impl StringPool {
@@ -136,18 +137,18 @@ impl StringPool {
         }
     }
 
-    pub fn intern(&mut self, value: &str) -> u32 {
+    pub fn intern(&mut self, value: &UStr) -> u32 {
         for i in 0..match u32::try_from(self.ordered.len()) { Ok(value) => value, Err(_) => u32::MAX } {
             if self.ordered[usize::try_from(i).unwrap_or(0)].clone() == value {
                 return i;
             }
         }
         let idx = u32::try_from((self.ordered.len()) & 0xFFFF_FFFF).unwrap_or(0);
-        self.ordered.push(value.to_string());
+        self.ordered.push(value.to_ustring());
         return idx;
     }
 
-    pub fn index_of(&self, value: &str) -> u32 {
+    pub fn index_of(&self, value: &UStr) -> u32 {
         for i in 0..match u32::try_from((self.ordered).clone().len()) { Ok(value) => value, Err(_) => u32::MAX } {
             if self.ordered[usize::try_from(i).unwrap_or(0)].clone() == value {
                 return i;
@@ -161,6 +162,10 @@ impl StringPool {
 pub struct PlanPacked;
 
 impl PlanPacked {
+    pub(crate) fn plan_packed_f32(v: f64) -> f64 {
+        return v;
+    }
+
     pub fn plan_packed_encode(plan: Plan) -> Vec<u8> {
         let mut pool = StringPool::new();
         let mut writer = PlanPackedWriter::new();
@@ -202,28 +207,32 @@ impl PlanPacked {
                 {
                     let mut _g = 0u32;
                     let _g1 = (line.cells).clone().clone();
-                    while (i32::from_ne_bytes((_g).to_ne_bytes())) < (i32::from_ne_bytes((u32::try_from((_g1.len()) & 0xFFFF_FFFF).unwrap_or(0)).to_ne_bytes())) {
+                    while (i32::from_ne_bytes(((_g) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((_g1.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
                         let cell = (_g1[usize::try_from(_g).unwrap_or(0)]).clone();
                         _g = u32::wrapping_add(_g, 1);
                         cell_range_start.push(cell.range_start);
                         cell_range_end.push(cell.range_end);
-                        cell_source_ref.push(pool.intern((cell.source).to_string().as_str()));
-                        cell_display_ref.push(pool.intern((cell.display).to_string().as_str()));
+                        cell_source_ref.push(pool.intern((cell.source).to_ustring().as_ustr()));
+                        cell_display_ref.push(pool.intern((cell.display).to_ustring().as_ustr()));
                         cell_draw_x.push(cell.draw_x);
                         cell_natural_width.push(cell.natural_width);
                         cell_leading_advance.push(cell.leading_layout_advance);
                         cell_shaping_boundary.push(if cell.shaping_boundary { 1 } else { 0 });
                         cell_latin.push(if cell.latin { 1 } else { 0 });
-                        cell_render_family_ref.push(match &(cell.render_font_family) { Some(__option1) => pool.intern((*__option1).clone().as_str()), None => 4294967295u32 });
-                        cell_dash_ref.push(match &(cell.dash_strategy) { Some(__option4) => pool.intern((*__option4).clone().as_str()), None => 4294967295u32 });
-                        cell_language_ref.push(match &(cell.shaping_language) { Some(__option7) => pool.intern((*__option7).clone().as_str()), None => 4294967295u32 });
-                        cell_resolved_face_ref.push(match &(cell.resolved_face) { Some(__option10) => pool.intern((*__option10).clone().as_str()), None => 4294967295u32 });
-                        cell_glyph_ids_ref.push(match &(cell.glyph_ids) { Some(__option13) => pool.intern((*__option13).clone().as_str()), None => 4294967295u32 });
-                        cell_evidence_ref.push(match &(cell.shaping_evidence) { Some(__option16) => pool.intern((*__option16).clone().as_str()), None => 4294967295u32 });
-                        cell_ink_floor.push(match &(cell.punctuation_ink_floor) { Some(__option19) => *__option19, None => f64::NAN });
-                        cell_body_width.push(match &(cell.punctuation_body_width) { Some(__option21) => *__option21, None => f64::NAN });
-                        cell_advance.push(match &(cell.advance) { Some(__option23) => *__option23, None => f64::NAN });
-                        cell_inline_object.push(match &(cell.inline_object) { Some(__option25) => *__option25, None => f64::NAN });
+                        cell_render_family_ref.push(match &(cell.render_font_family) { Some(__option1) => pool.intern((*__option1).clone().as_ustr()), None => 4294967295u32 });
+                        cell_dash_ref.push(match &(cell.dash_strategy) { Some(__option4) => pool.intern((*__option4).clone().as_ustr()), None => 4294967295u32 });
+                        cell_language_ref.push(match &(cell.shaping_language) { Some(__option7) => pool.intern((*__option7).clone().as_ustr()), None => 4294967295u32 });
+                        cell_resolved_face_ref.push(match &(cell.resolved_face) { Some(__option10) => pool.intern((*__option10).clone().as_ustr()), None => 4294967295u32 });
+                        cell_glyph_ids_ref.push(match &(cell.glyph_ids) { Some(__option13) => pool.intern((*__option13).clone().as_ustr()), None => 4294967295u32 });
+                        cell_evidence_ref.push(match &(cell.shaping_evidence) { Some(__option16) => pool.intern((*__option16).clone().as_ustr()), None => 4294967295u32 });
+                        let ink = cell.punctuation_ink_floor;
+                        cell_ink_floor.push(match &(ink) { Some(__option19) => *__option19, None => f64::NAN });
+                        let bw = cell.punctuation_body_width;
+                        cell_body_width.push(match &(bw) { Some(__option21) => *__option21, None => f64::NAN });
+                        let adv = cell.advance;
+                        cell_advance.push(match &(adv) { Some(__option23) => *__option23, None => f64::NAN });
+                        let inl = cell.inline_object;
+                        cell_inline_object.push(match &(inl) { Some(__option25) => *__option25, None => f64::NAN });
                         let style = cell.style_delta;
                         let mut style_font_size = f64::NAN;
                         let mut style_font_weight = f64::NAN;
@@ -241,7 +250,7 @@ impl PlanPacked {
                                 let fw = __option26.font_weight;
                                 match &(fw) {
                                     Some(__option28) => {
-                                        style_font_weight = *__option28;
+                                        style_font_weight = PlanPacked::plan_packed_f32(i32::from_ne_bytes(((*__option28) as i32).to_ne_bytes()) as f64);
                                     }
                                     None => {
                                     }
@@ -264,20 +273,20 @@ impl PlanPacked {
                         let feats = cell.open_type_features.clone();
                         {
                             let mut _g = 0u32;
-                            while (i32::from_ne_bytes((_g).to_ne_bytes())) < (i32::from_ne_bytes((u32::try_from((feats.len()) & 0xFFFF_FFFF).unwrap_or(0)).to_ne_bytes())) {
+                            while (i32::from_ne_bytes(((_g) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((feats.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
                                 let f = (feats[usize::try_from(_g).unwrap_or(0)]).clone();
                                 _g = u32::wrapping_add(_g, 1);
-                                pool.intern(f.as_str());
+                                pool.intern(f.as_ustr());
                             }
                         }
                         cell_feature_offset.push(u32::try_from((feature_pool.len()) & 0xFFFF_FFFF).unwrap_or(0));
                         cell_feature_count.push(u32::try_from((feats.len()) & 0xFFFF_FFFF).unwrap_or(0));
                         {
                             let mut _g = 0u32;
-                            while (i32::from_ne_bytes((_g).to_ne_bytes())) < (i32::from_ne_bytes((u32::try_from((feats.len()) & 0xFFFF_FFFF).unwrap_or(0)).to_ne_bytes())) {
+                            while (i32::from_ne_bytes(((_g) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((feats.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
                                 let f = (feats[usize::try_from(_g).unwrap_or(0)]).clone();
                                 _g = u32::wrapping_add(_g, 1);
-                                feature_pool.push(pool.index_of(f.as_str()));
+                                feature_pool.push(pool.index_of(f.as_ustr()));
                             }
                         }
                     }
@@ -301,13 +310,13 @@ impl PlanPacked {
                 {
                     let mut _g = 0u32;
                     let _g1 = (ruby.font_families).clone().clone();
-                    while (i32::from_ne_bytes((_g).to_ne_bytes())) < (i32::from_ne_bytes((u32::try_from((_g1.len()) & 0xFFFF_FFFF).unwrap_or(0)).to_ne_bytes())) {
+                    while (i32::from_ne_bytes(((_g) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((_g1.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
                         let fam = (_g1[usize::try_from(_g).unwrap_or(0)]).clone();
                         _g = u32::wrapping_add(_g, 1);
-                        pool.intern(fam.as_str());
+                        pool.intern(fam.as_ustr());
                     }
                 }
-                pool.intern((ruby.text).to_string().as_str());
+                pool.intern((ruby.text).to_ustring().as_ustr());
             }
         }
         {
@@ -315,21 +324,22 @@ impl PlanPacked {
             for ruby in &_g1 {
                 ruby_base_start.push(ruby.base_range_start);
                 ruby_base_end.push(ruby.base_range_end);
-                ruby_text_ref.push(pool.index_of((ruby.text).to_string().as_str()));
+                ruby_text_ref.push(pool.index_of((ruby.text).to_ustring().as_ustr()));
                 ruby_center_x.push(ruby.center_x);
                 ruby_baseline_y.push(ruby.baseline_y);
                 ruby_font_size.push(ruby.font_size);
                 ruby_font_weight.push(ruby.font_weight);
                 ruby_family_offset.push(u32::try_from((ruby_family_pool.len()) & 0xFFFF_FFFF).unwrap_or(0));
                 ruby_family_count.push(u32::try_from(((ruby.font_families).clone().len()) & 0xFFFF_FFFF).unwrap_or(0));
-                ruby_ascent.push(match &(ruby.ascent) { Some(__option31) => *__option31, None => f64::NAN });
+                let ascent = ruby.ascent;
+                ruby_ascent.push(match &(ascent) { Some(__option31) => *__option31, None => f64::NAN });
                 {
                     let mut _g = 0u32;
                     let _g1 = (ruby.font_families).clone().clone();
-                    while (i32::from_ne_bytes((_g).to_ne_bytes())) < (i32::from_ne_bytes((u32::try_from((_g1.len()) & 0xFFFF_FFFF).unwrap_or(0)).to_ne_bytes())) {
+                    while (i32::from_ne_bytes(((_g) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((_g1.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
                         let fam = (_g1[usize::try_from(_g).unwrap_or(0)]).clone();
                         _g = u32::wrapping_add(_g, 1);
-                        ruby_family_pool.push(pool.index_of(fam.as_str()));
+                        ruby_family_pool.push(pool.index_of(fam.as_ustr()));
                     }
                 }
             }
@@ -355,21 +365,21 @@ impl PlanPacked {
                 {
                     let mut _g = 0u32;
                     let _g1 = (bopomofo.font_families).clone().clone();
-                    while (i32::from_ne_bytes((_g).to_ne_bytes())) < (i32::from_ne_bytes((u32::try_from((_g1.len()) & 0xFFFF_FFFF).unwrap_or(0)).to_ne_bytes())) {
+                    while (i32::from_ne_bytes(((_g) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((_g1.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
                         let fam = (_g1[usize::try_from(_g).unwrap_or(0)]).clone();
                         _g = u32::wrapping_add(_g, 1);
-                        pool.intern(fam.as_str());
+                        pool.intern(fam.as_ustr());
                     }
                 }
-                pool.intern((bopomofo.text).to_string().as_str());
+                pool.intern((bopomofo.text).to_ustring().as_ustr());
                 {
                     let mut _g = 0u32;
                     let _g1 = (bopomofo.placements).clone().clone();
-                    while (i32::from_ne_bytes((_g).to_ne_bytes())) < (i32::from_ne_bytes((u32::try_from((_g1.len()) & 0xFFFF_FFFF).unwrap_or(0)).to_ne_bytes())) {
+                    while (i32::from_ne_bytes(((_g) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((_g1.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
                         let pl = (_g1[usize::try_from(_g).unwrap_or(0)]).clone();
                         _g = u32::wrapping_add(_g, 1);
-                        pool.intern((pl.text).to_string().as_str());
-                        pool.intern((pl.role).to_string().as_str());
+                        pool.intern((pl.text).to_ustring().as_ustr());
+                        pool.intern((pl.role).to_ustring().as_ustr());
                     }
                 }
             }
@@ -379,7 +389,7 @@ impl PlanPacked {
             for bopomofo in &_g1 {
                 bopomofo_base_start.push(bopomofo.base_range_start);
                 bopomofo_base_end.push(bopomofo.base_range_end);
-                bopomofo_text_ref.push(pool.index_of((bopomofo.text).to_string().as_str()));
+                bopomofo_text_ref.push(pool.index_of((bopomofo.text).to_ustring().as_ustr()));
                 bopomofo_font_weight.push(bopomofo.font_weight);
                 bopomofo_family_offset.push(u32::try_from((bopomofo_family_pool.len()) & 0xFFFF_FFFF).unwrap_or(0));
                 bopomofo_family_count.push(u32::try_from(((bopomofo.font_families).clone().len()) & 0xFFFF_FFFF).unwrap_or(0));
@@ -388,20 +398,20 @@ impl PlanPacked {
                 {
                     let mut _g = 0u32;
                     let _g1 = (bopomofo.font_families).clone().clone();
-                    while (i32::from_ne_bytes((_g).to_ne_bytes())) < (i32::from_ne_bytes((u32::try_from((_g1.len()) & 0xFFFF_FFFF).unwrap_or(0)).to_ne_bytes())) {
+                    while (i32::from_ne_bytes(((_g) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((_g1.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
                         let fam = (_g1[usize::try_from(_g).unwrap_or(0)]).clone();
                         _g = u32::wrapping_add(_g, 1);
-                        bopomofo_family_pool.push(pool.index_of(fam.as_str()));
+                        bopomofo_family_pool.push(pool.index_of(fam.as_ustr()));
                     }
                 }
                 {
                     let mut _g = 0u32;
                     let _g1 = (bopomofo.placements).clone().clone();
-                    while (i32::from_ne_bytes((_g).to_ne_bytes())) < (i32::from_ne_bytes((u32::try_from((_g1.len()) & 0xFFFF_FFFF).unwrap_or(0)).to_ne_bytes())) {
+                    while (i32::from_ne_bytes(((_g) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((_g1.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
                         let pl = (_g1[usize::try_from(_g).unwrap_or(0)]).clone();
                         _g = u32::wrapping_add(_g, 1);
-                        bopomofo_place_text_ref.push(pool.index_of((pl.text).to_string().as_str()));
-                        bopomofo_place_role_ref.push(pool.index_of((pl.role).to_string().as_str()));
+                        bopomofo_place_text_ref.push(pool.index_of((pl.text).to_ustring().as_ustr()));
+                        bopomofo_place_role_ref.push(pool.index_of((pl.role).to_ustring().as_ustr()));
                         bopomofo_place_left.push(pl.left);
                         bopomofo_place_top.push(pl.top);
                         bopomofo_place_width.push(pl.width);
@@ -417,13 +427,13 @@ impl PlanPacked {
         {
             let _g1 = plan.decoration_segments.clone();
             for seg in &_g1 {
-                pool.intern((seg.kind).to_string().as_str());
+                pool.intern((seg.kind).to_ustring().as_ustr());
             }
         }
         {
             let _g1 = plan.decoration_segments.clone();
             for seg in &_g1 {
-                decoration_kind_ref.push(pool.index_of((seg.kind).to_string().as_str()));
+                decoration_kind_ref.push(pool.index_of((seg.kind).to_ustring().as_ustr()));
                 decoration_left.push(seg.left);
                 decoration_top.push(seg.top);
                 decoration_right.push(seg.right);
@@ -612,31 +622,33 @@ impl PlanPacked {
         {
             let _g1 = plan.emphasis_ranges.clone();
             for range in &_g1 {
-                writer.f64(i32::from_ne_bytes((range.start).to_ne_bytes()) as f64);
+                writer.f64(i32::from_ne_bytes(((range.start) as i32).to_ne_bytes()) as f64);
             }
         }
         {
             let _g1 = plan.emphasis_ranges.clone();
             for range in &_g1 {
-                writer.f64(i32::from_ne_bytes((range.end).to_ne_bytes()) as f64);
+                writer.f64(i32::from_ne_bytes(((range.end) as i32).to_ne_bytes()) as f64);
             }
         }
         {
             let _g1 = plan.inline_edges.clone();
             for edge in &_g1 {
-                writer.f64(i32::from_ne_bytes((edge.offset).to_ne_bytes()) as f64);
+                writer.f64(i32::from_ne_bytes(((edge.offset) as i32).to_ne_bytes()) as f64);
             }
         }
         {
             let _g1 = plan.inline_edges.clone();
             for edge in &_g1 {
-                writer.f64(match &(edge.inline_start) { Some(__option37) => *__option37, None => f64::NAN });
+                let s = edge.inline_start;
+                writer.f64(match &(s) { Some(__option37) => *__option37, None => f64::NAN });
             }
         }
         {
             let _g1 = plan.inline_edges.clone();
             for edge in &_g1 {
-                writer.f64(match &(edge.inline_end) { Some(__option39) => *__option39, None => f64::NAN });
+                let e = edge.inline_end;
+                writer.f64(match &(e) { Some(__option39) => *__option39, None => f64::NAN });
             }
         }
         for &v in &ruby_base_start {
@@ -797,14 +809,14 @@ impl PlanPacked {
         for _ in 0..sc {
             deltas.push(r.u32());
         }
-        let pool: Arc<Mutex<Vec<String>>> = Arc::new(Mutex::new(vec![]));
+        let pool: Arc<Mutex<Vec<UString>>> = Arc::new(Mutex::new(vec![]));
         for &d in &deltas {
             pool.lock().unwrap().push(r.string(d));
         }
         if r.failed {
             return None;
         }
-        let sref: Arc<dyn Fn(u32) -> Option<String> + Send + Sync + 'static> = { let pool = (pool).clone(); Arc::new({ let pool = Arc::clone(&pool); move |r#ref| {
+        let sref: Arc<dyn Fn(u32) -> Option<UString> + Send + Sync + 'static> = { let pool = (pool).clone(); Arc::new({ let pool = Arc::clone(&pool); move |r#ref| {
         return if r#ref != 4294967295u32 { Some((pool.lock().unwrap()[usize::try_from(r#ref).unwrap_or(0)]).clone()) } else { None };
 } }) };
         let mut lrs: Vec<u32> = vec![];
@@ -964,48 +976,33 @@ impl PlanPacked {
                 cursor = u32::wrapping_add(cursor, 1);
                 let fo = cfo[usize::try_from(i).unwrap_or(0)];
                 let r#fn = cfc[usize::try_from(i).unwrap_or(0)];
-                let mut feats: Vec<String> = vec![];
+                let mut feats: Vec<UString> = vec![];
                 for k in 0..r#fn {
                     feats.push((__loop_guard[usize::try_from(fp[usize::try_from(u32::wrapping_add(fo, k)).unwrap_or(0)]).unwrap_or(0)]).clone());
                 }
                 let sf = csf[usize::try_from(i).unwrap_or(0)];
                 let sw = csw[usize::try_from(i).unwrap_or(0)];
                 let si = csi[usize::try_from(i).unwrap_or(0)];
-                let style = if sf.is_nan() && (sw).is_nan() && si == 2 { None } else { Some(PlanStyleDelta { font_size: if sf.is_nan() { None } else { Some(sf) }, font_weight: if sw.is_nan() { None } else { Some(u32::from_ne_bytes((match f64::from(sw) { v if v.is_nan() => 0i32, v
-if v >= 2147483648.0 => 2147483647i32, v if v < -2147483648.0 => -2147483648i32, v if v < 0.0 => i32::from_ne_bytes(u32::wrapping_sub(0, match ((0.0 - v).to_bits() >> 52) & 2047 { e if e < 1023 => 0u32, e => u32::try_from((((0.0 - v).to_bits() & 4503599627370495) |
-4503599627370496) >> (52 - (e - 1023))).unwrap_or(0) }).to_ne_bytes()), v => i32::from_ne_bytes(match ((v).to_bits() >> 52) & 2047 { e if e < 1023 => 0u32, e => u32::try_from((((v).to_bits() & 4503599627370495) | 4503599627370496) >> (52 - (e - 1023))).unwrap_or(0)
-}.to_ne_bytes()) }).to_ne_bytes())) }, italic: if si == 2 { None } else { Some(si != 0) } }) };
-                cells.push(PlanCell { range_start: crs[usize::try_from(i).unwrap_or(0)], range_end: cre[usize::try_from(i).unwrap_or(0)], source: (__loop_guard[usize::try_from(csr[usize::try_from(i).unwrap_or(0)]).unwrap_or(0)]).clone().clone(), display:
-(__loop_guard[usize::try_from(cdr[usize::try_from(i).unwrap_or(0)]).unwrap_or(0)]).clone().clone(), draw_x: cdx[usize::try_from(i).unwrap_or(0)], natural_width: cnw[usize::try_from(i).unwrap_or(0)], leading_layout_advance: cla[usize::try_from(i).unwrap_or(0)], shaping_boundary:
-csb[usize::try_from(i).unwrap_or(0)] != 0, open_type_features: feats, render_font_family: sref(crf[usize::try_from(i).unwrap_or(0)]).clone(), dash_strategy: sref(cd2[usize::try_from(i).unwrap_or(0)]).clone(), shaping_language: sref(cl2[usize::try_from(i).unwrap_or(0)]).clone(),
-resolved_face: sref(crf2[usize::try_from(i).unwrap_or(0)]).clone(), glyph_ids: sref(cgi[usize::try_from(i).unwrap_or(0)]).clone(), shaping_evidence: sref(cev[usize::try_from(i).unwrap_or(0)]).clone(), punctuation_ink_floor: if cif[usize::try_from(i).unwrap_or(0)].is_nan() { None
-} else { Some(cif[usize::try_from(i).unwrap_or(0)]) }, punctuation_body_width: if cbw[usize::try_from(i).unwrap_or(0)].is_nan() { None } else { Some(cbw[usize::try_from(i).unwrap_or(0)]) }, latin: cla2[usize::try_from(i).unwrap_or(0)] != 0, advance: if
-cad[usize::try_from(i).unwrap_or(0)].is_nan() { None } else { Some(cad[usize::try_from(i).unwrap_or(0)]) }, inline_object: if cio[usize::try_from(i).unwrap_or(0)].is_nan() { None } else { Some(cio[usize::try_from(i).unwrap_or(0)]) }, style_delta: style });
+                let style = if sf.is_nan() && (sw).is_nan() && si == 2 { None } else { Some(PlanStyleDelta { font_size: if sf.is_nan() { None } else { Some(sf) }, font_weight: if sw.is_nan() { None } else { Some(u32::from_ne_bytes(((match f64::from(sw) { v if v.is_nan() => 0i32, v if v >= 2147483648.0 => 2147483647i32, v if v < -2147483648.0 => -2147483648i32, v if v < 0.0 => i32::from_ne_bytes(u32::wrapping_sub(0, match ((0.0 - v).to_bits() >> 52) & 2047 { e if e < 1023 => 0u32, e => u32::try_from((((0.0 - v).to_bits() & 4503599627370495) | 4503599627370496) >> (52 - (e - 1023))).unwrap_or(0) }).to_ne_bytes()), v => i32::from_ne_bytes(match ((v).to_bits() >> 52) & 2047 { e if e < 1023 => 0u32, e => u32::try_from((((v).to_bits() & 4503599627370495) | 4503599627370496) >> (52 - (e - 1023))).unwrap_or(0) }.to_ne_bytes()) }) as u32).to_ne_bytes())) }, italic: if si == 2 { None } else { Some(si != 0) } }) };
+                cells.push(PlanCell { range_start: crs[usize::try_from(i).unwrap_or(0)], range_end: cre[usize::try_from(i).unwrap_or(0)], source: (__loop_guard[usize::try_from(csr[usize::try_from(i).unwrap_or(0)]).unwrap_or(0)]).clone().clone(), display: (__loop_guard[usize::try_from(cdr[usize::try_from(i).unwrap_or(0)]).unwrap_or(0)]).clone().clone(), draw_x: cdx[usize::try_from(i).unwrap_or(0)], natural_width: cnw[usize::try_from(i).unwrap_or(0)], leading_layout_advance: cla[usize::try_from(i).unwrap_or(0)], shaping_boundary: csb[usize::try_from(i).unwrap_or(0)] != 0, open_type_features: feats, render_font_family: sref(crf[usize::try_from(i).unwrap_or(0)]).clone(), dash_strategy: sref(cd2[usize::try_from(i).unwrap_or(0)]).clone(), shaping_language: sref(cl2[usize::try_from(i).unwrap_or(0)]).clone(), resolved_face: sref(crf2[usize::try_from(i).unwrap_or(0)]).clone(), glyph_ids: sref(cgi[usize::try_from(i).unwrap_or(0)]).clone(), shaping_evidence: sref(cev[usize::try_from(i).unwrap_or(0)]).clone(), punctuation_ink_floor: if cif[usize::try_from(i).unwrap_or(0)].is_nan() { None } else { Some(cif[usize::try_from(i).unwrap_or(0)]) }, punctuation_body_width: if cbw[usize::try_from(i).unwrap_or(0)].is_nan() { None } else { Some(cbw[usize::try_from(i).unwrap_or(0)]) }, latin: cla2[usize::try_from(i).unwrap_or(0)] != 0, advance: if cad[usize::try_from(i).unwrap_or(0)].is_nan() { None } else { Some(cad[usize::try_from(i).unwrap_or(0)]) }, inline_object: if cio[usize::try_from(i).unwrap_or(0)].is_nan() { None } else { Some(cio[usize::try_from(i).unwrap_or(0)]) }, style_delta: style });
             }
             let er = ler[usize::try_from(li).unwrap_or(0)];
             let end_r = if er == 1 { PlanEndReason::MandatoryBreak } else { if er == 2 { PlanEndReason::ParagraphEnd } else { PlanEndReason::AutoWrap } };
-            lines.push(PlanLine { range_start: lrs[usize::try_from(li).unwrap_or(0)], range_end: lre[usize::try_from(li).unwrap_or(0)], top: lt[usize::try_from(li).unwrap_or(0)], bottom: lb[usize::try_from(li).unwrap_or(0)], baseline: lbl[usize::try_from(li).unwrap_or(0)],
-indent: lin[usize::try_from(li).unwrap_or(0)], visual_width: lvw[usize::try_from(li).unwrap_or(0)], hyphen_advance: lha[usize::try_from(li).unwrap_or(0)], end_reason: end_r, cells: cells });
+            lines.push(PlanLine { range_start: lrs[usize::try_from(li).unwrap_or(0)], range_end: lre[usize::try_from(li).unwrap_or(0)], top: lt[usize::try_from(li).unwrap_or(0)], bottom: lb[usize::try_from(li).unwrap_or(0)], baseline: lbl[usize::try_from(li).unwrap_or(0)], indent: lin[usize::try_from(li).unwrap_or(0)], visual_width: lvw[usize::try_from(li).unwrap_or(0)], hyphen_advance: lha[usize::try_from(li).unwrap_or(0)], end_reason: end_r, cells: cells });
         }
         drop(__loop_guard);
         let mut emphasis: Vec<PlanEmphasisRange> = vec![];
         for _ in 0..erc {
             let s = r.f64();
             let e = r.f64();
-            emphasis.push(PlanEmphasisRange { start: u32::from_ne_bytes((match f64::from(s) { v if v.is_nan() => 0i32, v if v >= 2147483648.0 => 2147483647i32, v if v < -2147483648.0 => -2147483648i32, v if v < 0.0 => i32::from_ne_bytes(u32::wrapping_sub(0, match ((0.0 -
-v).to_bits() >> 52) & 2047 { e if e < 1023 => 0u32, e => u32::try_from((((0.0 - v).to_bits() & 4503599627370495) | 4503599627370496) >> (52 - (e - 1023))).unwrap_or(0) }).to_ne_bytes()), v => i32::from_ne_bytes(match ((v).to_bits() >> 52) & 2047 { e if e < 1023 => 0u32, e =>
-u32::try_from((((v).to_bits() & 4503599627370495) | 4503599627370496) >> (52 - (e - 1023))).unwrap_or(0) }.to_ne_bytes()) }).to_ne_bytes()), end: u32::from_ne_bytes((match f64::from(e) { v if v.is_nan() => 0i32, v if v >= 2147483648.0 => 2147483647i32, v if v < -2147483648.0 =>
--2147483648i32, v if v < 0.0 => i32::from_ne_bytes(u32::wrapping_sub(0, match ((0.0 - v).to_bits() >> 52) & 2047 { e if e < 1023 => 0u32, e => u32::try_from((((0.0 - v).to_bits() & 4503599627370495) | 4503599627370496) >> (52 - (e - 1023))).unwrap_or(0) }).to_ne_bytes()), v =>
-i32::from_ne_bytes(match ((v).to_bits() >> 52) & 2047 { e if e < 1023 => 0u32, e => u32::try_from((((v).to_bits() & 4503599627370495) | 4503599627370496) >> (52 - (e - 1023))).unwrap_or(0) }.to_ne_bytes()) }).to_ne_bytes()) });
+            emphasis.push(PlanEmphasisRange { start: u32::from_ne_bytes(((match f64::from(s) { v if v.is_nan() => 0i32, v if v >= 2147483648.0 => 2147483647i32, v if v < -2147483648.0 => -2147483648i32, v if v < 0.0 => i32::from_ne_bytes(u32::wrapping_sub(0, match ((0.0 - v).to_bits() >> 52) & 2047 { e if e < 1023 => 0u32, e => u32::try_from((((0.0 - v).to_bits() & 4503599627370495) | 4503599627370496) >> (52 - (e - 1023))).unwrap_or(0) }).to_ne_bytes()), v => i32::from_ne_bytes(match ((v).to_bits() >> 52) & 2047 { e if e < 1023 => 0u32, e => u32::try_from((((v).to_bits() & 4503599627370495) | 4503599627370496) >> (52 - (e - 1023))).unwrap_or(0) }.to_ne_bytes()) }) as u32).to_ne_bytes()), end: u32::from_ne_bytes(((match f64::from(e) { v if v.is_nan() => 0i32, v if v >= 2147483648.0 => 2147483647i32, v if v < -2147483648.0 => -2147483648i32, v if v < 0.0 => i32::from_ne_bytes(u32::wrapping_sub(0, match ((0.0 - v).to_bits() >> 52) & 2047 { e if e < 1023 => 0u32, e => u32::try_from((((0.0 - v).to_bits() & 4503599627370495) | 4503599627370496) >> (52 - (e - 1023))).unwrap_or(0) }).to_ne_bytes()), v => i32::from_ne_bytes(match ((v).to_bits() >> 52) & 2047 { e if e < 1023 => 0u32, e => u32::try_from((((v).to_bits() & 4503599627370495) | 4503599627370496) >> (52 - (e - 1023))).unwrap_or(0) }.to_ne_bytes()) }) as u32).to_ne_bytes()) });
         }
         let mut edges: Vec<PlanInlineEdge> = vec![];
         for _ in 0..iec {
             let off = r.f64();
             let s = r.f64();
             let e = r.f64();
-            edges.push(PlanInlineEdge { offset: u32::from_ne_bytes((match f64::from(off) { v if v.is_nan() => 0i32, v if v >= 2147483648.0 => 2147483647i32, v if v < -2147483648.0 => -2147483648i32, v if v < 0.0 => i32::from_ne_bytes(u32::wrapping_sub(0, match ((0.0 -
-v).to_bits() >> 52) & 2047 { e if e < 1023 => 0u32, e => u32::try_from((((0.0 - v).to_bits() & 4503599627370495) | 4503599627370496) >> (52 - (e - 1023))).unwrap_or(0) }).to_ne_bytes()), v => i32::from_ne_bytes(match ((v).to_bits() >> 52) & 2047 { e if e < 1023 => 0u32, e =>
-u32::try_from((((v).to_bits() & 4503599627370495) | 4503599627370496) >> (52 - (e - 1023))).unwrap_or(0) }.to_ne_bytes()) }).to_ne_bytes()), inline_start: if s.is_nan() { None } else { Some(s) }, inline_end: if e.is_nan() { None } else { Some(e) } });
+            edges.push(PlanInlineEdge { offset: u32::from_ne_bytes(((match f64::from(off) { v if v.is_nan() => 0i32, v if v >= 2147483648.0 => 2147483647i32, v if v < -2147483648.0 => -2147483648i32, v if v < 0.0 => i32::from_ne_bytes(u32::wrapping_sub(0, match ((0.0 - v).to_bits() >> 52) & 2047 { e if e < 1023 => 0u32, e => u32::try_from((((0.0 - v).to_bits() & 4503599627370495) | 4503599627370496) >> (52 - (e - 1023))).unwrap_or(0) }).to_ne_bytes()), v => i32::from_ne_bytes(match ((v).to_bits() >> 52) & 2047 { e if e < 1023 => 0u32, e => u32::try_from((((v).to_bits() & 4503599627370495) | 4503599627370496) >> (52 - (e - 1023))).unwrap_or(0) }.to_ne_bytes()) }) as u32).to_ne_bytes()), inline_start: if s.is_nan() { None } else { Some(s) }, inline_end: if e.is_nan() { None } else { Some(e) } });
         }
         let mut rb_s: Vec<u32> = vec![];
         for _ in 0..rc {
@@ -1054,13 +1051,11 @@ u32::try_from((((v).to_bits() & 4503599627370495) | 4503599627370496) >> (52 - (
         let mut rubys: Vec<PlanRuby> = vec![];
         let mut __loop_guard1 = pool.lock().unwrap();
         for i in 0..rc {
-            let mut fams: Vec<String> = vec![];
+            let mut fams: Vec<UString> = vec![];
             for k in 0..rb_fc[usize::try_from(i).unwrap_or(0)] {
                 fams.push((__loop_guard1[usize::try_from(ruby_fam[usize::try_from(u32::wrapping_add(rb_fo[usize::try_from(i).unwrap_or(0)], k)).unwrap_or(0)]).unwrap_or(0)]).clone());
             }
-            rubys.push(PlanRuby { base_range_start: rb_s[usize::try_from(i).unwrap_or(0)], base_range_end: rb_e[usize::try_from(i).unwrap_or(0)], text: (__loop_guard1[usize::try_from(rb_t[usize::try_from(i).unwrap_or(0)]).unwrap_or(0)]).clone().clone(), center_x:
-rb_cx[usize::try_from(i).unwrap_or(0)], baseline_y: rb_by[usize::try_from(i).unwrap_or(0)], font_size: rb_fs[usize::try_from(i).unwrap_or(0)], font_weight: rb_fw[usize::try_from(i).unwrap_or(0)], font_families: fams, ascent: if rb_as[usize::try_from(i).unwrap_or(0)].is_nan() {
-None } else { Some(rb_as[usize::try_from(i).unwrap_or(0)]) } });
+            rubys.push(PlanRuby { base_range_start: rb_s[usize::try_from(i).unwrap_or(0)], base_range_end: rb_e[usize::try_from(i).unwrap_or(0)], text: (__loop_guard1[usize::try_from(rb_t[usize::try_from(i).unwrap_or(0)]).unwrap_or(0)]).clone().clone(), center_x: rb_cx[usize::try_from(i).unwrap_or(0)], baseline_y: rb_by[usize::try_from(i).unwrap_or(0)], font_size: rb_fs[usize::try_from(i).unwrap_or(0)], font_weight: rb_fw[usize::try_from(i).unwrap_or(0)], font_families: fams, ascent: if rb_as[usize::try_from(i).unwrap_or(0)].is_nan() { None } else { Some(rb_as[usize::try_from(i).unwrap_or(0)]) } });
         }
         drop(__loop_guard1);
         let mut bb_s: Vec<u32> = vec![];
@@ -1126,18 +1121,16 @@ None } else { Some(rb_as[usize::try_from(i).unwrap_or(0)]) } });
         let mut bopos: Vec<PlanBopomofo> = vec![];
         let mut __loop_guard2 = pool.lock().unwrap();
         for i in 0..bc {
-            let mut fams: Vec<String> = vec![];
+            let mut fams: Vec<UString> = vec![];
             for k in 0..bb_fc[usize::try_from(i).unwrap_or(0)] {
                 fams.push((__loop_guard2[usize::try_from(bopo_fam[usize::try_from(u32::wrapping_add(bb_fo[usize::try_from(i).unwrap_or(0)], k)).unwrap_or(0)]).unwrap_or(0)]).clone());
             }
             let mut placements: Vec<PlanBopomofoPlacement> = vec![];
             for k in 0..bb_pc[usize::try_from(i).unwrap_or(0)] {
                 let pidx = u32::wrapping_add(bb_po[usize::try_from(i).unwrap_or(0)], k);
-                placements.push(PlanBopomofoPlacement { text: (__loop_guard2[usize::try_from(bp_t[usize::try_from(pidx).unwrap_or(0)]).unwrap_or(0)]).clone().clone(), role: (__loop_guard2[usize::try_from(bp_r[usize::try_from(pidx).unwrap_or(0)]).unwrap_or(0)]).clone().clone(),
-left: bp_l[usize::try_from(pidx).unwrap_or(0)], top: bp_t2[usize::try_from(pidx).unwrap_or(0)], width: bp_w[usize::try_from(pidx).unwrap_or(0)], height: bp_h[usize::try_from(pidx).unwrap_or(0)] });
+                placements.push(PlanBopomofoPlacement { text: (__loop_guard2[usize::try_from(bp_t[usize::try_from(pidx).unwrap_or(0)]).unwrap_or(0)]).clone().clone(), role: (__loop_guard2[usize::try_from(bp_r[usize::try_from(pidx).unwrap_or(0)]).unwrap_or(0)]).clone().clone(), left: bp_l[usize::try_from(pidx).unwrap_or(0)], top: bp_t2[usize::try_from(pidx).unwrap_or(0)], width: bp_w[usize::try_from(pidx).unwrap_or(0)], height: bp_h[usize::try_from(pidx).unwrap_or(0)] });
             }
-            bopos.push(PlanBopomofo { base_range_start: bb_s[usize::try_from(i).unwrap_or(0)], base_range_end: bb_e[usize::try_from(i).unwrap_or(0)], text: (__loop_guard2[usize::try_from(bb_t[usize::try_from(i).unwrap_or(0)]).unwrap_or(0)]).clone().clone(), font_weight:
-bb_fw[usize::try_from(i).unwrap_or(0)], font_families: fams, placements: placements });
+            bopos.push(PlanBopomofo { base_range_start: bb_s[usize::try_from(i).unwrap_or(0)], base_range_end: bb_e[usize::try_from(i).unwrap_or(0)], text: (__loop_guard2[usize::try_from(bb_t[usize::try_from(i).unwrap_or(0)]).unwrap_or(0)]).clone().clone(), font_weight: bb_fw[usize::try_from(i).unwrap_or(0)], font_families: fams, placements: placements });
         }
         drop(__loop_guard2);
         let mut decos: Vec<PlanDecorationSegment> = vec![];
@@ -1155,7 +1148,6 @@ bb_fw[usize::try_from(i).unwrap_or(0)], font_families: fams, placements: placeme
         if r.failed {
             return None;
         }
-        return Some(Plan { width: width, height: height, lines: lines, emphasis_ranges: emphasis, inline_edges: edges, ruby_decisions: rubys, bopomofo_decisions: bopos, font_size: if font_sz.is_nan() { None } else { Some(font_sz) }, overlay_width: if overlay_w.is_nan() { None }
-else { Some(overlay_w) }, decoration_segments: decos, emphasis_dots: dots });
+        return Some(Plan { width: width, height: height, lines: lines, emphasis_ranges: emphasis, inline_edges: edges, ruby_decisions: rubys, bopomofo_decisions: bopos, font_size: if font_sz.is_nan() { None } else { Some(font_sz) }, overlay_width: if overlay_w.is_nan() { None } else { Some(overlay_w) }, decoration_segments: decos, emphasis_dots: dots });
     }
 }

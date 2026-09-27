@@ -35,13 +35,25 @@ use crate::org::tiqian::layout::punctuation_model::PunctuationSpacingCompressor;
 use crate::org::tiqian::layout::quote_pair_analyzer::QuotePairAnalyzer;
 use crate::org::tiqian::layout::width_independent_annotation_cache::LruWidthIndependentAnnotationCache;
 use crate::org::tiqian::shaping::text_shaper::ExplainableStubTextShaper;
+use crate::runtime::u_string::UStr;
+use crate::runtime::u_string::UString;
 use std::fmt::Write;
+use std::sync::Arc;
+use std::sync::Mutex;
 
 
 #[derive(Debug, Clone, PartialEq)]
 pub enum AutoSpaceSingleGapTestSupportLetterDigitFault {
     TextRangeErrorFault(crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError),
     UStringFaultFault(crate::std::u_string_exception::UStringFault),
+}
+impl std::fmt::Display for AutoSpaceSingleGapTestSupportLetterDigitFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            AutoSpaceSingleGapTestSupportLetterDigitFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            AutoSpaceSingleGapTestSupportLetterDigitFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
 }
 
 impl From<AutoSpaceSingleGapTestSupportLetterDigitFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
@@ -79,6 +91,14 @@ pub enum AutoSpaceSingleGapTestSupportLayoutFault {
     TextRangeErrorFault(crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError),
     UStringFaultFault(crate::std::u_string_exception::UStringFault),
 }
+impl std::fmt::Display for AutoSpaceSingleGapTestSupportLayoutFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            AutoSpaceSingleGapTestSupportLayoutFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            AutoSpaceSingleGapTestSupportLayoutFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
+}
 
 impl From<AutoSpaceSingleGapTestSupportLayoutFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
     fn from(value: AutoSpaceSingleGapTestSupportLayoutFault) -> Self {
@@ -114,69 +134,31 @@ impl From<crate::std::u_string_exception::UStringFault> for AutoSpaceSingleGapTe
 pub struct AutoSpaceSingleGapTestSupport;
 
 impl AutoSpaceSingleGapTestSupport {
-    pub fn auto_space_single_gap_test_support_render_auto_space_decisions(list: &[AutoSpaceDecisionInfo]) -> String {
-        let mut parts: Vec<String> = vec![];
+    pub fn auto_space_single_gap_test_support_render_auto_space_decisions(list: &[AutoSpaceDecisionInfo]) -> UString {
+        let mut parts: Vec<UString> = vec![];
         for d in list {
-            parts.push(format!("{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}",
-            "AutoSpaceDecisionInfo(clusterRange=TextRange(start=",
-            crate::runtime::int_text::IntText::int_text((d.cluster_range).clone().start),
-            ", end=",
-            crate::runtime::int_text::IntText::int_text((d.cluster_range).clone().end),
-            "), side=",
-            (d.side).to_string(),
-            ", boundaryRole=",
-            (d.boundary_role).to_string(),
-            ", mode=",
-            (d.mode).to_string(),
-            ", charactersAffected=",
-            crate::runtime::int_text::IntText::int_text(d.characters_affected),
-            ", reductionPerChar=",
-            d.reduction_per_char,
-            ", totalReduction=",
-            d.total_reduction,
-            ", reason=",
-            (d.reason).to_string(),
-            ")"
-        ));
+            parts.push(UString::from(format!("{}", { let mut __s = UString::new(); __s += &(UString::from("AutoSpaceDecisionInfo(clusterRange=TextRange(start=")); __s += &(UString::from(format!("{}", crate::runtime::int_text::IntText::int_text((d.cluster_range).clone().start)).as_str())); __s += &(UString::from(", end=")); __s += &(UString::from(format!("{}", crate::runtime::int_text::IntText::int_text((d.cluster_range).clone().end)).as_str())); __s += &(UString::from("), side=")); __s += (d.side).to_ustring().as_ustr(); __s += &(UString::from(", boundaryRole=")); __s += (d.boundary_role).to_ustring().as_ustr(); __s += &(UString::from(", mode=")); __s += (d.mode).to_ustring().as_ustr(); __s += &(UString::from(", charactersAffected=")); __s += &(UString::from(format!("{}", crate::runtime::int_text::IntText::int_text(d.characters_affected)).as_str())); __s += &(UString::from(", reductionPerChar=")); __s += &(crate::runtime::fp_helper::FPHelper::format_float(d.reduction_per_char)); __s += &(UString::from(", totalReduction=")); __s += &(crate::runtime::fp_helper::FPHelper::format_float(d.total_reduction)); __s += &(UString::from(", reason=")); __s += (d.reason).to_ustring().as_ustr(); __s += &(UString::from(")")); __s }).as_str()));
         }
-        return format!("{}{}{}",
-            "[",
-            { let joined = parts; let mut out = String::new(); let n = joined.len(); let mut index = 0usize; while index < n { if index > 0 { out.push_str(&(", ")); } let _ = write!(out, "{}", joined[index]); index += 1; } out },
-            "]"
-        );
+        return UString::from(format!("{}", { let mut __s = UString::new(); __s += &(UString::from("[")); __s += UString::from(format!("{}", { let joined = parts; let mut out = String::new(); let n = joined.len(); let mut index = 0usize; while index < n { if index > 0 { out.push_str(", "); } let _ = write!(out, "{}", joined[index]); index += 1; } UString::from(out.as_str()) }).as_str()).as_ustr(); __s += &(UString::from("]")); __s }).as_str());
     }
 
-    pub fn auto_space_single_gap_test_support_layout(text: &str, spans: &Vec<TextSpan>) -> Result<LayoutResult, ParagraphLayoutEngineNewFault> {
-        return Ok(ExplainableStubParagraphLayoutEngine::new(Some(Box::new(CjkFontRoleClassifier::new())), Some(Box::new(ParagraphLayoutFallbackResolver::new(Some("cjk-primary".to_string()), Some("latin-primary".to_string()), Some("symbol-fallback".to_string()))?)),
-Some(Box::new(BuiltInClreqProfileResolver::new())), Some(Box::new(StubFontMetricsResolver::new())), Some(Box::new(ScriptAwareFontMetricsNormalizer::new())), Some((PunctuationAtomBuilder::new(None, None)?).clone()), Some((PunctuationSpacingCompressor::new()?).clone()),
-Some(QuotePairAnalyzer::new()), Some(Box::new(GreedyLineBreaker::new(None, None, None, None))), Some(Justifier::new(Some(0.5), Some(0.25))), Some(Box::new(ExplainableStubTextShaper::new())), Some((DefaultHyphenator::default_hyphenator_default_hyphenator()?).clone()),
-Some(Box::new(LruWidthIndependentAnnotationCache::new(512))))?.layout(LayoutInput::new(TiqianTextContent::new(text, Some((spans).clone()), Some(vec![]), Some(vec![]), Some(vec![])), Some(TextStyle::new(Some(vec![]), Some(16.0), Some("zh-Hans".to_string()), Some(400), Some(false),
-Some(0.0), Some(InlineAttachment::None))), Some(ParagraphStyle::new(Some(LastLineAlignment::Start), Some(WritingMode::HorizontalTb), None, Some((Ic::zero()).clone()), Some(Ic::zero()), Some(MeasureAdaptiveFirstLineIndent::new(Some(14.0), Some(1.0), Some(2.0))),
-Some(LineLengthGrid::new(Some(true), None)), Some(RubyLineHeightMode::PerLine), Some(ParagraphStyle::PARAGRAPH_STYLE_DEFAULT_INLINE_OBJECT_MINIMUM_CLEARANCE_EM), Some(ParagraphStyle::PARAGRAPH_STYLE_DEFAULT_EMPHASIS_DOT_GAP_EM))), LayoutConstraints::new(320.0f64,
-Some(f64::INFINITY), Some(2147483647)).map_err(|e| ParagraphLayoutEngineNewFault::TextRangeErrorFault(e))?, Some((*crate::org::tiqian::core::built_in_layout_profiles::BUILT_IN_LAYOUT_PROFILES_CLREQ_HORIZONTAL).clone()), Some(vec![]), Some(vec![]), Some(vec![]),
-Some(vec![]))).map_err(|e| ParagraphLayoutEngineNewFault::LayoutWithRejectedTechnicalTiersFault(e))?);
+    pub fn auto_space_single_gap_test_support_layout(text: &UStr, spans: &Vec<TextSpan>) -> Result<LayoutResult, ParagraphLayoutEngineNewFault> {
+        return Ok(ExplainableStubParagraphLayoutEngine::new(Some(Box::new(CjkFontRoleClassifier::new())), Some(Box::new(ParagraphLayoutFallbackResolver::new(Some(UString::from("cjk-primary")), Some(UString::from("latin-primary")), Some(UString::from("symbol-fallback")))?)), Some(Box::new(BuiltInClreqProfileResolver::new())), Some(Box::new(StubFontMetricsResolver::new())), Some(Box::new(ScriptAwareFontMetricsNormalizer::new())), Some((PunctuationAtomBuilder::new(None, None)?).clone()), Some((PunctuationSpacingCompressor::new()?).clone()), Some(QuotePairAnalyzer::new()), Some(Box::new(GreedyLineBreaker::new(None, None, None, None))), Some(Justifier::new(Some(0.5), Some(0.25))), Some(Arc::new(Mutex::new(ExplainableStubTextShaper::new()))), Some((DefaultHyphenator::default_hyphenator_default_hyphenator()?).clone()), Some(Arc::new(Mutex::new(LruWidthIndependentAnnotationCache::new(512)))))?.layout(LayoutInput::new(TiqianTextContent::new(text, Some((spans).clone()), Some(vec![]), Some(vec![]), Some(vec![])), Some(TextStyle::new(Some(vec![]), Some(16.0), Some(UString::from("zh-Hans")), Some(400), Some(false), Some(0.0), Some(InlineAttachment::None))), Some(ParagraphStyle::new(Some(LastLineAlignment::Start), Some(WritingMode::HorizontalTb), None, Some((Ic::zero()).clone()), Some(Ic::zero()), Some(MeasureAdaptiveFirstLineIndent::new(Some(14.0), Some(1.0), Some(2.0))), Some(LineLengthGrid::new(Some(true), None)), Some(RubyLineHeightMode::PerLine), Some(ParagraphStyle::PARAGRAPH_STYLE_DEFAULT_INLINE_OBJECT_MINIMUM_CLEARANCE_EM), Some(ParagraphStyle::PARAGRAPH_STYLE_DEFAULT_EMPHASIS_DOT_GAP_EM))), LayoutConstraints::new(320.0f64, Some(f64::INFINITY), Some(2147483647)).map_err(|e| ParagraphLayoutEngineNewFault::TextRangeErrorFault(e))?, Some((*crate::org::tiqian::core::built_in_layout_profiles::BUILT_IN_LAYOUT_PROFILES_CLREQ_HORIZONTAL).clone()), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]))).map_err(|e| ParagraphLayoutEngineNewFault::LayoutWithRejectedTechnicalTiersFault(e))?);
     }
 
     pub fn auto_space_single_gap_test_support_letter_digit() -> Result<LayoutResult, ParagraphLayoutEngineNewFault> {
-        let mut engine = ExplainableStubParagraphLayoutEngine::new(Some(Box::new(CjkFontRoleClassifier::new())), Some(Box::new(ParagraphLayoutFallbackResolver::new(Some("cjk-primary".to_string()), Some("latin-primary".to_string()), Some("symbol-fallback".to_string()))?)),
-Some(Box::new(AutoSpaceLetterDigitResolver::new())), Some(Box::new(StubFontMetricsResolver::new())), Some(Box::new(ScriptAwareFontMetricsNormalizer::new())), Some((PunctuationAtomBuilder::new(None, None)?).clone()), Some((PunctuationSpacingCompressor::new()?).clone()),
-Some(QuotePairAnalyzer::new()), Some(Box::new(GreedyLineBreaker::new(None, None, None, None))), Some(Justifier::new(Some(0.5), Some(0.25))), Some(Box::new(ExplainableStubTextShaper::new())), Some((DefaultHyphenator::default_hyphenator_default_hyphenator()?).clone()),
-Some(Box::new(LruWidthIndependentAnnotationCache::new(512))))?;
-        return Ok(engine.layout(LayoutInput::new(TiqianTextContent::new("甲A乙9丙", Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![])), Some(TextStyle::new(Some(vec![]), Some(16.0), Some("zh-Hans".to_string()), Some(400), Some(false), Some(0.0), Some(InlineAttachment::None))),
-Some(ParagraphStyle::new(Some(LastLineAlignment::Start), Some(WritingMode::HorizontalTb), None, Some((Ic::zero()).clone()), Some(Ic::zero()), Some(MeasureAdaptiveFirstLineIndent::new(Some(14.0), Some(1.0), Some(2.0))), Some(LineLengthGrid::new(Some(true), None)),
-Some(RubyLineHeightMode::PerLine), Some(ParagraphStyle::PARAGRAPH_STYLE_DEFAULT_INLINE_OBJECT_MINIMUM_CLEARANCE_EM), Some(ParagraphStyle::PARAGRAPH_STYLE_DEFAULT_EMPHASIS_DOT_GAP_EM))), LayoutConstraints::new(320.0f64, Some(f64::INFINITY), Some(2147483647)).map_err(|e|
-ParagraphLayoutEngineNewFault::TextRangeErrorFault(e))?, Some((*crate::org::tiqian::core::built_in_layout_profiles::BUILT_IN_LAYOUT_PROFILES_CLREQ_HORIZONTAL).clone()), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]))).map_err(|e|
-ParagraphLayoutEngineNewFault::LayoutWithRejectedTechnicalTiersFault(e))?);
+        let mut engine = ExplainableStubParagraphLayoutEngine::new(Some(Box::new(CjkFontRoleClassifier::new())), Some(Box::new(ParagraphLayoutFallbackResolver::new(Some(UString::from("cjk-primary")), Some(UString::from("latin-primary")), Some(UString::from("symbol-fallback")))?)), Some(Box::new(AutoSpaceLetterDigitResolver::new())), Some(Box::new(StubFontMetricsResolver::new())), Some(Box::new(ScriptAwareFontMetricsNormalizer::new())), Some((PunctuationAtomBuilder::new(None, None)?).clone()), Some((PunctuationSpacingCompressor::new()?).clone()), Some(QuotePairAnalyzer::new()), Some(Box::new(GreedyLineBreaker::new(None, None, None, None))), Some(Justifier::new(Some(0.5), Some(0.25))), Some(Arc::new(Mutex::new(ExplainableStubTextShaper::new()))), Some((DefaultHyphenator::default_hyphenator_default_hyphenator()?).clone()), Some(Arc::new(Mutex::new(LruWidthIndependentAnnotationCache::new(512)))))?;
+        return Ok(engine.layout(LayoutInput::new(TiqianTextContent::new(&(UStr::new(&[30002,65,20057,57,19993])), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![])), Some(TextStyle::new(Some(vec![]), Some(16.0), Some(UString::from("zh-Hans")), Some(400), Some(false), Some(0.0), Some(InlineAttachment::None))), Some(ParagraphStyle::new(Some(LastLineAlignment::Start), Some(WritingMode::HorizontalTb), None, Some((Ic::zero()).clone()), Some(Ic::zero()), Some(MeasureAdaptiveFirstLineIndent::new(Some(14.0), Some(1.0), Some(2.0))), Some(LineLengthGrid::new(Some(true), None)), Some(RubyLineHeightMode::PerLine), Some(ParagraphStyle::PARAGRAPH_STYLE_DEFAULT_INLINE_OBJECT_MINIMUM_CLEARANCE_EM), Some(ParagraphStyle::PARAGRAPH_STYLE_DEFAULT_EMPHASIS_DOT_GAP_EM))), LayoutConstraints::new(320.0f64, Some(f64::INFINITY), Some(2147483647)).map_err(|e| ParagraphLayoutEngineNewFault::TextRangeErrorFault(e))?, Some((*crate::org::tiqian::core::built_in_layout_profiles::BUILT_IN_LAYOUT_PROFILES_CLREQ_HORIZONTAL).clone()), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]))).map_err(|e| ParagraphLayoutEngineNewFault::LayoutWithRejectedTechnicalTiersFault(e))?);
     }
 
     pub fn auto_space_single_gap_test_support_same_range(first: TextRange, second: TextRange) -> bool {
         return first.start == second.start && first.end == second.end;
     }
 
-    pub fn auto_space_single_gap_test_support_clusters_with_text(result: LayoutResult, text: &str) -> Vec<Cluster> {
+    pub fn auto_space_single_gap_test_support_clusters_with_text(result: LayoutResult, text: &UStr) -> Vec<Cluster> {
         let mut matches: Vec<Cluster> = vec![];
         for i in 0..match u32::try_from(result.clusters.len()) { Ok(value) => value, Err(_) => u32::MAX } {
-            if result.clusters[usize::try_from(i).unwrap_or(0)].clone().text.to_string() == text {
+            if result.clusters[usize::try_from(i).unwrap_or(0)].clone().text.to_ustring() == text {
                 matches.push((result.clusters[usize::try_from(i).unwrap_or(0)]).clone());
             }
         }
@@ -196,8 +178,7 @@ impl AutoSpaceLetterDigitResolver {
 
     pub fn resolve(&self, _profile_id: LayoutProfileId) -> ClreqProfile {
         let base = (*crate::org::tiqian::clreq::clreq_profile::CLREQ_PROFILE_MAINLAND_HORIZONTAL).clone();
-        return ClreqProfile::new((base.id).to_string().as_str(), base.strictness, base.region, Some(base.punctuation_glyph_policy), Some(crate::org::tiqian::clreq::clreq_profile::CLREQ_PROFILE_DEFAULT_COALESCE_REPEATABLE_PUNCTUATION.to_vec()),
-Some(AutoSpacePolicy::new(Some(AutoSpaceMode::Insert), Some(AutoSpaceMode::Disabled), Some(0.125), Some(1.0 / 3.0))), Some(base.glue_placement), (base.adjustment).clone(), (base.kinsoku_mode).clone(), (base.punctuation_width).clone());
+        return ClreqProfile::new((base.id).to_ustring().as_ustr(), base.strictness, base.region, Some(base.punctuation_glyph_policy), Some(crate::org::tiqian::clreq::clreq_profile::CLREQ_PROFILE_DEFAULT_COALESCE_REPEATABLE_PUNCTUATION.to_vec()), Some(AutoSpacePolicy::new(Some(AutoSpaceMode::Insert), Some(AutoSpaceMode::Disabled), Some(0.125), Some(1.0 / 3.0))), Some(base.glue_placement), (base.adjustment).clone(), (base.kinsoku_mode).clone(), (base.punctuation_width).clone());
     }
 }
 
@@ -214,7 +195,6 @@ impl ClreqProfileResolver for AutoSpaceLetterDigitResolver {
 
     fn resolve(&self, _profile_id: LayoutProfileId) -> ClreqProfile {
         let base = (*crate::org::tiqian::clreq::clreq_profile::CLREQ_PROFILE_MAINLAND_HORIZONTAL).clone();
-        return ClreqProfile::new((base.id).to_string().as_str(), base.strictness, base.region, Some(base.punctuation_glyph_policy), Some(crate::org::tiqian::clreq::clreq_profile::CLREQ_PROFILE_DEFAULT_COALESCE_REPEATABLE_PUNCTUATION.to_vec()),
-Some(AutoSpacePolicy::new(Some(AutoSpaceMode::Insert), Some(AutoSpaceMode::Disabled), Some(0.125), Some(1.0 / 3.0))), Some(base.glue_placement), (base.adjustment).clone(), (base.kinsoku_mode).clone(), (base.punctuation_width).clone());
+        return ClreqProfile::new((base.id).to_ustring().as_ustr(), base.strictness, base.region, Some(base.punctuation_glyph_policy), Some(crate::org::tiqian::clreq::clreq_profile::CLREQ_PROFILE_DEFAULT_COALESCE_REPEATABLE_PUNCTUATION.to_vec()), Some(AutoSpacePolicy::new(Some(AutoSpaceMode::Insert), Some(AutoSpaceMode::Disabled), Some(0.125), Some(1.0 / 3.0))), Some(base.glue_placement), (base.adjustment).clone(), (base.kinsoku_mode).clone(), (base.punctuation_width).clone());
     }
 }

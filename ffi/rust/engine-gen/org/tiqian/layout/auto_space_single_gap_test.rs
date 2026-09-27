@@ -9,6 +9,8 @@ use crate::org::tiqian::test::trace::test_trace_recorder::TestTraceRecorder;
 use crate::org::tiqian::test::trace::traced_assertions::TracedAssertions;
 use crate::runtime::test as testlib;
 use crate::runtime::u_string;
+use crate::runtime::u_string::UStr;
+use crate::runtime::u_string::UString;
 
 
 #[derive(Debug, Clone, PartialEq)]
@@ -17,6 +19,16 @@ pub enum AutoSpaceSingleGapTestZeroSpacesGetInsertedGapsFault {
     UStringFaultFault(crate::std::u_string_exception::UStringFault),
     ParagraphLayoutEngineNewFaultFault(crate::org::tiqian::layout::paragraph_layout_engine::ParagraphLayoutEngineNewFault),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
+}
+impl std::fmt::Display for AutoSpaceSingleGapTestZeroSpacesGetInsertedGapsFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            AutoSpaceSingleGapTestZeroSpacesGetInsertedGapsFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            AutoSpaceSingleGapTestZeroSpacesGetInsertedGapsFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            AutoSpaceSingleGapTestZeroSpacesGetInsertedGapsFault::ParagraphLayoutEngineNewFaultFault(value) => write!(formatter, "{}", value),
+            AutoSpaceSingleGapTestZeroSpacesGetInsertedGapsFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
 }
 
 impl From<AutoSpaceSingleGapTestZeroSpacesGetInsertedGapsFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
@@ -86,6 +98,16 @@ pub enum AutoSpaceSingleGapTestUnicodeEastAsianSpacingCoversNarrowScriptsWithout
     ParagraphLayoutEngineNewFaultFault(crate::org::tiqian::layout::paragraph_layout_engine::ParagraphLayoutEngineNewFault),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
 }
+impl std::fmt::Display for AutoSpaceSingleGapTestUnicodeEastAsianSpacingCoversNarrowScriptsWithoutScriptWhitelistsFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            AutoSpaceSingleGapTestUnicodeEastAsianSpacingCoversNarrowScriptsWithoutScriptWhitelistsFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            AutoSpaceSingleGapTestUnicodeEastAsianSpacingCoversNarrowScriptsWithoutScriptWhitelistsFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            AutoSpaceSingleGapTestUnicodeEastAsianSpacingCoversNarrowScriptsWithoutScriptWhitelistsFault::ParagraphLayoutEngineNewFaultFault(value) => write!(formatter, "{}", value),
+            AutoSpaceSingleGapTestUnicodeEastAsianSpacingCoversNarrowScriptsWithoutScriptWhitelistsFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
+}
 
 impl From<AutoSpaceSingleGapTestUnicodeEastAsianSpacingCoversNarrowScriptsWithoutScriptWhitelistsFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
     fn from(value: AutoSpaceSingleGapTestUnicodeEastAsianSpacingCoversNarrowScriptsWithoutScriptWhitelistsFault) -> Self {
@@ -153,6 +175,16 @@ pub enum AutoSpaceSingleGapTestTwoTypedSpacesAtBoundaryStillCollapseToOneGapFaul
     UStringFaultFault(crate::std::u_string_exception::UStringFault),
     ParagraphLayoutEngineNewFaultFault(crate::org::tiqian::layout::paragraph_layout_engine::ParagraphLayoutEngineNewFault),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
+}
+impl std::fmt::Display for AutoSpaceSingleGapTestTwoTypedSpacesAtBoundaryStillCollapseToOneGapFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            AutoSpaceSingleGapTestTwoTypedSpacesAtBoundaryStillCollapseToOneGapFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            AutoSpaceSingleGapTestTwoTypedSpacesAtBoundaryStillCollapseToOneGapFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            AutoSpaceSingleGapTestTwoTypedSpacesAtBoundaryStillCollapseToOneGapFault::ParagraphLayoutEngineNewFaultFault(value) => write!(formatter, "{}", value),
+            AutoSpaceSingleGapTestTwoTypedSpacesAtBoundaryStillCollapseToOneGapFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
 }
 
 impl From<AutoSpaceSingleGapTestTwoTypedSpacesAtBoundaryStillCollapseToOneGapFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
@@ -222,6 +254,16 @@ pub enum AutoSpaceSingleGapTestThreeTypedSpacesStillOneGapFault {
     ParagraphLayoutEngineNewFaultFault(crate::org::tiqian::layout::paragraph_layout_engine::ParagraphLayoutEngineNewFault),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
 }
+impl std::fmt::Display for AutoSpaceSingleGapTestThreeTypedSpacesStillOneGapFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            AutoSpaceSingleGapTestThreeTypedSpacesStillOneGapFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            AutoSpaceSingleGapTestThreeTypedSpacesStillOneGapFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            AutoSpaceSingleGapTestThreeTypedSpacesStillOneGapFault::ParagraphLayoutEngineNewFaultFault(value) => write!(formatter, "{}", value),
+            AutoSpaceSingleGapTestThreeTypedSpacesStillOneGapFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
+}
 
 impl From<AutoSpaceSingleGapTestThreeTypedSpacesStillOneGapFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
     fn from(value: AutoSpaceSingleGapTestThreeTypedSpacesStillOneGapFault) -> Self {
@@ -289,6 +331,16 @@ pub enum AutoSpaceSingleGapTestOneTypedSpaceBecomesOneAutospaceGapFault {
     UStringFaultFault(crate::std::u_string_exception::UStringFault),
     ParagraphLayoutEngineNewFaultFault(crate::org::tiqian::layout::paragraph_layout_engine::ParagraphLayoutEngineNewFault),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
+}
+impl std::fmt::Display for AutoSpaceSingleGapTestOneTypedSpaceBecomesOneAutospaceGapFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            AutoSpaceSingleGapTestOneTypedSpaceBecomesOneAutospaceGapFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            AutoSpaceSingleGapTestOneTypedSpaceBecomesOneAutospaceGapFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            AutoSpaceSingleGapTestOneTypedSpaceBecomesOneAutospaceGapFault::ParagraphLayoutEngineNewFaultFault(value) => write!(formatter, "{}", value),
+            AutoSpaceSingleGapTestOneTypedSpaceBecomesOneAutospaceGapFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
 }
 
 impl From<AutoSpaceSingleGapTestOneTypedSpaceBecomesOneAutospaceGapFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
@@ -358,6 +410,16 @@ pub enum AutoSpaceSingleGapTestConditionalPunctuationFollowsChineseLanguageResol
     ParagraphLayoutEngineNewFaultFault(crate::org::tiqian::layout::paragraph_layout_engine::ParagraphLayoutEngineNewFault),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
 }
+impl std::fmt::Display for AutoSpaceSingleGapTestConditionalPunctuationFollowsChineseLanguageResolutionFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            AutoSpaceSingleGapTestConditionalPunctuationFollowsChineseLanguageResolutionFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            AutoSpaceSingleGapTestConditionalPunctuationFollowsChineseLanguageResolutionFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            AutoSpaceSingleGapTestConditionalPunctuationFollowsChineseLanguageResolutionFault::ParagraphLayoutEngineNewFaultFault(value) => write!(formatter, "{}", value),
+            AutoSpaceSingleGapTestConditionalPunctuationFollowsChineseLanguageResolutionFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
+}
 
 impl From<AutoSpaceSingleGapTestConditionalPunctuationFollowsChineseLanguageResolutionFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
     fn from(value: AutoSpaceSingleGapTestConditionalPunctuationFollowsChineseLanguageResolutionFault) -> Self {
@@ -425,6 +487,16 @@ pub enum AutoSpaceSingleGapTestAutospaceStillFiresBetweenLatinAndCjkTextEvenWith
     UStringFaultFault(crate::std::u_string_exception::UStringFault),
     ParagraphLayoutEngineNewFaultFault(crate::org::tiqian::layout::paragraph_layout_engine::ParagraphLayoutEngineNewFault),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
+}
+impl std::fmt::Display for AutoSpaceSingleGapTestAutospaceStillFiresBetweenLatinAndCjkTextEvenWithPunctuationNearbyFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            AutoSpaceSingleGapTestAutospaceStillFiresBetweenLatinAndCjkTextEvenWithPunctuationNearbyFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            AutoSpaceSingleGapTestAutospaceStillFiresBetweenLatinAndCjkTextEvenWithPunctuationNearbyFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            AutoSpaceSingleGapTestAutospaceStillFiresBetweenLatinAndCjkTextEvenWithPunctuationNearbyFault::ParagraphLayoutEngineNewFaultFault(value) => write!(formatter, "{}", value),
+            AutoSpaceSingleGapTestAutospaceStillFiresBetweenLatinAndCjkTextEvenWithPunctuationNearbyFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
 }
 
 impl From<AutoSpaceSingleGapTestAutospaceStillFiresBetweenLatinAndCjkTextEvenWithPunctuationNearbyFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
@@ -494,6 +566,16 @@ pub enum AutoSpaceSingleGapTestAutospaceDoesNotFireBetweenLatinAndCjkPunctuation
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
     ParagraphLayoutEngineNewFaultFault(crate::org::tiqian::layout::paragraph_layout_engine::ParagraphLayoutEngineNewFault),
 }
+impl std::fmt::Display for AutoSpaceSingleGapTestAutospaceDoesNotFireBetweenLatinAndCjkPunctuationFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            AutoSpaceSingleGapTestAutospaceDoesNotFireBetweenLatinAndCjkPunctuationFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            AutoSpaceSingleGapTestAutospaceDoesNotFireBetweenLatinAndCjkPunctuationFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            AutoSpaceSingleGapTestAutospaceDoesNotFireBetweenLatinAndCjkPunctuationFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+            AutoSpaceSingleGapTestAutospaceDoesNotFireBetweenLatinAndCjkPunctuationFault::ParagraphLayoutEngineNewFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
+}
 
 impl From<AutoSpaceSingleGapTestAutospaceDoesNotFireBetweenLatinAndCjkPunctuationFault> for crate::std::u_string_exception::UStringFault {
     fn from(value: AutoSpaceSingleGapTestAutospaceDoesNotFireBetweenLatinAndCjkPunctuationFault) -> Self {
@@ -561,6 +643,16 @@ pub enum AutoSpaceSingleGapTestAutospaceDoesNotFireBeforeSlashLedLatinTechnicalR
     UStringFaultFault(crate::std::u_string_exception::UStringFault),
     ParagraphLayoutEngineNewFaultFault(crate::org::tiqian::layout::paragraph_layout_engine::ParagraphLayoutEngineNewFault),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
+}
+impl std::fmt::Display for AutoSpaceSingleGapTestAutospaceDoesNotFireBeforeSlashLedLatinTechnicalRunFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            AutoSpaceSingleGapTestAutospaceDoesNotFireBeforeSlashLedLatinTechnicalRunFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            AutoSpaceSingleGapTestAutospaceDoesNotFireBeforeSlashLedLatinTechnicalRunFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            AutoSpaceSingleGapTestAutospaceDoesNotFireBeforeSlashLedLatinTechnicalRunFault::ParagraphLayoutEngineNewFaultFault(value) => write!(formatter, "{}", value),
+            AutoSpaceSingleGapTestAutospaceDoesNotFireBeforeSlashLedLatinTechnicalRunFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
 }
 
 impl From<AutoSpaceSingleGapTestAutospaceDoesNotFireBeforeSlashLedLatinTechnicalRunFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
@@ -630,6 +722,16 @@ pub enum AutoSpaceSingleGapTestAutospaceDistinguishesLetterFromDigitAtBoundaryFa
     ParagraphLayoutEngineNewFaultFault(crate::org::tiqian::layout::paragraph_layout_engine::ParagraphLayoutEngineNewFault),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
 }
+impl std::fmt::Display for AutoSpaceSingleGapTestAutospaceDistinguishesLetterFromDigitAtBoundaryFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            AutoSpaceSingleGapTestAutospaceDistinguishesLetterFromDigitAtBoundaryFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            AutoSpaceSingleGapTestAutospaceDistinguishesLetterFromDigitAtBoundaryFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            AutoSpaceSingleGapTestAutospaceDistinguishesLetterFromDigitAtBoundaryFault::ParagraphLayoutEngineNewFaultFault(value) => write!(formatter, "{}", value),
+            AutoSpaceSingleGapTestAutospaceDistinguishesLetterFromDigitAtBoundaryFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
+}
 
 impl From<AutoSpaceSingleGapTestAutospaceDistinguishesLetterFromDigitAtBoundaryFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
     fn from(value: AutoSpaceSingleGapTestAutospaceDistinguishesLetterFromDigitAtBoundaryFault) -> Self {
@@ -697,6 +799,16 @@ pub enum AutoSpaceSingleGapTestAttachedReferenceBetweenCjkTextDoesNotInventAnAut
     UStringFaultFault(crate::std::u_string_exception::UStringFault),
     ParagraphLayoutEngineNewFaultFault(crate::org::tiqian::layout::paragraph_layout_engine::ParagraphLayoutEngineNewFault),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
+}
+impl std::fmt::Display for AutoSpaceSingleGapTestAttachedReferenceBetweenCjkTextDoesNotInventAnAutospaceGapFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            AutoSpaceSingleGapTestAttachedReferenceBetweenCjkTextDoesNotInventAnAutospaceGapFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            AutoSpaceSingleGapTestAttachedReferenceBetweenCjkTextDoesNotInventAnAutospaceGapFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            AutoSpaceSingleGapTestAttachedReferenceBetweenCjkTextDoesNotInventAnAutospaceGapFault::ParagraphLayoutEngineNewFaultFault(value) => write!(formatter, "{}", value),
+            AutoSpaceSingleGapTestAttachedReferenceBetweenCjkTextDoesNotInventAnAutospaceGapFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
 }
 
 impl From<AutoSpaceSingleGapTestAttachedReferenceBetweenCjkTextDoesNotInventAnAutospaceGapFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
@@ -766,6 +878,16 @@ pub enum AutoSpaceSingleGapTestAttachedReferenceBeforeLatinTextGetsTheVirtualCjk
     ParagraphLayoutEngineNewFaultFault(crate::org::tiqian::layout::paragraph_layout_engine::ParagraphLayoutEngineNewFault),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
 }
+impl std::fmt::Display for AutoSpaceSingleGapTestAttachedReferenceBeforeLatinTextGetsTheVirtualCjkLatinGapFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            AutoSpaceSingleGapTestAttachedReferenceBeforeLatinTextGetsTheVirtualCjkLatinGapFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            AutoSpaceSingleGapTestAttachedReferenceBeforeLatinTextGetsTheVirtualCjkLatinGapFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            AutoSpaceSingleGapTestAttachedReferenceBeforeLatinTextGetsTheVirtualCjkLatinGapFault::ParagraphLayoutEngineNewFaultFault(value) => write!(formatter, "{}", value),
+            AutoSpaceSingleGapTestAttachedReferenceBeforeLatinTextGetsTheVirtualCjkLatinGapFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
+}
 
 impl From<AutoSpaceSingleGapTestAttachedReferenceBeforeLatinTextGetsTheVirtualCjkLatinGapFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
     fn from(value: AutoSpaceSingleGapTestAttachedReferenceBeforeLatinTextGetsTheVirtualCjkLatinGapFault) -> Self {
@@ -834,6 +956,16 @@ pub enum AutoSpaceSingleGapTestAttachedReferenceAtParagraphEndHasNoAutospaceGapF
     ParagraphLayoutEngineNewFaultFault(crate::org::tiqian::layout::paragraph_layout_engine::ParagraphLayoutEngineNewFault),
     TracedAssertionsFailFaultFault(crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFailFault),
 }
+impl std::fmt::Display for AutoSpaceSingleGapTestAttachedReferenceAtParagraphEndHasNoAutospaceGapFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            AutoSpaceSingleGapTestAttachedReferenceAtParagraphEndHasNoAutospaceGapFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            AutoSpaceSingleGapTestAttachedReferenceAtParagraphEndHasNoAutospaceGapFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            AutoSpaceSingleGapTestAttachedReferenceAtParagraphEndHasNoAutospaceGapFault::ParagraphLayoutEngineNewFaultFault(value) => write!(formatter, "{}", value),
+            AutoSpaceSingleGapTestAttachedReferenceAtParagraphEndHasNoAutospaceGapFault::TracedAssertionsFailFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
+}
 
 impl From<AutoSpaceSingleGapTestAttachedReferenceAtParagraphEndHasNoAutospaceGapFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
     fn from(value: AutoSpaceSingleGapTestAttachedReferenceAtParagraphEndHasNoAutospaceGapFault) -> Self {
@@ -898,51 +1030,49 @@ impl From<crate::org::tiqian::test::trace::traced_assertions::TracedAssertionsFa
 #[test]
 fn attached_reference_between_cjk_text_does_not_invent_an_autospace_gap() {
     testlib::run("org.tiqian.layout.AutoSpaceSingleGapTest.attachedReferenceBetweenCjkTextDoesNotInventAnAutospaceGap", "org.tiqian.layout.AutoSpaceSingleGapTest.attachedReferenceBetweenCjkTextDoesNotInventAnAutospaceGap", || {
-        let mut t = TestTraceRecorder::new("AutoSpaceSingleGapTest");
-        t.section(&"attachedReferenceBetweenCjkTextDoesNotInventAnAutospaceGap");
-        let r = AutoSpaceSingleGapTestSupport::auto_space_single_gap_test_support_layout(&"正文1后文", &vec![
-    (TextSpan::new(TextRange::new(2u32, 3u32).unwrap(), TextStyle::new(Some(vec![]), Some(16.0), Some("zh-Hans".to_string()), Some(400), Some(false), Some(0.0), Some(InlineAttachment::Previous)))).clone(),
+        let mut t = TestTraceRecorder::new(&(UStr::new(&[65,117,116,111,83,112,97,99,101,83,105,110,103,108,101,71,97,112,84,101,115,116])));
+        t.section(UStr::new(&[97,116,116,97,99,104,101,100,82,101,102,101,114,101,110,99,101,66,101,116,119,101,101,110,67,106,107,84,101,120,116,68,111,101,115,78,111,116,73,110,118,101,110,116,65,110,65,117,116,111,115,112,97,99,101,71,97,112]));
+        let r = AutoSpaceSingleGapTestSupport::auto_space_single_gap_test_support_layout(UStr::new(&[27491,25991,49,21518,25991]), &vec![
+    (TextSpan::new(TextRange::new(2u32, 3u32).unwrap(), TextStyle::new(Some(vec![]), Some(16.0), Some(UString::from("zh-Hans")), Some(400), Some(false), Some(0.0), Some(InlineAttachment::Previous)))).clone(),
 ]).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_true(u32::try_from(((r.debug).clone().auto_space_decisions.len()) & 0xFFFF_FFFF).unwrap_or(0) == 0,
-Some((AutoSpaceSingleGapTestSupport::auto_space_single_gap_test_support_render_auto_space_decisions(&(r.debug).clone().auto_space_decisions)).to_string())).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_true(u32::try_from(((r.debug).clone().auto_space_decisions.len()) & 0xFFFF_FFFF).unwrap_or(0) == 0, Some((AutoSpaceSingleGapTestSupport::auto_space_single_gap_test_support_render_auto_space_decisions(&(r.debug).clone().auto_space_decisions)).to_ustring())).unwrap();
     });
 }
 
 #[test]
 fn attached_reference_before_latin_text_gets_the_virtual_cjk_latin_gap() {
     testlib::run("org.tiqian.layout.AutoSpaceSingleGapTest.attachedReferenceBeforeLatinTextGetsTheVirtualCjkLatinGap", "org.tiqian.layout.AutoSpaceSingleGapTest.attachedReferenceBeforeLatinTextGetsTheVirtualCjkLatinGap", || {
-        let mut t = TestTraceRecorder::new("AutoSpaceSingleGapTest");
-        t.section(&"attachedReferenceBeforeLatinTextGetsTheVirtualCjkLatinGap");
-        let r = AutoSpaceSingleGapTestSupport::auto_space_single_gap_test_support_layout(&"正文1ABC", &vec![
-    (TextSpan::new(TextRange::new(2u32, 3u32).unwrap(), TextStyle::new(Some(vec![]), Some(16.0), Some("zh-Hans".to_string()), Some(400), Some(false), Some(0.0), Some(InlineAttachment::Previous)))).clone(),
+        let mut t = TestTraceRecorder::new(&(UStr::new(&[65,117,116,111,83,112,97,99,101,83,105,110,103,108,101,71,97,112,84,101,115,116])));
+        t.section(UStr::new(&[97,116,116,97,99,104,101,100,82,101,102,101,114,101,110,99,101,66,101,102,111,114,101,76,97,116,105,110,84,101,120,116,71,101,116,115,84,104,101,86,105,114,116,117,97,108,67,106,107,76,97,116,105,110,71,97,112]));
+        let r = AutoSpaceSingleGapTestSupport::auto_space_single_gap_test_support_layout(UStr::new(&[27491,25991,49,65,66,67]), &vec![
+    (TextSpan::new(TextRange::new(2u32, 3u32).unwrap(), TextStyle::new(Some(vec![]), Some(16.0), Some(UString::from("zh-Hans")), Some(400), Some(false), Some(0.0), Some(InlineAttachment::Previous)))).clone(),
 ]).unwrap();
         let d = ((r.debug).clone().auto_space_decisions[0usize]).clone();
-        let _ = TracedAssertions::traced_assertions_assert_equals_string(&"trailing", (d.side).to_string().as_str(), None).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_equals_string(&"InlineAttachment.Previous", (d.boundary_role).to_string().as_str(), None).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_equals_string(&"AttachedInlineVirtualAutoSpace:east-asian-spacing-W-N", (d.reason).to_string().as_str(), None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_equals_string(UStr::new(&[116,114,97,105,108,105,110,103]), (d.side).to_ustring().as_ustr(), None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_equals_string(UStr::new(&[73,110,108,105,110,101,65,116,116,97,99,104,109,101,110,116,46,80,114,101,118,105,111,117,115]), (d.boundary_role).to_ustring().as_ustr(), None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_equals_string(UStr::new(&[65,116,116,97,99,104,101,100,73,110,108,105,110,101,86,105,114,116,117,97,108,65,117,116,111,83,112,97,99,101,58,101,97,115,116,45,97,115,105,97,110,45,115,112,97,99,105,110,103,45,87,45,78]), (d.reason).to_ustring().as_ustr(), None).unwrap();
     });
 }
 
 #[test]
 fn attached_reference_at_paragraph_end_has_no_autospace_gap() {
     testlib::run("org.tiqian.layout.AutoSpaceSingleGapTest.attachedReferenceAtParagraphEndHasNoAutospaceGap", "org.tiqian.layout.AutoSpaceSingleGapTest.attachedReferenceAtParagraphEndHasNoAutospaceGap", || {
-        let mut t = TestTraceRecorder::new("AutoSpaceSingleGapTest");
-        t.section(&"attachedReferenceAtParagraphEndHasNoAutospaceGap");
-        let r = AutoSpaceSingleGapTestSupport::auto_space_single_gap_test_support_layout(&"正文1", &vec![
-    (TextSpan::new(TextRange::new(2u32, 3u32).unwrap(), TextStyle::new(Some(vec![]), Some(16.0), Some("zh-Hans".to_string()), Some(400), Some(false), Some(0.0), Some(InlineAttachment::Previous)))).clone(),
+        let mut t = TestTraceRecorder::new(&(UStr::new(&[65,117,116,111,83,112,97,99,101,83,105,110,103,108,101,71,97,112,84,101,115,116])));
+        t.section(UStr::new(&[97,116,116,97,99,104,101,100,82,101,102,101,114,101,110,99,101,65,116,80,97,114,97,103,114,97,112,104,69,110,100,72,97,115,78,111,65,117,116,111,115,112,97,99,101,71,97,112]));
+        let r = AutoSpaceSingleGapTestSupport::auto_space_single_gap_test_support_layout(UStr::new(&[27491,25991,49]), &vec![
+    (TextSpan::new(TextRange::new(2u32, 3u32).unwrap(), TextStyle::new(Some(vec![]), Some(16.0), Some(UString::from("zh-Hans")), Some(400), Some(false), Some(0.0), Some(InlineAttachment::Previous)))).clone(),
 ]).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_true(u32::try_from(((r.debug).clone().auto_space_decisions.len()) & 0xFFFF_FFFF).unwrap_or(0) == 0,
-Some((AutoSpaceSingleGapTestSupport::auto_space_single_gap_test_support_render_auto_space_decisions(&(r.debug).clone().auto_space_decisions)).to_string())).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_true(u32::try_from(((r.debug).clone().auto_space_decisions.len()) & 0xFFFF_FFFF).unwrap_or(0) == 0, Some((AutoSpaceSingleGapTestSupport::auto_space_single_gap_test_support_render_auto_space_decisions(&(r.debug).clone().auto_space_decisions)).to_ustring())).unwrap();
     });
 }
 
 #[test]
 fn one_typed_space_becomes_one_autospace_gap() {
     testlib::run("org.tiqian.layout.AutoSpaceSingleGapTest.oneTypedSpaceBecomesOneAutospaceGap", "org.tiqian.layout.AutoSpaceSingleGapTest.oneTypedSpaceBecomesOneAutospaceGap", || {
-        let mut t = TestTraceRecorder::new("AutoSpaceSingleGapTest");
-        t.section(&"oneTypedSpaceBecomesOneAutospaceGap");
-        let r = AutoSpaceSingleGapTestSupport::auto_space_single_gap_test_support_layout(&"中文 CJK 段落", &vec![]).unwrap();
-        let s = AutoSpaceSingleGapTestSupport::auto_space_single_gap_test_support_clusters_with_text((r).clone(), &" ");
+        let mut t = TestTraceRecorder::new(&(UStr::new(&[65,117,116,111,83,112,97,99,101,83,105,110,103,108,101,71,97,112,84,101,115,116])));
+        t.section(UStr::new(&[111,110,101,84,121,112,101,100,83,112,97,99,101,66,101,99,111,109,101,115,79,110,101,65,117,116,111,115,112,97,99,101,71,97,112]));
+        let r = AutoSpaceSingleGapTestSupport::auto_space_single_gap_test_support_layout(UStr::new(&[20013,25991,32,67,74,75,32,27573,33853]), &vec![]).unwrap();
+        let s = AutoSpaceSingleGapTestSupport::auto_space_single_gap_test_support_clusters_with_text((r).clone(), UStr::new(&[32]));
         let _ = TracedAssertions::traced_assertions_assert_equals_int(2, u32::try_from((s.len()) & 0xFFFF_FFFF).unwrap_or(0), None).unwrap();
         let mut all = true;
         for i in 0..match u32::try_from(s.len()) { Ok(value) => value, Err(_) => u32::MAX } {
@@ -951,52 +1081,52 @@ fn one_typed_space_becomes_one_autospace_gap() {
             }
         }
         let _ = TracedAssertions::traced_assertions_assert_true(all, None).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_equals_float(48 as f64, AutoSpaceSingleGapTestSupport::auto_space_single_gap_test_support_clusters_with_text((r).clone(), &"CJK")[0usize].advance, None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_equals_float(48 as f64, AutoSpaceSingleGapTestSupport::auto_space_single_gap_test_support_clusters_with_text((r).clone(), UStr::new(&[67,74,75]))[0usize].advance, None).unwrap();
     });
 }
 
 #[test]
 fn two_typed_spaces_at_boundary_still_collapse_to_one_gap() {
     testlib::run("org.tiqian.layout.AutoSpaceSingleGapTest.twoTypedSpacesAtBoundaryStillCollapseToOneGap", "org.tiqian.layout.AutoSpaceSingleGapTest.twoTypedSpacesAtBoundaryStillCollapseToOneGap", || {
-        let mut t = TestTraceRecorder::new("AutoSpaceSingleGapTest");
-        t.section(&"twoTypedSpacesAtBoundaryStillCollapseToOneGap");
-        let r = AutoSpaceSingleGapTestSupport::auto_space_single_gap_test_support_layout(&"中文  CJK 段落", &vec![]).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_equals_float(2 as f64, AutoSpaceSingleGapTestSupport::auto_space_single_gap_test_support_clusters_with_text((r).clone(), &"  ")[0usize].advance, None).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_equals_float(2 as f64, AutoSpaceSingleGapTestSupport::auto_space_single_gap_test_support_clusters_with_text((r).clone(), &" ")[0usize].advance, None).unwrap();
+        let mut t = TestTraceRecorder::new(&(UStr::new(&[65,117,116,111,83,112,97,99,101,83,105,110,103,108,101,71,97,112,84,101,115,116])));
+        t.section(UStr::new(&[116,119,111,84,121,112,101,100,83,112,97,99,101,115,65,116,66,111,117,110,100,97,114,121,83,116,105,108,108,67,111,108,108,97,112,115,101,84,111,79,110,101,71,97,112]));
+        let r = AutoSpaceSingleGapTestSupport::auto_space_single_gap_test_support_layout(UStr::new(&[20013,25991,32,32,67,74,75,32,27573,33853]), &vec![]).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_equals_float(2 as f64, AutoSpaceSingleGapTestSupport::auto_space_single_gap_test_support_clusters_with_text((r).clone(), UStr::new(&[32,32]))[0usize].advance, None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_equals_float(2 as f64, AutoSpaceSingleGapTestSupport::auto_space_single_gap_test_support_clusters_with_text((r).clone(), UStr::new(&[32]))[0usize].advance, None).unwrap();
     });
 }
 
 #[test]
 fn three_typed_spaces_still_one_gap() {
     testlib::run("org.tiqian.layout.AutoSpaceSingleGapTest.threeTypedSpacesStillOneGap", "org.tiqian.layout.AutoSpaceSingleGapTest.threeTypedSpacesStillOneGap", || {
-        let mut t = TestTraceRecorder::new("AutoSpaceSingleGapTest");
-        t.section(&"threeTypedSpacesStillOneGap");
-        let r = AutoSpaceSingleGapTestSupport::auto_space_single_gap_test_support_layout(&"中文   CJK段落", &vec![]).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_equals_float(2 as f64, AutoSpaceSingleGapTestSupport::auto_space_single_gap_test_support_clusters_with_text((r).clone(), &"   ")[0usize].advance, None).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_equals_float(50 as f64, AutoSpaceSingleGapTestSupport::auto_space_single_gap_test_support_clusters_with_text((r).clone(), &"CJK")[0usize].advance, None).unwrap();
+        let mut t = TestTraceRecorder::new(&(UStr::new(&[65,117,116,111,83,112,97,99,101,83,105,110,103,108,101,71,97,112,84,101,115,116])));
+        t.section(UStr::new(&[116,104,114,101,101,84,121,112,101,100,83,112,97,99,101,115,83,116,105,108,108,79,110,101,71,97,112]));
+        let r = AutoSpaceSingleGapTestSupport::auto_space_single_gap_test_support_layout(UStr::new(&[20013,25991,32,32,32,67,74,75,27573,33853]), &vec![]).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_equals_float(2 as f64, AutoSpaceSingleGapTestSupport::auto_space_single_gap_test_support_clusters_with_text((r).clone(), UStr::new(&[32,32,32]))[0usize].advance, None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_equals_float(50 as f64, AutoSpaceSingleGapTestSupport::auto_space_single_gap_test_support_clusters_with_text((r).clone(), UStr::new(&[67,74,75]))[0usize].advance, None).unwrap();
     });
 }
 
 #[test]
 fn zero_spaces_get_inserted_gaps() {
     testlib::run("org.tiqian.layout.AutoSpaceSingleGapTest.zeroSpacesGetInsertedGaps", "org.tiqian.layout.AutoSpaceSingleGapTest.zeroSpacesGetInsertedGaps", || {
-        let mut t = TestTraceRecorder::new("AutoSpaceSingleGapTest");
-        t.section(&"zeroSpacesGetInsertedGaps");
-        let r = AutoSpaceSingleGapTestSupport::auto_space_single_gap_test_support_layout(&"中文CJK段落", &vec![]).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_equals_float(52 as f64, AutoSpaceSingleGapTestSupport::auto_space_single_gap_test_support_clusters_with_text((r).clone(), &"CJK")[0usize].advance, None).unwrap();
+        let mut t = TestTraceRecorder::new(&(UStr::new(&[65,117,116,111,83,112,97,99,101,83,105,110,103,108,101,71,97,112,84,101,115,116])));
+        t.section(UStr::new(&[122,101,114,111,83,112,97,99,101,115,71,101,116,73,110,115,101,114,116,101,100,71,97,112,115]));
+        let r = AutoSpaceSingleGapTestSupport::auto_space_single_gap_test_support_layout(UStr::new(&[20013,25991,67,74,75,27573,33853]), &vec![]).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_equals_float(52 as f64, AutoSpaceSingleGapTestSupport::auto_space_single_gap_test_support_clusters_with_text((r).clone(), UStr::new(&[67,74,75]))[0usize].advance, None).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_equals_int(2, u32::try_from(((r.debug).clone().auto_space_decisions.len()) & 0xFFFF_FFFF).unwrap_or(0), None).unwrap();
         let mut modes = true;
         let mut reductions = true;
         let mut reasons = true;
         for i in 0..match u32::try_from((r.debug).clone().auto_space_decisions.len()) { Ok(value) => value, Err(_) => u32::MAX } {
             let x = ((r.debug).clone().auto_space_decisions[usize::try_from(i).unwrap_or(0)]).clone();
-            if x.mode.to_string() != "Insert" || x.characters_affected != 0 {
+            if x.mode.to_ustring() != UString::from("Insert") || x.characters_affected != 0 {
                 modes = false;
             }
             if x.total_reduction != -2.0f64 {
                 reductions = false;
             }
-            if u32::from_ne_bytes((u_string::find_from(&(x.reason).to_string(), "TextAutoSpaceInsert", 0)).to_ne_bytes()) != 0 {
+            if u32::from_ne_bytes(((u_string::find_from(&((x.reason).to_ustring()), UString::from("TextAutoSpaceInsert").as_ustr(), 0)) as u32).to_ne_bytes()) != 0 {
                 reasons = false;
             }
         }
@@ -1009,26 +1139,20 @@ fn zero_spaces_get_inserted_gaps() {
 #[test]
 fn unicode_east_asian_spacing_covers_narrow_scripts_without_script_whitelists() {
     testlib::run("org.tiqian.layout.AutoSpaceSingleGapTest.unicodeEastAsianSpacingCoversNarrowScriptsWithoutScriptWhitelists", "org.tiqian.layout.AutoSpaceSingleGapTest.unicodeEastAsianSpacingCoversNarrowScriptsWithoutScriptWhitelists", || {
-        let mut t = TestTraceRecorder::new("AutoSpaceSingleGapTest");
-        t.section(&"unicodeEastAsianSpacingCoversNarrowScriptsWithoutScriptWhitelists");
+        let mut t = TestTraceRecorder::new(&(UStr::new(&[65,117,116,111,83,112,97,99,101,83,105,110,103,108,101,71,97,112,84,101,115,116])));
+        t.section(UStr::new(&[117,110,105,99,111,100,101,69,97,115,116,65,115,105,97,110,83,112,97,99,105,110,103,67,111,118,101,114,115,78,97,114,114,111,119,83,99,114,105,112,116,115,87,105,116,104,111,117,116,83,99,114,105,112,116,87,104,105,116,101,108,105,115,116,115]));
         for si in 0..3 {
-            let sample = (vec!["α".to_string(), "я".to_string(), "ա".to_string()][usize::try_from(si).unwrap_or(0)]).clone();
-            let r = AutoSpaceSingleGapTestSupport::auto_space_single_gap_test_support_layout(format!("{}{}{}",
-            "中",
-            sample,
-            "文"
-        ).as_str(), &vec![]).unwrap();
-            let n = (AutoSpaceSingleGapTestSupport::auto_space_single_gap_test_support_clusters_with_text((r).clone(), sample.as_str())[0usize]).clone();
-            let _ = TracedAssertions::traced_assertions_assert_equals_float(20 as f64, n.advance, Some((format!("{}{}",
-            "sample=",
-            sample
-        )).to_string())).unwrap();
-            let _ = TracedAssertions::traced_assertions_assert_equals_int(2, u32::try_from(((r.debug).clone().auto_space_decisions.len()) & 0xFFFF_FFFF).unwrap_or(0), Some((format!("{}{}",
-            "sample=",
-            sample
-        )).to_string())).unwrap();
+            let sample = (vec![
+    UString::from("α").to_ustring(),
+    UString::from("я").to_ustring(),
+    UString::from("ա").to_ustring(),
+][usize::try_from(si).unwrap_or(0)]).clone();
+            let r = AutoSpaceSingleGapTestSupport::auto_space_single_gap_test_support_layout(UString::from(format!("{}", { let mut __s = UString::new(); __s += &(UString::from("中")); __s += sample.as_ustr(); __s += &(UString::from("文")); __s }).as_str()).as_ustr(), &vec![]).unwrap();
+            let n = (AutoSpaceSingleGapTestSupport::auto_space_single_gap_test_support_clusters_with_text((r).clone(), sample.as_ustr())[0usize]).clone();
+            let _ = TracedAssertions::traced_assertions_assert_equals_float(20 as f64, n.advance, Some(UString::from(format!("{}", { let mut __s = UString::new(); __s += &(UString::from("sample=")); __s += sample.as_ustr(); __s }).as_str()))).unwrap();
+            let _ = TracedAssertions::traced_assertions_assert_equals_int(2, u32::try_from(((r.debug).clone().auto_space_decisions.len()) & 0xFFFF_FFFF).unwrap_or(0), Some(UString::from(format!("{}", { let mut __s = UString::new(); __s += &(UString::from("sample=")); __s += sample.as_ustr(); __s }).as_str()))).unwrap();
             let mut all = false;
-            if i32::from_ne_bytes((u32::try_from(((r.debug).clone().auto_space_decisions.len()) & 0xFFFF_FFFF).unwrap_or(0)).to_ne_bytes()) > (0) {
+            if i32::from_ne_bytes(((u32::try_from(((r.debug).clone().auto_space_decisions.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes()) > (0) {
                 all = true;
                 for i in 0..match u32::try_from((r.debug).clone().auto_space_decisions.len()) { Ok(value) => value, Err(_) => u32::MAX } {
                     if !AutoSpaceSingleGapTestSupport::auto_space_single_gap_test_support_same_range((((r.debug).clone().auto_space_decisions[usize::try_from(i).unwrap_or(0)]).clone().cluster_range).clone(), (n.range).clone()) {
@@ -1036,20 +1160,14 @@ fn unicode_east_asian_spacing_covers_narrow_scripts_without_script_whitelists() 
                     }
                 }
             }
-            let _ = TracedAssertions::traced_assertions_assert_true(all, Some((format!("{}{}",
-            "sample=",
-            sample
-        )).to_string())).unwrap();
+            let _ = TracedAssertions::traced_assertions_assert_true(all, Some(UString::from(format!("{}", { let mut __s = UString::new(); __s += &(UString::from("sample=")); __s += sample.as_ustr(); __s }).as_str()))).unwrap();
             let mut rr = true;
             for i in 0..match u32::try_from((r.debug).clone().auto_space_decisions.len()) { Ok(value) => value, Err(_) => u32::MAX } {
-                if r.debug.clone().auto_space_decisions[usize::try_from(i).unwrap_or(0)].clone().reason.to_string() != "TextAutoSpaceInsert:east-asian-spacing-W-N" {
+                if r.debug.clone().auto_space_decisions[usize::try_from(i).unwrap_or(0)].clone().reason.to_ustring() != UString::from("TextAutoSpaceInsert:east-asian-spacing-W-N") {
                     rr = false;
                 }
             }
-            let _ = TracedAssertions::traced_assertions_assert_true(rr, Some((format!("{}{}",
-            "sample=",
-            sample
-        )).to_string())).unwrap();
+            let _ = TracedAssertions::traced_assertions_assert_true(rr, Some(UString::from(format!("{}", { let mut __s = UString::new(); __s += &(UString::from("sample=")); __s += sample.as_ustr(); __s }).as_str()))).unwrap();
         }
     });
 }
@@ -1057,13 +1175,13 @@ fn unicode_east_asian_spacing_covers_narrow_scripts_without_script_whitelists() 
 #[test]
 fn conditional_punctuation_follows_chinese_language_resolution() {
     testlib::run("org.tiqian.layout.AutoSpaceSingleGapTest.conditionalPunctuationFollowsChineseLanguageResolution", "org.tiqian.layout.AutoSpaceSingleGapTest.conditionalPunctuationFollowsChineseLanguageResolution", || {
-        let mut t = TestTraceRecorder::new("AutoSpaceSingleGapTest");
-        t.section(&"conditionalPunctuationFollowsChineseLanguageResolution");
-        let r = AutoSpaceSingleGapTestSupport::auto_space_single_gap_test_support_layout(&"中%文", &vec![]).unwrap();
+        let mut t = TestTraceRecorder::new(&(UStr::new(&[65,117,116,111,83,112,97,99,101,83,105,110,103,108,101,71,97,112,84,101,115,116])));
+        t.section(UStr::new(&[99,111,110,100,105,116,105,111,110,97,108,80,117,110,99,116,117,97,116,105,111,110,70,111,108,108,111,119,115,67,104,105,110,101,115,101,76,97,110,103,117,97,103,101,82,101,115,111,108,117,116,105,111,110]));
+        let r = AutoSpaceSingleGapTestSupport::auto_space_single_gap_test_support_layout(UStr::new(&[20013,37,25991]), &vec![]).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_equals_int(2, u32::try_from(((r.debug).clone().auto_space_decisions.len()) & 0xFFFF_FFFF).unwrap_or(0), None).unwrap();
         let mut ok = true;
         for i in 0..match u32::try_from((r.debug).clone().auto_space_decisions.len()) { Ok(value) => value, Err(_) => u32::MAX } {
-            if r.debug.clone().auto_space_decisions[usize::try_from(i).unwrap_or(0)].clone().boundary_role.to_string() != "EastAsianSpacing.Wide" {
+            if r.debug.clone().auto_space_decisions[usize::try_from(i).unwrap_or(0)].clone().boundary_role.to_ustring() != UString::from("EastAsianSpacing.Wide") {
                 ok = false;
             }
         }
@@ -1074,48 +1192,43 @@ fn conditional_punctuation_follows_chinese_language_resolution() {
 #[test]
 fn autospace_does_not_fire_between_latin_and_cjk_punctuation() {
     testlib::run("org.tiqian.layout.AutoSpaceSingleGapTest.autospaceDoesNotFireBetweenLatinAndCjkPunctuation", "org.tiqian.layout.AutoSpaceSingleGapTest.autospaceDoesNotFireBetweenLatinAndCjkPunctuation", || {
-        let mut t = TestTraceRecorder::new("AutoSpaceSingleGapTest");
-        t.section(&"autospaceDoesNotFireBetweenLatinAndCjkPunctuation");
-        let _ = TracedAssertions::traced_assertions_assert_equals_int(0, u32::try_from(((AutoSpaceSingleGapTestSupport::auto_space_single_gap_test_support_layout(&"Tiqian ）说明", &vec![]).unwrap().debug).clone().auto_space_decisions.len()) & 0xFFFF_FFFF).unwrap_or(0),
-None).unwrap();
+        let mut t = TestTraceRecorder::new(&(UStr::new(&[65,117,116,111,83,112,97,99,101,83,105,110,103,108,101,71,97,112,84,101,115,116])));
+        t.section(UStr::new(&[97,117,116,111,115,112,97,99,101,68,111,101,115,78,111,116,70,105,114,101,66,101,116,119,101,101,110,76,97,116,105,110,65,110,100,67,106,107,80,117,110,99,116,117,97,116,105,111,110]));
+        let _ = TracedAssertions::traced_assertions_assert_equals_int(0, u32::try_from(((AutoSpaceSingleGapTestSupport::auto_space_single_gap_test_support_layout(UStr::new(&[84,105,113,105,97,110,32,65289,35828,26126]), &vec![]).unwrap().debug).clone().auto_space_decisions.len()) & 0xFFFF_FFFF).unwrap_or(0), None).unwrap();
     });
 }
 
 #[test]
 fn autospace_does_not_fire_before_slash_led_latin_technical_run() {
     testlib::run("org.tiqian.layout.AutoSpaceSingleGapTest.autospaceDoesNotFireBeforeSlashLedLatinTechnicalRun", "org.tiqian.layout.AutoSpaceSingleGapTest.autospaceDoesNotFireBeforeSlashLedLatinTechnicalRun", || {
-        let mut t = TestTraceRecorder::new("AutoSpaceSingleGapTest");
-        t.section(&"autospaceDoesNotFireBeforeSlashLedLatinTechnicalRun");
-        let r = AutoSpaceSingleGapTestSupport::auto_space_single_gap_test_support_layout(&"恐跨/TERFism。如果", &vec![]).unwrap();
-        let c = (AutoSpaceSingleGapTestSupport::auto_space_single_gap_test_support_clusters_with_text((r).clone(), &"/TERFism")[0usize]).clone();
+        let mut t = TestTraceRecorder::new(&(UStr::new(&[65,117,116,111,83,112,97,99,101,83,105,110,103,108,101,71,97,112,84,101,115,116])));
+        t.section(UStr::new(&[97,117,116,111,115,112,97,99,101,68,111,101,115,78,111,116,70,105,114,101,66,101,102,111,114,101,83,108,97,115,104,76,101,100,76,97,116,105,110,84,101,99,104,110,105,99,97,108,82,117,110]));
+        let r = AutoSpaceSingleGapTestSupport::auto_space_single_gap_test_support_layout(UStr::new(&[24656,36328,47,84,69,82,70,105,115,109,12290,22914,26524]), &vec![]).unwrap();
+        let c = (AutoSpaceSingleGapTestSupport::auto_space_single_gap_test_support_clusters_with_text((r).clone(), UStr::new(&[47,84,69,82,70,105,115,109]))[0usize]).clone();
         let mut saw = false;
         for i in 0..match u32::try_from((r.debug).clone().auto_space_decisions.len()) { Ok(value) => value, Err(_) => u32::MAX } {
-            if AutoSpaceSingleGapTestSupport::auto_space_single_gap_test_support_same_range((((r.debug).clone().auto_space_decisions[usize::try_from(i).unwrap_or(0)]).clone().cluster_range).clone(), (c.range).clone()) &&
-(((r.debug).clone().auto_space_decisions[usize::try_from(i).unwrap_or(0)]).clone().side).to_string() == "leading" {
+            if AutoSpaceSingleGapTestSupport::auto_space_single_gap_test_support_same_range((((r.debug).clone().auto_space_decisions[usize::try_from(i).unwrap_or(0)]).clone().cluster_range).clone(), (c.range).clone()) && (((r.debug).clone().auto_space_decisions[usize::try_from(i).unwrap_or(0)]).clone().side).to_ustring() == UString::from("leading") {
                 saw = true;
             }
         }
-        let _ = TracedAssertions::traced_assertions_assert_true(!saw, Some((format!("{}{}",
-            "slash-led Latin technical run must not receive leading autospace: ",
-            AutoSpaceSingleGapTestSupport::auto_space_single_gap_test_support_render_auto_space_decisions(&(r.debug).clone().auto_space_decisions)
-        )).to_string())).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_true(!saw, Some(UString::from(format!("{}", { let mut __s = UString::new(); __s += &(UString::from("slash-led Latin technical run must not receive leading autospace: ")); __s += AutoSpaceSingleGapTestSupport::auto_space_single_gap_test_support_render_auto_space_decisions(&(r.debug).clone().auto_space_decisions).as_ustr(); __s }).as_str()))).unwrap();
     });
 }
 
 #[test]
 fn autospace_still_fires_between_latin_and_cjk_text_even_with_punctuation_nearby() {
     testlib::run("org.tiqian.layout.AutoSpaceSingleGapTest.autospaceStillFiresBetweenLatinAndCjkTextEvenWithPunctuationNearby", "org.tiqian.layout.AutoSpaceSingleGapTest.autospaceStillFiresBetweenLatinAndCjkTextEvenWithPunctuationNearby", || {
-        let mut t = TestTraceRecorder::new("AutoSpaceSingleGapTest");
-        t.section(&"autospaceStillFiresBetweenLatinAndCjkTextEvenWithPunctuationNearby");
-        let r = AutoSpaceSingleGapTestSupport::auto_space_single_gap_test_support_layout(&"中文 shaping 之后", &vec![]).unwrap();
+        let mut t = TestTraceRecorder::new(&(UStr::new(&[65,117,116,111,83,112,97,99,101,83,105,110,103,108,101,71,97,112,84,101,115,116])));
+        t.section(UStr::new(&[97,117,116,111,115,112,97,99,101,83,116,105,108,108,70,105,114,101,115,66,101,116,119,101,101,110,76,97,116,105,110,65,110,100,67,106,107,84,101,120,116,69,118,101,110,87,105,116,104,80,117,110,99,116,117,97,116,105,111,110,78,101,97,114,98,121]));
+        let r = AutoSpaceSingleGapTestSupport::auto_space_single_gap_test_support_layout(UStr::new(&[20013,25991,32,115,104,97,112,105,110,103,32,20043,21518]), &vec![]).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_equals_int(2, u32::try_from(((r.debug).clone().auto_space_decisions.len()) & 0xFFFF_FFFF).unwrap_or(0), None).unwrap();
         let mut role = true;
         let mut side = true;
         for i in 0..match u32::try_from((r.debug).clone().auto_space_decisions.len()) { Ok(value) => value, Err(_) => u32::MAX } {
-            if r.debug.clone().auto_space_decisions[usize::try_from(i).unwrap_or(0)].clone().boundary_role.to_string() != "EastAsianSpacing.Wide" {
+            if r.debug.clone().auto_space_decisions[usize::try_from(i).unwrap_or(0)].clone().boundary_role.to_ustring() != UString::from("EastAsianSpacing.Wide") {
                 role = false;
             }
-            if r.debug.clone().auto_space_decisions[usize::try_from(i).unwrap_or(0)].clone().side.to_string() != "gap" {
+            if r.debug.clone().auto_space_decisions[usize::try_from(i).unwrap_or(0)].clone().side.to_ustring() != UString::from("gap") {
                 side = false;
             }
         }
@@ -1127,27 +1240,24 @@ fn autospace_still_fires_between_latin_and_cjk_text_even_with_punctuation_nearby
 #[test]
 fn autospace_distinguishes_letter_from_digit_at_boundary() {
     testlib::run("org.tiqian.layout.AutoSpaceSingleGapTest.autospaceDistinguishesLetterFromDigitAtBoundary", "org.tiqian.layout.AutoSpaceSingleGapTest.autospaceDistinguishesLetterFromDigitAtBoundary", || {
-        let mut t = TestTraceRecorder::new("AutoSpaceSingleGapTest");
-        t.section(&"autospaceDistinguishesLetterFromDigitAtBoundary");
+        let mut t = TestTraceRecorder::new(&(UStr::new(&[65,117,116,111,83,112,97,99,101,83,105,110,103,108,101,71,97,112,84,101,115,116])));
+        t.section(UStr::new(&[97,117,116,111,115,112,97,99,101,68,105,115,116,105,110,103,117,105,115,104,101,115,76,101,116,116,101,114,70,114,111,109,68,105,103,105,116,65,116,66,111,117,110,100,97,114,121]));
         let r = AutoSpaceSingleGapTestSupport::auto_space_single_gap_test_support_letter_digit().unwrap();
-        let a = ((AutoSpaceSingleGapTestSupport::auto_space_single_gap_test_support_clusters_with_text((r).clone(), &"A")[0usize]).clone().range).clone();
-        let n = ((AutoSpaceSingleGapTestSupport::auto_space_single_gap_test_support_clusters_with_text((r).clone(), &"9")[0usize]).clone().range).clone();
+        let a = ((AutoSpaceSingleGapTestSupport::auto_space_single_gap_test_support_clusters_with_text((r).clone(), UStr::new(&[65]))[0usize]).clone().range).clone();
+        let n = ((AutoSpaceSingleGapTestSupport::auto_space_single_gap_test_support_clusters_with_text((r).clone(), UStr::new(&[57]))[0usize]).clone().range).clone();
         let mut all = true;
         for i in 0..match u32::try_from((r.debug).clone().auto_space_decisions.len()) { Ok(value) => value, Err(_) => u32::MAX } {
             if !AutoSpaceSingleGapTestSupport::auto_space_single_gap_test_support_same_range((((r.debug).clone().auto_space_decisions[usize::try_from(i).unwrap_or(0)]).clone().cluster_range).clone(), (a).clone()) {
                 all = false;
             }
         }
-        let _ = TracedAssertions::traced_assertions_assert_true((i32::from_ne_bytes((u32::try_from(((r.debug).clone().auto_space_decisions.len()) & 0xFFFF_FFFF).unwrap_or(0)).to_ne_bytes())) > (0) && all, Some((format!("{}{}",
-            "only the letter fires: ",
-            AutoSpaceSingleGapTestSupport::auto_space_single_gap_test_support_render_auto_space_decisions(&(r.debug).clone().auto_space_decisions)
-        )).to_string())).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_true((i32::from_ne_bytes(((u32::try_from(((r.debug).clone().auto_space_decisions.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) > (0) && all, Some(UString::from(format!("{}", { let mut __s = UString::new(); __s += &(UString::from("only the letter fires: ")); __s += AutoSpaceSingleGapTestSupport::auto_space_single_gap_test_support_render_auto_space_decisions(&(r.debug).clone().auto_space_decisions).as_ustr(); __s }).as_str()))).unwrap();
         let mut saw = false;
         for i in 0..match u32::try_from((r.debug).clone().auto_space_decisions.len()) { Ok(value) => value, Err(_) => u32::MAX } {
             if AutoSpaceSingleGapTestSupport::auto_space_single_gap_test_support_same_range((((r.debug).clone().auto_space_decisions[usize::try_from(i).unwrap_or(0)]).clone().cluster_range).clone(), (n).clone()) {
                 saw = true;
             }
         }
-        let _ = TracedAssertions::traced_assertions_assert_true(!saw, Some("digit boundary must not fire when cjkDigit disabled".to_string())).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_true(!saw, Some(UString::from("digit boundary must not fire when cjkDigit disabled"))).unwrap();
     });
 }

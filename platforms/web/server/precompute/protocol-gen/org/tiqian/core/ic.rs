@@ -1,3 +1,6 @@
+use crate::runtime::u_string::UString;
+
+
 #[derive(Debug, Clone, PartialEq)]
 pub struct Ic(pub f64);
 
@@ -14,12 +17,8 @@ impl Ic {
         return self.0 * em_px;
     }
 
-    fn to_string_value(&self) -> String {
-        return format!("{}{}{}",
-            "Ic(count=",
-            self.0,
-            ")"
-        );
+    fn to_string(&self) -> UString {
+        return UString::from(format!("{}", { let mut __s = UString::new(); __s += &(UString::from("Ic(count=")); __s += UString::from(format!("{}", crate::runtime::fp_helper::FPHelper::format_float(self.0)).as_str()).as_ustr(); __s += &(UString::from(")")); __s }).as_str());
     }
 
     pub fn zero() -> Ic { Ic(0.0f64) }
@@ -41,6 +40,6 @@ impl std::ops::Neg for Ic {
 
 impl std::fmt::Display for Ic {
     fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        write!(formatter, "{}", self.to_string_value())
+        write!(formatter, "{}", self.to_string())
     }
 }

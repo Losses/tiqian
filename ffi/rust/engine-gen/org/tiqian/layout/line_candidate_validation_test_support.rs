@@ -13,7 +13,7 @@ pub struct LineCandidateValidationTestSupport;
 
 impl LineCandidateValidationTestSupport {
     pub fn line_candidate_validation_test_support_candidate(hanging: &Vec<u32>, range: Option<IntRange>) -> Result<LineCandidate, TextRangeError> {
-        let mut b: SortedSetTableBuilder<u32> = SortedTable::sorted_table_set_builder::<u32>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_bytes((*a).to_ne_bytes()), i32::from_ne_bytes((*b).to_ne_bytes()))));
+        let mut b: SortedSetTableBuilder<u32> = SortedTable::sorted_table_set_builder::<u32>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_bytes(((*a) as i32).to_ne_bytes()), i32::from_ne_bytes(((*b) as i32).to_ne_bytes()))));
         for &value in hanging {
             b.put(&(value));
         }

@@ -12,33 +12,28 @@ use crate::org::tiqian::test::shaping_evidence::ShapingEvidenceKey;
 use crate::runtime::sorted_table::SortedMapTableBuilder;
 use crate::runtime::sorted_table::SortedTable;
 use crate::runtime::u_string;
+use crate::runtime::u_string::UStr;
+use crate::runtime::u_string::UString;
 use std::fmt::Write;
 use std::sync::Arc;
 
 
 #[derive(Debug, Clone, PartialEq)]
 pub struct JsonMember {
-    pub name: String,
+    pub name: UString,
     pub value: JsonValue,
 }
 
 impl JsonMember {
-    pub fn new(name: &str, value: JsonValue) -> Self {
+    pub fn new(name: &UStr, value: JsonValue) -> Self {
         Self {
-            name: name.to_string(),
+            name: name.to_ustring(),
             value,
         }
     }
 
-    pub fn to_string(&self) -> String {
-        return format!("{}{}{}{}{}{}{}",
-            "JsonMember(",
-            "name=",
-            (self.name).to_string(),
-            ", ",
-            "value=",
-            { fn std_string_json_value0(v: &JsonValue) -> String { { let mut out = String::new(); match v { JsonValue::JNull => out.push_str("JNull"), JsonValue::JBool { v } => { let _ = write!(out, "JBool(v={})", v); }, JsonValue::JNum { v } => { let _ = write!(out, "JNum(v={})",
-v); }, JsonValue::JStr { v } => { let _ = write!(out, "JStr(v={})", v); }, JsonValue::JArr { v } => { let _ = write!(out, "JArr(v={})", {
+    pub fn to_string(&self) -> UString {
+        return UString::from(format!("{}", { let mut __s = UString::new(); __s += &(UString::from("JsonMember(")); __s += &(UString::from("name=")); __s += (self.name).to_ustring().as_ustr(); __s += &(UString::from(", ")); __s += &(UString::from("value=")); __s += UString::from(format!("{}", { fn std_string_json_value0(v: &JsonValue) -> String { { let mut out = String::new(); match v { JsonValue::JNull => out.push_str("JNull"), JsonValue::JBool { v } => { let _ = write!(out, "JBool(v={})", v); }, JsonValue::JNum { v } => { let _ = write!(out, "JNum(v={})", v); }, JsonValue::JStr { v } => { let _ = write!(out, "JStr(v={})", v); }, JsonValue::JArr { v } => { let _ = write!(out, "JArr(v={})", {
         let mut out = String::new();
         out.push('[');
         let arr = v;
@@ -64,9 +59,7 @@ v); }, JsonValue::JStr { v } => { let _ = write!(out, "JStr(v={})", v); }, JsonV
         }
         out.push(']');
         out
-    }); } }; out } } std_string_json_value0(&(self.value).clone()) },
-            ")"
-        );
+    }); } }; out } } std_string_json_value0(&(self.value).clone()) }).as_str()).as_ustr(); __s += &(UString::from(")")); __s }).as_str());
     }
 }
 
@@ -81,7 +74,7 @@ fn json_member_value_order(v: &JsonValue) -> i32 {
     }
 }
 pub fn compare_json_member(a: &JsonMember, b: &JsonMember) -> i32 {
-    let cmp_name = SortedTable::sorted_table_compare_strings(a.name.as_str(), b.name.as_str());
+    let cmp_name = SortedTable::sorted_table_compare_strings(a.name.as_ustr(), b.name.as_ustr());
     if cmp_name != 0 { return cmp_name; }
     let cmp_value = match json_member_value_order(&a.value).cmp(&json_member_value_order(&b.value)) { core::cmp::Ordering::Less => -1, core::cmp::Ordering::Equal => 0, core::cmp::Ordering::Greater => 1 };
     if cmp_value != 0 { return cmp_value; }
@@ -105,141 +98,77 @@ impl JsonCursor {
 pub struct ShapingEvidenceJson;
 
 impl ShapingEvidenceJson {
-    pub fn shaping_evidence_json_parse(text: &str) -> Result<ShapingEvidence, TextRangeError> {
+    pub fn shaping_evidence_json_parse(text: &UStr) -> Result<ShapingEvidence, TextRangeError> {
         let mut cur = JsonCursor::new(0u32);
         ShapingEvidenceJson::shaping_evidence_json_skip_ws(&mut cur, text);
-        let root = ShapingEvidenceJson::shaping_evidence_json_obj_required(ShapingEvidenceJson::shaping_evidence_json_parse_value(&mut cur, text)?, &"<root>")?;
-        let meta_obj = ShapingEvidenceJson::shaping_evidence_json_obj_required(ShapingEvidenceJson::shaping_evidence_json_field(&root, &"meta")?, &"meta")?;
-        let mut meta: SortedMapTableBuilder<String, String> = SortedTable::sorted_table_map_builder::<String, String>(Arc::new(|a, b| SortedTable::sorted_table_compare_strings(a.as_str(), b.as_str())));
+        let root = ShapingEvidenceJson::shaping_evidence_json_obj_required(ShapingEvidenceJson::shaping_evidence_json_parse_value(&mut cur, text)?, UStr::new(&[60,114,111,111,116,62]))?;
+        let meta_obj = ShapingEvidenceJson::shaping_evidence_json_obj_required(ShapingEvidenceJson::shaping_evidence_json_field(&root, UStr::new(&[109,101,116,97]))?, UStr::new(&[109,101,116,97]))?;
+        let mut meta: SortedMapTableBuilder<UString, UString> = SortedTable::sorted_table_map_builder::<UString, UString>(Arc::new(|a, b| SortedTable::sorted_table_compare_strings(a.as_ustr(), b.as_ustr())));
         for i in 0..match u32::try_from(meta_obj.len()) { Ok(value) => value, Err(_) => u32::MAX } {
-            meta.put(&((meta_obj[usize::try_from(i).unwrap_or(0)]).clone().name).to_string(), &ShapingEvidenceJson::shaping_evidence_json_str_required(((meta_obj[usize::try_from(i).unwrap_or(0)]).clone().value).clone(), format!("{}{}",
-            "meta.",
-            ((meta_obj[usize::try_from(i).unwrap_or(0)]).clone().name).to_string()
-        ).as_str())?);
+            meta.put(&((meta_obj[usize::try_from(i).unwrap_or(0)]).clone().name).to_ustring(), &ShapingEvidenceJson::shaping_evidence_json_str_required(((meta_obj[usize::try_from(i).unwrap_or(0)]).clone().value).clone(), UString::from(format!("{}", { let mut __s = UString::new(); __s += &(UString::from("meta.")); __s += ((meta_obj[usize::try_from(i).unwrap_or(0)]).clone().name).to_ustring().as_ustr(); __s }).as_str()).as_ustr())?);
         }
-        let shaping_arr = ShapingEvidenceJson::shaping_evidence_json_arr_required(ShapingEvidenceJson::shaping_evidence_json_field(&root, &"shaping")?, &"shaping")?;
+        let shaping_arr = ShapingEvidenceJson::shaping_evidence_json_arr_required(ShapingEvidenceJson::shaping_evidence_json_field(&root, UStr::new(&[115,104,97,112,105,110,103]))?, UStr::new(&[115,104,97,112,105,110,103]))?;
         let mut shaping: Vec<ShapingEvidenceEntry> = vec![];
         for i in 0..match u32::try_from(shaping_arr.len()) { Ok(value) => value, Err(_) => u32::MAX } {
-            let entry = ShapingEvidenceJson::shaping_evidence_json_obj_required((shaping_arr[usize::try_from(i).unwrap_or(0)]).clone(), format!("{}{}{}",
-            "shaping[",
-            crate::runtime::int_text::IntText::int_text(i),
-            "]"
-        ).as_str())?;
-            let key = ShapingEvidenceJson::shaping_evidence_json_parse_shaping_key(&ShapingEvidenceJson::shaping_evidence_json_obj_required(ShapingEvidenceJson::shaping_evidence_json_field(&entry, &"key")?, format!("{}{}{}",
-            "shaping[",
-            crate::runtime::int_text::IntText::int_text(i),
-            "].key"
-        ).as_str())?)?;
-            let result = ShapingEvidenceJson::shaping_evidence_json_parse_shaping_result(&ShapingEvidenceJson::shaping_evidence_json_obj_required(ShapingEvidenceJson::shaping_evidence_json_field(&entry, &"result")?, format!("{}{}{}",
-            "shaping[",
-            crate::runtime::int_text::IntText::int_text(i),
-            "].result"
-        ).as_str())?)?;
+            let entry = ShapingEvidenceJson::shaping_evidence_json_obj_required((shaping_arr[usize::try_from(i).unwrap_or(0)]).clone(), UString::from(format!("{}", { let mut __s = UString::new(); __s += &(UString::from("shaping[")); __s += &(UString::from(format!("{}", crate::runtime::int_text::IntText::int_text(i)).as_str())); __s += &(UString::from("]")); __s }).as_str()).as_ustr())?;
+            let key = ShapingEvidenceJson::shaping_evidence_json_parse_shaping_key(&ShapingEvidenceJson::shaping_evidence_json_obj_required(ShapingEvidenceJson::shaping_evidence_json_field(&entry, UStr::new(&[107,101,121]))?, UString::from(format!("{}", { let mut __s = UString::new(); __s += &(UString::from("shaping[")); __s += &(UString::from(format!("{}", crate::runtime::int_text::IntText::int_text(i)).as_str())); __s += &(UString::from("].key")); __s }).as_str()).as_ustr())?)?;
+            let result = ShapingEvidenceJson::shaping_evidence_json_parse_shaping_result(&ShapingEvidenceJson::shaping_evidence_json_obj_required(ShapingEvidenceJson::shaping_evidence_json_field(&entry, UStr::new(&[114,101,115,117,108,116]))?, UString::from(format!("{}", { let mut __s = UString::new(); __s += &(UString::from("shaping[")); __s += &(UString::from(format!("{}", crate::runtime::int_text::IntText::int_text(i)).as_str())); __s += &(UString::from("].result")); __s }).as_str()).as_ustr())?)?;
             shaping.push(ShapingEvidenceEntry::new((key).clone(), (result).clone()));
         }
-        let metrics_arr = ShapingEvidenceJson::shaping_evidence_json_arr_required(ShapingEvidenceJson::shaping_evidence_json_field(&root, &"metrics")?, &"metrics")?;
+        let metrics_arr = ShapingEvidenceJson::shaping_evidence_json_arr_required(ShapingEvidenceJson::shaping_evidence_json_field(&root, UStr::new(&[109,101,116,114,105,99,115]))?, UStr::new(&[109,101,116,114,105,99,115]))?;
         let mut metrics: Vec<MetricsEvidenceEntry> = vec![];
         for i in 0..match u32::try_from(metrics_arr.len()) { Ok(value) => value, Err(_) => u32::MAX } {
-            let entry = ShapingEvidenceJson::shaping_evidence_json_obj_required((metrics_arr[usize::try_from(i).unwrap_or(0)]).clone(), format!("{}{}{}",
-            "metrics[",
-            crate::runtime::int_text::IntText::int_text(i),
-            "]"
-        ).as_str())?;
-            let key = ShapingEvidenceJson::shaping_evidence_json_parse_metrics_key(&ShapingEvidenceJson::shaping_evidence_json_obj_required(ShapingEvidenceJson::shaping_evidence_json_field(&entry, &"key")?, format!("{}{}{}",
-            "metrics[",
-            crate::runtime::int_text::IntText::int_text(i),
-            "].key"
-        ).as_str())?)?;
-            let result = ShapingEvidenceJson::shaping_evidence_json_parse_font_metrics(&ShapingEvidenceJson::shaping_evidence_json_obj_required(ShapingEvidenceJson::shaping_evidence_json_field(&entry, &"result")?, format!("{}{}{}",
-            "metrics[",
-            crate::runtime::int_text::IntText::int_text(i),
-            "].result"
-        ).as_str())?)?;
+            let entry = ShapingEvidenceJson::shaping_evidence_json_obj_required((metrics_arr[usize::try_from(i).unwrap_or(0)]).clone(), UString::from(format!("{}", { let mut __s = UString::new(); __s += &(UString::from("metrics[")); __s += &(UString::from(format!("{}", crate::runtime::int_text::IntText::int_text(i)).as_str())); __s += &(UString::from("]")); __s }).as_str()).as_ustr())?;
+            let key = ShapingEvidenceJson::shaping_evidence_json_parse_metrics_key(&ShapingEvidenceJson::shaping_evidence_json_obj_required(ShapingEvidenceJson::shaping_evidence_json_field(&entry, UStr::new(&[107,101,121]))?, UString::from(format!("{}", { let mut __s = UString::new(); __s += &(UString::from("metrics[")); __s += &(UString::from(format!("{}", crate::runtime::int_text::IntText::int_text(i)).as_str())); __s += &(UString::from("].key")); __s }).as_str()).as_ustr())?)?;
+            let result = ShapingEvidenceJson::shaping_evidence_json_parse_font_metrics(&ShapingEvidenceJson::shaping_evidence_json_obj_required(ShapingEvidenceJson::shaping_evidence_json_field(&entry, UStr::new(&[114,101,115,117,108,116]))?, UString::from(format!("{}", { let mut __s = UString::new(); __s += &(UString::from("metrics[")); __s += &(UString::from(format!("{}", crate::runtime::int_text::IntText::int_text(i)).as_str())); __s += &(UString::from("].result")); __s }).as_str()).as_ustr())?)?;
             metrics.push(MetricsEvidenceEntry::new((key).clone(), (result).clone()));
         }
         return Ok(ShapingEvidence::new(meta.clone().build(), shaping.to_vec(), metrics.to_vec()));
     }
 
     pub(crate) fn shaping_evidence_json_parse_shaping_key(obj: &Vec<JsonMember>) -> Result<ShapingEvidenceKey, TextRangeError> {
-        return Ok(ShapingEvidenceKey::new(ShapingEvidenceJson::shaping_evidence_json_str_required(ShapingEvidenceJson::shaping_evidence_json_field(&obj, &"displayText")?, &"displayText")?.as_str(),
-ShapingEvidenceJson::shaping_evidence_json_str_required(ShapingEvidenceJson::shaping_evidence_json_field(&obj, &"fontKey")?, &"fontKey")?.as_str(), ShapingEvidenceJson::shaping_evidence_json_str_required(ShapingEvidenceJson::shaping_evidence_json_field(&obj, &"fontFamily")?,
-&"fontFamily")?.as_str(), ShapingEvidenceJson::shaping_evidence_json_str_required(ShapingEvidenceJson::shaping_evidence_json_field(&obj, &"role")?, &"role")?.as_str(),
-ShapingEvidenceJson::shaping_evidence_json_str_array_required(ShapingEvidenceJson::shaping_evidence_json_field(&obj, &"styleFontFamilies")?, &"styleFontFamilies")?, ShapingEvidenceJson::shaping_evidence_json_num_required(ShapingEvidenceJson::shaping_evidence_json_field(&obj,
-&"fontSize")?, &"fontSize")?, ShapingEvidenceJson::shaping_evidence_json_int_required(ShapingEvidenceJson::shaping_evidence_json_field(&obj, &"fontWeight")?, &"fontWeight")?,
-ShapingEvidenceJson::shaping_evidence_json_bool_required(ShapingEvidenceJson::shaping_evidence_json_field(&obj, &"italic")?, &"italic")?, ShapingEvidenceJson::shaping_evidence_json_str_required(ShapingEvidenceJson::shaping_evidence_json_field(&obj, &"locale")?,
-&"locale")?.as_str(), ShapingEvidenceJson::shaping_evidence_json_str_array_required(ShapingEvidenceJson::shaping_evidence_json_field(&obj, &"openTypeFeatures")?, &"openTypeFeatures")?));
+        return Ok(ShapingEvidenceKey::new(ShapingEvidenceJson::shaping_evidence_json_str_required(ShapingEvidenceJson::shaping_evidence_json_field(&obj, UStr::new(&[100,105,115,112,108,97,121,84,101,120,116]))?, UStr::new(&[100,105,115,112,108,97,121,84,101,120,116]))?.as_ustr(), ShapingEvidenceJson::shaping_evidence_json_str_required(ShapingEvidenceJson::shaping_evidence_json_field(&obj, UStr::new(&[102,111,110,116,75,101,121]))?, UStr::new(&[102,111,110,116,75,101,121]))?.as_ustr(), ShapingEvidenceJson::shaping_evidence_json_str_required(ShapingEvidenceJson::shaping_evidence_json_field(&obj, UStr::new(&[102,111,110,116,70,97,109,105,108,121]))?, UStr::new(&[102,111,110,116,70,97,109,105,108,121]))?.as_ustr(), ShapingEvidenceJson::shaping_evidence_json_str_required(ShapingEvidenceJson::shaping_evidence_json_field(&obj, UStr::new(&[114,111,108,101]))?, UStr::new(&[114,111,108,101]))?.as_ustr(), ShapingEvidenceJson::shaping_evidence_json_str_array_required(ShapingEvidenceJson::shaping_evidence_json_field(&obj, UStr::new(&[115,116,121,108,101,70,111,110,116,70,97,109,105,108,105,101,115]))?, UStr::new(&[115,116,121,108,101,70,111,110,116,70,97,109,105,108,105,101,115]))?, ShapingEvidenceJson::shaping_evidence_json_num_required(ShapingEvidenceJson::shaping_evidence_json_field(&obj, UStr::new(&[102,111,110,116,83,105,122,101]))?, UStr::new(&[102,111,110,116,83,105,122,101]))?, ShapingEvidenceJson::shaping_evidence_json_int_required(ShapingEvidenceJson::shaping_evidence_json_field(&obj, UStr::new(&[102,111,110,116,87,101,105,103,104,116]))?, UStr::new(&[102,111,110,116,87,101,105,103,104,116]))?, ShapingEvidenceJson::shaping_evidence_json_bool_required(ShapingEvidenceJson::shaping_evidence_json_field(&obj, UStr::new(&[105,116,97,108,105,99]))?, UStr::new(&[105,116,97,108,105,99]))?, ShapingEvidenceJson::shaping_evidence_json_str_required(ShapingEvidenceJson::shaping_evidence_json_field(&obj, UStr::new(&[108,111,99,97,108,101]))?, UStr::new(&[108,111,99,97,108,101]))?.as_ustr(), ShapingEvidenceJson::shaping_evidence_json_str_array_required(ShapingEvidenceJson::shaping_evidence_json_field(&obj, UStr::new(&[111,112,101,110,84,121,112,101,70,101,97,116,117,114,101,115]))?, UStr::new(&[111,112,101,110,84,121,112,101,70,101,97,116,117,114,101,115]))?));
     }
 
     pub(crate) fn shaping_evidence_json_parse_shaping_result(obj: &Vec<JsonMember>) -> Result<RecordedShapingResult, TextRangeError> {
-        let glyph_values = ShapingEvidenceJson::shaping_evidence_json_arr_required(ShapingEvidenceJson::shaping_evidence_json_field(&obj, &"glyphs")?, &"glyphs")?;
+        let glyph_values = ShapingEvidenceJson::shaping_evidence_json_arr_required(ShapingEvidenceJson::shaping_evidence_json_field(&obj, UStr::new(&[103,108,121,112,104,115]))?, UStr::new(&[103,108,121,112,104,115]))?;
         let mut glyphs: Vec<RecordedGlyph> = vec![];
         for i in 0..match u32::try_from(glyph_values.len()) { Ok(value) => value, Err(_) => u32::MAX } {
-            let g = ShapingEvidenceJson::shaping_evidence_json_obj_required((glyph_values[usize::try_from(i).unwrap_or(0)]).clone(), format!("{}{}{}",
-            "glyphs[",
-            crate::runtime::int_text::IntText::int_text(i),
-            "]"
-        ).as_str())?;
-            glyphs.push(RecordedGlyph::new(ShapingEvidenceJson::shaping_evidence_json_int_required(ShapingEvidenceJson::shaping_evidence_json_field(&g, &"id")?, &"id")?, ShapingEvidenceJson::shaping_evidence_json_num_required(ShapingEvidenceJson::shaping_evidence_json_field(&g,
-&"advance")?, &"advance")?, ShapingEvidenceJson::shaping_evidence_json_num_required(ShapingEvidenceJson::shaping_evidence_json_field(&g, &"x")?, &"x")?, ShapingEvidenceJson::shaping_evidence_json_num_required(ShapingEvidenceJson::shaping_evidence_json_field(&g, &"y")?, &"y")?,
-ShapingEvidenceJson::shaping_evidence_json_rect_or_null(ShapingEvidenceJson::shaping_evidence_json_field(&g, &"bounds")?, &"bounds")?, ShapingEvidenceJson::shaping_evidence_json_float_or_null(ShapingEvidenceJson::shaping_evidence_json_field(&g, &"haltAdvance")?, &"haltAdvance")?,
-ShapingEvidenceJson::shaping_evidence_json_float_or_null(ShapingEvidenceJson::shaping_evidence_json_field(&g, &"haltPlacementX")?, &"haltPlacementX")?));
+            let g = ShapingEvidenceJson::shaping_evidence_json_obj_required((glyph_values[usize::try_from(i).unwrap_or(0)]).clone(), UString::from(format!("{}", { let mut __s = UString::new(); __s += &(UString::from("glyphs[")); __s += &(UString::from(format!("{}", crate::runtime::int_text::IntText::int_text(i)).as_str())); __s += &(UString::from("]")); __s }).as_str()).as_ustr())?;
+            glyphs.push(RecordedGlyph::new(ShapingEvidenceJson::shaping_evidence_json_int_required(ShapingEvidenceJson::shaping_evidence_json_field(&g, UStr::new(&[105,100]))?, UStr::new(&[105,100]))?, ShapingEvidenceJson::shaping_evidence_json_num_required(ShapingEvidenceJson::shaping_evidence_json_field(&g, UStr::new(&[97,100,118,97,110,99,101]))?, UStr::new(&[97,100,118,97,110,99,101]))?, ShapingEvidenceJson::shaping_evidence_json_num_required(ShapingEvidenceJson::shaping_evidence_json_field(&g, UStr::new(&[120]))?, UStr::new(&[120]))?, ShapingEvidenceJson::shaping_evidence_json_num_required(ShapingEvidenceJson::shaping_evidence_json_field(&g, UStr::new(&[121]))?, UStr::new(&[121]))?, ShapingEvidenceJson::shaping_evidence_json_rect_or_null(ShapingEvidenceJson::shaping_evidence_json_field(&g, UStr::new(&[98,111,117,110,100,115]))?, UStr::new(&[98,111,117,110,100,115]))?, ShapingEvidenceJson::shaping_evidence_json_float_or_null(ShapingEvidenceJson::shaping_evidence_json_field(&g, UStr::new(&[104,97,108,116,65,100,118,97,110,99,101]))?, UStr::new(&[104,97,108,116,65,100,118,97,110,99,101]))?, ShapingEvidenceJson::shaping_evidence_json_float_or_null(ShapingEvidenceJson::shaping_evidence_json_field(&g, UStr::new(&[104,97,108,116,80,108,97,99,101,109,101,110,116,88]))?, UStr::new(&[104,97,108,116,80,108,97,99,101,109,101,110,116,88]))?));
         }
-        let decision_values = ShapingEvidenceJson::shaping_evidence_json_arr_required(ShapingEvidenceJson::shaping_evidence_json_field(&obj, &"decisions")?, &"decisions")?;
+        let decision_values = ShapingEvidenceJson::shaping_evidence_json_arr_required(ShapingEvidenceJson::shaping_evidence_json_field(&obj, UStr::new(&[100,101,99,105,115,105,111,110,115]))?, UStr::new(&[100,101,99,105,115,105,111,110,115]))?;
         let mut decisions: Vec<RecordedShapingDecision> = vec![];
         for i in 0..match u32::try_from(decision_values.len()) { Ok(value) => value, Err(_) => u32::MAX } {
-            let d = ShapingEvidenceJson::shaping_evidence_json_obj_required((decision_values[usize::try_from(i).unwrap_or(0)]).clone(), format!("{}{}{}",
-            "decisions[",
-            crate::runtime::int_text::IntText::int_text(i),
-            "]"
-        ).as_str())?;
-            decisions.push(RecordedShapingDecision::new(ShapingEvidenceJson::shaping_evidence_json_int_required(ShapingEvidenceJson::shaping_evidence_json_field(&d, &"glyphCount")?, &"glyphCount")?,
-ShapingEvidenceJson::shaping_evidence_json_num_required(ShapingEvidenceJson::shaping_evidence_json_field(&d, &"advance")?, &"advance")?, ShapingEvidenceJson::shaping_evidence_json_str_required(ShapingEvidenceJson::shaping_evidence_json_field(&d, &"source")?, &"source")?.as_str(),
-ShapingEvidenceJson::shaping_evidence_json_str_required(ShapingEvidenceJson::shaping_evidence_json_field(&d, &"reason")?, &"reason")?.as_str(), ShapingEvidenceJson::shaping_evidence_json_int_required(ShapingEvidenceJson::shaping_evidence_json_field(&d, &"glyphsWithoutInkBounds")?,
-&"glyphsWithoutInkBounds")?, ShapingEvidenceJson::shaping_evidence_json_int_required(ShapingEvidenceJson::shaping_evidence_json_field(&d, &"missingGlyphs")?, &"missingGlyphs")?,
-ShapingEvidenceJson::shaping_evidence_json_str_or_null(ShapingEvidenceJson::shaping_evidence_json_field(&d, &"resolvedFace")?, &"resolvedFace")?.clone(), ShapingEvidenceJson::shaping_evidence_json_str_or_null(ShapingEvidenceJson::shaping_evidence_json_field(&d, &"script")?,
-&"script")?.clone(), ShapingEvidenceJson::shaping_evidence_json_str_or_null(ShapingEvidenceJson::shaping_evidence_json_field(&d, &"language")?, &"language")?.clone(), ShapingEvidenceJson::shaping_evidence_json_str_or_null(ShapingEvidenceJson::shaping_evidence_json_field(&d,
-&"strategy")?, &"strategy")?.clone(), ShapingEvidenceJson::shaping_evidence_json_str_or_null(ShapingEvidenceJson::shaping_evidence_json_field(&d, &"featureEvidence")?, &"featureEvidence")?.clone(),
-ShapingEvidenceJson::shaping_evidence_json_str_or_null(ShapingEvidenceJson::shaping_evidence_json_field(&d, &"capabilityIssue")?, &"capabilityIssue")?.clone()));
+            let d = ShapingEvidenceJson::shaping_evidence_json_obj_required((decision_values[usize::try_from(i).unwrap_or(0)]).clone(), UString::from(format!("{}", { let mut __s = UString::new(); __s += &(UString::from("decisions[")); __s += &(UString::from(format!("{}", crate::runtime::int_text::IntText::int_text(i)).as_str())); __s += &(UString::from("]")); __s }).as_str()).as_ustr())?;
+            decisions.push(RecordedShapingDecision::new(ShapingEvidenceJson::shaping_evidence_json_int_required(ShapingEvidenceJson::shaping_evidence_json_field(&d, UStr::new(&[103,108,121,112,104,67,111,117,110,116]))?, UStr::new(&[103,108,121,112,104,67,111,117,110,116]))?, ShapingEvidenceJson::shaping_evidence_json_num_required(ShapingEvidenceJson::shaping_evidence_json_field(&d, UStr::new(&[97,100,118,97,110,99,101]))?, UStr::new(&[97,100,118,97,110,99,101]))?, ShapingEvidenceJson::shaping_evidence_json_str_required(ShapingEvidenceJson::shaping_evidence_json_field(&d, UStr::new(&[115,111,117,114,99,101]))?, UStr::new(&[115,111,117,114,99,101]))?.as_ustr(), ShapingEvidenceJson::shaping_evidence_json_str_required(ShapingEvidenceJson::shaping_evidence_json_field(&d, UStr::new(&[114,101,97,115,111,110]))?, UStr::new(&[114,101,97,115,111,110]))?.as_ustr(), ShapingEvidenceJson::shaping_evidence_json_int_required(ShapingEvidenceJson::shaping_evidence_json_field(&d, UStr::new(&[103,108,121,112,104,115,87,105,116,104,111,117,116,73,110,107,66,111,117,110,100,115]))?, UStr::new(&[103,108,121,112,104,115,87,105,116,104,111,117,116,73,110,107,66,111,117,110,100,115]))?, ShapingEvidenceJson::shaping_evidence_json_int_required(ShapingEvidenceJson::shaping_evidence_json_field(&d, UStr::new(&[109,105,115,115,105,110,103,71,108,121,112,104,115]))?, UStr::new(&[109,105,115,115,105,110,103,71,108,121,112,104,115]))?, ShapingEvidenceJson::shaping_evidence_json_str_or_null(ShapingEvidenceJson::shaping_evidence_json_field(&d, UStr::new(&[114,101,115,111,108,118,101,100,70,97,99,101]))?, UStr::new(&[114,101,115,111,108,118,101,100,70,97,99,101]))?.clone(), ShapingEvidenceJson::shaping_evidence_json_str_or_null(ShapingEvidenceJson::shaping_evidence_json_field(&d, UStr::new(&[115,99,114,105,112,116]))?, UStr::new(&[115,99,114,105,112,116]))?.clone(), ShapingEvidenceJson::shaping_evidence_json_str_or_null(ShapingEvidenceJson::shaping_evidence_json_field(&d, UStr::new(&[108,97,110,103,117,97,103,101]))?, UStr::new(&[108,97,110,103,117,97,103,101]))?.clone(), ShapingEvidenceJson::shaping_evidence_json_str_or_null(ShapingEvidenceJson::shaping_evidence_json_field(&d, UStr::new(&[115,116,114,97,116,101,103,121]))?, UStr::new(&[115,116,114,97,116,101,103,121]))?.clone(), ShapingEvidenceJson::shaping_evidence_json_str_or_null(ShapingEvidenceJson::shaping_evidence_json_field(&d, UStr::new(&[102,101,97,116,117,114,101,69,118,105,100,101,110,99,101]))?, UStr::new(&[102,101,97,116,117,114,101,69,118,105,100,101,110,99,101]))?.clone(), ShapingEvidenceJson::shaping_evidence_json_str_or_null(ShapingEvidenceJson::shaping_evidence_json_field(&d, UStr::new(&[99,97,112,97,98,105,108,105,116,121,73,115,115,117,101]))?, UStr::new(&[99,97,112,97,98,105,108,105,116,121,73,115,115,117,101]))?.clone()));
         }
-        return Ok(RecordedShapingResult::new(ShapingEvidenceJson::shaping_evidence_json_num_required(ShapingEvidenceJson::shaping_evidence_json_field(&obj, &"clusterAdvance")?, &"clusterAdvance")?,
-ShapingEvidenceJson::shaping_evidence_json_num_required(ShapingEvidenceJson::shaping_evidence_json_field(&obj, &"runAdvance")?, &"runAdvance")?, ShapingEvidenceJson::shaping_evidence_json_str_array_required(ShapingEvidenceJson::shaping_evidence_json_field(&obj, &"runFeatures")?,
-&"runFeatures")?.to_vec(), glyphs.to_vec(), decisions.to_vec()));
+        return Ok(RecordedShapingResult::new(ShapingEvidenceJson::shaping_evidence_json_num_required(ShapingEvidenceJson::shaping_evidence_json_field(&obj, UStr::new(&[99,108,117,115,116,101,114,65,100,118,97,110,99,101]))?, UStr::new(&[99,108,117,115,116,101,114,65,100,118,97,110,99,101]))?, ShapingEvidenceJson::shaping_evidence_json_num_required(ShapingEvidenceJson::shaping_evidence_json_field(&obj, UStr::new(&[114,117,110,65,100,118,97,110,99,101]))?, UStr::new(&[114,117,110,65,100,118,97,110,99,101]))?, ShapingEvidenceJson::shaping_evidence_json_str_array_required(ShapingEvidenceJson::shaping_evidence_json_field(&obj, UStr::new(&[114,117,110,70,101,97,116,117,114,101,115]))?, UStr::new(&[114,117,110,70,101,97,116,117,114,101,115]))?.to_vec(), glyphs.to_vec(), decisions.to_vec()));
     }
 
     pub(crate) fn shaping_evidence_json_parse_metrics_key(obj: &Vec<JsonMember>) -> Result<MetricsEvidenceKey, TextRangeError> {
-        return Ok(MetricsEvidenceKey::new(ShapingEvidenceJson::shaping_evidence_json_str_required(ShapingEvidenceJson::shaping_evidence_json_field(&obj, &"fontKey")?, &"fontKey")?.as_str(),
-ShapingEvidenceJson::shaping_evidence_json_num_required(ShapingEvidenceJson::shaping_evidence_json_field(&obj, &"fontSize")?, &"fontSize")?, ShapingEvidenceJson::shaping_evidence_json_str_required(ShapingEvidenceJson::shaping_evidence_json_field(&obj, &"role")?,
-&"role")?.as_str(), ShapingEvidenceJson::shaping_evidence_json_str_required(ShapingEvidenceJson::shaping_evidence_json_field(&obj, &"locale")?, &"locale")?.as_str(),
-ShapingEvidenceJson::shaping_evidence_json_str_array_required(ShapingEvidenceJson::shaping_evidence_json_field(&obj, &"fontFamilies")?, &"fontFamilies")?, ShapingEvidenceJson::shaping_evidence_json_int_required(ShapingEvidenceJson::shaping_evidence_json_field(&obj,
-&"fontWeight")?, &"fontWeight")?, ShapingEvidenceJson::shaping_evidence_json_bool_required(ShapingEvidenceJson::shaping_evidence_json_field(&obj, &"italic")?, &"italic")?,
-ShapingEvidenceJson::shaping_evidence_json_str_required(ShapingEvidenceJson::shaping_evidence_json_field(&obj, &"faceSelectionText")?, &"faceSelectionText")?.as_str()));
+        return Ok(MetricsEvidenceKey::new(ShapingEvidenceJson::shaping_evidence_json_str_required(ShapingEvidenceJson::shaping_evidence_json_field(&obj, UStr::new(&[102,111,110,116,75,101,121]))?, UStr::new(&[102,111,110,116,75,101,121]))?.as_ustr(), ShapingEvidenceJson::shaping_evidence_json_num_required(ShapingEvidenceJson::shaping_evidence_json_field(&obj, UStr::new(&[102,111,110,116,83,105,122,101]))?, UStr::new(&[102,111,110,116,83,105,122,101]))?, ShapingEvidenceJson::shaping_evidence_json_str_required(ShapingEvidenceJson::shaping_evidence_json_field(&obj, UStr::new(&[114,111,108,101]))?, UStr::new(&[114,111,108,101]))?.as_ustr(), ShapingEvidenceJson::shaping_evidence_json_str_required(ShapingEvidenceJson::shaping_evidence_json_field(&obj, UStr::new(&[108,111,99,97,108,101]))?, UStr::new(&[108,111,99,97,108,101]))?.as_ustr(), ShapingEvidenceJson::shaping_evidence_json_str_array_required(ShapingEvidenceJson::shaping_evidence_json_field(&obj, UStr::new(&[102,111,110,116,70,97,109,105,108,105,101,115]))?, UStr::new(&[102,111,110,116,70,97,109,105,108,105,101,115]))?, ShapingEvidenceJson::shaping_evidence_json_int_required(ShapingEvidenceJson::shaping_evidence_json_field(&obj, UStr::new(&[102,111,110,116,87,101,105,103,104,116]))?, UStr::new(&[102,111,110,116,87,101,105,103,104,116]))?, ShapingEvidenceJson::shaping_evidence_json_bool_required(ShapingEvidenceJson::shaping_evidence_json_field(&obj, UStr::new(&[105,116,97,108,105,99]))?, UStr::new(&[105,116,97,108,105,99]))?, ShapingEvidenceJson::shaping_evidence_json_str_required(ShapingEvidenceJson::shaping_evidence_json_field(&obj, UStr::new(&[102,97,99,101,83,101,108,101,99,116,105,111,110,84,101,120,116]))?, UStr::new(&[102,97,99,101,83,101,108,101,99,116,105,111,110,84,101,120,116]))?.as_ustr()));
     }
 
     pub(crate) fn shaping_evidence_json_parse_font_metrics(obj: &Vec<JsonMember>) -> Result<RecordedFontMetrics, TextRangeError> {
-        return Ok(RecordedFontMetrics::new(ShapingEvidenceJson::shaping_evidence_json_num_required(ShapingEvidenceJson::shaping_evidence_json_field(&obj, &"ascent")?, &"ascent")?,
-ShapingEvidenceJson::shaping_evidence_json_num_required(ShapingEvidenceJson::shaping_evidence_json_field(&obj, &"descent")?, &"descent")?, ShapingEvidenceJson::shaping_evidence_json_num_required(ShapingEvidenceJson::shaping_evidence_json_field(&obj, &"leading")?, &"leading")?,
-ShapingEvidenceJson::shaping_evidence_json_str_required(ShapingEvidenceJson::shaping_evidence_json_field(&obj, &"source")?, &"source")?.as_str(), ShapingEvidenceJson::shaping_evidence_json_float_or_null(ShapingEvidenceJson::shaping_evidence_json_field(&obj, &"typoAscent")?,
-&"typoAscent")?, ShapingEvidenceJson::shaping_evidence_json_float_or_null(ShapingEvidenceJson::shaping_evidence_json_field(&obj, &"typoDescent")?, &"typoDescent")?));
+        return Ok(RecordedFontMetrics::new(ShapingEvidenceJson::shaping_evidence_json_num_required(ShapingEvidenceJson::shaping_evidence_json_field(&obj, UStr::new(&[97,115,99,101,110,116]))?, UStr::new(&[97,115,99,101,110,116]))?, ShapingEvidenceJson::shaping_evidence_json_num_required(ShapingEvidenceJson::shaping_evidence_json_field(&obj, UStr::new(&[100,101,115,99,101,110,116]))?, UStr::new(&[100,101,115,99,101,110,116]))?, ShapingEvidenceJson::shaping_evidence_json_num_required(ShapingEvidenceJson::shaping_evidence_json_field(&obj, UStr::new(&[108,101,97,100,105,110,103]))?, UStr::new(&[108,101,97,100,105,110,103]))?, ShapingEvidenceJson::shaping_evidence_json_str_required(ShapingEvidenceJson::shaping_evidence_json_field(&obj, UStr::new(&[115,111,117,114,99,101]))?, UStr::new(&[115,111,117,114,99,101]))?.as_ustr(), ShapingEvidenceJson::shaping_evidence_json_float_or_null(ShapingEvidenceJson::shaping_evidence_json_field(&obj, UStr::new(&[116,121,112,111,65,115,99,101,110,116]))?, UStr::new(&[116,121,112,111,65,115,99,101,110,116]))?, ShapingEvidenceJson::shaping_evidence_json_float_or_null(ShapingEvidenceJson::shaping_evidence_json_field(&obj, UStr::new(&[116,121,112,111,68,101,115,99,101,110,116]))?, UStr::new(&[116,121,112,111,68,101,115,99,101,110,116]))?));
     }
 
-    pub(crate) fn shaping_evidence_json_field(obj: &Vec<JsonMember>, name: &str) -> Result<JsonValue, TextRangeError> {
+    pub(crate) fn shaping_evidence_json_field(obj: &Vec<JsonMember>, name: &UStr) -> Result<JsonValue, TextRangeError> {
         let mut found: Option<JsonValue> = None;
         for i in 0..match u32::try_from(obj.len()) { Ok(value) => value, Err(_) => u32::MAX } {
-            if obj[usize::try_from(i).unwrap_or(0)].clone().name.to_string() == name {
+            if obj[usize::try_from(i).unwrap_or(0)].clone().name.to_ustring() == name {
                 found = Some(((obj[usize::try_from(i).unwrap_or(0)]).clone().value).clone());
                 break;
             }
         }
         if found == None {
-            return Err(TextRangeError::Message { text: format!("{}{}",
-            "Missing JSON field: ",
-            name
-        ).to_string() });
+            return Err(TextRangeError::Message { text: UString::from(format!("{}", { let mut __s = UString::new(); __s += &(UString::from("Missing JSON field: ")); __s += name; __s }).as_str()) });
         }
         return Ok((found).unwrap());
     }
 
-    pub(crate) fn shaping_evidence_json_str_required(v: JsonValue, name: &str) -> Result<String, TextRangeError> {
+    pub(crate) fn shaping_evidence_json_str_required(v: JsonValue, name: &UStr) -> Result<UString, TextRangeError> {
         let value = match v {
     JsonValue::JNull => None,
     JsonValue::JBool { .. } => None,
@@ -249,16 +178,12 @@ ShapingEvidenceJson::shaping_evidence_json_str_required(ShapingEvidenceJson::sha
     JsonValue::JObj { .. } => None,
 };
         if value.is_none() {
-            return Err(TextRangeError::Message { text: format!("{}{}{}",
-            "Field ",
-            name,
-            ": expected string"
-        ).to_string() });
+            return Err(TextRangeError::Message { text: UString::from(format!("{}", { let mut __s = UString::new(); __s += &(UString::from("Field ")); __s += name; __s += &(UString::from(": expected string")); __s }).as_str()) });
         }
-        return Ok((value).as_deref().unwrap_or("").to_string());
+        return Ok((value).as_deref().unwrap_or(UStr::new(&[])).to_ustring());
     }
 
-    pub(crate) fn shaping_evidence_json_num_required(v: JsonValue, name: &str) -> Result<f64, TextRangeError> {
+    pub(crate) fn shaping_evidence_json_num_required(v: JsonValue, name: &UStr) -> Result<f64, TextRangeError> {
         let matched: bool;
         let mut value = 0.0f64;
         let _ = match v {
@@ -273,22 +198,16 @@ ShapingEvidenceJson::shaping_evidence_json_str_required(ShapingEvidenceJson::sha
     JsonValue::JObj { .. } => matched = false,
 };
         if !matched {
-            return Err(TextRangeError::Message { text: format!("{}{}{}",
-            "Field ",
-            name,
-            ": expected number"
-        ).to_string() });
+            return Err(TextRangeError::Message { text: UString::from(format!("{}", { let mut __s = UString::new(); __s += &(UString::from("Field ")); __s += name; __s += &(UString::from(": expected number")); __s }).as_str()) });
         }
         return Ok(value);
     }
 
-    pub(crate) fn shaping_evidence_json_int_required(v: JsonValue, name: &str) -> Result<u32, TextRangeError> {
-        return Ok(u32::from_ne_bytes((match f64::from(ShapingEvidenceJson::shaping_evidence_json_num_required((v).clone(), name)?) { v if v.is_nan() => 0i32, v if v >= 2147483648.0 => 2147483647i32, v if v < -2147483648.0 => -2147483648i32, v if v < 0.0 =>
-i32::from_ne_bytes(u32::wrapping_sub(0, match ((0.0 - v).to_bits() >> 52) & 2047 { e if e < 1023 => 0u32, e => u32::try_from((((0.0 - v).to_bits() & 4503599627370495) | 4503599627370496) >> (52 - (e - 1023))).unwrap_or(0) }).to_ne_bytes()), v => i32::from_ne_bytes(match
-((v).to_bits() >> 52) & 2047 { e if e < 1023 => 0u32, e => u32::try_from((((v).to_bits() & 4503599627370495) | 4503599627370496) >> (52 - (e - 1023))).unwrap_or(0) }.to_ne_bytes()) }).to_ne_bytes()));
+    pub(crate) fn shaping_evidence_json_int_required(v: JsonValue, name: &UStr) -> Result<u32, TextRangeError> {
+        return Ok(u32::from_ne_bytes(((match f64::from(ShapingEvidenceJson::shaping_evidence_json_num_required((v).clone(), name)?) { v if v.is_nan() => 0i32, v if v >= 2147483648.0 => 2147483647i32, v if v < -2147483648.0 => -2147483648i32, v if v < 0.0 => i32::from_ne_bytes(u32::wrapping_sub(0, match ((0.0 - v).to_bits() >> 52) & 2047 { e if e < 1023 => 0u32, e => u32::try_from((((0.0 - v).to_bits() & 4503599627370495) | 4503599627370496) >> (52 - (e - 1023))).unwrap_or(0) }).to_ne_bytes()), v => i32::from_ne_bytes(match ((v).to_bits() >> 52) & 2047 { e if e < 1023 => 0u32, e => u32::try_from((((v).to_bits() & 4503599627370495) | 4503599627370496) >> (52 - (e - 1023))).unwrap_or(0) }.to_ne_bytes()) }) as u32).to_ne_bytes()));
     }
 
-    pub(crate) fn shaping_evidence_json_bool_required(v: JsonValue, name: &str) -> Result<bool, TextRangeError> {
+    pub(crate) fn shaping_evidence_json_bool_required(v: JsonValue, name: &UStr) -> Result<bool, TextRangeError> {
         let matched: bool;
         let mut value = false;
         let _ = match v {
@@ -303,32 +222,23 @@ i32::from_ne_bytes(u32::wrapping_sub(0, match ((0.0 - v).to_bits() >> 52) & 2047
     JsonValue::JObj { .. } => matched = false,
 };
         if !matched {
-            return Err(TextRangeError::Message { text: format!("{}{}{}",
-            "Field ",
-            name,
-            ": expected bool"
-        ).to_string() });
+            return Err(TextRangeError::Message { text: UString::from(format!("{}", { let mut __s = UString::new(); __s += &(UString::from("Field ")); __s += name; __s += &(UString::from(": expected bool")); __s }).as_str()) });
         }
         return Ok(value);
     }
 
-    pub(crate) fn shaping_evidence_json_str_array_required(v: JsonValue, name: &str) -> Result<Vec<String>, TextRangeError> {
+    pub(crate) fn shaping_evidence_json_str_array_required(v: JsonValue, name: &UStr) -> Result<Vec<UString>, TextRangeError> {
         let values = ShapingEvidenceJson::shaping_evidence_json_arr_required((v).clone(), name)?;
-        let mut out: Vec<String> = vec![];
+        let mut out: Vec<UString> = vec![];
         for i in 0..match u32::try_from(values.len()) { Ok(value) => value, Err(_) => u32::MAX } {
-            out.push(ShapingEvidenceJson::shaping_evidence_json_str_required((values[usize::try_from(i).unwrap_or(0)]).clone(), format!("{}{}{}{}",
-            name,
-            "[",
-            crate::runtime::int_text::IntText::int_text(i),
-            "]"
-        ).as_str())?);
+            out.push(ShapingEvidenceJson::shaping_evidence_json_str_required((values[usize::try_from(i).unwrap_or(0)]).clone(), UString::from(format!("{}", { let mut __s = UString::new(); __s += name; __s += &(UString::from("[")); __s += &(UString::from(format!("{}", crate::runtime::int_text::IntText::int_text(i)).as_str())); __s += &(UString::from("]")); __s }).as_str()).as_ustr())?);
         }
         return Ok(out);
     }
 
-    pub(crate) fn shaping_evidence_json_str_or_null(v: JsonValue, name: &str) -> Result<Option<String>, TextRangeError> {
+    pub(crate) fn shaping_evidence_json_str_or_null(v: JsonValue, name: &UStr) -> Result<Option<UString>, TextRangeError> {
         let mut null_kind = false;
-        let mut value: Option<String> = None;
+        let mut value: Option<UString> = None;
         let _ = match v {
     JsonValue::JNull => null_kind = true,
     JsonValue::JBool { .. } => value = None,
@@ -338,16 +248,12 @@ i32::from_ne_bytes(u32::wrapping_sub(0, match ((0.0 - v).to_bits() >> 52) & 2047
     JsonValue::JObj { .. } => value = None,
 };
         if !null_kind && value.is_none() {
-            return Err(TextRangeError::Message { text: format!("{}{}{}",
-            "Field ",
-            name,
-            ": expected string or null"
-        ).to_string() });
+            return Err(TextRangeError::Message { text: UString::from(format!("{}", { let mut __s = UString::new(); __s += &(UString::from("Field ")); __s += name; __s += &(UString::from(": expected string or null")); __s }).as_str()) });
         }
         return Ok(value);
     }
 
-    pub(crate) fn shaping_evidence_json_float_or_null(v: JsonValue, name: &str) -> Result<Option<f64>, TextRangeError> {
+    pub(crate) fn shaping_evidence_json_float_or_null(v: JsonValue, name: &UStr) -> Result<Option<f64>, TextRangeError> {
         let mut null_kind = false;
         let mut value: Option<f64> = None;
         let _ = match v {
@@ -359,44 +265,23 @@ i32::from_ne_bytes(u32::wrapping_sub(0, match ((0.0 - v).to_bits() >> 52) & 2047
     JsonValue::JObj { .. } => value = None,
 };
         if !null_kind && value.is_none() {
-            return Err(TextRangeError::Message { text: format!("{}{}{}",
-            "Field ",
-            name,
-            ": expected number or null"
-        ).to_string() });
+            return Err(TextRangeError::Message { text: UString::from(format!("{}", { let mut __s = UString::new(); __s += &(UString::from("Field ")); __s += name; __s += &(UString::from(": expected number or null")); __s }).as_str()) });
         }
         return Ok(value);
     }
 
-    pub(crate) fn shaping_evidence_json_rect_or_null(v: JsonValue, name: &str) -> Result<Option<Rect>, TextRangeError> {
+    pub(crate) fn shaping_evidence_json_rect_or_null(v: JsonValue, name: &UStr) -> Result<Option<Rect>, TextRangeError> {
         let values = ShapingEvidenceJson::shaping_evidence_json_arr_or_null((v).clone(), name)?;
         if values.is_none() {
             return Ok(None);
         }
         if values.as_ref().map_or(0, |v| v.len()) != 4 {
-            return Err(TextRangeError::Message { text: format!("{}{}{}{}",
-            "Field ",
-            name,
-            ": expected 4 bounds values, got ",
-            (values).as_ref().map_or(0, |v| v.len())
-        ).to_string() });
+            return Err(TextRangeError::Message { text: UString::from(format!("{}", { let mut __s = UString::new(); __s += &(UString::from("Field ")); __s += name; __s += &(UString::from(": expected 4 bounds values, got ")); __s += &(UString::from(format!("{}", ((values).as_ref().map_or(0, |v| v.len())).to_string()).as_str())); __s }).as_str()) });
         }
-        return Ok(Some(Rect::new(ShapingEvidenceJson::shaping_evidence_json_num_required(((values).as_ref().unwrap()[0usize]).clone(), format!("{}{}",
-            name,
-            "[0]"
-        ).as_str())?, ShapingEvidenceJson::shaping_evidence_json_num_required(((values).as_ref().unwrap()[1usize]).clone(), format!("{}{}",
-            name,
-            "[1]"
-        ).as_str())?, ShapingEvidenceJson::shaping_evidence_json_num_required(((values).as_ref().unwrap()[2usize]).clone(), format!("{}{}",
-            name,
-            "[2]"
-        ).as_str())?, ShapingEvidenceJson::shaping_evidence_json_num_required(((values).as_ref().unwrap()[3usize]).clone(), format!("{}{}",
-            name,
-            "[3]"
-        ).as_str())?)));
+        return Ok(Some(Rect::new(ShapingEvidenceJson::shaping_evidence_json_num_required(((values).as_ref().unwrap()[0usize]).clone(), UString::from(format!("{}", { let mut __s = UString::new(); __s += name; __s += &(UString::from("[0]")); __s }).as_str()).as_ustr())?, ShapingEvidenceJson::shaping_evidence_json_num_required(((values).as_ref().unwrap()[1usize]).clone(), UString::from(format!("{}", { let mut __s = UString::new(); __s += name; __s += &(UString::from("[1]")); __s }).as_str()).as_ustr())?, ShapingEvidenceJson::shaping_evidence_json_num_required(((values).as_ref().unwrap()[2usize]).clone(), UString::from(format!("{}", { let mut __s = UString::new(); __s += name; __s += &(UString::from("[2]")); __s }).as_str()).as_ustr())?, ShapingEvidenceJson::shaping_evidence_json_num_required(((values).as_ref().unwrap()[3usize]).clone(), UString::from(format!("{}", { let mut __s = UString::new(); __s += name; __s += &(UString::from("[3]")); __s }).as_str()).as_ustr())?)));
     }
 
-    pub(crate) fn shaping_evidence_json_arr_or_null(v: JsonValue, name: &str) -> Result<Option<Vec<JsonValue>>, TextRangeError> {
+    pub(crate) fn shaping_evidence_json_arr_or_null(v: JsonValue, name: &UStr) -> Result<Option<Vec<JsonValue>>, TextRangeError> {
         let mut null_kind = false;
         let mut value: Option<Vec<JsonValue>> = None;
         let _ = match v {
@@ -408,16 +293,12 @@ i32::from_ne_bytes(u32::wrapping_sub(0, match ((0.0 - v).to_bits() >> 52) & 2047
     JsonValue::JObj { .. } => value = None,
 };
         if !null_kind && value.is_none() {
-            return Err(TextRangeError::Message { text: format!("{}{}{}",
-            "Field ",
-            name,
-            ": expected array or null"
-        ).to_string() });
+            return Err(TextRangeError::Message { text: UString::from(format!("{}", { let mut __s = UString::new(); __s += &(UString::from("Field ")); __s += name; __s += &(UString::from(": expected array or null")); __s }).as_str()) });
         }
         return Ok(value);
     }
 
-    pub(crate) fn shaping_evidence_json_arr_required(v: JsonValue, name: &str) -> Result<Vec<JsonValue>, TextRangeError> {
+    pub(crate) fn shaping_evidence_json_arr_required(v: JsonValue, name: &UStr) -> Result<Vec<JsonValue>, TextRangeError> {
         let value = match v {
     JsonValue::JNull => None,
     JsonValue::JBool { .. } => None,
@@ -427,16 +308,12 @@ i32::from_ne_bytes(u32::wrapping_sub(0, match ((0.0 - v).to_bits() >> 52) & 2047
     JsonValue::JObj { .. } => None,
 };
         if value.is_none() {
-            return Err(TextRangeError::Message { text: format!("{}{}{}",
-            "Field ",
-            name,
-            ": expected array"
-        ).to_string() });
+            return Err(TextRangeError::Message { text: UString::from(format!("{}", { let mut __s = UString::new(); __s += &(UString::from("Field ")); __s += name; __s += &(UString::from(": expected array")); __s }).as_str()) });
         }
         return Ok((value).unwrap());
     }
 
-    pub(crate) fn shaping_evidence_json_obj_required(v: JsonValue, name: &str) -> Result<Vec<JsonMember>, TextRangeError> {
+    pub(crate) fn shaping_evidence_json_obj_required(v: JsonValue, name: &UStr) -> Result<Vec<JsonMember>, TextRangeError> {
         let value = match v {
     JsonValue::JNull => None,
     JsonValue::JBool { .. } => None,
@@ -446,21 +323,17 @@ i32::from_ne_bytes(u32::wrapping_sub(0, match ((0.0 - v).to_bits() >> 52) & 2047
     JsonValue::JObj { v: _p0 } => Some(_p0),
 };
         if value.is_none() {
-            return Err(TextRangeError::Message { text: format!("{}{}{}",
-            "Field ",
-            name,
-            ": expected object"
-        ).to_string() });
+            return Err(TextRangeError::Message { text: UString::from(format!("{}", { let mut __s = UString::new(); __s += &(UString::from("Field ")); __s += name; __s += &(UString::from(": expected object")); __s }).as_str()) });
         }
         return Ok((value).unwrap());
     }
 
-    pub(crate) fn shaping_evidence_json_skip_ws(cur: &mut JsonCursor, text: &str) {
+    pub(crate) fn shaping_evidence_json_skip_ws(cur: &mut JsonCursor, text: &UStr) {
     let __units = u_string::units(&text);
     let __count = u_string::unit_count(&text);
         let mut scanning = true;
         while scanning {
-            if i32::from_ne_bytes((cur.pos).to_ne_bytes()) >= i32::from_ne_bytes((__count).to_ne_bytes()) {
+            if i32::from_ne_bytes(((cur.pos) as i32).to_ne_bytes()) >= i32::from_ne_bytes(((__count) as i32).to_ne_bytes()) {
             }
             let c = u_string::unit_at_from(&__units, cur.pos).unwrap_or(0);
             if c == 32 || c == 9 || c == 10 || c == 13 {
@@ -471,7 +344,7 @@ i32::from_ne_bytes(u32::wrapping_sub(0, match ((0.0 - v).to_bits() >> 52) & 2047
         }
     }
 
-    pub(crate) fn shaping_evidence_json_parse_value(cur: &mut JsonCursor, text: &str) -> Result<JsonValue, TextRangeError> {
+    pub(crate) fn shaping_evidence_json_parse_value(cur: &mut JsonCursor, text: &UStr) -> Result<JsonValue, TextRangeError> {
         ShapingEvidenceJson::shaping_evidence_json_skip_ws(cur, text);
         let c = u_string::unit_at(&text, cur.pos).unwrap_or(0);
         if c == 123 {
@@ -481,24 +354,24 @@ i32::from_ne_bytes(u32::wrapping_sub(0, match ((0.0 - v).to_bits() >> 52) & 2047
             return Ok(JsonValue::JArr { v: ShapingEvidenceJson::shaping_evidence_json_parse_array(cur, text)?.to_vec() });
         }
         if c == 34 {
-            return Ok(JsonValue::JStr { v: ShapingEvidenceJson::shaping_evidence_json_parse_string(cur, text)?.to_string() });
+            return Ok(JsonValue::JStr { v: ShapingEvidenceJson::shaping_evidence_json_parse_string(cur, text)?.to_ustring() });
         }
-        if u_string::substr(&text, i32::from_ne_bytes((cur.pos).to_ne_bytes()), Some(4i32)) == "true" {
+        if u_string::substr(&text, i32::from_ne_bytes(((cur.pos) as i32).to_ne_bytes()), Some(4i32)) == UString::from("true") {
             cur.pos = u32::wrapping_add(cur.pos, 4);
             return Ok(JsonValue::JBool { v: true });
         }
-        if u_string::substr(&text, i32::from_ne_bytes((cur.pos).to_ne_bytes()), Some(5i32)) == "false" {
+        if u_string::substr(&text, i32::from_ne_bytes(((cur.pos) as i32).to_ne_bytes()), Some(5i32)) == UString::from("false") {
             cur.pos = u32::wrapping_add(cur.pos, 5);
             return Ok(JsonValue::JBool { v: false });
         }
-        if u_string::substr(&text, i32::from_ne_bytes((cur.pos).to_ne_bytes()), Some(4i32)) == "null" {
+        if u_string::substr(&text, i32::from_ne_bytes(((cur.pos) as i32).to_ne_bytes()), Some(4i32)) == UString::from("null") {
             cur.pos = u32::wrapping_add(cur.pos, 4);
             return Ok((JsonValue::JNull).clone());
         }
         return Ok(JsonValue::JNum { v: ShapingEvidenceJson::shaping_evidence_json_parse_number(cur, text)? });
     }
 
-    pub(crate) fn shaping_evidence_json_parse_object(cur: &mut JsonCursor, text: &str) -> Result<Vec<JsonMember>, TextRangeError> {
+    pub(crate) fn shaping_evidence_json_parse_object(cur: &mut JsonCursor, text: &UStr) -> Result<Vec<JsonMember>, TextRangeError> {
     let __units1 = u_string::units(&text);
     let __count1 = u_string::unit_count(&text);
         let mut members: Vec<JsonMember> = vec![];
@@ -512,22 +385,16 @@ i32::from_ne_bytes(u32::wrapping_sub(0, match ((0.0 - v).to_bits() >> 52) & 2047
         while !closed {
             ShapingEvidenceJson::shaping_evidence_json_skip_ws(cur, text);
             if !(u_string::unit_at_from(&__units1, cur.pos).as_ref().map_or(false, |v| v == &(34))) {
-                return Err(TextRangeError::Message { text: format!("{}{}",
-            "Malformed JSON: expected member name at offset ",
-            crate::runtime::int_text::IntText::int_text(cur.pos)
-        ).to_string() });
+                return Err(TextRangeError::Message { text: UString::from(format!("{}", { let mut __s = UString::new(); __s += &(UString::from("Malformed JSON: expected member name at offset ")); __s += &(UString::from(format!("{}", crate::runtime::int_text::IntText::int_text(cur.pos)).as_str())); __s }).as_str()) });
             }
             let name = ShapingEvidenceJson::shaping_evidence_json_parse_string(cur, text)?;
             ShapingEvidenceJson::shaping_evidence_json_skip_ws(cur, text);
             if !(u_string::unit_at_from(&__units1, cur.pos).as_ref().map_or(false, |v| v == &(58))) {
-                return Err(TextRangeError::Message { text: format!("{}{}",
-            "Malformed JSON: expected ':' at offset ",
-            crate::runtime::int_text::IntText::int_text(cur.pos)
-        ).to_string() });
+                return Err(TextRangeError::Message { text: UString::from(format!("{}", { let mut __s = UString::new(); __s += &(UString::from("Malformed JSON: expected ':' at offset ")); __s += &(UString::from(format!("{}", crate::runtime::int_text::IntText::int_text(cur.pos)).as_str())); __s }).as_str()) });
             }
             cur.pos = u32::wrapping_add(cur.pos, 1);
             ShapingEvidenceJson::shaping_evidence_json_skip_ws(cur, text);
-            members.push(JsonMember::new(name.as_str(), ShapingEvidenceJson::shaping_evidence_json_parse_value(cur, text)?));
+            members.push(JsonMember::new(name.as_ustr(), ShapingEvidenceJson::shaping_evidence_json_parse_value(cur, text)?));
             ShapingEvidenceJson::shaping_evidence_json_skip_ws(cur, text);
             let c = u_string::unit_at_from(&__units1, cur.pos).unwrap_or(0);
             if c == 44 {
@@ -537,17 +404,14 @@ i32::from_ne_bytes(u32::wrapping_sub(0, match ((0.0 - v).to_bits() >> 52) & 2047
                     cur.pos = u32::wrapping_add(cur.pos, 1);
                     closed = true;
                 } else {
-                    return Err(TextRangeError::Message { text: format!("{}{}",
-            "Malformed JSON: expected ',' or '}' at offset ",
-            crate::runtime::int_text::IntText::int_text(cur.pos)
-        ).to_string() });
+                    return Err(TextRangeError::Message { text: UString::from(format!("{}", { let mut __s = UString::new(); __s += &(UString::from("Malformed JSON: expected ',' or '}' at offset ")); __s += &(UString::from(format!("{}", crate::runtime::int_text::IntText::int_text(cur.pos)).as_str())); __s }).as_str()) });
                 }
             }
         }
         return Ok(members);
     }
 
-    pub(crate) fn shaping_evidence_json_parse_array(cur: &mut JsonCursor, text: &str) -> Result<Vec<JsonValue>, TextRangeError> {
+    pub(crate) fn shaping_evidence_json_parse_array(cur: &mut JsonCursor, text: &UStr) -> Result<Vec<JsonValue>, TextRangeError> {
     let __units2 = u_string::units(&text);
     let __count2 = u_string::unit_count(&text);
         let mut values: Vec<JsonValue> = vec![];
@@ -570,21 +434,18 @@ i32::from_ne_bytes(u32::wrapping_sub(0, match ((0.0 - v).to_bits() >> 52) & 2047
                     cur.pos = u32::wrapping_add(cur.pos, 1);
                     closed = true;
                 } else {
-                    return Err(TextRangeError::Message { text: format!("{}{}",
-            "Malformed JSON: expected ',' or ']' at offset ",
-            crate::runtime::int_text::IntText::int_text(cur.pos)
-        ).to_string() });
+                    return Err(TextRangeError::Message { text: UString::from(format!("{}", { let mut __s = UString::new(); __s += &(UString::from("Malformed JSON: expected ',' or ']' at offset ")); __s += &(UString::from(format!("{}", crate::runtime::int_text::IntText::int_text(cur.pos)).as_str())); __s }).as_str()) });
                 }
             }
         }
         return Ok(values);
     }
 
-    pub(crate) fn shaping_evidence_json_parse_string(cur: &mut JsonCursor, text: &str) -> Result<String, TextRangeError> {
+    pub(crate) fn shaping_evidence_json_parse_string(cur: &mut JsonCursor, text: &UStr) -> Result<UString, TextRangeError> {
     let __units3 = u_string::units(&text);
     let __count3 = u_string::unit_count(&text);
         cur.pos = u32::wrapping_add(cur.pos, 1);
-        let mut buf_b = String::new();
+        let mut buf_b = UString::new();
         let mut done = false;
         while !done {
             let c = u_string::unit_at_from(&__units3, cur.pos).unwrap_or(0);
@@ -596,49 +457,46 @@ i32::from_ne_bytes(u32::wrapping_sub(0, match ((0.0 - v).to_bits() >> 52) & 2047
                     cur.pos = u32::wrapping_add(cur.pos, 1);
                     let e = u_string::unit_at_from(&__units3, cur.pos).unwrap_or(0);
                     if e == 34 {
-                        buf_b += &("\"");
+                        buf_b += &(UString::from("\""));
                         cur.pos = u32::wrapping_add(cur.pos, 1);
                     } else {
                         if e == 92 {
-                            buf_b += &("\\");
+                            buf_b += &(UString::from("\\"));
                             cur.pos = u32::wrapping_add(cur.pos, 1);
                         } else {
                             if e == 47 {
-                                buf_b += &("/");
+                                buf_b += &(UString::from("/"));
                                 cur.pos = u32::wrapping_add(cur.pos, 1);
                             } else {
                                 if e == 98 {
-                                    buf_b += &("");
+                                    buf_b += &(UString::from(""));
                                     cur.pos = u32::wrapping_add(cur.pos, 1);
                                 } else {
                                     if e == 102 {
-                                        buf_b += &("");
+                                        buf_b += &(UString::from(""));
                                         cur.pos = u32::wrapping_add(cur.pos, 1);
                                     } else {
                                         if e == 110 {
-                                            buf_b += &(concat!("\n",
-""));
+                                            buf_b += &(UString::from(concat!("\n",
+"")));
                                             cur.pos = u32::wrapping_add(cur.pos, 1);
                                         } else {
                                             if e == 114 {
-                                                buf_b += &("\r");
+                                                buf_b += &(UString::from("\r"));
                                                 cur.pos = u32::wrapping_add(cur.pos, 1);
                                             } else {
                                                 if e == 116 {
-                                                    buf_b += &("\t");
+                                                    buf_b += &(UString::from("\t"));
                                                     cur.pos = u32::wrapping_add(cur.pos, 1);
                                                 } else {
                                                     if e == 117 {
                                                         {
                                                             let c = ShapingEvidenceJson::shaping_evidence_json_parse_hex4(text, u32::wrapping_add(cur.pos, 1))?;
-                                                            buf_b += &(if c > 0xFFFF { String::from_utf16(&[0xD800 + (((c) - 0x10000) >> 10) as u16, 0xDC00 + (((c) - 0x10000) & 0x3FF) as u16]).unwrap() } else { String::from_utf16_lossy(&[(c) as u16]) });
+                                                            buf_b += &(if c > 0xFFFF { u_string::from_units(&[0xD800 + (((c) - 0x10000) >> 10) as u16, 0xDC00 + (((c) - 0x10000) & 0x3FF) as u16]) } else { u_string::from_units(&[(c) as u16]) });
                                                         }
                                                         cur.pos = u32::wrapping_add(cur.pos, 5);
                                                     } else {
-                                                        return Err(TextRangeError::Message { text: format!("{}{}",
-            "Malformed JSON: unsupported escape at offset ",
-            crate::runtime::int_text::IntText::int_text(cur.pos)
-        ).to_string() });
+                                                        return Err(TextRangeError::Message { text: UString::from(format!("{}", { let mut __s = UString::new(); __s += &(UString::from("Malformed JSON: unsupported escape at offset ")); __s += &(UString::from(format!("{}", crate::runtime::int_text::IntText::int_text(cur.pos)).as_str())); __s }).as_str()) });
                                                     }
                                                 }
                                             }
@@ -651,7 +509,7 @@ i32::from_ne_bytes(u32::wrapping_sub(0, match ((0.0 - v).to_bits() >> 52) & 2047
                 } else {
                     {
                         let c = c;
-                        buf_b += &(if c > 0xFFFF { String::from_utf16(&[0xD800 + (((c) - 0x10000) >> 10) as u16, 0xDC00 + (((c) - 0x10000) & 0x3FF) as u16]).unwrap() } else { String::from_utf16_lossy(&[(c) as u16]) });
+                        buf_b += &(if c > 0xFFFF { u_string::from_units(&[0xD800 + (((c) - 0x10000) >> 10) as u16, 0xDC00 + (((c) - 0x10000) & 0x3FF) as u16]) } else { u_string::from_units(&[(c) as u16]) });
                     }
                     cur.pos = u32::wrapping_add(cur.pos, 1);
                 }
@@ -660,24 +518,21 @@ i32::from_ne_bytes(u32::wrapping_sub(0, match ((0.0 - v).to_bits() >> 52) & 2047
         return Ok(buf_b);
     }
 
-    pub(crate) fn shaping_evidence_json_parse_hex4(text: &str, start: u32) -> Result<u32, TextRangeError> {
+    pub(crate) fn shaping_evidence_json_parse_hex4(text: &UStr, start: u32) -> Result<u32, TextRangeError> {
         let mut value = 0u32;
         for i in 0..4 {
             let c = u_string::unit_at(&text, u32::wrapping_add(start, i)).unwrap_or(0);
             let digit: u32;
-            if i32::from_ne_bytes((c).to_ne_bytes()) >= 48 && (i32::from_ne_bytes((c).to_ne_bytes())) <= 57 {
+            if i32::from_ne_bytes(((c) as i32).to_ne_bytes()) >= 48 && (i32::from_ne_bytes(((c) as i32).to_ne_bytes())) <= 57 {
                 digit = u32::wrapping_sub(c, 48);
             } else {
-                if i32::from_ne_bytes((c).to_ne_bytes()) >= 97 && (i32::from_ne_bytes((c).to_ne_bytes())) <= 102 {
+                if i32::from_ne_bytes(((c) as i32).to_ne_bytes()) >= 97 && (i32::from_ne_bytes(((c) as i32).to_ne_bytes())) <= 102 {
                     digit = u32::wrapping_add(u32::wrapping_sub(c, 97), 10);
                 } else {
-                    if i32::from_ne_bytes((c).to_ne_bytes()) >= 65 && (i32::from_ne_bytes((c).to_ne_bytes())) <= 70 {
+                    if i32::from_ne_bytes(((c) as i32).to_ne_bytes()) >= 65 && (i32::from_ne_bytes(((c) as i32).to_ne_bytes())) <= 70 {
                         digit = u32::wrapping_add(u32::wrapping_sub(c, 65), 10);
                     } else {
-                        return Err(TextRangeError::Message { text: format!("{}{}",
-            "Malformed JSON: bad \\u escape at offset ",
-            crate::runtime::int_text::IntText::int_text(start)
-        ).to_string() });
+                        return Err(TextRangeError::Message { text: UString::from(format!("{}", { let mut __s = UString::new(); __s += &(UString::from("Malformed JSON: bad \\u escape at offset ")); __s += &(UString::from(format!("{}", crate::runtime::int_text::IntText::int_text(start)).as_str())); __s }).as_str()) });
                     }
                 }
             }
@@ -686,28 +541,25 @@ i32::from_ne_bytes(u32::wrapping_sub(0, match ((0.0 - v).to_bits() >> 52) & 2047
         return Ok(value);
     }
 
-    pub(crate) fn shaping_evidence_json_parse_number(cur: &mut JsonCursor, text: &str) -> Result<f64, TextRangeError> {
+    pub(crate) fn shaping_evidence_json_parse_number(cur: &mut JsonCursor, text: &UStr) -> Result<f64, TextRangeError> {
     let __units4 = u_string::units(&text);
     let __count4 = u_string::unit_count(&text);
         let start = cur.pos;
         let mut scanning = true;
         while scanning {
-            if i32::from_ne_bytes((cur.pos).to_ne_bytes()) >= i32::from_ne_bytes((__count4).to_ne_bytes()) {
+            if i32::from_ne_bytes(((cur.pos) as i32).to_ne_bytes()) >= i32::from_ne_bytes(((__count4) as i32).to_ne_bytes()) {
             }
             let c = u_string::unit_at_from(&__units4, cur.pos).unwrap_or(0);
-            if i32::from_ne_bytes((c).to_ne_bytes()) >= 48 && (i32::from_ne_bytes((c).to_ne_bytes())) <= 57 || c == 45 || c == 43 || c == 46 || c == 101 || c == 69 {
+            if i32::from_ne_bytes(((c) as i32).to_ne_bytes()) >= 48 && (i32::from_ne_bytes(((c) as i32).to_ne_bytes())) <= 57 || c == 45 || c == 43 || c == 46 || c == 101 || c == 69 {
                 cur.pos = u32::wrapping_add(cur.pos, 1);
             } else {
                 scanning = false;
             }
         }
         if cur.pos == start {
-            return Err(TextRangeError::Message { text: format!("{}{}",
-            "Malformed JSON: expected value at offset ",
-            crate::runtime::int_text::IntText::int_text(start)
-        ).to_string() });
+            return Err(TextRangeError::Message { text: UString::from(format!("{}", { let mut __s = UString::new(); __s += &(UString::from("Malformed JSON: expected value at offset ")); __s += &(UString::from(format!("{}", crate::runtime::int_text::IntText::int_text(start)).as_str())); __s }).as_str()) });
         }
-        return Ok(u_string::parse_f64(&(u_string::substring(&text, i32::from_ne_bytes((start).to_ne_bytes()), i32::from_ne_bytes((cur.pos).to_ne_bytes())))));
+        return Ok(u_string::parse_f64(&(u_string::substring(&text, i32::from_ne_bytes(((start) as i32).to_ne_bytes()), i32::from_ne_bytes(((cur.pos) as i32).to_ne_bytes())))));
     }
 }
 
@@ -716,7 +568,7 @@ pub enum JsonValue {
     JNull,
     JBool { v: bool },
     JNum { v: f64 },
-    JStr { v: String },
+    JStr { v: UString },
     JArr { v: Vec<JsonValue> },
     JObj { v: Vec<JsonMember> },
 }

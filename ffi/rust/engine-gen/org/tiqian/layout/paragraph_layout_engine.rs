@@ -36,7 +36,10 @@ use crate::runtime::sorted_table::SortedMapTable;
 use crate::runtime::sorted_table::SortedSetTable;
 use crate::runtime::sorted_table::SortedTable;
 use crate::runtime::u_string;
+use crate::runtime::u_string::UStr;
+use crate::runtime::u_string::UString;
 use std::sync::Arc;
+use std::sync::Mutex;
 
 
 #[derive(Debug, Clone, PartialEq)]
@@ -44,6 +47,15 @@ pub enum ParagraphLayoutEngineNewFault {
     TextRangeErrorFault(crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError),
     UStringFaultFault(crate::std::u_string_exception::UStringFault),
     LayoutWithRejectedTechnicalTiersFault(crate::org::tiqian::layout::paragraph_layout_engine::ParagraphLayoutEngineLayoutWithRejectedTechnicalTiersFault),
+}
+impl std::fmt::Display for ParagraphLayoutEngineNewFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            ParagraphLayoutEngineNewFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            ParagraphLayoutEngineNewFault::UStringFaultFault(value) => write!(formatter, "{}", value),
+            ParagraphLayoutEngineNewFault::LayoutWithRejectedTechnicalTiersFault(value) => write!(formatter, "{}", value),
+        }
+    }
 }
 
 impl From<ParagraphLayoutEngineNewFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
@@ -98,6 +110,17 @@ pub enum ParagraphLayoutEngineLayoutWithRejectedTechnicalTiersFault {
     WidthIndependentAnnotationCacheBuildParagraphLayoutPrepFaultFault(crate::org::tiqian::layout::width_independent_annotation_cache::WidthIndependentAnnotationCacheBuildParagraphLayoutPrepFault),
     LineAdjustmentStageFinishParagraphLayoutFaultFault(crate::org::tiqian::layout::line_adjustment_stage::LineAdjustmentStageFinishParagraphLayoutFault),
     ParagraphShapingStageShapeParagraphFaultFault(crate::org::tiqian::layout::paragraph_shaping_stage::ParagraphShapingStageShapeParagraphFault),
+}
+impl std::fmt::Display for ParagraphLayoutEngineLayoutWithRejectedTechnicalTiersFault {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            ParagraphLayoutEngineLayoutWithRejectedTechnicalTiersFault::TextRangeErrorFault(value) => write!(formatter, "{}", value),
+            ParagraphLayoutEngineLayoutWithRejectedTechnicalTiersFault::WidthIndependentAnnotationCachePrepareWidthIndependentAnnotationFaultFault(value) => write!(formatter, "{}", value),
+            ParagraphLayoutEngineLayoutWithRejectedTechnicalTiersFault::WidthIndependentAnnotationCacheBuildParagraphLayoutPrepFaultFault(value) => write!(formatter, "{}", value),
+            ParagraphLayoutEngineLayoutWithRejectedTechnicalTiersFault::LineAdjustmentStageFinishParagraphLayoutFaultFault(value) => write!(formatter, "{}", value),
+            ParagraphLayoutEngineLayoutWithRejectedTechnicalTiersFault::ParagraphShapingStageShapeParagraphFaultFault(value) => write!(formatter, "{}", value),
+        }
+    }
 }
 
 impl From<ParagraphLayoutEngineLayoutWithRejectedTechnicalTiersFault> for crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError {
@@ -179,7 +202,7 @@ impl From<crate::org::tiqian::layout::paragraph_shaping_stage::ParagraphShapingS
 pub struct ParagraphLayoutEngineFns;
 
 impl ParagraphLayoutEngineFns {
-    pub const PARAGRAPH_LAYOUT_ENGINE_FNS_MANDATORY_BREAK_FONT_KEY: &str = "mandatory-break";
+    pub const PARAGRAPH_LAYOUT_ENGINE_FNS_MANDATORY_BREAK_FONT_KEY: &UStr = unsafe { &*(&[0x006Du16, 0x0061u16, 0x006Eu16, 0x0064u16, 0x0061u16, 0x0074u16, 0x006Fu16, 0x0072u16, 0x0079u16, 0x002Du16, 0x0062u16, 0x0072u16, 0x0065u16, 0x0061u16, 0x006Bu16] as *const [u16] as *const crate::runtime::u_string::UStr) };
 }
 
 pub trait ParagraphLayoutEngine: Send + Sync {
@@ -213,17 +236,15 @@ pub struct ExplainableStubParagraphLayoutEngine {
     pub quote_pair_analyzer: QuotePairAnalyzer,
     pub line_breaker: Box<dyn LineBreaker>,
     pub justifier: Justifier,
-    pub text_shaper: Box<dyn ITextShaper>,
+    pub text_shaper: Arc<Mutex<dyn ITextShaper>>,
     pub hyphenator: Box<dyn Hyphenator>,
-    pub annotation_cache: Box<dyn WidthIndependentAnnotationCache>,
+    pub annotation_cache: Arc<Mutex<dyn WidthIndependentAnnotationCache>>,
 }
 
 impl ExplainableStubParagraphLayoutEngine {
-    pub fn new(font_role_classifier: Option<Box<dyn FontRoleClassifier>>, fallback_resolver: Option<Box<dyn FallbackResolver>>, clreq_profile_resolver: Option<Box<dyn ClreqProfileResolver>>, font_metrics_resolver: Option<Box<dyn FontMetricsResolver>>, font_metrics_normalizer:
-Option<Box<dyn FontMetricsNormalizer>>, punctuation_atom_builder: Option<PunctuationAtomBuilder>, punctuation_spacing_compressor: Option<PunctuationSpacingCompressor>, quote_pair_analyzer: Option<QuotePairAnalyzer>, line_breaker: Option<Box<dyn LineBreaker>>, justifier:
-Option<Justifier>, text_shaper: Option<Box<dyn ITextShaper>>, hyphenator: Option<Box<dyn Hyphenator>>, annotation_cache: Option<Box<dyn WidthIndependentAnnotationCache>>) -> Result<Self, ParagraphLayoutEngineNewFault> {
+    pub fn new(font_role_classifier: Option<Box<dyn FontRoleClassifier>>, fallback_resolver: Option<Box<dyn FallbackResolver>>, clreq_profile_resolver: Option<Box<dyn ClreqProfileResolver>>, font_metrics_resolver: Option<Box<dyn FontMetricsResolver>>, font_metrics_normalizer: Option<Box<dyn FontMetricsNormalizer>>, punctuation_atom_builder: Option<PunctuationAtomBuilder>, punctuation_spacing_compressor: Option<PunctuationSpacingCompressor>, quote_pair_analyzer: Option<QuotePairAnalyzer>, line_breaker: Option<Box<dyn LineBreaker>>, justifier: Option<Justifier>, text_shaper: Option<Arc<Mutex<dyn ITextShaper>>>, hyphenator: Option<Box<dyn Hyphenator>>, annotation_cache: Option<Arc<Mutex<dyn WidthIndependentAnnotationCache>>>) -> Result<Self, ParagraphLayoutEngineNewFault> {
         let font_role_classifier = font_role_classifier.unwrap_or_else(|| Box::new(CjkFontRoleClassifier::new()));
-        let fallback_resolver = fallback_resolver.unwrap_or_else(|| Box::new(ParagraphLayoutFallbackResolver::new(Some("cjk-primary".to_string()), Some("latin-primary".to_string()), Some("symbol-fallback".to_string())).unwrap()));
+        let fallback_resolver = fallback_resolver.unwrap_or_else(|| Box::new(ParagraphLayoutFallbackResolver::new(Some(UString::from("cjk-primary")), Some(UString::from("latin-primary")), Some(UString::from("symbol-fallback"))).unwrap()));
         let clreq_profile_resolver = clreq_profile_resolver.unwrap_or_else(|| Box::new(BuiltInClreqProfileResolver::new()));
         let font_metrics_resolver = font_metrics_resolver.unwrap_or_else(|| Box::new(StubFontMetricsResolver::new()));
         let font_metrics_normalizer = font_metrics_normalizer.unwrap_or_else(|| Box::new(ScriptAwareFontMetricsNormalizer::new()));
@@ -232,9 +253,9 @@ Option<Justifier>, text_shaper: Option<Box<dyn ITextShaper>>, hyphenator: Option
         let quote_pair_analyzer = quote_pair_analyzer.unwrap_or_else(|| QuotePairAnalyzer::new());
         let line_breaker = line_breaker.unwrap_or_else(|| Box::new(GreedyLineBreaker::new(None, None, None, None)));
         let justifier = justifier.unwrap_or_else(|| Justifier::new(Some(0.5), Some(0.25)));
-        let text_shaper = text_shaper.unwrap_or_else(|| Box::new(ExplainableStubTextShaper::new()));
+        let text_shaper = text_shaper.unwrap_or_else(|| Arc::new(Mutex::new(ExplainableStubTextShaper::new())));
         let hyphenator = hyphenator.unwrap_or_else(|| DefaultHyphenator::default_hyphenator_default_hyphenator().unwrap());
-        let annotation_cache = annotation_cache.unwrap_or_else(|| Box::new(LruWidthIndependentAnnotationCache::new(512)));
+        let annotation_cache = annotation_cache.unwrap_or_else(|| Arc::new(Mutex::new(LruWidthIndependentAnnotationCache::new(512))));
         Ok(Self {
             font_role_classifier: font_role_classifier,
             fallback_resolver: fallback_resolver,
@@ -259,90 +280,62 @@ Option<Justifier>, text_shaper: Option<Box<dyn ITextShaper>>, hyphenator: Option
     pub fn layout_with_rejected_technical_tiers(&mut self, input: LayoutInput, rejected_technical_tiers_by_span: SortedMapTable<TextRange, SortedSetTable<u32>>) -> Result<LayoutResult, ParagraphLayoutEngineLayoutWithRejectedTechnicalTiersFault> {
         let _ = self.validate_layout_input((input).clone()).map_err(|e| ParagraphLayoutEngineLayoutWithRejectedTechnicalTiersFault::TextRangeErrorFault(e))?;
         let cache_key = WidthIndependentAnnotationCacheFns::width_independent_annotation_cache_fns_to_width_independent_annotation_key((input).clone(), Some((rejected_technical_tiers_by_span).clone()));
-        let cached = self.annotation_cache.get((cache_key).clone());
+        let cached = self.annotation_cache.lock().unwrap().get((cache_key).clone());
         let annotation: WidthIndependentParagraphAnnotation;
         if cached.is_some() {
             annotation = (cached).as_ref().unwrap().clone();
         } else {
-            annotation = WidthIndependentAnnotationCacheFns::width_independent_annotation_cache_fns_prepare_width_independent_annotation(self, (input).clone(), (rejected_technical_tiers_by_span).clone()).map_err(|e|
-ParagraphLayoutEngineLayoutWithRejectedTechnicalTiersFault::ParagraphShapingStageShapeParagraphFaultFault(e))?;
-            self.annotation_cache.put((cache_key).clone(), (annotation).clone());
+            annotation = WidthIndependentAnnotationCacheFns::width_independent_annotation_cache_fns_prepare_width_independent_annotation(self, (input).clone(), (rejected_technical_tiers_by_span).clone()).map_err(|e| ParagraphLayoutEngineLayoutWithRejectedTechnicalTiersFault::ParagraphShapingStageShapeParagraphFaultFault(e))?;
+            self.annotation_cache.lock().unwrap().put((cache_key).clone(), (annotation).clone());
         }
-        let prep = WidthIndependentAnnotationCacheFns::width_independent_annotation_cache_fns_build_paragraph_layout_prep(self, (input).clone(), (annotation).clone(), (rejected_technical_tiers_by_span).clone()).map_err(|e|
-ParagraphLayoutEngineLayoutWithRejectedTechnicalTiersFault::WidthIndependentAnnotationCacheBuildParagraphLayoutPrepFaultFault(e))?;
-        return Ok(LineAdjustmentStage::line_adjustment_stage_finish_paragraph_layout(self, (prep).clone(), LineBreakPlanningStage::line_break_planning_stage_plan_paragraph_lines((self).clone(), (prep).clone()).map_err(|e|
-ParagraphLayoutEngineLayoutWithRejectedTechnicalTiersFault::TextRangeErrorFault(e))?).map_err(|e| ParagraphLayoutEngineLayoutWithRejectedTechnicalTiersFault::LineAdjustmentStageFinishParagraphLayoutFaultFault(e))?);
+        let prep = WidthIndependentAnnotationCacheFns::width_independent_annotation_cache_fns_build_paragraph_layout_prep(self, (input).clone(), (annotation).clone(), (rejected_technical_tiers_by_span).clone()).map_err(|e| ParagraphLayoutEngineLayoutWithRejectedTechnicalTiersFault::WidthIndependentAnnotationCacheBuildParagraphLayoutPrepFaultFault(e))?;
+        return Ok(LineAdjustmentStage::line_adjustment_stage_finish_paragraph_layout(self, (prep).clone(), LineBreakPlanningStage::line_break_planning_stage_plan_paragraph_lines((self).clone(), (prep).clone()).map_err(|e| ParagraphLayoutEngineLayoutWithRejectedTechnicalTiersFault::TextRangeErrorFault(e))?).map_err(|e| ParagraphLayoutEngineLayoutWithRejectedTechnicalTiersFault::LineAdjustmentStageFinishParagraphLayoutFaultFault(e))?);
     }
 
     fn validate_layout_input(&self, input: LayoutInput) -> Result<(), TextRangeError> {
-        let text = ((input.content).clone().text).to_string();
+        let text = ((input.content).clone().text).to_ustring();
         if !((input.paragraph_style).clone().emphasis_dot_gap_em).is_finite() || ((input.paragraph_style).clone().emphasis_dot_gap_em) < (0 as f64) {
-            return Err(TextRangeError::Message { text: "ParagraphStyle.emphasisDotGapEm must be finite and non-negative".to_string() });
+            return Err(TextRangeError::Message { text: UString::from("ParagraphStyle.emphasisDotGapEm must be finite and non-negative") });
         }
         if !((input.paragraph_style).clone().inline_object_minimum_clearance_em).is_finite() || ((input.paragraph_style).clone().inline_object_minimum_clearance_em) < (0 as f64) {
-            return Err(TextRangeError::Message { text: "ParagraphStyle.inlineObjectMinimumClearanceEm must be finite and non-negative".to_string() });
+            return Err(TextRangeError::Message { text: UString::from("ParagraphStyle.inlineObjectMinimumClearanceEm must be finite and non-negative") });
         }
         let mut surrogate_scan = 0u32;
         let __units = u_string::units(&text);
         let __count = u_string::unit_count(&text);
-        while (i32::from_ne_bytes((surrogate_scan).to_ne_bytes())) < (i32::from_ne_bytes((__count).to_ne_bytes())) {
+        while (i32::from_ne_bytes(((surrogate_scan) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((__count) as i32).to_ne_bytes())) {
             let code = u_string::unit_at_from(&__units, surrogate_scan).unwrap_or(0);
-            if i32::from_ne_bytes((code).to_ne_bytes()) >= 55296 && (i32::from_ne_bytes((code).to_ne_bytes())) <= 56319 {
-                if !((i32::from_ne_bytes((u32::wrapping_add(surrogate_scan, 1)).to_ne_bytes())) < (i32::from_ne_bytes((u_string::unit_count(&(text))).to_ne_bytes())) && (i32::from_ne_bytes((u_string::unit_at(&text, u32::wrapping_add(surrogate_scan,
-1)).unwrap_or(0)).to_ne_bytes())) >= 56320 && (i32::from_ne_bytes((u_string::unit_at(&text, u32::wrapping_add(surrogate_scan, 1)).unwrap_or(0)).to_ne_bytes())) <= 57343) {
-                    return Err(TextRangeError::Message { text: format!("{}{}",
-            "SourceText has an unpaired high surrogate at char ",
-            crate::runtime::int_text::IntText::int_text(surrogate_scan)
-        ).to_string() });
+            if i32::from_ne_bytes(((code) as i32).to_ne_bytes()) >= 55296 && (i32::from_ne_bytes(((code) as i32).to_ne_bytes())) <= 56319 {
+                if !((i32::from_ne_bytes(((u32::wrapping_add(surrogate_scan, 1)) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u_string::unit_count(&(text))) as i32).to_ne_bytes())) && (i32::from_ne_bytes(((u_string::unit_at(&text, u32::wrapping_add(surrogate_scan, 1)).unwrap_or(0)) as i32).to_ne_bytes())) >= 56320 && (i32::from_ne_bytes(((u_string::unit_at(&text, u32::wrapping_add(surrogate_scan, 1)).unwrap_or(0)) as i32).to_ne_bytes())) <= 57343) {
+                    return Err(TextRangeError::Message { text: UString::from(format!("{}", { let mut __s = UString::new(); __s += &(UString::from("SourceText has an unpaired high surrogate at char ")); __s += &(UString::from(format!("{}", crate::runtime::int_text::IntText::int_text(surrogate_scan)).as_str())); __s }).as_str()) });
                 }
                 surrogate_scan = u32::wrapping_add(surrogate_scan, 2);
             } else {
-                if i32::from_ne_bytes((code).to_ne_bytes()) >= 56320 && (i32::from_ne_bytes((code).to_ne_bytes())) <= 57343 {
-                    return Err(TextRangeError::Message { text: format!("{}{}",
-            "SourceText has an unpaired low surrogate at char ",
-            crate::runtime::int_text::IntText::int_text(surrogate_scan)
-        ).to_string() });
+                if i32::from_ne_bytes(((code) as i32).to_ne_bytes()) >= 56320 && (i32::from_ne_bytes(((code) as i32).to_ne_bytes())) <= 57343 {
+                    return Err(TextRangeError::Message { text: UString::from(format!("{}", { let mut __s = UString::new(); __s += &(UString::from("SourceText has an unpaired low surrogate at char ")); __s += &(UString::from(format!("{}", crate::runtime::int_text::IntText::int_text(surrogate_scan)).as_str())); __s }).as_str()) });
                 }
                 surrogate_scan = u32::wrapping_add(surrogate_scan, 1);
             }
         }
         for i in 0..match u32::try_from(input.inline_boxes.len()) { Ok(value) => value, Err(_) => u32::MAX } {
             let inline_box = (input.inline_boxes[usize::try_from(i).unwrap_or(0)]).clone();
-            if !(((inline_box.range).clone().start) <= 2147483647 && (i32::from_ne_bytes(((inline_box.range).clone().start).to_ne_bytes())) < (i32::from_ne_bytes(((inline_box.range).clone().end).to_ne_bytes())) &&
-(i32::from_ne_bytes(((inline_box.range).clone().end).to_ne_bytes())) <= i32::from_ne_bytes((u_string::unit_count(&(text))).to_ne_bytes())) {
-                return Err(TextRangeError::Message { text: format!("{}{}{}",
-            "InlineBoxSpan ",
-            (inline_box.range).clone().to_string(),
-            " must be a non-empty source range"
-        ).to_string() });
+            if !(((inline_box.range).clone().start) <= 2147483647 && (i32::from_ne_bytes((((inline_box.range).clone().start) as i32).to_ne_bytes())) < (i32::from_ne_bytes((((inline_box.range).clone().end) as i32).to_ne_bytes())) && (i32::from_ne_bytes((((inline_box.range).clone().end) as i32).to_ne_bytes())) <= i32::from_ne_bytes(((u_string::unit_count(&(text))) as i32).to_ne_bytes())) {
+                return Err(TextRangeError::Message { text: UString::from(format!("{}", { let mut __s = UString::new(); __s += &(UString::from("InlineBoxSpan ")); __s += UString::from(format!("{}", (inline_box.range).clone().to_string()).as_str()).as_ustr(); __s += &(UString::from(" must be a non-empty source range")); __s }).as_str()) });
             }
             if !((inline_box.inline_start).is_finite() && (inline_box.inline_end).is_finite()) {
-                return Err(TextRangeError::Message { text: format!("{}{}{}",
-            "InlineBoxSpan ",
-            (inline_box.range).clone().to_string(),
-            " must have finite inline edges"
-        ).to_string() });
+                return Err(TextRangeError::Message { text: UString::from(format!("{}", { let mut __s = UString::new(); __s += &(UString::from("InlineBoxSpan ")); __s += UString::from(format!("{}", (inline_box.range).clone().to_string()).as_str()).as_ustr(); __s += &(UString::from(" must have finite inline edges")); __s }).as_str()) });
             }
         }
         for i in 0..match u32::try_from((input.content).clone().line_break_spans.len()) { Ok(value) => value, Err(_) => u32::MAX } {
             let span = ((input.content).clone().line_break_spans[usize::try_from(i).unwrap_or(0)]).clone();
-            if !(((span.range).clone().start) <= 2147483647 && (i32::from_ne_bytes(((span.range).clone().start).to_ne_bytes())) < (i32::from_ne_bytes(((span.range).clone().end).to_ne_bytes())) && (i32::from_ne_bytes(((span.range).clone().end).to_ne_bytes())) <=
-i32::from_ne_bytes((u_string::unit_count(&(text))).to_ne_bytes())) {
-                return Err(TextRangeError::Message { text: format!("{}{}{}",
-            "LineBreakSpan ",
-            (span.range).clone().to_string(),
-            " must be a non-empty source range"
-        ).to_string() });
+            if !(((span.range).clone().start) <= 2147483647 && (i32::from_ne_bytes((((span.range).clone().start) as i32).to_ne_bytes())) < (i32::from_ne_bytes((((span.range).clone().end) as i32).to_ne_bytes())) && (i32::from_ne_bytes((((span.range).clone().end) as i32).to_ne_bytes())) <= i32::from_ne_bytes(((u_string::unit_count(&(text))) as i32).to_ne_bytes())) {
+                return Err(TextRangeError::Message { text: UString::from(format!("{}", { let mut __s = UString::new(); __s += &(UString::from("LineBreakSpan ")); __s += UString::from(format!("{}", (span.range).clone().to_string()).as_str()).as_ustr(); __s += &(UString::from(" must be a non-empty source range")); __s }).as_str()) });
             }
         }
         for i in 0..match u32::try_from((input.content).clone().auto_space_suppressed_ranges.len()) { Ok(value) => value, Err(_) => u32::MAX } {
             let range = ((input.content).clone().auto_space_suppressed_ranges[usize::try_from(i).unwrap_or(0)]).clone();
-            if !((range.start) <= 2147483647 && (i32::from_ne_bytes((range.start).to_ne_bytes())) < (i32::from_ne_bytes((range.end).to_ne_bytes())) && (i32::from_ne_bytes((range.end).to_ne_bytes())) <= i32::from_ne_bytes((u_string::unit_count(&(text))).to_ne_bytes())) {
-                return Err(TextRangeError::Message { text: format!("{}{}{}",
-            "Auto-space suppressed range ",
-            range.to_string(),
-            " must be a non-empty source range"
-        ).to_string() });
+            if !((range.start) <= 2147483647 && (i32::from_ne_bytes(((range.start) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((range.end) as i32).to_ne_bytes())) && (i32::from_ne_bytes(((range.end) as i32).to_ne_bytes())) <= i32::from_ne_bytes(((u_string::unit_count(&(text))) as i32).to_ne_bytes())) {
+                return Err(TextRangeError::Message { text: UString::from(format!("{}", { let mut __s = UString::new(); __s += &(UString::from("Auto-space suppressed range ")); __s += UString::from(format!("{}", range.to_string()).as_str()).as_ustr(); __s += &(UString::from(" must be a non-empty source range")); __s }).as_str()) });
             }
         }
         let mut seen_ranges: Vec<TextRange> = Vec::new();
@@ -350,7 +343,7 @@ i32::from_ne_bytes((u_string::unit_count(&(text))).to_ne_bytes())) {
             let inline_object = (input.inline_objects[usize::try_from(i).unwrap_or(0)]).clone();
             for seen in &seen_ranges {
                 if seen.start == (inline_object.range).clone().start && seen.end == (inline_object.range).clone().end {
-                    return Err(TextRangeError::Message { text: "InlineObjectSpan ranges must be unique".to_string() });
+                    return Err(TextRangeError::Message { text: UString::from("InlineObjectSpan ranges must be unique") });
                 }
             }
             seen_ranges.push((inline_object.range).clone());
@@ -361,10 +354,10 @@ i32::from_ne_bytes((u_string::unit_count(&(text))).to_ne_bytes())) {
             sorted_objects.push((input.inline_objects[usize::try_from(i).unwrap_or(0)]).clone());
         }
         let mut i = 1u32;
-        while (i32::from_ne_bytes((i).to_ne_bytes())) < (i32::from_ne_bytes((u32::try_from((sorted_objects.len()) & 0xFFFF_FFFF).unwrap_or(0)).to_ne_bytes())) {
+        while (i32::from_ne_bytes(((i) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((sorted_objects.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
             let item = (sorted_objects[usize::try_from(i).unwrap_or(0)]).clone();
             let mut j = i;
-            while (j) > (0) && (i32::from_ne_bytes((((sorted_objects[usize::try_from(u32::wrapping_sub(j, 1)).unwrap_or(0)]).clone().range).clone().start).to_ne_bytes())) > (i32::from_ne_bytes(((item.range).clone().start).to_ne_bytes())) {
+            while (j) > (0) && (i32::from_ne_bytes(((((sorted_objects[usize::try_from(u32::wrapping_sub(j, 1)).unwrap_or(0)]).clone().range).clone().start) as i32).to_ne_bytes())) > (i32::from_ne_bytes((((item.range).clone().start) as i32).to_ne_bytes())) {
                 sorted_objects[usize::try_from(j).unwrap_or(0)] = (sorted_objects[usize::try_from(u32::wrapping_sub(j, 1)).unwrap_or(0)]).clone();
                 j = u32::wrapping_sub(j, 1);
             }
@@ -374,59 +367,29 @@ i32::from_ne_bytes((u_string::unit_count(&(text))).to_ne_bytes())) {
         for idx in 0..u32::try_from((sorted_objects.len()) & 0xFFFF_FFFF).unwrap_or(0).saturating_sub(1) {
             let prev_obj = (sorted_objects[usize::try_from(idx).unwrap_or(0)]).clone();
             let next_obj = (sorted_objects[usize::try_from(u32::wrapping_add(idx, 1)).unwrap_or(0)]).clone();
-            if i32::from_ne_bytes(((prev_obj.range).clone().end).to_ne_bytes()) > (i32::from_ne_bytes(((next_obj.range).clone().start).to_ne_bytes())) {
-                return Err(TextRangeError::Message { text: format!("{}{}{}{}",
-            "InlineObjectSpan ranges must not overlap: ",
-            (prev_obj.range).clone().to_string(),
-            " and ",
-            (next_obj.range).clone().to_string()
-        ).to_string() });
+            if i32::from_ne_bytes((((prev_obj.range).clone().end) as i32).to_ne_bytes()) > (i32::from_ne_bytes((((next_obj.range).clone().start) as i32).to_ne_bytes())) {
+                return Err(TextRangeError::Message { text: UString::from(format!("{}", { let mut __s = UString::new(); __s += &(UString::from("InlineObjectSpan ranges must not overlap: ")); __s += UString::from(format!("{}", (prev_obj.range).clone().to_string()).as_str()).as_ustr(); __s += &(UString::from(" and ")); __s += UString::from(format!("{}", (next_obj.range).clone().to_string()).as_str()).as_ustr(); __s }).as_str()) });
             }
         }
         for k in 0..match u32::try_from(input.inline_objects.len()) { Ok(value) => value, Err(_) => u32::MAX } {
             let inline_object = (input.inline_objects[usize::try_from(k).unwrap_or(0)]).clone();
-            if !(((inline_object.range).clone().start) <= 2147483647 && (i32::from_ne_bytes(((inline_object.range).clone().start).to_ne_bytes())) < (i32::from_ne_bytes(((inline_object.range).clone().end).to_ne_bytes())) &&
-(i32::from_ne_bytes(((inline_object.range).clone().end).to_ne_bytes())) <= i32::from_ne_bytes((u_string::unit_count(&(text))).to_ne_bytes())) {
-                return Err(TextRangeError::Message { text: format!("{}{}{}",
-            "InlineObjectSpan ",
-            (inline_object.range).clone().to_string(),
-            " must cover a non-empty source range"
-        ).to_string() });
+            if !(((inline_object.range).clone().start) <= 2147483647 && (i32::from_ne_bytes((((inline_object.range).clone().start) as i32).to_ne_bytes())) < (i32::from_ne_bytes((((inline_object.range).clone().end) as i32).to_ne_bytes())) && (i32::from_ne_bytes((((inline_object.range).clone().end) as i32).to_ne_bytes())) <= i32::from_ne_bytes(((u_string::unit_count(&(text))) as i32).to_ne_bytes())) {
+                return Err(TextRangeError::Message { text: UString::from(format!("{}", { let mut __s = UString::new(); __s += &(UString::from("InlineObjectSpan ")); __s += UString::from(format!("{}", (inline_object.range).clone().to_string()).as_str()).as_ustr(); __s += &(UString::from(" must cover a non-empty source range")); __s }).as_str()) });
             }
             if !((inline_object.advance).is_finite() && (inline_object.advance) > (0 as f64) && (inline_object.ascent).is_finite() && (inline_object.ascent) >= 0 as f64 && (inline_object.descent).is_finite() && (inline_object.descent) >= 0 as f64) {
-                return Err(TextRangeError::Message { text: format!("{}{}{}",
-            "InlineObjectSpan ",
-            (inline_object.range).clone().to_string(),
-            " must have finite positive geometry"
-        ).to_string() });
+                return Err(TextRangeError::Message { text: UString::from(format!("{}", { let mut __s = UString::new(); __s += &(UString::from("InlineObjectSpan ")); __s += UString::from(format!("{}", (inline_object.range).clone().to_string()).as_str()).as_ustr(); __s += &(UString::from(" must have finite positive geometry")); __s }).as_str()) });
             }
             if inline_object.leading_boundary.clone().shrink_capacity != 0 as f64 {
-                return Err(TextRangeError::Message { text: format!("{}{}{}",
-            "InlineObjectSpan ",
-            (inline_object.range).clone().to_string(),
-            " cannot shrink its leading boundary"
-        ).to_string() });
+                return Err(TextRangeError::Message { text: UString::from(format!("{}", { let mut __s = UString::new(); __s += &(UString::from("InlineObjectSpan ")); __s += UString::from(format!("{}", (inline_object.range).clone().to_string()).as_str()).as_ustr(); __s += &(UString::from(" cannot shrink its leading boundary")); __s }).as_str()) });
             }
             if inline_object.leading_boundary.clone().line_end_discardable_advance != 0 as f64 {
-                return Err(TextRangeError::Message { text: format!("{}{}{}",
-            "InlineObjectSpan ",
-            (inline_object.range).clone().to_string(),
-            " cannot discard advance at its leading boundary"
-        ).to_string() });
+                return Err(TextRangeError::Message { text: UString::from(format!("{}", { let mut __s = UString::new(); __s += &(UString::from("InlineObjectSpan ")); __s += UString::from(format!("{}", (inline_object.range).clone().to_string()).as_str()).as_ustr(); __s += &(UString::from(" cannot discard advance at its leading boundary")); __s }).as_str()) });
             }
             if inline_object.trailing_boundary.clone().shrink_capacity > (inline_object.advance) {
-                return Err(TextRangeError::Message { text: format!("{}{}{}",
-            "InlineObjectSpan ",
-            (inline_object.range).clone().to_string(),
-            " trailing shrink capacity must not exceed its advance"
-        ).to_string() });
+                return Err(TextRangeError::Message { text: UString::from(format!("{}", { let mut __s = UString::new(); __s += &(UString::from("InlineObjectSpan ")); __s += UString::from(format!("{}", (inline_object.range).clone().to_string()).as_str()).as_ustr(); __s += &(UString::from(" trailing shrink capacity must not exceed its advance")); __s }).as_str()) });
             }
             if inline_object.trailing_boundary.clone().line_end_discardable_advance > (inline_object.advance) {
-                return Err(TextRangeError::Message { text: format!("{}{}{}",
-            "InlineObjectSpan ",
-            (inline_object.range).clone().to_string(),
-            " trailing line-end discard must not exceed its advance"
-        ).to_string() });
+                return Err(TextRangeError::Message { text: UString::from(format!("{}", { let mut __s = UString::new(); __s += &(UString::from("InlineObjectSpan ")); __s += UString::from(format!("{}", (inline_object.range).clone().to_string()).as_str()).as_ustr(); __s += &(UString::from(" trailing line-end discard must not exceed its advance")); __s }).as_str()) });
             }
         }
         Ok(())
@@ -451,16 +414,16 @@ impl ParagraphLayoutEngine for ExplainableStubParagraphLayoutEngine {
 
 #[derive(Clone, PartialEq)]
 pub struct ParagraphLayoutFallbackResolver {
-    pub cjk_font_key: String,
-    pub latin_font_key: String,
-    pub symbol_font_key: String,
+    pub cjk_font_key: UString,
+    pub latin_font_key: UString,
+    pub symbol_font_key: UString,
 }
 
 impl ParagraphLayoutFallbackResolver {
-    pub fn new(cjk_font_key: Option<String>, latin_font_key: Option<String>, symbol_font_key: Option<String>) -> Result<Self, ParagraphLayoutEngineNewFault> {
-        let cjk_font_key = cjk_font_key.unwrap_or_else(|| "cjk-primary".to_string());
-        let latin_font_key = latin_font_key.unwrap_or_else(|| "latin-primary".to_string());
-        let symbol_font_key = symbol_font_key.unwrap_or_else(|| "symbol-fallback".to_string());
+    pub fn new(cjk_font_key: Option<UString>, latin_font_key: Option<UString>, symbol_font_key: Option<UString>) -> Result<Self, ParagraphLayoutEngineNewFault> {
+        let cjk_font_key = cjk_font_key.unwrap_or_else(|| UString::from("cjk-primary"));
+        let latin_font_key = latin_font_key.unwrap_or_else(|| UString::from("latin-primary"));
+        let symbol_font_key = symbol_font_key.unwrap_or_else(|| UString::from("symbol-fallback"));
         Ok(Self {
             cjk_font_key: cjk_font_key,
             latin_font_key: latin_font_key,
@@ -468,21 +431,17 @@ impl ParagraphLayoutFallbackResolver {
         })
     }
 
-    pub fn resolve(&self, _text: &str, range: TextRange, request: FontRequest) -> FontDecision {
+    pub fn resolve(&self, _text: &UStr, range: TextRange, request: FontRequest) -> FontDecision {
         let c: FontCandidate;
         {
             let _g = request.role;
             let _ = match _g {
-    FontRole::CjkText | FontRole::CjkPunctuation => c = FontCandidate::new((self.cjk_font_key).to_string().as_str(), if u32::try_from((request.preferred_families.len()) & 0xFFFF_FFFF).unwrap_or(0) == 0 { (self.cjk_font_key).to_string() } else {
-(request.preferred_families[0usize]).clone() }.as_str(), request.role),
-    FontRole::LatinText => c = FontCandidate::new((self.latin_font_key).to_string().as_str(), (self.latin_font_key).to_string().as_str(), request.role),
-    FontRole::Symbol | FontRole::Emoji | FontRole::Unknown => c = FontCandidate::new((self.symbol_font_key).to_string().as_str(), (self.symbol_font_key).to_string().as_str(), request.role),
+    FontRole::CjkText | FontRole::CjkPunctuation => c = FontCandidate::new((self.cjk_font_key).to_ustring().as_ustr(), if u32::try_from((request.preferred_families.len()) & 0xFFFF_FFFF).unwrap_or(0) == 0 { (self.cjk_font_key).to_ustring() } else { (request.preferred_families[0usize]).clone() }.as_ustr(), request.role),
+    FontRole::LatinText => c = FontCandidate::new((self.latin_font_key).to_ustring().as_ustr(), (self.latin_font_key).to_ustring().as_ustr(), request.role),
+    FontRole::Symbol | FontRole::Emoji | FontRole::Unknown => c = FontCandidate::new((self.symbol_font_key).to_ustring().as_ustr(), (self.symbol_font_key).to_ustring().as_ustr(), request.role),
 };
         }
-        return FontDecision::new((range).clone(), (c).clone(), request.role, format!("{}{}",
-            "PreferCjkForAmbiguousPunctuationResolver:",
-            request.role.name()
-        ).as_str());
+        return FontDecision::new((range).clone(), (c).clone(), request.role, UString::from(format!("{}", { let mut __s = UString::new(); __s += &(UString::from("PreferCjkForAmbiguousPunctuationResolver:")); __s += UString::from(request.role.name()).as_ustr(); __s }).as_str()).as_ustr());
     }
 }
 
@@ -497,20 +456,16 @@ impl FallbackResolver for ParagraphLayoutFallbackResolver {
         Box::new(self.clone())
     }
 
-    fn resolve(&self, _text: &str, range: TextRange, request: FontRequest) -> FontDecision {
+    fn resolve(&self, _text: &UStr, range: TextRange, request: FontRequest) -> FontDecision {
         let c: FontCandidate;
         {
             let _g = request.role;
             let _ = match _g {
-    FontRole::CjkText | FontRole::CjkPunctuation => c = FontCandidate::new((self.cjk_font_key).to_string().as_str(), if u32::try_from((request.preferred_families.len()) & 0xFFFF_FFFF).unwrap_or(0) == 0 { (self.cjk_font_key).to_string() } else {
-(request.preferred_families[0usize]).clone() }.as_str(), request.role),
-    FontRole::LatinText => c = FontCandidate::new((self.latin_font_key).to_string().as_str(), (self.latin_font_key).to_string().as_str(), request.role),
-    FontRole::Symbol | FontRole::Emoji | FontRole::Unknown => c = FontCandidate::new((self.symbol_font_key).to_string().as_str(), (self.symbol_font_key).to_string().as_str(), request.role),
+    FontRole::CjkText | FontRole::CjkPunctuation => c = FontCandidate::new((self.cjk_font_key).to_ustring().as_ustr(), if u32::try_from((request.preferred_families.len()) & 0xFFFF_FFFF).unwrap_or(0) == 0 { (self.cjk_font_key).to_ustring() } else { (request.preferred_families[0usize]).clone() }.as_ustr(), request.role),
+    FontRole::LatinText => c = FontCandidate::new((self.latin_font_key).to_ustring().as_ustr(), (self.latin_font_key).to_ustring().as_ustr(), request.role),
+    FontRole::Symbol | FontRole::Emoji | FontRole::Unknown => c = FontCandidate::new((self.symbol_font_key).to_ustring().as_ustr(), (self.symbol_font_key).to_ustring().as_ustr(), request.role),
 };
         }
-        return FontDecision::new((range).clone(), (c).clone(), request.role, format!("{}{}",
-            "PreferCjkForAmbiguousPunctuationResolver:",
-            request.role.name()
-        ).as_str());
+        return FontDecision::new((range).clone(), (c).clone(), request.role, UString::from(format!("{}", { let mut __s = UString::new(); __s += &(UString::from("PreferCjkForAmbiguousPunctuationResolver:")); __s += UString::from(request.role.name()).as_ustr(); __s }).as_str()).as_ustr());
     }
 }
