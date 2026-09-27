@@ -5,4 +5,6 @@ pub mod fs;
 pub mod int_text;
 pub mod sorted_table;
 pub mod string_tools;
+pub mod test;
+pub mod test_core;
 pub mod u_string;
