@@ -2,11 +2,12 @@
 # Run from the worktree root:
 #   nix develop -c bash -c 'haxe engine-haxe/targets/protocol-rust.hxml'
 engine-haxe/targets/common.hxml
+-cp .haxelib/boring/git/packages/compiler
+-cp .haxelib/boring/git/samples
 -cp .haxelib/boring/git/packages/compiler/reflaxe/rust/std-shadow
 -cp .haxelib/boring/git/packages/compiler/reflaxe/rust
 --macro Intercept.run(['engine-haxe/src', '.haxelib/boring/git/samples'])
 --macro rustcompiler.Compiler.use()
--D rust-output=engine-haxe/out/protocol-rust/gen/src
 -D runtime-import=crate::runtime
 -D runtime-emit=runtime
 -D package-name=tiqian-protocol-gen
@@ -14,4 +15,5 @@ engine-haxe/targets/common.hxml
 org.tiqian.protocol.WireValue
 org.tiqian.protocol.Canonical
 org.tiqian.protocol.CanonicalTest
+org.tiqian.protocol.CanonicalTestSupport
 std.UStringException
