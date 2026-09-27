@@ -37,5 +37,10 @@ cat > "$OUT/tsconfig.json" <<'JSON'
 JSON
 
 cd "$OUT"
+# Pin the repo-local tsc (typescript 5.9.3): a fetched-latest tsc drifts the
+# diagnostic set between runs (observed: 744 vs 745 with 9 TS2307 flipping),
+# and the gate must keep one frozen reading basis.
+TSC="$TI_ROOT/node_modules/.bin/tsc"
+[ -x "$TSC" ] || { echo "ts-gate: $TSC missing; run 'bun install' at the tiqian root first" >&2; exit 2; }
 # Bound the run: a wedged resolver must read as a failed gate, not a hang.
-exec timeout 900 bun x tsc -p tsconfig.json
+exec timeout 900 "$TSC" -p tsconfig.json
