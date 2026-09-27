@@ -1,0 +1,18 @@
+# Stage A protocol Kotlin generation entry (NamedError family).
+# Run from the worktree root:
+#   nix develop -c bash -c 'haxe engine-haxe/targets/protocol-kotlin.hxml'
+# Shared compiler configuration for every engine-haxe generation entry.
+-lib reflaxe
+-lib boring
+-cp .haxelib/boring/git/samples
+-cp engine-haxe/src
+-cp engine-haxe/macros
+--macro haxe.macro.Compiler.addGlobalMetadata('org.tiqian', '@:build(std.RecordMember.build())')
+-cp .haxelib/boring/git/packages/compiler/reflaxe/kotlin/std-shadow
+-cp .haxelib/boring/git/packages/compiler/reflaxe/kotlin
+--macro Intercept.run(['engine-haxe/src'])
+--macro kotlincompiler.Compiler.use()
+-D runtime-import=org.tiqian.boring.runtime
+-D runtime-emit=runtime
+org.tiqian.protocol.NamedError
+org.tiqian.protocol.NamedErrorTest

@@ -21,3 +21,5 @@ org.tiqian.protocol.Canonical
 org.tiqian.protocol.CanonicalTest
 org.tiqian.protocol.ParagraphRequest
 org.tiqian.protocol.ParagraphRequestTest
+org.tiqian.protocol.NamedError
+org.tiqian.protocol.NamedErrorTest
