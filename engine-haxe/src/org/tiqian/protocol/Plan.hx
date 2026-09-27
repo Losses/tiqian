@@ -68,6 +68,8 @@ typedef PlanDecorationSegment = {
     var left:Float;
     var top:Float;
     var right:Float;
+    var sourceRangeStart:Int;
+    var sourceRangeEnd:Int;
 }
 
 /** One `emphasisDots` entry. */
