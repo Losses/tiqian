@@ -3,9 +3,8 @@
 //! `platforms/web/client/web-component/precompute.js` over the fixture font; every case dumps
 //! `stableStringify(entry)` (or `ERROR:<message>` for throws). The one exempt
 //! engine-identity field, `fontEvidence.harfbuzzVersion`, is aligned before
-//! the byte comparison. The engine archive must be linked.
+//! the byte comparison. The engine engine runs in-process.
 
-#![cfg(tiqian_engine_link)]
 
 use std::path::PathBuf;
 

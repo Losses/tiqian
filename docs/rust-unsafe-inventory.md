@@ -7,76 +7,35 @@ Occurrences of the word `unsafe` that are not unsafe code (`unsafe_break_count`
 fields, the `unsafeBreakCount` JSON key, the `unsafe_href` function, test
 names) are out of scope.
 
-The `unsafe` code sits on two boundaries: the C ABI between the Kotlin engine
-archive and Rust (protocol in `ffi/native/tiqian_layout_abi.h`, decision in
-ADR 0050), and the shared-library lifecycle boundary between the Neon addon
-and the host node process. Code outside these boundaries is safe Rust.
+The `unsafe` code sits on one remaining boundary: the shared-library lifecycle
+boundary between the Neon addon and the host node process. The former C ABI
+boundary (protocol in `ffi/native/tiqian_layout_abi.h`) disappeared with the
+`ffi/native` module; the engine is consumed directly through the generated
+Rust types (ADR 0050). Code outside the remaining boundary is safe Rust.
 
-## Obligations shared by both boundaries
-
-- The engine allocates one nativeHeap buffer per `tiqian_layout_paragraph`
-  call: the plan buffer on status 0, the error buffer on status 1. Rust
-  releases it with `tiqian_release_buffer`. A status of 2 or above marks a
-  protocol error; the engine allocated nothing, and Rust must not call
-  release.
-- Error strings of the font backend move from Rust to the engine through
-  `CString::into_raw` and return through the `release_string` callback, which
-  takes them back with `CString::from_raw`. Both ends live in this repository,
-  so one allocator serves the pair.
-- The vtable and its static strings live for the process lifetime; the
-  installation never unloads.
-
-## engine.rs: engine call side
-
-File `ffi/rust/tiqian/src/engine.rs`.
-
-| Site | Form | Why it exists |
-| --- | --- | --- |
-| `ensure_runtime`, inside `call_once` | `libnative_symbols()` | forces the linker to keep the Kotlin/Native runtime symbols, so the runtime is initialized before any engine call |
-| `install_font_backend` | `tiqian_install_font_backend(vtable as *const _)` | the C ABI takes a pointer; the vtable is a static and lives for the process lifetime |
-| `layout_paragraph` | `tiqian_layout_paragraph(...)` | the call crosses the ABI; the protocol obligations are held by this function |
-| status 0 branch | `slice::from_raw_parts(response, len)` | the engine returns the packed plan buffer per the protocol; the bytes are copied once and the buffer released |
-| status 0 branch | `tiqian_release_buffer(plan)` | releases the nativeHeap buffer the engine allocated |
-| status 1 branch | `CStr::from_ptr(error)` | the error name is a NUL-terminated string |
-| status 1 branch | `tiqian_release_buffer(error)` | releases the error buffer |
-
-Invariants: an empty `request` is rejected before the call; both out-pointers
-are set to null before the call; the status decides which buffer to release.
-A status outside 0 and 1 releases nothing.
-
-## font_backend.rs: vtable type declarations
-
-File `ffi/rust/tiqian/src/font_backend.rs`. The three
-`pub type ... = unsafe extern "C" fn` items declare function pointer types.
-They mark the callbacks as callable and run nothing. They must match the C
-function pointer signatures the Kotlin side declares.
-
-## engine_bridge.rs: font backend callback side
+## engine_bridge.rs: session-to-engine borrow boundary
 
 File `platforms/web/server/precompute/engine/src/engine_bridge.rs`.
-This module hands a `FontSession` to the engine through the vtable.
+
+The generated engine receives the font session as generated trait objects
+(`ITextShaper`, `FontMetricsResolver`); there is no C ABI left on this
+boundary. One `unsafe` site remains, and it exists because the generated
+trait objects require a type with `'static` lifetime while the session and
+its capture window are borrows that live exactly as long as one
+`precompute_paragraph` call.
 
 | Site | Form | Why it exists |
 | --- | --- | --- |
-| `SessionSlot::set` | `session as *mut FontSession` | the thread local stores a pointer; the borrow rules are held by the call stack of `precompute_paragraph` |
-| `with_current_session` | `&mut *pointer` | the callback runs inside the engine call stack, so the `&mut` borrow holds for the call |
-| `c_str` function | `unsafe fn` marker | arguments come from the engine; the function maps a null pointer to `None` and bytes that do not decode to the empty string |
-| inside `c_str` | `CStr::from_ptr(pointer)` | engine arguments are NUL-terminated strings per the protocol |
-| `set_error` | `*error_out = cstring.into_raw()` | hands the error string to the engine, which returns it through `release_string` |
-| `session_shape` declaration | `unsafe extern "C" fn` | the vtable callback signature is an unsafe fn type |
-| 6 `c_str(...)` calls in `session_shape` | per-argument decoding | see `c_str` |
-| buffer write in `session_shape` | `slice::from_raw_parts_mut(buffer, needed)` | the engine passes a buffer with the capacity it reported; when the capacity falls short, the callback returns the size it needs and the engine retries |
-| `session_metrics` declaration | `unsafe extern "C" fn` | see `session_shape` |
-| 3 `c_str(...)` calls in `session_metrics` | per-argument decoding | see `c_str` |
-| write in `session_metrics` | `*out_metrics.add(index) = *value` | the engine passes an out-buffer of five doubles |
-| `session_release_string` declaration | `unsafe extern "C" fn` | see `session_shape` |
-| inside `session_release_string` | `CString::from_raw(string)` | takes back the string `set_error` handed out; both ends use one allocator |
+| `SessionBackend::new` | `ptr::from_ref` / `ptr::from_mut` | erases the borrows into raw pointers so two `Box<dyn ...>` component slots can share one session and one capture window |
+| `with_access` | `&*self.session`, `&mut *self.evidence` | rebuilds the references for each component callback |
+| `unsafe impl Send / Sync for SessionBackend` | trait impls | satisfies the generated `Send + Sync` bounds on `ITextShaper`; no cross-thread use happens |
 
-Invariants: the session pointer is valid only inside the call stack of
-`precompute_paragraph`; `SessionSlot` clears the thread local on the panic
-path as well. The shape callback follows the retry protocol: it returns the
-size it needs when the capacity falls short, the engine retries once, and a
-second shortfall reports `FontBackendBufferOverflow`.
+Invariants (the obligations the caller, `precompute_paragraph`, carries): the
+`&FontSession` and `&mut CaptureEvidence` borrows outlive the `Engine` value,
+so both pointers stay valid while the engine can reach them; the engine runs
+its layout synchronously on the calling thread, so all access through the
+pointers is sequential and never re-entrant; the aliasing `&mut` rebuild is
+sound because only one component callback runs at a time.
 
 ## pin.rs: AddonMappingPin
 
