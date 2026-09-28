@@ -6,9 +6,11 @@ edition.workspace = true
 
 [dependencies]
 tiqian = { path = "../../../../../ffi/rust/tiqian", version = "0.1.0" }
-# The generated engine crate the ffi facade consumes; path mirrors the
-# tiqian crate's own dependency so both compile the same checkout.
-tiqian-engine-gen = { path = "../../../../../engine-haxe/out/engine-rust-f64/gen" }
+# The generated engine crate. The path is the vendored mount, which is the
+# same crate the tiqian facade depends on; pointing at engine-haxe/out/ would
+# depend on a gitignored build output and collide with the vendored package
+# name in the lockfile.
+tiqian-engine-gen = { path = "../../../../../ffi/rust/engine-gen" }
 tiqian-protocol-gen = { path = "../protocol-gen" }
 harfrust = "0.13"
 skrifa = "0.46"
