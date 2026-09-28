@@ -93,7 +93,7 @@ class PunctuationGeometryStageCoverageTest {
         )
         val atom = atomsOf(mark, glyphs).single()
         assertEquals(14.0f, atom.inkBounds!!.width)
-        assertEquals(16.0f, atom.inkBounds!!.bottom)
+        assertEquals(16.0f, atom.inkBounds.bottom)
         assertEquals(16.0f, atom.advance)
         assertNullFallback(atom)
     }
