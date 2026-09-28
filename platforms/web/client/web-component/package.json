@@ -77,7 +77,7 @@
     }
   },
   "dependencies": {
-    "@tiqian/core": "0.1.0-alpha.5"
+    "@tiqian/core": "0.1.0-alpha.6"
   },
   "sideEffects": [
     "./auto.js",

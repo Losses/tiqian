@@ -44,7 +44,7 @@ test("published package ships the TS runtime modules and no repository-only bin"
   ]);
   assert.equal(manifest.bin, undefined);
   assert.equal(manifest.exports["./build-runtime"], undefined);
-  assert.deepEqual(manifest.dependencies, { "@tiqian/core": "0.1.0-alpha.5" });
+  assert.deepEqual(manifest.dependencies, { "@tiqian/core": "0.1.0-alpha.6" });
   for (const removed of ["precompute.js", "precompute-html.js", "precompute-fonts.js", "precompute-node-fonts.js"]) {
     assert.equal(manifest.files.includes(removed), false, `${removed} must not ship`);
   }
