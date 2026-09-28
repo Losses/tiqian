@@ -435,8 +435,12 @@ pub fn precompute_paragraph(
     .map_err(|error| error.0)?;
     let input = layout_input(request).map_err(|error| error.0)?;
     let result = engine.layout(input).map_err(|error| error.0)?;
+    // The prepared-paragraph form keeps the emitter's default of no render
+    // evidence (PreparedParagraph.toPreparedParagraphJson default): the
+    // oracle plan carries no renderEvidence-only fields and the entry's
+    // render artifact is produced by this lane's own lowering.
     let json =
-        PreparedParagraphFns::prepared_paragraph_fns_to_prepared_paragraph_json(result, true)
+        PreparedParagraphFns::prepared_paragraph_fns_to_prepared_paragraph_json(result, false)
             .map_err(|fault| format!("{fault:?}"))?;
     // The emitter returns the JSON as a Haxe string; the plan reader
     // takes the UTF-8 `&str` form.
