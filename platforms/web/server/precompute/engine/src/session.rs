@@ -22,9 +22,13 @@ use crate::source_boundaries::{
 use tiqian_protocol_gen::org::tiqian::protocol::revision::Revision as RevisionFamily;
 
 /// The shared shaping backend revision (single source: the generated
-/// `Revision` crate; see crate::schema for the full family).
-pub const BACKEND_REVISION: &str = RevisionFamily::REVISION_FONT_BACKEND_REVISION;
-pub const FONT_REPLAY_REVISION: &str = RevisionFamily::REVISION_FONT_REPLAY_REVISION;
+/// `Revision` crate; see crate::schema for the full family). The generated
+/// constants are `&'static UStr`; the host lane keeps `String`, so the
+/// decode runs once behind a lazy static.
+pub static BACKEND_REVISION: std::sync::LazyLock<String> =
+    std::sync::LazyLock::new(|| RevisionFamily::REVISION_FONT_BACKEND_REVISION.to_utf8_lossy());
+pub static FONT_REPLAY_REVISION: std::sync::LazyLock<String> =
+    std::sync::LazyLock::new(|| RevisionFamily::REVISION_FONT_REPLAY_REVISION.to_utf8_lossy());
 
 /// Engine identity of the Rust stack; the JS session reports the wasm
 /// HarfBuzz version here. The field is an exempt engine-identity output.
@@ -186,8 +190,8 @@ pub struct MetricReplay {
 }
 
 pub struct FontEvidence {
-    pub backend_revision: &'static str,
-    pub harfbuzz_version: &'static str,
+    pub backend_revision: String,
+    pub harfbuzz_version: String,
     pub faces: Vec<FaceUsage>,
     pub replay_shapes: Vec<ShapeReplay>,
     pub replay_metrics: Vec<MetricReplay>,
@@ -220,8 +224,8 @@ static NEXT_SESSION_ID: std::sync::atomic::AtomicU32 = std::sync::atomic::Atomic
 
 pub struct FontSession {
     pub session_id: String,
-    pub backend_revision: &'static str,
-    pub harfbuzz_version: &'static str,
+    pub backend_revision: String,
+    pub harfbuzz_version: String,
     records: Vec<std::sync::Arc<FontRecord>>,
     base_features: Vec<String>,
     /// Evidence of the standalone session lane; `begin_capture` clears it.
@@ -268,8 +272,8 @@ impl CaptureEvidence {
     /// `captureEvidence`: the snapshot of the capture window.
     pub fn snapshot(&self) -> FontEvidence {
         FontEvidence {
-            backend_revision: BACKEND_REVISION,
-            harfbuzz_version: HARFBUZZ_VERSION,
+            backend_revision: BACKEND_REVISION.clone(),
+            harfbuzz_version: HARFBUZZ_VERSION.to_string(),
             faces: self.used.iter().map(|(_, usage)| usage.clone()).collect(),
             replay_shapes: self.replay_shapes.clone(),
             replay_metrics: self.replay_metrics.clone(),
@@ -389,8 +393,8 @@ pub fn create_font_session(
         .map_err(|_| SessionError::UnsupportedFontSessionBaseFeatures)?;
     Ok(FontSession {
         session_id,
-        backend_revision: BACKEND_REVISION,
-        harfbuzz_version: HARFBUZZ_VERSION,
+        backend_revision: BACKEND_REVISION.clone(),
+        harfbuzz_version: HARFBUZZ_VERSION.to_string(),
         records,
         base_features,
         evidence: std::sync::Mutex::new(CaptureEvidence::new()),

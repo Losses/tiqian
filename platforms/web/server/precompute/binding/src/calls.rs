@@ -27,7 +27,7 @@ use tiqian_precompute::paragraph::{
 use crate::registry;
 
 pub fn backend_revision(mut cx: FunctionContext) -> JsResult<JsString> {
-    Ok(cx.string(BACKEND_REVISION))
+    Ok(cx.string(BACKEND_REVISION.as_str()))
 }
 
 pub fn harfbuzz_version(mut cx: FunctionContext) -> JsResult<JsString> {

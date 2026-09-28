@@ -113,12 +113,12 @@ pub fn context_fingerprint(typography: &SnapshotTypography, faces: &[FaceInfo]) 
     let mut writer = FingerprintWriter::new();
     // Revisions that decide artifact bytes, then the bridge protocol.
     writer.u32(0x01, u32::try_from(SNAPSHOT_SCHEMA).unwrap_or(0));
-    writer.str(0x02, LAYOUT_REVISION);
-    writer.str(0x03, RENDER_REVISION);
-    writer.str(0x04, FONT_BACKEND_REVISION);
-    writer.str(0x05, FONT_REPLAY_REVISION);
-    writer.str(0x06, FONT_REPLAY_TRANSPORT);
-    writer.str(0x07, FONT_SOURCE_POLICY);
+    writer.str(0x02, LAYOUT_REVISION.as_str());
+    writer.str(0x03, RENDER_REVISION.as_str());
+    writer.str(0x04, FONT_BACKEND_REVISION.as_str());
+    writer.str(0x05, FONT_REPLAY_REVISION.as_str());
+    writer.str(0x06, FONT_REPLAY_TRANSPORT.as_str());
+    writer.str(0x07, FONT_SOURCE_POLICY.as_str());
     writer.str(0x08, HARFBUZZ_VERSION);
     writer.u32(0x09, u32::from(CANONICAL_VERSION));
     // Normalized typography, in declaration order.

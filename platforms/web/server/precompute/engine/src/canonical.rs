@@ -16,6 +16,7 @@
 use sha2::{Digest, Sha256};
 
 use tiqian::NamedError;
+use tiqian_protocol_gen::runtime::u_string::UString;
 
 use crate::json::{member, Json};
 use crate::snapshot_source::js_number_value;
@@ -54,14 +55,20 @@ fn json_to_wire(value: &Json) -> tiqian_protocol_gen::org::tiqian::protocol::wir
         Json::Null => WireValue::WNull,
         Json::Bool(inner) => WireValue::WBool { value: *inner },
         Json::Num(inner) => WireValue::WNum { value: *inner },
-        Json::Str(inner) => WireValue::WStr { value: inner.clone() },
+        // The wire lane stores Haxe strings (UTF-16 units); the parsed
+        // JSON lane keeps `String`, so the adapter encodes UTF-16 at the
+        // boundary with the generated `From<&str>` conversion.
+        Json::Str(inner) => WireValue::WStr { value: UString::from(inner.as_str()) },
         Json::Arr(items) => WireValue::WArr {
             items: items.iter().map(json_to_wire).collect(),
         },
         Json::Obj(fields) => WireValue::WObj {
             fields: fields
                 .iter()
-                .map(|(name, value)| WireField { name: name.clone(), value: json_to_wire(value) })
+                .map(|(name, value)| WireField {
+                    name: UString::from(name.as_str()),
+                    value: json_to_wire(value),
+                })
                 .collect(),
         },
     }
@@ -76,7 +83,9 @@ pub fn encode_input(value: &Json, kind: u8) -> Result<Vec<u8>, NamedError> {
     use tiqian_protocol_gen::org::tiqian::protocol::encode_result::EncodeResult;
     match Canonical::canonical_encode(json_to_wire(value), kind as u32) {
         EncodeResult::COk { bytes } => Ok(bytes),
-        EncodeResult::CErr { issue } => Err(NamedError(issue)),
+        // The generated issue is a Haxe string; the host lane reports it
+        // as the UTF-8 `String` inside `NamedError`.
+        EncodeResult::CErr { issue } => Err(NamedError(issue.to_utf8_lossy())),
     }
 }
 

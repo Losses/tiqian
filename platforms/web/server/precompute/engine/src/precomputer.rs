@@ -332,8 +332,8 @@ impl Precomputer {
                 "schema".to_string(),
                 Json::Num(js_int_to_number(SNAPSHOT_SCHEMA)),
             ),
-            ("layoutRevision".to_string(), Json::str(LAYOUT_REVISION)),
-            ("renderRevision".to_string(), Json::str(RENDER_REVISION)),
+            ("layoutRevision".to_string(), Json::str(LAYOUT_REVISION.as_str())),
+            ("renderRevision".to_string(), Json::str(RENDER_REVISION.as_str())),
             ("key".to_string(), Json::str(key)),
             ("sourceText".to_string(), Json::str(text.clone())),
             (

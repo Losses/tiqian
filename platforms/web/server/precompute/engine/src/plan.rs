@@ -15,7 +15,12 @@ pub const PLAN_SCHEMA: i64 = 1;
 
 /// `layoutRevision` of every plan this revision understands (single
 /// source: the generated `Revision` crate, boring cutover Stage1-P4).
-pub const PLAN_LAYOUT_REVISION: &str = RevisionFamily::REVISION_LAYOUT_REVISION;
+/// `layoutRevision` of every plan this revision understands (single
+/// source: the generated `Revision` crate, boring cutover Stage1-P4).
+/// The generated constant is a `&'static UStr`; the host lane keeps
+/// `String`, decoded once behind a lazy static.
+pub static PLAN_LAYOUT_REVISION: std::sync::LazyLock<String> =
+    std::sync::LazyLock::new(|| RevisionFamily::REVISION_LAYOUT_REVISION.to_utf8_lossy());
 
 #[derive(Debug, Clone, PartialEq)]
 pub struct Plan {
@@ -204,7 +209,7 @@ impl Plan {
         fields.push(("schema".to_string(), Json::Num(PLAN_SCHEMA as f64)));
         fields.push((
             "layoutRevision".to_string(),
-            Json::Str(PLAN_LAYOUT_REVISION.to_string()),
+            Json::Str(PLAN_LAYOUT_REVISION.clone()),
         ));
         fields.push(("width".to_string(), Json::Num(self.width)));
         fields.push(("height".to_string(), Json::Num(self.height)));
@@ -507,7 +512,7 @@ impl Plan {
         }
         let revision = string_field(&fields, "layoutRevision")
             .map_err(|_| NamedError("InvalidPlanLayoutRevision".to_string()))?;
-        if revision != PLAN_LAYOUT_REVISION {
+        if revision != PLAN_LAYOUT_REVISION.as_str() {
             return Err(NamedError("InvalidPlanLayoutRevision".to_string()));
         }
         // The js plan reader treats `width` as optional and no render path
