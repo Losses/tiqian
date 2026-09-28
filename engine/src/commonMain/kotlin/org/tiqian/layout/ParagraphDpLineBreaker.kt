@@ -509,7 +509,7 @@ internal class ParagraphDpLineBreaker(
                     val state = EdgeState(start, e, hyphenRunAfter, stretchRunAfter, cost, prev)
                     bestByKey[key] = state
                     if (isSegmentLast) {
-                        if (terminalBest == null || cost < terminalBest!!.cost) terminalBest = state
+                        if (terminalBest == null || cost < terminalBest.cost) terminalBest = state
                     } else {
                         val bucket = statesByStart.getOrPut(e) { mutableListOf() }
                         bucket.removeAll {
