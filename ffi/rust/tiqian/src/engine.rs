@@ -10,6 +10,7 @@
 //! as `crate::NamedError`.
 
 use crate::NamedError;
+use std::sync::{Arc, Mutex};
 use tiqian_engine_gen::org::tiqian::clreq::clreq_profile_resolver::ClreqProfileResolver;
 use tiqian_engine_gen::org::tiqian::core::layout_input::LayoutInput;
 use tiqian_engine_gen::org::tiqian::core::layout_result::LayoutResult;
@@ -49,9 +50,9 @@ pub struct EngineComponents {
     pub quote_pair_analyzer: Option<QuotePairAnalyzer>,
     pub line_breaker: Option<Box<dyn LineBreaker>>,
     pub justifier: Option<Justifier>,
-    pub text_shaper: Option<Box<dyn ITextShaper>>,
+    pub text_shaper: Option<Arc<Mutex<dyn ITextShaper>>>,
     pub hyphenator: Option<Box<dyn Hyphenator>>,
-    pub annotation_cache: Option<Box<dyn WidthIndependentAnnotationCache>>,
+    pub annotation_cache: Option<Arc<Mutex<dyn WidthIndependentAnnotationCache>>>,
 }
 
 /// Runs the full paragraph layout pipeline in-process. One engine instance
@@ -145,7 +146,7 @@ mod tests {
         // Dependency injection stays: the host hands in trait objects and the
         // engine uses them instead of its defaults.
         let components = EngineComponents {
-            text_shaper: Some(Box::new(ExplainableStubTextShaper::new())),
+            text_shaper: Some(Arc::new(Mutex::new(ExplainableStubTextShaper::new()))),
             font_metrics_resolver: Some(Box::new(StubFontMetricsResolver::new())),
             ..EngineComponents::default()
         };
