@@ -344,10 +344,10 @@ impl PlanJsonNumber {
     }
 
     pub(crate) fn plan_json_number_add_decimal(a: &UStr, b: &UStr) -> Result<UString, UStringFault> {
-    let __units5 = u_string::units(&b);
     let __units4 = u_string::units(&a);
-    let __count5 = u_string::unit_count(&b);
+    let __units5 = u_string::units(&b);
     let __count4 = u_string::unit_count(&a);
+    let __count5 = u_string::unit_count(&b);
         let mut out = Vec::<u16>::new();
         let mut i = i32::wrapping_sub(i32::from_ne_bytes(((__count4) as i32).to_ne_bytes()), 1);
         let mut j = i32::wrapping_sub(i32::from_ne_bytes(((__count5) as i32).to_ne_bytes()), 1);
@@ -510,10 +510,10 @@ impl PlanJsonNumber {
     }
 
     pub(crate) fn plan_json_number_compare_digit_strings(a: &UStr, b: &UStr) -> u32 {
-    let __units9 = u_string::units(&a);
     let __units10 = u_string::units(&b);
-    let __count9 = u_string::unit_count(&a);
+    let __units9 = u_string::units(&a);
     let __count10 = u_string::unit_count(&b);
+    let __count9 = u_string::unit_count(&a);
         if __count9 != __count10 {
             return u32::wrapping_sub(__count9, __count10);
         }

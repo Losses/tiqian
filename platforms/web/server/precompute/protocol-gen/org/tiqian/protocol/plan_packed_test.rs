@@ -15,7 +15,7 @@ use crate::runtime::u_string::UString;
 #[test]
 fn round_trip_preserves_plan_structure() {
     testlib::run("org.tiqian.protocol.PlanPackedTest.roundTripPreservesPlanStructure", "org.tiqian.protocol.PlanPackedTest.roundTripPreservesPlanStructure", || {
-        let inline_edges = vec![PlanInlineEdge { offset: 10, inline_start: 4.0f64, inline_end: None }];
+        let inline_edges = vec![PlanInlineEdge { offset: 10, inline_start: Some(4.0f64), inline_end: None }];
         let plan = Plan { width: 300.0f64, height: 20.0f64, lines: vec![
     (PlanLine { range_start: 0, range_end: 2, top: 0.0f64, bottom: 20.0f64, baseline: 18.0f64, indent: 0.0f64, visual_width: 24.0f64, hyphen_advance: 0.0f64, end_reason: PlanEndReason::ParagraphEnd, cells: vec![
     (PlanCell { range_start: 0, range_end: 1, source: UString::from("你").to_ustring(), display: UString::from("你").to_ustring(), draw_x: 0.0f64, natural_width: 12.0f64, leading_layout_advance: 12.0f64, shaping_boundary: false, open_type_features: vec![], render_font_family: None.clone(), dash_strategy: None.clone(), shaping_language: None.clone(), resolved_face: None.clone(), glyph_ids: None.clone(), shaping_evidence: None.clone(), punctuation_ink_floor: None, punctuation_body_width: None, latin: false, advance: None, inline_object: None, style_delta: None }).clone(),
