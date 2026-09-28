@@ -258,7 +258,7 @@ impl PlanPacked {
                                 let it = __option26.italic;
                                 match &(it) {
                                     Some(__option29) => {
-                                        style_italic = if *__option29.unwrap_or(false) { 1 } else { 0 };
+                                        style_italic = if *__option29 { 1 } else { 0 };
                                     }
                                     None => {
                                     }
