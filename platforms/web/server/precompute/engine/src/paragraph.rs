@@ -18,6 +18,7 @@ use tiqian_protocol_gen::org::tiqian::protocol::line_break_span_input::LineBreak
 use tiqian_protocol_gen::org::tiqian::protocol::paragraph_request::ParagraphRequest as GeneratedRequest;
 use tiqian_protocol_gen::org::tiqian::protocol::paragraph_request_checks::ParagraphRequestChecks;
 use tiqian_protocol_gen::org::tiqian::protocol::text_span_input::TextSpanInput as GenTextSpanInput;
+use tiqian_protocol_gen::runtime::u_string::UString;
 
 // The request lane keeps the code types of the former packed engine ABI;
 // callers building a ParagraphRequest take the codes from here. The
@@ -104,14 +105,18 @@ impl ParagraphRequest {
     /// sections are fields this Rust consumer does not send; they read
     /// as absent and stay unvalidated here.
     fn to_generated(&self) -> GeneratedRequest {
+        // Every text field crosses into the generated model's Haxe string
+        // domain (UTF-16 units) through the generated `From<&str>`
+        // conversion; the lane keeps `String` end to end.
+        let to_ustring = |text: &String| UString::from(text.as_str());
         GeneratedRequest {
-            font_session_id: self.font_session_id.clone(),
-            text: self.text.clone(),
+            font_session_id: to_ustring(&self.font_session_id),
+            text: to_ustring(&self.text),
             max_width_px: self.max_width_px,
-            font_families: self.font_families.clone(),
+            font_families: self.font_families.iter().map(to_ustring).collect(),
             font_size_px: self.font_size_px,
             line_height_px: self.line_height_px,
-            locale: self.locale.clone(),
+            locale: to_ustring(&self.locale),
             font_weight: self.font_weight as u32,
             italic: self.italic,
             first_line_indent_ic: self.first_line_indent_ic,
@@ -128,7 +133,7 @@ impl ParagraphRequest {
                 .map(|span| GenTextSpanInput {
                     start: span.start as u32,
                     end: span.end as u32,
-                    families: span.families.clone(),
+                    families: span.families.iter().map(to_ustring).collect(),
                     font_size_px: span.font_size_px,
                     font_weight: span.font_weight as u32,
                     italic: span.italic,
@@ -172,15 +177,15 @@ pub fn utf16_length(text: &str) -> i32 {
         .sum()
 }
 
-fn line_break_policy_name(policy: LineBreakPolicyCode) -> String {
+fn line_break_policy_name(policy: LineBreakPolicyCode) -> UString {
     match policy {
-        LineBreakPolicyCode::ProgressiveTechnical => "ProgressiveTechnical".to_string(),
+        LineBreakPolicyCode::ProgressiveTechnical => UString::from("ProgressiveTechnical"),
     }
 }
 
-fn outer_spacing_name(outer_spacing: InlineBoxOuterSpacingCode) -> String {
+fn outer_spacing_name(outer_spacing: InlineBoxOuterSpacingCode) -> UString {
     match outer_spacing {
-        InlineBoxOuterSpacingCode::Narrow => "Narrow".to_string(),
-        InlineBoxOuterSpacingCode::Source => "Source".to_string(),
+        InlineBoxOuterSpacingCode::Narrow => UString::from("Narrow"),
+        InlineBoxOuterSpacingCode::Source => UString::from("Source"),
     }
 }

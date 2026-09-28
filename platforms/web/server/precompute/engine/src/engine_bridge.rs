@@ -19,6 +19,7 @@
 use tiqian::engine::{Engine, EngineComponents};
 use tiqian::NamedError;
 use tiqian_engine_gen::org::tiqian::core::cluster::Cluster;
+use tiqian_engine_gen::runtime::u_string::UString;
 use tiqian_engine_gen::org::tiqian::core::glyph::Glyph;
 use tiqian_engine_gen::org::tiqian::core::glyph_run::GlyphRun;
 use tiqian_engine_gen::org::tiqian::core::ic::Ic;
@@ -104,14 +105,27 @@ impl SessionBackend {
     /// read the same as the former vtable error slot contents.
     fn shape_record(&self, input: &ShapingInput) -> Result<ShapingResult, String> {
         let shaped = self.with_access(|session, evidence| {
-            let source_text = utf16_substring(&input.text, input.range.start, input.range.end);
+            // The generated shaper inputs are Haxe strings (UTF-16 units);
+            // the session lane keeps `String`/`&str`, so the shape call
+            // decodes its inputs once at the component boundary through
+            // the generated `to_utf8_lossy` reader.
+            let display_text = input.display_text.to_utf8_lossy();
+            let text = input.text.to_utf8_lossy();
+            let font_families: Vec<String> = input
+                .style
+                .font_families
+                .iter()
+                .map(|family| family.to_utf8_lossy())
+                .collect();
+            let locale = input.style.locale.to_utf8_lossy();
+            let source_text = utf16_substring(&text, input.range.start, input.range.end);
             let input = ShapeInput {
-                display_text: &input.display_text,
-                font_families: &input.style.font_families,
+                display_text: &display_text,
+                font_families: &font_families,
                 font_size: input.style.font_size,
                 font_weight: f64::from(input.style.font_weight),
                 italic: input.style.italic,
-                locale: &input.style.locale,
+                locale: &locale,
                 role: Some(input.font_decision.role.name()),
                 source_text: Some(&source_text),
             };
@@ -143,9 +157,12 @@ impl SessionBackend {
         let advance = record.advance;
         let key = input.font_decision.candidate.key.clone();
         let features = record.features.clone();
+        // The generated cluster and run carry Haxe strings; the session
+        // record is `String`, so the texts and the feature list convert
+        // through the generated `From<&str>` conversion here.
         let cluster = Cluster::new(
             range.clone(),
-            &source_text,
+            &UString::from(source_text.as_str()),
             &key,
             advance,
             Some(input.display_text.clone()),
@@ -153,7 +170,13 @@ impl SessionBackend {
             None,
             None,
         );
-        let run = GlyphRun::new(range, &key, glyphs, advance, Some(features.clone()));
+        let run = GlyphRun::new(
+            range,
+            &key,
+            glyphs,
+            advance,
+            Some(features.iter().map(|f| UString::from(f.as_str())).collect()),
+        );
         // The reason string stays byte-identical to the former native backend
         // decision so engine dumps remain diffable across the cutover.
         let reason = format!(
@@ -177,20 +200,20 @@ impl SessionBackend {
                 .unwrap_or(u32::MAX);
         let decision = ShapingDecisionInfo::new(
             input.range.clone(),
-            &source_text,
+            &UString::from(source_text.as_str()),
             &input.display_text,
             &key,
             glyph_count,
             advance,
-            ShapingSource::HarfBuzz.name(),
-            &reason,
+            &UString::from(ShapingSource::HarfBuzz.name()),
+            &UString::from(reason.as_str()),
             Some(without_ink_bounds),
             Some(missing_glyphs),
-            Some(record.face_id.clone()),
-            Some(record.script.clone()),
+            Some(UString::from(record.face_id.as_str())),
+            Some(UString::from(record.script.as_str())),
             Some(input.style.locale.clone()),
             None,
-            (!features.is_empty()).then(|| features.join(",")),
+            (!features.is_empty()).then(|| UString::from(features.join(",").as_str())),
             None,
         );
         Ok(ShapingResult::new(
@@ -202,13 +225,21 @@ impl SessionBackend {
 
     fn resolve_metrics(&self, request: &FontMetricsRequest) -> Result<[f64; 5], String> {
         self.with_access(|session, evidence| {
+            // Same boundary decode as `shape_record`: generated Haxe
+            // strings in, host `String`/`&str` out.
+            let font_families: Vec<String> = request
+                .font_families
+                .iter()
+                .map(|family| family.to_utf8_lossy())
+                .collect();
+            let face_selection_text = request.face_selection_text.to_utf8_lossy();
             let input = MetricsInput {
-                font_families: &request.font_families,
+                font_families: &font_families,
                 font_size: request.font_size,
                 font_weight: f64::from(request.font_weight),
                 italic: request.italic,
                 role: Some(request.role.name()),
-                face_selection_text: Some(&request.face_selection_text),
+                face_selection_text: Some(&face_selection_text),
             };
             session.metrics_into(evidence, &input)
         })
@@ -251,7 +282,9 @@ impl FontMetricsResolver for SessionBackend {
     fn resolve(&self, request: FontMetricsRequest) -> Result<RawFontMetrics, TextRangeError> {
         let values = self
             .resolve_metrics(&request)
-            .map_err(|message| TextRangeError::Message { text: message })?;
+            .map_err(|message| TextRangeError::Message {
+                text: UString::from(message.as_str()),
+            })?;
         let [ascent, descent, leading, typo_ascent, typo_descent] = values;
         Ok(RawFontMetrics::new(
             ascent,
@@ -271,10 +304,19 @@ fn layout_input(request: &ParagraphRequest) -> Result<LayoutInput, NamedError> {
     fn text_range(start: i32, end: i32) -> Result<TextRange, NamedError> {
         TextRange::new(start as u32, end as u32).map_err(|error| NamedError(error.to_string()))
     }
+    // The generated engine input carries Haxe strings (UTF-16 units); the
+    // lane request keeps `String`, so every text field converts through
+    // the generated `From<&str>` conversion at this one boundary.
     let text_style = TextStyle::new(
-        Some(request.font_families.clone()),
+        Some(
+            request
+                .font_families
+                .iter()
+                .map(|family| UString::from(family.as_str()))
+                .collect(),
+        ),
         Some(request.font_size_px),
-        Some(request.locale.clone()),
+        Some(UString::from(request.locale.as_str())),
         Some(request.font_weight as u32),
         Some(request.italic),
         Some(0.0),
@@ -287,7 +329,12 @@ fn layout_input(request: &ParagraphRequest) -> Result<LayoutInput, NamedError> {
             Ok(TextSpan::new(
                 text_range(span.start, span.end)?,
                 TextStyle::new(
-                    Some(span.families.clone()),
+                    Some(
+                        span.families
+                            .iter()
+                            .map(|family| UString::from(family.as_str()))
+                            .collect(),
+                    ),
                     Some(span.font_size_px),
                     None,
                     Some(span.font_weight as u32),
@@ -314,7 +361,7 @@ fn layout_input(request: &ParagraphRequest) -> Result<LayoutInput, NamedError> {
         })
         .collect::<Result<Vec<_>, NamedError>>()?;
     let content = TiqianTextContent::new(
-        &request.text,
+        &UString::from(request.text.as_str()),
         Some(spans),
         Some(boundaries),
         Some(line_break_spans),
@@ -376,7 +423,12 @@ pub fn precompute_paragraph(
     // SAFETY: `precompute_paragraph` holds both borrows across the engine
     // call; see the obligation list on `SessionBackend`.
     let mut engine = Engine::new(EngineComponents {
-        text_shaper: Some(Box::new(unsafe { SessionBackend::new(session, evidence) })),
+        // The generated component slots share the shaper through
+        // `Arc<Mutex<dyn ITextShaper>>`; the metrics resolver stays a
+        // plain `Box`. Both point at the same session and capture window.
+        text_shaper: Some(std::sync::Arc::new(std::sync::Mutex::new(unsafe {
+            SessionBackend::new(session, evidence)
+        }))),
         font_metrics_resolver: Some(Box::new(unsafe { SessionBackend::new(session, evidence) })),
         ..EngineComponents::default()
     })
@@ -386,7 +438,9 @@ pub fn precompute_paragraph(
     let json =
         PreparedParagraphFns::prepared_paragraph_fns_to_prepared_paragraph_json(result, true)
             .map_err(|fault| format!("{fault:?}"))?;
-    crate::plan::Plan::from_json_str(&json).map_err(|error| error.0)
+    // The emitter returns the JSON as a Haxe string; the plan reader
+    // takes the UTF-8 `&str` form.
+    crate::plan::Plan::from_json_str(&json.to_utf8_lossy()).map_err(|error| error.0)
 }
 
 /// Kotlin `String.substring(start, end)`: UTF-16 code-unit offsets. A char

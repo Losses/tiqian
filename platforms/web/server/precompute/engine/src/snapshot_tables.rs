@@ -112,7 +112,7 @@ impl SnapshotTables {
             };
             let replay = field(evidence, "replay");
             let replay_ok = replay.is_some_and(|value| {
-                field(value, "revision") == Some(&Json::str(FONT_REPLAY_REVISION))
+                field(value, "revision") == Some(&Json::str(FONT_REPLAY_REVISION.as_str()))
                     && arr_of(field(value, "shapes")).is_some()
                     && arr_of(field(value, "metrics")).is_some()
             });
