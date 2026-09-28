@@ -425,6 +425,7 @@ function planWithDiagnostics(request, zeroAdvanceEpsilonPx, textShaper, fontMetr
       new TextRange(deco.start, deco.end),
       enumVariant(DecorationKind, "org.tiqian.core.DecorationKind.", deco.kind),
     )),
+    null,
     model.inlineBoxes.map((box) => new InlineBoxSpan(
       new TextRange(box.start, box.end),
       box.inlineStart,
