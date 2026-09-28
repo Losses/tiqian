@@ -191,7 +191,7 @@ impl PlanLowering {
                         style_delta = if cs != ((result.input).clone().text_style).clone() { Some(PlanStyleDelta { font_size: if cs.font_size != ((result.input).clone().text_style).clone().font_size { Some(cs.font_size) } else { None }, font_weight: if cs.font_weight != ((result.input).clone().text_style).clone().font_weight { Some(cs.font_weight) } else { None }, italic: if cs.italic != ((result.input).clone().text_style).clone().italic { Some(cs.italic) } else { None } }) } else { None };
                     }
                     let feats = features.get(&(ck).to_ustring());
-                    cells.push(PlanCell { range_start: (c.range).clone().start, range_end: (c.range).clone().end, source: (c.text).to_ustring().clone(), display: (c.display_text).to_ustring().clone(), draw_x: p.draw_x, natural_width: nat_w, leading_layout_advance: c.leading_layout_advance, shaping_boundary: (i32::from_ne_bytes(((u32::wrapping_sub((c.range).clone().end, (c.range).clone().start)) as i32).to_ne_bytes())) > (1), open_type_features: match &(feats) { Some(__option8) => (*__option8).clone().unwrap(), None => vec![] }, render_font_family: render_fam.clone(), dash_strategy: dash.clone(), shaping_language: lang.clone(), resolved_face: face.clone(), glyph_ids: g_ids.clone(), shaping_evidence: ev.clone(), punctuation_ink_floor: ink_floor, punctuation_body_width: body_w, latin: latin, advance: adv_override, inline_object: inline_obj, style_delta: style_delta });
+                    cells.push(PlanCell { range_start: (c.range).clone().start, range_end: (c.range).clone().end, source: (c.text).to_ustring().clone(), display: (c.display_text).to_ustring().clone(), draw_x: p.draw_x, natural_width: nat_w, leading_layout_advance: c.leading_layout_advance, shaping_boundary: (i32::from_ne_bytes(((u32::wrapping_sub((c.range).clone().end, (c.range).clone().start)) as i32).to_ne_bytes())) > (1), open_type_features: match &(feats) { Some(__option8) => (*__option8).clone(), None => vec![] }, render_font_family: render_fam.clone(), dash_strategy: dash.clone(), shaping_language: lang.clone(), resolved_face: face.clone(), glyph_ids: g_ids.clone(), shaping_evidence: ev.clone(), punctuation_ink_floor: ink_floor, punctuation_body_width: body_w, latin: latin, advance: adv_override, inline_object: inline_obj, style_delta: style_delta });
                 }
             }
             lines.push(PlanLine { range_start: (line.range).clone().start, range_end: (line.range).clone().end, top: line.top, bottom: line.bottom, baseline: line.baseline, indent: line.indent, visual_width: line.visual_width, hyphen_advance: line.hyphen_advance, end_reason: PlanLowering::plan_lowering_end_reason_from(line.end_reason), cells: cells });
@@ -240,7 +240,7 @@ impl PlanLowering {
             }
             let ruby_src = ((result.debug).clone().ruby_decisions).clone();
             for r in &ruby_src {
-                ruby_decisions.push(PlanRuby { base_range_start: (r.base_range).clone().start, base_range_end: (r.base_range).clone().end, text: (r.text).to_ustring().clone(), center_x: r.center_x, baseline_y: r.baseline_y, font_size: r.font_size, font_weight: r.font_weight, font_families: PlanLowering::plan_lowering_to_array(&(r.font_families).clone()), ascent: r.ascent });
+                ruby_decisions.push(PlanRuby { base_range_start: (r.base_range).clone().start, base_range_end: (r.base_range).clone().end, text: (r.text).to_ustring().clone(), center_x: r.center_x, baseline_y: r.baseline_y, font_size: r.font_size, font_weight: r.font_weight, font_families: PlanLowering::plan_lowering_to_array(&(r.font_families).clone()), ascent: Some(r.ascent) });
             }
             let bopo_src = ((result.debug).clone().bopomofo_decisions).clone();
             for z in &bopo_src {
@@ -260,7 +260,7 @@ impl PlanLowering {
             let dot_src = ((result.debug).clone().decoration_decisions).clone();
             for d in &dot_src {
                 if d.applied && (d.kind).to_ustring() == UString::from(DecorationKind::Emphasis.name()) && (d.dot_diameter) > (0 as f64) {
-                    emphasis_dots.push(PlanEmphasisDot { cluster_range_start: PlanLowering::plan_lowering_f32(i32::from_ne_bytes((((d.cluster_range).clone().start) as i32).to_ne_bytes()) as f64), anchor_x: d.anchor_x, anchor_y: d.anchor_y, dot_diameter: d.dot_diameter });
+                    emphasis_dots.push(PlanEmphasisDot { cluster_range_start: Some(PlanLowering::plan_lowering_f32(i32::from_ne_bytes((((d.cluster_range).clone().start) as i32).to_ne_bytes()) as f64)), anchor_x: d.anchor_x, anchor_y: d.anchor_y, dot_diameter: d.dot_diameter });
                 }
             }
         }

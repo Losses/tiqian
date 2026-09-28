@@ -765,13 +765,13 @@ impl PlanJson {
                 }
                 out.extend(UString::from("\"italic\":").encode_utf16());
                 if let Some(&unit) = out.last() {
-                    if unit >= 55296 && unit <= 56319 && !if *__option13.unwrap_or(false) { UString::from("true") } else { UString::from("false") }.is_empty() {
-                        if !if *__option13.unwrap_or(false) { UString::from("true") } else { UString::from("false") }.encode_utf16().next().map_or(false, |head| head >= 56320 && head <= 57343) {
+                    if unit >= 55296 && unit <= 56319 && !if *__option13 { UString::from("true") } else { UString::from("false") }.is_empty() {
+                        if !if *__option13 { UString::from("true") } else { UString::from("false") }.encode_utf16().next().map_or(false, |head| head >= 56320 && head <= 57343) {
                             return Err(UStringFault::UnpairedSurrogate { unit: u32::from(unit) });
                         }
                     }
                 }
-                out.extend(if *__option13.unwrap_or(false) { UString::from("true") } else { UString::from("false") }.encode_utf16());
+                out.extend(if *__option13 { UString::from("true") } else { UString::from("false") }.encode_utf16());
             }
             None => {
             }

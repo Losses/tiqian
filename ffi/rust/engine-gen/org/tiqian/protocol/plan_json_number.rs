@@ -344,10 +344,10 @@ impl PlanJsonNumber {
     }
 
     pub(crate) fn plan_json_number_add_decimal(a: &UStr, b: &UStr) -> Result<UString, UStringFault> {
-    let __units4 = u_string::units(&a);
     let __units5 = u_string::units(&b);
-    let __count4 = u_string::unit_count(&a);
+    let __units4 = u_string::units(&a);
     let __count5 = u_string::unit_count(&b);
+    let __count4 = u_string::unit_count(&a);
         let mut out = Vec::<u16>::new();
         let mut i = i32::wrapping_sub(i32::from_ne_bytes(((__count4) as i32).to_ne_bytes()), 1);
         let mut j = i32::wrapping_sub(i32::from_ne_bytes(((__count5) as i32).to_ne_bytes()), 1);
