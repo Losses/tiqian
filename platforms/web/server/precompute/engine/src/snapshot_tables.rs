@@ -558,7 +558,7 @@ mod tests {
                     (
                         "replay".to_string(),
                         Json::Obj(vec![
-                            ("revision".to_string(), Json::str(FONT_REPLAY_REVISION)),
+                            ("revision".to_string(), Json::str(FONT_REPLAY_REVISION.as_str())),
                             ("shapes".to_string(), Json::Arr(vec![shape(text, 0.5)])),
                             ("metrics".to_string(), Json::Arr(vec![metric("serif", 1.0)])),
                         ]),

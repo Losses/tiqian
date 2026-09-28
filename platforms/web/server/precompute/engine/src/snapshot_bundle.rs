@@ -862,7 +862,7 @@ mod tests {
                     (
                         "replay".to_string(),
                         Json::Obj(vec![
-                            ("revision".to_string(), Json::str(FONT_REPLAY_REVISION)),
+                            ("revision".to_string(), Json::str(FONT_REPLAY_REVISION.as_str())),
                             ("shapes".to_string(), Json::Arr(Vec::new())),
                             ("metrics".to_string(), Json::Arr(Vec::new())),
                         ]),
