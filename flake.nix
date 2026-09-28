@@ -8,7 +8,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     boring = {
-      url = "github:Losses/boring/304ed70c4ba09fe21edadcca4c85f963fd692927";
+      url = "github:Losses/boring/3719d3f0649f1eb04930a4b2330445ed68b56476";
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.rust-overlay.follows = "rust-overlay";
     };
@@ -108,7 +108,7 @@
               mkdir -p "$HAXELIB_PATH/boring"
               boring_git="$HAXELIB_PATH/boring/git"
               if [ ! -f "$boring_git/.boring-flake-revision" ] || \
-                 [ "$(cat "$boring_git/.boring-flake-revision")" != "304ed70c4ba09fe21edadcca4c85f963fd692927" ]; then
+                 [ "$(cat "$boring_git/.boring-flake-revision")" != "3719d3f0649f1eb04930a4b2330445ed68b56476" ]; then
                 if [ -e "$boring_git" ] || [ -L "$boring_git" ]; then
                   boring_backup="$boring_git.pre-flake-$(date +%Y%m%d%H%M%S)"
                   mv "$boring_git" "$boring_backup"
@@ -117,7 +117,7 @@
                 mkdir -p "$boring_git"
                 cp -a "${boring}/." "$boring_git/"
                 chmod -R u+w "$boring_git"
-                printf '%s\n' "304ed70c4ba09fe21edadcca4c85f963fd692927" > "$boring_git/.boring-flake-revision"
+                printf '%s\n' "3719d3f0649f1eb04930a4b2330445ed68b56476" > "$boring_git/.boring-flake-revision"
               fi
               printf '%s\n' "${boring}" > "$boring_git/.boring-flake-source"
               haxelib dev boring "$boring_git" >/dev/null

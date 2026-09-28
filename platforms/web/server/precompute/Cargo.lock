@@ -675,6 +675,13 @@ dependencies = [
 [[package]]
 name = "tiqian"
 version = "0.1.0"
+dependencies = [
+ "tiqian-engine-gen",
+]
+
+[[package]]
+name = "tiqian-engine-gen"
+version = "0.1.0"
 
 [[package]]
 name = "tiqian-precompute"
