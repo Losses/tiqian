@@ -14,6 +14,7 @@ use tiqian_protocol_gen::org::tiqian::protocol::table_data::TableData;
 use tiqian_protocol_gen::org::tiqian::protocol::table_input::TableInput;
 use tiqian_protocol_gen::org::tiqian::protocol::table_metric_row::TableMetricRow;
 use tiqian_protocol_gen::org::tiqian::protocol::table_probe::TableProbe;
+use tiqian_protocol_gen::runtime::u_string::UString;
 
 use crate::js_compat::trunc_sat_usize;
 use crate::json::{parse_json, Json};
@@ -105,12 +106,27 @@ pub(crate) fn encode(tables: &SnapshotTables) -> Result<Vec<u8>, NamedError> {
                 _ => return Err(invalid()),
             });
         }
+        // The generated rows carry Haxe strings; the string-table lookups
+        // produce `String`, so each ref converts through `From<&str>`.
+        let to_ustring = |text: &String| UString::from(text.as_str());
         metrics.push(TableMetricRow::new(
-            all_strings.get(usize::try_from(families_ref).map_err(|_| invalid())?).ok_or_else(invalid)?.as_str(),
+            &to_ustring(
+                all_strings
+                    .get(usize::try_from(families_ref).map_err(|_| invalid())?)
+                    .ok_or_else(invalid)?,
+            ),
             finite_number_of(&values[1])?,
             italic_number == 1.0,
-            all_strings.get(usize::try_from(role_ref).map_err(|_| invalid())?).ok_or_else(invalid)?.as_str(),
-            all_strings.get(usize::try_from(face_selection_ref).map_err(|_| invalid())?).ok_or_else(invalid)?.as_str(),
+            &to_ustring(
+                all_strings
+                    .get(usize::try_from(role_ref).map_err(|_| invalid())?)
+                    .ok_or_else(invalid)?,
+            ),
+            &to_ustring(
+                all_strings
+                    .get(usize::try_from(face_selection_ref).map_err(|_| invalid())?)
+                    .ok_or_else(invalid)?,
+            ),
             values_em,
         ));
     }
@@ -122,7 +138,7 @@ pub(crate) fn encode(tables: &SnapshotTables) -> Result<Vec<u8>, NamedError> {
             features.push(string_of(feature)?.to_string());
         }
         probes.push(TableProbe::new(
-            string_of(field(probe, "text").ok_or_else(invalid)?)?,
+            &UString::from(string_of(field(probe, "text").ok_or_else(invalid)?)?),
             finite_number_of(field(probe, "advancePx").ok_or_else(invalid)?)?,
             finite_number_of(field(probe, "fontSizePx").ok_or_else(invalid)?)?,
             finite_number_of(field(probe, "fontWeight").ok_or_else(invalid)?)?,
@@ -130,9 +146,9 @@ pub(crate) fn encode(tables: &SnapshotTables) -> Result<Vec<u8>, NamedError> {
                 Json::Bool(value) => *value,
                 _ => return Err(invalid()),
             },
-            string_of(field(probe, "script").ok_or_else(invalid)?)?,
-            string_of(field(probe, "language").ok_or_else(invalid)?)?,
-            features,
+            &UString::from(string_of(field(probe, "script").ok_or_else(invalid)?)?),
+            &UString::from(string_of(field(probe, "language").ok_or_else(invalid)?)?),
+            features.iter().map(|f| UString::from(f.as_str())).collect(),
         ));
     }
 
@@ -157,16 +173,19 @@ pub(crate) fn encode(tables: &SnapshotTables) -> Result<Vec<u8>, NamedError> {
     }
     let revision_text = stable_stringify(&Json::Obj(revisions));
 
+    // The generated encoder interns Haxe strings; the lane rows are
+    // `String`, so every list converts at the single encode boundary.
+    let to_ustring = |text: &String| UString::from(text.as_str());
     Ok(SnapshotTableBinary::snapshot_table_binary_encode(
         TableInput::new(
-            replay_strings,
+            replay_strings.iter().map(to_ustring).collect(),
             metrics,
             probes,
-            face_texts,
-            typography_texts,
-            tables.value_styles.clone(),
-            font_preloads,
-            &revision_text,
+            face_texts.iter().map(to_ustring).collect(),
+            typography_texts.iter().map(to_ustring).collect(),
+            tables.value_styles.iter().map(to_ustring).collect(),
+            font_preloads.iter().map(to_ustring).collect(),
+            &UString::from(revision_text.as_str()),
         ),
     ))
 }
@@ -202,7 +221,7 @@ pub(crate) fn decode(bytes: &[u8]) -> Result<DecodedTable, NamedError> {
     let strings: Vec<Json> = data
         .strings
         .iter()
-        .map(|text| Json::str(text.clone()))
+        .map(|text| Json::str(text.to_utf8_lossy()))
         .collect();
     let string_at = |reference: u32| -> Result<Json, NamedError> {
         Ok(
@@ -261,16 +280,21 @@ pub(crate) fn decode(bytes: &[u8]) -> Result<DecodedTable, NamedError> {
         ]));
     }
 
+    // The generated decoder stores JSON text regions as Haxe strings; the
+    // lane parses them from the UTF-8 form the generated decode produced.
     let mut typographies = Vec::new();
     for text in &data.typography_texts {
-        typographies.push(parse_json(text).map_err(|_| invalid())?);
+        let text = text.to_utf8_lossy();
+        typographies.push(parse_json(&text).map_err(|_| invalid())?);
     }
     let mut faces = Vec::new();
     for text in &data.face_texts {
-        faces.push(parse_json(text).map_err(|_| invalid())?);
+        let text = text.to_utf8_lossy();
+        faces.push(parse_json(&text).map_err(|_| invalid())?);
     }
 
-    let revisions = parse_json(&data.revision_text).map_err(|_| invalid())?;
+    let revision_text = data.revision_text.to_utf8_lossy();
+    let revisions = parse_json(&revision_text).map_err(|_| invalid())?;
 
     Ok(DecodedTable {
         replay_string_count: usize::try_from(data.replay_string_count).map_err(|_| invalid())?,
@@ -279,7 +303,11 @@ pub(crate) fn decode(bytes: &[u8]) -> Result<DecodedTable, NamedError> {
         probes,
         strings,
         metrics,
-        value_styles: data.value_style_texts.clone(),
+        value_styles: data
+            .value_style_texts
+            .iter()
+            .map(|text| text.to_utf8_lossy())
+            .collect(),
         backend_revision: field(&revisions, "backendRevision").cloned(),
         harfbuzz_version: field(&revisions, "harfbuzzVersion").cloned(),
     })

@@ -258,8 +258,8 @@ fn render_snapshot_bundle_data_inner(
     }
     if corpus.iter().any(|entry| {
         field(entry, "schema") != Some(&Json::Num(js_int_to_number(SNAPSHOT_SCHEMA)))
-            || field(entry, "layoutRevision") != Some(&Json::str(LAYOUT_REVISION))
-            || field(entry, "renderRevision") != Some(&Json::str(RENDER_REVISION))
+            || field(entry, "layoutRevision") != Some(&Json::str(LAYOUT_REVISION.as_str()))
+            || field(entry, "renderRevision") != Some(&Json::str(RENDER_REVISION.as_str()))
             || !matches!(field(entry, "renderArtifactSha256"), Some(Json::Str(_)))
     }) {
         return Err(named("SnapshotTemplateContainsStalePreparedParagraph"));
@@ -428,8 +428,8 @@ data-tq-render-revision=\"{}\" data-pagefind-ignore><script type=\"application/j
 data-tq-snapshot-manifest>{}</script>{}</template>",
         escape_attribute(&data.id),
         SNAPSHOT_SCHEMA,
-        LAYOUT_REVISION,
-        RENDER_REVISION,
+        LAYOUT_REVISION.as_str(),
+        RENDER_REVISION.as_str(),
         manifest_json,
         body,
     );
@@ -443,8 +443,8 @@ data-tq-render-revision=\"{}\" data-pagefind-ignore><script type=\"application/j
 data-tq-snapshot-manifest>{}</script></template>",
         escape_attribute(&data.id),
         SNAPSHOT_SCHEMA,
-        LAYOUT_REVISION,
-        RENDER_REVISION,
+        LAYOUT_REVISION.as_str(),
+        RENDER_REVISION.as_str(),
         client_manifest_json,
     );
     // The line strut, geometry reset, and nowrap contract of the prepared DOM
@@ -509,11 +509,11 @@ pub fn assemble_font_contract_bundle(
 /// passes through.
 fn tables_metadata(data: &SnapshotBundleData) -> Json {
     Json::Obj(vec![
-        ("layoutRevision".to_string(), Json::str(LAYOUT_REVISION)),
-        ("renderRevision".to_string(), Json::str(RENDER_REVISION)),
+        ("layoutRevision".to_string(), Json::str(LAYOUT_REVISION.as_str())),
+        ("renderRevision".to_string(), Json::str(RENDER_REVISION.as_str())),
         (
             "fontSourcePolicy".to_string(),
-            Json::str(FONT_SOURCE_POLICY),
+            Json::str(FONT_SOURCE_POLICY.as_str()),
         ),
         (
             "paragraphSelector".to_string(),

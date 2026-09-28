@@ -356,7 +356,7 @@ pub fn compact_snapshot_manifest_with_tables(
         };
         let replay = field(evidence, "replay");
         let replay_ok = replay.is_some_and(|value| {
-            field(value, "revision") == Some(&Json::str(FONT_REPLAY_REVISION))
+            field(value, "revision") == Some(&Json::str(FONT_REPLAY_REVISION.as_str()))
                 && arr_of(field(value, "shapes")).is_some()
                 && arr_of(field(value, "metrics")).is_some()
         });
@@ -447,8 +447,8 @@ pub fn compact_snapshot_manifest_with_tables(
     output.push((
         "fontReplay".to_string(),
         Json::Obj(vec![
-            ("revision".to_string(), Json::str(FONT_REPLAY_REVISION)),
-            ("encoding".to_string(), Json::str(FONT_REPLAY_TRANSPORT)),
+            ("revision".to_string(), Json::str(FONT_REPLAY_REVISION.as_str())),
+            ("encoding".to_string(), Json::str(FONT_REPLAY_TRANSPORT.as_str())),
             ("shapes".to_string(), Json::Arr(compact_shapes)),
         ]),
     ));

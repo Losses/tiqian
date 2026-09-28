@@ -122,11 +122,11 @@ pub fn evidence_json(evidence: &FontEvidence) -> Result<Json, NamedError> {
     Ok(Json::Obj(vec![
         (
             "backendRevision".into(),
-            Json::str(evidence.backend_revision),
+            Json::str(evidence.backend_revision.clone()),
         ),
         (
             "harfbuzzVersion".into(),
-            Json::str(evidence.harfbuzz_version),
+            Json::str(evidence.harfbuzz_version.clone()),
         ),
         (
             "faces".into(),
@@ -135,7 +135,7 @@ pub fn evidence_json(evidence: &FontEvidence) -> Result<Json, NamedError> {
         (
             "replay".into(),
             Json::Obj(vec![
-                ("revision".into(), Json::str(FONT_REPLAY_REVISION)),
+                ("revision".into(), Json::str(FONT_REPLAY_REVISION.as_str())),
                 (
                     "shapes".into(),
                     Json::Arr(

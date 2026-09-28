@@ -8,6 +8,8 @@
 //! (engine-haxe/src/org/tiqian/protocol/Revision.hx) is the one place the
 //! family is written.
 
+use std::sync::LazyLock;
+
 use crate::js_compat::{cmp_utf16, js_number_string};
 use crate::json::{json_string, Json};
 // The single-sourced revision family (generated crate); the constants below
@@ -21,22 +23,31 @@ pub const SNAPSHOT_SCHEMA: i64 = RevisionFamily::REVISION_SNAPSHOT_SCHEMA as i64
 pub const SNAPSHOT_TABLES_SCHEMA: i64 = RevisionFamily::REVISION_SNAPSHOT_TABLES_SCHEMA as i64;
 
 /// `LAYOUT_REVISION` of every snapshot this revision understands.
-pub const LAYOUT_REVISION: &str = RevisionFamily::REVISION_LAYOUT_REVISION;
+/// The generated constants are `&'static UStr` (UTF-16 units); the host
+/// lane keeps `String`, so each re-export decodes once through
+/// `to_utf8_lossy` behind a lazy static.
+pub static LAYOUT_REVISION: LazyLock<String> =
+    LazyLock::new(|| RevisionFamily::REVISION_LAYOUT_REVISION.to_utf8_lossy());
 
 /// `RENDER_REVISION` of the prepared DOM lowering.
-pub const RENDER_REVISION: &str = RevisionFamily::REVISION_RENDER_REVISION;
+pub static RENDER_REVISION: LazyLock<String> =
+    LazyLock::new(|| RevisionFamily::REVISION_RENDER_REVISION.to_utf8_lossy());
 
 /// `FONT_SOURCE_POLICY` of the snapshot font evidence.
-pub const FONT_SOURCE_POLICY: &str = RevisionFamily::REVISION_FONT_SOURCE_POLICY;
+pub static FONT_SOURCE_POLICY: LazyLock<String> =
+    LazyLock::new(|| RevisionFamily::REVISION_FONT_SOURCE_POLICY.to_utf8_lossy());
 
 /// `FONT_BACKEND_REVISION` of the shared shaping backend.
-pub const FONT_BACKEND_REVISION: &str = RevisionFamily::REVISION_FONT_BACKEND_REVISION;
+pub static FONT_BACKEND_REVISION: LazyLock<String> =
+    LazyLock::new(|| RevisionFamily::REVISION_FONT_BACKEND_REVISION.to_utf8_lossy());
 
 /// `FONT_REPLAY_REVISION` of the replay tables.
-pub const FONT_REPLAY_REVISION: &str = RevisionFamily::REVISION_FONT_REPLAY_REVISION;
+pub static FONT_REPLAY_REVISION: LazyLock<String> =
+    LazyLock::new(|| RevisionFamily::REVISION_FONT_REPLAY_REVISION.to_utf8_lossy());
 
 /// `FONT_REPLAY_TRANSPORT` of the compact replay encoding.
-pub const FONT_REPLAY_TRANSPORT: &str = RevisionFamily::REVISION_FONT_REPLAY_TRANSPORT;
+pub static FONT_REPLAY_TRANSPORT: LazyLock<String> =
+    LazyLock::new(|| RevisionFamily::REVISION_FONT_REPLAY_TRANSPORT.to_utf8_lossy());
 
 /// `stableStringify`: primitives render through `JSON.stringify`, arrays
 /// keep element order, object keys sort by UTF-16 code units.
@@ -79,22 +90,28 @@ mod tests {
         // pins the generated values item by item.
         assert_eq!(SNAPSHOT_SCHEMA, 1);
         assert_eq!(SNAPSHOT_TABLES_SCHEMA, 2);
-        assert_eq!(LAYOUT_REVISION, "tiqian-layout-v2");
-        assert_eq!(RENDER_REVISION, "prebroken-dom-v16");
-        assert_eq!(FONT_SOURCE_POLICY, "host-compatible-stylesheet-v1");
-        assert_eq!(FONT_BACKEND_REVISION, "tiqian-shared-harfbuzz-v5");
-        assert_eq!(FONT_REPLAY_REVISION, "tiqian-server-shaping-replay-v1");
-        assert_eq!(FONT_REPLAY_TRANSPORT, "shared-strings-v1");
+        assert_eq!(LAYOUT_REVISION.as_str(), "tiqian-layout-v2");
+        assert_eq!(RENDER_REVISION.as_str(), "prebroken-dom-v16");
+        assert_eq!(FONT_SOURCE_POLICY.as_str(), "host-compatible-stylesheet-v1");
+        assert_eq!(FONT_BACKEND_REVISION.as_str(), "tiqian-shared-harfbuzz-v5");
+        assert_eq!(
+            FONT_REPLAY_REVISION.as_str(),
+            "tiqian-server-shaping-replay-v1"
+        );
+        assert_eq!(FONT_REPLAY_TRANSPORT.as_str(), "shared-strings-v1");
         // The plan reader and the session constants re-export the same
         // single source; the declarations must not drift.
-        assert_eq!(LAYOUT_REVISION, crate::plan::PLAN_LAYOUT_REVISION);
         assert_eq!(
-            crate::session::BACKEND_REVISION,
-            RevisionFamily::REVISION_FONT_BACKEND_REVISION
+            LAYOUT_REVISION.as_str(),
+            crate::plan::PLAN_LAYOUT_REVISION.as_str()
         );
         assert_eq!(
-            crate::session::FONT_REPLAY_REVISION,
-            RevisionFamily::REVISION_FONT_REPLAY_REVISION
+            crate::session::BACKEND_REVISION.as_str(),
+            RevisionFamily::REVISION_FONT_BACKEND_REVISION.to_utf8_lossy()
+        );
+        assert_eq!(
+            crate::session::FONT_REPLAY_REVISION.as_str(),
+            RevisionFamily::REVISION_FONT_REPLAY_REVISION.to_utf8_lossy()
         );
     }
 
