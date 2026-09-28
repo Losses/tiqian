@@ -80,7 +80,7 @@ fn session_lends_the_engine_a_real_font_backend() {
         "last line must close the paragraph"
     );
     assert_eq!(
-        tiqian_precompute::plan::PLAN_LAYOUT_REVISION,
+        tiqian_precompute::plan::PLAN_LAYOUT_REVISION.as_str(),
         "tiqian-layout-v2",
         "layout revision constant diverged"
     );
