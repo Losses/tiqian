@@ -108,7 +108,9 @@
               mkdir -p "$HAXELIB_PATH/boring"
               boring_git="$HAXELIB_PATH/boring/git"
               if [ ! -f "$boring_git/.boring-flake-revision" ] || \
-                 [ "$(cat "$boring_git/.boring-flake-revision")" != "304ed70c4ba09fe21edadcca4c85f963fd692927" ]; then
+                 [ "$(cat "$boring_git/.boring-flake-revision")" != "${boring.rev or "unversioned-source"}" ] || \
+                 [ ! -f "$boring_git/.boring-flake-source" ] || \
+                 [ "$(cat "$boring_git/.boring-flake-source")" != "${boring}" ]; then
                 if [ -e "$boring_git" ] || [ -L "$boring_git" ]; then
                   boring_backup="$boring_git.pre-flake-$(date +%Y%m%d%H%M%S)"
                   mv "$boring_git" "$boring_backup"
@@ -117,7 +119,7 @@
                 mkdir -p "$boring_git"
                 cp -a "${boring}/." "$boring_git/"
                 chmod -R u+w "$boring_git"
-                printf '%s\n' "304ed70c4ba09fe21edadcca4c85f963fd692927" > "$boring_git/.boring-flake-revision"
+                printf '%s\n' "${boring.rev or "unversioned-source"}" > "$boring_git/.boring-flake-revision"
               fi
               printf '%s\n' "${boring}" > "$boring_git/.boring-flake-source"
               haxelib dev boring "$boring_git" >/dev/null
