@@ -10,5 +10,9 @@
     "platforms/web/client/astro",
     "platforms/web/client/sveltekit",
     "demo/web"
-  ]
+  ],
+  "devDependencies": {
+    "typescript": "5.9.3",
+    "@types/bun": "1.4.0"
+  }
 }
