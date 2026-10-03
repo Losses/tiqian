@@ -2,7 +2,10 @@
 # T1 gate: type-check the generated TS trees under the project strict
 # profile (the boring tsconfig profile). Regenerates out/ts/tsconfig.json
 # because out/ is a generated tree; the profile lives here, in version
-# control.
+# control. TS6133 is NOT a gate criterion (ruling: task t-muhbc7gp-sg81
+# timeline seq5, 2026-09-27): noUnusedLocals/noUnusedParameters stay off in
+# this profile; run the probe separately via `tsc --noUnusedLocals
+# --noUnusedParameters` and never change the gate baseline for it.
 set -euo pipefail
 TI_ROOT="$(cd "$(dirname "$0")/../.." && pwd)"
 # node_modules is a symlink in this worktree layout; resolve the real path
