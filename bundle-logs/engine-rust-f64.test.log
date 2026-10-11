@@ -1,0 +1,45 @@
+[test] engine-rust-f64
+  $ cargo test --no-run
+Error: bundle "engine-rust-f64", action "test", step "build" failed with exit code 101.
+  command: cargo test --no-run
+  --- output (tail) ---
+      |
+  447 |         let face = ReplayableFontFaceDescriptor::new(FontFaceIdImpl::font_face_id_impl_of(UStr::new(&[102,97,99,101,45,97])).expect("REASON").as_ustr(), ReplayableFontBackendCoverageTestSupport::replayable_font_backend_coverage_test_support_strings(&vec![UString::from("Serif").to_ustring()]), ReplayableFontBackendCoverageTestSupport::replayable_font_backend_coverage_test_support_roles(&vec![FontRole::CjkText]).to_vec(), &(UStr::new(&[98,121,116,101,115])), Some(400), Some(false), Some(0), Some(SortedTable::sorted_table_map_builder::<UString, f64>(Arc::new(|a, b| SortedTable::sorted_table_compare_strings(a.as_ustr(), b.as_ustr()))).build())).unwrap();
+      |                                                                                                                             +++++++++++++++++
+  
+  error[E0599]: no method named `as_ustr` found for enum `Result<T, E>` in the current scope
+     --> org/tiqian/shaping/replayable_font_backend_coverage_test.rs:463:138
+      |
+  463 | ...&[102,97,99,101,45,99,106,107])).as_ustr(), ReplayableFontBackendCoverageTestSupport::replayable_font_backend_coverage_test_supp...
+      |                                     ^^^^^^^ method not found in `Result<UString, TextRangeError>`
+      |
+  note: the method `as_ustr` exists on the type `UString`
+     --> runtime/u_string.rs:125:5
+      |
+  125 |     pub fn as_ustr(&self) -> &UStr {
+      |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  help: consider using `Result::expect` to unwrap the `UString` value, panicking if the value is a `Result::Err`
+      |
+  463 |         let cjk_face = ReplayableFontFaceDescriptor::new(FontFaceIdImpl::font_face_id_impl_of(UStr::new(&[102,97,99,101,45,99,106,107])).expect("REASON").as_ustr(), ReplayableFontBackendCoverageTestSupport::replayable_font_backend_coverage_test_support_strings(&vec![UString::from("Noto Serif CJK").to_ustring()]), ReplayableFontBackendCoverageTestSupport::replayable_font_backend_coverage_test_support_roles(&vec![FontRole::CjkText]).to_vec(), &(UStr::new(&[98,121,116,101,115])), Some(400), Some(false), Some(0), Some(SortedTable::sorted_table_map_builder::<UString, f64>(Arc::new(|a, b| SortedTable::sorted_table_compare_strings(a.as_ustr(), b.as_ustr()))).build())).unwrap();
+      |                                                                                                                                         +++++++++++++++++
+  
+  error[E0599]: no method named `as_ustr` found for enum `Result<T, E>` in the current scope
+     --> org/tiqian/shaping/replayable_font_backend_coverage_test.rs:464:148
+      |
+  464 | ...,99,101,45,108,97,116,105,110])).as_ustr(), ReplayableFontBackendCoverageTestSupport::replayable_font_backend_coverage_test_supp...
+      |                                     ^^^^^^^ method not found in `Result<UString, TextRangeError>`
+      |
+  note: the method `as_ustr` exists on the type `UString`
+     --> runtime/u_string.rs:125:5
+      |
+  125 |     pub fn as_ustr(&self) -> &UStr {
+      |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  help: consider using `Result::expect` to unwrap the `UString` value, panicking if the value is a `Result::Err`
+      |
+  464 |         let latin_face = ReplayableFontFaceDescriptor::new(FontFaceIdImpl::font_face_id_impl_of(UStr::new(&[102,97,99,101,45,108,97,116,105,110])).expect("REASON").as_ustr(), ReplayableFontBackendCoverageTestSupport::replayable_font_backend_coverage_test_support_strings(&vec![UString::from("Plex").to_ustring()]), ReplayableFontBackendCoverageTestSupport::replayable_font_backend_coverage_test_support_roles(&vec![FontRole::LatinText]).to_vec(), &(UStr::new(&[98,121,116,101,115])), Some(400), Some(false), Some(0), Some(SortedTable::sorted_table_map_builder::<UString, f64>(Arc::new(|a, b| SortedTable::sorted_table_compare_strings(a.as_ustr(), b.as_ustr()))).build())).unwrap();
+      |                                                                                                                                                   +++++++++++++++++
+  
+  Some errors have detailed explanations: E0308, E0432, E0433, E0599.
+  warning: `tiqian-engine-gen` (lib test) generated 21 warnings (5 duplicates)
+  error: could not compile `tiqian-engine-gen` (lib test) due to 16 previous errors; 21 warnings emitted
+  
