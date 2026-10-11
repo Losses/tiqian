@@ -1,0 +1,45 @@
+[test] protocol-rust
+  $ cargo test --no-run
+Error: bundle "protocol-rust", action "test", step "build" failed with exit code 101.
+  command: cargo test --no-run
+  --- output (tail) ---
+     |
+  85 |     fn from(value: crate::std::fs_error::FsError) -> Self {
+     |                                ^^^^^^^^ could not find `fs_error` in `std`
+  
+  warning: unused import: `named_error_test::*`
+    --> org/tiqian/protocol/mod.rs:46:9
+     |
+  46 | pub use named_error_test::*;
+     |         ^^^^^^^^^^^^^^^^^^^
+     |
+     = note: `#[warn(unused_imports)]` (part of `#[warn(unused)]`) on by default
+  
+  warning: unused import: `DerefMut`
+    --> runtime/u_string.rs:13:23
+     |
+  13 | use std::ops::{Deref, DerefMut};
+     |                       ^^^^^^^^
+     |
+     = note: `#[warn(unused_imports)]` (part of `#[warn(unused)]`) on by default
+  
+  warning: unused import: `snapshot_table_binary_test::*`
+    --> org/tiqian/protocol/mod.rs:57:9
+     |
+  57 | pub use snapshot_table_binary_test::*;
+     |         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  
+  warning: unused import: `DerefMut`
+    --> runtime/u_string.rs:13:23
+     |
+  13 | use std::ops::{Deref, DerefMut};
+     |                       ^^^^^^^^
+  
+  Some errors have detailed explanations: E0432, E0433.
+  For more information about an error, try `rustc --explain E0432`.
+  warning: `tiqian-protocol-gen` (lib) generated 1 warning
+  error: could not compile `tiqian-protocol-gen` (lib) due to 9 previous errors; 1 warning emitted
+  warning: build failed, waiting for other jobs to finish...
+  warning: `tiqian-protocol-gen` (lib test) generated 3 warnings
+  error: could not compile `tiqian-protocol-gen` (lib test) due to 9 previous errors; 3 warnings emitted
+  
