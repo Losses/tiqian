@@ -1,0 +1,3 @@
+[gen] protocol-ts -> /home/losses/Development/tq-workspace/tiqian/.scratch/tasks/wb-t-mv35eufr-s075/engine-haxe/out/protocol-ts/gen, /home/losses/Development/tq-workspace/tiqian/.scratch/tasks/wb-t-mv35eufr-s075/engine-haxe/out/protocol-ts/gen-tests
+  $ haxe -cp engine-haxe/src -cp engine-haxe/macros -D ts-test-runner=bun engine-haxe/targets/protocol-ts.hxml -D ts-output=/home/losses/Development/tq-workspace/tiqian/.scratch/tasks/wb-t-mv35eufr-s075/engine-haxe/out/protocol-ts/gen -D ts-test-output=/home/losses/Development/tq-workspace/tiqian/.scratch/tasks/wb-t-mv35eufr-s075/engine-haxe/out/protocol-ts/gen-tests
+bundle driver: ok
