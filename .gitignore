@@ -60,3 +60,6 @@ engine/src/commonTest/kotlin/org/tiqian/test/trace/TracedTestManifest.kt
 # boring unicode data cache and generation data (fetched/copied locally)
 /out/
 /tools/unicode-data/
+
+# task-workspace scratch (task copies snapshot this dir via jj; ignore keeps it out of deliveries)
+.task-tmp/

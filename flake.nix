@@ -8,7 +8,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     boring = {
-      url = "github:Losses/boring/007f9f1950ced782791643ee082129cafd13625a";
+      url = "github:Losses/boring/d730da1314ea641fbdeef0662d57dc35e57cb2fd";
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.rust-overlay.follows = "rust-overlay";
     };
@@ -70,11 +70,15 @@
                 git
                 rustToolchain
                 haxe
-                # Toolchains used by engine-haxe generation and tests. Swift
-                # uses the swiftc wrapper described in
-                # engine-haxe/README.md.
+                # Toolchains used by engine-haxe generation and tests: dart
+                # and kotlin below. The Swift toolchain comes from boring's
+                # linux-swift package (a FHS-wrapped swiftc), added on
+                # x86_64-linux in the optionals clause after this list.
                 dart
                 kotlin
+              ]
+              ++ pkgs.lib.optionals (pkgs.stdenv.hostPlatform.isLinux && pkgs.stdenv.hostPlatform.isx86_64) [
+                boring.packages.${pkgs.stdenv.hostPlatform.system}.linux-swift
               ]
               ++ pkgs.lib.optionals pkgs.stdenv.hostPlatform.isLinux [
                 chromium
@@ -103,12 +107,25 @@
                 pkgs.libxrender
               ]
             );
+            # Swift toolchain env shared with boring's own devShell. The
+            # Linux x86_64 branch carries the libdispatch runtime path (a
+            # swift toolchain store path not covered by the RUNPATH of
+            # linked test binaries) and a pinned glibc dynamic linker, both
+            # consumed by boring gen swift and the swift-f32/f64 bundle
+            # tests. SystemPackage is the prebuilt swift-system module.
+            BORING_SWIFT_SYSTEM_PACKAGE = "${boring.packages.${pkgs.stdenv.hostPlatform.system}.swift-system}";
+            BORING_SWIFT_LIBDISPATCH = pkgs.lib.optionalString (pkgs.stdenv.hostPlatform.isLinux && pkgs.stdenv.hostPlatform.isx86_64)
+              "${boring.packages.${pkgs.stdenv.hostPlatform.system}.linux-swift.passthru.libdispatch}:${pkgs.gcc.cc.lib}/lib";
+            BORING_SWIFT_DYNAMIC_LINKER = pkgs.lib.optionalString (pkgs.stdenv.hostPlatform.isLinux && pkgs.stdenv.hostPlatform.isx86_64)
+              "${pkgs.glibc}/lib/ld-linux-x86-64.so.2";
             shellHook = ''
               export HAXELIB_PATH="$PWD/.haxelib"
               mkdir -p "$HAXELIB_PATH/boring"
               boring_git="$HAXELIB_PATH/boring/git"
               if [ ! -f "$boring_git/.boring-flake-revision" ] || \
-                 [ "$(cat "$boring_git/.boring-flake-revision")" != "007f9f1950ced782791643ee082129cafd13625a" ]; then
+                 [ "$(cat "$boring_git/.boring-flake-revision")" != "${boring.rev or "unversioned-source"}" ] || \
+                 [ ! -f "$boring_git/.boring-flake-source" ] || \
+                 [ "$(cat "$boring_git/.boring-flake-source")" != "${boring}" ]; then
                 if [ -e "$boring_git" ] || [ -L "$boring_git" ]; then
                   boring_backup="$boring_git.pre-flake-$(date +%Y%m%d%H%M%S)"
                   mv "$boring_git" "$boring_backup"
@@ -117,7 +134,7 @@
                 mkdir -p "$boring_git"
                 cp -a "${boring}/." "$boring_git/"
                 chmod -R u+w "$boring_git"
-                printf '%s\n' "007f9f1950ced782791643ee082129cafd13625a" > "$boring_git/.boring-flake-revision"
+                printf '%s\n' "${boring.rev or "unversioned-source"}" > "$boring_git/.boring-flake-revision"
               fi
               printf '%s\n' "${boring}" > "$boring_git/.boring-flake-source"
               haxelib dev boring "$boring_git" >/dev/null
