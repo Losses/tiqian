@@ -3,7 +3,7 @@
 # parallel lanes queue instead of racing. Usage (from the WORKTREE ROOT,
 # because compile.hxml classpaths are root-relative):
 #
-#   nix develop -c bash engine-haxe/tools/gates.sh [all|g4|tests|compare]
+#   nix develop -c bash engine-haxe/tools/gates.sh [all|g4|tests|compare|ts]
 #
 # Gates:
 #   g4      compile the engine with targets/kotlin-f32.hxml, print G4-RC
@@ -11,7 +11,9 @@
 #           bun and print the FAIL line count (want 0)
 #   compare tolerance-compare produced traces against baseline goldens for
 #           every class registered in tests/Main.hx via flushClass
-# all runs g4, tests, compare in order and prints a one-line summary.
+#   ts      type-check generated TS trees under the project strict profile,
+#           print TS-RC (delegates to ts-gate.sh); 0 = zero diagnostics
+# all runs g4, tests, compare, ts in order and prints a one-line summary.
 set -u
 cd "$(git rev-parse --show-toplevel)"
 HERE="$(git rev-parse --show-toplevel)"
@@ -42,18 +44,27 @@ run_compare() {
   echo "COMPARE-RC=$?"
 }
 
+run_ts() {
+  bash engine-haxe/tools/ts-gate.sh
+  local rc=$?
+  echo "TS-RC=$rc"
+  return "$rc"
+}
+
 what="${1:-all}"
 case "$what" in
   g4) run_g4 ;;
   tests) run_tests ;;
   compare) run_compare ;;
+  ts) run_ts ;;
   all)
     run_g4
     run_tests
     run_compare
+    run_ts
     ;;
   *)
-    echo "usage: gates.sh [all|g4|tests|compare]" >&2
+    echo "usage: gates.sh [all|g4|tests|compare|ts]" >&2
     exit 2
     ;;
 esac
