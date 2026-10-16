@@ -1265,7 +1265,8 @@ class ParagraphShapingStage {
                 }
 
                 var cleanCuts = new Array<Int>();
-                if (progressiveSpan != null) {
+                final hasProgressiveSpan = progressiveSpan != null;
+                if (hasProgressiveSpan) {
                     for (c in 0...technicalStructuralCuts.length)
                         cleanCuts.push(technicalStructuralCuts[c]);
                     for (c in 0...technicalSyllableCuts.length)

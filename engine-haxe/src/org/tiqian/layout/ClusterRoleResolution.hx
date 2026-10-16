@@ -41,11 +41,9 @@ class ClusterRoleResolution {
         final out:Array<ResolvedClusterRange> = [];
         var index = 0;
         var gi = text.length == 0 ? 0 : 1;
-        var gs = graphemes[0];
         var ge = gi < graphemes.length ? graphemes[gi] : text.length;
         while (index < text.length) {
             while (index >= ge && gi < graphemes.length - 1) {
-                gs = ge;
                 gi++;
                 ge = graphemes[gi];
             }
