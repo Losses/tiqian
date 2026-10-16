@@ -43,7 +43,12 @@ demo/web-history/*.tsbuildinfo
 # Haxe engine module: generated outputs and local baselines, never committed
 /engine-haxe/out/
 /engine-haxe/targets/classes.hxml
-/engine-haxe/baseline-goldens
+# 黄金数据入库：layout-dumps/、layout-dumps-recorded/、shaping-evidence.json
+# 由 GoldenDataMacros.init() 在编译期读取，缺失即生成失败。仅本地可再生的
+# 轨迹目录与历史遗留软链继续不入库。
+/engine-haxe/baseline-goldens/process-traces/
+/engine-haxe/baseline-goldens/test-traces/
+/engine-haxe/baseline-goldens/baseline-goldens
 /engine-haxe/smoke/
 
 # Locally generated trace goldens (Haxe port contract); regenerate with
@@ -59,7 +64,9 @@ engine/src/commonTest/kotlin/org/tiqian/test/trace/TracedTestManifest.kt
 
 # boring unicode data cache and generation data (fetched/copied locally)
 /out/
-/tools/unicode-data/
+# Unicode 17.0.0 数据文件入库：reflaxe.unicode.GraphemeData 在编译期读取
+# tools/unicode-data/ 下的 4 个 .txt（与 boring 仓 tools/unicode-data 纳管
+# 先例一致）；缺失时可用 -D fetch-unicode=17.0.0 重新获取。
 
 # task-workspace scratch (task copies snapshot this dir via jj; ignore keeps it out of deliveries)
 .task-tmp/
