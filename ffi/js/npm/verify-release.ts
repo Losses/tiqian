@@ -72,7 +72,7 @@ import * as ffi from "@tiqian/ffi";
 
 assert.equal(typeof ffi.precomputePlainParagraph, "function");
 assert.equal(typeof ffi.precomputeParagraph, "function");
-assert.match(import.meta.resolve("@tiqian/ffi"), /Tiqian-tiqian-ffi-js\\.mjs$/u);
+assert.match(import.meta.resolve("@tiqian/ffi"), /facade\\.mjs$/u);
 `,
   );
   const result = spawnSync(process.execPath, ["verify.mjs"], {

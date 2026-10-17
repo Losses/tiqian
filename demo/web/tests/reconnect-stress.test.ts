@@ -127,7 +127,7 @@ function startFixtureServer(): Promise<Server> {
         if (file === join(npmCoreDir, "layout-worker.js")) {
           const source: string = data.toString("utf8");
           if (source.includes('from "@tiqian/ffi"')) {
-            send(source.replace('from "@tiqian/ffi"', 'from "/npm-ffi/Tiqian-tiqian-ffi-js.mjs"'), type);
+            send(source.replace('from "@tiqian/ffi"', 'from "/npm-ffi/facade.mjs"'), type);
             return;
           }
         }
@@ -155,7 +155,7 @@ function startFixtureServer(): Promise<Server> {
     "@tiqian/prose/element": "/npm/element.js",
     "@tiqian/prose/": "/npm/",
     "@tiqian/core/": "/core/",
-    "@tiqian/ffi": "/npm-ffi/Tiqian-tiqian-ffi-js.mjs"
+    "@tiqian/ffi": "/npm-ffi/facade.mjs"
   }
 }
 </script>

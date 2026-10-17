@@ -447,7 +447,7 @@ function startFixtureServer(svelteComponents: SvelteComponents): Promise<Server>
           const occurrences: number = source.split('from "@tiqian/ffi"').length - 1;
           assert.ok(occurrences <= 1, `unexpected engine import count ${occurrences}`);
           if (occurrences === 1) {
-            send(source.replace('from "@tiqian/ffi"', 'from "/npm-ffi/Tiqian-tiqian-ffi-js.mjs"'), type);
+            send(source.replace('from "@tiqian/ffi"', 'from "/npm-ffi/facade.mjs"'), type);
             return;
           }
         }
@@ -476,7 +476,7 @@ function startFixtureServer(svelteComponents: SvelteComponents): Promise<Server>
     "@tiqian/prose/element": "/npm/element.js",
     "@tiqian/prose/": "/npm/",
     "@tiqian/core/": "/core/",
-    "@tiqian/ffi": "/npm-ffi/Tiqian-tiqian-ffi-js.mjs",
+    "@tiqian/ffi": "/npm-ffi/facade.mjs",
     "svelte": "/svelte/src/index-client.js",
     "svelte/internal/client": "/svelte/src/internal/client/index.js",
     "svelte/internal/disclose-version": "/svelte/src/internal/disclose-version.js",

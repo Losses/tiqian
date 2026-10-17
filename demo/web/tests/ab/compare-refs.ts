@@ -3,14 +3,14 @@
 // manual "checkout base, rebuild, swap artifacts, eyeball" workflow as a
 // repeatable tool. Each ref builds inside its own git worktree, so the
 // working tree is never touched and each side's artifact cannot leak into
-// the other (the artifact under ffi/js/npm/runtime/Tiqian-tiqian-ffi-js.mjs is
+// the other (the artifact under ffi/js/npm/runtime/facade.mjs is
 // git-ignored, which made manual swapping produce a false green once).
 //
 // Usage (from demo/web, inside nix develop):
 //   node tests/ab/compare-refs.ts --base <git-ref> [--head <git-ref>]
 //
 // --head defaults to the current working tree, uncommitted changes included.
-// Both refs must know the :ffi:js:assembleNpmPackage task. The demo
+// Both refs must know the boring runtime build (ffi/js/npm/build-runtime.ts). The demo
 // page, viewport, fonts, and capture plan are identical constants for both
 // sides, so the only variable is the engine build.
 //
@@ -610,11 +610,10 @@ async function captureSide(options: CaptureSideOptions): Promise<CaptureSideResu
 }
 
 async function buildSide(label: string, sideDir: string): Promise<BuildSideResult> {
-  console.log(`[${label}] building :ffi:js:assembleNpmPackage in ${sideDir}`);
+  console.log(`[${label}] building @tiqian/ffi runtime (build-runtime.ts) in ${sideDir}`);
   await new Promise<void>((resolve: BuildSideResolver, reject: BuildSideRejecter): void => {
-    const proc: ChildProcess = spawn("./gradlew", [
-      ":ffi:js:assembleNpmPackage",
-      "--no-build-cache",
+    const proc: ChildProcess = spawn(process.execPath, [
+      join(sideDir, "ffi/js/npm/build-runtime.ts"),
     ], { cwd: sideDir, stdio: ["ignore", "pipe", "pipe"] });
     let stderr: string = "";
     const stdoutHandler: BufferDataHandler = (d: Buffer): void => {
@@ -628,16 +627,16 @@ async function buildSide(label: string, sideDir: string): Promise<BuildSideResul
     proc.stderr?.on("data", stderrHandler);
     const timer: NodeJS.Timeout = setTimeout((): void => {
       proc.kill("SIGKILL");
-      reject(new Error(`[${label}] gradle build timed out`));
+      reject(new Error(`[${label}] build timed out`));
     }, 15 * 60 * 1000);
     const exitHandler: ProcessExitHandler = (code: number | null): void => {
       clearTimeout(timer);
       if (code === 0) resolve();
-      else reject(new Error(`[${label}] gradle build failed (${code ?? "null"}): ${stderr}`));
+      else reject(new Error(`[${label}] build failed (${code ?? "null"}): ${stderr}`));
     };
     proc.on("exit", exitHandler);
   });
-  const artifact: string = join(sideDir, "ffi/js/npm/runtime/Tiqian-tiqian-ffi-js.mjs");
+  const artifact: string = join(sideDir, "ffi/js/npm/runtime/facade.mjs");
   const info: Stats = await stat(artifact);
   const bytes: Buffer = await readFile(artifact);
   const hash: string = createHash("md5").update(bytes).digest("hex");
