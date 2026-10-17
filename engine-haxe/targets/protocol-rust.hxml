@@ -41,3 +41,14 @@ org.tiqian.protocol.PlanPacked
 org.tiqian.protocol.PlanPackedTest
 org.tiqian.protocol.LayoutTree
 org.tiqian.protocol.FontFaceRecord
+org.tiqian.protocol.FontWeightSpec
+org.tiqian.protocol.FontFaceSpec
+org.tiqian.protocol.SessionFaceSpec
+org.tiqian.protocol.ReplayKey
+org.tiqian.protocol.ReplayKeyTest
+org.tiqian.protocol.SnapshotTypography
+org.tiqian.protocol.FontContract
+org.tiqian.protocol.FontContractTest
+org.tiqian.protocol.FaceInfo
+org.tiqian.protocol.ContextFingerprint
+org.tiqian.protocol.ContextFingerprintTest
