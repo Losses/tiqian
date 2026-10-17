@@ -283,7 +283,7 @@ function startDemoServer(port: number, pkgDir: string): Promise<DemoServerHandle
       }
       const data: Buffer | null = file ? await readFile(file).catch(() => null) : null;
       if (data) {
-        if (path === "/platforms/web/client/core/layout-worker.js") {
+        if (path === "/platforms/web/client/core/src/engine/layout-worker.js") {
           const source: string = data.toString("utf8");
           const occurrences: number = source.split('from "@tiqian/ffi"').length - 1;
           if (occurrences > 1) throw new Error(`unexpected engine import count ${occurrences}`);

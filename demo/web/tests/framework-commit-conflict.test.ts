@@ -442,7 +442,7 @@ function startFixtureServer(svelteComponents: SvelteComponents): Promise<Server>
         // Module workers do not see the document import map, so the dev-tree
         // layout worker in core gets its bare "@tiqian/ffi" import
         // rewritten to the absolute /npm-ffi/ URL served below.
-        if (file === join(npmCoreDir, "layout-worker.js")) {
+        if (file === join(npmCoreDir, "src/engine/layout-worker.js")) {
           const source: string = data.toString("utf8");
           const occurrences: number = source.split('from "@tiqian/ffi"').length - 1;
           assert.ok(occurrences <= 1, `unexpected engine import count ${occurrences}`);

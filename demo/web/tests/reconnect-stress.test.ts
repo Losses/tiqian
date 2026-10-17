@@ -124,7 +124,7 @@ function startFixtureServer(): Promise<Server> {
     const sendFile = async (file: string, type: string): Promise<void> => {
       const data: Buffer | null = await readFile(file).catch(() => null);
       if (data) {
-        if (file === join(npmCoreDir, "layout-worker.js")) {
+        if (file === join(npmCoreDir, "src/engine/layout-worker.js")) {
           const source: string = data.toString("utf8");
           if (source.includes('from "@tiqian/ffi"')) {
             send(source.replace('from "@tiqian/ffi"', 'from "/npm-ffi/facade.mjs"'), type);
