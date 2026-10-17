@@ -252,7 +252,7 @@ function startDemoServer(port: number, pkgDir: string): Promise<DemoServerHandle
       if (path === "/") {
         const html: string = (await readFile(join(webDemoDir, "index.html"), "utf8")).replace(
           "</head>",
-          `<script type="importmap">{"imports":{"@tiqian/prose/element":"/platforms/web/client/web-component/element.js","@tiqian/prose/auto":"/platforms/web/client/web-component/auto.js","@tiqian/prose/":"/platforms/web/client/web-component/","@tiqian/prose":"/platforms/web/client/web-component/element.js","@tiqian/core/":"/platforms/web/client/core/","@tiqian/ffi":"/ffi/Tiqian-tiqian-ffi-js.mjs"}}</script></head>`,
+          `<script type="importmap">{"imports":{"@tiqian/prose/element":"/platforms/web/client/web-component/element.js","@tiqian/prose/auto":"/platforms/web/client/web-component/auto.js","@tiqian/prose/":"/platforms/web/client/web-component/","@tiqian/prose":"/platforms/web/client/web-component/element.js","@tiqian/core/":"/platforms/web/client/core/","@tiqian/ffi":"/ffi/facade.mjs"}}</script></head>`,
         );
         res.setHeader("content-type", "text/html; charset=utf-8");
         res.end(html);
@@ -289,7 +289,7 @@ function startDemoServer(port: number, pkgDir: string): Promise<DemoServerHandle
           if (occurrences > 1) throw new Error(`unexpected engine import count ${occurrences}`);
           if (occurrences === 1) {
             res.setHeader("content-type", type);
-            res.end(source.replace('from "@tiqian/ffi"', 'from "/ffi/Tiqian-tiqian-ffi-js.mjs"'));
+            res.end(source.replace('from "@tiqian/ffi"', 'from "/ffi/facade.mjs"'));
             return;
           }
         }
