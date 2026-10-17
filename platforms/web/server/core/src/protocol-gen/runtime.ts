@@ -32,7 +32,7 @@ export function formatFloatRuntime(v: number): string {
   if (v === Infinity) return "Infinity";
   if (v === -Infinity) return "-Infinity";
   if (Object.is(v, -0) || v === 0) return "0";
-  let text = String(v).replace("E", "e");
+  const text = String(v).replace("E", "e");
   return text.replace(".0e", "e");
 }
 
@@ -84,7 +84,7 @@ export class StringTools {
       return false;
     }
     const c = (Number.isNaN(s.charCodeAt(pos)) ? null : s.charCodeAt(pos))!;
-    return c > 8 && c < 14 || c === 32;
+    return c! > 8 && c! < 14 || c === 32;
   }
 
   public static ltrim(s: string): string {

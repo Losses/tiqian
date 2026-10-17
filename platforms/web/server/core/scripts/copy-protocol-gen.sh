@@ -12,7 +12,7 @@ rm -rf "$DST"
 mkdir -p "$DST/haxe/crypto" "$DST/org/tiqian/protocol"
 cp "$SRC/runtime.ts" "$DST/runtime.ts"
 cp "$SRC/haxe/crypto/Sha256.ts" "$DST/haxe/crypto/Sha256.ts"
-for f in Canonical EncodeResult JsCoerce WireField WireValue; do
+for f in Canonical DecorationInput EncodeResult FontFaceRecord InlineBoxInput InlineObjectInput JsCoerce LayoutAttribute LayoutFloatShape LayoutTree LayoutVertex LineBreakSpanInput NamedError NamedErrorNames ParagraphRequest ParagraphRequestChecks ParagraphRequestException ParagraphRequestTestSupport TextSpanInput WireField WireValue; do
   cp "$SRC/org/tiqian/protocol/$f.ts" "$DST/org/tiqian/protocol/$f.ts"
 done
 grep -rl '\.ts"' "$DST" | while read -r file; do

@@ -56,9 +56,14 @@ org/tiqian/linebreak/break_kind.rs
 org/tiqian/protocol/canonical.rs
 org/tiqian/protocol/decoration_input.rs
 org/tiqian/protocol/encode_result.rs
+org/tiqian/protocol/font_face_record.rs
 org/tiqian/protocol/inline_box_input.rs
 org/tiqian/protocol/inline_object_input.rs
 org/tiqian/protocol/js_coerce.rs
+org/tiqian/protocol/layout_attribute.rs
+org/tiqian/protocol/layout_float_shape.rs
+org/tiqian/protocol/layout_tree.rs
+org/tiqian/protocol/layout_vertex.rs
 org/tiqian/protocol/line_break_span_input.rs
 org/tiqian/protocol/metric_entry.rs
 org/tiqian/protocol/named_error_names.rs
