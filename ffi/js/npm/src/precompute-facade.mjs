@@ -110,6 +110,12 @@ function numberMember(raw, name) {
   return typeof value === "number" ? value : Number.NaN;
 }
 
+function nullableNumberMember(raw, name) {
+  if (raw === null) return null;
+  const value = raw[name];
+  return typeof value === "number" ? value : null;
+}
+
 /** Reads a JSON string array the way WireJson.kt parseDynamicStringList does. */
 function stringListMember(raw, name) {
   if (raw === null) return [];
@@ -212,7 +218,7 @@ function parseShapingResultJson(json) {
     stringMember(c, "fontKey"),
     numberMember(c, "advance"),
     stringMember(c, "displayText"),
-    numberMember(c, "baselineShift"),
+    nullableNumberMember(c, "baselineShift"),
   ));
   const glyphRuns = list(raw.glyphRuns, (g) => new GlyphRun(
     range(g.range),
@@ -225,7 +231,7 @@ function parseShapingResultJson(json) {
       numberMember(glyph, "y"),
     )),
     numberMember(g, "advance"),
-    list(g.openTypeFeatures, (f) => (typeof f === "string" ? f : "")),
+    stringListMember(g, "openTypeFeatures"),
   ));
   const decisions = list(raw.decisions, (d) => new ShapingDecisionInfo(
     range(d.range),
