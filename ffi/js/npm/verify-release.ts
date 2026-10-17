@@ -70,8 +70,8 @@ try {
     `import assert from "node:assert/strict";
 import * as ffi from "@tiqian/ffi";
 
-assert.equal(typeof ffi.precomputePlainParagraph, "function");
-assert.equal(typeof ffi.precomputeParagraph, "function");
+assert.equal(typeof ffi.precomputeParagraphWithDiagnostics, "function");
+assert.equal(typeof ffi.precomputeParagraphWithBrowserMetrics, "function");
 assert.match(import.meta.resolve("@tiqian/ffi"), /facade\\.mjs$/u);
 `,
   );
