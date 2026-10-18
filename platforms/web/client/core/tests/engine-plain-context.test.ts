@@ -527,7 +527,7 @@ test("relayout restarts an interrupted Enhance through the canonical resolver", 
   }
 });
 
-test("relayout main path cancels the job and rebuilds a Relayout session", () => {
+test("relayout main path cancels the job and rebuilds a Relayout session", async () => {
   const root = fakeElement("tiqian-prose", { ownerDocument: fakeDocument() });
   const runtime = makePlainRuntime(root);
   const restoreGlobals = installDriveGlobals();
@@ -535,7 +535,7 @@ test("relayout main path cancels the job and rebuilds a Relayout session", () =>
     const seededOptions = seedEstablishedRuntime(runtime, root);
     runtime.ops.length = 0;
 
-    relayout(runtime.context, root);
+    await relayout(runtime.context, root);
 
     const cancelIndex = runtime.ops.indexOf("pool.cancelJob");
     const jobIndex = runtime.ops.indexOf("pool.startJob");
