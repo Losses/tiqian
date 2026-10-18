@@ -25,7 +25,13 @@ import type { RelayoutSession } from "./relayout-session.js";
 import { openRelayoutSession } from "./relayout-session.js";
 import type { PrepareLayoutResult } from "./prepare-paragraph-layout.js";
 import type { CapabilityIssueRecord, EnhanceOptions, ResolvedEnhanceOptions } from "./lifecycle.js";
-import { destroyRoot, reportIssue, responsiveSourceMeasure } from "./lifecycle.js";
+import {
+  conformingSnapshotFontSessionId,
+  destroyRoot,
+  optionsFromJs,
+  reportIssue,
+  responsiveSourceMeasure,
+} from "./lifecycle.js";
 import { processParagraph } from "./process-paragraph.js";
 import { raceAbort } from "./abort-race.js";
 import { createPrepareJob } from "./web-worker/worker-channel.js";
@@ -35,6 +41,7 @@ import type { BrowserFontSessionHandle } from "../measurement/browser-fonts.js";
 import { activeSnapshotSessionDescriptor } from "./enhance/snapshot-adoption.js";
 import { prepareParagraphLayout } from "./prepare-paragraph-layout.js";
 import { sourceParagraphWidth } from "./responsive-measure.js";
+import { workerLayoutRequest } from "./worker-request.js";
 
 // Named shapes for the progressive job driver callbacks. Their home is this
 // file; layout-job-pool.ts consumes the structurally identical inline slots
@@ -561,6 +568,7 @@ const WIDTH_DEPENDENT_CAPABILITY_ISSUES: string[] = ["InlineCloneDecorationBreak
       }
       console.warn("Tiqian Web relayout snapshot font session unavailable; using browser metrics", error);
     }
+    let preparedEnhanceOptions: EnhanceOptions | null = null;
     if (snapshotFontSession) {
       try {
         const preparedOptions = {
@@ -574,6 +582,7 @@ const WIDTH_DEPENDENT_CAPABILITY_ISSUES: string[] = ["InlineCloneDecorationBreak
             detail: "SnapshotFontBytes",
           },
         };
+        preparedEnhanceOptions = optionsFromJs(preparedOptions);
         const prepareJob = await raceAbort(
           signal,
           createPrepareJob(root as HTMLElement, snapshotFontSession, preparedOptions, isCurrent),
@@ -598,8 +607,26 @@ const WIDTH_DEPENDENT_CAPABILITY_ISSUES: string[] = ["InlineCloneDecorationBreak
           processParagraph(context, stranded[mixIndex - renderedCount]);
           return;
         }
-        // Rendered paragraph: prepare and commit through the relayout session.
+        // Rendered paragraph: consume a Worker-prepared plan when available,
+        // then fall back to synchronous preparation and commit on a miss.
         const paragraph = rendered[mixIndex];
+        if (preparedEnhanceOptions != null) {
+          const workerRequestDto = workerLayoutRequest(
+            paragraph.source,
+            paragraph.lowered,
+            preparedEnhanceOptions,
+          );
+          const workerRequest = workerRequestDto == null ? null : JSON.stringify(workerRequestDto);
+          const sessionKey = conformingSnapshotFontSessionId(preparedEnhanceOptions);
+          const layoutWorker = globalServices().coordination.layoutWorker;
+          const workerPlan = workerRequest != null && sessionKey != null && layoutWorker != null
+            ? layoutWorker.take(paragraph.source, sessionKey, workerRequest)
+            : null;
+          if (workerPlan != null) {
+            commitSession.processItem(mixIndex, { kind: "worker-plan", workerPlan: workerPlan });
+            return;
+          }
+        }
         const preparation: PrepareLayoutResult = prepareParagraphLayout(
           {
             paragraph: paragraph,
