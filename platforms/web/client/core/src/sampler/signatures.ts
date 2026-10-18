@@ -90,6 +90,23 @@ function paragraphLayoutWidth(element: Element, elementStyle: CSSStyleDeclaratio
     styleLengthPx(elementStyle.borderLeftWidth) - styleLengthPx(elementStyle.borderRightWidth);
 }
 
+// BlockBoundaryMirrorsLoweringTree: the block root of a mutation target is
+// the nearest ancestor (inclusive) whose computed display is neither "inline"
+// nor "contents". This is the same display gate buildLayoutElement uses to
+// stop recursing inline content (engine/markdown-lowering.ts), so invalidation
+// converges to the Block that Stage4-B's LayoutTree projects. p and li match
+// this gate one-to-one, keeping existing content byte-identical while also
+// localizing non-p/li block descendants to their own Block.
+export function findContainingBlock(element: Element | null): Element | null {
+  let current: Element | null = element;
+  while (current) {
+    const display = getComputedStyle(current).display;
+    if (display !== "inline" && display !== "contents") return current;
+    current = current.parentElement;
+  }
+  return null;
+}
+
 export { DEFAULT_PARAGRAPH_SELECTOR, fragmentedBorderBoxInlineSize, TYPOGRAPHY_PROPERTIES };
 
 export function typographySignature(root: Element, includeGenerated = true) {
