@@ -44,6 +44,8 @@ import {
   rubyAnnotationSpan,
 } from "./prepared-dom-evidence.js";
 import type { EnhancedElementContext } from "../../engine/context/enhance-context.js";
+import { SnapshotValueStyle } from "./shared-gen/org/tiqian/shared/SnapshotValueStyle.js";
+import { ValueStyleInterner } from "./shared-gen/org/tiqian/shared/ValueStyleInterner.js";
 
 // --- Internal types ---
 
@@ -101,8 +103,7 @@ export interface PreparedStyleState {
   scope: string;
   styleElement: HTMLStyleElement;
   originalScope: string | null;
-  declarations: string[];
-  indexes: Map<string, number>;
+  interner: ValueStyleInterner;
   owners: Map<StyleOwner, Set<number>>;
   dirty: boolean;
 }
@@ -326,38 +327,6 @@ function preparedLocale(value: string | Record<string, unknown>): string {
   return String(value?.locale ?? DEFAULT_LOCALE);
 }
 
-function snapshotValueStyleClass(index: number) {
-  return `tqv-${index.toString(36)}`;
-}
-
-// RuntimeValueStyleContentAddressing: runtime lowering must mint the same
-// class name for the same declaration in every session, so a fresh one-shot
-// enhance over a root reproduces the coordinated DOM byte for byte even
-// though the coordinated registry still holds declarations from earlier
-// widths. The snapshot namespace (tqv-) stays index based because frozen
-// snapshot tables persist those indexes across builds. Two independent
-// FNV-1a hashes make the name a pure function of the declaration string with
-// collision odds far below any realistic declaration count, so no probe or
-// registry state participates in naming.
-function runtimeValueStyleKey(declaration: string) {
-  let a = 0x811c9dc5;
-  let b = 0x01000193;
-  for (let i = 0; i < declaration.length; i++) {
-    const code = declaration.charCodeAt(i);
-    a ^= code;
-    a = Math.imul(a, 0x01000193);
-    b ^= code + i;
-    b = Math.imul(b, 0x811c9dc5);
-  }
-  a >>>= 0;
-  b >>>= 0;
-  return `${a.toString(36)}${b.toString(36)}`;
-}
-
-function runtimeValueStyleClass(key: string) {
-  return `tqvr-${key}`;
-}
-
 function createPreparedStyleState(root: Element, context: EnhancedElementContext) {
   const documentObject = root?.ownerDocument ?? globalThis.document;
   const parent = documentObject?.head ?? documentObject?.documentElement ?? documentObject?.body;
@@ -373,8 +342,7 @@ function createPreparedStyleState(root: Element, context: EnhancedElementContext
     scope,
     styleElement,
     originalScope,
-    declarations: [],
-    indexes: new Map(),
+    interner: new ValueStyleInterner(),
     owners: new Map(),
     dirty: false,
   };
@@ -388,12 +356,9 @@ function preparedStyleState(root: Element, context: EnhancedElementContext) {
 }
 
 function registerPreparedValueStyle(state: PreparedStyleState, declaration: string) {
-  const existing = state.indexes.get(declaration);
-  if (existing != null) return existing;
-  const index = state.declarations.length;
-  state.declarations.push(declaration);
-  state.indexes.set(declaration, index);
-  state.dirty = true;
+  const before = state.interner.size();
+  const index = state.interner.intern(declaration);
+  if (state.interner.size() > before) state.dirty = true;
   return index;
 }
 
@@ -403,7 +368,7 @@ function syncPreparedValueStyles(state: PreparedStyleState) {
   const snapshotValuesActive = state.owners.has(SNAPSHOT_STYLE_OWNER);
   const runtimeValuesActive = Array.from(state.owners.keys()).some((owner) =>
     owner !== SNAPSHOT_STYLE_OWNER);
-  state.styleElement.textContent = state.declarations.map((declaration: string, index: number) => {
+  state.styleElement.textContent = state.interner.declarations.map((declaration: string, index: number) => {
     // PreparedValueNamespaceIsolation: build-time snapshot CSS remains live in
     // the document so it can restore exact first-paint nodes. Runtime lowering
     // must use a distinct class namespace; otherwise the same compact index can
@@ -411,10 +376,10 @@ function syncPreparedValueStyles(state: PreparedStyleState) {
     // letter-spacing plus runtime margin-right) even when the scoped runtime
     // rule has higher specificity.
     const snapshotRule = snapshotValuesActive
-      ? `${rootScope} [data-tq-rendered="true"] .${snapshotValueStyleClass(index)}{${declaration}}`
+      ? `${rootScope} [data-tq-rendered="true"] .${SnapshotValueStyle.snapshotValueStyleClass(index)}{${declaration}}`
       : "";
     const runtimeRule = runtimeValuesActive
-      ? `${rootScope}[${VALUE_STYLE_SCOPE_ATTRIBUTE}] [data-tq-rendered="true"] .${runtimeValueStyleClass(runtimeValueStyleKey(declaration))}{${declaration}}`
+      ? `${rootScope}[${VALUE_STYLE_SCOPE_ATTRIBUTE}] [data-tq-rendered="true"] .${SnapshotValueStyle.runtimeValueStyleClass(SnapshotValueStyle.runtimeValueStyleKey(declaration))}{${declaration}}`
       : "";
     return snapshotRule + runtimeRule;
   }).join("");
@@ -1173,7 +1138,7 @@ export function renderPreparedParagraphInto(
         ? (declaration: string) => {
           const index = registerPreparedValueStyle(state, declaration);
           usedStyles.add(index);
-          return runtimeValueStyleClass(runtimeValueStyleKey(declaration));
+          return SnapshotValueStyle.runtimeValueStyleClass(SnapshotValueStyle.runtimeValueStyleKey(declaration));
         }
         : null,
     });
