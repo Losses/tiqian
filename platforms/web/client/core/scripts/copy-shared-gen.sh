@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # Copies the shared-layer generation output into the client core sampler package.
 #
-#   SRC: engine-haxe/out/shared-ts/gen        (produced by "boring gen shared-ts")
+#   SRC: engine-haxe/out/protocol-ts/gen        (produced by "boring gen protocol-ts")
 #   DST: platforms/web/client/core/src/sampler
 #
 # The generated TypeScript rewrites ".ts" import specifiers to ".js" so the tree
@@ -12,7 +12,7 @@ set -eu
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/../../../../.." && pwd)"
 cd "$ROOT"
 
-SRC=engine-haxe/out/shared-ts/gen
+SRC=engine-haxe/out/protocol-ts/gen
 DST=platforms/web/client/core/src/sampler
 
 rm -rf "$DST/org/tiqian/shared/fontface"

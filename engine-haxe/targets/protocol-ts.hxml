@@ -50,3 +50,5 @@ org.tiqian.protocol.ContextFingerprint
 org.tiqian.protocol.ContextFingerprintTest
 org.tiqian.shared.html.HtmlScan
 org.tiqian.shared.html.HtmlScanTest
+org.tiqian.shared.fontface.FontFaceBoundaries
+org.tiqian.shared.fontface.FontFaceBoundaryException
