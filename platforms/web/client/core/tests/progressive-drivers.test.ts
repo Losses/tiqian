@@ -28,6 +28,8 @@ import type { TrackedParagraph } from "../src/engine/enhance/context-state.js";
 import type { LoweredParagraph } from "../src/engine/lowered-paragraph.js";
 import type { BrowserFallbackDescriptor } from "../src/engine/enhance/typography.js";
 import type { CoordinationPoolSlot, GlobalEntry } from "./types.js";
+import type { TiqianLayoutWorkerInstance } from "../src/engine/coordination/coordination-service.js";
+import { LAYOUT_REVISION, SNAPSHOT_SCHEMA } from "../src/sampler/snapshot/snapshot-schema.js";
 initializeGlobalServices();
 
 // The driver functions take the per-element EnhancedElementContext as their
@@ -195,6 +197,7 @@ function installFakePool(pool: FakeLayoutJobPool): PoolRestoreFn {
 
 interface WithEnvOverrides {
   layoutJobPool?: FakeLayoutJobPool;
+  layoutWorker?: TiqianLayoutWorkerInstance;
   computedStyleValues?: MakeComputedStyleValues;
   document?: Document;
   node?: typeof Node;
@@ -232,6 +235,10 @@ function setupEnv(overrides: WithEnvOverrides = {}): WithEnvSetup {
   };
   const pool = overrides.layoutJobPool ?? makeFakeLayoutJobPool(fakePoolOptions);
   const restorePool = installFakePool(pool);
+  const savedLayoutWorker = globalServices().coordination.layoutWorker;
+  if (overrides.layoutWorker !== undefined) {
+    globalServices().coordination.layoutWorker = overrides.layoutWorker;
+  }
   const values = overrides.computedStyleValues ?? { "--tq-styles-ready": "1" };
   const computed = (_el: Element, _pseudo?: string | null): CSSStyleDeclaration => makeComputedStyle(values);
   Object.defineProperty(globalThis, "getComputedStyle", { value: computed, writable: true, configurable: true });
@@ -270,6 +277,7 @@ function setupEnv(overrides: WithEnvOverrides = {}): WithEnvSetup {
     pool,
     teardown(): void {
       restorePool();
+      globalServices().coordination.layoutWorker = savedLayoutWorker;
       restoreGlobals(saved);
     },
   };
@@ -1327,5 +1335,99 @@ test("7c. enhanceProgressivelyFromCanonical resolves through the canonical resol
     // Should start a job with kind Enhance (not Relayout)
     assert.equal(pool._calls.startJob.length, 1);
     assert.equal(pool._calls.startJob[0].kind, "Enhance");
+  });
+});
+
+
+// ---------------------------------------------------------------------------
+// 8. relayout worker-plan routing: take hit commits the Worker-prepared plan,
+//    take miss falls back to synchronous preparation.
+// ---------------------------------------------------------------------------
+
+// The take-hit envelope: renderWorkerPrepared JSON.parse()s the record and
+// passes record.plan (an object) straight to renderPreparedParagraphInto, so
+// plan must be an object - not the string form the canonical re-entry path
+// (process-paragraph.test.ts test 2) carries.
+const RELAYOUT_WORKER_PLAN_JSON = JSON.stringify({
+  plan: { schema: SNAPSHOT_SCHEMA, layoutRevision: LAYOUT_REVISION, height: 0, lines: [] },
+  semanticReplay: "snapshot-safe",
+  semantics: [],
+  inlineBoxes: [],
+});
+
+function makeFakeSnapshotFontSession(): { id: string; paragraphSelector: string; renderFontFamilies: string[] } {
+  return { id: "fake-session", paragraphSelector: "p", renderFontFamilies: [] };
+}
+
+function makeFakeLayoutWorker(
+  take: (element: Element | null | undefined, sessionKey: string, requestText: string) => string | null,
+): TiqianLayoutWorkerInstance {
+  return {
+    version: 1,
+    semanticReplayRevision: 1,
+    take,
+    issue: () => null,
+    release: () => true,
+  };
+}
+
+test("8a. relayout worker-plan take miss falls back to synchronous preparation", async function () {
+  const root = makeElement();
+  const renderedP = makeParagraph({ source: makeFixtureParagraphElement() });
+
+  let takeCalls = 0;
+  await withEnvAsync(async (pool) => {
+    const observed = makeObservedContext(root, { candidates: [] });
+    seedEstablishedRuntime(observed, root, { fontSize: 19, paragraphSelector: "p" });
+    installFixtureBrowserFallback(observed.context);
+    registerParagraph(observed.context, renderedP.source);
+    observed.context.contextState.paragraphs.push(renderedP);
+    // A conforming snapshot-font session opens the worker-plan gate; the stub
+    // take() misses, so routing falls through to prepareParagraphLayout.
+    observed.context.snapshotAdoption.prepareSnapshotFontSession = async () => makeFakeSnapshotFontSession();
+
+    await relayout(observed.context, root);
+
+    const spec = pool._calls.startJob[0];
+    spec.processItem!(0);
+
+    assert.equal(takeCalls, 1);
+    // The synchronous commit stamps canonical-source but never the
+    // Worker-only snapshot-prepared-dom marker.
+    assert.equal(renderedP.source.getAttribute("data-tq-canonical-source"), "true");
+    assert.equal(renderedP.source.getAttribute("data-tq-snapshot-prepared-dom"), null);
+    assert.equal(typeof renderedP.lastMeasure, "number");
+  }, {
+    document: makePipelineDocument(),
+    node: asNodeConstructor(FakeNode),
+    layoutWorker: makeFakeLayoutWorker(() => { takeCalls += 1; return null; }),
+  });
+});
+
+test("8b. relayout worker-plan take hit commits the Worker-prepared plan", async function () {
+  const root = makeElement();
+  const renderedP = makeParagraph({ source: makeFixtureParagraphElement() });
+
+  await withEnvAsync(async (pool) => {
+    const observed = makeObservedContext(root, { candidates: [] });
+    seedEstablishedRuntime(observed, root, { fontSize: 19, paragraphSelector: "p" });
+    installFixtureBrowserFallback(observed.context);
+    registerParagraph(observed.context, renderedP.source);
+    observed.context.contextState.paragraphs.push(renderedP);
+    observed.context.snapshotAdoption.prepareSnapshotFontSession = async () => makeFakeSnapshotFontSession();
+
+    await relayout(observed.context, root);
+
+    const spec = pool._calls.startJob[0];
+    spec.processItem!(0);
+
+    // commitWorkerPreparedParagraph is the only writer of the discriminator.
+    assert.equal(renderedP.source.getAttribute("data-tq-snapshot-prepared-dom"), "true");
+    assert.equal(renderedP.source.getAttribute("data-tq-canonical-source"), "true");
+    assert.equal(typeof renderedP.lastMeasure, "number");
+  }, {
+    document: makePipelineDocument(),
+    node: asNodeConstructor(FakeNode),
+    layoutWorker: makeFakeLayoutWorker(() => RELAYOUT_WORKER_PLAN_JSON),
   });
 });
