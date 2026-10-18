@@ -30,6 +30,7 @@ import type { BrowserFallbackDescriptor } from "../src/engine/enhance/typography
 import type { CoordinationPoolSlot, GlobalEntry } from "./types.js";
 import type { TiqianLayoutWorkerInstance } from "../src/engine/coordination/coordination-service.js";
 import { LAYOUT_REVISION, SNAPSHOT_SCHEMA } from "../src/sampler/snapshot/snapshot-schema.js";
+import { RELAYOUT_SYNC_STALL_MS, assertRelayoutSyncUpperBound } from "../src/engine/relayout-sync-timing.js";
 initializeGlobalServices();
 
 // The driver functions take the per-element EnhancedElementContext as their
@@ -1429,5 +1430,67 @@ test("8b. relayout worker-plan take hit commits the Worker-prepared plan", async
     document: makePipelineDocument(),
     node: asNodeConstructor(FakeNode),
     layoutWorker: makeFakeLayoutWorker(() => RELAYOUT_WORKER_PLAN_JSON),
+  });
+});
+
+
+// ---------------------------------------------------------------------------
+// 9. relayout synchronous-slice upper-bound gate: the assertion applied to the
+//    maxSliceMs carried by the real tiqian:relayout-ready event detail.
+// ---------------------------------------------------------------------------
+
+test("9a. the relayout-ready maxSliceMs passes the 50ms upper bound", async function () {
+  const root = makeElement({ "data-tiqian-snapshot-count": "3" });
+
+  await withEnvAsync(async (pool) => {
+    const observed = makeObservedContext(root, { candidates: [] });
+    seedEstablishedRuntime(observed, root, { fontSize: 19 });
+    await relayout(observed.context, root);
+
+    const spec = pool._calls.startJob[0];
+    assert.ok(spec.onFinished);
+    spec.onFinished!({
+      kind: "Relayout",
+      startedAt: Date.now() - 200,
+      maxSliceMs: 30,
+      stale: false,
+    });
+
+    const relayoutReadyEvent = root.events.find(function (e: Event) {
+      return e.type === "tiqian:relayout-ready";
+    });
+    assert.ok(relayoutReadyEvent);
+    const relayoutDetail = (relayoutReadyEvent as CustomEvent).detail as RelayoutReadyEventDetail;
+    // The gate reads the value the real event carries, not a hard-coded number.
+    assert.equal(assertRelayoutSyncUpperBound(relayoutDetail.maxSliceMs).ok, true);
+  });
+});
+
+test("9b. the pre-fix 283ms slice fails the gate on the real event detail (discriminative)", async function () {
+  const root = makeElement({ "data-tiqian-snapshot-count": "3" });
+
+  await withEnvAsync(async (pool) => {
+    const observed = makeObservedContext(root, { candidates: [] });
+    seedEstablishedRuntime(observed, root, { fontSize: 19 });
+    await relayout(observed.context, root);
+
+    const spec = pool._calls.startJob[0];
+    assert.ok(spec.onFinished);
+    spec.onFinished!({
+      kind: "Relayout",
+      startedAt: Date.now() - 200,
+      maxSliceMs: RELAYOUT_SYNC_STALL_MS,
+      stale: false,
+    });
+
+    const relayoutReadyEvent = root.events.find(function (e: Event) {
+      return e.type === "tiqian:relayout-ready";
+    });
+    assert.ok(relayoutReadyEvent);
+    const relayoutDetail = (relayoutReadyEvent as CustomEvent).detail as RelayoutReadyEventDetail;
+    // Discriminative validation: the same assertion must reject the pre-fix
+    // 283ms stall when it arrives through the real reporting path.
+    assert.equal(assertRelayoutSyncUpperBound(relayoutDetail.maxSliceMs).ok, false);
+    assert.equal(relayoutDetail.maxSliceMs, RELAYOUT_SYNC_STALL_MS);
   });
 });
