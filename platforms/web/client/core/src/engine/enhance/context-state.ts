@@ -104,7 +104,7 @@ export interface ContextStateHooks {
   /** DiagnosisManager + console path for a failed source refresh. */
   reportRefreshFailure(message: string, error: unknown): void;
   /** Composition root: the relayout driver on the shared pool. */
-  runRelayoutDriver(): void;
+  runRelayoutDriver(): Promise<void>;
 }
 
 export interface ContextState {
@@ -118,7 +118,7 @@ export interface ContextState {
   paragraphCandidates(root: Element, selector: string): Element[];
   beginLayoutWork(options?: LayoutWorkOptions): number;
   finishLayoutWorkAndObserve(expectedOperation?: number | null): boolean;
-  dispatchRelayout(observedMeasures?: string | null): void;
+  dispatchRelayout(observedMeasures?: string | null): Promise<void>;
   refreshRuntimeFromSource(options?: SourceRefreshOptions): void;
   relayout(): void;
   cancelCapturedLayoutForLatestGeometry(): void;
@@ -334,7 +334,7 @@ function createContextState(
     hooks.deactivateWorkerRegistration();
   }
 
-  function dispatchRelayout(observedMeasures: string | null = null): void {
+  async function dispatchRelayout(observedMeasures: string | null = null): Promise<void> {
     if (!stateMachine.runtimeActive) {
       finishLayoutWorkAndObserve();
       return;
@@ -349,11 +349,11 @@ function createContextState(
     stateMachine.completionGateOpen = true;
     ensureLayoutWorker();
     // RunToCompletionAnchorBracket: relayout dispatches take the same
-    // bracket as enhance dispatches; an uncoordinated relayout runs its
-    // whole job synchronously inside this call.
+    // bracket as enhance dispatches; a coordinated relayout warms the
+    // Worker prepare ahead and then runs its commit pass here.
     const relayoutAnchor = captureViewportAnchor(root);
     try {
-      hooks.runRelayoutDriver();
+      await hooks.runRelayoutDriver();
     } finally {
       compensateViewportAnchor(root, relayoutAnchor);
       releaseNativeScrollAnchoring(root);
