@@ -53,3 +53,6 @@ org.tiqian.shared.html.HtmlScanTest
 org.tiqian.shared.fontface.FontFaceBoundaries
 org.tiqian.shared.fontface.FontFaceBoundaryException
 org.tiqian.shared.snapshot.SnapshotSource
+org.tiqian.shared.SnapshotValueStyle
+org.tiqian.shared.ValueStyleInterner
+org.tiqian.shared.SnapshotValueStyleTest
