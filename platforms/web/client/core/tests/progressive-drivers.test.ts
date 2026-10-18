@@ -218,7 +218,12 @@ interface FakeWindowView {
   getComputedStyle(element: Element, pseudo?: string | null): CSSStyleDeclaration;
 }
 
-function withEnv<T>(fn: WithEnvFn<T>, overrides: WithEnvOverrides = {}): T {
+interface WithEnvSetup {
+  pool: FakeLayoutJobPool;
+  teardown(): void;
+}
+
+function setupEnv(overrides: WithEnvOverrides = {}): WithEnvSetup {
   const saved = saveGlobals(["window", "document", "getComputedStyle", "CustomEvent", "Node"]);
   const fakePoolOptions: FakeLayoutJobPoolOverrides = {
     startJob: overrides.startJob,
@@ -227,45 +232,68 @@ function withEnv<T>(fn: WithEnvFn<T>, overrides: WithEnvOverrides = {}): T {
   };
   const pool = overrides.layoutJobPool ?? makeFakeLayoutJobPool(fakePoolOptions);
   const restorePool = installFakePool(pool);
+  const values = overrides.computedStyleValues ?? { "--tq-styles-ready": "1" };
+  const computed = (_el: Element, _pseudo?: string | null): CSSStyleDeclaration => makeComputedStyle(values);
+  Object.defineProperty(globalThis, "getComputedStyle", { value: computed, writable: true, configurable: true });
+  const fakeWindow: FakeWindowView = {
+    innerHeight: 800,
+    getComputedStyle: computed,
+  };
+  Object.defineProperty(globalThis, "window", {
+    value: fakeWindow,
+    writable: true,
+    configurable: true,
+  });
+  Object.defineProperty(globalThis, "document", {
+    value: overrides.document ?? { documentElement: { clientHeight: 800 } },
+    writable: true,
+    configurable: true,
+  });
+  if (overrides.node) Object.defineProperty(globalThis, "Node", { value: overrides.node, writable: true, configurable: true });
+  Object.defineProperty(globalThis, "CustomEvent", {
+    value: class {
+      type: string;
+      bubbles: boolean;
+      composed: boolean;
+      detail: unknown;
+      constructor(type: string, init?: FakeCustomEventInit) {
+        this.type = type;
+        this.bubbles = Boolean(init && init.bubbles);
+        this.composed = Boolean(init && init.composed);
+        this.detail = init && init.detail;
+      }
+    },
+    writable: true,
+    configurable: true,
+  });
+  return {
+    pool,
+    teardown(): void {
+      restorePool();
+      restoreGlobals(saved);
+    },
+  };
+}
+
+function withEnv<T>(fn: WithEnvFn<T>, overrides: WithEnvOverrides = {}): T {
+  const env = setupEnv(overrides);
   try {
-    const values = overrides.computedStyleValues ?? { "--tq-styles-ready": "1" };
-    const computed = (_el: Element, _pseudo?: string | null): CSSStyleDeclaration => makeComputedStyle(values);
-    Object.defineProperty(globalThis, "getComputedStyle", { value: computed, writable: true, configurable: true });
-    const fakeWindow: FakeWindowView = {
-      innerHeight: 800,
-      getComputedStyle: computed,
-    };
-    Object.defineProperty(globalThis, "window", {
-      value: fakeWindow,
-      writable: true,
-      configurable: true,
-    });
-    Object.defineProperty(globalThis, "document", {
-      value: overrides.document ?? { documentElement: { clientHeight: 800 } },
-      writable: true,
-      configurable: true,
-    });
-    if (overrides.node) Object.defineProperty(globalThis, "Node", { value: overrides.node, writable: true, configurable: true });
-    Object.defineProperty(globalThis, "CustomEvent", {
-      value: class {
-        type: string;
-        bubbles: boolean;
-        composed: boolean;
-        detail: unknown;
-        constructor(type: string, init?: FakeCustomEventInit) {
-          this.type = type;
-          this.bubbles = Boolean(init && init.bubbles);
-          this.composed = Boolean(init && init.composed);
-          this.detail = init && init.detail;
-        }
-      },
-      writable: true,
-      configurable: true,
-    });
-    return fn(pool);
+    return fn(env.pool);
   } finally {
-    restorePool();
-    restoreGlobals(saved);
+    env.teardown();
+  }
+}
+
+interface WithEnvAsyncFn<T> {
+  (pool: FakeLayoutJobPool): Promise<T>;
+}
+
+async function withEnvAsync<T>(fn: WithEnvAsyncFn<T>, overrides: WithEnvOverrides = {}): Promise<T> {
+  const env = setupEnv(overrides);
+  try {
+    return await fn(env.pool);
+  } finally {
+    env.teardown();
   }
 }
 
@@ -874,14 +902,14 @@ test("4. relayout branch 3: InlineCloneDecorationBreakUnsupported issue => enhan
 // 5. relayout main path: session, processItem, stale threshold, rollback, finish
 // ---------------------------------------------------------------------------
 
-test("5a. relayout main path: openRelayoutSession dispatches stranded and rendered through processItem", function () {
+test("5a. relayout main path: openRelayoutSession dispatches stranded and rendered through processItem", async function () {
   const root = makeElement();
   root._rect = { top: 0, bottom: 100, width: 300 };
 
   const renderedP = makeParagraph({ source: makeFixtureParagraphElement() });
   const strandedSource = makeFixtureParagraphElement();
 
-  withEnv((pool) => {
+  await withEnvAsync(async (pool) => {
     const observed = makeObservedContext(root, {
       stranded: [strandedSource],
       candidates: [],
@@ -891,7 +919,7 @@ test("5a. relayout main path: openRelayoutSession dispatches stranded and render
     // The rendered paragraph already carries its enhance-time raw-DOM record.
     registerParagraph(observed.context, renderedP.source);
     observed.context.contextState.paragraphs.push(renderedP);
-    relayout(observed.context, root);
+    await relayout(observed.context, root);
 
     assert.equal(pool._calls.startJob.length, 1);
     const spec = pool._calls.startJob[0];
@@ -914,21 +942,21 @@ test("5a. relayout main path: openRelayoutSession dispatches stranded and render
   }, { document: makePipelineDocument(), node: asNodeConstructor(FakeNode) });
 });
 
-test("5b. relayout main path: preparation carries the measured source width", function () {
+test("5b. relayout main path: preparation carries the measured source width", async function () {
   const root = makeElement();
 
   const renderedSource = makeFixtureParagraphElement();
   renderedSource.width = 250;
   const renderedP = makeParagraph({ source: renderedSource });
 
-  withEnv((pool) => {
+  await withEnvAsync(async (pool) => {
     const observed = makeObservedContext(root, { candidates: [] });
     seedEstablishedRuntime(observed, root, { fontSize: 19 });
     installFixtureBrowserFallback(observed.context);
     registerParagraph(observed.context, renderedSource);
     observed.context.contextState.paragraphs.push(renderedP);
 
-    relayout(observed.context, root);
+    await relayout(observed.context, root);
 
     const spec = pool._calls.startJob[0];
     spec.processItem!(0);
@@ -941,14 +969,14 @@ test("5b. relayout main path: preparation carries the measured source width", fu
   }, { document: makePipelineDocument(), node: asNodeConstructor(FakeNode) });
 });
 
-test("5c. relayout main path: stale when root width drifts >= 0.5", function () {
+test("5c. relayout main path: stale when root width drifts >= 0.5", async function () {
   const root = makeElement();
   root._rect = { top: 0, bottom: 100, width: 300 };
 
-  withEnv((pool) => {
+  await withEnvAsync(async (pool) => {
     const observed = makeObservedContext(root, { candidates: [] });
     seedEstablishedRuntime(observed, root, { fontSize: 19 });
-    relayout(observed.context, root);
+    await relayout(observed.context, root);
 
     const spec = pool._calls.startJob[0];
     const staleFn = spec.isStale;
@@ -963,13 +991,13 @@ test("5c. relayout main path: stale when root width drifts >= 0.5", function () 
   });
 });
 
-test("5d. relayout main path: onFailure calls rollback", function () {
+test("5d. relayout main path: onFailure calls rollback", async function () {
   const root = makeElement();
 
   const renderedSource = makeFixtureParagraphElement();
   const renderedP = makeParagraph({ source: renderedSource });
 
-  withEnv((pool) => {
+  await withEnvAsync(async (pool) => {
     const observed = makeObservedContext(root, { candidates: [] });
     seedEstablishedRuntime(observed, root, { fontSize: 19 });
     installFixtureBrowserFallback(observed.context);
@@ -978,7 +1006,7 @@ test("5d. relayout main path: onFailure calls rollback", function () {
     // Enhanced steady state: the renderer wrote the prepared DOM through
     // innerHTML before the relayout session opens.
     renderedSource.innerHTML = "rendered v1";
-    relayout(observed.context, root);
+    await relayout(observed.context, root);
 
     const spec = pool._calls.startJob[0];
 
@@ -998,7 +1026,7 @@ test("5d. relayout main path: onFailure calls rollback", function () {
   }, { document: makePipelineDocument(), node: asNodeConstructor(FakeNode) });
 });
 
-test("5e. relayout main path: onItemsFinished calls finish which ejects unsupported paragraphs", function () {
+test("5e. relayout main path: onItemsFinished calls finish which ejects unsupported paragraphs", async function () {
   const root = makeElement();
 
   const renderedSource = makeFixtureParagraphElement();
@@ -1029,13 +1057,13 @@ test("5e. relayout main path: onItemsFinished calls finish which ejects unsuppor
     lowered: relaxedLowered as LoweredParagraph,
   });
 
-  withEnv((pool) => {
+  await withEnvAsync(async (pool) => {
     const observed = makeObservedContext(root, { candidates: [] });
     seedEstablishedRuntime(observed, root, { fontSize: 19 });
     installFixtureBrowserFallback(observed.context);
     registerParagraph(observed.context, renderedSource);
     observed.context.contextState.paragraphs.push(renderedP);
-    relayout(observed.context, root);
+    await relayout(observed.context, root);
 
     const spec = pool._calls.startJob[0];
     assert.ok(spec.onItemsFinished);
@@ -1124,13 +1152,13 @@ test("6a. finish: dispatches tiqian:ready with correct detail fields", function 
   });
 });
 
-test("6b. relayout finish: dispatches tiqian:relayout-ready with relayout: true", function () {
+test("6b. relayout finish: dispatches tiqian:relayout-ready with relayout: true", async function () {
   const root = makeElement({ "data-tiqian-snapshot-count": "3" });
 
-  withEnv((pool) => {
+  await withEnvAsync(async (pool) => {
     const observed = makeObservedContext(root, { candidates: [] });
     seedEstablishedRuntime(observed, root, { fontSize: 19 });
-    relayout(observed.context, root);
+    await relayout(observed.context, root);
 
     const spec = pool._calls.startJob[0];
     assert.ok(spec.onFinished);
@@ -1154,13 +1182,13 @@ test("6b. relayout finish: dispatches tiqian:relayout-ready with relayout: true"
   });
 });
 
-test("6c. fail: sets data-tiqian-relayout-error attribute, dispatches error and summary events", function () {
+test("6c. fail: sets data-tiqian-relayout-error attribute, dispatches error and summary events", async function () {
   const root = makeElement();
 
-  withEnv((pool) => {
+  await withEnvAsync(async (pool) => {
     const observed = makeObservedContext(root, { candidates: [] });
     seedEstablishedRuntime(observed, root, { fontSize: 19 });
-    relayout(observed.context, root);
+    await relayout(observed.context, root);
 
     const spec = pool._calls.startJob[0];
     assert.ok(spec.onFailed);
@@ -1194,13 +1222,13 @@ test("6c. fail: sets data-tiqian-relayout-error attribute, dispatches error and 
   });
 });
 
-test("6d. fail: detail truncated to 512 chars", function () {
+test("6d. fail: detail truncated to 512 chars", async function () {
   const root = makeElement();
 
-  withEnv((pool) => {
+  await withEnvAsync(async (pool) => {
     const observed = makeObservedContext(root, { candidates: [] });
     seedEstablishedRuntime(observed, root, { fontSize: 19 });
-    relayout(observed.context, root);
+    await relayout(observed.context, root);
 
     const spec = pool._calls.startJob[0];
     const longDetail = "X".repeat(1024);
@@ -1224,13 +1252,13 @@ test("6d. fail: detail truncated to 512 chars", function () {
   });
 });
 
-test("6e. fail for Enhance kind dispatches tiqian:error (not tiqian:relayout-error)", function () {
+test("6e. fail for Enhance kind dispatches tiqian:error (not tiqian:relayout-error)", async function () {
   const root = makeElement();
 
-  withEnv((pool) => {
+  await withEnvAsync(async (pool) => {
     const observed = makeObservedContext(root, { candidates: [] });
     seedEstablishedRuntime(observed, root, { fontSize: 19 });
-    relayout(observed.context, root);
+    await relayout(observed.context, root);
 
     const spec = pool._calls.startJob[0];
     spec.onFailed!({
