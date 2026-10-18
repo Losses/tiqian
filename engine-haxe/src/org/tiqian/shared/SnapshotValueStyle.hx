@@ -23,6 +23,13 @@ class SnapshotValueStyle {
     }
 
     /**
+     * RuntimeValueStyleContentAddressing: runtime lowering mints the same
+     * class name for the same declaration in every session, so a fresh
+     * one-shot enhance over a root reproduces the coordinated DOM byte for
+     * byte even though the coordinated registry still holds declarations
+     * from earlier widths. The snapshot namespace (tqv-) stays index based
+     * because frozen snapshot tables persist those indexes across builds.
+     *
      * The runtime value-style key for one declaration: double-FNV-1a over
      * UTF-16 code units, base-36-concatenating the two seeds without a
      * separator. The constants and the fold match the hand-written
