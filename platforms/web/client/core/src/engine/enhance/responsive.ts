@@ -48,7 +48,7 @@ import type {
 } from "./snapshot-adoption.js";
 
 /** Synchronous commit body run while the root size observation is paused. */
-type RootObservationCommit = () => void;
+type RootObservationCommit = () => void | Promise<void>;
 
 export interface ResponsiveHooks {
   currentGeneration(): number;
@@ -66,7 +66,7 @@ export interface ResponsiveHooks {
   dispatchContentReconcile(paragraphs: Element[]): boolean;
   /** ContextState: layout-work drive surfaces. */
   cancelCapturedLayoutForLatestGeometry(): void;
-  dispatchRelayout(observedMeasures: string | null): void;
+  dispatchRelayout(observedMeasures: string | null): Promise<void>;
   finishLayoutWorkAndObserve(): boolean;
   refreshRuntimeFromSource(options?: SourceRefreshOptions): void;
   /** TypographyManager: captured-job typography cancellation. */
@@ -124,7 +124,7 @@ function createResponsiveManager(
   let pendingCommittedMeasures = "";
 
   const boundResponsiveCommit: FrameTaskCallback = () => {
-    if (root.isConnected) commitResponsiveGeometryChange();
+    if (root.isConnected) void commitResponsiveGeometryChange();
   };
 
   function paragraphMeasureSignatureFn(): string {
@@ -192,8 +192,10 @@ function createResponsiveManager(
         }
       },
       onWidthsChanged: () => {
-        if (commitResponsiveGeometryPrePaint()) return;
-        scheduleResponsiveGeometryCommit();
+        void commitResponsiveGeometryPrePaint().then((committed) => {
+          if (committed) return;
+          scheduleResponsiveGeometryCommit();
+        });
       },
     });
     sizeObservation.start(targets);
@@ -293,7 +295,7 @@ function createResponsiveManager(
   // one frame of old lines first. Only the steady width-only case
   // qualifies — every other case keeps the scheduled commit's ordering
   // guarantees. Verified by demo/web/tests/resize-prepaint-commit.test.mjs.
-  function commitResponsiveGeometryPrePaint(): boolean {
+  async function commitResponsiveGeometryPrePaint(): Promise<boolean> {
     if (!root.isConnected || !stateMachine.inViewport) return false;
     // DegenerateViewportWidthRejection: pre-paint admission reads live
     // widths, which a collapsed capture window reports as zero. Fall
@@ -321,19 +323,19 @@ function createResponsiveManager(
       if (measures === lastParagraphMeasures) return false;
       lastWidth = lastObservedWidth || fragmentedBorderBoxInlineSize(root);
       lastParagraphMeasures = measures;
-      return withRootObservationPaused(() => hooks.dispatchRelayout(measures));
+      return await withRootObservationPaused(() => hooks.dispatchRelayout(measures));
     }
-    return withRootObservationPaused(() => commitResponsiveGeometryChange());
+    return await withRootObservationPaused(() => commitResponsiveGeometryChange());
   }
 
   // One pause/resume protocol for both pre-paint admission paths: the root is
-  // unobserved around the synchronous commit so its own height change
+  // unobserved around the commit so its own height change
   // cannot queue a same-depth observation for the browser's ResizeObserver
   // loop guard to report, then re-observed with the original box option.
-  function withRootObservationPaused(commit: RootObservationCommit): boolean {
+  async function withRootObservationPaused(commit: RootObservationCommit): Promise<boolean> {
     sizeObservation?.unobserve(root);
     try {
-      commit();
+      await commit();
       scheduler.grantImmediate();
     } finally {
       sizeObservation?.observe(root);
@@ -341,7 +343,7 @@ function createResponsiveManager(
     return true;
   }
 
-  function commitResponsiveGeometryChange(): void {
+  async function commitResponsiveGeometryChange(): Promise<void> {
     if (!root.isConnected) return;
     // DegenerateViewportWidthRejection: a commit running inside a
     // collapsed capture window reads live widths at zero and dispatches a
@@ -502,7 +504,7 @@ function createResponsiveManager(
       return;
     }
     if (stateMachine.runtimeActive) {
-      hooks.dispatchRelayout(paragraphMeasures);
+      await hooks.dispatchRelayout(paragraphMeasures);
       return;
     }
     hooks.refreshRuntimeFromSource({ revalidateSnapshotFont: false });
