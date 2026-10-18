@@ -35,3 +35,6 @@ class ValueStyleInterner {
         return declarations.length;
     }
 }
+
+// Append-only invariant: intern never reorders or removes, so the index it
+// returns stays a stable base-36 identifier feeding snapshotValueStyleClass.
