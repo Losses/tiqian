@@ -32,22 +32,6 @@ export interface NativeSessionOptions {
   baseFeatures: string[] | null;
 }
 
-/** Boundary style of the `sourceBoundaries` wire protocol. */
-export interface NativeBoundaryStyle {
-  fontFamilies: string[];
-  fontSizePx: number;
-  fontWeight: number;
-  italic: boolean;
-  baselineShiftPx?: number | null;
-}
-
-/** Boundary span of the `sourceBoundaries` wire protocol. */
-export interface NativeBoundarySpan {
-  start: number;
-  end: number;
-  style: NativeBoundaryStyle;
-}
-
 /** One styled span of the `precomputeParagraph` protocol. */
 export interface NativeTextSpan {
   start: number;
@@ -111,12 +95,6 @@ export interface NativeAddon {
     faceSelectionText: string | null,
   ): string;
   renderFamilies(sessionId: string, requestedFamilies: string[]): string;
-  sourceBoundaries(
-    sessionId: string,
-    text: string,
-    baseStyle: NativeBoundaryStyle,
-    textSpans: NativeBoundarySpan[],
-  ): string;
   /**
    * The structured form of the js facade call: arrays and span objects arrive
    * as themselves. Returns the plan JSON. An addon built without the engine
