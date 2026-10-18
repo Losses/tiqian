@@ -16,7 +16,6 @@ use tiqian_precompute::session::{
     create_font_session as create_session_impl, MetricsInput, SessionFaceSpec, SessionOptions,
     ShapeInput, BACKEND_REVISION, HARFBUZZ_VERSION,
 };
-use tiqian_precompute::source_boundaries::{BoundaryStyle, BoundaryTextSpan};
 
 use tiqian_precompute::engine_bridge;
 use tiqian_precompute::paragraph::{
@@ -260,52 +259,6 @@ pub fn render_families(mut cx: FunctionContext) -> JsResult<JsString> {
     }
 }
 
-/// `sourceBoundaries(sessionId, text, baseStyle, textSpans)`.
-pub fn source_boundaries(mut cx: FunctionContext) -> JsResult<JsString> {
-    let session_id = cx.argument::<JsString>(0)?.value(&mut cx);
-    let text = cx.argument::<JsString>(1)?.value(&mut cx);
-    let base_style = cx.argument::<JsObject>(2)?;
-    let spans = cx.argument::<JsArray>(3)?;
-
-    let base = read_boundary_style(&mut cx, &base_style)?;
-    let mut parsed: Vec<BoundaryTextSpan> = Vec::with_capacity(array_capacity(spans.len(&mut cx)));
-    for value in spans.to_vec(&mut cx)? {
-        let span = value.downcast_or_throw::<JsObject, _>(&mut cx)?;
-        let style_value = span.prop(&mut cx, "style").get::<Handle<JsValue>>()?;
-        let style = style_value.downcast_or_throw::<JsObject, _>(&mut cx)?;
-        parsed.push(BoundaryTextSpan {
-            start: span.prop(&mut cx, "start").get::<f64>()?,
-            end: span.prop(&mut cx, "end").get::<f64>()?,
-            style: read_boundary_style(&mut cx, &style)?,
-        });
-    }
-
-    match registry::with_session(&session_id, |session| {
-        session.source_boundaries(&text, &base, &parsed)
-    }) {
-        Ok(Ok(boundaries)) => {
-            Ok(cx.string(Json::Arr(boundaries.iter().map(|v| Json::Num(*v)).collect()).render()))
-        }
-        Ok(Err(error)) => cx.throw_error(error),
-        Err(error) => cx.throw_error(error),
-    }
-}
-
-fn read_boundary_style(
-    cx: &mut FunctionContext,
-    style: &Handle<JsObject>,
-) -> NeonResult<BoundaryStyle> {
-    Ok(BoundaryStyle {
-        font_families: read_property_string_array(cx, style, "fontFamilies")?,
-        font_size_px: style.prop(&mut *cx, "fontSizePx").get::<f64>()?,
-        font_weight: style.prop(&mut *cx, "fontWeight").get::<f64>()?,
-        italic: style.prop(&mut *cx, "italic").get::<bool>()?,
-        baseline_shift_px: style
-            .prop(&mut *cx, "baselineShiftPx")
-            .get::<Option<f64>>()?,
-    })
-}
-
 /// `precomputeParagraph(sessionId, text, maxWidthPx, families, fontSizePx,
 /// lineHeightPx, locale, fontWeight, italic, firstLineIndentIc,
 /// lineLengthGridEnabled, sourceBoundaries, textSpans, inlineBoxes,
@@ -492,13 +445,4 @@ pub(crate) fn read_string_elements(
         items.push(value.downcast_or_throw::<JsString, _>(cx)?.value(cx));
     }
     Ok(items)
-}
-
-fn read_property_string_array(
-    cx: &mut FunctionContext,
-    object: &Handle<JsObject>,
-    key: &str,
-) -> NeonResult<Vec<String>> {
-    let array = object.prop(&mut *cx, key).get::<Handle<JsArray>>()?;
-    read_string_elements(cx, &array)
 }

@@ -50,24 +50,6 @@ test("unsupported base features report by name", { skip: fonts === null }, async
   );
 });
 
-test("styled spans reach source boundaries", { skip: fonts === null }, async () => {
-  assert.ok(fonts);
-  const bytes = readLocalFont("EBGaramond-Regular.ttf");
-  const italicBytes = readLocalFont("EBGaramond-Italic.ttf");
-  if (bytes === null || italicBytes === null) return; // boundaries need real faces
-  const session = await fonts.createFontSession([
-    { family: "Garamond", publicUrl: "/fonts/garamond.ttf", source: bytes },
-    { family: "Garamond", publicUrl: "/fonts/garamond-italic.ttf", source: italicBytes, style: "italic" },
-  ]);
-  const style = { fontFamilies: ["Garamond"], fontSizePx: 20, fontWeight: 400, italic: false };
-  const boundaries = session.sourceBoundaries("typeset", style, [
-    { start: 0, end: 4, style },
-    { start: 4, end: 7, style: { ...style, italic: true } },
-  ]);
-  assert.ok(Array.isArray(boundaries));
-  session.close();
-});
-
 // The debug:native build carries no engine archive, so the entry reports
 // EngineNotLinked there; a build linked against the engine archive takes the
 // full path. One test covers both flavors.
