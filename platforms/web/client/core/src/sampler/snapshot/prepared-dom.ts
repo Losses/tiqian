@@ -311,12 +311,14 @@ const RENDER_FLOW_EPSILON_PX = 0.01;
 const DEFAULT_LOCALE = "zh-Hans";
 const LINE_MARKER_SELECTOR = "[data-tq-line-flow-width]";
 const ROOT_SELECTOR = "tiqian-prose, [data-tiqian-root]";
-const VALUE_STYLE_SCOPE_ATTRIBUTE = "data-tq-value-style-scope";
-const VALUE_STYLE_ELEMENT_ATTRIBUTE = "data-tq-prepared-value-styles";
+const VALUE_STYLE_SCOPE_ATTRIBUTE = SnapshotValueStyle.VALUE_STYLE_SCOPE_ATTRIBUTE;
+const VALUE_STYLE_ELEMENT_ATTRIBUTE = SnapshotValueStyle.VALUE_STYLE_ELEMENT_ATTRIBUTE;
 const LIVE_SEMANTIC_INDEX_ATTRIBUTE = "data-tq-live-semantic-index";
 // Snapshot style owner sentinel. A string marker: host Elements never
-// compare equal to it, so owner discrimination is unchanged.
-const SNAPSHOT_STYLE_OWNER = "tiqian-snapshot-style-owner";
+// compare equal to it, so owner discrimination is unchanged. The value is
+// single-sourced from SnapshotValueStyle (Haxe); the alias widens to
+// string, so StyleOwner resolves to Element | string.
+const SNAPSHOT_STYLE_OWNER = SnapshotValueStyle.SNAPSHOT_STYLE_OWNER;
 
 function preparedPlan(value: string | PreparedLayoutPlan): PreparedLayoutPlan {
   return typeof value === "string" ? JSON.parse(value) : value;

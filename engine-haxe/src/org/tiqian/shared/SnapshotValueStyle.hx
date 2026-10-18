@@ -12,6 +12,19 @@ package org.tiqian.shared;
  * (snapshot) and the Node precompute (runtime), item by item.
  */
 class SnapshotValueStyle {
+    /**
+     * The value-style DOM integration names, single-sourced for the
+     * hand-written TypeScript lane (prepared-dom.ts) and its Stage2-shared
+     * sibling. VALUE_STYLE_SCOPE_ATTRIBUTE marks the root scope; the element
+     * attribute marks the injected <style> element; SNAPSHOT_STYLE_OWNER is
+     * the owner sentinel that never collides with a host Element. Haxe has no
+     * string-literal type, so each field widens to a plain string; the
+     * consumer's StyleOwner type therefore resolves to Element | string.
+     */
+    public static final VALUE_STYLE_SCOPE_ATTRIBUTE:String = "data-tq-value-style-scope";
+    public static final VALUE_STYLE_ELEMENT_ATTRIBUTE:String = "data-tq-prepared-value-styles";
+    public static final SNAPSHOT_STYLE_OWNER:String = "tiqian-snapshot-style-owner";
+
     /** tqv-<index in base 36>: the snapshot value-style class for an interned index. */
     public static function snapshotValueStyleClass(index:Int):String {
         return "tqv-" + toBase36Unsigned(index);
