@@ -29,7 +29,6 @@ use crate::snapshot_source::{
     js_number_value, js_string_value, normalize_snapshot_semantics, semantics_json,
     snapshot_semantic_metric_contract_issue, SemanticSpan,
 };
-use crate::source_boundaries::{BoundaryStyle, BoundaryTextSpan};
 
 /// The session prefix `createBuildFontSession` always passes.
 const BUILD_SESSION_PREFIX: &str = "tq-build-font";
@@ -409,33 +408,6 @@ fn capture(
     for inline_box in inline_boxes {
         push_boundary(&mut boundaries, f64::from(inline_box.start));
         push_boundary(&mut boundaries, f64::from(inline_box.end));
-    }
-    let base_style = BoundaryStyle {
-        font_families: typography.font_families.clone(),
-        font_size_px: typography.font_size_px,
-        font_weight: f64::from(typography.font_weight),
-        italic: typography.italic,
-        baseline_shift_px: Some(0.0),
-    };
-    let boundary_spans: Vec<BoundaryTextSpan> = text_spans
-        .iter()
-        .map(|span| BoundaryTextSpan {
-            start: f64::from(span.start),
-            end: f64::from(span.end),
-            style: BoundaryStyle {
-                font_families: span.families.clone(),
-                font_size_px: span.font_size_px,
-                font_weight: f64::from(span.font_weight),
-                italic: span.italic,
-                baseline_shift_px: Some(span.baseline_shift),
-            },
-        })
-        .collect();
-    let session_boundaries = session
-        .source_boundaries(text, &base_style, &boundary_spans)
-        .map_err(NamedError)?;
-    for value in session_boundaries {
-        push_boundary(&mut boundaries, value);
     }
     for value in &boundaries {
         if !is_safe_integer(*value) || *value < 0.0 || *value > f64::from(text_length) {

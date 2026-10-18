@@ -86,20 +86,6 @@ export interface FaceInfo {
   localNames: string[];
 }
 
-export interface BoundaryStyleInput {
-  fontFamilies: string[];
-  fontSizePx: number;
-  fontWeight: number;
-  italic: boolean;
-  baselineShiftPx?: number;
-}
-
-export interface BoundaryTextSpanInput {
-  start: number;
-  end: number;
-  style: BoundaryStyleInput;
-}
-
 /** Paragraph typography of the `precomputeParagraph` call. */
 export interface ParagraphTypography {
   fontFamilies: string[];
@@ -224,11 +210,6 @@ export interface FontSession {
     faceSelectionText?: string | null,
   ): number[];
   renderFamilies(requestedFamilies: string[]): string[];
-  sourceBoundaries(
-    text: string,
-    baseStyle: BoundaryStyleInput,
-    textSpans: BoundaryTextSpanInput[],
-  ): number[];
   /**
    * Runs one paragraph through the engine with this session as the font
    * backend. Throws the named validation issues of the request; throws
@@ -327,13 +308,6 @@ export async function createFontSession(
     },
     renderFamilies(requestedFamilies: string[]): string[] {
       return parse<string[]>(addon.renderFamilies(id, requestedFamilies));
-    },
-    sourceBoundaries(
-      text: string,
-      baseStyle: BoundaryStyleInput,
-      textSpans: BoundaryTextSpanInput[],
-    ): number[] {
-      return parse<number[]>(addon.sourceBoundaries(id, text, baseStyle, textSpans));
     },
     precomputeParagraph(
       text: string,
