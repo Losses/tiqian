@@ -52,3 +52,5 @@ org.tiqian.protocol.FontContractTest
 org.tiqian.protocol.FaceInfo
 org.tiqian.protocol.ContextFingerprint
 org.tiqian.protocol.ContextFingerprintTest
+org.tiqian.protocol.FaceSession
+org.tiqian.protocol.FaceSessionTest
