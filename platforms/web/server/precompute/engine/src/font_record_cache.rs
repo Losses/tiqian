@@ -81,6 +81,7 @@ mod tests {
             weight: FontWeightSpec::Single(Some(400.0)),
             style: "normal",
             unicode_range: Some("U+4E00-9FFF"),
+            unicode_ranges: None,
             source_order,
         }
     }

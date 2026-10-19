@@ -60,6 +60,7 @@ fn session_lends_the_engine_a_real_font_backend() {
             weight: FontWeightSpec::Single(Some(400.0)),
             style: "normal",
             unicode_range: None,
+            unicode_ranges: None,
             source_order: 0,
         },
         source_order: Some(0.0),
