@@ -15,6 +15,7 @@ use crate::replay::{
 };
 use crate::selection::{render_families, select_shape_face};
 use crate::shaping::{FontEngine, ShapeRecordResult};
+use tiqian_protocol_gen::org::tiqian::protocol::face_session::FaceSession;
 use tiqian_protocol_gen::org::tiqian::protocol::revision::Revision as RevisionFamily;
 
 /// The shared shaping backend revision (single source: the generated
@@ -346,8 +347,19 @@ fn ordered_face_specs(specs: &[SessionFaceSpec]) -> Result<Vec<(usize, u32)>, Se
         resolved.push((input_order, order));
         input_order_number += 1.0;
     }
-    resolved.sort_by(|left, right| left.1.cmp(&right.1).then_with(|| left.0.cmp(&right.0)));
-    Ok(resolved)
+    // Delegate resolve (None -> input index) + stable sort to the generated
+    // FaceSession.orderedFaceSpecs; the dedupe above makes every order
+    // unique in the no-error path, so the tie-break is a no-op and the
+    // raw-float sort matches the trunc-u32 sort byte-for-byte.
+    // trunc_sat_u32 saturation has no Haxe Int equivalent, and the
+    // data-carrying faults above do not fit the name-only NamedError list,
+    // so both stay in Rust.
+    let ordered_indices = FaceSession::face_session_ordered_face_specs(&source_orders);
+    let ordered = ordered_indices
+        .into_iter()
+        .map(|input_index| resolved[input_index as usize])
+        .collect();
+    Ok(ordered)
 }
 
 /// `createFontSession`.
