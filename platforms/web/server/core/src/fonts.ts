@@ -6,6 +6,7 @@
 
 import { currentPlatform } from "@neon-rs/load";
 import { addon } from "./load.js";
+import { parseUnicodeRange } from "@tiqian/core/font-face-boundaries";
 
 const SUPPORTED_PLATFORMS = new Set([
   "win32-x64-msvc",
@@ -248,6 +249,7 @@ export async function createFontSession(
       weight: face.weight,
       style: face.style,
       unicodeRange: face.unicodeRange ?? null,
+      unicodeRanges: parseUnicodeRange(face.unicodeRange ?? ""),
       sourceOrder: face.sourceOrder ?? null,
     };
   });

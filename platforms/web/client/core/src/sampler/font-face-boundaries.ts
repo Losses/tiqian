@@ -82,3 +82,13 @@ export function mergeSerializedSourceBoundaries(
   const additionalNumbers = Array.from(additional ?? [], (value) => Number(value));
   return FontFaceBoundaries.mergeSerializedSourceBoundaries(existing, additionalNumbers);
 }
+
+/**
+ * Parse a CSS unicode-range descriptor into a list of inclusive
+ * code-point ranges [start, end], or null for an empty descriptor.
+ * Delegates to the generated FontFaceBoundaries.parseUnicodeRange.
+ */
+export function parseUnicodeRange(value: string): number[][] | null {
+  return FontFaceBoundaries.parseUnicodeRange(value);
+}
+
