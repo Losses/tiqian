@@ -328,6 +328,9 @@ impl Default for CaptureEvidence {
 fn ordered_face_specs(specs: &[SessionFaceSpec]) -> Result<Vec<(usize, u32)>, SessionError> {
     let mut seen = std::collections::HashSet::new();
     let mut resolved: Vec<(usize, u32)> = Vec::new();
+    // Raw source-order sequence handed to the generated resolver/sorter;
+    // validation, truncation and dedupe stay here (see below).
+    let mut source_orders: Vec<Option<f64>> = Vec::with_capacity(specs.len());
     // The js default sourceOrder is the input index held as a Number.
     let mut input_order_number = 0.0_f64;
     for (input_order, entry) in specs.iter().enumerate() {
@@ -345,6 +348,7 @@ fn ordered_face_specs(specs: &[SessionFaceSpec]) -> Result<Vec<(usize, u32)>, Se
             return Err(SessionError::DuplicateFontFaceSourceOrder(order));
         }
         resolved.push((input_order, order));
+        source_orders.push(entry.source_order);
         input_order_number += 1.0;
     }
     // Delegate resolve (None -> input index) + stable sort to the generated
