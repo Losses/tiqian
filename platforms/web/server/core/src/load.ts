@@ -23,6 +23,7 @@ export interface NativeFaceSpec {
   weight?: number | readonly [number, number];
   style?: string;
   unicodeRange: string | null;
+  unicodeRanges: number[][] | null;
   sourceOrder: number | null;
 }
 
