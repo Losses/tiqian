@@ -340,7 +340,7 @@ impl RepairOption {
     pub fn to_string(&self) -> String {
         match self {
             RepairOption::PushIn { penalty, reason, offender_cluster_index, allocations, total_shrink,
-total_available_capacity } => format!("PushIn(penalty={}, reason={}, offender_cluster_index={}, allocations={}, total_shrink={}, total_available_capacity={})", (penalty).to_string(), (reason).clone(), (offender_cluster_index).to_string(), {
+total_available_capacity } => format!("PushIn(penalty={}, reason={}, offender_cluster_index={}, allocations={}, total_shrink={}, total_available_capacity={})", crate::runtime::int_text::IntText::int_text(*penalty), (reason).clone(), crate::runtime::int_text::IntText::int_text(*offender_cluster_index), {
             let mut out = String::new();
             out.push('[');
             let mut j0 = 0usize;
@@ -352,11 +352,14 @@ total_available_capacity } => format!("PushIn(penalty={}, reason={}, offender_cl
             out.push(']');
             out
         }, (total_shrink).to_string(), (total_available_capacity).to_string()),
-            RepairOption::Hang { penalty, reason, offender_cluster_index } => format!("Hang(penalty={}, reason={}, offender_cluster_index={})", (penalty).to_string(), (reason).clone(), (offender_cluster_index).to_string()),
+            RepairOption::Hang { penalty, reason,
+offender_cluster_index } => format!("Hang(penalty={}, reason={}, offender_cluster_index={})", crate::runtime::int_text::IntText::int_text(*penalty), (reason).clone(), crate::runtime::int_text::IntText::int_text(*offender_cluster_index)),
             RepairOption::CarryPrevious { penalty, reason, offender_cluster_index,
-carried_cluster_index } => format!("CarryPrevious(penalty={}, reason={}, offender_cluster_index={}, carried_cluster_index={})", (penalty).to_string(), (reason).clone(), (offender_cluster_index).to_string(), (carried_cluster_index).to_string()),
-            RepairOption::CarryNext { penalty, reason, moved_cluster_index } => format!("CarryNext(penalty={}, reason={}, moved_cluster_index={})", (penalty).to_string(), (reason).clone(), (moved_cluster_index).to_string()),
-            RepairOption::LeaveRagged { penalty, reason, offender_cluster_index } => format!("LeaveRagged(penalty={}, reason={}, offender_cluster_index={})", (penalty).to_string(), (reason).clone(), (offender_cluster_index).to_string()),
+carried_cluster_index } => format!("CarryPrevious(penalty={}, reason={}, offender_cluster_index={}, carried_cluster_index={})", crate::runtime::int_text::IntText::int_text(*penalty), (reason).clone(), crate::runtime::int_text::IntText::int_text(*offender_cluster_index), crate::runtime::int_text::IntText::int_text(*carried_cluster_index)),
+            RepairOption::CarryNext { penalty, reason,
+moved_cluster_index } => format!("CarryNext(penalty={}, reason={}, moved_cluster_index={})", crate::runtime::int_text::IntText::int_text(*penalty), (reason).clone(), crate::runtime::int_text::IntText::int_text(*moved_cluster_index)),
+            RepairOption::LeaveRagged { penalty, reason,
+offender_cluster_index } => format!("LeaveRagged(penalty={}, reason={}, offender_cluster_index={})", crate::runtime::int_text::IntText::int_text(*penalty), (reason).clone(), crate::runtime::int_text::IntText::int_text(*offender_cluster_index)),
         }
     }
 }

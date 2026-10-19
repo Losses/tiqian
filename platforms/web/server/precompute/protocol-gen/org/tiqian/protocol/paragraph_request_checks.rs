@@ -133,10 +133,8 @@ impl ParagraphRequestChecks {
     let __units = u_string::units(&text);
     let __count = u_string::unit_count(&text);
         let mut index_idx = 0u32;
-        let __units1 = u_string::units(&text);
-        let __count1 = u_string::unit_count(&text);
         while (i32::from_ne_bytes(((index_idx) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((__count) as i32).to_ne_bytes())) {
-            let code = u_string::unit_at_from(&__units1, index_idx).unwrap_or(0);
+            let code = u_string::unit_at_from(&__units, index_idx).unwrap_or(0);
             if i32::from_ne_bytes(((code) as i32).to_ne_bytes()) >= 55296 && (i32::from_ne_bytes(((code) as i32).to_ne_bytes())) <= 57343 {
                 return false;
             }
