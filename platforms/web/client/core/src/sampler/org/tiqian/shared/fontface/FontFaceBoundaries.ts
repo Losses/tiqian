@@ -229,7 +229,7 @@ export class FontFaceBoundaries {
     return false;
   }
 
-  private static parseUnicodeRange(value: string): number[][] | null {
+  public static parseUnicodeRange(value: string): number[][] | null {
     const serialized = value.trim();
     if (serialized === "") {
       return null;

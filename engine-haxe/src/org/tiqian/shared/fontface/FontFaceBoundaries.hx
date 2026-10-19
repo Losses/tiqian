@@ -266,7 +266,7 @@ class FontFaceBoundaries {
         return false;
     }
 
-    static function parseUnicodeRange(value: String): Null<Array<Array<Int>>> {
+    public static function parseUnicodeRange(value: String): Null<Array<Array<Int>>> {
         final serialized = StringTools.trim(value);
         if (serialized == "") {
             return null;
