@@ -30,6 +30,9 @@ pub struct FontFaceSpec<'a> {
     pub weight: FontWeightSpec,
     pub style: &'a str,
     pub unicode_range: Option<&'a str>,
+    /// Pre-parsed unicode-range pairs from the Node session layer. None means
+    /// the face declares no range and covers every code point.
+    pub unicode_ranges: Option<Vec<(u32, u32)>>,
     /// Pre-validated by the session layer (`orderedFaceSpecs`); JS keeps the
     /// resolved value on the record.
     pub source_order: u32,
@@ -201,7 +204,7 @@ pub fn load_record(spec: &FontFaceSpec) -> Result<FontRecord, LoadRecordError> {
         });
     }
     let names = local_names(table(&sfnt, b"name"), table(&sfnt, b"ltag"));
-    let unicode_ranges = crate::font_face::parse_unicode_range(spec.unicode_range.unwrap_or(""));
+    let unicode_ranges = spec.unicode_ranges.clone();
     let face_id = format!(
         "{family}|{style}|{}-{}|{}|{}",
         js_number_string(weight_range[0]),
@@ -307,6 +310,7 @@ mod tests {
             weight: FontWeightSpec::Single(Some(400.0)),
             style: "normal",
             unicode_range: Some("U+4E00-9FFF"),
+            unicode_ranges: None,
             source_order: 0,
         }
     }
