@@ -9,6 +9,7 @@ use neon::types::buffer::TypedArray;
 use tiqian_precompute::emit;
 use tiqian_precompute::font_record::{FontFaceSpec, FontWeightSpec};
 use tiqian_precompute::js_compat::trunc_sat_i32;
+use tiqian_precompute::js_compat::trunc_sat_u32;
 use tiqian_precompute::js_compat::trunc_sat_usize;
 use tiqian_precompute::json::Json;
 use tiqian_precompute::session::CaptureEvidence;
@@ -43,6 +44,7 @@ pub(crate) struct FaceSpecOwned {
     pub weight: FontWeightSpec,
     pub style: String,
     pub unicode_range: Option<String>,
+    pub unicode_ranges: Option<Vec<(u32, u32)>>,
     pub source_order: Option<f64>,
 }
 
@@ -84,6 +86,7 @@ pub(crate) fn read_face_arguments(
                 .get::<Option<String>>()?
                 .unwrap_or_else(|| "normal".to_string()),
             unicode_range: face.prop(cx, "unicodeRange").get::<Option<String>>()?,
+            unicode_ranges: read_unicode_ranges(cx, &face)?,
             source_order: face.prop(cx, "sourceOrder").get::<Option<f64>>()?,
         });
     }
@@ -106,6 +109,7 @@ pub(crate) fn session_face_specs<'a>(
                 weight: face.weight.clone(),
                 style: face.style.as_str(),
                 unicode_range: face.unicode_range.as_deref(),
+                unicode_ranges: face.unicode_ranges.clone(),
                 source_order: 0,
             },
             source_order: face.source_order,
@@ -165,6 +169,32 @@ pub(crate) fn read_weight_spec(
     } else {
         Ok(FontWeightSpec::Single(None))
     }
+}
+
+/// Reads the pre-parsed unicodeRanges array the Node session layer assembles
+/// from the shared-gen parseUnicodeRange. Each element is a [start, end] pair
+/// of code points.
+pub(crate) fn read_unicode_ranges(
+    cx: &mut FunctionContext,
+    face: &Handle<JsObject>,
+) -> NeonResult<Option<Vec<(u32, u32)>>> {
+    let value = face.prop(&mut *cx, "unicodeRanges").get::<Handle<JsValue>>()?;
+    if value.is_a::<JsNull, _>(cx) || value.is_a::<JsUndefined, _>(cx) {
+        return Ok(None);
+    }
+    let array = value.downcast_or_throw::<JsArray, _>(cx)?;
+    let pairs = array.to_vec(cx)?;
+    let mut ranges = Vec::with_capacity(pairs.len());
+    for pair in pairs {
+        let items = pair.downcast_or_throw::<JsArray, _>(cx)?.to_vec(cx)?;
+        if items.len() != 2 {
+            return cx.throw_error("InvalidUnicodeRangePair");
+        }
+        let start = trunc_sat_u32(items[0].downcast_or_throw::<JsNumber, _>(cx)?.value(cx));
+        let end = trunc_sat_u32(items[1].downcast_or_throw::<JsNumber, _>(cx)?.value(cx));
+        ranges.push((start, end));
+    }
+    Ok(Some(ranges))
 }
 
 pub fn session_faces(mut cx: FunctionContext) -> JsResult<JsString> {
