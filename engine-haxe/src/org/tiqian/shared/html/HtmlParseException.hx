@@ -22,6 +22,7 @@ class HtmlParseException extends haxe.Exception {
         return switch (error) {
             case HtmlOffsetConversion: "HtmlOffsetConversion";
             case InvalidHtmlAttributeInsertionOffset: "InvalidHtmlAttributeInsertionOffset";
+            case UnsupportedHtmlAncestorSelector: "UnsupportedHtmlAncestorSelector";
         };
     }
 }
