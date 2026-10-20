@@ -8,18 +8,25 @@ export interface InvalidHtmlAttributeInsertionOffset {
   readonly kind: "InvalidHtmlAttributeInsertionOffset"
 }
 
+export interface UnsupportedHtmlAncestorSelector {
+  readonly kind: "UnsupportedHtmlAncestorSelector"
+}
+
 export type HtmlError =
   | HtmlOffsetConversion
-  | InvalidHtmlAttributeInsertionOffset;
+  | InvalidHtmlAttributeInsertionOffset
+  | UnsupportedHtmlAncestorSelector;
 
 export const HtmlError = Object.freeze({
   HtmlOffsetConversion: Object.freeze({ kind: "HtmlOffsetConversion" } as HtmlOffsetConversion),
-  InvalidHtmlAttributeInsertionOffset: Object.freeze({ kind: "InvalidHtmlAttributeInsertionOffset" } as InvalidHtmlAttributeInsertionOffset)
+  InvalidHtmlAttributeInsertionOffset: Object.freeze({ kind: "InvalidHtmlAttributeInsertionOffset" } as InvalidHtmlAttributeInsertionOffset),
+  UnsupportedHtmlAncestorSelector: Object.freeze({ kind: "UnsupportedHtmlAncestorSelector" } as UnsupportedHtmlAncestorSelector)
 });
 
 export function compareHtmlError(a: HtmlError, b: HtmlError): number {
   if (a === b) return 0;
   if (a.kind === "HtmlOffsetConversion") return 0 - (b.kind === "HtmlOffsetConversion" ? 0 : 0);
   if (a.kind === "InvalidHtmlAttributeInsertionOffset") return 1 - (b.kind === "InvalidHtmlAttributeInsertionOffset" ? 1 : 0);
+  if (a.kind === "UnsupportedHtmlAncestorSelector") return 2 - (b.kind === "UnsupportedHtmlAncestorSelector" ? 2 : 0);
   return 0;
 }

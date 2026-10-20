@@ -49,7 +49,11 @@ org.tiqian.protocol.FaceInfo
 org.tiqian.protocol.ContextFingerprint
 org.tiqian.protocol.ContextFingerprintTest
 org.tiqian.shared.html.HtmlScan
+org.tiqian.shared.html.DomParser
+org.tiqian.shared.html.CompoundSelector
 org.tiqian.shared.html.HtmlScanTest
+org.tiqian.shared.html.DomParserTest
+org.tiqian.shared.html.CompoundSelectorTest
 org.tiqian.shared.fontface.FontFaceBoundaries
 org.tiqian.shared.fontface.FontFaceBoundaryException
 org.tiqian.shared.snapshot.SnapshotSource

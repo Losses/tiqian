@@ -17,6 +17,8 @@ export class HtmlParseException extends Error {
         return "HtmlOffsetConversion";
       case "InvalidHtmlAttributeInsertionOffset":
         return "InvalidHtmlAttributeInsertionOffset";
+      case "UnsupportedHtmlAncestorSelector":
+        return "UnsupportedHtmlAncestorSelector";
     }
   }
 }

@@ -50,11 +50,13 @@ class HtmlScanTest {
         final recorder = new org.tiqian.test.trace.TestTraceRecorder("HtmlScanTest");
         recorder.section("thePublishedErrorNamesMatchTheVariantList");
         final variants = HtmlErrorNames.variants();
-        org.tiqian.test.trace.TracedAssertions.assertEquals(2, variants.length,
-            "the family has the 2 published names");
+        org.tiqian.test.trace.TracedAssertions.assertEquals(3, variants.length,
+            "the family has the 3 published names");
         org.tiqian.test.trace.TracedAssertions.assertEqualsString("HtmlOffsetConversion",
             HtmlErrorNames.describe(variants[0]));
         org.tiqian.test.trace.TracedAssertions.assertEqualsString("InvalidHtmlAttributeInsertionOffset",
             HtmlErrorNames.describe(variants[1]));
+        org.tiqian.test.trace.TracedAssertions.assertEqualsString("UnsupportedHtmlAncestorSelector",
+            HtmlErrorNames.describe(variants[2]));
     }
 }
