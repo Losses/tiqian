@@ -24,7 +24,6 @@ import {
   type ClassifyRolesFn,
   type PendingStrongTextRange,
 } from "./strong-emphasis-lowering.js";
-import type { LayoutTree } from "../sampler/snapshot/protocol-gen/org/tiqian/protocol/LayoutTree.js";
 
 // --- Internal types (module-scoped) ---
 
@@ -128,23 +127,6 @@ interface SpanRangeItem {
 }
 
 type ProjectedRangeCopyFn<T> = (item: T, range: [number, number]) => T;
-
-// Rich structural tree recorded by pass 1 (DOM walk), replayed by pass 2
-// (geometry measurement + flattening), and projected to the protocol
-// LayoutTree shape. Recording structure and inline style without measuring
-// keeps pass 1 free of geometry so the same builder replay is deterministic.
-type LoweringNode =
-  | { kind: "Text"; value: string; style: InlineStyleContext }
-  | { kind: "Break"; whiteSpace: WhiteSpaceMode }
-  | { kind: "Opaque"; element: Element; whiteSpace: WhiteSpaceMode }
-  | {
-      kind: "Inline";
-      element: Element;
-      style: InlineStyleContext;
-      depth: number;
-      cjkStrongBaseWeight: number | null;
-      children: LoweringNode[];
-    };
 
 // --- End internal types ---
 
@@ -827,9 +809,7 @@ function lowerWithCurrentStyles(
     helpers,
     issue,
   );
-  const layoutTree = buildLayoutTree(paragraph, baseInlineStyle, 0, builder);
-  if (layoutTree === null) return null;
-  if (!flattenLayoutTree(layoutTree, builder)) return null;
+  if (!builder.appendChildren(paragraph, baseInlineStyle, 0)) return null;
   const lowered = builder.build();
   if (String(lowered.text).trim() === "") {
     issue.name = "EmptyParagraph";
@@ -864,7 +844,11 @@ interface LoweringBuilderMethods {
   addBoundary(offset: number): void;
   unsupported(name: string, detail: string): false;
   appendRawText(value: string, whiteSpace: WhiteSpaceMode): void;
+  appendChildren(element: Element, style: InlineStyleContext, depth: number): boolean;
+  appendNode(node: Node, style: InlineStyleContext, depth: number): boolean;
+  appendElement(element: Element, style: InlineStyleContext, depth: number): boolean;
   appendOpaqueInlineObject(element: Element, whiteSpace: WhiteSpaceMode): boolean;
+  appendSemantic(element: Element, style: InlineStyleContext, depth: number, cjkStrongBaseWeight: number | null): boolean;
   appendText(value: string, style: InlineStyleContext): void;
   appendTextSegment(value: string, style: TextStyle, whiteSpace: WhiteSpaceMode): void;
   build(): LoweredParagraph;
@@ -936,6 +920,88 @@ LoweringBuilder.prototype.appendRawText = function (this: LoweringBuilder, value
   for (let i = 0; i < value.length; i++) this.whitespaceModes.push(whiteSpace);
 };
 
+LoweringBuilder.prototype.appendChildren = function (this: LoweringBuilder, element: Element, style: InlineStyleContext, depth: number): boolean {
+  const nodes = element.childNodes;
+  for (let i = 0; i < nodes.length; i++) {
+    const node = nodes.item ? nodes.item(i) : nodes[i];
+    if (!node) continue;
+    if (!this.appendNode(node, style, depth)) return false;
+  }
+  return true;
+};
+
+LoweringBuilder.prototype.appendNode = function (this: LoweringBuilder, node: Node, style: InlineStyleContext, depth: number): boolean {
+  if (node.nodeType === 3) {
+    this.appendText(node.textContent || "", style);
+    return true;
+  }
+  if (node.nodeType === 1) return this.appendElement(node as Element, style, depth);
+  return true;
+};
+
+LoweringBuilder.prototype.appendElement = function (this: LoweringBuilder, element: Element, style: InlineStyleContext, depth: number): boolean {
+  const tag = element.tagName.toUpperCase();
+  if (tag === "BR") {
+    this.hardBreakOffsets.push(this.text.length);
+    this.appendRawText("\n", style.whiteSpace);
+    return true;
+  }
+  const display = computedStyle(element, "display").trim().toLowerCase();
+  const opaqueCandidate = isNonTextInlineTag(tag) ||
+    tag.indexOf("-") !== -1 ||
+    isOpaqueInlineDisplay(display);
+  if (opaqueCandidate) {
+    if (!isOpaqueInlineLevelDisplay(display)) {
+      return this.unsupported(
+        "UnsupportedInlineFormattingContext",
+        tag.toLowerCase() + ":" + display,
+      );
+    }
+    if (!isCloneSafeOpaqueInlineObject(element)) {
+      return this.unsupported("UnsupportedStatefulInlineObject", tag.toLowerCase());
+    }
+    return this.appendOpaqueInlineObject(element, style.whiteSpace);
+  }
+  if (display !== "inline" && display !== "contents") {
+    return this.unsupported(
+      "UnsupportedInlineFormattingContext",
+      tag.toLowerCase() + ":" + display,
+    );
+  }
+  // RuntimeInlineCodeUsesResolvedBrowserFont: build-time snapshots
+  // must fail closed without exact monospace font/box evidence, but
+  // the live browser already exposes the resolved host font and box
+  // metrics. Lower that run normally and let the sliced browser
+  // shaping fallback handle Worker-ineligible rich paragraphs.
+  if (this.helpers.inlineShapingDecision !== null && this.helpers.inlineShapingProperties.length > 0) {
+    const elementValues = collectShapingValues(element, this.helpers.inlineShapingProperties);
+    const decision = this.helpers.inlineShapingDecision(
+      tag.toLowerCase(),
+      elementValues,
+      this.inlineShapingParagraphValues,
+    );
+    if (decision) {
+      return this.unsupported(decision.name, decision.detail);
+    }
+  }
+  const inheritedStrongWeight = style.cjkStrongBaseWeight;
+  let strongBaseWeight: number | null = null;
+  if (tag === "STRONG" && this.strongAsEmphasisMarks) {
+    strongBaseWeight = inheritedStrongWeight !== null && inheritedStrongWeight !== undefined
+      ? inheritedStrongWeight
+      : style.textStyle.fontWeight;
+  }
+  const computed = computedInlineStyle(element, style);
+  let elementStyle: InlineStyleContext = computed;
+  if (tag === "STRONG" && this.strongAsEmphasisMarks) {
+    elementStyle = {
+      textStyle: computed.textStyle,
+      whiteSpace: computed.whiteSpace,
+      cjkStrongBaseWeight: strongBaseWeight,
+    };
+  }
+  return this.appendSemantic(element, elementStyle, depth, strongBaseWeight);
+};
 
 LoweringBuilder.prototype.appendOpaqueInlineObject = function (this: LoweringBuilder, element: Element, whiteSpace: WhiteSpaceMode): boolean {
   const geometry = parseOpaqueInlineObjectGeometry(measuredOpaqueInlineObjectGeometry(element));
@@ -963,6 +1029,48 @@ LoweringBuilder.prototype.appendOpaqueInlineObject = function (this: LoweringBui
   return true;
 };
 
+LoweringBuilder.prototype.appendSemantic = function (this: LoweringBuilder, element: Element, style: InlineStyleContext, depth: number, cjkStrongBaseWeight: number | null): boolean {
+  const inlineStart = measuredInlineEdge(element, "start");
+  const inlineEnd = measuredInlineEdge(element, "end");
+  if (!Number.isFinite(inlineStart) || !Number.isFinite(inlineEnd)) {
+    return this.unsupported("InvalidInlineBoxGeometry", element.tagName.toLowerCase());
+  }
+  const start = this.text.length;
+  if (!this.appendChildren(element, style, depth + 1)) return false;
+  const end = this.text.length;
+  if (end > start) {
+    this.addBoundary(start);
+    this.addBoundary(end);
+    if (
+      Math.abs(inlineStart) >= INLINE_EDGE_EPSILON ||
+      Math.abs(inlineEnd) >= INLINE_EDGE_EPSILON
+    ) {
+      this.inlineBoxes.push({
+        start: start,
+        end: end,
+        inlineStart: inlineStart,
+        inlineEnd: inlineEnd,
+      });
+    }
+    const computedColor = computedStyle(element, "color");
+    this.sourceSpans.push({
+      start: start,
+      end: end,
+      element: element,
+      depth: depth,
+      cjkStrongBaseWeight: cjkStrongBaseWeight,
+      computedColor: String(computedColor).trim() !== "" ? computedColor : null,
+      inlineBoxStyle: {
+        inlineStart: inlineStart,
+        inlineEnd: inlineEnd,
+        marginRight: firstDefined(parseCssPx(computedStyle(element, "margin-right")), 0),
+        letterSpacing: firstDefined(parseCssPx(computedStyle(element, "letter-spacing")), 0),
+        boxDecorationBreak: computedStyle(element, "box-decoration-break").trim().toLowerCase(),
+      },
+    });
+  }
+  return true;
+};
 
 LoweringBuilder.prototype.appendText = function (this: LoweringBuilder, value: string, style: InlineStyleContext): void {
   if (value.length === 0) return;
@@ -1116,249 +1224,6 @@ LoweringBuilder.prototype.build = function (this: LoweringBuilder): LoweredParag
     sourceBoundaries: buildSourceBoundaries(this.sourceBoundaries, projection, loweredText),
   };
 };
-
-// --- Two-step lowering (pass 1: DOM to rich tree) ---
-
-function buildLayoutTree(
-  element: Element,
-  style: InlineStyleContext,
-  depth: number,
-  builder: LoweringBuilder,
-): LoweringNode[] | null {
-  const nodes = element.childNodes;
-  const result: LoweringNode[] = [];
-  for (let i = 0; i < nodes.length; i++) {
-    const node = nodes.item ? nodes.item(i) : nodes[i];
-    if (!node) continue;
-    if (node.nodeType === 3) {
-      result.push({ kind: "Text", value: node.textContent || "", style: style });
-      continue;
-    }
-    if (node.nodeType === 1) {
-      const child = buildLayoutElement(node as Element, style, depth, builder);
-      if (child === null) return null;
-      result.push(child);
-    }
-  }
-  return result;
-}
-
-function buildLayoutElement(
-  element: Element,
-  style: InlineStyleContext,
-  depth: number,
-  builder: LoweringBuilder,
-): LoweringNode | null {
-  const tag = element.tagName.toUpperCase();
-  if (tag === "BR") {
-    return { kind: "Break", whiteSpace: style.whiteSpace };
-  }
-  const display = computedStyle(element, "display").trim().toLowerCase();
-  const opaqueCandidate = isNonTextInlineTag(tag) ||
-    tag.indexOf("-") !== -1 ||
-    isOpaqueInlineDisplay(display);
-  if (opaqueCandidate) {
-    if (!isOpaqueInlineLevelDisplay(display)) {
-      builder.unsupported(
-        "UnsupportedInlineFormattingContext",
-        tag.toLowerCase() + ":" + display,
-      );
-      return null;
-    }
-    if (!isCloneSafeOpaqueInlineObject(element)) {
-      builder.unsupported("UnsupportedStatefulInlineObject", tag.toLowerCase());
-      return null;
-    }
-    return { kind: "Opaque", element: element, whiteSpace: style.whiteSpace };
-  }
-  if (display !== "inline" && display !== "contents") {
-    builder.unsupported(
-      "UnsupportedInlineFormattingContext",
-      tag.toLowerCase() + ":" + display,
-    );
-    return null;
-  }
-  // RuntimeInlineCodeUsesResolvedBrowserFont: build-time snapshots
-  // must fail closed without exact monospace font/box evidence, but
-  // the live browser already exposes the resolved host font and box
-  // metrics. Lower that run normally and let the sliced browser
-  // shaping fallback handle Worker-ineligible rich paragraphs.
-  if (builder.helpers.inlineShapingDecision !== null && builder.helpers.inlineShapingProperties.length > 0) {
-    const elementValues = collectShapingValues(element, builder.helpers.inlineShapingProperties);
-    const decision = builder.helpers.inlineShapingDecision(
-      tag.toLowerCase(),
-      elementValues,
-      builder.inlineShapingParagraphValues,
-    );
-    if (decision) {
-      builder.unsupported(decision.name, decision.detail);
-      return null;
-    }
-  }
-  const inheritedStrongWeight = style.cjkStrongBaseWeight;
-  let strongBaseWeight: number | null = null;
-  if (tag === "STRONG" && builder.strongAsEmphasisMarks) {
-    strongBaseWeight = inheritedStrongWeight !== null && inheritedStrongWeight !== undefined
-      ? inheritedStrongWeight
-      : style.textStyle.fontWeight;
-  }
-  const computed = computedInlineStyle(element, style);
-  let elementStyle: InlineStyleContext = computed;
-  if (tag === "STRONG" && builder.strongAsEmphasisMarks) {
-    elementStyle = {
-      textStyle: computed.textStyle,
-      whiteSpace: computed.whiteSpace,
-      cjkStrongBaseWeight: strongBaseWeight,
-    };
-  }
-  const children = buildLayoutTree(element, elementStyle, depth + 1, builder);
-  if (children === null) return null;
-  return {
-    kind: "Inline",
-    element: element,
-    style: elementStyle,
-    depth: depth,
-    cjkStrongBaseWeight: strongBaseWeight,
-    children: children,
-  };
-}
-
-// --- Two-step lowering (pass 2: rich tree to flattened paragraph) ---
-
-function flattenLayoutTree(nodes: LoweringNode[], builder: LoweringBuilder): boolean {
-  for (let i = 0; i < nodes.length; i++) {
-    const node = nodes[i];
-    if (node.kind === "Text") {
-      builder.appendText(node.value, node.style);
-      continue;
-    }
-    if (node.kind === "Break") {
-      builder.hardBreakOffsets.push(builder.text.length);
-      builder.appendRawText("\n", node.whiteSpace);
-      continue;
-    }
-    if (node.kind === "Opaque") {
-      if (!builder.appendOpaqueInlineObject(node.element, node.whiteSpace)) return false;
-      continue;
-    }
-    const inlineStart = measuredInlineEdge(node.element, "start");
-    const inlineEnd = measuredInlineEdge(node.element, "end");
-    if (!Number.isFinite(inlineStart) || !Number.isFinite(inlineEnd)) {
-      return builder.unsupported("InvalidInlineBoxGeometry", node.element.tagName.toLowerCase());
-    }
-    const start = builder.text.length;
-    if (!flattenLayoutTree(node.children, builder)) return false;
-    const end = builder.text.length;
-    if (end > start) {
-      builder.addBoundary(start);
-      builder.addBoundary(end);
-      if (
-        Math.abs(inlineStart) >= INLINE_EDGE_EPSILON ||
-        Math.abs(inlineEnd) >= INLINE_EDGE_EPSILON
-      ) {
-        builder.inlineBoxes.push({
-          start: start,
-          end: end,
-          inlineStart: inlineStart,
-          inlineEnd: inlineEnd,
-        });
-      }
-      const computedColor = computedStyle(node.element, "color");
-      builder.sourceSpans.push({
-        start: start,
-        end: end,
-        element: node.element,
-        depth: node.depth,
-        cjkStrongBaseWeight: node.cjkStrongBaseWeight,
-        computedColor: String(computedColor).trim() !== "" ? computedColor : null,
-        inlineBoxStyle: {
-          inlineStart: inlineStart,
-          inlineEnd: inlineEnd,
-          marginRight: firstDefined(parseCssPx(computedStyle(node.element, "margin-right")), 0),
-          letterSpacing: firstDefined(parseCssPx(computedStyle(node.element, "letter-spacing")), 0),
-          boxDecorationBreak: computedStyle(node.element, "box-decoration-break").trim().toLowerCase(),
-        },
-      });
-    }
-  }
-  return true;
-}
-
-// --- Protocol projection (rich tree to LayoutTree) ---
-
-function flattenLayoutRawText(nodes: LoweringNode[]): string {
-  let out = "";
-  for (let i = 0; i < nodes.length; i++) {
-    const node = nodes[i];
-    if (node.kind === "Text") out += node.value;
-    else if (node.kind === "Break") out += "\n";
-    else if (node.kind === "Opaque") out += INLINE_OBJECT_REPLACEMENT_CHAR;
-    else out += flattenLayoutRawText(node.children);
-  }
-  return out;
-}
-
-function projectLayoutChildren(nodes: LoweringNode[]): LayoutTree[] {
-  const result: LayoutTree[] = [];
-  for (let i = 0; i < nodes.length; i++) {
-    const node = nodes[i];
-    if (node.kind === "Text") {
-      result.push({
-        kind: "Inline",
-        tagName: null,
-        attributes: [],
-        continueAdjacent: false,
-        wordBreakable: false,
-        lineBreakable: false,
-        text: node.value,
-        children: [],
-      });
-    } else if (node.kind === "Break") {
-      result.push({
-        kind: "Inline",
-        tagName: "BR",
-        attributes: [],
-        continueAdjacent: false,
-        wordBreakable: false,
-        lineBreakable: false,
-        text: "\n",
-        children: [],
-      });
-    } else if (node.kind === "Opaque") {
-      result.push({
-        kind: "Inline",
-        tagName: node.element.tagName.toLowerCase(),
-        attributes: [],
-        continueAdjacent: false,
-        wordBreakable: false,
-        lineBreakable: false,
-        text: INLINE_OBJECT_REPLACEMENT_CHAR,
-        children: [],
-      });
-    } else {
-      result.push({
-        kind: "Inline",
-        tagName: node.element.tagName.toLowerCase(),
-        attributes: [],
-        continueAdjacent: false,
-        wordBreakable: false,
-        lineBreakable: false,
-        text: flattenLayoutRawText(node.children),
-        children: projectLayoutChildren(node.children),
-      });
-    }
-  }
-  return result;
-}
-
-/**
- * Project a rich lowering tree into the protocol LayoutTree shape. The
- * returned value is always a single root Block; web lowering never produces
- * Float nodes, so every descendant is an Inline leaf or container.
- */
-export function projectLayoutTree(nodes: LoweringNode[]): LayoutTree[] {
-  return [{ kind: "Block", children: projectLayoutChildren(nodes) }];
-}
 
 /**
  * Lower a paragraph element against the live DOM and return either the

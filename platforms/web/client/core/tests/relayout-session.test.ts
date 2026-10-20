@@ -160,17 +160,6 @@ const EMPTY_PLAN_JSON = JSON.stringify({
   lines: [],
 });
 
-// The worker-plan commit path consumes the record the layout worker returns
-// from take: a JSON string whose .plan field is the schema-conforming plan
-// object. The session worker-plan branch feeds it to
-// commitWorkerPreparedParagraph, which parses record.plan and renders it.
-const WORKER_PLAN_JSON = JSON.stringify({
-  plan: { schema: SNAPSHOT_SCHEMA, layoutRevision: LAYOUT_REVISION, height: 0, lines: [] },
-  semanticReplay: "snapshot-safe",
-  semantics: [],
-  inlineBoxes: [],
-});
-
 test("1. unchanged verdict: no rawDom consequence, no state change", () => {
   withDocument(() => {
     const p1 = makeParagraph({ lastMeasure: 100 });
@@ -252,35 +241,6 @@ test("3. ready + commit success: lastMeasure copies preparation.measure, the par
     active.finish();
 
     assert.equal(p1.lastMeasure, preparation.measure);
-    assert.equal(context.contextState.paragraphs.length, 1);
-    assert.equal(context.contextState.paragraphs[0], p1);
-    assert.equal(context.diagnosis.issues.length, 0);
-  });
-});
-
-test("3b. worker-plan commit success: processItem routes a worker-plan input through commitWorkerPreparedParagraph, recomputes lastMeasure, stamps the paragraph rendered, and pushes no issue", () => {
-  withDocument(() => {
-    const p1 = makeParagraph();
-    const context = seedContext(p1.source, { paragraphs: [p1] });
-    registerParagraph(context, p1.source);
-
-    const active = openRelayoutSession(context);
-
-    const workerPlanInput = { kind: "worker-plan" as const, workerPlan: WORKER_PLAN_JSON };
-    active.processItem(0, workerPlanInput);
-
-    // The worker-plan input carries no measure; commitWorkerPreparedParagraph
-    // recomputes lastMeasure from sourceParagraphWidth and the paragraph font
-    // size, so the null seed is replaced by a finite number.
-    assert.equal(typeof p1.lastMeasure, "number");
-    assert.ok(p1.lastMeasure !== null && Number.isFinite(p1.lastMeasure));
-    assert.equal(p1.source.getAttribute("data-tq-canonical-source"), "true");
-    assert.equal(p1.source.getAttribute("data-tq-canonical-plain"), "true");
-    assert.equal(p1.source.getAttribute("lang"), "zh-Hans");
-    assert.equal(context.rawDomParagraphs.get(p1.source)?.engineWriteDepth, 0);
-
-    active.finish();
-
     assert.equal(context.contextState.paragraphs.length, 1);
     assert.equal(context.contextState.paragraphs[0], p1);
     assert.equal(context.diagnosis.issues.length, 0);

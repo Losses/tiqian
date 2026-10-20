@@ -92,7 +92,6 @@
   ],
   "dependencies": {
     "@neon-rs/load": "^0.1.82",
-    "@tiqian/core": "0.1.0-alpha.6",
     "@tiqian/prose": "0.1.0-alpha.6"
   },
   "optionalDependencies": {
