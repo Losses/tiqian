@@ -1,20 +1,17 @@
 //! Process-wide registries keyed by generated handle strings. Sessions keep
-//! the ids the Rust session layer assigned; precomputers and HTML preparers
-//! are addressable only through this registry, so several preparers can share
-//! one precomputer while the caller keeps using it directly.
+//! the ids the Rust session layer assigned; precomputers and snapshot tables
+//! are addressable only through this registry.
 
 use std::collections::HashMap;
 use std::sync::atomic::{AtomicU64, Ordering};
 use std::sync::{Arc, Mutex, OnceLock};
 
-use tiqian_precompute::precompute_html::HtmlPreparer;
 use tiqian_precompute::precomputer::Precomputer;
 use tiqian_precompute::session::FontSession;
 use tiqian_precompute::snapshot_tables::SnapshotTables;
 
 static SESSIONS: OnceLock<Mutex<HashMap<String, FontSession>>> = OnceLock::new();
 static PRECOMPUTERS: OnceLock<Mutex<HashMap<String, Arc<Precomputer>>>> = OnceLock::new();
-static HTML_PREPARERS: OnceLock<Mutex<HashMap<String, HtmlPreparer>>> = OnceLock::new();
 static SNAPSHOT_TABLES: OnceLock<Mutex<HashMap<String, SnapshotTables>>> = OnceLock::new();
 static NEXT_HANDLE: AtomicU64 = AtomicU64::new(0);
 
@@ -24,10 +21,6 @@ fn sessions() -> &'static Mutex<HashMap<String, FontSession>> {
 
 fn precomputers() -> &'static Mutex<HashMap<String, Arc<Precomputer>>> {
     PRECOMPUTERS.get_or_init(|| Mutex::new(HashMap::new()))
-}
-
-fn html_preparers() -> &'static Mutex<HashMap<String, HtmlPreparer>> {
-    HTML_PREPARERS.get_or_init(|| Mutex::new(HashMap::new()))
 }
 
 fn snapshot_tables() -> &'static Mutex<HashMap<String, SnapshotTables>> {
@@ -90,25 +83,6 @@ pub fn with_precomputer<T>(
 ) -> Result<T, String> {
     let shared = shared_precomputer(handle)?;
     Ok(call(&shared))
-}
-
-/// Registers a created HTML preparer and returns its handle.
-pub fn insert_preparer(preparer: HtmlPreparer) -> String {
-    let handle = next_handle("tq-html-preparer");
-    recover(html_preparers().lock()).insert(handle.clone(), preparer);
-    handle
-}
-
-/// Runs `call` with the HTML preparer for `handle`.
-pub fn with_preparer<T>(
-    handle: &str,
-    call: impl FnOnce(&mut HtmlPreparer) -> T,
-) -> Result<T, String> {
-    let mut map = recover(html_preparers().lock());
-    match map.get_mut(handle) {
-        Some(preparer) => Ok(call(preparer)),
-        None => Err(format!("UnknownHtmlPreparer:{handle}")),
-    }
 }
 
 /// Registers a created snapshot-table set and returns its handle. A build
