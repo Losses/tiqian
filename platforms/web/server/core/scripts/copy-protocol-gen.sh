@@ -22,7 +22,7 @@ cp "$SRC/haxe/crypto/Sha256.ts" "$DST/haxe/crypto/Sha256.ts"
 for f in Canonical DecorationInput EncodeResult FontFaceRecord InlineBoxInput InlineObjectInput JsCoerce LayoutAttribute LayoutFloatShape LayoutTree LayoutVertex LineBreakSpanInput NamedError NamedErrorNames ParagraphRequest ParagraphRequestChecks ParagraphRequestException ParagraphRequestTestSupport TextSpanInput WireField WireValue; do
   cp "$SRC/org/tiqian/protocol/$f.ts" "$DST/org/tiqian/protocol/$f.ts"
 done
-for f in HtmlAttributeInsertion HtmlError HtmlOpeningTag HtmlParseException HtmlScan; do
+for f in CompoundSelector DomAttribute DomNode DomParser HtmlAttributeInsertion HtmlError HtmlNameCase HtmlOpeningTag HtmlParseException HtmlScan; do
   cp "$SRC/org/tiqian/shared/html/$f.ts" "$SHARED_DST/org/tiqian/shared/html/$f.ts"
 done
 grep -rl '\.ts"' "$DST" "$SHARED_DST" | while read -r file; do
