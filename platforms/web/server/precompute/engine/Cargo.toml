@@ -1,0 +1,21 @@
+[package]
+name = "tiqian-precompute"
+description = "Font session and precompute orchestration for Tiqian in Rust"
+version.workspace = true
+edition.workspace = true
+
+[dependencies]
+tiqian = { path = "../../../../../ffi/rust/tiqian", version = "0.1.0" }
+# The generated engine crate. The path is the vendored mount, which is the
+# same crate the tiqian facade depends on; pointing at engine-haxe/out/ would
+# depend on a gitignored build output and collide with the vendored package
+# name in the lockfile.
+tiqian-engine-gen = { path = "../../../../../ffi/rust/engine-gen" }
+tiqian-protocol-gen = { path = "../protocol-gen" }
+harfrust = "0.13"
+skrifa = "0.46"
+read-fonts = "0.43"
+wuff = { version = "0.2", default-features = false, features = ["brotli"] }
+sha2 = "0.10"
+html5ever = "0.39.0"
+url = "2"
