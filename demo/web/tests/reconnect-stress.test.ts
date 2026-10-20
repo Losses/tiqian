@@ -124,10 +124,10 @@ function startFixtureServer(): Promise<Server> {
     const sendFile = async (file: string, type: string): Promise<void> => {
       const data: Buffer | null = await readFile(file).catch(() => null);
       if (data) {
-        if (file === join(npmCoreDir, "src/engine/layout-worker.js")) {
+        if (file === join(npmCoreDir, "layout-worker.js")) {
           const source: string = data.toString("utf8");
           if (source.includes('from "@tiqian/ffi"')) {
-            send(source.replace('from "@tiqian/ffi"', 'from "/npm-ffi/facade.mjs"'), type);
+            send(source.replace('from "@tiqian/ffi"', 'from "/npm-ffi/Tiqian-tiqian-ffi-js.mjs"'), type);
             return;
           }
         }
@@ -155,7 +155,7 @@ function startFixtureServer(): Promise<Server> {
     "@tiqian/prose/element": "/npm/element.js",
     "@tiqian/prose/": "/npm/",
     "@tiqian/core/": "/core/",
-    "@tiqian/ffi": "/npm-ffi/facade.mjs"
+    "@tiqian/ffi": "/npm-ffi/Tiqian-tiqian-ffi-js.mjs"
   }
 }
 </script>

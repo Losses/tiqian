@@ -9,8 +9,7 @@
     "declaration": true,
     "composite": true,
     "verbatimModuleSyntax": true,
-    "skipLibCheck": true,
-    "types": ["node"]
+    "skipLibCheck": true
   },
   "include": ["**/*.ts"],
   "exclude": ["node_modules", "runtime"]

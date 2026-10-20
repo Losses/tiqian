@@ -2,7 +2,15 @@
 // from the package root; root paths remain as compatibility re-export shims.
 
 import { stableStringify } from "./snapshot-schema.js";
-import { SnapshotSource } from "./shared-gen/org/tiqian/shared/snapshot/SnapshotSource.js";
+
+const SAFE_SEMANTIC_TAGS = new Set([
+  "a", "abbr", "b", "bdi", "bdo", "cite", "code", "data", "del", "dfn", "em",
+  "i", "ins", "kbd", "mark", "q", "s", "samp", "small", "span", "strong", "sub",
+  "sup", "time", "u", "var",
+]);
+const INTERNAL_ATTRIBUTE_PREFIX = "data-tq-";
+const ATTRIBUTE_NAME = /^[A-Za-z_:][A-Za-z0-9_.:-]*$/u;
+const COLLAPSIBLE_WHITESPACE = /[ \t\n\r\f]/u;
 
 export class SnapshotSemanticError extends Error {
   declare code: string;
@@ -63,10 +71,11 @@ function normalizedAttributes(value: unknown): SnapshotSemanticAttributes {
     }
     const name = String(item[0]).trim().toLowerCase();
     const attributeValue = String(item[1]);
-    if (!SnapshotSource.isSupportedAttributeName(name)) {
+    if (!ATTRIBUTE_NAME.test(name) || name.startsWith("on") ||
+        name.startsWith(INTERNAL_ATTRIBUTE_PREFIX) || name === "style") {
       throw semanticError("UnsupportedSnapshotSemanticAttribute", name);
     }
-    if (name === "href" && SnapshotSource.isUnsafeHref(attributeValue)) {
+    if (name === "href" && /^\s*javascript:/iu.test(attributeValue)) {
       throw semanticError("UnsafeSnapshotSemanticHref");
     }
     attributes.push([name, attributeValue]);
@@ -137,7 +146,7 @@ export function normalizeSnapshotSemantics(textValue: unknown, value: readonly S
     value,
     (span) => {
       const tagName = String(span?.tagName ?? "").trim().toLowerCase();
-      if (!SnapshotSource.isSafeTag(tagName)) {
+      if (!SAFE_SEMANTIC_TAGS.has(tagName)) {
         throw semanticError("UnsupportedSnapshotSemanticTag", tagName);
       }
       return {
@@ -233,12 +242,48 @@ interface ProjectedNormalFlowSemantics {
 
 function projectedNormalFlow(rawText: string, rawSemantics: ProjectedNormalFlowSemantics) {
   const text = String(rawText);
-  const { text: projected, boundaryMap } = SnapshotSource.foldNormalFlow(
-    text,
-    Array.from(rawSemantics.hardBreakOffsets).sort((left, right) => left - right),
-  );
+  const projected: string[] = [];
+  const boundaryMap = new Array(text.length + 1).fill(0);
+  let pendingStart = -1;
+  let pendingEnd = -1;
+
+  const resolvePending = (emit: boolean) => {
+    if (pendingStart < 0) return;
+    const before = projected.length;
+    if (emit && projected.length > 0 && projected.at(-1) !== "\n") projected.push(" ");
+    const after = projected.length;
+    boundaryMap[pendingStart] = before;
+    for (let boundary = pendingStart + 1; boundary <= pendingEnd; boundary += 1) {
+      boundaryMap[boundary] = after;
+    }
+    pendingStart = -1;
+    pendingEnd = -1;
+  };
+
+  for (let index = 0; index < text.length; index += 1) {
+    const character = text[index];
+    if (character === "\n" && rawSemantics.hardBreakOffsets.has(index)) {
+      resolvePending(false);
+      boundaryMap[index] = projected.length;
+      projected.push("\n");
+      boundaryMap[index + 1] = projected.length;
+    } else if (COLLAPSIBLE_WHITESPACE.test(character)) {
+      if (pendingStart < 0) {
+        pendingStart = index;
+        boundaryMap[index] = projected.length;
+      }
+      pendingEnd = index + 1;
+    } else {
+      resolvePending(true);
+      boundaryMap[index] = projected.length;
+      projected.push(character);
+      boundaryMap[index + 1] = projected.length;
+    }
+  }
+  resolvePending(false);
+  boundaryMap[text.length] = projected.length;
   return snapshotSourceArtifact(
-    projected,
+    projected.join(""),
     rawSemantics.spans.map((span) => ({
       ...span,
       start: boundaryMap[span.start],
@@ -273,7 +318,7 @@ export function snapshotSourceArtifactFromDom(paragraph: Element): SnapshotSourc
       rawLength += 1;
       return;
     }
-    if (!SnapshotSource.isSafeTag(tagName)) {
+    if (!SAFE_SEMANTIC_TAGS.has(tagName)) {
       throw semanticError("UnsupportedSnapshotSemanticTag", tagName);
     }
     const start = rawLength;

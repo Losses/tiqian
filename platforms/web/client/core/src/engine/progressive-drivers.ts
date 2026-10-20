@@ -25,23 +25,13 @@ import type { RelayoutSession } from "./relayout-session.js";
 import { openRelayoutSession } from "./relayout-session.js";
 import type { PrepareLayoutResult } from "./prepare-paragraph-layout.js";
 import type { CapabilityIssueRecord, EnhanceOptions, ResolvedEnhanceOptions } from "./lifecycle.js";
-import {
-  conformingSnapshotFontSessionId,
-  destroyRoot,
-  optionsFromJs,
-  reportIssue,
-  responsiveSourceMeasure,
-} from "./lifecycle.js";
+import { destroyRoot, reportIssue, responsiveSourceMeasure } from "./lifecycle.js";
 import { processParagraph } from "./process-paragraph.js";
-import { raceAbort } from "./abort-race.js";
-import { createPrepareJob } from "./web-worker/worker-channel.js";
 import { globalServices } from "../services/global-services.js";
 import type { EnhancedElementContext } from "./context/enhance-context.js";
-import type { BrowserFontSessionHandle } from "../measurement/browser-fonts.js";
 import { activeSnapshotSessionDescriptor } from "./enhance/snapshot-adoption.js";
 import { prepareParagraphLayout } from "./prepare-paragraph-layout.js";
 import { sourceParagraphWidth } from "./responsive-measure.js";
-import { workerLayoutRequest } from "./worker-request.js";
 
 // Named shapes for the progressive job driver callbacks. Their home is this
 // file; layout-job-pool.ts consumes the structurally identical inline slots
@@ -432,10 +422,10 @@ const WIDTH_DEPENDENT_CAPABILITY_ISSUES: string[] = ["InlineCloneDecorationBreak
   // relayout
   // ---------------------------------------------------------------------------
 
-  export async function relayout(
+  export function relayout(
     context: EnhancedElementContext,
     root: Element,
-  ): Promise<void> {
+  ): void {
     const PJ = globalServices().coordination.layoutJobPool;
 
     // Branch 1: Enhance is running. Kotlin restarts the interrupted enhance
@@ -540,60 +530,6 @@ const WIDTH_DEPENDENT_CAPABILITY_ISSUES: string[] = ["InlineCloneDecorationBreak
     }
 
     const runtimeOptions = context.contextState.runtimeOptions as ResolvedEnhanceOptions;
-    // WorkerPrepareAhead: warm the Worker prepare job before the synchronous
-    // commit pass so a later commit can consume it without a sync FFI stall.
-    const generation = context.generation;
-    const request = context.stateMachine.transaction.enhanceRequest;
-    const layoutOperation = context.stateMachine.transaction.layoutOperation;
-    const signal = context.stateMachine.transaction.abortController?.signal ?? null;
-    const isCurrent = (): boolean => root.isConnected && generation === context.generation &&
-      request === context.stateMachine.transaction.enhanceRequest &&
-      layoutOperation === context.stateMachine.transaction.layoutOperation &&
-      !(signal?.aborted ?? false);
-    let snapshotFontSession: BrowserFontSessionHandle | null = null;
-    try {
-      const preparedSession = await raceAbort(
-        signal,
-        context.snapshotAdoption.prepareSnapshotFontSession(generation, request, false, signal),
-      );
-      if (preparedSession.aborted) {
-        context.snapshotAdoption.releaseSnapshotFontSession();
-      } else {
-        snapshotFontSession = preparedSession.value;
-      }
-    } catch (error) {
-      if (root.isConnected && generation === context.generation &&
-        request === context.stateMachine.transaction.enhanceRequest) {
-        context.snapshotAdoption.releaseSnapshotFontSession();
-      }
-      console.warn("Tiqian Web relayout snapshot font session unavailable; using browser metrics", error);
-    }
-    let preparedEnhanceOptions: EnhanceOptions | null = null;
-    if (snapshotFontSession) {
-      try {
-        const preparedOptions = {
-          ...(context.optionsLedger.baseEnhanceOptions() ?? {}),
-          paragraphSelector: runtimeOptions.paragraphSelector,
-          cjkDashCapability: runtimeOptions.cjkDashCapability,
-          requireSnapshotLayoutWorker: true,
-          snapshotFontSession: {
-            status: "conforming",
-            sessionId: snapshotFontSession.id,
-            detail: "SnapshotFontBytes",
-          },
-        };
-        preparedEnhanceOptions = optionsFromJs(preparedOptions);
-        const prepareJob = await raceAbort(
-          signal,
-          createPrepareJob(root as HTMLElement, snapshotFontSession, preparedOptions, isCurrent),
-        );
-        if (!prepareJob.aborted && prepareJob.value) {
-          await raceAbort(signal, context.scheduler.runPrepare(prepareJob.value));
-        }
-      } catch (error) {
-        console.warn("Tiqian Web relayout Worker prepare unavailable; using synchronous commit", error);
-      }
-    }
     startLayoutJob(
       context,
       "Relayout",
@@ -607,26 +543,8 @@ const WIDTH_DEPENDENT_CAPABILITY_ISSUES: string[] = ["InlineCloneDecorationBreak
           processParagraph(context, stranded[mixIndex - renderedCount]);
           return;
         }
-        // Rendered paragraph: consume a Worker-prepared plan when available,
-        // then fall back to synchronous preparation and commit on a miss.
+        // Rendered paragraph: prepare and commit through the relayout session.
         const paragraph = rendered[mixIndex];
-        if (preparedEnhanceOptions != null) {
-          const workerRequestDto = workerLayoutRequest(
-            paragraph.source,
-            paragraph.lowered,
-            preparedEnhanceOptions,
-          );
-          const workerRequest = workerRequestDto == null ? null : JSON.stringify(workerRequestDto);
-          const sessionKey = conformingSnapshotFontSessionId(preparedEnhanceOptions);
-          const layoutWorker = globalServices().coordination.layoutWorker;
-          const workerPlan = workerRequest != null && sessionKey != null && layoutWorker != null
-            ? layoutWorker.take(paragraph.source, sessionKey, workerRequest)
-            : null;
-          if (workerPlan != null) {
-            commitSession.processItem(mixIndex, { kind: "worker-plan", workerPlan: workerPlan });
-            return;
-          }
-        }
         const preparation: PrepareLayoutResult = prepareParagraphLayout(
           {
             paragraph: paragraph,

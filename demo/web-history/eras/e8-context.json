@@ -10,7 +10,7 @@
       "@tiqian/prose/element": "/prose/element.js",
       "@tiqian/prose/auto": "/prose/auto.js",
       "@tiqian/core/": "/core/",
-      "@tiqian/ffi": "/ffi/runtime/facade.mjs"
+      "@tiqian/ffi": "/ffi/runtime/Tiqian-tiqian-ffi-js.mjs"
     }
   },
   "static": {

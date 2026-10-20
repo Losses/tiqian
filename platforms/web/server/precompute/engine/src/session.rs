@@ -13,9 +13,12 @@ use crate::policy::normalize_base_features;
 use crate::replay::{
     instance_axes, instance_id, metric_replay_key, normalized_replay_number, shape_replay_key,
 };
-use crate::selection::{render_families, select_shape_face};
+use crate::selection::{render_families, select_face, select_shape_face};
 use crate::shaping::{FontEngine, ShapeRecordResult};
-use tiqian_protocol_gen::org::tiqian::protocol::face_session::FaceSession;
+use crate::source_boundaries::{
+    source_boundaries_for_selected_face, BoundaryStyle, BoundaryTextSpan,
+};
+
 use tiqian_protocol_gen::org::tiqian::protocol::revision::Revision as RevisionFamily;
 
 /// The shared shaping backend revision (single source: the generated
@@ -328,9 +331,6 @@ impl Default for CaptureEvidence {
 fn ordered_face_specs(specs: &[SessionFaceSpec]) -> Result<Vec<(usize, u32)>, SessionError> {
     let mut seen = std::collections::HashSet::new();
     let mut resolved: Vec<(usize, u32)> = Vec::new();
-    // Raw source-order sequence handed to the generated resolver/sorter;
-    // validation, truncation and dedupe stay here (see below).
-    let mut source_orders: Vec<Option<f64>> = Vec::with_capacity(specs.len());
     // The js default sourceOrder is the input index held as a Number.
     let mut input_order_number = 0.0_f64;
     for (input_order, entry) in specs.iter().enumerate() {
@@ -348,22 +348,10 @@ fn ordered_face_specs(specs: &[SessionFaceSpec]) -> Result<Vec<(usize, u32)>, Se
             return Err(SessionError::DuplicateFontFaceSourceOrder(order));
         }
         resolved.push((input_order, order));
-        source_orders.push(entry.source_order);
         input_order_number += 1.0;
     }
-    // Delegate resolve (None -> input index) + stable sort to the generated
-    // FaceSession.orderedFaceSpecs; the dedupe above makes every order
-    // unique in the no-error path, so the tie-break is a no-op and the
-    // raw-float sort matches the trunc-u32 sort byte-for-byte.
-    // trunc_sat_u32 saturation has no Haxe Int equivalent, and the
-    // data-carrying faults above do not fit the name-only NamedError list,
-    // so both stay in Rust.
-    let ordered_indices = FaceSession::face_session_ordered_face_specs(&source_orders);
-    let ordered = ordered_indices
-        .into_iter()
-        .map(|input_index| resolved[input_index as usize])
-        .collect();
-    Ok(ordered)
+    resolved.sort_by(|left, right| left.1.cmp(&right.1).then_with(|| left.0.cmp(&right.0)));
+    Ok(resolved)
 }
 
 /// `createFontSession`.
@@ -451,6 +439,26 @@ impl FontSession {
     /// `session.renderFamilies`.
     pub fn render_families(&self, requested: &[String]) -> Result<Vec<String>, String> {
         render_families(&self.records, requested)
+    }
+
+    /// `session.sourceBoundaries(text, baseStyle, textSpans)`: exact-face run
+    /// boundaries over the session's records, keyed on `faceId`.
+    pub fn source_boundaries(
+        &self,
+        text: &str,
+        base_style: &BoundaryStyle,
+        spans: &[BoundaryTextSpan],
+    ) -> Result<Vec<f64>, String> {
+        source_boundaries_for_selected_face(text, base_style, spans, |style, point| {
+            let record = select_face(
+                &self.records,
+                &style.font_families,
+                style.font_weight,
+                style.italic,
+                &[point],
+            )?;
+            Ok(record.face_id.clone())
+        })
     }
 
     /// `beginCapture`.

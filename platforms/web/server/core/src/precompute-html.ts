@@ -18,8 +18,6 @@ import {
   type SnapshotBundle,
   type SnapshotTypography,
 } from "./precompute.js";
-import { HtmlParseException } from "./shared-gen/org/tiqian/shared/html/HtmlParseException.js";
-import { HtmlScan } from "./shared-gen/org/tiqian/shared/html/HtmlScan.js";
 
 const SHARED_RUNTIME_STYLE = readFileSync(
   new URL(import.meta.resolve("@tiqian/core/styles.css")),
@@ -126,7 +124,9 @@ export function findHtmlOpeningTags(
   html: string,
   tagNames: readonly string[] = ["p", "li"],
 ): readonly HtmlOpeningTag[] {
-  return HtmlScan.findHtmlOpeningTags(html, Array.from(tagNames ?? []));
+  return parse<HtmlOpeningTag[]>(
+    addon.findHtmlOpeningTags(html, JSON.stringify(Array.from(tagNames ?? []))),
+  );
 }
 
 /** Inserts attribute strings at the given offsets, highest offset first. */
@@ -134,15 +134,7 @@ export function injectHtmlAttributes(
   html: string,
   insertions: readonly { readonly offset: number; readonly attribute: string }[],
 ): string {
-  const rows = Array.from(insertions ?? []).map(({ offset, attribute }) => ({ offset, attribute }));
-  try {
-    return HtmlScan.injectHtmlAttributes(html, rows);
-  } catch (error) {
-    if (error instanceof HtmlParseException) {
-      throw new Error(error.message);
-    }
-    throw error;
-  }
+  return addon.injectHtmlAttributes(html, JSON.stringify(Array.from(insertions ?? [])));
 }
 
 /** The payload a server template inlines. */
