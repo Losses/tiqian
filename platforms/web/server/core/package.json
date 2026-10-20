@@ -92,7 +92,8 @@
   ],
   "dependencies": {
     "@neon-rs/load": "^0.1.82",
-    "@tiqian/prose": "0.1.0-alpha.6"
+    "@tiqian/prose": "0.1.0-alpha.6",
+    "linkedom": "^0.18.13"
   },
   "optionalDependencies": {
     "@tiqian/precompute-darwin-arm64": "0.1.0-alpha.3",
