@@ -86,8 +86,10 @@ impl TraceFormat {
     let __count = u_string::unit_count(&value);
         let mut output = UString::new();
         let mut index = 0u32;
+        let __units1 = u_string::units(&value);
+        let __count1 = u_string::unit_count(&value);
         while (i32::from_ne_bytes(((index) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((__count) as i32).to_ne_bytes())) {
-            let code_unit = u_string::unit_at_from(&__units, index).unwrap_or(0);
+            let code_unit = u_string::unit_at_from(&__units1, index).unwrap_or(0);
             if code_unit == 10 {
                 output += &(UString::from("\\n"));
             } else {
@@ -112,7 +114,7 @@ impl TraceFormat {
                                         if code_unit == 8203 {
                                             output += &(UString::from("\\u200B"));
                                         } else {
-                                            output += &(u_string::char_at_from(&__units, index));
+                                            output += &(u_string::char_at_from(&__units1, index));
                                         }
                                     }
                                 }

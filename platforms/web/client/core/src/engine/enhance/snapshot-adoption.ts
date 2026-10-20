@@ -93,7 +93,7 @@ export interface SnapshotAdoptionHooks {
   /** ContextState: layout-work drive surfaces. */
   beginLayoutWork(options?: LayoutWorkOptions): number;
   finishLayoutWorkAndObserve(): boolean;
-  dispatchRelayout(observedMeasures?: string | null): Promise<void>;
+  dispatchRelayout(observedMeasures?: string | null): void;
   destroyRuntimeRoot(): void;
   /** Composition root: the context-bound loaded-snapshot helpers. */
   restoreLoadedSnapshot(): boolean;
@@ -418,11 +418,7 @@ function createSnapshotAdoption(
 
   function relayoutRuntimeAfterSnapshotMiss(operation: number): void {
     if (operation !== stateMachine.transaction.layoutOperation) return;
-    hooks.dispatchRelayout(null).catch((error: unknown) => {
-      if (!root.isConnected || operation !== stateMachine.transaction.layoutOperation) return;
-      hooks.finishLayoutWorkAndObserve();
-      hooks.reportMissRecoveryFailure("Tiqian Web snapshot miss relayout recovery failed", error);
-    });
+    hooks.dispatchRelayout(null);
   }
 
   return {

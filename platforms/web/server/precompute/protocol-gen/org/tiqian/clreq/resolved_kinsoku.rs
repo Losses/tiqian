@@ -26,28 +26,26 @@ impl ResolvedKinsoku {
     }
 }
 
-fn resolved_kinsoku_order_0(v: &KinsokuLevel) -> i32 {
+fn resolved_kinsoku_hanging_order(v: &HangingPunctuationStyle) -> i32 {
     match v {
-        KinsokuLevel::None => 0,
-        KinsokuLevel::Basic => 1,
-        KinsokuLevel::GbStyle => 2,
-        KinsokuLevel::Strict => 3,
-    }
-}
-
-fn resolved_kinsoku_order_1(v: &HangingPunctuationStyle) -> i32 {
-    match v {
-        HangingPunctuationStyle::Disabled => 0,
         HangingPunctuationStyle::PauseStops => 1,
+        HangingPunctuationStyle::Disabled => 0,
     }
 }
-
+fn resolved_kinsoku_level_order(v: &KinsokuLevel) -> i32 {
+    match v {
+        KinsokuLevel::Strict => 3,
+        KinsokuLevel::None => 0,
+        KinsokuLevel::GbStyle => 2,
+        KinsokuLevel::Basic => 1,
+    }
+}
 pub fn compare_resolved_kinsoku(a: &ResolvedKinsoku, b: &ResolvedKinsoku) -> i32 {
-    let cmp_level = match resolved_kinsoku_order_0(&a.level).cmp(&resolved_kinsoku_order_0(&b.level)) { core::cmp::Ordering::Less => -1, core::cmp::Ordering::Equal => 0, core::cmp::Ordering::Greater => 1 };
+    let cmp_level = match resolved_kinsoku_level_order(&a.level).cmp(&resolved_kinsoku_level_order(&b.level)) { core::cmp::Ordering::Less => -1, core::cmp::Ordering::Equal => 0, core::cmp::Ordering::Greater => 1 };
     if cmp_level != 0 { return cmp_level; }
-    let cmp_hanging = match resolved_kinsoku_order_1(&a.hanging).cmp(&resolved_kinsoku_order_1(&b.hanging)) { core::cmp::Ordering::Less => -1, core::cmp::Ordering::Equal => 0, core::cmp::Ordering::Greater => 1 };
+    let cmp_hanging = match resolved_kinsoku_hanging_order(&a.hanging).cmp(&resolved_kinsoku_hanging_order(&b.hanging)) { core::cmp::Ordering::Less => -1, core::cmp::Ordering::Equal => 0, core::cmp::Ordering::Greater => 1 };
     if cmp_hanging != 0 { return cmp_hanging; }
-    let cmp_reason = SortedTable::sorted_table_compare_strings((&a.reason).as_ustr(), (&b.reason).as_ustr());
+    let cmp_reason = SortedTable::sorted_table_compare_strings(a.reason.as_ustr(), b.reason.as_ustr());
     if cmp_reason != 0 { return cmp_reason; }
     0
 }

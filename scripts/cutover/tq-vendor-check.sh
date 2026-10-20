@@ -21,6 +21,8 @@
 #     · 非 .ts 文件：逐字节比对。
 #     · .ts 文件：先与驱动产物逐字节比；不一致再按既定约定改写后比——约定内容：
 #       双引号相对导入说明符（./ 或 ../ 开头、.ts 结尾）改写成 .js，其余字节不动。
+#       第三条可接受形态：在上一形态基础上，把仅导入类型的 import { X } 写成
+#       import type { X }（verbatimModuleSyntax 的包必须这样写；驱动端不区分）。
 #       任一形态一致即算一致，改写约定本身不报漂移。
 #     · 同一挂载里同时观察到 verbatim（.ts 说明符）与 rewritten（.js 说明符）两种形态
 #       → 单独报警告「形态不统一」；警告不影响退出码。（无相对 .ts 说明符的文件两种
@@ -47,7 +49,7 @@ if [ ! -d "$ROOT/engine-haxe/out" ]; then
 fi
 
 # 既定约定：双引号相对导入说明符（./ 或 ../ 开头、.ts 结尾）改写成 .js
-TS_REWRITE="s|(\")(\\.\.?/[^\\\"]*)\\.ts\1|\1\2.js\1|g;s,^import \{ (LayoutAttribute|LayoutFloatShape|LayoutVertex) \} from,import type { \1 } from,"
+TS_REWRITE="s|(\")(\\.\.?/[^\\\"]*)\\.ts\1|\1\2.js\1|g"
 # 探测：文件是否含双引号相对 .ts 导入说明符（决定该文件的形态是否可观察）
 TS_IMPORT_RE="\"\\.\.?/[^\\\"]*\\.ts\""
 
@@ -56,13 +58,9 @@ TS_IMPORT_RE="\"\\.\.?/[^\\\"]*\\.ts\""
 TABLE=(
   "protocol-rust|full|protocol-rust|platforms/web/server/precompute/protocol-gen|||"
   "ffi-rust-engine-gen|full|engine-rust-f64|ffi/rust/engine-gen|||"
-  "protocol-ts-client|subset|protocol-ts|platforms/web/client/core/src/sampler/snapshot/protocol-gen|*.js,*.d.ts,*.map|Revision.ts=org/tiqian/protocol/Revision.ts|Revision.ts,org/tiqian/protocol/MetricEntry.ts,org/tiqian/protocol/SnapshotTableBinary.ts,org/tiqian/protocol/StyleRow.ts,org/tiqian/protocol/TableData.ts,org/tiqian/protocol/TableInput.ts,org/tiqian/protocol/TableMetricRow.ts,org/tiqian/protocol/TableProbe.ts,org/tiqian/protocol/ValueRow.ts,org/tiqian/protocol/LayoutAttribute.ts,org/tiqian/protocol/LayoutFloatShape.ts,org/tiqian/protocol/LayoutTree.ts,org/tiqian/protocol/LayoutVertex.ts,runtime.ts|"
-  "protocol-ts-shared-snapshot|subset|protocol-ts|platforms/web/client/core/src/sampler/snapshot/shared-gen|*.js,*.d.ts,*.map||org/tiqian/shared/snapshot/SnapshotSource.ts,runtime.ts|"
+  "protocol-ts-client|subset|protocol-ts|platforms/web/client/core/src/sampler/snapshot/protocol-gen|*.js,*.d.ts,*.map|Revision.ts=org/tiqian/protocol/Revision.ts|Revision.ts,org/tiqian/protocol/MetricEntry.ts,org/tiqian/protocol/SnapshotTableBinary.ts,org/tiqian/protocol/StyleRow.ts,org/tiqian/protocol/TableData.ts,org/tiqian/protocol/TableInput.ts,org/tiqian/protocol/TableMetricRow.ts,org/tiqian/protocol/TableProbe.ts,org/tiqian/protocol/ValueRow.ts,runtime.ts|"
+  "prepared-dom-ts-client|subset|protocol-ts|platforms/web/client/core/src/sampler/snapshot/prepared-dom-gen|*.js,*.d.ts,*.map||org/tiqian/shared/prepared_dom/AttributeEntry.ts,org/tiqian/shared/prepared_dom/BopomofoPlacement.ts,org/tiqian/shared/prepared_dom/BopomofoPlacementCss.ts,org/tiqian/shared/prepared_dom/BopomofoZone.ts,org/tiqian/shared/prepared_dom/EmphasisDotColorResolver.ts,org/tiqian/shared/prepared_dom/Evidence.ts,org/tiqian/shared/prepared_dom/EvidenceDecorationKind.ts,org/tiqian/shared/prepared_dom/EvidenceDecorationSegment.ts,org/tiqian/shared/prepared_dom/EvidenceEmphasisDot.ts,org/tiqian/shared/prepared_dom/EvidenceOverlayOptions.ts,org/tiqian/shared/prepared_dom/EvidenceOverlayPlan.ts,org/tiqian/shared/prepared_dom/InlineBoxEntry.ts,org/tiqian/shared/prepared_dom/InlineEdgeEntry.ts,org/tiqian/shared/prepared_dom/InlineObjectPlaceholderCell.ts,org/tiqian/shared/prepared_dom/Markup.ts,org/tiqian/shared/prepared_dom/MarkupArtifact.ts,org/tiqian/shared/prepared_dom/MarkupContainer.ts,org/tiqian/shared/prepared_dom/MarkupNode.ts,org/tiqian/shared/prepared_dom/PlanBopomofoZone.ts,org/tiqian/shared/prepared_dom/PlanRubyAnnotation.ts,org/tiqian/shared/prepared_dom/PreparedArtifact.ts,org/tiqian/shared/prepared_dom/PreparedArtifactOptions.ts,org/tiqian/shared/prepared_dom/PreparedArtifactResult.ts,org/tiqian/shared/prepared_dom/PreparedArtifactState.ts,org/tiqian/shared/prepared_dom/PreparedCjkStrongSemantic.ts,org/tiqian/shared/prepared_dom/PreparedDom.ts,org/tiqian/shared/prepared_dom/PreparedDomError.ts,org/tiqian/shared/prepared_dom/PreparedDomException.ts,org/tiqian/shared/prepared_dom/PreparedEmphasisRange.ts,org/tiqian/shared/prepared_dom/PreparedLineChild.ts,org/tiqian/shared/prepared_dom/PreparedPlan.ts,org/tiqian/shared/prepared_dom/PreparedPlanCell.ts,org/tiqian/shared/prepared_dom/PreparedPlanLine.ts,org/tiqian/shared/prepared_dom/PreparedRenderTextSpan.ts,org/tiqian/shared/prepared_dom/PreparedRunRenderInput.ts,org/tiqian/shared/prepared_dom/PreparedRunSignature.ts,org/tiqian/shared/prepared_dom/PreparedRunTyped.ts,org/tiqian/shared/prepared_dom/PreparedSemanticSpan.ts,org/tiqian/shared/prepared_dom/PreparedSpacingResult.ts,org/tiqian/shared/prepared_dom/RenderedMarkupContainer.ts,org/tiqian/shared/prepared_dom/RenderedMarkupNode.ts,org/tiqian/shared/prepared_dom/RubyAnnotation.ts,org/tiqian/shared/prepared_dom/StyleClassResolver.ts,org/tiqian/shared/prepared_dom/StyleDelta.ts,runtime.ts|"
   "protocol-ts-server|subset|protocol-ts|platforms/web/server/core/src/protocol-gen|*.js,*.d.ts,*.map||haxe/crypto/Sha256.ts,org/tiqian/protocol/Canonical.ts,org/tiqian/protocol/DecorationInput.ts,org/tiqian/protocol/EncodeResult.ts,org/tiqian/protocol/FontFaceRecord.ts,org/tiqian/protocol/InlineBoxInput.ts,org/tiqian/protocol/InlineObjectInput.ts,org/tiqian/protocol/JsCoerce.ts,org/tiqian/protocol/LayoutAttribute.ts,org/tiqian/protocol/LayoutFloatShape.ts,org/tiqian/protocol/LayoutTree.ts,org/tiqian/protocol/LayoutVertex.ts,org/tiqian/protocol/LineBreakSpanInput.ts,org/tiqian/protocol/NamedError.ts,org/tiqian/protocol/NamedErrorNames.ts,org/tiqian/protocol/ParagraphRequest.ts,org/tiqian/protocol/ParagraphRequestChecks.ts,org/tiqian/protocol/ParagraphRequestException.ts,org/tiqian/protocol/ParagraphRequestTestSupport.ts,org/tiqian/protocol/TextSpanInput.ts,org/tiqian/protocol/WireField.ts,org/tiqian/protocol/WireValue.ts,runtime.ts|"
-  "shared-ts-client|subset|protocol-ts|platforms/web/client/core/src/sampler/snapshot/shared-gen|*.js,*.d.ts,*.map||org/tiqian/shared/SnapshotValueStyle.ts,org/tiqian/shared/ValueStyleInterner.ts|"
-  # Html-B1（t-mveb2o71-aidv）：shared/html 的 DOM 查询与选择器由 protocol-ts 束生成后
-  # 落到 server 的 shared-gen 挂载。该目录专职生成物，手写胶水在 src 根与预计算侧。
-  "protocol-ts-server-shared-html|subset|protocol-ts|platforms/web/server/core/src/shared-gen|*.js,*.d.ts,*.map||org/tiqian/shared/html/CompoundSelector.ts,org/tiqian/shared/html/DomAttribute.ts,org/tiqian/shared/html/DomNode.ts,org/tiqian/shared/html/DomParser.ts,org/tiqian/shared/html/HtmlAttributeInsertion.ts,org/tiqian/shared/html/HtmlError.ts,org/tiqian/shared/html/HtmlNameCase.ts,org/tiqian/shared/html/HtmlOpeningTag.ts,org/tiqian/shared/html/HtmlParseException.ts,org/tiqian/shared/html/HtmlScan.ts,runtime.ts|"
   "ffi-js-engine-gen|subset|ts|ffi/js/npm/engine-gen|*.json,clreq-exports.ts,org/tiqian/protocol/*||org/tiqian/clreq/BopomofoParser.ts,org/tiqian/clreq/BopomofoReading.ts,org/tiqian/clreq/BopomofoTone.ts,org/tiqian/clreq/NumberSymbolCohesion.ts,org/tiqian/core/EastAsianSpacingData.ts,org/tiqian/core/EastAsianSpacingEdges.ts,org/tiqian/core/EastAsianSpacingValue.ts,org/tiqian/core/IntRange.ts,org/tiqian/core/RoleOverrideInfo.ts,org/tiqian/core/SourceBoundaryBias.ts,org/tiqian/core/SourceInteractionBoundaries.ts,org/tiqian/core/TextRange.ts,org/tiqian/core/TextRangeError.ts,org/tiqian/core/TiqianIllegalArgumentException.ts,org/tiqian/core/UnicodeCombiningMarkData.ts,org/tiqian/core/UnicodeEastAsianSpacing.ts,org/tiqian/core/UnicodeEmojiModifierBaseData.ts,org/tiqian/core/UnicodeExtendedPictographicData.ts,org/tiqian/core/UnicodeNumber.ts,org/tiqian/core/UnicodeNumberData.ts,org/tiqian/core/UnicodeScriptEvidence.ts,org/tiqian/core/UnicodeScriptEvidenceClassifier.ts,org/tiqian/core/UnicodeScriptEvidenceData.ts,org/tiqian/core/UnicodeWordCharacter.ts,org/tiqian/core/UnicodeWordCharacterData.ts,org/tiqian/font/BaselineClass.ts,org/tiqian/font/BaselinePolicy.ts,org/tiqian/font/CjkFontRoleClassifier.ts,org/tiqian/font/FontMetricSource.ts,org/tiqian/font/FontMetrics.ts,org/tiqian/font/FontMetricsPolicy.ts,org/tiqian/font/FontPolicy.ts,org/tiqian/font/FontRole.ts,org/tiqian/font/FontRoleContext.ts,org/tiqian/font/InlineShapingStylePolicy.ts,org/tiqian/font/LayoutFontMetrics.ts,org/tiqian/font/MetricBox.ts,org/tiqian/font/PreferCjkForAmbiguousPunctuationResolver.ts,org/tiqian/font/RawFontMetrics.ts,org/tiqian/font/UnicodeEmojiPresentationData.ts,org/tiqian/font/UnicodeSymbolData.ts,org/tiqian/layout/ContextualDashEllipsisRoleResolver.ts,org/tiqian/layout/ContextualQuoteRoleResolver.ts,org/tiqian/layout/QuotePairAnalyzer.ts,org/tiqian/linebreak/Hyphenator.ts,org/tiqian/linebreak/LiangHyphenator.ts,org/tiqian/linebreak/LineBreakFns.ts,org/tiqian/linebreak/UnicodePunctuationLineBreak.ts,org/tiqian/linebreak/UnicodePunctuationLineBreakData.ts,runtime.ts|"
   # kotlin-protocol-engine（t-muiwi5ft-mc60 Stage1-P3 producer cutover）：engine 侧 Plan 挂载
   # 改为 kotlin-f32 束产物——engine 几何实数是 f32，挂载的生成 PlanLowering/PreparedParagraphFns
@@ -213,7 +211,7 @@ for row in "${TABLE[@]}"; do
   fi
 
   # 内容比对（.ts 两种形态任一一致即算一致；其余文件逐字节；extras/missing 非零时仍要做）
-  diffs=0; n_common=0; n_byte=0; n_rewritten=0; n_ts=0
+  diffs=0; n_common=0; n_byte=0; n_rewritten=0; n_type_import=0; n_ts=0
   form_verbatim=""; form_rewritten=""
   while IFS= read -r rel; do
     if [ "$mode" = files ] && [ "$have_expected" = 1 ]; then
@@ -239,8 +237,13 @@ for row in "${TABLE[@]}"; do
       if cmp -s "$TMP/rewritten" "$mfull"; then
         n_rewritten=$((n_rewritten+1))
         if grep -Eq "$TS_IMPORT_RE" "$dfull"; then form_rewritten="$form_rewritten $rel"; fi
+      elif sed -E 's|^import type \{|import {|' "$mfull" | cmp -s "$TMP/rewritten" -; then
+        # 第三形态：在 .ts→.js 改写基础上，把仅含类型的 import 写成 import type
+        # （verbatimModuleSyntax 的包必须这样写，见文件头约定说明）。
+        n_type_import=$((n_type_import+1))
+        if grep -Eq "$TS_IMPORT_RE" "$dfull"; then form_rewritten="$form_rewritten $rel"; fi
       else
-        echo "  !! 内容不一致（逐字节与按 .ts→.js 改写两种形态都不符）：$rel"
+        echo "  !! 内容不一致（逐字节、.ts→.js 改写、再加 import type 归一三种形态都不符）：$rel"
         diffs=$((diffs+1))
       fi
     else
@@ -252,9 +255,9 @@ for row in "${TABLE[@]}"; do
 
   if [ "$n_common" -gt 0 ]; then
     if [ "$diffs" -eq 0 ]; then
-      echo "  -- 内容：$n_common/$n_common 全一致（逐字节 $n_byte、.ts→.js 改写后 $n_rewritten）"
+      echo "  -- 内容：$n_common/$n_common 全一致（逐字节 $n_byte、.ts→.js 改写后 $n_rewritten、import type 归一 $n_type_import）"
     else
-      echo "  -- 内容：$n_common/$n_common 中 $diffs 个不一致（逐字节 $n_byte、改写后 $n_rewritten）"
+      echo "  -- 内容：$n_common/$n_common 中 $diffs 个不一致（逐字节 $n_byte、改写后 $n_rewritten、import type 归一 $n_type_import）"
     fi
   fi
   # 形态判定：只统计可观察的 .ts 文件（含相对 .ts 说明符的）；其余形态中性

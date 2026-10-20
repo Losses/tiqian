@@ -85,8 +85,10 @@ impl TestTraceRender {
     let __count = u_string::unit_count(&digits);
         let mut value = 0u32;
         let mut index = 0u32;
+        let __units1 = u_string::units(&digits);
+        let __count1 = u_string::unit_count(&digits);
         while (i32::from_ne_bytes(((index) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((__count) as i32).to_ne_bytes())) {
-            value = u32::wrapping_sub(u32::wrapping_add(u32::wrapping_mul(value, 10), u_string::unit_at_from(&__units, index).unwrap_or(0)), 48);
+            value = u32::wrapping_sub(u32::wrapping_add(u32::wrapping_mul(value, 10), u_string::unit_at_from(&__units1, index).unwrap_or(0)), 48);
             index = u32::wrapping_add(index, 1);
         }
         return value;
@@ -123,7 +125,7 @@ impl TestTraceRender {
         let __units3 = u_string::units(&plain);
         let __count3 = u_string::unit_count(&plain);
         while (i32::from_ne_bytes(((index) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((__count3) as i32).to_ne_bytes())) {
-            if matches!(u_string::unit_at_from(&__units3, index).as_ref(), Some(__v) if __v == &(46)) {
+            if u_string::unit_at_from(&__units3, index).as_ref().map_or(false, |v| v == &(46)) {
                 point = index;
                 break;
             }
@@ -133,14 +135,14 @@ impl TestTraceRender {
         let mut first = 0u32;
         let __units4 = u_string::units(&all);
         let __count4 = u_string::unit_count(&all);
-        while (i32::from_ne_bytes(((first) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((__count4) as i32).to_ne_bytes())) && matches!(u_string::unit_at_from(&__units4, first).as_ref(), Some(__v) if __v == &(48)) {
+        while (i32::from_ne_bytes(((first) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((__count4) as i32).to_ne_bytes())) && u_string::unit_at_from(&__units4, first).as_ref().map_or(false, |v| v == &(48)) {
             first = u32::wrapping_add(first, 1);
         }
         if first == u_string::unit_count(&(all)) {
             return Ok(None);
         }
         let mut last = u_string::unit_count(&(all));
-        while (i32::from_ne_bytes(((last) as i32).to_ne_bytes())) > (i32::from_ne_bytes(((u32::wrapping_add(first, 1)) as i32).to_ne_bytes())) && matches!(u_string::unit_at(&all, u32::wrapping_sub(last, 1)).as_ref(), Some(__v) if __v == &(48)) {
+        while (i32::from_ne_bytes(((last) as i32).to_ne_bytes())) > (i32::from_ne_bytes(((u32::wrapping_add(first, 1)) as i32).to_ne_bytes())) && u_string::unit_at(&all, u32::wrapping_sub(last, 1)).as_ref().map_or(false, |v| v == &(48)) {
             last = u32::wrapping_sub(last, 1);
         }
         let mut digits = UString::new();
@@ -150,7 +152,7 @@ impl TestTraceRender {
             if i32::from_ne_bytes(((u_string::unit_count(&(digits))) as i32).to_ne_bytes()) < (i32::from_ne_bytes(((TestTraceRender::TEST_TRACE_RENDER_MAX_SIGNIFICANT_DIGITS) as i32).to_ne_bytes())) {
                 digits += &(u_string::substring(&all, i32::from_ne_bytes(((cursor) as i32).to_ne_bytes()), i32::from_ne_bytes(((u32::wrapping_add(cursor, 1)) as i32).to_ne_bytes())));
             } else {
-                if !(matches!(u_string::unit_at(&all, cursor).as_ref(), Some(__v) if __v == &(48))) {
+                if !(u_string::unit_at(&all, cursor).as_ref().map_or(false, |v| v == &(48))) {
                     extended = true;
                 }
             }
@@ -169,7 +171,7 @@ impl TestTraceRender {
         if negative {
             if let Some(&unit) = out.last() {
                 if unit >= 55296 && unit <= 56319 && !UString::from("-").is_empty() {
-                    if !match (UString::from("-")).encode_utf16().next() { Some(head) => head >= 56320 && head <= 57343, None => false } {
+                    if !UString::from("-").encode_utf16().next().map_or(false, |head| head >= 56320 && head <= 57343) {
                         return Err(UStringFault::UnpairedSurrogate { unit: u32::from(unit) });
                     }
                 }
@@ -179,7 +181,7 @@ impl TestTraceRender {
         if point_after <= 0 {
             if let Some(&unit) = out.last() {
                 if unit >= 55296 && unit <= 56319 && !UString::from("0.").is_empty() {
-                    if !match (UString::from("0.")).encode_utf16().next() { Some(head) => head >= 56320 && head <= 57343, None => false } {
+                    if !UString::from("0.").encode_utf16().next().map_or(false, |head| head >= 56320 && head <= 57343) {
                         return Err(UStringFault::UnpairedSurrogate { unit: u32::from(unit) });
                     }
                 }
@@ -188,7 +190,7 @@ impl TestTraceRender {
             for _ in 0..u32::try_from(-(point_after as i32)).unwrap_or(0) {
                 if let Some(&unit) = out.last() {
                     if unit >= 55296 && unit <= 56319 && !UString::from("0").is_empty() {
-                        if !match (UString::from("0")).encode_utf16().next() { Some(head) => head >= 56320 && head <= 57343, None => false } {
+                        if !UString::from("0").encode_utf16().next().map_or(false, |head| head >= 56320 && head <= 57343) {
                             return Err(UStringFault::UnpairedSurrogate { unit: u32::from(unit) });
                         }
                     }
@@ -197,7 +199,7 @@ impl TestTraceRender {
             }
             if let Some(&unit) = out.last() {
                 if unit >= 55296 && unit <= 56319 && !s.is_empty() {
-                    if !match (s).encode_utf16().next() { Some(head) => head >= 56320 && head <= 57343, None => false } {
+                    if !s.encode_utf16().next().map_or(false, |head| head >= 56320 && head <= 57343) {
                         return Err(UStringFault::UnpairedSurrogate { unit: u32::from(unit) });
                     }
                 }
@@ -207,7 +209,7 @@ impl TestTraceRender {
             if point_after >= i32::from_ne_bytes(((p) as i32).to_ne_bytes()) {
                 if let Some(&unit) = out.last() {
                     if unit >= 55296 && unit <= 56319 && !s.is_empty() {
-                        if !match (s).encode_utf16().next() { Some(head) => head >= 56320 && head <= 57343, None => false } {
+                        if !s.encode_utf16().next().map_or(false, |head| head >= 56320 && head <= 57343) {
                             return Err(UStringFault::UnpairedSurrogate { unit: u32::from(unit) });
                         }
                     }
@@ -216,7 +218,7 @@ impl TestTraceRender {
                 for _ in p..u32::try_from(point_after).unwrap_or(0) {
                     if let Some(&unit) = out.last() {
                         if unit >= 55296 && unit <= 56319 && !UString::from("0").is_empty() {
-                            if !match (UString::from("0")).encode_utf16().next() { Some(head) => head >= 56320 && head <= 57343, None => false } {
+                            if !UString::from("0").encode_utf16().next().map_or(false, |head| head >= 56320 && head <= 57343) {
                                 return Err(UStringFault::UnpairedSurrogate { unit: u32::from(unit) });
                             }
                         }
@@ -225,7 +227,7 @@ impl TestTraceRender {
                 }
                 if let Some(&unit) = out.last() {
                     if unit >= 55296 && unit <= 56319 && !UString::from(".0").is_empty() {
-                        if !match (UString::from(".0")).encode_utf16().next() { Some(head) => head >= 56320 && head <= 57343, None => false } {
+                        if !UString::from(".0").encode_utf16().next().map_or(false, |head| head >= 56320 && head <= 57343) {
                             return Err(UStringFault::UnpairedSurrogate { unit: u32::from(unit) });
                         }
                     }
@@ -234,7 +236,7 @@ impl TestTraceRender {
             } else {
                 if let Some(&unit) = out.last() {
                     if unit >= 55296 && unit <= 56319 && !u_string::substring(&s, 0i32, i32::from_ne_bytes(((point_after) as i32).to_ne_bytes())).is_empty() {
-                        if !match (u_string::substring(&s, 0i32, i32::from_ne_bytes(((point_after) as i32).to_ne_bytes()))).encode_utf16().next() { Some(head) => head >= 56320 && head <= 57343, None => false } {
+                        if !u_string::substring(&s, 0i32, i32::from_ne_bytes(((point_after) as i32).to_ne_bytes())).encode_utf16().next().map_or(false, |head| head >= 56320 && head <= 57343) {
                             return Err(UStringFault::UnpairedSurrogate { unit: u32::from(unit) });
                         }
                     }
@@ -242,7 +244,7 @@ impl TestTraceRender {
                 out.extend(u_string::substring(&s, 0i32, i32::from_ne_bytes(((point_after) as i32).to_ne_bytes())).encode_utf16());
                 if let Some(&unit) = out.last() {
                     if unit >= 55296 && unit <= 56319 && !UString::from(".").is_empty() {
-                        if !match (UString::from(".")).encode_utf16().next() { Some(head) => head >= 56320 && head <= 57343, None => false } {
+                        if !UString::from(".").encode_utf16().next().map_or(false, |head| head >= 56320 && head <= 57343) {
                             return Err(UStringFault::UnpairedSurrogate { unit: u32::from(unit) });
                         }
                     }
@@ -250,7 +252,7 @@ impl TestTraceRender {
                 out.extend(UString::from(".").encode_utf16());
                 if let Some(&unit) = out.last() {
                     if unit >= 55296 && unit <= 56319 && !u_string::substring_from(&s, i32::from_ne_bytes(((point_after) as i32).to_ne_bytes())).is_empty() {
-                        if !match (u_string::substring_from(&s, i32::from_ne_bytes(((point_after) as i32).to_ne_bytes()))).encode_utf16().next() { Some(head) => head >= 56320 && head <= 57343, None => false } {
+                        if !u_string::substring_from(&s, i32::from_ne_bytes(((point_after) as i32).to_ne_bytes())).encode_utf16().next().map_or(false, |head| head >= 56320 && head <= 57343) {
                             return Err(UStringFault::UnpairedSurrogate { unit: u32::from(unit) });
                         }
                     }
@@ -273,7 +275,7 @@ impl TestTraceRender {
         let mut output = Vec::<u16>::new();
         if let Some(&unit) = output.last() {
             if unit >= 55296 && unit <= 56319 && !UString::from("[").is_empty() {
-                if !match (UString::from("[")).encode_utf16().next() { Some(head) => head >= 56320 && head <= 57343, None => false } {
+                if !UString::from("[").encode_utf16().next().map_or(false, |head| head >= 56320 && head <= 57343) {
                     return Err(UStringFault::UnpairedSurrogate { unit: u32::from(unit) });
                 }
             }
@@ -284,7 +286,7 @@ impl TestTraceRender {
             if i32::from_ne_bytes(((index) as i32).to_ne_bytes()) > (0) {
                 if let Some(&unit) = output.last() {
                     if unit >= 55296 && unit <= 56319 && !UString::from(", ").is_empty() {
-                        if !match (UString::from(", ")).encode_utf16().next() { Some(head) => head >= 56320 && head <= 57343, None => false } {
+                        if !UString::from(", ").encode_utf16().next().map_or(false, |head| head >= 56320 && head <= 57343) {
                             return Err(UStringFault::UnpairedSurrogate { unit: u32::from(unit) });
                         }
                     }
@@ -293,7 +295,7 @@ impl TestTraceRender {
             }
             if let Some(&unit) = output.last() {
                 if unit >= 55296 && unit <= 56319 && !TestTraceRender::test_trace_render_render_int(values[usize::try_from(index).unwrap_or(0)])?.is_empty() {
-                    if !match (TestTraceRender::test_trace_render_render_int(values[usize::try_from(index).unwrap_or(0)])?).encode_utf16().next() { Some(head) => head >= 56320 && head <= 57343, None => false } {
+                    if !TestTraceRender::test_trace_render_render_int(values[usize::try_from(index).unwrap_or(0)])?.encode_utf16().next().map_or(false, |head| head >= 56320 && head <= 57343) {
                         return Err(UStringFault::UnpairedSurrogate { unit: u32::from(unit) });
                     }
                 }
@@ -303,7 +305,7 @@ impl TestTraceRender {
         }
         if let Some(&unit) = output.last() {
             if unit >= 55296 && unit <= 56319 && !UString::from("]").is_empty() {
-                if !match (UString::from("]")).encode_utf16().next() { Some(head) => head >= 56320 && head <= 57343, None => false } {
+                if !UString::from("]").encode_utf16().next().map_or(false, |head| head >= 56320 && head <= 57343) {
                     return Err(UStringFault::UnpairedSurrogate { unit: u32::from(unit) });
                 }
             }
@@ -317,7 +319,7 @@ impl TestTraceRender {
         let mut output = Vec::<u16>::new();
         if let Some(&unit) = output.last() {
             if unit >= 55296 && unit <= 56319 && !UString::from("[").is_empty() {
-                if !match (UString::from("[")).encode_utf16().next() { Some(head) => head >= 56320 && head <= 57343, None => false } {
+                if !UString::from("[").encode_utf16().next().map_or(false, |head| head >= 56320 && head <= 57343) {
                     return Err(UStringFault::UnpairedSurrogate { unit: u32::from(unit) });
                 }
             }
@@ -328,7 +330,7 @@ impl TestTraceRender {
             if i32::from_ne_bytes(((index) as i32).to_ne_bytes()) > (0) {
                 if let Some(&unit) = output.last() {
                     if unit >= 55296 && unit <= 56319 && !UString::from(", ").is_empty() {
-                        if !match (UString::from(", ")).encode_utf16().next() { Some(head) => head >= 56320 && head <= 57343, None => false } {
+                        if !UString::from(", ").encode_utf16().next().map_or(false, |head| head >= 56320 && head <= 57343) {
                             return Err(UStringFault::UnpairedSurrogate { unit: u32::from(unit) });
                         }
                     }
@@ -337,7 +339,7 @@ impl TestTraceRender {
             }
             if let Some(&unit) = output.last() {
                 if unit >= 55296 && unit <= 56319 && !TestTraceRender::test_trace_render_render_string((values[usize::try_from(index).unwrap_or(0)]).clone().as_ustr())?.is_empty() {
-                    if !match (TestTraceRender::test_trace_render_render_string((values[usize::try_from(index).unwrap_or(0)]).clone().as_ustr())?).encode_utf16().next() { Some(head) => head >= 56320 && head <= 57343, None => false } {
+                    if !TestTraceRender::test_trace_render_render_string((values[usize::try_from(index).unwrap_or(0)]).clone().as_ustr())?.encode_utf16().next().map_or(false, |head| head >= 56320 && head <= 57343) {
                         return Err(UStringFault::UnpairedSurrogate { unit: u32::from(unit) });
                     }
                 }
@@ -347,7 +349,7 @@ impl TestTraceRender {
         }
         if let Some(&unit) = output.last() {
             if unit >= 55296 && unit <= 56319 && !UString::from("]").is_empty() {
-                if !match (UString::from("]")).encode_utf16().next() { Some(head) => head >= 56320 && head <= 57343, None => false } {
+                if !UString::from("]").encode_utf16().next().map_or(false, |head| head >= 56320 && head <= 57343) {
                     return Err(UStringFault::UnpairedSurrogate { unit: u32::from(unit) });
                 }
             }
@@ -378,12 +380,14 @@ impl TestTraceRender {
     let __count5 = u_string::unit_count(&value);
         let mut output = UString::new();
         let mut index = 0u32;
+        let __units6 = u_string::units(&value);
+        let __count6 = u_string::unit_count(&value);
         while (i32::from_ne_bytes(((index) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((__count5) as i32).to_ne_bytes())) {
-            let code_unit = u_string::unit_at_from(&__units5, index);
-            if matches!(code_unit.as_ref(), Some(__v) if __v == &(0)) {
+            let code_unit = u_string::unit_at_from(&__units6, index);
+            if code_unit.as_ref().map_or(false, |v| v == &(0)) {
                 output += &(UString::from("\\u0000"));
             } else {
-                output += &(TraceFormat::trace_format_escape_text(u_string::char_at_from(&__units5, index).as_ustr()));
+                output += &(TraceFormat::trace_format_escape_text(u_string::char_at_from(&__units6, index).as_ustr()));
             }
             index = u32::wrapping_add(index, 1);
         }
@@ -396,8 +400,10 @@ impl TestTraceRender {
         let mut output = Vec::<u16>::new();
         let mut copied = 0u32;
         let mut index = 0u32;
+        let __units8 = u_string::units(&value);
+        let __count8 = u_string::unit_count(&value);
         while (i32::from_ne_bytes(((index) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((__count7) as i32).to_ne_bytes())) {
-            let code_unit = u_string::unit_at_from(&__units7, index).unwrap_or(0);
+            let code_unit = u_string::unit_at_from(&__units8, index).unwrap_or(0);
             if code_unit != 69 && code_unit != 101 {
                 index = u32::wrapping_add(index, 1);
                 continue;
@@ -409,7 +415,7 @@ impl TestTraceRender {
             }
             if let Some(&unit) = output.last() {
                 if unit >= 55296 && unit <= 56319 && !u_string::substring(&value, i32::from_ne_bytes(((copied) as i32).to_ne_bytes()), i32::from_ne_bytes((((r#match).as_ref().unwrap().start) as i32).to_ne_bytes())).is_empty() {
-                    if !match (u_string::substring(&value, i32::from_ne_bytes(((copied) as i32).to_ne_bytes()), i32::from_ne_bytes((((r#match).as_ref().unwrap().start) as i32).to_ne_bytes()))).encode_utf16().next() { Some(head) => head >= 56320 && head <= 57343, None => false } {
+                    if !u_string::substring(&value, i32::from_ne_bytes(((copied) as i32).to_ne_bytes()), i32::from_ne_bytes((((r#match).as_ref().unwrap().start) as i32).to_ne_bytes())).encode_utf16().next().map_or(false, |head| head >= 56320 && head <= 57343) {
                         return Err(UStringFault::UnpairedSurrogate { unit: u32::from(unit) });
                     }
                 }
@@ -417,7 +423,7 @@ impl TestTraceRender {
             output.extend(u_string::substring(&value, i32::from_ne_bytes(((copied) as i32).to_ne_bytes()), i32::from_ne_bytes((((r#match).as_ref().unwrap().start) as i32).to_ne_bytes())).encode_utf16());
             if let Some(&unit) = output.last() {
                 if unit >= 55296 && unit <= 56319 && !TestTraceRender::test_trace_render_expand_mantissa(u_string::substring(&value, i32::from_ne_bytes((((r#match).as_ref().unwrap().start) as i32).to_ne_bytes()), i32::from_ne_bytes((((r#match).as_ref().unwrap().mantissa_end) as i32).to_ne_bytes())).as_ustr(), (r#match).as_ref().unwrap().exponent)?.is_empty() {
-                    if !match (TestTraceRender::test_trace_render_expand_mantissa(u_string::substring(&value, i32::from_ne_bytes((((r#match).as_ref().unwrap().start) as i32).to_ne_bytes()), i32::from_ne_bytes((((r#match).as_ref().unwrap().mantissa_end) as i32).to_ne_bytes())).as_ustr(), (r#match).as_ref().unwrap().exponent)?).encode_utf16().next() { Some(head) => head >= 56320 && head <= 57343, None => false } {
+                    if !TestTraceRender::test_trace_render_expand_mantissa(u_string::substring(&value, i32::from_ne_bytes((((r#match).as_ref().unwrap().start) as i32).to_ne_bytes()), i32::from_ne_bytes((((r#match).as_ref().unwrap().mantissa_end) as i32).to_ne_bytes())).as_ustr(), (r#match).as_ref().unwrap().exponent)?.encode_utf16().next().map_or(false, |head| head >= 56320 && head <= 57343) {
                         return Err(UStringFault::UnpairedSurrogate { unit: u32::from(unit) });
                     }
                 }
@@ -428,7 +434,7 @@ impl TestTraceRender {
         }
         if let Some(&unit) = output.last() {
             if unit >= 55296 && unit <= 56319 && !u_string::substring(&value, i32::from_ne_bytes(((copied) as i32).to_ne_bytes()), i32::from_ne_bytes(((__count7) as i32).to_ne_bytes())).is_empty() {
-                if !match (u_string::substring(&value, i32::from_ne_bytes(((copied) as i32).to_ne_bytes()), i32::from_ne_bytes(((__count7) as i32).to_ne_bytes()))).encode_utf16().next() { Some(head) => head >= 56320 && head <= 57343, None => false } {
+                if !u_string::substring(&value, i32::from_ne_bytes(((copied) as i32).to_ne_bytes()), i32::from_ne_bytes(((__count7) as i32).to_ne_bytes())).encode_utf16().next().map_or(false, |head| head >= 56320 && head <= 57343) {
                     return Err(UStringFault::UnpairedSurrogate { unit: u32::from(unit) });
                 }
             }
@@ -442,25 +448,29 @@ impl TestTraceRender {
     let __count9 = u_string::unit_count(&value);
         let mut output = Vec::<u16>::new();
         let mut index = 0u32;
+        let __units10 = u_string::units(&value);
+        let __count10 = u_string::unit_count(&value);
         while (i32::from_ne_bytes(((index) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((__count9) as i32).to_ne_bytes())) {
-            if matches!(u_string::unit_at_from(&__units9, index).as_ref(), Some(__v) if __v == &(46)) && (i32::from_ne_bytes(((index) as i32).to_ne_bytes())) > (0) && TestTraceRender::test_trace_render_is_digit(*(u_string::unit_at_from(&__units9, u32::wrapping_sub(index, 1))).as_ref().unwrap()) {
+            if u_string::unit_at_from(&__units10, index).as_ref().map_or(false, |v| v == &(46)) && (i32::from_ne_bytes(((index) as i32).to_ne_bytes())) > (0) && TestTraceRender::test_trace_render_is_digit(*(u_string::unit_at_from(&__units9, u32::wrapping_sub(index, 1))).as_ref().unwrap()) {
                 let mut cursor = u32::wrapping_add(index, 1);
-                while (i32::from_ne_bytes(((cursor) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((__count9) as i32).to_ne_bytes())) && matches!(u_string::unit_at_from(&__units9, cursor).as_ref(), Some(__v) if __v == &(48)) {
+                let __units11 = u_string::units(&value);
+                let __count11 = u_string::unit_count(&value);
+                while (i32::from_ne_bytes(((cursor) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((__count9) as i32).to_ne_bytes())) && u_string::unit_at_from(&__units9, cursor).as_ref().map_or(false, |v| v == &(48)) {
                     cursor = u32::wrapping_add(cursor, 1);
                 }
-                if i32::from_ne_bytes(((cursor) as i32).to_ne_bytes()) > (i32::from_ne_bytes(((u32::wrapping_add(index, 1)) as i32).to_ne_bytes())) && (cursor == __count9 || !TestTraceRender::test_trace_render_is_digit(*(u_string::unit_at_from(&__units9, cursor)).as_ref().unwrap()) && !(matches!(u_string::unit_at_from(&__units9, cursor).as_ref(), Some(__v) if __v == &(46)))) {
+                if i32::from_ne_bytes(((cursor) as i32).to_ne_bytes()) > (i32::from_ne_bytes(((u32::wrapping_add(index, 1)) as i32).to_ne_bytes())) && (cursor == __count9 || !TestTraceRender::test_trace_render_is_digit(*(u_string::unit_at_from(&__units9, cursor)).as_ref().unwrap()) && !(u_string::unit_at_from(&__units9, cursor).as_ref().map_or(false, |v| v == &(46)))) {
                     index = cursor;
                     continue;
                 }
             }
             if let Some(&unit) = output.last() {
-                if unit >= 55296 && unit <= 56319 && !u_string::char_at_from(&__units9, index).is_empty() {
-                    if !match (u_string::char_at_from(&__units9, index)).encode_utf16().next() { Some(head) => head >= 56320 && head <= 57343, None => false } {
+                if unit >= 55296 && unit <= 56319 && !u_string::char_at_from(&__units10, index).is_empty() {
+                    if !u_string::char_at_from(&__units10, index).encode_utf16().next().map_or(false, |head| head >= 56320 && head <= 57343) {
                         return Err(UStringFault::UnpairedSurrogate { unit: u32::from(unit) });
                     }
                 }
             }
-            output.extend(u_string::char_at_from(&__units9, index).encode_utf16());
+            output.extend(u_string::char_at_from(&__units10, index).encode_utf16());
             index = u32::wrapping_add(index, 1);
         }
         return Ok(UString::from_utf16(output.as_slice()).map_err(|_| UStringFault::UnpairedSurrogate { unit: u32::from(output[output.len() - 1]) })?);
@@ -470,10 +480,12 @@ impl TestTraceRender {
     let __units12 = u_string::units(&s);
     let __count12 = u_string::unit_count(&s);
         let mut i = u32::wrapping_add(e_index, 1);
-        if i32::from_ne_bytes(((i) as i32).to_ne_bytes()) < (i32::from_ne_bytes(((__count12) as i32).to_ne_bytes())) && (matches!(u_string::unit_at_from(&__units12, i).as_ref(), Some(__v) if __v == &(43)) || matches!(u_string::unit_at_from(&__units12, i).as_ref(), Some(__v) if __v == &(45))) {
+        if i32::from_ne_bytes(((i) as i32).to_ne_bytes()) < (i32::from_ne_bytes(((__count12) as i32).to_ne_bytes())) && (u_string::unit_at_from(&__units12, i).as_ref().map_or(false, |v| v == &(43)) || u_string::unit_at_from(&__units12, i).as_ref().map_or(false, |v| v == &(45))) {
             i = u32::wrapping_add(i, 1);
         }
         let digits_start = i;
+        let __units13 = u_string::units(&s);
+        let __count13 = u_string::unit_count(&s);
         while (i32::from_ne_bytes(((i) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((__count12) as i32).to_ne_bytes())) && TestTraceRender::test_trace_render_is_digit(*(u_string::unit_at_from(&__units12, i)).as_ref().unwrap()) {
             i = u32::wrapping_add(i, 1);
         }
@@ -494,7 +506,7 @@ impl TestTraceRender {
             run_start = u32::wrapping_sub(run_start, 1);
         }
         let lead: u32;
-        if i32::from_ne_bytes(((run_start) as i32).to_ne_bytes()) > (i32::from_ne_bytes(((u32::wrapping_add(floor, 1)) as i32).to_ne_bytes())) && matches!(u_string::unit_at_from(&__units12, u32::wrapping_sub(run_start, 1)).as_ref(), Some(__v) if __v == &(46)) && TestTraceRender::test_trace_render_is_digit(*(u_string::unit_at_from(&__units12, u32::wrapping_sub(run_start, 2))).as_ref().unwrap()) {
+        if i32::from_ne_bytes(((run_start) as i32).to_ne_bytes()) > (i32::from_ne_bytes(((u32::wrapping_add(floor, 1)) as i32).to_ne_bytes())) && u_string::unit_at_from(&__units12, u32::wrapping_sub(run_start, 1)).as_ref().map_or(false, |v| v == &(46)) && TestTraceRender::test_trace_render_is_digit(*(u_string::unit_at_from(&__units12, u32::wrapping_sub(run_start, 2))).as_ref().unwrap()) {
             lead = u32::wrapping_sub(run_start, 2);
         } else {
             if run_start != last {
@@ -502,14 +514,14 @@ impl TestTraceRender {
             }
             lead = last;
         }
-        if i32::from_ne_bytes(((lead) as i32).to_ne_bytes()) > (0) && matches!(u_string::unit_at_from(&__units12, u32::wrapping_sub(lead, 1)).as_ref(), Some(__v) if __v == &(45)) && (i32::from_ne_bytes(((u32::wrapping_sub(lead, 1)) as i32).to_ne_bytes())) >= i32::from_ne_bytes(((floor) as i32).to_ne_bytes()) {
-            let before_minus = i32::from_ne_bytes(((lead) as i32).to_ne_bytes()) >= 2 && (TestTraceRender::test_trace_render_is_digit(*(u_string::unit_at_from(&__units12, u32::wrapping_sub(lead, 2))).as_ref().unwrap()) || matches!(u_string::unit_at_from(&__units12, u32::wrapping_sub(lead, 2)).as_ref(), Some(__v) if __v == &(46)));
+        if i32::from_ne_bytes(((lead) as i32).to_ne_bytes()) > (0) && u_string::unit_at_from(&__units12, u32::wrapping_sub(lead, 1)).as_ref().map_or(false, |v| v == &(45)) && (i32::from_ne_bytes(((u32::wrapping_sub(lead, 1)) as i32).to_ne_bytes())) >= i32::from_ne_bytes(((floor) as i32).to_ne_bytes()) {
+            let before_minus = i32::from_ne_bytes(((lead) as i32).to_ne_bytes()) >= 2 && (TestTraceRender::test_trace_render_is_digit(*(u_string::unit_at_from(&__units12, u32::wrapping_sub(lead, 2))).as_ref().unwrap()) || u_string::unit_at_from(&__units12, u32::wrapping_sub(lead, 2)).as_ref().map_or(false, |v| v == &(46)));
             if !before_minus {
                 return Some(ScientificMatch::new(u32::wrapping_sub(lead, 1), e_index, end, exponent));
             }
             return Some(ScientificMatch::new(lead, e_index, end, exponent));
         }
-        let before_digit = i32::from_ne_bytes(((lead) as i32).to_ne_bytes()) > (0) && (TestTraceRender::test_trace_render_is_digit(*(u_string::unit_at_from(&__units12, u32::wrapping_sub(lead, 1))).as_ref().unwrap()) || matches!(u_string::unit_at_from(&__units12, u32::wrapping_sub(lead, 1)).as_ref(), Some(__v) if __v == &(46)));
+        let before_digit = i32::from_ne_bytes(((lead) as i32).to_ne_bytes()) > (0) && (TestTraceRender::test_trace_render_is_digit(*(u_string::unit_at_from(&__units12, u32::wrapping_sub(lead, 1))).as_ref().unwrap()) || u_string::unit_at_from(&__units12, u32::wrapping_sub(lead, 1)).as_ref().map_or(false, |v| v == &(46)));
         if !before_digit {
             return Some(ScientificMatch::new(lead, e_index, end, exponent));
         }
@@ -521,8 +533,8 @@ impl TestTraceRender {
     let __count14 = u_string::unit_count(&s);
         let mut index = from;
         let mut negative = false;
-        if i32::from_ne_bytes(((index) as i32).to_ne_bytes()) < (i32::from_ne_bytes(((to) as i32).to_ne_bytes())) && (matches!(u_string::unit_at_from(&__units14, index).as_ref(), Some(__v) if __v == &(43)) || matches!(u_string::unit_at_from(&__units14, index).as_ref(), Some(__v) if __v == &(45))) {
-            negative = matches!(u_string::unit_at_from(&__units14, index).as_ref(), Some(__v) if __v == &(45));
+        if i32::from_ne_bytes(((index) as i32).to_ne_bytes()) < (i32::from_ne_bytes(((to) as i32).to_ne_bytes())) && (u_string::unit_at_from(&__units14, index).as_ref().map_or(false, |v| v == &(43)) || u_string::unit_at_from(&__units14, index).as_ref().map_or(false, |v| v == &(45))) {
+            negative = u_string::unit_at_from(&__units14, index).as_ref().map_or(false, |v| v == &(45));
             index = u32::wrapping_add(index, 1);
         }
         let mut value = 0u32;
@@ -536,7 +548,7 @@ impl TestTraceRender {
     pub(crate) fn test_trace_render_expand_mantissa(mantissa: &UStr, exponent: u32) -> Result<UString, UStringFault> {
         let mut sign = UString::new();
         let mut value = (mantissa.to_ustring()).clone();
-        if i32::from_ne_bytes(((u_string::unit_count(&(value))) as i32).to_ne_bytes()) > (0) && matches!(u_string::unit_at(&value, 0u32).as_ref(), Some(__v) if __v == &(45)) {
+        if i32::from_ne_bytes(((u_string::unit_count(&(value))) as i32).to_ne_bytes()) > (0) && u_string::unit_at(&value, 0u32).as_ref().map_or(false, |v| v == &(45)) {
             sign = UString::from("-").to_ustring();
             value = u_string::substring_from(&value, 1i32);
         }
@@ -545,14 +557,14 @@ impl TestTraceRender {
         let __units15 = u_string::units(&value);
         let __count15 = u_string::unit_count(&value);
         while (i32::from_ne_bytes(((index) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((__count15) as i32).to_ne_bytes())) {
-            if matches!(u_string::unit_at_from(&__units15, index).as_ref(), Some(__v) if __v == &(46)) {
+            if u_string::unit_at_from(&__units15, index).as_ref().map_or(false, |v| v == &(46)) {
                 dot_index = index;
                 break;
             }
             index = u32::wrapping_add(index, 1);
         }
         let mut digits = if dot_index > 2147483647 { (value.to_ustring()).clone() } else { UString::from(format!("{}", { let mut __s = UString::new(); __s += u_string::substring(&value, 0i32, i32::from_ne_bytes(((dot_index) as i32).to_ne_bytes())).as_ustr(); __s += u_string::substring_from(&value, i32::from_ne_bytes(((u32::wrapping_add(dot_index, 1)) as i32).to_ne_bytes())).as_ustr(); __s }).as_str()) };
-        while (i32::from_ne_bytes(((u_string::unit_count(&(digits))) as i32).to_ne_bytes())) > (1) && matches!(u_string::unit_at(&digits, u32::wrapping_sub(u_string::unit_count(&(digits)), 1)).as_ref(), Some(__v) if __v == &(48)) {
+        while (i32::from_ne_bytes(((u_string::unit_count(&(digits))) as i32).to_ne_bytes())) > (1) && u_string::unit_at(&digits, u32::wrapping_sub(u_string::unit_count(&(digits)), 1)).as_ref().map_or(false, |v| v == &(48)) {
             digits = u_string::substring(&digits, 0i32, i32::from_ne_bytes(((u32::wrapping_sub(u_string::unit_count(&(digits)), 1)) as i32).to_ne_bytes()));
         }
         if i32::from_ne_bytes(((exponent) as i32).to_ne_bytes()) > (400) || (i32::from_ne_bytes(((exponent) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((4294966896u32) as i32).to_ne_bytes())) {
@@ -573,7 +585,7 @@ impl TestTraceRender {
         for _ in 0..count {
             if let Some(&unit) = output.last() {
                 if unit >= 55296 && unit <= 56319 && !UString::from("0").is_empty() {
-                    if !match (UString::from("0")).encode_utf16().next() { Some(head) => head >= 56320 && head <= 57343, None => false } {
+                    if !UString::from("0").encode_utf16().next().map_or(false, |head| head >= 56320 && head <= 57343) {
                         return Err(UStringFault::UnpairedSurrogate { unit: u32::from(unit) });
                     }
                 }
@@ -592,8 +604,10 @@ impl TestTraceRender {
     let __count16 = u_string::unit_count(&value);
         let mut hash = 2166136261u32;
         let mut index = 0u32;
+        let __units17 = u_string::units(&value);
+        let __count17 = u_string::unit_count(&value);
         while (i32::from_ne_bytes(((index) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((__count16) as i32).to_ne_bytes())) {
-            hash = hash ^ u_string::unit_at_from(&__units16, index).unwrap_or(0);
+            hash = hash ^ u_string::unit_at_from(&__units17, index).unwrap_or(0);
             hash = TestTraceRender::test_trace_render_multiply_fnv_prime(hash);
             index = u32::wrapping_add(index, 1);
         }
@@ -602,7 +616,7 @@ impl TestTraceRender {
         let third = u32::from(hash.to_be_bytes()[2]);
         let fourth = u32::from(hash.to_be_bytes()[3]);
         let mut output = { let mut __s = UString::new(); __s += TestTraceRender::test_trace_render_hex_byte(first).as_ustr(); __s += TestTraceRender::test_trace_render_hex_byte(second).as_ustr(); __s += TestTraceRender::test_trace_render_hex_byte(third).as_ustr(); __s += TestTraceRender::test_trace_render_hex_byte(fourth).as_ustr(); __s };
-        while (i32::from_ne_bytes(((u_string::unit_count(&(output))) as i32).to_ne_bytes())) > (1) && matches!(u_string::unit_at(&output, 0u32).as_ref(), Some(__v) if __v == &(48)) {
+        while (i32::from_ne_bytes(((u_string::unit_count(&(output))) as i32).to_ne_bytes())) > (1) && u_string::unit_at(&output, 0u32).as_ref().map_or(false, |v| v == &(48)) {
             output = u_string::substring_from(&output, 1i32);
         }
         return output;

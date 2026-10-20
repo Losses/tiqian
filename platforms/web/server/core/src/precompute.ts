@@ -12,7 +12,6 @@ import { fileURLToPath, pathToFileURL } from "node:url";
 import { addon } from "./load.js";
 import { createCacheBridge, type CacheBridge } from "./cache.js";
 import { renderPreparedParagraph as sharedRenderPreparedParagraph } from "@tiqian/prose/prepared-dom";
-import { parseUnicodeRange } from "@tiqian/core/font-face-boundaries";
 
 const SHARED_RUNTIME_STYLE = readFileSync(
   new URL(import.meta.resolve("@tiqian/core/styles.css")),
@@ -96,7 +95,6 @@ export interface ResolvedFaces {
     weight?: number | readonly [number, number];
     style?: string;
     unicodeRange: string | null;
-    unicodeRanges: number[][] | null;
     sourceOrder: number | null;
   }>;
   sources: Buffer[];
@@ -128,7 +126,6 @@ export async function resolveFaces(options: CreatePrecomputerOptions): Promise<R
         weight: face.weight,
         style: face.style,
         unicodeRange: face.unicodeRange ?? null,
-        unicodeRanges: parseUnicodeRange(face.unicodeRange ?? ""),
         sourceOrder: null,
       })),
       sources,
@@ -160,7 +157,6 @@ export async function resolveFaces(options: CreatePrecomputerOptions): Promise<R
       weight: face.weight ?? undefined,
       style: face.style,
       unicodeRange: face.unicodeRange,
-      unicodeRanges: parseUnicodeRange(face.unicodeRange),
       sourceOrder: index,
     })),
     sources,

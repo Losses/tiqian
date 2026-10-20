@@ -1,23 +1,9 @@
 #![allow(ambiguous_glob_reexports)]
 
 pub mod canonical;
-pub mod context_fingerprint;
-#[cfg(test)]
-pub mod context_fingerprint_test;
-pub mod context_fingerprint_test_support;
 pub mod decoration_input;
 pub mod encode_result;
-pub mod face_info;
-pub mod face_session;
-#[cfg(test)]
-pub mod face_session_test;
-pub mod font_contract;
-#[cfg(test)]
-pub mod font_contract_test;
-pub mod font_contract_test_support;
 pub mod font_face_record;
-pub mod font_face_spec;
-pub mod font_weight_spec;
 pub mod inline_box_input;
 pub mod inline_object_input;
 pub mod js_coerce;
@@ -50,16 +36,11 @@ pub mod plan_schema;
 #[cfg(test)]
 pub mod plan_schema_test;
 pub mod plan_style_delta;
-pub mod replay_key;
-#[cfg(test)]
-pub mod replay_key_test;
 pub mod revision;
-pub mod session_face_spec;
 pub mod snapshot_table_binary;
 #[cfg(test)]
 pub mod snapshot_table_binary_test;
 pub mod snapshot_table_test_support;
-pub mod snapshot_typography;
 pub mod style_row;
 pub mod table_data;
 pub mod table_input;
@@ -71,23 +52,9 @@ pub mod wire_field;
 pub mod wire_value;
 
 pub use canonical::*;
-pub use context_fingerprint::*;
-#[cfg(test)]
-pub use context_fingerprint_test::*;
-pub use context_fingerprint_test_support::*;
 pub use decoration_input::*;
 pub use encode_result::*;
-pub use face_info::*;
-pub use face_session::*;
-#[cfg(test)]
-pub use face_session_test::*;
-pub use font_contract::*;
-#[cfg(test)]
-pub use font_contract_test::*;
-pub use font_contract_test_support::*;
 pub use font_face_record::*;
-pub use font_face_spec::*;
-pub use font_weight_spec::*;
 pub use inline_box_input::*;
 pub use inline_object_input::*;
 pub use js_coerce::*;
@@ -120,16 +87,11 @@ pub use plan_schema::*;
 #[cfg(test)]
 pub use plan_schema_test::*;
 pub use plan_style_delta::*;
-pub use replay_key::*;
-#[cfg(test)]
-pub use replay_key_test::*;
 pub use revision::*;
-pub use session_face_spec::*;
 pub use snapshot_table_binary::*;
 #[cfg(test)]
 pub use snapshot_table_binary_test::*;
 pub use snapshot_table_test_support::*;
-pub use snapshot_typography::*;
 pub use style_row::*;
 pub use table_data::*;
 pub use table_input::*;

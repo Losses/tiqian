@@ -506,10 +506,10 @@ impl PlanJsonNumber {
     }
 
     pub(crate) fn plan_json_number_compare_digit_strings(a: &UStr, b: &UStr) -> u32 {
-    let __units11 = u_string::units(&b);
     let __units10 = u_string::units(&a);
-    let __count11 = u_string::unit_count(&b);
+    let __units11 = u_string::units(&b);
     let __count10 = u_string::unit_count(&a);
+    let __count11 = u_string::unit_count(&b);
         if __count10 != __count11 {
             return u32::wrapping_sub(__count10, __count11);
         }

@@ -7,10 +7,11 @@
 -cp .haxelib/boring/git/samples
 -cp engine-haxe/src
 -cp engine-haxe/macros
+-cp shared-haxe/src
 --macro haxe.macro.Compiler.addGlobalMetadata('org.tiqian', '@:build(std.RecordMember.build())')
 -cp .haxelib/boring/git/packages/compiler/reflaxe/ts/std-shadow
 -cp .haxelib/boring/git/packages/compiler/reflaxe/ts
---macro Intercept.run(['engine-haxe/src', '.haxelib/boring/git/samples'])
+--macro Intercept.run(['engine-haxe/src', '.haxelib/boring/git/samples', 'shared-haxe/src/org/tiqian/shared/prepared_dom'])
 --macro tscompiler.Compiler.use()
 -D ts-test-runner=bun
 -D runtime-import=@tiqian/runtime
@@ -48,15 +49,11 @@ org.tiqian.protocol.FontContractTest
 org.tiqian.protocol.FaceInfo
 org.tiqian.protocol.ContextFingerprint
 org.tiqian.protocol.ContextFingerprintTest
-org.tiqian.shared.html.HtmlScan
-org.tiqian.shared.html.DomParser
-org.tiqian.shared.html.CompoundSelector
-org.tiqian.shared.html.HtmlScanTest
-org.tiqian.shared.html.DomParserTest
-org.tiqian.shared.html.CompoundSelectorTest
-org.tiqian.shared.fontface.FontFaceBoundaries
-org.tiqian.shared.fontface.FontFaceBoundaryException
-org.tiqian.shared.snapshot.SnapshotSource
-org.tiqian.shared.SnapshotValueStyle
-org.tiqian.shared.ValueStyleInterner
-org.tiqian.shared.SnapshotValueStyleTest
+org.tiqian.shared.prepared_dom.Markup
+org.tiqian.shared.prepared_dom.MarkupTest
+org.tiqian.shared.prepared_dom.PreparedDom
+org.tiqian.shared.prepared_dom.Evidence
+org.tiqian.shared.prepared_dom.EvidenceTest
+org.tiqian.shared.prepared_dom.PreparedArtifact
+org.tiqian.shared.prepared_dom.PreparedArtifactTest
+org.tiqian.shared.prepared_dom.PreparedDomTest

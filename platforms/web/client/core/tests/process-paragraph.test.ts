@@ -679,10 +679,10 @@ test("10. preparedDomEnabled gate dissolved (2026-08-27 core-neutral wave): with
   }, { layoutWorker });
 });
 
-test("11. installed layout worker channel with an empty replay session reads as no reusable plan and the direct path proceeds", () => {
-  // installBridge installs the layout worker channel at import time, so the
-  // channel is present; the empty replay session reads as no reusable plan
-  // and the snapshot-session layout falls back to the browser path.
+test("11. absent layout worker channel reads as no reusable plan and the direct path proceeds", () => {
+  // The registered replay session stays empty, so after the absent worker
+  // channel reads as no plan the snapshot-session layout misses its shaping
+  // supply and completes through the browser fallback retry.
   const unregister = registerEmptyReplaySession("session-1");
   try {
     withEnv(() => {
@@ -694,10 +694,9 @@ test("11. installed layout worker channel with an empty replay session reads as 
 
       processParagraph(context, asElement(paragraph));
 
-      // installBridge installed the channel at import time, so it is present
-      // here; the empty replay session reads as no reusable plan and the
-      // direct path runs the real prepare and commit.
-      assert.ok(globalServices().coordination.layoutWorker);
+      // No layout worker channel is installed, so the direct path ran the
+      // real prepare and commit.
+      assert.ok(!globalServices().coordination.layoutWorker);
       assert.equal(context.contextState.paragraphs.length, 1);
       assert.equal(context.diagnosis.issues.length, 0);
     });

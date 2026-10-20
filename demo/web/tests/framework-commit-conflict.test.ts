@@ -442,12 +442,12 @@ function startFixtureServer(svelteComponents: SvelteComponents): Promise<Server>
         // Module workers do not see the document import map, so the dev-tree
         // layout worker in core gets its bare "@tiqian/ffi" import
         // rewritten to the absolute /npm-ffi/ URL served below.
-        if (file === join(npmCoreDir, "src/engine/layout-worker.js")) {
+        if (file === join(npmCoreDir, "layout-worker.js")) {
           const source: string = data.toString("utf8");
           const occurrences: number = source.split('from "@tiqian/ffi"').length - 1;
           assert.ok(occurrences <= 1, `unexpected engine import count ${occurrences}`);
           if (occurrences === 1) {
-            send(source.replace('from "@tiqian/ffi"', 'from "/npm-ffi/facade.mjs"'), type);
+            send(source.replace('from "@tiqian/ffi"', 'from "/npm-ffi/Tiqian-tiqian-ffi-js.mjs"'), type);
             return;
           }
         }
@@ -476,7 +476,7 @@ function startFixtureServer(svelteComponents: SvelteComponents): Promise<Server>
     "@tiqian/prose/element": "/npm/element.js",
     "@tiqian/prose/": "/npm/",
     "@tiqian/core/": "/core/",
-    "@tiqian/ffi": "/npm-ffi/facade.mjs",
+    "@tiqian/ffi": "/npm-ffi/Tiqian-tiqian-ffi-js.mjs",
     "svelte": "/svelte/src/index-client.js",
     "svelte/internal/client": "/svelte/src/internal/client/index.js",
     "svelte/internal/disclose-version": "/svelte/src/internal/disclose-version.js",
