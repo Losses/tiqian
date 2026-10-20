@@ -4,6 +4,7 @@
 // object shapes the js API promises. File reading and URL resolution stay
 // here: the crate never touches the filesystem.
 
+import { createHash } from "node:crypto";
 import { readFileSync } from "node:fs";
 import { readFile } from "node:fs/promises";
 import { resolve } from "node:path";
@@ -11,7 +12,11 @@ import { fileURLToPath, pathToFileURL } from "node:url";
 
 import { addon } from "./load.js";
 import { createCacheBridge, type CacheBridge } from "./cache.js";
-import { renderPreparedParagraph as sharedRenderPreparedParagraph } from "@tiqian/prose/prepared-dom";
+import { stableStringify } from "./stable-stringify.js";
+import {
+  renderPreparedParagraph as sharedRenderPreparedParagraph,
+  renderPreparedParagraphArtifact as sharedRenderPreparedParagraphArtifact,
+} from "@tiqian/prose/prepared-dom";
 
 const SHARED_RUNTIME_STYLE = readFileSync(
   new URL(import.meta.resolve("@tiqian/core/styles.css")),
@@ -397,6 +402,52 @@ function freezeEntry(entry: PreparedEntry): PreparedEntry {
 }
 
 /**
+ * Replays the shared prepared-DOM renderer in Node to recompute the html field
+ * and the renderArtifactSha256 field for one prepared entry. The options replay
+ * the exact set precomputer.rs builds in render_options (precomputer.rs L305-327)
+ * before handing the plan to render_prepared_paragraph_artifact_from_plan:
+ * semantics, inlineBoxes, renderTextSpans and sourceText are supplied, while
+ * cjkStrongSemantics and styleClassFor stay unset. The options value carries a
+ * cast because the shared module declares its option types in a normalized
+ * form; the runtime values entry.semantics, entry.inlineBoxes and
+ * entry.renderTextSpans carry back are the raw objects the Rust renderer fed the
+ * shared renderer, so the replay is byte-faithful.
+ */
+function computeRenderArtifact(
+  entry: Extract<PreparedEntry, { readonly status: "prepared" }>,
+): { html: string; renderArtifactSha256: string } {
+  if (!isSharedPlanInput(entry.plan)) {
+    throw new TypeError("prepareParagraph returned a prepared entry without a renderable plan");
+  }
+  const rendered = sharedRenderPreparedParagraphArtifact(entry.plan, entry.typography.locale, {
+    sourceText: entry.sourceText,
+    semantics: entry.semantics,
+    renderTextSpans: entry.renderTextSpans,
+    inlineBoxes: entry.inlineBoxes,
+  } as unknown as NonNullable<Parameters<typeof sharedRenderPreparedParagraphArtifact>[2]>);
+  return {
+    html: rendered.html,
+    renderArtifactSha256: createHash("sha256")
+      .update(stableStringify(rendered.artifact))
+      .digest("hex"),
+  };
+}
+
+/**
+ * Overwrites the render fields of a prepared entry with the Node-computed
+ * values, then freezes the entry. Unsupported entries pass through untouched;
+ * the font-contract lanes keep their own freezeEntry call and never reach this
+ * helper.
+ */
+function backfillRenderFields(entry: PreparedEntry): PreparedEntry {
+  if (entry.status !== "prepared") {
+    return freezeEntry(entry);
+  }
+  const { html, renderArtifactSha256 } = computeRenderArtifact(entry);
+  return freezeEntry({ ...entry, html, renderArtifactSha256 });
+}
+
+/**
  * Creates a precomputer from explicit faces or a host font stylesheet. The
  * typography is normalized in Rust; every named validation error of the js
  * implementation is thrown at the same step.
@@ -416,14 +467,14 @@ export async function createPrecomputer(options: CreatePrecomputerOptions): Prom
     renderFontFamilies: Object.freeze(info.renderFontFamilies),
     cache: createCacheBridge(handle),
     async prepareParagraph(input: SnapshotParagraphInput): Promise<PreparedEntry> {
-      return freezeEntry(
+      return backfillRenderFields(
         parse<PreparedEntry>(addon.prepareParagraph(handle, JSON.stringify(input ?? {}))),
       );
     },
     async prepareParagraphs(inputs: readonly SnapshotParagraphInput[]): Promise<PreparedEntry[]> {
       return parse<PreparedEntry[]>(
         addon.prepareParagraphs(handle, JSON.stringify(Array.from(inputs ?? []))),
-      ).map(freezeEntry);
+      ).map(backfillRenderFields);
     },
     async prepareFontContract(input: FontContractInput): Promise<PreparedEntry> {
       return freezeEntry(
