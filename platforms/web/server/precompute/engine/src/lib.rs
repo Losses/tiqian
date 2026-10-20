@@ -18,7 +18,6 @@ pub mod font_face;
 pub mod font_record;
 pub mod font_record_cache;
 pub mod font_source;
-pub mod html_parse;
 pub mod js_compat;
 pub mod json;
 pub mod metrics;
