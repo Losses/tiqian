@@ -9,7 +9,6 @@ use neon::types::buffer::TypedArray;
 use tiqian_precompute::emit;
 use tiqian_precompute::font_record::{FontFaceSpec, FontWeightSpec};
 use tiqian_precompute::js_compat::trunc_sat_i32;
-use tiqian_precompute::js_compat::trunc_sat_u32;
 use tiqian_precompute::js_compat::trunc_sat_usize;
 use tiqian_precompute::json::Json;
 use tiqian_precompute::session::CaptureEvidence;
@@ -17,6 +16,7 @@ use tiqian_precompute::session::{
     create_font_session as create_session_impl, MetricsInput, SessionFaceSpec, SessionOptions,
     ShapeInput, BACKEND_REVISION, HARFBUZZ_VERSION,
 };
+use tiqian_precompute::source_boundaries::{BoundaryStyle, BoundaryTextSpan};
 
 use tiqian_precompute::engine_bridge;
 use tiqian_precompute::paragraph::{
@@ -44,7 +44,6 @@ pub(crate) struct FaceSpecOwned {
     pub weight: FontWeightSpec,
     pub style: String,
     pub unicode_range: Option<String>,
-    pub unicode_ranges: Option<Vec<(u32, u32)>>,
     pub source_order: Option<f64>,
 }
 
@@ -86,7 +85,6 @@ pub(crate) fn read_face_arguments(
                 .get::<Option<String>>()?
                 .unwrap_or_else(|| "normal".to_string()),
             unicode_range: face.prop(cx, "unicodeRange").get::<Option<String>>()?,
-            unicode_ranges: read_unicode_ranges(cx, &face)?,
             source_order: face.prop(cx, "sourceOrder").get::<Option<f64>>()?,
         });
     }
@@ -109,7 +107,6 @@ pub(crate) fn session_face_specs<'a>(
                 weight: face.weight.clone(),
                 style: face.style.as_str(),
                 unicode_range: face.unicode_range.as_deref(),
-                unicode_ranges: face.unicode_ranges.clone(),
                 source_order: 0,
             },
             source_order: face.source_order,
@@ -169,32 +166,6 @@ pub(crate) fn read_weight_spec(
     } else {
         Ok(FontWeightSpec::Single(None))
     }
-}
-
-/// Reads the pre-parsed unicodeRanges array the Node session layer assembles
-/// from the shared-gen parseUnicodeRange. Each element is a [start, end] pair
-/// of code points.
-pub(crate) fn read_unicode_ranges(
-    cx: &mut FunctionContext,
-    face: &Handle<JsObject>,
-) -> NeonResult<Option<Vec<(u32, u32)>>> {
-    let value = face.prop(&mut *cx, "unicodeRanges").get::<Handle<JsValue>>()?;
-    if value.is_a::<JsNull, _>(cx) || value.is_a::<JsUndefined, _>(cx) {
-        return Ok(None);
-    }
-    let array = value.downcast_or_throw::<JsArray, _>(cx)?;
-    let pairs = array.to_vec(cx)?;
-    let mut ranges = Vec::with_capacity(pairs.len());
-    for pair in pairs {
-        let items = pair.downcast_or_throw::<JsArray, _>(cx)?.to_vec(cx)?;
-        if items.len() != 2 {
-            return cx.throw_error("InvalidUnicodeRangePair");
-        }
-        let start = trunc_sat_u32(items[0].downcast_or_throw::<JsNumber, _>(cx)?.value(cx));
-        let end = trunc_sat_u32(items[1].downcast_or_throw::<JsNumber, _>(cx)?.value(cx));
-        ranges.push((start, end));
-    }
-    Ok(Some(ranges))
 }
 
 pub fn session_faces(mut cx: FunctionContext) -> JsResult<JsString> {
@@ -287,6 +258,52 @@ pub fn render_families(mut cx: FunctionContext) -> JsResult<JsString> {
         Ok(Err(error)) => cx.throw_error(error),
         Err(error) => cx.throw_error(error),
     }
+}
+
+/// `sourceBoundaries(sessionId, text, baseStyle, textSpans)`.
+pub fn source_boundaries(mut cx: FunctionContext) -> JsResult<JsString> {
+    let session_id = cx.argument::<JsString>(0)?.value(&mut cx);
+    let text = cx.argument::<JsString>(1)?.value(&mut cx);
+    let base_style = cx.argument::<JsObject>(2)?;
+    let spans = cx.argument::<JsArray>(3)?;
+
+    let base = read_boundary_style(&mut cx, &base_style)?;
+    let mut parsed: Vec<BoundaryTextSpan> = Vec::with_capacity(array_capacity(spans.len(&mut cx)));
+    for value in spans.to_vec(&mut cx)? {
+        let span = value.downcast_or_throw::<JsObject, _>(&mut cx)?;
+        let style_value = span.prop(&mut cx, "style").get::<Handle<JsValue>>()?;
+        let style = style_value.downcast_or_throw::<JsObject, _>(&mut cx)?;
+        parsed.push(BoundaryTextSpan {
+            start: span.prop(&mut cx, "start").get::<f64>()?,
+            end: span.prop(&mut cx, "end").get::<f64>()?,
+            style: read_boundary_style(&mut cx, &style)?,
+        });
+    }
+
+    match registry::with_session(&session_id, |session| {
+        session.source_boundaries(&text, &base, &parsed)
+    }) {
+        Ok(Ok(boundaries)) => {
+            Ok(cx.string(Json::Arr(boundaries.iter().map(|v| Json::Num(*v)).collect()).render()))
+        }
+        Ok(Err(error)) => cx.throw_error(error),
+        Err(error) => cx.throw_error(error),
+    }
+}
+
+fn read_boundary_style(
+    cx: &mut FunctionContext,
+    style: &Handle<JsObject>,
+) -> NeonResult<BoundaryStyle> {
+    Ok(BoundaryStyle {
+        font_families: read_property_string_array(cx, style, "fontFamilies")?,
+        font_size_px: style.prop(&mut *cx, "fontSizePx").get::<f64>()?,
+        font_weight: style.prop(&mut *cx, "fontWeight").get::<f64>()?,
+        italic: style.prop(&mut *cx, "italic").get::<bool>()?,
+        baseline_shift_px: style
+            .prop(&mut *cx, "baselineShiftPx")
+            .get::<Option<f64>>()?,
+    })
 }
 
 /// `precomputeParagraph(sessionId, text, maxWidthPx, families, fontSizePx,
@@ -475,4 +492,13 @@ pub(crate) fn read_string_elements(
         items.push(value.downcast_or_throw::<JsString, _>(cx)?.value(cx));
     }
     Ok(items)
+}
+
+fn read_property_string_array(
+    cx: &mut FunctionContext,
+    object: &Handle<JsObject>,
+    key: &str,
+) -> NeonResult<Vec<String>> {
+    let array = object.prop(&mut *cx, key).get::<Handle<JsArray>>()?;
+    read_string_elements(cx, &array)
 }

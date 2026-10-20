@@ -38,19 +38,18 @@ impl QuotePair {
     }
 }
 
-fn quote_pair_order_0(v: &QuoteType) -> i32 {
+fn quote_pair_quote_type_order(v: &QuoteType) -> i32 {
     match v {
-        QuoteType::Double => 0,
         QuoteType::Single => 1,
+        QuoteType::Double => 0,
     }
 }
-
 pub fn compare_quote_pair(a: &QuotePair, b: &QuotePair) -> i32 {
-    let cmp_open_index = match i32::from_ne_bytes((*(&a.open_index)).to_ne_bytes()).cmp(&i32::from_ne_bytes((*(&b.open_index)).to_ne_bytes())) { core::cmp::Ordering::Less => -1, core::cmp::Ordering::Equal => 0, core::cmp::Ordering::Greater => 1 };
+    let cmp_open_index = if a.open_index < b.open_index { -1 } else if a.open_index > b.open_index { 1 } else { 0 };
     if cmp_open_index != 0 { return cmp_open_index; }
-    let cmp_close_index = match i32::from_ne_bytes((*(&a.close_index)).to_ne_bytes()).cmp(&i32::from_ne_bytes((*(&b.close_index)).to_ne_bytes())) { core::cmp::Ordering::Less => -1, core::cmp::Ordering::Equal => 0, core::cmp::Ordering::Greater => 1 };
+    let cmp_close_index = if a.close_index < b.close_index { -1 } else if a.close_index > b.close_index { 1 } else { 0 };
     if cmp_close_index != 0 { return cmp_close_index; }
-    let cmp_quote_type = match quote_pair_order_0(&a.quote_type).cmp(&quote_pair_order_0(&b.quote_type)) { core::cmp::Ordering::Less => -1, core::cmp::Ordering::Equal => 0, core::cmp::Ordering::Greater => 1 };
+    let cmp_quote_type = match quote_pair_quote_type_order(&a.quote_type).cmp(&quote_pair_quote_type_order(&b.quote_type)) { core::cmp::Ordering::Less => -1, core::cmp::Ordering::Equal => 0, core::cmp::Ordering::Greater => 1 };
     if cmp_quote_type != 0 { return cmp_quote_type; }
     0
 }
@@ -78,25 +77,24 @@ impl QuoteRoleDecision {
     }
 }
 
-fn quote_role_decision_order_0(v: &FontRole) -> i32 {
+fn quote_role_decision_role_order(v: &FontRole) -> i32 {
     match v {
+        FontRole::Unknown => 5,
+        FontRole::Symbol => 3,
+        FontRole::LatinText => 2,
+        FontRole::Emoji => 4,
         FontRole::CjkText => 0,
         FontRole::CjkPunctuation => 1,
-        FontRole::LatinText => 2,
-        FontRole::Symbol => 3,
-        FontRole::Emoji => 4,
-        FontRole::Unknown => 5,
     }
 }
-
 pub fn compare_quote_role_decision(a: &QuoteRoleDecision, b: &QuoteRoleDecision) -> i32 {
-    let cmp_index = match i32::from_ne_bytes((*(&a.index)).to_ne_bytes()).cmp(&i32::from_ne_bytes((*(&b.index)).to_ne_bytes())) { core::cmp::Ordering::Less => -1, core::cmp::Ordering::Equal => 0, core::cmp::Ordering::Greater => 1 };
+    let cmp_index = if a.index < b.index { -1 } else if a.index > b.index { 1 } else { 0 };
     if cmp_index != 0 { return cmp_index; }
-    let cmp_role = match quote_role_decision_order_0(&a.role).cmp(&quote_role_decision_order_0(&b.role)) { core::cmp::Ordering::Less => -1, core::cmp::Ordering::Equal => 0, core::cmp::Ordering::Greater => 1 };
+    let cmp_role = match quote_role_decision_role_order(&a.role).cmp(&quote_role_decision_role_order(&b.role)) { core::cmp::Ordering::Less => -1, core::cmp::Ordering::Equal => 0, core::cmp::Ordering::Greater => 1 };
     if cmp_role != 0 { return cmp_role; }
-    let cmp_source = SortedTable::sorted_table_compare_strings((&a.source).as_ustr(), (&b.source).as_ustr());
+    let cmp_source = SortedTable::sorted_table_compare_strings(a.source.as_ustr(), b.source.as_ustr());
     if cmp_source != 0 { return cmp_source; }
-    let cmp_reason = SortedTable::sorted_table_compare_strings((&a.reason).as_ustr(), (&b.reason).as_ustr());
+    let cmp_reason = SortedTable::sorted_table_compare_strings(a.reason.as_ustr(), b.reason.as_ustr());
     if cmp_reason != 0 { return cmp_reason; }
     0
 }
@@ -117,8 +115,10 @@ impl QuotePairAnalyzer {
         let mut stack: Vec<OpenQuoteEntry> = vec![];
         let mut pairs: Vec<QuotePair> = vec![];
         let mut index = 0u32;
+        let __units1 = u_string::units(&text);
+        let __count1 = u_string::unit_count(&text);
         while (i32::from_ne_bytes(((index) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((__count) as i32).to_ne_bytes())) {
-            let c = u_string::unit_at_from(&__units, index).unwrap_or(0);
+            let c = u_string::unit_at_from(&__units1, index).unwrap_or(0);
             if c == 8220 {
                 stack.push(OpenQuoteEntry { index: index, r#type: QuoteType::Double });
             } else {
@@ -184,7 +184,7 @@ impl QuotePairAnalyzer {
     pub fn quote_pair_analyzer_is_digit_bound_closing_quote(text: &UStr, index: u32) -> Result<bool, TextRangeError> {
     let __units2 = u_string::units(&text);
     let __count2 = u_string::unit_count(&text);
-        return Ok((matches!(u_string::unit_at_from(&__units2, index).as_ref(), Some(__v) if __v == &(8217)) || matches!(u_string::unit_at_from(&__units2, index).as_ref(), Some(__v) if __v == &(8221))) && QuotePairAnalyzer::quote_pair_analyzer_code_point_before(text, index).is_some() && UnicodeNumber::unicode_number_contains(*(QuotePairAnalyzer::quote_pair_analyzer_code_point_before(text, index)).as_ref().unwrap())?);
+        return Ok((u_string::unit_at_from(&__units2, index).as_ref().map_or(false, |v| v == &(8217)) || u_string::unit_at_from(&__units2, index).as_ref().map_or(false, |v| v == &(8221))) && QuotePairAnalyzer::quote_pair_analyzer_code_point_before(text, index).is_some() && UnicodeNumber::unicode_number_contains(*(QuotePairAnalyzer::quote_pair_analyzer_code_point_before(text, index)).as_ref().unwrap())?);
     }
 
     pub fn quote_pair_analyzer_is_non_cjk_word_internal_quote_pair(text: &UStr, pair: QuotePair) -> Result<bool, TextRangeError> {

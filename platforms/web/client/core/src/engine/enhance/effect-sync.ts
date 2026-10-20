@@ -107,6 +107,16 @@ function createEffectSync(
     for (const paragraph of taintedParagraphs) contentTainted.add(paragraph);
     if (!paragraphSignal && !structureSignal) return;
     stateMachine.invalidate(InvalidationReason.ContentDrift);
+    if (structureSignal && (!stateMachine.workInFlight || stateMachine.runtimeActive)) {
+      // StructureChangesCommitDirectly: a childList record outside every
+      // paragraph cannot be engine render output in the steady state, so no
+      // probe is needed and waiting for one would only delay candidate
+      // adoption. During initial enhancement the engine still installs its
+      // own scaffolding at root level, so an in-flight signal there keeps
+      // the probe path.
+      hooks.scheduleResponsiveGeometryCommit();
+      return;
+    }
     if (stateMachine.workInFlight) {
       // MutationObserverDeliveryIsAsync: records land in a microtask after the
       // engine's synchronous commit batch, so a captured job may already be

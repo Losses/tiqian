@@ -14,10 +14,7 @@
 // Ambient global declarations pulled in via import type from owner modules.
 import type { PrepareLayoutResult } from "./prepare-paragraph-layout.js";
 import type { CommitResult } from "./commit-prepared-paragraph.js";
-import {
-  commitPreparedParagraph,
-  commitWorkerPreparedParagraph,
-} from "./commit-prepared-paragraph.js";
+import { commitPreparedParagraph } from "./commit-prepared-paragraph.js";
 import type { TrackedParagraph } from "./enhance/context-state.js";
 import type { DiagnosisIssueRecord } from "./context/diagnosis-manager.js";
 import type { EnhancedElementContext } from "./context/enhance-context.js";
@@ -35,13 +32,9 @@ import {
   preparedSemanticReplayJson,
 } from "./prepared-metadata.js";
 
-type RelayoutSessionProcessItemInput =
-  | PrepareLayoutResult
-  | { kind: "worker-plan"; workerPlan: string };
-
 type RelayoutSessionProcessItemFn = (
   index: number,
-  preparation: RelayoutSessionProcessItemInput,
+  preparation: PrepareLayoutResult,
 ) => void;
 type RelayoutSessionFinishFn = () => void;
 type RelayoutSessionRollbackFn = () => void;
@@ -75,7 +68,7 @@ export function openRelayoutSession(context: EnhancedElementContext): RelayoutSe
     // ProcessItem: dispatches layout preparation for a single paragraph item.
     // Unchanged preparations are no-ops. Unsupported and ready preparations
     // capture live raw-DOM backup snapshots before commit or restore.
-    function processItem(index: number, preparation: RelayoutSessionProcessItemInput): void {
+    function processItem(index: number, preparation: PrepareLayoutResult): void {
       const paragraph = paragraphs[index];
       if (preparation.kind === 'unchanged') {
         return;
@@ -85,27 +78,6 @@ export function openRelayoutSession(context: EnhancedElementContext): RelayoutSe
         unsupported.push([paragraph, preparation]);
         rawDomRestoreParagraph(context, paragraph.source);
         return;
-      }
-      if (preparation.kind === 'worker-plan') {
-        snapshots.set(paragraph, rawDomCaptureLive(context, paragraph.source, paragraph.lastMeasure));
-        const workerCommit: CommitResult | null = commitWorkerPreparedParagraph(
-          context,
-          {
-            paragraph: paragraph,
-            workerPlan: preparation.workerPlan,
-            inlineObjectMetaJson: preparedInlineObjectMetaJson(paragraph.lowered),
-            cjkStrongSemanticsJson: preparedCjkStrongSemanticsJson(paragraph.lowered),
-          }
-        );
-        if (workerCommit != null) {
-          unsupported.push([paragraph, workerCommit as DiagnosisIssueRecord]);
-          rawDomRestoreParagraph(context, paragraph.source);
-        } else {
-          const measure = paragraph.lastMeasure;
-          if (measure != null) {
-            successful.push([paragraph, measure]);
-          }
-        }
       }
       if (preparation.kind === 'ready') {
         snapshots.set(paragraph, rawDomCaptureLive(context, paragraph.source, paragraph.lastMeasure));

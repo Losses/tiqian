@@ -26,9 +26,9 @@ impl FontRoleContext {
 }
 
 pub fn compare_font_role_context(a: &FontRoleContext, b: &FontRoleContext) -> i32 {
-    let cmp_locale = SortedTable::sorted_table_compare_strings((&a.locale).as_ustr(), (&b.locale).as_ustr());
+    let cmp_locale = SortedTable::sorted_table_compare_strings(a.locale.as_ustr(), b.locale.as_ustr());
     if cmp_locale != 0 { return cmp_locale; }
-    let cmp_region_hint = match (&a.region_hint, &b.region_hint) { (None, None) => 0, (None, Some(_)) => -1, (Some(_), None) => 1, (Some(av), Some(bv)) => SortedTable::sorted_table_compare_strings((av).as_ustr(), (bv).as_ustr()) };
+    let cmp_region_hint = match (&a.region_hint, &b.region_hint) { (None, None) => 0, (None, Some(_)) => -1, (Some(_), None) => 1, (Some(av), Some(bv)) => match av.cmp(bv) { core::cmp::Ordering::Less => -1, core::cmp::Ordering::Equal => 0, core::cmp::Ordering::Greater => 1 } };
     if cmp_region_hint != 0 { return cmp_region_hint; }
     0
 }

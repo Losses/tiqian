@@ -5,11 +5,10 @@
 
 use std::sync::Arc;
 
+use crate::font_face::css_weight_matched;
 use crate::font_record::FontRecord;
 use crate::js_compat::js_number_string;
-use crate::selection::{
-    css_weight_matched, face_candidates, find_face, no_exact_font_face_message,
-};
+use crate::selection::{face_candidates, find_face, no_exact_font_face_message};
 use crate::shaping::FontEngine;
 use crate::NamedError;
 

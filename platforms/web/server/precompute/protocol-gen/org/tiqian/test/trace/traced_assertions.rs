@@ -1995,7 +1995,7 @@ impl TracedAssertions {
         let mut buf = Vec::<u16>::new();
         if let Some(&unit) = buf.last() {
             if unit >= 55296 && unit <= 56319 && !UString::from("[").is_empty() {
-                if !match (UString::from("[")).encode_utf16().next() { Some(head) => head >= 56320 && head <= 57343, None => false } {
+                if !UString::from("[").encode_utf16().next().map_or(false, |head| head >= 56320 && head <= 57343) {
                     return Err(UStringFault::UnpairedSurrogate { unit: u32::from(unit) });
                 }
             }
@@ -2006,7 +2006,7 @@ impl TracedAssertions {
             if i32::from_ne_bytes(((i) as i32).to_ne_bytes()) > (0) {
                 if let Some(&unit) = buf.last() {
                     if unit >= 55296 && unit <= 56319 && !UString::from(", ").is_empty() {
-                        if !match (UString::from(", ")).encode_utf16().next() { Some(head) => head >= 56320 && head <= 57343, None => false } {
+                        if !UString::from(", ").encode_utf16().next().map_or(false, |head| head >= 56320 && head <= 57343) {
                             return Err(UStringFault::UnpairedSurrogate { unit: u32::from(unit) });
                         }
                     }
@@ -2015,7 +2015,7 @@ impl TracedAssertions {
             }
             if let Some(&unit) = buf.last() {
                 if unit >= 55296 && unit <= 56319 && !{ let mut __s = UString::new(); __s += &(UString::from("")); __s += &(UString::from(format!("{}", crate::runtime::int_text::IntText::int_text(values[usize::try_from(i).unwrap_or(0)])).as_str())); __s }.is_empty() {
-                    if !match ({ let mut __s = UString::new(); __s += &(UString::from("")); __s += &(UString::from(format!("{}", crate::runtime::int_text::IntText::int_text(values[usize::try_from(i).unwrap_or(0)])).as_str())); __s }).encode_utf16().next() { Some(head) => head >= 56320 && head <= 57343, None => false } {
+                    if !{ let mut __s = UString::new(); __s += &(UString::from("")); __s += &(UString::from(format!("{}", crate::runtime::int_text::IntText::int_text(values[usize::try_from(i).unwrap_or(0)])).as_str())); __s }.encode_utf16().next().map_or(false, |head| head >= 56320 && head <= 57343) {
                         return Err(UStringFault::UnpairedSurrogate { unit: u32::from(unit) });
                     }
                 }
@@ -2025,7 +2025,7 @@ impl TracedAssertions {
         }
         if let Some(&unit) = buf.last() {
             if unit >= 55296 && unit <= 56319 && !UString::from("]").is_empty() {
-                if !match (UString::from("]")).encode_utf16().next() { Some(head) => head >= 56320 && head <= 57343, None => false } {
+                if !UString::from("]").encode_utf16().next().map_or(false, |head| head >= 56320 && head <= 57343) {
                     return Err(UStringFault::UnpairedSurrogate { unit: u32::from(unit) });
                 }
             }
@@ -2102,7 +2102,7 @@ impl TracedAssertions {
         let mut buf = Vec::<u16>::new();
         if let Some(&unit) = buf.last() {
             if unit >= 55296 && unit <= 56319 && !UString::from("[").is_empty() {
-                if !match (UString::from("[")).encode_utf16().next() { Some(head) => head >= 56320 && head <= 57343, None => false } {
+                if !UString::from("[").encode_utf16().next().map_or(false, |head| head >= 56320 && head <= 57343) {
                     return Err(UStringFault::UnpairedSurrogate { unit: u32::from(unit) });
                 }
             }
@@ -2113,7 +2113,7 @@ impl TracedAssertions {
             if i32::from_ne_bytes(((i) as i32).to_ne_bytes()) > (0) {
                 if let Some(&unit) = buf.last() {
                     if unit >= 55296 && unit <= 56319 && !UString::from(", ").is_empty() {
-                        if !match (UString::from(", ")).encode_utf16().next() { Some(head) => head >= 56320 && head <= 57343, None => false } {
+                        if !UString::from(", ").encode_utf16().next().map_or(false, |head| head >= 56320 && head <= 57343) {
                             return Err(UStringFault::UnpairedSurrogate { unit: u32::from(unit) });
                         }
                     }
@@ -2122,7 +2122,7 @@ impl TracedAssertions {
             }
             if let Some(&unit) = buf.last() {
                 if unit >= 55296 && unit <= 56319 && !(values[usize::try_from(i).unwrap_or(0)]).clone().to_string().is_empty() {
-                    if !match ((values[usize::try_from(i).unwrap_or(0)]).clone().to_string()).encode_utf16().next() { Some(head) => head >= 56320 && head <= 57343, None => false } {
+                    if !(values[usize::try_from(i).unwrap_or(0)]).clone().to_string().encode_utf16().next().map_or(false, |head| head >= 56320 && head <= 57343) {
                         return Err(UStringFault::UnpairedSurrogate { unit: u32::from(unit) });
                     }
                 }
@@ -2132,7 +2132,7 @@ impl TracedAssertions {
         }
         if let Some(&unit) = buf.last() {
             if unit >= 55296 && unit <= 56319 && !UString::from("]").is_empty() {
-                if !match (UString::from("]")).encode_utf16().next() { Some(head) => head >= 56320 && head <= 57343, None => false } {
+                if !UString::from("]").encode_utf16().next().map_or(false, |head| head >= 56320 && head <= 57343) {
                     return Err(UStringFault::UnpairedSurrogate { unit: u32::from(unit) });
                 }
             }
@@ -2227,7 +2227,7 @@ impl TracedAssertions {
         let mut buf = Vec::<u16>::new();
         if let Some(&unit) = buf.last() {
             if unit >= 55296 && unit <= 56319 && !UString::from("[").is_empty() {
-                if !match (UString::from("[")).encode_utf16().next() { Some(head) => head >= 56320 && head <= 57343, None => false } {
+                if !UString::from("[").encode_utf16().next().map_or(false, |head| head >= 56320 && head <= 57343) {
                     return Err(UStringFault::UnpairedSurrogate { unit: u32::from(unit) });
                 }
             }
@@ -2238,7 +2238,7 @@ impl TracedAssertions {
             if i32::from_ne_bytes(((i) as i32).to_ne_bytes()) > (i32::from_ne_bytes(((r.start) as i32).to_ne_bytes())) {
                 if let Some(&unit) = buf.last() {
                     if unit >= 55296 && unit <= 56319 && !UString::from(", ").is_empty() {
-                        if !match (UString::from(", ")).encode_utf16().next() { Some(head) => head >= 56320 && head <= 57343, None => false } {
+                        if !UString::from(", ").encode_utf16().next().map_or(false, |head| head >= 56320 && head <= 57343) {
                             return Err(UStringFault::UnpairedSurrogate { unit: u32::from(unit) });
                         }
                     }
@@ -2247,7 +2247,7 @@ impl TracedAssertions {
             }
             if let Some(&unit) = buf.last() {
                 if unit >= 55296 && unit <= 56319 && !TestTraceRender::test_trace_render_render_int(i)?.is_empty() {
-                    if !match (TestTraceRender::test_trace_render_render_int(i)?).encode_utf16().next() { Some(head) => head >= 56320 && head <= 57343, None => false } {
+                    if !TestTraceRender::test_trace_render_render_int(i)?.encode_utf16().next().map_or(false, |head| head >= 56320 && head <= 57343) {
                         return Err(UStringFault::UnpairedSurrogate { unit: u32::from(unit) });
                     }
                 }
@@ -2257,7 +2257,7 @@ impl TracedAssertions {
         }
         if let Some(&unit) = buf.last() {
             if unit >= 55296 && unit <= 56319 && !UString::from("]").is_empty() {
-                if !match (UString::from("]")).encode_utf16().next() { Some(head) => head >= 56320 && head <= 57343, None => false } {
+                if !UString::from("]").encode_utf16().next().map_or(false, |head| head >= 56320 && head <= 57343) {
                     return Err(UStringFault::UnpairedSurrogate { unit: u32::from(unit) });
                 }
             }
@@ -2289,7 +2289,7 @@ impl TracedAssertions {
         let mut buf = Vec::<u16>::new();
         if let Some(&unit) = buf.last() {
             if unit >= 55296 && unit <= 56319 && !UString::from("[").is_empty() {
-                if !match (UString::from("[")).encode_utf16().next() { Some(head) => head >= 56320 && head <= 57343, None => false } {
+                if !UString::from("[").encode_utf16().next().map_or(false, |head| head >= 56320 && head <= 57343) {
                     return Err(UStringFault::UnpairedSurrogate { unit: u32::from(unit) });
                 }
             }
@@ -2300,7 +2300,7 @@ impl TracedAssertions {
             if i32::from_ne_bytes(((i) as i32).to_ne_bytes()) > (0) {
                 if let Some(&unit) = buf.last() {
                     if unit >= 55296 && unit <= 56319 && !UString::from(", ").is_empty() {
-                        if !match (UString::from(", ")).encode_utf16().next() { Some(head) => head >= 56320 && head <= 57343, None => false } {
+                        if !UString::from(", ").encode_utf16().next().map_or(false, |head| head >= 56320 && head <= 57343) {
                             return Err(UStringFault::UnpairedSurrogate { unit: u32::from(unit) });
                         }
                     }
@@ -2309,7 +2309,7 @@ impl TracedAssertions {
             }
             if let Some(&unit) = buf.last() {
                 if unit >= 55296 && unit <= 56319 && !TestTraceRender::test_trace_render_render_int(values.at(i32::from_ne_bytes(((i) as i32).to_ne_bytes())))?.is_empty() {
-                    if !match (TestTraceRender::test_trace_render_render_int(values.at(i32::from_ne_bytes(((i) as i32).to_ne_bytes())))?).encode_utf16().next() { Some(head) => head >= 56320 && head <= 57343, None => false } {
+                    if !TestTraceRender::test_trace_render_render_int(values.at(i32::from_ne_bytes(((i) as i32).to_ne_bytes())))?.encode_utf16().next().map_or(false, |head| head >= 56320 && head <= 57343) {
                         return Err(UStringFault::UnpairedSurrogate { unit: u32::from(unit) });
                     }
                 }
@@ -2319,7 +2319,7 @@ impl TracedAssertions {
         }
         if let Some(&unit) = buf.last() {
             if unit >= 55296 && unit <= 56319 && !UString::from("]").is_empty() {
-                if !match (UString::from("]")).encode_utf16().next() { Some(head) => head >= 56320 && head <= 57343, None => false } {
+                if !UString::from("]").encode_utf16().next().map_or(false, |head| head >= 56320 && head <= 57343) {
                     return Err(UStringFault::UnpairedSurrogate { unit: u32::from(unit) });
                 }
             }
@@ -2365,7 +2365,7 @@ impl TracedAssertions {
         let mut buf = Vec::<u16>::new();
         if let Some(&unit) = buf.last() {
             if unit >= 55296 && unit <= 56319 && !UString::from("[").is_empty() {
-                if !match (UString::from("[")).encode_utf16().next() { Some(head) => head >= 56320 && head <= 57343, None => false } {
+                if !UString::from("[").encode_utf16().next().map_or(false, |head| head >= 56320 && head <= 57343) {
                     return Err(UStringFault::UnpairedSurrogate { unit: u32::from(unit) });
                 }
             }
@@ -2376,7 +2376,7 @@ impl TracedAssertions {
             if i32::from_ne_bytes(((i) as i32).to_ne_bytes()) > (0) {
                 if let Some(&unit) = buf.last() {
                     if unit >= 55296 && unit <= 56319 && !UString::from(", ").is_empty() {
-                        if !match (UString::from(", ")).encode_utf16().next() { Some(head) => head >= 56320 && head <= 57343, None => false } {
+                        if !UString::from(", ").encode_utf16().next().map_or(false, |head| head >= 56320 && head <= 57343) {
                             return Err(UStringFault::UnpairedSurrogate { unit: u32::from(unit) });
                         }
                     }
@@ -2385,7 +2385,7 @@ impl TracedAssertions {
             }
             if let Some(&unit) = buf.last() {
                 if unit >= 55296 && unit <= 56319 && !TestTraceRender::test_trace_render_render_int(values[usize::try_from(i).unwrap_or(0)])?.is_empty() {
-                    if !match (TestTraceRender::test_trace_render_render_int(values[usize::try_from(i).unwrap_or(0)])?).encode_utf16().next() { Some(head) => head >= 56320 && head <= 57343, None => false } {
+                    if !TestTraceRender::test_trace_render_render_int(values[usize::try_from(i).unwrap_or(0)])?.encode_utf16().next().map_or(false, |head| head >= 56320 && head <= 57343) {
                         return Err(UStringFault::UnpairedSurrogate { unit: u32::from(unit) });
                     }
                 }
@@ -2395,7 +2395,7 @@ impl TracedAssertions {
         }
         if let Some(&unit) = buf.last() {
             if unit >= 55296 && unit <= 56319 && !UString::from("]").is_empty() {
-                if !match (UString::from("]")).encode_utf16().next() { Some(head) => head >= 56320 && head <= 57343, None => false } {
+                if !UString::from("]").encode_utf16().next().map_or(false, |head| head >= 56320 && head <= 57343) {
                     return Err(UStringFault::UnpairedSurrogate { unit: u32::from(unit) });
                 }
             }
@@ -2422,7 +2422,7 @@ impl TracedAssertions {
         let mut buf = Vec::<u16>::new();
         if let Some(&unit) = buf.last() {
             if unit >= 55296 && unit <= 56319 && !UString::from("[").is_empty() {
-                if !match (UString::from("[")).encode_utf16().next() { Some(head) => head >= 56320 && head <= 57343, None => false } {
+                if !UString::from("[").encode_utf16().next().map_or(false, |head| head >= 56320 && head <= 57343) {
                     return Err(UStringFault::UnpairedSurrogate { unit: u32::from(unit) });
                 }
             }
@@ -2433,7 +2433,7 @@ impl TracedAssertions {
             if i32::from_ne_bytes(((i) as i32).to_ne_bytes()) > (0) {
                 if let Some(&unit) = buf.last() {
                     if unit >= 55296 && unit <= 56319 && !UString::from(", ").is_empty() {
-                        if !match (UString::from(", ")).encode_utf16().next() { Some(head) => head >= 56320 && head <= 57343, None => false } {
+                        if !UString::from(", ").encode_utf16().next().map_or(false, |head| head >= 56320 && head <= 57343) {
                             return Err(UStringFault::UnpairedSurrogate { unit: u32::from(unit) });
                         }
                     }
@@ -2442,7 +2442,7 @@ impl TracedAssertions {
             }
             if let Some(&unit) = buf.last() {
                 if unit >= 55296 && unit <= 56319 && !TracedAssertions::traced_assertions_render_repair_option((values[usize::try_from(i).unwrap_or(0)]).clone()).is_empty() {
-                    if !match (TracedAssertions::traced_assertions_render_repair_option((values[usize::try_from(i).unwrap_or(0)]).clone())).encode_utf16().next() { Some(head) => head >= 56320 && head <= 57343, None => false } {
+                    if !TracedAssertions::traced_assertions_render_repair_option((values[usize::try_from(i).unwrap_or(0)]).clone()).encode_utf16().next().map_or(false, |head| head >= 56320 && head <= 57343) {
                         return Err(UStringFault::UnpairedSurrogate { unit: u32::from(unit) });
                     }
                 }
@@ -2452,7 +2452,7 @@ impl TracedAssertions {
         }
         if let Some(&unit) = buf.last() {
             if unit >= 55296 && unit <= 56319 && !UString::from("]").is_empty() {
-                if !match (UString::from("]")).encode_utf16().next() { Some(head) => head >= 56320 && head <= 57343, None => false } {
+                if !UString::from("]").encode_utf16().next().map_or(false, |head| head >= 56320 && head <= 57343) {
                     return Err(UStringFault::UnpairedSurrogate { unit: u32::from(unit) });
                 }
             }
@@ -2469,7 +2469,7 @@ impl TracedAssertions {
         let mut buf = Vec::<u16>::new();
         if let Some(&unit) = buf.last() {
             if unit >= 55296 && unit <= 56319 && !UString::from("[").is_empty() {
-                if !match (UString::from("[")).encode_utf16().next() { Some(head) => head >= 56320 && head <= 57343, None => false } {
+                if !UString::from("[").encode_utf16().next().map_or(false, |head| head >= 56320 && head <= 57343) {
                     return Err(UStringFault::UnpairedSurrogate { unit: u32::from(unit) });
                 }
             }
@@ -2480,7 +2480,7 @@ impl TracedAssertions {
             if i32::from_ne_bytes(((i) as i32).to_ne_bytes()) > (0) {
                 if let Some(&unit) = buf.last() {
                     if unit >= 55296 && unit <= 56319 && !UString::from(", ").is_empty() {
-                        if !match (UString::from(", ")).encode_utf16().next() { Some(head) => head >= 56320 && head <= 57343, None => false } {
+                        if !UString::from(", ").encode_utf16().next().map_or(false, |head| head >= 56320 && head <= 57343) {
                             return Err(UStringFault::UnpairedSurrogate { unit: u32::from(unit) });
                         }
                     }
@@ -2489,7 +2489,7 @@ impl TracedAssertions {
             }
             if let Some(&unit) = buf.last() {
                 if unit >= 55296 && unit <= 56319 && !(values[usize::try_from(i).unwrap_or(0)]).clone().to_string().is_empty() {
-                    if !match ((values[usize::try_from(i).unwrap_or(0)]).clone().to_string()).encode_utf16().next() { Some(head) => head >= 56320 && head <= 57343, None => false } {
+                    if !(values[usize::try_from(i).unwrap_or(0)]).clone().to_string().encode_utf16().next().map_or(false, |head| head >= 56320 && head <= 57343) {
                         return Err(UStringFault::UnpairedSurrogate { unit: u32::from(unit) });
                     }
                 }
@@ -2499,7 +2499,7 @@ impl TracedAssertions {
         }
         if let Some(&unit) = buf.last() {
             if unit >= 55296 && unit <= 56319 && !UString::from("]").is_empty() {
-                if !match (UString::from("]")).encode_utf16().next() { Some(head) => head >= 56320 && head <= 57343, None => false } {
+                if !UString::from("]").encode_utf16().next().map_or(false, |head| head >= 56320 && head <= 57343) {
                     return Err(UStringFault::UnpairedSurrogate { unit: u32::from(unit) });
                 }
             }
@@ -2814,7 +2814,7 @@ impl TracedAssertions {
         let mut line = Vec::<u16>::new();
         if let Some(&unit) = line.last() {
             if unit >= 55296 && unit <= 56319 && !name.is_empty() {
-                if !match (name).encode_utf16().next() { Some(head) => head >= 56320 && head <= 57343, None => false } {
+                if !name.encode_utf16().next().map_or(false, |head| head >= 56320 && head <= 57343) {
                     return Err(UStringFault::UnpairedSurrogate { unit: u32::from(unit) });
                 }
             }
@@ -2827,7 +2827,7 @@ impl TracedAssertions {
                 Some(__option145) => {
                     if let Some(&unit) = line.last() {
                         if unit >= 55296 && unit <= 56319 && !UString::from(" ").is_empty() {
-                            if !match (UString::from(" ")).encode_utf16().next() { Some(head) => head >= 56320 && head <= 57343, None => false } {
+                            if !UString::from(" ").encode_utf16().next().map_or(false, |head| head >= 56320 && head <= 57343) {
                                 return Err(UStringFault::UnpairedSurrogate { unit: u32::from(unit) });
                             }
                         }
@@ -2835,7 +2835,7 @@ impl TracedAssertions {
                     line.extend(UString::from(" ").encode_utf16());
                     if let Some(&unit) = line.last() {
                         if unit >= 55296 && unit <= 56319 && !(__option145.key).to_ustring().is_empty() {
-                            if !match ((__option145.key).to_ustring()).encode_utf16().next() { Some(head) => head >= 56320 && head <= 57343, None => false } {
+                            if !(__option145.key).to_ustring().encode_utf16().next().map_or(false, |head| head >= 56320 && head <= 57343) {
                                 return Err(UStringFault::UnpairedSurrogate { unit: u32::from(unit) });
                             }
                         }
@@ -2843,7 +2843,7 @@ impl TracedAssertions {
                     line.extend((__option145.key).to_ustring().encode_utf16());
                     if let Some(&unit) = line.last() {
                         if unit >= 55296 && unit <= 56319 && !UString::from("=").is_empty() {
-                            if !match (UString::from("=")).encode_utf16().next() { Some(head) => head >= 56320 && head <= 57343, None => false } {
+                            if !UString::from("=").encode_utf16().next().map_or(false, |head| head >= 56320 && head <= 57343) {
                                 return Err(UStringFault::UnpairedSurrogate { unit: u32::from(unit) });
                             }
                         }
@@ -2851,7 +2851,7 @@ impl TracedAssertions {
                     line.extend(UString::from("=").encode_utf16());
                     if let Some(&unit) = line.last() {
                         if unit >= 55296 && unit <= 56319 && !TestTraceRender::test_trace_render_canonical_numbers((__option145.value).to_ustring().as_ustr())?.is_empty() {
-                            if !match (TestTraceRender::test_trace_render_canonical_numbers((__option145.value).to_ustring().as_ustr())?).encode_utf16().next() { Some(head) => head >= 56320 && head <= 57343, None => false } {
+                            if !TestTraceRender::test_trace_render_canonical_numbers((__option145.value).to_ustring().as_ustr())?.encode_utf16().next().map_or(false, |head| head >= 56320 && head <= 57343) {
                                 return Err(UStringFault::UnpairedSurrogate { unit: u32::from(unit) });
                             }
                         }

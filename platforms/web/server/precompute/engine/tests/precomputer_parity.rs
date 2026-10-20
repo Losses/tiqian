@@ -92,7 +92,6 @@ fn fixture_precomputer() -> Option<Precomputer> {
                     weight: FontWeightSpec::Single(Some(400.0)),
                     style: "normal",
                     unicode_range: None,
-                    unicode_ranges: None,
                     source_order: 0,
                 },
                 source_order: Some(0.0),

@@ -1,5 +1,4 @@
 use crate::org::tiqian::clreq::bopomofo_tone::BopomofoTone;
-use crate::runtime::sorted_table::SortedTable;
 use crate::runtime::u_string;
 use crate::runtime::u_string::UString;
 use std::fmt::Write;
@@ -77,21 +76,21 @@ impl BopomofoReading {
     }
 }
 
-fn bopomofo_reading_order_0(v: &BopomofoTone) -> i32 {
+fn bopomofo_reading_tone_order(v: &BopomofoTone) -> i32 {
     match v {
         BopomofoTone::Yinping => 0,
         BopomofoTone::Yangping => 1,
         BopomofoTone::Shang => 2,
+        BopomofoTone::Ru => 5,
         BopomofoTone::Qu => 3,
         BopomofoTone::Neutral => 4,
-        BopomofoTone::Ru => 5,
     }
 }
-
 pub fn compare_bopomofo_reading(a: &BopomofoReading, b: &BopomofoReading) -> i32 {
-    let cmp_symbols = { let mut cmp = 0; for (av, bv) in (&a.symbols).iter().zip((&b.symbols).iter()) { cmp = SortedTable::sorted_table_compare_strings((av).as_ustr(), (bv).as_ustr()); if cmp != 0 { break; } } if cmp == 0 { cmp = match (&a.symbols).len().cmp(&(&b.symbols).len()) { core::cmp::Ordering::Less => -1, core::cmp::Ordering::Equal => 0, core::cmp::Ordering::Greater => 1 }; } cmp };
+    let mut cmp_symbols = 0; for (av, bv) in a.symbols.iter().zip(b.symbols.iter()) { cmp_symbols = match av.cmp(bv) { core::cmp::Ordering::Less => -1, core::cmp::Ordering::Equal => 0, core::cmp::Ordering::Greater => 1 }; if cmp_symbols != 0 { break; } }
+    if cmp_symbols == 0 { cmp_symbols = match a.symbols.len().cmp(&b.symbols.len()) { core::cmp::Ordering::Less => -1, core::cmp::Ordering::Equal => 0, core::cmp::Ordering::Greater => 1 }; }
     if cmp_symbols != 0 { return cmp_symbols; }
-    let cmp_tone = match bopomofo_reading_order_0(&a.tone).cmp(&bopomofo_reading_order_0(&b.tone)) { core::cmp::Ordering::Less => -1, core::cmp::Ordering::Equal => 0, core::cmp::Ordering::Greater => 1 };
+    let cmp_tone = match bopomofo_reading_tone_order(&a.tone).cmp(&bopomofo_reading_tone_order(&b.tone)) { core::cmp::Ordering::Less => -1, core::cmp::Ordering::Equal => 0, core::cmp::Ordering::Greater => 1 };
     if cmp_tone != 0 { return cmp_tone; }
     0
 }

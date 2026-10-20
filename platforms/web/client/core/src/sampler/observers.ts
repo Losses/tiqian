@@ -4,7 +4,7 @@
 // facts through callbacks; comparison and commit decisions stay with the
 // element. Kinds: geometry, typography, content.
 
-import { DEFAULT_PARAGRAPH_SELECTOR, findContainingBlock, fragmentedBorderBoxInlineSize } from "./signatures.js";
+import { DEFAULT_PARAGRAPH_SELECTOR, fragmentedBorderBoxInlineSize } from "./signatures.js";
 import { onDeclaredFacesChanged } from "./snapshot/declared-faces.js";
 import { documentViewportInlineSizeDegenerate } from "../engine/responsive-measure.js";
 import type { RawDomParagraphRecord } from "../engine/context/enhance-context.js";
@@ -298,7 +298,6 @@ export function classifyContentMutationRecords(
   let paragraphSignal = false;
   let structureSignal = false;
   const taintedParagraphs: Element[] = [];
-  const taintedSeen = new Set<Element>();
   for (let i = 0; i < records.length; i++) {
     const record = records[i];
     // EnginePreparedStyleWritesAreNotContent: the prepared-dom renderer
@@ -316,28 +315,18 @@ export function classifyContentMutationRecords(
       // node it still holds. Taint directly. A childList record may be the
       // engine's own re-take or rollback refill; the raw-DOM backup identity
       // check in the probe tells them apart, so it only raises the flag.
-      if (record.type === "characterData" && !taintedSeen.has(rawDomParagraph)) {
-        taintedSeen.add(rawDomParagraph);
-        taintedParagraphs.push(rawDomParagraph);
-      }
+      if (record.type === "characterData") taintedParagraphs.push(rawDomParagraph);
       paragraphSignal = true;
       continue;
     }
-    // BlockDiscoveryFromStage4BTree: converge to the nearest Block root (the
-    // same display gate as buildLayoutElement). The root itself is never a
-    // Block target; root-flow mutations without a Block wrapper fall through
-    // to structureSignal below.
-    const paragraph = findContainingBlock(recordElement);
-    if (paragraph && paragraph !== context.root && context.belongsToRootScope(paragraph, context.root)) {
+    const paragraph = recordElement?.closest?.(DEFAULT_PARAGRAPH_SELECTOR);
+    if (paragraph && context.belongsToRootScope(paragraph, context.root)) {
       // TopLevelChildListTrustsIdentityProbe: engine commits append and
       // remove a paragraph's direct children on every render, so a top-level
       // childList record proves nothing by itself. The Kotlin classifier
       // proves engine ownership by node identity. Only an in-place text
       // edit, which child identity cannot see, taints its paragraph.
-      if (record.type === "characterData" && !taintedSeen.has(paragraph)) {
-        taintedSeen.add(paragraph);
-        taintedParagraphs.push(paragraph);
-      }
+      if (record.type === "characterData") taintedParagraphs.push(paragraph);
       paragraphSignal = true;
     } else if (record.type === "childList") {
       // Records outside any paragraph (a host adding or removing paragraph

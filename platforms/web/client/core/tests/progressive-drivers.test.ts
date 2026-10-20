@@ -28,9 +28,6 @@ import type { TrackedParagraph } from "../src/engine/enhance/context-state.js";
 import type { LoweredParagraph } from "../src/engine/lowered-paragraph.js";
 import type { BrowserFallbackDescriptor } from "../src/engine/enhance/typography.js";
 import type { CoordinationPoolSlot, GlobalEntry } from "./types.js";
-import type { TiqianLayoutWorkerInstance } from "../src/engine/coordination/coordination-service.js";
-import { LAYOUT_REVISION, SNAPSHOT_SCHEMA } from "../src/sampler/snapshot/snapshot-schema.js";
-import { RELAYOUT_SYNC_STALL_MS, assertRelayoutSyncUpperBound } from "../src/engine/relayout-sync-timing.js";
 initializeGlobalServices();
 
 // The driver functions take the per-element EnhancedElementContext as their
@@ -198,7 +195,6 @@ function installFakePool(pool: FakeLayoutJobPool): PoolRestoreFn {
 
 interface WithEnvOverrides {
   layoutJobPool?: FakeLayoutJobPool;
-  layoutWorker?: TiqianLayoutWorkerInstance;
   computedStyleValues?: MakeComputedStyleValues;
   document?: Document;
   node?: typeof Node;
@@ -222,12 +218,7 @@ interface FakeWindowView {
   getComputedStyle(element: Element, pseudo?: string | null): CSSStyleDeclaration;
 }
 
-interface WithEnvSetup {
-  pool: FakeLayoutJobPool;
-  teardown(): void;
-}
-
-function setupEnv(overrides: WithEnvOverrides = {}): WithEnvSetup {
+function withEnv<T>(fn: WithEnvFn<T>, overrides: WithEnvOverrides = {}): T {
   const saved = saveGlobals(["window", "document", "getComputedStyle", "CustomEvent", "Node"]);
   const fakePoolOptions: FakeLayoutJobPoolOverrides = {
     startJob: overrides.startJob,
@@ -236,73 +227,45 @@ function setupEnv(overrides: WithEnvOverrides = {}): WithEnvSetup {
   };
   const pool = overrides.layoutJobPool ?? makeFakeLayoutJobPool(fakePoolOptions);
   const restorePool = installFakePool(pool);
-  const savedLayoutWorker = globalServices().coordination.layoutWorker;
-  if (overrides.layoutWorker !== undefined) {
-    globalServices().coordination.layoutWorker = overrides.layoutWorker;
-  }
-  const values = overrides.computedStyleValues ?? { "--tq-styles-ready": "1" };
-  const computed = (_el: Element, _pseudo?: string | null): CSSStyleDeclaration => makeComputedStyle(values);
-  Object.defineProperty(globalThis, "getComputedStyle", { value: computed, writable: true, configurable: true });
-  const fakeWindow: FakeWindowView = {
-    innerHeight: 800,
-    getComputedStyle: computed,
-  };
-  Object.defineProperty(globalThis, "window", {
-    value: fakeWindow,
-    writable: true,
-    configurable: true,
-  });
-  Object.defineProperty(globalThis, "document", {
-    value: overrides.document ?? { documentElement: { clientHeight: 800 } },
-    writable: true,
-    configurable: true,
-  });
-  if (overrides.node) Object.defineProperty(globalThis, "Node", { value: overrides.node, writable: true, configurable: true });
-  Object.defineProperty(globalThis, "CustomEvent", {
-    value: class {
-      type: string;
-      bubbles: boolean;
-      composed: boolean;
-      detail: unknown;
-      constructor(type: string, init?: FakeCustomEventInit) {
-        this.type = type;
-        this.bubbles = Boolean(init && init.bubbles);
-        this.composed = Boolean(init && init.composed);
-        this.detail = init && init.detail;
-      }
-    },
-    writable: true,
-    configurable: true,
-  });
-  return {
-    pool,
-    teardown(): void {
-      restorePool();
-      globalServices().coordination.layoutWorker = savedLayoutWorker;
-      restoreGlobals(saved);
-    },
-  };
-}
-
-function withEnv<T>(fn: WithEnvFn<T>, overrides: WithEnvOverrides = {}): T {
-  const env = setupEnv(overrides);
   try {
-    return fn(env.pool);
+    const values = overrides.computedStyleValues ?? { "--tq-styles-ready": "1" };
+    const computed = (_el: Element, _pseudo?: string | null): CSSStyleDeclaration => makeComputedStyle(values);
+    Object.defineProperty(globalThis, "getComputedStyle", { value: computed, writable: true, configurable: true });
+    const fakeWindow: FakeWindowView = {
+      innerHeight: 800,
+      getComputedStyle: computed,
+    };
+    Object.defineProperty(globalThis, "window", {
+      value: fakeWindow,
+      writable: true,
+      configurable: true,
+    });
+    Object.defineProperty(globalThis, "document", {
+      value: overrides.document ?? { documentElement: { clientHeight: 800 } },
+      writable: true,
+      configurable: true,
+    });
+    if (overrides.node) Object.defineProperty(globalThis, "Node", { value: overrides.node, writable: true, configurable: true });
+    Object.defineProperty(globalThis, "CustomEvent", {
+      value: class {
+        type: string;
+        bubbles: boolean;
+        composed: boolean;
+        detail: unknown;
+        constructor(type: string, init?: FakeCustomEventInit) {
+          this.type = type;
+          this.bubbles = Boolean(init && init.bubbles);
+          this.composed = Boolean(init && init.composed);
+          this.detail = init && init.detail;
+        }
+      },
+      writable: true,
+      configurable: true,
+    });
+    return fn(pool);
   } finally {
-    env.teardown();
-  }
-}
-
-interface WithEnvAsyncFn<T> {
-  (pool: FakeLayoutJobPool): Promise<T>;
-}
-
-async function withEnvAsync<T>(fn: WithEnvAsyncFn<T>, overrides: WithEnvOverrides = {}): Promise<T> {
-  const env = setupEnv(overrides);
-  try {
-    return await fn(env.pool);
-  } finally {
-    env.teardown();
+    restorePool();
+    restoreGlobals(saved);
   }
 }
 
@@ -911,14 +874,14 @@ test("4. relayout branch 3: InlineCloneDecorationBreakUnsupported issue => enhan
 // 5. relayout main path: session, processItem, stale threshold, rollback, finish
 // ---------------------------------------------------------------------------
 
-test("5a. relayout main path: openRelayoutSession dispatches stranded and rendered through processItem", async function () {
+test("5a. relayout main path: openRelayoutSession dispatches stranded and rendered through processItem", function () {
   const root = makeElement();
   root._rect = { top: 0, bottom: 100, width: 300 };
 
   const renderedP = makeParagraph({ source: makeFixtureParagraphElement() });
   const strandedSource = makeFixtureParagraphElement();
 
-  await withEnvAsync(async (pool) => {
+  withEnv((pool) => {
     const observed = makeObservedContext(root, {
       stranded: [strandedSource],
       candidates: [],
@@ -928,7 +891,7 @@ test("5a. relayout main path: openRelayoutSession dispatches stranded and render
     // The rendered paragraph already carries its enhance-time raw-DOM record.
     registerParagraph(observed.context, renderedP.source);
     observed.context.contextState.paragraphs.push(renderedP);
-    await relayout(observed.context, root);
+    relayout(observed.context, root);
 
     assert.equal(pool._calls.startJob.length, 1);
     const spec = pool._calls.startJob[0];
@@ -951,21 +914,21 @@ test("5a. relayout main path: openRelayoutSession dispatches stranded and render
   }, { document: makePipelineDocument(), node: asNodeConstructor(FakeNode) });
 });
 
-test("5b. relayout main path: preparation carries the measured source width", async function () {
+test("5b. relayout main path: preparation carries the measured source width", function () {
   const root = makeElement();
 
   const renderedSource = makeFixtureParagraphElement();
   renderedSource.width = 250;
   const renderedP = makeParagraph({ source: renderedSource });
 
-  await withEnvAsync(async (pool) => {
+  withEnv((pool) => {
     const observed = makeObservedContext(root, { candidates: [] });
     seedEstablishedRuntime(observed, root, { fontSize: 19 });
     installFixtureBrowserFallback(observed.context);
     registerParagraph(observed.context, renderedSource);
     observed.context.contextState.paragraphs.push(renderedP);
 
-    await relayout(observed.context, root);
+    relayout(observed.context, root);
 
     const spec = pool._calls.startJob[0];
     spec.processItem!(0);
@@ -978,14 +941,14 @@ test("5b. relayout main path: preparation carries the measured source width", as
   }, { document: makePipelineDocument(), node: asNodeConstructor(FakeNode) });
 });
 
-test("5c. relayout main path: stale when root width drifts >= 0.5", async function () {
+test("5c. relayout main path: stale when root width drifts >= 0.5", function () {
   const root = makeElement();
   root._rect = { top: 0, bottom: 100, width: 300 };
 
-  await withEnvAsync(async (pool) => {
+  withEnv((pool) => {
     const observed = makeObservedContext(root, { candidates: [] });
     seedEstablishedRuntime(observed, root, { fontSize: 19 });
-    await relayout(observed.context, root);
+    relayout(observed.context, root);
 
     const spec = pool._calls.startJob[0];
     const staleFn = spec.isStale;
@@ -1000,13 +963,13 @@ test("5c. relayout main path: stale when root width drifts >= 0.5", async functi
   });
 });
 
-test("5d. relayout main path: onFailure calls rollback", async function () {
+test("5d. relayout main path: onFailure calls rollback", function () {
   const root = makeElement();
 
   const renderedSource = makeFixtureParagraphElement();
   const renderedP = makeParagraph({ source: renderedSource });
 
-  await withEnvAsync(async (pool) => {
+  withEnv((pool) => {
     const observed = makeObservedContext(root, { candidates: [] });
     seedEstablishedRuntime(observed, root, { fontSize: 19 });
     installFixtureBrowserFallback(observed.context);
@@ -1015,7 +978,7 @@ test("5d. relayout main path: onFailure calls rollback", async function () {
     // Enhanced steady state: the renderer wrote the prepared DOM through
     // innerHTML before the relayout session opens.
     renderedSource.innerHTML = "rendered v1";
-    await relayout(observed.context, root);
+    relayout(observed.context, root);
 
     const spec = pool._calls.startJob[0];
 
@@ -1035,7 +998,7 @@ test("5d. relayout main path: onFailure calls rollback", async function () {
   }, { document: makePipelineDocument(), node: asNodeConstructor(FakeNode) });
 });
 
-test("5e. relayout main path: onItemsFinished calls finish which ejects unsupported paragraphs", async function () {
+test("5e. relayout main path: onItemsFinished calls finish which ejects unsupported paragraphs", function () {
   const root = makeElement();
 
   const renderedSource = makeFixtureParagraphElement();
@@ -1066,13 +1029,13 @@ test("5e. relayout main path: onItemsFinished calls finish which ejects unsuppor
     lowered: relaxedLowered as LoweredParagraph,
   });
 
-  await withEnvAsync(async (pool) => {
+  withEnv((pool) => {
     const observed = makeObservedContext(root, { candidates: [] });
     seedEstablishedRuntime(observed, root, { fontSize: 19 });
     installFixtureBrowserFallback(observed.context);
     registerParagraph(observed.context, renderedSource);
     observed.context.contextState.paragraphs.push(renderedP);
-    await relayout(observed.context, root);
+    relayout(observed.context, root);
 
     const spec = pool._calls.startJob[0];
     assert.ok(spec.onItemsFinished);
@@ -1161,13 +1124,13 @@ test("6a. finish: dispatches tiqian:ready with correct detail fields", function 
   });
 });
 
-test("6b. relayout finish: dispatches tiqian:relayout-ready with relayout: true", async function () {
+test("6b. relayout finish: dispatches tiqian:relayout-ready with relayout: true", function () {
   const root = makeElement({ "data-tiqian-snapshot-count": "3" });
 
-  await withEnvAsync(async (pool) => {
+  withEnv((pool) => {
     const observed = makeObservedContext(root, { candidates: [] });
     seedEstablishedRuntime(observed, root, { fontSize: 19 });
-    await relayout(observed.context, root);
+    relayout(observed.context, root);
 
     const spec = pool._calls.startJob[0];
     assert.ok(spec.onFinished);
@@ -1191,13 +1154,13 @@ test("6b. relayout finish: dispatches tiqian:relayout-ready with relayout: true"
   });
 });
 
-test("6c. fail: sets data-tiqian-relayout-error attribute, dispatches error and summary events", async function () {
+test("6c. fail: sets data-tiqian-relayout-error attribute, dispatches error and summary events", function () {
   const root = makeElement();
 
-  await withEnvAsync(async (pool) => {
+  withEnv((pool) => {
     const observed = makeObservedContext(root, { candidates: [] });
     seedEstablishedRuntime(observed, root, { fontSize: 19 });
-    await relayout(observed.context, root);
+    relayout(observed.context, root);
 
     const spec = pool._calls.startJob[0];
     assert.ok(spec.onFailed);
@@ -1231,13 +1194,13 @@ test("6c. fail: sets data-tiqian-relayout-error attribute, dispatches error and 
   });
 });
 
-test("6d. fail: detail truncated to 512 chars", async function () {
+test("6d. fail: detail truncated to 512 chars", function () {
   const root = makeElement();
 
-  await withEnvAsync(async (pool) => {
+  withEnv((pool) => {
     const observed = makeObservedContext(root, { candidates: [] });
     seedEstablishedRuntime(observed, root, { fontSize: 19 });
-    await relayout(observed.context, root);
+    relayout(observed.context, root);
 
     const spec = pool._calls.startJob[0];
     const longDetail = "X".repeat(1024);
@@ -1261,13 +1224,13 @@ test("6d. fail: detail truncated to 512 chars", async function () {
   });
 });
 
-test("6e. fail for Enhance kind dispatches tiqian:error (not tiqian:relayout-error)", async function () {
+test("6e. fail for Enhance kind dispatches tiqian:error (not tiqian:relayout-error)", function () {
   const root = makeElement();
 
-  await withEnvAsync(async (pool) => {
+  withEnv((pool) => {
     const observed = makeObservedContext(root, { candidates: [] });
     seedEstablishedRuntime(observed, root, { fontSize: 19 });
-    await relayout(observed.context, root);
+    relayout(observed.context, root);
 
     const spec = pool._calls.startJob[0];
     spec.onFailed!({
@@ -1336,161 +1299,5 @@ test("7c. enhanceProgressivelyFromCanonical resolves through the canonical resol
     // Should start a job with kind Enhance (not Relayout)
     assert.equal(pool._calls.startJob.length, 1);
     assert.equal(pool._calls.startJob[0].kind, "Enhance");
-  });
-});
-
-
-// ---------------------------------------------------------------------------
-// 8. relayout worker-plan routing: take hit commits the Worker-prepared plan,
-//    take miss falls back to synchronous preparation.
-// ---------------------------------------------------------------------------
-
-// The take-hit envelope: renderWorkerPrepared JSON.parse()s the record and
-// passes record.plan (an object) straight to renderPreparedParagraphInto, so
-// plan must be an object - not the string form the canonical re-entry path
-// (process-paragraph.test.ts test 2) carries.
-const RELAYOUT_WORKER_PLAN_JSON = JSON.stringify({
-  plan: { schema: SNAPSHOT_SCHEMA, layoutRevision: LAYOUT_REVISION, height: 0, lines: [] },
-  semanticReplay: "snapshot-safe",
-  semantics: [],
-  inlineBoxes: [],
-});
-
-function makeFakeSnapshotFontSession(): { id: string; paragraphSelector: string; renderFontFamilies: string[] } {
-  return { id: "fake-session", paragraphSelector: "p", renderFontFamilies: [] };
-}
-
-function makeFakeLayoutWorker(
-  take: (element: Element | null | undefined, sessionKey: string, requestText: string) => string | null,
-): TiqianLayoutWorkerInstance {
-  return {
-    version: 1,
-    semanticReplayRevision: 1,
-    take,
-    issue: () => null,
-    release: () => true,
-  };
-}
-
-test("8a. relayout worker-plan take miss falls back to synchronous preparation", async function () {
-  const root = makeElement();
-  const renderedP = makeParagraph({ source: makeFixtureParagraphElement() });
-
-  let takeCalls = 0;
-  await withEnvAsync(async (pool) => {
-    const observed = makeObservedContext(root, { candidates: [] });
-    seedEstablishedRuntime(observed, root, { fontSize: 19, paragraphSelector: "p" });
-    installFixtureBrowserFallback(observed.context);
-    registerParagraph(observed.context, renderedP.source);
-    observed.context.contextState.paragraphs.push(renderedP);
-    // A conforming snapshot-font session opens the worker-plan gate; the stub
-    // take() misses, so routing falls through to prepareParagraphLayout.
-    observed.context.snapshotAdoption.prepareSnapshotFontSession = async () => makeFakeSnapshotFontSession();
-
-    await relayout(observed.context, root);
-
-    const spec = pool._calls.startJob[0];
-    spec.processItem!(0);
-
-    assert.equal(takeCalls, 1);
-    // The synchronous commit stamps canonical-source but never the
-    // Worker-only snapshot-prepared-dom marker.
-    assert.equal(renderedP.source.getAttribute("data-tq-canonical-source"), "true");
-    assert.equal(renderedP.source.getAttribute("data-tq-snapshot-prepared-dom"), null);
-    assert.equal(typeof renderedP.lastMeasure, "number");
-  }, {
-    document: makePipelineDocument(),
-    node: asNodeConstructor(FakeNode),
-    layoutWorker: makeFakeLayoutWorker(() => { takeCalls += 1; return null; }),
-  });
-});
-
-test("8b. relayout worker-plan take hit commits the Worker-prepared plan", async function () {
-  const root = makeElement();
-  const renderedP = makeParagraph({ source: makeFixtureParagraphElement() });
-
-  await withEnvAsync(async (pool) => {
-    const observed = makeObservedContext(root, { candidates: [] });
-    seedEstablishedRuntime(observed, root, { fontSize: 19, paragraphSelector: "p" });
-    installFixtureBrowserFallback(observed.context);
-    registerParagraph(observed.context, renderedP.source);
-    observed.context.contextState.paragraphs.push(renderedP);
-    observed.context.snapshotAdoption.prepareSnapshotFontSession = async () => makeFakeSnapshotFontSession();
-
-    await relayout(observed.context, root);
-
-    const spec = pool._calls.startJob[0];
-    spec.processItem!(0);
-
-    // commitWorkerPreparedParagraph is the only writer of the discriminator.
-    assert.equal(renderedP.source.getAttribute("data-tq-snapshot-prepared-dom"), "true");
-    assert.equal(renderedP.source.getAttribute("data-tq-canonical-source"), "true");
-    assert.equal(typeof renderedP.lastMeasure, "number");
-  }, {
-    document: makePipelineDocument(),
-    node: asNodeConstructor(FakeNode),
-    layoutWorker: makeFakeLayoutWorker(() => RELAYOUT_WORKER_PLAN_JSON),
-  });
-});
-
-
-// ---------------------------------------------------------------------------
-// 9. relayout synchronous-slice upper-bound gate: the assertion applied to the
-//    maxSliceMs carried by the real tiqian:relayout-ready event detail.
-// ---------------------------------------------------------------------------
-
-test("9a. the relayout-ready maxSliceMs passes the 50ms upper bound", async function () {
-  const root = makeElement({ "data-tiqian-snapshot-count": "3" });
-
-  await withEnvAsync(async (pool) => {
-    const observed = makeObservedContext(root, { candidates: [] });
-    seedEstablishedRuntime(observed, root, { fontSize: 19 });
-    await relayout(observed.context, root);
-
-    const spec = pool._calls.startJob[0];
-    assert.ok(spec.onFinished);
-    spec.onFinished!({
-      kind: "Relayout",
-      startedAt: Date.now() - 200,
-      maxSliceMs: 30,
-      stale: false,
-    });
-
-    const relayoutReadyEvent = root.events.find(function (e: Event) {
-      return e.type === "tiqian:relayout-ready";
-    });
-    assert.ok(relayoutReadyEvent);
-    const relayoutDetail = (relayoutReadyEvent as CustomEvent).detail as RelayoutReadyEventDetail;
-    // The gate reads the value the real event carries, not a hard-coded number.
-    assert.equal(assertRelayoutSyncUpperBound(relayoutDetail.maxSliceMs).ok, true);
-  });
-});
-
-test("9b. the pre-fix 283ms slice fails the gate on the real event detail (discriminative)", async function () {
-  const root = makeElement({ "data-tiqian-snapshot-count": "3" });
-
-  await withEnvAsync(async (pool) => {
-    const observed = makeObservedContext(root, { candidates: [] });
-    seedEstablishedRuntime(observed, root, { fontSize: 19 });
-    await relayout(observed.context, root);
-
-    const spec = pool._calls.startJob[0];
-    assert.ok(spec.onFinished);
-    spec.onFinished!({
-      kind: "Relayout",
-      startedAt: Date.now() - 200,
-      maxSliceMs: RELAYOUT_SYNC_STALL_MS,
-      stale: false,
-    });
-
-    const relayoutReadyEvent = root.events.find(function (e: Event) {
-      return e.type === "tiqian:relayout-ready";
-    });
-    assert.ok(relayoutReadyEvent);
-    const relayoutDetail = (relayoutReadyEvent as CustomEvent).detail as RelayoutReadyEventDetail;
-    // Discriminative validation: the same assertion must reject the pre-fix
-    // 283ms stall when it arrives through the real reporting path.
-    assert.equal(assertRelayoutSyncUpperBound(relayoutDetail.maxSliceMs).ok, false);
-    assert.equal(relayoutDetail.maxSliceMs, RELAYOUT_SYNC_STALL_MS);
   });
 });

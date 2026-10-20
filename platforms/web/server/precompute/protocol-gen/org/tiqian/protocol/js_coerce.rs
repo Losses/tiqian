@@ -162,12 +162,16 @@ impl JsCoerce {
     let __count1 = u_string::unit_count(&body);
         let mut index = 0u32;
         let mut seen_digit = false;
+        let __units2 = u_string::units(&body);
+        let __count2 = u_string::unit_count(&body);
         while (i32::from_ne_bytes(((index) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((__count1) as i32).to_ne_bytes())) && JsCoerce::js_coerce_is_decimal_digit(*(u_string::unit_at_from(&__units1, index)).as_ref().unwrap()) {
             index = u32::wrapping_add(index, 1);
             seen_digit = true;
         }
-        if i32::from_ne_bytes(((index) as i32).to_ne_bytes()) < (i32::from_ne_bytes(((__count1) as i32).to_ne_bytes())) && matches!(u_string::unit_at_from(&__units1, index).as_ref(), Some(__v) if __v == &(46)) {
+        if i32::from_ne_bytes(((index) as i32).to_ne_bytes()) < (i32::from_ne_bytes(((__count1) as i32).to_ne_bytes())) && u_string::unit_at_from(&__units1, index).as_ref().map_or(false, |v| v == &(46)) {
             index = u32::wrapping_add(index, 1);
+            let __units3 = u_string::units(&body);
+            let __count3 = u_string::unit_count(&body);
             while (i32::from_ne_bytes(((index) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((__count1) as i32).to_ne_bytes())) && JsCoerce::js_coerce_is_decimal_digit(*(u_string::unit_at_from(&__units1, index)).as_ref().unwrap()) {
                 index = u32::wrapping_add(index, 1);
                 seen_digit = true;
@@ -176,12 +180,14 @@ impl JsCoerce {
         if !seen_digit {
             return false;
         }
-        if i32::from_ne_bytes(((index) as i32).to_ne_bytes()) < (i32::from_ne_bytes(((__count1) as i32).to_ne_bytes())) && (matches!(u_string::unit_at_from(&__units1, index).as_ref(), Some(__v) if __v == &(101)) || matches!(u_string::unit_at_from(&__units1, index).as_ref(), Some(__v) if __v == &(69))) {
+        if i32::from_ne_bytes(((index) as i32).to_ne_bytes()) < (i32::from_ne_bytes(((__count1) as i32).to_ne_bytes())) && (u_string::unit_at_from(&__units1, index).as_ref().map_or(false, |v| v == &(101)) || u_string::unit_at_from(&__units1, index).as_ref().map_or(false, |v| v == &(69))) {
             index = u32::wrapping_add(index, 1);
-            if i32::from_ne_bytes(((index) as i32).to_ne_bytes()) < (i32::from_ne_bytes(((__count1) as i32).to_ne_bytes())) && (matches!(u_string::unit_at_from(&__units1, index).as_ref(), Some(__v) if __v == &(43)) || matches!(u_string::unit_at_from(&__units1, index).as_ref(), Some(__v) if __v == &(45))) {
+            if i32::from_ne_bytes(((index) as i32).to_ne_bytes()) < (i32::from_ne_bytes(((__count1) as i32).to_ne_bytes())) && (u_string::unit_at_from(&__units1, index).as_ref().map_or(false, |v| v == &(43)) || u_string::unit_at_from(&__units1, index).as_ref().map_or(false, |v| v == &(45))) {
                 index = u32::wrapping_add(index, 1);
             }
             let mut exponent_digits = false;
+            let __units4 = u_string::units(&body);
+            let __count4 = u_string::unit_count(&body);
             while (i32::from_ne_bytes(((index) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((__count1) as i32).to_ne_bytes())) && JsCoerce::js_coerce_is_decimal_digit(*(u_string::unit_at_from(&__units1, index)).as_ref().unwrap()) {
                 index = u32::wrapping_add(index, 1);
                 exponent_digits = true;
@@ -254,8 +260,10 @@ impl JsCoerce {
         let mut out_b = UString::new();
         out_b += &(UString::from("\""));
         let mut index_idx = 0u32;
+        let __units7 = u_string::units(&text);
+        let __count7 = u_string::unit_count(&text);
         while (i32::from_ne_bytes(((index_idx) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((__count6) as i32).to_ne_bytes())) {
-            let code = u_string::unit_at_from(&__units6, index_idx).unwrap_or(0);
+            let code = u_string::unit_at_from(&__units7, index_idx).unwrap_or(0);
             if code == 34 {
                 out_b += &(UString::from("\\\""));
             } else {
