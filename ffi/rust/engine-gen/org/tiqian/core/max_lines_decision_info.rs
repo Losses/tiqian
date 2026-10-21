@@ -25,11 +25,11 @@ impl MaxLinesDecisionInfo {
 }
 
 pub fn compare_max_lines_decision_info(a: &MaxLinesDecisionInfo, b: &MaxLinesDecisionInfo) -> i32 {
-    let cmp_laid_out_lines = if a.laid_out_lines < b.laid_out_lines { -1 } else if a.laid_out_lines > b.laid_out_lines { 1 } else { 0 };
+    let cmp_laid_out_lines = match i32::from_ne_bytes((*(&a.laid_out_lines)).to_ne_bytes()).cmp(&i32::from_ne_bytes((*(&b.laid_out_lines)).to_ne_bytes())) { core::cmp::Ordering::Less => -1, core::cmp::Ordering::Equal => 0, core::cmp::Ordering::Greater => 1 };
     if cmp_laid_out_lines != 0 { return cmp_laid_out_lines; }
-    let cmp_visible_lines = if a.visible_lines < b.visible_lines { -1 } else if a.visible_lines > b.visible_lines { 1 } else { 0 };
+    let cmp_visible_lines = match i32::from_ne_bytes((*(&a.visible_lines)).to_ne_bytes()).cmp(&i32::from_ne_bytes((*(&b.visible_lines)).to_ne_bytes())) { core::cmp::Ordering::Less => -1, core::cmp::Ordering::Equal => 0, core::cmp::Ordering::Greater => 1 };
     if cmp_visible_lines != 0 { return cmp_visible_lines; }
-    let cmp_reason = SortedTable::sorted_table_compare_strings(a.reason.as_ustr(), b.reason.as_ustr());
+    let cmp_reason = SortedTable::sorted_table_compare_strings((&a.reason).as_ustr(), (&b.reason).as_ustr());
     if cmp_reason != 0 { return cmp_reason; }
     0
 }

@@ -49,8 +49,6 @@ impl EnglishHyphenationTestHelpers {
         let offsets = EnglishHyphenation::english_hyphenation_en_us()?.hyphenate(word);
         let mut b_b = UString::new();
         let mut i = 0u32;
-        let __units1 = u_string::units(&word);
-        let __count1 = u_string::unit_count(&word);
         while (i32::from_ne_bytes(((i) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((__count) as i32).to_ne_bytes())) {
             let mut j = 0u32;
             let mut found = false;
@@ -64,7 +62,7 @@ impl EnglishHyphenationTestHelpers {
                 b_b += &(UString::from("-"));
             }
             {
-                let x = u_string::char_at_from(&__units1, i);
+                let x = u_string::char_at_from(&__units, i);
                 b_b += &(x.to_string());
             }
             i = u32::wrapping_add(i, 1);

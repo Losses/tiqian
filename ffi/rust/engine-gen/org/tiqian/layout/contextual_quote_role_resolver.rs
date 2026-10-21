@@ -157,7 +157,7 @@ FontRole>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_by
     }
 
     fn resolve_unmatched(&self, index: u32) -> Result<Resolution, TextRangeError> {
-        if u_string::unit_at(&(self.text).to_ustring(), index).as_ref().map_or(false, |v| v == &(8217)) && self.is_non_cjk_in_word_apostrophe(index)? {
+        if matches!(u_string::unit_at(&(self.text).to_ustring(), index).as_ref(), Some(__v) if __v == &(8217)) && self.is_non_cjk_in_word_apostrophe(index)? {
             return Ok(Resolution::new(FontRole::LatinText, &(UStr::new(&[78,111,110,67,106,107,73,110,87,111,114,100,65,112,111,115,116,114,111,112,104,101])), &(UStr::new(&[110,111,110,45,99,106,107,45,105,110,45,119,111,114,100,45,97,112,111,115,116,114,111,112,104,101]))));
         }
         if self.is_digit_bound_closing_quote(index)? {
@@ -264,7 +264,7 @@ FontRole>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_by
 
     fn is_digit_bound_closing_quote(&self, index: u32) -> Result<bool, TextRangeError> {
         let before = self.code_point_before(index);
-        return Ok((u_string::unit_at(&(self.text).to_ustring(), index).as_ref().map_or(false, |v| v == &(8217)) || u_string::unit_at(&(self.text).to_ustring(), index).as_ref().map_or(false, |v| v == &(8221))) && before.is_some() && UnicodeNumber::unicode_number_contains(*(before).as_ref().unwrap())?);
+        return Ok((matches!(u_string::unit_at(&(self.text).to_ustring(), index).as_ref(), Some(__v) if __v == &(8217)) || matches!(u_string::unit_at(&(self.text).to_ustring(), index).as_ref(), Some(__v) if __v == &(8221))) && before.is_some() && UnicodeNumber::unicode_number_contains(*(before).as_ref().unwrap())?);
     }
 
     fn is_non_cjk_word_internal_quote_pair(&self, pair: QuotePair) -> Result<bool, TextRangeError> {

@@ -149,10 +149,8 @@ impl QuotePairAnalyzerTestSupport {
     let __count = u_string::unit_count(&text);
         let mut out = UString::new();
         let mut i = 0u32;
-        let __units1 = u_string::units(&text);
-        let __count1 = u_string::unit_count(&text);
         while (i32::from_ne_bytes(((i) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((__count) as i32).to_ne_bytes())) {
-            let c = u_string::unit_at_from(&__units1, i).unwrap_or(0);
+            let c = u_string::unit_at_from(&__units, i).unwrap_or(0);
             if c == 8216 || c == 8217 || c == 8220 || c == 8221 {
                 let r = roles.get(&(i));
                 out += &(if r == Some(FontRole::LatinText) { UString::from("L") } else { if r == Some(FontRole::CjkPunctuation) { UString::from("C") } else { UString::from("?") }.to_ustring() });

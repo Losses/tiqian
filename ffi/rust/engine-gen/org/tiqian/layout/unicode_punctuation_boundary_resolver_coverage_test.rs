@@ -7297,10 +7297,8 @@ impl UnicodePunctuationBoundaryResolverCoverageSupport {
     let __count = u_string::unit_count(&t);
         let mut a: Vec<Cluster> = vec![];
         let mut i = 0u32;
-        let __units1 = u_string::units(&t);
-        let __count1 = u_string::unit_count(&t);
         while (i32::from_ne_bytes(((i) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((__count) as i32).to_ne_bytes())) {
-            let s = u_string::char_at_from(&__units1, i);
+            let s = u_string::char_at_from(&__units, i);
             a.push(Cluster::new(TextRange::new(i, u32::wrapping_add(i, 1))?, s.as_ustr(), &(UStr::new(&[99,106,107])), 16.0f64, Some(s.to_ustring()), Some(0.0), Some(0.0), Some(0.0)));
             i = u32::wrapping_add(i, 1);
         }
@@ -7312,10 +7310,8 @@ impl UnicodePunctuationBoundaryResolverCoverageSupport {
     let __count2 = u_string::unit_count(&t);
         let mut a: Vec<Cluster> = vec![];
         let mut i = 0u32;
-        let __units3 = u_string::units(&t);
-        let __count3 = u_string::unit_count(&t);
         while (i32::from_ne_bytes(((i) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((__count2) as i32).to_ne_bytes())) {
-            let s = u_string::char_at_from(&__units3, i);
+            let s = u_string::char_at_from(&__units2, i);
             a.push(Cluster::new(TextRange::new(i, u32::wrapping_add(i, 1))?, s.as_ustr(), &(UStr::new(&[108,97,116,105,110])), 8.0f64, Some(s.to_ustring()), Some(0.0), Some(0.0), Some(0.0)));
             i = u32::wrapping_add(i, 1);
         }

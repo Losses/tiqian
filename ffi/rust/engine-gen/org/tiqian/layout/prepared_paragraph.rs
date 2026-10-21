@@ -109,7 +109,7 @@ impl PreparedParagraphFns {
         let mut out = Vec::<u16>::new();
         if let Some(&unit) = out.last() {
             if unit >= 55296 && unit <= 56319 && !UString::from("{\"plan\":").is_empty() {
-                if !UString::from("{\"plan\":").encode_utf16().next().map_or(false, |head| head >= 56320 && head <= 57343) {
+                if !match (UString::from("{\"plan\":")).encode_utf16().next() { Some(head) => head >= 56320 && head <= 57343, None => false } {
                     return Err(PreparedParagraphToPlanWithDiagnosticsJsonFault::UStringFaultFault(UStringFault::UnpairedSurrogate { unit: u32::from(unit) }));
                 }
             }
@@ -118,7 +118,7 @@ impl PreparedParagraphFns {
         let _ = PlanJsonNumber::plan_json_number_append_json_string(&mut out, PreparedParagraphFns::prepared_paragraph_fns_to_prepared_paragraph_json((result).clone(), render_evidence).map_err(|e| PreparedParagraphToPlanWithDiagnosticsJsonFault::ToPreparedParagraphJsonFault(e))?.as_ustr()).map_err(|e| PreparedParagraphToPlanWithDiagnosticsJsonFault::UStringFaultFault(e))?;
         if let Some(&unit) = out.last() {
             if unit >= 55296 && unit <= 56319 && !UString::from(",\"diagnostics\":{\"capabilityIssues\":[").is_empty() {
-                if !UString::from(",\"diagnostics\":{\"capabilityIssues\":[").encode_utf16().next().map_or(false, |head| head >= 56320 && head <= 57343) {
+                if !match (UString::from(",\"diagnostics\":{\"capabilityIssues\":[")).encode_utf16().next() { Some(head) => head >= 56320 && head <= 57343, None => false } {
                     return Err(PreparedParagraphToPlanWithDiagnosticsJsonFault::UStringFaultFault(UStringFault::UnpairedSurrogate { unit: u32::from(unit) }));
                 }
             }
@@ -132,7 +132,7 @@ impl PreparedParagraphFns {
                     if !first {
                         if let Some(&unit) = out.last() {
                             if unit >= 55296 && unit <= 56319 && !UString::from(",").is_empty() {
-                                if !UString::from(",").encode_utf16().next().map_or(false, |head| head >= 56320 && head <= 57343) {
+                                if !match (UString::from(",")).encode_utf16().next() { Some(head) => head >= 56320 && head <= 57343, None => false } {
                                     return Err(PreparedParagraphToPlanWithDiagnosticsJsonFault::UStringFaultFault(UStringFault::UnpairedSurrogate { unit: u32::from(unit) }));
                                 }
                             }
@@ -142,7 +142,7 @@ impl PreparedParagraphFns {
                     first = false;
                     if let Some(&unit) = out.last() {
                         if unit >= 55296 && unit <= 56319 && !UString::from("{\"name\":").is_empty() {
-                            if !UString::from("{\"name\":").encode_utf16().next().map_or(false, |head| head >= 56320 && head <= 57343) {
+                            if !match (UString::from("{\"name\":")).encode_utf16().next() { Some(head) => head >= 56320 && head <= 57343, None => false } {
                                 return Err(PreparedParagraphToPlanWithDiagnosticsJsonFault::UStringFaultFault(UStringFault::UnpairedSurrogate { unit: u32::from(unit) }));
                             }
                         }
@@ -151,7 +151,7 @@ impl PreparedParagraphFns {
                     let _ = PlanJsonNumber::plan_json_number_append_json_string(&mut out, (*__option).clone().as_ustr()).map_err(|e| PreparedParagraphToPlanWithDiagnosticsJsonFault::UStringFaultFault(e))?;
                     if let Some(&unit) = out.last() {
                         if unit >= 55296 && unit <= 56319 && !UString::from(",\"reason\":").is_empty() {
-                            if !UString::from(",\"reason\":").encode_utf16().next().map_or(false, |head| head >= 56320 && head <= 57343) {
+                            if !match (UString::from(",\"reason\":")).encode_utf16().next() { Some(head) => head >= 56320 && head <= 57343, None => false } {
                                 return Err(PreparedParagraphToPlanWithDiagnosticsJsonFault::UStringFaultFault(UStringFault::UnpairedSurrogate { unit: u32::from(unit) }));
                             }
                         }
@@ -160,7 +160,7 @@ impl PreparedParagraphFns {
                     let _ = PlanJsonNumber::plan_json_number_append_json_string(&mut out, (d.reason).to_ustring().as_ustr()).map_err(|e| PreparedParagraphToPlanWithDiagnosticsJsonFault::UStringFaultFault(e))?;
                     if let Some(&unit) = out.last() {
                         if unit >= 55296 && unit <= 56319 && !UString::from(",\"rangeStart\":").is_empty() {
-                            if !UString::from(",\"rangeStart\":").encode_utf16().next().map_or(false, |head| head >= 56320 && head <= 57343) {
+                            if !match (UString::from(",\"rangeStart\":")).encode_utf16().next() { Some(head) => head >= 56320 && head <= 57343, None => false } {
                                 return Err(PreparedParagraphToPlanWithDiagnosticsJsonFault::UStringFaultFault(UStringFault::UnpairedSurrogate { unit: u32::from(unit) }));
                             }
                         }
@@ -168,7 +168,7 @@ impl PreparedParagraphFns {
                     out.extend(UString::from(",\"rangeStart\":").encode_utf16());
                     if let Some(&unit) = out.last() {
                         if unit >= 55296 && unit <= 56319 && !UString::from(format!("{}", crate::runtime::int_text::IntText::int_text((d.range).clone().start)).as_str()).is_empty() {
-                            if !UString::from(format!("{}", crate::runtime::int_text::IntText::int_text((d.range).clone().start)).as_str()).encode_utf16().next().map_or(false, |head| head >= 56320 && head <= 57343) {
+                            if !match (UString::from(format!("{}", crate::runtime::int_text::IntText::int_text((d.range).clone().start)).as_str())).encode_utf16().next() { Some(head) => head >= 56320 && head <= 57343, None => false } {
                                 return Err(PreparedParagraphToPlanWithDiagnosticsJsonFault::UStringFaultFault(UStringFault::UnpairedSurrogate { unit: u32::from(unit) }));
                             }
                         }
@@ -176,7 +176,7 @@ impl PreparedParagraphFns {
                     out.extend(UString::from(format!("{}", crate::runtime::int_text::IntText::int_text((d.range).clone().start)).as_str()).encode_utf16());
                     if let Some(&unit) = out.last() {
                         if unit >= 55296 && unit <= 56319 && !UString::from(",\"rangeEnd\":").is_empty() {
-                            if !UString::from(",\"rangeEnd\":").encode_utf16().next().map_or(false, |head| head >= 56320 && head <= 57343) {
+                            if !match (UString::from(",\"rangeEnd\":")).encode_utf16().next() { Some(head) => head >= 56320 && head <= 57343, None => false } {
                                 return Err(PreparedParagraphToPlanWithDiagnosticsJsonFault::UStringFaultFault(UStringFault::UnpairedSurrogate { unit: u32::from(unit) }));
                             }
                         }
@@ -184,7 +184,7 @@ impl PreparedParagraphFns {
                     out.extend(UString::from(",\"rangeEnd\":").encode_utf16());
                     if let Some(&unit) = out.last() {
                         if unit >= 55296 && unit <= 56319 && !UString::from(format!("{}", crate::runtime::int_text::IntText::int_text((d.range).clone().end)).as_str()).is_empty() {
-                            if !UString::from(format!("{}", crate::runtime::int_text::IntText::int_text((d.range).clone().end)).as_str()).encode_utf16().next().map_or(false, |head| head >= 56320 && head <= 57343) {
+                            if !match (UString::from(format!("{}", crate::runtime::int_text::IntText::int_text((d.range).clone().end)).as_str())).encode_utf16().next() { Some(head) => head >= 56320 && head <= 57343, None => false } {
                                 return Err(PreparedParagraphToPlanWithDiagnosticsJsonFault::UStringFaultFault(UStringFault::UnpairedSurrogate { unit: u32::from(unit) }));
                             }
                         }
@@ -192,7 +192,7 @@ impl PreparedParagraphFns {
                     out.extend(UString::from(format!("{}", crate::runtime::int_text::IntText::int_text((d.range).clone().end)).as_str()).encode_utf16());
                     if let Some(&unit) = out.last() {
                         if unit >= 55296 && unit <= 56319 && !UString::from("}").is_empty() {
-                            if !UString::from("}").encode_utf16().next().map_or(false, |head| head >= 56320 && head <= 57343) {
+                            if !match (UString::from("}")).encode_utf16().next() { Some(head) => head >= 56320 && head <= 57343, None => false } {
                                 return Err(PreparedParagraphToPlanWithDiagnosticsJsonFault::UStringFaultFault(UStringFault::UnpairedSurrogate { unit: u32::from(unit) }));
                             }
                         }
@@ -205,7 +205,7 @@ impl PreparedParagraphFns {
         }
         if let Some(&unit) = out.last() {
             if unit >= 55296 && unit <= 56319 && !UString::from("],\"advanceSuspects\":[").is_empty() {
-                if !UString::from("],\"advanceSuspects\":[").encode_utf16().next().map_or(false, |head| head >= 56320 && head <= 57343) {
+                if !match (UString::from("],\"advanceSuspects\":[")).encode_utf16().next() { Some(head) => head >= 56320 && head <= 57343, None => false } {
                     return Err(PreparedParagraphToPlanWithDiagnosticsJsonFault::UStringFaultFault(UStringFault::UnpairedSurrogate { unit: u32::from(unit) }));
                 }
             }
@@ -217,7 +217,7 @@ impl PreparedParagraphFns {
                 if !first {
                     if let Some(&unit) = out.last() {
                         if unit >= 55296 && unit <= 56319 && !UString::from(",").is_empty() {
-                            if !UString::from(",").encode_utf16().next().map_or(false, |head| head >= 56320 && head <= 57343) {
+                            if !match (UString::from(",")).encode_utf16().next() { Some(head) => head >= 56320 && head <= 57343, None => false } {
                                 return Err(PreparedParagraphToPlanWithDiagnosticsJsonFault::UStringFaultFault(UStringFault::UnpairedSurrogate { unit: u32::from(unit) }));
                             }
                         }
@@ -227,7 +227,7 @@ impl PreparedParagraphFns {
                 first = false;
                 if let Some(&unit) = out.last() {
                     if unit >= 55296 && unit <= 56319 && !UString::from("{\"displayText\":").is_empty() {
-                        if !UString::from("{\"displayText\":").encode_utf16().next().map_or(false, |head| head >= 56320 && head <= 57343) {
+                        if !match (UString::from("{\"displayText\":")).encode_utf16().next() { Some(head) => head >= 56320 && head <= 57343, None => false } {
                             return Err(PreparedParagraphToPlanWithDiagnosticsJsonFault::UStringFaultFault(UStringFault::UnpairedSurrogate { unit: u32::from(unit) }));
                         }
                     }
@@ -236,7 +236,7 @@ impl PreparedParagraphFns {
                 let _ = PlanJsonNumber::plan_json_number_append_json_string(&mut out, (d.display_text).to_ustring().as_ustr()).map_err(|e| PreparedParagraphToPlanWithDiagnosticsJsonFault::UStringFaultFault(e))?;
                 if let Some(&unit) = out.last() {
                     if unit >= 55296 && unit <= 56319 && !UString::from(",\"advance\":\"").is_empty() {
-                        if !UString::from(",\"advance\":\"").encode_utf16().next().map_or(false, |head| head >= 56320 && head <= 57343) {
+                        if !match (UString::from(",\"advance\":\"")).encode_utf16().next() { Some(head) => head >= 56320 && head <= 57343, None => false } {
                             return Err(PreparedParagraphToPlanWithDiagnosticsJsonFault::UStringFaultFault(UStringFault::UnpairedSurrogate { unit: u32::from(unit) }));
                         }
                     }
@@ -244,7 +244,7 @@ impl PreparedParagraphFns {
                 out.extend(UString::from(",\"advance\":\"").encode_utf16());
                 if let Some(&unit) = out.last() {
                     if unit >= 55296 && unit <= 56319 && !if d.advance.is_finite() { PlanJsonNumber::plan_json_number_ecma_json_number(d.advance).map_err(|e| PreparedParagraphToPlanWithDiagnosticsJsonFault::UStringFaultFault(e))?.to_ustring() } else { UString::from(format!("{}", crate::runtime::fp_helper::FPHelper::format_float(d.advance)).as_str()) }.is_empty() {
-                        if !if d.advance.is_finite() { PlanJsonNumber::plan_json_number_ecma_json_number(d.advance).map_err(|e| PreparedParagraphToPlanWithDiagnosticsJsonFault::UStringFaultFault(e))?.to_ustring() } else { UString::from(format!("{}", crate::runtime::fp_helper::FPHelper::format_float(d.advance)).as_str()) }.encode_utf16().next().map_or(false, |head| head >= 56320 && head <= 57343) {
+                        if !match (if d.advance.is_finite() { PlanJsonNumber::plan_json_number_ecma_json_number(d.advance).map_err(|e| PreparedParagraphToPlanWithDiagnosticsJsonFault::UStringFaultFault(e))?.to_ustring() } else { UString::from(format!("{}", crate::runtime::fp_helper::FPHelper::format_float(d.advance)).as_str()) }).encode_utf16().next() { Some(head) => head >= 56320 && head <= 57343, None => false } {
                             return Err(PreparedParagraphToPlanWithDiagnosticsJsonFault::UStringFaultFault(UStringFault::UnpairedSurrogate { unit: u32::from(unit) }));
                         }
                     }
@@ -252,7 +252,7 @@ impl PreparedParagraphFns {
                 out.extend(if d.advance.is_finite() { PlanJsonNumber::plan_json_number_ecma_json_number(d.advance).map_err(|e| PreparedParagraphToPlanWithDiagnosticsJsonFault::UStringFaultFault(e))?.to_ustring() } else { UString::from(format!("{}", crate::runtime::fp_helper::FPHelper::format_float(d.advance)).as_str()) }.encode_utf16());
                 if let Some(&unit) = out.last() {
                     if unit >= 55296 && unit <= 56319 && !UString::from("\",\"reason\":").is_empty() {
-                        if !UString::from("\",\"reason\":").encode_utf16().next().map_or(false, |head| head >= 56320 && head <= 57343) {
+                        if !match (UString::from("\",\"reason\":")).encode_utf16().next() { Some(head) => head >= 56320 && head <= 57343, None => false } {
                             return Err(PreparedParagraphToPlanWithDiagnosticsJsonFault::UStringFaultFault(UStringFault::UnpairedSurrogate { unit: u32::from(unit) }));
                         }
                     }
@@ -261,7 +261,7 @@ impl PreparedParagraphFns {
                 let _ = PlanJsonNumber::plan_json_number_append_json_string(&mut out, (d.reason).to_ustring().as_ustr()).map_err(|e| PreparedParagraphToPlanWithDiagnosticsJsonFault::UStringFaultFault(e))?;
                 if let Some(&unit) = out.last() {
                     if unit >= 55296 && unit <= 56319 && !UString::from(",\"rangeStart\":").is_empty() {
-                        if !UString::from(",\"rangeStart\":").encode_utf16().next().map_or(false, |head| head >= 56320 && head <= 57343) {
+                        if !match (UString::from(",\"rangeStart\":")).encode_utf16().next() { Some(head) => head >= 56320 && head <= 57343, None => false } {
                             return Err(PreparedParagraphToPlanWithDiagnosticsJsonFault::UStringFaultFault(UStringFault::UnpairedSurrogate { unit: u32::from(unit) }));
                         }
                     }
@@ -269,7 +269,7 @@ impl PreparedParagraphFns {
                 out.extend(UString::from(",\"rangeStart\":").encode_utf16());
                 if let Some(&unit) = out.last() {
                     if unit >= 55296 && unit <= 56319 && !UString::from(format!("{}", crate::runtime::int_text::IntText::int_text((d.range).clone().start)).as_str()).is_empty() {
-                        if !UString::from(format!("{}", crate::runtime::int_text::IntText::int_text((d.range).clone().start)).as_str()).encode_utf16().next().map_or(false, |head| head >= 56320 && head <= 57343) {
+                        if !match (UString::from(format!("{}", crate::runtime::int_text::IntText::int_text((d.range).clone().start)).as_str())).encode_utf16().next() { Some(head) => head >= 56320 && head <= 57343, None => false } {
                             return Err(PreparedParagraphToPlanWithDiagnosticsJsonFault::UStringFaultFault(UStringFault::UnpairedSurrogate { unit: u32::from(unit) }));
                         }
                     }
@@ -277,7 +277,7 @@ impl PreparedParagraphFns {
                 out.extend(UString::from(format!("{}", crate::runtime::int_text::IntText::int_text((d.range).clone().start)).as_str()).encode_utf16());
                 if let Some(&unit) = out.last() {
                     if unit >= 55296 && unit <= 56319 && !UString::from(",\"rangeEnd\":").is_empty() {
-                        if !UString::from(",\"rangeEnd\":").encode_utf16().next().map_or(false, |head| head >= 56320 && head <= 57343) {
+                        if !match (UString::from(",\"rangeEnd\":")).encode_utf16().next() { Some(head) => head >= 56320 && head <= 57343, None => false } {
                             return Err(PreparedParagraphToPlanWithDiagnosticsJsonFault::UStringFaultFault(UStringFault::UnpairedSurrogate { unit: u32::from(unit) }));
                         }
                     }
@@ -285,7 +285,7 @@ impl PreparedParagraphFns {
                 out.extend(UString::from(",\"rangeEnd\":").encode_utf16());
                 if let Some(&unit) = out.last() {
                     if unit >= 55296 && unit <= 56319 && !UString::from(format!("{}", crate::runtime::int_text::IntText::int_text((d.range).clone().end)).as_str()).is_empty() {
-                        if !UString::from(format!("{}", crate::runtime::int_text::IntText::int_text((d.range).clone().end)).as_str()).encode_utf16().next().map_or(false, |head| head >= 56320 && head <= 57343) {
+                        if !match (UString::from(format!("{}", crate::runtime::int_text::IntText::int_text((d.range).clone().end)).as_str())).encode_utf16().next() { Some(head) => head >= 56320 && head <= 57343, None => false } {
                             return Err(PreparedParagraphToPlanWithDiagnosticsJsonFault::UStringFaultFault(UStringFault::UnpairedSurrogate { unit: u32::from(unit) }));
                         }
                     }
@@ -293,7 +293,7 @@ impl PreparedParagraphFns {
                 out.extend(UString::from(format!("{}", crate::runtime::int_text::IntText::int_text((d.range).clone().end)).as_str()).encode_utf16());
                 if let Some(&unit) = out.last() {
                     if unit >= 55296 && unit <= 56319 && !UString::from("}").is_empty() {
-                        if !UString::from("}").encode_utf16().next().map_or(false, |head| head >= 56320 && head <= 57343) {
+                        if !match (UString::from("}")).encode_utf16().next() { Some(head) => head >= 56320 && head <= 57343, None => false } {
                             return Err(PreparedParagraphToPlanWithDiagnosticsJsonFault::UStringFaultFault(UStringFault::UnpairedSurrogate { unit: u32::from(unit) }));
                         }
                     }
@@ -303,7 +303,7 @@ impl PreparedParagraphFns {
         }
         if let Some(&unit) = out.last() {
             if unit >= 55296 && unit <= 56319 && !UString::from("]}}").is_empty() {
-                if !UString::from("]}}").encode_utf16().next().map_or(false, |head| head >= 56320 && head <= 57343) {
+                if !match (UString::from("]}}")).encode_utf16().next() { Some(head) => head >= 56320 && head <= 57343, None => false } {
                     return Err(PreparedParagraphToPlanWithDiagnosticsJsonFault::UStringFaultFault(UStringFault::UnpairedSurrogate { unit: u32::from(unit) }));
                 }
             }

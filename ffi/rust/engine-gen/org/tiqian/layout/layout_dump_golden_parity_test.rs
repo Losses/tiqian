@@ -103,7 +103,7 @@ fn layout_decision_dumps_match_embedded_golden() {
                     continue;
                 }
                 let actual = LayoutDumpFormat::layout_dump_format_layout_fixture_dump((fixture).clone(), None, None).unwrap();
-                if !(golden.as_ref().map_or(false, |v| v == &(actual.clone()))) {
+                if !(matches!(golden.as_ref(), Some(__v) if __v == &(actual.clone()))) {
                     failures.push(LayoutDumpFormat::layout_dump_format_layout_dump_diff_message((fixture.id).to_ustring().as_ustr(), (golden).as_deref().unwrap_or(UStr::new(&[])), actual.as_ustr()));
                 }
             }

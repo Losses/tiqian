@@ -1590,7 +1590,7 @@ fn styled_point_mark_run_can_extend_one_impossible_measure_hang() {
                 let _ = TracedAssertions::traced_assertions_assert_true(AsciiPointMarkKinsokuTestSupport::ascii_point_mark_kinsoku_test_support_has_cluster((r).clone(), UStr::new(&[44])), Some(UString::from(format!("{}", { let mut __s = UString::new(); __s += (b.label).to_ustring().as_ustr(); __s += &(UString::from(" comma cluster")); __s }).as_str()))).unwrap();
                 let mut n = 0u32;
                 for i in 0..match u32::try_from((r.debug).clone().contextual_kinsoku_decisions.len()) { Ok(value) => value, Err(_) => u32::MAX } {
-                    if r.debug.clone().contextual_kinsoku_decisions[usize::try_from(i).unwrap_or(0)].clone().impossible_measure_fallback.as_ref().map_or(false, |v| v == &(UString::from("AttachedAsciiPointMarkImpossibleMeasureHang").to_ustring())) {
+                    if matches!(((r.debug).clone().contextual_kinsoku_decisions[usize::try_from(i).unwrap_or(0)]).clone().impossible_measure_fallback.as_ref(), Some(__v) if __v == &(UString::from("AttachedAsciiPointMarkImpossibleMeasureHang").to_ustring())) {
                         n = u32::wrapping_add(n, 1);
                     }
                 }

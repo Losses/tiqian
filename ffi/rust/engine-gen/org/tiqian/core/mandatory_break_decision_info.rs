@@ -31,11 +31,12 @@ impl MandatoryBreakDecisionInfo {
 pub fn compare_mandatory_break_decision_info(a: &MandatoryBreakDecisionInfo, b: &MandatoryBreakDecisionInfo) -> i32 {
     let cmp_range = compare_text_range(&a.range, &b.range);
     if cmp_range != 0 { return cmp_range; }
-    let cmp_source_text = SortedTable::sorted_table_compare_strings(a.source_text.as_ustr(), b.source_text.as_ustr());
+    let cmp_source_text = SortedTable::sorted_table_compare_strings((&a.source_text).as_ustr(), (&b.source_text).as_ustr());
     if cmp_source_text != 0 { return cmp_source_text; }
-    let cmp_break_after_cluster_index = if a.break_after_cluster_index < b.break_after_cluster_index { -1 } else if a.break_after_cluster_index > b.break_after_cluster_index { 1 } else { 0 };
+    let cmp_break_after_cluster_index = match i32::from_ne_bytes((*(&a.break_after_cluster_index)).to_ne_bytes()).cmp(&i32::from_ne_bytes((*(&b.break_after_cluster_index)).to_ne_bytes())) { core::cmp::Ordering::Less => -1, core::cmp::Ordering::Equal => 0,
+core::cmp::Ordering::Greater => 1 };
     if cmp_break_after_cluster_index != 0 { return cmp_break_after_cluster_index; }
-    let cmp_reason = SortedTable::sorted_table_compare_strings(a.reason.as_ustr(), b.reason.as_ustr());
+    let cmp_reason = SortedTable::sorted_table_compare_strings((&a.reason).as_ustr(), (&b.reason).as_ustr());
     if cmp_reason != 0 { return cmp_reason; }
     0
 }

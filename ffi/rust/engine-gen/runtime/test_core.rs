@@ -72,7 +72,7 @@ impl TestCore {
         let raw = UString::from((v).to_string().as_str());
         let mut s = (raw).clone();
         let mut negative = false;
-        if u_string::unit_at(&s, 0u32).as_ref().map_or(false, |v| v == &(45)) {
+        if matches!(u_string::unit_at(&s, 0u32).as_ref(), Some(__v) if __v == &(45)) {
             negative = true;
             s = u_string::substring_from(&s, 1i32);
         }
@@ -92,7 +92,7 @@ impl TestCore {
         }
         let mut digits = { let mut __s = UString::new(); __s += (decimal_parts[0usize]).clone().as_ustr(); __s += fraction.as_ustr(); __s };
         let mut decimal_position = i32::wrapping_add(i32::from_ne_bytes(((u_string::unit_count(&((decimal_parts[0usize]).clone()))) as i32).to_ne_bytes()), exponent);
-        while (i32::from_ne_bytes(((u_string::unit_count(&(digits))) as i32).to_ne_bytes())) > (1) && u_string::unit_at(&digits, 0u32).as_ref().map_or(false, |v| v == &(48)) {
+        while (i32::from_ne_bytes(((u_string::unit_count(&(digits))) as i32).to_ne_bytes())) > (1) && matches!(u_string::unit_at(&digits, 0u32).as_ref(), Some(__v) if __v == &(48)) {
             digits = u_string::substring_from(&digits, 1i32);
             decimal_position = i32::wrapping_sub(decimal_position, 1);
         }
@@ -101,15 +101,15 @@ impl TestCore {
         }
         if decimal_position >= -5 && (decimal_position) <= 21 {
             let mut plain = if decimal_position <= 0 { TestCore::test_core_plain_leading(digits.as_ustr(), decimal_position).to_ustring() } else { if decimal_position >= i32::from_ne_bytes(((u_string::unit_count(&(digits))) as i32).to_ne_bytes()) { TestCore::test_core_plain_trailing(digits.as_ustr(), decimal_position).to_ustring() } else { UString::from(format!("{}", { let mut __s = UString::new(); __s += u_string::substring(&digits, 0i32, decimal_position).as_ustr(); __s += &(UString::from(".")); __s += u_string::substring_from(&digits, decimal_position).as_ustr(); __s }).as_str()) }.to_ustring() };
-            while (i32::from_ne_bytes(((u_string::unit_count(&(plain))) as i32).to_ne_bytes())) > (0) && u_string::unit_at(&plain, u32::from_ne_bytes(((i32::wrapping_sub(i32::from_ne_bytes(((u_string::unit_count(&(plain))) as i32).to_ne_bytes()), 1)) as u32).to_ne_bytes())).as_ref().map_or(false, |v| v == &(48)) && (i32::from_ne_bytes(u32::try_from(((u_string::split(&plain, &UString::from("."))).len()) & 4294967295).unwrap_or(0).to_ne_bytes())) > (1) {
+            while (i32::from_ne_bytes(((u_string::unit_count(&(plain))) as i32).to_ne_bytes())) > (0) && matches!(u_string::unit_at(&plain, u32::from_ne_bytes(((i32::wrapping_sub(i32::from_ne_bytes(((u_string::unit_count(&(plain))) as i32).to_ne_bytes()), 1)) as u32).to_ne_bytes())).as_ref(), Some(__v) if __v == &(48)) && (i32::from_ne_bytes(u32::try_from(((u_string::split(&plain, &UString::from("."))).len()) & 4294967295).unwrap_or(0).to_ne_bytes())) > (1) {
                 plain = u_string::substring(&plain, 0i32, i32::wrapping_sub(i32::from_ne_bytes(((u_string::unit_count(&(plain))) as i32).to_ne_bytes()), 1));
             }
-            if i32::from_ne_bytes(((u_string::unit_count(&(plain))) as i32).to_ne_bytes()) > (0) && u_string::unit_at(&plain, u32::from_ne_bytes(((i32::wrapping_sub(i32::from_ne_bytes(((u_string::unit_count(&(plain))) as i32).to_ne_bytes()), 1)) as u32).to_ne_bytes())).as_ref().map_or(false, |v| v == &(46)) {
+            if i32::from_ne_bytes(((u_string::unit_count(&(plain))) as i32).to_ne_bytes()) > (0) && matches!(u_string::unit_at(&plain, u32::from_ne_bytes(((i32::wrapping_sub(i32::from_ne_bytes(((u_string::unit_count(&(plain))) as i32).to_ne_bytes()), 1)) as u32).to_ne_bytes())).as_ref(), Some(__v) if __v == &(46)) {
                 plain = u_string::substring(&plain, 0i32, i32::wrapping_sub(i32::from_ne_bytes(((u_string::unit_count(&(plain))) as i32).to_ne_bytes()), 1));
             }
             return UString::from(format!("{}", { let mut __s = UString::new(); __s += (if negative { UString::from("-") } else { UString::from("") }).as_ustr(); __s += plain.as_ustr(); __s }).as_str());
         }
-        while (i32::from_ne_bytes(((u_string::unit_count(&(digits))) as i32).to_ne_bytes())) > (1) && u_string::unit_at(&digits, u32::from_ne_bytes(((i32::wrapping_sub(i32::from_ne_bytes(((u_string::unit_count(&(digits))) as i32).to_ne_bytes()), 1)) as u32).to_ne_bytes())).as_ref().map_or(false, |v| v == &(48)) {
+        while (i32::from_ne_bytes(((u_string::unit_count(&(digits))) as i32).to_ne_bytes())) > (1) && matches!(u_string::unit_at(&digits, u32::from_ne_bytes(((i32::wrapping_sub(i32::from_ne_bytes(((u_string::unit_count(&(digits))) as i32).to_ne_bytes()), 1)) as u32).to_ne_bytes())).as_ref(), Some(__v) if __v == &(48)) {
             digits = u_string::substring(&digits, 0i32, i32::wrapping_sub(i32::from_ne_bytes(((u_string::unit_count(&(digits))) as i32).to_ne_bytes()), 1));
         }
         let sci_exponent = i32::wrapping_sub(decimal_position, 1);

@@ -10,7 +10,7 @@
 //   to_utf8()       -> Option<String> (None on unpaired surrogates)
 
 use std::fmt;
-use std::ops::{Deref, DerefMut};
+use std::ops::Deref;
 
 #[derive(Clone, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct UString(Vec<u16>);
@@ -59,7 +59,7 @@ impl UStr {
     /// The UTF-16 code units as an iterator (String.encodeUtf16). Mirrors
     /// the UString inherent method so `&UStr` receivers resolve too. Items
     /// are owned `u16`, matching the std String encode_utf16 item type.
-    pub fn encode_utf16(&self) -> std::iter::Copied<std::slice::Iter<u16>> {
+    pub fn encode_utf16(&self) -> std::iter::Copied<std::slice::Iter<'_, u16>> {
         self.0.iter().copied()
     }
 
@@ -253,13 +253,23 @@ impl UString {
         i32::try_from(count(s)).unwrap_or(0)
     }
     pub fn u_string_at(s: &UStr, index: i32) -> Option<i32> {
-        at(s, u32::try_from(index).unwrap_or(0)).map(|v| i32::try_from(v).unwrap_or(0))
+        match at(s, u32::try_from(index).unwrap_or(0)) {
+            Some(v) => Some(i32::try_from(v).unwrap_or(0)),
+            None => None,
+        }
     }
     pub fn u_string_slice(s: &UStr, from: i32, to: i32) -> UString {
         slice(s, from, to)
     }
     pub fn u_string_to_code_points(s: &UStr) -> Vec<i32> {
-        to_code_points(s).iter().map(|v| i32::try_from(*v).unwrap_or(0)).collect()
+        let source = to_code_points(s);
+        let mut out = Vec::with_capacity(source.len());
+        let mut i = 0usize;
+        while i < source.len() {
+            out.push(i32::try_from(source[i]).unwrap_or(0));
+            i += 1;
+        }
+        out
     }
     pub fn u_string_from_code_point(code: i32) -> UString {
         from_code_point(u32::try_from(code).unwrap_or(0))
@@ -277,7 +287,7 @@ impl UString {
     /// The UTF-16 code units of this string. UString stores units natively,
     /// so this is the slice itself — no re-encoding. (String.encodeUtf16)
     /// Items are owned `u16`, matching the std String encode_utf16 item type.
-    pub fn encode_utf16(&self) -> std::iter::Copied<std::slice::Iter<u16>> {
+    pub fn encode_utf16(&self) -> std::iter::Copied<std::slice::Iter<'_, u16>> {
         self.0.iter().copied()
     }
 }
@@ -344,7 +354,7 @@ impl PartialEq<UStr> for String {
 }
 // Business ABI adapters: Int arguments arrive unsigned (u32), results
 // return u32. slice, substring, and substr keep i32 bounds because
-// negative bounds are part of their clamping contract.
+// negative bounds are part of their clamping rule.
 
 pub fn count(s: &UStr) -> u32 {
     let mut i = 0u32;
@@ -381,7 +391,10 @@ pub fn units(s: &UStr) -> Vec<u16> {
 // The single UTF-16 unit at `index` read from a precomputed unit vector,
 // the O(1) form of String.charCodeAt.
 pub fn unit_at_from(units: &[u16], index: u32) -> Option<u32> {
-    units.get(usize::try_from(index).unwrap_or(0)).map(|u| u32::from(*u))
+    match units.get(usize::try_from(index).unwrap_or(0)) {
+        Some(u) => Some(u32::from(*u)),
+        None => None,
+    }
 }
 
 // The single UTF-16 unit at `index` as an owned one-unit UString, the
@@ -433,7 +446,10 @@ pub fn at(s: &UStr, index: u32) -> Option<u32> {
 // carries its own address and the value is the unit, never the combined
 // code point.
 pub fn unit_at(s: &UStr, index: u32) -> Option<u32> {
-    s.as_slice().get(usize::try_from(index).unwrap_or(0)).map(|u| u32::from(*u))
+    match s.as_slice().get(usize::try_from(index).unwrap_or(0)) {
+        Some(u) => Some(u32::from(*u)),
+        None => None,
+    }
 }
 
 pub fn split(s: &UStr, separator: &UStr) -> Vec<UString> {
@@ -555,7 +571,7 @@ pub fn from_code_points(codes: &Vec<u32>) -> UString {
 }
 
 // substring keeps i32 bounds for the same clamping reason as slice:
-// negative bounds are part of the haxe substring contract.
+// negative bounds are part of the haxe substring rule.
 pub fn substring(s: &UStr, from: i32, to: i32) -> UString {
     let units = s.as_slice();
     let len = units.len() as u32;
@@ -584,7 +600,7 @@ pub fn substring_from(s: &UStr, from: i32) -> UString {
     UString(units[start as usize..].to_vec())
 }
 
-// substr: pos and len count units per the std contract.
+// substr: pos and len count units per the std rule.
 // A negative pos counts from the end; a negative len returns empty.
 pub fn substr(s: &UStr, pos: i32, len: Option<i32>) -> UString {
     match len {
@@ -665,6 +681,18 @@ pub fn parse_i32(s: &UStr) -> Option<i32> {
     i32::try_from(signed).ok()
 }
 
+// std.Process.args() lowers here (stdlib/17): the host arguments after
+// the program name, each as a UString, collected with an index loop.
+pub fn args_from_host() -> Vec<UString> {
+    let mut raw = std::env::args();
+    raw.next();
+    let mut out = Vec::new();
+    while let Some(argument) = raw.next() {
+        out.push(UString::from(argument.as_str()));
+    }
+    out
+}
+
 // The whitespace set of the Haxe scanners.
 fn trim_fixed(s: &str) -> &str {
     s.trim_matches(|c: char| c == ' ' || matches!(c, '\t'..='\r'))
@@ -732,16 +760,5 @@ pub fn find_from(s: &UStr, needle: &UStr, start: i32) -> i32 {
         }
     }
     -1
-}
-
-fn byte_to_unit(s: &str, byte: usize) -> u32 {
-    let mut units = 0u32;
-    for (b, c) in s.char_indices() {
-        if b >= byte {
-            break;
-        }
-        units += u32::try_from(c.len_utf16()).unwrap_or(0);
-    }
-    units
 }
 

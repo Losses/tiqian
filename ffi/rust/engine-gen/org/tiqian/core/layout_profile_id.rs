@@ -21,7 +21,7 @@ impl LayoutProfileId {
 }
 
 pub fn compare_layout_profile_id(a: &LayoutProfileId, b: &LayoutProfileId) -> i32 {
-    let cmp_value = SortedTable::sorted_table_compare_strings(a.value.as_ustr(), b.value.as_ustr());
+    let cmp_value = SortedTable::sorted_table_compare_strings((&a.value).as_ustr(), (&b.value).as_ustr());
     if cmp_value != 0 { return cmp_value; }
     0
 }

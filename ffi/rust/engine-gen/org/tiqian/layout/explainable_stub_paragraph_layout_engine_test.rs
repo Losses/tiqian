@@ -1835,7 +1835,7 @@ fn single_mandatory_break_after_wrapped_line_does_not_create_empty_line() {
         let _ = TracedAssertions::traced_assertions_assert_true(!no, Some((dbg).to_ustring())).unwrap();
         let mut idx = 0u32;
         for i in 0..u_string::count(text.as_ustr()) {
-            if u_string::at(text.as_ustr(), i).as_ref().map_or(false, |v| v == &(10)) {
+            if matches!(u_string::at(text.as_ustr(), i).as_ref(), Some(__v) if __v == &(10)) {
                 idx = u32::wrapping_add(i, 1);
             }
         }

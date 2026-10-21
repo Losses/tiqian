@@ -42,24 +42,25 @@ impl DashEllipsisRoleDecision {
     }
 }
 
-fn dash_ellipsis_role_decision_role_order(v: &FontRole) -> i32 {
+fn dash_ellipsis_role_decision_order_0(v: &FontRole) -> i32 {
     match v {
-        FontRole::Unknown => 5,
-        FontRole::Symbol => 3,
-        FontRole::LatinText => 2,
-        FontRole::Emoji => 4,
         FontRole::CjkText => 0,
         FontRole::CjkPunctuation => 1,
+        FontRole::LatinText => 2,
+        FontRole::Symbol => 3,
+        FontRole::Emoji => 4,
+        FontRole::Unknown => 5,
     }
 }
+
 pub fn compare_dash_ellipsis_role_decision(a: &DashEllipsisRoleDecision, b: &DashEllipsisRoleDecision) -> i32 {
     let cmp_range = compare_text_range(&a.range, &b.range);
     if cmp_range != 0 { return cmp_range; }
-    let cmp_role = match dash_ellipsis_role_decision_role_order(&a.role).cmp(&dash_ellipsis_role_decision_role_order(&b.role)) { core::cmp::Ordering::Less => -1, core::cmp::Ordering::Equal => 0, core::cmp::Ordering::Greater => 1 };
+    let cmp_role = match dash_ellipsis_role_decision_order_0(&a.role).cmp(&dash_ellipsis_role_decision_order_0(&b.role)) { core::cmp::Ordering::Less => -1, core::cmp::Ordering::Equal => 0, core::cmp::Ordering::Greater => 1 };
     if cmp_role != 0 { return cmp_role; }
-    let cmp_source = SortedTable::sorted_table_compare_strings(a.source.as_ustr(), b.source.as_ustr());
+    let cmp_source = SortedTable::sorted_table_compare_strings((&a.source).as_ustr(), (&b.source).as_ustr());
     if cmp_source != 0 { return cmp_source; }
-    let cmp_reason = SortedTable::sorted_table_compare_strings(a.reason.as_ustr(), b.reason.as_ustr());
+    let cmp_reason = SortedTable::sorted_table_compare_strings((&a.reason).as_ustr(), (&b.reason).as_ustr());
     if cmp_reason != 0 { return cmp_reason; }
     0
 }
@@ -80,10 +81,8 @@ impl ContextualDashEllipsisRoleResolver {
         let actual_context = match &(context) { None => FontRoleContext::new(Some(UString::from("zh-Hans")), None), Some(__option) => (*__option).clone() };
         let mut has_mark = false;
         let mut ci = 0u32;
-        let __units1 = u_string::units(&text);
-        let __count1 = u_string::unit_count(&text);
         while (i32::from_ne_bytes(((ci) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((__count) as i32).to_ne_bytes())) {
-            if ContextualDashEllipsisRoleResolver::contextual_dash_ellipsis_role_resolver_is_contextual_dash_or_ellipsis(*(u_string::unit_at_from(&__units1, ci)).as_ref().unwrap()) {
+            if ContextualDashEllipsisRoleResolver::contextual_dash_ellipsis_role_resolver_is_contextual_dash_or_ellipsis(*(u_string::unit_at_from(&__units, ci)).as_ref().unwrap()) {
                 has_mark = true;
                 break;
             }
@@ -112,17 +111,13 @@ impl ContextualDashEllipsisRoleResolver {
     let __count2 = u_string::unit_count(&text);
         let mut runs: Vec<TextRange> = vec![];
         let mut index = 0u32;
-        let __units3 = u_string::units(&text);
-        let __count3 = u_string::unit_count(&text);
         while (i32::from_ne_bytes(((index) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((__count2) as i32).to_ne_bytes())) {
-            if !ContextualDashEllipsisRoleResolver::contextual_dash_ellipsis_role_resolver_is_contextual_dash_or_ellipsis(*(u_string::unit_at_from(&__units3, index)).as_ref().unwrap()) {
+            if !ContextualDashEllipsisRoleResolver::contextual_dash_ellipsis_role_resolver_is_contextual_dash_or_ellipsis(*(u_string::unit_at_from(&__units2, index)).as_ref().unwrap()) {
                 index = u32::wrapping_add(index, ContextualDashEllipsisRoleResolver::contextual_dash_ellipsis_role_resolver_code_point_length_at(text, index));
                 continue;
             }
             let start = index;
-            let __units4 = u_string::units(&text);
-            let __count4 = u_string::unit_count(&text);
-            while (i32::from_ne_bytes(((index) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((__count2) as i32).to_ne_bytes())) && ContextualDashEllipsisRoleResolver::contextual_dash_ellipsis_role_resolver_is_contextual_dash_or_ellipsis(*(u_string::unit_at_from(&__units3, index)).as_ref().unwrap()) {
+            while (i32::from_ne_bytes(((index) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((__count2) as i32).to_ne_bytes())) && ContextualDashEllipsisRoleResolver::contextual_dash_ellipsis_role_resolver_is_contextual_dash_or_ellipsis(*(u_string::unit_at_from(&__units2, index)).as_ref().unwrap()) {
                 index = u32::wrapping_add(index, 1);
             }
             runs.push(TextRange::new(start, index)?);
@@ -247,7 +242,7 @@ Resolution>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_
     pub(crate) fn contextual_dash_ellipsis_role_resolver_is_pure_dash_run(text: &UStr, range: TextRange) -> bool {
         let mut index = range.start;
         while (i32::from_ne_bytes(((index) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((range.end) as i32).to_ne_bytes())) {
-            if !(u_string::unit_at(&text, index).as_ref().map_or(false, |v| v == &(8212))) {
+            if !(matches!(u_string::unit_at(&text, index).as_ref(), Some(__v) if __v == &(8212))) {
                 return false;
             }
             index = u32::wrapping_add(index, 1);

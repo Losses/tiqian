@@ -512,7 +512,7 @@ impl CatalogImpl {
         {
             let _g1 = (self.stored).clone();
             for face in &_g1 {
-                if u32::from_ne_bytes(((match (face.roles).clone().iter().position(|e| e == &request.role) { Some(v) => i32::from_ne_bytes(u32::try_from(v).unwrap_or(0).to_ne_bytes()), None => -1 }) as u32).to_ne_bytes()) <= 2147483647 {
+                if u32::from_ne_bytes(({ let __hay = &((face.roles).clone()); let __n = __hay.len(); let mut __i = 0usize; let mut __found: i32 = -1; while __i < __n { if __hay[__i] == request.role { __found = i32::from_ne_bytes(u32::try_from(__i).unwrap_or(0).to_ne_bytes()); break; } __i += 1; } __found } as u32).to_ne_bytes()) <= 2147483647 {
                     let mut _g = 0u32;
                     let _g1 = request.preferred_families.clone();
                     while (i32::from_ne_bytes(((_g) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((_g1.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
@@ -552,7 +552,7 @@ impl ReplayableFontCatalog for CatalogImpl {
         {
             let _g1 = (self.stored).clone();
             for face in &_g1 {
-                if u32::from_ne_bytes(((match (face.roles).clone().iter().position(|e| e == &request.role) { Some(v) => i32::from_ne_bytes(u32::try_from(v).unwrap_or(0).to_ne_bytes()), None => -1 }) as u32).to_ne_bytes()) <= 2147483647 {
+                if u32::from_ne_bytes(({ let __hay = &((face.roles).clone()); let __n = __hay.len(); let mut __i = 0usize; let mut __found: i32 = -1; while __i < __n { if __hay[__i] == request.role { __found = i32::from_ne_bytes(u32::try_from(__i).unwrap_or(0).to_ne_bytes()); break; } __i += 1; } __found } as u32).to_ne_bytes()) <= 2147483647 {
                     let _g1 = request.preferred_families.clone();
                     for family in &_g1 {
                         if face.family_aliases.clone().has(&(family).to_ustring()) {
