@@ -1,6 +1,7 @@
 package org.tiqian.core
 
 /** Paint overhang belonging to already-visible occupied text geometry. */
+@Deprecated("Legacy engine, migrate to engine-haxe")
 data class LayoutPaintOverhang(
     val left: Float = 0f,
     val top: Float = 0f,
@@ -14,6 +15,7 @@ data class LayoutPaintOverhang(
  * Ordinary over-long text remains clipped to [viewportWidth]; only an explicit hanging mark may
  * extend the legal clip edge to its final visual position.
  */
+@Deprecated("Legacy engine, migrate to engine-haxe")
 fun LineBox.legalHangingPunctuationClipEdge(viewportWidth: Float): Float =
     if (hangingPunctuationAdvance > 0f) indent + visualWidth else viewportWidth
 
@@ -22,6 +24,7 @@ fun LineBox.legalHangingPunctuationClipEdge(viewportWidth: Float): Float =
  * [viewportWidth] x [viewportHeight]. Layout ownership does not move into the frontend: callers use
  * this result only to avoid clipping legal ink emitted by the engine.
  */
+@Deprecated("Legacy engine, migrate to engine-haxe")
 fun LayoutResult.visiblePaintOverhang(
     viewportWidth: Float,
     viewportHeight: Float,

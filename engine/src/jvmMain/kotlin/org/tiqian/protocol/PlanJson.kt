@@ -2,6 +2,7 @@ package org.tiqian.protocol
 
 import std.UStringException
 
+@Deprecated("Legacy engine, migrate to engine-haxe")
 object PlanJson {
     fun encode(plan: Plan): String {
         val out = StringBuilder()

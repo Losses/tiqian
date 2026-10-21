@@ -4,6 +4,7 @@ import org.tiqian.core.TextRange
 import org.tiqian.core.LineEndReason
 import org.tiqian.linebreak.BreakKind
 
+@Deprecated("Legacy engine, migrate to engine-haxe")
 data class BreakCandidate(
     val index: Int,
     val kind: BreakKind,
@@ -14,6 +15,7 @@ data class BreakCandidate(
     val repairOptions: List<RepairOption> = emptyList(),
 )
 
+@Deprecated("Legacy engine, migrate to engine-haxe")
 sealed interface RepairOption {
     val penalty: Int
     val reason: String
@@ -66,6 +68,7 @@ sealed interface RepairOption {
     ) : RepairOption
 }
 
+@Deprecated("Legacy engine, migrate to engine-haxe")
 data class PushInAllocation(
     val clusterIndex: Int,
     val shrink: Float,
@@ -74,6 +77,7 @@ data class PushInAllocation(
     val channel: ShrinkChannel = ShrinkChannel.TrailingGlue,
 )
 
+@Deprecated("Legacy engine, migrate to engine-haxe")
 data class LineCandidate(
     val clusterRange: IntRange,
     val sourceRange: TextRange,
@@ -118,6 +122,7 @@ data class LineCandidate(
         get() = hangingClusterIndices.minOrNull()?.let { clusterRange.first until it } ?: clusterRange
 }
 
+@Deprecated("Legacy engine, migrate to engine-haxe")
 data class RepairCandidate(
     val kind: String,
     val reasonCode: String,
@@ -132,11 +137,13 @@ data class RepairCandidate(
     val availableCapacity: Float = 0f,
 )
 
+@Deprecated("Legacy engine, migrate to engine-haxe")
 data class LineSolution(
     val lines: List<LineCandidate>,
     val totalBadness: Float = 0f,
 )
 
+@Deprecated("Legacy engine, migrate to engine-haxe")
 enum class LineOptimizationStrategy {
     Greedy,
     Lookahead,

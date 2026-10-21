@@ -9,6 +9,7 @@ import org.tiqian.core.TextStyle
 import org.tiqian.font.FontDecision
 
 /** Cross-module capability contract for display substitutions lacking face evidence. */
+@Deprecated("Legacy engine, migrate to engine-haxe")
 const val UNVERIFIED_DISPLAY_SUBSTITUTION_COVERAGE_ISSUE =
     "UnverifiedDisplaySubstitutionCoverage"
 
@@ -19,8 +20,10 @@ const val UNVERIFIED_DISPLAY_SUBSTITUTION_COVERAGE_ISSUE =
  * face cannot replay such a segment, so the backend measures and draws it through the platform
  * text stack instead of outline replay, keeping the source range and layout correct.
  */
+@Deprecated("Legacy engine, migrate to engine-haxe")
 const val PLATFORM_MULTI_FACE_STRING_DRAW_ISSUE = "PlatformMultiFaceStringDraw"
 
+@Deprecated("Legacy engine, migrate to engine-haxe")
 data class ShapingInput(
     val text: String,
     val range: TextRange,
@@ -31,16 +34,19 @@ data class ShapingInput(
     val openTypeFeatures: List<String> = emptyList(),
 )
 
+@Deprecated("Legacy engine, migrate to engine-haxe")
 data class ShapingResult(
     val clusters: List<Cluster>,
     val glyphRuns: List<GlyphRun>,
     val decisions: List<ShapingDecisionInfo> = emptyList(),
 )
 
+@Deprecated("Legacy engine, migrate to engine-haxe")
 interface TextShaper {
     fun shape(input: ShapingInput): ShapingResult
 }
 
+@Deprecated("Legacy engine, migrate to engine-haxe")
 enum class ShapingSource {
     Stub,
     JvmAwt,
@@ -50,6 +56,7 @@ enum class ShapingSource {
     CoreText,
 }
 
+@Deprecated("Legacy engine, migrate to engine-haxe")
 class ExplainableStubTextShaper : TextShaper {
     override fun shape(input: ShapingInput): ShapingResult {
         val sourceText = input.text.substring(input.range.start, input.range.end)
@@ -124,6 +131,7 @@ class ExplainableStubTextShaper : TextShaper {
     }
 }
 
+@Deprecated("Legacy engine, migrate to engine-haxe")
 class UnimplementedTextShaper : TextShaper {
     override fun shape(input: ShapingInput): ShapingResult {
         error("Text shaping is platform-specific and has not been wired for this target yet.")

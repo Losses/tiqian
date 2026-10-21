@@ -9,6 +9,7 @@ import kotlin.math.roundToInt
  * query results and glyph grouping that Compose renderers otherwise rebuilt on every draw. A new
  * index is created whenever the owning layout result or rich-text ranges change.
  */
+@Deprecated("Legacy engine, migrate to engine-haxe")
 class LayoutResultReplayIndex internal constructor(
     val positionedClusters: List<PositionedCluster>,
     val positionedClustersByLine: List<List<PositionedCluster>>,
@@ -20,6 +21,7 @@ class LayoutResultReplayIndex internal constructor(
     val fontRoleByClusterRange: Map<TextRange, String?>,
 )
 
+@Deprecated("Legacy engine, migrate to engine-haxe")
 fun LayoutResult.toReplayIndex(richTextSpans: List<RichTextSpan>): LayoutResultReplayIndex {
     val positionedClusters = positionedClusters()
     val positionedClustersByLine = List(lines.size) { mutableListOf<PositionedCluster>() }
@@ -76,6 +78,7 @@ fun LayoutResult.toReplayIndex(richTextSpans: List<RichTextSpan>): LayoutResultR
 }
 
 /** Hot-path selection hit test over the immutable replay geometry. */
+@Deprecated("Legacy engine, migrate to engine-haxe")
 fun LayoutResultReplayIndex.selectionOffsetForPosition(
     result: LayoutResult,
     x: Float,
@@ -114,6 +117,7 @@ fun LayoutResultReplayIndex.selectionOffsetForPosition(
     return if (backwardDistance < forwardDistance) backward else forward
 }
 
+@Deprecated("Legacy engine, migrate to engine-haxe")
 fun LayoutResultReplayIndex.selectionWordRangeForPosition(
     result: LayoutResult,
     x: Float,
@@ -138,6 +142,7 @@ fun LayoutResultReplayIndex.selectionWordRangeForPosition(
     return result.getSelectionWordBoundary(sourceUnitOffset)
 }
 
+@Deprecated("Legacy engine, migrate to engine-haxe")
 fun LayoutResultReplayIndex.cursorRect(result: LayoutResult, offset: Int): Rect {
     if (result.lines.isEmpty()) return Rect(0f, 0f, 0f, 0f)
     val clamped = offset.coerceIn(0, result.input.content.text.length)
@@ -156,6 +161,7 @@ fun LayoutResultReplayIndex.cursorRect(result: LayoutResult, offset: Int): Rect 
     return Rect(x, line.top, x + 1f, line.bottom)
 }
 
+@Deprecated("Legacy engine, migrate to engine-haxe")
 fun LayoutResultReplayIndex.selectionBoxes(
     result: LayoutResult,
     range: TextRange,

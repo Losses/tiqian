@@ -7,6 +7,7 @@ import org.tiqian.protocol.PlanJsonNumber
 import org.tiqian.protocol.PlanPacked
 import std.UStringException
 
+@Deprecated("Legacy engine, migrate to engine-haxe")
 object PreparedParagraphFns {
     fun toPreparedParagraphJson(result: LayoutResult, renderEvidence: Boolean = false): String {
         val plan = PlanLowering.toPlan(result, renderEvidence)

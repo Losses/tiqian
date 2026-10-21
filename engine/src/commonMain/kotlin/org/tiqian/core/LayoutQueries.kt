@@ -10,6 +10,7 @@ private const val INTERLINEAR_UNDERLINE_OFFSET_EM = 0.18f
  * A cluster positioned in layout coordinates. The rectangle is the cluster's line box slice, not
  * glyph ink bounds: selection, hit testing, and accessibility need stable occupied text geometry.
  */
+@Deprecated("Legacy engine, migrate to engine-haxe")
 data class PositionedCluster(
     val lineIndex: Int,
     val clusterIndex: Int,
@@ -46,6 +47,7 @@ data class PositionedCluster(
  * A per-line occupied geometry segment covered by a [RichTextSpan]. Segments are derived from the
  * same positioned clusters used for selection/hit testing, not from renderer-side text shaping.
  */
+@Deprecated("Legacy engine, migrate to engine-haxe")
 data class RichTextLineSegment(
     val span: RichTextSpan,
     val lineIndex: Int,
@@ -66,6 +68,7 @@ data class RichTextLineSegment(
 }
 
 /** Four physical corner radii resolved from one final rich-text background segment. */
+@Deprecated("Legacy engine, migrate to engine-haxe")
 data class RichTextCornerRadii(
     val topLeft: Float,
     val topRight: Float,
@@ -86,6 +89,7 @@ data class RichTextCornerRadii(
  * is moved inside the measured box. Renderers consume these four values instead of independently
  * deciding whether a fragment is open or closed.
  */
+@Deprecated("Legacy engine, migrate to engine-haxe")
 fun RichTextLineSegment.resolvedBackgroundCornerRadii(inset: Float = 0f): RichTextCornerRadii {
     require(inset.isFinite() && inset >= 0f)
     val boxWidth = (width - inset * 2f).coerceAtLeast(0f)
@@ -114,6 +118,7 @@ fun RichTextLineSegment.resolvedBackgroundCornerRadii(inset: Float = 0f): RichTe
  * contract by appending a fully-selected ruby / 注音 reading in full-width parentheses after its
  * base. A partial selection of a multi-character base does not invent a detached reading.
  */
+@Deprecated("Legacy engine, migrate to engine-haxe")
 fun projectTextForCopy(
     source: String,
     range: TextRange,
@@ -124,6 +129,7 @@ fun projectTextForCopy(
     annotations = rubySpans.map { it.baseRange to it.text },
 )
 
+@Deprecated("Legacy engine, migrate to engine-haxe")
 fun LayoutResult.getTextForCopy(range: TextRange): String = projectAnnotatedTextForCopy(
     source = input.content.text,
     range = range,
@@ -165,10 +171,12 @@ private fun projectAnnotatedTextForCopy(
  * Returns each cluster's occupied rectangle using the same line/cluster advances consumed by
  * renderers. This is the geometry bridge for links, selection, and accessibility.
  */
+@Deprecated("Legacy engine, migrate to engine-haxe")
 fun LayoutResult.positionedClusters(): List<PositionedCluster> =
     lines.flatMapIndexed { lineIndex, line -> positionedClusters(lineIndex, line) }
 
 /** Returns the positioned clusters for [line]. */
+@Deprecated("Legacy engine, migrate to engine-haxe")
 fun LayoutResult.positionedClusters(line: LineBox): List<PositionedCluster> {
     val lineIndex = lines.indexOf(line)
     require(lineIndex >= 0) { "line must belong to this LayoutResult." }
@@ -183,6 +191,7 @@ fun LayoutResult.positionedClusters(line: LineBox): List<PositionedCluster> {
  * must continue to use stable occupied geometry. Renderers use this only to avoid clipping
  * real ink that belongs to already-emitted line boxes.
  */
+@Deprecated("Legacy engine, migrate to engine-haxe")
 fun LayoutResult.glyphInkBounds(): Rect? {
     val positionsByRange = positionedClusters().associateBy { it.range }
     var left = Float.POSITIVE_INFINITY
@@ -207,6 +216,7 @@ fun LayoutResult.glyphInkBounds(): Rect? {
  * Compose-like line lookup backed by Tiqian line boxes. End offsets attach to the previous line so
  * a caret at paragraph end stays on the final visible line.
  */
+@Deprecated("Legacy engine, migrate to engine-haxe")
 fun LayoutResult.getLineForOffset(offset: Int): Int {
     if (lines.isEmpty()) return -1
     val clamped = offset.coerceIn(0, input.content.text.length)
@@ -220,6 +230,7 @@ fun LayoutResult.getLineForOffset(offset: Int): Int {
  * Returns the occupied cluster box containing [offset]. A paragraph-end offset returns the final
  * caret rectangle so accessibility callers still get a concrete position.
  */
+@Deprecated("Legacy engine, migrate to engine-haxe")
 fun LayoutResult.getBoundingBox(offset: Int): Rect {
     if (lines.isEmpty()) return Rect(0f, 0f, 0f, 0f)
     val clamped = offset.coerceIn(0, input.content.text.length)
@@ -234,6 +245,7 @@ fun LayoutResult.getBoundingBox(offset: Int): Rect {
  * multi-code-unit display cluster, `SourceRangeLinearClusterSplit` divides the cluster box
  * proportionally by source UTF-16 offsets until glyph-level source mapping lands.
  */
+@Deprecated("Legacy engine, migrate to engine-haxe")
 fun LayoutResult.getBoundingBoxes(range: TextRange): List<Rect> {
     if (range.isEmpty || lines.isEmpty()) return emptyList()
     val start = range.start.coerceIn(0, input.content.text.length)
@@ -247,6 +259,7 @@ fun LayoutResult.getBoundingBoxes(range: TextRange): List<Rect> {
     }
 }
 
+@Deprecated("Legacy engine, migrate to engine-haxe")
 fun LayoutResult.getBoundingBoxes(start: Int, end: Int): List<Rect> =
     getBoundingBoxes(TextRange(start, end))
 
@@ -255,6 +268,7 @@ fun LayoutResult.getBoundingBoxes(start: Int, end: Int): List<Rect> =
  * line boundaries; a span cutting through a multi-code-unit display cluster uses the same
  * proportional source split as [getBoundingBoxes].
  */
+@Deprecated("Legacy engine, migrate to engine-haxe")
 fun LayoutResult.positionedRichTextSegments(spans: List<RichTextSpan>): List<RichTextLineSegment> {
     if (spans.isEmpty() || lines.isEmpty()) return emptyList()
     val clusters = positionedClusters()
@@ -330,6 +344,7 @@ fun LayoutResult.positionedRichTextSegments(spans: List<RichTextSpan>): List<Ric
  * backgrounds, links, selection and hit testing; glue between two decorated clusters also remains
  * covered so a continuous decoration does not acquire an internal gap.
  */
+@Deprecated("Legacy engine, migrate to engine-haxe")
 fun LayoutResult.trimmedRichTextDecorationSegments(
     occupiedSegments: List<RichTextLineSegment>,
 ): List<RichTextLineSegment> {
@@ -348,6 +363,7 @@ fun LayoutResult.trimmedRichTextDecorationSegments(
  * uses the marked clusters' typographic faces rather than the complete line box, so paragraph
  * leading does not inflate a short highlight.
  */
+@Deprecated("Legacy engine, migrate to engine-haxe")
 fun LayoutResult.richTextBackgroundSegments(
     occupiedSegments: List<RichTextLineSegment>,
 ): List<RichTextLineSegment> {
@@ -538,6 +554,7 @@ private fun LayoutResult.trimOuterPunctuationGlue(
  * Resolves the physical center line used by Tiqian's underline/strike-through renderers.
  * Consumers drawing a custom stroke style reuse this query instead of guessing from a line box.
  */
+@Deprecated("Legacy engine, migrate to engine-haxe")
 fun LayoutResult.richTextDecorationLineY(
     segment: RichTextLineSegment,
     strokeWidth: Float,
@@ -573,6 +590,7 @@ fun LayoutResult.richTextDecorationLineY(
  * Returns a caret rectangle for [offset]. The x position is derived from Tiqian's cluster advances;
  * inside a multi-code-unit cluster, `SourceRangeLinearClusterSplit` places the caret proportionally.
  */
+@Deprecated("Legacy engine, migrate to engine-haxe")
 fun LayoutResult.getCursorRect(offset: Int): Rect {
     if (lines.isEmpty()) return Rect(0f, 0f, 0f, 0f)
     val clamped = offset.coerceIn(0, input.content.text.length)
@@ -597,6 +615,7 @@ fun LayoutResult.getCursorRect(offset: Int): Rect {
  * nearest source offset inside a cluster using its occupied advance until glyph-level source maps
  * are available.
  */
+@Deprecated("Legacy engine, migrate to engine-haxe")
 fun LayoutResult.getOffsetForPosition(x: Float, y: Float): Int {
     if (lines.isEmpty()) return 0
     val lineIndex = lines.indices.minBy { index ->
@@ -621,6 +640,7 @@ fun LayoutResult.getOffsetForPosition(x: Float, y: Float): Int {
  * This retains per-code-point Latin selection inside word layout atoms without ever returning the
  * middle of a surrogate, combining sequence, emoji ZWJ sequence, or other grouped source unit.
  */
+@Deprecated("Legacy engine, migrate to engine-haxe")
 fun LayoutResult.getSelectionOffsetForPosition(x: Float, y: Float): Int {
     if (lines.isEmpty()) return 0
     val lineIndex = lines.indices.minBy { index ->
@@ -653,11 +673,13 @@ fun LayoutResult.getSelectionOffsetForPosition(x: Float, y: Float): Int {
 }
 
 /** Coerces an external UTF-16 offset to a safe selection/caret boundary. */
+@Deprecated("Legacy engine, migrate to engine-haxe")
 fun LayoutResult.coerceSelectionOffset(offset: Int, bias: SourceBoundaryBias): Int {
     return coerceTextSelectionOffset(input.content.text, input.inlineObjects, offset, bias)
 }
 
 /** Safe source-boundary coercion for logical documents that outlive their attached layout. */
+@Deprecated("Legacy engine, migrate to engine-haxe")
 fun coerceTextSelectionOffset(
     text: String,
     inlineObjects: List<InlineObjectSpan>,
@@ -687,6 +709,7 @@ fun coerceTextSelectionOffset(
  * ideographs individually selectable, groups adjacent whitespace, and otherwise returns exactly
  * one source interaction unit. It does not depend on shaping-cluster width or line-break atoms.
  */
+@Deprecated("Legacy engine, migrate to engine-haxe")
 fun LayoutResult.getSelectionWordBoundary(offset: Int): TextRange {
     val text = input.content.text
     if (text.isEmpty()) return TextRange(0, 0)
@@ -729,6 +752,7 @@ fun LayoutResult.getSelectionWordBoundary(offset: Int): TextRange {
  * right half of one Han box still belongs to that ideograph instead of the following insertion
  * boundary.
  */
+@Deprecated("Legacy engine, migrate to engine-haxe")
 fun LayoutResult.getSelectionWordBoundaryForPosition(x: Float, y: Float): TextRange? {
     if (lines.isEmpty() || input.content.text.isEmpty()) return null
     val lineIndex = lines.indices.minBy { index ->

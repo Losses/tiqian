@@ -196,6 +196,7 @@ internal class ContextualDashEllipsisAwareFontRoleClassifier(
  * Resolves contextual U+2014 and U+2026 roles for callers that classify several ranges from the
  * same complete paragraph outside the layout pipeline, such as markdown lowering bridges.
  */
+@Deprecated("Legacy engine, migrate to engine-haxe")
 fun FontRoleClassifier.withContextualDashEllipsisRoles(
     text: String,
     context: FontRoleContext = FontRoleContext(),

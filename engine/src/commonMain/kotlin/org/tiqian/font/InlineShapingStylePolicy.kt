@@ -7,6 +7,7 @@ package org.tiqian.font
  * otherwise make browser glyph advances diverge from LayoutResult. The first
  * divergent property is what makes lowering fail.
  */
+@Deprecated("Legacy engine, migrate to engine-haxe")
 object InlineShapingStylePolicy {
     /**
      * The sixteen inherited shaping properties the lowering engine compares

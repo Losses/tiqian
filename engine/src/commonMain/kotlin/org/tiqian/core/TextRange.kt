@@ -1,5 +1,6 @@
 package org.tiqian.core
 
+@Deprecated("Legacy engine, migrate to engine-haxe")
 data class TextRange(val start: Int, val end: Int) {
     init {
         if ((start > end)) {

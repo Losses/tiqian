@@ -12,6 +12,7 @@ package org.tiqian.core
  * Retire this file together with the hand-written LayoutQueries.kt when
  * org.tiqian.core.LayoutQueries is mounted from the kotlin bundle.
  */
+@Deprecated("Legacy engine, migrate to engine-haxe")
 object LayoutQueries {
     fun positionedClustersForLine(result: LayoutResult, line: LineBox): List<PositionedCluster> =
         result.positionedClusters(line)

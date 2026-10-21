@@ -12,6 +12,7 @@ package org.tiqian.linebreak
  * and [EnglishHyphenation] (bundled TeX patterns). Each instance is bound to
  * one language.
  */
+@Deprecated("Legacy engine, migrate to engine-haxe")
 interface Hyphenator {
     fun hyphenate(word: String): List<Int>
 }
@@ -21,6 +22,7 @@ interface Hyphenator {
  * wired (core stays data-free): a Western word is then only ever broken at
  * existing break characters / word boundaries, never mid-word.
  */
+@Deprecated("Legacy engine, migrate to engine-haxe")
 object NoHyphenator : Hyphenator {
     override fun hyphenate(word: String): List<Int> = emptyList()
 }
@@ -34,6 +36,7 @@ object NoHyphenator : Hyphenator {
  * allowed where the merged level is odd and outside the [leftMin]/[rightMin]
  * margins.
  */
+@Deprecated("Legacy engine, migrate to engine-haxe")
 class LiangHyphenator(
     private val patterns: Map<String, IntArray>,
     private val exceptions: Map<String, List<Int>> = emptyMap(),
@@ -79,6 +82,7 @@ class LiangHyphenator(
  * `\hyphenation{…}` exception blocks) into ([patterns], [exceptions]) ready for
  * [LiangHyphenator]. `%` comments are stripped.
  */
+@Deprecated("Legacy engine, migrate to engine-haxe")
 fun parseTexHyphenationPatterns(tex: String): Pair<Map<String, IntArray>, Map<String, List<Int>>> {
     val noComments = tex.lineSequence().joinToString("\n") { line ->
         val comment = line.indexOf('%')

@@ -14,6 +14,7 @@ import kotlin.jvm.JvmInline
  * 安全 + 锚点明确。`fontSize` 自身**不**用 `ic`（它定义了一个字身框）。
  */
 @JvmInline
+@Deprecated("Legacy engine, migrate to engine-haxe")
 value class Ic(val count: Float) {
     /** 解析成 px：[emPx] = 该上下文的字身框进格（横排全宽 CJK = 字号）。 */
     fun toPx(emPx: Float): Float = count * emPx
@@ -27,7 +28,9 @@ value class Ic(val count: Float) {
 }
 
 /** 作者面字面量：`2f.ic` / `0.25f.ic`。 */
+@Deprecated("Legacy engine, migrate to engine-haxe")
 val Float.ic: Ic get() = Ic(this)
 
 /** 作者面字面量：`40.ic` / `2.ic`。 */
+@Deprecated("Legacy engine, migrate to engine-haxe")
 val Int.ic: Ic get() = Ic(toFloat())

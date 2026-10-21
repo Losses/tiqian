@@ -3,6 +3,7 @@ package org.tiqian.protocol
 import org.tiqian.boring.runtime.BytesBuffer
 import org.tiqian.boring.runtime.FPHelper
 
+@Deprecated("Legacy engine, migrate to engine-haxe")
 object PlanPacked {
     private fun f32(v: Float): Float {
         return v

@@ -1,5 +1,6 @@
 package org.tiqian.core
 
+@Deprecated("Legacy engine, migrate to engine-haxe")
 object UnicodeWordCharacter {
     const val DATA_REVISION: String = "17.0.0"
     const val DATA_SOURCE: String = "https://www.unicode.org/Public/17.0.0/ucd/extracted/DerivedGeneralCategory.txt"
