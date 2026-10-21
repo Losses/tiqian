@@ -19,10 +19,8 @@ use std::collections::HashMap;
 
 use tiqian::NamedError;
 
-use crate::font_source::sha256_hex;
-use crate::js_compat::{js_int_to_number, js_number_string, js_trim, trunc_sat_usize};
+use crate::js_compat::{js_int_to_number, js_number_string, js_trim};
 use crate::json::Json;
-use crate::prepared_dom::{render_prepared_paragraph_artifact, PreparedRenderOptions};
 use crate::schema::{
     stable_stringify, FONT_SOURCE_POLICY, LAYOUT_REVISION, RENDER_REVISION, SNAPSHOT_SCHEMA,
 };
@@ -86,22 +84,12 @@ pub struct SnapshotBundleData {
     pub render_font_families: Vec<Json>,
     pub rendered_entries: Vec<Json>,
     pub font_contract_entries: Vec<Json>,
-    /// Table indexes this bundle's classes used, in first-mint order.
-    pub used_value_style_indexes: Vec<usize>,
 }
 
 impl SnapshotBundleData {
     /// The wire form the neon boundary passes between the data and assembly
     /// calls; the host holds it for the span of one build.
     pub fn to_json(&self) -> Json {
-        let mut used_indexes: Vec<Json> = Vec::with_capacity(self.used_value_style_indexes.len());
-        for index in &self.used_value_style_indexes {
-            used_indexes.push(match i64::try_from(*index) {
-                Ok(value) => Json::Num(js_int_to_number(value)),
-                // Table row counts stay far below the i64 limit.
-                Err(_) => Json::Num(js_int_to_number(0)),
-            });
-        }
         Json::Obj(vec![
             ("id".to_string(), Json::str(self.id.clone())),
             (
@@ -120,7 +108,6 @@ impl SnapshotBundleData {
                 "fontContractEntries".to_string(),
                 Json::Arr(self.font_contract_entries.clone()),
             ),
-            ("usedValueStyleIndexes".to_string(), Json::Arr(used_indexes)),
         ])
     }
 
@@ -147,28 +134,12 @@ impl SnapshotBundleData {
             Some(Json::Arr(items)) => items.clone(),
             _ => return Err(invalid()),
         };
-        let mut used_value_style_indexes: Vec<usize> = Vec::new();
-        match field(value, "usedValueStyleIndexes") {
-            Some(Json::Arr(rows)) => {
-                for row in rows {
-                    let Json::Num(number) = row else {
-                        return Err(invalid());
-                    };
-                    if number.fract() != 0.0 || *number < 0.0 {
-                        return Err(invalid());
-                    }
-                    used_value_style_indexes.push(trunc_sat_usize(*number));
-                }
-            }
-            _ => return Err(invalid()),
-        }
         Ok(SnapshotBundleData {
             id,
             paragraph_selector,
             render_font_families,
             rendered_entries,
             font_contract_entries,
-            used_value_style_indexes,
         })
     }
 }
@@ -241,7 +212,7 @@ fn render_snapshot_bundle_data_inner(
     entries: &[Json],
     font_contract_entries: &[Json],
     options: &SnapshotBundleOptions,
-    tables: &mut SnapshotTables,
+    _tables: &mut SnapshotTables,
     supported_paragraph_selector: &str,
 ) -> Result<SnapshotBundleData, NamedError> {
     let mut corpus: Vec<&Json> = Vec::with_capacity(entries.len() + font_contract_entries.len());
@@ -305,66 +276,13 @@ fn render_snapshot_bundle_data_inner(
         return Err(named("UnsupportedSnapshotParagraphSelector"));
     }
 
-    let mut used_value_style_indexes: Vec<usize> = Vec::new();
-    let mut class_for: Box<dyn FnMut(&str) -> String + '_> = Box::new(|declaration: &str| {
-        // Table rows define the class indexes; the data phase records
-        // which rows this bundle used so assembly writes the rules.
-        let index = tables.intern_value_style(declaration);
-        if !used_value_style_indexes.contains(&index) {
-            used_value_style_indexes.push(index);
-        }
-        format!("tqv-{}", to_string_36(index))
-    });
-    let mut rendered_entries: Vec<Json> = Vec::with_capacity(entries.len());
-    for entry in entries {
-        let plan_json = match field(entry, "plan") {
-            Some(Json::Str(text)) => text.clone(),
-            Some(other) => other.render(),
-            None => return Err(named("InvalidPreparedParagraphGeometry")),
-        };
-        let locale = prepared_locale(field(entry, "typography"));
-        let mut render_options = PreparedRenderOptions::new();
-        render_options.style_class_for = Some(&mut class_for);
-        render_options.semantics = field(entry, "semantics");
-        render_options.inline_boxes = field(entry, "inlineBoxes");
-        render_options.render_text_spans = field(entry, "renderTextSpans");
-        if let Some(Json::Str(text)) = field(entry, "sourceText") {
-            render_options.source_text = Some(text.as_str());
-        }
-        let rendered =
-            render_prepared_paragraph_artifact(&plan_json, &locale, &mut render_options)?;
-        let artifact_sha = sha256_hex(stable_stringify(&rendered.artifact).as_bytes());
-        let mut fields = match entry {
-            Json::Obj(fields) => fields.clone(),
-            _ => Vec::new(),
-        };
-        let mut has_html = false;
-        let mut has_artifact_sha = false;
-        for (name, value) in fields.iter_mut() {
-            if name == "html" {
-                *value = Json::str(&rendered.html);
-                has_html = true;
-            } else if name == "renderArtifactSha256" {
-                *value = Json::str(&artifact_sha);
-                has_artifact_sha = true;
-            }
-        }
-        if !has_html {
-            fields.push(("html".to_string(), Json::str(&rendered.html)));
-        }
-        if !has_artifact_sha {
-            fields.push(("renderArtifactSha256".to_string(), Json::str(&artifact_sha)));
-        }
-        rendered_entries.push(Json::Obj(fields));
-    }
-    drop(class_for);
+    let rendered_entries = entries.to_vec();
     Ok(SnapshotBundleData {
         id,
         paragraph_selector: paragraph_selector.to_string(),
         render_font_families: families.to_vec(),
         rendered_entries,
         font_contract_entries: font_contract_entries.to_vec(),
-        used_value_style_indexes,
     })
 }
 
@@ -451,17 +369,6 @@ data-tq-snapshot-manifest>{}</script></template>",
     // belong in the server-injected first-paint style as well.
     let mut initial_style = String::from(options.shared_runtime_style);
     initial_style.push_str(&exact_render_font_style(&data.id));
-    for &index in &data.used_value_style_indexes {
-        let Some(declaration) = tables.value_style_at(index) else {
-            return Err(named("SnapshotTableValueStyleMissing"));
-        };
-        initial_style.push_str(&format!(
-            "tiqian-prose[snapshot-ref=\"{}\"] [data-tq-rendered=\"true\"] .tqv-{}{{{}}}",
-            escape_attribute(&data.id),
-            to_string_36(index),
-            declaration,
-        ));
-    }
     Ok(SnapshotBundle {
         id: data.id.clone(),
         template,
@@ -795,41 +702,16 @@ mod tests {
                 ("html".to_string(), Json::str("<span>p</span>")),
             ])],
             font_contract_entries: Vec::new(),
-            used_value_style_indexes: vec![0, 2],
         };
         let wire = data.to_json().render();
         let restored = SnapshotBundleData::from_json(&parse_json(&wire).expect("wire form parses"))
             .expect("wire form restores");
         assert_eq!(restored.id, "tq-page");
         assert_eq!(restored.paragraph_selector, PLAIN_PARAGRAPH_SELECTOR);
-        assert_eq!(restored.used_value_style_indexes, vec![0, 2]);
         assert_eq!(restored.rendered_entries.len(), 1);
         // Value-style declarations live in the table rows; the wire form
         // carries the used indexes only.
         assert!(!wire.contains("valueStyles"));
-    }
-
-    #[test]
-    fn bundle_data_wire_form_rejects_fractional_indexes() {
-        let wire = Json::Obj(vec![
-            ("id".to_string(), Json::str("tq-page")),
-            (
-                "paragraphSelector".to_string(),
-                Json::str(PLAIN_PARAGRAPH_SELECTOR),
-            ),
-            ("renderFontFamilies".to_string(), Json::Arr(Vec::new())),
-            ("renderedEntries".to_string(), Json::Arr(Vec::new())),
-            ("fontContractEntries".to_string(), Json::Arr(Vec::new())),
-            (
-                "usedValueStyleIndexes".to_string(),
-                Json::Arr(vec![Json::Num(0.5)]),
-            ),
-        ]);
-        let error = match SnapshotBundleData::from_json(&wire) {
-            Ok(_) => panic!("fractional index rejects"),
-            Err(error) => error,
-        };
-        assert_eq!(error.0, "SnapshotBundleDataInvalid");
     }
 
     fn contract_entry(key: &str, coverage: &str, probe_text: &str) -> Json {

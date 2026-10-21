@@ -74,10 +74,6 @@ fn main(mut cx: ModuleContext) -> NeonResult<()> {
         precompute_calls::absorb_snapshot_tables,
     )?;
     cx.export_function(
-        "absorbSnapshotTablesMetadata",
-        precompute_calls::absorb_snapshot_tables_metadata,
-    )?;
-    cx.export_function(
         "finalizeSnapshotTables",
         precompute_calls::finalize_snapshot_tables,
     )?;

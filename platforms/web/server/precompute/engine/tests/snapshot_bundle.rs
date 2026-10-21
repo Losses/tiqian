@@ -162,7 +162,8 @@ fn snapshot_bundle_emits_a_schema_2_manifest_pinned_to_the_table() {
     assert!(member(face_row, "probeRef").is_some());
     assert!(member(face_row, "coverageText").is_none());
     assert!(member(face_row, "probe").is_none());
-    // The rendered bodies carry the minted class and the two entry keys.
+    // The rendered bodies carry the two entry keys; value-style classes are
+    // minted by the shared TS layer, so no Rust-minted tqv class appears.
     let rendered = match &bundle.entries {
         Json::Arr(items) => items.clone(),
         _ => panic!("entries array"),
@@ -174,7 +175,7 @@ fn snapshot_bundle_emits_a_schema_2_manifest_pinned_to_the_table() {
             Some(Json::Str(text)) => text,
             _ => panic!("html present"),
         };
-        assert!(html.contains("tqv-0"), "body carries the value class");
+        assert!(!html.contains("tqv-"), "body carries no Rust value class");
     }
     assert_eq!(bundle.render_font_families.render(), r#"["Snapshot Sans"]"#);
     assert_eq!(bundle.font_preloads.render(), "[]");
@@ -182,12 +183,10 @@ fn snapshot_bundle_emits_a_schema_2_manifest_pinned_to_the_table() {
         bundle.root_attributes.render(),
         r#"{"data-tiqian-snapshot-render-font":"true"}"#
     );
-    // The first-paint style keeps the shared prefix and appends the table
-    // rows the classes reference.
+    // The first-paint style keeps the shared prefix; value-style rules are
+    // emitted by the shared TS layer, so the Rust assembly adds none.
     assert!(bundle.initial_style.starts_with(SHARED_STYLE));
-    assert!(bundle
-        .initial_style
-        .contains(r#"tiqian-prose[snapshot-ref="tq-page"] [data-tq-rendered="true"] .tqv-0{--tq-line-height:27px!important;--tq-line-baseline-offset:-7px!important}"#));
+    assert!(!bundle.initial_style.contains(".tqv-"));
 }
 
 #[test]
