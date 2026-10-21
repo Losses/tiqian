@@ -1,5 +1,9 @@
 # engine-haxe
 
+> **唯一活跃源码**：本目录是 Tiqian 引擎的唯一活跃源码（Phase 1，2026-10-21）。
+> 同级 engine/（Kotlin 手写引擎）已标记 Legacy，仅作为 Kotlin 平台当前
+> 消费面保留，最终由 boring 从本目录生成的多目标产物取代。
+
 `engine-haxe` 是排版引擎的 Haxe 源码树。`engine`（Kotlin）是当前的产品代码；
 本目录与它并行存在：先把 Kotlin 逐包翻译成 Haxe，再用生成的 Kotlin 逐个
 文件替换 `engine` 中的手写文件。全部替换完成后，删除 `engine`，本目录改名

@@ -480,7 +480,7 @@ impl LineBreakPlanningStage {
         if __count == 0 {
             return false;
         }
-        for i in 0..__count {
+        for i in 0..match u32::try_from(u_string::unit_count(&(str))) { Ok(value) => value, Err(_) => u32::MAX } {
             if !ParagraphShapingStage::paragraph_shaping_stage_is_whitespace(*(u_string::unit_at_from(&__units, i)).as_ref().unwrap()) {
                 return false;
             }

@@ -1923,7 +1923,7 @@ fn adjacent_quoted_list_items_keep_cjk_quote_geometry_across_mixed_content() {
             let mut a: Vec<u32> = vec![];
             for i in 0..match u32::try_from((r.debug).clone().font_decisions.len()) { Ok(value) => value, Err(_) => u32::MAX } {
                 let d = ((r.debug).clone().font_decisions[usize::try_from(i).unwrap_or(0)]).clone();
-                if d.role.to_ustring() == UString::from("CjkPunctuation") && (u32::from_ne_bytes(({ let __hay = &(qi); let __n = __hay.len(); let mut __i = 0usize; let mut __found: i32 = -1; while __i < __n { if __hay[__i] == (d.range).clone().start { __found = i32::from_ne_bytes(u32::try_from(__i).unwrap_or(0).to_ne_bytes()); break; } __i += 1; } __found } as u32).to_ne_bytes())) <= 2147483647 {
+                if d.role.to_ustring() == UString::from("CjkPunctuation") && (u32::from_ne_bytes(((match qi.iter().position(|e| e == &(d.range).clone().start) { Some(v) => i32::from_ne_bytes(u32::try_from(v).unwrap_or(0).to_ne_bytes()), None => -1 }) as u32).to_ne_bytes())) <= 2147483647 {
                     a.push((d.range).clone().start);
                 }
             }
@@ -1943,7 +1943,7 @@ fn adjacent_quoted_list_items_keep_cjk_quote_geometry_across_mixed_content() {
             let mut o: Vec<u32> = vec![];
             for i in 0..match u32::try_from((r.debug).clone().role_overrides.len()) { Ok(value) => value, Err(_) => u32::MAX } {
                 let d = ((r.debug).clone().role_overrides[usize::try_from(i).unwrap_or(0)]).clone();
-                if u32::from_ne_bytes(({ let __hay = &(f); let __n = __hay.len(); let mut __i = 0usize; let mut __found: i32 = -1; while __i < __n { if __hay[__i] == (d.range).clone().start { __found = i32::from_ne_bytes(u32::try_from(__i).unwrap_or(0).to_ne_bytes()); break; } __i += 1; } __found } as u32).to_ne_bytes()) <= 2147483647 {
+                if u32::from_ne_bytes(((match f.iter().position(|e| e == &(d.range).clone().start) { Some(v) => i32::from_ne_bytes(u32::try_from(v).unwrap_or(0).to_ne_bytes()), None => -1 }) as u32).to_ne_bytes()) <= 2147483647 {
                     o.push((d.range).clone().start);
                 }
             }
@@ -1951,7 +1951,7 @@ fn adjacent_quoted_list_items_keep_cjk_quote_geometry_across_mixed_content() {
             let mut good = true;
             for i in 0..match u32::try_from((r.debug).clone().role_overrides.len()) { Ok(value) => value, Err(_) => u32::MAX } {
                 let d = ((r.debug).clone().role_overrides[usize::try_from(i).unwrap_or(0)]).clone();
-                if u32::from_ne_bytes(({ let __hay = &(f); let __n = __hay.len(); let mut __i = 0usize; let mut __found: i32 = -1; while __i < __n { if __hay[__i] == (d.range).clone().start { __found = i32::from_ne_bytes(u32::try_from(__i).unwrap_or(0).to_ne_bytes()); break; } __i += 1; } __found } as u32).to_ne_bytes()) <= 2147483647 {
+                if u32::from_ne_bytes(((match f.iter().position(|e| e == &(d.range).clone().start) { Some(v) => i32::from_ne_bytes(u32::try_from(v).unwrap_or(0).to_ne_bytes()), None => -1 }) as u32).to_ne_bytes()) <= 2147483647 {
                     good = good && (d.source).to_ustring() == UString::from("PairedPunctuationOuterScriptContext");
                 }
             }
@@ -1975,7 +1975,7 @@ fn mi10s_adjacent_latin_transcriptions_keep_the_final_quote_pair_in_cjk_context(
         let mut a: Vec<u32> = vec![];
         for i in 0..match u32::try_from((r.debug).clone().role_overrides.len()) { Ok(value) => value, Err(_) => u32::MAX } {
             let d = ((r.debug).clone().role_overrides[usize::try_from(i).unwrap_or(0)]).clone();
-            if u32::from_ne_bytes(({ let __hay = &(f); let __n = __hay.len(); let mut __i = 0usize; let mut __found: i32 = -1; while __i < __n { if __hay[__i] == (d.range).clone().start { __found = i32::from_ne_bytes(u32::try_from(__i).unwrap_or(0).to_ne_bytes()); break; } __i += 1; } __found } as u32).to_ne_bytes()) <= 2147483647 {
+            if u32::from_ne_bytes(((match f.iter().position(|e| e == &(d.range).clone().start) { Some(v) => i32::from_ne_bytes(u32::try_from(v).unwrap_or(0).to_ne_bytes()), None => -1 }) as u32).to_ne_bytes()) <= 2147483647 {
                 a.push((d.range).clone().start);
             }
         }
@@ -1984,7 +1984,7 @@ fn mi10s_adjacent_latin_transcriptions_keep_the_final_quote_pair_in_cjk_context(
         let mut sources_ok = true;
         for i in 0..match u32::try_from((r.debug).clone().role_overrides.len()) { Ok(value) => value, Err(_) => u32::MAX } {
             let d = ((r.debug).clone().role_overrides[usize::try_from(i).unwrap_or(0)]).clone();
-            if u32::from_ne_bytes(({ let __hay = &(f); let __n = __hay.len(); let mut __i = 0usize; let mut __found: i32 = -1; while __i < __n { if __hay[__i] == (d.range).clone().start { __found = i32::from_ne_bytes(u32::try_from(__i).unwrap_or(0).to_ne_bytes()); break; } __i += 1; } __found } as u32).to_ne_bytes()) <= 2147483647 {
+            if u32::from_ne_bytes(((match f.iter().position(|e| e == &(d.range).clone().start) { Some(v) => i32::from_ne_bytes(u32::try_from(v).unwrap_or(0).to_ne_bytes()), None => -1 }) as u32).to_ne_bytes()) <= 2147483647 {
                 roles_ok = roles_ok && (d.overridden_role).to_ustring() == UString::from("CjkPunctuation");
                 sources_ok = sources_ok && (d.source).to_ustring() == UString::from("PairedPunctuationOuterScriptContext");
             }

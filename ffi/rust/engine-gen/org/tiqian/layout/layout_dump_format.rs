@@ -159,7 +159,7 @@ impl LayoutDumpFormat {
     let __units = u_string::units(&value);
     let __count = u_string::unit_count(&value);
         let mut out_b = UString::new();
-        for i in 0..__count {
+        for i in 0..match u32::try_from(u_string::unit_count(&(value))) { Ok(value) => value, Err(_) => u32::MAX } {
             let c = u_string::unit_at_from(&__units, i).unwrap_or(0);
             if c == 10 {
                 out_b += &(UString::from("\\n"));

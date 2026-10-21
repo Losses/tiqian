@@ -22,43 +22,6 @@ permissions:
   contents: read
 
 jobs:
-  native-link-linux:
-    name: Kotlin/Native link linux x64 arm64 mingw
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
-      - uses: actions/setup-java@03ad4de0992f5dab5e18fcb136590ce7c4a0ac95 # v5.6.0
-        with:
-          distribution: temurin
-          java-version: "25"
-      - uses: android-actions/setup-android@be39fa834029ff78f1a44aa3bb0819b8fc2bd8fd # v4.0.4
-      - name: Accept Android SDK licenses
-        run: yes | sdkmanager --licenses > /dev/null
-      - name: Install Android platform pieces
-        run: sdkmanager --install "platforms;android-36" "build-tools;36.0.0" > /dev/null
-      - name: Cache Gradle
-        uses: actions/cache@0057852bfaa89a56745cba8c7296529d2fc39830 # v4
-        with:
-          path: |
-            ~/.gradle/caches
-            ~/.gradle/wrapper
-          key: gradle-${{ runner.os }}-${{ hashFiles('gradle/wrapper/gradle-wrapper.properties', 'gradle/gradle-daemon-jvm.properties', '**/*.gradle.kts') }}
-          restore-keys: gradle-${{ runner.os }}-
-      - name: Cache Kotlin/Native toolchains
-        uses: actions/cache@0057852bfaa89a56745cba8c7296529d2fc39830 # v4
-        with:
-          path: ~/.konan
-          key: konan-${{ runner.os }}-link-linux-${{ hashFiles('**/*.gradle.kts') }}
-          restore-keys: |
-            konan-${{ runner.os }}-link-linux-
-            konan-${{ runner.os }}-
-      - name: Link static libraries
-        run: >
-          ./gradlew
-          :ffi:native:linkReleaseStaticLinuxX64
-          :ffi:native:linkReleaseStaticLinuxArm64
-          :ffi:native:linkReleaseStaticMingwX64
-
   native-tests-linux:
     name: Kotlin/Native linuxX64 module tests
     runs-on: ubuntu-latest
@@ -90,46 +53,10 @@ jobs:
             konan-${{ runner.os }}-tests-linux-
             konan-${{ runner.os }}-
       - name: Run linuxX64 module tests
-        run: >
-          ./gradlew
-          :engine:linuxX64Test
-          :ffi:native:linuxX64Test
-
-  native-link-macos:
-    name: Kotlin/Native link macosArm64
-    runs-on: macos-latest
-    steps:
-      - uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
-      - uses: actions/setup-java@03ad4de0992f5dab5e18fcb136590ce7c4a0ac95 # v5.6.0
-        with:
-          distribution: temurin
-          java-version: "25"
-      - uses: android-actions/setup-android@be39fa834029ff78f1a44aa3bb0819b8fc2bd8fd # v4.0.4
-      - name: Accept Android SDK licenses
-        run: yes | sdkmanager --licenses > /dev/null
-      - name: Install Android platform pieces
-        run: sdkmanager --install "platforms;android-36" "build-tools;36.0.0" > /dev/null
-      - name: Cache Gradle
-        uses: actions/cache@0057852bfaa89a56745cba8c7296529d2fc39830 # v4
-        with:
-          path: |
-            ~/.gradle/caches
-            ~/.gradle/wrapper
-          key: gradle-${{ runner.os }}-${{ hashFiles('gradle/wrapper/gradle-wrapper.properties', 'gradle/gradle-daemon-jvm.properties', '**/*.gradle.kts') }}
-          restore-keys: gradle-${{ runner.os }}-
-      - name: Cache Kotlin/Native toolchains
-        uses: actions/cache@0057852bfaa89a56745cba8c7296529d2fc39830 # v4
-        with:
-          path: ~/.konan
-          key: konan-${{ runner.os }}-link-macos-${{ hashFiles('**/*.gradle.kts') }}
-          restore-keys: |
-            konan-${{ runner.os }}-link-macos-
-            konan-${{ runner.os }}-
-      - name: Link static libraries
-        run: ./gradlew :ffi:native:linkReleaseStaticMacosArm64
+        run: ./gradlew :engine:linuxX64Test
 
   js-node:
-    name: Kotlin/JS engine export node tests
+    name: Kotlin/JS engine export node tests (boring-generated TS)
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
@@ -150,8 +77,18 @@ jobs:
             ~/.gradle/wrapper
           key: gradle-${{ runner.os }}-${{ hashFiles('gradle/wrapper/gradle-wrapper.properties', 'gradle/gradle-daemon-jvm.properties', '**/*.gradle.kts') }}
           restore-keys: gradle-${{ runner.os }}-
-      - name: Run jsNodeTest
-        run: ./gradlew :ffi:js:jsNodeTest
+      - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6.5.0
+        with:
+          node-version: "24"
+          package-manager-cache: false
+      - name: Install workspace dependencies
+        working-directory: .
+        run: npm install --no-audit --no-fund
+      - name: Build and test the boring-generated @tiqian/ffi runtime
+        working-directory: ffi/js/npm
+        run: |
+          npm run build:runtime
+          npm test
 
   rust:
     name: Rust workspaces build and test
@@ -203,12 +140,15 @@ jobs:
       - name: Replay the fixture through the js corpus test
         run: node --test platforms/web/client/web-component/tests/prepared-dom-corpus.test.js
 
-  # The engine archive linked into the Rust tests: the cargo run below
-  # exercises the C ABI through the real Kotlin/Native archive, and the npm
-  # steps after it run the loader over the same engine-linked addon. The js
-  # bundle feeds the npm suite.
+  # The former engine-linked lane (C ABI static link into the Rust tests via
+  # TIQIAN_NATIVE_LIB_DIR) is gone: ffi/native was removed and the Rust crates
+  # consume the boring-generated types directly. What remains of this job is
+  # the full-type-checked npm suite over the web precompute server: build the
+  # @tiqian/ffi runtime (its .d.mts declarations feed the core type check),
+  # then type-check core and prose, then build the Neon addon from cargo and
+  # run the precompute npm suite.
   rust-engine-linked:
-    name: Rust engine-linked tests
+    name: Web precompute npm suite (full type checks)
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
@@ -230,32 +170,7 @@ jobs:
             ~/.gradle/wrapper
           key: gradle-${{ runner.os }}-${{ hashFiles('gradle/wrapper/gradle-wrapper.properties', 'gradle/gradle-daemon-jvm.properties', '**/*.gradle.kts') }}
           restore-keys: gradle-${{ runner.os }}-
-      - name: Cache Kotlin/Native toolchains
-        uses: actions/cache@0057852bfaa89a56745cba8c7296529d2fc39830 # v4
-        with:
-          path: ~/.konan
-          key: konan-${{ runner.os }}-engine-linked-${{ hashFiles('**/*.gradle.kts') }}
-          restore-keys: |
-            konan-${{ runner.os }}-engine-linked-
-            konan-${{ runner.os }}-
-      - name: Build engine archive and js bundle
-        run: >
-          ./gradlew
-          :ffi:native:linkReleaseStaticLinuxX64
-          :ffi:js:compileProductionExecutableKotlinJs
-          :ffi:js:assembleNpmPackage
-      - name: Run the engine-linked cargo tests
-        run: >
-          TIQIAN_NATIVE_LIB_DIR=$GITHUB_WORKSPACE/ffi/native/build/bin/linuxX64/releaseStatic
-          cargo test --manifest-path platforms/web/server/precompute/Cargo.toml
-      # The npm loader over an engine-linked addon; the font-dependent lanes
-      # self-skip on runners without fonts, so this exercises the wiring and
-      # the pure entries, while the cargo run above exercises the engine.
-      # Workspace install (root npm ci) hoists @tiqian/* packages as symlinks;
-      # the redirect order (core full checks -> prose --noCheck -> precompute)
-      # preserves the ffi declarations prerequisite from commit 81d2330c.
-      - name: Set up Node.js 24
-        uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6.5.0
+      - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6.5.0
         with:
           node-version: "24"
           package-manager-cache: false
@@ -265,16 +180,17 @@ jobs:
         # precompute member are not on the registry, so no lockfile can carry
         # resolved entries for them and npm ci (npm >= 11) rejects the gap.
         run: npm install --no-audit --no-fund
+      - name: Build the @tiqian/ffi runtime
+        working-directory: ffi/js/npm
+        run: npm run build:runtime
       - name: Build core with full type checks
         working-directory: platforms/web/client/core
         run: npx tsc -b
       - name: Emit the prose package
         working-directory: platforms/web/client/web-component
         run: npx tsc -b --noCheck
-      - name: Run the npm suite engine-linked
+      - name: Run the npm suite over the built addon
         working-directory: platforms/web/server/core
-        env:
-          TIQIAN_NATIVE_LIB_DIR: ${{ github.workspace }}/ffi/native/build/bin/linuxX64/releaseStatic
         run: |
           npm run debug:native
           npm test

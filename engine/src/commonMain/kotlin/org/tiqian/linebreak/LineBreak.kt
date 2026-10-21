@@ -2,6 +2,7 @@ package org.tiqian.linebreak
 
 import org.tiqian.core.TextRange
 
+@Deprecated("Legacy engine, migrate to engine-haxe")
 data class BreakOpportunity(
     val index: Int,
     val kind: BreakKind,
@@ -9,6 +10,7 @@ data class BreakOpportunity(
     val reason: String,
 )
 
+@Deprecated("Legacy engine, migrate to engine-haxe")
 enum class BreakKind {
     Allowed,
     Forbidden,
@@ -22,6 +24,7 @@ enum class BreakKind {
  * (U+000D U+000A) is a single break — a code-point scanner should treat an LF
  * right after a CR as part of the same break, not a second one.
  */
+@Deprecated("Legacy engine, migrate to engine-haxe")
 fun isMandatoryBreakCodePoint(codePoint: Int): Boolean =
     codePoint == 0x000A || // LF  line feed
         codePoint == 0x000B || // VT  vertical tab
@@ -36,12 +39,15 @@ fun isMandatoryBreakCodePoint(codePoint: Int): Boolean =
  * advance. WORD JOINER (U+2060) and ZWNBSP/BOM (U+FEFF) are deliberately not
  * included because they have the opposite no-break semantics.
  */
+@Deprecated("Legacy engine, migrate to engine-haxe")
 fun isZeroWidthSpaceCodePoint(codePoint: Int): Boolean = codePoint == 0x200B
 
+@Deprecated("Legacy engine, migrate to engine-haxe")
 interface LineBreakAnalyzer {
     fun analyze(text: String): List<BreakOpportunity>
 }
 
+@Deprecated("Legacy engine, migrate to engine-haxe")
 class SimpleCharacterLineBreakAnalyzer : LineBreakAnalyzer {
     override fun analyze(text: String): List<BreakOpportunity> {
         if (text.isEmpty()) return emptyList()
@@ -65,6 +71,7 @@ class SimpleCharacterLineBreakAnalyzer : LineBreakAnalyzer {
     }
 }
 
+@Deprecated("Legacy engine, migrate to engine-haxe")
 data class ForbiddenBreak(
     val range: TextRange,
     val reason: String,

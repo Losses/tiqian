@@ -47,6 +47,7 @@ import org.tiqian.font.FontRoleContext
 import org.tiqian.shaping.ShapingInput
 import org.tiqian.shaping.ShapingResult
 
+@Deprecated("Legacy engine, migrate to engine-haxe")
 data class WidthIndependentAnnotationKey(
     val text: String,
     val spans: List<TextSpan>,
@@ -103,6 +104,7 @@ internal class WidthIndependentParagraphAnnotation(
     val baseShapingStage: ParagraphShapingStageResult,
 )
 
+@Deprecated("Legacy engine, migrate to engine-haxe")
 interface WidthIndependentAnnotationCache {
     fun get(key: WidthIndependentAnnotationKey): Any?
     fun put(key: WidthIndependentAnnotationKey, annotation: Any)
@@ -110,6 +112,7 @@ interface WidthIndependentAnnotationCache {
     val size: Int
 }
 
+@Deprecated("Legacy engine, migrate to engine-haxe")
 class LruWidthIndependentAnnotationCache(val maxEntries: Int = 512) : WidthIndependentAnnotationCache {
     private val map = mutableMapOf<WidthIndependentAnnotationKey, Any>()
     private val keys = mutableListOf<WidthIndependentAnnotationKey>()

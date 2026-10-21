@@ -16,6 +16,7 @@ package org.tiqian.clreq
  * this actually protects are the ones that split into separate clusters
  * (`50%`, `¥100`, `+5`, `37℃`, `±2`).
  */
+@Deprecated("Legacy engine, migrate to engine-haxe")
 object NumberSymbolCohesion {
     private val PREFIX_SIGN = setOf('+', '-', '±')
     private val SUFFIX_UNIT = setOf('%', '‰', '°', '℃', '℉', '′', '″')

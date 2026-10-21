@@ -9,6 +9,7 @@ package org.tiqian.font
  * belongs to the engine font policy and the platform adapter only forwards the
  * evidence.
  */
+@Deprecated("Legacy engine, migrate to engine-haxe")
 object CjkDashCapabilityPolicy {
     /** No conforming CJK dash glyph source is available for shaping. */
     const val NoConformingCjkDashGlyph: String = "NoConformingCjkDashGlyph"

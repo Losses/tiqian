@@ -22,7 +22,6 @@ use crate::paragraph::{
     utf16_length, InlineBoxInput, LineBreakPolicyCode, LineBreakSpanInput, ParagraphRequest,
     TextSpanInput,
 };
-use crate::prepared_dom::PreparedRenderOptions;
 use crate::schema::{stable_stringify, LAYOUT_REVISION, RENDER_REVISION, SNAPSHOT_SCHEMA};
 use crate::session::{create_font_session, FontSession, SessionFaceSpec, SessionOptions};
 use crate::snapshot_source::{
@@ -307,25 +306,6 @@ impl Precomputer {
         let render_text_spans_json = render_text_spans_value(&render_text_spans);
         let inline_boxes_json = inline_boxes_value(&inline_boxes);
         let semantics_value = semantics_json(&semantics);
-        let mut render_options = PreparedRenderOptions::new();
-        render_options.semantics = Some(&semantics_value);
-        render_options.inline_boxes = Some(&inline_boxes_json);
-        render_options.render_text_spans = Some(&render_text_spans_json);
-        render_options.source_text = Some(&text);
-        let rendered = match crate::prepared_dom::render_prepared_paragraph_artifact_from_plan(
-            &plan,
-            &typography.locale,
-            &mut render_options,
-        ) {
-            Ok(rendered) => rendered,
-            Err(error) => {
-                return match paragraph_capability_issue(&error.0) {
-                    Some(issue) => Ok(unsupported_paragraph(&key, issue, Some(&error.0))),
-                    None => Err(error),
-                };
-            }
-        };
-
         Ok(Json::Obj(vec![
             ("status".to_string(), Json::str("prepared")),
             (
@@ -363,11 +343,6 @@ impl Precomputer {
             ("maxWidthPx".to_string(), Json::Num(max_width_px)),
             ("fontEvidence".to_string(), evidence_json(&evidence)?),
             ("plan".to_string(), plan.to_json_value()),
-            ("html".to_string(), Json::str(rendered.html)),
-            (
-                "renderArtifactSha256".to_string(),
-                Json::str(sha256_hex(stable_stringify(&rendered.artifact).as_bytes())),
-            ),
         ]))
     }
 }

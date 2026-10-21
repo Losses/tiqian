@@ -9,14 +9,17 @@ import org.tiqian.font.FontRole
 import org.tiqian.font.FontRoleClassifier
 import org.tiqian.font.FontRoleContext
 
+@Deprecated("Legacy engine, migrate to engine-haxe")
 data class QuotePair(
     val openIndex: Int,
     val closeIndex: Int,
     val quoteType: QuoteType,
 )
 
+@Deprecated("Legacy engine, migrate to engine-haxe")
 enum class QuoteType { Double, Single }
 
+@Deprecated("Legacy engine, migrate to engine-haxe")
 data class QuoteRoleDecision(
     val index: Int,
     val role: FontRole,
@@ -29,6 +32,7 @@ data class QuoteRoleDecision(
  * [ContextualQuoteRoleResolver]. Pairing and language/script resolution stay
  * separate so neither phase has to guess the other's state.
  */
+@Deprecated("Legacy engine, migrate to engine-haxe")
 class QuotePairAnalyzer {
     fun analyze(text: String): List<QuotePair> {
         val stack = ArrayDeque<Pair<Int, QuoteType>>()
@@ -164,6 +168,7 @@ private fun String.codePointAtOrNull(index: Int): Int? {
  * Overrides a delegate classifier only at curly quotes resolved for this
  * paragraph. Every override remains traceable through [QuoteRoleDecision].
  */
+@Deprecated("Legacy engine, migrate to engine-haxe")
 class QuotePairAwareFontRoleClassifier(
     private val delegate: FontRoleClassifier,
     private val quoteRoles: Map<Int, FontRole>,
@@ -178,6 +183,7 @@ class QuotePairAwareFontRoleClassifier(
  * `prepareWidthIndependentAnnotation`. Chain with [withContextualDashEllipsisRoles] in the
  * same base-to-outermost order the pipeline uses.
  */
+@Deprecated("Legacy engine, migrate to engine-haxe")
 fun FontRoleClassifier.withContextualQuoteRoles(
     text: String,
     context: FontRoleContext = FontRoleContext(),

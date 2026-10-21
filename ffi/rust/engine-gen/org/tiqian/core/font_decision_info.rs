@@ -37,17 +37,17 @@ impl FontDecisionInfo {
 pub fn compare_font_decision_info(a: &FontDecisionInfo, b: &FontDecisionInfo) -> i32 {
     let cmp_range = compare_text_range(&a.range, &b.range);
     if cmp_range != 0 { return cmp_range; }
-    let cmp_source_text = SortedTable::sorted_table_compare_strings((&a.source_text).as_ustr(), (&b.source_text).as_ustr());
+    let cmp_source_text = SortedTable::sorted_table_compare_strings(a.source_text.as_ustr(), b.source_text.as_ustr());
     if cmp_source_text != 0 { return cmp_source_text; }
-    let cmp_display_text = SortedTable::sorted_table_compare_strings((&a.display_text).as_ustr(), (&b.display_text).as_ustr());
+    let cmp_display_text = SortedTable::sorted_table_compare_strings(a.display_text.as_ustr(), b.display_text.as_ustr());
     if cmp_display_text != 0 { return cmp_display_text; }
-    let cmp_role = SortedTable::sorted_table_compare_strings((&a.role).as_ustr(), (&b.role).as_ustr());
+    let cmp_role = SortedTable::sorted_table_compare_strings(a.role.as_ustr(), b.role.as_ustr());
     if cmp_role != 0 { return cmp_role; }
-    let cmp_font_key = SortedTable::sorted_table_compare_strings((&a.font_key).as_ustr(), (&b.font_key).as_ustr());
+    let cmp_font_key = SortedTable::sorted_table_compare_strings(a.font_key.as_ustr(), b.font_key.as_ustr());
     if cmp_font_key != 0 { return cmp_font_key; }
-    let cmp_reason = SortedTable::sorted_table_compare_strings((&a.reason).as_ustr(), (&b.reason).as_ustr());
+    let cmp_reason = SortedTable::sorted_table_compare_strings(a.reason.as_ustr(), b.reason.as_ustr());
     if cmp_reason != 0 { return cmp_reason; }
-    let cmp_substitution_reason = SortedTable::sorted_table_compare_strings((&a.substitution_reason).as_ustr(), (&b.substitution_reason).as_ustr());
+    let cmp_substitution_reason = SortedTable::sorted_table_compare_strings(a.substitution_reason.as_ustr(), b.substitution_reason.as_ustr());
     if cmp_substitution_reason != 0 { return cmp_substitution_reason; }
     0
 }

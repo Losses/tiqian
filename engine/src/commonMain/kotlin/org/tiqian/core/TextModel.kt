@@ -1,5 +1,6 @@
 package org.tiqian.core
 
+@Deprecated("Legacy engine, migrate to engine-haxe")
 data class TiqianTextContent(
     val text: String,
     val spans: List<TextSpan> = emptyList(),
@@ -27,6 +28,7 @@ data class TiqianTextContent(
  * links should take [LineBreakPolicy.ProgressiveTechnical]; other link text keeps prose
  * line breaking.
  */
+@Deprecated("Legacy engine, migrate to engine-haxe")
 object LinkAddressDisplay {
     fun displaysAddress(display: String, target: String): Boolean {
         if (display.isEmpty() || target.isEmpty()) return false
@@ -36,11 +38,13 @@ object LinkAddressDisplay {
 }
 
 /** A source range opting into a named, frontend-independent line-break policy. */
+@Deprecated("Legacy engine, migrate to engine-haxe")
 data class LineBreakSpan(
     val range: TextRange,
     val policy: LineBreakPolicy,
 )
 
+@Deprecated("Legacy engine, migrate to engine-haxe")
 enum class LineBreakPolicy {
     /**
      * Technical inline text: prefer structural-symbol/camel boundaries, then
@@ -50,12 +54,14 @@ enum class LineBreakPolicy {
     ProgressiveTechnical,
 }
 
+@Deprecated("Legacy engine, migrate to engine-haxe")
 data class TextSpan(
     val range: TextRange,
     val style: TextStyle,
 )
 
 /** How an inline text range belongs to the surrounding prose for boundary spacing. */
+@Deprecated("Legacy engine, migrate to engine-haxe")
 enum class InlineAttachment {
     None,
 
@@ -76,6 +82,7 @@ enum class InlineAttachment {
  * advances in line breaking. [inlineStart] and [inlineEnd] are physical px in
  * the current horizontal writing mode; negative margins are therefore allowed.
  */
+@Deprecated("Legacy engine, migrate to engine-haxe")
 data class InlineBoxSpan(
     val range: TextRange,
     val inlineStart: Float = 0f,
@@ -89,21 +96,25 @@ data class InlineBoxSpan(
     val outerSpacing: InlineBoxOuterSpacing = InlineBoxOuterSpacing.Narrow,
 )
 
+@Deprecated("Legacy engine, migrate to engine-haxe")
 enum class InlineBoxOuterSpacing {
     Narrow,
     Source,
 }
 
 /** Structural token used by text projections that have no source fallback for an inline object. */
+@Deprecated("Legacy engine, migrate to engine-haxe")
 const val INLINE_OBJECT_REPLACEMENT_CHAR: Char = '\uFFFC'
 
 /** Provider-supplied semantic class for capped, preferential inline-object boundary stretch. */
+@Deprecated("Legacy engine, migrate to engine-haxe")
 enum class InlineObjectPreferredStretchKind {
     PunctuationTrailing,
     Relation,
     BinaryOperator,
 }
 
+@Deprecated("Legacy engine, migrate to engine-haxe")
 data class InlineObjectPreferredStretch(
     val kind: InlineObjectPreferredStretchKind,
     /** Blank already included in the provider's measured object advance. */
@@ -139,6 +150,7 @@ data class InlineObjectPreferredStretch(
  * supported because removing it would also have to move the object's paint origin.
  * Opaque objects default to [Fixed].
  */
+@Deprecated("Legacy engine, migrate to engine-haxe")
 data class InlineObjectBoundaryAdjustment(
     val participatesInUniformStretch: Boolean = false,
     val preferredStretch: InlineObjectPreferredStretch? = null,
@@ -171,6 +183,7 @@ data class InlineObjectBoundaryAdjustment(
  * text faces; the baseline grid expands only for the remaining collision deficit. The platform
  * renderer owns the actual object.
  */
+@Deprecated("Legacy engine, migrate to engine-haxe")
 data class InlineObjectSpan(
     val range: TextRange,
     val advance: Float,
@@ -180,6 +193,7 @@ data class InlineObjectSpan(
     val trailingBoundary: InlineObjectBoundaryAdjustment = InlineObjectBoundaryAdjustment.Fixed,
 )
 
+@Deprecated("Legacy engine, migrate to engine-haxe")
 data class TextStyle(
     val fontFamilies: List<String> = emptyList(),
     val fontSize: Float = 16f,
@@ -204,6 +218,7 @@ data class TextStyle(
  * render-geometry: they never participate in metrics, line breaking or
  * justification.
  */
+@Deprecated("Legacy engine, migrate to engine-haxe")
 data class DecorationSpan(
     val range: TextRange,
     val kind: DecorationKind,
@@ -215,6 +230,7 @@ data class DecorationSpan(
  * justification, so it rides beside the layout model rather than inside it.
  * Platform-neutral (`argb` Int) so the frontend contract carries no Skia type.
  */
+@Deprecated("Legacy engine, migrate to engine-haxe")
 data class ColorSpan(val start: Int, val end: Int, val argb: Int)
 
 /**
@@ -224,12 +240,14 @@ data class ColorSpan(val start: Int, val end: Int, val argb: Int)
  * may still be passed through [TiqianTextContent.sourceBoundaries] so the engine can expose exact
  * range geometry instead of slicing through a coalesced cluster.
  */
+@Deprecated("Legacy engine, migrate to engine-haxe")
 data class RichTextSpan(
     val range: TextRange,
     val role: RichTextRole,
     val paint: RichTextPaint = RichTextPaint(),
 )
 
+@Deprecated("Legacy engine, migrate to engine-haxe")
 data class RichTextPaint(
     /** Optional ARGB paint. Null means "inherit the current text color/default role paint". */
     val argb: Int? = null,
@@ -245,6 +263,7 @@ data class RichTextPaint(
     }
 }
 
+@Deprecated("Legacy engine, migrate to engine-haxe")
 data class RichTextBackgroundPaint(
     /** Fixed space between the glyph edge and each horizontal box edge, in layout units. */
     val horizontalPadding: Float = 0f,
@@ -270,6 +289,7 @@ data class RichTextBackgroundPaint(
     }
 }
 
+@Deprecated("Legacy engine, migrate to engine-haxe")
 sealed interface RichTextBackgroundDrawStyle {
     data object Fill : RichTextBackgroundDrawStyle
 
@@ -281,6 +301,7 @@ sealed interface RichTextBackgroundDrawStyle {
     }
 }
 
+@Deprecated("Legacy engine, migrate to engine-haxe")
 enum class RichTextBackgroundMetricPolicy {
     /** Union the declared metric boxes of the actual faces covered by the marked range. */
     MarkedFaces,
@@ -292,6 +313,7 @@ enum class RichTextBackgroundMetricPolicy {
     UniformParagraphStyle,
 }
 
+@Deprecated("Legacy engine, migrate to engine-haxe")
 sealed interface RichTextLinePattern {
     data object Solid : RichTextLinePattern
 
@@ -320,6 +342,7 @@ sealed interface RichTextLinePattern {
     }
 }
 
+@Deprecated("Legacy engine, migrate to engine-haxe")
 sealed interface RichTextRole {
     /** Compose `SpanStyle.background`, painted as one continuous typographic box per visual line. */
     data object Background : RichTextRole
@@ -356,6 +379,7 @@ sealed interface RichTextRole {
  * DOES affect layout: it reserves line height and keeps the base unbreakable.
  * [text] is NOT part of the source (拼音 不进源；复制/搜索保真) — it lives only here.
  */
+@Deprecated("Legacy engine, migrate to engine-haxe")
 data class RubySpan(
     val baseRange: TextRange,
     val text: String,
@@ -373,6 +397,7 @@ data class RubySpan(
     val locale: String? = if (kind == RubyKind.Bopomofo) "zh-TW" else null,
 )
 
+@Deprecated("Legacy engine, migrate to engine-haxe")
 enum class RubyKind {
     /** 罗马拼音：注文在基字**上方**、水平居中（ADR 0032）。 */
     Pinyin,
@@ -381,6 +406,7 @@ enum class RubyKind {
     Bopomofo,
 }
 
+@Deprecated("Legacy engine, migrate to engine-haxe")
 enum class DecorationKind {
     /** CLREQ 着重号 — a solid dot under each emphasised Han character. */
     Emphasis,
@@ -409,6 +435,7 @@ enum class DecorationKind {
 }
 
 /** How insufficient inter-line space for pinyin ruby expands the baseline grid. */
+@Deprecated("Legacy engine, migrate to engine-haxe")
 enum class RubyLineHeightMode {
     /** Default: add the missing space only before lines that carry pinyin ruby. */
     PerLine,
@@ -418,11 +445,14 @@ enum class RubyLineHeightMode {
 }
 
 /** ADR 0018: 着重号与被注文字字面底边之间的默认净空，单位 em。 */
+@Deprecated("Legacy engine, migrate to engine-haxe")
 const val DEFAULT_EMPHASIS_DOT_GAP_EM: Float = 0.1f
 
 /** InlineObjectMinimumClearance: oversized inline ink keeps this inter-line clearance, in em. */
+@Deprecated("Legacy engine, migrate to engine-haxe")
 const val DEFAULT_INLINE_OBJECT_MINIMUM_CLEARANCE_EM: Float = 0.1f
 
+@Deprecated("Legacy engine, migrate to engine-haxe")
 data class ParagraphStyle(
     /**
      * Alignment of the paragraph's LAST line only. CLREQ:「与西文排版不同，
@@ -515,6 +545,7 @@ data class ParagraphStyle(
  * 与行长无关地固定缩进，用 [ParagraphStyle.firstLineIndent]（显式值，含
  * 0 关闭）覆盖。
  */
+@Deprecated("Legacy engine, migrate to engine-haxe")
 data class MeasureAdaptiveFirstLineIndent(
     val shortBelowEm: Float = 14f,
     val shortEm: Float = 1f,
@@ -533,6 +564,7 @@ data class MeasureAdaptiveFirstLineIndent(
  * 某些边缘情形——已知精确像素行长、非中文正文、或调用方自己做了字格
  * 对齐——可 `enabled = false` 绕过，直接用原始 maxWidth。
  */
+@Deprecated("Legacy engine, migrate to engine-haxe")
 data class LineLengthGrid(
     val enabled: Boolean = true,
     /**
@@ -543,25 +575,30 @@ data class LineLengthGrid(
     val bodyAlignment: LastLineAlignment? = null,
 )
 
+@Deprecated("Legacy engine, migrate to engine-haxe")
 enum class LastLineAlignment {
     Start,
     Center,
     End,
 }
 
+@Deprecated("Legacy engine, migrate to engine-haxe")
 enum class WritingMode {
     HorizontalTb,
     VerticalRl,
 }
 
+@Deprecated("Legacy engine, migrate to engine-haxe")
 data class LayoutProfileId(
     val value: String,
 )
 
+@Deprecated("Legacy engine, migrate to engine-haxe")
 object BuiltInLayoutProfiles {
     val ClreqHorizontal = LayoutProfileId("clreq-horizontal")
 }
 
+@Deprecated("Legacy engine, migrate to engine-haxe")
 data class LayoutInput(
     val content: TiqianTextContent,
     val textStyle: TextStyle = TextStyle(),

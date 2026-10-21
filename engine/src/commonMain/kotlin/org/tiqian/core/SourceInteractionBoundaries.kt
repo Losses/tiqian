@@ -1,6 +1,7 @@
 package org.tiqian.core
 
 /** Direction used when an interaction offset falls inside one source grapheme. */
+@Deprecated("Legacy engine, migrate to engine-haxe")
 enum class SourceBoundaryBias {
     Backward,
     Forward,
@@ -47,6 +48,7 @@ internal fun String.interactionBoundaries(range: TextRange): List<Int> {
  * surrogate pair, combining sequence, emoji modifier/ZWJ sequence, regional
  * indicator pair, or Hangul syllable sequence.
  */
+@Deprecated("Legacy engine, migrate to engine-haxe")
 fun String.sourceGraphemeBoundaries(range: TextRange): List<Int> = interactionBoundaries(range)
 
 private fun String.interactionBoundaries(start: Int, end: Int): List<Int> {

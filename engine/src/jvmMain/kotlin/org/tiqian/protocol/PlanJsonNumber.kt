@@ -6,6 +6,7 @@ import org.tiqian.boring.runtime.SortedMapTableBuilder
 import org.tiqian.boring.runtime.SortedTable
 import std.UStringException
 
+@Deprecated("Legacy engine, migrate to engine-haxe")
 object PlanJsonNumber {
     private var fivePowersBuilder: SortedMapTableBuilder<Int, String>? = null
     private var fivePowers: SortedMapTable<Int, String>? = null
@@ -490,11 +491,13 @@ object PlanJsonNumber {
     }
 }
 
+@Deprecated("Legacy engine, migrate to engine-haxe")
 data class PlanJsonDigitsAndExponent(
     var digits: String,
     var exponent: Int
 )
 
+@Deprecated("Legacy engine, migrate to engine-haxe")
 fun compare(a: PlanJsonDigitsAndExponent, b: PlanJsonDigitsAndExponent): Int {
     if (a === b) return 0
     var cmp = 0
@@ -505,11 +508,13 @@ fun compare(a: PlanJsonDigitsAndExponent, b: PlanJsonDigitsAndExponent): Int {
     return 0
 }
 
+@Deprecated("Legacy engine, migrate to engine-haxe")
 data class PlanJsonDecomposed(
     var mantissa: String,
     var exp2: Int
 )
 
+@Deprecated("Legacy engine, migrate to engine-haxe")
 fun compare(a: PlanJsonDecomposed, b: PlanJsonDecomposed): Int {
     if (a === b) return 0
     var cmp = 0
@@ -520,11 +525,13 @@ fun compare(a: PlanJsonDecomposed, b: PlanJsonDecomposed): Int {
     return 0
 }
 
+@Deprecated("Legacy engine, migrate to engine-haxe")
 data class PlanJsonF32Decomposed(
     var mant24: Int,
     var exp2: Int
 )
 
+@Deprecated("Legacy engine, migrate to engine-haxe")
 fun compare(a: PlanJsonF32Decomposed, b: PlanJsonF32Decomposed): Int {
     if (a === b) return 0
     var cmp = 0

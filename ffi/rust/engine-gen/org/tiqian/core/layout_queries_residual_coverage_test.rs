@@ -5756,7 +5756,7 @@ impl LayoutQueriesResidualCoverageTestHelpers {
         let mut output = Vec::<u16>::new();
         if let Some(&unit) = output.last() {
             if unit >= 55296 && unit <= 56319 && !UString::from("[").is_empty() {
-                if !match (UString::from("[")).encode_utf16().next() { Some(head) => head >= 56320 && head <= 57343, None => false } {
+                if !UString::from("[").encode_utf16().next().map_or(false, |head| head >= 56320 && head <= 57343) {
                     return Err(UStringFault::UnpairedSurrogate { unit: u32::from(unit) });
                 }
             }
@@ -5767,7 +5767,7 @@ impl LayoutQueriesResidualCoverageTestHelpers {
             if i32::from_ne_bytes(((index) as i32).to_ne_bytes()) > (0) {
                 if let Some(&unit) = output.last() {
                     if unit >= 55296 && unit <= 56319 && !UString::from(", ").is_empty() {
-                        if !match (UString::from(", ")).encode_utf16().next() { Some(head) => head >= 56320 && head <= 57343, None => false } {
+                        if !UString::from(", ").encode_utf16().next().map_or(false, |head| head >= 56320 && head <= 57343) {
                             return Err(UStringFault::UnpairedSurrogate { unit: u32::from(unit) });
                         }
                     }
@@ -5776,7 +5776,7 @@ impl LayoutQueriesResidualCoverageTestHelpers {
             }
             if let Some(&unit) = output.last() {
                 if unit >= 55296 && unit <= 56319 && !TestTraceRender::test_trace_render_cap(UString::from(format!("{}", (values[usize::try_from(index).unwrap_or(0)]).clone().to_string()).as_str()).as_ustr())?.is_empty() {
-                    if !match (TestTraceRender::test_trace_render_cap(UString::from(format!("{}", (values[usize::try_from(index).unwrap_or(0)]).clone().to_string()).as_str()).as_ustr())?).encode_utf16().next() { Some(head) => head >= 56320 && head <= 57343, None => false } {
+                    if !TestTraceRender::test_trace_render_cap(UString::from(format!("{}", (values[usize::try_from(index).unwrap_or(0)]).clone().to_string()).as_str()).as_ustr())?.encode_utf16().next().map_or(false, |head| head >= 56320 && head <= 57343) {
                         return Err(UStringFault::UnpairedSurrogate { unit: u32::from(unit) });
                     }
                 }
@@ -5786,7 +5786,7 @@ impl LayoutQueriesResidualCoverageTestHelpers {
         }
         if let Some(&unit) = output.last() {
             if unit >= 55296 && unit <= 56319 && !UString::from("]").is_empty() {
-                if !match (UString::from("]")).encode_utf16().next() { Some(head) => head >= 56320 && head <= 57343, None => false } {
+                if !UString::from("]").encode_utf16().next().map_or(false, |head| head >= 56320 && head <= 57343) {
                     return Err(UStringFault::UnpairedSurrogate { unit: u32::from(unit) });
                 }
             }
@@ -5799,7 +5799,7 @@ impl LayoutQueriesResidualCoverageTestHelpers {
         let mut output = Vec::<u16>::new();
         if let Some(&unit) = output.last() {
             if unit >= 55296 && unit <= 56319 && !UString::from("[").is_empty() {
-                if !match (UString::from("[")).encode_utf16().next() { Some(head) => head >= 56320 && head <= 57343, None => false } {
+                if !UString::from("[").encode_utf16().next().map_or(false, |head| head >= 56320 && head <= 57343) {
                     return Err(UStringFault::UnpairedSurrogate { unit: u32::from(unit) });
                 }
             }
@@ -5810,7 +5810,7 @@ impl LayoutQueriesResidualCoverageTestHelpers {
             if i32::from_ne_bytes(((index) as i32).to_ne_bytes()) > (0) {
                 if let Some(&unit) = output.last() {
                     if unit >= 55296 && unit <= 56319 && !UString::from(", ").is_empty() {
-                        if !match (UString::from(", ")).encode_utf16().next() { Some(head) => head >= 56320 && head <= 57343, None => false } {
+                        if !UString::from(", ").encode_utf16().next().map_or(false, |head| head >= 56320 && head <= 57343) {
                             return Err(UStringFault::UnpairedSurrogate { unit: u32::from(unit) });
                         }
                     }
@@ -5819,7 +5819,7 @@ impl LayoutQueriesResidualCoverageTestHelpers {
             }
             if let Some(&unit) = output.last() {
                 if unit >= 55296 && unit <= 56319 && !(values[usize::try_from(index).unwrap_or(0)]).clone().to_string().is_empty() {
-                    if !match ((values[usize::try_from(index).unwrap_or(0)]).clone().to_string()).encode_utf16().next() { Some(head) => head >= 56320 && head <= 57343, None => false } {
+                    if !(values[usize::try_from(index).unwrap_or(0)]).clone().to_string().encode_utf16().next().map_or(false, |head| head >= 56320 && head <= 57343) {
                         return Err(UStringFault::UnpairedSurrogate { unit: u32::from(unit) });
                     }
                 }
@@ -5829,7 +5829,7 @@ impl LayoutQueriesResidualCoverageTestHelpers {
         }
         if let Some(&unit) = output.last() {
             if unit >= 55296 && unit <= 56319 && !UString::from("]").is_empty() {
-                if !match (UString::from("]")).encode_utf16().next() { Some(head) => head >= 56320 && head <= 57343, None => false } {
+                if !UString::from("]").encode_utf16().next().map_or(false, |head| head >= 56320 && head <= 57343) {
                     return Err(UStringFault::UnpairedSurrogate { unit: u32::from(unit) });
                 }
             }

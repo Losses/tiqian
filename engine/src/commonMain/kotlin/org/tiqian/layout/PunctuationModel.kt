@@ -8,6 +8,7 @@ import org.tiqian.clreq.glueSideFor
 import org.tiqian.core.Rect
 import org.tiqian.core.TextRange
 
+@Deprecated("Legacy engine, migrate to engine-haxe")
 data class PunctuationAtom(
     val range: TextRange,
     val char: Char,
@@ -50,6 +51,7 @@ data class PunctuationAtom(
     val trailingGlueInitiallyConsumed: Float = 0f,
 )
 
+@Deprecated("Legacy engine, migrate to engine-haxe")
 data class PunctuationInkInput(
     val advance: Float,
     val inkBounds: Rect? = null,
@@ -84,12 +86,14 @@ data class PunctuationInkInput(
     val boundsFallbackReason: String? = null,
 )
 
+@Deprecated("Legacy engine, migrate to engine-haxe")
 enum class PunctuationAnchor {
     Leading,
     Center,
     Trailing,
 }
 
+@Deprecated("Legacy engine, migrate to engine-haxe")
 data class Glue(
     val kind: GlueKind,
     val min: Float,
@@ -104,6 +108,7 @@ data class Glue(
     }
 }
 
+@Deprecated("Legacy engine, migrate to engine-haxe")
 enum class GlueKind {
     PunctuationLeading,
     PunctuationTrailing,
@@ -118,11 +123,13 @@ enum class GlueKind {
     InlineObjectBoundary,
 }
 
+@Deprecated("Legacy engine, migrate to engine-haxe")
 data class AdjustmentOpportunity(
     val range: TextRange,
     val glue: Glue,
 )
 
+@Deprecated("Legacy engine, migrate to engine-haxe")
 data class PunctuationSpacingAdjustment(
     val range: TextRange,
     val reductionTargetRange: TextRange,
@@ -134,6 +141,7 @@ data class PunctuationSpacingAdjustment(
     val reason: String,
 )
 
+@Deprecated("Legacy engine, migrate to engine-haxe")
 data class PunctuationSpacingCompressionResult(
     val adjustments: List<PunctuationSpacingAdjustment>,
 ) {
@@ -141,6 +149,7 @@ data class PunctuationSpacingCompressionResult(
         adjustments.sumOf { it.reduction.toDouble() }.toFloat()
 }
 
+@Deprecated("Legacy engine, migrate to engine-haxe")
 class PunctuationSpacingCompressor {
     /**
      * Named heuristic: `CollapseAdjacentPunctuationInnerGlue`.
@@ -250,6 +259,7 @@ class PunctuationSpacingCompressor {
     }
 }
 
+@Deprecated("Legacy engine, migrate to engine-haxe")
 class PunctuationAtomBuilder(
     private val gluePlacement: PunctuationGluePlacement = PunctuationGluePlacement.MainlandSimplified,
     private val widthPolicy: org.tiqian.clreq.PunctuationWidthPolicy =

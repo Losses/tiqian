@@ -5,6 +5,7 @@ import org.tiqian.core.LineEndReason
 import org.tiqian.core.TextRange
 
 /** Ordered fallback tier for a break inside one progressive technical span. */
+@Deprecated("Legacy engine, migrate to engine-haxe")
 enum class ProgressiveBreakTier(val priority: Int) {
     Whitespace(0),
     Structural(1),
@@ -14,6 +15,7 @@ enum class ProgressiveBreakTier(val priority: Int) {
 }
 
 /** One cluster boundary exposed by a [org.tiqian.core.LineBreakSpan]. */
+@Deprecated("Legacy engine, migrate to engine-haxe")
 data class ProgressiveBreakOpportunity(
     val tier: ProgressiveBreakTier,
     val spanRange: TextRange,
@@ -309,6 +311,7 @@ internal fun lineLimit(maxWidth: Float, firstLineIndent: Float, lineStartCluster
  * - tier 7 — 行内句号/问号/感叹号 trailing glue（风格开关可禁）
  * - tier 8 — inline-object provider 明确暴露的边界空白（例如公式内部运算符断点处的数学间距）
  */
+@Deprecated("Legacy engine, migrate to engine-haxe")
 data class ShrinkOpportunity(
     val clusterIndex: Int,
     val tier: Int,
@@ -322,6 +325,7 @@ data class ShrinkOpportunity(
     val lineEndOnly: Boolean = false,
 )
 
+@Deprecated("Legacy engine, migrate to engine-haxe")
 enum class ShrinkChannel {
     /** Consume the punctuation atom's trailing glue. */
     TrailingGlue,
@@ -356,6 +360,7 @@ enum class ShrinkChannel {
  * never the converged result. A per-break full scan made line breaking quadratic on
  * punctuation-dense pathological paragraphs.
  */
+@Deprecated("Legacy engine, migrate to engine-haxe")
 class UnbreakableRanges(val ranges: List<IntRange>) {
     private val byStart = ranges.sortedBy { it.first }
     private val startsSorted = IntArray(byStart.size) { byStart[it].first }

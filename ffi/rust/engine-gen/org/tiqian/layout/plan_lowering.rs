@@ -71,7 +71,7 @@ impl PlanLowering {
                     }
                     for fi in 0..match u32::try_from(run.open_type_features.len()) { Ok(value) => value, Err(_) => u32::MAX } {
                         let f = (run.open_type_features[usize::try_from(fi).unwrap_or(0)]).clone();
-                        if u32::from_ne_bytes(({ let __hay = &((fs).as_ref().unwrap()); let __n = __hay.len(); let mut __i = 0usize; let mut __found: i32 = -1; while __i < __n { if __hay[__i] == f { __found = i32::from_ne_bytes(u32::try_from(__i).unwrap_or(0).to_ne_bytes()); break; } __i += 1; } __found } as u32).to_ne_bytes()) > 2147483647 {
+                        if u32::from_ne_bytes(((match (fs).as_ref().unwrap().iter().position(|e| e == &f) { Some(v) => i32::from_ne_bytes(u32::try_from(v).unwrap_or(0).to_ne_bytes()), None => -1 }) as u32).to_ne_bytes()) > 2147483647 {
                             (fs).as_mut().unwrap().push(f.clone());
                         }
                     }
@@ -174,7 +174,7 @@ impl PlanLowering {
                         dash = match &(sd) { Some(__option2) => (__option2.strategy).clone(), None => None };
                         lang = match &(sd) { Some(__option3) => (__option3.language).clone(), None => None };
                         face = match &(sd) { Some(__option4) => (__option4.resolved_face).clone(), None => None };
-                        g_ids = if glyph_ids.has(&(ck).to_ustring()) && (u32::try_from((u32::try_from(((glyph_ids.get(&(ck).to_ustring())).as_ref().map_or(0usize, |v| v.len())) & 0xFFFF_FFFF).unwrap_or(0)) & 0xFFFF_FFFF).unwrap_or(0)) > (0) { Some(UString::from(format!("{}", { let _jtmp = glyph_ids.get(&(ck).to_ustring()); let joined = _jtmp.as_ref().unwrap(); let mut out = String::new(); let n = joined.len(); let mut index = 0usize; while index < n { if index > 0 { out.push_str(","); } let _ = write!(out, "{}", joined[index]); index += 1; } UString::from(out.as_str()) }).as_str())) } else { None };
+                        g_ids = if glyph_ids.has(&(ck).to_ustring()) && (u32::try_from(((glyph_ids.get(&(ck).to_ustring())).as_ref().map_or(0, |v| v.len())) & 0xFFFF_FFFF).unwrap_or(0)) > (0) { Some(UString::from(format!("{}", { let _jtmp = glyph_ids.get(&(ck).to_ustring()); let joined = _jtmp.as_ref().unwrap(); let mut out = String::new(); let n = joined.len(); let mut index = 0usize; while index < n { if index > 0 { out.push_str(","); } let _ = write!(out, "{}", joined[index]); index += 1; } UString::from(out.as_str()) }).as_str())) } else { None };
                         ev = match &(sd) { Some(__option5) => (Some((__option5.reason).to_ustring())).clone(), None => None };
                         let pd = punct.get(&(ck).to_ustring());
                         if match &(pd) { Some(__option6) => __option6.ink_containment_applied && __option6.ink_containment_body_floor.is_some(), None => false } {
@@ -219,7 +219,7 @@ impl PlanLowering {
             }
             for ei in 0..u32::from_ne_bytes(((edge_end.size()) as u32).to_ne_bytes()) {
                 let ev = u_string::parse_i32(&(edge_end.key_at({ let v: u32 = ei; i32::from_ne_bytes(v.to_ne_bytes()) })));
-                if u32::from_ne_bytes(({ let __hay = &(offsets); let __n = __hay.len(); let mut __i = 0usize; let mut __found: i32 = -1; while __i < __n { if __hay[__i] == u32::from_ne_bytes(((ev.unwrap_or(-1)) as u32).to_ne_bytes()) { __found = i32::from_ne_bytes(u32::try_from(__i).unwrap_or(0).to_ne_bytes()); break; } __i += 1; } __found } as u32).to_ne_bytes()) > 2147483647 {
+                if u32::from_ne_bytes(((match offsets.iter().position(|e| e == &u32::from_ne_bytes(((ev.unwrap_or(-1)) as u32).to_ne_bytes())) { Some(v) => i32::from_ne_bytes(u32::try_from(v).unwrap_or(0).to_ne_bytes()), None => -1 }) as u32).to_ne_bytes()) > 2147483647 {
                     offsets.push(u32::from_ne_bytes(((ev.unwrap()) as u32).to_ne_bytes()));
                 }
             }

@@ -8,6 +8,7 @@ import kotlin.text.CharCategory
  * The property is deliberately separate from font/script classification: it answers whether
  * two grapheme clusters receive East Asian auto-spacing, not which font shapes either cluster.
  */
+@Deprecated("Legacy engine, migrate to engine-haxe")
 enum class EastAsianSpacingValue {
     Wide,
     Narrow,
@@ -16,6 +17,7 @@ enum class EastAsianSpacingValue {
 }
 
 /** Boundary properties of all source grapheme units contained in one shaping/layout cluster. */
+@Deprecated("Legacy engine, migrate to engine-haxe")
 data class EastAsianSpacingEdges(
     val leading: EastAsianSpacingValue,
     val trailing: EastAsianSpacingValue,
@@ -28,6 +30,7 @@ data class EastAsianSpacingEdges(
  * UTR #59 is informative work in progress, not a stable Unicode property. Pinning the data
  * revision keeps layout deterministic while still making future draft updates explicit.
  */
+@Deprecated("Legacy engine, migrate to engine-haxe")
 object UnicodeEastAsianSpacing {
     const val DATA_REVISION: String = "draft-2024-12-16"
     const val DATA_SOURCE: String = "https://www.unicode.org/reports/tr59/east-asian-spacing.txt"

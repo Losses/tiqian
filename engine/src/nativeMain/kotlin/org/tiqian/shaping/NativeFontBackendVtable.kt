@@ -59,5 +59,6 @@ private const val INSTALL_INVALID = 3
  * owned by the installer and must outlive the process.
  */
 @CName("tiqian_install_font_backend")
+@Deprecated("Legacy engine, migrate to engine-haxe")
 fun tiqianInstallFontBackend(vtable: CPointer<tiqian_font_backend_vtable_t>?): Int =
     NativeFontBackendRegistry.install(vtable)

@@ -3,12 +3,14 @@ package org.tiqian.font
 import org.tiqian.core.TextRange
 import kotlin.text.CharCategory
 
+@Deprecated("Legacy engine, migrate to engine-haxe")
 data class FontRequest(
     val preferredFamilies: List<String>,
     val locale: String,
     val role: FontRole,
 )
 
+@Deprecated("Legacy engine, migrate to engine-haxe")
 enum class FontRole {
     CjkText,
     CjkPunctuation,
@@ -28,18 +30,22 @@ enum class FontRole {
  * CJK face, so e.g. a missing glyph renders as a full-em 字身框 豆腐 (consistent with
  * CJK body) instead of a Latin half-width box — and measure == draw either way.
  */
+@Deprecated("Legacy engine, migrate to engine-haxe")
 fun FontRole.usesLatinFace(): Boolean = this == FontRole.LatinText
 
 /** Overload for callers that only hold the serialized role name (LayoutResult dumps). */
+@Deprecated("Legacy engine, migrate to engine-haxe")
 fun fontRoleNameUsesLatinFace(roleName: String?): Boolean =
     roleName?.let { name -> FontRole.entries.firstOrNull { it.name == name }?.usesLatinFace() } ?: false
 
+@Deprecated("Legacy engine, migrate to engine-haxe")
 data class FontCandidate(
     val key: String,
     val family: String,
     val role: FontRole,
 )
 
+@Deprecated("Legacy engine, migrate to engine-haxe")
 data class FontDecision(
     val range: TextRange,
     val candidate: FontCandidate,
@@ -47,15 +53,18 @@ data class FontDecision(
     val reason: String,
 )
 
+@Deprecated("Legacy engine, migrate to engine-haxe")
 interface FallbackResolver {
     fun resolve(text: String, range: TextRange, request: FontRequest): FontDecision
 }
 
+@Deprecated("Legacy engine, migrate to engine-haxe")
 data class FontRoleContext(
     val locale: String = "zh-Hans",
     val regionHint: String? = null,
 )
 
+@Deprecated("Legacy engine, migrate to engine-haxe")
 interface FontRoleClassifier {
     fun classify(
         text: String,
@@ -64,6 +73,7 @@ interface FontRoleClassifier {
     ): FontRole
 }
 
+@Deprecated("Legacy engine, migrate to engine-haxe")
 class CjkFontRoleClassifier : FontRoleClassifier {
     override fun classify(text: String, range: TextRange, context: FontRoleContext): FontRole {
         val firstCodePoint = text.codePointAtCompat(range.start)
@@ -186,6 +196,7 @@ class CjkFontRoleClassifier : FontRoleClassifier {
         if (index >= length) null else codePointAtCompat(index)
 }
 
+@Deprecated("Legacy engine, migrate to engine-haxe")
 class PreferCjkForAmbiguousPunctuationResolver(
     private val cjkFontKey: String = "cjk-primary",
     private val latinFontKey: String = "latin-primary",
@@ -214,6 +225,7 @@ class PreferCjkForAmbiguousPunctuationResolver(
     }
 }
 
+@Deprecated("Legacy engine, migrate to engine-haxe")
 enum class FontMetricsPolicy {
     Raw,
     IdeographicBox,
@@ -221,12 +233,14 @@ enum class FontMetricsPolicy {
     ManualOverride,
 }
 
+@Deprecated("Legacy engine, migrate to engine-haxe")
 enum class BaselinePolicy {
     Alphabetic,
     Ideographic,
     CenteredCjkVisual,
 }
 
+@Deprecated("Legacy engine, migrate to engine-haxe")
 data class RawFontMetrics(
     val ascent: Float,
     val descent: Float,
@@ -244,6 +258,7 @@ data class RawFontMetrics(
     val typoDescent: Float? = null,
 )
 
+@Deprecated("Legacy engine, migrate to engine-haxe")
 data class LayoutFontMetrics(
     val ascent: Float,
     val descent: Float,
@@ -256,6 +271,7 @@ data class LayoutFontMetrics(
     val reason: String = "",
 )
 
+@Deprecated("Legacy engine, migrate to engine-haxe")
 enum class PunctuationFontPolicy {
     PreferCjkForAmbiguousPunctuation,
     PreferLatinForAscii,

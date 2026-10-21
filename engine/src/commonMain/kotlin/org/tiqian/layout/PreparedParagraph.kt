@@ -15,7 +15,9 @@ import org.tiqian.protocol.Revision
 /** Wire fields of the prepared-paragraph plan; readers reject other values.
  * The layout revision is single-sourced in the generated [Revision] object
  * (boring cutover Stage1-P4); only the plan schema number stays local. */
+@Deprecated("Legacy engine, migrate to engine-haxe")
 public const val PREPARED_PARAGRAPH_SCHEMA: Int = 1
+@Deprecated("Legacy engine, migrate to engine-haxe")
 public const val PREPARED_PARAGRAPH_LAYOUT_REVISION: String = Revision.LAYOUT_REVISION
 
 /**
@@ -32,6 +34,7 @@ public const val PREPARED_PARAGRAPH_LAYOUT_REVISION: String = Revision.LAYOUT_RE
  * both existing readers (prepared-dom.js, tiqian-precompute plan.rs) read
  * fields by name and ignore the unknown ones.
  */
+@Deprecated("Legacy engine, migrate to engine-haxe")
 fun LayoutResult.toPreparedParagraphJson(renderEvidence: Boolean = false): String {
     val naturalWidth = mutableMapOf<TextRange, Float>()
     val openTypeFeatures = mutableMapOf<TextRange, LinkedHashSet<String>>()
@@ -162,6 +165,7 @@ fun LayoutResult.toPreparedParagraphJson(renderEvidence: Boolean = false): Strin
  * which is why it has no diagnostics entry. [zeroAdvanceEpsilonPx] is the host
  * threshold passed through so the layout module holds no host policy.
  */
+@Deprecated("Legacy engine, migrate to engine-haxe")
 fun LayoutResult.toPlanWithDiagnosticsJson(renderEvidence: Boolean, zeroAdvanceEpsilonPx: Float): String =
     buildString {
         append("{\"plan\":")
@@ -440,6 +444,7 @@ private fun StringBuilder.appendJsonNumber(value: Float): StringBuilder =
  * is re-derived from the f32 grid value the `Float` type denotes. On JVM and
  * Native the runtime value already is the widened f32, so the two agree.
  */
+@Deprecated("Legacy engine, migrate to engine-haxe")
 public fun ecmaJsonNumber(floatValue: Float): String {
     if (floatValue.isNaN()) return "NaN"
     if (floatValue.isInfinite()) return if (floatValue < 0f) "-Infinity" else "Infinity"

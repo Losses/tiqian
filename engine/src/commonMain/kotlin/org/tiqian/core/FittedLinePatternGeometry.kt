@@ -10,6 +10,7 @@ import kotlin.math.roundToInt
  * The first and last dots meet the span edges, while any remainder is shared by all intervening
  * gaps. [keptLeft] and [keptRight] only apply skip-ink clipping; they do not restart the pattern.
  */
+@Deprecated("Legacy engine, migrate to engine-haxe")
 fun fittedDottedLineCenters(
     spanLeft: Float,
     spanRight: Float,
@@ -64,6 +65,7 @@ private const val DOTTED_CENTER_EPSILON = 0.001f
  * intervening gaps, so the first and last dashes meet the span edges. A shorter span becomes one
  * dash instead of disappearing or leaving an unmatched end gap.
  */
+@Deprecated("Legacy engine, migrate to engine-haxe")
 fun fittedDashedLineSegments(
     spanLeft: Float,
     spanRight: Float,
