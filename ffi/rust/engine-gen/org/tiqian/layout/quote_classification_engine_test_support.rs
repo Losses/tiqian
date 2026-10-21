@@ -367,8 +367,8 @@ impl QuoteClassificationEngineTestSupport {
     let __units = u_string::units(&text);
     let __count = u_string::unit_count(&text);
         let mut r: Vec<u32> = vec![];
-        for i in 0..match u32::try_from(u_string::unit_count(&(text))) { Ok(value) => value, Err(_) => u32::MAX } {
-            if QuoteClassificationEngineTestSupport::quote_classification_engine_test_support_is_curly_quote_for_test(u_string::substring(&text, { let v: u32 = i; i32::from_ne_bytes(v.to_ne_bytes()) }, i32::from_ne_bytes(((u32::wrapping_add(i, 1)) as i32).to_ne_bytes())).as_ustr()) {
+        for i in 0..__count {
+            if QuoteClassificationEngineTestSupport::quote_classification_engine_test_support_is_curly_quote_for_test(u_string::char_at_from(&__units, i).as_ustr()) {
                 r.push(i);
             }
         }

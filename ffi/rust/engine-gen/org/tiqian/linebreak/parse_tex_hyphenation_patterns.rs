@@ -32,10 +32,8 @@ impl ParseTexHyphenationPatterns {
         let mut out: Vec<UString> = vec![];
         let mut token = UString::new();
         let mut i = 0u32;
-        let __units1 = u_string::units(&text);
-        let __count1 = u_string::unit_count(&text);
         while (i32::from_ne_bytes(((i) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((__count) as i32).to_ne_bytes())) {
-            let c = u_string::char_at_from(&__units1, i);
+            let c = u_string::char_at_from(&__units, i);
             let sep = c == UString::from(" ") || c == UString::from("\t") || c == UString::from(concat!("\n",
 "")) || c == UString::from("\r");
             if sep {

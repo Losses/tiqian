@@ -21,7 +21,7 @@ impl BopomofoParser {
         if __count == 0 {
             return BopomofoReading::new(vec![].to_vec(), BopomofoTone::Yinping);
         }
-        if u_string::unit_at_from(&__units, 0u32).as_ref().map_or(false, |v| v == &(BopomofoParser::BOPOMOFO_PARSER_NEUTRAL_MARK)) {
+        if matches!(u_string::unit_at_from(&__units, 0u32).as_ref(), Some(__v) if __v == &(BopomofoParser::BOPOMOFO_PARSER_NEUTRAL_MARK)) {
             return BopomofoReading::new(BopomofoParser::bopomofo_parser_symbols_of(u_string::substring_from(&reading, 1i32).as_ustr()).to_vec(), BopomofoTone::Neutral);
         }
         let last = u_string::unit_at_from(&__units, u32::wrapping_sub(__count, 1)).unwrap_or(0);
@@ -47,10 +47,8 @@ impl BopomofoParser {
     let __count1 = u_string::unit_count(&body);
         let mut symbols: Vec<UString> = vec![];
         let mut index = 0u32;
-        let __units2 = u_string::units(&body);
-        let __count2 = u_string::unit_count(&body);
         while (i32::from_ne_bytes(((index) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((__count1) as i32).to_ne_bytes())) {
-            symbols.push(u_string::char_at_from(&__units2, index));
+            symbols.push(u_string::char_at_from(&__units1, index));
             index = u32::wrapping_add(index, 1);
         }
         return symbols;

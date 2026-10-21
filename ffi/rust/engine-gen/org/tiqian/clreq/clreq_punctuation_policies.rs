@@ -116,7 +116,7 @@ impl ClreqPunctuationPolicies {
     }
 
     pub(crate) fn clreq_punctuation_policies_default_punctuation_body_em(unit: Option<u32>, punctuation_class: PunctuationClass) -> f64 {
-        if unit.as_ref().map_or(false, |v| v == &(11834)) {
+        if matches!(unit.as_ref(), Some(__v) if __v == &(11834)) {
             return 2.0f64;
         }
         if ClreqPunctuationPolicies::clreq_punctuation_policies_contains_unit(&CLREQ_PUNCTUATION_POLICIES_SHORT_HYPHEN_CONNECTORS, unit) {
@@ -135,7 +135,7 @@ impl ClreqPunctuationPolicies {
     }
 
     pub(crate) fn clreq_punctuation_policies_default_punctuation_advance_em(unit: Option<u32>, _punctuation_class: PunctuationClass) -> f64 {
-        if unit.as_ref().map_or(false, |v| v == &(11834)) {
+        if matches!(unit.as_ref(), Some(__v) if __v == &(11834)) {
             return 2.0f64;
         }
         if ClreqPunctuationPolicies::clreq_punctuation_policies_contains_unit(&CLREQ_PUNCTUATION_POLICIES_SHORT_HYPHEN_CONNECTORS, unit) {
@@ -147,7 +147,7 @@ impl ClreqPunctuationPolicies {
     pub(crate) fn clreq_punctuation_policies_contains_unit(units: &[u32], unit: Option<u32>) -> bool {
         let mut index = 0u32;
         while (i32::from_ne_bytes(((index) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((units.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
-            if unit.as_ref().map_or(false, |v| v == &(units[usize::try_from(index).unwrap_or(0)])) {
+            if matches!(unit.as_ref(), Some(__v) if __v == &(units[usize::try_from(index).unwrap_or(0)])) {
                 return true;
             }
             index = u32::wrapping_add(index, 1);
