@@ -1,9 +1,7 @@
 package org.tiqian.boring.runtime
 
-@Deprecated("Legacy engine, migrate to engine-haxe")
 class Int64Halves(val high: Int, val low: Int)
 
-@Deprecated("Legacy engine, migrate to engine-haxe")
 object FPHelper {
     fun doubleToI64(value: Double): Int64Halves {
         val bits = value.toRawBits()

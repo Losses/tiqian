@@ -1,6 +1,5 @@
 package org.tiqian.boring.runtime
 
-@Deprecated("Legacy engine, migrate to engine-haxe")
 object SortedTable {
     fun compareInts(a: Int, b: Int): Int {
         if ((a < b)) {
@@ -53,7 +52,6 @@ object SortedTable {
     }
 }
 
-@Deprecated("Legacy engine, migrate to engine-haxe")
 class SortedMapTable<K, V>(private val keys: MutableList<K>, private val values: MutableList<V>, private val compare: (K, K) -> Int) {
 
     fun get(key: K): V? {
@@ -113,7 +111,6 @@ class SortedMapTable<K, V>(private val keys: MutableList<K>, private val values:
     }
 }
 
-@Deprecated("Legacy engine, migrate to engine-haxe")
 class SortedMapTableBuilder<K, V>(private val keys: MutableList<K>, private val values: MutableList<V>, private val compare: (K, K) -> Int) {
 
     fun put(key: K, value: V) {
@@ -174,7 +171,6 @@ class SortedMapTableBuilder<K, V>(private val keys: MutableList<K>, private val 
     }
 }
 
-@Deprecated("Legacy engine, migrate to engine-haxe")
 class SortedSetTable<K>(private val keys: MutableList<K>, private val compare: (K, K) -> Int) {
 
     fun has(key: K): Boolean {
@@ -222,7 +218,6 @@ class SortedSetTable<K>(private val keys: MutableList<K>, private val compare: (
     }
 }
 
-@Deprecated("Legacy engine, migrate to engine-haxe")
 class SortedSetTableBuilder<K>(private val keys: MutableList<K>, private val compare: (K, K) -> Int) {
 
     fun put(key: K) {
