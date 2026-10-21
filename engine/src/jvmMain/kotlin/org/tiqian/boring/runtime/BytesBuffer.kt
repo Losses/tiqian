@@ -2,7 +2,6 @@ package org.tiqian.boring.runtime
 
 import java.util.ArrayList
 
-@Deprecated("Legacy engine, migrate to engine-haxe")
 class BytesBuffer {
     private val buffer = ArrayList<Byte>()
 
