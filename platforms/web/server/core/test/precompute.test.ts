@@ -405,6 +405,9 @@ test("split render assembles per-article bundles against one frozen table", { sk
   // Both articles share one face row; each distinct probe keeps its own row.
   assert.equal(header.faceCount, 1);
   assert.equal(header.probeCount, 2);
+  // Value styles left the shared table: the wire column stays present and
+  // empty, so the binary layout does not change shape.
+  assert.equal(header.valueStyleCount, 0);
 
   const bundleFirst = precompute.assembleSnapshotBundle(dataFirst, tables);
   const bundleSecond = precompute.assembleSnapshotBundle(dataSecond, tables);
@@ -428,15 +431,19 @@ test("split render assembles per-article bundles against one frozen table", { sk
 
   // A restored table extends the union under one address across builds.
   const restored = precompute.restoreSnapshotTables(file.bytes);
+  // Value styles are TS-side rows now; absorbing metadata no longer changes
+  // the native table bytes, so the restored table re-freezes to the same sha.
   precompute.absorbSnapshotTablesMetadata(restored, { valueStyles: ["font-weight:700"] });
   const dataThird = precompute.renderSnapshotBundleData([first], {
     id: "tq-page-c",
     snapshotTables: restored,
   });
   const refile = precompute.finalizeSnapshotTables(restored);
-  assert.notEqual(refile.sha256, file.sha256);
+  assert.equal(refile.sha256, file.sha256);
   const bundleThird = precompute.assembleSnapshotBundle(dataThird, restored);
-  assert.match(bundleThird.initialStyle, /\.tqv-0\{/u);
+  // The absorbed declaration holds index 0 of the restored interner, so this
+  // build's minted class takes the next index.
+  assert.match(bundleThird.initialStyle, /\.tqv-1\{/u);
   assert.match(bundleThird.template, new RegExp(refile.sha256, "u"));
   precompute.closeSnapshotTables(tables);
   precompute.closeSnapshotTables(restored);

@@ -183,17 +183,7 @@ export interface NativeAddon {
     optionsJson: string,
   ): { result: string; tablesBytes: Buffer | null; tablesSha256: string | undefined };
   closeHtmlPreparer(handle: string): void;
-  /** The split render of ADR 0052 schema 2: data phase, then assembly. */
-  renderSnapshotBundleData(
-    preparedParagraphsJson: string,
-    optionsJson: string,
-    sharedRuntimeStyle: string,
-  ): string;
-  renderFontContractBundleData(
-    preparedParagraphsJson: string,
-    optionsJson: string,
-    sharedRuntimeStyle: string,
-  ): string;
+  /** The assembly phase of ADR 0052 schema 2. */
   assembleSnapshotBundle(
     dataJson: string,
     optionsJson: string,
@@ -208,7 +198,6 @@ export interface NativeAddon {
   createSnapshotTables(): string;
   restoreSnapshotTables(bytes: Buffer): string;
   absorbSnapshotTables(handle: string, preparedJson: string): number;
-  absorbSnapshotTablesMetadata(handle: string, metadataJson: string): void;
   finalizeSnapshotTables(handle: string): { bytes: Buffer; sha256: string };
   closeSnapshotTables(handle: string): void;
   snapshotPlainTextIssue(text: string): string;

@@ -47,8 +47,6 @@ pub struct SnapshotTables {
     pub(crate) strings: ReplayStrings,
     pub(crate) metrics: Vec<Json>,
     metric_keys: HashMap<String, usize>,
-    pub(crate) value_styles: Vec<String>,
-    value_style_indexes: HashMap<String, usize>,
     pub(crate) backend_revision: Option<Json>,
     pub(crate) harfbuzz_version: Option<Json>,
 }
@@ -72,8 +70,6 @@ impl SnapshotTables {
             strings: ReplayStrings::new(),
             metrics: Vec::new(),
             metric_keys: HashMap::new(),
-            value_styles: Vec::new(),
-            value_style_indexes: HashMap::new(),
             backend_revision: None,
             harfbuzz_version: None,
         }
@@ -197,44 +193,6 @@ impl SnapshotTables {
         Ok(())
     }
 
-    /// Absorbs the render metadata one build shares across articles. Value
-    /// styles are content rows: declarations append in first-seen order and
-    /// re-absorbing an existing row keeps its index.
-    pub fn absorb_metadata(&mut self, metadata: &Json) -> Result<(), NamedError> {
-        if self.frozen() {
-            return Err(named("SnapshotTablesFrozen"));
-        }
-        if let Some(Json::Arr(rows)) = field(metadata, "valueStyles") {
-            for row in rows {
-                let Json::Str(declaration) = row else {
-                    return Err(named("SnapshotTableValueStylesInvalid"));
-                };
-                self.intern_value_style(declaration);
-            }
-        }
-        Ok(())
-    }
-
-    /// Interns one value-style declaration, returning its table index. The
-    /// render phase mints `tqv-` classes from these indexes, so a frozen table
-    /// keeps every index this returns stable.
-    pub fn intern_value_style(&mut self, declaration: &str) -> usize {
-        if let Some(&index) = self.value_style_indexes.get(declaration) {
-            return index;
-        }
-        let index = self.value_styles.len();
-        self.value_styles.push(declaration.to_string());
-        self.value_style_indexes
-            .insert(declaration.to_string(), index);
-        index
-    }
-
-    /// One value-style declaration by table index; the assembly phase emits
-    /// the initial-style rules from these lookups.
-    pub fn value_style_at(&self, index: usize) -> Option<&str> {
-        self.value_styles.get(index).map(String::as_str)
-    }
-
     /// Freezes the table and returns its binary bytes plus content hash.
     /// Freezing again returns the same file; absorbs after the freeze fail.
     pub fn finalize(&mut self) -> Result<SnapshotTableFile, NamedError> {
@@ -282,7 +240,6 @@ impl SnapshotTables {
         tables.faces = decoded.faces;
         tables.probes = decoded.probes;
         tables.metrics = decoded.metrics;
-        tables.value_styles = decoded.value_styles;
         for (index, row) in tables.typographies.iter().enumerate() {
             tables
                 .typography_indexes
@@ -293,11 +250,6 @@ impl SnapshotTables {
         }
         for (index, row) in tables.probes.iter().enumerate() {
             tables.probe_indexes.insert(stable_stringify(row), index);
-        }
-        for (index, declaration) in tables.value_styles.iter().enumerate() {
-            tables
-                .value_style_indexes
-                .insert(declaration.clone(), index);
         }
         // Only the leading replay strings feed the string table; the probe
         // aux strings re-intern through the probe walk on the next encode.
@@ -606,39 +558,6 @@ mod tests {
         assert_eq!(error.0, "SnapshotTablesFrozen");
     }
 
-    #[test]
-    fn value_styles_union_in_first_seen_order() {
-        let mut tables = SnapshotTables::new();
-        tables
-            .absorb_metadata(&Json::Obj(vec![(
-                "valueStyles".to_string(),
-                Json::Arr(vec![Json::str("font-feature-settings:'ss01'")]),
-            )]))
-            .expect("absorbs");
-        // A second absorb with new declarations extends the union; a repeated
-        // declaration keeps its index.
-        tables
-            .absorb_metadata(&Json::Obj(vec![(
-                "valueStyles".to_string(),
-                Json::Arr(vec![
-                    Json::str("font-weight:600"),
-                    Json::str("font-feature-settings:'ss01'"),
-                ]),
-            )]))
-            .expect("unions");
-        assert_eq!(tables.intern_value_style("font-feature-settings:'ss01'"), 0);
-        assert_eq!(tables.intern_value_style("font-weight:600"), 1);
-        assert_eq!(tables.value_style_at(1), Some("font-weight:600"));
-        let error = match tables.absorb_metadata(&Json::Obj(vec![(
-            "valueStyles".to_string(),
-            Json::Arr(vec![Json::Num(7.0)]),
-        )])) {
-            Ok(_) => panic!("non-string row rejected"),
-            Err(error) => error,
-        };
-        assert_eq!(error.0, "SnapshotTableValueStylesInvalid");
-    }
-
     fn object_field_mut<'a>(value: &'a mut Json, name: &str) -> &'a mut Json {
         let Json::Obj(fields) = value else {
             panic!("object field {name}");
@@ -702,23 +621,11 @@ mod tests {
         let corpus = Json::Arr(vec![entry("p1", "同文"), entry("p2", "同文")]);
         let mut tables = SnapshotTables::new();
         tables.absorb_prepared(&corpus).expect("absorbs");
-        tables
-            .absorb_metadata(&Json::Obj(vec![(
-                "valueStyles".to_string(),
-                Json::Arr(vec![Json::str("font-feature-settings:'ss01'")]),
-            )]))
-            .expect("absorbs metadata");
         let file = tables.finalize().expect("freezes");
-        let metadata = Json::Obj(vec![
-            (
-                "valueStyles".to_string(),
-                Json::Arr(vec![Json::str("font-feature-settings:'ss01'")]),
-            ),
-            (
-                "renderFontFamilies".to_string(),
-                Json::Arr(vec![Json::str("serif")]),
-            ),
-        ]);
+        let metadata = Json::Obj(vec![(
+            "renderFontFamilies".to_string(),
+            Json::Arr(vec![Json::str("serif")]),
+        )]);
         let manifest =
             compact_snapshot_manifest_with_tables(&corpus, &metadata, &tables).expect("compacts");
         // The manifest pins the table hash and declares schema 2.
