@@ -11,13 +11,14 @@ import { resolve } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
 
 import { addon } from "./load.js";
-import { createCacheBridge, type CacheBridge } from "./cache.js";
-import { stableStringify } from "./stable-stringify.js";
 import {
   renderPreparedParagraph as sharedRenderPreparedParagraph,
   renderPreparedParagraphArtifact as sharedRenderPreparedParagraphArtifact,
 } from "@tiqian/prose/prepared-dom";
-
+import { Revision } from "./protocol-gen/Revision.js";
+import { SnapshotValueStyle } from "./shared-gen/org/tiqian/shared/SnapshotValueStyle.js";
+import { ValueStyleInterner } from "./shared-gen/org/tiqian/shared/ValueStyleInterner.js";
+import { sha256Hex, stableStringify } from "./stable-stringify.js";
 const SHARED_RUNTIME_STYLE = readFileSync(
   new URL(import.meta.resolve("@tiqian/core/styles.css")),
   "utf8",
@@ -558,28 +559,6 @@ interface BundleOptionsJson {
   snapshotTables: string;
 }
 
-function bundleWireValues(
-  preparedParagraphs: readonly PreparedEntry[],
-  options: {
-    id: string;
-    paragraphSelector?: string;
-    fontContractParagraphs?: readonly PreparedEntry[];
-    snapshotTables: SnapshotTables;
-  },
-): [string, string] {
-  return [
-    JSON.stringify(Array.from(preparedParagraphs ?? [])),
-    JSON.stringify({
-      id: options.id,
-      paragraphSelector: options.paragraphSelector ?? null,
-      fontContractParagraphs: options.fontContractParagraphs
-        ? Array.from(options.fontContractParagraphs)
-        : null,
-      snapshotTables: options.snapshotTables.handle,
-    } satisfies BundleOptionsJson),
-  ];
-}
-
 function freezeBundle(bundle: SnapshotBundle): SnapshotBundle {
   return Object.freeze({
     ...bundle,
@@ -590,14 +569,19 @@ function freezeBundle(bundle: SnapshotBundle): SnapshotBundle {
   });
 }
 
-/**
- * One build's snapshot tables (ADR 0052 `BundleLayering`): the shared rows
+/** One build's snapshot tables (ADR 0052 `BundleLayering`): the shared rows
  * every article of the build shares. Absorb first, render every article,
- * then finalize; the finalized json is content-addressed by its sha256.
+ * then finalize; the finalized bytes are content-addressed by their sha256.
+ *
+ * Value styles are a TS-side concern: the shared layer
+ * (`ValueStyleInterner`/`SnapshotValueStyle`) mints the `tqv-` classes and
+ * the first-paint rules, so the native table carries no value-style rows.
  */
 export interface SnapshotTables {
   readonly kind: "snapshot-tables";
   readonly handle: string;
+  /** The build's value-style rows in first-seen order; TS-side only. */
+  readonly valueStyles: ValueStyleInterner;
 }
 
 /** The finalized table file a host serves verbatim under its sha address. */
@@ -613,17 +597,30 @@ export interface FinalizedSnapshotTables {
  */
 export interface SnapshotBundleData {
   readonly kind: "snapshot-bundle-data";
+  /** The wire form the native assembly reads. */
   readonly json: string;
+  /** The template id the first-paint rules scope to. */
+  readonly id: string;
+  /** Value-style rows this bundle's classes used, in first-mint order. */
+  readonly usedValueStyleIndexes: readonly number[];
 }
 
 /** Creates the empty, unfrozen table set of one build. */
 export function createSnapshotTables(): SnapshotTables {
-  return { kind: "snapshot-tables", handle: addon.createSnapshotTables() };
+  return {
+    kind: "snapshot-tables",
+    handle: addon.createSnapshotTables(),
+    valueStyles: new ValueStyleInterner(),
+  };
 }
 
 /** Restores a previous build's frozen table so a rebuild extends the union. */
 export function restoreSnapshotTables(bytes: Buffer): SnapshotTables {
-  return { kind: "snapshot-tables", handle: addon.restoreSnapshotTables(bytes) };
+  return {
+    kind: "snapshot-tables",
+    handle: addon.restoreSnapshotTables(bytes),
+    valueStyles: new ValueStyleInterner(),
+  };
 }
 
 /**
@@ -638,13 +635,22 @@ export function absorbSnapshotTables(
   return addon.absorbSnapshotTables(tables.handle, JSON.stringify(Array.from(prepared ?? [])));
 }
 
-/** Absorbs table-scoped render metadata; value styles append in first-seen
- * order, re-absorbing an existing declaration keeps its index. */
+/**
+ * Absorbs table-scoped render metadata; value styles append to the TS-side
+ * interner in first-seen order, and re-absorbing an existing declaration
+ * keeps its index. The native table rows stay untouched, so the table hash
+ * does not change.
+ */
 export function absorbSnapshotTablesMetadata(
   tables: SnapshotTables,
   metadata: { readonly valueStyles: readonly string[] },
 ): void {
-  addon.absorbSnapshotTablesMetadata(tables.handle, JSON.stringify(metadata));
+  const rows = (metadata as { valueStyles?: unknown } | undefined)?.valueStyles;
+  if (!Array.isArray(rows)) return;
+  for (const row of rows) {
+    if (typeof row !== "string") throw new Error("SnapshotTableValueStylesInvalid");
+    tables.valueStyles.intern(row);
+  }
 }
 
 /**
@@ -661,41 +667,182 @@ export function closeSnapshotTables(tables: SnapshotTables): void {
   addon.closeSnapshotTables(tables.handle);
 }
 
+const SNAPSHOT_SCHEMA = Revision.SNAPSHOT_SCHEMA;
+const LAYOUT_REVISION = Revision.LAYOUT_REVISION;
+const RENDER_REVISION = Revision.RENDER_REVISION;
+const DEFAULT_LOCALE = "zh-Hans";
+/** `PLAIN_PARAGRAPH_SELECTOR`: canonical plain paragraphs of a snapshot root. */
+const PLAIN_PARAGRAPH_SELECTOR = ":is(p, li)[data-tq-snapshot-key]";
+/** `RUNTIME_PARAGRAPH_SELECTOR`: every live paragraph of a semantic root. */
+const RUNTIME_PARAGRAPH_SELECTOR = ":is(p, li):not([data-tiqian-skip])";
+
+/** Options of the shared artifact renderer. */
+type SharedArtifactOptions = NonNullable<
+  Parameters<typeof sharedRenderPreparedParagraphArtifact>[2]
+>;
+
+/** The ts entry of one bundle data phase. */
+interface BundleRenderOptions {
+  id: string;
+  paragraphSelector?: string;
+  fontContractParagraphs?: readonly PreparedEntry[];
+  snapshotTables: SnapshotTables;
+}
+
+/** `preparedLocale`: a string typography is its locale, an object carries it. */
+function preparedLocale(typography: unknown): string {
+  if (typeof typography === "string") return typography;
+  if (typography !== null && typeof typography === "object") {
+    const locale = (typography as { locale?: unknown }).locale;
+    if (typeof locale === "string") return locale;
+    if (typeof locale === "number") return String(locale);
+    if (typeof locale === "boolean") return String(locale);
+  }
+  return DEFAULT_LOCALE;
+}
+
+/** The corpus gates of the data phase, in the order the Rust port ran them. */
+function bundleCorpus(
+  entries: readonly PreparedEntry[],
+  fontContractEntries: readonly PreparedEntry[],
+): PreparedEntry[] {
+  if (entries.length === 0) throw new Error("MissingPreparedParagraphs");
+  const corpus = [...entries, ...fontContractEntries];
+  if (corpus.some((entry) => (entry as { status?: unknown })?.status !== "prepared")) {
+    throw new Error("SnapshotTemplateContainsUnsupportedParagraph");
+  }
+  if (corpus.some((entry) => {
+    const row = entry as Record<string, unknown>;
+    return row.schema !== SNAPSHOT_SCHEMA ||
+      row.layoutRevision !== LAYOUT_REVISION ||
+      row.renderRevision !== RENDER_REVISION ||
+      typeof row.renderArtifactSha256 !== "string";
+  })) {
+    throw new Error("SnapshotTemplateContainsStalePreparedParagraph");
+  }
+  const seen = new Set<string>();
+  for (const entry of corpus) {
+    const key = (entry as { key?: unknown }).key ?? null;
+    const rendered = stableStringify(key);
+    if (seen.has(rendered)) throw new Error("DuplicateSnapshotKey");
+    seen.add(rendered);
+  }
+  return corpus;
+}
+
+/** The exact render font families every corpus entry must share. */
+function renderFontFamiliesOf(entries: readonly PreparedEntry[]): readonly string[] {
+  const families = (entries[0] as { renderFontFamilies?: unknown } | undefined)?.renderFontFamilies;
+  if (!Array.isArray(families) || families.length === 0) {
+    throw new Error("MissingExactRenderFontFamilies");
+  }
+  for (const family of families) {
+    if (typeof family !== "string" || family.trim().length === 0) {
+      throw new Error("MissingExactRenderFontFamilies");
+    }
+  }
+  return families as readonly string[];
+}
+
 /**
- * The data phase for plain snapshot bundles: re-renders the bodies and mints
- * value-style rows into the build's mutable tables.
+ * Renders one prepared entry with the shared renderer and hashes its artifact
+ * tree with the same stable encoding the Rust renderer used, so the entry
+ * keeps its byte identity when the render loop moves here.
+ */
+function renderBundleEntry(
+  entry: PreparedEntry,
+  styleClassFor: (declaration: string) => string,
+): Record<string, unknown> {
+  const row = entry as Record<string, unknown>;
+  const plan = row.plan;
+  if (plan === undefined || plan === null) throw new Error("InvalidPreparedParagraphGeometry");
+  const planText = typeof plan === "string" ? plan : JSON.stringify(plan);
+  const rendered = sharedRenderPreparedParagraphArtifact(
+    planText,
+    preparedLocale(row.typography),
+    {
+      semantics: row.semantics,
+      inlineBoxes: row.inlineBoxes,
+      renderTextSpans: row.renderTextSpans,
+      sourceText: typeof row.sourceText === "string" ? row.sourceText : undefined,
+      styleClassFor,
+    } as SharedArtifactOptions,
+  );
+  return {
+    ...row,
+    html: rendered.html,
+    renderArtifactSha256: sha256Hex(stableStringify(rendered.artifact)),
+  };
+}
+
+/**
+ * The data phase over one entry list: gates, per-entry render with the shared
+ * renderer, and the class indexes this bundle minted. First-paint rules are
+ * appended at assembly from these indexes.
+ */
+function renderBundleData(
+  preparedParagraphs: readonly PreparedEntry[],
+  options: BundleRenderOptions,
+  supportedParagraphSelector: string,
+): SnapshotBundleData {
+  const entries = Array.from(preparedParagraphs ?? []);
+  const fontContractEntries = Array.from(options.fontContractParagraphs ?? []);
+  const corpus = bundleCorpus(entries, fontContractEntries);
+  const families = renderFontFamiliesOf(entries);
+  const familySignature = stableStringify(families);
+  for (const entry of corpus) {
+    const entryFamilies = (entry as { renderFontFamilies?: unknown }).renderFontFamilies;
+    const signature = entryFamilies === undefined ? "" : stableStringify(entryFamilies);
+    if (signature !== familySignature) throw new Error("SnapshotRenderFontFamilyConflict");
+  }
+  const id = typeof options.id === "string" ? options.id.trim() : "";
+  if (id.length === 0) throw new Error("MissingSnapshotTemplateId");
+  if (!/^[A-Za-z][A-Za-z0-9_-]*$/u.test(id)) throw new Error("InvalidSnapshotTemplateId");
+  const paragraphSelector = typeof options.paragraphSelector === "string"
+    ? options.paragraphSelector
+    : supportedParagraphSelector;
+  if (paragraphSelector !== supportedParagraphSelector) {
+    throw new Error("UnsupportedSnapshotParagraphSelector");
+  }
+  const interner = options.snapshotTables.valueStyles;
+  const usedValueStyleIndexes: number[] = [];
+  const styleClassFor = (declaration: string): string => {
+    const index = interner.intern(declaration);
+    if (!usedValueStyleIndexes.includes(index)) usedValueStyleIndexes.push(index);
+    return SnapshotValueStyle.snapshotValueStyleClass(index);
+  };
+  const renderedEntries = entries.map((entry) => renderBundleEntry(entry, styleClassFor));
+  return Object.freeze({
+    kind: "snapshot-bundle-data",
+    id,
+    usedValueStyleIndexes: Object.freeze([...usedValueStyleIndexes]),
+    json: JSON.stringify({
+      id,
+      paragraphSelector,
+      renderFontFamilies: families,
+      renderedEntries,
+      fontContractEntries,
+    }),
+  });
+}
+
+/**
+ * The data phase for plain snapshot bundles: renders the bodies with the
+ * shared TS renderer and mints `tqv-` classes into the build's TS interner.
  */
 export function renderSnapshotBundleData(
   preparedParagraphs: readonly PreparedEntry[],
-  options: {
-    id: string;
-    paragraphSelector?: ":is(p, li)[data-tq-snapshot-key]";
-    fontContractParagraphs?: readonly PreparedEntry[];
-    snapshotTables: SnapshotTables;
-  },
+  options: BundleRenderOptions,
 ): SnapshotBundleData {
-  const [preparedJson, optionsJson] = bundleWireValues(preparedParagraphs, options);
-  return {
-    kind: "snapshot-bundle-data",
-    json: addon.renderSnapshotBundleData(preparedJson, optionsJson, SHARED_RUNTIME_STYLE),
-  };
+  return renderBundleData(preparedParagraphs, options, PLAIN_PARAGRAPH_SELECTOR);
 }
 
 /** The data phase for font-contract bundles. */
 export function renderFontContractBundleData(
   preparedParagraphs: readonly PreparedEntry[],
-  options: {
-    id: string;
-    paragraphSelector?: ":is(p, li):not([data-tiqian-skip])";
-    fontContractParagraphs?: readonly PreparedEntry[];
-    snapshotTables: SnapshotTables;
-  },
+  options: BundleRenderOptions,
 ): SnapshotBundleData {
-  const [preparedJson, optionsJson] = bundleWireValues(preparedParagraphs, options);
-  return {
-    kind: "snapshot-bundle-data",
-    json: addon.renderFontContractBundleData(preparedJson, optionsJson, SHARED_RUNTIME_STYLE),
-  };
+  return renderBundleData(preparedParagraphs, options, RUNTIME_PARAGRAPH_SELECTOR);
 }
 
 function assembleWireValues(data: SnapshotBundleData, tables: SnapshotTables): [string, string] {
@@ -703,6 +850,31 @@ function assembleWireValues(data: SnapshotBundleData, tables: SnapshotTables): [
     data.json,
     JSON.stringify({ snapshotTables: tables.handle } satisfies BundleOptionsJson),
   ];
+}
+
+/** `escapeAttribute`: ampersand, quote, and left angle, in that order. */
+function escapeBundleAttribute(value: string): string {
+  return value
+    .replaceAll("&", "&amp;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("<", "&lt;");
+}
+
+/**
+ * The first-paint rules of the value-style classes this bundle used, in
+ * first-mint order. The native assembly owns the templates and the manifest;
+ * the declarations live in the shared layer, so the rules append here in the
+ * byte form the Rust assembly emitted.
+ */
+function valueStyleRules(data: SnapshotBundleData, tables: SnapshotTables): string {
+  let rules = "";
+  for (const index of data.usedValueStyleIndexes) {
+    const declaration = tables.valueStyles.at(index);
+    if (typeof declaration !== "string") throw new Error("SnapshotTableValueStyleMissing");
+    rules += `tiqian-prose[snapshot-ref="${escapeBundleAttribute(data.id)}"] ` +
+      `[data-tq-rendered="true"] .${SnapshotValueStyle.snapshotValueStyleClass(index)}{${declaration}}`;
+  }
+  return rules;
 }
 
 /**
@@ -714,9 +886,10 @@ export function assembleSnapshotBundle(
   tables: SnapshotTables,
 ): SnapshotBundle {
   const [dataJson, optionsJson] = assembleWireValues(data, tables);
-  return freezeBundle(
-    parse<SnapshotBundle>(addon.assembleSnapshotBundle(dataJson, optionsJson, SHARED_RUNTIME_STYLE)),
+  const bundle = parse<SnapshotBundle>(
+    addon.assembleSnapshotBundle(dataJson, optionsJson, SHARED_RUNTIME_STYLE),
   );
+  return freezeBundle({ ...bundle, initialStyle: bundle.initialStyle + valueStyleRules(data, tables) });
 }
 
 /** The assembly phase for font-contract bundles. */

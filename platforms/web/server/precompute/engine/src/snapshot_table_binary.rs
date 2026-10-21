@@ -183,7 +183,9 @@ pub(crate) fn encode(tables: &SnapshotTables) -> Result<Vec<u8>, NamedError> {
             probes,
             face_texts.iter().map(to_ustring).collect(),
             typography_texts.iter().map(to_ustring).collect(),
-            tables.value_styles.iter().map(to_ustring).collect(),
+            // Value styles left the shared table with the shared-layer
+            // cutover: the column stays on the wire and is always empty.
+            Vec::new(),
             font_preloads.iter().map(to_ustring).collect(),
             &UString::from(revision_text.as_str()),
         ),
@@ -203,7 +205,6 @@ pub(crate) struct DecodedTable {
     pub(crate) probes: Vec<Json>,
     pub(crate) strings: Vec<Json>,
     pub(crate) metrics: Vec<Json>,
-    pub(crate) value_styles: Vec<String>,
     pub(crate) backend_revision: Option<Json>,
     pub(crate) harfbuzz_version: Option<Json>,
 }
@@ -303,11 +304,6 @@ pub(crate) fn decode(bytes: &[u8]) -> Result<DecodedTable, NamedError> {
         probes,
         strings,
         metrics,
-        value_styles: data
-            .value_style_texts
-            .iter()
-            .map(|text| text.to_utf8_lossy())
-            .collect(),
         backend_revision: field(&revisions, "backendRevision").cloned(),
         harfbuzz_version: field(&revisions, "harfbuzzVersion").cloned(),
     })
