@@ -7,6 +7,7 @@ package org.tiqian.core
  * link and decoration ranges do not change line layout, but their exact source edges must survive
  * shaping so hit testing and paint geometry do not slice a larger cluster proportionally.
  */
+@Deprecated("Legacy engine, migrate to engine-haxe")
 fun sourceBoundariesForPresentation(
     textLength: Int,
     decorations: List<DecorationSpan> = emptyList(),
@@ -32,6 +33,7 @@ fun sourceBoundariesForPresentation(
 }
 
 /** Shared rich-text projection for named technical line-breaking policies. */
+@Deprecated("Legacy engine, migrate to engine-haxe")
 fun List<RichTextSpan>.layoutLineBreakSpans(text: String): List<LineBreakSpan> =
     asSequence()
         .filter { span ->
@@ -51,6 +53,7 @@ fun List<RichTextSpan>.layoutLineBreakSpans(text: String): List<LineBreakSpan> =
         .toList()
 
 /** Inline-code and technical ranges preserve source while suppressing internal auto spacing. */
+@Deprecated("Legacy engine, migrate to engine-haxe")
 fun List<RichTextSpan>.layoutAutoSpaceSuppressedRanges(): List<TextRange> =
     asSequence()
         .filter { it.role == RichTextRole.InlineCode || it.role == RichTextRole.TechnicalInline }
@@ -60,6 +63,7 @@ fun List<RichTextSpan>.layoutAutoSpaceSuppressedRanges(): List<TextRange> =
         .toList()
 
 /** Reserves renderer-owned horizontal padding in the engine's line-breaking geometry. */
+@Deprecated("Legacy engine, migrate to engine-haxe")
 fun List<RichTextSpan>.layoutInlineBoxes(): List<InlineBoxSpan> = mapNotNull { span ->
     val horizontalPadding = span.paint.background.horizontalPadding
     if (

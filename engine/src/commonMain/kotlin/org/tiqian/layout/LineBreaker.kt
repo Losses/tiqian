@@ -4,6 +4,7 @@ import org.tiqian.core.Cluster
 import org.tiqian.core.LineEndReason
 import org.tiqian.core.TextRange
 
+@Deprecated("Legacy engine, migrate to engine-haxe")
 interface LineBreaker {
     val strategyName: String
         get() = "custom"
@@ -122,6 +123,7 @@ interface LineBreaker {
  * Slice 4b scope: PushIn via punctuation glue, CarryPrevious, and LeaveRagged.
  * Hang remains profile opt-in and is not a default repair.
  */
+@Deprecated("Legacy engine, migrate to engine-haxe")
 class GreedyLineBreaker(
     private val kinsoku: KinsokuRule = ClreqKinsokuRule(),
     private val pushInPenalty: Int = 2,
@@ -320,6 +322,7 @@ internal fun closeFilledLine(
  * consistent benefit. The numbers are corpus-dependent; re-evaluate with
  * `LookaheadWindowProbe` when the fixture corpus changes.
  */
+@Deprecated("Legacy engine, migrate to engine-haxe")
 class LookaheadLineBreaker(
     private val window: Int = 2,
     private val futureLineHorizon: Int = 2,

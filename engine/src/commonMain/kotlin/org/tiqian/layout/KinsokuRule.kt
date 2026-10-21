@@ -12,11 +12,13 @@ import org.tiqian.core.Cluster
  * Profile-specific overrides should construct with another level or replace
  * this rule, not edit the engine.
  */
+@Deprecated("Legacy engine, migrate to engine-haxe")
 interface KinsokuRule {
     fun forbiddenAtLineStart(cluster: Cluster): Boolean
     fun forbiddenAtLineEnd(cluster: Cluster): Boolean
 }
 
+@Deprecated("Legacy engine, migrate to engine-haxe")
 class ClreqKinsokuRule(
     private val level: KinsokuLevel = KinsokuLevel.Basic,
 ) : KinsokuRule {

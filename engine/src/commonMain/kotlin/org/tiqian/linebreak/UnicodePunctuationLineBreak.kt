@@ -6,6 +6,7 @@ package org.tiqian.linebreak
  * Line Breaking Algorithm: word, numeric, combining-mark and script-specific
  * rules remain in their existing pipeline stages.
  */
+@Deprecated("Legacy engine, migrate to engine-haxe")
 enum class UnicodePunctuationLineBreakClass {
     BreakAfter,
     BreakBoth,
@@ -27,6 +28,7 @@ enum class UnicodePunctuationLineBreakClass {
  * Unicode 17.0.0 punctuation properties used by the layout layer to preserve
  * the tailorable UAX #14 punctuation boundaries independently of font choice.
  */
+@Deprecated("Legacy engine, migrate to engine-haxe")
 object UnicodePunctuationLineBreak {
     const val DATA_REVISION: String = "17.0.0"
     const val DATA_SOURCE: String = "https://www.unicode.org/Public/17.0.0/ucd/LineBreak.txt"

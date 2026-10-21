@@ -1,10 +1,12 @@
 package org.tiqian.protocol
 
+@Deprecated("Legacy engine, migrate to engine-haxe")
 data class PlanEmphasisRange(
     var start: Int,
     var end: Int
 )
 
+@Deprecated("Legacy engine, migrate to engine-haxe")
 fun compare(a: PlanEmphasisRange, b: PlanEmphasisRange): Int {
     if (a === b) return 0
     var cmp = 0
@@ -15,12 +17,14 @@ fun compare(a: PlanEmphasisRange, b: PlanEmphasisRange): Int {
     return 0
 }
 
+@Deprecated("Legacy engine, migrate to engine-haxe")
 data class PlanInlineEdge(
     var offset: Int,
     var inlineStart: Float?,
     var inlineEnd: Float?
 )
 
+@Deprecated("Legacy engine, migrate to engine-haxe")
 data class PlanRuby(
     var baseRangeStart: Int,
     var baseRangeEnd: Int,
@@ -33,6 +37,7 @@ data class PlanRuby(
     var ascent: Float?
 )
 
+@Deprecated("Legacy engine, migrate to engine-haxe")
 data class PlanBopomofo(
     var baseRangeStart: Int,
     var baseRangeEnd: Int,
@@ -42,6 +47,7 @@ data class PlanBopomofo(
     var placements: MutableList<PlanBopomofoPlacement>
 )
 
+@Deprecated("Legacy engine, migrate to engine-haxe")
 data class PlanBopomofoPlacement(
     var text: String,
     var role: String,
@@ -51,6 +57,7 @@ data class PlanBopomofoPlacement(
     var height: Float
 )
 
+@Deprecated("Legacy engine, migrate to engine-haxe")
 data class PlanDecorationSegment(
     var kind: String,
     var left: Float,
@@ -60,6 +67,7 @@ data class PlanDecorationSegment(
     var sourceRangeEnd: Int
 )
 
+@Deprecated("Legacy engine, migrate to engine-haxe")
 data class PlanEmphasisDot(
     var clusterRangeStart: Float?,
     var anchorX: Float,
@@ -67,6 +75,7 @@ data class PlanEmphasisDot(
     var dotDiameter: Float
 )
 
+@Deprecated("Legacy engine, migrate to engine-haxe")
 data class PlanLine(
     var rangeStart: Int,
     var rangeEnd: Int,
@@ -80,6 +89,7 @@ data class PlanLine(
     var cells: MutableList<PlanCell>
 )
 
+@Deprecated("Legacy engine, migrate to engine-haxe")
 data class PlanCell(
     var rangeStart: Int,
     var rangeEnd: Int,
@@ -104,6 +114,7 @@ data class PlanCell(
     var styleDelta: PlanStyleDelta?
 )
 
+@Deprecated("Legacy engine, migrate to engine-haxe")
 data class Plan(
     var width: Float,
     var height: Float,

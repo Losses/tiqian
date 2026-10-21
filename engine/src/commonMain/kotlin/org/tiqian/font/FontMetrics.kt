@@ -1,5 +1,6 @@
 package org.tiqian.font
 
+@Deprecated("Legacy engine, migrate to engine-haxe")
 data class FontMetricsRequest(
     val fontKey: String,
     val fontSize: Float,
@@ -23,10 +24,12 @@ data class FontMetricsRequest(
     val faceSelectionText: String = "",
 )
 
+@Deprecated("Legacy engine, migrate to engine-haxe")
 interface FontMetricsResolver {
     fun resolve(request: FontMetricsRequest): RawFontMetrics
 }
 
+@Deprecated("Legacy engine, migrate to engine-haxe")
 class StubFontMetricsResolver : FontMetricsResolver {
     override fun resolve(request: FontMetricsRequest): RawFontMetrics =
         when (request.role) {
@@ -63,15 +66,18 @@ class StubFontMetricsResolver : FontMetricsResolver {
         }
 }
 
+@Deprecated("Legacy engine, migrate to engine-haxe")
 data class FontMetricsNormalizationInput(
     val request: FontMetricsRequest,
     val rawMetrics: RawFontMetrics,
 )
 
+@Deprecated("Legacy engine, migrate to engine-haxe")
 interface FontMetricsNormalizer {
     fun normalize(input: FontMetricsNormalizationInput): LayoutFontMetrics
 }
 
+@Deprecated("Legacy engine, migrate to engine-haxe")
 class ScriptAwareFontMetricsNormalizer : FontMetricsNormalizer {
     override fun normalize(input: FontMetricsNormalizationInput): LayoutFontMetrics {
         val request = input.request
@@ -130,6 +136,7 @@ class ScriptAwareFontMetricsNormalizer : FontMetricsNormalizer {
     }
 }
 
+@Deprecated("Legacy engine, migrate to engine-haxe")
 enum class BaselineClass {
     Roman,
     IdeographicCentered,
@@ -138,6 +145,7 @@ enum class BaselineClass {
     Hanging,
 }
 
+@Deprecated("Legacy engine, migrate to engine-haxe")
 enum class MetricBox {
     RawFontBox,
     IdeographicEmBox,
@@ -145,6 +153,7 @@ enum class MetricBox {
     SampledInkBox,
 }
 
+@Deprecated("Legacy engine, migrate to engine-haxe")
 enum class FontMetricSource {
     RawTables,
     OpenTypeBase,

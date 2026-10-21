@@ -1,5 +1,6 @@
 package org.tiqian.core
 
+@Deprecated("Legacy engine, migrate to engine-haxe")
 data class Rect(val left: Float, val top: Float, val right: Float, val bottom: Float) {
     val width: Float get() = get_width()
     val height: Float get() = get_height()

@@ -39,6 +39,7 @@ import org.tiqian.shaping.backend.tiqian_font_backend_vtable_t
  * lane builds from its shaping callbacks, so the engine sees identical
  * evidence on both sides of the snapshot boundary.
  */
+@Deprecated("Legacy engine, migrate to engine-haxe")
 class NativeFontBackendTextShaper(
     private val sessionId: String,
 ) : TextShaper {
@@ -118,6 +119,7 @@ class NativeFontBackendTextShaper(
     }
 }
 
+@Deprecated("Legacy engine, migrate to engine-haxe")
 class NativeFontBackendFontMetricsResolver(
     private val sessionId: String,
 ) : FontMetricsResolver {

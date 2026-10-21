@@ -1,5 +1,6 @@
 package org.tiqian.core
 
+@Deprecated("Legacy engine, migrate to engine-haxe")
 class LayoutConstraints(val maxWidth: Float, val maxHeight: Float = Float.POSITIVE_INFINITY, val maxLines: Int = 2147483647) {
     init {
         if ((!(this.maxWidth > 0.0f))) {
