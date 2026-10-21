@@ -31,7 +31,6 @@ pub mod plan_packed;
 pub mod policy;
 pub mod precompute_html;
 pub mod precomputer;
-pub mod prepared_dom;
 pub mod renderer;
 pub mod replay;
 pub mod schema;

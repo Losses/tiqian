@@ -365,18 +365,6 @@ pub fn absorb_snapshot_tables(mut cx: FunctionContext) -> JsResult<JsNumber> {
     }
 }
 
-/// `absorbSnapshotTablesMetadata(handle, metadataJson)`: absorbs the
-/// table-scoped render metadata of one build.
-pub fn absorb_snapshot_tables_metadata(mut cx: FunctionContext) -> JsResult<JsUndefined> {
-    let handle = cx.argument::<JsString>(0)?.value(&mut cx);
-    let metadata = json_argument(&mut cx, 1, "metadata")?;
-    match registry::with_snapshot_tables(&handle, |tables| tables.absorb_metadata(&metadata)) {
-        Ok(Ok(())) => Ok(cx.undefined()),
-        Ok(Err(error)) => cx.throw_error(error.0),
-        Err(error) => cx.throw_error(error),
-    }
-}
-
 /// `finalizeSnapshotTables(handle)`: freezes the rows and returns
 /// `{bytes, sha256}`; hosts serve the binary bytes verbatim under the sha
 /// address.
