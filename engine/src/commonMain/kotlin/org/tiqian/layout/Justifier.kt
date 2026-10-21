@@ -53,6 +53,7 @@ import org.tiqian.font.FontRole
  * closed. Collapsed line-edge spaces stay collapsed, and atomic long marks (dash / ellipsis) still
  * keep both neighbours closed.
  */
+@Deprecated("Legacy engine, migrate to engine-haxe")
 class Justifier(
     /**
      * CLREQ 拉伸第①档：「每个西文词距最大可以拉伸到半个汉字字宽」——the
@@ -735,6 +736,7 @@ private fun EastAsianSpacingValue.isWideNarrowPairWith(other: EastAsianSpacingVa
     (this == EastAsianSpacingValue.Wide && other == EastAsianSpacingValue.Narrow) ||
         (this == EastAsianSpacingValue.Narrow && other == EastAsianSpacingValue.Wide)
 
+@Deprecated("Legacy engine, migrate to engine-haxe")
 data class JustificationOpportunity(
     val targetClusterIndex: Int,
     val kind: GlueKind,
@@ -743,6 +745,7 @@ data class JustificationOpportunity(
     val reason: String? = null,
 )
 
+@Deprecated("Legacy engine, migrate to engine-haxe")
 data class JustificationAllocation(
     val targetClusterIndex: Int,
     val kind: GlueKind,
@@ -751,6 +754,7 @@ data class JustificationAllocation(
     val reason: String,
 )
 
+@Deprecated("Legacy engine, migrate to engine-haxe")
 data class JustificationPlan(
     val lineClusterRange: IntRange,
     val allocations: List<JustificationAllocation>,
@@ -765,6 +769,7 @@ data class JustificationPlan(
  * (CLREQ §6.2.2.3). [unfilledSurplus] > 0 means even full compression could not
  * absorb the overflow — the caller (`LineAdjustmentStrategy`) must then 推出.
  */
+@Deprecated("Legacy engine, migrate to engine-haxe")
 data class CompressionPlan(
     val allocations: List<PushInAllocation>,
     val surplusBefore: Float,

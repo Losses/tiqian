@@ -9,6 +9,7 @@ package org.tiqian.linebreak
  * This is the shared bundled-patterns hyphenator for platforms where Tiqian
  * needs deterministic, enumerable English hyphenation opportunities.
  */
+@Deprecated("Legacy engine, migrate to engine-haxe")
 object EnglishHyphenation {
     val enUs: Hyphenator by lazy {
         val tex = loadBundledEnglishHyphenationPatterns()

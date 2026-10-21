@@ -13,8 +13,10 @@ impl NumberSymbolCohesion {
     let __count = u_string::unit_count(&text);
         let mut result: Vec<IntRange> = vec![];
         let mut i = 0u32;
+        let __units1 = u_string::units(&text);
+        let __count1 = u_string::unit_count(&text);
         while (i32::from_ne_bytes(((i) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((__count) as i32).to_ne_bytes())) {
-            if !UnicodeNumberData::unicode_number_data_contains(*(u_string::unit_at_from(&__units, i)).as_ref().unwrap()) {
+            if !UnicodeNumberData::unicode_number_data_contains(*(u_string::unit_at_from(&__units1, i)).as_ref().unwrap()) {
                 i = u32::wrapping_add(i, 1);
                 continue;
             }

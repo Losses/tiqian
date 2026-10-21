@@ -187,7 +187,7 @@ Some(__option) => AsciiPointMarkKinsokuTestSupport::ascii_point_mark_kinsoku_tes
 
     pub fn ascii_point_mark_kinsoku_test_support_has_repair(r: LayoutResult, s: &UStr) -> bool {
         for i in 0..match u32::try_from((r.debug).clone().line_decisions.len()) { Ok(value) => value, Err(_) => u32::MAX } {
-            if matches!(((r.debug).clone().line_decisions[usize::try_from(i).unwrap_or(0)]).clone().repair.as_ref(), Some(__v) if __v == &(s.to_ustring())) {
+            if r.debug.clone().line_decisions[usize::try_from(i).unwrap_or(0)].clone().repair.as_ref().map_or(false, |v| v == &(s.to_ustring())) {
                 return true;
             }
         }

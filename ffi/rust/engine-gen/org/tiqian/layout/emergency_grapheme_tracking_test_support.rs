@@ -302,7 +302,7 @@ impl EmergencyGraphemeTrackingTestSupport {
     pub fn emergency_grapheme_tracking_test_support_break_offsets_for_tier(decisions: &[BreakOpportunityDecisionInfo], tier: &UStr) -> Vec<u32> {
         let mut result: Vec<u32> = vec![];
         for i in 0..match u32::try_from(decisions.len()) { Ok(value) => value, Err(_) => u32::MAX } {
-            if matches!(((decisions[usize::try_from(i).unwrap_or(0)]).clone().tier).clone().as_ref(), Some(__v) if __v == &(tier.to_ustring())) {
+            if decisions[usize::try_from(i).unwrap_or(0)].clone().tier.clone().as_ref().map_or(false, |v| v == &(tier.to_ustring())) {
                 for j in 0..match u32::try_from(((decisions[usize::try_from(i).unwrap_or(0)]).clone().break_offsets).clone().len()) { Ok(value) => value, Err(_) => u32::MAX } {
                     result.push((decisions[usize::try_from(i).unwrap_or(0)]).clone().break_offsets[usize::try_from(j).unwrap_or(0)]);
                 }

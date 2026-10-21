@@ -19,10 +19,12 @@ import org.tiqian.shaping.TextShaper
 
 internal const val MANDATORY_BREAK_FONT_KEY = "mandatory-break"
 
+@Deprecated("Legacy engine, migrate to engine-haxe")
 interface ParagraphLayoutEngine {
     fun layout(input: LayoutInput): LayoutResult
 }
 
+@Deprecated("Legacy engine, migrate to engine-haxe")
 class ExplainableStubParagraphLayoutEngine(
     internal val fontRoleClassifier: FontRoleClassifier = CjkFontRoleClassifier(),
     internal val fallbackResolver: FallbackResolver = PreferCjkForAmbiguousPunctuationResolver(),

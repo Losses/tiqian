@@ -2075,7 +2075,7 @@ fn unmatched_glyph_counts_record_the_ambiguous_fallback() {
     (PunctuationGeometryStageCoverageSupport::punctuation_geometry_stage_coverage_support_g(3, 8 as f64, None, None).unwrap()).clone(),
 ]).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_equals_int(2, u32::try_from((a.len()) & 0xFFFF_FFFF).unwrap_or(0), None).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_true(matches!((a[0usize]).clone().ink_bounds_fallback.as_ref(), Some(__v) if __v == &(UString::from("glyph-cluster-mapping-ambiguous").to_ustring())) && matches!((a[1usize]).clone().ink_bounds_fallback.as_ref(), Some(__v) if __v == &(UString::from("glyph-cluster-mapping-ambiguous").to_ustring())), None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_true((a[0usize]).clone().ink_bounds_fallback.as_ref().map_or(false, |v| v == &(UString::from("glyph-cluster-mapping-ambiguous").to_ustring())) && (a[1usize]).clone().ink_bounds_fallback.as_ref().map_or(false, |v| v == &(UString::from("glyph-cluster-mapping-ambiguous").to_ustring())), None).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_true((a[0usize]).clone().ink_bounds.is_none() && (a[1usize]).clone().ink_bounds.is_none(), None).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_equals_float(16 as f64, a[0usize].advance, None).unwrap();
     });

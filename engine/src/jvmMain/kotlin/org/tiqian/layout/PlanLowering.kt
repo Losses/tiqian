@@ -24,6 +24,7 @@ import org.tiqian.protocol.PlanLine
 import org.tiqian.protocol.PlanRuby
 import org.tiqian.protocol.PlanStyleDelta
 
+@Deprecated("Legacy engine, migrate to engine-haxe")
 object PlanLowering {
     private fun f32(v: Float): Float {
         return v

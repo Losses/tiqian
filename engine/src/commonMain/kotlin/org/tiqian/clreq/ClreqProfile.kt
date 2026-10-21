@@ -3,12 +3,14 @@ package org.tiqian.clreq
 import org.tiqian.core.BuiltInLayoutProfiles
 import org.tiqian.core.LayoutProfileId
 
+@Deprecated("Legacy engine, migrate to engine-haxe")
 enum class ClreqStrictness {
     Loose,
     Normal,
     Strict,
 }
 
+@Deprecated("Legacy engine, migrate to engine-haxe")
 data class ClreqProfile(
     val id: String,
     val strictness: ClreqStrictness,
@@ -57,6 +59,7 @@ data class ClreqProfile(
     }
 }
 
+@Deprecated("Legacy engine, migrate to engine-haxe")
 enum class ClreqRegion {
     Mainland,
     Taiwan,
@@ -85,6 +88,7 @@ enum class ClreqRegion {
  * to translate the glyph into the position the profile asks for; the
  * additive glue model continues to derive its directions from here.
  */
+@Deprecated("Legacy engine, migrate to engine-haxe")
 enum class PunctuationGluePlacement {
     /** Mainland / Simplified convention. */
     MainlandSimplified,
@@ -103,12 +107,14 @@ enum class PunctuationGluePlacement {
 }
 
 /** Where the glue sits relative to the body for a given punctuation class. */
+@Deprecated("Legacy engine, migrate to engine-haxe")
 enum class GlueSide {
     LeadingOnly,
     TrailingOnly,
     BothSides,
 }
 
+@Deprecated("Legacy engine, migrate to engine-haxe")
 fun PunctuationGluePlacement.glueSideFor(punctuationClass: PunctuationClass): GlueSide =
     when (this) {
         PunctuationGluePlacement.MainlandSimplified -> when (punctuationClass) {
@@ -157,6 +163,7 @@ fun PunctuationGluePlacement.glueSideFor(punctuationClass: PunctuationClass): Gl
  * [Default] is 1/8–1/3 and the literal reading lives in [Clreq]. The engine
  * threads this pair into the Justifier; nothing else re-declares the numbers.
  */
+@Deprecated("Legacy engine, migrate to engine-haxe")
 data class AutoSpacePolicy(
     val cjkLatin: AutoSpaceMode = AutoSpaceMode.Insert,
     val cjkDigit: AutoSpaceMode = AutoSpaceMode.Insert,
@@ -182,6 +189,7 @@ data class AutoSpacePolicy(
  * 行内调整（挤压/拉伸）的风格开关。CLREQ 的调整程序是默认侧；每个开关都
  * 对应原文点名的「部分排版风格」变体。
  */
+@Deprecated("Legacy engine, migrate to engine-haxe")
 data class AdjustmentStylePolicy(
     /**
      * 严格风格（默认）：行尾标点无条件削成半宽（`LineEndHalfWidthPunctuation`）。
@@ -213,6 +221,7 @@ data class AdjustmentStylePolicy(
  * 行尾越界那一字落在本行还是下一行的取舍——压缩(推入)与拉伸(推出)的方向选择。
  * 压缩/拉伸的「档内分配」始终按 §6.2.2.3/§6.2.2.4 的 tier 顺序，本枚举只决定**方向**。
  */
+@Deprecated("Legacy engine, migrate to engine-haxe")
 enum class LineAdjustmentStrategy {
     /** 先推入：压得动就把越界字挤进来（CLREQ「先挤进」的字面顺序），压不动才推出。默认。 */
     PushInFirst,
@@ -224,6 +233,7 @@ enum class LineAdjustmentStrategy {
     PushOutOnly,
 }
 
+@Deprecated("Legacy engine, migrate to engine-haxe")
 enum class LineEndPunctuationStyle {
     ForceHalfWidth,
     AllowFullWidth,
@@ -239,6 +249,7 @@ enum class LineEndPunctuationStyle {
  * - [GbStyle]（GB 法）——在基本处理上追加：分隔号也不得居行尾。
  * - [Strict]（严格处理）——在 GB 法上追加：破折号、省略号不得居行首。
  */
+@Deprecated("Legacy engine, migrate to engine-haxe")
 enum class KinsokuLevel {
     None,
     Basic,
@@ -257,17 +268,20 @@ enum class KinsokuLevel {
  * - [gbFixedSeparators] GB 式固定半宽：连接号、间隔号、分隔号固定半字、
  *   不可调整（CLREQ「不可调整的标点……固定半个字宽」）。
  */
+@Deprecated("Legacy engine, migrate to engine-haxe")
 data class PunctuationWidthPolicy(
     val interior: InteriorPunctuationStyle = InteriorPunctuationStyle.FullWidth,
     val gbFixedSeparators: Boolean = false,
 )
 
+@Deprecated("Legacy engine, migrate to engine-haxe")
 enum class InteriorPunctuationStyle {
     FullWidth,
     Kaiming,
 }
 
 /** Resolved kinsoku level + hanging style for a given measure. */
+@Deprecated("Legacy engine, migrate to engine-haxe")
 data class ResolvedKinsoku(
     val level: KinsokuLevel,
     val hanging: HangingPunctuationStyle,
@@ -288,6 +302,7 @@ data class ResolvedKinsoku(
  * 注：CLREQ 主张「一份文档内禁则级别应统一」；自适应是面向响应式/移动端
  * 重排（measure 随容器变）的现代扩展，决策记入 dump。
  */
+@Deprecated("Legacy engine, migrate to engine-haxe")
 sealed interface KinsokuMode {
     fun resolve(measureEm: Float): ResolvedKinsoku
 
@@ -322,6 +337,7 @@ sealed interface KinsokuMode {
     }
 }
 
+@Deprecated("Legacy engine, migrate to engine-haxe")
 enum class HangingPunctuationStyle {
     /** 不悬挂（默认）：行尾点号走挤进/推出修复链。 */
     Disabled,
@@ -337,6 +353,7 @@ enum class HangingPunctuationStyle {
  * CLREQ:「原则上，汉字与西文字母、数字间使用不多于四分之一个汉字宽的字距
  * 或空白。」The gap exists whether or not the author typed U+0020.
  */
+@Deprecated("Legacy engine, migrate to engine-haxe")
 enum class AutoSpaceMode {
     Disabled,
 
@@ -356,10 +373,12 @@ enum class AutoSpaceMode {
     Insert,
 }
 
+@Deprecated("Legacy engine, migrate to engine-haxe")
 fun interface ClreqProfileResolver {
     fun resolve(profileId: LayoutProfileId): ClreqProfile
 }
 
+@Deprecated("Legacy engine, migrate to engine-haxe")
 object BuiltInClreqProfileResolver : ClreqProfileResolver {
     override fun resolve(profileId: LayoutProfileId): ClreqProfile =
         when (profileId.value) {
@@ -371,12 +390,14 @@ object BuiltInClreqProfileResolver : ClreqProfileResolver {
         }
 }
 
+@Deprecated("Legacy engine, migrate to engine-haxe")
 enum class CjkPunctuationGlyphPolicy {
     PreserveInput,
     PreferClreqRecommendedCodepoints,
     ForceClreqRecommendedCodepoints,
 }
 
+@Deprecated("Legacy engine, migrate to engine-haxe")
 enum class PunctuationClass {
     Opening,
     Closing,
@@ -390,6 +411,7 @@ enum class PunctuationClass {
     Other,
 }
 
+@Deprecated("Legacy engine, migrate to engine-haxe")
 data class PunctuationPolicy(
     val punctuationClass: PunctuationClass,
     val allowAtLineStart: Boolean,
@@ -398,6 +420,7 @@ data class PunctuationPolicy(
     val defaultAdvanceEm: Float = 1f,
 )
 
+@Deprecated("Legacy engine, migrate to engine-haxe")
 object ClreqPunctuationPolicies {
     /**
      * `AsciiPointMark`: unambiguous Western point marks. They keep their Latin
@@ -536,6 +559,7 @@ object ClreqPunctuationPolicies {
         }
 }
 
+@Deprecated("Legacy engine, migrate to engine-haxe")
 object ClreqPunctuationAdvancePolicy {
     fun advanceEm(sourceText: String, displayText: String): Float =
         when {
@@ -568,12 +592,14 @@ object ClreqPunctuationAdvancePolicy {
         if (this > 0xFFFF) 2 else 1
 }
 
+@Deprecated("Legacy engine, migrate to engine-haxe")
 data class CjkPunctuationGlyphSubstitution(
     val sourceText: String,
     val displayText: String,
     val reason: String,
 )
 
+@Deprecated("Legacy engine, migrate to engine-haxe")
 class ClreqPunctuationGlyphSubstitutor(
     private val policy: CjkPunctuationGlyphPolicy = CjkPunctuationGlyphPolicy.PreferClreqRecommendedCodepoints,
 ) {

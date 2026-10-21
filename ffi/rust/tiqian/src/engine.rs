@@ -113,7 +113,7 @@ fn named(fault: ParagraphLayoutEngineLayoutWithRejectedTechnicalTiersFault) -> N
         ParagraphLayoutEngineLayoutWithRejectedTechnicalTiersFault::TextRangeErrorFault(error) => {
             error.to_string()
         }
-        other => format!("{other:?}"),
+        other => other.to_string(),
     };
     NamedError(text)
 }

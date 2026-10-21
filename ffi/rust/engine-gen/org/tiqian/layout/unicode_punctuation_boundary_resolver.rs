@@ -42,9 +42,9 @@ impl SignificantCodePoint {
 }
 
 pub fn compare_significant_code_point(a: &SignificantCodePoint, b: &SignificantCodePoint) -> i32 {
-    let cmp_offset = match i32::from_ne_bytes((*(&a.offset)).to_ne_bytes()).cmp(&i32::from_ne_bytes((*(&b.offset)).to_ne_bytes())) { core::cmp::Ordering::Less => -1, core::cmp::Ordering::Equal => 0, core::cmp::Ordering::Greater => 1 };
+    let cmp_offset = if a.offset < b.offset { -1 } else if a.offset > b.offset { 1 } else { 0 };
     if cmp_offset != 0 { return cmp_offset; }
-    let cmp_code_point = match i32::from_ne_bytes((*(&a.code_point)).to_ne_bytes()).cmp(&i32::from_ne_bytes((*(&b.code_point)).to_ne_bytes())) { core::cmp::Ordering::Less => -1, core::cmp::Ordering::Equal => 0, core::cmp::Ordering::Greater => 1 };
+    let cmp_code_point = if a.code_point < b.code_point { -1 } else if a.code_point > b.code_point { 1 } else { 0 };
     if cmp_code_point != 0 { return cmp_code_point; }
     0
 }

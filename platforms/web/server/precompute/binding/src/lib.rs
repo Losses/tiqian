@@ -41,10 +41,14 @@ fn main(mut cx: ModuleContext) -> NeonResult<()> {
         precompute_calls::prepare_font_contracts,
     )?;
     cx.export_function("closePrecomputer", precompute_calls::close_precomputer)?;
-    cx.export_function("createHtmlPreparer", precompute_calls::create_html_preparer)?;
-    cx.export_function("prepareHtml", precompute_calls::prepare_html)?;
-    cx.export_function("closeHtmlPreparer", precompute_calls::close_html_preparer)?;
-    cx.export_function("htmlPreparerInfo", precompute_calls::html_preparer_info)?;
+    cx.export_function(
+        "renderSnapshotBundleData",
+        precompute_calls::render_snapshot_bundle_data,
+    )?;
+    cx.export_function(
+        "renderFontContractBundleData",
+        precompute_calls::render_font_contract_bundle_data,
+    )?;
     cx.export_function(
         "assembleSnapshotBundle",
         precompute_calls::assemble_snapshot_bundle,
@@ -76,22 +80,6 @@ fn main(mut cx: ModuleContext) -> NeonResult<()> {
     cx.export_function(
         "closeSnapshotTables",
         precompute_calls::close_snapshot_tables,
-    )?;
-    cx.export_function(
-        "findHtmlOpeningTags",
-        precompute_calls::find_html_opening_tags,
-    )?;
-    cx.export_function(
-        "injectHtmlAttributes",
-        precompute_calls::inject_html_attributes,
-    )?;
-    cx.export_function(
-        "snapshotServerAssets",
-        precompute_calls::snapshot_server_assets,
-    )?;
-    cx.export_function(
-        "renderSnapshotServerAssets",
-        precompute_calls::render_snapshot_server_assets,
     )?;
     cx.export_function(
         "parseBuildFontStylesheet",

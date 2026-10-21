@@ -23,11 +23,11 @@ impl ColorSpan {
 }
 
 pub fn compare_color_span(a: &ColorSpan, b: &ColorSpan) -> i32 {
-    let cmp_start = match i32::from_ne_bytes((*(&a.start)).to_ne_bytes()).cmp(&i32::from_ne_bytes((*(&b.start)).to_ne_bytes())) { core::cmp::Ordering::Less => -1, core::cmp::Ordering::Equal => 0, core::cmp::Ordering::Greater => 1 };
+    let cmp_start = if a.start < b.start { -1 } else if a.start > b.start { 1 } else { 0 };
     if cmp_start != 0 { return cmp_start; }
-    let cmp_end = match i32::from_ne_bytes((*(&a.end)).to_ne_bytes()).cmp(&i32::from_ne_bytes((*(&b.end)).to_ne_bytes())) { core::cmp::Ordering::Less => -1, core::cmp::Ordering::Equal => 0, core::cmp::Ordering::Greater => 1 };
+    let cmp_end = if a.end < b.end { -1 } else if a.end > b.end { 1 } else { 0 };
     if cmp_end != 0 { return cmp_end; }
-    let cmp_argb = match i32::from_ne_bytes((*(&a.argb)).to_ne_bytes()).cmp(&i32::from_ne_bytes((*(&b.argb)).to_ne_bytes())) { core::cmp::Ordering::Less => -1, core::cmp::Ordering::Equal => 0, core::cmp::Ordering::Greater => 1 };
+    let cmp_argb = if a.argb < b.argb { -1 } else if a.argb > b.argb { 1 } else { 0 };
     if cmp_argb != 0 { return cmp_argb; }
     0
 }

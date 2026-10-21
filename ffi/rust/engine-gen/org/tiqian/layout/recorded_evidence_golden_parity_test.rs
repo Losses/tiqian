@@ -134,7 +134,7 @@ fn recorded_evidence_layout_matches_golden() {
                     continue;
                 }
                 let dump = LayoutDumpFormat::layout_dump_format_layout_fixture_dump((fixture).clone(), Some({ let __shared_handle: Arc<Mutex<dyn ITextShaper>> = shaper.clone(); __shared_handle }), Some(Box::new((metrics).clone()))).unwrap();
-                if !(matches!(golden.as_ref(), Some(__v) if __v == &(dump.clone()))) {
+                if !(golden.as_ref().map_or(false, |v| v == &(dump.clone()))) {
                     failures.push(LayoutDumpFormat::layout_dump_format_layout_dump_diff_message((fixture.id).to_ustring().as_ustr(), (golden).as_deref().unwrap_or(UStr::new(&[])), dump.as_ustr()));
                 }
             }

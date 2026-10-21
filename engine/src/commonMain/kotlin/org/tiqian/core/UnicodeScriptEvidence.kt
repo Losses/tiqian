@@ -5,12 +5,14 @@ package org.tiqian.core
  * Common, Inherited, and unassigned scalars are neutral: punctuation, spaces,
  * and ASCII digits do not get to decide the language of surrounding marks.
  */
+@Deprecated("Legacy engine, migrate to engine-haxe")
 enum class UnicodeScriptEvidence {
     Neutral,
     EastAsian,
     Other,
 }
 
+@Deprecated("Legacy engine, migrate to engine-haxe")
 object UnicodeScriptEvidenceClassifier {
     const val DATA_REVISION: String = "17.0.0"
     const val DATA_SOURCE: String =

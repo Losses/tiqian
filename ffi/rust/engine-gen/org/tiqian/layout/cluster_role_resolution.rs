@@ -81,7 +81,7 @@ impl ClusterRoleResolution {
             let count = if i32::from_ne_bytes(((cp) as i32).to_ne_bytes()) > (65535) { 2 } else { 1 };
             let start = index;
             if ClusterRoleResolution::cluster_role_resolution_is_mandatory(text, index, cp) {
-                let end = if cp == 13 && (i32::from_ne_bytes(((u32::wrapping_add(index, 1)) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((__count) as i32).to_ne_bytes())) && matches!(u_string::unit_at_from(&__units, u32::wrapping_add(index, 1)).as_ref(), Some(__v) if __v == &(10)) { u32::wrapping_add(index, 2) } else { u32::wrapping_add(index, count) };
+                let end = if cp == 13 && (i32::from_ne_bytes(((u32::wrapping_add(index, 1)) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((__count) as i32).to_ne_bytes())) && u_string::unit_at_from(&__units, u32::wrapping_add(index, 1)).as_ref().map_or(false, |v| v == &(10)) { u32::wrapping_add(index, 2) } else { u32::wrapping_add(index, count) };
                 out.push(ResolvedClusterRange::new(TextRange::new(start, end)?, FontRole::Unknown, Some(true), Some(false), None));
                 index = end;
                 continue;
@@ -195,7 +195,7 @@ impl ClusterRoleResolution {
     }
 
     pub(crate) fn cluster_role_resolution_is_mandatory(t: &UStr, i: u32, c: u32) -> bool {
-        return LineBreakFns::line_break_fns_is_mandatory_break_code_point(c) && !(c == 10 && (i32::from_ne_bytes(((i) as i32).to_ne_bytes())) > (0) && matches!(u_string::unit_at(&t, u32::wrapping_sub(i, 1)).as_ref(), Some(__v) if __v == &(13)));
+        return LineBreakFns::line_break_fns_is_mandatory_break_code_point(c) && !(c == 10 && (i32::from_ne_bytes(((i) as i32).to_ne_bytes())) > (0) && u_string::unit_at(&t, u32::wrapping_sub(i, 1)).as_ref().map_or(false, |v| v == &(13)));
     }
 
     pub(crate) fn cluster_role_resolution_contains(a: &[u32], v: u32) -> bool {

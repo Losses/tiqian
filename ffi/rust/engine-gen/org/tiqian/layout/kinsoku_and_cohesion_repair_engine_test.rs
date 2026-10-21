@@ -1221,7 +1221,7 @@ fn hanging_punctuation_fills_line_to_measure_and_overflows_visual() {
         let _ = TracedAssertions::traced_assertions_assert_true(none_overflow, None).unwrap();
         let mut none_hang = true;
         for i in 0..match u32::try_from((plain.debug).clone().line_decisions.len()) { Ok(value) => value, Err(_) => u32::MAX } {
-            if matches!(((plain.debug).clone().line_decisions[usize::try_from(i).unwrap_or(0)]).clone().repair.as_ref(), Some(__v) if __v == &(UString::from("Hang").to_ustring())) {
+            if plain.debug.clone().line_decisions[usize::try_from(i).unwrap_or(0)].clone().repair.as_ref().map_or(false, |v| v == &(UString::from("Hang").to_ustring())) {
                 none_hang = false;
             }
         }
@@ -1451,7 +1451,7 @@ fn line_end_kinsoku_moves_dangling_opener_to_next_line() {
         }
         let mut any_carry_next = false;
         for i in 0..match u32::try_from((result.debug).clone().line_decisions.len()) { Ok(value) => value, Err(_) => u32::MAX } {
-            if matches!(((result.debug).clone().line_decisions[usize::try_from(i).unwrap_or(0)]).clone().repair.as_ref(), Some(__v) if __v == &(UString::from("CarryNext").to_ustring())) {
+            if result.debug.clone().line_decisions[usize::try_from(i).unwrap_or(0)].clone().repair.as_ref().map_or(false, |v| v == &(UString::from("CarryNext").to_ustring())) {
                 any_carry_next = true;
             }
         }

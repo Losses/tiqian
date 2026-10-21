@@ -550,8 +550,10 @@ impl JustifierFields {
             return false;
         }
         let mut i = 0u32;
+        let __units2 = u_string::units(&s);
+        let __count2 = u_string::unit_count(&s);
         while (i32::from_ne_bytes(((i) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((__count1) as i32).to_ne_bytes())) {
-            if u_string::char_at_from(&__units1, i) != UString::from(" ") {
+            if u_string::char_at_from(&__units2, i) != UString::from(" ") {
                 return false;
             }
             i = u32::wrapping_add(i, 1);

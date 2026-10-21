@@ -1,5 +1,6 @@
 package org.tiqian.protocol
 
+@Deprecated("Legacy engine, migrate to engine-haxe")
 object Revision {
     const val SNAPSHOT_SCHEMA: Int = 1
     const val SNAPSHOT_TABLES_SCHEMA: Int = 2

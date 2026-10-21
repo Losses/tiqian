@@ -1,5 +1,6 @@
 package org.tiqian.core
 
+@Deprecated("Legacy engine, migrate to engine-haxe")
 data class Cluster(
     val range: TextRange,
     val text: String,
@@ -25,6 +26,7 @@ data class Cluster(
     val glyphInlineShift: Float = 0f,
 )
 
+@Deprecated("Legacy engine, migrate to engine-haxe")
 data class GlyphRun(
     val range: TextRange,
     val fontKey: String,
@@ -38,6 +40,7 @@ data class GlyphRun(
     val openTypeFeatures: List<String> = emptyList(),
 )
 
+@Deprecated("Legacy engine, migrate to engine-haxe")
 data class Glyph(
     val id: UInt,
     val clusterRange: TextRange,
@@ -82,6 +85,7 @@ data class Glyph(
     val haltPlacementX: Float? = null,
 )
 
+@Deprecated("Legacy engine, migrate to engine-haxe")
 data class LineBox(
     val range: TextRange,
     /**
@@ -130,17 +134,20 @@ data class LineBox(
     val debug: LineDebugInfo = LineDebugInfo(),
 )
 
+@Deprecated("Legacy engine, migrate to engine-haxe")
 enum class LineEndReason {
     AutoWrap,
     MandatoryBreak,
     ParagraphEnd,
 }
 
+@Deprecated("Legacy engine, migrate to engine-haxe")
 data class LineDebugInfo(
     val repair: String? = null,
     val notes: List<String> = emptyList(),
 )
 
+@Deprecated("Legacy engine, migrate to engine-haxe")
 data class LayoutResult(
     val input: LayoutInput,
     val size: Size,
@@ -150,6 +157,7 @@ data class LayoutResult(
     val debug: LayoutDebugInfo = LayoutDebugInfo(),
 )
 
+@Deprecated("Legacy engine, migrate to engine-haxe")
 data class LayoutDebugInfo(
     val fontDecisions: List<FontDecisionInfo> = emptyList(),
     val shapingDecisions: List<ShapingDecisionInfo> = emptyList(),
@@ -188,6 +196,7 @@ data class LayoutDebugInfo(
  * otherwise indivisible shaping segment. Offsets are absolute UTF-16 source
  * offsets; no source character or synthetic glyph is inserted.
  */
+@Deprecated("Legacy engine, migrate to engine-haxe")
 data class BreakOpportunityDecisionInfo(
     val range: TextRange,
     val sourceText: String,
@@ -202,12 +211,14 @@ data class BreakOpportunityDecisionInfo(
  * deficit through grapheme-safe tracking. Ordinary Western prose is absent
  * from this list and therefore never becomes tracking-eligible by default.
  */
+@Deprecated("Legacy engine, migrate to engine-haxe")
 data class EmergencyTrackingEligibilityDecisionInfo(
     val range: TextRange,
     val sourceText: String,
     val reason: String,
 )
 
+@Deprecated("Legacy engine, migrate to engine-haxe")
 data class InlineBoxDecisionInfo(
     val range: TextRange,
     val inlineStart: Float,
@@ -218,6 +229,7 @@ data class InlineBoxDecisionInfo(
     val reason: String = "InlineBoxBoundaryAdvance",
 )
 
+@Deprecated("Legacy engine, migrate to engine-haxe")
 data class InlineObjectDecisionInfo(
     val range: TextRange,
     val advance: Float,
@@ -244,6 +256,7 @@ data class InlineObjectDecisionInfo(
     val reason: String = "MeasurableOpaqueInlineObject",
 )
 
+@Deprecated("Legacy engine, migrate to engine-haxe")
 data class ZeroWidthBreakDecisionInfo(
     val range: TextRange,
     val sourceText: String,
@@ -251,6 +264,7 @@ data class ZeroWidthBreakDecisionInfo(
     val reason: String = "ZeroWidthSpaceSoftBreakNoShape",
 )
 
+@Deprecated("Legacy engine, migrate to engine-haxe")
 data class MandatoryBreakDecisionInfo(
     val range: TextRange,
     val sourceText: String,
@@ -263,6 +277,7 @@ data class MandatoryBreakDecisionInfo(
  * lines, still visible in `lineDecisions`), but the result emits only the first
  * [visibleLines] line boxes per `LayoutConstraints.maxLines`.
  */
+@Deprecated("Legacy engine, migrate to engine-haxe")
 data class MaxLinesDecisionInfo(
     val laidOutLines: Int,
     val visibleLines: Int,
@@ -274,6 +289,7 @@ data class MaxLinesDecisionInfo(
  * 字数自适应，< [thresholdEm] 字缩窄）或 "Explicit"（`firstLineIndent`
  * 显式覆盖）；[resolvedEm] 是最终缩进字数。
  */
+@Deprecated("Legacy engine, migrate to engine-haxe")
 data class FirstLineIndentDecisionInfo(
     val source: String,
     val measureEm: Float,
@@ -288,6 +304,7 @@ data class FirstLineIndentDecisionInfo(
  * the whole body within the container ([bodyOffset] by [bodyAlignment]).
  * `enabled = false` records the bypass (measure == container, offset 0).
  */
+@Deprecated("Legacy engine, migrate to engine-haxe")
 data class LineLengthGridDecisionInfo(
     val enabled: Boolean,
     val containerWidth: Float,
@@ -304,6 +321,7 @@ data class LineLengthGridDecisionInfo(
  * Which kinsoku level + hanging style the paragraph resolved to, and why
  * (`MeasureAdaptiveKinsoku` keys on the measure in 字; `Fixed` pins it).
  */
+@Deprecated("Legacy engine, migrate to engine-haxe")
 data class KinsokuDecisionInfo(
     val measureEm: Float,
     val level: String,
@@ -320,6 +338,7 @@ data class KinsokuDecisionInfo(
  * natural proportional advance while Chinese context still makes it a
  * line-start nonstarter.
  */
+@Deprecated("Legacy engine, migrate to engine-haxe")
 data class ContextualKinsokuDecisionInfo(
     val range: TextRange,
     val sourceText: String,
@@ -337,6 +356,7 @@ data class ContextualKinsokuDecisionInfo(
  * collapsed so the mark is visually attached. Every boundary in [protectedRange] is also closed to
  * line breaking and justification.
  */
+@Deprecated("Legacy engine, migrate to engine-haxe")
 data class InlineObjectPunctuationAttachmentDecisionInfo(
     val objectRange: TextRange,
     val separatorRange: TextRange,
@@ -356,6 +376,7 @@ data class InlineObjectPunctuationAttachmentDecisionInfo(
  * (CLREQ's 双面装 5/8 floor is print-only — show-through has no screen analogue —
  * and returns with a print backend.)
  */
+@Deprecated("Legacy engine, migrate to engine-haxe")
 data class LineSpacingDecisionInfo(
     val naturalHeight: Float,
     val requestedLineHeight: Float?,
@@ -370,6 +391,7 @@ data class LineSpacingDecisionInfo(
  * Only [lineExtras] beyond that space change line boxes, following [mode].
  * [expandedLineIndices] is empty when the existing line height fits.
  */
+@Deprecated("Legacy engine, migrate to engine-haxe")
 data class RubyLineHeightDecisionInfo(
     val mode: String,
     val baseLineHeight: Float,
@@ -390,6 +412,7 @@ data class RubyLineHeightDecisionInfo(
  * paragraph-top containment); [boundaryShiftsAfter] records redistribution of already available
  * space between adjacent line boxes and therefore does not change baseline distance.
  */
+@Deprecated("Legacy engine, migrate to engine-haxe")
 data class InlineObjectLineHeightDecisionInfo(
     val baseLineHeight: Float,
     val baseFaceAscent: Float,
@@ -416,6 +439,7 @@ data class InlineObjectLineHeightDecisionInfo(
  * [overhang] > 0 means the 注文 is wider than the base content and overhangs
  * each side before minimum-gap avoidance is applied.
  */
+@Deprecated("Legacy engine, migrate to engine-haxe")
 data class RubyDecisionInfo(
     val baseRange: TextRange,
     val text: String,
@@ -445,6 +469,7 @@ data class RubyDecisionInfo(
  * (absolute px) + role. Symbols use the 9×9 slot size; ordinary tone marks use the
  * 5×5 slot size without glyph-ink-dependent rescaling.
  */
+@Deprecated("Legacy engine, migrate to engine-haxe")
 data class BopomofoDecisionInfo(
     val baseRange: TextRange,
     val text: String,
@@ -458,6 +483,7 @@ data class BopomofoDecisionInfo(
     val locale: String = "zh-Hans",
 )
 
+@Deprecated("Legacy engine, migrate to engine-haxe")
 data class BopomofoGlyphPlacement(
     val text: String,
     val left: Float,
@@ -472,6 +498,7 @@ data class BopomofoGlyphPlacement(
     val fontSize: Float = height,
 )
 
+@Deprecated("Legacy engine, migrate to engine-haxe")
 enum class BopomofoGlyphRole {
     /** ㄅㄆㄇ — fill the 9×9 box at the box font size (字身框). */
     Symbol,
@@ -494,6 +521,7 @@ enum class BopomofoGlyphRole {
  * `openStart`/`openEnd` mark segments that continue from/onto another line —
  * renderers leave that frame edge undrawn.
  */
+@Deprecated("Legacy engine, migrate to engine-haxe")
 data class DecorationSegmentInfo(
     val sourceRange: TextRange,
     val kind: String,
@@ -513,6 +541,7 @@ data class DecorationSegmentInfo(
  * in layout canvas coordinates; skipped clusters record why (CLREQ:
  * punctuation never carries a dot; western text uses italics instead).
  */
+@Deprecated("Legacy engine, migrate to engine-haxe")
 data class DecorationDecisionInfo(
     val clusterRange: TextRange,
     val sourceText: String,
@@ -529,6 +558,7 @@ data class DecorationDecisionInfo(
     val dotDiameter: Float = 0f,
 )
 
+@Deprecated("Legacy engine, migrate to engine-haxe")
 data class LineEdgeTrimDecisionInfo(
     val lineRange: TextRange,
     val clusterRange: TextRange,
@@ -539,6 +569,7 @@ data class LineEdgeTrimDecisionInfo(
     val reason: String,
 )
 
+@Deprecated("Legacy engine, migrate to engine-haxe")
 data class AutoSpaceDecisionInfo(
     val clusterRange: TextRange,
     val side: String,
@@ -550,6 +581,7 @@ data class AutoSpaceDecisionInfo(
     val reason: String,
 )
 
+@Deprecated("Legacy engine, migrate to engine-haxe")
 data class FontDecisionInfo(
     val range: TextRange,
     val sourceText: String,
@@ -560,6 +592,7 @@ data class FontDecisionInfo(
     val substitutionReason: String,
 )
 
+@Deprecated("Legacy engine, migrate to engine-haxe")
 data class ShapingDecisionInfo(
     val range: TextRange,
     val sourceText: String,
@@ -596,6 +629,7 @@ data class ShapingDecisionInfo(
     val capabilityIssue: String? = null,
 )
 
+@Deprecated("Legacy engine, migrate to engine-haxe")
 data class MetricDecisionInfo(
     val range: TextRange,
     val sourceText: String,
@@ -613,6 +647,7 @@ data class MetricDecisionInfo(
     val reason: String,
 )
 
+@Deprecated("Legacy engine, migrate to engine-haxe")
 data class PunctuationDecisionInfo(
     val range: TextRange,
     val char: Char,
@@ -657,6 +692,7 @@ data class PunctuationDecisionInfo(
     val trailingGlueInitiallyConsumed: Float = 0f,
 )
 
+@Deprecated("Legacy engine, migrate to engine-haxe")
 data class ClusterGeometryDecisionInfo(
     val range: TextRange,
     val sourceText: String,
@@ -683,6 +719,7 @@ data class ClusterGeometryDecisionInfo(
     val reason: String,
 )
 
+@Deprecated("Legacy engine, migrate to engine-haxe")
 data class SpacingDecisionInfo(
     val range: TextRange,
     val leftChar: Char,
@@ -694,6 +731,7 @@ data class SpacingDecisionInfo(
     val reason: String,
 )
 
+@Deprecated("Legacy engine, migrate to engine-haxe")
 data class RoleOverrideInfo(
     val range: TextRange,
     val sourceText: String,
@@ -703,6 +741,7 @@ data class RoleOverrideInfo(
     val reason: String,
 )
 
+@Deprecated("Legacy engine, migrate to engine-haxe")
 data class LineDecisionInfo(
     val range: TextRange,
     val kind: String,
@@ -713,6 +752,7 @@ data class LineDecisionInfo(
     val notes: List<String> = emptyList(),
 )
 
+@Deprecated("Legacy engine, migrate to engine-haxe")
 data class LineRepairDecisionInfo(
     val kind: String,
     val reasonCode: String,
@@ -731,12 +771,14 @@ data class LineRepairDecisionInfo(
     val pushInAllocations: List<LineRepairAllocationInfo> = emptyList(),
 )
 
+@Deprecated("Legacy engine, migrate to engine-haxe")
 data class LineRepairAllocationInfo(
     val clusterRange: TextRange,
     val shrink: Float,
     val availableCapacity: Float,
 )
 
+@Deprecated("Legacy engine, migrate to engine-haxe")
 data class LineRepairCandidateInfo(
     val kind: String,
     val reasonCode: String,
@@ -751,6 +793,7 @@ data class LineRepairCandidateInfo(
     val availableCapacity: Float = 0f,
 )
 
+@Deprecated("Legacy engine, migrate to engine-haxe")
 data class JustificationDecisionInfo(
     val lineRange: TextRange,
     val deficitBefore: Float,
@@ -758,6 +801,7 @@ data class JustificationDecisionInfo(
     val allocations: List<JustificationAllocationInfo>,
 )
 
+@Deprecated("Legacy engine, migrate to engine-haxe")
 data class JustificationAllocationInfo(
     val clusterRange: TextRange,
     val kind: String,

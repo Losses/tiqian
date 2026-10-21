@@ -4287,7 +4287,7 @@ impl EnglishHyphenationPatterns {
         while (i32::from_ne_bytes(((index) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((TEX_UNITS.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
             if let Some(&unit) = output.last() {
                 if unit >= 55296 && unit <= 56319 && !(if TEX_UNITS[usize::try_from(index).unwrap_or(0)] > 0xFFFF { u_string::from_units(&[0xD800 + (((TEX_UNITS[usize::try_from(index).unwrap_or(0)]) - 0x10000) >> 10) as u16, 0xDC00 + (((TEX_UNITS[usize::try_from(index).unwrap_or(0)]) - 0x10000) & 0x3FF) as u16]) } else { u_string::from_units(&[(TEX_UNITS[usize::try_from(index).unwrap_or(0)]) as u16]) }).is_empty() {
-                    if !match (if TEX_UNITS[usize::try_from(index).unwrap_or(0)] > 0xFFFF { u_string::from_units(&[0xD800 + (((TEX_UNITS[usize::try_from(index).unwrap_or(0)]) - 0x10000) >> 10) as u16, 0xDC00 + (((TEX_UNITS[usize::try_from(index).unwrap_or(0)]) - 0x10000) & 0x3FF) as u16]) } else { u_string::from_units(&[(TEX_UNITS[usize::try_from(index).unwrap_or(0)]) as u16]) }).encode_utf16().next() { Some(head) => head >= 56320 && head <= 57343, None => false } {
+                    if !(if TEX_UNITS[usize::try_from(index).unwrap_or(0)] > 0xFFFF { u_string::from_units(&[0xD800 + (((TEX_UNITS[usize::try_from(index).unwrap_or(0)]) - 0x10000) >> 10) as u16, 0xDC00 + (((TEX_UNITS[usize::try_from(index).unwrap_or(0)]) - 0x10000) & 0x3FF) as u16]) } else { u_string::from_units(&[(TEX_UNITS[usize::try_from(index).unwrap_or(0)]) as u16]) }).encode_utf16().next().map_or(false, |head| head >= 56320 && head <= 57343) {
                         return Err(UStringFault::UnpairedSurrogate { unit: u32::from(unit) });
                     }
                 }

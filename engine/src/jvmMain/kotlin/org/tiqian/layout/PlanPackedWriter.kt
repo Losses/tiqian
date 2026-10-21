@@ -13,5 +13,6 @@ import org.tiqian.core.LayoutResult
  * generated writer goes through the boring runtime shims, which target the
  * JVM at pin ede5476f.
  */
+@Deprecated("Legacy engine, migrate to engine-haxe")
 fun LayoutResult.toPackedPlanBytes(): ByteArray =
     PreparedParagraphFns.toPackedPlanBytes(this)

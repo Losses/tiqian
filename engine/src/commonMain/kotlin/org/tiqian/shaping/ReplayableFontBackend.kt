@@ -11,6 +11,7 @@ import kotlin.jvm.JvmInline
  * it through the same catalog that supplied shaping and metrics.
  */
 @JvmInline
+@Deprecated("Legacy engine, migrate to engine-haxe")
 value class FontFaceId(val value: String) {
     init {
         require(value.isNotBlank()) { "FontFaceId must not be blank" }
@@ -19,6 +20,7 @@ value class FontFaceId(val value: String) {
     override fun toString(): String = value
 }
 
+@Deprecated("Legacy engine, migrate to engine-haxe")
 data class ReplayableFontFaceDescriptor(
     val id: FontFaceId,
     val familyAliases: Set<String>,
@@ -30,6 +32,7 @@ data class ReplayableFontFaceDescriptor(
     val variationAxes: Map<String, Float> = emptyMap(),
 )
 
+@Deprecated("Legacy engine, migrate to engine-haxe")
 data class ReplayableFontFaceRequest(
     val role: FontRole,
     val preferredFamilies: List<String>,
@@ -47,11 +50,13 @@ data class ReplayableFontFaceRequest(
 }
 
 /** A named loss of evidence or coverage. Reports inform hosts; they never route to another renderer. */
+@Deprecated("Legacy engine, migrate to engine-haxe")
 data class FontBackendCapabilityIssue(
     val code: String,
     val detail: String,
 )
 
+@Deprecated("Legacy engine, migrate to engine-haxe")
 data class FontBackendCapabilityReport(
     val backend: String,
     val sourceKind: String,
@@ -67,6 +72,7 @@ data class FontBackendCapabilityReport(
  * Concrete catalogs may own files, byte arrays, assets or public system-font
  * handles, but callers only observe stable face descriptors.
  */
+@Deprecated("Legacy engine, migrate to engine-haxe")
 interface ReplayableFontCatalog {
     val faces: List<ReplayableFontFaceDescriptor>
     val capabilityReport: FontBackendCapabilityReport

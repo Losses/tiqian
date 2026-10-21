@@ -259,8 +259,10 @@ impl ExplainableStubTextShaper {
         if i32::from_ne_bytes(((__count) as i32).to_ne_bytes()) > (0) {
             let mut all_spaces = true;
             let mut i = 0u32;
+            let __units1 = u_string::units(&source);
+            let __count1 = u_string::unit_count(&source);
             while (i32::from_ne_bytes(((i) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((__count) as i32).to_ne_bytes())) {
-                if !(matches!(u_string::unit_at_from(&__units, i).as_ref(), Some(__v) if __v == &(32))) {
+                if !(u_string::unit_at_from(&__units1, i).as_ref().map_or(false, |v| v == &(32))) {
                     all_spaces = false;
                 }
                 i = u32::wrapping_add(i, 1);
@@ -279,8 +281,10 @@ impl ExplainableStubTextShaper {
     let __count2 = u_string::unit_count(&value);
         let mut count = 0u32;
         let mut index = 0u32;
+        let __units3 = u_string::units(&value);
+        let __count3 = u_string::unit_count(&value);
         while (i32::from_ne_bytes(((index) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((__count2) as i32).to_ne_bytes())) {
-            let code = u_string::unit_at_from(&__units2, index).unwrap_or(0);
+            let code = u_string::unit_at_from(&__units3, index).unwrap_or(0);
             if i32::from_ne_bytes(((code) as i32).to_ne_bytes()) >= 55296 && (i32::from_ne_bytes(((code) as i32).to_ne_bytes())) <= 56319 && (i32::from_ne_bytes(((u32::wrapping_add(index, 1)) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((__count2) as i32).to_ne_bytes())) {
                 let next = u_string::unit_at_from(&__units2, u32::wrapping_add(index, 1)).unwrap_or(0);
                 if i32::from_ne_bytes(((next) as i32).to_ne_bytes()) >= 56320 && (i32::from_ne_bytes(((next) as i32).to_ne_bytes())) <= 57343 {

@@ -156,7 +156,7 @@ impl RichTextRole for Link {
 }
 
 pub fn compare_link(a: &Link, b: &Link) -> i32 {
-    let cmp_target = SortedTable::sorted_table_compare_strings((&a.target).as_ustr(), (&b.target).as_ustr());
+    let cmp_target = SortedTable::sorted_table_compare_strings(a.target.as_ustr(), b.target.as_ustr());
     if cmp_target != 0 { return cmp_target; }
     0
 }

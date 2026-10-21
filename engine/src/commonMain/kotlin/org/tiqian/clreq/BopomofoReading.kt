@@ -4,6 +4,7 @@ package org.tiqian.clreq
  * 注音 声调 (ADR 0033). The author writes only the reading string; the engine
  * derives the tone — manual tone tagging would be a disaster.
  */
+@Deprecated("Legacy engine, migrate to engine-haxe")
 enum class BopomofoTone {
     /** 阴平 (1声) — no mark drawn, but reserves the same调号 space as the others. */
     Yinping,
@@ -25,6 +26,7 @@ enum class BopomofoTone {
 }
 
 /** A parsed 注音 reading: 1–3 ㄅㄆㄇ symbols + the tone (ADR 0033). */
+@Deprecated("Legacy engine, migrate to engine-haxe")
 data class BopomofoReading(
     val symbols: List<String>,
     val tone: BopomofoTone,
@@ -39,6 +41,7 @@ data class BopomofoReading(
  * Each remaining char (U+3105–U+312F bopomofo) is one symbol — readings carry ≤3.
  * 入声 (方音) is not parsed in v1 (Mandarin 注音 has none).
  */
+@Deprecated("Legacy engine, migrate to engine-haxe")
 object BopomofoParser {
     private const val NEUTRAL = '˙' // ˙ 轻声
     private const val YANGPING = 'ˊ' // ˊ

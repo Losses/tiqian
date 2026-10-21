@@ -30,23 +30,22 @@ impl BreakOpportunity {
     }
 }
 
-fn break_opportunity_order_0(v: &BreakKind) -> i32 {
+fn break_opportunity_kind_order(v: &BreakKind) -> i32 {
     match v {
-        BreakKind::Allowed => 0,
-        BreakKind::Forbidden => 1,
         BreakKind::Required => 2,
         BreakKind::Problematic => 3,
+        BreakKind::Forbidden => 1,
+        BreakKind::Allowed => 0,
     }
 }
-
 pub fn compare_break_opportunity(a: &BreakOpportunity, b: &BreakOpportunity) -> i32 {
-    let cmp_index = match i32::from_ne_bytes((*(&a.index)).to_ne_bytes()).cmp(&i32::from_ne_bytes((*(&b.index)).to_ne_bytes())) { core::cmp::Ordering::Less => -1, core::cmp::Ordering::Equal => 0, core::cmp::Ordering::Greater => 1 };
+    let cmp_index = if a.index < b.index { -1 } else if a.index > b.index { 1 } else { 0 };
     if cmp_index != 0 { return cmp_index; }
-    let cmp_kind = match break_opportunity_order_0(&a.kind).cmp(&break_opportunity_order_0(&b.kind)) { core::cmp::Ordering::Less => -1, core::cmp::Ordering::Equal => 0, core::cmp::Ordering::Greater => 1 };
+    let cmp_kind = match break_opportunity_kind_order(&a.kind).cmp(&break_opportunity_kind_order(&b.kind)) { core::cmp::Ordering::Less => -1, core::cmp::Ordering::Equal => 0, core::cmp::Ordering::Greater => 1 };
     if cmp_kind != 0 { return cmp_kind; }
-    let cmp_penalty = match i32::from_ne_bytes((*(&a.penalty)).to_ne_bytes()).cmp(&i32::from_ne_bytes((*(&b.penalty)).to_ne_bytes())) { core::cmp::Ordering::Less => -1, core::cmp::Ordering::Equal => 0, core::cmp::Ordering::Greater => 1 };
+    let cmp_penalty = if a.penalty < b.penalty { -1 } else if a.penalty > b.penalty { 1 } else { 0 };
     if cmp_penalty != 0 { return cmp_penalty; }
-    let cmp_reason = SortedTable::sorted_table_compare_strings((&a.reason).as_ustr(), (&b.reason).as_ustr());
+    let cmp_reason = SortedTable::sorted_table_compare_strings(a.reason.as_ustr(), b.reason.as_ustr());
     if cmp_reason != 0 { return cmp_reason; }
     0
 }
@@ -73,7 +72,7 @@ impl ForbiddenBreak {
 pub fn compare_forbidden_break(a: &ForbiddenBreak, b: &ForbiddenBreak) -> i32 {
     let cmp_range = compare_text_range(&a.range, &b.range);
     if cmp_range != 0 { return cmp_range; }
-    let cmp_reason = SortedTable::sorted_table_compare_strings((&a.reason).as_ustr(), (&b.reason).as_ustr());
+    let cmp_reason = SortedTable::sorted_table_compare_strings(a.reason.as_ustr(), b.reason.as_ustr());
     if cmp_reason != 0 { return cmp_reason; }
     0
 }

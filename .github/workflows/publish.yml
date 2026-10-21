@@ -66,7 +66,11 @@ jobs:
           echo "$cmake_bin_dir" >> "$GITHUB_PATH"
           "$cmake_bin_dir/cmake" --version
 
-      - name: Verify platform-independent tests and release artifacts
+      # :engine vendors the boring-generated Kotlin from engine-haxe (the sole
+      # active source); :engine:allTests verifies the exact artifacts this
+      # workflow publishes. Haxe-source regeneration (gates.sh) belongs to the
+      # development CI, not the Maven release.
+      - name: Verify the boring-generated engine and release artifacts
         run: |
           ./gradlew \
             :engine:allTests \

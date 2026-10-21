@@ -288,7 +288,7 @@ impl ParagraphShapingStage {
         if __count == 0 {
             return false;
         }
-        for i in 0..__count {
+        for i in 0..match u32::try_from(u_string::unit_count(&(s))) { Ok(value) => value, Err(_) => u32::MAX } {
             let c = u_string::unit_at_from(&__units, i).unwrap_or(0);
             if i32::from_ne_bytes(((c) as i32).to_ne_bytes()) < (48) || (i32::from_ne_bytes(((c) as i32).to_ne_bytes())) > (57) {
                 return false;
@@ -339,11 +339,11 @@ impl ParagraphShapingStage {
     }
 
     pub fn paragraph_shaping_stage_cjk_punctuation_full_width_features(role: FontRole, display_text: &UStr) -> Vec<UString> {
-    let __units2 = u_string::units(&display_text);
-    let __count2 = u_string::unit_count(&display_text);
+    let __units1 = u_string::units(&display_text);
+    let __count1 = u_string::unit_count(&display_text);
         if role == FontRole::CjkPunctuation {
-            for i in 0..__count2 {
-                let c = u_string::unit_at_from(&__units2, i).unwrap_or(0);
+            for i in 0..match u32::try_from(u_string::unit_count(&(display_text))) { Ok(value) => value, Err(_) => u32::MAX } {
+                let c = u_string::unit_at_from(&__units1, i).unwrap_or(0);
                 if ParagraphShapingStage::paragraph_shaping_stage_is_shared_curly_quote(c) {
                     return vec![UString::from("fwid=1").to_ustring()];
                 }
@@ -358,18 +358,20 @@ impl ParagraphShapingStage {
     }
 
     pub fn paragraph_shaping_stage_has_domain_like_dot(token: &UStr) -> bool {
-    let __units4 = u_string::units(&token);
-    let __count4 = u_string::unit_count(&token);
-        for i in 0..__count4 {
-            if !(matches!(u_string::unit_at_from(&__units4, i).as_ref(), Some(__v) if __v == &(46))) || i == 0 || (i32::from_ne_bytes(((u32::wrapping_add(i, 2)) as i32).to_ne_bytes())) >= i32::from_ne_bytes(((__count4) as i32).to_ne_bytes()) {
+    let __units2 = u_string::units(&token);
+    let __count2 = u_string::unit_count(&token);
+        for i in 0..match u32::try_from(u_string::unit_count(&(token))) { Ok(value) => value, Err(_) => u32::MAX } {
+            if !(u_string::unit_at_from(&__units2, i).as_ref().map_or(false, |v| v == &(46))) || i == 0 || (i32::from_ne_bytes(((u32::wrapping_add(i, 2)) as i32).to_ne_bytes())) >= i32::from_ne_bytes(((__count2) as i32).to_ne_bytes()) {
                 continue;
             }
-            if !ParagraphShapingStage::paragraph_shaping_stage_is_letter_or_digit(*(u_string::unit_at_from(&__units4, u32::wrapping_sub(i, 1))).as_ref().unwrap()) || !ParagraphShapingStage::paragraph_shaping_stage_is_letter_or_digit(*(u_string::unit_at_from(&__units4, u32::wrapping_add(i, 1))).as_ref().unwrap()) {
+            if !ParagraphShapingStage::paragraph_shaping_stage_is_letter_or_digit(*(u_string::unit_at_from(&__units2, u32::wrapping_sub(i, 1))).as_ref().unwrap()) || !ParagraphShapingStage::paragraph_shaping_stage_is_letter_or_digit(*(u_string::unit_at_from(&__units2, u32::wrapping_add(i, 1))).as_ref().unwrap()) {
                 continue;
             }
             let mut tld = 0u32;
             let mut j = u32::wrapping_add(i, 1);
-            while (i32::from_ne_bytes(((j) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((__count4) as i32).to_ne_bytes())) && ParagraphShapingStage::paragraph_shaping_stage_is_letter(*(u_string::unit_at_from(&__units4, j)).as_ref().unwrap()) {
+            let __units3 = u_string::units(&token);
+            let __count3 = u_string::unit_count(&token);
+            while (i32::from_ne_bytes(((j) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((__count2) as i32).to_ne_bytes())) && ParagraphShapingStage::paragraph_shaping_stage_is_letter(*(u_string::unit_at_from(&__units2, j)).as_ref().unwrap()) {
                 tld = u32::wrapping_add(tld, 1);
                 j = u32::wrapping_add(j, 1);
             }
@@ -381,14 +383,14 @@ impl ParagraphShapingStage {
     }
 
     pub fn paragraph_shaping_stage_is_latin_token_break_after(token: &UStr, index: u32, keep_url_scheme: bool) -> bool {
-    let __units7 = u_string::units(&token);
-    let __count7 = u_string::unit_count(&token);
-        if index > 2147483647 || (i32::from_ne_bytes(((index) as i32).to_ne_bytes())) >= i32::from_ne_bytes(((u32::wrapping_sub(__count7, 1)) as i32).to_ne_bytes()) {
+    let __units4 = u_string::units(&token);
+    let __count4 = u_string::unit_count(&token);
+        if index > 2147483647 || (i32::from_ne_bytes(((index) as i32).to_ne_bytes())) >= i32::from_ne_bytes(((u32::wrapping_sub(__count4, 1)) as i32).to_ne_bytes()) {
             return false;
         }
-        let c = u_string::unit_at_from(&__units7, index).unwrap_or(0);
+        let c = u_string::unit_at_from(&__units4, index).unwrap_or(0);
         if c == 47 {
-            return !keep_url_scheme || (index == 0 || !(matches!(u_string::unit_at_from(&__units7, u32::wrapping_sub(index, 1)).as_ref(), Some(__v) if __v == &(58))));
+            return !keep_url_scheme || (index == 0 || !(u_string::unit_at_from(&__units4, u32::wrapping_sub(index, 1)).as_ref().map_or(false, |v| v == &(58))));
         }
         if c == 46 || c == 45 || c == 95 || c == 63 || c == 38 || c == 61 || c == 35 || c == 37 || c == 126 {
             return true;
@@ -397,10 +399,10 @@ impl ParagraphShapingStage {
     }
 
     pub fn paragraph_shaping_stage_bibliographic_numeric_locator_break_offsets(token: &UStr) -> Vec<u32> {
-    let __units8 = u_string::units(&token);
-    let __count8 = u_string::unit_count(&token);
+    let __units5 = u_string::units(&token);
+    let __count5 = u_string::unit_count(&token);
         let open = u_string::find_from(&(token), UString::from("(").as_ustr(), 0);
-        if open <= 0 || !ParagraphShapingStage::paragraph_shaping_stage_is_digit(*(u_string::unit_at_from(&__units8, 0u32)).as_ref().unwrap()) {
+        if open <= 0 || !ParagraphShapingStage::paragraph_shaping_stage_is_digit(*(u_string::unit_at_from(&__units5, 0u32)).as_ref().unwrap()) {
             return vec![];
         }
         let close = u_string::find_from(&(token), UString::from(")").as_ustr(), i32::from_ne_bytes(((i32::wrapping_add(open, 1)) as i32).to_ne_bytes()));
@@ -408,7 +410,7 @@ impl ParagraphShapingStage {
             return vec![];
         }
         let colon = u_string::find_from(&(token), UString::from(":").as_ustr(), i32::from_ne_bytes(((i32::wrapping_add(close, 1)) as i32).to_ne_bytes()));
-        if colon != i32::wrapping_add(close, 1) || (colon) >= i32::wrapping_sub(i32::from_ne_bytes(((__count8) as i32).to_ne_bytes()), 1) {
+        if colon != i32::wrapping_add(close, 1) || (colon) >= i32::wrapping_sub(i32::from_ne_bytes(((__count5) as i32).to_ne_bytes()), 1) {
             return vec![];
         }
         let volume = u_string::substring(&token, 0i32, i32::from_ne_bytes(((open) as i32).to_ne_bytes()));
@@ -424,10 +426,8 @@ impl ParagraphShapingStage {
             return vec![];
         }
         let mut range_separator = -1i32;
-        let __units9 = u_string::units(&pages);
-        let __count9 = u_string::unit_count(&pages);
-        for i in 0..__count9 {
-            let c = u_string::unit_at_from(&__units9, i).unwrap_or(0);
+        for i in 0..match u32::try_from(u_string::unit_count(&(pages))) { Ok(value) => value, Err(_) => u32::MAX } {
+            let c = u_string::unit_at(&pages, i).unwrap_or(0);
             if c == 45 || c == 8211 || c == 8212 {
                 range_separator = i32::from_ne_bytes(((i) as i32).to_ne_bytes());
                 break;
@@ -444,10 +444,10 @@ impl ParagraphShapingStage {
     }
 
     pub fn paragraph_shaping_stage_has_breakable_latin_solidus(token: &UStr) -> bool {
-    let __units10 = u_string::units(&token);
-    let __count10 = u_string::unit_count(&token);
-        for i in 1..__count10.saturating_sub(1) {
-            if matches!(u_string::unit_at_from(&__units10, i).as_ref(), Some(__v) if __v == &(47)) && ParagraphShapingStage::paragraph_shaping_stage_is_letter_or_digit(*(u_string::unit_at_from(&__units10, u32::wrapping_sub(i, 1))).as_ref().unwrap()) && ParagraphShapingStage::paragraph_shaping_stage_is_letter_or_digit(*(u_string::unit_at_from(&__units10, u32::wrapping_add(i, 1))).as_ref().unwrap()) {
+    let __units6 = u_string::units(&token);
+    let __count6 = u_string::unit_count(&token);
+        for i in 1..__count6.saturating_sub(1) {
+            if u_string::unit_at_from(&__units6, i).as_ref().map_or(false, |v| v == &(47)) && ParagraphShapingStage::paragraph_shaping_stage_is_letter_or_digit(*(u_string::unit_at_from(&__units6, u32::wrapping_sub(i, 1))).as_ref().unwrap()) && ParagraphShapingStage::paragraph_shaping_stage_is_letter_or_digit(*(u_string::unit_at_from(&__units6, u32::wrapping_add(i, 1))).as_ref().unwrap()) {
                 return true;
             }
         }
@@ -457,10 +457,8 @@ impl ParagraphShapingStage {
     pub fn paragraph_shaping_stage_existing_hyphen_cuts(text: &UStr, word_range: TextRange) -> Vec<u32> {
         let w = u_string::substring(&text, i32::from_ne_bytes(((word_range.start) as i32).to_ne_bytes()), i32::from_ne_bytes(((word_range.end) as i32).to_ne_bytes()));
         let mut cuts: Vec<u32> = Vec::new();
-        let __units11 = u_string::units(&w);
-        let __count11 = u_string::unit_count(&w);
-        for i in 0..__count11 {
-            if !(matches!(u_string::unit_at_from(&__units11, i).as_ref(), Some(__v) if __v == &(45))) {
+        for i in 0..match u32::try_from(u_string::unit_count(&(w))) { Ok(value) => value, Err(_) => u32::MAX } {
+            if !(u_string::unit_at(&w, i).as_ref().map_or(false, |v| v == &(45))) {
                 continue;
             }
             let mut before = 0u32;
@@ -471,7 +469,9 @@ impl ParagraphShapingStage {
             }
             let mut after = 0u32;
             let mut k = u32::wrapping_add(i, 1);
-            while (i32::from_ne_bytes(((k) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((__count11) as i32).to_ne_bytes())) && ParagraphShapingStage::paragraph_shaping_stage_is_letter(*(u_string::unit_at_from(&__units11, k)).as_ref().unwrap()) {
+            let __units7 = u_string::units(&w);
+            let __count7 = u_string::unit_count(&w);
+            while (i32::from_ne_bytes(((k) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((__count7) as i32).to_ne_bytes())) && ParagraphShapingStage::paragraph_shaping_stage_is_letter(*(u_string::unit_at_from(&__units7, k)).as_ref().unwrap()) {
                 after = u32::wrapping_add(after, 1);
                 k = u32::wrapping_add(k, 1);
             }
@@ -485,10 +485,8 @@ impl ParagraphShapingStage {
     pub fn paragraph_shaping_stage_camel_case_cuts(text: &UStr, word_range: TextRange) -> Vec<u32> {
         let w = u_string::substring(&text, i32::from_ne_bytes(((word_range.start) as i32).to_ne_bytes()), i32::from_ne_bytes(((word_range.end) as i32).to_ne_bytes()));
         let mut humps: Vec<u32> = Vec::new();
-        let __units13 = u_string::units(&w);
-        let __count13 = u_string::unit_count(&w);
-        for i in 1..__count13 {
-            let c = u_string::unit_at_from(&__units13, i).unwrap_or(0);
+        for i in 1..match u32::try_from(u_string::unit_count(&(w))) { Ok(value) => value, Err(_) => u32::MAX } {
+            let c = u_string::unit_at(&w, i).unwrap_or(0);
             let prev = u_string::unit_at(&w, u32::wrapping_sub(i, 1)).unwrap_or(0);
             if ParagraphShapingStage::paragraph_shaping_stage_is_upper_case(c) && (ParagraphShapingStage::paragraph_shaping_stage_is_lower_case(prev) || ParagraphShapingStage::paragraph_shaping_stage_is_upper_case(prev) && (i32::from_ne_bytes(((u32::wrapping_add(i, 1)) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u_string::unit_count(&(w))) as i32).to_ne_bytes())) && ParagraphShapingStage::paragraph_shaping_stage_is_lower_case(*(u_string::unit_at(&w, u32::wrapping_add(i, 1))).as_ref().unwrap())) {
                 humps.push(i);
@@ -524,11 +522,9 @@ impl ParagraphShapingStage {
     pub fn paragraph_shaping_stage_alpha_numeric_transition_cuts(text: &UStr, word_range: TextRange) -> Vec<u32> {
         let w = u_string::substring(&text, i32::from_ne_bytes(((word_range.start) as i32).to_ne_bytes()), i32::from_ne_bytes(((word_range.end) as i32).to_ne_bytes()));
         let mut cuts: Vec<u32> = Vec::new();
-        let __units14 = u_string::units(&w);
-        let __count14 = u_string::unit_count(&w);
-        for index in 1..__count14 {
+        for index in 1..match u32::try_from(u_string::unit_count(&(w))) { Ok(value) => value, Err(_) => u32::MAX } {
             let left = u_string::unit_at(&w, u32::wrapping_sub(index, 1)).unwrap_or(0);
-            let right = u_string::unit_at_from(&__units14, index).unwrap_or(0);
+            let right = u_string::unit_at(&w, index).unwrap_or(0);
             if ParagraphShapingStage::paragraph_shaping_stage_is_letter(left) && ParagraphShapingStage::paragraph_shaping_stage_is_digit(right) || ParagraphShapingStage::paragraph_shaping_stage_is_digit(left) && ParagraphShapingStage::paragraph_shaping_stage_is_letter(right) {
                 cuts.push(u32::wrapping_add(word_range.start, index));
             }
@@ -537,21 +533,21 @@ impl ParagraphShapingStage {
     }
 
     pub fn paragraph_shaping_stage_strong_non_lexical_reason(w: &UStr) -> Option<UString> {
-    let __units15 = u_string::units(&w);
-    let __count15 = u_string::unit_count(&w);
-        if i32::from_ne_bytes(((__count15) as i32).to_ne_bytes()) < (12) {
+    let __units8 = u_string::units(&w);
+    let __count8 = u_string::unit_count(&w);
+        if i32::from_ne_bytes(((__count8) as i32).to_ne_bytes()) < (12) {
             return None;
         }
         let mut all_letters = true;
-        let first_char_lower = u_string::char_at_from(&__units15, 0u32).to_lowercase();
+        let first_char_lower = u_string::char_at_from(&__units8, 0u32).to_lowercase();
         let mut all_same_letter = true;
-        for i in 0..__count15 {
-            let c = u_string::unit_at_from(&__units15, i).unwrap_or(0);
+        for i in 0..match u32::try_from(u_string::unit_count(&(w))) { Ok(value) => value, Err(_) => u32::MAX } {
+            let c = u_string::unit_at_from(&__units8, i).unwrap_or(0);
             if !ParagraphShapingStage::paragraph_shaping_stage_is_letter(c) {
                 all_letters = false;
                 all_same_letter = false;
             } else {
-                if u_string::char_at_from(&__units15, i).to_lowercase() != first_char_lower {
+                if u_string::char_at_from(&__units8, i).to_lowercase() != first_char_lower {
                     all_same_letter = false;
                 }
             }
@@ -561,8 +557,8 @@ impl ParagraphShapingStage {
         }
         let mut any_letter = false;
         let mut all_hex_or_digit = true;
-        for i in 0..__count15 {
-            let c = u_string::unit_at_from(&__units15, i).unwrap_or(0);
+        for i in 0..match u32::try_from(u_string::unit_count(&(w))) { Ok(value) => value, Err(_) => u32::MAX } {
+            let c = u_string::unit_at_from(&__units8, i).unwrap_or(0);
             if ParagraphShapingStage::paragraph_shaping_stage_is_letter(c) {
                 any_letter = true;
             }
@@ -575,17 +571,17 @@ impl ParagraphShapingStage {
             return Some(UString::from("LongHexIdentityRun").to_ustring());
         }
         let mut any_digit = false;
-        for i in 0..__count15 {
-            if ParagraphShapingStage::paragraph_shaping_stage_is_digit(*(u_string::unit_at_from(&__units15, i)).as_ref().unwrap()) {
+        for i in 0..match u32::try_from(u_string::unit_count(&(w))) { Ok(value) => value, Err(_) => u32::MAX } {
+            if ParagraphShapingStage::paragraph_shaping_stage_is_digit(*(u_string::unit_at_from(&__units8, i)).as_ref().unwrap()) {
                 any_digit = true;
                 break;
             }
         }
         if any_letter && any_digit {
             let mut transitions = 0u32;
-            for i in 0..__count15.saturating_sub(1) {
-                let left = u_string::unit_at_from(&__units15, i).unwrap_or(0);
-                let right = u_string::unit_at_from(&__units15, u32::wrapping_add(i, 1)).unwrap_or(0);
+            for i in 0..__count8.saturating_sub(1) {
+                let left = u_string::unit_at_from(&__units8, i).unwrap_or(0);
+                let right = u_string::unit_at_from(&__units8, u32::wrapping_add(i, 1)).unwrap_or(0);
                 if ParagraphShapingStage::paragraph_shaping_stage_is_letter(left) && ParagraphShapingStage::paragraph_shaping_stage_is_digit(right) || ParagraphShapingStage::paragraph_shaping_stage_is_digit(left) && ParagraphShapingStage::paragraph_shaping_stage_is_letter(right) {
                     transitions = u32::wrapping_add(transitions, 1);
                 }
@@ -656,17 +652,17 @@ impl ParagraphShapingStage {
     }
 
     pub fn paragraph_shaping_stage_shaping_segments(decision: FontDecision, text: &UStr) -> Result<Vec<TextRange>, TextRangeError> {
-    let __units19 = u_string::units(&text);
-    let __count19 = u_string::unit_count(&text);
+    let __units9 = u_string::units(&text);
+    let __count9 = u_string::unit_count(&text);
         if decision.role != FontRole::LatinText {
             return Ok(vec![(decision.range).clone()]);
         }
         let mut segments: Vec<TextRange> = Vec::new();
         let mut seg_start = (decision.range).clone().start;
-        let mut in_space = matches!(u_string::unit_at_from(&__units19, (decision.range).clone().start).as_ref(), Some(__v) if __v == &(32));
+        let mut in_space = u_string::unit_at_from(&__units9, (decision.range).clone().start).as_ref().map_or(false, |v| v == &(32));
         let mut i = u32::wrapping_add((decision.range).clone().start, 1);
         while (i32::from_ne_bytes(((i) as i32).to_ne_bytes())) < (i32::from_ne_bytes((((decision.range).clone().end) as i32).to_ne_bytes())) {
-            let is_space = matches!(u_string::unit_at_from(&__units19, i).as_ref(), Some(__v) if __v == &(32));
+            let is_space = u_string::unit_at_from(&__units9, i).as_ref().map_or(false, |v| v == &(32));
             if is_space != in_space {
                 segments.push(TextRange::new(seg_start, i)?);
                 seg_start = i;
@@ -795,32 +791,31 @@ impl ParagraphShapingStage {
         let target_advance = 2.0f64 * segment_font_size;
         return ((ink).as_ref().unwrap().right - (ink).as_ref().unwrap().left) < (target_advance * 0.85f64);
 }) };
-        let shape_segment: Arc<dyn Fn(FontDecision, TextRange) -> Result<ShapingResult,
-ParagraphShapingStageShapeParagraphFault> + Send + Sync + 'static> = { let get_cached_segment_shaping = (get_cached_segment_shaping).clone(); let text = (text).to_ustring(); let punctuation_glyph_substitutor = (punctuation_glyph_substitutor).clone(); let style_at = (style_at).clone(); let emphasis_italic_at = (emphasis_italic_at).clone(); let engine = (engine).clone(); let dash_ink_coverage_deficient = (dash_ink_coverage_deficient).clone(); let put_substitution_rollback = (put_substitution_rollback).clone(); let put_cached_segment_shaping = (put_cached_segment_shaping).clone(); Arc::new(move |decision, segment_range| {
+        let shape_segment: Arc<dyn Fn(FontDecision, TextRange) -> ShapingResult + Send + Sync + 'static> = { let get_cached_segment_shaping = (get_cached_segment_shaping).clone(); let text = (text).to_ustring(); let punctuation_glyph_substitutor = (punctuation_glyph_substitutor).clone(); let style_at = (style_at).clone(); let emphasis_italic_at = (emphasis_italic_at).clone(); let engine = (engine).clone(); let dash_ink_coverage_deficient = (dash_ink_coverage_deficient).clone(); let put_substitution_rollback = (put_substitution_rollback).clone(); let put_cached_segment_shaping = (put_cached_segment_shaping).clone(); Arc::new(move |decision, segment_range| {
         let mut engine = (engine).clone();
         let cached = get_cached_segment_shaping((segment_range).clone());
         match &(cached) {
             Some(__option2) => {
-                return Ok((*__option2).clone());
+                return (*__option2).clone();
             }
             None => {
             }
         }
         let source_text = u_string::substring(&text.as_ustr(), i32::from_ne_bytes(((segment_range.start) as i32).to_ne_bytes()), i32::from_ne_bytes(((segment_range.end) as i32).to_ne_bytes()));
-        let substitution = ContextualPunctuationDisplaySubstitutionFns::contextual_punctuation_display_substitution_fns_substitute_for_role((punctuation_glyph_substitutor).clone(), source_text.as_ustr(), decision.role).map_err(|e| ParagraphShapingStageShapeParagraphFault::UStringFaultFault(e))?;
+        let substitution = ContextualPunctuationDisplaySubstitutionFns::contextual_punctuation_display_substitution_fns_substitute_for_role((punctuation_glyph_substitutor).clone(), source_text.as_ustr(), decision.role).unwrap();
         let base_segment_style = style_at(segment_range.start);
         let mut segment_style = (base_segment_style).clone();
         if decision.role == FontRole::LatinText && emphasis_italic_at(segment_range.start) {
             segment_style = TextStyle::new(Some(ParagraphShapingStage::paragraph_shaping_stage_copy_font_families(&base_segment_style.font_families)), Some(base_segment_style.font_size), Some((base_segment_style.locale).to_ustring()), Some(base_segment_style.font_weight), Some(true), Some(base_segment_style.baseline_shift), Some(base_segment_style.inline_attachment));
         }
-        let shaped = engine.text_shaper.lock().unwrap().shape(ShapingInput::new(text.as_ustr(), (segment_range).clone(), (segment_style).clone(), (decision).clone(), Some((substitution.display_text).to_ustring()), Some(ParagraphShapingStage::paragraph_shaping_stage_cjk_punctuation_full_width_features(decision.role, (substitution.display_text).to_ustring().as_ustr())))).map_err(|e| ParagraphShapingStageShapeParagraphFault::TextShaperShapeFaultFault(e))?;
+        let shaped = engine.text_shaper.lock().unwrap().shape(ShapingInput::new(text.as_ustr(), (segment_range).clone(), (segment_style).clone(), (decision).clone(), Some((substitution.display_text).to_ustring()), Some(ParagraphShapingStage::paragraph_shaping_stage_cjk_punctuation_full_width_features(decision.role, (substitution.display_text).to_ustring().as_ustr())))).unwrap();
         let mut rollback_cause: Option<UString> = None;
         if substitution.display_text.to_ustring() != source_text {
             let mut has_unverified = false;
             let mut has_missing = false;
             for i in 0..match u32::try_from(shaped.decisions.len()) { Ok(value) => value, Err(_) => u32::MAX } {
                 let d = (shaped.decisions[usize::try_from(i).unwrap_or(0)]).clone();
-                if matches!(d.capability_issue.as_ref(), Some(__v) if __v == &(TextShaper::TEXT_SHAPER_UNVERIFIED_DISPLAY_SUBSTITUTION_COVERAGE_ISSUE.to_ustring())) {
+                if d.capability_issue.as_ref().map_or(false, |v| v == &(TextShaper::TEXT_SHAPER_UNVERIFIED_DISPLAY_SUBSTITUTION_COVERAGE_ISSUE.to_ustring())) {
                     has_unverified = true;
                 }
                 if i32::from_ne_bytes(((d.missing_glyphs) as i32).to_ne_bytes()) > (0) {
@@ -843,34 +838,32 @@ ParagraphShapingStageShapeParagraphFault> + Send + Sync + 'static> = { let get_c
         match &(rollback_cause) {
             Some(__option3) => {
                 put_substitution_rollback((segment_range).clone(), __option3.as_ustr());
-                result = engine.text_shaper.lock().unwrap().shape(ShapingInput::new(text.as_ustr(), (segment_range).clone(), (segment_style).clone(), (decision).clone(), Some((source_text).to_ustring()), Some(ParagraphShapingStage::paragraph_shaping_stage_cjk_punctuation_full_width_features(decision.role, source_text.as_ustr())))).map_err(|e| ParagraphShapingStageShapeParagraphFault::TextShaperShapeFaultFault(e))?;
+                result = engine.text_shaper.lock().unwrap().shape(ShapingInput::new(text.as_ustr(), (segment_range).clone(), (segment_style).clone(), (decision).clone(), Some((source_text).to_ustring()), Some(ParagraphShapingStage::paragraph_shaping_stage_cjk_punctuation_full_width_features(decision.role, source_text.as_ustr())))).unwrap();
             }
             None => {
             }
         }
         put_cached_segment_shaping((segment_range).clone(), (result).clone());
-        return Ok(result);
+        return result;
 }) };
-        let shape_segment_with_point_mark_prefix: Arc<dyn Fn(FontDecision, TextRange) -> Result<Vec<ShapingResult>,
-ParagraphShapingStageShapeParagraphFault> + Send + Sync + 'static> = { let text = (text).to_ustring(); let shape_segment = (shape_segment).clone(); Arc::new(move |decision, segment_range| {
+        let shape_segment_with_point_mark_prefix: Arc<dyn Fn(FontDecision, TextRange) -> Vec<ShapingResult> + Send + Sync + 'static> = { let text = (text).to_ustring(); let shape_segment = (shape_segment).clone(); Arc::new(move |decision, segment_range| {
         let mut prefix_end = segment_range.start;
         while (i32::from_ne_bytes(((prefix_end) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((segment_range.end) as i32).to_ne_bytes())) && ClreqPunctuationPolicies::clreq_punctuation_policies_is_ascii_point_mark(u_string::substring(&text.as_ustr(), i32::from_ne_bytes(((prefix_end) as i32).to_ne_bytes()), i32::wrapping_add(i32::from_ne_bytes(((prefix_end) as i32).to_ne_bytes()), 1)).as_ustr()) {
             prefix_end = u32::wrapping_add(prefix_end, 1);
         }
         if i32::from_ne_bytes(((prefix_end) as i32).to_ne_bytes()) > (i32::from_ne_bytes(((segment_range.start) as i32).to_ne_bytes())) && (i32::from_ne_bytes(((prefix_end) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((segment_range.end) as i32).to_ne_bytes())) {
-            return Ok(vec![
-    (shape_segment((decision).clone(), TextRange::new(segment_range.start, prefix_end).map_err(|e| ParagraphShapingStageShapeParagraphFault::TextRangeErrorFault(e))?)?).clone(),
-    (shape_segment((decision).clone(), TextRange::new(prefix_end, segment_range.end).map_err(|e| ParagraphShapingStageShapeParagraphFault::TextRangeErrorFault(e))?)?).clone(),
-]);
+            return vec![
+    (shape_segment((decision).clone(), TextRange::new(segment_range.start, prefix_end).unwrap())).clone(),
+    (shape_segment((decision).clone(), TextRange::new(prefix_end, segment_range.end).unwrap())).clone(),
+];
         } else {
-            return Ok(vec![(shape_segment((decision).clone(), (segment_range).clone())?).clone()]);
+            return vec![(shape_segment((decision).clone(), (segment_range).clone())).clone()];
         }
-        unreachable!();
 }) };
         let mut hyphen_offsets: Vec<u32> = Vec::new();
         let mut hyphen_advance_or_null: Option<f64> = None;
         let mut hyphen_glyphs: Vec<Glyph> = Vec::new();
-        let latin_word_cuts: Arc<dyn Fn(FontDecision, TextRange, &Vec<u32>) -> Result<Vec<u32>, ParagraphShapingStageShapeParagraphFault> + Send + Sync + '_> = { let shape_segment = (shape_segment).clone(); Arc::new(move |decision, word_range, syllable| {
+        let latin_word_cuts: Arc<dyn Fn(FontDecision, TextRange, &Vec<u32>) -> Vec<u32> + Send + Sync + '_> = { let shape_segment = (shape_segment).clone(); Arc::new(move |decision, word_range, syllable| {
         let capacity = syllable.len();
         let mut cuts = Vec::with_capacity(capacity);
         for i in 0..match u32::try_from(syllable.len()) { Ok(value) => value, Err(_) => u32::MAX } {
@@ -903,7 +896,7 @@ ParagraphShapingStageShapeParagraphFault> + Send + Sync + 'static> = { let text 
         for i in 0..u32::try_from((rel_bounds.len()) & 0xFFFF_FFFF).unwrap_or(0).saturating_sub(1) {
             let a = rel_bounds[usize::try_from(i).unwrap_or(0)];
             let b = rel_bounds[usize::try_from(u32::wrapping_add(i, 1)).unwrap_or(0)];
-            let piece_shaped = shape_segment((decision).clone(), TextRange::new(u32::wrapping_add(word_range.start, a), u32::wrapping_add(word_range.start, b)).map_err(|e| ParagraphShapingStageShapeParagraphFault::TextRangeErrorFault(e))?)?;
+            let piece_shaped = shape_segment((decision).clone(), TextRange::new(u32::wrapping_add(word_range.start, a), u32::wrapping_add(word_range.start, b)).unwrap());
             let piece_advance = if u32::try_from((piece_shaped.clusters.len()) & 0xFFFF_FFFF).unwrap_or(0) == 1 { piece_shaped.clusters[0usize].advance } else { 0.0f64 };
             if piece_advance <= measure {
                 continue;
@@ -928,7 +921,7 @@ ParagraphShapingStageShapeParagraphFault> + Send + Sync + 'static> = { let text 
             }
         }
         ParagraphShapingStage::paragraph_shaping_stage_sort_ints(&mut cuts);
-        return Ok(cuts);
+        return cuts;
 }) };
         let break_opportunity_decisions: Arc<Mutex<Vec<BreakOpportunityDecisionInfo>>> = Arc::new(Mutex::new(Vec::new()));
         let emergency_tracking_eligibility_decisions: Arc<Mutex<Vec<EmergencyTrackingEligibilityDecisionInfo>>> = Arc::new(Mutex::new(Vec::new()));
@@ -970,10 +963,8 @@ ParagraphShapingStageShapeParagraphFault> + Send + Sync + 'static> = { let text 
         let token = u_string::substring(&text.as_ustr(), i32::from_ne_bytes(((token_range.start) as i32).to_ne_bytes()), i32::from_ne_bytes(((token_range.end) as i32).to_ne_bytes()));
         let url_like = ParagraphShapingStage::paragraph_shaping_stage_is_url_like_latin_token(token.as_ustr());
         let mut opaque = false;
-        let __units20 = u_string::units(&token);
-        let __count20 = u_string::unit_count(&token);
-        for i in 0..__count20 {
-            if !ParagraphShapingStage::paragraph_shaping_stage_is_letter(*(u_string::unit_at_from(&__units20, i)).as_ref().unwrap()) {
+        for i in 0..match u32::try_from(u_string::unit_count(&(token))) { Ok(value) => value, Err(_) => u32::MAX } {
+            if !ParagraphShapingStage::paragraph_shaping_stage_is_letter(*(u_string::unit_at(&token, i)).as_ref().unwrap()) {
                 opaque = true;
                 break;
             }
@@ -993,15 +984,14 @@ ParagraphShapingStageShapeParagraphFault> + Send + Sync + 'static> = { let text 
             break_opportunity_decisions.lock().unwrap().push(BreakOpportunityDecisionInfo::new((token_range).clone(), token.as_ustr(), ParagraphShapingStage::paragraph_shaping_stage_copy_ints(&cuts).to_vec(), &(UStr::new(&[66,105,98,108,105,111,103,114,97,112,104,105,99,78,117,109,101,114,105,99,76,111,99,97,116,111,114,66,114,101,97,107])), None));
         }
         for i in 0..u_string::unit_count(&(token)).saturating_sub(1) {
-            let break_after = structural_solidus && !url_like && matches!(u_string::unit_at(&token, i).as_ref(), Some(__v) if __v == &(47)) || opaque_separator_mode && ParagraphShapingStage::paragraph_shaping_stage_is_latin_token_break_after(token.as_ustr(), i, (token_advance) <= measure);
+            let break_after = structural_solidus && !url_like && u_string::unit_at(&token, i).as_ref().map_or(false, |v| v == &(47)) || opaque_separator_mode && ParagraphShapingStage::paragraph_shaping_stage_is_latin_token_break_after(token.as_ustr(), i, (token_advance) <= measure);
             if break_after {
                 cuts.push(u32::wrapping_add(u32::wrapping_add(token_range.start, i), 1));
             }
         }
         return cuts;
 } }) };
-        let latin_opaque_hard_cuts: Arc<dyn Fn(FontDecision, TextRange, &Vec<u32>, bool) -> Result<Vec<u32>,
-ParagraphShapingStageShapeParagraphFault> + Send + Sync + '_> = { let shape_segment = (shape_segment).clone(); let text = (text).to_ustring(); Arc::new(move |decision, token_range, clean_cuts, force_opaque_breaks| {
+        let latin_opaque_hard_cuts: Arc<dyn Fn(FontDecision, TextRange, &Vec<u32>, bool) -> Vec<u32> + Send + Sync + '_> = { let shape_segment = (shape_segment).clone(); let text = (text).to_ustring(); Arc::new(move |decision, token_range, clean_cuts, force_opaque_breaks| {
         let mut rel_bounds = vec![0];
         for i in 0..match u32::try_from(clean_cuts.len()) { Ok(value) => value, Err(_) => u32::MAX } {
             let rel = u32::wrapping_sub(clean_cuts[usize::try_from(i).unwrap_or(0)], token_range.start);
@@ -1034,8 +1024,8 @@ ParagraphShapingStageShapeParagraphFault> + Send + Sync + '_> = { let shape_segm
             if i32::from_ne_bytes(((u32::wrapping_sub(b, a)) as i32).to_ne_bytes()) <= 1 {
                 continue;
             }
-            let piece_range = TextRange::new(u32::wrapping_add(token_range.start, a), u32::wrapping_add(token_range.start, b)).map_err(|e| ParagraphShapingStageShapeParagraphFault::TextRangeErrorFault(e))?;
-            let piece_shaped = shape_segment((decision).clone(), (piece_range).clone())?;
+            let piece_range = TextRange::new(u32::wrapping_add(token_range.start, a), u32::wrapping_add(token_range.start, b)).unwrap();
+            let piece_shaped = shape_segment((decision).clone(), (piece_range).clone());
             let piece_advance = if u32::try_from((piece_shaped.clusters.len()) & 0xFFFF_FFFF).unwrap_or(0) == 1 { piece_shaped.clusters[0usize].advance } else { 0.0f64 };
             if piece_advance <= measure && !(force_opaque_breaks && (i32::from_ne_bytes(((u32::wrapping_sub(b, a)) as i32).to_ne_bytes())) >= 24) {
                 continue;
@@ -1057,7 +1047,7 @@ ParagraphShapingStageShapeParagraphFault> + Send + Sync + '_> = { let shape_segm
             }
         }
         ParagraphShapingStage::paragraph_shaping_stage_sort_ints(&mut cuts);
-        return Ok(cuts);
+        return cuts;
 }) };
         let get_inline_object: Arc<dyn Fn(TextRange) -> Option<InlineObjectSpan> + Send + Sync + 'static> = { let inline_object_by_range = (inline_object_by_range).clone(); Arc::new(move |range| {
         if false {
@@ -1097,14 +1087,13 @@ ParagraphShapingStageShapeParagraphFault> + Send + Sync + '_> = { let shape_segm
 }) };
         let span_advance_cache_keys: Arc<Mutex<Vec<TextRange>>> = Arc::new(Mutex::new(Vec::new()));
         let span_advance_cache_values: Arc<Mutex<Vec<f64>>> = Arc::new(Mutex::new(Vec::new()));
-        let progressive_span_advance: Arc<dyn Fn(TextRange) -> Result<f64,
-ParagraphShapingStageShapeParagraphFault> + Send + Sync + 'static> = { let span_advance_cache_keys = Arc::clone(&span_advance_cache_keys); let span_advance_cache_values = Arc::clone(&span_advance_cache_values); let cluster_ranges = (cluster_ranges).to_vec(); let get_inline_object = (get_inline_object).clone(); let get_font_decision = (get_font_decision).clone(); let text = (text).to_ustring(); let shape_segment = (shape_segment).clone(); Arc::new({ let span_advance_cache_keys = Arc::clone(&span_advance_cache_keys); let span_advance_cache_values = Arc::clone(&span_advance_cache_values); move |span_range| {
+        let progressive_span_advance: Arc<dyn Fn(TextRange) -> f64 + Send + Sync + 'static> = { let span_advance_cache_keys = Arc::clone(&span_advance_cache_keys); let span_advance_cache_values = Arc::clone(&span_advance_cache_values); let cluster_ranges = (cluster_ranges).to_vec(); let get_inline_object = (get_inline_object).clone(); let get_font_decision = (get_font_decision).clone(); let text = (text).to_ustring(); let shape_segment = (shape_segment).clone(); Arc::new({ let span_advance_cache_keys = Arc::clone(&span_advance_cache_keys); let span_advance_cache_values = Arc::clone(&span_advance_cache_values); move |span_range| {
         let mut __loop_guard13 = span_advance_cache_keys.lock().unwrap();
         let mut __loop_guard14 = span_advance_cache_values.lock().unwrap();
         for i in 0..match u32::try_from(__loop_guard13.len()) { Ok(value) => value, Err(_) => u32::MAX } {
             let k = (__loop_guard13[usize::try_from(i).unwrap_or(0)]).clone();
             if k.start == span_range.start && k.end == span_range.end {
-                return Ok(__loop_guard14[usize::try_from(i).unwrap_or(0)]);
+                return __loop_guard14[usize::try_from(i).unwrap_or(0)];
             }
         }
         drop(__loop_guard13);
@@ -1118,12 +1107,12 @@ ParagraphShapingStageShapeParagraphFault> + Send + Sync + 'static> = { let span_
             if decision.is_none() {
                 continue;
             }
-            let candidates = ParagraphShapingStage::paragraph_shaping_stage_shaping_segments(((decision).as_ref().unwrap().clone()).clone(), text.as_ustr()).map_err(|e| ParagraphShapingStageShapeParagraphFault::TextRangeErrorFault(e))?;
+            let candidates = ParagraphShapingStage::paragraph_shaping_stage_shaping_segments(((decision).as_ref().unwrap().clone()).clone(), text.as_ustr()).unwrap();
             for candidate in &candidates {
                 let start = if i32::from_ne_bytes(((candidate.start) as i32).to_ne_bytes()) > (i32::from_ne_bytes(((span_range.start) as i32).to_ne_bytes())) { candidate.start } else { span_range.start };
                 let end = if i32::from_ne_bytes(((candidate.end) as i32).to_ne_bytes()) < (i32::from_ne_bytes(((span_range.end) as i32).to_ne_bytes())) { candidate.end } else { span_range.end };
                 if ({ let v: u32 = start; i32::from_ne_bytes(v.to_ne_bytes()) }) < ({ let v: u32 = end; i32::from_ne_bytes(v.to_ne_bytes()) }) {
-                    let piece_shaped = shape_segment(((decision).as_ref().unwrap().clone()).clone(), TextRange::new(start, end).map_err(|e| ParagraphShapingStageShapeParagraphFault::TextRangeErrorFault(e))?)?;
+                    let piece_shaped = shape_segment(((decision).as_ref().unwrap().clone()).clone(), TextRange::new(start, end).unwrap());
                     for cl_idx in 0..match u32::try_from(piece_shaped.clusters.len()) { Ok(value) => value, Err(_) => u32::MAX } {
                         advance_terms.push(piece_shaped.clusters[usize::try_from(cl_idx).unwrap_or(0)].advance);
                     }
@@ -1133,7 +1122,7 @@ ParagraphShapingStageShapeParagraphFault> + Send + Sync + 'static> = { let span_
         let total_advance = AccurateSum::accurate_sum_of(&advance_terms);
         span_advance_cache_keys.lock().unwrap().push(span_range.clone());
         span_advance_cache_values.lock().unwrap().push(total_advance);
-        return Ok(total_advance);
+        return total_advance;
 } }) };
         let mut shaping_results: Vec<ShapingResult> = Vec::new();
         for resolved_range in cluster_ranges {
@@ -1160,7 +1149,7 @@ ParagraphShapingStageShapeParagraphFault> + Send + Sync + 'static> = { let span_
             }
             let segments = ParagraphShapingStage::paragraph_shaping_stage_shaping_segments(((decision).as_ref().unwrap().clone()).clone(), text).map_err(|e| ParagraphShapingStageShapeParagraphFault::TextRangeErrorFault(e))?;
             for segment_range in &segments {
-                let shaped = shape_segment(((decision).as_ref().unwrap().clone()).clone(), (segment_range).clone())?;
+                let shaped = shape_segment(((decision).as_ref().unwrap().clone()).clone(), (segment_range).clone());
                 let is_latin = (decision).as_ref().unwrap().role == FontRole::LatinText && (i32::from_ne_bytes(((segment_range.get_length()) as i32).to_ne_bytes())) > (0);
                 let w = if is_latin { u_string::substring(&text, i32::from_ne_bytes(((segment_range.start) as i32).to_ne_bytes()), i32::from_ne_bytes(((segment_range.end) as i32).to_ne_bytes())).to_ustring() } else { UString::from("") };
                 let mut progressive_span: Option<LineBreakSpan> = None;
@@ -1173,10 +1162,8 @@ ParagraphShapingStageShapeParagraphFault> + Send + Sync + 'static> = { let span_
                 }
                 let mut all_letters = is_latin && (i32::from_ne_bytes(((u_string::unit_count(&(w))) as i32).to_ne_bytes())) > (0);
                 if is_latin {
-                    let __units21 = u_string::units(&w);
-                    let __count21 = u_string::unit_count(&w);
-                    for c_idx in 0..__count21 {
-                        if !ParagraphShapingStage::paragraph_shaping_stage_is_letter(*(u_string::unit_at_from(&__units21, c_idx)).as_ref().unwrap()) {
+                    for c_idx in 0..match u32::try_from(u_string::unit_count(&(w))) { Ok(value) => value, Err(_) => u32::MAX } {
+                        if !ParagraphShapingStage::paragraph_shaping_stage_is_letter(*(u_string::unit_at(&w, c_idx)).as_ref().unwrap()) {
                             all_letters = false;
                             break;
                         }
@@ -1184,10 +1171,8 @@ ParagraphShapingStageShapeParagraphFault> + Send + Sync + 'static> = { let span_
                 }
                 let mut is_all_caps = all_letters && (i32::from_ne_bytes(((u_string::unit_count(&(w))) as i32).to_ne_bytes())) >= 2;
                 if is_all_caps {
-                    let __units22 = u_string::units(&w);
-                    let __count22 = u_string::unit_count(&w);
-                    for c_idx in 0..__count22 {
-                        if ParagraphShapingStage::paragraph_shaping_stage_is_lower_case(*(u_string::unit_at_from(&__units22, c_idx)).as_ref().unwrap()) {
+                    for c_idx in 0..match u32::try_from(u_string::unit_count(&(w))) { Ok(value) => value, Err(_) => u32::MAX } {
+                        if ParagraphShapingStage::paragraph_shaping_stage_is_lower_case(*(u_string::unit_at(&w, c_idx)).as_ref().unwrap()) {
                             is_all_caps = false;
                             break;
                         }
@@ -1196,10 +1181,8 @@ ParagraphShapingStageShapeParagraphFault> + Send + Sync + 'static> = { let span_
                 let is_abbreviation = is_all_caps && (i32::from_ne_bytes(((u_string::unit_count(&(w))) as i32).to_ne_bytes())) < (24);
                 let mut has_internal_upper = false;
                 if all_letters && !is_all_caps && !is_abbreviation {
-                    let __units23 = u_string::units(&w);
-                    let __count23 = u_string::unit_count(&w);
-                    for c_idx in 1..__count23 {
-                        if ParagraphShapingStage::paragraph_shaping_stage_is_upper_case(*(u_string::unit_at_from(&__units23, c_idx)).as_ref().unwrap()) {
+                    for c_idx in 1..match u32::try_from(u_string::unit_count(&(w))) { Ok(value) => value, Err(_) => u32::MAX } {
+                        if ParagraphShapingStage::paragraph_shaping_stage_is_upper_case(*(u_string::unit_at(&w, c_idx)).as_ref().unwrap()) {
                             has_internal_upper = true;
                             break;
                         }
@@ -1399,13 +1382,13 @@ ParagraphShapingStageShapeParagraphFault> + Send + Sync + 'static> = { let span_
                             let p_start = unique_bounds[usize::try_from(p).unwrap_or(0)];
                             let p_end = unique_bounds[usize::try_from(u32::wrapping_add(p, 1)).unwrap_or(0)];
                             let piece_range = TextRange::new(p_start, p_end).map_err(|e| ParagraphShapingStageShapeParagraphFault::TextRangeErrorFault(e))?;
-                            let piece_shaped = shape_segment(((decision).as_ref().unwrap().clone()).clone(), (piece_range).clone())?;
+                            let piece_shaped = shape_segment(((decision).as_ref().unwrap().clone()).clone(), (piece_range).clone());
                             let mut piece_terms: Vec<f64> = vec![];
                             for cl_idx in 0..match u32::try_from(piece_shaped.clusters.len()) { Ok(value) => value, Err(_) => u32::MAX } {
                                 piece_terms.push(piece_shaped.clusters[usize::try_from(cl_idx).unwrap_or(0)].advance);
                             }
                             let piece_advance = AccurateSum::accurate_sum_of(&piece_terms);
-                            if !exposed_for_current_line && (piece_advance) <= measure && (progressive_span_advance((__option11.range).clone())?) <= measure {
+                            if !exposed_for_current_line && (piece_advance) <= measure && (progressive_span_advance((__option11.range).clone())) <= measure {
                             } else {
                                 let graphemes = SourceInteractionBoundaries::source_interaction_boundaries_source_grapheme_boundaries(text, (piece_range).clone());
                                 for &pt in &graphemes {
@@ -1598,11 +1581,11 @@ ParagraphShapingStageShapeParagraphFault> + Send + Sync + 'static> = { let span_
                 }
                 let mut hyphen_cuts: Vec<u32> = Vec::new();
                 if progressive_span.is_none() && all_letters && !is_abbreviation && !is_camel_case && !is_long_unhyphenated_letter_token && (u32::from_ne_bytes(((u_string::find_from(&(w), UString::from("-").as_ustr(), 0)) as u32).to_ne_bytes())) > 2147483647 && u32::try_from((clean_cuts.len()) & 0xFFFF_FFFF).unwrap_or(0) == 0 {
-                    hyphen_cuts = latin_word_cuts(((decision).as_ref().unwrap().clone()).clone(), (segment_range).clone(), &syllable_cuts)?;
+                    hyphen_cuts = latin_word_cuts(((decision).as_ref().unwrap().clone()).clone(), (segment_range).clone(), &syllable_cuts);
                 }
                 let mut opaque_hard_cuts: Vec<u32> = Vec::new();
                 if progressive_span.is_none() && is_latin && (!all_letters || is_long_unhyphenated_letter_token) && ((token_advance) > (measure) || is_long_opaque_latin_token) {
-                    opaque_hard_cuts = latin_opaque_hard_cuts(((decision).as_ref().unwrap().clone()).clone(), (segment_range).clone(), &clean_cuts, is_long_opaque_latin_token)?;
+                    opaque_hard_cuts = latin_opaque_hard_cuts(((decision).as_ref().unwrap().clone()).clone(), (segment_range).clone(), &clean_cuts, is_long_opaque_latin_token);
                 }
                 if progressive_span.is_none() && (i32::from_ne_bytes(((u32::try_from((opaque_hard_cuts.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) > (0) {
                     let mut clean_bounds = vec![segment_range.start];
@@ -1707,7 +1690,7 @@ ParagraphShapingStageShapeParagraphFault> + Send + Sync + 'static> = { let span_
                     }
                     bounds.push(segment_range.end);
                     for k in 0..u32::try_from((bounds.len()) & 0xFFFF_FFFF).unwrap_or(0).saturating_sub(1) {
-                        let pieces = shape_segment_with_point_mark_prefix(((decision).as_ref().unwrap().clone()).clone(), TextRange::new(bounds[usize::try_from(k).unwrap_or(0)], bounds[usize::try_from(u32::wrapping_add(k, 1)).unwrap_or(0)]).map_err(|e| ParagraphShapingStageShapeParagraphFault::TextRangeErrorFault(e))?)?;
+                        let pieces = shape_segment_with_point_mark_prefix(((decision).as_ref().unwrap().clone()).clone(), TextRange::new(bounds[usize::try_from(k).unwrap_or(0)], bounds[usize::try_from(u32::wrapping_add(k, 1)).unwrap_or(0)]).map_err(|e| ParagraphShapingStageShapeParagraphFault::TextRangeErrorFault(e))?);
                         for p in 0..match u32::try_from(pieces.len()) { Ok(value) => value, Err(_) => u32::MAX } {
                             shaping_results.push((pieces[usize::try_from(p).unwrap_or(0)]).clone());
                         }

@@ -41,23 +41,24 @@ impl FontRequest {
     }
 }
 
-fn font_request_order_0(v: &FontRole) -> i32 {
+fn font_request_role_order(v: &FontRole) -> i32 {
     match v {
+        FontRole::Unknown => 5,
+        FontRole::Symbol => 3,
+        FontRole::LatinText => 2,
+        FontRole::Emoji => 4,
         FontRole::CjkText => 0,
         FontRole::CjkPunctuation => 1,
-        FontRole::LatinText => 2,
-        FontRole::Symbol => 3,
-        FontRole::Emoji => 4,
-        FontRole::Unknown => 5,
     }
 }
-
 pub fn compare_font_request(a: &FontRequest, b: &FontRequest) -> i32 {
-    let cmp_preferred_families = { let mut cmp = 0; for (av, bv) in (&a.preferred_families).iter().zip((&b.preferred_families).iter()) { cmp = SortedTable::sorted_table_compare_strings((av).as_ustr(), (bv).as_ustr()); if cmp != 0 { break; } } if cmp == 0 { cmp = match (&a.preferred_families).len().cmp(&(&b.preferred_families).len()) { core::cmp::Ordering::Less => -1, core::cmp::Ordering::Equal => 0, core::cmp::Ordering::Greater => 1 }; } cmp };
+    let mut cmp_preferred_families = 0; for (av, bv) in a.preferred_families.iter().zip(b.preferred_families.iter()) { cmp_preferred_families = match av.cmp(bv) { core::cmp::Ordering::Less => -1, core::cmp::Ordering::Equal => 0,
+core::cmp::Ordering::Greater => 1 }; if cmp_preferred_families != 0 { break; } }
+    if cmp_preferred_families == 0 { cmp_preferred_families = match a.preferred_families.len().cmp(&b.preferred_families.len()) { core::cmp::Ordering::Less => -1, core::cmp::Ordering::Equal => 0, core::cmp::Ordering::Greater => 1 }; }
     if cmp_preferred_families != 0 { return cmp_preferred_families; }
-    let cmp_locale = SortedTable::sorted_table_compare_strings((&a.locale).as_ustr(), (&b.locale).as_ustr());
+    let cmp_locale = SortedTable::sorted_table_compare_strings(a.locale.as_ustr(), b.locale.as_ustr());
     if cmp_locale != 0 { return cmp_locale; }
-    let cmp_role = match font_request_order_0(&a.role).cmp(&font_request_order_0(&b.role)) { core::cmp::Ordering::Less => -1, core::cmp::Ordering::Equal => 0, core::cmp::Ordering::Greater => 1 };
+    let cmp_role = match font_request_role_order(&a.role).cmp(&font_request_role_order(&b.role)) { core::cmp::Ordering::Less => -1, core::cmp::Ordering::Equal => 0, core::cmp::Ordering::Greater => 1 };
     if cmp_role != 0 { return cmp_role; }
     0
 }
@@ -83,23 +84,22 @@ impl FontCandidate {
     }
 }
 
-fn font_candidate_order_0(v: &FontRole) -> i32 {
+fn font_candidate_role_order(v: &FontRole) -> i32 {
     match v {
+        FontRole::Unknown => 5,
+        FontRole::Symbol => 3,
+        FontRole::LatinText => 2,
+        FontRole::Emoji => 4,
         FontRole::CjkText => 0,
         FontRole::CjkPunctuation => 1,
-        FontRole::LatinText => 2,
-        FontRole::Symbol => 3,
-        FontRole::Emoji => 4,
-        FontRole::Unknown => 5,
     }
 }
-
 pub fn compare_font_candidate(a: &FontCandidate, b: &FontCandidate) -> i32 {
-    let cmp_key = SortedTable::sorted_table_compare_strings((&a.key).as_ustr(), (&b.key).as_ustr());
+    let cmp_key = SortedTable::sorted_table_compare_strings(a.key.as_ustr(), b.key.as_ustr());
     if cmp_key != 0 { return cmp_key; }
-    let cmp_family = SortedTable::sorted_table_compare_strings((&a.family).as_ustr(), (&b.family).as_ustr());
+    let cmp_family = SortedTable::sorted_table_compare_strings(a.family.as_ustr(), b.family.as_ustr());
     if cmp_family != 0 { return cmp_family; }
-    let cmp_role = match font_candidate_order_0(&a.role).cmp(&font_candidate_order_0(&b.role)) { core::cmp::Ordering::Less => -1, core::cmp::Ordering::Equal => 0, core::cmp::Ordering::Greater => 1 };
+    let cmp_role = match font_candidate_role_order(&a.role).cmp(&font_candidate_role_order(&b.role)) { core::cmp::Ordering::Less => -1, core::cmp::Ordering::Equal => 0, core::cmp::Ordering::Greater => 1 };
     if cmp_role != 0 { return cmp_role; }
     0
 }
@@ -127,25 +127,24 @@ impl FontDecision {
     }
 }
 
-fn font_decision_order_0(v: &FontRole) -> i32 {
+fn font_decision_role_order(v: &FontRole) -> i32 {
     match v {
+        FontRole::Unknown => 5,
+        FontRole::Symbol => 3,
+        FontRole::LatinText => 2,
+        FontRole::Emoji => 4,
         FontRole::CjkText => 0,
         FontRole::CjkPunctuation => 1,
-        FontRole::LatinText => 2,
-        FontRole::Symbol => 3,
-        FontRole::Emoji => 4,
-        FontRole::Unknown => 5,
     }
 }
-
 pub fn compare_font_decision(a: &FontDecision, b: &FontDecision) -> i32 {
     let cmp_range = compare_text_range(&a.range, &b.range);
     if cmp_range != 0 { return cmp_range; }
     let cmp_candidate = compare_font_candidate(&a.candidate, &b.candidate);
     if cmp_candidate != 0 { return cmp_candidate; }
-    let cmp_role = match font_decision_order_0(&a.role).cmp(&font_decision_order_0(&b.role)) { core::cmp::Ordering::Less => -1, core::cmp::Ordering::Equal => 0, core::cmp::Ordering::Greater => 1 };
+    let cmp_role = match font_decision_role_order(&a.role).cmp(&font_decision_role_order(&b.role)) { core::cmp::Ordering::Less => -1, core::cmp::Ordering::Equal => 0, core::cmp::Ordering::Greater => 1 };
     if cmp_role != 0 { return cmp_role; }
-    let cmp_reason = SortedTable::sorted_table_compare_strings((&a.reason).as_ustr(), (&b.reason).as_ustr());
+    let cmp_reason = SortedTable::sorted_table_compare_strings(a.reason.as_ustr(), b.reason.as_ustr());
     if cmp_reason != 0 { return cmp_reason; }
     0
 }
@@ -183,7 +182,7 @@ pub fn font_role_name_uses_latin_face(role_name: Option<UString>) -> bool {
     let mut pipeline_result = false;
     for pipeline_index in 0..6 {
         let value = values[usize::try_from(pipeline_index).unwrap_or(0)];
-        if matches!(role_name.as_ref(), Some(__v) if __v == &(UString::from(value.name()))) && value.uses_latin_face() {
+        if role_name.as_ref().map_or(false, |v| v == &(UString::from(value.name()))) && value.uses_latin_face() {
             pipeline_result = true;
             break;
         }

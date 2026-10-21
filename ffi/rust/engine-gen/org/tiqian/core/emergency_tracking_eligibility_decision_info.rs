@@ -29,9 +29,9 @@ impl EmergencyTrackingEligibilityDecisionInfo {
 pub fn compare_emergency_tracking_eligibility_decision_info(a: &EmergencyTrackingEligibilityDecisionInfo, b: &EmergencyTrackingEligibilityDecisionInfo) -> i32 {
     let cmp_range = compare_text_range(&a.range, &b.range);
     if cmp_range != 0 { return cmp_range; }
-    let cmp_source_text = SortedTable::sorted_table_compare_strings((&a.source_text).as_ustr(), (&b.source_text).as_ustr());
+    let cmp_source_text = SortedTable::sorted_table_compare_strings(a.source_text.as_ustr(), b.source_text.as_ustr());
     if cmp_source_text != 0 { return cmp_source_text; }
-    let cmp_reason = SortedTable::sorted_table_compare_strings((&a.reason).as_ustr(), (&b.reason).as_ustr());
+    let cmp_reason = SortedTable::sorted_table_compare_strings(a.reason.as_ustr(), b.reason.as_ustr());
     if cmp_reason != 0 { return cmp_reason; }
     0
 }
