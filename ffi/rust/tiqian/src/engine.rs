@@ -96,7 +96,7 @@ impl Engine {
 
 /// Flattens the generated fault unions into the named error surface. The
 /// range faults carry the engine's published sentences; the remaining stage
-/// faults render through their generated `Debug`.
+/// faults render through their generated `Display`.
 fn named_new(
     fault: tiqian_engine_gen::org::tiqian::layout::paragraph_layout_engine::ParagraphLayoutEngineNewFault,
 ) -> NamedError {
