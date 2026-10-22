@@ -8,13 +8,13 @@ pub struct UnicodePunctuationLineBreak;
 
 impl UnicodePunctuationLineBreak {
     pub fn unicode_punctuation_line_break_class_of(code_point: u32) -> Result<UnicodePunctuationLineBreakClass, TextRangeError> {
-        if code_point > 2147483647 || ((code_point) as i32) > (1114111) {
+        if code_point > 2147483647 || (i32::from_ne_bytes(((code_point) as i32).to_ne_bytes())) > (1114111) {
             return Err(TextRangeError::Message { text: UString::from(format!("{}", { let mut __s = UString::new(); __s += &(UString::from("Not a Unicode scalar value: ")); __s += &(UString::from(format!("{}", crate::runtime::int_text::IntText::int_text(code_point)).as_str())); __s }).as_str()) });
         }
-        if code_point as i32 >= 55296 && ((code_point) as i32) <= 57343 {
+        if i32::from_ne_bytes(((code_point) as i32).to_ne_bytes()) >= 55296 && (i32::from_ne_bytes(((code_point) as i32).to_ne_bytes())) <= 57343 {
             return Err(TextRangeError::Message { text: UString::from(format!("{}", { let mut __s = UString::new(); __s += &(UString::from("Surrogate is not a Unicode scalar value: ")); __s += &(UString::from(format!("{}", crate::runtime::int_text::IntText::int_text(code_point)).as_str())); __s }).as_str()) });
         }
-        let kind = UnicodePunctuationLineBreakData::unicode_punctuation_line_break_data_lookup((code_point) as u32);
+        let kind = UnicodePunctuationLineBreakData::unicode_punctuation_line_break_data_lookup(u32::from_ne_bytes(((code_point) as u32).to_ne_bytes()));
         if kind == 0 {
             return Ok(UnicodePunctuationLineBreakClass::BreakAfter);
         }

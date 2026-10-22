@@ -26,12 +26,18 @@ export class PushInResult {
   }
 
   public toString(): string {
-    return `PushInResult(previous=${this.previous.toString()}, current=${(this.current === null ? "null" : this.current.toString())}, candidate=${this.candidate.toString()})`;
+    return `PushInResult(previous=${this.previous.toString()}, current=${(this.current === null ? "null" : this.current!.toString())}, candidate=${this.candidate.toString()})`;
   }
 }
 
 export class LineRepair {
   public static applyKinsokuRepairs(initial: LineCandidate[], naturalClusters: Cluster[], adjustedClusters: Cluster[], maxWidth: number, kinsoku: KinsokuRule, shrinkOpportunities: ShrinkOpportunity[], pushInPenalty: number, carryPreviousPenalty: number, leaveRaggedPenalty: number, unbreakableRanges?: UnbreakableRanges | null, firstLineIndent?: number | null, hangableClusters?: SortedSetTable<number> | null, extendableHangRanges?: IntRange[] | null, hangPenalty?: number | null, forbiddenLineStartClusters?: SortedSetTable<number> | null): LineSolution {
+    unbreakableRanges = unbreakableRanges ?? null;
+    firstLineIndent = firstLineIndent ?? null;
+    hangableClusters = hangableClusters ?? null;
+    extendableHangRanges = extendableHangRanges ?? null;
+    hangPenalty = hangPenalty ?? null;
+    forbiddenLineStartClusters = forbiddenLineStartClusters ?? null;
     if (initial.length < 2) {
       return new LineSolution(initial);
     }
@@ -51,13 +57,13 @@ export class LineRepair {
         continue;
       }
       const firstCluster = adjustedClusters[firstIndex]!;
-      const forbidden = (forbiddenLineStartClusters !== null ? forbiddenLineStartClusters.has(firstIndex) : kinsoku.forbiddenAtLineStart(firstCluster));
+      const forbidden = (forbiddenLineStartClusters !== null ? forbiddenLineStartClusters!.has(firstIndex) : kinsoku.forbiddenAtLineStart(firstCluster));
       if (!forbidden) {
         i++;
         continue;
       }
       const repairCandidates: RepairCandidate[] = [];
-      const pushIn = LineRepair.tryPushIn(prev, curr, naturalClusters, adjustedClusters, ProgressiveBreakDecisions.lineLimit(maxWidth, indent, prev.clusterRange.start), shrinkOpportunities, pushInPenalty, null, "ForbiddenAtLineStart");
+      const pushIn = LineRepair.tryPushIn(prev, curr, naturalClusters, adjustedClusters, ProgressiveBreakDecisions.lineLimit(maxWidth, (indent)!, prev.clusterRange.start), shrinkOpportunities, pushInPenalty, null, "ForbiddenAtLineStart");
       repairCandidates.push(pushIn.candidate);
       if (pushIn.candidate.accepted) {
         mutable[i - 1] = pushIn.previous;
@@ -73,8 +79,8 @@ export class LineRepair {
       let extendsContextualHang = false;
       if (existingHanging.size() > 0 && prev.clusterRange.end + 1 === offenderIndex) {
         let gi = 0;
-        while (gi < extendables.length) {
-          const group = extendables[gi]!;
+        while (gi < extendables!.length) {
+          const group = extendables![gi]!;
           if (offenderIndex >= group.start && offenderIndex <= group.end) {
             let all = true;
             let hi = 0;
@@ -94,9 +100,9 @@ export class LineRepair {
           gi++;
         }
       }
-      if (hangables.has(offenderIndex) && (existingHanging.size() === 0 || extendsContextualHang)) {
+      if (hangables!.has(offenderIndex) && (existingHanging.size() === 0 || extendsContextualHang)) {
         const mergeEndIndex = LineRepair.mandatoryBreakTailEnd(curr, offenderIndex, adjustedClusters);
-        const hangCandidate = new RepairCandidate("Hang", "ForbiddenAtLineStart", offenderIndex, hangCost, true, null, null, null);
+        const hangCandidate = new RepairCandidate("Hang", "ForbiddenAtLineStart", offenderIndex, (hangCost)!, true, null, null, null);
         repairCandidates.push(hangCandidate);
         const mergedRange = new IntRange(prev.clusterRange.start, mergeEndIndex);
         const mergedTerms: number[] = [];
@@ -140,7 +146,7 @@ export class LineRepair {
         continue;
       }
       const carriedIndex = prev.clusterRange.end;
-      if (ranges.containsBoundary(carriedIndex)) {
+      if (ranges!.containsBoundary(carriedIndex)) {
         repairCandidates.push(new RepairCandidate("CarryPrevious", "ForbiddenAtLineStart", firstIndex, carryPreviousPenalty, false, "carry-would-split-mourning-span", null, carriedIndex));
         repairCandidates.push(new RepairCandidate("LeaveRagged", "ForbiddenAtLineStart", firstIndex, leaveRaggedPenalty, true, null, null, null));
         mutable[i] = new LineCandidate(curr.clusterRange, curr.sourceRange, curr.naturalWidth, curr.adjustedWidth, curr.endReason, ({ kind: "LeaveRagged", penalty: leaveRaggedPenalty, reason: `ForbiddenAtLineStart:${firstCluster.text}:carry-would-split-mourning-span`, offenderClusterIndex: firstIndex } as RepairOption), repairCandidates, curr.hangingClusterIndices);
@@ -164,19 +170,21 @@ export class LineRepair {
     }
     const badnessTerms: number[] = [];
     for (let bi = 0, count = mutable.length; bi < count; bi += 1) {
-      badnessTerms.push((mutable[bi]!.repair === null ? 0.0 : RepairOptions.penalty(mutable[bi]!.repair) * 1.0));
+      badnessTerms.push((mutable[bi]!.repair === null ? 0.0 : RepairOptions.penalty((mutable[bi]!.repair)!) * 1.0));
     }
     const totalBadness = AccurateSum.of(badnessTerms);
     return new LineSolution(mutable, totalBadness);
   }
 
   public static tryPushIn(prev: LineCandidate, curr: LineCandidate, naturalClusters: Cluster[], adjustedClusters: Cluster[], maxWidth: number, shrinkOpportunities: ShrinkOpportunity[], pushInPenalty: number, mergeThroughClusterIndex?: number | null, reasonCode?: string | null): PushInResult {
+    mergeThroughClusterIndex = mergeThroughClusterIndex ?? null;
+    reasonCode = reasonCode ?? null;
     const code = reasonCode ?? "ForbiddenAtLineStart";
     const offenderIndex = mergeThroughClusterIndex ?? curr.clusterRange.start;
-    if (offenderIndex < curr.clusterRange.start || offenderIndex > curr.clusterRange.end) {
+    if (offenderIndex! < curr.clusterRange.start || offenderIndex! > curr.clusterRange.end) {
       throw new TiqianIllegalArgumentException(({ kind: "Message", text: "PushIn merge-through cluster must belong to the current line." } as TextRangeError));
     }
-    const mergeEndIndex = LineRepair.mandatoryBreakTailEnd(curr, offenderIndex, adjustedClusters);
+    const mergeEndIndex = LineRepair.mandatoryBreakTailEnd(curr, (offenderIndex)!, adjustedClusters);
     const expandedRange = new IntRange(prev.clusterRange.start, mergeEndIndex);
     const expanded = LineBreakerLines.rebuildLine(expandedRange, naturalClusters, adjustedClusters, null, null, null);
     const overflow = expanded.adjustedWidth - maxWidth;
@@ -202,12 +210,12 @@ export class LineRepair {
     const totalCapacity = AccurateSum.of(capacityTerms);
     if (overflow > totalCapacity) {
       const required = (overflow > 0 ? overflow : 0);
-      return new PushInResult(prev, curr, new RepairCandidate("PushIn", code, offenderIndex, pushInPenalty, false, "insufficient-capacity", offenderIndex, null, 0, required, totalCapacity));
+      return new PushInResult(prev, curr, new RepairCandidate("PushIn", (code)!, (offenderIndex)!, pushInPenalty, false, "insufficient-capacity", offenderIndex, null, 0, required, totalCapacity));
     }
     const shrink = (overflow > 0 ? overflow : 0);
     const allocations = (shrink > 0 ? LineRepair.distributePushInShrink(inLine, shrink) : []);
     const offender = adjustedClusters[offenderIndex]!;
-    const candidate = new RepairCandidate("PushIn", code, offenderIndex, pushInPenalty, true, null, offenderIndex, null, shrink, shrink, totalCapacity);
+    const candidate = new RepairCandidate("PushIn", (code)!, (offenderIndex)!, pushInPenalty, true, null, offenderIndex, null, shrink, shrink, totalCapacity);
     const reasonText = (shrink > 0 ? code + ":" + offender.text + ":pushed-in=" + LineRepair.toPortableDebugString(shrink) + "/" + LineRepair.toPortableDebugString(totalCapacity) : code + ":" + offender.text + ":fits-no-shrink");
     const candidateList = prev.repairCandidates.slice();
     candidateList.push(candidate);
@@ -337,7 +345,7 @@ export class LineRepair {
     while (groupEnd <= curr.clusterRange.end) {
       const containing = unbreakableRanges.containingFromClosedStartOrNull(groupEnd);
       if (containing !== null) {
-        groupEnd = containing.end;
+        groupEnd = containing!.end;
         if (groupEnd > curr.clusterRange.end) {
           return null;
         }
@@ -348,7 +356,7 @@ export class LineRepair {
         continue;
       }
       const nextHead = groupEnd + 1;
-      if (nextHead <= curr.clusterRange.end && forbiddenLineStartClusters !== null && forbiddenLineStartClusters.has(nextHead)) {
+      if (nextHead <= curr.clusterRange.end && forbiddenLineStartClusters !== null && forbiddenLineStartClusters!.has(nextHead)) {
         groupEnd = nextHead;
         continue;
       }
@@ -358,6 +366,8 @@ export class LineRepair {
   }
 
   public static applyFillPushIn(lines: LineCandidate[], naturalClusters: Cluster[], adjustedClusters: Cluster[], maxWidth: number, shrinkOpportunities: ShrinkOpportunity[], firstLineIndent: number, compressBias: number, forbiddenLineStartClusters: SortedSetTable<number> | null, forbiddenLineEndClusters: SortedSetTable<number>, unbreakableRanges: UnbreakableRanges, pushInPenalty: number, gapBoundaries?: SortedSetTable<number> | null, progressiveBreakOpportunities?: SortedMapTable<number, ProgressiveBreakOpportunity> | null): LineCandidate[] {
+    gapBoundaries = gapBoundaries ?? null;
+    progressiveBreakOpportunities = progressiveBreakOpportunities ?? null;
     if (lines.length < 2 || compressBias <= 0) {
       return lines;
     }
@@ -385,26 +395,26 @@ export class LineRepair {
         i += 1;
         continue;
       }
-      const currentBreak = progressive.get(prev.clusterRange.end + 1);
-      let resultingBreak = progressive.get(groupEnd + 1);
+      const currentBreak = progressive!.get(prev.clusterRange.end + 1);
+      let resultingBreak = progressive!.get(groupEnd + 1);
       const addedTerms: number[] = [];
       let cIdx = curr0;
-      while (cIdx <= groupEnd) {
+      while (cIdx <= groupEnd!) {
         addedTerms.push(adjustedClusters[cIdx]!.advance);
         cIdx++;
       }
       let addedAdvance = AccurateSum.of(addedTerms);
-      let promotesProgressiveTier = currentBreak !== null && resultingBreak !== null && currentBreak.spanRange.start === resultingBreak.spanRange.start && currentBreak.spanRange.end === resultingBreak.spanRange.end && ProgressiveBreakTierPriority.priority(resultingBreak.tier) < ProgressiveBreakTierPriority.priority(currentBreak.tier);
+      let promotesProgressiveTier = currentBreak !== null && resultingBreak !== null && currentBreak!.spanRange.start === resultingBreak!.spanRange.start && currentBreak!.spanRange.end === resultingBreak!.spanRange.end && ProgressiveBreakTierPriority.priority(resultingBreak!.tier) < ProgressiveBreakTierPriority.priority(currentBreak!.tier);
       if (promotesProgressiveTier && addedAdvance < deficit - 0.001) {
-        const activeBreak = currentBreak;
+        const activeBreak: ProgressiveBreakOpportunity | null = currentBreak;
         const searchStart = groupEnd + 2;
         const searchEnd = curr.clusterRange.end + 1;
         let matchingTierBoundary: number | null = null;
         if (searchStart <= searchEnd) {
           let boundary = searchStart;
           while (boundary <= searchEnd) {
-            const opp = progressive.get(boundary);
-            if (opp !== null && opp.spanRange.start === activeBreak.spanRange.start && opp.spanRange.end === activeBreak.spanRange.end && opp.tier === activeBreak.tier) {
+            const opp = progressive!.get(boundary);
+            if (opp !== null && opp!.spanRange.start === activeBreak!.spanRange.start && opp!.spanRange.end === activeBreak!.spanRange.end && opp!.tier === activeBreak!.tier) {
               matchingTierBoundary = boundary;
               break;
             }
@@ -413,10 +423,10 @@ export class LineRepair {
         }
         if (matchingTierBoundary !== null) {
           groupEnd = matchingTierBoundary - 1;
-          resultingBreak = progressive.get(matchingTierBoundary);
+          resultingBreak = progressive!.get((matchingTierBoundary)!);
           const reassignedTerms: number[] = [];
           let cIdx2 = curr0;
-          while (cIdx2 <= groupEnd) {
+          while (cIdx2 <= groupEnd!) {
             reassignedTerms.push(adjustedClusters[cIdx2]!.advance);
             cIdx2++;
           }
@@ -424,7 +434,7 @@ export class LineRepair {
           promotesProgressiveTier = false;
         }
       }
-      if (currentBreak !== null && resultingBreak !== null && currentBreak.spanRange.start === resultingBreak.spanRange.start && currentBreak.spanRange.end === resultingBreak.spanRange.end && ProgressiveBreakTierPriority.priority(resultingBreak.tier) > ProgressiveBreakTierPriority.priority(currentBreak.tier)) {
+      if (currentBreak !== null && resultingBreak !== null && currentBreak!.spanRange.start === resultingBreak!.spanRange.start && currentBreak!.spanRange.end === resultingBreak!.spanRange.end && ProgressiveBreakTierPriority.priority(resultingBreak!.tier) > ProgressiveBreakTierPriority.priority(currentBreak!.tier)) {
         i += 1;
         continue;
       }
@@ -438,9 +448,9 @@ export class LineRepair {
         continue;
       }
       if (overflow > 0.0 && !promotesProgressiveTier) {
-        const prevGaps = LineBreakerLines.lineGapCount(prev.clusterRange, gaps);
+        const prevGaps = LineBreakerLines.lineGapCount(prev.clusterRange, (gaps)!);
         const dStretchCured = (prevGaps === 0 ? 0.0 : deficit / prevGaps);
-        const groupGaps = LineBreakerLines.lineGapCount(new IntRange(prev.clusterRange.start, groupEnd), gaps);
+        const groupGaps = LineBreakerLines.lineGapCount(new IntRange(prev.clusterRange.start, (groupEnd)!), (gaps)!);
         const dCompressionIntroduced = overflow / (groupGaps > 1 ? groupGaps : 1);
         if (dCompressionIntroduced > dStretchCured) {
           i += 1;
@@ -465,6 +475,8 @@ export class LineRepair {
   }
 
   public static withFillPushIn(solution: LineSolution, enabled: boolean, naturalClusters: Cluster[], adjustedClusters: Cluster[], maxWidth: number, shrinkOpportunities: ShrinkOpportunity[], firstLineIndent: number, compressBias: number, forbiddenLineStartClusters: SortedSetTable<number> | null, forbiddenLineEndClusters: SortedSetTable<number>, unbreakableRanges: UnbreakableRanges, pushInPenalty: number, gapBoundaries?: SortedSetTable<number> | null, progressiveBreakOpportunities?: SortedMapTable<number, ProgressiveBreakOpportunity> | null): LineSolution {
+    gapBoundaries = gapBoundaries ?? null;
+    progressiveBreakOpportunities = progressiveBreakOpportunities ?? null;
     if (!enabled) {
       return solution;
     }

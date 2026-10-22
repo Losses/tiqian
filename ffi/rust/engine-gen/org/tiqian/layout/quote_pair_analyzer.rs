@@ -46,9 +46,9 @@ fn quote_pair_order_0(v: &QuoteType) -> i32 {
 }
 
 pub fn compare_quote_pair(a: &QuotePair, b: &QuotePair) -> i32 {
-    let cmp_open_index = match ((*(&a.open_index)) as i32).cmp(&((*(&b.open_index)) as i32)) { core::cmp::Ordering::Less => -1, core::cmp::Ordering::Equal => 0, core::cmp::Ordering::Greater => 1 };
+    let cmp_open_index = match i32::from_ne_bytes((*(&a.open_index)).to_ne_bytes()).cmp(&i32::from_ne_bytes((*(&b.open_index)).to_ne_bytes())) { core::cmp::Ordering::Less => -1, core::cmp::Ordering::Equal => 0, core::cmp::Ordering::Greater => 1 };
     if cmp_open_index != 0 { return cmp_open_index; }
-    let cmp_close_index = match ((*(&a.close_index)) as i32).cmp(&((*(&b.close_index)) as i32)) { core::cmp::Ordering::Less => -1, core::cmp::Ordering::Equal => 0, core::cmp::Ordering::Greater => 1 };
+    let cmp_close_index = match i32::from_ne_bytes((*(&a.close_index)).to_ne_bytes()).cmp(&i32::from_ne_bytes((*(&b.close_index)).to_ne_bytes())) { core::cmp::Ordering::Less => -1, core::cmp::Ordering::Equal => 0, core::cmp::Ordering::Greater => 1 };
     if cmp_close_index != 0 { return cmp_close_index; }
     let cmp_quote_type = match quote_pair_order_0(&a.quote_type).cmp(&quote_pair_order_0(&b.quote_type)) { core::cmp::Ordering::Less => -1, core::cmp::Ordering::Equal => 0, core::cmp::Ordering::Greater => 1 };
     if cmp_quote_type != 0 { return cmp_quote_type; }
@@ -90,7 +90,7 @@ fn quote_role_decision_order_0(v: &FontRole) -> i32 {
 }
 
 pub fn compare_quote_role_decision(a: &QuoteRoleDecision, b: &QuoteRoleDecision) -> i32 {
-    let cmp_index = match ((*(&a.index)) as i32).cmp(&((*(&b.index)) as i32)) { core::cmp::Ordering::Less => -1, core::cmp::Ordering::Equal => 0, core::cmp::Ordering::Greater => 1 };
+    let cmp_index = match i32::from_ne_bytes((*(&a.index)).to_ne_bytes()).cmp(&i32::from_ne_bytes((*(&b.index)).to_ne_bytes())) { core::cmp::Ordering::Less => -1, core::cmp::Ordering::Equal => 0, core::cmp::Ordering::Greater => 1 };
     if cmp_index != 0 { return cmp_index; }
     let cmp_role = match quote_role_decision_order_0(&a.role).cmp(&quote_role_decision_order_0(&b.role)) { core::cmp::Ordering::Less => -1, core::cmp::Ordering::Equal => 0, core::cmp::Ordering::Greater => 1 };
     if cmp_role != 0 { return cmp_role; }
@@ -117,7 +117,7 @@ impl QuotePairAnalyzer {
         let mut stack: Vec<OpenQuoteEntry> = vec![];
         let mut pairs: Vec<QuotePair> = vec![];
         let mut index = 0u32;
-        while ((index) as i32) < ((__count) as i32) {
+        while (i32::from_ne_bytes(((index) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((__count) as i32).to_ne_bytes())) {
             let c = u_string::unit_at_from(__units, index).unwrap_or(0);
             if c == 8220 {
                 stack.push(OpenQuoteEntry { index: index, r#type: QuoteType::Double });
@@ -126,13 +126,13 @@ impl QuotePairAnalyzer {
                     stack.push(OpenQuoteEntry { index: index, r#type: QuoteType::Single });
                 } else {
                     if c == 8221 {
-                        if u32::try_from((stack.len()) & 0xFFFF_FFFF).unwrap_or(0) as i32 > (0) && stack[usize::try_from(u32::wrapping_sub(u32::try_from((stack.len()) & 0xFFFF_FFFF).unwrap_or(0), 1)).unwrap_or(0)].r#type == QuoteType::Double {
+                        if i32::from_ne_bytes(((u32::try_from((stack.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes()) > (0) && stack[usize::try_from(u32::wrapping_sub(u32::try_from((stack.len()) & 0xFFFF_FFFF).unwrap_or(0), 1)).unwrap_or(0)].r#type == QuoteType::Double {
                             let r#match = stack.pop();
                             pairs.push(QuotePair::new(r#match.as_ref().unwrap().index, index, QuoteType::Double));
                         }
                     } else {
                         if c == 8217 {
-                            if !QuotePairAnalyzer::quote_pair_analyzer_is_non_cjk_in_word_apostrophe(text, index)? && ((u32::try_from((stack.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32) > (0) && stack[usize::try_from(u32::wrapping_sub(u32::try_from((stack.len()) & 0xFFFF_FFFF).unwrap_or(0), 1)).unwrap_or(0)].r#type == QuoteType::Single {
+                            if !QuotePairAnalyzer::quote_pair_analyzer_is_non_cjk_in_word_apostrophe(text, index)? && (i32::from_ne_bytes(((u32::try_from((stack.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) > (0) && stack[usize::try_from(u32::wrapping_sub(u32::try_from((stack.len()) & 0xFFFF_FFFF).unwrap_or(0), 1)).unwrap_or(0)].r#type == QuoteType::Single {
                                 let r#match = stack.pop();
                                 pairs.push(QuotePair::new(r#match.as_ref().unwrap().index, index, QuoteType::Single));
                             }
@@ -162,7 +162,7 @@ impl QuotePairAnalyzer {
     }
 
     pub(crate) fn quote_pair_analyzer_map_decisions(decisions: &Vec<QuoteRoleDecision>) -> SortedMapTable<u32, FontRole> {
-        let mut out: SortedMapTableBuilder<u32, FontRole> = SortedTable::sorted_table_map_builder::<u32, FontRole>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints((*a) as i32, (*b) as i32)));
+        let mut out: SortedMapTableBuilder<u32, FontRole> = SortedTable::sorted_table_map_builder::<u32, FontRole>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_bytes(((*a) as i32).to_ne_bytes()), i32::from_ne_bytes(((*b) as i32).to_ne_bytes()))));
         for d in decisions {
             out.put(&(d.index), &(d.role));
         }
@@ -195,12 +195,12 @@ Some(__option4) => after.is_none() } || !QuotePairAnalyzer::quote_pair_analyzer_
             return Ok(false);
         }
         let mut index = u32::wrapping_add(pair.open_index, 1);
-        while ((index) as i32) < ((pair.close_index) as i32) {
+        while (i32::from_ne_bytes(((index) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((pair.close_index) as i32).to_ne_bytes())) {
             let cp = QuotePairAnalyzer::quote_pair_analyzer_code_point_at_or_null(text, index);
             if match &(cp) { None => true, Some(__option5) => !QuotePairAnalyzer::quote_pair_analyzer_is_non_cjk_word_character(*__option5)? } {
                 return Ok(false);
             }
-            index = u32::wrapping_add(index, if cp.unwrap_or(0) as i32 > (65535) { 2 } else { 1 });
+            index = u32::wrapping_add(index, if i32::from_ne_bytes(((cp.unwrap_or(0)) as i32).to_ne_bytes()) > (65535) { 2 } else { 1 });
         }
         return Ok(true);
     }
@@ -214,21 +214,21 @@ Some(__option4) => after.is_none() } || !QuotePairAnalyzer::quote_pair_analyzer_
     }
 
     pub(crate) fn quote_pair_analyzer_is_fullwidth_east_asian_width(cp: u32) -> bool {
-        return cp == 12288 || ((cp) as i32) >= 65281 && ((cp) as i32) <= 65376 || ((cp) as i32) >= 65504 && ((cp) as i32) <= 65510;
+        return cp == 12288 || (i32::from_ne_bytes(((cp) as i32).to_ne_bytes())) >= 65281 && (i32::from_ne_bytes(((cp) as i32).to_ne_bytes())) <= 65376 || (i32::from_ne_bytes(((cp) as i32).to_ne_bytes())) >= 65504 && (i32::from_ne_bytes(((cp) as i32).to_ne_bytes())) <= 65510;
     }
 
     pub fn quote_pair_analyzer_code_point_before(text: &UStr, index: u32) -> Option<u32> {
     let __units3 = text.as_slice();
     let __count3 = u_string::unit_count(&text);
-        if index as i32 <= 0 {
+        if i32::from_ne_bytes(((index) as i32).to_ne_bytes()) <= 0 {
             return None;
         }
         let low = u_string::unit_at_from(__units3, u32::wrapping_sub(index, 1)).unwrap_or(0);
-        if low as i32 < (56320) || ((low) as i32) > (57343) || ((index) as i32) < (2) {
+        if i32::from_ne_bytes(((low) as i32).to_ne_bytes()) < (56320) || (i32::from_ne_bytes(((low) as i32).to_ne_bytes())) > (57343) || (i32::from_ne_bytes(((index) as i32).to_ne_bytes())) < (2) {
             return Some(low);
         }
         let high = u_string::unit_at_from(__units3, u32::wrapping_sub(index, 2)).unwrap_or(0);
-        if high as i32 < (55296) || ((high) as i32) > (56319) {
+        if i32::from_ne_bytes(((high) as i32).to_ne_bytes()) < (55296) || (i32::from_ne_bytes(((high) as i32).to_ne_bytes())) > (56319) {
             return Some(low);
         }
         return Some(u32::wrapping_add(u32::wrapping_add(65536, (u32::wrapping_sub(high, 55296)) << (10)), u32::wrapping_sub(low, 56320)));
@@ -237,15 +237,15 @@ Some(__option4) => after.is_none() } || !QuotePairAnalyzer::quote_pair_analyzer_
     pub fn quote_pair_analyzer_code_point_at_or_null(text: &UStr, index: u32) -> Option<u32> {
     let __units4 = text.as_slice();
     let __count4 = u_string::unit_count(&text);
-        if index > 2147483647 || ((index) as i32) >= __count4 as i32 {
+        if index > 2147483647 || (i32::from_ne_bytes(((index) as i32).to_ne_bytes())) >= i32::from_ne_bytes(((__count4) as i32).to_ne_bytes()) {
             return None;
         }
         let high = u_string::unit_at_from(__units4, index).unwrap_or(0);
-        if high as i32 < (55296) || ((high) as i32) > (56319) || ((u32::wrapping_add(index, 1)) as i32) >= __count4 as i32 {
+        if i32::from_ne_bytes(((high) as i32).to_ne_bytes()) < (55296) || (i32::from_ne_bytes(((high) as i32).to_ne_bytes())) > (56319) || (i32::from_ne_bytes(((u32::wrapping_add(index, 1)) as i32).to_ne_bytes())) >= i32::from_ne_bytes(((__count4) as i32).to_ne_bytes()) {
             return Some(high);
         }
         let low = u_string::unit_at_from(__units4, u32::wrapping_add(index, 1)).unwrap_or(0);
-        if low as i32 < (56320) || ((low) as i32) > (57343) {
+        if i32::from_ne_bytes(((low) as i32).to_ne_bytes()) < (56320) || (i32::from_ne_bytes(((low) as i32).to_ne_bytes())) > (57343) {
             return Some(high);
         }
         return Some(u32::wrapping_add(u32::wrapping_add(65536, (u32::wrapping_sub(high, 55296)) << (10)), u32::wrapping_sub(low, 56320)));
@@ -277,7 +277,7 @@ impl QuotePairAwareFontRoleClassifier {
         if u32::try_from((decisions.len()) & 0xFFFF_FFFF).unwrap_or(0) == 0 {
             return Ok(base.clone());
         }
-        let mut roles: SortedMapTableBuilder<u32, FontRole> = SortedTable::sorted_table_map_builder::<u32, FontRole>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints((*a) as i32, (*b) as i32)));
+        let mut roles: SortedMapTableBuilder<u32, FontRole> = SortedTable::sorted_table_map_builder::<u32, FontRole>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_bytes(((*a) as i32).to_ne_bytes()), i32::from_ne_bytes(((*b) as i32).to_ne_bytes()))));
         for decision in &decisions {
             roles.put(&(decision.index), &(decision.role));
         }

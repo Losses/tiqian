@@ -10,7 +10,6 @@ import { KinsokuModes } from "./KinsokuModes.ts";
 import { PunctuationGluePlacement } from "./PunctuationGluePlacement.ts";
 import { PunctuationGluePlacements } from "./PunctuationGluePlacements.ts";
 import { PunctuationWidthPolicy } from "./PunctuationWidthPolicy.ts";
-import { formatFloatRuntime } from "../../../runtime.ts";
 
 export class ClreqProfile {
   public readonly id: string;
@@ -24,9 +23,9 @@ export class ClreqProfile {
   public readonly kinsokuMode: KinsokuMode;
   public readonly punctuationWidth: PunctuationWidthPolicy;
   public static readonly DefaultCoalesceRepeatablePunctuation: readonly number[] = [8212, 8230, 8943];
-  public static readonly MainlandHorizontal: ClreqProfile = new ClreqProfile("clreq-mainland-horizontal", ClreqStrictness.Normal, ClreqRegion.Mainland, (CjkPunctuationGlyphPolicy.PreferClreqRecommendedCodepoints as CjkPunctuationGlyphPolicy), ClreqProfile.DefaultCoalesceRepeatablePunctuation, AutoSpacePolicy.Default, null, new AdjustmentStylePolicy(), ({ kind: "MeasureAdaptive", hangBelowEm: 14.0, gbAboveEm: 24.0, strictAboveEm: 32.0 } as KinsokuMode), new PunctuationWidthPolicy());
-  public static readonly TaiwanHorizontal: ClreqProfile = new ClreqProfile("clreq-taiwan-horizontal", ClreqStrictness.Normal, ClreqRegion.Taiwan, (CjkPunctuationGlyphPolicy.PreferClreqRecommendedCodepoints as CjkPunctuationGlyphPolicy), ClreqProfile.DefaultCoalesceRepeatablePunctuation, AutoSpacePolicy.Default, null, new AdjustmentStylePolicy(), ({ kind: "MeasureAdaptive", hangBelowEm: 14.0, gbAboveEm: 24.0, strictAboveEm: 32.0 } as KinsokuMode), new PunctuationWidthPolicy());
-  public static readonly HongKongHorizontal: ClreqProfile = new ClreqProfile("clreq-hongkong-horizontal", ClreqStrictness.Normal, ClreqRegion.HongKong, (CjkPunctuationGlyphPolicy.PreferClreqRecommendedCodepoints as CjkPunctuationGlyphPolicy), ClreqProfile.DefaultCoalesceRepeatablePunctuation, AutoSpacePolicy.Default, null, new AdjustmentStylePolicy(), ({ kind: "MeasureAdaptive", hangBelowEm: 14.0, gbAboveEm: 24.0, strictAboveEm: 32.0 } as KinsokuMode), new PunctuationWidthPolicy());
+  public static readonly MainlandHorizontal: ClreqProfile = new ClreqProfile("clreq-mainland-horizontal", (ClreqStrictness.Normal as ClreqStrictness), (ClreqRegion.Mainland as ClreqRegion), (CjkPunctuationGlyphPolicy.PreferClreqRecommendedCodepoints as CjkPunctuationGlyphPolicy), ClreqProfile.DefaultCoalesceRepeatablePunctuation, AutoSpacePolicy.Default, null, new AdjustmentStylePolicy(), ({ kind: "MeasureAdaptive", hangBelowEm: 14.0, gbAboveEm: 24.0, strictAboveEm: 32.0 } as KinsokuMode), new PunctuationWidthPolicy());
+  public static readonly TaiwanHorizontal: ClreqProfile = new ClreqProfile("clreq-taiwan-horizontal", (ClreqStrictness.Normal as ClreqStrictness), (ClreqRegion.Taiwan as ClreqRegion), (CjkPunctuationGlyphPolicy.PreferClreqRecommendedCodepoints as CjkPunctuationGlyphPolicy), ClreqProfile.DefaultCoalesceRepeatablePunctuation, AutoSpacePolicy.Default, null, new AdjustmentStylePolicy(), ({ kind: "MeasureAdaptive", hangBelowEm: 14.0, gbAboveEm: 24.0, strictAboveEm: 32.0 } as KinsokuMode), new PunctuationWidthPolicy());
+  public static readonly HongKongHorizontal: ClreqProfile = new ClreqProfile("clreq-hongkong-horizontal", (ClreqStrictness.Normal as ClreqStrictness), (ClreqRegion.HongKong as ClreqRegion), (CjkPunctuationGlyphPolicy.PreferClreqRecommendedCodepoints as CjkPunctuationGlyphPolicy), ClreqProfile.DefaultCoalesceRepeatablePunctuation, AutoSpacePolicy.Default, null, new AdjustmentStylePolicy(), ({ kind: "MeasureAdaptive", hangBelowEm: 14.0, gbAboveEm: 24.0, strictAboveEm: 32.0 } as KinsokuMode), new PunctuationWidthPolicy());
 
   constructor(id: string, strictness: ClreqStrictness, region: ClreqRegion, punctuationGlyphPolicy: CjkPunctuationGlyphPolicy | null = null, coalesceRepeatablePunctuation: readonly number[] | null = null, autoSpace: AutoSpacePolicy | null = null, gluePlacement: PunctuationGluePlacement | null = null, adjustment: AdjustmentStylePolicy, kinsokuMode: KinsokuMode, punctuationWidth: PunctuationWidthPolicy) {
     this.id = id;

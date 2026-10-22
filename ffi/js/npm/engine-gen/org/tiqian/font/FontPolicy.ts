@@ -20,20 +20,21 @@ export class FontRequest {
 }
 
 export function FontRequestroleOrder(v: FontRole): number {
-  if (v.kind === "Unknown") return 5;
-  if (v.kind === "Symbol") return 3;
-  if (v.kind === "LatinText") return 2;
-  if (v.kind === "Emoji") return 4;
   if (v.kind === "CjkText") return 0;
   if (v.kind === "CjkPunctuation") return 1;
+  if (v.kind === "LatinText") return 2;
+  if (v.kind === "Symbol") return 3;
+  if (v.kind === "Emoji") return 4;
+  if (v.kind === "Unknown") return 5;
   return 0;
 }
 
 export function compareFontRequest(a: FontRequest, b: FontRequest): number {
   if (a === b) return 0;
-  const apreferredFamiliesLength = a.preferredFamilies.length; const bpreferredFamiliesLength = b.preferredFamilies.length;
-  for (let i = 0; i < apreferredFamiliesLength && i < bpreferredFamiliesLength; i++) { if (a.preferredFamilies[i] !== b.preferredFamilies[i]) return a.preferredFamilies[i]! < b.preferredFamilies[i]! ? -1 : 1; }
-  if (apreferredFamiliesLength !== bpreferredFamiliesLength) return apreferredFamiliesLength - bpreferredFamiliesLength;
+  for (let i0 = 0, n0 = a.preferredFamilies.length < b.preferredFamilies.length ? a.preferredFamilies.length : b.preferredFamilies.length; i0 < n0; i0++) {
+    if (a.preferredFamilies[i0]! !== b.preferredFamilies[i0]!) return a.preferredFamilies[i0]! < b.preferredFamilies[i0]! ? -1 : 1;
+  }
+  if (a.preferredFamilies.length !== b.preferredFamilies.length) return a.preferredFamilies.length - b.preferredFamilies.length;
   if (a.locale !== b.locale) return a.locale < b.locale ? -1 : 1;
   if (FontRequestroleOrder(a.role) !== FontRequestroleOrder(b.role)) return FontRequestroleOrder(a.role) - FontRequestroleOrder(b.role);
   return 0;
@@ -56,12 +57,12 @@ export class FontCandidate {
 }
 
 export function FontCandidateroleOrder(v: FontRole): number {
-  if (v.kind === "Unknown") return 5;
-  if (v.kind === "Symbol") return 3;
-  if (v.kind === "LatinText") return 2;
-  if (v.kind === "Emoji") return 4;
   if (v.kind === "CjkText") return 0;
   if (v.kind === "CjkPunctuation") return 1;
+  if (v.kind === "LatinText") return 2;
+  if (v.kind === "Symbol") return 3;
+  if (v.kind === "Emoji") return 4;
+  if (v.kind === "Unknown") return 5;
   return 0;
 }
 
@@ -92,12 +93,12 @@ export class FontDecision {
 }
 
 export function FontDecisionroleOrder(v: FontRole): number {
-  if (v.kind === "Unknown") return 5;
-  if (v.kind === "Symbol") return 3;
-  if (v.kind === "LatinText") return 2;
-  if (v.kind === "Emoji") return 4;
   if (v.kind === "CjkText") return 0;
   if (v.kind === "CjkPunctuation") return 1;
+  if (v.kind === "LatinText") return 2;
+  if (v.kind === "Symbol") return 3;
+  if (v.kind === "Emoji") return 4;
+  if (v.kind === "Unknown") return 5;
   return 0;
 }
 

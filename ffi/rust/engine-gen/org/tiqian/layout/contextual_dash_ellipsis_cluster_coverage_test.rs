@@ -180,7 +180,7 @@ pub struct ContextualDashEllipsisClusterCoverageTestSupport;
 impl ContextualDashEllipsisClusterCoverageTestSupport {
     pub fn contextual_dash_ellipsis_cluster_coverage_test_support_single_mark(d: &[FontDecisionInfo]) -> Result<FontDecisionInfo, TextRangeError> {
         for i in 0..match u32::try_from(d.len()) { Ok(value) => value, Err(_) => u32::MAX } {
-            if u_string::find_from(&(((d[usize::try_from(i).unwrap_or(0)]).clone().source_text).to_ustring()), UString::from("—").as_ustr(), 0) as u32 <= 2147483647 {
+            if u32::from_ne_bytes(((u_string::find_from(&(((d[usize::try_from(i).unwrap_or(0)]).clone().source_text).to_ustring()), UString::from("—").as_ustr(), 0)) as u32).to_ne_bytes()) <= 2147483647 {
                 return Ok((d[usize::try_from(i).unwrap_or(0)]).clone());
             }
         }

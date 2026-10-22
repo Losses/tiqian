@@ -39,12 +39,12 @@ impl UnicodeEastAsianSpacing {
             return Ok(EastAsianSpacingValue::Other);
         }
         let mut index = 0u32;
-        while ((index) as i32) < ((__count) as i32) {
+        while (i32::from_ne_bytes(((index) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((__count) as i32).to_ne_bytes())) {
             let code_point = SourceInteractionBoundaries::source_interaction_boundaries_code_point_at_compat(grapheme_cluster, index, __count);
             if UnicodeEastAsianSpacing::unicode_east_asian_spacing_is_enclosing_mark(code_point) {
                 return Ok(EastAsianSpacingValue::Other);
             }
-            let advance = if code_point as i32 > (65535) { 2 } else { 1 };
+            let advance = if i32::from_ne_bytes(((code_point) as i32).to_ne_bytes()) > (65535) { 2 } else { 1 };
             index = u32::wrapping_add(index, advance);
         }
         let property = UnicodeEastAsianSpacing::unicode_east_asian_spacing_property_of(SourceInteractionBoundaries::source_interaction_boundaries_code_point_at_compat(grapheme_cluster, 0, __count))?;
@@ -65,8 +65,8 @@ impl UnicodeEastAsianSpacing {
         let mut leading = EastAsianSpacingValue::Other;
         let mut trailing = EastAsianSpacingValue::Other;
         let mut contains_wide = false;
-        while ((u32::wrapping_add(index, 1)) as i32) < ((u32::try_from((boundaries.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32) {
-            let value = UnicodeEastAsianSpacing::unicode_east_asian_spacing_resolved_for_grapheme_cluster(u_string::substring(&text, { let v: u32 = boundaries[usize::try_from(index).unwrap_or(0)]; v as i32 }, { let v: u32 = boundaries[usize::try_from(u32::wrapping_add(index, 1)).unwrap_or(0)]; v as i32 }).as_ustr(), locale)?;
+        while (i32::from_ne_bytes(((u32::wrapping_add(index, 1)) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((boundaries.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
+            let value = UnicodeEastAsianSpacing::unicode_east_asian_spacing_resolved_for_grapheme_cluster(u_string::substring(&text, { let v: u32 = boundaries[usize::try_from(index).unwrap_or(0)]; i32::from_ne_bytes(v.to_ne_bytes()) }, { let v: u32 = boundaries[usize::try_from(u32::wrapping_add(index, 1)).unwrap_or(0)]; i32::from_ne_bytes(v.to_ne_bytes()) }).as_ustr(), locale)?;
             if index == 0 {
                 leading = value;
             }
@@ -80,10 +80,10 @@ impl UnicodeEastAsianSpacing {
     }
 
     pub(crate) fn unicode_east_asian_spacing_validate_scalar(code_point: u32) -> Result<(), TextRangeError> {
-        if code_point > 2147483647 || ((code_point) as i32) > (1114111) {
+        if code_point > 2147483647 || (i32::from_ne_bytes(((code_point) as i32).to_ne_bytes())) > (1114111) {
             return Err(TextRangeError::Message { text: UString::from(format!("{}", { let mut __s = UString::new(); __s += &(UString::from("Not a Unicode scalar value: ")); __s += &(UString::from(format!("{}", crate::runtime::int_text::IntText::int_text(code_point)).as_str())); __s }).as_str()) });
         }
-        if code_point as i32 >= 55296 && ((code_point) as i32) <= 57343 {
+        if i32::from_ne_bytes(((code_point) as i32).to_ne_bytes()) >= 55296 && (i32::from_ne_bytes(((code_point) as i32).to_ne_bytes())) <= 57343 {
             return Err(TextRangeError::Message { text: UString::from(format!("{}", { let mut __s = UString::new(); __s += &(UString::from("Surrogate is not a Unicode scalar value: ")); __s += &(UString::from(format!("{}", crate::runtime::int_text::IntText::int_text(code_point)).as_str())); __s }).as_str()) });
         }
         Ok(())
@@ -98,12 +98,12 @@ impl UnicodeEastAsianSpacing {
             end = underscore;
         }
         if end < (0) {
-            end = __count2 as i32;
+            end = i32::from_ne_bytes(((__count2) as i32).to_ne_bytes());
         }
-        return u_string::substring(&locale, 0i32, (end) as i32).to_lowercase();
+        return u_string::substring(&locale, 0i32, i32::from_ne_bytes(((end) as i32).to_ne_bytes())).to_lowercase();
     }
 
     pub(crate) fn unicode_east_asian_spacing_is_enclosing_mark(code_point: u32) -> bool {
-        return code_point == 1160 || code_point == 1161 || code_point == 6846 || ((code_point) as i32) >= 8413 && ((code_point) as i32) <= 8416 || ((code_point) as i32) >= 42608 && ((code_point) as i32) <= 42610 || ((code_point) as i32) >= 42612 && ((code_point) as i32) <= 42621;
+        return code_point == 1160 || code_point == 1161 || code_point == 6846 || (i32::from_ne_bytes(((code_point) as i32).to_ne_bytes())) >= 8413 && (i32::from_ne_bytes(((code_point) as i32).to_ne_bytes())) <= 8416 || (i32::from_ne_bytes(((code_point) as i32).to_ne_bytes())) >= 42608 && (i32::from_ne_bytes(((code_point) as i32).to_ne_bytes())) <= 42610 || (i32::from_ne_bytes(((code_point) as i32).to_ne_bytes())) >= 42612 && (i32::from_ne_bytes(((code_point) as i32).to_ne_bytes())) <= 42621;
     }
 }

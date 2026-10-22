@@ -150,7 +150,7 @@ impl ContextualDashEllipsisRoleResolverTestSupport {
     pub fn contextual_dash_ellipsis_role_resolver_test_support_font_at(r: LayoutResult, index: u32) -> Result<FontDecisionInfo, TextRangeError> {
         for i in 0..match u32::try_from((r.debug).clone().font_decisions.len()) { Ok(value) => value, Err(_) => u32::MAX } {
             let d = ((r.debug).clone().font_decisions[usize::try_from(i).unwrap_or(0)]).clone();
-            if index as i32 >= (d.range).clone().start as i32 && ((index) as i32) < (((d.range).clone().end) as i32) {
+            if i32::from_ne_bytes(((index) as i32).to_ne_bytes()) >= i32::from_ne_bytes((((d.range).clone().start) as i32).to_ne_bytes()) && (i32::from_ne_bytes(((index) as i32).to_ne_bytes())) < (i32::from_ne_bytes((((d.range).clone().end) as i32).to_ne_bytes())) {
                 return Ok(d);
             }
         }

@@ -61,7 +61,7 @@ impl UnicodePunctuationBoundaryTestSupport {
     }
 
     pub fn unicode_punctuation_boundary_test_support_set_ints(values: &Vec<u32>) -> SortedSetTable<u32> {
-        let mut b: SortedSetTableBuilder<u32> = SortedTable::sorted_table_set_builder::<u32>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints((*a) as i32, (*b) as i32)));
+        let mut b: SortedSetTableBuilder<u32> = SortedTable::sorted_table_set_builder::<u32>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_bytes(((*a) as i32).to_ne_bytes()), i32::from_ne_bytes(((*b) as i32).to_ne_bytes()))));
         for i in 0..match u32::try_from(values.len()) { Ok(value) => value, Err(_) => u32::MAX } {
             b.put(&(values[usize::try_from(i).unwrap_or(0)]));
         }
@@ -104,7 +104,7 @@ impl UnicodePunctuationBoundaryTestSupport {
         let mut a: Vec<UString> = vec![];
         for i in 0..match u32::try_from(r.lines.len()) { Ok(value) => value, Err(_) => u32::MAX } {
             let x = (r.lines[usize::try_from(i).unwrap_or(0)]).clone();
-            a.push(u_string::substring(&text, ((x.range).clone().start) as i32, ((x.range).clone().end) as i32));
+            a.push(u_string::substring(&text, i32::from_ne_bytes((((x.range).clone().start) as i32).to_ne_bytes()), i32::from_ne_bytes((((x.range).clone().end) as i32).to_ne_bytes())));
         }
         return a;
     }
@@ -142,7 +142,7 @@ impl UnicodePunctuationBoundaryTestSupport {
     let __count = u_string::unit_count(&text);
         let mut a: Vec<Cluster> = vec![];
         for i in 0..match u32::try_from(u_string::unit_count(&(text))) { Ok(value) => value, Err(_) => u32::MAX } {
-            a.push(Cluster::new(TextRange::new(i, u32::wrapping_add(i, 1))?, u_string::substring(&text, { let v: u32 = i; v as i32 }, (u32::wrapping_add(i, 1)) as i32).as_ustr(), if matches!(latin.as_ref(), Some(__v) if __v == &(true)) { UString::from("latin") } else { UString::from("cjk") }.as_ustr(), 16 as f64 as f64, Some(u_string::substring(&text, { let v: u32 = i; v as i32 }, (u32::wrapping_add(i, 1)) as i32)), Some(0.0), Some(0.0), Some(0.0)));
+            a.push(Cluster::new(TextRange::new(i, u32::wrapping_add(i, 1))?, u_string::substring(&text, { let v: u32 = i; i32::from_ne_bytes(v.to_ne_bytes()) }, i32::from_ne_bytes(((u32::wrapping_add(i, 1)) as i32).to_ne_bytes())).as_ustr(), if matches!(latin.as_ref(), Some(__v) if __v == &(true)) { UString::from("latin") } else { UString::from("cjk") }.as_ustr(), 16 as f64 as f64, Some(u_string::substring(&text, { let v: u32 = i; i32::from_ne_bytes(v.to_ne_bytes()) }, i32::from_ne_bytes(((u32::wrapping_add(i, 1)) as i32).to_ne_bytes()))), Some(0.0), Some(0.0), Some(0.0)));
         }
         return Ok(a);
     }

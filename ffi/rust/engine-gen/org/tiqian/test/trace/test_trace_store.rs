@@ -121,16 +121,16 @@ impl TestTraceStore {
 "")).encode_utf16());
         let mut order: Vec<u32> = Vec::new();
         let mut index = 0u32;
-        while ((index) as i32) < ((u32::try_from((((class_state).as_ref().unwrap().sections).clone().len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32) {
+        while (i32::from_ne_bytes(((index) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((((class_state).as_ref().unwrap().sections).clone().len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
             let mut insertion = u32::try_from((order.len()) & 0xFFFF_FFFF).unwrap_or(0);
-            while ((insertion) as i32) > (0) && (((((class_state).as_ref().unwrap().sections).clone()[usize::try_from(order[usize::try_from(u32::wrapping_sub(insertion, 1)).unwrap_or(0)]).unwrap_or(0)]).clone().name).to_ustring().as_ustr()) > (((((class_state).as_ref().unwrap().sections).clone()[usize::try_from(index).unwrap_or(0)]).clone().name).to_ustring().as_ustr()) {
+            while (i32::from_ne_bytes(((insertion) as i32).to_ne_bytes())) > (0) && (((((class_state).as_ref().unwrap().sections).clone()[usize::try_from(order[usize::try_from(u32::wrapping_sub(insertion, 1)).unwrap_or(0)]).unwrap_or(0)]).clone().name).to_ustring().as_ustr()) > (((((class_state).as_ref().unwrap().sections).clone()[usize::try_from(index).unwrap_or(0)]).clone().name).to_ustring().as_ustr()) {
                 insertion = u32::wrapping_sub(insertion, 1);
             }
-            { let _a = &mut (order); let _n = i32::try_from(_a.len()).unwrap_or(0); let _pos = insertion as i32; let _at = if _pos < 0 { let _tail = _n + _pos; if _tail < 0 { 0 } else { _tail } } else if _pos > _n { _n } else { _pos }; _a.insert(usize::try_from(_at).unwrap_or(0), index); };
+            { let _a = &mut (order); let _n = i32::try_from(_a.len()).unwrap_or(0); let _pos = i32::from_ne_bytes(((insertion) as i32).to_ne_bytes()); let _at = if _pos < 0 { let _tail = _n + _pos; if _tail < 0 { 0 } else { _tail } } else if _pos > _n { _n } else { _pos }; _a.insert(usize::try_from(_at).unwrap_or(0), index); };
             index = u32::wrapping_add(index, 1);
         }
         index = 0u32;
-        while ((index) as i32) < ((u32::try_from((order.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32) {
+        while (i32::from_ne_bytes(((index) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((order.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
             let section = (((class_state).as_ref().unwrap().sections).clone()[usize::try_from(order[usize::try_from(index).unwrap_or(0)]).unwrap_or(0)]).clone();
             if let Some(&unit) = output.last() {
                 if unit >= 55296 && unit <= 56319 && !UString::from("test: ").is_empty() {
@@ -160,7 +160,7 @@ impl TestTraceStore {
             output.extend(UString::from(concat!("\n",
 "")).encode_utf16());
             let section_text = UString::from_utf16(section.lines.as_slice()).map_err(|_| UStringFault::UnpairedSurrogate { unit: u32::from(section.lines[section.lines.len() - 1]) })?;
-            if u_string::unit_count(&(section_text)) as i32 > (0) {
+            if i32::from_ne_bytes(((u_string::unit_count(&(section_text))) as i32).to_ne_bytes()) > (0) {
                 if let Some(&unit) = output.last() {
                     if unit >= 55296 && unit <= 56319 && !section_text.is_empty() {
                         if !match (section_text).encode_utf16().next() { Some(head) => head >= 56320 && head <= 57343, None => false } {
@@ -177,7 +177,7 @@ impl TestTraceStore {
 
     pub(crate) fn test_trace_store_find_class(class_name: &UStr) -> Option<TraceClassState> {
         let mut index = 0u32;
-        while ((index) as i32) < ((match u32::try_from(TEST_TRACE_STORE_CLASSES.lock().unwrap_or_else(|e| e.into_inner()).len()) { Ok(value) => value, Err(_) => u32::MAX }) as i32) {
+        while (i32::from_ne_bytes(((index) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((match u32::try_from(TEST_TRACE_STORE_CLASSES.lock().unwrap_or_else(|e| e.into_inner()).len()) { Ok(value) => value, Err(_) => u32::MAX }) as i32).to_ne_bytes())) {
             if TEST_TRACE_STORE_CLASSES.lock().unwrap_or_else(|e| e.into_inner())[match usize::try_from(index) { Ok(value) => value, Err(_) => 0usize }].clone().class_name.to_ustring() == class_name {
                 return Some((TEST_TRACE_STORE_CLASSES.lock().unwrap_or_else(|e| e.into_inner())[match usize::try_from(index) { Ok(value) => value, Err(_) => 0usize }]).clone());
             }
@@ -188,7 +188,7 @@ impl TestTraceStore {
 
     pub(crate) fn test_trace_store_find_section(class_state: TraceClassState, section_name: &UStr) -> Option<TraceSectionState> {
         let mut index = 0u32;
-        while ((index) as i32) < ((u32::try_from((class_state.sections.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32) {
+        while (i32::from_ne_bytes(((index) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((class_state.sections.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
             if class_state.sections[usize::try_from(index).unwrap_or(0)].clone().name.to_ustring() == section_name {
                 return Some((class_state.sections[usize::try_from(index).unwrap_or(0)]).clone());
             }

@@ -86,7 +86,7 @@ impl TraceFormat {
     let __count = u_string::unit_count(&value);
         let mut output = UString::new();
         let mut index = 0u32;
-        while ((index) as i32) < ((__count) as i32) {
+        while (i32::from_ne_bytes(((index) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((__count) as i32).to_ne_bytes())) {
             let code_unit = u_string::unit_at_from(__units, index).unwrap_or(0);
             if code_unit == 10 {
                 output += &(UString::from("\\n"));
@@ -134,7 +134,7 @@ impl TraceFormat {
         let integer_part = TraceFormat::trace_format_integer_part_of(magnitude, rounded, scale);
         let fraction_part = u32::try_from((rounded.wrapping_sub(TraceFormat::trace_format_multiply(integer_part, scale))) & 0xFFFF_FFFF).unwrap_or(0);
         let mut fraction_text = { let mut __s = UString::new(); __s += &(UString::from("")); __s += &(UString::from(format!("{}", crate::runtime::int_text::IntText::int_text(fraction_part)).as_str())); __s };
-        while ((u_string::unit_count(&(fraction_text))) as i32) < ((decimals) as i32) {
+        while (i32::from_ne_bytes(((u_string::unit_count(&(fraction_text))) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((decimals) as i32).to_ne_bytes())) {
             fraction_text = UString::from(format!("{}", { let mut __s = UString::new(); __s += &(UString::from("0")); __s += fraction_text.as_ustr(); __s }).as_str());
         }
         return UString::from(format!("{}", { let mut __s = UString::new(); __s += (if negative { UString::from("-") } else { UString::from("") }).as_ustr(); __s += &(UString::from(format!("{}", crate::runtime::int_text::IntText::int_text(integer_part)).as_str())); __s += &(UString::from(".")); __s += fraction_text.as_ustr(); __s }).as_str());
@@ -156,8 +156,8 @@ impl TraceFormat {
         let bits = FPHelper::float_to_i32(magnitude);
         let exponent_field = bits >> 23 & 255;
         let mantissa_bits = bits & 8388607;
-        let mantissa = if exponent_field as u32 == 0 { mantissa_bits as u32 } else { mantissa_bits as u32 | 8388608 as u32 };
-        let exponent = if exponent_field as u32 == 0 { 4294967147u32 } else { i32::wrapping_sub(exponent_field, 150) as u32 };
+        let mantissa = if u32::from_ne_bytes(((exponent_field) as u32).to_ne_bytes()) == 0 { u32::from_ne_bytes(((mantissa_bits) as u32).to_ne_bytes()) } else { u32::from_ne_bytes(((u32::from_ne_bytes(((mantissa_bits) as u32).to_ne_bytes()) | 8388608) as u32).to_ne_bytes()) };
+        let exponent = if u32::from_ne_bytes(((exponent_field) as u32).to_ne_bytes()) == 0 { 4294967147u32 } else { u32::from_ne_bytes(((i32::wrapping_sub(exponent_field, 150)) as u32).to_ne_bytes()) };
         let product = TraceFormat::trace_format_multiply(mantissa, scale);
         if exponent <= 2147483647 {
             return product.wrapping_shl(exponent);
@@ -166,13 +166,11 @@ impl TraceFormat {
         if divisor_shift >= 64 {
             return 0i64;
         }
-        return i64::from_ne_bytes(u64::from_ne_bytes((product.wrapping_add((1i64).wrapping_shl((i32::wrapping_sub(divisor_shift, 1)) as u32))).to_ne_bytes()).wrapping_shr((divisor_shift) as u32).to_ne_bytes());
+        return i64::from_ne_bytes(u64::from_ne_bytes((product.wrapping_add((1i64).wrapping_shl(u32::from_ne_bytes(((i32::wrapping_sub(divisor_shift, 1)) as u32).to_ne_bytes())))).to_ne_bytes()).wrapping_shr(u32::from_ne_bytes(((divisor_shift) as u32).to_ne_bytes())).to_ne_bytes());
     }
 
     pub(crate) fn trace_format_integer_part_of(magnitude: f64, rounded: i64, scale: u32) -> u32 {
-        let mut whole = match f64::from(f64::floor(magnitude)) { v if v.is_nan() => 0i32, v if v >= 2147483648.0 => 2147483647i32, v if v < -2147483648.0 => -2147483648i32,
-v if v < 0.0 => i32::from_ne_bytes(u32::wrapping_sub(0, match ((0.0 - v).to_bits() >> 52) & 2047 { e if e < 1023 => 0u32, e => u32::try_from((((0.0 - v).to_bits() & 4503599627370495) | 4503599627370496) >> (52 - (e - 1023))).unwrap_or(0) }).to_ne_bytes()),
-v => i32::from_ne_bytes(match ((v).to_bits() >> 52) & 2047 { e if e < 1023 => 0u32, e => u32::try_from((((v).to_bits() & 4503599627370495) | 4503599627370496) >> (52 - (e - 1023))).unwrap_or(0) }.to_ne_bytes()) } as u32;
+        let mut whole = u32::from_ne_bytes(((match f64::from(f64::floor(magnitude)) { v if v.is_nan() => 0i32, v if v >= 2147483648.0 => 2147483647i32, v if v < -2147483648.0 => -2147483648i32, v if v < 0.0 => i32::from_ne_bytes(u32::wrapping_sub(0, match ((0.0 - v).to_bits() >> 52) & 2047 { e if e < 1023 => 0u32, e => u32::try_from((((0.0 - v).to_bits() & 4503599627370495) | 4503599627370496) >> (52 - (e - 1023))).unwrap_or(0) }).to_ne_bytes()), v => i32::from_ne_bytes(match ((v).to_bits() >> 52) & 2047 { e if e < 1023 => 0u32, e => u32::try_from((((v).to_bits() & 4503599627370495) | 4503599627370496) >> (52 - (e - 1023))).unwrap_or(0) }.to_ne_bytes()) }) as u32).to_ne_bytes());
         if rounded >= TraceFormat::trace_format_multiply(u32::wrapping_add(whole, 1), scale) {
             whole = u32::wrapping_add(whole, 1);
         }
@@ -183,7 +181,7 @@ v => i32::from_ne_bytes(match ((v).to_bits() >> 52) & 2047 { e if e < 1023 => 0u
         let mut product = 0i64;
         let mut factor = right;
         let mut shift = 0u32;
-        while ((factor) as i32) > (0) {
+        while (i32::from_ne_bytes(((factor) as i32).to_ne_bytes())) > (0) {
             if factor & 1 != 0 {
                 product = product.wrapping_add((i64::from((left) ^ 0x8000_0000u32).wrapping_sub(0x8000_0000i64)).wrapping_shl(shift));
             }

@@ -29,12 +29,12 @@ export class DashEllipsisRoleDecision {
 }
 
 export function DashEllipsisRoleDecisionroleOrder(v: FontRole): number {
-  if (v.kind === "Unknown") return 5;
-  if (v.kind === "Symbol") return 3;
-  if (v.kind === "LatinText") return 2;
-  if (v.kind === "Emoji") return 4;
   if (v.kind === "CjkText") return 0;
   if (v.kind === "CjkPunctuation") return 1;
+  if (v.kind === "LatinText") return 2;
+  if (v.kind === "Symbol") return 3;
+  if (v.kind === "Emoji") return 4;
+  if (v.kind === "Unknown") return 5;
   return 0;
 }
 
@@ -52,6 +52,7 @@ export class ContextualDashEllipsisRoleResolver {
   }
 
   public resolve(text: string, context?: FontRoleContext | null): DashEllipsisRoleDecision[] {
+    context = context ?? null;
     const actualContext = context ?? new FontRoleContext("zh-Hans", null);
     let hasMark = false;
     let ci = 0;
@@ -101,13 +102,13 @@ export class ContextualDashEllipsisRoleResolver {
     const leftRole = strongScriptContext.leftOf(range.start);
     const rightRole = strongScriptContext.rightOf(range.end);
     if (leftRole !== null && rightRole === leftRole) {
-      return new Resolution(leftRole, "DashEllipsisSurroundingScriptContext", "matching-surrounding-script");
+      return new Resolution((leftRole)!, "DashEllipsisSurroundingScriptContext", "matching-surrounding-script");
     }
     if (leftRole !== null && rightRole === null) {
-      return new Resolution(leftRole, "DashEllipsisSurroundingScriptContext", "only-left-strong-script");
+      return new Resolution((leftRole)!, "DashEllipsisSurroundingScriptContext", "only-left-strong-script");
     }
     if (rightRole !== null && leftRole === null) {
-      return new Resolution(rightRole, "DashEllipsisSurroundingScriptContext", "only-right-strong-script");
+      return new Resolution((rightRole)!, "DashEllipsisSurroundingScriptContext", "only-right-strong-script");
     }
     const reason = (leftRole !== null && rightRole !== null ? "conflicting-surrounding-script" : "no-strong-script-context");
     return this.paragraphLanguageResolution(context, reason);
@@ -135,20 +136,20 @@ export class ContextualDashEllipsisRoleResolver {
 
   private parentheticalPairResolution(leftRole: FontRole | null, rightRole: FontRole | null, context: FontRoleContext): Resolution {
     if (leftRole !== null && rightRole === leftRole) {
-      return new Resolution(leftRole, "ParentheticalDashPairContext", "matching-outer-script");
+      return new Resolution((leftRole)!, "ParentheticalDashPairContext", "matching-outer-script");
     }
     if (leftRole !== null && rightRole === null) {
-      return new Resolution(leftRole, "ParentheticalDashPairContext", "only-left-outer-script");
+      return new Resolution((leftRole)!, "ParentheticalDashPairContext", "only-left-outer-script");
     }
     if (rightRole !== null && leftRole === null) {
-      return new Resolution(rightRole, "ParentheticalDashPairContext", "only-right-outer-script");
+      return new Resolution((rightRole)!, "ParentheticalDashPairContext", "only-right-outer-script");
     }
     const reason = (leftRole !== null && rightRole !== null ? "parenthetical-pair-conflicting-outer-script" : "parenthetical-pair-no-outer-context");
     return this.paragraphLanguageResolution(context, reason);
   }
 
   private paragraphLanguageResolution(context: FontRoleContext, reason: string): Resolution {
-    const role = (UnicodeEastAsianSpacing.isChineseLanguageContext(context.locale) ? FontRole.CjkPunctuation : FontRole.LatinText);
+    const role = (UnicodeEastAsianSpacing.isChineseLanguageContext(context.locale) ? (FontRole.CjkPunctuation as FontRole) : (FontRole.LatinText as FontRole));
     return new Resolution(role, "ParagraphLanguageDashEllipsisContext", reason + "; paragraph-language=" + context.locale);
   }
 
@@ -187,11 +188,11 @@ export class ContextualDashEllipsisRoleResolver {
 
   public static codePointAtCompat(text: string, index: number): number {
     const high = (Number.isNaN(text.charCodeAt(index)) ? null : text.charCodeAt(index))!;
-    if (high < 55296 || high > 56319 || index + 1 >= text.length) {
+    if (high! < 55296 || high! > 56319 || index + 1 >= text.length) {
       return high!;
     }
     const low = readUnit(text, index + 1)!;
-    if (low < 56320 || low > 57343) {
+    if (low! < 56320 || low! > 57343) {
       return high!;
     }
     return 65536 + (high - 55296 << 10) + (low - 56320);
@@ -227,13 +228,15 @@ export class ContextualDashEllipsisAwareFontRoleClassifier implements FontRoleCl
   }
 
   public classify(text: string, range: TextRange, context?: FontRoleContext | null): FontRole {
+    context = context ?? null;
     const role = this.roleByIndex.get(range.start);
-    return (role === null ? this.delegate.classify(text, range, context) : role);
+    return (role === null ? this.delegate.classify(text, range, context) : role)!;
   }
 }
 
 export class ContextualDashEllipsisRoles {
   public static withContextualDashEllipsisRoles(base: FontRoleClassifier, text: string, context?: FontRoleContext | null): FontRoleClassifier {
+    context = context ?? null;
     const decisions = new ContextualDashEllipsisRoleResolver().resolve(text, context);
     return (decisions.length === 0 ? base : new ContextualDashEllipsisAwareFontRoleClassifier(base, decisions));
   }
@@ -321,18 +324,18 @@ export class StrongScriptContextIndex {
       case "Neutral":
         return currentRole;
       case "EastAsian":
-        return FontRole.CjkPunctuation;
+        return (FontRole.CjkPunctuation as FontRole);
       case "Other":
-        return FontRole.LatinText;
+        return (FontRole.LatinText as FontRole);
     }
   }
 
   private static scalarStartBefore(text: string, endExclusive: number): number {
     const lastIndex = endExclusive - 1;
     const last = (Number.isNaN(text.charCodeAt(lastIndex)) ? null : text.charCodeAt(lastIndex))!;
-    if (last >= 56320 && last <= 57343 && lastIndex > 0) {
+    if (last! >= 56320 && last! <= 57343 && lastIndex > 0) {
       const before = readUnit(text, lastIndex - 1)!;
-      if (before >= 55296 && before <= 56319) {
+      if (before! >= 55296 && before! <= 56319) {
         return lastIndex - 1;
       }
     }

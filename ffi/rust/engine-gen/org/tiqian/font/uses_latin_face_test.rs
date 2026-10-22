@@ -144,7 +144,7 @@ fn only_latin_text_uses_latin_face() {
     FontRole::Unknown,
 ];
         let mut i = 0u32;
-        while ((i) as i32) < ((u32::try_from((a.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32) {
+        while (i32::from_ne_bytes(((i) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((a.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
             let _ = TracedAssertions::traced_assertions_assert_false(a[usize::try_from(i).unwrap_or(0)].uses_latin_face(), Some(UString::from(format!("{}", { let mut __s = UString::new(); __s += UString::from(a[usize::try_from(i).unwrap_or(0)].name()).as_ustr(); __s += &(UString::from(" must fall back to the CJK face")); __s }).as_str()))).unwrap();
             i = u32::wrapping_add(i, 1);
         }
@@ -164,7 +164,7 @@ fn name_overload_agrees_with_enum() {
     UString::from("Unknown").to_ustring(),
 ];
         let mut i = 0u32;
-        while ((i) as i32) < ((u32::try_from((names.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32) {
+        while (i32::from_ne_bytes(((i) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((names.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
             let x = (names[usize::try_from(i).unwrap_or(0)]).clone();
             let _ = TracedAssertions::traced_assertions_assert_equals_rendered(if x == UString::from("LatinText") { UString::from("true") } else { UString::from("false") }.as_ustr(), if font_role_name_uses_latin_face(Some((x).to_ustring())) { UString::from("true") } else { UString::from("false") }.as_ustr(), Some(UString::from(format!("{}", { let mut __s = UString::new(); __s += &(UString::from("name overload must match the enum for ")); __s += x.as_ustr(); __s }).as_str()))).unwrap();
             i = u32::wrapping_add(i, 1);

@@ -1069,11 +1069,11 @@ fn glue_capacities_report_sides_and_pairing() {
     testlib::run("org.tiqian.layout.PunctuationGeometryLedgerCoverageTest.glueCapacitiesReportSidesAndPairing", "org.tiqian.layout.PunctuationGeometryLedgerCoverageTest.glueCapacitiesReportSidesAndPairing", || {
         PunctuationGeometryLedgerCoverageSupport::punctuation_geometry_ledger_coverage_support_start(UStr::new(&[103,108,117,101,67,97,112,97,99,105,116,105,101,115,82,101,112,111,114,116,83,105,100,101,115,65,110,100,80,97,105,114,105,110,103]));
         let m: SortedMapTable<u32, GlueCapacity> = PunctuationGeometryLedgerCoverageSupport::punctuation_geometry_ledger_coverage_support_ledger(&vec![UString::from("。").to_ustring(), UString::from("「").to_ustring()]).unwrap().glue_capacities();
-        let mut ek: SortedSetTableBuilder<u32> = SortedTable::sorted_table_set_builder::<u32>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints((*a) as i32, (*b) as i32)));
+        let mut ek: SortedSetTableBuilder<u32> = SortedTable::sorted_table_set_builder::<u32>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_bytes(((*a) as i32).to_ne_bytes()), i32::from_ne_bytes(((*b) as i32).to_ne_bytes()))));
         ek.put(&(1));
-        let mut ak: SortedSetTableBuilder<u32> = SortedTable::sorted_table_set_builder::<u32>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints((*a) as i32, (*b) as i32)));
-        for i in 0..((m.size()) as u32) {
-            ak.put(&(m.key_at({ let v: u32 = i; v as i32 })));
+        let mut ak: SortedSetTableBuilder<u32> = SortedTable::sorted_table_set_builder::<u32>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_bytes(((*a) as i32).to_ne_bytes()), i32::from_ne_bytes(((*b) as i32).to_ne_bytes()))));
+        for i in 0..u32::from_ne_bytes(((m.size()) as u32).to_ne_bytes()) {
+            ak.put(&(m.key_at({ let v: u32 = i; i32::from_ne_bytes(v.to_ne_bytes()) })));
         }
         let _ = TracedAssertions::traced_assertions_assert_equals_int_set(ek.clone().build(), ak.clone().build(), None).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_equals_float(8 as f64, m.get(&(1)).as_ref().unwrap().leading, None).unwrap();
@@ -1100,30 +1100,30 @@ fn justification_deltas_and_structural_channels_feed_resolved_advance() {
         PunctuationGeometryLedgerCoverageSupport::punctuation_geometry_ledger_coverage_support_start(UStr::new(&[106,117,115,116,105,102,105,99,97,116,105,111,110,68,101,108,116,97,115,65,110,100,83,116,114,117,99,116,117,114,97,108,67,104,97,110,110,101,108,115,70,101,101,100,82,101,115,111,108,118,101,100,65,100,118,97,110,99,101]));
         let base = PunctuationGeometryLedgerCoverageSupport::punctuation_geometry_ledger_coverage_support_ledger(&vec![UString::from("「").to_ustring(), UString::from("中").to_ustring()]).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_equals_float(16 as f64, base.resolve_clusters()[0usize].advance, None).unwrap();
-        let mut b: SortedMapTableBuilder<u32, f64> = SortedTable::sorted_table_map_builder::<u32, f64>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints((*a) as i32, (*b) as i32)));
+        let mut b: SortedMapTableBuilder<u32, f64> = SortedTable::sorted_table_map_builder::<u32, f64>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_bytes(((*a) as i32).to_ne_bytes()), i32::from_ne_bytes(((*b) as i32).to_ne_bytes()))));
         b.put(&(0), &(1.5f64));
         let justified = base.add_justification_deltas(b.clone().build());
         let _ = TracedAssertions::traced_assertions_assert_equals_float(17.5f64, justified.resolve_clusters()[0usize].advance, None).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_equals_float(1.5f64, justified.to_decision_info()[0usize].justification_delta, None).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_equals_float(0 as f64, base.to_decision_info()[0usize].justification_delta, None).unwrap();
-        let mut s: SortedMapTableBuilder<u32, f64> = SortedTable::sorted_table_map_builder::<u32, f64>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints((*a) as i32, (*b) as i32)));
+        let mut s: SortedMapTableBuilder<u32, f64> = SortedTable::sorted_table_map_builder::<u32, f64>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_bytes(((*a) as i32).to_ne_bytes()), i32::from_ne_bytes(((*b) as i32).to_ne_bytes()))));
         s.put(&(0), &(2.0f64));
         let spread = base.with_ruby_spread(s.clone().build());
         let _ = TracedAssertions::traced_assertions_assert_equals_float(18 as f64, spread.resolve_clusters()[0usize].advance, None).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_equals_float(2 as f64, spread.to_decision_info()[0usize].ruby_spread, None).unwrap();
-        let mut r: SortedMapTableBuilder<u32, f64> = SortedTable::sorted_table_map_builder::<u32, f64>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints((*a) as i32, (*b) as i32)));
+        let mut r: SortedMapTableBuilder<u32, f64> = SortedTable::sorted_table_map_builder::<u32, f64>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_bytes(((*a) as i32).to_ne_bytes()), i32::from_ne_bytes(((*b) as i32).to_ne_bytes()))));
         r.put(&(0), &(3.0f64));
         let trimmed = base.with_raw_edge_trims(r.clone().build());
         let _ = TracedAssertions::traced_assertions_assert_equals_float(13 as f64, trimmed.resolve_clusters()[0usize].advance, None).unwrap();
-        let mut r2: SortedMapTableBuilder<u32, f64> = SortedTable::sorted_table_map_builder::<u32, f64>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints((*a) as i32, (*b) as i32)));
+        let mut r2: SortedMapTableBuilder<u32, f64> = SortedTable::sorted_table_map_builder::<u32, f64>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_bytes(((*a) as i32).to_ne_bytes()), i32::from_ne_bytes(((*b) as i32).to_ne_bytes()))));
         r2.put(&(0), &(20.0f64));
         let trimmed_twice = trimmed.with_raw_edge_trims(r2.clone().build());
         let _ = TracedAssertions::traced_assertions_assert_equals_float(0 as f64, trimmed_twice.resolve_clusters()[0usize].advance, None).unwrap();
-        let empty: SortedMapTable<u32, f64> = SortedTable::sorted_table_map_builder::<u32, f64>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints((*a) as i32, (*b) as i32))).clone().build();
+        let empty: SortedMapTable<u32, f64> = SortedTable::sorted_table_map_builder::<u32, f64>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_bytes(((*a) as i32).to_ne_bytes()), i32::from_ne_bytes(((*b) as i32).to_ne_bytes())))).clone().build();
         let _ = TracedAssertions::traced_assertions_assert_true(base.with_ruby_spread((empty).clone()) == base, None).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_true(base.with_raw_edge_trims((empty).clone()) == base, None).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_true(base.with_inline_box_advances((empty).clone()) == base, None).unwrap();
-        let mut r#box: SortedMapTableBuilder<u32, f64> = SortedTable::sorted_table_map_builder::<u32, f64>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints((*a) as i32, (*b) as i32)));
+        let mut r#box: SortedMapTableBuilder<u32, f64> = SortedTable::sorted_table_map_builder::<u32, f64>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_bytes(((*a) as i32).to_ne_bytes()), i32::from_ne_bytes(((*b) as i32).to_ne_bytes()))));
         r#box.put(&(0), &(4.0f64));
         let boxed = base.with_inline_box_advances(r#box.clone().build());
         let _ = TracedAssertions::traced_assertions_assert_equals_float(20 as f64, boxed.resolve_clusters()[0usize].advance, None).unwrap();
@@ -1135,7 +1135,7 @@ fn geometry_without_budget_falls_back_to_body_width() {
     testlib::run("org.tiqian.layout.PunctuationGeometryLedgerCoverageTest.geometryWithoutBudgetFallsBackToBodyWidth", "org.tiqian.layout.PunctuationGeometryLedgerCoverageTest.geometryWithoutBudgetFallsBackToBodyWidth", || {
         PunctuationGeometryLedgerCoverageSupport::punctuation_geometry_ledger_coverage_support_start(UStr::new(&[103,101,111,109,101,116,114,121,87,105,116,104,111,117,116,66,117,100,103,101,116,70,97,108,108,115,66,97,99,107,84,111,66,111,100,121,87,105,100,116,104]));
         let x = PunctuationGeometryLedgerCoverageSupport::punctuation_geometry_ledger_coverage_support_ledger(&vec![UString::from("「").to_ustring(), UString::from("中").to_ustring()]).unwrap();
-        let e: SortedMapTable<u32, GlueBudget> = SortedTable::sorted_table_map_builder::<u32, GlueBudget>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints((*a) as i32, (*b) as i32))).clone().build();
+        let e: SortedMapTable<u32, GlueBudget> = SortedTable::sorted_table_map_builder::<u32, GlueBudget>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_bytes(((*a) as i32).to_ne_bytes()), i32::from_ne_bytes(((*b) as i32).to_ne_bytes())))).clone().build();
         let y = PunctuationGeometryLedger::new(x.natural_clusters.to_vec(), (x.geometries).clone(), (e).clone(), Some(PunctuationGeometryLedger::punctuation_geometry_ledger_empty_f()), Some(PunctuationGeometryLedger::punctuation_geometry_ledger_empty_f()), Some(PunctuationGeometryLedger::punctuation_geometry_ledger_empty_f()), Some(PunctuationGeometryLedger::punctuation_geometry_ledger_empty_f()), Some(PunctuationGeometryLedger::punctuation_geometry_ledger_empty_f()));
         let _ = TracedAssertions::traced_assertions_assert_equals_float(8 as f64, y.resolve_clusters()[0usize].advance, None).unwrap();
         let d = y.add_justification_deltas(PunctuationGeometryLedgerCoverageSupport::punctuation_geometry_ledger_coverage_support_budget_at(&vec![0], 1 as f64)).with_ruby_spread(PunctuationGeometryLedgerCoverageSupport::punctuation_geometry_ledger_coverage_support_budget_at(&vec![0], 2 as f64)).with_raw_edge_trims(PunctuationGeometryLedgerCoverageSupport::punctuation_geometry_ledger_coverage_support_budget_at(&vec![0], 1 as f64));
@@ -1173,7 +1173,7 @@ fn spacing_plan_adjustments_consume_by_target_and_anchor() {
             {
                 let mut _g = 0u32;
                 let _g1 = PunctuationGeometryStage::punctuation_geometry_stage_punctuation_atoms((q).clone(), PunctuationGeometryLedgerCoverageSupport::PUNCTUATION_GEOMETRY_LEDGER_COVERAGE_SUPPORT_EM, (*PUNCTUATION_GEOMETRY_LEDGER_COVERAGE_SUPPORT_BUILDER).clone(), &vec![], PunctuationGluePlacement::MainlandSimplified, PunctuationWidthPolicy::new(Some(InteriorPunctuationStyle::FullWidth), Some(false))).unwrap();
-                while ((_g) as i32) < ((u32::try_from((_g1.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32) {
+                while (i32::from_ne_bytes(((_g) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((_g1.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
                     let atom = (_g1[usize::try_from(_g).unwrap_or(0)]).clone();
                     _g = u32::wrapping_add(_g, 1);
                     aa.push(atom.clone());
@@ -1181,20 +1181,20 @@ fn spacing_plan_adjustments_consume_by_target_and_anchor() {
             }
         }
         let stray = PunctuationSpacingAdjustment::new(TextRange::new(90u32, 91u32).unwrap(), TextRange::new(90u32, 91u32).unwrap(), &(UStr::new(&[12290])), &(UStr::new(&[12300])), 8 as f64 as f64, 0 as f64 as f64, 8 as f64 as f64, &(UStr::new(&[115,116,114,97,121]))).unwrap();
-        let mut ek: SortedSetTableBuilder<u32> = SortedTable::sorted_table_set_builder::<u32>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints((*a) as i32, (*b) as i32)));
+        let mut ek: SortedSetTableBuilder<u32> = SortedTable::sorted_table_set_builder::<u32>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_bytes(((*a) as i32).to_ne_bytes()), i32::from_ne_bytes(((*b) as i32).to_ne_bytes()))));
         ek.put(&(0));
         ek.put(&(1));
-        let mut ak: SortedSetTableBuilder<u32> = SortedTable::sorted_table_set_builder::<u32>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints((*a) as i32, (*b) as i32)));
+        let mut ak: SortedSetTableBuilder<u32> = SortedTable::sorted_table_set_builder::<u32>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_bytes(((*a) as i32).to_ne_bytes()), i32::from_ne_bytes(((*b) as i32).to_ne_bytes()))));
         let sm: SortedMapTable<u32, GlueCapacity> = PunctuationGeometryLedger::punctuation_geometry_ledger_from(&cs, &aa, PunctuationSpacingCompressionResult::new(vec![(stray).clone()].to_vec()).unwrap()).glue_capacities();
-        for i in 0..((sm.size()) as u32) {
-            ak.put(&(sm.key_at({ let v: u32 = i; v as i32 })));
+        for i in 0..u32::from_ne_bytes(((sm.size()) as u32).to_ne_bytes()) {
+            ak.put(&(sm.key_at({ let v: u32 = i; i32::from_ne_bytes(v.to_ne_bytes()) })));
         }
         let _ = TracedAssertions::traced_assertions_assert_equals_int_set(ek.clone().build(), ak.clone().build(), None).unwrap();
         let a = PunctuationSpacingAdjustment::new(TextRange::new(0u32, 1u32).unwrap(), TextRange::new(0u32, 1u32).unwrap(), &(UStr::new(&[12300])), &(UStr::new(&[12300])), 8 as f64 as f64, 4 as f64 as f64, 4 as f64 as f64, &(UStr::new(&[108,101,97,100,105,110,103,45,115,105,100,101]))).unwrap();
         let y = PunctuationGeometryLedger::punctuation_geometry_ledger_from(&cs, &aa, PunctuationSpacingCompressionResult::new(vec![(a).clone()].to_vec()).unwrap());
         let _ = TracedAssertions::traced_assertions_assert_equals_float(4 as f64, y.glue_capacities().get(&(0)).as_ref().unwrap().leading, None).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_equals_float(8 as f64, y.glue_capacities().get(&(1)).as_ref().unwrap().leading, None).unwrap();
-        let atom = (*PUNCTUATION_GEOMETRY_LEDGER_COVERAGE_SUPPORT_BUILDER).clone().build(UStr::new(&[183]), TextRange::new(0u32, 1u32).unwrap(), PunctuationGeometryLedgerCoverageSupport::PUNCTUATION_GEOMETRY_LEDGER_COVERAGE_SUPPORT_EM, Some(PunctuationInkInput::new(16 as f64 as f64, Some(Rect::new(2 as f64 as f64, 4 as f64 as f64, 10 as f64 as f64, 12 as f64 as f64)), Some(8 as f64), Some((4294967294u32) as i32 as f64), None).unwrap()), None, None).unwrap();
+        let atom = (*PUNCTUATION_GEOMETRY_LEDGER_COVERAGE_SUPPORT_BUILDER).clone().build(UStr::new(&[183]), TextRange::new(0u32, 1u32).unwrap(), PunctuationGeometryLedgerCoverageSupport::PUNCTUATION_GEOMETRY_LEDGER_COVERAGE_SUPPORT_EM, Some(PunctuationInkInput::new(16 as f64 as f64, Some(Rect::new(2 as f64 as f64, 4 as f64 as f64, 10 as f64 as f64, 12 as f64 as f64)), Some(8 as f64), Some(i32::from_ne_bytes(((4294967294u32) as i32).to_ne_bytes()) as f64), None).unwrap()), None, None).unwrap();
         let ca = vec![
     (PunctuationGeometryLedgerCoverageSupport::punctuation_geometry_ledger_coverage_support_c(UStr::new(&[183]), 0, Some(16 as f64 as f64), Some(UString::from("cjk"))).unwrap()).clone(),
     (PunctuationGeometryLedgerCoverageSupport::punctuation_geometry_ledger_coverage_support_c(UStr::new(&[20013]), 1, Some(16 as f64 as f64), Some(UString::from("cjk"))).unwrap()).clone(),
@@ -1219,7 +1219,7 @@ fn attached_inline_boundaries_require_alignment_and_run_only_with_attachments() 
 }) }).unwrap();
         let r = x.resolve_attached_inline_punctuation_boundaries(&vec![InlineAttachment::None, InlineAttachment::None], &vec![], PunctuationGeometryLedgerCoverageSupport::PUNCTUATION_GEOMETRY_LEDGER_COVERAGE_SUPPORT_EM).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_true(u32::try_from((r.decisions.len()) & 0xFFFF_FFFF).unwrap_or(0) == 0, None).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_true((r.trailing_glue_by_cluster.size()) as u32 == 0, None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_true(u32::from_ne_bytes(((r.trailing_glue_by_cluster.size()) as u32).to_ne_bytes()) == 0, None).unwrap();
         let p = PunctuationGeometryLedgerCoverageSupport::punctuation_geometry_ledger_coverage_support_ledger(&vec![UString::from("中").to_ustring(), UString::from("中").to_ustring()]).unwrap().resolve_attached_inline_punctuation_boundaries(&vec![InlineAttachment::None, InlineAttachment::Previous], &vec![], PunctuationGeometryLedgerCoverageSupport::PUNCTUATION_GEOMETRY_LEDGER_COVERAGE_SUPPORT_EM).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_true(u32::try_from((p.decisions.len()) & 0xFFFF_FFFF).unwrap_or(0) == 0, None).unwrap();
     });
@@ -1237,7 +1237,7 @@ fn attached_inline_boundary_at_line_end_consumes_trailing_glue() {
         let _ = TracedAssertions::traced_assertions_assert_equals_string(UStr::new(&[65,116,116,97,99,104,101,100,73,110,108,105,110,101,86,105,114,116,117,97,108,80,117,110,99,116,117,97,116,105,111,110,66,111,117,110,100,97,114,121,58,108,105,110,101,45,101,110,100]), ((r.decisions[0usize]).clone().reason).to_ustring().as_ustr(), None).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_equals_float(8 as f64, r.decisions[0usize].reduction, None).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_equals_float(8 as f64, (r.geometry).clone().resolve_clusters()[0usize].advance, None).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_true((r.trailing_glue_by_cluster.size()) as u32 == 0, None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_true(u32::from_ne_bytes(((r.trailing_glue_by_cluster.size()) as u32).to_ne_bytes()) == 0, None).unwrap();
     });
 }
 
@@ -1255,7 +1255,7 @@ fn attached_inline_boundary_adjacent_punctuation_halves_the_virtual_glue() {
             {
                 let mut _g = 0u32;
                 let _g1 = PunctuationGeometryStage::punctuation_geometry_stage_punctuation_atoms((q).clone(), PunctuationGeometryLedgerCoverageSupport::PUNCTUATION_GEOMETRY_LEDGER_COVERAGE_SUPPORT_EM, (*PUNCTUATION_GEOMETRY_LEDGER_COVERAGE_SUPPORT_BUILDER).clone(), &vec![], PunctuationGluePlacement::MainlandSimplified, PunctuationWidthPolicy::new(Some(InteriorPunctuationStyle::FullWidth), Some(false))).unwrap();
-                while ((_g) as i32) < ((u32::try_from((_g1.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32) {
+                while (i32::from_ne_bytes(((_g) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((_g1.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
                     let a = (_g1[usize::try_from(_g).unwrap_or(0)]).clone();
                     _g = u32::wrapping_add(_g, 1);
                     atoms.push(a.clone());
@@ -1272,7 +1272,7 @@ fn attached_inline_boundary_adjacent_punctuation_halves_the_virtual_glue() {
         let b = pre.resolve_attached_inline_punctuation_boundaries(&vec![InlineAttachment::None, InlineAttachment::Previous, InlineAttachment::None], &atoms, PunctuationGeometryLedgerCoverageSupport::PUNCTUATION_GEOMETRY_LEDGER_COVERAGE_SUPPORT_EM).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_equals_float(12 as f64, b.decisions[0usize].natural_inner_glue, None).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_equals_float(4 as f64, b.decisions[0usize].adjusted_inner_glue, None).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_true((b.trailing_glue_by_cluster.size()) as u32 == 0, None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_true(u32::from_ne_bytes(((b.trailing_glue_by_cluster.size()) as u32).to_ne_bytes()) == 0, None).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_equals_float(4 as f64, (b.geometry).clone().glue_capacities().get(&(2)).as_ref().unwrap().leading, None).unwrap();
     });
 }
@@ -1325,7 +1325,7 @@ fn attached_inline_boundary_without_glue_emits_no_decision() {
             {
                 let mut _g = 0u32;
                 let _g1 = PunctuationGeometryStage::punctuation_geometry_stage_punctuation_atoms((q).clone(), PunctuationGeometryLedgerCoverageSupport::PUNCTUATION_GEOMETRY_LEDGER_COVERAGE_SUPPORT_EM, (*PUNCTUATION_GEOMETRY_LEDGER_COVERAGE_SUPPORT_BUILDER).clone(), &vec![], PunctuationGluePlacement::MainlandSimplified, PunctuationWidthPolicy::new(Some(InteriorPunctuationStyle::FullWidth), Some(false))).unwrap();
-                while ((_g) as i32) < ((u32::try_from((_g1.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32) {
+                while (i32::from_ne_bytes(((_g) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((_g1.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
                     let atom = (_g1[usize::try_from(_g).unwrap_or(0)]).clone();
                     _g = u32::wrapping_add(_g, 1);
                     aa.push(atom.clone());
@@ -1344,7 +1344,7 @@ fn attached_inline_boundary_without_glue_emits_no_decision() {
             {
                 let mut _g = 0u32;
                 let _g1 = PunctuationGeometryStage::punctuation_geometry_stage_punctuation_atoms((q).clone(), PunctuationGeometryLedgerCoverageSupport::PUNCTUATION_GEOMETRY_LEDGER_COVERAGE_SUPPORT_EM, (*PUNCTUATION_GEOMETRY_LEDGER_COVERAGE_SUPPORT_BUILDER).clone(), &vec![], PunctuationGluePlacement::MainlandSimplified, PunctuationWidthPolicy::new(Some(InteriorPunctuationStyle::FullWidth), Some(false))).unwrap();
-                while ((_g) as i32) < ((u32::try_from((_g1.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32) {
+                while (i32::from_ne_bytes(((_g) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((_g1.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
                     let atom = (_g1[usize::try_from(_g).unwrap_or(0)]).clone();
                     _g = u32::wrapping_add(_g, 1);
                     caa.push(atom.clone());
@@ -1399,7 +1399,7 @@ fn line_edge_trim_consumes_half_width_at_edges_and_skips_empty_inputs() {
 fn line_edge_trim_consumes_centred_punctuation_once_per_line() {
     testlib::run("org.tiqian.layout.PunctuationGeometryLedgerCoverageTest.lineEdgeTrimConsumesCentredPunctuationOncePerLine", "org.tiqian.layout.PunctuationGeometryLedgerCoverageTest.lineEdgeTrimConsumesCentredPunctuationOncePerLine", || {
         PunctuationGeometryLedgerCoverageSupport::punctuation_geometry_ledger_coverage_support_start(UStr::new(&[108,105,110,101,69,100,103,101,84,114,105,109,67,111,110,115,117,109,101,115,67,101,110,116,114,101,100,80,117,110,99,116,117,97,116,105,111,110,79,110,99,101,80,101,114,76,105,110,101]));
-        let atom = (*PUNCTUATION_GEOMETRY_LEDGER_COVERAGE_SUPPORT_BUILDER).clone().build(UStr::new(&[183]), TextRange::new(0u32, 1u32).unwrap(), PunctuationGeometryLedgerCoverageSupport::PUNCTUATION_GEOMETRY_LEDGER_COVERAGE_SUPPORT_EM, Some(PunctuationInkInput::new(16 as f64 as f64, Some(Rect::new(2 as f64 as f64, 4 as f64 as f64, 10 as f64 as f64, 12 as f64 as f64)), Some(8 as f64), Some((4294967294u32) as i32 as f64), None).unwrap()), None, None).unwrap();
+        let atom = (*PUNCTUATION_GEOMETRY_LEDGER_COVERAGE_SUPPORT_BUILDER).clone().build(UStr::new(&[183]), TextRange::new(0u32, 1u32).unwrap(), PunctuationGeometryLedgerCoverageSupport::PUNCTUATION_GEOMETRY_LEDGER_COVERAGE_SUPPORT_EM, Some(PunctuationInkInput::new(16 as f64 as f64, Some(Rect::new(2 as f64 as f64, 4 as f64 as f64, 10 as f64 as f64, 12 as f64 as f64)), Some(8 as f64), Some(i32::from_ne_bytes(((4294967294u32) as i32).to_ne_bytes()) as f64), None).unwrap()), None, None).unwrap();
         let x = PunctuationGeometryLedger::punctuation_geometry_ledger_from(&vec![
     (PunctuationGeometryLedgerCoverageSupport::punctuation_geometry_ledger_coverage_support_c(UStr::new(&[183]), 0, Some(16 as f64 as f64), Some(UString::from("cjk"))).unwrap()).clone(),
 ], &vec![((atom).as_ref().unwrap()).clone()], PunctuationSpacingCompressionResult::new(vec![].to_vec()).unwrap());
@@ -1458,7 +1458,7 @@ impl PunctuationGeometryLedgerCoverageSupport {
         let mut atoms: Vec<PunctuationAtom> = vec![];
         let mut i = 0u32;
         let mut pos = 0u32;
-        while ((i) as i32) < ((u32::try_from((texts.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32) {
+        while (i32::from_ne_bytes(((i) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((texts.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
             let x = PunctuationGeometryLedgerCoverageSupport::punctuation_geometry_ledger_coverage_support_c((texts[usize::try_from(i).unwrap_or(0)]).clone().as_ustr(), pos, Some(16 as f64 as f64), Some(UString::from("cjk")))?;
             cs.push(x.clone());
             let aa = PunctuationGeometryStage::punctuation_geometry_stage_punctuation_atoms((x).clone(), PunctuationGeometryLedgerCoverageSupport::PUNCTUATION_GEOMETRY_LEDGER_COVERAGE_SUPPORT_EM, (*PUNCTUATION_GEOMETRY_LEDGER_COVERAGE_SUPPORT_BUILDER).clone(), &vec![], PunctuationGluePlacement::MainlandSimplified, PunctuationWidthPolicy::new(Some(InteriorPunctuationStyle::FullWidth), Some(false)))?;
@@ -1473,11 +1473,11 @@ impl PunctuationGeometryLedgerCoverageSupport {
 
     pub fn punctuation_geometry_ledger_coverage_support_float_map_text(m: SortedMapTable<u32, f64>) -> UString {
         let mut s = UString::from("{").to_ustring();
-        for i in 0..((m.size()) as u32) {
-            if ({ let v: u32 = i; v as i32 }) > (0) {
+        for i in 0..u32::from_ne_bytes(((m.size()) as u32).to_ne_bytes()) {
+            if ({ let v: u32 = i; i32::from_ne_bytes(v.to_ne_bytes()) }) > (0) {
                 s += &(UString::from(", "));
             }
-            s += &({ let mut __s = UString::new(); __s += &(UString::from(format!("{}", crate::runtime::int_text::IntText::int_text(m.key_at({ let v: u32 = i; v as i32 }))).as_str())); __s += &(UString::from("=")); __s += &(match m.get(&(m.key_at({ let v: u32 = i; v as i32 }))) { Some(v) => UString::from(format!("{}", crate::runtime::fp_helper::FPHelper::format_float(v)).as_str()), None => UString::from("null") }); __s });
+            s += &({ let mut __s = UString::new(); __s += &(UString::from(format!("{}", crate::runtime::int_text::IntText::int_text(m.key_at({ let v: u32 = i; i32::from_ne_bytes(v.to_ne_bytes()) }))).as_str())); __s += &(UString::from("=")); __s += &(match m.get(&(m.key_at({ let v: u32 = i; i32::from_ne_bytes(v.to_ne_bytes()) }))) { Some(v) => UString::from(format!("{}", crate::runtime::fp_helper::FPHelper::format_float(v)).as_str()), None => UString::from("null") }); __s });
         }
         return UString::from(format!("{}", { let mut __s = UString::new(); __s += s.as_ustr(); __s += &(UString::from("}")); __s }).as_str());
     }
@@ -1485,8 +1485,8 @@ impl PunctuationGeometryLedgerCoverageSupport {
     pub fn punctuation_geometry_ledger_coverage_support_int_range_text(r: IntRange) -> UString {
         let mut s = UString::from("[").to_ustring();
         let mut i = r.start;
-        while ((i) as i32) <= r.end as i32 {
-            if i as i32 > ((r.start) as i32) {
+        while (i32::from_ne_bytes(((i) as i32).to_ne_bytes())) <= i32::from_ne_bytes(((r.end) as i32).to_ne_bytes()) {
+            if i32::from_ne_bytes(((i) as i32).to_ne_bytes()) > (i32::from_ne_bytes(((r.start) as i32).to_ne_bytes())) {
                 s += &(UString::from(", "));
             }
             s += &UString::from((i).to_string().as_str());
@@ -1496,7 +1496,7 @@ impl PunctuationGeometryLedgerCoverageSupport {
     }
 
     pub fn punctuation_geometry_ledger_coverage_support_budget_at(entries: &Vec<u32>, value: f64) -> SortedMapTable<u32, f64> {
-        let mut b: SortedMapTableBuilder<u32, f64> = SortedTable::sorted_table_map_builder::<u32, f64>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints((*a) as i32, (*b) as i32)));
+        let mut b: SortedMapTableBuilder<u32, f64> = SortedTable::sorted_table_map_builder::<u32, f64>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_bytes(((*a) as i32).to_ne_bytes()), i32::from_ne_bytes(((*b) as i32).to_ne_bytes()))));
         for &k in entries {
             b.put(&(k), &(value));
         }

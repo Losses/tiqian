@@ -231,7 +231,7 @@ Some(__option) => AsciiPointMarkKinsokuTestSupport::ascii_point_mark_kinsoku_tes
         let mut texts: Vec<UString> = vec![];
         for i in 0..match u32::try_from(result.lines.len()) { Ok(value) => value, Err(_) => u32::MAX } {
             let line = (result.lines[usize::try_from(i).unwrap_or(0)]).clone();
-            texts.push(u_string::substring(&source, ((line.range).clone().start) as i32, ((line.range).clone().end) as i32));
+            texts.push(u_string::substring(&source, i32::from_ne_bytes((((line.range).clone().start) as i32).to_ne_bytes()), i32::from_ne_bytes((((line.range).clone().end) as i32).to_ne_bytes())));
         }
         return texts;
     }

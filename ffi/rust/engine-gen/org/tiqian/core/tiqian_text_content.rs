@@ -52,7 +52,7 @@ impl TiqianTextContent {
         let mut i = 0usize;
         while i < n {
             if i > 0 { out.push_str(", "); }
-            let _ = write!(out, "{}", (arr[i]) as i32);
+            let _ = write!(out, "{}", i32::from_ne_bytes(((arr[i]) as i32).to_ne_bytes()));
             i += 1;
         }
         out.push(']');

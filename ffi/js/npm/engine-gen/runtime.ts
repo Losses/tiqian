@@ -32,7 +32,7 @@ export function formatFloatRuntime(v: number): string {
   if (v === Infinity) return "Infinity";
   if (v === -Infinity) return "-Infinity";
   if (Object.is(v, -0) || v === 0) return "0";
-  let text = String(v).replace("E", "e");
+  const text = String(v).replace("E", "e");
   return text.replace(".0e", "e");
 }
 
@@ -84,7 +84,7 @@ export class StringTools {
       return false;
     }
     const c = (Number.isNaN(s.charCodeAt(pos)) ? null : s.charCodeAt(pos))!;
-    return c > 8 && c < 14 || c === 32;
+    return c! > 8 && c! < 14 || c === 32;
   }
 
   public static ltrim(s: string): string {
@@ -1364,21 +1364,50 @@ export class SortedMapTableBuilder<K, V> {
       order.push(i);
       i += 1;
     }
-    i = 1;
+    const tmp = new Array<number>();
+    i = 0;
     while (i < total) {
-      const current = order[i]!;
-      let j = i;
-      let moved = true;
-      while (j > 0 && moved) {
-        if (this.compare(this.keys[order[j - 1]!]!, this.keys[current]!) > 0) {
-          order[j] = order[j - 1]!;
-          j -= 1;
-        } else {
-          moved = false;
-        }
-      }
-      order[j] = current;
+      tmp.push(0);
       i += 1;
+    }
+    let width = 1;
+    while (width < total) {
+      const step = width * 2;
+      let start = 0;
+      while (start < total) {
+        const mid = (start + width < total ? start + width : total);
+        const end = (start + step < total ? start + step : total);
+        let left = start;
+        let right = mid;
+        let k = start;
+        while (left < mid && right < end) {
+          if (this.compare(this.keys[order[left]!]!, this.keys[order[right]!]!) > 0) {
+            tmp[k] = order[right]!;
+            right += 1;
+          } else {
+            tmp[k] = order[left]!;
+            left += 1;
+          }
+          k += 1;
+        }
+        while (left < mid) {
+          tmp[k] = order[left]!;
+          left += 1;
+          k += 1;
+        }
+        while (right < end) {
+          tmp[k] = order[right]!;
+          right += 1;
+          k += 1;
+        }
+        let m = start;
+        while (m < end) {
+          order[m] = tmp[m]!;
+          m += 1;
+        }
+        start += step;
+      }
+      width = step;
     }
     const outKeys = new Array<K>();
     const outValues = new Array<V>();
@@ -1471,21 +1500,50 @@ export class SortedSetTableBuilder<K> {
       order.push(i);
       i += 1;
     }
-    i = 1;
+    const tmp = new Array<number>();
+    i = 0;
     while (i < total) {
-      const current = order[i]!;
-      let j = i;
-      let moved = true;
-      while (j > 0 && moved) {
-        if (this.compare(this.keys[order[j - 1]!]!, this.keys[current]!) > 0) {
-          order[j] = order[j - 1]!;
-          j -= 1;
-        } else {
-          moved = false;
-        }
-      }
-      order[j] = current;
+      tmp.push(0);
       i += 1;
+    }
+    let width = 1;
+    while (width < total) {
+      const step = width * 2;
+      let start = 0;
+      while (start < total) {
+        const mid = (start + width < total ? start + width : total);
+        const end = (start + step < total ? start + step : total);
+        let left = start;
+        let right = mid;
+        let k = start;
+        while (left < mid && right < end) {
+          if (this.compare(this.keys[order[left]!]!, this.keys[order[right]!]!) > 0) {
+            tmp[k] = order[right]!;
+            right += 1;
+          } else {
+            tmp[k] = order[left]!;
+            left += 1;
+          }
+          k += 1;
+        }
+        while (left < mid) {
+          tmp[k] = order[left]!;
+          left += 1;
+          k += 1;
+        }
+        while (right < end) {
+          tmp[k] = order[right]!;
+          right += 1;
+          k += 1;
+        }
+        let m = start;
+        while (m < end) {
+          order[m] = tmp[m]!;
+          m += 1;
+        }
+        start += step;
+      }
+      width = step;
     }
     const outKeys = new Array<K>();
     i = 0;

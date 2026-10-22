@@ -906,7 +906,7 @@ fn deprecated_classify_quote_roles_with_font_role_classifier_delegates() {
     testlib::run("org.tiqian.layout.QuotePairAnalyzerCoverageTest.deprecatedClassifyQuoteRolesWithFontRoleClassifierDelegates", "org.tiqian.layout.QuotePairAnalyzerCoverageTest.deprecatedClassifyQuoteRolesWithFontRoleClassifierDelegates", || {
         QuotePairAnalyzerCoverageTestSupport::quote_pair_analyzer_coverage_test_support_rec(UStr::new(&[100,101,112,114,101,99,97,116,101,100,67,108,97,115,115,105,102,121,81,117,111,116,101,82,111,108,101,115,87,105,116,104,70,111,110,116,82,111,108,101,67,108,97,115,115,105,102,105,101,114,68,101,108,101,103,97,116,101,115]));
         let t = UString::from("他说“你好”").to_ustring();
-        let _ = TracedAssertions::traced_assertions_assert_true((u32::try_from((QuotePairAnalyzerCoverageTestSupport::quote_pair_analyzer_coverage_test_support_a().classify_quote_roles_with_classifier(t.as_ustr(), &QuotePairAnalyzerCoverageTestSupport::quote_pair_analyzer_coverage_test_support_a().analyze(t.as_ustr()).unwrap(), Box::new(CjkFontRoleClassifier::new()), None).unwrap().len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32 > (0), None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_true((i32::from_ne_bytes(((u32::try_from((QuotePairAnalyzerCoverageTestSupport::quote_pair_analyzer_coverage_test_support_a().classify_quote_roles_with_classifier(t.as_ustr(), &QuotePairAnalyzerCoverageTestSupport::quote_pair_analyzer_coverage_test_support_a().analyze(t.as_ustr()).unwrap(), Box::new(CjkFontRoleClassifier::new()), None).unwrap().len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) > (0), None).unwrap();
     });
 }
 
@@ -954,7 +954,7 @@ fn code_point_before_returns_supplementary_for_surrogate_pair() {
 fn quote_pair_aware_font_role_classifier_uses_override() {
     testlib::run("org.tiqian.layout.QuotePairAnalyzerCoverageTest.quotePairAwareFontRoleClassifierUsesOverride", "org.tiqian.layout.QuotePairAnalyzerCoverageTest.quotePairAwareFontRoleClassifierUsesOverride", || {
         QuotePairAnalyzerCoverageTestSupport::quote_pair_analyzer_coverage_test_support_rec(UStr::new(&[113,117,111,116,101,80,97,105,114,65,119,97,114,101,70,111,110,116,82,111,108,101,67,108,97,115,115,105,102,105,101,114,85,115,101,115,79,118,101,114,114,105,100,101]));
-        let mut b: SortedMapTableBuilder<u32, FontRole> = SortedTable::sorted_table_map_builder::<u32, FontRole>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints((*a) as i32, (*b) as i32)));
+        let mut b: SortedMapTableBuilder<u32, FontRole> = SortedTable::sorted_table_map_builder::<u32, FontRole>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_bytes(((*a) as i32).to_ne_bytes()), i32::from_ne_bytes(((*b) as i32).to_ne_bytes()))));
         b.put(&(2), &(FontRole::LatinText));
         let c = QuotePairAwareFontRoleClassifier::new(Box::new(CjkFontRoleClassifier::new()), b.clone().build());
         let _ = TracedAssertions::traced_assertions_assert_equals_font_role(FontRole::LatinText, Some(c.classify(UStr::new(&[97,98]), TextRange::new(0u32, 2u32).unwrap(), Some(FontRoleContext::new(Some(UString::from("zh-Hans")), None)))), None).unwrap();
@@ -965,7 +965,7 @@ fn quote_pair_aware_font_role_classifier_uses_override() {
 fn quote_pair_aware_font_role_classifier_delegates_when_no_override() {
     testlib::run("org.tiqian.layout.QuotePairAnalyzerCoverageTest.quotePairAwareFontRoleClassifierDelegatesWhenNoOverride", "org.tiqian.layout.QuotePairAnalyzerCoverageTest.quotePairAwareFontRoleClassifierDelegatesWhenNoOverride", || {
         QuotePairAnalyzerCoverageTestSupport::quote_pair_analyzer_coverage_test_support_rec(UStr::new(&[113,117,111,116,101,80,97,105,114,65,119,97,114,101,70,111,110,116,82,111,108,101,67,108,97,115,115,105,102,105,101,114,68,101,108,101,103,97,116,101,115,87,104,101,110,78,111,79,118,101,114,114,105,100,101]));
-        let b: SortedMapTableBuilder<u32, FontRole> = SortedTable::sorted_table_map_builder::<u32, FontRole>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints((*a) as i32, (*b) as i32)));
+        let b: SortedMapTableBuilder<u32, FontRole> = SortedTable::sorted_table_map_builder::<u32, FontRole>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_bytes(((*a) as i32).to_ne_bytes()), i32::from_ne_bytes(((*b) as i32).to_ne_bytes()))));
         let c = CjkFontRoleClassifier::new();
         let w = QuotePairAwareFontRoleClassifier::new(Box::new((c).clone()), b.clone().build());
         let _ = TracedAssertions::traced_assertions_assert_equals_font_role(c.classify(UStr::new(&[97,98]), TextRange::new(0u32, 2u32).unwrap(), Some(FontRoleContext::new(Some(UString::from("zh-Hans")), None))), Some(w.classify(UStr::new(&[97,98]), TextRange::new(0u32, 2u32).unwrap(), Some(FontRoleContext::new(Some(UString::from("zh-Hans")), None)))), None).unwrap();

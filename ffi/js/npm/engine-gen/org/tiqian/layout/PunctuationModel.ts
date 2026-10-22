@@ -43,8 +43,8 @@ export class PunctuationAtom {
     this.advance = advance;
     this.inkBounds = inkBounds;
     this.bodyWidth = bodyWidth;
-    this.haltAdvance = haltAdvance;
-    this.haltValidation = haltValidation;
+    this.haltAdvance = (haltAdvance)!;
+    this.haltValidation = (haltValidation)!;
     this.leadingGlue = leadingGlue;
     this.trailingGlue = trailingGlue;
     this.anchor = anchor;
@@ -63,7 +63,7 @@ export class PunctuationAtom {
   }
 
   public toString(): string {
-    return `PunctuationAtom(range=${this.range.toString()}, char=${this.char}, punctuationClass=${this.punctuationClass.kind}, advance=${this.advance}, inkBounds=${(this.inkBounds === null ? "null" : this.inkBounds.toString())}, bodyWidth=${this.bodyWidth}, haltAdvance=${this.haltAdvance}, haltValidation=${this.haltValidation}, leadingGlue=${this.leadingGlue.toString()}, trailingGlue=${this.trailingGlue.toString()}, anchor=${this.anchor.kind}, geometrySource=${this.geometrySource}, policyBodyFloor=${this.policyBodyFloor}, inkWidth=${this.inkWidth}, inkCenter=${this.inkCenter}, inkContainmentBodyFloor=${this.inkContainmentBodyFloor}, inkContainmentApplied=${this.inkContainmentApplied}, inkBoundsFallback=${this.inkBoundsFallback}, advanceExpansion=${this.advanceExpansion}, glyphInlineShift=${this.glyphInlineShift}, glyphPlacementReason=${this.glyphPlacementReason}, leadingGlueInitiallyConsumed=${this.leadingGlueInitiallyConsumed}, trailingGlueInitiallyConsumed=${this.trailingGlueInitiallyConsumed})`;
+    return `PunctuationAtom(range=${this.range.toString()}, char=${this.char}, punctuationClass=${this.punctuationClass.kind}, advance=${this.advance}, inkBounds=${(this.inkBounds === null ? "null" : this.inkBounds!.toString())}, bodyWidth=${this.bodyWidth}, haltAdvance=${this.haltAdvance}, haltValidation=${this.haltValidation}, leadingGlue=${this.leadingGlue.toString()}, trailingGlue=${this.trailingGlue.toString()}, anchor=${this.anchor.kind}, geometrySource=${this.geometrySource}, policyBodyFloor=${this.policyBodyFloor}, inkWidth=${this.inkWidth}, inkCenter=${this.inkCenter}, inkContainmentBodyFloor=${this.inkContainmentBodyFloor}, inkContainmentApplied=${this.inkContainmentApplied}, inkBoundsFallback=${this.inkBoundsFallback}, advanceExpansion=${this.advanceExpansion}, glyphInlineShift=${this.glyphInlineShift}, glyphPlacementReason=${this.glyphPlacementReason}, leadingGlueInitiallyConsumed=${this.leadingGlueInitiallyConsumed}, trailingGlueInitiallyConsumed=${this.trailingGlueInitiallyConsumed})`;
   }
 }
 
@@ -75,6 +75,10 @@ export class PunctuationInkInput {
   public readonly boundsFallbackReason: string | null;
 
   constructor(advance: number, inkBounds?: Rect | null, haltAdvance?: number | null, haltPlacementX?: number | null, boundsFallbackReason?: string | null) {
+    inkBounds = inkBounds ?? null;
+    haltAdvance = haltAdvance ?? null;
+    haltPlacementX = haltPlacementX ?? null;
+    boundsFallbackReason = boundsFallbackReason ?? null;
     this.advance = advance;
     this.inkBounds = inkBounds;
     this.haltAdvance = haltAdvance;
@@ -83,7 +87,7 @@ export class PunctuationInkInput {
   }
 
   public toString(): string {
-    return `PunctuationInkInput(advance=${this.advance}, inkBounds=${(this.inkBounds === null ? "null" : this.inkBounds.toString())}, haltAdvance=${this.haltAdvance}, haltPlacementX=${this.haltPlacementX}, boundsFallbackReason=${this.boundsFallbackReason})`;
+    return `PunctuationInkInput(advance=${this.advance}, inkBounds=${(this.inkBounds === null ? "null" : this.inkBounds!.toString())}, haltAdvance=${this.haltAdvance}, haltPlacementX=${this.haltPlacementX}, boundsFallbackReason=${this.boundsFallbackReason})`;
   }
 }
 
@@ -240,8 +244,10 @@ export class PunctuationAtomBuilder {
   private static readonly PLACEMENT_EPSILON: number = .001;
 
   constructor(gluePlacement?: PunctuationGluePlacement | null, widthPolicy?: PunctuationWidthPolicy | null) {
-    this.defaultGluePlacement = (gluePlacement === null ? PunctuationGluePlacement.MainlandSimplified : gluePlacement);
-    this.defaultWidthPolicy = (widthPolicy === null ? new PunctuationWidthPolicy() : widthPolicy);
+    gluePlacement = gluePlacement ?? null;
+    widthPolicy = widthPolicy ?? null;
+    this.defaultGluePlacement = ((gluePlacement === null ? (PunctuationGluePlacement.MainlandSimplified as PunctuationGluePlacement) : gluePlacement))!;
+    this.defaultWidthPolicy = ((widthPolicy === null ? new PunctuationWidthPolicy() : widthPolicy))!;
   }
 
   public buildAtIndex(text: string, index: number, em: number): PunctuationAtom | null {
@@ -252,6 +258,9 @@ export class PunctuationAtomBuilder {
   }
 
   public build(char: string, range: TextRange, em: number, inkInput?: PunctuationInkInput | null, gluePlacement?: PunctuationGluePlacement | null, widthPolicy?: PunctuationWidthPolicy | null): PunctuationAtom | null {
+    inkInput = inkInput ?? null;
+    gluePlacement = gluePlacement ?? null;
+    widthPolicy = widthPolicy ?? null;
     const placement = gluePlacement ?? this.defaultGluePlacement;
     const wp = widthPolicy ?? this.defaultWidthPolicy;
     const policy = ClreqPunctuationPolicies.policyFor(char);
@@ -259,10 +268,10 @@ export class PunctuationAtomBuilder {
       return null;
     }
     const policyAdvance = policy.defaultAdvanceEm * em;
-    const shaped = (inkInput === null ? null : (inkInput.advance > 0 ? inkInput.advance : null));
+    const shaped = (inkInput === null ? null : (inkInput!.advance > 0 ? inkInput!.advance : null));
     const raw = (shaped === null ? policyAdvance : shaped);
     const expansion = Math.max(0, policyAdvance - raw);
-    const glueSide = PunctuationGluePlacements.glueSideFor(placement, policy.punctuationClass);
+    const glueSide = PunctuationGluePlacements.glueSideFor((placement)!, policy.punctuationClass);
     const shift = (shaped !== null && expansion > 0 ? (() => {
   switch (glueSide.kind) {
     case "LeadingOnly":
@@ -273,17 +282,17 @@ export class PunctuationAtomBuilder {
       return expansion / 2;
   }
 })() : 0);
-    const ink = (inkInput === null || inkInput.inkBounds === null ? null : this.shiftRect(inkInput.inkBounds, shift));
-    const inkWidth = (ink === null ? null : Math.max(0, ink.width));
-    const center = (ink === null ? null : (ink.left + ink.right) / 2);
-    const advance = Math.max(Math.max(raw, policyAdvance), (ink === null ? 0 : ink.right));
+    const ink = (inkInput === null || inkInput!.inkBounds === null ? null : this.shiftRect((inkInput!.inkBounds)!, shift));
+    const inkWidth = (ink === null ? null : Math.max(0, ink!.width));
+    const center = (ink === null ? null : (ink!.left + ink!.right) / 2);
+    const advance = Math.max(Math.max((raw)!, policyAdvance), (ink === null ? 0 : ink!.right));
     const policyFloor = policy.defaultBodyEm * em;
-    const halt = (inkInput === null ? null : (expansion <= PunctuationAtomBuilder.PLACEMENT_EPSILON && inkInput.haltAdvance !== null && inkInput.haltAdvance > 0 && inkInput.haltAdvance < advance ? inkInput.haltAdvance : null));
-    const forced = ClreqPunctuationPolicies.forcedHalfWidth(char, wp);
+    const halt = (inkInput === null ? null : (expansion <= PunctuationAtomBuilder.PLACEMENT_EPSILON && inkInput!.haltAdvance !== null && inkInput!.haltAdvance! > 0 && inkInput!.haltAdvance! < advance ? inkInput!.haltAdvance : null));
+    const forced = ClreqPunctuationPolicies.forcedHalfWidth(char, (wp)!);
     const forcedFloor = (forced ? Math.min(policyFloor, .5 * em) : policyFloor);
     const target = (halt === null ? forcedFloor : halt);
-    const geo = this.compressionGeometry(advance, raw, target, ink, halt, (inkInput === null ? null : inkInput.haltPlacementX), policy.punctuationClass, placement);
-    return new PunctuationAtom(range, char, policy.punctuationClass, advance, ink, geo.bodyWidth, halt, geo.haltValidation, new Glue(GlueKind.PunctuationLeading, 0, geo.leadingTrim, geo.leadingTrim, 0, 0), new Glue(GlueKind.PunctuationTrailing, 0, geo.trailingTrim, geo.trailingTrim, 0, 0), geo.anchor, (forced ? geo.source + "FixedHalfWidth" : geo.source), policyFloor, inkWidth, center, geo.inkBodyFloor, geo.inkContainmentApplied, (ink === null && inkInput !== null ? inkInput.boundsFallbackReason : null), Math.max(0, advance - raw), shift, (shift !== 0 ? "UnderwidthPunctuationFullWidthBoxPlacement" : null), ((forced ? geo.leadingTrim : 0) ?? 0), ((forced ? geo.trailingTrim : 0) ?? 0));
+    const geo = this.compressionGeometry(advance, (raw)!, (target)!, ink, halt, (inkInput === null ? null : inkInput!.haltPlacementX), policy.punctuationClass, (placement)!);
+    return new PunctuationAtom(range, char, policy.punctuationClass, advance, ink, geo.bodyWidth, halt, geo.haltValidation, new Glue((GlueKind.PunctuationLeading as GlueKind), 0, geo.leadingTrim, geo.leadingTrim, 0, 0), new Glue((GlueKind.PunctuationTrailing as GlueKind), 0, geo.trailingTrim, geo.trailingTrim, 0, 0), geo.anchor, (forced ? geo.source + "FixedHalfWidth" : geo.source), policyFloor, inkWidth, center, geo.inkBodyFloor, geo.inkContainmentApplied, (ink === null && inkInput !== null ? inkInput!.boundsFallbackReason : null), Math.max(0, advance - raw), shift, (shift !== 0 ? "UnderwidthPunctuationFullWidthBoxPlacement" : null), ((forced ? geo.leadingTrim : 0) ?? 0), ((forced ? geo.trailingTrim : 0) ?? 0));
   }
 
   private shiftRect(r: Rect, a: number): Rect {
@@ -296,13 +305,13 @@ export class PunctuationAtomBuilder {
       const rawReduction = Math.max(0, raw - halt);
       const reqLead = Math.max(0, Math.min(rawReduction, -placementX));
       const reqTrail = Math.max(0, requested - reqLead);
-      const lead = (ink === null ? reqLead : Math.min(reqLead, Math.max(0, ink.left)));
-      const trail = (ink === null ? reqTrail : Math.min(reqTrail, Math.max(0, advance - ink.right)));
+      const lead = (ink === null ? reqLead : Math.min(reqLead, Math.max(0, ink!.left)));
+      const trail = (ink === null ? reqTrail : Math.min(reqTrail, Math.max(0, advance - ink!.right)));
       const limited = lead + PunctuationAtomBuilder.PLACEMENT_EPSILON < reqLead || trail + PunctuationAtomBuilder.PLACEMENT_EPSILON < reqTrail;
       return new CompressionGeometry(lead, trail, advance - lead - trail, this.anchorFor(lead, trail), "FontHaltFittedBodyCompression", (ink === null ? null : advance - lead - trail), limited, (limited ? "halt-trim-limited-by-default-ink-bounds" : null));
     }
     if (ink !== null) {
-      const frame = this.fittedBodyFrame(advance, Math.max(0, Math.min(target, advance)), ink);
+      const frame = this.fittedBodyFrame(advance, Math.max(0, Math.min(target, advance)), (ink)!);
       return new CompressionGeometry(frame.start, Math.max(0, advance - frame.start - frame.width), frame.width, frame.anchor, (halt !== null ? "FontHaltAdvanceWithInkBoundsFittedPlacement" : "InkBoundsFittedBodyCompression"), frame.width, frame.width > target + PunctuationAtomBuilder.PLACEMENT_EPSILON, null);
     }
     const pair = this.classBasedGlue(cls, requested, placement);
@@ -313,7 +322,7 @@ export class PunctuationAtomBuilder {
     const lw = Math.max(target, Math.min(ink.right, advance));
     const tw = Math.max(target, Math.min(advance - ink.left, advance));
     const cw = Math.max(target, Math.min(Math.max(advance - 2 * ink.left, 2 * ink.right - advance), advance));
-    const a = [new BodyFrame(PunctuationAnchor.Leading, 0, lw), new BodyFrame(PunctuationAnchor.Center, (advance - cw) / 2, cw), new BodyFrame(PunctuationAnchor.Trailing, advance - tw, tw)];
+    const a = [new BodyFrame((PunctuationAnchor.Leading as PunctuationAnchor), 0, lw), new BodyFrame((PunctuationAnchor.Center as PunctuationAnchor), (advance - cw) / 2, cw), new BodyFrame((PunctuationAnchor.Trailing as PunctuationAnchor), advance - tw, tw)];
     const ic = (ink.left + ink.right) / 2;
     let best = a[0]!;
     for (let i = 1, count3 = a.length; i < count3; i += 1) {
@@ -325,7 +334,7 @@ export class PunctuationAtomBuilder {
   }
 
   private anchorFor(l: number, t: number): PunctuationAnchor {
-    return (l > PunctuationAtomBuilder.PLACEMENT_EPSILON && t > PunctuationAtomBuilder.PLACEMENT_EPSILON ? PunctuationAnchor.Center : (l > PunctuationAtomBuilder.PLACEMENT_EPSILON ? PunctuationAnchor.Trailing : (t > PunctuationAtomBuilder.PLACEMENT_EPSILON ? PunctuationAnchor.Leading : PunctuationAnchor.Center)));
+    return (l > PunctuationAtomBuilder.PLACEMENT_EPSILON && t > PunctuationAtomBuilder.PLACEMENT_EPSILON ? (PunctuationAnchor.Center as PunctuationAnchor) : (l > PunctuationAtomBuilder.PLACEMENT_EPSILON ? (PunctuationAnchor.Trailing as PunctuationAnchor) : (t > PunctuationAtomBuilder.PLACEMENT_EPSILON ? (PunctuationAnchor.Leading as PunctuationAnchor) : (PunctuationAnchor.Center as PunctuationAnchor))));
   }
 
   private classBasedGlue(cls: PunctuationClass, total: number, placement: PunctuationGluePlacement): ClassGluePair {

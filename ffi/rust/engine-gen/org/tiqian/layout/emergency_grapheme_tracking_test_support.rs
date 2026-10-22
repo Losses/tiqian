@@ -352,9 +352,9 @@ impl UniformAdvanceShaper {
     }
 
     pub fn shape(&self, input: ShapingInput) -> ShapingResult {
-        let source = u_string::substring(&(input.text).to_ustring(), ((input.range).clone().start) as i32, ((input.range).clone().end) as i32);
+        let source = u_string::substring(&(input.text).to_ustring(), i32::from_ne_bytes((((input.range).clone().start) as i32).to_ne_bytes()), i32::from_ne_bytes((((input.range).clone().end) as i32).to_ne_bytes()));
         return ShapingResult::new(vec![
-    (Cluster::new((input.range).clone(), source.as_ustr(), (((input.font_decision).clone().candidate).clone().key).to_ustring().as_ustr(), format!("{}", (u_string::unit_count(&(source))) as i32).parse::<f64>().unwrap_or(0.0) * 10.0f64, Some((input.display_text).to_ustring()), Some(0.0), Some(0.0), Some(0.0))).clone(),
+    (Cluster::new((input.range).clone(), source.as_ustr(), (((input.font_decision).clone().candidate).clone().key).to_ustring().as_ustr(), format!("{}", (i32::from_ne_bytes(((u_string::unit_count(&(source))) as i32).to_ne_bytes()))).parse::<f64>().unwrap_or(0.0) * 10.0f64, Some((input.display_text).to_ustring()), Some(0.0), Some(0.0), Some(0.0))).clone(),
 ].to_vec(), vec![].to_vec(), Some(vec![]));
     }
 }
@@ -371,9 +371,9 @@ impl ITextShaper for UniformAdvanceShaper {
     }
 
     fn shape(&mut self, input: ShapingInput) -> Result<ShapingResult, TextShaperShapeFault> {
-        let source = u_string::substring(&(input.text).to_ustring(), ((input.range).clone().start) as i32, ((input.range).clone().end) as i32);
+        let source = u_string::substring(&(input.text).to_ustring(), i32::from_ne_bytes((((input.range).clone().start) as i32).to_ne_bytes()), i32::from_ne_bytes((((input.range).clone().end) as i32).to_ne_bytes()));
         return Ok(ShapingResult::new(vec![
-    (Cluster::new((input.range).clone(), source.as_ustr(), (((input.font_decision).clone().candidate).clone().key).to_ustring().as_ustr(), format!("{}", (u_string::unit_count(&(source))) as i32).parse::<f64>().unwrap_or(0.0) * 10.0f64, Some((input.display_text).to_ustring()), Some(0.0), Some(0.0), Some(0.0))).clone(),
+    (Cluster::new((input.range).clone(), source.as_ustr(), (((input.font_decision).clone().candidate).clone().key).to_ustring().as_ustr(), format!("{}", (i32::from_ne_bytes(((u_string::unit_count(&(source))) as i32).to_ne_bytes()))).parse::<f64>().unwrap_or(0.0) * 10.0f64, Some((input.display_text).to_ustring()), Some(0.0), Some(0.0), Some(0.0))).clone(),
 ].to_vec(), vec![].to_vec(), Some(vec![])));
     }
 }

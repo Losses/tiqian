@@ -205,7 +205,7 @@ impl ShapingEvidenceJson {
     }
 
     pub(crate) fn shaping_evidence_json_int_required(v: JsonValue, name: &UStr) -> Result<u32, TextRangeError> {
-        return Ok((match f64::from(ShapingEvidenceJson::shaping_evidence_json_num_required((v).clone(), name)?) { v if v.is_nan() => 0i32, v if v >= 2147483648.0 => 2147483647i32, v if v < -2147483648.0 => -2147483648i32, v if v < 0.0 => i32::from_ne_bytes(u32::wrapping_sub(0, match ((0.0 - v).to_bits() >> 52) & 2047 { e if e < 1023 => 0u32, e => u32::try_from((((0.0 - v).to_bits() & 4503599627370495) | 4503599627370496) >> (52 - (e - 1023))).unwrap_or(0) }).to_ne_bytes()), v => i32::from_ne_bytes(match ((v).to_bits() >> 52) & 2047 { e if e < 1023 => 0u32, e => u32::try_from((((v).to_bits() & 4503599627370495) | 4503599627370496) >> (52 - (e - 1023))).unwrap_or(0) }.to_ne_bytes()) }) as u32);
+        return Ok(u32::from_ne_bytes(((match f64::from(ShapingEvidenceJson::shaping_evidence_json_num_required((v).clone(), name)?) { v if v.is_nan() => 0i32, v if v >= 2147483648.0 => 2147483647i32, v if v < -2147483648.0 => -2147483648i32, v if v < 0.0 => i32::from_ne_bytes(u32::wrapping_sub(0, match ((0.0 - v).to_bits() >> 52) & 2047 { e if e < 1023 => 0u32, e => u32::try_from((((0.0 - v).to_bits() & 4503599627370495) | 4503599627370496) >> (52 - (e - 1023))).unwrap_or(0) }).to_ne_bytes()), v => i32::from_ne_bytes(match ((v).to_bits() >> 52) & 2047 { e if e < 1023 => 0u32, e => u32::try_from((((v).to_bits() & 4503599627370495) | 4503599627370496) >> (52 - (e - 1023))).unwrap_or(0) }.to_ne_bytes()) }) as u32).to_ne_bytes()));
     }
 
     pub(crate) fn shaping_evidence_json_bool_required(v: JsonValue, name: &UStr) -> Result<bool, TextRangeError> {
@@ -334,7 +334,7 @@ impl ShapingEvidenceJson {
     let __count = u_string::unit_count(&text);
         let mut scanning = true;
         while scanning {
-            if cur.pos as i32 >= __count as i32 {
+            if i32::from_ne_bytes(((cur.pos) as i32).to_ne_bytes()) >= i32::from_ne_bytes(((__count) as i32).to_ne_bytes()) {
             }
             let c = u_string::unit_at_from(__units, cur.pos).unwrap_or(0);
             if c == 32 || c == 9 || c == 10 || c == 13 {
@@ -357,15 +357,15 @@ impl ShapingEvidenceJson {
         if c == 34 {
             return Ok(JsonValue::JStr { v: ShapingEvidenceJson::shaping_evidence_json_parse_string(cur, text)?.to_ustring() });
         }
-        if u_string::substr(&text, (cur.pos) as i32, Some(4i32)) == UString::from("true") {
+        if u_string::substr(&text, i32::from_ne_bytes(((cur.pos) as i32).to_ne_bytes()), Some(4i32)) == UString::from("true") {
             cur.pos = u32::wrapping_add(cur.pos, 4);
             return Ok(JsonValue::JBool { v: true });
         }
-        if u_string::substr(&text, (cur.pos) as i32, Some(5i32)) == UString::from("false") {
+        if u_string::substr(&text, i32::from_ne_bytes(((cur.pos) as i32).to_ne_bytes()), Some(5i32)) == UString::from("false") {
             cur.pos = u32::wrapping_add(cur.pos, 5);
             return Ok(JsonValue::JBool { v: false });
         }
-        if u_string::substr(&text, (cur.pos) as i32, Some(4i32)) == UString::from("null") {
+        if u_string::substr(&text, i32::from_ne_bytes(((cur.pos) as i32).to_ne_bytes()), Some(4i32)) == UString::from("null") {
             cur.pos = u32::wrapping_add(cur.pos, 4);
             return Ok((JsonValue::JNull).clone());
         }
@@ -524,13 +524,13 @@ impl ShapingEvidenceJson {
         for i in 0..4 {
             let c = u_string::unit_at(&text, u32::wrapping_add(start, i)).unwrap_or(0);
             let digit: u32;
-            if c as i32 >= 48 && ((c) as i32) <= 57 {
+            if i32::from_ne_bytes(((c) as i32).to_ne_bytes()) >= 48 && (i32::from_ne_bytes(((c) as i32).to_ne_bytes())) <= 57 {
                 digit = u32::wrapping_sub(c, 48);
             } else {
-                if c as i32 >= 97 && ((c) as i32) <= 102 {
+                if i32::from_ne_bytes(((c) as i32).to_ne_bytes()) >= 97 && (i32::from_ne_bytes(((c) as i32).to_ne_bytes())) <= 102 {
                     digit = u32::wrapping_add(u32::wrapping_sub(c, 97), 10);
                 } else {
-                    if c as i32 >= 65 && ((c) as i32) <= 70 {
+                    if i32::from_ne_bytes(((c) as i32).to_ne_bytes()) >= 65 && (i32::from_ne_bytes(((c) as i32).to_ne_bytes())) <= 70 {
                         digit = u32::wrapping_add(u32::wrapping_sub(c, 65), 10);
                     } else {
                         return Err(TextRangeError::Message { text: UString::from(format!("{}", { let mut __s = UString::new(); __s += &(UString::from("Malformed JSON: bad \\u escape at offset ")); __s += &(UString::from(format!("{}", crate::runtime::int_text::IntText::int_text(start)).as_str())); __s }).as_str()) });
@@ -548,10 +548,10 @@ impl ShapingEvidenceJson {
         let start = cur.pos;
         let mut scanning = true;
         while scanning {
-            if cur.pos as i32 >= __count4 as i32 {
+            if i32::from_ne_bytes(((cur.pos) as i32).to_ne_bytes()) >= i32::from_ne_bytes(((__count4) as i32).to_ne_bytes()) {
             }
             let c = u_string::unit_at_from(__units4, cur.pos).unwrap_or(0);
-            if c as i32 >= 48 && ((c) as i32) <= 57 || c == 45 || c == 43 || c == 46 || c == 101 || c == 69 {
+            if i32::from_ne_bytes(((c) as i32).to_ne_bytes()) >= 48 && (i32::from_ne_bytes(((c) as i32).to_ne_bytes())) <= 57 || c == 45 || c == 43 || c == 46 || c == 101 || c == 69 {
                 cur.pos = u32::wrapping_add(cur.pos, 1);
             } else {
                 scanning = false;
@@ -560,7 +560,7 @@ impl ShapingEvidenceJson {
         if cur.pos == start {
             return Err(TextRangeError::Message { text: UString::from(format!("{}", { let mut __s = UString::new(); __s += &(UString::from("Malformed JSON: expected value at offset ")); __s += &(UString::from(format!("{}", crate::runtime::int_text::IntText::int_text(start)).as_str())); __s }).as_str()) });
         }
-        return Ok(u_string::parse_f64(&(u_string::substring(&text, (start) as i32, (cur.pos) as i32))));
+        return Ok(u_string::parse_f64(&(u_string::substring(&text, i32::from_ne_bytes(((start) as i32).to_ne_bytes()), i32::from_ne_bytes(((cur.pos) as i32).to_ne_bytes())))));
     }
 }
 

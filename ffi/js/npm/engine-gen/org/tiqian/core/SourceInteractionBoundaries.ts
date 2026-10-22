@@ -61,11 +61,11 @@ export class SourceInteractionBoundaries {
   }
 
   public static codePointAtCompat(text: string, index: number, end: number): number {
-    const high = (Number.isNaN(text.charCodeAt(index)) ? null : text.charCodeAt(index))!!;
+    const high = (Number.isNaN(text.charCodeAt(index)) ? null : text.charCodeAt(index))!;
     if (high < SourceInteractionBoundaries.HIGH_SURROGATE_START || high > SourceInteractionBoundaries.HIGH_SURROGATE_END || index + 1 >= end) {
       return high;
     }
-    const low = readUnit(text, index + 1)!!;
+    const low = readUnit(text, index + 1)!;
     if (low < SourceInteractionBoundaries.LOW_SURROGATE_START || low > SourceInteractionBoundaries.LOW_SURROGATE_END) {
       return high;
     }

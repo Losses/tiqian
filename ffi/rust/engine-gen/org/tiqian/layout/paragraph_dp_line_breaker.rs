@@ -89,40 +89,45 @@ impl ParagraphDpLineBreaker {
         let ranges = match &(unbreakable_ranges) { None => UnbreakableRanges::new(vec![].to_vec()), Some(__option1) => (*__option1).clone() };
         let indent = match &(first_line_indent) { None => 0.0f64, Some(__option2) => *__option2 };
         let forbid_start = (forbidden_line_start_clusters).clone();
-        let forbid_end = match &(forbidden_line_end_clusters) { None => SortedTable::sorted_table_set_builder::<u32>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints((*a) as i32, (*b) as i32))).clone().build(), Some(__option3) => (*__option3).clone() };
-        let hyphens = match &(hyphen_break_clusters) { None => SortedTable::sorted_table_set_builder::<u32>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints((*a) as i32, (*b) as i32))).clone().build(), Some(__option4) => (*__option4).clone() };
-        let cjk = match &(cjk_inter_char_boundaries) { None => SortedTable::sorted_table_set_builder::<u32>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints((*a) as i32, (*b) as i32))).clone().build(), Some(__option5) => (*__option5).clone() };
-        let sino = match &(sino_western_boundaries) { None => SortedTable::sorted_table_set_builder::<u32>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints((*a) as i32, (*b) as i32))).clone().build(), Some(__option6) => (*__option6).clone() };
-        let mut gap_boundaries_builder: SortedSetTableBuilder<u32> = SortedTable::sorted_table_set_builder::<u32>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints((*a) as i32, (*b) as i32)));
-        for i in 0..((cjk.size()) as u32) {
-            gap_boundaries_builder.put(&(cjk.at({ let v: u32 = i; v as i32 })));
+        let forbid_end = match &(forbidden_line_end_clusters) { None => SortedTable::sorted_table_set_builder::<u32>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_bytes(((*a) as i32).to_ne_bytes()), i32::from_ne_bytes(((*b) as i32).to_ne_bytes())))).clone().build(), Some(__option3) => (*__option3).clone() };
+        let hyphens = match &(hyphen_break_clusters) { None => SortedTable::sorted_table_set_builder::<u32>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_bytes(((*a) as i32).to_ne_bytes()), i32::from_ne_bytes(((*b) as i32).to_ne_bytes())))).clone().build(),
+Some(__option4) => (*__option4).clone() };
+        let cjk = match &(cjk_inter_char_boundaries) { None => SortedTable::sorted_table_set_builder::<u32>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_bytes(((*a) as i32).to_ne_bytes()), i32::from_ne_bytes(((*b) as i32).to_ne_bytes())))).clone().build(),
+Some(__option5) => (*__option5).clone() };
+        let sino = match &(sino_western_boundaries) { None => SortedTable::sorted_table_set_builder::<u32>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_bytes(((*a) as i32).to_ne_bytes()), i32::from_ne_bytes(((*b) as i32).to_ne_bytes())))).clone().build(),
+Some(__option6) => (*__option6).clone() };
+        let mut gap_boundaries_builder: SortedSetTableBuilder<u32> = SortedTable::sorted_table_set_builder::<u32>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_bytes(((*a) as i32).to_ne_bytes()), i32::from_ne_bytes(((*b) as i32).to_ne_bytes()))));
+        for i in 0..u32::from_ne_bytes(((cjk.size()) as u32).to_ne_bytes()) {
+            gap_boundaries_builder.put(&(cjk.at({ let v: u32 = i; i32::from_ne_bytes(v.to_ne_bytes()) })));
         }
-        for i in 0..((sino.size()) as u32) {
-            gap_boundaries_builder.put(&(sino.at({ let v: u32 = i; v as i32 })));
+        for i in 0..u32::from_ne_bytes(((sino.size()) as u32).to_ne_bytes()) {
+            gap_boundaries_builder.put(&(sino.at({ let v: u32 = i; i32::from_ne_bytes(v.to_ne_bytes()) })));
         }
         let gap_boundaries: SortedSetTable<u32> = gap_boundaries_builder.clone().build();
-        let controls = match &(non_rendering_control_clusters) { None => SortedTable::sorted_table_set_builder::<u32>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints((*a) as i32, (*b) as i32))).clone().build(), Some(__option7) => (*__option7).clone() };
-        let progressive = match &(progressive_break_opportunities) { None => SortedTable::sorted_table_map_builder::<u32, ProgressiveBreakOpportunity>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints((*a) as i32, (*b) as i32))).clone().build(),
-Some(__option8) => (*__option8).clone() };
-        let hard = match &(hard_break_after_clusters) { None => SortedTable::sorted_table_set_builder::<u32>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints((*a) as i32, (*b) as i32))).clone().build(), Some(__option9) => (*__option9).clone() };
-        let hangables = match &(hangable_clusters) { None => SortedTable::sorted_table_set_builder::<u32>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints((*a) as i32, (*b) as i32))).clone().build(), Some(__option10) => (*__option10).clone() };
+        let controls = match &(non_rendering_control_clusters) { None => SortedTable::sorted_table_set_builder::<u32>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_bytes(((*a) as i32).to_ne_bytes()), i32::from_ne_bytes(((*b) as i32).to_ne_bytes())))).clone().build(), Some(__option7) => (*__option7).clone() };
+        let progressive = match &(progressive_break_opportunities) { None => SortedTable::sorted_table_map_builder::<u32,
+ProgressiveBreakOpportunity>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_bytes(((*a) as i32).to_ne_bytes()), i32::from_ne_bytes(((*b) as i32).to_ne_bytes())))).clone().build(), Some(__option8) => (*__option8).clone() };
+        let hard = match &(hard_break_after_clusters) { None => SortedTable::sorted_table_set_builder::<u32>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_bytes(((*a) as i32).to_ne_bytes()), i32::from_ne_bytes(((*b) as i32).to_ne_bytes())))).clone().build(),
+Some(__option9) => (*__option9).clone() };
+        let hangables = match &(hangable_clusters) { None => SortedTable::sorted_table_set_builder::<u32>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_bytes(((*a) as i32).to_ne_bytes()), i32::from_ne_bytes(((*b) as i32).to_ne_bytes())))).clone().build(),
+Some(__option10) => (*__option10).clone() };
         let max_stretch = match &(max_cjk_stretch_per_gap) { None => f64::INFINITY, Some(__option11) => *__option11 };
         let sino_cap = match &(sino_western_stretch_cap) { None => 0.0f64, Some(__option12) => *__option12 };
         let context = DpContext::new(natural_clusters.to_vec(), adjusted_clusters.to_vec(), max_width, (shrink).clone(), (ranges).clone(), indent, (forbidden_line_start_clusters).clone(), (forbid_end).clone(), (hyphens).clone(), (cjk).clone(), max_stretch, (sino).clone(), sino_cap, (controls).clone(), (gap_boundaries).clone(), max_stretch, matches!(line_adjustment_push_in.as_ref(), Some(__v) if __v == &(true)), (progressive).clone())?;
         let mut committed: Vec<LineCandidate> = vec![];
         let mut sorted_breaks: Vec<u32> = vec![];
-        if hard.size() as u32 as i32 > (0) {
-            for i in 0..((hard.size()) as u32) {
-                sorted_breaks.push(hard.at({ let v: u32 = i; v as i32 }));
+        if i32::from_ne_bytes(((u32::from_ne_bytes(((hard.size()) as u32).to_ne_bytes())) as i32).to_ne_bytes()) > (0) {
+            for i in 0..u32::from_ne_bytes(((hard.size()) as u32).to_ne_bytes()) {
+                sorted_breaks.push(hard.at({ let v: u32 = i; i32::from_ne_bytes(v.to_ne_bytes()) }));
             }
         }
         let mut cursor = 0u32;
         let mut segment_start = 0u32;
-        while ((segment_start) as i32) < ((u32::try_from((adjusted_clusters.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32) {
-            while ((cursor) as i32) < ((u32::try_from((sorted_breaks.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32) && ({ let v: u32 = sorted_breaks[usize::try_from(cursor).unwrap_or(0)]; v as i32 }) < ((segment_start) as i32) {
+        while (i32::from_ne_bytes(((segment_start) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((adjusted_clusters.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
+            while (i32::from_ne_bytes(((cursor) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((sorted_breaks.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) && ({ let v: u32 = sorted_breaks[usize::try_from(cursor).unwrap_or(0)]; i32::from_ne_bytes(v.to_ne_bytes()) }) < (i32::from_ne_bytes(((segment_start) as i32).to_ne_bytes())) {
                 cursor = u32::wrapping_add(cursor, 1);
             }
-            let mandatory = if cursor as i32 < ((u32::try_from((sorted_breaks.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32) { Some(sorted_breaks[usize::try_from(cursor).unwrap_or(0)]) } else { None };
+            let mandatory = if i32::from_ne_bytes(((cursor) as i32).to_ne_bytes()) < (i32::from_ne_bytes(((u32::try_from((sorted_breaks.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) { Some(sorted_breaks[usize::try_from(cursor).unwrap_or(0)]) } else { None };
             let end = match &(mandatory) { None => u32::try_from((adjusted_clusters.len()) & 0xFFFF_FFFF).unwrap_or(0), Some(__option13) => u32::wrapping_add(*__option13, 1) };
             let ends = self.solve_segment((context).clone(), segment_start, end, mandatory.is_some())?;
             let _ = self.commit_segment(&mut committed, &ends, segment_start, mandatory, (context).clone(), (hard).clone())?;
@@ -134,7 +139,7 @@ Some(__option8) => (*__option8).clone() };
     fn candidate_ends(&self, context: DpContext, start: u32, segment_end_exclusive: u32, ends_with_mandatory: bool) -> Vec<u32> {
         let limit = ProgressiveBreakDecisions::progressive_break_decisions_line_limit(context.max_width, context.first_line_indent, start);
         let raw = LineBreakerLines::line_breaker_lines_find_greedy_end(&context.adjusted_clusters, start, limit, Some(segment_end_exclusive), Some((context.non_rendering_control_clusters).clone()));
-        if raw as i32 >= segment_end_exclusive as i32 {
+        if i32::from_ne_bytes(((raw) as i32).to_ne_bytes()) >= i32::from_ne_bytes(((segment_end_exclusive) as i32).to_ne_bytes()) {
             return vec![segment_end_exclusive];
         }
         let progressive = ProgressiveBreakDecisions::progressive_break_decisions_decide_progressive_break(start, raw, (context.progressive_break_opportunities).clone(), Some((context.adjusted_clusters).clone()), Some(limit), Some((context.cjk_inter_char_boundaries).clone()), Some(context.max_cjk_stretch_per_gap), Some((context.sino_western_boundaries).clone()), Some(context.sino_western_stretch_cap));
@@ -143,12 +148,12 @@ Some(__option8) => (*__option8).clone() };
         if context.allow_compression_edges {
             let mut width = 0.0f64;
             let mut i = start;
-            while ((i) as i32) < ((raw) as i32) {
+            while (i32::from_ne_bytes(((i) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((raw) as i32).to_ne_bytes())) {
                 width += context.adjusted_clusters[usize::try_from(i).unwrap_or(0)].advance;
                 i = u32::wrapping_add(i, 1);
             }
             let mut e = u32::wrapping_add(raw, 1);
-            while ((e) as i32) <= segment_end_exclusive as i32 && ((u32::try_from((compressed.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32) < ((self.candidate_window) as i32) {
+            while (i32::from_ne_bytes(((e) as i32).to_ne_bytes())) <= i32::from_ne_bytes(((segment_end_exclusive) as i32).to_ne_bytes()) && (i32::from_ne_bytes(((u32::try_from((compressed.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((self.candidate_window) as i32).to_ne_bytes())) {
                 width += context.adjusted_clusters[usize::try_from(u32::wrapping_sub(e, 1)).unwrap_or(0)].advance;
                 if width - limit > (context.shrink_capacity(IntRange::new(start, u32::wrapping_sub(e, 1)))) {
                     break;
@@ -158,19 +163,19 @@ Some(__option8) => (*__option8).clone() };
             }
         }
         let is_promotion: Arc<dyn Fn(u32) -> bool + Send + Sync + 'static> = { let context = (context).clone(); Arc::new(move |e| {
-        if e as i32 <= raw as i32 {
+        if i32::from_ne_bytes(((e) as i32).to_ne_bytes()) <= i32::from_ne_bytes(((raw) as i32).to_ne_bytes()) {
             return false;
         }
         let current = context.progressive_break_opportunities.get(&(progressive));
         let resulting = context.progressive_break_opportunities.get(&(e));
-        return match &(current) { Some(__option16) => resulting.is_some() && __option16.span_range.start == ((resulting).as_ref().unwrap().span_range).clone().start && __option16.span_range.end == ((resulting).as_ref().unwrap().span_range).clone().end && ((ProgressiveBreakTierPriority::progressive_break_tier_priority_priority((resulting).as_ref().unwrap().tier)) as i32) < ((ProgressiveBreakTierPriority::progressive_break_tier_priority_priority(__option16.tier)) as i32), None => false };
+        return match &(current) { Some(__option16) => resulting.is_some() && __option16.span_range.start == ((resulting).as_ref().unwrap().span_range).clone().start && __option16.span_range.end == ((resulting).as_ref().unwrap().span_range).clone().end && (i32::from_ne_bytes(((ProgressiveBreakTierPriority::progressive_break_tier_priority_priority((resulting).as_ref().unwrap().tier)) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((ProgressiveBreakTierPriority::progressive_break_tier_priority_priority(__option16.tier)) as i32).to_ne_bytes())), None => false };
 }) };
         let mut filtered: Vec<u32> = vec![];
         let mut i = u32::wrapping_sub(raw, self.candidate_window);
-        if i as i32 < ((u32::wrapping_add(start, 1)) as i32) {
+        if i32::from_ne_bytes(((i) as i32).to_ne_bytes()) < (i32::from_ne_bytes(((u32::wrapping_add(start, 1)) as i32).to_ne_bytes())) {
             i = u32::wrapping_add(start, 1);
         }
-        while ((i) as i32) <= raw as i32 {
+        while (i32::from_ne_bytes(((i) as i32).to_ne_bytes())) <= i32::from_ne_bytes(((raw) as i32).to_ne_bytes()) {
             if (!ends_with_mandatory || i != u32::wrapping_sub(segment_end_exclusive, 1)) && !context.unbreakable_ranges.contains_boundary(i) && (is_promotion(i) || ProgressiveBreakDecisions::progressive_break_decisions_progressive_candidate_allowed(start, raw, i, (context.progressive_break_opportunities).clone(), Some((context.adjusted_clusters).clone()), Some(limit), Some((context.cjk_inter_char_boundaries).clone()), Some(context.max_cjk_stretch_per_gap), Some((context.sino_western_boundaries).clone()), Some(context.sino_western_stretch_cap))) && (i == segment_end_exclusive || ParagraphDpLineBreaker::paragraph_dp_line_breaker_range_has_only_non_control_clusters(start, i, (context.non_rendering_control_clusters).clone())) {
                 filtered.push(i);
             }
@@ -194,12 +199,12 @@ Some(__option8) => (*__option8).clone() };
                 promotions.push(e);
             }
         }
-        if u32::try_from((promotions.len()) & 0xFFFF_FFFF).unwrap_or(0) as i32 > (0) {
+        if i32::from_ne_bytes(((u32::try_from((promotions.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes()) > (0) {
             let mut best = 999999u32;
             let promoted = (context.progressive_break_opportunities.get(&(promotions[0usize])).as_ref().unwrap().span_range).clone();
             for &e in &promotions {
                 let o = context.progressive_break_opportunities.get(&(e));
-                if ProgressiveBreakTierPriority::progressive_break_tier_priority_priority(o.as_ref().unwrap().tier) as i32 < ((best) as i32) {
+                if i32::from_ne_bytes(((ProgressiveBreakTierPriority::progressive_break_tier_priority_priority(o.as_ref().unwrap().tier)) as i32).to_ne_bytes()) < (i32::from_ne_bytes(((best) as i32).to_ne_bytes())) {
                     best = ProgressiveBreakTierPriority::progressive_break_tier_priority_priority(o.as_ref().unwrap().tier);
                 }
             }
@@ -207,13 +212,13 @@ Some(__option8) => (*__option8).clone() };
             for &e in &pool {
                 let o = context.progressive_break_opportunities.get(&(e));
                 if match &(o) { None => true,
-Some(__option18) => __option18.span_range.start != promoted.start } || ((o).as_ref().unwrap().span_range).clone().end != promoted.end || ((ProgressiveBreakTierPriority::progressive_break_tier_priority_priority((o).as_ref().unwrap().tier)) as i32) <= best as i32 {
+Some(__option18) => __option18.span_range.start != promoted.start } || ((o).as_ref().unwrap().span_range).clone().end != promoted.end || (i32::from_ne_bytes(((ProgressiveBreakTierPriority::progressive_break_tier_priority_priority((o).as_ref().unwrap().tier)) as i32).to_ne_bytes())) <= i32::from_ne_bytes(((best) as i32).to_ne_bytes()) {
                     preferred.push(e);
                 }
             }
             pool = preferred;
         }
-        if baseline as i32 >= u32::wrapping_add(start, 1) as i32 && ((baseline) as i32) <= segment_end_exclusive as i32 && u32::try_from((promotions.len()) & 0xFFFF_FFFF).unwrap_or(0) == 0 {
+        if i32::from_ne_bytes(((baseline) as i32).to_ne_bytes()) >= i32::from_ne_bytes(((u32::wrapping_add(start, 1)) as i32).to_ne_bytes()) && (i32::from_ne_bytes(((baseline) as i32).to_ne_bytes())) <= i32::from_ne_bytes(((segment_end_exclusive) as i32).to_ne_bytes()) && u32::try_from((promotions.len()) & 0xFFFF_FFFF).unwrap_or(0) == 0 {
             pool.push(baseline);
         }
         let mut unique: Vec<u32> = vec![];
@@ -221,7 +226,7 @@ Some(__option18) => __option18.span_range.start != promoted.start } || ((o).as_r
             let mut seen = false;
             {
                 let mut _g = 0u32;
-                while ((_g) as i32) < ((u32::try_from((unique.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32) {
+                while (i32::from_ne_bytes(((_g) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((unique.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
                     let v = unique[usize::try_from(_g).unwrap_or(0)];
                     _g = u32::wrapping_add(_g, 1);
                     if v == e {
@@ -233,8 +238,8 @@ Some(__option18) => __option18.span_range.start != promoted.start } || ((o).as_r
                 unique.push(e);
             }
         }
-        return if u32::try_from((unique.len()) & 0xFFFF_FFFF).unwrap_or(0) as i32 > (0) { unique } else { vec![
-    if baseline as i32 < ((u32::wrapping_add(start, 1)) as i32) { u32::wrapping_add(start, 1) } else { baseline },
+        return if i32::from_ne_bytes(((u32::try_from((unique.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes()) > (0) { unique } else { vec![
+    if i32::from_ne_bytes(((baseline) as i32).to_ne_bytes()) < (i32::from_ne_bytes(((u32::wrapping_add(start, 1)) as i32).to_ne_bytes())) { u32::wrapping_add(start, 1) } else { baseline },
 ] };
     }
 
@@ -242,32 +247,33 @@ Some(__option18) => __option18.span_range.start != promoted.start } || ((o).as_r
         let limit = ProgressiveBreakDecisions::progressive_break_decisions_line_limit(context.max_width, context.first_line_indent, line.cluster_range.start);
         let in_measure = line.cluster_range.clone();
         let overflow = line.adjusted_width - limit;
-        let orphan = if !is_segment_last && in_measure.start == in_measure.end { self.leave_ragged_penalty as i32 as f64 } else { 0.0f64 } as f64;
+        let orphan = if !is_segment_last && in_measure.start == in_measure.end { i32::from_ne_bytes(((self.leave_ragged_penalty) as i32).to_ne_bytes()) as f64 } else { 0.0f64 } as f64;
         let hyphen = if hyphen_end { self.synthetic_hyphen_break_penalty } else { 0.0f64 };
         let r#ref = if context.d_ref < (1.0f64) { 1.0f64 } else { context.d_ref };
         if overflow > (0.0f64) {
-            let gaps = if context.gap_count((in_measure).clone()) as i32 < (1) { 1 } else { context.gap_count((in_measure).clone()) };
-            let d = (overflow / format!("{}", { let v: u32 = gaps; v as i32 }).parse::<f64>().unwrap_or(0.0)) * self.compression_visibility;
+            let gaps = if i32::from_ne_bytes(((context.gap_count((in_measure).clone())) as i32).to_ne_bytes()) < (1) { 1 } else { context.gap_count((in_measure).clone()) };
+            let d = (overflow / format!("{}", { let v: u32 = gaps; i32::from_ne_bytes(v.to_ne_bytes()) }).parse::<f64>().unwrap_or(0.0)) * self.compression_visibility;
             return Ok(EdgeGeometry::new(orphan + hyphen + (d * d / r#ref) * self.raggedness_weight, false)?);
         }
         let deficit = if is_segment_last { 0.0f64 } else { { let __min_a = (limit - line.adjusted_width) as f64; let __min_b = 0.0f64 as f64; if __min_a.is_nan() || __min_b.is_nan() { f64::NAN } else { if __min_a > __min_b { __min_a } else if __min_b > __min_a { __min_b } else if __min_a == 0.0 && __min_b == 0.0 { if __min_a.is_sign_negative() { __min_b } else { __min_a } } else { __min_a } } } };
         let sino_gaps = context.sino_gap_count((in_measure).clone());
         let cjk_gaps = context.cjk_gap_count((in_measure).clone());
-        let sino_fill = if sino_gaps as i32 > (0) { { let __min_a1 = deficit as f64; let __min_b1 = (format!("{}", (sino_gaps) as i32).parse::<f64>().unwrap_or(0.0) * context.sino_western_stretch_cap) as f64; if __min_a1.is_nan() || __min_b1.is_nan() { f64::NAN } else { if __min_a1 < __min_b1 { __min_a1 } else if __min_b1 < __min_a1 { __min_b1 } else if __min_a1 == 0.0 && __min_b1 == 0.0 { if __min_a1.is_sign_negative() { __min_a1 } else { __min_b1 } } else { __min_a1 } } } } else { 0.0f64 };
-        let d_sino = if sino_gaps as i32 > (0) { sino_fill / format!("{}", (sino_gaps) as i32).parse::<f64>().unwrap_or(0.0) } else { 0.0f64 };
+        let sino_fill = if i32::from_ne_bytes(((sino_gaps) as i32).to_ne_bytes()) > (0) { { let __min_a1 = deficit as f64; let __min_b1 = (format!("{}", (i32::from_ne_bytes(((sino_gaps) as i32).to_ne_bytes()))).parse::<f64>().unwrap_or(0.0) * context.sino_western_stretch_cap) as f64; if __min_a1.is_nan() || __min_b1.is_nan() { f64::NAN } else { if __min_a1 < __min_b1 { __min_a1 } else if __min_b1 < __min_a1 { __min_b1 } else if __min_a1 == 0.0 && __min_b1 == 0.0 { if __min_a1.is_sign_negative() { __min_a1 } else { __min_b1 } } else { __min_a1 } } } } else { 0.0f64 };
+        let d_sino = if i32::from_ne_bytes(((sino_gaps) as i32).to_ne_bytes()) > (0) { sino_fill / format!("{}", (i32::from_ne_bytes(((sino_gaps) as i32).to_ne_bytes()))).parse::<f64>().unwrap_or(0.0) } else { 0.0f64 };
         let cjk_deficit = deficit - sino_fill;
-        let d_cjk = if cjk_gaps as i32 > (0) { cjk_deficit / format!("{}", (cjk_gaps) as i32).parse::<f64>().unwrap_or(0.0) } else { 0.0f64 };
+        let d_cjk = if i32::from_ne_bytes(((cjk_gaps) as i32).to_ne_bytes()) > (0) { cjk_deficit / format!("{}", (i32::from_ne_bytes(((cjk_gaps) as i32).to_ne_bytes()))).parse::<f64>().unwrap_or(0.0) } else { 0.0f64 };
         let residual = if cjk_gaps == 0 { cjk_deficit } else { 0.0f64 };
         return Ok(EdgeGeometry::new(residual * self.raggedness_weight + orphan + hyphen + ((d_sino * d_sino + d_cjk * d_cjk) / r#ref) * self.raggedness_weight, { let __min_a2 = d_sino as f64; let __min_b2 = d_cjk as f64; if __min_a2.is_nan() || __min_b2.is_nan() { f64::NAN } else { if __min_a2 > __min_b2 { __min_a2 } else if __min_b2 > __min_a2 { __min_b2 } else if __min_a2 == 0.0 && __min_b2 == 0.0 { if __min_a2.is_sign_negative() { __min_b2 } else { __min_a2 } } else { __min_a2 } } } > (ParagraphDpLineBreaker::PARAGRAPH_DP_LINE_BREAKER_VISIBLE_STRETCH_FLOOR_PX))?);
     }
 
     fn solve_segment(&self, context: DpContext, segment_start: u32, segment_end_exclusive: u32, ends_with_mandatory: bool) -> Result<Vec<u32>, TextRangeError> {
-        let mut states_builder: SortedMapTableBuilder<u32, Vec<EdgeState>> = SortedTable::sorted_table_map_builder::<u32, Vec<EdgeState>>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints((*a) as i32, (*b) as i32)));
+        let mut states_builder: SortedMapTableBuilder<u32, Vec<EdgeState>> = SortedTable::sorted_table_map_builder::<u32,
+Vec<EdgeState>>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_bytes(((*a) as i32).to_ne_bytes()), i32::from_ne_bytes(((*b) as i32).to_ne_bytes()))));
         states_builder.put(&(segment_start), &(vec![]));
         let mut best_builder: SortedMapTableBuilder<UString, EdgeState> = SortedTable::sorted_table_map_builder::<UString, EdgeState>(Arc::new(|a, b| SortedTable::sorted_table_compare_strings(a.as_ustr(), b.as_ustr())));
         let mut terminal_best: Option<EdgeState> = None;
         let mut start = segment_start;
-        while ((start) as i32) < ((segment_end_exclusive) as i32) {
+        while (i32::from_ne_bytes(((start) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((segment_end_exclusive) as i32).to_ne_bytes())) {
             let bucket = states_builder.get(&(start));
             let mut incoming: Vec<Option<EdgeState>> = vec![];
             if start == segment_start {
@@ -276,7 +282,7 @@ Some(__option18) => __option18.span_range.start != promoted.start } || ((o).as_r
                 match &(bucket) {
                     Some(__option19) => {
                         let mut _g = 0u32;
-                        while ((_g) as i32) < ((u32::try_from((__option19.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32) {
+                        while (i32::from_ne_bytes(((_g) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((__option19.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
                             let state = ((__option19)[usize::try_from(_g).unwrap_or(0)]).clone();
                             _g = u32::wrapping_add(_g, 1);
                             incoming.push(Some(state));
@@ -293,27 +299,27 @@ Some(__option18) => __option18.span_range.start != promoted.start } || ((o).as_r
             {
                 let _g1 = self.candidate_ends((context).clone(), start, segment_end_exclusive, ends_with_mandatory);
                 for &e in &_g1 {
-                    let last = { let v: u32 = e; v as i32 } >= segment_end_exclusive as i32;
+                    let last = { let v: u32 = e; i32::from_ne_bytes(v.to_ne_bytes()) } >= i32::from_ne_bytes(((segment_end_exclusive) as i32).to_ne_bytes());
                     let reason = if !last { LineEndReason::AutoWrap } else { if ends_with_mandatory { LineEndReason::MandatoryBreak } else { LineEndReason::ParagraphEnd } };
-                    let line_end = if u32::wrapping_sub(e, 1) as i32 < ((u32::wrapping_sub(segment_end_exclusive, 1)) as i32) { u32::wrapping_sub(e, 1) } else { u32::wrapping_sub(segment_end_exclusive, 1) };
+                    let line_end = if i32::from_ne_bytes(((u32::wrapping_sub(e, 1)) as i32).to_ne_bytes()) < (i32::from_ne_bytes(((u32::wrapping_sub(segment_end_exclusive, 1)) as i32).to_ne_bytes())) { u32::wrapping_sub(e, 1) } else { u32::wrapping_sub(segment_end_exclusive, 1) };
                     let line = context.build_line(IntRange::new(start, line_end), reason)?;
                     let hyphen_end = !last && context.hyphen_break_clusters.has(&(e));
                     let geometry = self.edge_geometry((context).clone(), (line).clone(), last, hyphen_end)?;
                     {
                         let mut _g = 0u32;
-                        while ((_g) as i32) < ((u32::try_from((incoming.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32) {
+                        while (i32::from_ne_bytes(((_g) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((incoming.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
                             let prev = (incoming[usize::try_from(_g).unwrap_or(0)]).clone();
                             _g = u32::wrapping_add(_g, 1);
                             let ph = match &(prev) { None => 0, Some(__option20) => __option20.hyphen_run };
                             let ps = match &(prev) { None => 0, Some(__option21) => __option21.stretch_run };
-                            let cost = (match &(prev) { None => 0.0f64, Some(__option22) => __option22.cost }) + geometry.base_cost + (if hyphen_end { self.consecutive_synthetic_hyphen_penalty * format!("{}", { let v: u32 = ph; v as i32 }).parse::<f64>().unwrap_or(0.0) } else { 0.0f64 }) + (if geometry.visible_stretch { self.consecutive_stretch_penalty * format!("{}", { let v: u32 = ps; v as i32 }).parse::<f64>().unwrap_or(0.0) } else { 0.0f64 });
+                            let cost = (match &(prev) { None => 0.0f64, Some(__option22) => __option22.cost }) + geometry.base_cost + (if hyphen_end { self.consecutive_synthetic_hyphen_penalty * format!("{}", { let v: u32 = ph; i32::from_ne_bytes(v.to_ne_bytes()) }).parse::<f64>().unwrap_or(0.0) } else { 0.0f64 }) + (if geometry.visible_stretch { self.consecutive_stretch_penalty * format!("{}", { let v: u32 = ps; i32::from_ne_bytes(v.to_ne_bytes()) }).parse::<f64>().unwrap_or(0.0) } else { 0.0f64 });
                             let mut hr = 0u32;
                             if hyphen_end {
-                                hr = if u32::wrapping_add(ph, 1) as i32 > ((ParagraphDpLineBreaker::PARAGRAPH_DP_LINE_BREAKER_HYPHEN_RUN_STATE_CAP) as i32) { ParagraphDpLineBreaker::PARAGRAPH_DP_LINE_BREAKER_HYPHEN_RUN_STATE_CAP } else { u32::wrapping_add(ph, 1) };
+                                hr = if i32::from_ne_bytes(((u32::wrapping_add(ph, 1)) as i32).to_ne_bytes()) > (i32::from_ne_bytes(((ParagraphDpLineBreaker::PARAGRAPH_DP_LINE_BREAKER_HYPHEN_RUN_STATE_CAP) as i32).to_ne_bytes())) { ParagraphDpLineBreaker::PARAGRAPH_DP_LINE_BREAKER_HYPHEN_RUN_STATE_CAP } else { u32::wrapping_add(ph, 1) };
                             }
                             let mut sr = 0u32;
                             if geometry.visible_stretch {
-                                sr = if u32::wrapping_add(ps, 1) as i32 > ((ParagraphDpLineBreaker::PARAGRAPH_DP_LINE_BREAKER_STRETCH_RUN_STATE_CAP) as i32) { ParagraphDpLineBreaker::PARAGRAPH_DP_LINE_BREAKER_STRETCH_RUN_STATE_CAP } else { u32::wrapping_add(ps, 1) };
+                                sr = if i32::from_ne_bytes(((u32::wrapping_add(ps, 1)) as i32).to_ne_bytes()) > (i32::from_ne_bytes(((ParagraphDpLineBreaker::PARAGRAPH_DP_LINE_BREAKER_STRETCH_RUN_STATE_CAP) as i32).to_ne_bytes())) { ParagraphDpLineBreaker::PARAGRAPH_DP_LINE_BREAKER_STRETCH_RUN_STATE_CAP } else { u32::wrapping_add(ps, 1) };
                             }
                             let key = { let mut __s = UString::new(); __s += &(UString::from(format!("{}", crate::runtime::int_text::IntText::int_text(start)).as_str())); __s += &(UString::from(":")); __s += &(UString::from(format!("{}", crate::runtime::int_text::IntText::int_text(e)).as_str())); __s += &(UString::from(":")); __s += &(UString::from(format!("{}", crate::runtime::int_text::IntText::int_text(hr)).as_str())); __s += &(UString::from(":")); __s += &(UString::from(format!("{}", crate::runtime::int_text::IntText::int_text(sr)).as_str())); __s };
                             let existing = best_builder.get(&(key).to_ustring());
@@ -373,11 +379,11 @@ Some(__option18) => __option18.span_range.start != promoted.start } || ((o).as_r
     fn greedy_fallback_ends(&self, context: DpContext, segment_start: u32, segment_end_exclusive: u32) -> Vec<u32> {
         let mut ends: Vec<u32> = vec![];
         let mut start = segment_start;
-        while ((start) as i32) < ((segment_end_exclusive) as i32) {
+        while (i32::from_ne_bytes(((start) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((segment_end_exclusive) as i32).to_ne_bytes())) {
             let limit = ProgressiveBreakDecisions::progressive_break_decisions_line_limit(context.max_width, context.first_line_indent, start);
             let raw = LineBreakerLines::line_breaker_lines_find_greedy_end(&context.adjusted_clusters, start, limit, Some(segment_end_exclusive), Some((context.non_rendering_control_clusters).clone()));
-            let mut e = if raw as i32 >= segment_end_exclusive as i32 { segment_end_exclusive } else { ProgressiveBreakDecisions::progressive_break_decisions_adjust_break_for_unbreakables(ProgressiveBreakDecisions::progressive_break_decisions_decide_hyphen_break(start, raw, &context.adjusted_clusters, limit, (context.hyphen_break_clusters).clone(), (context.cjk_inter_char_boundaries).clone(), context.max_cjk_stretch_per_gap, Some((context.sino_western_boundaries).clone()), Some(context.sino_western_stretch_cap)), start, (context.unbreakable_ranges).clone()) };
-            if ({ let v: u32 = e; v as i32 }) <= start as i32 {
+            let mut e = if i32::from_ne_bytes(((raw) as i32).to_ne_bytes()) >= i32::from_ne_bytes(((segment_end_exclusive) as i32).to_ne_bytes()) { segment_end_exclusive } else { ProgressiveBreakDecisions::progressive_break_decisions_adjust_break_for_unbreakables(ProgressiveBreakDecisions::progressive_break_decisions_decide_hyphen_break(start, raw, &context.adjusted_clusters, limit, (context.hyphen_break_clusters).clone(), (context.cjk_inter_char_boundaries).clone(), context.max_cjk_stretch_per_gap, Some((context.sino_western_boundaries).clone()), Some(context.sino_western_stretch_cap)), start, (context.unbreakable_ranges).clone()) };
+            if ({ let v: u32 = e; i32::from_ne_bytes(v.to_ne_bytes()) }) <= i32::from_ne_bytes(((start) as i32).to_ne_bytes()) {
                 e = u32::wrapping_add(start, 1);
             }
             ends.push(e);
@@ -389,7 +395,7 @@ Some(__option18) => __option18.span_range.start != promoted.start } || ((o).as_r
     fn commit_segment(&self, committed: &mut Vec<LineCandidate>, ends: &Vec<u32>, segment_start: u32, mandatory_end: Option<u32>, context: DpContext, hard_break_after_clusters: SortedSetTable<u32>) -> Result<(), TextRangeError> {
         let mut line_start = segment_start;
         for &chosen_end in ends {
-            if line_start as i32 >= { let v: u32 = chosen_end; v as i32 } {
+            if i32::from_ne_bytes(((line_start) as i32).to_ne_bytes()) >= { let v: u32 = chosen_end; i32::from_ne_bytes(v.to_ne_bytes()) } {
                 continue;
             }
             let final_line = chosen_end == ends[usize::try_from(u32::wrapping_sub(u32::try_from((ends.len()) & 0xFFFF_FFFF).unwrap_or(0), 1)).unwrap_or(0)];
@@ -398,11 +404,11 @@ Some(__option18) => __option18.span_range.start != promoted.start } || ((o).as_r
             let limit = ProgressiveBreakDecisions::progressive_break_decisions_line_limit(context.max_width, context.first_line_indent, line_start);
             let natural_line = LineBreakerLines::line_breaker_lines_rebuild_line(IntRange::new(line_start, last_index.unwrap_or(0)), &context.natural_clusters, &context.adjusted_clusters, Some(reason), None, None)?;
             let mut compressed: Option<LineCandidate> = None;
-            if natural_line.adjusted_width > (limit) && ((last_index.unwrap_or(0)) as i32) > ((line_start) as i32) {
+            if natural_line.adjusted_width > (limit) && (i32::from_ne_bytes(((last_index.unwrap_or(0)) as i32).to_ne_bytes())) > (i32::from_ne_bytes(((line_start) as i32).to_ne_bytes())) {
                 let resulting_break = context.progressive_break_opportunities.get(&(chosen_end));
                 let raw_greedy = LineBreakerLines::line_breaker_lines_find_greedy_end(&context.adjusted_clusters, line_start, limit, Some(ends[usize::try_from(u32::wrapping_sub(u32::try_from((ends.len()) & 0xFFFF_FFFF).unwrap_or(0), 1)).unwrap_or(0)]), Some((context.non_rendering_control_clusters).clone()));
                 let original_break = context.progressive_break_opportunities.get(&(ProgressiveBreakDecisions::progressive_break_decisions_decide_progressive_break(line_start, raw_greedy, (context.progressive_break_opportunities).clone(), Some((context.adjusted_clusters).clone()), Some(limit), Some((context.cjk_inter_char_boundaries).clone()), Some(context.max_cjk_stretch_per_gap), Some((context.sino_western_boundaries).clone()), Some(context.sino_western_stretch_cap))));
-                let promotes_progressive_tier = match &(original_break) { Some(__option25) => resulting_break.is_some() && __option25.span_range.start == ((resulting_break).as_ref().unwrap().span_range).clone().start && __option25.span_range.end == ((resulting_break).as_ref().unwrap().span_range).clone().end && ((ProgressiveBreakTierPriority::progressive_break_tier_priority_priority((resulting_break).as_ref().unwrap().tier)) as i32) < ((ProgressiveBreakTierPriority::progressive_break_tier_priority_priority(__option25.tier)) as i32), None => false };
+                let promotes_progressive_tier = match &(original_break) { Some(__option25) => resulting_break.is_some() && __option25.span_range.start == ((resulting_break).as_ref().unwrap().span_range).clone().start && __option25.span_range.end == ((resulting_break).as_ref().unwrap().span_range).clone().end && (i32::from_ne_bytes(((ProgressiveBreakTierPriority::progressive_break_tier_priority_priority((resulting_break).as_ref().unwrap().tier)) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((ProgressiveBreakTierPriority::progressive_break_tier_priority_priority(__option25.tier)) as i32).to_ne_bytes())), None => false };
                 let result = LineRepair::line_repair_try_push_in(LineBreakerLines::line_breaker_lines_rebuild_line(IntRange::new(line_start, line_start), &context.natural_clusters, &context.adjusted_clusters, None, None, None)?, LineBreakerLines::line_breaker_lines_rebuild_line(IntRange::new(u32::wrapping_add(line_start, 1), last_index.unwrap_or(0)), &context.natural_clusters, &context.adjusted_clusters, Some(reason), None, None)?, &context.natural_clusters, &context.adjusted_clusters, limit, &context.shrink_opportunities, self.push_in_penalty, last_index, if promotes_progressive_tier { Some(UString::from("ProgressiveTechnicalTierPromotion")) } else { Some(UString::from("LineAdjustmentPushIn")) }.clone())?;
                 if result.candidate.clone().accepted && result.current.is_none() {
                     compressed = Some((result.previous).clone());
@@ -422,7 +428,7 @@ Some(__option18) => __option18.span_range.start != promoted.start } || ((o).as_r
                     }
                     None => {
                         let committed_end = ProgressiveBreakDecisions::progressive_break_decisions_adjust_break_for_line_end(chosen_end, line_start, (context.forbidden_line_end_clusters).clone());
-                        if hard_break_after_clusters.has(&(committed_end)) && ((line_start) as i32) < ((committed_end) as i32) {
+                        if hard_break_after_clusters.has(&(committed_end)) && (i32::from_ne_bytes(((line_start) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((committed_end) as i32).to_ne_bytes())) {
                             committed.push(LineBreakerLines::line_breaker_lines_rebuild_line(IntRange::new(line_start, committed_end), &context.natural_clusters, &context.adjusted_clusters, Some(LineEndReason::MandatoryBreak), None, None)?);
                             line_start = u32::wrapping_add(committed_end, 1);
                         } else {
@@ -438,7 +444,7 @@ Some(__option18) => __option18.span_range.start != promoted.start } || ((o).as_r
 
     pub(crate) fn paragraph_dp_line_breaker_range_has_only_non_control_clusters(start: u32, end_exclusive: u32, set: SortedSetTable<u32>) -> bool {
         let mut i = start;
-        while ((i) as i32) < ((end_exclusive) as i32) {
+        while (i32::from_ne_bytes(((i) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((end_exclusive) as i32).to_ne_bytes())) {
             if !set.has(&(i)) {
                 return true;
             }
@@ -474,40 +480,45 @@ impl LineBreaker for ParagraphDpLineBreaker {
         let ranges = match &(unbreakable_ranges) { None => UnbreakableRanges::new(vec![].to_vec()), Some(__option32) => (*__option32).clone() };
         let indent = match &(first_line_indent) { None => 0.0f64, Some(__option33) => *__option33 };
         let forbid_start = (forbidden_line_start_clusters).clone();
-        let forbid_end = match &(forbidden_line_end_clusters) { None => SortedTable::sorted_table_set_builder::<u32>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints((*a) as i32, (*b) as i32))).clone().build(), Some(__option34) => (*__option34).clone() };
-        let hyphens = match &(hyphen_break_clusters) { None => SortedTable::sorted_table_set_builder::<u32>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints((*a) as i32, (*b) as i32))).clone().build(), Some(__option35) => (*__option35).clone() };
-        let cjk = match &(cjk_inter_char_boundaries) { None => SortedTable::sorted_table_set_builder::<u32>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints((*a) as i32, (*b) as i32))).clone().build(), Some(__option36) => (*__option36).clone() };
-        let sino = match &(sino_western_boundaries) { None => SortedTable::sorted_table_set_builder::<u32>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints((*a) as i32, (*b) as i32))).clone().build(), Some(__option37) => (*__option37).clone() };
-        let mut gap_boundaries_builder: SortedSetTableBuilder<u32> = SortedTable::sorted_table_set_builder::<u32>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints((*a) as i32, (*b) as i32)));
-        for i in 0..((cjk.size()) as u32) {
-            gap_boundaries_builder.put(&(cjk.at({ let v: u32 = i; v as i32 })));
+        let forbid_end = match &(forbidden_line_end_clusters) { None => SortedTable::sorted_table_set_builder::<u32>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_bytes(((*a) as i32).to_ne_bytes()), i32::from_ne_bytes(((*b) as i32).to_ne_bytes())))).clone().build(), Some(__option34) => (*__option34).clone() };
+        let hyphens = match &(hyphen_break_clusters) { None => SortedTable::sorted_table_set_builder::<u32>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_bytes(((*a) as i32).to_ne_bytes()), i32::from_ne_bytes(((*b) as i32).to_ne_bytes())))).clone().build(),
+Some(__option35) => (*__option35).clone() };
+        let cjk = match &(cjk_inter_char_boundaries) { None => SortedTable::sorted_table_set_builder::<u32>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_bytes(((*a) as i32).to_ne_bytes()), i32::from_ne_bytes(((*b) as i32).to_ne_bytes())))).clone().build(),
+Some(__option36) => (*__option36).clone() };
+        let sino = match &(sino_western_boundaries) { None => SortedTable::sorted_table_set_builder::<u32>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_bytes(((*a) as i32).to_ne_bytes()), i32::from_ne_bytes(((*b) as i32).to_ne_bytes())))).clone().build(),
+Some(__option37) => (*__option37).clone() };
+        let mut gap_boundaries_builder: SortedSetTableBuilder<u32> = SortedTable::sorted_table_set_builder::<u32>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_bytes(((*a) as i32).to_ne_bytes()), i32::from_ne_bytes(((*b) as i32).to_ne_bytes()))));
+        for i in 0..u32::from_ne_bytes(((cjk.size()) as u32).to_ne_bytes()) {
+            gap_boundaries_builder.put(&(cjk.at({ let v: u32 = i; i32::from_ne_bytes(v.to_ne_bytes()) })));
         }
-        for i in 0..((sino.size()) as u32) {
-            gap_boundaries_builder.put(&(sino.at({ let v: u32 = i; v as i32 })));
+        for i in 0..u32::from_ne_bytes(((sino.size()) as u32).to_ne_bytes()) {
+            gap_boundaries_builder.put(&(sino.at({ let v: u32 = i; i32::from_ne_bytes(v.to_ne_bytes()) })));
         }
         let gap_boundaries: SortedSetTable<u32> = gap_boundaries_builder.clone().build();
-        let controls = match &(non_rendering_control_clusters) { None => SortedTable::sorted_table_set_builder::<u32>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints((*a) as i32, (*b) as i32))).clone().build(), Some(__option38) => (*__option38).clone() };
-        let progressive = match &(progressive_break_opportunities) { None => SortedTable::sorted_table_map_builder::<u32, ProgressiveBreakOpportunity>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints((*a) as i32, (*b) as i32))).clone().build(),
-Some(__option39) => (*__option39).clone() };
-        let hard = match &(hard_break_after_clusters) { None => SortedTable::sorted_table_set_builder::<u32>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints((*a) as i32, (*b) as i32))).clone().build(), Some(__option40) => (*__option40).clone() };
-        let hangables = match &(hangable_clusters) { None => SortedTable::sorted_table_set_builder::<u32>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints((*a) as i32, (*b) as i32))).clone().build(), Some(__option41) => (*__option41).clone() };
+        let controls = match &(non_rendering_control_clusters) { None => SortedTable::sorted_table_set_builder::<u32>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_bytes(((*a) as i32).to_ne_bytes()), i32::from_ne_bytes(((*b) as i32).to_ne_bytes())))).clone().build(), Some(__option38) => (*__option38).clone() };
+        let progressive = match &(progressive_break_opportunities) { None => SortedTable::sorted_table_map_builder::<u32,
+ProgressiveBreakOpportunity>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_bytes(((*a) as i32).to_ne_bytes()), i32::from_ne_bytes(((*b) as i32).to_ne_bytes())))).clone().build(), Some(__option39) => (*__option39).clone() };
+        let hard = match &(hard_break_after_clusters) { None => SortedTable::sorted_table_set_builder::<u32>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_bytes(((*a) as i32).to_ne_bytes()), i32::from_ne_bytes(((*b) as i32).to_ne_bytes())))).clone().build(),
+Some(__option40) => (*__option40).clone() };
+        let hangables = match &(hangable_clusters) { None => SortedTable::sorted_table_set_builder::<u32>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_bytes(((*a) as i32).to_ne_bytes()), i32::from_ne_bytes(((*b) as i32).to_ne_bytes())))).clone().build(),
+Some(__option41) => (*__option41).clone() };
         let max_stretch = match &(max_cjk_stretch_per_gap) { None => f64::INFINITY, Some(__option42) => *__option42 };
         let sino_cap = match &(sino_western_stretch_cap) { None => 0.0f64, Some(__option43) => *__option43 };
         let context = DpContext::new(natural_clusters.to_vec(), adjusted_clusters.to_vec(), max_width, (shrink).clone(), (ranges).clone(), indent, (forbidden_line_start_clusters).clone(), (forbid_end).clone(), (hyphens).clone(), (cjk).clone(), max_stretch, (sino).clone(), sino_cap, (controls).clone(), (gap_boundaries).clone(), max_stretch, matches!(line_adjustment_push_in.as_ref(), Some(__v) if __v == &(true)), (progressive).clone())?;
         let mut committed: Vec<LineCandidate> = vec![];
         let mut sorted_breaks: Vec<u32> = vec![];
-        if hard.size() as u32 as i32 > (0) {
-            for i in 0..((hard.size()) as u32) {
-                sorted_breaks.push(hard.at({ let v: u32 = i; v as i32 }));
+        if i32::from_ne_bytes(((u32::from_ne_bytes(((hard.size()) as u32).to_ne_bytes())) as i32).to_ne_bytes()) > (0) {
+            for i in 0..u32::from_ne_bytes(((hard.size()) as u32).to_ne_bytes()) {
+                sorted_breaks.push(hard.at({ let v: u32 = i; i32::from_ne_bytes(v.to_ne_bytes()) }));
             }
         }
         let mut cursor = 0u32;
         let mut segment_start = 0u32;
-        while ((segment_start) as i32) < ((u32::try_from((adjusted_clusters.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32) {
-            while ((cursor) as i32) < ((u32::try_from((sorted_breaks.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32) && ({ let v: u32 = sorted_breaks[usize::try_from(cursor).unwrap_or(0)]; v as i32 }) < ((segment_start) as i32) {
+        while (i32::from_ne_bytes(((segment_start) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((adjusted_clusters.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
+            while (i32::from_ne_bytes(((cursor) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((sorted_breaks.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) && ({ let v: u32 = sorted_breaks[usize::try_from(cursor).unwrap_or(0)]; i32::from_ne_bytes(v.to_ne_bytes()) }) < (i32::from_ne_bytes(((segment_start) as i32).to_ne_bytes())) {
                 cursor = u32::wrapping_add(cursor, 1);
             }
-            let mandatory = if cursor as i32 < ((u32::try_from((sorted_breaks.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32) { Some(sorted_breaks[usize::try_from(cursor).unwrap_or(0)]) } else { None };
+            let mandatory = if i32::from_ne_bytes(((cursor) as i32).to_ne_bytes()) < (i32::from_ne_bytes(((u32::try_from((sorted_breaks.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) { Some(sorted_breaks[usize::try_from(cursor).unwrap_or(0)]) } else { None };
             let end = match &(mandatory) { None => u32::try_from((adjusted_clusters.len()) & 0xFFFF_FFFF).unwrap_or(0), Some(__option44) => u32::wrapping_add(*__option44, 1) };
             let ends = self.solve_segment((context).clone(), segment_start, end, mandatory.is_some())?;
             let _ = self.commit_segment(&mut committed, &ends, segment_start, mandatory, (context).clone(), (hard).clone())?;
@@ -557,7 +568,7 @@ impl DpContext {
     let mut line_end_only_capacity = vec![];
         let n = u32::try_from((adjusted_clusters.len()) & 0xFFFF_FFFF).unwrap_or(0);
         let mut init = 0u32;
-        while ((init) as i32) <= n as i32 {
+        while (i32::from_ne_bytes(((init) as i32).to_ne_bytes())) <= i32::from_ne_bytes(((n) as i32).to_ne_bytes()) {
             gap_prefix.push(0);
             sino_prefix.push(0);
             cjk_prefix.push(0);
@@ -565,12 +576,12 @@ impl DpContext {
             init = u32::wrapping_add(init, 1);
         }
         init = 0u32;
-        while ((init) as i32) <= u32::try_from((natural_clusters.len()) & 0xFFFF_FFFF).unwrap_or(0) as i32 {
+        while (i32::from_ne_bytes(((init) as i32).to_ne_bytes())) <= i32::from_ne_bytes(((u32::try_from((natural_clusters.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes()) {
             natural_prefix.push(0.0f64);
             init = u32::wrapping_add(init, 1);
         }
         let mut k = 0u32;
-        while ((k) as i32) < ((n) as i32) {
+        while (i32::from_ne_bytes(((k) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((n) as i32).to_ne_bytes())) {
             { while gap_prefix.len() <= usize::try_from(u32::wrapping_add(k, 1)).unwrap_or(0) { gap_prefix.push(0); } gap_prefix[usize::try_from(u32::wrapping_add(k, 1)).unwrap_or(0)] = u32::wrapping_add(gap_prefix[usize::try_from(k).unwrap_or(0)], if gap_boundaries.has(&(k)) { 1 } else { 0 }); };
             { while sino_prefix.len() <= usize::try_from(u32::wrapping_add(k, 1)).unwrap_or(0) { sino_prefix.push(0); } sino_prefix[usize::try_from(u32::wrapping_add(k, 1)).unwrap_or(0)] = u32::wrapping_add(sino_prefix[usize::try_from(k).unwrap_or(0)], if sino_western_boundaries.has(&(k)) { 1 } else { 0 }); };
             { while cjk_prefix.len() <= usize::try_from(u32::wrapping_add(k, 1)).unwrap_or(0) { cjk_prefix.push(0); } cjk_prefix[usize::try_from(u32::wrapping_add(k, 1)).unwrap_or(0)] = u32::wrapping_add(cjk_prefix[usize::try_from(k).unwrap_or(0)], if cjk_inter_char_boundaries.has(&(k)) { 1 } else { 0 }); };
@@ -579,7 +590,7 @@ impl DpContext {
             k = u32::wrapping_add(k, 1);
         }
         init = 0u32;
-        while ((init) as i32) <= n as i32 {
+        while (i32::from_ne_bytes(((init) as i32).to_ne_bytes())) <= i32::from_ne_bytes(((n) as i32).to_ne_bytes()) {
             shrink_prefix.push(0.0f64);
             init = u32::wrapping_add(init, 1);
         }
@@ -587,7 +598,7 @@ impl DpContext {
             line_end_only_capacity.push(0.0f64);
         }
         for opp in &shrink_opportunities {
-            if opp.capacity <= 0 as f64 || (opp.cluster_index) > 2147483647 || ((opp.cluster_index) as i32) >= n as i32 {
+            if opp.capacity <= 0 as f64 || (opp.cluster_index) > 2147483647 || (i32::from_ne_bytes(((opp.cluster_index) as i32).to_ne_bytes())) >= i32::from_ne_bytes(((n) as i32).to_ne_bytes()) {
                 continue;
             }
             if opp.line_end_only {
@@ -597,7 +608,7 @@ impl DpContext {
             }
         }
         k = 0u32;
-        while ((k) as i32) < ((n) as i32) {
+        while (i32::from_ne_bytes(((k) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((n) as i32).to_ne_bytes())) {
             shrink_prefix[usize::try_from(u32::wrapping_add(k, 1)).unwrap_or(0)] += shrink_prefix[usize::try_from(k).unwrap_or(0)];
             k = u32::wrapping_add(k, 1);
         }

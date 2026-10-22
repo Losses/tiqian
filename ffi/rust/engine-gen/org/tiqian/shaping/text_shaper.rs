@@ -102,7 +102,7 @@ pub struct ShapingInput {
 
 impl ShapingInput {
     pub fn new(text: &UStr, range: TextRange, style: TextStyle, font_decision: FontDecision, display_text: Option<UString>, open_type_features: Option<Vec<UString>>) -> Self {
-        let display_text = display_text.unwrap_or_else(|| u_string::substring(text, (range.start) as i32, (range.end) as i32));
+        let display_text = display_text.unwrap_or_else(|| u_string::substring(text, i32::from_ne_bytes(((range.start) as i32).to_ne_bytes()), i32::from_ne_bytes(((range.end) as i32).to_ne_bytes())));
         let open_type_features = open_type_features.unwrap_or_else(|| vec![]);
         Self {
             text: text.to_ustring(),
@@ -231,18 +231,18 @@ impl ExplainableStubTextShaper {
     }
 
     pub fn shape(&self, input: ShapingInput) -> Result<ShapingResult, TextShaperShapeFault> {
-        let source_text = u_string::substring(&(input.text).to_ustring(), ((input.range).clone().start) as i32, ((input.range).clone().end) as i32);
+        let source_text = u_string::substring(&(input.text).to_ustring(), i32::from_ne_bytes((((input.range).clone().start) as i32).to_ne_bytes()), i32::from_ne_bytes((((input.range).clone().end) as i32).to_ne_bytes()));
         let mut glyph_count = ExplainableStubTextShaper::explainable_stub_text_shaper_code_point_count((input.display_text).to_ustring().as_ustr());
-        if glyph_count as i32 < (1) {
+        if i32::from_ne_bytes(((glyph_count) as i32).to_ne_bytes()) < (1) {
             glyph_count = 1u32;
         }
         let advance = (input.style).clone().font_size * ExplainableStubTextShaper::explainable_stub_text_shaper_nominal_advance_em(source_text.as_ustr(), (input.display_text).to_ustring().as_ustr());
         let cluster = Cluster::new((input.range).clone(), source_text.as_ustr(), (((input.font_decision).clone().candidate).clone().key).to_ustring().as_ustr(), advance, Some((input.display_text).to_ustring()), Some(0.0), Some(0.0), Some(0.0));
-        let glyph_advance = advance / format!("{}", (glyph_count) as i32).parse::<f64>().unwrap_or(0.0);
+        let glyph_advance = advance / format!("{}", (i32::from_ne_bytes(((glyph_count) as i32).to_ne_bytes()))).parse::<f64>().unwrap_or(0.0);
         let mut glyphs: Vec<Glyph> = vec![];
         let mut glyph_id = 0u32;
-        while ((glyph_id) as i32) < ((glyph_count) as i32) {
-            glyphs.push(Glyph::new(glyph_id, (input.range).clone(), glyph_advance, Some(glyph_advance * format!("{}", (glyph_id) as i32).parse::<f64>().unwrap_or(0.0)), Some(0.0), None, None, None, None));
+        while (i32::from_ne_bytes(((glyph_id) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((glyph_count) as i32).to_ne_bytes())) {
+            glyphs.push(Glyph::new(glyph_id, (input.range).clone(), glyph_advance, Some(glyph_advance * format!("{}", (i32::from_ne_bytes(((glyph_id) as i32).to_ne_bytes()))).parse::<f64>().unwrap_or(0.0)), Some(0.0), None, None, None, None));
             glyph_id = u32::wrapping_add(glyph_id, 1);
         }
         let run = GlyphRun::new((input.range).clone(), (((input.font_decision).clone().candidate).clone().key).to_ustring().as_ustr(), glyphs.to_vec(), advance, Some(vec![]));
@@ -256,22 +256,22 @@ impl ExplainableStubTextShaper {
         if source == UString::from("⸺") || display_text == UString::from("⸺") {
             return 2.0f64;
         }
-        if __count as i32 > (0) {
+        if i32::from_ne_bytes(((__count) as i32).to_ne_bytes()) > (0) {
             let mut all_spaces = true;
             let mut i = 0u32;
-            while ((i) as i32) < ((__count) as i32) {
+            while (i32::from_ne_bytes(((i) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((__count) as i32).to_ne_bytes())) {
                 if !(matches!(u_string::unit_at_from(__units, i).as_ref(), Some(__v) if __v == &(32))) {
                     all_spaces = false;
                 }
                 i = u32::wrapping_add(i, 1);
             }
             if all_spaces {
-                return 0.5f64 * format!("{}", (__count) as i32).parse::<f64>().unwrap_or(0.0);
+                return 0.5f64 * format!("{}", (i32::from_ne_bytes(((__count) as i32).to_ne_bytes()))).parse::<f64>().unwrap_or(0.0);
             }
         }
         let a = ExplainableStubTextShaper::explainable_stub_text_shaper_code_point_count(source);
         let b = ExplainableStubTextShaper::explainable_stub_text_shaper_code_point_count(display_text);
-        return { let v: u32 = if a as i32 > ((b) as i32) { a } else { b }; v as i32 } as f64;
+        return { let v: u32 = if i32::from_ne_bytes(((a) as i32).to_ne_bytes()) > (i32::from_ne_bytes(((b) as i32).to_ne_bytes())) { a } else { b }; i32::from_ne_bytes(v.to_ne_bytes()) } as f64;
     }
 
     pub(crate) fn explainable_stub_text_shaper_code_point_count(value: &UStr) -> u32 {
@@ -279,11 +279,11 @@ impl ExplainableStubTextShaper {
     let __count2 = u_string::unit_count(&value);
         let mut count = 0u32;
         let mut index = 0u32;
-        while ((index) as i32) < ((__count2) as i32) {
+        while (i32::from_ne_bytes(((index) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((__count2) as i32).to_ne_bytes())) {
             let code = u_string::unit_at_from(__units2, index).unwrap_or(0);
-            if code as i32 >= 55296 && ((code) as i32) <= 56319 && ((u32::wrapping_add(index, 1)) as i32) < ((__count2) as i32) {
+            if i32::from_ne_bytes(((code) as i32).to_ne_bytes()) >= 55296 && (i32::from_ne_bytes(((code) as i32).to_ne_bytes())) <= 56319 && (i32::from_ne_bytes(((u32::wrapping_add(index, 1)) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((__count2) as i32).to_ne_bytes())) {
                 let next = u_string::unit_at_from(__units2, u32::wrapping_add(index, 1)).unwrap_or(0);
-                if next as i32 >= 56320 && ((next) as i32) <= 57343 {
+                if i32::from_ne_bytes(((next) as i32).to_ne_bytes()) >= 56320 && (i32::from_ne_bytes(((next) as i32).to_ne_bytes())) <= 57343 {
                     index = u32::wrapping_add(index, 2);
                 } else {
                     index = u32::wrapping_add(index, 1);
@@ -309,18 +309,18 @@ impl ITextShaper for ExplainableStubTextShaper {
     }
 
     fn shape(&mut self, input: ShapingInput) -> Result<ShapingResult, TextShaperShapeFault> {
-        let source_text = u_string::substring(&(input.text).to_ustring(), ((input.range).clone().start) as i32, ((input.range).clone().end) as i32);
+        let source_text = u_string::substring(&(input.text).to_ustring(), i32::from_ne_bytes((((input.range).clone().start) as i32).to_ne_bytes()), i32::from_ne_bytes((((input.range).clone().end) as i32).to_ne_bytes()));
         let mut glyph_count = ExplainableStubTextShaper::explainable_stub_text_shaper_code_point_count((input.display_text).to_ustring().as_ustr());
-        if glyph_count as i32 < (1) {
+        if i32::from_ne_bytes(((glyph_count) as i32).to_ne_bytes()) < (1) {
             glyph_count = 1u32;
         }
         let advance = (input.style).clone().font_size * ExplainableStubTextShaper::explainable_stub_text_shaper_nominal_advance_em(source_text.as_ustr(), (input.display_text).to_ustring().as_ustr());
         let cluster = Cluster::new((input.range).clone(), source_text.as_ustr(), (((input.font_decision).clone().candidate).clone().key).to_ustring().as_ustr(), advance, Some((input.display_text).to_ustring()), Some(0.0), Some(0.0), Some(0.0));
-        let glyph_advance = advance / format!("{}", (glyph_count) as i32).parse::<f64>().unwrap_or(0.0);
+        let glyph_advance = advance / format!("{}", (i32::from_ne_bytes(((glyph_count) as i32).to_ne_bytes()))).parse::<f64>().unwrap_or(0.0);
         let mut glyphs: Vec<Glyph> = vec![];
         let mut glyph_id = 0u32;
-        while ((glyph_id) as i32) < ((glyph_count) as i32) {
-            glyphs.push(Glyph::new(glyph_id, (input.range).clone(), glyph_advance, Some(glyph_advance * format!("{}", (glyph_id) as i32).parse::<f64>().unwrap_or(0.0)), Some(0.0), None, None, None, None));
+        while (i32::from_ne_bytes(((glyph_id) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((glyph_count) as i32).to_ne_bytes())) {
+            glyphs.push(Glyph::new(glyph_id, (input.range).clone(), glyph_advance, Some(glyph_advance * format!("{}", (i32::from_ne_bytes(((glyph_id) as i32).to_ne_bytes()))).parse::<f64>().unwrap_or(0.0)), Some(0.0), None, None, None, None));
             glyph_id = u32::wrapping_add(glyph_id, 1);
         }
         let run = GlyphRun::new((input.range).clone(), (((input.font_decision).clone().candidate).clone().key).to_ustring().as_ustr(), glyphs.to_vec(), advance, Some(vec![]));

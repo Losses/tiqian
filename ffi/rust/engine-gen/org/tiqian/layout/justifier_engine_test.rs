@@ -1551,7 +1551,7 @@ fn connector_boundaries_avoid_stretch_under_justification() {
     testlib::run("org.tiqian.layout.JustifierEngineTest.connectorBoundariesAvoidStretchUnderJustification", "org.tiqian.layout.JustifierEngineTest.connectorBoundariesAvoidStretchUnderJustification", || {
         let _ = JustifierEngineTestSupport::justifier_engine_test_support_start(UStr::new(&[99,111,110,110,101,99,116,111,114,66,111,117,110,100,97,114,105,101,115,65,118,111,105,100,83,116,114,101,116,99,104,85,110,100,101,114,74,117,115,116,105,102,105,99,97,116,105,111,110]));
         let r = JustifierEngineTestSupport::justifier_engine_test_support_engine().unwrap().layout(LayoutInput::new(TiqianTextContent::new(&(UStr::new(&[20013,65374,25991,20013,69,120,97,109,112,108,101])), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![])), Some(TextStyle::new(Some(vec![]), Some(16.0), Some(UString::from("zh-Hans")), Some(400), Some(false), Some(0.0), Some(InlineAttachment::None))), Some(ParagraphStyle::new(Some(LastLineAlignment::Start), Some(WritingMode::HorizontalTb), None, Some((Ic::zero()).clone()), Some(Ic::zero()), Some(MeasureAdaptiveFirstLineIndent::new(Some(14.0), Some(1.0), Some(2.0))), Some(LineLengthGrid::new(Some(true), None)), Some(RubyLineHeightMode::PerLine), Some(ParagraphStyle::PARAGRAPH_STYLE_DEFAULT_INLINE_OBJECT_MINIMUM_CLEARANCE_EM), Some(ParagraphStyle::PARAGRAPH_STYLE_DEFAULT_EMPHASIS_DOT_GAP_EM))), LayoutConstraints::new(80 as f64 as f64, Some(f64::INFINITY), Some(2147483647)).unwrap(), Some((*crate::org::tiqian::core::built_in_layout_profiles::BUILT_IN_LAYOUT_PROFILES_CLREQ_HORIZONTAL).clone()), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]))).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_true((u32::try_from((r.lines.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32 >= 2, None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_true((i32::from_ne_bytes(((u32::try_from((r.lines.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) >= 2, None).unwrap();
         let d = ((r.debug).clone().justification_decisions[0usize]).clone();
         let _ = TracedAssertions::traced_assertions_assert_equals_float(0 as f64, d.deficit_after, None).unwrap();
         let mut a: Vec<u32> = vec![];
@@ -1569,7 +1569,7 @@ fn connector_boundaries_avoid_stretch_under_justification() {
         let mut i = 0usize;
         while i < n {
             if i > 0 { out.push_str(", "); }
-            let _ = write!(out, "{}", (arr[i]) as i32);
+            let _ = write!(out, "{}", i32::from_ne_bytes(((arr[i]) as i32).to_ne_bytes()));
             i += 1;
         }
         out.push(']');
@@ -1591,10 +1591,10 @@ fn inseparable_number_and_unit_boundary_avoids_stretch_under_justification() {
         let mut u: Option<Cluster> = None;
         for _g_index in 0..match u32::try_from(r.clusters.len()) { Ok(value) => value, Err(_) => u32::MAX } {
             let c = (r.clusters[usize::try_from(_g_index).unwrap_or(0)]).clone();
-            if nr.start as i32 >= (c.range).clone().start as i32 && ((nr.end) as i32) <= (c.range).clone().end as i32 {
+            if i32::from_ne_bytes(((nr.start) as i32).to_ne_bytes()) >= i32::from_ne_bytes((((c.range).clone().start) as i32).to_ne_bytes()) && (i32::from_ne_bytes(((nr.end) as i32).to_ne_bytes())) <= i32::from_ne_bytes((((c.range).clone().end) as i32).to_ne_bytes()) {
                 n = Some(c.clone());
             }
-            if ur.start as i32 >= (c.range).clone().start as i32 && ((ur.end) as i32) <= (c.range).clone().end as i32 {
+            if i32::from_ne_bytes(((ur.start) as i32).to_ne_bytes()) >= i32::from_ne_bytes((((c.range).clone().start) as i32).to_ne_bytes()) && (i32::from_ne_bytes(((ur.end) as i32).to_ne_bytes())) <= i32::from_ne_bytes((((c.range).clone().end) as i32).to_ne_bytes()) {
                 u = Some(c.clone());
             }
         }
@@ -1723,7 +1723,7 @@ fn justify_distributes_deficit_across_priority_chain() {
     testlib::run("org.tiqian.layout.JustifierEngineTest.justifyDistributesDeficitAcrossPriorityChain", "org.tiqian.layout.JustifierEngineTest.justifyDistributesDeficitAcrossPriorityChain", || {
         let _ = JustifierEngineTestSupport::justifier_engine_test_support_start(UStr::new(&[106,117,115,116,105,102,121,68,105,115,116,114,105,98,117,116,101,115,68,101,102,105,99,105,116,65,99,114,111,115,115,80,114,105,111,114,105,116,121,67,104,97,105,110]));
         let r = JustifierEngineTestSupport::justifier_engine_test_support_engine().unwrap().layout(LayoutInput::new(TiqianTextContent::new(&(UStr::new(&[20013,12301,12290,25991,20013,25991,20013,25991,20013])), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![])), Some(TextStyle::new(Some(vec![]), Some(16.0), Some(UString::from("zh-Hans")), Some(400), Some(false), Some(0.0), Some(InlineAttachment::None))), Some(ParagraphStyle::new(Some(LastLineAlignment::Start), Some(WritingMode::HorizontalTb), None, Some((Ic::zero()).clone()), Some(Ic::zero()), Some(MeasureAdaptiveFirstLineIndent::new(Some(14.0), Some(1.0), Some(2.0))), Some(LineLengthGrid::new(Some(true), None)), Some(RubyLineHeightMode::PerLine), Some(ParagraphStyle::PARAGRAPH_STYLE_DEFAULT_INLINE_OBJECT_MINIMUM_CLEARANCE_EM), Some(ParagraphStyle::PARAGRAPH_STYLE_DEFAULT_EMPHASIS_DOT_GAP_EM))), LayoutConstraints::new(80 as f64 as f64, Some(f64::INFINITY), Some(2147483647)).unwrap(), Some((*crate::org::tiqian::core::built_in_layout_profiles::BUILT_IN_LAYOUT_PROFILES_CLREQ_HORIZONTAL).clone()), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]))).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_true((u32::try_from((r.lines.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32 >= 2, None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_true((i32::from_ne_bytes(((u32::try_from((r.lines.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) >= 2, None).unwrap();
         let d = ((r.debug).clone().justification_decisions[0usize]).clone();
         let _ = TracedAssertions::traced_assertions_assert_equals_float(8 as f64, d.deficit_before, None).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_equals_float(0 as f64, d.deficit_after, None).unwrap();
@@ -1849,7 +1849,7 @@ fn dash_boundaries_do_not_receive_uniform_tracking() {
     testlib::run("org.tiqian.layout.JustifierEngineTest.dashBoundariesDoNotReceiveUniformTracking", "org.tiqian.layout.JustifierEngineTest.dashBoundariesDoNotReceiveUniformTracking", || {
         let _ = JustifierEngineTestSupport::justifier_engine_test_support_start(UStr::new(&[100,97,115,104,66,111,117,110,100,97,114,105,101,115,68,111,78,111,116,82,101,99,101,105,118,101,85,110,105,102,111,114,109,84,114,97,99,107,105,110,103]));
         let r = JustifierEngineTestSupport::justifier_engine_test_support_engine().unwrap().layout(LayoutInput::new(TiqianTextContent::new(&(UStr::new(&[22312,25152,35859,20013,25991,35821,22659,19979,8212,8212,19981,22914,35828,20013,25991])), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![])), Some(TextStyle::new(Some(vec![]), Some(16.0), Some(UString::from("zh-Hans")), Some(400), Some(false), Some(0.0), Some(InlineAttachment::None))), Some(ParagraphStyle::new(Some(LastLineAlignment::Start), Some(WritingMode::HorizontalTb), None, Some((Ic::zero()).clone()), Some(Ic::zero()), Some(MeasureAdaptiveFirstLineIndent::new(Some(14.0), Some(1.0), Some(2.0))), Some(LineLengthGrid::new(Some(false), None)), Some(RubyLineHeightMode::PerLine), Some(ParagraphStyle::PARAGRAPH_STYLE_DEFAULT_INLINE_OBJECT_MINIMUM_CLEARANCE_EM), Some(ParagraphStyle::PARAGRAPH_STYLE_DEFAULT_EMPHASIS_DOT_GAP_EM))), LayoutConstraints::new(180 as f64 as f64, Some(f64::INFINITY), Some(2147483647)).unwrap(), Some((*crate::org::tiqian::core::built_in_layout_profiles::BUILT_IN_LAYOUT_PROFILES_CLREQ_HORIZONTAL).clone()), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]))).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_true((u32::try_from((r.lines.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32 >= 2, None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_true((i32::from_ne_bytes(((u32::try_from((r.lines.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) >= 2, None).unwrap();
         let mut dash: Option<Cluster> = None;
         for _g_index in 0..match u32::try_from(r.clusters.len()) { Ok(value) => value, Err(_) => u32::MAX } {
             let c = (r.clusters[usize::try_from(_g_index).unwrap_or(0)]).clone();
@@ -1885,7 +1885,7 @@ fn typed_sino_western_spaces_stretch_in_tier_two() {
     testlib::run("org.tiqian.layout.JustifierEngineTest.typedSinoWesternSpacesStretchInTierTwo", "org.tiqian.layout.JustifierEngineTest.typedSinoWesternSpacesStretchInTierTwo", || {
         let _ = JustifierEngineTestSupport::justifier_engine_test_support_start(UStr::new(&[116,121,112,101,100,83,105,110,111,87,101,115,116,101,114,110,83,112,97,99,101,115,83,116,114,101,116,99,104,73,110,84,105,101,114,84,119,111]));
         let r = JustifierEngineTestSupport::justifier_engine_test_support_engine().unwrap().layout(LayoutInput::new(TiqianTextContent::new(&(UStr::new(&[20013,25991,32,72,101,108,108,111,32,20013,25991,20013,25991,20013,25991])), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![])), Some(TextStyle::new(Some(vec![]), Some(16.0), Some(UString::from("zh-Hans")), Some(400), Some(false), Some(0.0), Some(InlineAttachment::None))), Some(ParagraphStyle::new(Some(LastLineAlignment::Start), Some(WritingMode::HorizontalTb), None, Some((Ic::zero()).clone()), Some(Ic::zero()), Some(MeasureAdaptiveFirstLineIndent::new(Some(14.0), Some(1.0), Some(2.0))), Some(LineLengthGrid::new(Some(true), None)), Some(RubyLineHeightMode::PerLine), Some(ParagraphStyle::PARAGRAPH_STYLE_DEFAULT_INLINE_OBJECT_MINIMUM_CLEARANCE_EM), Some(ParagraphStyle::PARAGRAPH_STYLE_DEFAULT_EMPHASIS_DOT_GAP_EM))), LayoutConstraints::new(180 as f64 as f64, Some(f64::INFINITY), Some(2147483647)).unwrap(), Some((*crate::org::tiqian::core::built_in_layout_profiles::BUILT_IN_LAYOUT_PROFILES_CLREQ_HORIZONTAL).clone()), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]))).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_true((u32::try_from((r.lines.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32 >= 2, None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_true((i32::from_ne_bytes(((u32::try_from((r.lines.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) >= 2, None).unwrap();
         let d = ((r.debug).clone().justification_decisions[0usize]).clone();
         let mut a: Vec<JustificationAllocationInfo> = vec![];
         for _g_index in 0..match u32::try_from(d.allocations.len()) { Ok(value) => value, Err(_) => u32::MAX } {
@@ -1945,7 +1945,7 @@ fn line_edge_sino_western_space_stays_collapsed() {
             let mut edge: Option<Cluster> = None;
             for _g_index in 0..match u32::try_from(r.clusters.len()) { Ok(value) => value, Err(_) => u32::MAX } {
                 let c = (r.clusters[usize::try_from(_g_index).unwrap_or(0)]).clone();
-                if c.range.clone().start as i32 < ((((r.lines[usize::try_from(i).unwrap_or(0)]).clone().range).clone().end) as i32) {
+                if i32::from_ne_bytes((((c.range).clone().start) as i32).to_ne_bytes()) < (i32::from_ne_bytes(((((r.lines[usize::try_from(i).unwrap_or(0)]).clone().range).clone().end) as i32).to_ne_bytes())) {
                     edge = Some(c.clone());
                 }
             }

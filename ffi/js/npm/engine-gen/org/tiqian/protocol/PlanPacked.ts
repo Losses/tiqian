@@ -167,14 +167,14 @@ export class PlanPacked {
     let cellCount = 0;
     {
       const _g1 = plan.lines;
-      for (let _g_index = 0, count55 = _g1.length; _g_index < count55; _g_index += 1) {
+      for (let _g_index = 0, count59 = _g1.length; _g_index < count59; _g_index += 1) {
         const line = _g1[_g_index]!;
         cellCount += line.cells.length;
       }
     }
     {
       const _g12 = plan.lines;
-      for (let _g_index1 = 0, count56 = _g12.length; _g_index1 < count56; _g_index1 += 1) {
+      for (let _g_index1 = 0, count60 = _g12.length; _g_index1 < count60; _g_index1 += 1) {
         const line2 = _g12[_g_index1]!;
         {
           let _g = 0;
@@ -191,34 +191,34 @@ export class PlanPacked {
             cellLeadingAdvance.push(cell.leadingLayoutAdvance);
             cellShapingBoundary.push((cell.shapingBoundary ? 1 : 0));
             cellLatin.push((cell.latin ? 1 : 0));
-            cellRenderFamilyRef.push((cell.renderFontFamily !== null ? pool.intern(cell.renderFontFamily) : -1));
-            cellDashRef.push((cell.dashStrategy !== null ? pool.intern(cell.dashStrategy) : -1));
-            cellLanguageRef.push((cell.shapingLanguage !== null ? pool.intern(cell.shapingLanguage) : -1));
-            cellResolvedFaceRef.push((cell.resolvedFace !== null ? pool.intern(cell.resolvedFace) : -1));
-            cellGlyphIdsRef.push((cell.glyphIds !== null ? pool.intern(cell.glyphIds) : -1));
-            cellEvidenceRef.push((cell.shapingEvidence !== null ? pool.intern(cell.shapingEvidence) : -1));
+            cellRenderFamilyRef.push((cell.renderFontFamily !== null ? pool.intern((cell.renderFontFamily)!) : -1));
+            cellDashRef.push((cell.dashStrategy !== null ? pool.intern((cell.dashStrategy)!) : -1));
+            cellLanguageRef.push((cell.shapingLanguage !== null ? pool.intern((cell.shapingLanguage)!) : -1));
+            cellResolvedFaceRef.push((cell.resolvedFace !== null ? pool.intern((cell.resolvedFace)!) : -1));
+            cellGlyphIdsRef.push((cell.glyphIds !== null ? pool.intern((cell.glyphIds)!) : -1));
+            cellEvidenceRef.push((cell.shapingEvidence !== null ? pool.intern((cell.shapingEvidence)!) : -1));
             const ink = cell.punctuationInkFloor;
-            cellInkFloor.push((ink !== null ? ink : Number.NaN));
+            cellInkFloor.push(((ink !== null ? ink : Number.NaN))!);
             const bw = cell.punctuationBodyWidth;
-            cellBodyWidth.push((bw !== null ? bw : Number.NaN));
+            cellBodyWidth.push(((bw !== null ? bw : Number.NaN))!);
             const adv = cell.advance;
-            cellAdvance.push((adv !== null ? adv : Number.NaN));
+            cellAdvance.push(((adv !== null ? adv : Number.NaN))!);
             const inl = cell.inlineObject;
-            cellInlineObject.push((inl !== null ? inl : Number.NaN));
+            cellInlineObject.push(((inl !== null ? inl : Number.NaN))!);
             const style = cell.styleDelta;
             let styleFontSize = Number.NaN;
             let styleFontWeight = Number.NaN;
             let styleItalic = 2;
             if (style !== null) {
-              const fs = style.fontSize;
+              const fs = style!.fontSize;
               if (fs !== null) {
                 styleFontSize = fs;
               }
-              const fw = style.fontWeight;
+              const fw = style!.fontWeight;
               if (fw !== null) {
-                styleFontWeight = PlanPacked.f32(fw);
+                styleFontWeight = PlanPacked.f32((fw)!);
               }
-              const it = style.italic;
+              const it = style!.italic;
               if (it !== null) {
                 styleItalic = (it ? 1 : 0);
               }
@@ -262,7 +262,7 @@ export class PlanPacked {
     const rubyFamilyPool: number[] = [];
     {
       const _g14 = plan.rubyDecisions;
-      for (let _g_index2 = 0, count57 = _g14.length; _g_index2 < count57; _g_index2 += 1) {
+      for (let _g_index2 = 0, count61 = _g14.length; _g_index2 < count61; _g_index2 += 1) {
         const ruby = _g14[_g_index2]!;
         {
           let _g4 = 0;
@@ -278,7 +278,7 @@ export class PlanPacked {
     }
     {
       const _g16 = plan.rubyDecisions;
-      for (let _g_index3 = 0, count58 = _g16.length; _g_index3 < count58; _g_index3 += 1) {
+      for (let _g_index3 = 0, count62 = _g16.length; _g_index3 < count62; _g_index3 += 1) {
         const ruby2 = _g16[_g_index3]!;
         rubyBaseStart.push(ruby2.baseRangeStart);
         rubyBaseEnd.push(ruby2.baseRangeEnd);
@@ -290,7 +290,7 @@ export class PlanPacked {
         rubyFamilyOffset.push(rubyFamilyPool.length);
         rubyFamilyCount.push(ruby2.fontFamilies.length);
         const ascent = ruby2.ascent;
-        rubyAscent.push((ascent !== null ? ascent : Number.NaN));
+        rubyAscent.push(((ascent !== null ? ascent : Number.NaN))!);
         {
           let _g5 = 0;
           const _g17 = ruby2.fontFamilies;
@@ -319,7 +319,7 @@ export class PlanPacked {
     const bopomofoPlaceHeight: number[] = [];
     {
       const _g18 = plan.bopomofoDecisions;
-      for (let _g_index4 = 0, count59 = _g18.length; _g_index4 < count59; _g_index4 += 1) {
+      for (let _g_index4 = 0, count63 = _g18.length; _g_index4 < count63; _g_index4 += 1) {
         const bopomofo = _g18[_g_index4]!;
         {
           let _g6 = 0;
@@ -345,7 +345,7 @@ export class PlanPacked {
     }
     {
       const _g111 = plan.bopomofoDecisions;
-      for (let _g_index5 = 0, count60 = _g111.length; _g_index5 < count60; _g_index5 += 1) {
+      for (let _g_index5 = 0, count64 = _g111.length; _g_index5 < count64; _g_index5 += 1) {
         const bopomofo2 = _g111[_g_index5]!;
         bopomofoBaseStart.push(bopomofo2.baseRangeStart);
         bopomofoBaseEnd.push(bopomofo2.baseRangeEnd);
@@ -386,14 +386,14 @@ export class PlanPacked {
     const decorationRight: number[] = [];
     {
       const _g114 = plan.decorationSegments;
-      for (let _g_index6 = 0, count61 = _g114.length; _g_index6 < count61; _g_index6 += 1) {
+      for (let _g_index6 = 0, count65 = _g114.length; _g_index6 < count65; _g_index6 += 1) {
         const seg = _g114[_g_index6]!;
         pool.intern(seg.kind);
       }
     }
     {
       const _g115 = plan.decorationSegments;
-      for (let _g_index7 = 0, count62 = _g115.length; _g_index7 < count62; _g_index7 += 1) {
+      for (let _g_index7 = 0, count66 = _g115.length; _g_index7 < count66; _g_index7 += 1) {
         const seg2 = _g115[_g_index7]!;
         decorationKindRef.push(pool.indexOf(seg2.kind));
         decorationLeft.push(seg2.left);
@@ -405,13 +405,17 @@ export class PlanPacked {
     const inlineEdgeCount = plan.inlineEdges.length;
     const rubyCount = plan.rubyDecisions.length;
     const bopomofoCount = plan.bopomofoDecisions.length;
-    const bopomofoPlacementTotal = bopomofoPlaceTextRef.length;
+    const count49 = bopomofoPlaceTextRef.length;
+    const bopomofoPlacementTotal = count49;
     const decorationSegmentCount = plan.decorationSegments.length;
     const emphasisDotCount = plan.emphasisDots.length;
     const stringCount = pool.ordered.length;
-    const featureTotal = featurePool.length;
-    const rubyFamilyTotal = rubyFamilyPool.length;
-    const bopomofoFamilyTotal = bopomofoFamilyPool.length;
+    const count28 = featurePool.length;
+    const featureTotal = count28;
+    const count39 = rubyFamilyPool.length;
+    const rubyFamilyTotal = count39;
+    const count48 = bopomofoFamilyPool.length;
+    const bopomofoFamilyTotal = count48;
     writer.u32(1414615120);
     writer.u32(1);
     writer.f64(plan.width);
@@ -435,7 +439,7 @@ export class PlanPacked {
     writer.u32(bopomofoFamilyTotal);
     {
       const _g116 = pool.ordered;
-      for (let _g_index8 = 0, count63 = _g116.length; _g_index8 < count63; _g_index8 += 1) {
+      for (let _g_index8 = 0, count67 = _g116.length; _g_index8 < count67; _g_index8 += 1) {
         const s = _g116[_g_index8]!;
         const encoded = new TextEncoder().encode(s);
         writer.u32(encoded.length);
@@ -443,77 +447,77 @@ export class PlanPacked {
     }
     {
       const _g117 = pool.ordered;
-      for (let _g_index9 = 0, count64 = _g117.length; _g_index9 < count64; _g_index9 += 1) {
+      for (let _g_index9 = 0, count68 = _g117.length; _g_index9 < count68; _g_index9 += 1) {
         const s2 = _g117[_g_index9]!;
         writer.raw(new TextEncoder().encode(s2));
       }
     }
     {
       const _g118 = plan.lines;
-      for (let _g_index10 = 0, count65 = _g118.length; _g_index10 < count65; _g_index10 += 1) {
+      for (let _g_index10 = 0, count69 = _g118.length; _g_index10 < count69; _g_index10 += 1) {
         const line3 = _g118[_g_index10]!;
         writer.u32(line3.rangeStart);
       }
     }
     {
       const _g119 = plan.lines;
-      for (let _g_index11 = 0, count66 = _g119.length; _g_index11 < count66; _g_index11 += 1) {
+      for (let _g_index11 = 0, count70 = _g119.length; _g_index11 < count70; _g_index11 += 1) {
         const line4 = _g119[_g_index11]!;
         writer.u32(line4.rangeEnd);
       }
     }
     {
       const _g120 = plan.lines;
-      for (let _g_index12 = 0, count67 = _g120.length; _g_index12 < count67; _g_index12 += 1) {
+      for (let _g_index12 = 0, count71 = _g120.length; _g_index12 < count71; _g_index12 += 1) {
         const line5 = _g120[_g_index12]!;
         writer.f64(line5.top);
       }
     }
     {
       const _g121 = plan.lines;
-      for (let _g_index13 = 0, count68 = _g121.length; _g_index13 < count68; _g_index13 += 1) {
+      for (let _g_index13 = 0, count72 = _g121.length; _g_index13 < count72; _g_index13 += 1) {
         const line6 = _g121[_g_index13]!;
         writer.f64(line6.bottom);
       }
     }
     {
       const _g122 = plan.lines;
-      for (let _g_index14 = 0, count69 = _g122.length; _g_index14 < count69; _g_index14 += 1) {
+      for (let _g_index14 = 0, count73 = _g122.length; _g_index14 < count73; _g_index14 += 1) {
         const line7 = _g122[_g_index14]!;
         writer.f64(line7.baseline);
       }
     }
     {
       const _g123 = plan.lines;
-      for (let _g_index15 = 0, count70 = _g123.length; _g_index15 < count70; _g_index15 += 1) {
+      for (let _g_index15 = 0, count74 = _g123.length; _g_index15 < count74; _g_index15 += 1) {
         const line8 = _g123[_g_index15]!;
         writer.f64(line8.indent);
       }
     }
     {
       const _g124 = plan.lines;
-      for (let _g_index16 = 0, count71 = _g124.length; _g_index16 < count71; _g_index16 += 1) {
+      for (let _g_index16 = 0, count75 = _g124.length; _g_index16 < count75; _g_index16 += 1) {
         const line9 = _g124[_g_index16]!;
         writer.f64(line9.visualWidth);
       }
     }
     {
       const _g125 = plan.lines;
-      for (let _g_index17 = 0, count72 = _g125.length; _g_index17 < count72; _g_index17 += 1) {
+      for (let _g_index17 = 0, count76 = _g125.length; _g_index17 < count76; _g_index17 += 1) {
         const line10 = _g125[_g_index17]!;
         writer.f64(line10.hyphenAdvance);
       }
     }
     {
       const _g126 = plan.lines;
-      for (let _g_index18 = 0, count73 = _g126.length; _g_index18 < count73; _g_index18 += 1) {
+      for (let _g_index18 = 0, count77 = _g126.length; _g_index18 < count77; _g_index18 += 1) {
         const line11 = _g126[_g_index18]!;
         writer.u8(PlanPacked.endReasonCode(line11.endReason));
       }
     }
     {
       const _g127 = plan.lines;
-      for (let _g_index19 = 0, count74 = _g127.length; _g_index19 < count74; _g_index19 += 1) {
+      for (let _g_index19 = 0, count78 = _g127.length; _g_index19 < count78; _g_index19 += 1) {
         const line12 = _g127[_g_index19]!;
         writer.u32(line12.cells.length);
       }
@@ -614,164 +618,164 @@ export class PlanPacked {
       const v24 = cellFeatureCount[_g_index43]!;
       writer.u32(v24);
     }
-    for (let _g_index44 = 0, count75 = featurePool.length; _g_index44 < count75; _g_index44 += 1) {
+    for (let _g_index44 = 0; _g_index44 < count28; _g_index44 += 1) {
       const v25 = featurePool[_g_index44]!;
       writer.u32(v25);
     }
     {
       const _g128 = plan.emphasisRanges;
-      for (let _g_index45 = 0, count76 = _g128.length; _g_index45 < count76; _g_index45 += 1) {
+      for (let _g_index45 = 0, count79 = _g128.length; _g_index45 < count79; _g_index45 += 1) {
         const range = _g128[_g_index45]!;
         writer.f64(range.start);
       }
     }
     {
       const _g129 = plan.emphasisRanges;
-      for (let _g_index46 = 0, count77 = _g129.length; _g_index46 < count77; _g_index46 += 1) {
+      for (let _g_index46 = 0, count80 = _g129.length; _g_index46 < count80; _g_index46 += 1) {
         const range2 = _g129[_g_index46]!;
         writer.f64(range2.end);
       }
     }
     {
       const _g130 = plan.inlineEdges;
-      for (let _g_index47 = 0, count78 = _g130.length; _g_index47 < count78; _g_index47 += 1) {
+      for (let _g_index47 = 0, count81 = _g130.length; _g_index47 < count81; _g_index47 += 1) {
         const edge = _g130[_g_index47]!;
         writer.f64(edge.offset);
       }
     }
     {
       const _g131 = plan.inlineEdges;
-      for (let _g_index48 = 0, count79 = _g131.length; _g_index48 < count79; _g_index48 += 1) {
+      for (let _g_index48 = 0, count82 = _g131.length; _g_index48 < count82; _g_index48 += 1) {
         const edge2 = _g131[_g_index48]!;
         const s3 = edge2.inlineStart;
-        writer.f64((s3 !== null ? s3 : Number.NaN));
+        writer.f64(((s3 !== null ? s3 : Number.NaN))!);
       }
     }
     {
       const _g132 = plan.inlineEdges;
-      for (let _g_index49 = 0, count80 = _g132.length; _g_index49 < count80; _g_index49 += 1) {
+      for (let _g_index49 = 0, count83 = _g132.length; _g_index49 < count83; _g_index49 += 1) {
         const edge3 = _g132[_g_index49]!;
         const e = edge3.inlineEnd;
-        writer.f64((e !== null ? e : Number.NaN));
+        writer.f64(((e !== null ? e : Number.NaN))!);
       }
     }
-    for (let _g_index50 = 0, count28 = rubyBaseStart.length; _g_index50 < count28; _g_index50 += 1) {
+    for (let _g_index50 = 0, count29 = rubyBaseStart.length; _g_index50 < count29; _g_index50 += 1) {
       const v26 = rubyBaseStart[_g_index50]!;
       writer.u32(v26);
     }
-    for (let _g_index51 = 0, count29 = rubyBaseEnd.length; _g_index51 < count29; _g_index51 += 1) {
+    for (let _g_index51 = 0, count30 = rubyBaseEnd.length; _g_index51 < count30; _g_index51 += 1) {
       const v27 = rubyBaseEnd[_g_index51]!;
       writer.u32(v27);
     }
-    for (let _g_index52 = 0, count30 = rubyTextRef.length; _g_index52 < count30; _g_index52 += 1) {
+    for (let _g_index52 = 0, count31 = rubyTextRef.length; _g_index52 < count31; _g_index52 += 1) {
       const v28 = rubyTextRef[_g_index52]!;
       writer.u32(v28);
     }
-    for (let _g_index53 = 0, count31 = rubyCenterX.length; _g_index53 < count31; _g_index53 += 1) {
+    for (let _g_index53 = 0, count32 = rubyCenterX.length; _g_index53 < count32; _g_index53 += 1) {
       const v29 = rubyCenterX[_g_index53]!;
       writer.f64(v29);
     }
-    for (let _g_index54 = 0, count32 = rubyBaselineY.length; _g_index54 < count32; _g_index54 += 1) {
+    for (let _g_index54 = 0, count33 = rubyBaselineY.length; _g_index54 < count33; _g_index54 += 1) {
       const v30 = rubyBaselineY[_g_index54]!;
       writer.f64(v30);
     }
-    for (let _g_index55 = 0, count33 = rubyFontSize.length; _g_index55 < count33; _g_index55 += 1) {
+    for (let _g_index55 = 0, count34 = rubyFontSize.length; _g_index55 < count34; _g_index55 += 1) {
       const v31 = rubyFontSize[_g_index55]!;
       writer.f64(v31);
     }
-    for (let _g_index56 = 0, count34 = rubyFontWeight.length; _g_index56 < count34; _g_index56 += 1) {
+    for (let _g_index56 = 0, count35 = rubyFontWeight.length; _g_index56 < count35; _g_index56 += 1) {
       const v32 = rubyFontWeight[_g_index56]!;
       writer.u32(v32);
     }
-    for (let _g_index57 = 0, count35 = rubyFamilyOffset.length; _g_index57 < count35; _g_index57 += 1) {
+    for (let _g_index57 = 0, count36 = rubyFamilyOffset.length; _g_index57 < count36; _g_index57 += 1) {
       const v33 = rubyFamilyOffset[_g_index57]!;
       writer.u32(v33);
     }
-    for (let _g_index58 = 0, count36 = rubyFamilyCount.length; _g_index58 < count36; _g_index58 += 1) {
+    for (let _g_index58 = 0, count37 = rubyFamilyCount.length; _g_index58 < count37; _g_index58 += 1) {
       const v34 = rubyFamilyCount[_g_index58]!;
       writer.u32(v34);
     }
-    for (let _g_index59 = 0, count37 = rubyAscent.length; _g_index59 < count37; _g_index59 += 1) {
+    for (let _g_index59 = 0, count38 = rubyAscent.length; _g_index59 < count38; _g_index59 += 1) {
       const v35 = rubyAscent[_g_index59]!;
       writer.f64(v35);
     }
-    for (let _g_index60 = 0, count81 = rubyFamilyPool.length; _g_index60 < count81; _g_index60 += 1) {
+    for (let _g_index60 = 0; _g_index60 < count39; _g_index60 += 1) {
       const v36 = rubyFamilyPool[_g_index60]!;
       writer.u32(v36);
     }
-    for (let _g_index61 = 0, count38 = bopomofoBaseStart.length; _g_index61 < count38; _g_index61 += 1) {
+    for (let _g_index61 = 0, count40 = bopomofoBaseStart.length; _g_index61 < count40; _g_index61 += 1) {
       const v37 = bopomofoBaseStart[_g_index61]!;
       writer.u32(v37);
     }
-    for (let _g_index62 = 0, count39 = bopomofoBaseEnd.length; _g_index62 < count39; _g_index62 += 1) {
+    for (let _g_index62 = 0, count41 = bopomofoBaseEnd.length; _g_index62 < count41; _g_index62 += 1) {
       const v38 = bopomofoBaseEnd[_g_index62]!;
       writer.u32(v38);
     }
-    for (let _g_index63 = 0, count40 = bopomofoTextRef.length; _g_index63 < count40; _g_index63 += 1) {
+    for (let _g_index63 = 0, count42 = bopomofoTextRef.length; _g_index63 < count42; _g_index63 += 1) {
       const v39 = bopomofoTextRef[_g_index63]!;
       writer.u32(v39);
     }
-    for (let _g_index64 = 0, count41 = bopomofoFontWeight.length; _g_index64 < count41; _g_index64 += 1) {
+    for (let _g_index64 = 0, count43 = bopomofoFontWeight.length; _g_index64 < count43; _g_index64 += 1) {
       const v40 = bopomofoFontWeight[_g_index64]!;
       writer.u32(v40);
     }
-    for (let _g_index65 = 0, count42 = bopomofoFamilyOffset.length; _g_index65 < count42; _g_index65 += 1) {
+    for (let _g_index65 = 0, count44 = bopomofoFamilyOffset.length; _g_index65 < count44; _g_index65 += 1) {
       const v41 = bopomofoFamilyOffset[_g_index65]!;
       writer.u32(v41);
     }
-    for (let _g_index66 = 0, count43 = bopomofoFamilyCount.length; _g_index66 < count43; _g_index66 += 1) {
+    for (let _g_index66 = 0, count45 = bopomofoFamilyCount.length; _g_index66 < count45; _g_index66 += 1) {
       const v42 = bopomofoFamilyCount[_g_index66]!;
       writer.u32(v42);
     }
-    for (let _g_index67 = 0, count44 = bopomofoPlaceOffset.length; _g_index67 < count44; _g_index67 += 1) {
+    for (let _g_index67 = 0, count46 = bopomofoPlaceOffset.length; _g_index67 < count46; _g_index67 += 1) {
       const v43 = bopomofoPlaceOffset[_g_index67]!;
       writer.u32(v43);
     }
-    for (let _g_index68 = 0, count45 = bopomofoPlaceCount.length; _g_index68 < count45; _g_index68 += 1) {
+    for (let _g_index68 = 0, count47 = bopomofoPlaceCount.length; _g_index68 < count47; _g_index68 += 1) {
       const v44 = bopomofoPlaceCount[_g_index68]!;
       writer.u32(v44);
     }
-    for (let _g_index69 = 0, count82 = bopomofoFamilyPool.length; _g_index69 < count82; _g_index69 += 1) {
+    for (let _g_index69 = 0; _g_index69 < count48; _g_index69 += 1) {
       const v45 = bopomofoFamilyPool[_g_index69]!;
       writer.u32(v45);
     }
-    for (let _g_index70 = 0, count83 = bopomofoPlaceTextRef.length; _g_index70 < count83; _g_index70 += 1) {
+    for (let _g_index70 = 0; _g_index70 < count49; _g_index70 += 1) {
       const v46 = bopomofoPlaceTextRef[_g_index70]!;
       writer.u32(v46);
     }
-    for (let _g_index71 = 0, count46 = bopomofoPlaceRoleRef.length; _g_index71 < count46; _g_index71 += 1) {
+    for (let _g_index71 = 0, count50 = bopomofoPlaceRoleRef.length; _g_index71 < count50; _g_index71 += 1) {
       const v47 = bopomofoPlaceRoleRef[_g_index71]!;
       writer.u32(v47);
     }
-    for (let _g_index72 = 0, count47 = bopomofoPlaceLeft.length; _g_index72 < count47; _g_index72 += 1) {
+    for (let _g_index72 = 0, count51 = bopomofoPlaceLeft.length; _g_index72 < count51; _g_index72 += 1) {
       const v48 = bopomofoPlaceLeft[_g_index72]!;
       writer.f64(v48);
     }
-    for (let _g_index73 = 0, count48 = bopomofoPlaceTop.length; _g_index73 < count48; _g_index73 += 1) {
+    for (let _g_index73 = 0, count52 = bopomofoPlaceTop.length; _g_index73 < count52; _g_index73 += 1) {
       const v49 = bopomofoPlaceTop[_g_index73]!;
       writer.f64(v49);
     }
-    for (let _g_index74 = 0, count49 = bopomofoPlaceWidth.length; _g_index74 < count49; _g_index74 += 1) {
+    for (let _g_index74 = 0, count53 = bopomofoPlaceWidth.length; _g_index74 < count53; _g_index74 += 1) {
       const v50 = bopomofoPlaceWidth[_g_index74]!;
       writer.f64(v50);
     }
-    for (let _g_index75 = 0, count50 = bopomofoPlaceHeight.length; _g_index75 < count50; _g_index75 += 1) {
+    for (let _g_index75 = 0, count54 = bopomofoPlaceHeight.length; _g_index75 < count54; _g_index75 += 1) {
       const v51 = bopomofoPlaceHeight[_g_index75]!;
       writer.f64(v51);
     }
-    for (let _g_index76 = 0, count51 = decorationKindRef.length; _g_index76 < count51; _g_index76 += 1) {
+    for (let _g_index76 = 0, count55 = decorationKindRef.length; _g_index76 < count55; _g_index76 += 1) {
       const v52 = decorationKindRef[_g_index76]!;
       writer.u32(v52);
     }
-    for (let _g_index77 = 0, count52 = decorationLeft.length; _g_index77 < count52; _g_index77 += 1) {
+    for (let _g_index77 = 0, count56 = decorationLeft.length; _g_index77 < count56; _g_index77 += 1) {
       const v53 = decorationLeft[_g_index77]!;
       writer.f64(v53);
     }
-    for (let _g_index78 = 0, count53 = decorationTop.length; _g_index78 < count53; _g_index78 += 1) {
+    for (let _g_index78 = 0, count57 = decorationTop.length; _g_index78 < count57; _g_index78 += 1) {
       const v54 = decorationTop[_g_index78]!;
       writer.f64(v54);
     }
-    for (let _g_index79 = 0, count54 = decorationRight.length; _g_index79 < count54; _g_index79 += 1) {
+    for (let _g_index79 = 0, count58 = decorationRight.length; _g_index79 < count58; _g_index79 += 1) {
       const v55 = decorationRight[_g_index79]!;
       writer.f64(v55);
     }
@@ -1028,7 +1032,7 @@ export class PlanPacked {
         cells.push({ rangeStart: crs[i37]!, rangeEnd: cre[i37]!, source: pool[csr[i37]!]!, display: pool[cdr[i37]!]!, drawX: cdx[i37]!, naturalWidth: cnw[i37]!, leadingLayoutAdvance: cla[i37]!, shapingBoundary: csb[i37]! !== 0, openTypeFeatures: feats, renderFontFamily: sref(crf[i37]!), dashStrategy: sref(cd2[i37]!), shapingLanguage: sref(cl2[i37]!), resolvedFace: sref(crf2[i37]!), glyphIds: sref(cgi[i37]!), shapingEvidence: sref(cev[i37]!), punctuationInkFloor: (Number.isNaN(cif[i37]!) ? null : cif[i37]!), punctuationBodyWidth: (Number.isNaN(cbw[i37]!) ? null : cbw[i37]!), latin: cla2[i37]! !== 0, advance: (Number.isNaN(cad[i37]!) ? null : cad[i37]!), inlineObject: (Number.isNaN(cio[i37]!) ? null : cio[i37]!), styleDelta: style });
       }
       const er = ler[li]!;
-      const endR = (er === 1 ? PlanEndReason.MandatoryBreak : (er === 2 ? PlanEndReason.ParagraphEnd : PlanEndReason.AutoWrap));
+      const endR = (er === 1 ? (PlanEndReason.MandatoryBreak as PlanEndReason) : (er === 2 ? (PlanEndReason.ParagraphEnd as PlanEndReason) : (PlanEndReason.AutoWrap as PlanEndReason)));
       lines.push({ rangeStart: lrs[li]!, rangeEnd: lre[li]!, top: lt[li]!, bottom: lb[li]!, baseline: lbl[li]!, indent: lin[li]!, visualWidth: lvw[li]!, hyphenAdvance: lha[li]!, endReason: endR, cells });
     }
     const emphasis: PlanEmphasisRange[] = [];

@@ -1142,7 +1142,7 @@ fn inline_object_is_one_indivisible_break_cluster() {
         }
         let mut object_line: Option<LineBox> = None;
         for i in 0..match u32::try_from(r.lines.len()) { Ok(value) => value, Err(_) => u32::MAX } {
-            if object_index as i32 >= (r.lines[usize::try_from(i).unwrap_or(0)]).clone().cluster_range.start as i32 && ((object_index) as i32) <= (r.lines[usize::try_from(i).unwrap_or(0)]).clone().cluster_range.end as i32 {
+            if i32::from_ne_bytes(((object_index) as i32).to_ne_bytes()) >= i32::from_ne_bytes((((r.lines[usize::try_from(i).unwrap_or(0)]).clone().cluster_range.start) as i32).to_ne_bytes()) && (i32::from_ne_bytes(((object_index) as i32).to_ne_bytes())) <= i32::from_ne_bytes((((r.lines[usize::try_from(i).unwrap_or(0)]).clone().cluster_range.end) as i32).to_ne_bytes()) {
                 object_line = Some((r.lines[usize::try_from(i).unwrap_or(0)]).clone());
             }
         }
@@ -1258,17 +1258,17 @@ fn punctuation_attached_to_inline_object_never_starts_wrapped_line() {
                 {
                     let mut _g = 0u32;
                     let _g1 = vec![UString::from("，").to_ustring(), UString::from(",").to_ustring()];
-                    while ((_g) as i32) < ((u32::try_from((_g1.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32) {
+                    while (i32::from_ne_bytes(((_g) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((_g1.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
                         let comma = (_g1[usize::try_from(_g).unwrap_or(0)]).clone();
                         _g = u32::wrapping_add(_g, 1);
                         {
                             let mut _g = 0u32;
                             let _g1 = vec![24, 32, 36, 48, 64];
-                            while ((_g) as i32) < ((u32::try_from((_g1.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32) {
+                            while (i32::from_ne_bytes(((_g) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((_g1.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
                                 let w = _g1[usize::try_from(_g).unwrap_or(0)];
                                 _g = u32::wrapping_add(_g, 1);
                                 let text = { let mut __s = UString::new(); __s += &(UString::from("x+")); __s += comma.as_ustr(); __s += &(UString::from(" 后")); __s };
-                                let r = InlineObjectLayoutTestSupport::inline_object_layout_test_support_fixed_basic_kinsoku_engine(Some((*b).clone())).unwrap().layout(LayoutInput::new(TiqianTextContent::new(text.as_ustr(), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![])), Some(TextStyle::new(Some(vec![]), Some(16 as f64), Some(UString::from("zh-Hans")), Some(400), Some(false), Some(0.0), Some(InlineAttachment::None))), Some((*crate::org::tiqian::layout::inline_object_layout_test_support::INLINE_OBJECT_LAYOUT_TEST_SUPPORT_STYLE).clone()), LayoutConstraints::new({ let v: u32 = w; v as i32 } as f64 as f64, Some(f64::INFINITY), Some(2147483647)).unwrap(), Some((*crate::org::tiqian::core::built_in_layout_profiles::BUILT_IN_LAYOUT_PROFILES_CLREQ_HORIZONTAL).clone()), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![
+                                let r = InlineObjectLayoutTestSupport::inline_object_layout_test_support_fixed_basic_kinsoku_engine(Some((*b).clone())).unwrap().layout(LayoutInput::new(TiqianTextContent::new(text.as_ustr(), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![])), Some(TextStyle::new(Some(vec![]), Some(16 as f64), Some(UString::from("zh-Hans")), Some(400), Some(false), Some(0.0), Some(InlineAttachment::None))), Some((*crate::org::tiqian::layout::inline_object_layout_test_support::INLINE_OBJECT_LAYOUT_TEST_SUPPORT_STYLE).clone()), LayoutConstraints::new({ let v: u32 = w; i32::from_ne_bytes(v.to_ne_bytes()) } as f64 as f64, Some(f64::INFINITY), Some(2147483647)).unwrap(), Some((*crate::org::tiqian::core::built_in_layout_profiles::BUILT_IN_LAYOUT_PROFILES_CLREQ_HORIZONTAL).clone()), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![
     (InlineObjectSpan::new(TextRange::new(0u32, 2u32).unwrap(), 30 as f64 as f64, 16 as f64 as f64, 4 as f64 as f64, Some(InlineObjectBoundaryAdjustment::inline_object_boundary_adjustment_fixed().unwrap()), Some(InlineObjectBoundaryAdjustment::inline_object_boundary_adjustment_fixed().unwrap())).unwrap()).clone(),
 ]))).unwrap();
                                 let ls = InlineObjectLayoutTestSupport::inline_object_layout_test_support_lines((r).clone(), text.as_ustr());
@@ -1309,11 +1309,11 @@ fn separator_space_before_punctuation_collapses_and_stays_with_inline_object() {
                 {
                     let mut _g = 0u32;
                     let _g1 = vec![32, 40, 48, 56, 64];
-                    while ((_g) as i32) < ((u32::try_from((_g1.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32) {
+                    while (i32::from_ne_bytes(((_g) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((_g1.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
                         let w = _g1[usize::try_from(_g).unwrap_or(0)];
                         _g = u32::wrapping_add(_g, 1);
                         let text = UString::from("前x ，后文").to_ustring();
-                        let r = InlineObjectLayoutTestSupport::inline_object_layout_test_support_fixed_basic_kinsoku_engine(Some((*b).clone())).unwrap().layout(LayoutInput::new(TiqianTextContent::new(text.as_ustr(), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![])), Some(TextStyle::new(Some(vec![]), Some(16 as f64), Some(UString::from("zh-Hans")), Some(400), Some(false), Some(0.0), Some(InlineAttachment::None))), Some((*crate::org::tiqian::layout::inline_object_layout_test_support::INLINE_OBJECT_LAYOUT_TEST_SUPPORT_STYLE).clone()), LayoutConstraints::new({ let v: u32 = w; v as i32 } as f64 as f64, Some(f64::INFINITY), Some(2147483647)).unwrap(), Some((*crate::org::tiqian::core::built_in_layout_profiles::BUILT_IN_LAYOUT_PROFILES_CLREQ_HORIZONTAL).clone()), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![
+                        let r = InlineObjectLayoutTestSupport::inline_object_layout_test_support_fixed_basic_kinsoku_engine(Some((*b).clone())).unwrap().layout(LayoutInput::new(TiqianTextContent::new(text.as_ustr(), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![])), Some(TextStyle::new(Some(vec![]), Some(16 as f64), Some(UString::from("zh-Hans")), Some(400), Some(false), Some(0.0), Some(InlineAttachment::None))), Some((*crate::org::tiqian::layout::inline_object_layout_test_support::INLINE_OBJECT_LAYOUT_TEST_SUPPORT_STYLE).clone()), LayoutConstraints::new({ let v: u32 = w; i32::from_ne_bytes(v.to_ne_bytes()) } as f64 as f64, Some(f64::INFINITY), Some(2147483647)).unwrap(), Some((*crate::org::tiqian::core::built_in_layout_profiles::BUILT_IN_LAYOUT_PROFILES_CLREQ_HORIZONTAL).clone()), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![
     (InlineObjectSpan::new(TextRange::new(1u32, 2u32).unwrap(), 24 as f64 as f64, 16 as f64 as f64, 4 as f64 as f64, Some(InlineObjectBoundaryAdjustment::new(Some(true), None, Some(0.0), Some(0.0), Some(false)).unwrap()), Some(InlineObjectBoundaryAdjustment::new(Some(true), None, Some(0.0), Some(0.0), Some(false)).unwrap())).unwrap()).clone(),
 ]))).unwrap();
                         let space = InlineObjectLayoutTestSupport::inline_object_layout_test_support_single_cluster((r).clone(), TextRange::new(2u32, 3u32).unwrap());
@@ -1362,22 +1362,22 @@ fn relation_stretch_moves_both_formula_sides_by_the_same_final_geometry() {
         let formula_body_width = 10u32;
         let text = UString::from("a=b中").to_ustring();
         let r = InlineObjectLayoutTestSupport::inline_object_layout_test_support_fixed_basic_kinsoku_engine(None).unwrap().layout(LayoutInput::new(TiqianTextContent::new(text.as_ustr(), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![])), Some(TextStyle::new(Some(vec![]), Some(16 as f64), Some(UString::from("zh-Hans")), Some(400), Some(false), Some(0.0), Some(InlineAttachment::None))), Some((*crate::org::tiqian::layout::inline_object_layout_test_support::INLINE_OBJECT_LAYOUT_TEST_SUPPORT_STYLE).clone()), LayoutConstraints::new(47 as f64 as f64, Some(f64::INFINITY), Some(2147483647)).unwrap(), Some((*crate::org::tiqian::core::built_in_layout_profiles::BUILT_IN_LAYOUT_PROFILES_CLREQ_HORIZONTAL).clone()), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![
-    (InlineObjectSpan::new(TextRange::new(0u32, 1u32).unwrap(), format!("{}", (formula_body_width) as i32).parse::<f64>().unwrap_or(0.0) + natural_relation_gap, 12 as f64 as f64, 4 as f64 as f64, Some(InlineObjectBoundaryAdjustment::inline_object_boundary_adjustment_fixed().unwrap()), Some(InlineObjectBoundaryAdjustment::new(Some(true), Some(InlineObjectPreferredStretch::new(InlineObjectPreferredStretchKind::Relation, natural_relation_gap, target_gap).unwrap()), Some(0.0), Some(0.0), Some(false)).unwrap())).unwrap()).clone(),
-    (InlineObjectSpan::new(TextRange::new(1u32, 2u32).unwrap(), format!("{}", (formula_body_width) as i32).parse::<f64>().unwrap_or(0.0) + natural_relation_gap, 12 as f64 as f64, 4 as f64 as f64, Some(InlineObjectBoundaryAdjustment::inline_object_boundary_adjustment_fixed().unwrap()), Some(InlineObjectBoundaryAdjustment::new(Some(true), Some(InlineObjectPreferredStretch::new(InlineObjectPreferredStretchKind::Relation, natural_relation_gap, target_gap).unwrap()), Some(0.0), Some(0.0), Some(true)).unwrap())).unwrap()).clone(),
-    (InlineObjectSpan::new(TextRange::new(2u32, 3u32).unwrap(), (formula_body_width) as i32 as f64 as f64, 12 as f64 as f64, 4 as f64 as f64, Some(InlineObjectBoundaryAdjustment::inline_object_boundary_adjustment_fixed().unwrap()), Some(InlineObjectBoundaryAdjustment::inline_object_boundary_adjustment_fixed().unwrap())).unwrap()).clone(),
+    (InlineObjectSpan::new(TextRange::new(0u32, 1u32).unwrap(), format!("{}", (i32::from_ne_bytes(((formula_body_width) as i32).to_ne_bytes()))).parse::<f64>().unwrap_or(0.0) + natural_relation_gap, 12 as f64 as f64, 4 as f64 as f64, Some(InlineObjectBoundaryAdjustment::inline_object_boundary_adjustment_fixed().unwrap()), Some(InlineObjectBoundaryAdjustment::new(Some(true), Some(InlineObjectPreferredStretch::new(InlineObjectPreferredStretchKind::Relation, natural_relation_gap, target_gap).unwrap()), Some(0.0), Some(0.0), Some(false)).unwrap())).unwrap()).clone(),
+    (InlineObjectSpan::new(TextRange::new(1u32, 2u32).unwrap(), format!("{}", (i32::from_ne_bytes(((formula_body_width) as i32).to_ne_bytes()))).parse::<f64>().unwrap_or(0.0) + natural_relation_gap, 12 as f64 as f64, 4 as f64 as f64, Some(InlineObjectBoundaryAdjustment::inline_object_boundary_adjustment_fixed().unwrap()), Some(InlineObjectBoundaryAdjustment::new(Some(true), Some(InlineObjectPreferredStretch::new(InlineObjectPreferredStretchKind::Relation, natural_relation_gap, target_gap).unwrap()), Some(0.0), Some(0.0), Some(true)).unwrap())).unwrap()).clone(),
+    (InlineObjectSpan::new(TextRange::new(2u32, 3u32).unwrap(), i32::from_ne_bytes(((formula_body_width) as i32).to_ne_bytes()) as f64 as f64, 12 as f64 as f64, 4 as f64 as f64, Some(InlineObjectBoundaryAdjustment::inline_object_boundary_adjustment_fixed().unwrap()), Some(InlineObjectBoundaryAdjustment::inline_object_boundary_adjustment_fixed().unwrap())).unwrap()).clone(),
 ]))).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_true((u32::try_from((r.lines.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32 > (1), None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_true((i32::from_ne_bytes(((u32::try_from((r.lines.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) > (1), None).unwrap();
         let pc = LayoutQueries::layout_queries_positioned_clusters((r).clone());
         let mut formula: Vec<PositionedCluster> = vec![];
         for i in 0..match u32::try_from(pc.len()) { Ok(value) => value, Err(_) => u32::MAX } {
-            if pc[usize::try_from(i).unwrap_or(0)].clone().range.clone().end as i32 <= 3 {
+            if i32::from_ne_bytes(((((pc[usize::try_from(i).unwrap_or(0)]).clone().range).clone().end) as i32).to_ne_bytes()) <= 3 {
                 formula.push((pc[usize::try_from(i).unwrap_or(0)]).clone());
             }
         }
         let _ = TracedAssertions::traced_assertions_assert_equals_int(3, u32::try_from((formula.len()) & 0xFFFF_FFFF).unwrap_or(0), None).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_equals_int(0, formula[0usize].line_index, None).unwrap();
-        let before_equals = formula[1usize].draw_x - (formula[0usize].draw_x + format!("{}", (formula_body_width) as i32).parse::<f64>().unwrap_or(0.0));
-        let after_equals = formula[2usize].draw_x - (formula[1usize].draw_x + format!("{}", (formula_body_width) as i32).parse::<f64>().unwrap_or(0.0));
+        let before_equals = formula[1usize].draw_x - (formula[0usize].draw_x + format!("{}", (i32::from_ne_bytes(((formula_body_width) as i32).to_ne_bytes()))).parse::<f64>().unwrap_or(0.0));
+        let after_equals = formula[2usize].draw_x - (formula[1usize].draw_x + format!("{}", (i32::from_ne_bytes(((formula_body_width) as i32).to_ne_bytes()))).parse::<f64>().unwrap_or(0.0));
         let _ = TracedAssertions::traced_assertions_assert_equals_float_tolerance(before_equals, after_equals, 0.001f64, None).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_true((before_equals) >= target_gap, None).unwrap();
         let mut rel: Vec<JustificationAllocationInfo> = vec![];
@@ -1410,7 +1410,7 @@ fn formula_break_keeps_baseline_operator_on_previous_line() {
             for b in &_g1 {
                 let r = InlineObjectLayoutTestSupport::inline_object_layout_test_support_fixed_basic_kinsoku_engine(Some((*b).clone())).unwrap().layout(LayoutInput::new(TiqianTextContent::new(text.as_ustr(), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![])), Some(TextStyle::new(Some(vec![]), Some(16 as f64), Some(UString::from("zh-Hans")), Some(400), Some(false), Some(0.0), Some(InlineAttachment::None))), Some((*crate::org::tiqian::layout::inline_object_layout_test_support::INLINE_OBJECT_LAYOUT_TEST_SUPPORT_STYLE).clone()), LayoutConstraints::new(24 as f64 as f64, Some(f64::INFINITY), Some(2147483647)).unwrap(), Some((*crate::org::tiqian::core::built_in_layout_profiles::BUILT_IN_LAYOUT_PROFILES_CLREQ_HORIZONTAL).clone()), Some(vec![]), Some(vec![]), Some(vec![]), Some((objs).clone()))).unwrap();
                 let ls = InlineObjectLayoutTestSupport::inline_object_layout_test_support_lines((r).clone(), text.as_ustr());
-                let _ = TracedAssertions::traced_assertions_assert_true((u32::try_from((ls.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32 > (1), Some(UString::from(format!("{}", { let mut __s = UString::new(); __s += &(UString::from("breaker=")); __s += b.get_strategy_name().as_ustr(); __s += &(UString::from(" lines=")); __s += InlineObjectLayoutTestSupport::inline_object_layout_test_support_render_strings(&ls).as_ustr(); __s }).as_str()))).unwrap();
+                let _ = TracedAssertions::traced_assertions_assert_true((i32::from_ne_bytes(((u32::try_from((ls.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) > (1), Some(UString::from(format!("{}", { let mut __s = UString::new(); __s += &(UString::from("breaker=")); __s += b.get_strategy_name().as_ustr(); __s += &(UString::from(" lines=")); __s += InlineObjectLayoutTestSupport::inline_object_layout_test_support_render_strings(&ls).as_ustr(); __s }).as_str()))).unwrap();
                 let mut starts = false;
                 for i in 1..match u32::try_from(ls.len()) { Ok(value) => value, Err(_) => u32::MAX } {
                     if ls[usize::try_from(i).unwrap_or(0)].clone().starts_with(&UString::from("+")) {

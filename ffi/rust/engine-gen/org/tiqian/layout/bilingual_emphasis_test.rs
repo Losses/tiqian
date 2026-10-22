@@ -110,7 +110,7 @@ fn emphasis_dots_han_but_not_western() {
         t.section(UStr::new(&[101,109,112,104,97,115,105,115,68,111,116,115,72,97,110,66,117,116,78,111,116,87,101,115,116,101,114,110]));
         let r = BilingualEmphasisTestSupport::bilingual_emphasis_test_support_layout().unwrap();
         let decisions = ((r.debug).clone().decoration_decisions).clone();
-        if u32::try_from((decisions.len()) & 0xFFFF_FFFF).unwrap_or(0) as i32 < (3) {
+        if i32::from_ne_bytes(((u32::try_from((decisions.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes()) < (3) {
             return;
         }
         let han_first = (decisions[0usize]).clone();

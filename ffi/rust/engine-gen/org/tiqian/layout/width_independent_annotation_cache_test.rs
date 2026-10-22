@@ -603,10 +603,10 @@ fn relayout_with_different_width_hits_cache_and_skips_shaper() {
         let _ = TracedAssertions::traced_assertions_assert_equals(0, cache.lock().unwrap().get_size(), None).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_equals(0, shaper.lock().unwrap().shape_call_count, None).unwrap();
         let result1 = engine.layout((input_width1).clone()).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_true((u32::try_from((result1.lines.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32 > (0), None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_true((i32::from_ne_bytes(((u32::try_from((result1.lines.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) > (0), None).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_equals(1, cache.lock().unwrap().get_size(), None).unwrap();
         let initial_shape_calls = shaper.lock().unwrap().shape_call_count;
-        let _ = TracedAssertions::traced_assertions_assert_true((initial_shape_calls) as i32 > (0), Some(UString::from("Initial layout must shape segments"))).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_true((i32::from_ne_bytes(((initial_shape_calls) as i32).to_ne_bytes())) > (0), Some(UString::from("Initial layout must shape segments"))).unwrap();
         let input_width2 = LayoutInput::new((input_width1.content).clone(), Some((input_width1.text_style).clone()), Some((input_width1.paragraph_style).clone()), LayoutConstraints::new(180 as f64 as f64, Some(f64::INFINITY), Some(2147483647)).unwrap(), Some((input_width1.profile_id).clone()), Some((input_width1.decorations).clone()), Some((input_width1.ruby_spans).clone()), Some((input_width1.inline_boxes).clone()), Some((input_width1.inline_objects).clone()));
         let result2 = engine.layout((input_width2).clone()).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_equals(initial_shape_calls, shaper.lock().unwrap().shape_call_count, Some(UString::from("Relayout at new width must reuse cached annotation without shaping"))).unwrap();
@@ -614,8 +614,8 @@ fn relayout_with_different_width_hits_cache_and_skips_shaper() {
         let input_width3 = LayoutInput::new((input_width1.content).clone(), Some((input_width1.text_style).clone()), Some((input_width1.paragraph_style).clone()), LayoutConstraints::new(500 as f64 as f64, Some(f64::INFINITY), Some(2147483647)).unwrap(), Some((input_width1.profile_id).clone()), Some((input_width1.decorations).clone()), Some((input_width1.ruby_spans).clone()), Some((input_width1.inline_boxes).clone()), Some((input_width1.inline_objects).clone()));
         let result3 = engine.layout((input_width3).clone()).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_equals(initial_shape_calls, shaper.lock().unwrap().shape_call_count, Some(UString::from("Relayout at third width must also reuse cached annotation"))).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_true((u32::try_from((result2.lines.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32 >= u32::try_from((result1.lines.len()) & 0xFFFF_FFFF).unwrap_or(0) as i32, Some(UString::from("Narrower width should have at least as many lines"))).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_true((u32::try_from((result1.lines.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32 >= u32::try_from((result3.lines.len()) & 0xFFFF_FFFF).unwrap_or(0) as i32, Some(UString::from("Wider width should have fewer or equal lines"))).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_true((i32::from_ne_bytes(((u32::try_from((result2.lines.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) >= i32::from_ne_bytes(((u32::try_from((result1.lines.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes()), Some(UString::from("Narrower width should have at least as many lines"))).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_true((i32::from_ne_bytes(((u32::try_from((result1.lines.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) >= i32::from_ne_bytes(((u32::try_from((result3.lines.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes()), Some(UString::from("Wider width should have fewer or equal lines"))).unwrap();
     });
 }
 
@@ -635,7 +635,7 @@ fn cached_and_uncached_engines_produce_identical_layout_results_across_widths() 
         for fixture in &fixtures {
             {
                 let mut _g = 0u32;
-                while ((_g) as i32) < ((u32::try_from((sweep_widths.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32) {
+                while (i32::from_ne_bytes(((_g) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((sweep_widths.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
                     let width = sweep_widths[usize::try_from(_g).unwrap_or(0)];
                     _g = u32::wrapping_add(_g, 1);
                     let input = LayoutInput::new(TiqianTextContent::new(fixture.as_ustr(), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![])), Some(TextStyle::new(Some(vec![]), Some(16.0), Some(UString::from("zh-Hans")), Some(400), Some(false), Some(0.0), Some(InlineAttachment::None))), Some(ParagraphStyle::new(Some(LastLineAlignment::Start), Some(WritingMode::HorizontalTb), None, Some(Ic(2 as f64)), Some(Ic::zero()), Some(MeasureAdaptiveFirstLineIndent::new(Some(14.0), Some(1.0), Some(2.0))), Some(LineLengthGrid::new(Some(true), None)), Some(RubyLineHeightMode::PerLine), Some(ParagraphStyle::PARAGRAPH_STYLE_DEFAULT_INLINE_OBJECT_MINIMUM_CLEARANCE_EM), Some(ParagraphStyle::PARAGRAPH_STYLE_DEFAULT_EMPHASIS_DOT_GAP_EM))), LayoutConstraints::new(width, Some(f64::INFINITY), Some(2147483647)).unwrap(), Some((*crate::org::tiqian::core::built_in_layout_profiles::BUILT_IN_LAYOUT_PROFILES_CLREQ_HORIZONTAL).clone()), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]));

@@ -829,7 +829,7 @@ fn hash_piece_inside_technical_url_skips_syllable_classification() {
         let syllable_offsets = EmergencyGraphemeTrackingTestSupport::emergency_grapheme_tracking_test_support_break_offsets_for_tier(&(result.debug).clone().break_opportunity_decisions, UStr::new(&[83,121,108,108,97,98,108,101]));
         let mut none = true;
         for i in 0..match u32::try_from(syllable_offsets.len()) { Ok(value) => value, Err(_) => u32::MAX } {
-            if syllable_offsets[usize::try_from(i).unwrap_or(0)] as i32 > (hash_start) && ({ let v: u32 = syllable_offsets[usize::try_from(i).unwrap_or(0)]; v as i32 }) < ((u_string::unit_count(&(text))) as i32) {
+            if i32::from_ne_bytes(((syllable_offsets[usize::try_from(i).unwrap_or(0)]) as i32).to_ne_bytes()) > (hash_start) && ({ let v: u32 = syllable_offsets[usize::try_from(i).unwrap_or(0)]; i32::from_ne_bytes(v.to_ne_bytes()) }) < (i32::from_ne_bytes(((u_string::unit_count(&(text))) as i32).to_ne_bytes())) {
                 none = false;
                 break;
             }
@@ -855,7 +855,7 @@ fn long_all_caps_western_word_does_not_become_tracking_eligible() {
         let result = EmergencyGraphemeTrackingTestSupport::emergency_grapheme_tracking_test_support_layout(text.as_ustr(), 101 as f64, None).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_true(u32::try_from(((result.debug).clone().emergency_tracking_eligibility_decisions.len()) & 0xFFFF_FFFF).unwrap_or(0) == 0, None).unwrap();
         let track_allocs = EmergencyGraphemeTrackingTestSupport::emergency_grapheme_tracking_test_support_allocations_for_kind(&(result.debug).clone().justification_decisions, UStr::new(&[69,109,101,114,103,101,110,99,121,71,114,97,112,104,101,109,101,84,114,97,99,107,105,110,103]));
-        let _ = TracedAssertions::traced_assertions_assert_false((u32::try_from((track_allocs.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32 > (0), None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_false((i32::from_ne_bytes(((u32::try_from((track_allocs.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) > (0), None).unwrap();
     });
 }
 
@@ -868,7 +868,7 @@ fn ordinary_western_prose_is_never_inferred_as_tracking_eligible() {
         let result = EmergencyGraphemeTrackingTestSupport::emergency_grapheme_tracking_test_support_layout(text.as_ustr(), 137 as f64, None).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_true(u32::try_from(((result.debug).clone().emergency_tracking_eligibility_decisions.len()) & 0xFFFF_FFFF).unwrap_or(0) == 0, None).unwrap();
         let track_allocs = EmergencyGraphemeTrackingTestSupport::emergency_grapheme_tracking_test_support_allocations_for_kind(&(result.debug).clone().justification_decisions, UStr::new(&[69,109,101,114,103,101,110,99,121,71,114,97,112,104,101,109,101,84,114,97,99,107,105,110,103]));
-        let _ = TracedAssertions::traced_assertions_assert_false((u32::try_from((track_allocs.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32 > (0), None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_false((i32::from_ne_bytes(((u32::try_from((track_allocs.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) > (0), None).unwrap();
         let mut any_deficit = false;
         for i in 0..match u32::try_from((result.debug).clone().justification_decisions.len()) { Ok(value) => value, Err(_) => u32::MAX } {
             if result.debug.clone().justification_decisions[usize::try_from(i).unwrap_or(0)].deficit_after > (0 as f64) {
@@ -890,7 +890,7 @@ fn plain_opaque_hard_break_keeps_combining_grapheme_intact() {
         let text = { let mut __s = UString::new(); __s += prefix.as_ustr(); __s += combining_mark.as_ustr(); __s += &(UString::from("def456ghi")); __s };
         let combining_mark_offset = u_string::unit_count(&(prefix));
         let result = EmergencyGraphemeTrackingTestSupport::emergency_grapheme_tracking_test_support_layout(text.as_ustr(), 64 as f64, None).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_true((u32::try_from((result.clusters.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32 > (1), Some((EmergencyGraphemeTrackingTestSupport::emergency_grapheme_tracking_test_support_render_clusters(&result.clusters)).to_ustring())).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_true((i32::from_ne_bytes(((u32::try_from((result.clusters.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) > (1), Some((EmergencyGraphemeTrackingTestSupport::emergency_grapheme_tracking_test_support_render_clusters(&result.clusters)).to_ustring())).unwrap();
         let mut none = true;
         let mut ranges: Vec<TextRange> = vec![];
         for i in 0..match u32::try_from(result.clusters.len()) { Ok(value) => value, Err(_) => u32::MAX } {
@@ -976,7 +976,7 @@ fn standalone_technical_hash_uses_tracking_to_fill_every_auto_wrapped_line() {
                 auto_count = u32::wrapping_add(auto_count, 1);
             }
         }
-        let _ = TracedAssertions::traced_assertions_assert_true((auto_count) as i32 > (0), None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_true((i32::from_ne_bytes(((auto_count) as i32).to_ne_bytes())) > (0), None).unwrap();
         for i in 0..match u32::try_from(result.lines.len()) { Ok(value) => value, Err(_) => u32::MAX } {
             if result.lines[usize::try_from(i).unwrap_or(0)].end_reason == LineEndReason::AutoWrap {
                 let _ = TracedAssertions::traced_assertions_assert_equals_float_tolerance(101 as f64, result.lines[usize::try_from(i).unwrap_or(0)].visual_width, 0.001f64, None).unwrap();
@@ -1007,7 +1007,7 @@ fn technical_identifier_relabels_loose_letter_digit_boundary_as_emergency() {
         let mut found_note = false;
         let notes = (((result.debug).clone().line_decisions[0usize]).clone().notes).clone();
         for i in 0..match u32::try_from(notes.len()) { Ok(value) => value, Err(_) => u32::MAX } {
-            if u_string::find_from(&((notes[usize::try_from(i).unwrap_or(0)]).clone()), UString::from("technical-break:Emergency").as_ustr(), 0) as u32 <= 2147483647 {
+            if u32::from_ne_bytes(((u_string::find_from(&((notes[usize::try_from(i).unwrap_or(0)]).clone()), UString::from("technical-break:Emergency").as_ustr(), 0)) as u32).to_ne_bytes()) <= 2147483647 {
                 found_note = true;
                 break;
             }
@@ -1033,7 +1033,7 @@ fn technical_tracking_does_not_open_edges_touching_inline_objects_or_zero_width_
     (LineBreakSpan::new(TextRange::new(0u32, object_len).unwrap(), LineBreakPolicy::ProgressiveTechnical)).clone(),
 ])).unwrap();
         let object_allocations = EmergencyGraphemeTrackingTestSupport::emergency_grapheme_tracking_test_support_allocations_for_kind(&(object_result.debug).clone().justification_decisions, UStr::new(&[69,109,101,114,103,101,110,99,121,71,114,97,112,104,101,109,101,84,114,97,99,107,105,110,103]));
-        let _ = TracedAssertions::traced_assertions_assert_true((u32::try_from((object_allocations.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32 > (0), None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_true((i32::from_ne_bytes(((u32::try_from((object_allocations.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) > (0), None).unwrap();
         let mut none = true;
         for i in 0..match u32::try_from(object_allocations.len()) { Ok(value) => value, Err(_) => u32::MAX } {
             let cr = ((object_allocations[usize::try_from(i).unwrap_or(0)]).clone().cluster_range).clone();
@@ -1051,7 +1051,7 @@ fn technical_tracking_does_not_open_edges_touching_inline_objects_or_zero_width_
     (LineBreakSpan::new(TextRange::new(0u32, zero_width_len).unwrap(), LineBreakPolicy::ProgressiveTechnical)).clone(),
 ])).unwrap();
         let zero_width_allocations = EmergencyGraphemeTrackingTestSupport::emergency_grapheme_tracking_test_support_allocations_for_kind(&(zero_width_result.debug).clone().justification_decisions, UStr::new(&[69,109,101,114,103,101,110,99,121,71,114,97,112,104,101,109,101,84,114,97,99,107,105,110,103]));
-        let _ = TracedAssertions::traced_assertions_assert_true((u32::try_from((zero_width_allocations.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32 > (0), None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_true((i32::from_ne_bytes(((u32::try_from((zero_width_allocations.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) > (0), None).unwrap();
         let mut none_z = true;
         for i in 0..match u32::try_from(zero_width_allocations.len()) { Ok(value) => value, Err(_) => u32::MAX } {
             let cr = ((zero_width_allocations[usize::try_from(i).unwrap_or(0)]).clone().cluster_range).clone();
@@ -1076,11 +1076,13 @@ fn unannotated_url_does_not_authorize_tracking_across_ordinary_path_components()
         for i in 0..match u32::try_from((result.debug).clone().emergency_tracking_eligibility_decisions.len()) { Ok(value) => value, Err(_) => u32::MAX } {
             actual_ranges.push((((result.debug).clone().emergency_tracking_eligibility_decisions[usize::try_from(i).unwrap_or(0)]).clone().range).clone());
         }
-        let _ = TracedAssertions::traced_assertions_assert_equals_text_range_array(&vec![(TextRange::new((identity_start) as u32, u_string::unit_count(&(text))).unwrap()).clone()], &actual_ranges, None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_equals_text_range_array(&vec![
+    (TextRange::new(u32::from_ne_bytes(((identity_start) as u32).to_ne_bytes()), u_string::unit_count(&(text))).unwrap()).clone(),
+], &actual_ranges, None).unwrap();
         let track_allocations = EmergencyGraphemeTrackingTestSupport::emergency_grapheme_tracking_test_support_allocations_for_kind(&(result.debug).clone().justification_decisions, UStr::new(&[69,109,101,114,103,101,110,99,121,71,114,97,112,104,101,109,101,84,114,97,99,107,105,110,103]));
         let mut all_gte = true;
         for i in 0..match u32::try_from(track_allocations.len()) { Ok(value) => value, Err(_) => u32::MAX } {
-            if track_allocations[usize::try_from(i).unwrap_or(0)].clone().cluster_range.clone().start as i32 < (identity_start) {
+            if i32::from_ne_bytes(((((track_allocations[usize::try_from(i).unwrap_or(0)]).clone().cluster_range).clone().start) as i32).to_ne_bytes()) < (identity_start) {
                 all_gte = false;
                 break;
             }

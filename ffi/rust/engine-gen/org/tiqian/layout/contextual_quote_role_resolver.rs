@@ -35,22 +35,25 @@ impl ContextualQuoteRoleResolver {
             text: text.to_ustring(),
             pairs: pairs.clone(),
             context: context.clone(),
-            pair_by_open: SortedTable::sorted_table_map_builder::<u32, QuotePair>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints((*a) as i32, (*b) as i32))).build(),
-            pair_by_close: SortedTable::sorted_table_map_builder::<u32, QuotePair>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints((*a) as i32, (*b) as i32))).build(),
-            parent_by_pair: SortedTable::sorted_table_map_builder::<u32, Option<QuotePair>>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints((*a) as i32, (*b) as i32))).build(),
+            pair_by_open: SortedTable::sorted_table_map_builder::<u32, QuotePair>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_bytes(((*a) as i32).to_ne_bytes()), i32::from_ne_bytes(((*b) as i32).to_ne_bytes())))).build(),
+            pair_by_close: SortedTable::sorted_table_map_builder::<u32, QuotePair>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_bytes(((*a) as i32).to_ne_bytes()), i32::from_ne_bytes(((*b) as i32).to_ne_bytes())))).build(),
+            parent_by_pair: SortedTable::sorted_table_map_builder::<u32, Option<QuotePair>>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_bytes(((*a) as i32).to_ne_bytes()), i32::from_ne_bytes(((*b) as i32).to_ne_bytes())))).build(),
         };
-        let mut open_builder: SortedMapTableBuilder<u32, QuotePair> = SortedTable::sorted_table_map_builder::<u32, QuotePair>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints((*a) as i32, (*b) as i32)));
-        let mut close_builder: SortedMapTableBuilder<u32, QuotePair> = SortedTable::sorted_table_map_builder::<u32, QuotePair>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints((*a) as i32, (*b) as i32)));
+        let mut open_builder: SortedMapTableBuilder<u32, QuotePair> = SortedTable::sorted_table_map_builder::<u32,
+QuotePair>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_bytes(((*a) as i32).to_ne_bytes()), i32::from_ne_bytes(((*b) as i32).to_ne_bytes()))));
+        let mut close_builder: SortedMapTableBuilder<u32, QuotePair> = SortedTable::sorted_table_map_builder::<u32,
+QuotePair>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_bytes(((*a) as i32).to_ne_bytes()), i32::from_ne_bytes(((*b) as i32).to_ne_bytes()))));
         let mut pi = 0u32;
-        while ((pi) as i32) < ((u32::try_from((pairs.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32) {
+        while (i32::from_ne_bytes(((pi) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((pairs.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
             let pair = (pairs[usize::try_from(pi).unwrap_or(0)]).clone();
             pi = u32::wrapping_add(pi, 1);
             open_builder.put(&(pair.open_index), &(pair));
             close_builder.put(&(pair.close_index), &(pair));
         }
-        let mut parent_builder: SortedMapTableBuilder<u32, Option<QuotePair>> = SortedTable::sorted_table_map_builder::<u32, Option<QuotePair>>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints((*a) as i32, (*b) as i32)));
+        let mut parent_builder: SortedMapTableBuilder<u32, Option<QuotePair>> = SortedTable::sorted_table_map_builder::<u32,
+Option<QuotePair>>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_bytes(((*a) as i32).to_ne_bytes()), i32::from_ne_bytes(((*b) as i32).to_ne_bytes()))));
         pi = 0u32;
-        while ((pi) as i32) < ((u32::try_from((pairs.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32) {
+        while (i32::from_ne_bytes(((pi) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((pairs.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
             let pair = (pairs[usize::try_from(pi).unwrap_or(0)]).clone();
             pi = u32::wrapping_add(pi, 1);
             parent_builder.put(&(pair.open_index), &(__self.find_parent((pair).clone())));
@@ -63,7 +66,8 @@ impl ContextualQuoteRoleResolver {
 
     pub fn resolve(&self) -> Result<Vec<QuoteRoleDecision>, TextRangeError> {
         let mut decisions: Vec<QuoteRoleDecision> = vec![];
-        let mut resolved_pairs: SortedMapTableBuilder<u32, FontRole> = SortedTable::sorted_table_map_builder::<u32, FontRole>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints((*a) as i32, (*b) as i32)));
+        let mut resolved_pairs: SortedMapTableBuilder<u32, FontRole> = SortedTable::sorted_table_map_builder::<u32,
+FontRole>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_bytes(((*a) as i32).to_ne_bytes()), i32::from_ne_bytes(((*b) as i32).to_ne_bytes()))));
         let pipeline_result = {
     let mut _sorted = (self.pairs).clone().to_vec();
     _sorted.sort_by_key(|pair| pair.open_index);
@@ -76,9 +80,9 @@ impl ContextualQuoteRoleResolver {
             decisions.push(QuoteRoleDecision::new(pair.open_index, resolution.role, (resolution.source).to_ustring().as_ustr(), (resolution.reason).to_ustring().as_ustr()));
             decisions.push(QuoteRoleDecision::new(pair.close_index, resolution.role, (resolution.source).to_ustring().as_ustr(), (resolution.reason).to_ustring().as_ustr()));
         }
-        let mut paired_indices_builder: SortedSetTableBuilder<u32> = SortedTable::sorted_table_set_builder::<u32>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints((*a) as i32, (*b) as i32)));
+        let mut paired_indices_builder: SortedSetTableBuilder<u32> = SortedTable::sorted_table_set_builder::<u32>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_bytes(((*a) as i32).to_ne_bytes()), i32::from_ne_bytes(((*b) as i32).to_ne_bytes()))));
         let mut pi = 0u32;
-        while ((pi) as i32) < ((u32::try_from(((self.pairs).clone().len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32) {
+        while (i32::from_ne_bytes(((pi) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from(((self.pairs).clone().len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
             let pair = (self.pairs[usize::try_from(pi).unwrap_or(0)]).clone();
             pi = u32::wrapping_add(pi, 1);
             paired_indices_builder.put(&(pair.open_index));
@@ -188,7 +192,7 @@ impl ContextualQuoteRoleResolver {
 
     fn nearest_strong_script_role(&self, start_index: u32, direction: u32) -> Result<Option<FontRole>, TextRangeError> {
         let mut index = start_index;
-        while (index) <= 2147483647 && ((index) as i32) < ((u_string::unit_count(&((self.text).to_ustring()))) as i32) {
+        while (index) <= 2147483647 && (i32::from_ne_bytes(((index) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u_string::unit_count(&((self.text).to_ustring()))) as i32).to_ne_bytes())) {
             if direction > 2147483647 {
                 let pair = (self.pair_by_close).clone().get(&(index));
                 match &(pair) {
@@ -210,7 +214,7 @@ impl ContextualQuoteRoleResolver {
                     }
                 }
             }
-            let scalar_start = if direction > 2147483647 && ContextualQuoteRoleResolver::contextual_quote_role_resolver_is_low_surrogate(*(u_string::unit_at(&(self.text).to_ustring(), index)).as_ref().unwrap()) && ((index) as i32) > (0) && ContextualQuoteRoleResolver::contextual_quote_role_resolver_is_high_surrogate(*(u_string::unit_at(&(self.text).to_ustring(), u32::wrapping_sub(index, 1))).as_ref().unwrap()) { u32::wrapping_sub(index, 1) } else { index };
+            let scalar_start = if direction > 2147483647 && ContextualQuoteRoleResolver::contextual_quote_role_resolver_is_low_surrogate(*(u_string::unit_at(&(self.text).to_ustring(), index)).as_ref().unwrap()) && (i32::from_ne_bytes(((index) as i32).to_ne_bytes())) > (0) && ContextualQuoteRoleResolver::contextual_quote_role_resolver_is_high_surrogate(*(u_string::unit_at(&(self.text).to_ustring(), u32::wrapping_sub(index, 1))).as_ref().unwrap()) { u32::wrapping_sub(index, 1) } else { index };
             let length = self.code_point_length_at(scalar_start, u_string::unit_count(&((self.text).to_ustring())));
             let role = self.strong_script_role(scalar_start, length)?;
             match &(role) {
@@ -233,10 +237,10 @@ impl ContextualQuoteRoleResolver {
     fn find_parent(&self, pair: QuotePair) -> Option<QuotePair> {
         let mut result: Option<QuotePair> = None;
         let mut ci = 0u32;
-        while ((ci) as i32) < ((u32::try_from(((self.pairs).clone().len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32) {
+        while (i32::from_ne_bytes(((ci) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from(((self.pairs).clone().len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
             let candidate = (self.pairs[usize::try_from(ci).unwrap_or(0)]).clone();
             ci = u32::wrapping_add(ci, 1);
-            if candidate != pair && ((candidate.open_index) as i32) < ((pair.open_index) as i32) && ((candidate.close_index) as i32) > ((pair.close_index) as i32) && (match &(result) { None => true, Some(__option16) => u32::wrapping_sub(candidate.close_index, candidate.open_index) as i32 < ((u32::wrapping_sub(__option16.close_index, __option16.open_index)) as i32) }) {
+            if candidate != pair && (i32::from_ne_bytes(((candidate.open_index) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((pair.open_index) as i32).to_ne_bytes())) && (i32::from_ne_bytes(((candidate.close_index) as i32).to_ne_bytes())) > (i32::from_ne_bytes(((pair.close_index) as i32).to_ne_bytes())) && (match &(result) { None => true, Some(__option16) => i32::from_ne_bytes(((u32::wrapping_sub(candidate.close_index, candidate.open_index)) as i32).to_ne_bytes()) < (i32::from_ne_bytes(((u32::wrapping_sub(__option16.close_index, __option16.open_index)) as i32).to_ne_bytes())) }) {
                 result = Some(candidate.clone());
             }
         }
@@ -270,12 +274,12 @@ impl ContextualQuoteRoleResolver {
             return Ok(false);
         }
         let mut index = u32::wrapping_add(pair.open_index, 1);
-        while ((index) as i32) < ((pair.close_index) as i32) {
+        while (i32::from_ne_bytes(((index) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((pair.close_index) as i32).to_ne_bytes())) {
             let code_point = self.code_point_at_or_null(index);
             if match &(code_point) { None => true, Some(__option19) => !self.is_non_cjk_word_character(*__option19)? } {
                 return Ok(false);
             }
-            index = u32::wrapping_add(index, if code_point.unwrap_or(0) as i32 > (65535) { 2 } else { 1 });
+            index = u32::wrapping_add(index, if i32::from_ne_bytes(((code_point.unwrap_or(0)) as i32).to_ne_bytes()) > (65535) { 2 } else { 1 });
         }
         return Ok(true);
     }
@@ -289,16 +293,16 @@ impl ContextualQuoteRoleResolver {
     }
 
     fn is_fullwidth(&self, code_point: u32) -> bool {
-        return code_point == 12288 || ((code_point) as i32) >= 65281 && ((code_point) as i32) <= 65376 || ((code_point) as i32) >= 65504 && ((code_point) as i32) <= 65510;
+        return code_point == 12288 || (i32::from_ne_bytes(((code_point) as i32).to_ne_bytes())) >= 65281 && (i32::from_ne_bytes(((code_point) as i32).to_ne_bytes())) <= 65376 || (i32::from_ne_bytes(((code_point) as i32).to_ne_bytes())) >= 65504 && (i32::from_ne_bytes(((code_point) as i32).to_ne_bytes())) <= 65510;
     }
 
     fn char_at(&self, index: u32) -> Option<u32> {
-        return if index <= 2147483647 && ((index) as i32) < ((u_string::unit_count(&((self.text).to_ustring()))) as i32) { u_string::unit_at(&(self.text).to_ustring(), index) } else { None };
+        return if index <= 2147483647 && (i32::from_ne_bytes(((index) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u_string::unit_count(&((self.text).to_ustring()))) as i32).to_ne_bytes())) { u_string::unit_at(&(self.text).to_ustring(), index) } else { None };
     }
 
     fn code_point_at(&self, index: u32, end: u32) -> u32 {
         let high = u_string::unit_at(&(self.text).to_ustring(), index).unwrap_or(0);
-        if !ContextualQuoteRoleResolver::contextual_quote_role_resolver_is_high_surrogate(high) || ((u32::wrapping_add(index, 1)) as i32) >= end as i32 {
+        if !ContextualQuoteRoleResolver::contextual_quote_role_resolver_is_high_surrogate(high) || (i32::from_ne_bytes(((u32::wrapping_add(index, 1)) as i32).to_ne_bytes())) >= i32::from_ne_bytes(((end) as i32).to_ne_bytes()) {
             return high;
         }
         let low = u_string::unit_at(&(self.text).to_ustring(), u32::wrapping_add(index, 1)).unwrap_or(0);
@@ -306,15 +310,15 @@ impl ContextualQuoteRoleResolver {
     }
 
     fn code_point_length_at(&self, index: u32, end: u32) -> u32 {
-        return if ContextualQuoteRoleResolver::contextual_quote_role_resolver_is_high_surrogate(*(u_string::unit_at(&(self.text).to_ustring(), index)).as_ref().unwrap()) && ((u32::wrapping_add(index, 1)) as i32) < ((end) as i32) && ContextualQuoteRoleResolver::contextual_quote_role_resolver_is_low_surrogate(*(u_string::unit_at(&(self.text).to_ustring(), u32::wrapping_add(index, 1))).as_ref().unwrap()) { 2 } else { 1 };
+        return if ContextualQuoteRoleResolver::contextual_quote_role_resolver_is_high_surrogate(*(u_string::unit_at(&(self.text).to_ustring(), index)).as_ref().unwrap()) && (i32::from_ne_bytes(((u32::wrapping_add(index, 1)) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((end) as i32).to_ne_bytes())) && ContextualQuoteRoleResolver::contextual_quote_role_resolver_is_low_surrogate(*(u_string::unit_at(&(self.text).to_ustring(), u32::wrapping_add(index, 1))).as_ref().unwrap()) { 2 } else { 1 };
     }
 
     fn code_point_before(&self, index: u32) -> Option<u32> {
-        if index as i32 <= 0 {
+        if i32::from_ne_bytes(((index) as i32).to_ne_bytes()) <= 0 {
             return None;
         }
         let low = u_string::unit_at(&(self.text).to_ustring(), u32::wrapping_sub(index, 1)).unwrap_or(0);
-        if !ContextualQuoteRoleResolver::contextual_quote_role_resolver_is_low_surrogate(low) || ((index) as i32) < (2) {
+        if !ContextualQuoteRoleResolver::contextual_quote_role_resolver_is_low_surrogate(low) || (i32::from_ne_bytes(((index) as i32).to_ne_bytes())) < (2) {
             return Some(low);
         }
         let high = u_string::unit_at(&(self.text).to_ustring(), u32::wrapping_sub(index, 2)).unwrap_or(0);
@@ -322,7 +326,7 @@ impl ContextualQuoteRoleResolver {
     }
 
     fn code_point_at_or_null(&self, index: u32) -> Option<u32> {
-        return if index > 2147483647 || ((index) as i32) >= u_string::unit_count(&((self.text).to_ustring())) as i32 { None } else { Some(self.code_point_at((index) as u32, u_string::unit_count(&((self.text).to_ustring())))) };
+        return if index > 2147483647 || (i32::from_ne_bytes(((index) as i32).to_ne_bytes())) >= i32::from_ne_bytes(((u_string::unit_count(&((self.text).to_ustring()))) as i32).to_ne_bytes()) { None } else { Some(self.code_point_at(u32::from_ne_bytes(((index) as u32).to_ne_bytes()), u_string::unit_count(&((self.text).to_ustring())))) };
     }
 
     pub(crate) fn contextual_quote_role_resolver_is_ambiguous_curly_quote(code_point: u32) -> bool {
@@ -334,11 +338,11 @@ impl ContextualQuoteRoleResolver {
     }
 
     pub(crate) fn contextual_quote_role_resolver_is_high_surrogate(code_point: u32) -> bool {
-        return ((code_point) as i32) >= 55296 && ((code_point) as i32) <= 56319;
+        return (i32::from_ne_bytes(((code_point) as i32).to_ne_bytes())) >= 55296 && (i32::from_ne_bytes(((code_point) as i32).to_ne_bytes())) <= 56319;
     }
 
     pub(crate) fn contextual_quote_role_resolver_is_low_surrogate(code_point: u32) -> bool {
-        return ((code_point) as i32) >= 56320 && ((code_point) as i32) <= 57343;
+        return (i32::from_ne_bytes(((code_point) as i32).to_ne_bytes())) >= 56320 && (i32::from_ne_bytes(((code_point) as i32).to_ne_bytes())) <= 57343;
     }
 }
 
@@ -364,11 +368,11 @@ impl ScriptEvidence {
 
     pub fn add_range(&mut self, start: u32, end: u32) -> Result<(), TextRangeError> {
         let mut index = start;
-        while ((index) as i32) < ((end) as i32) {
+        while (i32::from_ne_bytes(((index) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((end) as i32).to_ne_bytes())) {
             let nested = self.resolver.pair_by_open.get(&(index));
             match &(nested) {
                 Some(__option21) => {
-                    if __option21.close_index as i32 < ((end) as i32) {
+                    if i32::from_ne_bytes(((__option21.close_index) as i32).to_ne_bytes()) < (i32::from_ne_bytes(((end) as i32).to_ne_bytes())) {
                     index = u32::wrapping_add(__option21.close_index, 1);
                     continue;
                     }

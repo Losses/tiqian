@@ -3,7 +3,7 @@ pub struct GraphemeWalk;
 
 impl GraphemeWalk {
     pub fn grapheme_walk_lookup(table: &[i32], code: i32) -> i32 {
-        let range_count = u32::try_from(((table).len()) & 4294967295).unwrap_or(0) as i32 / (3);
+        let range_count = i32::from_ne_bytes(u32::try_from(((table).len()) & 4294967295).unwrap_or(0).to_ne_bytes()) / (3);
         let mut lo = 0i32;
         let mut hi = i32::wrapping_sub(range_count, 1);
         while (lo) <= hi {

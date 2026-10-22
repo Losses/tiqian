@@ -417,7 +417,7 @@ impl PlanJson {
             }
             out.extend(UString::from(",\"shapingBoundary\":true").encode_utf16());
         }
-        if u32::try_from((cell.open_type_features.len()) & 0xFFFF_FFFF).unwrap_or(0) as i32 > (0) {
+        if i32::from_ne_bytes(((u32::try_from((cell.open_type_features.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes()) > (0) {
             if let Some(&unit) = out.last() {
                 if unit >= 55296 && unit <= 56319 && !UString::from(",\"openTypeFeatures\":[").is_empty() {
                     if !match (UString::from(",\"openTypeFeatures\":[")).encode_utf16().next() { Some(head) => head >= 56320 && head <= 57343, None => false } {
@@ -712,7 +712,7 @@ impl PlanJson {
         let font_weight = style.font_weight;
         match &(font_weight) {
             Some(__option12) => {
-                if field_count as i32 > (0) {
+                if i32::from_ne_bytes(((field_count) as i32).to_ne_bytes()) > (0) {
                     if let Some(&unit) = out.last() {
                         if unit >= 55296 && unit <= 56319 && !UString::from(",").is_empty() {
                             if !match (UString::from(",")).encode_utf16().next() { Some(head) => head >= 56320 && head <= 57343, None => false } {
@@ -746,7 +746,7 @@ impl PlanJson {
         let italic = style.italic;
         match &(italic) {
             Some(__option13) => {
-                if field_count as i32 > (0) {
+                if i32::from_ne_bytes(((field_count) as i32).to_ne_bytes()) > (0) {
                     if let Some(&unit) = out.last() {
                         if unit >= 55296 && unit <= 56319 && !UString::from(",").is_empty() {
                             if !match (UString::from(",")).encode_utf16().next() { Some(head) => head >= 56320 && head <= 57343, None => false } {
@@ -834,7 +834,7 @@ impl PlanJson {
             None => {
             }
         }
-        if u32::try_from((plan.emphasis_ranges.len()) & 0xFFFF_FFFF).unwrap_or(0) as i32 > (0) {
+        if i32::from_ne_bytes(((u32::try_from((plan.emphasis_ranges.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes()) > (0) {
             if let Some(&unit) = out.last() {
                 if unit >= 55296 && unit <= 56319 && !UString::from(",\"emphasisRanges\":[").is_empty() {
                     if !match (UString::from(",\"emphasisRanges\":[")).encode_utf16().next() { Some(head) => head >= 56320 && head <= 57343, None => false } {
@@ -909,7 +909,7 @@ impl PlanJson {
             }
             out.extend(UString::from("]").encode_utf16());
         }
-        if u32::try_from((plan.inline_edges.len()) & 0xFFFF_FFFF).unwrap_or(0) as i32 > (0) {
+        if i32::from_ne_bytes(((u32::try_from((plan.inline_edges.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes()) > (0) {
             if let Some(&unit) = out.last() {
                 if unit >= 55296 && unit <= 56319 && !UString::from(",\"inlineEdges\":[").is_empty() {
                     if !match (UString::from(",\"inlineEdges\":[")).encode_utf16().next() { Some(head) => head >= 56320 && head <= 57343, None => false } {
@@ -1014,7 +1014,7 @@ impl PlanJson {
             }
             out.extend(UString::from("]").encode_utf16());
         }
-        if u32::try_from((plan.ruby_decisions.len()) & 0xFFFF_FFFF).unwrap_or(0) as i32 > (0) {
+        if i32::from_ne_bytes(((u32::try_from((plan.ruby_decisions.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes()) > (0) {
             if let Some(&unit) = out.last() {
                 if unit >= 55296 && unit <= 56319 && !UString::from(",\"rubyDecisions\":[").is_empty() {
                     if !match (UString::from(",\"rubyDecisions\":[")).encode_utf16().next() { Some(head) => head >= 56320 && head <= 57343, None => false } {
@@ -1166,7 +1166,7 @@ impl PlanJson {
                         }
                     }
                     out.extend(UString::from(format!("{}", crate::runtime::int_text::IntText::int_text(ruby.font_weight)).as_str()).encode_utf16());
-                    if u32::try_from(((ruby.font_families).clone().len()) & 0xFFFF_FFFF).unwrap_or(0) as i32 > (0) {
+                    if i32::from_ne_bytes(((u32::try_from(((ruby.font_families).clone().len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes()) > (0) {
                         if let Some(&unit) = out.last() {
                             if unit >= 55296 && unit <= 56319 && !UString::from(",\"fontFamilies\":[").is_empty() {
                                 if !match (UString::from(",\"fontFamilies\":[")).encode_utf16().next() { Some(head) => head >= 56320 && head <= 57343, None => false } {
@@ -1179,7 +1179,7 @@ impl PlanJson {
                         {
                             let mut _g = 0u32;
                             let _g1 = (ruby.font_families).clone().clone();
-                            while ((_g) as i32) < ((u32::try_from((_g1.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32) {
+                            while (i32::from_ne_bytes(((_g) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((_g1.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
                                 let family = (_g1[usize::try_from(_g).unwrap_or(0)]).clone();
                                 _g = u32::wrapping_add(_g, 1);
                                 if !first_family {
@@ -1224,7 +1224,7 @@ impl PlanJson {
             }
             out.extend(UString::from("]").encode_utf16());
         }
-        if u32::try_from((plan.bopomofo_decisions.len()) & 0xFFFF_FFFF).unwrap_or(0) as i32 > (0) {
+        if i32::from_ne_bytes(((u32::try_from((plan.bopomofo_decisions.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes()) > (0) {
             if let Some(&unit) = out.last() {
                 if unit >= 55296 && unit <= 56319 && !UString::from(",\"bopomofoDecisions\":[").is_empty() {
                     if !match (UString::from(",\"bopomofoDecisions\":[")).encode_utf16().next() { Some(head) => head >= 56320 && head <= 57343, None => false } {
@@ -1305,7 +1305,7 @@ impl PlanJson {
                         }
                     }
                     out.extend(UString::from(format!("{}", crate::runtime::int_text::IntText::int_text(bopomofo.font_weight)).as_str()).encode_utf16());
-                    if u32::try_from(((bopomofo.font_families).clone().len()) & 0xFFFF_FFFF).unwrap_or(0) as i32 > (0) {
+                    if i32::from_ne_bytes(((u32::try_from(((bopomofo.font_families).clone().len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes()) > (0) {
                         if let Some(&unit) = out.last() {
                             if unit >= 55296 && unit <= 56319 && !UString::from(",\"fontFamilies\":[").is_empty() {
                                 if !match (UString::from(",\"fontFamilies\":[")).encode_utf16().next() { Some(head) => head >= 56320 && head <= 57343, None => false } {
@@ -1318,7 +1318,7 @@ impl PlanJson {
                         {
                             let mut _g = 0u32;
                             let _g1 = (bopomofo.font_families).clone().clone();
-                            while ((_g) as i32) < ((u32::try_from((_g1.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32) {
+                            while (i32::from_ne_bytes(((_g) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((_g1.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
                                 let family = (_g1[usize::try_from(_g).unwrap_or(0)]).clone();
                                 _g = u32::wrapping_add(_g, 1);
                                 if !first_family {
@@ -1356,7 +1356,7 @@ impl PlanJson {
                     {
                         let mut _g = 0u32;
                         let _g1 = (bopomofo.placements).clone().clone();
-                        while ((_g) as i32) < ((u32::try_from((_g1.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32) {
+                        while (i32::from_ne_bytes(((_g) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((_g1.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
                             let placement = (_g1[usize::try_from(_g).unwrap_or(0)]).clone();
                             _g = u32::wrapping_add(_g, 1);
                             if !first_placement {
@@ -1481,7 +1481,7 @@ impl PlanJson {
             }
             out.extend(UString::from("]").encode_utf16());
         }
-        if u32::try_from((plan.decoration_segments.len()) & 0xFFFF_FFFF).unwrap_or(0) as i32 > (0) {
+        if i32::from_ne_bytes(((u32::try_from((plan.decoration_segments.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes()) > (0) {
             if let Some(&unit) = out.last() {
                 if unit >= 55296 && unit <= 56319 && !UString::from(",\"decorationSegments\":[").is_empty() {
                     if !match (UString::from(",\"decorationSegments\":[")).encode_utf16().next() { Some(head) => head >= 56320 && head <= 57343, None => false } {
@@ -1613,7 +1613,7 @@ impl PlanJson {
             }
             out.extend(UString::from("]").encode_utf16());
         }
-        if u32::try_from((plan.emphasis_dots.len()) & 0xFFFF_FFFF).unwrap_or(0) as i32 > (0) {
+        if i32::from_ne_bytes(((u32::try_from((plan.emphasis_dots.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes()) > (0) {
             if let Some(&unit) = out.last() {
                 if unit >= 55296 && unit <= 56319 && !UString::from(",\"emphasisDots\":[").is_empty() {
                     if !match (UString::from(",\"emphasisDots\":[")).encode_utf16().next() { Some(head) => head >= 56320 && head <= 57343, None => false } {

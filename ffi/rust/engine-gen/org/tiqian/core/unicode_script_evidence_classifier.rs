@@ -14,12 +14,12 @@ impl UnicodeScriptEvidenceClassifier {
     pub const UNICODE_SCRIPT_EVIDENCE_CLASSIFIER_DATA_SHA256: &UStr = unsafe { &*(&[0x0039u16, 0x0066u16, 0x0035u16, 0x0065u16, 0x0035u16, 0x0030u16, 0x0064u16, 0x0033u16, 0x0061u16, 0x0062u16, 0x0061u16, 0x0065u16, 0x0065u16, 0x0037u16, 0x0064u16, 0x0036u16, 0x0063u16, 0x0065u16, 0x0030u16, 0x0039u16, 0x0034u16, 0x0038u16, 0x0030u16, 0x0066u16, 0x0033u16, 0x0032u16, 0x0035u16, 0x0063u16, 0x0037u16, 0x0030u16, 0x0036u16, 0x0066u16, 0x0034u16, 0x0038u16, 0x0035u16, 0x0061u16, 0x0065u16, 0x0033u16, 0x0032u16, 0x0034u16, 0x0030u16, 0x0039u16, 0x0031u16, 0x0032u16, 0x0035u16, 0x0032u16, 0x0037u16, 0x0065u16, 0x0036u16, 0x0035u16, 0x0031u16, 0x0039u16, 0x0035u16, 0x0034u16, 0x0064u16, 0x0032u16, 0x0064u16, 0x0036u16, 0x0062u16, 0x0030u16, 0x0033u16, 0x0035u16, 0x0062u16, 0x0066u16] as *const [u16] as *const crate::runtime::u_string::UStr) };
 
     pub fn unicode_script_evidence_classifier_classify(code_point: u32) -> Result<UnicodeScriptEvidence, TextRangeError> {
-        if code_point > 2147483647 || ((code_point) as i32) > (1114111) {
+        if code_point > 2147483647 || (i32::from_ne_bytes(((code_point) as i32).to_ne_bytes())) > (1114111) {
             return Err(TextRangeError::Message { text: UString::from(format!("{}", { let mut __s = UString::new(); __s += &(UString::from("Not a Unicode scalar value: ")); __s += &(UString::from(format!("{}", crate::runtime::int_text::IntText::int_text(code_point)).as_str())); __s }).as_str()) });
         }
-        if code_point as i32 >= 55296 && ((code_point) as i32) <= 57343 {
+        if i32::from_ne_bytes(((code_point) as i32).to_ne_bytes()) >= 55296 && (i32::from_ne_bytes(((code_point) as i32).to_ne_bytes())) <= 57343 {
             return Err(TextRangeError::Message { text: UString::from(format!("{}", { let mut __s = UString::new(); __s += &(UString::from("Surrogate is not a Unicode scalar value: ")); __s += &(UString::from(format!("{}", crate::runtime::int_text::IntText::int_text(code_point)).as_str())); __s }).as_str()) });
         }
-        return Ok(UnicodeScriptEvidenceData::unicode_script_evidence_data_classify((code_point) as u32));
+        return Ok(UnicodeScriptEvidenceData::unicode_script_evidence_data_classify(u32::from_ne_bytes(((code_point) as u32).to_ne_bytes())));
     }
 }

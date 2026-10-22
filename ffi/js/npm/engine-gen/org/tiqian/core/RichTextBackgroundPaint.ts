@@ -30,7 +30,7 @@ export class RichTextBackgroundPaint {
   }
 
   public static withHorizontalPadding(value: number): RichTextBackgroundPaint {
-    return new RichTextBackgroundPaint(value, 0.0, 0.0, 0.0, RichTextBackgroundMetricPolicy.MarkedFaces, Fill.instance);
+    return new RichTextBackgroundPaint(value, 0.0, 0.0, 0.0, (RichTextBackgroundMetricPolicy.MarkedFaces as RichTextBackgroundMetricPolicy), Fill.instance);
   }
 
   public static withMetricPolicy(value: RichTextBackgroundMetricPolicy): RichTextBackgroundPaint {
@@ -38,7 +38,7 @@ export class RichTextBackgroundPaint {
   }
 
   public static withCornerRadius(corner: number, continuation: number | null): RichTextBackgroundPaint {
-    return new RichTextBackgroundPaint(0.0, 0.0, corner, continuation, RichTextBackgroundMetricPolicy.MarkedFaces, Fill.instance);
+    return new RichTextBackgroundPaint(0.0, 0.0, corner, continuation, (RichTextBackgroundMetricPolicy.MarkedFaces as RichTextBackgroundMetricPolicy), Fill.instance);
   }
 
    static sameValues(a: RichTextBackgroundPaint, b: RichTextBackgroundPaint): boolean {

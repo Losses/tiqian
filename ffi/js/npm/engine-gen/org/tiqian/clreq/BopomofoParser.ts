@@ -13,21 +13,21 @@ export class BopomofoParser {
 
   public static parse(reading: string): BopomofoReading {
     if (reading.length === 0) {
-      return new BopomofoReading([], BopomofoTone.Yinping);
+      return new BopomofoReading([], (BopomofoTone.Yinping as BopomofoTone));
     }
     if ((Number.isNaN(reading.charCodeAt(0)) ? null : reading.charCodeAt(0))! === BopomofoParser.NEUTRAL_MARK) {
-      return new BopomofoReading(BopomofoParser.symbolsOf(reading.substring(1)), BopomofoTone.Neutral);
+      return new BopomofoReading(BopomofoParser.symbolsOf(reading.substring(1)), (BopomofoTone.Neutral as BopomofoTone));
     }
-    const last = readUnit(reading, reading.length - 1)!!;
-    let tone: BopomofoTone = BopomofoTone.Yinping;
+    const last = readUnit(reading, reading.length - 1)!;
+    let tone: BopomofoTone = (BopomofoTone.Yinping as BopomofoTone);
     if (last === BopomofoParser.YANGPING_MARK) {
-      tone = BopomofoTone.Yangping;
+      tone = (BopomofoTone.Yangping as BopomofoTone);
     } else {
       if (last === BopomofoParser.SHANG_MARK) {
-        tone = BopomofoTone.Shang;
+        tone = (BopomofoTone.Shang as BopomofoTone);
       } else {
         if (last === BopomofoParser.QU_MARK) {
-          tone = BopomofoTone.Qu;
+          tone = (BopomofoTone.Qu as BopomofoTone);
         }
       }
     }

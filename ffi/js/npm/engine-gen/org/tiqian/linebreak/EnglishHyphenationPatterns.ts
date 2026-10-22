@@ -4278,20 +4278,22 @@ export class EnglishHyphenationPatterns {
   }
 
   public static load(): string {
-    let output = "";
+    let output = [];
     let index = 0;
     while (index < TEX_UNITS.length) {
-      const tail = output.charCodeAt(output.length - 1);
+      const tail = output.length > 0 ? output[output.length - 1].charCodeAt(output[output.length - 1].length - 1) : NaN;
       if (tail >= 55296 && tail <= 56319 && String.fromCodePoint(TEX_UNITS[index]!).length > 0 && !(String.fromCodePoint(TEX_UNITS[index]!).charCodeAt(0) >= 56320 && String.fromCodePoint(TEX_UNITS[index]!).charCodeAt(0) <= 57343)) {
         throw new UStringException({ kind: "UnpairedSurrogate", unit: tail });
       }
-      output += String.fromCodePoint(TEX_UNITS[index]!);
+      if (String.fromCodePoint(TEX_UNITS[index]!).length > 0) {
+        output.push(String.fromCodePoint(TEX_UNITS[index]!));
+      }
       index++;
     }
-    const tail2 = output.charCodeAt(output.length - 1);
+    const tail2 = output.length > 0 ? output[output.length - 1].charCodeAt(output[output.length - 1].length - 1) : NaN;
     if (tail2 >= 55296 && tail2 <= 56319) {
       throw new UStringException({ kind: "UnpairedSurrogate", unit: tail2 });
     }
-    return output;
+    return output.join("")
   }
 }
