@@ -425,7 +425,7 @@ function computeRenderArtifact(
     semantics: entry.semantics,
     renderTextSpans: entry.renderTextSpans,
     inlineBoxes: entry.inlineBoxes,
-  } as unknown as NonNullable<Parameters<typeof sharedRenderPreparedParagraphArtifact>[2]>);
+  } as NonNullable<Parameters<typeof sharedRenderPreparedParagraphArtifact>[2]>);
   return {
     html: rendered.html,
     renderArtifactSha256: createHash("sha256")
