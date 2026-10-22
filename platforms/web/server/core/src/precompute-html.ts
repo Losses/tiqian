@@ -125,7 +125,7 @@ export function injectHtmlAttributes(html: string, insertions: readonly {
     }
     catch (error) {
         if (error instanceof HtmlParseException) {
-            throw new Error(error.message);
+            throw new Error(error.message, { cause: error });
         }
         throw error;
     }
@@ -163,7 +163,7 @@ function parseSelectorList(selector: string): CompoundSelector[] {
     }
     catch (error) {
         if (error instanceof HtmlParseException)
-            throw new Error(error.message);
+            throw new Error(error.message, { cause: error });
         throw error;
     }
 }
@@ -180,7 +180,7 @@ function selectedTagNames(selector: string): string[] {
 
 function parseDocument(markup: string): DomParser {
     const window = parseHTML(markup);
-    return new DomParser(window.document as unknown as DomNode);
+    return new DomParser(window.document as DomNode);
 }
 
 /** nestedListItem: a list item that owns a block container keeps its layout in the host. */
