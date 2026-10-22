@@ -153,7 +153,7 @@ fn exposes_pinned_western_and_cjk_punctuation_classes() {
     UnicodePunctuationLineBreakClass::ClosePunctuation,
 ];
         let mut i = 0u32;
-        while (i32::from_ne_bytes(((i) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((cps.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
+        while ((i) as i32) < ((u32::try_from((cps.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32) {
             let _ = TracedAssertions::traced_assertions_assert_equals_rendered(UString::from(k[usize::try_from(i).unwrap_or(0)].name()).as_ustr(), UString::from(UnicodePunctuationLineBreak::unicode_punctuation_line_break_class_of(cps[usize::try_from(i).unwrap_or(0)]).unwrap().name()).as_ustr(), Some((if cps[usize::try_from(i).unwrap_or(0)] > 0xFFFF { u_string::from_units(&[0xD800 + (((cps[usize::try_from(i).unwrap_or(0)]) - 0x10000) >> 10) as u16, 0xDC00 + (((cps[usize::try_from(i).unwrap_or(0)]) - 0x10000) & 0x3FF) as u16]) } else { u_string::from_units(&[(cps[usize::try_from(i).unwrap_or(0)]) as u16]) }).to_ustring())).unwrap();
             i = u32::wrapping_add(i, 1);
         }

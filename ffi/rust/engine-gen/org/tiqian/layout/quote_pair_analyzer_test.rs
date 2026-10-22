@@ -943,7 +943,7 @@ fn matches_nested_quote_pairs() {
         let mut has6 = false;
         let mut has3 = false;
         let mut i = 0u32;
-        while (i32::from_ne_bytes(((i) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((p.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
+        while ((i) as i32) < ((u32::try_from((p.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32) {
             if p[usize::try_from(i).unwrap_or(0)].open_index == 6 {
                 has6 = true;
             }
@@ -1002,13 +1002,13 @@ fn in_word_apostrophe_matrix_does_not_consume_outer_quote_pairs() {
     UString::from("é’s").to_ustring(),
 ];
         let mut i = 0u32;
-        while (i32::from_ne_bytes(((i) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((words.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
+        while ((i) as i32) < ((u32::try_from((words.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32) {
             let w = (words[usize::try_from(i).unwrap_or(0)]).clone();
             let d = QuotePairAnalyzerTestSupport::quote_pair_analyzer_test_support_a().classify_quote_roles(w.as_ustr(), &vec![], None).unwrap();
             let _ = TracedAssertions::traced_assertions_assert_true(u32::try_from((QuotePairAnalyzerTestSupport::quote_pair_analyzer_test_support_a().analyze(w.as_ustr()).unwrap().len()) & 0xFFFF_FFFF).unwrap_or(0) == 0, Some((w).to_ustring())).unwrap();
             let mut all_latin = true;
             let mut j = 0u32;
-            while (i32::from_ne_bytes(((j) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((d.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
+            while ((j) as i32) < ((u32::try_from((d.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32) {
                 if d[usize::try_from(j).unwrap_or(0)].role != FontRole::LatinText {
                     all_latin = false;
                 }
@@ -1017,7 +1017,7 @@ fn in_word_apostrophe_matrix_does_not_consume_outer_quote_pairs() {
             let _ = TracedAssertions::traced_assertions_assert_true(all_latin, Some(UString::from(format!("{}", { let mut __s = UString::new(); __s += w.as_ustr(); __s += &(UString::from(": ")); __s += QuotePairAnalyzerTestSupport::quote_pair_analyzer_test_support_render_decisions(&d).as_ustr(); __s }).as_str()))).unwrap();
             let mut all_source = true;
             j = 0u32;
-            while (i32::from_ne_bytes(((j) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((d.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
+            while ((j) as i32) < ((u32::try_from((d.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32) {
                 if d[usize::try_from(j).unwrap_or(0)].clone().source.to_ustring() != UString::from("NonCjkInWordApostrophe") {
                     all_source = false;
                 }
@@ -1030,10 +1030,10 @@ fn in_word_apostrophe_matrix_does_not_consume_outer_quote_pairs() {
 ], &QuotePairAnalyzerTestSupport::quote_pair_analyzer_test_support_a().analyze(q.as_ustr()).unwrap(), Some((q).to_ustring())).unwrap();
             let mut curly = 0u32;
             let mut k = 0u32;
-            let __units = u_string::units(&q);
+            let __units = q.as_slice();
             let __count = u_string::unit_count(&q);
-            while (i32::from_ne_bytes(((k) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((__count) as i32).to_ne_bytes())) {
-                let cq = u_string::unit_at_from(&__units, k).unwrap_or(0);
+            while ((k) as i32) < ((__count) as i32) {
+                let cq = u_string::unit_at_from(__units, k).unwrap_or(0);
                 if cq == 8216 || cq == 8217 || cq == 8220 || cq == 8221 {
                     curly = u32::wrapping_add(curly, 1);
                 }
@@ -1150,7 +1150,7 @@ fn whitespace_delimited_latin_quote_pair_overrides_cjk_outer_context() {
         let d = QuotePairAnalyzerTestSupport::quote_pair_analyzer_test_support_decisions(t.as_ustr()).unwrap();
         let mut indexes: Vec<u32> = Vec::new();
         let mut j = 0u32;
-        while (i32::from_ne_bytes(((j) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((d.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
+        while ((j) as i32) < ((u32::try_from((d.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32) {
             indexes.push(d[usize::try_from(j).unwrap_or(0)].index);
             j = u32::wrapping_add(j, 1);
         }
@@ -1172,15 +1172,15 @@ fn adjacent_quoted_list_items_do_not_use_previous_item_content_as_outer_context(
 " “欧派”“double”“double may”呢")).to_ustring(),
 ];
         let mut ti = 0u32;
-        while (i32::from_ne_bytes(((ti) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((texts.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
+        while ((ti) as i32) < ((u32::try_from((texts.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32) {
             let tt = (texts[usize::try_from(ti).unwrap_or(0)]).clone();
             let mut final_open = 4294967295u32;
             let mut final_close = 4294967295u32;
             let mut p = 0u32;
-            let __units1 = u_string::units(&tt);
+            let __units1 = tt.as_slice();
             let __count1 = u_string::unit_count(&tt);
-            while (i32::from_ne_bytes(((p) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((__count1) as i32).to_ne_bytes())) {
-                let ch = u_string::unit_at_from(&__units1, p).unwrap_or(0);
+            while ((p) as i32) < ((__count1) as i32) {
+                let ch = u_string::unit_at_from(__units1, p).unwrap_or(0);
                 if ch == 8220 {
                     final_open = p;
                 }
@@ -1192,7 +1192,7 @@ fn adjacent_quoted_list_items_do_not_use_previous_item_content_as_outer_context(
             let fd = QuotePairAnalyzerTestSupport::quote_pair_analyzer_test_support_decisions(tt.as_ustr()).unwrap();
             let mut filtered: Vec<QuoteRoleDecision> = Vec::new();
             let mut fi = 0u32;
-            while (i32::from_ne_bytes(((fi) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((fd.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
+            while ((fi) as i32) < ((u32::try_from((fd.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32) {
                 if fd[usize::try_from(fi).unwrap_or(0)].index == final_open || fd[usize::try_from(fi).unwrap_or(0)].index == final_close {
                     filtered.push((fd[usize::try_from(fi).unwrap_or(0)]).clone());
                 }
@@ -1201,7 +1201,7 @@ fn adjacent_quoted_list_items_do_not_use_previous_item_content_as_outer_context(
             let _ = TracedAssertions::traced_assertions_assert_equals(2, u32::try_from((filtered.len()) & 0xFFFF_FFFF).unwrap_or(0), Some((tt).to_ustring())).unwrap();
             let mut all_src = true;
             let mut si = 0u32;
-            while (i32::from_ne_bytes(((si) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((filtered.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
+            while ((si) as i32) < ((u32::try_from((filtered.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32) {
                 if filtered[usize::try_from(si).unwrap_or(0)].clone().source.to_ustring() != UString::from("PairedPunctuationOuterScriptContext") {
                     all_src = false;
                 }
@@ -1269,7 +1269,7 @@ fn numbered_cjk_quote_prefix_uses_quoted_content() {
         let mut role_last = FontRole::CjkPunctuation;
         let mut src2 = UString::new();
         let mut i = 0u32;
-        while (i32::from_ne_bytes(((i) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((d.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
+        while ((i) as i32) < ((u32::try_from((d.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32) {
             if d[usize::try_from(i).unwrap_or(0)].index == 2 {
                 role2 = d[usize::try_from(i).unwrap_or(0)].role;
                 src2 = ((d[usize::try_from(i).unwrap_or(0)]).clone().source).to_ustring();
@@ -1333,7 +1333,7 @@ fn representative_quote_context_matrix_remains_stable() {
     UString::from("tab-delimited Western quote|（如\t‘O’）|LL").to_ustring(),
 ];
         let mut i = 0u32;
-        while (i32::from_ne_bytes(((i) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((xs.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
+        while ((i) as i32) < ((u32::try_from((xs.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32) {
             let z = u_string::split(&(xs[usize::try_from(i).unwrap_or(0)]).clone(), &UString::from("|"));
             let _ = QuotePairAnalyzerTestSupport::quote_pair_analyzer_test_support_role((z[0usize]).clone().as_ustr(), (z[1usize]).clone().as_ustr(), (z[2usize]).clone().as_ustr()).unwrap();
             i = u32::wrapping_add(i, 1);
@@ -1360,10 +1360,10 @@ fn role_decision_sources_stay_explainable_across_fallback_paths() {
     UString::from("”").to_ustring(),
 ];
         let mut i = 0u32;
-        while (i32::from_ne_bytes(((i) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((xs.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
+        while ((i) as i32) < ((u32::try_from((xs.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32) {
             let d = QuotePairAnalyzerTestSupport::quote_pair_analyzer_test_support_decisions((xs[usize::try_from(i).unwrap_or(0)]).clone().as_ustr()).unwrap();
-            let _ = TracedAssertions::traced_assertions_assert_true((i32::from_ne_bytes(((u32::try_from((d.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) > (0), Some(((xs[usize::try_from(i).unwrap_or(0)]).clone()).to_ustring())).unwrap();
-            let _ = TracedAssertions::traced_assertions_assert_true((i32::from_ne_bytes(((u_string::unit_count(&(((d[0usize]).clone().source).to_ustring()))) as i32).to_ne_bytes())) > (0), Some(UString::from(format!("{}", { let mut __s = UString::new(); __s += (xs[usize::try_from(i).unwrap_or(0)]).clone().as_ustr(); __s += &(UString::from(": ")); __s += QuotePairAnalyzerTestSupport::quote_pair_analyzer_test_support_render_decisions(&d).as_ustr(); __s }).as_str()))).unwrap();
+            let _ = TracedAssertions::traced_assertions_assert_true((u32::try_from((d.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32 > (0), Some(((xs[usize::try_from(i).unwrap_or(0)]).clone()).to_ustring())).unwrap();
+            let _ = TracedAssertions::traced_assertions_assert_true((u_string::unit_count(&(((d[0usize]).clone().source).to_ustring()))) as i32 > (0), Some(UString::from(format!("{}", { let mut __s = UString::new(); __s += (xs[usize::try_from(i).unwrap_or(0)]).clone().as_ustr(); __s += &(UString::from(": ")); __s += QuotePairAnalyzerTestSupport::quote_pair_analyzer_test_support_render_decisions(&d).as_ustr(); __s }).as_str()))).unwrap();
             i = u32::wrapping_add(i, 1);
         }
     });

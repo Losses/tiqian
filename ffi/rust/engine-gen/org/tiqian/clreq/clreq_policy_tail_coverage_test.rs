@@ -81,7 +81,7 @@ fn forbidden_at_line_start_covers_every_punctuation_class() {
         TestTraceRecorder::new(&(UStr::new(&[67,108,114,101,113,80,111,108,105,99,121,84,97,105,108,67,111,118,101,114,97,103,101,84,101,115,116]))).section(UStr::new(&[102,111,114,98,105,100,100,101,110,65,116,76,105,110,101,83,116,97,114,116,67,111,118,101,114,115,69,118,101,114,121,80,117,110,99,116,117,97,116,105,111,110,67,108,97,115,115]));
         let levels = vec![KinsokuLevel::Basic, KinsokuLevel::GbStyle, KinsokuLevel::Strict];
         let mut index = 0u32;
-        while (i32::from_ne_bytes(((index) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((levels.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
+        while ((index) as i32) < ((u32::try_from((levels.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32) {
             let level = levels[usize::try_from(index).unwrap_or(0)];
             let _ = TracedAssertions::traced_assertions_assert_true(ClreqPunctuationPolicies::clreq_punctuation_policies_forbidden_at_line_start(UStr::new(&[65292]), level), Some(UString::from(format!("{}", { let mut __s = UString::new(); __s += &(UString::from("comma at ")); __s += UString::from(level.name()).as_ustr(); __s }).as_str()))).unwrap();
             let _ = TracedAssertions::traced_assertions_assert_true(ClreqPunctuationPolicies::clreq_punctuation_policies_forbidden_at_line_start(UStr::new(&[8221]), level), Some(UString::from(format!("{}", { let mut __s = UString::new(); __s += &(UString::from("closing quote at ")); __s += UString::from(level.name()).as_ustr(); __s }).as_str()))).unwrap();

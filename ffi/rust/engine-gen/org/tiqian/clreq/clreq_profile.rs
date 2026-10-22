@@ -68,7 +68,7 @@ impl ClreqProfile {
         let mut i = 0usize;
         while i < n {
             if i > 0 { out.push_str(", "); }
-            let _ = write!(out, "{}", i32::from_ne_bytes(((arr[i]) as i32).to_ne_bytes()));
+            let _ = write!(out, "{}", (arr[i]) as i32);
             i += 1;
         }
         out.push(']');
@@ -81,7 +81,7 @@ impl ClreqProfile {
             return false;
         }
         let mut index = 0u32;
-        while (i32::from_ne_bytes(((index) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((a.coalesce_repeatable_punctuation.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
+        while ((index) as i32) < ((u32::try_from((a.coalesce_repeatable_punctuation.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32) {
             if a.coalesce_repeatable_punctuation[usize::try_from(index).unwrap_or(0)] != b.coalesce_repeatable_punctuation[usize::try_from(index).unwrap_or(0)] {
                 return false;
             }

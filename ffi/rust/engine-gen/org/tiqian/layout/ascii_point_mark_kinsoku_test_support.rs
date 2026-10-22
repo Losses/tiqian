@@ -187,7 +187,7 @@ Some(__option) => AsciiPointMarkKinsokuTestSupport::ascii_point_mark_kinsoku_tes
 
     pub fn ascii_point_mark_kinsoku_test_support_has_repair(r: LayoutResult, s: &UStr) -> bool {
         for i in 0..match u32::try_from((r.debug).clone().line_decisions.len()) { Ok(value) => value, Err(_) => u32::MAX } {
-            if r.debug.clone().line_decisions[usize::try_from(i).unwrap_or(0)].clone().repair.as_ref().map_or(false, |v| v == &(s.to_ustring())) {
+            if matches!(((r.debug).clone().line_decisions[usize::try_from(i).unwrap_or(0)]).clone().repair.as_ref(), Some(__v) if __v == &(s.to_ustring())) {
                 return true;
             }
         }
@@ -231,7 +231,7 @@ Some(__option) => AsciiPointMarkKinsokuTestSupport::ascii_point_mark_kinsoku_tes
         let mut texts: Vec<UString> = vec![];
         for i in 0..match u32::try_from(result.lines.len()) { Ok(value) => value, Err(_) => u32::MAX } {
             let line = (result.lines[usize::try_from(i).unwrap_or(0)]).clone();
-            texts.push(u_string::substring(&source, i32::from_ne_bytes((((line.range).clone().start) as i32).to_ne_bytes()), i32::from_ne_bytes((((line.range).clone().end) as i32).to_ne_bytes())));
+            texts.push(u_string::substring(&source, ((line.range).clone().start) as i32, ((line.range).clone().end) as i32));
         }
         return texts;
     }

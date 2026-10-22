@@ -374,13 +374,13 @@ impl DisplayGlyphSubstitutionEngineTestSupport {
 
     pub fn display_glyph_substitution_engine_test_support_find_justified_dash_hit(engine: &mut ExplainableStubParagraphLayoutEngine, text: &UStr) -> Result<JustifiedDashHit, DisplayGlyphSubstitutionEngineTestSupportFindJustifiedDashHitFault> {
         let mut cells = 13u32;
-        while (i32::from_ne_bytes(((cells) as i32).to_ne_bytes())) <= 30 {
-            let result = DisplayGlyphSubstitutionEngineTestSupport::display_glyph_substitution_engine_test_support_layout_without_grid(engine, text, i32::from_ne_bytes(((u32::wrapping_add(u32::wrapping_mul(cells, 16), 7)) as i32).to_ne_bytes()) as f64).map_err(|e| DisplayGlyphSubstitutionEngineTestSupportFindJustifiedDashHitFault::ParagraphLayoutEngineLayoutWithRejectedTechnicalTiersFaultFault(e))?;
+        while ((cells) as i32) <= 30 {
+            let result = DisplayGlyphSubstitutionEngineTestSupport::display_glyph_substitution_engine_test_support_layout_without_grid(engine, text, (u32::wrapping_add(u32::wrapping_mul(cells, 16), 7)) as i32 as f64).map_err(|e| DisplayGlyphSubstitutionEngineTestSupportFindJustifiedDashHitFault::ParagraphLayoutEngineLayoutWithRejectedTechnicalTiersFaultFault(e))?;
             let dash = DisplayGlyphSubstitutionEngineTestSupport::display_glyph_substitution_engine_test_support_single_cluster_with_text((result).clone(), UStr::new(&[8212,8212])).map_err(|e| DisplayGlyphSubstitutionEngineTestSupportFindJustifiedDashHitFault::IllegalStateExceptionFault(e))?;
             let found = DisplayGlyphSubstitutionEngineTestSupport::display_glyph_substitution_engine_test_support_first_justification_decision_covering((result).clone(), (dash.range).clone());
             match &(found) {
                 Some(__option) => {
-                    if i32::from_ne_bytes(((u32::try_from((__option.allocations.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes()) > (0) {
+                    if u32::try_from((__option.allocations.len()) & 0xFFFF_FFFF).unwrap_or(0) as i32 > (0) {
                     let decision = (*__option).clone();
                     return Ok(JustifiedDashHit { dash: dash, decision: decision });
                     }
@@ -467,7 +467,7 @@ impl DisplayGlyphSubstitutionEngineTestSupport {
     pub fn display_glyph_substitution_engine_test_support_first_justification_decision_covering(r: LayoutResult, range: TextRange) -> Option<JustificationDecisionInfo> {
         for i in 0..match u32::try_from((r.debug).clone().justification_decisions.len()) { Ok(value) => value, Err(_) => u32::MAX } {
             let d = ((r.debug).clone().justification_decisions[usize::try_from(i).unwrap_or(0)]).clone();
-            if i32::from_ne_bytes(((range.start) as i32).to_ne_bytes()) >= i32::from_ne_bytes((((d.line_range).clone().start) as i32).to_ne_bytes()) && (i32::from_ne_bytes(((range.end) as i32).to_ne_bytes())) <= i32::from_ne_bytes((((d.line_range).clone().end) as i32).to_ne_bytes()) {
+            if range.start as i32 >= (d.line_range).clone().start as i32 && ((range.end) as i32) <= (d.line_range).clone().end as i32 {
                 return Some(d);
             }
         }
@@ -546,8 +546,8 @@ impl PerGlyphQuoteRunShaper {
         }
         let mut clusters: Vec<Cluster> = vec![];
         let mut index = (input.range).clone().start;
-        while (i32::from_ne_bytes(((index) as i32).to_ne_bytes())) < (i32::from_ne_bytes((((input.range).clone().end) as i32).to_ne_bytes())) {
-            clusters.push(Cluster::new(TextRange::new(index, u32::wrapping_add(index, 1)).map_err(|e| DisplayGlyphSubstitutionEngineTestSupportShapeFault::TextRangeErrorFault(e))?, u_string::substring(&(input.text).to_ustring(), i32::from_ne_bytes(((index) as i32).to_ne_bytes()), i32::from_ne_bytes(((u32::wrapping_add(index, 1)) as i32).to_ne_bytes())).as_ustr(), (((input.font_decision).clone().candidate).clone().key).to_ustring().as_ustr(), 16 as f64 as f64, Some((u_string::substring(&(input.display_text).to_ustring(), i32::from_ne_bytes(((u32::wrapping_sub(index, (input.range).clone().start)) as i32).to_ne_bytes()), i32::from_ne_bytes(((u32::wrapping_sub(u32::wrapping_add(index, 1), (input.range).clone().start)) as i32).to_ne_bytes()))).to_ustring()), Some(0.0), Some(0.0), Some(0.0)));
+        while ((index) as i32) < (((input.range).clone().end) as i32) {
+            clusters.push(Cluster::new(TextRange::new(index, u32::wrapping_add(index, 1)).map_err(|e| DisplayGlyphSubstitutionEngineTestSupportShapeFault::TextRangeErrorFault(e))?, u_string::substring(&(input.text).to_ustring(), (index) as i32, (u32::wrapping_add(index, 1)) as i32).as_ustr(), (((input.font_decision).clone().candidate).clone().key).to_ustring().as_ustr(), 16 as f64 as f64, Some((u_string::substring(&(input.display_text).to_ustring(), (u32::wrapping_sub(index, (input.range).clone().start)) as i32, (u32::wrapping_sub(u32::wrapping_add(index, 1), (input.range).clone().start)) as i32)).to_ustring()), Some(0.0), Some(0.0), Some(0.0)));
             index = u32::wrapping_add(index, 1);
         }
         let mut runs: Vec<GlyphRun> = vec![];
@@ -579,8 +579,8 @@ impl ITextShaper for PerGlyphQuoteRunShaper {
         }
         let mut clusters: Vec<Cluster> = vec![];
         let mut index = (input.range).clone().start;
-        while (i32::from_ne_bytes(((index) as i32).to_ne_bytes())) < (i32::from_ne_bytes((((input.range).clone().end) as i32).to_ne_bytes())) {
-            clusters.push(Cluster::new(TextRange::new(index, u32::wrapping_add(index, 1)).map_err(|e| TextShaperShapeFault::TextRangeErrorFault(e))?, u_string::substring(&(input.text).to_ustring(), i32::from_ne_bytes(((index) as i32).to_ne_bytes()), i32::from_ne_bytes(((u32::wrapping_add(index, 1)) as i32).to_ne_bytes())).as_ustr(), (((input.font_decision).clone().candidate).clone().key).to_ustring().as_ustr(), 16 as f64 as f64, Some((u_string::substring(&(input.display_text).to_ustring(), i32::from_ne_bytes(((u32::wrapping_sub(index, (input.range).clone().start)) as i32).to_ne_bytes()), i32::from_ne_bytes(((u32::wrapping_sub(u32::wrapping_add(index, 1), (input.range).clone().start)) as i32).to_ne_bytes()))).to_ustring()), Some(0.0), Some(0.0), Some(0.0)));
+        while ((index) as i32) < (((input.range).clone().end) as i32) {
+            clusters.push(Cluster::new(TextRange::new(index, u32::wrapping_add(index, 1)).map_err(|e| TextShaperShapeFault::TextRangeErrorFault(e))?, u_string::substring(&(input.text).to_ustring(), (index) as i32, (u32::wrapping_add(index, 1)) as i32).as_ustr(), (((input.font_decision).clone().candidate).clone().key).to_ustring().as_ustr(), 16 as f64 as f64, Some((u_string::substring(&(input.display_text).to_ustring(), (u32::wrapping_sub(index, (input.range).clone().start)) as i32, (u32::wrapping_sub(u32::wrapping_add(index, 1), (input.range).clone().start)) as i32)).to_ustring()), Some(0.0), Some(0.0), Some(0.0)));
             index = u32::wrapping_add(index, 1);
         }
         let mut runs: Vec<GlyphRun> = vec![];
@@ -607,7 +607,7 @@ impl SingleClusterNoBoundsShaper {
 
     pub fn shape(&self, input: ShapingInput) -> Result<ShapingResult, DisplayGlyphSubstitutionEngineTestSupportShapeFault> {
         return Ok(ShapingResult::new(vec![
-    (Cluster::new((input.range).clone(), u_string::substring(&(input.text).to_ustring(), i32::from_ne_bytes((((input.range).clone().start) as i32).to_ne_bytes()), i32::from_ne_bytes((((input.range).clone().end) as i32).to_ne_bytes())).as_ustr(), (((input.font_decision).clone().candidate).clone().key).to_ustring().as_ustr(), 16 as f64 as f64, Some((input.display_text).to_ustring()), Some(0.0), Some(0.0), Some(0.0))).clone(),
+    (Cluster::new((input.range).clone(), u_string::substring(&(input.text).to_ustring(), ((input.range).clone().start) as i32, ((input.range).clone().end) as i32).as_ustr(), (((input.font_decision).clone().candidate).clone().key).to_ustring().as_ustr(), 16 as f64 as f64, Some((input.display_text).to_ustring()), Some(0.0), Some(0.0), Some(0.0))).clone(),
 ].to_vec(), vec![
     (GlyphRun::new((input.range).clone(), (((input.font_decision).clone().candidate).clone().key).to_ustring().as_ustr(), vec![
     (Glyph::new(0u32, (input.range).clone(), 16 as f64 as f64, Some(0.0), Some(0.0), None, None, None, None)).clone(),
@@ -629,7 +629,7 @@ impl ITextShaper for SingleClusterNoBoundsShaper {
 
     fn shape(&mut self, input: ShapingInput) -> Result<ShapingResult, TextShaperShapeFault> {
         return Ok(ShapingResult::new(vec![
-    (Cluster::new((input.range).clone(), u_string::substring(&(input.text).to_ustring(), i32::from_ne_bytes((((input.range).clone().start) as i32).to_ne_bytes()), i32::from_ne_bytes((((input.range).clone().end) as i32).to_ne_bytes())).as_ustr(), (((input.font_decision).clone().candidate).clone().key).to_ustring().as_ustr(), 16 as f64 as f64, Some((input.display_text).to_ustring()), Some(0.0), Some(0.0), Some(0.0))).clone(),
+    (Cluster::new((input.range).clone(), u_string::substring(&(input.text).to_ustring(), ((input.range).clone().start) as i32, ((input.range).clone().end) as i32).as_ustr(), (((input.font_decision).clone().candidate).clone().key).to_ustring().as_ustr(), 16 as f64 as f64, Some((input.display_text).to_ustring()), Some(0.0), Some(0.0), Some(0.0))).clone(),
 ].to_vec(), vec![
     (GlyphRun::new((input.range).clone(), (((input.font_decision).clone().candidate).clone().key).to_ustring().as_ustr(), vec![
     (Glyph::new(0u32, (input.range).clone(), 16 as f64 as f64, Some(0.0), Some(0.0), None, None, None, None)).clone(),
@@ -650,10 +650,10 @@ impl SingleClusterAmbiguousShaper {
 
     pub fn shape(&self, input: ShapingInput) -> Result<ShapingResult, DisplayGlyphSubstitutionEngineTestSupportShapeFault> {
         return Ok(ShapingResult::new(vec![
-    (Cluster::new((input.range).clone(), u_string::substring(&(input.text).to_ustring(), i32::from_ne_bytes((((input.range).clone().start) as i32).to_ne_bytes()), i32::from_ne_bytes((((input.range).clone().end) as i32).to_ne_bytes())).as_ustr(), (((input.font_decision).clone().candidate).clone().key).to_ustring().as_ustr(), 32 as f64 as f64, Some((input.display_text).to_ustring()), Some(0.0), Some(0.0), Some(0.0))).clone(),
+    (Cluster::new((input.range).clone(), u_string::substring(&(input.text).to_ustring(), ((input.range).clone().start) as i32, ((input.range).clone().end) as i32).as_ustr(), (((input.font_decision).clone().candidate).clone().key).to_ustring().as_ustr(), 32 as f64 as f64, Some((input.display_text).to_ustring()), Some(0.0), Some(0.0), Some(0.0))).clone(),
 ].to_vec(), vec![
     (GlyphRun::new((input.range).clone(), (((input.font_decision).clone().candidate).clone().key).to_ustring().as_ustr(), vec![
-    (Glyph::new(0u32, (input.range).clone(), 32 as f64 as f64, Some(0.0), Some(0.0), None, Some(Rect::new(2 as f64 as f64, i32::from_ne_bytes(((4294967286u32) as i32).to_ne_bytes()) as f64 as f64, 30 as f64 as f64, i32::from_ne_bytes(((4294967290u32) as i32).to_ne_bytes()) as f64 as f64)), None, None)).clone(),
+    (Glyph::new(0u32, (input.range).clone(), 32 as f64 as f64, Some(0.0), Some(0.0), None, Some(Rect::new(2 as f64 as f64, (4294967286u32) as i32 as f64 as f64, 30 as f64 as f64, (4294967290u32) as i32 as f64 as f64)), None, None)).clone(),
 ].to_vec(), 32 as f64 as f64, Some(vec![]))).clone(),
 ].to_vec(), Some(vec![])));
     }
@@ -672,10 +672,10 @@ impl ITextShaper for SingleClusterAmbiguousShaper {
 
     fn shape(&mut self, input: ShapingInput) -> Result<ShapingResult, TextShaperShapeFault> {
         return Ok(ShapingResult::new(vec![
-    (Cluster::new((input.range).clone(), u_string::substring(&(input.text).to_ustring(), i32::from_ne_bytes((((input.range).clone().start) as i32).to_ne_bytes()), i32::from_ne_bytes((((input.range).clone().end) as i32).to_ne_bytes())).as_ustr(), (((input.font_decision).clone().candidate).clone().key).to_ustring().as_ustr(), 32 as f64 as f64, Some((input.display_text).to_ustring()), Some(0.0), Some(0.0), Some(0.0))).clone(),
+    (Cluster::new((input.range).clone(), u_string::substring(&(input.text).to_ustring(), ((input.range).clone().start) as i32, ((input.range).clone().end) as i32).as_ustr(), (((input.font_decision).clone().candidate).clone().key).to_ustring().as_ustr(), 32 as f64 as f64, Some((input.display_text).to_ustring()), Some(0.0), Some(0.0), Some(0.0))).clone(),
 ].to_vec(), vec![
     (GlyphRun::new((input.range).clone(), (((input.font_decision).clone().candidate).clone().key).to_ustring().as_ustr(), vec![
-    (Glyph::new(0u32, (input.range).clone(), 32 as f64 as f64, Some(0.0), Some(0.0), None, Some(Rect::new(2 as f64 as f64, i32::from_ne_bytes(((4294967286u32) as i32).to_ne_bytes()) as f64 as f64, 30 as f64 as f64, i32::from_ne_bytes(((4294967290u32) as i32).to_ne_bytes()) as f64 as f64)), None, None)).clone(),
+    (Glyph::new(0u32, (input.range).clone(), 32 as f64 as f64, Some(0.0), Some(0.0), None, Some(Rect::new(2 as f64 as f64, (4294967286u32) as i32 as f64 as f64, 30 as f64 as f64, (4294967290u32) as i32 as f64 as f64)), None, None)).clone(),
 ].to_vec(), 32 as f64 as f64, Some(vec![]))).clone(),
 ].to_vec(), Some(vec![])));
     }
@@ -695,7 +695,7 @@ impl MissingGlyphReportingShaper {
 
     pub fn shape(&self, input: ShapingInput) -> Result<ShapingResult, DisplayGlyphSubstitutionEngineTestSupportShapeFault> {
         let res = self.delegate.lock().unwrap().shape((input).clone()).map_err(|e| DisplayGlyphSubstitutionEngineTestSupportShapeFault::TextShaperShapeFaultFault(e))?;
-        if u32::from_ne_bytes(((u_string::find_from(&((input.display_text).to_ustring()), UString::from("⸺").as_ustr(), 0)) as u32).to_ne_bytes()) > 2147483647 {
+        if u_string::find_from(&((input.display_text).to_ustring()), UString::from("⸺").as_ustr(), 0) as u32 > 2147483647 {
             return Ok(res);
         }
         let mut decisions: Vec<ShapingDecisionInfo> = vec![];
@@ -720,7 +720,7 @@ impl ITextShaper for MissingGlyphReportingShaper {
 
     fn shape(&mut self, input: ShapingInput) -> Result<ShapingResult, TextShaperShapeFault> {
         let res = self.delegate.lock().unwrap().shape((input).clone())?;
-        if u32::from_ne_bytes(((u_string::find_from(&((input.display_text).to_ustring()), UString::from("⸺").as_ustr(), 0)) as u32).to_ne_bytes()) > 2147483647 {
+        if u_string::find_from(&((input.display_text).to_ustring()), UString::from("⸺").as_ustr(), 0) as u32 > 2147483647 {
             return Ok(res);
         }
         let mut decisions: Vec<ShapingDecisionInfo> = vec![];
@@ -746,7 +746,7 @@ impl UnverifiedCoverageReportingShaper {
 
     pub fn shape(&self, input: ShapingInput) -> Result<ShapingResult, DisplayGlyphSubstitutionEngineTestSupportShapeFault> {
         let res = self.delegate.lock().unwrap().shape((input).clone()).map_err(|e| DisplayGlyphSubstitutionEngineTestSupportShapeFault::TextShaperShapeFaultFault(e))?;
-        if u32::from_ne_bytes(((u_string::find_from(&((input.display_text).to_ustring()), UString::from("⋯").as_ustr(), 0)) as u32).to_ne_bytes()) > 2147483647 {
+        if u_string::find_from(&((input.display_text).to_ustring()), UString::from("⋯").as_ustr(), 0) as u32 > 2147483647 {
             return Ok(res);
         }
         let mut decisions: Vec<ShapingDecisionInfo> = vec![];
@@ -771,7 +771,7 @@ impl ITextShaper for UnverifiedCoverageReportingShaper {
 
     fn shape(&mut self, input: ShapingInput) -> Result<ShapingResult, TextShaperShapeFault> {
         let res = self.delegate.lock().unwrap().shape((input).clone())?;
-        if u32::from_ne_bytes(((u_string::find_from(&((input.display_text).to_ustring()), UString::from("⋯").as_ustr(), 0)) as u32).to_ne_bytes()) > 2147483647 {
+        if u_string::find_from(&((input.display_text).to_ustring()), UString::from("⋯").as_ustr(), 0) as u32 > 2147483647 {
             return Ok(res);
         }
         let mut decisions: Vec<ShapingDecisionInfo> = vec![];
@@ -803,7 +803,7 @@ impl DashInkOverrideShaper {
 
     pub fn shape(&self, input: ShapingInput) -> Result<ShapingResult, DisplayGlyphSubstitutionEngineTestSupportShapeFault> {
         let res = self.delegate.lock().unwrap().shape((input).clone()).map_err(|e| DisplayGlyphSubstitutionEngineTestSupportShapeFault::TextShaperShapeFaultFault(e))?;
-        if u32::from_ne_bytes(((u_string::find_from(&((input.display_text).to_ustring()), UString::from("⸺").as_ustr(), 0)) as u32).to_ne_bytes()) > 2147483647 {
+        if u_string::find_from(&((input.display_text).to_ustring()), UString::from("⸺").as_ustr(), 0) as u32 > 2147483647 {
             return Ok(res);
         }
         if !self.full_override {
@@ -850,7 +850,7 @@ impl ITextShaper for DashInkOverrideShaper {
 
     fn shape(&mut self, input: ShapingInput) -> Result<ShapingResult, TextShaperShapeFault> {
         let res = self.delegate.lock().unwrap().shape((input).clone())?;
-        if u32::from_ne_bytes(((u_string::find_from(&((input.display_text).to_ustring()), UString::from("⸺").as_ustr(), 0)) as u32).to_ne_bytes()) > 2147483647 {
+        if u_string::find_from(&((input.display_text).to_ustring()), UString::from("⸺").as_ustr(), 0) as u32 > 2147483647 {
             return Ok(res);
         }
         if !self.full_override {
@@ -887,11 +887,11 @@ impl TwoGlyphEllipsisShaper {
             return Ok(self.delegate.lock().unwrap().shape((input).clone()).map_err(|e| DisplayGlyphSubstitutionEngineTestSupportShapeFault::TextShaperShapeFaultFault(e))?);
         }
         return Ok(ShapingResult::new(vec![
-    (Cluster::new((input.range).clone(), u_string::substring(&(input.text).to_ustring(), i32::from_ne_bytes((((input.range).clone().start) as i32).to_ne_bytes()), i32::from_ne_bytes((((input.range).clone().end) as i32).to_ne_bytes())).as_ustr(), (((input.font_decision).clone().candidate).clone().key).to_ustring().as_ustr(), 32 as f64 as f64, Some((input.display_text).to_ustring()), Some(0.0), Some(0.0), Some(0.0))).clone(),
+    (Cluster::new((input.range).clone(), u_string::substring(&(input.text).to_ustring(), ((input.range).clone().start) as i32, ((input.range).clone().end) as i32).as_ustr(), (((input.font_decision).clone().candidate).clone().key).to_ustring().as_ustr(), 32 as f64 as f64, Some((input.display_text).to_ustring()), Some(0.0), Some(0.0), Some(0.0))).clone(),
 ].to_vec(), vec![
     (GlyphRun::new((input.range).clone(), (((input.font_decision).clone().candidate).clone().key).to_ustring().as_ustr(), vec![
-    (Glyph::new(1u32, (input.range).clone(), 16 as f64 as f64, Some(0 as f64), Some(0.0), None, Some(Rect::new(1.5f64, i32::from_ne_bytes(((4294967289u32) as i32).to_ne_bytes()) as f64 as f64, 14.5f64, i32::from_ne_bytes(((4294967291u32) as i32).to_ne_bytes()) as f64 as f64)), None, None)).clone(),
-    (Glyph::new(2u32, (input.range).clone(), 16 as f64 as f64, Some(16 as f64), Some(0.0), None, Some(Rect::new(1.5f64, i32::from_ne_bytes(((4294967289u32) as i32).to_ne_bytes()) as f64 as f64, 14.5f64, i32::from_ne_bytes(((4294967291u32) as i32).to_ne_bytes()) as f64 as f64)), None, None)).clone(),
+    (Glyph::new(1u32, (input.range).clone(), 16 as f64 as f64, Some(0 as f64), Some(0.0), None, Some(Rect::new(1.5f64, (4294967289u32) as i32 as f64 as f64, 14.5f64, (4294967291u32) as i32 as f64 as f64)), None, None)).clone(),
+    (Glyph::new(2u32, (input.range).clone(), 16 as f64 as f64, Some(16 as f64), Some(0.0), None, Some(Rect::new(1.5f64, (4294967289u32) as i32 as f64 as f64, 14.5f64, (4294967291u32) as i32 as f64 as f64)), None, None)).clone(),
 ].to_vec(), 32 as f64 as f64, Some(vec![]))).clone(),
 ].to_vec(), Some(vec![])));
     }
@@ -913,11 +913,11 @@ impl ITextShaper for TwoGlyphEllipsisShaper {
             return Ok(self.delegate.lock().unwrap().shape((input).clone())?);
         }
         return Ok(ShapingResult::new(vec![
-    (Cluster::new((input.range).clone(), u_string::substring(&(input.text).to_ustring(), i32::from_ne_bytes((((input.range).clone().start) as i32).to_ne_bytes()), i32::from_ne_bytes((((input.range).clone().end) as i32).to_ne_bytes())).as_ustr(), (((input.font_decision).clone().candidate).clone().key).to_ustring().as_ustr(), 32 as f64 as f64, Some((input.display_text).to_ustring()), Some(0.0), Some(0.0), Some(0.0))).clone(),
+    (Cluster::new((input.range).clone(), u_string::substring(&(input.text).to_ustring(), ((input.range).clone().start) as i32, ((input.range).clone().end) as i32).as_ustr(), (((input.font_decision).clone().candidate).clone().key).to_ustring().as_ustr(), 32 as f64 as f64, Some((input.display_text).to_ustring()), Some(0.0), Some(0.0), Some(0.0))).clone(),
 ].to_vec(), vec![
     (GlyphRun::new((input.range).clone(), (((input.font_decision).clone().candidate).clone().key).to_ustring().as_ustr(), vec![
-    (Glyph::new(1u32, (input.range).clone(), 16 as f64 as f64, Some(0 as f64), Some(0.0), None, Some(Rect::new(1.5f64, i32::from_ne_bytes(((4294967289u32) as i32).to_ne_bytes()) as f64 as f64, 14.5f64, i32::from_ne_bytes(((4294967291u32) as i32).to_ne_bytes()) as f64 as f64)), None, None)).clone(),
-    (Glyph::new(2u32, (input.range).clone(), 16 as f64 as f64, Some(16 as f64), Some(0.0), None, Some(Rect::new(1.5f64, i32::from_ne_bytes(((4294967289u32) as i32).to_ne_bytes()) as f64 as f64, 14.5f64, i32::from_ne_bytes(((4294967291u32) as i32).to_ne_bytes()) as f64 as f64)), None, None)).clone(),
+    (Glyph::new(1u32, (input.range).clone(), 16 as f64 as f64, Some(0 as f64), Some(0.0), None, Some(Rect::new(1.5f64, (4294967289u32) as i32 as f64 as f64, 14.5f64, (4294967291u32) as i32 as f64 as f64)), None, None)).clone(),
+    (Glyph::new(2u32, (input.range).clone(), 16 as f64 as f64, Some(16 as f64), Some(0.0), None, Some(Rect::new(1.5f64, (4294967289u32) as i32 as f64 as f64, 14.5f64, (4294967291u32) as i32 as f64 as f64)), None, None)).clone(),
 ].to_vec(), 32 as f64 as f64, Some(vec![]))).clone(),
 ].to_vec(), Some(vec![])));
     }

@@ -500,7 +500,7 @@ fn test_tiqian_text_content_and_link_address_display() {
         let _ = TracedAssertions::traced_assertions_assert_equals_int(1, u32::try_from((content.line_break_spans.len()) & 0xFFFF_FFFF).unwrap_or(0), None).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_equals_int(1, u32::try_from((content.auto_space_suppressed_ranges.len()) & 0xFFFF_FFFF).unwrap_or(0), None).unwrap();
         let _ = TextModelCoverageTestHelpers::text_model_coverage_test_helpers_assert_rendered(UString::from(format!("{}", content.to_string()).as_str()).as_ustr()).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_true((u32::from_ne_bytes(((u_string::find_from(&UString::from(format!("{}", content.to_string()).as_str()), UString::from("TiqianTextContent").as_ustr(), 0)) as u32).to_ne_bytes())) <= 2147483647, None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_true((u_string::find_from(&UString::from(format!("{}", content.to_string()).as_str()), UString::from("TiqianTextContent").as_ustr(), 0)) as u32 <= 2147483647, None).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_false(LinkAddressDisplay::link_address_display_displays_address(UStr::new(&[]), UStr::new(&[])), None).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_false(LinkAddressDisplay::link_address_display_displays_address(UStr::new(&[116,105,113,105,97,110,46,111,114,103]), UStr::new(&[])), None).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_false(LinkAddressDisplay::link_address_display_displays_address(UStr::new(&[]), UStr::new(&[104,116,116,112,115,58,47,47,116,105,113,105,97,110,46,111,114,103])), None).unwrap();
@@ -654,7 +654,7 @@ fn test_text_style_and_decorations() {
         let _ = TracedAssertions::traced_assertions_assert_equals_int(5, color.end, None).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_equals_int(4279312947u32, color.argb, None).unwrap();
         let _ = TextModelCoverageTestHelpers::text_model_coverage_test_helpers_assert_rendered(UString::from(format!("{}", color.to_string()).as_str()).as_ustr()).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_true((u32::from_ne_bytes(((u_string::find_from(&UString::from(format!("{}", color.to_string()).as_str()), UString::from("ColorSpan").as_ustr(), 0)) as u32).to_ne_bytes())) <= 2147483647, None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_true((u_string::find_from(&UString::from(format!("{}", color.to_string()).as_str()), UString::from("ColorSpan").as_ustr(), 0)) as u32 <= 2147483647, None).unwrap();
     });
 }
 
@@ -842,7 +842,7 @@ fn test_rich_text_spans_and_patterns() {
     Box::new(({ let __guard = crate::org::tiqian::core::rich_text_role::INLINE_CODE_INSTANCE.lock().unwrap_or_else(|e| e.into_inner()); __guard.clone() }).clone()) as Box<dyn RichTextRole>,
 ];
         let mut role_index = 0u32;
-        while (i32::from_ne_bytes(((role_index) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((roles.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
+        while ((role_index) as i32) < ((u32::try_from((roles.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32) {
             let role: Box<dyn RichTextRole> = (roles[usize::try_from(role_index).unwrap_or(0)]).clone();
             let span = RichTextSpan::new(TextRange::new(0u32, 2u32).unwrap(), role.clone(), (paint).clone());
             let _ = TracedAssertions::traced_assertions_assert_equals_rendered(TextModelCoverageTestHelpers::text_model_coverage_test_helpers_role_name(role.clone()).as_ustr(), TextModelCoverageTestHelpers::text_model_coverage_test_helpers_role_name(span.role.clone()).as_ustr(), None).unwrap();
@@ -940,8 +940,8 @@ impl TextModelCoverageTestHelpers {
     pub fn text_model_coverage_test_helpers_render_strings(values: &[UString]) -> UString {
         let mut output = UString::from("[").to_ustring();
         let mut index = 0u32;
-        while (i32::from_ne_bytes(((index) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((values.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
-            if i32::from_ne_bytes(((index) as i32).to_ne_bytes()) > (0) {
+        while ((index) as i32) < ((u32::try_from((values.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32) {
+            if index as i32 > (0) {
                 output += &(UString::from(", "));
             }
             output += &({ let mut __s = UString::new(); __s += &(UString::from("'")); __s += (values[usize::try_from(index).unwrap_or(0)]).clone().as_ustr(); __s += &(UString::from("'")); __s });

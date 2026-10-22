@@ -404,7 +404,7 @@ fn font_face_id_rejects_blank_and_keeps_value() {
         FontFaceIdImpl::font_face_id_impl_of(UStr::new(&[32])).map_err(|e| IllegalStateException::new(&format!("{}", e)))?;
         Ok(())
 }) }).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_true((u32::from_ne_bytes(((u_string::find_from(&UString::from(format!("{}", format!("{}", blank)).as_str()), UString::from("blank").as_ustr(), 0)) as u32).to_ne_bytes())) <= 2147483647, Some(UString::from(format!("{}", format!("{}", blank)).as_str()))).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_true((u_string::find_from(&UString::from(format!("{}", format!("{}", blank)).as_str()), UString::from("blank").as_ustr(), 0)) as u32 <= 2147483647, Some(UString::from(format!("{}", format!("{}", blank)).as_str()))).unwrap();
         TracedAssertions::traced_assertions_assert_fails_with(None.clone(), {  Arc::new(move || {
         FontFaceIdImpl::font_face_id_impl_of(UStr::new(&[])).map_err(|e| IllegalStateException::new(&format!("{}", e)))?;
         Ok(())
@@ -420,7 +420,7 @@ fn face_descriptor_defaults_are_stable() {
         let _ = TracedAssertions::traced_assertions_assert_equals(400, descriptor.weight, None).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_false(descriptor.italic, None).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_equals(0, descriptor.collection_index, None).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_true(u32::from_ne_bytes(((descriptor.variation_axes.size()) as u32).to_ne_bytes()) == 0, None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_true((descriptor.variation_axes.size()) as u32 == 0, None).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_equals_rendered(UStr::new(&[102,97,99,101,45,97]), FontFaceIdImpl::font_face_id_impl_to_string(descriptor.id.as_ustr()).as_ustr(), None).unwrap();
         let varied = ReplayableFontFaceDescriptor::new(descriptor.id.as_ustr(), (descriptor.family_aliases).clone(), descriptor.roles.to_vec(), (descriptor.source_label).to_ustring().as_ustr(), Some(700), Some(true), Some(2), Some(ReplayableFontBackendCoverageTestSupport::replayable_font_backend_coverage_test_support_axes(UStr::new(&[119,103,104,116]), 700.0f64))).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_equals(700, varied.weight, None).unwrap();
@@ -441,7 +441,7 @@ fn face_request_rejects_non_positive_and_non_finite_font_size() {
         ReplayableFontFaceRequest::new(FontRole::LatinText, vec![].to_vec(), 0.0f64, 400u32, false, &(UStr::new(&[])), &(UStr::new(&[65]))).map_err(|e| IllegalStateException::new(&format!("{}", e)))?;
         Ok(())
 }) }).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_true((u32::from_ne_bytes(((u_string::find_from(&UString::from(format!("{}", format!("{}", error)).as_str()), UString::from("positive and finite").as_ustr(), 0)) as u32).to_ne_bytes())) <= 2147483647, Some(UString::from(format!("{}", format!("{}", error)).as_str()))).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_true((u_string::find_from(&UString::from(format!("{}", format!("{}", error)).as_str()), UString::from("positive and finite").as_ustr(), 0)) as u32 <= 2147483647, Some(UString::from(format!("{}", format!("{}", error)).as_str()))).unwrap();
         TracedAssertions::traced_assertions_assert_fails_with(None.clone(), {  Arc::new(move || {
         ReplayableFontFaceRequest::new(FontRole::LatinText, vec![].to_vec(), -1.0f64, 400u32, false, &(UStr::new(&[])), &(UStr::new(&[65]))).map_err(|e| IllegalStateException::new(&format!("{}", e)))?;
         Ok(())
@@ -512,10 +512,10 @@ impl CatalogImpl {
         {
             let _g1 = (self.stored).clone();
             for face in &_g1 {
-                if u32::from_ne_bytes(((match (face.roles).clone().iter().position(|e| e == &request.role) { Some(v) => i32::from_ne_bytes(u32::try_from(v).unwrap_or(0).to_ne_bytes()), None => -1 }) as u32).to_ne_bytes()) <= 2147483647 {
+                if ({ let __hay = &((face.roles).clone()); let __n = __hay.len(); let mut __i = 0usize; let mut __found: i32 = -1; while __i < __n { if __hay[__i] == request.role { __found = u32::try_from(__i).unwrap_or(0) as i32; break; } __i += 1; } __found }) as u32 <= 2147483647 {
                     let mut _g = 0u32;
                     let _g1 = request.preferred_families.clone();
-                    while (i32::from_ne_bytes(((_g) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((_g1.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
+                    while ((_g) as i32) < ((u32::try_from((_g1.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32) {
                         let family = (_g1[usize::try_from(_g).unwrap_or(0)]).clone();
                         _g = u32::wrapping_add(_g, 1);
                         if face.family_aliases.clone().has(&(family).to_ustring()) {
@@ -552,7 +552,7 @@ impl ReplayableFontCatalog for CatalogImpl {
         {
             let _g1 = (self.stored).clone();
             for face in &_g1 {
-                if u32::from_ne_bytes(((match (face.roles).clone().iter().position(|e| e == &request.role) { Some(v) => i32::from_ne_bytes(u32::try_from(v).unwrap_or(0).to_ne_bytes()), None => -1 }) as u32).to_ne_bytes()) <= 2147483647 {
+                if ({ let __hay = &((face.roles).clone()); let __n = __hay.len(); let mut __i = 0usize; let mut __found: i32 = -1; while __i < __n { if __hay[__i] == request.role { __found = u32::try_from(__i).unwrap_or(0) as i32; break; } __i += 1; } __found }) as u32 <= 2147483647 {
                     let _g1 = request.preferred_families.clone();
                     for family in &_g1 {
                         if face.family_aliases.clone().has(&(family).to_ustring()) {

@@ -138,7 +138,7 @@ impl LineAdjustmentStage {
     }
 
     pub(crate) fn line_adjustment_stage_line_hyphen_advance_at(line_index: u32, lines: &Vec<LineCandidate>, hyphen_offsets: SortedSetTable<u32>, natural_clusters: &Vec<Cluster>, hyphen_advance: f64) -> f64 {
-        if u32::from_ne_bytes(((hyphen_offsets.size()) as u32).to_ne_bytes()) == 0 || (i32::from_ne_bytes(((line_index) as i32).to_ne_bytes())) >= i32::from_ne_bytes(((u32::wrapping_sub(u32::try_from((lines.len()) & 0xFFFF_FFFF).unwrap_or(0), 1)) as i32).to_ne_bytes()) {
+        if hyphen_offsets.size() as u32 == 0 || ((line_index) as i32) >= u32::wrapping_sub(u32::try_from((lines.len()) & 0xFFFF_FFFF).unwrap_or(0), 1) as i32 {
             return 0.0f64;
         }
         let next = (lines[usize::try_from(u32::wrapping_add(line_index, 1)).unwrap_or(0)]).clone();
@@ -152,7 +152,7 @@ impl LineAdjustmentStage {
     pub(crate) fn line_adjustment_stage_renderable_glyph_run_clusters(clusters: &Vec<Cluster>, open_type_features_by_cluster_range: SortedMapTable<TextRange, Vec<UString>>) -> Vec<Vec<Cluster>> {
         let mut renderable: Vec<Cluster> = Vec::new();
         for c in clusters {
-            if i32::from_ne_bytes(((u_string::unit_count(&((c.display_text).to_ustring()))) as i32).to_ne_bytes()) > (0) && !ParagraphShapingStage::paragraph_shaping_stage_is_inline_object_cluster((c).clone()) {
+            if u_string::unit_count(&((c.display_text).to_ustring())) as i32 > (0) && !ParagraphShapingStage::paragraph_shaping_stage_is_inline_object_cluster((c).clone()) {
                 renderable.push(c.clone());
             }
         }
@@ -222,14 +222,14 @@ impl LineAdjustmentStage {
             let adjusted_width = AccurateSum::accurate_sum_of(&adjusted_terms);
             let visual_width = AccurateSum::accurate_sum_of(&visual_terms);
             let mut hanging_terms: Vec<f64> = vec![];
-            for h_idx in 0..u32::from_ne_bytes(((line_candidate.hanging_cluster_indices.size()) as u32).to_ne_bytes()) {
-                hanging_terms.push(final_clusters[usize::try_from(line_candidate.hanging_cluster_indices.at({ let v: u32 = h_idx; i32::from_ne_bytes(v.to_ne_bytes()) })).unwrap_or(0)].advance);
+            for h_idx in 0..((line_candidate.hanging_cluster_indices.size()) as u32) {
+                hanging_terms.push(final_clusters[usize::try_from(line_candidate.hanging_cluster_indices.at({ let v: u32 = h_idx; v as i32 })).unwrap_or(0)].advance);
             }
             let hanging_punctuation_advance = AccurateSum::accurate_sum_of(&hanging_terms);
             let mut has_drawable_content = false;
             if !line_candidate.cluster_range.get_is_empty() {
                 for idx in line_candidate.cluster_range.start..u32::wrapping_add(line_candidate.cluster_range.end, 1) {
-                    if i32::from_ne_bytes(((u_string::unit_count(&(((final_clusters[usize::try_from(idx).unwrap_or(0)]).clone().display_text).to_ustring()))) as i32).to_ne_bytes()) > (0) {
+                    if u_string::unit_count(&(((final_clusters[usize::try_from(idx).unwrap_or(0)]).clone().display_text).to_ustring())) as i32 > (0) {
                         has_drawable_content = true;
                         break;
                     }
@@ -281,11 +281,11 @@ impl LineAdjustmentStage {
         }
         let mut visible_lines: Vec<LineBox> = Vec::new();
         let max_lines = (input.constraints).clone().max_lines;
-        let count = if i32::from_ne_bytes(((u32::try_from((laid_out_lines.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes()) > (i32::from_ne_bytes(((max_lines) as i32).to_ne_bytes())) { max_lines } else { u32::try_from((laid_out_lines.len()) & 0xFFFF_FFFF).unwrap_or(0) };
+        let count = if u32::try_from((laid_out_lines.len()) & 0xFFFF_FFFF).unwrap_or(0) as i32 > ((max_lines) as i32) { max_lines } else { u32::try_from((laid_out_lines.len()) & 0xFFFF_FFFF).unwrap_or(0) };
         for i in 0..count {
             visible_lines.push((laid_out_lines[usize::try_from(i).unwrap_or(0)]).clone());
         }
-        let max_lines_decision = if i32::from_ne_bytes(((u32::try_from((visible_lines.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes()) < (i32::from_ne_bytes(((u32::try_from((laid_out_lines.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) { Some(MaxLinesDecisionInfo::new(u32::try_from((laid_out_lines.len()) & 0xFFFF_FFFF).unwrap_or(0), u32::try_from((visible_lines.len()) & 0xFFFF_FFFF).unwrap_or(0), Some(UString::from("MaxLinesLineTruncation")))) } else { None };
+        let max_lines_decision = if u32::try_from((visible_lines.len()) & 0xFFFF_FFFF).unwrap_or(0) as i32 < ((u32::try_from((laid_out_lines.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32) { Some(MaxLinesDecisionInfo::new(u32::try_from((laid_out_lines.len()) & 0xFFFF_FFFF).unwrap_or(0), u32::try_from((visible_lines.len()) & 0xFFFF_FFFF).unwrap_or(0), Some(UString::from("MaxLinesLineTruncation")))) } else { None };
         let capacity = visible_lines.len();
         let mut visible_line_ranges = Vec::with_capacity(capacity);
         for i in 0..match u32::try_from(visible_lines.len()) { Ok(value) => value, Err(_) => u32::MAX } {
@@ -299,15 +299,15 @@ impl LineAdjustmentStage {
     }
 
     pub fn line_adjustment_stage_resolve_annotation_geometry(engine: &mut ExplainableStubParagraphLayoutEngine, input: LayoutInput, font_size: f64, inline_object_by_cluster_index: SortedMapTable<u32, InlineObjectSpan>, line_solution: LineSolution, clreq_profile: ClreqProfile, geometry_decisions: &Vec<ClusterGeometryDecisionInfo>, auto_space_decisions: &Vec<AutoSpaceDecisionInfo>, visible_line_ranges: &Vec<IntRange>, lines: &Vec<LineBox>, final_clusters: &Vec<Cluster>, cluster_roles: &Vec<FontRole>, justify_delta_by_cluster: SortedMapTable<u32, f64>, ruby_and_bopomofo_spread: SortedMapTable<u32, f64>, metric_decisions: &Vec<ClusterMetricDecision>, pinyin_spans: &Vec<RubySpan>, natural_clusters: &Vec<Cluster>, ruby_font_geometry_by_span: SortedMapTable<RubySpan, RubyFontGeometry>, ruby_stack_gap: f64, base_ascent: f64, ruby_font_size: f64, ruby_font_weight: u32, base_descent: f64, bopomofo_font_weight_at: Arc<dyn Fn(u32) -> u32 + Send + Sync>) -> Result<AnnotationGeometryStageResult, TextShaperShapeFault> {
-        let capacity = usize::try_from(u32::from_ne_bytes(((inline_object_by_cluster_index.size()) as u32).to_ne_bytes())).unwrap_or(0);
+        let capacity = usize::try_from((inline_object_by_cluster_index.size()) as u32).unwrap_or(0);
         let mut inline_object_decisions = Vec::with_capacity(capacity);
-        for i in 0..u32::from_ne_bytes(((inline_object_by_cluster_index.size()) as u32).to_ne_bytes()) {
-            let cluster_index = inline_object_by_cluster_index.key_at(i32::from_ne_bytes(((i) as i32).to_ne_bytes()));
-            let inline_object = inline_object_by_cluster_index.value_at(i32::from_ne_bytes(((i) as i32).to_ne_bytes()));
+        for i in 0..((inline_object_by_cluster_index.size()) as u32) {
+            let cluster_index = inline_object_by_cluster_index.key_at((i) as i32);
+            let inline_object = inline_object_by_cluster_index.value_at((i) as i32);
             let mut line_idx = 4294967295u32;
             for l in 0..match u32::try_from(line_solution.lines.len()) { Ok(value) => value, Err(_) => u32::MAX } {
                 let cr = (line_solution.lines[usize::try_from(l).unwrap_or(0)]).clone().cluster_range;
-                if !cr.get_is_empty() && (i32::from_ne_bytes(((cluster_index) as i32).to_ne_bytes())) >= i32::from_ne_bytes(((cr.start) as i32).to_ne_bytes()) && (i32::from_ne_bytes(((cluster_index) as i32).to_ne_bytes())) <= i32::from_ne_bytes(((cr.end) as i32).to_ne_bytes()) {
+                if !cr.get_is_empty() && ((cluster_index) as i32) >= cr.start as i32 && ((cluster_index) as i32) <= cr.end as i32 {
                     line_idx = l;
                     break;
                 }
@@ -386,22 +386,22 @@ impl LineAdjustmentStage {
     }
 
     pub fn line_adjustment_stage_finish_paragraph_layout(engine: &mut ExplainableStubParagraphLayoutEngine, prep: ParagraphLayoutPrep, plan: LineBreakPlanningStageResult) -> Result<LayoutResult, LineAdjustmentStageFinishParagraphLayoutFault> {
-        let mut applied_hanging_clusters_builder: SortedSetTableBuilder<u32> = SortedTable::sorted_table_set_builder::<u32>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_bytes(((*a) as i32).to_ne_bytes()), i32::from_ne_bytes(((*b) as i32).to_ne_bytes()))));
+        let mut applied_hanging_clusters_builder: SortedSetTableBuilder<u32> = SortedTable::sorted_table_set_builder::<u32>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints((*a) as i32, (*b) as i32)));
         {
             let _g1 = ((plan.line_solution).clone().lines).clone();
             for line in &_g1 {
-                for i in 0..u32::from_ne_bytes((((line.hanging_cluster_indices).clone().size()) as u32).to_ne_bytes()) {
-                    applied_hanging_clusters_builder.put(&((line.hanging_cluster_indices).clone().at({ let v: u32 = i; i32::from_ne_bytes(v.to_ne_bytes()) })));
+                for i in 0..(((line.hanging_cluster_indices).clone().size()) as u32) {
+                    applied_hanging_clusters_builder.put(&((line.hanging_cluster_indices).clone().at({ let v: u32 = i; v as i32 })));
                 }
             }
         }
         let applied_hanging_clusters: SortedSetTable<u32> = applied_hanging_clusters_builder.clone().build();
-        let mut impossible_measure_contextual_hang_clusters_builder: SortedSetTableBuilder<u32> = SortedTable::sorted_table_set_builder::<u32>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_bytes(((*a) as i32).to_ne_bytes()), i32::from_ne_bytes(((*b) as i32).to_ne_bytes()))));
-        for i in 0..u32::from_ne_bytes((((plan.ascii_point_mark_kinsoku).clone().impossible_measure_hang_eligible_clusters.size()) as u32).to_ne_bytes()) {
-            impossible_measure_contextual_hang_clusters_builder.put(&((plan.ascii_point_mark_kinsoku).clone().impossible_measure_hang_eligible_clusters.at({ let v: u32 = i; i32::from_ne_bytes(v.to_ne_bytes()) })));
+        let mut impossible_measure_contextual_hang_clusters_builder: SortedSetTableBuilder<u32> = SortedTable::sorted_table_set_builder::<u32>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints((*a) as i32, (*b) as i32)));
+        for i in 0..(((plan.ascii_point_mark_kinsoku).clone().impossible_measure_hang_eligible_clusters.size()) as u32) {
+            impossible_measure_contextual_hang_clusters_builder.put(&((plan.ascii_point_mark_kinsoku).clone().impossible_measure_hang_eligible_clusters.at({ let v: u32 = i; v as i32 })));
         }
-        for i in 0..u32::from_ne_bytes((((plan.inline_object_kinsoku).clone().impossible_measure_hang_eligible_clusters.size()) as u32).to_ne_bytes()) {
-            impossible_measure_contextual_hang_clusters_builder.put(&((plan.inline_object_kinsoku).clone().impossible_measure_hang_eligible_clusters.at({ let v: u32 = i; i32::from_ne_bytes(v.to_ne_bytes()) })));
+        for i in 0..(((plan.inline_object_kinsoku).clone().impossible_measure_hang_eligible_clusters.size()) as u32) {
+            impossible_measure_contextual_hang_clusters_builder.put(&((plan.inline_object_kinsoku).clone().impossible_measure_hang_eligible_clusters.at({ let v: u32 = i; v as i32 })));
         }
         let impossible_measure_contextual_hang_clusters: SortedSetTable<u32> = impossible_measure_contextual_hang_clusters_builder.clone().build();
         let mut raw_decisions: Vec<ContextualKinsokuDecisionInfo> = Vec::new();
@@ -430,7 +430,7 @@ impl LineAdjustmentStage {
             let mut already_seen = false;
             {
                 let mut _g = 0u32;
-                while (i32::from_ne_bytes(((_g) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((seen_decision_keys.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
+                while ((_g) as i32) < ((u32::try_from((seen_decision_keys.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32) {
                     let s = (seen_decision_keys[usize::try_from(_g).unwrap_or(0)]).clone();
                     _g = u32::wrapping_add(_g, 1);
                     if s == key {
@@ -467,7 +467,7 @@ impl LineAdjustmentStage {
                     match &(allocations) {
                         Some(__option20) => {
                             for alloc in __option20 {
-                                if alloc.cluster_index <= 2147483647 && (i32::from_ne_bytes(((alloc.cluster_index) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((prep.natural_clusters.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
+                                if alloc.cluster_index <= 2147483647 && ((alloc.cluster_index) as i32) < ((u32::try_from((prep.natural_clusters.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32) {
                                     if alloc.channel == ShrinkChannel::TrailingGlue {
                                         let index = alloc.cluster_index;
                                         push_in_trailing[usize::try_from(index).unwrap_or(0)] += alloc.shrink;
@@ -500,7 +500,7 @@ impl LineAdjustmentStage {
                 }
             }
         }
-        if i32::from_ne_bytes(((u32::from_ne_bytes(((prep.hyphen_offsets.size()) as u32).to_ne_bytes())) as i32).to_ne_bytes()) > (0) {
+        if prep.hyphen_offsets.size() as u32 as i32 > (0) {
             for line_index in 0..match u32::try_from((plan.line_solution).clone().lines.len()) { Ok(value) => value, Err(_) => u32::MAX } {
                 let line = ((plan.line_solution).clone().lines[usize::try_from(line_index).unwrap_or(0)]).clone();
                 if line.cluster_range.get_is_empty() {
@@ -523,15 +523,15 @@ impl LineAdjustmentStage {
                 let mut sorted_opportunities: Vec<ShrinkOpportunity> = Vec::new();
                 for opp_idx in 0..match u32::try_from(prep.shrink_opportunities.len()) { Ok(value) => value, Err(_) => u32::MAX } {
                     let opp = (prep.shrink_opportunities[usize::try_from(opp_idx).unwrap_or(0)]).clone();
-                    if i32::from_ne_bytes(((opp.cluster_index) as i32).to_ne_bytes()) >= i32::from_ne_bytes(((line.cluster_range.start) as i32).to_ne_bytes()) && (i32::from_ne_bytes(((opp.cluster_index) as i32).to_ne_bytes())) <= i32::from_ne_bytes(((line.cluster_range.end) as i32).to_ne_bytes()) && !opp.line_end_only {
+                    if opp.cluster_index as i32 >= line.cluster_range.start as i32 && ((opp.cluster_index) as i32) <= line.cluster_range.end as i32 && !opp.line_end_only {
                         sorted_opportunities.push(opp.clone());
                     }
                 }
                 let mut r_idx = 1u32;
-                while (i32::from_ne_bytes(((r_idx) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((sorted_opportunities.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
+                while ((r_idx) as i32) < ((u32::try_from((sorted_opportunities.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32) {
                     let curr = (sorted_opportunities[usize::try_from(r_idx).unwrap_or(0)]).clone();
                     let mut j = r_idx;
-                    while (j) > (0) && (i32::from_ne_bytes(((sorted_opportunities[usize::try_from(u32::wrapping_sub(j, 1)).unwrap_or(0)].tier) as i32).to_ne_bytes())) > (i32::from_ne_bytes(((curr.tier) as i32).to_ne_bytes())) {
+                    while (j) > (0) && ((sorted_opportunities[usize::try_from(u32::wrapping_sub(j, 1)).unwrap_or(0)].tier) as i32) > ((curr.tier) as i32) {
                         sorted_opportunities[usize::try_from(j).unwrap_or(0)] = (sorted_opportunities[usize::try_from(u32::wrapping_sub(j, 1)).unwrap_or(0)]).clone();
                         j = u32::wrapping_sub(j, 1);
                     }
@@ -589,10 +589,8 @@ impl LineAdjustmentStage {
                 }
             }
         }
-        let mut push_in_trailing_map_builder: SortedMapTableBuilder<u32, f64> = SortedTable::sorted_table_map_builder::<u32,
-f64>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_bytes(((*a) as i32).to_ne_bytes()), i32::from_ne_bytes(((*b) as i32).to_ne_bytes()))));
-        let mut push_in_leading_map_builder: SortedMapTableBuilder<u32, f64> = SortedTable::sorted_table_map_builder::<u32,
-f64>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_bytes(((*a) as i32).to_ne_bytes()), i32::from_ne_bytes(((*b) as i32).to_ne_bytes()))));
+        let mut push_in_trailing_map_builder: SortedMapTableBuilder<u32, f64> = SortedTable::sorted_table_map_builder::<u32, f64>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints((*a) as i32, (*b) as i32)));
+        let mut push_in_leading_map_builder: SortedMapTableBuilder<u32, f64> = SortedTable::sorted_table_map_builder::<u32, f64>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints((*a) as i32, (*b) as i32)));
         for i in 0..match u32::try_from(prep.natural_clusters.len()) { Ok(value) => value, Err(_) => u32::MAX } {
             if push_in_trailing[usize::try_from(i).unwrap_or(0)] != 0.0f64 {
                 push_in_trailing_map_builder.put(&(i), &(push_in_trailing[usize::try_from(i).unwrap_or(0)]));
@@ -639,7 +637,7 @@ f64>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_bytes((
                 }
             }
         }
-        let mut raw_trims_builder: SortedMapTableBuilder<u32, f64> = SortedTable::sorted_table_map_builder::<u32, f64>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_bytes(((*a) as i32).to_ne_bytes()), i32::from_ne_bytes(((*b) as i32).to_ne_bytes()))));
+        let mut raw_trims_builder: SortedMapTableBuilder<u32, f64> = SortedTable::sorted_table_map_builder::<u32, f64>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints((*a) as i32, (*b) as i32)));
         for i in 0..match u32::try_from(prep.natural_clusters.len()) { Ok(value) => value, Err(_) => u32::MAX } {
             let total = auto_space_edge_trims[usize::try_from(i).unwrap_or(0)] + push_in_raw_trims[usize::try_from(i).unwrap_or(0)];
             if total != 0.0f64 {
@@ -668,15 +666,14 @@ f64>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_bytes((
                 let next_idx = u32::wrapping_add(line_candidate.cluster_range.end, 1);
                 let selected_technical_break = if plan.progressive_break_opportunities.has(&(next_idx)) { plan.progressive_break_opportunities.get(&(next_idx)) } else { None };
                 let preferred_tracking_span = match &(selected_technical_break) { Some(__option22) => (if __option22.tier == ProgressiveBreakTier::Emergency { Some((__option22.span_range).clone()) } else { None }).clone(), None => None };
-                let mut preferred_emergency_tracking_boundaries_builder: SortedMapTableBuilder<u32, UString> = SortedTable::sorted_table_map_builder::<u32,
-UString>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_bytes(((*a) as i32).to_ne_bytes()), i32::from_ne_bytes(((*b) as i32).to_ne_bytes()))));
+                let mut preferred_emergency_tracking_boundaries_builder: SortedMapTableBuilder<u32, UString> = SortedTable::sorted_table_map_builder::<u32, UString>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints((*a) as i32, (*b) as i32)));
                 match &(preferred_tracking_span) {
                     Some(__option23) => {
-                        for i in 0..u32::from_ne_bytes(((plan.emergency_tracking_boundary_after_clusters.size()) as u32).to_ne_bytes()) {
-                            let left_index = plan.emergency_tracking_boundary_after_clusters.key_at({ let v: u32 = i; i32::from_ne_bytes(v.to_ne_bytes()) });
-                            let reason = plan.emergency_tracking_boundary_after_clusters.value_at({ let v: u32 = i; i32::from_ne_bytes(v.to_ne_bytes()) });
+                        for i in 0..((plan.emergency_tracking_boundary_after_clusters.size()) as u32) {
+                            let left_index = plan.emergency_tracking_boundary_after_clusters.key_at({ let v: u32 = i; v as i32 });
+                            let reason = plan.emergency_tracking_boundary_after_clusters.value_at({ let v: u32 = i; v as i32 });
                             let right_index = u32::wrapping_add(left_index, 1);
-                            if i32::from_ne_bytes(((((prep.natural_clusters[usize::try_from(left_index).unwrap_or(0)]).clone().range).clone().start) as i32).to_ne_bytes()) >= i32::from_ne_bytes(((__option23.start) as i32).to_ne_bytes()) && (i32::from_ne_bytes(((((prep.natural_clusters[usize::try_from(right_index).unwrap_or(0)]).clone().range).clone().end) as i32).to_ne_bytes())) <= i32::from_ne_bytes(((__option23.end) as i32).to_ne_bytes()) {
+                            if prep.natural_clusters[usize::try_from(left_index).unwrap_or(0)].clone().range.clone().start as i32 >= __option23.start as i32 && ((((prep.natural_clusters[usize::try_from(right_index).unwrap_or(0)]).clone().range).clone().end) as i32) <= __option23.end as i32 {
                                 preferred_emergency_tracking_boundaries_builder.put(&(left_index), &(reason).to_ustring());
                             }
                         }
@@ -696,7 +693,7 @@ UString>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_byt
         let mut newly_rejected_tiers_list: Vec<SortedSetTable<u32>> = Vec::new();
         for line_index in 0..match u32::try_from((plan.line_solution).clone().lines.len()) { Ok(value) => value, Err(_) => u32::MAX } {
             let line = ((plan.line_solution).clone().lines[usize::try_from(line_index).unwrap_or(0)]).clone();
-            if line.end_reason != LineEndReason::AutoWrap || (i32::from_ne_bytes(((line.cluster_range.start) as i32).to_ne_bytes())) > (i32::from_ne_bytes(((line.cluster_range.end) as i32).to_ne_bytes())) {
+            if line.end_reason != LineEndReason::AutoWrap || ((line.cluster_range.start) as i32) > ((line.cluster_range.end) as i32) {
                 continue;
             }
             let next_cluster = u32::wrapping_add(line.cluster_range.end, 1);
@@ -738,34 +735,34 @@ UString>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_byt
                 }
                 if found_span_idx > 2147483647 {
                     newly_rejected_spans.push(span_range.clone());
-                    let mut b: SortedSetTableBuilder<u32> = SortedTable::sorted_table_set_builder::<u32>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_bytes(((*a) as i32).to_ne_bytes()), i32::from_ne_bytes(((*b) as i32).to_ne_bytes()))));
+                    let mut b: SortedSetTableBuilder<u32> = SortedTable::sorted_table_set_builder::<u32>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints((*a) as i32, (*b) as i32)));
                     b.put(&(ProgressiveBreakTierPriority::progressive_break_tier_priority_priority(selected_technical_break.as_ref().unwrap().tier)));
                     newly_rejected_tiers_list.push(b.clone().build());
                 } else {
-                    let mut b: SortedSetTableBuilder<u32> = SortedTable::sorted_table_set_builder::<u32>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_bytes(((*a) as i32).to_ne_bytes()), i32::from_ne_bytes(((*b) as i32).to_ne_bytes()))));
+                    let mut b: SortedSetTableBuilder<u32> = SortedTable::sorted_table_set_builder::<u32>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints((*a) as i32, (*b) as i32)));
                     let existing: SortedSetTable<u32> = (newly_rejected_tiers_list[usize::try_from(found_span_idx).unwrap_or(0)]).clone();
-                    for e in 0..u32::from_ne_bytes(((existing.size()) as u32).to_ne_bytes()) {
-                        b.put(&(existing.at({ let v: u32 = e; i32::from_ne_bytes(v.to_ne_bytes()) })));
+                    for e in 0..((existing.size()) as u32) {
+                        b.put(&(existing.at({ let v: u32 = e; v as i32 })));
                     }
                     b.put(&(ProgressiveBreakTierPriority::progressive_break_tier_priority_priority(selected_technical_break.as_ref().unwrap().tier)));
                     newly_rejected_tiers_list[usize::try_from(found_span_idx).unwrap_or(0)] = b.clone().build();
                 }
             }
         }
-        if i32::from_ne_bytes(((u32::try_from((newly_rejected_spans.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes()) > (0) {
+        if u32::try_from((newly_rejected_spans.len()) & 0xFFFF_FFFF).unwrap_or(0) as i32 > (0) {
             let mut updated_rejected_tiers_builder: SortedMapTableBuilder<TextRange, SortedSetTable<u32>> = SortedTable::sorted_table_map_builder::<TextRange, SortedSetTable<u32>>(Arc::new(compare_text_range));
-            for i in 0..u32::from_ne_bytes(((prep.rejected_technical_tiers_by_span.size()) as u32).to_ne_bytes()) {
-                let span = prep.rejected_technical_tiers_by_span.key_at({ let v: u32 = i; i32::from_ne_bytes(v.to_ne_bytes()) });
-                let tiers: SortedSetTable<u32> = prep.rejected_technical_tiers_by_span.value_at({ let v: u32 = i; i32::from_ne_bytes(v.to_ne_bytes()) });
-                let mut b: SortedSetTableBuilder<u32> = SortedTable::sorted_table_set_builder::<u32>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_bytes(((*a) as i32).to_ne_bytes()), i32::from_ne_bytes(((*b) as i32).to_ne_bytes()))));
-                for t in 0..u32::from_ne_bytes(((tiers.size()) as u32).to_ne_bytes()) {
-                    b.put(&(tiers.at({ let v: u32 = t; i32::from_ne_bytes(v.to_ne_bytes()) })));
+            for i in 0..((prep.rejected_technical_tiers_by_span.size()) as u32) {
+                let span = prep.rejected_technical_tiers_by_span.key_at({ let v: u32 = i; v as i32 });
+                let tiers: SortedSetTable<u32> = prep.rejected_technical_tiers_by_span.value_at({ let v: u32 = i; v as i32 });
+                let mut b: SortedSetTableBuilder<u32> = SortedTable::sorted_table_set_builder::<u32>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints((*a) as i32, (*b) as i32)));
+                for t in 0..((tiers.size()) as u32) {
+                    b.put(&(tiers.at({ let v: u32 = t; v as i32 })));
                 }
                 for n_idx in 0..match u32::try_from(newly_rejected_spans.len()) { Ok(value) => value, Err(_) => u32::MAX } {
                     if newly_rejected_spans[usize::try_from(n_idx).unwrap_or(0)].start == span.start && newly_rejected_spans[usize::try_from(n_idx).unwrap_or(0)].end == span.end {
                         let add_tiers: SortedSetTable<u32> = (newly_rejected_tiers_list[usize::try_from(n_idx).unwrap_or(0)]).clone();
-                        for at in 0..u32::from_ne_bytes(((add_tiers.size()) as u32).to_ne_bytes()) {
-                            b.put(&(add_tiers.at({ let v: u32 = at; i32::from_ne_bytes(v.to_ne_bytes()) })));
+                        for at in 0..((add_tiers.size()) as u32) {
+                            b.put(&(add_tiers.at({ let v: u32 = at; v as i32 })));
                         }
                     }
                 }
@@ -789,10 +786,10 @@ UString>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_byt
                 Some(__option24) => {
                     let mut _g = 0u32;
                     let _g1 = (__option24.allocations).clone().clone();
-                    while (i32::from_ne_bytes(((_g) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((_g1.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
+                    while ((_g) as i32) < ((u32::try_from((_g1.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32) {
                         let alloc = (_g1[usize::try_from(_g).unwrap_or(0)]).clone();
                         _g = u32::wrapping_add(_g, 1);
-                        if alloc.target_cluster_index <= 2147483647 && (i32::from_ne_bytes(((alloc.target_cluster_index) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((justify_deltas.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
+                        if alloc.target_cluster_index <= 2147483647 && ((alloc.target_cluster_index) as i32) < ((u32::try_from((justify_deltas.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32) {
                             let index = alloc.target_cluster_index;
                             justify_deltas[usize::try_from(index).unwrap_or(0)] += alloc.delta;
                         }
@@ -802,7 +799,7 @@ UString>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_byt
                 }
             }
         }
-        let mut justify_delta_builder: SortedMapTableBuilder<u32, f64> = SortedTable::sorted_table_map_builder::<u32, f64>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_bytes(((*a) as i32).to_ne_bytes()), i32::from_ne_bytes(((*b) as i32).to_ne_bytes()))));
+        let mut justify_delta_builder: SortedMapTableBuilder<u32, f64> = SortedTable::sorted_table_map_builder::<u32, f64>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints((*a) as i32, (*b) as i32)));
         for i in 0..match u32::try_from(justify_deltas.len()) { Ok(value) => value, Err(_) => u32::MAX } {
             if justify_deltas[usize::try_from(i).unwrap_or(0)] != 0.0f64 {
                 justify_delta_builder.put(&(i), &(justify_deltas[usize::try_from(i).unwrap_or(0)]));
@@ -846,7 +843,7 @@ UString>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_byt
                     let centered = LineAdjustmentStage::line_adjustment_stage_center_dash_ink(&mapped, (cluster).clone(), (prep.atom_class_by_range).clone());
                     {
                         let mut _g = 0u32;
-                        while (i32::from_ne_bytes(((_g) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((centered.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
+                        while ((_g) as i32) < ((u32::try_from((centered.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32) {
                             let g = (centered[usize::try_from(_g).unwrap_or(0)]).clone();
                             _g = u32::wrapping_add(_g, 1);
                             run_glyphs.push(g.clone());
@@ -883,7 +880,7 @@ UString>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_byt
             }
         }
         let total_height: f64;
-        if i32::from_ne_bytes(((u32::try_from((lines.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes()) > (0) {
+        if u32::try_from((lines.len()) & 0xFFFF_FFFF).unwrap_or(0) as i32 > (0) {
             total_height = lines[usize::try_from(u32::wrapping_sub(u32::try_from((lines.len()) & 0xFFFF_FFFF).unwrap_or(0), 1)).unwrap_or(0)].bottom;
         } else {
             if u_string::unit_count(&((prep.text).to_ustring())) == 0 {

@@ -145,7 +145,7 @@ fn bmp_math_and_currency_symbols_resolve_to_symbol_role() {
         TestTraceRecorder::new(&(UStr::new(&[70,111,110,116,82,111,108,101,84,97,105,108,67,111,118,101,114,97,103,101,84,101,115,116]))).section(UStr::new(&[98,109,112,77,97,116,104,65,110,100,67,117,114,114,101,110,99,121,83,121,109,98,111,108,115,82,101,115,111,108,118,101,84,111,83,121,109,98,111,108,82,111,108,101]));
         let xs = vec![UString::from("±").to_ustring(), UString::from("€").to_ustring()];
         let mut xi = 0u32;
-        while (i32::from_ne_bytes(((xi) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((xs.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
+        while ((xi) as i32) < ((u32::try_from((xs.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32) {
             let x = (xs[usize::try_from(xi).unwrap_or(0)]).clone();
             let _ = TracedAssertions::traced_assertions_assert_equals_rendered(UStr::new(&[83,121,109,98,111,108]), UString::from(CjkFontRoleClassifier::new().classify(x.as_ustr(), TextRange::new(0u32, 1u32).unwrap(), None).name()).as_ustr(), None).unwrap();
             xi = u32::wrapping_add(xi, 1);

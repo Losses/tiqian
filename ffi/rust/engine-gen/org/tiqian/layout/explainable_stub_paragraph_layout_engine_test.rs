@@ -1814,19 +1814,19 @@ fn single_mandatory_break_after_wrapped_line_does_not_create_empty_line() {
             dbg_lines.push(UString::from(format!("{}", { let mut __s = UString::new(); __s += UString::from(format!("{}", l.cluster_range.to_string()).as_str()).as_ustr(); __s += &(UString::from(" ")); __s += UString::from(format!("{}", (l.range).clone().to_string()).as_str()).as_ustr(); __s += &(UString::from(" ")); __s += UString::from(l.end_reason.name()).as_ustr(); __s += &(UString::from(" \"")); __s += UString::from(format!("{}", {
     let from = (l.range).clone().start;
     let to = (l.range).clone().end;
-    u_string::slice(text.as_ustr(), i32::from_ne_bytes(((from) as i32).to_ne_bytes()), i32::from_ne_bytes(((to) as i32).to_ne_bytes()))
+    u_string::slice(text.as_ustr(), (from) as i32, (to) as i32)
 }).as_str()).as_ustr(); __s += &(UString::from("\"")); __s }).as_str()));
         }
         let dbg = { let joined = dbg_lines; let mut out = String::new(); let n = joined.len(); let mut index = 0usize; while index < n { if index > 0 { out.push_str(concat!("\n",
 "")); } let _ = write!(out, "{}", joined[index]); index += 1; } UString::from(out.as_str()) };
-        let _ = TracedAssertions::traced_assertions_assert_true((i32::from_ne_bytes(((u32::try_from((r.lines.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) >= 4, None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_true((u32::try_from((r.lines.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32 >= 4, None).unwrap();
         let mut no = false;
         for _g_index1 in 0..match u32::try_from(r.lines.len()) { Ok(value) => value, Err(_) => u32::MAX } {
             let l = (r.lines[usize::try_from(_g_index1).unwrap_or(0)]).clone();
             if {
     let from = (l.range).clone().start;
     let to = (l.range).clone().end;
-    u_string::slice(text.as_ustr(), i32::from_ne_bytes(((from) as i32).to_ne_bytes()), i32::from_ne_bytes(((to) as i32).to_ne_bytes()))
+    u_string::slice(text.as_ustr(), (from) as i32, (to) as i32)
 } == UString::from(concat!("\n",
 "")) {
                 no = true;
@@ -1835,7 +1835,7 @@ fn single_mandatory_break_after_wrapped_line_does_not_create_empty_line() {
         let _ = TracedAssertions::traced_assertions_assert_true(!no, Some((dbg).to_ustring())).unwrap();
         let mut idx = 0u32;
         for i in 0..u_string::count(text.as_ustr()) {
-            if u_string::at(text.as_ustr(), i).as_ref().map_or(false, |v| v == &(10)) {
+            if matches!(u_string::at(text.as_ustr(), i).as_ref(), Some(__v) if __v == &(10)) {
                 idx = u32::wrapping_add(i, 1);
             }
         }
@@ -1922,7 +1922,7 @@ fn preserves_shaper_glyph_bounds_in_layout_glyph_runs() {
         let r = ExplainableStubParagraphLayoutEngineTestSupport::explainable_stub_paragraph_layout_engine_test_support_engine(Some(Arc::new(Mutex::new(FixedBoundsTextShaper::new()))), None).unwrap().layout(ExplainableStubParagraphLayoutEngineTestSupport::explainable_stub_paragraph_layout_engine_test_support_input(UStr::new(&[65]), 240 as f64, None, None, None).unwrap()).unwrap();
         let g = ((r.glyph_runs[0usize]).clone().glyphs[0usize]).clone();
         let _ = TracedAssertions::traced_assertions_assert_equals_int(42, g.id, None).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_equals_rendered(UString::from(format!("{}", Rect::new(1 as f64 as f64, i32::from_ne_bytes(((4294967286u32) as i32).to_ne_bytes()) as f64 as f64, 12 as f64 as f64, 2 as f64 as f64).to_string()).as_str()).as_ustr(), ExplainableStubParagraphLayoutEngineTestSupport::explainable_stub_paragraph_layout_engine_test_support_render_nullable_bounds((g.bounds).clone()).as_ustr(), None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_equals_rendered(UString::from(format!("{}", Rect::new(1 as f64 as f64, (4294967286u32) as i32 as f64 as f64, 12 as f64 as f64, 2 as f64 as f64).to_string()).as_str()).as_ustr(), ExplainableStubParagraphLayoutEngineTestSupport::explainable_stub_paragraph_layout_engine_test_support_render_nullable_bounds((g.bounds).clone()).as_ustr(), None).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_equals_float(20 as f64, g.advance, None).unwrap();
     });
 }

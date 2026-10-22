@@ -142,7 +142,7 @@ impl QuotePairAnalyzerCoverageTestSupport {
 
     pub fn quote_pair_analyzer_coverage_test_support_non_empty(t: &UStr) -> Result<(), QuotePairAnalyzerCoverageTestSupportNonEmptyFault> {
         let d = QuotePairAnalyzerCoverageTestSupport::quote_pair_analyzer_coverage_test_support_a().classify_quote_roles(t, &vec![], None).map_err(|e| QuotePairAnalyzerCoverageTestSupportNonEmptyFault::TextRangeErrorFault(e))?;
-        let _ = TracedAssertions::traced_assertions_assert_true((i32::from_ne_bytes(((u32::try_from((d.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) > (0), None).map_err(|e| QuotePairAnalyzerCoverageTestSupportNonEmptyFault::TracedAssertionsFailFaultFault(e))?;
+        let _ = TracedAssertions::traced_assertions_assert_true((u32::try_from((d.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32 > (0), None).map_err(|e| QuotePairAnalyzerCoverageTestSupportNonEmptyFault::TracedAssertionsFailFaultFault(e))?;
         Ok(())
     }
 

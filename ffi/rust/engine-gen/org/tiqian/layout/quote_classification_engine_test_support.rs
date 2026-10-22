@@ -356,7 +356,7 @@ impl QuoteClassificationEngineTestSupport {
     }
 
     pub fn quote_classification_engine_test_support_set(values: &Vec<u32>) -> SortedSetTable<u32> {
-        let mut b: SortedSetTableBuilder<u32> = SortedTable::sorted_table_set_builder::<u32>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_bytes(((*a) as i32).to_ne_bytes()), i32::from_ne_bytes(((*b) as i32).to_ne_bytes()))));
+        let mut b: SortedSetTableBuilder<u32> = SortedTable::sorted_table_set_builder::<u32>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints((*a) as i32, (*b) as i32)));
         for &v in values {
             b.put(&(v));
         }
@@ -364,11 +364,11 @@ impl QuoteClassificationEngineTestSupport {
     }
 
     pub fn quote_classification_engine_test_support_indices(text: &UStr) -> Vec<u32> {
-    let __units = u_string::units(&text);
+    let __units = text.as_slice();
     let __count = u_string::unit_count(&text);
         let mut r: Vec<u32> = vec![];
-        for i in 0..match u32::try_from(u_string::unit_count(&(text))) { Ok(value) => value, Err(_) => u32::MAX } {
-            if QuoteClassificationEngineTestSupport::quote_classification_engine_test_support_is_curly_quote_for_test(u_string::substring(&text, { let v: u32 = i; i32::from_ne_bytes(v.to_ne_bytes()) }, i32::from_ne_bytes(((u32::wrapping_add(i, 1)) as i32).to_ne_bytes())).as_ustr()) {
+        for i in 0..__count {
+            if QuoteClassificationEngineTestSupport::quote_classification_engine_test_support_is_curly_quote_for_test(u_string::char_at_from(__units, i).as_ustr()) {
                 r.push(i);
             }
         }
@@ -378,7 +378,7 @@ impl QuoteClassificationEngineTestSupport {
     pub fn quote_classification_engine_test_support_role_at(result: LayoutResult, index: u32) -> UString {
         for i in 0..match u32::try_from((result.debug).clone().font_decisions.len()) { Ok(value) => value, Err(_) => u32::MAX } {
             let d = ((result.debug).clone().font_decisions[usize::try_from(i).unwrap_or(0)]).clone();
-            if i32::from_ne_bytes(((index) as i32).to_ne_bytes()) >= i32::from_ne_bytes((((d.range).clone().start) as i32).to_ne_bytes()) && (i32::from_ne_bytes(((index) as i32).to_ne_bytes())) < (i32::from_ne_bytes((((d.range).clone().end) as i32).to_ne_bytes())) {
+            if index as i32 >= (d.range).clone().start as i32 && ((index) as i32) < (((d.range).clone().end) as i32) {
                 return ((d.role).to_ustring()).clone();
             }
         }
@@ -393,22 +393,22 @@ impl QuoteClassificationEngineTestSupport {
         let mut result = 4294967295u32;
         let mut start = 0u32;
         loop {
-            let next = u_string::find_from(&(text), mark, i32::from_ne_bytes(((start) as i32).to_ne_bytes()));
+            let next = u_string::find_from(&(text), mark, (start) as i32);
             if next < (0) {
                 return result;
             }
-            result = u32::from_ne_bytes(((next) as u32).to_ne_bytes());
-            start = u32::from_ne_bytes(((i32::wrapping_add(next, 1)) as u32).to_ne_bytes());
+            result = next as u32;
+            start = i32::wrapping_add(next, 1) as u32;
         }
     }
 
     pub fn quote_classification_engine_test_support_render_role_map(map: SortedMapTable<u32, UString>) -> UString {
         let mut out = UString::new();
-        for i in 0..u32::from_ne_bytes(((map.size()) as u32).to_ne_bytes()) {
-            if ({ let v: u32 = i; i32::from_ne_bytes(v.to_ne_bytes()) }) > (0) {
+        for i in 0..((map.size()) as u32) {
+            if ({ let v: u32 = i; v as i32 }) > (0) {
                 out += &(UString::from(", "));
             }
-            out += &({ let mut __s = UString::new(); __s += &(UString::from("")); __s += &(UString::from(format!("{}", crate::runtime::int_text::IntText::int_text(map.key_at({ let v: u32 = i; i32::from_ne_bytes(v.to_ne_bytes()) }))).as_str())); __s += &(UString::from("='")); __s += map.value_at({ let v: u32 = i; i32::from_ne_bytes(v.to_ne_bytes()) }).as_ustr(); __s += &(UString::from("'")); __s });
+            out += &({ let mut __s = UString::new(); __s += &(UString::from("")); __s += &(UString::from(format!("{}", crate::runtime::int_text::IntText::int_text(map.key_at({ let v: u32 = i; v as i32 }))).as_str())); __s += &(UString::from("='")); __s += map.value_at({ let v: u32 = i; v as i32 }).as_ustr(); __s += &(UString::from("'")); __s });
         }
         return UString::from(format!("{}", { let mut __s = UString::new(); __s += &(UString::from("{")); __s += out.as_ustr(); __s += &(UString::from("}")); __s }).as_str());
     }
@@ -500,9 +500,9 @@ impl QuoteClassificationEngineTestSupport {
     pub fn quote_classification_engine_test_support_starts_with(text: &UStr, range: TextRange, mark: &UStr) -> bool {
         let from = range.start;
         let to = range.end;
-        let x = u_string::slice(text, i32::from_ne_bytes(((from) as i32).to_ne_bytes()), i32::from_ne_bytes(((to) as i32).to_ne_bytes()));
+        let x = u_string::slice(text, (from) as i32, (to) as i32);
         let mut r = false;
-        if u32::from_ne_bytes(((u_string::find_from(&(x), mark, 0)) as u32).to_ne_bytes()) == 0 {
+        if u_string::find_from(&(x), mark, 0) as u32 == 0 {
             r = true;
         }
         return r;
@@ -511,8 +511,8 @@ impl QuoteClassificationEngineTestSupport {
     pub fn quote_classification_engine_test_support_ends_with(text: &UStr, range: TextRange, mark: &UStr) -> bool {
         let from = range.start;
         let to = range.end;
-        let x = u_string::slice(text, i32::from_ne_bytes(((from) as i32).to_ne_bytes()), i32::from_ne_bytes(((to) as i32).to_ne_bytes()));
-        return u32::from_ne_bytes(((match (x).rfind(&mark) { Some(v) => i32::from_ne_bytes(u32::try_from((v) & 4294967295).unwrap_or(0).to_ne_bytes()), None => -1 }) as u32).to_ne_bytes()) == u32::wrapping_sub(u_string::unit_count(&(x)), 1);
+        let x = u_string::slice(text, (from) as i32, (to) as i32);
+        return ((match (x).rfind(&mark) { Some(v) => u32::try_from((v) & 4294967295).unwrap_or(0) as i32, None => -1 }) as u32) == u32::wrapping_sub(u_string::unit_count(&(x)), 1);
     }
 }
 
@@ -545,7 +545,7 @@ impl ProportionalQuoteTextShaper {
             let mut gs: Vec<Glyph> = vec![];
             for gi in 0..match u32::try_from(run.glyphs.len()) { Ok(value) => value, Err(_) => u32::MAX } {
                 let g = (run.glyphs[usize::try_from(gi).unwrap_or(0)]).clone();
-                gs.push(Glyph::new(g.id, (g.cluster_range).clone(), 6.0f64, Some(g.x), Some(g.y), g.render_font_key.clone(), Some(Rect::new(1 as f64 as f64, i32::from_ne_bytes(((4294967286u32) as i32).to_ne_bytes()) as f64 as f64, 5 as f64 as f64, 0 as f64 as f64)), g.halt_advance, g.halt_placement_x));
+                gs.push(Glyph::new(g.id, (g.cluster_range).clone(), 6.0f64, Some(g.x), Some(g.y), g.render_font_key.clone(), Some(Rect::new(1 as f64 as f64, (4294967286u32) as i32 as f64 as f64, 5 as f64 as f64, 0 as f64 as f64)), g.halt_advance, g.halt_placement_x));
             }
             let mut features: Vec<UString> = vec![];
             for fi in 0..match u32::try_from(run.open_type_features.len()) { Ok(value) => value, Err(_) => u32::MAX } {
@@ -590,7 +590,7 @@ impl ITextShaper for ProportionalQuoteTextShaper {
             let mut gs: Vec<Glyph> = vec![];
             for gi in 0..match u32::try_from(run.glyphs.len()) { Ok(value) => value, Err(_) => u32::MAX } {
                 let g = (run.glyphs[usize::try_from(gi).unwrap_or(0)]).clone();
-                gs.push(Glyph::new(g.id, (g.cluster_range).clone(), 6.0f64, Some(g.x), Some(g.y), g.render_font_key.clone(), Some(Rect::new(1 as f64 as f64, i32::from_ne_bytes(((4294967286u32) as i32).to_ne_bytes()) as f64 as f64, 5 as f64 as f64, 0 as f64 as f64)), g.halt_advance, g.halt_placement_x));
+                gs.push(Glyph::new(g.id, (g.cluster_range).clone(), 6.0f64, Some(g.x), Some(g.y), g.render_font_key.clone(), Some(Rect::new(1 as f64 as f64, (4294967286u32) as i32 as f64 as f64, 5 as f64 as f64, 0 as f64 as f64)), g.halt_advance, g.halt_placement_x));
             }
             let mut features: Vec<UString> = vec![];
             for fi in 0..match u32::try_from(run.open_type_features.len()) { Ok(value) => value, Err(_) => u32::MAX } {

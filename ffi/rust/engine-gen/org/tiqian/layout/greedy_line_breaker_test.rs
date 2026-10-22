@@ -1446,7 +1446,7 @@ fn hangs_pause_stop_past_measure_when_enabled_and_push_in_cannot_fit() {
         let _ = TracedAssertions::traced_assertions_assert_equals(4, GreedyLineBreakerTestSupport::greedy_line_breaker_test_support_hang_offender_cluster_index((repair).clone()), None).unwrap();
         let mut candidate: Option<RepairCandidate> = None;
         let mut ci = 0u32;
-        while (i32::from_ne_bytes(((ci) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((line.repair_candidates.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
+        while ((ci) as i32) < ((u32::try_from((line.repair_candidates.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32) {
             if line.repair_candidates[usize::try_from(ci).unwrap_or(0)].clone().kind.to_ustring() == UString::from("Hang") {
                 candidate = Some((line.repair_candidates[usize::try_from(ci).unwrap_or(0)]).clone());
                 break;
@@ -1575,7 +1575,7 @@ impl GreedyLineBreakerTestSupport {
     pub fn greedy_line_breaker_test_support_clusters_x(count: u32) -> Result<Vec<Cluster>, TextRangeError> {
         let mut out: Vec<Cluster> = vec![];
         let mut i = 0u32;
-        while (i32::from_ne_bytes(((i) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((count) as i32).to_ne_bytes())) {
+        while ((i) as i32) < ((count) as i32) {
             out.push(GreedyLineBreakerTestSupport::greedy_line_breaker_test_support_cluster(i, u32::wrapping_add(i, 1), UStr::new(&[120]), 16 as f64, None)?);
             i = u32::wrapping_add(i, 1);
         }
@@ -1583,9 +1583,9 @@ impl GreedyLineBreakerTestSupport {
     }
 
     pub fn greedy_line_breaker_test_support_set_ints(values: &Vec<u32>) -> SortedSetTable<u32> {
-        let mut b: SortedSetTableBuilder<u32> = SortedTable::sorted_table_set_builder::<u32>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_bytes(((*a) as i32).to_ne_bytes()), i32::from_ne_bytes(((*b) as i32).to_ne_bytes()))));
+        let mut b: SortedSetTableBuilder<u32> = SortedTable::sorted_table_set_builder::<u32>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints((*a) as i32, (*b) as i32)));
         let mut i = 0u32;
-        while (i32::from_ne_bytes(((i) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((values.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
+        while ((i) as i32) < ((u32::try_from((values.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32) {
             b.put(&(values[usize::try_from(i).unwrap_or(0)]));
             i = u32::wrapping_add(i, 1);
         }
@@ -1626,29 +1626,29 @@ impl GreedyLineBreakerTestSupport {
 
     pub fn greedy_line_breaker_test_support_push_in_total_shrink(o: Option<RepairOption>) -> f64 {
         if o == None {
-            return i32::from_ne_bytes(((4294967295u32) as i32).to_ne_bytes()) as f64;
+            return ((4294967295u32) as i32) as f64;
         }
         let v = (o).as_ref().unwrap().clone();
         return match v {
             RepairOption::PushIn { penalty: _p0, reason: _p1, offender_cluster_index: _p2, allocations: _p3, total_shrink: _p4, .. } => _p4,
-            RepairOption::Hang { .. } => i32::from_ne_bytes(((4294967295u32) as i32).to_ne_bytes()) as f64,
-            RepairOption::CarryPrevious { .. } => i32::from_ne_bytes(((4294967295u32) as i32).to_ne_bytes()) as f64,
-            RepairOption::CarryNext { .. } => i32::from_ne_bytes(((4294967295u32) as i32).to_ne_bytes()) as f64,
-            RepairOption::LeaveRagged { .. } => i32::from_ne_bytes(((4294967295u32) as i32).to_ne_bytes()) as f64,
+            RepairOption::Hang { .. } => 4294967295u32 as i32 as f64,
+            RepairOption::CarryPrevious { .. } => 4294967295u32 as i32 as f64,
+            RepairOption::CarryNext { .. } => 4294967295u32 as i32 as f64,
+            RepairOption::LeaveRagged { .. } => 4294967295u32 as i32 as f64,
         };
     }
 
     pub fn greedy_line_breaker_test_support_push_in_total_available_capacity(o: Option<RepairOption>) -> f64 {
         if o == None {
-            return i32::from_ne_bytes(((4294967295u32) as i32).to_ne_bytes()) as f64;
+            return ((4294967295u32) as i32) as f64;
         }
         let v = (o).as_ref().unwrap().clone();
         return match v {
             RepairOption::PushIn { penalty: _p0, reason: _p1, offender_cluster_index: _p2, allocations: _p3, total_shrink: _p4, total_available_capacity: _p5 } => _p5,
-            RepairOption::Hang { .. } => i32::from_ne_bytes(((4294967295u32) as i32).to_ne_bytes()) as f64,
-            RepairOption::CarryPrevious { .. } => i32::from_ne_bytes(((4294967295u32) as i32).to_ne_bytes()) as f64,
-            RepairOption::CarryNext { .. } => i32::from_ne_bytes(((4294967295u32) as i32).to_ne_bytes()) as f64,
-            RepairOption::LeaveRagged { .. } => i32::from_ne_bytes(((4294967295u32) as i32).to_ne_bytes()) as f64,
+            RepairOption::Hang { .. } => 4294967295u32 as i32 as f64,
+            RepairOption::CarryPrevious { .. } => 4294967295u32 as i32 as f64,
+            RepairOption::CarryNext { .. } => 4294967295u32 as i32 as f64,
+            RepairOption::LeaveRagged { .. } => 4294967295u32 as i32 as f64,
         };
     }
 
@@ -1697,7 +1697,7 @@ impl GreedyLineBreakerTestSupport {
     pub fn greedy_line_breaker_test_support_allocation_cluster_indices(allocations: &Vec<PushInAllocation>) -> Vec<u32> {
         let mut out: Vec<u32> = vec![];
         let mut i = 0u32;
-        while (i32::from_ne_bytes(((i) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((allocations.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
+        while ((i) as i32) < ((u32::try_from((allocations.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32) {
             out.push(allocations[usize::try_from(i).unwrap_or(0)].cluster_index);
             i = u32::wrapping_add(i, 1);
         }

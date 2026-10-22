@@ -19,7 +19,7 @@ impl LayoutConstraints {
         if !((max_height) > (0.0f64)) {
             return Err(TextRangeError::Message { text: UString::from("maxHeight must be positive.") });
         }
-        if i32::from_ne_bytes(((max_lines) as i32).to_ne_bytes()) <= 0 {
+        if max_lines as i32 <= 0 {
             return Err(TextRangeError::Message { text: UString::from("maxLines must be positive.") });
         }
         Ok(Self {

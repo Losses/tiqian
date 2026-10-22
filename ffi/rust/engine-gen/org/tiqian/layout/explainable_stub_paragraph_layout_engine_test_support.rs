@@ -71,7 +71,7 @@ impl ExplainableStubParagraphLayoutEngineTestSupport {
     pub fn explainable_stub_paragraph_layout_engine_test_support_render_ranges(a: &Vec<TextRange>) -> UString {
         let mut s = UString::from("[").to_ustring();
         for i in 0..match u32::try_from(a.len()) { Ok(value) => value, Err(_) => u32::MAX } {
-            if ({ let v: u32 = i; i32::from_ne_bytes(v.to_ne_bytes()) }) > (0) {
+            if ({ let v: u32 = i; v as i32 }) > (0) {
                 s += &(UString::from(", "));
             }
             s += &((a[usize::try_from(i).unwrap_or(0)]).clone().to_string());
@@ -82,7 +82,7 @@ impl ExplainableStubParagraphLayoutEngineTestSupport {
     pub fn explainable_stub_paragraph_layout_engine_test_support_render_pairs(a: &Vec<UString>, b: &Vec<UString>) -> UString {
         let mut s = UString::from("[").to_ustring();
         for i in 0..match u32::try_from(a.len()) { Ok(value) => value, Err(_) => u32::MAX } {
-            if ({ let v: u32 = i; i32::from_ne_bytes(v.to_ne_bytes()) }) > (0) {
+            if ({ let v: u32 = i; v as i32 }) > (0) {
                 s += &(UString::from(", "));
             }
             s += &({ let mut __s = UString::new(); __s += &(UString::from("(")); __s += (a[usize::try_from(i).unwrap_or(0)]).clone().as_ustr(); __s += &(UString::from(", ")); __s += (b[usize::try_from(i).unwrap_or(0)]).clone().as_ustr(); __s += &(UString::from(")")); __s });
@@ -101,7 +101,7 @@ impl ExplainableStubParagraphLayoutEngineTestSupport {
     pub fn explainable_stub_paragraph_layout_engine_test_support_render_strings(a: &Vec<UString>) -> UString {
         let mut s = UString::from("[").to_ustring();
         for i in 0..match u32::try_from(a.len()) { Ok(value) => value, Err(_) => u32::MAX } {
-            if ({ let v: u32 = i; i32::from_ne_bytes(v.to_ne_bytes()) }) > (0) {
+            if ({ let v: u32 = i; v as i32 }) > (0) {
                 s += &(UString::from(", "));
             }
             s += &({ let mut __s = UString::new(); __s += &(UString::from("'")); __s += (a[usize::try_from(i).unwrap_or(0)]).clone().as_ustr(); __s += &(UString::from("'")); __s });
@@ -152,9 +152,9 @@ impl FixedBoundsTextShaper {
     }
 
     pub fn shape(&self, input: ShapingInput) -> ShapingResult {
-        let text = u_string::substring(&(input.text).to_ustring(), i32::from_ne_bytes((((input.range).clone().start) as i32).to_ne_bytes()), i32::from_ne_bytes((((input.range).clone().end) as i32).to_ne_bytes()));
-        let c = Cluster::new((input.range).clone(), text.as_ustr(), (((input.font_decision).clone().candidate).clone().key).to_ustring().as_ustr(), { let v: u32 = if u32::wrapping_sub((input.range).clone().end, (input.range).clone().start) == 0 { 0 } else { 20 }; i32::from_ne_bytes(v.to_ne_bytes()) } as f64 as f64, Some((input.display_text).to_ustring()), Some(0.0), Some(0.0), Some(0.0));
-        let g = Glyph::new(42u32, (input.range).clone(), 20 as f64 as f64, Some(0.0), Some(0.0), None, Some(Rect::new(1 as f64 as f64, i32::from_ne_bytes(((4294967286u32) as i32).to_ne_bytes()) as f64 as f64, 12 as f64 as f64, 2 as f64 as f64)), None, None);
+        let text = u_string::substring(&(input.text).to_ustring(), ((input.range).clone().start) as i32, ((input.range).clone().end) as i32);
+        let c = Cluster::new((input.range).clone(), text.as_ustr(), (((input.font_decision).clone().candidate).clone().key).to_ustring().as_ustr(), { let v: u32 = if u32::wrapping_sub((input.range).clone().end, (input.range).clone().start) == 0 { 0 } else { 20 }; v as i32 } as f64 as f64, Some((input.display_text).to_ustring()), Some(0.0), Some(0.0), Some(0.0));
+        let g = Glyph::new(42u32, (input.range).clone(), 20 as f64 as f64, Some(0.0), Some(0.0), None, Some(Rect::new(1 as f64 as f64, (4294967286u32) as i32 as f64 as f64, 12 as f64 as f64, 2 as f64 as f64)), None, None);
         return ShapingResult::new(vec![(c).clone()].to_vec(), vec![
     (GlyphRun::new((input.range).clone(), (((input.font_decision).clone().candidate).clone().key).to_ustring().as_ustr(), vec![(g).clone()].to_vec(), 20 as f64 as f64, Some(vec![]))).clone(),
 ].to_vec(), Some(vec![]));
@@ -173,9 +173,9 @@ impl ITextShaper for FixedBoundsTextShaper {
     }
 
     fn shape(&mut self, input: ShapingInput) -> Result<ShapingResult, TextShaperShapeFault> {
-        let text = u_string::substring(&(input.text).to_ustring(), i32::from_ne_bytes((((input.range).clone().start) as i32).to_ne_bytes()), i32::from_ne_bytes((((input.range).clone().end) as i32).to_ne_bytes()));
-        let c = Cluster::new((input.range).clone(), text.as_ustr(), (((input.font_decision).clone().candidate).clone().key).to_ustring().as_ustr(), { let v: u32 = if u32::wrapping_sub((input.range).clone().end, (input.range).clone().start) == 0 { 0 } else { 20 }; i32::from_ne_bytes(v.to_ne_bytes()) } as f64 as f64, Some((input.display_text).to_ustring()), Some(0.0), Some(0.0), Some(0.0));
-        let g = Glyph::new(42u32, (input.range).clone(), 20 as f64 as f64, Some(0.0), Some(0.0), None, Some(Rect::new(1 as f64 as f64, i32::from_ne_bytes(((4294967286u32) as i32).to_ne_bytes()) as f64 as f64, 12 as f64 as f64, 2 as f64 as f64)), None, None);
+        let text = u_string::substring(&(input.text).to_ustring(), ((input.range).clone().start) as i32, ((input.range).clone().end) as i32);
+        let c = Cluster::new((input.range).clone(), text.as_ustr(), (((input.font_decision).clone().candidate).clone().key).to_ustring().as_ustr(), { let v: u32 = if u32::wrapping_sub((input.range).clone().end, (input.range).clone().start) == 0 { 0 } else { 20 }; v as i32 } as f64 as f64, Some((input.display_text).to_ustring()), Some(0.0), Some(0.0), Some(0.0));
+        let g = Glyph::new(42u32, (input.range).clone(), 20 as f64 as f64, Some(0.0), Some(0.0), None, Some(Rect::new(1 as f64 as f64, (4294967286u32) as i32 as f64 as f64, 12 as f64 as f64, 2 as f64 as f64)), None, None);
         return Ok(ShapingResult::new(vec![(c).clone()].to_vec(), vec![
     (GlyphRun::new((input.range).clone(), (((input.font_decision).clone().candidate).clone().key).to_ustring().as_ustr(), vec![(g).clone()].to_vec(), 20 as f64 as f64, Some(vec![]))).clone(),
 ].to_vec(), Some(vec![])));

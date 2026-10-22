@@ -249,7 +249,7 @@ fn interpunct_ink_evidence_frees_paired_glue_for_tier_three_shrink() {
         let ellipsis = ((result.debug).clone().punctuation_decisions[usize::try_from(u32::wrapping_sub(u32::try_from(((result.debug).clone().punctuation_decisions.len()) & 0xFFFF_FFFF).unwrap_or(0), 1)).unwrap_or(0)]).clone();
         let _ = TracedAssertions::traced_assertions_assert_equals_float(0.0f64, ellipsis.leading_glue_natural, None).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_true((ellipsis.trailing_glue_natural) > (0.0f64), Some(UString::from(format!("{}", { let mut __s = UString::new(); __s += &(UString::from("trailing glue: ")); __s += &(crate::runtime::fp_helper::FPHelper::format_float(ellipsis.trailing_glue_natural)); __s }).as_str()))).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_true((i32::from_ne_bytes(((u32::try_from((result.lines.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) > (0), None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_true((u32::try_from((result.lines.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32 > (0), None).unwrap();
     });
 }
 
@@ -276,6 +276,6 @@ fn preserved_interpunct_codepoint_keeps_interpunct_class_for_tier_three_shrink()
             let _ = TracedAssertions::traced_assertions_assert_true((dot.trailing_glue_natural) > (0.0f64), Some(UString::from(format!("{}", { let mut __s = UString::new(); __s += &(UString::from("trailing glue: ")); __s += &(crate::runtime::fp_helper::FPHelper::format_float(dot.trailing_glue_natural)); __s }).as_str()))).unwrap();
             let _ = TracedAssertions::traced_assertions_assert_equals_string(UStr::new(&[67,101,110,116,101,114]), (dot.anchor).to_ustring().as_ustr(), None).unwrap();
         }
-        let _ = TracedAssertions::traced_assertions_assert_true((i32::from_ne_bytes(((u32::try_from((result.lines.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) > (0), None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_true((u32::try_from((result.lines.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32 > (0), None).unwrap();
     });
 }

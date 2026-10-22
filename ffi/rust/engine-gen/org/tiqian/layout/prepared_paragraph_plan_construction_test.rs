@@ -408,9 +408,9 @@ fn open_type_features_and_render_font_family_attach_per_cluster() {
         let mut t = TestTraceRecorder::new(&(UStr::new(&[80,114,101,112,97,114,101,100,80,97,114,97,103,114,97,112,104,80,108,97,110,67,111,110,115,116,114,117,99,116,105,111,110,84,101,115,116])));
         t.section(UStr::new(&[111,112,101,110,84,121,112,101,70,101,97,116,117,114,101,115,65,110,100,82,101,110,100,101,114,70,111,110,116,70,97,109,105,108,121,65,116,116,97,99,104,80,101,114,67,108,117,115,116,101,114]));
         let json = PreparedParagraphFns::prepared_paragraph_fns_to_prepared_paragraph_json(PreparedParagraphPlanConstructionTestSupport::prepared_paragraph_plan_construction_test_support_open_type_features_and_render_font_family_attach_per_cluster().unwrap(), true).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_true((u32::from_ne_bytes(((u_string::find_from(&(json), UString::from("\"openTypeFeatures\":[\"kern\",\"liga\"]").as_ustr(), 0)) as u32).to_ne_bytes())) <= 2147483647, Some((json).to_ustring())).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_true((u32::from_ne_bytes(((u_string::find_from(&(json), UString::from("\"renderFontFamily\":\"Noto Serif CJK\"").as_ustr(), 0)) as u32).to_ne_bytes())) <= 2147483647, Some((json).to_ustring())).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_false((u32::from_ne_bytes(((u_string::find_from(&(json), UString::from("shapingBoundary").as_ustr(), 0)) as u32).to_ne_bytes())) <= 2147483647, Some((json).to_ustring())).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_true((u_string::find_from(&(json), UString::from("\"openTypeFeatures\":[\"kern\",\"liga\"]").as_ustr(), 0)) as u32 <= 2147483647, Some((json).to_ustring())).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_true((u_string::find_from(&(json), UString::from("\"renderFontFamily\":\"Noto Serif CJK\"").as_ustr(), 0)) as u32 <= 2147483647, Some((json).to_ustring())).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_false((u_string::find_from(&(json), UString::from("shapingBoundary").as_ustr(), 0)) as u32 <= 2147483647, Some((json).to_ustring())).unwrap();
     });
 }
 
@@ -420,7 +420,7 @@ fn multi_unit_cluster_marks_shaping_boundary() {
         let mut t = TestTraceRecorder::new(&(UStr::new(&[80,114,101,112,97,114,101,100,80,97,114,97,103,114,97,112,104,80,108,97,110,67,111,110,115,116,114,117,99,116,105,111,110,84,101,115,116])));
         t.section(UStr::new(&[109,117,108,116,105,85,110,105,116,67,108,117,115,116,101,114,77,97,114,107,115,83,104,97,112,105,110,103,66,111,117,110,100,97,114,121]));
         let json = PreparedParagraphFns::prepared_paragraph_fns_to_prepared_paragraph_json(PreparedParagraphPlanConstructionTestSupport::prepared_paragraph_plan_construction_test_support_multi_unit_cluster_marks_shaping_boundary().unwrap(), false).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_true((u32::from_ne_bytes(((u_string::find_from(&(json), UString::from("\"shapingBoundary\":true").as_ustr(), 0)) as u32).to_ne_bytes())) <= 2147483647, Some((json).to_ustring())).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_true((u_string::find_from(&(json), UString::from("\"shapingBoundary\":true").as_ustr(), 0)) as u32 <= 2147483647, Some((json).to_ustring())).unwrap();
     });
 }
 
@@ -431,8 +431,8 @@ fn inline_object_cell_emits_advance_override() {
         t.section(UStr::new(&[105,110,108,105,110,101,79,98,106,101,99,116,67,101,108,108,69,109,105,116,115,65,100,118,97,110,99,101,79,118,101,114,114,105,100,101]));
         let r = PreparedParagraphPlanConstructionTestSupport::prepared_paragraph_plan_construction_test_support_inline_object_cell_emits_advance_override().unwrap();
         let json = PreparedParagraphFns::prepared_paragraph_fns_to_prepared_paragraph_json((r).clone(), true).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_true((u32::from_ne_bytes(((u_string::find_from(&(json), UString::from("\"inlineObject\":24").as_ustr(), 0)) as u32).to_ne_bytes())) <= 2147483647, Some((json).to_ustring())).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_true((u32::from_ne_bytes(((u_string::find_from(&(json), UString::from("\"advance\":10").as_ustr(), 0)) as u32).to_ne_bytes())) <= 2147483647, Some((json).to_ustring())).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_true((u_string::find_from(&(json), UString::from("\"inlineObject\":24").as_ustr(), 0)) as u32 <= 2147483647, Some((json).to_ustring())).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_true((u_string::find_from(&(json), UString::from("\"advance\":10").as_ustr(), 0)) as u32 <= 2147483647, Some((json).to_ustring())).unwrap();
         let mut empty_clusters: Vec<Cluster> = vec![];
         for i in 0..match u32::try_from(r.clusters.len()) { Ok(value) => value, Err(_) => u32::MAX } {
             let c = (r.clusters[usize::try_from(i).unwrap_or(0)]).clone();
@@ -440,10 +440,10 @@ fn inline_object_cell_emits_advance_override() {
         }
         let empty_display = LayoutResult::new((r.input).clone(), (r.size).clone(), (empty_clusters).clone(), (r.glyph_runs).clone(), (r.lines).clone(), (r.debug).clone());
         let plain = PreparedParagraphFns::prepared_paragraph_fns_to_prepared_paragraph_json((empty_display).clone(), false).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_false((u32::from_ne_bytes(((u_string::find_from(&(plain), UString::from("\"inlineObject\"").as_ustr(), 0)) as u32).to_ne_bytes())) <= 2147483647, Some((plain).to_ustring())).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_false((u32::from_ne_bytes(((u_string::find_from(&(plain), UString::from("\"rangeStart\":1").as_ustr(), 0)) as u32).to_ne_bytes())) <= 2147483647, Some((plain).to_ustring())).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_false((u_string::find_from(&(plain), UString::from("\"inlineObject\"").as_ustr(), 0)) as u32 <= 2147483647, Some((plain).to_ustring())).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_false((u_string::find_from(&(plain), UString::from("\"rangeStart\":1").as_ustr(), 0)) as u32 <= 2147483647, Some((plain).to_ustring())).unwrap();
         let evidence = PreparedParagraphFns::prepared_paragraph_fns_to_prepared_paragraph_json((empty_display).clone(), true).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_true((u32::from_ne_bytes(((u_string::find_from(&(evidence), UString::from("\"inlineObject\":24").as_ustr(), 0)) as u32).to_ne_bytes())) <= 2147483647, Some((evidence).to_ustring())).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_true((u_string::find_from(&(evidence), UString::from("\"inlineObject\":24").as_ustr(), 0)) as u32 <= 2147483647, Some((evidence).to_ustring())).unwrap();
     });
 }
 
@@ -453,8 +453,8 @@ fn style_delta_lists_only_paint_fields() {
         let mut t = TestTraceRecorder::new(&(UStr::new(&[80,114,101,112,97,114,101,100,80,97,114,97,103,114,97,112,104,80,108,97,110,67,111,110,115,116,114,117,99,116,105,111,110,84,101,115,116])));
         t.section(UStr::new(&[115,116,121,108,101,68,101,108,116,97,76,105,115,116,115,79,110,108,121,80,97,105,110,116,70,105,101,108,100,115]));
         let json = PreparedParagraphFns::prepared_paragraph_fns_to_prepared_paragraph_json(PreparedParagraphPlanConstructionTestSupport::prepared_paragraph_plan_construction_test_support_style_delta_lists_only_paint_fields().unwrap(), true).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_true((u32::from_ne_bytes(((u_string::find_from(&(json), UString::from("\"style\":{\"fontSize\":20,\"fontWeight\":700,\"italic\":true}").as_ustr(), 0)) as u32).to_ne_bytes())) <= 2147483647, Some((json).to_ustring())).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_true((u32::from_ne_bytes(((u_string::find_from(&(json), UString::from("\"style\":{}").as_ustr(), 0)) as u32).to_ne_bytes())) <= 2147483647, Some((json).to_ustring())).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_true((u_string::find_from(&(json), UString::from("\"style\":{\"fontSize\":20,\"fontWeight\":700,\"italic\":true}").as_ustr(), 0)) as u32 <= 2147483647, Some((json).to_ustring())).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_true((u_string::find_from(&(json), UString::from("\"style\":{}").as_ustr(), 0)) as u32 <= 2147483647, Some((json).to_ustring())).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_equals(2, u32::wrapping_sub(u32::try_from((u_string::split(&json, &UString::from("\"style\":")).len()) & 0xFFFF_FFFF).unwrap_or(0), 1), None).unwrap();
     });
 }

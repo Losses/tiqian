@@ -143,9 +143,9 @@ impl MultiGlyphBoundsShaper {
 
     pub fn shape(&mut self, input: ShapingInput) -> Result<ShapingResult, TextShaperShapeFault> {
         self.call_count += 1;
-        let cluster = Cluster::new((input.range).clone(), u_string::substring(&(input.text).to_ustring(), i32::from_ne_bytes((((input.range).clone().start) as i32).to_ne_bytes()), i32::from_ne_bytes((((input.range).clone().end) as i32).to_ne_bytes())).as_ustr(), &(UStr::new(&[116,101,115,116])), 16.0f64, Some((input.display_text).to_ustring()), Some(0.0), Some(0.0), Some(0.0));
+        let cluster = Cluster::new((input.range).clone(), u_string::substring(&(input.text).to_ustring(), ((input.range).clone().start) as i32, ((input.range).clone().end) as i32).as_ustr(), &(UStr::new(&[116,101,115,116])), 16.0f64, Some((input.display_text).to_ustring()), Some(0.0), Some(0.0), Some(0.0));
         let mut glyphs: Vec<Glyph> = vec![];
-        if u32::from_ne_bytes(((i32::from_ne_bytes(((self.call_count) as i32).to_ne_bytes()) % 2i32) as u32).to_ne_bytes()) == 0 {
+        if self.call_count as i32 % 2i32 as u32 == 0 {
             glyphs.push(Glyph::new(1u32, (input.range).clone(), 5.0f64, Some(0.0f64), Some(0.0), None, Some(Rect::new(10.0f64, 10.0f64, 20.0f64, 20.0f64)), None, None));
             glyphs.push(Glyph::new(2u32, (input.range).clone(), 5.0f64, Some(5.0f64), Some(0.0), None, Some(Rect::new(5.0f64, 5.0f64, 25.0f64, 25.0f64)), None, None));
             glyphs.push(Glyph::new(3u32, (input.range).clone(), 6.0f64, Some(10.0f64), Some(0.0), None, Some(Rect::new(15.0f64, 15.0f64, 15.0f64, 15.0f64)), None, None));
@@ -169,9 +169,9 @@ impl ITextShaper for MultiGlyphBoundsShaper {
 
     fn shape(&mut self, input: ShapingInput) -> Result<ShapingResult, TextShaperShapeFault> {
         self.call_count += 1;
-        let cluster = Cluster::new((input.range).clone(), u_string::substring(&(input.text).to_ustring(), i32::from_ne_bytes((((input.range).clone().start) as i32).to_ne_bytes()), i32::from_ne_bytes((((input.range).clone().end) as i32).to_ne_bytes())).as_ustr(), &(UStr::new(&[116,101,115,116])), 16.0f64, Some((input.display_text).to_ustring()), Some(0.0), Some(0.0), Some(0.0));
+        let cluster = Cluster::new((input.range).clone(), u_string::substring(&(input.text).to_ustring(), ((input.range).clone().start) as i32, ((input.range).clone().end) as i32).as_ustr(), &(UStr::new(&[116,101,115,116])), 16.0f64, Some((input.display_text).to_ustring()), Some(0.0), Some(0.0), Some(0.0));
         let mut glyphs: Vec<Glyph> = vec![];
-        if u32::from_ne_bytes(((i32::from_ne_bytes(((self.call_count) as i32).to_ne_bytes()) % 2i32) as u32).to_ne_bytes()) == 0 {
+        if self.call_count as i32 % 2i32 as u32 == 0 {
             glyphs.push(Glyph::new(1u32, (input.range).clone(), 5.0f64, Some(0.0f64), Some(0.0), None, Some(Rect::new(10.0f64, 10.0f64, 20.0f64, 20.0f64)), None, None));
             glyphs.push(Glyph::new(2u32, (input.range).clone(), 5.0f64, Some(5.0f64), Some(0.0), None, Some(Rect::new(5.0f64, 5.0f64, 25.0f64, 25.0f64)), None, None));
             glyphs.push(Glyph::new(3u32, (input.range).clone(), 6.0f64, Some(10.0f64), Some(0.0), None, Some(Rect::new(15.0f64, 15.0f64, 15.0f64, 15.0f64)), None, None));

@@ -162,7 +162,7 @@ impl DashBoundsShaper {
             let mut gs: Vec<Glyph> = vec![];
             for gi in 0..match u32::try_from(run.glyphs.len()) { Ok(value) => value, Err(_) => u32::MAX } {
                 let g = (run.glyphs[usize::try_from(gi).unwrap_or(0)]).clone();
-                gs.push(if u32::from_ne_bytes(((u_string::find_from(&((input.display_text).to_ustring()), UString::from("⸺").as_ustr(), 0)) as u32).to_ne_bytes()) <= 2147483647 { Glyph::new(g.id, (g.cluster_range).clone(), g.advance, Some(g.x), Some(g.y), g.render_font_key.clone(), Some(Rect::new(if self.wide { 0.0f64 } else { 1.0f64 }, 0 as f64 as f64, if self.wide { 31.5f64 } else { 29 as f64 }, 16 as f64 as f64)), g.halt_advance, g.halt_placement_x) } else { g });
+                gs.push(if u_string::find_from(&((input.display_text).to_ustring()), UString::from("⸺").as_ustr(), 0) as u32 <= 2147483647 { Glyph::new(g.id, (g.cluster_range).clone(), g.advance, Some(g.x), Some(g.y), g.render_font_key.clone(), Some(Rect::new(if self.wide { 0.0f64 } else { 1.0f64 }, 0 as f64 as f64, if self.wide { 31.5f64 } else { 29 as f64 }, 16 as f64 as f64)), g.halt_advance, g.halt_placement_x) } else { g });
             }
             runs.push(GlyphRun::new((run.range).clone(), (run.font_key).to_ustring().as_ustr(), gs.to_vec(), run.advance, Some(vec![])));
         }
@@ -189,7 +189,7 @@ impl ITextShaper for DashBoundsShaper {
             let mut gs: Vec<Glyph> = vec![];
             for gi in 0..match u32::try_from(run.glyphs.len()) { Ok(value) => value, Err(_) => u32::MAX } {
                 let g = (run.glyphs[usize::try_from(gi).unwrap_or(0)]).clone();
-                gs.push(if u32::from_ne_bytes(((u_string::find_from(&((input.display_text).to_ustring()), UString::from("⸺").as_ustr(), 0)) as u32).to_ne_bytes()) <= 2147483647 { Glyph::new(g.id, (g.cluster_range).clone(), g.advance, Some(g.x), Some(g.y), g.render_font_key.clone(), Some(Rect::new(if self.wide { 0.0f64 } else { 1.0f64 }, 0 as f64 as f64, if self.wide { 31.5f64 } else { 29 as f64 }, 16 as f64 as f64)), g.halt_advance, g.halt_placement_x) } else { g });
+                gs.push(if u_string::find_from(&((input.display_text).to_ustring()), UString::from("⸺").as_ustr(), 0) as u32 <= 2147483647 { Glyph::new(g.id, (g.cluster_range).clone(), g.advance, Some(g.x), Some(g.y), g.render_font_key.clone(), Some(Rect::new(if self.wide { 0.0f64 } else { 1.0f64 }, 0 as f64 as f64, if self.wide { 31.5f64 } else { 29 as f64 }, 16 as f64 as f64)), g.halt_advance, g.halt_placement_x) } else { g });
             }
             runs.push(GlyphRun::new((run.range).clone(), (run.font_key).to_ustring().as_ustr(), gs.to_vec(), run.advance, Some(vec![])));
         }

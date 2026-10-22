@@ -595,7 +595,7 @@ fn centered_ink_punctuation_keeps_paired_glue() {
         let wide = R3GeometryTailCoverageTestSupport::r3_geometry_tail_coverage_test_support_layout(UStr::new(&[20013,183,25991]), Some(320 as f64 as f64), None, None, None, Some(R3GeometryTailCoverageTestSupport::r3_geometry_tail_coverage_test_support_centered_ink_shaper())).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_equals_int(1, u32::try_from((wide.lines.len()) & 0xFFFF_FFFF).unwrap_or(0), None).unwrap();
         let tight = R3GeometryTailCoverageTestSupport::r3_geometry_tail_coverage_test_support_layout(UStr::new(&[25991,183,26412,65292,20869,23481,12290]), Some(60 as f64 as f64), None, None, None, Some(R3GeometryTailCoverageTestSupport::r3_geometry_tail_coverage_test_support_centered_ink_shaper())).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_true((i32::from_ne_bytes(((u32::try_from((tight.lines.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) > (1), None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_true((u32::try_from((tight.lines.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32 > (1), None).unwrap();
     });
 }
 
@@ -616,7 +616,7 @@ fn max_lines_caps_visible_lines_to_one() {
         t.section(UStr::new(&[109,97,120,76,105,110,101,115,67,97,112,115,86,105,115,105,98,108,101,76,105,110,101,115,84,111,79,110,101]));
         let text = UString::from("中文排版引擎测试文本，用于验证多行截断行为是否正确工作并继续延伸。").to_ustring();
         let u = R3GeometryTailCoverageTestSupport::r3_geometry_tail_coverage_test_support_layout(text.as_ustr(), Some(64 as f64 as f64), None, None, None, None).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_true((i32::from_ne_bytes(((u32::try_from((u.lines.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) > (1), Some(UString::from("fixture must wrap without the cap"))).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_true((u32::try_from((u.lines.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32 > (1), Some(UString::from("fixture must wrap without the cap"))).unwrap();
         let c = R3GeometryTailCoverageTestSupport::r3_geometry_tail_coverage_test_support_layout(text.as_ustr(), Some(64 as f64 as f64), Some(1), None, None, None).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_equals_int(1, u32::try_from((c.lines.len()) & 0xFFFF_FFFF).unwrap_or(0), None).unwrap();
     });
@@ -628,7 +628,7 @@ fn pure_latin_paragraph_still_produces_lines() {
         let mut t = TestTraceRecorder::new(&(UStr::new(&[82,51,71,101,111,109,101,116,114,121,84,97,105,108,67,111,118,101,114,97,103,101,84,101,115,116])));
         t.section(UStr::new(&[112,117,114,101,76,97,116,105,110,80,97,114,97,103,114,97,112,104,83,116,105,108,108,80,114,111,100,117,99,101,115,76,105,110,101,115]));
         let r = R3GeometryTailCoverageTestSupport::r3_geometry_tail_coverage_test_support_layout(UStr::new(&[104,101,108,108,111,32,106,117,115,116,105,102,105,101,100,32,119,111,114,108,100]), Some(96 as f64 as f64), None, None, None, None).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_true((i32::from_ne_bytes(((u32::try_from((r.lines.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) > (0), None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_true((u32::try_from((r.lines.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32 > (0), None).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_true((r.lines[0usize].natural_width) > (0 as f64), None).unwrap();
     });
 }

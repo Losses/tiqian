@@ -79,7 +79,7 @@ impl LiangHyphenatorTestHelpers {
     pub fn liang_hyphenator_test_helpers_table(keys: &Vec<UString>, values: &Vec<Vec<u32>>) -> SortedMapTable<UString, Vec<u32>> {
         let mut b = SortedTable::sorted_table_map_builder::<UString, Vec<u32>>(Arc::new(|a, b| SortedTable::sorted_table_compare_strings(a.as_ustr(), b.as_ustr())));
         let mut i = 0u32;
-        while (i32::from_ne_bytes(((i) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((keys.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
+        while ((i) as i32) < ((u32::try_from((keys.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32) {
             b.put(&(keys[usize::try_from(i).unwrap_or(0)]).clone(), &((values[usize::try_from(i).unwrap_or(0)]).clone()));
             i = u32::wrapping_add(i, 1);
         }

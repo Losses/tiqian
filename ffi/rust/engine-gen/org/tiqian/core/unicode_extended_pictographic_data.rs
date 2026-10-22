@@ -48,13 +48,13 @@ impl UnicodeExtendedPictographicData {
     pub fn unicode_extended_pictographic_data_contains(code_point: u32) -> bool {
         let mut low = 0u32;
         let mut high = u32::wrapping_sub(u32::try_from((RANGES.len()) & 0xFFFF_FFFF).unwrap_or(0) >> 1, 1);
-        while (i32::from_ne_bytes(((low) as i32).to_ne_bytes())) <= i32::from_ne_bytes(((high) as i32).to_ne_bytes()) {
+        while ((low) as i32) <= high as i32 {
             let middle = u32::wrapping_add(low, high) >> 1;
             let base = u32::wrapping_mul(middle, 2);
-            if i32::from_ne_bytes(((code_point) as i32).to_ne_bytes()) < ({ let v: u32 = RANGES[usize::try_from(base).unwrap_or(0)]; i32::from_ne_bytes(v.to_ne_bytes()) }) {
+            if code_point as i32 < ({ let v: u32 = RANGES[usize::try_from(base).unwrap_or(0)]; v as i32 }) {
                 high = u32::wrapping_sub(middle, 1);
             } else {
-                if i32::from_ne_bytes(((code_point) as i32).to_ne_bytes()) > ({ let v: u32 = RANGES[usize::try_from(u32::wrapping_add(base, 1)).unwrap_or(0)]; i32::from_ne_bytes(v.to_ne_bytes()) }) {
+                if code_point as i32 > ({ let v: u32 = RANGES[usize::try_from(u32::wrapping_add(base, 1)).unwrap_or(0)]; v as i32 }) {
                     low = u32::wrapping_add(middle, 1);
                 } else {
                     return true;

@@ -50,8 +50,8 @@ impl NumberSymbolCohesionTestHelpers {
         let ranges = NumberSymbolCohesion::number_symbol_cohesion_unbreakable_ranges(text);
         let mut result: Vec<UString> = vec![];
         let mut index = 0u32;
-        while (i32::from_ne_bytes(((index) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((ranges.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
-            result.push(u_string::substring(&text, i32::from_ne_bytes(((ranges[usize::try_from(index).unwrap_or(0)].start) as i32).to_ne_bytes()), i32::from_ne_bytes(((u32::wrapping_add(ranges[usize::try_from(index).unwrap_or(0)].end, 1)) as i32).to_ne_bytes())));
+        while ((index) as i32) < ((u32::try_from((ranges.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32) {
+            result.push(u_string::substring(&text, (ranges[usize::try_from(index).unwrap_or(0)].start) as i32, (u32::wrapping_add(ranges[usize::try_from(index).unwrap_or(0)].end, 1)) as i32));
             index = u32::wrapping_add(index, 1);
         }
         return result;

@@ -46,21 +46,19 @@ impl ClreqPunctuationGlyphSubstitutor {
     }
 
     pub(crate) fn clreq_punctuation_glyph_substitutor_to_clreq_recommended_display_text(text: &UStr) -> Result<UString, UStringFault> {
-    let __units = u_string::units(&text);
+    let __units = text.as_slice();
     let __count = u_string::unit_count(&text);
         let mut output = Vec::<u16>::new();
         let mut index = 0u32;
         let mut all_ellipsis = true;
-        let __units1 = u_string::units(&text);
-        let __count1 = u_string::unit_count(&text);
-        while (i32::from_ne_bytes(((index) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((__count) as i32).to_ne_bytes())) {
-            if !(u_string::unit_at_from(&__units1, index).as_ref().map_or(false, |v| v == &(8230))) {
+        while ((index) as i32) < ((__count) as i32) {
+            if !(matches!(u_string::unit_at_from(__units, index).as_ref(), Some(__v) if __v == &(8230))) {
                 all_ellipsis = false;
                 break;
             }
             if let Some(&unit) = output.last() {
                 if unit >= 55296 && unit <= 56319 && !ClreqPunctuationGlyphSubstitutor::CLREQ_PUNCTUATION_GLYPH_SUBSTITUTOR_MIDLINE_ELLIPSIS.to_ustring().is_empty() {
-                    if !ClreqPunctuationGlyphSubstitutor::CLREQ_PUNCTUATION_GLYPH_SUBSTITUTOR_MIDLINE_ELLIPSIS.to_ustring().encode_utf16().next().map_or(false, |head| head >= 56320 && head <= 57343) {
+                    if !match (ClreqPunctuationGlyphSubstitutor::CLREQ_PUNCTUATION_GLYPH_SUBSTITUTOR_MIDLINE_ELLIPSIS.to_ustring()).encode_utf16().next() { Some(head) => head >= 56320 && head <= 57343, None => false } {
                         return Err(UStringFault::UnpairedSurrogate { unit: u32::from(unit) });
                     }
                 }
@@ -81,17 +79,15 @@ impl ClreqPunctuationGlyphSubstitutor {
     }
 
     pub(crate) fn clreq_punctuation_glyph_substitutor_to_code_point_labels(text: &UStr) -> Result<UString, UStringFault> {
-    let __units2 = u_string::units(&text);
+    let __units2 = text.as_slice();
     let __count2 = u_string::unit_count(&text);
         let mut output = Vec::<u16>::new();
         let mut index = 0u32;
-        let __units3 = u_string::units(&text);
-        let __count3 = u_string::unit_count(&text);
-        while (i32::from_ne_bytes(((index) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((__count2) as i32).to_ne_bytes())) {
-            if i32::from_ne_bytes(((index) as i32).to_ne_bytes()) > (0) {
+        while ((index) as i32) < ((__count2) as i32) {
+            if index as i32 > (0) {
                 if let Some(&unit) = output.last() {
                     if unit >= 55296 && unit <= 56319 && !UString::from("+").is_empty() {
-                        if !UString::from("+").encode_utf16().next().map_or(false, |head| head >= 56320 && head <= 57343) {
+                        if !match (UString::from("+")).encode_utf16().next() { Some(head) => head >= 56320 && head <= 57343, None => false } {
                             return Err(UStringFault::UnpairedSurrogate { unit: u32::from(unit) });
                         }
                     }
@@ -100,26 +96,26 @@ impl ClreqPunctuationGlyphSubstitutor {
             }
             if let Some(&unit) = output.last() {
                 if unit >= 55296 && unit <= 56319 && !UString::from("U+").is_empty() {
-                    if !UString::from("U+").encode_utf16().next().map_or(false, |head| head >= 56320 && head <= 57343) {
+                    if !match (UString::from("U+")).encode_utf16().next() { Some(head) => head >= 56320 && head <= 57343, None => false } {
                         return Err(UStringFault::UnpairedSurrogate { unit: u32::from(unit) });
                     }
                 }
             }
             output.extend(UString::from("U+").encode_utf16());
             if let Some(&unit) = output.last() {
-                if unit >= 55296 && unit <= 56319 && !ClreqPunctuationGlyphSubstitutor::clreq_punctuation_glyph_substitutor_hex_label(*(u_string::unit_at_from(&__units3, index)).as_ref().unwrap()).is_empty() {
-                    if !ClreqPunctuationGlyphSubstitutor::clreq_punctuation_glyph_substitutor_hex_label(*(u_string::unit_at_from(&__units3, index)).as_ref().unwrap()).encode_utf16().next().map_or(false, |head| head >= 56320 && head <= 57343) {
+                if unit >= 55296 && unit <= 56319 && !ClreqPunctuationGlyphSubstitutor::clreq_punctuation_glyph_substitutor_hex_label(*(u_string::unit_at_from(__units2, index)).as_ref().unwrap()).is_empty() {
+                    if !match (ClreqPunctuationGlyphSubstitutor::clreq_punctuation_glyph_substitutor_hex_label(*(u_string::unit_at_from(__units2, index)).as_ref().unwrap())).encode_utf16().next() { Some(head) => head >= 56320 && head <= 57343, None => false } {
                         return Err(UStringFault::UnpairedSurrogate { unit: u32::from(unit) });
                     }
                 }
             }
-            output.extend(ClreqPunctuationGlyphSubstitutor::clreq_punctuation_glyph_substitutor_hex_label(*(u_string::unit_at_from(&__units3, index)).as_ref().unwrap()).encode_utf16());
+            output.extend(ClreqPunctuationGlyphSubstitutor::clreq_punctuation_glyph_substitutor_hex_label(*(u_string::unit_at_from(__units2, index)).as_ref().unwrap()).encode_utf16());
             index = u32::wrapping_add(index, 1);
         }
         return Ok(UString::from_utf16(output.as_slice()).map_err(|_| UStringFault::UnpairedSurrogate { unit: u32::from(output[output.len() - 1]) })?);
     }
 
     pub(crate) fn clreq_punctuation_glyph_substitutor_hex_label(unit: u32) -> UString {
-        return UString::from(format!("{}", { let mut __s = UString::new(); __s += u_string::substring(&ClreqPunctuationGlyphSubstitutor::CLREQ_PUNCTUATION_GLYPH_SUBSTITUTOR_HEX_UPPER.to_ustring(), i32::from_ne_bytes(((unit >> 12 & 15) as i32).to_ne_bytes()), i32::from_ne_bytes(((u32::wrapping_add(unit >> 12 & 15, 1)) as i32).to_ne_bytes())).as_ustr(); __s += u_string::substring(&ClreqPunctuationGlyphSubstitutor::CLREQ_PUNCTUATION_GLYPH_SUBSTITUTOR_HEX_UPPER.to_ustring(), i32::from_ne_bytes(((unit >> 8 & 15) as i32).to_ne_bytes()), i32::from_ne_bytes(((u32::wrapping_add(unit >> 8 & 15, 1)) as i32).to_ne_bytes())).as_ustr(); __s += u_string::substring(&ClreqPunctuationGlyphSubstitutor::CLREQ_PUNCTUATION_GLYPH_SUBSTITUTOR_HEX_UPPER.to_ustring(), i32::from_ne_bytes(((unit >> 4 & 15) as i32).to_ne_bytes()), i32::from_ne_bytes(((u32::wrapping_add(unit >> 4 & 15, 1)) as i32).to_ne_bytes())).as_ustr(); __s += u_string::substring(&ClreqPunctuationGlyphSubstitutor::CLREQ_PUNCTUATION_GLYPH_SUBSTITUTOR_HEX_UPPER.to_ustring(), i32::from_ne_bytes(((unit & 15) as i32).to_ne_bytes()), i32::from_ne_bytes(((u32::wrapping_add(unit & 15, 1)) as i32).to_ne_bytes())).as_ustr(); __s }).as_str());
+        return UString::from(format!("{}", { let mut __s = UString::new(); __s += u_string::substring(&ClreqPunctuationGlyphSubstitutor::CLREQ_PUNCTUATION_GLYPH_SUBSTITUTOR_HEX_UPPER.to_ustring(), (unit >> 12 & 15) as i32, (u32::wrapping_add(unit >> 12 & 15, 1)) as i32).as_ustr(); __s += u_string::substring(&ClreqPunctuationGlyphSubstitutor::CLREQ_PUNCTUATION_GLYPH_SUBSTITUTOR_HEX_UPPER.to_ustring(), (unit >> 8 & 15) as i32, (u32::wrapping_add(unit >> 8 & 15, 1)) as i32).as_ustr(); __s += u_string::substring(&ClreqPunctuationGlyphSubstitutor::CLREQ_PUNCTUATION_GLYPH_SUBSTITUTOR_HEX_UPPER.to_ustring(), (unit >> 4 & 15) as i32, (u32::wrapping_add(unit >> 4 & 15, 1)) as i32).as_ustr(); __s += u_string::substring(&ClreqPunctuationGlyphSubstitutor::CLREQ_PUNCTUATION_GLYPH_SUBSTITUTOR_HEX_UPPER.to_ustring(), (unit & 15) as i32, (u32::wrapping_add(unit & 15, 1)) as i32).as_ustr(); __s }).as_str());
     }
 }

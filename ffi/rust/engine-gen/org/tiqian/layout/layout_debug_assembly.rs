@@ -463,7 +463,7 @@ impl LayoutDebugStageInput {
         let mut i = 0;
         while i < n {
             if i > 0 { out.push_str(", "); }
-            let _ = write!(out, "{}={}", i32::from_ne_bytes((((self.progressive_break_opportunities).clone().key_at(i)) as i32).to_ne_bytes()), (self.progressive_break_opportunities).clone().value_at(i).to_string());
+            let _ = write!(out, "{}={}", ((self.progressive_break_opportunities).clone().key_at(i)) as i32, (self.progressive_break_opportunities).clone().value_at(i).to_string());
             i += 1;
         }
         out.push('}');
@@ -495,7 +495,7 @@ impl LayoutDebugAssembly {
             RepairOption::PushIn { penalty: _p0, reason: _p1, offender_cluster_index: _p2, allocations: _p3, total_shrink: _p4, total_available_capacity: _p5 } => {
             let push_in_allocations = LayoutDebugAssembly::layout_debug_assembly_to_push_in_allocations(&_p3, &clusters);
             let colon_idx = u_string::find_from(&(_p1), UString::from(":").as_ustr(), 0);
-            let reason_code = if colon_idx >= 0 { u_string::substring(&_p1, 0i32, i32::from_ne_bytes(((colon_idx) as i32).to_ne_bytes())).to_ustring() } else { _p1.to_ustring() };
+            let reason_code = if colon_idx >= 0 { u_string::substring(&_p1, 0i32, (colon_idx) as i32).to_ustring() } else { _p1.to_ustring() };
             LineRepairDecisionInfo::new(&(UStr::new(&[80,117,115,104,73,110])), reason_code.as_ustr(), ((clusters[usize::try_from(_p2).unwrap_or(0)]).clone().range).clone(), _p0, Some(_p2), None, Some(_p4), Some(_p5), Some((push_in_allocations).clone()))
         },
             RepairOption::Hang { penalty: _p0, reason: _p1,
@@ -543,13 +543,13 @@ offender_cluster_index: _p2 } => LineRepairDecisionInfo::new(&(UStr::new(&[76,10
         let mut font_decisions_out = Vec::with_capacity(capacity);
         for f_idx in 0..match u32::try_from(stage.font_decisions.len()) { Ok(value) => value, Err(_) => u32::MAX } {
             let decision = (stage.font_decisions[usize::try_from(f_idx).unwrap_or(0)]).clone();
-            let cluster_text = u_string::substring(&(stage.text).to_ustring(), i32::from_ne_bytes((((decision.range).clone().start) as i32).to_ne_bytes()), i32::from_ne_bytes((((decision.range).clone().end) as i32).to_ne_bytes()));
+            let cluster_text = u_string::substring(&(stage.text).to_ustring(), ((decision.range).clone().start) as i32, ((decision.range).clone().end) as i32);
             let substitution = ContextualPunctuationDisplaySubstitutionFns::contextual_punctuation_display_substitution_fns_substitute_for_role((stage.punctuation_glyph_substitutor).clone(), cluster_text.as_ustr(), decision.role)?;
             let mut rollback_cause: Option<UString> = None;
-            for i in 0..u32::from_ne_bytes(((stage.substitution_rollbacks.size()) as u32).to_ne_bytes()) {
-                let k = stage.substitution_rollbacks.key_at({ let v: u32 = i; i32::from_ne_bytes(v.to_ne_bytes()) });
-                if i32::from_ne_bytes(((k.start) as i32).to_ne_bytes()) >= i32::from_ne_bytes((((decision.range).clone().start) as i32).to_ne_bytes()) && (i32::from_ne_bytes(((k.end) as i32).to_ne_bytes())) <= i32::from_ne_bytes((((decision.range).clone().end) as i32).to_ne_bytes()) {
-                    rollback_cause = Some(stage.substitution_rollbacks.value_at({ let v: u32 = i; i32::from_ne_bytes(v.to_ne_bytes()) }).clone());
+            for i in 0..((stage.substitution_rollbacks.size()) as u32) {
+                let k = stage.substitution_rollbacks.key_at({ let v: u32 = i; v as i32 });
+                if k.start as i32 >= (decision.range).clone().start as i32 && ((k.end) as i32) <= (decision.range).clone().end as i32 {
+                    rollback_cause = Some(stage.substitution_rollbacks.value_at({ let v: u32 = i; v as i32 }).clone());
                     break;
                 }
             }
@@ -580,7 +580,7 @@ None => ((substitution.reason).to_ustring()).clone() };
             spacing_decisions_out.push(((stage.attached_punctuation_boundary).clone().decisions[usize::try_from(apb_idx).unwrap_or(0)]).clone());
         }
         let mut line_decisions_out: Vec<LineDecisionInfo> = Vec::new();
-        let min_line_count = if i32::from_ne_bytes(((u32::try_from((stage.laid_out_lines.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes()) < (i32::from_ne_bytes(((u32::try_from(((stage.line_solution).clone().lines.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) { u32::try_from((stage.laid_out_lines.len()) & 0xFFFF_FFFF).unwrap_or(0) } else { u32::try_from(((stage.line_solution).clone().lines.len()) & 0xFFFF_FFFF).unwrap_or(0) };
+        let min_line_count = if u32::try_from((stage.laid_out_lines.len()) & 0xFFFF_FFFF).unwrap_or(0) as i32 < ((u32::try_from(((stage.line_solution).clone().lines.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32) { u32::try_from((stage.laid_out_lines.len()) & 0xFFFF_FFFF).unwrap_or(0) } else { u32::try_from(((stage.line_solution).clone().lines.len()) & 0xFFFF_FFFF).unwrap_or(0) };
         for line_index in 0..min_line_count {
             let line = (stage.laid_out_lines[usize::try_from(line_index).unwrap_or(0)]).clone();
             let candidate = ((stage.line_solution).clone().lines[usize::try_from(line_index).unwrap_or(0)]).clone();
@@ -611,7 +611,7 @@ None => ((substitution.reason).to_ustring()).clone() };
                 None => {
                 }
             }
-            let plan = if ({ let v: u32 = line_index; i32::from_ne_bytes(v.to_ne_bytes()) }) < (i32::from_ne_bytes(((u32::try_from((stage.justification_plans.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) { (stage.justification_plans[usize::try_from(line_index).unwrap_or(0)]).clone() } else { None };
+            let plan = if ({ let v: u32 = line_index; v as i32 }) < ((u32::try_from((stage.justification_plans.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32) { (stage.justification_plans[usize::try_from(line_index).unwrap_or(0)]).clone() } else { None };
             match &(plan) {
                 Some(__option10) => {
                     if __option10.fallback_reason.is_some() {
@@ -626,10 +626,10 @@ None => ((substitution.reason).to_ustring()).clone() };
         let mut justification_decisions_out: Vec<JustificationDecisionInfo> = Vec::new();
         for i in 0..match u32::try_from((stage.line_solution).clone().lines.len()) { Ok(value) => value, Err(_) => u32::MAX } {
             let candidate = ((stage.line_solution).clone().lines[usize::try_from(i).unwrap_or(0)]).clone();
-            let plan = if ({ let v: u32 = i; i32::from_ne_bytes(v.to_ne_bytes()) }) < (i32::from_ne_bytes(((u32::try_from((stage.justification_plans.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) { (stage.justification_plans[usize::try_from(i).unwrap_or(0)]).clone() } else { None };
+            let plan = if ({ let v: u32 = i; v as i32 }) < ((u32::try_from((stage.justification_plans.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32) { (stage.justification_plans[usize::try_from(i).unwrap_or(0)]).clone() } else { None };
             match &(plan) {
                 Some(__option11) => {
-                    if i32::from_ne_bytes(((u32::try_from((__option11.allocations.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes()) > (0) || (__option11.deficit_before) > (0.0f64) {
+                    if u32::try_from((__option11.allocations.len()) & 0xFFFF_FFFF).unwrap_or(0) as i32 > (0) || (__option11.deficit_before) > (0.0f64) {
                     let capacity = __option11.allocations.len();
                     let mut allocations_out = Vec::with_capacity(capacity);
                     for a_idx in 0..match u32::try_from(__option11.allocations.len()) { Ok(value) => value, Err(_) => u32::MAX } {

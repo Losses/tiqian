@@ -406,11 +406,11 @@ fn attached_reference_never_starts_a_wrapped_line() {
         let breakers = AttachedInlineVirtualAdjacencyTestSupport::attached_inline_virtual_adjacency_test_support_breakers().unwrap();
         for choice in &breakers {
             let result = AttachedInlineVirtualAdjacencyTestSupport::attached_inline_virtual_adjacency_test_support_layout_with_breaker(text.as_ustr(), (choice.breaker).clone()).unwrap();
-            let _ = TracedAssertions::traced_assertions_assert_true((i32::from_ne_bytes(((u32::try_from((result.lines.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) > (1), Some(UString::from(format!("{}", { let mut __s = UString::new(); __s += (choice.breaker).clone().get_strategy_name().as_ustr(); __s += &(UString::from(": test must wrap: ")); __s += AttachedInlineVirtualAdjacencyTestSupport::attached_inline_virtual_adjacency_test_support_render_lines(&result.lines).as_ustr(); __s }).as_str()))).unwrap();
+            let _ = TracedAssertions::traced_assertions_assert_true((u32::try_from((result.lines.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32 > (1), Some(UString::from(format!("{}", { let mut __s = UString::new(); __s += (choice.breaker).clone().get_strategy_name().as_ustr(); __s += &(UString::from(": test must wrap: ")); __s += AttachedInlineVirtualAdjacencyTestSupport::attached_inline_virtual_adjacency_test_support_render_lines(&result.lines).as_ustr(); __s }).as_str()))).unwrap();
             let mut started = false;
             for i in 0..match u32::try_from(result.lines.len()) { Ok(value) => value, Err(_) => u32::MAX } {
                 let s = ((result.lines[usize::try_from(i).unwrap_or(0)]).clone().range).clone().start;
-                if i32::from_ne_bytes(((s) as i32).to_ne_bytes()) >= i32::from_ne_bytes(((reference_range.start) as i32).to_ne_bytes()) && (i32::from_ne_bytes(((s) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((reference_range.end) as i32).to_ne_bytes())) {
+                if s as i32 >= reference_range.start as i32 && ((s) as i32) < ((reference_range.end) as i32) {
                     started = true;
                 }
             }
@@ -418,7 +418,7 @@ fn attached_reference_never_starts_a_wrapped_line() {
             let mut attached = false;
             for i in 0..match u32::try_from(result.lines.len()) { Ok(value) => value, Err(_) => u32::MAX } {
                 let line = (result.lines[usize::try_from(i).unwrap_or(0)]).clone();
-                if i32::from_ne_bytes((((line.range).clone().start) as i32).to_ne_bytes()) < (i32::from_ne_bytes(((reference_range.start) as i32).to_ne_bytes())) && (i32::from_ne_bytes((((line.range).clone().end) as i32).to_ne_bytes())) >= i32::from_ne_bytes(((reference_range.end) as i32).to_ne_bytes()) {
+                if line.range.clone().start as i32 < ((reference_range.start) as i32) && (((line.range).clone().end) as i32) >= reference_range.end as i32 {
                     attached = true;
                 }
             }

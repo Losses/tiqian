@@ -36,18 +36,16 @@ impl SimpleCharacterLineBreakAnalyzer {
     }
 
     pub fn analyze(&self, text: &UStr) -> Vec<BreakOpportunity> {
-    let __units = u_string::units(&text);
+    let __units = text.as_slice();
     let __count = u_string::unit_count(&text);
         let mut result: Vec<BreakOpportunity> = Vec::new();
         if __count == 0 {
             return result;
         }
         let mut index = 1u32;
-        let __units1 = u_string::units(&text);
-        let __count1 = u_string::unit_count(&text);
-        while (i32::from_ne_bytes(((index) as i32).to_ne_bytes())) <= i32::from_ne_bytes(((__count) as i32).to_ne_bytes()) {
-            let prev = u_string::unit_at_from(&__units, u32::wrapping_sub(index, 1)).unwrap_or(0);
-            let mandatory = LineBreakFns::line_break_fns_is_mandatory_break_code_point(prev) && !(prev == 13 && (i32::from_ne_bytes(((index) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((__count) as i32).to_ne_bytes())) && u_string::unit_at_from(&__units1, index).as_ref().map_or(false, |v| v == &(10)));
+        while ((index) as i32) <= __count as i32 {
+            let prev = u_string::unit_at_from(__units, u32::wrapping_sub(index, 1)).unwrap_or(0);
+            let mandatory = LineBreakFns::line_break_fns_is_mandatory_break_code_point(prev) && !(prev == 13 && ((index) as i32) < ((__count) as i32) && matches!(u_string::unit_at_from(__units, index).as_ref(), Some(__v) if __v == &(10)));
             result.push(BreakOpportunity::new(index, if index == __count || mandatory { BreakKind::Required } else { BreakKind::Allowed }, if mandatory { UString::from("MandatoryBreak") } else { UString::from("SimpleCharacterLineBreakAnalyzer") }.as_ustr(), Some(0)));
             index = u32::wrapping_add(index, 1);
         }
@@ -67,18 +65,16 @@ impl LineBreakAnalyzer for SimpleCharacterLineBreakAnalyzer {
     }
 
     fn analyze(&self, text: &UStr) -> Vec<BreakOpportunity> {
-    let __units2 = u_string::units(&text);
+    let __units2 = text.as_slice();
     let __count2 = u_string::unit_count(&text);
         let mut result: Vec<BreakOpportunity> = Vec::new();
         if __count2 == 0 {
             return result;
         }
         let mut index = 1u32;
-        let __units3 = u_string::units(&text);
-        let __count3 = u_string::unit_count(&text);
-        while (i32::from_ne_bytes(((index) as i32).to_ne_bytes())) <= i32::from_ne_bytes(((__count2) as i32).to_ne_bytes()) {
-            let prev = u_string::unit_at_from(&__units2, u32::wrapping_sub(index, 1)).unwrap_or(0);
-            let mandatory = LineBreakFns::line_break_fns_is_mandatory_break_code_point(prev) && !(prev == 13 && (i32::from_ne_bytes(((index) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((__count2) as i32).to_ne_bytes())) && u_string::unit_at_from(&__units3, index).as_ref().map_or(false, |v| v == &(10)));
+        while ((index) as i32) <= __count2 as i32 {
+            let prev = u_string::unit_at_from(__units2, u32::wrapping_sub(index, 1)).unwrap_or(0);
+            let mandatory = LineBreakFns::line_break_fns_is_mandatory_break_code_point(prev) && !(prev == 13 && ((index) as i32) < ((__count2) as i32) && matches!(u_string::unit_at_from(__units2, index).as_ref(), Some(__v) if __v == &(10)));
             result.push(BreakOpportunity::new(index, if index == __count2 || mandatory { BreakKind::Required } else { BreakKind::Allowed }, if mandatory { UString::from("MandatoryBreak") } else { UString::from("SimpleCharacterLineBreakAnalyzer") }.as_ustr(), Some(0)));
             index = u32::wrapping_add(index, 1);
         }

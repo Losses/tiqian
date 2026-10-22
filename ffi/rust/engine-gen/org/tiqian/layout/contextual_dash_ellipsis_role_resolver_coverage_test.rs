@@ -268,7 +268,7 @@ impl ContextualDashEllipsisRoleResolverCoverageSupport {
     pub fn contextual_dash_ellipsis_role_resolver_coverage_support_surrogate_text(c: &Vec<u32>) -> UString {
         let mut s = UString::new();
         let mut i = 0u32;
-        while (i32::from_ne_bytes(((i) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((c.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
+        while ((i) as i32) < ((u32::try_from((c.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32) {
             s += &(if c[usize::try_from(i).unwrap_or(0)] > 0xFFFF { u_string::from_units(&[0xD800 + (((c[usize::try_from(i).unwrap_or(0)]) - 0x10000) >> 10) as u16, 0xDC00 + (((c[usize::try_from(i).unwrap_or(0)]) - 0x10000) & 0x3FF) as u16]) } else { u_string::from_units(&[(c[usize::try_from(i).unwrap_or(0)]) as u16]) });
             i = u32::wrapping_add(i, 1);
         }
@@ -280,7 +280,7 @@ impl ContextualDashEllipsisRoleResolverCoverageSupport {
             return false;
         }
         let mut i = 0u32;
-        while (i32::from_ne_bytes(((i) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((d.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
+        while ((i) as i32) < ((u32::try_from((d.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32) {
             if d[usize::try_from(i).unwrap_or(0)].role != FontRole::CjkPunctuation || ((d[usize::try_from(i).unwrap_or(0)]).clone().source).to_ustring() != source || !(((d[usize::try_from(i).unwrap_or(0)]).clone().reason).to_ustring()).starts_with(&prefix) {
                 return false;
             }

@@ -27,12 +27,12 @@ pub struct InlineShapingStylePolicy;
 impl InlineShapingStylePolicy {
 
     pub fn inline_shaping_style_policy_first_divergent_property(element_values: &[UString], paragraph_values: &[UString]) -> Option<UString> {
-        let mut n = if i32::from_ne_bytes(((u32::try_from((element_values.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes()) < (i32::from_ne_bytes(((u32::try_from((paragraph_values.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) { u32::try_from((element_values.len()) & 0xFFFF_FFFF).unwrap_or(0) } else { u32::try_from((paragraph_values.len()) & 0xFFFF_FFFF).unwrap_or(0) };
-        if ({ let v: u32 = n; i32::from_ne_bytes(v.to_ne_bytes()) }) > (i32::from_ne_bytes(((u32::try_from(((*INLINE_SHAPING_STYLE_POLICY_UNSUPPORTED_INLINE_SHAPING_PROPERTIES).clone().len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
+        let mut n = if u32::try_from((element_values.len()) & 0xFFFF_FFFF).unwrap_or(0) as i32 < ((u32::try_from((paragraph_values.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32) { u32::try_from((element_values.len()) & 0xFFFF_FFFF).unwrap_or(0) } else { u32::try_from((paragraph_values.len()) & 0xFFFF_FFFF).unwrap_or(0) };
+        if ({ let v: u32 = n; v as i32 }) > ((u32::try_from(((*INLINE_SHAPING_STYLE_POLICY_UNSUPPORTED_INLINE_SHAPING_PROPERTIES).clone().len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32) {
             n = u32::try_from(((*INLINE_SHAPING_STYLE_POLICY_UNSUPPORTED_INLINE_SHAPING_PROPERTIES).clone().len()) & 0xFFFF_FFFF).unwrap_or(0);
         }
         let mut i = 0u32;
-        while (i32::from_ne_bytes(((i) as i32).to_ne_bytes())) < ({ let v: u32 = n; i32::from_ne_bytes(v.to_ne_bytes()) }) {
+        while ((i) as i32) < ({ let v: u32 = n; v as i32 }) {
             if element_values[usize::try_from(i).unwrap_or(0)].clone() != (paragraph_values[usize::try_from(i).unwrap_or(0)]).clone() {
                 return Some(((*INLINE_SHAPING_STYLE_POLICY_UNSUPPORTED_INLINE_SHAPING_PROPERTIES).clone()[usize::try_from(i).unwrap_or(0)]).clone());
             }

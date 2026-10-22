@@ -235,13 +235,13 @@ impl PunctuationSpacingCompressor {
     }
 
     pub fn compress(&self, atoms: &Vec<PunctuationAtom>, em: f64) -> Result<PunctuationSpacingCompressionResult, TextRangeError> {
-        if i32::from_ne_bytes(((u32::try_from((atoms.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes()) < (2) {
+        if u32::try_from((atoms.len()) & 0xFFFF_FFFF).unwrap_or(0) as i32 < (2) {
             return Ok(PunctuationSpacingCompressionResult::new(vec![].to_vec())?);
         }
         let half = em / format!("{}", (2i32)).parse::<f64>().unwrap_or(0.0);
         let mut out: Vec<PunctuationSpacingAdjustment> = vec![];
         let mut i = 0;
-        while (i) < (i32::wrapping_sub(i32::from_ne_bytes(((i32::from_ne_bytes(u32::try_from(((atoms).len()) & 4294967295).unwrap_or(0).to_ne_bytes())) as i32).to_ne_bytes()), 1)) {
+        while (i) < (i32::wrapping_sub((u32::try_from(((atoms).len()) & 4294967295).unwrap_or(0)) as i32 as i32, 1)) {
             let left = (atoms[usize::try_from(i).unwrap_or(0)]).clone();
             let right = (atoms[usize::try_from(i32::wrapping_add(i, 1)).unwrap_or(0)]).clone();
             if left.range.clone().end == (right.range).clone().start {
@@ -262,15 +262,15 @@ impl PunctuationSpacingCompressor {
     }
 
     pub fn compress_cjk_closing_before_ascii_point_mark(&self, atoms: &Vec<PunctuationAtom>, text: &UStr, em: f64) -> Result<PunctuationSpacingCompressionResult, TextRangeError> {
-    let __units = u_string::units(&text);
+    let __units = text.as_slice();
     let __count = u_string::unit_count(&text);
         let mut out: Vec<PunctuationSpacingAdjustment> = vec![];
         let half = em / format!("{}", (2i32)).parse::<f64>().unwrap_or(0.0);
         for left in atoms {
-            if left.punctuation_class != PunctuationClass::Closing || (i32::from_ne_bytes((((left.range).clone().end) as i32).to_ne_bytes())) >= i32::from_ne_bytes(((__count) as i32).to_ne_bytes()) {
+            if left.punctuation_class != PunctuationClass::Closing || (((left.range).clone().end) as i32) >= __count as i32 {
                 continue;
             }
-            let r = u_string::char_at_from(&__units, (left.range).clone().end);
+            let r = u_string::char_at_from(__units, (left.range).clone().end);
             if !ClreqPunctuationPolicies::clreq_punctuation_policies_is_ascii_point_mark(r.as_ustr()) {
                 continue;
             }
@@ -304,12 +304,12 @@ impl PunctuationAtomBuilder {
     }
 
     pub fn build_at_index(&self, text: &UStr, index: u32, em: f64) -> Result<Option<PunctuationAtom>, TextRangeError> {
-    let __units1 = u_string::units(&text);
+    let __units1 = text.as_slice();
     let __count1 = u_string::unit_count(&text);
-        if index > 2147483647 || (i32::from_ne_bytes(((index) as i32).to_ne_bytes())) >= i32::from_ne_bytes(((__count1) as i32).to_ne_bytes()) {
+        if index > 2147483647 || ((index) as i32) >= __count1 as i32 {
             return Ok(None);
         }
-        return Ok(self.build(u_string::char_at_from(&__units1, index).as_ustr(), TextRange::new(u32::from_ne_bytes(((index) as u32).to_ne_bytes()), u32::wrapping_add(index, 1))?, em, None, None, None)?);
+        return Ok(self.build(u_string::char_at_from(__units1, index).as_ustr(), TextRange::new((index) as u32, u32::wrapping_add(index, 1))?, em, None, None, None)?);
     }
 
     pub fn build(&self, char: &UStr, range: TextRange, em: f64, ink_input: Option<PunctuationInkInput>, glue_placement: Option<PunctuationGluePlacement>, width_policy: Option<PunctuationWidthPolicy>) -> Result<Option<PunctuationAtom>, TextRangeError> {

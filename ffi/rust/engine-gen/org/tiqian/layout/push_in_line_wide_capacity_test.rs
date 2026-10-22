@@ -462,7 +462,7 @@ fn push_in_merges_offender_that_fits_after_chained_repairs() {
         }
         let _ = TracedAssertions::traced_assertions_assert_true(PushInLineWideCapacityTestSupport::push_in_line_wide_capacity_test_support_is_push_in(((s.lines[1usize]).clone().repair).as_ref().unwrap().clone()), None).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_equals_float(0 as f64, PushInLineWideCapacityTestSupport::push_in_line_wide_capacity_test_support_push_in_total_shrink(((s.lines[1usize]).clone().repair).as_ref().unwrap().clone()), None).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_true((u32::from_ne_bytes(((u_string::find_from(&(RepairOptions::repair_options_reason(((s.lines[1usize]).clone().repair).as_ref().unwrap().clone())), UString::from("fits-no-shrink").as_ustr(), 0)) as u32).to_ne_bytes())) <= 2147483647, None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_true((u_string::find_from(&(RepairOptions::repair_options_reason(((s.lines[1usize]).clone().repair).as_ref().unwrap().clone())), UString::from("fits-no-shrink").as_ustr(), 0)) as u32 <= 2147483647, None).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_equals_float(64 as f64, s.lines[1usize].adjusted_width, None).unwrap();
     });
 }
@@ -486,7 +486,7 @@ fn carry_previous_refuses_to_split_unbreakable_span() {
         let _ = TracedAssertions::traced_assertions_assert_equals_int(2, u32::try_from((s.lines.len()) & 0xFFFF_FFFF).unwrap_or(0), None).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_true(PushInLineWideCapacityTestSupport::push_in_line_wide_capacity_test_support_is_leave_ragged(((s.lines[1usize]).clone().repair).as_ref().unwrap().clone()), None).unwrap();
         let reason = RepairOptions::repair_options_reason(((s.lines[1usize]).clone().repair).as_ref().unwrap().clone());
-        let _ = TracedAssertions::traced_assertions_assert_true(u_string::substr(&reason, i32::from_ne_bytes(((u32::wrapping_sub(u_string::unit_count(&(reason)), u_string::unit_count(&(UString::from("carry-would-split-mourning-span"))))) as i32).to_ne_bytes()), None) == UString::from("carry-would-split-mourning-span"), None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_true(u_string::substr(&reason, (u32::wrapping_sub(u_string::unit_count(&(reason)), u_string::unit_count(&(UString::from("carry-would-split-mourning-span"))))) as i32, None) == UString::from("carry-would-split-mourning-span"), None).unwrap();
         let mut carry: Option<RepairCandidate> = None;
         {
             let _g1 = ((s.lines[1usize]).clone().repair_candidates).clone();

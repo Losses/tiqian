@@ -322,7 +322,7 @@ pub struct JustifierCompressionTestSupport;
 impl JustifierCompressionTestSupport {
     pub fn justifier_compression_test_support_shrink_of(plan: CompressionPlan, cluster_index: u32) -> Option<f64> {
         let mut i = 0u32;
-        while (i32::from_ne_bytes(((i) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((plan.allocations.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
+        while ((i) as i32) < ((u32::try_from((plan.allocations.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32) {
             if plan.allocations[usize::try_from(i).unwrap_or(0)].cluster_index == cluster_index {
                 return Some(plan.allocations[usize::try_from(i).unwrap_or(0)].shrink);
             }

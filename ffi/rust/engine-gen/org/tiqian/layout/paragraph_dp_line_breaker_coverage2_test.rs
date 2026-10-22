@@ -447,7 +447,7 @@ fn test_shrink_opportunities_negative_and_out_of_range() {
         let c = ParagraphDpLineBreakerCoverage2TestSupport::paragraph_dp_line_breaker_coverage2_test_support_han(3, None).unwrap();
         let s = ParagraphDpLineBreakerCoverage2TestSupport::paragraph_dp_line_breaker_coverage2_test_support_solve(&c, 100 as f64, Some(vec![
     (ShrinkOpportunity::new(4294967295u32, 1u32, 10 as f64 as f64, ShrinkChannel::RawAdvance, Some(false))).clone(),
-    (ShrinkOpportunity::new(0u32, 1u32, i32::from_ne_bytes(((4294967291u32) as i32).to_ne_bytes()) as f64 as f64, ShrinkChannel::RawAdvance, Some(false))).clone(),
+    (ShrinkOpportunity::new(0u32, 1u32, (4294967291u32) as i32 as f64 as f64, ShrinkChannel::RawAdvance, Some(false))).clone(),
     (ShrinkOpportunity::new(5u32, 1u32, 10 as f64 as f64, ShrinkChannel::RawAdvance, Some(false))).clone(),
     (ShrinkOpportunity::new(1u32, 1u32, 4 as f64 as f64, ShrinkChannel::RawAdvance, Some(false))).clone(),
     (ShrinkOpportunity::new(2u32, 1u32, 4 as f64 as f64, ShrinkChannel::TrailingGlue, Some(true))).clone(),
@@ -466,7 +466,7 @@ fn test_candidate_window_bounds_compression_edges() {
     (ShrinkOpportunity::new(1u32, 1u32, 10 as f64 as f64, ShrinkChannel::RawAdvance, Some(false))).clone(),
     (ShrinkOpportunity::new(2u32, 1u32, 10 as f64 as f64, ShrinkChannel::RawAdvance, Some(false))).clone(),
 ]), None, Some(true), None, None, Some(1)).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_true((i32::from_ne_bytes(((u32::try_from((s.lines.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) > (0), None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_true((u32::try_from((s.lines.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32 > (0), None).unwrap();
     });
 }
 
@@ -480,15 +480,15 @@ fn test_progressive_tier_promotion_branches() {
         let a = ParagraphDpLineBreakerCoverage2TestSupport::paragraph_dp_line_breaker_coverage2_test_support_solve(&c, 80 as f64, Some(vec![
     (ShrinkOpportunity::new(2u32, 2u32, 5 as f64 as f64, ShrinkChannel::RawAdvance, Some(false))).clone(),
 ]), None, Some(true), None, Some(ParagraphDpLineBreakerCoverage2TestSupport::paragraph_dp_line_breaker_coverage2_test_support_opp(&vec![2, 3], &vec![(span).clone(), (span).clone()], &vec![ProgressiveBreakTier::Whitespace, ProgressiveBreakTier::Emergency])), None).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_true((i32::from_ne_bytes(((u32::try_from((a.lines.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) > (0), None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_true((u32::try_from((a.lines.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32 > (0), None).unwrap();
         let b = ParagraphDpLineBreakerCoverage2TestSupport::paragraph_dp_line_breaker_coverage2_test_support_solve(&c, 80 as f64, Some(vec![
     (ShrinkOpportunity::new(2u32, 2u32, 5 as f64 as f64, ShrinkChannel::RawAdvance, Some(false))).clone(),
 ]), None, Some(true), None, Some(ParagraphDpLineBreakerCoverage2TestSupport::paragraph_dp_line_breaker_coverage2_test_support_opp(&vec![2, 3], &vec![(span).clone(), (other).clone()], &vec![ProgressiveBreakTier::Emergency, ProgressiveBreakTier::Whitespace])), None).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_true((i32::from_ne_bytes(((u32::try_from((b.lines.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) > (0), None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_true((u32::try_from((b.lines.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32 > (0), None).unwrap();
         let d = ParagraphDpLineBreakerCoverage2TestSupport::paragraph_dp_line_breaker_coverage2_test_support_solve(&c, 80 as f64, Some(vec![
     (ShrinkOpportunity::new(2u32, 2u32, 5 as f64 as f64, ShrinkChannel::RawAdvance, Some(false))).clone(),
 ]), None, Some(true), None, Some(ParagraphDpLineBreakerCoverage2TestSupport::paragraph_dp_line_breaker_coverage2_test_support_opp(&vec![2, 3], &vec![(span).clone(), (span).clone()], &vec![ProgressiveBreakTier::Emergency, ProgressiveBreakTier::Whitespace])), Some(4)).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_true((i32::from_ne_bytes(((u32::try_from((d.lines.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) > (0), None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_true((u32::try_from((d.lines.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32 > (0), None).unwrap();
     });
 }
 
@@ -500,7 +500,7 @@ fn test_commit_segment_original_break_not_null_resulting_break_null() {
         let s = ParagraphDpLineBreakerCoverage2TestSupport::paragraph_dp_line_breaker_coverage2_test_support_solve(&c, 80 as f64, Some(vec![
     (ShrinkOpportunity::new(2u32, 2u32, 5 as f64 as f64, ShrinkChannel::RawAdvance, Some(false))).clone(),
 ]), None, Some(true), None, Some(ParagraphDpLineBreakerCoverage2TestSupport::paragraph_dp_line_breaker_coverage2_test_support_opp(&vec![2], &vec![(TextRange::new(0u32, 5u32).unwrap()).clone()], &vec![ProgressiveBreakTier::Whitespace])), None).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_true((i32::from_ne_bytes(((u32::try_from((s.lines.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) > (0), None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_true((u32::try_from((s.lines.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32 > (0), None).unwrap();
     });
 }
 
@@ -509,7 +509,7 @@ fn test_tier_preferred_pool_empty_fallback() {
     testlib::run("org.tiqian.layout.ParagraphDpLineBreakerCoverage2Test.testTierPreferredPoolEmptyFallback", "org.tiqian.layout.ParagraphDpLineBreakerCoverage2Test.testTierPreferredPoolEmptyFallback", || {
         ParagraphDpLineBreakerCoverage2TestSupport::paragraph_dp_line_breaker_coverage2_test_support_rec(UStr::new(&[116,101,115,116,84,105,101,114,80,114,101,102,101,114,114,101,100,80,111,111,108,69,109,112,116,121,70,97,108,108,98,97,99,107]));
         let s = ParagraphDpLineBreakerCoverage2TestSupport::paragraph_dp_line_breaker_coverage2_test_support_solve(&ParagraphDpLineBreakerCoverage2TestSupport::paragraph_dp_line_breaker_coverage2_test_support_han(4, Some(20 as f64 as f64)).unwrap(), 30 as f64, None, None, None, Some(UnbreakableRanges::new(vec![(IntRange::new(0u32, 3u32)).clone()].to_vec())), None, None).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_true((i32::from_ne_bytes(((u32::try_from((s.lines.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) > (0), None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_true((u32::try_from((s.lines.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32 > (0), None).unwrap();
     });
 }
 

@@ -289,9 +289,9 @@ fn dash_shaping_decision_with_glyph_ids() {
     (ShapingDecisionInfo::new(TextRange::new(0u32, 2u32).unwrap(), &(UStr::new(&[8212,8212])), &(UStr::new(&[8212,8212])), &(UStr::new(&[107])), 1u32, 32 as f64 as f64, &(UStr::new(&[116,101,115,116])), &(UStr::new(&[68,97,115,104,82,117,108,101])), Some(0), Some(0), Some(UString::from("NotoSansCJK")), None, Some(UString::from("zh")), Some(UString::from("DashTwoEmLigature")), None, None)).clone(),
 ]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), None, None, None, None, Some(vec![]), None, None, Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![])));
         let json = PreparedParagraphFns::prepared_paragraph_fns_to_prepared_paragraph_json((r).clone(), true).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_true((u32::from_ne_bytes(((u_string::find_from(&(json), UString::from("\"glyphIds\":\"42\"").as_ustr(), 0)) as u32).to_ne_bytes())) <= 2147483647, None).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_true((u32::from_ne_bytes(((u_string::find_from(&(json), UString::from("\"shapingLanguage\":\"zh\"").as_ustr(), 0)) as u32).to_ne_bytes())) <= 2147483647, None).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_true((u32::from_ne_bytes(((u_string::find_from(&(json), UString::from("\"resolvedFace\":\"NotoSansCJK\"").as_ustr(), 0)) as u32).to_ne_bytes())) <= 2147483647, None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_true((u_string::find_from(&(json), UString::from("\"glyphIds\":\"42\"").as_ustr(), 0)) as u32 <= 2147483647, None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_true((u_string::find_from(&(json), UString::from("\"shapingLanguage\":\"zh\"").as_ustr(), 0)) as u32 <= 2147483647, None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_true((u_string::find_from(&(json), UString::from("\"resolvedFace\":\"NotoSansCJK\"").as_ustr(), 0)) as u32 <= 2147483647, None).unwrap();
     });
 }
 
@@ -300,21 +300,21 @@ fn ecma_json_number_edge_cases() {
     testlib::run("org.tiqian.layout.PreparedParagraphJfTest.ecmaJsonNumberEdgeCases", "org.tiqian.layout.PreparedParagraphJfTest.ecmaJsonNumberEdgeCases", || {
         let mut t = TestTraceRecorder::new(&(UStr::new(&[80,114,101,112,97,114,101,100,80,97,114,97,103,114,97,112,104,74,102,84,101,115,116])));
         t.section(UStr::new(&[101,99,109,97,74,115,111,110,78,117,109,98,101,114,69,100,103,101,67,97,115,101,115]));
-        let _ = TracedAssertions::traced_assertions_assert_true((i32::from_ne_bytes(((u_string::unit_count(&(PlanJsonNumber::plan_json_number_ecma_json_number(TestHelpers::test_helpers_f32_bits(1)).unwrap()))) as i32).to_ne_bytes())) > (0), None).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_true((i32::from_ne_bytes(((u_string::unit_count(&(PlanJsonNumber::plan_json_number_ecma_json_number(TestHelpers::test_helpers_f32_bits(8388607)).unwrap()))) as i32).to_ne_bytes())) > (0), None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_true((u_string::unit_count(&(PlanJsonNumber::plan_json_number_ecma_json_number(TestHelpers::test_helpers_f32_bits(1)).unwrap()))) as i32 > (0), None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_true((u_string::unit_count(&(PlanJsonNumber::plan_json_number_ecma_json_number(TestHelpers::test_helpers_f32_bits(8388607)).unwrap()))) as i32 > (0), None).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_equals_string(UStr::new(&[56,46,57,57,57,57,57,57,54,56,56,53,52,48,51,48,57,101,45,49,55]), PlanJsonNumber::plan_json_number_ecma_json_number(TestHelpers::test_helpers_f32_literal(9.000000000000001e-17f64)).unwrap().as_ustr(), None).unwrap();
         for i in 1..2001 {
-            PlanJsonNumber::plan_json_number_ecma_json_number(TestHelpers::test_helpers_f32_literal(format!("{}", { let v: u32 = i; i32::from_ne_bytes(v.to_ne_bytes()) }).parse::<f64>().unwrap_or(0.0) * 1e-17f64)).unwrap();
-            PlanJsonNumber::plan_json_number_ecma_json_number(TestHelpers::test_helpers_f32_literal(format!("{}", { let v: u32 = i; i32::from_ne_bytes(v.to_ne_bytes()) }).parse::<f64>().unwrap_or(0.0) * 1e-15f64)).unwrap();
-            PlanJsonNumber::plan_json_number_ecma_json_number(TestHelpers::test_helpers_f32_literal(format!("{}", { let v: u32 = i; i32::from_ne_bytes(v.to_ne_bytes()) }).parse::<f64>().unwrap_or(0.0) * 1e-20f64)).unwrap();
+            PlanJsonNumber::plan_json_number_ecma_json_number(TestHelpers::test_helpers_f32_literal(format!("{}", { let v: u32 = i; v as i32 }).parse::<f64>().unwrap_or(0.0) * 1e-17f64)).unwrap();
+            PlanJsonNumber::plan_json_number_ecma_json_number(TestHelpers::test_helpers_f32_literal(format!("{}", { let v: u32 = i; v as i32 }).parse::<f64>().unwrap_or(0.0) * 1e-15f64)).unwrap();
+            PlanJsonNumber::plan_json_number_ecma_json_number(TestHelpers::test_helpers_f32_literal(format!("{}", { let v: u32 = i; v as i32 }).parse::<f64>().unwrap_or(0.0) * 1e-20f64)).unwrap();
         }
         for shift in 1..61 {
-            let v = TestHelpers::test_helpers_f32_literal(f64::powf(2.0f64, { let v: u32 = shift; i32::from_ne_bytes(v.to_ne_bytes()) } as f64));
-            let _ = TracedAssertions::traced_assertions_assert_true((i32::from_ne_bytes(((u_string::unit_count(&(PlanJsonNumber::plan_json_number_ecma_json_number(v).unwrap()))) as i32).to_ne_bytes())) > (0), None).unwrap();
-            let _ = TracedAssertions::traced_assertions_assert_true((i32::from_ne_bytes(((u_string::unit_count(&(PlanJsonNumber::plan_json_number_ecma_json_number(-v).unwrap()))) as i32).to_ne_bytes())) > (0), None).unwrap();
+            let v = TestHelpers::test_helpers_f32_literal(f64::powf(2.0f64, { let v: u32 = shift; v as i32 } as f64));
+            let _ = TracedAssertions::traced_assertions_assert_true((u_string::unit_count(&(PlanJsonNumber::plan_json_number_ecma_json_number(v).unwrap()))) as i32 > (0), None).unwrap();
+            let _ = TracedAssertions::traced_assertions_assert_true((u_string::unit_count(&(PlanJsonNumber::plan_json_number_ecma_json_number(-v).unwrap()))) as i32 > (0), None).unwrap();
             let inv = TestHelpers::test_helpers_f32_literal(1.0f64 / v);
-            let _ = TracedAssertions::traced_assertions_assert_true((i32::from_ne_bytes(((u_string::unit_count(&(PlanJsonNumber::plan_json_number_ecma_json_number(inv).unwrap()))) as i32).to_ne_bytes())) > (0), None).unwrap();
-            let _ = TracedAssertions::traced_assertions_assert_true((i32::from_ne_bytes(((u_string::unit_count(&(PlanJsonNumber::plan_json_number_ecma_json_number(-inv).unwrap()))) as i32).to_ne_bytes())) > (0), None).unwrap();
+            let _ = TracedAssertions::traced_assertions_assert_true((u_string::unit_count(&(PlanJsonNumber::plan_json_number_ecma_json_number(inv).unwrap()))) as i32 > (0), None).unwrap();
+            let _ = TracedAssertions::traced_assertions_assert_true((u_string::unit_count(&(PlanJsonNumber::plan_json_number_ecma_json_number(-inv).unwrap()))) as i32 > (0), None).unwrap();
         }
         let edge_values = vec![
     0.9999999999999999f64,
@@ -334,8 +334,8 @@ fn ecma_json_number_edge_cases() {
 ];
         for &raw in &edge_values {
             let v = TestHelpers::test_helpers_f32_literal(raw);
-            let _ = TracedAssertions::traced_assertions_assert_true((i32::from_ne_bytes(((u_string::unit_count(&(PlanJsonNumber::plan_json_number_ecma_json_number(v).unwrap()))) as i32).to_ne_bytes())) > (0), None).unwrap();
-            let _ = TracedAssertions::traced_assertions_assert_true((i32::from_ne_bytes(((u_string::unit_count(&(PlanJsonNumber::plan_json_number_ecma_json_number(-v).unwrap()))) as i32).to_ne_bytes())) > (0), None).unwrap();
+            let _ = TracedAssertions::traced_assertions_assert_true((u_string::unit_count(&(PlanJsonNumber::plan_json_number_ecma_json_number(v).unwrap()))) as i32 > (0), None).unwrap();
+            let _ = TracedAssertions::traced_assertions_assert_true((u_string::unit_count(&(PlanJsonNumber::plan_json_number_ecma_json_number(-v).unwrap()))) as i32 > (0), None).unwrap();
         }
     });
 }
@@ -368,9 +368,9 @@ fn inline_box_edges_and_emphasis_dots_filter() {
     (PreparedParagraphJfTestSupport::prepared_paragraph_jf_test_support_line(TextRange::new(0u32, 2u32).unwrap(), IntRange::new(0u32, 1u32), Some(32 as f64 as f64))).clone(),
 ], (debug).clone());
         let json = PreparedParagraphFns::prepared_paragraph_fns_to_prepared_paragraph_json((r).clone(), true).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_true((u32::from_ne_bytes(((u_string::find_from(&(json), UString::from("\"inlineStart\":4").as_ustr(), 0)) as u32).to_ne_bytes())) <= 2147483647, None).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_true((u32::from_ne_bytes(((u_string::find_from(&(json), UString::from("\"inlineEnd\":6").as_ustr(), 0)) as u32).to_ne_bytes())) <= 2147483647, None).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_true((u32::from_ne_bytes(((u_string::find_from(&(json), UString::from("\"emphasisDots\":").as_ustr(), 0)) as u32).to_ne_bytes())) <= 2147483647, None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_true((u_string::find_from(&(json), UString::from("\"inlineStart\":4").as_ustr(), 0)) as u32 <= 2147483647, None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_true((u_string::find_from(&(json), UString::from("\"inlineEnd\":6").as_ustr(), 0)) as u32 <= 2147483647, None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_true((u_string::find_from(&(json), UString::from("\"emphasisDots\":").as_ustr(), 0)) as u32 <= 2147483647, None).unwrap();
     });
 }
 
@@ -417,9 +417,9 @@ fn style_at_and_style_deltas_in_prepared_paragraph_json() {
 ],
 LayoutDebugInfo::new(None, Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), None, None, None, None, Some(vec![]), None, None, Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![])));
         let json = PreparedParagraphFns::prepared_paragraph_fns_to_prepared_paragraph_json((r).clone(), true).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_true((u32::from_ne_bytes(((u_string::find_from(&(json), UString::from("\"openTypeFeatures\":[\"liga\",\"dlig\"]").as_ustr(), 0)) as u32).to_ne_bytes())) <= 2147483647, None).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_true((u32::from_ne_bytes(((u_string::find_from(&(json), UString::from("\"fontSize\":20").as_ustr(), 0)) as u32).to_ne_bytes())) <= 2147483647, None).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_true((u32::from_ne_bytes(((u_string::find_from(&(json), UString::from("\"fontWeight\":700").as_ustr(), 0)) as u32).to_ne_bytes())) <= 2147483647, None).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_true((u32::from_ne_bytes(((u_string::find_from(&(json), UString::from("\"italic\":true").as_ustr(), 0)) as u32).to_ne_bytes())) <= 2147483647, None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_true((u_string::find_from(&(json), UString::from("\"openTypeFeatures\":[\"liga\",\"dlig\"]").as_ustr(), 0)) as u32 <= 2147483647, None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_true((u_string::find_from(&(json), UString::from("\"fontSize\":20").as_ustr(), 0)) as u32 <= 2147483647, None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_true((u_string::find_from(&(json), UString::from("\"fontWeight\":700").as_ustr(), 0)) as u32 <= 2147483647, None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_true((u_string::find_from(&(json), UString::from("\"italic\":true").as_ustr(), 0)) as u32 <= 2147483647, None).unwrap();
     });
 }

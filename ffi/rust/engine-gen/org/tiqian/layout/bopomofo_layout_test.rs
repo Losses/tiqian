@@ -417,7 +417,7 @@ fn symbols_and_tone_right_of_base() {
     (RubySpan::new(TextRange::new(1u32, 2u32).unwrap(), &(UStr::new(&[12564,12580,714])), Some(vec![]), RubyKind::Bopomofo, Some(UString::from("zh-TW")))).clone(),
 ], None).unwrap();
         let z = ((r.debug).clone().bopomofo_decisions).clone();
-        if i32::from_ne_bytes(((u32::try_from((z.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes()) < (2) {
+        if u32::try_from((z.len()) & 0xFFFF_FFFF).unwrap_or(0) as i32 < (2) {
             let _ = TracedAssertions::traced_assertions_assert_equals_int(2, u32::try_from((z.len()) & 0xFFFF_FFFF).unwrap_or(0), None).unwrap();
             return;
         }

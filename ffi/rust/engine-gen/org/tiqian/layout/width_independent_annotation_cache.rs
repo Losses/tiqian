@@ -254,7 +254,7 @@ impl WidthIndependentAnnotationKey {
         let mut i = 0usize;
         while i < n {
             if i > 0 { out.push_str(", "); }
-            let _ = write!(out, "{}", i32::from_ne_bytes(((arr[i]) as i32).to_ne_bytes()));
+            let _ = write!(out, "{}", (arr[i]) as i32);
             i += 1;
         }
         out.push(']');
@@ -325,7 +325,7 @@ impl WidthIndependentAnnotationKey {
         let mut i1 = 0;
         while i1 < n {
             if i1 > 0 { out.push_str(", "); }
-            let _ = write!(out, "{}", i32::from_ne_bytes((((self.rejected_technical_tiers_by_span).clone().value_at(i).at(i1)) as i32).to_ne_bytes()));
+            let _ = write!(out, "{}", ((self.rejected_technical_tiers_by_span).clone().value_at(i).at(i1)) as i32);
             i1 += 1;
         }
         out.push(']');
@@ -443,8 +443,8 @@ impl LruWidthIndependentAnnotationCache {
         }
         let k = (self.keys[usize::try_from(found_index).unwrap_or(0)]).clone();
         let v = (self.values[usize::try_from(found_index).unwrap_or(0)]).clone();
-        { let _a = &mut (self.keys); let _n = i32::try_from(_a.len()).unwrap_or(0); let _pos = i32::from_ne_bytes(((found_index) as i32).to_ne_bytes()); let splice_index = if _pos < 0 { let _tail = _n + _pos; if _tail < 0 { 0 } else { _tail } } else if _pos > _n { _n } else { _pos }; let _len = 1i32; let splice_count = if _len < 0 { 0 } else { let _rest = _n - splice_index; if _len < _rest { _len } else { _rest } }; let splice_removed: Vec<_> = _a.drain(usize::try_from(splice_index).unwrap_or(0)..usize::try_from(splice_index + splice_count).unwrap_or(0)).collect(); splice_removed };
-        { let _a = &mut (self.values); let _n = i32::try_from(_a.len()).unwrap_or(0); let _pos = i32::from_ne_bytes(((found_index) as i32).to_ne_bytes()); let splice_index1 = if _pos < 0 { let _tail = _n + _pos; if _tail < 0 { 0 } else { _tail } } else if _pos > _n { _n } else { _pos }; let _len = 1i32; let splice_count1 = if _len < 0 { 0 } else { let _rest = _n - splice_index1; if _len < _rest { _len } else { _rest } }; let splice_removed1: Vec<_> = _a.drain(usize::try_from(splice_index1).unwrap_or(0)..usize::try_from(splice_index1 + splice_count1).unwrap_or(0)).collect(); splice_removed1 };
+        { let _a = &mut (self.keys); let _n = i32::try_from(_a.len()).unwrap_or(0); let _pos = found_index as i32; let splice_index = if _pos < 0 { let _tail = _n + _pos; if _tail < 0 { 0 } else { _tail } } else if _pos > _n { _n } else { _pos }; let _len = 1i32; let splice_count = if _len < 0 { 0 } else { let _rest = _n - splice_index; if _len < _rest { _len } else { _rest } }; let splice_removed: Vec<_> = _a.drain(usize::try_from(splice_index).unwrap_or(0)..usize::try_from(splice_index + splice_count).unwrap_or(0)).collect(); splice_removed };
+        { let _a = &mut (self.values); let _n = i32::try_from(_a.len()).unwrap_or(0); let _pos = found_index as i32; let splice_index1 = if _pos < 0 { let _tail = _n + _pos; if _tail < 0 { 0 } else { _tail } } else if _pos > _n { _n } else { _pos }; let _len = 1i32; let splice_count1 = if _len < 0 { 0 } else { let _rest = _n - splice_index1; if _len < _rest { _len } else { _rest } }; let splice_removed1: Vec<_> = _a.drain(usize::try_from(splice_index1).unwrap_or(0)..usize::try_from(splice_index1 + splice_count1).unwrap_or(0)).collect(); splice_removed1 };
         self.keys.push(k.clone());
         self.values.push(v.clone());
         return Some(v);
@@ -459,10 +459,10 @@ impl LruWidthIndependentAnnotationCache {
             }
         }
         if found_index <= 2147483647 {
-            { let _a = &mut (self.keys); let _n = i32::try_from(_a.len()).unwrap_or(0); let _pos = i32::from_ne_bytes(((found_index) as i32).to_ne_bytes()); let splice_index2 = if _pos < 0 { let _tail = _n + _pos; if _tail < 0 { 0 } else { _tail } } else if _pos > _n { _n } else { _pos }; let _len = 1i32; let splice_count2 = if _len < 0 { 0 } else { let _rest = _n - splice_index2; if _len < _rest { _len } else { _rest } }; let splice_removed2: Vec<_> = _a.drain(usize::try_from(splice_index2).unwrap_or(0)..usize::try_from(splice_index2 + splice_count2).unwrap_or(0)).collect(); splice_removed2 };
-            { let _a = &mut (self.values); let _n = i32::try_from(_a.len()).unwrap_or(0); let _pos = i32::from_ne_bytes(((found_index) as i32).to_ne_bytes()); let splice_index3 = if _pos < 0 { let _tail = _n + _pos; if _tail < 0 { 0 } else { _tail } } else if _pos > _n { _n } else { _pos }; let _len = 1i32; let splice_count3 = if _len < 0 { 0 } else { let _rest = _n - splice_index3; if _len < _rest { _len } else { _rest } }; let splice_removed3: Vec<_> = _a.drain(usize::try_from(splice_index3).unwrap_or(0)..usize::try_from(splice_index3 + splice_count3).unwrap_or(0)).collect(); splice_removed3 };
+            { let _a = &mut (self.keys); let _n = i32::try_from(_a.len()).unwrap_or(0); let _pos = found_index as i32; let splice_index2 = if _pos < 0 { let _tail = _n + _pos; if _tail < 0 { 0 } else { _tail } } else if _pos > _n { _n } else { _pos }; let _len = 1i32; let splice_count2 = if _len < 0 { 0 } else { let _rest = _n - splice_index2; if _len < _rest { _len } else { _rest } }; let splice_removed2: Vec<_> = _a.drain(usize::try_from(splice_index2).unwrap_or(0)..usize::try_from(splice_index2 + splice_count2).unwrap_or(0)).collect(); splice_removed2 };
+            { let _a = &mut (self.values); let _n = i32::try_from(_a.len()).unwrap_or(0); let _pos = found_index as i32; let splice_index3 = if _pos < 0 { let _tail = _n + _pos; if _tail < 0 { 0 } else { _tail } } else if _pos > _n { _n } else { _pos }; let _len = 1i32; let splice_count3 = if _len < 0 { 0 } else { let _rest = _n - splice_index3; if _len < _rest { _len } else { _rest } }; let splice_removed3: Vec<_> = _a.drain(usize::try_from(splice_index3).unwrap_or(0)..usize::try_from(splice_index3 + splice_count3).unwrap_or(0)).collect(); splice_removed3 };
         } else {
-            if i32::from_ne_bytes(((u32::try_from((self.keys.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes()) >= i32::from_ne_bytes(((self.max_entries) as i32).to_ne_bytes()) {
+            if u32::try_from((self.keys.len()) & 0xFFFF_FFFF).unwrap_or(0) as i32 >= self.max_entries as i32 {
                 { if self.keys.is_empty() { None } else { Some(self.keys.remove(0)) } };
                 { if self.values.is_empty() { None } else { Some(self.values.remove(0)) } };
             }
@@ -472,7 +472,7 @@ impl LruWidthIndependentAnnotationCache {
     }
 
     pub fn clear(&mut self) {
-        while (i32::from_ne_bytes(((u32::try_from((self.keys.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) > (0) {
+        while ((u32::try_from((self.keys.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32) > (0) {
             self.keys.pop();
             self.values.pop();
         }
@@ -580,26 +580,26 @@ impl LruWidthIndependentAnnotationCache {
         if a == b {
             return true;
         }
-        if false || false || u32::from_ne_bytes(((a.size()) as u32).to_ne_bytes()) != u32::from_ne_bytes(((b.size()) as u32).to_ne_bytes()) {
+        if false || false || ((a.size()) as u32) != b.size() as u32 {
             return false;
         }
-        for i in 0..u32::from_ne_bytes(((a.size()) as u32).to_ne_bytes()) {
-            let ak = a.key_at({ let v: u32 = i; i32::from_ne_bytes(v.to_ne_bytes()) });
+        for i in 0..((a.size()) as u32) {
+            let ak = a.key_at({ let v: u32 = i; v as i32 });
             let mut matched = false;
-            for j in 0..u32::from_ne_bytes(((b.size()) as u32).to_ne_bytes()) {
-                let bk = b.key_at({ let v: u32 = j; i32::from_ne_bytes(v.to_ne_bytes()) });
+            for j in 0..((b.size()) as u32) {
+                let bk = b.key_at({ let v: u32 = j; v as i32 });
                 if LruWidthIndependentAnnotationCache::lru_width_independent_annotation_cache_text_range_equals((ak).clone(), (bk).clone()) {
-                    let av: SortedSetTable<u32> = a.value_at({ let v: u32 = i; i32::from_ne_bytes(v.to_ne_bytes()) });
-                    let bv: SortedSetTable<u32> = b.value_at({ let v: u32 = j; i32::from_ne_bytes(v.to_ne_bytes()) });
+                    let av: SortedSetTable<u32> = a.value_at({ let v: u32 = i; v as i32 });
+                    let bv: SortedSetTable<u32> = b.value_at({ let v: u32 = j; v as i32 });
                     if av == bv {
                         matched = true;
                     } else {
-                        if false || false || u32::from_ne_bytes(((av.size()) as u32).to_ne_bytes()) != u32::from_ne_bytes(((bv.size()) as u32).to_ne_bytes()) {
+                        if false || false || ((av.size()) as u32) != bv.size() as u32 {
                             return false;
                         } else {
                             matched = true;
-                            for k in 0..u32::from_ne_bytes(((av.size()) as u32).to_ne_bytes()) {
-                                if av.at({ let v: u32 = k; i32::from_ne_bytes(v.to_ne_bytes()) }) != bv.at({ let v: u32 = k; i32::from_ne_bytes(v.to_ne_bytes()) }) {
+                            for k in 0..((av.size()) as u32) {
+                                if av.at({ let v: u32 = k; v as i32 }) != bv.at({ let v: u32 = k; v as i32 }) {
                                     matched = false;
                                     break;
                                 }
@@ -684,8 +684,8 @@ impl WidthIndependentAnnotationCache for LruWidthIndependentAnnotationCache {
         }
         let k = (self.keys[usize::try_from(found_index).unwrap_or(0)]).clone();
         let v = (self.values[usize::try_from(found_index).unwrap_or(0)]).clone();
-        { let _a = &mut (self.keys); let _n = i32::try_from(_a.len()).unwrap_or(0); let _pos = i32::from_ne_bytes(((found_index) as i32).to_ne_bytes()); let splice_index4 = if _pos < 0 { let _tail = _n + _pos; if _tail < 0 { 0 } else { _tail } } else if _pos > _n { _n } else { _pos }; let _len = 1i32; let splice_count4 = if _len < 0 { 0 } else { let _rest = _n - splice_index4; if _len < _rest { _len } else { _rest } }; let splice_removed4: Vec<_> = _a.drain(usize::try_from(splice_index4).unwrap_or(0)..usize::try_from(splice_index4 + splice_count4).unwrap_or(0)).collect(); splice_removed4 };
-        { let _a = &mut (self.values); let _n = i32::try_from(_a.len()).unwrap_or(0); let _pos = i32::from_ne_bytes(((found_index) as i32).to_ne_bytes()); let splice_index5 = if _pos < 0 { let _tail = _n + _pos; if _tail < 0 { 0 } else { _tail } } else if _pos > _n { _n } else { _pos }; let _len = 1i32; let splice_count5 = if _len < 0 { 0 } else { let _rest = _n - splice_index5; if _len < _rest { _len } else { _rest } }; let splice_removed5: Vec<_> = _a.drain(usize::try_from(splice_index5).unwrap_or(0)..usize::try_from(splice_index5 + splice_count5).unwrap_or(0)).collect(); splice_removed5 };
+        { let _a = &mut (self.keys); let _n = i32::try_from(_a.len()).unwrap_or(0); let _pos = found_index as i32; let splice_index4 = if _pos < 0 { let _tail = _n + _pos; if _tail < 0 { 0 } else { _tail } } else if _pos > _n { _n } else { _pos }; let _len = 1i32; let splice_count4 = if _len < 0 { 0 } else { let _rest = _n - splice_index4; if _len < _rest { _len } else { _rest } }; let splice_removed4: Vec<_> = _a.drain(usize::try_from(splice_index4).unwrap_or(0)..usize::try_from(splice_index4 + splice_count4).unwrap_or(0)).collect(); splice_removed4 };
+        { let _a = &mut (self.values); let _n = i32::try_from(_a.len()).unwrap_or(0); let _pos = found_index as i32; let splice_index5 = if _pos < 0 { let _tail = _n + _pos; if _tail < 0 { 0 } else { _tail } } else if _pos > _n { _n } else { _pos }; let _len = 1i32; let splice_count5 = if _len < 0 { 0 } else { let _rest = _n - splice_index5; if _len < _rest { _len } else { _rest } }; let splice_removed5: Vec<_> = _a.drain(usize::try_from(splice_index5).unwrap_or(0)..usize::try_from(splice_index5 + splice_count5).unwrap_or(0)).collect(); splice_removed5 };
         self.keys.push(k.clone());
         self.values.push(v.clone());
         return Some(v);
@@ -700,10 +700,10 @@ impl WidthIndependentAnnotationCache for LruWidthIndependentAnnotationCache {
             }
         }
         if found_index <= 2147483647 {
-            { let _a = &mut (self.keys); let _n = i32::try_from(_a.len()).unwrap_or(0); let _pos = i32::from_ne_bytes(((found_index) as i32).to_ne_bytes()); let splice_index6 = if _pos < 0 { let _tail = _n + _pos; if _tail < 0 { 0 } else { _tail } } else if _pos > _n { _n } else { _pos }; let _len = 1i32; let splice_count6 = if _len < 0 { 0 } else { let _rest = _n - splice_index6; if _len < _rest { _len } else { _rest } }; let splice_removed6: Vec<_> = _a.drain(usize::try_from(splice_index6).unwrap_or(0)..usize::try_from(splice_index6 + splice_count6).unwrap_or(0)).collect(); splice_removed6 };
-            { let _a = &mut (self.values); let _n = i32::try_from(_a.len()).unwrap_or(0); let _pos = i32::from_ne_bytes(((found_index) as i32).to_ne_bytes()); let splice_index7 = if _pos < 0 { let _tail = _n + _pos; if _tail < 0 { 0 } else { _tail } } else if _pos > _n { _n } else { _pos }; let _len = 1i32; let splice_count7 = if _len < 0 { 0 } else { let _rest = _n - splice_index7; if _len < _rest { _len } else { _rest } }; let splice_removed7: Vec<_> = _a.drain(usize::try_from(splice_index7).unwrap_or(0)..usize::try_from(splice_index7 + splice_count7).unwrap_or(0)).collect(); splice_removed7 };
+            { let _a = &mut (self.keys); let _n = i32::try_from(_a.len()).unwrap_or(0); let _pos = found_index as i32; let splice_index6 = if _pos < 0 { let _tail = _n + _pos; if _tail < 0 { 0 } else { _tail } } else if _pos > _n { _n } else { _pos }; let _len = 1i32; let splice_count6 = if _len < 0 { 0 } else { let _rest = _n - splice_index6; if _len < _rest { _len } else { _rest } }; let splice_removed6: Vec<_> = _a.drain(usize::try_from(splice_index6).unwrap_or(0)..usize::try_from(splice_index6 + splice_count6).unwrap_or(0)).collect(); splice_removed6 };
+            { let _a = &mut (self.values); let _n = i32::try_from(_a.len()).unwrap_or(0); let _pos = found_index as i32; let splice_index7 = if _pos < 0 { let _tail = _n + _pos; if _tail < 0 { 0 } else { _tail } } else if _pos > _n { _n } else { _pos }; let _len = 1i32; let splice_count7 = if _len < 0 { 0 } else { let _rest = _n - splice_index7; if _len < _rest { _len } else { _rest } }; let splice_removed7: Vec<_> = _a.drain(usize::try_from(splice_index7).unwrap_or(0)..usize::try_from(splice_index7 + splice_count7).unwrap_or(0)).collect(); splice_removed7 };
         } else {
-            if i32::from_ne_bytes(((u32::try_from((self.keys.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes()) >= i32::from_ne_bytes(((self.max_entries) as i32).to_ne_bytes()) {
+            if u32::try_from((self.keys.len()) & 0xFFFF_FFFF).unwrap_or(0) as i32 >= self.max_entries as i32 {
                 { if self.keys.is_empty() { None } else { Some(self.keys.remove(0)) } };
                 { if self.values.is_empty() { None } else { Some(self.values.remove(0)) } };
             }
@@ -713,7 +713,7 @@ impl WidthIndependentAnnotationCache for LruWidthIndependentAnnotationCache {
     }
 
     fn clear(&mut self) {
-        while (i32::from_ne_bytes(((u32::try_from((self.keys.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) > (0) {
+        while ((u32::try_from((self.keys.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32) > (0) {
             self.keys.pop();
             self.values.pop();
         }
@@ -750,19 +750,19 @@ impl WidthIndependentAnnotationCacheFns {
     }
 
     pub fn width_independent_annotation_cache_fns_is_contained_in(r: TextRange, other: TextRange) -> bool {
-        return (i32::from_ne_bytes(((r.start) as i32).to_ne_bytes())) >= i32::from_ne_bytes(((other.start) as i32).to_ne_bytes()) && (i32::from_ne_bytes(((r.end) as i32).to_ne_bytes())) <= i32::from_ne_bytes(((other.end) as i32).to_ne_bytes());
+        return ((r.start) as i32) >= other.start as i32 && ((r.end) as i32) <= other.end as i32;
     }
 
     pub fn width_independent_annotation_cache_fns_containing_font_decisions(clusters: &Vec<Cluster>, items: &Vec<FontDecision>) -> Vec<Option<FontDecision>> {
         let mut item_index = 0u32;
         let mut result: Vec<Option<FontDecision>> = Vec::new();
         for cluster in clusters {
-            while (i32::from_ne_bytes(((item_index) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((items.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) && (i32::from_ne_bytes(((((items[usize::try_from(item_index).unwrap_or(0)]).clone().range).clone().end) as i32).to_ne_bytes())) <= i32::from_ne_bytes((((cluster.range).clone().start) as i32).to_ne_bytes()) {
+            while ((item_index) as i32) < ((u32::try_from((items.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32) && ((((items[usize::try_from(item_index).unwrap_or(0)]).clone().range).clone().end) as i32) <= (cluster.range).clone().start as i32 {
                 item_index = u32::wrapping_add(item_index, 1);
             }
-            if i32::from_ne_bytes(((item_index) as i32).to_ne_bytes()) < (i32::from_ne_bytes(((u32::try_from((items.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
+            if item_index as i32 < ((u32::try_from((items.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32) {
                 let item = (items[usize::try_from(item_index).unwrap_or(0)]).clone();
-                if i32::from_ne_bytes((((cluster.range).clone().start) as i32).to_ne_bytes()) >= i32::from_ne_bytes((((item.range).clone().start) as i32).to_ne_bytes()) && (i32::from_ne_bytes((((cluster.range).clone().end) as i32).to_ne_bytes())) <= i32::from_ne_bytes((((item.range).clone().end) as i32).to_ne_bytes()) {
+                if cluster.range.clone().start as i32 >= (item.range).clone().start as i32 && (((cluster.range).clone().end) as i32) <= (item.range).clone().end as i32 {
                     result.push(Some(item));
                 } else {
                     result.push(None);
@@ -778,12 +778,12 @@ impl WidthIndependentAnnotationCacheFns {
         let mut item_index = 0u32;
         let mut result: Vec<Option<PunctuationAtom>> = Vec::new();
         for cluster in clusters {
-            while (i32::from_ne_bytes(((item_index) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((items.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) && (i32::from_ne_bytes(((((items[usize::try_from(item_index).unwrap_or(0)]).clone().range).clone().end) as i32).to_ne_bytes())) <= i32::from_ne_bytes((((cluster.range).clone().start) as i32).to_ne_bytes()) {
+            while ((item_index) as i32) < ((u32::try_from((items.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32) && ((((items[usize::try_from(item_index).unwrap_or(0)]).clone().range).clone().end) as i32) <= (cluster.range).clone().start as i32 {
                 item_index = u32::wrapping_add(item_index, 1);
             }
-            if i32::from_ne_bytes(((item_index) as i32).to_ne_bytes()) < (i32::from_ne_bytes(((u32::try_from((items.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
+            if item_index as i32 < ((u32::try_from((items.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32) {
                 let item = (items[usize::try_from(item_index).unwrap_or(0)]).clone();
-                if i32::from_ne_bytes((((item.range).clone().start) as i32).to_ne_bytes()) >= i32::from_ne_bytes((((cluster.range).clone().start) as i32).to_ne_bytes()) && (i32::from_ne_bytes((((item.range).clone().end) as i32).to_ne_bytes())) <= i32::from_ne_bytes((((cluster.range).clone().end) as i32).to_ne_bytes()) {
+                if item.range.clone().start as i32 >= (cluster.range).clone().start as i32 && (((item.range).clone().end) as i32) <= (cluster.range).clone().end as i32 {
                     result.push(Some(item));
                 } else {
                     result.push(None);
@@ -796,7 +796,7 @@ impl WidthIndependentAnnotationCacheFns {
     }
 
     pub(crate) fn width_independent_annotation_cache_fns_quote_to_role_override_infos(decisions: &Vec<QuoteRoleDecision>, text: &UStr, base_classifier: Box<dyn FontRoleClassifier>, context: FontRoleContext) -> Result<Vec<RoleOverrideInfo>, TextRangeError> {
-    let __units = u_string::units(&text);
+    let __units = text.as_slice();
     let __count = u_string::unit_count(&text);
         let capacity = decisions.len();
         let mut sorted = Vec::with_capacity(capacity);
@@ -804,10 +804,10 @@ impl WidthIndependentAnnotationCacheFns {
             sorted.push((decisions[usize::try_from(i).unwrap_or(0)]).clone());
         }
         let mut r_idx = 1u32;
-        while (i32::from_ne_bytes(((r_idx) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((sorted.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
+        while ((r_idx) as i32) < ((u32::try_from((sorted.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32) {
             let curr = (sorted[usize::try_from(r_idx).unwrap_or(0)]).clone();
             let mut j = r_idx;
-            while (j) > (0) && (i32::from_ne_bytes(((sorted[usize::try_from(u32::wrapping_sub(j, 1)).unwrap_or(0)].index) as i32).to_ne_bytes())) > (i32::from_ne_bytes(((curr.index) as i32).to_ne_bytes())) {
+            while (j) > (0) && ((sorted[usize::try_from(u32::wrapping_sub(j, 1)).unwrap_or(0)].index) as i32) > ((curr.index) as i32) {
                 sorted[usize::try_from(j).unwrap_or(0)] = (sorted[usize::try_from(u32::wrapping_sub(j, 1)).unwrap_or(0)]).clone();
                 j = u32::wrapping_sub(j, 1);
             }
@@ -819,8 +819,8 @@ impl WidthIndependentAnnotationCacheFns {
         for i in 0..match u32::try_from(sorted.len()) { Ok(value) => value, Err(_) => u32::MAX } {
             let decision = (sorted[usize::try_from(i).unwrap_or(0)]).clone();
             let index = decision.index;
-            let end_idx = if i32::from_ne_bytes(((u32::wrapping_add(index, 1)) as i32).to_ne_bytes()) < (i32::from_ne_bytes(((__count) as i32).to_ne_bytes())) { u32::wrapping_add(index, 1) } else { __count };
-            let source_text = u_string::substring(&text, i32::from_ne_bytes(((index) as i32).to_ne_bytes()), { let v: u32 = end_idx; i32::from_ne_bytes(v.to_ne_bytes()) });
+            let end_idx = if u32::wrapping_add(index, 1) as i32 < ((__count) as i32) { u32::wrapping_add(index, 1) } else { __count };
+            let source_text = u_string::substring(&text, (index) as i32, { let v: u32 = end_idx; v as i32 });
             let original_role = base_classifier.classify(text, TextRange::new(index, u32::wrapping_add(index, 1))?, Some((context).clone()));
             result.push(RoleOverrideInfo::new(TextRange::new(index, u32::wrapping_add(index, 1))?, source_text.as_ustr(), UString::from(original_role.name()).as_ustr(), UString::from(decision.role.name()).as_ustr(), (decision.source).to_ustring().as_ustr(), (decision.reason).to_ustring().as_ustr()));
         }
@@ -833,7 +833,7 @@ impl WidthIndependentAnnotationCacheFns {
     }
 
     pub(crate) fn width_independent_annotation_cache_fns_clamp_int(val: u32, min: u32, max: u32) -> u32 {
-        return if i32::from_ne_bytes(((val) as i32).to_ne_bytes()) < (i32::from_ne_bytes(((min) as i32).to_ne_bytes())) { min } else { if i32::from_ne_bytes(((val) as i32).to_ne_bytes()) > (i32::from_ne_bytes(((max) as i32).to_ne_bytes())) { max } else { val } };
+        return if val as i32 < ((min) as i32) { min } else { if val as i32 > ((max) as i32) { max } else { val } };
     }
 
     pub(crate) fn width_independent_annotation_cache_fns_is_inline_stop(code: u32) -> bool {
@@ -853,7 +853,7 @@ impl WidthIndependentAnnotationCacheFns {
         let mut __loop_guard = sized_spans.lock().unwrap();
         for i in 0..match u32::try_from((input.content).clone().spans.len()) { Ok(value) => value, Err(_) => u32::MAX } {
             let sp = ((input.content).clone().spans[usize::try_from(i).unwrap_or(0)]).clone();
-            if i32::from_ne_bytes((((sp.range).clone().start) as i32).to_ne_bytes()) < (i32::from_ne_bytes((((sp.range).clone().end) as i32).to_ne_bytes())) {
+            if sp.range.clone().start as i32 < (((sp.range).clone().end) as i32) {
                 __loop_guard.push(sp.clone());
             }
         }
@@ -866,7 +866,7 @@ impl WidthIndependentAnnotationCacheFns {
             let __loop_len = match u32::try_from(__loop_guard1.len()) { Ok(value) => value, Err(_) => u32::MAX };
             if __loop_i >= __loop_len { break; }
             let sp = (__loop_guard1[usize::try_from(__loop_i).unwrap_or(0)]).clone();
-            if i32::from_ne_bytes(((offset) as i32).to_ne_bytes()) >= i32::from_ne_bytes((((sp.range).clone().start) as i32).to_ne_bytes()) && (i32::from_ne_bytes(((offset) as i32).to_ne_bytes())) < (i32::from_ne_bytes((((sp.range).clone().end) as i32).to_ne_bytes())) {
+            if offset as i32 >= (sp.range).clone().start as i32 && ((offset) as i32) < (((sp.range).clone().end) as i32) {
                 last_span = Some(sp.clone());
             }
             __loop_i += 1;
@@ -893,7 +893,7 @@ impl WidthIndependentAnnotationCacheFns {
             let __loop_len1 = match u32::try_from(__loop_guard3.len()) { Ok(value) => value, Err(_) => u32::MAX };
             if __loop_i1 >= __loop_len1 { break; }
             let r = (__loop_guard3[usize::try_from(__loop_i1).unwrap_or(0)]).clone();
-            if i32::from_ne_bytes(((offset) as i32).to_ne_bytes()) >= i32::from_ne_bytes(((r.start) as i32).to_ne_bytes()) && (i32::from_ne_bytes(((offset) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((r.end) as i32).to_ne_bytes())) {
+            if offset as i32 >= r.start as i32 && ((offset) as i32) < ((r.end) as i32) {
                 return true;
             }
             __loop_i1 += 1;
@@ -914,9 +914,9 @@ impl WidthIndependentAnnotationCacheFns {
                 pinyin_spans.push(rs.clone());
             }
         }
-        let span_boundaries_builder: Arc<Mutex<SortedSetTableBuilder<u32>>> = Arc::new(Mutex::new(SortedTable::sorted_table_set_builder::<u32>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_bytes(((*a) as i32).to_ne_bytes()), i32::from_ne_bytes(((*b) as i32).to_ne_bytes()))))));
+        let span_boundaries_builder: Arc<Mutex<SortedSetTableBuilder<u32>>> = Arc::new(Mutex::new(SortedTable::sorted_table_set_builder::<u32>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints((*a) as i32, (*b) as i32)))));
         let add_span_boundary: Arc<dyn Fn(u32) -> () + Send + Sync + 'static> = { let text = (text).clone(); let span_boundaries_builder = (span_boundaries_builder).clone(); Arc::new({ let span_boundaries_builder = Arc::clone(&span_boundaries_builder); move |offset| {
-        if i32::from_ne_bytes(((offset) as i32).to_ne_bytes()) > (0) && (i32::from_ne_bytes(((offset) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u_string::unit_count(&(text))) as i32).to_ne_bytes())) {
+        if offset as i32 > (0) && ((offset) as i32) < ((u_string::unit_count(&(text))) as i32) {
             span_boundaries_builder.lock().unwrap().put(&(offset));
         }
 } }) };
@@ -948,9 +948,9 @@ impl WidthIndependentAnnotationCacheFns {
             add_span_boundary((input.content).clone().source_boundaries[usize::try_from(i).unwrap_or(0)]);
         }
         let span_boundaries: SortedSetTable<u32> = span_boundaries_builder.lock().unwrap().clone().build();
-        let emoji_shaping_boundaries_builder: Arc<Mutex<SortedSetTableBuilder<u32>>> = Arc::new(Mutex::new(SortedTable::sorted_table_set_builder::<u32>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_bytes(((*a) as i32).to_ne_bytes()), i32::from_ne_bytes(((*b) as i32).to_ne_bytes()))))));
+        let emoji_shaping_boundaries_builder: Arc<Mutex<SortedSetTableBuilder<u32>>> = Arc::new(Mutex::new(SortedTable::sorted_table_set_builder::<u32>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints((*a) as i32, (*b) as i32)))));
         let add_emoji_boundary: Arc<dyn Fn(u32) -> () + Send + Sync + 'static> = { let text = (text).clone(); let emoji_shaping_boundaries_builder = (emoji_shaping_boundaries_builder).clone(); Arc::new({ let emoji_shaping_boundaries_builder = Arc::clone(&emoji_shaping_boundaries_builder); move |offset| {
-        if i32::from_ne_bytes(((offset) as i32).to_ne_bytes()) > (0) && (i32::from_ne_bytes(((offset) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u_string::unit_count(&(text))) as i32).to_ne_bytes())) {
+        if offset as i32 > (0) && ((offset) as i32) < ((u_string::unit_count(&(text))) as i32) {
             emoji_shaping_boundaries_builder.lock().unwrap().put(&(offset));
         }
 } }) };
@@ -978,19 +978,17 @@ impl WidthIndependentAnnotationCacheFns {
         let punctuation_glyph_substitutor = ClreqPunctuationGlyphSubstitutor::new(Some(clreq_profile.punctuation_glyph_policy));
         let quote_pairs = engine.quote_pair_analyzer.analyze(text.as_ustr()).map_err(|e| ParagraphShapingStageShapeParagraphFault::TextRangeErrorFault(e))?;
         let quote_role_decisions = engine.quote_pair_analyzer.classify_quote_roles(text.as_ustr(), &quote_pairs, Some((context).clone())).map_err(|e| ParagraphShapingStageShapeParagraphFault::TextRangeErrorFault(e))?;
-        let mut quote_role_overrides_builder: SortedMapTableBuilder<u32, FontRole> = SortedTable::sorted_table_map_builder::<u32,
-FontRole>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_bytes(((*a) as i32).to_ne_bytes()), i32::from_ne_bytes(((*b) as i32).to_ne_bytes()))));
+        let mut quote_role_overrides_builder: SortedMapTableBuilder<u32, FontRole> = SortedTable::sorted_table_map_builder::<u32, FontRole>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints((*a) as i32, (*b) as i32)));
         for i in 0..match u32::try_from(quote_role_decisions.len()) { Ok(value) => value, Err(_) => u32::MAX } {
             quote_role_overrides_builder.put(&(quote_role_decisions[usize::try_from(i).unwrap_or(0)].index), &(quote_role_decisions[usize::try_from(i).unwrap_or(0)].role));
         }
         let quote_role_overrides: SortedMapTable<u32, FontRole> = quote_role_overrides_builder.clone().build();
         let quote_role_override_infos = WidthIndependentAnnotationCacheFns::width_independent_annotation_cache_fns_quote_to_role_override_infos(&quote_role_decisions, text.as_ustr(), engine.font_role_classifier.clone(), (context).clone()).map_err(|e| ParagraphShapingStageShapeParagraphFault::TextRangeErrorFault(e))?;
-        let quote_aware_classifier: Box<dyn FontRoleClassifier> = if i32::from_ne_bytes(((u32::from_ne_bytes(((quote_role_overrides.size()) as u32).to_ne_bytes())) as i32).to_ne_bytes()) > (0) { Box::new(QuotePairAwareFontRoleClassifier::new(engine.font_role_classifier.clone(), (quote_role_overrides).clone())) } else { engine.font_role_classifier.clone() };
+        let quote_aware_classifier: Box<dyn FontRoleClassifier> = if quote_role_overrides.size() as u32 as i32 > (0) { Box::new(QuotePairAwareFontRoleClassifier::new(engine.font_role_classifier.clone(), (quote_role_overrides).clone())) } else { engine.font_role_classifier.clone() };
         let dash_ellipsis_role_decisions = ContextualDashEllipsisRoleResolver::new().map_err(|e| ParagraphShapingStageShapeParagraphFault::TextRangeErrorFault(e))?.resolve(text.as_ustr(), Some((context).clone())).map_err(|e| ParagraphShapingStageShapeParagraphFault::TextRangeErrorFault(e))?;
         let dash_ellipsis_role_override_infos = ContextualDashEllipsisRoles::contextual_dash_ellipsis_roles_to_role_override_infos(&dash_ellipsis_role_decisions, text.as_ustr(), quote_aware_classifier.clone(), (context).clone()).map_err(|e| ParagraphShapingStageShapeParagraphFault::TextRangeErrorFault(e))?;
-        let effective_classifier: Box<dyn FontRoleClassifier> = if i32::from_ne_bytes(((u32::try_from((dash_ellipsis_role_decisions.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes()) > (0) { Box::new(ContextualDashEllipsisAwareFontRoleClassifier::new(quote_aware_classifier.clone(), dash_ellipsis_role_decisions.to_vec()).map_err(|e| ParagraphShapingStageShapeParagraphFault::TextRangeErrorFault(e))?) } else { quote_aware_classifier.clone() };
-        let mut inline_object_by_start_builder: SortedMapTableBuilder<u32, InlineObjectSpan> = SortedTable::sorted_table_map_builder::<u32,
-InlineObjectSpan>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_bytes(((*a) as i32).to_ne_bytes()), i32::from_ne_bytes(((*b) as i32).to_ne_bytes()))));
+        let effective_classifier: Box<dyn FontRoleClassifier> = if u32::try_from((dash_ellipsis_role_decisions.len()) & 0xFFFF_FFFF).unwrap_or(0) as i32 > (0) { Box::new(ContextualDashEllipsisAwareFontRoleClassifier::new(quote_aware_classifier.clone(), dash_ellipsis_role_decisions.to_vec()).map_err(|e| ParagraphShapingStageShapeParagraphFault::TextRangeErrorFault(e))?) } else { quote_aware_classifier.clone() };
+        let mut inline_object_by_start_builder: SortedMapTableBuilder<u32, InlineObjectSpan> = SortedTable::sorted_table_map_builder::<u32, InlineObjectSpan>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints((*a) as i32, (*b) as i32)));
         for i in 0..match u32::try_from(input.inline_objects.len()) { Ok(value) => value, Err(_) => u32::MAX } {
             let obj = (input.inline_objects[usize::try_from(i).unwrap_or(0)]).clone();
             inline_object_by_start_builder.put(&((obj.range).clone().start), &(obj));
@@ -1015,10 +1013,10 @@ InlineObjectSpan>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::fr
             }
         }
         let mut r_idx = 1u32;
-        while (i32::from_ne_bytes(((r_idx) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((all_role_overrides.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
+        while ((r_idx) as i32) < ((u32::try_from((all_role_overrides.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32) {
             let curr = (all_role_overrides[usize::try_from(r_idx).unwrap_or(0)]).clone();
             let mut j = r_idx;
-            while (j) > (0) && (i32::from_ne_bytes(((((all_role_overrides[usize::try_from(u32::wrapping_sub(j, 1)).unwrap_or(0)]).clone().range).clone().start) as i32).to_ne_bytes())) > (i32::from_ne_bytes((((curr.range).clone().start) as i32).to_ne_bytes())) {
+            while (j) > (0) && ((((all_role_overrides[usize::try_from(u32::wrapping_sub(j, 1)).unwrap_or(0)]).clone().range).clone().start) as i32) > (((curr.range).clone().start) as i32) {
                 all_role_overrides[usize::try_from(j).unwrap_or(0)] = (all_role_overrides[usize::try_from(u32::wrapping_sub(j, 1)).unwrap_or(0)]).clone();
                 j = u32::wrapping_sub(j, 1);
             }
@@ -1052,7 +1050,7 @@ InlineObjectSpan>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::fr
             let declared_ascent = match &(raw.typo_ascent) { Some(__option5) => *__option5, None => raw.ascent };
             let declared_descent = match &(raw.typo_descent) { Some(__option6) => *__option6, None => raw.descent };
             let mut shaped: Option<ShapingResult> = None;
-            if i32::from_ne_bytes(((u_string::unit_count(&((ruby.text).to_ustring()))) as i32).to_ne_bytes()) > (0) {
+            if u_string::unit_count(&((ruby.text).to_ustring())) as i32 > (0) {
                 shaped = Some(engine.text_shaper.lock().unwrap().shape(ShapingInput::new((ruby.text).to_ustring().as_ustr(), TextRange::new(0u32, u_string::unit_count(&((ruby.text).to_ustring()))).map_err(|e| ParagraphShapingStageShapeParagraphFault::TextRangeErrorFault(e))?, TextStyle::new(Some(WidthIndependentAnnotationCacheFns::width_independent_annotation_cache_fns_copy_font_families(&(ruby.font_families).clone())), Some(ruby_font_size), Some((ruby_locale).to_ustring()), Some(ruby_font_weight), Some((input.text_style).clone().italic), Some((input.text_style).clone().baseline_shift), Some((input.text_style).clone().inline_attachment)), (decision).clone(), Some((ruby.text).to_ustring()), Some(vec![]))).map_err(|e| ParagraphShapingStageShapeParagraphFault::TextShaperShapeFaultFault(e))?.clone());
             }
             let mut ruby_width_terms: Vec<f64> = vec![];
@@ -1085,7 +1083,7 @@ InlineObjectSpan>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::fr
 
     pub(crate) fn width_independent_annotation_cache_fns_compute_ruby_spread(natural: &Vec<Cluster>, ruby_size: f64, pinyin_spans: &Vec<RubySpan>, ruby_font_geometry_by_span: SortedMapTable<RubySpan, RubyFontGeometry>) -> SortedMapTable<u32, f64> {
         if u32::try_from((pinyin_spans.len()) & 0xFFFF_FFFF).unwrap_or(0) == 0 {
-            return SortedTable::sorted_table_map_builder::<u32, f64>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_bytes(((*a) as i32).to_ne_bytes()), i32::from_ne_bytes(((*b) as i32).to_ne_bytes())))).clone().build();
+            return SortedTable::sorted_table_map_builder::<u32, f64>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints((*a) as i32, (*b) as i32))).clone().build();
         }
         let word_space = ruby_size * 0.25f64;
         let mut left_x: Vec<f64> = Vec::new();
@@ -1109,12 +1107,12 @@ InlineObjectSpan>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::fr
             measures_rw.push(geom.as_ref().unwrap().width);
         }
         let mut m_idx = 1u32;
-        while (i32::from_ne_bytes(((m_idx) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((measures_first_cluster.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
+        while ((m_idx) as i32) < ((u32::try_from((measures_first_cluster.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32) {
             let curr_fc = measures_first_cluster[usize::try_from(m_idx).unwrap_or(0)];
             let curr_center = measures_center[usize::try_from(m_idx).unwrap_or(0)];
             let curr_rw = measures_rw[usize::try_from(m_idx).unwrap_or(0)];
             let mut j = m_idx;
-            while (j) > (0) && ({ let v: u32 = measures_first_cluster[usize::try_from(u32::wrapping_sub(j, 1)).unwrap_or(0)]; i32::from_ne_bytes(v.to_ne_bytes()) }) > ({ let v: u32 = curr_fc; i32::from_ne_bytes(v.to_ne_bytes()) }) {
+            while (j) > (0) && ({ let v: u32 = measures_first_cluster[usize::try_from(u32::wrapping_sub(j, 1)).unwrap_or(0)]; v as i32 }) > ({ let v: u32 = curr_fc; v as i32 }) {
                 { while measures_first_cluster.len() <= usize::try_from(j).unwrap_or(0) { measures_first_cluster.push(0); } measures_first_cluster[usize::try_from(j).unwrap_or(0)] = measures_first_cluster[usize::try_from(u32::wrapping_sub(j, 1)).unwrap_or(0)]; };
                 { while measures_center.len() <= usize::try_from(j).unwrap_or(0) { measures_center.push(0.0); } measures_center[usize::try_from(j).unwrap_or(0)] = measures_center[usize::try_from(u32::wrapping_sub(j, 1)).unwrap_or(0)]; };
                 { while measures_rw.len() <= usize::try_from(j).unwrap_or(0) { measures_rw.push(0.0); } measures_rw[usize::try_from(j).unwrap_or(0)] = measures_rw[usize::try_from(u32::wrapping_sub(j, 1)).unwrap_or(0)]; };
@@ -1125,7 +1123,7 @@ InlineObjectSpan>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::fr
             { while measures_rw.len() <= usize::try_from(j).unwrap_or(0) { measures_rw.push(0.0); } measures_rw[usize::try_from(j).unwrap_or(0)] = curr_rw; };
             m_idx = u32::wrapping_add(m_idx, 1);
         }
-        let mut spread_builder: SortedMapTableBuilder<u32, f64> = SortedTable::sorted_table_map_builder::<u32, f64>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_bytes(((*a) as i32).to_ne_bytes()), i32::from_ne_bytes(((*b) as i32).to_ne_bytes()))));
+        let mut spread_builder: SortedMapTableBuilder<u32, f64> = SortedTable::sorted_table_map_builder::<u32, f64>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints((*a) as i32, (*b) as i32)));
         let spread_keys: Arc<Mutex<Vec<u32>>> = Arc::new(Mutex::new(Vec::new()));
         let spread_values: Arc<Mutex<Vec<f64>>> = Arc::new(Mutex::new(Vec::new()));
         let get_spread: Arc<dyn Fn(u32) -> f64 + Send + Sync + 'static> = { let spread_keys = Arc::clone(&spread_keys); let spread_values = Arc::clone(&spread_values); Arc::new({ let spread_keys = Arc::clone(&spread_keys); let spread_values = Arc::clone(&spread_values); move |key| {
@@ -1161,7 +1159,7 @@ InlineObjectSpan>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::fr
             let rw = measures_rw[usize::try_from(m).unwrap_or(0)];
             let mut center = measures_center[usize::try_from(m).unwrap_or(0)] + shift;
             let needed = prev_right + word_space - (center - rw / 2.0f64);
-            if needed > (0.0f64) && ({ let v: u32 = first_cluster; i32::from_ne_bytes(v.to_ne_bytes()) }) > (0) {
+            if needed > (0.0f64) && ({ let v: u32 = first_cluster; v as i32 }) > (0) {
                 let key = u32::wrapping_sub(first_cluster, 1);
                 put_spread(key, get_spread(key) + needed);
                 shift += needed;
@@ -1201,14 +1199,16 @@ InlineObjectSpan>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::fr
         let font_size = (input.text_style).clone().font_size;
         let grid = ((input.paragraph_style).clone().line_length_grid).clone();
         let container_width = (input.constraints).clone().max_width;
-        let mut grid_cells = u32::from_ne_bytes(((match f64::from(f64::floor(container_width / font_size)) { v if v.is_nan() => 0i32, v if v >= 2147483648.0 => 2147483647i32, v if v < -2147483648.0 => -2147483648i32, v if v < 0.0 => i32::from_ne_bytes(u32::wrapping_sub(0, match ((0.0 - v).to_bits() >> 52) & 2047 { e if e < 1023 => 0u32, e => u32::try_from((((0.0 - v).to_bits() & 4503599627370495) | 4503599627370496) >> (52 - (e - 1023))).unwrap_or(0) }).to_ne_bytes()), v => i32::from_ne_bytes(match ((v).to_bits() >> 52) & 2047 { e if e < 1023 => 0u32, e => u32::try_from((((v).to_bits() & 4503599627370495) | 4503599627370496) >> (52 - (e - 1023))).unwrap_or(0) }.to_ne_bytes()) }) as u32).to_ne_bytes());
-        if i32::from_ne_bytes(((grid_cells) as i32).to_ne_bytes()) < (1) {
+        let mut grid_cells = match f64::from(f64::floor(container_width / font_size)) { v if v.is_nan() => 0i32, v if v >= 2147483648.0 => 2147483647i32, v if v < -2147483648.0 => -2147483648i32,
+v if v < 0.0 => i32::from_ne_bytes(u32::wrapping_sub(0, match ((0.0 - v).to_bits() >> 52) & 2047 { e if e < 1023 => 0u32, e => u32::try_from((((0.0 - v).to_bits() & 4503599627370495) | 4503599627370496) >> (52 - (e - 1023))).unwrap_or(0) }).to_ne_bytes()),
+v => i32::from_ne_bytes(match ((v).to_bits() >> 52) & 2047 { e if e < 1023 => 0u32, e => u32::try_from((((v).to_bits() & 4503599627370495) | 4503599627370496) >> (52 - (e - 1023))).unwrap_or(0) }.to_ne_bytes()) } as u32;
+        if grid_cells as i32 < (1) {
             grid_cells = 1u32;
         }
         let grid_cells_int = grid_cells;
         let mut measure = container_width;
         if grid.enabled {
-            measure = format!("{}", (i32::from_ne_bytes(((grid_cells_int) as i32).to_ne_bytes()))).parse::<f64>().unwrap_or(0.0) * font_size;
+            measure = format!("{}", (grid_cells_int) as i32).parse::<f64>().unwrap_or(0.0) * font_size;
             if measure > (container_width) {
                 measure = container_width;
             }
@@ -1225,7 +1225,7 @@ InlineObjectSpan>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::fr
                 }
             }
         }
-        let line_length_grid_decision = LineLengthGridDecisionInfo::new(grid.enabled, container_width, font_size, if grid.enabled { grid_cells_int } else { u32::from_ne_bytes(((match f64::from(measure / font_size) { v if v.is_nan() => 0i32, v if v >= 2147483648.0 => 2147483647i32, v if v < -2147483648.0 => -2147483648i32, v if v < 0.0 => i32::from_ne_bytes(u32::wrapping_sub(0, match ((0.0 - v).to_bits() >> 52) & 2047 { e if e < 1023 => 0u32, e => u32::try_from((((0.0 - v).to_bits() & 4503599627370495) | 4503599627370496) >> (52 - (e - 1023))).unwrap_or(0) }).to_ne_bytes()), v => i32::from_ne_bytes(match ((v).to_bits() >> 52) & 2047 { e if e < 1023 => 0u32, e => u32::try_from((((v).to_bits() & 4503599627370495) | 4503599627370496) >> (52 - (e - 1023))).unwrap_or(0) }.to_ne_bytes()) }) as u32).to_ne_bytes()) }, measure, grid_slack, WidthIndependentAnnotationCacheFns::width_independent_annotation_cache_fns_render_nullable_last_line_alignment(Some(grid_body_alignment)).as_ustr(), grid_body_offset, if grid.enabled { UString::from("LineLengthGridQuantization") } else { UString::from("GridBypassed") }.as_ustr());
+        let line_length_grid_decision = LineLengthGridDecisionInfo::new(grid.enabled, container_width, font_size, if grid.enabled { grid_cells_int } else { match f64::from(measure / font_size) { v if v.is_nan() => 0i32, v if v >= 2147483648.0 => 2147483647i32, v if v < -2147483648.0 => -2147483648i32, v if v < 0.0 => i32::from_ne_bytes(u32::wrapping_sub(0, match ((0.0 - v).to_bits() >> 52) & 2047 { e if e < 1023 => 0u32, e => u32::try_from((((0.0 - v).to_bits() & 4503599627370495) | 4503599627370496) >> (52 - (e - 1023))).unwrap_or(0) }).to_ne_bytes()), v => i32::from_ne_bytes(match ((v).to_bits() >> 52) & 2047 { e if e < 1023 => 0u32, e => u32::try_from((((v).to_bits() & 4503599627370495) | 4503599627370496) >> (52 - (e - 1023))).unwrap_or(0) }.to_ne_bytes()) } as u32 }, measure, grid_slack, WidthIndependentAnnotationCacheFns::width_independent_annotation_cache_fns_render_nullable_last_line_alignment(Some(grid_body_alignment)).as_ustr(), grid_body_offset, if grid.enabled { UString::from("LineLengthGridQuantization") } else { UString::from("GridBypassed") }.as_ustr());
         let measure_em = measure / font_size;
         let resolved_kinsoku = KinsokuModes::kinsoku_modes_resolve(((annotation.clreq_profile).clone().kinsoku_mode).clone(), measure_em);
         let kinsoku_rule = ClreqKinsokuRule::new(Some(resolved_kinsoku.level));
@@ -1248,13 +1248,13 @@ InlineObjectSpan>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::fr
                 break;
             }
         }
-        let needs_dynamic_shaping = true && (i32::from_ne_bytes(((u32::from_ne_bytes(((rejected_technical_tiers_by_span.size()) as u32).to_ne_bytes())) as i32).to_ne_bytes())) > (0) || has_prog_span || has_over_measure_token;
+        let needs_dynamic_shaping = true && ((rejected_technical_tiers_by_span.size()) as u32 as i32) > (0) || has_prog_span || has_over_measure_token;
         let mut shaping_stage = (annotation.base_shaping_stage).clone().clone();
         if needs_dynamic_shaping {
             shaping_stage = ParagraphShapingStage::paragraph_shaping_stage_shape_paragraph(engine, (input).clone(), text.as_ustr(), font_size, measure, &annotation.cluster_ranges, (annotation.font_decision_by_range).clone(), (annotation.inline_object_by_range).clone(), (annotation.punctuation_glyph_substitutor).clone(), (annotation.style_at).clone(), { let input = (input).clone(); Arc::new(move |offset| {
         for i in 0..match u32::try_from(input.decorations.len()) { Ok(value) => value, Err(_) => u32::MAX } {
             let d = (input.decorations[usize::try_from(i).unwrap_or(0)]).clone();
-            if d.kind == DecorationKind::Emphasis && (i32::from_ne_bytes(((offset) as i32).to_ne_bytes())) >= i32::from_ne_bytes((((d.range).clone().start) as i32).to_ne_bytes()) && (i32::from_ne_bytes(((offset) as i32).to_ne_bytes())) < (i32::from_ne_bytes((((d.range).clone().end) as i32).to_ne_bytes())) {
+            if d.kind == DecorationKind::Emphasis && ((offset) as i32) >= (d.range).clone().start as i32 && ((offset) as i32) < (((d.range).clone().end) as i32) {
                 return true;
             }
         }
@@ -1365,8 +1365,8 @@ InlineObjectSpan>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::fr
                 narrow_inline_box_ranges.push((r#box.range).clone());
             }
         }
-        let mut narrow_inline_box_leading_clusters_builder: SortedSetTableBuilder<u32> = SortedTable::sorted_table_set_builder::<u32>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_bytes(((*a) as i32).to_ne_bytes()), i32::from_ne_bytes(((*b) as i32).to_ne_bytes()))));
-        let mut narrow_inline_box_trailing_clusters_builder: SortedSetTableBuilder<u32> = SortedTable::sorted_table_set_builder::<u32>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_bytes(((*a) as i32).to_ne_bytes()), i32::from_ne_bytes(((*b) as i32).to_ne_bytes()))));
+        let mut narrow_inline_box_leading_clusters_builder: SortedSetTableBuilder<u32> = SortedTable::sorted_table_set_builder::<u32>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints((*a) as i32, (*b) as i32)));
+        let mut narrow_inline_box_trailing_clusters_builder: SortedSetTableBuilder<u32> = SortedTable::sorted_table_set_builder::<u32>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints((*a) as i32, (*b) as i32)));
         for idx in 0..match u32::try_from(raw_natural_clusters.len()) { Ok(value) => value, Err(_) => u32::MAX } {
             let cl = (raw_natural_clusters[usize::try_from(idx).unwrap_or(0)]).clone();
             for j in 0..match u32::try_from(narrow_inline_box_ranges.len()) { Ok(value) => value, Err(_) => u32::MAX } {
@@ -1402,14 +1402,14 @@ InlineObjectSpan>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::fr
         let verbatim_ranges = ((input.content).clone().auto_space_suppressed_ranges).clone();
         let verbatim_suppressed_boundary: Arc<dyn Fn(u32) -> bool + Send + Sync + 'static> = { let verbatim_ranges = (verbatim_ranges).clone(); Arc::new(move |offset| {
         for vr in &verbatim_ranges {
-            if i32::from_ne_bytes(((vr.start) as i32).to_ne_bytes()) < (i32::from_ne_bytes(((offset) as i32).to_ne_bytes())) && (i32::from_ne_bytes(((offset) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((vr.end) as i32).to_ne_bytes())) {
+            if vr.start as i32 < ((offset) as i32) && ((offset) as i32) < ((vr.end) as i32) {
                 return true;
             }
         }
         return false;
 }) };
         let mut east_asian_spacing_edges = (resolved_spacing_edges).clone();
-        if i32::from_ne_bytes(((u32::try_from((verbatim_ranges.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes()) > (0) {
+        if u32::try_from((verbatim_ranges.len()) & 0xFFFF_FFFF).unwrap_or(0) as i32 > (0) {
             let mut list: Vec<EastAsianSpacingEdges> = Vec::new();
             for index in 0..match u32::try_from(resolved_spacing_edges.len()) { Ok(value) => value, Err(_) => u32::MAX } {
                 let edges = (resolved_spacing_edges[usize::try_from(index).unwrap_or(0)]).clone();
@@ -1425,7 +1425,7 @@ InlineObjectSpan>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::fr
             east_asian_spacing_edges = list;
         }
         let mut verbatim_suppression_decisions: Vec<AutoSpaceDecisionInfo> = Vec::new();
-        if i32::from_ne_bytes(((u32::try_from((verbatim_ranges.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes()) > (0) {
+        if u32::try_from((verbatim_ranges.len()) & 0xFFFF_FFFF).unwrap_or(0) as i32 > (0) {
             for index in 1..match u32::try_from(raw_natural_clusters.len()) { Ok(value) => value, Err(_) => u32::MAX } {
                 let offset = ((raw_natural_clusters[usize::try_from(index).unwrap_or(0)]).clone().range).clone().start;
                 if !verbatim_suppressed_boundary(offset) {
@@ -1453,8 +1453,7 @@ InlineObjectSpan>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::fr
         }
         let inline_box_result = PunctuationGeometryStage::punctuation_geometry_stage_apply_inline_box_spans(&auto_space_result.clusters, &inline_boxes_copy);
         let natural_clusters = inline_box_result.clusters.clone();
-        let mut inline_object_by_cluster_index_builder: SortedMapTableBuilder<u32, InlineObjectSpan> = SortedTable::sorted_table_map_builder::<u32,
-InlineObjectSpan>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_bytes(((*a) as i32).to_ne_bytes()), i32::from_ne_bytes(((*b) as i32).to_ne_bytes()))));
+        let mut inline_object_by_cluster_index_builder: SortedMapTableBuilder<u32, InlineObjectSpan> = SortedTable::sorted_table_map_builder::<u32, InlineObjectSpan>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints((*a) as i32, (*b) as i32)));
         let boundary_indices: Arc<Mutex<Vec<u32>>> = Arc::new(Mutex::new(Vec::new()));
         let boundary_adjustments: Arc<Mutex<Vec<InlineObjectBoundaryAdjustment>>> = Arc::new(Mutex::new(Vec::new()));
         let get_registered_boundary: Arc<dyn Fn(u32) -> Option<InlineObjectBoundaryAdjustment> + Send + Sync + 'static> = { let boundary_indices = Arc::clone(&boundary_indices); let boundary_adjustments = Arc::clone(&boundary_adjustments); Arc::new({ let boundary_indices = Arc::clone(&boundary_indices); let boundary_adjustments = Arc::clone(&boundary_adjustments); move |left_cluster_index| {
@@ -1526,11 +1525,11 @@ WidthIndependentAnnotationCacheBuildParagraphLayoutPrepFault> + Send + Sync + 's
             match &(inline_object) {
                 Some(__option16) => {
                     inline_object_by_cluster_index_builder.put(&(cluster_index), __option16);
-                    if ({ let v: u32 = cluster_index; i32::from_ne_bytes(v.to_ne_bytes()) }) > (0) && !WidthIndependentAnnotationCacheFns::width_independent_annotation_cache_fns_is_fixed_boundary((__option16.leading_boundary).clone()) {
+                    if ({ let v: u32 = cluster_index; v as i32 }) > (0) && !WidthIndependentAnnotationCacheFns::width_independent_annotation_cache_fns_is_fixed_boundary((__option16.leading_boundary).clone()) {
                         register_inline_object_boundary(u32::wrapping_sub(cluster_index, 1), (__option16.leading_boundary).clone())?;
                     }
-                    if ({ let v: u32 = cluster_index; i32::from_ne_bytes(v.to_ne_bytes()) }) < (i32::from_ne_bytes(((u32::wrapping_sub(u32::try_from((natural_clusters.len()) & 0xFFFF_FFFF).unwrap_or(0), 1)) as i32).to_ne_bytes())) && !WidthIndependentAnnotationCacheFns::width_independent_annotation_cache_fns_is_fixed_boundary((__option16.trailing_boundary).clone()) {
-                        register_inline_object_boundary(u32::from_ne_bytes(((cluster_index) as u32).to_ne_bytes()), (__option16.trailing_boundary).clone())?;
+                    if ({ let v: u32 = cluster_index; v as i32 }) < ((u32::wrapping_sub(u32::try_from((natural_clusters.len()) & 0xFFFF_FFFF).unwrap_or(0), 1)) as i32) && !WidthIndependentAnnotationCacheFns::width_independent_annotation_cache_fns_is_fixed_boundary((__option16.trailing_boundary).clone()) {
+                        register_inline_object_boundary((cluster_index) as u32, (__option16.trailing_boundary).clone())?;
                     }
                 }
                 None => {
@@ -1538,9 +1537,8 @@ WidthIndependentAnnotationCacheBuildParagraphLayoutPrepFault> + Send + Sync + 's
             }
         }
         let inline_object_by_cluster_index: SortedMapTable<u32, InlineObjectSpan> = inline_object_by_cluster_index_builder.clone().build();
-        let mut uniform_inline_object_boundary_builder: SortedSetTableBuilder<u32> = SortedTable::sorted_table_set_builder::<u32>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_bytes(((*a) as i32).to_ne_bytes()), i32::from_ne_bytes(((*b) as i32).to_ne_bytes()))));
-        let mut preferred_inline_object_boundary_builder: SortedMapTableBuilder<u32, InlineObjectPreferredStretch> = SortedTable::sorted_table_map_builder::<u32,
-InlineObjectPreferredStretch>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_bytes(((*a) as i32).to_ne_bytes()), i32::from_ne_bytes(((*b) as i32).to_ne_bytes()))));
+        let mut uniform_inline_object_boundary_builder: SortedSetTableBuilder<u32> = SortedTable::sorted_table_set_builder::<u32>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints((*a) as i32, (*b) as i32)));
+        let mut preferred_inline_object_boundary_builder: SortedMapTableBuilder<u32, InlineObjectPreferredStretch> = SortedTable::sorted_table_map_builder::<u32, InlineObjectPreferredStretch>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints((*a) as i32, (*b) as i32)));
         let mut inline_object_boundary_unbreakable_ranges: Vec<IntRange> = Vec::new();
         let mut __loop_guard20 = boundary_indices.lock().unwrap();
         let mut __loop_guard21 = boundary_adjustments.lock().unwrap();
@@ -1581,9 +1579,8 @@ InlineObjectPreferredStretch>(Arc::new(|a, b| SortedTable::sorted_table_compare_
             cluster_roles.push(match &(d) { Some(__option18) => __option18.role, None => FontRole::Unknown });
         }
         let inline_object_attached_marks = PunctuationGeometryStage::punctuation_geometry_stage_inline_object_attached_marks(&natural_clusters, &cluster_roles, resolved_kinsoku.level, (Box::new((kinsoku_rule).clone())).clone());
-        let mut inline_object_separator_space_trims_builder: SortedMapTableBuilder<u32, f64> = SortedTable::sorted_table_map_builder::<u32,
-f64>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_bytes(((*a) as i32).to_ne_bytes()), i32::from_ne_bytes(((*b) as i32).to_ne_bytes()))));
-        let mut inline_object_attachment_no_stretch_boundaries_builder: SortedSetTableBuilder<u32> = SortedTable::sorted_table_set_builder::<u32>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_bytes(((*a) as i32).to_ne_bytes()), i32::from_ne_bytes(((*b) as i32).to_ne_bytes()))));
+        let mut inline_object_separator_space_trims_builder: SortedMapTableBuilder<u32, f64> = SortedTable::sorted_table_map_builder::<u32, f64>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints((*a) as i32, (*b) as i32)));
+        let mut inline_object_attachment_no_stretch_boundaries_builder: SortedSetTableBuilder<u32> = SortedTable::sorted_table_set_builder::<u32>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints((*a) as i32, (*b) as i32)));
         let mut inline_object_punctuation_attachment_decisions: Vec<InlineObjectPunctuationAttachmentDecisionInfo> = Vec::new();
         for attachment in &inline_object_attached_marks {
             for s in 0..match u32::try_from((attachment.separator_cluster_indices).clone().len()) { Ok(value) => value, Err(_) => u32::MAX } {
@@ -1593,7 +1590,7 @@ f64>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_bytes((
             for idx in attachment.object_cluster_index..attachment.mark_cluster_index {
                 inline_object_attachment_no_stretch_boundaries_builder.put(&(idx));
             }
-            if i32::from_ne_bytes(((u32::try_from(((attachment.separator_cluster_indices).clone().len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes()) > (0) {
+            if u32::try_from(((attachment.separator_cluster_indices).clone().len()) & 0xFFFF_FFFF).unwrap_or(0) as i32 > (0) {
                 let separator_first = (natural_clusters[usize::try_from(attachment.separator_cluster_indices[0usize]).unwrap_or(0)]).clone();
                 let separator_last = (natural_clusters[usize::try_from(attachment.separator_cluster_indices[usize::try_from(u32::wrapping_sub(u32::try_from(((attachment.separator_cluster_indices).clone().len()) & 0xFFFF_FFFF).unwrap_or(0), 1)).unwrap_or(0)]).unwrap_or(0)]).clone();
                 let mark = (natural_clusters[usize::try_from(attachment.mark_cluster_index).unwrap_or(0)]).clone();
@@ -1607,8 +1604,8 @@ f64>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_bytes((
         }
         let inline_object_separator_space_trims: SortedMapTable<u32, f64> = inline_object_separator_space_trims_builder.clone().build();
         let inline_object_attachment_no_stretch_boundaries: SortedSetTable<u32> = inline_object_attachment_no_stretch_boundaries_builder.clone().build();
-        let mut mandatory_break_clusters_builder: SortedSetTableBuilder<u32> = SortedTable::sorted_table_set_builder::<u32>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_bytes(((*a) as i32).to_ne_bytes()), i32::from_ne_bytes(((*b) as i32).to_ne_bytes()))));
-        let mut zero_width_break_clusters_builder: SortedSetTableBuilder<u32> = SortedTable::sorted_table_set_builder::<u32>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_bytes(((*a) as i32).to_ne_bytes()), i32::from_ne_bytes(((*b) as i32).to_ne_bytes()))));
+        let mut mandatory_break_clusters_builder: SortedSetTableBuilder<u32> = SortedTable::sorted_table_set_builder::<u32>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints((*a) as i32, (*b) as i32)));
+        let mut zero_width_break_clusters_builder: SortedSetTableBuilder<u32> = SortedTable::sorted_table_set_builder::<u32>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints((*a) as i32, (*b) as i32)));
         let mut mandatory_break_decisions: Vec<MandatoryBreakDecisionInfo> = Vec::new();
         let mut zero_width_break_decisions: Vec<ZeroWidthBreakDecisionInfo> = Vec::new();
         for idx in 0..match u32::try_from(natural_clusters.len()) { Ok(value) => value, Err(_) => u32::MAX } {
@@ -1656,13 +1653,13 @@ f64>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_bytes((
             }
         }
         let mut ruby_and_bopomofo_spread: SortedMapTable<u32, f64> = (ruby_spread).clone();
-        if i32::from_ne_bytes(((u32::try_from((bopomofo_spans.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes()) > (0) {
-            let mut merged_builder: SortedMapTableBuilder<u32, f64> = SortedTable::sorted_table_map_builder::<u32, f64>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_bytes(((*a) as i32).to_ne_bytes()), i32::from_ne_bytes(((*b) as i32).to_ne_bytes()))));
+        if u32::try_from((bopomofo_spans.len()) & 0xFFFF_FFFF).unwrap_or(0) as i32 > (0) {
+            let mut merged_builder: SortedMapTableBuilder<u32, f64> = SortedTable::sorted_table_map_builder::<u32, f64>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints((*a) as i32, (*b) as i32)));
             let mut merged_keys: Vec<u32> = Vec::new();
             let mut merged_vals: Vec<f64> = Vec::new();
-            for i in 0..u32::from_ne_bytes(((ruby_spread.size()) as u32).to_ne_bytes()) {
-                merged_keys.push(ruby_spread.key_at({ let v: u32 = i; i32::from_ne_bytes(v.to_ne_bytes()) }));
-                merged_vals.push(ruby_spread.value_at({ let v: u32 = i; i32::from_ne_bytes(v.to_ne_bytes()) }));
+            for i in 0..((ruby_spread.size()) as u32) {
+                merged_keys.push(ruby_spread.key_at({ let v: u32 = i; v as i32 }));
+                merged_vals.push(ruby_spread.value_at({ let v: u32 = i; v as i32 }));
             }
             for z in &bopomofo_spans {
                 let r = PunctuationGeometryLedger::punctuation_geometry_ledger_cluster_index_range_for(&natural_clusters, (z.base_range).clone());
@@ -1732,7 +1729,7 @@ f64>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_bytes((
                         WidthIndependentAnnotationCacheFns::width_independent_annotation_cache_fns_add_geometry_aware_opportunity(&mut shrink_opportunities, (caps).clone(), idx, 4, false);
                     } else {
                         if cls == Some(PunctuationClass::PauseOrStop) {
-                            let first_char = if i32::from_ne_bytes(((u_string::unit_count(&((cluster.display_text).to_ustring()))) as i32).to_ne_bytes()) > (0) { u_string::unit_at(&(cluster.display_text).to_ustring(), 0u32) } else { Some(0) };
+                            let first_char = if u_string::unit_count(&((cluster.display_text).to_ustring())) as i32 > (0) { u_string::unit_at(&(cluster.display_text).to_ustring(), 0u32) } else { Some(0) };
                             let is_stop = WidthIndependentAnnotationCacheFns::width_independent_annotation_cache_fns_is_inline_stop(*(first_char).as_ref().unwrap());
                             let tier = if is_stop { 7 } else { 5 };
                             let line_end_only = is_stop && !adjustment_style.allow_inline_stop_compression;
@@ -1765,9 +1762,9 @@ f64>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_bytes((
                 }
             }
         }
-        for i in 0..u32::from_ne_bytes(((inline_object_by_cluster_index.size()) as u32).to_ne_bytes()) {
-            let idx = inline_object_by_cluster_index.key_at({ let v: u32 = i; i32::from_ne_bytes(v.to_ne_bytes()) });
-            let inline_object = inline_object_by_cluster_index.value_at({ let v: u32 = i; i32::from_ne_bytes(v.to_ne_bytes()) });
+        for i in 0..((inline_object_by_cluster_index.size()) as u32) {
+            let idx = inline_object_by_cluster_index.key_at({ let v: u32 = i; v as i32 });
+            let inline_object = inline_object_by_cluster_index.value_at({ let v: u32 = i; v as i32 });
             let trailing = (inline_object.trailing_boundary).clone().shrink_capacity;
             if trailing > (0.0f64) {
                 shrink_opportunities.push(ShrinkOpportunity::new(idx, 8u32, trailing, ShrinkChannel::RawAdvance, Some(false)));

@@ -224,8 +224,7 @@ impl LineGeometryStageFns {
     }
 
     pub(crate) fn line_geometry_stage_fns_sorted_inline_object_by_cluster_index(inline_object_by_cluster_index: HashMap<u32, InlineObjectSpan>, natural_clusters: &Vec<Cluster>) -> SortedMapTable<u32, InlineObjectSpan> {
-        let mut builder: SortedMapTableBuilder<u32, InlineObjectSpan> = SortedTable::sorted_table_map_builder::<u32,
-InlineObjectSpan>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_bytes(((*a) as i32).to_ne_bytes()), i32::from_ne_bytes(((*b) as i32).to_ne_bytes()))));
+        let mut builder: SortedMapTableBuilder<u32, InlineObjectSpan> = SortedTable::sorted_table_map_builder::<u32, InlineObjectSpan>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints((*a) as i32, (*b) as i32)));
         if true {
             for index in 0..match u32::try_from(natural_clusters.len()) { Ok(value) => value, Err(_) => u32::MAX } {
                 let inline_object = inline_object_by_cluster_index.get(&index).cloned();
@@ -260,10 +259,10 @@ InlineObjectSpan>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::fr
                 let mut required = 0.0f64;
                 {
                     let mut _g = 0u32;
-                    while (i32::from_ne_bytes(((_g) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((pinyin_cluster_ranges.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
+                    while ((_g) as i32) < ((u32::try_from((pinyin_cluster_ranges.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32) {
                         let pair = (pinyin_cluster_ranges[usize::try_from(_g).unwrap_or(0)]).clone();
                         _g = u32::wrapping_add(_g, 1);
-                        if i32::from_ne_bytes(((pair.range.start) as i32).to_ne_bytes()) <= i32::from_ne_bytes((((line.cluster_range).clone().end) as i32).to_ne_bytes()) && (i32::from_ne_bytes(((pair.range.end) as i32).to_ne_bytes())) >= i32::from_ne_bytes((((line.cluster_range).clone().start) as i32).to_ne_bytes()) && ruby_font_geometry_by_span.has(&((pair.ruby).clone())) {
+                        if pair.range.start as i32 <= (line.cluster_range).clone().end as i32 && ((pair.range.end) as i32) >= (line.cluster_range).clone().start as i32 && ruby_font_geometry_by_span.has(&((pair.ruby).clone())) {
                             required = { let __min_a = required as f64; let __min_b = ruby_font_geometry_by_span.get(&((pair.ruby).clone())).as_ref().unwrap().required_extent as f64; if __min_a.is_nan() || __min_b.is_nan() { f64::NAN } else { if __min_a > __min_b { __min_a } else if __min_b > __min_a { __min_b } else if __min_a == 0.0 && __min_b == 0.0 { if __min_a.is_sign_negative() { __min_b } else { __min_a } } else { __min_a } } };
                         }
                     }
@@ -301,7 +300,7 @@ InlineObjectSpan>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::fr
                 expanded_ruby.push(i);
             }
         }
-        let has_ruby_extra = i32::from_ne_bytes(((u32::try_from((expanded_ruby.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes()) > (0);
+        let has_ruby_extra = u32::try_from((expanded_ruby.len()) & 0xFFFF_FFFF).unwrap_or(0) as i32 > (0);
         let ruby_reason = if has_ruby_extra { UString::from("ConditionalRubyLineHeight") } else { UString::from("ExistingInterlineSpaceFitsRuby") };
         let rd = if u32::try_from((pinyin_spans.len()) & 0xFFFF_FFFF).unwrap_or(0) == 0 { None } else { Some(RubyLineHeightDecisionInfo::new(UString::from((input.paragraph_style).clone().ruby_line_height_mode.name()).as_ustr(), base_line_metrics.height, base_face_height, ruby_extent, existing_interline_space, max_extra, line_ruby_top_extra.to_vec(), expanded_ruby.to_vec(), ruby_reason.as_ustr())) };
         let base_baseline = LineGeometryStageFns::line_geometry_stage_fns_f32(base_line_metrics.baseline);
@@ -318,7 +317,7 @@ InlineObjectSpan>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::fr
                 let mut ascent = 0.0f64;
                 let mut descent = 0.0f64;
                 let mut idx = (line.cluster_range).clone().start;
-                while (i32::from_ne_bytes(((idx) as i32).to_ne_bytes())) <= i32::from_ne_bytes((((line.cluster_range).clone().end) as i32).to_ne_bytes()) {
+                while ((idx) as i32) <= (line.cluster_range).clone().end as i32 {
                     match &(inline_object_by_cluster_index) {
                         Some(__option5) => {
                             if __option5.has(&(idx)) {
@@ -367,7 +366,7 @@ InlineObjectSpan>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::fr
             object_line_extra.push({ let __min_a19 = 0.0f64 as f64; let __min_b19 = LineGeometryStageFns::line_geometry_stage_fns_f32(combined_line_extra[usize::try_from(i).unwrap_or(0)] - LineGeometryStageFns::line_geometry_stage_fns_f32(line_ruby_top_extra[usize::try_from(i).unwrap_or(0)])) as f64; if __min_a19.is_nan() || __min_b19.is_nan() { f64::NAN } else { if __min_a19 > __min_b19 { __min_a19 } else if __min_b19 > __min_a19 { __min_b19 } else if __min_a19 == 0.0 && __min_b19 == 0.0 { if __min_a19.is_sign_negative() { __min_b19 } else { __min_a19 } } else { __min_a19 } } });
         }
         let mut baselines: Vec<f64> = vec![];
-        if i32::from_ne_bytes(((u32::try_from((line_solution.lines.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes()) > (0) {
+        if u32::try_from((line_solution.lines.len()) & 0xFFFF_FFFF).unwrap_or(0) as i32 > (0) {
             baselines.push(LineGeometryStageFns::line_geometry_stage_fns_f32(base_baseline + combined_line_extra[0usize]));
             for i in 1..match u32::try_from(line_solution.lines.len()) { Ok(value) => value, Err(_) => u32::MAX } {
                 baselines.push(LineGeometryStageFns::line_geometry_stage_fns_f32(LineGeometryStageFns::line_geometry_stage_fns_f32(baselines[usize::try_from(u32::wrapping_sub(i, 1)).unwrap_or(0)] + base_height) + combined_line_extra[usize::try_from(i).unwrap_or(0)]));
@@ -383,7 +382,7 @@ InlineObjectSpan>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::fr
             _g.push(0.0f64);
         }
         let mut bottoms = (_g).clone();
-        let boundary_count = if i32::from_ne_bytes(((u32::try_from((line_solution.lines.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes()) > (1) { u32::wrapping_sub(u32::try_from((line_solution.lines.len()) & 0xFFFF_FFFF).unwrap_or(0), 1) } else { 0 };
+        let boundary_count = if u32::try_from((line_solution.lines.len()) & 0xFFFF_FFFF).unwrap_or(0) as i32 > (1) { u32::wrapping_sub(u32::try_from((line_solution.lines.len()) & 0xFFFF_FFFF).unwrap_or(0), 1) } else { 0 };
         let mut _g: Vec<f64> = vec![];
         for _ in 0..boundary_count {
             _g.push(0.0f64);
@@ -399,7 +398,7 @@ InlineObjectSpan>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::fr
             { while boundary_shifts.len() <= usize::try_from(i).unwrap_or(0) { boundary_shifts.push(0.0); } boundary_shifts[usize::try_from(i).unwrap_or(0)] = LineGeometryStageFns::line_geometry_stage_fns_f32(boundary - nominal); };
         }
         let trailing = if u32::try_from((line_solution.lines.len()) & 0xFFFF_FFFF).unwrap_or(0) == 0 { 0.0f64 } else { { let __min_a23 = 0.0f64 as f64; let __min_b23 = LineGeometryStageFns::line_geometry_stage_fns_f32(line_object_descent[usize::try_from(u32::wrapping_sub(u32::try_from((line_object_descent.len()) & 0xFFFF_FFFF).unwrap_or(0), 1)).unwrap_or(0)] - base_bottom_extent) as f64; if __min_a23.is_nan() || __min_b23.is_nan() { f64::NAN } else { if __min_a23 > __min_b23 { __min_a23 } else if __min_b23 > __min_a23 { __min_b23 } else if __min_a23 == 0.0 && __min_b23 == 0.0 { if __min_a23.is_sign_negative() { __min_b23 } else { __min_a23 } } else { __min_a23 } } } };
-        if i32::from_ne_bytes(((u32::try_from((line_solution.lines.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes()) > (0) {
+        if u32::try_from((line_solution.lines.len()) & 0xFFFF_FFFF).unwrap_or(0) as i32 > (0) {
             { let __grow_idx3 = usize::try_from(u32::wrapping_sub(u32::try_from((bottoms.len()) & 0xFFFF_FFFF).unwrap_or(0), 1)).unwrap_or(0); while bottoms.len() <= __grow_idx3 { bottoms.push(0.0); } bottoms[__grow_idx3] = LineGeometryStageFns::line_geometry_stage_fns_f32(LineGeometryStageFns::line_geometry_stage_fns_f32(baselines[usize::try_from(u32::wrapping_sub(u32::try_from((baselines.len()) & 0xFFFF_FFFF).unwrap_or(0), 1)).unwrap_or(0)] + base_bottom_extent) + trailing); };
         }
         let mut object_indices: Vec<u32> = vec![];
@@ -411,7 +410,7 @@ InlineObjectSpan>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::fr
         let mut has_inline_objects = false;
         match &(inline_object_by_cluster_index) {
             Some(__option6) => {
-                has_inline_objects = i32::from_ne_bytes(((u32::from_ne_bytes(((__option6.size()) as u32).to_ne_bytes())) as i32).to_ne_bytes()) > (0);
+                has_inline_objects = __option6.size() as u32 as i32 > (0);
             }
             None => {
             }

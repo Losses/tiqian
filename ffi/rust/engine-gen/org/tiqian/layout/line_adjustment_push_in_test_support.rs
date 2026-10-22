@@ -110,7 +110,7 @@ impl LineAdjustmentPushInTestSupport {
     }
 
     pub fn line_adjustment_push_in_test_support_ints(a: &Vec<u32>) -> SortedSetTable<u32> {
-        let mut b: SortedSetTableBuilder<u32> = SortedTable::sorted_table_set_builder::<u32>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_bytes(((*a) as i32).to_ne_bytes()), i32::from_ne_bytes(((*b) as i32).to_ne_bytes()))));
+        let mut b: SortedSetTableBuilder<u32> = SortedTable::sorted_table_set_builder::<u32>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints((*a) as i32, (*b) as i32)));
         for &x in a {
             b.put(&(x));
         }
@@ -130,7 +130,7 @@ impl LineAdjustmentPushInTestSupport {
     }
 
     pub fn line_adjustment_push_in_test_support_empty_progressive() -> SortedMapTable<u32, ProgressiveBreakOpportunity> {
-        return SortedTable::sorted_table_map_builder::<u32, ProgressiveBreakOpportunity>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_bytes(((*a) as i32).to_ne_bytes()), i32::from_ne_bytes(((*b) as i32).to_ne_bytes())))).clone().build();
+        return SortedTable::sorted_table_map_builder::<u32, ProgressiveBreakOpportunity>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints((*a) as i32, (*b) as i32))).clone().build();
     }
 
     pub fn line_adjustment_push_in_test_support_base_clusters() -> Result<Vec<Cluster>, TextRangeError> {
@@ -189,15 +189,15 @@ impl LineAdjustmentPushInTestSupport {
 
     pub fn line_adjustment_push_in_test_support_repair_total_shrink(o: Option<RepairOption>) -> f64 {
         if o == None {
-            return i32::from_ne_bytes(((4294967295u32) as i32).to_ne_bytes()) as f64;
+            return ((4294967295u32) as i32) as f64;
         }
         let v = (o).as_ref().unwrap().clone();
         return match v {
             RepairOption::PushIn { penalty: _p0, reason: _p1, offender_cluster_index: _p2, allocations: _p3, total_shrink: _p4, .. } => _p4,
-            RepairOption::Hang { .. } => i32::from_ne_bytes(((4294967295u32) as i32).to_ne_bytes()) as f64,
-            RepairOption::CarryPrevious { .. } => i32::from_ne_bytes(((4294967295u32) as i32).to_ne_bytes()) as f64,
-            RepairOption::CarryNext { .. } => i32::from_ne_bytes(((4294967295u32) as i32).to_ne_bytes()) as f64,
-            RepairOption::LeaveRagged { .. } => i32::from_ne_bytes(((4294967295u32) as i32).to_ne_bytes()) as f64,
+            RepairOption::Hang { .. } => 4294967295u32 as i32 as f64,
+            RepairOption::CarryPrevious { .. } => 4294967295u32 as i32 as f64,
+            RepairOption::CarryNext { .. } => 4294967295u32 as i32 as f64,
+            RepairOption::LeaveRagged { .. } => 4294967295u32 as i32 as f64,
         };
     }
 

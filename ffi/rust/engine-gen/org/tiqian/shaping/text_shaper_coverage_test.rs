@@ -392,7 +392,7 @@ fn covers_all_shaping_source_enum_entries() {
         let mut has_harf_buzz = false;
         let mut has_core_text = false;
         let mut e = 0u32;
-        while (i32::from_ne_bytes(((e) as i32).to_ne_bytes())) < (6) {
+        while ((e) as i32) < (6) {
             let entry = sources[usize::try_from(e).unwrap_or(0)];
             if entry == ShapingSource::Stub {
                 has_stub = true;
@@ -422,7 +422,7 @@ fn covers_all_shaping_source_enum_entries() {
         let _ = TracedAssertions::traced_assertions_assert_true(has_core_text, None).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_equals_int(6, 6, None).unwrap();
         let mut i = 0u32;
-        while (i32::from_ne_bytes(((i) as i32).to_ne_bytes())) < (6) {
+        while ((i) as i32) < (6) {
             let source = sources[usize::try_from(i).unwrap_or(0)];
             let name = UString::from(source.name());
             let _ = TracedAssertions::traced_assertions_assert_equals_rendered(name.as_ustr(), UString::from(ShapingSource::from_name(name.as_ustr()).unwrap().name()).as_ustr(), None).unwrap();
@@ -439,7 +439,7 @@ fn unimplemented_text_shaper_throws_on_shape() {
         Arc::new(Mutex::new(UnimplementedTextShaper::new())).lock().unwrap().shape(TextShaperCoverageTestSupport::text_shaper_coverage_test_support_input(UStr::new(&[116,101,115,116]), None, None, None).map_err(|e| IllegalStateException::new(&format!("{}", e)))?).map_err(|e| IllegalStateException::new(&format!("{}", e)))?;
         Ok(())
 }) }).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_true((u32::from_ne_bytes(((u_string::find_from(&UString::from(format!("{}", format!("{}", error)).as_str()), UString::from("platform-specific").as_ustr(), 0)) as u32).to_ne_bytes())) <= 2147483647, None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_true((u_string::find_from(&UString::from(format!("{}", format!("{}", error)).as_str()), UString::from("platform-specific").as_ustr(), 0)) as u32 <= 2147483647, None).unwrap();
     });
 }
 
