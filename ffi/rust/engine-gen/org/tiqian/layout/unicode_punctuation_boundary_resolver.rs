@@ -42,9 +42,9 @@ impl SignificantCodePoint {
 }
 
 pub fn compare_significant_code_point(a: &SignificantCodePoint, b: &SignificantCodePoint) -> i32 {
-    let cmp_offset = if a.offset < b.offset { -1 } else if a.offset > b.offset { 1 } else { 0 };
+    let cmp_offset = match ((*(&a.offset)) as i32).cmp(&((*(&b.offset)) as i32)) { core::cmp::Ordering::Less => -1, core::cmp::Ordering::Equal => 0, core::cmp::Ordering::Greater => 1 };
     if cmp_offset != 0 { return cmp_offset; }
-    let cmp_code_point = if a.code_point < b.code_point { -1 } else if a.code_point > b.code_point { 1 } else { 0 };
+    let cmp_code_point = match ((*(&a.code_point)) as i32).cmp(&((*(&b.code_point)) as i32)) { core::cmp::Ordering::Less => -1, core::cmp::Ordering::Equal => 0, core::cmp::Ordering::Greater => 1 };
     if cmp_code_point != 0 { return cmp_code_point; }
     0
 }
@@ -75,7 +75,7 @@ impl UnicodePunctuationBoundaries {
         let mut i = 0;
         while i < n {
             if i > 0 { out.push_str(", "); }
-            let _ = write!(out, "{}", i32::from_ne_bytes((((self.forbidden_line_start_clusters).clone().at(i)) as i32).to_ne_bytes()));
+            let _ = write!(out, "{}", ((self.forbidden_line_start_clusters).clone().at(i)) as i32);
             i += 1;
         }
         out.push(']');
@@ -87,7 +87,7 @@ impl UnicodePunctuationBoundaries {
         let mut i = 0;
         while i < n {
             if i > 0 { out.push_str(", "); }
-            let _ = write!(out, "{}", i32::from_ne_bytes((((self.forbidden_line_end_clusters).clone().at(i)) as i32).to_ne_bytes()));
+            let _ = write!(out, "{}", ((self.forbidden_line_end_clusters).clone().at(i)) as i32);
             i += 1;
         }
         out.push(']');
@@ -169,7 +169,7 @@ impl AttachedInlineInterCharBoundaries {
         let mut i = 0;
         while i < n {
             if i > 0 { out.push_str(", "); }
-            let _ = write!(out, "{}", i32::from_ne_bytes((((self.ordinary_western_boundary_after_clusters).clone().at(i)) as i32).to_ne_bytes()));
+            let _ = write!(out, "{}", ((self.ordinary_western_boundary_after_clusters).clone().at(i)) as i32);
             i += 1;
         }
         out.push(']');
@@ -181,7 +181,7 @@ impl AttachedInlineInterCharBoundaries {
         let mut i = 0;
         while i < n {
             if i > 0 { out.push_str(", "); }
-            let _ = write!(out, "{}", i32::from_ne_bytes((((self.suppressed_physical_boundary_after_clusters).clone().at(i)) as i32).to_ne_bytes()));
+            let _ = write!(out, "{}", ((self.suppressed_physical_boundary_after_clusters).clone().at(i)) as i32);
             i += 1;
         }
         out.push(']');
@@ -193,7 +193,7 @@ impl AttachedInlineInterCharBoundaries {
         let mut i = 0;
         while i < n {
             if i > 0 { out.push_str(", "); }
-            let _ = write!(out, "{}={}", i32::from_ne_bytes((((self.virtual_boundary_after_clusters).clone().key_at(i)) as i32).to_ne_bytes()), i32::from_ne_bytes((((self.virtual_boundary_after_clusters).clone().value_at(i)) as i32).to_ne_bytes()));
+            let _ = write!(out, "{}={}", ((self.virtual_boundary_after_clusters).clone().key_at(i)) as i32, ((self.virtual_boundary_after_clusters).clone().value_at(i)) as i32);
             i += 1;
         }
         out.push('}');
@@ -205,7 +205,7 @@ impl AttachedInlineInterCharBoundaries {
         let mut i = 0;
         while i < n {
             if i > 0 { out.push_str(", "); }
-            let _ = write!(out, "{}", i32::from_ne_bytes((((self.virtual_sino_western_boundary_after_clusters).clone().at(i)) as i32).to_ne_bytes()));
+            let _ = write!(out, "{}", ((self.virtual_sino_western_boundary_after_clusters).clone().at(i)) as i32);
             i += 1;
         }
         out.push(']');
@@ -219,9 +219,9 @@ pub struct UnicodePunctuationBoundaryResolver;
 
 impl UnicodePunctuationBoundaryResolver {
     pub fn unicode_punctuation_boundary_resolver_resolve_western_bracket_cjk_inter_char_boundaries(text: &UStr, clusters: &Vec<Cluster>, roles: &Vec<FontRole>) -> Result<SortedSetTable<u32>, TextRangeError> {
-        let mut b: SortedSetTableBuilder<u32> = SortedTable::sorted_table_set_builder::<u32>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_bytes(((*a) as i32).to_ne_bytes()), i32::from_ne_bytes(((*b) as i32).to_ne_bytes()))));
+        let mut b: SortedSetTableBuilder<u32> = SortedTable::sorted_table_set_builder::<u32>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints((*a) as i32, (*b) as i32)));
         let mut i = 0u32;
-        while (i32::from_ne_bytes(((u32::wrapping_add(i, 1)) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((clusters.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
+        while ((u32::wrapping_add(i, 1)) as i32) < ((u32::try_from((clusters.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32) {
             if UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_is_western_bracket_cjk_inter_char_boundary(text, &clusters, &roles, i, u32::wrapping_add(i, 1))? {
                 b.put(&(i));
             }
@@ -233,18 +233,18 @@ impl UnicodePunctuationBoundaryResolver {
     pub fn unicode_punctuation_boundary_resolver_resolve_attached_inline_virtual_boundaries(a: &Vec<InlineAttachment>) -> Vec<AttachedInlineVirtualBoundary> {
         let mut r: Vec<AttachedInlineVirtualBoundary> = vec![];
         let mut i = 0u32;
-        while (i32::from_ne_bytes(((i) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((a.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
+        while ((i) as i32) < ((u32::try_from((a.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32) {
             if a[usize::try_from(i).unwrap_or(0)] != InlineAttachment::Previous {
                 i = u32::wrapping_add(i, 1);
                 continue;
             }
             let s = i;
             let mut e = s;
-            while (i32::from_ne_bytes(((u32::wrapping_add(e, 1)) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((a.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) && a[usize::try_from(u32::wrapping_add(e, 1)).unwrap_or(0)] == InlineAttachment::Previous {
+            while ((u32::wrapping_add(e, 1)) as i32) < ((u32::try_from((a.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32) && a[usize::try_from(u32::wrapping_add(e, 1)).unwrap_or(0)] == InlineAttachment::Previous {
                 e = u32::wrapping_add(e, 1);
             }
-            if i32::from_ne_bytes(((s) as i32).to_ne_bytes()) > (0) {
-                r.push(AttachedInlineVirtualBoundary::new(u32::wrapping_sub(s, 1), IntRange::new(s, e), if i32::from_ne_bytes(((u32::wrapping_add(e, 1)) as i32).to_ne_bytes()) < (i32::from_ne_bytes(((u32::try_from((a.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) { Some(u32::wrapping_add(e, 1)) } else { None }));
+            if s as i32 > (0) {
+                r.push(AttachedInlineVirtualBoundary::new(u32::wrapping_sub(s, 1), IntRange::new(s, e), if u32::wrapping_add(e, 1) as i32 < ((u32::try_from((a.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32) { Some(u32::wrapping_add(e, 1)) } else { None }));
             }
             i = u32::wrapping_add(e, 1);
         }
@@ -259,9 +259,9 @@ impl UnicodePunctuationBoundaryResolver {
             return Err(TextRangeError::Message { text: UString::from("Inline attachments must align with clusters.") });
         }
         let vb = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_attached_inline_virtual_boundaries(&attachments);
-        let mut sup: SortedSetTableBuilder<u32> = SortedTable::sorted_table_set_builder::<u32>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_bytes(((*a) as i32).to_ne_bytes()), i32::from_ne_bytes(((*b) as i32).to_ne_bytes()))));
+        let mut sup: SortedSetTableBuilder<u32> = SortedTable::sorted_table_set_builder::<u32>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints((*a) as i32, (*b) as i32)));
         let mut i = 0u32;
-        while (i32::from_ne_bytes(((i) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((vb.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
+        while ((i) as i32) < ((u32::try_from((vb.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32) {
             sup.put(&(vb[usize::try_from(i).unwrap_or(0)].previous_cluster_index));
             if vb[usize::try_from(i).unwrap_or(0)].next_cluster_index.is_some() {
                 sup.put(&((vb[usize::try_from(i).unwrap_or(0)]).clone().attached_cluster_range.end));
@@ -269,19 +269,19 @@ impl UnicodePunctuationBoundaryResolver {
             i = u32::wrapping_add(i, 1);
         }
         let sup_set: SortedSetTable<u32> = sup.clone().build();
-        let mut ordinary: SortedSetTableBuilder<u32> = SortedTable::sorted_table_set_builder::<u32>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_bytes(((*a) as i32).to_ne_bytes()), i32::from_ne_bytes(((*b) as i32).to_ne_bytes()))));
+        let mut ordinary: SortedSetTableBuilder<u32> = SortedTable::sorted_table_set_builder::<u32>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints((*a) as i32, (*b) as i32)));
         i = 0u32;
-        while (i32::from_ne_bytes(((i) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::from_ne_bytes(((western.size()) as u32).to_ne_bytes())) as i32).to_ne_bytes())) {
-            let x = western.at(i32::from_ne_bytes(((i) as i32).to_ne_bytes()));
+        while ((i) as i32) < ((western.size()) as u32 as i32) {
+            let x = western.at((i) as i32);
             if !sup_set.has(&(x)) {
                 ordinary.put(&(x));
             }
             i = u32::wrapping_add(i, 1);
         }
-        let mut vm: SortedMapTableBuilder<u32, u32> = SortedTable::sorted_table_map_builder::<u32, u32>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_bytes(((*a) as i32).to_ne_bytes()), i32::from_ne_bytes(((*b) as i32).to_ne_bytes()))));
-        let mut vs: SortedSetTableBuilder<u32> = SortedTable::sorted_table_set_builder::<u32>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_bytes(((*a) as i32).to_ne_bytes()), i32::from_ne_bytes(((*b) as i32).to_ne_bytes()))));
+        let mut vm: SortedMapTableBuilder<u32, u32> = SortedTable::sorted_table_map_builder::<u32, u32>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints((*a) as i32, (*b) as i32)));
+        let mut vs: SortedSetTableBuilder<u32> = SortedTable::sorted_table_set_builder::<u32>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints((*a) as i32, (*b) as i32)));
         i = 0u32;
-        while (i32::from_ne_bytes(((i) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((vb.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
+        while ((i) as i32) < ((u32::try_from((vb.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32) {
             let q = (vb[usize::try_from(i).unwrap_or(0)]).clone();
             i = u32::wrapping_add(i, 1);
             if q.next_cluster_index.is_none() {
@@ -304,29 +304,29 @@ impl UnicodePunctuationBoundaryResolver {
     }
 
     pub fn unicode_punctuation_boundary_resolver_resolve_unicode_punctuation_boundaries(text: &UStr, clusters: &Vec<Cluster>, roles: &Vec<FontRole>, pairs: &Vec<QuotePair>) -> Result<UnicodePunctuationBoundaries, TextRangeError> {
-        let mut opens: SortedSetTableBuilder<u32> = SortedTable::sorted_table_set_builder::<u32>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_bytes(((*a) as i32).to_ne_bytes()), i32::from_ne_bytes(((*b) as i32).to_ne_bytes()))));
-        let mut closes: SortedSetTableBuilder<u32> = SortedTable::sorted_table_set_builder::<u32>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_bytes(((*a) as i32).to_ne_bytes()), i32::from_ne_bytes(((*b) as i32).to_ne_bytes()))));
+        let mut opens: SortedSetTableBuilder<u32> = SortedTable::sorted_table_set_builder::<u32>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints((*a) as i32, (*b) as i32)));
+        let mut closes: SortedSetTableBuilder<u32> = SortedTable::sorted_table_set_builder::<u32>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints((*a) as i32, (*b) as i32)));
         let mut i = 0u32;
-        while (i32::from_ne_bytes(((i) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((pairs.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
+        while ((i) as i32) < ((u32::try_from((pairs.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32) {
             opens.put(&(pairs[usize::try_from(i).unwrap_or(0)].open_index));
             closes.put(&(pairs[usize::try_from(i).unwrap_or(0)].close_index));
             i = u32::wrapping_add(i, 1);
         }
         let open_set: SortedSetTable<u32> = opens.clone().build();
         let close_set: SortedSetTable<u32> = closes.clone().build();
-        let mut start: SortedSetTableBuilder<u32> = SortedTable::sorted_table_set_builder::<u32>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_bytes(((*a) as i32).to_ne_bytes()), i32::from_ne_bytes(((*b) as i32).to_ne_bytes()))));
-        let mut end: SortedSetTableBuilder<u32> = SortedTable::sorted_table_set_builder::<u32>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_bytes(((*a) as i32).to_ne_bytes()), i32::from_ne_bytes(((*b) as i32).to_ne_bytes()))));
+        let mut start: SortedSetTableBuilder<u32> = SortedTable::sorted_table_set_builder::<u32>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints((*a) as i32, (*b) as i32)));
+        let mut end: SortedSetTableBuilder<u32> = SortedTable::sorted_table_set_builder::<u32>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints((*a) as i32, (*b) as i32)));
         let mut ranges: Vec<IntRange> = vec![];
         let mut decisions: Vec<ContextualKinsokuDecisionInfo> = vec![];
         i = 0u32;
-        while (i32::from_ne_bytes(((i) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((clusters.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
+        while ((i) as i32) < ((u32::try_from((clusters.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32) {
             let c = (clusters[usize::try_from(i).unwrap_or(0)]).clone();
             i = u32::wrapping_add(i, 1);
             let ix = u32::wrapping_sub(i, 1);
-            if i32::from_ne_bytes(((ix) as i32).to_ne_bytes()) >= i32::from_ne_bytes(((u32::try_from((roles.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes()) || roles[usize::try_from(ix).unwrap_or(0)] == FontRole::CjkPunctuation || (i32::from_ne_bytes((((c.range).clone().start) as i32).to_ne_bytes())) >= i32::from_ne_bytes((((c.range).clone().end) as i32).to_ne_bytes()) {
+            if ix as i32 >= u32::try_from((roles.len()) & 0xFFFF_FFFF).unwrap_or(0) as i32 || roles[usize::try_from(ix).unwrap_or(0)] == FontRole::CjkPunctuation || (((c.range).clone().start) as i32) >= (c.range).clone().end as i32 {
                 continue;
             }
-            let source = u_string::substring(&text, i32::from_ne_bytes((((c.range).clone().start) as i32).to_ne_bytes()), i32::from_ne_bytes((((c.range).clone().end) as i32).to_ne_bytes()));
+            let source = u_string::substring(&text, ((c.range).clone().start) as i32, ((c.range).clone().end) as i32);
             let first = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_first_sig(source.as_ustr());
             if first.is_none() {
                 continue;
@@ -385,10 +385,10 @@ impl UnicodePunctuationBoundaryResolver {
     }
 
     pub(crate) fn unicode_punctuation_boundary_resolver_is_western_bracket_cjk_inter_char_boundary(t: &UStr, c: &Vec<Cluster>, r: &Vec<FontRole>, a: u32, b: u32) -> Result<bool, TextRangeError> {
-    let __units = u_string::units(&t);
+    let __units = t.as_slice();
     let __count = u_string::unit_count(&t);
-        let l = r[usize::try_from(a).unwrap_or(0)] != FontRole::CjkPunctuation && UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_western_cp(UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_last_sig(u_string::substring(&t, i32::from_ne_bytes(((((c[usize::try_from(a).unwrap_or(0)]).clone().range).clone().start) as i32).to_ne_bytes()), i32::from_ne_bytes(((((c[usize::try_from(a).unwrap_or(0)]).clone().range).clone().end) as i32).to_ne_bytes())).as_ustr()))?;
-        let q = r[usize::try_from(b).unwrap_or(0)] != FontRole::CjkPunctuation && UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_western_cp(UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_first_sig(u_string::substring(&t, i32::from_ne_bytes(((((c[usize::try_from(b).unwrap_or(0)]).clone().range).clone().start) as i32).to_ne_bytes()), i32::from_ne_bytes(((((c[usize::try_from(b).unwrap_or(0)]).clone().range).clone().end) as i32).to_ne_bytes())).as_ustr()))?;
+        let l = r[usize::try_from(a).unwrap_or(0)] != FontRole::CjkPunctuation && UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_western_cp(UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_last_sig(u_string::substring(&t, (((c[usize::try_from(a).unwrap_or(0)]).clone().range).clone().start) as i32, (((c[usize::try_from(a).unwrap_or(0)]).clone().range).clone().end) as i32).as_ustr()))?;
+        let q = r[usize::try_from(b).unwrap_or(0)] != FontRole::CjkPunctuation && UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_western_cp(UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_first_sig(u_string::substring(&t, (((c[usize::try_from(b).unwrap_or(0)]).clone().range).clone().start) as i32, (((c[usize::try_from(b).unwrap_or(0)]).clone().range).clone().end) as i32).as_ustr()))?;
         return Ok(l && r[usize::try_from(b).unwrap_or(0)] == FontRole::CjkText || r[usize::try_from(a).unwrap_or(0)] == FontRole::CjkText && q);
     }
 
@@ -405,27 +405,27 @@ impl UnicodePunctuationBoundaryResolver {
     }
 
     pub(crate) fn unicode_punctuation_boundary_resolver_decimal_after_space(i: u32, t: &UStr, c: &Vec<Cluster>) -> bool {
-    let __units1 = u_string::units(&t);
+    let __units1 = t.as_slice();
     let __count1 = u_string::unit_count(&t);
-        if i32::from_ne_bytes(((i) as i32).to_ne_bytes()) <= 0 {
+        if i as i32 <= 0 {
             return false;
         }
-        let p = u_string::substring(&t, i32::from_ne_bytes(((((c[usize::try_from(u32::wrapping_sub(i, 1)).unwrap_or(0)]).clone().range).clone().start) as i32).to_ne_bytes()), i32::from_ne_bytes(((((c[usize::try_from(u32::wrapping_sub(i, 1)).unwrap_or(0)]).clone().range).clone().end) as i32).to_ne_bytes()));
+        let p = u_string::substring(&t, (((c[usize::try_from(u32::wrapping_sub(i, 1)).unwrap_or(0)]).clone().range).clone().start) as i32, (((c[usize::try_from(u32::wrapping_sub(i, 1)).unwrap_or(0)]).clone().range).clone().end) as i32);
         if u_string::unit_count(&(p)) == 0 {
             return false;
         }
         let mut j = 0u32;
-        let __units2 = u_string::units(&p);
+        let __units2 = p.as_slice();
         let __count2 = u_string::unit_count(&p);
-        while (i32::from_ne_bytes(((j) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((__count2) as i32).to_ne_bytes())) {
-            if !UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_is_ws(*(u_string::unit_at_from(&__units2, j)).as_ref().unwrap()) {
+        while ((j) as i32) < ((__count2) as i32) {
+            if !UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_is_ws(*(u_string::unit_at_from(__units2, j)).as_ref().unwrap()) {
                 return false;
             }
             j = u32::wrapping_add(j, 1);
         }
-        let cur = u_string::substring(&t, i32::from_ne_bytes(((((c[usize::try_from(i).unwrap_or(0)]).clone().range).clone().start) as i32).to_ne_bytes()), i32::from_ne_bytes(((((c[usize::try_from(i).unwrap_or(0)]).clone().range).clone().end) as i32).to_ne_bytes()));
-        let cp = if i32::from_ne_bytes(((u_string::unit_count(&(cur))) as i32).to_ne_bytes()) > (1) { UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_cp_at(cur.as_ustr(), 1) } else { if i32::from_ne_bytes(((u32::wrapping_add(i, 1)) as i32).to_ne_bytes()) < (i32::from_ne_bytes(((u32::try_from((c.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) { UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_cp_at(u_string::substring(&t, i32::from_ne_bytes(((((c[usize::try_from(u32::wrapping_add(i, 1)).unwrap_or(0)]).clone().range).clone().start) as i32).to_ne_bytes()), i32::from_ne_bytes(((((c[usize::try_from(u32::wrapping_add(i, 1)).unwrap_or(0)]).clone().range).clone().end) as i32).to_ne_bytes())).as_ustr(), 0) } else { None } };
-        return match &(cp) { Some(__option4) => i32::from_ne_bytes(((*__option4) as i32).to_ne_bytes()) >= 48 && (i32::from_ne_bytes(((*__option4) as i32).to_ne_bytes())) <= 57, None => false };
+        let cur = u_string::substring(&t, (((c[usize::try_from(i).unwrap_or(0)]).clone().range).clone().start) as i32, (((c[usize::try_from(i).unwrap_or(0)]).clone().range).clone().end) as i32);
+        let cp = if u_string::unit_count(&(cur)) as i32 > (1) { UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_cp_at(cur.as_ustr(), 1) } else { if u32::wrapping_add(i, 1) as i32 < ((u32::try_from((c.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32) { UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_cp_at(u_string::substring(&t, (((c[usize::try_from(u32::wrapping_add(i, 1)).unwrap_or(0)]).clone().range).clone().start) as i32, (((c[usize::try_from(u32::wrapping_add(i, 1)).unwrap_or(0)]).clone().range).clone().end) as i32).as_ustr(), 0) } else { None } };
+        return match &(cp) { Some(__option4) => (*__option4) as i32 >= 48 && ((*__option4) as i32) <= 57, None => false };
     }
 
     pub(crate) fn unicode_punctuation_boundary_resolver_quote_dir(t: &UStr, o: u32, cp: u32, c: UnicodePunctuationLineBreakClass) -> Dir {
@@ -441,12 +441,12 @@ impl UnicodePunctuationBoundaryResolver {
     }
 
     pub(crate) fn unicode_punctuation_boundary_resolver_word(cp: Option<u32>) -> bool {
-        return match &(cp) { Some(__option5) => i32::from_ne_bytes(((*__option5) as i32).to_ne_bytes()) >= 65 && (i32::from_ne_bytes(((*__option5) as i32).to_ne_bytes())) <= 90 || (i32::from_ne_bytes(((*__option5) as i32).to_ne_bytes())) >= 97 && (i32::from_ne_bytes(((*__option5) as i32).to_ne_bytes())) <= 122 || (i32::from_ne_bytes(((*__option5) as i32).to_ne_bytes())) >= 48 && (i32::from_ne_bytes(((*__option5) as i32).to_ne_bytes())) <= 57 || (i32::from_ne_bytes(((*__option5) as i32).to_ne_bytes())) >= 192 && (i32::from_ne_bytes(((*__option5) as i32).to_ne_bytes())) <= 591, None => false };
+        return match &(cp) { Some(__option5) => (*__option5) as i32 >= 65 && ((*__option5) as i32) <= 90 || ((*__option5) as i32) >= 97 && ((*__option5) as i32) <= 122 || ((*__option5) as i32) >= 48 && ((*__option5) as i32) <= 57 || ((*__option5) as i32) >= 192 && ((*__option5) as i32) <= 591, None => false };
     }
 
     pub(crate) fn unicode_punctuation_boundary_resolver_follows(t: &UStr, o: u32) -> bool {
         let mut x = o;
-        while (i32::from_ne_bytes(((x) as i32).to_ne_bytes())) > (0) {
+        while ((x) as i32) > (0) {
             let p = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_cp_before(t, x);
             if match &(p) { None => true, Some(__option6) => LineBreakFns::line_break_fns_is_mandatory_break_code_point(*__option6) } || LineBreakFns::line_break_fns_is_zero_width_space_code_point(*(p).as_ref().unwrap()) {
                 return true;
@@ -460,13 +460,13 @@ impl UnicodePunctuationBoundaryResolver {
     }
 
     pub(crate) fn unicode_punctuation_boundary_resolver_is_ws(cp: u32) -> bool {
-        return (i32::from_ne_bytes(((cp) as i32).to_ne_bytes())) <= 65535 && ((i32::from_ne_bytes(((cp) as i32).to_ne_bytes())) >= 9 && (i32::from_ne_bytes(((cp) as i32).to_ne_bytes())) <= 13 || (i32::from_ne_bytes(((cp) as i32).to_ne_bytes())) >= 28 && (i32::from_ne_bytes(((cp) as i32).to_ne_bytes())) <= 32 || cp == 160 || cp == 5760 || (i32::from_ne_bytes(((cp) as i32).to_ne_bytes())) >= 8192 && (i32::from_ne_bytes(((cp) as i32).to_ne_bytes())) <= 8202 || cp == 8232 || cp == 8233 || cp == 8239 || cp == 8287 || cp == 12288);
+        return ((cp) as i32) <= 65535 && ((cp) as i32 >= 9 && ((cp) as i32) <= 13 || ((cp) as i32) >= 28 && ((cp) as i32) <= 32 || cp == 160 || cp == 5760 || ((cp) as i32) >= 8192 && ((cp) as i32) <= 8202 || cp == 8232 || cp == 8233 || cp == 8239 || cp == 8287 || cp == 12288);
     }
 
     pub(crate) fn unicode_punctuation_boundary_resolver_previous(i: u32, t: &UStr, c: &Vec<Cluster>) -> Option<u32> {
         let mut x = i;
         while (x) > (0) {
-            let s = u_string::substring(&t, i32::from_ne_bytes(((((c[usize::try_from(u32::wrapping_sub(x, 1)).unwrap_or(0)]).clone().range).clone().start) as i32).to_ne_bytes()), i32::from_ne_bytes(((((c[usize::try_from(u32::wrapping_sub(x, 1)).unwrap_or(0)]).clone().range).clone().end) as i32).to_ne_bytes()));
+            let s = u_string::substring(&t, (((c[usize::try_from(u32::wrapping_sub(x, 1)).unwrap_or(0)]).clone().range).clone().start) as i32, (((c[usize::try_from(u32::wrapping_sub(x, 1)).unwrap_or(0)]).clone().range).clone().end) as i32);
             if UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_has_break(s.as_ustr()) {
                 return None;
             }
@@ -480,8 +480,8 @@ impl UnicodePunctuationBoundaryResolver {
 
     pub(crate) fn unicode_punctuation_boundary_resolver_next(i: u32, t: &UStr, c: &Vec<Cluster>) -> Option<u32> {
         let mut x = u32::wrapping_add(i, 1);
-        while (i32::from_ne_bytes(((x) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((c.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
-            let s = u_string::substring(&t, i32::from_ne_bytes(((((c[usize::try_from(x).unwrap_or(0)]).clone().range).clone().start) as i32).to_ne_bytes()), i32::from_ne_bytes(((((c[usize::try_from(x).unwrap_or(0)]).clone().range).clone().end) as i32).to_ne_bytes()));
+        while ((x) as i32) < ((u32::try_from((c.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32) {
+            let s = u_string::substring(&t, (((c[usize::try_from(x).unwrap_or(0)]).clone().range).clone().start) as i32, (((c[usize::try_from(x).unwrap_or(0)]).clone().range).clone().end) as i32);
             if UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_has_break(s.as_ustr()) {
                 return None;
             }
@@ -495,7 +495,7 @@ impl UnicodePunctuationBoundaryResolver {
 
     pub(crate) fn unicode_punctuation_boundary_resolver_has_break(s: &UStr) -> bool {
         let mut i = 0u32;
-        while (i32::from_ne_bytes(((i) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u_string::unit_count(&(s))) as i32).to_ne_bytes())) {
+        while ((i) as i32) < ((u_string::unit_count(&(s))) as i32) {
             let p = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_cp_at(s, i);
             if p.is_none() {
                 return false;
@@ -503,35 +503,35 @@ impl UnicodePunctuationBoundaryResolver {
             if LineBreakFns::line_break_fns_is_mandatory_break_code_point(*(p).as_ref().unwrap()) || LineBreakFns::line_break_fns_is_zero_width_space_code_point(*(p).as_ref().unwrap()) {
                 return true;
             }
-            i = u32::wrapping_add(i, if i32::from_ne_bytes(((*(p).as_ref().unwrap()) as i32).to_ne_bytes()) > (65535) { 2 } else { 1 });
+            i = u32::wrapping_add(i, if (*(p).as_ref().unwrap()) as i32 > (65535) { 2 } else { 1 });
         }
         return false;
     }
 
     pub(crate) fn unicode_punctuation_boundary_resolver_cp_at(s: &UStr, i: u32) -> Option<u32> {
-    let __units3 = u_string::units(&s);
+    let __units3 = s.as_slice();
     let __count3 = u_string::unit_count(&s);
-        if i > 2147483647 || (i32::from_ne_bytes(((i) as i32).to_ne_bytes())) >= i32::from_ne_bytes(((__count3) as i32).to_ne_bytes()) {
+        if i > 2147483647 || ((i) as i32) >= __count3 as i32 {
             return None;
         }
-        let h = u_string::unit_at_from(&__units3, i).unwrap_or(0);
-        if i32::from_ne_bytes(((h) as i32).to_ne_bytes()) < (55296) || (i32::from_ne_bytes(((h) as i32).to_ne_bytes())) > (56319) || (i32::from_ne_bytes(((u32::wrapping_add(i, 1)) as i32).to_ne_bytes())) >= i32::from_ne_bytes(((__count3) as i32).to_ne_bytes()) {
+        let h = u_string::unit_at_from(__units3, i).unwrap_or(0);
+        if h as i32 < (55296) || ((h) as i32) > (56319) || ((u32::wrapping_add(i, 1)) as i32) >= __count3 as i32 {
             return Some(h);
         }
-        let l = u_string::unit_at_from(&__units3, u32::wrapping_add(i, 1)).unwrap_or(0);
-        return if i32::from_ne_bytes(((l) as i32).to_ne_bytes()) >= 56320 && (i32::from_ne_bytes(((l) as i32).to_ne_bytes())) <= 57343 { Some(u32::wrapping_add(u32::wrapping_add(65536, (u32::wrapping_sub(h, 55296)) << (10)), u32::wrapping_sub(l, 56320))) } else { Some(h) };
+        let l = u_string::unit_at_from(__units3, u32::wrapping_add(i, 1)).unwrap_or(0);
+        return if l as i32 >= 56320 && ((l) as i32) <= 57343 { Some(u32::wrapping_add(u32::wrapping_add(65536, (u32::wrapping_sub(h, 55296)) << (10)), u32::wrapping_sub(l, 56320))) } else { Some(h) };
     }
 
     pub(crate) fn unicode_punctuation_boundary_resolver_cp_before(s: &UStr, i: u32) -> Option<u32> {
-    let __units4 = u_string::units(&s);
+    let __units4 = s.as_slice();
     let __count4 = u_string::unit_count(&s);
-        if i32::from_ne_bytes(((i) as i32).to_ne_bytes()) <= 0 || (i32::from_ne_bytes(((i) as i32).to_ne_bytes())) > (i32::from_ne_bytes(((__count4) as i32).to_ne_bytes())) {
+        if i as i32 <= 0 || ((i) as i32) > ((__count4) as i32) {
             return None;
         }
-        let l = u_string::unit_at_from(&__units4, u32::wrapping_sub(i, 1)).unwrap_or(0);
-        if i32::from_ne_bytes(((l) as i32).to_ne_bytes()) >= 56320 && (i32::from_ne_bytes(((l) as i32).to_ne_bytes())) <= 57343 && (i32::from_ne_bytes(((i) as i32).to_ne_bytes())) > (1) {
-            let h = u_string::unit_at_from(&__units4, u32::wrapping_sub(i, 2)).unwrap_or(0);
-            if i32::from_ne_bytes(((h) as i32).to_ne_bytes()) >= 55296 && (i32::from_ne_bytes(((h) as i32).to_ne_bytes())) <= 56319 {
+        let l = u_string::unit_at_from(__units4, u32::wrapping_sub(i, 1)).unwrap_or(0);
+        if l as i32 >= 56320 && ((l) as i32) <= 57343 && ((i) as i32) > (1) {
+            let h = u_string::unit_at_from(__units4, u32::wrapping_sub(i, 2)).unwrap_or(0);
+            if h as i32 >= 55296 && ((h) as i32) <= 56319 {
                 return Some(u32::wrapping_add(u32::wrapping_add(65536, (u32::wrapping_sub(h, 55296)) << (10)), u32::wrapping_sub(l, 56320)));
             }
         }
@@ -540,7 +540,7 @@ impl UnicodePunctuationBoundaryResolver {
 
     pub(crate) fn unicode_punctuation_boundary_resolver_first_sig(s: &UStr) -> Option<SignificantCodePoint> {
         let mut i = 0u32;
-        while (i32::from_ne_bytes(((i) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u_string::unit_count(&(s))) as i32).to_ne_bytes())) {
+        while ((i) as i32) < ((u_string::unit_count(&(s))) as i32) {
             let p = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_cp_at(s, i);
             if p.is_none() {
                 return None;
@@ -554,11 +554,11 @@ impl UnicodePunctuationBoundaryResolver {
     }
 
     pub(crate) fn unicode_punctuation_boundary_resolver_last_sig(s: &UStr) -> Option<SignificantCodePoint> {
-    let __units5 = u_string::units(&s);
+    let __units5 = s.as_slice();
     let __count5 = u_string::unit_count(&s);
         let mut e = __count5;
-        while (i32::from_ne_bytes(((e) as i32).to_ne_bytes())) > (0) {
-            let i = if i32::from_ne_bytes(((u_string::unit_at_from(&__units5, u32::wrapping_sub(e, 1)).unwrap_or(0)) as i32).to_ne_bytes()) >= 56320 && (i32::from_ne_bytes(((u_string::unit_at_from(&__units5, u32::wrapping_sub(e, 1)).unwrap_or(0)) as i32).to_ne_bytes())) <= 57343 { u32::wrapping_sub(e, 2) } else { u32::wrapping_sub(e, 1) };
+        while ((e) as i32) > (0) {
+            let i = if u_string::unit_at_from(__units5, u32::wrapping_sub(e, 1)).unwrap_or(0) as i32 >= 56320 && ((u_string::unit_at_from(__units5, u32::wrapping_sub(e, 1)).unwrap_or(0)) as i32) <= 57343 { u32::wrapping_sub(e, 2) } else { u32::wrapping_sub(e, 1) };
             let p = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_cp_at(s, i);
             if p.is_none() {
                 return None;
@@ -574,10 +574,10 @@ impl UnicodePunctuationBoundaryResolver {
     pub(crate) fn unicode_punctuation_boundary_resolver_distinct(a: &Vec<IntRange>) -> Vec<IntRange> {
         let mut r: Vec<IntRange> = vec![];
         let mut i = 0u32;
-        while (i32::from_ne_bytes(((i) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((a.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
+        while ((i) as i32) < ((u32::try_from((a.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32) {
             let mut found = false;
             let mut j = 0u32;
-            while (i32::from_ne_bytes(((j) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((r.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
+            while ((j) as i32) < ((u32::try_from((r.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32) {
                 if r[usize::try_from(j).unwrap_or(0)].start == a[usize::try_from(i).unwrap_or(0)].start && r[usize::try_from(j).unwrap_or(0)].end == a[usize::try_from(i).unwrap_or(0)].end {
                     found = true;
                 }

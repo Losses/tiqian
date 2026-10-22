@@ -355,8 +355,8 @@ impl SourceInteractionBoundariesCoverageTestHelpers {
     pub fn source_interaction_boundaries_coverage_test_helpers_render_ints(values: &Vec<u32>) -> UString {
         let mut output = UString::from("[").to_ustring();
         let mut index = 0u32;
-        while (i32::from_ne_bytes(((index) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((values.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
-            if i32::from_ne_bytes(((index) as i32).to_ne_bytes()) > (0) {
+        while ((index) as i32) < ((u32::try_from((values.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32) {
+            if index as i32 > (0) {
                 output += &(UString::from(", "));
             }
             output += &(UString::from(format!("{}", crate::runtime::int_text::IntText::int_text(values[usize::try_from(index).unwrap_or(0)])).as_str()));

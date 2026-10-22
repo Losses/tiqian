@@ -52,7 +52,7 @@ impl ParagraphDpLineBreakerTestSupport {
     }
 
     pub fn paragraph_dp_line_breaker_test_support_ints(v: &Vec<u32>) -> SortedSetTable<u32> {
-        let mut b: SortedSetTableBuilder<u32> = SortedTable::sorted_table_set_builder::<u32>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_bytes(((*a) as i32).to_ne_bytes()), i32::from_ne_bytes(((*b) as i32).to_ne_bytes()))));
+        let mut b: SortedSetTableBuilder<u32> = SortedTable::sorted_table_set_builder::<u32>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints((*a) as i32, (*b) as i32)));
         for &x in v {
             b.put(&(x));
         }
@@ -60,8 +60,7 @@ impl ParagraphDpLineBreakerTestSupport {
     }
 
     pub fn paragraph_dp_line_breaker_test_support_opportunities(v: &Vec<u32>, spans: &Vec<TextRange>, tiers: &Vec<ProgressiveBreakTier>) -> SortedMapTable<u32, ProgressiveBreakOpportunity> {
-        let mut b: SortedMapTableBuilder<u32, ProgressiveBreakOpportunity> = SortedTable::sorted_table_map_builder::<u32,
-ProgressiveBreakOpportunity>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_bytes(((*a) as i32).to_ne_bytes()), i32::from_ne_bytes(((*b) as i32).to_ne_bytes()))));
+        let mut b: SortedMapTableBuilder<u32, ProgressiveBreakOpportunity> = SortedTable::sorted_table_map_builder::<u32, ProgressiveBreakOpportunity>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints((*a) as i32, (*b) as i32)));
         for i in 0..match u32::try_from(v.len()) { Ok(value) => value, Err(_) => u32::MAX } {
             b.put(&(v[usize::try_from(i).unwrap_or(0)]), &(ProgressiveBreakOpportunity::new(tiers[usize::try_from(i).unwrap_or(0)], (spans[usize::try_from(i).unwrap_or(0)]).clone(), Some(0.0))));
         }
@@ -86,7 +85,7 @@ ProgressiveBreakOpportunity>(Arc::new(|a, b| SortedTable::sorted_table_compare_i
         {
             let _g1 = s.lines.clone();
             for l in &_g1 {
-                if i32::from_ne_bytes((((l.cluster_range).clone().start) as i32).to_ne_bytes()) <= i32::from_ne_bytes((((l.cluster_range).clone().end) as i32).to_ne_bytes()) {
+                if l.cluster_range.clone().start as i32 <= (l.cluster_range).clone().end as i32 {
                     let _ = TracedAssertions::traced_assertions_assert_equals_int(e, (l.cluster_range).clone().start, Some(UString::from("lines must tile clusters in order")))?;
                     e = u32::wrapping_add((l.cluster_range).clone().end, 1);
                 }

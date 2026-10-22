@@ -1976,7 +1976,7 @@ fn rich_text_decoration_does_not_trim_already_consumed_opening_glue_twice() {
         let original = LayoutQueriesTestHelpers::layout_queries_test_helpers_punctuation_glue_result().unwrap();
         let mut geometry: Vec<ClusterGeometryDecisionInfo> = vec![];
         let mut index = 0u32;
-        while (i32::from_ne_bytes(((index) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from(((original.debug).clone().geometry_decisions.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
+        while ((index) as i32) < ((u32::try_from(((original.debug).clone().geometry_decisions.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32) {
             let decision = ((original.debug).clone().geometry_decisions[usize::try_from(index).unwrap_or(0)]).clone();
             if LayoutQueriesTestHelpers::layout_queries_test_helpers_same_range((decision.range).clone(), TextRange::new(0u32, 1u32).unwrap()) {
                 geometry.push(ClusterGeometryDecisionInfo::new((decision.range).clone(), (decision.source_text).to_ustring().as_ustr(), (decision.display_text).to_ustring().as_ustr(), decision.base_advance, decision.body_width, decision.leading_glue_natural, decision.leading_glue_natural, decision.trailing_glue_natural, decision.trailing_glue_consumed, decision.justification_delta, decision.resolved_advance, (decision.source).to_ustring().as_ustr(), (decision.reason).to_ustring().as_ustr(), Some(decision.ruby_spread), Some(decision.glyph_inline_shift), decision.glyph_placement_reason.clone()));
@@ -2236,7 +2236,7 @@ fn ruby_selection_geometry_redistributes_avoidance_spread_without_overlap() {
         let _ = TracedAssertions::traced_assertions_assert_equals_rendered(UString::from(format!("{}", Rect::new(64.0f64, 0.0f64, 96.0f64, 20.0f64).to_string()).as_str()).as_ustr(), UString::from(format!("{}", (positioned[2usize]).clone().get_rect().to_string()).as_str()).as_ustr(), None).unwrap();
         let mut no_overlap = true;
         let mut index = 0u32;
-        while (i32::from_ne_bytes(((u32::wrapping_add(index, 1)) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((positioned.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
+        while ((u32::wrapping_add(index, 1)) as i32) < ((u32::try_from((positioned.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32) {
             if !((positioned[usize::try_from(index).unwrap_or(0)].right) <= positioned[usize::try_from(u32::wrapping_add(index, 1)).unwrap_or(0)].left) {
                 no_overlap = false;
             }
@@ -2290,18 +2290,18 @@ impl LayoutQueriesTestHelpers {
         let mut output = Vec::<u16>::new();
         if let Some(&unit) = output.last() {
             if unit >= 55296 && unit <= 56319 && !UString::from("[").is_empty() {
-                if !UString::from("[").encode_utf16().next().map_or(false, |head| head >= 56320 && head <= 57343) {
+                if !match (UString::from("[")).encode_utf16().next() { Some(head) => head >= 56320 && head <= 57343, None => false } {
                     return Err(UStringFault::UnpairedSurrogate { unit: u32::from(unit) });
                 }
             }
         }
         output.extend(UString::from("[").encode_utf16());
         let mut index = 0u32;
-        while (i32::from_ne_bytes(((index) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((values.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
-            if i32::from_ne_bytes(((index) as i32).to_ne_bytes()) > (0) {
+        while ((index) as i32) < ((u32::try_from((values.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32) {
+            if index as i32 > (0) {
                 if let Some(&unit) = output.last() {
                     if unit >= 55296 && unit <= 56319 && !UString::from(", ").is_empty() {
-                        if !UString::from(", ").encode_utf16().next().map_or(false, |head| head >= 56320 && head <= 57343) {
+                        if !match (UString::from(", ")).encode_utf16().next() { Some(head) => head >= 56320 && head <= 57343, None => false } {
                             return Err(UStringFault::UnpairedSurrogate { unit: u32::from(unit) });
                         }
                     }
@@ -2310,7 +2310,7 @@ impl LayoutQueriesTestHelpers {
             }
             if let Some(&unit) = output.last() {
                 if unit >= 55296 && unit <= 56319 && !(values[usize::try_from(index).unwrap_or(0)]).clone().to_string().is_empty() {
-                    if !(values[usize::try_from(index).unwrap_or(0)]).clone().to_string().encode_utf16().next().map_or(false, |head| head >= 56320 && head <= 57343) {
+                    if !match ((values[usize::try_from(index).unwrap_or(0)]).clone().to_string()).encode_utf16().next() { Some(head) => head >= 56320 && head <= 57343, None => false } {
                         return Err(UStringFault::UnpairedSurrogate { unit: u32::from(unit) });
                     }
                 }
@@ -2320,7 +2320,7 @@ impl LayoutQueriesTestHelpers {
         }
         if let Some(&unit) = output.last() {
             if unit >= 55296 && unit <= 56319 && !UString::from("]").is_empty() {
-                if !UString::from("]").encode_utf16().next().map_or(false, |head| head >= 56320 && head <= 57343) {
+                if !match (UString::from("]")).encode_utf16().next() { Some(head) => head >= 56320 && head <= 57343, None => false } {
                     return Err(UStringFault::UnpairedSurrogate { unit: u32::from(unit) });
                 }
             }
@@ -2333,18 +2333,18 @@ impl LayoutQueriesTestHelpers {
         let mut output = Vec::<u16>::new();
         if let Some(&unit) = output.last() {
             if unit >= 55296 && unit <= 56319 && !UString::from("[").is_empty() {
-                if !UString::from("[").encode_utf16().next().map_or(false, |head| head >= 56320 && head <= 57343) {
+                if !match (UString::from("[")).encode_utf16().next() { Some(head) => head >= 56320 && head <= 57343, None => false } {
                     return Err(UStringFault::UnpairedSurrogate { unit: u32::from(unit) });
                 }
             }
         }
         output.extend(UString::from("[").encode_utf16());
         let mut index = 0u32;
-        while (i32::from_ne_bytes(((index) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((values.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
-            if i32::from_ne_bytes(((index) as i32).to_ne_bytes()) > (0) {
+        while ((index) as i32) < ((u32::try_from((values.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32) {
+            if index as i32 > (0) {
                 if let Some(&unit) = output.last() {
                     if unit >= 55296 && unit <= 56319 && !UString::from(", ").is_empty() {
-                        if !UString::from(", ").encode_utf16().next().map_or(false, |head| head >= 56320 && head <= 57343) {
+                        if !match (UString::from(", ")).encode_utf16().next() { Some(head) => head >= 56320 && head <= 57343, None => false } {
                             return Err(UStringFault::UnpairedSurrogate { unit: u32::from(unit) });
                         }
                     }
@@ -2353,7 +2353,7 @@ impl LayoutQueriesTestHelpers {
             }
             if let Some(&unit) = output.last() {
                 if unit >= 55296 && unit <= 56319 && !(values[usize::try_from(index).unwrap_or(0)]).clone().to_string().is_empty() {
-                    if !(values[usize::try_from(index).unwrap_or(0)]).clone().to_string().encode_utf16().next().map_or(false, |head| head >= 56320 && head <= 57343) {
+                    if !match ((values[usize::try_from(index).unwrap_or(0)]).clone().to_string()).encode_utf16().next() { Some(head) => head >= 56320 && head <= 57343, None => false } {
                         return Err(UStringFault::UnpairedSurrogate { unit: u32::from(unit) });
                     }
                 }
@@ -2363,7 +2363,7 @@ impl LayoutQueriesTestHelpers {
         }
         if let Some(&unit) = output.last() {
             if unit >= 55296 && unit <= 56319 && !UString::from("]").is_empty() {
-                if !UString::from("]").encode_utf16().next().map_or(false, |head| head >= 56320 && head <= 57343) {
+                if !match (UString::from("]")).encode_utf16().next() { Some(head) => head >= 56320 && head <= 57343, None => false } {
                     return Err(UStringFault::UnpairedSurrogate { unit: u32::from(unit) });
                 }
             }

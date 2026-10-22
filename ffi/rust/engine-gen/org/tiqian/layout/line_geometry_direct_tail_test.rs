@@ -606,7 +606,7 @@ impl LineGeometryDirectTailSupport {
     pub fn line_geometry_direct_tail_support_clusters() -> Result<Vec<Cluster>, TextRangeError> {
         let mut r: Vec<Cluster> = vec![];
         let mut i = 0u32;
-        while (i32::from_ne_bytes(((i) as i32).to_ne_bytes())) < (4) {
+        while ((i) as i32) < (4) {
             r.push(LineGeometryDirectTailSupport::line_geometry_direct_tail_support_c(i)?);
             i = u32::wrapping_add(i, 1);
         }
@@ -624,7 +624,7 @@ impl LineGeometryDirectTailSupport {
     pub fn line_geometry_direct_tail_support_map_ruby(entries: &Vec<RubyEntry>) -> SortedMapTable<RubySpan, RubyFontGeometry> {
         let mut b: SortedMapTableBuilder<RubySpan, RubyFontGeometry> = SortedTable::sorted_table_map_builder::<RubySpan, RubyFontGeometry>(Arc::new(compare_ruby_span));
         let mut i = 0u32;
-        while (i32::from_ne_bytes(((i) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((entries.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
+        while ((i) as i32) < ((u32::try_from((entries.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32) {
             b.put(&(((entries[usize::try_from(i).unwrap_or(0)]).clone().s).clone()), &(((entries[usize::try_from(i).unwrap_or(0)]).clone().g).clone()));
             i = u32::wrapping_add(i, 1);
         }

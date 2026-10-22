@@ -301,17 +301,17 @@ impl ExplainableStubParagraphLayoutEngine {
             return Err(TextRangeError::Message { text: UString::from("ParagraphStyle.inlineObjectMinimumClearanceEm must be finite and non-negative") });
         }
         let mut surrogate_scan = 0u32;
-        let __units = u_string::units(&text);
+        let __units = text.as_slice();
         let __count = u_string::unit_count(&text);
-        while (i32::from_ne_bytes(((surrogate_scan) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((__count) as i32).to_ne_bytes())) {
-            let code = u_string::unit_at_from(&__units, surrogate_scan).unwrap_or(0);
-            if i32::from_ne_bytes(((code) as i32).to_ne_bytes()) >= 55296 && (i32::from_ne_bytes(((code) as i32).to_ne_bytes())) <= 56319 {
-                if !((i32::from_ne_bytes(((u32::wrapping_add(surrogate_scan, 1)) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u_string::unit_count(&(text))) as i32).to_ne_bytes())) && (i32::from_ne_bytes(((u_string::unit_at(&text, u32::wrapping_add(surrogate_scan, 1)).unwrap_or(0)) as i32).to_ne_bytes())) >= 56320 && (i32::from_ne_bytes(((u_string::unit_at(&text, u32::wrapping_add(surrogate_scan, 1)).unwrap_or(0)) as i32).to_ne_bytes())) <= 57343) {
+        while ((surrogate_scan) as i32) < ((__count) as i32) {
+            let code = u_string::unit_at_from(__units, surrogate_scan).unwrap_or(0);
+            if code as i32 >= 55296 && ((code) as i32) <= 56319 {
+                if !((u32::wrapping_add(surrogate_scan, 1)) as i32 < ((u_string::unit_count(&(text))) as i32) && ((u_string::unit_at(&text, u32::wrapping_add(surrogate_scan, 1)).unwrap_or(0)) as i32) >= 56320 && ((u_string::unit_at(&text, u32::wrapping_add(surrogate_scan, 1)).unwrap_or(0)) as i32) <= 57343) {
                     return Err(TextRangeError::Message { text: UString::from(format!("{}", { let mut __s = UString::new(); __s += &(UString::from("SourceText has an unpaired high surrogate at char ")); __s += &(UString::from(format!("{}", crate::runtime::int_text::IntText::int_text(surrogate_scan)).as_str())); __s }).as_str()) });
                 }
                 surrogate_scan = u32::wrapping_add(surrogate_scan, 2);
             } else {
-                if i32::from_ne_bytes(((code) as i32).to_ne_bytes()) >= 56320 && (i32::from_ne_bytes(((code) as i32).to_ne_bytes())) <= 57343 {
+                if code as i32 >= 56320 && ((code) as i32) <= 57343 {
                     return Err(TextRangeError::Message { text: UString::from(format!("{}", { let mut __s = UString::new(); __s += &(UString::from("SourceText has an unpaired low surrogate at char ")); __s += &(UString::from(format!("{}", crate::runtime::int_text::IntText::int_text(surrogate_scan)).as_str())); __s }).as_str()) });
                 }
                 surrogate_scan = u32::wrapping_add(surrogate_scan, 1);
@@ -319,7 +319,7 @@ impl ExplainableStubParagraphLayoutEngine {
         }
         for i in 0..match u32::try_from(input.inline_boxes.len()) { Ok(value) => value, Err(_) => u32::MAX } {
             let inline_box = (input.inline_boxes[usize::try_from(i).unwrap_or(0)]).clone();
-            if !(((inline_box.range).clone().start) <= 2147483647 && (i32::from_ne_bytes((((inline_box.range).clone().start) as i32).to_ne_bytes())) < (i32::from_ne_bytes((((inline_box.range).clone().end) as i32).to_ne_bytes())) && (i32::from_ne_bytes((((inline_box.range).clone().end) as i32).to_ne_bytes())) <= i32::from_ne_bytes(((u_string::unit_count(&(text))) as i32).to_ne_bytes())) {
+            if !(((inline_box.range).clone().start) <= 2147483647 && (((inline_box.range).clone().start) as i32) < (((inline_box.range).clone().end) as i32) && (((inline_box.range).clone().end) as i32) <= u_string::unit_count(&(text)) as i32) {
                 return Err(TextRangeError::Message { text: UString::from(format!("{}", { let mut __s = UString::new(); __s += &(UString::from("InlineBoxSpan ")); __s += UString::from(format!("{}", (inline_box.range).clone().to_string()).as_str()).as_ustr(); __s += &(UString::from(" must be a non-empty source range")); __s }).as_str()) });
             }
             if !((inline_box.inline_start).is_finite() && (inline_box.inline_end).is_finite()) {
@@ -328,13 +328,13 @@ impl ExplainableStubParagraphLayoutEngine {
         }
         for i in 0..match u32::try_from((input.content).clone().line_break_spans.len()) { Ok(value) => value, Err(_) => u32::MAX } {
             let span = ((input.content).clone().line_break_spans[usize::try_from(i).unwrap_or(0)]).clone();
-            if !(((span.range).clone().start) <= 2147483647 && (i32::from_ne_bytes((((span.range).clone().start) as i32).to_ne_bytes())) < (i32::from_ne_bytes((((span.range).clone().end) as i32).to_ne_bytes())) && (i32::from_ne_bytes((((span.range).clone().end) as i32).to_ne_bytes())) <= i32::from_ne_bytes(((u_string::unit_count(&(text))) as i32).to_ne_bytes())) {
+            if !(((span.range).clone().start) <= 2147483647 && (((span.range).clone().start) as i32) < (((span.range).clone().end) as i32) && (((span.range).clone().end) as i32) <= u_string::unit_count(&(text)) as i32) {
                 return Err(TextRangeError::Message { text: UString::from(format!("{}", { let mut __s = UString::new(); __s += &(UString::from("LineBreakSpan ")); __s += UString::from(format!("{}", (span.range).clone().to_string()).as_str()).as_ustr(); __s += &(UString::from(" must be a non-empty source range")); __s }).as_str()) });
             }
         }
         for i in 0..match u32::try_from((input.content).clone().auto_space_suppressed_ranges.len()) { Ok(value) => value, Err(_) => u32::MAX } {
             let range = ((input.content).clone().auto_space_suppressed_ranges[usize::try_from(i).unwrap_or(0)]).clone();
-            if !((range.start) <= 2147483647 && (i32::from_ne_bytes(((range.start) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((range.end) as i32).to_ne_bytes())) && (i32::from_ne_bytes(((range.end) as i32).to_ne_bytes())) <= i32::from_ne_bytes(((u_string::unit_count(&(text))) as i32).to_ne_bytes())) {
+            if !((range.start) <= 2147483647 && ((range.start) as i32) < ((range.end) as i32) && ((range.end) as i32) <= u_string::unit_count(&(text)) as i32) {
                 return Err(TextRangeError::Message { text: UString::from(format!("{}", { let mut __s = UString::new(); __s += &(UString::from("Auto-space suppressed range ")); __s += UString::from(format!("{}", range.to_string()).as_str()).as_ustr(); __s += &(UString::from(" must be a non-empty source range")); __s }).as_str()) });
             }
         }
@@ -354,10 +354,10 @@ impl ExplainableStubParagraphLayoutEngine {
             sorted_objects.push((input.inline_objects[usize::try_from(i).unwrap_or(0)]).clone());
         }
         let mut i = 1u32;
-        while (i32::from_ne_bytes(((i) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((sorted_objects.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
+        while ((i) as i32) < ((u32::try_from((sorted_objects.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32) {
             let item = (sorted_objects[usize::try_from(i).unwrap_or(0)]).clone();
             let mut j = i;
-            while (j) > (0) && (i32::from_ne_bytes(((((sorted_objects[usize::try_from(u32::wrapping_sub(j, 1)).unwrap_or(0)]).clone().range).clone().start) as i32).to_ne_bytes())) > (i32::from_ne_bytes((((item.range).clone().start) as i32).to_ne_bytes())) {
+            while (j) > (0) && ((((sorted_objects[usize::try_from(u32::wrapping_sub(j, 1)).unwrap_or(0)]).clone().range).clone().start) as i32) > (((item.range).clone().start) as i32) {
                 sorted_objects[usize::try_from(j).unwrap_or(0)] = (sorted_objects[usize::try_from(u32::wrapping_sub(j, 1)).unwrap_or(0)]).clone();
                 j = u32::wrapping_sub(j, 1);
             }
@@ -367,13 +367,13 @@ impl ExplainableStubParagraphLayoutEngine {
         for idx in 0..u32::try_from((sorted_objects.len()) & 0xFFFF_FFFF).unwrap_or(0).saturating_sub(1) {
             let prev_obj = (sorted_objects[usize::try_from(idx).unwrap_or(0)]).clone();
             let next_obj = (sorted_objects[usize::try_from(u32::wrapping_add(idx, 1)).unwrap_or(0)]).clone();
-            if i32::from_ne_bytes((((prev_obj.range).clone().end) as i32).to_ne_bytes()) > (i32::from_ne_bytes((((next_obj.range).clone().start) as i32).to_ne_bytes())) {
+            if prev_obj.range.clone().end as i32 > (((next_obj.range).clone().start) as i32) {
                 return Err(TextRangeError::Message { text: UString::from(format!("{}", { let mut __s = UString::new(); __s += &(UString::from("InlineObjectSpan ranges must not overlap: ")); __s += UString::from(format!("{}", (prev_obj.range).clone().to_string()).as_str()).as_ustr(); __s += &(UString::from(" and ")); __s += UString::from(format!("{}", (next_obj.range).clone().to_string()).as_str()).as_ustr(); __s }).as_str()) });
             }
         }
         for k in 0..match u32::try_from(input.inline_objects.len()) { Ok(value) => value, Err(_) => u32::MAX } {
             let inline_object = (input.inline_objects[usize::try_from(k).unwrap_or(0)]).clone();
-            if !(((inline_object.range).clone().start) <= 2147483647 && (i32::from_ne_bytes((((inline_object.range).clone().start) as i32).to_ne_bytes())) < (i32::from_ne_bytes((((inline_object.range).clone().end) as i32).to_ne_bytes())) && (i32::from_ne_bytes((((inline_object.range).clone().end) as i32).to_ne_bytes())) <= i32::from_ne_bytes(((u_string::unit_count(&(text))) as i32).to_ne_bytes())) {
+            if !(((inline_object.range).clone().start) <= 2147483647 && (((inline_object.range).clone().start) as i32) < (((inline_object.range).clone().end) as i32) && (((inline_object.range).clone().end) as i32) <= u_string::unit_count(&(text)) as i32) {
                 return Err(TextRangeError::Message { text: UString::from(format!("{}", { let mut __s = UString::new(); __s += &(UString::from("InlineObjectSpan ")); __s += UString::from(format!("{}", (inline_object.range).clone().to_string()).as_str()).as_ustr(); __s += &(UString::from(" must cover a non-empty source range")); __s }).as_str()) });
             }
             if !((inline_object.advance).is_finite() && (inline_object.advance) > (0 as f64) && (inline_object.ascent).is_finite() && (inline_object.ascent) >= 0 as f64 && (inline_object.descent).is_finite() && (inline_object.descent) >= 0 as f64) {

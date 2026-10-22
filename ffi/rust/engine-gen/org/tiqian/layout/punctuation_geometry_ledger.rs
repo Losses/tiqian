@@ -85,25 +85,25 @@ impl PunctuationGeometryLedger {
     }
 
     pub fn with_inline_box_advances(&self, m: SortedMapTable<u32, f64>) -> PunctuationGeometryLedger {
-        return if u32::from_ne_bytes(((m.size()) as u32).to_ne_bytes()) == 0 { (self).clone() } else { PunctuationGeometryLedger::punctuation_geometry_ledger_replace((self).clone(), None, None, None, Some((m).clone()), None, None) };
+        return if m.size() as u32 == 0 { (self).clone() } else { PunctuationGeometryLedger::punctuation_geometry_ledger_replace((self).clone(), None, None, None, Some((m).clone()), None, None) };
     }
 
     pub fn with_ruby_spread(&self, m: SortedMapTable<u32, f64>) -> PunctuationGeometryLedger {
-        return if u32::from_ne_bytes(((m.size()) as u32).to_ne_bytes()) == 0 { (self).clone() } else { PunctuationGeometryLedger::punctuation_geometry_ledger_replace((self).clone(), None, None, Some((m).clone()), None, None, None) };
+        return if m.size() as u32 == 0 { (self).clone() } else { PunctuationGeometryLedger::punctuation_geometry_ledger_replace((self).clone(), None, None, Some((m).clone()), None, None, None) };
     }
 
     pub fn with_raw_edge_trims(&self, m: SortedMapTable<u32, f64>) -> PunctuationGeometryLedger {
-        if u32::from_ne_bytes(((m.size()) as u32).to_ne_bytes()) == 0 {
+        if m.size() as u32 == 0 {
             return ((self).clone()).clone();
         }
         let mut n: SortedMapTable<u32, f64> = PunctuationGeometryLedger::punctuation_geometry_ledger_clone_f((self.raw_edge_trim_by_cluster).clone());
-        for i in 0..u32::from_ne_bytes(((m.size()) as u32).to_ne_bytes()) {
-            let k = m.key_at({ let v: u32 = i; i32::from_ne_bytes(v.to_ne_bytes()) });
-            let mut b: SortedMapTableBuilder<u32, f64> = SortedTable::sorted_table_map_builder::<u32, f64>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_bytes(((*a) as i32).to_ne_bytes()), i32::from_ne_bytes(((*b) as i32).to_ne_bytes()))));
-            for j in 0..u32::from_ne_bytes(((n.size()) as u32).to_ne_bytes()) {
-                b.put(&(n.key_at({ let v: u32 = j; i32::from_ne_bytes(v.to_ne_bytes()) })), &(n.value_at({ let v: u32 = j; i32::from_ne_bytes(v.to_ne_bytes()) })));
+        for i in 0..((m.size()) as u32) {
+            let k = m.key_at({ let v: u32 = i; v as i32 });
+            let mut b: SortedMapTableBuilder<u32, f64> = SortedTable::sorted_table_map_builder::<u32, f64>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints((*a) as i32, (*b) as i32)));
+            for j in 0..((n.size()) as u32) {
+                b.put(&(n.key_at({ let v: u32 = j; v as i32 })), &(n.value_at({ let v: u32 = j; v as i32 })));
             }
-            b.put(&(k), &((if n.has(&(k)) { (n.get(&(k))).unwrap() } else { 0 as f64 }) + m.value_at({ let v: u32 = i; i32::from_ne_bytes(v.to_ne_bytes()) })));
+            b.put(&(k), &((if n.has(&(k)) { (n.get(&(k))).unwrap() } else { 0 as f64 }) + m.value_at({ let v: u32 = i; v as i32 })));
             n = b.clone().build();
         }
         return PunctuationGeometryLedger::punctuation_geometry_ledger_replace((self).clone(), None, Some((n).clone()), None, None, None, None);
@@ -115,15 +115,15 @@ impl PunctuationGeometryLedger {
 
     fn consume_side(&self, m: SortedMapTable<u32, f64>, lead: bool) -> PunctuationGeometryLedger {
         let mut n: SortedMapTable<u32, GlueBudget> = PunctuationGeometryLedger::punctuation_geometry_ledger_clone_b((self.budgets).clone());
-        for i in 0..u32::from_ne_bytes(((m.size()) as u32).to_ne_bytes()) {
-            let k = m.key_at({ let v: u32 = i; i32::from_ne_bytes(v.to_ne_bytes()) });
-            let amount = m.value_at({ let v: u32 = i; i32::from_ne_bytes(v.to_ne_bytes()) });
+        for i in 0..((m.size()) as u32) {
+            let k = m.key_at({ let v: u32 = i; v as i32 });
+            let amount = m.value_at({ let v: u32 = i; v as i32 });
             if n.has(&(k)) && (amount) > (0 as f64) {
                 let q = n.get(&(k));
                 let replacement = if lead { GlueBudget::new(q.as_ref().unwrap().leading_natural, { let __min_a3 = q.as_ref().unwrap().leading_natural as f64; let __min_b3 = (q.as_ref().unwrap().leading_consumed + amount) as f64; if __min_a3.is_nan() || __min_b3.is_nan() { f64::NAN } else { if __min_a3 < __min_b3 { __min_a3 } else if __min_b3 < __min_a3 { __min_b3 } else if __min_a3 == 0.0 && __min_b3 == 0.0 { if __min_a3.is_sign_negative() { __min_a3 } else { __min_b3 } } else { __min_a3 } } }, q.as_ref().unwrap().trailing_natural, q.as_ref().unwrap().trailing_consumed) } else { GlueBudget::new(q.as_ref().unwrap().leading_natural, q.as_ref().unwrap().leading_consumed, q.as_ref().unwrap().trailing_natural, { let __min_a4 = q.as_ref().unwrap().trailing_natural as f64; let __min_b4 = (q.as_ref().unwrap().trailing_consumed + amount) as f64; if __min_a4.is_nan() || __min_b4.is_nan() { f64::NAN } else { if __min_a4 < __min_b4 { __min_a4 } else if __min_b4 < __min_a4 { __min_b4 } else if __min_a4 == 0.0 && __min_b4 == 0.0 { if __min_a4.is_sign_negative() { __min_a4 } else { __min_b4 } } else { __min_a4 } } }) };
-                let mut b: SortedMapTableBuilder<u32, GlueBudget> = SortedTable::sorted_table_map_builder::<u32, GlueBudget>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_bytes(((*a) as i32).to_ne_bytes()), i32::from_ne_bytes(((*b) as i32).to_ne_bytes()))));
-                for j in 0..u32::from_ne_bytes(((n.size()) as u32).to_ne_bytes()) {
-                    b.put(&(n.key_at({ let v: u32 = j; i32::from_ne_bytes(v.to_ne_bytes()) })), &(n.value_at({ let v: u32 = j; i32::from_ne_bytes(v.to_ne_bytes()) })));
+                let mut b: SortedMapTableBuilder<u32, GlueBudget> = SortedTable::sorted_table_map_builder::<u32, GlueBudget>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints((*a) as i32, (*b) as i32)));
+                for j in 0..((n.size()) as u32) {
+                    b.put(&(n.key_at({ let v: u32 = j; v as i32 })), &(n.value_at({ let v: u32 = j; v as i32 })));
                 }
                 b.put(&(k), &(replacement));
                 n = b.clone().build();
@@ -141,10 +141,10 @@ impl PunctuationGeometryLedger {
     }
 
     pub fn glue_capacities(&self) -> SortedMapTable<u32, GlueCapacity> {
-        let mut b: SortedMapTableBuilder<u32, GlueCapacity> = SortedTable::sorted_table_map_builder::<u32, GlueCapacity>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_bytes(((*a) as i32).to_ne_bytes()), i32::from_ne_bytes(((*b) as i32).to_ne_bytes()))));
-        for i in 0..u32::from_ne_bytes((((self.budgets).clone().size()) as u32).to_ne_bytes()) {
-            let k = (self.budgets).clone().key_at({ let v: u32 = i; i32::from_ne_bytes(v.to_ne_bytes()) });
-            let q = (self.budgets).clone().value_at({ let v: u32 = i; i32::from_ne_bytes(v.to_ne_bytes()) });
+        let mut b: SortedMapTableBuilder<u32, GlueCapacity> = SortedTable::sorted_table_map_builder::<u32, GlueCapacity>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints((*a) as i32, (*b) as i32)));
+        for i in 0..(((self.budgets).clone().size()) as u32) {
+            let k = (self.budgets).clone().key_at({ let v: u32 = i; v as i32 });
+            let q = (self.budgets).clone().value_at({ let v: u32 = i; v as i32 });
             if q.get_leading_remaining() > (0 as f64) || (q.get_trailing_remaining()) > (0 as f64) {
                 b.put(&(k), &(GlueCapacity::new(q.get_leading_remaining(), q.get_trailing_remaining(), (self.geometries).clone().has(&(k)) && (self.geometries).clone().get(&(k)).as_ref().unwrap().anchor == Some(PunctuationAnchor::Center))));
             }
@@ -154,9 +154,9 @@ impl PunctuationGeometryLedger {
 
     pub fn to_decision_info(&self) -> Vec<ClusterGeometryDecisionInfo> {
         let mut r: Vec<ClusterGeometryDecisionInfo> = vec![];
-        for i in 0..u32::from_ne_bytes((((self.geometries).clone().size()) as u32).to_ne_bytes()) {
-            let k = (self.geometries).clone().key_at({ let v: u32 = i; i32::from_ne_bytes(v.to_ne_bytes()) });
-            let g = (self.geometries).clone().value_at({ let v: u32 = i; i32::from_ne_bytes(v.to_ne_bytes()) });
+        for i in 0..(((self.geometries).clone().size()) as u32) {
+            let k = (self.geometries).clone().key_at({ let v: u32 = i; v as i32 });
+            let g = (self.geometries).clone().value_at({ let v: u32 = i; v as i32 });
             let b = (self.budgets).clone().get(&(k));
             r.push(ClusterGeometryDecisionInfo::new((g.range).clone(), (g.source_text).to_ustring().as_ustr(), (g.display_text).to_ustring().as_ustr(), g.base_advance, g.body_width, b.as_ref().unwrap().leading_natural, b.as_ref().unwrap().leading_consumed, b.as_ref().unwrap().trailing_natural, b.as_ref().unwrap().trailing_consumed, if self.justification_delta_by_cluster.clone().has(&(k)) { ((self.justification_delta_by_cluster).clone().get(&(k))).unwrap() } else { 0 as f64 }, self.resolved_advance(k, (self.natural_clusters[usize::try_from(k).unwrap_or(0)]).clone()), &(UStr::new(&[80,117,110,99,116,117,97,116,105,111,110,71,101,111,109,101,116,114,121,76,101,100,103,101,114])), (g.reason).to_ustring().as_ustr(), Some(if self.ruby_spread_by_cluster.clone().has(&(k)) { ((self.ruby_spread_by_cluster).clone().get(&(k))).unwrap() } else { 0 as f64 }), Some(g.glyph_inline_shift), g.glyph_placement_reason.clone()));
         }
@@ -188,10 +188,9 @@ impl PunctuationGeometryLedger {
                             replacement = GlueBudget::new(q.as_ref().unwrap().leading_natural, { let __min_a9 = q.as_ref().unwrap().leading_natural as f64; let __min_b9 = (q.as_ref().unwrap().leading_consumed + a.reduction) as f64; if __min_a9.is_nan() || __min_b9.is_nan() { f64::NAN } else { if __min_a9 < __min_b9 { __min_a9 } else if __min_b9 < __min_a9 { __min_b9 } else if __min_a9 == 0.0 && __min_b9 == 0.0 { if __min_a9.is_sign_negative() { __min_a9 } else { __min_b9 } } else { __min_a9 } } }, q.as_ref().unwrap().trailing_natural, q.as_ref().unwrap().trailing_consumed);
                         }
                     }
-                    let mut b: SortedMapTableBuilder<u32, GlueBudget> = SortedTable::sorted_table_map_builder::<u32,
-GlueBudget>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_bytes(((*a) as i32).to_ne_bytes()), i32::from_ne_bytes(((*b) as i32).to_ne_bytes()))));
-                    for j in 0..u32::from_ne_bytes(((n.size()) as u32).to_ne_bytes()) {
-                        b.put(&(n.key_at({ let v: u32 = j; i32::from_ne_bytes(v.to_ne_bytes()) })), &(n.value_at({ let v: u32 = j; i32::from_ne_bytes(v.to_ne_bytes()) })));
+                    let mut b: SortedMapTableBuilder<u32, GlueBudget> = SortedTable::sorted_table_map_builder::<u32, GlueBudget>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints((*a) as i32, (*b) as i32)));
+                    for j in 0..((n.size()) as u32) {
+                        b.put(&(n.key_at({ let v: u32 = j; v as i32 })), &(n.value_at({ let v: u32 = j; v as i32 })));
                     }
                     b.put(&(idx), &(replacement));
                     n = b.clone().build();
@@ -203,7 +202,7 @@ GlueBudget>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_
 
     pub fn consume_line_edge_glue(&self, lines: &Vec<LineCandidate>, force: Option<bool>) -> LineEdgeTrimResult {
         let _gthis = (self).clone();
-        if u32::try_from((lines.len()) & 0xFFFF_FFFF).unwrap_or(0) == 0 || u32::from_ne_bytes((((self.budgets).clone().size()) as u32).to_ne_bytes()) == 0 {
+        if u32::try_from((lines.len()) & 0xFFFF_FFFF).unwrap_or(0) == 0 || (((self.budgets).clone().size()) as u32) == 0 {
             return LineEdgeTrimResult::new((self).clone(), vec![].to_vec());
         }
         let lead: Arc<Mutex<SortedMapTable<u32, f64>>> = Arc::new(Mutex::new(PunctuationGeometryLedger::punctuation_geometry_ledger_empty_f()));
@@ -257,7 +256,7 @@ GlueBudget>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_
         ds.lock().unwrap().push(LineEdgeTrimDecisionInfo::new((line.source_range).clone(), ((_gthis.natural_clusters[usize::try_from(index).unwrap_or(0)]).clone().range).clone(), side.as_ustr(), total, consumed, natural, reason.as_ustr()));
 } }) };
         for line in lines {
-            if i32::from_ne_bytes((((line.cluster_range).clone().start) as i32).to_ne_bytes()) > (i32::from_ne_bytes((((line.cluster_range).clone().end) as i32).to_ne_bytes())) {
+            if line.cluster_range.clone().start as i32 > (((line.cluster_range).clone().end) as i32) {
                 continue;
             }
             let end = (line.cluster_range).clone().end;
@@ -273,7 +272,7 @@ GlueBudget>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_
         if u32::try_from((a.len()) & 0xFFFF_FFFF).unwrap_or(0) != u32::try_from(((self.natural_clusters).clone().len()) & 0xFFFF_FFFF).unwrap_or(0) {
             return Err(TextRangeError::Message { text: UString::from("Inline attachments must align with punctuation geometry clusters.") });
         }
-        if u32::from_ne_bytes((((self.budgets).clone().size()) as u32).to_ne_bytes()) == 0 {
+        if self.budgets.clone().size() as u32 == 0 {
             return Ok(AttachedInlinePunctuationBoundaryResult::new((self).clone(), PunctuationGeometryLedger::punctuation_geometry_ledger_empty_f(), vec![].to_vec()));
         }
         let mut has_previous = false;
@@ -303,7 +302,7 @@ GlueBudget>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_
             let mut left_atom: Option<PunctuationAtom> = None;
             {
                 let mut _g = 0u32;
-                while (i32::from_ne_bytes(((_g) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((atoms.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
+                while ((_g) as i32) < ((u32::try_from((atoms.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32) {
                     let atom = (atoms[usize::try_from(_g).unwrap_or(0)]).clone();
                     _g = u32::wrapping_add(_g, 1);
                     if PunctuationGeometryLedger::punctuation_geometry_ledger_is_inside((atom.range).clone(), ((self.natural_clusters[usize::try_from(previous).unwrap_or(0)]).clone().range).clone()) {
@@ -315,7 +314,7 @@ GlueBudget>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_
             match &(next) {
                 Some(__option6) => {
                     let mut _g = 0u32;
-                    while (i32::from_ne_bytes(((_g) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((atoms.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
+                    while ((_g) as i32) < ((u32::try_from((atoms.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32) {
                         let atom = (atoms[usize::try_from(_g).unwrap_or(0)]).clone();
                         _g = u32::wrapping_add(_g, 1);
                         if PunctuationGeometryLedger::punctuation_geometry_ledger_is_inside((atom.range).clone(), ((self.natural_clusters[usize::try_from(*__option6).unwrap_or(0)]).clone().range).clone()) {
@@ -328,7 +327,7 @@ GlueBudget>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_
                 }
             }
             let next_char = match &(next) { None => None,
-Some(__option7) => if i32::from_ne_bytes(((u_string::unit_count(&(((self.natural_clusters[usize::try_from(*__option7).unwrap_or(0)]).clone().text).to_ustring()))) as i32).to_ne_bytes()) > (0) { Some(u_string::substring(&((self.natural_clusters[usize::try_from(*__option7).unwrap_or(0)]).clone().text).to_ustring(), 0i32, i32::wrapping_add(0i32, 1)).to_ustring()) } else { None } };
+Some(__option7) => if u_string::unit_count(&(((self.natural_clusters[usize::try_from(*__option7).unwrap_or(0)]).clone().text).to_ustring())) as i32 > (0) { Some(u_string::substring(&((self.natural_clusters[usize::try_from(*__option7).unwrap_or(0)]).clone().text).to_ustring(), 0i32, i32::wrapping_add(0i32, 1)).to_ustring()) } else { None } };
             let natural = left + right;
             let adjusted = match &(next) { None => 0 as f64, Some(__option8) => if match &(left_atom) { Some(__option11) => right_atom != None,
 None => false } || (match &(left_atom) { Some(__option12) => __option12.punctuation_class == PunctuationClass::Closing && next_char.is_some() && ClreqPunctuationPolicies::clreq_punctuation_policies_is_ascii_point_mark((next_char).as_deref().unwrap_or(UStr::new(&[]))), None => false }) { { let __min_a14 = 0.0f64 as f64; let __min_b14 = (natural - em / format!("{}", (2i32)).parse::<f64>().unwrap_or(0.0)) as f64; if __min_a14.is_nan() || __min_b14.is_nan() { f64::NAN } else { if __min_a14 > __min_b14 { __min_a14 } else if __min_b14 > __min_a14 { __min_b14 } else if __min_a14 == 0.0 && __min_b14 == 0.0 { if __min_a14.is_sign_negative() { __min_b14 } else { __min_a14 } } else { __min_a14 } } } } else { natural } };
@@ -353,13 +352,13 @@ None => false } || (match &(left_atom) { Some(__option12) => __option12.punctuat
                 let n = match &(next) { None => None, Some(__option15) => Some((self.natural_clusters[usize::try_from(*__option15).unwrap_or(0)]).clone()) };
                 let reason = match &(next) { None => UString::from("AttachedInlineVirtualPunctuationBoundary:line-end"), Some(__option16) => if match &(left_atom) { Some(__option19) => right_atom != None,
 None => false } { UString::from("AttachedInlineVirtualPunctuationBoundary:adjacent-punctuation") } else { if match &(left_atom) { Some(__option21) => __option21.punctuation_class == PunctuationClass::Closing && next_char.is_some() && ClreqPunctuationPolicies::clreq_punctuation_policies_is_ascii_point_mark((next_char).as_deref().unwrap_or(UStr::new(&[]))), None => false } { UString::from("AttachedInlineVirtualPunctuationBoundary:ascii-point-mark") } else { UString::from("AttachedInlineVirtualPunctuationBoundary:natural") }.to_ustring() }.to_ustring() };
-                decisions.push(SpacingDecisionInfo::new(TextRange::new(((self.natural_clusters[usize::try_from(previous).unwrap_or(0)]).clone().range).clone().start, u32::from_ne_bytes(((match &(n) { None => ((self.natural_clusters[usize::try_from(end).unwrap_or(0)]).clone().range).clone().end, Some(__option24) => __option24.range.end }) as u32).to_ne_bytes()))?, if i32::from_ne_bytes(((u_string::unit_count(&(((self.natural_clusters[usize::try_from(previous).unwrap_or(0)]).clone().text).to_ustring()))) as i32).to_ne_bytes()) > (0) { u_string::substring(&((self.natural_clusters[usize::try_from(previous).unwrap_or(0)]).clone().text).to_ustring(), i32::from_ne_bytes(((u32::wrapping_sub(u_string::unit_count(&(((self.natural_clusters[usize::try_from(previous).unwrap_or(0)]).clone().text).to_ustring())), 1)) as i32).to_ne_bytes()), i32::wrapping_add(i32::from_ne_bytes(((u32::wrapping_sub(u_string::unit_count(&(((self.natural_clusters[usize::try_from(previous).unwrap_or(0)]).clone().text).to_ustring())), 1)) as i32).to_ne_bytes()), 1)).to_ustring() } else { UString::from(" ") }.as_ustr(), match &(n) { None => UString::from(" "), Some(__option25) => if i32::from_ne_bytes(((u_string::unit_count(&((__option25.text).to_ustring()))) as i32).to_ne_bytes()) > (0) { u_string::substring(&(__option25.text).to_ustring(), 0i32, i32::wrapping_add(0i32, 1)).to_ustring() } else { UString::from(" ") }.to_ustring() }.as_ustr(), natural, adjusted, natural - adjusted, ((self.natural_clusters[usize::try_from(previous).unwrap_or(0)]).clone().range).clone(), reason.as_ustr()));
+                decisions.push(SpacingDecisionInfo::new(TextRange::new(((self.natural_clusters[usize::try_from(previous).unwrap_or(0)]).clone().range).clone().start, (match &(n) { None => ((self.natural_clusters[usize::try_from(end).unwrap_or(0)]).clone().range).clone().end, Some(__option24) => __option24.range.end }) as u32)?, if u_string::unit_count(&(((self.natural_clusters[usize::try_from(previous).unwrap_or(0)]).clone().text).to_ustring())) as i32 > (0) { u_string::substring(&((self.natural_clusters[usize::try_from(previous).unwrap_or(0)]).clone().text).to_ustring(), (u32::wrapping_sub(u_string::unit_count(&(((self.natural_clusters[usize::try_from(previous).unwrap_or(0)]).clone().text).to_ustring())), 1)) as i32, i32::wrapping_add((u32::wrapping_sub(u_string::unit_count(&(((self.natural_clusters[usize::try_from(previous).unwrap_or(0)]).clone().text).to_ustring())), 1)) as i32, 1)).to_ustring() } else { UString::from(" ") }.as_ustr(), match &(n) { None => UString::from(" "), Some(__option25) => if u_string::unit_count(&((__option25.text).to_ustring())) as i32 > (0) { u_string::substring(&(__option25.text).to_ustring(), 0i32, i32::wrapping_add(0i32, 1)).to_ustring() } else { UString::from(" ") }.to_ustring() }.as_ustr(), natural, adjusted, natural - adjusted, ((self.natural_clusters[usize::try_from(previous).unwrap_or(0)]).clone().range).clone(), reason.as_ustr()));
             }
         }
         let mut attached: SortedMapTable<u32, f64> = PunctuationGeometryLedger::punctuation_geometry_ledger_clone_f((self.attached_inline_trailing_glue_by_cluster).clone());
-        for i in 0..u32::from_ne_bytes(((trailing.size()) as u32).to_ne_bytes()) {
-            let k = trailing.key_at({ let v: u32 = i; i32::from_ne_bytes(v.to_ne_bytes()) });
-            attached = PunctuationGeometryLedger::punctuation_geometry_ledger_put_f((attached).clone(), k, { let __min_a18 = if attached.has(&(k)) { (attached.get(&(k))).unwrap() } else { 0 as f64 } as f64; let __min_b18 = trailing.value_at({ let v: u32 = i; i32::from_ne_bytes(v.to_ne_bytes()) }) as f64; if __min_a18.is_nan() || __min_b18.is_nan() { f64::NAN } else { if __min_a18 > __min_b18 { __min_a18 } else if __min_b18 > __min_a18 { __min_b18 } else if __min_a18 == 0.0 && __min_b18 == 0.0 { if __min_a18.is_sign_negative() { __min_b18 } else { __min_a18 } } else { __min_a18 } } });
+        for i in 0..((trailing.size()) as u32) {
+            let k = trailing.key_at({ let v: u32 = i; v as i32 });
+            attached = PunctuationGeometryLedger::punctuation_geometry_ledger_put_f((attached).clone(), k, { let __min_a18 = if attached.has(&(k)) { (attached.get(&(k))).unwrap() } else { 0 as f64 } as f64; let __min_b18 = trailing.value_at({ let v: u32 = i; v as i32 }) as f64; if __min_a18.is_nan() || __min_b18.is_nan() { f64::NAN } else { if __min_a18 > __min_b18 { __min_a18 } else if __min_b18 > __min_a18 { __min_b18 } else if __min_a18 == 0.0 && __min_b18 == 0.0 { if __min_a18.is_sign_negative() { __min_b18 } else { __min_a18 } } else { __min_a18 } } });
         }
         return Ok(AttachedInlinePunctuationBoundaryResult::new(PunctuationGeometryLedger::new((self.natural_clusters).clone().to_vec(), (self.geometries).clone(), (updated).clone(), Some((self.justification_delta_by_cluster).clone()), Some((self.raw_edge_trim_by_cluster).clone()), Some((self.ruby_spread_by_cluster).clone()), Some((self.inline_box_advance_by_cluster).clone()), Some((attached).clone())), (trailing).clone(), decisions.to_vec()));
     }
@@ -385,7 +384,7 @@ None => false } { UString::from("AttachedInlineVirtualPunctuationBoundary:adjace
         let mut i = 0;
         while i < n {
             if i > 0 { out.push_str(", "); }
-            let _ = write!(out, "{}={}", i32::from_ne_bytes((((self.geometries).clone().key_at(i)) as i32).to_ne_bytes()), (self.geometries).clone().value_at(i).to_string());
+            let _ = write!(out, "{}={}", ((self.geometries).clone().key_at(i)) as i32, (self.geometries).clone().value_at(i).to_string());
             i += 1;
         }
         out.push('}');
@@ -397,7 +396,7 @@ None => false } { UString::from("AttachedInlineVirtualPunctuationBoundary:adjace
         let mut i = 0;
         while i < n {
             if i > 0 { out.push_str(", "); }
-            let _ = write!(out, "{}={}", i32::from_ne_bytes((((self.budgets).clone().key_at(i)) as i32).to_ne_bytes()), (self.budgets).clone().value_at(i).to_string());
+            let _ = write!(out, "{}={}", ((self.budgets).clone().key_at(i)) as i32, (self.budgets).clone().value_at(i).to_string());
             i += 1;
         }
         out.push('}');
@@ -409,7 +408,7 @@ None => false } { UString::from("AttachedInlineVirtualPunctuationBoundary:adjace
         let mut i = 0;
         while i < n {
             if i > 0 { out.push_str(", "); }
-            let _ = write!(out, "{}={}", i32::from_ne_bytes((((self.justification_delta_by_cluster).clone().key_at(i)) as i32).to_ne_bytes()), (self.justification_delta_by_cluster).clone().value_at(i));
+            let _ = write!(out, "{}={}", ((self.justification_delta_by_cluster).clone().key_at(i)) as i32, (self.justification_delta_by_cluster).clone().value_at(i));
             i += 1;
         }
         out.push('}');
@@ -421,7 +420,7 @@ None => false } { UString::from("AttachedInlineVirtualPunctuationBoundary:adjace
         let mut i = 0;
         while i < n {
             if i > 0 { out.push_str(", "); }
-            let _ = write!(out, "{}={}", i32::from_ne_bytes((((self.raw_edge_trim_by_cluster).clone().key_at(i)) as i32).to_ne_bytes()), (self.raw_edge_trim_by_cluster).clone().value_at(i));
+            let _ = write!(out, "{}={}", ((self.raw_edge_trim_by_cluster).clone().key_at(i)) as i32, (self.raw_edge_trim_by_cluster).clone().value_at(i));
             i += 1;
         }
         out.push('}');
@@ -433,7 +432,7 @@ None => false } { UString::from("AttachedInlineVirtualPunctuationBoundary:adjace
         let mut i = 0;
         while i < n {
             if i > 0 { out.push_str(", "); }
-            let _ = write!(out, "{}={}", i32::from_ne_bytes((((self.ruby_spread_by_cluster).clone().key_at(i)) as i32).to_ne_bytes()), (self.ruby_spread_by_cluster).clone().value_at(i));
+            let _ = write!(out, "{}={}", ((self.ruby_spread_by_cluster).clone().key_at(i)) as i32, (self.ruby_spread_by_cluster).clone().value_at(i));
             i += 1;
         }
         out.push('}');
@@ -445,7 +444,7 @@ None => false } { UString::from("AttachedInlineVirtualPunctuationBoundary:adjace
         let mut i = 0;
         while i < n {
             if i > 0 { out.push_str(", "); }
-            let _ = write!(out, "{}={}", i32::from_ne_bytes((((self.inline_box_advance_by_cluster).clone().key_at(i)) as i32).to_ne_bytes()), (self.inline_box_advance_by_cluster).clone().value_at(i));
+            let _ = write!(out, "{}={}", ((self.inline_box_advance_by_cluster).clone().key_at(i)) as i32, (self.inline_box_advance_by_cluster).clone().value_at(i));
             i += 1;
         }
         out.push('}');
@@ -457,7 +456,7 @@ None => false } { UString::from("AttachedInlineVirtualPunctuationBoundary:adjace
         let mut i = 0;
         while i < n {
             if i > 0 { out.push_str(", "); }
-            let _ = write!(out, "{}={}", i32::from_ne_bytes((((self.attached_inline_trailing_glue_by_cluster).clone().key_at(i)) as i32).to_ne_bytes()), (self.attached_inline_trailing_glue_by_cluster).clone().value_at(i));
+            let _ = write!(out, "{}={}", ((self.attached_inline_trailing_glue_by_cluster).clone().key_at(i)) as i32, (self.attached_inline_trailing_glue_by_cluster).clone().value_at(i));
             i += 1;
         }
         out.push('}');
@@ -466,21 +465,21 @@ None => false } { UString::from("AttachedInlineVirtualPunctuationBoundary:adjace
     }
 
     pub(crate) fn punctuation_geometry_ledger_empty_f() -> SortedMapTable<u32, f64> {
-        return SortedTable::sorted_table_map_builder::<u32, f64>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_bytes(((*a) as i32).to_ne_bytes()), i32::from_ne_bytes(((*b) as i32).to_ne_bytes())))).clone().build();
+        return SortedTable::sorted_table_map_builder::<u32, f64>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints((*a) as i32, (*b) as i32))).clone().build();
     }
 
     pub(crate) fn punctuation_geometry_ledger_clone_f(x: SortedMapTable<u32, f64>) -> SortedMapTable<u32, f64> {
-        let mut b: SortedMapTableBuilder<u32, f64> = SortedTable::sorted_table_map_builder::<u32, f64>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_bytes(((*a) as i32).to_ne_bytes()), i32::from_ne_bytes(((*b) as i32).to_ne_bytes()))));
-        for i in 0..u32::from_ne_bytes(((x.size()) as u32).to_ne_bytes()) {
-            b.put(&(x.key_at({ let v: u32 = i; i32::from_ne_bytes(v.to_ne_bytes()) })), &(x.value_at({ let v: u32 = i; i32::from_ne_bytes(v.to_ne_bytes()) })));
+        let mut b: SortedMapTableBuilder<u32, f64> = SortedTable::sorted_table_map_builder::<u32, f64>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints((*a) as i32, (*b) as i32)));
+        for i in 0..((x.size()) as u32) {
+            b.put(&(x.key_at({ let v: u32 = i; v as i32 })), &(x.value_at({ let v: u32 = i; v as i32 })));
         }
         return b.clone().build();
     }
 
     pub(crate) fn punctuation_geometry_ledger_clone_b(x: SortedMapTable<u32, GlueBudget>) -> SortedMapTable<u32, GlueBudget> {
-        let mut b: SortedMapTableBuilder<u32, GlueBudget> = SortedTable::sorted_table_map_builder::<u32, GlueBudget>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_bytes(((*a) as i32).to_ne_bytes()), i32::from_ne_bytes(((*b) as i32).to_ne_bytes()))));
-        for i in 0..u32::from_ne_bytes(((x.size()) as u32).to_ne_bytes()) {
-            b.put(&(x.key_at({ let v: u32 = i; i32::from_ne_bytes(v.to_ne_bytes()) })), &(x.value_at({ let v: u32 = i; i32::from_ne_bytes(v.to_ne_bytes()) })));
+        let mut b: SortedMapTableBuilder<u32, GlueBudget> = SortedTable::sorted_table_map_builder::<u32, GlueBudget>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints((*a) as i32, (*b) as i32)));
+        for i in 0..((x.size()) as u32) {
+            b.put(&(x.key_at({ let v: u32 = i; v as i32 })), &(x.value_at({ let v: u32 = i; v as i32 })));
         }
         return b.clone().build();
     }
@@ -490,8 +489,7 @@ None => false } { UString::from("AttachedInlineVirtualPunctuationBoundary:adjace
     }
 
     pub fn punctuation_geometry_ledger_from(natural_clusters: &Vec<Cluster>, punctuation_atoms: &Vec<PunctuationAtom>, spacing_plan: PunctuationSpacingCompressionResult) -> PunctuationGeometryLedger {
-        let mut geometry_builder: SortedMapTableBuilder<u32, PunctuationClusterGeometry> = SortedTable::sorted_table_map_builder::<u32,
-PunctuationClusterGeometry>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_bytes(((*a) as i32).to_ne_bytes()), i32::from_ne_bytes(((*b) as i32).to_ne_bytes()))));
+        let mut geometry_builder: SortedMapTableBuilder<u32, PunctuationClusterGeometry> = SortedTable::sorted_table_map_builder::<u32, PunctuationClusterGeometry>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints((*a) as i32, (*b) as i32)));
         for i in 0..match u32::try_from(natural_clusters.len()) { Ok(value) => value, Err(_) => u32::MAX } {
             let mut atoms_for_cluster: Vec<PunctuationAtom> = vec![];
             for atom in punctuation_atoms {
@@ -499,7 +497,7 @@ PunctuationClusterGeometry>(Arc::new(|a, b| SortedTable::sorted_table_compare_in
                     atoms_for_cluster.push(atom.clone());
                 }
             }
-            if i32::from_ne_bytes(((u32::try_from((atoms_for_cluster.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes()) > (0) {
+            if u32::try_from((atoms_for_cluster.len()) & 0xFFFF_FFFF).unwrap_or(0) as i32 > (0) {
                 let mut body_terms: Vec<f64> = vec![];
                 for atom in &atoms_for_cluster {
                     body_terms.push(atom.body_width);
@@ -509,36 +507,35 @@ PunctuationClusterGeometry>(Arc::new(|a, b| SortedTable::sorted_table_compare_in
             }
         }
         let geometries: SortedMapTable<u32, PunctuationClusterGeometry> = geometry_builder.clone().build();
-        let mut budget_builder: SortedMapTableBuilder<u32, GlueBudget> = SortedTable::sorted_table_map_builder::<u32,
-GlueBudget>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_bytes(((*a) as i32).to_ne_bytes()), i32::from_ne_bytes(((*b) as i32).to_ne_bytes()))));
-        for i in 0..u32::from_ne_bytes(((geometries.size()) as u32).to_ne_bytes()) {
-            let index = geometries.key_at({ let v: u32 = i; i32::from_ne_bytes(v.to_ne_bytes()) });
-            let geometry = geometries.value_at({ let v: u32 = i; i32::from_ne_bytes(v.to_ne_bytes()) });
+        let mut budget_builder: SortedMapTableBuilder<u32, GlueBudget> = SortedTable::sorted_table_map_builder::<u32, GlueBudget>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints((*a) as i32, (*b) as i32)));
+        for i in 0..((geometries.size()) as u32) {
+            let index = geometries.key_at({ let v: u32 = i; v as i32 });
+            let geometry = geometries.value_at({ let v: u32 = i; v as i32 });
             budget_builder.put(&(index), &(GlueBudget::new(geometry.leading_glue_natural, geometry.leading_glue_initially_consumed, geometry.trailing_glue_natural, geometry.trailing_glue_initially_consumed)));
         }
         return PunctuationGeometryLedger::new(natural_clusters.to_vec(), (geometries).clone(), budget_builder.clone().build(), Some(PunctuationGeometryLedger::punctuation_geometry_ledger_empty_f()), Some(PunctuationGeometryLedger::punctuation_geometry_ledger_empty_f()), Some(PunctuationGeometryLedger::punctuation_geometry_ledger_empty_f()), Some(PunctuationGeometryLedger::punctuation_geometry_ledger_empty_f()), Some(PunctuationGeometryLedger::punctuation_geometry_ledger_empty_f())).consume_spacing((spacing_plan).clone());
     }
 
     pub(crate) fn punctuation_geometry_ledger_put_b(m: SortedMapTable<u32, GlueBudget>, k: u32, v: GlueBudget) -> SortedMapTable<u32, GlueBudget> {
-        let mut b: SortedMapTableBuilder<u32, GlueBudget> = SortedTable::sorted_table_map_builder::<u32, GlueBudget>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_bytes(((*a) as i32).to_ne_bytes()), i32::from_ne_bytes(((*b) as i32).to_ne_bytes()))));
-        for i in 0..u32::from_ne_bytes(((m.size()) as u32).to_ne_bytes()) {
-            b.put(&(m.key_at({ let v: u32 = i; i32::from_ne_bytes(v.to_ne_bytes()) })), &(m.value_at({ let v: u32 = i; i32::from_ne_bytes(v.to_ne_bytes()) })));
+        let mut b: SortedMapTableBuilder<u32, GlueBudget> = SortedTable::sorted_table_map_builder::<u32, GlueBudget>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints((*a) as i32, (*b) as i32)));
+        for i in 0..((m.size()) as u32) {
+            b.put(&(m.key_at({ let v: u32 = i; v as i32 })), &(m.value_at({ let v: u32 = i; v as i32 })));
         }
         b.put(&(k), &(v));
         return b.clone().build();
     }
 
     pub(crate) fn punctuation_geometry_ledger_put_f(m: SortedMapTable<u32, f64>, k: u32, v: f64) -> SortedMapTable<u32, f64> {
-        let mut b: SortedMapTableBuilder<u32, f64> = SortedTable::sorted_table_map_builder::<u32, f64>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_bytes(((*a) as i32).to_ne_bytes()), i32::from_ne_bytes(((*b) as i32).to_ne_bytes()))));
-        for i in 0..u32::from_ne_bytes(((m.size()) as u32).to_ne_bytes()) {
-            b.put(&(m.key_at({ let v: u32 = i; i32::from_ne_bytes(v.to_ne_bytes()) })), &(m.value_at({ let v: u32 = i; i32::from_ne_bytes(v.to_ne_bytes()) })));
+        let mut b: SortedMapTableBuilder<u32, f64> = SortedTable::sorted_table_map_builder::<u32, f64>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints((*a) as i32, (*b) as i32)));
+        for i in 0..((m.size()) as u32) {
+            b.put(&(m.key_at({ let v: u32 = i; v as i32 })), &(m.value_at({ let v: u32 = i; v as i32 })));
         }
         b.put(&(k), &(v));
         return b.clone().build();
     }
 
     pub fn punctuation_geometry_ledger_is_inside(self_: TextRange, other: TextRange) -> bool {
-        return (i32::from_ne_bytes(((self_.start) as i32).to_ne_bytes())) >= i32::from_ne_bytes(((other.start) as i32).to_ne_bytes()) && (i32::from_ne_bytes(((self_.end) as i32).to_ne_bytes())) <= i32::from_ne_bytes(((other.end) as i32).to_ne_bytes());
+        return ((self_.start) as i32) >= other.start as i32 && ((self_.end) as i32) <= other.end as i32;
     }
 
     pub fn punctuation_geometry_ledger_cluster_index_range_for(self_: &Vec<Cluster>, r: TextRange) -> Option<IntRange> {
@@ -547,9 +544,9 @@ GlueBudget>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_
         }
         let mut low = 0u32;
         let mut high = u32::try_from((self_.len()) & 0xFFFF_FFFF).unwrap_or(0);
-        while (i32::from_ne_bytes(((low) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((high) as i32).to_ne_bytes())) {
+        while ((low) as i32) < ((high) as i32) {
             let mid = u32::wrapping_add(low, high) >> 1;
-            if i32::from_ne_bytes(((((self_[usize::try_from(mid).unwrap_or(0)]).clone().range).clone().start) as i32).to_ne_bytes()) < (i32::from_ne_bytes(((r.start) as i32).to_ne_bytes())) {
+            if self_[usize::try_from(mid).unwrap_or(0)].clone().range.clone().start as i32 < ((r.start) as i32) {
                 low = u32::wrapping_add(mid, 1);
             } else {
                 high = mid;
@@ -558,16 +555,16 @@ GlueBudget>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_
         let first = low;
         low = first;
         high = u32::try_from((self_.len()) & 0xFFFF_FFFF).unwrap_or(0);
-        while (i32::from_ne_bytes(((low) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((high) as i32).to_ne_bytes())) {
+        while ((low) as i32) < ((high) as i32) {
             let mid = u32::wrapping_add(low, high) >> 1;
-            if i32::from_ne_bytes(((((self_[usize::try_from(mid).unwrap_or(0)]).clone().range).clone().end) as i32).to_ne_bytes()) <= i32::from_ne_bytes(((r.end) as i32).to_ne_bytes()) {
+            if self_[usize::try_from(mid).unwrap_or(0)].clone().range.clone().end as i32 <= r.end as i32 {
                 low = u32::wrapping_add(mid, 1);
             } else {
                 high = mid;
             }
         }
         let last_exclusive = low;
-        return if i32::from_ne_bytes(((first) as i32).to_ne_bytes()) < (i32::from_ne_bytes(((last_exclusive) as i32).to_ne_bytes())) { Some(IntRange::new(first, u32::wrapping_sub(last_exclusive, 1))) } else { None };
+        return if first as i32 < ((last_exclusive) as i32) { Some(IntRange::new(first, u32::wrapping_sub(last_exclusive, 1))) } else { None };
     }
 }
 
@@ -595,7 +592,7 @@ impl AttachedInlinePunctuationBoundaryResult {
         let mut i = 0;
         while i < n {
             if i > 0 { out.push_str(", "); }
-            let _ = write!(out, "{}={}", i32::from_ne_bytes((((self.trailing_glue_by_cluster).clone().key_at(i)) as i32).to_ne_bytes()), (self.trailing_glue_by_cluster).clone().value_at(i));
+            let _ = write!(out, "{}={}", ((self.trailing_glue_by_cluster).clone().key_at(i)) as i32, (self.trailing_glue_by_cluster).clone().value_at(i));
             i += 1;
         }
         out.push('}');

@@ -431,8 +431,8 @@ fn test_unicode_word_character() {
     testlib::run("org.tiqian.core.EastAsianSpacingCoverageTest.testUnicodeWordCharacter", "org.tiqian.core.EastAsianSpacingCoverageTest.testUnicodeWordCharacter", || {
         TestTraceRecorder::new(&(UStr::new(&[69,97,115,116,65,115,105,97,110,83,112,97,99,105,110,103,67,111,118,101,114,97,103,101,84,101,115,116]))).section(UStr::new(&[116,101,115,116,85,110,105,99,111,100,101,87,111,114,100,67,104,97,114,97,99,116,101,114]));
         let _ = TracedAssertions::traced_assertions_assert_equals_string(UStr::new(&[49,55,46,48,46,48]), UnicodeWordCharacter::UNICODE_WORD_CHARACTER_DATA_REVISION.to_ustring().as_ustr(), None).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_true((i32::from_ne_bytes(((u_string::unit_count(&(UnicodeWordCharacter::UNICODE_WORD_CHARACTER_DATA_SOURCE.to_ustring()))) as i32).to_ne_bytes())) > (0), None).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_true((i32::from_ne_bytes(((u_string::unit_count(&(UnicodeWordCharacter::UNICODE_WORD_CHARACTER_DATA_SHA256.to_ustring()))) as i32).to_ne_bytes())) > (0), None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_true((u_string::unit_count(&(UnicodeWordCharacter::UNICODE_WORD_CHARACTER_DATA_SOURCE.to_ustring()))) as i32 > (0), None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_true((u_string::unit_count(&(UnicodeWordCharacter::UNICODE_WORD_CHARACTER_DATA_SHA256.to_ustring()))) as i32 > (0), None).unwrap();
         let _ = EastAsianSpacingCoverageTestHelpers::east_asian_spacing_coverage_test_helpers_expect_argument_failure({  Arc::new(move || {
         UnicodeWordCharacter::unicode_word_character_contains(4294967295u32).map_err(|e| IllegalStateException::new(&format!("{}", e)))?;
         Ok(())
@@ -462,14 +462,14 @@ fn test_unicode_script_evidence() {
         TestTraceRecorder::new(&(UStr::new(&[69,97,115,116,65,115,105,97,110,83,112,97,99,105,110,103,67,111,118,101,114,97,103,101,84,101,115,116]))).section(UStr::new(&[116,101,115,116,85,110,105,99,111,100,101,83,99,114,105,112,116,69,118,105,100,101,110,99,101]));
         let values = vec![UnicodeScriptEvidence::Neutral, UnicodeScriptEvidence::EastAsian, UnicodeScriptEvidence::Other];
         let mut index = 0u32;
-        while (i32::from_ne_bytes(((index) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((values.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
+        while ((index) as i32) < ((u32::try_from((values.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32) {
             let value = values[usize::try_from(index).unwrap_or(0)];
             let _ = TracedAssertions::traced_assertions_record_rendered_not_null(if false { UString::from("-") } else { UString::from(value.name()) }.as_ustr(), None).unwrap();
             index = u32::wrapping_add(index, 1);
         }
         let _ = TracedAssertions::traced_assertions_assert_equals_string(UStr::new(&[49,55,46,48,46,48]), UnicodeScriptEvidenceClassifier::UNICODE_SCRIPT_EVIDENCE_CLASSIFIER_DATA_REVISION.to_ustring().as_ustr(), None).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_true((i32::from_ne_bytes(((u_string::unit_count(&(UnicodeScriptEvidenceClassifier::UNICODE_SCRIPT_EVIDENCE_CLASSIFIER_DATA_SOURCE.to_ustring()))) as i32).to_ne_bytes())) > (0), None).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_true((i32::from_ne_bytes(((u_string::unit_count(&(UnicodeScriptEvidenceClassifier::UNICODE_SCRIPT_EVIDENCE_CLASSIFIER_DATA_SHA256.to_ustring()))) as i32).to_ne_bytes())) > (0), None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_true((u_string::unit_count(&(UnicodeScriptEvidenceClassifier::UNICODE_SCRIPT_EVIDENCE_CLASSIFIER_DATA_SOURCE.to_ustring()))) as i32 > (0), None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_true((u_string::unit_count(&(UnicodeScriptEvidenceClassifier::UNICODE_SCRIPT_EVIDENCE_CLASSIFIER_DATA_SHA256.to_ustring()))) as i32 > (0), None).unwrap();
         let _ = EastAsianSpacingCoverageTestHelpers::east_asian_spacing_coverage_test_helpers_expect_argument_failure({  Arc::new(move || {
         UnicodeScriptEvidenceClassifier::unicode_script_evidence_classifier_classify(4294967295u32).map_err(|e| IllegalStateException::new(&format!("{}", e)))?;
         Ok(())
@@ -503,7 +503,7 @@ fn test_east_asian_spacing_data_and_values() {
     EastAsianSpacingValue::Conditional,
 ];
         let mut index = 0u32;
-        while (i32::from_ne_bytes(((index) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((values.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
+        while ((index) as i32) < ((u32::try_from((values.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32) {
             let value = values[usize::try_from(index).unwrap_or(0)];
             let _ = TracedAssertions::traced_assertions_record_rendered_not_null(if false { UString::from("-") } else { UString::from(value.name()) }.as_ustr(), None).unwrap();
             index = u32::wrapping_add(index, 1);
@@ -526,7 +526,7 @@ fn test_east_asian_spacing_edges_model() {
         let _ = TracedAssertions::traced_assertions_assert_true(edges.contains_wide, None).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_equals_east_asian_spacing_edges(EastAsianSpacingEdges::new(EastAsianSpacingValue::Wide, EastAsianSpacingValue::Narrow, true), (edges).clone(), None).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_true(edges.leading == EastAsianSpacingEdges::new(EastAsianSpacingValue::Wide, EastAsianSpacingValue::Narrow, true).leading, None).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_true((u32::from_ne_bytes(((u_string::find_from(&UString::from(format!("{}", edges.to_string()).as_str()), UString::from("EastAsianSpacingEdges").as_ustr(), 0)) as u32).to_ne_bytes())) <= 2147483647, None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_true((u_string::find_from(&UString::from(format!("{}", edges.to_string()).as_str()), UString::from("EastAsianSpacingEdges").as_ustr(), 0)) as u32 <= 2147483647, None).unwrap();
     });
 }
 
@@ -535,10 +535,10 @@ fn test_unicode_east_asian_spacing() {
     testlib::run("org.tiqian.core.EastAsianSpacingCoverageTest.testUnicodeEastAsianSpacing", "org.tiqian.core.EastAsianSpacingCoverageTest.testUnicodeEastAsianSpacing", || {
         TestTraceRecorder::new(&(UStr::new(&[69,97,115,116,65,115,105,97,110,83,112,97,99,105,110,103,67,111,118,101,114,97,103,101,84,101,115,116]))).section(UStr::new(&[116,101,115,116,85,110,105,99,111,100,101,69,97,115,116,65,115,105,97,110,83,112,97,99,105,110,103]));
         let _ = TracedAssertions::traced_assertions_assert_equals_string(UStr::new(&[100,114,97,102,116,45,50,48,50,52,45,49,50,45,49,54]), UnicodeEastAsianSpacing::UNICODE_EAST_ASIAN_SPACING_DATA_REVISION.to_ustring().as_ustr(), None).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_true((i32::from_ne_bytes(((u_string::unit_count(&(UnicodeEastAsianSpacing::UNICODE_EAST_ASIAN_SPACING_DATA_SOURCE.to_ustring()))) as i32).to_ne_bytes())) > (0), None).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_true((i32::from_ne_bytes(((u_string::unit_count(&(UnicodeEastAsianSpacing::UNICODE_EAST_ASIAN_SPACING_DATA_SHA256.to_ustring()))) as i32).to_ne_bytes())) > (0), None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_true((u_string::unit_count(&(UnicodeEastAsianSpacing::UNICODE_EAST_ASIAN_SPACING_DATA_SOURCE.to_ustring()))) as i32 > (0), None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_true((u_string::unit_count(&(UnicodeEastAsianSpacing::UNICODE_EAST_ASIAN_SPACING_DATA_SHA256.to_ustring()))) as i32 > (0), None).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_equals_string(UStr::new(&[50,48,50,54,45,48,54,45,49,52]), UnicodeEastAsianSpacing::UNICODE_EAST_ASIAN_SPACING_LANGUAGE_REGISTRY_REVISION.to_ustring().as_ustr(), None).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_true((i32::from_ne_bytes(((u_string::unit_count(&(UnicodeEastAsianSpacing::UNICODE_EAST_ASIAN_SPACING_LANGUAGE_REGISTRY_SOURCE.to_ustring()))) as i32).to_ne_bytes())) > (0), None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_true((u_string::unit_count(&(UnicodeEastAsianSpacing::UNICODE_EAST_ASIAN_SPACING_LANGUAGE_REGISTRY_SOURCE.to_ustring()))) as i32 > (0), None).unwrap();
         let chinese_locales = vec![
     UString::from("zh").to_ustring(),
     UString::from("zh-Hans").to_ustring(),
@@ -568,7 +568,7 @@ fn test_unicode_east_asian_spacing() {
     UString::from("cmn-Hans-CN").to_ustring(),
 ];
         let mut index = 0u32;
-        while (i32::from_ne_bytes(((index) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((chinese_locales.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
+        while ((index) as i32) < ((u32::try_from((chinese_locales.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32) {
             let locale = (chinese_locales[usize::try_from(index).unwrap_or(0)]).clone();
             let _ = TracedAssertions::traced_assertions_assert_true(UnicodeEastAsianSpacing::unicode_east_asian_spacing_is_chinese_language_context(locale.as_ustr()), Some(UString::from(format!("{}", { let mut __s = UString::new(); __s += &(UString::from("Locale ")); __s += locale.as_ustr(); __s += &(UString::from(" should be Chinese")); __s }).as_str()))).unwrap();
             index = u32::wrapping_add(index, 1);
@@ -583,7 +583,7 @@ fn test_unicode_east_asian_spacing() {
     UString::from("es").to_ustring(),
 ];
         index = 0u32;
-        while (i32::from_ne_bytes(((index) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((non_chinese_locales.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
+        while ((index) as i32) < ((u32::try_from((non_chinese_locales.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32) {
             let locale = (non_chinese_locales[usize::try_from(index).unwrap_or(0)]).clone();
             let _ = TracedAssertions::traced_assertions_assert_false(UnicodeEastAsianSpacing::unicode_east_asian_spacing_is_chinese_language_context(locale.as_ustr()), Some(UString::from(format!("{}", { let mut __s = UString::new(); __s += &(UString::from("Locale ")); __s += locale.as_ustr(); __s += &(UString::from(" should not be Chinese")); __s }).as_str()))).unwrap();
             index = u32::wrapping_add(index, 1);

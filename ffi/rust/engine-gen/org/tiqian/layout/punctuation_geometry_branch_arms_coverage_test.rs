@@ -2059,7 +2059,7 @@ fn empty_text_clusters_cannot_be_attached_marks() {
         let _ = TracedAssertions::traced_assertions_assert_true(u32::try_from((PunctuationGeometryStage::punctuation_geometry_stage_inline_object_attached_marks(&cs, &vec![FontRole::Unknown, FontRole::LatinText], KinsokuLevel::Basic, (Box::new((r).clone())).clone()).len()) & 0xFFFF_FFFF).unwrap_or(0) == 0, None).unwrap();
         let x = PunctuationGeometryStage::punctuation_geometry_stage_inline_object_attached_kinsoku(&cs, &vec![(InlineObjectAttachedMark::new(0u32, vec![].to_vec(), 1u32)).clone()], &cs, KinsokuLevel::Basic, 10 as f64, 10 as f64).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_true(u32::try_from((x.extendable_hang_ranges.len()) & 0xFFFF_FFFF).unwrap_or(0) == 0, None).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_true(u32::from_ne_bytes(((x.impossible_measure_hang_eligible_clusters.size()) as u32).to_ne_bytes()) == 0, None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_true((x.impossible_measure_hang_eligible_clusters.size()) as u32 == 0, None).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_equals_int(1, u32::try_from((x.decisions.len()) & 0xFFFF_FFFF).unwrap_or(0), None).unwrap();
     });
 }
@@ -2229,11 +2229,11 @@ fn inline_box_span_with_zero_net_structural_edge_still_applies_leading() {
     (PunctuationGeometryBranchArmsCoverageTestSupport::punctuation_geometry_branch_arms_coverage_test_support_c(UStr::new(&[97]), 0, Some(8 as f64 as f64), Some(UString::from("latin")), None).unwrap()).clone(),
 ], &vec![
     (InlineBoxSpan::new(TextRange::new(0u32, 1u32).unwrap(), Some(2 as f64), Some(0.0), Some(InlineBoxOuterSpacing::Narrow))).clone(),
-    (InlineBoxSpan::new(TextRange::new(0u32, 1u32).unwrap(), Some(0 as f64), Some(i32::from_ne_bytes(((4294967294u32) as i32).to_ne_bytes()) as f64), Some(InlineBoxOuterSpacing::Narrow))).clone(),
+    (InlineBoxSpan::new(TextRange::new(0u32, 1u32).unwrap(), Some(0 as f64), Some((4294967294u32) as i32 as f64), Some(InlineBoxOuterSpacing::Narrow))).clone(),
 ]);
         let _ = TracedAssertions::traced_assertions_assert_equals_float(8 as f64, r.clusters[0usize].advance, None).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_equals_float(2 as f64, r.clusters[0usize].leading_layout_advance, None).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_true(u32::from_ne_bytes(((r.advance_by_cluster.size()) as u32).to_ne_bytes()) == 0, None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_true((r.advance_by_cluster.size()) as u32 == 0, None).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_equals_int(2, u32::try_from((r.decisions.len()) & 0xFFFF_FFFF).unwrap_or(0), None).unwrap();
     });
 }
@@ -2281,7 +2281,7 @@ fn attached_boundary_with_plain_previous_cluster_keeps_the_right_budget() {
         let aa = PunctuationGeometryBranchArmsCoverageTestSupport::punctuation_geometry_branch_arms_coverage_test_support_atoms(&cs).unwrap();
         let r = PunctuationGeometryLedger::punctuation_geometry_ledger_from(&cs, &aa, PunctuationSpacingCompressionResult::new(vec![].to_vec()).unwrap()).resolve_attached_inline_punctuation_boundaries(&vec![InlineAttachment::None, InlineAttachment::Previous, InlineAttachment::None], &aa, 16 as f64).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_true(u32::try_from((r.decisions.len()) & 0xFFFF_FFFF).unwrap_or(0) == 0, None).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_true(u32::from_ne_bytes(((r.trailing_glue_by_cluster.size()) as u32).to_ne_bytes()) == 0, None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_true((r.trailing_glue_by_cluster.size()) as u32 == 0, None).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_equals_float(16 as f64, (r.geometry).clone().resolve_clusters()[2usize].advance, None).unwrap();
     });
 }
@@ -2360,7 +2360,7 @@ fn centred_adjacency_consumes_both_sides_equally() {
             {
                 let mut _g = 0u32;
                 let _g1 = PunctuationGeometryStage::punctuation_geometry_stage_punctuation_atoms((x).clone(), 16 as f64, PunctuationAtomBuilder::new(None, None).unwrap(), &vec![], PunctuationGluePlacement::Traditional, PunctuationWidthPolicy::new(Some(InteriorPunctuationStyle::FullWidth), Some(false))).unwrap();
-                while (i32::from_ne_bytes(((_g) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((_g1.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
+                while ((_g) as i32) < ((u32::try_from((_g1.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32) {
                     let a = (_g1[usize::try_from(_g).unwrap_or(0)]).clone();
                     _g = u32::wrapping_add(_g, 1);
                     aa.push(a.clone());
@@ -2419,7 +2419,7 @@ impl PunctuationGeometryBranchArmsCoverageTestSupport {
             {
                 let mut _g = 0u32;
                 let _g1 = PunctuationGeometryStage::punctuation_geometry_stage_punctuation_atoms((x).clone(), 16 as f64, PunctuationAtomBuilder::new(None, None)?, &vec![], PunctuationGluePlacement::MainlandSimplified, PunctuationWidthPolicy::new(Some(InteriorPunctuationStyle::FullWidth), Some(false)))?;
-                while (i32::from_ne_bytes(((_g) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((_g1.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
+                while ((_g) as i32) < ((u32::try_from((_g1.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32) {
                     let a = (_g1[usize::try_from(_g).unwrap_or(0)]).clone();
                     _g = u32::wrapping_add(_g, 1);
                     r.push(a.clone());
@@ -2432,7 +2432,7 @@ impl PunctuationGeometryBranchArmsCoverageTestSupport {
     pub fn punctuation_geometry_branch_arms_coverage_test_support_render(rs: &Vec<IntRange>) -> UString {
         let mut s = UString::from("[").to_ustring();
         for i in 0..match u32::try_from(rs.len()) { Ok(value) => value, Err(_) => u32::MAX } {
-            if ({ let v: u32 = i; i32::from_ne_bytes(v.to_ne_bytes()) }) > (0) {
+            if ({ let v: u32 = i; v as i32 }) > (0) {
                 s += &(UString::from(", "));
             }
             s += &({ let mut __s = UString::new(); __s += &(UString::from("[")); __s += &(UString::from(format!("{}", crate::runtime::int_text::IntText::int_text(rs[usize::try_from(i).unwrap_or(0)].start)).as_str())); __s += &(UString::from(", ")); __s += &(UString::from(format!("{}", crate::runtime::int_text::IntText::int_text(rs[usize::try_from(i).unwrap_or(0)].end)).as_str())); __s += &(UString::from("]")); __s });

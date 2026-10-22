@@ -228,8 +228,8 @@ fn test_bundled_hyphenation_resource() {
     testlib::run("org.tiqian.linebreak.LineBreakCoverageTest.testBundledHyphenationResource", "org.tiqian.linebreak.LineBreakCoverageTest.testBundledHyphenationResource", || {
         TestTraceRecorder::new(&(UStr::new(&[76,105,110,101,66,114,101,97,107,67,111,118,101,114,97,103,101,84,101,115,116]))).section(UStr::new(&[116,101,115,116,66,117,110,100,108,101,100,72,121,112,104,101,110,97,116,105,111,110,82,101,115,111,117,114,99,101]));
         let p = EnglishHyphenationPatterns::english_hyphenation_patterns_load().unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_true((i32::from_ne_bytes(((u_string::unit_count(&(p))) as i32).to_ne_bytes())) > (0), None).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_true((u32::from_ne_bytes(((u_string::find_from(&(p), UString::from("\\patterns").as_ustr(), 0)) as u32).to_ne_bytes())) <= 2147483647, None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_true((u_string::unit_count(&(p))) as i32 > (0), None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_true((u_string::find_from(&(p), UString::from("\\patterns").as_ustr(), 0)) as u32 <= 2147483647, None).unwrap();
     });
 }
 
@@ -247,10 +247,10 @@ fn test_line_break_models_and_enums() {
         let oc = BreakOpportunity::new(5u32, BreakKind::Allowed, &(UStr::new(&[84,101,115,116,82,101,97,115,111,110])), Some(10));
         let _ = TracedAssertions::traced_assertions_assert_equals_rendered(UString::from(format!("{}", o.to_string()).as_str()).as_ustr(), UString::from(format!("{}", oc.to_string()).as_str()).as_ustr(), None).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_true(o.to_string() == oc.to_string(), None).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_true((u32::from_ne_bytes(((u_string::find_from(&UString::from(format!("{}", o.to_string()).as_str()), UString::from("BreakOpportunity").as_ustr(), 0)) as u32).to_ne_bytes())) <= 2147483647, None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_true((u_string::find_from(&UString::from(format!("{}", o.to_string()).as_str()), UString::from("BreakOpportunity").as_ustr(), 0)) as u32 <= 2147483647, None).unwrap();
         let mut i = 0u32;
         let kinds = vec![BreakKind::Allowed, BreakKind::Forbidden, BreakKind::Required, BreakKind::Problematic];
-        while (i32::from_ne_bytes(((i) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((kinds.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
+        while ((i) as i32) < ((u32::try_from((kinds.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32) {
             let _ = TracedAssertions::traced_assertions_record_rendered_not_null(UString::from(kinds[usize::try_from(i).unwrap_or(0)].name()).as_ustr(), None).unwrap();
             i = u32::wrapping_add(i, 1);
         }
@@ -260,7 +260,7 @@ fn test_line_break_models_and_enums() {
         let fc = ForbiddenBreak::new(TextRange::new(2u32, 6u32).unwrap(), &(UStr::new(&[70,111,114,98,105,100,100,101,110,82,101,97,115,111,110])));
         let _ = TracedAssertions::traced_assertions_assert_equals_rendered(UString::from(format!("{}", f.to_string()).as_str()).as_ustr(), UString::from(format!("{}", fc.to_string()).as_str()).as_ustr(), None).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_true(f.to_string() == fc.to_string(), None).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_true((u32::from_ne_bytes(((u_string::find_from(&UString::from(format!("{}", f.to_string()).as_str()), UString::from("ForbiddenBreak").as_ustr(), 0)) as u32).to_ne_bytes())) <= 2147483647, None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_true((u_string::find_from(&UString::from(format!("{}", f.to_string()).as_str()), UString::from("ForbiddenBreak").as_ustr(), 0)) as u32 <= 2147483647, None).unwrap();
     });
 }
 
@@ -270,13 +270,13 @@ fn test_mandatory_break_and_zero_width_space_code_points() {
         TestTraceRecorder::new(&(UStr::new(&[76,105,110,101,66,114,101,97,107,67,111,118,101,114,97,103,101,84,101,115,116]))).section(UStr::new(&[116,101,115,116,77,97,110,100,97,116,111,114,121,66,114,101,97,107,65,110,100,90,101,114,111,87,105,100,116,104,83,112,97,99,101,67,111,100,101,80,111,105,110,116,115]));
         let yes = vec![10, 11, 12, 13, 133, 8232, 8233];
         let mut i = 0u32;
-        while (i32::from_ne_bytes(((i) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((yes.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
+        while ((i) as i32) < ((u32::try_from((yes.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32) {
             let _ = TracedAssertions::traced_assertions_assert_true(LineBreakFns::line_break_fns_is_mandatory_break_code_point(yes[usize::try_from(i).unwrap_or(0)]), Some(UString::from(format!("{}", { let mut __s = UString::new(); __s += &(UString::from("Code point ")); __s += &(UString::from(format!("{}", crate::runtime::int_text::IntText::int_text(yes[usize::try_from(i).unwrap_or(0)])).as_str())); __s += &(UString::from(" should be mandatory break")); __s }).as_str()))).unwrap();
             i = u32::wrapping_add(i, 1);
         }
         let no = vec![32, 65, 0, 8203, 8234];
         i = 0u32;
-        while (i32::from_ne_bytes(((i) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((no.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
+        while ((i) as i32) < ((u32::try_from((no.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32) {
             let _ = TracedAssertions::traced_assertions_assert_false(LineBreakFns::line_break_fns_is_mandatory_break_code_point(no[usize::try_from(i).unwrap_or(0)]), Some(UString::from(format!("{}", { let mut __s = UString::new(); __s += &(UString::from("Code point ")); __s += &(UString::from(format!("{}", crate::runtime::int_text::IntText::int_text(no[usize::try_from(i).unwrap_or(0)])).as_str())); __s += &(UString::from(" should not be mandatory break")); __s }).as_str()))).unwrap();
             i = u32::wrapping_add(i, 1);
         }
@@ -343,14 +343,14 @@ fn test_hyphenation_components() {
         let _ = TracedAssertions::traced_assertions_assert_equals_int_array(&vec![4], &h.hyphenate(UStr::new(&[83,112,101,99,105,97,108,87,111,114,100])), None).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_equals_int_array(&vec![], &h.hyphenate(UStr::new(&[122,122,122,122,122,122])), None).unwrap();
         let e = ParseTexHyphenationPatterns::parse_tex_hyphenation_patterns_parse(UStr::new(&[37,32,111,110,108,121,32,99,111,109,109,101,110,116,115,10,32,32,32]));
-        let _ = TracedAssertions::traced_assertions_assert_equals_int(0, u32::from_ne_bytes(((u32::from_ne_bytes(((e.patterns.size()) as u32).to_ne_bytes())) as u32).to_ne_bytes()), None).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_equals_int(0, u32::from_ne_bytes(((u32::from_ne_bytes(((e.exceptions.size()) as u32).to_ne_bytes())) as u32).to_ne_bytes()), None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_equals_int(0, (e.patterns.size()) as u32 as u32, None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_equals_int(0, (e.exceptions.size()) as u32 as u32, None).unwrap();
         let m = ParseTexHyphenationPatterns::parse_tex_hyphenation_patterns_parse(UStr::new(&[92,112,97,116,116,101,114,110,115,32,110,111,32,98,114,97,99,101,115,32,92,104,121,112,104,101,110,97,116,105,111,110,32,110,111,32,98,114,97,99,101,115]));
-        let _ = TracedAssertions::traced_assertions_assert_equals_int(0, u32::from_ne_bytes(((u32::from_ne_bytes(((m.patterns.size()) as u32).to_ne_bytes())) as u32).to_ne_bytes()), None).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_equals_int(0, u32::from_ne_bytes(((u32::from_ne_bytes(((m.exceptions.size()) as u32).to_ne_bytes())) as u32).to_ne_bytes()), None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_equals_int(0, (m.patterns.size()) as u32 as u32, None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_equals_int(0, (m.exceptions.size()) as u32 as u32, None).unwrap();
         let u = ParseTexHyphenationPatterns::parse_tex_hyphenation_patterns_parse(UStr::new(&[92,112,97,116,116,101,114,110,115,32,123,32,97,98,99,32,10,92,104,121,112,104,101,110,97,116,105,111,110,32,123,32,100,101,102]));
-        let _ = TracedAssertions::traced_assertions_assert_equals_int(0, u32::from_ne_bytes(((u32::from_ne_bytes(((u.patterns.size()) as u32).to_ne_bytes())) as u32).to_ne_bytes()), None).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_equals_int(0, u32::from_ne_bytes(((u32::from_ne_bytes(((u.exceptions.size()) as u32).to_ne_bytes())) as u32).to_ne_bytes()), None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_equals_int(0, (u.patterns.size()) as u32 as u32, None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_equals_int(0, (u.exceptions.size()) as u32 as u32, None).unwrap();
         let v = ParseTexHyphenationPatterns::parse_tex_hyphenation_patterns_parse(UStr::new(&[92,112,97,116,116,101,114,110,115,123,32,46,97,98,51,99,100,46,32,101,49,102,32,125,92,104,121,112,104,101,110,97,116,105,111,110,123,32,97,115,45,115,111,45,99,105,97,116,101,32,100,105,115,45,97,108,108,111,119,45,32,125]));
         let _ = TracedAssertions::traced_assertions_assert_true(v.patterns.get(&(UString::from(".abcd.")).to_ustring()).is_some(), None).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_true(v.exceptions.get(&(UString::from("associate")).to_ustring()).is_some(), None).unwrap();
@@ -363,8 +363,8 @@ fn test_unicode_punctuation_line_break() {
     testlib::run("org.tiqian.linebreak.LineBreakCoverageTest.testUnicodePunctuationLineBreak", "org.tiqian.linebreak.LineBreakCoverageTest.testUnicodePunctuationLineBreak", || {
         TestTraceRecorder::new(&(UStr::new(&[76,105,110,101,66,114,101,97,107,67,111,118,101,114,97,103,101,84,101,115,116]))).section(UStr::new(&[116,101,115,116,85,110,105,99,111,100,101,80,117,110,99,116,117,97,116,105,111,110,76,105,110,101,66,114,101,97,107]));
         let _ = TracedAssertions::traced_assertions_assert_equals_string(UStr::new(&[49,55,46,48,46,48]), UStr::new(&[49,55,46,48,46,48]), None).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_true((i32::from_ne_bytes(((u_string::unit_count(&(UString::from("https://www.unicode.org/Public/17.0.0/ucd/LineBreak.txt")))) as i32).to_ne_bytes())) > (0), None).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_true((i32::from_ne_bytes(((u_string::unit_count(&(UString::from("e6a18fa91f8f6a6f8e534b1d3f128c21ada45bfe152eb6b1bcc5e15fd8ac92e6")))) as i32).to_ne_bytes())) > (0), None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_true((u_string::unit_count(&(UString::from("https://www.unicode.org/Public/17.0.0/ucd/LineBreak.txt")))) as i32 > (0), None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_true((u_string::unit_count(&(UString::from("e6a18fa91f8f6a6f8e534b1d3f128c21ada45bfe152eb6b1bcc5e15fd8ac92e6")))) as i32 > (0), None).unwrap();
         let mut i = 0u32;
         let kinds = vec![
     UnicodePunctuationLineBreakClass::BreakAfter,
@@ -382,7 +382,7 @@ fn test_unicode_punctuation_line_break() {
     UnicodePunctuationLineBreakClass::SymbolsAllowingBreakAfter,
     UnicodePunctuationLineBreakClass::Other,
 ];
-        while (i32::from_ne_bytes(((i) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((kinds.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
+        while ((i) as i32) < ((u32::try_from((kinds.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32) {
             let _ = TracedAssertions::traced_assertions_record_rendered_not_null(UString::from(kinds[usize::try_from(i).unwrap_or(0)].name()).as_ustr(), None).unwrap();
             i = u32::wrapping_add(i, 1);
         }
@@ -404,7 +404,7 @@ fn test_unicode_punctuation_line_break() {
 }) }).unwrap();
         let cps = vec![9, 8212, 125, 41, 33, 1418, 45, 8229, 44, 12293, 40, 34, 47, 65];
         i = 0u32;
-        while (i32::from_ne_bytes(((i) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((cps.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
+        while ((i) as i32) < ((u32::try_from((cps.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32) {
             let _ = TracedAssertions::traced_assertions_assert_equals_rendered(UString::from(kinds[usize::try_from(i).unwrap_or(0)].name()).as_ustr(), UString::from(UnicodePunctuationLineBreak::unicode_punctuation_line_break_class_of(cps[usize::try_from(i).unwrap_or(0)]).unwrap().name()).as_ustr(), None).unwrap();
             i = u32::wrapping_add(i, 1);
         }
@@ -419,8 +419,8 @@ impl LineBreakCoverageTestHelpers {
         let mut b_b = UString::new();
         b_b += &(UString::from("["));
         let mut i = 0u32;
-        while (i32::from_ne_bytes(((i) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((values.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
-            if i32::from_ne_bytes(((i) as i32).to_ne_bytes()) > (0) {
+        while ((i) as i32) < ((u32::try_from((values.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32) {
+            if i as i32 > (0) {
                 b_b += &(UString::from(", "));
             }
             {

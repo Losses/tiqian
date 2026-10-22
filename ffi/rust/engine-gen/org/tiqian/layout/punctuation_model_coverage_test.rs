@@ -1514,7 +1514,7 @@ fn underwidth_glyphs_expand_into_full_width_cell_by_class_side() {
 fn halt_fitted_compression_uses_font_measurements() {
     testlib::run("org.tiqian.layout.PunctuationModelCoverageTest.haltFittedCompressionUsesFontMeasurements", "org.tiqian.layout.PunctuationModelCoverageTest.haltFittedCompressionUsesFontMeasurements", || {
         PunctuationModelCoverageSupport::punctuation_model_coverage_support_start(UStr::new(&[104,97,108,116,70,105,116,116,101,100,67,111,109,112,114,101,115,115,105,111,110,85,115,101,115,70,111,110,116,77,101,97,115,117,114,101,109,101,110,116,115]));
-        let a = PunctuationModelCoverageSupport::punctuation_model_coverage_support_atom_or_fail(UStr::new(&[183]), Some(0), Some(PunctuationInkInput::new(16 as f64 as f64, Some(Rect::new(2 as f64 as f64, 4 as f64 as f64, 10 as f64 as f64, 12 as f64 as f64)), Some(8 as f64), Some(i32::from_ne_bytes(((4294967294u32) as i32).to_ne_bytes()) as f64), None).unwrap())).unwrap();
+        let a = PunctuationModelCoverageSupport::punctuation_model_coverage_support_atom_or_fail(UStr::new(&[183]), Some(0), Some(PunctuationInkInput::new(16 as f64 as f64, Some(Rect::new(2 as f64 as f64, 4 as f64 as f64, 10 as f64 as f64, 12 as f64 as f64)), Some(8 as f64), Some((4294967294u32) as i32 as f64), None).unwrap())).unwrap();
         let _ = PunctuationModelCoverageSupport::punctuation_model_coverage_support_eqs(UStr::new(&[70,111,110,116,72,97,108,116,70,105,116,116,101,100,66,111,100,121,67,111,109,112,114,101,115,115,105,111,110]), (a.geometry_source).to_ustring().as_ustr()).unwrap();
         let _ = PunctuationModelCoverageSupport::punctuation_model_coverage_support_eqf(2 as f64, (a.leading_glue).clone().natural).unwrap();
         let _ = PunctuationModelCoverageSupport::punctuation_model_coverage_support_eqf(6 as f64, (a.trailing_glue).clone().natural).unwrap();
@@ -1531,7 +1531,7 @@ fn halt_fitted_compression_uses_font_measurements() {
 fn halt_trim_is_limited_by_ink_bounds_and_records_why() {
     testlib::run("org.tiqian.layout.PunctuationModelCoverageTest.haltTrimIsLimitedByInkBoundsAndRecordsWhy", "org.tiqian.layout.PunctuationModelCoverageTest.haltTrimIsLimitedByInkBoundsAndRecordsWhy", || {
         PunctuationModelCoverageSupport::punctuation_model_coverage_support_start(UStr::new(&[104,97,108,116,84,114,105,109,73,115,76,105,109,105,116,101,100,66,121,73,110,107,66,111,117,110,100,115,65,110,100,82,101,99,111,114,100,115,87,104,121]));
-        let a = PunctuationModelCoverageSupport::punctuation_model_coverage_support_atom(UStr::new(&[183]), Some(0), Some(PunctuationInkInput::new(16 as f64 as f64, Some(Rect::new(2 as f64 as f64, 4 as f64 as f64, 14 as f64 as f64, 12 as f64 as f64)), Some(8 as f64), Some(i32::from_ne_bytes(((4294967294u32) as i32).to_ne_bytes()) as f64), None).unwrap())).unwrap();
+        let a = PunctuationModelCoverageSupport::punctuation_model_coverage_support_atom(UStr::new(&[183]), Some(0), Some(PunctuationInkInput::new(16 as f64 as f64, Some(Rect::new(2 as f64 as f64, 4 as f64 as f64, 14 as f64 as f64, 12 as f64 as f64)), Some(8 as f64), Some((4294967294u32) as i32 as f64), None).unwrap())).unwrap();
         let _ = PunctuationModelCoverageSupport::punctuation_model_coverage_support_eqf(2 as f64, (a.as_ref().unwrap().leading_glue).clone().natural).unwrap();
         let _ = PunctuationModelCoverageSupport::punctuation_model_coverage_support_eqf(2 as f64, (a.as_ref().unwrap().trailing_glue).clone().natural).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_true(a.as_ref().unwrap().ink_containment_applied, None).unwrap();
@@ -1556,7 +1556,7 @@ fn halt_advance_without_placement_falls_back_to_fitted_ink_or_profile() {
 fn halt_from_proportional_glyph_is_rejected() {
     testlib::run("org.tiqian.layout.PunctuationModelCoverageTest.haltFromProportionalGlyphIsRejected", "org.tiqian.layout.PunctuationModelCoverageTest.haltFromProportionalGlyphIsRejected", || {
         PunctuationModelCoverageSupport::punctuation_model_coverage_support_start(UStr::new(&[104,97,108,116,70,114,111,109,80,114,111,112,111,114,116,105,111,110,97,108,71,108,121,112,104,73,115,82,101,106,101,99,116,101,100]));
-        let a = PunctuationModelCoverageSupport::punctuation_model_coverage_support_atom(UStr::new(&[12300]), Some(0), Some(PunctuationInkInput::new(8 as f64 as f64, None, Some(4 as f64), Some(i32::from_ne_bytes(((4294967294u32) as i32).to_ne_bytes()) as f64), None).unwrap())).unwrap();
+        let a = PunctuationModelCoverageSupport::punctuation_model_coverage_support_atom(UStr::new(&[12300]), Some(0), Some(PunctuationInkInput::new(8 as f64 as f64, None, Some(4 as f64), Some((4294967294u32) as i32 as f64), None).unwrap())).unwrap();
         let _ = PunctuationModelCoverageSupport::punctuation_model_coverage_support_nul(a.as_ref().unwrap().halt_advance).unwrap();
         let _ = PunctuationModelCoverageSupport::punctuation_model_coverage_support_eqf(8 as f64, a.as_ref().unwrap().glyph_inline_shift).unwrap();
         let _ = PunctuationModelCoverageSupport::punctuation_model_coverage_support_eqs(UStr::new(&[85,110,100,101,114,119,105,100,116,104,80,117,110,99,116,117,97,116,105,111,110,70,117,108,108,87,105,100,116,104,66,111,120,80,108,97,99,101,109,101,110,116]), ((a.as_ref().unwrap().glyph_placement_reason).clone()).as_deref().unwrap_or(UStr::new(&[]))).unwrap();

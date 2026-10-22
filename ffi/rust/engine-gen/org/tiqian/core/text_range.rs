@@ -10,7 +10,7 @@ pub struct TextRange {
 
 impl TextRange {
     pub fn new(start: u32, end: u32) -> Result<Self, TextRangeError> {
-        if i32::from_ne_bytes(((start) as i32).to_ne_bytes()) > (i32::from_ne_bytes(((end) as i32).to_ne_bytes())) {
+        if start as i32 > ((end) as i32) {
             return Err(TextRangeError::StartGreaterThanEnd);
         }
         if start > 2147483647 {
@@ -36,9 +36,9 @@ impl TextRange {
 }
 
 pub fn compare_text_range(a: &TextRange, b: &TextRange) -> i32 {
-    let cmp_start = if a.start < b.start { -1 } else if a.start > b.start { 1 } else { 0 };
+    let cmp_start = match ((*(&a.start)) as i32).cmp(&((*(&b.start)) as i32)) { core::cmp::Ordering::Less => -1, core::cmp::Ordering::Equal => 0, core::cmp::Ordering::Greater => 1 };
     if cmp_start != 0 { return cmp_start; }
-    let cmp_end = if a.end < b.end { -1 } else if a.end > b.end { 1 } else { 0 };
+    let cmp_end = match ((*(&a.end)) as i32).cmp(&((*(&b.end)) as i32)) { core::cmp::Ordering::Less => -1, core::cmp::Ordering::Equal => 0, core::cmp::Ordering::Greater => 1 };
     if cmp_end != 0 { return cmp_end; }
     0
 }

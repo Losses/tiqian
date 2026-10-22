@@ -906,9 +906,9 @@ impl JustifierJfTestSupport {
     }
 
     pub fn justifier_jf_test_support_set(xs: &Vec<u32>) -> SortedSetTable<u32> {
-        let mut b: SortedSetTableBuilder<u32> = SortedTable::sorted_table_set_builder::<u32>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_bytes(((*a) as i32).to_ne_bytes()), i32::from_ne_bytes(((*b) as i32).to_ne_bytes()))));
+        let mut b: SortedSetTableBuilder<u32> = SortedTable::sorted_table_set_builder::<u32>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints((*a) as i32, (*b) as i32)));
         let mut i0 = 0u32;
-        while (i32::from_ne_bytes(((i0) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((xs.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
+        while ((i0) as i32) < ((u32::try_from((xs.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32) {
             b.put(&(xs[usize::try_from(i0).unwrap_or(0)]));
             i0 = u32::wrapping_add(i0, 1);
         }
@@ -916,9 +916,9 @@ impl JustifierJfTestSupport {
     }
 
     pub fn justifier_jf_test_support_int_map(xs: &Vec<u32>, ys: &Vec<u32>) -> SortedMapTable<u32, u32> {
-        let mut b: SortedMapTableBuilder<u32, u32> = SortedTable::sorted_table_map_builder::<u32, u32>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_bytes(((*a) as i32).to_ne_bytes()), i32::from_ne_bytes(((*b) as i32).to_ne_bytes()))));
+        let mut b: SortedMapTableBuilder<u32, u32> = SortedTable::sorted_table_map_builder::<u32, u32>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints((*a) as i32, (*b) as i32)));
         let mut i = 0u32;
-        while (i32::from_ne_bytes(((i) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((xs.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
+        while ((i) as i32) < ((u32::try_from((xs.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32) {
             b.put(&(xs[usize::try_from(i).unwrap_or(0)]), &(ys[usize::try_from(i).unwrap_or(0)]));
             i = u32::wrapping_add(i, 1);
         }
@@ -946,7 +946,7 @@ fn attached_inline_virtual_sino_western_boundary_out_of_bounds() {
     (JustifierJfTestSupport::justifier_jf_test_support_e(Some(EastAsianSpacingValue::Narrow), Some(EastAsianSpacingValue::Narrow), None)).clone(),
 ];
         let v: SortedMapTable<u32, u32> = JustifierJfTestSupport::justifier_jf_test_support_int_map(&vec![4294967295u32, 2, 5], &vec![4294967294u32, 1, 4]);
-        let _ = TracedAssertions::traced_assertions_assert_true((i32::from_ne_bytes(((u32::try_from((JustifierJfTestSupport::justifier_jf_test_support_justify(&c, &r, &e, IntRange::new(0u32, 2u32), 60 as f64, Some({ let __guard = JUSTIFIER_JF_TEST_SUPPORT_EM.lock().unwrap_or_else(|e| e.into_inner()); __guard.clone() }), Some(false), None.clone(), Some(true), Some(0.25f64), Some(0.5f64), None, None, None, None, Some((v).clone()), Some(JustifierJfTestSupport::justifier_jf_test_support_set(&vec![4294967295u32, 2, 5])), None, None, None, None, None).unwrap().allocations.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) > (0), None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_true((u32::try_from((JustifierJfTestSupport::justifier_jf_test_support_justify(&c, &r, &e, IntRange::new(0u32, 2u32), 60 as f64, Some({ let __guard = JUSTIFIER_JF_TEST_SUPPORT_EM.lock().unwrap_or_else(|e| e.into_inner()); __guard.clone() }), Some(false), None.clone(), Some(true), Some(0.25f64), Some(0.5f64), None, None, None, None, Some((v).clone()), Some(JustifierJfTestSupport::justifier_jf_test_support_set(&vec![4294967295u32, 2, 5])), None, None, None, None, None).unwrap().allocations.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32 > (0), None).unwrap();
     });
 }
 
@@ -969,7 +969,7 @@ fn attached_inline_virtual_sino_western_zero_headroom_in_allocate() {
         let mut has_cjk_latin = false;
         let mut has_inter = false;
         let mut i = 0u32;
-        while (i32::from_ne_bytes(((i) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((p.allocations.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
+        while ((i) as i32) < ((u32::try_from((p.allocations.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32) {
             if p.allocations[usize::try_from(i).unwrap_or(0)].kind == GlueKind::CjkLatinSpace {
                 has_cjk_latin = true;
             }
@@ -1003,7 +1003,7 @@ fn cjk_latin_mixed_zero_and_positive_capacity_allocation() {
         let p = JustifierJfTestSupport::justifier_jf_test_support_justify(&c, &r, &e, IntRange::new(0u32, 3u32), 54 as f64, Some(16 as f64 as f64), Some(false), None.clone(), Some(true), Some(0.5f64), Some(0.5f64), None, None, None, None, Some(JustifierJfTestSupport::justifier_jf_test_support_int_map(&vec![2], &vec![0])), Some(JustifierJfTestSupport::justifier_jf_test_support_set(&vec![2])), None, None, None, None, None).unwrap();
         let mut la: Vec<JustificationAllocation> = vec![];
         let mut i = 0u32;
-        while (i32::from_ne_bytes(((i) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((p.allocations.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
+        while ((i) as i32) < ((u32::try_from((p.allocations.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32) {
             if p.allocations[usize::try_from(i).unwrap_or(0)].kind == GlueKind::CjkLatinSpace {
                 la.push((p.allocations[usize::try_from(i).unwrap_or(0)]).clone());
             }
@@ -1015,7 +1015,7 @@ fn cjk_latin_mixed_zero_and_positive_capacity_allocation() {
         let q = JustifierJfTestSupport::justifier_jf_test_support_justify(&c, &r, &e, IntRange::new(0u32, 3u32), 60 as f64, Some(16 as f64 as f64), Some(false), None.clone(), Some(true), Some(0.5f64), Some(0.5f64), None, None, None, None, Some(JustifierJfTestSupport::justifier_jf_test_support_int_map(&vec![2], &vec![0])), Some(JustifierJfTestSupport::justifier_jf_test_support_set(&vec![2])), None, None, None, None, None).unwrap();
         let mut lz: Vec<JustificationAllocation> = vec![];
         let mut j = 0u32;
-        while (i32::from_ne_bytes(((j) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((q.allocations.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
+        while ((j) as i32) < ((u32::try_from((q.allocations.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32) {
             if q.allocations[usize::try_from(j).unwrap_or(0)].kind == GlueKind::CjkLatinSpace {
                 lz.push((q.allocations[usize::try_from(j).unwrap_or(0)]).clone());
             }
@@ -1131,25 +1131,24 @@ fn preferred_inline_object_boundary_out_of_bounds() {
     (JustifierJfTestSupport::justifier_jf_test_support_e(Some(EastAsianSpacingValue::Wide), Some(EastAsianSpacingValue::Wide), Some(true))).clone(),
     (JustifierJfTestSupport::justifier_jf_test_support_e(Some(EastAsianSpacingValue::Wide), Some(EastAsianSpacingValue::Wide), Some(true))).clone(),
 ];
-        let mut b: SortedMapTableBuilder<u32, InlineObjectPreferredStretch> = SortedTable::sorted_table_map_builder::<u32,
-InlineObjectPreferredStretch>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_bytes(((*a) as i32).to_ne_bytes()), i32::from_ne_bytes(((*b) as i32).to_ne_bytes()))));
+        let mut b: SortedMapTableBuilder<u32, InlineObjectPreferredStretch> = SortedTable::sorted_table_map_builder::<u32, InlineObjectPreferredStretch>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints((*a) as i32, (*b) as i32)));
         let ks = vec![4294967295u32, 2, 5];
         let mut i2 = 0u32;
-        while (i32::from_ne_bytes(((i2) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((ks.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
+        while ((i2) as i32) < ((u32::try_from((ks.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32) {
             b.put(&(ks[usize::try_from(i2).unwrap_or(0)]), &(InlineObjectPreferredStretch::new(InlineObjectPreferredStretchKind::Relation, 0 as f64 as f64, 4 as f64 as f64).unwrap()));
             i2 = u32::wrapping_add(i2, 1);
         }
         let p = JustifierJfTestSupport::justifier_jf_test_support_justify(&c, &r, &e, IntRange::new(0u32, 2u32), 60 as f64, Some(16 as f64 as f64), Some(false), None.clone(), Some(true), Some(0.25f64), Some(0.5f64), None, None, None, None, None, None, None, Some(b.clone().build()), None, None, None).unwrap();
         let mut none = true;
         let mut i3 = 0u32;
-        while (i32::from_ne_bytes(((i3) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((p.allocations.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
+        while ((i3) as i32) < ((u32::try_from((p.allocations.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32) {
             if p.allocations[usize::try_from(i3).unwrap_or(0)].kind == GlueKind::InlineObjectRelation {
                 none = false;
             }
             i3 = u32::wrapping_add(i3, 1);
         }
         let _ = TracedAssertions::traced_assertions_assert_true(none, None).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_true((i32::from_ne_bytes(((u32::try_from((p.allocations.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) > (0), None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_true((u32::try_from((p.allocations.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32 > (0), None).unwrap();
     });
 }
 
@@ -1194,7 +1193,7 @@ fn typed_space_and_word_space_predicate_edge_conditions() {
     (JustifierJfTestSupport::justifier_jf_test_support_e(Some(EastAsianSpacingValue::Narrow), Some(EastAsianSpacingValue::Narrow), None)).clone(),
     (JustifierJfTestSupport::justifier_jf_test_support_e(Some(EastAsianSpacingValue::Wide), Some(EastAsianSpacingValue::Wide), Some(true))).clone(),
 ];
-        let _ = TracedAssertions::traced_assertions_assert_true((i32::from_ne_bytes(((u32::try_from((JustifierJfTestSupport::justifier_jf_test_support_justify(&c, &r, &e, IntRange::new(0u32, 5u32), 150 as f64, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None).unwrap().allocations.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) > (0), None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_true((u32::try_from((JustifierJfTestSupport::justifier_jf_test_support_justify(&c, &r, &e, IntRange::new(0u32, 5u32), 150 as f64, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None).unwrap().allocations.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32 > (0), None).unwrap();
     });
 }
 
@@ -1220,7 +1219,7 @@ fn virtual_non_sino_western_boundary_when_allow_sino_western_gap_stretch_is_fals
         let p = JustifierJfTestSupport::justifier_jf_test_support_justify(&c, &r, &e, IntRange::new(0u32, 4u32), 100 as f64, Some(16 as f64 as f64), Some(false), None.clone(), Some(false), Some(0.25f64), Some(0.5f64), None, None, None, None, Some(JustifierJfTestSupport::justifier_jf_test_support_int_map(&vec![3], &vec![0])), None, None, None, None, None, None).unwrap();
         let mut ok = false;
         let mut i4 = 0u32;
-        while (i32::from_ne_bytes(((i4) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((p.allocations.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
+        while ((i4) as i32) < ((u32::try_from((p.allocations.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32) {
             if p.allocations[usize::try_from(i4).unwrap_or(0)].target_cluster_index == 3 && ((p.allocations[usize::try_from(i4).unwrap_or(0)]).clone().reason).to_ustring() == UString::from("AttachedInlineVirtualInterChar") {
                 ok = true;
             }
@@ -1258,7 +1257,7 @@ fn virtual_sino_western_gap_when_allow_sino_western_gap_stretch_is_false() {
         let p = JustifierJfTestSupport::justifier_jf_test_support_justify(&c, &r, &e, IntRange::new(0u32, 4u32), 100 as f64, Some(16 as f64 as f64), Some(false), None.clone(), Some(false), Some(0.25f64), Some(0.5f64), None, None, None, None, Some(JustifierJfTestSupport::justifier_jf_test_support_int_map(&vec![3], &vec![0])), Some(JustifierJfTestSupport::justifier_jf_test_support_set(&vec![3])), None, None, None, None, None).unwrap();
         let mut ok = true;
         let mut i5 = 0u32;
-        while (i32::from_ne_bytes(((i5) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((p.allocations.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
+        while ((i5) as i32) < ((u32::try_from((p.allocations.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32) {
             if p.allocations[usize::try_from(i5).unwrap_or(0)].target_cluster_index == 3 {
                 ok = false;
             }
@@ -1284,7 +1283,7 @@ fn zero_cjk_latin_headroom_produces_no_opportunities() {
         let p = JustifierJfTestSupport::justifier_jf_test_support_justify(&c, &r, &e, IntRange::new(0u32, 1u32), 40 as f64, Some(16 as f64 as f64), Some(false), None.clone(), Some(true), Some(0.5f64), Some(0.5f64), None, None, None, None, None, None, None, None, None, None, None).unwrap();
         let mut ok = true;
         let mut i6 = 0u32;
-        while (i32::from_ne_bytes(((i6) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((p.allocations.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
+        while ((i6) as i32) < ((u32::try_from((p.allocations.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32) {
             if p.allocations[usize::try_from(i6).unwrap_or(0)].kind != GlueKind::CjkInterChar {
                 ok = false;
             }

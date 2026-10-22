@@ -22,8 +22,7 @@ impl ProgressiveBreakDecisionsTailTestSupport {
     }
 
     pub fn progressive_break_decisions_tail_test_support_o() -> Result<SortedMapTable<u32, ProgressiveBreakOpportunity>, TextRangeError> {
-        let mut b: SortedMapTableBuilder<u32, ProgressiveBreakOpportunity> = SortedTable::sorted_table_map_builder::<u32,
-ProgressiveBreakOpportunity>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_bytes(((*a) as i32).to_ne_bytes()), i32::from_ne_bytes(((*b) as i32).to_ne_bytes()))));
+        let mut b: SortedMapTableBuilder<u32, ProgressiveBreakOpportunity> = SortedTable::sorted_table_map_builder::<u32, ProgressiveBreakOpportunity>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints((*a) as i32, (*b) as i32)));
         let s = TextRange::new(0u32, 5u32)?;
         b.put(&(2), &(ProgressiveBreakOpportunity::new(ProgressiveBreakTier::Whitespace, (s).clone(), Some(0.0))));
         b.put(&(4), &(ProgressiveBreakOpportunity::new(ProgressiveBreakTier::Emergency, (s).clone(), Some(0.0))));

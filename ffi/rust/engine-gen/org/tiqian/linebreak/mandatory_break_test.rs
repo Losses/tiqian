@@ -15,13 +15,13 @@ fn recognizes_mandatory_break_code_points() {
         TestTraceRecorder::new(&(UStr::new(&[77,97,110,100,97,116,111,114,121,66,114,101,97,107,84,101,115,116]))).section(UStr::new(&[114,101,99,111,103,110,105,122,101,115,77,97,110,100,97,116,111,114,121,66,114,101,97,107,67,111,100,101,80,111,105,110,116,115]));
         let y = vec![10, 11, 12, 13, 133, 8232, 8233];
         let mut i = 0u32;
-        while (i32::from_ne_bytes(((i) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((y.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
+        while ((i) as i32) < ((u32::try_from((y.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32) {
             let _ = TracedAssertions::traced_assertions_assert_true(LineBreakFns::line_break_fns_is_mandatory_break_code_point(y[usize::try_from(i).unwrap_or(0)]), Some((MandatoryBreakTestHelpers::mandatory_break_test_helpers_u(y[usize::try_from(i).unwrap_or(0)])).to_ustring())).unwrap();
             i = u32::wrapping_add(i, 1);
         }
         let n = vec![97, 20013, 32, 9, 12288];
         i = 0u32;
-        while (i32::from_ne_bytes(((i) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((n.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
+        while ((i) as i32) < ((u32::try_from((n.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32) {
             let _ = TracedAssertions::traced_assertions_assert_false(LineBreakFns::line_break_fns_is_mandatory_break_code_point(n[usize::try_from(i).unwrap_or(0)]), Some((MandatoryBreakTestHelpers::mandatory_break_test_helpers_u(n[usize::try_from(i).unwrap_or(0)])).to_ustring())).unwrap();
             i = u32::wrapping_add(i, 1);
         }
@@ -35,7 +35,7 @@ fn recognizes_zero_width_space_without_conflating_no_break_controls() {
         let _ = TracedAssertions::traced_assertions_assert_true(LineBreakFns::line_break_fns_is_zero_width_space_code_point(8203), Some((MandatoryBreakTestHelpers::mandatory_break_test_helpers_u(8203)).to_ustring())).unwrap();
         let n = vec![8204, 8205, 8288, 65279];
         let mut i = 0u32;
-        while (i32::from_ne_bytes(((i) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((n.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
+        while ((i) as i32) < ((u32::try_from((n.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32) {
             let _ = TracedAssertions::traced_assertions_assert_false(LineBreakFns::line_break_fns_is_zero_width_space_code_point(n[usize::try_from(i).unwrap_or(0)]), Some((MandatoryBreakTestHelpers::mandatory_break_test_helpers_u(n[usize::try_from(i).unwrap_or(0)])).to_ustring())).unwrap();
             i = u32::wrapping_add(i, 1);
         }

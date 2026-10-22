@@ -783,7 +783,7 @@ fn mismatched_natural_and_adjusted_sizes_are_rejected() {
         ParagraphDpLineBreaker::new(Some(8), Some(0.5), Some(Box::new(ClreqKinsokuRule::new(Some(KinsokuLevel::Basic)))), Some(2), Some(10), Some(20), Some(12 as f64), Some(12 as f64), Some(3 as f64), Some(1 as f64)).map_err(|e| IllegalStateException::new(&format!("{}", e)))?.break_lines(&ParagraphDpLineBreakerCoverageTestSupport::paragraph_dp_line_breaker_coverage_test_support_han(2, None).map_err(|e| IllegalStateException::new(&format!("{}", e)))?, &ParagraphDpLineBreakerCoverageTestSupport::paragraph_dp_line_breaker_coverage_test_support_han(1, None).map_err(|e| IllegalStateException::new(&format!("{}", e)))?, 100 as f64, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None).map_err(|e| IllegalStateException::new(&format!("{}", e)))?;
         Ok(())
 }) }).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_true((u32::from_ne_bytes(((u_string::find_from(&UString::from(format!("{}", format!("{}", e)).as_str()), UString::from("cluster-for-cluster").as_ustr(), 0)) as u32).to_ne_bytes())) <= 2147483647, Some(UString::from(format!("{}", format!("{}", e)).as_str()))).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_true((u_string::find_from(&UString::from(format!("{}", format!("{}", e)).as_str()), UString::from("cluster-for-cluster").as_ustr(), 0)) as u32 <= 2147483647, Some(UString::from(format!("{}", format!("{}", e)).as_str()))).unwrap();
     });
 }
 
@@ -795,7 +795,7 @@ fn negative_candidate_window_is_rejected() {
         ParagraphDpLineBreaker::new(Some(4294967295u32), Some(0.5), Some(Box::new(ClreqKinsokuRule::new(Some(KinsokuLevel::Basic)))), Some(2), Some(10), Some(20), Some(12 as f64), Some(12 as f64), Some(3 as f64), Some(1 as f64)).map_err(|e| IllegalStateException::new(&format!("{}", e)))?.break_lines(&ParagraphDpLineBreakerCoverageTestSupport::paragraph_dp_line_breaker_coverage_test_support_han(2, None).map_err(|e| IllegalStateException::new(&format!("{}", e)))?, &ParagraphDpLineBreakerCoverageTestSupport::paragraph_dp_line_breaker_coverage_test_support_han(2, None).map_err(|e| IllegalStateException::new(&format!("{}", e)))?, 100 as f64, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None).map_err(|e| IllegalStateException::new(&format!("{}", e)))?;
         Ok(())
 }) }).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_true((u32::from_ne_bytes(((u_string::find_from(&UString::from(format!("{}", format!("{}", e)).as_str()), UString::from("non-negative").as_ustr(), 0)) as u32).to_ne_bytes())) <= 2147483647, Some(UString::from(format!("{}", format!("{}", e)).as_str()))).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_true((u_string::find_from(&UString::from(format!("{}", format!("{}", e)).as_str()), UString::from("non-negative").as_ustr(), 0)) as u32 <= 2147483647, Some(UString::from(format!("{}", format!("{}", e)).as_str()))).unwrap();
     });
 }
 

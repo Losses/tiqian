@@ -1,4 +1,5 @@
 use crate::org::tiqian::clreq::bopomofo_tone::BopomofoTone;
+use crate::runtime::sorted_table::SortedTable;
 use crate::runtime::u_string;
 use crate::runtime::u_string::UString;
 use std::fmt::Write;
@@ -21,7 +22,7 @@ impl BopomofoReading {
     pub fn copy(&self) -> BopomofoReading {
         let mut copied_symbols: Vec<UString> = vec![];
         let mut index = 0u32;
-        while (i32::from_ne_bytes(((index) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from(((self.symbols).clone().len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
+        while ((index) as i32) < ((u32::try_from(((self.symbols).clone().len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32) {
             copied_symbols.push((self.symbols[usize::try_from(index).unwrap_or(0)]).clone());
             index = u32::wrapping_add(index, 1);
         }
@@ -32,13 +33,13 @@ impl BopomofoReading {
         let mut hash = 17u32;
         hash = u32::wrapping_add(u32::wrapping_mul(hash, 31), self.tone_index());
         let mut index = 0u32;
-        while (i32::from_ne_bytes(((index) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from(((self.symbols).clone().len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
+        while ((index) as i32) < ((u32::try_from(((self.symbols).clone().len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32) {
             let symbol = (self.symbols[usize::try_from(index).unwrap_or(0)]).clone();
             let mut unit_index = 0u32;
-            let __units = u_string::units(&symbol);
+            let __units = symbol.as_slice();
             let __count = u_string::unit_count(&symbol);
-            while (i32::from_ne_bytes(((unit_index) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((__count) as i32).to_ne_bytes())) {
-                hash = u32::wrapping_add(u32::wrapping_mul(hash, 31), u_string::unit_at_from(&__units, unit_index).unwrap_or(0));
+            while ((unit_index) as i32) < ((__count) as i32) {
+                hash = u32::wrapping_add(u32::wrapping_mul(hash, 31), u_string::unit_at_from(__units, unit_index).unwrap_or(0));
                 unit_index = u32::wrapping_add(unit_index, 1);
             }
             index = u32::wrapping_add(index, 1);
@@ -76,21 +77,21 @@ impl BopomofoReading {
     }
 }
 
-fn bopomofo_reading_tone_order(v: &BopomofoTone) -> i32 {
+fn bopomofo_reading_order_0(v: &BopomofoTone) -> i32 {
     match v {
         BopomofoTone::Yinping => 0,
         BopomofoTone::Yangping => 1,
         BopomofoTone::Shang => 2,
-        BopomofoTone::Ru => 5,
         BopomofoTone::Qu => 3,
         BopomofoTone::Neutral => 4,
+        BopomofoTone::Ru => 5,
     }
 }
+
 pub fn compare_bopomofo_reading(a: &BopomofoReading, b: &BopomofoReading) -> i32 {
-    let mut cmp_symbols = 0; for (av, bv) in a.symbols.iter().zip(b.symbols.iter()) { cmp_symbols = match av.cmp(bv) { core::cmp::Ordering::Less => -1, core::cmp::Ordering::Equal => 0, core::cmp::Ordering::Greater => 1 }; if cmp_symbols != 0 { break; } }
-    if cmp_symbols == 0 { cmp_symbols = match a.symbols.len().cmp(&b.symbols.len()) { core::cmp::Ordering::Less => -1, core::cmp::Ordering::Equal => 0, core::cmp::Ordering::Greater => 1 }; }
+    let cmp_symbols = { let mut cmp = 0; for (av, bv) in (&a.symbols).iter().zip((&b.symbols).iter()) { cmp = SortedTable::sorted_table_compare_strings((av).as_ustr(), (bv).as_ustr()); if cmp != 0 { break; } } if cmp == 0 { cmp = match (&a.symbols).len().cmp(&(&b.symbols).len()) { core::cmp::Ordering::Less => -1, core::cmp::Ordering::Equal => 0, core::cmp::Ordering::Greater => 1 }; } cmp };
     if cmp_symbols != 0 { return cmp_symbols; }
-    let cmp_tone = match bopomofo_reading_tone_order(&a.tone).cmp(&bopomofo_reading_tone_order(&b.tone)) { core::cmp::Ordering::Less => -1, core::cmp::Ordering::Equal => 0, core::cmp::Ordering::Greater => 1 };
+    let cmp_tone = match bopomofo_reading_order_0(&a.tone).cmp(&bopomofo_reading_order_0(&b.tone)) { core::cmp::Ordering::Less => -1, core::cmp::Ordering::Equal => 0, core::cmp::Ordering::Greater => 1 };
     if cmp_tone != 0 { return cmp_tone; }
     0
 }

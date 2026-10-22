@@ -888,7 +888,7 @@ fn test_adjustable_inline_boundary_right_clusters_no_stretch_boundaries() {
         t.section(UStr::new(&[116,101,115,116,65,100,106,117,115,116,97,98,108,101,73,110,108,105,110,101,66,111,117,110,100,97,114,121,82,105,103,104,116,67,108,117,115,116,101,114,115,78,111,83,116,114,101,116,99,104,66,111,117,110,100,97,114,105,101,115]));
         let p = LineBreakPlanningStageCoverage2TestSupport::line_break_planning_stage_coverage2_test_support_prep(UStr::new(&[20013,25991,23383,31526,25490,29256])).unwrap();
         let r = LineBreakPlanningStageCoverage2TestSupport::line_break_planning_stage_coverage2_test_support_plan(LineBreakPlanningStageCoverage2TestSupport::line_break_planning_stage_coverage2_test_support_with_prep((p).clone(), None, None, None, None, None, Some(LineBreakPlanningStageCoverage2TestSupport::line_break_planning_stage_coverage2_test_support_set_uniform()), Some(LineBreakPlanningStageCoverage2TestSupport::line_break_planning_stage_coverage2_test_support_map_atom().unwrap()))).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_true((i32::from_ne_bytes(((u32::try_from(((r.line_solution).clone().lines.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) > (0), None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_true((u32::try_from(((r.line_solution).clone().lines.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32 > (0), None).unwrap();
     });
 }
 
@@ -897,7 +897,7 @@ fn test_ascii_point_mark_kinsoku_line_start() {
     testlib::run("org.tiqian.layout.LineBreakPlanningStageCoverage2Test.testAsciiPointMarkKinsokuLineStart", "org.tiqian.layout.LineBreakPlanningStageCoverage2Test.testAsciiPointMarkKinsokuLineStart", || {
         let mut t = TestTraceRecorder::new(&(UStr::new(&[76,105,110,101,66,114,101,97,107,80,108,97,110,110,105,110,103,83,116,97,103,101,67,111,118,101,114,97,103,101,50,84,101,115,116])));
         t.section(UStr::new(&[116,101,115,116,65,115,99,105,105,80,111,105,110,116,77,97,114,107,75,105,110,115,111,107,117,76,105,110,101,83,116,97,114,116]));
-        let _ = TracedAssertions::traced_assertions_assert_true((i32::from_ne_bytes(((u32::try_from((LineBreakPlanningStageCoverage2TestSupport::line_break_planning_stage_coverage2_test_support_layout(UStr::new(&[104,101,108,108,111,44,32,119,111,114,108,100]), 50 as f64, None).unwrap().lines.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) > (0), None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_true((u32::try_from((LineBreakPlanningStageCoverage2TestSupport::line_break_planning_stage_coverage2_test_support_layout(UStr::new(&[104,101,108,108,111,44,32,119,111,114,108,100]), 50 as f64, None).unwrap().lines.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32 > (0), None).unwrap();
     });
 }
 
@@ -913,7 +913,7 @@ fn test_cluster_crosses_font_decision_throws() {
         LineBreakPlanningStageCoverage2TestSupport::line_break_planning_stage_coverage2_test_support_plan(LineBreakPlanningStageCoverage2TestSupport::line_break_planning_stage_coverage2_test_support_with_prep((p).clone(), Some(vec![(c).clone()]), Some(vec![(c).clone()]), Some(vec![(d).clone()]), None, None, None, None)).map_err(|e| IllegalStateException::new(&format!("{}", e)))?;
         Ok(())
 }) }).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_true((u32::from_ne_bytes(((u_string::find_from(&UString::from(format!("{}", format!("{}", e)).as_str()), UString::from("crosses font decision").as_ustr(), 0)) as u32).to_ne_bytes())) <= 2147483647, Some(UString::from(format!("{}", format!("{}", e)).as_str()))).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_true((u_string::find_from(&UString::from(format!("{}", format!("{}", e)).as_str()), UString::from("crosses font decision").as_ustr(), 0)) as u32 <= 2147483647, Some(UString::from(format!("{}", format!("{}", e)).as_str()))).unwrap();
     });
 }
 
@@ -930,7 +930,7 @@ fn test_emergency_tracking_boundary_whitespace_and_empty() {
     (Cluster::new(TextRange::new(1u32, 2u32).unwrap(), &(UStr::new(&[98])), &(UStr::new(&[116,101,115,116])), 10 as f64 as f64, Some(UString::from("b")), Some(0.0), Some(0.0), Some(0.0))).clone(),
 ];
         let e = EmergencyTrackingEligibilityDecisionInfo::new(TextRange::new(0u32, 2u32).unwrap(), &(UStr::new(&[97,98])), &(UStr::new(&[114,101,97,115,111,110])));
-        let _ = TracedAssertions::traced_assertions_assert_true((i32::from_ne_bytes(((u32::try_from(((LineBreakPlanningStageCoverage2TestSupport::line_break_planning_stage_coverage2_test_support_plan(LineBreakPlanningStageCoverage2TestSupport::line_break_planning_stage_coverage2_test_support_with_prep((p).clone(), Some((cs).clone()), Some((cs).clone()), None, None, Some(vec![(e).clone()]), None, None)).unwrap().line_solution).clone().lines.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) > (0), None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_true((u32::try_from(((LineBreakPlanningStageCoverage2TestSupport::line_break_planning_stage_coverage2_test_support_plan(LineBreakPlanningStageCoverage2TestSupport::line_break_planning_stage_coverage2_test_support_with_prep((p).clone(), Some((cs).clone()), Some((cs).clone()), None, None, Some(vec![(e).clone()]), None, None)).unwrap().line_solution).clone().lines.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32 > (0), None).unwrap();
     });
 }
 
@@ -945,7 +945,7 @@ fn test_emergency_tracking_eligibility_decisions_branches() {
     (EmergencyTrackingEligibilityDecisionInfo::new(TextRange::new(0u32, 4u32).unwrap(), &(UStr::new(&[20013,25991,23383,31526])), &(UStr::new(&[118,97,108,105,100,82,101,97,115,111,110])))).clone(),
     (EmergencyTrackingEligibilityDecisionInfo::new(TextRange::new(0u32, 4u32).unwrap(), &(UStr::new(&[20013,25991,23383,31526])), &(UStr::new(&[100,117,112,108,105,99,97,116,101,82,101,97,115,111,110])))).clone(),
 ];
-        let _ = TracedAssertions::traced_assertions_assert_true((i32::from_ne_bytes(((u32::try_from(((LineBreakPlanningStageCoverage2TestSupport::line_break_planning_stage_coverage2_test_support_plan(LineBreakPlanningStageCoverage2TestSupport::line_break_planning_stage_coverage2_test_support_with_prep((p).clone(), None, None, None, None, Some((es).clone()), None, None)).unwrap().line_solution).clone().lines.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) > (0), None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_true((u32::try_from(((LineBreakPlanningStageCoverage2TestSupport::line_break_planning_stage_coverage2_test_support_plan(LineBreakPlanningStageCoverage2TestSupport::line_break_planning_stage_coverage2_test_support_with_prep((p).clone(), None, None, None, None, Some((es).clone()), None, None)).unwrap().line_solution).clone().lines.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32 > (0), None).unwrap();
     });
 }
 
@@ -968,9 +968,9 @@ fn test_inline_object_kinsoku_line_start() {
     testlib::run("org.tiqian.layout.LineBreakPlanningStageCoverage2Test.testInlineObjectKinsokuLineStart", "org.tiqian.layout.LineBreakPlanningStageCoverage2Test.testInlineObjectKinsokuLineStart", || {
         let mut t = TestTraceRecorder::new(&(UStr::new(&[76,105,110,101,66,114,101,97,107,80,108,97,110,110,105,110,103,83,116,97,103,101,67,111,118,101,114,97,103,101,50,84,101,115,116])));
         t.section(UStr::new(&[116,101,115,116,73,110,108,105,110,101,79,98,106,101,99,116,75,105,110,115,111,107,117,76,105,110,101,83,116,97,114,116]));
-        let _ = TracedAssertions::traced_assertions_assert_true((i32::from_ne_bytes(((u32::try_from((LineBreakPlanningStageCoverage2TestSupport::line_break_planning_stage_coverage2_test_support_layout(UStr::new(&[65532,104,101,108,108,111]), 50 as f64, Some(vec![
+        let _ = TracedAssertions::traced_assertions_assert_true((u32::try_from((LineBreakPlanningStageCoverage2TestSupport::line_break_planning_stage_coverage2_test_support_layout(UStr::new(&[65532,104,101,108,108,111]), 50 as f64, Some(vec![
     (InlineObjectSpan::new(TextRange::new(0u32, 1u32).unwrap(), 16 as f64 as f64, 8 as f64 as f64, 8 as f64 as f64, Some(InlineObjectBoundaryAdjustment::inline_object_boundary_adjustment_fixed().unwrap()), Some(InlineObjectBoundaryAdjustment::inline_object_boundary_adjustment_fixed().unwrap())).unwrap()).clone(),
-])).unwrap().lines.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) > (0), None).unwrap();
+])).unwrap().lines.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32 > (0), None).unwrap();
     });
 }
 
@@ -981,6 +981,6 @@ fn test_progressive_break_offsets_unmapped_cluster_index() {
         t.section(UStr::new(&[116,101,115,116,80,114,111,103,114,101,115,115,105,118,101,66,114,101,97,107,79,102,102,115,101,116,115,85,110,109,97,112,112,101,100,67,108,117,115,116,101,114,73,110,100,101,120]));
         let p = LineBreakPlanningStageCoverage2TestSupport::line_break_planning_stage_coverage2_test_support_prep(UStr::new(&[97,98,99])).unwrap();
         let r = LineBreakPlanningStageCoverage2TestSupport::line_break_planning_stage_coverage2_test_support_plan(LineBreakPlanningStageCoverage2TestSupport::line_break_planning_stage_coverage2_test_support_with_prep((p).clone(), None, None, None, Some(LineBreakPlanningStageCoverage2TestSupport::line_break_planning_stage_coverage2_test_support_map_opp().unwrap()), None, None, None)).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_true(u32::from_ne_bytes(((r.progressive_break_opportunities.size()) as u32).to_ne_bytes()) == 0, None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_true((r.progressive_break_opportunities.size()) as u32 == 0, None).unwrap();
     });
 }

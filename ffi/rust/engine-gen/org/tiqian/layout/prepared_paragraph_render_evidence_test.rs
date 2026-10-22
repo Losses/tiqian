@@ -794,16 +794,16 @@ fn plain_paragraph_evidence_is_append_only() {
         let a = PreparedParagraphRenderEvidenceTestSupport::prepared_paragraph_render_evidence_test_support_layout(LayoutInput::new(TiqianTextContent::new(&(UStr::new(&[20013,25991,27573,33853,32431,25991,26412,27979,35797])), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![])), Some(TextStyle::new(Some(vec![]), Some(16.0), Some(UString::from("zh-Hans")), Some(400), Some(false), Some(0.0), Some(InlineAttachment::None))), Some(ParagraphStyle::new(Some(LastLineAlignment::Start), Some(WritingMode::HorizontalTb), None, None, Some(Ic::zero()), Some(MeasureAdaptiveFirstLineIndent::new(Some(14.0), Some(1.0), Some(2.0))), Some(LineLengthGrid::new(Some(true), None)), Some(RubyLineHeightMode::PerLine), Some(ParagraphStyle::PARAGRAPH_STYLE_DEFAULT_INLINE_OBJECT_MINIMUM_CLEARANCE_EM), Some(ParagraphStyle::PARAGRAPH_STYLE_DEFAULT_EMPHASIS_DOT_GAP_EM))), LayoutConstraints::new(200 as f64 as f64, Some(f64::INFINITY), Some(2147483647)).unwrap(), Some((*crate::org::tiqian::core::built_in_layout_profiles::BUILT_IN_LAYOUT_PROFILES_CLREQ_HORIZONTAL).clone()), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]))).unwrap();
         let ap = PreparedParagraphRenderEvidenceTestSupport::prepared_paragraph_render_evidence_test_support_plain((a).clone()).unwrap();
         let ae = PreparedParagraphRenderEvidenceTestSupport::prepared_paragraph_render_evidence_test_support_evidence((a).clone()).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_true((ae).starts_with(&u_string::substr(&ap, 0i32, Some(i32::from_ne_bytes(((u32::wrapping_sub(u_string::unit_count(&(ap)), 1)) as i32).to_ne_bytes())))), None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_true((ae).starts_with(&u_string::substr(&ap, 0i32, Some((u32::wrapping_sub(u_string::unit_count(&(ap)), 1)) as i32))), None).unwrap();
         let r = PreparedParagraphRenderEvidenceTestSupport::prepared_paragraph_render_evidence_test_support_layout(LayoutInput::new(TiqianTextContent::new(&(UStr::new(&[20013,25991,27573,33853,65292,21547,26631,28857,19982,26367,25442,30772,25240,21495,8212,8212,27979,35797,12290])), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![])), Some(TextStyle::new(Some(vec![]), Some(16.0), Some(UString::from("zh-Hans")), Some(400), Some(false), Some(0.0), Some(InlineAttachment::None))), Some(ParagraphStyle::new(Some(LastLineAlignment::Start), Some(WritingMode::HorizontalTb), None, None, Some(Ic::zero()), Some(MeasureAdaptiveFirstLineIndent::new(Some(14.0), Some(1.0), Some(2.0))), Some(LineLengthGrid::new(Some(true), None)), Some(RubyLineHeightMode::PerLine), Some(ParagraphStyle::PARAGRAPH_STYLE_DEFAULT_INLINE_OBJECT_MINIMUM_CLEARANCE_EM), Some(ParagraphStyle::PARAGRAPH_STYLE_DEFAULT_EMPHASIS_DOT_GAP_EM))), LayoutConstraints::new(200 as f64 as f64, Some(f64::INFINITY), Some(2147483647)).unwrap(), Some((*crate::org::tiqian::core::built_in_layout_profiles::BUILT_IN_LAYOUT_PROFILES_CLREQ_HORIZONTAL).clone()), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]))).unwrap();
         let p = PreparedParagraphRenderEvidenceTestSupport::prepared_paragraph_render_evidence_test_support_plain((r).clone()).unwrap();
         let e = PreparedParagraphRenderEvidenceTestSupport::prepared_paragraph_render_evidence_test_support_evidence((r).clone()).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_false((u32::from_ne_bytes(((u_string::find_from(&(p), UString::from("\"fontSize\"").as_ustr(), 0)) as u32).to_ne_bytes())) <= 2147483647, None).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_false((u32::from_ne_bytes(((u_string::find_from(&(p), UString::from("\"rubyDecisions\"").as_ustr(), 0)) as u32).to_ne_bytes())) <= 2147483647, None).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_false((u32::from_ne_bytes(((u_string::find_from(&(p), UString::from("\"dashStrategy\"").as_ustr(), 0)) as u32).to_ne_bytes())) <= 2147483647, None).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_true((u32::from_ne_bytes(((u_string::find_from(&(e), UString::from("\"schema\":1,").as_ustr(), 0)) as u32).to_ne_bytes())) <= 2147483647, None).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_true((u32::from_ne_bytes(((u_string::find_from(&(e), UString::from("\"fontSize\":").as_ustr(), 0)) as u32).to_ne_bytes())) <= 2147483647, None).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_true((u32::from_ne_bytes(((u_string::find_from(&(e), UString::from("\"overlayWidth\":").as_ustr(), 0)) as u32).to_ne_bytes())) <= 2147483647, None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_false((u_string::find_from(&(p), UString::from("\"fontSize\"").as_ustr(), 0)) as u32 <= 2147483647, None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_false((u_string::find_from(&(p), UString::from("\"rubyDecisions\"").as_ustr(), 0)) as u32 <= 2147483647, None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_false((u_string::find_from(&(p), UString::from("\"dashStrategy\"").as_ustr(), 0)) as u32 <= 2147483647, None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_true((u_string::find_from(&(e), UString::from("\"schema\":1,").as_ustr(), 0)) as u32 <= 2147483647, None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_true((u_string::find_from(&(e), UString::from("\"fontSize\":").as_ustr(), 0)) as u32 <= 2147483647, None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_true((u_string::find_from(&(e), UString::from("\"overlayWidth\":").as_ustr(), 0)) as u32 <= 2147483647, None).unwrap();
     });
 }
 
@@ -817,7 +817,7 @@ fn pinyin_ruby_emits_ruby_decisions() {
 ]), Some(vec![]), Some(vec![]))).unwrap();
         let p = PreparedParagraphRenderEvidenceTestSupport::prepared_paragraph_render_evidence_test_support_plain((r).clone()).unwrap();
         let e = PreparedParagraphRenderEvidenceTestSupport::prepared_paragraph_render_evidence_test_support_evidence((r).clone()).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_false((u32::from_ne_bytes(((u_string::find_from(&(p), UString::from("rubyDecisions").as_ustr(), 0)) as u32).to_ne_bytes())) <= 2147483647, None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_false((u_string::find_from(&(p), UString::from("rubyDecisions").as_ustr(), 0)) as u32 <= 2147483647, None).unwrap();
         let _ = PreparedParagraphRenderEvidenceTestSupport::prepared_paragraph_render_evidence_test_support_contains(e.as_ustr(), UStr::new(&[34,114,117,98,121,68,101,99,105,115,105,111,110,115,34,58,91]), UStr::new(&[109,105,115,115,105,110,103,32,114,117,98,121,68,101,99,105,115,105,111,110,115])).unwrap();
         let _ = PreparedParagraphRenderEvidenceTestSupport::prepared_paragraph_render_evidence_test_support_contains(e.as_ustr(), UStr::new(&[34,98,97,115,101,82,97,110,103,101,83,116,97,114,116,34,58,48]), UStr::new(&[98,97,115,101,82,97,110,103,101,83,116,97,114,116])).unwrap();
         let _ = PreparedParagraphRenderEvidenceTestSupport::prepared_paragraph_render_evidence_test_support_contains(e.as_ustr(), UStr::new(&[34,98,97,115,101,82,97,110,103,101,69,110,100,34,58,50]), UStr::new(&[98,97,115,101,82,97,110,103,101,69,110,100])).unwrap();
@@ -840,11 +840,11 @@ fn bopomofo_ruby_emits_bopomofo_decisions() {
 ]), Some(vec![]), Some(vec![]))).unwrap();
         let p = PreparedParagraphRenderEvidenceTestSupport::prepared_paragraph_render_evidence_test_support_plain((r).clone()).unwrap();
         let e = PreparedParagraphRenderEvidenceTestSupport::prepared_paragraph_render_evidence_test_support_evidence((r).clone()).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_false((u32::from_ne_bytes(((u_string::find_from(&(p), UString::from("bopomofoDecisions").as_ustr(), 0)) as u32).to_ne_bytes())) <= 2147483647, None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_false((u_string::find_from(&(p), UString::from("bopomofoDecisions").as_ustr(), 0)) as u32 <= 2147483647, None).unwrap();
         let _ = PreparedParagraphRenderEvidenceTestSupport::prepared_paragraph_render_evidence_test_support_contains(e.as_ustr(), UStr::new(&[34,98,111,112,111,109,111,102,111,68,101,99,105,115,105,111,110,115,34,58,91]), UStr::new(&[98,111,112,111,109,111,102,111])).unwrap();
         let _ = PreparedParagraphRenderEvidenceTestSupport::prepared_paragraph_render_evidence_test_support_contains(e.as_ustr(), UStr::new(&[34,112,108,97,99,101,109,101,110,116,115,34,58,91]), UStr::new(&[112,108,97,99,101,109,101,110,116,115])).unwrap();
         let _ = PreparedParagraphRenderEvidenceTestSupport::prepared_paragraph_render_evidence_test_support_contains(e.as_ustr(), UStr::new(&[34,114,111,108,101,34,58,34]), UStr::new(&[114,111,108,101])).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_false((u32::from_ne_bytes(((u_string::find_from(&(e), UString::from("\"rubyDecisions\"").as_ustr(), 0)) as u32).to_ne_bytes())) <= 2147483647, None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_false((u_string::find_from(&(e), UString::from("\"rubyDecisions\"").as_ustr(), 0)) as u32 <= 2147483647, None).unwrap();
     });
 }
 
@@ -860,15 +860,15 @@ fn decorations_emit_segments_dots_and_ranges() {
 ]), Some(vec![]), Some(vec![]), Some(vec![]))).unwrap();
         let p = PreparedParagraphRenderEvidenceTestSupport::prepared_paragraph_render_evidence_test_support_plain((r).clone()).unwrap();
         let e = PreparedParagraphRenderEvidenceTestSupport::prepared_paragraph_render_evidence_test_support_evidence((r).clone()).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_false((u32::from_ne_bytes(((u_string::find_from(&(p), UString::from("decorationSegments").as_ustr(), 0)) as u32).to_ne_bytes())) <= 2147483647, None).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_false((u32::from_ne_bytes(((u_string::find_from(&(p), UString::from("emphasisDots").as_ustr(), 0)) as u32).to_ne_bytes())) <= 2147483647, None).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_false((u32::from_ne_bytes(((u_string::find_from(&(p), UString::from("emphasisRanges").as_ustr(), 0)) as u32).to_ne_bytes())) <= 2147483647, None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_false((u_string::find_from(&(p), UString::from("decorationSegments").as_ustr(), 0)) as u32 <= 2147483647, None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_false((u_string::find_from(&(p), UString::from("emphasisDots").as_ustr(), 0)) as u32 <= 2147483647, None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_false((u_string::find_from(&(p), UString::from("emphasisRanges").as_ustr(), 0)) as u32 <= 2147483647, None).unwrap();
         let _ = PreparedParagraphRenderEvidenceTestSupport::prepared_paragraph_render_evidence_test_support_contains(e.as_ustr(), UStr::new(&[34,100,101,99,111,114,97,116,105,111,110,83,101,103,109,101,110,116,115,34,58,91]), UStr::new(&[115,101,103,109,101,110,116,115])).unwrap();
         let _ = PreparedParagraphRenderEvidenceTestSupport::prepared_paragraph_render_evidence_test_support_contains(e.as_ustr(), UStr::new(&[34,107,105,110,100,34,58,34,80,114,111,112,101,114,78,111,117,110,34]), UStr::new(&[107,105,110,100])).unwrap();
         let _ = PreparedParagraphRenderEvidenceTestSupport::prepared_paragraph_render_evidence_test_support_contains(e.as_ustr(), UStr::new(&[34,107,105,110,100,34,58,34,66,111,111,107,84,105,116,108,101,34]), UStr::new(&[107,105,110,100])).unwrap();
         let _ = PreparedParagraphRenderEvidenceTestSupport::prepared_paragraph_render_evidence_test_support_contains(e.as_ustr(), UStr::new(&[34,115,111,117,114,99,101,82,97,110,103,101,83,116,97,114,116,34,58,48]), UStr::new(&[114,97,110,103,101])).unwrap();
         let _ = PreparedParagraphRenderEvidenceTestSupport::prepared_paragraph_render_evidence_test_support_contains(e.as_ustr(), UStr::new(&[34,101,109,112,104,97,115,105,115,82,97,110,103,101,115,34,58,91,91,54,44,57,93,93]), UStr::new(&[114,97,110,103,101,115])).unwrap();
-        if u32::from_ne_bytes(((u_string::find_from(&(e), UString::from("\"emphasisDots\"").as_ustr(), 0)) as u32).to_ne_bytes()) <= 2147483647 {
+        if u_string::find_from(&(e), UString::from("\"emphasisDots\"").as_ustr(), 0) as u32 <= 2147483647 {
             let _ = PreparedParagraphRenderEvidenceTestSupport::prepared_paragraph_render_evidence_test_support_contains(e.as_ustr(), UStr::new(&[34,97,110,99,104,111,114,88,34,58]), UStr::new(&[97,110,99,104,111,114])).unwrap();
             let _ = PreparedParagraphRenderEvidenceTestSupport::prepared_paragraph_render_evidence_test_support_contains(e.as_ustr(), UStr::new(&[34,100,111,116,68,105,97,109,101,116,101,114,34,58]), UStr::new(&[100,105,97,109,101,116,101,114])).unwrap();
         }
@@ -886,7 +886,7 @@ fn style_delta_emits_per_cell_style_block() {
 Some(ParagraphStyle::new(Some(LastLineAlignment::Start), Some(WritingMode::HorizontalTb), None, None, Some(Ic::zero()), Some(MeasureAdaptiveFirstLineIndent::new(Some(14.0), Some(1.0), Some(2.0))), Some(LineLengthGrid::new(Some(true), None)), Some(RubyLineHeightMode::PerLine), Some(ParagraphStyle::PARAGRAPH_STYLE_DEFAULT_INLINE_OBJECT_MINIMUM_CLEARANCE_EM), Some(ParagraphStyle::PARAGRAPH_STYLE_DEFAULT_EMPHASIS_DOT_GAP_EM))), LayoutConstraints::new(200 as f64 as f64, Some(f64::INFINITY), Some(2147483647)).unwrap(), Some((*crate::org::tiqian::core::built_in_layout_profiles::BUILT_IN_LAYOUT_PROFILES_CLREQ_HORIZONTAL).clone()), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]))).unwrap();
         let p = PreparedParagraphRenderEvidenceTestSupport::prepared_paragraph_render_evidence_test_support_plain((r).clone()).unwrap();
         let e = PreparedParagraphRenderEvidenceTestSupport::prepared_paragraph_render_evidence_test_support_evidence((r).clone()).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_false((u32::from_ne_bytes(((u_string::find_from(&(p), UString::from("\"style\":{").as_ustr(), 0)) as u32).to_ne_bytes())) <= 2147483647, None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_false((u_string::find_from(&(p), UString::from("\"style\":{").as_ustr(), 0)) as u32 <= 2147483647, None).unwrap();
         let _ = PreparedParagraphRenderEvidenceTestSupport::prepared_paragraph_render_evidence_test_support_contains(e.as_ustr(), UStr::new(&[34,115,116,121,108,101,34,58,123,34,102,111,110,116,83,105,122,101,34,58]), UStr::new(&[115,116,121,108,101])).unwrap();
         let _ = PreparedParagraphRenderEvidenceTestSupport::prepared_paragraph_render_evidence_test_support_contains(e.as_ustr(), UStr::new(&[34,102,111,110,116,87,101,105,103,104,116,34,58,55,48,48]), UStr::new(&[119,101,105,103,104,116])).unwrap();
     });
@@ -902,7 +902,7 @@ fn inline_boxes_emit_inline_edges() {
 ]), Some(vec![]))).unwrap();
         let p = PreparedParagraphRenderEvidenceTestSupport::prepared_paragraph_render_evidence_test_support_plain((r).clone()).unwrap();
         let e = PreparedParagraphRenderEvidenceTestSupport::prepared_paragraph_render_evidence_test_support_evidence((r).clone()).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_false((u32::from_ne_bytes(((u_string::find_from(&(p), UString::from("inlineEdges").as_ustr(), 0)) as u32).to_ne_bytes())) <= 2147483647, None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_false((u_string::find_from(&(p), UString::from("inlineEdges").as_ustr(), 0)) as u32 <= 2147483647, None).unwrap();
         let _ = PreparedParagraphRenderEvidenceTestSupport::prepared_paragraph_render_evidence_test_support_contains(e.as_ustr(), UStr::new(&[34,105,110,108,105,110,101,69,100,103,101,115,34,58,91]), UStr::new(&[101,100,103,101,115])).unwrap();
         let _ = PreparedParagraphRenderEvidenceTestSupport::prepared_paragraph_render_evidence_test_support_contains(e.as_ustr(), UStr::new(&[34,111,102,102,115,101,116,34,58,48]), UStr::new(&[111,102,102,115,101,116])).unwrap();
         let _ = PreparedParagraphRenderEvidenceTestSupport::prepared_paragraph_render_evidence_test_support_contains(e.as_ustr(), UStr::new(&[34,111,102,102,115,101,116,34,58,49]), UStr::new(&[111,102,102,115,101,116])).unwrap();

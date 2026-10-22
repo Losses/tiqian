@@ -1754,8 +1754,8 @@ fn ascii_closing_bracket_with_cjk_interior_is_forbidden_at_line_start() {
             let l = (r.lines[usize::try_from(i).unwrap_or(0)]).clone();
             let from = (l.range).clone().start;
             let to = (l.range).clone().end;
-            let s = u_string::slice(text.as_ustr(), i32::from_ne_bytes(((from) as i32).to_ne_bytes()), i32::from_ne_bytes(((to) as i32).to_ne_bytes()));
-            if ({ let v: u32 = i; i32::from_ne_bytes(v.to_ne_bytes()) }) > (0) {
+            let s = u_string::slice(text.as_ustr(), (from) as i32, (to) as i32);
+            if ({ let v: u32 = i; v as i32 }) > (0) {
                 debug_lines += &(UString::from(concat!("\n",
 "")));
             }
@@ -1789,8 +1789,8 @@ fn ascii_opening_bracket_with_cjk_interior_is_forbidden_at_line_end() {
             let l = (r.lines[usize::try_from(i).unwrap_or(0)]).clone();
             let from = (l.range).clone().start;
             let to = (l.range).clone().end;
-            let s = u_string::slice(text.as_ustr(), i32::from_ne_bytes(((from) as i32).to_ne_bytes()), i32::from_ne_bytes(((to) as i32).to_ne_bytes()));
-            if ({ let v: u32 = i; i32::from_ne_bytes(v.to_ne_bytes()) }) > (0) {
+            let s = u_string::slice(text.as_ustr(), (from) as i32, (to) as i32);
+            if ({ let v: u32 = i; v as i32 }) > (0) {
                 debug_lines += &(UString::from(concat!("\n",
 "")));
             }
@@ -1838,7 +1838,7 @@ fn mixed_quote_contexts_reach_the_font_and_punctuation_pipeline() {
         let r = QuoteClassificationEngineTestSupport::quote_classification_engine_test_support_layout(text.as_ustr(), 1000 as f64, None).unwrap();
         let c = QuoteClassificationEngineTestSupport::quote_classification_engine_test_support_indices(text.as_ustr());
         let ck: SortedSetTable<u32> = QuoteClassificationEngineTestSupport::quote_classification_engine_test_support_set(&vec![1, 3, 29, 47]);
-        let mut b: SortedSetTableBuilder<u32> = SortedTable::sorted_table_set_builder::<u32>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_bytes(((*a) as i32).to_ne_bytes()), i32::from_ne_bytes(((*b) as i32).to_ne_bytes()))));
+        let mut b: SortedSetTableBuilder<u32> = SortedTable::sorted_table_set_builder::<u32>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints((*a) as i32, (*b) as i32)));
         for i in 0..match u32::try_from((r.debug).clone().punctuation_decisions.len()) { Ok(value) => value, Err(_) => u32::MAX } {
             let d = ((r.debug).clone().punctuation_decisions[usize::try_from(i).unwrap_or(0)]).clone();
             if QuoteClassificationEngineTestSupport::quote_classification_engine_test_support_is_curly_quote_for_test((d.char).to_ustring().as_ustr()) {
@@ -1855,13 +1855,13 @@ fn mixed_quote_contexts_reach_the_font_and_punctuation_pipeline() {
                 latin_ok = latin_ok && QuoteClassificationEngineTestSupport::quote_classification_engine_test_support_role_at((r).clone(), i) == UString::from("LatinText");
             }
         }
-        let mut rb: SortedMapTableBuilder<u32, UString> = SortedTable::sorted_table_map_builder::<u32, UString>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_bytes(((*a) as i32).to_ne_bytes()), i32::from_ne_bytes(((*b) as i32).to_ne_bytes()))));
+        let mut rb: SortedMapTableBuilder<u32, UString> = SortedTable::sorted_table_map_builder::<u32, UString>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints((*a) as i32, (*b) as i32)));
         for i in 0..match u32::try_from((r.debug).clone().role_overrides.len()) { Ok(value) => value, Err(_) => u32::MAX } {
             let d = ((r.debug).clone().role_overrides[usize::try_from(i).unwrap_or(0)]).clone();
             rb.put(&((d.range).clone().start), &(d.overridden_role).to_ustring());
         }
         let roles: SortedMapTable<u32, UString> = rb.clone().build();
-        let mut expected: SortedMapTableBuilder<u32, UString> = SortedTable::sorted_table_map_builder::<u32, UString>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_bytes(((*a) as i32).to_ne_bytes()), i32::from_ne_bytes(((*b) as i32).to_ne_bytes()))));
+        let mut expected: SortedMapTableBuilder<u32, UString> = SortedTable::sorted_table_map_builder::<u32, UString>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints((*a) as i32, (*b) as i32)));
         for &i in &c {
             expected.put(&(i), &if ck.has(&(i)) { UString::from("CjkPunctuation") } else { UString::from("LatinText") });
         }
@@ -1883,7 +1883,7 @@ fn quote_roles_survive_style_and_source_boundaries() {
 ]), Some(vec![1, 2, 6, 7, 8, 9]), Some(vec![]), Some(vec![])), Some(TextStyle::new(Some(vec![]), Some(16.0), Some(UString::from("zh-Hans")), Some(400), Some(false), Some(0.0), Some(InlineAttachment::None))),
 Some(ParagraphStyle::new(Some(LastLineAlignment::Start), Some(WritingMode::HorizontalTb), None, None, Some(Ic::zero()), Some(MeasureAdaptiveFirstLineIndent::new(Some(14.0), Some(1.0), Some(2.0))), Some(LineLengthGrid::new(Some(true), None)), Some(RubyLineHeightMode::PerLine), Some(ParagraphStyle::PARAGRAPH_STYLE_DEFAULT_INLINE_OBJECT_MINIMUM_CLEARANCE_EM), Some(ParagraphStyle::PARAGRAPH_STYLE_DEFAULT_EMPHASIS_DOT_GAP_EM))), LayoutConstraints::new(320 as f64 as f64, Some(f64::INFINITY), Some(2147483647)).unwrap(), Some((*crate::org::tiqian::core::built_in_layout_profiles::BUILT_IN_LAYOUT_PROFILES_CLREQ_HORIZONTAL).clone()), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]));
         let r = ExplainableStubParagraphLayoutEngine::new(Some(Box::new(CjkFontRoleClassifier::new())), Some(Box::new(ParagraphLayoutFallbackResolver::new(Some(UString::from("cjk-primary")), Some(UString::from("latin-primary")), Some(UString::from("symbol-fallback"))).unwrap())), Some(Box::new(BuiltInClreqProfileResolver::new())), Some(Box::new(StubFontMetricsResolver::new())), Some(Box::new(ScriptAwareFontMetricsNormalizer::new())), Some(PunctuationAtomBuilder::new(None, None).unwrap()), Some(PunctuationSpacingCompressor::new().unwrap()), Some(QuotePairAnalyzer::new()), Some(Box::new(GreedyLineBreaker::new(None, None, None, None))), Some(Justifier::new(Some(0.5), Some(0.25))), Some(Arc::new(Mutex::new(ExplainableStubTextShaper::new()))), Some(DefaultHyphenator::default_hyphenator_default_hyphenator().unwrap()), Some(Arc::new(Mutex::new(LruWidthIndependentAnnotationCache::new(512))))).unwrap().layout((input).clone()).unwrap();
-        let mut b: SortedMapTableBuilder<u32, UString> = SortedTable::sorted_table_map_builder::<u32, UString>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_bytes(((*a) as i32).to_ne_bytes()), i32::from_ne_bytes(((*b) as i32).to_ne_bytes()))));
+        let mut b: SortedMapTableBuilder<u32, UString> = SortedTable::sorted_table_map_builder::<u32, UString>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints((*a) as i32, (*b) as i32)));
         for i in 0..match u32::try_from((r.debug).clone().role_overrides.len()) { Ok(value) => value, Err(_) => u32::MAX } {
             let d = ((r.debug).clone().role_overrides[usize::try_from(i).unwrap_or(0)]).clone();
             b.put(&((d.range).clone().start), &(d.overridden_role).to_ustring());
@@ -1923,7 +1923,7 @@ fn adjacent_quoted_list_items_keep_cjk_quote_geometry_across_mixed_content() {
             let mut a: Vec<u32> = vec![];
             for i in 0..match u32::try_from((r.debug).clone().font_decisions.len()) { Ok(value) => value, Err(_) => u32::MAX } {
                 let d = ((r.debug).clone().font_decisions[usize::try_from(i).unwrap_or(0)]).clone();
-                if d.role.to_ustring() == UString::from("CjkPunctuation") && (u32::from_ne_bytes(((match qi.iter().position(|e| e == &(d.range).clone().start) { Some(v) => i32::from_ne_bytes(u32::try_from(v).unwrap_or(0).to_ne_bytes()), None => -1 }) as u32).to_ne_bytes())) <= 2147483647 {
+                if d.role.to_ustring() == UString::from("CjkPunctuation") && ({ let __hay = &(qi); let __n = __hay.len(); let mut __i = 0usize; let mut __found: i32 = -1; while __i < __n { if __hay[__i] == (d.range).clone().start { __found = u32::try_from(__i).unwrap_or(0) as i32; break; } __i += 1; } __found } as u32) <= 2147483647 {
                     a.push((d.range).clone().start);
                 }
             }
@@ -1943,7 +1943,7 @@ fn adjacent_quoted_list_items_keep_cjk_quote_geometry_across_mixed_content() {
             let mut o: Vec<u32> = vec![];
             for i in 0..match u32::try_from((r.debug).clone().role_overrides.len()) { Ok(value) => value, Err(_) => u32::MAX } {
                 let d = ((r.debug).clone().role_overrides[usize::try_from(i).unwrap_or(0)]).clone();
-                if u32::from_ne_bytes(((match f.iter().position(|e| e == &(d.range).clone().start) { Some(v) => i32::from_ne_bytes(u32::try_from(v).unwrap_or(0).to_ne_bytes()), None => -1 }) as u32).to_ne_bytes()) <= 2147483647 {
+                if ({ let __hay = &(f); let __n = __hay.len(); let mut __i = 0usize; let mut __found: i32 = -1; while __i < __n { if __hay[__i] == (d.range).clone().start { __found = u32::try_from(__i).unwrap_or(0) as i32; break; } __i += 1; } __found }) as u32 <= 2147483647 {
                     o.push((d.range).clone().start);
                 }
             }
@@ -1951,7 +1951,7 @@ fn adjacent_quoted_list_items_keep_cjk_quote_geometry_across_mixed_content() {
             let mut good = true;
             for i in 0..match u32::try_from((r.debug).clone().role_overrides.len()) { Ok(value) => value, Err(_) => u32::MAX } {
                 let d = ((r.debug).clone().role_overrides[usize::try_from(i).unwrap_or(0)]).clone();
-                if u32::from_ne_bytes(((match f.iter().position(|e| e == &(d.range).clone().start) { Some(v) => i32::from_ne_bytes(u32::try_from(v).unwrap_or(0).to_ne_bytes()), None => -1 }) as u32).to_ne_bytes()) <= 2147483647 {
+                if ({ let __hay = &(f); let __n = __hay.len(); let mut __i = 0usize; let mut __found: i32 = -1; while __i < __n { if __hay[__i] == (d.range).clone().start { __found = u32::try_from(__i).unwrap_or(0) as i32; break; } __i += 1; } __found }) as u32 <= 2147483647 {
                     good = good && (d.source).to_ustring() == UString::from("PairedPunctuationOuterScriptContext");
                 }
             }
@@ -1975,7 +1975,7 @@ fn mi10s_adjacent_latin_transcriptions_keep_the_final_quote_pair_in_cjk_context(
         let mut a: Vec<u32> = vec![];
         for i in 0..match u32::try_from((r.debug).clone().role_overrides.len()) { Ok(value) => value, Err(_) => u32::MAX } {
             let d = ((r.debug).clone().role_overrides[usize::try_from(i).unwrap_or(0)]).clone();
-            if u32::from_ne_bytes(((match f.iter().position(|e| e == &(d.range).clone().start) { Some(v) => i32::from_ne_bytes(u32::try_from(v).unwrap_or(0).to_ne_bytes()), None => -1 }) as u32).to_ne_bytes()) <= 2147483647 {
+            if ({ let __hay = &(f); let __n = __hay.len(); let mut __i = 0usize; let mut __found: i32 = -1; while __i < __n { if __hay[__i] == (d.range).clone().start { __found = u32::try_from(__i).unwrap_or(0) as i32; break; } __i += 1; } __found }) as u32 <= 2147483647 {
                 a.push((d.range).clone().start);
             }
         }
@@ -1984,7 +1984,7 @@ fn mi10s_adjacent_latin_transcriptions_keep_the_final_quote_pair_in_cjk_context(
         let mut sources_ok = true;
         for i in 0..match u32::try_from((r.debug).clone().role_overrides.len()) { Ok(value) => value, Err(_) => u32::MAX } {
             let d = ((r.debug).clone().role_overrides[usize::try_from(i).unwrap_or(0)]).clone();
-            if u32::from_ne_bytes(((match f.iter().position(|e| e == &(d.range).clone().start) { Some(v) => i32::from_ne_bytes(u32::try_from(v).unwrap_or(0).to_ne_bytes()), None => -1 }) as u32).to_ne_bytes()) <= 2147483647 {
+            if ({ let __hay = &(f); let __n = __hay.len(); let mut __i = 0usize; let mut __found: i32 = -1; while __i < __n { if __hay[__i] == (d.range).clone().start { __found = u32::try_from(__i).unwrap_or(0) as i32; break; } __i += 1; } __found }) as u32 <= 2147483647 {
                 roles_ok = roles_ok && (d.overridden_role).to_ustring() == UString::from("CjkPunctuation");
                 sources_ok = sources_ok && (d.source).to_ustring() == UString::from("PairedPunctuationOuterScriptContext");
             }
@@ -1997,9 +1997,9 @@ fn mi10s_adjacent_latin_transcriptions_keep_the_final_quote_pair_in_cjk_context(
             let l = (r.lines[usize::try_from(i).unwrap_or(0)]).clone();
             let from = (l.range).clone().start;
             let to = (l.range).clone().end;
-            let s = u_string::slice(text.as_ustr(), i32::from_ne_bytes(((from) as i32).to_ne_bytes()), i32::from_ne_bytes(((to) as i32).to_ne_bytes()));
-            no = no && u32::from_ne_bytes(((u_string::find_from(&(s), UString::from("”").as_ustr(), 0)) as u32).to_ne_bytes()) != 0;
-            if ({ let v: u32 = i; i32::from_ne_bytes(v.to_ne_bytes()) }) > (0) {
+            let s = u_string::slice(text.as_ustr(), (from) as i32, (to) as i32);
+            no = no && ((u_string::find_from(&(s), UString::from("”").as_ustr(), 0)) as u32) != 0;
+            if ({ let v: u32 = i; v as i32 }) > (0) {
                 lm += &(UString::from(", "));
             }
             lm += &(s);
@@ -2016,7 +2016,7 @@ fn skips_neutral_dash_before_latin_quote_pair_in_layout() {
         let mut c: Option<Cluster> = None;
         for i in 0..match u32::try_from(r.clusters.len()) { Ok(value) => value, Err(_) => u32::MAX } {
             let v = (r.clusters[usize::try_from(i).unwrap_or(0)]).clone();
-            if u32::from_ne_bytes(((u_string::find_from(&((v.text).to_ustring()), UString::from("“hello”").as_ustr(), 0)) as u32).to_ne_bytes()) <= 2147483647 {
+            if u_string::find_from(&((v.text).to_ustring()), UString::from("“hello”").as_ustr(), 0) as u32 <= 2147483647 {
                 c = Some(v.clone());
             }
         }
@@ -2084,7 +2084,7 @@ fn mixed_chinese_question_at_paragraph_start_keeps_cjk_quote_geometry() {
         let text = UString::from("“Json是谁？”").to_ustring();
         let r = QuoteClassificationEngineTestSupport::quote_classification_engine_test_support_layout(text.as_ustr(), 320 as f64, None).unwrap();
         let q: SortedSetTable<u32> = QuoteClassificationEngineTestSupport::quote_classification_engine_test_support_set(&vec![0, 8]);
-        let mut o: SortedSetTableBuilder<u32> = SortedTable::sorted_table_set_builder::<u32>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_bytes(((*a) as i32).to_ne_bytes()), i32::from_ne_bytes(((*b) as i32).to_ne_bytes()))));
+        let mut o: SortedSetTableBuilder<u32> = SortedTable::sorted_table_set_builder::<u32>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints((*a) as i32, (*b) as i32)));
         for i in 0..match u32::try_from((r.debug).clone().role_overrides.len()) { Ok(value) => value, Err(_) => u32::MAX } {
             let d = ((r.debug).clone().role_overrides[usize::try_from(i).unwrap_or(0)]).clone();
             if q.has(&((d.range).clone().start)) {
@@ -2101,7 +2101,7 @@ fn mixed_chinese_question_at_paragraph_start_keeps_cjk_quote_geometry() {
                 sources_ok = sources_ok && (d.source).to_ustring() == UString::from("ParagraphLanguageQuoteContext");
             }
         }
-        let mut p: SortedSetTableBuilder<u32> = SortedTable::sorted_table_set_builder::<u32>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_bytes(((*a) as i32).to_ne_bytes()), i32::from_ne_bytes(((*b) as i32).to_ne_bytes()))));
+        let mut p: SortedSetTableBuilder<u32> = SortedTable::sorted_table_set_builder::<u32>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints((*a) as i32, (*b) as i32)));
         for i in 0..match u32::try_from((r.debug).clone().punctuation_decisions.len()) { Ok(value) => value, Err(_) => u32::MAX } {
             let d = ((r.debug).clone().punctuation_decisions[usize::try_from(i).unwrap_or(0)]).clone();
             if d.char.to_ustring() == UString::from("“") || (d.char).to_ustring() == UString::from("”") {

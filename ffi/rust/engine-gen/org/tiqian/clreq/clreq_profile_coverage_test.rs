@@ -38,7 +38,7 @@ fn test_bopomofo_models_and_parser() {
     BopomofoTone::Ru,
 ];
         let mut tone_index = 0u32;
-        while (i32::from_ne_bytes(((tone_index) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((tones.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
+        while ((tone_index) as i32) < ((u32::try_from((tones.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32) {
             let tone = tones[usize::try_from(tone_index).unwrap_or(0)];
             let _ = TracedAssertions::traced_assertions_record_rendered_not_null(if false { UString::from("-") } else { UString::from(tone.name()) }.as_ustr(), None).unwrap();
             tone_index = u32::wrapping_add(tone_index, 1);
@@ -48,7 +48,7 @@ fn test_bopomofo_models_and_parser() {
         let _ = TracedAssertions::traced_assertions_assert_equals_bopomofo_tone(BopomofoTone::Yangping, reading.tone, None).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_equals_bopomofo_reading((reading).clone(), reading.copy(), None).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_true(reading.hash_code() == reading.copy().hash_code(), None).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_true((u32::from_ne_bytes(((u_string::find_from(&UString::from(format!("{}", reading.to_string()).as_str()), UString::from("BopomofoReading").as_ustr(), 0)) as u32).to_ne_bytes())) <= 2147483647, None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_true((u_string::find_from(&UString::from(format!("{}", reading.to_string()).as_str()), UString::from("BopomofoReading").as_ustr(), 0)) as u32 <= 2147483647, None).unwrap();
         let empty_reading = BopomofoParser::bopomofo_parser_parse(UStr::new(&[]));
         let _ = TracedAssertions::traced_assertions_assert_equals_string_array(&vec![], &empty_reading.symbols, None).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_equals_bopomofo_tone(BopomofoTone::Yinping, empty_reading.tone, None).unwrap();
@@ -79,14 +79,14 @@ fn test_clreq_profile_and_resolver() {
         TestTraceRecorder::new(&(UStr::new(&[67,108,114,101,113,80,114,111,102,105,108,101,67,111,118,101,114,97,103,101,84,101,115,116]))).section(UStr::new(&[116,101,115,116,67,108,114,101,113,80,114,111,102,105,108,101,65,110,100,82,101,115,111,108,118,101,114]));
         let strictnesses = vec![ClreqStrictness::Loose, ClreqStrictness::Normal, ClreqStrictness::Strict];
         let mut strictness_index = 0u32;
-        while (i32::from_ne_bytes(((strictness_index) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((strictnesses.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
+        while ((strictness_index) as i32) < ((u32::try_from((strictnesses.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32) {
             let strictness = strictnesses[usize::try_from(strictness_index).unwrap_or(0)];
             let _ = TracedAssertions::traced_assertions_record_rendered_not_null(if false { UString::from("-") } else { UString::from(strictness.name()) }.as_ustr(), None).unwrap();
             strictness_index = u32::wrapping_add(strictness_index, 1);
         }
         let regions = vec![ClreqRegion::Mainland, ClreqRegion::Taiwan, ClreqRegion::HongKong, ClreqRegion::Custom];
         let mut region_index = 0u32;
-        while (i32::from_ne_bytes(((region_index) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((regions.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
+        while ((region_index) as i32) < ((u32::try_from((regions.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32) {
             let region = regions[usize::try_from(region_index).unwrap_or(0)];
             let _ = TracedAssertions::traced_assertions_record_rendered_not_null(if false { UString::from("-") } else { UString::from(region.name()) }.as_ustr(), None).unwrap();
             region_index = u32::wrapping_add(region_index, 1);
@@ -97,7 +97,7 @@ fn test_clreq_profile_and_resolver() {
     CjkPunctuationGlyphPolicy::ForceClreqRecommendedCodepoints,
 ];
         let mut policy_index = 0u32;
-        while (i32::from_ne_bytes(((policy_index) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((glyph_policies.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
+        while ((policy_index) as i32) < ((u32::try_from((glyph_policies.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32) {
             let policy = glyph_policies[usize::try_from(policy_index).unwrap_or(0)];
             let _ = TracedAssertions::traced_assertions_record_rendered_not_null(if false { UString::from("-") } else { UString::from(policy.name()) }.as_ustr(), None).unwrap();
             policy_index = u32::wrapping_add(policy_index, 1);
@@ -115,7 +115,7 @@ fn test_clreq_profile_and_resolver() {
     PunctuationClass::Other,
 ];
         let mut class_index = 0u32;
-        while (i32::from_ne_bytes(((class_index) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((classes.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
+        while ((class_index) as i32) < ((u32::try_from((classes.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32) {
             let cls = classes[usize::try_from(class_index).unwrap_or(0)];
             let _ = TracedAssertions::traced_assertions_record_rendered_not_null(if false { UString::from("-") } else { UString::from(cls.name()) }.as_ustr(), None).unwrap();
             class_index = u32::wrapping_add(class_index, 1);
@@ -151,7 +151,7 @@ fn test_clreq_punctuation_policies_and_classification() {
     UString::from("?").to_ustring(),
 ];
         let mut point_index = 0u32;
-        while (i32::from_ne_bytes(((point_index) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((point_marks.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
+        while ((point_index) as i32) < ((u32::try_from((point_marks.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32) {
             let _ = TracedAssertions::traced_assertions_assert_true(ClreqPunctuationPolicies::clreq_punctuation_policies_is_ascii_point_mark((point_marks[usize::try_from(point_index).unwrap_or(0)]).clone().as_ustr()), None).unwrap();
             point_index = u32::wrapping_add(point_index, 1);
         }
@@ -172,7 +172,7 @@ fn test_clreq_punctuation_policies_and_classification() {
     UString::from("〚").to_ustring(),
 ];
         let mut index = 0u32;
-        while (i32::from_ne_bytes(((index) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((opening_chars.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
+        while ((index) as i32) < ((u32::try_from((opening_chars.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32) {
             let _ = TracedAssertions::traced_assertions_assert_equals_punctuation_class(PunctuationClass::Opening, ClreqPunctuationPolicies::clreq_punctuation_policies_classify((opening_chars[usize::try_from(index).unwrap_or(0)]).clone().as_ustr()), None).unwrap();
             index = u32::wrapping_add(index, 1);
         }
@@ -191,7 +191,7 @@ fn test_clreq_punctuation_policies_and_classification() {
     UString::from("〛").to_ustring(),
 ];
         index = 0u32;
-        while (i32::from_ne_bytes(((index) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((closing_chars.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
+        while ((index) as i32) < ((u32::try_from((closing_chars.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32) {
             let _ = TracedAssertions::traced_assertions_assert_equals_punctuation_class(PunctuationClass::Closing, ClreqPunctuationPolicies::clreq_punctuation_policies_classify((closing_chars[usize::try_from(index).unwrap_or(0)]).clone().as_ustr()), None).unwrap();
             index = u32::wrapping_add(index, 1);
         }
@@ -205,7 +205,7 @@ fn test_clreq_punctuation_policies_and_classification() {
     UString::from("？").to_ustring(),
 ];
         index = 0u32;
-        while (i32::from_ne_bytes(((index) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((pause_or_stop_chars.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
+        while ((index) as i32) < ((u32::try_from((pause_or_stop_chars.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32) {
             let _ = TracedAssertions::traced_assertions_assert_equals_punctuation_class(PunctuationClass::PauseOrStop, ClreqPunctuationPolicies::clreq_punctuation_policies_classify((pause_or_stop_chars[usize::try_from(index).unwrap_or(0)]).clone().as_ustr()), None).unwrap();
             index = u32::wrapping_add(index, 1);
         }
@@ -216,7 +216,7 @@ fn test_clreq_punctuation_policies_and_classification() {
     UString::from("•").to_ustring(),
 ];
         index = 0u32;
-        while (i32::from_ne_bytes(((index) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((interpuncts.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
+        while ((index) as i32) < ((u32::try_from((interpuncts.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32) {
             let _ = TracedAssertions::traced_assertions_assert_equals_punctuation_class(PunctuationClass::Interpunct, ClreqPunctuationPolicies::clreq_punctuation_policies_classify((interpuncts[usize::try_from(index).unwrap_or(0)]).clone().as_ustr()), None).unwrap();
             index = u32::wrapping_add(index, 1);
         }
@@ -227,25 +227,25 @@ fn test_clreq_punctuation_policies_and_classification() {
     UString::from("–").to_ustring(),
 ];
         index = 0u32;
-        while (i32::from_ne_bytes(((index) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((connectors.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
+        while ((index) as i32) < ((u32::try_from((connectors.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32) {
             let _ = TracedAssertions::traced_assertions_assert_equals_punctuation_class(PunctuationClass::Connector, ClreqPunctuationPolicies::clreq_punctuation_policies_classify((connectors[usize::try_from(index).unwrap_or(0)]).clone().as_ustr()), None).unwrap();
             index = u32::wrapping_add(index, 1);
         }
         let solidi = vec![UString::from("/").to_ustring(), UString::from("／").to_ustring()];
         index = 0u32;
-        while (i32::from_ne_bytes(((index) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((solidi.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
+        while ((index) as i32) < ((u32::try_from((solidi.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32) {
             let _ = TracedAssertions::traced_assertions_assert_equals_punctuation_class(PunctuationClass::Solidus, ClreqPunctuationPolicies::clreq_punctuation_policies_classify((solidi[usize::try_from(index).unwrap_or(0)]).clone().as_ustr()), None).unwrap();
             index = u32::wrapping_add(index, 1);
         }
         let ellipses = vec![UString::from("…").to_ustring(), UString::from("⋯").to_ustring()];
         index = 0u32;
-        while (i32::from_ne_bytes(((index) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((ellipses.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
+        while ((index) as i32) < ((u32::try_from((ellipses.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32) {
             let _ = TracedAssertions::traced_assertions_assert_equals_punctuation_class(PunctuationClass::Ellipsis, ClreqPunctuationPolicies::clreq_punctuation_policies_classify((ellipses[usize::try_from(index).unwrap_or(0)]).clone().as_ustr()), None).unwrap();
             index = u32::wrapping_add(index, 1);
         }
         let dashes = vec![UString::from("—").to_ustring(), UString::from("⸺").to_ustring()];
         index = 0u32;
-        while (i32::from_ne_bytes(((index) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((dashes.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
+        while ((index) as i32) < ((u32::try_from((dashes.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32) {
             let _ = TracedAssertions::traced_assertions_assert_equals_punctuation_class(PunctuationClass::Dash, ClreqPunctuationPolicies::clreq_punctuation_policies_classify((dashes[usize::try_from(index).unwrap_or(0)]).clone().as_ustr()), None).unwrap();
             index = u32::wrapping_add(index, 1);
         }
@@ -337,14 +337,14 @@ fn test_punctuation_advance_and_substitutor() {
         let preserve_substitutor = ClreqPunctuationGlyphSubstitutor::new(Some(CjkPunctuationGlyphPolicy::PreserveInput));
         let preserve_res = preserve_substitutor.substitute(UStr::new(&[8230,8230])).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_equals_string(UStr::new(&[8230,8230]), (preserve_res.display_text).to_ustring().as_ustr(), None).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_true((u32::from_ne_bytes(((u_string::find_from(&((preserve_res.reason).to_ustring()), UString::from("preserve").as_ustr(), 0)) as u32).to_ne_bytes())) <= 2147483647, None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_true((u_string::find_from(&((preserve_res.reason).to_ustring()), UString::from("preserve").as_ustr(), 0)) as u32 <= 2147483647, None).unwrap();
         let prefer_substitutor = ClreqPunctuationGlyphSubstitutor::new(Some(CjkPunctuationGlyphPolicy::PreferClreqRecommendedCodepoints));
         let prefer_res = prefer_substitutor.substitute(UStr::new(&[8212,8212])).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_equals_string(UStr::new(&[8212,8212]), (prefer_res.source_text).to_ustring().as_ustr(), None).unwrap();
         let force_substitutor = ClreqPunctuationGlyphSubstitutor::new(Some(CjkPunctuationGlyphPolicy::ForceClreqRecommendedCodepoints));
         let force_res = force_substitutor.substitute(UStr::new(&[97,98,99])).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_equals_string(UStr::new(&[97,98,99]), (force_res.display_text).to_ustring().as_ustr(), None).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_true((u32::from_ne_bytes(((u_string::find_from(&((force_res.reason).to_ustring()), UString::from("preserve").as_ustr(), 0)) as u32).to_ne_bytes())) <= 2147483647, None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_true((u_string::find_from(&((force_res.reason).to_ustring()), UString::from("preserve").as_ustr(), 0)) as u32 <= 2147483647, None).unwrap();
     });
 }
 
@@ -355,7 +355,7 @@ impl ClreqProfileCoverageTestHelpers {
     pub fn clreq_profile_coverage_test_helpers_surrogate_text(codes: &Vec<u32>) -> UString {
         let mut output = UString::new();
         let mut index = 0u32;
-        while (i32::from_ne_bytes(((index) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((codes.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
+        while ((index) as i32) < ((u32::try_from((codes.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32) {
             output += &(if codes[usize::try_from(index).unwrap_or(0)] > 0xFFFF { u_string::from_units(&[0xD800 + (((codes[usize::try_from(index).unwrap_or(0)]) - 0x10000) >> 10) as u16, 0xDC00 + (((codes[usize::try_from(index).unwrap_or(0)]) - 0x10000) & 0x3FF) as u16]) } else { u_string::from_units(&[(codes[usize::try_from(index).unwrap_or(0)]) as u16]) });
             index = u32::wrapping_add(index, 1);
         }
@@ -364,7 +364,7 @@ impl ClreqProfileCoverageTestHelpers {
 
     pub fn clreq_profile_coverage_test_helpers_contains_int(values: &[u32], value: u32) -> bool {
         let mut index = 0u32;
-        while (i32::from_ne_bytes(((index) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((values.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
+        while ((index) as i32) < ((u32::try_from((values.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32) {
             if values[usize::try_from(index).unwrap_or(0)] == value {
                 return true;
             }

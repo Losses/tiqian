@@ -981,9 +981,9 @@ impl LineOptimizationCoverageSupport {
     }
 
     pub fn line_optimization_coverage_support_set(values: &Vec<u32>) -> SortedSetTable<u32> {
-        let mut b: SortedSetTableBuilder<u32> = SortedTable::sorted_table_set_builder::<u32>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_bytes(((*a) as i32).to_ne_bytes()), i32::from_ne_bytes(((*b) as i32).to_ne_bytes()))));
+        let mut b: SortedSetTableBuilder<u32> = SortedTable::sorted_table_set_builder::<u32>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints((*a) as i32, (*b) as i32)));
         let mut i = 0u32;
-        while (i32::from_ne_bytes(((i) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((values.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
+        while ((i) as i32) < ((u32::try_from((values.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32) {
             b.put(&(values[usize::try_from(i).unwrap_or(0)]));
             i = u32::wrapping_add(i, 1);
         }
@@ -1009,8 +1009,8 @@ impl LineOptimizationCoverageSupport {
         let mut buf_b = UString::new();
         buf_b += &(UString::from("["));
         let mut i = 0u32;
-        while (i32::from_ne_bytes(((i) as i32).to_ne_bytes())) < (3) {
-            if i32::from_ne_bytes(((i) as i32).to_ne_bytes()) > (0) {
+        while ((i) as i32) < (3) {
+            if i as i32 > (0) {
                 buf_b += &(UString::from(", "));
             }
             {

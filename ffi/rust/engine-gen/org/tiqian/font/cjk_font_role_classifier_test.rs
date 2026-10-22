@@ -694,7 +694,7 @@ fn classifies_ascii_brackets_as_latin() {
     UString::from("中(文").to_ustring(),
 ];
         let mut xi = 0u32;
-        while (i32::from_ne_bytes(((xi) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((xs.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
+        while ((xi) as i32) < ((u32::try_from((xs.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32) {
             let x = (xs[usize::try_from(xi).unwrap_or(0)]).clone();
             let _ = TracedAssertions::traced_assertions_assert_equals_rendered(UStr::new(&[76,97,116,105,110,84,101,120,116]), UString::from(CjkFontRoleClassifierTestSupport::cjk_font_role_classifier_test_support_c(x.as_ustr(), if x == UString::from("中(文") { 1 } else { 0 }, if x == UString::from("中(文") { 2 } else { 1 }).unwrap().name()).as_ustr(), None).unwrap();
             xi = u32::wrapping_add(xi, 1);
@@ -715,7 +715,7 @@ fn classifies_ascii_hyphen_slash_tilde_as_latin_regardless_of_context() {
     UString::from("中文~中文").to_ustring(),
 ];
         let mut xi = 0u32;
-        while (i32::from_ne_bytes(((xi) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((xs.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
+        while ((xi) as i32) < ((u32::try_from((xs.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32) {
             let x = (xs[usize::try_from(xi).unwrap_or(0)]).clone();
             let p = if xi == 0 { 4 } else { if xi == 1 { 6 } else { if xi == 2 { 7 } else { 2 } } };
             let _ = TracedAssertions::traced_assertions_assert_equals_rendered(UStr::new(&[76,97,116,105,110,84,101,120,116]), UString::from(CjkFontRoleClassifierTestSupport::cjk_font_role_classifier_test_support_c(x.as_ustr(), p, u32::wrapping_add(p, 1)).unwrap().name()).as_ustr(), None).unwrap();
@@ -752,7 +752,7 @@ fn classifies_ascii_symbols_and_punctuation_as_latin() {
     UString::from("\"").to_ustring(),
 ];
         let mut xi = 0u32;
-        while (i32::from_ne_bytes(((xi) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((xs.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
+        while ((xi) as i32) < ((u32::try_from((xs.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32) {
             let x = (xs[usize::try_from(xi).unwrap_or(0)]).clone();
             let _ = TracedAssertions::traced_assertions_assert_equals_rendered(UStr::new(&[76,97,116,105,110,84,101,120,116]), UString::from(CjkFontRoleClassifierTestSupport::cjk_font_role_classifier_test_support_c(x.as_ustr(), 0, 1).unwrap().name()).as_ustr(), Some(UString::from(format!("{}", { let mut __s = UString::new(); __s += &(UString::from("char=")); __s += x.as_ustr(); __s }).as_str()))).unwrap();
             xi = u32::wrapping_add(xi, 1);
@@ -777,7 +777,7 @@ fn classifies_cjk_punctuation() {
     UString::from("／").to_ustring(),
 ];
         let mut i = 0u32;
-        while (i32::from_ne_bytes(((i) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((a.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
+        while ((i) as i32) < ((u32::try_from((a.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32) {
             let x = (a[usize::try_from(i).unwrap_or(0)]).clone();
             let _ = TracedAssertions::traced_assertions_assert_equals_rendered(UStr::new(&[67,106,107,80,117,110,99,116,117,97,116,105,111,110]), UString::from(CjkFontRoleClassifierTestSupport::cjk_font_role_classifier_test_support_c(x.as_ustr(), 0, 1).unwrap().name()).as_ustr(), None).unwrap();
             i = u32::wrapping_add(i, 1);
@@ -850,7 +850,7 @@ fn classifies_unicode_emoji_presentation_without_reclassifying_plain_keycap_base
     UString::from("🫪").to_ustring(),
 ];
         let mut xi = 0u32;
-        while (i32::from_ne_bytes(((xi) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((xs.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
+        while ((xi) as i32) < ((u32::try_from((xs.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32) {
             let x = (xs[usize::try_from(xi).unwrap_or(0)]).clone();
             let _ = TracedAssertions::traced_assertions_assert_equals_rendered(UStr::new(&[69,109,111,106,105]), UString::from(CjkFontRoleClassifierTestSupport::cjk_font_role_classifier_test_support_c(x.as_ustr(), 0, u_string::unit_count(&(x))).unwrap().name()).as_ustr(), Some((x).to_ustring())).unwrap();
             xi = u32::wrapping_add(xi, 1);

@@ -499,7 +499,7 @@ fn test_lookahead_candidate_filtering_with_non_rendering_control_clusters() {
     (LineBreakerCoverage2TestSupport::line_breaker_coverage2_test_support_cluster(2, UStr::new(&[66]), 20.0f64).unwrap()).clone(),
 ];
         let solution = LookaheadLineBreaker::new(Some(2), Some(2), Some(0.5), Some(Box::new(ClreqKinsokuRule::new(Some(KinsokuLevel::Basic)))), Some(2), Some(10), Some(20), Some(12.0)).break_lines(&clusters, &clusters, 25.0f64, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, Some(LineBreakerCoverage2TestSupport::line_breaker_coverage2_test_support_ints(&vec![0])), None).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_true((i32::from_ne_bytes(((u32::try_from((solution.lines.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) > (0), None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_true((u32::try_from((solution.lines.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32 > (0), None).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_equals_int_range(IntRange::new(0u32, 1u32), ((solution.lines[0usize]).clone().cluster_range).clone(), None).unwrap();
     });
 }
@@ -540,7 +540,7 @@ fn test_line_candidate_ends_with_progressive_break() {
         let _ = TracedAssertions::traced_assertions_assert_false(LineBreakerLines::line_breaker_lines_ends_with_progressive_break((paragraph_end).clone(), LineBreakerCoverage2TestSupport::line_breaker_coverage2_test_support_opp_map(&vec![2], &vec![(opp).clone()])), None).unwrap();
         let empty_range = LineCandidate::new(IntRange::new(1u32, 0u32), (c.source_range).clone(), c.natural_width, c.adjusted_width, Some(c.end_reason), (c.repair).clone(), Some((c.repair_candidates).clone()), Some((c.hanging_cluster_indices).clone())).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_false(LineBreakerLines::line_breaker_lines_ends_with_progressive_break((empty_range).clone(), LineBreakerCoverage2TestSupport::line_breaker_coverage2_test_support_opp_map(&vec![2], &vec![(opp).clone()])), None).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_false(LineBreakerLines::line_breaker_lines_ends_with_progressive_break((c).clone(), SortedTable::sorted_table_map_builder::<u32, ProgressiveBreakOpportunity>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_bytes(((*a) as i32).to_ne_bytes()), i32::from_ne_bytes(((*b) as i32).to_ne_bytes())))).clone().build()), None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_false(LineBreakerLines::line_breaker_lines_ends_with_progressive_break((c).clone(), SortedTable::sorted_table_map_builder::<u32, ProgressiveBreakOpportunity>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints((*a) as i32, (*b) as i32))).clone().build()), None).unwrap();
     });
 }
 
@@ -644,7 +644,7 @@ impl LineBreakerCoverage2TestSupport {
     }
 
     pub fn line_breaker_coverage2_test_support_ints(values: &Vec<u32>) -> SortedSetTable<u32> {
-        let mut b: SortedSetTableBuilder<u32> = SortedTable::sorted_table_set_builder::<u32>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_bytes(((*a) as i32).to_ne_bytes()), i32::from_ne_bytes(((*b) as i32).to_ne_bytes()))));
+        let mut b: SortedSetTableBuilder<u32> = SortedTable::sorted_table_set_builder::<u32>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints((*a) as i32, (*b) as i32)));
         for &v in values {
             b.put(&(v));
         }
@@ -652,8 +652,7 @@ impl LineBreakerCoverage2TestSupport {
     }
 
     pub fn line_breaker_coverage2_test_support_opp_map(keys: &Vec<u32>, opps: &Vec<ProgressiveBreakOpportunity>) -> SortedMapTable<u32, ProgressiveBreakOpportunity> {
-        let mut b: SortedMapTableBuilder<u32, ProgressiveBreakOpportunity> = SortedTable::sorted_table_map_builder::<u32,
-ProgressiveBreakOpportunity>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_bytes(((*a) as i32).to_ne_bytes()), i32::from_ne_bytes(((*b) as i32).to_ne_bytes()))));
+        let mut b: SortedMapTableBuilder<u32, ProgressiveBreakOpportunity> = SortedTable::sorted_table_map_builder::<u32, ProgressiveBreakOpportunity>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints((*a) as i32, (*b) as i32)));
         for i in 0..match u32::try_from(keys.len()) { Ok(value) => value, Err(_) => u32::MAX } {
             b.put(&(keys[usize::try_from(i).unwrap_or(0)]), &((opps[usize::try_from(i).unwrap_or(0)]).clone()));
         }

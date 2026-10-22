@@ -212,7 +212,7 @@ fn internal_boundaries_are_suppressed_and_outer_edges_keep_the_gap() {
         let decisions = ((result.debug).clone().auto_space_decisions).clone();
         let mut decision_parts: Vec<UString> = vec![];
         let mut di = 0u32;
-        while (i32::from_ne_bytes(((di) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((decisions.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
+        while ((di) as i32) < ((u32::try_from((decisions.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32) {
             decision_parts.push(UString::from(format!("{}", (decisions[usize::try_from(di).unwrap_or(0)]).clone().to_string()).as_str()));
             di = u32::wrapping_add(di, 1);
         }

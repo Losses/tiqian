@@ -18,8 +18,8 @@ impl SortedTable {
     }
 
     pub fn sorted_table_compare_strings(a: &UStr, b: &UStr) -> i32 {
-        let end_a = i32::from_ne_bytes(u32::try_from(((a).len()) & 4294967295).unwrap_or(0).to_ne_bytes());
-        let end_b = i32::from_ne_bytes(u32::try_from(((b).len()) & 4294967295).unwrap_or(0).to_ne_bytes());
+        let end_a = u32::try_from(((a).len()) & 4294967295).unwrap_or(0) as i32;
+        let end_b = u32::try_from(((b).len()) & 4294967295).unwrap_or(0) as i32;
         let mut index_a = 0i32;
         let mut index_b = 0i32;
         while (index_a) < (end_a) && (index_b) < (end_b) {
@@ -37,8 +37,8 @@ impl SortedTable {
                 }
                 return 1;
             }
-            index_a = i32::from_ne_bytes(u32::try_from((usize::try_from(index_a).unwrap_or(0) + 1) & 4294967295).unwrap_or(0).to_ne_bytes());
-            index_b = i32::from_ne_bytes(u32::try_from((usize::try_from(index_b).unwrap_or(0) + 1) & 4294967295).unwrap_or(0).to_ne_bytes());
+            index_a = u32::try_from((usize::try_from(index_a).unwrap_or(0) + 1) & 4294967295).unwrap_or(0) as i32;
+            index_b = u32::try_from((usize::try_from(index_b).unwrap_or(0) + 1) & 4294967295).unwrap_or(0) as i32;
         }
         if index_a < (end_a) {
             return 1;
@@ -92,7 +92,7 @@ impl<K: Clone, V: Clone> SortedMapTable<K, V> {
     }
 
     pub fn size(&self) -> i32 {
-        return i32::from_ne_bytes(u32::try_from((((self.keys).clone()).len()) & 4294967295).unwrap_or(0).to_ne_bytes());
+        return (u32::try_from((((self.keys).clone()).len()) & 4294967295).unwrap_or(0)) as i32;
     }
 
     pub fn key_at(&self, index: i32) -> K {
@@ -105,7 +105,7 @@ impl<K: Clone, V: Clone> SortedMapTable<K, V> {
 
     fn locate(&self, key: &K) -> i32 {
         let mut low = 0i32;
-        let mut high = i32::from_ne_bytes(u32::try_from((((self.keys).clone()).len()) & 4294967295).unwrap_or(0).to_ne_bytes());
+        let mut high = u32::try_from((((self.keys).clone()).len()) & 4294967295).unwrap_or(0) as i32;
         while (low) < (high) {
             let mid = i32::wrapping_add(low, high) >> 1;
             let order = (self.compare)(&((self.keys[usize::try_from(mid).unwrap_or(0)]).clone()), key);
@@ -127,7 +127,7 @@ impl<K: Clone + std::fmt::Debug, V: Clone + std::fmt::Debug> SortedMapTable<K, V
     pub fn to_string(&self) -> UString {
         let mut out = UString::from("{").to_ustring();
         let mut i = 0i32;
-        while (i) < (i32::from_ne_bytes(u32::try_from((((self.keys).clone()).len()) & 4294967295).unwrap_or(0).to_ne_bytes())) {
+        while (i) < ((u32::try_from((((self.keys).clone()).len()) & 4294967295).unwrap_or(0)) as i32) {
             if i > (0) {
                 out += &(UString::from(", "));
             }
@@ -160,7 +160,7 @@ impl<K: Clone, V: Clone> SortedMapTableBuilder<K, V> {
     }
 
     pub fn get(&self, key: &K) -> Option<V> {
-        let mut index = i32::from_ne_bytes(u32::try_from((((self.keys).clone()).len()) & 4294967295).unwrap_or(0).to_ne_bytes());
+        let mut index = u32::try_from((((self.keys).clone()).len()) & 4294967295).unwrap_or(0) as i32;
         while (index) > (0) {
             index = i32::wrapping_sub(index, 1);
             if (self.compare)(&((self.keys[usize::try_from(index).unwrap_or(0)]).clone()), key) == 0 {
@@ -171,7 +171,7 @@ impl<K: Clone, V: Clone> SortedMapTableBuilder<K, V> {
     }
 
     pub fn build(self) -> SortedMapTable<K, V> {
-        let total = i32::from_ne_bytes(u32::try_from((((self.keys).clone()).len()) & 4294967295).unwrap_or(0).to_ne_bytes());
+        let total = u32::try_from((((self.keys).clone()).len()) & 4294967295).unwrap_or(0) as i32;
         let mut order: Vec<i32> = Vec::new();
         let mut i = 0i32;
         while (i) < (total) {
@@ -234,7 +234,7 @@ impl<K: Clone> SortedSetTable<K> {
     }
 
     pub fn size(&self) -> i32 {
-        return i32::from_ne_bytes(u32::try_from((((self.keys).clone()).len()) & 4294967295).unwrap_or(0).to_ne_bytes());
+        return (u32::try_from((((self.keys).clone()).len()) & 4294967295).unwrap_or(0)) as i32;
     }
 
     pub fn at(&self, index: i32) -> K {
@@ -243,7 +243,7 @@ impl<K: Clone> SortedSetTable<K> {
 
     fn locate(&self, key: &K) -> i32 {
         let mut low = 0i32;
-        let mut high = i32::from_ne_bytes(u32::try_from((((self.keys).clone()).len()) & 4294967295).unwrap_or(0).to_ne_bytes());
+        let mut high = u32::try_from((((self.keys).clone()).len()) & 4294967295).unwrap_or(0) as i32;
         while (low) < (high) {
             let mid = i32::wrapping_add(low, high) >> 1;
             let order = (self.compare)(&((self.keys[usize::try_from(mid).unwrap_or(0)]).clone()), key);
@@ -265,7 +265,7 @@ impl<K: Clone + std::fmt::Debug> SortedSetTable<K> {
     pub fn to_string(&self) -> UString {
         let mut out = UString::from("[").to_ustring();
         let mut i = 0i32;
-        while (i) < (i32::from_ne_bytes(u32::try_from((((self.keys).clone()).len()) & 4294967295).unwrap_or(0).to_ne_bytes())) {
+        while (i) < ((u32::try_from((((self.keys).clone()).len()) & 4294967295).unwrap_or(0)) as i32) {
             if i > (0) {
                 out += &(UString::from(", "));
             }
@@ -295,7 +295,7 @@ impl<K: Clone> SortedSetTableBuilder<K> {
     }
 
     pub fn build(self) -> SortedSetTable<K> {
-        let total = i32::from_ne_bytes(u32::try_from((((self.keys).clone()).len()) & 4294967295).unwrap_or(0).to_ne_bytes());
+        let total = u32::try_from((((self.keys).clone()).len()) & 4294967295).unwrap_or(0) as i32;
         let mut order: Vec<i32> = Vec::new();
         let mut i = 0i32;
         while (i) < (total) {

@@ -192,7 +192,7 @@ impl InlineObjectLayoutTestSupport {
     pub fn inline_object_layout_test_support_lines(r: LayoutResult, text: &UStr) -> Vec<UString> {
         let mut a: Vec<UString> = vec![];
         for i in 0..match u32::try_from(r.lines.len()) { Ok(value) => value, Err(_) => u32::MAX } {
-            a.push(u_string::substring(&text, i32::from_ne_bytes(((((r.lines[usize::try_from(i).unwrap_or(0)]).clone().range).clone().start) as i32).to_ne_bytes()), i32::from_ne_bytes(((((r.lines[usize::try_from(i).unwrap_or(0)]).clone().range).clone().end) as i32).to_ne_bytes())));
+            a.push(u_string::substring(&text, (((r.lines[usize::try_from(i).unwrap_or(0)]).clone().range).clone().start) as i32, (((r.lines[usize::try_from(i).unwrap_or(0)]).clone().range).clone().end) as i32));
         }
         return a;
     }

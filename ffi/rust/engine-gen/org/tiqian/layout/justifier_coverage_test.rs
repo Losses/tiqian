@@ -3145,9 +3145,9 @@ impl JustifierCoverageTestSupport {
     }
 
     pub fn justifier_coverage_test_support_set(xs: &Vec<u32>) -> SortedSetTable<u32> {
-        let mut b: SortedSetTableBuilder<u32> = SortedTable::sorted_table_set_builder::<u32>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_bytes(((*a) as i32).to_ne_bytes()), i32::from_ne_bytes(((*b) as i32).to_ne_bytes()))));
+        let mut b: SortedSetTableBuilder<u32> = SortedTable::sorted_table_set_builder::<u32>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints((*a) as i32, (*b) as i32)));
         let mut i = 0u32;
-        while (i32::from_ne_bytes(((i) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((xs.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
+        while ((i) as i32) < ((u32::try_from((xs.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32) {
             b.put(&(xs[usize::try_from(i).unwrap_or(0)]));
             i = u32::wrapping_add(i, 1);
         }
@@ -3155,9 +3155,9 @@ impl JustifierCoverageTestSupport {
     }
 
     pub fn justifier_coverage_test_support_int_map(xs: &Vec<u32>, ys: &Vec<u32>) -> SortedMapTable<u32, u32> {
-        let mut b: SortedMapTableBuilder<u32, u32> = SortedTable::sorted_table_map_builder::<u32, u32>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_bytes(((*a) as i32).to_ne_bytes()), i32::from_ne_bytes(((*b) as i32).to_ne_bytes()))));
+        let mut b: SortedMapTableBuilder<u32, u32> = SortedTable::sorted_table_map_builder::<u32, u32>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints((*a) as i32, (*b) as i32)));
         let mut i = 0u32;
-        while (i32::from_ne_bytes(((i) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((xs.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
+        while ((i) as i32) < ((u32::try_from((xs.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32) {
             b.put(&(xs[usize::try_from(i).unwrap_or(0)]), &(ys[usize::try_from(i).unwrap_or(0)]));
             i = u32::wrapping_add(i, 1);
         }
@@ -3165,10 +3165,9 @@ impl JustifierCoverageTestSupport {
     }
 
     pub fn justifier_coverage_test_support_tier_map(xs: &Vec<u32>, ys: &Vec<ProgressiveBreakTier>) -> SortedMapTable<u32, ProgressiveBreakTier> {
-        let mut b: SortedMapTableBuilder<u32, ProgressiveBreakTier> = SortedTable::sorted_table_map_builder::<u32,
-ProgressiveBreakTier>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_bytes(((*a) as i32).to_ne_bytes()), i32::from_ne_bytes(((*b) as i32).to_ne_bytes()))));
+        let mut b: SortedMapTableBuilder<u32, ProgressiveBreakTier> = SortedTable::sorted_table_map_builder::<u32, ProgressiveBreakTier>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints((*a) as i32, (*b) as i32)));
         let mut i = 0u32;
-        while (i32::from_ne_bytes(((i) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((xs.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
+        while ((i) as i32) < ((u32::try_from((xs.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32) {
             b.put(&(xs[usize::try_from(i).unwrap_or(0)]), &(ys[usize::try_from(i).unwrap_or(0)]));
             i = u32::wrapping_add(i, 1);
         }
@@ -3176,9 +3175,9 @@ ProgressiveBreakTier>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32
     }
 
     pub fn justifier_coverage_test_support_str_map(xs: &Vec<u32>, ys: &Vec<UString>) -> SortedMapTable<u32, UString> {
-        let mut b: SortedMapTableBuilder<u32, UString> = SortedTable::sorted_table_map_builder::<u32, UString>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_bytes(((*a) as i32).to_ne_bytes()), i32::from_ne_bytes(((*b) as i32).to_ne_bytes()))));
+        let mut b: SortedMapTableBuilder<u32, UString> = SortedTable::sorted_table_map_builder::<u32, UString>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints((*a) as i32, (*b) as i32)));
         let mut i = 0u32;
-        while (i32::from_ne_bytes(((i) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((xs.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
+        while ((i) as i32) < ((u32::try_from((xs.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32) {
             b.put(&(xs[usize::try_from(i).unwrap_or(0)]), &(ys[usize::try_from(i).unwrap_or(0)]).clone());
             i = u32::wrapping_add(i, 1);
         }
@@ -3361,7 +3360,7 @@ fn space_gap_protection_covers_all_four_disjuncts() {
         let v1 = JustifierCoverageTestSupport::justifier_coverage_test_support_justify(&c, &r, &e, IntRange::new(0u32, 4u32), 72 as f64, None, None, None.clone(), None, None, None, None, Some(JustifierCoverageTestSupport::justifier_coverage_test_support_set(&vec![0])), None, None, None, None, None, None, None, None, None).unwrap();
         let mut h1 = true;
         let mut i = 0u32;
-        while (i32::from_ne_bytes(((i) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((v1.allocations.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
+        while ((i) as i32) < ((u32::try_from((v1.allocations.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32) {
             if v1.allocations[usize::try_from(i).unwrap_or(0)].kind == GlueKind::WordSpace {
                 h1 = false;
             }
@@ -3372,7 +3371,7 @@ fn space_gap_protection_covers_all_four_disjuncts() {
         let v2 = JustifierCoverageTestSupport::justifier_coverage_test_support_justify(&c, &r, &e, IntRange::new(0u32, 4u32), 72 as f64, None, None, None.clone(), None, None, None, None, Some(JustifierCoverageTestSupport::justifier_coverage_test_support_set(&vec![1])), None, None, None, None, None, None, None, None, None).unwrap();
         let mut h2 = true;
         let mut i2 = 0u32;
-        while (i32::from_ne_bytes(((i2) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((v2.allocations.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
+        while ((i2) as i32) < ((u32::try_from((v2.allocations.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32) {
             if v2.allocations[usize::try_from(i2).unwrap_or(0)].kind == GlueKind::WordSpace {
                 h2 = false;
             }
@@ -3383,7 +3382,7 @@ fn space_gap_protection_covers_all_four_disjuncts() {
         let v3 = JustifierCoverageTestSupport::justifier_coverage_test_support_justify(&c, &r, &e, IntRange::new(0u32, 4u32), 72 as f64, None, None, None.clone(), None, None, None, Some(JustifierCoverageTestSupport::justifier_coverage_test_support_set(&vec![0])), None, None, None, None, None, None, None, None, None, None).unwrap();
         let mut h3 = true;
         let mut i3 = 0u32;
-        while (i32::from_ne_bytes(((i3) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((v3.allocations.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
+        while ((i3) as i32) < ((u32::try_from((v3.allocations.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32) {
             if v3.allocations[usize::try_from(i3).unwrap_or(0)].kind == GlueKind::WordSpace {
                 h3 = false;
             }
@@ -3394,7 +3393,7 @@ fn space_gap_protection_covers_all_four_disjuncts() {
         let v4 = JustifierCoverageTestSupport::justifier_coverage_test_support_justify(&c, &r, &e, IntRange::new(0u32, 4u32), 72 as f64, None, None, None.clone(), None, None, None, Some(JustifierCoverageTestSupport::justifier_coverage_test_support_set(&vec![2])), None, None, None, None, None, None, None, None, None, None).unwrap();
         let mut h4 = true;
         let mut i4 = 0u32;
-        while (i32::from_ne_bytes(((i4) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((v4.allocations.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
+        while ((i4) as i32) < ((u32::try_from((v4.allocations.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32) {
             if v4.allocations[usize::try_from(i4).unwrap_or(0)].kind == GlueKind::WordSpace {
                 h4 = false;
             }
@@ -3436,7 +3435,7 @@ fn virtual_sino_western_gap_skips_protected_and_typed_edges() {
         let typed_right = JustifierCoverageTestSupport::justifier_coverage_test_support_justify(&trc, &tlr, &tre, IntRange::new(0u32, 2u32), 52 as f64, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None).unwrap();
         let mut ok1 = true;
         let mut i1 = 0u32;
-        while (i32::from_ne_bytes(((i1) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((typed_right.allocations.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
+        while ((i1) as i32) < ((u32::try_from((typed_right.allocations.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32) {
             if typed_right.allocations[usize::try_from(i1).unwrap_or(0)].kind == GlueKind::CjkLatinSpace {
                 ok1 = false;
             }
@@ -3447,7 +3446,7 @@ fn virtual_sino_western_gap_skips_protected_and_typed_edges() {
         let physical = JustifierCoverageTestSupport::justifier_coverage_test_support_justify(&f.c, &f.r, &f.e, IntRange::new(0u32, 1u32), 36 as f64, None, None, None.clone(), None, None, None, None, None, None, Some(JustifierCoverageTestSupport::justifier_coverage_test_support_set(&vec![0])), None, None, None, None, None, None, None).unwrap();
         let mut ok2 = true;
         let mut i2 = 0u32;
-        while (i32::from_ne_bytes(((i2) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((physical.allocations.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
+        while ((i2) as i32) < ((u32::try_from((physical.allocations.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32) {
             if physical.allocations[usize::try_from(i2).unwrap_or(0)].kind == GlueKind::CjkLatinSpace {
                 ok2 = false;
             }
@@ -3457,7 +3456,7 @@ fn virtual_sino_western_gap_skips_protected_and_typed_edges() {
         let closed = JustifierCoverageTestSupport::justifier_coverage_test_support_justify(&f.c, &f.r, &f.e, IntRange::new(0u32, 1u32), 36 as f64, None, None, None.clone(), None, None, None, None, Some(JustifierCoverageTestSupport::justifier_coverage_test_support_set(&vec![0])), None, None, None, None, None, None, None, None, None).unwrap();
         let mut ok3 = true;
         let mut i3 = 0u32;
-        while (i32::from_ne_bytes(((i3) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((closed.allocations.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
+        while ((i3) as i32) < ((u32::try_from((closed.allocations.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32) {
             if closed.allocations[usize::try_from(i3).unwrap_or(0)].kind == GlueKind::CjkLatinSpace {
                 ok3 = false;
             }
@@ -3494,7 +3493,7 @@ fn attached_inline_virtual_auto_space_joins_tier_two() {
         let no_previous = JustifierCoverageTestSupport::justifier_coverage_test_support_justify(&c, &r, &e, IntRange::new(0u32, 3u32), 52 as f64, None, None, None.clone(), None, None, None, None, None, None, None, None, Some(JustifierCoverageTestSupport::justifier_coverage_test_support_set(&vec![2])), None, None, None, None, None).unwrap();
         let mut ok1 = true;
         let mut i1 = 0u32;
-        while (i32::from_ne_bytes(((i1) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((no_previous.allocations.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
+        while ((i1) as i32) < ((u32::try_from((no_previous.allocations.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32) {
             if no_previous.allocations[usize::try_from(i1).unwrap_or(0)].clone().reason.to_ustring() == UString::from("AttachedInlineVirtualAutoSpace") {
                 ok1 = false;
             }
@@ -3504,7 +3503,7 @@ fn attached_inline_virtual_auto_space_joins_tier_two() {
         let target_out_of_range = JustifierCoverageTestSupport::justifier_coverage_test_support_justify(&c, &r, &e, IntRange::new(0u32, 2u32), 36 as f64, None, None, None.clone(), None, None, None, None, None, None, None, Some(JustifierCoverageTestSupport::justifier_coverage_test_support_int_map(&vec![3], &vec![0])), Some(JustifierCoverageTestSupport::justifier_coverage_test_support_set(&vec![3])), None, None, None, None, None).unwrap();
         let mut ok2 = true;
         let mut i2 = 0u32;
-        while (i32::from_ne_bytes(((i2) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((target_out_of_range.allocations.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
+        while ((i2) as i32) < ((u32::try_from((target_out_of_range.allocations.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32) {
             if target_out_of_range.allocations[usize::try_from(i2).unwrap_or(0)].clone().reason.to_ustring() == UString::from("AttachedInlineVirtualAutoSpace") {
                 ok2 = false;
             }
@@ -3514,7 +3513,7 @@ fn attached_inline_virtual_auto_space_joins_tier_two() {
         let next_out_of_range = JustifierCoverageTestSupport::justifier_coverage_test_support_justify(&c, &r, &e, IntRange::new(0u32, 2u32), 36 as f64, None, None, None.clone(), None, None, None, None, None, None, None, Some(JustifierCoverageTestSupport::justifier_coverage_test_support_int_map(&vec![2], &vec![0])), Some(JustifierCoverageTestSupport::justifier_coverage_test_support_set(&vec![2])), None, None, None, None, None).unwrap();
         let mut ok3 = true;
         let mut i3 = 0u32;
-        while (i32::from_ne_bytes(((i3) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((next_out_of_range.allocations.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
+        while ((i3) as i32) < ((u32::try_from((next_out_of_range.allocations.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32) {
             if next_out_of_range.allocations[usize::try_from(i3).unwrap_or(0)].clone().reason.to_ustring() == UString::from("AttachedInlineVirtualAutoSpace") {
                 ok3 = false;
             }
@@ -3524,7 +3523,7 @@ fn attached_inline_virtual_auto_space_joins_tier_two() {
         let p0 = JustifierCoverageTestSupport::justifier_coverage_test_support_justify(&c, &r, &e, IntRange::new(0u32, 3u32), 52 as f64, None, None, None.clone(), None, None, None, Some(JustifierCoverageTestSupport::justifier_coverage_test_support_set(&vec![0])), None, None, None, Some(JustifierCoverageTestSupport::justifier_coverage_test_support_int_map(&vec![2], &vec![0])), Some(JustifierCoverageTestSupport::justifier_coverage_test_support_set(&vec![2])), None, None, None, None, None).unwrap();
         let mut ok4 = true;
         let mut i4 = 0u32;
-        while (i32::from_ne_bytes(((i4) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((p0.allocations.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
+        while ((i4) as i32) < ((u32::try_from((p0.allocations.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32) {
             if p0.allocations[usize::try_from(i4).unwrap_or(0)].clone().reason.to_ustring() == UString::from("AttachedInlineVirtualAutoSpace") {
                 ok4 = false;
             }
@@ -3534,7 +3533,7 @@ fn attached_inline_virtual_auto_space_joins_tier_two() {
         let p3 = JustifierCoverageTestSupport::justifier_coverage_test_support_justify(&c, &r, &e, IntRange::new(0u32, 3u32), 52 as f64, None, None, None.clone(), None, None, None, Some(JustifierCoverageTestSupport::justifier_coverage_test_support_set(&vec![3])), None, None, None, Some(JustifierCoverageTestSupport::justifier_coverage_test_support_int_map(&vec![2], &vec![0])), Some(JustifierCoverageTestSupport::justifier_coverage_test_support_set(&vec![2])), None, None, None, None, None).unwrap();
         let mut ok5 = true;
         let mut i5 = 0u32;
-        while (i32::from_ne_bytes(((i5) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((p3.allocations.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
+        while ((i5) as i32) < ((u32::try_from((p3.allocations.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32) {
             if p3.allocations[usize::try_from(i5).unwrap_or(0)].clone().reason.to_ustring() == UString::from("AttachedInlineVirtualAutoSpace") {
                 ok5 = false;
             }
@@ -3567,7 +3566,7 @@ fn attached_inline_virtual_inter_char_honours_no_stretch_protection() {
         let v1 = JustifierCoverageTestSupport::justifier_coverage_test_support_justify(&c, &r, &e, IntRange::new(0u32, 3u32), 60 as f64, None, None, None.clone(), None, None, None, Some(JustifierCoverageTestSupport::justifier_coverage_test_support_set(&vec![0])), None, None, None, Some(JustifierCoverageTestSupport::justifier_coverage_test_support_int_map(&vec![1], &vec![0])), None, None, None, None, None, None).unwrap();
         let mut ok1 = true;
         let mut i1 = 0u32;
-        while (i32::from_ne_bytes(((i1) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((v1.allocations.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
+        while ((i1) as i32) < ((u32::try_from((v1.allocations.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32) {
             if v1.allocations[usize::try_from(i1).unwrap_or(0)].clone().reason.to_ustring() == UString::from("AttachedInlineVirtualInterChar") {
                 ok1 = false;
             }
@@ -3578,7 +3577,7 @@ fn attached_inline_virtual_inter_char_honours_no_stretch_protection() {
         let v2 = JustifierCoverageTestSupport::justifier_coverage_test_support_justify(&c, &r, &e, IntRange::new(0u32, 3u32), 60 as f64, None, None, None.clone(), None, None, None, Some(JustifierCoverageTestSupport::justifier_coverage_test_support_set(&vec![2])), None, None, None, Some(JustifierCoverageTestSupport::justifier_coverage_test_support_int_map(&vec![1], &vec![0])), None, None, None, None, None, None).unwrap();
         let mut ok2 = true;
         let mut i2 = 0u32;
-        while (i32::from_ne_bytes(((i2) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((v2.allocations.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
+        while ((i2) as i32) < ((u32::try_from((v2.allocations.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32) {
             if v2.allocations[usize::try_from(i2).unwrap_or(0)].clone().reason.to_ustring() == UString::from("AttachedInlineVirtualInterChar") {
                 ok2 = false;
             }
@@ -3589,7 +3588,7 @@ fn attached_inline_virtual_inter_char_honours_no_stretch_protection() {
         let v3 = JustifierCoverageTestSupport::justifier_coverage_test_support_justify(&c, &r, &e, IntRange::new(0u32, 3u32), 60 as f64, None, None, None.clone(), None, None, None, None, Some(JustifierCoverageTestSupport::justifier_coverage_test_support_set(&vec![0])), None, None, Some(JustifierCoverageTestSupport::justifier_coverage_test_support_int_map(&vec![1], &vec![0])), None, None, None, None, None, None).unwrap();
         let mut ok3 = true;
         let mut i3 = 0u32;
-        while (i32::from_ne_bytes(((i3) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((v3.allocations.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
+        while ((i3) as i32) < ((u32::try_from((v3.allocations.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32) {
             if v3.allocations[usize::try_from(i3).unwrap_or(0)].clone().reason.to_ustring() == UString::from("AttachedInlineVirtualInterChar") {
                 ok3 = false;
             }
@@ -3600,7 +3599,7 @@ fn attached_inline_virtual_inter_char_honours_no_stretch_protection() {
         let promoted = JustifierCoverageTestSupport::justifier_coverage_test_support_justify(&c, &r, &e, IntRange::new(0u32, 3u32), 60 as f64, None, None, None.clone(), None, None, None, None, None, None, None, Some(JustifierCoverageTestSupport::justifier_coverage_test_support_int_map(&vec![1], &vec![0])), None, Some(JustifierCoverageTestSupport::justifier_coverage_test_support_set(&vec![1])), None, None, None, None).unwrap();
         let mut found: Option<JustificationAllocation> = None;
         let mut i4 = 0u32;
-        while (i32::from_ne_bytes(((i4) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((promoted.allocations.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
+        while ((i4) as i32) < ((u32::try_from((promoted.allocations.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32) {
             if promoted.allocations[usize::try_from(i4).unwrap_or(0)].target_cluster_index == 1 {
                 found = Some((promoted.allocations[usize::try_from(i4).unwrap_or(0)]).clone());
             }
@@ -3630,7 +3629,7 @@ fn attached_inline_virtual_sino_western_needs_stretch_enabled() {
         let p = JustifierCoverageTestSupport::justifier_coverage_test_support_justify(&c, &r, &e, IntRange::new(0u32, 3u32), 60 as f64, None, None, None.clone(), Some(false), None, None, None, None, None, None, Some(JustifierCoverageTestSupport::justifier_coverage_test_support_int_map(&vec![1], &vec![0])), Some(JustifierCoverageTestSupport::justifier_coverage_test_support_set(&vec![1])), None, None, None, None, None).unwrap();
         let mut ok = true;
         let mut i = 0u32;
-        while (i32::from_ne_bytes(((i) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((p.allocations.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
+        while ((i) as i32) < ((u32::try_from((p.allocations.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32) {
             if p.allocations[usize::try_from(i).unwrap_or(0)].clone().reason.to_ustring() == UString::from("AttachedInlineVirtualInterChar") {
                 ok = false;
             }
@@ -3751,7 +3750,7 @@ fn paragraph_edge_space_lines_cover_the_boundary_guards() {
         let lp = JustifierCoverageTestSupport::justifier_coverage_test_support_justify(&leading, &lr, &le, IntRange::new(0u32, 2u32), 40 as f64, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None).unwrap();
         let mut wc1 = 0u32;
         let mut i1 = 0u32;
-        while (i32::from_ne_bytes(((i1) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((lp.allocations.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
+        while ((i1) as i32) < ((u32::try_from((lp.allocations.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32) {
             if lp.allocations[usize::try_from(i1).unwrap_or(0)].kind == GlueKind::WordSpace {
                 wc1 = u32::wrapping_add(wc1, 1);
             }
@@ -3760,7 +3759,7 @@ fn paragraph_edge_space_lines_cover_the_boundary_guards() {
         let _ = TracedAssertions::traced_assertions_assert_equals(0, wc1, None).unwrap();
         let mut lg: Option<JustificationAllocation> = None;
         let mut i2 = 0u32;
-        while (i32::from_ne_bytes(((i2) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((lp.allocations.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
+        while ((i2) as i32) < ((u32::try_from((lp.allocations.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32) {
             if lp.allocations[usize::try_from(i2).unwrap_or(0)].kind == GlueKind::CjkLatinSpace {
                 lg = Some((lp.allocations[usize::try_from(i2).unwrap_or(0)]).clone());
             }
@@ -3776,7 +3775,7 @@ fn paragraph_edge_space_lines_cover_the_boundary_guards() {
         let tp = JustifierCoverageTestSupport::justifier_coverage_test_support_justify(&trailing, &lr, &le, IntRange::new(0u32, 2u32), 40 as f64, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None).unwrap();
         let mut wc2 = 0u32;
         let mut i3 = 0u32;
-        while (i32::from_ne_bytes(((i3) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((tp.allocations.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
+        while ((i3) as i32) < ((u32::try_from((tp.allocations.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32) {
             if tp.allocations[usize::try_from(i3).unwrap_or(0)].kind == GlueKind::WordSpace {
                 wc2 = u32::wrapping_add(wc2, 1);
             }
@@ -3785,7 +3784,7 @@ fn paragraph_edge_space_lines_cover_the_boundary_guards() {
         let _ = TracedAssertions::traced_assertions_assert_equals(0, wc2, None).unwrap();
         let mut tg: Option<JustificationAllocation> = None;
         let mut i4 = 0u32;
-        while (i32::from_ne_bytes(((i4) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((tp.allocations.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
+        while ((i4) as i32) < ((u32::try_from((tp.allocations.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32) {
             if tp.allocations[usize::try_from(i4).unwrap_or(0)].kind == GlueKind::CjkLatinSpace {
                 tg = Some((tp.allocations[usize::try_from(i4).unwrap_or(0)]).clone());
             }
@@ -3811,8 +3810,7 @@ fn preferred_inline_object_kinds_chain_until_filled() {
     (JustifierCoverageTestSupport::justifier_coverage_test_support_e(None, None, None)).clone(),
     (JustifierCoverageTestSupport::justifier_coverage_test_support_e(Some(EastAsianSpacingValue::Wide), Some(EastAsianSpacingValue::Wide), Some(true))).clone(),
 ];
-        let mut pb: SortedMapTableBuilder<u32, InlineObjectPreferredStretch> = SortedTable::sorted_table_map_builder::<u32,
-InlineObjectPreferredStretch>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_bytes(((*a) as i32).to_ne_bytes()), i32::from_ne_bytes(((*b) as i32).to_ne_bytes()))));
+        let mut pb: SortedMapTableBuilder<u32, InlineObjectPreferredStretch> = SortedTable::sorted_table_map_builder::<u32, InlineObjectPreferredStretch>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints((*a) as i32, (*b) as i32)));
         pb.put(&(1), &(InlineObjectPreferredStretch::new(InlineObjectPreferredStretchKind::PunctuationTrailing, 4 as f64 as f64, 6 as f64 as f64).unwrap()));
         pb.put(&(0), &(InlineObjectPreferredStretch::new(InlineObjectPreferredStretchKind::Relation, 4 as f64 as f64, 6 as f64 as f64).unwrap()));
         let p = JustifierCoverageTestSupport::justifier_coverage_test_support_justify(&c, &r, &e, IntRange::new(0u32, 2u32), 36 as f64, None, None, None.clone(), None, None, None, None, None, None, None, None, None, None, Some(pb.clone().build()), None, None, None).unwrap();
@@ -3820,7 +3818,7 @@ InlineObjectPreferredStretch>(Arc::new(|a, b| SortedTable::sorted_table_compare_
         let _ = TracedAssertions::traced_assertions_assert_equals_float(0 as f64, p.unfilled_deficit, None).unwrap();
         let mut all = true;
         let mut i = 0u32;
-        while (i32::from_ne_bytes(((i) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((p.allocations.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
+        while ((i) as i32) < ((u32::try_from((p.allocations.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32) {
             if p.allocations[usize::try_from(i).unwrap_or(0)].kind != GlueKind::InlineObjectPunctuationTrailing && p.allocations[usize::try_from(i).unwrap_or(0)].kind != GlueKind::InlineObjectRelation {
                 all = false;
             }
@@ -3861,9 +3859,8 @@ fn preferred_inline_object_stretch_runs_by_semantic_kind() {
     UString::from("InlineObjectBinaryOperator").to_ustring(),
 ];
         let mut i = 0u32;
-        while (i32::from_ne_bytes(((i) as i32).to_ne_bytes())) < (3) {
-            let mut pb: SortedMapTableBuilder<u32, InlineObjectPreferredStretch> = SortedTable::sorted_table_map_builder::<u32,
-InlineObjectPreferredStretch>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_bytes(((*a) as i32).to_ne_bytes()), i32::from_ne_bytes(((*b) as i32).to_ne_bytes()))));
+        while ((i) as i32) < (3) {
+            let mut pb: SortedMapTableBuilder<u32, InlineObjectPreferredStretch> = SortedTable::sorted_table_map_builder::<u32, InlineObjectPreferredStretch>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints((*a) as i32, (*b) as i32)));
             pb.put(&(1), &(InlineObjectPreferredStretch::new(kinds[usize::try_from(i).unwrap_or(0)], 4 as f64 as f64, 8 as f64 as f64).unwrap()));
             let p = JustifierCoverageTestSupport::justifier_coverage_test_support_justify(&c, &r, &e, IntRange::new(0u32, 2u32), 36 as f64, None, None, None.clone(), None, None, None, None, None, None, None, None, None, None, Some(pb.clone().build()), None, None, None).unwrap();
             let a = (p.allocations[0usize]).clone();
@@ -3873,20 +3870,18 @@ InlineObjectPreferredStretch>(Arc::new(|a, b| SortedTable::sorted_table_compare_
             let _ = TracedAssertions::traced_assertions_assert_equals(2, a.priority, None).unwrap();
             i = u32::wrapping_add(i, 1);
         }
-        let mut pb2: SortedMapTableBuilder<u32, InlineObjectPreferredStretch> = SortedTable::sorted_table_map_builder::<u32,
-InlineObjectPreferredStretch>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_bytes(((*a) as i32).to_ne_bytes()), i32::from_ne_bytes(((*b) as i32).to_ne_bytes()))));
+        let mut pb2: SortedMapTableBuilder<u32, InlineObjectPreferredStretch> = SortedTable::sorted_table_map_builder::<u32, InlineObjectPreferredStretch>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints((*a) as i32, (*b) as i32)));
         pb2.put(&(1), &(InlineObjectPreferredStretch::new(InlineObjectPreferredStretchKind::Relation, 4 as f64 as f64, 8 as f64 as f64).unwrap()));
         let at_end = JustifierCoverageTestSupport::justifier_coverage_test_support_justify(&c, &r, &e, IntRange::new(0u32, 1u32), 20 as f64, None, None, None.clone(), None, None, None, None, None, None, None, None, None, None, Some(pb2.clone().build()), None, None, None).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_true(u32::try_from((at_end.allocations.len()) & 0xFFFF_FFFF).unwrap_or(0) == 0, None).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_equals_float(4 as f64, at_end.unfilled_deficit, None).unwrap();
-        let mut pb3: SortedMapTableBuilder<u32, InlineObjectPreferredStretch> = SortedTable::sorted_table_map_builder::<u32,
-InlineObjectPreferredStretch>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_bytes(((*a) as i32).to_ne_bytes()), i32::from_ne_bytes(((*b) as i32).to_ne_bytes()))));
+        let mut pb3: SortedMapTableBuilder<u32, InlineObjectPreferredStretch> = SortedTable::sorted_table_map_builder::<u32, InlineObjectPreferredStretch>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints((*a) as i32, (*b) as i32)));
         pb3.put(&(1), &(InlineObjectPreferredStretch::new(InlineObjectPreferredStretchKind::Relation, 4 as f64 as f64, 8 as f64 as f64).unwrap()));
         let closed = JustifierCoverageTestSupport::justifier_coverage_test_support_justify(&c, &r, &e, IntRange::new(0u32, 2u32), 36 as f64, None, None, None.clone(), None, None, None, None, Some(JustifierCoverageTestSupport::justifier_coverage_test_support_set(&vec![1])), None, None, None, None, None, Some(pb3.clone().build()), None, None, None).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_equals_float(4 as f64, closed.unfilled_deficit, None).unwrap();
         let mut ok = true;
         let mut i5 = 0u32;
-        while (i32::from_ne_bytes(((i5) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((closed.allocations.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
+        while ((i5) as i32) < ((u32::try_from((closed.allocations.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32) {
             if closed.allocations[usize::try_from(i5).unwrap_or(0)].kind == GlueKind::InlineObjectRelation {
                 ok = false;
             }
@@ -3925,7 +3920,7 @@ fn typed_sino_western_space_needs_both_edges_to_pair() {
         let p = JustifierCoverageTestSupport::justifier_coverage_test_support_justify(&c, &r, &e, IntRange::new(0u32, 2u32), 40 as f64, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None).unwrap();
         let mut ok = true;
         let mut i = 0u32;
-        while (i32::from_ne_bytes(((i) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((p.allocations.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
+        while ((i) as i32) < ((u32::try_from((p.allocations.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32) {
             if p.allocations[usize::try_from(i).unwrap_or(0)].kind == GlueKind::WordSpace || p.allocations[usize::try_from(i).unwrap_or(0)].kind == GlueKind::CjkLatinSpace {
                 ok = false;
             }
@@ -3965,7 +3960,7 @@ fn typed_sino_western_space_stretches_from_its_base() {
         let ap = JustifierCoverageTestSupport::justifier_coverage_test_support_justify(&at_cap, &r, &e, IntRange::new(0u32, 2u32), 44 as f64, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None).unwrap();
         let mut n1 = 0u32;
         let mut i1 = 0u32;
-        while (i32::from_ne_bytes(((i1) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((ap.allocations.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
+        while ((i1) as i32) < ((u32::try_from((ap.allocations.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32) {
             if ap.allocations[usize::try_from(i1).unwrap_or(0)].kind == GlueKind::CjkLatinSpace {
                 n1 = u32::wrapping_add(n1, 1);
             }
@@ -3974,7 +3969,7 @@ fn typed_sino_western_space_stretches_from_its_base() {
         let _ = TracedAssertions::traced_assertions_assert_equals(0, n1, None).unwrap();
         let mut n2 = 0u32;
         let mut i2 = 0u32;
-        while (i32::from_ne_bytes(((i2) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((ap.allocations.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
+        while ((i2) as i32) < ((u32::try_from((ap.allocations.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32) {
             if ap.allocations[usize::try_from(i2).unwrap_or(0)].kind == GlueKind::CjkInterChar {
                 n2 = u32::wrapping_add(n2, 1);
             }
@@ -3990,7 +3985,7 @@ fn typed_sino_western_space_stretches_from_its_base() {
         let cp = JustifierCoverageTestSupport::justifier_coverage_test_support_justify(&collapsed, &r, &e, IntRange::new(0u32, 2u32), 36 as f64, None, None, None.clone(), None, Some(0.25f64), Some(0.25f64), None, None, None, None, None, None, None, None, None, None, None).unwrap();
         let mut ok = true;
         let mut i3 = 0u32;
-        while (i32::from_ne_bytes(((i3) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((cp.allocations.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
+        while ((i3) as i32) < ((u32::try_from((cp.allocations.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32) {
             if cp.allocations[usize::try_from(i3).unwrap_or(0)].target_cluster_index == 1 && (cp.allocations[usize::try_from(i3).unwrap_or(0)].delta) > (0 as f64) {
                 ok = false;
             }
@@ -4009,7 +4004,7 @@ fn uniform_object_boundary_opens_the_gate_and_fills() {
         let _ = TracedAssertions::traced_assertions_assert_null_rendered(p.fallback_reason.is_none(), UStr::new(&[45]), None).unwrap();
         let mut has = false;
         let mut i = 0u32;
-        while (i32::from_ne_bytes(((i) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((p.allocations.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
+        while ((i) as i32) < ((u32::try_from((p.allocations.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32) {
             if p.allocations[usize::try_from(i).unwrap_or(0)].kind == GlueKind::InlineObjectBoundary {
                 has = true;
             }
@@ -4073,7 +4068,7 @@ fn mixed_capacity_sino_western_opps_skip_zero_capacity_in_overflow() {
         let p = JustifierCoverageTestSupport::justifier_coverage_test_support_justify(&c, &r, &e, IntRange::new(0u32, 2u32), 40 as f64, None, None, None.clone(), None, None, Some(0.25f64), None, None, None, None, None, None, None, None, None, None, None).unwrap();
         let mut tier2: Vec<JustificationAllocation> = vec![];
         let mut i = 0u32;
-        while (i32::from_ne_bytes(((i) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((p.allocations.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
+        while ((i) as i32) < ((u32::try_from((p.allocations.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32) {
             if p.allocations[usize::try_from(i).unwrap_or(0)].kind == GlueKind::CjkLatinSpace {
                 tier2.push((p.allocations[usize::try_from(i).unwrap_or(0)]).clone());
             }
@@ -4081,7 +4076,7 @@ fn mixed_capacity_sino_western_opps_skip_zero_capacity_in_overflow() {
         }
         let mut idxs: Vec<u32> = vec![];
         let mut i2 = 0u32;
-        while (i32::from_ne_bytes(((i2) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((tier2.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
+        while ((i2) as i32) < ((u32::try_from((tier2.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32) {
             idxs.push(tier2[usize::try_from(i2).unwrap_or(0)].target_cluster_index);
             i2 = u32::wrapping_add(i2, 1);
         }

@@ -4325,7 +4325,7 @@ fn positioned_clusters_by_line_rejects_foreign_lines() {
         LayoutQueries::layout_queries_positioned_clusters_for_line((content).clone(), (foreign).clone()).map_err(|e| IllegalStateException::new(&format!("{}", e)))?;
         Ok(())
 }) }).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_true((u32::from_ne_bytes(((u_string::find_from(&UString::from(format!("{}", format!("{}", error)).as_str()), UString::from("must belong").as_ustr(), 0)) as u32).to_ne_bytes())) <= 2147483647, Some(UString::from(format!("{}", format!("{}", error)).as_str()))).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_true((u_string::find_from(&UString::from(format!("{}", format!("{}", error)).as_str()), UString::from("must belong").as_ustr(), 0)) as u32 <= 2147483647, Some(UString::from(format!("{}", format!("{}", error)).as_str()))).unwrap();
     });
 }
 
@@ -4551,7 +4551,7 @@ fn uniform_text_style_falls_back_when_every_metric_field_differs() {
         let decision = LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_metric(TextRange::new(1u32, 2u32).unwrap(), UStr::new(&[76,97,116,105,110,66,111,120]), 9.0f64, 1.0f64, UStr::new(&[108,97,116,105,110]));
         let paint = RichTextPaint::new(None, Some(Box::new((*crate::org::tiqian::core::rich_text_line_pattern::SOLID_INSTANCE).clone())), RichTextBackgroundPaint::new(Some(0.0f64), Some(0.0f64), Some(0.0f64), Some(0.0f64), Some(RichTextBackgroundMetricPolicy::UniformTextStyle), Some(Box::new((*crate::org::tiqian::core::rich_text_background_draw_style::FILL_INSTANCE).clone()))).unwrap(), Some(0.0f64)).unwrap();
         let mut index = 0u32;
-        while (i32::from_ne_bytes(((index) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((variants.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
+        while ((index) as i32) < ((u32::try_from((variants.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32) {
             let variant = (variants[usize::try_from(index).unwrap_or(0)]).clone();
             let content = LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_result(UStr::new(&[97,98]), &clusters, &vec![
     (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_line(TextRange::new(0u32, 2u32).unwrap(), 0, 1, 0.0f64, 20.0f64, 15.0f64, 0.0f64, 20.0f64)).clone(),
@@ -4645,7 +4645,7 @@ fn decoration_line_y_requires_valid_stroke_and_decoration_roles() {
         LayoutQueries::layout_queries_rich_text_decoration_line_y((content).clone(), LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_plain_segment(TextRange::new(0u32, 1u32).map_err(|e| IllegalStateException::new(&format!("{}", e)))?).map_err(|e| IllegalStateException::new(&format!("{}", e)))?, 1.0f64).map_err(|e| IllegalStateException::new(&format!("{}", e)))?;
         Ok(())
 }) }).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_true((u32::from_ne_bytes(((u_string::find_from(&UString::from(format!("{}", format!("{}", error)).as_str()), UString::from("underline and line-through").as_ustr(), 0)) as u32).to_ne_bytes())) <= 2147483647, Some(UString::from(format!("{}", format!("{}", error)).as_str()))).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_true((u_string::find_from(&UString::from(format!("{}", format!("{}", error)).as_str()), UString::from("underline and line-through").as_ustr(), 0)) as u32 <= 2147483647, Some(UString::from(format!("{}", format!("{}", error)).as_str()))).unwrap();
         let with_span_style = LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_result(UStr::new(&[97,98]), &vec![
     (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_cluster(TextRange::new(0u32, 1u32).unwrap(), UStr::new(&[97]), 10.0f64)).clone(),
 ], &vec![
@@ -4846,7 +4846,7 @@ fn selection_word_kind_covers_every_han_block() {
     supplementary.clone(),
 ];
         let mut index = 0u32;
-        while (i32::from_ne_bytes(((index) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((values.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
+        while ((index) as i32) < ((u32::try_from((values.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32) {
             let text = (values[usize::try_from(index).unwrap_or(0)]).clone();
             let content = LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_result(text.as_ustr(), &vec![], &vec![
     (LayoutQueriesResidualCoverageTestHelpers::layout_queries_residual_coverage_test_helpers_line(TextRange::new(0u32, u_string::unit_count(&(text))).unwrap(), 0, 0, 0.0f64, 20.0f64, 15.0f64, 0.0f64, 0.0f64)).clone(),
@@ -5756,18 +5756,18 @@ impl LayoutQueriesResidualCoverageTestHelpers {
         let mut output = Vec::<u16>::new();
         if let Some(&unit) = output.last() {
             if unit >= 55296 && unit <= 56319 && !UString::from("[").is_empty() {
-                if !UString::from("[").encode_utf16().next().map_or(false, |head| head >= 56320 && head <= 57343) {
+                if !match (UString::from("[")).encode_utf16().next() { Some(head) => head >= 56320 && head <= 57343, None => false } {
                     return Err(UStringFault::UnpairedSurrogate { unit: u32::from(unit) });
                 }
             }
         }
         output.extend(UString::from("[").encode_utf16());
         let mut index = 0u32;
-        while (i32::from_ne_bytes(((index) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((values.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
-            if i32::from_ne_bytes(((index) as i32).to_ne_bytes()) > (0) {
+        while ((index) as i32) < ((u32::try_from((values.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32) {
+            if index as i32 > (0) {
                 if let Some(&unit) = output.last() {
                     if unit >= 55296 && unit <= 56319 && !UString::from(", ").is_empty() {
-                        if !UString::from(", ").encode_utf16().next().map_or(false, |head| head >= 56320 && head <= 57343) {
+                        if !match (UString::from(", ")).encode_utf16().next() { Some(head) => head >= 56320 && head <= 57343, None => false } {
                             return Err(UStringFault::UnpairedSurrogate { unit: u32::from(unit) });
                         }
                     }
@@ -5776,7 +5776,7 @@ impl LayoutQueriesResidualCoverageTestHelpers {
             }
             if let Some(&unit) = output.last() {
                 if unit >= 55296 && unit <= 56319 && !TestTraceRender::test_trace_render_cap(UString::from(format!("{}", (values[usize::try_from(index).unwrap_or(0)]).clone().to_string()).as_str()).as_ustr())?.is_empty() {
-                    if !TestTraceRender::test_trace_render_cap(UString::from(format!("{}", (values[usize::try_from(index).unwrap_or(0)]).clone().to_string()).as_str()).as_ustr())?.encode_utf16().next().map_or(false, |head| head >= 56320 && head <= 57343) {
+                    if !match (TestTraceRender::test_trace_render_cap(UString::from(format!("{}", (values[usize::try_from(index).unwrap_or(0)]).clone().to_string()).as_str()).as_ustr())?).encode_utf16().next() { Some(head) => head >= 56320 && head <= 57343, None => false } {
                         return Err(UStringFault::UnpairedSurrogate { unit: u32::from(unit) });
                     }
                 }
@@ -5786,7 +5786,7 @@ impl LayoutQueriesResidualCoverageTestHelpers {
         }
         if let Some(&unit) = output.last() {
             if unit >= 55296 && unit <= 56319 && !UString::from("]").is_empty() {
-                if !UString::from("]").encode_utf16().next().map_or(false, |head| head >= 56320 && head <= 57343) {
+                if !match (UString::from("]")).encode_utf16().next() { Some(head) => head >= 56320 && head <= 57343, None => false } {
                     return Err(UStringFault::UnpairedSurrogate { unit: u32::from(unit) });
                 }
             }
@@ -5799,18 +5799,18 @@ impl LayoutQueriesResidualCoverageTestHelpers {
         let mut output = Vec::<u16>::new();
         if let Some(&unit) = output.last() {
             if unit >= 55296 && unit <= 56319 && !UString::from("[").is_empty() {
-                if !UString::from("[").encode_utf16().next().map_or(false, |head| head >= 56320 && head <= 57343) {
+                if !match (UString::from("[")).encode_utf16().next() { Some(head) => head >= 56320 && head <= 57343, None => false } {
                     return Err(UStringFault::UnpairedSurrogate { unit: u32::from(unit) });
                 }
             }
         }
         output.extend(UString::from("[").encode_utf16());
         let mut index = 0u32;
-        while (i32::from_ne_bytes(((index) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((values.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
-            if i32::from_ne_bytes(((index) as i32).to_ne_bytes()) > (0) {
+        while ((index) as i32) < ((u32::try_from((values.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32) {
+            if index as i32 > (0) {
                 if let Some(&unit) = output.last() {
                     if unit >= 55296 && unit <= 56319 && !UString::from(", ").is_empty() {
-                        if !UString::from(", ").encode_utf16().next().map_or(false, |head| head >= 56320 && head <= 57343) {
+                        if !match (UString::from(", ")).encode_utf16().next() { Some(head) => head >= 56320 && head <= 57343, None => false } {
                             return Err(UStringFault::UnpairedSurrogate { unit: u32::from(unit) });
                         }
                     }
@@ -5819,7 +5819,7 @@ impl LayoutQueriesResidualCoverageTestHelpers {
             }
             if let Some(&unit) = output.last() {
                 if unit >= 55296 && unit <= 56319 && !(values[usize::try_from(index).unwrap_or(0)]).clone().to_string().is_empty() {
-                    if !(values[usize::try_from(index).unwrap_or(0)]).clone().to_string().encode_utf16().next().map_or(false, |head| head >= 56320 && head <= 57343) {
+                    if !match ((values[usize::try_from(index).unwrap_or(0)]).clone().to_string()).encode_utf16().next() { Some(head) => head >= 56320 && head <= 57343, None => false } {
                         return Err(UStringFault::UnpairedSurrogate { unit: u32::from(unit) });
                     }
                 }
@@ -5829,7 +5829,7 @@ impl LayoutQueriesResidualCoverageTestHelpers {
         }
         if let Some(&unit) = output.last() {
             if unit >= 55296 && unit <= 56319 && !UString::from("]").is_empty() {
-                if !UString::from("]").encode_utf16().next().map_or(false, |head| head >= 56320 && head <= 57343) {
+                if !match (UString::from("]")).encode_utf16().next() { Some(head) => head >= 56320 && head <= 57343, None => false } {
                     return Err(UStringFault::UnpairedSurrogate { unit: u32::from(unit) });
                 }
             }

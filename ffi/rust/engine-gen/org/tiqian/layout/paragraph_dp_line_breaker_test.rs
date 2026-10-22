@@ -696,7 +696,7 @@ fn trailing_mandatory_break_emits_paragraph_end_line() {
 ], 200 as f64, None, Some(vec![1]), None, None, None, None).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_equals_rendered(UStr::new(&[77,97,110,100,97,116,111,114,121,66,114,101,97,107]), UString::from(s.lines[0usize].end_reason.name()).as_ustr(), None).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_equals_rendered(UStr::new(&[80,97,114,97,103,114,97,112,104,69,110,100]), UString::from(s.lines[usize::try_from(u32::wrapping_sub(u32::try_from((s.lines.len()) & 0xFFFF_FFFF).unwrap_or(0), 1)).unwrap_or(0)].end_reason.name()).as_ustr(), None).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_true((i32::from_ne_bytes((((s.lines[usize::try_from(u32::wrapping_sub(u32::try_from((s.lines.len()) & 0xFFFF_FFFF).unwrap_or(0), 1)).unwrap_or(0)]).clone().cluster_range.start) as i32).to_ne_bytes())) > (i32::from_ne_bytes((((s.lines[usize::try_from(u32::wrapping_sub(u32::try_from((s.lines.len()) & 0xFFFF_FFFF).unwrap_or(0), 1)).unwrap_or(0)]).clone().cluster_range.end) as i32).to_ne_bytes())), None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_true(((s.lines[usize::try_from(u32::wrapping_sub(u32::try_from((s.lines.len()) & 0xFFFF_FFFF).unwrap_or(0), 1)).unwrap_or(0)]).clone().cluster_range.start) as i32 > (((s.lines[usize::try_from(u32::wrapping_sub(u32::try_from((s.lines.len()) & 0xFFFF_FFFF).unwrap_or(0), 1)).unwrap_or(0)]).clone().cluster_range.end) as i32), None).unwrap();
     });
 }
 
@@ -709,8 +709,8 @@ fn never_breaks_inside_unbreakable_range() {
         {
             let _g1 = s.lines.clone();
             for l in &_g1 {
-                if i32::from_ne_bytes((((l.cluster_range).clone().start) as i32).to_ne_bytes()) <= i32::from_ne_bytes((((l.cluster_range).clone().end) as i32).to_ne_bytes()) {
-                    let _ = TracedAssertions::traced_assertions_assert_true(!((i32::from_ne_bytes((((l.cluster_range).clone().start) as i32).to_ne_bytes())) >= 4 && (i32::from_ne_bytes((((l.cluster_range).clone().start) as i32).to_ne_bytes())) <= 6), Some(UString::from(format!("{}", { let mut __s = UString::new(); __s += &(UString::from("break inside unbreakable range: ")); __s += &(UString::from(format!("{}", crate::runtime::int_text::IntText::int_text((l.cluster_range).clone().start)).as_str())); __s += &(UString::from("..")); __s += &(UString::from(format!("{}", crate::runtime::int_text::IntText::int_text((l.cluster_range).clone().end)).as_str())); __s }).as_str()))).unwrap();
+                if l.cluster_range.clone().start as i32 <= (l.cluster_range).clone().end as i32 {
+                    let _ = TracedAssertions::traced_assertions_assert_true(!(((l.cluster_range).clone().start) as i32 >= 4 && (((l.cluster_range).clone().start) as i32) <= 6), Some(UString::from(format!("{}", { let mut __s = UString::new(); __s += &(UString::from("break inside unbreakable range: ")); __s += &(UString::from(format!("{}", crate::runtime::int_text::IntText::int_text((l.cluster_range).clone().start)).as_str())); __s += &(UString::from("..")); __s += &(UString::from(format!("{}", crate::runtime::int_text::IntText::int_text((l.cluster_range).clone().end)).as_str())); __s }).as_str()))).unwrap();
                 }
             }
         }
@@ -728,7 +728,7 @@ fn kinsoku_avoidance_routes_around_forbidden_line_start() {
         {
             let _g1 = s.lines.clone();
             for l in &_g1 {
-                if i32::from_ne_bytes((((l.cluster_range).clone().start) as i32).to_ne_bytes()) <= i32::from_ne_bytes((((l.cluster_range).clone().end) as i32).to_ne_bytes()) {
+                if l.cluster_range.clone().start as i32 <= (l.cluster_range).clone().end as i32 {
                     let _ = TracedAssertions::traced_assertions_assert_true((l.cluster_range).clone().start != 6 || (l.repair).clone() != None, Some(UString::from("。 must not start a line without a recorded repair"))).unwrap();
                 }
             }

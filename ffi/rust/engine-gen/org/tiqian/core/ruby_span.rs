@@ -47,24 +47,23 @@ None => UStr::new(&[]) }; __s += &(UString::from(")")); __s }).as_str());
     }
 }
 
-fn ruby_span_kind_order(v: &RubyKind) -> i32 {
+fn ruby_span_order_0(v: &RubyKind) -> i32 {
     match v {
         RubyKind::Pinyin => 0,
         RubyKind::Bopomofo => 1,
     }
 }
+
 pub fn compare_ruby_span(a: &RubySpan, b: &RubySpan) -> i32 {
     let cmp_base_range = compare_text_range(&a.base_range, &b.base_range);
     if cmp_base_range != 0 { return cmp_base_range; }
-    let cmp_text = SortedTable::sorted_table_compare_strings(a.text.as_ustr(), b.text.as_ustr());
+    let cmp_text = SortedTable::sorted_table_compare_strings((&a.text).as_ustr(), (&b.text).as_ustr());
     if cmp_text != 0 { return cmp_text; }
-    let mut cmp_font_families = 0; for (av, bv) in a.font_families.iter().zip(b.font_families.iter()) { cmp_font_families = match av.cmp(bv) { core::cmp::Ordering::Less => -1, core::cmp::Ordering::Equal => 0,
-core::cmp::Ordering::Greater => 1 }; if cmp_font_families != 0 { break; } }
-    if cmp_font_families == 0 { cmp_font_families = match a.font_families.len().cmp(&b.font_families.len()) { core::cmp::Ordering::Less => -1, core::cmp::Ordering::Equal => 0, core::cmp::Ordering::Greater => 1 }; }
+    let cmp_font_families = { let mut cmp = 0; for (av, bv) in (&a.font_families).iter().zip((&b.font_families).iter()) { cmp = SortedTable::sorted_table_compare_strings((av).as_ustr(), (bv).as_ustr()); if cmp != 0 { break; } } if cmp == 0 { cmp = match (&a.font_families).len().cmp(&(&b.font_families).len()) { core::cmp::Ordering::Less => -1, core::cmp::Ordering::Equal => 0, core::cmp::Ordering::Greater => 1 }; } cmp };
     if cmp_font_families != 0 { return cmp_font_families; }
-    let cmp_kind = match ruby_span_kind_order(&a.kind).cmp(&ruby_span_kind_order(&b.kind)) { core::cmp::Ordering::Less => -1, core::cmp::Ordering::Equal => 0, core::cmp::Ordering::Greater => 1 };
+    let cmp_kind = match ruby_span_order_0(&a.kind).cmp(&ruby_span_order_0(&b.kind)) { core::cmp::Ordering::Less => -1, core::cmp::Ordering::Equal => 0, core::cmp::Ordering::Greater => 1 };
     if cmp_kind != 0 { return cmp_kind; }
-    let cmp_locale = match (&a.locale, &b.locale) { (None, None) => 0, (None, Some(_)) => -1, (Some(_), None) => 1, (Some(av), Some(bv)) => match av.cmp(bv) { core::cmp::Ordering::Less => -1, core::cmp::Ordering::Equal => 0, core::cmp::Ordering::Greater => 1 } };
+    let cmp_locale = match (&a.locale, &b.locale) { (None, None) => 0, (None, Some(_)) => -1, (Some(_), None) => 1, (Some(av), Some(bv)) => SortedTable::sorted_table_compare_strings((av).as_ustr(), (bv).as_ustr()) };
     if cmp_locale != 0 { return cmp_locale; }
     0
 }

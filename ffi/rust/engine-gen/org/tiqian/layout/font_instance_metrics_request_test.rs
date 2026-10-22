@@ -323,7 +323,7 @@ Some(ParagraphStyle::new(Some(LastLineAlignment::Start), Some(WritingMode::Horiz
         let mut cjk = false;
         let mut latin = false;
         let mut i = 0u32;
-        while (i32::from_ne_bytes(((i) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((match u32::try_from(crate::org::tiqian::layout::font_instance_metrics_request_test_support::FONT_INSTANCE_METRICS_REQUEST_TEST_SUPPORT_RECORDED.lock().unwrap_or_else(|e| e.into_inner()).len()) { Ok(value) => value, Err(_) => u32::MAX }) as i32).to_ne_bytes())) {
+        while ((i) as i32) < ((match u32::try_from(crate::org::tiqian::layout::font_instance_metrics_request_test_support::FONT_INSTANCE_METRICS_REQUEST_TEST_SUPPORT_RECORDED.lock().unwrap_or_else(|e| e.into_inner()).len()) { Ok(value) => value, Err(_) => u32::MAX }) as i32) {
             let r = (crate::org::tiqian::layout::font_instance_metrics_request_test_support::FONT_INSTANCE_METRICS_REQUEST_TEST_SUPPORT_RECORDED.lock().unwrap_or_else(|e| e.into_inner())[match usize::try_from(i) { Ok(value) => value, Err(_) => 0usize }]).clone();
             if r.role == FontRole::CjkText && r.font_weight == 400 && !r.italic && (r.face_selection_text).to_ustring() == UString::from("中") {
                 cjk = true;
@@ -346,7 +346,7 @@ fn face_selection_uses_the_display_text_that_was_actually_shaped() {
         FontInstanceMetricsRequestTestSupport::font_instance_metrics_request_test_support_recording_engine().unwrap().layout(LayoutInput::new(TiqianTextContent::new(&(UStr::new(&[8212,8212])), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![])), Some(TextStyle::new(Some(vec![UString::from("Fixture Sans").to_ustring()]), Some(18.0f64), Some(UString::from("zh-Hans")), Some(400), Some(false), Some(0.0), Some(InlineAttachment::None))), Some(ParagraphStyle::new(Some(LastLineAlignment::Start), Some(WritingMode::HorizontalTb), None, None, Some(Ic::zero()), Some(MeasureAdaptiveFirstLineIndent::new(Some(14.0), Some(1.0), Some(2.0))), Some(LineLengthGrid::new(Some(true), None)), Some(RubyLineHeightMode::PerLine), Some(ParagraphStyle::PARAGRAPH_STYLE_DEFAULT_INLINE_OBJECT_MINIMUM_CLEARANCE_EM), Some(ParagraphStyle::PARAGRAPH_STYLE_DEFAULT_EMPHASIS_DOT_GAP_EM))), LayoutConstraints::new(180.0f64, Some(f64::INFINITY), Some(2147483647)).unwrap(), Some((*crate::org::tiqian::core::built_in_layout_profiles::BUILT_IN_LAYOUT_PROFILES_CLREQ_HORIZONTAL).clone()), Some(vec![]), Some(vec![]), Some(vec![]), Some(vec![]))).unwrap();
         let mut found = false;
         let mut i = 0u32;
-        while (i32::from_ne_bytes(((i) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((match u32::try_from(crate::org::tiqian::layout::font_instance_metrics_request_test_support::FONT_INSTANCE_METRICS_REQUEST_TEST_SUPPORT_RECORDED.lock().unwrap_or_else(|e| e.into_inner()).len()) { Ok(value) => value, Err(_) => u32::MAX }) as i32).to_ne_bytes())) {
+        while ((i) as i32) < ((match u32::try_from(crate::org::tiqian::layout::font_instance_metrics_request_test_support::FONT_INSTANCE_METRICS_REQUEST_TEST_SUPPORT_RECORDED.lock().unwrap_or_else(|e| e.into_inner()).len()) { Ok(value) => value, Err(_) => u32::MAX }) as i32) {
             let r = (crate::org::tiqian::layout::font_instance_metrics_request_test_support::FONT_INSTANCE_METRICS_REQUEST_TEST_SUPPORT_RECORDED.lock().unwrap_or_else(|e| e.into_inner())[match usize::try_from(i) { Ok(value) => value, Err(_) => 0usize }]).clone();
             if r.face_selection_text.to_ustring() == UString::from("⸺") {
                 found = true;
@@ -367,7 +367,7 @@ fn ruby_metrics_use_the_same_italic_instance_as_ruby_shaping() {
 ]), Some(vec![]), Some(vec![]))).unwrap();
         let mut found = false;
         let mut i = 0u32;
-        while (i32::from_ne_bytes(((i) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((match u32::try_from(crate::org::tiqian::layout::font_instance_metrics_request_test_support::FONT_INSTANCE_METRICS_REQUEST_TEST_SUPPORT_RECORDED.lock().unwrap_or_else(|e| e.into_inner()).len()) { Ok(value) => value, Err(_) => u32::MAX }) as i32).to_ne_bytes())) {
+        while ((i) as i32) < ((match u32::try_from(crate::org::tiqian::layout::font_instance_metrics_request_test_support::FONT_INSTANCE_METRICS_REQUEST_TEST_SUPPORT_RECORDED.lock().unwrap_or_else(|e| e.into_inner()).len()) { Ok(value) => value, Err(_) => u32::MAX }) as i32) {
             let r = (crate::org::tiqian::layout::font_instance_metrics_request_test_support::FONT_INSTANCE_METRICS_REQUEST_TEST_SUPPORT_RECORDED.lock().unwrap_or_else(|e| e.into_inner())[match usize::try_from(i) { Ok(value) => value, Err(_) => 0usize }]).clone();
             if r.role == FontRole::LatinText && (r.face_selection_text).to_ustring() == UString::from("zhōng") && r.italic {
                 found = true;

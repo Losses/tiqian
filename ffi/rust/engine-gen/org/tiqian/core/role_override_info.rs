@@ -35,15 +35,15 @@ impl RoleOverrideInfo {
 pub fn compare_role_override_info(a: &RoleOverrideInfo, b: &RoleOverrideInfo) -> i32 {
     let cmp_range = compare_text_range(&a.range, &b.range);
     if cmp_range != 0 { return cmp_range; }
-    let cmp_source_text = SortedTable::sorted_table_compare_strings(a.source_text.as_ustr(), b.source_text.as_ustr());
+    let cmp_source_text = SortedTable::sorted_table_compare_strings((&a.source_text).as_ustr(), (&b.source_text).as_ustr());
     if cmp_source_text != 0 { return cmp_source_text; }
-    let cmp_original_role = SortedTable::sorted_table_compare_strings(a.original_role.as_ustr(), b.original_role.as_ustr());
+    let cmp_original_role = SortedTable::sorted_table_compare_strings((&a.original_role).as_ustr(), (&b.original_role).as_ustr());
     if cmp_original_role != 0 { return cmp_original_role; }
-    let cmp_overridden_role = SortedTable::sorted_table_compare_strings(a.overridden_role.as_ustr(), b.overridden_role.as_ustr());
+    let cmp_overridden_role = SortedTable::sorted_table_compare_strings((&a.overridden_role).as_ustr(), (&b.overridden_role).as_ustr());
     if cmp_overridden_role != 0 { return cmp_overridden_role; }
-    let cmp_source = SortedTable::sorted_table_compare_strings(a.source.as_ustr(), b.source.as_ustr());
+    let cmp_source = SortedTable::sorted_table_compare_strings((&a.source).as_ustr(), (&b.source).as_ustr());
     if cmp_source != 0 { return cmp_source; }
-    let cmp_reason = SortedTable::sorted_table_compare_strings(a.reason.as_ustr(), b.reason.as_ustr());
+    let cmp_reason = SortedTable::sorted_table_compare_strings((&a.reason).as_ustr(), (&b.reason).as_ustr());
     if cmp_reason != 0 { return cmp_reason; }
     0
 }

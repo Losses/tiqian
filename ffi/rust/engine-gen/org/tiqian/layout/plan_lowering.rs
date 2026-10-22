@@ -44,7 +44,7 @@ impl PlanLowering {
     pub(crate) fn plan_lowering_style_at(result: LayoutResult, offset: u32) -> TextStyle {
         let span_src = (((result.input).clone().content).clone().spans).clone();
         for span in &span_src {
-            if i32::from_ne_bytes(((offset) as i32).to_ne_bytes()) >= i32::from_ne_bytes((((span.range).clone().start) as i32).to_ne_bytes()) && (i32::from_ne_bytes(((offset) as i32).to_ne_bytes())) < (i32::from_ne_bytes((((span.range).clone().end) as i32).to_ne_bytes())) {
+            if offset as i32 >= (span.range).clone().start as i32 && ((offset) as i32) < (((span.range).clone().end) as i32) {
                 return ((span.style).clone()).clone();
             }
         }
@@ -64,14 +64,14 @@ impl PlanLowering {
                 let prior_natural = natural_b.get(&(k).to_ustring());
                 let prior_n = (prior_natural).unwrap_or(0.0f64);
                 natural_b.put(&(k).to_ustring(), &(prior_n + glyph.advance));
-                if i32::from_ne_bytes(((u32::try_from((run.open_type_features.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes()) > (0) {
+                if u32::try_from((run.open_type_features.len()) & 0xFFFF_FFFF).unwrap_or(0) as i32 > (0) {
                     let mut fs = features_b.get(&(k).to_ustring());
                     if fs.is_none() {
                         fs = Some(vec![].clone());
                     }
                     for fi in 0..match u32::try_from(run.open_type_features.len()) { Ok(value) => value, Err(_) => u32::MAX } {
                         let f = (run.open_type_features[usize::try_from(fi).unwrap_or(0)]).clone();
-                        if u32::from_ne_bytes(((match (fs).as_ref().unwrap().iter().position(|e| e == &f) { Some(v) => i32::from_ne_bytes(u32::try_from(v).unwrap_or(0).to_ne_bytes()), None => -1 }) as u32).to_ne_bytes()) > 2147483647 {
+                        if ({ let __hay = &((fs).as_ref().unwrap()); let __n = __hay.len(); let mut __i = 0usize; let mut __found: i32 = -1; while __i < __n { if __hay[__i] == f { __found = u32::try_from(__i).unwrap_or(0) as i32; break; } __i += 1; } __found }) as u32 > 2147483647 {
                             (fs).as_mut().unwrap().push(f.clone());
                         }
                     }
@@ -149,7 +149,7 @@ impl PlanLowering {
                 for p in &_g1 {
                     let c = (result.clusters[usize::try_from(p.cluster_index).unwrap_or(0)]).clone();
                     let ck = PlanLowering::plan_lowering_range_key((c.range).clone());
-                    if !((i32::from_ne_bytes(((u_string::unit_count(&((c.display_text).to_ustring()))) as i32).to_ne_bytes())) > (0) || zero.has(&(ck).to_ustring()) || render_evidence && inline_advance.has(&(ck).to_ustring())) {
+                    if !((u_string::unit_count(&((c.display_text).to_ustring()))) as i32 > (0) || zero.has(&(ck).to_ustring()) || render_evidence && inline_advance.has(&(ck).to_ustring())) {
                         continue;
                     }
                     let nat_w = if natural.has(&(ck).to_ustring()) { (natural.get(&(ck).to_ustring())).unwrap() } else { c.advance };
@@ -174,7 +174,7 @@ impl PlanLowering {
                         dash = match &(sd) { Some(__option2) => (__option2.strategy).clone(), None => None };
                         lang = match &(sd) { Some(__option3) => (__option3.language).clone(), None => None };
                         face = match &(sd) { Some(__option4) => (__option4.resolved_face).clone(), None => None };
-                        g_ids = if glyph_ids.has(&(ck).to_ustring()) && (u32::try_from(((glyph_ids.get(&(ck).to_ustring())).as_ref().map_or(0, |v| v.len())) & 0xFFFF_FFFF).unwrap_or(0)) > (0) { Some(UString::from(format!("{}", { let _jtmp = glyph_ids.get(&(ck).to_ustring()); let joined = _jtmp.as_ref().unwrap(); let mut out = String::new(); let n = joined.len(); let mut index = 0usize; while index < n { if index > 0 { out.push_str(","); } let _ = write!(out, "{}", joined[index]); index += 1; } UString::from(out.as_str()) }).as_str())) } else { None };
+                        g_ids = if glyph_ids.has(&(ck).to_ustring()) && (u32::try_from((u32::try_from(((glyph_ids.get(&(ck).to_ustring())).as_ref().map_or(0usize, |v| v.len())) & 0xFFFF_FFFF).unwrap_or(0)) & 0xFFFF_FFFF).unwrap_or(0)) > (0) { Some(UString::from(format!("{}", { let _jtmp = glyph_ids.get(&(ck).to_ustring()); let joined = _jtmp.as_ref().unwrap(); let mut out = String::new(); let n = joined.len(); let mut index = 0usize; while index < n { if index > 0 { out.push_str(","); } let _ = write!(out, "{}", joined[index]); index += 1; } UString::from(out.as_str()) }).as_str())) } else { None };
                         ev = match &(sd) { Some(__option5) => (Some((__option5.reason).to_ustring())).clone(), None => None };
                         let pd = punct.get(&(ck).to_ustring());
                         if match &(pd) { Some(__option6) => __option6.ink_containment_applied && __option6.ink_containment_body_floor.is_some(), None => false } {
@@ -183,7 +183,7 @@ impl PlanLowering {
                         }
                         let fd_src = ((result.debug).clone().font_decisions).clone();
                         for fd in &fd_src {
-                            if i32::from_ne_bytes((((c.range).clone().start) as i32).to_ne_bytes()) >= i32::from_ne_bytes((((fd.range).clone().start) as i32).to_ne_bytes()) && (i32::from_ne_bytes((((c.range).clone().end) as i32).to_ne_bytes())) <= i32::from_ne_bytes((((fd.range).clone().end) as i32).to_ne_bytes()) && (fd.role).to_ustring() == UString::from(FontRole::LatinText.name()) {
+                            if c.range.clone().start as i32 >= (fd.range).clone().start as i32 && (((c.range).clone().end) as i32) <= (fd.range).clone().end as i32 && (fd.role).to_ustring() == UString::from(FontRole::LatinText.name()) {
                                 latin = true;
                             }
                         }
@@ -191,7 +191,7 @@ impl PlanLowering {
                         style_delta = if cs != ((result.input).clone().text_style).clone() { Some(PlanStyleDelta { font_size: if cs.font_size != ((result.input).clone().text_style).clone().font_size { Some(cs.font_size) } else { None }, font_weight: if cs.font_weight != ((result.input).clone().text_style).clone().font_weight { Some(cs.font_weight) } else { None }, italic: if cs.italic != ((result.input).clone().text_style).clone().italic { Some(cs.italic) } else { None } }) } else { None };
                     }
                     let feats = features.get(&(ck).to_ustring());
-                    cells.push(PlanCell { range_start: (c.range).clone().start, range_end: (c.range).clone().end, source: (c.text).to_ustring().clone(), display: (c.display_text).to_ustring().clone(), draw_x: p.draw_x, natural_width: nat_w, leading_layout_advance: c.leading_layout_advance, shaping_boundary: (i32::from_ne_bytes(((u32::wrapping_sub((c.range).clone().end, (c.range).clone().start)) as i32).to_ne_bytes())) > (1), open_type_features: match &(feats) { Some(__option8) => (*__option8).clone(), None => vec![] }, render_font_family: render_fam.clone(), dash_strategy: dash.clone(), shaping_language: lang.clone(), resolved_face: face.clone(), glyph_ids: g_ids.clone(), shaping_evidence: ev.clone(), punctuation_ink_floor: ink_floor, punctuation_body_width: body_w, latin: latin, advance: adv_override, inline_object: inline_obj, style_delta: style_delta });
+                    cells.push(PlanCell { range_start: (c.range).clone().start, range_end: (c.range).clone().end, source: (c.text).to_ustring().clone(), display: (c.display_text).to_ustring().clone(), draw_x: p.draw_x, natural_width: nat_w, leading_layout_advance: c.leading_layout_advance, shaping_boundary: ((u32::wrapping_sub((c.range).clone().end, (c.range).clone().start)) as i32) > (1), open_type_features: match &(feats) { Some(__option8) => (*__option8).clone(), None => vec![] }, render_font_family: render_fam.clone(), dash_strategy: dash.clone(), shaping_language: lang.clone(), resolved_face: face.clone(), glyph_ids: g_ids.clone(), shaping_evidence: ev.clone(), punctuation_ink_floor: ink_floor, punctuation_body_width: body_w, latin: latin, advance: adv_override, inline_object: inline_obj, style_delta: style_delta });
                 }
             }
             lines.push(PlanLine { range_start: (line.range).clone().start, range_end: (line.range).clone().end, top: line.top, bottom: line.bottom, baseline: line.baseline, indent: line.indent, visual_width: line.visual_width, hyphen_advance: line.hyphen_advance, end_reason: PlanLowering::plan_lowering_end_reason_from(line.end_reason), cells: cells });
@@ -214,20 +214,20 @@ impl PlanLowering {
                 }
             }
             let mut offsets: Vec<u32> = vec![];
-            for oi in 0..u32::from_ne_bytes(((edge_start.size()) as u32).to_ne_bytes()) {
-                offsets.push(u32::from_ne_bytes(((u_string::parse_i32(&(edge_start.key_at({ let v: u32 = oi; i32::from_ne_bytes(v.to_ne_bytes()) }))).unwrap()) as u32).to_ne_bytes()));
+            for oi in 0..((edge_start.size()) as u32) {
+                offsets.push((u_string::parse_i32(&(edge_start.key_at({ let v: u32 = oi; v as i32 }))).unwrap()) as u32);
             }
-            for ei in 0..u32::from_ne_bytes(((edge_end.size()) as u32).to_ne_bytes()) {
-                let ev = u_string::parse_i32(&(edge_end.key_at({ let v: u32 = ei; i32::from_ne_bytes(v.to_ne_bytes()) })));
-                if u32::from_ne_bytes(((match offsets.iter().position(|e| e == &u32::from_ne_bytes(((ev.unwrap_or(-1)) as u32).to_ne_bytes())) { Some(v) => i32::from_ne_bytes(u32::try_from(v).unwrap_or(0).to_ne_bytes()), None => -1 }) as u32).to_ne_bytes()) > 2147483647 {
-                    offsets.push(u32::from_ne_bytes(((ev.unwrap()) as u32).to_ne_bytes()));
+            for ei in 0..((edge_end.size()) as u32) {
+                let ev = u_string::parse_i32(&(edge_end.key_at({ let v: u32 = ei; v as i32 })));
+                if ({ let __hay = &(offsets); let __n = __hay.len(); let mut __i = 0usize; let mut __found: i32 = -1; while __i < __n { if __hay[__i] == ev.unwrap_or(-1) as u32 { __found = u32::try_from(__i).unwrap_or(0) as i32; break; } __i += 1; } __found }) as u32 > 2147483647 {
+                    offsets.push((ev.unwrap()) as u32);
                 }
             }
             let mut oi = 1u32;
-            while (i32::from_ne_bytes(((oi) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((offsets.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
+            while ((oi) as i32) < ((u32::try_from((offsets.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32) {
                 let ov = offsets[usize::try_from(oi).unwrap_or(0)];
                 let mut oj = oi;
-                while (oj) > (0) && ({ let v: u32 = offsets[usize::try_from(u32::wrapping_sub(oj, 1)).unwrap_or(0)]; i32::from_ne_bytes(v.to_ne_bytes()) }) > ({ let v: u32 = ov; i32::from_ne_bytes(v.to_ne_bytes()) }) {
+                while (oj) > (0) && ({ let v: u32 = offsets[usize::try_from(u32::wrapping_sub(oj, 1)).unwrap_or(0)]; v as i32 }) > ({ let v: u32 = ov; v as i32 }) {
                     { while offsets.len() <= usize::try_from(oj).unwrap_or(0) { offsets.push(0); } offsets[usize::try_from(oj).unwrap_or(0)] = offsets[usize::try_from(u32::wrapping_sub(oj, 1)).unwrap_or(0)]; };
                     oj = u32::wrapping_sub(oj, 1);
                 }
@@ -260,7 +260,7 @@ impl PlanLowering {
             let dot_src = ((result.debug).clone().decoration_decisions).clone();
             for d in &dot_src {
                 if d.applied && (d.kind).to_ustring() == UString::from(DecorationKind::Emphasis.name()) && (d.dot_diameter) > (0 as f64) {
-                    emphasis_dots.push(PlanEmphasisDot { cluster_range_start: Some(PlanLowering::plan_lowering_f32(i32::from_ne_bytes((((d.cluster_range).clone().start) as i32).to_ne_bytes()) as f64)), anchor_x: d.anchor_x, anchor_y: d.anchor_y, dot_diameter: d.dot_diameter });
+                    emphasis_dots.push(PlanEmphasisDot { cluster_range_start: Some(PlanLowering::plan_lowering_f32(((d.cluster_range).clone().start) as i32 as f64)), anchor_x: d.anchor_x, anchor_y: d.anchor_y, dot_diameter: d.dot_diameter });
                 }
             }
         }

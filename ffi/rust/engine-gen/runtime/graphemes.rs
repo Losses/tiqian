@@ -766,7 +766,7 @@ impl Graphemes {
     }
 
     pub fn graphemes_at(s: &UStr, index: i32) -> Option<UString> {
-    let __units = u_string::units(&s);
+    let __units = s.as_slice();
     let __count = u_string::unit_count(&s);
         if index < (0) {
             return None;
@@ -798,7 +798,7 @@ impl Graphemes {
     }
 
     pub fn graphemes_slice(s: &UStr, from: i32, to: i32) -> UString {
-    let __units1 = u_string::units(&s);
+    let __units1 = s.as_slice();
     let __count1 = u_string::unit_count(&s);
         let total = Graphemes::graphemes_count(s);
         let mut start = if from < (0) { 0 } else { from };
@@ -862,7 +862,7 @@ impl Graphemes {
     }
 
     pub fn graphemes_parts(s: &UStr) -> Vec<UString> {
-    let __units2 = u_string::units(&s);
+    let __units2 = s.as_slice();
     let __count2 = u_string::unit_count(&s);
         let codes = UString::u_string_to_code_points(s);
         let mut out: Vec<UString> = vec![];

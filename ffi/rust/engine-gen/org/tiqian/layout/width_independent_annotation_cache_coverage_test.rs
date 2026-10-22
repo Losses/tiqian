@@ -2126,7 +2126,7 @@ Some(ParagraphStyle::new(Some(LastLineAlignment::Start), Some(WritingMode::Horiz
         let _ = TracedAssertions::traced_assertions_assert_equals_float(16.0f64, (annotation.style_at)(25).font_size, None).unwrap();
         let prep = WidthIndependentAnnotationCacheFns::width_independent_annotation_cache_fns_build_paragraph_layout_prep(&mut engine, (input).clone(), (annotation).clone(), WidthIndependentAnnotationCacheCoverageTestSupport::width_independent_annotation_cache_coverage_test_support_empty_tiers()).unwrap();
         let _ = TracedAssertions::traced_assertions_record_rendered_not_null(if false { UString::from("null") } else { UString::from("ParagraphLayoutPrep@identity") }.as_ustr(), None).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_true((i32::from_ne_bytes(((u32::from_ne_bytes(((prep.ruby_and_bopomofo_spread.size()) as u32).to_ne_bytes())) as i32).to_ne_bytes())) > (0), None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_true((prep.ruby_and_bopomofo_spread.size()) as u32 as i32 > (0), None).unwrap();
     });
 }
 
@@ -2229,7 +2229,7 @@ fn conflicting_open_type_features_throws() {
         WidthIndependentAnnotationCacheFns::width_independent_annotation_cache_fns_build_paragraph_layout_prep(&mut engine.lock().unwrap(), (input).clone(), (annotation).clone(), WidthIndependentAnnotationCacheCoverageTestSupport::width_independent_annotation_cache_coverage_test_support_empty_tiers()).map_err(|e| IllegalStateException::new(&format!("{}", e)))?;
         Ok(())
 } }) }).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_true((u32::from_ne_bytes(((u_string::find_from(&UString::from(format!("{}", format!("{}", error)).as_str()), UString::from("Conflicting OpenType features").as_ustr(), 0)) as u32).to_ne_bytes())) <= 2147483647, None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_true((u_string::find_from(&UString::from(format!("{}", format!("{}", error)).as_str()), UString::from("Conflicting OpenType features").as_ustr(), 0)) as u32 <= 2147483647, None).unwrap();
     });
 }
 
@@ -2464,7 +2464,7 @@ fn adjacent_inline_object_boundaries_merging_and_conflicts() {
         WidthIndependentAnnotationCacheFns::width_independent_annotation_cache_fns_build_paragraph_layout_prep(&mut engine.lock().unwrap(), (conflict_input).clone(), (conflict_annotation).clone(), WidthIndependentAnnotationCacheCoverageTestSupport::width_independent_annotation_cache_coverage_test_support_empty_tiers()).map_err(|e| IllegalStateException::new(&format!("{}", e)))?;
         Ok(())
 } }) }).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_true((u32::from_ne_bytes(((u_string::find_from(&UString::from(format!("{}", format!("{}", conflict_error)).as_str()), UString::from("Conflicting inline-object stretch classes").as_ustr(), 0)) as u32).to_ne_bytes())) <= 2147483647, None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_true((u_string::find_from(&UString::from(format!("{}", format!("{}", conflict_error)).as_str()), UString::from("Conflicting inline-object stretch classes").as_ustr(), 0)) as u32 <= 2147483647, None).unwrap();
     });
 }
 
@@ -2527,7 +2527,7 @@ fn shrink_opportunities_cover_all_punctuation_classes_and_spaces() {
                         let modified_annotation = WidthIndependentAnnotationCacheCoverageTestSupport::width_independent_annotation_cache_coverage_test_support_with_adjusted_profile((annotation).clone(), allow_inline_stop, allow_sino_western);
                         let prep = WidthIndependentAnnotationCacheFns::width_independent_annotation_cache_fns_build_paragraph_layout_prep(&mut engine, (input).clone(), (modified_annotation).clone(), WidthIndependentAnnotationCacheCoverageTestSupport::width_independent_annotation_cache_coverage_test_support_empty_tiers()).unwrap();
                         let _ = TracedAssertions::traced_assertions_record_rendered_not_null(if false { UString::from("null") } else { UString::from("ParagraphLayoutPrep@identity") }.as_ustr(), None).unwrap();
-                        let _ = TracedAssertions::traced_assertions_assert_true((i32::from_ne_bytes(((u32::try_from((prep.shrink_opportunities.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) > (0), None).unwrap();
+                        let _ = TracedAssertions::traced_assertions_assert_true((u32::try_from((prep.shrink_opportunities.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32 > (0), None).unwrap();
                     }
                     {
                         let allow_sino_western = false;
@@ -2542,7 +2542,7 @@ fn shrink_opportunities_cover_all_punctuation_classes_and_spaces() {
                         let modified_annotation = WidthIndependentAnnotationCacheCoverageTestSupport::width_independent_annotation_cache_coverage_test_support_with_adjusted_profile((annotation).clone(), allow_inline_stop, allow_sino_western);
                         let prep = WidthIndependentAnnotationCacheFns::width_independent_annotation_cache_fns_build_paragraph_layout_prep(&mut engine, (input).clone(), (modified_annotation).clone(), WidthIndependentAnnotationCacheCoverageTestSupport::width_independent_annotation_cache_coverage_test_support_empty_tiers()).unwrap();
                         let _ = TracedAssertions::traced_assertions_record_rendered_not_null(if false { UString::from("null") } else { UString::from("ParagraphLayoutPrep@identity") }.as_ustr(), None).unwrap();
-                        let _ = TracedAssertions::traced_assertions_assert_true((i32::from_ne_bytes(((u32::try_from((prep.shrink_opportunities.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) > (0), None).unwrap();
+                        let _ = TracedAssertions::traced_assertions_assert_true((u32::try_from((prep.shrink_opportunities.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32 > (0), None).unwrap();
                     }
                 }
             }
@@ -2562,7 +2562,7 @@ fn shrink_opportunities_cover_all_punctuation_classes_and_spaces() {
                         let modified_annotation = WidthIndependentAnnotationCacheCoverageTestSupport::width_independent_annotation_cache_coverage_test_support_with_adjusted_profile((annotation).clone(), allow_inline_stop, allow_sino_western);
                         let prep = WidthIndependentAnnotationCacheFns::width_independent_annotation_cache_fns_build_paragraph_layout_prep(&mut engine, (input).clone(), (modified_annotation).clone(), WidthIndependentAnnotationCacheCoverageTestSupport::width_independent_annotation_cache_coverage_test_support_empty_tiers()).unwrap();
                         let _ = TracedAssertions::traced_assertions_record_rendered_not_null(if false { UString::from("null") } else { UString::from("ParagraphLayoutPrep@identity") }.as_ustr(), None).unwrap();
-                        let _ = TracedAssertions::traced_assertions_assert_true((i32::from_ne_bytes(((u32::try_from((prep.shrink_opportunities.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) > (0), None).unwrap();
+                        let _ = TracedAssertions::traced_assertions_assert_true((u32::try_from((prep.shrink_opportunities.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32 > (0), None).unwrap();
                     }
                     {
                         let allow_sino_western = false;
@@ -2577,7 +2577,7 @@ fn shrink_opportunities_cover_all_punctuation_classes_and_spaces() {
                         let modified_annotation = WidthIndependentAnnotationCacheCoverageTestSupport::width_independent_annotation_cache_coverage_test_support_with_adjusted_profile((annotation).clone(), allow_inline_stop, allow_sino_western);
                         let prep = WidthIndependentAnnotationCacheFns::width_independent_annotation_cache_fns_build_paragraph_layout_prep(&mut engine, (input).clone(), (modified_annotation).clone(), WidthIndependentAnnotationCacheCoverageTestSupport::width_independent_annotation_cache_coverage_test_support_empty_tiers()).unwrap();
                         let _ = TracedAssertions::traced_assertions_record_rendered_not_null(if false { UString::from("null") } else { UString::from("ParagraphLayoutPrep@identity") }.as_ustr(), None).unwrap();
-                        let _ = TracedAssertions::traced_assertions_assert_true((i32::from_ne_bytes(((u32::try_from((prep.shrink_opportunities.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) > (0), None).unwrap();
+                        let _ = TracedAssertions::traced_assertions_assert_true((u32::try_from((prep.shrink_opportunities.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32 > (0), None).unwrap();
                     }
                 }
             }
@@ -2701,7 +2701,7 @@ Some(ParagraphStyle::new(Some(LastLineAlignment::Start), Some(WritingMode::Horiz
         let mut boundary: Option<SpacingDecisionInfo> = None;
         for i in 0..match u32::try_from((result.debug).clone().spacing_decisions.len()) { Ok(value) => value, Err(_) => u32::MAX } {
             let d = ((result.debug).clone().spacing_decisions[usize::try_from(i).unwrap_or(0)]).clone();
-            if u32::from_ne_bytes(((u_string::find_from(&((d.reason).to_ustring()), UString::from("AttachedInlineVirtualPunctuationBoundary").as_ustr(), 0)) as u32).to_ne_bytes()) == 0 {
+            if u_string::find_from(&((d.reason).to_ustring()), UString::from("AttachedInlineVirtualPunctuationBoundary").as_ustr(), 0) as u32 == 0 {
                 boundary = Some(d.clone());
                 break;
             }

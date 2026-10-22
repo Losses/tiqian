@@ -23,11 +23,11 @@ impl ColorSpan {
 }
 
 pub fn compare_color_span(a: &ColorSpan, b: &ColorSpan) -> i32 {
-    let cmp_start = if a.start < b.start { -1 } else if a.start > b.start { 1 } else { 0 };
+    let cmp_start = match ((*(&a.start)) as i32).cmp(&((*(&b.start)) as i32)) { core::cmp::Ordering::Less => -1, core::cmp::Ordering::Equal => 0, core::cmp::Ordering::Greater => 1 };
     if cmp_start != 0 { return cmp_start; }
-    let cmp_end = if a.end < b.end { -1 } else if a.end > b.end { 1 } else { 0 };
+    let cmp_end = match ((*(&a.end)) as i32).cmp(&((*(&b.end)) as i32)) { core::cmp::Ordering::Less => -1, core::cmp::Ordering::Equal => 0, core::cmp::Ordering::Greater => 1 };
     if cmp_end != 0 { return cmp_end; }
-    let cmp_argb = if a.argb < b.argb { -1 } else if a.argb > b.argb { 1 } else { 0 };
+    let cmp_argb = match ((*(&a.argb)) as i32).cmp(&((*(&b.argb)) as i32)) { core::cmp::Ordering::Less => -1, core::cmp::Ordering::Equal => 0, core::cmp::Ordering::Greater => 1 };
     if cmp_argb != 0 { return cmp_argb; }
     0
 }

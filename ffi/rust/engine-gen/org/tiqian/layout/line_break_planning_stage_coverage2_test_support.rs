@@ -286,8 +286,7 @@ impl LineBreakPlanningStageCoverage2TestSupport {
     }
 
     pub fn line_break_planning_stage_coverage2_test_support_map_opp() -> Result<SortedMapTable<u32, ProgressiveBreakOpportunity>, TextRangeError> {
-        let mut b: SortedMapTableBuilder<u32, ProgressiveBreakOpportunity> = SortedTable::sorted_table_map_builder::<u32,
-ProgressiveBreakOpportunity>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_bytes(((*a) as i32).to_ne_bytes()), i32::from_ne_bytes(((*b) as i32).to_ne_bytes()))));
+        let mut b: SortedMapTableBuilder<u32, ProgressiveBreakOpportunity> = SortedTable::sorted_table_map_builder::<u32, ProgressiveBreakOpportunity>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints((*a) as i32, (*b) as i32)));
         b.put(&(999), &(ProgressiveBreakOpportunity::new(ProgressiveBreakTier::Whitespace, TextRange::new(0u32, 3u32)?, Some(0.0))));
         return Ok(b.clone().build());
     }
@@ -300,7 +299,7 @@ ProgressiveBreakOpportunity>(Arc::new(|a, b| SortedTable::sorted_table_compare_i
     }
 
     pub fn line_break_planning_stage_coverage2_test_support_set_uniform() -> SortedSetTable<u32> {
-        let mut b: SortedSetTableBuilder<u32> = SortedTable::sorted_table_set_builder::<u32>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_bytes(((*a) as i32).to_ne_bytes()), i32::from_ne_bytes(((*b) as i32).to_ne_bytes()))));
+        let mut b: SortedSetTableBuilder<u32> = SortedTable::sorted_table_set_builder::<u32>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints((*a) as i32, (*b) as i32)));
         b.put(&(0));
         b.put(&(1));
         b.put(&(3));

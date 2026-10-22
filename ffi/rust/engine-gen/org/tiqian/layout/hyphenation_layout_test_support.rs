@@ -56,11 +56,11 @@ impl HyphenationLayoutTestSupport {
     }
 
     pub fn hyphenation_layout_test_support_is_latin(s: &UStr) -> bool {
-    let __units = u_string::units(&s);
+    let __units = s.as_slice();
     let __count = u_string::unit_count(&s);
-        for i in 0..match u32::try_from(u_string::unit_count(&(s))) { Ok(value) => value, Err(_) => u32::MAX } {
-            let c = u_string::unit_at_from(&__units, i).unwrap_or(0);
-            if !((i32::from_ne_bytes(((c) as i32).to_ne_bytes())) >= 97 && (i32::from_ne_bytes(((c) as i32).to_ne_bytes())) <= 122 || (i32::from_ne_bytes(((c) as i32).to_ne_bytes())) >= 65 && (i32::from_ne_bytes(((c) as i32).to_ne_bytes())) <= 90) {
+        for i in 0..__count {
+            let c = u_string::unit_at_from(__units, i).unwrap_or(0);
+            if !((c) as i32 >= 97 && ((c) as i32) <= 122 || ((c) as i32) >= 65 && ((c) as i32) <= 90) {
                 return false;
             }
         }
@@ -68,15 +68,15 @@ impl HyphenationLayoutTestSupport {
     }
 
     pub fn hyphenation_layout_test_support_rebuild(word: &UStr, points: &[u32]) -> UString {
-    let __units1 = u_string::units(&word);
-    let __count1 = u_string::unit_count(&word);
+    let __units2 = word.as_slice();
+    let __count2 = u_string::unit_count(&word);
         let mut parts: Vec<UString> = vec![];
         let mut prev = 0u32;
         for &p in points {
-            parts.push(u_string::substring(&word, i32::from_ne_bytes(((prev) as i32).to_ne_bytes()), { let v: u32 = p; i32::from_ne_bytes(v.to_ne_bytes()) }));
+            parts.push(u_string::substring(&word, (prev) as i32, { let v: u32 = p; v as i32 }));
             prev = p;
         }
-        parts.push(u_string::substring_from(&word, i32::from_ne_bytes(((prev) as i32).to_ne_bytes())));
+        parts.push(u_string::substring_from(&word, (prev) as i32));
         return UString::from(format!("{}", { let joined = parts; let mut out = String::new(); let n = joined.len(); let mut index = 0usize; while index < n { if index > 0 { out.push_str("-"); } let _ = write!(out, "{}", joined[index]); index += 1; } UString::from(out.as_str()) }).as_str());
     }
 }

@@ -302,7 +302,7 @@ impl EmergencyGraphemeTrackingTestSupport {
     pub fn emergency_grapheme_tracking_test_support_break_offsets_for_tier(decisions: &[BreakOpportunityDecisionInfo], tier: &UStr) -> Vec<u32> {
         let mut result: Vec<u32> = vec![];
         for i in 0..match u32::try_from(decisions.len()) { Ok(value) => value, Err(_) => u32::MAX } {
-            if decisions[usize::try_from(i).unwrap_or(0)].clone().tier.clone().as_ref().map_or(false, |v| v == &(tier.to_ustring())) {
+            if matches!(((decisions[usize::try_from(i).unwrap_or(0)]).clone().tier).clone().as_ref(), Some(__v) if __v == &(tier.to_ustring())) {
                 for j in 0..match u32::try_from(((decisions[usize::try_from(i).unwrap_or(0)]).clone().break_offsets).clone().len()) { Ok(value) => value, Err(_) => u32::MAX } {
                     result.push((decisions[usize::try_from(i).unwrap_or(0)]).clone().break_offsets[usize::try_from(j).unwrap_or(0)]);
                 }
@@ -352,9 +352,9 @@ impl UniformAdvanceShaper {
     }
 
     pub fn shape(&self, input: ShapingInput) -> ShapingResult {
-        let source = u_string::substring(&(input.text).to_ustring(), i32::from_ne_bytes((((input.range).clone().start) as i32).to_ne_bytes()), i32::from_ne_bytes((((input.range).clone().end) as i32).to_ne_bytes()));
+        let source = u_string::substring(&(input.text).to_ustring(), ((input.range).clone().start) as i32, ((input.range).clone().end) as i32);
         return ShapingResult::new(vec![
-    (Cluster::new((input.range).clone(), source.as_ustr(), (((input.font_decision).clone().candidate).clone().key).to_ustring().as_ustr(), format!("{}", (i32::from_ne_bytes(((u_string::unit_count(&(source))) as i32).to_ne_bytes()))).parse::<f64>().unwrap_or(0.0) * 10.0f64, Some((input.display_text).to_ustring()), Some(0.0), Some(0.0), Some(0.0))).clone(),
+    (Cluster::new((input.range).clone(), source.as_ustr(), (((input.font_decision).clone().candidate).clone().key).to_ustring().as_ustr(), format!("{}", (u_string::unit_count(&(source))) as i32).parse::<f64>().unwrap_or(0.0) * 10.0f64, Some((input.display_text).to_ustring()), Some(0.0), Some(0.0), Some(0.0))).clone(),
 ].to_vec(), vec![].to_vec(), Some(vec![]));
     }
 }
@@ -371,9 +371,9 @@ impl ITextShaper for UniformAdvanceShaper {
     }
 
     fn shape(&mut self, input: ShapingInput) -> Result<ShapingResult, TextShaperShapeFault> {
-        let source = u_string::substring(&(input.text).to_ustring(), i32::from_ne_bytes((((input.range).clone().start) as i32).to_ne_bytes()), i32::from_ne_bytes((((input.range).clone().end) as i32).to_ne_bytes()));
+        let source = u_string::substring(&(input.text).to_ustring(), ((input.range).clone().start) as i32, ((input.range).clone().end) as i32);
         return Ok(ShapingResult::new(vec![
-    (Cluster::new((input.range).clone(), source.as_ustr(), (((input.font_decision).clone().candidate).clone().key).to_ustring().as_ustr(), format!("{}", (i32::from_ne_bytes(((u_string::unit_count(&(source))) as i32).to_ne_bytes()))).parse::<f64>().unwrap_or(0.0) * 10.0f64, Some((input.display_text).to_ustring()), Some(0.0), Some(0.0), Some(0.0))).clone(),
+    (Cluster::new((input.range).clone(), source.as_ustr(), (((input.font_decision).clone().candidate).clone().key).to_ustring().as_ustr(), format!("{}", (u_string::unit_count(&(source))) as i32).parse::<f64>().unwrap_or(0.0) * 10.0f64, Some((input.display_text).to_ustring()), Some(0.0), Some(0.0), Some(0.0))).clone(),
 ].to_vec(), vec![].to_vec(), Some(vec![])));
     }
 }
