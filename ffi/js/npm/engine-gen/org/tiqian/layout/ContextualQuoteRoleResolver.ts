@@ -37,7 +37,7 @@ export class ContextualQuoteRoleResolver {
     while (pi < pairs.length) {
       const pair2 = pairs[pi]!;
       pi++;
-      parentBuilder.put(pair2.openIndex, this.findParent(pair2));
+      parentBuilder.put(pair2.openIndex, (this.findParent(pair2))!);
     }
     this.parentByPair = parentBuilder.build();
   }
@@ -77,56 +77,56 @@ export class ContextualQuoteRoleResolver {
 
   private resolvePair(pair: QuotePair, resolvedPairs: SortedMapTableBuilder<number, FontRole>): Resolution {
     const parent = this.parentByPair.get(pair.openIndex);
-    const enclosingStart = (parent === null ? 0 : parent.openIndex + 1);
-    const enclosingEnd = (parent === null ? this.text.length : parent.closeIndex);
+    const enclosingStart = (parent === null ? 0 : parent!.openIndex + 1);
+    const enclosingEnd = (parent === null ? this.text.length : parent!.closeIndex);
     const outerEvidence = new ScriptEvidence(this);
     outerEvidence.addRange(enclosingStart, pair.openIndex);
     outerEvidence.addRange(pair.closeIndex + 1, enclosingEnd);
     const contentEvidence = new ScriptEvidence(this);
     contentEvidence.addRange(pair.openIndex + 1, pair.closeIndex);
     if (this.charAt(pair.openIndex - 1) !== null && ContextualQuoteRoleResolver.isAsciiSpaceOrTab(this.charAt(pair.openIndex - 1)) && contentEvidence.hasWestern && !contentEvidence.hasCjk) {
-      return new Resolution(FontRole.LatinText, "DelimitedWesternQuotationRun", "whitespace-delimited-wholly-western-quotation");
+      return new Resolution((FontRole.LatinText as FontRole), "DelimitedWesternQuotationRun", "whitespace-delimited-wholly-western-quotation");
     }
     if (this.isNonCjkWordInternalQuotePair(pair)) {
-      return new Resolution(FontRole.LatinText, "NonCjkWordInternalQuotePair", "non-cjk-word-internal-quotation");
+      return new Resolution((FontRole.LatinText as FontRole), "NonCjkWordInternalQuotePair", "non-cjk-word-internal-quotation");
     }
     const outerRole = outerEvidence.unambiguousRole();
     if (outerRole !== null) {
-      return new Resolution(outerRole, "PairedPunctuationOuterScriptContext", "quote-pair-inherits-enclosing-level-script");
+      return new Resolution((outerRole)!, "PairedPunctuationOuterScriptContext", "quote-pair-inherits-enclosing-level-script");
     }
     if (outerEvidence.isMixed) {
       return this.paragraphLanguageResolution("mixed-enclosing-level-script");
     }
     if (parent !== null) {
-      const enclosingRole = resolvedPairs.get(parent.openIndex);
+      const enclosingRole = resolvedPairs.get(parent!.openIndex);
       if (enclosingRole !== null) {
-        return new Resolution(enclosingRole, "PairedPunctuationEnclosingQuoteContext", "quote-pair-inherits-enclosing-quotation");
+        return new Resolution((enclosingRole)!, "PairedPunctuationEnclosingQuoteContext", "quote-pair-inherits-enclosing-quotation");
       }
     }
     const contentRole = contentEvidence.unambiguousRole();
     if (contentRole !== null) {
-      return new Resolution(contentRole, "PairedPunctuationContentScriptContext", "quoted-content-script");
+      return new Resolution((contentRole)!, "PairedPunctuationContentScriptContext", "quoted-content-script");
     }
     return this.paragraphLanguageResolution((contentEvidence.isMixed ? "mixed-quoted-content" : "no-strong-script-context"));
   }
 
   private resolveUnmatched(index: number): Resolution {
     if ((Number.isNaN(this.text.charCodeAt(index)) ? null : this.text.charCodeAt(index))! === 8217 && this.isNonCjkInWordApostrophe(index)) {
-      return new Resolution(FontRole.LatinText, "NonCjkInWordApostrophe", "non-cjk-in-word-apostrophe");
+      return new Resolution((FontRole.LatinText as FontRole), "NonCjkInWordApostrophe", "non-cjk-in-word-apostrophe");
     }
     if (this.isDigitBoundClosingQuote(index)) {
-      return new Resolution(FontRole.LatinText, "NumericPrimeUnmatchedQuote", "digit-bound-unmatched-quote-as-prime");
+      return new Resolution((FontRole.LatinText as FontRole), "NumericPrimeUnmatchedQuote", "digit-bound-unmatched-quote-as-prime");
     }
     const leftRole = this.nearestStrongScriptRole(index - 1, -1);
     const rightRole = this.nearestStrongScriptRole(index + 1, 1);
-    if (ContextualQuoteRoleResolver.isAsciiSpaceOrTab(this.charAt(index - 1)) && (rightRole !== null && rightRole.kind === "LatinText")) {
-      return new Resolution(FontRole.LatinText, "DelimitedUnmatchedWesternQuote", "whitespace-delimited-unmatched-western-quote");
+    if (ContextualQuoteRoleResolver.isAsciiSpaceOrTab(this.charAt(index - 1)) && (rightRole !== null && rightRole!.kind === "LatinText")) {
+      return new Resolution((FontRole.LatinText as FontRole), "DelimitedUnmatchedWesternQuote", "whitespace-delimited-unmatched-western-quote");
     }
     if (leftRole !== null && (rightRole === null || rightRole === leftRole)) {
-      return new Resolution(leftRole, "UnmatchedQuoteSurroundingScriptContext", "unmatched-quote-surrounding-script");
+      return new Resolution((leftRole)!, "UnmatchedQuoteSurroundingScriptContext", "unmatched-quote-surrounding-script");
     }
     if (rightRole !== null && leftRole === null) {
-      return new Resolution(rightRole, "UnmatchedQuoteSurroundingScriptContext", "unmatched-quote-surrounding-script");
+      return new Resolution((rightRole)!, "UnmatchedQuoteSurroundingScriptContext", "unmatched-quote-surrounding-script");
     }
     const reason = (leftRole !== null && rightRole !== null ? "conflicting-unmatched-quote-context" : "no-unmatched-quote-context");
     return this.paragraphLanguageResolution(reason);
@@ -160,7 +160,7 @@ export class ContextualQuoteRoleResolver {
   }
 
   private paragraphLanguageResolution(reason: string): Resolution {
-    const role = (UnicodeEastAsianSpacing.isChineseLanguageContext(this.context.locale) ? FontRole.CjkPunctuation : FontRole.LatinText);
+    const role = (UnicodeEastAsianSpacing.isChineseLanguageContext(this.context.locale) ? (FontRole.CjkPunctuation as FontRole) : (FontRole.LatinText as FontRole));
     return new Resolution(role, "ParagraphLanguageQuoteContext", reason + "; paragraph-language=" + this.context.locale);
   }
 
@@ -170,7 +170,7 @@ export class ContextualQuoteRoleResolver {
     while (ci < this.pairs.length) {
       const candidate = this.pairs[ci]!;
       ci++;
-      if (candidate !== pair && candidate.openIndex < pair.openIndex && candidate.closeIndex > pair.closeIndex && (result === null || candidate.closeIndex - candidate.openIndex < result.closeIndex - result.openIndex)) {
+      if (candidate !== pair && candidate.openIndex < pair.openIndex && candidate.closeIndex > pair.closeIndex && (result === null || candidate.closeIndex - candidate.openIndex < result!.closeIndex - result!.openIndex)) {
         result = candidate;
       }
     }
@@ -183,36 +183,36 @@ export class ContextualQuoteRoleResolver {
       case "Neutral":
         return null;
       case "EastAsian":
-        return FontRole.CjkPunctuation;
+        return (FontRole.CjkPunctuation as FontRole);
       case "Other":
-        return FontRole.LatinText;
+        return (FontRole.LatinText as FontRole);
     }
   }
 
   private isNonCjkInWordApostrophe(index: number): boolean {
     const before = this.codePointBefore(index);
     const after = this.codePointAtOrNull(index + 1);
-    return before !== null && after !== null && this.isNonCjkWordCharacter(before) && this.isNonCjkWordCharacter(after) && (this.isNonCjkNonNumericWordCharacter(before) || this.isNonCjkNonNumericWordCharacter(after));
+    return before !== null && after !== null && this.isNonCjkWordCharacter((before)!) && this.isNonCjkWordCharacter((after)!) && (this.isNonCjkNonNumericWordCharacter((before)!) || this.isNonCjkNonNumericWordCharacter((after)!));
   }
 
   private isDigitBoundClosingQuote(index: number): boolean {
     const before = this.codePointBefore(index);
-    return ((Number.isNaN(this.text.charCodeAt(index)) ? null : this.text.charCodeAt(index))! === 8217 || (Number.isNaN(this.text.charCodeAt(index)) ? null : this.text.charCodeAt(index))! === 8221) && before !== null && UnicodeNumber.contains(before);
+    return ((Number.isNaN(this.text.charCodeAt(index)) ? null : this.text.charCodeAt(index))! === 8217 || (Number.isNaN(this.text.charCodeAt(index)) ? null : this.text.charCodeAt(index))! === 8221) && before !== null && UnicodeNumber.contains((before)!);
   }
 
   private isNonCjkWordInternalQuotePair(pair: QuotePair): boolean {
     const before = this.codePointBefore(pair.openIndex);
     const after = this.codePointAtOrNull(pair.closeIndex + 1);
-    if (before === null || after === null || !this.isNonCjkNonNumericWordCharacter(before) || !this.isNonCjkNonNumericWordCharacter(after)) {
+    if (before === null || after === null || !this.isNonCjkNonNumericWordCharacter((before)!) || !this.isNonCjkNonNumericWordCharacter((after)!)) {
       return false;
     }
     let index = pair.openIndex + 1;
     while (index < pair.closeIndex) {
       const codePoint = this.codePointAtOrNull(index);
-      if (codePoint === null || !this.isNonCjkWordCharacter(codePoint)) {
+      if (codePoint === null || !this.isNonCjkWordCharacter((codePoint)!)) {
         return false;
       }
-      index += (codePoint > 65535 ? 2 : 1);
+      index += (codePoint! > 65535 ? 2 : 1);
     }
     return true;
   }
@@ -234,11 +234,11 @@ export class ContextualQuoteRoleResolver {
   }
 
   private codePointAt(index: number, end: number): number {
-    const high = (Number.isNaN(this.text.charCodeAt(index)) ? null : this.text.charCodeAt(index))!!;
+    const high = (Number.isNaN(this.text.charCodeAt(index)) ? null : this.text.charCodeAt(index))!;
     if (!ContextualQuoteRoleResolver.isHighSurrogate(high) || index + 1 >= end) {
       return high;
     }
-    const low = readUnit(this.text, index + 1)!!;
+    const low = readUnit(this.text, index + 1)!;
     return (ContextualQuoteRoleResolver.isLowSurrogate(low) ? 65536 + (high - 55296 << 10) + low - 56320 : high);
   }
 
@@ -250,11 +250,11 @@ export class ContextualQuoteRoleResolver {
     if (index <= 0) {
       return null;
     }
-    const low = readUnit(this.text, index - 1)!!;
+    const low = readUnit(this.text, index - 1)!;
     if (!ContextualQuoteRoleResolver.isLowSurrogate(low) || index < 2) {
       return low;
     }
-    const high = readUnit(this.text, index - 2)!!;
+    const high = readUnit(this.text, index - 2)!;
     return (ContextualQuoteRoleResolver.isHighSurrogate(high) ? 65536 + (high - 55296 << 10) + low - 56320 : low);
   }
 
@@ -301,16 +301,16 @@ export class ScriptEvidence {
     let index = start;
     while (index < end) {
       const nested = this.resolver.pairByOpen.get(index);
-      if (nested !== null && nested.closeIndex < end) {
-        index = nested.closeIndex + 1;
+      if (nested !== null && nested!.closeIndex < end) {
+        index = nested!.closeIndex + 1;
         continue;
       }
       const length = this.resolver.codePointLengthAt(index, end);
       const role = this.resolver.strongScriptRole(index, length);
-      if ((role !== null && role.kind === "CjkPunctuation")) {
+      if ((role !== null && role!.kind === "CjkPunctuation")) {
         this.hasCjk = true;
       } else {
-        if ((role !== null && role.kind === "LatinText")) {
+        if ((role !== null && role!.kind === "LatinText")) {
           this.hasWestern = true;
         }
       }
@@ -319,7 +319,7 @@ export class ScriptEvidence {
   }
 
   public unambiguousRole(): FontRole | null {
-    return (this.hasCjk && !this.hasWestern ? FontRole.CjkPunctuation : (this.hasWestern && !this.hasCjk ? FontRole.LatinText : null));
+    return (this.hasCjk && !this.hasWestern ? (FontRole.CjkPunctuation as FontRole) : (this.hasWestern && !this.hasCjk ? (FontRole.LatinText as FontRole) : null));
   }
 }
 

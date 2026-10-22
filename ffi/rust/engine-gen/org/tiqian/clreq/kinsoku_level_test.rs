@@ -31,7 +31,7 @@ fn none_forbids_nothing() {
     UString::from("（").to_ustring(),
 ];
         let mut index = 0u32;
-        while ((index) as i32) < ((u32::try_from((chars.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32) {
+        while (i32::from_ne_bytes(((index) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((chars.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
             let c = (chars[usize::try_from(index).unwrap_or(0)]).clone();
             let _ = TracedAssertions::traced_assertions_assert_false(KinsokuLevelTestHelpers::kinsoku_level_test_helpers_start(c.as_ustr(), KinsokuLevel::None), Some(UString::from(format!("{}", { let mut __s = UString::new(); __s += c.as_ustr(); __s += &(UString::from(" start@None")); __s }).as_str()))).unwrap();
             let _ = TracedAssertions::traced_assertions_assert_false(KinsokuLevelTestHelpers::kinsoku_level_test_helpers_end(c.as_ustr(), KinsokuLevel::None), Some(UString::from(format!("{}", { let mut __s = UString::new(); __s += c.as_ustr(); __s += &(UString::from(" end@None")); __s }).as_str()))).unwrap();
@@ -60,7 +60,7 @@ fn basic_forbids_pause_stops_closing_connectors_at_start_and_opening_at_end() {
     UString::from("／").to_ustring(),
 ];
         let mut index = 0u32;
-        while ((index) as i32) < ((u32::try_from((start_chars.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32) {
+        while (i32::from_ne_bytes(((index) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((start_chars.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
             let c = (start_chars[usize::try_from(index).unwrap_or(0)]).clone();
             let _ = TracedAssertions::traced_assertions_assert_true(KinsokuLevelTestHelpers::kinsoku_level_test_helpers_start(c.as_ustr(), KinsokuLevel::Basic), Some(UString::from(format!("{}", { let mut __s = UString::new(); __s += c.as_ustr(); __s += &(UString::from(" start@Basic")); __s }).as_str()))).unwrap();
             index = u32::wrapping_add(index, 1);
@@ -73,7 +73,7 @@ fn basic_forbids_pause_stops_closing_connectors_at_start_and_opening_at_end() {
     UString::from("【").to_ustring(),
 ];
         index = 0u32;
-        while ((index) as i32) < ((u32::try_from((end_chars.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32) {
+        while (i32::from_ne_bytes(((index) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((end_chars.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
             let c = (end_chars[usize::try_from(index).unwrap_or(0)]).clone();
             let _ = TracedAssertions::traced_assertions_assert_true(KinsokuLevelTestHelpers::kinsoku_level_test_helpers_end(c.as_ustr(), KinsokuLevel::Basic), Some(UString::from(format!("{}", { let mut __s = UString::new(); __s += c.as_ustr(); __s += &(UString::from(" end@Basic")); __s }).as_str()))).unwrap();
             index = u32::wrapping_add(index, 1);
@@ -127,7 +127,7 @@ fn cjk_bracket_variants_classify_as_opening_and_closing() {
     UString::from("〚").to_ustring(),
 ];
         let mut index = 0u32;
-        while ((index) as i32) < ((u32::try_from((opening.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32) {
+        while (i32::from_ne_bytes(((index) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((opening.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
             let _ = TracedAssertions::traced_assertions_assert_equals_punctuation_class(PunctuationClass::Opening, ClreqPunctuationPolicies::clreq_punctuation_policies_classify((opening[usize::try_from(index).unwrap_or(0)]).clone().as_ustr()), Some(((opening[usize::try_from(index).unwrap_or(0)]).clone()).to_ustring())).unwrap();
             index = u32::wrapping_add(index, 1);
         }
@@ -139,7 +139,7 @@ fn cjk_bracket_variants_classify_as_opening_and_closing() {
     UString::from("〛").to_ustring(),
 ];
         index = 0u32;
-        while ((index) as i32) < ((u32::try_from((closing.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32) {
+        while (i32::from_ne_bytes(((index) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((closing.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
             let _ = TracedAssertions::traced_assertions_assert_equals_punctuation_class(PunctuationClass::Closing, ClreqPunctuationPolicies::clreq_punctuation_policies_classify((closing[usize::try_from(index).unwrap_or(0)]).clone().as_ustr()), Some(((closing[usize::try_from(index).unwrap_or(0)]).clone()).to_ustring())).unwrap();
             index = u32::wrapping_add(index, 1);
         }
@@ -159,7 +159,7 @@ fn exposes_unambiguous_ascii_point_marks_without_guessing_quotes_or_connectors()
     UString::from("?").to_ustring(),
 ];
         let mut index = 0u32;
-        while ((index) as i32) < ((u32::try_from((included.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32) {
+        while (i32::from_ne_bytes(((index) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((included.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
             let _ = TracedAssertions::traced_assertions_assert_true(ClreqPunctuationPolicies::clreq_punctuation_policies_is_ascii_point_mark((included[usize::try_from(index).unwrap_or(0)]).clone().as_ustr()), Some(UString::from(format!("{}", { let mut __s = UString::new(); __s += (included[usize::try_from(index).unwrap_or(0)]).clone().as_ustr(); __s += &(UString::from(" point mark")); __s }).as_str()))).unwrap();
             index = u32::wrapping_add(index, 1);
         }
@@ -172,7 +172,7 @@ fn exposes_unambiguous_ascii_point_marks_without_guessing_quotes_or_connectors()
     UString::from("%").to_ustring(),
 ];
         index = 0u32;
-        while ((index) as i32) < ((u32::try_from((excluded.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32) {
+        while (i32::from_ne_bytes(((index) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((excluded.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
             let _ = TracedAssertions::traced_assertions_assert_false(ClreqPunctuationPolicies::clreq_punctuation_policies_is_ascii_point_mark((excluded[usize::try_from(index).unwrap_or(0)]).clone().as_ustr()), Some(UString::from(format!("{}", { let mut __s = UString::new(); __s += (excluded[usize::try_from(index).unwrap_or(0)]).clone().as_ustr(); __s += &(UString::from(" excluded")); __s }).as_str()))).unwrap();
             index = u32::wrapping_add(index, 1);
         }

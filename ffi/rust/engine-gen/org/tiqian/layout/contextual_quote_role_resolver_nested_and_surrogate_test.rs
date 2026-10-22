@@ -825,7 +825,7 @@ impl ContextualQuoteRoleResolverNestedAndSurrogateSupport {
 
     pub fn contextual_quote_role_resolver_nested_and_surrogate_support_locate(ds: &Vec<QuoteRoleDecision>, i: u32) -> QuoteRoleDecision {
         let mut n = 0u32;
-        while ((n) as i32) < ((u32::try_from((ds.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32) {
+        while (i32::from_ne_bytes(((n) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((ds.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
             if ds[usize::try_from(n).unwrap_or(0)].index == i {
                 return (ds[usize::try_from(n).unwrap_or(0)]).clone();
             }
@@ -837,7 +837,7 @@ impl ContextualQuoteRoleResolverNestedAndSurrogateSupport {
     pub fn contextual_quote_role_resolver_nested_and_surrogate_support_surrogate_text(codes: &Vec<u32>) -> UString {
         let mut s = UString::new();
         let mut i = 0u32;
-        while ((i) as i32) < ((u32::try_from((codes.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32) {
+        while (i32::from_ne_bytes(((i) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((codes.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
             s += &(if codes[usize::try_from(i).unwrap_or(0)] > 0xFFFF { u_string::from_units(&[0xD800 + (((codes[usize::try_from(i).unwrap_or(0)]) - 0x10000) >> 10) as u16, 0xDC00 + (((codes[usize::try_from(i).unwrap_or(0)]) - 0x10000) & 0x3FF) as u16]) } else { u_string::from_units(&[(codes[usize::try_from(i).unwrap_or(0)]) as u16]) });
             i = u32::wrapping_add(i, 1);
         }
@@ -862,7 +862,7 @@ fn nested_pair_inside_neutral_enclosing_inherits_the_outer_quotation() {
         let _ = TracedAssertions::traced_assertions_assert_equals_font_role(outer.role, Some(inner.role), None).unwrap();
         let mut has = false;
         let mut i = 0u32;
-        while ((i) as i32) < ((u32::try_from((d.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32) {
+        while (i32::from_ne_bytes(((i) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((d.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
             if d[usize::try_from(i).unwrap_or(0)].clone().source.to_ustring() == UString::from("DelimitedWesternQuotationRun") {
                 has = true;
             }
@@ -913,7 +913,7 @@ fn space_before_a_mixed_content_pair_reports_mixed_content() {
         ContextualQuoteRoleResolverNestedAndSurrogateSupport::contextual_quote_role_resolver_nested_and_surrogate_support_start(UStr::new(&[115,112,97,99,101,66,101,102,111,114,101,65,77,105,120,101,100,67,111,110,116,101,110,116,80,97,105,114,82,101,112,111,114,116,115,77,105,120,101,100,67,111,110,116,101,110,116]));
         let x = ContextualQuoteRoleResolverNestedAndSurrogateSupport::contextual_quote_role_resolver_nested_and_surrogate_support_locate(&ContextualQuoteRoleResolverNestedAndSurrogateSupport::contextual_quote_role_resolver_nested_and_surrogate_support_decisions(UStr::new(&[32,8220,97,20013,8221]), None).unwrap(), 1);
         let _ = TracedAssertions::traced_assertions_assert_equals_string(UStr::new(&[80,97,114,97,103,114,97,112,104,76,97,110,103,117,97,103,101,81,117,111,116,101,67,111,110,116,101,120,116]), (x.source).to_ustring().as_ustr(), None).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_true((u_string::find_from(&((x.reason).to_ustring()), UString::from("mixed-quoted-content").as_ustr(), 0)) as u32 <= 2147483647, Some((x.reason).to_ustring())).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_true((u32::from_ne_bytes(((u_string::find_from(&((x.reason).to_ustring()), UString::from("mixed-quoted-content").as_ustr(), 0)) as u32).to_ne_bytes())) <= 2147483647, Some((x.reason).to_ustring())).unwrap();
     });
 }
 
@@ -923,7 +923,7 @@ fn mixed_enclosing_level_falls_back_to_paragraph_language() {
         ContextualQuoteRoleResolverNestedAndSurrogateSupport::contextual_quote_role_resolver_nested_and_surrogate_support_start(UStr::new(&[109,105,120,101,100,69,110,99,108,111,115,105,110,103,76,101,118,101,108,70,97,108,108,115,66,97,99,107,84,111,80,97,114,97,103,114,97,112,104,76,97,110,103,117,97,103,101]));
         let x = ContextualQuoteRoleResolverNestedAndSurrogateSupport::contextual_quote_role_resolver_nested_and_surrogate_support_locate(&ContextualQuoteRoleResolverNestedAndSurrogateSupport::contextual_quote_role_resolver_nested_and_surrogate_support_decisions(UStr::new(&[97,8220,20013,8221,25991]), None).unwrap(), 1);
         let _ = TracedAssertions::traced_assertions_assert_equals_string(UStr::new(&[80,97,114,97,103,114,97,112,104,76,97,110,103,117,97,103,101,81,117,111,116,101,67,111,110,116,101,120,116]), (x.source).to_ustring().as_ustr(), None).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_true((u_string::find_from(&((x.reason).to_ustring()), UString::from("mixed-enclosing-level-script").as_ustr(), 0)) as u32 <= 2147483647, Some((x.reason).to_ustring())).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_true((u32::from_ne_bytes(((u_string::find_from(&((x.reason).to_ustring()), UString::from("mixed-enclosing-level-script").as_ustr(), 0)) as u32).to_ne_bytes())) <= 2147483647, Some((x.reason).to_ustring())).unwrap();
     });
 }
 
@@ -934,7 +934,7 @@ fn non_chinese_locale_resolves_neutral_context_to_latin_text() {
         let d = ContextualQuoteRoleResolverNestedAndSurrogateSupport::contextual_quote_role_resolver_nested_and_surrogate_support_decisions(UStr::new(&[8217]), Some(UString::from("en-US"))).unwrap();
         let x = (d[0usize]).clone();
         let _ = TracedAssertions::traced_assertions_assert_equals_font_role(FontRole::LatinText, Some(x.role), None).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_true((u_string::find_from(&((x.reason).to_ustring()), UString::from("paragraph-language=en-US").as_ustr(), 0)) as u32 <= 2147483647, None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_true((u32::from_ne_bytes(((u_string::find_from(&((x.reason).to_ustring()), UString::from("paragraph-language=en-US").as_ustr(), 0)) as u32).to_ne_bytes())) <= 2147483647, None).unwrap();
     });
 }
 

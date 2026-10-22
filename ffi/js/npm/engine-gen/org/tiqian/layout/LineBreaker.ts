@@ -27,25 +27,29 @@ export class GreedyLineBreaker implements LineBreaker {
   private leaveRaggedPenalty: number;
 
   constructor(kinsoku?: KinsokuRule | null, pushInPenalty?: number | null, carryPreviousPenalty?: number | null, leaveRaggedPenalty?: number | null) {
+    kinsoku = kinsoku ?? null;
+    pushInPenalty = pushInPenalty ?? null;
+    carryPreviousPenalty = carryPreviousPenalty ?? null;
+    leaveRaggedPenalty = leaveRaggedPenalty ?? null;
     if (kinsoku === null) {
       this.kinsoku = new ClreqKinsokuRule();
     } else {
-      this.kinsoku = kinsoku;
+      this.kinsoku = (kinsoku)!;
     }
     if (pushInPenalty === null) {
       this.pushInPenalty = 2;
     } else {
-      this.pushInPenalty = pushInPenalty;
+      this.pushInPenalty = (pushInPenalty)!;
     }
     if (carryPreviousPenalty === null) {
       this.carryPreviousPenalty = 10;
     } else {
-      this.carryPreviousPenalty = carryPreviousPenalty;
+      this.carryPreviousPenalty = (carryPreviousPenalty)!;
     }
     if (leaveRaggedPenalty === null) {
       this.leaveRaggedPenalty = 20;
     } else {
-      this.leaveRaggedPenalty = leaveRaggedPenalty;
+      this.leaveRaggedPenalty = (leaveRaggedPenalty)!;
     }
   }
 
@@ -57,6 +61,23 @@ export class GreedyLineBreaker implements LineBreaker {
   }
 
   public breakLines(n: Cluster[], a: Cluster[], maxWidth: number, shrinkOpportunities?: ShrinkOpportunity[] | null, unbreakableRanges?: UnbreakableRanges | null, firstLineIndent?: number | null, hangableClusters?: SortedSetTable<number> | null, extendableHangRanges?: IntRange[] | null, forbiddenLineStartClusters?: SortedSetTable<number> | null, forbiddenLineEndClusters?: SortedSetTable<number> | null, hyphenBreakClusters?: SortedSetTable<number> | null, cjkInterCharBoundaries?: SortedSetTable<number> | null, maxCjkStretchPerGap?: number | null, sinoWesternBoundaries?: SortedSetTable<number> | null, sinoWesternStretchCap?: number | null, lineAdjustmentPushIn?: boolean | null, lineAdjustmentCompressBias?: number | null, hardBreakAfterClusters?: SortedSetTable<number> | null, nonRenderingControlClusters?: SortedSetTable<number> | null, progressiveBreakOpportunities?: SortedMapTable<number, ProgressiveBreakOpportunity> | null): LineSolution {
+    shrinkOpportunities = shrinkOpportunities ?? null;
+    unbreakableRanges = unbreakableRanges ?? null;
+    firstLineIndent = firstLineIndent ?? null;
+    hangableClusters = hangableClusters ?? null;
+    extendableHangRanges = extendableHangRanges ?? null;
+    forbiddenLineStartClusters = forbiddenLineStartClusters ?? null;
+    forbiddenLineEndClusters = forbiddenLineEndClusters ?? null;
+    hyphenBreakClusters = hyphenBreakClusters ?? null;
+    cjkInterCharBoundaries = cjkInterCharBoundaries ?? null;
+    maxCjkStretchPerGap = maxCjkStretchPerGap ?? null;
+    sinoWesternBoundaries = sinoWesternBoundaries ?? null;
+    sinoWesternStretchCap = sinoWesternStretchCap ?? null;
+    lineAdjustmentPushIn = lineAdjustmentPushIn ?? null;
+    lineAdjustmentCompressBias = lineAdjustmentCompressBias ?? null;
+    hardBreakAfterClusters = hardBreakAfterClusters ?? null;
+    nonRenderingControlClusters = nonRenderingControlClusters ?? null;
+    progressiveBreakOpportunities = progressiveBreakOpportunities ?? null;
     if (a.length === 0) {
       return new LineSolution([]);
     }
@@ -77,23 +98,23 @@ export class GreedyLineBreaker implements LineBreaker {
     const hard = hardBreakAfterClusters ?? LineBreakerLines.emptyIntSet();
     const controls = nonRenderingControlClusters ?? LineBreakerLines.emptyIntSet();
     const progressive = progressiveBreakOpportunities ?? LineBreakerLines.emptyProgressiveMap();
-    const greedy = this.greedyFill(n, a, maxWidth, ranges, indent, forbidEnd, hyphens, cjk, maxStretch, sino, sinoCap, hard, controls, progressive);
-    const repaired = LineRepair.applyKinsokuRepairs(greedy, n, a, maxWidth, this.kinsoku, shrinkOps, this.pushInPenalty, this.carryPreviousPenalty, this.leaveRaggedPenalty, ranges, indent, hangables, extendables, 5, forbiddenLineStartClusters);
+    const greedy = this.greedyFill(n, a, maxWidth, (ranges)!, (indent)!, (forbidEnd)!, (hyphens)!, (cjk)!, (maxStretch)!, (sino)!, (sinoCap)!, (hard)!, (controls)!, (progressive)!);
+    const repaired = LineRepair.applyKinsokuRepairs(greedy, n, a, maxWidth, this.kinsoku, (shrinkOps)!, this.pushInPenalty, this.carryPreviousPenalty, this.leaveRaggedPenalty, ranges, indent, hangables, extendables, 5, forbiddenLineStartClusters);
     const gapBuilder = SortedTable.setBuilder<number>(SortedTable.compareInts);
     let gi = 0;
-    while (gi < cjk.size()) {
-      gapBuilder.put(cjk.at(gi));
+    while (gi < cjk!.size()) {
+      gapBuilder.put(cjk!.at(gi));
       gi++;
     }
     let si = 0;
-    while (si < sino.size()) {
-      gapBuilder.put(sino.at(si));
+    while (si < sino!.size()) {
+      gapBuilder.put(sino!.at(si));
       si++;
     }
     const gapBoundaries = gapBuilder.build();
     const pushIn = lineAdjustmentPushIn ?? false;
     const compressBias = lineAdjustmentCompressBias ?? 1.0;
-    return LineRepair.withFillPushIn(repaired, pushIn, n, a, maxWidth, shrinkOps, indent, compressBias, forbiddenLineStartClusters, forbidEnd, ranges, this.pushInPenalty, gapBoundaries, progressive);
+    return LineRepair.withFillPushIn(repaired, (pushIn)!, n, a, maxWidth, (shrinkOps)!, (indent)!, (compressBias)!, forbiddenLineStartClusters, (forbidEnd)!, (ranges)!, this.pushInPenalty, gapBoundaries, progressive);
   }
 
   private greedyFill(n: Cluster[], a: Cluster[], maxWidth: number, unbreakableRanges: UnbreakableRanges, firstLineIndent: number, forbiddenLineEndClusters: SortedSetTable<number>, hyphenBreakClusters: SortedSetTable<number>, cjkInterCharBoundaries: SortedSetTable<number>, maxCjkStretchPerGap: number, sinoWesternBoundaries: SortedSetTable<number>, sinoWesternStretchCap: number, hardBreakAfterClusters: SortedSetTable<number>, nonRenderingControlClusters: SortedSetTable<number>, progressiveBreakOpportunities: SortedMapTable<number, ProgressiveBreakOpportunity>): LineCandidate[] {
@@ -124,7 +145,7 @@ export class GreedyLineBreaker implements LineBreaker {
           hasRenderingContent = true;
         }
         if (hardBreakAfterClusters.has(i)) {
-          lines.push(LineBreakerLines.rebuildLine(new IntRange(lineStart, i), n, a, LineEndReason.MandatoryBreak, null, null));
+          lines.push(LineBreakerLines.rebuildLine(new IntRange(lineStart, i), n, a, (LineEndReason.MandatoryBreak as LineEndReason), null, null));
           lineStart = i + 1;
           adjustedAccum = 0;
           naturalAccum = 0;
@@ -134,10 +155,10 @@ export class GreedyLineBreaker implements LineBreaker {
       }
     }
     if (lineStart < a.length) {
-      lines.push(LineBreakerLines.rebuildLine(new IntRange(lineStart, a.length - 1), n, a, LineEndReason.ParagraphEnd, null, null));
+      lines.push(LineBreakerLines.rebuildLine(new IntRange(lineStart, a.length - 1), n, a, (LineEndReason.ParagraphEnd as LineEndReason), null, null));
     } else {
       if (hardBreakAfterClusters.has(a.length - 1)) {
-        lines.push(LineBreakerLines.emptyLineCandidate(a[a.length - 1]!.range.end, LineEndReason.ParagraphEnd));
+        lines.push(LineBreakerLines.emptyLineCandidate(a[a.length - 1]!.range.end, (LineEndReason.ParagraphEnd as LineEndReason)));
       }
     }
     return lines;
@@ -173,6 +194,23 @@ export class LookaheadLineBreaker implements LineBreaker {
   }
 
   public breakLines(naturalClusters: Cluster[], adjustedClusters: Cluster[], maxWidth: number, shrinkOpportunities?: ShrinkOpportunity[] | null, unbreakableRanges?: UnbreakableRanges | null, firstLineIndent?: number | null, hangableClusters?: SortedSetTable<number> | null, extendableHangRanges?: IntRange[] | null, forbiddenLineStartClusters?: SortedSetTable<number> | null, forbiddenLineEndClusters?: SortedSetTable<number> | null, hyphenBreakClusters?: SortedSetTable<number> | null, cjkInterCharBoundaries?: SortedSetTable<number> | null, maxCjkStretchPerGap?: number | null, sinoWesternBoundaries?: SortedSetTable<number> | null, sinoWesternStretchCap?: number | null, lineAdjustmentPushIn?: boolean | null, lineAdjustmentCompressBias?: number | null, hardBreakAfterClusters?: SortedSetTable<number> | null, nonRenderingControlClusters?: SortedSetTable<number> | null, progressiveBreakOpportunities?: SortedMapTable<number, ProgressiveBreakOpportunity> | null): LineSolution {
+    shrinkOpportunities = shrinkOpportunities ?? null;
+    unbreakableRanges = unbreakableRanges ?? null;
+    firstLineIndent = firstLineIndent ?? null;
+    hangableClusters = hangableClusters ?? null;
+    extendableHangRanges = extendableHangRanges ?? null;
+    forbiddenLineStartClusters = forbiddenLineStartClusters ?? null;
+    forbiddenLineEndClusters = forbiddenLineEndClusters ?? null;
+    hyphenBreakClusters = hyphenBreakClusters ?? null;
+    cjkInterCharBoundaries = cjkInterCharBoundaries ?? null;
+    maxCjkStretchPerGap = maxCjkStretchPerGap ?? null;
+    sinoWesternBoundaries = sinoWesternBoundaries ?? null;
+    sinoWesternStretchCap = sinoWesternStretchCap ?? null;
+    lineAdjustmentPushIn = lineAdjustmentPushIn ?? null;
+    lineAdjustmentCompressBias = lineAdjustmentCompressBias ?? null;
+    hardBreakAfterClusters = hardBreakAfterClusters ?? null;
+    nonRenderingControlClusters = nonRenderingControlClusters ?? null;
+    progressiveBreakOpportunities = progressiveBreakOpportunities ?? null;
     if (adjustedClusters.length === 0) {
       return new LineSolution([]);
     }
@@ -205,23 +243,23 @@ export class LookaheadLineBreaker implements LineBreaker {
     let lineStart = 0;
     const gapBuilder = SortedTable.setBuilder<number>(SortedTable.compareInts);
     let gi = 0;
-    while (gi < cjk.size()) {
-      gapBuilder.put(cjk.at(gi));
+    while (gi < cjk!.size()) {
+      gapBuilder.put(cjk!.at(gi));
       gi++;
     }
     let si = 0;
-    while (si < sino.size()) {
-      gapBuilder.put(sino.at(si));
+    while (si < sino!.size()) {
+      gapBuilder.put(sino!.at(si));
       si++;
     }
     const gapBoundaries = gapBuilder.build();
-    const dRef = maxStretch;
+    const dRef: number | null = maxStretch;
     let committedDensity = 0.0;
     let committedSyntheticHyphenRun = 0;
     const sortedBreaks: number[] = [];
     let bi = 0;
-    while (bi < hard.size()) {
-      sortedBreaks.push(hard.at(bi));
+    while (bi < hard!.size()) {
+      sortedBreaks.push(hard!.at(bi));
       bi++;
     }
     let breakCursor = 0;
@@ -231,29 +269,29 @@ export class LookaheadLineBreaker implements LineBreaker {
       }
       const mandatoryEnd = (breakCursor < sortedBreaks.length ? sortedBreaks[breakCursor]! : null);
       const segmentEndExclusive = (mandatoryEnd !== null ? mandatoryEnd + 1 : adjustedClusters.length);
-      const rawGreedyEnd = LineBreakerLines.findGreedyEnd(adjustedClusters, lineStart, ProgressiveBreakDecisions.lineLimit(maxWidth, indent, lineStart), segmentEndExclusive, controls);
-      const progBreak = ProgressiveBreakDecisions.decideProgressiveBreak(lineStart, rawGreedyEnd, progressive, adjustedClusters, ProgressiveBreakDecisions.lineLimit(maxWidth, indent, lineStart), cjk, maxStretch, sino, sinoCap);
-      const hyphenBreak = ProgressiveBreakDecisions.decideHyphenBreak(lineStart, progBreak, adjustedClusters, ProgressiveBreakDecisions.lineLimit(maxWidth, indent, lineStart), hyphens, cjk, maxStretch, sino, sinoCap);
-      const greedyEnd = ProgressiveBreakDecisions.adjustBreakForUnbreakables(hyphenBreak, lineStart, ranges);
+      const rawGreedyEnd = LineBreakerLines.findGreedyEnd(adjustedClusters, lineStart, ProgressiveBreakDecisions.lineLimit(maxWidth, (indent)!, lineStart), segmentEndExclusive, controls);
+      const progBreak = ProgressiveBreakDecisions.decideProgressiveBreak(lineStart, rawGreedyEnd, (progressive)!, adjustedClusters, ProgressiveBreakDecisions.lineLimit(maxWidth, (indent)!, lineStart), cjk, maxStretch, sino, sinoCap);
+      const hyphenBreak = ProgressiveBreakDecisions.decideHyphenBreak(lineStart, progBreak, adjustedClusters, ProgressiveBreakDecisions.lineLimit(maxWidth, (indent)!, lineStart), (hyphens)!, (cjk)!, (maxStretch)!, sino, sinoCap);
+      const greedyEnd = ProgressiveBreakDecisions.adjustBreakForUnbreakables(hyphenBreak, lineStart, (ranges)!);
       if (greedyEnd >= segmentEndExclusive) {
         if (mandatoryEnd !== null) {
-          committed.push(LineBreakerLines.rebuildLine(new IntRange(lineStart, mandatoryEnd), naturalClusters, adjustedClusters, LineEndReason.MandatoryBreak, null, null));
+          committed.push(LineBreakerLines.rebuildLine(new IntRange(lineStart, (mandatoryEnd)!), naturalClusters, adjustedClusters, (LineEndReason.MandatoryBreak as LineEndReason), null, null));
           committedDensity = 0.0;
           committedSyntheticHyphenRun = 0;
           lineStart = mandatoryEnd + 1;
           if (lineStart === adjustedClusters.length) {
-            committed.push(LineBreakerLines.emptyLineCandidate(adjustedClusters[adjustedClusters.length - 1]!.range.end, LineEndReason.ParagraphEnd));
+            committed.push(LineBreakerLines.emptyLineCandidate(adjustedClusters[adjustedClusters.length - 1]!.range.end, (LineEndReason.ParagraphEnd as LineEndReason)));
           }
           continue;
         }
-        committed.push(LineBreakerLines.rebuildLine(new IntRange(lineStart, adjustedClusters.length - 1), naturalClusters, adjustedClusters, LineEndReason.ParagraphEnd, null, null));
+        committed.push(LineBreakerLines.rebuildLine(new IntRange(lineStart, adjustedClusters.length - 1), naturalClusters, adjustedClusters, (LineEndReason.ParagraphEnd as LineEndReason), null, null));
         break;
       }
       const candidates: number[] = [];
       const candStart = greedyEnd - this.window;
       let c = candStart;
       while (c <= greedyEnd) {
-        if (c >= lineStart + 1 && c <= adjustedClusters.length && c <= segmentEndExclusive && !ranges.containsBoundary(c) && ProgressiveBreakDecisions.progressiveCandidateAllowed(lineStart, rawGreedyEnd, c, progressive, adjustedClusters, ProgressiveBreakDecisions.lineLimit(maxWidth, indent, lineStart), cjk, maxStretch, sino, sinoCap) && (LookaheadLineBreaker.hasRenderingContentInRange(lineStart, c, controls) || c === segmentEndExclusive)) {
+        if (c >= lineStart + 1 && c <= adjustedClusters.length && c <= segmentEndExclusive && !ranges!.containsBoundary(c) && ProgressiveBreakDecisions.progressiveCandidateAllowed(lineStart, rawGreedyEnd, c, (progressive)!, adjustedClusters, ProgressiveBreakDecisions.lineLimit(maxWidth, (indent)!, lineStart), cjk, maxStretch, sino, sinoCap) && (LookaheadLineBreaker.hasRenderingContentInRange(lineStart, c, (controls)!) || c === segmentEndExclusive)) {
           if (candidates.indexOf(c) === -1) {
             candidates.push(c);
           }
@@ -261,38 +299,38 @@ export class LookaheadLineBreaker implements LineBreaker {
         c++;
       }
       if (candidates.length === 0) {
-        candidates.push(ProgressiveBreakDecisions.adjustBreakForUnbreakables(greedyEnd, lineStart, ranges));
+        candidates.push(ProgressiveBreakDecisions.adjustBreakForUnbreakables(greedyEnd, lineStart, (ranges)!));
       }
       let bestEnd = greedyEnd;
       let bestScore = Infinity;
       for (let _g_index = 0, count = candidates.length; _g_index < count; _g_index += 1) {
         const e = candidates[_g_index]!;
-        const score = this.scoreCandidate(lineStart, e, naturalClusters, adjustedClusters, maxWidth, shrinkOps, indent, hangables, extendables, forbiddenLineStartClusters, hyphens, cjk, maxStretch, sino, sinoCap, segmentEndExclusive, committedDensity, committedSyntheticHyphenRun, gapBoundaries, dRef, ranges, controls, progressive);
+        const score = this.scoreCandidate(lineStart, e, naturalClusters, adjustedClusters, maxWidth, (shrinkOps)!, (indent)!, (hangables)!, (extendables)!, forbiddenLineStartClusters, (hyphens)!, (cjk)!, (maxStretch)!, (sino)!, (sinoCap)!, segmentEndExclusive, committedDensity, committedSyntheticHyphenRun, gapBoundaries, (dRef)!, (ranges)!, (controls)!, (progressive)!);
         if (score < bestScore) {
           bestScore = score;
           bestEnd = e;
         }
       }
-      const committedEnd = ProgressiveBreakDecisions.adjustBreakForLineEnd(bestEnd, lineStart, forbidEnd);
-      if (hard.has(committedEnd) && lineStart < committedEnd) {
-        committed.push(LineBreakerLines.rebuildLine(new IntRange(lineStart, committedEnd), naturalClusters, adjustedClusters, LineEndReason.MandatoryBreak, null, null));
+      const committedEnd = ProgressiveBreakDecisions.adjustBreakForLineEnd(bestEnd, lineStart, (forbidEnd)!);
+      if (hard!.has(committedEnd) && lineStart < committedEnd) {
+        committed.push(LineBreakerLines.rebuildLine(new IntRange(lineStart, committedEnd), naturalClusters, adjustedClusters, (LineEndReason.MandatoryBreak as LineEndReason), null, null));
         committedDensity = 0.0;
         committedSyntheticHyphenRun = 0;
         lineStart = committedEnd + 1;
         if (lineStart === adjustedClusters.length) {
-          committed.push(LineBreakerLines.emptyLineCandidate(adjustedClusters[adjustedClusters.length - 1]!.range.end, LineEndReason.ParagraphEnd));
+          committed.push(LineBreakerLines.emptyLineCandidate(adjustedClusters[adjustedClusters.length - 1]!.range.end, (LineEndReason.ParagraphEnd as LineEndReason)));
         }
         continue;
       }
       committed.push(LineBreakerLines.closeFilledLine(new IntRange(lineStart, committedEnd - 1), bestEnd, naturalClusters, adjustedClusters));
       const lastLine = committed[committed.length - 1]!;
-      const limit = ProgressiveBreakDecisions.lineLimit(maxWidth, indent, lastLine.clusterRange.start);
+      const limit = ProgressiveBreakDecisions.lineLimit(maxWidth, (indent)!, lastLine.clusterRange.start);
       committedDensity = LineBreakerLines.lineAdjustmentDensity(lastLine, limit, false, gapBoundaries);
-      committedSyntheticHyphenRun = (LineBreakerLines.endsWithSyntheticHyphen(lastLine, hyphens) ? committedSyntheticHyphenRun + 1 : 0);
+      committedSyntheticHyphenRun = (LineBreakerLines.endsWithSyntheticHyphen(lastLine, (hyphens)!) ? committedSyntheticHyphenRun + 1 : 0);
       lineStart = committedEnd;
     }
-    const repaired = LineRepair.applyKinsokuRepairs(committed, naturalClusters, adjustedClusters, maxWidth, this.kinsoku, shrinkOps, this.pushInPenalty, this.carryPreviousPenalty, this.leaveRaggedPenalty, ranges, indent, hangables, extendables, 5, forbiddenLineStartClusters);
-    return LineRepair.withFillPushIn(repaired, pushIn, naturalClusters, adjustedClusters, maxWidth, shrinkOps, indent, compressBias, forbiddenLineStartClusters, forbidEnd, ranges, this.pushInPenalty, gapBoundaries, progressive);
+    const repaired = LineRepair.applyKinsokuRepairs(committed, naturalClusters, adjustedClusters, maxWidth, this.kinsoku, (shrinkOps)!, this.pushInPenalty, this.carryPreviousPenalty, this.leaveRaggedPenalty, ranges, indent, hangables, extendables, 5, forbiddenLineStartClusters);
+    return LineRepair.withFillPushIn(repaired, (pushIn)!, naturalClusters, adjustedClusters, maxWidth, (shrinkOps)!, (indent)!, (compressBias)!, forbiddenLineStartClusters, (forbidEnd)!, (ranges)!, this.pushInPenalty, gapBoundaries, progressive);
   }
 
   private scoreCandidate(s: number, e: number, natural: Cluster[], adjusted: Cluster[], maxWidth: number, shrinkOpportunities: ShrinkOpportunity[], firstLineIndent: number, hangableClusters: SortedSetTable<number>, extendableHangRanges: IntRange[], forbiddenLineStartClusters: SortedSetTable<number> | null, hyphenBreakClusters: SortedSetTable<number>, cjkInterCharBoundaries: SortedSetTable<number>, maxCjkStretchPerGap: number, sinoWesternBoundaries: SortedSetTable<number>, sinoWesternStretchCap: number, segmentEndExclusive: number, prevCommittedDensity: number, prevSyntheticHyphenRun: number, gapBoundaries: SortedSetTable<number>, dRef: number, unbreakableRanges: UnbreakableRanges, nonRenderingControlClusters: SortedSetTable<number>, progressiveBreakOpportunities: SortedMapTable<number, ProgressiveBreakOpportunity>): number {
@@ -356,7 +394,7 @@ export class LookaheadLineBreaker implements LineBreaker {
         i++;
       }
     }
-    lines.push(LineBreakerLines.rebuildLine(new IntRange(lineStart, endExclusive - 1), natural, adjusted, LineEndReason.ParagraphEnd, null, null));
+    lines.push(LineBreakerLines.rebuildLine(new IntRange(lineStart, endExclusive - 1), natural, adjusted, (LineEndReason.ParagraphEnd as LineEndReason), null, null));
     return lines;
   }
 
@@ -368,7 +406,7 @@ export class LookaheadLineBreaker implements LineBreaker {
     const residual = (gaps === 0 ? ragged : 0.0);
     const d = LineBreakerLines.lineAdjustmentDensity(line, limit, isLast, gapBoundaries);
     const orphan = (!isLast && !inMeasureRange.isEmpty && inMeasureRange.start === inMeasureRange.end ? this.leaveRaggedPenalty * 1.0 : 0.0);
-    const repairPenalty = (line.repair !== null ? RepairOptions.penalty(line.repair) * 1.0 : 0.0);
+    const repairPenalty = (line.repair !== null ? RepairOptions.penalty((line.repair)!) * 1.0 : 0.0);
     return residual * this.raggednessWeight + orphan + LineBreakerLines.amortizedAdjustmentCost(d, prevDensity, dRef) * this.raggednessWeight + repairPenalty;
   }
 
@@ -395,6 +433,9 @@ export class LineBreakerLines {
   }
 
   public static rebuildLine(clusterRange: IntRange, n: Cluster[], a: Cluster[], endReason?: LineEndReason | null, repair?: RepairOption | null, repairCandidates?: RepairCandidate[] | null): LineCandidate {
+    endReason = endReason ?? null;
+    repair = repair ?? null;
+    repairCandidates = repairCandidates ?? null;
     if (clusterRange.isEmpty) {
       throw new TiqianIllegalArgumentException(({ kind: "Message", text: "Use emptyLineCandidate for an empty line." } as TextRangeError));
     }
@@ -410,6 +451,7 @@ export class LineBreakerLines {
   }
 
   public static emptyLineCandidate(sourceOffset: number, endReason?: LineEndReason | null): LineCandidate {
+    endReason = endReason ?? null;
     return new LineCandidate(new IntRange(1, 0), new TextRange(sourceOffset, sourceOffset), 0, 0, (endReason ?? (LineEndReason.AutoWrap as LineEndReason)), null, []);
   }
 
@@ -465,18 +507,20 @@ export class LineBreakerLines {
   }
 
   public static findGreedyEnd(clusters: Cluster[], start: number, maxWidth: number, endExclusive?: number | null, nonRenderingControlClusters?: SortedSetTable<number> | null): number {
+    endExclusive = endExclusive ?? null;
+    nonRenderingControlClusters = nonRenderingControlClusters ?? null;
     const end = endExclusive ?? clusters.length;
     const controls = nonRenderingControlClusters ?? LineBreakerLines.emptyIntSet();
     let accum = 0.0;
     let i = start;
     let hasRenderingContent = false;
-    while (i < end) {
+    while (i < end!) {
       const next = accum + clusters[i]!.advance;
       if (next > maxWidth && hasRenderingContent) {
         return i;
       }
       accum = next;
-      if (!controls.has(i)) {
+      if (!controls!.has(i)) {
         hasRenderingContent = true;
       }
       i++;

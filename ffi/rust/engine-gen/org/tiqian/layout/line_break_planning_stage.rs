@@ -305,7 +305,7 @@ impl LineBreakPlanningStageResult {
         let mut i = 0;
         while i < n {
             if i > 0 { out.push_str(", "); }
-            let _ = write!(out, "{}", ((self.western_bracket_cjk_inter_char_boundary_after_clusters).clone().at(i)) as i32);
+            let _ = write!(out, "{}", i32::from_ne_bytes((((self.western_bracket_cjk_inter_char_boundary_after_clusters).clone().at(i)) as i32).to_ne_bytes()));
             i += 1;
         }
         out.push(']');
@@ -317,7 +317,7 @@ impl LineBreakPlanningStageResult {
         let mut i = 0;
         while i < n {
             if i > 0 { out.push_str(", "); }
-            let _ = write!(out, "{}", ((self.attached_inline_physical_boundary_after_clusters).clone().at(i)) as i32);
+            let _ = write!(out, "{}", i32::from_ne_bytes((((self.attached_inline_physical_boundary_after_clusters).clone().at(i)) as i32).to_ne_bytes()));
             i += 1;
         }
         out.push(']');
@@ -329,7 +329,7 @@ impl LineBreakPlanningStageResult {
         let mut i = 0;
         while i < n {
             if i > 0 { out.push_str(", "); }
-            let _ = write!(out, "{}={}", ((self.attached_inline_virtual_boundary_after_clusters).clone().key_at(i)) as i32, ((self.attached_inline_virtual_boundary_after_clusters).clone().value_at(i)) as i32);
+            let _ = write!(out, "{}={}", i32::from_ne_bytes((((self.attached_inline_virtual_boundary_after_clusters).clone().key_at(i)) as i32).to_ne_bytes()), i32::from_ne_bytes((((self.attached_inline_virtual_boundary_after_clusters).clone().value_at(i)) as i32).to_ne_bytes()));
             i += 1;
         }
         out.push('}');
@@ -341,7 +341,7 @@ impl LineBreakPlanningStageResult {
         let mut i = 0;
         while i < n {
             if i > 0 { out.push_str(", "); }
-            let _ = write!(out, "{}", ((self.attached_inline_virtual_sino_western_boundary_after_clusters).clone().at(i)) as i32);
+            let _ = write!(out, "{}", i32::from_ne_bytes((((self.attached_inline_virtual_sino_western_boundary_after_clusters).clone().at(i)) as i32).to_ne_bytes()));
             i += 1;
         }
         out.push(']');
@@ -353,7 +353,7 @@ impl LineBreakPlanningStageResult {
         let mut i = 0;
         while i < n {
             if i > 0 { out.push_str(", "); }
-            let _ = write!(out, "{}", ((self.no_stretch_boundary_clusters).clone().at(i)) as i32);
+            let _ = write!(out, "{}", i32::from_ne_bytes((((self.no_stretch_boundary_clusters).clone().at(i)) as i32).to_ne_bytes()));
             i += 1;
         }
         out.push(']');
@@ -365,7 +365,7 @@ impl LineBreakPlanningStageResult {
         let mut i = 0;
         while i < n {
             if i > 0 { out.push_str(", "); }
-            let _ = write!(out, "{}", ((self.no_stretch_boundary_after_clusters).clone().at(i)) as i32);
+            let _ = write!(out, "{}", i32::from_ne_bytes((((self.no_stretch_boundary_after_clusters).clone().at(i)) as i32).to_ne_bytes()));
             i += 1;
         }
         out.push(']');
@@ -377,7 +377,7 @@ impl LineBreakPlanningStageResult {
         let mut i = 0;
         while i < n {
             if i > 0 { out.push_str(", "); }
-            let _ = write!(out, "{}={}", ((self.technical_boundary_after_clusters).clone().key_at(i)) as i32, (self.technical_boundary_after_clusters).clone().value_at(i).name());
+            let _ = write!(out, "{}={}", i32::from_ne_bytes((((self.technical_boundary_after_clusters).clone().key_at(i)) as i32).to_ne_bytes()), (self.technical_boundary_after_clusters).clone().value_at(i).name());
             i += 1;
         }
         out.push('}');
@@ -389,7 +389,7 @@ impl LineBreakPlanningStageResult {
         let mut i = 0;
         while i < n {
             if i > 0 { out.push_str(", "); }
-            let _ = write!(out, "{}={}", ((self.emergency_tracking_boundary_after_clusters).clone().key_at(i)) as i32, (self.emergency_tracking_boundary_after_clusters).clone().value_at(i));
+            let _ = write!(out, "{}={}", i32::from_ne_bytes((((self.emergency_tracking_boundary_after_clusters).clone().key_at(i)) as i32).to_ne_bytes()), (self.emergency_tracking_boundary_after_clusters).clone().value_at(i));
             i += 1;
         }
         out.push('}');
@@ -401,7 +401,7 @@ impl LineBreakPlanningStageResult {
         let mut i = 0;
         while i < n {
             if i > 0 { out.push_str(", "); }
-            let _ = write!(out, "{}={}", ((self.progressive_break_opportunities).clone().key_at(i)) as i32, (self.progressive_break_opportunities).clone().value_at(i).to_string());
+            let _ = write!(out, "{}={}", i32::from_ne_bytes((((self.progressive_break_opportunities).clone().key_at(i)) as i32).to_ne_bytes()), (self.progressive_break_opportunities).clone().value_at(i).to_string());
             i += 1;
         }
         out.push('}');
@@ -425,10 +425,10 @@ impl IntervalOverlapIndex {
             sorted.push((ranges[usize::try_from(i).unwrap_or(0)]).clone());
         }
         let mut r_idx = 1u32;
-        while ((r_idx) as i32) < ((u32::try_from((sorted.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32) {
+        while (i32::from_ne_bytes(((r_idx) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((sorted.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
             let curr = (sorted[usize::try_from(r_idx).unwrap_or(0)]).clone();
             let mut j = r_idx;
-            while (j) > (0) && ((sorted[usize::try_from(u32::wrapping_sub(j, 1)).unwrap_or(0)].start) as i32) > ((curr.start) as i32) {
+            while (j) > (0) && (i32::from_ne_bytes(((sorted[usize::try_from(u32::wrapping_sub(j, 1)).unwrap_or(0)].start) as i32).to_ne_bytes())) > (i32::from_ne_bytes(((curr.start) as i32).to_ne_bytes())) {
                 sorted[usize::try_from(j).unwrap_or(0)] = (sorted[usize::try_from(u32::wrapping_sub(j, 1)).unwrap_or(0)]).clone();
                 j = u32::wrapping_sub(j, 1);
             }
@@ -437,7 +437,7 @@ impl IntervalOverlapIndex {
         }
         let mut running = 2147483648u32;
         for i in 0..match u32::try_from(sorted.len()) { Ok(value) => value, Err(_) => u32::MAX } {
-            if sorted[usize::try_from(i).unwrap_or(0)].end as i32 > ((running) as i32) {
+            if i32::from_ne_bytes(((sorted[usize::try_from(i).unwrap_or(0)].end) as i32).to_ne_bytes()) > (i32::from_ne_bytes(((running) as i32).to_ne_bytes())) {
                 running = sorted[usize::try_from(i).unwrap_or(0)].end;
             }
             prefix_max_end.push(running);
@@ -454,15 +454,15 @@ impl IntervalOverlapIndex {
         }
         let mut low = 0u32;
         let mut high = u32::try_from(((self.by_start).clone().len()) & 0xFFFF_FFFF).unwrap_or(0);
-        while ((low) as i32) < ((high) as i32) {
+        while (i32::from_ne_bytes(((low) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((high) as i32).to_ne_bytes())) {
             let mid = u32::wrapping_add(low, high) >> 1;
-            if self.by_start[usize::try_from(mid).unwrap_or(0)].start as i32 < ((end_exclusive) as i32) {
+            if i32::from_ne_bytes(((self.by_start[usize::try_from(mid).unwrap_or(0)].start) as i32).to_ne_bytes()) < (i32::from_ne_bytes(((end_exclusive) as i32).to_ne_bytes())) {
                 low = u32::wrapping_add(mid, 1);
             } else {
                 high = mid;
             }
         }
-        return ((low) as i32) > (0) && ({ let v: u32 = self.prefix_max_end[usize::try_from(u32::wrapping_sub(low, 1)).unwrap_or(0)]; v as i32 }) > ((start) as i32);
+        return (i32::from_ne_bytes(((low) as i32).to_ne_bytes())) > (0) && ({ let v: u32 = self.prefix_max_end[usize::try_from(u32::wrapping_sub(low, 1)).unwrap_or(0)]; i32::from_ne_bytes(v.to_ne_bytes()) }) > (i32::from_ne_bytes(((start) as i32).to_ne_bytes()));
     }
 }
 
@@ -492,12 +492,12 @@ impl LineBreakPlanningStage {
         let mut item_index = 0u32;
         let mut result: Vec<Option<ClusterMetricDecision>> = Vec::new();
         for cluster in clusters {
-            while ((item_index) as i32) < ((u32::try_from((decisions.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32) && ((((decisions[usize::try_from(item_index).unwrap_or(0)]).clone().range).clone().end) as i32) <= (cluster.range).clone().start as i32 {
+            while (i32::from_ne_bytes(((item_index) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((decisions.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) && (i32::from_ne_bytes(((((decisions[usize::try_from(item_index).unwrap_or(0)]).clone().range).clone().end) as i32).to_ne_bytes())) <= i32::from_ne_bytes((((cluster.range).clone().start) as i32).to_ne_bytes()) {
                 item_index = u32::wrapping_add(item_index, 1);
             }
-            if item_index as i32 < ((u32::try_from((decisions.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32) {
+            if i32::from_ne_bytes(((item_index) as i32).to_ne_bytes()) < (i32::from_ne_bytes(((u32::try_from((decisions.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
                 let item = (decisions[usize::try_from(item_index).unwrap_or(0)]).clone();
-                if cluster.range.clone().start as i32 >= (item.range).clone().start as i32 && (((cluster.range).clone().end) as i32) <= (item.range).clone().end as i32 {
+                if i32::from_ne_bytes((((cluster.range).clone().start) as i32).to_ne_bytes()) >= i32::from_ne_bytes((((item.range).clone().start) as i32).to_ne_bytes()) && (i32::from_ne_bytes((((cluster.range).clone().end) as i32).to_ne_bytes())) <= i32::from_ne_bytes((((item.range).clone().end) as i32).to_ne_bytes()) {
                     result.push(Some(item));
                 } else {
                     result.push(None);
@@ -515,13 +515,13 @@ impl LineBreakPlanningStage {
         let mut metric_decisions = Vec::with_capacity(capacity);
         for dec_idx in 0..match u32::try_from(prep.font_decisions.len()) { Ok(value) => value, Err(_) => u32::MAX } {
             let decision = (prep.font_decisions[usize::try_from(dec_idx).unwrap_or(0)]).clone();
-            while ((metric_cluster_index) as i32) < ((u32::try_from((prep.natural_clusters.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32) && ((((prep.natural_clusters[usize::try_from(metric_cluster_index).unwrap_or(0)]).clone().range).clone().end) as i32) <= (decision.range).clone().start as i32 {
+            while (i32::from_ne_bytes(((metric_cluster_index) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((prep.natural_clusters.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) && (i32::from_ne_bytes(((((prep.natural_clusters[usize::try_from(metric_cluster_index).unwrap_or(0)]).clone().range).clone().end) as i32).to_ne_bytes())) <= i32::from_ne_bytes((((decision.range).clone().start) as i32).to_ne_bytes()) {
                 metric_cluster_index = u32::wrapping_add(metric_cluster_index, 1);
             }
             let mut text_buf_b = UString::new();
-            while ((metric_cluster_index) as i32) < ((u32::try_from((prep.natural_clusters.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32) && ((((prep.natural_clusters[usize::try_from(metric_cluster_index).unwrap_or(0)]).clone().range).clone().start) as i32) < (((decision.range).clone().end) as i32) {
+            while (i32::from_ne_bytes(((metric_cluster_index) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((prep.natural_clusters.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) && (i32::from_ne_bytes(((((prep.natural_clusters[usize::try_from(metric_cluster_index).unwrap_or(0)]).clone().range).clone().start) as i32).to_ne_bytes())) < (i32::from_ne_bytes((((decision.range).clone().end) as i32).to_ne_bytes())) {
                 let cluster = (prep.natural_clusters[usize::try_from(metric_cluster_index).unwrap_or(0)]).clone();
-                if cluster.range.clone().start as i32 < (((decision.range).clone().start) as i32) || (((cluster.range).clone().end) as i32) > (((decision.range).clone().end) as i32) {
+                if i32::from_ne_bytes((((cluster.range).clone().start) as i32).to_ne_bytes()) < (i32::from_ne_bytes((((decision.range).clone().start) as i32).to_ne_bytes())) || (i32::from_ne_bytes((((cluster.range).clone().end) as i32).to_ne_bytes())) > (i32::from_ne_bytes((((decision.range).clone().end) as i32).to_ne_bytes())) {
                     return Err(TextRangeError::Message { text: UString::from(format!("{}", { let mut __s = UString::new(); __s += &(UString::from("Shaped cluster ")); __s += UString::from(format!("{}", (cluster.range).clone().to_string()).as_str()).as_ustr(); __s += &(UString::from(" crosses font decision ")); __s += UString::from(format!("{}", (decision.range).clone().to_string()).as_str()).as_ustr(); __s }).as_str()) });
                 }
                 {
@@ -531,7 +531,7 @@ impl LineBreakPlanningStage {
                 metric_cluster_index = u32::wrapping_add(metric_cluster_index, 1);
             }
             let buf_str = (text_buf_b).clone();
-            let displayed_face_selection_text = if u_string::unit_count(&(buf_str)) as i32 > (0) { buf_str.to_ustring() } else { u_string::substring(&(prep.text).to_ustring(), ((decision.range).clone().start) as i32, ((decision.range).clone().end) as i32).to_ustring() };
+            let displayed_face_selection_text = if i32::from_ne_bytes(((u_string::unit_count(&(buf_str))) as i32).to_ne_bytes()) > (0) { buf_str.to_ustring() } else { u_string::substring(&(prep.text).to_ustring(), i32::from_ne_bytes((((decision.range).clone().start) as i32).to_ne_bytes()), i32::from_ne_bytes((((decision.range).clone().end) as i32).to_ne_bytes())).to_ustring() };
             let dec_style = (prep.style_at)((decision.range).clone().start);
             let capacity = dec_style.font_families.len();
             let mut font_families_copy = Vec::with_capacity(capacity);
@@ -541,7 +541,7 @@ impl LineBreakPlanningStage {
             let request = FontMetricsRequest::new(((decision.candidate).clone().key).to_ustring().as_ustr(), (prep.font_size_at)((decision.range).clone().start), decision.role, (((prep.input).clone().text_style).clone().locale).to_ustring().as_ustr(), Some((font_families_copy).clone()), Some(dec_style.font_weight), Some(dec_style.italic), Some((displayed_face_selection_text).to_ustring()));
             let raw_metrics = engine.font_metrics_resolver.resolve((request).clone())?;
             let layout_metrics = engine.font_metrics_normalizer.normalize(FontMetricsNormalizationInput::new((request).clone(), (raw_metrics).clone()));
-            metric_decisions.push(ClusterMetricDecision::new((decision.range).clone(), u_string::substring(&(prep.text).to_ustring(), ((decision.range).clone().start) as i32, ((decision.range).clone().end) as i32).as_ustr(), (request).clone(), (raw_metrics).clone(), (layout_metrics).clone()));
+            metric_decisions.push(ClusterMetricDecision::new((decision.range).clone(), u_string::substring(&(prep.text).to_ustring(), i32::from_ne_bytes((((decision.range).clone().start) as i32).to_ne_bytes()), i32::from_ne_bytes((((decision.range).clone().end) as i32).to_ne_bytes())).as_ustr(), (request).clone(), (raw_metrics).clone(), (layout_metrics).clone()));
         }
         let mut ideographic_decisions: Vec<ClusterMetricDecision> = Vec::new();
         for i in 0..match u32::try_from(metric_decisions.len()) { Ok(value) => value, Err(_) => u32::MAX } {
@@ -549,7 +549,7 @@ impl LineBreakPlanningStage {
                 ideographic_decisions.push((metric_decisions[usize::try_from(i).unwrap_or(0)]).clone());
             }
         }
-        let base_metric_decisions = if u32::try_from((ideographic_decisions.len()) & 0xFFFF_FFFF).unwrap_or(0) as i32 > (0) { ideographic_decisions } else { (metric_decisions).clone() };
+        let base_metric_decisions = if i32::from_ne_bytes(((u32::try_from((ideographic_decisions.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes()) > (0) { ideographic_decisions } else { (metric_decisions).clone() };
         let mut max_ascent: Option<f64> = None;
         let mut max_descent: Option<f64> = None;
         for i in 0..match u32::try_from(base_metric_decisions.len()) { Ok(value) => value, Err(_) => u32::MAX } {
@@ -573,8 +573,8 @@ impl LineBreakPlanningStage {
         }
         let base_box_descent = match &(base_ref_metrics) { Some(__option5) => __option5.descent, None => base_descent };
         let mut max_ruby_extent = 0.0f64;
-        for i in 0..((prep.ruby_font_geometry_by_span.size()) as u32) {
-            let geom = prep.ruby_font_geometry_by_span.value_at({ let v: u32 = i; v as i32 });
+        for i in 0..u32::from_ne_bytes(((prep.ruby_font_geometry_by_span.size()) as u32).to_ne_bytes()) {
+            let geom = prep.ruby_font_geometry_by_span.value_at({ let v: u32 = i; i32::from_ne_bytes(v.to_ne_bytes()) });
             if geom.required_extent > (max_ruby_extent) {
                 max_ruby_extent = geom.required_extent;
             }
@@ -636,7 +636,7 @@ impl LineBreakPlanningStage {
         }
         let first_line_indent_decision = FirstLineIndentDecisionInfo::new(if explicit_indent_em.is_some() { UString::from("Explicit") } else { UString::from("MeasureAdaptiveFirstLineIndent") }.as_ustr(), prep.measure_em, indent_policy.short_below_em, resolved_indent_em);
         let kinsoku_decision = KinsokuDecisionInfo::new(prep.measure_em, UString::from((prep.resolved_kinsoku).clone().level.name()).as_ustr(), UString::from((prep.resolved_kinsoku).clone().hanging.name()).as_ustr(), ((prep.resolved_kinsoku).clone().reason).to_ustring().as_ustr());
-        let mut hangable_clusters_builder: SortedSetTableBuilder<u32> = SortedTable::sorted_table_set_builder::<u32>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints((*a) as i32, (*b) as i32)));
+        let mut hangable_clusters_builder: SortedSetTableBuilder<u32> = SortedTable::sorted_table_set_builder::<u32>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_bytes(((*a) as i32).to_ne_bytes()), i32::from_ne_bytes(((*b) as i32).to_ne_bytes()))));
         if prep.resolved_kinsoku.clone().hanging == HangingPunctuationStyle::PauseStops {
             for idx in 0..match u32::try_from(prep.natural_clusters.len()) { Ok(value) => value, Err(_) => u32::MAX } {
                 if LineBreakPlanningStage::line_break_planning_stage_is_hangable_punctuation(((prep.natural_clusters[usize::try_from(idx).unwrap_or(0)]).clone().display_text).to_ustring().as_ustr()) {
@@ -647,15 +647,15 @@ impl LineBreakPlanningStage {
         let hangable_clusters: SortedSetTable<u32> = hangable_clusters_builder.clone().build();
         let ascii_point_mark_kinsoku = PunctuationGeometryStage::punctuation_geometry_stage_attached_ascii_point_mark_kinsoku(&prep.natural_clusters, &prep.cluster_roles, &prep.clusters, (prep.resolved_kinsoku).clone().level, prep.measure - block_indent, prep.measure - first_line_indent)?;
         let inline_object_kinsoku = PunctuationGeometryStage::punctuation_geometry_stage_inline_object_attached_kinsoku(&prep.natural_clusters, &prep.inline_object_attached_marks, &prep.clusters, (prep.resolved_kinsoku).clone().level, prep.measure - block_indent, prep.measure - first_line_indent)?;
-        let mut resolved_hangable_clusters_builder: SortedSetTableBuilder<u32> = SortedTable::sorted_table_set_builder::<u32>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints((*a) as i32, (*b) as i32)));
-        for i in 0..((hangable_clusters.size()) as u32) {
-            resolved_hangable_clusters_builder.put(&(hangable_clusters.at({ let v: u32 = i; v as i32 })));
+        let mut resolved_hangable_clusters_builder: SortedSetTableBuilder<u32> = SortedTable::sorted_table_set_builder::<u32>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_bytes(((*a) as i32).to_ne_bytes()), i32::from_ne_bytes(((*b) as i32).to_ne_bytes()))));
+        for i in 0..u32::from_ne_bytes(((hangable_clusters.size()) as u32).to_ne_bytes()) {
+            resolved_hangable_clusters_builder.put(&(hangable_clusters.at({ let v: u32 = i; i32::from_ne_bytes(v.to_ne_bytes()) })));
         }
-        for i in 0..((ascii_point_mark_kinsoku.impossible_measure_hang_eligible_clusters.size()) as u32) {
-            resolved_hangable_clusters_builder.put(&(ascii_point_mark_kinsoku.impossible_measure_hang_eligible_clusters.at({ let v: u32 = i; v as i32 })));
+        for i in 0..u32::from_ne_bytes(((ascii_point_mark_kinsoku.impossible_measure_hang_eligible_clusters.size()) as u32).to_ne_bytes()) {
+            resolved_hangable_clusters_builder.put(&(ascii_point_mark_kinsoku.impossible_measure_hang_eligible_clusters.at({ let v: u32 = i; i32::from_ne_bytes(v.to_ne_bytes()) })));
         }
-        for i in 0..((inline_object_kinsoku.impossible_measure_hang_eligible_clusters.size()) as u32) {
-            resolved_hangable_clusters_builder.put(&(inline_object_kinsoku.impossible_measure_hang_eligible_clusters.at({ let v: u32 = i; v as i32 })));
+        for i in 0..u32::from_ne_bytes(((inline_object_kinsoku.impossible_measure_hang_eligible_clusters.size()) as u32).to_ne_bytes()) {
+            resolved_hangable_clusters_builder.put(&(inline_object_kinsoku.impossible_measure_hang_eligible_clusters.at({ let v: u32 = i; i32::from_ne_bytes(v.to_ne_bytes()) })));
         }
         let resolved_hangable_clusters: SortedSetTable<u32> = resolved_hangable_clusters_builder.clone().build();
         let unicode_punctuation_boundaries = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_unicode_punctuation_boundaries((prep.text).to_ustring().as_ustr(), &prep.natural_clusters, &prep.cluster_roles, &prep.quote_pairs)?;
@@ -666,29 +666,29 @@ impl LineBreakPlanningStage {
         let attached_inline_physical_boundary_after_clusters: SortedSetTable<u32> = attached_inline_inter_char_boundaries.suppressed_physical_boundary_after_clusters.clone();
         let attached_inline_virtual_boundary_after_clusters: SortedMapTable<u32, u32> = attached_inline_inter_char_boundaries.virtual_boundary_after_clusters.clone();
         let attached_inline_virtual_sino_western_boundary_after_clusters: SortedSetTable<u32> = attached_inline_inter_char_boundaries.virtual_sino_western_boundary_after_clusters.clone();
-        let mut attached_inline_forbidden_line_start_clusters_builder: SortedSetTableBuilder<u32> = SortedTable::sorted_table_set_builder::<u32>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints((*a) as i32, (*b) as i32)));
+        let mut attached_inline_forbidden_line_start_clusters_builder: SortedSetTableBuilder<u32> = SortedTable::sorted_table_set_builder::<u32>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_bytes(((*a) as i32).to_ne_bytes()), i32::from_ne_bytes(((*b) as i32).to_ne_bytes()))));
         for it in 0..match u32::try_from(inline_attachments.len()) { Ok(value) => value, Err(_) => u32::MAX } {
             if inline_attachments[usize::try_from(it).unwrap_or(0)] == InlineAttachment::Previous {
                 attached_inline_forbidden_line_start_clusters_builder.put(&(it));
             }
         }
         let attached_inline_forbidden_line_start_clusters: SortedSetTable<u32> = attached_inline_forbidden_line_start_clusters_builder.clone().build();
-        let mut forbidden_line_start_clusters_builder: SortedSetTableBuilder<u32> = SortedTable::sorted_table_set_builder::<u32>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints((*a) as i32, (*b) as i32)));
+        let mut forbidden_line_start_clusters_builder: SortedSetTableBuilder<u32> = SortedTable::sorted_table_set_builder::<u32>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_bytes(((*a) as i32).to_ne_bytes()), i32::from_ne_bytes(((*b) as i32).to_ne_bytes()))));
         for idx in 0..match u32::try_from(prep.natural_clusters.len()) { Ok(value) => value, Err(_) => u32::MAX } {
             if attached_inline_forbidden_line_start_clusters.has(&(idx)) || prep.zero_width_break_clusters.has(&(idx)) || PunctuationGeometryStage::punctuation_geometry_stage_is_cjk_kinsoku_role(Some(prep.cluster_roles[usize::try_from(idx).unwrap_or(0)])) && prep.kinsoku_rule.forbidden_at_line_start((prep.natural_clusters[usize::try_from(idx).unwrap_or(0)]).clone()) || unicode_punctuation_boundaries.forbidden_line_start_clusters.has(&(idx)) || ascii_point_mark_kinsoku.forbidden_line_start_clusters.has(&(idx)) || inline_object_kinsoku.forbidden_line_start_clusters.has(&(idx)) {
                 forbidden_line_start_clusters_builder.put(&(idx));
             }
         }
         let forbidden_line_start_clusters: SortedSetTable<u32> = forbidden_line_start_clusters_builder.clone().build();
-        let mut forbidden_line_end_clusters_builder: SortedSetTableBuilder<u32> = SortedTable::sorted_table_set_builder::<u32>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints((*a) as i32, (*b) as i32)));
+        let mut forbidden_line_end_clusters_builder: SortedSetTableBuilder<u32> = SortedTable::sorted_table_set_builder::<u32>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_bytes(((*a) as i32).to_ne_bytes()), i32::from_ne_bytes(((*b) as i32).to_ne_bytes()))));
         for idx in 0..match u32::try_from(prep.natural_clusters.len()) { Ok(value) => value, Err(_) => u32::MAX } {
             if PunctuationGeometryStage::punctuation_geometry_stage_is_cjk_kinsoku_role(Some(prep.cluster_roles[usize::try_from(idx).unwrap_or(0)])) && prep.kinsoku_rule.forbidden_at_line_end((prep.natural_clusters[usize::try_from(idx).unwrap_or(0)]).clone()) || unicode_punctuation_boundaries.forbidden_line_end_clusters.has(&(idx)) {
                 forbidden_line_end_clusters_builder.put(&(idx));
             }
         }
         let forbidden_line_end_clusters: SortedSetTable<u32> = forbidden_line_end_clusters_builder.clone().build();
-        let mut hyphen_break_clusters_builder: SortedSetTableBuilder<u32> = SortedTable::sorted_table_set_builder::<u32>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints((*a) as i32, (*b) as i32)));
-        if prep.hyphen_offsets.size() as u32 as i32 > (0) {
+        let mut hyphen_break_clusters_builder: SortedSetTableBuilder<u32> = SortedTable::sorted_table_set_builder::<u32>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_bytes(((*a) as i32).to_ne_bytes()), i32::from_ne_bytes(((*b) as i32).to_ne_bytes()))));
+        if i32::from_ne_bytes(((u32::from_ne_bytes(((prep.hyphen_offsets.size()) as u32).to_ne_bytes())) as i32).to_ne_bytes()) > (0) {
             for it in 0..match u32::try_from(prep.natural_clusters.len()) { Ok(value) => value, Err(_) => u32::MAX } {
                 if prep.hyphen_offsets.has(&(((prep.natural_clusters[usize::try_from(it).unwrap_or(0)]).clone().range).clone().start)) {
                     hyphen_break_clusters_builder.put(&(it));
@@ -696,16 +696,18 @@ impl LineBreakPlanningStage {
             }
         }
         let hyphen_break_clusters: SortedSetTable<u32> = hyphen_break_clusters_builder.clone().build();
-        let mut cluster_index_by_source_start_builder: SortedMapTableBuilder<u32, u32> = SortedTable::sorted_table_map_builder::<u32, u32>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints((*a) as i32, (*b) as i32)));
+        let mut cluster_index_by_source_start_builder: SortedMapTableBuilder<u32, u32> = SortedTable::sorted_table_map_builder::<u32,
+u32>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_bytes(((*a) as i32).to_ne_bytes()), i32::from_ne_bytes(((*b) as i32).to_ne_bytes()))));
         for it in 0..match u32::try_from(prep.natural_clusters.len()) { Ok(value) => value, Err(_) => u32::MAX } {
             cluster_index_by_source_start_builder.put(&(((prep.natural_clusters[usize::try_from(it).unwrap_or(0)]).clone().range).clone().start), &(it));
         }
         let cluster_index_by_source_start: SortedMapTable<u32, u32> = cluster_index_by_source_start_builder.clone().build();
         let progressive_technical_whitespace_stretch_capacity = engine.justifier.progressive_technical_whitespace_stretch_capacity(prep.font_size);
-        let mut progressive_break_opportunities_builder: SortedMapTableBuilder<u32, ProgressiveBreakOpportunity> = SortedTable::sorted_table_map_builder::<u32, ProgressiveBreakOpportunity>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints((*a) as i32, (*b) as i32)));
-        for i in 0..((prep.progressive_break_offsets.size()) as u32) {
-            let source_offset = prep.progressive_break_offsets.key_at({ let v: u32 = i; v as i32 });
-            let opportunity = prep.progressive_break_offsets.value_at({ let v: u32 = i; v as i32 });
+        let mut progressive_break_opportunities_builder: SortedMapTableBuilder<u32, ProgressiveBreakOpportunity> = SortedTable::sorted_table_map_builder::<u32,
+ProgressiveBreakOpportunity>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_bytes(((*a) as i32).to_ne_bytes()), i32::from_ne_bytes(((*b) as i32).to_ne_bytes()))));
+        for i in 0..u32::from_ne_bytes(((prep.progressive_break_offsets.size()) as u32).to_ne_bytes()) {
+            let source_offset = prep.progressive_break_offsets.key_at({ let v: u32 = i; i32::from_ne_bytes(v.to_ne_bytes()) });
+            let opportunity = prep.progressive_break_offsets.value_at({ let v: u32 = i; i32::from_ne_bytes(v.to_ne_bytes()) });
             if cluster_index_by_source_start.has(&(source_offset)) {
                 let cluster_index = (cluster_index_by_source_start.get(&(source_offset))).unwrap();
                 let opp = if opportunity.tier == ProgressiveBreakTier::Whitespace { ProgressiveBreakOpportunity::new(opportunity.tier, (opportunity.span_range).clone(), Some(progressive_technical_whitespace_stretch_capacity)) } else { opportunity };
@@ -744,7 +746,7 @@ impl LineBreakPlanningStage {
                 number_symbol_unbreakable_ranges.push(idx_range.clone());
             }
         }
-        let mut no_stretch_boundary_clusters_builder: SortedSetTableBuilder<u32> = SortedTable::sorted_table_set_builder::<u32>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints((*a) as i32, (*b) as i32)));
+        let mut no_stretch_boundary_clusters_builder: SortedSetTableBuilder<u32> = SortedTable::sorted_table_set_builder::<u32>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_bytes(((*a) as i32).to_ne_bytes()), i32::from_ne_bytes(((*b) as i32).to_ne_bytes()))));
         for idx in 0..match u32::try_from(prep.natural_clusters.len()) { Ok(value) => value, Err(_) => u32::MAX } {
             let cls = if prep.atom_class_by_range.has(&(((prep.natural_clusters[usize::try_from(idx).unwrap_or(0)]).clone().range).clone())) { prep.atom_class_by_range.get(&(((prep.natural_clusters[usize::try_from(idx).unwrap_or(0)]).clone().range).clone())) } else { None };
             if cls == Some(PunctuationClass::Connector) || cls == Some(PunctuationClass::Solidus) || cls == Some(PunctuationClass::Dash) || cls == Some(PunctuationClass::Ellipsis) {
@@ -752,20 +754,21 @@ impl LineBreakPlanningStage {
             }
         }
         let no_stretch_boundary_clusters: SortedSetTable<u32> = no_stretch_boundary_clusters_builder.clone().build();
-        let mut no_stretch_boundary_after_clusters_builder: SortedSetTableBuilder<u32> = SortedTable::sorted_table_set_builder::<u32>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints((*a) as i32, (*b) as i32)));
+        let mut no_stretch_boundary_after_clusters_builder: SortedSetTableBuilder<u32> = SortedTable::sorted_table_set_builder::<u32>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_bytes(((*a) as i32).to_ne_bytes()), i32::from_ne_bytes(((*b) as i32).to_ne_bytes()))));
         for range in &number_symbol_cluster_ranges {
             for c_idx in range.start..range.end {
                 no_stretch_boundary_after_clusters_builder.put(&(c_idx));
             }
         }
-        for i in 0..((prep.inline_object_attachment_no_stretch_boundaries.size()) as u32) {
-            no_stretch_boundary_after_clusters_builder.put(&(prep.inline_object_attachment_no_stretch_boundaries.at({ let v: u32 = i; v as i32 })));
+        for i in 0..u32::from_ne_bytes(((prep.inline_object_attachment_no_stretch_boundaries.size()) as u32).to_ne_bytes()) {
+            no_stretch_boundary_after_clusters_builder.put(&(prep.inline_object_attachment_no_stretch_boundaries.at({ let v: u32 = i; i32::from_ne_bytes(v.to_ne_bytes()) })));
         }
         let no_stretch_boundary_after_clusters: SortedSetTable<u32> = no_stretch_boundary_after_clusters_builder.clone().build();
-        let mut technical_boundary_after_clusters_builder: SortedMapTableBuilder<u32, ProgressiveBreakTier> = SortedTable::sorted_table_map_builder::<u32, ProgressiveBreakTier>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints((*a) as i32, (*b) as i32)));
-        for i in 0..((progressive_break_opportunities.size()) as u32) {
-            let right_index = progressive_break_opportunities.key_at({ let v: u32 = i; v as i32 });
-            let opportunity = progressive_break_opportunities.value_at({ let v: u32 = i; v as i32 });
+        let mut technical_boundary_after_clusters_builder: SortedMapTableBuilder<u32, ProgressiveBreakTier> = SortedTable::sorted_table_map_builder::<u32,
+ProgressiveBreakTier>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_bytes(((*a) as i32).to_ne_bytes()), i32::from_ne_bytes(((*b) as i32).to_ne_bytes()))));
+        for i in 0..u32::from_ne_bytes(((progressive_break_opportunities.size()) as u32).to_ne_bytes()) {
+            let right_index = progressive_break_opportunities.key_at({ let v: u32 = i; i32::from_ne_bytes(v.to_ne_bytes()) });
+            let opportunity = progressive_break_opportunities.value_at({ let v: u32 = i; i32::from_ne_bytes(v.to_ne_bytes()) });
             if opportunity.tier == ProgressiveBreakTier::Whitespace {
                 technical_boundary_after_clusters_builder.put(&(u32::wrapping_sub(right_index, 1)), &(opportunity.tier));
             }
@@ -793,7 +796,8 @@ impl LineBreakPlanningStage {
         for _ in 0..match u32::try_from(prep.natural_clusters.len()) { Ok(value) => value, Err(_) => u32::MAX } {
             added_keys.push(false);
         }
-        let mut emergency_tracking_boundary_after_clusters_builder: SortedMapTableBuilder<u32, UString> = SortedTable::sorted_table_map_builder::<u32, UString>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints((*a) as i32, (*b) as i32)));
+        let mut emergency_tracking_boundary_after_clusters_builder: SortedMapTableBuilder<u32, UString> = SortedTable::sorted_table_map_builder::<u32,
+UString>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_bytes(((*a) as i32).to_ne_bytes()), i32::from_ne_bytes(((*b) as i32).to_ne_bytes()))));
         for i in 0..match u32::try_from(prep.emergency_tracking_eligibility_decisions.len()) { Ok(value) => value, Err(_) => u32::MAX } {
             let decision = (prep.emergency_tracking_eligibility_decisions[usize::try_from(i).unwrap_or(0)]).clone();
             let span = PunctuationGeometryLedger::punctuation_geometry_ledger_cluster_index_range_for(&prep.natural_clusters, (decision.range).clone());
@@ -809,9 +813,9 @@ impl LineBreakPlanningStage {
             }
         }
         let emergency_tracking_boundary_after_clusters: SortedMapTable<u32, UString> = emergency_tracking_boundary_after_clusters_builder.clone().build();
-        let mut adjustable_inline_boundary_right_clusters_builder: SortedSetTableBuilder<u32> = SortedTable::sorted_table_set_builder::<u32>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints((*a) as i32, (*b) as i32)));
-        for i in 0..((prep.uniform_inline_object_boundary_after_clusters.size()) as u32) {
-            let left_index = prep.uniform_inline_object_boundary_after_clusters.at({ let v: u32 = i; v as i32 });
+        let mut adjustable_inline_boundary_right_clusters_builder: SortedSetTableBuilder<u32> = SortedTable::sorted_table_set_builder::<u32>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_bytes(((*a) as i32).to_ne_bytes()), i32::from_ne_bytes(((*b) as i32).to_ne_bytes()))));
+        for i in 0..u32::from_ne_bytes(((prep.uniform_inline_object_boundary_after_clusters.size()) as u32).to_ne_bytes()) {
+            let left_index = prep.uniform_inline_object_boundary_after_clusters.at({ let v: u32 = i; i32::from_ne_bytes(v.to_ne_bytes()) });
             let right_index = u32::wrapping_add(left_index, 1);
             if no_stretch_boundary_after_clusters.has(&(left_index)) || no_stretch_boundary_clusters.has(&(left_index)) || no_stretch_boundary_clusters.has(&(right_index)) {
             } else {
@@ -819,30 +823,30 @@ impl LineBreakPlanningStage {
             }
         }
         let adjustable_inline_boundary_right_clusters: SortedSetTable<u32> = adjustable_inline_boundary_right_clusters_builder.clone().build();
-        let mut cjk_inter_char_boundaries_builder: SortedSetTableBuilder<u32> = SortedTable::sorted_table_set_builder::<u32>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints((*a) as i32, (*b) as i32)));
+        let mut cjk_inter_char_boundaries_builder: SortedSetTableBuilder<u32> = SortedTable::sorted_table_set_builder::<u32>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_bytes(((*a) as i32).to_ne_bytes()), i32::from_ne_bytes(((*b) as i32).to_ne_bytes()))));
         for it in 1..match u32::try_from(prep.natural_clusters.len()) { Ok(value) => value, Err(_) => u32::MAX } {
             if !attached_inline_physical_boundary_after_clusters.has(&(u32::wrapping_sub(it, 1))) && !no_stretch_boundary_after_clusters.has(&(u32::wrapping_sub(it, 1))) && prep.cluster_roles[usize::try_from(u32::wrapping_sub(it, 1)).unwrap_or(0)] == FontRole::CjkText && prep.cluster_roles[usize::try_from(it).unwrap_or(0)] == FontRole::CjkText {
                 cjk_inter_char_boundaries_builder.put(&(it));
             }
         }
-        for i in 0..((adjustable_inline_boundary_right_clusters.size()) as u32) {
-            cjk_inter_char_boundaries_builder.put(&(adjustable_inline_boundary_right_clusters.at({ let v: u32 = i; v as i32 })));
+        for i in 0..u32::from_ne_bytes(((adjustable_inline_boundary_right_clusters.size()) as u32).to_ne_bytes()) {
+            cjk_inter_char_boundaries_builder.put(&(adjustable_inline_boundary_right_clusters.at({ let v: u32 = i; i32::from_ne_bytes(v.to_ne_bytes()) })));
         }
-        for i in 0..((western_bracket_cjk_inter_char_boundary_after_clusters.size()) as u32) {
-            cjk_inter_char_boundaries_builder.put(&(u32::wrapping_add(western_bracket_cjk_inter_char_boundary_after_clusters.at({ let v: u32 = i; v as i32 }), 1)));
+        for i in 0..u32::from_ne_bytes(((western_bracket_cjk_inter_char_boundary_after_clusters.size()) as u32).to_ne_bytes()) {
+            cjk_inter_char_boundaries_builder.put(&(u32::wrapping_add(western_bracket_cjk_inter_char_boundary_after_clusters.at({ let v: u32 = i; i32::from_ne_bytes(v.to_ne_bytes()) }), 1)));
         }
-        for i in 0..((attached_inline_virtual_boundary_after_clusters.size()) as u32) {
-            cjk_inter_char_boundaries_builder.put(&(u32::wrapping_add(attached_inline_virtual_boundary_after_clusters.key_at({ let v: u32 = i; v as i32 }), 1)));
+        for i in 0..u32::from_ne_bytes(((attached_inline_virtual_boundary_after_clusters.size()) as u32).to_ne_bytes()) {
+            cjk_inter_char_boundaries_builder.put(&(u32::wrapping_add(attached_inline_virtual_boundary_after_clusters.key_at({ let v: u32 = i; i32::from_ne_bytes(v.to_ne_bytes()) }), 1)));
         }
         let cjk_inter_char_boundaries: SortedSetTable<u32> = cjk_inter_char_boundaries_builder.clone().build();
-        let mut sino_western_boundaries_builder: SortedSetTableBuilder<u32> = SortedTable::sorted_table_set_builder::<u32>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints((*a) as i32, (*b) as i32)));
+        let mut sino_western_boundaries_builder: SortedSetTableBuilder<u32> = SortedTable::sorted_table_set_builder::<u32>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_bytes(((*a) as i32).to_ne_bytes()), i32::from_ne_bytes(((*b) as i32).to_ne_bytes()))));
         for it in 1..match u32::try_from(prep.natural_clusters.len()) { Ok(value) => value, Err(_) => u32::MAX } {
             if !attached_inline_physical_boundary_after_clusters.has(&(u32::wrapping_sub(it, 1))) && !no_stretch_boundary_after_clusters.has(&(u32::wrapping_sub(it, 1))) && PunctuationGeometryStage::punctuation_geometry_stage_is_east_asian_spacing_boundary_at(it, &prep.natural_clusters, &prep.east_asian_spacing_edges) {
                 sino_western_boundaries_builder.put(&(it));
             }
         }
-        for i in 0..((attached_inline_virtual_sino_western_boundary_after_clusters.size()) as u32) {
-            sino_western_boundaries_builder.put(&(u32::wrapping_add(attached_inline_virtual_sino_western_boundary_after_clusters.at({ let v: u32 = i; v as i32 }), 1)));
+        for i in 0..u32::from_ne_bytes(((attached_inline_virtual_sino_western_boundary_after_clusters.size()) as u32).to_ne_bytes()) {
+            sino_western_boundaries_builder.put(&(u32::wrapping_add(attached_inline_virtual_sino_western_boundary_after_clusters.at({ let v: u32 = i; i32::from_ne_bytes(v.to_ne_bytes()) }), 1)));
         }
         let sino_western_boundaries: SortedSetTable<u32> = sino_western_boundaries_builder.clone().build();
         let virtual_boundaries = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_attached_inline_virtual_boundaries(&inline_attachments);
@@ -904,7 +908,7 @@ impl LineBreakPlanningStage {
             combined_extendable_hang_ranges.push((inline_object_kinsoku.extendable_hang_ranges[usize::try_from(i).unwrap_or(0)]).clone());
         }
         let mut line_solution = LineSolution::new(Some(vec![]), Some(0 as f64))?;
-        if u_string::unit_count(&((prep.text).to_ustring())) as i32 > (0) {
+        if i32::from_ne_bytes(((u_string::unit_count(&((prep.text).to_ustring()))) as i32).to_ne_bytes()) > (0) {
             let mut line_adjustment_compress_bias = 0.0f64;
             if prep.adjustment_style.clone().line_adjustment == LineAdjustmentStrategy::PushInFirst {
                 line_adjustment_compress_bias = 1000000.0f64;

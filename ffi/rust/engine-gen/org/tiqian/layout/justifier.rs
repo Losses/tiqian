@@ -170,17 +170,28 @@ impl Justifier {
     }
 
     pub fn justify(&self, c: &Vec<Cluster>, roles: &Vec<FontRole>, edges: &Vec<EastAsianSpacingEdges>, r: IntRange, max_width: f64, font_size: f64, skip: bool, skip_reason: Option<UString>, allow_sino_western_gap_stretch: Option<bool>, base_em: f64, max_em: f64, no_stretch: Option<SortedSetTable<u32>>, no_stretch_after: Option<SortedSetTable<u32>>, bracket: Option<SortedSetTable<u32>>, physical: Option<SortedSetTable<u32>>, r#virtual: Option<SortedMapTable<u32, u32>>, virtual_sino: Option<SortedSetTable<u32>>, uniform_object: Option<SortedSetTable<u32>>, preferred: Option<SortedMapTable<u32, InlineObjectPreferredStretch>>, technical: Option<SortedMapTable<u32, ProgressiveBreakTier>>, emergency: Option<SortedMapTable<u32, UString>>, preferred_emergency: Option<SortedMapTable<u32, UString>>) -> Result<JustificationPlan, TextRangeError> {
-        let ns = match &(no_stretch) { None => SortedTable::sorted_table_set_builder::<u32>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints((*a) as i32, (*b) as i32))).clone().build(), Some(__option) => (*__option).clone() };
-        let nsa = match &(no_stretch_after) { None => SortedTable::sorted_table_set_builder::<u32>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints((*a) as i32, (*b) as i32))).clone().build(), Some(__option1) => (*__option1).clone() };
-        let br = match &(bracket) { None => SortedTable::sorted_table_set_builder::<u32>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints((*a) as i32, (*b) as i32))).clone().build(), Some(__option2) => (*__option2).clone() };
-        let ph = match &(physical) { None => SortedTable::sorted_table_set_builder::<u32>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints((*a) as i32, (*b) as i32))).clone().build(), Some(__option3) => (*__option3).clone() };
-        let vi = match &(r#virtual) { None => SortedTable::sorted_table_map_builder::<u32, u32>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints((*a) as i32, (*b) as i32))).clone().build(), Some(__option4) => (*__option4).clone() };
-        let vs = match &(virtual_sino) { None => SortedTable::sorted_table_set_builder::<u32>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints((*a) as i32, (*b) as i32))).clone().build(), Some(__option5) => (*__option5).clone() };
-        let uo = match &(uniform_object) { None => SortedTable::sorted_table_set_builder::<u32>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints((*a) as i32, (*b) as i32))).clone().build(), Some(__option6) => (*__option6).clone() };
-        let pref = match &(preferred) { None => SortedTable::sorted_table_map_builder::<u32, InlineObjectPreferredStretch>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints((*a) as i32, (*b) as i32))).clone().build(), Some(__option7) => (*__option7).clone() };
-        let te = match &(technical) { None => SortedTable::sorted_table_map_builder::<u32, ProgressiveBreakTier>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints((*a) as i32, (*b) as i32))).clone().build(), Some(__option8) => (*__option8).clone() };
-        let emg = match &(emergency) { None => SortedTable::sorted_table_map_builder::<u32, UString>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints((*a) as i32, (*b) as i32))).clone().build(), Some(__option9) => (*__option9).clone() };
-        let pem = match &(preferred_emergency) { None => SortedTable::sorted_table_map_builder::<u32, UString>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints((*a) as i32, (*b) as i32))).clone().build(), Some(__option10) => (*__option10).clone() };
+        let ns = match &(no_stretch) { None => SortedTable::sorted_table_set_builder::<u32>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_bytes(((*a) as i32).to_ne_bytes()), i32::from_ne_bytes(((*b) as i32).to_ne_bytes())))).clone().build(),
+Some(__option) => (*__option).clone() };
+        let nsa = match &(no_stretch_after) { None => SortedTable::sorted_table_set_builder::<u32>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_bytes(((*a) as i32).to_ne_bytes()), i32::from_ne_bytes(((*b) as i32).to_ne_bytes())))).clone().build(),
+Some(__option1) => (*__option1).clone() };
+        let br = match &(bracket) { None => SortedTable::sorted_table_set_builder::<u32>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_bytes(((*a) as i32).to_ne_bytes()), i32::from_ne_bytes(((*b) as i32).to_ne_bytes())))).clone().build(),
+Some(__option2) => (*__option2).clone() };
+        let ph = match &(physical) { None => SortedTable::sorted_table_set_builder::<u32>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_bytes(((*a) as i32).to_ne_bytes()), i32::from_ne_bytes(((*b) as i32).to_ne_bytes())))).clone().build(),
+Some(__option3) => (*__option3).clone() };
+        let vi = match &(r#virtual) { None => SortedTable::sorted_table_map_builder::<u32, u32>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_bytes(((*a) as i32).to_ne_bytes()), i32::from_ne_bytes(((*b) as i32).to_ne_bytes())))).clone().build(),
+Some(__option4) => (*__option4).clone() };
+        let vs = match &(virtual_sino) { None => SortedTable::sorted_table_set_builder::<u32>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_bytes(((*a) as i32).to_ne_bytes()), i32::from_ne_bytes(((*b) as i32).to_ne_bytes())))).clone().build(),
+Some(__option5) => (*__option5).clone() };
+        let uo = match &(uniform_object) { None => SortedTable::sorted_table_set_builder::<u32>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_bytes(((*a) as i32).to_ne_bytes()), i32::from_ne_bytes(((*b) as i32).to_ne_bytes())))).clone().build(),
+Some(__option6) => (*__option6).clone() };
+        let pref = match &(preferred) { None => SortedTable::sorted_table_map_builder::<u32,
+InlineObjectPreferredStretch>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_bytes(((*a) as i32).to_ne_bytes()), i32::from_ne_bytes(((*b) as i32).to_ne_bytes())))).clone().build(), Some(__option7) => (*__option7).clone() };
+        let te = match &(technical) { None => SortedTable::sorted_table_map_builder::<u32,
+ProgressiveBreakTier>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_bytes(((*a) as i32).to_ne_bytes()), i32::from_ne_bytes(((*b) as i32).to_ne_bytes())))).clone().build(), Some(__option8) => (*__option8).clone() };
+        let emg = match &(emergency) { None => SortedTable::sorted_table_map_builder::<u32, UString>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_bytes(((*a) as i32).to_ne_bytes()), i32::from_ne_bytes(((*b) as i32).to_ne_bytes())))).clone().build(),
+Some(__option9) => (*__option9).clone() };
+        let pem = match &(preferred_emergency) { None => SortedTable::sorted_table_map_builder::<u32,
+UString>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_bytes(((*a) as i32).to_ne_bytes()), i32::from_ne_bytes(((*b) as i32).to_ne_bytes())))).clone().build(), Some(__option10) => (*__option10).clone() };
         if u32::try_from((roles.len()) & 0xFFFF_FFFF).unwrap_or(0) != u32::try_from((c.len()) & 0xFFFF_FFFF).unwrap_or(0) {
             return Err(TextRangeError::Message { text: UString::from("clusterRoles must align with adjustedClusters.") });
         }
@@ -189,7 +200,7 @@ impl Justifier {
         }
         let mut width_terms: Vec<f64> = vec![];
         let mut i = r.start;
-        while ((i) as i32) <= r.end as i32 {
+        while (i32::from_ne_bytes(((i) as i32).to_ne_bytes())) <= i32::from_ne_bytes(((r.end) as i32).to_ne_bytes()) {
             width_terms.push(c[usize::try_from(i).unwrap_or(0)].advance);
             i = u32::wrapping_add(i, 1);
         }
@@ -213,7 +224,7 @@ impl Justifier {
         let mut capacity_terms: Vec<f64> = vec![];
         {
             let mut _g = 0u32;
-            while ((_g) as i32) < ((u32::try_from((ops.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32) {
+            while (i32::from_ne_bytes(((_g) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((ops.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
                 let o = (ops[usize::try_from(_g).unwrap_or(0)]).clone();
                 _g = u32::wrapping_add(_g, 1);
                 capacity_terms.push(o.capacity);
@@ -247,7 +258,7 @@ impl Justifier {
             return a;
         }
         let mut j = r.start;
-        while ((j) as i32) < ((r.end) as i32) {
+        while (i32::from_ne_bytes(((j) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((r.end) as i32).to_ne_bytes())) {
             if p(j, u32::wrapping_add(j, 1)) {
                 a.push(JustificationOpportunity::new(j, kind, priority, cap, reason.clone()));
             }
@@ -268,7 +279,7 @@ impl Justifier {
         }
         let mut ws: Vec<JustificationOpportunity> = vec![];
         i = r.start;
-        while ((i) as i32) <= r.end as i32 {
+        while (i32::from_ne_bytes(((i) as i32).to_ne_bytes())) <= i32::from_ne_bytes(((r.end) as i32).to_ne_bytes()) {
             if JustifierFields::justifier_fields_word_space_between_narrow(&c, i, &edges) && !space_gap_is_closed(i) {
                 let h = { let __min_a2 = (self.word_space_max_em * font_size - c[usize::try_from(i).unwrap_or(0)].advance) as f64; let __min_b2 = 0.0f64 as f64; if __min_a2.is_nan() || __min_b2.is_nan() { f64::NAN } else { if __min_a2 > __min_b2 { __min_a2 } else if __min_b2 > __min_a2 { __min_b2 } else if __min_a2 == 0.0 && __min_b2 == 0.0 { if __min_a2.is_sign_negative() { __min_b2 } else { __min_a2 } } else { __min_a2 } } };
                 if c[usize::try_from(i).unwrap_or(0)].advance > (0 as f64) && (h) > (0 as f64) {
@@ -284,13 +295,13 @@ impl Justifier {
         let mut sino: Vec<JustificationOpportunity> = vec![];
         if allow_sino_western_gap_stretch.unwrap_or(false) {
             sino = build(GlueKind::CjkLatinSpace, 1, { let __min_a4 = ((max_em - base_em) * font_size) as f64; let __min_b4 = 0.0f64 as f64; if __min_a4.is_nan() || __min_b4.is_nan() { f64::NAN } else { if __min_a4 > __min_b4 { __min_a4 } else if __min_b4 > __min_a4 { __min_b4 } else if __min_a4 == 0.0 && __min_b4 == 0.0 { if __min_a4.is_sign_negative() { __min_b4 } else { __min_a4 } } else { __min_a4 } } }, None.clone(), { let edges = (edges).to_vec(); let ph = (ph).clone(); let boundary_is_closed = (boundary_is_closed).clone(); let c = (c).to_vec(); Arc::new(move |l, x| {
-        return JustifierFields::justifier_fields_wide_narrow_boundary(l, x, &edges) && !ph.has(&(l)) && !boundary_is_closed(l, x) && ((u_string::find_from(&(((c[usize::try_from(l).unwrap_or(0)]).clone().text).to_ustring()), UString::from(" ").as_ustr(), 0)) as u32) > 2147483647 && ((u_string::find_from(&(((c[usize::try_from(x).unwrap_or(0)]).clone().text).to_ustring()), UString::from(" ").as_ustr(), 0)) as u32) != 0;
+        return JustifierFields::justifier_fields_wide_narrow_boundary(l, x, &edges) && !ph.has(&(l)) && !boundary_is_closed(l, x) && (u32::from_ne_bytes(((u_string::find_from(&(((c[usize::try_from(l).unwrap_or(0)]).clone().text).to_ustring()), UString::from(" ").as_ustr(), 0)) as u32).to_ne_bytes())) > 2147483647 && u32::from_ne_bytes(((u_string::find_from(&(((c[usize::try_from(x).unwrap_or(0)]).clone().text).to_ustring()), UString::from(" ").as_ustr(), 0)) as u32).to_ne_bytes()) != 0;
 }) });
             i = r.start;
-            while ((i) as i32) <= r.end as i32 {
+            while (i32::from_ne_bytes(((i) as i32).to_ne_bytes())) <= i32::from_ne_bytes(((r.end) as i32).to_ne_bytes()) {
                 if vs.has(&(i)) {
                     let prev = vi.get(&(i));
-                    if match &(prev) { Some(__option15) => i as i32 >= r.start as i32 && ((u32::wrapping_add(i, 1)) as i32) <= r.end as i32 && !ns.has(&(*__option15)) && !ns.has(&(u32::wrapping_add(i, 1))), None => false } {
+                    if match &(prev) { Some(__option15) => i32::from_ne_bytes(((i) as i32).to_ne_bytes()) >= i32::from_ne_bytes(((r.start) as i32).to_ne_bytes()) && (i32::from_ne_bytes(((u32::wrapping_add(i, 1)) as i32).to_ne_bytes())) <= i32::from_ne_bytes(((r.end) as i32).to_ne_bytes()) && !ns.has(&(*__option15)) && !ns.has(&(u32::wrapping_add(i, 1))), None => false } {
                         sino.push(JustificationOpportunity::new(i, GlueKind::CjkLatinSpace, 1u32, { let __min_a6 = ((max_em - base_em) * font_size) as f64; let __min_b6 = 0.0f64 as f64; if __min_a6.is_nan() || __min_b6.is_nan() { f64::NAN } else { if __min_a6 > __min_b6 { __min_a6 } else if __min_b6 > __min_a6 { __min_b6 } else if __min_a6 == 0.0 && __min_b6 == 0.0 { if __min_a6.is_sign_negative() { __min_b6 } else { __min_a6 } } else { __min_a6 } } }, Some(UString::from("AttachedInlineVirtualAutoSpace"))));
                     }
                 }
@@ -313,13 +324,13 @@ impl Justifier {
     InlineObjectPreferredStretchKind::BinaryOperator,
 ];
         let mut ki = 0u32;
-        while ((ki) as i32) < ((u32::try_from((kinds.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32) {
+        while (i32::from_ne_bytes(((ki) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((kinds.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
             let mut po: Vec<JustificationOpportunity> = vec![];
             let mut mi = 0u32;
-            while ((mi) as i32) < ((pref.size()) as u32 as i32) {
-                let key = pref.key_at((mi) as i32);
+            while (i32::from_ne_bytes(((mi) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::from_ne_bytes(((pref.size()) as u32).to_ne_bytes())) as i32).to_ne_bytes())) {
+                let key = pref.key_at(i32::from_ne_bytes(((mi) as i32).to_ne_bytes()));
                 let pv = pref.get(&(key));
-                if match &(pv) { Some(__option16) => __option16.kind == kinds[usize::try_from(ki).unwrap_or(0)] && ((key) as i32) >= r.start as i32 && ((key) as i32) < ((r.end) as i32) && !boundary_is_closed(key, u32::wrapping_add(key, 1)), None => false } {
+                if match &(pv) { Some(__option16) => __option16.kind == kinds[usize::try_from(ki).unwrap_or(0)] && (i32::from_ne_bytes(((key) as i32).to_ne_bytes())) >= i32::from_ne_bytes(((r.start) as i32).to_ne_bytes()) && (i32::from_ne_bytes(((key) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((r.end) as i32).to_ne_bytes())) && !boundary_is_closed(key, u32::wrapping_add(key, 1)), None => false } {
                     po.push(JustificationOpportunity::new(key, JustifierFields::justifier_fields_glue_kind(kinds[usize::try_from(ki).unwrap_or(0)]), 2u32, pv.as_ref().unwrap().get_capacity(), Some((JustifierFields::justifier_fields_reason(kinds[usize::try_from(ki).unwrap_or(0)])).to_ustring())));
                 }
                 mi = u32::wrapping_add(mi, 1);
@@ -346,7 +357,7 @@ impl Justifier {
         }
         let mut has_cjk = false;
         i = r.start;
-        while ((i) as i32) <= r.end as i32 {
+        while (i32::from_ne_bytes(((i) as i32).to_ne_bytes())) <= i32::from_ne_bytes(((r.end) as i32).to_ne_bytes()) {
             if edges[usize::try_from(i).unwrap_or(0)].contains_wide {
                 has_cjk = true;
             }
@@ -354,7 +365,7 @@ impl Justifier {
         }
         let mut has_u = false;
         i = r.start;
-        while ((i) as i32) < ((r.end) as i32) {
+        while (i32::from_ne_bytes(((i) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((r.end) as i32).to_ne_bytes())) {
             if uo.has(&(i)) && !boundary_is_closed(i, u32::wrapping_add(i, 1)) {
                 has_u = true;
             }
@@ -362,7 +373,7 @@ impl Justifier {
         }
         let mut has_e = false;
         i = r.start;
-        while ((i) as i32) < ((r.end) as i32) {
+        while (i32::from_ne_bytes(((i) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((r.end) as i32).to_ne_bytes())) {
             if emg.has(&(i)) {
                 has_e = true;
             }
@@ -390,7 +401,7 @@ impl Justifier {
         return uo.has(&(l)) && !boundary_is_closed(l, x);
 }) }).iter().cloned()); result };
         i = r.start;
-        while ((i) as i32) <= r.end as i32 {
+        while (i32::from_ne_bytes(((i) as i32).to_ne_bytes())) <= i32::from_ne_bytes(((r.end) as i32).to_ne_bytes()) {
             if (JustifierFields::justifier_fields_word_space_between_narrow(&c, i, &edges) || allow_sino_western_gap_stretch.unwrap_or(false) && JustifierFields::justifier_fields_wide_narrow_typed_space(&c, i, &edges)) && !space_gap_is_closed(i) && (c[usize::try_from(i).unwrap_or(0)].advance) > (0 as f64) {
                 all.push(JustificationOpportunity::new(i, GlueKind::CjkInterChar, 3u32, *remaining.lock().unwrap(), None));
             }
@@ -426,7 +437,8 @@ impl Justifier {
                 pipeline_result.push(v.clone());
             }
         }
-        let mut pipeline_builder: SortedMapTableBuilder<u32, Vec<ShrinkOpportunity>> = SortedTable::sorted_table_map_builder::<u32, Vec<ShrinkOpportunity>>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints((*a) as i32, (*b) as i32)));
+        let mut pipeline_builder: SortedMapTableBuilder<u32, Vec<ShrinkOpportunity>> = SortedTable::sorted_table_map_builder::<u32,
+Vec<ShrinkOpportunity>>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_bytes(((*a) as i32).to_ne_bytes()), i32::from_ne_bytes(((*b) as i32).to_ne_bytes()))));
         for o in &pipeline_result {
             let pipeline_entry = ShrinkTierEntry { key: o.tier, value: (*o).clone() };
             let mut pipeline_bucket = match pipeline_builder.get(&(pipeline_entry.key)) {
@@ -439,11 +451,11 @@ impl Justifier {
         let pipeline_result1: SortedMapTable<u32, Vec<ShrinkOpportunity>> = pipeline_builder.clone().build();
         let m: SortedMapTable<u32, Vec<ShrinkOpportunity>> = (pipeline_result1).clone();
         let mut k = 0u32;
-        while ((k) as i32) < ((m.size()) as u32 as i32) {
+        while (i32::from_ne_bytes(((k) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::from_ne_bytes(((m.size()) as u32).to_ne_bytes())) as i32).to_ne_bytes())) {
             if rem <= 0 as f64 {
                 break;
             }
-            let group = m.value_at((k) as i32);
+            let group = m.value_at(i32::from_ne_bytes(((k) as i32).to_ne_bytes()));
             let mut group_terms: Vec<f64> = vec![];
             for gi in 0..match u32::try_from(group.len()) { Ok(value) => value, Err(_) => u32::MAX } {
                 group_terms.push(group[usize::try_from(gi).unwrap_or(0)].capacity);
@@ -478,8 +490,8 @@ impl JustifierFields {
             return false;
         }
         let mut i = 0u32;
-        while ((i) as i32) < ((__count) as i32) {
-            if !string_tools::StringTools::string_tools_is_space(s, (i) as i32) {
+        while (i32::from_ne_bytes(((i) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((__count) as i32).to_ne_bytes())) {
+            if !string_tools::StringTools::string_tools_is_space(s, i32::from_ne_bytes(((i) as i32).to_ne_bytes())) {
                 return false;
             }
             i = u32::wrapping_add(i, 1);
@@ -516,18 +528,18 @@ impl JustifierFields {
     }
 
     pub fn justifier_fields_word_space_between_narrow(c: &Vec<Cluster>, i: u32, e: &Vec<EastAsianSpacingEdges>) -> bool {
-        if i > 2147483647 || ((i) as i32) >= u32::try_from((c.len()) & 0xFFFF_FFFF).unwrap_or(0) as i32 || !JustifierFields::justifier_fields_all_spaces(((c[usize::try_from(i).unwrap_or(0)]).clone().text).to_ustring().as_ustr()) {
+        if i > 2147483647 || (i32::from_ne_bytes(((i) as i32).to_ne_bytes())) >= i32::from_ne_bytes(((u32::try_from((c.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes()) || !JustifierFields::justifier_fields_all_spaces(((c[usize::try_from(i).unwrap_or(0)]).clone().text).to_ustring().as_ustr()) {
             return false;
         }
-        return ((i) as i32) > (0) && ((i) as i32) < ((u32::wrapping_sub(u32::try_from((c.len()) & 0xFFFF_FFFF).unwrap_or(0), 1)) as i32) && e[usize::try_from(u32::wrapping_sub(i, 1)).unwrap_or(0)].trailing == EastAsianSpacingValue::Narrow && e[usize::try_from(u32::wrapping_add(i, 1)).unwrap_or(0)].leading == EastAsianSpacingValue::Narrow && !JustifierFields::justifier_fields_all_spaces(((c[usize::try_from(u32::wrapping_sub(i, 1)).unwrap_or(0)]).clone().text).to_ustring().as_ustr()) && !JustifierFields::justifier_fields_all_spaces(((c[usize::try_from(u32::wrapping_add(i, 1)).unwrap_or(0)]).clone().text).to_ustring().as_ustr());
+        return (i32::from_ne_bytes(((i) as i32).to_ne_bytes())) > (0) && (i32::from_ne_bytes(((i) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::wrapping_sub(u32::try_from((c.len()) & 0xFFFF_FFFF).unwrap_or(0), 1)) as i32).to_ne_bytes())) && e[usize::try_from(u32::wrapping_sub(i, 1)).unwrap_or(0)].trailing == EastAsianSpacingValue::Narrow && e[usize::try_from(u32::wrapping_add(i, 1)).unwrap_or(0)].leading == EastAsianSpacingValue::Narrow && !JustifierFields::justifier_fields_all_spaces(((c[usize::try_from(u32::wrapping_sub(i, 1)).unwrap_or(0)]).clone().text).to_ustring().as_ustr()) && !JustifierFields::justifier_fields_all_spaces(((c[usize::try_from(u32::wrapping_add(i, 1)).unwrap_or(0)]).clone().text).to_ustring().as_ustr());
     }
 
     pub fn justifier_fields_wide_narrow_typed_space(c: &Vec<Cluster>, i: u32, e: &Vec<EastAsianSpacingEdges>) -> bool {
-        if i > 2147483647 || ((i) as i32) >= u32::try_from((c.len()) & 0xFFFF_FFFF).unwrap_or(0) as i32 || !JustifierFields::justifier_fields_all_spaces(((c[usize::try_from(i).unwrap_or(0)]).clone().text).to_ustring().as_ustr()) {
+        if i > 2147483647 || (i32::from_ne_bytes(((i) as i32).to_ne_bytes())) >= i32::from_ne_bytes(((u32::try_from((c.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes()) || !JustifierFields::justifier_fields_all_spaces(((c[usize::try_from(i).unwrap_or(0)]).clone().text).to_ustring().as_ustr()) {
             return false;
         }
-        let l = if i as i32 > (0) { Some(e[usize::try_from(u32::wrapping_sub(i, 1)).unwrap_or(0)].trailing) } else { None };
-        let x = if u32::wrapping_add(i, 1) as i32 < ((u32::try_from((c.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32) { Some(e[usize::try_from(u32::wrapping_add(i, 1)).unwrap_or(0)].leading) } else { None };
+        let l = if i32::from_ne_bytes(((i) as i32).to_ne_bytes()) > (0) { Some(e[usize::try_from(u32::wrapping_sub(i, 1)).unwrap_or(0)].trailing) } else { None };
+        let x = if i32::from_ne_bytes(((u32::wrapping_add(i, 1)) as i32).to_ne_bytes()) < (i32::from_ne_bytes(((u32::try_from((c.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) { Some(e[usize::try_from(u32::wrapping_add(i, 1)).unwrap_or(0)].leading) } else { None };
         return JustifierFields::justifier_fields_wide_narrow_pair_with(l, x);
     }
 
@@ -538,7 +550,7 @@ impl JustifierFields {
             return false;
         }
         let mut i = 0u32;
-        while ((i) as i32) < ((__count1) as i32) {
+        while (i32::from_ne_bytes(((i) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((__count1) as i32).to_ne_bytes())) {
             if u_string::char_at_from(__units1, i) != UString::from(" ") {
                 return false;
             }

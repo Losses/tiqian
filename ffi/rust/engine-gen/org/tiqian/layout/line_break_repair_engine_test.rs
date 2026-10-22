@@ -1414,7 +1414,7 @@ fn hyphenated_compound_breaks_at_existing_hyphen_without_adding_one() {
         let _ = TracedAssertions::traced_assertions_assert_true(LineBreakRepairEngineTestSupport::line_break_repair_engine_test_support_has_text((r).clone(), UStr::new(&[119,97,121])), None).unwrap();
         let mut x = UString::new();
         for i in 0..match u32::try_from(r.clusters.len()) { Ok(value) => value, Err(_) => u32::MAX } {
-            if r.clusters[usize::try_from(i).unwrap_or(0)].clone().range.clone().end as i32 <= ((r.lines[0usize]).clone().range).clone().end as i32 {
+            if i32::from_ne_bytes(((((r.clusters[usize::try_from(i).unwrap_or(0)]).clone().range).clone().end) as i32).to_ne_bytes()) <= i32::from_ne_bytes(((((r.lines[0usize]).clone().range).clone().end) as i32).to_ne_bytes()) {
                 x = ((r.clusters[usize::try_from(i).unwrap_or(0)]).clone().text).to_ustring();
             }
         }
@@ -1443,7 +1443,7 @@ fn long_all_caps_opaque_token_hard_breaks_without_synthetic_hyphen() {
         t.section(UStr::new(&[108,111,110,103,65,108,108,67,97,112,115,79,112,97,113,117,101,84,111,107,101,110,72,97,114,100,66,114,101,97,107,115,87,105,116,104,111,117,116,83,121,110,116,104,101,116,105,99,72,121,112,104,101,110]));
         let s = UString::from("QUJDREVGR0hJSktMTU5PUFFSU1RVVldYWVo").to_ustring();
         let r = LineBreakRepairEngineTestSupport::line_break_repair_engine_test_support_layout(s.as_ustr(), 96 as f64, None, Some(Box::new(NoHyphenator::new())), None).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_true((u32::try_from((r.lines.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32 > (1), None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_true((i32::from_ne_bytes(((u32::try_from((r.lines.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) > (1), None).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_true(LineBreakRepairEngineTestSupport::line_break_repair_engine_test_support_no_hyphen((r).clone()), None).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_true(!LineBreakRepairEngineTestSupport::line_break_repair_engine_test_support_has_text((r).clone(), s.as_ustr()), None).unwrap();
     });
@@ -1484,7 +1484,7 @@ fn opaque_latin_token_after_cjk_pulls_prefix_onto_loose_line() {
         let prefix = UString::from("为什么历史是 ").to_ustring();
         let r = LineBreakRepairEngineTestSupport::line_break_repair_engine_test_support_layout(UString::from(format!("{}", { let mut __s = UString::new(); __s += prefix.as_ustr(); __s += &(UString::from("abc123def456ghi789")); __s }).as_str()).as_ustr(), 160 as f64, Some(Box::new(LookaheadLineBreaker::new(Some(2), Some(2), Some(0.5), Some(Box::new(ClreqKinsokuRule::new(Some(KinsokuLevel::Basic)))), Some(2), Some(10), Some(20), Some(12.0)))), Some(Box::new(NoHyphenator::new())), None).unwrap();
         let first_line_text = LineBreakRepairEngineTestSupport::line_break_repair_engine_test_support_line_text((r).clone(), 0);
-        let _ = TracedAssertions::traced_assertions_assert_true((u_string::unit_count(&(first_line_text))) as i32 > (7), Some(UString::from(format!("{}", { let mut __s = UString::new(); __s += &(UString::from("first line should carry part of the opaque token instead of stretching only '")); __s += prefix.as_ustr(); __s += &(UString::from("': ")); __s += first_line_text.as_ustr(); __s }).as_str()))).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_true((i32::from_ne_bytes(((u_string::unit_count(&(first_line_text))) as i32).to_ne_bytes())) > (7), Some(UString::from(format!("{}", { let mut __s = UString::new(); __s += &(UString::from("first line should carry part of the opaque token instead of stretching only '")); __s += prefix.as_ustr(); __s += &(UString::from("': ")); __s += first_line_text.as_ustr(); __s }).as_str()))).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_true(r.lines[0usize].hyphen_advance == 0 as f64, None).unwrap();
     });
 }
@@ -1509,7 +1509,7 @@ fn overlong_opaque_latin_token_hard_breaks_without_synthetic_hyphen() {
         let mut t = TestTraceRecorder::new(&(UStr::new(&[76,105,110,101,66,114,101,97,107,82,101,112,97,105,114,69,110,103,105,110,101,84,101,115,116])));
         t.section(UStr::new(&[111,118,101,114,108,111,110,103,79,112,97,113,117,101,76,97,116,105,110,84,111,107,101,110,72,97,114,100,66,114,101,97,107,115,87,105,116,104,111,117,116,83,121,110,116,104,101,116,105,99,72,121,112,104,101,110]));
         let r = LineBreakRepairEngineTestSupport::line_break_repair_engine_test_support_layout(UStr::new(&[97,98,99,49,50,51,100,101,102,52,53,54,103,104,105,55,56,57]), 96 as f64, None, Some(Box::new(NoHyphenator::new())), None).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_true((u32::try_from((r.lines.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32 > (1), None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_true((i32::from_ne_bytes(((u32::try_from((r.lines.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) > (1), None).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_true(LineBreakRepairEngineTestSupport::line_break_repair_engine_test_support_no_hyphen((r).clone()), None).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_true(!LineBreakRepairEngineTestSupport::line_break_repair_engine_test_support_has_text((r).clone(), UStr::new(&[97,98,99,49,50,51,100,101,102,52,53,54,103,104,105,55,56,57])), None).unwrap();
         let mut all_within = true;
@@ -1557,7 +1557,7 @@ fn progressive_technical_break_falls_through_structural_tier_before_overstretchi
             let mut none_in_span = true;
             for j in 0..match u32::try_from(adjustment.allocations.len()) { Ok(value) => value, Err(_) => u32::MAX } {
                 let alloc = (adjustment.allocations[usize::try_from(j).unwrap_or(0)]).clone();
-                if alloc.cluster_range.clone().end as i32 > (((technical.range).clone().start) as i32) && (((alloc.cluster_range).clone().end) as i32) < (((technical.range).clone().end) as i32) {
+                if i32::from_ne_bytes((((alloc.cluster_range).clone().end) as i32).to_ne_bytes()) > (i32::from_ne_bytes((((technical.range).clone().start) as i32).to_ne_bytes())) && (i32::from_ne_bytes((((alloc.cluster_range).clone().end) as i32).to_ne_bytes())) < (i32::from_ne_bytes((((technical.range).clone().end) as i32).to_ne_bytes())) {
                     none_in_span = false;
                 }
             }
@@ -1598,7 +1598,7 @@ fn progressive_technical_break_keeps_cjk_body_unstretched_in_every_strategy() {
                 }
             }
             let adjustment = ((result.debug).clone().justification_decisions[usize::try_from(adj_index).unwrap_or(0)]).clone();
-            let _ = TracedAssertions::traced_assertions_assert_true((u32::try_from((adjustment.allocations.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32 > (0), Some((breaker.get_strategy_name()).to_ustring())).unwrap();
+            let _ = TracedAssertions::traced_assertions_assert_true((i32::from_ne_bytes(((u32::try_from((adjustment.allocations.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) > (0), Some((breaker.get_strategy_name()).to_ustring())).unwrap();
             let mut none_cjk = true;
             for j in 0..match u32::try_from(adjustment.allocations.len()) { Ok(value) => value, Err(_) => u32::MAX } {
                 if adjustment.allocations[usize::try_from(j).unwrap_or(0)].clone().kind.to_ustring() == UString::from("CjkInterChar") {
@@ -1609,7 +1609,7 @@ fn progressive_technical_break_keeps_cjk_body_unstretched_in_every_strategy() {
             let mut has_emergency_tracking = false;
             for j in 0..match u32::try_from(adjustment.allocations.len()) { Ok(value) => value, Err(_) => u32::MAX } {
                 let alloc = (adjustment.allocations[usize::try_from(j).unwrap_or(0)]).clone();
-                if alloc.kind.to_ustring() == UString::from("EmergencyGraphemeTracking") && (((alloc.cluster_range).clone().start) as i32) >= (technical.range).clone().start as i32 {
+                if alloc.kind.to_ustring() == UString::from("EmergencyGraphemeTracking") && (i32::from_ne_bytes((((alloc.cluster_range).clone().start) as i32).to_ne_bytes())) >= i32::from_ne_bytes((((technical.range).clone().start) as i32).to_ne_bytes()) {
                     has_emergency_tracking = true;
                 }
             }
@@ -1670,10 +1670,10 @@ fn progressive_technical_clean_break_may_not_stretch_earlier_opaque_token() {
                 emergency_tracking.push((affected_line_adjustment.allocations[usize::try_from(i).unwrap_or(0)]).clone());
             }
         }
-        let _ = TracedAssertions::traced_assertions_assert_true((u32::try_from((emergency_tracking.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32 > (0), Some(UString::from(format!("{}", affected_line_adjustment.to_string()).as_str()))).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_true((i32::from_ne_bytes(((u32::try_from((emergency_tracking.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) > (0), Some(UString::from(format!("{}", affected_line_adjustment.to_string()).as_str()))).unwrap();
         let mut all_in_technical = true;
         for i in 0..match u32::try_from(emergency_tracking.len()) { Ok(value) => value, Err(_) => u32::MAX } {
-            if emergency_tracking[usize::try_from(i).unwrap_or(0)].clone().cluster_range.clone().start as i32 < ((terminal_technical_range.start) as i32) {
+            if i32::from_ne_bytes(((((emergency_tracking[usize::try_from(i).unwrap_or(0)]).clone().cluster_range).clone().start) as i32).to_ne_bytes()) < (i32::from_ne_bytes(((terminal_technical_range.start) as i32).to_ne_bytes())) {
                 all_in_technical = false;
             }
         }
@@ -1699,7 +1699,7 @@ fn progressive_technical_emergency_is_exposed_by_current_line_stretch_not_full_m
         }
         let mut affected_line_index = 4294967295u32;
         for i in 0..match u32::try_from(line_texts.len()) { Ok(value) => value, Err(_) => u32::MAX } {
-            if u_string::find_from(&((line_texts[usize::try_from(i).unwrap_or(0)]).clone()), UString::from("Objective-C").as_ustr(), 0) as u32 <= 2147483647 {
+            if u32::from_ne_bytes(((u_string::find_from(&((line_texts[usize::try_from(i).unwrap_or(0)]).clone()), UString::from("Objective-C").as_ustr(), 0)) as u32).to_ne_bytes()) <= 2147483647 {
                 affected_line_index = i;
                 break;
             }
@@ -1845,7 +1845,7 @@ fn unbroken_progressive_span_uses_source_space_then_keeps_body_opportunities_ava
         }
         let _ = TracedAssertions::traced_assertions_assert_true(none_tech, None).unwrap();
         let adjustment = ((result.debug).clone().justification_decisions[0usize]).clone();
-        let _ = TracedAssertions::traced_assertions_assert_true((u32::try_from((adjustment.allocations.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32 > (0), None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_true((i32::from_ne_bytes(((u32::try_from((adjustment.allocations.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) > (0), None).unwrap();
         let mut baseline_ranges: Vec<TextRange> = vec![];
         for i in 0..match u32::try_from(baseline.lines.len()) { Ok(value) => value, Err(_) => u32::MAX } {
             baseline_ranges.push(((baseline.lines[usize::try_from(i).unwrap_or(0)]).clone().range).clone());
@@ -1868,7 +1868,7 @@ fn unbroken_progressive_span_uses_source_space_then_keeps_body_opportunities_ava
         let mut has_remaining_body_opp = false;
         for i in 0..match u32::try_from(adjustment.allocations.len()) { Ok(value) => value, Err(_) => u32::MAX } {
             let alloc = (adjustment.allocations[usize::try_from(i).unwrap_or(0)]).clone();
-            if alloc.cluster_range.clone().end as i32 <= (technical.range).clone().start as i32 || (((alloc.cluster_range).clone().start) as i32) >= (technical.range).clone().end as i32 {
+            if i32::from_ne_bytes((((alloc.cluster_range).clone().end) as i32).to_ne_bytes()) <= i32::from_ne_bytes((((technical.range).clone().start) as i32).to_ne_bytes()) || (i32::from_ne_bytes((((alloc.cluster_range).clone().start) as i32).to_ne_bytes())) >= i32::from_ne_bytes((((technical.range).clone().end) as i32).to_ne_bytes()) {
                 has_remaining_body_opp = true;
                 break;
             }
@@ -1884,7 +1884,7 @@ fn url_like_latin_token_breaks_at_separators_without_synthetic_hyphen() {
         t.section(UStr::new(&[117,114,108,76,105,107,101,76,97,116,105,110,84,111,107,101,110,66,114,101,97,107,115,65,116,83,101,112,97,114,97,116,111,114,115,87,105,116,104,111,117,116,83,121,110,116,104,101,116,105,99,72,121,112,104,101,110]));
         let url = UString::from("https://example.com/path/to/abc123def456ghi789").to_ustring();
         let result = LineBreakRepairEngineTestSupport::line_break_repair_engine_test_support_layout(url.as_ustr(), 128 as f64, None, Some(Box::new(NoHyphenator::new())), None).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_true((u32::try_from((result.lines.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32 > (1), None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_true((i32::from_ne_bytes(((u32::try_from((result.lines.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) > (1), None).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_true(LineBreakRepairEngineTestSupport::line_break_repair_engine_test_support_no_hyphen((result).clone()), None).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_true(!LineBreakRepairEngineTestSupport::line_break_repair_engine_test_support_has_text((result).clone(), url.as_ustr()), None).unwrap();
         let mut any_ends_with_slash = false;

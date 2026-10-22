@@ -43,9 +43,9 @@ impl SimpleCharacterLineBreakAnalyzer {
             return result;
         }
         let mut index = 1u32;
-        while ((index) as i32) <= __count as i32 {
+        while (i32::from_ne_bytes(((index) as i32).to_ne_bytes())) <= i32::from_ne_bytes(((__count) as i32).to_ne_bytes()) {
             let prev = u_string::unit_at_from(__units, u32::wrapping_sub(index, 1)).unwrap_or(0);
-            let mandatory = LineBreakFns::line_break_fns_is_mandatory_break_code_point(prev) && !(prev == 13 && ((index) as i32) < ((__count) as i32) && matches!(u_string::unit_at_from(__units, index).as_ref(), Some(__v) if __v == &(10)));
+            let mandatory = LineBreakFns::line_break_fns_is_mandatory_break_code_point(prev) && !(prev == 13 && (i32::from_ne_bytes(((index) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((__count) as i32).to_ne_bytes())) && matches!(u_string::unit_at_from(__units, index).as_ref(), Some(__v) if __v == &(10)));
             result.push(BreakOpportunity::new(index, if index == __count || mandatory { BreakKind::Required } else { BreakKind::Allowed }, if mandatory { UString::from("MandatoryBreak") } else { UString::from("SimpleCharacterLineBreakAnalyzer") }.as_ustr(), Some(0)));
             index = u32::wrapping_add(index, 1);
         }
@@ -72,9 +72,9 @@ impl LineBreakAnalyzer for SimpleCharacterLineBreakAnalyzer {
             return result;
         }
         let mut index = 1u32;
-        while ((index) as i32) <= __count2 as i32 {
+        while (i32::from_ne_bytes(((index) as i32).to_ne_bytes())) <= i32::from_ne_bytes(((__count2) as i32).to_ne_bytes()) {
             let prev = u_string::unit_at_from(__units2, u32::wrapping_sub(index, 1)).unwrap_or(0);
-            let mandatory = LineBreakFns::line_break_fns_is_mandatory_break_code_point(prev) && !(prev == 13 && ((index) as i32) < ((__count2) as i32) && matches!(u_string::unit_at_from(__units2, index).as_ref(), Some(__v) if __v == &(10)));
+            let mandatory = LineBreakFns::line_break_fns_is_mandatory_break_code_point(prev) && !(prev == 13 && (i32::from_ne_bytes(((index) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((__count2) as i32).to_ne_bytes())) && matches!(u_string::unit_at_from(__units2, index).as_ref(), Some(__v) if __v == &(10)));
             result.push(BreakOpportunity::new(index, if index == __count2 || mandatory { BreakKind::Required } else { BreakKind::Allowed }, if mandatory { UString::from("MandatoryBreak") } else { UString::from("SimpleCharacterLineBreakAnalyzer") }.as_ustr(), Some(0)));
             index = u32::wrapping_add(index, 1);
         }

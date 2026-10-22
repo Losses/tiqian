@@ -547,7 +547,8 @@ fn fill_push_in_compresses_source_space_to_promote_emergency_break_to_syllable()
         t.section(UStr::new(&[102,105,108,108,80,117,115,104,73,110,67,111,109,112,114,101,115,115,101,115,83,111,117,114,99,101,83,112,97,99,101,84,111,80,114,111,109,111,116,101,69,109,101,114,103,101,110,99,121,66,114,101,97,107,84,111,83,121,108,108,97,98,108,101]));
         let c = LineAdjustmentPushInTestSupport::line_adjustment_push_in_test_support_technical_clusters().unwrap();
         let tech_range = TextRange::new(0u32, 5u32).unwrap();
-        let mut prog: SortedMapTableBuilder<u32, ProgressiveBreakOpportunity> = SortedTable::sorted_table_map_builder::<u32, ProgressiveBreakOpportunity>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints((*a) as i32, (*b) as i32)));
+        let mut prog: SortedMapTableBuilder<u32, ProgressiveBreakOpportunity> = SortedTable::sorted_table_map_builder::<u32,
+ProgressiveBreakOpportunity>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_bytes(((*a) as i32).to_ne_bytes()), i32::from_ne_bytes(((*b) as i32).to_ne_bytes()))));
         prog.put(&(1), &(ProgressiveBreakOpportunity::new(ProgressiveBreakTier::Structural, (tech_range).clone(), Some(0.0))));
         prog.put(&(3), &(ProgressiveBreakOpportunity::new(ProgressiveBreakTier::Emergency, (tech_range).clone(), Some(0.0))));
         prog.put(&(4), &(ProgressiveBreakOpportunity::new(ProgressiveBreakTier::Syllable, (tech_range).clone(), Some(0.0))));
@@ -572,7 +573,8 @@ fn fill_push_in_crosses_intermediate_cleaner_boundary_to_refill_at_selected_tier
         t.section(UStr::new(&[102,105,108,108,80,117,115,104,73,110,67,114,111,115,115,101,115,73,110,116,101,114,109,101,100,105,97,116,101,67,108,101,97,110,101,114,66,111,117,110,100,97,114,121,84,111,82,101,102,105,108,108,65,116,83,101,108,101,99,116,101,100,84,105,101,114]));
         let c = LineAdjustmentPushInTestSupport::line_adjustment_push_in_test_support_technical_clusters().unwrap();
         let tech_range = TextRange::new(0u32, 5u32).unwrap();
-        let mut prog: SortedMapTableBuilder<u32, ProgressiveBreakOpportunity> = SortedTable::sorted_table_map_builder::<u32, ProgressiveBreakOpportunity>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints((*a) as i32, (*b) as i32)));
+        let mut prog: SortedMapTableBuilder<u32, ProgressiveBreakOpportunity> = SortedTable::sorted_table_map_builder::<u32,
+ProgressiveBreakOpportunity>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_bytes(((*a) as i32).to_ne_bytes()), i32::from_ne_bytes(((*b) as i32).to_ne_bytes()))));
         prog.put(&(3), &(ProgressiveBreakOpportunity::new(ProgressiveBreakTier::Emergency, (tech_range).clone(), Some(0.0))));
         prog.put(&(4), &(ProgressiveBreakOpportunity::new(ProgressiveBreakTier::Syllable, (tech_range).clone(), Some(0.0))));
         prog.put(&(5), &(ProgressiveBreakOpportunity::new(ProgressiveBreakTier::Emergency, (tech_range).clone(), Some(0.0))));
@@ -591,7 +593,8 @@ fn fill_push_in_does_not_promote_emergency_break_when_cleaner_boundary_still_lea
         t.section(UStr::new(&[102,105,108,108,80,117,115,104,73,110,68,111,101,115,78,111,116,80,114,111,109,111,116,101,69,109,101,114,103,101,110,99,121,66,114,101,97,107,87,104,101,110,67,108,101,97,110,101,114,66,111,117,110,100,97,114,121,83,116,105,108,108,76,101,97,118,101,115,68,101,102,105,99,105,116]));
         let c = LineAdjustmentPushInTestSupport::line_adjustment_push_in_test_support_technical_clusters().unwrap();
         let tech_range = TextRange::new(0u32, 5u32).unwrap();
-        let mut prog: SortedMapTableBuilder<u32, ProgressiveBreakOpportunity> = SortedTable::sorted_table_map_builder::<u32, ProgressiveBreakOpportunity>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints((*a) as i32, (*b) as i32)));
+        let mut prog: SortedMapTableBuilder<u32, ProgressiveBreakOpportunity> = SortedTable::sorted_table_map_builder::<u32,
+ProgressiveBreakOpportunity>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_bytes(((*a) as i32).to_ne_bytes()), i32::from_ne_bytes(((*b) as i32).to_ne_bytes()))));
         prog.put(&(3), &(ProgressiveBreakOpportunity::new(ProgressiveBreakTier::Emergency, (tech_range).clone(), Some(0.0))));
         prog.put(&(4), &(ProgressiveBreakOpportunity::new(ProgressiveBreakTier::Syllable, (tech_range).clone(), Some(0.0))));
         let s = LineAdjustmentPushInTestSupport::line_adjustment_push_in_test_support_fill(&c, 100 as f64, None, None, None, Some(prog.clone().build()), Some(2)).unwrap();
@@ -653,8 +656,8 @@ fn push_in_first_compresses_some_boundaries_push_out_only_none() {
         let auto = LineAdjustmentPushInTestSupport::line_adjustment_push_in_test_support_layout(LineAdjustmentStrategy::PushInFirst).unwrap();
         let push_out = LineAdjustmentPushInTestSupport::line_adjustment_push_in_test_support_layout(LineAdjustmentStrategy::PushOutOnly).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_equals_int(0, LineAdjustmentPushInTestSupport::line_adjustment_push_in_test_support_fill_push_in_count((push_out).clone()), Some(UString::from("PushOutOnly must never fill-push-in"))).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_true((LineAdjustmentPushInTestSupport::line_adjustment_push_in_test_support_fill_push_in_count((auto).clone())) as i32 > (0), Some(UString::from("PushInFirst should compress at least one boundary"))).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_true((u32::try_from((auto.lines.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32 <= u32::try_from((push_out.lines.len()) & 0xFFFF_FFFF).unwrap_or(0) as i32, Some(UString::from(format!("{}", { let mut __s = UString::new(); __s += &(UString::from("PushInFirst (")); __s += &(UString::from(format!("{}", crate::runtime::int_text::IntText::int_text(u32::try_from((auto.lines.len()) & 0xFFFF_FFFF).unwrap_or(0))).as_str())); __s += &(UString::from(") should not need more lines than PushOutOnly (")); __s += &(UString::from(format!("{}", crate::runtime::int_text::IntText::int_text(u32::try_from((push_out.lines.len()) & 0xFFFF_FFFF).unwrap_or(0))).as_str())); __s += &(UString::from(")")); __s }).as_str()))).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_true((i32::from_ne_bytes(((LineAdjustmentPushInTestSupport::line_adjustment_push_in_test_support_fill_push_in_count((auto).clone())) as i32).to_ne_bytes())) > (0), Some(UString::from("PushInFirst should compress at least one boundary"))).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_true((i32::from_ne_bytes(((u32::try_from((auto.lines.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) <= i32::from_ne_bytes(((u32::try_from((push_out.lines.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes()), Some(UString::from(format!("{}", { let mut __s = UString::new(); __s += &(UString::from("PushInFirst (")); __s += &(UString::from(format!("{}", crate::runtime::int_text::IntText::int_text(u32::try_from((auto.lines.len()) & 0xFFFF_FFFF).unwrap_or(0))).as_str())); __s += &(UString::from(") should not need more lines than PushOutOnly (")); __s += &(UString::from(format!("{}", crate::runtime::int_text::IntText::int_text(u32::try_from((push_out.lines.len()) & 0xFFFF_FFFF).unwrap_or(0))).as_str())); __s += &(UString::from(")")); __s }).as_str()))).unwrap();
     });
 }
 
@@ -664,6 +667,6 @@ fn push_in_first_does_not_compress_every_line() {
         let mut t = TestTraceRecorder::new(&(UStr::new(&[76,105,110,101,65,100,106,117,115,116,109,101,110,116,80,117,115,104,73,110,84,101,115,116])));
         t.section(UStr::new(&[112,117,115,104,73,110,70,105,114,115,116,68,111,101,115,78,111,116,67,111,109,112,114,101,115,115,69,118,101,114,121,76,105,110,101]));
         let auto = LineAdjustmentPushInTestSupport::line_adjustment_push_in_test_support_layout(LineAdjustmentStrategy::PushInFirst).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_true((LineAdjustmentPushInTestSupport::line_adjustment_push_in_test_support_fill_push_in_count((auto).clone())) as i32 < ((u32::try_from((auto.lines.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32), Some(UString::from(format!("{}", { let mut __s = UString::new(); __s += &(UString::from("not every line should be a fill-push-in (")); __s += &(UString::from(format!("{}", crate::runtime::int_text::IntText::int_text(LineAdjustmentPushInTestSupport::line_adjustment_push_in_test_support_fill_push_in_count((auto).clone()))).as_str())); __s += &(UString::from("/")); __s += &(UString::from(format!("{}", crate::runtime::int_text::IntText::int_text(u32::try_from((auto.lines.len()) & 0xFFFF_FFFF).unwrap_or(0))).as_str())); __s += &(UString::from(")")); __s }).as_str()))).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_true((i32::from_ne_bytes(((LineAdjustmentPushInTestSupport::line_adjustment_push_in_test_support_fill_push_in_count((auto).clone())) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((auto.lines.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())), Some(UString::from(format!("{}", { let mut __s = UString::new(); __s += &(UString::from("not every line should be a fill-push-in (")); __s += &(UString::from(format!("{}", crate::runtime::int_text::IntText::int_text(LineAdjustmentPushInTestSupport::line_adjustment_push_in_test_support_fill_push_in_count((auto).clone()))).as_str())); __s += &(UString::from("/")); __s += &(UString::from(format!("{}", crate::runtime::int_text::IntText::int_text(u32::try_from((auto.lines.len()) & 0xFFFF_FFFF).unwrap_or(0))).as_str())); __s += &(UString::from(")")); __s }).as_str()))).unwrap();
     });
 }

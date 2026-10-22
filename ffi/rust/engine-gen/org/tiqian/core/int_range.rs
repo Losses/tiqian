@@ -16,7 +16,7 @@ impl IntRange {
     }
 
     pub fn get_is_empty(&self) -> bool {
-        return ((self.start) as i32) > ((self.end) as i32);
+        return (i32::from_ne_bytes(((self.start) as i32).to_ne_bytes())) > (i32::from_ne_bytes(((self.end) as i32).to_ne_bytes()));
     }
 
     pub fn to_string(&self) -> UString {

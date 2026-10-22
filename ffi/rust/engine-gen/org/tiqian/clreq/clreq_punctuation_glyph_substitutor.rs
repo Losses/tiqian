@@ -51,7 +51,7 @@ impl ClreqPunctuationGlyphSubstitutor {
         let mut output = Vec::<u16>::new();
         let mut index = 0u32;
         let mut all_ellipsis = true;
-        while ((index) as i32) < ((__count) as i32) {
+        while (i32::from_ne_bytes(((index) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((__count) as i32).to_ne_bytes())) {
             if !(matches!(u_string::unit_at_from(__units, index).as_ref(), Some(__v) if __v == &(8230))) {
                 all_ellipsis = false;
                 break;
@@ -83,8 +83,8 @@ impl ClreqPunctuationGlyphSubstitutor {
     let __count2 = u_string::unit_count(&text);
         let mut output = Vec::<u16>::new();
         let mut index = 0u32;
-        while ((index) as i32) < ((__count2) as i32) {
-            if index as i32 > (0) {
+        while (i32::from_ne_bytes(((index) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((__count2) as i32).to_ne_bytes())) {
+            if i32::from_ne_bytes(((index) as i32).to_ne_bytes()) > (0) {
                 if let Some(&unit) = output.last() {
                     if unit >= 55296 && unit <= 56319 && !UString::from("+").is_empty() {
                         if !match (UString::from("+")).encode_utf16().next() { Some(head) => head >= 56320 && head <= 57343, None => false } {
@@ -116,6 +116,6 @@ impl ClreqPunctuationGlyphSubstitutor {
     }
 
     pub(crate) fn clreq_punctuation_glyph_substitutor_hex_label(unit: u32) -> UString {
-        return UString::from(format!("{}", { let mut __s = UString::new(); __s += u_string::substring(&ClreqPunctuationGlyphSubstitutor::CLREQ_PUNCTUATION_GLYPH_SUBSTITUTOR_HEX_UPPER.to_ustring(), (unit >> 12 & 15) as i32, (u32::wrapping_add(unit >> 12 & 15, 1)) as i32).as_ustr(); __s += u_string::substring(&ClreqPunctuationGlyphSubstitutor::CLREQ_PUNCTUATION_GLYPH_SUBSTITUTOR_HEX_UPPER.to_ustring(), (unit >> 8 & 15) as i32, (u32::wrapping_add(unit >> 8 & 15, 1)) as i32).as_ustr(); __s += u_string::substring(&ClreqPunctuationGlyphSubstitutor::CLREQ_PUNCTUATION_GLYPH_SUBSTITUTOR_HEX_UPPER.to_ustring(), (unit >> 4 & 15) as i32, (u32::wrapping_add(unit >> 4 & 15, 1)) as i32).as_ustr(); __s += u_string::substring(&ClreqPunctuationGlyphSubstitutor::CLREQ_PUNCTUATION_GLYPH_SUBSTITUTOR_HEX_UPPER.to_ustring(), (unit & 15) as i32, (u32::wrapping_add(unit & 15, 1)) as i32).as_ustr(); __s }).as_str());
+        return UString::from(format!("{}", { let mut __s = UString::new(); __s += u_string::substring(&ClreqPunctuationGlyphSubstitutor::CLREQ_PUNCTUATION_GLYPH_SUBSTITUTOR_HEX_UPPER.to_ustring(), i32::from_ne_bytes(((unit >> 12 & 15) as i32).to_ne_bytes()), i32::from_ne_bytes(((u32::wrapping_add(unit >> 12 & 15, 1)) as i32).to_ne_bytes())).as_ustr(); __s += u_string::substring(&ClreqPunctuationGlyphSubstitutor::CLREQ_PUNCTUATION_GLYPH_SUBSTITUTOR_HEX_UPPER.to_ustring(), i32::from_ne_bytes(((unit >> 8 & 15) as i32).to_ne_bytes()), i32::from_ne_bytes(((u32::wrapping_add(unit >> 8 & 15, 1)) as i32).to_ne_bytes())).as_ustr(); __s += u_string::substring(&ClreqPunctuationGlyphSubstitutor::CLREQ_PUNCTUATION_GLYPH_SUBSTITUTOR_HEX_UPPER.to_ustring(), i32::from_ne_bytes(((unit >> 4 & 15) as i32).to_ne_bytes()), i32::from_ne_bytes(((u32::wrapping_add(unit >> 4 & 15, 1)) as i32).to_ne_bytes())).as_ustr(); __s += u_string::substring(&ClreqPunctuationGlyphSubstitutor::CLREQ_PUNCTUATION_GLYPH_SUBSTITUTOR_HEX_UPPER.to_ustring(), i32::from_ne_bytes(((unit & 15) as i32).to_ne_bytes()), i32::from_ne_bytes(((u32::wrapping_add(unit & 15, 1)) as i32).to_ne_bytes())).as_ustr(); __s }).as_str());
     }
 }

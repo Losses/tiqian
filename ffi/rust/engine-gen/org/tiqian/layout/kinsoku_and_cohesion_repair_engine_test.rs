@@ -1203,7 +1203,7 @@ fn hanging_punctuation_fills_line_to_measure_and_overflows_visual() {
         let _ = LineBreakRepairEngineTestSupport::line_break_repair_engine_test_support_kinsoku_start(UStr::new(&[104,97,110,103,105,110,103,80,117,110,99,116,117,97,116,105,111,110,70,105,108,108,115,76,105,110,101,84,111,77,101,97,115,117,114,101,65,110,100,79,118,101,114,102,108,111,119,115,86,105,115,117,97,108]));
         let mut engine = LineBreakRepairEngineTestSupport::line_break_repair_engine_test_support_fixed(Some(KinsokuLevel::Basic), Some(HangingPunctuationStyle::PauseStops)).unwrap();
         let result = engine.layout(LineBreakRepairEngineTestSupport::line_break_repair_engine_test_support_input(UStr::new(&[20013,25991,20013,25991,65292,20013,25991,12290]), 64 as f64, None).unwrap()).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_true((u32::try_from((result.lines.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32 >= 2, None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_true((i32::from_ne_bytes(((u32::try_from((result.lines.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) >= 2, None).unwrap();
         let line0 = (result.lines[0usize]).clone();
         let _ = TracedAssertions::traced_assertions_assert_equals_int(0, (line0.range).clone().start, None).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_equals_int(5, (line0.range).clone().end, None).unwrap();
@@ -1260,7 +1260,7 @@ fn kinsoku_carries_previous_cluster_when_line_would_start_with_forbidden_punctua
         let mut notes_match = false;
         let notes = (((result.debug).clone().line_decisions[1usize]).clone().notes).clone();
         for i in 0..match u32::try_from(notes.len()) { Ok(value) => value, Err(_) => u32::MAX } {
-            if u_string::find_from(&((notes[usize::try_from(i).unwrap_or(0)]).clone()), UString::from("ForbiddenAtLineStart:。").as_ustr(), 0) as u32 <= 2147483647 && ((u_string::find_from(&((notes[usize::try_from(i).unwrap_or(0)]).clone()), UString::from("carried=文").as_ustr(), 0)) as u32) <= 2147483647 {
+            if u32::from_ne_bytes(((u_string::find_from(&((notes[usize::try_from(i).unwrap_or(0)]).clone()), UString::from("ForbiddenAtLineStart:。").as_ustr(), 0)) as u32).to_ne_bytes()) <= 2147483647 && (u32::from_ne_bytes(((u_string::find_from(&((notes[usize::try_from(i).unwrap_or(0)]).clone()), UString::from("carried=文").as_ustr(), 0)) as u32).to_ne_bytes())) <= 2147483647 {
                 notes_match = true;
                 break;
             }
@@ -1287,7 +1287,7 @@ fn kinsoku_falls_back_to_leave_ragged_when_previous_line_cannot_spare_a_cluster(
         let mut notes_match = false;
         let notes = (((result.debug).clone().line_decisions[1usize]).clone().notes).clone();
         for i in 0..match u32::try_from(notes.len()) { Ok(value) => value, Err(_) => u32::MAX } {
-            if u_string::find_from(&((notes[usize::try_from(i).unwrap_or(0)]).clone()), UString::from("ForbiddenAtLineStart:。").as_ustr(), 0) as u32 <= 2147483647 && ((u_string::find_from(&((notes[usize::try_from(i).unwrap_or(0)]).clone()), UString::from("no-room-to-carry").as_ustr(), 0)) as u32) <= 2147483647 {
+            if u32::from_ne_bytes(((u_string::find_from(&((notes[usize::try_from(i).unwrap_or(0)]).clone()), UString::from("ForbiddenAtLineStart:。").as_ustr(), 0)) as u32).to_ne_bytes()) <= 2147483647 && (u32::from_ne_bytes(((u_string::find_from(&((notes[usize::try_from(i).unwrap_or(0)]).clone()), UString::from("no-room-to-carry").as_ustr(), 0)) as u32).to_ne_bytes())) <= 2147483647 {
                 notes_match = true;
                 break;
             }
@@ -1425,7 +1425,7 @@ fn kinsoku_pushes_line_start_punctuation_into_previous_line_when_trailing_glue_c
         let mut notes_match = false;
         let notes = (((result.debug).clone().line_decisions[0usize]).clone().notes).clone();
         for i in 0..match u32::try_from(notes.len()) { Ok(value) => value, Err(_) => u32::MAX } {
-            if u_string::find_from(&((notes[usize::try_from(i).unwrap_or(0)]).clone()), UString::from("ForbiddenAtLineStart:。").as_ustr(), 0) as u32 <= 2147483647 && ((u_string::find_from(&((notes[usize::try_from(i).unwrap_or(0)]).clone()), UString::from("pushed-in=4.0").as_ustr(), 0)) as u32) <= 2147483647 {
+            if u32::from_ne_bytes(((u_string::find_from(&((notes[usize::try_from(i).unwrap_or(0)]).clone()), UString::from("ForbiddenAtLineStart:。").as_ustr(), 0)) as u32).to_ne_bytes()) <= 2147483647 && (u32::from_ne_bytes(((u_string::find_from(&((notes[usize::try_from(i).unwrap_or(0)]).clone()), UString::from("pushed-in=4.0").as_ustr(), 0)) as u32).to_ne_bytes())) <= 2147483647 {
                 notes_match = true;
                 break;
             }
@@ -1443,7 +1443,7 @@ fn line_end_kinsoku_moves_dangling_opener_to_next_line() {
             let line = (result.lines[usize::try_from(i).unwrap_or(0)]).clone();
             let mut last_cluster: Option<Cluster> = None;
             for j in 0..match u32::try_from(result.clusters.len()) { Ok(value) => value, Err(_) => u32::MAX } {
-                if result.clusters[usize::try_from(j).unwrap_or(0)].clone().range.clone().end as i32 <= (line.range).clone().end as i32 {
+                if i32::from_ne_bytes(((((result.clusters[usize::try_from(j).unwrap_or(0)]).clone().range).clone().end) as i32).to_ne_bytes()) <= i32::from_ne_bytes((((line.range).clone().end) as i32).to_ne_bytes()) {
                     last_cluster = Some((result.clusters[usize::try_from(j).unwrap_or(0)]).clone());
                 }
             }
@@ -1464,29 +1464,29 @@ fn long_latin_sentence_wraps_at_word_boundaries() {
     testlib::run("org.tiqian.layout.KinsokuAndCohesionRepairEngineTest.longLatinSentenceWrapsAtWordBoundaries", "org.tiqian.layout.KinsokuAndCohesionRepairEngineTest.longLatinSentenceWrapsAtWordBoundaries", || {
         let _ = LineBreakRepairEngineTestSupport::line_break_repair_engine_test_support_kinsoku_start(UStr::new(&[108,111,110,103,76,97,116,105,110,83,101,110,116,101,110,99,101,87,114,97,112,115,65,116,87,111,114,100,66,111,117,110,100,97,114,105,101,115]));
         let result = LineBreakRepairEngineTestSupport::line_break_repair_engine_test_support_layout(UStr::new(&[84,104,101,32,113,117,105,99,107,32,98,114,111,119,110,32,102,111,120]), 160 as f64, None, None, None).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_true((u32::try_from((result.lines.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32 > (1), Some(UString::from("long Latin must wrap at word boundaries"))).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_true((i32::from_ne_bytes(((u32::try_from((result.lines.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) > (1), Some(UString::from("long Latin must wrap at word boundaries"))).unwrap();
         for i in 0..match u32::try_from(result.lines.len()) { Ok(value) => value, Err(_) => u32::MAX } {
             let line = (result.lines[usize::try_from(i).unwrap_or(0)]).clone();
             let mut line_clusters: Vec<Cluster> = vec![];
             for j in 0..match u32::try_from(result.clusters.len()) { Ok(value) => value, Err(_) => u32::MAX } {
-                if result.clusters[usize::try_from(j).unwrap_or(0)].clone().range.clone().start as i32 >= (line.range).clone().start as i32 && ((((result.clusters[usize::try_from(j).unwrap_or(0)]).clone().range).clone().end) as i32) <= (line.range).clone().end as i32 {
+                if i32::from_ne_bytes(((((result.clusters[usize::try_from(j).unwrap_or(0)]).clone().range).clone().start) as i32).to_ne_bytes()) >= i32::from_ne_bytes((((line.range).clone().start) as i32).to_ne_bytes()) && (i32::from_ne_bytes(((((result.clusters[usize::try_from(j).unwrap_or(0)]).clone().range).clone().end) as i32).to_ne_bytes())) <= i32::from_ne_bytes((((line.range).clone().end) as i32).to_ne_bytes()) {
                     line_clusters.push((result.clusters[usize::try_from(j).unwrap_or(0)]).clone());
                 }
             }
             let first = (line_clusters[0usize]).clone();
             let last = (line_clusters[usize::try_from(u32::wrapping_sub(u32::try_from((line_clusters.len()) & 0xFFFF_FFFF).unwrap_or(0), 1)).unwrap_or(0)]).clone();
-            let mut first_all_space = u_string::unit_count(&((first.text).to_ustring())) as i32 > (0);
+            let mut first_all_space = i32::from_ne_bytes(((u_string::unit_count(&((first.text).to_ustring()))) as i32).to_ne_bytes()) > (0);
             for j in 0..match u32::try_from(u_string::unit_count(&((first.text).to_ustring()))) { Ok(value) => value, Err(_) => u32::MAX } {
-                if u_string::substring(&(first.text).to_ustring(), { let v: u32 = j; v as i32 }, i32::wrapping_add({ let v: u32 = j; v as i32 }, 1)) != UString::from(" ") {
+                if u_string::substring(&(first.text).to_ustring(), { let v: u32 = j; i32::from_ne_bytes(v.to_ne_bytes()) }, i32::wrapping_add({ let v: u32 = j; i32::from_ne_bytes(v.to_ne_bytes()) }, 1)) != UString::from(" ") {
                     first_all_space = false;
                 }
             }
             if first_all_space {
                 let _ = TracedAssertions::traced_assertions_assert_equals_float(0 as f64, first.advance, None).unwrap();
             }
-            let mut last_all_space = u_string::unit_count(&((last.text).to_ustring())) as i32 > (0);
+            let mut last_all_space = i32::from_ne_bytes(((u_string::unit_count(&((last.text).to_ustring()))) as i32).to_ne_bytes()) > (0);
             for j in 0..match u32::try_from(u_string::unit_count(&((last.text).to_ustring()))) { Ok(value) => value, Err(_) => u32::MAX } {
-                if u_string::substring(&(last.text).to_ustring(), { let v: u32 = j; v as i32 }, i32::wrapping_add({ let v: u32 = j; v as i32 }, 1)) != UString::from(" ") {
+                if u_string::substring(&(last.text).to_ustring(), { let v: u32 = j; i32::from_ne_bytes(v.to_ne_bytes()) }, i32::wrapping_add({ let v: u32 = j; i32::from_ne_bytes(v.to_ne_bytes()) }, 1)) != UString::from(" ") {
                     last_all_space = false;
                 }
             }
@@ -1509,7 +1509,7 @@ fn number_with_suffix_symbol_never_splits_across_lines() {
         }
         let mut any50 = false;
         for i in 0..match u32::try_from(line_texts.len()) { Ok(value) => value, Err(_) => u32::MAX } {
-            if u_string::find_from(&((line_texts[usize::try_from(i).unwrap_or(0)]).clone()), UString::from("50%").as_ustr(), 0) as u32 <= 2147483647 {
+            if u32::from_ne_bytes(((u_string::find_from(&((line_texts[usize::try_from(i).unwrap_or(0)]).clone()), UString::from("50%").as_ustr(), 0)) as u32).to_ne_bytes()) <= 2147483647 {
                 any50 = true;
             }
         }

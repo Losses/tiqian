@@ -10,7 +10,7 @@ export class NoHyphenator implements Hyphenator {
   constructor() {
   }
 
-  public hyphenate(word: string): readonly number[] {
+  public hyphenate(_word: string): readonly number[] {
     return [];
   }
 }
@@ -31,7 +31,7 @@ export class SyllableHyphenator implements Hyphenator {
     this.points = points;
   }
 
-  public hyphenate(word: string): readonly number[] {
+  public hyphenate(_word: string): readonly number[] {
     return this.points;
   }
 }

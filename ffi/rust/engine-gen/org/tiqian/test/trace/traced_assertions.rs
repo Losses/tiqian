@@ -1982,7 +1982,7 @@ impl TracedAssertions {
             let _ = TracedAssertions::traced_assertions_fail(Some((match &(message) { None => UString::from("Expected arrays to be equal."), Some(__option41) => __option41.to_ustring() }).to_ustring()), None)?;
         }
         let mut i = 0u32;
-        while ((i) as i32) < ((u32::try_from((expected.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32) {
+        while (i32::from_ne_bytes(((i) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((expected.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
             if expected[usize::try_from(i).unwrap_or(0)] != actual[usize::try_from(i).unwrap_or(0)] {
                 let _ = TracedAssertions::traced_assertions_fail(Some((match &(message) { None => UString::from("Expected arrays to be equal."), Some(__option43) => __option43.to_ustring() }).to_ustring()), None)?;
             }
@@ -2002,8 +2002,8 @@ impl TracedAssertions {
         }
         buf.extend(UString::from("[").encode_utf16());
         let mut i = 0u32;
-        while ((i) as i32) < ((u32::try_from((values.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32) {
-            if i as i32 > (0) {
+        while (i32::from_ne_bytes(((i) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((values.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
+            if i32::from_ne_bytes(((i) as i32).to_ne_bytes()) > (0) {
                 if let Some(&unit) = buf.last() {
                     if unit >= 55296 && unit <= 56319 && !UString::from(", ").is_empty() {
                         if !match (UString::from(", ")).encode_utf16().next() { Some(head) => head >= 56320 && head <= 57343, None => false } {
@@ -2109,8 +2109,8 @@ impl TracedAssertions {
         }
         buf.extend(UString::from("[").encode_utf16());
         let mut i = 0u32;
-        while ((i) as i32) < ((u32::try_from((values.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32) {
-            if i as i32 > (0) {
+        while (i32::from_ne_bytes(((i) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((values.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
+            if i32::from_ne_bytes(((i) as i32).to_ne_bytes()) > (0) {
                 if let Some(&unit) = buf.last() {
                     if unit >= 55296 && unit <= 56319 && !UString::from(", ").is_empty() {
                         if !match (UString::from(", ")).encode_utf16().next() { Some(head) => head >= 56320 && head <= 57343, None => false } {
@@ -2151,7 +2151,7 @@ impl TracedAssertions {
             let _ = TracedAssertions::traced_assertions_fail(Some((match &(message) { None => UString::from("Expected arrays to be equal."), Some(__option62) => __option62.to_ustring() }).to_ustring()), None)?;
         }
         let mut i = 0u32;
-        while ((i) as i32) < ((u32::try_from((expected.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32) {
+        while (i32::from_ne_bytes(((i) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((expected.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
             if expected[usize::try_from(i).unwrap_or(0)].open_index != actual[usize::try_from(i).unwrap_or(0)].open_index || expected[usize::try_from(i).unwrap_or(0)].close_index != actual[usize::try_from(i).unwrap_or(0)].close_index || expected[usize::try_from(i).unwrap_or(0)].quote_type != actual[usize::try_from(i).unwrap_or(0)].quote_type {
                 let _ = TracedAssertions::traced_assertions_fail(Some((match &(message) { None => UString::from("Expected arrays to be equal."), Some(__option64) => __option64.to_ustring() }).to_ustring()), None)?;
             }
@@ -2234,8 +2234,8 @@ impl TracedAssertions {
         }
         buf.extend(UString::from("[").encode_utf16());
         let mut i = r.start;
-        while ((i) as i32) <= r.end as i32 {
-            if i as i32 > ((r.start) as i32) {
+        while (i32::from_ne_bytes(((i) as i32).to_ne_bytes())) <= i32::from_ne_bytes(((r.end) as i32).to_ne_bytes()) {
+            if i32::from_ne_bytes(((i) as i32).to_ne_bytes()) > (i32::from_ne_bytes(((r.start) as i32).to_ne_bytes())) {
                 if let Some(&unit) = buf.last() {
                     if unit >= 55296 && unit <= 56319 && !UString::from(", ").is_empty() {
                         if !match (UString::from(", ")).encode_utf16().next() { Some(head) => head >= 56320 && head <= 57343, None => false } {
@@ -2272,12 +2272,12 @@ impl TracedAssertions {
     Some(TracedAssertions::traced_assertions_field(UStr::new(&[97,99,116,117,97,108]), TracedAssertions::traced_assertions_render_int_set((actual).clone()).map_err(|e| TracedAssertionsFailFault::UStringFaultFault(e))?.as_ustr())),
     TracedAssertions::traced_assertions_msg_field(match &(message) { Some(v) => Some(v.to_ustring()), None => None }.clone()).map_err(|e| TracedAssertionsFailFault::UStringFaultFault(e))?,
 ]).map_err(|e| TracedAssertionsFailFault::UStringFaultFault(e))?;
-        if expected.size() as u32 != actual.size() as u32 {
+        if u32::from_ne_bytes(((expected.size()) as u32).to_ne_bytes()) != u32::from_ne_bytes(((actual.size()) as u32).to_ne_bytes()) {
             let _ = TracedAssertions::traced_assertions_fail(Some((match &(message) { None => UString::from("Expected values to be equal."), Some(__option100) => __option100.to_ustring() }).to_ustring()), None)?;
         }
         let mut i = 0u32;
-        while ((i) as i32) < ((expected.size()) as u32 as i32) {
-            if expected.at((i) as i32) != actual.at((i) as i32) {
+        while (i32::from_ne_bytes(((i) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::from_ne_bytes(((expected.size()) as u32).to_ne_bytes())) as i32).to_ne_bytes())) {
+            if expected.at(i32::from_ne_bytes(((i) as i32).to_ne_bytes())) != actual.at(i32::from_ne_bytes(((i) as i32).to_ne_bytes())) {
                 let _ = TracedAssertions::traced_assertions_fail(Some((match &(message) { None => UString::from("Expected values to be equal."), Some(__option102) => __option102.to_ustring() }).to_ustring()), None)?;
             }
             i = u32::wrapping_add(i, 1);
@@ -2296,8 +2296,8 @@ impl TracedAssertions {
         }
         buf.extend(UString::from("[").encode_utf16());
         let mut i = 0u32;
-        while ((i) as i32) < ((values.size()) as u32 as i32) {
-            if i as i32 > (0) {
+        while (i32::from_ne_bytes(((i) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::from_ne_bytes(((values.size()) as u32).to_ne_bytes())) as i32).to_ne_bytes())) {
+            if i32::from_ne_bytes(((i) as i32).to_ne_bytes()) > (0) {
                 if let Some(&unit) = buf.last() {
                     if unit >= 55296 && unit <= 56319 && !UString::from(", ").is_empty() {
                         if !match (UString::from(", ")).encode_utf16().next() { Some(head) => head >= 56320 && head <= 57343, None => false } {
@@ -2308,13 +2308,13 @@ impl TracedAssertions {
                 buf.extend(UString::from(", ").encode_utf16());
             }
             if let Some(&unit) = buf.last() {
-                if unit >= 55296 && unit <= 56319 && !TestTraceRender::test_trace_render_render_int(values.at((i) as i32))?.is_empty() {
-                    if !match (TestTraceRender::test_trace_render_render_int(values.at((i) as i32))?).encode_utf16().next() { Some(head) => head >= 56320 && head <= 57343, None => false } {
+                if unit >= 55296 && unit <= 56319 && !TestTraceRender::test_trace_render_render_int(values.at(i32::from_ne_bytes(((i) as i32).to_ne_bytes())))?.is_empty() {
+                    if !match (TestTraceRender::test_trace_render_render_int(values.at(i32::from_ne_bytes(((i) as i32).to_ne_bytes())))?).encode_utf16().next() { Some(head) => head >= 56320 && head <= 57343, None => false } {
                         return Err(UStringFault::UnpairedSurrogate { unit: u32::from(unit) });
                     }
                 }
             }
-            buf.extend(TestTraceRender::test_trace_render_render_int(values.at((i) as i32))?.encode_utf16());
+            buf.extend(TestTraceRender::test_trace_render_render_int(values.at(i32::from_ne_bytes(((i) as i32).to_ne_bytes())))?.encode_utf16());
             i = u32::wrapping_add(i, 1);
         }
         if let Some(&unit) = buf.last() {
@@ -2334,26 +2334,26 @@ impl TracedAssertions {
     Some(TracedAssertions::traced_assertions_field(UStr::new(&[97,99,116,117,97,108]), TracedAssertions::traced_assertions_render_int_list_in_given_order(&actual).map_err(|e| TracedAssertionsFailFault::UStringFaultFault(e))?.as_ustr())),
     TracedAssertions::traced_assertions_msg_field(match &(message) { Some(v) => Some(v.to_ustring()), None => None }.clone()).map_err(|e| TracedAssertionsFailFault::UStringFaultFault(e))?,
 ]).map_err(|e| TracedAssertionsFailFault::UStringFaultFault(e))?;
-        let mut expected_set: SortedSetTableBuilder<u32> = SortedTable::sorted_table_set_builder::<u32>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints((*a) as i32, (*b) as i32)));
+        let mut expected_set: SortedSetTableBuilder<u32> = SortedTable::sorted_table_set_builder::<u32>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_bytes(((*a) as i32).to_ne_bytes()), i32::from_ne_bytes(((*b) as i32).to_ne_bytes()))));
         let mut i = 0u32;
-        while ((i) as i32) < ((u32::try_from((expected.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32) {
+        while (i32::from_ne_bytes(((i) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((expected.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
             expected_set.put(&(expected[usize::try_from(i).unwrap_or(0)]));
             i = u32::wrapping_add(i, 1);
         }
-        let mut actual_set: SortedSetTableBuilder<u32> = SortedTable::sorted_table_set_builder::<u32>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints((*a) as i32, (*b) as i32)));
+        let mut actual_set: SortedSetTableBuilder<u32> = SortedTable::sorted_table_set_builder::<u32>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_bytes(((*a) as i32).to_ne_bytes()), i32::from_ne_bytes(((*b) as i32).to_ne_bytes()))));
         i = 0u32;
-        while ((i) as i32) < ((u32::try_from((actual.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32) {
+        while (i32::from_ne_bytes(((i) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((actual.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
             actual_set.put(&(actual[usize::try_from(i).unwrap_or(0)]));
             i = u32::wrapping_add(i, 1);
         }
         let e: SortedSetTable<u32> = expected_set.clone().build();
         let a: SortedSetTable<u32> = actual_set.clone().build();
-        if e.size() as u32 != a.size() as u32 {
+        if u32::from_ne_bytes(((e.size()) as u32).to_ne_bytes()) != u32::from_ne_bytes(((a.size()) as u32).to_ne_bytes()) {
             let _ = TracedAssertions::traced_assertions_fail(Some((match &(message) { None => UString::from("Expected values to be equal."), Some(__option104) => __option104.to_ustring() }).to_ustring()), None)?;
         }
         i = 0u32;
-        while ((i) as i32) < ((e.size()) as u32 as i32) {
-            if e.at((i) as i32) != a.at((i) as i32) {
+        while (i32::from_ne_bytes(((i) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::from_ne_bytes(((e.size()) as u32).to_ne_bytes())) as i32).to_ne_bytes())) {
+            if e.at(i32::from_ne_bytes(((i) as i32).to_ne_bytes())) != a.at(i32::from_ne_bytes(((i) as i32).to_ne_bytes())) {
                 let _ = TracedAssertions::traced_assertions_fail(Some((match &(message) { None => UString::from("Expected values to be equal."), Some(__option106) => __option106.to_ustring() }).to_ustring()), None)?;
             }
             i = u32::wrapping_add(i, 1);
@@ -2372,8 +2372,8 @@ impl TracedAssertions {
         }
         buf.extend(UString::from("[").encode_utf16());
         let mut i = 0u32;
-        while ((i) as i32) < ((u32::try_from((values.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32) {
-            if i as i32 > (0) {
+        while (i32::from_ne_bytes(((i) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((values.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
+            if i32::from_ne_bytes(((i) as i32).to_ne_bytes()) > (0) {
                 if let Some(&unit) = buf.last() {
                     if unit >= 55296 && unit <= 56319 && !UString::from(", ").is_empty() {
                         if !match (UString::from(", ")).encode_utf16().next() { Some(head) => head >= 56320 && head <= 57343, None => false } {
@@ -2429,8 +2429,8 @@ impl TracedAssertions {
         }
         buf.extend(UString::from("[").encode_utf16());
         let mut i = 0u32;
-        while ((i) as i32) < ((u32::try_from((values.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32) {
-            if i as i32 > (0) {
+        while (i32::from_ne_bytes(((i) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((values.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
+            if i32::from_ne_bytes(((i) as i32).to_ne_bytes()) > (0) {
                 if let Some(&unit) = buf.last() {
                     if unit >= 55296 && unit <= 56319 && !UString::from(", ").is_empty() {
                         if !match (UString::from(", ")).encode_utf16().next() { Some(head) => head >= 56320 && head <= 57343, None => false } {
@@ -2476,8 +2476,8 @@ impl TracedAssertions {
         }
         buf.extend(UString::from("[").encode_utf16());
         let mut i = 0u32;
-        while ((i) as i32) < ((u32::try_from((values.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32) {
-            if i as i32 > (0) {
+        while (i32::from_ne_bytes(((i) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((values.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
+            if i32::from_ne_bytes(((i) as i32).to_ne_bytes()) > (0) {
                 if let Some(&unit) = buf.last() {
                     if unit >= 55296 && unit <= 56319 && !UString::from(", ").is_empty() {
                         if !match (UString::from(", ")).encode_utf16().next() { Some(head) => head >= 56320 && head <= 57343, None => false } {
@@ -2612,7 +2612,7 @@ impl TracedAssertions {
             return false;
         }
         let mut index = 0u32;
-        while ((index) as i32) < ((u32::try_from((first.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32) {
+        while (i32::from_ne_bytes(((index) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((first.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
             if first[usize::try_from(index).unwrap_or(0)].clone() != (second[usize::try_from(index).unwrap_or(0)]).clone() {
                 return false;
             }
@@ -2821,7 +2821,7 @@ impl TracedAssertions {
         }
         line.extend(name.encode_utf16());
         let mut index = 0u32;
-        while ((index) as i32) < ((u32::try_from((fields.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32) {
+        while (i32::from_ne_bytes(((index) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((fields.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
             let current = (fields[usize::try_from(index).unwrap_or(0)]).clone();
             match &(current) {
                 Some(__option145) => {

@@ -83,7 +83,7 @@ impl InterpunctHaltShaper {
 
     pub fn shape(&self, input: ShapingInput) -> Result<ShapingResult, TextShaperShapeFault> {
         let res = self.delegate.lock().unwrap().shape((input).clone())?;
-        let source = u_string::substring(&(input.text).to_ustring(), ((input.range).clone().start) as i32, ((input.range).clone().end) as i32);
+        let source = u_string::substring(&(input.text).to_ustring(), i32::from_ne_bytes((((input.range).clone().start) as i32).to_ne_bytes()), i32::from_ne_bytes((((input.range).clone().end) as i32).to_ne_bytes()));
         let inter = source == UString::from("·") || source == UString::from("・");
         let ellipsis = source == UString::from("…");
         let mut runs: Vec<GlyphRun> = vec![];
@@ -114,7 +114,7 @@ impl ITextShaper for InterpunctHaltShaper {
 
     fn shape(&mut self, input: ShapingInput) -> Result<ShapingResult, TextShaperShapeFault> {
         let res = self.delegate.lock().unwrap().shape((input).clone())?;
-        let source = u_string::substring(&(input.text).to_ustring(), ((input.range).clone().start) as i32, ((input.range).clone().end) as i32);
+        let source = u_string::substring(&(input.text).to_ustring(), i32::from_ne_bytes((((input.range).clone().start) as i32).to_ne_bytes()), i32::from_ne_bytes((((input.range).clone().end) as i32).to_ne_bytes()));
         let inter = source == UString::from("·") || source == UString::from("・");
         let ellipsis = source == UString::from("…");
         let mut runs: Vec<GlyphRun> = vec![];

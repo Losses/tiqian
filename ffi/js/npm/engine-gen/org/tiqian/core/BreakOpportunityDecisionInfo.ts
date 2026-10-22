@@ -26,12 +26,15 @@ export function compareBreakOpportunityDecisionInfo(a: BreakOpportunityDecisionI
   if (a === b) return 0;
   { const cmp = compareTextRange(a.range, b.range); if (cmp !== 0) return cmp; }
   if (a.sourceText !== b.sourceText) return a.sourceText < b.sourceText ? -1 : 1;
-  const abreakOffsetsLength = a.breakOffsets.length; const bbreakOffsetsLength = b.breakOffsets.length;
-  for (let i = 0; i < abreakOffsetsLength && i < bbreakOffsetsLength; i++) { const cmp = a.breakOffsets[i]! - b.breakOffsets[i]!; if (cmp !== 0) return cmp; }
-  if (abreakOffsetsLength !== bbreakOffsetsLength) return abreakOffsetsLength - bbreakOffsetsLength;
+  for (let i0 = 0, n0 = a.breakOffsets.length < b.breakOffsets.length ? a.breakOffsets.length : b.breakOffsets.length; i0 < n0; i0++) {
+    if (a.breakOffsets[i0]! !== b.breakOffsets[i0]!) return a.breakOffsets[i0]! - b.breakOffsets[i0]!;
+  }
+  if (a.breakOffsets.length !== b.breakOffsets.length) return a.breakOffsets.length - b.breakOffsets.length;
   if (a.reason !== b.reason) return a.reason < b.reason ? -1 : 1;
   if (a.tier === null && b.tier !== null) return -1;
   if (a.tier !== null && b.tier === null) return 1;
-  if (a.tier !== null && b.tier !== null && a.tier !== b.tier) return a.tier < b.tier ? -1 : 1;
+  if (a.tier !== null && b.tier !== null) {
+    if (a.tier !== b.tier) return a.tier < b.tier ? -1 : 1;
+  }
   return 0;
 }

@@ -36,7 +36,7 @@ impl BreakOpportunityDecisionInfo {
         let mut i = 0usize;
         while i < n {
             if i > 0 { out.push_str(", "); }
-            let _ = write!(out, "{}", (arr[i]) as i32);
+            let _ = write!(out, "{}", i32::from_ne_bytes(((arr[i]) as i32).to_ne_bytes()));
             i += 1;
         }
         out.push(']');
@@ -51,8 +51,9 @@ pub fn compare_break_opportunity_decision_info(a: &BreakOpportunityDecisionInfo,
     if cmp_range != 0 { return cmp_range; }
     let cmp_source_text = SortedTable::sorted_table_compare_strings((&a.source_text).as_ustr(), (&b.source_text).as_ustr());
     if cmp_source_text != 0 { return cmp_source_text; }
-    let cmp_break_offsets = { let mut cmp = 0; for (av, bv) in (&a.break_offsets).iter().zip((&b.break_offsets).iter()) { cmp = match ((*(av)) as i32).cmp(&((*(bv)) as i32)) { core::cmp::Ordering::Less => -1, core::cmp::Ordering::Equal => 0,
-core::cmp::Ordering::Greater => 1 }; if cmp != 0 { break; } } if cmp == 0 { cmp = match (&a.break_offsets).len().cmp(&(&b.break_offsets).len()) { core::cmp::Ordering::Less => -1, core::cmp::Ordering::Equal => 0, core::cmp::Ordering::Greater => 1 }; } cmp };
+    let cmp_break_offsets = { let mut cmp = 0; for (av, bv) in (&a.break_offsets).iter().zip((&b.break_offsets).iter()) { cmp = match i32::from_ne_bytes((*(av)).to_ne_bytes()).cmp(&i32::from_ne_bytes((*(bv)).to_ne_bytes())) { core::cmp::Ordering::Less => -1,
+core::cmp::Ordering::Equal => 0, core::cmp::Ordering::Greater => 1 }; if cmp != 0 { break; } } if cmp == 0 { cmp = match (&a.break_offsets).len().cmp(&(&b.break_offsets).len()) { core::cmp::Ordering::Less => -1, core::cmp::Ordering::Equal => 0,
+core::cmp::Ordering::Greater => 1 }; } cmp };
     if cmp_break_offsets != 0 { return cmp_break_offsets; }
     let cmp_reason = SortedTable::sorted_table_compare_strings((&a.reason).as_ustr(), (&b.reason).as_ustr());
     if cmp_reason != 0 { return cmp_reason; }

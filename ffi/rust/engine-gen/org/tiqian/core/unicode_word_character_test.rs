@@ -75,14 +75,14 @@ fn letters_and_numbers_are_word_characters_across_scripts() {
         TestTraceRecorder::new(&(UStr::new(&[85,110,105,99,111,100,101,87,111,114,100,67,104,97,114,97,99,116,101,114,84,101,115,116]))).section(UStr::new(&[108,101,116,116,101,114,115,65,110,100,78,117,109,98,101,114,115,65,114,101,87,111,114,100,67,104,97,114,97,99,116,101,114,115,65,99,114,111,115,115,83,99,114,105,112,116,115]));
         let positives = vec![65, 50, 16397, 769, 960, 1046, 1634, 131072];
         let mut index = 0u32;
-        while ((index) as i32) < ((u32::try_from((positives.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32) {
+        while (i32::from_ne_bytes(((index) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((positives.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
             let code_point = positives[usize::try_from(index).unwrap_or(0)];
             let _ = TracedAssertions::traced_assertions_assert_true(UnicodeWordCharacter::unicode_word_character_contains(code_point).unwrap(), Some(UString::from(format!("{}", { let mut __s = UString::new(); __s += &(UString::from("U+")); __s += UString::from(format!("{}", format!("{:0w$X}", code_point, w = usize::try_from(0).unwrap_or_default()).to_lowercase()).as_str()).as_ustr(); __s }).as_str()))).unwrap();
             index = u32::wrapping_add(index, 1);
         }
         let negatives = vec![32, 8217, 65311, 128512];
         index = 0u32;
-        while ((index) as i32) < ((u32::try_from((negatives.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32) {
+        while (i32::from_ne_bytes(((index) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((negatives.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
             let code_point = negatives[usize::try_from(index).unwrap_or(0)];
             let _ = TracedAssertions::traced_assertions_assert_false(UnicodeWordCharacter::unicode_word_character_contains(code_point).unwrap(), Some(UString::from(format!("{}", { let mut __s = UString::new(); __s += &(UString::from("U+")); __s += UString::from(format!("{}", format!("{:0w$X}", code_point, w = usize::try_from(0).unwrap_or_default()).to_lowercase()).as_str()).as_ustr(); __s }).as_str()))).unwrap();
             index = u32::wrapping_add(index, 1);

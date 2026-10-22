@@ -25,7 +25,7 @@ import { FontRole } from "./../font/FontRole.ts";
 import { KinsokuRule } from "./KinsokuRule.ts";
 import { PunctuationAtom, PunctuationAtomBuilder, PunctuationInkInput } from "./PunctuationModel.ts";
 import { UnicodePunctuationBoundaryResolver } from "./UnicodePunctuationBoundaryResolver.ts";
-import { SortedMapTable, SortedSetTable, SortedTable, formatFloatRuntime, readUnit } from "../../../runtime.ts";
+import { SortedMapTable, SortedSetTable, SortedTable, readUnit } from "../../../runtime.ts";
 
 export class ContextualKinsoku {
   public readonly forbiddenLineStartClusters: SortedSetTable<number>;
@@ -104,7 +104,7 @@ export class PunctuationGeometryStage {
       const mark = c[markIndex]!;
       const role = (markIndex < clusterRoles.length ? clusterRoles[markIndex]! : null);
       const isCjkForbidden = PunctuationGeometryStage.isCjkKinsokuRole(role) && kinsokuRule.forbiddenAtLineStart(mark);
-      const isAttachedAsciiPointMark = (role !== null && role.kind === "LatinText") && PunctuationGeometryStage.isAsciiPointMarkChar(PunctuationGeometryStage.firstChar(mark.text));
+      const isAttachedAsciiPointMark = (role !== null && role!.kind === "LatinText") && PunctuationGeometryStage.isAsciiPointMarkChar(PunctuationGeometryStage.firstChar(mark.text));
       if (!isCjkForbidden && !isAttachedAsciiPointMark) {
         markIndex++;
         continue;
@@ -198,7 +198,7 @@ export class PunctuationGeometryStage {
     while (index < c.length) {
       const cluster = c[index]!;
       const previous = c[index - 1]!;
-      const startsAttachedPointMarkRun = ((index < clusterRoles.length ? clusterRoles[index]! : null) !== null && (index < clusterRoles.length ? clusterRoles[index]! : null).kind === "LatinText") && PunctuationGeometryStage.isAsciiPointMarkChar(PunctuationGeometryStage.firstChar(cluster.text)) && previous.displayText.length > 0 && previous.text.length > 0 && !PunctuationGeometryStage.isWhitespaceCode(readUnit(previous.text, previous.text.length - 1)!) && previous.range.end === cluster.range.start;
+      const startsAttachedPointMarkRun = ((index < clusterRoles.length ? clusterRoles[index]! : null) !== null && (index < clusterRoles.length ? clusterRoles[index]! : null)!.kind === "LatinText") && PunctuationGeometryStage.isAsciiPointMarkChar(PunctuationGeometryStage.firstChar(cluster.text)) && previous.displayText.length > 0 && previous.text.length > 0 && !PunctuationGeometryStage.isWhitespaceCode(readUnit(previous.text, previous.text.length - 1)!) && previous.range.end === cluster.range.start;
       if (!startsAttachedPointMarkRun) {
         index++;
         continue;
@@ -207,7 +207,7 @@ export class PunctuationGeometryStage {
       let runEnd = index;
       while (runEnd + 1 < c.length) {
         const next = c[runEnd + 1]!;
-        const continuesRun = ((runEnd + 1 < clusterRoles.length ? clusterRoles[runEnd + 1]! : null) !== null && (runEnd + 1 < clusterRoles.length ? clusterRoles[runEnd + 1]! : null).kind === "LatinText") && PunctuationGeometryStage.isAsciiPointMarkChar(PunctuationGeometryStage.firstChar(next.text)) && c[runEnd]!.range.end === next.range.start;
+        const continuesRun = ((runEnd + 1 < clusterRoles.length ? clusterRoles[runEnd + 1]! : null) !== null && (runEnd + 1 < clusterRoles.length ? clusterRoles[runEnd + 1]! : null)!.kind === "LatinText") && PunctuationGeometryStage.isAsciiPointMarkChar(PunctuationGeometryStage.firstChar(next.text)) && c[runEnd]!.range.end === next.range.start;
         if (!continuesRun) {
           break;
         }
@@ -247,7 +247,7 @@ export class PunctuationGeometryStage {
   }
 
   public static isCjkKinsokuRole(role: FontRole | null): boolean {
-    return (role !== null && role.kind === "CjkPunctuation");
+    return (role !== null && role!.kind === "CjkPunctuation");
   }
 
   public static punctuationAtoms(c: Cluster, em: number, builder: PunctuationAtomBuilder, shapedGlyphs: Glyph[], gluePlacement: PunctuationGluePlacement, widthPolicy: PunctuationWidthPolicy): PunctuationAtom[] {
@@ -259,7 +259,7 @@ export class PunctuationGeometryStage {
     while (i < c.displayText.length) {
       const atom = builder.build(c.displayText.charAt(i), PunctuationGeometryStage.displayCharSourceRange(c, i), em, PunctuationGeometryStage.punctuationInkInputFor(c, i, shapedGlyphs), gluePlacement, widthPolicy);
       if (atom !== null) {
-        out.push(atom);
+        out.push((atom)!);
       }
       i++;
     }
@@ -289,7 +289,7 @@ export class PunctuationGeometryStage {
     if (glyph === null) {
       return new PunctuationInkInput(0, null, null, null, "glyph-cluster-mapping-ambiguous");
     }
-    return new PunctuationInkInput(glyph.advance, (glyph.bounds === null ? null : new Rect(glyph.bounds.left + glyph.x, glyph.bounds.top + glyph.y, glyph.bounds.right + glyph.x, glyph.bounds.bottom + glyph.y)), glyph.haltAdvance, glyph.haltPlacementX, (glyph.bounds === null ? "shaper-no-ink-bounds" : null));
+    return new PunctuationInkInput(glyph!.advance, (glyph!.bounds === null ? null : new Rect(glyph!.bounds!.left + glyph!.x, glyph!.bounds!.top + glyph!.y, glyph!.bounds!.right + glyph!.x, glyph!.bounds!.bottom + glyph!.y)), glyph!.haltAdvance, glyph!.haltPlacementX, (glyph!.bounds === null ? "shaper-no-ink-bounds" : null));
   }
 
   private static unionAsSingleGlyph(g: Glyph[]): Glyph | null {
@@ -304,7 +304,7 @@ export class PunctuationGeometryStage {
       const glyph = g[i]!;
       unionTerms.push(glyph.advance);
       if (glyph.bounds !== null) {
-        bounds.push(new Rect(glyph.bounds.left + glyph.x, glyph.bounds.top + glyph.y, glyph.bounds.right + glyph.x, glyph.bounds.bottom + glyph.y));
+        bounds.push(new Rect(glyph.bounds!.left + glyph.x, glyph.bounds!.top + glyph.y, glyph.bounds!.right + glyph.x, glyph.bounds!.bottom + glyph.y));
       }
       i++;
     }
@@ -346,6 +346,8 @@ export class PunctuationGeometryStage {
   }
 
   public static applyAutoSpacePolicy(c: Cluster[], eastAsianSpacingEdges: EastAsianSpacingEdges[], inlineAttachments: InlineAttachment[], policy: AutoSpacePolicy, fontSize: number, narrowInlineBoxLeadingClusters?: SortedSetTable<number> | null, narrowInlineBoxTrailingClusters?: SortedSetTable<number> | null): AutoSpaceApplicationResult {
+    narrowInlineBoxLeadingClusters = narrowInlineBoxLeadingClusters ?? null;
+    narrowInlineBoxTrailingClusters = narrowInlineBoxTrailingClusters ?? null;
     const count2 = c.length;
     if (count2 === 0) {
       return new AutoSpaceApplicationResult([], []);
@@ -383,7 +385,7 @@ export class PunctuationGeometryStage {
         continue;
       }
       const nextIndex = boundary2.nextClusterIndex;
-      if (nextIndex >= c.length) {
+      if (nextIndex! >= c.length) {
         continue;
       }
       const nextCluster = c[nextIndex]!;
@@ -401,7 +403,7 @@ export class PunctuationGeometryStage {
           narrowChar = PunctuationGeometryStage.lastChar(c[previousIndex]!.text);
         }
       }
-      virtualGapAtRunEnd[boundary2.attachedClusterRange.end] = (PunctuationGeometryStage.modeForNarrow(policy, narrowChar) !== null && PunctuationGeometryStage.modeForNarrow(policy, narrowChar).kind === "Insert");
+      virtualGapAtRunEnd[boundary2.attachedClusterRange.end] = (PunctuationGeometryStage.modeForNarrow(policy, narrowChar) !== null && PunctuationGeometryStage.modeForNarrow(policy, narrowChar)!.kind === "Insert");
     }
     const suppressedSet = suppressed.build();
     const updated: Cluster[] = [];
@@ -413,15 +415,15 @@ export class PunctuationGeometryStage {
       const nextSpacing = (idx + 1 < eastAsianSpacingEdges.length ? eastAsianSpacingEdges[idx + 1]!.leading : null);
       if (PunctuationGeometryStage.isSpaceRun(cluster)) {
         let narrowBoundaryChar: string | null = null;
-        if ((previousSpacing !== null && previousSpacing.kind === "Wide") && (nextSpacing !== null && nextSpacing.kind === "Narrow")) {
+        if ((previousSpacing !== null && previousSpacing!.kind === "Wide") && (nextSpacing !== null && nextSpacing!.kind === "Narrow")) {
           narrowBoundaryChar = (idx + 1 < c.length ? PunctuationGeometryStage.firstChar(c[idx + 1]!.text) : null);
         } else {
-          if ((previousSpacing !== null && previousSpacing.kind === "Narrow") && (nextSpacing !== null && nextSpacing.kind === "Wide")) {
+          if ((previousSpacing !== null && previousSpacing!.kind === "Narrow") && (nextSpacing !== null && nextSpacing!.kind === "Wide")) {
             narrowBoundaryChar = (idx - 1 >= 0 ? PunctuationGeometryStage.lastChar(c[idx - 1]!.text) : null);
           }
         }
         const mode = PunctuationGeometryStage.modeForNarrow(policy, narrowBoundaryChar);
-        if (mode === null || (mode !== null && mode.kind === "Disabled")) {
+        if (mode === null || (mode !== null && mode!.kind === "Disabled")) {
           updated.push(cluster);
           idx++;
           continue;
@@ -432,21 +434,21 @@ export class PunctuationGeometryStage {
           idx++;
           continue;
         }
-        decisions.push(new AutoSpaceDecisionInfo(cluster.range, "gap", "EastAsianSpacing.Wide", AutoSpaceMode.Replace.kind, cluster.text.length, reduction / cluster.text.length, reduction, "TextAutoSpaceReplace:east-asian-spacing-W-space-N"));
+        decisions.push(new AutoSpaceDecisionInfo(cluster.range, "gap", "EastAsianSpacing.Wide", (AutoSpaceMode.Replace as AutoSpaceMode).kind, cluster.text.length, reduction / cluster.text.length, reduction, "TextAutoSpaceReplace:east-asian-spacing-W-space-N"));
         updated.push(new Cluster(cluster.range, cluster.text, cluster.fontKey, gap, cluster.displayText, cluster.baselineShift, cluster.leadingLayoutAdvance, cluster.glyphInlineShift));
         idx++;
         continue;
       }
       let added = 0.;
-      if ((previousSpacing !== null && previousSpacing.kind === "Wide") && currentSpacing.leading.kind === "Narrow" && (PunctuationGeometryStage.modeForNarrow(policy, PunctuationGeometryStage.firstChar(cluster.text)) !== null && PunctuationGeometryStage.modeForNarrow(policy, PunctuationGeometryStage.firstChar(cluster.text)).kind === "Insert") && !suppressedSet.has(idx - 1)) {
+      if ((previousSpacing !== null && previousSpacing!.kind === "Wide") && currentSpacing.leading.kind === "Narrow" && (PunctuationGeometryStage.modeForNarrow(policy, PunctuationGeometryStage.firstChar(cluster.text)) !== null && PunctuationGeometryStage.modeForNarrow(policy, PunctuationGeometryStage.firstChar(cluster.text))!.kind === "Insert") && !suppressedSet.has(idx - 1)) {
         added += gap;
-        decisions.push(new AutoSpaceDecisionInfo(cluster.range, "leading", (narrowLeading.has(idx) ? "InlineBox.Narrow" : "EastAsianSpacing.Wide"), AutoSpaceMode.Insert.kind, 0, 0, -gap, (narrowLeading.has(idx) ? "InlineBoxOuterAutoSpace:leading-W-N" : "TextAutoSpaceInsert:east-asian-spacing-W-N")));
+        decisions.push(new AutoSpaceDecisionInfo(cluster.range, "leading", (narrowLeading!.has(idx) ? "InlineBox.Narrow" : "EastAsianSpacing.Wide"), (AutoSpaceMode.Insert as AutoSpaceMode).kind, 0, 0, -gap, (narrowLeading!.has(idx) ? "InlineBoxOuterAutoSpace:leading-W-N" : "TextAutoSpaceInsert:east-asian-spacing-W-N")));
       }
-      const normalTrailingGap = (nextSpacing !== null && nextSpacing.kind === "Wide") && currentSpacing.trailing.kind === "Narrow" && (PunctuationGeometryStage.modeForNarrow(policy, PunctuationGeometryStage.lastChar(cluster.text)) !== null && PunctuationGeometryStage.modeForNarrow(policy, PunctuationGeometryStage.lastChar(cluster.text)).kind === "Insert") && !suppressedSet.has(idx);
+      const normalTrailingGap = (nextSpacing !== null && nextSpacing!.kind === "Wide") && currentSpacing.trailing.kind === "Narrow" && (PunctuationGeometryStage.modeForNarrow(policy, PunctuationGeometryStage.lastChar(cluster.text)) !== null && PunctuationGeometryStage.modeForNarrow(policy, PunctuationGeometryStage.lastChar(cluster.text))!.kind === "Insert") && !suppressedSet.has(idx);
       const virtualTrailingGap = virtualGapAtRunEnd[idx]!;
       if (normalTrailingGap || virtualTrailingGap) {
         added += gap;
-        decisions.push(new AutoSpaceDecisionInfo(cluster.range, "trailing", (narrowTrailing.has(idx) ? "InlineBox.Narrow" : (virtualTrailingGap ? "InlineAttachment.Previous" : "EastAsianSpacing.Wide")), AutoSpaceMode.Insert.kind, 0, 0, -gap, (narrowTrailing.has(idx) ? "InlineBoxOuterAutoSpace:trailing-N-W" : (virtualTrailingGap ? "AttachedInlineVirtualAutoSpace:east-asian-spacing-W-N" : "TextAutoSpaceInsert:east-asian-spacing-W-N"))));
+        decisions.push(new AutoSpaceDecisionInfo(cluster.range, "trailing", (narrowTrailing!.has(idx) ? "InlineBox.Narrow" : (virtualTrailingGap ? "InlineAttachment.Previous" : "EastAsianSpacing.Wide")), (AutoSpaceMode.Insert as AutoSpaceMode).kind, 0, 0, -gap, (narrowTrailing!.has(idx) ? "InlineBoxOuterAutoSpace:trailing-N-W" : (virtualTrailingGap ? "AttachedInlineVirtualAutoSpace:east-asian-spacing-W-N" : "TextAutoSpaceInsert:east-asian-spacing-W-N"))));
       }
       if (added === 0) {
         updated.push(cluster);
@@ -465,10 +467,10 @@ export class PunctuationGeometryStage {
     if (PunctuationGeometryStage.isWideNarrowPairWith(left, right)) {
       return true;
     }
-    if (PunctuationGeometryStage.isSpaceRun(clusters[rightIndex]!) && left.kind === "Wide" && ((rightIndex + 1 < spacingEdges.length ? spacingEdges[rightIndex + 1]!.leading : null) !== null && (rightIndex + 1 < spacingEdges.length ? spacingEdges[rightIndex + 1]!.leading : null).kind === "Narrow")) {
+    if (PunctuationGeometryStage.isSpaceRun(clusters[rightIndex]!) && left.kind === "Wide" && ((rightIndex + 1 < spacingEdges.length ? spacingEdges[rightIndex + 1]!.leading : null) !== null && (rightIndex + 1 < spacingEdges.length ? spacingEdges[rightIndex + 1]!.leading : null)!.kind === "Narrow")) {
       return true;
     }
-    if (PunctuationGeometryStage.isSpaceRun(clusters[leftIndex]!) && right.kind === "Wide" && ((leftIndex - 1 >= 0 ? spacingEdges[leftIndex - 1]!.trailing : null) !== null && (leftIndex - 1 >= 0 ? spacingEdges[leftIndex - 1]!.trailing : null).kind === "Narrow")) {
+    if (PunctuationGeometryStage.isSpaceRun(clusters[leftIndex]!) && right.kind === "Wide" && ((leftIndex - 1 >= 0 ? spacingEdges[leftIndex - 1]!.trailing : null) !== null && (leftIndex - 1 >= 0 ? spacingEdges[leftIndex - 1]!.trailing : null)!.kind === "Narrow")) {
       return true;
     }
     return false;
@@ -506,14 +508,14 @@ export class PunctuationGeometryStage {
         continue;
       }
       if (span.inlineStart !== 0) {
-        const existing = leadingByCluster.get(clusterRange.start);
-        leadingByCluster.put(clusterRange.start, (existing === null ? span.inlineStart : existing + span.inlineStart));
+        const existing = leadingByCluster.get(clusterRange!.start);
+        leadingByCluster.put(clusterRange!.start, ((existing === null ? span.inlineStart : existing + span.inlineStart))!);
       }
       if (span.inlineEnd !== 0) {
-        const existing2 = trailingByCluster.get(clusterRange.end);
-        trailingByCluster.put(clusterRange.end, (existing2 === null ? span.inlineEnd : existing2 + span.inlineEnd));
+        const existing2 = trailingByCluster.get(clusterRange!.end);
+        trailingByCluster.put(clusterRange!.end, ((existing2 === null ? span.inlineEnd : existing2 + span.inlineEnd))!);
       }
-      decisions.push(new InlineBoxDecisionInfo(span.range, span.inlineStart, span.inlineEnd, span.outerSpacing.kind, clusterRange.start, clusterRange.end));
+      decisions.push(new InlineBoxDecisionInfo(span.range, span.inlineStart, span.inlineEnd, span.outerSpacing.kind, clusterRange!.start, clusterRange!.end));
     }
     const advanceByCluster = SortedTable.mapBuilder<number, number>(SortedTable.compareInts);
     const resolved: Cluster[] = [];
@@ -579,11 +581,11 @@ export class PunctuationGeometryStage {
   }
 
   private static isDigitChar(code: number | null): boolean {
-    return code >= 48 && code <= 57 || code >= 65296 && code <= 65305;
+    return code! >= 48 && code! <= 57 || code! >= 65296 && code! <= 65305;
   }
 
   private static isAsciiPointMarkChar(ch: string | null): boolean {
-    return ch !== null && ClreqPunctuationPolicies.isAsciiPointMark(ch);
+    return ch !== null && ClreqPunctuationPolicies.isAsciiPointMark((ch)!);
   }
 
   private static isHangablePunctuationMark(displayText: string): boolean {

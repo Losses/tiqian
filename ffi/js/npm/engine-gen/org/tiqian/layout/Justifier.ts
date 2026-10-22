@@ -24,6 +24,7 @@ export class JustificationOpportunity {
   public readonly reason: string | null;
 
   constructor(targetClusterIndex: number, kind: GlueKind, priority: number, capacity: number, reason?: string | null) {
+    reason = reason ?? null;
     this.targetClusterIndex = targetClusterIndex;
     this.kind = kind;
     this.priority = priority;
@@ -64,6 +65,7 @@ export class JustificationPlan {
   public readonly fallbackReason: string | null;
 
   constructor(lineClusterRange: IntRange, allocations: JustificationAllocation[], deficitBefore: number, unfilledDeficit: number, fallbackReason?: string | null) {
+    fallbackReason = fallbackReason ?? null;
     this.lineClusterRange = lineClusterRange;
     this.allocations = allocations;
     this.deficitBefore = deficitBefore;
@@ -105,7 +107,18 @@ export class Justifier {
     return this.progressiveTechnicalWhitespaceStretchMaxEm * fontSize;
   }
 
-  public justify(c: Cluster[], roles: FontRole[], edges: EastAsianSpacingEdges[], r: IntRange, maxWidth: number, fontSize: number, skip: boolean, skipReason: string | null, allowSinoWesternGapStretch: boolean | null, baseEm: number, maxEm: number, noStretch?: SortedSetTable<number> | null, noStretchAfter?: SortedSetTable<number> | null, bracket?: SortedSetTable<number> | null, physical?: SortedSetTable<number> | null, virtual?: SortedMapTable<number, number> | null, virtualSino?: SortedSetTable<number> | null, uniformObject?: SortedSetTable<number> | null, preferred?: SortedMapTable<number, InlineObjectPreferredStretch> | null, technical?: SortedMapTable<number, ProgressiveBreakTier> | null, emergency?: SortedMapTable<number, string> | null, preferredEmergency?: SortedMapTable<number, string> | null): JustificationPlan {
+  public justify(c: Cluster[], roles: FontRole[], edges: EastAsianSpacingEdges[], r: IntRange, maxWidth: number, fontSize: number, skip: boolean, skipReason: string | null, allowSinoWesternGapStretch: boolean, baseEm: number, maxEm: number, noStretch?: SortedSetTable<number> | null, noStretchAfter?: SortedSetTable<number> | null, bracket?: SortedSetTable<number> | null, physical?: SortedSetTable<number> | null, virtual?: SortedMapTable<number, number> | null, virtualSino?: SortedSetTable<number> | null, uniformObject?: SortedSetTable<number> | null, preferred?: SortedMapTable<number, InlineObjectPreferredStretch> | null, technical?: SortedMapTable<number, ProgressiveBreakTier> | null, emergency?: SortedMapTable<number, string> | null, preferredEmergency?: SortedMapTable<number, string> | null): JustificationPlan {
+    noStretch = noStretch ?? null;
+    noStretchAfter = noStretchAfter ?? null;
+    bracket = bracket ?? null;
+    physical = physical ?? null;
+    virtual = virtual ?? null;
+    virtualSino = virtualSino ?? null;
+    uniformObject = uniformObject ?? null;
+    preferred = preferred ?? null;
+    technical = technical ?? null;
+    emergency = emergency ?? null;
+    preferredEmergency = preferredEmergency ?? null;
     const ns = noStretch ?? SortedTable.setBuilder<number>(SortedTable.compareInts).build();
     const nsa = noStretchAfter ?? SortedTable.setBuilder<number>(SortedTable.compareInts).build();
     const br = bracket ?? SortedTable.setBuilder<number>(SortedTable.compareInts).build();
@@ -137,10 +150,10 @@ export class Justifier {
     let remaining = deficit;
     const out: JustificationAllocation[] = [];
     const boundaryIsClosed = (l: number, x: number): boolean => {
-    return nsa.has(l) || ns.has(l) || ns.has(x);
+    return nsa!.has(l) || ns!.has(l) || ns!.has(x);
 };
     const spaceGapIsClosed = (x: number): boolean => {
-    return nsa.has(x - 1) || nsa.has(x) || ns.has(x - 1) || ns.has(x + 1);
+    return nsa!.has(x - 1) || nsa!.has(x) || ns!.has(x - 1) || ns!.has(x + 1);
 };
     const alloc = (ops: JustificationOpportunity[], reason: string): void => {
     if (ops.length === 0 || remaining <= 0) {
@@ -164,14 +177,14 @@ export class Justifier {
       ops.forEach((o: JustificationOpportunity): void => {
     const d = o.capacity * f;
     if (d > 0) {
-      out.push(new JustificationAllocation(o.targetClusterIndex, o.kind, o.priority, d, (o.reason === null ? reason : o.reason)));
+      out.push(new JustificationAllocation(o.targetClusterIndex, o.kind, o.priority, d, ((o.reason === null ? reason : o.reason))!));
     }
 });
       remaining = 0;
     } else {
       ops.forEach((o: JustificationOpportunity): void => {
     if (o.capacity > 0) {
-      out.push(new JustificationAllocation(o.targetClusterIndex, o.kind, o.priority, o.capacity, (o.reason === null ? reason : o.reason)));
+      out.push(new JustificationAllocation(o.targetClusterIndex, o.kind, o.priority, o.capacity, ((o.reason === null ? reason : o.reason))!));
     }
 });
       remaining -= total;
@@ -194,13 +207,13 @@ export class Justifier {
     const finish = (fallback: string | null): JustificationPlan => {
     return new JustificationPlan(r, out, deficit, Math.max(remaining, 0), fallback);
 };
-    let ops = build(GlueKind.ProgressiveTechnical, ProgressiveBreakTierPriority.priority(ProgressiveBreakTier.Whitespace), this.progressiveTechnicalWhitespaceStretchCapacity(fontSize), "ProgressiveTechnicalWhitespaceStretch", (l: number, x: number): boolean => {
-    const t = te.get(l);
-    return (t !== null && t.kind === "Whitespace") && Justifier_Fields_.allWhitespace(c[l]!.text);
+    let ops = build((GlueKind.ProgressiveTechnical as GlueKind), ProgressiveBreakTierPriority.priority((ProgressiveBreakTier.Whitespace as ProgressiveBreakTier)), this.progressiveTechnicalWhitespaceStretchCapacity(fontSize), "ProgressiveTechnicalWhitespaceStretch", (l: number, x: number): boolean => {
+    const t = te!.get(l);
+    return (t !== null && t!.kind === "Whitespace") && Justifier_Fields_.allWhitespace(c[l]!.text);
 });
     alloc(ops, "ProgressiveTechnicalWhitespaceStretch");
     if (remaining <= 0) {
-      return finish(null);
+      return finish((null)!);
     }
     const ws: JustificationOpportunity[] = [];
     i = r.start;
@@ -208,32 +221,32 @@ export class Justifier {
       if (Justifier_Fields_.wordSpaceBetweenNarrow(c, i, edges) && !spaceGapIsClosed(i)) {
         const h = Math.max(this.wordSpaceMaxEm * fontSize - c[i]!.advance, 0);
         if (c[i]!.advance > 0 && h > 0) {
-          ws.push(new JustificationOpportunity(i, GlueKind.WordSpace, 0, h, null));
+          ws.push(new JustificationOpportunity(i, (GlueKind.WordSpace as GlueKind), 0, h, null));
         }
       }
       i++;
     }
     alloc(ws, "WordSpace");
     if (remaining <= 0) {
-      return finish(null);
+      return finish((null)!);
     }
     let sino: JustificationOpportunity[] = [];
     if (allowSinoWesternGapStretch) {
-      sino = build(GlueKind.CjkLatinSpace, 1, Math.max((maxEm - baseEm) * fontSize, 0), null, (l: number, x: number): boolean => {
-    return Justifier_Fields_.wideNarrowBoundary(l, x, edges) && !ph.has(l) && !boundaryIsClosed(l, x) && c[l]!.text.indexOf(" ") < 0 && c[x]!.text.indexOf(" ") !== 0;
+      sino = build((GlueKind.CjkLatinSpace as GlueKind), 1, Math.max((maxEm - baseEm) * fontSize, 0), (null)!, (l: number, x: number): boolean => {
+    return Justifier_Fields_.wideNarrowBoundary(l, x, edges) && !ph!.has(l) && !boundaryIsClosed(l, x) && c[l]!.text.indexOf(" ") < 0 && c[x]!.text.indexOf(" ") !== 0;
 });
       i = r.start;
       while (i <= r.end) {
-        if (vs.has(i)) {
-          const prev = vi.get(i);
-          if (prev !== null && i >= r.start && i + 1 <= r.end && !ns.has(prev) && !ns.has(i + 1)) {
-            sino.push(new JustificationOpportunity(i, GlueKind.CjkLatinSpace, 1, Math.max((maxEm - baseEm) * fontSize, 0), "AttachedInlineVirtualAutoSpace"));
+        if (vs!.has(i)) {
+          const prev = vi!.get(i);
+          if (prev !== null && i >= r.start && i + 1 <= r.end && !ns!.has((prev)!) && !ns!.has(i + 1)) {
+            sino.push(new JustificationOpportunity(i, (GlueKind.CjkLatinSpace as GlueKind), 1, Math.max((maxEm - baseEm) * fontSize, 0), "AttachedInlineVirtualAutoSpace"));
           }
         }
         if (Justifier_Fields_.wideNarrowTypedSpace(c, i, edges) && !spaceGapIsClosed(i) && c[i]!.advance > 0) {
           const h2 = Math.max(maxEm * fontSize - c[i]!.advance, 0);
           if (h2 > 0) {
-            sino.push(new JustificationOpportunity(i, GlueKind.CjkLatinSpace, 1, h2, null));
+            sino.push(new JustificationOpportunity(i, (GlueKind.CjkLatinSpace as GlueKind), 1, h2, null));
           }
         }
         i++;
@@ -241,40 +254,40 @@ export class Justifier {
     }
     alloc(sino, "CjkLatinSpace");
     if (remaining <= 0) {
-      return finish(null);
+      return finish((null)!);
     }
-    const kinds = [InlineObjectPreferredStretchKind.PunctuationTrailing, InlineObjectPreferredStretchKind.Relation, InlineObjectPreferredStretchKind.BinaryOperator];
+    const kinds = [(InlineObjectPreferredStretchKind.PunctuationTrailing as InlineObjectPreferredStretchKind), (InlineObjectPreferredStretchKind.Relation as InlineObjectPreferredStretchKind), (InlineObjectPreferredStretchKind.BinaryOperator as InlineObjectPreferredStretchKind)];
     let ki = 0;
     while (ki < kinds.length) {
       const po: JustificationOpportunity[] = [];
       let mi = 0;
-      while (mi < pref.size()) {
-        const key = pref.keyAt(mi);
-        const pv = pref.get(key);
-        if (pv !== null && pv.kind === kinds[ki]! && key >= r.start && key < r.end && !boundaryIsClosed(key, key + 1)) {
-          po.push(new JustificationOpportunity(key, Justifier_Fields_.glueKind(kinds[ki]!), 2, pv.capacity, Justifier_Fields_.reason(kinds[ki]!)));
+      while (mi < pref!.size()) {
+        const key = pref!.keyAt(mi);
+        const pv = pref!.get(key);
+        if (pv !== null && pv!.kind === kinds[ki]! && key >= r.start && key < r.end && !boundaryIsClosed(key, key + 1)) {
+          po.push(new JustificationOpportunity(key, Justifier_Fields_.glueKind(kinds[ki]!), 2, pv!.capacity, Justifier_Fields_.reason(kinds[ki]!)));
         }
         mi++;
       }
       alloc(po, Justifier_Fields_.reason(kinds[ki]!));
       if (remaining <= 0) {
-        return finish(null);
+        return finish((null)!);
       }
       ki++;
     }
-    ops = build(GlueKind.EmergencyGraphemeTracking, 3, remaining, null, (l: number, x: number): boolean => {
-    return pem.has(l);
+    ops = build((GlueKind.EmergencyGraphemeTracking as GlueKind), 3, remaining, (null)!, (l: number, x: number): boolean => {
+    return pem!.has(l);
 });
     const count = ops.length;
     const pipeline_result: JustificationOpportunity[] = new Array<JustificationOpportunity>(count);
     for (let pipeline_index = 0; pipeline_index < count; pipeline_index += 1) {
       const v = ops[pipeline_index]!;
-      pipeline_result[pipeline_index] = new JustificationOpportunity(v.targetClusterIndex, v.kind, v.priority, v.capacity, `TerminalTechnicalEmergencyTracking:${pem.get(v.targetClusterIndex)}`);
+      pipeline_result[pipeline_index] = new JustificationOpportunity(v.targetClusterIndex, v.kind, v.priority, v.capacity, `TerminalTechnicalEmergencyTracking:${pem!.get(v.targetClusterIndex)}`);
     }
     const pe = pipeline_result;
     alloc(pe, "TerminalTechnicalEmergencyTracking");
     if (remaining <= 0) {
-      return finish(null);
+      return finish((null)!);
     }
     let hasCjk = false;
     i = r.start;
@@ -287,7 +300,7 @@ export class Justifier {
     let hasU = false;
     i = r.start;
     while (i < r.end) {
-      if (uo.has(i) && !boundaryIsClosed(i, i + 1)) {
+      if (uo!.has(i) && !boundaryIsClosed(i, i + 1)) {
         hasU = true;
       }
       i++;
@@ -295,7 +308,7 @@ export class Justifier {
     let hasE = false;
     i = r.start;
     while (i < r.end) {
-      if (emg.has(i)) {
+      if (emg!.has(i)) {
         hasE = true;
       }
       i++;
@@ -304,45 +317,45 @@ export class Justifier {
       return finish("WesternDominantLineNaturalSpacing");
     }
     let all: JustificationOpportunity[] = [];
-    const textOps = build(GlueKind.CjkInterChar, 3, remaining, null, (l: number, x: number): boolean => {
+    const textOps = build((GlueKind.CjkInterChar as GlueKind), 3, remaining, (null)!, (l: number, x: number): boolean => {
     const both = Justifier_Fields_.isCjk(roles[l]!) && Justifier_Fields_.isCjk(roles[x]!);
     const pw = roles[l]!.kind === "CjkPunctuation" && edges[x]!.leading.kind === "Narrow" || edges[l]!.trailing.kind === "Narrow" && roles[x]!.kind === "CjkPunctuation";
     const vw = allowSinoWesternGapStretch && Justifier_Fields_.wideNarrowBoundary(l, x, edges);
-    return (both || pw || vw) && !br.has(l) && !ph.has(l) && !vi.has(l) && !uo.has(l) && !boundaryIsClosed(l, x);
+    return (both || pw || vw) && !br!.has(l) && !ph!.has(l) && !vi!.has(l) && !uo!.has(l) && !boundaryIsClosed(l, x);
 });
     all = all.concat(textOps);
-    all = all.concat(build(GlueKind.CjkInterChar, 3, remaining, "WesternBracketCjkInterChar", (l: number, x: number): boolean => {
-    return br.has(l) && !ph.has(l) && !uo.has(l) && !boundaryIsClosed(l, x);
+    all = all.concat(build((GlueKind.CjkInterChar as GlueKind), 3, remaining, "WesternBracketCjkInterChar", (l: number, x: number): boolean => {
+    return br!.has(l) && !ph!.has(l) && !uo!.has(l) && !boundaryIsClosed(l, x);
 }));
-    all = all.concat(build(GlueKind.CjkInterChar, 3, remaining, "AttachedInlineVirtualInterChar", (l: number, x: number): boolean => {
-    const pv2 = vi.get(l);
-    return pv2 !== null && (allowSinoWesternGapStretch || !vs.has(l)) && !uo.has(l) && !ns.has(pv2) && !ns.has(x) && !nsa.has(pv2);
+    all = all.concat(build((GlueKind.CjkInterChar as GlueKind), 3, remaining, "AttachedInlineVirtualInterChar", (l: number, x: number): boolean => {
+    const pv2 = vi!.get(l);
+    return pv2 !== null && (allowSinoWesternGapStretch || !vs!.has(l)) && !uo!.has(l) && !ns!.has((pv2)!) && !ns!.has(x) && !nsa!.has((pv2)!);
 }));
-    all = all.concat(build(GlueKind.InlineObjectBoundary, 3, remaining, null, (l: number, x: number): boolean => {
-    return uo.has(l) && !boundaryIsClosed(l, x);
+    all = all.concat(build((GlueKind.InlineObjectBoundary as GlueKind), 3, remaining, (null)!, (l: number, x: number): boolean => {
+    return uo!.has(l) && !boundaryIsClosed(l, x);
 }));
     i = r.start;
     while (i <= r.end) {
       if ((Justifier_Fields_.wordSpaceBetweenNarrow(c, i, edges) || allowSinoWesternGapStretch && Justifier_Fields_.wideNarrowTypedSpace(c, i, edges)) && !spaceGapIsClosed(i) && c[i]!.advance > 0) {
-        all.push(new JustificationOpportunity(i, GlueKind.CjkInterChar, 3, remaining, null));
+        all.push(new JustificationOpportunity(i, (GlueKind.CjkInterChar as GlueKind), 3, remaining, null));
       }
       i++;
     }
     alloc(all, "CjkInterChar");
     if (remaining <= 0) {
-      return finish(null);
+      return finish((null)!);
     }
-    ops = build(GlueKind.EmergencyGraphemeTracking, 4, remaining, null, (l: number, x: number): boolean => {
-    return emg.has(l) && !pem.has(l);
+    ops = build((GlueKind.EmergencyGraphemeTracking as GlueKind), 4, remaining, (null)!, (l: number, x: number): boolean => {
+    return emg!.has(l) && !pem!.has(l);
 });
     const pipeline_result1: JustificationOpportunity[] = new Array<JustificationOpportunity>(ops.length);
     for (let pipeline_index1 = 0; pipeline_index1 < ops.length; pipeline_index1 += 1) {
       const v2 = ops[pipeline_index1]!;
-      pipeline_result1[pipeline_index1] = new JustificationOpportunity(v2.targetClusterIndex, v2.kind, v2.priority, v2.capacity, `EmergencyGraphemeTracking:${emg.get(v2.targetClusterIndex)}`);
+      pipeline_result1[pipeline_index1] = new JustificationOpportunity(v2.targetClusterIndex, v2.kind, v2.priority, v2.capacity, `EmergencyGraphemeTracking:${emg!.get(v2.targetClusterIndex)}`);
     }
     const ee = pipeline_result1;
     alloc(ee, "EmergencyGraphemeTracking");
-    return finish((remaining > 0 && hasE ? "EmergencyTrackingNoOpenBoundary" : null));
+    return finish(((remaining > 0 && hasE ? "EmergencyTrackingNoOpenBoundary" : null))!);
   }
 
   public compress(surplus: number, opps: ShrinkOpportunity[]): CompressionPlan {
@@ -425,11 +438,11 @@ export class Justifier_Fields_ {
   public static glueKind(k: InlineObjectPreferredStretchKind): GlueKind {
     switch (k.kind) {
       case "PunctuationTrailing":
-        return GlueKind.InlineObjectPunctuationTrailing;
+        return (GlueKind.InlineObjectPunctuationTrailing as GlueKind);
       case "Relation":
-        return GlueKind.InlineObjectRelation;
+        return (GlueKind.InlineObjectRelation as GlueKind);
       case "BinaryOperator":
-        return GlueKind.InlineObjectBinaryOperator;
+        return (GlueKind.InlineObjectBinaryOperator as GlueKind);
     }
   }
 
@@ -449,7 +462,7 @@ export class Justifier_Fields_ {
   }
 
   public static wideNarrowPairWith(a: EastAsianSpacingValue | null, b: EastAsianSpacingValue | null): boolean {
-    return (a !== null && a.kind === "Wide") && (b !== null && b.kind === "Narrow") || (a !== null && a.kind === "Narrow") && (b !== null && b.kind === "Wide");
+    return (a !== null && a!.kind === "Wide") && (b !== null && b!.kind === "Narrow") || (a !== null && a!.kind === "Narrow") && (b !== null && b!.kind === "Wide");
   }
 
   public static wordSpaceBetweenNarrow(c: Cluster[], i: number, e: EastAsianSpacingEdges[]): boolean {

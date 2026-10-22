@@ -38,7 +38,7 @@ impl BopomofoParser {
             }
         }
         let has_suffix_mark = last == BopomofoParser::BOPOMOFO_PARSER_YANGPING_MARK || last == BopomofoParser::BOPOMOFO_PARSER_SHANG_MARK || last == BopomofoParser::BOPOMOFO_PARSER_QU_MARK || last == BopomofoParser::BOPOMOFO_PARSER_YINPING_MACRON_MARK;
-        let body = if has_suffix_mark { u_string::substring(&reading, 0i32, (u32::wrapping_sub(__count, 1)) as i32).to_ustring() } else { reading.to_ustring() };
+        let body = if has_suffix_mark { u_string::substring(&reading, 0i32, i32::from_ne_bytes(((u32::wrapping_sub(__count, 1)) as i32).to_ne_bytes())).to_ustring() } else { reading.to_ustring() };
         return BopomofoReading::new(BopomofoParser::bopomofo_parser_symbols_of(body.as_ustr()).to_vec(), tone);
     }
 
@@ -47,7 +47,7 @@ impl BopomofoParser {
     let __count1 = u_string::unit_count(&body);
         let mut symbols: Vec<UString> = vec![];
         let mut index = 0u32;
-        while ((index) as i32) < ((__count1) as i32) {
+        while (i32::from_ne_bytes(((index) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((__count1) as i32).to_ne_bytes())) {
             symbols.push(u_string::char_at_from(__units1, index));
             index = u32::wrapping_add(index, 1);
         }

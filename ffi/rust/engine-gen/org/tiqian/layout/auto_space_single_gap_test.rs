@@ -1126,7 +1126,7 @@ fn zero_spaces_get_inserted_gaps() {
             if x.total_reduction != -2.0f64 {
                 reductions = false;
             }
-            if u_string::find_from(&((x.reason).to_ustring()), UString::from("TextAutoSpaceInsert").as_ustr(), 0) as u32 != 0 {
+            if u32::from_ne_bytes(((u_string::find_from(&((x.reason).to_ustring()), UString::from("TextAutoSpaceInsert").as_ustr(), 0)) as u32).to_ne_bytes()) != 0 {
                 reasons = false;
             }
         }
@@ -1152,7 +1152,7 @@ fn unicode_east_asian_spacing_covers_narrow_scripts_without_script_whitelists() 
             let _ = TracedAssertions::traced_assertions_assert_equals_float(20 as f64, n.advance, Some(UString::from(format!("{}", { let mut __s = UString::new(); __s += &(UString::from("sample=")); __s += sample.as_ustr(); __s }).as_str()))).unwrap();
             let _ = TracedAssertions::traced_assertions_assert_equals_int(2, u32::try_from(((r.debug).clone().auto_space_decisions.len()) & 0xFFFF_FFFF).unwrap_or(0), Some(UString::from(format!("{}", { let mut __s = UString::new(); __s += &(UString::from("sample=")); __s += sample.as_ustr(); __s }).as_str()))).unwrap();
             let mut all = false;
-            if u32::try_from(((r.debug).clone().auto_space_decisions.len()) & 0xFFFF_FFFF).unwrap_or(0) as i32 > (0) {
+            if i32::from_ne_bytes(((u32::try_from(((r.debug).clone().auto_space_decisions.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes()) > (0) {
                 all = true;
                 for i in 0..match u32::try_from((r.debug).clone().auto_space_decisions.len()) { Ok(value) => value, Err(_) => u32::MAX } {
                     if !AutoSpaceSingleGapTestSupport::auto_space_single_gap_test_support_same_range((((r.debug).clone().auto_space_decisions[usize::try_from(i).unwrap_or(0)]).clone().cluster_range).clone(), (n.range).clone()) {
@@ -1251,7 +1251,7 @@ fn autospace_distinguishes_letter_from_digit_at_boundary() {
                 all = false;
             }
         }
-        let _ = TracedAssertions::traced_assertions_assert_true((u32::try_from(((r.debug).clone().auto_space_decisions.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32 > (0) && all, Some(UString::from(format!("{}", { let mut __s = UString::new(); __s += &(UString::from("only the letter fires: ")); __s += AutoSpaceSingleGapTestSupport::auto_space_single_gap_test_support_render_auto_space_decisions(&(r.debug).clone().auto_space_decisions).as_ustr(); __s }).as_str()))).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_true((i32::from_ne_bytes(((u32::try_from(((r.debug).clone().auto_space_decisions.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) > (0) && all, Some(UString::from(format!("{}", { let mut __s = UString::new(); __s += &(UString::from("only the letter fires: ")); __s += AutoSpaceSingleGapTestSupport::auto_space_single_gap_test_support_render_auto_space_decisions(&(r.debug).clone().auto_space_decisions).as_ustr(); __s }).as_str()))).unwrap();
         let mut saw = false;
         for i in 0..match u32::try_from((r.debug).clone().auto_space_decisions.len()) { Ok(value) => value, Err(_) => u32::MAX } {
             if AutoSpaceSingleGapTestSupport::auto_space_single_gap_test_support_same_range((((r.debug).clone().auto_space_decisions[usize::try_from(i).unwrap_or(0)]).clone().cluster_range).clone(), (n).clone()) {

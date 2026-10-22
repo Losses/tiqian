@@ -152,10 +152,10 @@ impl LineCandidate {
         let end_reason = end_reason.unwrap_or_else(|| LineEndReason::AutoWrap);
         let repair_candidates = repair_candidates.unwrap_or_else(|| vec![]);
         let hanging_cluster_indices = hanging_cluster_indices.unwrap_or_else(|| LineCandidate::line_candidate_empty_hanging());
-        if hanging_cluster_indices.size() as u32 as i32 > (0) {
+        if i32::from_ne_bytes(((u32::from_ne_bytes(((hanging_cluster_indices.size()) as u32).to_ne_bytes())) as i32).to_ne_bytes()) > (0) {
             let first_hanging = hanging_cluster_indices.at(0i32);
-            let last_hanging = hanging_cluster_indices.at((u32::wrapping_sub((hanging_cluster_indices.size()) as u32, 1)) as i32);
-            if !((cluster_range.start) as i32 <= first_hanging as i32 && ((first_hanging) as i32) <= cluster_range.end as i32 && last_hanging == cluster_range.end) {
+            let last_hanging = hanging_cluster_indices.at(i32::from_ne_bytes(((u32::wrapping_sub(u32::from_ne_bytes(((hanging_cluster_indices.size()) as u32).to_ne_bytes()), 1)) as i32).to_ne_bytes()));
+            if !((i32::from_ne_bytes(((cluster_range.start) as i32).to_ne_bytes())) <= i32::from_ne_bytes(((first_hanging) as i32).to_ne_bytes()) && (i32::from_ne_bytes(((first_hanging) as i32).to_ne_bytes())) <= i32::from_ne_bytes(((cluster_range.end) as i32).to_ne_bytes()) && last_hanging == cluster_range.end) {
                 return Err(TextRangeError::Message { text: UString::from(format!("{}", { let mut __s = UString::new(); __s += &(UString::from("Hanging clusters must be a trailing line suffix: line=")); __s += LineCandidates::line_candidates_render_range((cluster_range).clone()).as_ustr(); __s += &(UString::from(" hanging=")); __s += UString::from(format!("{}", {
         let mut out = String::new();
         out.push('[');
@@ -163,14 +163,14 @@ impl LineCandidate {
         let mut i = 0;
         while i < n {
             if i > 0 { out.push_str(", "); }
-            let _ = write!(out, "{}", (hanging_cluster_indices.at(i)) as i32);
+            let _ = write!(out, "{}", i32::from_ne_bytes(((hanging_cluster_indices.at(i)) as i32).to_ne_bytes()));
             i += 1;
         }
         out.push(']');
         out
     }).as_str()).as_ustr(); __s }).as_str()) });
             }
-            if hanging_cluster_indices.size() as u32 != u32::wrapping_add(u32::wrapping_sub(cluster_range.end, first_hanging), 1) {
+            if u32::from_ne_bytes(((hanging_cluster_indices.size()) as u32).to_ne_bytes()) != u32::wrapping_add(u32::wrapping_sub(cluster_range.end, first_hanging), 1) {
                 return Err(TextRangeError::Message { text: UString::from(format!("{}", { let mut __s = UString::new(); __s += &(UString::from("Hanging clusters must be contiguous: line=")); __s += LineCandidates::line_candidates_render_range((cluster_range).clone()).as_ustr(); __s += &(UString::from(" hanging=")); __s += UString::from(format!("{}", {
         let mut out = String::new();
         out.push('[');
@@ -178,7 +178,7 @@ impl LineCandidate {
         let mut i = 0;
         while i < n {
             if i > 0 { out.push_str(", "); }
-            let _ = write!(out, "{}", (hanging_cluster_indices.at(i)) as i32);
+            let _ = write!(out, "{}", i32::from_ne_bytes(((hanging_cluster_indices.at(i)) as i32).to_ne_bytes()));
             i += 1;
         }
         out.push(']');
@@ -200,12 +200,12 @@ impl LineCandidate {
 
     pub fn get_hanging_cluster_index(&self) -> Option<u32> {
         let from_repair = match &(self.repair) { None => None, Some(__option) => RepairOptions::repair_options_hang_offender((*__option).clone()) };
-        let last = if self.hanging_cluster_indices.clone().size() as u32 == 0 { None } else { Some((self.hanging_cluster_indices).clone().at((u32::wrapping_sub(((self.hanging_cluster_indices).clone().size()) as u32, 1)) as i32)) };
+        let last = if u32::from_ne_bytes((((self.hanging_cluster_indices).clone().size()) as u32).to_ne_bytes()) == 0 { None } else { Some((self.hanging_cluster_indices).clone().at(i32::from_ne_bytes(((u32::wrapping_sub(u32::from_ne_bytes((((self.hanging_cluster_indices).clone().size()) as u32).to_ne_bytes()), 1)) as i32).to_ne_bytes()))) };
         return match &(from_repair) { Some(__option1) => Some(*__option1), None => last };
     }
 
     pub fn get_in_measure_cluster_range(&self) -> IntRange {
-        let first_hanging = if self.hanging_cluster_indices.clone().size() as u32 == 0 { None } else { Some((self.hanging_cluster_indices).clone().at(0i32)) };
+        let first_hanging = if u32::from_ne_bytes((((self.hanging_cluster_indices).clone().size()) as u32).to_ne_bytes()) == 0 { None } else { Some((self.hanging_cluster_indices).clone().at(0i32)) };
         return match &(first_hanging) { None => (self.cluster_range).clone(), Some(__option2) => IntRange::new((self.cluster_range).clone().start, u32::wrapping_sub(*__option2, 1)) };
     }
 
@@ -230,7 +230,7 @@ impl LineCandidate {
         let mut i = 0;
         while i < n {
             if i > 0 { out.push_str(", "); }
-            let _ = write!(out, "{}", ((self.hanging_cluster_indices).clone().at(i)) as i32);
+            let _ = write!(out, "{}", i32::from_ne_bytes((((self.hanging_cluster_indices).clone().at(i)) as i32).to_ne_bytes()));
             i += 1;
         }
         out.push(']');
@@ -239,7 +239,7 @@ impl LineCandidate {
     }
 
     pub fn line_candidate_empty_hanging() -> SortedSetTable<u32> {
-        let b: SortedSetTableBuilder<u32> = SortedTable::sorted_table_set_builder::<u32>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints((*a) as i32, (*b) as i32)));
+        let b: SortedSetTableBuilder<u32> = SortedTable::sorted_table_set_builder::<u32>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_bytes(((*a) as i32).to_ne_bytes()), i32::from_ne_bytes(((*b) as i32).to_ne_bytes()))));
         return b.clone().build();
     }
 }

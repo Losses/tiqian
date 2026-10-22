@@ -7297,7 +7297,7 @@ impl UnicodePunctuationBoundaryResolverCoverageSupport {
     let __count = u_string::unit_count(&t);
         let mut a: Vec<Cluster> = vec![];
         let mut i = 0u32;
-        while ((i) as i32) < ((__count) as i32) {
+        while (i32::from_ne_bytes(((i) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((__count) as i32).to_ne_bytes())) {
             let s = u_string::char_at_from(__units, i);
             a.push(Cluster::new(TextRange::new(i, u32::wrapping_add(i, 1))?, s.as_ustr(), &(UStr::new(&[99,106,107])), 16.0f64, Some(s.to_ustring()), Some(0.0), Some(0.0), Some(0.0)));
             i = u32::wrapping_add(i, 1);
@@ -7310,7 +7310,7 @@ impl UnicodePunctuationBoundaryResolverCoverageSupport {
     let __count2 = u_string::unit_count(&t);
         let mut a: Vec<Cluster> = vec![];
         let mut i = 0u32;
-        while ((i) as i32) < ((__count2) as i32) {
+        while (i32::from_ne_bytes(((i) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((__count2) as i32).to_ne_bytes())) {
             let s = u_string::char_at_from(__units2, i);
             a.push(Cluster::new(TextRange::new(i, u32::wrapping_add(i, 1))?, s.as_ustr(), &(UStr::new(&[108,97,116,105,110])), 8.0f64, Some(s.to_ustring()), Some(0.0), Some(0.0), Some(0.0)));
             i = u32::wrapping_add(i, 1);
@@ -7337,9 +7337,9 @@ impl UnicodePunctuationBoundaryResolverCoverageSupport {
     pub fn unicode_punctuation_boundary_resolver_coverage_support_surrogate(codes: &Vec<u32>) -> UString {
         let mut s = UString::new();
         let mut i = 0u32;
-        while ((i) as i32) < ((u32::try_from((codes.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32) {
+        while (i32::from_ne_bytes(((i) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((codes.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
             let unit = codes[usize::try_from(i).unwrap_or(0)];
-            if ({ let v: u32 = unit; v as i32 }) >= 55296 && ({ let v: u32 = unit; v as i32 }) <= 56319 && ((u32::wrapping_add(i, 1)) as i32) < ((u32::try_from((codes.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32) && ({ let v: u32 = codes[usize::try_from(u32::wrapping_add(i, 1)).unwrap_or(0)]; v as i32 }) >= 56320 && ({ let v: u32 = codes[usize::try_from(u32::wrapping_add(i, 1)).unwrap_or(0)]; v as i32 }) <= 57343 {
+            if ({ let v: u32 = unit; i32::from_ne_bytes(v.to_ne_bytes()) }) >= 55296 && ({ let v: u32 = unit; i32::from_ne_bytes(v.to_ne_bytes()) }) <= 56319 && (i32::from_ne_bytes(((u32::wrapping_add(i, 1)) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((codes.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) && ({ let v: u32 = codes[usize::try_from(u32::wrapping_add(i, 1)).unwrap_or(0)]; i32::from_ne_bytes(v.to_ne_bytes()) }) >= 56320 && ({ let v: u32 = codes[usize::try_from(u32::wrapping_add(i, 1)).unwrap_or(0)]; i32::from_ne_bytes(v.to_ne_bytes()) }) <= 57343 {
                 let low = codes[usize::try_from(u32::wrapping_add(i, 1)).unwrap_or(0)];
                 s += &(if u32::wrapping_add(u32::wrapping_add(65536, (u32::wrapping_sub(unit, 55296)) << (10)), u32::wrapping_sub(low, 56320)) > 0xFFFF { u_string::from_units(&[0xD800 + (((u32::wrapping_add(u32::wrapping_add(65536, (u32::wrapping_sub(unit, 55296)) << (10)), u32::wrapping_sub(low, 56320))) - 0x10000) >> 10) as u16, 0xDC00 + (((u32::wrapping_add(u32::wrapping_add(65536, (u32::wrapping_sub(unit, 55296)) << (10)), u32::wrapping_sub(low, 56320))) - 0x10000) & 0x3FF) as u16]) } else { u_string::from_units(&[(u32::wrapping_add(u32::wrapping_add(65536, (u32::wrapping_sub(unit, 55296)) << (10)), u32::wrapping_sub(low, 56320))) as u16]) });
                 i = u32::wrapping_add(i, 2);
@@ -7354,11 +7354,11 @@ impl UnicodePunctuationBoundaryResolverCoverageSupport {
     pub fn unicode_punctuation_boundary_resolver_coverage_support_map_text(m: SortedMapTable<u32, u32>) -> UString {
         let mut s = UString::from("{").to_ustring();
         let mut i = 0u32;
-        while ((i) as i32) < ((m.size()) as u32 as i32) {
-            if i as i32 > (0) {
+        while (i32::from_ne_bytes(((i) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::from_ne_bytes(((m.size()) as u32).to_ne_bytes())) as i32).to_ne_bytes())) {
+            if i32::from_ne_bytes(((i) as i32).to_ne_bytes()) > (0) {
                 s += &(UString::from(", "));
             }
-            s += &({ let mut __s = UString::new(); __s += &(UString::from(format!("{}", crate::runtime::int_text::IntText::int_text(m.key_at((i) as i32))).as_str())); __s += &(UString::from("=")); __s += &(match m.get(&(m.key_at((i) as i32))) { Some(v) => UString::from(format!("{}", crate::runtime::int_text::IntText::int_text(v)).as_str()), None => UString::from("null") }); __s });
+            s += &({ let mut __s = UString::new(); __s += &(UString::from(format!("{}", crate::runtime::int_text::IntText::int_text(m.key_at(i32::from_ne_bytes(((i) as i32).to_ne_bytes())))).as_str())); __s += &(UString::from("=")); __s += &(match m.get(&(m.key_at(i32::from_ne_bytes(((i) as i32).to_ne_bytes())))) { Some(v) => UString::from(format!("{}", crate::runtime::int_text::IntText::int_text(v)).as_str()), None => UString::from("null") }); __s });
             i = u32::wrapping_add(i, 1);
         }
         return UString::from(format!("{}", { let mut __s = UString::new(); __s += s.as_ustr(); __s += &(UString::from("}")); __s }).as_str());
@@ -7401,7 +7401,7 @@ fn resolve_unicode_punctuation_boundaries_with_open_punctuation() {
         let r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_unicode_punctuation_boundaries(text.as_ustr(), &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_cjk_clusters(text.as_ustr()).unwrap(), &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_cjk_roles(text.as_ustr()), &vec![]).unwrap();
         let mut found = false;
         let mut i = 0u32;
-        while ((i) as i32) < ((u32::try_from((r.decisions.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32) {
+        while (i32::from_ne_bytes(((i) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((r.decisions.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
             if r.decisions[usize::try_from(i).unwrap_or(0)].clone().forbidden_position.to_ustring() == UString::from("LineEnd") {
                 found = true;
                 break;
@@ -7422,7 +7422,7 @@ fn resolve_unicode_punctuation_boundaries_with_paired_quotes() {
         let mut a = false;
         let mut b = false;
         let mut i = 0u32;
-        while ((i) as i32) < ((u32::try_from((r.decisions.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32) {
+        while (i32::from_ne_bytes(((i) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((r.decisions.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
             if r.decisions[usize::try_from(i).unwrap_or(0)].clone().reason.to_ustring() == UString::from("Uax14WesternPunctuationBoundary:PairedOpeningQuote") {
                 a = true;
             }
@@ -7442,7 +7442,7 @@ fn resolve_unicode_punctuation_boundaries_with_unmatched_closing_punctuation() {
         UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_start(UStr::new(&[114,101,115,111,108,118,101,85,110,105,99,111,100,101,80,117,110,99,116,117,97,116,105,111,110,66,111,117,110,100,97,114,105,101,115,87,105,116,104,85,110,109,97,116,99,104,101,100,67,108,111,115,105,110,103,80,117,110,99,116,117,97,116,105,111,110]));
         let text = UString::from("中。").to_ustring();
         let r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_unicode_punctuation_boundaries(text.as_ustr(), &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_cjk_clusters(text.as_ustr()).unwrap(), &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_cjk_roles(text.as_ustr()), &vec![]).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_true((r.forbidden_line_start_clusters.size()) as u32 as i32 > (0), None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_true((i32::from_ne_bytes(((u32::from_ne_bytes(((r.forbidden_line_start_clusters.size()) as u32).to_ne_bytes())) as i32).to_ne_bytes())) > (0), None).unwrap();
     });
 }
 
@@ -7455,7 +7455,7 @@ fn resolve_unicode_punctuation_boundaries_with_cjk_closing_at_line_start() {
         let r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_unicode_punctuation_boundaries(text.as_ustr(), &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_cjk_clusters(text.as_ustr()).unwrap(), &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_cjk_roles(text.as_ustr()), &pairs).unwrap();
         let mut f = false;
         let mut i = 0u32;
-        while ((i) as i32) < ((u32::try_from((r.decisions.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32) {
+        while (i32::from_ne_bytes(((i) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((r.decisions.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
             if r.decisions[usize::try_from(i).unwrap_or(0)].clone().forbidden_position.to_ustring() == UString::from("LineEnd") {
                 f = true;
             }
@@ -7478,7 +7478,7 @@ fn resolve_unicode_punctuation_boundaries_with_exclamation_mark() {
         let r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_unicode_punctuation_boundaries(text.as_ustr(), &clusters, &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_cjk_roles(text.as_ustr()), &vec![]).unwrap();
         let mut f = false;
         let mut i = 0u32;
-        while ((i) as i32) < ((u32::try_from((r.decisions.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32) {
+        while (i32::from_ne_bytes(((i) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((r.decisions.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
             if r.decisions[usize::try_from(i).unwrap_or(0)].clone().forbidden_position.to_ustring() == UString::from("LineStart") {
                 f = true;
             }
@@ -7496,7 +7496,7 @@ fn resolve_unicode_punctuation_boundaries_with_initial_quote_forbid_line_end() {
         let r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_unicode_punctuation_boundaries(text.as_ustr(), &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_cjk_clusters(text.as_ustr()).unwrap(), &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_cjk_roles(text.as_ustr()), &vec![]).unwrap();
         let mut f = false;
         let mut i = 0u32;
-        while ((i) as i32) < ((u32::try_from((r.decisions.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32) {
+        while (i32::from_ne_bytes(((i) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((r.decisions.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
             if r.decisions[usize::try_from(i).unwrap_or(0)].clone().forbidden_position.to_ustring() == UString::from("LineEnd") {
                 f = true;
             }
@@ -7514,7 +7514,7 @@ fn resolve_unicode_punctuation_boundaries_with_unresolved_quote() {
         let r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_unicode_punctuation_boundaries(text.as_ustr(), &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_cjk_clusters(text.as_ustr()).unwrap(), &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_cjk_roles(text.as_ustr()), &vec![]).unwrap();
         let mut f = false;
         let mut i = 0u32;
-        while ((i) as i32) < ((u32::try_from((r.decisions.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32) {
+        while (i32::from_ne_bytes(((i) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((r.decisions.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
             if r.decisions[usize::try_from(i).unwrap_or(0)].clone().forbidden_position.to_ustring() == UString::from("LineStart") {
                 f = true;
             }
@@ -7532,7 +7532,7 @@ fn resolve_unicode_punctuation_boundaries_with_multiple_clusters() {
         let r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_unicode_punctuation_boundaries(text.as_ustr(), &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_cjk_clusters(text.as_ustr()).unwrap(), &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_cjk_roles(text.as_ustr()), &vec![]).unwrap();
         let mut f = false;
         let mut i = 0u32;
-        while ((i) as i32) < ((u32::try_from((r.decisions.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32) {
+        while (i32::from_ne_bytes(((i) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((r.decisions.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
             if r.decisions[usize::try_from(i).unwrap_or(0)].clone().forbidden_position.to_ustring() == UString::from("LineStart") {
                 f = true;
             }
@@ -7547,7 +7547,7 @@ fn resolve_unicode_punctuation_boundaries_with_empty_clusters() {
     testlib::run("org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesWithEmptyClusters", "org.tiqian.layout.UnicodePunctuationBoundaryResolverCoverageTest.resolveUnicodePunctuationBoundariesWithEmptyClusters", || {
         UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_start(UStr::new(&[114,101,115,111,108,118,101,85,110,105,99,111,100,101,80,117,110,99,116,117,97,116,105,111,110,66,111,117,110,100,97,114,105,101,115,87,105,116,104,69,109,112,116,121,67,108,117,115,116,101,114,115]));
         let r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_unicode_punctuation_boundaries(UStr::new(&[]), &vec![], &vec![], &vec![]).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_equals(0, (r.forbidden_line_start_clusters.size()) as u32, None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_equals(0, u32::from_ne_bytes(((r.forbidden_line_start_clusters.size()) as u32).to_ne_bytes()), None).unwrap();
     });
 }
 
@@ -7572,7 +7572,7 @@ fn resolve_unicode_punctuation_boundaries_with_western_closing_forbid_line_start
     (Cluster::new(TextRange::new(2u32, 3u32).unwrap(), &(UStr::new(&[20013])), &(UStr::new(&[99,106,107])), 16.0f64, Some(UString::from("中")), Some(0.0), Some(0.0), Some(0.0))).clone(),
 ];
         let r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_unicode_punctuation_boundaries(text.as_ustr(), &c, &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_cjk_roles(text.as_ustr()), &vec![]).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_true((r.forbidden_line_start_clusters.size()) as u32 as i32 > (0), None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_true((i32::from_ne_bytes(((u32::from_ne_bytes(((r.forbidden_line_start_clusters.size()) as u32).to_ne_bytes())) as i32).to_ne_bytes())) > (0), None).unwrap();
     });
 }
 
@@ -7582,7 +7582,7 @@ fn resolve_unicode_punctuation_boundaries_with_cjk_closing_forbid_line_start() {
         UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_start(UStr::new(&[114,101,115,111,108,118,101,85,110,105,99,111,100,101,80,117,110,99,116,117,97,116,105,111,110,66,111,117,110,100,97,114,105,101,115,87,105,116,104,67,106,107,67,108,111,115,105,110,103,70,111,114,98,105,100,76,105,110,101,83,116,97,114,116]));
         let text = UString::from("中。中").to_ustring();
         let r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_unicode_punctuation_boundaries(text.as_ustr(), &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_cjk_clusters(text.as_ustr()).unwrap(), &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_cjk_roles(text.as_ustr()), &vec![]).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_true((r.forbidden_line_start_clusters.size()) as u32 as i32 > (0), None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_true((i32::from_ne_bytes(((u32::from_ne_bytes(((r.forbidden_line_start_clusters.size()) as u32).to_ne_bytes())) as i32).to_ne_bytes())) > (0), None).unwrap();
     });
 }
 
@@ -7594,7 +7594,7 @@ fn resolve_unicode_punctuation_boundaries_with_open_punctuation_forbid_line_end(
         let r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_unicode_punctuation_boundaries(text.as_ustr(), &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_cjk_clusters(text.as_ustr()).unwrap(), &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_cjk_roles(text.as_ustr()), &vec![]).unwrap();
         let mut f = false;
         let mut i = 0u32;
-        while ((i) as i32) < ((u32::try_from((r.decisions.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32) {
+        while (i32::from_ne_bytes(((i) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((r.decisions.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
             if r.decisions[usize::try_from(i).unwrap_or(0)].clone().forbidden_position.to_ustring() == UString::from("LineEnd") {
                 f = true;
             }
@@ -7617,7 +7617,7 @@ fn resolve_unicode_punctuation_boundaries_with_punctuation_and_space() {
         let r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_unicode_punctuation_boundaries(text.as_ustr(), &c, &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_cjk_roles(text.as_ustr()), &vec![]).unwrap();
         let mut f = false;
         let mut i = 0u32;
-        while ((i) as i32) < ((u32::try_from((r.decisions.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32) {
+        while (i32::from_ne_bytes(((i) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((r.decisions.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
             if r.decisions[usize::try_from(i).unwrap_or(0)].clone().forbidden_position.to_ustring() == UString::from("LineStart") {
                 f = true;
             }
@@ -7636,7 +7636,7 @@ fn resolve_unicode_punctuation_boundaries_with_follows_authored_boundary() {
         let r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_unicode_punctuation_boundaries(text.as_ustr(), &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_cjk_clusters(text.as_ustr()).unwrap(), &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_cjk_roles(text.as_ustr()), &vec![]).unwrap();
         let mut hit: Option<ContextualKinsokuDecisionInfo> = None;
         let mut i = 0u32;
-        while ((i) as i32) < ((u32::try_from((r.decisions.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32) {
+        while (i32::from_ne_bytes(((i) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((r.decisions.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
             if r.decisions[usize::try_from(i).unwrap_or(0)].clone().source_text.to_ustring() == UString::from("（") && ((r.decisions[usize::try_from(i).unwrap_or(0)]).clone().forbidden_position).to_ustring() == UString::from("LineStart") {
                 hit = Some((r.decisions[usize::try_from(i).unwrap_or(0)]).clone());
                 break;
@@ -7653,7 +7653,7 @@ fn resolve_unicode_punctuation_boundaries_with_close_punctuation_class() {
         UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_start(UStr::new(&[114,101,115,111,108,118,101,85,110,105,99,111,100,101,80,117,110,99,116,117,97,116,105,111,110,66,111,117,110,100,97,114,105,101,115,87,105,116,104,67,108,111,115,101,80,117,110,99,116,117,97,116,105,111,110,67,108,97,115,115]));
         let text = UString::from("中。").to_ustring();
         let r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_unicode_punctuation_boundaries(text.as_ustr(), &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_cjk_clusters(text.as_ustr()).unwrap(), &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_cjk_roles(text.as_ustr()), &vec![]).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_true((r.forbidden_line_start_clusters.size()) as u32 as i32 > (0), None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_true((i32::from_ne_bytes(((u32::from_ne_bytes(((r.forbidden_line_start_clusters.size()) as u32).to_ne_bytes())) as i32).to_ne_bytes())) > (0), None).unwrap();
     });
 }
 
@@ -7669,7 +7669,7 @@ fn resolve_unicode_punctuation_boundaries_with_infix_numeric_separator() {
 ];
         let roles = vec![FontRole::LatinText, FontRole::CjkPunctuation, FontRole::LatinText];
         let r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_unicode_punctuation_boundaries(text.as_ustr(), &c, &roles, &vec![]).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_equals(0, (r.forbidden_line_start_clusters.size()) as u32, None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_equals(0, u32::from_ne_bytes(((r.forbidden_line_start_clusters.size()) as u32).to_ne_bytes()), None).unwrap();
     });
 }
 
@@ -7686,7 +7686,7 @@ fn resolve_unicode_punctuation_boundaries_with_decimal_mark_after_space() {
 ];
         let roles = vec![FontRole::LatinText, FontRole::LatinText, FontRole::CjkPunctuation, FontRole::LatinText];
         let r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_unicode_punctuation_boundaries(text.as_ustr(), &c, &roles, &vec![]).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_equals(0, (r.forbidden_line_start_clusters.size()) as u32, None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_equals(0, u32::from_ne_bytes(((r.forbidden_line_start_clusters.size()) as u32).to_ne_bytes()), None).unwrap();
     });
 }
 
@@ -7698,7 +7698,7 @@ fn resolve_unicode_punctuation_boundaries_with_rule_for_line_start_infix() {
         let r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_unicode_punctuation_boundaries(text.as_ustr(), &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_latin_clusters(text.as_ustr()).unwrap(), &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_latin_roles(text.as_ustr()), &vec![]).unwrap();
         let mut hit: Option<ContextualKinsokuDecisionInfo> = None;
         let mut i = 0u32;
-        while ((i) as i32) < ((u32::try_from((r.decisions.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32) {
+        while (i32::from_ne_bytes(((i) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((r.decisions.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
             if r.decisions[usize::try_from(i).unwrap_or(0)].clone().source_text.to_ustring() == UString::from(",") {
                 hit = Some((r.decisions[usize::try_from(i).unwrap_or(0)]).clone());
                 break;
@@ -7720,8 +7720,8 @@ fn resolve_attached_inline_inter_char_boundaries_with_cjk_both_cjk() {
     (EastAsianSpacingEdges::new(EastAsianSpacingValue::Narrow, EastAsianSpacingValue::Wide, false)).clone(),
 ];
         let a = vec![InlineAttachment::None, InlineAttachment::None];
-        let r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_attached_inline_inter_char_boundaries(text.as_ustr(), &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_cjk_clusters(text.as_ustr()).unwrap(), &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_cjk_roles(text.as_ustr()), &e, SortedTable::sorted_table_set_builder::<u32>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints((*a) as i32, (*b) as i32))).clone().build(), &a).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_equals(0, (r.virtual_boundary_after_clusters.size()) as u32, None).unwrap();
+        let r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_attached_inline_inter_char_boundaries(text.as_ustr(), &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_cjk_clusters(text.as_ustr()).unwrap(), &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_cjk_roles(text.as_ustr()), &e, SortedTable::sorted_table_set_builder::<u32>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_bytes(((*a) as i32).to_ne_bytes()), i32::from_ne_bytes(((*b) as i32).to_ne_bytes())))).clone().build(), &a).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_equals(0, u32::from_ne_bytes(((r.virtual_boundary_after_clusters.size()) as u32).to_ne_bytes()), None).unwrap();
     });
 }
 
@@ -7740,8 +7740,8 @@ fn resolve_attached_inline_inter_char_boundaries_with_western_bracket() {
     (EastAsianSpacingEdges::new(EastAsianSpacingValue::Wide, EastAsianSpacingValue::Wide, false)).clone(),
 ];
         let a = vec![InlineAttachment::None, InlineAttachment::None];
-        let r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_attached_inline_inter_char_boundaries(text.as_ustr(), &c, &roles, &e, SortedTable::sorted_table_set_builder::<u32>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints((*a) as i32, (*b) as i32))).clone().build(), &a).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_equals(0, (r.virtual_boundary_after_clusters.size()) as u32, None).unwrap();
+        let r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_attached_inline_inter_char_boundaries(text.as_ustr(), &c, &roles, &e, SortedTable::sorted_table_set_builder::<u32>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_bytes(((*a) as i32).to_ne_bytes()), i32::from_ne_bytes(((*b) as i32).to_ne_bytes())))).clone().build(), &a).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_equals(0, u32::from_ne_bytes(((r.virtual_boundary_after_clusters.size()) as u32).to_ne_bytes()), None).unwrap();
     });
 }
 
@@ -7760,8 +7760,8 @@ fn resolve_attached_inline_inter_char_boundaries_with_cjk_body_western_bracket()
     (EastAsianSpacingEdges::new(EastAsianSpacingValue::Wide, EastAsianSpacingValue::Wide, false)).clone(),
 ];
         let a = vec![InlineAttachment::None, InlineAttachment::None];
-        let r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_attached_inline_inter_char_boundaries(text.as_ustr(), &c, &roles, &e, SortedTable::sorted_table_set_builder::<u32>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints((*a) as i32, (*b) as i32))).clone().build(), &a).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_equals(0, (r.ordinary_western_boundary_after_clusters.size()) as u32, None).unwrap();
+        let r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_attached_inline_inter_char_boundaries(text.as_ustr(), &c, &roles, &e, SortedTable::sorted_table_set_builder::<u32>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_bytes(((*a) as i32).to_ne_bytes()), i32::from_ne_bytes(((*b) as i32).to_ne_bytes())))).clone().build(), &a).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_equals(0, u32::from_ne_bytes(((r.ordinary_western_boundary_after_clusters.size()) as u32).to_ne_bytes()), None).unwrap();
     });
 }
 
@@ -7777,7 +7777,7 @@ fn resolve_attached_inline_inter_char_boundaries_requires_matching_cluster_role_
 ];
         let a = vec![InlineAttachment::None];
         TracedAssertions::traced_assertions_assert_fails_with(None.clone(), { let c = (c).clone(); let e = (e).clone(); let a = (a).clone(); Arc::new(move || {
-        UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_attached_inline_inter_char_boundaries(UStr::new(&[97,98]), &c, &vec![FontRole::LatinText, FontRole::LatinText], &e, SortedTable::sorted_table_set_builder::<u32>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints((*a) as i32, (*b) as i32))).clone().build(), &a).map_err(|e| IllegalStateException::new(&format!("{}", e)))?;
+        UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_attached_inline_inter_char_boundaries(UStr::new(&[97,98]), &c, &vec![FontRole::LatinText, FontRole::LatinText], &e, SortedTable::sorted_table_set_builder::<u32>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_bytes(((*a) as i32).to_ne_bytes()), i32::from_ne_bytes(((*b) as i32).to_ne_bytes())))).clone().build(), &a).map_err(|e| IllegalStateException::new(&format!("{}", e)))?;
         Ok(())
 }) }).unwrap();
     });
@@ -7794,7 +7794,7 @@ fn resolve_attached_inline_inter_char_boundaries_requires_matching_attachment_si
     (EastAsianSpacingEdges::new(EastAsianSpacingValue::Wide, EastAsianSpacingValue::Wide, false)).clone(),
 ];
         TracedAssertions::traced_assertions_assert_fails_with(None.clone(), { let text = (text).clone(); let c = (c).clone(); let e = (e).clone(); Arc::new(move || {
-        UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_attached_inline_inter_char_boundaries(text.as_ustr(), &c, &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_latin_roles(text.as_ustr()), &e, SortedTable::sorted_table_set_builder::<u32>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints((*a) as i32, (*b) as i32))).clone().build(), &vec![InlineAttachment::None]).map_err(|e| IllegalStateException::new(&format!("{}", e)))?;
+        UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_attached_inline_inter_char_boundaries(text.as_ustr(), &c, &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_latin_roles(text.as_ustr()), &e, SortedTable::sorted_table_set_builder::<u32>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_bytes(((*a) as i32).to_ne_bytes()), i32::from_ne_bytes(((*b) as i32).to_ne_bytes())))).clone().build(), &vec![InlineAttachment::None]).map_err(|e| IllegalStateException::new(&format!("{}", e)))?;
         Ok(())
 }) }).unwrap();
     });
@@ -7817,8 +7817,8 @@ fn resolve_attached_inline_inter_char_boundaries_punctuation_western_narrow_trai
     (EastAsianSpacingEdges::new(EastAsianSpacingValue::Wide, EastAsianSpacingValue::Wide, false)).clone(),
 ];
         let a = vec![InlineAttachment::None, InlineAttachment::Previous, InlineAttachment::None];
-        let r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_attached_inline_inter_char_boundaries(text.as_ustr(), &c, &roles, &e, SortedTable::sorted_table_set_builder::<u32>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints((*a) as i32, (*b) as i32))).clone().build(), &a).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_true((r.virtual_boundary_after_clusters.size()) as u32 as i32 > (0), None).unwrap();
+        let r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_attached_inline_inter_char_boundaries(text.as_ustr(), &c, &roles, &e, SortedTable::sorted_table_set_builder::<u32>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_bytes(((*a) as i32).to_ne_bytes()), i32::from_ne_bytes(((*b) as i32).to_ne_bytes())))).clone().build(), &a).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_true((i32::from_ne_bytes(((u32::from_ne_bytes(((r.virtual_boundary_after_clusters.size()) as u32).to_ne_bytes())) as i32).to_ne_bytes())) > (0), None).unwrap();
     });
 }
 
@@ -7833,7 +7833,7 @@ fn resolve_unicode_punctuation_boundaries_previous_content_cluster_returns_null(
     (Cluster::new(TextRange::new(2u32, 3u32).unwrap(), &(UStr::new(&[33])), &(UStr::new(&[116,101,115,116])), 8.0f64, Some(UString::from("!")), Some(0.0), Some(0.0), Some(0.0))).clone(),
 ];
         let r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_unicode_punctuation_boundaries(text.as_ustr(), &c, &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_latin_roles(text.as_ustr()), &vec![]).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_true((r.forbidden_line_start_clusters.size()) as u32 == 0, None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_true(u32::from_ne_bytes(((r.forbidden_line_start_clusters.size()) as u32).to_ne_bytes()) == 0, None).unwrap();
     });
 }
 
@@ -7854,8 +7854,8 @@ fn resolve_attached_inline_inter_char_boundaries_punctuation_western_trailing_no
     (EastAsianSpacingEdges::new(EastAsianSpacingValue::Wide, EastAsianSpacingValue::Wide, false)).clone(),
 ];
         let a = vec![InlineAttachment::None, InlineAttachment::Previous, InlineAttachment::None];
-        let r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_attached_inline_inter_char_boundaries(text.as_ustr(), &c, &roles, &e, SortedTable::sorted_table_set_builder::<u32>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints((*a) as i32, (*b) as i32))).clone().build(), &a).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_true((r.virtual_boundary_after_clusters.size()) as u32 as i32 > (0), None).unwrap();
+        let r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_attached_inline_inter_char_boundaries(text.as_ustr(), &c, &roles, &e, SortedTable::sorted_table_set_builder::<u32>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_bytes(((*a) as i32).to_ne_bytes()), i32::from_ne_bytes(((*b) as i32).to_ne_bytes())))).clone().build(), &a).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_true((i32::from_ne_bytes(((u32::from_ne_bytes(((r.virtual_boundary_after_clusters.size()) as u32).to_ne_bytes())) as i32).to_ne_bytes())) > (0), None).unwrap();
     });
 }
 
@@ -7876,8 +7876,8 @@ fn resolve_attached_inline_inter_char_boundaries_punctuation_western_trailing_na
     (EastAsianSpacingEdges::new(EastAsianSpacingValue::Wide, EastAsianSpacingValue::Wide, false)).clone(),
 ];
         let a = vec![InlineAttachment::None, InlineAttachment::Previous, InlineAttachment::None];
-        let r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_attached_inline_inter_char_boundaries(text.as_ustr(), &c, &roles, &e, SortedTable::sorted_table_set_builder::<u32>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints((*a) as i32, (*b) as i32))).clone().build(), &a).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_true((r.virtual_boundary_after_clusters.size()) as u32 as i32 > (0), None).unwrap();
+        let r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_attached_inline_inter_char_boundaries(text.as_ustr(), &c, &roles, &e, SortedTable::sorted_table_set_builder::<u32>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_bytes(((*a) as i32).to_ne_bytes()), i32::from_ne_bytes(((*b) as i32).to_ne_bytes())))).clone().build(), &a).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_true((i32::from_ne_bytes(((u32::from_ne_bytes(((r.virtual_boundary_after_clusters.size()) as u32).to_ne_bytes())) as i32).to_ne_bytes())) > (0), None).unwrap();
     });
 }
 
@@ -7891,7 +7891,7 @@ fn resolve_unicode_punctuation_boundaries_with_infix_numeric_separator_not_decim
     (Cluster::new(TextRange::new(1u32, 2u32).unwrap(), &(UStr::new(&[65292])), &(UStr::new(&[99,106,107])), 16.0f64, Some(UString::from("，")), Some(0.0), Some(0.0), Some(0.0))).clone(),
 ];
         let r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_unicode_punctuation_boundaries(text.as_ustr(), &c, &vec![FontRole::LatinText, FontRole::LatinText], &vec![]).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_true((r.forbidden_line_start_clusters.size()) as u32 as i32 > (0), None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_true((i32::from_ne_bytes(((u32::from_ne_bytes(((r.forbidden_line_start_clusters.size()) as u32).to_ne_bytes())) as i32).to_ne_bytes())) > (0), None).unwrap();
     });
 }
 
@@ -7908,7 +7908,7 @@ fn resolve_unicode_punctuation_boundaries_with_decimal_mark_after_non_space() {
 ];
         let roles = vec![FontRole::LatinText, FontRole::LatinText, FontRole::CjkPunctuation, FontRole::LatinText];
         let r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_unicode_punctuation_boundaries(text.as_ustr(), &c, &roles, &vec![]).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_true((r.forbidden_line_start_clusters.size()) as u32 as i32 > (0), None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_true((i32::from_ne_bytes(((u32::from_ne_bytes(((r.forbidden_line_start_clusters.size()) as u32).to_ne_bytes())) as i32).to_ne_bytes())) > (0), None).unwrap();
     });
 }
 
@@ -7920,7 +7920,7 @@ fn resolve_unicode_punctuation_boundaries_with_quote_direction_final() {
         let r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_unicode_punctuation_boundaries(text.as_ustr(), &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_cjk_clusters(text.as_ustr()).unwrap(), &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_cjk_roles(text.as_ustr()), &vec![]).unwrap();
         let mut f = false;
         let mut i = 0u32;
-        while ((i) as i32) < ((u32::try_from((r.decisions.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32) {
+        while (i32::from_ne_bytes(((i) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((r.decisions.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
             if r.decisions[usize::try_from(i).unwrap_or(0)].clone().forbidden_position.to_ustring() == UString::from("LineStart") {
                 f = true;
             }
@@ -7938,7 +7938,7 @@ fn resolve_unicode_punctuation_boundaries_with_quote_direction_initial() {
         let r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_unicode_punctuation_boundaries(text.as_ustr(), &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_cjk_clusters(text.as_ustr()).unwrap(), &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_cjk_roles(text.as_ustr()), &vec![]).unwrap();
         let mut f = false;
         let mut i = 0u32;
-        while ((i) as i32) < ((u32::try_from((r.decisions.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32) {
+        while (i32::from_ne_bytes(((i) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((r.decisions.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
             if r.decisions[usize::try_from(i).unwrap_or(0)].clone().forbidden_position.to_ustring() == UString::from("LineEnd") {
                 f = true;
             }
@@ -7956,7 +7956,7 @@ fn resolve_unicode_punctuation_boundaries_with_quote_direction_unresolved() {
         let r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_unicode_punctuation_boundaries(text.as_ustr(), &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_cjk_clusters(text.as_ustr()).unwrap(), &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_cjk_roles(text.as_ustr()), &vec![]).unwrap();
         let mut f = false;
         let mut i = 0u32;
-        while ((i) as i32) < ((u32::try_from((r.decisions.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32) {
+        while (i32::from_ne_bytes(((i) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((r.decisions.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
             if r.decisions[usize::try_from(i).unwrap_or(0)].clone().forbidden_position.to_ustring() == UString::from("LineEnd") {
                 f = true;
             }
@@ -7972,7 +7972,7 @@ fn resolve_unicode_punctuation_boundaries_with_word_apostrophe2019() {
         UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_start(UStr::new(&[114,101,115,111,108,118,101,85,110,105,99,111,100,101,80,117,110,99,116,117,97,116,105,111,110,66,111,117,110,100,97,114,105,101,115,87,105,116,104,87,111,114,100,65,112,111,115,116,114,111,112,104,101,50,48,49,57]));
         let text = UString::from("it’s").to_ustring();
         let r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_unicode_punctuation_boundaries(text.as_ustr(), &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_latin_clusters(text.as_ustr()).unwrap(), &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_latin_roles(text.as_ustr()), &vec![]).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_equals(0, (r.forbidden_line_start_clusters.size()) as u32, None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_equals(0, u32::from_ne_bytes(((r.forbidden_line_start_clusters.size()) as u32).to_ne_bytes()), None).unwrap();
     });
 }
 
@@ -7994,7 +7994,7 @@ fn resolve_unicode_punctuation_boundaries_with_first_significant_code_point() {
         let r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_unicode_punctuation_boundaries(text.as_ustr(), &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_latin_clusters(text.as_ustr()).unwrap(), &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_latin_roles(text.as_ustr()), &vec![]).unwrap();
         let mut f = false;
         let mut i = 0u32;
-        while ((i) as i32) < ((u32::try_from((r.decisions.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32) {
+        while (i32::from_ne_bytes(((i) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((r.decisions.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
             if r.decisions[usize::try_from(i).unwrap_or(0)].clone().forbidden_position.to_ustring() == UString::from("LineEnd") {
                 f = true;
             }
@@ -8012,7 +8012,7 @@ fn resolve_unicode_punctuation_boundaries_with_last_significant_code_point() {
         let r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_unicode_punctuation_boundaries(text.as_ustr(), &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_latin_clusters(text.as_ustr()).unwrap(), &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_latin_roles(text.as_ustr()), &vec![]).unwrap();
         let mut f = false;
         let mut i = 0u32;
-        while ((i) as i32) < ((u32::try_from((r.decisions.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32) {
+        while (i32::from_ne_bytes(((i) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((r.decisions.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
             if r.decisions[usize::try_from(i).unwrap_or(0)].clone().forbidden_position.to_ustring() == UString::from("LineStart") {
                 f = true;
             }
@@ -8029,7 +8029,7 @@ fn resolve_unicode_punctuation_boundaries_with_has_authored_break() {
         let text = UString::from(concat!("\n",
 "“")).to_ustring();
         let r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_unicode_punctuation_boundaries(text.as_ustr(), &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_latin_clusters(text.as_ustr()).unwrap(), &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_latin_roles(text.as_ustr()), &vec![]).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_equals(0, (r.forbidden_line_start_clusters.size()) as u32, None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_equals(0, u32::from_ne_bytes(((r.forbidden_line_start_clusters.size()) as u32).to_ne_bytes()), None).unwrap();
     });
 }
 
@@ -8039,7 +8039,7 @@ fn resolve_unicode_punctuation_boundaries_with_next_content_cluster() {
         UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_start(UStr::new(&[114,101,115,111,108,118,101,85,110,105,99,111,100,101,80,117,110,99,116,117,97,116,105,111,110,66,111,117,110,100,97,114,105,101,115,87,105,116,104,78,101,120,116,67,111,110,116,101,110,116,67,108,117,115,116,101,114]));
         let text = UString::from("a”中").to_ustring();
         let r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_unicode_punctuation_boundaries(text.as_ustr(), &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_latin_clusters(text.as_ustr()).unwrap(), &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_latin_roles(text.as_ustr()), &vec![]).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_true((u32::try_from((r.unbreakable_ranges.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32 > (0), None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_true((i32::from_ne_bytes(((u32::try_from((r.unbreakable_ranges.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) > (0), None).unwrap();
     });
 }
 
@@ -8049,7 +8049,7 @@ fn resolve_unicode_punctuation_boundaries_with_previous_content_cluster_has_cont
         UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_start(UStr::new(&[114,101,115,111,108,118,101,85,110,105,99,111,100,101,80,117,110,99,116,117,97,116,105,111,110,66,111,117,110,100,97,114,105,101,115,87,105,116,104,80,114,101,118,105,111,117,115,67,111,110,116,101,110,116,67,108,117,115,116,101,114,72,97,115,67,111,110,116,101,110,116]));
         let text = UString::from("中”").to_ustring();
         let r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_unicode_punctuation_boundaries(text.as_ustr(), &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_cjk_clusters(text.as_ustr()).unwrap(), &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_cjk_roles(text.as_ustr()), &vec![]).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_true((u32::try_from((r.unbreakable_ranges.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32 > (0), None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_true((i32::from_ne_bytes(((u32::try_from((r.unbreakable_ranges.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) > (0), None).unwrap();
     });
 }
 
@@ -8059,7 +8059,7 @@ fn resolve_unicode_punctuation_boundaries_with_close_punctuation() {
         UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_start(UStr::new(&[114,101,115,111,108,118,101,85,110,105,99,111,100,101,80,117,110,99,116,117,97,116,105,111,110,66,111,117,110,100,97,114,105,101,115,87,105,116,104,67,108,111,115,101,80,117,110,99,116,117,97,116,105,111,110]));
         let text = UString::from("中）").to_ustring();
         let r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_unicode_punctuation_boundaries(text.as_ustr(), &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_cjk_clusters(text.as_ustr()).unwrap(), &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_cjk_roles(text.as_ustr()), &vec![]).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_true((r.forbidden_line_start_clusters.size()) as u32 as i32 > (0), None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_true((i32::from_ne_bytes(((u32::from_ne_bytes(((r.forbidden_line_start_clusters.size()) as u32).to_ne_bytes())) as i32).to_ne_bytes())) > (0), None).unwrap();
     });
 }
 
@@ -8069,7 +8069,7 @@ fn resolve_unicode_punctuation_boundaries_with_exclamation_class() {
         UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_start(UStr::new(&[114,101,115,111,108,118,101,85,110,105,99,111,100,101,80,117,110,99,116,117,97,116,105,111,110,66,111,117,110,100,97,114,105,101,115,87,105,116,104,69,120,99,108,97,109,97,116,105,111,110,67,108,97,115,115]));
         let text = UString::from("中！").to_ustring();
         let r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_unicode_punctuation_boundaries(text.as_ustr(), &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_cjk_clusters(text.as_ustr()).unwrap(), &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_cjk_roles(text.as_ustr()), &vec![]).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_true((r.forbidden_line_start_clusters.size()) as u32 as i32 > (0), None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_true((i32::from_ne_bytes(((u32::from_ne_bytes(((r.forbidden_line_start_clusters.size()) as u32).to_ne_bytes())) as i32).to_ne_bytes())) > (0), None).unwrap();
     });
 }
 
@@ -8081,8 +8081,8 @@ fn resolve_unicode_punctuation_boundaries_with_close_parenthesis_class() {
         let r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_unicode_punctuation_boundaries(text.as_ustr(), &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_cjk_clusters(text.as_ustr()).unwrap(), &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_cjk_roles(text.as_ustr()), &vec![]).unwrap();
         let mut f = false;
         let mut i = 0u32;
-        while ((i) as i32) < ((u32::try_from((r.decisions.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32) {
-            if u_string::find_from(&(((r.decisions[usize::try_from(i).unwrap_or(0)]).clone().reason).to_ustring()), UString::from("LB13").as_ustr(), 0) as u32 <= 2147483647 {
+        while (i32::from_ne_bytes(((i) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((r.decisions.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
+            if u32::from_ne_bytes(((u_string::find_from(&(((r.decisions[usize::try_from(i).unwrap_or(0)]).clone().reason).to_ustring()), UString::from("LB13").as_ustr(), 0)) as u32).to_ne_bytes()) <= 2147483647 {
                 f = true;
             }
             i = u32::wrapping_add(i, 1);
@@ -8100,7 +8100,7 @@ fn resolve_unicode_punctuation_boundaries_with_infix_numeric_separator_rule() {
         let r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_unicode_punctuation_boundaries(text.as_ustr(), &c, &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_latin_roles(text.as_ustr()), &vec![]).unwrap();
         let mut hit: Option<ContextualKinsokuDecisionInfo> = None;
         let mut i = 0u32;
-        while ((i) as i32) < ((u32::try_from((r.decisions.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32) {
+        while (i32::from_ne_bytes(((i) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((r.decisions.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
             if r.decisions[usize::try_from(i).unwrap_or(0)].clone().source_text.to_ustring() == UString::from(",") {
                 hit = Some((r.decisions[usize::try_from(i).unwrap_or(0)]).clone());
                 break;
@@ -8108,7 +8108,7 @@ fn resolve_unicode_punctuation_boundaries_with_infix_numeric_separator_rule() {
             i = u32::wrapping_add(i, 1);
         }
         let _ = TracedAssertions::traced_assertions_assert_not_null_rendered(hit != None, match &(hit) { None => UString::from("null"), Some(__option11) => UString::from(format!("{}", __option11.to_string()).as_str()) }.as_ustr(), None).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_true(match &(hit) { Some(__option13) => u_string::find_from(&((__option13.reason).to_ustring()), UString::from("LB15d").as_ustr(), 0) as u32 <= 2147483647, None => false }, None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_true(match &(hit) { Some(__option13) => u32::from_ne_bytes(((u_string::find_from(&((__option13.reason).to_ustring()), UString::from("LB15d").as_ustr(), 0)) as u32).to_ne_bytes()) <= 2147483647, None => false }, None).unwrap();
     });
 }
 
@@ -8118,7 +8118,7 @@ fn resolve_unicode_punctuation_boundaries_with_rule_for_line_start_else() {
         UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_start(UStr::new(&[114,101,115,111,108,118,101,85,110,105,99,111,100,101,80,117,110,99,116,117,97,116,105,111,110,66,111,117,110,100,97,114,105,101,115,87,105,116,104,82,117,108,101,70,111,114,76,105,110,101,83,116,97,114,116,69,108,115,101]));
         let text = UString::from("中、").to_ustring();
         let r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_unicode_punctuation_boundaries(text.as_ustr(), &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_cjk_clusters(text.as_ustr()).unwrap(), &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_cjk_roles(text.as_ustr()), &vec![]).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_true((r.forbidden_line_start_clusters.size()) as u32 as i32 > (0), None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_true((i32::from_ne_bytes(((u32::from_ne_bytes(((r.forbidden_line_start_clusters.size()) as u32).to_ne_bytes())) as i32).to_ne_bytes())) > (0), None).unwrap();
     });
 }
 
@@ -8139,8 +8139,8 @@ fn resolve_attached_inline_inter_char_boundaries_with_sino_western_pair() {
     (EastAsianSpacingEdges::new(EastAsianSpacingValue::Narrow, EastAsianSpacingValue::Wide, false)).clone(),
 ];
         let a = vec![InlineAttachment::None, InlineAttachment::Previous, InlineAttachment::None];
-        let r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_attached_inline_inter_char_boundaries(text.as_ustr(), &c, &roles, &e, SortedTable::sorted_table_set_builder::<u32>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints((*a) as i32, (*b) as i32))).clone().build(), &a).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_true((r.virtual_sino_western_boundary_after_clusters.size()) as u32 as i32 > (0), None).unwrap();
+        let r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_attached_inline_inter_char_boundaries(text.as_ustr(), &c, &roles, &e, SortedTable::sorted_table_set_builder::<u32>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_bytes(((*a) as i32).to_ne_bytes()), i32::from_ne_bytes(((*b) as i32).to_ne_bytes())))).clone().build(), &a).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_true((i32::from_ne_bytes(((u32::from_ne_bytes(((r.virtual_sino_western_boundary_after_clusters.size()) as u32).to_ne_bytes())) as i32).to_ne_bytes())) > (0), None).unwrap();
     });
 }
 
@@ -8150,7 +8150,7 @@ fn resolve_unicode_punctuation_boundaries_with_code_point_before_supplementary()
         UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_start(UStr::new(&[114,101,115,111,108,118,101,85,110,105,99,111,100,101,80,117,110,99,116,117,97,116,105,111,110,66,111,117,110,100,97,114,105,101,115,87,105,116,104,67,111,100,101,80,111,105,110,116,66,101,102,111,114,101,83,117,112,112,108,101,109,101,110,116,97,114,121]));
         let text = UString::from("中”").to_ustring();
         let r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_unicode_punctuation_boundaries(text.as_ustr(), &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_cjk_clusters(text.as_ustr()).unwrap(), &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_cjk_roles(text.as_ustr()), &vec![]).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_true((u32::try_from((r.decisions.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32 > (0), None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_true((i32::from_ne_bytes(((u32::try_from((r.decisions.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) > (0), None).unwrap();
     });
 }
 
@@ -8186,7 +8186,7 @@ fn resolve_unicode_punctuation_boundaries_with_is_whitespace_code_point() {
         let r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_unicode_punctuation_boundaries(text.as_ustr(), &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_latin_clusters(text.as_ustr()).unwrap(), &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_latin_roles(text.as_ustr()), &vec![]).unwrap();
         let mut f = false;
         let mut i = 0u32;
-        while ((i) as i32) < ((u32::try_from((r.decisions.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32) {
+        while (i32::from_ne_bytes(((i) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((r.decisions.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
             if r.decisions[usize::try_from(i).unwrap_or(0)].clone().forbidden_position.to_ustring() == UString::from("LineEnd") {
                 f = true;
             }
@@ -8202,7 +8202,7 @@ fn resolve_unicode_punctuation_boundaries_with_follows_authored_boundary_mandato
         UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_start(UStr::new(&[114,101,115,111,108,118,101,85,110,105,99,111,100,101,80,117,110,99,116,117,97,116,105,111,110,66,111,117,110,100,97,114,105,101,115,87,105,116,104,70,111,108,108,111,119,115,65,117,116,104,111,114,101,100,66,111,117,110,100,97,114,121,77,97,110,100,97,116,111,114,121]));
         let text = UString::from("\r“").to_ustring();
         let r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_unicode_punctuation_boundaries(text.as_ustr(), &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_latin_clusters(text.as_ustr()).unwrap(), &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_latin_roles(text.as_ustr()), &vec![]).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_equals(0, (r.forbidden_line_start_clusters.size()) as u32, None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_equals(0, u32::from_ne_bytes(((r.forbidden_line_start_clusters.size()) as u32).to_ne_bytes()), None).unwrap();
     });
 }
 
@@ -8212,7 +8212,7 @@ fn resolve_unicode_punctuation_boundaries_with_follows_authored_boundary_zwsp() 
         UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_start(UStr::new(&[114,101,115,111,108,118,101,85,110,105,99,111,100,101,80,117,110,99,116,117,97,116,105,111,110,66,111,117,110,100,97,114,105,101,115,87,105,116,104,70,111,108,108,111,119,115,65,117,116,104,111,114,101,100,66,111,117,110,100,97,114,121,90,87,83,80]));
         let text = UString::from("​“").to_ustring();
         let r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_unicode_punctuation_boundaries(text.as_ustr(), &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_latin_clusters(text.as_ustr()).unwrap(), &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_latin_roles(text.as_ustr()), &vec![]).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_equals(0, (r.forbidden_line_start_clusters.size()) as u32, None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_equals(0, u32::from_ne_bytes(((r.forbidden_line_start_clusters.size()) as u32).to_ne_bytes()), None).unwrap();
     });
 }
 
@@ -8229,7 +8229,7 @@ fn resolve_unicode_punctuation_boundaries_with_decimal_mark_following_inside_dig
 ];
         let roles = vec![FontRole::LatinText, FontRole::LatinText, FontRole::CjkPunctuation, FontRole::LatinText];
         let r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_unicode_punctuation_boundaries(text.as_ustr(), &c, &roles, &vec![]).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_equals(0, (r.forbidden_line_start_clusters.size()) as u32, None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_equals(0, u32::from_ne_bytes(((r.forbidden_line_start_clusters.size()) as u32).to_ne_bytes()), None).unwrap();
     });
 }
 
@@ -8246,7 +8246,7 @@ fn resolve_unicode_punctuation_boundaries_with_decimal_mark_following_outside_di
 ];
         let roles = vec![FontRole::LatinText, FontRole::LatinText, FontRole::LatinText, FontRole::LatinText];
         let r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_unicode_punctuation_boundaries(text.as_ustr(), &c, &roles, &vec![]).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_true((u32::try_from((r.decisions.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32 > (0) || ((r.forbidden_line_start_clusters.size()) as u32 as i32) > (0), None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_true((i32::from_ne_bytes(((u32::try_from((r.decisions.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) > (0) || (i32::from_ne_bytes(((u32::from_ne_bytes(((r.forbidden_line_start_clusters.size()) as u32).to_ne_bytes())) as i32).to_ne_bytes())) > (0), None).unwrap();
     });
 }
 
@@ -8257,7 +8257,7 @@ fn resolve_unicode_punctuation_boundaries_with_previous_content_cluster_has_auth
         let text = UString::from(concat!("\n",
 "（")).to_ustring();
         let r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_unicode_punctuation_boundaries(text.as_ustr(), &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_latin_clusters(text.as_ustr()).unwrap(), &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_latin_roles(text.as_ustr()), &vec![]).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_true((r.forbidden_line_start_clusters.size()) as u32 == 0, None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_true(u32::from_ne_bytes(((r.forbidden_line_start_clusters.size()) as u32).to_ne_bytes()) == 0, None).unwrap();
     });
 }
 
@@ -8293,7 +8293,7 @@ fn resolve_unicode_punctuation_boundaries_with_has_authored_break_both() {
 "“\n",
 "")).to_ustring();
         let r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_unicode_punctuation_boundaries(text.as_ustr(), &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_latin_clusters(text.as_ustr()).unwrap(), &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_latin_roles(text.as_ustr()), &vec![]).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_true((u32::try_from((r.decisions.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32 > (0), None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_true((i32::from_ne_bytes(((u32::try_from((r.decisions.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) > (0), None).unwrap();
     });
 }
 
@@ -8313,8 +8313,8 @@ fn resolve_attached_inline_inter_char_boundaries_with_both_cjk_punctuation() {
     (EastAsianSpacingEdges::new(EastAsianSpacingValue::Wide, EastAsianSpacingValue::Wide, false)).clone(),
     (EastAsianSpacingEdges::new(EastAsianSpacingValue::Wide, EastAsianSpacingValue::Wide, false)).clone(),
 ];
-        let result = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_attached_inline_inter_char_boundaries(text.as_ustr(), &clusters, &roles, &edges, SortedTable::sorted_table_set_builder::<u32>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints((*a) as i32, (*b) as i32))).clone().build(), &vec![InlineAttachment::None, InlineAttachment::Previous, InlineAttachment::None]).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_true((result.virtual_boundary_after_clusters.size()) as u32 as i32 > (0), None).unwrap();
+        let result = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_attached_inline_inter_char_boundaries(text.as_ustr(), &clusters, &roles, &edges, SortedTable::sorted_table_set_builder::<u32>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_bytes(((*a) as i32).to_ne_bytes()), i32::from_ne_bytes(((*b) as i32).to_ne_bytes())))).clone().build(), &vec![InlineAttachment::None, InlineAttachment::Previous, InlineAttachment::None]).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_true((i32::from_ne_bytes(((u32::from_ne_bytes(((result.virtual_boundary_after_clusters.size()) as u32).to_ne_bytes())) as i32).to_ne_bytes())) > (0), None).unwrap();
     });
 }
 
@@ -8324,7 +8324,7 @@ fn resolve_unicode_punctuation_boundaries_with_follows_authored_boundary_whitesp
         UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_start(UStr::new(&[114,101,115,111,108,118,101,85,110,105,99,111,100,101,80,117,110,99,116,117,97,116,105,111,110,66,111,117,110,100,97,114,105,101,115,87,105,116,104,70,111,108,108,111,119,115,65,117,116,104,111,114,101,100,66,111,117,110,100,97,114,121,87,104,105,116,101,115,112,97,99,101]));
         let text = UString::from(" “").to_ustring();
         let result = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_unicode_punctuation_boundaries(text.as_ustr(), &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_latin_clusters(text.as_ustr()).unwrap(), &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_latin_roles(text.as_ustr()), &vec![]).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_equals(0, (result.forbidden_line_start_clusters.size()) as u32, None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_equals(0, u32::from_ne_bytes(((result.forbidden_line_start_clusters.size()) as u32).to_ne_bytes()), None).unwrap();
     });
 }
 
@@ -8334,7 +8334,7 @@ fn resolve_unicode_punctuation_boundaries_with_follows_authored_boundary_whitesp
         UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_start(UStr::new(&[114,101,115,111,108,118,101,85,110,105,99,111,100,101,80,117,110,99,116,117,97,116,105,111,110,66,111,117,110,100,97,114,105,101,115,87,105,116,104,70,111,108,108,111,119,115,65,117,116,104,111,114,101,100,66,111,117,110,100,97,114,121,87,104,105,116,101,115,112,97,99,101,84,104,101,110,78,111,110,87,104,105,116,101,115,112,97,99,101]));
         let text = UString::from(" A“").to_ustring();
         let result = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_unicode_punctuation_boundaries(text.as_ustr(), &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_latin_clusters(text.as_ustr()).unwrap(), &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_latin_roles(text.as_ustr()), &vec![]).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_true((u32::try_from((result.decisions.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32 > (0) || ((result.forbidden_line_start_clusters.size()) as u32 as i32) > (0), None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_true((i32::from_ne_bytes(((u32::try_from((result.decisions.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) > (0) || (i32::from_ne_bytes(((u32::from_ne_bytes(((result.forbidden_line_start_clusters.size()) as u32).to_ne_bytes())) as i32).to_ne_bytes())) > (0), None).unwrap();
     });
 }
 
@@ -8347,7 +8347,7 @@ fn resolve_unicode_punctuation_boundaries_with_previous_content_cluster_empty() 
     (Cluster::new(TextRange::new(0u32, 1u32).unwrap(), &(UStr::new(&[8220])), &(UStr::new(&[108,97,116,105,110])), 16.0f64, Some(UString::from("“")), Some(0.0), Some(0.0), Some(0.0))).clone(),
 ];
         let result = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_unicode_punctuation_boundaries(text.as_ustr(), &clusters, &vec![FontRole::LatinText], &vec![]).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_true((u32::try_from((result.decisions.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32 > (0) || ((result.forbidden_line_start_clusters.size()) as u32 as i32) > (0) || ((u32::try_from((result.unbreakable_ranges.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32) > (0), None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_true((i32::from_ne_bytes(((u32::try_from((result.decisions.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) > (0) || (i32::from_ne_bytes(((u32::from_ne_bytes(((result.forbidden_line_start_clusters.size()) as u32).to_ne_bytes())) as i32).to_ne_bytes())) > (0) || (i32::from_ne_bytes(((u32::try_from((result.unbreakable_ranges.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) > (0), None).unwrap();
     });
 }
 
@@ -8357,7 +8357,7 @@ fn resolve_unicode_punctuation_boundaries_with_next_content_cluster_empty() {
         UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_start(UStr::new(&[114,101,115,111,108,118,101,85,110,105,99,111,100,101,80,117,110,99,116,117,97,116,105,111,110,66,111,117,110,100,97,114,105,101,115,87,105,116,104,78,101,120,116,67,111,110,116,101,110,116,67,108,117,115,116,101,114,69,109,112,116,121]));
         let text = UString::from("a”b").to_ustring();
         let result = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_unicode_punctuation_boundaries(text.as_ustr(), &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_latin_clusters(text.as_ustr()).unwrap(), &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_latin_roles(text.as_ustr()), &vec![]).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_true((result.forbidden_line_start_clusters.size()) as u32 as i32 > (0) || ((u32::try_from((result.unbreakable_ranges.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32) > (0), None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_true((i32::from_ne_bytes(((u32::from_ne_bytes(((result.forbidden_line_start_clusters.size()) as u32).to_ne_bytes())) as i32).to_ne_bytes())) > (0) || (i32::from_ne_bytes(((u32::try_from((result.unbreakable_ranges.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) > (0), None).unwrap();
     });
 }
 
@@ -8371,7 +8371,7 @@ fn resolve_unicode_punctuation_boundaries_with_code_point_at_or_null_surrogate()
     (Cluster::new(TextRange::new(1u32, 3u32).unwrap(), UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_surrogate(&vec![55357, 56832]).as_ustr(), &(UStr::new(&[101,109,111,106,105])), 16.0f64, Some(UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_surrogate(&vec![55357, 56832])), Some(0.0), Some(0.0), Some(0.0))).clone(),
 ];
         let result = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_unicode_punctuation_boundaries(text.as_ustr(), &clusters, &vec![FontRole::LatinText, FontRole::Emoji], &vec![]).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_true((u32::try_from((result.decisions.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32 > (0) || ((result.forbidden_line_start_clusters.size()) as u32 as i32) > (0), None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_true((i32::from_ne_bytes(((u32::try_from((result.decisions.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) > (0) || (i32::from_ne_bytes(((u32::from_ne_bytes(((result.forbidden_line_start_clusters.size()) as u32).to_ne_bytes())) as i32).to_ne_bytes())) > (0), None).unwrap();
     });
 }
 
@@ -8381,7 +8381,7 @@ fn resolve_unicode_punctuation_boundaries_with_has_authored_break_mandatory_only
         UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_start(UStr::new(&[114,101,115,111,108,118,101,85,110,105,99,111,100,101,80,117,110,99,116,117,97,116,105,111,110,66,111,117,110,100,97,114,105,101,115,87,105,116,104,72,97,115,65,117,116,104,111,114,101,100,66,114,101,97,107,77,97,110,100,97,116,111,114,121,79,110,108,121]));
         let text = UString::from("\r“").to_ustring();
         let result = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_unicode_punctuation_boundaries(text.as_ustr(), &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_latin_clusters(text.as_ustr()).unwrap(), &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_latin_roles(text.as_ustr()), &vec![]).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_equals(0, (result.forbidden_line_start_clusters.size()) as u32, None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_equals(0, u32::from_ne_bytes(((result.forbidden_line_start_clusters.size()) as u32).to_ne_bytes()), None).unwrap();
     });
 }
 
@@ -8395,7 +8395,7 @@ fn resolve_unicode_punctuation_boundaries_with_code_point_before_surrogate_pair(
     (Cluster::new(TextRange::new(2u32, 3u32).unwrap(), &(UStr::new(&[8221])), &(UStr::new(&[108,97,116,105,110])), 16.0f64, Some(UString::from("”")), Some(0.0), Some(0.0), Some(0.0))).clone(),
 ];
         let result = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_unicode_punctuation_boundaries(text.as_ustr(), &clusters, &vec![FontRole::Emoji, FontRole::LatinText], &vec![]).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_true((u32::try_from((result.decisions.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32 > (0) || ((result.forbidden_line_start_clusters.size()) as u32 as i32) > (0), None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_true((i32::from_ne_bytes(((u32::try_from((result.decisions.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) > (0) || (i32::from_ne_bytes(((u32::from_ne_bytes(((result.forbidden_line_start_clusters.size()) as u32).to_ne_bytes())) as i32).to_ne_bytes())) > (0), None).unwrap();
     });
 }
 
@@ -8409,7 +8409,7 @@ fn resolve_unicode_punctuation_boundaries_with_code_point_at_or_null_supplementa
     (Cluster::new(TextRange::new(2u32, 3u32).unwrap(), &(UStr::new(&[8220])), &(UStr::new(&[108,97,116,105,110])), 16.0f64, Some(UString::from("“")), Some(0.0), Some(0.0), Some(0.0))).clone(),
 ];
         let result = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_unicode_punctuation_boundaries(text.as_ustr(), &clusters, &vec![FontRole::Emoji, FontRole::LatinText], &vec![]).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_true((u32::try_from((result.decisions.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32 > (0) || ((result.forbidden_line_start_clusters.size()) as u32 as i32) > (0), None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_true((i32::from_ne_bytes(((u32::try_from((result.decisions.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) > (0) || (i32::from_ne_bytes(((u32::from_ne_bytes(((result.forbidden_line_start_clusters.size()) as u32).to_ne_bytes())) as i32).to_ne_bytes())) > (0), None).unwrap();
     });
 }
 
@@ -8434,7 +8434,7 @@ fn resolve_attached_inline_inter_char_boundaries_requires_matching_edges_size() 
     (EastAsianSpacingEdges::new(EastAsianSpacingValue::Wide, EastAsianSpacingValue::Wide, false)).clone(),
 ];
         TracedAssertions::traced_assertions_assert_fails_with(None.clone(), { let clusters = (clusters).clone(); let edges = (edges).clone(); Arc::new(move || {
-        UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_attached_inline_inter_char_boundaries(UStr::new(&[97]), &clusters, &vec![FontRole::LatinText], &edges, SortedTable::sorted_table_set_builder::<u32>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints((*a) as i32, (*b) as i32))).clone().build(), &vec![InlineAttachment::None]).map_err(|e| IllegalStateException::new(&format!("{}", e)))?;
+        UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_attached_inline_inter_char_boundaries(UStr::new(&[97]), &clusters, &vec![FontRole::LatinText], &edges, SortedTable::sorted_table_set_builder::<u32>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_bytes(((*a) as i32).to_ne_bytes()), i32::from_ne_bytes(((*b) as i32).to_ne_bytes())))).clone().build(), &vec![InlineAttachment::None]).map_err(|e| IllegalStateException::new(&format!("{}", e)))?;
         Ok(())
 }) }).unwrap();
     });
@@ -8455,8 +8455,8 @@ fn resolve_attached_inline_inter_char_boundaries_punctuation_western_leading_not
     (EastAsianSpacingEdges::new(EastAsianSpacingValue::Wide, EastAsianSpacingValue::Wide, false)).clone(),
     (EastAsianSpacingEdges::new(EastAsianSpacingValue::Wide, EastAsianSpacingValue::Wide, false)).clone(),
 ];
-        let result = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_attached_inline_inter_char_boundaries(text.as_ustr(), &clusters, &vec![FontRole::CjkPunctuation, FontRole::CjkText, FontRole::LatinText], &edges, SortedTable::sorted_table_set_builder::<u32>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints((*a) as i32, (*b) as i32))).clone().build(), &vec![InlineAttachment::None, InlineAttachment::Previous, InlineAttachment::None]).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_equals(0, (result.virtual_boundary_after_clusters.size()) as u32, None).unwrap();
+        let result = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_attached_inline_inter_char_boundaries(text.as_ustr(), &clusters, &vec![FontRole::CjkPunctuation, FontRole::CjkText, FontRole::LatinText], &edges, SortedTable::sorted_table_set_builder::<u32>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_bytes(((*a) as i32).to_ne_bytes()), i32::from_ne_bytes(((*b) as i32).to_ne_bytes())))).clone().build(), &vec![InlineAttachment::None, InlineAttachment::Previous, InlineAttachment::None]).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_equals(0, u32::from_ne_bytes(((result.virtual_boundary_after_clusters.size()) as u32).to_ne_bytes()), None).unwrap();
     });
 }
 
@@ -8475,8 +8475,8 @@ fn resolve_attached_inline_inter_char_boundaries_all_conditions_false() {
     (EastAsianSpacingEdges::new(EastAsianSpacingValue::Wide, EastAsianSpacingValue::Wide, false)).clone(),
     (EastAsianSpacingEdges::new(EastAsianSpacingValue::Wide, EastAsianSpacingValue::Wide, false)).clone(),
 ];
-        let result = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_attached_inline_inter_char_boundaries(text.as_ustr(), &clusters, &vec![FontRole::LatinText, FontRole::LatinText, FontRole::LatinText], &edges, SortedTable::sorted_table_set_builder::<u32>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints((*a) as i32, (*b) as i32))).clone().build(), &vec![InlineAttachment::None, InlineAttachment::Previous, InlineAttachment::None]).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_equals(0, (result.virtual_boundary_after_clusters.size()) as u32, None).unwrap();
+        let result = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_attached_inline_inter_char_boundaries(text.as_ustr(), &clusters, &vec![FontRole::LatinText, FontRole::LatinText, FontRole::LatinText], &edges, SortedTable::sorted_table_set_builder::<u32>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_bytes(((*a) as i32).to_ne_bytes()), i32::from_ne_bytes(((*b) as i32).to_ne_bytes())))).clone().build(), &vec![InlineAttachment::None, InlineAttachment::Previous, InlineAttachment::None]).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_equals(0, u32::from_ne_bytes(((result.virtual_boundary_after_clusters.size()) as u32).to_ne_bytes()), None).unwrap();
     });
 }
 
@@ -8495,8 +8495,8 @@ fn resolve_attached_inline_inter_char_boundaries_narrow_narrow_pair() {
     (EastAsianSpacingEdges::new(EastAsianSpacingValue::Wide, EastAsianSpacingValue::Wide, false)).clone(),
     (EastAsianSpacingEdges::new(EastAsianSpacingValue::Narrow, EastAsianSpacingValue::Wide, false)).clone(),
 ];
-        let result = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_attached_inline_inter_char_boundaries(text.as_ustr(), &clusters, &vec![FontRole::LatinText, FontRole::LatinText, FontRole::LatinText], &edges, SortedTable::sorted_table_set_builder::<u32>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints((*a) as i32, (*b) as i32))).clone().build(), &vec![InlineAttachment::None, InlineAttachment::Previous, InlineAttachment::None]).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_equals(0, (result.virtual_boundary_after_clusters.size()) as u32, None).unwrap();
+        let result = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_attached_inline_inter_char_boundaries(text.as_ustr(), &clusters, &vec![FontRole::LatinText, FontRole::LatinText, FontRole::LatinText], &edges, SortedTable::sorted_table_set_builder::<u32>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_bytes(((*a) as i32).to_ne_bytes()), i32::from_ne_bytes(((*b) as i32).to_ne_bytes())))).clone().build(), &vec![InlineAttachment::None, InlineAttachment::Previous, InlineAttachment::None]).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_equals(0, u32::from_ne_bytes(((result.virtual_boundary_after_clusters.size()) as u32).to_ne_bytes()), None).unwrap();
     });
 }
 
@@ -8506,13 +8506,13 @@ fn resolve_unicode_punctuation_boundaries_infix_numeric_separator_with_space_and
         UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_start(UStr::new(&[114,101,115,111,108,118,101,85,110,105,99,111,100,101,80,117,110,99,116,117,97,116,105,111,110,66,111,117,110,100,97,114,105,101,115,73,110,102,105,120,78,117,109,101,114,105,99,83,101,112,97,114,97,116,111,114,87,105,116,104,83,112,97,99,101,65,110,100,78,111,83,112,97,99,101]));
         let mut t = UString::from(" .5").to_ustring();
         let mut r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_unicode_punctuation_boundaries(t.as_ustr(), &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_latin_clusters(t.as_ustr()).unwrap(), &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_latin_roles(t.as_ustr()), &vec![]).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_equals(0, (r.forbidden_line_start_clusters.size()) as u32, None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_equals(0, u32::from_ne_bytes(((r.forbidden_line_start_clusters.size()) as u32).to_ne_bytes()), None).unwrap();
         t = UString::from(" 1.5").to_ustring();
         r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_unicode_punctuation_boundaries(t.as_ustr(), &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_latin_clusters(t.as_ustr()).unwrap(), &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_latin_roles(t.as_ustr()), &vec![]).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_true(r.forbidden_line_start_clusters.has(&(2)), None).unwrap();
         let mut found = false;
         let mut i = 0u32;
-        while ((i) as i32) < ((u32::try_from((r.decisions.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32) {
+        while (i32::from_ne_bytes(((i) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((r.decisions.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
             if r.decisions[usize::try_from(i).unwrap_or(0)].clone().reason.to_ustring() == UString::from("Uax14WesternPunctuationBoundary:LB15d") {
                 found = true;
             }
@@ -8521,7 +8521,7 @@ fn resolve_unicode_punctuation_boundaries_infix_numeric_separator_with_space_and
         let _ = TracedAssertions::traced_assertions_assert_true(found, None).unwrap();
         t = UString::from(".5").to_ustring();
         r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_unicode_punctuation_boundaries(t.as_ustr(), &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_latin_clusters(t.as_ustr()).unwrap(), &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_latin_roles(t.as_ustr()), &vec![]).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_equals(0, (r.forbidden_line_start_clusters.size()) as u32, None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_equals(0, u32::from_ne_bytes(((r.forbidden_line_start_clusters.size()) as u32).to_ne_bytes()), None).unwrap();
     });
 }
 
@@ -8535,13 +8535,13 @@ fn resolve_unicode_punctuation_boundaries_decimal_mark_following_variations() {
     (Cluster::new(TextRange::new(0u32, 1u32).unwrap(), &(UStr::new(&[46])), &(UStr::new(&[108,97,116,105,110])), 8.0f64, Some(UString::from(".")), Some(0.0), Some(0.0), Some(0.0))).clone(),
 ];
         let mut r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_unicode_punctuation_boundaries(t.as_ustr(), &c, &vec![FontRole::LatinText, FontRole::LatinText], &vec![]).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_equals(0, (r.forbidden_line_start_clusters.size()) as u32, None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_equals(0, u32::from_ne_bytes(((r.forbidden_line_start_clusters.size()) as u32).to_ne_bytes()), None).unwrap();
         t = UString::from("a .#").to_ustring();
         r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_unicode_punctuation_boundaries(t.as_ustr(), &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_latin_clusters(t.as_ustr()).unwrap(), &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_latin_roles(t.as_ustr()), &vec![]).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_true(r.forbidden_line_start_clusters.has(&(2)), None).unwrap();
         let mut f = false;
         let mut i = 0u32;
-        while ((i) as i32) < ((u32::try_from((r.decisions.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32) {
+        while (i32::from_ne_bytes(((i) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((r.decisions.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
             if r.decisions[usize::try_from(i).unwrap_or(0)].clone().reason.to_ustring() == UString::from("Uax14WesternPunctuationBoundary:LB15d") {
                 f = true;
             }
@@ -8553,7 +8553,7 @@ fn resolve_unicode_punctuation_boundaries_decimal_mark_following_variations() {
         let _ = TracedAssertions::traced_assertions_assert_true(r.forbidden_line_start_clusters.has(&(2)), None).unwrap();
         f = false;
         i = 0u32;
-        while ((i) as i32) < ((u32::try_from((r.decisions.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32) {
+        while (i32::from_ne_bytes(((i) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((r.decisions.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
             if r.decisions[usize::try_from(i).unwrap_or(0)].clone().reason.to_ustring() == UString::from("Uax14WesternPunctuationBoundary:LB15d") {
                 f = true;
             }
@@ -8566,7 +8566,7 @@ fn resolve_unicode_punctuation_boundaries_decimal_mark_following_variations() {
     (Cluster::new(TextRange::new(1u32, 3u32).unwrap(), &(UStr::new(&[46,53])), &(UStr::new(&[108,97,116,105,110])), 16.0f64, Some(UString::from(".5")), Some(0.0), Some(0.0), Some(0.0))).clone(),
 ];
         r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_unicode_punctuation_boundaries(t.as_ustr(), &c, &vec![FontRole::LatinText, FontRole::LatinText], &vec![]).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_equals(0, (r.forbidden_line_start_clusters.size()) as u32, None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_equals(0, u32::from_ne_bytes(((r.forbidden_line_start_clusters.size()) as u32).to_ne_bytes()), None).unwrap();
     });
 }
 
@@ -8578,7 +8578,7 @@ fn resolve_unicode_punctuation_boundaries_apostrophe_and_latin_word_branches() {
         let mut r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_unicode_punctuation_boundaries(t.as_ustr(), &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_latin_clusters(t.as_ustr()).unwrap(), &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_latin_roles(t.as_ustr()), &vec![]).unwrap();
         let mut f = false;
         let mut i = 0u32;
-        while ((i) as i32) < ((u32::try_from((r.decisions.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32) {
+        while (i32::from_ne_bytes(((i) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((r.decisions.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
             if r.decisions[usize::try_from(i).unwrap_or(0)].clone().forbidden_position.to_ustring() == UString::from("LineStart") {
                 f = true;
             }
@@ -8589,7 +8589,7 @@ fn resolve_unicode_punctuation_boundaries_apostrophe_and_latin_word_branches() {
         r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_unicode_punctuation_boundaries(t.as_ustr(), &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_latin_clusters(t.as_ustr()).unwrap(), &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_latin_roles(t.as_ustr()), &vec![]).unwrap();
         f = false;
         i = 0u32;
-        while ((i) as i32) < ((u32::try_from((r.decisions.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32) {
+        while (i32::from_ne_bytes(((i) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((r.decisions.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
             if r.decisions[usize::try_from(i).unwrap_or(0)].clone().forbidden_position.to_ustring() == UString::from("LineEnd") {
                 f = true;
             }
@@ -8598,12 +8598,12 @@ fn resolve_unicode_punctuation_boundaries_apostrophe_and_latin_word_branches() {
         let _ = TracedAssertions::traced_assertions_assert_true(f, None).unwrap();
         t = UString::from("À’ɏ").to_ustring();
         r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_unicode_punctuation_boundaries(t.as_ustr(), &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_latin_clusters(t.as_ustr()).unwrap(), &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_latin_roles(t.as_ustr()), &vec![]).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_equals(0, (r.forbidden_line_start_clusters.size()) as u32, None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_equals(0, u32::from_ne_bytes(((r.forbidden_line_start_clusters.size()) as u32).to_ne_bytes()), None).unwrap();
         t = UString::from("¿’中").to_ustring();
         r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_unicode_punctuation_boundaries(t.as_ustr(), &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_latin_clusters(t.as_ustr()).unwrap(), &vec![FontRole::LatinText, FontRole::LatinText, FontRole::CjkText], &vec![]).unwrap();
         f = false;
         i = 0u32;
-        while ((i) as i32) < ((u32::try_from((r.decisions.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32) {
+        while (i32::from_ne_bytes(((i) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((r.decisions.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
             if r.decisions[usize::try_from(i).unwrap_or(0)].clone().forbidden_position.to_ustring() == UString::from("LineStart") {
                 f = true;
             }
@@ -8624,7 +8624,7 @@ fn resolve_unicode_punctuation_boundaries_surrogate_scanning_variations() {
     UString::from("hello").to_ustring(),
 ];
         let mut si = 0u32;
-        while ((si) as i32) < ((u32::try_from((strings.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32) {
+        while (i32::from_ne_bytes(((si) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((strings.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
             let s = (strings[usize::try_from(si).unwrap_or(0)]).clone();
             let t = { let mut __s = UString::new(); __s += &(UString::from(" ")); __s += s.as_ustr(); __s += &(UString::from(")")); __s };
             let c = vec![
@@ -8633,7 +8633,7 @@ fn resolve_unicode_punctuation_boundaries_surrogate_scanning_variations() {
     (Cluster::new(TextRange::new(u32::wrapping_add(1, u_string::unit_count(&(s))), u32::wrapping_add(2, u_string::unit_count(&(s)))).unwrap(), &(UStr::new(&[41])), &(UStr::new(&[108,97,116,105,110])), 8.0f64, Some(UString::from(")")), Some(0.0), Some(0.0), Some(0.0))).clone(),
 ];
             let r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_unicode_punctuation_boundaries(t.as_ustr(), &c, &vec![FontRole::LatinText, FontRole::LatinText, FontRole::LatinText], &vec![]).unwrap();
-            let _ = TracedAssertions::traced_assertions_assert_true((r.forbidden_line_start_clusters.size()) as u32 as i32 > (0) || ((u32::try_from((r.decisions.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32) > (0) || ((r.forbidden_line_end_clusters.size()) as u32 as i32) > (0) || u32::try_from((r.unbreakable_ranges.len()) & 0xFFFF_FFFF).unwrap_or(0) == 0 || ((u32::try_from((r.unbreakable_ranges.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32) > (0), None).unwrap();
+            let _ = TracedAssertions::traced_assertions_assert_true((i32::from_ne_bytes(((u32::from_ne_bytes(((r.forbidden_line_start_clusters.size()) as u32).to_ne_bytes())) as i32).to_ne_bytes())) > (0) || (i32::from_ne_bytes(((u32::try_from((r.decisions.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) > (0) || (i32::from_ne_bytes(((u32::from_ne_bytes(((r.forbidden_line_end_clusters.size()) as u32).to_ne_bytes())) as i32).to_ne_bytes())) > (0) || u32::try_from((r.unbreakable_ranges.len()) & 0xFFFF_FFFF).unwrap_or(0) == 0 || (i32::from_ne_bytes(((u32::try_from((r.unbreakable_ranges.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) > (0), None).unwrap();
             si = u32::wrapping_add(si, 1);
         }
         let strings2 = vec![
@@ -8642,7 +8642,7 @@ fn resolve_unicode_punctuation_boundaries_surrogate_scanning_variations() {
     UString::from("中’").to_ustring(),
 ];
         si = 0u32;
-        while ((si) as i32) < ((u32::try_from((strings2.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32) {
+        while (i32::from_ne_bytes(((si) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((strings2.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
             let s = (strings2[usize::try_from(si).unwrap_or(0)]).clone();
             let t = { let mut __s = UString::new(); __s += &(UString::from(" ")); __s += s.as_ustr(); __s += &(UString::from(" ")); __s };
             let c = vec![
@@ -8651,7 +8651,7 @@ fn resolve_unicode_punctuation_boundaries_surrogate_scanning_variations() {
     (Cluster::new(TextRange::new(u32::wrapping_add(1, u_string::unit_count(&(s))), u32::wrapping_add(2, u_string::unit_count(&(s)))).unwrap(), &(UStr::new(&[32])), &(UStr::new(&[108,97,116,105,110])), 8.0f64, Some(UString::from(" ")), Some(0.0), Some(0.0), Some(0.0))).clone(),
 ];
             let r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_unicode_punctuation_boundaries(t.as_ustr(), &c, &vec![FontRole::LatinText, FontRole::LatinText, FontRole::LatinText], &vec![]).unwrap();
-            let _ = TracedAssertions::traced_assertions_assert_equals(0, (r.forbidden_line_start_clusters.size()) as u32, None).unwrap();
+            let _ = TracedAssertions::traced_assertions_assert_equals(0, u32::from_ne_bytes(((r.forbidden_line_start_clusters.size()) as u32).to_ne_bytes()), None).unwrap();
             si = u32::wrapping_add(si, 1);
         }
         let mut t = { let mut __s = UString::new(); __s += &(UString::from(" ")); __s += UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_surrogate(&vec![55357, 56832]).as_ustr(); __s += &(UString::from(".5")); __s };
@@ -8680,7 +8680,7 @@ fn resolve_unicode_punctuation_boundaries_is_decimal_mark_after_space_index_zero
         UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_start(UStr::new(&[114,101,115,111,108,118,101,85,110,105,99,111,100,101,80,117,110,99,116,117,97,116,105,111,110,66,111,117,110,100,97,114,105,101,115,73,115,68,101,99,105,109,97,108,77,97,114,107,65,102,116,101,114,83,112,97,99,101,73,110,100,101,120,90,101,114,111]));
         let t = UString::from(".5").to_ustring();
         let r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_unicode_punctuation_boundaries(t.as_ustr(), &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_latin_clusters(t.as_ustr()).unwrap(), &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_latin_roles(t.as_ustr()), &vec![]).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_equals(0, (r.forbidden_line_start_clusters.size()) as u32, None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_equals(0, u32::from_ne_bytes(((r.forbidden_line_start_clusters.size()) as u32).to_ne_bytes()), None).unwrap();
     });
 }
 
@@ -8690,7 +8690,7 @@ fn resolve_unicode_punctuation_boundaries_is_decimal_mark_after_space_non_whites
         UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_start(UStr::new(&[114,101,115,111,108,118,101,85,110,105,99,111,100,101,80,117,110,99,116,117,97,116,105,111,110,66,111,117,110,100,97,114,105,101,115,73,115,68,101,99,105,109,97,108,77,97,114,107,65,102,116,101,114,83,112,97,99,101,78,111,110,87,104,105,116,101,115,112,97,99,101,80,114,101,118]));
         let t = UString::from("1，2").to_ustring();
         let r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_unicode_punctuation_boundaries(t.as_ustr(), &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_latin_clusters(t.as_ustr()).unwrap(), &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_latin_roles(t.as_ustr()), &vec![]).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_true((r.forbidden_line_start_clusters.size()) as u32 as i32 > (0), None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_true((i32::from_ne_bytes(((u32::from_ne_bytes(((r.forbidden_line_start_clusters.size()) as u32).to_ne_bytes())) as i32).to_ne_bytes())) > (0), None).unwrap();
     });
 }
 
@@ -8700,7 +8700,7 @@ fn resolve_unicode_punctuation_boundaries_is_decimal_mark_after_space_empty_prev
         UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_start(UStr::new(&[114,101,115,111,108,118,101,85,110,105,99,111,100,101,80,117,110,99,116,117,97,116,105,111,110,66,111,117,110,100,97,114,105,101,115,73,115,68,101,99,105,109,97,108,77,97,114,107,65,102,116,101,114,83,112,97,99,101,69,109,112,116,121,80,114,101,118]));
         let t = UString::from("a，5").to_ustring();
         let r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_unicode_punctuation_boundaries(t.as_ustr(), &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_latin_clusters(t.as_ustr()).unwrap(), &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_latin_roles(t.as_ustr()), &vec![]).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_true((r.forbidden_line_start_clusters.size()) as u32 as i32 > (0), None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_true((i32::from_ne_bytes(((u32::from_ne_bytes(((r.forbidden_line_start_clusters.size()) as u32).to_ne_bytes())) as i32).to_ne_bytes())) > (0), None).unwrap();
     });
 }
 
@@ -8712,7 +8712,7 @@ fn resolve_unicode_punctuation_boundaries_follows_authored_boundary_non_whitespa
         let r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_unicode_punctuation_boundaries(t.as_ustr(), &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_latin_clusters(t.as_ustr()).unwrap(), &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_latin_roles(t.as_ustr()), &vec![]).unwrap();
         let mut f = false;
         let mut i = 0u32;
-        while ((i) as i32) < ((u32::try_from((r.decisions.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32) {
+        while (i32::from_ne_bytes(((i) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((r.decisions.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
             if r.decisions[usize::try_from(i).unwrap_or(0)].clone().forbidden_position.to_ustring() == UString::from("LineEnd") {
                 f = true;
             }
@@ -8728,7 +8728,7 @@ fn resolve_unicode_punctuation_boundaries_previous_content_cluster_returns_conte
         UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_start(UStr::new(&[114,101,115,111,108,118,101,85,110,105,99,111,100,101,80,117,110,99,116,117,97,116,105,111,110,66,111,117,110,100,97,114,105,101,115,80,114,101,118,105,111,117,115,67,111,110,116,101,110,116,67,108,117,115,116,101,114,82,101,116,117,114,110,115,67,111,110,116,101,110,116]));
         let t = UString::from("a ”").to_ustring();
         let r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_unicode_punctuation_boundaries(t.as_ustr(), &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_latin_clusters(t.as_ustr()).unwrap(), &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_latin_roles(t.as_ustr()), &vec![]).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_true((u32::try_from((r.unbreakable_ranges.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32 > (0), None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_true((i32::from_ne_bytes(((u32::try_from((r.unbreakable_ranges.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) > (0), None).unwrap();
     });
 }
 
@@ -8742,7 +8742,7 @@ fn resolve_unicode_punctuation_boundaries_previous_content_cluster_empty_only() 
     (Cluster::new(TextRange::new(0u32, 1u32).unwrap(), &(UStr::new(&[8220])), &(UStr::new(&[108,97,116,105,110])), 16.0f64, Some(UString::from("“")), Some(0.0), Some(0.0), Some(0.0))).clone(),
 ];
         let r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_unicode_punctuation_boundaries(t.as_ustr(), &c, &vec![FontRole::LatinText, FontRole::LatinText], &vec![]).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_true((r.forbidden_line_end_clusters.size()) as u32 as i32 > (0), None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_true((i32::from_ne_bytes(((u32::from_ne_bytes(((r.forbidden_line_end_clusters.size()) as u32).to_ne_bytes())) as i32).to_ne_bytes())) > (0), None).unwrap();
     });
 }
 
@@ -8757,7 +8757,7 @@ fn resolve_unicode_punctuation_boundaries_next_content_cluster_returns_content()
     (Cluster::new(TextRange::new(2u32, 3u32).unwrap(), &(UStr::new(&[20013])), &(UStr::new(&[99,106,107])), 16.0f64, Some(UString::from("中")), Some(0.0), Some(0.0), Some(0.0))).clone(),
 ];
         let r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_unicode_punctuation_boundaries(t.as_ustr(), &c, &vec![FontRole::LatinText, FontRole::LatinText, FontRole::CjkText], &vec![]).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_true((u32::try_from((r.unbreakable_ranges.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32 > (0), None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_true((i32::from_ne_bytes(((u32::try_from((r.unbreakable_ranges.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) > (0), None).unwrap();
     });
 }
 
@@ -8768,7 +8768,7 @@ fn resolve_unicode_punctuation_boundaries_has_authored_break_with_code_point() {
         let t = UString::from(concat!("a\n",
 "“")).to_ustring();
         let r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_unicode_punctuation_boundaries(t.as_ustr(), &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_latin_clusters(t.as_ustr()).unwrap(), &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_latin_roles(t.as_ustr()), &vec![]).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_true((r.forbidden_line_start_clusters.size()) as u32 == 0, None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_true(u32::from_ne_bytes(((r.forbidden_line_start_clusters.size()) as u32).to_ne_bytes()) == 0, None).unwrap();
     });
 }
 
@@ -8778,7 +8778,7 @@ fn resolve_unicode_punctuation_boundaries_has_authored_break_null_code_point() {
         UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_start(UStr::new(&[114,101,115,111,108,118,101,85,110,105,99,111,100,101,80,117,110,99,116,117,97,116,105,111,110,66,111,117,110,100,97,114,105,101,115,72,97,115,65,117,116,104,111,114,101,100,66,114,101,97,107,78,117,108,108,67,111,100,101,80,111,105,110,116]));
         let t = UString::from("“").to_ustring();
         let r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_unicode_punctuation_boundaries(t.as_ustr(), &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_latin_clusters(t.as_ustr()).unwrap(), &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_latin_roles(t.as_ustr()), &vec![]).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_true((r.forbidden_line_end_clusters.size()) as u32 as i32 > (0), None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_true((i32::from_ne_bytes(((u32::from_ne_bytes(((r.forbidden_line_end_clusters.size()) as u32).to_ne_bytes())) as i32).to_ne_bytes())) > (0), None).unwrap();
     });
 }
 
@@ -8788,7 +8788,7 @@ fn resolve_unicode_punctuation_boundaries_first_code_point_length_bmp() {
         UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_start(UStr::new(&[114,101,115,111,108,118,101,85,110,105,99,111,100,101,80,117,110,99,116,117,97,116,105,111,110,66,111,117,110,100,97,114,105,101,115,70,105,114,115,116,67,111,100,101,80,111,105,110,116,76,101,110,103,116,104,66,109,112]));
         let t = UString::from("a“").to_ustring();
         let r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_unicode_punctuation_boundaries(t.as_ustr(), &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_latin_clusters(t.as_ustr()).unwrap(), &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_latin_roles(t.as_ustr()), &vec![]).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_true((u32::try_from((r.decisions.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32 > (0), None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_true((i32::from_ne_bytes(((u32::try_from((r.decisions.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) > (0), None).unwrap();
     });
 }
 
@@ -8802,7 +8802,7 @@ fn resolve_unicode_punctuation_boundaries_first_code_point_length_surrogate() {
     (Cluster::new(TextRange::new(2u32, 3u32).unwrap(), &(UStr::new(&[8220])), &(UStr::new(&[108,97,116,105,110])), 16.0f64, Some(UString::from("“")), Some(0.0), Some(0.0), Some(0.0))).clone(),
 ];
         let r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_unicode_punctuation_boundaries(t.as_ustr(), &c, &vec![FontRole::Emoji, FontRole::LatinText], &vec![]).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_true((u32::try_from((r.decisions.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32 > (0), None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_true((i32::from_ne_bytes(((u32::try_from((r.decisions.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) > (0), None).unwrap();
     });
 }
 
@@ -8816,7 +8816,7 @@ fn resolve_unicode_punctuation_boundaries_code_point_at_or_null_surrogate_pair()
     (Cluster::new(TextRange::new(2u32, 3u32).unwrap(), &(UStr::new(&[8220])), &(UStr::new(&[108,97,116,105,110])), 16.0f64, Some(UString::from("“")), Some(0.0), Some(0.0), Some(0.0))).clone(),
 ];
         let r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_unicode_punctuation_boundaries(t.as_ustr(), &c, &vec![FontRole::Emoji, FontRole::LatinText], &vec![]).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_true((u32::try_from((r.decisions.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32 > (0), None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_true((i32::from_ne_bytes(((u32::try_from((r.decisions.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) > (0), None).unwrap();
     });
 }
 
@@ -8843,7 +8843,7 @@ fn resolve_unicode_punctuation_boundaries_code_point_before_low_surrogate() {
     (Cluster::new(TextRange::new(1u32, 3u32).unwrap(), UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_surrogate(&vec![55357, 56832]).as_ustr(), &(UStr::new(&[101,109,111,106,105])), 16.0f64, Some(UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_surrogate(&vec![55357, 56832])), Some(0.0), Some(0.0), Some(0.0))).clone(),
 ];
         let r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_unicode_punctuation_boundaries(text.as_ustr(), &c, &vec![FontRole::LatinText, FontRole::Emoji], &vec![]).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_equals(0, (r.forbidden_line_start_clusters.size()) as u32, None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_equals(0, u32::from_ne_bytes(((r.forbidden_line_start_clusters.size()) as u32).to_ne_bytes()), None).unwrap();
     });
 }
 
@@ -8857,7 +8857,7 @@ fn resolve_unicode_punctuation_boundaries_quote_direction2019_surrogate_left() {
     (Cluster::new(TextRange::new(2u32, 3u32).unwrap(), &(UStr::new(&[8217])), &(UStr::new(&[108,97,116,105,110])), 8.0f64, Some(UString::from("’")), Some(0.0), Some(0.0), Some(0.0))).clone(),
 ];
         let r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_unicode_punctuation_boundaries(text.as_ustr(), &c, &vec![FontRole::Emoji, FontRole::LatinText], &vec![]).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_true((u32::try_from((r.decisions.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32 > (0), None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_true((i32::from_ne_bytes(((u32::try_from((r.decisions.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) > (0), None).unwrap();
     });
 }
 
@@ -8872,7 +8872,7 @@ fn resolve_unicode_punctuation_boundaries_previous_content_cluster_multiple_empt
     (Cluster::new(TextRange::new(2u32, 3u32).unwrap(), &(UStr::new(&[8221])), &(UStr::new(&[108,97,116,105,110])), 8.0f64, Some(UString::from("”")), Some(0.0), Some(0.0), Some(0.0))).clone(),
 ];
         let r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_unicode_punctuation_boundaries(text.as_ustr(), &c, &vec![FontRole::LatinText, FontRole::LatinText, FontRole::LatinText], &vec![]).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_true((r.forbidden_line_start_clusters.size()) as u32 as i32 > (0), None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_true((i32::from_ne_bytes(((u32::from_ne_bytes(((r.forbidden_line_start_clusters.size()) as u32).to_ne_bytes())) as i32).to_ne_bytes())) > (0), None).unwrap();
     });
 }
 
@@ -8883,7 +8883,7 @@ fn resolve_unicode_punctuation_boundaries_follows_authored_boundary_zwsp_in_midd
         let text = UString::from(" ​“").to_ustring();
         let c = UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_latin_clusters(text.as_ustr()).unwrap();
         let r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_unicode_punctuation_boundaries(text.as_ustr(), &c, &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_latin_roles(text.as_ustr()), &vec![]).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_equals(0, (r.forbidden_line_start_clusters.size()) as u32, None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_equals(0, u32::from_ne_bytes(((r.forbidden_line_start_clusters.size()) as u32).to_ne_bytes()), None).unwrap();
     });
 }
 
@@ -8897,7 +8897,7 @@ fn resolve_unicode_punctuation_boundaries_last_significant_code_point_surrogate_
     (Cluster::new(TextRange::new(2u32, 3u32).unwrap(), &(UStr::new(&[8221])), &(UStr::new(&[108,97,116,105,110])), 8.0f64, Some(UString::from("”")), Some(0.0), Some(0.0), Some(0.0))).clone(),
 ];
         let r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_unicode_punctuation_boundaries(text.as_ustr(), &c, &vec![FontRole::Emoji, FontRole::LatinText], &vec![]).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_true((r.forbidden_line_end_clusters.size()) as u32 as i32 > (0) || ((u32::try_from((r.unbreakable_ranges.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32) > (0), None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_true((i32::from_ne_bytes(((u32::from_ne_bytes(((r.forbidden_line_end_clusters.size()) as u32).to_ne_bytes())) as i32).to_ne_bytes())) > (0) || (i32::from_ne_bytes(((u32::try_from((r.unbreakable_ranges.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) > (0), None).unwrap();
     });
 }
 
@@ -8912,7 +8912,7 @@ fn resolve_unicode_punctuation_boundaries_is_decimal_mark_after_space_following_
     (Cluster::new(TextRange::new(2u32, 4u32).unwrap(), &(UStr::new(&[46,53])), &(UStr::new(&[108,97,116,105,110])), 16.0f64, Some(UString::from(".5")), Some(0.0), Some(0.0), Some(0.0))).clone(),
 ];
         let r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_unicode_punctuation_boundaries(text.as_ustr(), &c, &vec![FontRole::LatinText, FontRole::LatinText, FontRole::CjkPunctuation], &vec![]).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_equals(0, (r.forbidden_line_start_clusters.size()) as u32, None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_equals(0, u32::from_ne_bytes(((r.forbidden_line_start_clusters.size()) as u32).to_ne_bytes()), None).unwrap();
     });
 }
 
@@ -8927,7 +8927,7 @@ fn resolve_unicode_punctuation_boundary_full_width_comma_after_space_stays_forbi
     (Cluster::new(TextRange::new(2u32, 4u32).unwrap(), &(UStr::new(&[65292,53])), &(UStr::new(&[108,97,116,105,110])), 16.0f64, Some(UString::from("，5")), Some(0.0), Some(0.0), Some(0.0))).clone(),
 ];
         let r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_unicode_punctuation_boundaries(text.as_ustr(), &c, &vec![FontRole::LatinText, FontRole::LatinText, FontRole::LatinText], &vec![]).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_equals(1, (r.forbidden_line_start_clusters.size()) as u32, None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_equals(1, u32::from_ne_bytes(((r.forbidden_line_start_clusters.size()) as u32).to_ne_bytes()), None).unwrap();
     });
 }
 
@@ -8943,7 +8943,7 @@ fn resolve_unicode_punctuation_boundaries_is_decimal_mark_after_space_following_
     (Cluster::new(TextRange::new(3u32, 4u32).unwrap(), &(UStr::new(&[53])), &(UStr::new(&[108,97,116,105,110])), 8.0f64, Some(UString::from("5")), Some(0.0), Some(0.0), Some(0.0))).clone(),
 ];
         let r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_unicode_punctuation_boundaries(text.as_ustr(), &c, &vec![FontRole::LatinText, FontRole::LatinText, FontRole::CjkPunctuation, FontRole::LatinText], &vec![]).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_equals(0, (r.forbidden_line_start_clusters.size()) as u32, None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_equals(0, u32::from_ne_bytes(((r.forbidden_line_start_clusters.size()) as u32).to_ne_bytes()), None).unwrap();
     });
 }
 
@@ -8953,7 +8953,7 @@ fn resolve_unicode_punctuation_boundaries_quote_direction2019_bmp_left() {
         UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_start(UStr::new(&[114,101,115,111,108,118,101,85,110,105,99,111,100,101,80,117,110,99,116,117,97,116,105,111,110,66,111,117,110,100,97,114,105,101,115,81,117,111,116,101,68,105,114,101,99,116,105,111,110,50,48,49,57,66,109,112,76,101,102,116]));
         let text = UString::from("A’").to_ustring();
         let r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_unicode_punctuation_boundaries(text.as_ustr(), &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_latin_clusters(text.as_ustr()).unwrap(), &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_latin_roles(text.as_ustr()), &vec![]).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_true((u32::try_from((r.decisions.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32 > (0) || ((r.forbidden_line_start_clusters.size()) as u32 as i32) > (0), None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_true((i32::from_ne_bytes(((u32::try_from((r.decisions.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) > (0) || (i32::from_ne_bytes(((u32::from_ne_bytes(((r.forbidden_line_start_clusters.size()) as u32).to_ne_bytes())) as i32).to_ne_bytes())) > (0), None).unwrap();
     });
 }
 
@@ -8965,7 +8965,7 @@ fn resolve_unicode_punctuation_boundaries_quote_direction2019_right_word_only() 
         let r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_unicode_punctuation_boundaries(text.as_ustr(), &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_latin_clusters(text.as_ustr()).unwrap(), &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_latin_roles(text.as_ustr()), &vec![]).unwrap();
         let mut f = false;
         let mut i = 0u32;
-        while ((i) as i32) < ((u32::try_from((r.decisions.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32) {
+        while (i32::from_ne_bytes(((i) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((r.decisions.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
             if r.decisions[usize::try_from(i).unwrap_or(0)].clone().forbidden_position.to_ustring() == UString::from("LineEnd") {
                 f = true;
             }
@@ -8983,7 +8983,7 @@ fn resolve_unicode_punctuation_boundaries_quote_direction2019_left_word_only() {
         let r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_unicode_punctuation_boundaries(text.as_ustr(), &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_latin_clusters(text.as_ustr()).unwrap(), &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_latin_roles(text.as_ustr()), &vec![]).unwrap();
         let mut f = false;
         let mut i = 0u32;
-        while ((i) as i32) < ((u32::try_from((r.decisions.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32) {
+        while (i32::from_ne_bytes(((i) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((r.decisions.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
             if r.decisions[usize::try_from(i).unwrap_or(0)].clone().forbidden_position.to_ustring() == UString::from("LineStart") {
                 f = true;
             }
@@ -9001,7 +9001,7 @@ fn resolve_unicode_punctuation_boundaries_quote_direction2019_neither_word() {
         let r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_unicode_punctuation_boundaries(text.as_ustr(), &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_latin_clusters(text.as_ustr()).unwrap(), &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_latin_roles(text.as_ustr()), &vec![]).unwrap();
         let mut f = false;
         let mut i = 0u32;
-        while ((i) as i32) < ((u32::try_from((r.decisions.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32) {
+        while (i32::from_ne_bytes(((i) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((r.decisions.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
             if r.decisions[usize::try_from(i).unwrap_or(0)].clone().forbidden_position.to_ustring() == UString::from("LineStart") {
                 f = true;
             }
@@ -9033,7 +9033,7 @@ fn resolve_unicode_punctuation_boundaries_code_point_at_or_null_supplementary() 
     (Cluster::new(TextRange::new(0u32, 2u32).unwrap(), text.as_ustr(), &(UStr::new(&[101,109,111,106,105])), 16.0f64, Some(text.to_ustring()), Some(0.0), Some(0.0), Some(0.0))).clone(),
 ];
         let r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_unicode_punctuation_boundaries(text.as_ustr(), &c, &vec![FontRole::Emoji], &vec![]).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_equals(0, (r.forbidden_line_start_clusters.size()) as u32, None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_equals(0, u32::from_ne_bytes(((r.forbidden_line_start_clusters.size()) as u32).to_ne_bytes()), None).unwrap();
     });
 }
 
@@ -9043,7 +9043,7 @@ fn resolve_unicode_punctuation_boundaries_has_authored_break_empty_string() {
         UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_start(UStr::new(&[114,101,115,111,108,118,101,85,110,105,99,111,100,101,80,117,110,99,116,117,97,116,105,111,110,66,111,117,110,100,97,114,105,101,115,72,97,115,65,117,116,104,111,114,101,100,66,114,101,97,107,69,109,112,116,121,83,116,114,105,110,103]));
         let text = UString::from("“").to_ustring();
         let r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_unicode_punctuation_boundaries(text.as_ustr(), &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_latin_clusters(text.as_ustr()).unwrap(), &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_latin_roles(text.as_ustr()), &vec![]).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_true((r.forbidden_line_end_clusters.size()) as u32 as i32 > (0), None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_true((i32::from_ne_bytes(((u32::from_ne_bytes(((r.forbidden_line_end_clusters.size()) as u32).to_ne_bytes())) as i32).to_ne_bytes())) > (0), None).unwrap();
     });
 }
 
@@ -9062,7 +9062,7 @@ fn resolve_attached_inline_inter_char_boundaries_virtual_from_cjk_punctuation_le
     (EastAsianSpacingEdges::new(EastAsianSpacingValue::Other, EastAsianSpacingValue::Other, false)).clone(),
     (EastAsianSpacingEdges::new(EastAsianSpacingValue::Narrow, EastAsianSpacingValue::Wide, false)).clone(),
 ];
-        let r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_attached_inline_inter_char_boundaries(text.as_ustr(), &c, &vec![FontRole::CjkPunctuation, FontRole::LatinText, FontRole::CjkText], &e, SortedTable::sorted_table_set_builder::<u32>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints((*a) as i32, (*b) as i32))).clone().build(), &vec![InlineAttachment::None, InlineAttachment::Previous, InlineAttachment::None]).unwrap();
+        let r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_attached_inline_inter_char_boundaries(text.as_ustr(), &c, &vec![FontRole::CjkPunctuation, FontRole::LatinText, FontRole::CjkText], &e, SortedTable::sorted_table_set_builder::<u32>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_bytes(((*a) as i32).to_ne_bytes()), i32::from_ne_bytes(((*b) as i32).to_ne_bytes())))).clone().build(), &vec![InlineAttachment::None, InlineAttachment::Previous, InlineAttachment::None]).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_equals_rendered(UStr::new(&[123,49,61,48,125]), UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_map_text((r.virtual_boundary_after_clusters).clone()).as_ustr(), None).unwrap();
     });
 }
@@ -9076,7 +9076,7 @@ fn resolve_unicode_punctuation_boundaries_decimal_mark_at_cluster_zero_forbidden
     (Cluster::new(TextRange::new(1u32, 3u32).unwrap(), &(UStr::new(&[46,53])), &(UStr::new(&[108,97,116,105,110])), 16.0f64, Some(UString::from(".5")), Some(0.0), Some(0.0), Some(0.0))).clone(),
 ];
         let r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_unicode_punctuation_boundaries(text.as_ustr(), &c, &vec![FontRole::LatinText], &vec![]).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_equals(1, (r.forbidden_line_start_clusters.size()) as u32, None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_equals(1, u32::from_ne_bytes(((r.forbidden_line_start_clusters.size()) as u32).to_ne_bytes()), None).unwrap();
     });
 }
 
@@ -9090,7 +9090,7 @@ fn resolve_unicode_punctuation_boundaries_decimal_mark_after_letter_cluster_forb
     (Cluster::new(TextRange::new(1u32, 3u32).unwrap(), &(UStr::new(&[46,53])), &(UStr::new(&[108,97,116,105,110])), 16.0f64, Some(UString::from(".5")), Some(0.0), Some(0.0), Some(0.0))).clone(),
 ];
         let r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_unicode_punctuation_boundaries(text.as_ustr(), &c, &vec![FontRole::LatinText, FontRole::LatinText], &vec![]).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_equals(1, (r.forbidden_line_start_clusters.size()) as u32, None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_equals(1, u32::from_ne_bytes(((r.forbidden_line_start_clusters.size()) as u32).to_ne_bytes()), None).unwrap();
     });
 }
 
@@ -9100,7 +9100,7 @@ fn resolve_unicode_punctuation_boundaries_decimal_mark_followed_by_letter_forbid
         UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_start(UStr::new(&[114,101,115,111,108,118,101,85,110,105,99,111,100,101,80,117,110,99,116,117,97,116,105,111,110,66,111,117,110,100,97,114,105,101,115,68,101,99,105,109,97,108,77,97,114,107,70,111,108,108,111,119,101,100,66,121,76,101,116,116,101,114,70,111,114,98,105,100,100,101,110]));
         let text = UString::from("a .x").to_ustring();
         let r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_unicode_punctuation_boundaries(text.as_ustr(), &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_latin_clusters(text.as_ustr()).unwrap(), &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_latin_roles(text.as_ustr()), &vec![]).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_equals(1, (r.forbidden_line_start_clusters.size()) as u32, None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_equals(1, u32::from_ne_bytes(((r.forbidden_line_start_clusters.size()) as u32).to_ne_bytes()), None).unwrap();
     });
 }
 
@@ -9110,7 +9110,7 @@ fn resolve_unicode_punctuation_boundaries_decimal_mark_alone_after_space_forbidd
         UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_start(UStr::new(&[114,101,115,111,108,118,101,85,110,105,99,111,100,101,80,117,110,99,116,117,97,116,105,111,110,66,111,117,110,100,97,114,105,101,115,68,101,99,105,109,97,108,77,97,114,107,65,108,111,110,101,65,102,116,101,114,83,112,97,99,101,70,111,114,98,105,100,100,101,110]));
         let text = UString::from("a .").to_ustring();
         let r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_unicode_punctuation_boundaries(text.as_ustr(), &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_latin_clusters(text.as_ustr()).unwrap(), &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_latin_roles(text.as_ustr()), &vec![]).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_equals(1, (r.forbidden_line_start_clusters.size()) as u32, None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_equals(1, u32::from_ne_bytes(((r.forbidden_line_start_clusters.size()) as u32).to_ne_bytes()), None).unwrap();
     });
 }
 
@@ -9125,7 +9125,7 @@ fn resolve_unicode_punctuation_boundaries_astral_tail_keeps_pair_as_last_signifi
     (Cluster::new(TextRange::new(2u32, 5u32).unwrap(), UString::from(format!("{}", { let mut __s = UString::new(); __s += &(UString::from(".")); __s += UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_surrogate(&vec![55357, 56832]).as_ustr(); __s }).as_str()).as_ustr(), &(UStr::new(&[108,97,116,105,110])), 16.0f64, Some({ let mut __s = UString::new(); __s += &(UString::from(".")); __s += UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_surrogate(&vec![55357, 56832]).as_ustr(); __s }), Some(0.0), Some(0.0), Some(0.0))).clone(),
 ];
         let r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_unicode_punctuation_boundaries(text.as_ustr(), &c, &vec![FontRole::LatinText, FontRole::LatinText, FontRole::LatinText], &vec![]).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_equals(1, (r.forbidden_line_start_clusters.size()) as u32, None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_equals(1, u32::from_ne_bytes(((r.forbidden_line_start_clusters.size()) as u32).to_ne_bytes()), None).unwrap();
     });
 }
 
@@ -9141,7 +9141,7 @@ fn resolve_unicode_punctuation_boundaries_authored_break_inside_previous_cluster
     (Cluster::new(TextRange::new(3u32, 4u32).unwrap(), &(UStr::new(&[65292])), &(UStr::new(&[108,97,116,105,110])), 16.0f64, Some(UString::from("，")), Some(0.0), Some(0.0), Some(0.0))).clone(),
 ];
         let r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_unicode_punctuation_boundaries(text.as_ustr(), &c, &vec![FontRole::LatinText, FontRole::LatinText], &vec![]).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_equals(1, (r.forbidden_line_start_clusters.size()) as u32, None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_equals(1, u32::from_ne_bytes(((r.forbidden_line_start_clusters.size()) as u32).to_ne_bytes()), None).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_true(u32::try_from((r.unbreakable_ranges.len()) & 0xFFFF_FFFF).unwrap_or(0) == 0, None).unwrap();
     });
 }
@@ -9152,7 +9152,7 @@ fn resolve_unicode_punctuation_boundaries_apostrophe_at_text_start_no_left_conte
         UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_start(UStr::new(&[114,101,115,111,108,118,101,85,110,105,99,111,100,101,80,117,110,99,116,117,97,116,105,111,110,66,111,117,110,100,97,114,105,101,115,65,112,111,115,116,114,111,112,104,101,65,116,84,101,120,116,83,116,97,114,116,78,111,76,101,102,116,67,111,110,116,101,120,116]));
         let text = UString::from("’s").to_ustring();
         let r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_unicode_punctuation_boundaries(text.as_ustr(), &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_latin_clusters(text.as_ustr()).unwrap(), &UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_latin_roles(text.as_ustr()), &vec![]).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_equals(0, (r.forbidden_line_start_clusters.size()) as u32, None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_equals(0, u32::from_ne_bytes(((r.forbidden_line_start_clusters.size()) as u32).to_ne_bytes()), None).unwrap();
     });
 }
 
@@ -9179,7 +9179,7 @@ fn resolve_unicode_punctuation_boundaries_apostrophe_left_neighbour_supplementar
     (Cluster::new(TextRange::new(2u32, 3u32).unwrap(), &(UStr::new(&[8217])), &(UStr::new(&[108,97,116,105,110])), 16.0f64, Some(UString::from("’")), Some(0.0), Some(0.0), Some(0.0))).clone(),
 ];
         let r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_unicode_punctuation_boundaries(text.as_ustr(), &c, &vec![FontRole::Emoji, FontRole::LatinText], &vec![]).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_true((u32::try_from((r.decisions.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32 > (0), None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_true((i32::from_ne_bytes(((u32::try_from((r.decisions.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) > (0), None).unwrap();
     });
 }
 
@@ -9198,9 +9198,9 @@ fn resolve_attached_inline_inter_char_boundaries_punctuation_western_leading_nar
     (EastAsianSpacingEdges::new(EastAsianSpacingValue::Other, EastAsianSpacingValue::Other, false)).clone(),
     (EastAsianSpacingEdges::new(EastAsianSpacingValue::Narrow, EastAsianSpacingValue::Other, false)).clone(),
 ];
-        let r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_attached_inline_inter_char_boundaries(text.as_ustr(), &c, &vec![FontRole::CjkPunctuation, FontRole::LatinText, FontRole::LatinText], &e, SortedTable::sorted_table_set_builder::<u32>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints((*a) as i32, (*b) as i32))).clone().build(), &vec![InlineAttachment::None, InlineAttachment::Previous, InlineAttachment::None]).unwrap();
+        let r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_attached_inline_inter_char_boundaries(text.as_ustr(), &c, &vec![FontRole::CjkPunctuation, FontRole::LatinText, FontRole::LatinText], &e, SortedTable::sorted_table_set_builder::<u32>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_bytes(((*a) as i32).to_ne_bytes()), i32::from_ne_bytes(((*b) as i32).to_ne_bytes())))).clone().build(), &vec![InlineAttachment::None, InlineAttachment::Previous, InlineAttachment::None]).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_equals_rendered(UStr::new(&[123,49,61,48,125]), UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_map_text((r.virtual_boundary_after_clusters).clone()).as_ustr(), None).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_true((r.virtual_sino_western_boundary_after_clusters.size()) as u32 == 0, None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_true(u32::from_ne_bytes(((r.virtual_sino_western_boundary_after_clusters.size()) as u32).to_ne_bytes()) == 0, None).unwrap();
     });
 }
 
@@ -9219,9 +9219,9 @@ fn resolve_attached_inline_inter_char_boundaries_punctuation_western_trailing_na
     (EastAsianSpacingEdges::new(EastAsianSpacingValue::Other, EastAsianSpacingValue::Other, false)).clone(),
     (EastAsianSpacingEdges::new(EastAsianSpacingValue::Other, EastAsianSpacingValue::Other, false)).clone(),
 ];
-        let r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_attached_inline_inter_char_boundaries(text.as_ustr(), &c, &vec![FontRole::LatinText, FontRole::LatinText, FontRole::CjkPunctuation], &e, SortedTable::sorted_table_set_builder::<u32>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints((*a) as i32, (*b) as i32))).clone().build(), &vec![InlineAttachment::None, InlineAttachment::Previous, InlineAttachment::None]).unwrap();
+        let r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_attached_inline_inter_char_boundaries(text.as_ustr(), &c, &vec![FontRole::LatinText, FontRole::LatinText, FontRole::CjkPunctuation], &e, SortedTable::sorted_table_set_builder::<u32>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_bytes(((*a) as i32).to_ne_bytes()), i32::from_ne_bytes(((*b) as i32).to_ne_bytes())))).clone().build(), &vec![InlineAttachment::None, InlineAttachment::Previous, InlineAttachment::None]).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_equals_rendered(UStr::new(&[123,49,61,48,125]), UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_map_text((r.virtual_boundary_after_clusters).clone()).as_ustr(), None).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_true((r.virtual_sino_western_boundary_after_clusters.size()) as u32 == 0, None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_true(u32::from_ne_bytes(((r.virtual_sino_western_boundary_after_clusters.size()) as u32).to_ne_bytes()) == 0, None).unwrap();
     });
 }
 
@@ -9240,9 +9240,9 @@ fn resolve_attached_inline_inter_char_boundaries_sino_western_only() {
     (EastAsianSpacingEdges::new(EastAsianSpacingValue::Other, EastAsianSpacingValue::Other, false)).clone(),
     (EastAsianSpacingEdges::new(EastAsianSpacingValue::Narrow, EastAsianSpacingValue::Other, false)).clone(),
 ];
-        let r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_attached_inline_inter_char_boundaries(text.as_ustr(), &c, &vec![FontRole::CjkText, FontRole::LatinText, FontRole::LatinText], &e, SortedTable::sorted_table_set_builder::<u32>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints((*a) as i32, (*b) as i32))).clone().build(), &vec![InlineAttachment::None, InlineAttachment::Previous, InlineAttachment::None]).unwrap();
+        let r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_attached_inline_inter_char_boundaries(text.as_ustr(), &c, &vec![FontRole::CjkText, FontRole::LatinText, FontRole::LatinText], &e, SortedTable::sorted_table_set_builder::<u32>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_bytes(((*a) as i32).to_ne_bytes()), i32::from_ne_bytes(((*b) as i32).to_ne_bytes())))).clone().build(), &vec![InlineAttachment::None, InlineAttachment::Previous, InlineAttachment::None]).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_equals_rendered(UStr::new(&[123,49,61,48,125]), UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_map_text((r.virtual_boundary_after_clusters).clone()).as_ustr(), None).unwrap();
-        let mut expected: SortedSetTableBuilder<u32> = SortedTable::sorted_table_set_builder::<u32>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints((*a) as i32, (*b) as i32)));
+        let mut expected: SortedSetTableBuilder<u32> = SortedTable::sorted_table_set_builder::<u32>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_bytes(((*a) as i32).to_ne_bytes()), i32::from_ne_bytes(((*b) as i32).to_ne_bytes()))));
         expected.put(&(1));
         let _ = TracedAssertions::traced_assertions_assert_equals_int_set(expected.clone().build(), (r.virtual_sino_western_boundary_after_clusters).clone(), None).unwrap();
     });
@@ -9263,9 +9263,9 @@ fn resolve_attached_inline_inter_char_boundaries_western_bracket_only() {
     (EastAsianSpacingEdges::new(EastAsianSpacingValue::Other, EastAsianSpacingValue::Other, false)).clone(),
     (EastAsianSpacingEdges::new(EastAsianSpacingValue::Other, EastAsianSpacingValue::Other, false)).clone(),
 ];
-        let r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_attached_inline_inter_char_boundaries(text.as_ustr(), &c, &vec![FontRole::LatinText, FontRole::LatinText, FontRole::CjkText], &e, SortedTable::sorted_table_set_builder::<u32>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints((*a) as i32, (*b) as i32))).clone().build(), &vec![InlineAttachment::None, InlineAttachment::Previous, InlineAttachment::None]).unwrap();
+        let r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_attached_inline_inter_char_boundaries(text.as_ustr(), &c, &vec![FontRole::LatinText, FontRole::LatinText, FontRole::CjkText], &e, SortedTable::sorted_table_set_builder::<u32>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_bytes(((*a) as i32).to_ne_bytes()), i32::from_ne_bytes(((*b) as i32).to_ne_bytes())))).clone().build(), &vec![InlineAttachment::None, InlineAttachment::Previous, InlineAttachment::None]).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_equals_rendered(UStr::new(&[123,49,61,48,125]), UnicodePunctuationBoundaryResolverCoverageSupport::unicode_punctuation_boundary_resolver_coverage_support_map_text((r.virtual_boundary_after_clusters).clone()).as_ustr(), None).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_true((r.virtual_sino_western_boundary_after_clusters.size()) as u32 == 0, None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_true(u32::from_ne_bytes(((r.virtual_sino_western_boundary_after_clusters.size()) as u32).to_ne_bytes()) == 0, None).unwrap();
     });
 }
 
@@ -9280,7 +9280,7 @@ fn resolve_unicode_punctuation_boundaries_decimal_mark_after_empty_cluster_forbi
     (Cluster::new(TextRange::new(1u32, 3u32).unwrap(), &(UStr::new(&[46,53])), &(UStr::new(&[108,97,116,105,110])), 16.0f64, Some(UString::from(".5")), Some(0.0), Some(0.0), Some(0.0))).clone(),
 ];
         let r = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_unicode_punctuation_boundaries(text.as_ustr(), &c, &vec![FontRole::LatinText, FontRole::LatinText, FontRole::LatinText], &vec![]).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_equals(1, (r.forbidden_line_start_clusters.size()) as u32, None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_equals(1, u32::from_ne_bytes(((r.forbidden_line_start_clusters.size()) as u32).to_ne_bytes()), None).unwrap();
     });
 }
 

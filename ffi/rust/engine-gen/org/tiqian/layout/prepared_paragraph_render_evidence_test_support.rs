@@ -89,7 +89,7 @@ impl PreparedParagraphRenderEvidenceTestSupport {
     }
 
     pub fn prepared_paragraph_render_evidence_test_support_contains(s: &UStr, x: &UStr, msg: &UStr) -> Result<(), TracedAssertionsFailFault> {
-        if u_string::find_from(&(s), x, 0) as u32 > 2147483647 {
+        if u32::from_ne_bytes(((u_string::find_from(&(s), x, 0)) as u32).to_ne_bytes()) > 2147483647 {
             let _ = TracedAssertions::traced_assertions_fail(Some((msg).to_ustring()), None)?;
         }
         Ok(())

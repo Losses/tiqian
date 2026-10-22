@@ -199,7 +199,7 @@ impl AnnotationGeometryStage {
                 let mut x = line_boxes[usize::try_from(line_index).unwrap_or(0)].indent;
                 for idx in cluster_range.start..u32::wrapping_add(cluster_range.end, 1) {
                     let cluster = (final_clusters[usize::try_from(idx).unwrap_or(0)]).clone();
-                    let covered_by_span = (cluster.range).clone().start as i32 >= (span.range).clone().start as i32 && (((cluster.range).clone().end) as i32) <= (span.range).clone().end as i32;
+                    let covered_by_span = i32::from_ne_bytes((((cluster.range).clone().start) as i32).to_ne_bytes()) >= i32::from_ne_bytes((((span.range).clone().start) as i32).to_ne_bytes()) && (i32::from_ne_bytes((((cluster.range).clone().end) as i32).to_ne_bytes())) <= i32::from_ne_bytes((((span.range).clone().end) as i32).to_ne_bytes());
                     if covered_by_span {
                         let role = cluster_roles[usize::try_from(idx).unwrap_or(0)];
                         let applied = role == FontRole::CjkText;
@@ -208,7 +208,7 @@ impl AnnotationGeometryStage {
                         let glyph_advance = (cluster.advance - justify_delta) - ruby_spread;
                         let mut metric: Option<ClusterMetricDecision> = None;
                         for m in metric_decisions {
-                            if cluster.range.clone().start as i32 >= (m.range).clone().start as i32 && (((cluster.range).clone().end) as i32) <= (m.range).clone().end as i32 {
+                            if i32::from_ne_bytes((((cluster.range).clone().start) as i32).to_ne_bytes()) >= i32::from_ne_bytes((((m.range).clone().start) as i32).to_ne_bytes()) && (i32::from_ne_bytes((((cluster.range).clone().end) as i32).to_ne_bytes())) <= i32::from_ne_bytes((((m.range).clone().end) as i32).to_ne_bytes()) {
                                 metric = Some(m.clone());
                                 break;
                             }
@@ -231,7 +231,8 @@ impl AnnotationGeometryStage {
         let proper_noun_name = UString::from(DecorationKind::ProperNoun.name());
         let book_title_name = UString::from(DecorationKind::BookTitle.name());
         let mut result = segments.clone();
-        let mut by_line_builder: SortedMapTableBuilder<u32, Vec<IndexedDecorationSegment>> = SortedTable::sorted_table_map_builder::<u32, Vec<IndexedDecorationSegment>>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints((*a) as i32, (*b) as i32)));
+        let mut by_line_builder: SortedMapTableBuilder<u32, Vec<IndexedDecorationSegment>> = SortedTable::sorted_table_map_builder::<u32,
+Vec<IndexedDecorationSegment>>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_bytes(((*a) as i32).to_ne_bytes()), i32::from_ne_bytes(((*b) as i32).to_ne_bytes()))));
         let mut line_keys: Vec<u32> = vec![];
         let mut line_groups: Vec<Vec<IndexedDecorationSegment>> = vec![];
         for i in 0..match u32::try_from(result.len()) { Ok(value) => value, Err(_) => u32::MAX } {
@@ -239,7 +240,7 @@ impl AnnotationGeometryStage {
             if seg.kind.to_ustring() == proper_noun_name || (seg.kind).to_ustring() == book_title_name {
                 let mut slot = 4294967295u32;
                 let mut k = 0u32;
-                while ((k) as i32) < ((u32::try_from((line_keys.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32) {
+                while (i32::from_ne_bytes(((k) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((line_keys.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
                     if line_keys[usize::try_from(k).unwrap_or(0)] == seg.line_index {
                         slot = k;
                         break;
@@ -258,8 +259,8 @@ impl AnnotationGeometryStage {
             by_line_builder.put(&(line_keys[usize::try_from(k).unwrap_or(0)]), &((line_groups[usize::try_from(k).unwrap_or(0)]).clone()));
         }
         let by_line: SortedMapTable<u32, Vec<IndexedDecorationSegment>> = by_line_builder.clone().build();
-        for k in 0..((by_line.size()) as u32) {
-            let mut entries = by_line.value_at({ let v: u32 = k; v as i32 });
+        for k in 0..u32::from_ne_bytes(((by_line.size()) as u32).to_ne_bytes()) {
+            let mut entries = by_line.value_at({ let v: u32 = k; i32::from_ne_bytes(v.to_ne_bytes()) });
             for p in 1..match u32::try_from(entries.len()) { Ok(value) => value, Err(_) => u32::MAX } {
                 let key = (entries[usize::try_from(p).unwrap_or(0)]).clone();
                 let mut q = p;
@@ -270,7 +271,7 @@ impl AnnotationGeometryStage {
                 entries[usize::try_from(q).unwrap_or(0)] = key;
             }
             let mut i = 0;
-            while (i) < (i32::wrapping_sub((u32::try_from(((entries).len()) & 4294967295).unwrap_or(0)) as i32 as i32, 1)) {
+            while (i) < (i32::wrapping_sub(i32::from_ne_bytes(((i32::from_ne_bytes(u32::try_from(((entries).len()) & 4294967295).unwrap_or(0).to_ne_bytes())) as i32).to_ne_bytes()), 1)) {
                 let a = (entries[usize::try_from(i).unwrap_or(0)]).clone();
                 let b = (entries[usize::try_from(i32::wrapping_add(i, 1)).unwrap_or(0)]).clone();
                 if b.seg.clone().left - (a.seg).clone().right <= 0.01f64 * font_size {
@@ -321,7 +322,7 @@ impl AnnotationGeometryStage {
                 let mut seg_end = 4294967295u32;
                 for idx in cluster_range.start..u32::wrapping_add(cluster_range.end, 1) {
                     let cluster = (final_clusters[usize::try_from(idx).unwrap_or(0)]).clone();
-                    let covered = (cluster.range).clone().start as i32 >= (span.range).clone().start as i32 && (((cluster.range).clone().end) as i32) <= (span.range).clone().end as i32;
+                    let covered = i32::from_ne_bytes((((cluster.range).clone().start) as i32).to_ne_bytes()) >= i32::from_ne_bytes((((span.range).clone().start) as i32).to_ne_bytes()) && (i32::from_ne_bytes((((cluster.range).clone().end) as i32).to_ne_bytes())) <= i32::from_ne_bytes((((span.range).clone().end) as i32).to_ne_bytes());
                     if covered {
                         if left.is_none() {
                             left = Some(x + leading_blank((cluster.range).clone(), idx == cluster_range.start));
@@ -341,9 +342,9 @@ impl AnnotationGeometryStage {
                 let is_line = span.kind != DecorationKind::Mourning;
                 let line_y_em = if span.kind == DecorationKind::BookTitle { 0.24f64 } else { 0.18f64 };
                 let line_y = baseline + font_size * line_y_em;
-                span_segments.push(DecorationSegmentInfo::new(TextRange::new(seg_start, seg_end)?, UString::from(span.kind.name()).as_ustr(), line_index, left_edge, if is_line { line_y } else { baseline - font_size * 0.88f64 }, right, if is_line { line_y } else { baseline + font_size * 0.12f64 }, (seg_start) as i32 > (((span.range).clone().start) as i32), (seg_end) as i32 < (((span.range).clone().end) as i32), &(UStr::new(&[]))));
+                span_segments.push(DecorationSegmentInfo::new(TextRange::new(seg_start, seg_end)?, UString::from(span.kind.name()).as_ustr(), line_index, left_edge, if is_line { line_y } else { baseline - font_size * 0.88f64 }, right, if is_line { line_y } else { baseline + font_size * 0.12f64 }, (i32::from_ne_bytes(((seg_start) as i32).to_ne_bytes())) > (i32::from_ne_bytes((((span.range).clone().start) as i32).to_ne_bytes())), (i32::from_ne_bytes(((seg_end) as i32).to_ne_bytes())) < (i32::from_ne_bytes((((span.range).clone().end) as i32).to_ne_bytes())), &(UStr::new(&[]))));
             }
-            let reason = if span.kind == DecorationKind::Mourning && ((u32::try_from((span_segments.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32) <= 1 { UString::from("MourningSpanKeptUnbroken") } else { if span.kind == DecorationKind::Mourning { UString::from("mourning-span-split-across-lines") } else { UString::from("InterlinearLinePerAnnotatedItem") }.to_ustring() };
+            let reason = if span.kind == DecorationKind::Mourning && (i32::from_ne_bytes(((u32::try_from((span_segments.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) <= 1 { UString::from("MourningSpanKeptUnbroken") } else { if span.kind == DecorationKind::Mourning { UString::from("mourning-span-split-across-lines") } else { UString::from("InterlinearLinePerAnnotatedItem") }.to_ustring() };
             for seg in &span_segments {
                 segments.push(DecorationSegmentInfo::new((seg.source_range).clone(), (seg.kind).to_ustring().as_ustr(), seg.line_index, seg.left, seg.top, seg.right, seg.bottom, seg.open_start, seg.open_end, reason.as_ustr()));
             }
@@ -367,7 +368,7 @@ impl AnnotationGeometryStage {
                 let mut base_face_top = f64::INFINITY;
                 for idx in cluster_range.start..u32::wrapping_add(cluster_range.end, 1) {
                     let cluster = (final_clusters[usize::try_from(idx).unwrap_or(0)]).clone();
-                    if cluster.range.clone().start as i32 >= (ruby.base_range).clone().start as i32 && (((cluster.range).clone().end) as i32) <= (ruby.base_range).clone().end as i32 {
+                    if i32::from_ne_bytes((((cluster.range).clone().start) as i32).to_ne_bytes()) >= i32::from_ne_bytes((((ruby.base_range).clone().start) as i32).to_ne_bytes()) && (i32::from_ne_bytes((((cluster.range).clone().end) as i32).to_ne_bytes())) <= i32::from_ne_bytes((((ruby.base_range).clone().end) as i32).to_ne_bytes()) {
                         if !has_base_left {
                             base_left = x;
                             has_base_left = true;
@@ -375,7 +376,7 @@ impl AnnotationGeometryStage {
                         content_width += natural_clusters[usize::try_from(idx).unwrap_or(0)].advance;
                         let mut metric: Option<ClusterMetricDecision> = None;
                         for m in metric_decisions {
-                            if cluster.range.clone().start as i32 >= (m.range).clone().start as i32 && (((cluster.range).clone().end) as i32) <= (m.range).clone().end as i32 {
+                            if i32::from_ne_bytes((((cluster.range).clone().start) as i32).to_ne_bytes()) >= i32::from_ne_bytes((((m.range).clone().start) as i32).to_ne_bytes()) && (i32::from_ne_bytes((((cluster.range).clone().end) as i32).to_ne_bytes())) <= i32::from_ne_bytes((((m.range).clone().end) as i32).to_ne_bytes()) {
                                 metric = Some(m.clone());
                                 break;
                             }
@@ -403,7 +404,7 @@ impl AnnotationGeometryStage {
     }
 
     pub fn annotation_geometry_stage_bopomofo_symbol_rows(n: u32, neutral: bool) -> Vec<IntRange> {
-        if n as i32 <= 1 {
+        if i32::from_ne_bytes(((n) as i32).to_ne_bytes()) <= 1 {
             return vec![(IntRange::new(11u32, 20u32)).clone()];
         } else {
             if n == 2 {
@@ -484,9 +485,9 @@ impl AnnotationGeometryStage {
 
     pub(crate) fn annotation_geometry_stage_bopomofo_box(zone_left: f64, box_top: f64, h_unit: f64, v_unit: f64, left_u: f64, width_u: f64, top_u: u32, bot_u: u32, role: BopomofoGlyphRole, text: &UStr) -> BopomofoGlyphPlacement {
         let b_left = zone_left + left_u * h_unit;
-        let b_top = box_top + format!("{}", (top_u) as i32).parse::<f64>().unwrap_or(0.0) * v_unit;
+        let b_top = box_top + format!("{}", (i32::from_ne_bytes(((top_u) as i32).to_ne_bytes()))).parse::<f64>().unwrap_or(0.0) * v_unit;
         let b_width = width_u * h_unit;
-        let b_height = format!("{}", (u32::wrapping_sub(bot_u, top_u)) as i32).parse::<f64>().unwrap_or(0.0) * v_unit;
+        let b_height = format!("{}", (i32::from_ne_bytes(((u32::wrapping_sub(bot_u, top_u)) as i32).to_ne_bytes()))).parse::<f64>().unwrap_or(0.0) * v_unit;
         return BopomofoGlyphPlacement::new(text, b_left, b_top, b_width, b_height, role, Some(vec![]), b_left, b_top + b_height, b_height);
     }
 
@@ -549,7 +550,7 @@ impl AnnotationGeometryStage {
                 let mut content_width = 0.0f64;
                 for idx in cluster_range.start..u32::wrapping_add(cluster_range.end, 1) {
                     let cluster = (final_clusters[usize::try_from(idx).unwrap_or(0)]).clone();
-                    if cluster.range.clone().start as i32 >= (ruby.base_range).clone().start as i32 && (((cluster.range).clone().end) as i32) <= (ruby.base_range).clone().end as i32 {
+                    if i32::from_ne_bytes((((cluster.range).clone().start) as i32).to_ne_bytes()) >= i32::from_ne_bytes((((ruby.base_range).clone().start) as i32).to_ne_bytes()) && (i32::from_ne_bytes((((cluster.range).clone().end) as i32).to_ne_bytes())) <= i32::from_ne_bytes((((ruby.base_range).clone().end) as i32).to_ne_bytes()) {
                         if !has_content_left {
                             content_left = x;
                             has_content_left = true;
@@ -565,10 +566,10 @@ impl AnnotationGeometryStage {
                 let box_top = line_boxes[usize::try_from(line_index).unwrap_or(0)].baseline - base_ascent;
                 let parsed = BopomofoParser::bopomofo_parser_parse((ruby.text).to_ustring().as_ustr());
                 let mut n = u32::try_from((parsed.symbols.len()) & 0xFFFF_FFFF).unwrap_or(0);
-                if n as i32 < (1) {
+                if i32::from_ne_bytes(((n) as i32).to_ne_bytes()) < (1) {
                     n = 1u32;
                 } else {
-                    if n as i32 > (3) {
+                    if i32::from_ne_bytes(((n) as i32).to_ne_bytes()) > (3) {
                         n = 3u32;
                     }
                 }
@@ -579,7 +580,7 @@ impl AnnotationGeometryStage {
                     placements.push(AnnotationGeometryStage::annotation_geometry_stage_bopomofo_box(zone_left, box_top, h_unit, v_unit, 1.0f64, 9.0f64, row.start, row.end, BopomofoGlyphRole::Neutral, UStr::new(&[729])));
                 }
                 let rows = AnnotationGeometryStage::annotation_geometry_stage_bopomofo_symbol_rows(n, neutral);
-                let sym_count = if u32::try_from((parsed.symbols.len()) & 0xFFFF_FFFF).unwrap_or(0) as i32 < (3) { u32::try_from((parsed.symbols.len()) & 0xFFFF_FFFF).unwrap_or(0) } else { 3 };
+                let sym_count = if i32::from_ne_bytes(((u32::try_from((parsed.symbols.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes()) < (3) { u32::try_from((parsed.symbols.len()) & 0xFFFF_FFFF).unwrap_or(0) } else { 3 };
                 for i in 0..sym_count {
                     let sym = (parsed.symbols[usize::try_from(i).unwrap_or(0)]).clone();
                     let row = (rows[usize::try_from(i).unwrap_or(0)]).clone();
@@ -608,7 +609,7 @@ impl AnnotationGeometryStage {
 },
 };
                 }
-                if u32::try_from((placements.len()) & 0xFFFF_FFFF).unwrap_or(0) as i32 > (0) {
+                if i32::from_ne_bytes(((u32::try_from((placements.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes()) > (0) {
                     let placement_weight = bopomofo_font_weight_at((ruby.base_range).clone().start);
                     let capacity = placements.len();
                     let mut replay_placements = Vec::with_capacity(capacity);

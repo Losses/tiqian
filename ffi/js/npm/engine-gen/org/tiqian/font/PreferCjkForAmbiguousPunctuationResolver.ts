@@ -14,7 +14,7 @@ export class PreferCjkForAmbiguousPunctuationResolver implements FallbackResolve
     this.symbolFontKey = symbolFontKey ?? "symbol-fallback";
   }
 
-  public resolve(text: string, range: TextRange, request: FontRequest): FontDecision {
+  public resolve(_text: string, range: TextRange, request: FontRequest): FontDecision {
     const c = PreferCjkForAmbiguousPunctuationResolver.candidateFor(request, this.cjkFontKey, this.latinFontKey, this.symbolFontKey);
     return new FontDecision(range, c, request.role, `PreferCjkForAmbiguousPunctuationResolver:${request.role.kind}`);
   }

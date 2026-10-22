@@ -541,7 +541,7 @@ impl RecordedEvidenceTextShaper {
         if recorded.is_none() {
             return Err(TextRangeError::Message { text: UString::from(format!("{}", { let mut __s = UString::new(); __s += &(UString::from("No recorded shaping evidence for ")); __s += UString::from(format!("{}", key.to_string()).as_str()).as_ustr(); __s += &(UString::from(" — re-record on the JVM with ")); __s += &(UString::from("TIQIAN_RECORD_SHAPING=1 ./gradlew :engine:jvmTest --tests '*ShapingEvidenceRecorder*'")); __s }).as_str()) });
         }
-        let source_text = u_string::substring(&(input.text).to_ustring(), ((input.range).clone().start) as i32, ((input.range).clone().end) as i32);
+        let source_text = u_string::substring(&(input.text).to_ustring(), i32::from_ne_bytes((((input.range).clone().start) as i32).to_ne_bytes()), i32::from_ne_bytes((((input.range).clone().end) as i32).to_ne_bytes()));
         let font_key = (((input.font_decision).clone().candidate).clone().key).to_ustring();
         let cluster = Cluster::new((input.range).clone(), source_text.as_ustr(), font_key.as_ustr(), (recorded).as_ref().unwrap().cluster_advance, Some((input.display_text).to_ustring()), Some(0.0), Some(0.0), Some(0.0));
         let mut glyphs: Vec<Glyph> = vec![];
@@ -580,7 +580,7 @@ impl ITextShaper for RecordedEvidenceTextShaper {
         if recorded.is_none() {
             return Err(TextShaperShapeFault::TextRangeErrorFault(TextRangeError::Message { text: UString::from(format!("{}", { let mut __s = UString::new(); __s += &(UString::from("No recorded shaping evidence for ")); __s += UString::from(format!("{}", key.to_string()).as_str()).as_ustr(); __s += &(UString::from(" — re-record on the JVM with ")); __s += &(UString::from("TIQIAN_RECORD_SHAPING=1 ./gradlew :engine:jvmTest --tests '*ShapingEvidenceRecorder*'")); __s }).as_str()) }));
         }
-        let source_text = u_string::substring(&(input.text).to_ustring(), ((input.range).clone().start) as i32, ((input.range).clone().end) as i32);
+        let source_text = u_string::substring(&(input.text).to_ustring(), i32::from_ne_bytes((((input.range).clone().start) as i32).to_ne_bytes()), i32::from_ne_bytes((((input.range).clone().end) as i32).to_ne_bytes()));
         let font_key = (((input.font_decision).clone().candidate).clone().key).to_ustring();
         let cluster = Cluster::new((input.range).clone(), source_text.as_ustr(), font_key.as_ustr(), (recorded).as_ref().unwrap().cluster_advance, Some((input.display_text).to_ustring()), Some(0.0), Some(0.0), Some(0.0));
         let mut glyphs: Vec<Glyph> = vec![];

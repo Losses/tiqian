@@ -22,37 +22,37 @@ impl CjkFontRoleClassifier {
     let __units = text.as_slice();
     let __count = u_string::unit_count(&text);
         let mut c = u_string::unit_at_from(__units, range.start).unwrap_or(0);
-        if c as i32 >= 55296 && ((c) as i32) <= 56319 && ((u32::wrapping_add(range.start, 1)) as i32) < ((__count) as i32) {
+        if i32::from_ne_bytes(((c) as i32).to_ne_bytes()) >= 55296 && (i32::from_ne_bytes(((c) as i32).to_ne_bytes())) <= 56319 && (i32::from_ne_bytes(((u32::wrapping_add(range.start, 1)) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((__count) as i32).to_ne_bytes())) {
             let lo = u_string::unit_at_from(__units, u32::wrapping_add(range.start, 1)).unwrap_or(0);
-            if lo as i32 >= 56320 && ((lo) as i32) <= 57343 {
+            if i32::from_ne_bytes(((lo) as i32).to_ne_bytes()) >= 56320 && (i32::from_ne_bytes(((lo) as i32).to_ne_bytes())) <= 57343 {
                 c = u32::wrapping_add(u32::wrapping_add(65536, (u32::wrapping_sub(c, 55296)) << (10)), u32::wrapping_sub(lo, 56320));
             }
         }
-        if c as i32 >= 12549 && ((c) as i32) <= 12591 || ((c) as i32) >= 12704 && ((c) as i32) <= 12735 || ((c) as i32) >= 13312 && ((c) as i32) <= 19903 || ((c) as i32) >= 19968 && ((c) as i32) <= 40959 || ((c) as i32) >= 63744 && ((c) as i32) <= 64255 || ((c) as i32) >= 131072 && ((c) as i32) <= 173791 || ((c) as i32) >= 173824 && ((c) as i32) <= 177983 || ((c) as i32) >= 177984 && ((c) as i32) <= 178207 || ((c) as i32) >= 178208 && ((c) as i32) <= 183983 || ((c) as i32) >= 196608 && ((c) as i32) <= 201551 {
+        if i32::from_ne_bytes(((c) as i32).to_ne_bytes()) >= 12549 && (i32::from_ne_bytes(((c) as i32).to_ne_bytes())) <= 12591 || (i32::from_ne_bytes(((c) as i32).to_ne_bytes())) >= 12704 && (i32::from_ne_bytes(((c) as i32).to_ne_bytes())) <= 12735 || (i32::from_ne_bytes(((c) as i32).to_ne_bytes())) >= 13312 && (i32::from_ne_bytes(((c) as i32).to_ne_bytes())) <= 19903 || (i32::from_ne_bytes(((c) as i32).to_ne_bytes())) >= 19968 && (i32::from_ne_bytes(((c) as i32).to_ne_bytes())) <= 40959 || (i32::from_ne_bytes(((c) as i32).to_ne_bytes())) >= 63744 && (i32::from_ne_bytes(((c) as i32).to_ne_bytes())) <= 64255 || (i32::from_ne_bytes(((c) as i32).to_ne_bytes())) >= 131072 && (i32::from_ne_bytes(((c) as i32).to_ne_bytes())) <= 173791 || (i32::from_ne_bytes(((c) as i32).to_ne_bytes())) >= 173824 && (i32::from_ne_bytes(((c) as i32).to_ne_bytes())) <= 177983 || (i32::from_ne_bytes(((c) as i32).to_ne_bytes())) >= 177984 && (i32::from_ne_bytes(((c) as i32).to_ne_bytes())) <= 178207 || (i32::from_ne_bytes(((c) as i32).to_ne_bytes())) >= 178208 && (i32::from_ne_bytes(((c) as i32).to_ne_bytes())) <= 183983 || (i32::from_ne_bytes(((c) as i32).to_ne_bytes())) >= 196608 && (i32::from_ne_bytes(((c) as i32).to_ne_bytes())) <= 201551 {
             return FontRole::CjkText;
         }
         if c == 8216 || c == 8217 || c == 8220 || c == 8221 {
-            let l = if range.start as i32 > (0) { u_string::unit_at_from(__units, u32::wrapping_sub(range.start, 1)) } else { None };
-            let r = if range.end as i32 < ((__count) as i32) { u_string::unit_at_from(__units, range.end) } else { None };
+            let l = if i32::from_ne_bytes(((range.start) as i32).to_ne_bytes()) > (0) { u_string::unit_at_from(__units, u32::wrapping_sub(range.start, 1)) } else { None };
+            let r = if i32::from_ne_bytes(((range.end) as i32).to_ne_bytes()) < (i32::from_ne_bytes(((__count) as i32).to_ne_bytes())) { u_string::unit_at_from(__units, range.end) } else { None };
             return if CjkFontRoleClassifier::cjk_font_role_classifier_is_latin(l) && CjkFontRoleClassifier::cjk_font_role_classifier_is_latin(r) { FontRole::LatinText } else { FontRole::CjkPunctuation };
         }
-        if c as i32 >= 32 && ((c) as i32) <= 126 || ((c) as i32) >= 192 && ((c) as i32) <= 591 {
+        if i32::from_ne_bytes(((c) as i32).to_ne_bytes()) >= 32 && (i32::from_ne_bytes(((c) as i32).to_ne_bytes())) <= 126 || (i32::from_ne_bytes(((c) as i32).to_ne_bytes())) >= 192 && (i32::from_ne_bytes(((c) as i32).to_ne_bytes())) <= 591 {
             return FontRole::LatinText;
         }
-        if c as i32 >= 12288 && ((c) as i32) <= 12351 || c == 8212 || c == 8211 || c == 8252 || c == 8263 || c == 8230 || c == 8231 || c == 8943 || c == 12539 || c == 11834 || c == 183 || c == 8226 || c == 65281 || c == 65311 || c == 65292 || c == 65294 || c == 65295 || c == 65306 || c == 65307 || c == 65288 || c == 65289 || c == 65374 {
+        if i32::from_ne_bytes(((c) as i32).to_ne_bytes()) >= 12288 && (i32::from_ne_bytes(((c) as i32).to_ne_bytes())) <= 12351 || c == 8212 || c == 8211 || c == 8252 || c == 8263 || c == 8230 || c == 8231 || c == 8943 || c == 12539 || c == 11834 || c == 183 || c == 8226 || c == 65281 || c == 65311 || c == 65292 || c == 65294 || c == 65295 || c == 65306 || c == 65307 || c == 65288 || c == 65289 || c == 65374 {
             return FontRole::CjkPunctuation;
         }
         if UnicodeEmojiPresentationData::unicode_emoji_presentation_data_contains(c) {
             return FontRole::Emoji;
         }
-        if c as i32 <= 65535 && UnicodeSymbolData::unicode_symbol_data_contains(c) {
+        if i32::from_ne_bytes(((c) as i32).to_ne_bytes()) <= 65535 && UnicodeSymbolData::unicode_symbol_data_contains(c) {
             return FontRole::Symbol;
         }
         return FontRole::Unknown;
     }
 
     pub(crate) fn cjk_font_role_classifier_is_latin(c: Option<u32>) -> bool {
-        return match &(c) { Some(__option) => (*__option) as i32 >= 32 && ((*__option) as i32) <= 126 || ((*__option) as i32) >= 192 && ((*__option) as i32) <= 591 || *__option == 8216 || *__option == 8217 || *__option == 8220 || *__option == 8221, None => false };
+        return match &(c) { Some(__option) => i32::from_ne_bytes(((*__option) as i32).to_ne_bytes()) >= 32 && (i32::from_ne_bytes(((*__option) as i32).to_ne_bytes())) <= 126 || (i32::from_ne_bytes(((*__option) as i32).to_ne_bytes())) >= 192 && (i32::from_ne_bytes(((*__option) as i32).to_ne_bytes())) <= 591 || *__option == 8216 || *__option == 8217 || *__option == 8220 || *__option == 8221, None => false };
     }
 }
 
@@ -71,30 +71,30 @@ impl FontRoleClassifier for CjkFontRoleClassifier {
     let __units1 = text.as_slice();
     let __count1 = u_string::unit_count(&text);
         let mut c = u_string::unit_at_from(__units1, range.start).unwrap_or(0);
-        if c as i32 >= 55296 && ((c) as i32) <= 56319 && ((u32::wrapping_add(range.start, 1)) as i32) < ((__count1) as i32) {
+        if i32::from_ne_bytes(((c) as i32).to_ne_bytes()) >= 55296 && (i32::from_ne_bytes(((c) as i32).to_ne_bytes())) <= 56319 && (i32::from_ne_bytes(((u32::wrapping_add(range.start, 1)) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((__count1) as i32).to_ne_bytes())) {
             let lo = u_string::unit_at_from(__units1, u32::wrapping_add(range.start, 1)).unwrap_or(0);
-            if lo as i32 >= 56320 && ((lo) as i32) <= 57343 {
+            if i32::from_ne_bytes(((lo) as i32).to_ne_bytes()) >= 56320 && (i32::from_ne_bytes(((lo) as i32).to_ne_bytes())) <= 57343 {
                 c = u32::wrapping_add(u32::wrapping_add(65536, (u32::wrapping_sub(c, 55296)) << (10)), u32::wrapping_sub(lo, 56320));
             }
         }
-        if c as i32 >= 12549 && ((c) as i32) <= 12591 || ((c) as i32) >= 12704 && ((c) as i32) <= 12735 || ((c) as i32) >= 13312 && ((c) as i32) <= 19903 || ((c) as i32) >= 19968 && ((c) as i32) <= 40959 || ((c) as i32) >= 63744 && ((c) as i32) <= 64255 || ((c) as i32) >= 131072 && ((c) as i32) <= 173791 || ((c) as i32) >= 173824 && ((c) as i32) <= 177983 || ((c) as i32) >= 177984 && ((c) as i32) <= 178207 || ((c) as i32) >= 178208 && ((c) as i32) <= 183983 || ((c) as i32) >= 196608 && ((c) as i32) <= 201551 {
+        if i32::from_ne_bytes(((c) as i32).to_ne_bytes()) >= 12549 && (i32::from_ne_bytes(((c) as i32).to_ne_bytes())) <= 12591 || (i32::from_ne_bytes(((c) as i32).to_ne_bytes())) >= 12704 && (i32::from_ne_bytes(((c) as i32).to_ne_bytes())) <= 12735 || (i32::from_ne_bytes(((c) as i32).to_ne_bytes())) >= 13312 && (i32::from_ne_bytes(((c) as i32).to_ne_bytes())) <= 19903 || (i32::from_ne_bytes(((c) as i32).to_ne_bytes())) >= 19968 && (i32::from_ne_bytes(((c) as i32).to_ne_bytes())) <= 40959 || (i32::from_ne_bytes(((c) as i32).to_ne_bytes())) >= 63744 && (i32::from_ne_bytes(((c) as i32).to_ne_bytes())) <= 64255 || (i32::from_ne_bytes(((c) as i32).to_ne_bytes())) >= 131072 && (i32::from_ne_bytes(((c) as i32).to_ne_bytes())) <= 173791 || (i32::from_ne_bytes(((c) as i32).to_ne_bytes())) >= 173824 && (i32::from_ne_bytes(((c) as i32).to_ne_bytes())) <= 177983 || (i32::from_ne_bytes(((c) as i32).to_ne_bytes())) >= 177984 && (i32::from_ne_bytes(((c) as i32).to_ne_bytes())) <= 178207 || (i32::from_ne_bytes(((c) as i32).to_ne_bytes())) >= 178208 && (i32::from_ne_bytes(((c) as i32).to_ne_bytes())) <= 183983 || (i32::from_ne_bytes(((c) as i32).to_ne_bytes())) >= 196608 && (i32::from_ne_bytes(((c) as i32).to_ne_bytes())) <= 201551 {
             return FontRole::CjkText;
         }
         if c == 8216 || c == 8217 || c == 8220 || c == 8221 {
-            let l = if range.start as i32 > (0) { u_string::unit_at_from(__units1, u32::wrapping_sub(range.start, 1)) } else { None };
-            let r = if range.end as i32 < ((__count1) as i32) { u_string::unit_at_from(__units1, range.end) } else { None };
+            let l = if i32::from_ne_bytes(((range.start) as i32).to_ne_bytes()) > (0) { u_string::unit_at_from(__units1, u32::wrapping_sub(range.start, 1)) } else { None };
+            let r = if i32::from_ne_bytes(((range.end) as i32).to_ne_bytes()) < (i32::from_ne_bytes(((__count1) as i32).to_ne_bytes())) { u_string::unit_at_from(__units1, range.end) } else { None };
             return if CjkFontRoleClassifier::cjk_font_role_classifier_is_latin(l) && CjkFontRoleClassifier::cjk_font_role_classifier_is_latin(r) { FontRole::LatinText } else { FontRole::CjkPunctuation };
         }
-        if c as i32 >= 32 && ((c) as i32) <= 126 || ((c) as i32) >= 192 && ((c) as i32) <= 591 {
+        if i32::from_ne_bytes(((c) as i32).to_ne_bytes()) >= 32 && (i32::from_ne_bytes(((c) as i32).to_ne_bytes())) <= 126 || (i32::from_ne_bytes(((c) as i32).to_ne_bytes())) >= 192 && (i32::from_ne_bytes(((c) as i32).to_ne_bytes())) <= 591 {
             return FontRole::LatinText;
         }
-        if c as i32 >= 12288 && ((c) as i32) <= 12351 || c == 8212 || c == 8211 || c == 8252 || c == 8263 || c == 8230 || c == 8231 || c == 8943 || c == 12539 || c == 11834 || c == 183 || c == 8226 || c == 65281 || c == 65311 || c == 65292 || c == 65294 || c == 65295 || c == 65306 || c == 65307 || c == 65288 || c == 65289 || c == 65374 {
+        if i32::from_ne_bytes(((c) as i32).to_ne_bytes()) >= 12288 && (i32::from_ne_bytes(((c) as i32).to_ne_bytes())) <= 12351 || c == 8212 || c == 8211 || c == 8252 || c == 8263 || c == 8230 || c == 8231 || c == 8943 || c == 12539 || c == 11834 || c == 183 || c == 8226 || c == 65281 || c == 65311 || c == 65292 || c == 65294 || c == 65295 || c == 65306 || c == 65307 || c == 65288 || c == 65289 || c == 65374 {
             return FontRole::CjkPunctuation;
         }
         if UnicodeEmojiPresentationData::unicode_emoji_presentation_data_contains(c) {
             return FontRole::Emoji;
         }
-        if c as i32 <= 65535 && UnicodeSymbolData::unicode_symbol_data_contains(c) {
+        if i32::from_ne_bytes(((c) as i32).to_ne_bytes()) <= 65535 && UnicodeSymbolData::unicode_symbol_data_contains(c) {
             return FontRole::Symbol;
         }
         return FontRole::Unknown;

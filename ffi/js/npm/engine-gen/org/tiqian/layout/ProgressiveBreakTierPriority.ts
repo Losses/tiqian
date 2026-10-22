@@ -20,17 +20,17 @@ export class ProgressiveBreakTierPriority {
 
   public static fromPriority(value: number): ProgressiveBreakTier {
     if (value === 0) {
-      return ProgressiveBreakTier.Whitespace;
+      return (ProgressiveBreakTier.Whitespace as ProgressiveBreakTier);
     }
     if (value === 1) {
-      return ProgressiveBreakTier.Structural;
+      return (ProgressiveBreakTier.Structural as ProgressiveBreakTier);
     }
     if (value === 2) {
-      return ProgressiveBreakTier.Syllable;
+      return (ProgressiveBreakTier.Syllable as ProgressiveBreakTier);
     }
     if (value === 3) {
-      return ProgressiveBreakTier.WholeToken;
+      return (ProgressiveBreakTier.WholeToken as ProgressiveBreakTier);
     }
-    return ProgressiveBreakTier.Emergency;
+    return (ProgressiveBreakTier.Emergency as ProgressiveBreakTier);
   }
 }

@@ -22,7 +22,7 @@ impl BopomofoReading {
     pub fn copy(&self) -> BopomofoReading {
         let mut copied_symbols: Vec<UString> = vec![];
         let mut index = 0u32;
-        while ((index) as i32) < ((u32::try_from(((self.symbols).clone().len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32) {
+        while (i32::from_ne_bytes(((index) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from(((self.symbols).clone().len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
             copied_symbols.push((self.symbols[usize::try_from(index).unwrap_or(0)]).clone());
             index = u32::wrapping_add(index, 1);
         }
@@ -33,12 +33,12 @@ impl BopomofoReading {
         let mut hash = 17u32;
         hash = u32::wrapping_add(u32::wrapping_mul(hash, 31), self.tone_index());
         let mut index = 0u32;
-        while ((index) as i32) < ((u32::try_from(((self.symbols).clone().len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32) {
+        while (i32::from_ne_bytes(((index) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from(((self.symbols).clone().len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
             let symbol = (self.symbols[usize::try_from(index).unwrap_or(0)]).clone();
             let mut unit_index = 0u32;
             let __units = symbol.as_slice();
             let __count = u_string::unit_count(&symbol);
-            while ((unit_index) as i32) < ((__count) as i32) {
+            while (i32::from_ne_bytes(((unit_index) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((__count) as i32).to_ne_bytes())) {
                 hash = u32::wrapping_add(u32::wrapping_mul(hash, 31), u_string::unit_at_from(__units, unit_index).unwrap_or(0));
                 unit_index = u32::wrapping_add(unit_index, 1);
             }

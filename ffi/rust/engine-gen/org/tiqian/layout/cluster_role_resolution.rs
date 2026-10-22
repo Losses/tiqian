@@ -60,9 +60,9 @@ impl ClusterRoleResolution {
         let mut index = 0u32;
         let mut gi = if __count == 0 { 0 } else { 1 };
         let mut gs = graphemes[0usize];
-        let mut ge = if gi < ((u32::try_from(((graphemes).len()) & 4294967295).unwrap_or(0)) as i32 as i32) { graphemes[usize::try_from(gi).unwrap_or(0)] } else { __count };
-        while ((index) as i32) < ((__count) as i32) {
-            while ((index) as i32) >= { let v: u32 = ge; v as i32 } && (gi) < (i32::wrapping_sub((u32::try_from(((graphemes).len()) & 4294967295).unwrap_or(0)) as i32 as i32, 1)) {
+        let mut ge = if gi < (i32::from_ne_bytes(u32::try_from(((graphemes).len()) & 4294967295).unwrap_or(0).to_ne_bytes())) { graphemes[usize::try_from(gi).unwrap_or(0)] } else { __count };
+        while (i32::from_ne_bytes(((index) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((__count) as i32).to_ne_bytes())) {
+            while (i32::from_ne_bytes(((index) as i32).to_ne_bytes())) >= { let v: u32 = ge; i32::from_ne_bytes(v.to_ne_bytes()) } && (gi) < (i32::wrapping_sub(i32::from_ne_bytes(((i32::from_ne_bytes(u32::try_from(((graphemes).len()) & 4294967295).unwrap_or(0).to_ne_bytes())) as i32).to_ne_bytes()), 1)) {
                 gs = ge;
                 gi = i32::wrapping_add(gi, 1);
                 ge = graphemes[usize::try_from(gi).unwrap_or(0)];
@@ -78,10 +78,10 @@ impl ClusterRoleResolution {
                 }
             }
             let cp = ClusterRoleResolution::cluster_role_resolution_code_point(text, index);
-            let count = if cp as i32 > (65535) { 2 } else { 1 };
+            let count = if i32::from_ne_bytes(((cp) as i32).to_ne_bytes()) > (65535) { 2 } else { 1 };
             let start = index;
             if ClusterRoleResolution::cluster_role_resolution_is_mandatory(text, index, cp) {
-                let end = if cp == 13 && ((u32::wrapping_add(index, 1)) as i32) < ((__count) as i32) && matches!(u_string::unit_at_from(__units, u32::wrapping_add(index, 1)).as_ref(), Some(__v) if __v == &(10)) { u32::wrapping_add(index, 2) } else { u32::wrapping_add(index, count) };
+                let end = if cp == 13 && (i32::from_ne_bytes(((u32::wrapping_add(index, 1)) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((__count) as i32).to_ne_bytes())) && matches!(u_string::unit_at_from(__units, u32::wrapping_add(index, 1)).as_ref(), Some(__v) if __v == &(10)) { u32::wrapping_add(index, 2) } else { u32::wrapping_add(index, count) };
                 out.push(ResolvedClusterRange::new(TextRange::new(start, end)?, FontRole::Unknown, Some(true), Some(false), None));
                 index = end;
                 continue;
@@ -100,9 +100,9 @@ impl ClusterRoleResolution {
             if role == FontRole::Emoji {
                 let mut b = ge;
                 let mut bi = 0u32;
-                while ((bi) as i32) < ((emoji_shaping_boundaries.size()) as u32 as i32) {
-                    let k = emoji_shaping_boundaries.at((bi) as i32);
-                    if k as i32 > ((start) as i32) && ((k) as i32) < ({ let v: u32 = ge; v as i32 }) && (b == ge || ((k) as i32) < ({ let v: u32 = b; v as i32 })) {
+                while (i32::from_ne_bytes(((bi) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::from_ne_bytes(((emoji_shaping_boundaries.size()) as u32).to_ne_bytes())) as i32).to_ne_bytes())) {
+                    let k = emoji_shaping_boundaries.at(i32::from_ne_bytes(((bi) as i32).to_ne_bytes()));
+                    if i32::from_ne_bytes(((k) as i32).to_ne_bytes()) > (i32::from_ne_bytes(((start) as i32).to_ne_bytes())) && (i32::from_ne_bytes(((k) as i32).to_ne_bytes())) < ({ let v: u32 = ge; i32::from_ne_bytes(v.to_ne_bytes()) }) && (b == ge || (i32::from_ne_bytes(((k) as i32).to_ne_bytes())) < ({ let v: u32 = b; i32::from_ne_bytes(v.to_ne_bytes()) })) {
                         b = k;
                     }
                     bi = u32::wrapping_add(bi, 1);
@@ -112,44 +112,44 @@ impl ClusterRoleResolution {
                 if role == FontRole::LatinText {
                     if cp == 8212 || cp == 8230 {
                         if ClusterRoleResolution::cluster_role_resolution_contains(&profile.coalesce_repeatable_punctuation, cp) {
-                            while ((index) as i32) < ((__count) as i32) && !span_boundaries.has(&(index)) && ClusterRoleResolution::cluster_role_resolution_code_point(text, index) == cp {
-                                index = u32::wrapping_add(index, if cp as i32 > (65535) { 2 } else { 1 });
+                            while (i32::from_ne_bytes(((index) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((__count) as i32).to_ne_bytes())) && !span_boundaries.has(&(index)) && ClusterRoleResolution::cluster_role_resolution_code_point(text, index) == cp {
+                                index = u32::wrapping_add(index, if i32::from_ne_bytes(((cp) as i32).to_ne_bytes()) > (65535) { 2 } else { 1 });
                             }
                         }
                     } else {
                         if attached {
-                            while ((index) as i32) < ((__count) as i32) && !span_boundaries.has(&(index)) && ClusterRoleResolution::cluster_role_resolution_is_ascii_point(ClusterRoleResolution::cluster_role_resolution_code_point(text, index)) {
+                            while (i32::from_ne_bytes(((index) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((__count) as i32).to_ne_bytes())) && !span_boundaries.has(&(index)) && ClusterRoleResolution::cluster_role_resolution_is_ascii_point(ClusterRoleResolution::cluster_role_resolution_code_point(text, index)) {
                                 index = u32::wrapping_add(index, 1);
                             }
                         } else {
-                            while ((index) as i32) < ((__count) as i32) && !span_boundaries.has(&(index)) {
+                            while (i32::from_ne_bytes(((index) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((__count) as i32).to_ne_bytes())) && !span_boundaries.has(&(index)) {
                                 let n = ClusterRoleResolution::cluster_role_resolution_code_point(text, index);
-                                if n == 8212 || n == 8230 || classifier.classify(text, TextRange::new(index, u32::wrapping_add(index, if n as i32 > (65535) { 2 } else { 1 }))?, Some((context).clone())) != FontRole::LatinText || ClusterRoleResolution::cluster_role_resolution_emoji_promotion(text, index, __count).is_some() {
+                                if n == 8212 || n == 8230 || classifier.classify(text, TextRange::new(index, u32::wrapping_add(index, if i32::from_ne_bytes(((n) as i32).to_ne_bytes()) > (65535) { 2 } else { 1 }))?, Some((context).clone())) != FontRole::LatinText || ClusterRoleResolution::cluster_role_resolution_emoji_promotion(text, index, __count).is_some() {
                                     break;
                                 }
-                                index = u32::wrapping_add(index, if n as i32 > (65535) { 2 } else { 1 });
+                                index = u32::wrapping_add(index, if i32::from_ne_bytes(((n) as i32).to_ne_bytes()) > (65535) { 2 } else { 1 });
                             }
                         }
                     }
                 } else {
                     if role == FontRole::CjkPunctuation && ClusterRoleResolution::cluster_role_resolution_contains(&profile.coalesce_repeatable_punctuation, cp) {
-                        while ((index) as i32) < ((__count) as i32) && !span_boundaries.has(&(index)) && ClusterRoleResolution::cluster_role_resolution_code_point(text, index) == cp {
-                            index = u32::wrapping_add(index, if cp as i32 > (65535) { 2 } else { 1 });
+                        while (i32::from_ne_bytes(((index) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((__count) as i32).to_ne_bytes())) && !span_boundaries.has(&(index)) && ClusterRoleResolution::cluster_role_resolution_code_point(text, index) == cp {
+                            index = u32::wrapping_add(index, if i32::from_ne_bytes(((cp) as i32).to_ne_bytes()) > (65535) { 2 } else { 1 });
                         }
                     }
                 }
             }
-            while ((index) as i32) < ((__count) as i32) && !span_boundaries.has(&(index)) {
+            while (i32::from_ne_bytes(((index) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((__count) as i32).to_ne_bytes())) && !span_boundaries.has(&(index)) {
                 let e = ClusterRoleResolution::cluster_role_resolution_code_point(text, index);
                 if !ClusterRoleResolution::cluster_role_resolution_is_combining(e) && !ClusterRoleResolution::cluster_role_resolution_is_variation(e) {
                     break;
                 }
-                index = u32::wrapping_add(index, if e as i32 > (65535) { 2 } else { 1 });
+                index = u32::wrapping_add(index, if i32::from_ne_bytes(((e) as i32).to_ne_bytes()) > (65535) { 2 } else { 1 });
             }
             let r = TextRange::new(start, index)?;
             let mut role_info: Option<RoleOverrideInfo> = None;
             if role == FontRole::Emoji && classified != FontRole::Emoji {
-                role_info = Some(RoleOverrideInfo::new((r).clone(), u_string::substring(&text, (r.start) as i32, (r.end) as i32).as_ustr(), UString::from(classified.name()).as_ustr(), UString::from(role.name()).as_ustr(), &(UStr::new(&[85,110,105,99,111,100,101,69,109,111,106,105,83,101,113,117,101,110,99,101,82,111,108,101,80,114,111,109,111,116,105,111,110])), match &(promotion) { None => UString::from("EmojiPresentationCodePoint"), Some(__option3) => __option3.to_ustring() }.as_ustr()).clone());
+                role_info = Some(RoleOverrideInfo::new((r).clone(), u_string::substring(&text, i32::from_ne_bytes(((r.start) as i32).to_ne_bytes()), i32::from_ne_bytes(((r.end) as i32).to_ne_bytes())).as_ustr(), UString::from(classified.name()).as_ustr(), UString::from(role.name()).as_ustr(), &(UStr::new(&[85,110,105,99,111,100,101,69,109,111,106,105,83,101,113,117,101,110,99,101,82,111,108,101,80,114,111,109,111,116,105,111,110])), match &(promotion) { None => UString::from("EmojiPresentationCodePoint"), Some(__option3) => __option3.to_ustring() }.as_ustr()).clone());
             }
             out.push(ResolvedClusterRange::new((r).clone(), role, Some(false), Some(false), (role_info).clone()));
         }
@@ -159,15 +159,15 @@ impl ClusterRoleResolution {
     pub fn cluster_role_resolution_require_covered_by(clusters: &Vec<Cluster>, decisions: &Vec<FontDecision>) -> Result<(), TextRangeError> {
         let mut ci = 0u32;
         let mut di = 0u32;
-        while ((di) as i32) < ((u32::try_from((decisions.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32) {
+        while (i32::from_ne_bytes(((di) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((decisions.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
             let d = (decisions[usize::try_from({ let t = di; di = u32::wrapping_add(di, 1); t }).unwrap_or(0)]).clone();
-            while ((ci) as i32) < ((u32::try_from((clusters.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32) && ((((clusters[usize::try_from(ci).unwrap_or(0)]).clone().range).clone().end) as i32) <= (d.range).clone().start as i32 {
+            while (i32::from_ne_bytes(((ci) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((clusters.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) && (i32::from_ne_bytes(((((clusters[usize::try_from(ci).unwrap_or(0)]).clone().range).clone().end) as i32).to_ne_bytes())) <= i32::from_ne_bytes((((d.range).clone().start) as i32).to_ne_bytes()) {
                 ci = u32::wrapping_add(ci, 1);
             }
             let mut cursor = (d.range).clone().start;
-            while ((ci) as i32) < ((u32::try_from((clusters.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32) && ((((clusters[usize::try_from(ci).unwrap_or(0)]).clone().range).clone().start) as i32) < (((d.range).clone().end) as i32) {
+            while (i32::from_ne_bytes(((ci) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((clusters.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) && (i32::from_ne_bytes(((((clusters[usize::try_from(ci).unwrap_or(0)]).clone().range).clone().start) as i32).to_ne_bytes())) < (i32::from_ne_bytes((((d.range).clone().end) as i32).to_ne_bytes())) {
                 let c = (clusters[usize::try_from(ci).unwrap_or(0)]).clone();
-                if !(((c.range).clone().start) as i32 >= (d.range).clone().start as i32 && (((c.range).clone().end) as i32) <= (d.range).clone().end as i32) {
+                if !((i32::from_ne_bytes((((c.range).clone().start) as i32).to_ne_bytes())) >= i32::from_ne_bytes((((d.range).clone().start) as i32).to_ne_bytes()) && (i32::from_ne_bytes((((c.range).clone().end) as i32).to_ne_bytes())) <= i32::from_ne_bytes((((d.range).clone().end) as i32).to_ne_bytes())) {
                     return Err(TextRangeError::Message { text: UString::from(format!("{}", { let mut __s = UString::new(); __s += &(UString::from("TextShaper returned cluster ")); __s += UString::from(format!("{}", (c.range).clone().to_string()).as_str()).as_ustr(); __s += &(UString::from(" crossing ")); __s += UString::from(format!("{}", (d.range).clone().to_string()).as_str()).as_ustr(); __s }).as_str()) });
                 }
                 if c.range.clone().start != cursor {
@@ -187,20 +187,20 @@ impl ClusterRoleResolution {
     let __units1 = t.as_slice();
     let __count1 = u_string::unit_count(&t);
         let h = u_string::unit_at_from(__units1, i).unwrap_or(0);
-        if h as i32 < (55296) || ((h) as i32) > (56319) || ((u32::wrapping_add(i, 1)) as i32) >= __count1 as i32 {
+        if i32::from_ne_bytes(((h) as i32).to_ne_bytes()) < (55296) || (i32::from_ne_bytes(((h) as i32).to_ne_bytes())) > (56319) || (i32::from_ne_bytes(((u32::wrapping_add(i, 1)) as i32).to_ne_bytes())) >= i32::from_ne_bytes(((__count1) as i32).to_ne_bytes()) {
             return h;
         }
         let l = u_string::unit_at_from(__units1, u32::wrapping_add(i, 1)).unwrap_or(0);
-        return if l as i32 < (56320) || ((l) as i32) > (57343) { h } else { u32::wrapping_add(u32::wrapping_add(65536, (u32::wrapping_sub(h, 55296)) << (10)), u32::wrapping_sub(l, 56320)) };
+        return if i32::from_ne_bytes(((l) as i32).to_ne_bytes()) < (56320) || (i32::from_ne_bytes(((l) as i32).to_ne_bytes())) > (57343) { h } else { u32::wrapping_add(u32::wrapping_add(65536, (u32::wrapping_sub(h, 55296)) << (10)), u32::wrapping_sub(l, 56320)) };
     }
 
     pub(crate) fn cluster_role_resolution_is_mandatory(t: &UStr, i: u32, c: u32) -> bool {
-        return LineBreakFns::line_break_fns_is_mandatory_break_code_point(c) && !(c == 10 && ((i) as i32) > (0) && matches!(u_string::unit_at(&t, u32::wrapping_sub(i, 1)).as_ref(), Some(__v) if __v == &(13)));
+        return LineBreakFns::line_break_fns_is_mandatory_break_code_point(c) && !(c == 10 && (i32::from_ne_bytes(((i) as i32).to_ne_bytes())) > (0) && matches!(u_string::unit_at(&t, u32::wrapping_sub(i, 1)).as_ref(), Some(__v) if __v == &(13)));
     }
 
     pub(crate) fn cluster_role_resolution_contains(a: &[u32], v: u32) -> bool {
         let mut i = 0u32;
-        while ((i) as i32) < ((u32::try_from((a.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32) {
+        while (i32::from_ne_bytes(((i) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((a.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
             if a[usize::try_from(i).unwrap_or(0)] == v {
                 return true;
             }
@@ -210,15 +210,15 @@ impl ClusterRoleResolution {
     }
 
     pub(crate) fn cluster_role_resolution_is_variation(c: u32) -> bool {
-        return ((c) as i32) >= 65024 && ((c) as i32) <= 65039 || ((c) as i32) >= 917760 && ((c) as i32) <= 917999;
+        return (i32::from_ne_bytes(((c) as i32).to_ne_bytes())) >= 65024 && (i32::from_ne_bytes(((c) as i32).to_ne_bytes())) <= 65039 || (i32::from_ne_bytes(((c) as i32).to_ne_bytes())) >= 917760 && (i32::from_ne_bytes(((c) as i32).to_ne_bytes())) <= 917999;
     }
 
     pub(crate) fn cluster_role_resolution_is_combining(c: u32) -> bool {
-        return ((c) as i32) <= 65535 && UnicodeCombiningMarkData::unicode_combining_mark_data_contains(c);
+        return (i32::from_ne_bytes(((c) as i32).to_ne_bytes())) <= 65535 && UnicodeCombiningMarkData::unicode_combining_mark_data_contains(c);
     }
 
     pub(crate) fn cluster_role_resolution_is_ws(cp: u32) -> bool {
-        return ((cp) as i32) <= 65535 && ((cp) as i32 >= 9 && ((cp) as i32) <= 13 || ((cp) as i32) >= 28 && ((cp) as i32) <= 32 || cp == 160 || cp == 5760 || ((cp) as i32) >= 8192 && ((cp) as i32) <= 8202 || cp == 8232 || cp == 8233 || cp == 8239 || cp == 8287 || cp == 12288);
+        return (i32::from_ne_bytes(((cp) as i32).to_ne_bytes())) <= 65535 && ((i32::from_ne_bytes(((cp) as i32).to_ne_bytes())) >= 9 && (i32::from_ne_bytes(((cp) as i32).to_ne_bytes())) <= 13 || (i32::from_ne_bytes(((cp) as i32).to_ne_bytes())) >= 28 && (i32::from_ne_bytes(((cp) as i32).to_ne_bytes())) <= 32 || cp == 160 || cp == 5760 || (i32::from_ne_bytes(((cp) as i32).to_ne_bytes())) >= 8192 && (i32::from_ne_bytes(((cp) as i32).to_ne_bytes())) <= 8202 || cp == 8232 || cp == 8233 || cp == 8239 || cp == 8287 || cp == 12288);
     }
 
     pub(crate) fn cluster_role_resolution_is_ascii_point(c: u32) -> bool {
@@ -227,24 +227,24 @@ impl ClusterRoleResolution {
 
     pub(crate) fn cluster_role_resolution_emoji_promotion(t: &UStr, s: u32, e: u32) -> Option<UString> {
         let b = ClusterRoleResolution::cluster_role_resolution_code_point(t, s);
-        let mut n = u32::wrapping_add(s, if b as i32 > (65535) { 2 } else { 1 });
-        if b == 35 || b == 42 || ((b) as i32) >= 48 && ((b) as i32) <= 57 {
-            if n as i32 < ((e) as i32) && ClusterRoleResolution::cluster_role_resolution_code_point(t, n) == 65039 {
+        let mut n = u32::wrapping_add(s, if i32::from_ne_bytes(((b) as i32).to_ne_bytes()) > (65535) { 2 } else { 1 });
+        if b == 35 || b == 42 || (i32::from_ne_bytes(((b) as i32).to_ne_bytes())) >= 48 && (i32::from_ne_bytes(((b) as i32).to_ne_bytes())) <= 57 {
+            if i32::from_ne_bytes(((n) as i32).to_ne_bytes()) < (i32::from_ne_bytes(((e) as i32).to_ne_bytes())) && ClusterRoleResolution::cluster_role_resolution_code_point(t, n) == 65039 {
                 n = u32::wrapping_add(n, 1);
             }
-            if n as i32 < ((e) as i32) && ClusterRoleResolution::cluster_role_resolution_code_point(t, n) == 8419 {
+            if i32::from_ne_bytes(((n) as i32).to_ne_bytes()) < (i32::from_ne_bytes(((e) as i32).to_ne_bytes())) && ClusterRoleResolution::cluster_role_resolution_code_point(t, n) == 8419 {
                 return Some(UString::from("KeycapSequence").to_ustring());
             }
         }
-        if UnicodeEmojiData::unicode_emoji_data_contains(b) && UnicodeEmojiStyleVariationData::unicode_emoji_style_variation_data_contains(b) && ((n) as i32) < ((e) as i32) && ClusterRoleResolution::cluster_role_resolution_code_point(t, n) == 65039 {
+        if UnicodeEmojiData::unicode_emoji_data_contains(b) && UnicodeEmojiStyleVariationData::unicode_emoji_style_variation_data_contains(b) && (i32::from_ne_bytes(((n) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((e) as i32).to_ne_bytes())) && ClusterRoleResolution::cluster_role_resolution_code_point(t, n) == 65039 {
             return Some(UString::from("EmojiStyleVariationSequence").to_ustring());
         }
         if UnicodeEmojiModifierBaseData::unicode_emoji_modifier_base_data_contains(b) {
-            while ((n) as i32) < ((e) as i32) && (ClusterRoleResolution::cluster_role_resolution_is_combining(ClusterRoleResolution::cluster_role_resolution_code_point(t, n)) || ClusterRoleResolution::cluster_role_resolution_is_variation(ClusterRoleResolution::cluster_role_resolution_code_point(t, n))) {
-                n = u32::wrapping_add(n, if ClusterRoleResolution::cluster_role_resolution_code_point(t, n) as i32 > (65535) { 2 } else { 1 });
+            while (i32::from_ne_bytes(((n) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((e) as i32).to_ne_bytes())) && (ClusterRoleResolution::cluster_role_resolution_is_combining(ClusterRoleResolution::cluster_role_resolution_code_point(t, n)) || ClusterRoleResolution::cluster_role_resolution_is_variation(ClusterRoleResolution::cluster_role_resolution_code_point(t, n))) {
+                n = u32::wrapping_add(n, if i32::from_ne_bytes(((ClusterRoleResolution::cluster_role_resolution_code_point(t, n)) as i32).to_ne_bytes()) > (65535) { 2 } else { 1 });
             }
-            let m = if n as i32 < ((e) as i32) { ClusterRoleResolution::cluster_role_resolution_code_point(t, n) } else { 4294967295u32 };
-            if ({ let v: u32 = m; v as i32 }) >= 127995 && ({ let v: u32 = m; v as i32 }) <= 127999 {
+            let m = if i32::from_ne_bytes(((n) as i32).to_ne_bytes()) < (i32::from_ne_bytes(((e) as i32).to_ne_bytes())) { ClusterRoleResolution::cluster_role_resolution_code_point(t, n) } else { 4294967295u32 };
+            if ({ let v: u32 = m; i32::from_ne_bytes(v.to_ne_bytes()) }) >= 127995 && ({ let v: u32 = m; i32::from_ne_bytes(v.to_ne_bytes()) }) <= 127999 {
                 return Some(UString::from("EmojiModifierSequence").to_ustring());
             }
         }

@@ -38,7 +38,7 @@ pub fn compare_contextual_kinsoku_decision_info(a: &ContextualKinsokuDecisionInf
     if cmp_range != 0 { return cmp_range; }
     let cmp_source_text = SortedTable::sorted_table_compare_strings((&a.source_text).as_ustr(), (&b.source_text).as_ustr());
     if cmp_source_text != 0 { return cmp_source_text; }
-    let cmp_cluster_index = match ((*(&a.cluster_index)) as i32).cmp(&((*(&b.cluster_index)) as i32)) { core::cmp::Ordering::Less => -1, core::cmp::Ordering::Equal => 0, core::cmp::Ordering::Greater => 1 };
+    let cmp_cluster_index = match i32::from_ne_bytes((*(&a.cluster_index)).to_ne_bytes()).cmp(&i32::from_ne_bytes((*(&b.cluster_index)).to_ne_bytes())) { core::cmp::Ordering::Less => -1, core::cmp::Ordering::Equal => 0, core::cmp::Ordering::Greater => 1 };
     if cmp_cluster_index != 0 { return cmp_cluster_index; }
     let cmp_forbidden_position = SortedTable::sorted_table_compare_strings((&a.forbidden_position).as_ustr(), (&b.forbidden_position).as_ustr());
     if cmp_forbidden_position != 0 { return cmp_forbidden_position; }

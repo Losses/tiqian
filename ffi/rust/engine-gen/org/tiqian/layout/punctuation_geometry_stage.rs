@@ -64,7 +64,7 @@ impl ContextualKinsoku {
         let mut i = 0;
         while i < n {
             if i > 0 { out.push_str(", "); }
-            let _ = write!(out, "{}", ((self.forbidden_line_start_clusters).clone().at(i)) as i32);
+            let _ = write!(out, "{}", i32::from_ne_bytes((((self.forbidden_line_start_clusters).clone().at(i)) as i32).to_ne_bytes()));
             i += 1;
         }
         out.push(']');
@@ -89,7 +89,7 @@ impl ContextualKinsoku {
         let mut i = 0;
         while i < n {
             if i > 0 { out.push_str(", "); }
-            let _ = write!(out, "{}", ((self.impossible_measure_hang_eligible_clusters).clone().at(i)) as i32);
+            let _ = write!(out, "{}", i32::from_ne_bytes((((self.impossible_measure_hang_eligible_clusters).clone().at(i)) as i32).to_ne_bytes()));
             i += 1;
         }
         out.push(']');
@@ -149,7 +149,7 @@ impl InlineObjectAttachedMark {
         let mut i = 0usize;
         while i < n {
             if i > 0 { out.push_str(", "); }
-            let _ = write!(out, "{}", (arr[i]) as i32);
+            let _ = write!(out, "{}", i32::from_ne_bytes(((arr[i]) as i32).to_ne_bytes()));
             i += 1;
         }
         out.push(']');
@@ -240,7 +240,7 @@ impl InlineBoxApplicationResult {
         let mut i = 0;
         while i < n {
             if i > 0 { out.push_str(", "); }
-            let _ = write!(out, "{}={}", ((self.advance_by_cluster).clone().key_at(i)) as i32, (self.advance_by_cluster).clone().value_at(i));
+            let _ = write!(out, "{}={}", i32::from_ne_bytes((((self.advance_by_cluster).clone().key_at(i)) as i32).to_ne_bytes()), (self.advance_by_cluster).clone().value_at(i));
             i += 1;
         }
         out.push('}');
@@ -272,19 +272,19 @@ impl PunctuationGeometryStage {
         }
         let mut result: Vec<InlineObjectAttachedMark> = vec![];
         let mut mark_index = 1u32;
-        while ((mark_index) as i32) < ((u32::try_from((c.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32) {
+        while (i32::from_ne_bytes(((mark_index) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((c.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
             let mark = (c[usize::try_from(mark_index).unwrap_or(0)]).clone();
-            let role = if mark_index as i32 < ((u32::try_from((cluster_roles.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32) { Some(cluster_roles[usize::try_from(mark_index).unwrap_or(0)]) } else { None };
+            let role = if i32::from_ne_bytes(((mark_index) as i32).to_ne_bytes()) < (i32::from_ne_bytes(((u32::try_from((cluster_roles.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) { Some(cluster_roles[usize::try_from(mark_index).unwrap_or(0)]) } else { None };
             let is_cjk_forbidden = PunctuationGeometryStage::punctuation_geometry_stage_is_cjk_kinsoku_role(role) && kinsoku_rule.forbidden_at_line_start((mark).clone());
             let is_attached_ascii_point_mark = role == Some(FontRole::LatinText) && PunctuationGeometryStage::punctuation_geometry_stage_is_ascii_point_mark_char(PunctuationGeometryStage::punctuation_geometry_stage_first_char((mark.text).to_ustring().as_ustr()).clone());
             if !is_cjk_forbidden && !is_attached_ascii_point_mark {
                 mark_index = u32::wrapping_add(mark_index, 1);
                 continue;
             }
-            let mut previous_index = i32::wrapping_sub((mark_index) as i32, 1);
+            let mut previous_index = i32::wrapping_sub(i32::from_ne_bytes(((mark_index) as i32).to_ne_bytes()), 1);
             let mut separator_indices: Vec<u32> = vec![];
             while (previous_index) >= 0 && PunctuationGeometryStage::punctuation_geometry_stage_is_space_run((c[usize::try_from(previous_index).unwrap_or(0)]).clone()) && ((c[usize::try_from(previous_index).unwrap_or(0)]).clone().range).clone().end == ((c[usize::try_from(i32::wrapping_add(previous_index, 1)).unwrap_or(0)]).clone().range).clone().start {
-                separator_indices.insert(0, (previous_index) as u32);
+                separator_indices.insert(0, u32::from_ne_bytes(((previous_index) as u32).to_ne_bytes()));
                 previous_index = i32::wrapping_sub(previous_index, 1);
             }
             if previous_index < (0) {
@@ -296,7 +296,7 @@ impl PunctuationGeometryStage {
                 mark_index = u32::wrapping_add(mark_index, 1);
                 continue;
             }
-            result.push(InlineObjectAttachedMark::new((previous_index) as u32, separator_indices.to_vec(), mark_index));
+            result.push(InlineObjectAttachedMark::new(u32::from_ne_bytes(((previous_index) as u32).to_ne_bytes()), separator_indices.to_vec(), mark_index));
             mark_index = u32::wrapping_add(mark_index, 1);
         }
         return result;
@@ -309,9 +309,9 @@ impl PunctuationGeometryStage {
         if u32::try_from((c.len()) & 0xFFFF_FFFF).unwrap_or(0) != u32::try_from((line_break_clusters.len()) & 0xFFFF_FFFF).unwrap_or(0) {
             return Err(TextRangeError::Message { text: UString::from("Inline-object kinsoku requires cluster-for-cluster line-break geometry") });
         }
-        let mut forbidden: SortedSetTableBuilder<u32> = SortedTable::sorted_table_set_builder::<u32>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints((*a) as i32, (*b) as i32)));
+        let mut forbidden: SortedSetTableBuilder<u32> = SortedTable::sorted_table_set_builder::<u32>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_bytes(((*a) as i32).to_ne_bytes()), i32::from_ne_bytes(((*b) as i32).to_ne_bytes()))));
         let mut unbreakable_ranges: Vec<IntRange> = vec![];
-        let mut forced_hangable: SortedSetTableBuilder<u32> = SortedTable::sorted_table_set_builder::<u32>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints((*a) as i32, (*b) as i32)));
+        let mut forced_hangable: SortedSetTableBuilder<u32> = SortedTable::sorted_table_set_builder::<u32>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_bytes(((*a) as i32).to_ne_bytes()), i32::from_ne_bytes(((*b) as i32).to_ne_bytes()))));
         let mut extendable_hang_ranges: Vec<IntRange> = vec![];
         let mut decisions: Vec<ContextualKinsokuDecisionInfo> = vec![];
         for attachment in attachments {
@@ -320,7 +320,7 @@ impl PunctuationGeometryStage {
             let mark = (c[usize::try_from(index).unwrap_or(0)]).clone();
             let is_attached_ascii_point_mark = PunctuationGeometryStage::punctuation_geometry_stage_is_ascii_point_mark_char(PunctuationGeometryStage::punctuation_geometry_stage_first_char((mark.text).to_ustring().as_ustr()).clone());
             let mut si = 0u32;
-            while ((si) as i32) < ((u32::try_from(((attachment.separator_cluster_indices).clone().len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32) {
+            while (i32::from_ne_bytes(((si) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from(((attachment.separator_cluster_indices).clone().len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
                 forbidden.put(&(attachment.separator_cluster_indices[usize::try_from(si).unwrap_or(0)]));
                 si = u32::wrapping_add(si, 1);
             }
@@ -328,7 +328,7 @@ impl PunctuationGeometryStage {
             let protected_pair = IntRange::new(previous_index, index);
             let mut pair_terms: Vec<f64> = vec![];
             let mut wi = previous_index;
-            while ((wi) as i32) <= index as i32 {
+            while (i32::from_ne_bytes(((wi) as i32).to_ne_bytes())) <= i32::from_ne_bytes(((index) as i32).to_ne_bytes()) {
                 pair_terms.push(line_break_clusters[usize::try_from(wi).unwrap_or(0)].advance);
                 wi = u32::wrapping_add(wi, 1);
             }
@@ -340,7 +340,7 @@ impl PunctuationGeometryStage {
                 let may_hang = PunctuationGeometryStage::punctuation_geometry_stage_is_hangable_punctuation_mark((mark.display_text).to_ustring().as_ustr()) || is_attached_ascii_point_mark;
                 if may_hang {
                     let mut sj = 0u32;
-                    while ((sj) as i32) < ((u32::try_from(((attachment.separator_cluster_indices).clone().len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32) {
+                    while (i32::from_ne_bytes(((sj) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from(((attachment.separator_cluster_indices).clone().len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
                         forced_hangable.put(&(attachment.separator_cluster_indices[usize::try_from(sj).unwrap_or(0)]));
                         sj = u32::wrapping_add(sj, 1);
                     }
@@ -360,32 +360,32 @@ impl PunctuationGeometryStage {
         if u32::try_from((c.len()) & 0xFFFF_FFFF).unwrap_or(0) != u32::try_from((line_break_clusters.len()) & 0xFFFF_FFFF).unwrap_or(0) {
             return Err(TextRangeError::Message { text: UString::from("Contextual kinsoku requires cluster-for-cluster line-break geometry") });
         }
-        let mut forbidden: SortedSetTableBuilder<u32> = SortedTable::sorted_table_set_builder::<u32>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints((*a) as i32, (*b) as i32)));
+        let mut forbidden: SortedSetTableBuilder<u32> = SortedTable::sorted_table_set_builder::<u32>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_bytes(((*a) as i32).to_ne_bytes()), i32::from_ne_bytes(((*b) as i32).to_ne_bytes()))));
         let mut unbreakable_ranges: Vec<IntRange> = vec![];
-        let mut forced_hangable: SortedSetTableBuilder<u32> = SortedTable::sorted_table_set_builder::<u32>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints((*a) as i32, (*b) as i32)));
+        let mut forced_hangable: SortedSetTableBuilder<u32> = SortedTable::sorted_table_set_builder::<u32>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_bytes(((*a) as i32).to_ne_bytes()), i32::from_ne_bytes(((*b) as i32).to_ne_bytes()))));
         let mut extendable_hang_ranges: Vec<IntRange> = vec![];
         let mut decisions: Vec<ContextualKinsokuDecisionInfo> = vec![];
         let mut index = 1u32;
-        while ((index) as i32) < ((u32::try_from((c.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32) {
+        while (i32::from_ne_bytes(((index) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((c.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
             let cluster = (c[usize::try_from(index).unwrap_or(0)]).clone();
             let previous = (c[usize::try_from(u32::wrapping_sub(index, 1)).unwrap_or(0)]).clone();
-            let starts_attached_point_mark_run = if index as i32 < ((u32::try_from((cluster_roles.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32) { Some(cluster_roles[usize::try_from(index).unwrap_or(0)]) } else { None } == Some(FontRole::LatinText) && PunctuationGeometryStage::punctuation_geometry_stage_is_ascii_point_mark_char(PunctuationGeometryStage::punctuation_geometry_stage_first_char((cluster.text).to_ustring().as_ustr()).clone()) && ((u_string::unit_count(&((previous.display_text).to_ustring()))) as i32) > (0) && ((u_string::unit_count(&((previous.text).to_ustring()))) as i32) > (0) && !PunctuationGeometryStage::punctuation_geometry_stage_is_whitespace_code(*(u_string::unit_at(&(previous.text).to_ustring(), u32::wrapping_sub(u_string::unit_count(&((previous.text).to_ustring())), 1))).as_ref().unwrap()) && (previous.range).clone().end == (cluster.range).clone().start;
+            let starts_attached_point_mark_run = (if i32::from_ne_bytes(((index) as i32).to_ne_bytes()) < (i32::from_ne_bytes(((u32::try_from((cluster_roles.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) { Some(cluster_roles[usize::try_from(index).unwrap_or(0)]) } else { None }) == Some(FontRole::LatinText) && PunctuationGeometryStage::punctuation_geometry_stage_is_ascii_point_mark_char(PunctuationGeometryStage::punctuation_geometry_stage_first_char((cluster.text).to_ustring().as_ustr()).clone()) && (i32::from_ne_bytes(((u_string::unit_count(&((previous.display_text).to_ustring()))) as i32).to_ne_bytes())) > (0) && (i32::from_ne_bytes(((u_string::unit_count(&((previous.text).to_ustring()))) as i32).to_ne_bytes())) > (0) && !PunctuationGeometryStage::punctuation_geometry_stage_is_whitespace_code(*(u_string::unit_at(&(previous.text).to_ustring(), u32::wrapping_sub(u_string::unit_count(&((previous.text).to_ustring())), 1))).as_ref().unwrap()) && (previous.range).clone().end == (cluster.range).clone().start;
             if !starts_attached_point_mark_run {
                 index = u32::wrapping_add(index, 1);
                 continue;
             }
             let run_start = index;
             let mut run_end = index;
-            while ((u32::wrapping_add(run_end, 1)) as i32) < ((u32::try_from((c.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32) {
+            while (i32::from_ne_bytes(((u32::wrapping_add(run_end, 1)) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((c.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
                 let next = (c[usize::try_from(u32::wrapping_add(run_end, 1)).unwrap_or(0)]).clone();
-                let continues_run = if u32::wrapping_add(run_end, 1) as i32 < ((u32::try_from((cluster_roles.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32) { Some(cluster_roles[usize::try_from(u32::wrapping_add(run_end, 1)).unwrap_or(0)]) } else { None } == Some(FontRole::LatinText) && PunctuationGeometryStage::punctuation_geometry_stage_is_ascii_point_mark_char(PunctuationGeometryStage::punctuation_geometry_stage_first_char((next.text).to_ustring().as_ustr()).clone()) && ((c[usize::try_from(run_end).unwrap_or(0)]).clone().range).clone().end == (next.range).clone().start;
+                let continues_run = (if i32::from_ne_bytes(((u32::wrapping_add(run_end, 1)) as i32).to_ne_bytes()) < (i32::from_ne_bytes(((u32::try_from((cluster_roles.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) { Some(cluster_roles[usize::try_from(u32::wrapping_add(run_end, 1)).unwrap_or(0)]) } else { None }) == Some(FontRole::LatinText) && PunctuationGeometryStage::punctuation_geometry_stage_is_ascii_point_mark_char(PunctuationGeometryStage::punctuation_geometry_stage_first_char((next.text).to_ustring().as_ustr()).clone()) && ((c[usize::try_from(run_end).unwrap_or(0)]).clone().range).clone().end == (next.range).clone().start;
                 if !continues_run {
                     break;
                 }
                 run_end = u32::wrapping_add(run_end, 1);
             }
             let mut fi = run_start;
-            while ((fi) as i32) <= run_end as i32 {
+            while (i32::from_ne_bytes(((fi) as i32).to_ne_bytes())) <= i32::from_ne_bytes(((run_end) as i32).to_ne_bytes()) {
                 forbidden.put(&(fi));
                 fi = u32::wrapping_add(fi, 1);
             }
@@ -393,21 +393,21 @@ impl PunctuationGeometryStage {
             let run_line_width = if u32::wrapping_sub(run_start, 1) == 0 { first_line_width } else { body_line_width };
             let mut run_terms: Vec<f64> = vec![];
             let mut wi = u32::wrapping_sub(run_start, 1);
-            while ((wi) as i32) <= run_end as i32 {
+            while (i32::from_ne_bytes(((wi) as i32).to_ne_bytes())) <= i32::from_ne_bytes(((run_end) as i32).to_ne_bytes()) {
                 run_terms.push(line_break_clusters[usize::try_from(wi).unwrap_or(0)].advance);
                 wi = u32::wrapping_add(wi, 1);
             }
             let run_width = AccurateSum::accurate_sum_of(&run_terms);
             if run_width > (run_line_width) {
                 fi = run_start;
-                while ((fi) as i32) <= run_end as i32 {
+                while (i32::from_ne_bytes(((fi) as i32).to_ne_bytes())) <= i32::from_ne_bytes(((run_end) as i32).to_ne_bytes()) {
                     forced_hangable.put(&(fi));
                     fi = u32::wrapping_add(fi, 1);
                 }
                 extendable_hang_ranges.push(IntRange::new(u32::wrapping_sub(run_start, 1), run_end));
             }
             fi = run_start;
-            while ((fi) as i32) <= run_end as i32 {
+            while (i32::from_ne_bytes(((fi) as i32).to_ne_bytes())) <= i32::from_ne_bytes(((run_end) as i32).to_ne_bytes()) {
                 let point_mark = (c[usize::try_from(fi).unwrap_or(0)]).clone();
                 decisions.push(ContextualKinsokuDecisionInfo::new((point_mark.range).clone(), (point_mark.text).to_ustring().as_ustr(), fi, &(UStr::new(&[76,105,110,101,83,116,97,114,116])), &(UStr::new(&[65,116,116,97,99,104,101,100,65,115,99,105,105,80,111,105,110,116,77,97,114,107,75,105,110,115,111,107,117])), None));
                 fi = u32::wrapping_add(fi, 1);
@@ -427,8 +427,8 @@ impl PunctuationGeometryStage {
             return Ok(out);
         }
         let mut i = 0u32;
-        while ((i) as i32) < ((u_string::unit_count(&((c.display_text).to_ustring()))) as i32) {
-            let atom = builder.build(u_string::substring(&(c.display_text).to_ustring(), (i) as i32, i32::wrapping_add((i) as i32, 1)).as_ustr(), PunctuationGeometryStage::punctuation_geometry_stage_display_char_source_range((c).clone(), i)?, em, PunctuationGeometryStage::punctuation_geometry_stage_punctuation_ink_input_for((c).clone(), i, &shaped_glyphs)?, Some(glue_placement), Some((width_policy).clone()))?;
+        while (i32::from_ne_bytes(((i) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u_string::unit_count(&((c.display_text).to_ustring()))) as i32).to_ne_bytes())) {
+            let atom = builder.build(u_string::substring(&(c.display_text).to_ustring(), i32::from_ne_bytes(((i) as i32).to_ne_bytes()), i32::wrapping_add(i32::from_ne_bytes(((i) as i32).to_ne_bytes()), 1)).as_ustr(), PunctuationGeometryStage::punctuation_geometry_stage_display_char_source_range((c).clone(), i)?, em, PunctuationGeometryStage::punctuation_geometry_stage_punctuation_ink_input_for((c).clone(), i, &shaped_glyphs)?, Some(glue_placement), Some((width_policy).clone()))?;
             match &(atom) {
                 Some(__option) => {
                     out.push((__option).clone());
@@ -450,7 +450,7 @@ impl PunctuationGeometryStage {
             let source = (shaped_glyphs[usize::try_from(display_index).unwrap_or(0)]).clone();
             let mut pen_terms: Vec<f64> = vec![];
             let mut i = 0u32;
-            while ((i) as i32) < ((display_index) as i32) {
+            while (i32::from_ne_bytes(((i) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((display_index) as i32).to_ne_bytes())) {
                 pen_terms.push(shaped_glyphs[usize::try_from(i).unwrap_or(0)].advance);
                 i = u32::wrapping_add(i, 1);
             }
@@ -475,7 +475,7 @@ impl PunctuationGeometryStage {
         let mut bounds: Vec<Rect> = vec![];
         let mut union_terms: Vec<f64> = vec![];
         let mut i = 0u32;
-        while ((i) as i32) < ((u32::try_from((g.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32) {
+        while (i32::from_ne_bytes(((i) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((g.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
             let glyph = (g[usize::try_from(i).unwrap_or(0)]).clone();
             union_terms.push(glyph.advance);
             match &(glyph.bounds) {
@@ -496,7 +496,7 @@ impl PunctuationGeometryStage {
         let mut right = bounds[0usize].right;
         let mut bottom = bounds[0usize].bottom;
         i = 1u32;
-        while ((i) as i32) < ((u32::try_from((bounds.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32) {
+        while (i32::from_ne_bytes(((i) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((bounds.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
             left = { let __min_a = left as f64; let __min_b = bounds[usize::try_from(i).unwrap_or(0)].left as f64; if __min_a.is_nan() || __min_b.is_nan() { f64::NAN } else { if __min_a < __min_b { __min_a } else if __min_b < __min_a { __min_b } else if __min_a == 0.0 && __min_b == 0.0 { if __min_a.is_sign_negative() { __min_a } else { __min_b } } else { __min_a } } };
             top = { let __min_a1 = top as f64; let __min_b1 = bounds[usize::try_from(i).unwrap_or(0)].top as f64; if __min_a1.is_nan() || __min_b1.is_nan() { f64::NAN } else { if __min_a1 < __min_b1 { __min_a1 } else if __min_b1 < __min_a1 { __min_b1 } else if __min_a1 == 0.0 && __min_b1 == 0.0 { if __min_a1.is_sign_negative() { __min_a1 } else { __min_b1 } } else { __min_a1 } } };
             right = { let __min_a2 = right as f64; let __min_b2 = bounds[usize::try_from(i).unwrap_or(0)].right as f64; if __min_a2.is_nan() || __min_b2.is_nan() { f64::NAN } else { if __min_a2 > __min_b2 { __min_a2 } else if __min_b2 > __min_a2 { __min_b2 } else if __min_a2 == 0.0 && __min_b2 == 0.0 { if __min_a2.is_sign_negative() { __min_b2 } else { __min_a2 } } else { __min_a2 } } };
@@ -515,8 +515,8 @@ impl PunctuationGeometryStage {
             return false;
         }
         let mut i = 0u32;
-        while ((i) as i32) < ((u_string::unit_count(&((c.text).to_ustring()))) as i32) {
-            if u_string::substring(&(c.text).to_ustring(), (i) as i32, i32::wrapping_add((i) as i32, 1)) != UString::from(" ") {
+        while (i32::from_ne_bytes(((i) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u_string::unit_count(&((c.text).to_ustring()))) as i32).to_ne_bytes())) {
+            if u_string::substring(&(c.text).to_ustring(), i32::from_ne_bytes(((i) as i32).to_ne_bytes()), i32::wrapping_add(i32::from_ne_bytes(((i) as i32).to_ne_bytes()), 1)) != UString::from(" ") {
                 return false;
             }
             i = u32::wrapping_add(i, 1);
@@ -534,14 +534,14 @@ impl PunctuationGeometryStage {
         if u32::try_from((inline_attachments.len()) & 0xFFFF_FFFF).unwrap_or(0) != u32::try_from((c.len()) & 0xFFFF_FFFF).unwrap_or(0) {
             return Err(TextRangeError::Message { text: UString::from("Inline attachments must align with natural clusters.") });
         }
-        let narrow_leading = match &(narrow_inline_box_leading_clusters) { None => SortedTable::sorted_table_set_builder::<u32>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints((*a) as i32, (*b) as i32))).clone().build(), Some(__option6) => (*__option6).clone() };
-        let narrow_trailing = match &(narrow_inline_box_trailing_clusters) { None => SortedTable::sorted_table_set_builder::<u32>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints((*a) as i32, (*b) as i32))).clone().build(), Some(__option7) => (*__option7).clone() };
+        let narrow_leading = match &(narrow_inline_box_leading_clusters) { None => SortedTable::sorted_table_set_builder::<u32>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_bytes(((*a) as i32).to_ne_bytes()), i32::from_ne_bytes(((*b) as i32).to_ne_bytes())))).clone().build(), Some(__option6) => (*__option6).clone() };
+        let narrow_trailing = match &(narrow_inline_box_trailing_clusters) { None => SortedTable::sorted_table_set_builder::<u32>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_bytes(((*a) as i32).to_ne_bytes()), i32::from_ne_bytes(((*b) as i32).to_ne_bytes())))).clone().build(), Some(__option7) => (*__option7).clone() };
         let mut decisions: Vec<AutoSpaceDecisionInfo> = vec![];
         let gap = policy.gap_em * font_size;
         let attached_boundaries = UnicodePunctuationBoundaryResolver::unicode_punctuation_boundary_resolver_resolve_attached_inline_virtual_boundaries(&inline_attachments);
-        let mut suppressed: SortedSetTableBuilder<u32> = SortedTable::sorted_table_set_builder::<u32>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints((*a) as i32, (*b) as i32)));
+        let mut suppressed: SortedSetTableBuilder<u32> = SortedTable::sorted_table_set_builder::<u32>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_bytes(((*a) as i32).to_ne_bytes()), i32::from_ne_bytes(((*b) as i32).to_ne_bytes()))));
         let mut bi = 0u32;
-        while ((bi) as i32) < ((u32::try_from((attached_boundaries.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32) {
+        while (i32::from_ne_bytes(((bi) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((attached_boundaries.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
             let boundary = (attached_boundaries[usize::try_from(bi).unwrap_or(0)]).clone();
             bi = u32::wrapping_add(bi, 1);
             suppressed.put(&(boundary.previous_cluster_index));
@@ -554,14 +554,14 @@ impl PunctuationGeometryStage {
             virtual_gap_at_run_end.push(false);
         }
         bi = 0u32;
-        while ((bi) as i32) < ((u32::try_from((attached_boundaries.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32) {
+        while (i32::from_ne_bytes(((bi) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((attached_boundaries.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
             let boundary = (attached_boundaries[usize::try_from(bi).unwrap_or(0)]).clone();
             bi = u32::wrapping_add(bi, 1);
             if boundary.next_cluster_index.is_none() {
                 continue;
             }
             let next_index = boundary.next_cluster_index;
-            if (*(next_index).as_ref().unwrap()) as i32 >= u32::try_from((c.len()) & 0xFFFF_FFFF).unwrap_or(0) as i32 {
+            if i32::from_ne_bytes(((*(next_index).as_ref().unwrap()) as i32).to_ne_bytes()) >= i32::from_ne_bytes(((u32::try_from((c.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes()) {
                 continue;
             }
             let next_cluster = (c[usize::try_from(*((next_index).as_ref().unwrap())).unwrap_or(0)]).clone();
@@ -584,15 +584,15 @@ impl PunctuationGeometryStage {
         let suppressed_set: SortedSetTable<u32> = suppressed.clone().build();
         let mut updated: Vec<Cluster> = vec![];
         let mut idx = 0u32;
-        while ((idx) as i32) < ((u32::try_from((c.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32) {
+        while (i32::from_ne_bytes(((idx) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((c.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
             let cluster = (c[usize::try_from(idx).unwrap_or(0)]).clone();
             let previous_spacing = if u32::wrapping_sub(idx, 1) <= 2147483647 { Some(east_asian_spacing_edges[usize::try_from(u32::wrapping_sub(idx, 1)).unwrap_or(0)].trailing) } else { None };
             let current_spacing = (east_asian_spacing_edges[usize::try_from(idx).unwrap_or(0)]).clone();
-            let next_spacing = if u32::wrapping_add(idx, 1) as i32 < ((u32::try_from((east_asian_spacing_edges.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32) { Some(east_asian_spacing_edges[usize::try_from(u32::wrapping_add(idx, 1)).unwrap_or(0)].leading) } else { None };
+            let next_spacing = if i32::from_ne_bytes(((u32::wrapping_add(idx, 1)) as i32).to_ne_bytes()) < (i32::from_ne_bytes(((u32::try_from((east_asian_spacing_edges.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) { Some(east_asian_spacing_edges[usize::try_from(u32::wrapping_add(idx, 1)).unwrap_or(0)].leading) } else { None };
             if PunctuationGeometryStage::punctuation_geometry_stage_is_space_run((cluster).clone()) {
                 let mut narrow_boundary_char: Option<UString> = None;
                 if previous_spacing == Some(EastAsianSpacingValue::Wide) && next_spacing == Some(EastAsianSpacingValue::Narrow) {
-                    narrow_boundary_char = if u32::wrapping_add(idx, 1) as i32 < ((u32::try_from((c.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32) { PunctuationGeometryStage::punctuation_geometry_stage_first_char(((c[usize::try_from(u32::wrapping_add(idx, 1)).unwrap_or(0)]).clone().text).to_ustring().as_ustr()) } else { None };
+                    narrow_boundary_char = if i32::from_ne_bytes(((u32::wrapping_add(idx, 1)) as i32).to_ne_bytes()) < (i32::from_ne_bytes(((u32::try_from((c.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) { PunctuationGeometryStage::punctuation_geometry_stage_first_char(((c[usize::try_from(u32::wrapping_add(idx, 1)).unwrap_or(0)]).clone().text).to_ustring().as_ustr()) } else { None };
                 } else {
                     if previous_spacing == Some(EastAsianSpacingValue::Narrow) && next_spacing == Some(EastAsianSpacingValue::Wide) {
                         narrow_boundary_char = if u32::wrapping_sub(idx, 1) <= 2147483647 { PunctuationGeometryStage::punctuation_geometry_stage_last_char(((c[usize::try_from(u32::wrapping_sub(idx, 1)).unwrap_or(0)]).clone().text).to_ustring().as_ustr()) } else { None };
@@ -610,7 +610,7 @@ impl PunctuationGeometryStage {
                     idx = u32::wrapping_add(idx, 1);
                     continue;
                 }
-                decisions.push(AutoSpaceDecisionInfo::new((cluster.range).clone(), &(UStr::new(&[103,97,112])), &(UStr::new(&[69,97,115,116,65,115,105,97,110,83,112,97,99,105,110,103,46,87,105,100,101])), UString::from(AutoSpaceMode::Replace.name()).as_ustr(), u_string::unit_count(&((cluster.text).to_ustring())), reduction / format!("{}", (u_string::unit_count(&((cluster.text).to_ustring()))) as i32).parse::<f64>().unwrap_or(0.0), reduction, &(UStr::new(&[84,101,120,116,65,117,116,111,83,112,97,99,101,82,101,112,108,97,99,101,58,101,97,115,116,45,97,115,105,97,110,45,115,112,97,99,105,110,103,45,87,45,115,112,97,99,101,45,78]))));
+                decisions.push(AutoSpaceDecisionInfo::new((cluster.range).clone(), &(UStr::new(&[103,97,112])), &(UStr::new(&[69,97,115,116,65,115,105,97,110,83,112,97,99,105,110,103,46,87,105,100,101])), UString::from(AutoSpaceMode::Replace.name()).as_ustr(), u_string::unit_count(&((cluster.text).to_ustring())), reduction / format!("{}", (i32::from_ne_bytes(((u_string::unit_count(&((cluster.text).to_ustring()))) as i32).to_ne_bytes()))).parse::<f64>().unwrap_or(0.0), reduction, &(UStr::new(&[84,101,120,116,65,117,116,111,83,112,97,99,101,82,101,112,108,97,99,101,58,101,97,115,116,45,97,115,105,97,110,45,115,112,97,99,105,110,103,45,87,45,115,112,97,99,101,45,78]))));
                 updated.push(Cluster::new((cluster.range).clone(), (cluster.text).to_ustring().as_ustr(), (cluster.font_key).to_ustring().as_ustr(), gap, Some((cluster.display_text).to_ustring()), Some(cluster.baseline_shift), Some(cluster.leading_layout_advance), Some(cluster.glyph_inline_shift)));
                 idx = u32::wrapping_add(idx, 1);
                 continue;
@@ -643,7 +643,7 @@ impl PunctuationGeometryStage {
         if PunctuationGeometryStage::punctuation_geometry_stage_is_wide_narrow_pair_with(left, right) {
             return true;
         }
-        if PunctuationGeometryStage::punctuation_geometry_stage_is_space_run((clusters[usize::try_from(right_index).unwrap_or(0)]).clone()) && left == EastAsianSpacingValue::Wide && (if u32::wrapping_add(right_index, 1) as i32 < ((u32::try_from((spacing_edges.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32) { Some(spacing_edges[usize::try_from(u32::wrapping_add(right_index, 1)).unwrap_or(0)].leading) } else { None }) == Some(EastAsianSpacingValue::Narrow) {
+        if PunctuationGeometryStage::punctuation_geometry_stage_is_space_run((clusters[usize::try_from(right_index).unwrap_or(0)]).clone()) && left == EastAsianSpacingValue::Wide && (if i32::from_ne_bytes(((u32::wrapping_add(right_index, 1)) as i32).to_ne_bytes()) < (i32::from_ne_bytes(((u32::try_from((spacing_edges.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) { Some(spacing_edges[usize::try_from(u32::wrapping_add(right_index, 1)).unwrap_or(0)].leading) } else { None }) == Some(EastAsianSpacingValue::Narrow) {
             return true;
         }
         if PunctuationGeometryStage::punctuation_geometry_stage_is_space_run((clusters[usize::try_from(left_index).unwrap_or(0)]).clone()) && right == EastAsianSpacingValue::Wide && (if u32::wrapping_sub(left_index, 1) <= 2147483647 { Some(spacing_edges[usize::try_from(u32::wrapping_sub(left_index, 1)).unwrap_or(0)].trailing) } else { None }) == Some(EastAsianSpacingValue::Narrow) {
@@ -657,24 +657,24 @@ impl PunctuationGeometryStage {
     }
 
     pub fn punctuation_geometry_stage_is_attached_ascii_point_mark_at(c: &Vec<Cluster>, index: u32) -> bool {
-        if index as i32 <= 0 {
+        if i32::from_ne_bytes(((index) as i32).to_ne_bytes()) <= 0 {
             return false;
         }
         let cluster = (c[usize::try_from(index).unwrap_or(0)]).clone();
         let previous = (c[usize::try_from(u32::wrapping_sub(index, 1)).unwrap_or(0)]).clone();
-        return PunctuationGeometryStage::punctuation_geometry_stage_is_ascii_point_mark_char(PunctuationGeometryStage::punctuation_geometry_stage_first_char((cluster.text).to_ustring().as_ustr()).clone()) && ((u_string::unit_count(&((previous.display_text).to_ustring()))) as i32) > (0) && ((u_string::unit_count(&((previous.text).to_ustring()))) as i32) > (0) && !PunctuationGeometryStage::punctuation_geometry_stage_is_whitespace_code(*(u_string::unit_at(&(previous.text).to_ustring(), u32::wrapping_sub(u_string::unit_count(&((previous.text).to_ustring())), 1))).as_ref().unwrap()) && (previous.range).clone().end == (cluster.range).clone().start;
+        return PunctuationGeometryStage::punctuation_geometry_stage_is_ascii_point_mark_char(PunctuationGeometryStage::punctuation_geometry_stage_first_char((cluster.text).to_ustring().as_ustr()).clone()) && (i32::from_ne_bytes(((u_string::unit_count(&((previous.display_text).to_ustring()))) as i32).to_ne_bytes())) > (0) && (i32::from_ne_bytes(((u_string::unit_count(&((previous.text).to_ustring()))) as i32).to_ne_bytes())) > (0) && !PunctuationGeometryStage::punctuation_geometry_stage_is_whitespace_code(*(u_string::unit_at(&(previous.text).to_ustring(), u32::wrapping_sub(u_string::unit_count(&((previous.text).to_ustring())), 1))).as_ref().unwrap()) && (previous.range).clone().end == (cluster.range).clone().start;
     }
 
     pub fn punctuation_geometry_stage_apply_inline_box_spans(c: &Vec<Cluster>, spans: &Vec<InlineBoxSpan>) -> InlineBoxApplicationResult {
         if u32::try_from((c.len()) & 0xFFFF_FFFF).unwrap_or(0) == 0 || u32::try_from((spans.len()) & 0xFFFF_FFFF).unwrap_or(0) == 0 {
-            let empty_advance: SortedMapTable<u32, f64> = SortedTable::sorted_table_map_builder::<u32, f64>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints((*a) as i32, (*b) as i32))).clone().build();
+            let empty_advance: SortedMapTable<u32, f64> = SortedTable::sorted_table_map_builder::<u32, f64>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_bytes(((*a) as i32).to_ne_bytes()), i32::from_ne_bytes(((*b) as i32).to_ne_bytes())))).clone().build();
             return InlineBoxApplicationResult::new(c.to_vec(), (empty_advance).clone(), vec![].to_vec());
         }
-        let mut leading_by_cluster: SortedMapTableBuilder<u32, f64> = SortedTable::sorted_table_map_builder::<u32, f64>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints((*a) as i32, (*b) as i32)));
-        let mut trailing_by_cluster: SortedMapTableBuilder<u32, f64> = SortedTable::sorted_table_map_builder::<u32, f64>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints((*a) as i32, (*b) as i32)));
+        let mut leading_by_cluster: SortedMapTableBuilder<u32, f64> = SortedTable::sorted_table_map_builder::<u32, f64>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_bytes(((*a) as i32).to_ne_bytes()), i32::from_ne_bytes(((*b) as i32).to_ne_bytes()))));
+        let mut trailing_by_cluster: SortedMapTableBuilder<u32, f64> = SortedTable::sorted_table_map_builder::<u32, f64>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_bytes(((*a) as i32).to_ne_bytes()), i32::from_ne_bytes(((*b) as i32).to_ne_bytes()))));
         let mut decisions: Vec<InlineBoxDecisionInfo> = vec![];
         for span in spans {
-            if span.range.clone().start as i32 >= (span.range).clone().end as i32 {
+            if i32::from_ne_bytes((((span.range).clone().start) as i32).to_ne_bytes()) >= i32::from_ne_bytes((((span.range).clone().end) as i32).to_ne_bytes()) {
                 continue;
             }
             let cluster_range = PunctuationGeometryStage::punctuation_geometry_stage_cluster_index_range_for(&c, (span.range).clone());
@@ -691,10 +691,10 @@ impl PunctuationGeometryStage {
             }
             decisions.push(InlineBoxDecisionInfo::new((span.range).clone(), span.inline_start, span.inline_end, UString::from(span.outer_spacing.name()).as_ustr(), (cluster_range).as_ref().unwrap().start, (cluster_range).as_ref().unwrap().end, Some(UString::from("InlineBoxBoundaryAdvance"))));
         }
-        let mut advance_by_cluster: SortedMapTableBuilder<u32, f64> = SortedTable::sorted_table_map_builder::<u32, f64>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints((*a) as i32, (*b) as i32)));
+        let mut advance_by_cluster: SortedMapTableBuilder<u32, f64> = SortedTable::sorted_table_map_builder::<u32, f64>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_bytes(((*a) as i32).to_ne_bytes()), i32::from_ne_bytes(((*b) as i32).to_ne_bytes()))));
         let mut resolved: Vec<Cluster> = vec![];
         let mut idx = 0u32;
-        while ((idx) as i32) < ((u32::try_from((c.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32) {
+        while (i32::from_ne_bytes(((idx) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((c.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
             let cluster = (c[usize::try_from(idx).unwrap_or(0)]).clone();
             let leading = leading_by_cluster.get(&(idx));
             let trailing = trailing_by_cluster.get(&(idx));
@@ -720,9 +720,9 @@ impl PunctuationGeometryStage {
         }
         let mut low = 0u32;
         let mut high = u32::try_from((c.len()) & 0xFFFF_FFFF).unwrap_or(0);
-        while ((low) as i32) < ((high) as i32) {
+        while (i32::from_ne_bytes(((low) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((high) as i32).to_ne_bytes())) {
             let mid = u32::wrapping_add(low, high) >> 1;
-            if c[usize::try_from(mid).unwrap_or(0)].clone().range.clone().start as i32 < ((source_range.start) as i32) {
+            if i32::from_ne_bytes(((((c[usize::try_from(mid).unwrap_or(0)]).clone().range).clone().start) as i32).to_ne_bytes()) < (i32::from_ne_bytes(((source_range.start) as i32).to_ne_bytes())) {
                 low = u32::wrapping_add(mid, 1);
             } else {
                 high = mid;
@@ -731,20 +731,20 @@ impl PunctuationGeometryStage {
         let first = low;
         low = first;
         high = u32::try_from((c.len()) & 0xFFFF_FFFF).unwrap_or(0);
-        while ((low) as i32) < ((high) as i32) {
+        while (i32::from_ne_bytes(((low) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((high) as i32).to_ne_bytes())) {
             let mid = u32::wrapping_add(low, high) >> 1;
-            if c[usize::try_from(mid).unwrap_or(0)].clone().range.clone().end as i32 <= source_range.end as i32 {
+            if i32::from_ne_bytes(((((c[usize::try_from(mid).unwrap_or(0)]).clone().range).clone().end) as i32).to_ne_bytes()) <= i32::from_ne_bytes(((source_range.end) as i32).to_ne_bytes()) {
                 low = u32::wrapping_add(mid, 1);
             } else {
                 high = mid;
             }
         }
         let last_exclusive = low;
-        return if first as i32 < ((last_exclusive) as i32) { Some(IntRange::new(first, u32::wrapping_sub(last_exclusive, 1))) } else { None };
+        return if i32::from_ne_bytes(((first) as i32).to_ne_bytes()) < (i32::from_ne_bytes(((last_exclusive) as i32).to_ne_bytes())) { Some(IntRange::new(first, u32::wrapping_sub(last_exclusive, 1))) } else { None };
     }
 
     pub(crate) fn punctuation_geometry_stage_empty_contextual_kinsoku() -> ContextualKinsoku {
-        return ContextualKinsoku::new(SortedTable::sorted_table_set_builder::<u32>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints((*a) as i32, (*b) as i32))).clone().build(), vec![].to_vec(), SortedTable::sorted_table_set_builder::<u32>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints((*a) as i32, (*b) as i32))).clone().build(), vec![].to_vec(), vec![].to_vec());
+        return ContextualKinsoku::new(SortedTable::sorted_table_set_builder::<u32>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_bytes(((*a) as i32).to_ne_bytes()), i32::from_ne_bytes(((*b) as i32).to_ne_bytes())))).clone().build(), vec![].to_vec(), SortedTable::sorted_table_set_builder::<u32>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_bytes(((*a) as i32).to_ne_bytes()), i32::from_ne_bytes(((*b) as i32).to_ne_bytes())))).clone().build(), vec![].to_vec(), vec![].to_vec());
     }
 
     pub(crate) fn punctuation_geometry_stage_mode_for_narrow(policy: AutoSpacePolicy, boundary_char: Option<UString>) -> Option<AutoSpaceMode> {
@@ -755,7 +755,7 @@ impl PunctuationGeometryStage {
     }
 
     pub(crate) fn punctuation_geometry_stage_is_digit_char(code: Option<u32>) -> bool {
-        return ((code.unwrap_or(0)) as i32) >= 48 && ((code.unwrap_or(0)) as i32) <= 57 || ((code.unwrap_or(0)) as i32) >= 65296 && ((code.unwrap_or(0)) as i32) <= 65305;
+        return (i32::from_ne_bytes(((code.unwrap_or(0)) as i32).to_ne_bytes())) >= 48 && (i32::from_ne_bytes(((code.unwrap_or(0)) as i32).to_ne_bytes())) <= 57 || (i32::from_ne_bytes(((code.unwrap_or(0)) as i32).to_ne_bytes())) >= 65296 && (i32::from_ne_bytes(((code.unwrap_or(0)) as i32).to_ne_bytes())) <= 65305;
     }
 
     pub(crate) fn punctuation_geometry_stage_is_ascii_point_mark_char(ch: Option<UString>) -> bool {
@@ -778,18 +778,18 @@ impl PunctuationGeometryStage {
     }
 
     pub(crate) fn punctuation_geometry_stage_is_whitespace_code(code: u32) -> bool {
-        return ((code) as i32) >= 9 && ((code) as i32) <= 13 || code == 32 || code == 12288;
+        return (i32::from_ne_bytes(((code) as i32).to_ne_bytes())) >= 9 && (i32::from_ne_bytes(((code) as i32).to_ne_bytes())) <= 13 || code == 32 || code == 12288;
     }
 
     pub(crate) fn punctuation_geometry_stage_first_char(s: &UStr) -> Option<UString> {
     let __units = s.as_slice();
     let __count = u_string::unit_count(&s);
-        return if __count as i32 > (0) { Some(u_string::char_at_from(__units, 0u32).to_ustring()) } else { None };
+        return if i32::from_ne_bytes(((__count) as i32).to_ne_bytes()) > (0) { Some(u_string::char_at_from(__units, 0u32).to_ustring()) } else { None };
     }
 
     pub(crate) fn punctuation_geometry_stage_last_char(s: &UStr) -> Option<UString> {
     let __units1 = s.as_slice();
     let __count1 = u_string::unit_count(&s);
-        return if __count1 as i32 > (0) { Some(u_string::char_at_from(__units1, u32::wrapping_sub(__count1, 1)).to_ustring()) } else { None };
+        return if i32::from_ne_bytes(((__count1) as i32).to_ne_bytes()) > (0) { Some(u_string::char_at_from(__units1, u32::wrapping_sub(__count1, 1)).to_ustring()) } else { None };
     }
 }

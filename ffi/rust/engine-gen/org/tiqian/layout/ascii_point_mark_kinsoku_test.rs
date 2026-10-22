@@ -1379,7 +1379,7 @@ fn point_mark_split_from_an_overlong_latin_token_still_cannot_start_a_line() {
                         {
                             let mut _g = 0u32;
                             let _g1 = AsciiPointMarkKinsokuTestSupport::ascii_point_mark_kinsoku_test_support_line_texts((r).clone(), UStr::new(&[97,110,121,119,97,121,44,20320]));
-                            while ((_g) as i32) < ((u32::try_from((_g1.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32) {
+                            while (i32::from_ne_bytes(((_g) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((_g1.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
                                 let s = (_g1[usize::try_from(_g).unwrap_or(0)]).clone();
                                 _g = u32::wrapping_add(_g, 1);
                                 if s.starts_with(&UString::from(",")) {
@@ -1401,7 +1401,7 @@ fn point_mark_split_from_an_overlong_latin_token_still_cannot_start_a_line() {
                         {
                             let mut _g = 0u32;
                             let _g1 = AsciiPointMarkKinsokuTestSupport::ascii_point_mark_kinsoku_test_support_line_texts((r).clone(), UStr::new(&[97,110,121,119,97,121,44,20320]));
-                            while ((_g) as i32) < ((u32::try_from((_g1.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32) {
+                            while (i32::from_ne_bytes(((_g) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((_g1.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
                                 let s = (_g1[usize::try_from(_g).unwrap_or(0)]).clone();
                                 _g = u32::wrapping_add(_g, 1);
                                 if s.starts_with(&UString::from(",")) {
@@ -1423,7 +1423,7 @@ fn point_mark_split_from_an_overlong_latin_token_still_cannot_start_a_line() {
                         {
                             let mut _g = 0u32;
                             let _g1 = AsciiPointMarkKinsokuTestSupport::ascii_point_mark_kinsoku_test_support_line_texts((r).clone(), UStr::new(&[97,110,121,119,97,121,44,20320]));
-                            while ((_g) as i32) < ((u32::try_from((_g1.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32) {
+                            while (i32::from_ne_bytes(((_g) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((_g1.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
                                 let s = (_g1[usize::try_from(_g).unwrap_or(0)]).clone();
                                 _g = u32::wrapping_add(_g, 1);
                                 if s.starts_with(&UString::from(",")) {
@@ -1445,7 +1445,7 @@ fn point_mark_split_from_an_overlong_latin_token_still_cannot_start_a_line() {
                         {
                             let mut _g = 0u32;
                             let _g1 = AsciiPointMarkKinsokuTestSupport::ascii_point_mark_kinsoku_test_support_line_texts((r).clone(), UStr::new(&[97,110,121,119,97,121,44,20320]));
-                            while ((_g) as i32) < ((u32::try_from((_g1.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32) {
+                            while (i32::from_ne_bytes(((_g) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((_g1.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
                                 let s = (_g1[usize::try_from(_g).unwrap_or(0)]).clone();
                                 _g = u32::wrapping_add(_g, 1);
                                 if s.starts_with(&UString::from(",")) {
@@ -1474,7 +1474,7 @@ fn point_mark_exposed_by_a_second_stage_latin_cut_is_split_from_its_suffix() {
                 {
                     let mut _g = 0u32;
                     let _g1 = AsciiPointMarkKinsokuTestSupport::ascii_point_mark_kinsoku_test_support_line_texts((r).clone(), UStr::new(&[46,44,65,20013]));
-                    while ((_g) as i32) < ((u32::try_from((_g1.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32) {
+                    while (i32::from_ne_bytes(((_g) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((_g1.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
                         let s = (_g1[usize::try_from(_g).unwrap_or(0)]).clone();
                         _g = u32::wrapping_add(_g, 1);
                         if s.starts_with(&UString::from(",")) {
@@ -1502,7 +1502,7 @@ fn impossible_measure_hangs_the_point_mark_instead_of_leaving_it_at_line_start()
                 {
                     let mut _g = 0u32;
                     let _g1 = AsciiPointMarkKinsokuTestSupport::ascii_point_mark_kinsoku_test_support_breakers();
-                    while ((_g) as i32) < ((u32::try_from((_g1.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32) {
+                    while (i32::from_ne_bytes(((_g) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((_g1.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
                         let b = (_g1[usize::try_from(_g).unwrap_or(0)]).clone();
                         _g = u32::wrapping_add(_g, 1);
                         let r = AsciiPointMarkKinsokuTestSupport::ascii_point_mark_kinsoku_test_support_layout(UStr::new(&[20013,44,25991]), w, b.breaker.clone(), None, None, None, None, None, None).unwrap();
@@ -1510,7 +1510,7 @@ fn impossible_measure_hangs_the_point_mark_instead_of_leaving_it_at_line_start()
                         {
                             let mut _g = 0u32;
                             let _g1 = AsciiPointMarkKinsokuTestSupport::ascii_point_mark_kinsoku_test_support_line_texts((r).clone(), UStr::new(&[20013,44,25991]));
-                            while ((_g) as i32) < ((u32::try_from((_g1.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32) {
+                            while (i32::from_ne_bytes(((_g) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((_g1.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
                                 let s = (_g1[usize::try_from(_g).unwrap_or(0)]).clone();
                                 _g = u32::wrapping_add(_g, 1);
                                 if s.starts_with(&UString::from(",")) {
@@ -1577,7 +1577,7 @@ fn styled_point_mark_run_can_extend_one_impossible_measure_hang() {
                 {
                     let mut _g = 0u32;
                     let _g1 = AsciiPointMarkKinsokuTestSupport::ascii_point_mark_kinsoku_test_support_line_texts((r).clone(), UStr::new(&[20013,33,44,25991]));
-                    while ((_g) as i32) < ((u32::try_from((_g1.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32) {
+                    while (i32::from_ne_bytes(((_g) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((_g1.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
                         let s = (_g1[usize::try_from(_g).unwrap_or(0)]).clone();
                         _g = u32::wrapping_add(_g, 1);
                         if s.starts_with(&UString::from("!")) || (s).starts_with(&UString::from(",")) {
@@ -1626,7 +1626,7 @@ fn contextual_run_can_extend_a_profile_hang_only_within_the_same_protected_group
                 {
                     let mut _g = 0u32;
                     let _g1 = AsciiPointMarkKinsokuTestSupport::ascii_point_mark_kinsoku_test_support_line_texts((r).clone(), UStr::new(&[20013,65292,44,25991]));
-                    while ((_g) as i32) < ((u32::try_from((_g1.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32) {
+                    while (i32::from_ne_bytes(((_g) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((_g1.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
                         let s = (_g1[usize::try_from(_g).unwrap_or(0)]).clone();
                         _g = u32::wrapping_add(_g, 1);
                         if s.starts_with(&UString::from(",")) || (s).starts_with(&UString::from("，")) {
@@ -1661,7 +1661,7 @@ fn adjacent_impossible_groups_do_not_share_hang_provenance() {
                 {
                     let mut _g = 0u32;
                     let _g1 = AsciiPointMarkKinsokuTestSupport::ascii_point_mark_kinsoku_test_support_line_texts((r).clone(), UStr::new(&[20013,33,65292,63]));
-                    while ((_g) as i32) < ((u32::try_from((_g1.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32) {
+                    while (i32::from_ne_bytes(((_g) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((_g1.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
                         let s = (_g1[usize::try_from(_g).unwrap_or(0)]).clone();
                         _g = u32::wrapping_add(_g, 1);
                         if s.starts_with(&UString::from("!")) || (s).starts_with(&UString::from("?")) {
@@ -1705,7 +1705,7 @@ fn kinsoku_none_disables_clreq_but_keeps_the_uax14_ascii_point_mark_boundary() {
                 {
                     let mut _g = 0u32;
                     let _g1 = AsciiPointMarkKinsokuTestSupport::ascii_point_mark_kinsoku_test_support_line_texts((r).clone(), UStr::new(&[20013,25991,20013,25991,44,20013,25991]));
-                    while ((_g) as i32) < ((u32::try_from((_g1.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32) {
+                    while (i32::from_ne_bytes(((_g) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((_g1.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
                         let s = (_g1[usize::try_from(_g).unwrap_or(0)]).clone();
                         _g = u32::wrapping_add(_g, 1);
                         if s.starts_with(&UString::from(",")) {
@@ -1773,7 +1773,7 @@ fn mandatory_break_control_after_a_hung_point_mark_stays_in_the_trailing_suffix(
                 {
                     let mut _g = 0u32;
                     let _g1 = AsciiPointMarkKinsokuTestSupport::ascii_point_mark_kinsoku_test_support_line_texts((r).clone(), UStr::new(&[20013,44,10,25991]));
-                    while ((_g) as i32) < ((u32::try_from((_g1.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32) {
+                    while (i32::from_ne_bytes(((_g) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((_g1.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
                         let s = (_g1[usize::try_from(_g).unwrap_or(0)]).clone();
                         _g = u32::wrapping_add(_g, 1);
                         if s.starts_with(&UString::from(",")) {
@@ -1799,7 +1799,7 @@ fn reported_real_world_paragraph_never_wraps_directly_before_an_ascii_comma() {
                 {
                     let mut _g = 0u32;
                     let _g1 = AsciiPointMarkKinsokuTestSupport::ascii_point_mark_kinsoku_test_support_breakers();
-                    while ((_g) as i32) < ((u32::try_from((_g1.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32) {
+                    while (i32::from_ne_bytes(((_g) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((_g1.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
                         let b = (_g1[usize::try_from(_g).unwrap_or(0)]).clone();
                         _g = u32::wrapping_add(_g, 1);
                         let r = AsciiPointMarkKinsokuTestSupport::ascii_point_mark_kinsoku_test_support_layout(UString::from(format!("{}", { let mut __s = UString::new(); __s += &(UString::from("对于你冒犯的断言不敢苟同,你以一种理所当然的语气声明\"明显的已经越过了人际尊重的基本门槛\",")); __s += &(UString::from("如此注重逻辑推导的作者居然会对论断的前提条件如此宽松以至于不留回旋余地?当然不是,在回复的一开头,")); __s += &(UString::from("聪明的作者就已经强调了自己作为被冒犯者有权力定义自己的感受,当然有权力!,但是这种感受是否可以无限扩展到")); __s += &(UString::from("\"人际尊重的基本门槛\",还是值得商榷的,逻辑严谨如你岂能放过如此基础的逻辑漏洞?也许我们可以采用更加自洽的解释,")); __s += &(UString::from(" 这种愤怒来源于作者遭到否定是的第一反应,一篇让你耿耿于怀三年的留言需要你通过反复打磨的语言和极致构思的反讽,")); __s += &(UString::from("只为了冷嘲热讽一个逻辑甚至不大通顺的留言.\" 我一定要用最严密的逻辑反驳回去,这是关乎我尊严的网络论战\",也许你心里确实这么想,")); __s += &(UString::from(" 可是承认这件事情在你的内心是一件丢脸的事情,倘若承认了自己的三年的耿耿于怀, 就等同于认可自己与对方与自己处于同一水平对话,")); __s += &(UString::from(" “居然要和一个沙文主义在相提并论, 这怎么可以接受”.但事实上,如此自视清高反而令人啼笑皆非,如果你可以大方承认自己的傲慢,")); __s += &(UString::from("我大可因为你的心胸宽广\"对你致上最高的敬意\".别急着找我的逻辑漏洞,因为我也会大大方方的承认我就是在玩,")); __s += &(UString::from("我乐意这种伪装成思辨的娱乐,这比大部分辩论赛有意思多了 .anyway,你完全有机会在一开始就讲清楚自己愤怒的来源,")); __s += &(UString::from("而不是强行带上无所谓的面具却又如此的用力过猛,希望下一次你可以清晰表述,就像你自己提到的那样,")); __s += &(UString::from("不要\"把解读的权利拱手让给对方\"")); __s }).as_str()).as_ustr(), w, b.breaker.clone(), None, None, None, None, None, None).unwrap();
@@ -1807,7 +1807,7 @@ fn reported_real_world_paragraph_never_wraps_directly_before_an_ascii_comma() {
                         {
                             let mut _g = 0u32;
                             let _g1 = AsciiPointMarkKinsokuTestSupport::ascii_point_mark_kinsoku_test_support_line_texts((r).clone(), UString::from(format!("{}", { let mut __s = UString::new(); __s += &(UString::from("对于你冒犯的断言不敢苟同,你以一种理所当然的语气声明\"明显的已经越过了人际尊重的基本门槛\",")); __s += &(UString::from("如此注重逻辑推导的作者居然会对论断的前提条件如此宽松以至于不留回旋余地?当然不是,在回复的一开头,")); __s += &(UString::from("聪明的作者就已经强调了自己作为被冒犯者有权力定义自己的感受,当然有权力!,但是这种感受是否可以无限扩展到")); __s += &(UString::from("\"人际尊重的基本门槛\",还是值得商榷的,逻辑严谨如你岂能放过如此基础的逻辑漏洞?也许我们可以采用更加自洽的解释,")); __s += &(UString::from(" 这种愤怒来源于作者遭到否定是的第一反应,一篇让你耿耿于怀三年的留言需要你通过反复打磨的语言和极致构思的反讽,")); __s += &(UString::from("只为了冷嘲热讽一个逻辑甚至不大通顺的留言.\" 我一定要用最严密的逻辑反驳回去,这是关乎我尊严的网络论战\",也许你心里确实这么想,")); __s += &(UString::from(" 可是承认这件事情在你的内心是一件丢脸的事情,倘若承认了自己的三年的耿耿于怀, 就等同于认可自己与对方与自己处于同一水平对话,")); __s += &(UString::from(" “居然要和一个沙文主义在相提并论, 这怎么可以接受”.但事实上,如此自视清高反而令人啼笑皆非,如果你可以大方承认自己的傲慢,")); __s += &(UString::from("我大可因为你的心胸宽广\"对你致上最高的敬意\".别急着找我的逻辑漏洞,因为我也会大大方方的承认我就是在玩,")); __s += &(UString::from("我乐意这种伪装成思辨的娱乐,这比大部分辩论赛有意思多了 .anyway,你完全有机会在一开始就讲清楚自己愤怒的来源,")); __s += &(UString::from("而不是强行带上无所谓的面具却又如此的用力过猛,希望下一次你可以清晰表述,就像你自己提到的那样,")); __s += &(UString::from("不要\"把解读的权利拱手让给对方\"")); __s }).as_str()).as_ustr());
-                            while ((_g) as i32) < ((u32::try_from((_g1.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32) {
+                            while (i32::from_ne_bytes(((_g) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((_g1.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
                                 let s = (_g1[usize::try_from(_g).unwrap_or(0)]).clone();
                                 _g = u32::wrapping_add(_g, 1);
                                 if s.starts_with(&UString::from(",")) {

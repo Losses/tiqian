@@ -20,16 +20,16 @@ export class ResolvedKinsoku {
 }
 
 export function ResolvedKinsokulevelOrder(v: KinsokuLevel): number {
-  if (v.kind === "Strict") return 3;
   if (v.kind === "None") return 0;
-  if (v.kind === "GbStyle") return 2;
   if (v.kind === "Basic") return 1;
+  if (v.kind === "GbStyle") return 2;
+  if (v.kind === "Strict") return 3;
   return 0;
 }
 
 export function ResolvedKinsokuhangingOrder(v: HangingPunctuationStyle): number {
-  if (v.kind === "PauseStops") return 1;
   if (v.kind === "Disabled") return 0;
+  if (v.kind === "PauseStops") return 1;
   return 0;
 }
 

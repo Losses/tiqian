@@ -52,7 +52,7 @@ export class StubFontMetricsResolver implements FontMetricsResolver {
       switch (_g.kind) {
         case "CjkText":
         case "CjkPunctuation":
-          result = new RawFontMetrics(r.fontSize * 1.16, r.fontSize * 0.288, 0, FontMetricSource.RawTables, r.fontSize * 0.88, r.fontSize * 0.12);
+          result = new RawFontMetrics(r.fontSize * 1.16, r.fontSize * 0.288, 0, (FontMetricSource.RawTables as FontMetricSource), r.fontSize * 0.88, r.fontSize * 0.12);
           break;
         case "LatinText":
           result = new RawFontMetrics(r.fontSize * 0.8, r.fontSize * 0.2, 0, (FontMetricSource.RawTables as FontMetricSource), null, null);
@@ -117,11 +117,11 @@ export class ScriptAwareFontMetricsNormalizer implements FontMetricsNormalizer {
   private normalizeCjk(i: FontMetricsNormalizationInput): LayoutFontMetrics {
     const m = i.rawMetrics;
     const t = m.typoAscent !== null && m.typoDescent !== null;
-    return new LayoutFontMetrics((m.typoAscent !== null ? m.typoAscent : m.ascent), (m.typoDescent !== null ? m.typoDescent : m.descent), 0, (t ? FontMetricsPolicy.IdeographicBox : FontMetricsPolicy.Raw), BaselinePolicy.Ideographic, BaselineClass.IdeographicLow, MetricBox.IdeographicEmBox, m.source, `ScriptAwareFontMetricsNormalizer:${i.request.role.kind}:${(t ? "font-typo-box" : "hhea-fallback-no-os2")}`);
+    return new LayoutFontMetrics(((m.typoAscent !== null ? m.typoAscent : m.ascent))!, ((m.typoDescent !== null ? m.typoDescent : m.descent))!, 0, (t ? (FontMetricsPolicy.IdeographicBox as FontMetricsPolicy) : (FontMetricsPolicy.Raw as FontMetricsPolicy)), (BaselinePolicy.Ideographic as BaselinePolicy), (BaselineClass.IdeographicLow as BaselineClass), (MetricBox.IdeographicEmBox as MetricBox), m.source, `ScriptAwareFontMetricsNormalizer:${i.request.role.kind}:${(t ? "font-typo-box" : "hhea-fallback-no-os2")}`);
   }
 
   private normalizeRaw(i: FontMetricsNormalizationInput, why: string): LayoutFontMetrics {
     const m = i.rawMetrics;
-    return new LayoutFontMetrics(m.ascent, m.descent, 0, FontMetricsPolicy.Raw, BaselinePolicy.Alphabetic, BaselineClass.Roman, MetricBox.RawFontBox, m.source, `ScriptAwareFontMetricsNormalizer:${i.request.role.kind}:${why}`);
+    return new LayoutFontMetrics(m.ascent, m.descent, 0, (FontMetricsPolicy.Raw as FontMetricsPolicy), (BaselinePolicy.Alphabetic as BaselinePolicy), (BaselineClass.Roman as BaselineClass), (MetricBox.RawFontBox as MetricBox), m.source, `ScriptAwareFontMetricsNormalizer:${i.request.role.kind}:${why}`);
   }
 }

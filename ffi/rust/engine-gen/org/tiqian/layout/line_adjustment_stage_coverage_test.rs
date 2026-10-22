@@ -2524,9 +2524,9 @@ fn emergency_selected_break_opens_the_preferred_tracking_span() {
         let r = LineAdjustmentStageCoverageTestSupport::line_adjustment_stage_coverage_test_support_layout(text.as_ustr(), 101.0f64, None, None, Some(vec![
     (LineBreakSpan::new(TextRange::new(0u32, LineAdjustmentStageCoverageTestSupport::line_adjustment_stage_coverage_test_support_text_length(text.as_ustr())).unwrap(), LineBreakPolicy::ProgressiveTechnical)).clone(),
 ]), None, None).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_true((u32::try_from((r.lines.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32 > (1), Some((LineAdjustmentStageCoverageTestSupport::line_adjustment_stage_coverage_test_support_render_lines(&r.lines)).to_ustring())).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_true((i32::from_ne_bytes(((u32::try_from((r.lines.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) > (1), Some((LineAdjustmentStageCoverageTestSupport::line_adjustment_stage_coverage_test_support_render_lines(&r.lines)).to_ustring())).unwrap();
         let tracking = LineAdjustmentStageCoverageTestSupport::line_adjustment_stage_coverage_test_support_allocation_deltas((r).clone(), UStr::new(&[69,109,101,114,103,101,110,99,121,71,114,97,112,104,101,109,101,84,114,97,99,107,105,110,103]));
-        let _ = TracedAssertions::traced_assertions_assert_true((u32::try_from((tracking.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32 > (0), Some((LineAdjustmentStageCoverageTestSupport::line_adjustment_stage_coverage_test_support_render_justifications(&(r.debug).clone().justification_decisions)).to_ustring())).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_true((i32::from_ne_bytes(((u32::try_from((tracking.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) > (0), Some((LineAdjustmentStageCoverageTestSupport::line_adjustment_stage_coverage_test_support_render_justifications(&(r.debug).clone().justification_decisions)).to_ustring())).unwrap();
     });
 }
 
@@ -2714,7 +2714,7 @@ fn technical_line_body_stretch_rejects_the_clean_tier_and_replays() {
         let r = LineAdjustmentStageCoverageTestSupport::line_adjustment_stage_coverage_test_support_layout(text.as_ustr(), 96.0f64, None, None, Some(vec![
     (LineBreakSpan::new(TextRange::new(0u32, LineAdjustmentStageCoverageTestSupport::line_adjustment_stage_coverage_test_support_text_length(text.as_ustr())).unwrap(), LineBreakPolicy::ProgressiveTechnical)).clone(),
 ]), None, None).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_true((u32::try_from((r.lines.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32 > (1), Some((LineAdjustmentStageCoverageTestSupport::line_adjustment_stage_coverage_test_support_render_lines(&r.lines)).to_ustring())).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_true((i32::from_ne_bytes(((u32::try_from((r.lines.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) > (1), Some((LineAdjustmentStageCoverageTestSupport::line_adjustment_stage_coverage_test_support_render_lines(&r.lines)).to_ustring())).unwrap();
         let reasons = LineAdjustmentStageCoverageTestSupport::line_adjustment_stage_coverage_test_support_emergency_reasons((r).clone());
         let mut has_rejection = false;
         for i in 0..match u32::try_from(reasons.len()) { Ok(value) => value, Err(_) => u32::MAX } {
@@ -2748,7 +2748,7 @@ fn tiny_technical_tracking_stays_below_the_rejection_threshold() {
         let tiny = LineAdjustmentStageCoverageTestSupport::line_adjustment_stage_coverage_test_support_layout(text.as_ustr(), TestHelpers::test_helpers_f32_literal(96.004f64), None, None, Some((span).clone()), None, None).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_equals_int_range(IntRange::new(0u32, 5u32), ((tiny.lines[0usize]).clone().cluster_range).clone(), Some((LineAdjustmentStageCoverageTestSupport::line_adjustment_stage_coverage_test_support_render_lines(&tiny.lines)).to_ustring())).unwrap();
         let deltas = LineAdjustmentStageCoverageTestSupport::line_adjustment_stage_coverage_test_support_allocation_deltas((tiny).clone(), UStr::new(&[67,106,107,73,110,116,101,114,67,104,97,114]));
-        let _ = TracedAssertions::traced_assertions_assert_true((u32::try_from((deltas.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32 > (0), Some((LineAdjustmentStageCoverageTestSupport::line_adjustment_stage_coverage_test_support_render_justifications(&(tiny.debug).clone().justification_decisions)).to_ustring())).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_true((i32::from_ne_bytes(((u32::try_from((deltas.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) > (0), Some((LineAdjustmentStageCoverageTestSupport::line_adjustment_stage_coverage_test_support_render_justifications(&(tiny.debug).clone().justification_decisions)).to_ustring())).unwrap();
         let mut all_small = true;
         for i in 0..match u32::try_from(deltas.len()) { Ok(value) => value, Err(_) => u32::MAX } {
             if !((deltas[usize::try_from(i).unwrap_or(0)]) <= 0.001f64) {

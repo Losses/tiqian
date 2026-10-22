@@ -85,7 +85,7 @@ export class ParagraphShapingStage {
     }
     for (let i = 0; i < count; i += 1) {
       const c = (Number.isNaN(s.charCodeAt(i)) ? null : s.charCodeAt(i))!;
-      if (c < 48 || c > 57) {
+      if (c! < 48 || c! > 57) {
         return false;
       }
     }
@@ -137,7 +137,7 @@ export class ParagraphShapingStage {
     if (role.kind === "CjkPunctuation") {
       for (let i = 0, count2 = displayText.length; i < count2; i += 1) {
         const c = (Number.isNaN(displayText.charCodeAt(i)) ? null : displayText.charCodeAt(i))!;
-        if (ParagraphShapingStage.isSharedCurlyQuote(c)) {
+        if (ParagraphShapingStage.isSharedCurlyQuote((c)!)) {
           return ["fwid=1"];
         }
       }
@@ -204,14 +204,15 @@ export class ParagraphShapingStage {
     if (pages.endsWith(".")) {
       pages = pages.substring(0, pages.length - 1);
     }
-    if (volume.length === 0 || issue.length === 0 || pages.length === 0) {
+    const count4 = pages.length;
+    if (volume.length === 0 || issue.length === 0 || count4 === 0) {
       return [];
     }
     if (!ParagraphShapingStage.isAllDigits(volume) || !ParagraphShapingStage.isAllDigits(issue)) {
       return [];
     }
     let rangeSeparator = -1;
-    for (let i = 0, count4 = pages.length; i < count4; i += 1) {
+    for (let i = 0; i < count4; i += 1) {
       const c = (Number.isNaN(pages.charCodeAt(i)) ? null : pages.charCodeAt(i))!;
       if (c === 45 || c === 8211 || c === 8212) {
         rangeSeparator = i;
@@ -266,7 +267,7 @@ export class ParagraphShapingStage {
     for (let i = 1, count7 = w.length; i < count7; i += 1) {
       const c = (Number.isNaN(w.charCodeAt(i)) ? null : w.charCodeAt(i))!;
       const prev = readUnit(w, i - 1)!;
-      if (ParagraphShapingStage.isUpperCase(c) && (ParagraphShapingStage.isLowerCase(prev) || ParagraphShapingStage.isUpperCase(prev) && i + 1 < count7 && ParagraphShapingStage.isLowerCase(readUnit(w, i + 1)!))) {
+      if (ParagraphShapingStage.isUpperCase((c)!) && (ParagraphShapingStage.isLowerCase((prev)!) || ParagraphShapingStage.isUpperCase((prev)!) && i + 1 < count7 && ParagraphShapingStage.isLowerCase(readUnit(w, i + 1)!))) {
         humps.push(i);
       }
     }
@@ -304,7 +305,7 @@ export class ParagraphShapingStage {
     for (let index = 1, count12 = w.length; index < count12; index += 1) {
       const left = readUnit(w, index - 1)!;
       const right = (Number.isNaN(w.charCodeAt(index)) ? null : w.charCodeAt(index))!;
-      if (ParagraphShapingStage.isLetter(left) && ParagraphShapingStage.isDigit(right) || ParagraphShapingStage.isDigit(left) && ParagraphShapingStage.isLetter(right)) {
+      if (ParagraphShapingStage.isLetter((left)!) && ParagraphShapingStage.isDigit((right)!) || ParagraphShapingStage.isDigit((left)!) && ParagraphShapingStage.isLetter((right)!)) {
         cuts.push(wordRange.start + index);
       }
     }
@@ -321,7 +322,7 @@ export class ParagraphShapingStage {
     let allSameLetter = true;
     for (let i = 0; i < count13; i += 1) {
       const c = (Number.isNaN(w.charCodeAt(i)) ? null : w.charCodeAt(i))!;
-      if (!ParagraphShapingStage.isLetter(c)) {
+      if (!ParagraphShapingStage.isLetter((c)!)) {
         allLetters = false;
         allSameLetter = false;
       } else {
@@ -337,10 +338,10 @@ export class ParagraphShapingStage {
     let allHexOrDigit = true;
     for (let i2 = 0, count14 = w.length; i2 < count14; i2 += 1) {
       const c2 = (Number.isNaN(w.charCodeAt(i2)) ? null : w.charCodeAt(i2))!;
-      if (ParagraphShapingStage.isLetter(c2)) {
+      if (ParagraphShapingStage.isLetter((c2)!)) {
         anyLetter = true;
       }
-      const isHexDigit = ParagraphShapingStage.isDigit(c2) || c2 >= 65 && c2 <= 70 || c2 >= 97 && c2 <= 102;
+      const isHexDigit = ParagraphShapingStage.isDigit((c2)!) || c2! >= 65 && c2! <= 70 || c2! >= 97 && c2! <= 102;
       if (!isHexDigit) {
         allHexOrDigit = false;
       }
@@ -360,7 +361,7 @@ export class ParagraphShapingStage {
       for (let i4 = 0, count16 = w.length - 1; i4 < count16; i4 += 1) {
         const left = (Number.isNaN(w.charCodeAt(i4)) ? null : w.charCodeAt(i4))!;
         const right = readUnit(w, i4 + 1)!;
-        if (ParagraphShapingStage.isLetter(left) && ParagraphShapingStage.isDigit(right) || ParagraphShapingStage.isDigit(left) && ParagraphShapingStage.isLetter(right)) {
+        if (ParagraphShapingStage.isLetter((left)!) && ParagraphShapingStage.isDigit((right)!) || ParagraphShapingStage.isDigit((left)!) && ParagraphShapingStage.isLetter((right)!)) {
           transitions++;
         }
       }
@@ -468,24 +469,26 @@ export class ParagraphShapingStage {
   }
 
   public static shapeParagraph(engine: ExplainableStubParagraphLayoutEngine, input: LayoutInput, text: string, fontSize: number, measure: number, clusterRanges: ResolvedClusterRange[], fontDecisionByRange: SortedMapTable<TextRange, FontDecision>, inlineObjectByRange: SortedMapTable<TextRange, InlineObjectSpan>, punctuationGlyphSubstitutor: ClreqPunctuationGlyphSubstitutor, styleAt: (a0: number) => TextStyle, emphasisItalicAt: (a0: number) => boolean, rejectedTechnicalTiersBySpan: SortedMapTable<TextRange, SortedSetTable<number>>, cachedSegmentShaping?: SortedMapTable<TextRange, ShapingResult> | null, cachedSubstitutionRollbacks?: SortedMapTable<TextRange, string> | null): ParagraphShapingStageResult {
+    cachedSegmentShaping = cachedSegmentShaping ?? null;
+    cachedSubstitutionRollbacks = cachedSubstitutionRollbacks ?? null;
     const segmentShapingCacheKeys = new Array<TextRange>();
     const segmentShapingCacheValues = new Array<ShapingResult>();
     if (cachedSegmentShaping !== null) {
-      for (let i = 0, count22 = cachedSegmentShaping.size(); i < count22; i += 1) {
-        segmentShapingCacheKeys.push(cachedSegmentShaping.keyAt(i));
-        segmentShapingCacheValues.push(cachedSegmentShaping.valueAt(i));
+      for (let i = 0, count26 = cachedSegmentShaping!.size(); i < count26; i += 1) {
+        segmentShapingCacheKeys.push(cachedSegmentShaping!.keyAt(i));
+        segmentShapingCacheValues.push(cachedSegmentShaping!.valueAt(i));
       }
     }
     const substitutionRollbackKeys = new Array<TextRange>();
     const substitutionRollbackValues = new Array<string>();
     if (cachedSubstitutionRollbacks !== null) {
-      for (let i2 = 0, count23 = cachedSubstitutionRollbacks.size(); i2 < count23; i2 += 1) {
-        substitutionRollbackKeys.push(cachedSubstitutionRollbacks.keyAt(i2));
-        substitutionRollbackValues.push(cachedSubstitutionRollbacks.valueAt(i2));
+      for (let i2 = 0, count27 = cachedSubstitutionRollbacks!.size(); i2 < count27; i2 += 1) {
+        substitutionRollbackKeys.push(cachedSubstitutionRollbacks!.keyAt(i2));
+        substitutionRollbackValues.push(cachedSubstitutionRollbacks!.valueAt(i2));
       }
     }
     const getCachedSegmentShaping = (r: TextRange): ShapingResult | null => {
-    for (let i3 = 0, count24 = segmentShapingCacheKeys.length; i3 < count24; i3 += 1) {
+    for (let i3 = 0, count28 = segmentShapingCacheKeys.length; i3 < count28; i3 += 1) {
       const k = segmentShapingCacheKeys[i3]!;
       if (k.start === r.start && k.end === r.end) {
         return segmentShapingCacheValues[i3]!;
@@ -494,7 +497,7 @@ export class ParagraphShapingStage {
     return null;
 };
     const putCachedSegmentShaping = (r: TextRange, v: ShapingResult): void => {
-    for (let i4 = 0, count25 = segmentShapingCacheKeys.length; i4 < count25; i4 += 1) {
+    for (let i4 = 0, count29 = segmentShapingCacheKeys.length; i4 < count29; i4 += 1) {
       const k2 = segmentShapingCacheKeys[i4]!;
       if (k2.start === r.start && k2.end === r.end) {
         segmentShapingCacheValues[i4] = v;
@@ -505,7 +508,7 @@ export class ParagraphShapingStage {
     segmentShapingCacheValues.push(v);
 };
     const putSubstitutionRollback = (r: TextRange, v: string): void => {
-    for (let i5 = 0, count26 = substitutionRollbackKeys.length; i5 < count26; i5 += 1) {
+    for (let i5 = 0, count30 = substitutionRollbackKeys.length; i5 < count30; i5 += 1) {
       const k3 = substitutionRollbackKeys[i5]!;
       if (k3.start === r.start && k3.end === r.end) {
         substitutionRollbackValues[i5] = v;
@@ -521,9 +524,9 @@ export class ParagraphShapingStage {
     }
     let totalGlyphs = 0;
     let singleGlyph: Glyph | null = null;
-    for (let i6 = 0, count27 = shaped.glyphRuns.length; i6 < count27; i6 += 1) {
+    for (let i6 = 0, count31 = shaped.glyphRuns.length; i6 < count31; i6 += 1) {
       const r = shaped.glyphRuns[i6]!;
-      for (let j = 0, count28 = r.glyphs.length; j < count28; j += 1) {
+      for (let j = 0, count32 = r.glyphs.length; j < count32; j += 1) {
         totalGlyphs++;
         singleGlyph = r.glyphs[j]!;
       }
@@ -531,12 +534,12 @@ export class ParagraphShapingStage {
     if (totalGlyphs !== 1 || singleGlyph === null) {
       return false;
     }
-    const ink = singleGlyph.bounds;
+    const ink = singleGlyph!.bounds;
     if (ink === null) {
       return false;
     }
     const targetAdvance = 2.0 * segmentFontSize;
-    return ink.right - ink.left < targetAdvance * 0.85;
+    return ink!.right - ink!.left < targetAdvance * 0.85;
 };
     const shapeSegment = (decision: FontDecision, segmentRange: TextRange): ShapingResult => {
     const cached = getCachedSegmentShaping(segmentRange);
@@ -555,7 +558,7 @@ export class ParagraphShapingStage {
     if (substitution.displayText !== sourceText) {
       let hasUnverified = false;
       let hasMissing = false;
-      for (let i7 = 0, count29 = shaped.decisions.length; i7 < count29; i7 += 1) {
+      for (let i7 = 0, count33 = shaped.decisions.length; i7 < count33; i7 += 1) {
         const d = shaped.decisions[i7]!;
         if (d.capabilityIssue === TextShaper.UNVERIFIED_DISPLAY_SUBSTITUTION_COVERAGE_ISSUE) {
           hasUnverified = true;
@@ -578,7 +581,7 @@ export class ParagraphShapingStage {
     }
     let result = shaped;
     if (rollbackCause !== null) {
-      putSubstitutionRollback(segmentRange, rollbackCause);
+      putSubstitutionRollback(segmentRange, (rollbackCause)!);
       result = engine.textShaper.shape(new ShapingInput(text, segmentRange, segmentStyle, decision, sourceText, ParagraphShapingStage.cjkPunctuationFullWidthFeatures(decision.role, sourceText)));
     }
     putCachedSegmentShaping(segmentRange, result);
@@ -599,16 +602,16 @@ export class ParagraphShapingStage {
     let hyphenAdvanceOrNull: number | null = null;
     let hyphenGlyphs = new Array<Glyph>();
     const latinWordCuts = (decision: FontDecision, wordRange: TextRange, syllable: number[]): number[] => {
-    const count30 = syllable.length;
+    const count34 = syllable.length;
     const cuts: number[] = [];
-    for (let i8 = 0; i8 < count30; i8 += 1) {
+    for (let i8 = 0; i8 < count34; i8 += 1) {
       cuts.push(wordRange.start + syllable[i8]!);
     }
     const relBounds = [0];
-    for (let sIdx = 0, count31 = syllable.length; sIdx < count31; sIdx += 1) {
+    for (let sIdx = 0, count36 = syllable.length; sIdx < count36; sIdx += 1) {
       const s = syllable[sIdx]!;
       let exists = false;
-      for (let j2 = 0, count32 = relBounds.length; j2 < count32; j2 += 1) {
+      for (let j2 = 0, count37 = relBounds.length; j2 < count37; j2 += 1) {
         if (relBounds[j2]! === s) {
           exists = true;
           break;
@@ -619,7 +622,7 @@ export class ParagraphShapingStage {
       }
     }
     let lenExists = false;
-    for (let j3 = 0, count33 = relBounds.length; j3 < count33; j3 += 1) {
+    for (let j3 = 0, count35 = relBounds.length; j3 < count35; j3 += 1) {
       if (relBounds[j3]! === wordRange.length) {
         lenExists = true;
         break;
@@ -629,7 +632,7 @@ export class ParagraphShapingStage {
       relBounds.push(wordRange.length);
     }
     ParagraphShapingStage.sortInts(relBounds);
-    for (let i9 = 0, count34 = relBounds.length - 1; i9 < count34; i9 += 1) {
+    for (let i9 = 0, count38 = relBounds.length - 1; i9 < count38; i9 += 1) {
       const a = relBounds[i9]!;
       const b = relBounds[i9 + 1]!;
       const pieceShaped = shapeSegment(decision, new TextRange(wordRange.start + a, wordRange.start + b));
@@ -644,7 +647,7 @@ export class ParagraphShapingStage {
       while (off < endOff) {
         const c = wordRange.start + off;
         let exists2 = false;
-        for (let k4 = 0, count35 = cuts.length; k4 < count35; k4 += 1) {
+        for (let k4 = 0, count39 = cuts.length; k4 < count39; k4 += 1) {
           if (cuts[k4]! === c) {
             exists2 = true;
             break;
@@ -662,7 +665,7 @@ export class ParagraphShapingStage {
     const breakOpportunityDecisions = new Array<BreakOpportunityDecisionInfo>();
     const emergencyTrackingEligibilityDecisions = new Array<EmergencyTrackingEligibilityDecisionInfo>();
     const registerEmergencyTrackingEligibility = (range: TextRange, reason: string): void => {
-    for (let i10 = 0, count36 = emergencyTrackingEligibilityDecisions.length; i10 < count36; i10 += 1) {
+    for (let i10 = 0, count40 = emergencyTrackingEligibilityDecisions.length; i10 < count40; i10 += 1) {
       const d2 = emergencyTrackingEligibilityDecisions[i10]!;
       if (d2.range.start === range.start && d2.range.end === range.end && d2.reason === reason) {
         return;
@@ -673,7 +676,7 @@ export class ParagraphShapingStage {
     const progBreakKeys = new Array<number>();
     const progBreakValues = new Array<ProgressiveBreakOpportunity>();
     const putProgressiveBreak = (offset: number, opp: ProgressiveBreakOpportunity): void => {
-    for (let i11 = 0, count37 = progBreakKeys.length; i11 < count37; i11 += 1) {
+    for (let i11 = 0, count41 = progBreakKeys.length; i11 < count41; i11 += 1) {
       if (progBreakKeys[i11]! === offset) {
         const current = progBreakValues[i11]!;
         if (ProgressiveBreakTierPriority.priority(opp.tier) < ProgressiveBreakTierPriority.priority(current.tier)) {
@@ -689,7 +692,7 @@ export class ParagraphShapingStage {
     const token = text.substring(tokenRange.start, tokenRange.end);
     const urlLike = ParagraphShapingStage.isUrlLikeLatinToken(token);
     let opaque = false;
-    for (let i12 = 0, count38 = token.length; i12 < count38; i12 += 1) {
+    for (let i12 = 0, count42 = token.length; i12 < count42; i12 += 1) {
       if (!ParagraphShapingStage.isLetter((Number.isNaN(token.charCodeAt(i12)) ? null : token.charCodeAt(i12))!)) {
         opaque = true;
         break;
@@ -698,18 +701,18 @@ export class ParagraphShapingStage {
     const structuralSolidus = ParagraphShapingStage.hasBreakableLatinSolidus(token);
     const bibliographicLocatorCuts = ParagraphShapingStage.bibliographicNumericLocatorBreakOffsets(token);
     const opaqueSeparatorMode = urlLike || opaque && (tokenAdvance > measure || forceOpaqueBreaks);
-    const count39 = bibliographicLocatorCuts.length;
-    if (!structuralSolidus && !opaqueSeparatorMode && count39 === 0) {
+    const count43 = bibliographicLocatorCuts.length;
+    if (!structuralSolidus && !opaqueSeparatorMode && count43 === 0) {
       return [];
     }
     const cuts2: number[] = [];
-    for (let i13 = 0; i13 < count39; i13 += 1) {
+    for (let i13 = 0; i13 < count43; i13 += 1) {
       cuts2.push(tokenRange.start + bibliographicLocatorCuts[i13]!);
     }
     if (bibliographicLocatorCuts.length > 0) {
       breakOpportunityDecisions.push(new BreakOpportunityDecisionInfo(tokenRange, token, ParagraphShapingStage.copyInts(cuts2), "BibliographicNumericLocatorBreak"));
     }
-    for (let i14 = 0, count40 = token.length - 1; i14 < count40; i14 += 1) {
+    for (let i14 = 0, count44 = token.length - 1; i14 < count44; i14 += 1) {
       const breakAfter = structuralSolidus && !urlLike && (Number.isNaN(token.charCodeAt(i14)) ? null : token.charCodeAt(i14))! === 47 || opaqueSeparatorMode && ParagraphShapingStage.isLatinTokenBreakAfter(token, i14, tokenAdvance <= measure);
       if (breakAfter) {
         cuts2.push(tokenRange.start + i14 + 1);
@@ -719,10 +722,10 @@ export class ParagraphShapingStage {
 };
     const latinOpaqueHardCuts = (decision: FontDecision, tokenRange: TextRange, cleanCuts: number[], forceOpaqueBreaks: boolean): number[] => {
     const relBounds2 = [0];
-    for (let i15 = 0, count41 = cleanCuts.length; i15 < count41; i15 += 1) {
+    for (let i15 = 0, count45 = cleanCuts.length; i15 < count45; i15 += 1) {
       const rel = cleanCuts[i15]! - tokenRange.start;
       let exists3 = false;
-      for (let j4 = 0, count42 = relBounds2.length; j4 < count42; j4 += 1) {
+      for (let j4 = 0, count47 = relBounds2.length; j4 < count47; j4 += 1) {
         if (relBounds2[j4]! === rel) {
           exists3 = true;
           break;
@@ -733,7 +736,7 @@ export class ParagraphShapingStage {
       }
     }
     let lenExists2 = false;
-    for (let j5 = 0, count43 = relBounds2.length; j5 < count43; j5 += 1) {
+    for (let j5 = 0, count46 = relBounds2.length; j5 < count46; j5 += 1) {
       if (relBounds2[j5]! === tokenRange.length) {
         lenExists2 = true;
         break;
@@ -744,7 +747,7 @@ export class ParagraphShapingStage {
     }
     ParagraphShapingStage.sortInts(relBounds2);
     const cuts3 = new Array<number>();
-    for (let i16 = 0, count44 = relBounds2.length - 1; i16 < count44; i16 += 1) {
+    for (let i16 = 0, count48 = relBounds2.length - 1; i16 < count48; i16 += 1) {
       const a2 = relBounds2[i16]!;
       const b2 = relBounds2[i16 + 1]!;
       if (b2 - a2 <= 1) {
@@ -757,11 +760,11 @@ export class ParagraphShapingStage {
         continue;
       }
       const graphemes = SourceInteractionBoundaries.sourceGraphemeBoundaries(text, pieceRange);
-      for (let g = 0, count45 = graphemes.length; g < count45; g += 1) {
+      for (let g = 0, count49 = graphemes.length; g < count49; g += 1) {
         const pos = graphemes[g]!;
         if (pos > pieceRange.start && pos < pieceRange.end) {
           let exists4 = false;
-          for (let k5 = 0, count46 = cuts3.length; k5 < count46; k5 += 1) {
+          for (let k5 = 0, count50 = cuts3.length; k5 < count50; k5 += 1) {
             if (cuts3[k5]! === pos) {
               exists4 = true;
               break;
@@ -780,7 +783,7 @@ export class ParagraphShapingStage {
     if (inlineObjectByRange === null) {
       return null;
     }
-    for (let i17 = 0, count47 = inlineObjectByRange.size(); i17 < count47; i17 += 1) {
+    for (let i17 = 0, count51 = inlineObjectByRange.size(); i17 < count51; i17 += 1) {
       const k6 = inlineObjectByRange.keyAt(i17);
       if (k6.start === range.start && k6.end === range.end) {
         return inlineObjectByRange.valueAt(i17);
@@ -792,7 +795,7 @@ export class ParagraphShapingStage {
     if (fontDecisionByRange === null) {
       return null;
     }
-    for (let i18 = 0, count48 = fontDecisionByRange.size(); i18 < count48; i18 += 1) {
+    for (let i18 = 0, count52 = fontDecisionByRange.size(); i18 < count52; i18 += 1) {
       const k7 = fontDecisionByRange.keyAt(i18);
       if (k7.start === range.start && k7.end === range.end) {
         return fontDecisionByRange.valueAt(i18);
@@ -804,7 +807,7 @@ export class ParagraphShapingStage {
     if (rejectedTechnicalTiersBySpan === null) {
       return null;
     }
-    for (let i19 = 0, count49 = rejectedTechnicalTiersBySpan.size(); i19 < count49; i19 += 1) {
+    for (let i19 = 0, count53 = rejectedTechnicalTiersBySpan.size(); i19 < count53; i19 += 1) {
       const k8 = rejectedTechnicalTiersBySpan.keyAt(i19);
       if (k8.start === range.start && k8.end === range.end) {
         return rejectedTechnicalTiersBySpan.valueAt(i19);
@@ -814,16 +817,15 @@ export class ParagraphShapingStage {
 };
     const spanAdvanceCacheKeys = new Array<TextRange>();
     const spanAdvanceCacheValues = new Array<number>();
-    const count21 = clusterRanges.length;
     const progressiveSpanAdvance = (spanRange: TextRange): number => {
-    for (let i20 = 0, count50 = spanAdvanceCacheKeys.length; i20 < count50; i20 += 1) {
+    for (let i20 = 0, count54 = spanAdvanceCacheKeys.length; i20 < count54; i20 += 1) {
       const k9 = spanAdvanceCacheKeys[i20]!;
       if (k9.start === spanRange.start && k9.end === spanRange.end) {
         return spanAdvanceCacheValues[i20]!;
       }
     }
     const advanceTerms: number[] = [];
-    for (let crIdx = 0, count51 = clusterRanges.length; crIdx < count51; crIdx += 1) {
+    for (let crIdx = 0, count55 = clusterRanges.length; crIdx < count55; crIdx += 1) {
       const resolvedRange = clusterRanges[crIdx]!;
       if (resolvedRange.mandatoryBreak || resolvedRange.zeroWidthSoftBreak || getInlineObject(resolvedRange.range) !== null) {
         continue;
@@ -832,14 +834,14 @@ export class ParagraphShapingStage {
       if (decision === null) {
         continue;
       }
-      const candidates = ParagraphShapingStage.shapingSegments(decision, text);
-      for (let cIdx = 0, count52 = candidates.length; cIdx < count52; cIdx += 1) {
+      const candidates = ParagraphShapingStage.shapingSegments((decision)!, text);
+      for (let cIdx = 0, count56 = candidates.length; cIdx < count56; cIdx += 1) {
         const candidate = candidates[cIdx]!;
         const start = (candidate.start > spanRange.start ? candidate.start : spanRange.start);
         const end = (candidate.end < spanRange.end ? candidate.end : spanRange.end);
         if (start < end) {
-          const pieceShaped3 = shapeSegment(decision, new TextRange(start, end));
-          for (let clIdx = 0, count53 = pieceShaped3.clusters.length; clIdx < count53; clIdx += 1) {
+          const pieceShaped3 = shapeSegment((decision)!, new TextRange(start, end));
+          for (let clIdx = 0, count57 = pieceShaped3.clusters.length; clIdx < count57; clIdx += 1) {
             advanceTerms.push(pieceShaped3.clusters[clIdx]!.advance);
           }
         }
@@ -851,11 +853,11 @@ export class ParagraphShapingStage {
     return totalAdvance;
 };
     const shapingResults = new Array<ShapingResult>();
-    for (let crIdx2 = 0, count54 = clusterRanges.length; crIdx2 < count54; crIdx2 += 1) {
+    for (let crIdx2 = 0, count21 = clusterRanges.length; crIdx2 < count21; crIdx2 += 1) {
       const resolvedRange2 = clusterRanges[crIdx2]!;
       const inlineObj = getInlineObject(resolvedRange2.range);
       if (inlineObj !== null) {
-        shapingResults.push(ParagraphShapingStage.inlineObjectShapingResult(text, inlineObj));
+        shapingResults.push(ParagraphShapingStage.inlineObjectShapingResult(text, (inlineObj)!));
         continue;
       }
       if (resolvedRange2.mandatoryBreak) {
@@ -870,14 +872,14 @@ export class ParagraphShapingStage {
       if (decision2 === null) {
         decision2 = engine.fallbackResolver.resolve(text, resolvedRange2.range, new FontRequest(input.textStyle.fontFamilies, input.textStyle.locale, resolvedRange2.role));
       }
-      const segments = ParagraphShapingStage.shapingSegments(decision2, text);
-      for (let segIdx = 0, count55 = segments.length; segIdx < count55; segIdx += 1) {
+      const segments = ParagraphShapingStage.shapingSegments((decision2)!, text);
+      for (let segIdx = 0, count58 = segments.length; segIdx < count58; segIdx += 1) {
         const segmentRange = segments[segIdx]!;
-        const shaped2 = shapeSegment(decision2, segmentRange);
-        const isLatin = decision2.role.kind === "LatinText" && segmentRange.length > 0;
+        const shaped2 = shapeSegment((decision2)!, segmentRange);
+        const isLatin = decision2!.role.kind === "LatinText" && segmentRange.length > 0;
         const w = (isLatin ? text.substring(segmentRange.start, segmentRange.end) : "");
         let progressiveSpan: LineBreakSpan | null = null;
-        for (let sIdx2 = 0, count61 = input.content.lineBreakSpans.length; sIdx2 < count61; sIdx2 += 1) {
+        for (let sIdx2 = 0, count64 = input.content.lineBreakSpans.length; sIdx2 < count64; sIdx2 += 1) {
           const s2 = input.content.lineBreakSpans[sIdx2]!;
           if (s2.policy.kind === "ProgressiveTechnical" && segmentRange.start >= s2.range.start && segmentRange.end <= s2.range.end) {
             progressiveSpan = s2;
@@ -886,7 +888,7 @@ export class ParagraphShapingStage {
         }
         let allLetters = isLatin && w.length > 0;
         if (isLatin) {
-          for (let cIdx2 = 0, count62 = w.length; cIdx2 < count62; cIdx2 += 1) {
+          for (let cIdx2 = 0, count65 = w.length; cIdx2 < count65; cIdx2 += 1) {
             if (!ParagraphShapingStage.isLetter((Number.isNaN(w.charCodeAt(cIdx2)) ? null : w.charCodeAt(cIdx2))!)) {
               allLetters = false;
               break;
@@ -895,7 +897,7 @@ export class ParagraphShapingStage {
         }
         let isAllCaps = allLetters && w.length >= 2;
         if (isAllCaps) {
-          for (let cIdx3 = 0, count63 = w.length; cIdx3 < count63; cIdx3 += 1) {
+          for (let cIdx3 = 0, count66 = w.length; cIdx3 < count66; cIdx3 += 1) {
             if (ParagraphShapingStage.isLowerCase((Number.isNaN(w.charCodeAt(cIdx3)) ? null : w.charCodeAt(cIdx3))!)) {
               isAllCaps = false;
               break;
@@ -905,7 +907,7 @@ export class ParagraphShapingStage {
         const isAbbreviation = isAllCaps && w.length < 24;
         let hasInternalUpper = false;
         if (allLetters && !isAllCaps && !isAbbreviation) {
-          for (let cIdx4 = 1, count64 = w.length; cIdx4 < count64; cIdx4 += 1) {
+          for (let cIdx4 = 1, count67 = w.length; cIdx4 < count67; cIdx4 += 1) {
             if (ParagraphShapingStage.isUpperCase((Number.isNaN(w.charCodeAt(cIdx4)) ? null : w.charCodeAt(cIdx4))!)) {
               hasInternalUpper = true;
               break;
@@ -914,7 +916,7 @@ export class ParagraphShapingStage {
         }
         const isCamelCase = allLetters && !isAllCaps && !isAbbreviation && hasInternalUpper;
         const tokenTerms: number[] = [];
-        for (let clIdx2 = 0, count65 = shaped2.clusters.length; clIdx2 < count65; clIdx2 += 1) {
+        for (let clIdx2 = 0, count68 = shaped2.clusters.length; clIdx2 < count68; clIdx2 += 1) {
           tokenTerms.push(shaped2.clusters[clIdx2]!.advance);
         }
         const tokenAdvance = AccurateSum.of(tokenTerms);
@@ -923,10 +925,10 @@ export class ParagraphShapingStage {
         if (allLetters && !isAbbreviation && !isCamelCase && w.indexOf("-") < 0 && strongReason === null) {
           const hyphenPoints = engine.hyphenator.hyphenate(w);
           const uniquePoints = new Array<number>();
-          for (let p = 0, count66 = hyphenPoints.length; p < count66; p += 1) {
+          for (let p = 0, count69 = hyphenPoints.length; p < count69; p += 1) {
             const pt = hyphenPoints[p]!;
             let exists5 = false;
-            for (let q = 0, count67 = uniquePoints.length; q < count67; q += 1) {
+            for (let q = 0, count70 = uniquePoints.length; q < count70; q += 1) {
               if (uniquePoints[q]! === pt) {
                 exists5 = true;
                 break;
@@ -942,12 +944,12 @@ export class ParagraphShapingStage {
         let longestUnhyphenatedLetterPiece = 0;
         if (allLetters) {
           const bounds = [0];
-          for (let p2 = 0, count68 = syllableCuts.length; p2 < count68; p2 += 1) {
+          for (let p2 = 0, count71 = syllableCuts.length; p2 < count71; p2 += 1) {
             bounds.push(syllableCuts[p2]!);
           }
           bounds.push(w.length);
           let maxLen = 0;
-          for (let p3 = 0, count69 = bounds.length - 1; p3 < count69; p3 += 1) {
+          for (let p3 = 0, count72 = bounds.length - 1; p3 < count72; p3 += 1) {
             const diff = bounds[p3 + 1]! - bounds[p3]!;
             if (diff > maxLen) {
               maxLen = diff;
@@ -961,14 +963,14 @@ export class ParagraphShapingStage {
         if (progressiveSpan !== null && isLatin) {
           const cutsSet = new Array<number>();
           const cc = ParagraphShapingStage.camelCaseCuts(text, segmentRange);
-          for (let c2 = 0, count70 = cc.length; c2 < count70; c2 += 1) {
+          for (let c2 = 0, count73 = cc.length; c2 < count73; c2 += 1) {
             cutsSet.push(cc[c2]!);
           }
           const at = ParagraphShapingStage.alphaNumericTransitionCuts(text, segmentRange);
-          for (let c3 = 0, count71 = at.length; c3 < count71; c3 += 1) {
+          for (let c3 = 0, count74 = at.length; c3 < count74; c3 += 1) {
             const v = at[c3]!;
             let exists6 = false;
-            for (let q2 = 0, count72 = cutsSet.length; q2 < count72; q2 += 1) {
+            for (let q2 = 0, count75 = cutsSet.length; q2 < count75; q2 += 1) {
               if (cutsSet[q2]! === v) {
                 exists6 = true;
                 break;
@@ -978,11 +980,11 @@ export class ParagraphShapingStage {
               cutsSet.push(v);
             }
           }
-          for (let i21 = 0, count73 = w.length - 1; i21 < count73; i21 += 1) {
+          for (let i21 = 0, count76 = w.length - 1; i21 < count76; i21 += 1) {
             if (ParagraphShapingStage.isProgressiveTechnicalBreakAfterChar((Number.isNaN(w.charCodeAt(i21)) ? null : w.charCodeAt(i21))!)) {
               const v2 = segmentRange.start + i21 + 1;
               let exists7 = false;
-              for (let q3 = 0, count74 = cutsSet.length; q3 < count74; q3 += 1) {
+              for (let q3 = 0, count77 = cutsSet.length; q3 < count77; q3 += 1) {
                 if (cutsSet[q3]! === v2) {
                   exists7 = true;
                   break;
@@ -999,15 +1001,15 @@ export class ParagraphShapingStage {
         let rawTechnicalSyllableCuts = new Array<number>();
         if (progressiveSpan !== null && isLatin) {
           const preferredBounds = [segmentRange.start];
-          for (let c4 = 0, count75 = technicalStructuralCuts.length; c4 < count75; c4 += 1) {
+          for (let c4 = 0, count78 = technicalStructuralCuts.length; c4 < count78; c4 += 1) {
             preferredBounds.push(technicalStructuralCuts[c4]!);
           }
           preferredBounds.push(segmentRange.end);
           const uniqueBounds = new Array<number>();
-          for (let p4 = 0, count76 = preferredBounds.length; p4 < count76; p4 += 1) {
+          for (let p4 = 0, count79 = preferredBounds.length; p4 < count79; p4 += 1) {
             const pt2 = preferredBounds[p4]!;
             let exists8 = false;
-            for (let q4 = 0, count78 = uniqueBounds.length; q4 < count78; q4 += 1) {
+            for (let q4 = 0, count81 = uniqueBounds.length; q4 < count81; q4 += 1) {
               if (uniqueBounds[q4]! === pt2) {
                 exists8 = true;
                 break;
@@ -1019,7 +1021,7 @@ export class ParagraphShapingStage {
           }
           ParagraphShapingStage.sortInts(uniqueBounds);
           const cutsList = new Array<number>();
-          for (let p5 = 0, count79 = uniqueBounds.length - 1; p5 < count79; p5 += 1) {
+          for (let p5 = 0, count82 = uniqueBounds.length - 1; p5 < count82; p5 += 1) {
             const pieceStart = uniqueBounds[p5]!;
             const pieceEnd = uniqueBounds[p5 + 1]!;
             const piece = text.substring(pieceStart, pieceEnd);
@@ -1038,7 +1040,7 @@ export class ParagraphShapingStage {
               if (runEnd > runStart) {
                 const word = text.substring(runStart, runEnd);
                 const wordHyphs = engine.hyphenator.hyphenate(word);
-                for (let h = 0, count80 = wordHyphs.length; h < count80; h += 1) {
+                for (let h = 0, count83 = wordHyphs.length; h < count83; h += 1) {
                   const off2 = wordHyphs[h]!;
                   if (off2 >= 1 && off2 < word.length) {
                     cutsList.push(runStart + off2);
@@ -1049,10 +1051,10 @@ export class ParagraphShapingStage {
             }
           }
           const uniqueCuts = new Array<number>();
-          for (let p6 = 0, count77 = cutsList.length; p6 < count77; p6 += 1) {
+          for (let p6 = 0, count80 = cutsList.length; p6 < count80; p6 += 1) {
             const pt3 = cutsList[p6]!;
             let exists9 = false;
-            for (let q5 = 0, count81 = uniqueCuts.length; q5 < count81; q5 += 1) {
+            for (let q5 = 0, count84 = uniqueCuts.length; q5 < count84; q5 += 1) {
               if (uniqueCuts[q5]! === pt3) {
                 exists9 = true;
                 break;
@@ -1066,10 +1068,10 @@ export class ParagraphShapingStage {
           rawTechnicalSyllableCuts = uniqueCuts;
         }
         const technicalSyllableCuts = new Array<number>();
-        for (let i22 = 0, count56 = rawTechnicalSyllableCuts.length; i22 < count56; i22 += 1) {
+        for (let i22 = 0, count59 = rawTechnicalSyllableCuts.length; i22 < count59; i22 += 1) {
           const cut = rawTechnicalSyllableCuts[i22]!;
           let inStructural = false;
-          for (let j6 = 0, count82 = technicalStructuralCuts.length; j6 < count82; j6 += 1) {
+          for (let j6 = 0, count85 = technicalStructuralCuts.length; j6 < count85; j6 += 1) {
             if (technicalStructuralCuts[j6]! === cut) {
               inStructural = true;
               break;
@@ -1081,21 +1083,21 @@ export class ParagraphShapingStage {
         }
         let technicalEmergencyCuts = new Array<number>();
         if (progressiveSpan !== null && isLatin) {
-          const rejectedTiers = getRejectedTiers(progressiveSpan.range);
-          const exposedForCurrentLine = rejectedTiers !== null && rejectedTiers.size() > 0;
+          const rejectedTiers = getRejectedTiers(progressiveSpan!.range);
+          const exposedForCurrentLine = rejectedTiers !== null && rejectedTiers!.size() > 0;
           const preferredBounds2 = [segmentRange.start];
-          for (let c5 = 0, count83 = technicalStructuralCuts.length; c5 < count83; c5 += 1) {
+          for (let c5 = 0, count86 = technicalStructuralCuts.length; c5 < count86; c5 += 1) {
             preferredBounds2.push(technicalStructuralCuts[c5]!);
           }
-          for (let c6 = 0, count84 = technicalSyllableCuts.length; c6 < count84; c6 += 1) {
+          for (let c6 = 0, count87 = technicalSyllableCuts.length; c6 < count87; c6 += 1) {
             preferredBounds2.push(technicalSyllableCuts[c6]!);
           }
           preferredBounds2.push(segmentRange.end);
           const uniqueBounds2 = new Array<number>();
-          for (let p7 = 0, count85 = preferredBounds2.length; p7 < count85; p7 += 1) {
+          for (let p7 = 0, count88 = preferredBounds2.length; p7 < count88; p7 += 1) {
             const pt4 = preferredBounds2[p7]!;
             let exists10 = false;
-            for (let q6 = 0, count89 = uniqueBounds2.length; q6 < count89; q6 += 1) {
+            for (let q6 = 0, count92 = uniqueBounds2.length; q6 < count92; q6 += 1) {
               if (uniqueBounds2[q6]! === pt4) {
                 exists10 = true;
                 break;
@@ -1107,20 +1109,20 @@ export class ParagraphShapingStage {
           }
           ParagraphShapingStage.sortInts(uniqueBounds2);
           const interiorEmergencyCuts = new Array<number>();
-          for (let p8 = 0, count90 = uniqueBounds2.length - 1; p8 < count90; p8 += 1) {
+          for (let p8 = 0, count93 = uniqueBounds2.length - 1; p8 < count93; p8 += 1) {
             const pStart = uniqueBounds2[p8]!;
             const pEnd = uniqueBounds2[p8 + 1]!;
             const pieceRange2 = new TextRange(pStart, pEnd);
-            const pieceShaped4 = shapeSegment(decision2, pieceRange2);
+            const pieceShaped4 = shapeSegment((decision2)!, pieceRange2);
             const pieceTerms: number[] = [];
-            for (let clIdx3 = 0, count91 = pieceShaped4.clusters.length; clIdx3 < count91; clIdx3 += 1) {
+            for (let clIdx3 = 0, count94 = pieceShaped4.clusters.length; clIdx3 < count94; clIdx3 += 1) {
               pieceTerms.push(pieceShaped4.clusters[clIdx3]!.advance);
             }
             const pieceAdvance3 = AccurateSum.of(pieceTerms);
-            if (!exposedForCurrentLine && pieceAdvance3 <= measure && progressiveSpanAdvance(progressiveSpan.range) <= measure) {
+            if (!exposedForCurrentLine && pieceAdvance3 <= measure && progressiveSpanAdvance(progressiveSpan!.range) <= measure) {
             } else {
               const graphemes2 = SourceInteractionBoundaries.sourceGraphemeBoundaries(text, pieceRange2);
-              for (let g2 = 0, count92 = graphemes2.length; g2 < count92; g2 += 1) {
+              for (let g2 = 0, count95 = graphemes2.length; g2 < count95; g2 += 1) {
                 const pt5 = graphemes2[g2]!;
                 if (pt5 > pStart && pt5 < pEnd) {
                   interiorEmergencyCuts.push(pt5);
@@ -1130,30 +1132,30 @@ export class ParagraphShapingStage {
           }
           const rejectedCleanBoundaries = new Array<number>();
           if (rejectedTiers !== null) {
-            if (rejectedTiers.has(ProgressiveBreakTierPriority.priority(ProgressiveBreakTier.Structural))) {
-              for (let c7 = 0, count93 = technicalStructuralCuts.length; c7 < count93; c7 += 1) {
+            if (rejectedTiers!.has(ProgressiveBreakTierPriority.priority((ProgressiveBreakTier.Structural as ProgressiveBreakTier)))) {
+              for (let c7 = 0, count96 = technicalStructuralCuts.length; c7 < count96; c7 += 1) {
                 rejectedCleanBoundaries.push(technicalStructuralCuts[c7]!);
               }
             }
-            if (rejectedTiers.has(ProgressiveBreakTierPriority.priority(ProgressiveBreakTier.Syllable))) {
-              for (let c8 = 0, count94 = technicalSyllableCuts.length; c8 < count94; c8 += 1) {
+            if (rejectedTiers!.has(ProgressiveBreakTierPriority.priority((ProgressiveBreakTier.Syllable as ProgressiveBreakTier)))) {
+              for (let c8 = 0, count97 = technicalSyllableCuts.length; c8 < count97; c8 += 1) {
                 rejectedCleanBoundaries.push(technicalSyllableCuts[c8]!);
               }
             }
           }
-          const count86 = interiorEmergencyCuts.length;
+          const count89 = interiorEmergencyCuts.length;
           const combined: number[] = [];
-          for (let c9 = 0; c9 < count86; c9 += 1) {
+          for (let c9 = 0; c9 < count89; c9 += 1) {
             combined.push(interiorEmergencyCuts[c9]!);
           }
-          for (let c10 = 0, count87 = rejectedCleanBoundaries.length; c10 < count87; c10 += 1) {
+          for (let c10 = 0, count90 = rejectedCleanBoundaries.length; c10 < count90; c10 += 1) {
             combined.push(rejectedCleanBoundaries[c10]!);
           }
           const uniqueCombined = new Array<number>();
-          for (let p9 = 0, count88 = combined.length; p9 < count88; p9 += 1) {
+          for (let p9 = 0, count91 = combined.length; p9 < count91; p9 += 1) {
             const pt6 = combined[p9]!;
             let exists11 = false;
-            for (let q7 = 0, count95 = uniqueCombined.length; q7 < count95; q7 += 1) {
+            for (let q7 = 0, count98 = uniqueCombined.length; q7 < count98; q7 += 1) {
               if (uniqueCombined[q7]! === pt6) {
                 exists11 = true;
                 break;
@@ -1168,12 +1170,12 @@ export class ParagraphShapingStage {
         }
         if (progressiveSpan !== null) {
           if (technicalEmergencyCuts.length > 0) {
-            const rej = getRejectedTiers(progressiveSpan.range);
+            const rej = getRejectedTiers(progressiveSpan!.range);
             let reason = "ProgressiveTechnicalSpan";
-            if (rej !== null && rej.size() > 0) {
+            if (rej !== null && rej!.size() > 0) {
               const tiers: number[] = [];
-              for (let i23 = 0; i23 < rej.size(); i23 += 1) {
-                tiers.push(rej.at(i23));
+              for (let i23 = 0; i23 < rej!.size(); i23 += 1) {
+                tiers.push(rej!.at(i23));
               }
               let tIdx = 1;
               while (tIdx < tiers.length) {
@@ -1187,7 +1189,7 @@ export class ParagraphShapingStage {
                 tIdx++;
               }
               let joined = "";
-              for (let i24 = 0, count96 = tiers.length; i24 < count96; i24 += 1) {
+              for (let i24 = 0, count99 = tiers.length; i24 < count99; i24 += 1) {
                 if (i24 > 0) {
                   joined += "+";
                 }
@@ -1195,22 +1197,22 @@ export class ParagraphShapingStage {
               }
               reason = `CurrentLineTechnicalTierRejection:${joined}`;
             }
-            registerEmergencyTrackingEligibility(progressiveSpan.range, reason);
+            registerEmergencyTrackingEligibility(progressiveSpan!.range, reason);
           }
           const tierArrays = [technicalStructuralCuts, technicalSyllableCuts, technicalEmergencyCuts];
-          const tierTypes = [ProgressiveBreakTier.Structural, ProgressiveBreakTier.Syllable, ProgressiveBreakTier.Emergency];
+          const tierTypes = [(ProgressiveBreakTier.Structural as ProgressiveBreakTier), (ProgressiveBreakTier.Syllable as ProgressiveBreakTier), (ProgressiveBreakTier.Emergency as ProgressiveBreakTier)];
           for (let tIdx2 = 0; tIdx2 < 3; tIdx2 += 1) {
             const tier = tierTypes[tIdx2]!;
             const offsets = tierArrays[tIdx2]!;
-            const rej2 = getRejectedTiers(progressiveSpan.range);
-            if (rej2 !== null && rej2.has(ProgressiveBreakTierPriority.priority(tier))) {
+            const rej2 = getRejectedTiers(progressiveSpan!.range);
+            if (rej2 !== null && rej2!.has(ProgressiveBreakTierPriority.priority(tier))) {
               continue;
             }
             const uniqueOffsets = new Array<number>();
-            for (let p10 = 0, count97 = offsets.length; p10 < count97; p10 += 1) {
+            for (let p10 = 0, count100 = offsets.length; p10 < count100; p10 += 1) {
               const pt7 = offsets[p10]!;
               let exists12 = false;
-              for (let q8 = 0, count98 = uniqueOffsets.length; q8 < count98; q8 += 1) {
+              for (let q8 = 0, count102 = uniqueOffsets.length; q8 < count102; q8 += 1) {
                 if (uniqueOffsets[q8]! === pt7) {
                   exists12 = true;
                   break;
@@ -1221,23 +1223,24 @@ export class ParagraphShapingStage {
               }
             }
             ParagraphShapingStage.sortInts(uniqueOffsets);
-            if (uniqueOffsets.length > 0) {
-              const rejNotEmpty = rej2 !== null && rej2.size() > 0;
+            const count101 = uniqueOffsets.length;
+            if (count101 > 0) {
+              const rejNotEmpty = rej2 !== null && rej2!.size() > 0;
               const breakReason = (tier.kind === "Emergency" && rejNotEmpty ? "CurrentLineTechnicalEmergencyBreak" : "ProgressiveTechnicalBreak");
               breakOpportunityDecisions.push(new BreakOpportunityDecisionInfo(segmentRange, w, ParagraphShapingStage.copyInts(uniqueOffsets), breakReason, ParagraphShapingStage.tierName(tier)));
             }
-            for (let oIdx = 0, count99 = uniqueOffsets.length; oIdx < count99; oIdx += 1) {
+            for (let oIdx = 0; oIdx < count101; oIdx += 1) {
               const offset = uniqueOffsets[oIdx]!;
-              putProgressiveBreak(offset, new ProgressiveBreakOpportunity(tier, progressiveSpan.range));
+              putProgressiveBreak(offset, new ProgressiveBreakOpportunity(tier, progressiveSpan!.range));
             }
           }
-          let boundaryTier: ProgressiveBreakTier = ProgressiveBreakTier.WholeToken;
-          if (segmentRange.start > progressiveSpan.range.start && ParagraphShapingStage.isWhitespace(readUnit(text, segmentRange.start - 1)!)) {
-            boundaryTier = ProgressiveBreakTier.Whitespace;
+          let boundaryTier: ProgressiveBreakTier = (ProgressiveBreakTier.WholeToken as ProgressiveBreakTier);
+          if (segmentRange.start > progressiveSpan!.range.start && ParagraphShapingStage.isWhitespace(readUnit(text, segmentRange.start - 1)!)) {
+            boundaryTier = (ProgressiveBreakTier.Whitespace as ProgressiveBreakTier);
           }
-          const rej3 = getRejectedTiers(progressiveSpan.range);
-          if (rej3 === null || !rej3.has(ProgressiveBreakTierPriority.priority(boundaryTier))) {
-            const wholeToken = new ProgressiveBreakOpportunity(boundaryTier, progressiveSpan.range);
+          const rej3 = getRejectedTiers(progressiveSpan!.range);
+          if (rej3 === null || !rej3!.has(ProgressiveBreakTierPriority.priority(boundaryTier))) {
+            const wholeToken = new ProgressiveBreakOpportunity(boundaryTier, progressiveSpan!.range);
             putProgressiveBreak(segmentRange.start, wholeToken);
             const wrapReason = (boundaryTier.kind === "Whitespace" ? "ProgressiveTechnicalWhitespaceBreak" : "ProgressiveTechnicalWholeTokenWrap");
             breakOpportunityDecisions.push(new BreakOpportunityDecisionInfo(segmentRange, w, [segmentRange.start], wrapReason, ParagraphShapingStage.tierName(boundaryTier)));
@@ -1245,13 +1248,13 @@ export class ParagraphShapingStage {
         }
         let cleanCuts = new Array<number>();
         if (progressiveSpan !== null) {
-          for (let c11 = 0, count100 = technicalStructuralCuts.length; c11 < count100; c11 += 1) {
+          for (let c11 = 0, count103 = technicalStructuralCuts.length; c11 < count103; c11 += 1) {
             cleanCuts.push(technicalStructuralCuts[c11]!);
           }
-          for (let c12 = 0, count101 = technicalSyllableCuts.length; c12 < count101; c12 += 1) {
+          for (let c12 = 0, count104 = technicalSyllableCuts.length; c12 < count104; c12 += 1) {
             cleanCuts.push(technicalSyllableCuts[c12]!);
           }
-          for (let c13 = 0, count102 = technicalEmergencyCuts.length; c13 < count102; c13 += 1) {
+          for (let c13 = 0, count105 = technicalEmergencyCuts.length; c13 < count105; c13 += 1) {
             cleanCuts.push(technicalEmergencyCuts[c13]!);
           }
         } else {
@@ -1259,11 +1262,11 @@ export class ParagraphShapingStage {
           } else {
             if (w.indexOf("-") >= 0) {
               const existing = ParagraphShapingStage.existingHyphenCuts(text, segmentRange);
-              for (let c14 = 0, count103 = existing.length; c14 < count103; c14 += 1) {
+              for (let c14 = 0, count106 = existing.length; c14 < count106; c14 += 1) {
                 cleanCuts.push(existing[c14]!);
               }
               const sep = latinSeparatorCuts(segmentRange, tokenAdvance, isLongOpaqueLatinToken);
-              for (let c15 = 0, count104 = sep.length; c15 < count104; c15 += 1) {
+              for (let c15 = 0, count107 = sep.length; c15 < count107; c15 += 1) {
                 cleanCuts.push(sep[c15]!);
               }
             } else {
@@ -1278,26 +1281,26 @@ export class ParagraphShapingStage {
           }
         }
         let hyphenCuts = new Array<number>();
-        const count57 = cleanCuts.length;
-        if (progressiveSpan === null && allLetters && !isAbbreviation && !isCamelCase && !isLongUnhyphenatedLetterToken && w.indexOf("-") < 0 && count57 === 0) {
-          hyphenCuts = latinWordCuts(decision2, segmentRange, syllableCuts);
+        const count60 = cleanCuts.length;
+        if (progressiveSpan === null && allLetters && !isAbbreviation && !isCamelCase && !isLongUnhyphenatedLetterToken && w.indexOf("-") < 0 && count60 === 0) {
+          hyphenCuts = latinWordCuts((decision2)!, segmentRange, syllableCuts);
         }
         let opaqueHardCuts = new Array<number>();
         if (progressiveSpan === null && isLatin && (!allLetters || isLongUnhyphenatedLetterToken) && (tokenAdvance > measure || isLongOpaqueLatinToken)) {
-          opaqueHardCuts = latinOpaqueHardCuts(decision2, segmentRange, cleanCuts, isLongOpaqueLatinToken);
+          opaqueHardCuts = latinOpaqueHardCuts((decision2)!, segmentRange, cleanCuts, isLongOpaqueLatinToken);
         }
-        const count59 = opaqueHardCuts.length;
-        if (progressiveSpan === null && count59 > 0) {
+        const count62 = opaqueHardCuts.length;
+        if (progressiveSpan === null && count62 > 0) {
           const cleanBounds = [segmentRange.start];
-          for (let c16 = 0, count105 = cleanCuts.length; c16 < count105; c16 += 1) {
+          for (let c16 = 0, count108 = cleanCuts.length; c16 < count108; c16 += 1) {
             cleanBounds.push(cleanCuts[c16]!);
           }
           cleanBounds.push(segmentRange.end);
           const uniqueBounds3 = new Array<number>();
-          for (let p11 = 0, count106 = cleanBounds.length; p11 < count106; p11 += 1) {
+          for (let p11 = 0, count109 = cleanBounds.length; p11 < count109; p11 += 1) {
             const pt8 = cleanBounds[p11]!;
             let exists13 = false;
-            for (let q9 = 0, count107 = uniqueBounds3.length; q9 < count107; q9 += 1) {
+            for (let q9 = 0, count110 = uniqueBounds3.length; q9 < count110; q9 += 1) {
               if (uniqueBounds3[q9]! === pt8) {
                 exists13 = true;
                 break;
@@ -1308,11 +1311,11 @@ export class ParagraphShapingStage {
             }
           }
           ParagraphShapingStage.sortInts(uniqueBounds3);
-          for (let p12 = 0, count108 = uniqueBounds3.length - 1; p12 < count108; p12 += 1) {
+          for (let p12 = 0, count111 = uniqueBounds3.length - 1; p12 < count111; p12 += 1) {
             const pieceStart2 = uniqueBounds3[p12]!;
             const pieceEnd2 = uniqueBounds3[p12 + 1]!;
             let hasPieceHardCuts = false;
-            for (let k10 = 0, count109 = opaqueHardCuts.length; k10 < count109; k10 += 1) {
+            for (let k10 = 0, count112 = opaqueHardCuts.length; k10 < count112; k10 += 1) {
               const cut2 = opaqueHardCuts[k10]!;
               if (cut2 > pieceStart2 && cut2 < pieceEnd2) {
                 hasPieceHardCuts = true;
@@ -1325,25 +1328,25 @@ export class ParagraphShapingStage {
             const pieceRange3 = new TextRange(pieceStart2, pieceEnd2);
             const pieceReason = ParagraphShapingStage.strongNonLexicalReason(text.substring(pieceStart2, pieceEnd2));
             if (pieceReason !== null) {
-              registerEmergencyTrackingEligibility(pieceRange3, pieceReason);
+              registerEmergencyTrackingEligibility(pieceRange3, (pieceReason)!);
             }
           }
         }
         const allCutsCombined: number[] = [];
-        for (let c17 = 0; c17 < count57; c17 += 1) {
+        for (let c17 = 0; c17 < count60; c17 += 1) {
           allCutsCombined.push(cleanCuts[c17]!);
         }
-        for (let c18 = 0, count58 = hyphenCuts.length; c18 < count58; c18 += 1) {
+        for (let c18 = 0, count61 = hyphenCuts.length; c18 < count61; c18 += 1) {
           allCutsCombined.push(hyphenCuts[c18]!);
         }
-        for (let c19 = 0, count110 = opaqueHardCuts.length; c19 < count110; c19 += 1) {
+        for (let c19 = 0, count113 = opaqueHardCuts.length; c19 < count113; c19 += 1) {
           allCutsCombined.push(opaqueHardCuts[c19]!);
         }
         const allCuts = new Array<number>();
-        for (let p13 = 0, count60 = allCutsCombined.length; p13 < count60; p13 += 1) {
+        for (let p13 = 0, count63 = allCutsCombined.length; p13 < count63; p13 += 1) {
           const pt9 = allCutsCombined[p13]!;
           let exists14 = false;
-          for (let q10 = 0, count111 = allCuts.length; q10 < count111; q10 += 1) {
+          for (let q10 = 0, count114 = allCuts.length; q10 < count114; q10 += 1) {
             if (allCuts[q10]! === pt9) {
               exists14 = true;
               break;
@@ -1358,10 +1361,10 @@ export class ParagraphShapingStage {
           shapingResults.push(shaped2);
         } else {
           if (hyphenCuts.length > 0) {
-            for (let c20 = 0, count113 = hyphenCuts.length; c20 < count113; c20 += 1) {
+            for (let c20 = 0, count116 = hyphenCuts.length; c20 < count116; c20 += 1) {
               const cut3 = hyphenCuts[c20]!;
               let exists15 = false;
-              for (let q11 = 0, count114 = hyphenOffsets.length; q11 < count114; q11 += 1) {
+              for (let q11 = 0, count117 = hyphenOffsets.length; q11 < count117; q11 += 1) {
                 if (hyphenOffsets[q11]! === cut3) {
                   exists15 = true;
                   break;
@@ -1372,25 +1375,25 @@ export class ParagraphShapingStage {
               }
             }
             if (hyphenAdvanceOrNull === null) {
-              const hyphenShaped = engine.textShaper.shape(new ShapingInput("-", new TextRange(0, 1), input.textStyle, decision2, "-", []));
+              const hyphenShaped = engine.textShaper.shape(new ShapingInput("-", new TextRange(0, 1), input.textStyle, (decision2)!, "-", []));
               hyphenAdvanceOrNull = (hyphenShaped.clusters.length === 1 ? hyphenShaped.clusters[0]!.advance : 0.5 * fontSize);
               hyphenGlyphs = new Array<Glyph>();
-              for (let r2 = 0, count115 = hyphenShaped.glyphRuns.length; r2 < count115; r2 += 1) {
+              for (let r2 = 0, count118 = hyphenShaped.glyphRuns.length; r2 < count118; r2 += 1) {
                 const run = hyphenShaped.glyphRuns[r2]!;
-                for (let g3 = 0, count116 = run.glyphs.length; g3 < count116; g3 += 1) {
+                for (let g3 = 0, count119 = run.glyphs.length; g3 < count119; g3 += 1) {
                   hyphenGlyphs.push(run.glyphs[g3]!);
                 }
               }
             }
           }
           const bounds2 = [segmentRange.start];
-          for (let c21 = 0, count112 = allCuts.length; c21 < count112; c21 += 1) {
+          for (let c21 = 0, count115 = allCuts.length; c21 < count115; c21 += 1) {
             bounds2.push(allCuts[c21]!);
           }
           bounds2.push(segmentRange.end);
-          for (let k11 = 0, count117 = bounds2.length - 1; k11 < count117; k11 += 1) {
-            const pieces = shapeSegmentWithPointMarkPrefix(decision2, new TextRange(bounds2[k11]!, bounds2[k11 + 1]!));
-            for (let p14 = 0, count118 = pieces.length; p14 < count118; p14 += 1) {
+          for (let k11 = 0, count120 = bounds2.length - 1; k11 < count120; k11 += 1) {
+            const pieces = shapeSegmentWithPointMarkPrefix((decision2)!, new TextRange(bounds2[k11]!, bounds2[k11 + 1]!));
+            for (let p14 = 0, count121 = pieces.length; p14 < count121; p14 += 1) {
               shapingResults.push(pieces[p14]!);
             }
           }
@@ -1399,25 +1402,25 @@ export class ParagraphShapingStage {
     }
     const hyphenAdvance = (hyphenAdvanceOrNull !== null ? hyphenAdvanceOrNull : 0.0);
     const hyphenOffsetsBuilder = SortedTable.setBuilder<number>(SortedTable.compareInts);
-    for (let i25 = 0, count119 = hyphenOffsets.length; i25 < count119; i25 += 1) {
+    for (let i25 = 0, count22 = hyphenOffsets.length; i25 < count22; i25 += 1) {
       hyphenOffsetsBuilder.put(hyphenOffsets[i25]!);
     }
     const hyphenOffsetsSet = hyphenOffsetsBuilder.build();
     const rollbacksBuilder = SortedTable.mapBuilder<TextRange, string>(compareTextRange);
-    for (let i26 = 0, count120 = substitutionRollbackKeys.length; i26 < count120; i26 += 1) {
+    for (let i26 = 0, count23 = substitutionRollbackKeys.length; i26 < count23; i26 += 1) {
       rollbacksBuilder.put(substitutionRollbackKeys[i26]!, substitutionRollbackValues[i26]!);
     }
     const rollbacksMap = rollbacksBuilder.build();
     const progOffsetsBuilder = SortedTable.mapBuilder<number, ProgressiveBreakOpportunity>(SortedTable.compareInts);
-    for (let i27 = 0, count121 = progBreakKeys.length; i27 < count121; i27 += 1) {
+    for (let i27 = 0, count24 = progBreakKeys.length; i27 < count24; i27 += 1) {
       progOffsetsBuilder.put(progBreakKeys[i27]!, progBreakValues[i27]!);
     }
     const progOffsetsMap = progOffsetsBuilder.build();
     const segmentCacheBuilder = SortedTable.mapBuilder<TextRange, ShapingResult>(compareTextRange);
-    for (let i28 = 0, count122 = segmentShapingCacheKeys.length; i28 < count122; i28 += 1) {
+    for (let i28 = 0, count25 = segmentShapingCacheKeys.length; i28 < count25; i28 += 1) {
       segmentCacheBuilder.put(segmentShapingCacheKeys[i28]!, segmentShapingCacheValues[i28]!);
     }
     const segmentCacheMap = segmentCacheBuilder.build();
-    return new ParagraphShapingStageResult(shapingResults, hyphenOffsetsSet, hyphenAdvance, hyphenGlyphs, rollbacksMap, breakOpportunityDecisions, emergencyTrackingEligibilityDecisions, progOffsetsMap, segmentCacheMap);
+    return new ParagraphShapingStageResult(shapingResults, hyphenOffsetsSet, (hyphenAdvance)!, hyphenGlyphs, rollbacksMap, breakOpportunityDecisions, emergencyTrackingEligibilityDecisions, progOffsetsMap, segmentCacheMap);
   }
 }

@@ -169,19 +169,19 @@ impl PositionedPairShaper {
     }
 
     pub fn shape(&self, input: ShapingInput) -> ShapingResult {
-        let text = u_string::substring(&(input.text).to_ustring(), ((input.range).clone().start) as i32, ((input.range).clone().end) as i32);
+        let text = u_string::substring(&(input.text).to_ustring(), i32::from_ne_bytes((((input.range).clone().start) as i32).to_ne_bytes()), i32::from_ne_bytes((((input.range).clone().end) as i32).to_ne_bytes()));
         let advance = if text == UString::from("AV") { 10 } else { u32::wrapping_mul(u_string::unit_count(&(text)), 16) };
         let mut gs: Vec<Glyph> = vec![];
         if text == UString::from("AV") {
             gs.push(Glyph::new(1u32, (input.range).clone(), 5 as f64 as f64, Some(0 as f64), Some(0 as f64), None, None, None, None));
             gs.push(Glyph::new(2u32, (input.range).clone(), 5 as f64 as f64, Some(5 as f64), Some(0 as f64), None, None, None, None));
         } else {
-            gs.push(Glyph::new(3u32, (input.range).clone(), { let v: u32 = advance; v as i32 } as f64 as f64, Some(0 as f64), Some(0 as f64), None, None, None, None));
+            gs.push(Glyph::new(3u32, (input.range).clone(), { let v: u32 = advance; i32::from_ne_bytes(v.to_ne_bytes()) } as f64 as f64, Some(0 as f64), Some(0 as f64), None, None, None, None));
         }
         return ShapingResult::new(vec![
-    (Cluster::new((input.range).clone(), text.as_ustr(), (((input.font_decision).clone().candidate).clone().key).to_ustring().as_ustr(), { let v: u32 = advance; v as i32 } as f64 as f64, Some((input.display_text).to_ustring()), Some(0.0), Some(0.0), Some(0.0))).clone(),
+    (Cluster::new((input.range).clone(), text.as_ustr(), (((input.font_decision).clone().candidate).clone().key).to_ustring().as_ustr(), { let v: u32 = advance; i32::from_ne_bytes(v.to_ne_bytes()) } as f64 as f64, Some((input.display_text).to_ustring()), Some(0.0), Some(0.0), Some(0.0))).clone(),
 ].to_vec(), vec![
-    (GlyphRun::new((input.range).clone(), (((input.font_decision).clone().candidate).clone().key).to_ustring().as_ustr(), gs.to_vec(), { let v: u32 = advance; v as i32 } as f64 as f64, Some(vec![]))).clone(),
+    (GlyphRun::new((input.range).clone(), (((input.font_decision).clone().candidate).clone().key).to_ustring().as_ustr(), gs.to_vec(), { let v: u32 = advance; i32::from_ne_bytes(v.to_ne_bytes()) } as f64 as f64, Some(vec![]))).clone(),
 ].to_vec(), Some(vec![]));
     }
 }
@@ -198,19 +198,19 @@ impl ITextShaper for PositionedPairShaper {
     }
 
     fn shape(&mut self, input: ShapingInput) -> Result<ShapingResult, TextShaperShapeFault> {
-        let text = u_string::substring(&(input.text).to_ustring(), ((input.range).clone().start) as i32, ((input.range).clone().end) as i32);
+        let text = u_string::substring(&(input.text).to_ustring(), i32::from_ne_bytes((((input.range).clone().start) as i32).to_ne_bytes()), i32::from_ne_bytes((((input.range).clone().end) as i32).to_ne_bytes()));
         let advance = if text == UString::from("AV") { 10 } else { u32::wrapping_mul(u_string::unit_count(&(text)), 16) };
         let mut gs: Vec<Glyph> = vec![];
         if text == UString::from("AV") {
             gs.push(Glyph::new(1u32, (input.range).clone(), 5 as f64 as f64, Some(0 as f64), Some(0 as f64), None, None, None, None));
             gs.push(Glyph::new(2u32, (input.range).clone(), 5 as f64 as f64, Some(5 as f64), Some(0 as f64), None, None, None, None));
         } else {
-            gs.push(Glyph::new(3u32, (input.range).clone(), { let v: u32 = advance; v as i32 } as f64 as f64, Some(0 as f64), Some(0 as f64), None, None, None, None));
+            gs.push(Glyph::new(3u32, (input.range).clone(), { let v: u32 = advance; i32::from_ne_bytes(v.to_ne_bytes()) } as f64 as f64, Some(0 as f64), Some(0 as f64), None, None, None, None));
         }
         return Ok(ShapingResult::new(vec![
-    (Cluster::new((input.range).clone(), text.as_ustr(), (((input.font_decision).clone().candidate).clone().key).to_ustring().as_ustr(), { let v: u32 = advance; v as i32 } as f64 as f64, Some((input.display_text).to_ustring()), Some(0.0), Some(0.0), Some(0.0))).clone(),
+    (Cluster::new((input.range).clone(), text.as_ustr(), (((input.font_decision).clone().candidate).clone().key).to_ustring().as_ustr(), { let v: u32 = advance; i32::from_ne_bytes(v.to_ne_bytes()) } as f64 as f64, Some((input.display_text).to_ustring()), Some(0.0), Some(0.0), Some(0.0))).clone(),
 ].to_vec(), vec![
-    (GlyphRun::new((input.range).clone(), (((input.font_decision).clone().candidate).clone().key).to_ustring().as_ustr(), gs.to_vec(), { let v: u32 = advance; v as i32 } as f64 as f64, Some(vec![]))).clone(),
+    (GlyphRun::new((input.range).clone(), (((input.font_decision).clone().candidate).clone().key).to_ustring().as_ustr(), gs.to_vec(), { let v: u32 = advance; i32::from_ne_bytes(v.to_ne_bytes()) } as f64 as f64, Some(vec![]))).clone(),
 ].to_vec(), Some(vec![])));
     }
 }

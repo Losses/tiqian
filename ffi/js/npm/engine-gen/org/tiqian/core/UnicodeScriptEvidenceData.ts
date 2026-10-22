@@ -284,13 +284,13 @@ export class UnicodeScriptEvidenceData {
           low = middle + 1;
         } else {
           if (RANGES[base + 2]! === 1) {
-            return UnicodeScriptEvidence.EastAsian;
+            return (UnicodeScriptEvidence.EastAsian as UnicodeScriptEvidence);
           } else {
-            return UnicodeScriptEvidence.Other;
+            return (UnicodeScriptEvidence.Other as UnicodeScriptEvidence);
           }
         }
       }
     }
-    return UnicodeScriptEvidence.Neutral;
+    return (UnicodeScriptEvidence.Neutral as UnicodeScriptEvidence);
   }
 }

@@ -1313,7 +1313,7 @@ fn progressive_technical_span_breaks_and_tiers() {
             {
                 let tier = ProgressiveBreakTier::Structural;
                 let ti = ProgressiveBreakTierPriority::progressive_break_tier_priority_priority(tier);
-                let mut tiers: SortedSetTableBuilder<u32> = SortedTable::sorted_table_set_builder::<u32>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints((*a) as i32, (*b) as i32)));
+                let mut tiers: SortedSetTableBuilder<u32> = SortedTable::sorted_table_set_builder::<u32>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_bytes(((*a) as i32).to_ne_bytes()), i32::from_ne_bytes(((*b) as i32).to_ne_bytes()))));
                 tiers.put(&(ti));
                 let mut m: SortedMapTableBuilder<TextRange, SortedSetTable<u32>> = SortedTable::sorted_table_map_builder::<TextRange, SortedSetTable<u32>>(Arc::new(compare_text_range));
                 m.put(&(key), &(tiers.clone().build()));
@@ -1324,7 +1324,7 @@ fn progressive_technical_span_breaks_and_tiers() {
             {
                 let tier = ProgressiveBreakTier::Syllable;
                 let ti = ProgressiveBreakTierPriority::progressive_break_tier_priority_priority(tier);
-                let mut tiers: SortedSetTableBuilder<u32> = SortedTable::sorted_table_set_builder::<u32>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints((*a) as i32, (*b) as i32)));
+                let mut tiers: SortedSetTableBuilder<u32> = SortedTable::sorted_table_set_builder::<u32>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_bytes(((*a) as i32).to_ne_bytes()), i32::from_ne_bytes(((*b) as i32).to_ne_bytes()))));
                 tiers.put(&(ti));
                 let mut m: SortedMapTableBuilder<TextRange, SortedSetTable<u32>> = SortedTable::sorted_table_map_builder::<TextRange, SortedSetTable<u32>>(Arc::new(compare_text_range));
                 m.put(&(key), &(tiers.clone().build()));
@@ -1335,7 +1335,7 @@ fn progressive_technical_span_breaks_and_tiers() {
             {
                 let tier = ProgressiveBreakTier::Emergency;
                 let ti = ProgressiveBreakTierPriority::progressive_break_tier_priority_priority(tier);
-                let mut tiers: SortedSetTableBuilder<u32> = SortedTable::sorted_table_set_builder::<u32>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints((*a) as i32, (*b) as i32)));
+                let mut tiers: SortedSetTableBuilder<u32> = SortedTable::sorted_table_set_builder::<u32>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_bytes(((*a) as i32).to_ne_bytes()), i32::from_ne_bytes(((*b) as i32).to_ne_bytes()))));
                 tiers.put(&(ti));
                 let mut m: SortedMapTableBuilder<TextRange, SortedSetTable<u32>> = SortedTable::sorted_table_map_builder::<TextRange, SortedSetTable<u32>>(Arc::new(compare_text_range));
                 m.put(&(key), &(tiers.clone().build()));
@@ -1345,7 +1345,7 @@ fn progressive_technical_span_breaks_and_tiers() {
             }
         }
         let ann_empty = WidthIndependentAnnotationCacheFns::width_independent_annotation_cache_fns_prepare_width_independent_annotation(&mut e, (i).clone(), SortedTable::sorted_table_map_builder::<TextRange, SortedSetTable<u32>>(Arc::new(compare_text_range)).clone().build()).unwrap();
-        let mut multi: SortedSetTableBuilder<u32> = SortedTable::sorted_table_set_builder::<u32>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints((*a) as i32, (*b) as i32)));
+        let mut multi: SortedSetTableBuilder<u32> = SortedTable::sorted_table_set_builder::<u32>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_bytes(((*a) as i32).to_ne_bytes()), i32::from_ne_bytes(((*b) as i32).to_ne_bytes()))));
         multi.put(&(ProgressiveBreakTierPriority::progressive_break_tier_priority_priority(ProgressiveBreakTier::Structural)));
         multi.put(&(ProgressiveBreakTierPriority::progressive_break_tier_priority_priority(ProgressiveBreakTier::Syllable)));
         let mut mm: SortedMapTableBuilder<TextRange, SortedSetTable<u32>> = SortedTable::sorted_table_map_builder::<TextRange, SortedSetTable<u32>>(Arc::new(compare_text_range));

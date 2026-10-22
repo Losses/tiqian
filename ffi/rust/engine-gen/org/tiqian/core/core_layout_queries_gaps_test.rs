@@ -1506,7 +1506,7 @@ fn positioned_clusters_produces_source_stops_for_latin_run() {
     (CoreLayoutQueriesGapsTestHelpers::core_layout_queries_gaps_test_helpers_line((glyph_range).clone(), 0, 0, 15.0f64, 0.0f64, 20.0f64, 20.0f64, None)).clone(),
 ], None).unwrap();
         let positioned = LayoutQueries::layout_queries_positioned_clusters((result).clone());
-        let _ = TracedAssertions::traced_assertions_assert_equals_int(3, (match &((positioned[0usize]).clone().source_stops) { None => 0, Some(__option1) => u32::try_from(((*__option1).clone().len()) & 0xFFFF_FFFF).unwrap_or(0) }) as u32, None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_equals_int(3, u32::from_ne_bytes(((match &((positioned[0usize]).clone().source_stops) { None => 0, Some(__option1) => u32::try_from(((*__option1).clone().len()) & 0xFFFF_FFFF).unwrap_or(0) }) as u32).to_ne_bytes()), None).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_true((positioned[0usize]).clone().source_stops.is_some(), None).unwrap();
     });
 }
@@ -1542,8 +1542,8 @@ fn get_bounding_boxes_empty_range_returns_empty_list() {
         let boxes = LayoutQueries::layout_queries_get_bounding_boxes((result).clone(), TextRange::new(2u32, 2u32).unwrap());
         let mut rendered_boxes = UString::from("[").to_ustring();
         let mut box_index = 0u32;
-        while ((box_index) as i32) < ((u32::try_from((boxes.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32) {
-            if box_index as i32 > (0) {
+        while (i32::from_ne_bytes(((box_index) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((boxes.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
+            if i32::from_ne_bytes(((box_index) as i32).to_ne_bytes()) > (0) {
                 rendered_boxes += &(UString::from(", "));
             }
             rendered_boxes += &((boxes[usize::try_from(box_index).unwrap_or(0)]).clone().to_string());
@@ -1645,8 +1645,8 @@ impl CoreLayoutQueriesGapsTestHelpers {
         }
         output.extend(UString::from("[").encode_utf16());
         let mut index = 0u32;
-        while ((index) as i32) < ((u32::try_from((values.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32) {
-            if index as i32 > (0) {
+        while (i32::from_ne_bytes(((index) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((values.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
+            if i32::from_ne_bytes(((index) as i32).to_ne_bytes()) > (0) {
                 if let Some(&unit) = output.last() {
                     if unit >= 55296 && unit <= 56319 && !UString::from(", ").is_empty() {
                         if !match (UString::from(", ")).encode_utf16().next() { Some(head) => head >= 56320 && head <= 57343, None => false } {

@@ -316,7 +316,7 @@ fn test_cjk_font_role_classifier_all_ranges() {
     UString::from("～").to_ustring(),
 ];
         let mut i = 0u32;
-        while ((i) as i32) < ((u32::try_from((punct.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32) {
+        while (i32::from_ne_bytes(((i) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((punct.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
             let ch = (punct[usize::try_from(i).unwrap_or(0)]).clone();
             let _ = TracedAssertions::traced_assertions_assert_equals_font_role(FontRole::CjkPunctuation, Some(classifier.classify(ch.as_ustr(), TextRange::new(0u32, u_string::unit_count(&(ch))).unwrap(), None)), Some(UString::from(format!("{}", { let mut __s = UString::new(); __s += &(UString::from("Expected CjkPunctuation for ")); __s += ch.as_ustr(); __s }).as_str()))).unwrap();
             i = u32::wrapping_add(i, 1);
@@ -362,19 +362,19 @@ fn test_font_enums_and_models() {
         t.section(UStr::new(&[116,101,115,116,70,111,110,116,69,110,117,109,115,65,110,100,77,111,100,101,108,115]));
         let metrics_policies = FontMetricsPolicy::ALL;
         let mut i = 0u32;
-        while ((i) as i32) < (4) {
+        while (i32::from_ne_bytes(((i) as i32).to_ne_bytes())) < (4) {
             let _ = TracedAssertions::traced_assertions_record_rendered_not_null(UString::from(metrics_policies[usize::try_from(i).unwrap_or(0)].name()).as_ustr(), None).unwrap();
             i = u32::wrapping_add(i, 1);
         }
         let baseline_policies = BaselinePolicy::ALL;
         i = 0u32;
-        while ((i) as i32) < (3) {
+        while (i32::from_ne_bytes(((i) as i32).to_ne_bytes())) < (3) {
             let _ = TracedAssertions::traced_assertions_record_rendered_not_null(UString::from(baseline_policies[usize::try_from(i).unwrap_or(0)].name()).as_ustr(), None).unwrap();
             i = u32::wrapping_add(i, 1);
         }
         let punctuation_policies = PunctuationFontPolicy::ALL;
         i = 0u32;
-        while ((i) as i32) < (4) {
+        while (i32::from_ne_bytes(((i) as i32).to_ne_bytes())) < (4) {
             let _ = TracedAssertions::traced_assertions_record_rendered_not_null(UString::from(punctuation_policies[usize::try_from(i).unwrap_or(0)].name()).as_ustr(), None).unwrap();
             i = u32::wrapping_add(i, 1);
         }
@@ -444,7 +444,7 @@ fn test_font_request_and_roles() {
         let _ = TracedAssertions::traced_assertions_assert_true(request.to_string() == request_copy.to_string(), None).unwrap();
         let roles = FontRole::ALL;
         let mut i = 0u32;
-        while ((i) as i32) < (6) {
+        while (i32::from_ne_bytes(((i) as i32).to_ne_bytes())) < (6) {
             let _ = TracedAssertions::traced_assertions_record_rendered_not_null(UString::from(roles[usize::try_from(i).unwrap_or(0)].name()).as_ustr(), None).unwrap();
             i = u32::wrapping_add(i, 1);
         }
@@ -517,13 +517,13 @@ fn test_script_aware_font_metrics_normalizer_branches() {
         let _ = TracedAssertions::traced_assertions_assert_equals_float(14 as f64, typo.ascent, None).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_equals_float(2 as f64, typo.descent, None).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_equals_rendered(UStr::new(&[73,100,101,111,103,114,97,112,104,105,99,66,111,120]), UString::from(typo.policy.name()).as_ustr(), None).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_true((u_string::find_from(&((typo.reason).to_ustring()), UString::from("font-typo-box").as_ustr(), 0)) as u32 <= 2147483647, None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_true((u32::from_ne_bytes(((u_string::find_from(&((typo.reason).to_ustring()), UString::from("font-typo-box").as_ustr(), 0)) as u32).to_ne_bytes())) <= 2147483647, None).unwrap();
         let input_partial_typo1 = FontMetricsNormalizationInput::new((base).clone(), RawFontMetrics::new(18 as f64 as f64, 5 as f64 as f64, Some(0 as f64), Some(FontMetricSource::RawTables), Some(14 as f64), None));
         let partial1 = normalizer.normalize((input_partial_typo1).clone());
         let _ = TracedAssertions::traced_assertions_assert_equals_float(14 as f64, partial1.ascent, None).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_equals_float(5 as f64, partial1.descent, None).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_equals_rendered(UStr::new(&[82,97,119]), UString::from(partial1.policy.name()).as_ustr(), None).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_true((u_string::find_from(&((partial1.reason).to_ustring()), UString::from("hhea-fallback-no-os2").as_ustr(), 0)) as u32 <= 2147483647, None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_true((u32::from_ne_bytes(((u_string::find_from(&((partial1.reason).to_ustring()), UString::from("hhea-fallback-no-os2").as_ustr(), 0)) as u32).to_ne_bytes())) <= 2147483647, None).unwrap();
         let input_partial_typo2 = FontMetricsNormalizationInput::new((base).clone(), RawFontMetrics::new(18 as f64 as f64, 5 as f64 as f64, Some(0 as f64), Some(FontMetricSource::RawTables), None, Some(2 as f64)));
         let partial2 = normalizer.normalize((input_partial_typo2).clone());
         let _ = TracedAssertions::traced_assertions_assert_equals_float(18 as f64, partial2.ascent, None).unwrap();

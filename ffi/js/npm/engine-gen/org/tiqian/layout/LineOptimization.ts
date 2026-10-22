@@ -7,7 +7,7 @@ import { TextRangeError } from "./../core/TextRangeError.ts";
 import { TiqianIllegalArgumentException } from "./../core/TiqianIllegalArgumentException.ts";
 import { ShrinkChannel } from "./ProgressiveBreakDecisions.ts";
 import { BreakKind } from "./../linebreak/BreakKind.ts";
-import { SortedSetTable, SortedTable, formatFloatRuntime } from "../../../runtime.ts";
+import { SortedSetTable, SortedTable } from "../../../runtime.ts";
 
 export class BreakCandidate {
   public readonly index: number;
@@ -19,6 +19,7 @@ export class BreakCandidate {
   public readonly repairOptions: RepairOption[];
 
   constructor(index: number, kind: BreakKind, naturalWidth: number, compressedWidth: number, expandedWidth: number, forbiddenReason?: string | null, repairOptions: RepairOption[] | null = null) {
+    forbiddenReason = forbiddenReason ?? null;
     this.index = index;
     this.kind = kind;
     this.naturalWidth = naturalWidth;
@@ -165,6 +166,7 @@ export class LineCandidate {
   public readonly hangingClusterIndices: SortedSetTable<number>;
 
   constructor(clusterRange: IntRange, sourceRange: TextRange, naturalWidth: number, adjustedWidth: number, endReason: LineEndReason | null = null, repair?: RepairOption | null, repairCandidates: RepairCandidate[] | null = null, hangingClusterIndices: SortedSetTable<number> | null = null) {
+    repair = repair ?? null;
     this.clusterRange = clusterRange;
     this.sourceRange = sourceRange;
     this.naturalWidth = naturalWidth;
@@ -189,7 +191,7 @@ export class LineCandidate {
     return this.get_hangingClusterIndex();
   }
   public get_hangingClusterIndex(): number | null {
-    const fromRepair = (this.repair === null ? null : RepairOptions.hangOffender(this.repair));
+    const fromRepair = (this.repair === null ? null : RepairOptions.hangOffender((this.repair)!));
     const last = (this.hangingClusterIndices.size() === 0 ? null : this.hangingClusterIndices.at(this.hangingClusterIndices.size() - 1));
     return (fromRepair !== null ? fromRepair : last);
   }
@@ -232,6 +234,9 @@ export class RepairCandidate {
   public readonly availableCapacity: number;
 
   constructor(kind: string, reasonCode: string, offenderClusterIndex: number, penalty: number, accepted: boolean, rejectionReason?: string | null, targetClusterIndex?: number | null, carriedClusterIndex?: number | null, shrink: number | null = null, requiredShrink: number | null = null, availableCapacity: number | null = null) {
+    rejectionReason = rejectionReason ?? null;
+    targetClusterIndex = targetClusterIndex ?? null;
+    carriedClusterIndex = carriedClusterIndex ?? null;
     this.kind = kind;
     this.reasonCode = reasonCode;
     this.offenderClusterIndex = offenderClusterIndex;

@@ -411,7 +411,7 @@ fn dash_ink_centering_with_shaped_bounds() {
         let mut t = TestTraceRecorder::new(&(UStr::new(&[76,105,110,101,65,100,106,117,115,116,109,101,110,116,83,116,97,103,101,74,102,84,101,115,116])));
         t.section(UStr::new(&[100,97,115,104,73,110,107,67,101,110,116,101,114,105,110,103,87,105,116,104,83,104,97,112,101,100,66,111,117,110,100,115]));
         let r = LineAdjustmentStageJfTestSupport::line_adjustment_stage_jf_test_support_layout(UStr::new(&[20013,8212,8212,20013]), 200 as f64, None, Some(false), Some(Arc::new(Mutex::new(DashBoundsShaper::new(false)))), None).unwrap();
-        let x = if u32::try_from(((r.glyph_runs[0usize]).clone().glyphs.len()) & 0xFFFF_FFFF).unwrap_or(0) as i32 > (1) { (r.glyph_runs[0usize]).clone().glyphs[1usize].x } else { (r.glyph_runs[0usize]).clone().glyphs[0usize].x };
+        let x = if i32::from_ne_bytes(((u32::try_from(((r.glyph_runs[0usize]).clone().glyphs.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes()) > (1) { (r.glyph_runs[0usize]).clone().glyphs[1usize].x } else { (r.glyph_runs[0usize]).clone().glyphs[0usize].x };
         let _ = TracedAssertions::traced_assertions_assert_equals_float(1 as f64, x, None).unwrap();
     });
 }
@@ -422,7 +422,7 @@ fn dash_ink_centering_with_wide_bounds_returns_same_glyph() {
         let mut t = TestTraceRecorder::new(&(UStr::new(&[76,105,110,101,65,100,106,117,115,116,109,101,110,116,83,116,97,103,101,74,102,84,101,115,116])));
         t.section(UStr::new(&[100,97,115,104,73,110,107,67,101,110,116,101,114,105,110,103,87,105,116,104,87,105,100,101,66,111,117,110,100,115,82,101,116,117,114,110,115,83,97,109,101,71,108,121,112,104]));
         let r = LineAdjustmentStageJfTestSupport::line_adjustment_stage_jf_test_support_layout(UStr::new(&[20013,8212,8212,20013]), 200 as f64, None, Some(false), Some(Arc::new(Mutex::new(DashBoundsShaper::new(true)))), None).unwrap();
-        let x = if u32::try_from(((r.glyph_runs[0usize]).clone().glyphs.len()) & 0xFFFF_FFFF).unwrap_or(0) as i32 > (1) { (r.glyph_runs[0usize]).clone().glyphs[1usize].x } else { (r.glyph_runs[0usize]).clone().glyphs[0usize].x };
+        let x = if i32::from_ne_bytes(((u32::try_from(((r.glyph_runs[0usize]).clone().glyphs.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes()) > (1) { (r.glyph_runs[0usize]).clone().glyphs[1usize].x } else { (r.glyph_runs[0usize]).clone().glyphs[0usize].x };
         let _ = TracedAssertions::traced_assertions_assert_equals_float(0 as f64, x, None).unwrap();
     });
 }
@@ -453,7 +453,7 @@ fn inline_object_separator_space_trim_edge() {
     (InlineObjectSpan::new(TextRange::new(1u32, 2u32).unwrap(), 16 as f64 as f64, 12 as f64 as f64, 12 as f64 as f64, Some(InlineObjectBoundaryAdjustment::inline_object_boundary_adjustment_fixed().unwrap()), Some(InlineObjectBoundaryAdjustment::inline_object_boundary_adjustment_fixed().unwrap())).unwrap()).clone(),
 ];
         let r = LineAdjustmentStageJfTestSupport::line_adjustment_stage_jf_test_support_layout(UStr::new(&[20013,65532,32,65292,25991,25991]), 34 as f64, Some((o).clone()), Some(false), None, None).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_true((u32::try_from((r.lines.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32 > (1), None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_true((i32::from_ne_bytes(((u32::try_from((r.lines.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) > (1), None).unwrap();
     });
 }
 

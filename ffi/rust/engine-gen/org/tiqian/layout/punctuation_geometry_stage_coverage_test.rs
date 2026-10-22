@@ -1460,9 +1460,9 @@ impl PunctuationGeometryStageCoverageSupport {
     }
 
     pub fn punctuation_geometry_stage_coverage_support_set_ints(v: &Vec<u32>) -> SortedSetTable<u32> {
-        let mut b: SortedSetTableBuilder<u32> = SortedTable::sorted_table_set_builder::<u32>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints((*a) as i32, (*b) as i32)));
+        let mut b: SortedSetTableBuilder<u32> = SortedTable::sorted_table_set_builder::<u32>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_bytes(((*a) as i32).to_ne_bytes()), i32::from_ne_bytes(((*b) as i32).to_ne_bytes()))));
         let mut i = 0u32;
-        while ((i) as i32) < ((u32::try_from((v.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32) {
+        while (i32::from_ne_bytes(((i) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((v.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
             b.put(&(v[usize::try_from(i).unwrap_or(0)]));
             i = u32::wrapping_add(i, 1);
         }
@@ -1470,9 +1470,9 @@ impl PunctuationGeometryStageCoverageSupport {
     }
 
     pub fn punctuation_geometry_stage_coverage_support_float_map(keys: &Vec<u32>, values: &Vec<f64>) -> SortedMapTable<u32, f64> {
-        let mut b: SortedMapTableBuilder<u32, f64> = SortedTable::sorted_table_map_builder::<u32, f64>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints((*a) as i32, (*b) as i32)));
+        let mut b: SortedMapTableBuilder<u32, f64> = SortedTable::sorted_table_map_builder::<u32, f64>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_bytes(((*a) as i32).to_ne_bytes()), i32::from_ne_bytes(((*b) as i32).to_ne_bytes()))));
         let mut i = 0u32;
-        while ((i) as i32) < ((u32::try_from((keys.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32) {
+        while (i32::from_ne_bytes(((i) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((keys.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
             b.put(&(keys[usize::try_from(i).unwrap_or(0)]), &(values[usize::try_from(i).unwrap_or(0)]));
             i = u32::wrapping_add(i, 1);
         }
@@ -1483,15 +1483,15 @@ impl PunctuationGeometryStageCoverageSupport {
         let mut b_b = UString::new();
         b_b += &(UString::from("["));
         let mut i = 0u32;
-        while ((i) as i32) < ((u32::try_from((v.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32) {
-            if i as i32 > (0) {
+        while (i32::from_ne_bytes(((i) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((v.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
+            if i32::from_ne_bytes(((i) as i32).to_ne_bytes()) > (0) {
                 b_b += &(UString::from(", "));
             }
             let r = (v[usize::try_from(i).unwrap_or(0)]).clone();
             b_b += &(UString::from("["));
             let mut j = r.start;
-            while ((j) as i32) <= r.end as i32 {
-                if j as i32 > ((r.start) as i32) {
+            while (i32::from_ne_bytes(((j) as i32).to_ne_bytes())) <= i32::from_ne_bytes(((r.end) as i32).to_ne_bytes()) {
+                if i32::from_ne_bytes(((j) as i32).to_ne_bytes()) > (i32::from_ne_bytes(((r.start) as i32).to_ne_bytes())) {
                     b_b += &(UString::from(", "));
                 }
                 b_b += &(UString::from(format!("{}", crate::runtime::int_text::IntText::int_text(j)).as_str()));
@@ -1508,12 +1508,12 @@ impl PunctuationGeometryStageCoverageSupport {
         let mut b_b = UString::new();
         b_b += &(UString::from("{"));
         let mut i = 0u32;
-        while ((i) as i32) < ((m.size()) as u32 as i32) {
-            if i as i32 > (0) {
+        while (i32::from_ne_bytes(((i) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::from_ne_bytes(((m.size()) as u32).to_ne_bytes())) as i32).to_ne_bytes())) {
+            if i32::from_ne_bytes(((i) as i32).to_ne_bytes()) > (0) {
                 b_b += &(UString::from(", "));
             }
             {
-                let x = { let mut __s = UString::new(); __s += &(UString::from(format!("{}", crate::runtime::int_text::IntText::int_text(m.key_at((i) as i32))).as_str())); __s += &(UString::from("=")); __s += TestTraceRender::test_trace_render_render_float(m.value_at((i) as i32))?.as_ustr(); __s };
+                let x = { let mut __s = UString::new(); __s += &(UString::from(format!("{}", crate::runtime::int_text::IntText::int_text(m.key_at(i32::from_ne_bytes(((i) as i32).to_ne_bytes())))).as_str())); __s += &(UString::from("=")); __s += TestTraceRender::test_trace_render_render_float(m.value_at(i32::from_ne_bytes(((i) as i32).to_ne_bytes())))?.as_ustr(); __s };
                 b_b += &(x.to_string());
             }
             i = u32::wrapping_add(i, 1);
@@ -1545,7 +1545,7 @@ fn attached_ascii_point_mark_kinsoku_protects_runs() {
         let _ = TracedAssertions::traced_assertions_assert_equals_int(2, u32::try_from((fits.decisions.len()) & 0xFFFF_FFFF).unwrap_or(0), None).unwrap();
         let mut all_reasons = true;
         let mut di = 0u32;
-        while ((di) as i32) < ((u32::try_from((fits.decisions.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32) {
+        while (i32::from_ne_bytes(((di) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((fits.decisions.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
             if fits.decisions[usize::try_from(di).unwrap_or(0)].clone().reason.to_ustring() != UString::from("AttachedAsciiPointMarkKinsoku") {
                 all_reasons = false;
             }
@@ -1773,7 +1773,7 @@ fn inline_box_spans_add_structural_edges_and_skip_degenerate_ranges() {
     (InlineBoxSpan::new(TextRange::new(10u32, 11u32).unwrap(), Some(4 as f64), Some(0.0), Some(InlineBoxOuterSpacing::Narrow))).clone(),
 ]);
         let _ = TracedAssertions::traced_assertions_assert_true(u32::try_from((skipped.decisions.len()) & 0xFFFF_FFFF).unwrap_or(0) == 0, None).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_true((skipped.advance_by_cluster.size()) as u32 == 0, None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_true(u32::from_ne_bytes(((skipped.advance_by_cluster.size()) as u32).to_ne_bytes()) == 0, None).unwrap();
         let applied = PunctuationGeometryStage::punctuation_geometry_stage_apply_inline_box_spans(&c, &vec![
     (InlineBoxSpan::new(TextRange::new(0u32, 1u32).unwrap(), Some(2 as f64), Some(0.0), Some(InlineBoxOuterSpacing::Narrow))).clone(),
     (InlineBoxSpan::new(TextRange::new(1u32, 2u32).unwrap(), Some(0.0), Some(3 as f64), Some(InlineBoxOuterSpacing::Narrow))).clone(),
@@ -1790,7 +1790,7 @@ fn inline_box_spans_add_structural_edges_and_skip_degenerate_ranges() {
     (PunctuationGeometryStageCoverageSupport::punctuation_geometry_stage_coverage_support_c(UStr::new(&[97]), 0, Some(2 as f64 as f64), Some(UString::from("latin")), None).unwrap()).clone(),
 ];
         let clamped_result = PunctuationGeometryStage::punctuation_geometry_stage_apply_inline_box_spans(&clamped, &vec![
-    (InlineBoxSpan::new(TextRange::new(0u32, 1u32).unwrap(), Some(0.0), Some((4294967290u32) as i32 as f64), Some(InlineBoxOuterSpacing::Narrow))).clone(),
+    (InlineBoxSpan::new(TextRange::new(0u32, 1u32).unwrap(), Some(0.0), Some(i32::from_ne_bytes(((4294967290u32) as i32).to_ne_bytes()) as f64), Some(InlineBoxOuterSpacing::Narrow))).clone(),
 ]);
         let _ = TracedAssertions::traced_assertions_assert_equals_float(0 as f64, clamped_result.clusters[0usize].advance, None).unwrap();
     });
@@ -2148,7 +2148,7 @@ fn wide_to_narrow_boundaries_insert_leading_and_trailing_gaps() {
         let _ = TracedAssertions::traced_assertions_assert_equals_string(UStr::new(&[108,101,97,100,105,110,103]), ((leading_result.decisions[0usize]).clone().side).to_ustring().as_ustr(), None).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_equals_string(UStr::new(&[69,97,115,116,65,115,105,97,110,83,112,97,99,105,110,103,46,87,105,100,101]), ((leading_result.decisions[0usize]).clone().boundary_role).to_ustring().as_ustr(), None).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_equals_string(UStr::new(&[84,101,120,116,65,117,116,111,83,112,97,99,101,73,110,115,101,114,116,58,101,97,115,116,45,97,115,105,97,110,45,115,112,97,99,105,110,103,45,87,45,78]), ((leading_result.decisions[0usize]).clone().reason).to_ustring().as_ustr(), None).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_equals_float((4294967294u32) as i32 as f64, leading_result.decisions[0usize].total_reduction, None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_equals_float(i32::from_ne_bytes(((4294967294u32) as i32).to_ne_bytes()) as f64, leading_result.decisions[0usize].total_reduction, None).unwrap();
         let _ = TracedAssertions::traced_assertions_assert_equals_float(10 as f64, leading_result.clusters[1usize].advance, None).unwrap();
         let trailing = vec![
     (PunctuationGeometryStageCoverageSupport::punctuation_geometry_stage_coverage_support_c(UStr::new(&[97]), 0, Some(8 as f64 as f64), Some(UString::from("latin")), None).unwrap()).clone(),

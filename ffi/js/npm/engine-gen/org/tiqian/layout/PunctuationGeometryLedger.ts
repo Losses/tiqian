@@ -14,7 +14,7 @@ import { TiqianIllegalArgumentException } from "./../core/TiqianIllegalArgumentE
 import { LineCandidate } from "./LineOptimization.ts";
 import { PunctuationAnchor, PunctuationAtom, PunctuationSpacingCompressionResult } from "./PunctuationModel.ts";
 import { UnicodePunctuationBoundaryResolver } from "./UnicodePunctuationBoundaryResolver.ts";
-import { SortedMapTable, SortedTable, formatFloatRuntime } from "../../../runtime.ts";
+import { SortedMapTable, SortedTable } from "../../../runtime.ts";
 
 export class PunctuationGeometryLedger {
   public readonly naturalClusters: Cluster[];
@@ -42,27 +42,27 @@ export class PunctuationGeometryLedger {
     for (let i = 0, count = this.naturalClusters.length; i < count; i += 1) {
       const c = this.naturalClusters[i]!;
       const v = this.resolvedAdvance(i, c);
-      const sh = (this.geometries.has(i) ? this.geometries.get(i).glyphInlineShift : 0);
+      const sh = (this.geometries.has(i) ? this.geometries.get(i)!.glyphInlineShift : 0);
       result.push((v === c.advance && sh === 0 ? c : new Cluster(c.range, c.text, c.fontKey, v, c.displayText, c.baselineShift, c.leadingLayoutAdvance, c.glyphInlineShift + sh)));
     }
     return result;
   }
 
   private resolvedAdvance(i: number, c: Cluster): number {
-    const raw = (this.rawEdgeTrimByCluster.has(i) ? this.rawEdgeTrimByCluster.get(i) : 0);
-    const sp = (this.rubySpreadByCluster.has(i) ? this.rubySpreadByCluster.get(i) : 0);
-    const d = (this.justificationDeltaByCluster.has(i) ? this.justificationDeltaByCluster.get(i) : 0);
-    const att = (this.attachedInlineTrailingGlueByCluster.has(i) ? this.attachedInlineTrailingGlueByCluster.get(i) : 0);
-    const box = (this.inlineBoxAdvanceByCluster.has(i) ? this.inlineBoxAdvanceByCluster.get(i) : 0);
+    const raw = (this.rawEdgeTrimByCluster.has(i) ? this.rawEdgeTrimByCluster.get(i)! : 0);
+    const sp = (this.rubySpreadByCluster.has(i) ? this.rubySpreadByCluster.get(i)! : 0);
+    const d = (this.justificationDeltaByCluster.has(i) ? this.justificationDeltaByCluster.get(i)! : 0);
+    const att = (this.attachedInlineTrailingGlueByCluster.has(i) ? this.attachedInlineTrailingGlueByCluster.get(i)! : 0);
+    const box = (this.inlineBoxAdvanceByCluster.has(i) ? this.inlineBoxAdvanceByCluster.get(i)! : 0);
     if (!this.geometries.has(i)) {
       return Math.max(0, c.advance + d + sp + att - raw);
     }
     const g = this.geometries.get(i);
     if (!this.budgets.has(i)) {
-      return Math.max(0, g.bodyWidth + box + d + sp - raw);
+      return Math.max(0, g!.bodyWidth + box + d + sp - raw);
     }
     const b = this.budgets.get(i);
-    return Math.max(0, g.bodyWidth + box + b.leadingRemaining + b.trailingRemaining + d + sp + att - raw);
+    return Math.max(0, g!.bodyWidth + box + b!.leadingRemaining + b!.trailingRemaining + d + sp + att - raw);
   }
 
   public withInlineBoxAdvances(m: SortedMapTable<number, number>): PunctuationGeometryLedger {
@@ -84,7 +84,7 @@ export class PunctuationGeometryLedger {
       for (let j = 0, count3 = n.size(); j < count3; j += 1) {
         b.put(n.keyAt(j), n.valueAt(j));
       }
-      b.put(k, (n.has(k) ? n.get(k) : 0) + m.valueAt(i));
+      b.put(k, (n.has(k) ? n.get(k)! : 0) + m.valueAt(i));
       n = b.build();
     }
     return PunctuationGeometryLedger.replace(this, null, n, null, null, null, null);
@@ -101,7 +101,7 @@ export class PunctuationGeometryLedger {
       const amount = m.valueAt(i);
       if (n.has(k) && amount > 0) {
         const q = n.get(k);
-        const replacement = (lead ? new GlueBudget(q.leadingNatural, Math.min(q.leadingNatural, q.leadingConsumed + amount), q.trailingNatural, q.trailingConsumed) : new GlueBudget(q.leadingNatural, q.leadingConsumed, q.trailingNatural, Math.min(q.trailingNatural, q.trailingConsumed + amount)));
+        const replacement = (lead ? new GlueBudget(q!.leadingNatural, Math.min(q!.leadingNatural, q!.leadingConsumed + amount), q!.trailingNatural, q!.trailingConsumed) : new GlueBudget(q!.leadingNatural, q!.leadingConsumed, q!.trailingNatural, Math.min(q!.trailingNatural, q!.trailingConsumed + amount)));
         const b = SortedTable.mapBuilder<number, GlueBudget>(SortedTable.compareInts);
         for (let j = 0, count5 = n.size(); j < count5; j += 1) {
           b.put(n.keyAt(j), n.valueAt(j));
@@ -127,7 +127,7 @@ export class PunctuationGeometryLedger {
       const k = this.budgets.keyAt(i);
       const q = this.budgets.valueAt(i);
       if (q.leadingRemaining > 0 || q.trailingRemaining > 0) {
-        b.put(k, new GlueCapacity(q.leadingRemaining, q.trailingRemaining, this.geometries.has(k) && (this.geometries.get(k).anchor !== null && this.geometries.get(k).anchor.kind === "Center")));
+        b.put(k, new GlueCapacity(q.leadingRemaining, q.trailingRemaining, this.geometries.has(k) && (this.geometries.get(k)!.anchor !== null && this.geometries.get(k)!.anchor!.kind === "Center")));
       }
     }
     return b.build();
@@ -139,7 +139,7 @@ export class PunctuationGeometryLedger {
       const k = this.geometries.keyAt(i);
       const g = this.geometries.valueAt(i);
       const b = this.budgets.get(k);
-      r.push(new ClusterGeometryDecisionInfo(g.range, g.sourceText, g.displayText, g.baseAdvance, g.bodyWidth, b.leadingNatural, b.leadingConsumed, b.trailingNatural, b.trailingConsumed, (this.justificationDeltaByCluster.has(k) ? this.justificationDeltaByCluster.get(k) : 0), this.resolvedAdvance(k, this.naturalClusters[k]!), "PunctuationGeometryLedger", g.reason, ((this.rubySpreadByCluster.has(k) ? this.rubySpreadByCluster.get(k) : 0) ?? 0.0), g.glyphInlineShift, g.glyphPlacementReason));
+      r.push(new ClusterGeometryDecisionInfo(g.range, g.sourceText, g.displayText, g.baseAdvance, g.bodyWidth, b!.leadingNatural, b!.leadingConsumed, b!.trailingNatural, b!.trailingConsumed, ((this.justificationDeltaByCluster.has(k) ? this.justificationDeltaByCluster.get(k)! : 0))!, this.resolvedAdvance(k, this.naturalClusters[k]!), "PunctuationGeometryLedger", g.reason, ((this.rubySpreadByCluster.has(k) ? this.rubySpreadByCluster.get(k)! : 0) ?? 0.0), g.glyphInlineShift, g.glyphPlacementReason));
     }
     return r;
   }
@@ -160,14 +160,14 @@ export class PunctuationGeometryLedger {
         if (idx >= 0 && n.has(idx)) {
           const q = n.get(idx);
           let replacement: GlueBudget;
-          if ((this.geometries.get(idx).anchor !== null && this.geometries.get(idx).anchor.kind === "Center")) {
-            const x = Math.min(a.reduction / 2, Math.min(q.leadingRemaining, q.trailingRemaining));
-            replacement = new GlueBudget(q.leadingNatural, q.leadingConsumed + x, q.trailingNatural, q.trailingConsumed + x);
+          if ((this.geometries.get(idx)!.anchor !== null && this.geometries.get(idx)!.anchor!.kind === "Center")) {
+            const x = Math.min(a.reduction / 2, Math.min(q!.leadingRemaining, q!.trailingRemaining));
+            replacement = new GlueBudget(q!.leadingNatural, q!.leadingConsumed + x, q!.trailingNatural, q!.trailingConsumed + x);
           } else {
-            if (q.trailingRemaining >= q.leadingRemaining) {
-              replacement = new GlueBudget(q.leadingNatural, q.leadingConsumed, q.trailingNatural, Math.min(q.trailingNatural, q.trailingConsumed + a.reduction));
+            if (q!.trailingRemaining >= q!.leadingRemaining) {
+              replacement = new GlueBudget(q!.leadingNatural, q!.leadingConsumed, q!.trailingNatural, Math.min(q!.trailingNatural, q!.trailingConsumed + a.reduction));
             } else {
-              replacement = new GlueBudget(q.leadingNatural, Math.min(q.leadingNatural, q.leadingConsumed + a.reduction), q.trailingNatural, q.trailingConsumed);
+              replacement = new GlueBudget(q!.leadingNatural, Math.min(q!.leadingNatural, q!.leadingConsumed + a.reduction), q!.trailingNatural, q!.trailingConsumed);
             }
           }
           const b = SortedTable.mapBuilder<number, GlueBudget>(SortedTable.compareInts);
@@ -183,6 +183,7 @@ export class PunctuationGeometryLedger {
   }
 
   public consumeLineEdgeGlue(lines: LineCandidate[], force?: boolean | null): LineEdgeTrimResult {
+    force = force ?? null;
     const _gthis = this;
     const count11 = lines.length;
     if (count11 === 0 || this.budgets.size() === 0) {
@@ -197,11 +198,11 @@ export class PunctuationGeometryLedger {
       return;
     }
     const q = _gthis.budgets.get(index);
-    const alreadyLead = (lead.get(index) === null ? 0 : lead.get(index));
-    const alreadyTrail = (trail.get(index) === null ? 0 : trail.get(index));
-    const lr = Math.max(0, q.leadingRemaining - alreadyLead);
-    const tr = Math.max(0, q.trailingRemaining - alreadyTrail);
-    const paired = _gthis.geometries.has(index) && (_gthis.geometries.get(index).anchor !== null && _gthis.geometries.get(index).anchor.kind === "Center");
+    const alreadyLead = (lead.get(index) === null ? 0 : lead.get(index)!);
+    const alreadyTrail = (trail.get(index) === null ? 0 : trail.get(index)!);
+    const lr = Math.max(0, q!.leadingRemaining - alreadyLead);
+    const tr = Math.max(0, q!.trailingRemaining - alreadyTrail);
+    const paired = _gthis.geometries.has(index) && (_gthis.geometries.get(index)!.anchor !== null && _gthis.geometries.get(index)!.anchor!.kind === "Center");
     const lp = (paired ? Math.min(lr, tr) : (edge === "Start" ? lr : 0));
     const tp = (paired ? Math.min(lr, tr) : (edge === "End" ? tr : 0));
     const total = lp + tp;
@@ -220,19 +221,19 @@ export class PunctuationGeometryLedger {
     let reason = "";
     if (paired) {
       side = "both";
-      consumed = q.leadingConsumed + q.trailingConsumed;
-      natural = q.leadingNatural + q.trailingNatural;
+      consumed = q!.leadingConsumed + q!.trailingConsumed;
+      natural = q!.leadingNatural + q!.trailingNatural;
       reason = (edge === "Start" ? "LineStartCenteredPunctuationPairedCompression" : "LineEndCenteredPunctuationPairedCompression");
     } else {
       if (edge === "Start") {
         side = "leading";
-        consumed = q.leadingConsumed;
-        natural = q.leadingNatural;
+        consumed = q!.leadingConsumed;
+        natural = q!.leadingNatural;
         reason = "LineStartHalfWidthPunctuation";
       } else {
         side = "trailing";
-        consumed = q.trailingConsumed;
-        natural = q.trailingNatural;
+        consumed = q!.trailingConsumed;
+        natural = q!.trailingNatural;
         reason = "LineEndHalfWidthPunctuation";
       }
     }
@@ -278,15 +279,15 @@ export class PunctuationGeometryLedger {
       const boundary = boundaries[_g_index1]!;
       const previous = boundary.previousClusterIndex;
       const end = boundary.attachedClusterRange.end;
-      const previousBudget = (updated.has(previous) ? updated.get(previous) : null);
-      const left = (previousBudget === null ? 0 : previousBudget.trailingRemaining);
+      const previousBudget = (updated.has(previous) ? updated.get(previous)! : null);
+      const left = (previousBudget === null ? 0 : previousBudget!.trailingRemaining);
       let next = boundary.nextClusterIndex;
       if (next !== null && this.naturalClusters[next]!.fontKey === "mandatory-break" && this.naturalClusters[next]!.displayText === "") {
         next = null;
       }
-      const nextBudget = (next !== null && updated.has(next) ? updated.get(next) : null);
-      const right = (nextBudget === null ? 0 : nextBudget.leadingRemaining);
-      let leftAtom: PunctuationAtom = null;
+      const nextBudget = (next !== null && updated.has((next)!) ? updated.get((next)!) : null);
+      const right = (nextBudget === null ? 0 : nextBudget!.leadingRemaining);
+      let leftAtom: PunctuationAtom = null!;
       {
         let _g = 0;
         while (_g < atoms.length) {
@@ -297,7 +298,7 @@ export class PunctuationGeometryLedger {
           }
         }
       }
-      let rightAtom: PunctuationAtom = null;
+      let rightAtom: PunctuationAtom = null!;
       if (next !== null) {
         let _g2 = 0;
         while (_g2 < atoms.length) {
@@ -311,13 +312,13 @@ export class PunctuationGeometryLedger {
       }
       const nextChar = (next === null ? null : (this.naturalClusters[next]!.text.length > 0 ? this.naturalClusters[next]!.text.charAt(0) : null));
       const natural = left + right;
-      const adjusted = (next === null ? 0 : (leftAtom !== null && rightAtom !== null || leftAtom !== null && leftAtom.punctuationClass.kind === "Closing" && nextChar !== null && ClreqPunctuationPolicies.isAsciiPointMark(nextChar) ? Math.max(0, natural - em / 2) : natural));
+      const adjusted = (next === null ? 0 : (leftAtom !== null && rightAtom !== null || leftAtom !== null && leftAtom.punctuationClass.kind === "Closing" && nextChar !== null && ClreqPunctuationPolicies.isAsciiPointMark((nextChar)!) ? Math.max(0, natural - em / 2) : natural));
       if (previousBudget !== null && left > 0) {
-        updated = PunctuationGeometryLedger.putB(updated, previous, new GlueBudget(previousBudget.leadingNatural, previousBudget.leadingConsumed, previousBudget.trailingNatural, previousBudget.trailingNatural));
+        updated = PunctuationGeometryLedger.putB(updated, previous, new GlueBudget(previousBudget!.leadingNatural, previousBudget!.leadingConsumed, previousBudget!.trailingNatural, previousBudget!.trailingNatural));
       }
       const kept = Math.min(right, adjusted);
       if (next !== null && nextBudget !== null && kept < right) {
-        updated = PunctuationGeometryLedger.putB(updated, next, new GlueBudget(nextBudget.leadingNatural, nextBudget.leadingNatural - kept, nextBudget.trailingNatural, nextBudget.trailingConsumed));
+        updated = PunctuationGeometryLedger.putB(updated, (next)!, new GlueBudget(nextBudget!.leadingNatural, nextBudget!.leadingNatural - kept, nextBudget!.trailingNatural, nextBudget!.trailingConsumed));
       }
       const target = Math.max(0, adjusted - kept);
       if (target > 0) {
@@ -325,14 +326,14 @@ export class PunctuationGeometryLedger {
       }
       if (left > 0 || right !== adjusted) {
         const n = (next === null ? null : this.naturalClusters[next]!);
-        const reason = (next === null ? "AttachedInlineVirtualPunctuationBoundary:line-end" : (leftAtom !== null && rightAtom !== null ? "AttachedInlineVirtualPunctuationBoundary:adjacent-punctuation" : (leftAtom !== null && leftAtom.punctuationClass.kind === "Closing" && nextChar !== null && ClreqPunctuationPolicies.isAsciiPointMark(nextChar) ? "AttachedInlineVirtualPunctuationBoundary:ascii-point-mark" : "AttachedInlineVirtualPunctuationBoundary:natural")));
-        decisions.push(new SpacingDecisionInfo(new TextRange(this.naturalClusters[previous]!.range.start, (n === null ? this.naturalClusters[end]!.range.end : n.range.end)), (this.naturalClusters[previous]!.text.length > 0 ? this.naturalClusters[previous]!.text.charAt(this.naturalClusters[previous]!.text.length - 1) : " "), (n === null ? " " : (n.text.length > 0 ? n.text.charAt(0) : " ")), natural, adjusted, natural - adjusted, this.naturalClusters[previous]!.range, reason));
+        const reason = (next === null ? "AttachedInlineVirtualPunctuationBoundary:line-end" : (leftAtom !== null && rightAtom !== null ? "AttachedInlineVirtualPunctuationBoundary:adjacent-punctuation" : (leftAtom !== null && leftAtom.punctuationClass.kind === "Closing" && nextChar !== null && ClreqPunctuationPolicies.isAsciiPointMark((nextChar)!) ? "AttachedInlineVirtualPunctuationBoundary:ascii-point-mark" : "AttachedInlineVirtualPunctuationBoundary:natural")));
+        decisions.push(new SpacingDecisionInfo(new TextRange(this.naturalClusters[previous]!.range.start, (n === null ? this.naturalClusters[end]!.range.end : n!.range.end)), (this.naturalClusters[previous]!.text.length > 0 ? this.naturalClusters[previous]!.text.charAt(this.naturalClusters[previous]!.text.length - 1) : " "), (n === null ? " " : (n!.text.length > 0 ? n!.text.charAt(0) : " ")), natural, adjusted, natural - adjusted, this.naturalClusters[previous]!.range, reason));
       }
     }
     let attached = PunctuationGeometryLedger.cloneF(this.attachedInlineTrailingGlueByCluster);
     for (let i = 0, count14 = trailing.size(); i < count14; i += 1) {
       const k = trailing.keyAt(i);
-      attached = PunctuationGeometryLedger.putF(attached, k, Math.max((attached.has(k) ? attached.get(k) : 0), trailing.valueAt(i)));
+      attached = PunctuationGeometryLedger.putF(attached, k, Math.max(((attached.has(k) ? attached.get(k)! : 0))!, trailing.valueAt(i)));
     }
     return new AttachedInlinePunctuationBoundaryResult(new PunctuationGeometryLedger(this.naturalClusters, this.geometries, updated, this.justificationDeltaByCluster, this.rawEdgeTrimByCluster, this.rubySpreadByCluster, this.inlineBoxAdvanceByCluster, attached), trailing, decisions);
   }
@@ -362,7 +363,13 @@ export class PunctuationGeometryLedger {
   }
 
   private static replace(x: PunctuationGeometryLedger, d?: SortedMapTable<number, number> | null, r?: SortedMapTable<number, number> | null, s?: SortedMapTable<number, number> | null, i?: SortedMapTable<number, number> | null, a?: SortedMapTable<number, number> | null, b?: SortedMapTable<number, GlueBudget> | null): PunctuationGeometryLedger {
-    return new PunctuationGeometryLedger(x.naturalClusters, x.geometries, (b === null ? x.budgets : b), ((d === null ? x.justificationDeltaByCluster : d) ?? PunctuationGeometryLedger.emptyF()), ((r === null ? x.rawEdgeTrimByCluster : r) ?? PunctuationGeometryLedger.emptyF()), ((s === null ? x.rubySpreadByCluster : s) ?? PunctuationGeometryLedger.emptyF()), ((i === null ? x.inlineBoxAdvanceByCluster : i) ?? PunctuationGeometryLedger.emptyF()), ((a === null ? x.attachedInlineTrailingGlueByCluster : a) ?? PunctuationGeometryLedger.emptyF()));
+    d = d ?? null;
+    r = r ?? null;
+    s = s ?? null;
+    i = i ?? null;
+    a = a ?? null;
+    b = b ?? null;
+    return new PunctuationGeometryLedger(x.naturalClusters, x.geometries, ((b === null ? x.budgets : b))!, ((d === null ? x.justificationDeltaByCluster : d) ?? PunctuationGeometryLedger.emptyF()), ((r === null ? x.rawEdgeTrimByCluster : r) ?? PunctuationGeometryLedger.emptyF()), ((s === null ? x.rubySpreadByCluster : s) ?? PunctuationGeometryLedger.emptyF()), ((i === null ? x.inlineBoxAdvanceByCluster : i) ?? PunctuationGeometryLedger.emptyF()), ((a === null ? x.attachedInlineTrailingGlueByCluster : a) ?? PunctuationGeometryLedger.emptyF()));
   }
 
   public static from(naturalClusters: Cluster[], punctuationAtoms: PunctuationAtom[], spacingPlan: PunctuationSpacingCompressionResult): PunctuationGeometryLedger {

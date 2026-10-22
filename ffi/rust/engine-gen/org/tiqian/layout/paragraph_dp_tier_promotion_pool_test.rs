@@ -217,7 +217,7 @@ fn foreign_span_candidate_survives_the_promotion_pool_purge() {
     (ProgressiveBreakOpportunity::new(ProgressiveBreakTier::Emergency, (span).clone(), Some(0.0))).clone(),
     (ProgressiveBreakOpportunity::new(ProgressiveBreakTier::Whitespace, (span).clone(), Some(0.0))).clone(),
 ]))).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_true((u_string::find_from(&(ParagraphDpTierPromotionPoolTestSupport::paragraph_dp_tier_promotion_pool_test_support_repair_reason(((s.lines[0usize]).clone().repair).clone())), UString::from("ProgressiveTechnicalTierPromotion").as_ustr(), 0)) as u32 == 0, Some((ParagraphDpLineBreakerTestSupport::paragraph_dp_line_breaker_test_support_repairs_string((s).clone())).to_ustring())).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_true(u32::from_ne_bytes(((u_string::find_from(&(ParagraphDpTierPromotionPoolTestSupport::paragraph_dp_tier_promotion_pool_test_support_repair_reason(((s.lines[0usize]).clone().repair).clone())), UString::from("ProgressiveTechnicalTierPromotion").as_ustr(), 0)) as u32).to_ne_bytes()) == 0, Some((ParagraphDpLineBreakerTestSupport::paragraph_dp_line_breaker_test_support_repairs_string((s).clone())).to_ustring())).unwrap();
     });
 }
 
@@ -242,7 +242,7 @@ fn committed_compressed_line_with_foreign_span_opportunities_keeps_plain_push_in
         }
         let _ = (_g).clone();
         let _ = TracedAssertions::traced_assertions_assert_equals_int_range(IntRange::new(0u32, 2u32), ((s.lines[0usize]).clone().cluster_range).clone(), Some((ParagraphDpLineBreakerTestSupport::paragraph_dp_line_breaker_test_support_lines_string((s).clone())).to_ustring())).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_true((u_string::find_from(&(ParagraphDpTierPromotionPoolTestSupport::paragraph_dp_tier_promotion_pool_test_support_repair_reason(((s.lines[0usize]).clone().repair).clone())), UString::from("LineAdjustmentPushIn").as_ustr(), 0)) as u32 == 0, Some((ParagraphDpLineBreakerTestSupport::paragraph_dp_line_breaker_test_support_repairs_string((s).clone())).to_ustring())).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_true(u32::from_ne_bytes(((u_string::find_from(&(ParagraphDpTierPromotionPoolTestSupport::paragraph_dp_tier_promotion_pool_test_support_repair_reason(((s.lines[0usize]).clone().repair).clone())), UString::from("LineAdjustmentPushIn").as_ustr(), 0)) as u32).to_ne_bytes()) == 0, Some((ParagraphDpLineBreakerTestSupport::paragraph_dp_line_breaker_test_support_repairs_string((s).clone())).to_ustring())).unwrap();
     });
 }
 
@@ -266,6 +266,6 @@ fn committed_compressed_end_without_opportunity_keeps_plain_push_in_reason() {
         }
         let _ = (_g).clone();
         let _ = TracedAssertions::traced_assertions_assert_equals_int_range(IntRange::new(0u32, 2u32), ((s.lines[0usize]).clone().cluster_range).clone(), Some((ParagraphDpLineBreakerTestSupport::paragraph_dp_line_breaker_test_support_lines_string((s).clone())).to_ustring())).unwrap();
-        let _ = TracedAssertions::traced_assertions_assert_true((u_string::find_from(&(ParagraphDpTierPromotionPoolTestSupport::paragraph_dp_tier_promotion_pool_test_support_repair_reason(((s.lines[0usize]).clone().repair).clone())), UString::from("LineAdjustmentPushIn").as_ustr(), 0)) as u32 == 0, Some((ParagraphDpLineBreakerTestSupport::paragraph_dp_line_breaker_test_support_repairs_string((s).clone())).to_ustring())).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_true(u32::from_ne_bytes(((u_string::find_from(&(ParagraphDpTierPromotionPoolTestSupport::paragraph_dp_tier_promotion_pool_test_support_repair_reason(((s.lines[0usize]).clone().repair).clone())), UString::from("LineAdjustmentPushIn").as_ustr(), 0)) as u32).to_ne_bytes()) == 0, Some((ParagraphDpLineBreakerTestSupport::paragraph_dp_line_breaker_test_support_repairs_string((s).clone())).to_ustring())).unwrap();
     });
 }

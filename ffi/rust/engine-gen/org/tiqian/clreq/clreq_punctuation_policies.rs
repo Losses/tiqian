@@ -146,7 +146,7 @@ impl ClreqPunctuationPolicies {
 
     pub(crate) fn clreq_punctuation_policies_contains_unit(units: &[u32], unit: Option<u32>) -> bool {
         let mut index = 0u32;
-        while ((index) as i32) < ((u32::try_from((units.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32) {
+        while (i32::from_ne_bytes(((index) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((units.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
             if matches!(unit.as_ref(), Some(__v) if __v == &(units[usize::try_from(index).unwrap_or(0)])) {
                 return true;
             }

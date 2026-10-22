@@ -200,7 +200,7 @@ impl WidthIndependentAnnotationCacheCoverageTestSupport {
     }
 
     pub fn width_independent_annotation_cache_coverage_test_support_tier_set(tiers: &Vec<ProgressiveBreakTier>) -> SortedSetTable<u32> {
-        let mut b: SortedSetTableBuilder<u32> = SortedTable::sorted_table_set_builder::<u32>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints((*a) as i32, (*b) as i32)));
+        let mut b: SortedSetTableBuilder<u32> = SortedTable::sorted_table_set_builder::<u32>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_bytes(((*a) as i32).to_ne_bytes()), i32::from_ne_bytes(((*b) as i32).to_ne_bytes()))));
         for i in 0..match u32::try_from(tiers.len()) { Ok(value) => value, Err(_) => u32::MAX } {
             b.put(&(ProgressiveBreakTierPriority::progressive_break_tier_priority_priority(tiers[usize::try_from(i).unwrap_or(0)])));
         }
@@ -225,11 +225,11 @@ impl WidthIndependentAnnotationCacheCoverageTestSupport {
         let mut out: Vec<Option<TextRange>> = vec![];
         let mut item_index = 0u32;
         for cluster in clusters {
-            while ((item_index) as i32) < ((u32::try_from((items.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32) && ((items[usize::try_from(item_index).unwrap_or(0)].end) as i32) <= (cluster.range).clone().start as i32 {
+            while (i32::from_ne_bytes(((item_index) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((items.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) && (i32::from_ne_bytes(((items[usize::try_from(item_index).unwrap_or(0)].end) as i32).to_ne_bytes())) <= i32::from_ne_bytes((((cluster.range).clone().start) as i32).to_ne_bytes()) {
                 item_index = u32::wrapping_add(item_index, 1);
             }
-            let item = if item_index as i32 < ((u32::try_from((items.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32) { Some((items[usize::try_from(item_index).unwrap_or(0)]).clone()) } else { None };
-            let candidate = if match &(item) { Some(__option2) => (cluster.range).clone().start as i32 >= __option2.start as i32 && (((cluster.range).clone().end) as i32) <= __option2.end as i32, None => false } { item } else { None };
+            let item = if i32::from_ne_bytes(((item_index) as i32).to_ne_bytes()) < (i32::from_ne_bytes(((u32::try_from((items.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) { Some((items[usize::try_from(item_index).unwrap_or(0)]).clone()) } else { None };
+            let candidate = if match &(item) { Some(__option2) => i32::from_ne_bytes((((cluster.range).clone().start) as i32).to_ne_bytes()) >= i32::from_ne_bytes(((__option2.start) as i32).to_ne_bytes()) && (i32::from_ne_bytes((((cluster.range).clone().end) as i32).to_ne_bytes())) <= i32::from_ne_bytes(((__option2.end) as i32).to_ne_bytes()), None => false } { item } else { None };
             out.push(candidate.clone());
         }
         return out;
@@ -239,11 +239,11 @@ impl WidthIndependentAnnotationCacheCoverageTestSupport {
         let mut out: Vec<Option<TextRange>> = vec![];
         let mut item_index = 0u32;
         for cluster in clusters {
-            while ((item_index) as i32) < ((u32::try_from((items.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32) && ((items[usize::try_from(item_index).unwrap_or(0)].end) as i32) <= (cluster.range).clone().start as i32 {
+            while (i32::from_ne_bytes(((item_index) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((items.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) && (i32::from_ne_bytes(((items[usize::try_from(item_index).unwrap_or(0)].end) as i32).to_ne_bytes())) <= i32::from_ne_bytes((((cluster.range).clone().start) as i32).to_ne_bytes()) {
                 item_index = u32::wrapping_add(item_index, 1);
             }
-            let item = if item_index as i32 < ((u32::try_from((items.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32) { Some((items[usize::try_from(item_index).unwrap_or(0)]).clone()) } else { None };
-            let candidate = if match &(item) { Some(__option4) => __option4.start as i32 >= (cluster.range).clone().start as i32 && ((__option4.end) as i32) <= (cluster.range).clone().end as i32, None => false } { item } else { None };
+            let item = if i32::from_ne_bytes(((item_index) as i32).to_ne_bytes()) < (i32::from_ne_bytes(((u32::try_from((items.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) { Some((items[usize::try_from(item_index).unwrap_or(0)]).clone()) } else { None };
+            let candidate = if match &(item) { Some(__option4) => i32::from_ne_bytes(((__option4.start) as i32).to_ne_bytes()) >= i32::from_ne_bytes((((cluster.range).clone().start) as i32).to_ne_bytes()) && (i32::from_ne_bytes(((__option4.end) as i32).to_ne_bytes())) <= i32::from_ne_bytes((((cluster.range).clone().end) as i32).to_ne_bytes()), None => false } { item } else { None };
             out.push(candidate.clone());
         }
         return out;
@@ -303,10 +303,10 @@ impl WidthIndependentAnnotationCacheCoverageTestSupport {
         let nl = u_string::unit_count(&(needle));
         let limit = u32::wrapping_add(u32::wrapping_sub(u_string::unit_count(&(text)), nl), 1);
         let mut i = 0u32;
-        while ((i) as i32) < ((limit) as i32) {
+        while (i32::from_ne_bytes(((i) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((limit) as i32).to_ne_bytes())) {
             let mut r#match = true;
             let mut j = 0u32;
-            while ((j) as i32) < ((nl) as i32) {
+            while (i32::from_ne_bytes(((j) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((nl) as i32).to_ne_bytes())) {
                 if u_string::at(text, u32::wrapping_add(i, j)) != u_string::at(needle, j) {
                     r#match = false;
                     break;
@@ -366,7 +366,7 @@ impl ConflictingOpenTypeFeaturesShaper {
     }
 
     pub fn shape(&self, input: ShapingInput) -> Result<ShapingResult, TextShaperShapeFault> {
-        let cluster = Cluster::new((input.range).clone(), u_string::substring(&(input.text).to_ustring(), ((input.range).clone().start) as i32, ((input.range).clone().end) as i32).as_ustr(), &(UStr::new(&[116,101,115,116])), 16.0f64, Some((input.display_text).to_ustring()), Some(0.0), Some(0.0), Some(0.0));
+        let cluster = Cluster::new((input.range).clone(), u_string::substring(&(input.text).to_ustring(), i32::from_ne_bytes((((input.range).clone().start) as i32).to_ne_bytes()), i32::from_ne_bytes((((input.range).clone().end) as i32).to_ne_bytes())).as_ustr(), &(UStr::new(&[116,101,115,116])), 16.0f64, Some((input.display_text).to_ustring()), Some(0.0), Some(0.0), Some(0.0));
         let glyph1 = Glyph::new(1u32, (input.range).clone(), 8.0f64, Some(0.0f64), Some(0.0), None, None, None, None);
         let glyph2 = Glyph::new(2u32, (input.range).clone(), 8.0f64, Some(8.0f64), Some(0.0), None, None, None, None);
         let run1 = GlyphRun::new((input.range).clone(), &(UStr::new(&[116,101,115,116])), vec![(glyph1).clone()].to_vec(), 8.0f64, Some(vec![UString::from("feat1").to_ustring()]));
@@ -387,7 +387,7 @@ impl ITextShaper for ConflictingOpenTypeFeaturesShaper {
     }
 
     fn shape(&mut self, input: ShapingInput) -> Result<ShapingResult, TextShaperShapeFault> {
-        let cluster = Cluster::new((input.range).clone(), u_string::substring(&(input.text).to_ustring(), ((input.range).clone().start) as i32, ((input.range).clone().end) as i32).as_ustr(), &(UStr::new(&[116,101,115,116])), 16.0f64, Some((input.display_text).to_ustring()), Some(0.0), Some(0.0), Some(0.0));
+        let cluster = Cluster::new((input.range).clone(), u_string::substring(&(input.text).to_ustring(), i32::from_ne_bytes((((input.range).clone().start) as i32).to_ne_bytes()), i32::from_ne_bytes((((input.range).clone().end) as i32).to_ne_bytes())).as_ustr(), &(UStr::new(&[116,101,115,116])), 16.0f64, Some((input.display_text).to_ustring()), Some(0.0), Some(0.0), Some(0.0));
         let glyph1 = Glyph::new(1u32, (input.range).clone(), 8.0f64, Some(0.0f64), Some(0.0), None, None, None, None);
         let glyph2 = Glyph::new(2u32, (input.range).clone(), 8.0f64, Some(8.0f64), Some(0.0), None, None, None, None);
         let run1 = GlyphRun::new((input.range).clone(), &(UStr::new(&[116,101,115,116])), vec![(glyph1).clone()].to_vec(), 8.0f64, Some(vec![UString::from("feat1").to_ustring()]));

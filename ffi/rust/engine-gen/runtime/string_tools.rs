@@ -11,15 +11,15 @@ impl StringTools {
     pub fn string_tools_is_space(s: &UStr, pos: i32) -> bool {
     let __units = s.as_slice();
     let __count = u_string::unit_count(&s);
-        if __count as i32 == 0 || (pos) < (0) || (pos) >= __count as i32 {
+        if i32::from_ne_bytes(((__count) as i32).to_ne_bytes()) == 0 || (pos) < (0) || (pos) >= i32::from_ne_bytes(((__count) as i32).to_ne_bytes()) {
             return false;
         }
-        let c = u_string::unit_at_from(__units, (pos) as u32).unwrap_or(0);
+        let c = u_string::unit_at_from(__units, u32::from_ne_bytes(((pos) as u32).to_ne_bytes())).unwrap_or(0);
         return (c) > (8) && (c) < (14) || c == 32;
     }
 
     pub fn string_tools_ltrim(s: &UStr) -> UString {
-        let l = u_string::unit_count(&(s)) as i32;
+        let l = i32::from_ne_bytes(((u_string::unit_count(&(s))) as i32).to_ne_bytes());
         let mut r = 0i32;
         while (r) < (l) && StringTools::string_tools_is_space(s, r) {
             r = i32::wrapping_add(r, 1);
@@ -28,7 +28,7 @@ impl StringTools {
     }
 
     pub fn string_tools_rtrim(s: &UStr) -> UString {
-        let l = u_string::unit_count(&(s)) as i32;
+        let l = i32::from_ne_bytes(((u_string::unit_count(&(s))) as i32).to_ne_bytes());
         let mut r = 0i32;
         while (r) < (l) && StringTools::string_tools_is_space(s, i32::wrapping_sub(i32::wrapping_sub(l, r), 1)) {
             r = i32::wrapping_add(r, 1);
@@ -37,12 +37,12 @@ impl StringTools {
     }
 
     pub fn string_tools_lpad(s: &UStr, c: &UStr, l: i32) -> UString {
-        if u_string::unit_count(&(c)) as i32 <= 0 {
+        if i32::from_ne_bytes(((u_string::unit_count(&(c))) as i32).to_ne_bytes()) <= 0 {
             return s.to_ustring();
         }
         let mut buf_b = UString::new();
-        let remaining = i32::wrapping_sub(l, (u_string::unit_count(&(s))) as i32);
-        while ((u_string::unit_count(&(buf_b))) as i32) < (remaining) {
+        let remaining = i32::wrapping_sub(l, i32::from_ne_bytes(((u_string::unit_count(&(s))) as i32).to_ne_bytes()));
+        while (i32::from_ne_bytes(((u_string::unit_count(&(buf_b))) as i32).to_ne_bytes())) < (remaining) {
             buf_b += &(c.to_string());
         }
         buf_b += &(s.to_string());
@@ -50,13 +50,13 @@ impl StringTools {
     }
 
     pub fn string_tools_rpad(s: &UStr, c: &UStr, l: i32) -> UString {
-        if u_string::unit_count(&(c)) as i32 <= 0 {
+        if i32::from_ne_bytes(((u_string::unit_count(&(c))) as i32).to_ne_bytes()) <= 0 {
             return s.to_ustring();
         }
         let mut buf_b = UString::new();
         buf_b += &(s.to_string());
-        let remaining = i32::wrapping_sub(l, (u_string::unit_count(&(s))) as i32);
-        while ((u_string::unit_count(&(buf_b))) as i32) < (remaining) {
+        let remaining = i32::wrapping_sub(l, i32::from_ne_bytes(((u_string::unit_count(&(s))) as i32).to_ne_bytes()));
+        while (i32::from_ne_bytes(((u_string::unit_count(&(buf_b))) as i32).to_ne_bytes())) < (remaining) {
             buf_b += &(c.to_string());
         }
         return buf_b;

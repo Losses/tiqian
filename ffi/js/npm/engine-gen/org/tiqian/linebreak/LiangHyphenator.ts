@@ -10,8 +10,9 @@ export class LiangHyphenator implements Hyphenator {
   private readonly rightMin: number;
 
   constructor(patterns: SortedMapTable<string, number[]>, exceptions?: SortedMapTable<string, number[]> | null, leftMin: number | null = null, rightMin: number | null = null) {
+    exceptions = exceptions ?? null;
     this.patterns = patterns;
-    this.exceptions = exceptions;
+    this.exceptions = (exceptions)!;
     this.leftMin = leftMin ?? 2;
     this.rightMin = rightMin ?? 3;
   }
@@ -25,7 +26,7 @@ export class LiangHyphenator implements Hyphenator {
     if (explicit !== null) {
       const out: number[] = [];
       for (let qIdx = 0, count = explicit.length; qIdx < count; qIdx += 1) {
-        const v = explicit[qIdx]!;
+        const v = explicit![qIdx]!;
         if (v >= this.leftMin && v <= word.length - this.rightMin) {
           out.push(v);
         }
@@ -47,9 +48,9 @@ export class LiangHyphenator implements Hyphenator {
         const pattern = this.patterns.get(key);
         if (pattern !== null) {
           let k = 0;
-          while (k < pattern.length) {
-            if (pattern[k]! > levels[i + k]!) {
-              levels[i + k] = pattern[k]!;
+          while (k < pattern!.length) {
+            if (pattern![k]! > levels[i + k]!) {
+              levels[i + k] = pattern![k]!;
             }
             k++;
           }

@@ -81,7 +81,7 @@ impl ContextualDashEllipsisRoleResolver {
         let actual_context = match &(context) { None => FontRoleContext::new(Some(UString::from("zh-Hans")), None), Some(__option) => (*__option).clone() };
         let mut has_mark = false;
         let mut ci = 0u32;
-        while ((ci) as i32) < ((__count) as i32) {
+        while (i32::from_ne_bytes(((ci) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((__count) as i32).to_ne_bytes())) {
             if ContextualDashEllipsisRoleResolver::contextual_dash_ellipsis_role_resolver_is_contextual_dash_or_ellipsis(*(u_string::unit_at_from(__units, ci)).as_ref().unwrap()) {
                 has_mark = true;
                 break;
@@ -96,7 +96,7 @@ impl ContextualDashEllipsisRoleResolver {
         let pair_resolutions: SortedMapTable<u32, Resolution> = self.resolve_parenthetical_pairs(text, &runs, (strong_script_context).clone(), (actual_context).clone())?;
         let mut result: Vec<DashEllipsisRoleDecision> = vec![];
         let mut ri = 0u32;
-        while ((ri) as i32) < ((u32::try_from((runs.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32) {
+        while (i32::from_ne_bytes(((ri) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((runs.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
             let range = (runs[usize::try_from(ri).unwrap_or(0)]).clone();
             let paired = pair_resolutions.get(&(range.start));
             let resolution = match &(paired) { None => self.resolve_single_run((range).clone(), (strong_script_context).clone(), (actual_context).clone())?, Some(__option1) => (*__option1).clone() };
@@ -111,13 +111,13 @@ impl ContextualDashEllipsisRoleResolver {
     let __count2 = u_string::unit_count(&text);
         let mut runs: Vec<TextRange> = vec![];
         let mut index = 0u32;
-        while ((index) as i32) < ((__count2) as i32) {
+        while (i32::from_ne_bytes(((index) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((__count2) as i32).to_ne_bytes())) {
             if !ContextualDashEllipsisRoleResolver::contextual_dash_ellipsis_role_resolver_is_contextual_dash_or_ellipsis(*(u_string::unit_at_from(__units2, index)).as_ref().unwrap()) {
                 index = u32::wrapping_add(index, ContextualDashEllipsisRoleResolver::contextual_dash_ellipsis_role_resolver_code_point_length_at(text, index));
                 continue;
             }
             let start = index;
-            while ((index) as i32) < ((__count2) as i32) && ContextualDashEllipsisRoleResolver::contextual_dash_ellipsis_role_resolver_is_contextual_dash_or_ellipsis(*(u_string::unit_at_from(__units2, index)).as_ref().unwrap()) {
+            while (i32::from_ne_bytes(((index) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((__count2) as i32).to_ne_bytes())) && ContextualDashEllipsisRoleResolver::contextual_dash_ellipsis_role_resolver_is_contextual_dash_or_ellipsis(*(u_string::unit_at_from(__units2, index)).as_ref().unwrap()) {
                 index = u32::wrapping_add(index, 1);
             }
             runs.push(TextRange::new(start, index)?);
@@ -160,9 +160,10 @@ impl ContextualDashEllipsisRoleResolver {
     }
 
     fn resolve_parenthetical_pairs(&self, text: &UStr, runs: &Vec<TextRange>, strong_script_context: StrongScriptContextIndex, context: FontRoleContext) -> Result<SortedMapTable<u32, Resolution>, TextRangeError> {
-        let mut resolutions: SortedMapTableBuilder<u32, Resolution> = SortedTable::sorted_table_map_builder::<u32, Resolution>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints((*a) as i32, (*b) as i32)));
+        let mut resolutions: SortedMapTableBuilder<u32, Resolution> = SortedTable::sorted_table_map_builder::<u32,
+Resolution>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_bytes(((*a) as i32).to_ne_bytes()), i32::from_ne_bytes(((*b) as i32).to_ne_bytes()))));
         let mut index = 0u32;
-        while ((u32::wrapping_add(index, 1)) as i32) < ((u32::try_from((runs.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32) {
+        while (i32::from_ne_bytes(((u32::wrapping_add(index, 1)) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((runs.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
             let first = (runs[usize::try_from(index).unwrap_or(0)]).clone();
             let second = (runs[usize::try_from(u32::wrapping_add(index, 1)).unwrap_or(0)]).clone();
             if !ContextualDashEllipsisRoleResolver::contextual_dash_ellipsis_role_resolver_is_parenthetical_dash_pair(text, (first).clone(), (second).clone())? {
@@ -228,7 +229,7 @@ impl ContextualDashEllipsisRoleResolver {
             return Ok(false);
         }
         let mut index = first.end;
-        while ((index) as i32) < ((second.start) as i32) {
+        while (i32::from_ne_bytes(((index) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((second.start) as i32).to_ne_bytes())) {
             let cp = ContextualDashEllipsisRoleResolver::contextual_dash_ellipsis_role_resolver_code_point_at_compat(text, index);
             if cp != 32 && !UnicodeWordCharacter::unicode_word_character_contains(cp)? {
                 return Ok(false);
@@ -240,7 +241,7 @@ impl ContextualDashEllipsisRoleResolver {
 
     pub(crate) fn contextual_dash_ellipsis_role_resolver_is_pure_dash_run(text: &UStr, range: TextRange) -> bool {
         let mut index = range.start;
-        while ((index) as i32) < ((range.end) as i32) {
+        while (i32::from_ne_bytes(((index) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((range.end) as i32).to_ne_bytes())) {
             if !(matches!(u_string::unit_at(&text, index).as_ref(), Some(__v) if __v == &(8212))) {
                 return false;
             }
@@ -253,11 +254,11 @@ impl ContextualDashEllipsisRoleResolver {
     let __units5 = text.as_slice();
     let __count5 = u_string::unit_count(&text);
         let high = u_string::unit_at_from(__units5, index).unwrap_or(0);
-        if high as i32 < (55296) || ((high) as i32) > (56319) || ((u32::wrapping_add(index, 1)) as i32) >= __count5 as i32 {
+        if i32::from_ne_bytes(((high) as i32).to_ne_bytes()) < (55296) || (i32::from_ne_bytes(((high) as i32).to_ne_bytes())) > (56319) || (i32::from_ne_bytes(((u32::wrapping_add(index, 1)) as i32).to_ne_bytes())) >= i32::from_ne_bytes(((__count5) as i32).to_ne_bytes()) {
             return high;
         }
         let low = u_string::unit_at_from(__units5, u32::wrapping_add(index, 1)).unwrap_or(0);
-        if low as i32 < (56320) || ((low) as i32) > (57343) {
+        if i32::from_ne_bytes(((low) as i32).to_ne_bytes()) < (56320) || (i32::from_ne_bytes(((low) as i32).to_ne_bytes())) > (57343) {
             return high;
         }
         return u32::wrapping_add(u32::wrapping_add(65536, (u32::wrapping_sub(high, 55296)) << (10)), u32::wrapping_sub(low, 56320));
@@ -268,7 +269,7 @@ impl ContextualDashEllipsisRoleResolver {
     }
 
     pub fn contextual_dash_ellipsis_role_resolver_char_count(code_point: u32) -> u32 {
-        return if code_point as i32 > (65535) { 2 } else { 1 };
+        return if i32::from_ne_bytes(((code_point) as i32).to_ne_bytes()) > (65535) { 2 } else { 1 };
     }
 }
 
@@ -280,12 +281,12 @@ pub struct ContextualDashEllipsisAwareFontRoleClassifier {
 
 impl ContextualDashEllipsisAwareFontRoleClassifier {
     pub fn new(delegate: Box<dyn FontRoleClassifier>, decisions: Vec<DashEllipsisRoleDecision>) -> Result<Self, TextRangeError> {
-        let mut builder: SortedMapTableBuilder<u32, FontRole> = SortedTable::sorted_table_map_builder::<u32, FontRole>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints((*a) as i32, (*b) as i32)));
+        let mut builder: SortedMapTableBuilder<u32, FontRole> = SortedTable::sorted_table_map_builder::<u32, FontRole>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from_ne_bytes(((*a) as i32).to_ne_bytes()), i32::from_ne_bytes(((*b) as i32).to_ne_bytes()))));
         let mut di = 0u32;
-        while ((di) as i32) < ((u32::try_from((decisions.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32) {
+        while (i32::from_ne_bytes(((di) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((decisions.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
             let d = (decisions[usize::try_from(di).unwrap_or(0)]).clone();
             let mut index = (d.range).clone().start;
-            while ((index) as i32) < (((d.range).clone().end) as i32) {
+            while (i32::from_ne_bytes(((index) as i32).to_ne_bytes())) < (i32::from_ne_bytes((((d.range).clone().end) as i32).to_ne_bytes())) {
                 builder.put(&(index), &(d.role));
                 index = u32::wrapping_add(index, 1);
             }
@@ -332,10 +333,10 @@ impl ContextualDashEllipsisRoles {
     pub fn contextual_dash_ellipsis_roles_to_role_override_infos(decisions: &Vec<DashEllipsisRoleDecision>, text: &UStr, base_classifier: Box<dyn FontRoleClassifier>, context: FontRoleContext) -> Result<Vec<RoleOverrideInfo>, TextRangeError> {
         let mut result: Vec<RoleOverrideInfo> = vec![];
         let mut index = 0u32;
-        while ((index) as i32) < ((u32::try_from((decisions.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32) {
+        while (i32::from_ne_bytes(((index) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((decisions.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
             let d = (decisions[usize::try_from(index).unwrap_or(0)]).clone();
             let first = TextRange::new((d.range).clone().start, u32::wrapping_add((d.range).clone().start, 1))?;
-            result.push(RoleOverrideInfo::new((d.range).clone(), u_string::substring(&text, ((d.range).clone().start) as i32, ((d.range).clone().end) as i32).as_ustr(), UString::from(base_classifier.classify(text, (first).clone(), Some((context).clone())).name()).as_ustr(), UString::from(d.role.name()).as_ustr(), (d.source).to_ustring().as_ustr(), (d.reason).to_ustring().as_ustr()));
+            result.push(RoleOverrideInfo::new((d.range).clone(), u_string::substring(&text, i32::from_ne_bytes((((d.range).clone().start) as i32).to_ne_bytes()), i32::from_ne_bytes((((d.range).clone().end) as i32).to_ne_bytes())).as_ustr(), UString::from(base_classifier.classify(text, (first).clone(), Some((context).clone())).name()).as_ustr(), UString::from(d.role.name()).as_ustr(), (d.source).to_ustring().as_ustr(), (d.reason).to_ustring().as_ustr()));
             index = u32::wrapping_add(index, 1);
         }
         return Ok(result);
@@ -370,19 +371,19 @@ impl StrongScriptContextIndex {
     let mut left_role_before_boundary = vec![];
     let mut right_role_from_boundary = vec![];
         let mut i = 0u32;
-        while ((i) as i32) <= u_string::unit_count(&(text)) as i32 {
+        while (i32::from_ne_bytes(((i) as i32).to_ne_bytes())) <= i32::from_ne_bytes(((u_string::unit_count(&(text))) as i32).to_ne_bytes()) {
             { while left_role_before_boundary.len() <= usize::try_from(i).unwrap_or(0) { left_role_before_boundary.push(None); } left_role_before_boundary[usize::try_from(i).unwrap_or(0)] = None; };
             { while right_role_from_boundary.len() <= usize::try_from(i).unwrap_or(0) { right_role_from_boundary.push(None); } right_role_from_boundary[usize::try_from(i).unwrap_or(0)] = None; };
             i = u32::wrapping_add(i, 1);
         }
         let mut current_role: Option<FontRole> = None;
         let mut scalar_start = 0u32;
-        while ((scalar_start) as i32) < ((u_string::unit_count(&(text))) as i32) {
+        while (i32::from_ne_bytes(((scalar_start) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u_string::unit_count(&(text))) as i32).to_ne_bytes())) {
             let cp = ContextualDashEllipsisRoleResolver::contextual_dash_ellipsis_role_resolver_code_point_at_compat(text, scalar_start);
             let scalar_end = u32::wrapping_add(scalar_start, ContextualDashEllipsisRoleResolver::contextual_dash_ellipsis_role_resolver_char_count(cp));
             current_role = StrongScriptContextIndex::strong_script_context_index_next_strong_script_role(cp, current_role)?;
             let mut boundary = u32::wrapping_add(scalar_start, 1);
-            while ((boundary) as i32) <= scalar_end as i32 {
+            while (i32::from_ne_bytes(((boundary) as i32).to_ne_bytes())) <= i32::from_ne_bytes(((scalar_end) as i32).to_ne_bytes()) {
                 { while left_role_before_boundary.len() <= usize::try_from(boundary).unwrap_or(0) { left_role_before_boundary.push(None); } left_role_before_boundary[usize::try_from(boundary).unwrap_or(0)] = current_role; };
                 boundary = u32::wrapping_add(boundary, 1);
             }
@@ -390,12 +391,12 @@ impl StrongScriptContextIndex {
         }
         current_role = None;
         let mut scalar_end = u_string::unit_count(&(text));
-        while ((scalar_end) as i32) > (0) {
+        while (i32::from_ne_bytes(((scalar_end) as i32).to_ne_bytes())) > (0) {
             scalar_start = StrongScriptContextIndex::strong_script_context_index_scalar_start_before(text, scalar_end);
             let cp = ContextualDashEllipsisRoleResolver::contextual_dash_ellipsis_role_resolver_code_point_at_compat(text, scalar_start);
             current_role = StrongScriptContextIndex::strong_script_context_index_next_strong_script_role(cp, current_role)?;
             let mut boundary = scalar_start;
-            while ((boundary) as i32) < ((scalar_end) as i32) {
+            while (i32::from_ne_bytes(((boundary) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((scalar_end) as i32).to_ne_bytes())) {
                 { while right_role_from_boundary.len() <= usize::try_from(boundary).unwrap_or(0) { right_role_from_boundary.push(None); } right_role_from_boundary[usize::try_from(boundary).unwrap_or(0)] = current_role; };
                 boundary = u32::wrapping_add(boundary, 1);
             }
@@ -432,9 +433,9 @@ impl StrongScriptContextIndex {
     let __count6 = u_string::unit_count(&text);
         let last_index = u32::wrapping_sub(end_exclusive, 1);
         let last = u_string::unit_at_from(__units6, last_index).unwrap_or(0);
-        if last as i32 >= 56320 && ((last) as i32) <= 57343 && ((last_index) as i32) > (0) {
+        if i32::from_ne_bytes(((last) as i32).to_ne_bytes()) >= 56320 && (i32::from_ne_bytes(((last) as i32).to_ne_bytes())) <= 57343 && (i32::from_ne_bytes(((last_index) as i32).to_ne_bytes())) > (0) {
             let before = u_string::unit_at_from(__units6, u32::wrapping_sub(last_index, 1)).unwrap_or(0);
-            if before as i32 >= 55296 && ((before) as i32) <= 56319 {
+            if i32::from_ne_bytes(((before) as i32).to_ne_bytes()) >= 55296 && (i32::from_ne_bytes(((before) as i32).to_ne_bytes())) <= 56319 {
                 return u32::wrapping_sub(last_index, 1);
             }
         }

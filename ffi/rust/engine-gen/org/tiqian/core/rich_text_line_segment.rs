@@ -43,11 +43,11 @@ impl RichTextLineSegment {
     }
 
     pub fn get_continues_from_previous_line(&self) -> bool {
-        return (((self.range).clone().start) as i32) > ((((self.span).clone().range).clone().start) as i32);
+        return (i32::from_ne_bytes((((self.range).clone().start) as i32).to_ne_bytes())) > (i32::from_ne_bytes(((((self.span).clone().range).clone().start) as i32).to_ne_bytes()));
     }
 
     pub fn get_continues_on_next_line(&self) -> bool {
-        return (((self.range).clone().end) as i32) < ((((self.span).clone().range).clone().end) as i32);
+        return (i32::from_ne_bytes((((self.range).clone().end) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((((self.span).clone().range).clone().end) as i32).to_ne_bytes()));
     }
 
     pub fn to_string(&self) -> UString {

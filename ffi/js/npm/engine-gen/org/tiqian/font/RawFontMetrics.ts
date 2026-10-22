@@ -11,6 +11,8 @@ export class RawFontMetrics {
   public readonly typoDescent: number | null;
 
   constructor(ascent: number, descent: number, leading: number | null = null, source: FontMetricSource | null = null, typoAscent?: number | null, typoDescent?: number | null) {
+    typoAscent = typoAscent ?? null;
+    typoDescent = typoDescent ?? null;
     this.ascent = ascent;
     this.descent = descent;
     this.leading = leading ?? 0;

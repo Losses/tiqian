@@ -15,7 +15,7 @@ export class NumberSymbolCohesion {
       }
       let end = i;
       while (end + 1 < text.length) {
-        const unit = readUnit(text, end + 1)!!;
+        const unit = readUnit(text, end + 1)!;
         if (UnicodeNumberData.contains(unit)) {
           end += 1;
         } else {
