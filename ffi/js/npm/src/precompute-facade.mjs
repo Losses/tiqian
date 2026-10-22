@@ -59,6 +59,28 @@ import { ShapingInput, ShapingResult } from "./engine-gen/org/tiqian/shaping/Tex
 import { ExplainableStubParagraphLayoutEngine } from "./engine-gen/org/tiqian/layout/ParagraphLayoutEngine.js";
 import { LookaheadLineBreaker } from "./engine-gen/org/tiqian/layout/LineBreaker.js";
 import { PreparedParagraphFns } from "./engine-gen/org/tiqian/layout/PreparedParagraph.js";
+import { LruWidthIndependentAnnotationCache } from "./engine-gen/org/tiqian/layout/WidthIndependentAnnotationCache.js";
+
+/**
+ * Per-shaping-session annotation cache. The engine's width-independent
+ * annotation cache (shaping results) is keyed only by text and style, so it
+ * must be scoped per shaper: a cache shared across font sessions would
+ * return annotations shaped by the wrong session. The host shapeJson
+ * function identity scopes the cache; a width-only relayout reuses the same
+ * function and therefore hits the cache instead of re-shaping every
+ * paragraph. The Map entry count is bounded by the number of concurrent
+ * font sessions the host keeps, which is small.
+ */
+const annotationCacheStore = new Map();
+
+function cachedAnnotationCache(shaperKey) {
+  let entry = annotationCacheStore.get(shaperKey);
+  if (entry === undefined) {
+    entry = new LruWidthIndependentAnnotationCache(512);
+    annotationCacheStore.set(shaperKey, entry);
+  }
+  return entry;
+}
 
 /** Mirrors the identity of Kotlin's IllegalArgumentException on this wire. */
 class IllegalArgumentException extends Error {
@@ -329,7 +351,7 @@ function callbackFontMetricsResolver(metricsJson) {
  * (ParagraphWireCodec.kt:436-505): the engine's prepared-paragraph pipeline
  * runs from the generated tree, with the host callbacks inverted in.
  */
-function planWithDiagnostics(request, zeroAdvanceEpsilonPx, textShaper, fontMetricsResolver) {
+function planWithDiagnostics(request, zeroAdvanceEpsilonPx, textShaper, fontMetricsResolver, annotationCache) {
   const model = {
     fontSessionId: "",
     text: request.text,
@@ -451,6 +473,8 @@ function planWithDiagnostics(request, zeroAdvanceEpsilonPx, textShaper, fontMetr
     new LookaheadLineBreaker(),
     null,
     textShaper,
+    null,
+    annotationCache,
   ).layout(input);
   return PreparedParagraphFns.toPlanWithDiagnosticsJson(
     result,
@@ -482,6 +506,7 @@ export function precomputeParagraphWithDiagnostics(
     zeroAdvanceEpsilonPx,
     callbackTextShaper(shapeJson),
     callbackFontMetricsResolver(metricsJson),
+    cachedAnnotationCache(shapeJson),
   );
 }
 
@@ -498,5 +523,6 @@ export function precomputeParagraphWithBrowserMetrics(request, zeroAdvanceEpsilo
     zeroAdvanceEpsilonPx,
     callbackTextShaper((requestJson) => callbacks.shapeJson(requestJson)),
     callbackFontMetricsResolver((requestJson) => callbacks.metricsJson(requestJson)),
+    cachedAnnotationCache(callbacks),
   );
 }
