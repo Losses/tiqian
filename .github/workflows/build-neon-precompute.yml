@@ -15,12 +15,14 @@ on:
     paths:
       - 'platforms/web/server/precompute/**'
       - 'platforms/web/server/core/**'
+      - 'ffi/rust/engine-gen/**'
       - '.github/workflows/build-neon-precompute.yml'
   push:
     branches: [main]
     paths:
       - 'platforms/web/server/precompute/**'
       - 'platforms/web/server/core/**'
+      - 'ffi/rust/engine-gen/**'
       - '.github/workflows/build-neon-precompute.yml'
   workflow_dispatch:
 
