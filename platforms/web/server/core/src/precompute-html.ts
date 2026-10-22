@@ -14,7 +14,7 @@ import { DomParser } from "./shared-gen/org/tiqian/shared/html/DomParser.js";
 import { HtmlParseException } from "./shared-gen/org/tiqian/shared/html/HtmlParseException.js";
 import { HtmlScan } from "./shared-gen/org/tiqian/shared/html/HtmlScan.js";
 import { type BuildFontFace, type BuildFontStylesheet, type NormalizedTypography, type Precomputer, type SnapshotBundle, type SnapshotTypography } from "./precompute.js";
-import type { FinalizedSnapshotTables, FontContractInput, PreparedEntry, SnapshotBundleData, SnapshotParagraphInput, SnapshotTables } from "./precompute.js";
+import type { FontContractInput, PreparedEntry, SnapshotParagraphInput } from "./precompute.js";
 import type { DomNode } from "./shared-gen/org/tiqian/shared/html/DomNode.js";
 
 const DEFAULT_PARAGRAPH_SELECTOR = "p, li";
