@@ -33,6 +33,7 @@ use tiqian_engine_gen::org::tiqian::shaping::text_shaper::ITextShaper;
 
 pub use tiqian_engine_gen::org::tiqian::core::layout_input::LayoutInput as EngineLayoutInput;
 pub use tiqian_engine_gen::org::tiqian::core::layout_result::LayoutResult as EngineLayoutResult;
+#[cfg(test)]
 pub use tiqian_engine_gen::org::tiqian::shaping::replayable_font_backend::ReplayableFontCatalog;
 
 /// One slot per `ExplainableStubParagraphLayoutEngine::new` parameter;
@@ -121,6 +122,7 @@ fn named(fault: ParagraphLayoutEngineLayoutWithRejectedTechnicalTiersFault) -> N
 #[cfg(test)]
 mod tests {
     use super::*;
+    use tiqian_engine_gen::runtime::u_string::UString;
     use tiqian_engine_gen::org::tiqian::core::layout_constraints::LayoutConstraints;
     use tiqian_engine_gen::org::tiqian::core::tiqian_text_content::TiqianTextContent;
     use tiqian_engine_gen::org::tiqian::font::font_metrics::StubFontMetricsResolver;
@@ -130,7 +132,7 @@ mod tests {
     fn engine_runs_a_stub_paragraph_end_to_end() {
         let mut engine = Engine::new(EngineComponents::default())
             .expect("default components satisfy the generated constructor");
-        let content = TiqianTextContent::new("正文", None, None, None, None);
+        let content = TiqianTextContent::new(&UString::from("正文"), None, None, None, None);
         let constraints = LayoutConstraints::new(320.0, None, None)
             .expect("fixture width is positive");
         let input =
@@ -152,7 +154,7 @@ mod tests {
         };
         let mut engine = Engine::new(components)
             .expect("injected components satisfy the generated constructor");
-        let content = TiqianTextContent::new("句号后换行。", None, None, None, None);
+        let content = TiqianTextContent::new(&UString::from("句号后换行。"), None, None, None, None);
         let constraints = LayoutConstraints::new(160.0, None, None)
             .expect("fixture width is positive");
         let input =
