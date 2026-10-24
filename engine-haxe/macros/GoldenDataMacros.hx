@@ -106,6 +106,11 @@ class GoldenDataMacros {
             pack: ["org", "tiqian", "layout"],
             name: name,
             pos: macroPos(),
+            // @:asset marks the class as an asset module: boring emits its
+            // data literals as side files (include_str!/resource read) instead
+            // of target-language string literals. Metadata wins over the v1
+            // name registry, which stays as fallback.
+            meta: [{name: ":asset", params: [], pos: macroPos()}],
             kind: TDClass(),
             fields: fields
         });

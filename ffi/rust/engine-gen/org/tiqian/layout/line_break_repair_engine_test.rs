@@ -1737,7 +1737,7 @@ fn progressive_technical_emergency_is_exposed_by_current_line_stretch_not_full_m
         let mut has_break_opp = false;
         for i in 0..match u32::try_from((result.debug).clone().break_opportunity_decisions.len()) { Ok(value) => value, Err(_) => u32::MAX } {
             let opp = ((result.debug).clone().break_opportunity_decisions[usize::try_from(i).unwrap_or(0)]).clone();
-            if opp.range.clone().start == swift_range.start && (opp.range).clone().end == swift_range.end && opp.tier.as_ref().map_or(false, |v| v == &(UString::from("Emergency").to_ustring())) && (opp.reason).to_ustring() == UString::from("CurrentLineTechnicalEmergencyBreak") {
+            if opp.range.clone().start == swift_range.start && (opp.range).clone().end == swift_range.end && matches!(opp.tier.as_ref(), Some(__v) if __v == &(UString::from("Emergency").to_ustring())) && (opp.reason).to_ustring() == UString::from("CurrentLineTechnicalEmergencyBreak") {
                 has_break_opp = true;
                 break;
             }

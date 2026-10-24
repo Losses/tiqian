@@ -16,6 +16,7 @@ pub mod clreq_profile;
 #[cfg(test)]
 pub mod clreq_profile_coverage_test;
 pub mod clreq_profile_resolver;
+#[cfg(test)]
 pub mod clreq_punctuation_advance_policy;
 pub mod clreq_punctuation_glyph_substitutor;
 #[cfg(test)]
@@ -61,6 +62,7 @@ pub use clreq_profile::*;
 #[cfg(test)]
 pub use clreq_profile_coverage_test::*;
 pub use clreq_profile_resolver::*;
+#[cfg(test)]
 pub use clreq_punctuation_advance_policy::*;
 pub use clreq_punctuation_glyph_substitutor::*;
 #[cfg(test)]

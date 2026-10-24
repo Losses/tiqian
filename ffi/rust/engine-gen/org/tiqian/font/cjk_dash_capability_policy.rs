@@ -1,3 +1,5 @@
+#![cfg(test)]
+
 use crate::runtime::u_string::UStr;
 use crate::runtime::u_string::UString;
 
@@ -7,7 +9,7 @@ pub struct CjkDashCapabilityPolicy;
 
 impl CjkDashCapabilityPolicy {
     pub fn cjk_dash_capability_policy_issue_name_for(status: Option<UString>) -> UString {
-        return if status.as_ref().map_or(false, |v| v == &(UString::from("conforming").to_ustring())) { UString::from("ConformingCjkDashRequiresExactFontSession") } else { UString::from("NoConformingCjkDashGlyph") };
+        return if matches!(status.as_ref(), Some(__v) if __v == &(UString::from("conforming").to_ustring())) { UString::from("ConformingCjkDashRequiresExactFontSession") } else { UString::from("NoConformingCjkDashGlyph") };
     }
 
     pub fn cjk_dash_capability_policy_issue_detail_for(status: Option<UString>, detail: Option<UString>) -> UString {

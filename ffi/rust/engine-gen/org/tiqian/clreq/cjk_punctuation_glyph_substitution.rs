@@ -25,11 +25,11 @@ impl CjkPunctuationGlyphSubstitution {
 }
 
 pub fn compare_cjk_punctuation_glyph_substitution(a: &CjkPunctuationGlyphSubstitution, b: &CjkPunctuationGlyphSubstitution) -> i32 {
-    let cmp_source_text = SortedTable::sorted_table_compare_strings(a.source_text.as_ustr(), b.source_text.as_ustr());
+    let cmp_source_text = SortedTable::sorted_table_compare_strings((&a.source_text).as_ustr(), (&b.source_text).as_ustr());
     if cmp_source_text != 0 { return cmp_source_text; }
-    let cmp_display_text = SortedTable::sorted_table_compare_strings(a.display_text.as_ustr(), b.display_text.as_ustr());
+    let cmp_display_text = SortedTable::sorted_table_compare_strings((&a.display_text).as_ustr(), (&b.display_text).as_ustr());
     if cmp_display_text != 0 { return cmp_display_text; }
-    let cmp_reason = SortedTable::sorted_table_compare_strings(a.reason.as_ustr(), b.reason.as_ustr());
+    let cmp_reason = SortedTable::sorted_table_compare_strings((&a.reason).as_ustr(), (&b.reason).as_ustr());
     if cmp_reason != 0 { return cmp_reason; }
     0
 }

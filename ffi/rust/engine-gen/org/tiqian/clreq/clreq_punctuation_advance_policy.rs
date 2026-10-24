@@ -1,3 +1,5 @@
+#![cfg(test)]
+
 use crate::runtime::u_string;
 use crate::runtime::u_string::UStr;
 
@@ -29,13 +31,13 @@ impl ClreqPunctuationAdvancePolicy {
     }
 
     pub(crate) fn clreq_punctuation_advance_policy_code_point_at_compat(text: &UStr, index: u32) -> u32 {
-    let __units = u_string::units(&text);
+    let __units = text.as_slice();
     let __count = u_string::unit_count(&text);
-        let high = u_string::unit_at_from(&__units, index).unwrap_or(0);
+        let high = u_string::unit_at_from(__units, index).unwrap_or(0);
         if i32::from_ne_bytes(((high) as i32).to_ne_bytes()) < (55296) || (i32::from_ne_bytes(((high) as i32).to_ne_bytes())) > (56319) || (i32::from_ne_bytes(((u32::wrapping_add(index, 1)) as i32).to_ne_bytes())) >= i32::from_ne_bytes(((__count) as i32).to_ne_bytes()) {
             return high;
         }
-        let low = u_string::unit_at_from(&__units, u32::wrapping_add(index, 1)).unwrap_or(0);
+        let low = u_string::unit_at_from(__units, u32::wrapping_add(index, 1)).unwrap_or(0);
         if i32::from_ne_bytes(((low) as i32).to_ne_bytes()) < (56320) || (i32::from_ne_bytes(((low) as i32).to_ne_bytes())) > (57343) {
             return high;
         }

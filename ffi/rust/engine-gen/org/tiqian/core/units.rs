@@ -1,3 +1,5 @@
+#![cfg(test)]
+
 use crate::org::tiqian::core::ic::Ic;
 
 

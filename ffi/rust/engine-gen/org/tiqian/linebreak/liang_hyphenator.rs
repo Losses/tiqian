@@ -28,7 +28,7 @@ impl LiangHyphenator {
     }
 
     pub fn hyphenate(&self, word: &UStr) -> Vec<u32> {
-    let __units = u_string::units(&word);
+    let __units = word.as_slice();
     let __count = u_string::unit_count(&word);
         if i32::from_ne_bytes(((__count) as i32).to_ne_bytes()) < (i32::from_ne_bytes(((u32::wrapping_add(self.left_min, self.right_min)) as i32).to_ne_bytes())) {
             return vec![];
@@ -103,7 +103,7 @@ impl Hyphenator for LiangHyphenator {
     }
 
     fn hyphenate(&self, word: &UStr) -> Vec<u32> {
-    let __units1 = u_string::units(&word);
+    let __units1 = word.as_slice();
     let __count1 = u_string::unit_count(&word);
         if i32::from_ne_bytes(((__count1) as i32).to_ne_bytes()) < (i32::from_ne_bytes(((u32::wrapping_add(self.left_min, self.right_min)) as i32).to_ne_bytes())) {
             return vec![];

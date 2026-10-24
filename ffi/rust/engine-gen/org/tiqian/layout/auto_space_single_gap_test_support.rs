@@ -1,3 +1,5 @@
+#![cfg(test)]
+
 use crate::org::tiqian::clreq::auto_space_mode::AutoSpaceMode;
 use crate::org::tiqian::clreq::auto_space_policy::AutoSpacePolicy;
 use crate::org::tiqian::clreq::clreq_profile::ClreqProfile;

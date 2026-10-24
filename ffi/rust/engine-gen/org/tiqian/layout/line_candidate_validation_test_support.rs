@@ -1,3 +1,5 @@
+#![cfg(test)]
+
 use crate::org::tiqian::core::int_range::IntRange;
 use crate::org::tiqian::core::line_end_reason::LineEndReason;
 use crate::org::tiqian::core::text_range::TextRange;

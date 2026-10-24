@@ -10,6 +10,7 @@ pub mod hyphenator;
 pub mod liang_hyphenator;
 #[cfg(test)]
 pub mod liang_hyphenator_test;
+#[cfg(test)]
 pub mod line_break_analyzer;
 #[cfg(test)]
 pub mod line_break_coverage_test;
@@ -35,6 +36,7 @@ pub use hyphenator::*;
 pub use liang_hyphenator::*;
 #[cfg(test)]
 pub use liang_hyphenator_test::*;
+#[cfg(test)]
 pub use line_break_analyzer::*;
 #[cfg(test)]
 pub use line_break_coverage_test::*;

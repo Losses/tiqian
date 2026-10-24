@@ -9,12 +9,12 @@ pub struct StringTools;
 
 impl StringTools {
     pub fn string_tools_is_space(s: &UStr, pos: i32) -> bool {
-    let __units = u_string::units(&s);
+    let __units = s.as_slice();
     let __count = u_string::unit_count(&s);
         if i32::from_ne_bytes(((__count) as i32).to_ne_bytes()) == 0 || (pos) < (0) || (pos) >= i32::from_ne_bytes(((__count) as i32).to_ne_bytes()) {
             return false;
         }
-        let c = u_string::unit_at_from(&__units, u32::from_ne_bytes(((pos) as u32).to_ne_bytes())).unwrap_or(0);
+        let c = u_string::unit_at_from(__units, u32::from_ne_bytes(((pos) as u32).to_ne_bytes())).unwrap_or(0);
         return (c) > (8) && (c) < (14) || c == 32;
     }
 

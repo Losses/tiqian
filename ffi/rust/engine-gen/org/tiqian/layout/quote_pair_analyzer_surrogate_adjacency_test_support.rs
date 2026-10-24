@@ -1,3 +1,5 @@
+#![cfg(test)]
+
 use crate::org::tiqian::test::trace::test_trace_recorder::TestTraceRecorder;
 use crate::runtime::u_string::UStr;
 

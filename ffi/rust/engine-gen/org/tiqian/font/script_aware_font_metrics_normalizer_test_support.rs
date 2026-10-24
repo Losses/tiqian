@@ -1,3 +1,5 @@
+#![cfg(test)]
+
 use crate::org::tiqian::font::font_metrics::FontMetricsRequest;
 use crate::org::tiqian::font::font_role::FontRole;
 use crate::runtime::u_string::UStr;

@@ -1,3 +1,5 @@
+#![cfg(test)]
+
 use crate::runtime::u_string::UStr;
 use crate::runtime::u_string::UString;
 use crate::std::u_string_exception::UStringFault;

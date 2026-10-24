@@ -1,3 +1,5 @@
+#![cfg(test)]
+
 use crate::org::tiqian::core::bopomofo_decision_info::BopomofoDecisionInfo;
 use crate::org::tiqian::core::bopomofo_glyph_placement::BopomofoGlyphPlacement;
 use crate::org::tiqian::core::bopomofo_glyph_role::BopomofoGlyphRole;

@@ -1,3 +1,5 @@
+#![cfg(test)]
+
 use crate::org::tiqian::clreq::adjustment_style_policy::AdjustmentStylePolicy;
 use crate::org::tiqian::clreq::cjk_punctuation_glyph_policy::CjkPunctuationGlyphPolicy;
 use crate::org::tiqian::clreq::clreq_profile::ClreqProfile;

@@ -262,7 +262,7 @@ impl PunctuationSpacingCompressor {
     }
 
     pub fn compress_cjk_closing_before_ascii_point_mark(&self, atoms: &Vec<PunctuationAtom>, text: &UStr, em: f64) -> Result<PunctuationSpacingCompressionResult, TextRangeError> {
-    let __units = u_string::units(&text);
+    let __units = text.as_slice();
     let __count = u_string::unit_count(&text);
         let mut out: Vec<PunctuationSpacingAdjustment> = vec![];
         let half = em / format!("{}", (2i32)).parse::<f64>().unwrap_or(0.0);
@@ -270,7 +270,7 @@ impl PunctuationSpacingCompressor {
             if left.punctuation_class != PunctuationClass::Closing || (i32::from_ne_bytes((((left.range).clone().end) as i32).to_ne_bytes())) >= i32::from_ne_bytes(((__count) as i32).to_ne_bytes()) {
                 continue;
             }
-            let r = u_string::char_at_from(&__units, (left.range).clone().end);
+            let r = u_string::char_at_from(__units, (left.range).clone().end);
             if !ClreqPunctuationPolicies::clreq_punctuation_policies_is_ascii_point_mark(r.as_ustr()) {
                 continue;
             }
@@ -304,12 +304,12 @@ impl PunctuationAtomBuilder {
     }
 
     pub fn build_at_index(&self, text: &UStr, index: u32, em: f64) -> Result<Option<PunctuationAtom>, TextRangeError> {
-    let __units1 = u_string::units(&text);
+    let __units1 = text.as_slice();
     let __count1 = u_string::unit_count(&text);
         if index > 2147483647 || (i32::from_ne_bytes(((index) as i32).to_ne_bytes())) >= i32::from_ne_bytes(((__count1) as i32).to_ne_bytes()) {
             return Ok(None);
         }
-        return Ok(self.build(u_string::char_at_from(&__units1, index).as_ustr(), TextRange::new(u32::from_ne_bytes(((index) as u32).to_ne_bytes()), u32::wrapping_add(index, 1))?, em, None, None, None)?);
+        return Ok(self.build(u_string::char_at_from(__units1, index).as_ustr(), TextRange::new(u32::from_ne_bytes(((index) as u32).to_ne_bytes()), u32::wrapping_add(index, 1))?, em, None, None, None)?);
     }
 
     pub fn build(&self, char: &UStr, range: TextRange, em: f64, ink_input: Option<PunctuationInkInput>, glue_placement: Option<PunctuationGluePlacement>, width_policy: Option<PunctuationWidthPolicy>) -> Result<Option<PunctuationAtom>, TextRangeError> {

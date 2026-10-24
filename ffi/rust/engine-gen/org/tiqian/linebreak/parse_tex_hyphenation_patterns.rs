@@ -27,15 +27,13 @@ impl ParseTexHyphenationPatterns {
     }
 
     pub(crate) fn parse_tex_hyphenation_patterns_tokens(text: &UStr) -> Vec<UString> {
-    let __units = u_string::units(&text);
+    let __units = text.as_slice();
     let __count = u_string::unit_count(&text);
         let mut out: Vec<UString> = vec![];
         let mut token = UString::new();
         let mut i = 0u32;
-        let __units1 = u_string::units(&text);
-        let __count1 = u_string::unit_count(&text);
         while (i32::from_ne_bytes(((i) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((__count) as i32).to_ne_bytes())) {
-            let c = u_string::char_at_from(&__units1, i);
+            let c = u_string::char_at_from(__units, i);
             let sep = c == UString::from(" ") || c == UString::from("\t") || c == UString::from(concat!("\n",
 "")) || c == UString::from("\r");
             if sep {
@@ -75,15 +73,15 @@ impl ParseTexHyphenationPatterns {
             let mut key_b = UString::new();
             let mut levels = vec![0];
             let mut i = 0u32;
-            let __units2 = u_string::units(&token);
+            let __units2 = token.as_slice();
             let __count2 = u_string::unit_count(&token);
             while (i32::from_ne_bytes(((i) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((__count2) as i32).to_ne_bytes())) {
-                let code = u_string::unit_at_from(&__units2, i).unwrap_or(0);
+                let code = u_string::unit_at_from(__units2, i).unwrap_or(0);
                 if i32::from_ne_bytes(((code) as i32).to_ne_bytes()) >= 48 && (i32::from_ne_bytes(((code) as i32).to_ne_bytes())) <= 57 {
                     { let __grow_idx = usize::try_from(u32::wrapping_sub(u32::try_from((levels.len()) & 0xFFFF_FFFF).unwrap_or(0), 1)).unwrap_or(0); while levels.len() <= __grow_idx { levels.push(0); } levels[__grow_idx] = u32::wrapping_sub(code, 48); };
                 } else {
                     {
-                        let x = u_string::char_at_from(&__units2, i);
+                        let x = u_string::char_at_from(__units2, i);
                         key_b += &(x.to_string());
                     }
                     levels.push(0);
@@ -101,14 +99,14 @@ impl ParseTexHyphenationPatterns {
             let mut offsets: Vec<u32> = vec![];
             let mut pos = 0u32;
             let mut i = 0u32;
-            let __units3 = u_string::units(&token);
+            let __units3 = token.as_slice();
             let __count3 = u_string::unit_count(&token);
             while (i32::from_ne_bytes(((i) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((__count3) as i32).to_ne_bytes())) {
-                if u_string::char_at_from(&__units3, i) == UString::from("-") {
+                if u_string::char_at_from(__units3, i) == UString::from("-") {
                     offsets.push(pos);
                 } else {
                     {
-                        let x = u_string::char_at_from(&__units3, i);
+                        let x = u_string::char_at_from(__units3, i);
                         key_b += &(x.to_string());
                     }
                     pos = u32::wrapping_add(pos, 1);

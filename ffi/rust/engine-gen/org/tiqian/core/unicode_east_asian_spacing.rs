@@ -33,7 +33,7 @@ impl UnicodeEastAsianSpacing {
     }
 
     pub fn unicode_east_asian_spacing_resolved_for_grapheme_cluster(grapheme_cluster: &UStr, locale: &UStr) -> Result<EastAsianSpacingValue, TextRangeError> {
-    let __units = u_string::units(&grapheme_cluster);
+    let __units = grapheme_cluster.as_slice();
     let __count = u_string::unit_count(&grapheme_cluster);
         if __count == 0 {
             return Ok(EastAsianSpacingValue::Other);
@@ -55,7 +55,7 @@ impl UnicodeEastAsianSpacing {
     }
 
     pub fn unicode_east_asian_spacing_resolved_edges(text: &UStr, locale: &UStr) -> Result<EastAsianSpacingEdges, TextRangeError> {
-    let __units1 = u_string::units(&text);
+    let __units1 = text.as_slice();
     let __count1 = u_string::unit_count(&text);
         if __count1 == 0 {
             return Ok(EastAsianSpacingEdges::new(EastAsianSpacingValue::Other, EastAsianSpacingValue::Other, false));
@@ -90,7 +90,7 @@ impl UnicodeEastAsianSpacing {
     }
 
     pub(crate) fn unicode_east_asian_spacing_language_subtag(locale: &UStr) -> UString {
-    let __units2 = u_string::units(&locale);
+    let __units2 = locale.as_slice();
     let __count2 = u_string::unit_count(&locale);
         let mut end = u_string::find_from(&(locale), UString::from("-").as_ustr(), 0);
         let underscore = u_string::find_from(&(locale), UString::from("_").as_ustr(), 0);

@@ -36,16 +36,15 @@ impl ContextualKinsokuDecisionInfo {
 pub fn compare_contextual_kinsoku_decision_info(a: &ContextualKinsokuDecisionInfo, b: &ContextualKinsokuDecisionInfo) -> i32 {
     let cmp_range = compare_text_range(&a.range, &b.range);
     if cmp_range != 0 { return cmp_range; }
-    let cmp_source_text = SortedTable::sorted_table_compare_strings(a.source_text.as_ustr(), b.source_text.as_ustr());
+    let cmp_source_text = SortedTable::sorted_table_compare_strings((&a.source_text).as_ustr(), (&b.source_text).as_ustr());
     if cmp_source_text != 0 { return cmp_source_text; }
-    let cmp_cluster_index = if a.cluster_index < b.cluster_index { -1 } else if a.cluster_index > b.cluster_index { 1 } else { 0 };
+    let cmp_cluster_index = match i32::from_ne_bytes((*(&a.cluster_index)).to_ne_bytes()).cmp(&i32::from_ne_bytes((*(&b.cluster_index)).to_ne_bytes())) { core::cmp::Ordering::Less => -1, core::cmp::Ordering::Equal => 0, core::cmp::Ordering::Greater => 1 };
     if cmp_cluster_index != 0 { return cmp_cluster_index; }
-    let cmp_forbidden_position = SortedTable::sorted_table_compare_strings(a.forbidden_position.as_ustr(), b.forbidden_position.as_ustr());
+    let cmp_forbidden_position = SortedTable::sorted_table_compare_strings((&a.forbidden_position).as_ustr(), (&b.forbidden_position).as_ustr());
     if cmp_forbidden_position != 0 { return cmp_forbidden_position; }
-    let cmp_reason = SortedTable::sorted_table_compare_strings(a.reason.as_ustr(), b.reason.as_ustr());
+    let cmp_reason = SortedTable::sorted_table_compare_strings((&a.reason).as_ustr(), (&b.reason).as_ustr());
     if cmp_reason != 0 { return cmp_reason; }
-    let cmp_impossible_measure_fallback = match (&a.impossible_measure_fallback, &b.impossible_measure_fallback) { (None, None) => 0, (None, Some(_)) => -1, (Some(_), None) => 1, (Some(av), Some(bv)) => match av.cmp(bv) { core::cmp::Ordering::Less => -1,
-core::cmp::Ordering::Equal => 0, core::cmp::Ordering::Greater => 1 } };
+    let cmp_impossible_measure_fallback = match (&a.impossible_measure_fallback, &b.impossible_measure_fallback) { (None, None) => 0, (None, Some(_)) => -1, (Some(_), None) => 1, (Some(av), Some(bv)) => SortedTable::sorted_table_compare_strings((av).as_ustr(), (bv).as_ustr()) };
     if cmp_impossible_measure_fallback != 0 { return cmp_impossible_measure_fallback; }
     0
 }

@@ -782,14 +782,14 @@ impl PunctuationGeometryStage {
     }
 
     pub(crate) fn punctuation_geometry_stage_first_char(s: &UStr) -> Option<UString> {
-    let __units = u_string::units(&s);
+    let __units = s.as_slice();
     let __count = u_string::unit_count(&s);
-        return if i32::from_ne_bytes(((__count) as i32).to_ne_bytes()) > (0) { Some(u_string::char_at_from(&__units, 0u32).to_ustring()) } else { None };
+        return if i32::from_ne_bytes(((__count) as i32).to_ne_bytes()) > (0) { Some(u_string::char_at_from(__units, 0u32).to_ustring()) } else { None };
     }
 
     pub(crate) fn punctuation_geometry_stage_last_char(s: &UStr) -> Option<UString> {
-    let __units1 = u_string::units(&s);
+    let __units1 = s.as_slice();
     let __count1 = u_string::unit_count(&s);
-        return if i32::from_ne_bytes(((__count1) as i32).to_ne_bytes()) > (0) { Some(u_string::char_at_from(&__units1, u32::wrapping_sub(__count1, 1)).to_ustring()) } else { None };
+        return if i32::from_ne_bytes(((__count1) as i32).to_ne_bytes()) > (0) { Some(u_string::char_at_from(__units1, u32::wrapping_sub(__count1, 1)).to_ustring()) } else { None };
     }
 }

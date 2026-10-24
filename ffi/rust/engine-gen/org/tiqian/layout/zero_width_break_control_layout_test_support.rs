@@ -1,3 +1,5 @@
+#![cfg(test)]
+
 use crate::org::tiqian::clreq::clreq_profile_resolver::BuiltInClreqProfileResolver;
 use crate::org::tiqian::core::ic::Ic;
 use crate::org::tiqian::core::inline_attachment::InlineAttachment;

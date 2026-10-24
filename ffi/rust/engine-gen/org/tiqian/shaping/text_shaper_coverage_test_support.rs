@@ -1,3 +1,5 @@
+#![cfg(test)]
+
 use crate::org::tiqian::core::inline_attachment::InlineAttachment;
 use crate::org::tiqian::core::text_range::TextRange;
 use crate::org::tiqian::core::text_style::TextStyle;

@@ -1,3 +1,5 @@
+#![cfg(test)]
+
 use crate::org::tiqian::clreq::clreq_profile_resolver::BuiltInClreqProfileResolver;
 use crate::org::tiqian::clreq::punctuation_class::PunctuationClass;
 use crate::org::tiqian::core::cluster::Cluster;

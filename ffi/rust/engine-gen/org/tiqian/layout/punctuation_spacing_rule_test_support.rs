@@ -1,3 +1,5 @@
+#![cfg(test)]
+
 use crate::org::tiqian::clreq::clreq_punctuation_policies::ClreqPunctuationPolicies;
 use crate::org::tiqian::clreq::punctuation_class::PunctuationClass;
 use crate::org::tiqian::clreq::punctuation_glue_placement::PunctuationGluePlacement;

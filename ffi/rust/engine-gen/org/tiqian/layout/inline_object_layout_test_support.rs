@@ -1,3 +1,5 @@
+#![cfg(test)]
+
 use crate::org::tiqian::clreq::clreq_profile::ClreqProfile;
 use crate::org::tiqian::clreq::clreq_profile_resolver::ClreqProfileResolver;
 use crate::org::tiqian::clreq::hanging_punctuation_style::HangingPunctuationStyle;

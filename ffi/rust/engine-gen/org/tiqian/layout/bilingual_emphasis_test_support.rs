@@ -1,3 +1,5 @@
+#![cfg(test)]
+
 use crate::org::tiqian::clreq::clreq_profile_resolver::BuiltInClreqProfileResolver;
 use crate::org::tiqian::core::decoration_kind::DecorationKind;
 use crate::org::tiqian::core::decoration_span::DecorationSpan;

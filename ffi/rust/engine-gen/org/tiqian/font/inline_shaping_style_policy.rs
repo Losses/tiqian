@@ -1,3 +1,5 @@
+#![cfg(test)]
+
 use crate::runtime::u_string::UString;
 use std::sync::LazyLock;
 

@@ -1,3 +1,5 @@
+#![cfg(test)]
+
 use crate::org::tiqian::clreq::adjustment_style_policy::AdjustmentStylePolicy;
 use crate::org::tiqian::clreq::clreq_profile::ClreqProfile;
 use crate::org::tiqian::clreq::clreq_profile_resolver::ClreqProfileResolver;
