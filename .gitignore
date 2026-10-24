@@ -39,6 +39,7 @@ demo/web-history/*.tsbuildinfo
 # notes. Never committed.
 /porting/
 .haxelib
+.haxelib-override/
 
 # Haxe engine module: generated outputs and local baselines, never committed
 /engine-haxe/out/

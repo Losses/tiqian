@@ -91,6 +91,8 @@ Boring 编译器的全部调试工作先取证、后调试。取证对象是**�
 
 引擎产物一律经 driver 编译：`nix develop -c boring gen engine-<target> --project boring.json`，产物在 `engine-haxe/out/engine-<target>/gen`；禁止绕过 driver 直接运行 hxml 编译。入口与分层判据见 [docs/cross-target-alignment.md](docs/cross-target-alignment.md#分层判据)。
 
+testlib 的失败消息写入 `out/test-results/rust.jsonl`，路径可用环境变量 `BORING_TEST_RESULTS` 覆盖；`--nocapture` 看不到这些消息是设计行为。
+
 ## 构建与验证
 
 项目使用 Gradle Kotlin Multiplatform，JVM 工具链版本为 25；包含 Android 目标平台与 `:ffi:js` 的 Kotlin/JS 目标平台。
