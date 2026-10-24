@@ -24,6 +24,6 @@ export class LineDecisionInfo {
   }
 
   public toString(): string {
-    return `LineDecisionInfo(range=${this.range.toString()}, kind=${this.kind}, repair=${this.repair}, repairPenalty=${this.repairPenalty}, repairDecision=${(this.repairDecision === null ? "null" : this.repairDecision.toString())}, repairCandidates=${(() => { let out = "["; const n = this.repairCandidates.length; for (let i = 0; i < n; i += 1) { if (i > 0) { out += ", "; } out += this.repairCandidates[i]!.toString(); } out += "]"; return out; })()}, notes=${(() => { let out = "["; const n = this.notes.length; for (let i = 0; i < n; i += 1) { if (i > 0) { out += ", "; } out += this.notes[i]!; } out += "]"; return out; })()})`;
+    return `LineDecisionInfo(range=${this.range.toString()}, kind=${this.kind}, repair=${this.repair}, repairPenalty=${this.repairPenalty}, repairDecision=${(this.repairDecision === null ? "null" : this.repairDecision!.toString())}, repairCandidates=${(() => { let out = "["; const n = this.repairCandidates.length; for (let i = 0; i < n; i += 1) { if (i > 0) { out += ", "; } out += this.repairCandidates[i]!.toString(); } out += "]"; return out; })()}, notes=${(() => { let out = "["; const n = this.notes.length; for (let i = 0; i < n; i += 1) { if (i > 0) { out += ", "; } out += this.notes[i]!; } out += "]"; return out; })()})`;
   }
 }

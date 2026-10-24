@@ -30,32 +30,32 @@ export class UnicodeEastAsianSpacing {
 
   public static resolvedForGraphemeCluster(graphemeCluster: string, locale: string): EastAsianSpacingValue {
     if (graphemeCluster.length === 0) {
-      return EastAsianSpacingValue.Other;
+      return (EastAsianSpacingValue.Other as EastAsianSpacingValue);
     }
     let index = 0;
     while (index < graphemeCluster.length) {
       const codePoint = SourceInteractionBoundaries.codePointAtCompat(graphemeCluster, index, graphemeCluster.length);
       if (UnicodeEastAsianSpacing.isEnclosingMark(codePoint)) {
-        return EastAsianSpacingValue.Other;
+        return (EastAsianSpacingValue.Other as EastAsianSpacingValue);
       }
       const advance = (codePoint > 65535 ? 2 : 1);
       index += advance;
     }
     const property = UnicodeEastAsianSpacing.propertyOf(SourceInteractionBoundaries.codePointAtCompat(graphemeCluster, 0, graphemeCluster.length));
     if (property.kind === "Conditional") {
-      return (UnicodeEastAsianSpacing.isChineseLanguageContext(locale) ? EastAsianSpacingValue.Narrow : EastAsianSpacingValue.Other);
+      return (UnicodeEastAsianSpacing.isChineseLanguageContext(locale) ? (EastAsianSpacingValue.Narrow as EastAsianSpacingValue) : (EastAsianSpacingValue.Other as EastAsianSpacingValue));
     }
     return property;
   }
 
   public static resolvedEdges(text: string, locale: string): EastAsianSpacingEdges {
     if (text.length === 0) {
-      return new EastAsianSpacingEdges(EastAsianSpacingValue.Other, EastAsianSpacingValue.Other, false);
+      return new EastAsianSpacingEdges((EastAsianSpacingValue.Other as EastAsianSpacingValue), (EastAsianSpacingValue.Other as EastAsianSpacingValue), false);
     }
     const boundaries = SourceInteractionBoundaries.interactionBoundaries(text, new TextRange(0, text.length));
     let index = 0;
-    let leading: EastAsianSpacingValue = EastAsianSpacingValue.Other;
-    let trailing: EastAsianSpacingValue = EastAsianSpacingValue.Other;
+    let leading: EastAsianSpacingValue = (EastAsianSpacingValue.Other as EastAsianSpacingValue);
+    let trailing: EastAsianSpacingValue = (EastAsianSpacingValue.Other as EastAsianSpacingValue);
     let containsWide = false;
     while (index + 1 < boundaries.length) {
       const value = UnicodeEastAsianSpacing.resolvedForGraphemeCluster(text.substring(boundaries[index]!, boundaries[index + 1]!), locale);

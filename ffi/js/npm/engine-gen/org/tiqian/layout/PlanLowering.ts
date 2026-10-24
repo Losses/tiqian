@@ -55,21 +55,21 @@ export class PlanLowering {
           for (let fi = 0, count9 = run.openTypeFeatures.length; fi < count9; fi += 1) {
             const f = run.openTypeFeatures[fi]!;
             if (fs.indexOf(f) < 0) {
-              fs.push(f);
+              fs!.push(f);
             }
           }
-          featuresB.put(k, fs);
+          featuresB.put(k, (fs)!);
         }
         const rfk = glyph.renderFontKey;
         if (rfk !== null) {
-          fontsB.put(k, rfk);
+          fontsB.put(k, (rfk)!);
         }
         let ids = glyphIdsB.get(k);
         if (ids === null) {
           ids = [];
         }
-        ids.push(String(glyph.id));
-        glyphIdsB.put(k, ids);
+        ids!.push(String(glyph.id));
+        glyphIdsB.put(k, (ids)!);
       }
     }
     const zeroB = SortedTable.mapBuilder<string, boolean>(SortedTable.compareStrings);
@@ -133,7 +133,7 @@ export class PlanLowering {
           if (!(c.displayText.length > 0 || zero.has(ck) || renderEvidence && inlineAdvance.has(ck))) {
             continue;
           }
-          const natW = (natural.has(ck) ? natural.get(ck) : c.advance);
+          const natW = (natural.has(ck) ? natural.get(ck)! : c.advance);
           let inlineObj: number | null = null;
           let advOverride: number | null = null;
           let renderFam: string | null = null;
@@ -147,25 +147,25 @@ export class PlanLowering {
           let latin = false;
           let styleDelta: PlanStyleDelta | null = null;
           if (renderEvidence) {
-            inlineObj = (inlineAdvance.has(ck) ? inlineAdvance.get(ck) : null);
+            inlineObj = (inlineAdvance.has(ck) ? inlineAdvance.get(ck)! : null);
             const glyphW = (inlineObj === null ? natW : inlineObj);
             advOverride = (c.advance !== glyphW ? c.advance : null);
-            renderFam = (fonts.has(ck) ? fonts.get(ck) : null);
+            renderFam = (fonts.has(ck) ? fonts.get(ck)! : null);
             const sd = shaping.get(ck);
-            dash = (sd !== null ? sd.strategy : null);
-            lang = (sd !== null ? sd.language : null);
-            face = (sd !== null ? sd.resolvedFace : null);
-            gIds = (glyphIds.has(ck) && glyphIds.get(ck).length > 0 ? glyphIds.get(ck).join(",") : null);
-            ev = (sd !== null ? sd.reason : null);
+            dash = (sd !== null ? sd!.strategy : null);
+            lang = (sd !== null ? sd!.language : null);
+            face = (sd !== null ? sd!.resolvedFace : null);
+            gIds = (glyphIds.has(ck) && glyphIds.get(ck)!.length > 0 ? glyphIds.get(ck)!.join(",") : null);
+            ev = (sd !== null ? sd!.reason : null);
             const pd = punct.get(ck);
-            if (pd !== null && pd.inkContainmentApplied && pd.inkContainmentBodyFloor !== null) {
-              inkFloor = pd.inkContainmentBodyFloor;
-              bodyW = pd.bodyWidth;
+            if (pd !== null && pd!.inkContainmentApplied && pd!.inkContainmentBodyFloor !== null) {
+              inkFloor = pd!.inkContainmentBodyFloor;
+              bodyW = pd!.bodyWidth;
             }
             const fdSrc = result.debug.fontDecisions;
             for (let fi2 = 0, count12 = fdSrc.length; fi2 < count12; fi2 += 1) {
               const fd = fdSrc[fi2]!;
-              if (c.range.start >= fd.range.start && c.range.end <= fd.range.end && fd.role === FontRole.LatinText.kind) {
+              if (c.range.start >= fd.range.start && c.range.end <= fd.range.end && fd.role === (FontRole.LatinText as FontRole).kind) {
                 latin = true;
               }
             }
@@ -199,13 +199,13 @@ export class PlanLowering {
       const offsets: number[] = [];
       const parseHexCode = (s: string): number | null => { let a = 0, z = s.length; while (a < z) { const c = s.charCodeAt(a); if (c === 32 || (c >= 9 && c <= 13)) { a++; } else { break; } } while (z > a) { const c = s.charCodeAt(z - 1); if (c === 32 || (c >= 9 && c <= 13)) { z--; } else { break; } } let i = a; const c0 = s.charCodeAt(i); if (c0 === 43 || c0 === 45) { i++; } let radix = 10; if (i + 1 < z && s.charCodeAt(i) === 48 && (s.charCodeAt(i + 1) === 120 || s.charCodeAt(i + 1) === 88)) { i += 2; radix = 16; } const st = i; while (i < z) { const c = s.charCodeAt(i); if ((c >= 48 && c <= 57) || (radix === 16 && ((c >= 97 && c <= 102) || (c >= 65 && c <= 70)))) { i++; } else { break; } } if (i === st || i !== z) { return null; } const n = Number.parseInt(s.substring(a, z), radix); if (n >= -2147483648 && n <= 2147483647) { return n; } return null; };
       for (let oi = 0, count18 = edgeStart.size(); oi < count18; oi += 1) {
-        offsets.push(parseHexCode(edgeStart.keyAt(oi)));
+        offsets.push((parseHexCode(edgeStart.keyAt(oi)))!);
       }
       const parseHexCode2 = (s: string): number | null => { let a = 0, z = s.length; while (a < z) { const c = s.charCodeAt(a); if (c === 32 || (c >= 9 && c <= 13)) { a++; } else { break; } } while (z > a) { const c = s.charCodeAt(z - 1); if (c === 32 || (c >= 9 && c <= 13)) { z--; } else { break; } } let i = a; const c0 = s.charCodeAt(i); if (c0 === 43 || c0 === 45) { i++; } let radix = 10; if (i + 1 < z && s.charCodeAt(i) === 48 && (s.charCodeAt(i + 1) === 120 || s.charCodeAt(i + 1) === 88)) { i += 2; radix = 16; } const st = i; while (i < z) { const c = s.charCodeAt(i); if ((c >= 48 && c <= 57) || (radix === 16 && ((c >= 97 && c <= 102) || (c >= 65 && c <= 70)))) { i++; } else { break; } } if (i === st || i !== z) { return null; } const n = Number.parseInt(s.substring(a, z), radix); if (n >= -2147483648 && n <= 2147483647) { return n; } return null; };
       for (let ei2 = 0, count19 = edgeEnd.size(); ei2 < count19; ei2 += 1) {
         const ev2 = parseHexCode2(edgeEnd.keyAt(ei2));
-        if (offsets.indexOf(ev2) < 0) {
-          offsets.push(ev2);
+        if (offsets.indexOf((ev2)!) < 0) {
+          offsets.push((ev2)!);
         }
       }
       let oi2 = 1;
@@ -222,7 +222,7 @@ export class PlanLowering {
       for (let _g_index1 = 0, count20 = offsets.length; _g_index1 < count20; _g_index1 += 1) {
         const offset = offsets[_g_index1]!;
         const sk2 = String(offset);
-        inlineEdges.push({ offset, inlineStart: (edgeStart.has(sk2) ? edgeStart.get(sk2) : null), inlineEnd: (edgeEnd.has(sk2) ? edgeEnd.get(sk2) : null) });
+        inlineEdges.push({ offset, inlineStart: (edgeStart.has(sk2) ? edgeStart.get(sk2)! : null), inlineEnd: (edgeEnd.has(sk2) ? edgeEnd.get(sk2)! : null) });
       }
       const rubySrc = result.debug.rubyDecisions;
       for (let ri2 = 0, count14 = rubySrc.length; ri2 < count14; ri2 += 1) {
@@ -242,14 +242,14 @@ export class PlanLowering {
       const segSrc = result.debug.decorationSegments;
       for (let si = 0, count16 = segSrc.length; si < count16; si += 1) {
         const s = segSrc[si]!;
-        if (s.kind === DecorationKind.ProperNoun.kind || s.kind === DecorationKind.BookTitle.kind) {
+        if (s.kind === (DecorationKind.ProperNoun as DecorationKind).kind || s.kind === (DecorationKind.BookTitle as DecorationKind).kind) {
           decorationSegments.push({ kind: s.kind, left: s.left, top: s.top, right: s.right, sourceRangeStart: s.sourceRange.start, sourceRangeEnd: s.sourceRange.end });
         }
       }
       const dotSrc = result.debug.decorationDecisions;
       for (let di = 0, count17 = dotSrc.length; di < count17; di += 1) {
         const d2 = dotSrc[di]!;
-        if (d2.applied && d2.kind === DecorationKind.Emphasis.kind && d2.dotDiameter > 0) {
+        if (d2.applied && d2.kind === (DecorationKind.Emphasis as DecorationKind).kind && d2.dotDiameter > 0) {
           emphasisDots.push({ clusterRangeStart: PlanLowering.f32(d2.clusterRange.start), anchorX: d2.anchorX, anchorY: d2.anchorY, dotDiameter: d2.dotDiameter });
         }
       }
@@ -260,11 +260,11 @@ export class PlanLowering {
   private static endReasonFrom(reason: LineEndReason): PlanEndReason {
     switch (reason.kind) {
       case "AutoWrap":
-        return PlanEndReason.AutoWrap;
+        return (PlanEndReason.AutoWrap as PlanEndReason);
       case "MandatoryBreak":
-        return PlanEndReason.MandatoryBreak;
+        return (PlanEndReason.MandatoryBreak as PlanEndReason);
       case "ParagraphEnd":
-        return PlanEndReason.ParagraphEnd;
+        return (PlanEndReason.ParagraphEnd as PlanEndReason);
     }
   }
 

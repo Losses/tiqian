@@ -239,7 +239,7 @@ export class LineBreakPlanningStageResult {
   }
 
   public toString(): string {
-    return `LineBreakPlanningStageResult(metricDecisions=${(() => { let out = "["; const n = this.metricDecisions.length; for (let i = 0; i < n; i += 1) { if (i > 0) { out += ", "; } out += this.metricDecisions[i]!.toString(); } out += "]"; return out; })()}, metricDecisionByRange=${(() => { let out = "{"; const n = this.metricDecisionByRange.size(); for (let i = 0; i < n; i += 1) { if (i > 0) { out += ", "; } out += this.metricDecisionByRange.keyAt(i).toString() + "=" + this.metricDecisionByRange.valueAt(i).toString(); } out += "}"; return out; })()}, baseAscent=${this.baseAscent}, baseDescent=${this.baseDescent}, baseBoxDescent=${this.baseBoxDescent}, baseFaceHeight=${this.baseFaceHeight}, existingInterlineSpace=${this.existingInterlineSpace}, rubyExtent=${this.rubyExtent}, baseLineMetrics=${this.baseLineMetrics.toString()}, lineSpacingDecision=${(this.lineSpacingDecision === null ? "null" : this.lineSpacingDecision.toString())}, blockIndent=${this.blockIndent}, firstLineIndent=${this.firstLineIndent}, firstLineIndentDecision=${this.firstLineIndentDecision.toString()}, kinsokuDecision=${this.kinsokuDecision.toString()}, asciiPointMarkKinsoku=${this.asciiPointMarkKinsoku.toString()}, inlineObjectKinsoku=${this.inlineObjectKinsoku.toString()}, unicodePunctuationBoundaries=${this.unicodePunctuationBoundaries.toString()}, westernBracketCjkInterCharBoundaryAfterClusters=${(() => { let out = "["; const n = this.westernBracketCjkInterCharBoundaryAfterClusters.size(); for (let i = 0; i < n; i += 1) { if (i > 0) { out += ", "; } out += this.westernBracketCjkInterCharBoundaryAfterClusters.at(i); } out += "]"; return out; })()}, attachedInlinePhysicalBoundaryAfterClusters=${(() => { let out = "["; const n = this.attachedInlinePhysicalBoundaryAfterClusters.size(); for (let i = 0; i < n; i += 1) { if (i > 0) { out += ", "; } out += this.attachedInlinePhysicalBoundaryAfterClusters.at(i); } out += "]"; return out; })()}, attachedInlineVirtualBoundaryAfterClusters=${(() => { let out = "{"; const n = this.attachedInlineVirtualBoundaryAfterClusters.size(); for (let i = 0; i < n; i += 1) { if (i > 0) { out += ", "; } out += this.attachedInlineVirtualBoundaryAfterClusters.keyAt(i) + "=" + this.attachedInlineVirtualBoundaryAfterClusters.valueAt(i); } out += "}"; return out; })()}, attachedInlineVirtualSinoWesternBoundaryAfterClusters=${(() => { let out = "["; const n = this.attachedInlineVirtualSinoWesternBoundaryAfterClusters.size(); for (let i = 0; i < n; i += 1) { if (i > 0) { out += ", "; } out += this.attachedInlineVirtualSinoWesternBoundaryAfterClusters.at(i); } out += "]"; return out; })()}, noStretchBoundaryClusters=${(() => { let out = "["; const n = this.noStretchBoundaryClusters.size(); for (let i = 0; i < n; i += 1) { if (i > 0) { out += ", "; } out += this.noStretchBoundaryClusters.at(i); } out += "]"; return out; })()}, noStretchBoundaryAfterClusters=${(() => { let out = "["; const n = this.noStretchBoundaryAfterClusters.size(); for (let i = 0; i < n; i += 1) { if (i > 0) { out += ", "; } out += this.noStretchBoundaryAfterClusters.at(i); } out += "]"; return out; })()}, technicalBoundaryAfterClusters=${(() => { let out = "{"; const n = this.technicalBoundaryAfterClusters.size(); for (let i = 0; i < n; i += 1) { if (i > 0) { out += ", "; } out += this.technicalBoundaryAfterClusters.keyAt(i) + "=" + this.technicalBoundaryAfterClusters.valueAt(i).kind; } out += "}"; return out; })()}, emergencyTrackingBoundaryAfterClusters=${(() => { let out = "{"; const n = this.emergencyTrackingBoundaryAfterClusters.size(); for (let i = 0; i < n; i += 1) { if (i > 0) { out += ", "; } out += this.emergencyTrackingBoundaryAfterClusters.keyAt(i) + "=" + this.emergencyTrackingBoundaryAfterClusters.valueAt(i); } out += "}"; return out; })()}, progressiveBreakOpportunities=${(() => { let out = "{"; const n = this.progressiveBreakOpportunities.size(); for (let i = 0; i < n; i += 1) { if (i > 0) { out += ", "; } out += this.progressiveBreakOpportunities.keyAt(i) + "=" + this.progressiveBreakOpportunities.valueAt(i).toString(); } out += "}"; return out; })()}, lineSolution=${this.lineSolution.toString()})`;
+    return `LineBreakPlanningStageResult(metricDecisions=${(() => { let out = "["; const n = this.metricDecisions.length; for (let i = 0; i < n; i += 1) { if (i > 0) { out += ", "; } out += this.metricDecisions[i]!.toString(); } out += "]"; return out; })()}, metricDecisionByRange=${(() => { let out = "{"; const n = this.metricDecisionByRange.size(); for (let i = 0; i < n; i += 1) { if (i > 0) { out += ", "; } out += this.metricDecisionByRange.keyAt(i).toString() + "=" + this.metricDecisionByRange.valueAt(i).toString(); } out += "}"; return out; })()}, baseAscent=${this.baseAscent}, baseDescent=${this.baseDescent}, baseBoxDescent=${this.baseBoxDescent}, baseFaceHeight=${this.baseFaceHeight}, existingInterlineSpace=${this.existingInterlineSpace}, rubyExtent=${this.rubyExtent}, baseLineMetrics=${this.baseLineMetrics.toString()}, lineSpacingDecision=${(this.lineSpacingDecision === null ? "null" : this.lineSpacingDecision!.toString())}, blockIndent=${this.blockIndent}, firstLineIndent=${this.firstLineIndent}, firstLineIndentDecision=${this.firstLineIndentDecision.toString()}, kinsokuDecision=${this.kinsokuDecision.toString()}, asciiPointMarkKinsoku=${this.asciiPointMarkKinsoku.toString()}, inlineObjectKinsoku=${this.inlineObjectKinsoku.toString()}, unicodePunctuationBoundaries=${this.unicodePunctuationBoundaries.toString()}, westernBracketCjkInterCharBoundaryAfterClusters=${(() => { let out = "["; const n = this.westernBracketCjkInterCharBoundaryAfterClusters.size(); for (let i = 0; i < n; i += 1) { if (i > 0) { out += ", "; } out += this.westernBracketCjkInterCharBoundaryAfterClusters.at(i); } out += "]"; return out; })()}, attachedInlinePhysicalBoundaryAfterClusters=${(() => { let out = "["; const n = this.attachedInlinePhysicalBoundaryAfterClusters.size(); for (let i = 0; i < n; i += 1) { if (i > 0) { out += ", "; } out += this.attachedInlinePhysicalBoundaryAfterClusters.at(i); } out += "]"; return out; })()}, attachedInlineVirtualBoundaryAfterClusters=${(() => { let out = "{"; const n = this.attachedInlineVirtualBoundaryAfterClusters.size(); for (let i = 0; i < n; i += 1) { if (i > 0) { out += ", "; } out += this.attachedInlineVirtualBoundaryAfterClusters.keyAt(i) + "=" + this.attachedInlineVirtualBoundaryAfterClusters.valueAt(i); } out += "}"; return out; })()}, attachedInlineVirtualSinoWesternBoundaryAfterClusters=${(() => { let out = "["; const n = this.attachedInlineVirtualSinoWesternBoundaryAfterClusters.size(); for (let i = 0; i < n; i += 1) { if (i > 0) { out += ", "; } out += this.attachedInlineVirtualSinoWesternBoundaryAfterClusters.at(i); } out += "]"; return out; })()}, noStretchBoundaryClusters=${(() => { let out = "["; const n = this.noStretchBoundaryClusters.size(); for (let i = 0; i < n; i += 1) { if (i > 0) { out += ", "; } out += this.noStretchBoundaryClusters.at(i); } out += "]"; return out; })()}, noStretchBoundaryAfterClusters=${(() => { let out = "["; const n = this.noStretchBoundaryAfterClusters.size(); for (let i = 0; i < n; i += 1) { if (i > 0) { out += ", "; } out += this.noStretchBoundaryAfterClusters.at(i); } out += "]"; return out; })()}, technicalBoundaryAfterClusters=${(() => { let out = "{"; const n = this.technicalBoundaryAfterClusters.size(); for (let i = 0; i < n; i += 1) { if (i > 0) { out += ", "; } out += this.technicalBoundaryAfterClusters.keyAt(i) + "=" + this.technicalBoundaryAfterClusters.valueAt(i).kind; } out += "}"; return out; })()}, emergencyTrackingBoundaryAfterClusters=${(() => { let out = "{"; const n = this.emergencyTrackingBoundaryAfterClusters.size(); for (let i = 0; i < n; i += 1) { if (i > 0) { out += ", "; } out += this.emergencyTrackingBoundaryAfterClusters.keyAt(i) + "=" + this.emergencyTrackingBoundaryAfterClusters.valueAt(i); } out += "}"; return out; })()}, progressiveBreakOpportunities=${(() => { let out = "{"; const n = this.progressiveBreakOpportunities.size(); for (let i = 0; i < n; i += 1) { if (i > 0) { out += ", "; } out += this.progressiveBreakOpportunities.keyAt(i) + "=" + this.progressiveBreakOpportunities.valueAt(i).toString(); } out += "}"; return out; })()}, lineSolution=${this.lineSolution.toString()})`;
   }
 }
 
@@ -324,10 +324,10 @@ export class LineBreakPlanningStage {
         if (cluster.range.start >= item.range.start && cluster.range.end <= item.range.end) {
           result.push(item);
         } else {
-          result.push(null);
+          result.push((null)!);
         }
       } else {
-        result.push(null);
+        result.push((null)!);
       }
     }
     return result;
@@ -377,10 +377,10 @@ export class LineBreakPlanningStage {
     for (let i2 = 0, count6 = baseMetricDecisions.length; i2 < count6; i2 += 1) {
       const asc = baseMetricDecisions[i2]!.layoutMetrics.ascent;
       const dsc = baseMetricDecisions[i2]!.layoutMetrics.descent;
-      if (maxAscent === null || asc > maxAscent) {
+      if (maxAscent === null || asc > maxAscent!) {
         maxAscent = asc;
       }
-      if (maxDescent === null || dsc > maxDescent) {
+      if (maxDescent === null || dsc > maxDescent!) {
         maxDescent = dsc;
       }
     }
@@ -393,7 +393,7 @@ export class LineBreakPlanningStage {
         break;
       }
     }
-    const baseBoxDescent = (baseRefMetrics !== null ? baseRefMetrics.descent : baseDescent);
+    const baseBoxDescent = (baseRefMetrics !== null ? baseRefMetrics!.descent : baseDescent);
     let maxRubyExtent = 0.0;
     for (let i4 = 0, count14 = prep.rubyFontGeometryBySpan.size(); i4 < count14; i4 += 1) {
       const geom = prep.rubyFontGeometryBySpan.valueAt(i4);
@@ -523,7 +523,7 @@ export class LineBreakPlanningStage {
       if (clusterIndexBySourceStart.has(sourceOffset)) {
         const clusterIndex = clusterIndexBySourceStart.get(sourceOffset);
         const opp = (opportunity.tier.kind === "Whitespace" ? new ProgressiveBreakOpportunity(opportunity.tier, opportunity.spanRange, progressiveTechnicalWhitespaceStretchCapacity) : opportunity);
-        progressiveBreakOpportunitiesBuilder.put(clusterIndex, opp);
+        progressiveBreakOpportunitiesBuilder.put((clusterIndex)!, opp);
       }
     }
     const progressiveBreakOpportunities = progressiveBreakOpportunitiesBuilder.build();
@@ -541,7 +541,7 @@ export class LineBreakPlanningStage {
       if (!progressiveTechnicalOverlap.overlaps(sourceRange.start, sourceRange.end + 1)) {
         const idxRange = PunctuationGeometryLedger.clusterIndexRangeFor(prep.naturalClusters, new TextRange(sourceRange.start, sourceRange.end + 1));
         if (idxRange !== null) {
-          numberSymbolClusterRanges.push(idxRange);
+          numberSymbolClusterRanges.push((idxRange)!);
         }
       }
     }
@@ -558,8 +558,8 @@ export class LineBreakPlanningStage {
     }
     const noStretchBoundaryClustersBuilder = SortedTable.setBuilder<number>(SortedTable.compareInts);
     for (let idx4 = 0, count27 = prep.naturalClusters.length; idx4 < count27; idx4 += 1) {
-      const cls = (prep.atomClassByRange.has(prep.naturalClusters[idx4]!.range) ? prep.atomClassByRange.get(prep.naturalClusters[idx4]!.range) : null);
-      if ((cls !== null && cls.kind === "Connector") || (cls !== null && cls.kind === "Solidus") || (cls !== null && cls.kind === "Dash") || (cls !== null && cls.kind === "Ellipsis")) {
+      const cls = (prep.atomClassByRange.has(prep.naturalClusters[idx4]!.range) ? prep.atomClassByRange.get(prep.naturalClusters[idx4]!.range)! : null);
+      if ((cls !== null && cls!.kind === "Connector") || (cls !== null && cls!.kind === "Solidus") || (cls !== null && cls!.kind === "Dash") || (cls !== null && cls!.kind === "Ellipsis")) {
         noStretchBoundaryClustersBuilder.put(idx4);
       }
     }
@@ -611,7 +611,7 @@ export class LineBreakPlanningStage {
       if (span === null) {
         continue;
       }
-      for (let leftIndex2 = span.start, count34 = span.end; leftIndex2 < count34; leftIndex2 += 1) {
+      for (let leftIndex2 = span!.start, count34 = span!.end; leftIndex2 < count34; leftIndex2 += 1) {
         if (!boundaryEligible[leftIndex2]! || addedKeys[leftIndex2]!) {
           continue;
         }
@@ -669,14 +669,14 @@ export class LineBreakPlanningStage {
       if (d2.kind.kind === "Mourning") {
         const r = PunctuationGeometryLedger.clusterIndexRangeFor(prep.naturalClusters, d2.range);
         if (r !== null) {
-          allUnbreakables.push(r);
+          allUnbreakables.push((r)!);
         }
       }
     }
     for (let i26 = 0, count43 = prep.pinyinSpans.length; i26 < count43; i26 += 1) {
       const r2 = PunctuationGeometryLedger.clusterIndexRangeFor(prep.naturalClusters, prep.pinyinSpans[i26]!.baseRange);
       if (r2 !== null) {
-        allUnbreakables.push(r2);
+        allUnbreakables.push((r2)!);
       }
     }
     for (let i27 = 0, count11 = attachedInlineUnbreakableRanges.length; i27 < count11; i27 += 1) {
@@ -717,6 +717,6 @@ export class LineBreakPlanningStage {
       }
       lineSolution = engine.lineBreaker.breakLines(prep.naturalClusters, prep.clusters, prep.measure - blockIndent, prep.shrinkOpportunities, unbreakableRanges, firstLineIndent - blockIndent, resolvedHangableClusters, combinedExtendableHangRanges, forbiddenLineStartClusters, forbiddenLineEndClusters, hyphenBreakClusters, cjkInterCharBoundaries, 0.5 * prep.fontSize, sinoWesternBoundaries, 0.25 * prep.fontSize, prep.adjustmentStyle.lineAdjustment.kind !== "PushOutOnly", lineAdjustmentCompressBias, prep.mandatoryBreakClusters, prep.zeroWidthBreakClusters, progressiveBreakOpportunities);
     }
-    return new LineBreakPlanningStageResult(metricDecisions, metricDecisionByRange, baseAscent, baseDescent, baseBoxDescent, baseFaceHeight, existingInterlineSpace, rubyExtent, baseLineMetrics, lineSpacingDecision, blockIndent, firstLineIndent, firstLineIndentDecision, kinsokuDecision, asciiPointMarkKinsoku, inlineObjectKinsoku, unicodePunctuationBoundaries, westernBracketCjkInterCharBoundaryAfterClusters, attachedInlinePhysicalBoundaryAfterClusters, attachedInlineVirtualBoundaryAfterClusters, attachedInlineVirtualSinoWesternBoundaryAfterClusters, noStretchBoundaryClusters, noStretchBoundaryAfterClusters, technicalBoundaryAfterClusters, emergencyTrackingBoundaryAfterClusters, progressiveBreakOpportunities, lineSolution);
+    return new LineBreakPlanningStageResult(metricDecisions, metricDecisionByRange, (baseAscent)!, (baseDescent)!, (baseBoxDescent)!, baseFaceHeight, existingInterlineSpace, rubyExtent, baseLineMetrics, lineSpacingDecision, blockIndent, firstLineIndent, firstLineIndentDecision, kinsokuDecision, asciiPointMarkKinsoku, inlineObjectKinsoku, unicodePunctuationBoundaries, westernBracketCjkInterCharBoundaryAfterClusters, attachedInlinePhysicalBoundaryAfterClusters, attachedInlineVirtualBoundaryAfterClusters, attachedInlineVirtualSinoWesternBoundaryAfterClusters, noStretchBoundaryClusters, noStretchBoundaryAfterClusters, technicalBoundaryAfterClusters, emergencyTrackingBoundaryAfterClusters, progressiveBreakOpportunities, lineSolution);
   }
 }

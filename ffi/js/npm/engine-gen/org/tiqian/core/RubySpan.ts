@@ -11,10 +11,11 @@ export class RubySpan {
   public readonly locale: string | null;
 
   constructor(baseRange: TextRange, text: string, fontFamilies: string[] | null = null, kind: RubyKind, locale?: string | null) {
+    locale = locale ?? null;
     this.baseRange = baseRange;
     this.text = text;
     this.fontFamilies = fontFamilies ?? [];
-    this.kind = kind;
+    this.kind = (kind)!;
     this.locale = locale;
   }
 
@@ -33,12 +34,15 @@ export function compareRubySpan(a: RubySpan, b: RubySpan): number {
   if (a === b) return 0;
   { const cmp = compareTextRange(a.baseRange, b.baseRange); if (cmp !== 0) return cmp; }
   if (a.text !== b.text) return a.text < b.text ? -1 : 1;
-  const afontFamiliesLength = a.fontFamilies.length; const bfontFamiliesLength = b.fontFamilies.length;
-  for (let i = 0; i < afontFamiliesLength && i < bfontFamiliesLength; i++) { if (a.fontFamilies[i] !== b.fontFamilies[i]) return a.fontFamilies[i]! < b.fontFamilies[i]! ? -1 : 1; }
-  if (afontFamiliesLength !== bfontFamiliesLength) return afontFamiliesLength - bfontFamiliesLength;
+  for (let i0 = 0, n0 = a.fontFamilies.length < b.fontFamilies.length ? a.fontFamilies.length : b.fontFamilies.length; i0 < n0; i0++) {
+    if (a.fontFamilies[i0]! !== b.fontFamilies[i0]!) return a.fontFamilies[i0]! < b.fontFamilies[i0]! ? -1 : 1;
+  }
+  if (a.fontFamilies.length !== b.fontFamilies.length) return a.fontFamilies.length - b.fontFamilies.length;
   if (RubySpankindOrder(a.kind) !== RubySpankindOrder(b.kind)) return RubySpankindOrder(a.kind) - RubySpankindOrder(b.kind);
   if (a.locale === null && b.locale !== null) return -1;
   if (a.locale !== null && b.locale === null) return 1;
-  if (a.locale !== null && b.locale !== null && a.locale !== b.locale) return a.locale < b.locale ? -1 : 1;
+  if (a.locale !== null && b.locale !== null) {
+    if (a.locale !== b.locale) return a.locale < b.locale ? -1 : 1;
+  }
   return 0;
 }

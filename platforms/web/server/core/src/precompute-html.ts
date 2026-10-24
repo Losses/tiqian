@@ -14,7 +14,7 @@ import { DomParser } from "./shared-gen/org/tiqian/shared/html/DomParser.js";
 import { HtmlParseException } from "./shared-gen/org/tiqian/shared/html/HtmlParseException.js";
 import { HtmlScan } from "./shared-gen/org/tiqian/shared/html/HtmlScan.js";
 import { type BuildFontFace, type BuildFontStylesheet, type NormalizedTypography, type Precomputer, type SnapshotBundle, type SnapshotTypography } from "./precompute.js";
-import type { FinalizedSnapshotTables, FontContractInput, PreparedEntry, SnapshotBundleData, SnapshotParagraphInput, SnapshotTables } from "./precompute.js";
+import type { FontContractInput, PreparedEntry, SnapshotParagraphInput } from "./precompute.js";
 import type { DomNode } from "./shared-gen/org/tiqian/shared/html/DomNode.js";
 
 const DEFAULT_PARAGRAPH_SELECTOR = "p, li";
@@ -125,7 +125,7 @@ export function injectHtmlAttributes(html: string, insertions: readonly {
     }
     catch (error) {
         if (error instanceof HtmlParseException) {
-            throw new Error(error.message);
+            throw new Error(error.message, { cause: error });
         }
         throw error;
     }
@@ -163,7 +163,7 @@ function parseSelectorList(selector: string): CompoundSelector[] {
     }
     catch (error) {
         if (error instanceof HtmlParseException)
-            throw new Error(error.message);
+            throw new Error(error.message, { cause: error });
         throw error;
     }
 }
@@ -180,7 +180,7 @@ function selectedTagNames(selector: string): string[] {
 
 function parseDocument(markup: string): DomParser {
     const window = parseHTML(markup);
-    return new DomParser(window.document as unknown as DomNode);
+    return new DomParser(window.document as DomNode);
 }
 
 /** nestedListItem: a list item that owns a block container keeps its layout in the host. */

@@ -44,11 +44,11 @@ export class RichTextPaint {
   }
 
   public static withClearance(clearance: number): RichTextPaint {
-    return new RichTextPaint(null, Solid.instance, new RichTextBackgroundPaint(0.0, 0.0, 0.0, 0.0, RichTextBackgroundMetricPolicy.MarkedFaces, Fill.instance), clearance);
+    return new RichTextPaint(null, Solid.instance, new RichTextBackgroundPaint(0.0, 0.0, 0.0, 0.0, (RichTextBackgroundMetricPolicy.MarkedFaces as RichTextBackgroundMetricPolicy), Fill.instance), clearance);
   }
 
   public static withArgb(value: number): RichTextPaint {
-    return new RichTextPaint(value, Solid.instance, new RichTextBackgroundPaint(0.0, 0.0, 0.0, 0.0, RichTextBackgroundMetricPolicy.MarkedFaces, Fill.instance), 0.0);
+    return new RichTextPaint(value, Solid.instance, new RichTextBackgroundPaint(0.0, 0.0, 0.0, 0.0, (RichTextBackgroundMetricPolicy.MarkedFaces as RichTextBackgroundMetricPolicy), Fill.instance), 0.0);
   }
 
   private static sameLinePattern(a: RichTextLinePattern, b: RichTextLinePattern): boolean {

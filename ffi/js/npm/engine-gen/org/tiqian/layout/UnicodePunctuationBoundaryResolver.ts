@@ -162,7 +162,7 @@ export class UnicodePunctuationBoundaryResolver {
       const both = UnicodePunctuationBoundaryResolver.isCjk(roles[p]!) && UnicodePunctuationBoundaryResolver.isCjk(roles[n]!);
       const punct = roles[p]!.kind === "CjkPunctuation" && edges[n]!.leading.kind === "Narrow" || edges[p]!.trailing.kind === "Narrow" && roles[n]!.kind === "CjkPunctuation";
       const sino = UnicodePunctuationBoundaryResolver.wideNarrow(edges[p]!.trailing, edges[n]!.leading);
-      const bracket = UnicodePunctuationBoundaryResolver.isWesternBracketCjkInterCharBoundary(text, clusters, roles, p, n);
+      const bracket = UnicodePunctuationBoundaryResolver.isWesternBracketCjkInterCharBoundary(text, clusters, roles, p, (n)!);
       if (both || punct || sino || bracket) {
         vm.put(q.attachedClusterRange.end, p);
       }
@@ -205,12 +205,12 @@ export class UnicodePunctuationBoundaryResolver {
       if (last === null) {
         continue;
       }
-      const fc = UnicodePunctuationLineBreak.classOf(first.codePoint);
-      const lc = UnicodePunctuationLineBreak.classOf(last.codePoint);
-      const fo = c.range.start + first.offset;
-      const lo = c.range.start + last.offset;
-      const fdir = UnicodePunctuationBoundaryResolver.quoteDir(text, fo, first.codePoint, fc);
-      const ldir = UnicodePunctuationBoundaryResolver.quoteDir(text, lo, last.codePoint, lc);
+      const fc = UnicodePunctuationLineBreak.classOf(first!.codePoint);
+      const lc = UnicodePunctuationLineBreak.classOf(last!.codePoint);
+      const fo = c.range.start + first!.offset;
+      const lo = c.range.start + last!.offset;
+      const fdir = UnicodePunctuationBoundaryResolver.quoteDir(text, fo, first!.codePoint, fc);
+      const ldir = UnicodePunctuationBoundaryResolver.quoteDir(text, lo, last!.codePoint, lc);
       const pairedClose = closeSet.has(fo);
       const authored = UnicodePunctuationBoundaryResolver.follows(text, fo);
       const forbidStart = (authored ? false : pairedClose || fdir.kind === "Final" || fdir.kind === "Unresolved" || fc.kind === "InfixNumericSeparator" && !UnicodePunctuationBoundaryResolver.decimalAfterSpace(ix, text, clusters) || UnicodePunctuationBoundaryResolver.forbidClass(fc));
@@ -218,7 +218,7 @@ export class UnicodePunctuationBoundaryResolver {
         start.put(ix);
         const p = UnicodePunctuationBoundaryResolver.previous(ix, text, clusters);
         if (p !== null) {
-          ranges.push(new IntRange(p, ix));
+          ranges.push(new IntRange((p)!, ix));
         }
         const reason = (pairedClose ? "Uax14WesternPunctuationBoundary:PairedClosingQuote" : (fdir.kind === "Final" || fdir.kind === "Unresolved" ? "Uax14WesternPunctuationBoundary:LB19" : `Uax14WesternPunctuationBoundary:${UnicodePunctuationBoundaryResolver.rule(fc)}`));
         decisions.push(new ContextualKinsokuDecisionInfo(c.range, source, ix, "LineStart", reason));
@@ -229,7 +229,7 @@ export class UnicodePunctuationBoundaryResolver {
         end.put(ix);
         const n = UnicodePunctuationBoundaryResolver.next(ix, text, clusters);
         if (n !== null) {
-          ranges.push(new IntRange(ix, n));
+          ranges.push(new IntRange(ix, (n)!));
         }
         const reason2 = (pairedOpen ? "Uax14WesternPunctuationBoundary:PairedOpeningQuote" : (ldir.kind === "Initial" || ldir.kind === "Unresolved" ? "Uax14WesternPunctuationBoundary:LB19" : "Uax14WesternPunctuationBoundary:LB14"));
         decisions.push(new ContextualKinsokuDecisionInfo(c.range, source, ix, "LineEnd", reason2));
@@ -253,7 +253,7 @@ export class UnicodePunctuationBoundaryResolver {
   }
 
   private static westernCp(s: SignificantCodePoint | null): boolean {
-    return s !== null && (UnicodePunctuationLineBreak.classOf(s.codePoint).kind === "OpenPunctuation" || UnicodePunctuationLineBreak.classOf(s.codePoint).kind === "ClosePunctuation" || UnicodePunctuationLineBreak.classOf(s.codePoint).kind === "CloseParenthesis");
+    return s !== null && (UnicodePunctuationLineBreak.classOf(s!.codePoint).kind === "OpenPunctuation" || UnicodePunctuationLineBreak.classOf(s!.codePoint).kind === "ClosePunctuation" || UnicodePunctuationLineBreak.classOf(s!.codePoint).kind === "CloseParenthesis");
   }
 
   private static forbidClass(c: UnicodePunctuationLineBreakClass): boolean {
@@ -281,33 +281,33 @@ export class UnicodePunctuationBoundaryResolver {
     }
     const cur = t.substring(c[i]!.range.start, c[i]!.range.end);
     const cp = (cur.length > 1 ? UnicodePunctuationBoundaryResolver.cpAt(cur, 1) : (i + 1 < c.length ? UnicodePunctuationBoundaryResolver.cpAt(t.substring(c[i + 1]!.range.start, c[i + 1]!.range.end), 0) : null));
-    return cp !== null && cp >= 48 && cp <= 57;
+    return cp !== null && cp! >= 48 && cp! <= 57;
   }
 
   private static quoteDir(t: string, o: number, cp: number, c: UnicodePunctuationLineBreakClass): Dir {
     if (c.kind !== "Quotation") {
-      return Dir.None;
+      return (Dir.None as Dir);
     }
     if (cp === 8217) {
       const l = UnicodePunctuationBoundaryResolver.word(UnicodePunctuationBoundaryResolver.cpBefore(t, o));
       const rr = UnicodePunctuationBoundaryResolver.word(UnicodePunctuationBoundaryResolver.cpAt(t, o + 1));
-      return (l && rr ? Dir.Word : (l ? Dir.Final : (rr ? Dir.Initial : Dir.Final)));
+      return (l && rr ? (Dir.Word as Dir) : (l ? (Dir.Final as Dir) : (rr ? (Dir.Initial as Dir) : (Dir.Final as Dir))));
     }
-    return (cp === 171 || cp === 8216 || cp === 8219 || cp === 8220 || cp === 8223 || cp === 8249 ? Dir.Initial : (cp === 187 || cp === 8217 || cp === 8221 || cp === 8250 ? Dir.Final : Dir.Unresolved));
+    return (cp === 171 || cp === 8216 || cp === 8219 || cp === 8220 || cp === 8223 || cp === 8249 ? (Dir.Initial as Dir) : (cp === 187 || cp === 8217 || cp === 8221 || cp === 8250 ? (Dir.Final as Dir) : (Dir.Unresolved as Dir)));
   }
 
   private static word(cp: number | null): boolean {
-    return cp !== null && (cp >= 65 && cp <= 90 || cp >= 97 && cp <= 122 || cp >= 48 && cp <= 57 || cp >= 192 && cp <= 591);
+    return cp !== null && (cp! >= 65 && cp! <= 90 || cp! >= 97 && cp! <= 122 || cp! >= 48 && cp! <= 57 || cp! >= 192 && cp! <= 591);
   }
 
   private static follows(t: string, o: number): boolean {
     let x = o;
     while (x > 0) {
       const p = UnicodePunctuationBoundaryResolver.cpBefore(t, x);
-      if (p === null || LineBreakFns.isMandatoryBreakCodePoint(p) || LineBreakFns.isZeroWidthSpaceCodePoint(p)) {
+      if (p === null || LineBreakFns.isMandatoryBreakCodePoint((p)!) || LineBreakFns.isZeroWidthSpaceCodePoint((p)!)) {
         return true;
       }
-      if (!UnicodePunctuationBoundaryResolver.isWs(p)) {
+      if (!UnicodePunctuationBoundaryResolver.isWs((p)!)) {
         return false;
       }
       x--;
@@ -356,10 +356,10 @@ export class UnicodePunctuationBoundaryResolver {
       if (p === null) {
         return false;
       }
-      if (LineBreakFns.isMandatoryBreakCodePoint(p) || LineBreakFns.isZeroWidthSpaceCodePoint(p)) {
+      if (LineBreakFns.isMandatoryBreakCodePoint((p)!) || LineBreakFns.isZeroWidthSpaceCodePoint((p)!)) {
         return true;
       }
-      i += (p > 65535 ? 2 : 1);
+      i += (p! > 65535 ? 2 : 1);
     }
     return false;
   }
@@ -369,11 +369,11 @@ export class UnicodePunctuationBoundaryResolver {
       return null;
     }
     const h = (Number.isNaN(s.charCodeAt(i)) ? null : s.charCodeAt(i))!;
-    if (h < 55296 || h > 56319 || i + 1 >= s.length) {
+    if (h! < 55296 || h! > 56319 || i + 1 >= s.length) {
       return h;
     }
     const l = readUnit(s, i + 1)!;
-    return (l >= 56320 && l <= 57343 ? 65536 + (h - 55296 << 10) + (l - 56320) : h);
+    return (l! >= 56320 && l! <= 57343 ? 65536 + (h - 55296 << 10) + (l - 56320) : h);
   }
 
   private static cpBefore(s: string, i: number): number | null {
@@ -381,9 +381,9 @@ export class UnicodePunctuationBoundaryResolver {
       return null;
     }
     const l = readUnit(s, i - 1)!;
-    if (l >= 56320 && l <= 57343 && i > 1) {
+    if (l! >= 56320 && l! <= 57343 && i > 1) {
       const h = readUnit(s, i - 2)!;
-      if (h >= 55296 && h <= 56319) {
+      if (h! >= 55296 && h! <= 56319) {
         return 65536 + (h - 55296 << 10) + (l - 56320);
       }
     }
@@ -397,8 +397,8 @@ export class UnicodePunctuationBoundaryResolver {
       if (p === null) {
         return null;
       }
-      if (!UnicodePunctuationBoundaryResolver.isWs(p)) {
-        return new SignificantCodePoint(i, p);
+      if (!UnicodePunctuationBoundaryResolver.isWs((p)!)) {
+        return new SignificantCodePoint(i, (p)!);
       }
       i++;
     }
@@ -413,8 +413,8 @@ export class UnicodePunctuationBoundaryResolver {
       if (p === null) {
         return null;
       }
-      if (!UnicodePunctuationBoundaryResolver.isWs(p)) {
-        return new SignificantCodePoint(i, p);
+      if (!UnicodePunctuationBoundaryResolver.isWs((p)!)) {
+        return new SignificantCodePoint(i, (p)!);
       }
       e = i;
     }

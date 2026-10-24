@@ -81,12 +81,12 @@ export class LineAdjustmentStage {
     for (let i = 1; i < count2; i += 1) {
       const prev = currentGroup[currentGroup.length - 1]!;
       const curr = renderable[i]!;
-      const prevFeat = (openTypeFeaturesByClusterRange.has(prev.range) ? openTypeFeaturesByClusterRange.get(prev.range) : []);
-      const currFeat = (openTypeFeaturesByClusterRange.has(curr.range) ? openTypeFeaturesByClusterRange.get(curr.range) : []);
-      let sameFeatures = prevFeat.length === currFeat.length;
+      const prevFeat = (openTypeFeaturesByClusterRange.has(prev.range) ? openTypeFeaturesByClusterRange.get(prev.range)! : []);
+      const currFeat = (openTypeFeaturesByClusterRange.has(curr.range) ? openTypeFeaturesByClusterRange.get(curr.range)! : []);
+      let sameFeatures = prevFeat!.length === currFeat!.length;
       if (sameFeatures) {
         for (let f = 0, count3 = prevFeat.length; f < count3; f += 1) {
-          if (prevFeat[f]! !== currFeat[f]!) {
+          if (prevFeat![f]! !== currFeat![f]!) {
             sameFeatures = false;
             break;
           }
@@ -104,7 +104,7 @@ export class LineAdjustmentStage {
   }
 
   private static centerDashInk(glyphs: Glyph[], cluster: Cluster, atomClassByRange: SortedMapTable<TextRange, PunctuationClass>): Glyph[] {
-    if (!atomClassByRange.has(cluster.range) || (atomClassByRange.get(cluster.range) === null || atomClassByRange.get(cluster.range).kind !== "Dash")) {
+    if (!atomClassByRange.has(cluster.range) || (atomClassByRange.get(cluster.range) === null || atomClassByRange.get(cluster.range)!.kind !== "Dash")) {
       return glyphs;
     }
     if (glyphs.length !== 1) {
@@ -115,7 +115,7 @@ export class LineAdjustmentStage {
     if (ink === null) {
       return glyphs;
     }
-    const inset = (cluster.advance - (ink.right - ink.left)) / 2.0 - ink.left;
+    const inset = (cluster.advance - (ink!.right - ink!.left)) / 2.0 - ink!.left;
     if (inset <= 0.5) {
       return glyphs;
     }
@@ -172,7 +172,7 @@ export class LineAdjustmentStage {
           }
         }
       }
-      const repairStr = (lineCandidate.repair !== null ? LineAdjustmentStage.repairOptionName(lineCandidate.repair) + ":" + RepairOptions.reason(lineCandidate.repair) : null);
+      const repairStr = (lineCandidate.repair !== null ? LineAdjustmentStage.repairOptionName((lineCandidate.repair)!) + ":" + RepairOptions.reason((lineCandidate.repair)!) : null);
       const notes = new Array<string>();
       if (lineCandidate.clusterRange.isEmpty) {
         notes.push(`line:${lineIndex}:clusters=empty`);
@@ -182,8 +182,8 @@ export class LineAdjustmentStage {
       notes.push(`end:${lineCandidate.endReason.kind}`);
       notes.push(`natural=${lineCandidate.naturalWidth},adjusted=${lineCandidate.adjustedWidth},visual=${visualWidth}`);
       const planForLine = justificationPlans[lineIndex]!;
-      if (planForLine !== null && planForLine.fallbackReason !== null) {
-        notes.push(`justify-fallback:${planForLine.fallbackReason}`);
+      if (planForLine !== null && planForLine!.fallbackReason !== null) {
+        notes.push(`justify-fallback:${planForLine!.fallbackReason}`);
       }
       const hGlyphs = (lineHyphenAdvance > 0.0 ? hyphenGlyphs : []);
       laidOutLines.push(new LineBox(lineCandidate.sourceRange, lineCandidate.clusterRange, lineBaseline[lineIndex]!, lineTop[lineIndex]!, lineBottom[lineIndex]!, lineCandidate.naturalWidth, adjustedWidth, visualWidth, hangingPunctuationAdvance, gridBodyOffset + baseIndent + alignmentInset, lineCandidate.endReason, lineHyphenAdvance, hGlyphs, new LineDebugInfo(repairStr, notes)));
@@ -223,7 +223,7 @@ export class LineAdjustmentStage {
       const leadingPreferred = inlineObject.leadingBoundary.preferredStretch;
       const trailingPreferred = inlineObject.trailingBoundary.preferredStretch;
       const reason = (!LineAdjustmentStage.isFixedBoundary(inlineObject.leadingBoundary) || !LineAdjustmentStage.isFixedBoundary(inlineObject.trailingBoundary) ? "AdjustableInlineObject" : "MeasurableOpaqueInlineObject");
-      inlineObjectDecisions.push(new InlineObjectDecisionInfo(inlineObject.range, inlineObject.advance, inlineObject.ascent, inlineObject.descent, clusterIndex, lineIdx, inlineObject.leadingBoundary.participatesInUniformStretch, (leadingPreferred !== null ? leadingPreferred.kind.kind : null), ((leadingPreferred !== null ? leadingPreferred.naturalWidth : 0.0) ?? 0.0), ((leadingPreferred !== null ? leadingPreferred.targetWidth : 0.0) ?? 0.0), ((leadingPreferred !== null ? leadingPreferred.capacity : 0.0) ?? 0.0), inlineObject.leadingBoundary.preventsLineBreak, inlineObject.leadingBoundary.shrinkCapacity, inlineObject.leadingBoundary.lineEndDiscardableAdvance, inlineObject.trailingBoundary.participatesInUniformStretch, (trailingPreferred !== null ? trailingPreferred.kind.kind : null), ((trailingPreferred !== null ? trailingPreferred.naturalWidth : 0.0) ?? 0.0), ((trailingPreferred !== null ? trailingPreferred.targetWidth : 0.0) ?? 0.0), ((trailingPreferred !== null ? trailingPreferred.capacity : 0.0) ?? 0.0), inlineObject.trailingBoundary.preventsLineBreak, inlineObject.trailingBoundary.shrinkCapacity, inlineObject.trailingBoundary.lineEndDiscardableAdvance, reason));
+      inlineObjectDecisions.push(new InlineObjectDecisionInfo(inlineObject.range, inlineObject.advance, inlineObject.ascent, inlineObject.descent, clusterIndex, lineIdx, inlineObject.leadingBoundary.participatesInUniformStretch, (leadingPreferred !== null ? leadingPreferred!.kind.kind : null), ((leadingPreferred !== null ? leadingPreferred!.naturalWidth : 0.0) ?? 0.0), ((leadingPreferred !== null ? leadingPreferred!.targetWidth : 0.0) ?? 0.0), ((leadingPreferred !== null ? leadingPreferred!.capacity : 0.0) ?? 0.0), inlineObject.leadingBoundary.preventsLineBreak, inlineObject.leadingBoundary.shrinkCapacity, inlineObject.leadingBoundary.lineEndDiscardableAdvance, inlineObject.trailingBoundary.participatesInUniformStretch, (trailingPreferred !== null ? trailingPreferred!.kind.kind : null), ((trailingPreferred !== null ? trailingPreferred!.naturalWidth : 0.0) ?? 0.0), ((trailingPreferred !== null ? trailingPreferred!.targetWidth : 0.0) ?? 0.0), ((trailingPreferred !== null ? trailingPreferred!.capacity : 0.0) ?? 0.0), inlineObject.trailingBoundary.preventsLineBreak, inlineObject.trailingBoundary.shrinkCapacity, inlineObject.trailingBoundary.lineEndDiscardableAdvance, reason));
     }
     const decorationDecisions = AnnotationGeometryStage.computeDecorationDecisions(input.decorations, visibleLineRanges, lines, finalClusters, clusterRoles, justifyDeltaByCluster, rubyAndBopomofoSpread, metricDecisions, fontSize, input.paragraphStyle.emphasisDotGapEm);
     const autoSpaceGapPx = clreqProfile.autoSpace.gapEm * fontSize;
@@ -271,8 +271,8 @@ export class LineAdjustmentStage {
       }
     }
     if (foundDecision !== null) {
-      autoSpaceEdgeTrims[clusterIdx] += autoSpaceGap;
-      autoSpaceEdgeDecisions.push(new LineEdgeTrimDecisionInfo(lineSourceRange, foundDecision.clusterRange, side, autoSpaceGap, 0.0, autoSpaceGap, "TextAutoSpaceLineEdgeTrim"));
+      autoSpaceEdgeTrims[clusterIdx] = autoSpaceEdgeTrims[clusterIdx]! + autoSpaceGap;
+      autoSpaceEdgeDecisions.push(new LineEdgeTrimDecisionInfo(lineSourceRange, foundDecision!.clusterRange, side, autoSpaceGap, 0.0, autoSpaceGap, "TextAutoSpaceLineEdgeTrim"));
     }
   }
 
@@ -288,7 +288,7 @@ export class LineAdjustmentStage {
     if (advance <= 0.0) {
       return;
     }
-    autoSpaceEdgeTrims[clusterIdx] += advance;
+    autoSpaceEdgeTrims[clusterIdx] = autoSpaceEdgeTrims[clusterIdx]! + advance;
     autoSpaceEdgeDecisions.push(new LineEdgeTrimDecisionInfo(lineSourceRange, cluster.range, side, advance, 0.0, advance, "LineEdgeWordSpaceCollapse"));
   }
 
@@ -296,40 +296,40 @@ export class LineAdjustmentStage {
     const appliedHangingClustersBuilder = SortedTable.setBuilder<number>(SortedTable.compareInts);
     {
       const _g1 = plan.lineSolution.lines;
-      for (let _g_index = 0, count20 = _g1.length; _g_index < count20; _g_index += 1) {
+      for (let _g_index = 0, count21 = _g1.length; _g_index < count21; _g_index += 1) {
         const line = _g1[_g_index]!;
-        for (let i = 0, count21 = line.hangingClusterIndices.size(); i < count21; i += 1) {
+        for (let i = 0, count22 = line.hangingClusterIndices.size(); i < count22; i += 1) {
           appliedHangingClustersBuilder.put(line.hangingClusterIndices.at(i));
         }
       }
     }
     const appliedHangingClusters = appliedHangingClustersBuilder.build();
     const impossibleMeasureContextualHangClustersBuilder = SortedTable.setBuilder<number>(SortedTable.compareInts);
-    for (let i2 = 0, count22 = plan.asciiPointMarkKinsoku.impossibleMeasureHangEligibleClusters.size(); i2 < count22; i2 += 1) {
+    for (let i2 = 0, count23 = plan.asciiPointMarkKinsoku.impossibleMeasureHangEligibleClusters.size(); i2 < count23; i2 += 1) {
       impossibleMeasureContextualHangClustersBuilder.put(plan.asciiPointMarkKinsoku.impossibleMeasureHangEligibleClusters.at(i2));
     }
-    for (let i3 = 0, count23 = plan.inlineObjectKinsoku.impossibleMeasureHangEligibleClusters.size(); i3 < count23; i3 += 1) {
+    for (let i3 = 0, count24 = plan.inlineObjectKinsoku.impossibleMeasureHangEligibleClusters.size(); i3 < count24; i3 += 1) {
       impossibleMeasureContextualHangClustersBuilder.put(plan.inlineObjectKinsoku.impossibleMeasureHangEligibleClusters.at(i3));
     }
     const impossibleMeasureContextualHangClusters = impossibleMeasureContextualHangClustersBuilder.build();
     const rawDecisions = new Array<ContextualKinsokuDecisionInfo>();
     {
       const _g15 = plan.asciiPointMarkKinsoku.decisions;
-      for (let _g_index1 = 0, count24 = _g15.length; _g_index1 < count24; _g_index1 += 1) {
+      for (let _g_index1 = 0, count25 = _g15.length; _g_index1 < count25; _g_index1 += 1) {
         const d = _g15[_g_index1]!;
         rawDecisions.push(d);
       }
     }
     {
       const _g16 = plan.inlineObjectKinsoku.decisions;
-      for (let _g_index2 = 0, count25 = _g16.length; _g_index2 < count25; _g_index2 += 1) {
+      for (let _g_index2 = 0, count26 = _g16.length; _g_index2 < count26; _g_index2 += 1) {
         const d2 = _g16[_g_index2]!;
         rawDecisions.push(d2);
       }
     }
     {
       const _g17 = plan.unicodePunctuationBoundaries.decisions;
-      for (let _g_index3 = 0, count26 = _g17.length; _g_index3 < count26; _g_index3 += 1) {
+      for (let _g_index3 = 0, count27 = _g17.length; _g_index3 < count27; _g_index3 += 1) {
         const d3 = _g17[_g_index3]!;
         rawDecisions.push(d3);
       }
@@ -365,37 +365,37 @@ export class LineAdjustmentStage {
     const pushInTrailing = new Array<number>();
     const pushInLeading = new Array<number>();
     const pushInRawTrims = new Array<number>();
-    for (let i4 = 0, count27 = prep.naturalClusters.length; i4 < count27; i4 += 1) {
+    for (let i4 = 0, count28 = prep.naturalClusters.length; i4 < count28; i4 += 1) {
       pushInTrailing.push(0.0);
       pushInLeading.push(0.0);
       pushInRawTrims.push(0.0);
     }
-    for (let lIdx = 0, count28 = plan.lineSolution.lines.length; lIdx < count28; lIdx += 1) {
+    for (let lIdx = 0, count29 = plan.lineSolution.lines.length; lIdx < count29; lIdx += 1) {
       const line2 = plan.lineSolution.lines[lIdx]!;
       const repair = line2.repair;
       if (repair !== null) {
-        const allocations = RepairOptions.pushInAllocations(repair);
+        const allocations = RepairOptions.pushInAllocations((repair)!);
         if (allocations !== null) {
-          for (let aIdx = 0, count29 = allocations.length; aIdx < count29; aIdx += 1) {
-            const alloc = allocations[aIdx]!;
+          for (let aIdx = 0, count30 = allocations.length; aIdx < count30; aIdx += 1) {
+            const alloc = allocations![aIdx]!;
             if (alloc.clusterIndex >= 0 && alloc.clusterIndex < prep.naturalClusters.length) {
               if (alloc.channel.kind === "TrailingGlue") {
                 const index = alloc.clusterIndex;
-                pushInTrailing[index] += alloc.shrink;
+                pushInTrailing[index] = pushInTrailing[index]! + alloc.shrink;
               } else {
                 if (alloc.channel.kind === "LeadingGlue") {
                   const index2 = alloc.clusterIndex;
-                  pushInLeading[index2] += alloc.shrink;
+                  pushInLeading[index2] = pushInLeading[index2]! + alloc.shrink;
                 } else {
                   if (alloc.channel.kind === "LeadingAndTrailingGlue") {
                     const index3 = alloc.clusterIndex;
-                    pushInLeading[index3] += alloc.shrink / 2.0;
+                    pushInLeading[index3] = pushInLeading[index3]! + alloc.shrink / 2.0;
                     const index4 = alloc.clusterIndex;
-                    pushInTrailing[index4] += alloc.shrink / 2.0;
+                    pushInTrailing[index4] = pushInTrailing[index4]! + alloc.shrink / 2.0;
                   } else {
                     if (alloc.channel.kind === "RawAdvance") {
                       const index5 = alloc.clusterIndex;
-                      pushInRawTrims[index5] += alloc.shrink;
+                      pushInRawTrims[index5] = pushInRawTrims[index5]! + alloc.shrink;
                     }
                   }
                 }
@@ -406,7 +406,7 @@ export class LineAdjustmentStage {
       }
     }
     if (prep.hyphenOffsets.size() > 0) {
-      for (let lineIndex = 0, count30 = plan.lineSolution.lines.length; lineIndex < count30; lineIndex += 1) {
+      for (let lineIndex = 0, count31 = plan.lineSolution.lines.length; lineIndex < count31; lineIndex += 1) {
         const line3 = plan.lineSolution.lines[lineIndex]!;
         if (line3.clusterRange.isEmpty) {
           continue;
@@ -417,7 +417,7 @@ export class LineAdjustmentStage {
         }
         const lineLimit = (line3.clusterRange.start === 0 ? prep.measure - plan.firstLineIndent : prep.measure - plan.blockIndent);
         const contentTerms: number[] = [];
-        for (let cIdx2 = line3.clusterRange.start, count31 = line3.clusterRange.end + 1; cIdx2 < count31; cIdx2 += 1) {
+        for (let cIdx2 = line3.clusterRange.start, count32 = line3.clusterRange.end + 1; cIdx2 < count32; cIdx2 += 1) {
           contentTerms.push(prep.clusters[cIdx2]!.advance);
         }
         const content = AccurateSum.of(contentTerms);
@@ -426,7 +426,7 @@ export class LineAdjustmentStage {
           continue;
         }
         const sortedOpportunities = new Array<ShrinkOpportunity>();
-        for (let oppIdx = 0, count32 = prep.shrinkOpportunities.length; oppIdx < count32; oppIdx += 1) {
+        for (let oppIdx = 0, count33 = prep.shrinkOpportunities.length; oppIdx < count33; oppIdx += 1) {
           const opp = prep.shrinkOpportunities[oppIdx]!;
           if (opp.clusterIndex >= line3.clusterRange.start && opp.clusterIndex <= line3.clusterRange.end && !opp.lineEndOnly) {
             sortedOpportunities.push(opp);
@@ -443,7 +443,7 @@ export class LineAdjustmentStage {
           sortedOpportunities[j + 1] = curr;
           rIdx++;
         }
-        for (let oIdx = 0, count33 = sortedOpportunities.length; oIdx < count33; oIdx += 1) {
+        for (let oIdx = 0, count34 = sortedOpportunities.length; oIdx < count34; oIdx += 1) {
           const opp2 = sortedOpportunities[oIdx]!;
           if (shortfall <= 0.001) {
             break;
@@ -472,21 +472,21 @@ export class LineAdjustmentStage {
           }
           if (opp2.channel.kind === "TrailingGlue") {
             const index6 = opp2.clusterIndex;
-            pushInTrailing[index6] += take;
+            pushInTrailing[index6] = pushInTrailing[index6]! + take;
           } else {
             if (opp2.channel.kind === "LeadingGlue") {
               const index7 = opp2.clusterIndex;
-              pushInLeading[index7] += take;
+              pushInLeading[index7] = pushInLeading[index7]! + take;
             } else {
               if (opp2.channel.kind === "LeadingAndTrailingGlue") {
                 const index8 = opp2.clusterIndex;
-                pushInLeading[index8] += take / 2.0;
+                pushInLeading[index8] = pushInLeading[index8]! + take / 2.0;
                 const index9 = opp2.clusterIndex;
-                pushInTrailing[index9] += take / 2.0;
+                pushInTrailing[index9] = pushInTrailing[index9]! + take / 2.0;
               } else {
                 if (opp2.channel.kind === "RawAdvance") {
                   const index10 = opp2.clusterIndex;
-                  pushInRawTrims[index10] += take;
+                  pushInRawTrims[index10] = pushInRawTrims[index10]! + take;
                 }
               }
             }
@@ -497,7 +497,7 @@ export class LineAdjustmentStage {
     }
     const pushInTrailingMapBuilder = SortedTable.mapBuilder<number, number>(SortedTable.compareInts);
     const pushInLeadingMapBuilder = SortedTable.mapBuilder<number, number>(SortedTable.compareInts);
-    for (let i5 = 0, count34 = prep.naturalClusters.length; i5 < count34; i5 += 1) {
+    for (let i5 = 0, count35 = prep.naturalClusters.length; i5 < count35; i5 += 1) {
       if (pushInTrailing[i5]! !== 0.0) {
         pushInTrailingMapBuilder.put(i5, pushInTrailing[i5]!);
       }
@@ -515,7 +515,7 @@ export class LineAdjustmentStage {
     const autoSpaceEdgeDecisions = new Array<LineEdgeTrimDecisionInfo>();
     {
       const _g117 = plan.lineSolution.lines;
-      for (let _g_index5 = 0, count35 = _g117.length; _g_index5 < count35; _g_index5 += 1) {
+      for (let _g_index5 = 0, count36 = _g117.length; _g_index5 < count36; _g_index5 += 1) {
         const line4 = _g117[_g_index5]!;
         if (line4.clusterRange.isEmpty) {
           continue;
@@ -525,26 +525,26 @@ export class LineAdjustmentStage {
         LineAdjustmentStage.collapseEdgeSpace(line4.sourceRange, line4.clusterRange.end, "trailing", prep.naturalClusters, prep.inlineObjectSeparatorSpaceTrims, autoSpaceEdgeTrims, autoSpaceEdgeDecisions);
         LineAdjustmentStage.collapseEdgeSpace(line4.sourceRange, line4.clusterRange.start, "leading", prep.naturalClusters, prep.inlineObjectSeparatorSpaceTrims, autoSpaceEdgeTrims, autoSpaceEdgeDecisions);
         const attachedGlueCluster = line4.clusterRange.end;
-        const attachedGlue = (prep.attachedPunctuationTrailingGlueByCluster.has(attachedGlueCluster) ? prep.attachedPunctuationTrailingGlueByCluster.get(attachedGlueCluster) : 0.0);
-        if (attachedGlue > 0.0) {
-          autoSpaceEdgeTrims[attachedGlueCluster] += attachedGlue;
-          autoSpaceEdgeDecisions.push(new LineEdgeTrimDecisionInfo(line4.sourceRange, prep.naturalClusters[attachedGlueCluster]!.range, "trailing", attachedGlue, 0.0, attachedGlue, "AttachedInlineVirtualBoundaryLineEndTrim"));
+        const attachedGlue = (prep.attachedPunctuationTrailingGlueByCluster.has(attachedGlueCluster) ? prep.attachedPunctuationTrailingGlueByCluster.get(attachedGlueCluster)! : 0.0);
+        if (attachedGlue! > 0.0) {
+          autoSpaceEdgeTrims[attachedGlueCluster] = autoSpaceEdgeTrims[attachedGlueCluster]! + attachedGlue;
+          autoSpaceEdgeDecisions.push(new LineEdgeTrimDecisionInfo(line4.sourceRange, prep.naturalClusters[attachedGlueCluster]!.range, "trailing", (attachedGlue)!, 0.0, (attachedGlue)!, "AttachedInlineVirtualBoundaryLineEndTrim"));
         }
         if (line4.endReason.kind === "AutoWrap") {
           const clusterIdx = line4.clusterRange.end;
-          const discardable = (prep.inlineObjectByClusterIndex.has(clusterIdx) ? prep.inlineObjectByClusterIndex.get(clusterIdx).trailingBoundary.lineEndDiscardableAdvance : 0.0);
+          const discardable = (prep.inlineObjectByClusterIndex.has(clusterIdx) ? prep.inlineObjectByClusterIndex.get(clusterIdx)!.trailingBoundary.lineEndDiscardableAdvance : 0.0);
           const consumedBefore = (pushInRawTrims[clusterIdx]! < discardable ? pushInRawTrims[clusterIdx]! : discardable);
           const diff = discardable - consumedBefore;
           const remaining = (diff < 0.0 ? 0.0 : diff);
           if (remaining > 0.0) {
-            autoSpaceEdgeTrims[clusterIdx] += remaining;
+            autoSpaceEdgeTrims[clusterIdx] = autoSpaceEdgeTrims[clusterIdx]! + remaining;
             autoSpaceEdgeDecisions.push(new LineEdgeTrimDecisionInfo(line4.sourceRange, prep.naturalClusters[clusterIdx]!.range, "trailing", remaining, consumedBefore, discardable, "InlineObjectLineEndDiscardableGlue"));
           }
         }
       }
     }
     const rawTrimsBuilder = SortedTable.mapBuilder<number, number>(SortedTable.compareInts);
-    for (let i7 = 0, count36 = prep.naturalClusters.length; i7 < count36; i7 += 1) {
+    for (let i7 = 0, count37 = prep.naturalClusters.length; i7 < count37; i7 += 1) {
       const total = autoSpaceEdgeTrims[i7]! + pushInRawTrims[i7]!;
       if (total !== 0.0) {
         rawTrimsBuilder.put(i7, total);
@@ -555,7 +555,7 @@ export class LineAdjustmentStage {
     const edgeTrimDecisions = new Array<LineEdgeTrimDecisionInfo>();
     {
       const _g119 = edgeTrimResult.decisions;
-      for (let _g_index6 = 0, count37 = _g119.length; _g_index6 < count37; _g_index6 += 1) {
+      for (let _g_index6 = 0, count38 = _g119.length; _g_index6 < count38; _g_index6 += 1) {
         const d4 = _g119[_g_index6]!;
         edgeTrimDecisions.push(d4);
       }
@@ -565,22 +565,22 @@ export class LineAdjustmentStage {
       edgeTrimDecisions.push(d5);
     }
     const justificationPlans = new Array<JustificationPlan | null>();
-    for (let lineIndex2 = 0, count38 = plan.lineSolution.lines.length; lineIndex2 < count38; lineIndex2 += 1) {
+    for (let lineIndex2 = 0, count39 = plan.lineSolution.lines.length; lineIndex2 < count39; lineIndex2 += 1) {
       const lineCandidate = plan.lineSolution.lines[lineIndex2]!;
       const isLast = lineIndex2 === plan.lineSolution.lines.length - 1;
       if (isLast || lineCandidate.clusterRange.isEmpty || lineCandidate.endReason.kind !== "AutoWrap") {
-        justificationPlans.push(null);
+        justificationPlans.push((null)!);
       } else {
         const nextIdx = lineCandidate.clusterRange.end + 1;
-        const selectedTechnicalBreak = (plan.progressiveBreakOpportunities.has(nextIdx) ? plan.progressiveBreakOpportunities.get(nextIdx) : null);
-        const preferredTrackingSpan = (selectedTechnicalBreak !== null && selectedTechnicalBreak.tier.kind === "Emergency" ? selectedTechnicalBreak.spanRange : null);
+        const selectedTechnicalBreak = (plan.progressiveBreakOpportunities.has(nextIdx) ? plan.progressiveBreakOpportunities.get(nextIdx)! : null);
+        const preferredTrackingSpan = (selectedTechnicalBreak !== null && selectedTechnicalBreak!.tier.kind === "Emergency" ? selectedTechnicalBreak!.spanRange : null);
         const preferredEmergencyTrackingBoundariesBuilder = SortedTable.mapBuilder<number, string>(SortedTable.compareInts);
         if (preferredTrackingSpan !== null) {
-          for (let i8 = 0, count39 = plan.emergencyTrackingBoundaryAfterClusters.size(); i8 < count39; i8 += 1) {
+          for (let i8 = 0, count40 = plan.emergencyTrackingBoundaryAfterClusters.size(); i8 < count40; i8 += 1) {
             const leftIndex = plan.emergencyTrackingBoundaryAfterClusters.keyAt(i8);
             const reason = plan.emergencyTrackingBoundaryAfterClusters.valueAt(i8);
             const rightIndex = leftIndex + 1;
-            if (prep.naturalClusters[leftIndex]!.range.start >= preferredTrackingSpan.start && prep.naturalClusters[rightIndex]!.range.end <= preferredTrackingSpan.end) {
+            if (prep.naturalClusters[leftIndex]!.range.start >= preferredTrackingSpan!.start && prep.naturalClusters[rightIndex]!.range.end <= preferredTrackingSpan!.end) {
               preferredEmergencyTrackingBoundariesBuilder.put(leftIndex, reason);
             }
           }
@@ -595,7 +595,7 @@ export class LineAdjustmentStage {
     const currentLineTechnicalBodyStretchLimit = 0.0 * prep.fontSize;
     const newlyRejectedSpans = new Array<TextRange>();
     const newlyRejectedTiersList = new Array<SortedSetTable<number>>();
-    for (let lineIndex3 = 0, count40 = plan.lineSolution.lines.length; lineIndex3 < count40; lineIndex3 += 1) {
+    for (let lineIndex3 = 0, count41 = plan.lineSolution.lines.length; lineIndex3 < count41; lineIndex3 += 1) {
       const line5 = plan.lineSolution.lines[lineIndex3]!;
       if (line5.endReason.kind !== "AutoWrap" || line5.clusterRange.start > line5.clusterRange.end) {
         continue;
@@ -605,13 +605,13 @@ export class LineAdjustmentStage {
         continue;
       }
       const selectedTechnicalBreak2 = plan.progressiveBreakOpportunities.get(nextCluster);
-      if (selectedTechnicalBreak2.tier.kind === "Emergency") {
+      if (selectedTechnicalBreak2!.tier.kind === "Emergency") {
         continue;
       }
-      const spanRange = selectedTechnicalBreak2.spanRange;
+      const spanRange = selectedTechnicalBreak2!.spanRange;
       if (prep.rejectedTechnicalTiersBySpan.has(spanRange)) {
         const rejectedForSpan = prep.rejectedTechnicalTiersBySpan.get(spanRange);
-        if (rejectedForSpan.has(ProgressiveBreakTierPriority.priority(selectedTechnicalBreak2.tier))) {
+        if (rejectedForSpan!.has(ProgressiveBreakTierPriority.priority(selectedTechnicalBreak2!.tier))) {
           continue;
         }
       }
@@ -621,8 +621,8 @@ export class LineAdjustmentStage {
       }
       let currentLineUsesUnboundedTracking = false;
       {
-        const _g123 = currentLinePlan.allocations;
-        for (let _g_index8 = 0, count41 = _g123.length; _g_index8 < count41; _g_index8 += 1) {
+        const _g123 = currentLinePlan!.allocations;
+        for (let _g_index8 = 0, count42 = _g123.length; _g_index8 < count42; _g_index8 += 1) {
           const alloc2 = _g123[_g_index8]!;
           if ((alloc2.kind.kind === "CjkInterChar" || alloc2.kind.kind === "EmergencyGraphemeTracking") && alloc2.delta > currentLineTechnicalBodyStretchLimit + 0.001) {
             currentLineUsesUnboundedTracking = true;
@@ -632,7 +632,7 @@ export class LineAdjustmentStage {
       }
       if (currentLineUsesUnboundedTracking) {
         let foundSpanIdx = -1;
-        for (let sIdx = 0, count42 = newlyRejectedSpans.length; sIdx < count42; sIdx += 1) {
+        for (let sIdx = 0, count43 = newlyRejectedSpans.length; sIdx < count43; sIdx += 1) {
           if (newlyRejectedSpans[sIdx]!.start === spanRange.start && newlyRejectedSpans[sIdx]!.end === spanRange.end) {
             foundSpanIdx = sIdx;
             break;
@@ -641,40 +641,39 @@ export class LineAdjustmentStage {
         if (foundSpanIdx < 0) {
           newlyRejectedSpans.push(spanRange);
           const b = SortedTable.setBuilder<number>(SortedTable.compareInts);
-          b.put(ProgressiveBreakTierPriority.priority(selectedTechnicalBreak2.tier));
+          b.put(ProgressiveBreakTierPriority.priority(selectedTechnicalBreak2!.tier));
           newlyRejectedTiersList.push(b.build());
         } else {
           const b2 = SortedTable.setBuilder<number>(SortedTable.compareInts);
           const existing = newlyRejectedTiersList[foundSpanIdx]!;
-          for (let e = 0, count43 = existing.size(); e < count43; e += 1) {
+          for (let e = 0, count44 = existing.size(); e < count44; e += 1) {
             b2.put(existing.at(e));
           }
-          b2.put(ProgressiveBreakTierPriority.priority(selectedTechnicalBreak2.tier));
+          b2.put(ProgressiveBreakTierPriority.priority(selectedTechnicalBreak2!.tier));
           newlyRejectedTiersList[foundSpanIdx] = b2.build();
         }
       }
     }
     if (newlyRejectedSpans.length > 0) {
       const updatedRejectedTiersBuilder = SortedTable.mapBuilder<TextRange, SortedSetTable<number>>(compareTextRange);
-      const count44 = newlyRejectedSpans.length;
-      for (let i9 = 0, count45 = prep.rejectedTechnicalTiersBySpan.size(); i9 < count45; i9 += 1) {
+      for (let i9 = 0, count46 = prep.rejectedTechnicalTiersBySpan.size(); i9 < count46; i9 += 1) {
         const span = prep.rejectedTechnicalTiersBySpan.keyAt(i9);
         const tiers = prep.rejectedTechnicalTiersBySpan.valueAt(i9);
         const b3 = SortedTable.setBuilder<number>(SortedTable.compareInts);
-        for (let t = 0, count47 = tiers.size(); t < count47; t += 1) {
+        for (let t = 0, count48 = tiers.size(); t < count48; t += 1) {
           b3.put(tiers.at(t));
         }
-        for (let nIdx = 0, count46 = newlyRejectedSpans.length; nIdx < count46; nIdx += 1) {
+        for (let nIdx = 0, count47 = newlyRejectedSpans.length; nIdx < count47; nIdx += 1) {
           if (newlyRejectedSpans[nIdx]!.start === span.start && newlyRejectedSpans[nIdx]!.end === span.end) {
             const addTiers = newlyRejectedTiersList[nIdx]!;
-            for (let at = 0, count48 = addTiers.size(); at < count48; at += 1) {
+            for (let at = 0, count49 = addTiers.size(); at < count49; at += 1) {
               b3.put(addTiers.at(at));
             }
           }
         }
         updatedRejectedTiersBuilder.put(span, b3.build());
       }
-      for (let nIdx2 = 0, count49 = newlyRejectedSpans.length; nIdx2 < count49; nIdx2 += 1) {
+      for (let nIdx2 = 0, count45 = newlyRejectedSpans.length; nIdx2 < count45; nIdx2 += 1) {
         const span2 = newlyRejectedSpans[nIdx2]!;
         if (!prep.rejectedTechnicalTiersBySpan.has(span2)) {
           updatedRejectedTiersBuilder.put(span2, newlyRejectedTiersList[nIdx2]!);
@@ -690,19 +689,19 @@ export class LineAdjustmentStage {
       const p = justificationPlans[_g_index9]!;
       if (p !== null) {
         let _g26 = 0;
-        const _g132 = p.allocations;
+        const _g132 = p!.allocations;
         while (_g26 < _g132.length) {
           const alloc3 = _g132[_g26]!;
           _g26++;
           if (alloc3.targetClusterIndex >= 0 && alloc3.targetClusterIndex < justifyDeltas.length) {
             const index11 = alloc3.targetClusterIndex;
-            justifyDeltas[index11] += alloc3.delta;
+            justifyDeltas[index11] = justifyDeltas[index11]! + alloc3.delta;
           }
         }
       }
     }
     const justifyDeltaBuilder = SortedTable.mapBuilder<number, number>(SortedTable.compareInts);
-    for (let i11 = 0, count50 = justifyDeltas.length; i11 < count50; i11 += 1) {
+    for (let i11 = 0, count17 = justifyDeltas.length; i11 < count17; i11 += 1) {
       if (justifyDeltas[i11]! !== 0.0) {
         justifyDeltaBuilder.put(i11, justifyDeltas[i11]!);
       }
@@ -711,12 +710,12 @@ export class LineAdjustmentStage {
     const finalGeometry = trimmedGeometry.addJustificationDeltas(justifyDeltaByCluster);
     const resolvedFinalClusters = finalGeometry.resolveClusters();
     const finalClusters = new Array<Cluster>();
-    for (let _g_index10 = 0, count17 = resolvedFinalClusters.length; _g_index10 < count17; _g_index10 += 1) {
+    for (let _g_index10 = 0, count18 = resolvedFinalClusters.length; _g_index10 < count18; _g_index10 += 1) {
       const c = resolvedFinalClusters[_g_index10]!;
       if (!plan.metricDecisionByRange.has(c.range)) {
         finalClusters.push(c);
       } else {
-        const m = plan.metricDecisionByRange.get(c.range).layoutMetrics;
+        const m = plan.metricDecisionByRange.get(c.range)!.layoutMetrics;
         const metricShift = (m.baselineClass.kind === "Roman" ? 0.0 : plan.baseBoxDescent - m.descent);
         const shift = c.baselineShift + metricShift + prep.styleAt(c.range.start).baselineShift;
         if (shift > -0.01 && shift < 0.01) {
@@ -728,22 +727,22 @@ export class LineAdjustmentStage {
     }
     const geometryDecisions = finalGeometry.toDecisionInfo();
     const runGroups = LineAdjustmentStage.renderableGlyphRunClusters(finalClusters, prep.openTypeFeaturesByClusterRange);
-    const count18 = runGroups.length;
+    const count19 = runGroups.length;
     const glyphRuns: GlyphRun[] = [];
-    for (let _g_index11 = 0; _g_index11 < count18; _g_index11 += 1) {
+    for (let _g_index11 = 0; _g_index11 < count19; _g_index11 += 1) {
       const runClusters = runGroups[_g_index11]!;
       const firstC = runClusters[0]!;
-      const count51 = runClusters.length;
-      const lastC = runClusters[count51 - 1]!;
-      const openTypeFeatures = (prep.openTypeFeaturesByClusterRange.has(firstC.range) ? prep.openTypeFeaturesByClusterRange.get(firstC.range) : []);
+      const count50 = runClusters.length;
+      const lastC = runClusters[count50 - 1]!;
+      const openTypeFeatures = (prep.openTypeFeaturesByClusterRange.has(firstC.range) ? prep.openTypeFeaturesByClusterRange.get(firstC.range)! : []);
       const runGlyphs = new Array<Glyph>();
       const runAdvanceTerms: number[] = [];
-      for (let clusterIdx2 = 0; clusterIdx2 < count51; clusterIdx2 += 1) {
+      for (let clusterIdx2 = 0; clusterIdx2 < count50; clusterIdx2 += 1) {
         const cluster = runClusters[clusterIdx2]!;
         runAdvanceTerms.push(cluster.advance);
         if (prep.shapedGlyphsByClusterRange.has(cluster.range)) {
           const shaped = prep.shapedGlyphsByClusterRange.get(cluster.range);
-          const mapped = ParagraphShapingStage.mapToClusterRange(shaped, cluster);
+          const mapped = ParagraphShapingStage.mapToClusterRange((shaped)!, cluster);
           const centered = LineAdjustmentStage.centerDashInk(mapped, cluster, prep.atomClassByRange);
           {
             let _g29 = 0;
@@ -777,7 +776,7 @@ export class LineAdjustmentStage {
     const rubyDecisions = annotationGeometry.rubyDecisions;
     const bopomofoDecisions = annotationGeometry.bopomofoDecisions;
     let widestLine = 0.0;
-    for (let i12 = 0, count19 = lines.length; i12 < count19; i12 += 1) {
+    for (let i12 = 0, count20 = lines.length; i12 < count20; i12 += 1) {
       const line6 = lines[i12]!;
       const w = line6.indent + line6.visualWidth + line6.hyphenAdvance;
       if (w > widestLine) {

@@ -15,146 +15,190 @@ export class PreparedParagraphFns {
   }
 
   public static toPlanWithDiagnosticsJson(result: LayoutResult, renderEvidence: boolean, zeroAdvanceEpsilonPx: number): string {
-    let out = "";
-    const tail = out.charCodeAt(out.length - 1);
+    let out = [];
+    const tail = out.length > 0 ? out[out.length - 1].charCodeAt(out[out.length - 1].length - 1) : NaN;
     if (tail >= 55296 && tail <= 56319 && "{\"plan\":".length > 0 && !("{\"plan\":".charCodeAt(0) >= 56320 && "{\"plan\":".charCodeAt(0) <= 57343)) {
       throw new UStringException({ kind: "UnpairedSurrogate", unit: tail });
     }
-    out += "{\"plan\":";
+    if ("{\"plan\":".length > 0) {
+      out.push("{\"plan\":");
+    }
     out = PlanJsonNumber.appendJsonString(out, PreparedParagraphFns.toPreparedParagraphJson(result, renderEvidence));
-    const tail2 = out.charCodeAt(out.length - 1);
+    const tail2 = out.length > 0 ? out[out.length - 1].charCodeAt(out[out.length - 1].length - 1) : NaN;
     if (tail2 >= 55296 && tail2 <= 56319 && ",\"diagnostics\":{\"capabilityIssues\":[".length > 0 && !(",\"diagnostics\":{\"capabilityIssues\":[".charCodeAt(0) >= 56320 && ",\"diagnostics\":{\"capabilityIssues\":[".charCodeAt(0) <= 57343)) {
       throw new UStringException({ kind: "UnpairedSurrogate", unit: tail2 });
     }
-    out += ",\"diagnostics\":{\"capabilityIssues\":[";
+    if (",\"diagnostics\":{\"capabilityIssues\":[".length > 0) {
+      out.push(",\"diagnostics\":{\"capabilityIssues\":[");
+    }
     let first = true;
     const shapingDiagSrc = result.debug.shapingDecisions;
     for (let di = 0, count = shapingDiagSrc.length; di < count; di += 1) {
       const d = shapingDiagSrc[di]!;
       if (d.capabilityIssue !== null) {
         if (!first) {
-          const tail3 = out.charCodeAt(out.length - 1);
+          const tail3 = out.length > 0 ? out[out.length - 1].charCodeAt(out[out.length - 1].length - 1) : NaN;
           if (tail3 >= 55296 && tail3 <= 56319 && ",".length > 0 && !(",".charCodeAt(0) >= 56320 && ",".charCodeAt(0) <= 57343)) {
             throw new UStringException({ kind: "UnpairedSurrogate", unit: tail3 });
           }
-          out += ",";
+          if (",".length > 0) {
+            out.push(",");
+          }
         }
         first = false;
-        const tail4 = out.charCodeAt(out.length - 1);
+        const tail4 = out.length > 0 ? out[out.length - 1].charCodeAt(out[out.length - 1].length - 1) : NaN;
         if (tail4 >= 55296 && tail4 <= 56319 && "{\"name\":".length > 0 && !("{\"name\":".charCodeAt(0) >= 56320 && "{\"name\":".charCodeAt(0) <= 57343)) {
           throw new UStringException({ kind: "UnpairedSurrogate", unit: tail4 });
         }
-        out += "{\"name\":";
-        out = PlanJsonNumber.appendJsonString(out, d.capabilityIssue);
-        const tail5 = out.charCodeAt(out.length - 1);
+        if ("{\"name\":".length > 0) {
+          out.push("{\"name\":");
+        }
+        out = PlanJsonNumber.appendJsonString(out, (d.capabilityIssue)!);
+        const tail5 = out.length > 0 ? out[out.length - 1].charCodeAt(out[out.length - 1].length - 1) : NaN;
         if (tail5 >= 55296 && tail5 <= 56319 && ",\"reason\":".length > 0 && !(",\"reason\":".charCodeAt(0) >= 56320 && ",\"reason\":".charCodeAt(0) <= 57343)) {
           throw new UStringException({ kind: "UnpairedSurrogate", unit: tail5 });
         }
-        out += ",\"reason\":";
+        if (",\"reason\":".length > 0) {
+          out.push(",\"reason\":");
+        }
         out = PlanJsonNumber.appendJsonString(out, d.reason);
-        const tail6 = out.charCodeAt(out.length - 1);
+        const tail6 = out.length > 0 ? out[out.length - 1].charCodeAt(out[out.length - 1].length - 1) : NaN;
         if (tail6 >= 55296 && tail6 <= 56319 && ",\"rangeStart\":".length > 0 && !(",\"rangeStart\":".charCodeAt(0) >= 56320 && ",\"rangeStart\":".charCodeAt(0) <= 57343)) {
           throw new UStringException({ kind: "UnpairedSurrogate", unit: tail6 });
         }
-        out += ",\"rangeStart\":";
-        const tail7 = out.charCodeAt(out.length - 1);
+        if (",\"rangeStart\":".length > 0) {
+          out.push(",\"rangeStart\":");
+        }
+        const tail7 = out.length > 0 ? out[out.length - 1].charCodeAt(out[out.length - 1].length - 1) : NaN;
         if (tail7 >= 55296 && tail7 <= 56319 && String(d.range.start).length > 0 && !(String(d.range.start).charCodeAt(0) >= 56320 && String(d.range.start).charCodeAt(0) <= 57343)) {
           throw new UStringException({ kind: "UnpairedSurrogate", unit: tail7 });
         }
-        out += String(d.range.start);
-        const tail8 = out.charCodeAt(out.length - 1);
+        if (String(d.range.start).length > 0) {
+          out.push(String(d.range.start));
+        }
+        const tail8 = out.length > 0 ? out[out.length - 1].charCodeAt(out[out.length - 1].length - 1) : NaN;
         if (tail8 >= 55296 && tail8 <= 56319 && ",\"rangeEnd\":".length > 0 && !(",\"rangeEnd\":".charCodeAt(0) >= 56320 && ",\"rangeEnd\":".charCodeAt(0) <= 57343)) {
           throw new UStringException({ kind: "UnpairedSurrogate", unit: tail8 });
         }
-        out += ",\"rangeEnd\":";
-        const tail9 = out.charCodeAt(out.length - 1);
+        if (",\"rangeEnd\":".length > 0) {
+          out.push(",\"rangeEnd\":");
+        }
+        const tail9 = out.length > 0 ? out[out.length - 1].charCodeAt(out[out.length - 1].length - 1) : NaN;
         if (tail9 >= 55296 && tail9 <= 56319 && String(d.range.end).length > 0 && !(String(d.range.end).charCodeAt(0) >= 56320 && String(d.range.end).charCodeAt(0) <= 57343)) {
           throw new UStringException({ kind: "UnpairedSurrogate", unit: tail9 });
         }
-        out += String(d.range.end);
-        const tail10 = out.charCodeAt(out.length - 1);
+        if (String(d.range.end).length > 0) {
+          out.push(String(d.range.end));
+        }
+        const tail10 = out.length > 0 ? out[out.length - 1].charCodeAt(out[out.length - 1].length - 1) : NaN;
         if (tail10 >= 55296 && tail10 <= 56319 && "}".length > 0 && !("}".charCodeAt(0) >= 56320 && "}".charCodeAt(0) <= 57343)) {
           throw new UStringException({ kind: "UnpairedSurrogate", unit: tail10 });
         }
-        out += "}";
+        if ("}".length > 0) {
+          out.push("}");
+        }
       }
     }
-    const tail11 = out.charCodeAt(out.length - 1);
+    const tail11 = out.length > 0 ? out[out.length - 1].charCodeAt(out[out.length - 1].length - 1) : NaN;
     if (tail11 >= 55296 && tail11 <= 56319 && "],\"advanceSuspects\":[".length > 0 && !("],\"advanceSuspects\":[".charCodeAt(0) >= 56320 && "],\"advanceSuspects\":[".charCodeAt(0) <= 57343)) {
       throw new UStringException({ kind: "UnpairedSurrogate", unit: tail11 });
     }
-    out += "],\"advanceSuspects\":[";
+    if ("],\"advanceSuspects\":[".length > 0) {
+      out.push("],\"advanceSuspects\":[");
+    }
     first = true;
     for (let di2 = 0, count2 = shapingDiagSrc.length; di2 < count2; di2 += 1) {
       const d2 = shapingDiagSrc[di2]!;
       if (!(Number.isFinite(d2.advance) && d2.advance > zeroAdvanceEpsilonPx)) {
         if (!first) {
-          const tail12 = out.charCodeAt(out.length - 1);
+          const tail12 = out.length > 0 ? out[out.length - 1].charCodeAt(out[out.length - 1].length - 1) : NaN;
           if (tail12 >= 55296 && tail12 <= 56319 && ",".length > 0 && !(",".charCodeAt(0) >= 56320 && ",".charCodeAt(0) <= 57343)) {
             throw new UStringException({ kind: "UnpairedSurrogate", unit: tail12 });
           }
-          out += ",";
+          if (",".length > 0) {
+            out.push(",");
+          }
         }
         first = false;
-        const tail13 = out.charCodeAt(out.length - 1);
+        const tail13 = out.length > 0 ? out[out.length - 1].charCodeAt(out[out.length - 1].length - 1) : NaN;
         if (tail13 >= 55296 && tail13 <= 56319 && "{\"displayText\":".length > 0 && !("{\"displayText\":".charCodeAt(0) >= 56320 && "{\"displayText\":".charCodeAt(0) <= 57343)) {
           throw new UStringException({ kind: "UnpairedSurrogate", unit: tail13 });
         }
-        out += "{\"displayText\":";
+        if ("{\"displayText\":".length > 0) {
+          out.push("{\"displayText\":");
+        }
         out = PlanJsonNumber.appendJsonString(out, d2.displayText);
-        const tail14 = out.charCodeAt(out.length - 1);
+        const tail14 = out.length > 0 ? out[out.length - 1].charCodeAt(out[out.length - 1].length - 1) : NaN;
         if (tail14 >= 55296 && tail14 <= 56319 && ",\"advance\":\"".length > 0 && !(",\"advance\":\"".charCodeAt(0) >= 56320 && ",\"advance\":\"".charCodeAt(0) <= 57343)) {
           throw new UStringException({ kind: "UnpairedSurrogate", unit: tail14 });
         }
-        out += ",\"advance\":\"";
-        const tail15 = out.charCodeAt(out.length - 1);
+        if (",\"advance\":\"".length > 0) {
+          out.push(",\"advance\":\"");
+        }
+        const tail15 = out.length > 0 ? out[out.length - 1].charCodeAt(out[out.length - 1].length - 1) : NaN;
         if (tail15 >= 55296 && tail15 <= 56319 && (Number.isFinite(d2.advance) ? PlanJsonNumber.ecmaJsonNumber(d2.advance) : formatFloatRuntime(d2.advance)).length > 0 && !((Number.isFinite(d2.advance) ? PlanJsonNumber.ecmaJsonNumber(d2.advance) : formatFloatRuntime(d2.advance)).charCodeAt(0) >= 56320 && (Number.isFinite(d2.advance) ? PlanJsonNumber.ecmaJsonNumber(d2.advance) : formatFloatRuntime(d2.advance)).charCodeAt(0) <= 57343)) {
           throw new UStringException({ kind: "UnpairedSurrogate", unit: tail15 });
         }
-        out += (Number.isFinite(d2.advance) ? PlanJsonNumber.ecmaJsonNumber(d2.advance) : formatFloatRuntime(d2.advance));
-        const tail16 = out.charCodeAt(out.length - 1);
+        if ((Number.isFinite(d2.advance) ? PlanJsonNumber.ecmaJsonNumber(d2.advance) : formatFloatRuntime(d2.advance)).length > 0) {
+          out.push((Number.isFinite(d2.advance) ? PlanJsonNumber.ecmaJsonNumber(d2.advance) : formatFloatRuntime(d2.advance)));
+        }
+        const tail16 = out.length > 0 ? out[out.length - 1].charCodeAt(out[out.length - 1].length - 1) : NaN;
         if (tail16 >= 55296 && tail16 <= 56319 && "\",\"reason\":".length > 0 && !("\",\"reason\":".charCodeAt(0) >= 56320 && "\",\"reason\":".charCodeAt(0) <= 57343)) {
           throw new UStringException({ kind: "UnpairedSurrogate", unit: tail16 });
         }
-        out += "\",\"reason\":";
+        if ("\",\"reason\":".length > 0) {
+          out.push("\",\"reason\":");
+        }
         out = PlanJsonNumber.appendJsonString(out, d2.reason);
-        const tail17 = out.charCodeAt(out.length - 1);
+        const tail17 = out.length > 0 ? out[out.length - 1].charCodeAt(out[out.length - 1].length - 1) : NaN;
         if (tail17 >= 55296 && tail17 <= 56319 && ",\"rangeStart\":".length > 0 && !(",\"rangeStart\":".charCodeAt(0) >= 56320 && ",\"rangeStart\":".charCodeAt(0) <= 57343)) {
           throw new UStringException({ kind: "UnpairedSurrogate", unit: tail17 });
         }
-        out += ",\"rangeStart\":";
-        const tail18 = out.charCodeAt(out.length - 1);
+        if (",\"rangeStart\":".length > 0) {
+          out.push(",\"rangeStart\":");
+        }
+        const tail18 = out.length > 0 ? out[out.length - 1].charCodeAt(out[out.length - 1].length - 1) : NaN;
         if (tail18 >= 55296 && tail18 <= 56319 && String(d2.range.start).length > 0 && !(String(d2.range.start).charCodeAt(0) >= 56320 && String(d2.range.start).charCodeAt(0) <= 57343)) {
           throw new UStringException({ kind: "UnpairedSurrogate", unit: tail18 });
         }
-        out += String(d2.range.start);
-        const tail19 = out.charCodeAt(out.length - 1);
+        if (String(d2.range.start).length > 0) {
+          out.push(String(d2.range.start));
+        }
+        const tail19 = out.length > 0 ? out[out.length - 1].charCodeAt(out[out.length - 1].length - 1) : NaN;
         if (tail19 >= 55296 && tail19 <= 56319 && ",\"rangeEnd\":".length > 0 && !(",\"rangeEnd\":".charCodeAt(0) >= 56320 && ",\"rangeEnd\":".charCodeAt(0) <= 57343)) {
           throw new UStringException({ kind: "UnpairedSurrogate", unit: tail19 });
         }
-        out += ",\"rangeEnd\":";
-        const tail20 = out.charCodeAt(out.length - 1);
+        if (",\"rangeEnd\":".length > 0) {
+          out.push(",\"rangeEnd\":");
+        }
+        const tail20 = out.length > 0 ? out[out.length - 1].charCodeAt(out[out.length - 1].length - 1) : NaN;
         if (tail20 >= 55296 && tail20 <= 56319 && String(d2.range.end).length > 0 && !(String(d2.range.end).charCodeAt(0) >= 56320 && String(d2.range.end).charCodeAt(0) <= 57343)) {
           throw new UStringException({ kind: "UnpairedSurrogate", unit: tail20 });
         }
-        out += String(d2.range.end);
-        const tail21 = out.charCodeAt(out.length - 1);
+        if (String(d2.range.end).length > 0) {
+          out.push(String(d2.range.end));
+        }
+        const tail21 = out.length > 0 ? out[out.length - 1].charCodeAt(out[out.length - 1].length - 1) : NaN;
         if (tail21 >= 55296 && tail21 <= 56319 && "}".length > 0 && !("}".charCodeAt(0) >= 56320 && "}".charCodeAt(0) <= 57343)) {
           throw new UStringException({ kind: "UnpairedSurrogate", unit: tail21 });
         }
-        out += "}";
+        if ("}".length > 0) {
+          out.push("}");
+        }
       }
     }
-    const tail22 = out.charCodeAt(out.length - 1);
+    const tail22 = out.length > 0 ? out[out.length - 1].charCodeAt(out[out.length - 1].length - 1) : NaN;
     if (tail22 >= 55296 && tail22 <= 56319 && "]}}".length > 0 && !("]}}".charCodeAt(0) >= 56320 && "]}}".charCodeAt(0) <= 57343)) {
       throw new UStringException({ kind: "UnpairedSurrogate", unit: tail22 });
     }
-    out += "]}}";
-    const tail23 = out.charCodeAt(out.length - 1);
+    if ("]}}".length > 0) {
+      out.push("]}}");
+    }
+    const tail23 = out.length > 0 ? out[out.length - 1].charCodeAt(out[out.length - 1].length - 1) : NaN;
     if (tail23 >= 55296 && tail23 <= 56319) {
       throw new UStringException({ kind: "UnpairedSurrogate", unit: tail23 });
     }
-    return out;
+    return out.join("")
   }
 
   public static toPackedPlanBytes(result: LayoutResult): Uint8Array {

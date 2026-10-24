@@ -26,8 +26,8 @@ export class QuotePair {
 }
 
 export function QuotePairquoteTypeOrder(v: QuoteType): number {
-  if (v.kind === "Single") return 1;
   if (v.kind === "Double") return 0;
+  if (v.kind === "Single") return 1;
   return 0;
 }
 
@@ -58,12 +58,12 @@ export class QuoteRoleDecision {
 }
 
 export function QuoteRoleDecisionroleOrder(v: FontRole): number {
-  if (v.kind === "Unknown") return 5;
-  if (v.kind === "Symbol") return 3;
-  if (v.kind === "LatinText") return 2;
-  if (v.kind === "Emoji") return 4;
   if (v.kind === "CjkText") return 0;
   if (v.kind === "CjkPunctuation") return 1;
+  if (v.kind === "LatinText") return 2;
+  if (v.kind === "Symbol") return 3;
+  if (v.kind === "Emoji") return 4;
+  if (v.kind === "Unknown") return 5;
   return 0;
 }
 
@@ -87,21 +87,21 @@ export class QuotePairAnalyzer {
     while (index < text.length) {
       const c = (Number.isNaN(text.charCodeAt(index)) ? null : text.charCodeAt(index))!;
       if (c === 8220) {
-        stack.push({ index, type: QuoteType.Double });
+        stack.push({ index, type: (QuoteType.Double as QuoteType) });
       } else {
         if (c === 8216) {
-          stack.push({ index, type: QuoteType.Single });
+          stack.push({ index, type: (QuoteType.Single as QuoteType) });
         } else {
           if (c === 8221) {
             if (stack.length > 0 && stack[stack.length - 1]!.type.kind === "Double") {
               const match = stack.pop();
-              pairs.push(new QuotePair(match.index, index, QuoteType.Double));
+              pairs.push(new QuotePair(match!.index, index, (QuoteType.Double as QuoteType)));
             }
           } else {
             if (c === 8217) {
               if (!QuotePairAnalyzer.isNonCjkInWordApostrophe(text, index) && stack.length > 0 && stack[stack.length - 1]!.type.kind === "Single") {
                 const match2 = stack.pop();
-                pairs.push(new QuotePair(match2.index, index, QuoteType.Single));
+                pairs.push(new QuotePair(match2!.index, index, (QuoteType.Single as QuoteType)));
               }
             }
           }
@@ -113,18 +113,22 @@ export class QuotePairAnalyzer {
   }
 
   public classifyPairs(text: string, pairs: QuotePair[], context?: FontRoleContext | null): SortedMapTable<number, FontRole> {
+    context = context ?? null;
     return QuotePairAnalyzer.mapDecisions(this.classifyQuoteRoles(text, pairs, context));
   }
 
-  public classifyPairsWithClassifier(text: string, pairs: QuotePair[], fontRoleClassifier: FontRoleClassifier, context?: FontRoleContext | null): SortedMapTable<number, FontRole> {
+  public classifyPairsWithClassifier(text: string, pairs: QuotePair[], _fontRoleClassifier: FontRoleClassifier, context?: FontRoleContext | null): SortedMapTable<number, FontRole> {
+    context = context ?? null;
     return this.classifyPairs(text, pairs, context);
   }
 
   public classifyQuoteRoles(text: string, pairs: QuotePair[], context?: FontRoleContext | null): QuoteRoleDecision[] {
-    return new ContextualQuoteRoleResolver(text, pairs, (context === null ? new FontRoleContext("zh-Hans", null) : context)).resolve();
+    context = context ?? null;
+    return new ContextualQuoteRoleResolver(text, pairs, ((context === null ? new FontRoleContext("zh-Hans", null) : context))!).resolve();
   }
 
-  public classifyQuoteRolesWithClassifier(text: string, pairs: QuotePair[], fontRoleClassifier: FontRoleClassifier, context?: FontRoleContext | null): QuoteRoleDecision[] {
+  public classifyQuoteRolesWithClassifier(text: string, pairs: QuotePair[], _fontRoleClassifier: FontRoleClassifier, context?: FontRoleContext | null): QuoteRoleDecision[] {
+    context = context ?? null;
     return this.classifyQuoteRoles(text, pairs, context);
   }
 
@@ -146,26 +150,26 @@ export class QuotePairAnalyzer {
     if (after === null) {
       return false;
     }
-    return QuotePairAnalyzer.isNonCjkWordCharacter(before) && QuotePairAnalyzer.isNonCjkWordCharacter(after) && (QuotePairAnalyzer.isNonCjkNonNumericWordCharacter(before) || QuotePairAnalyzer.isNonCjkNonNumericWordCharacter(after));
+    return QuotePairAnalyzer.isNonCjkWordCharacter((before)!) && QuotePairAnalyzer.isNonCjkWordCharacter((after)!) && (QuotePairAnalyzer.isNonCjkNonNumericWordCharacter((before)!) || QuotePairAnalyzer.isNonCjkNonNumericWordCharacter((after)!));
   }
 
   public static isDigitBoundClosingQuote(text: string, index: number): boolean {
-    return ((Number.isNaN(text.charCodeAt(index)) ? null : text.charCodeAt(index))! === 8217 || (Number.isNaN(text.charCodeAt(index)) ? null : text.charCodeAt(index))! === 8221) && QuotePairAnalyzer.codePointBefore(text, index) !== null && UnicodeNumber.contains(QuotePairAnalyzer.codePointBefore(text, index));
+    return ((Number.isNaN(text.charCodeAt(index)) ? null : text.charCodeAt(index))! === 8217 || (Number.isNaN(text.charCodeAt(index)) ? null : text.charCodeAt(index))! === 8221) && QuotePairAnalyzer.codePointBefore(text, index) !== null && UnicodeNumber.contains((QuotePairAnalyzer.codePointBefore(text, index))!);
   }
 
   public static isNonCjkWordInternalQuotePair(text: string, pair: QuotePair): boolean {
     const before = QuotePairAnalyzer.codePointBefore(text, pair.openIndex);
     const after = QuotePairAnalyzer.codePointAtOrNull(text, pair.closeIndex + 1);
-    if (before === null || after === null || !QuotePairAnalyzer.isNonCjkNonNumericWordCharacter(before) || !QuotePairAnalyzer.isNonCjkNonNumericWordCharacter(after)) {
+    if (before === null || after === null || !QuotePairAnalyzer.isNonCjkNonNumericWordCharacter((before)!) || !QuotePairAnalyzer.isNonCjkNonNumericWordCharacter((after)!)) {
       return false;
     }
     let index = pair.openIndex + 1;
     while (index < pair.closeIndex) {
       const cp = QuotePairAnalyzer.codePointAtOrNull(text, index);
-      if (cp === null || !QuotePairAnalyzer.isNonCjkWordCharacter(cp)) {
+      if (cp === null || !QuotePairAnalyzer.isNonCjkWordCharacter((cp)!)) {
         return false;
       }
-      index += (cp > 65535 ? 2 : 1);
+      index += (cp! > 65535 ? 2 : 1);
     }
     return true;
   }
@@ -187,11 +191,11 @@ export class QuotePairAnalyzer {
       return null;
     }
     const low = readUnit(text, index - 1)!;
-    if (low < 56320 || low > 57343 || index < 2) {
+    if (low! < 56320 || low! > 57343 || index < 2) {
       return low;
     }
     const high = readUnit(text, index - 2)!;
-    if (high < 55296 || high > 56319) {
+    if (high! < 55296 || high! > 56319) {
       return low;
     }
     return 65536 + (high - 55296 << 10) + (low - 56320);
@@ -202,11 +206,11 @@ export class QuotePairAnalyzer {
       return null;
     }
     const high = (Number.isNaN(text.charCodeAt(index)) ? null : text.charCodeAt(index))!;
-    if (high < 55296 || high > 56319 || index + 1 >= text.length) {
+    if (high! < 55296 || high! > 56319 || index + 1 >= text.length) {
       return high;
     }
     const low = readUnit(text, index + 1)!;
-    if (low < 56320 || low > 57343) {
+    if (low! < 56320 || low! > 57343) {
       return high;
     }
     return 65536 + (high - 55296 << 10) + (low - 56320);
@@ -223,11 +227,13 @@ export class QuotePairAwareFontRoleClassifier implements FontRoleClassifier {
   }
 
   public classify(text: string, range: TextRange, context?: FontRoleContext | null): FontRole {
+    context = context ?? null;
     const role = this.quoteRoles.get(range.start);
-    return (role === null ? this.delegate.classify(text, range, context) : role);
+    return (role === null ? this.delegate.classify(text, range, context) : role)!;
   }
 
   public static withContextualQuoteRoles(base: FontRoleClassifier, text: string, context?: FontRoleContext | null): FontRoleClassifier {
+    context = context ?? null;
     const analyzer = new QuotePairAnalyzer();
     const decisions = analyzer.classifyQuoteRoles(text, analyzer.analyze(text), context);
     const count2 = decisions.length;

@@ -99,8 +99,8 @@ export class AnnotationGeometryStage {
           if (coveredBySpan) {
             const role = clusterRoles[idx]!;
             const applied = role.kind === "CjkText";
-            const justifyDelta = (justifyDeltaByCluster.has(idx) ? justifyDeltaByCluster.get(idx) : 0.0);
-            const rubySpread = (rubySpreadByCluster.has(idx) ? rubySpreadByCluster.get(idx) : 0.0);
+            const justifyDelta = (justifyDeltaByCluster.has(idx) ? justifyDeltaByCluster.get(idx)! : 0.0);
+            const rubySpread = (rubySpreadByCluster.has(idx) ? rubySpreadByCluster.get(idx)! : 0.0);
             const glyphAdvance = cluster.advance - justifyDelta - rubySpread;
             let metric: ClusterMetricDecision | null = null;
             for (let mi = 0, count4 = metricDecisions.length; mi < count4; mi += 1) {
@@ -110,8 +110,8 @@ export class AnnotationGeometryStage {
                 break;
               }
             }
-            const clusterEm = (metric !== null && metric.request !== null ? metric.request.fontSize : fontSize);
-            const faceDescent = (metric !== null && metric.layoutMetrics !== null ? metric.layoutMetrics.descent : clusterEm * 0.12);
+            const clusterEm = (metric !== null && metric!.request !== null ? metric!.request.fontSize : fontSize);
+            const faceDescent = (metric !== null && metric!.layoutMetrics !== null ? metric!.layoutMetrics.descent : clusterEm * 0.12);
             const candidateDotDiameter = clusterEm * 0.19;
             const dotDiameter = (applied ? candidateDotDiameter : 0.0);
             const reason = (applied ? "EmphasisDotOnHanText" : (role.kind === "CjkPunctuation" ? "clreq-no-dot-on-punctuation" : "no-dot-on-non-han"));
@@ -125,8 +125,8 @@ export class AnnotationGeometryStage {
   }
 
   public static shortenAdjacentInterlinearLines(segments: DecorationSegmentInfo[], fontSize: number): DecorationSegmentInfo[] {
-    const properNounName = DecorationKind.ProperNoun.kind;
-    const bookTitleName = DecorationKind.BookTitle.kind;
+    const properNounName = (DecorationKind.ProperNoun as DecorationKind).kind;
+    const bookTitleName = (DecorationKind.BookTitle as DecorationKind).kind;
     const result = segments.slice();
     const byLineBuilder = SortedTable.mapBuilder<number, IndexedDecorationSegment[]>(SortedTable.compareInts);
     const lineKeys: number[] = [];
@@ -185,14 +185,14 @@ export class AnnotationGeometryStage {
 
   public static computeDecorationSegments(decorations: readonly DecorationSpan[], lineRanges: IntRange[], lineBoxes: LineBox[], finalClusters: Cluster[], justifyDeltaByCluster: SortedMapTable<number, number>, geometryByRange: SortedMapTable<TextRange, ClusterGeometryDecisionInfo>, leadingGapRanges: SortedSetTable<TextRange>, trailingGapRanges: SortedSetTable<TextRange>, autoSpaceGapPx: number, fontSize: number): DecorationSegmentInfo[] {
     const leadingBlank = (range: TextRange, atLineStart: boolean): number => {
-    const g = (geometryByRange.has(range) ? geometryByRange.get(range) : null);
-    const glue = (g !== null ? g.leadingGlueNatural - g.leadingGlueConsumed : 0.0);
+    const g = (geometryByRange.has(range) ? geometryByRange.get(range)! : null);
+    const glue = (g !== null ? g!.leadingGlueNatural - g!.leadingGlueConsumed : 0.0);
     const auto = (leadingGapRanges.has(range) && !atLineStart ? autoSpaceGapPx : 0.0);
     return glue + auto;
 };
     const trailingBlank = (range: TextRange, atLineEnd: boolean): number => {
-    const g2 = (geometryByRange.has(range) ? geometryByRange.get(range) : null);
-    const glue2 = (g2 !== null ? g2.trailingGlueNatural - g2.trailingGlueConsumed : 0.0);
+    const g2 = (geometryByRange.has(range) ? geometryByRange.get(range)! : null);
+    const glue2 = (g2 !== null ? g2!.trailingGlueNatural - g2!.trailingGlueConsumed : 0.0);
     const auto2 = (trailingGapRanges.has(range) && !atLineEnd ? autoSpaceGapPx : 0.0);
     return glue2 + auto2;
 };
@@ -227,7 +227,7 @@ export class AnnotationGeometryStage {
               left = x + leadingBlank(cluster.range, idx === clusterRange.start);
               segStart = cluster.range.start;
             }
-            const justifyDelta = (justifyDeltaByCluster.has(idx) ? justifyDeltaByCluster.get(idx) : 0.0);
+            const justifyDelta = (justifyDeltaByCluster.has(idx) ? justifyDeltaByCluster.get(idx)! : 0.0);
             right = x + cluster.advance - justifyDelta - trailingBlank(cluster.range, idx === clusterRange.end);
             segEnd = cluster.range.end;
           }
@@ -236,12 +236,12 @@ export class AnnotationGeometryStage {
         if (left === null) {
           continue;
         }
-        const leftEdge = left;
+        const leftEdge: number | null = left;
         const baseline = lineBoxes[lineIndex]!.baseline;
         const isLine = span.kind.kind !== "Mourning";
         const lineYEm = (span.kind.kind === "BookTitle" ? 0.24 : 0.18);
         const lineY = baseline + fontSize * lineYEm;
-        spanSegments.push(new DecorationSegmentInfo(new TextRange(segStart, segEnd), span.kind.kind, lineIndex, leftEdge, (isLine ? lineY : baseline - fontSize * 0.88), right, (isLine ? lineY : baseline + fontSize * 0.12), segStart > span.range.start, segEnd < span.range.end, ""));
+        spanSegments.push(new DecorationSegmentInfo(new TextRange(segStart, segEnd), span.kind.kind, lineIndex, (leftEdge)!, (isLine ? lineY : baseline - fontSize * 0.88), right, (isLine ? lineY : baseline + fontSize * 0.12), segStart > span.range.start, segEnd < span.range.end, ""));
       }
       const count12 = spanSegments.length;
       const reason = (span.kind.kind === "Mourning" && count12 <= 1 ? "MourningSpanKeptUnbroken" : (span.kind.kind === "Mourning" ? "mourning-span-split-across-lines" : "InterlinearLinePerAnnotatedItem"));
@@ -285,7 +285,7 @@ export class AnnotationGeometryStage {
                 break;
               }
             }
-            const ascent = (metric !== null && metric.layoutMetrics !== null ? metric.layoutMetrics.ascent : fallbackBaseAscent);
+            const ascent = (metric !== null && metric!.layoutMetrics !== null ? metric!.layoutMetrics.ascent : fallbackBaseAscent);
             const candidateTop = lineBoxes[lineIndex]!.baseline + cluster.baselineShift - ascent;
             if (candidateTop < baseFaceTop) {
               baseFaceTop = candidateTop;
@@ -294,13 +294,13 @@ export class AnnotationGeometryStage {
           x += cluster.advance;
         }
         if (hasBaseLeft) {
-          const rubyWidth = rubyGeometry.width;
+          const rubyWidth = rubyGeometry!.width;
           const _g5: string[] = [];
           for (let f = 0, count18 = ruby.fontFamilies.length; f < count18; f += 1) {
             _g5.push(ruby.fontFamilies[f]!);
           }
           const fontFamilies = _g5;
-          out.push(new RubyDecisionInfo(ruby.baseRange, ruby.text, lineIndex, baseLeft + contentWidth / 2.0, baseFaceTop - rubyStackGap - rubyGeometry.descent, rubyFontSize, Math.max(0.0, (rubyWidth - contentWidth) / 2.0), rubyGeometry.ascent, rubyGeometry.descent, rubyWidth, fontFamilies, rubyFontWeight, ((ruby.locale !== null ? ruby.locale : baseLocale) ?? "zh-Hans"), rubyGeometry.glyphs));
+          out.push(new RubyDecisionInfo(ruby.baseRange, ruby.text, lineIndex, baseLeft + contentWidth / 2.0, baseFaceTop - rubyStackGap - rubyGeometry!.descent, rubyFontSize, Math.max(0.0, (rubyWidth - contentWidth) / 2.0), rubyGeometry!.ascent, rubyGeometry!.descent, rubyWidth, fontFamilies, rubyFontWeight, ((ruby.locale !== null ? ruby.locale : baseLocale) ?? "zh-Hans"), rubyGeometry!.glyphs));
         }
       }
     }
@@ -405,10 +405,10 @@ export class AnnotationGeometryStage {
         const glyph = run.glyphs[gi]!;
         if (glyph.bounds !== null) {
           const bound = glyph.bounds;
-          const l = bound.left + glyph.x;
-          const t = bound.top + glyph.y;
-          const r = bound.right + glyph.x;
-          const b = bound.bottom + glyph.y;
+          const l = bound!.left + glyph.x;
+          const t = bound!.top + glyph.y;
+          const r = bound!.right + glyph.x;
+          const b = bound!.bottom + glyph.y;
           if (l < minLeft) {
             minLeft = l;
           }
@@ -477,14 +477,14 @@ export class AnnotationGeometryStage {
         const placements = new Array<BopomofoGlyphPlacement>();
         if (parsed.tone.kind === "Neutral") {
           const row = AnnotationGeometryStage.bopomofoNeutralRow(n);
-          placements.push(AnnotationGeometryStage.bopomofoBox(zoneLeft, boxTop, hUnit, vUnit, 1.0, 9.0, row.start, row.end, BopomofoGlyphRole.Neutral, "˙"));
+          placements.push(AnnotationGeometryStage.bopomofoBox(zoneLeft, boxTop, hUnit, vUnit, 1.0, 9.0, row.start, row.end, (BopomofoGlyphRole.Neutral as BopomofoGlyphRole), "˙"));
         }
         const rows = AnnotationGeometryStage.bopomofoSymbolRows(n, neutral);
         const symCount = (parsed.symbols.length < 3 ? parsed.symbols.length : 3);
         for (let i = 0; i < symCount; i += 1) {
           const sym = parsed.symbols[i]!;
           const row2 = rows[i]!;
-          placements.push(AnnotationGeometryStage.bopomofoBox(zoneLeft, boxTop, hUnit, vUnit, 1.0, 9.0, row2.start, row2.end, BopomofoGlyphRole.Symbol, sym));
+          placements.push(AnnotationGeometryStage.bopomofoBox(zoneLeft, boxTop, hUnit, vUnit, 1.0, 9.0, row2.start, row2.end, (BopomofoGlyphRole.Symbol as BopomofoGlyphRole), sym));
         }
         {
           const _g5 = parsed.tone;
@@ -495,19 +495,19 @@ export class AnnotationGeometryStage {
             case "Yangping":
             {
               const row3 = AnnotationGeometryStage.bopomofoRegularToneRow(n);
-              placements.push(AnnotationGeometryStage.bopomofoBox(zoneLeft, boxTop, hUnit, vUnit, 10.0, 5.0, row3.start, row3.end, BopomofoGlyphRole.Tone, AnnotationGeometryStage.bopomofoToneGlyph(parsed.tone)));
+              placements.push(AnnotationGeometryStage.bopomofoBox(zoneLeft, boxTop, hUnit, vUnit, 10.0, 5.0, row3.start, row3.end, (BopomofoGlyphRole.Tone as BopomofoGlyphRole), AnnotationGeometryStage.bopomofoToneGlyph(parsed.tone)));
               break;
             }
             case "Shang":
             {
               const row4 = AnnotationGeometryStage.bopomofoRegularToneRow(n);
-              placements.push(AnnotationGeometryStage.bopomofoBox(zoneLeft, boxTop, hUnit, vUnit, 10.0, 5.0, row4.start, row4.end, BopomofoGlyphRole.Tone, AnnotationGeometryStage.bopomofoToneGlyph(parsed.tone)));
+              placements.push(AnnotationGeometryStage.bopomofoBox(zoneLeft, boxTop, hUnit, vUnit, 10.0, 5.0, row4.start, row4.end, (BopomofoGlyphRole.Tone as BopomofoGlyphRole), AnnotationGeometryStage.bopomofoToneGlyph(parsed.tone)));
               break;
             }
             case "Qu":
             {
               const row5 = AnnotationGeometryStage.bopomofoRegularToneRow(n);
-              placements.push(AnnotationGeometryStage.bopomofoBox(zoneLeft, boxTop, hUnit, vUnit, 10.0, 5.0, row5.start, row5.end, BopomofoGlyphRole.Tone, AnnotationGeometryStage.bopomofoToneGlyph(parsed.tone)));
+              placements.push(AnnotationGeometryStage.bopomofoBox(zoneLeft, boxTop, hUnit, vUnit, 10.0, 5.0, row5.start, row5.end, (BopomofoGlyphRole.Tone as BopomofoGlyphRole), AnnotationGeometryStage.bopomofoToneGlyph(parsed.tone)));
               break;
             }
             case "Neutral":
@@ -516,7 +516,7 @@ export class AnnotationGeometryStage {
             case "Ru":
             {
               const row6 = AnnotationGeometryStage.bopomofoRuToneRow(n);
-              placements.push(AnnotationGeometryStage.bopomofoBox(zoneLeft, boxTop, hUnit, vUnit, 10.0, 5.0, row6.start, row6.end, BopomofoGlyphRole.Tone, AnnotationGeometryStage.bopomofoToneGlyph(parsed.tone)));
+              placements.push(AnnotationGeometryStage.bopomofoBox(zoneLeft, boxTop, hUnit, vUnit, 10.0, 5.0, row6.start, row6.end, (BopomofoGlyphRole.Tone as BopomofoGlyphRole), AnnotationGeometryStage.bopomofoToneGlyph(parsed.tone)));
               break;
             }
           }
@@ -544,7 +544,7 @@ export class AnnotationGeometryStage {
             }
             const range = new TextRange(0, placement.text.length);
             const preferredFamilies = AnnotationGeometryStage.copyFontFamilies(ruby.fontFamilies);
-            const decision = engine.fallbackResolver.resolve(placement.text, range, new FontRequest(preferredFamilies, rubyLocale, FontRole.CjkText));
+            const decision = engine.fallbackResolver.resolve(placement.text, range, new FontRequest(preferredFamilies, (rubyLocale)!, (FontRole.CjkText as FontRole)));
             const styled = new TextStyle(preferredFamilies, replayFontSize, (rubyLocale ?? "zh-Hans"), placementWeight, false, baseTextStyle.baselineShift, baseTextStyle.inlineAttachment);
             const shaped = engine.textShaper.shape(new ShapingInput(placement.text, range, styled, decision, placement.text, ["vert=1"]));
             const glyphs = new Array<Glyph>();
@@ -569,8 +569,8 @@ export class AnnotationGeometryStage {
                   break;
                 case "Tone":
                 {
-                  const inkLeft = (ink !== null ? ink.left : 0.0);
-                  const inkRight = (ink !== null ? ink.right : advance);
+                  const inkLeft = (ink !== null ? ink!.left : 0.0);
+                  const inkRight = (ink !== null ? ink!.right : advance);
                   drawX = placement.left + placement.width / 2.0 - (inkLeft + inkRight) / 2.0;
                   break;
                 }
@@ -588,15 +588,15 @@ export class AnnotationGeometryStage {
                   break;
                 case "Tone":
                 {
-                  const inkTop = (ink !== null ? ink.top : 0.0);
-                  const inkBottom = (ink !== null ? ink.bottom : 0.0);
+                  const inkTop = (ink !== null ? ink!.top : 0.0);
+                  const inkBottom = (ink !== null ? ink!.bottom : 0.0);
                   baselineY = placement.top + placement.height / 2.0 - (inkTop + inkBottom) / 2.0;
                   break;
                 }
                 case "Neutral":
                 {
-                  const inkTop2 = (ink !== null ? ink.top : 0.0);
-                  const inkBottom2 = (ink !== null ? ink.bottom : 0.0);
+                  const inkTop2 = (ink !== null ? ink!.top : 0.0);
+                  const inkBottom2 = (ink !== null ? ink!.bottom : 0.0);
                   baselineY = placement.top + placement.height / 2.0 - (inkTop2 + inkBottom2) / 2.0;
                   break;
                 }

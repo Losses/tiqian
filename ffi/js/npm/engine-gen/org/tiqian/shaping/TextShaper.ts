@@ -79,7 +79,7 @@ export class ExplainableStubTextShaper implements ITextShaper {
       glyphId++;
     }
     const run = new GlyphRun(input.range, input.fontDecision.candidate.key, glyphs, advance, []);
-    const decision = new ShapingDecisionInfo(input.range, sourceText, input.displayText, input.fontDecision.candidate.key, glyphCount, advance, ShapingSource.Stub.kind, "ExplainableStubTextShaper:nominal-em-advance", glyphCount);
+    const decision = new ShapingDecisionInfo(input.range, sourceText, input.displayText, input.fontDecision.candidate.key, glyphCount, advance, (ShapingSource.Stub as ShapingSource).kind, "ExplainableStubTextShaper:nominal-em-advance", glyphCount);
     return new ShapingResult([cluster], [run], [decision]);
   }
 
@@ -110,9 +110,9 @@ export class ExplainableStubTextShaper implements ITextShaper {
     let index = 0;
     while (index < value.length) {
       const code = (Number.isNaN(value.charCodeAt(index)) ? null : value.charCodeAt(index))!;
-      if (code >= 55296 && code <= 56319 && index + 1 < value.length) {
+      if (code! >= 55296 && code! <= 56319 && index + 1 < value.length) {
         const next = readUnit(value, index + 1)!;
-        if (next >= 56320 && next <= 57343) {
+        if (next! >= 56320 && next! <= 57343) {
           index += 2;
         } else {
           index++;
@@ -130,7 +130,7 @@ export class UnimplementedTextShaper implements ITextShaper {
   constructor() {
   }
 
-  public shape(input: ShapingInput): ShapingResult {
+  public shape(_input: ShapingInput): ShapingResult {
     throw new IllegalStateException("Text shaping is platform-specific and has not been wired for this target yet.");
   }
 }

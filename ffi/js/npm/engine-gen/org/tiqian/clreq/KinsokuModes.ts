@@ -50,8 +50,8 @@ export class KinsokuModes {
   }
 
   private static resolveMeasureAdaptive(measureEm: number, hangBelowEm: number, gbAboveEm: number, strictAboveEm: number): ResolvedKinsoku {
-    const level = (measureEm > strictAboveEm ? KinsokuLevel.Strict : (measureEm > gbAboveEm ? KinsokuLevel.GbStyle : KinsokuLevel.Basic));
-    const hanging = (measureEm < hangBelowEm ? HangingPunctuationStyle.PauseStops : HangingPunctuationStyle.Disabled);
+    const level = (measureEm > strictAboveEm ? (KinsokuLevel.Strict as KinsokuLevel) : (measureEm > gbAboveEm ? (KinsokuLevel.GbStyle as KinsokuLevel) : (KinsokuLevel.Basic as KinsokuLevel)));
+    const hanging = (measureEm < hangBelowEm ? (HangingPunctuationStyle.PauseStops as HangingPunctuationStyle) : (HangingPunctuationStyle.Disabled as HangingPunctuationStyle));
     const tag = `MeasureAdaptiveKinsoku:${Math.trunc(measureEm)}字→${level.kind}${(hanging.kind !== "Disabled" ? "+Hang" : "")}`;
     return new ResolvedKinsoku(level, hanging, tag);
   }

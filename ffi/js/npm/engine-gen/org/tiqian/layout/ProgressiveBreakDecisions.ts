@@ -24,6 +24,12 @@ export class ProgressiveBreakOpportunity {
 
 export class ProgressiveBreakDecisions {
   public static decideProgressiveBreak(lineStart: number, overflowAt: number, opportunities: SortedMapTable<number, ProgressiveBreakOpportunity>, adjustedClusters?: Cluster[] | null, lineLimit?: number | null, cjkInterCharBoundaries?: SortedSetTable<number> | null, maxCjkStretchPerGap?: number | null, sinoWesternBoundaries?: SortedSetTable<number> | null, sinoWesternStretchCap?: number | null): number {
+    adjustedClusters = adjustedClusters ?? null;
+    lineLimit = lineLimit ?? null;
+    cjkInterCharBoundaries = cjkInterCharBoundaries ?? null;
+    maxCjkStretchPerGap = maxCjkStretchPerGap ?? null;
+    sinoWesternBoundaries = sinoWesternBoundaries ?? null;
+    sinoWesternStretchCap = sinoWesternStretchCap ?? null;
     const limit = lineLimit ?? Infinity;
     const cjk = cjkInterCharBoundaries ?? SortedTable.setBuilder<number>(SortedTable.compareInts).build();
     const max = maxCjkStretchPerGap ?? Infinity;
@@ -33,20 +39,26 @@ export class ProgressiveBreakDecisions {
     if (active === null) {
       return overflowAt;
     }
-    const bestPriority = ProgressiveBreakDecisions.progressiveBreakPriorityForLine(lineStart, overflowAt, active, opportunities, adjustedClusters, limit, cjk, max, sino, cap);
+    const bestPriority = ProgressiveBreakDecisions.progressiveBreakPriorityForLine(lineStart, overflowAt, (active)!, opportunities, adjustedClusters, (limit)!, (cjk)!, (max)!, (sino)!, (cap)!);
     let best: number | null = null;
     let boundary = lineStart + 1;
     while (boundary <= overflowAt) {
       const o = opportunities.get(boundary);
-      if (o !== null && o.spanRange.start === active.spanRange.start && o.spanRange.end === active.spanRange.end && ProgressiveBreakTierPriority.priority(o.tier) === bestPriority && (best === null || boundary > best)) {
+      if (o !== null && o!.spanRange.start === active!.spanRange.start && o!.spanRange.end === active!.spanRange.end && ProgressiveBreakTierPriority.priority(o!.tier) === bestPriority && (best === null || boundary > best!)) {
         best = boundary;
       }
       boundary++;
     }
-    return (best === null ? overflowAt : best);
+    return (best === null ? overflowAt : best)!;
   }
 
   public static progressiveCandidateAllowed(lineStart: number, rawGreedy: number, candidateEnd: number, opportunities: SortedMapTable<number, ProgressiveBreakOpportunity>, adjustedClusters?: Cluster[] | null, lineLimit?: number | null, cjkInterCharBoundaries?: SortedSetTable<number> | null, maxCjkStretchPerGap?: number | null, sinoWesternBoundaries?: SortedSetTable<number> | null, sinoWesternStretchCap?: number | null): boolean {
+    adjustedClusters = adjustedClusters ?? null;
+    lineLimit = lineLimit ?? null;
+    cjkInterCharBoundaries = cjkInterCharBoundaries ?? null;
+    maxCjkStretchPerGap = maxCjkStretchPerGap ?? null;
+    sinoWesternBoundaries = sinoWesternBoundaries ?? null;
+    sinoWesternStretchCap = sinoWesternStretchCap ?? null;
     const limit = lineLimit ?? Infinity;
     const cjk = cjkInterCharBoundaries ?? SortedTable.setBuilder<number>(SortedTable.compareInts).build();
     const max = maxCjkStretchPerGap ?? Infinity;
@@ -58,17 +70,17 @@ export class ProgressiveBreakDecisions {
     }
     const candidate = opportunities.get(candidateEnd);
     if (candidate === null) {
-      if (adjustedClusters === null || candidateEnd < 0 || candidateEnd >= adjustedClusters.length) {
+      if (adjustedClusters === null || candidateEnd < 0 || candidateEnd >= adjustedClusters!.length) {
         return true;
       }
-      const source = adjustedClusters[candidateEnd]!.range.start;
-      return source <= active.spanRange.start || source >= active.spanRange.end;
+      const source = adjustedClusters![candidateEnd]!.range.start;
+      return source <= active!.spanRange.start || source >= active!.spanRange.end;
     }
-    if (candidate.spanRange.start !== active.spanRange.start || candidate.spanRange.end !== active.spanRange.end) {
+    if (candidate!.spanRange.start !== active!.spanRange.start || candidate!.spanRange.end !== active!.spanRange.end) {
       return true;
     }
     if (candidateEnd > rawGreedy) {
-      return ProgressiveBreakTierPriority.priority(candidate.tier) <= ProgressiveBreakTierPriority.priority(active.tier);
+      return ProgressiveBreakTierPriority.priority(candidate!.tier) <= ProgressiveBreakTierPriority.priority(active!.tier);
     }
     const selected = ProgressiveBreakDecisions.decideProgressiveBreak(lineStart, rawGreedy, opportunities, adjustedClusters, limit, cjk, max, sino, cap);
     return candidateEnd === selected;
@@ -79,8 +91,8 @@ export class ProgressiveBreakDecisions {
     let i = lineStart + 1;
     while (i <= overflowAt) {
       const o = opportunities.get(i);
-      if (o !== null && o.spanRange.start === active.spanRange.start && o.spanRange.end === active.spanRange.end) {
-        prioritiesBuilder.put(ProgressiveBreakTierPriority.priority(o.tier));
+      if (o !== null && o!.spanRange.start === active.spanRange.start && o!.spanRange.end === active.spanRange.end) {
+        prioritiesBuilder.put(ProgressiveBreakTierPriority.priority(o!.tier));
       }
       i++;
     }
@@ -102,7 +114,7 @@ export class ProgressiveBreakDecisions {
       i = lineStart + 1;
       while (i <= overflowAt) {
         const o2 = opportunities.get(i);
-        if (o2 !== null && o2.spanRange.start === active.spanRange.start && o2.spanRange.end === active.spanRange.end && ProgressiveBreakTierPriority.priority(o2.tier) === priority) {
+        if (o2 !== null && o2!.spanRange.start === active.spanRange.start && o2!.spanRange.end === active.spanRange.end && ProgressiveBreakTierPriority.priority(o2!.tier) === priority) {
           b = i;
         }
         i++;
@@ -111,7 +123,7 @@ export class ProgressiveBreakDecisions {
         pi++;
         continue;
       }
-      const d = ProgressiveBreakDecisions.progressiveCandidateStretchDensity(lineStart, b, opportunities, adjustedClusters, lineLimit, cjkInterCharBoundaries, sinoWesternBoundaries, sinoWesternStretchCap);
+      const d = ProgressiveBreakDecisions.progressiveCandidateStretchDensity(lineStart, b, opportunities, (adjustedClusters)!, lineLimit, cjkInterCharBoundaries, sinoWesternBoundaries, sinoWesternStretchCap);
       if (d < density) {
         density = d;
         least = priority;
@@ -126,12 +138,12 @@ export class ProgressiveBreakDecisions {
     i = lineStart + 1;
     while (i <= overflowAt) {
       const o3 = opportunities.get(i);
-      if (o3 !== null && o3.spanRange.start === active.spanRange.start && o3.spanRange.end === active.spanRange.end && o3.tier.kind === "Emergency") {
+      if (o3 !== null && o3!.spanRange.start === active.spanRange.start && o3!.spanRange.end === active.spanRange.end && o3!.tier.kind === "Emergency") {
         emergency = i;
       }
       i++;
     }
-    return (emergency !== 0 && emergency >= leastBoundary ? ProgressiveBreakTierPriority.priority(ProgressiveBreakTier.Emergency) : least);
+    return (emergency !== 0 && emergency >= leastBoundary ? ProgressiveBreakTierPriority.priority((ProgressiveBreakTier.Emergency as ProgressiveBreakTier)) : least);
   }
 
   private static progressiveCandidateStretchDensity(lineStart: number, boundary: number, opportunities: SortedMapTable<number, ProgressiveBreakOpportunity>, adjustedClusters: Cluster[], lineLimit: number, cjkInterCharBoundaries: SortedSetTable<number>, sinoWesternBoundaries: SortedSetTable<number>, sinoWesternStretchCap: number): number {
@@ -146,8 +158,8 @@ export class ProgressiveBreakDecisions {
     i = lineStart + 1;
     while (i < boundary) {
       const o = opportunities.get(i);
-      if (o !== null && o.tier.kind === "Whitespace") {
-        technical += o.precedingWhitespaceStretchCapacity;
+      if (o !== null && o!.tier.kind === "Whitespace") {
+        technical += o!.precedingWhitespaceStretchCapacity;
       }
       i++;
     }
@@ -166,7 +178,7 @@ export class ProgressiveBreakDecisions {
       i = lineStart;
       while (i < boundary) {
         const c = adjustedClusters[i]!;
-        if (c.range.start >= active.spanRange.start && c.range.end <= active.spanRange.end && !ProgressiveBreakDecisions.hasWhitespaceUnit(c.text)) {
+        if (c.range.start >= active!.spanRange.start && c.range.end <= active!.spanRange.end && !ProgressiveBreakDecisions.hasWhitespaceUnit(c.text)) {
           units += c.text.length;
         }
         i++;
@@ -191,7 +203,7 @@ export class ProgressiveBreakDecisions {
     let i = 0;
     while (i < s.length) {
       const c = (Number.isNaN(s.charCodeAt(i)) ? null : s.charCodeAt(i))!;
-      if (c >= 9 && c <= 13 || c >= 28 && c <= 32 || c === 160 || c === 5760 || c >= 8192 && c <= 8202 || c === 8232 || c === 8233 || c === 8239 || c === 8287 || c === 12288) {
+      if (c! >= 9 && c! <= 13 || c! >= 28 && c! <= 32 || c === 160 || c === 5760 || c! >= 8192 && c! <= 8202 || c === 8232 || c === 8233 || c === 8239 || c === 8287 || c === 12288) {
         return true;
       }
       i++;
@@ -200,6 +212,8 @@ export class ProgressiveBreakDecisions {
   }
 
   public static decideHyphenBreak(lineStart: number, overflowAt: number, adjustedClusters: Cluster[], lineLimit: number, hyphenBreakClusters: SortedSetTable<number>, cjkInterCharBoundaries: SortedSetTable<number>, maxCjkStretchPerGap: number, sinoWesternBoundaries?: SortedSetTable<number> | null, sinoWesternStretchCap?: number | null): number {
+    sinoWesternBoundaries = sinoWesternBoundaries ?? null;
+    sinoWesternStretchCap = sinoWesternStretchCap ?? null;
     const sino = sinoWesternBoundaries ?? SortedTable.setBuilder<number>(SortedTable.compareInts).build();
     const cap = sinoWesternStretchCap ?? 0.0;
     if (!hyphenBreakClusters.has(overflowAt)) {
@@ -225,7 +239,7 @@ export class ProgressiveBreakDecisions {
     let sw = 0;
     k = lineStart + 1;
     while (k < whole) {
-      if (sino.has(k)) {
+      if (sino!.has(k)) {
         sw++;
       }
       k++;
@@ -261,10 +275,10 @@ export class ProgressiveBreakDecisions {
       if (containing === null) {
         return candidate;
       }
-      if (containing.start <= lineStart) {
+      if (containing!.start <= lineStart) {
         return breakAt;
       }
-      candidate = containing.start;
+      candidate = containing!.start;
     }
   }
 }

@@ -64,7 +64,7 @@ export class ParseTexHyphenationPatterns {
       let i = 0;
       while (i < token.length) {
         const code = (Number.isNaN(token.charCodeAt(i)) ? null : token.charCodeAt(i))!;
-        if (code >= 48 && code <= 57) {
+        if (code! >= 48 && code! <= 57) {
           levels[levels.length - 1] = code - 48;
         } else {
           {

@@ -9,13 +9,13 @@ export class PunctuationGluePlacements {
   public static forRegion(region: ClreqRegion): PunctuationGluePlacement {
     switch (region.kind) {
       case "Mainland":
-        return PunctuationGluePlacement.MainlandSimplified;
+        return (PunctuationGluePlacement.MainlandSimplified as PunctuationGluePlacement);
       case "Taiwan":
-        return PunctuationGluePlacement.Traditional;
+        return (PunctuationGluePlacement.Traditional as PunctuationGluePlacement);
       case "HongKong":
-        return PunctuationGluePlacement.Traditional;
+        return (PunctuationGluePlacement.Traditional as PunctuationGluePlacement);
       case "Custom":
-        return PunctuationGluePlacement.MainlandSimplified;
+        return (PunctuationGluePlacement.MainlandSimplified as PunctuationGluePlacement);
     }
   }
 
@@ -24,32 +24,32 @@ export class PunctuationGluePlacements {
       case "MainlandSimplified":
         return PunctuationGluePlacements.mainlandGlueSide(punctuationClass);
       case "Traditional":
-        return GlueSide.BothSides;
+        return (GlueSide.BothSides as GlueSide);
     }
   }
 
   private static mainlandGlueSide(punctuationClass: PunctuationClass): GlueSide {
     switch (punctuationClass.kind) {
       case "Opening":
-        return GlueSide.LeadingOnly;
+        return (GlueSide.LeadingOnly as GlueSide);
       case "Closing":
-        return GlueSide.TrailingOnly;
+        return (GlueSide.TrailingOnly as GlueSide);
       case "PauseOrStop":
-        return GlueSide.TrailingOnly;
+        return (GlueSide.TrailingOnly as GlueSide);
       case "MiddleDot":
-        return GlueSide.BothSides;
+        return (GlueSide.BothSides as GlueSide);
       case "Interpunct":
-        return GlueSide.BothSides;
+        return (GlueSide.BothSides as GlueSide);
       case "Connector":
-        return GlueSide.BothSides;
+        return (GlueSide.BothSides as GlueSide);
       case "Solidus":
-        return GlueSide.BothSides;
+        return (GlueSide.BothSides as GlueSide);
       case "Ellipsis":
-        return GlueSide.BothSides;
+        return (GlueSide.BothSides as GlueSide);
       case "Dash":
-        return GlueSide.BothSides;
+        return (GlueSide.BothSides as GlueSide);
       case "Other":
-        return GlueSide.BothSides;
+        return (GlueSide.BothSides as GlueSide);
     }
   }
 }
