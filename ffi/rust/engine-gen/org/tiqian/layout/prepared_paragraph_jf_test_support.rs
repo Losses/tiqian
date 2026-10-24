@@ -1,3 +1,5 @@
+#![cfg(test)]
+
 use crate::org::tiqian::core::int_range::IntRange;
 use crate::org::tiqian::core::line_box::LineBox;
 use crate::org::tiqian::core::line_debug_info::LineDebugInfo;

@@ -1,3 +1,5 @@
+#![cfg(test)]
+
 use crate::org::tiqian::core::text_range::TextRange;
 use crate::org::tiqian::font::font_policy::FallbackResolver;
 use crate::org::tiqian::font::font_policy::FontCandidate;

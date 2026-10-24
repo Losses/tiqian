@@ -796,7 +796,7 @@ impl WidthIndependentAnnotationCacheFns {
     }
 
     pub(crate) fn width_independent_annotation_cache_fns_quote_to_role_override_infos(decisions: &Vec<QuoteRoleDecision>, text: &UStr, base_classifier: Box<dyn FontRoleClassifier>, context: FontRoleContext) -> Result<Vec<RoleOverrideInfo>, TextRangeError> {
-    let __units = u_string::units(&text);
+    let __units = text.as_slice();
     let __count = u_string::unit_count(&text);
         let capacity = decisions.len();
         let mut sorted = Vec::with_capacity(capacity);

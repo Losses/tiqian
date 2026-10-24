@@ -178,21 +178,50 @@ impl<K: Clone, V: Clone> SortedMapTableBuilder<K, V> {
             order.push(i);
             i = i32::wrapping_add(i, 1);
         }
-        i = 1i32;
+        let mut tmp: Vec<i32> = Vec::new();
+        i = 0i32;
         while (i) < (total) {
-            let current = order[usize::try_from(i).unwrap_or(0)];
-            let mut j = i;
-            let mut moved = true;
-            while (j) > (0) && moved {
-                if (self.compare)(&((self.keys[usize::try_from(order[usize::try_from(i32::wrapping_sub(j, 1)).unwrap_or(0)]).unwrap_or(0)]).clone()), &((self.keys[usize::try_from(current).unwrap_or(0)]).clone())) > (0) {
-                    { while order.len() <= usize::try_from(j).unwrap_or(0) { order.push(0); } order[usize::try_from(j).unwrap_or(0)] = order[usize::try_from(i32::wrapping_sub(j, 1)).unwrap_or(0)]; };
-                    j = i32::wrapping_sub(j, 1);
-                } else {
-                    moved = false;
-                }
-            }
-            { while order.len() <= usize::try_from(j).unwrap_or(0) { order.push(0); } order[usize::try_from(j).unwrap_or(0)] = current; };
+            tmp.push(0);
             i = i32::wrapping_add(i, 1);
+        }
+        let mut width = 1i32;
+        while (width) < (total) {
+            let step = i32::wrapping_mul(width, 2);
+            let mut start = 0i32;
+            while (start) < (total) {
+                let mid = if i32::wrapping_add(start, width) < (total) { i32::wrapping_add(start, width) } else { total };
+                let end = if i32::wrapping_add(start, step) < (total) { i32::wrapping_add(start, step) } else { total };
+                let mut left = start;
+                let mut right = mid;
+                let mut k = start;
+                while (left) < (mid) && (right) < (end) {
+                    if (self.compare)(&((self.keys[usize::try_from(order[usize::try_from(left).unwrap_or(0)]).unwrap_or(0)]).clone()), &((self.keys[usize::try_from(order[usize::try_from(right).unwrap_or(0)]).unwrap_or(0)]).clone())) > (0) {
+                        { while tmp.len() <= usize::try_from(k).unwrap_or(0) { tmp.push(0); } tmp[usize::try_from(k).unwrap_or(0)] = order[usize::try_from(right).unwrap_or(0)]; };
+                        right = i32::wrapping_add(right, 1);
+                    } else {
+                        { while tmp.len() <= usize::try_from(k).unwrap_or(0) { tmp.push(0); } tmp[usize::try_from(k).unwrap_or(0)] = order[usize::try_from(left).unwrap_or(0)]; };
+                        left = i32::wrapping_add(left, 1);
+                    }
+                    k = i32::wrapping_add(k, 1);
+                }
+                while (left) < (mid) {
+                    { while tmp.len() <= usize::try_from(k).unwrap_or(0) { tmp.push(0); } tmp[usize::try_from(k).unwrap_or(0)] = order[usize::try_from(left).unwrap_or(0)]; };
+                    left = i32::wrapping_add(left, 1);
+                    k = i32::wrapping_add(k, 1);
+                }
+                while (right) < (end) {
+                    { while tmp.len() <= usize::try_from(k).unwrap_or(0) { tmp.push(0); } tmp[usize::try_from(k).unwrap_or(0)] = order[usize::try_from(right).unwrap_or(0)]; };
+                    right = i32::wrapping_add(right, 1);
+                    k = i32::wrapping_add(k, 1);
+                }
+                let mut m = start;
+                while (m) < (end) {
+                    { while order.len() <= usize::try_from(m).unwrap_or(0) { order.push(0); } order[usize::try_from(m).unwrap_or(0)] = tmp[usize::try_from(m).unwrap_or(0)]; };
+                    m = i32::wrapping_add(m, 1);
+                }
+                start = i32::wrapping_add(start, step);
+            }
+            width = step;
         }
         let mut out_keys: Vec<K> = Vec::new();
         let mut out_values: Vec<V> = Vec::new();
@@ -302,21 +331,50 @@ impl<K: Clone> SortedSetTableBuilder<K> {
             order.push(i);
             i = i32::wrapping_add(i, 1);
         }
-        i = 1i32;
+        let mut tmp: Vec<i32> = Vec::new();
+        i = 0i32;
         while (i) < (total) {
-            let current = order[usize::try_from(i).unwrap_or(0)];
-            let mut j = i;
-            let mut moved = true;
-            while (j) > (0) && moved {
-                if (self.compare)(&((self.keys[usize::try_from(order[usize::try_from(i32::wrapping_sub(j, 1)).unwrap_or(0)]).unwrap_or(0)]).clone()), &((self.keys[usize::try_from(current).unwrap_or(0)]).clone())) > (0) {
-                    { while order.len() <= usize::try_from(j).unwrap_or(0) { order.push(0); } order[usize::try_from(j).unwrap_or(0)] = order[usize::try_from(i32::wrapping_sub(j, 1)).unwrap_or(0)]; };
-                    j = i32::wrapping_sub(j, 1);
-                } else {
-                    moved = false;
-                }
-            }
-            { while order.len() <= usize::try_from(j).unwrap_or(0) { order.push(0); } order[usize::try_from(j).unwrap_or(0)] = current; };
+            tmp.push(0);
             i = i32::wrapping_add(i, 1);
+        }
+        let mut width = 1i32;
+        while (width) < (total) {
+            let step = i32::wrapping_mul(width, 2);
+            let mut start = 0i32;
+            while (start) < (total) {
+                let mid = if i32::wrapping_add(start, width) < (total) { i32::wrapping_add(start, width) } else { total };
+                let end = if i32::wrapping_add(start, step) < (total) { i32::wrapping_add(start, step) } else { total };
+                let mut left = start;
+                let mut right = mid;
+                let mut k = start;
+                while (left) < (mid) && (right) < (end) {
+                    if (self.compare)(&((self.keys[usize::try_from(order[usize::try_from(left).unwrap_or(0)]).unwrap_or(0)]).clone()), &((self.keys[usize::try_from(order[usize::try_from(right).unwrap_or(0)]).unwrap_or(0)]).clone())) > (0) {
+                        { while tmp.len() <= usize::try_from(k).unwrap_or(0) { tmp.push(0); } tmp[usize::try_from(k).unwrap_or(0)] = order[usize::try_from(right).unwrap_or(0)]; };
+                        right = i32::wrapping_add(right, 1);
+                    } else {
+                        { while tmp.len() <= usize::try_from(k).unwrap_or(0) { tmp.push(0); } tmp[usize::try_from(k).unwrap_or(0)] = order[usize::try_from(left).unwrap_or(0)]; };
+                        left = i32::wrapping_add(left, 1);
+                    }
+                    k = i32::wrapping_add(k, 1);
+                }
+                while (left) < (mid) {
+                    { while tmp.len() <= usize::try_from(k).unwrap_or(0) { tmp.push(0); } tmp[usize::try_from(k).unwrap_or(0)] = order[usize::try_from(left).unwrap_or(0)]; };
+                    left = i32::wrapping_add(left, 1);
+                    k = i32::wrapping_add(k, 1);
+                }
+                while (right) < (end) {
+                    { while tmp.len() <= usize::try_from(k).unwrap_or(0) { tmp.push(0); } tmp[usize::try_from(k).unwrap_or(0)] = order[usize::try_from(right).unwrap_or(0)]; };
+                    right = i32::wrapping_add(right, 1);
+                    k = i32::wrapping_add(k, 1);
+                }
+                let mut m = start;
+                while (m) < (end) {
+                    { while order.len() <= usize::try_from(m).unwrap_or(0) { order.push(0); } order[usize::try_from(m).unwrap_or(0)] = tmp[usize::try_from(m).unwrap_or(0)]; };
+                    m = i32::wrapping_add(m, 1);
+                }
+                start = i32::wrapping_add(start, step);
+            }
+            width = step;
         }
         let mut out_keys: Vec<K> = Vec::new();
         i = 0i32;

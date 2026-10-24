@@ -1,3 +1,5 @@
+#![cfg(test)]
+
 use crate::org::tiqian::clreq::clreq_profile::ClreqProfile;
 use crate::org::tiqian::clreq::clreq_profile_resolver::ClreqProfileResolver;
 use crate::org::tiqian::clreq::hanging_punctuation_style::HangingPunctuationStyle;
@@ -138,11 +140,11 @@ impl UnicodePunctuationBoundaryTestSupport {
     }
 
     pub fn unicode_punctuation_boundary_test_support_clusters(text: &UStr, latin: Option<bool>) -> Result<Vec<Cluster>, TextRangeError> {
-    let __units = u_string::units(&text);
+    let __units = text.as_slice();
     let __count = u_string::unit_count(&text);
         let mut a: Vec<Cluster> = vec![];
         for i in 0..match u32::try_from(u_string::unit_count(&(text))) { Ok(value) => value, Err(_) => u32::MAX } {
-            a.push(Cluster::new(TextRange::new(i, u32::wrapping_add(i, 1))?, u_string::substring(&text, { let v: u32 = i; i32::from_ne_bytes(v.to_ne_bytes()) }, i32::from_ne_bytes(((u32::wrapping_add(i, 1)) as i32).to_ne_bytes())).as_ustr(), if latin.as_ref().map_or(false, |v| v == &(true)) { UString::from("latin") } else { UString::from("cjk") }.as_ustr(), 16 as f64 as f64, Some(u_string::substring(&text, { let v: u32 = i; i32::from_ne_bytes(v.to_ne_bytes()) }, i32::from_ne_bytes(((u32::wrapping_add(i, 1)) as i32).to_ne_bytes()))), Some(0.0), Some(0.0), Some(0.0)));
+            a.push(Cluster::new(TextRange::new(i, u32::wrapping_add(i, 1))?, u_string::substring(&text, { let v: u32 = i; i32::from_ne_bytes(v.to_ne_bytes()) }, i32::from_ne_bytes(((u32::wrapping_add(i, 1)) as i32).to_ne_bytes())).as_ustr(), if matches!(latin.as_ref(), Some(__v) if __v == &(true)) { UString::from("latin") } else { UString::from("cjk") }.as_ustr(), 16 as f64 as f64, Some(u_string::substring(&text, { let v: u32 = i; i32::from_ne_bytes(v.to_ne_bytes()) }, i32::from_ne_bytes(((u32::wrapping_add(i, 1)) as i32).to_ne_bytes()))), Some(0.0), Some(0.0), Some(0.0)));
         }
         return Ok(a);
     }
@@ -150,7 +152,7 @@ impl UnicodePunctuationBoundaryTestSupport {
     pub fn unicode_punctuation_boundary_test_support_roles(text: &UStr, latin: Option<bool>) -> Vec<FontRole> {
         let mut a: Vec<FontRole> = vec![];
         for _ in 0..match u32::try_from(u_string::unit_count(&(text))) { Ok(value) => value, Err(_) => u32::MAX } {
-            a.push(if latin.as_ref().map_or(false, |v| v == &(true)) { FontRole::LatinText } else { FontRole::CjkText });
+            a.push(if matches!(latin.as_ref(), Some(__v) if __v == &(true)) { FontRole::LatinText } else { FontRole::CjkText });
         }
         return a;
     }

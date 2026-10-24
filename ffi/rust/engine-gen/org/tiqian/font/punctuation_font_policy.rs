@@ -1,3 +1,5 @@
+#![cfg(test)]
+
 #[derive(Debug, Clone, Copy, PartialEq)]
 pub enum PunctuationFontPolicy {
     PreferCjkForAmbiguousPunctuation,

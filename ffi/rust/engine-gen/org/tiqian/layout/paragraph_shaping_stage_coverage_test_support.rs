@@ -1,3 +1,5 @@
+#![cfg(test)]
+
 use crate::org::tiqian::clreq::cjk_punctuation_glyph_policy::CjkPunctuationGlyphPolicy;
 use crate::org::tiqian::clreq::clreq_profile_resolver::BuiltInClreqProfileResolver;
 use crate::org::tiqian::clreq::clreq_punctuation_glyph_substitutor::ClreqPunctuationGlyphSubstitutor;
@@ -735,7 +737,7 @@ impl ParagraphTierHyphenator {
     }
 
     pub fn hyphenate(&self, w: &UStr) -> Vec<u32> {
-    let __units = u_string::units(&w);
+    let __units = w.as_slice();
     let __count = u_string::unit_count(&w);
         return if u32::from_ne_bytes(((u_string::find_from(&(w), UString::from("Machine").as_ustr(), 0)) as u32).to_ne_bytes()) <= 2147483647 { vec![4294967295u32, 0, 3, __count, u32::wrapping_add(__count, 1)] } else { vec![2] };
     }
@@ -753,7 +755,7 @@ impl Hyphenator for ParagraphTierHyphenator {
     }
 
     fn hyphenate(&self, w: &UStr) -> Vec<u32> {
-    let __units1 = u_string::units(&w);
+    let __units1 = w.as_slice();
     let __count1 = u_string::unit_count(&w);
         return if u32::from_ne_bytes(((u_string::find_from(&(w), UString::from("Machine").as_ustr(), 0)) as u32).to_ne_bytes()) <= 2147483647 { vec![4294967295u32, 0, 3, __count1, u32::wrapping_add(__count1, 1)] } else { vec![2] };
     }
@@ -770,7 +772,7 @@ impl ParagraphDirectShapeHyphenator {
     }
 
     pub fn hyphenate(&self, w: &UStr) -> Vec<u32> {
-    let __units2 = u_string::units(&w);
+    let __units2 = w.as_slice();
     let __count2 = u_string::unit_count(&w);
         if w == UString::from("abcdef") {
             return vec![1];
@@ -800,7 +802,7 @@ impl Hyphenator for ParagraphDirectShapeHyphenator {
     }
 
     fn hyphenate(&self, w: &UStr) -> Vec<u32> {
-    let __units3 = u_string::units(&w);
+    let __units3 = w.as_slice();
     let __count3 = u_string::unit_count(&w);
         if w == UString::from("abcdef") {
             return vec![1];
@@ -829,7 +831,7 @@ impl ParagraphTierPriorityHyphenator {
     }
 
     pub fn hyphenate(&self, w: &UStr) -> Vec<u32> {
-    let __units4 = u_string::units(&w);
+    let __units4 = w.as_slice();
     let __count4 = u_string::unit_count(&w);
         return if w == UString::from("abcdef") { vec![2, 4] } else { vec![4294967295u32, 0, 1, 2, __count4, u32::wrapping_add(__count4, 2)] };
     }
@@ -847,7 +849,7 @@ impl Hyphenator for ParagraphTierPriorityHyphenator {
     }
 
     fn hyphenate(&self, w: &UStr) -> Vec<u32> {
-    let __units5 = u_string::units(&w);
+    let __units5 = w.as_slice();
     let __count5 = u_string::unit_count(&w);
         return if w == UString::from("abcdef") { vec![2, 4] } else { vec![4294967295u32, 0, 1, 2, __count5, u32::wrapping_add(__count5, 2)] };
     }

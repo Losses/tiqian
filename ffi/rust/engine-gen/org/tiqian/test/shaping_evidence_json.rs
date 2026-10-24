@@ -1,3 +1,5 @@
+#![cfg(test)]
+
 use crate::org::tiqian::core::rect::Rect;
 use crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError;
 use crate::org::tiqian::test::shaping_evidence::MetricsEvidenceEntry;
@@ -63,20 +65,21 @@ impl JsonMember {
     }
 }
 
-fn json_member_value_order(v: &JsonValue) -> i32 {
+fn json_member_order_0(v: &JsonValue) -> i32 {
     match v {
-        JsonValue::JStr { .. } => 3,
-        JsonValue::JObj { .. } => 5,
-        JsonValue::JNum { .. } => 2,
         JsonValue::JNull => 0,
         JsonValue::JBool { .. } => 1,
+        JsonValue::JNum { .. } => 2,
+        JsonValue::JStr { .. } => 3,
         JsonValue::JArr { .. } => 4,
+        JsonValue::JObj { .. } => 5,
     }
 }
+
 pub fn compare_json_member(a: &JsonMember, b: &JsonMember) -> i32 {
-    let cmp_name = SortedTable::sorted_table_compare_strings(a.name.as_ustr(), b.name.as_ustr());
+    let cmp_name = SortedTable::sorted_table_compare_strings((&a.name).as_ustr(), (&b.name).as_ustr());
     if cmp_name != 0 { return cmp_name; }
-    let cmp_value = match json_member_value_order(&a.value).cmp(&json_member_value_order(&b.value)) { core::cmp::Ordering::Less => -1, core::cmp::Ordering::Equal => 0, core::cmp::Ordering::Greater => 1 };
+    let cmp_value = match json_member_order_0(&a.value).cmp(&json_member_order_0(&b.value)) { core::cmp::Ordering::Less => -1, core::cmp::Ordering::Equal => 0, core::cmp::Ordering::Greater => 1 };
     if cmp_value != 0 { return cmp_value; }
     0
 }
@@ -275,8 +278,8 @@ impl ShapingEvidenceJson {
         if values.is_none() {
             return Ok(None);
         }
-        if values.as_ref().map_or(0, |v| v.len()) != 4 {
-            return Err(TextRangeError::Message { text: UString::from(format!("{}", { let mut __s = UString::new(); __s += &(UString::from("Field ")); __s += name; __s += &(UString::from(": expected 4 bounds values, got ")); __s += &(UString::from(format!("{}", ((values).as_ref().map_or(0, |v| v.len())).to_string()).as_str())); __s }).as_str()) });
+        if u32::try_from(((values).as_ref().map_or(0usize, |v| v.len())) & 0xFFFF_FFFF).unwrap_or(0) != 4 {
+            return Err(TextRangeError::Message { text: UString::from(format!("{}", { let mut __s = UString::new(); __s += &(UString::from("Field ")); __s += name; __s += &(UString::from(": expected 4 bounds values, got ")); __s += &(UString::from(format!("{}", crate::runtime::int_text::IntText::int_text(u32::try_from(((values).as_ref().map_or(0usize, |v| v.len())) & 0xFFFF_FFFF).unwrap_or(0))).as_str())); __s }).as_str()) });
         }
         return Ok(Some(Rect::new(ShapingEvidenceJson::shaping_evidence_json_num_required(((values).as_ref().unwrap()[0usize]).clone(), UString::from(format!("{}", { let mut __s = UString::new(); __s += name; __s += &(UString::from("[0]")); __s }).as_str()).as_ustr())?, ShapingEvidenceJson::shaping_evidence_json_num_required(((values).as_ref().unwrap()[1usize]).clone(), UString::from(format!("{}", { let mut __s = UString::new(); __s += name; __s += &(UString::from("[1]")); __s }).as_str()).as_ustr())?, ShapingEvidenceJson::shaping_evidence_json_num_required(((values).as_ref().unwrap()[2usize]).clone(), UString::from(format!("{}", { let mut __s = UString::new(); __s += name; __s += &(UString::from("[2]")); __s }).as_str()).as_ustr())?, ShapingEvidenceJson::shaping_evidence_json_num_required(((values).as_ref().unwrap()[3usize]).clone(), UString::from(format!("{}", { let mut __s = UString::new(); __s += name; __s += &(UString::from("[3]")); __s }).as_str()).as_ustr())?)));
     }
@@ -329,13 +332,13 @@ impl ShapingEvidenceJson {
     }
 
     pub(crate) fn shaping_evidence_json_skip_ws(cur: &mut JsonCursor, text: &UStr) {
-    let __units = u_string::units(&text);
+    let __units = text.as_slice();
     let __count = u_string::unit_count(&text);
         let mut scanning = true;
         while scanning {
             if i32::from_ne_bytes(((cur.pos) as i32).to_ne_bytes()) >= i32::from_ne_bytes(((__count) as i32).to_ne_bytes()) {
             }
-            let c = u_string::unit_at_from(&__units, cur.pos).unwrap_or(0);
+            let c = u_string::unit_at_from(__units, cur.pos).unwrap_or(0);
             if c == 32 || c == 9 || c == 10 || c == 13 {
                 cur.pos = u32::wrapping_add(cur.pos, 1);
             } else {
@@ -372,31 +375,31 @@ impl ShapingEvidenceJson {
     }
 
     pub(crate) fn shaping_evidence_json_parse_object(cur: &mut JsonCursor, text: &UStr) -> Result<Vec<JsonMember>, TextRangeError> {
-    let __units1 = u_string::units(&text);
+    let __units1 = text.as_slice();
     let __count1 = u_string::unit_count(&text);
         let mut members: Vec<JsonMember> = vec![];
         cur.pos = u32::wrapping_add(cur.pos, 1);
         ShapingEvidenceJson::shaping_evidence_json_skip_ws(cur, text);
         let mut closed = false;
-        if u_string::unit_at_from(&__units1, cur.pos).as_ref().map_or(false, |v| v == &(125)) {
+        if matches!(u_string::unit_at_from(__units1, cur.pos).as_ref(), Some(__v) if __v == &(125)) {
             cur.pos = u32::wrapping_add(cur.pos, 1);
             closed = true;
         }
         while !closed {
             ShapingEvidenceJson::shaping_evidence_json_skip_ws(cur, text);
-            if !(u_string::unit_at_from(&__units1, cur.pos).as_ref().map_or(false, |v| v == &(34))) {
+            if !(matches!(u_string::unit_at_from(__units1, cur.pos).as_ref(), Some(__v) if __v == &(34))) {
                 return Err(TextRangeError::Message { text: UString::from(format!("{}", { let mut __s = UString::new(); __s += &(UString::from("Malformed JSON: expected member name at offset ")); __s += &(UString::from(format!("{}", crate::runtime::int_text::IntText::int_text(cur.pos)).as_str())); __s }).as_str()) });
             }
             let name = ShapingEvidenceJson::shaping_evidence_json_parse_string(cur, text)?;
             ShapingEvidenceJson::shaping_evidence_json_skip_ws(cur, text);
-            if !(u_string::unit_at_from(&__units1, cur.pos).as_ref().map_or(false, |v| v == &(58))) {
+            if !(matches!(u_string::unit_at_from(__units1, cur.pos).as_ref(), Some(__v) if __v == &(58))) {
                 return Err(TextRangeError::Message { text: UString::from(format!("{}", { let mut __s = UString::new(); __s += &(UString::from("Malformed JSON: expected ':' at offset ")); __s += &(UString::from(format!("{}", crate::runtime::int_text::IntText::int_text(cur.pos)).as_str())); __s }).as_str()) });
             }
             cur.pos = u32::wrapping_add(cur.pos, 1);
             ShapingEvidenceJson::shaping_evidence_json_skip_ws(cur, text);
             members.push(JsonMember::new(name.as_ustr(), ShapingEvidenceJson::shaping_evidence_json_parse_value(cur, text)?));
             ShapingEvidenceJson::shaping_evidence_json_skip_ws(cur, text);
-            let c = u_string::unit_at_from(&__units1, cur.pos).unwrap_or(0);
+            let c = u_string::unit_at_from(__units1, cur.pos).unwrap_or(0);
             if c == 44 {
                 cur.pos = u32::wrapping_add(cur.pos, 1);
             } else {
@@ -412,13 +415,13 @@ impl ShapingEvidenceJson {
     }
 
     pub(crate) fn shaping_evidence_json_parse_array(cur: &mut JsonCursor, text: &UStr) -> Result<Vec<JsonValue>, TextRangeError> {
-    let __units2 = u_string::units(&text);
+    let __units2 = text.as_slice();
     let __count2 = u_string::unit_count(&text);
         let mut values: Vec<JsonValue> = vec![];
         cur.pos = u32::wrapping_add(cur.pos, 1);
         ShapingEvidenceJson::shaping_evidence_json_skip_ws(cur, text);
         let mut closed = false;
-        if u_string::unit_at_from(&__units2, cur.pos).as_ref().map_or(false, |v| v == &(93)) {
+        if matches!(u_string::unit_at_from(__units2, cur.pos).as_ref(), Some(__v) if __v == &(93)) {
             cur.pos = u32::wrapping_add(cur.pos, 1);
             closed = true;
         }
@@ -426,7 +429,7 @@ impl ShapingEvidenceJson {
             ShapingEvidenceJson::shaping_evidence_json_skip_ws(cur, text);
             values.push(ShapingEvidenceJson::shaping_evidence_json_parse_value(cur, text)?);
             ShapingEvidenceJson::shaping_evidence_json_skip_ws(cur, text);
-            let c = u_string::unit_at_from(&__units2, cur.pos).unwrap_or(0);
+            let c = u_string::unit_at_from(__units2, cur.pos).unwrap_or(0);
             if c == 44 {
                 cur.pos = u32::wrapping_add(cur.pos, 1);
             } else {
@@ -442,20 +445,20 @@ impl ShapingEvidenceJson {
     }
 
     pub(crate) fn shaping_evidence_json_parse_string(cur: &mut JsonCursor, text: &UStr) -> Result<UString, TextRangeError> {
-    let __units3 = u_string::units(&text);
+    let __units3 = text.as_slice();
     let __count3 = u_string::unit_count(&text);
         cur.pos = u32::wrapping_add(cur.pos, 1);
         let mut buf_b = UString::new();
         let mut done = false;
         while !done {
-            let c = u_string::unit_at_from(&__units3, cur.pos).unwrap_or(0);
+            let c = u_string::unit_at_from(__units3, cur.pos).unwrap_or(0);
             if c == 34 {
                 cur.pos = u32::wrapping_add(cur.pos, 1);
                 done = true;
             } else {
                 if c == 92 {
                     cur.pos = u32::wrapping_add(cur.pos, 1);
-                    let e = u_string::unit_at_from(&__units3, cur.pos).unwrap_or(0);
+                    let e = u_string::unit_at_from(__units3, cur.pos).unwrap_or(0);
                     if e == 34 {
                         buf_b += &(UString::from("\""));
                         cur.pos = u32::wrapping_add(cur.pos, 1);
@@ -542,14 +545,14 @@ impl ShapingEvidenceJson {
     }
 
     pub(crate) fn shaping_evidence_json_parse_number(cur: &mut JsonCursor, text: &UStr) -> Result<f64, TextRangeError> {
-    let __units4 = u_string::units(&text);
+    let __units4 = text.as_slice();
     let __count4 = u_string::unit_count(&text);
         let start = cur.pos;
         let mut scanning = true;
         while scanning {
             if i32::from_ne_bytes(((cur.pos) as i32).to_ne_bytes()) >= i32::from_ne_bytes(((__count4) as i32).to_ne_bytes()) {
             }
-            let c = u_string::unit_at_from(&__units4, cur.pos).unwrap_or(0);
+            let c = u_string::unit_at_from(__units4, cur.pos).unwrap_or(0);
             if i32::from_ne_bytes(((c) as i32).to_ne_bytes()) >= 48 && (i32::from_ne_bytes(((c) as i32).to_ne_bytes())) <= 57 || c == 45 || c == 43 || c == 46 || c == 101 || c == 69 {
                 cur.pos = u32::wrapping_add(cur.pos, 1);
             } else {

@@ -1,3 +1,5 @@
+#![cfg(test)]
+
 use crate::org::tiqian::clreq::clreq_profile::ClreqProfile;
 use crate::org::tiqian::clreq::clreq_profile_resolver::ClreqProfileResolver;
 use crate::org::tiqian::clreq::hanging_punctuation_style::HangingPunctuationStyle;
@@ -156,11 +158,11 @@ impl LayoutDumpFormat {
     }
 
     pub fn layout_dump_format_escape_dump_text(value: &UStr) -> UString {
-    let __units = u_string::units(&value);
+    let __units = value.as_slice();
     let __count = u_string::unit_count(&value);
         let mut out_b = UString::new();
-        for i in 0..match u32::try_from(u_string::unit_count(&(value))) { Ok(value) => value, Err(_) => u32::MAX } {
-            let c = u_string::unit_at_from(&__units, i).unwrap_or(0);
+        for i in 0..__count {
+            let c = u_string::unit_at_from(__units, i).unwrap_or(0);
             if c == 10 {
                 out_b += &(UString::from("\\n"));
             } else {

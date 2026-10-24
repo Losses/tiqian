@@ -139,7 +139,7 @@ impl LayoutQueries {
             if i32::from_ne_bytes(((annotation.end) as i32).to_ne_bytes()) >= i32::from_ne_bytes(((cursor) as i32).to_ne_bytes()) && (i32::from_ne_bytes(((annotation.end) as i32).to_ne_bytes())) <= i32::from_ne_bytes(((end) as i32).to_ne_bytes()) {
                 if let Some(&unit) = output.last() {
                     if unit >= 55296 && unit <= 56319 && !u_string::substring(&source, i32::from_ne_bytes(((cursor) as i32).to_ne_bytes()), i32::from_ne_bytes(((annotation.end) as i32).to_ne_bytes())).is_empty() {
-                        if !u_string::substring(&source, i32::from_ne_bytes(((cursor) as i32).to_ne_bytes()), i32::from_ne_bytes(((annotation.end) as i32).to_ne_bytes())).encode_utf16().next().map_or(false, |head| head >= 56320 && head <= 57343) {
+                        if !match (u_string::substring(&source, i32::from_ne_bytes(((cursor) as i32).to_ne_bytes()), i32::from_ne_bytes(((annotation.end) as i32).to_ne_bytes()))).encode_utf16().next() { Some(head) => head >= 56320 && head <= 57343, None => false } {
                             return Err(UStringFault::UnpairedSurrogate { unit: u32::from(unit) });
                         }
                     }
@@ -147,7 +147,7 @@ impl LayoutQueries {
                 output.extend(u_string::substring(&source, i32::from_ne_bytes(((cursor) as i32).to_ne_bytes()), i32::from_ne_bytes(((annotation.end) as i32).to_ne_bytes())).encode_utf16());
                 if let Some(&unit) = output.last() {
                     if unit >= 55296 && unit <= 56319 && !UString::from("（").is_empty() {
-                        if !UString::from("（").encode_utf16().next().map_or(false, |head| head >= 56320 && head <= 57343) {
+                        if !match (UString::from("（")).encode_utf16().next() { Some(head) => head >= 56320 && head <= 57343, None => false } {
                             return Err(UStringFault::UnpairedSurrogate { unit: u32::from(unit) });
                         }
                     }
@@ -155,7 +155,7 @@ impl LayoutQueries {
                 output.extend(UString::from("（").encode_utf16());
                 if let Some(&unit) = output.last() {
                     if unit >= 55296 && unit <= 56319 && !(annotation.text).to_ustring().is_empty() {
-                        if !(annotation.text).to_ustring().encode_utf16().next().map_or(false, |head| head >= 56320 && head <= 57343) {
+                        if !match ((annotation.text).to_ustring()).encode_utf16().next() { Some(head) => head >= 56320 && head <= 57343, None => false } {
                             return Err(UStringFault::UnpairedSurrogate { unit: u32::from(unit) });
                         }
                     }
@@ -163,7 +163,7 @@ impl LayoutQueries {
                 output.extend((annotation.text).to_ustring().encode_utf16());
                 if let Some(&unit) = output.last() {
                     if unit >= 55296 && unit <= 56319 && !UString::from("）").is_empty() {
-                        if !UString::from("）").encode_utf16().next().map_or(false, |head| head >= 56320 && head <= 57343) {
+                        if !match (UString::from("）")).encode_utf16().next() { Some(head) => head >= 56320 && head <= 57343, None => false } {
                             return Err(UStringFault::UnpairedSurrogate { unit: u32::from(unit) });
                         }
                     }
@@ -175,7 +175,7 @@ impl LayoutQueries {
         }
         if let Some(&unit) = output.last() {
             if unit >= 55296 && unit <= 56319 && !u_string::substring(&source, i32::from_ne_bytes(((cursor) as i32).to_ne_bytes()), i32::from_ne_bytes(((end) as i32).to_ne_bytes())).is_empty() {
-                if !u_string::substring(&source, i32::from_ne_bytes(((cursor) as i32).to_ne_bytes()), i32::from_ne_bytes(((end) as i32).to_ne_bytes())).encode_utf16().next().map_or(false, |head| head >= 56320 && head <= 57343) {
+                if !match (u_string::substring(&source, i32::from_ne_bytes(((cursor) as i32).to_ne_bytes()), i32::from_ne_bytes(((end) as i32).to_ne_bytes()))).encode_utf16().next() { Some(head) => head >= 56320 && head <= 57343, None => false } {
                     return Err(UStringFault::UnpairedSurrogate { unit: u32::from(unit) });
                 }
             }
@@ -1384,7 +1384,7 @@ pub struct CopyAnnotation {
 }
 
 pub fn compare_copy_annotation(a: &CopyAnnotation, b: &CopyAnnotation) -> i32 {
-    let cmp_end = if a.end < b.end { -1 } else if a.end > b.end { 1 } else { 0 };
+    let cmp_end = match i32::from_ne_bytes((a.end).to_ne_bytes()).cmp(&i32::from_ne_bytes((b.end).to_ne_bytes())) { core::cmp::Ordering::Less => -1, core::cmp::Ordering::Equal => 0, core::cmp::Ordering::Greater => 1 };
     if cmp_end != 0 { return cmp_end; }
     let cmp_text = SortedTable::sorted_table_compare_strings(a.text.as_ustr(), b.text.as_ustr());
     if cmp_text != 0 { return cmp_text; }

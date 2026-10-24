@@ -1005,7 +1005,7 @@ fn source_grapheme_boundaries_with_hangul_leading_jamo() {
         TestTraceRecorder::new(&(UStr::new(&[67,111,114,101,66,111,117,110,100,97,114,121,84,101,115,116]))).section(UStr::new(&[115,111,117,114,99,101,71,114,97,112,104,101,109,101,66,111,117,110,100,97,114,105,101,115,87,105,116,104,72,97,110,103,117,108,76,101,97,100,105,110,103,74,97,109,111]));
         let text = UString::from("각").to_ustring();
         let boundaries = SourceInteractionBoundaries::source_interaction_boundaries_source_grapheme_boundaries(text.as_ustr(), TextRange::new(0u32, 3u32).unwrap());
-        let _ = TracedAssertions::traced_assertions_assert_true((u32::from_ne_bytes(((match boundaries.iter().position(|e| e == &3) { Some(v) => i32::from_ne_bytes(u32::try_from(v).unwrap_or(0).to_ne_bytes()), None => -1 }) as u32).to_ne_bytes())) <= 2147483647, None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_true((u32::from_ne_bytes(({ let __hay = &(boundaries); let __n = __hay.len(); let mut __i = 0usize; let mut __found: i32 = -1; while __i < __n { if __hay[__i] == 3 { __found = i32::from_ne_bytes(u32::try_from(__i).unwrap_or(0).to_ne_bytes()); break; } __i += 1; } __found } as u32).to_ne_bytes())) <= 2147483647, None).unwrap();
     });
 }
 
@@ -1027,7 +1027,7 @@ fn source_grapheme_boundaries_with_regional_indicator() {
         TestTraceRecorder::new(&(UStr::new(&[67,111,114,101,66,111,117,110,100,97,114,121,84,101,115,116]))).section(UStr::new(&[115,111,117,114,99,101,71,114,97,112,104,101,109,101,66,111,117,110,100,97,114,105,101,115,87,105,116,104,82,101,103,105,111,110,97,108,73,110,100,105,99,97,116,111,114]));
         let text = TestHelpers::test_helpers_surrogate_text(&vec![55356, 56808, 55356, 56806]);
         let boundaries = SourceInteractionBoundaries::source_interaction_boundaries_source_grapheme_boundaries(text.as_ustr(), TextRange::new(0u32, u_string::unit_count(&(text))).unwrap());
-        let _ = TracedAssertions::traced_assertions_assert_true((u32::from_ne_bytes(((match boundaries.iter().position(|e| e == &u_string::unit_count(&(text))) { Some(v) => i32::from_ne_bytes(u32::try_from(v).unwrap_or(0).to_ne_bytes()), None => -1 }) as u32).to_ne_bytes())) <= 2147483647, None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_true((u32::from_ne_bytes(({ let __hay = &(boundaries); let __n = __hay.len(); let mut __i = 0usize; let mut __found: i32 = -1; while __i < __n { if __hay[__i] == u_string::unit_count(&(text)) { __found = i32::from_ne_bytes(u32::try_from(__i).unwrap_or(0).to_ne_bytes()); break; } __i += 1; } __found } as u32).to_ne_bytes())) <= 2147483647, None).unwrap();
     });
 }
 
@@ -1048,7 +1048,7 @@ fn source_grapheme_boundaries_with_emoji_modifier() {
         TestTraceRecorder::new(&(UStr::new(&[67,111,114,101,66,111,117,110,100,97,114,121,84,101,115,116]))).section(UStr::new(&[115,111,117,114,99,101,71,114,97,112,104,101,109,101,66,111,117,110,100,97,114,105,101,115,87,105,116,104,69,109,111,106,105,77,111,100,105,102,105,101,114]));
         let text = TestHelpers::test_helpers_surrogate_text(&vec![55357, 56425, 55356, 57339]);
         let boundaries = SourceInteractionBoundaries::source_interaction_boundaries_source_grapheme_boundaries(text.as_ustr(), TextRange::new(0u32, u_string::unit_count(&(text))).unwrap());
-        let _ = TracedAssertions::traced_assertions_assert_true((u32::from_ne_bytes(((match boundaries.iter().position(|e| e == &u_string::unit_count(&(text))) { Some(v) => i32::from_ne_bytes(u32::try_from(v).unwrap_or(0).to_ne_bytes()), None => -1 }) as u32).to_ne_bytes())) <= 2147483647, None).unwrap();
+        let _ = TracedAssertions::traced_assertions_assert_true((u32::from_ne_bytes(({ let __hay = &(boundaries); let __n = __hay.len(); let mut __i = 0usize; let mut __found: i32 = -1; while __i < __n { if __hay[__i] == u_string::unit_count(&(text)) { __found = i32::from_ne_bytes(u32::try_from(__i).unwrap_or(0).to_ne_bytes()); break; } __i += 1; } __found } as u32).to_ne_bytes())) <= 2147483647, None).unwrap();
     });
 }
 

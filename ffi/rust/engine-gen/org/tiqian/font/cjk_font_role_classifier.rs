@@ -19,11 +19,11 @@ impl CjkFontRoleClassifier {
     }
 
     pub fn classify(&self, text: &UStr, range: TextRange, _context: Option<FontRoleContext>) -> FontRole {
-    let __units = u_string::units(&text);
+    let __units = text.as_slice();
     let __count = u_string::unit_count(&text);
-        let mut c = u_string::unit_at_from(&__units, range.start).unwrap_or(0);
+        let mut c = u_string::unit_at_from(__units, range.start).unwrap_or(0);
         if i32::from_ne_bytes(((c) as i32).to_ne_bytes()) >= 55296 && (i32::from_ne_bytes(((c) as i32).to_ne_bytes())) <= 56319 && (i32::from_ne_bytes(((u32::wrapping_add(range.start, 1)) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((__count) as i32).to_ne_bytes())) {
-            let lo = u_string::unit_at_from(&__units, u32::wrapping_add(range.start, 1)).unwrap_or(0);
+            let lo = u_string::unit_at_from(__units, u32::wrapping_add(range.start, 1)).unwrap_or(0);
             if i32::from_ne_bytes(((lo) as i32).to_ne_bytes()) >= 56320 && (i32::from_ne_bytes(((lo) as i32).to_ne_bytes())) <= 57343 {
                 c = u32::wrapping_add(u32::wrapping_add(65536, (u32::wrapping_sub(c, 55296)) << (10)), u32::wrapping_sub(lo, 56320));
             }
@@ -32,8 +32,8 @@ impl CjkFontRoleClassifier {
             return FontRole::CjkText;
         }
         if c == 8216 || c == 8217 || c == 8220 || c == 8221 {
-            let l = if i32::from_ne_bytes(((range.start) as i32).to_ne_bytes()) > (0) { u_string::unit_at_from(&__units, u32::wrapping_sub(range.start, 1)) } else { None };
-            let r = if i32::from_ne_bytes(((range.end) as i32).to_ne_bytes()) < (i32::from_ne_bytes(((__count) as i32).to_ne_bytes())) { u_string::unit_at_from(&__units, range.end) } else { None };
+            let l = if i32::from_ne_bytes(((range.start) as i32).to_ne_bytes()) > (0) { u_string::unit_at_from(__units, u32::wrapping_sub(range.start, 1)) } else { None };
+            let r = if i32::from_ne_bytes(((range.end) as i32).to_ne_bytes()) < (i32::from_ne_bytes(((__count) as i32).to_ne_bytes())) { u_string::unit_at_from(__units, range.end) } else { None };
             return if CjkFontRoleClassifier::cjk_font_role_classifier_is_latin(l) && CjkFontRoleClassifier::cjk_font_role_classifier_is_latin(r) { FontRole::LatinText } else { FontRole::CjkPunctuation };
         }
         if i32::from_ne_bytes(((c) as i32).to_ne_bytes()) >= 32 && (i32::from_ne_bytes(((c) as i32).to_ne_bytes())) <= 126 || (i32::from_ne_bytes(((c) as i32).to_ne_bytes())) >= 192 && (i32::from_ne_bytes(((c) as i32).to_ne_bytes())) <= 591 {
@@ -68,11 +68,11 @@ impl FontRoleClassifier for CjkFontRoleClassifier {
     }
 
     fn classify(&self, text: &UStr, range: TextRange, _context: Option<FontRoleContext>) -> FontRole {
-    let __units1 = u_string::units(&text);
+    let __units1 = text.as_slice();
     let __count1 = u_string::unit_count(&text);
-        let mut c = u_string::unit_at_from(&__units1, range.start).unwrap_or(0);
+        let mut c = u_string::unit_at_from(__units1, range.start).unwrap_or(0);
         if i32::from_ne_bytes(((c) as i32).to_ne_bytes()) >= 55296 && (i32::from_ne_bytes(((c) as i32).to_ne_bytes())) <= 56319 && (i32::from_ne_bytes(((u32::wrapping_add(range.start, 1)) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((__count1) as i32).to_ne_bytes())) {
-            let lo = u_string::unit_at_from(&__units1, u32::wrapping_add(range.start, 1)).unwrap_or(0);
+            let lo = u_string::unit_at_from(__units1, u32::wrapping_add(range.start, 1)).unwrap_or(0);
             if i32::from_ne_bytes(((lo) as i32).to_ne_bytes()) >= 56320 && (i32::from_ne_bytes(((lo) as i32).to_ne_bytes())) <= 57343 {
                 c = u32::wrapping_add(u32::wrapping_add(65536, (u32::wrapping_sub(c, 55296)) << (10)), u32::wrapping_sub(lo, 56320));
             }
@@ -81,8 +81,8 @@ impl FontRoleClassifier for CjkFontRoleClassifier {
             return FontRole::CjkText;
         }
         if c == 8216 || c == 8217 || c == 8220 || c == 8221 {
-            let l = if i32::from_ne_bytes(((range.start) as i32).to_ne_bytes()) > (0) { u_string::unit_at_from(&__units1, u32::wrapping_sub(range.start, 1)) } else { None };
-            let r = if i32::from_ne_bytes(((range.end) as i32).to_ne_bytes()) < (i32::from_ne_bytes(((__count1) as i32).to_ne_bytes())) { u_string::unit_at_from(&__units1, range.end) } else { None };
+            let l = if i32::from_ne_bytes(((range.start) as i32).to_ne_bytes()) > (0) { u_string::unit_at_from(__units1, u32::wrapping_sub(range.start, 1)) } else { None };
+            let r = if i32::from_ne_bytes(((range.end) as i32).to_ne_bytes()) < (i32::from_ne_bytes(((__count1) as i32).to_ne_bytes())) { u_string::unit_at_from(__units1, range.end) } else { None };
             return if CjkFontRoleClassifier::cjk_font_role_classifier_is_latin(l) && CjkFontRoleClassifier::cjk_font_role_classifier_is_latin(r) { FontRole::LatinText } else { FontRole::CjkPunctuation };
         }
         if i32::from_ne_bytes(((c) as i32).to_ne_bytes()) >= 32 && (i32::from_ne_bytes(((c) as i32).to_ne_bytes())) <= 126 || (i32::from_ne_bytes(((c) as i32).to_ne_bytes())) >= 192 && (i32::from_ne_bytes(((c) as i32).to_ne_bytes())) <= 591 {

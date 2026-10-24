@@ -1030,10 +1030,10 @@ fn in_word_apostrophe_matrix_does_not_consume_outer_quote_pairs() {
 ], &QuotePairAnalyzerTestSupport::quote_pair_analyzer_test_support_a().analyze(q.as_ustr()).unwrap(), Some((q).to_ustring())).unwrap();
             let mut curly = 0u32;
             let mut k = 0u32;
-            let __units = u_string::units(&q);
+            let __units = q.as_slice();
             let __count = u_string::unit_count(&q);
             while (i32::from_ne_bytes(((k) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((__count) as i32).to_ne_bytes())) {
-                let cq = u_string::unit_at_from(&__units, k).unwrap_or(0);
+                let cq = u_string::unit_at_from(__units, k).unwrap_or(0);
                 if cq == 8216 || cq == 8217 || cq == 8220 || cq == 8221 {
                     curly = u32::wrapping_add(curly, 1);
                 }
@@ -1177,10 +1177,10 @@ fn adjacent_quoted_list_items_do_not_use_previous_item_content_as_outer_context(
             let mut final_open = 4294967295u32;
             let mut final_close = 4294967295u32;
             let mut p = 0u32;
-            let __units1 = u_string::units(&tt);
+            let __units1 = tt.as_slice();
             let __count1 = u_string::unit_count(&tt);
             while (i32::from_ne_bytes(((p) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((__count1) as i32).to_ne_bytes())) {
-                let ch = u_string::unit_at_from(&__units1, p).unwrap_or(0);
+                let ch = u_string::unit_at_from(__units1, p).unwrap_or(0);
                 if ch == 8220 {
                     final_open = p;
                 }

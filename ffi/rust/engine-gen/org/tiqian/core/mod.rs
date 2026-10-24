@@ -9,6 +9,7 @@ pub mod break_opportunity_decision_info;
 pub mod built_in_layout_profiles;
 pub mod cluster;
 pub mod cluster_geometry_decision_info;
+#[cfg(test)]
 pub mod color_span;
 pub mod contextual_kinsoku_decision_info;
 #[cfg(test)]
@@ -76,6 +77,7 @@ pub mod line_repair_allocation_info;
 pub mod line_repair_candidate_info;
 pub mod line_repair_decision_info;
 pub mod line_spacing_decision_info;
+#[cfg(test)]
 pub mod link_address_display;
 #[cfg(test)]
 pub mod link_address_display_test;
@@ -136,6 +138,7 @@ pub mod unicode_word_character;
 pub mod unicode_word_character_data;
 #[cfg(test)]
 pub mod unicode_word_character_test;
+#[cfg(test)]
 pub mod units;
 pub mod writing_mode;
 pub mod zero_width_break_decision_info;
@@ -149,6 +152,7 @@ pub use break_opportunity_decision_info::*;
 pub use built_in_layout_profiles::*;
 pub use cluster::*;
 pub use cluster_geometry_decision_info::*;
+#[cfg(test)]
 pub use color_span::*;
 pub use contextual_kinsoku_decision_info::*;
 #[cfg(test)]
@@ -216,6 +220,7 @@ pub use line_repair_allocation_info::*;
 pub use line_repair_candidate_info::*;
 pub use line_repair_decision_info::*;
 pub use line_spacing_decision_info::*;
+#[cfg(test)]
 pub use link_address_display::*;
 #[cfg(test)]
 pub use link_address_display_test::*;
@@ -276,6 +281,7 @@ pub use unicode_word_character::*;
 pub use unicode_word_character_data::*;
 #[cfg(test)]
 pub use unicode_word_character_test::*;
+#[cfg(test)]
 pub use units::*;
 pub use writing_mode::*;
 pub use zero_width_break_decision_info::*;

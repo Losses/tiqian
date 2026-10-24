@@ -1,3 +1,5 @@
+#![cfg(test)]
+
 use crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError;
 use crate::org::tiqian::font::font_role::FontRole;
 use crate::runtime::sorted_table::SortedMapTable;

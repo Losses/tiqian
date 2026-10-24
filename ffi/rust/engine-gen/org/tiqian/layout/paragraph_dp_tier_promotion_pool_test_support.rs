@@ -1,3 +1,5 @@
+#![cfg(test)]
+
 use crate::org::tiqian::core::cluster::Cluster;
 use crate::org::tiqian::core::text_range::TextRange;
 use crate::org::tiqian::core::tiqian_illegal_argument_exception::TextRangeError;

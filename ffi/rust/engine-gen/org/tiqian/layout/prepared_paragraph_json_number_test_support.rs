@@ -1,3 +1,5 @@
+#![cfg(test)]
+
 use crate::org::tiqian::protocol::plan_json_number::PlanJsonNumber;
 use crate::org::tiqian::test::trace::test_trace_recorder::TestTraceRecorder;
 use crate::org::tiqian::test::trace::traced_assertions::TracedAssertions;

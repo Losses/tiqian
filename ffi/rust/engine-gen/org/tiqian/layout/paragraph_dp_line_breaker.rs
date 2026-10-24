@@ -113,7 +113,7 @@ Some(__option9) => (*__option9).clone() };
 Some(__option10) => (*__option10).clone() };
         let max_stretch = match &(max_cjk_stretch_per_gap) { None => f64::INFINITY, Some(__option11) => *__option11 };
         let sino_cap = match &(sino_western_stretch_cap) { None => 0.0f64, Some(__option12) => *__option12 };
-        let context = DpContext::new(natural_clusters.to_vec(), adjusted_clusters.to_vec(), max_width, (shrink).clone(), (ranges).clone(), indent, (forbidden_line_start_clusters).clone(), (forbid_end).clone(), (hyphens).clone(), (cjk).clone(), max_stretch, (sino).clone(), sino_cap, (controls).clone(), (gap_boundaries).clone(), max_stretch, line_adjustment_push_in.as_ref().map_or(false, |v| v == &(true)), (progressive).clone())?;
+        let context = DpContext::new(natural_clusters.to_vec(), adjusted_clusters.to_vec(), max_width, (shrink).clone(), (ranges).clone(), indent, (forbidden_line_start_clusters).clone(), (forbid_end).clone(), (hyphens).clone(), (cjk).clone(), max_stretch, (sino).clone(), sino_cap, (controls).clone(), (gap_boundaries).clone(), max_stretch, matches!(line_adjustment_push_in.as_ref(), Some(__v) if __v == &(true)), (progressive).clone())?;
         let mut committed: Vec<LineCandidate> = vec![];
         let mut sorted_breaks: Vec<u32> = vec![];
         if i32::from_ne_bytes(((u32::from_ne_bytes(((hard.size()) as u32).to_ne_bytes())) as i32).to_ne_bytes()) > (0) {
@@ -346,7 +346,7 @@ Vec<EdgeState>>(Arc::new(|a, b| SortedTable::sorted_table_compare_ints(i32::from
                                 let mut kept: Vec<EdgeState> = vec![];
                                 {
                                     let mut _g = 0u32;
-                                    while (_g) < (u32::try_from(((next).as_ref().map_or(0, |v| v.len())) & 0xFFFF_FFFF).unwrap_or(0)) {
+                                    while (_g) < (u32::try_from((u32::try_from(((next).as_ref().map_or(0usize, |v| v.len())) & 0xFFFF_FFFF).unwrap_or(0)) & 0xFFFF_FFFF).unwrap_or(0)) {
                                         let old = ((next).as_ref().unwrap()[usize::try_from(_g).unwrap_or(0)]).clone();
                                         _g = u32::wrapping_add(_g, 1);
                                         if !(old.start == start && old.hyphen_run == hr && old.stretch_run == sr) {
@@ -504,7 +504,7 @@ Some(__option40) => (*__option40).clone() };
 Some(__option41) => (*__option41).clone() };
         let max_stretch = match &(max_cjk_stretch_per_gap) { None => f64::INFINITY, Some(__option42) => *__option42 };
         let sino_cap = match &(sino_western_stretch_cap) { None => 0.0f64, Some(__option43) => *__option43 };
-        let context = DpContext::new(natural_clusters.to_vec(), adjusted_clusters.to_vec(), max_width, (shrink).clone(), (ranges).clone(), indent, (forbidden_line_start_clusters).clone(), (forbid_end).clone(), (hyphens).clone(), (cjk).clone(), max_stretch, (sino).clone(), sino_cap, (controls).clone(), (gap_boundaries).clone(), max_stretch, line_adjustment_push_in.as_ref().map_or(false, |v| v == &(true)), (progressive).clone())?;
+        let context = DpContext::new(natural_clusters.to_vec(), adjusted_clusters.to_vec(), max_width, (shrink).clone(), (ranges).clone(), indent, (forbidden_line_start_clusters).clone(), (forbid_end).clone(), (hyphens).clone(), (cjk).clone(), max_stretch, (sino).clone(), sino_cap, (controls).clone(), (gap_boundaries).clone(), max_stretch, matches!(line_adjustment_push_in.as_ref(), Some(__v) if __v == &(true)), (progressive).clone())?;
         let mut committed: Vec<LineCandidate> = vec![];
         let mut sorted_breaks: Vec<u32> = vec![];
         if i32::from_ne_bytes(((u32::from_ne_bytes(((hard.size()) as u32).to_ne_bytes())) as i32).to_ne_bytes()) > (0) {

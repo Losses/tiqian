@@ -78,7 +78,7 @@ Some(__option11) => (*__option11).clone() };
         }
         let candidate = opportunities.get(&(candidate_end));
         if candidate.is_none() {
-            if match &(adjusted_clusters) { None => true, Some(__option13) => candidate_end > 2147483647 } || (candidate_end) >= u32::try_from(((adjusted_clusters).as_ref().map_or(0, |v| v.len())) & 0xFFFF_FFFF).unwrap_or(0) {
+            if match &(adjusted_clusters) { None => true, Some(__option13) => candidate_end > 2147483647 } || (candidate_end) >= u32::try_from((u32::try_from(((adjusted_clusters).as_ref().map_or(0usize, |v| v.len())) & 0xFFFF_FFFF).unwrap_or(0)) & 0xFFFF_FFFF).unwrap_or(0) {
                 return true;
             }
             let source = (((adjusted_clusters).as_ref().unwrap()[usize::try_from(candidate_end).unwrap_or(0)]).clone().range).clone().start;
@@ -218,13 +218,11 @@ Some(__option11) => (*__option11).clone() };
     }
 
     pub(crate) fn progressive_break_decisions_has_whitespace_unit(s: &UStr) -> bool {
-    let __units = u_string::units(&s);
+    let __units = s.as_slice();
     let __count = u_string::unit_count(&s);
         let mut i = 0u32;
-        let __units1 = u_string::units(&s);
-        let __count1 = u_string::unit_count(&s);
         while (i32::from_ne_bytes(((i) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((__count) as i32).to_ne_bytes())) {
-            let c = u_string::unit_at_from(&__units1, i).unwrap_or(0);
+            let c = u_string::unit_at_from(__units, i).unwrap_or(0);
             if i32::from_ne_bytes(((c) as i32).to_ne_bytes()) >= 9 && (i32::from_ne_bytes(((c) as i32).to_ne_bytes())) <= 13 || (i32::from_ne_bytes(((c) as i32).to_ne_bytes())) >= 28 && (i32::from_ne_bytes(((c) as i32).to_ne_bytes())) <= 32 || c == 160 || c == 5760 || (i32::from_ne_bytes(((c) as i32).to_ne_bytes())) >= 8192 && (i32::from_ne_bytes(((c) as i32).to_ne_bytes())) <= 8202 || c == 8232 || c == 8233 || c == 8239 || c == 8287 || c == 12288 {
                 return true;
             }

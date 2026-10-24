@@ -65,7 +65,7 @@ impl TestTraceStore {
         }
         if let Some(&unit) = (section).as_mut().unwrap().lines.last() {
             if unit >= 55296 && unit <= 56319 && !line.is_empty() {
-                if !line.encode_utf16().next().map_or(false, |head| head >= 56320 && head <= 57343) {
+                if !match (line).encode_utf16().next() { Some(head) => head >= 56320 && head <= 57343, None => false } {
                     return Err(UStringFault::UnpairedSurrogate { unit: u32::from(unit) });
                 }
             }
@@ -74,8 +74,8 @@ impl TestTraceStore {
         if let Some(&unit) = (section).as_mut().unwrap().lines.last() {
             if unit >= 55296 && unit <= 56319 && !UString::from(concat!("\n",
 "")).is_empty() {
-                if !UString::from(concat!("\n",
-"")).encode_utf16().next().map_or(false, |head| head >= 56320 && head <= 57343) {
+                if !match (UString::from(concat!("\n",
+""))).encode_utf16().next() { Some(head) => head >= 56320 && head <= 57343, None => false } {
                     return Err(UStringFault::UnpairedSurrogate { unit: u32::from(unit) });
                 }
             }
@@ -94,7 +94,7 @@ impl TestTraceStore {
         let mut output = Vec::<u16>::new();
         if let Some(&unit) = output.last() {
             if unit >= 55296 && unit <= 56319 && !UString::from("class: ").is_empty() {
-                if !UString::from("class: ").encode_utf16().next().map_or(false, |head| head >= 56320 && head <= 57343) {
+                if !match (UString::from("class: ")).encode_utf16().next() { Some(head) => head >= 56320 && head <= 57343, None => false } {
                     return Err(UStringFault::UnpairedSurrogate { unit: u32::from(unit) });
                 }
             }
@@ -102,7 +102,7 @@ impl TestTraceStore {
         output.extend(UString::from("class: ").encode_utf16());
         if let Some(&unit) = output.last() {
             if unit >= 55296 && unit <= 56319 && !class_name.is_empty() {
-                if !class_name.encode_utf16().next().map_or(false, |head| head >= 56320 && head <= 57343) {
+                if !match (class_name).encode_utf16().next() { Some(head) => head >= 56320 && head <= 57343, None => false } {
                     return Err(UStringFault::UnpairedSurrogate { unit: u32::from(unit) });
                 }
             }
@@ -111,8 +111,8 @@ impl TestTraceStore {
         if let Some(&unit) = output.last() {
             if unit >= 55296 && unit <= 56319 && !UString::from(concat!("\n",
 "")).is_empty() {
-                if !UString::from(concat!("\n",
-"")).encode_utf16().next().map_or(false, |head| head >= 56320 && head <= 57343) {
+                if !match (UString::from(concat!("\n",
+""))).encode_utf16().next() { Some(head) => head >= 56320 && head <= 57343, None => false } {
                     return Err(UStringFault::UnpairedSurrogate { unit: u32::from(unit) });
                 }
             }
@@ -134,7 +134,7 @@ impl TestTraceStore {
             let section = (((class_state).as_ref().unwrap().sections).clone()[usize::try_from(order[usize::try_from(index).unwrap_or(0)]).unwrap_or(0)]).clone();
             if let Some(&unit) = output.last() {
                 if unit >= 55296 && unit <= 56319 && !UString::from("test: ").is_empty() {
-                    if !UString::from("test: ").encode_utf16().next().map_or(false, |head| head >= 56320 && head <= 57343) {
+                    if !match (UString::from("test: ")).encode_utf16().next() { Some(head) => head >= 56320 && head <= 57343, None => false } {
                         return Err(UStringFault::UnpairedSurrogate { unit: u32::from(unit) });
                     }
                 }
@@ -142,7 +142,7 @@ impl TestTraceStore {
             output.extend(UString::from("test: ").encode_utf16());
             if let Some(&unit) = output.last() {
                 if unit >= 55296 && unit <= 56319 && !(section.name).to_ustring().is_empty() {
-                    if !(section.name).to_ustring().encode_utf16().next().map_or(false, |head| head >= 56320 && head <= 57343) {
+                    if !match ((section.name).to_ustring()).encode_utf16().next() { Some(head) => head >= 56320 && head <= 57343, None => false } {
                         return Err(UStringFault::UnpairedSurrogate { unit: u32::from(unit) });
                     }
                 }
@@ -151,8 +151,8 @@ impl TestTraceStore {
             if let Some(&unit) = output.last() {
                 if unit >= 55296 && unit <= 56319 && !UString::from(concat!("\n",
 "")).is_empty() {
-                    if !UString::from(concat!("\n",
-"")).encode_utf16().next().map_or(false, |head| head >= 56320 && head <= 57343) {
+                    if !match (UString::from(concat!("\n",
+""))).encode_utf16().next() { Some(head) => head >= 56320 && head <= 57343, None => false } {
                         return Err(UStringFault::UnpairedSurrogate { unit: u32::from(unit) });
                     }
                 }
@@ -163,7 +163,7 @@ impl TestTraceStore {
             if i32::from_ne_bytes(((u_string::unit_count(&(section_text))) as i32).to_ne_bytes()) > (0) {
                 if let Some(&unit) = output.last() {
                     if unit >= 55296 && unit <= 56319 && !section_text.is_empty() {
-                        if !section_text.encode_utf16().next().map_or(false, |head| head >= 56320 && head <= 57343) {
+                        if !match (section_text).encode_utf16().next() { Some(head) => head >= 56320 && head <= 57343, None => false } {
                             return Err(UStringFault::UnpairedSurrogate { unit: u32::from(unit) });
                         }
                     }

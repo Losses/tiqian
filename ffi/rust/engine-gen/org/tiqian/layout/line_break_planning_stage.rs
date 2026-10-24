@@ -475,13 +475,13 @@ impl LineBreakPlanningStage {
     }
 
     pub(crate) fn line_break_planning_stage_is_whitespace_only(str: &UStr) -> bool {
-    let __units = u_string::units(&str);
+    let __units = str.as_slice();
     let __count = u_string::unit_count(&str);
         if __count == 0 {
             return false;
         }
-        for i in 0..match u32::try_from(u_string::unit_count(&(str))) { Ok(value) => value, Err(_) => u32::MAX } {
-            if !ParagraphShapingStage::paragraph_shaping_stage_is_whitespace(*(u_string::unit_at_from(&__units, i)).as_ref().unwrap()) {
+        for i in 0..__count {
+            if !ParagraphShapingStage::paragraph_shaping_stage_is_whitespace(*(u_string::unit_at_from(__units, i)).as_ref().unwrap()) {
                 return false;
             }
         }

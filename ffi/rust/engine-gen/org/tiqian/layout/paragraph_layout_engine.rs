@@ -301,10 +301,10 @@ impl ExplainableStubParagraphLayoutEngine {
             return Err(TextRangeError::Message { text: UString::from("ParagraphStyle.inlineObjectMinimumClearanceEm must be finite and non-negative") });
         }
         let mut surrogate_scan = 0u32;
-        let __units = u_string::units(&text);
+        let __units = text.as_slice();
         let __count = u_string::unit_count(&text);
         while (i32::from_ne_bytes(((surrogate_scan) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((__count) as i32).to_ne_bytes())) {
-            let code = u_string::unit_at_from(&__units, surrogate_scan).unwrap_or(0);
+            let code = u_string::unit_at_from(__units, surrogate_scan).unwrap_or(0);
             if i32::from_ne_bytes(((code) as i32).to_ne_bytes()) >= 55296 && (i32::from_ne_bytes(((code) as i32).to_ne_bytes())) <= 56319 {
                 if !((i32::from_ne_bytes(((u32::wrapping_add(surrogate_scan, 1)) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u_string::unit_count(&(text))) as i32).to_ne_bytes())) && (i32::from_ne_bytes(((u_string::unit_at(&text, u32::wrapping_add(surrogate_scan, 1)).unwrap_or(0)) as i32).to_ne_bytes())) >= 56320 && (i32::from_ne_bytes(((u_string::unit_at(&text, u32::wrapping_add(surrogate_scan, 1)).unwrap_or(0)) as i32).to_ne_bytes())) <= 57343) {
                     return Err(TextRangeError::Message { text: UString::from(format!("{}", { let mut __s = UString::new(); __s += &(UString::from("SourceText has an unpaired high surrogate at char ")); __s += &(UString::from(format!("{}", crate::runtime::int_text::IntText::int_text(surrogate_scan)).as_str())); __s }).as_str()) });

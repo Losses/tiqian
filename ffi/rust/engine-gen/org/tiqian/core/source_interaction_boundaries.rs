@@ -21,7 +21,7 @@ impl SourceInteractionBoundaries {
     const SOURCE_INTERACTION_BOUNDARIES_ZWJ: u32 = 8205;
 
     pub fn source_interaction_boundaries_coerce_to_interaction_boundary(text: &UStr, offset: u32, range: TextRange, bias: SourceBoundaryBias) -> u32 {
-    let __units = u_string::units(&text);
+    let __units = text.as_slice();
     let __count = u_string::unit_count(&text);
         let start = SourceInteractionBoundaries::source_interaction_boundaries_clamp(range.start, 0, __count);
         let end = SourceInteractionBoundaries::source_interaction_boundaries_clamp(range.end, start, __count);
@@ -56,7 +56,7 @@ impl SourceInteractionBoundaries {
     }
 
     pub fn source_interaction_boundaries_interaction_boundaries(text: &UStr, range: TextRange) -> Vec<u32> {
-    let __units1 = u_string::units(&text);
+    let __units1 = text.as_slice();
     let __count1 = u_string::unit_count(&text);
         let start = SourceInteractionBoundaries::source_interaction_boundaries_clamp(range.start, 0, __count1);
         let end = SourceInteractionBoundaries::source_interaction_boundaries_clamp(range.end, start, __count1);
@@ -68,13 +68,13 @@ impl SourceInteractionBoundaries {
     }
 
     pub fn source_interaction_boundaries_code_point_at_compat(text: &UStr, index: u32, end: u32) -> u32 {
-    let __units2 = u_string::units(&text);
+    let __units2 = text.as_slice();
     let __count2 = u_string::unit_count(&text);
-        let high = u_string::unit_at_from(&__units2, index).unwrap_or(0);
+        let high = u_string::unit_at_from(__units2, index).unwrap_or(0);
         if i32::from_ne_bytes(((high) as i32).to_ne_bytes()) < (i32::from_ne_bytes(((SourceInteractionBoundaries::SOURCE_INTERACTION_BOUNDARIES_HIGH_SURROGATE_START) as i32).to_ne_bytes())) || (i32::from_ne_bytes(((high) as i32).to_ne_bytes())) > (i32::from_ne_bytes(((SourceInteractionBoundaries::SOURCE_INTERACTION_BOUNDARIES_HIGH_SURROGATE_END) as i32).to_ne_bytes())) || (i32::from_ne_bytes(((u32::wrapping_add(index, 1)) as i32).to_ne_bytes())) >= i32::from_ne_bytes(((end) as i32).to_ne_bytes()) {
             return high;
         }
-        let low = u_string::unit_at_from(&__units2, u32::wrapping_add(index, 1)).unwrap_or(0);
+        let low = u_string::unit_at_from(__units2, u32::wrapping_add(index, 1)).unwrap_or(0);
         if i32::from_ne_bytes(((low) as i32).to_ne_bytes()) < (i32::from_ne_bytes(((SourceInteractionBoundaries::SOURCE_INTERACTION_BOUNDARIES_LOW_SURROGATE_START) as i32).to_ne_bytes())) || (i32::from_ne_bytes(((low) as i32).to_ne_bytes())) > (i32::from_ne_bytes(((SourceInteractionBoundaries::SOURCE_INTERACTION_BOUNDARIES_LOW_SURROGATE_END) as i32).to_ne_bytes())) {
             return high;
         }

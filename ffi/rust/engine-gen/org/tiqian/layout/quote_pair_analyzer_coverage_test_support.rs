@@ -1,3 +1,5 @@
+#![cfg(test)]
+
 use crate::org::tiqian::core::illegal_state_exception::IllegalStateException;
 use crate::org::tiqian::layout::quote_pair_analyzer::QuotePairAnalyzer;
 use crate::org::tiqian::test::trace::test_trace_recorder::TestTraceRecorder;

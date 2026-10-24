@@ -81,10 +81,10 @@ impl ClreqPunctuationPolicies {
     }
 
     pub fn clreq_punctuation_policies_policy_for(char: &UStr) -> PunctuationPolicy {
-    let __units = u_string::units(&char);
+    let __units = char.as_slice();
     let __count = u_string::unit_count(&char);
         let punctuation_class = ClreqPunctuationPolicies::clreq_punctuation_policies_classify(char);
-        return PunctuationPolicy::new(punctuation_class, !ClreqPunctuationPolicies::clreq_punctuation_policies_forbidden_at_line_start(char, KinsokuLevel::Basic), !ClreqPunctuationPolicies::clreq_punctuation_policies_forbidden_at_line_end(char, KinsokuLevel::Basic), ClreqPunctuationPolicies::clreq_punctuation_policies_default_punctuation_body_em(u_string::unit_at_from(&__units, 0u32), punctuation_class), Some(ClreqPunctuationPolicies::clreq_punctuation_policies_default_punctuation_advance_em(u_string::unit_at_from(&__units, 0u32), punctuation_class)));
+        return PunctuationPolicy::new(punctuation_class, !ClreqPunctuationPolicies::clreq_punctuation_policies_forbidden_at_line_start(char, KinsokuLevel::Basic), !ClreqPunctuationPolicies::clreq_punctuation_policies_forbidden_at_line_end(char, KinsokuLevel::Basic), ClreqPunctuationPolicies::clreq_punctuation_policies_default_punctuation_body_em(u_string::unit_at_from(__units, 0u32), punctuation_class), Some(ClreqPunctuationPolicies::clreq_punctuation_policies_default_punctuation_advance_em(u_string::unit_at_from(__units, 0u32), punctuation_class)));
     }
 
     pub fn clreq_punctuation_policies_forbidden_at_line_start(char: &UStr, level: KinsokuLevel) -> bool {
@@ -116,7 +116,7 @@ impl ClreqPunctuationPolicies {
     }
 
     pub(crate) fn clreq_punctuation_policies_default_punctuation_body_em(unit: Option<u32>, punctuation_class: PunctuationClass) -> f64 {
-        if unit.as_ref().map_or(false, |v| v == &(11834)) {
+        if matches!(unit.as_ref(), Some(__v) if __v == &(11834)) {
             return 2.0f64;
         }
         if ClreqPunctuationPolicies::clreq_punctuation_policies_contains_unit(&CLREQ_PUNCTUATION_POLICIES_SHORT_HYPHEN_CONNECTORS, unit) {
@@ -135,7 +135,7 @@ impl ClreqPunctuationPolicies {
     }
 
     pub(crate) fn clreq_punctuation_policies_default_punctuation_advance_em(unit: Option<u32>, _punctuation_class: PunctuationClass) -> f64 {
-        if unit.as_ref().map_or(false, |v| v == &(11834)) {
+        if matches!(unit.as_ref(), Some(__v) if __v == &(11834)) {
             return 2.0f64;
         }
         if ClreqPunctuationPolicies::clreq_punctuation_policies_contains_unit(&CLREQ_PUNCTUATION_POLICIES_SHORT_HYPHEN_CONNECTORS, unit) {
@@ -147,7 +147,7 @@ impl ClreqPunctuationPolicies {
     pub(crate) fn clreq_punctuation_policies_contains_unit(units: &[u32], unit: Option<u32>) -> bool {
         let mut index = 0u32;
         while (i32::from_ne_bytes(((index) as i32).to_ne_bytes())) < (i32::from_ne_bytes(((u32::try_from((units.len()) & 0xFFFF_FFFF).unwrap_or(0)) as i32).to_ne_bytes())) {
-            if unit.as_ref().map_or(false, |v| v == &(units[usize::try_from(index).unwrap_or(0)])) {
+            if matches!(unit.as_ref(), Some(__v) if __v == &(units[usize::try_from(index).unwrap_or(0)])) {
                 return true;
             }
             index = u32::wrapping_add(index, 1);
