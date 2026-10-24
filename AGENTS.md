@@ -89,6 +89,8 @@ Boring 编译器的全部调试工作先取证、后调试。取证对象是**�
 
 生成物读数必须写明**生成器修订**（boring 检出路径与 commit）。tiqian 各检出的 `.haxelib/boring/git` 指向的修订不同，用错修订得到的读数与结论无效。
 
+引擎产物一律经 driver 编译：`nix develop -c boring gen engine-<target> --project boring.json`，产物在 `engine-haxe/out/engine-<target>/gen`；禁止绕过 driver 直接运行 hxml 编译。入口与分层判据见 [docs/cross-target-alignment.md](docs/cross-target-alignment.md#分层判据)。
+
 ## 构建与验证
 
 项目使用 Gradle Kotlin Multiplatform，JVM 工具链版本为 25；包含 Android 目标平台与 `:ffi:js` 的 Kotlin/JS 目标平台。
