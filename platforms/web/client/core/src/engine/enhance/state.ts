@@ -99,6 +99,7 @@ export interface LayoutWorkRecord {
   signaturesCaptured: boolean;
   geometrySignature: string;
   measureSignature: string;
+  relayoutMeasure: string;
   typographySignature: string;
   maximumMeasure: boolean;
   viewportTypographyEntries: TypographyViewportEntry[];
@@ -111,6 +112,7 @@ export interface LayoutWorkInputs {
   signaturesCaptured: boolean;
   geometrySignature: string;
   measureSignature: string;
+  relayoutMeasure?: string;
   typographySignature: string;
   maximumMeasure: boolean;
   viewportTypographyEntries: TypographyViewportEntry[];

@@ -9,7 +9,7 @@ export class AutoSpacePolicy {
   public readonly stretchMaxEm: number;
   public static readonly Default: AutoSpacePolicy = new AutoSpacePolicy();
   public static readonly Clreq: AutoSpacePolicy = new AutoSpacePolicy((AutoSpaceMode.Insert as AutoSpaceMode), (AutoSpaceMode.Insert as AutoSpaceMode), 0.25, 0.5);
-  public static readonly Disabled: AutoSpacePolicy = new AutoSpacePolicy(AutoSpaceMode.Disabled, AutoSpaceMode.Disabled);
+  public static readonly Disabled: AutoSpacePolicy = new AutoSpacePolicy((AutoSpaceMode.Disabled as AutoSpaceMode), (AutoSpaceMode.Disabled as AutoSpaceMode));
 
   constructor(cjkLatin: AutoSpaceMode | null = null, cjkDigit: AutoSpaceMode | null = null, gapEm: number | null = null, stretchMaxEm: number | null = null) {
     this.cjkLatin = cjkLatin ?? (AutoSpaceMode.Insert as AutoSpaceMode);

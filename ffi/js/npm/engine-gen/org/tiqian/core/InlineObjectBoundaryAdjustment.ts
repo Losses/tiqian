@@ -26,7 +26,7 @@ export class InlineObjectBoundaryAdjustment {
   }
 
   public toString(): string {
-    return `InlineObjectBoundaryAdjustment(participatesInUniformStretch=${this.participatesInUniformStretch}, preferredStretch=${(this.preferredStretch === null ? "null" : this.preferredStretch.toString())}, shrinkCapacity=${this.shrinkCapacity}, lineEndDiscardableAdvance=${this.lineEndDiscardableAdvance}, preventsLineBreak=${this.preventsLineBreak})`;
+    return `InlineObjectBoundaryAdjustment(participatesInUniformStretch=${this.participatesInUniformStretch}, preferredStretch=${(this.preferredStretch === null ? "null" : this.preferredStretch!.toString())}, shrinkCapacity=${this.shrinkCapacity}, lineEndDiscardableAdvance=${this.lineEndDiscardableAdvance}, preventsLineBreak=${this.preventsLineBreak})`;
   }
 
   public static fixed(): InlineObjectBoundaryAdjustment {

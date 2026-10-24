@@ -42,71 +42,89 @@ export class PlanJsonNumber {
     return sign + mantissa + "e" + esign + String(absoluteExponent);
   }
 
-  public static appendJsonString(out: string, value: string): string {
-    const tail = out.charCodeAt(out.length - 1);
+  public static appendJsonString(out: string[], value: string): string[] {
+    const tail = out.length > 0 ? out[out.length - 1].charCodeAt(out[out.length - 1].length - 1) : NaN;
     if (tail >= 55296 && tail <= 56319 && "\"".length > 0 && !("\"".charCodeAt(0) >= 56320 && "\"".charCodeAt(0) <= 57343)) {
       throw new UStringException({ kind: "UnpairedSurrogate", unit: tail });
     }
-    out += "\"";
+    if ("\"".length > 0) {
+      out.push("\"");
+    }
     for (let i = 0, count = value.length; i < count; i += 1) {
       const c = (Number.isNaN(value.charCodeAt(i)) ? null : value.charCodeAt(i))!;
       if (c === 34) {
-        const tail2 = out.charCodeAt(out.length - 1);
+        const tail2 = out.length > 0 ? out[out.length - 1].charCodeAt(out[out.length - 1].length - 1) : NaN;
         if (tail2 >= 55296 && tail2 <= 56319 && "\\\"".length > 0 && !("\\\"".charCodeAt(0) >= 56320 && "\\\"".charCodeAt(0) <= 57343)) {
           throw new UStringException({ kind: "UnpairedSurrogate", unit: tail2 });
         }
-        out += "\\\"";
+        if ("\\\"".length > 0) {
+          out.push("\\\"");
+        }
       } else {
         if (c === 92) {
-          const tail3 = out.charCodeAt(out.length - 1);
+          const tail3 = out.length > 0 ? out[out.length - 1].charCodeAt(out[out.length - 1].length - 1) : NaN;
           if (tail3 >= 55296 && tail3 <= 56319 && "\\\\".length > 0 && !("\\\\".charCodeAt(0) >= 56320 && "\\\\".charCodeAt(0) <= 57343)) {
             throw new UStringException({ kind: "UnpairedSurrogate", unit: tail3 });
           }
-          out += "\\\\";
+          if ("\\\\".length > 0) {
+            out.push("\\\\");
+          }
         } else {
           if (c === 8) {
-            const tail4 = out.charCodeAt(out.length - 1);
+            const tail4 = out.length > 0 ? out[out.length - 1].charCodeAt(out[out.length - 1].length - 1) : NaN;
             if (tail4 >= 55296 && tail4 <= 56319 && "\\b".length > 0 && !("\\b".charCodeAt(0) >= 56320 && "\\b".charCodeAt(0) <= 57343)) {
               throw new UStringException({ kind: "UnpairedSurrogate", unit: tail4 });
             }
-            out += "\\b";
+            if ("\\b".length > 0) {
+              out.push("\\b");
+            }
           } else {
             if (c === 12) {
-              const tail5 = out.charCodeAt(out.length - 1);
+              const tail5 = out.length > 0 ? out[out.length - 1].charCodeAt(out[out.length - 1].length - 1) : NaN;
               if (tail5 >= 55296 && tail5 <= 56319 && "\\f".length > 0 && !("\\f".charCodeAt(0) >= 56320 && "\\f".charCodeAt(0) <= 57343)) {
                 throw new UStringException({ kind: "UnpairedSurrogate", unit: tail5 });
               }
-              out += "\\f";
+              if ("\\f".length > 0) {
+                out.push("\\f");
+              }
             } else {
               if (c === 10) {
-                const tail6 = out.charCodeAt(out.length - 1);
+                const tail6 = out.length > 0 ? out[out.length - 1].charCodeAt(out[out.length - 1].length - 1) : NaN;
                 if (tail6 >= 55296 && tail6 <= 56319 && "\\n".length > 0 && !("\\n".charCodeAt(0) >= 56320 && "\\n".charCodeAt(0) <= 57343)) {
                   throw new UStringException({ kind: "UnpairedSurrogate", unit: tail6 });
                 }
-                out += "\\n";
+                if ("\\n".length > 0) {
+                  out.push("\\n");
+                }
               } else {
                 if (c === 13) {
-                  const tail7 = out.charCodeAt(out.length - 1);
+                  const tail7 = out.length > 0 ? out[out.length - 1].charCodeAt(out[out.length - 1].length - 1) : NaN;
                   if (tail7 >= 55296 && tail7 <= 56319 && "\\r".length > 0 && !("\\r".charCodeAt(0) >= 56320 && "\\r".charCodeAt(0) <= 57343)) {
                     throw new UStringException({ kind: "UnpairedSurrogate", unit: tail7 });
                   }
-                  out += "\\r";
+                  if ("\\r".length > 0) {
+                    out.push("\\r");
+                  }
                 } else {
                   if (c === 9) {
-                    const tail8 = out.charCodeAt(out.length - 1);
+                    const tail8 = out.length > 0 ? out[out.length - 1].charCodeAt(out[out.length - 1].length - 1) : NaN;
                     if (tail8 >= 55296 && tail8 <= 56319 && "\\t".length > 0 && !("\\t".charCodeAt(0) >= 56320 && "\\t".charCodeAt(0) <= 57343)) {
                       throw new UStringException({ kind: "UnpairedSurrogate", unit: tail8 });
                     }
-                    out += "\\t";
+                    if ("\\t".length > 0) {
+                      out.push("\\t");
+                    }
                   } else {
-                    if (c < 32) {
-                      const tail9 = out.charCodeAt(out.length - 1);
+                    if (c! < 32) {
+                      const tail9 = out.length > 0 ? out[out.length - 1].charCodeAt(out[out.length - 1].length - 1) : NaN;
                       if (tail9 >= 55296 && tail9 <= 56319 && `\\u${(((c)) >>> 0).toString(16).toUpperCase().padStart(4, "0").toLowerCase()}`.length > 0 && !(`\\u${(((c)) >>> 0).toString(16).toUpperCase().padStart(4, "0").toLowerCase()}`.charCodeAt(0) >= 56320 && `\\u${(((c)) >>> 0).toString(16).toUpperCase().padStart(4, "0").toLowerCase()}`.charCodeAt(0) <= 57343)) {
                         throw new UStringException({ kind: "UnpairedSurrogate", unit: tail9 });
                       }
-                      out += `\\u${(((c)) >>> 0).toString(16).toUpperCase().padStart(4, "0").toLowerCase()}`;
+                      if (`\\u${(((c)) >>> 0).toString(16).toUpperCase().padStart(4, "0").toLowerCase()}`.length > 0) {
+                        out.push(`\\u${(((c)) >>> 0).toString(16).toUpperCase().padStart(4, "0").toLowerCase()}`);
+                      }
                     } else {
-                      const tail10 = out.charCodeAt(out.length - 1);
+                      const tail10 = out.length > 0 ? out[out.length - 1].charCodeAt(out[out.length - 1].length - 1) : NaN;
                       if (c >= 56320 && c <= 57343) {
                         if (!(tail10 >= 55296 && tail10 <= 56319)) {
                           throw new UStringException({ kind: "UnpairedSurrogate", unit: c });
@@ -114,7 +132,7 @@ export class PlanJsonNumber {
                       } else if (tail10 >= 55296 && tail10 <= 56319) {
                         throw new UStringException({ kind: "UnpairedSurrogate", unit: tail10 });
                       }
-                      out += String.fromCharCode(c);
+                      out.push(String.fromCharCode(c));
                     }
                   }
                 }
@@ -124,11 +142,13 @@ export class PlanJsonNumber {
         }
       }
     }
-    const tail11 = out.charCodeAt(out.length - 1);
+    const tail11 = out.length > 0 ? out[out.length - 1].charCodeAt(out[out.length - 1].length - 1) : NaN;
     if (tail11 >= 55296 && tail11 <= 56319 && "\"".length > 0 && !("\"".charCodeAt(0) >= 56320 && "\"".charCodeAt(0) <= 57343)) {
       throw new UStringException({ kind: "UnpairedSurrogate", unit: tail11 });
     }
-    out += "\"";
+    if ("\"".length > 0) {
+      out.push("\"");
+    }
     return out;
   }
 
@@ -210,54 +230,54 @@ export class PlanJsonNumber {
   private static fiveToThe(k: number): string {
     if (PlanJsonNumber.fivePowersBuilder === null) {
       PlanJsonNumber.fivePowersBuilder = SortedTable.mapBuilder<number, string>(SortedTable.compareInts);
-      PlanJsonNumber.fivePowers = PlanJsonNumber.fivePowersBuilder.build();
+      PlanJsonNumber.fivePowers = PlanJsonNumber.fivePowersBuilder!.build();
     }
-    const cached = PlanJsonNumber.fivePowers.get(k);
+    const cached = PlanJsonNumber.fivePowers!.get(k);
     if (cached !== null) {
       return cached!;
     }
     let anchor = 0;
     let digits = "1";
     let i = 0;
-    while (i < PlanJsonNumber.fivePowers.size()) {
-      if (PlanJsonNumber.fivePowers.keyAt(i) < k && PlanJsonNumber.fivePowers.keyAt(i) > anchor) {
-        anchor = PlanJsonNumber.fivePowers.keyAt(i);
-        digits = PlanJsonNumber.fivePowers.valueAt(i);
+    while (i < PlanJsonNumber.fivePowers!.size()) {
+      if (PlanJsonNumber.fivePowers!.keyAt(i) < k && PlanJsonNumber.fivePowers!.keyAt(i) > anchor) {
+        anchor = PlanJsonNumber.fivePowers!.keyAt(i);
+        digits = PlanJsonNumber.fivePowers!.valueAt(i);
       }
       i++;
     }
     for (let i = anchor; i < k; i += 1) {
       digits = PlanJsonNumber.timesSmall(digits, 5);
     }
-    PlanJsonNumber.fivePowersBuilder.put(k, digits);
-    PlanJsonNumber.fivePowers = PlanJsonNumber.fivePowersBuilder.build();
+    PlanJsonNumber.fivePowersBuilder!.put(k, digits);
+    PlanJsonNumber.fivePowers = PlanJsonNumber.fivePowersBuilder!.build();
     return digits;
   }
 
   private static twoToThe(k: number): string {
     if (PlanJsonNumber.twoPowersBuilder === null) {
       PlanJsonNumber.twoPowersBuilder = SortedTable.mapBuilder<number, string>(SortedTable.compareInts);
-      PlanJsonNumber.twoPowers = PlanJsonNumber.twoPowersBuilder.build();
+      PlanJsonNumber.twoPowers = PlanJsonNumber.twoPowersBuilder!.build();
     }
-    const cached = PlanJsonNumber.twoPowers.get(k);
+    const cached = PlanJsonNumber.twoPowers!.get(k);
     if (cached !== null) {
       return cached!;
     }
     let anchor = 0;
     let digits = "1";
     let i = 0;
-    while (i < PlanJsonNumber.twoPowers.size()) {
-      if (PlanJsonNumber.twoPowers.keyAt(i) < k && PlanJsonNumber.twoPowers.keyAt(i) > anchor) {
-        anchor = PlanJsonNumber.twoPowers.keyAt(i);
-        digits = PlanJsonNumber.twoPowers.valueAt(i);
+    while (i < PlanJsonNumber.twoPowers!.size()) {
+      if (PlanJsonNumber.twoPowers!.keyAt(i) < k && PlanJsonNumber.twoPowers!.keyAt(i) > anchor) {
+        anchor = PlanJsonNumber.twoPowers!.keyAt(i);
+        digits = PlanJsonNumber.twoPowers!.valueAt(i);
       }
       i++;
     }
     for (let i = anchor; i < k; i += 1) {
       digits = PlanJsonNumber.timesSmall(digits, 2);
     }
-    PlanJsonNumber.twoPowersBuilder.put(k, digits);
-    PlanJsonNumber.twoPowers = PlanJsonNumber.twoPowersBuilder.build();
+    PlanJsonNumber.twoPowersBuilder!.put(k, digits);
+    PlanJsonNumber.twoPowers = PlanJsonNumber.twoPowersBuilder!.build();
     return digits;
   }
 
@@ -265,7 +285,7 @@ export class PlanJsonNumber {
     if (factor === 0) {
       return "0";
     }
-    let result: string = null;
+    let result: string = null!;
     let shift = 0;
     let remaining = factor;
     while (remaining > 0) {
@@ -284,13 +304,13 @@ export class PlanJsonNumber {
   }
 
   private static addDecimal(a: string, b: string): string {
-    let out = "";
+    let out = [];
     let i = a.length - 1;
     let j = b.length - 1;
     let carry = 0;
     while (i >= 0 || j >= 0 || carry > 0) {
       const sum = (i >= 0 ? (Number.isNaN(a.charCodeAt(i)) ? null : a.charCodeAt(i))! - 48 : 0) + (j >= 0 ? (Number.isNaN(b.charCodeAt(j)) ? null : b.charCodeAt(j))! - 48 : 0) + carry;
-      const tail12 = out.charCodeAt(out.length - 1);
+      const tail12 = out.length > 0 ? out[out.length - 1].charCodeAt(out[out.length - 1].length - 1) : NaN;
       if (48 + sum % 10 >= 56320 && 48 + sum % 10 <= 57343) {
         if (!(tail12 >= 55296 && tail12 <= 56319)) {
           throw new UStringException({ kind: "UnpairedSurrogate", unit: 48 + sum % 10 });
@@ -298,16 +318,16 @@ export class PlanJsonNumber {
       } else if (tail12 >= 55296 && tail12 <= 56319) {
         throw new UStringException({ kind: "UnpairedSurrogate", unit: tail12 });
       }
-      out += String.fromCharCode(48 + sum % 10);
+      out.push(String.fromCharCode(48 + sum % 10));
       carry = Math.trunc(sum / 10);
       i--;
       j--;
     }
-    const tail13 = out.charCodeAt(out.length - 1);
+    const tail13 = out.length > 0 ? out[out.length - 1].charCodeAt(out[out.length - 1].length - 1) : NaN;
     if (tail13 >= 55296 && tail13 <= 56319) {
       throw new UStringException({ kind: "UnpairedSurrogate", unit: tail13 });
     }
-    const text = out;
+    const text = out.join("")
     return PlanJsonNumber.reverse(text);
   }
 
@@ -345,12 +365,12 @@ export class PlanJsonNumber {
   }
 
   private static timesSmall(digits: string, factor: number): string {
-    let out = "";
+    let out = [];
     let carry = 0;
     let i = digits.length - 1;
     while (i >= 0) {
       const product = ((Number.isNaN(digits.charCodeAt(i)) ? null : digits.charCodeAt(i))! - 48) * factor + carry;
-      const tail14 = out.charCodeAt(out.length - 1);
+      const tail14 = out.length > 0 ? out[out.length - 1].charCodeAt(out[out.length - 1].length - 1) : NaN;
       if (48 + product % 10 >= 56320 && 48 + product % 10 <= 57343) {
         if (!(tail14 >= 55296 && tail14 <= 56319)) {
           throw new UStringException({ kind: "UnpairedSurrogate", unit: 48 + product % 10 });
@@ -358,12 +378,12 @@ export class PlanJsonNumber {
       } else if (tail14 >= 55296 && tail14 <= 56319) {
         throw new UStringException({ kind: "UnpairedSurrogate", unit: tail14 });
       }
-      out += String.fromCharCode(48 + product % 10);
+      out.push(String.fromCharCode(48 + product % 10));
       carry = Math.trunc(product / 10);
       i--;
     }
     while (carry > 0) {
-      const tail15 = out.charCodeAt(out.length - 1);
+      const tail15 = out.length > 0 ? out[out.length - 1].charCodeAt(out[out.length - 1].length - 1) : NaN;
       if (48 + carry % 10 >= 56320 && 48 + carry % 10 <= 57343) {
         if (!(tail15 >= 55296 && tail15 <= 56319)) {
           throw new UStringException({ kind: "UnpairedSurrogate", unit: 48 + carry % 10 });
@@ -371,14 +391,14 @@ export class PlanJsonNumber {
       } else if (tail15 >= 55296 && tail15 <= 56319) {
         throw new UStringException({ kind: "UnpairedSurrogate", unit: tail15 });
       }
-      out += String.fromCharCode(48 + carry % 10);
+      out.push(String.fromCharCode(48 + carry % 10));
       carry = Math.trunc(carry / 10);
     }
-    const tail16 = out.charCodeAt(out.length - 1);
+    const tail16 = out.length > 0 ? out[out.length - 1].charCodeAt(out[out.length - 1].length - 1) : NaN;
     if (tail16 >= 55296 && tail16 <= 56319) {
       throw new UStringException({ kind: "UnpairedSurrogate", unit: tail16 });
     }
-    const text = out;
+    const text = out.join("")
     return PlanJsonNumber.reverse(text);
   }
 

@@ -174,7 +174,7 @@ function ensureWorker(): Worker {
   const c = coord();
   if (c.worker) return c.worker;
   if (typeof Worker !== "function") throw new Error("LayoutWorkerUnavailable");
-  c.worker = new Worker(new URL("../layout-worker.js", import.meta.url), {
+  c.worker = new Worker(new URL("../layout-worker.ts", import.meta.url), {
     type: "module",
   });
   c.worker.addEventListener("message", (event: MessageEvent<WorkerResponseEnvelope>) => {

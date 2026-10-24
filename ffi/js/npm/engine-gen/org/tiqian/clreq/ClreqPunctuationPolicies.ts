@@ -25,33 +25,33 @@ export class ClreqPunctuationPolicies {
   public static classify(char: string): PunctuationClass {
     const unit = (Number.isNaN(char.charCodeAt(0)) ? null : char.charCodeAt(0))!;
     if (ClreqPunctuationPolicies.containsUnit(ClreqPunctuationPolicies.OPENING_UNITS, unit)) {
-      return PunctuationClass.Opening;
+      return (PunctuationClass.Opening as PunctuationClass);
     }
     if (ClreqPunctuationPolicies.containsUnit(ClreqPunctuationPolicies.CLOSING_UNITS, unit)) {
-      return PunctuationClass.Closing;
+      return (PunctuationClass.Closing as PunctuationClass);
     }
     if (ClreqPunctuationPolicies.containsUnit(ClreqPunctuationPolicies.PAUSE_OR_STOP_UNITS, unit)) {
-      return PunctuationClass.PauseOrStop;
+      return (PunctuationClass.PauseOrStop as PunctuationClass);
     }
     if (unit === 183) {
-      return PunctuationClass.MiddleDot;
+      return (PunctuationClass.MiddleDot as PunctuationClass);
     }
     if (ClreqPunctuationPolicies.containsUnit(ClreqPunctuationPolicies.INTERPUNCT_UNITS, unit)) {
-      return PunctuationClass.Interpunct;
+      return (PunctuationClass.Interpunct as PunctuationClass);
     }
     if (ClreqPunctuationPolicies.containsUnit(ClreqPunctuationPolicies.CONNECTOR_UNITS, unit)) {
-      return PunctuationClass.Connector;
+      return (PunctuationClass.Connector as PunctuationClass);
     }
     if (ClreqPunctuationPolicies.containsUnit(ClreqPunctuationPolicies.SOLIDUS_UNITS, unit)) {
-      return PunctuationClass.Solidus;
+      return (PunctuationClass.Solidus as PunctuationClass);
     }
     if (ClreqPunctuationPolicies.containsUnit(ClreqPunctuationPolicies.ELLIPSIS_UNITS, unit)) {
-      return PunctuationClass.Ellipsis;
+      return (PunctuationClass.Ellipsis as PunctuationClass);
     }
     if (ClreqPunctuationPolicies.containsUnit(ClreqPunctuationPolicies.DASH_UNITS, unit)) {
-      return PunctuationClass.Dash;
+      return (PunctuationClass.Dash as PunctuationClass);
     }
-    return PunctuationClass.Other;
+    return (PunctuationClass.Other as PunctuationClass);
   }
 
   public static forcedHalfWidth(char: string, policy: PunctuationWidthPolicy): boolean {
@@ -76,7 +76,7 @@ export class ClreqPunctuationPolicies {
 
   public static policyFor(char: string): PunctuationPolicy {
     const punctuationClass = ClreqPunctuationPolicies.classify(char);
-    return new PunctuationPolicy(punctuationClass, !ClreqPunctuationPolicies.forbiddenAtLineStart(char, KinsokuLevel.Basic), !ClreqPunctuationPolicies.forbiddenAtLineEnd(char, KinsokuLevel.Basic), ClreqPunctuationPolicies.defaultPunctuationBodyEm((Number.isNaN(char.charCodeAt(0)) ? null : char.charCodeAt(0))!, punctuationClass), ClreqPunctuationPolicies.defaultPunctuationAdvanceEm((Number.isNaN(char.charCodeAt(0)) ? null : char.charCodeAt(0))!, punctuationClass));
+    return new PunctuationPolicy(punctuationClass, !ClreqPunctuationPolicies.forbiddenAtLineStart(char, (KinsokuLevel.Basic as KinsokuLevel)), !ClreqPunctuationPolicies.forbiddenAtLineEnd(char, (KinsokuLevel.Basic as KinsokuLevel)), ClreqPunctuationPolicies.defaultPunctuationBodyEm((Number.isNaN(char.charCodeAt(0)) ? null : char.charCodeAt(0))!, punctuationClass), ClreqPunctuationPolicies.defaultPunctuationAdvanceEm((Number.isNaN(char.charCodeAt(0)) ? null : char.charCodeAt(0))!, punctuationClass));
   }
 
   public static forbiddenAtLineStart(char: string, level: KinsokuLevel): boolean {
@@ -126,7 +126,7 @@ export class ClreqPunctuationPolicies {
     return 1.0;
   }
 
-  private static defaultPunctuationAdvanceEm(unit: number | null, punctuationClass: PunctuationClass): number {
+  private static defaultPunctuationAdvanceEm(unit: number | null, _punctuationClass: PunctuationClass): number {
     if (unit === 11834) {
       return 2.0;
     }

@@ -39,6 +39,10 @@ import type {
 } from "../../sampler/observers.js";
 import type { FrameTaskCallback } from "../coordination/coordination-service.js";
 import { InvalidationReason } from "./state.js";
+import {
+  committedMeasureSignatureFor,
+  recordCommittedMeasureSignature,
+} from "./committed-measure-ledger.js";
 import type { EnhancementStateMachine } from "./state-machine.js";
 import type { SchedulerRegistration } from "./scheduler-registration.js";
 import type { SourceRefreshOptions } from "./context-state.js";
@@ -120,7 +124,6 @@ function createResponsiveManager(
   let lastWidth = 0;
   let lastParagraphMeasures = "";
   let lastParagraphWidths = "";
-  let lastCommittedParagraphMeasures = "";
   let pendingCommittedMeasures = "";
 
   const boundResponsiveCommit: FrameTaskCallback = () => {
@@ -416,7 +419,14 @@ function createResponsiveManager(
     // reads here do not thrash.
     const paragraphMeasures = paragraphMeasureSignatureFromObservedFn();
     const hostInlineSizeRefresh = widthsChanged && hasHostInlineSizeParagraph(root);
-    const measuresChanged = paragraphMeasures !== lastParagraphMeasures;
+    // CommittedMeasureLedgerSingleWriter: dedup against the committed signature
+    // recorded by the last clean relayout completion, plus the in-flight
+    // relayout target, instead of the multi-writer dispatch bookkeeping.
+    const committedMeasures = committedMeasureSignatureFor(root);
+    const relayoutInFlight = stateMachine.workInFlight && stateMachine.work.kind === "Relayout";
+    const inFlightTarget = relayoutInFlight ? pendingCommittedMeasures : "";
+    const measuresChanged = paragraphMeasures !== committedMeasures &&
+      (inFlightTarget === "" || paragraphMeasures !== inFlightTarget);
     const signature = (widthsChanged && !stateMachine.isInvalidated(InvalidationReason.TypographyRefreshForced))
       ? hooks.typographyBaseline()
       : typographySignature(root);
@@ -464,12 +474,10 @@ function createResponsiveManager(
       hooks.tryReadoptSnapshotAtMaximumMeasure();
       return;
     }
-    // A forced pass (viewport revalidation, stale follow-up) may only skip
-    // against the CommittedMeasureLedger; a normal pass dedups against the
-    // dispatch bookkeeping.
-    const measureSettled = forceLatestWidth
-      ? paragraphMeasures === lastCommittedParagraphMeasures
-      : !measuresChanged;
+    // CommittedMeasureLedgerSingleWriter: the committed signature and the
+    // in-flight relayout target are both folded into measuresChanged, so one
+    // dedup gate serves the forced and normal passes alike.
+    const measureSettled = !measuresChanged;
     if (!typographyChanged && !hostInlineSizeRefresh && measureSettled) {
       // LineLengthGridResponsiveInvalidation: Web currently exposes the
       // engine's Start-aligned body only. Within one N×fontSize cell count,
@@ -617,10 +625,10 @@ function createResponsiveManager(
       pendingCommittedMeasures = value;
     },
     committedMeasureLedger() {
-      return lastCommittedParagraphMeasures;
+      return committedMeasureSignatureFor(root);
     },
     setCommittedMeasureLedger(value: string) {
-      lastCommittedParagraphMeasures = value;
+      recordCommittedMeasureSignature(root, value);
     },
     responsiveCommitCallback() {
       return boundResponsiveCommit;

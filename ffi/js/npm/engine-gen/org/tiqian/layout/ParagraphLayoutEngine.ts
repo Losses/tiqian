@@ -94,13 +94,13 @@ export class ExplainableStubParagraphLayoutEngine implements ParagraphLayoutEngi
     let surrogateScan = 0;
     while (surrogateScan < text.length) {
       const code = (Number.isNaN(text.charCodeAt(surrogateScan)) ? null : text.charCodeAt(surrogateScan))!;
-      if (code >= 55296 && code <= 56319) {
+      if (code! >= 55296 && code! <= 56319) {
         if (!(surrogateScan + 1 < text.length && readUnit(text, surrogateScan + 1)! >= 56320 && readUnit(text, surrogateScan + 1)! <= 57343)) {
           throw new TiqianIllegalArgumentException(({ kind: "Message", text: `SourceText has an unpaired high surrogate at char ${surrogateScan}` } as TextRangeError));
         }
         surrogateScan += 2;
       } else {
-        if (code >= 56320 && code <= 57343) {
+        if (code! >= 56320 && code! <= 57343) {
           throw new TiqianIllegalArgumentException(({ kind: "Message", text: `SourceText has an unpaired low surrogate at char ${surrogateScan}` } as TextRangeError));
         }
         surrogateScan += 1;
@@ -195,7 +195,7 @@ export class ParagraphLayoutFallbackResolver implements FallbackResolver {
     this.symbolFontKey = symbolFontKey ?? "symbol-fallback";
   }
 
-  public resolve(text: string, range: TextRange, request: FontRequest): FontDecision {
+  public resolve(_text: string, range: TextRange, request: FontRequest): FontDecision {
     let c: FontCandidate;
     {
       const _g = request.role;

@@ -18,9 +18,9 @@ export class DecorationSpan {
 }
 
 export function DecorationSpankindOrder(v: DecorationKind): number {
-  if (v.kind === "ProperNoun") return 2;
-  if (v.kind === "Mourning") return 1;
   if (v.kind === "Emphasis") return 0;
+  if (v.kind === "Mourning") return 1;
+  if (v.kind === "ProperNoun") return 2;
   if (v.kind === "BookTitle") return 3;
   return 0;
 }

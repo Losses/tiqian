@@ -46,6 +46,7 @@ export type TrackedParagraph = {
 export interface LayoutWorkOptions {
   usesCapturedMeasure?: boolean;
   captureSignatures?: boolean;
+  relayoutMeasure?: string;
 }
 
 export interface SourceRefreshOptions {
@@ -165,7 +166,7 @@ function createContextState(
     return result;
   }
 
-  function beginLayoutWork({ usesCapturedMeasure = false, captureSignatures = usesCapturedMeasure }: LayoutWorkOptions = {}): number {
+  function beginLayoutWork({ usesCapturedMeasure = false, captureSignatures = usesCapturedMeasure, relayoutMeasure = "" }: LayoutWorkOptions = {}): number {
     hooks.clearResponsiveRetarget();
     const viewportTypographyEntries = captureSignatures
       ? captureLayoutWorkViewportTypographyEntries(root)
@@ -186,6 +187,7 @@ function createContextState(
       measureSignature: captureSignatures
         ? hooks.paragraphMeasureSignature()
         : "",
+      relayoutMeasure,
       typographySignature: typographySig,
       maximumMeasure: captureSignatures && hooks.maximumMeasureActive(),
       viewportTypographyEntries,
@@ -339,7 +341,7 @@ function createContextState(
       finishLayoutWorkAndObserve();
       return;
     }
-    beginLayoutWork({ usesCapturedMeasure: true, captureSignatures: false });
+    beginLayoutWork({ usesCapturedMeasure: true, captureSignatures: false, relayoutMeasure: observedMeasures ?? hooks.paragraphMeasureSignatureFromObserved() });
     stateMachine.markWorkAsRelayout();
     // Callers on the commit paths pass the signature they just computed;
     // recomputing here is reserved for dispatches that never went through

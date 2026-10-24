@@ -2,7 +2,6 @@
 
 import { Rect } from "./Rect.ts";
 import { TextRange } from "./TextRange.ts";
-import { formatFloatRuntime } from "../../../runtime.ts";
 
 export class PositionedCluster {
   public readonly lineIndex: number;

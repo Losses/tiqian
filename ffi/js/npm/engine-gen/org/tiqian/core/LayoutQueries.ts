@@ -76,46 +76,56 @@ export class LayoutQueries {
       index += 1;
     }
     LayoutQueries.insertionSortAnnotations(annotations);
-    let output = "";
+    let output = [];
     let cursor = start;
     index = 0;
     while (index < annotations.length) {
       const annotation = annotations[index]!;
       if (annotation.end >= cursor && annotation.end <= end) {
-        const tail = output.charCodeAt(output.length - 1);
+        const tail = output.length > 0 ? output[output.length - 1].charCodeAt(output[output.length - 1].length - 1) : NaN;
         if (tail >= 55296 && tail <= 56319 && source.substring(cursor, annotation.end).length > 0 && !(source.substring(cursor, annotation.end).charCodeAt(0) >= 56320 && source.substring(cursor, annotation.end).charCodeAt(0) <= 57343)) {
           throw new UStringException({ kind: "UnpairedSurrogate", unit: tail });
         }
-        output += source.substring(cursor, annotation.end);
-        const tail2 = output.charCodeAt(output.length - 1);
+        if (source.substring(cursor, annotation.end).length > 0) {
+          output.push(source.substring(cursor, annotation.end));
+        }
+        const tail2 = output.length > 0 ? output[output.length - 1].charCodeAt(output[output.length - 1].length - 1) : NaN;
         if (tail2 >= 55296 && tail2 <= 56319 && "（".length > 0 && !("（".charCodeAt(0) >= 56320 && "（".charCodeAt(0) <= 57343)) {
           throw new UStringException({ kind: "UnpairedSurrogate", unit: tail2 });
         }
-        output += "（";
-        const tail3 = output.charCodeAt(output.length - 1);
+        if ("（".length > 0) {
+          output.push("（");
+        }
+        const tail3 = output.length > 0 ? output[output.length - 1].charCodeAt(output[output.length - 1].length - 1) : NaN;
         if (tail3 >= 55296 && tail3 <= 56319 && annotation.text.length > 0 && !(annotation.text.charCodeAt(0) >= 56320 && annotation.text.charCodeAt(0) <= 57343)) {
           throw new UStringException({ kind: "UnpairedSurrogate", unit: tail3 });
         }
-        output += annotation.text;
-        const tail4 = output.charCodeAt(output.length - 1);
+        if (annotation.text.length > 0) {
+          output.push(annotation.text);
+        }
+        const tail4 = output.length > 0 ? output[output.length - 1].charCodeAt(output[output.length - 1].length - 1) : NaN;
         if (tail4 >= 55296 && tail4 <= 56319 && "）".length > 0 && !("）".charCodeAt(0) >= 56320 && "）".charCodeAt(0) <= 57343)) {
           throw new UStringException({ kind: "UnpairedSurrogate", unit: tail4 });
         }
-        output += "）";
+        if ("）".length > 0) {
+          output.push("）");
+        }
         cursor = annotation.end;
       }
       index += 1;
     }
-    const tail5 = output.charCodeAt(output.length - 1);
+    const tail5 = output.length > 0 ? output[output.length - 1].charCodeAt(output[output.length - 1].length - 1) : NaN;
     if (tail5 >= 55296 && tail5 <= 56319 && source.substring(cursor, end).length > 0 && !(source.substring(cursor, end).charCodeAt(0) >= 56320 && source.substring(cursor, end).charCodeAt(0) <= 57343)) {
       throw new UStringException({ kind: "UnpairedSurrogate", unit: tail5 });
     }
-    output += source.substring(cursor, end);
-    const tail6 = output.charCodeAt(output.length - 1);
+    if (source.substring(cursor, end).length > 0) {
+      output.push(source.substring(cursor, end));
+    }
+    const tail6 = output.length > 0 ? output[output.length - 1].charCodeAt(output[output.length - 1].length - 1) : NaN;
     if (tail6 >= 55296 && tail6 <= 56319) {
       throw new UStringException({ kind: "UnpairedSurrogate", unit: tail6 });
     }
-    return output;
+    return output.join("")
   }
 
   public static positionedClusters(result: LayoutResult): PositionedCluster[] {
@@ -160,10 +170,10 @@ export class LayoutQueries {
           const cluster = LayoutQueries.findPositionedByRange(positioned, glyph.clusterRange);
           if (cluster !== null) {
             const bounds = glyph.bounds!;
-            left = LayoutQueries.minFloat(left, cluster.drawX + glyph.x + bounds.left);
-            top = LayoutQueries.minFloat(top, cluster.baseline + glyph.y + bounds.top);
-            right = LayoutQueries.maxFloat(right, cluster.drawX + glyph.x + bounds.right);
-            bottom = LayoutQueries.maxFloat(bottom, cluster.baseline + glyph.y + bounds.bottom);
+            left = LayoutQueries.minFloat(left, cluster!.drawX + glyph.x + bounds.left);
+            top = LayoutQueries.minFloat(top, cluster!.baseline + glyph.y + bounds.top);
+            right = LayoutQueries.maxFloat(right, cluster!.drawX + glyph.x + bounds.right);
+            bottom = LayoutQueries.maxFloat(bottom, cluster!.baseline + glyph.y + bounds.bottom);
           }
         }
         glyphIndex += 1;
@@ -212,8 +222,8 @@ export class LayoutQueries {
         break;
       }
     }
-    const match = pipeline_result;
-    return (match === null ? LayoutQueries.getCursorRect(result, clamped) : match.rect);
+    const match: PositionedCluster | null = pipeline_result;
+    return (match === null ? LayoutQueries.getCursorRect(result, clamped) : match!.rect);
   }
 
   public static getBoundingBoxes(result: LayoutResult, range: TextRange): Rect[] {
@@ -232,7 +242,7 @@ export class LayoutQueries {
       {
         const pipeline_item = LayoutQueries.sliceRectIfCovered(cluster, start, end);
         if (pipeline_item !== null) {
-          pipeline_result.push(pipeline_item);
+          pipeline_result.push((pipeline_item)!);
         }
       }
     }
@@ -270,11 +280,11 @@ export class LayoutQueries {
             if (sliceStart < sliceEnd) {
               const rect = LayoutQueries.sliceRect(cluster, sliceStart, sliceEnd);
               const next = new RichTextLineSegment(normalized, cluster.lineIndex, new TextRange(sliceStart, sliceEnd), rect.left, rect.top, rect.right, rect.bottom, cluster.baseline);
-              if (pending !== null && pending.lineIndex === next.lineIndex && pending.span === next.span && pending.range.end === next.range.start) {
-                pending = new RichTextLineSegment(pending.span, pending.lineIndex, new TextRange(pending.range.start, next.range.end), pending.left, LayoutQueries.minFloat(pending.top, next.top), next.right, LayoutQueries.maxFloat(pending.bottom, next.bottom), pending.baseline);
+              if (pending !== null && pending!.lineIndex === next.lineIndex && pending!.span === next.span && pending!.range.end === next.range.start) {
+                pending = new RichTextLineSegment(pending!.span, pending!.lineIndex, new TextRange(pending!.range.start, next.range.end), pending!.left, LayoutQueries.minFloat(pending!.top, next.top), next.right, LayoutQueries.maxFloat(pending!.bottom, next.bottom), pending!.baseline);
               } else {
                 if (pending !== null) {
-                  output.push(pending);
+                  output.push((pending)!);
                 }
                 pending = next;
               }
@@ -283,7 +293,7 @@ export class LayoutQueries {
           clusterIndex += 1;
         }
         if (pending !== null) {
-          output.push(pending);
+          output.push((pending)!);
         }
       }
       spanIndex += 1;
@@ -464,13 +474,13 @@ export class LayoutQueries {
     const positioned = LayoutQueries.positionedClustersAt(result, lineIndex, result.lines[lineIndex]!);
     const count5 = positioned.length;
     if (count5 === 0) {
-      return LayoutQueries.coerceSelectionOffset(result, result.lines[lineIndex]!.range.start, SourceBoundaryBias.Nearest);
+      return LayoutQueries.coerceSelectionOffset(result, result.lines[lineIndex]!.range.start, (SourceBoundaryBias.Nearest as SourceBoundaryBias));
     }
     if (x <= positioned[0]!.left) {
-      return LayoutQueries.coerceSelectionOffset(result, positioned[0]!.range.start, SourceBoundaryBias.Nearest);
+      return LayoutQueries.coerceSelectionOffset(result, positioned[0]!.range.start, (SourceBoundaryBias.Nearest as SourceBoundaryBias));
     }
     if (x >= positioned[count5 - 1]!.right) {
-      return LayoutQueries.coerceSelectionOffset(result, positioned[count5 - 1]!.range.end, SourceBoundaryBias.Nearest);
+      return LayoutQueries.coerceSelectionOffset(result, positioned[count5 - 1]!.range.end, (SourceBoundaryBias.Nearest as SourceBoundaryBias));
     }
     let pipeline_result: PositionedCluster | null = null;
     for (let pipeline_index = 0; pipeline_index < count5; pipeline_index += 1) {
@@ -480,11 +490,11 @@ export class LayoutQueries {
         break;
       }
     }
-    const candidate = pipeline_result;
+    const candidate: PositionedCluster | null = pipeline_result;
     const cluster2 = (candidate !== null ? candidate : LayoutQueries.nearestCluster(positioned, x));
     const rawOffset = LayoutQueries.offsetForX(cluster2, x);
-    const backward = LayoutQueries.coerceSelectionOffset(result, rawOffset, SourceBoundaryBias.Backward);
-    const forward = LayoutQueries.coerceSelectionOffset(result, rawOffset, SourceBoundaryBias.Forward);
+    const backward = LayoutQueries.coerceSelectionOffset(result, rawOffset, (SourceBoundaryBias.Backward as SourceBoundaryBias));
+    const forward = LayoutQueries.coerceSelectionOffset(result, rawOffset, (SourceBoundaryBias.Forward as SourceBoundaryBias));
     if (backward === forward) {
       return backward;
     }
@@ -576,7 +586,7 @@ export class LayoutQueries {
         break;
       }
     }
-    const candidate = pipeline_result;
+    const candidate: PositionedCluster | null = pipeline_result;
     const cluster2 = (candidate !== null ? candidate : LayoutQueries.nearestCluster(positioned, x));
     if (cluster2.range.isEmpty) {
       return null;
@@ -737,16 +747,16 @@ export class LayoutQueries {
       }
       let leadingGlue = 0.0;
       let trailingGlue = 0.0;
-      if (first !== null && segment.range.start === first.range.start) {
-        const decision = LayoutQueries.geometryDecisionForRange(result, first.range);
+      if (first !== null && segment.range.start === first!.range.start) {
+        const decision = LayoutQueries.geometryDecisionForRange(result, first!.range);
         if (decision !== null) {
-          leadingGlue = LayoutQueries.maxFloat(decision.leadingGlueNatural - decision.leadingGlueConsumed, 0.0);
+          leadingGlue = LayoutQueries.maxFloat(decision!.leadingGlueNatural - decision!.leadingGlueConsumed, 0.0);
         }
       }
-      if (last !== null && segment.range.end === last.range.end) {
-        const decision2 = LayoutQueries.geometryDecisionForRange(result, last.range);
+      if (last !== null && segment.range.end === last!.range.end) {
+        const decision2 = LayoutQueries.geometryDecisionForRange(result, last!.range);
         if (decision2 !== null) {
-          trailingGlue = LayoutQueries.maxFloat(decision2.trailingGlueNatural - decision2.trailingGlueConsumed, 0.0);
+          trailingGlue = LayoutQueries.maxFloat(decision2!.trailingGlueNatural - decision2!.trailingGlueConsumed, 0.0);
         }
       }
       const left = LayoutQueries.minFloat(segment.right, segment.left + leadingGlue);
@@ -756,7 +766,7 @@ export class LayoutQueries {
     return output;
   }
 
-  private static withAdjacentSameStyleClearance(result: LayoutResult, segments: RichTextLineSegment[]): RichTextLineSegment[] {
+  private static withAdjacentSameStyleClearance(_result: LayoutResult, segments: RichTextLineSegment[]): RichTextLineSegment[] {
     if (segments.length < 2) {
       return segments;
     }
@@ -795,8 +805,8 @@ export class LayoutQueries {
       const cluster = covered[pipeline_index]!;
       const metric = LayoutQueries.lastMetricContaining(result, cluster.range);
       if (metric !== null) {
-        top = LayoutQueries.minFloat(top, cluster.baseline - metric.layoutAscent);
-        bottom = LayoutQueries.maxFloat(bottom, cluster.baseline + metric.layoutDescent);
+        top = LayoutQueries.minFloat(top, cluster.baseline - metric!.layoutAscent);
+        bottom = LayoutQueries.maxFloat(bottom, cluster.baseline + metric!.layoutDescent);
       } else {
         const style = LayoutQueries.resolvedTextStyleAt(result, cluster.range.start);
         top = LayoutQueries.minFloat(top, cluster.baseline - style.fontSize * LayoutQueries.BACKGROUND_FALLBACK_ASCENT_EM);
@@ -825,8 +835,8 @@ export class LayoutQueries {
     if (reference === null) {
       reference = firstMatch;
     }
-    const ascent = (reference === null ? style.fontSize * LayoutQueries.BACKGROUND_FALLBACK_ASCENT_EM : reference.layoutAscent);
-    const descent = (reference === null ? style.fontSize * LayoutQueries.BACKGROUND_FALLBACK_DESCENT_EM : reference.layoutDescent);
+    const ascent = (reference === null ? style.fontSize * LayoutQueries.BACKGROUND_FALLBACK_ASCENT_EM : reference!.layoutAscent);
+    const descent = (reference === null ? style.fontSize * LayoutQueries.BACKGROUND_FALLBACK_DESCENT_EM : reference!.layoutDescent);
     return [segment.baseline - ascent, segment.baseline + descent];
   }
 
@@ -1086,18 +1096,18 @@ export class LayoutQueries {
   private static selectionWordKind(text: string, start: number, end: number): SelectionWordKind {
     const codePoint = SourceInteractionBoundaries.codePointAtCompat(text, start, end);
     if (codePoint === LayoutQueries.CR || codePoint === LayoutQueries.LF || codePoint === LayoutQueries.NEL || codePoint === LayoutQueries.LINE_SEPARATOR || codePoint === LayoutQueries.PARAGRAPH_SEPARATOR) {
-      return SelectionWordKind.Single;
+      return (SelectionWordKind.Single as SelectionWordKind);
     }
     if (LayoutQueries.isWhitespace(codePoint)) {
-      return SelectionWordKind.Whitespace;
+      return (SelectionWordKind.Whitespace as SelectionWordKind);
     }
     if (LayoutQueries.isHanIdeograph(codePoint)) {
-      return SelectionWordKind.Single;
+      return (SelectionWordKind.Single as SelectionWordKind);
     }
     if (LayoutQueries.isLetterOrDigit(codePoint) || codePoint === 95 || codePoint === 39 || codePoint === 8217) {
-      return SelectionWordKind.Word;
+      return (SelectionWordKind.Word as SelectionWordKind);
     }
-    return SelectionWordKind.Single;
+    return (SelectionWordKind.Single as SelectionWordKind);
   }
 
   private static isWhitespace(codePoint: number): boolean {
@@ -1182,10 +1192,10 @@ export class LayoutQueries {
   }
 
   private static sharedClearance(segment: RichTextLineSegment, neighbour: RichTextLineSegment | null): number {
-    if (neighbour === null || !LayoutQueries.sameVisibleStyle(segment, neighbour)) {
+    if (neighbour === null || !LayoutQueries.sameVisibleStyle(segment, (neighbour)!)) {
       return 0.0;
     }
-    return LayoutQueries.minFloat(segment.span.paint.adjacentSameStyleClearance, neighbour.span.paint.adjacentSameStyleClearance);
+    return LayoutQueries.minFloat(segment.span.paint.adjacentSameStyleClearance, neighbour!.span.paint.adjacentSameStyleClearance);
   }
 
   private static isDecorationRole(role: RichTextRole): boolean {

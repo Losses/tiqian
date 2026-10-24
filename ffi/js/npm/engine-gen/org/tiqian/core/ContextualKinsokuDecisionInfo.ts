@@ -33,6 +33,8 @@ export function compareContextualKinsokuDecisionInfo(a: ContextualKinsokuDecisio
   if (a.reason !== b.reason) return a.reason < b.reason ? -1 : 1;
   if (a.impossibleMeasureFallback === null && b.impossibleMeasureFallback !== null) return -1;
   if (a.impossibleMeasureFallback !== null && b.impossibleMeasureFallback === null) return 1;
-  if (a.impossibleMeasureFallback !== null && b.impossibleMeasureFallback !== null && a.impossibleMeasureFallback !== b.impossibleMeasureFallback) return a.impossibleMeasureFallback < b.impossibleMeasureFallback ? -1 : 1;
+  if (a.impossibleMeasureFallback !== null && b.impossibleMeasureFallback !== null) {
+    if (a.impossibleMeasureFallback !== b.impossibleMeasureFallback) return a.impossibleMeasureFallback < b.impossibleMeasureFallback ? -1 : 1;
+  }
   return 0;
 }

@@ -14,45 +14,45 @@ export class UnicodePunctuationLineBreak {
     }
     const kind = UnicodePunctuationLineBreakData.lookup(codePoint);
     if (kind === 0) {
-      return UnicodePunctuationLineBreakClass.BreakAfter;
+      return (UnicodePunctuationLineBreakClass.BreakAfter as UnicodePunctuationLineBreakClass);
     }
     if (kind === 1) {
-      return UnicodePunctuationLineBreakClass.BreakBoth;
+      return (UnicodePunctuationLineBreakClass.BreakBoth as UnicodePunctuationLineBreakClass);
     }
     if (kind === 2) {
-      return UnicodePunctuationLineBreakClass.ClosePunctuation;
+      return (UnicodePunctuationLineBreakClass.ClosePunctuation as UnicodePunctuationLineBreakClass);
     }
     if (kind === 3) {
-      return UnicodePunctuationLineBreakClass.CloseParenthesis;
+      return (UnicodePunctuationLineBreakClass.CloseParenthesis as UnicodePunctuationLineBreakClass);
     }
     if (kind === 4) {
-      return UnicodePunctuationLineBreakClass.Exclamation;
+      return (UnicodePunctuationLineBreakClass.Exclamation as UnicodePunctuationLineBreakClass);
     }
     if (kind === 5) {
-      return UnicodePunctuationLineBreakClass.HyphenHH;
+      return (UnicodePunctuationLineBreakClass.HyphenHH as UnicodePunctuationLineBreakClass);
     }
     if (kind === 6) {
-      return UnicodePunctuationLineBreakClass.Hyphen;
+      return (UnicodePunctuationLineBreakClass.Hyphen as UnicodePunctuationLineBreakClass);
     }
     if (kind === 7) {
-      return UnicodePunctuationLineBreakClass.Inseparable;
+      return (UnicodePunctuationLineBreakClass.Inseparable as UnicodePunctuationLineBreakClass);
     }
     if (kind === 8) {
-      return UnicodePunctuationLineBreakClass.InfixNumericSeparator;
+      return (UnicodePunctuationLineBreakClass.InfixNumericSeparator as UnicodePunctuationLineBreakClass);
     }
     if (kind === 9) {
-      return UnicodePunctuationLineBreakClass.Nonstarter;
+      return (UnicodePunctuationLineBreakClass.Nonstarter as UnicodePunctuationLineBreakClass);
     }
     if (kind === 10) {
-      return UnicodePunctuationLineBreakClass.OpenPunctuation;
+      return (UnicodePunctuationLineBreakClass.OpenPunctuation as UnicodePunctuationLineBreakClass);
     }
     if (kind === 11) {
-      return UnicodePunctuationLineBreakClass.Quotation;
+      return (UnicodePunctuationLineBreakClass.Quotation as UnicodePunctuationLineBreakClass);
     }
     if (kind === 12) {
-      return UnicodePunctuationLineBreakClass.SymbolsAllowingBreakAfter;
+      return (UnicodePunctuationLineBreakClass.SymbolsAllowingBreakAfter as UnicodePunctuationLineBreakClass);
     }
-    return UnicodePunctuationLineBreakClass.Other;
+    return (UnicodePunctuationLineBreakClass.Other as UnicodePunctuationLineBreakClass);
   }
 }
 

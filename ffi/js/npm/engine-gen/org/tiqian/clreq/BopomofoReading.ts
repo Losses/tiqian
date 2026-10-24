@@ -64,17 +64,18 @@ export function BopomofoReadingtoneOrder(v: BopomofoTone): number {
   if (v.kind === "Yinping") return 0;
   if (v.kind === "Yangping") return 1;
   if (v.kind === "Shang") return 2;
-  if (v.kind === "Ru") return 5;
   if (v.kind === "Qu") return 3;
   if (v.kind === "Neutral") return 4;
+  if (v.kind === "Ru") return 5;
   return 0;
 }
 
 export function compareBopomofoReading(a: BopomofoReading, b: BopomofoReading): number {
   if (a === b) return 0;
-  const asymbolsLength = a.symbols.length; const bsymbolsLength = b.symbols.length;
-  for (let i = 0; i < asymbolsLength && i < bsymbolsLength; i++) { if (a.symbols[i] !== b.symbols[i]) return a.symbols[i]! < b.symbols[i]! ? -1 : 1; }
-  if (asymbolsLength !== bsymbolsLength) return asymbolsLength - bsymbolsLength;
+  for (let i0 = 0, n0 = a.symbols.length < b.symbols.length ? a.symbols.length : b.symbols.length; i0 < n0; i0++) {
+    if (a.symbols[i0]! !== b.symbols[i0]!) return a.symbols[i0]! < b.symbols[i0]! ? -1 : 1;
+  }
+  if (a.symbols.length !== b.symbols.length) return a.symbols.length - b.symbols.length;
   if (BopomofoReadingtoneOrder(a.tone) !== BopomofoReadingtoneOrder(b.tone)) return BopomofoReadingtoneOrder(a.tone) - BopomofoReadingtoneOrder(b.tone);
   return 0;
 }

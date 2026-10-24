@@ -16,7 +16,7 @@ import { RawFontMetrics } from "./../font/RawFontMetrics.ts";
 import { RubyFontGeometry } from "./AnnotationGeometryStage.ts";
 import { LineSolution } from "./LineOptimization.ts";
 import { PunctuationGeometryLedger } from "./PunctuationGeometryLedger.ts";
-import { SortedMapTable, SortedTable, floatToI32, formatFloatRuntime, i32ToFloat } from "../../../runtime.ts";
+import { SortedMapTable, SortedTable, floatToI32, i32ToFloat } from "../../../runtime.ts";
 
 export class LineBoxStageResult {
   public readonly laidOutLines: LineBox[];
@@ -32,7 +32,7 @@ export class LineBoxStageResult {
   }
 
   public toString(): string {
-    return `LineBoxStageResult(laidOutLines=${(() => { let out = "["; const n = this.laidOutLines.length; for (let i = 0; i < n; i += 1) { if (i > 0) { out += ", "; } out += this.laidOutLines[i]!.toString(); } out += "]"; return out; })()}, visibleLines=${(() => { let out = "["; const n = this.visibleLines.length; for (let i = 0; i < n; i += 1) { if (i > 0) { out += ", "; } out += this.visibleLines[i]!.toString(); } out += "]"; return out; })()}, maxLinesDecision=${(this.maxLinesDecision === null ? "null" : this.maxLinesDecision.toString())}, visibleLineRanges=${(() => { let out = "["; const n = this.visibleLineRanges.length; for (let i = 0; i < n; i += 1) { if (i > 0) { out += ", "; } out += this.visibleLineRanges[i]!.toString(); } out += "]"; return out; })()})`;
+    return `LineBoxStageResult(laidOutLines=${(() => { let out = "["; const n = this.laidOutLines.length; for (let i = 0; i < n; i += 1) { if (i > 0) { out += ", "; } out += this.laidOutLines[i]!.toString(); } out += "]"; return out; })()}, visibleLines=${(() => { let out = "["; const n = this.visibleLines.length; for (let i = 0; i < n; i += 1) { if (i > 0) { out += ", "; } out += this.visibleLines[i]!.toString(); } out += "]"; return out; })()}, maxLinesDecision=${(this.maxLinesDecision === null ? "null" : this.maxLinesDecision!.toString())}, visibleLineRanges=${(() => { let out = "["; const n = this.visibleLineRanges.length; for (let i = 0; i < n; i += 1) { if (i > 0) { out += ", "; } out += this.visibleLineRanges[i]!.toString(); } out += "]"; return out; })()})`;
   }
 }
 
@@ -52,7 +52,7 @@ export class LineVerticalGeometryStageResult {
   }
 
   public toString(): string {
-    return `LineVerticalGeometryStageResult(rubyLineHeightDecision=${(this.rubyLineHeightDecision === null ? "null" : this.rubyLineHeightDecision.toString())}, inlineObjectLineHeightDecision=${(this.inlineObjectLineHeightDecision === null ? "null" : this.inlineObjectLineHeightDecision.toString())}, lineBaseline=${(() => { let out = "["; const n = this.lineBaseline.length; for (let i = 0; i < n; i += 1) { if (i > 0) { out += ", "; } out += this.lineBaseline[i]!; } out += "]"; return out; })()}, lineTop=${(() => { let out = "["; const n = this.lineTop.length; for (let i = 0; i < n; i += 1) { if (i > 0) { out += ", "; } out += this.lineTop[i]!; } out += "]"; return out; })()}, lineBottom=${(() => { let out = "["; const n = this.lineBottom.length; for (let i = 0; i < n; i += 1) { if (i > 0) { out += ", "; } out += this.lineBottom[i]!; } out += "]"; return out; })()})`;
+    return `LineVerticalGeometryStageResult(rubyLineHeightDecision=${(this.rubyLineHeightDecision === null ? "null" : this.rubyLineHeightDecision!.toString())}, inlineObjectLineHeightDecision=${(this.inlineObjectLineHeightDecision === null ? "null" : this.inlineObjectLineHeightDecision!.toString())}, lineBaseline=${(() => { let out = "["; const n = this.lineBaseline.length; for (let i = 0; i < n; i += 1) { if (i > 0) { out += ", "; } out += this.lineBaseline[i]!; } out += "]"; return out; })()}, lineTop=${(() => { let out = "["; const n = this.lineTop.length; for (let i = 0; i < n; i += 1) { if (i > 0) { out += ", "; } out += this.lineTop[i]!; } out += "]"; return out; })()}, lineBottom=${(() => { let out = "["; const n = this.lineBottom.length; for (let i = 0; i < n; i += 1) { if (i > 0) { out += ", "; } out += this.lineBottom[i]!; } out += "]"; return out; })()})`;
   }
 }
 
@@ -113,7 +113,7 @@ export class LineGeometryStageFns {
       for (let index = 0, count = naturalClusters.length; index < count; index += 1) {
         const inlineObject = (inlineObjectByClusterIndex.get(index) ?? null);
         if (inlineObject !== null) {
-          builder.put(index, inlineObject);
+          builder.put(index, (inlineObject)!);
         }
       }
     }
@@ -126,7 +126,7 @@ export class LineGeometryStageFns {
       const ruby = pinyinSpans[_g_index]!;
       const range = LineGeometryStageFns.clusterIndexRangeFor(naturalClusters, ruby.baseRange);
       if (range !== null) {
-        pinyinClusterRanges.push(new RubyClusterRange(ruby, range));
+        pinyinClusterRanges.push(new RubyClusterRange(ruby, (range)!));
       }
     }
     const perLineRubyExtent: number[] = [];
@@ -141,7 +141,7 @@ export class LineGeometryStageFns {
             const pair = pinyinClusterRanges[_g]!;
             _g++;
             if (pair.range.start <= line.clusterRange.end && pair.range.end >= line.clusterRange.start && rubyFontGeometryBySpan.has(pair.ruby)) {
-              required = Math.max(required, rubyFontGeometryBySpan.get(pair.ruby).requiredExtent);
+              required = Math.max(required, rubyFontGeometryBySpan.get(pair.ruby)!.requiredExtent);
             }
           }
         }
@@ -199,10 +199,10 @@ export class LineGeometryStageFns {
         let descent = 0.0;
         let idx = line2.clusterRange.start;
         while (idx <= line2.clusterRange.end) {
-          if (inlineObjectByClusterIndex !== null && inlineObjectByClusterIndex.has(idx)) {
-            const obj = inlineObjectByClusterIndex.get(idx);
-            ascent = Math.max(ascent, LineGeometryStageFns.f32(obj.ascent));
-            descent = Math.max(descent, LineGeometryStageFns.f32(obj.descent));
+          if (inlineObjectByClusterIndex !== null && inlineObjectByClusterIndex!.has(idx)) {
+            const obj = inlineObjectByClusterIndex!.get(idx);
+            ascent = Math.max(ascent, LineGeometryStageFns.f32(obj!.ascent));
+            descent = Math.max(descent, LineGeometryStageFns.f32(obj!.descent));
           }
           idx++;
         }
@@ -284,13 +284,14 @@ export class LineGeometryStageFns {
     }
     let hasInlineObjects = false;
     if (inlineObjectByClusterIndex !== null) {
-      hasInlineObjects = inlineObjectByClusterIndex.size() > 0;
+      hasInlineObjects = inlineObjectByClusterIndex!.size() > 0;
     }
     const iod = (hasInlineObjects ? new InlineObjectLineHeightDecisionInfo(baseLineMetrics.height, baseAscent, baseDescent, existingInterlineSpace, minimumClearance, lineObjectAscent, lineObjectDescent, objectLineExtra, boundaryShifts, trailing, objectIndices, (objectIndices.length === 0 && trailing === 0 ? "ExistingInterlineSpaceFitsInlineObjects" : "InlineObjectInterlineCollision")) : null);
     return new LineVerticalGeometryStageResult(rd, iod, baselines, tops, bottoms);
   }
 
   public static lineMetrics(self: ClusterMetricDecision[], explicitLineHeight: number | null, defaultLineHeight: number, spacingFloor?: number | null): ResolvedLineMetrics {
+    spacingFloor = spacingFloor ?? null;
     let floorValue = 0.0;
     if (spacingFloor !== null) {
       floorValue = spacingFloor;

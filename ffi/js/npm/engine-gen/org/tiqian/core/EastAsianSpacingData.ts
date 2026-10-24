@@ -385,18 +385,18 @@ export class EastAsianSpacingData {
         } else {
           const value = RANGES[base + 2]!;
           if (value === 0) {
-            return EastAsianSpacingValue.Wide;
+            return (EastAsianSpacingValue.Wide as EastAsianSpacingValue);
           }
           if (value === 1) {
-            return EastAsianSpacingValue.Narrow;
+            return (EastAsianSpacingValue.Narrow as EastAsianSpacingValue);
           }
           if (value === 3) {
-            return EastAsianSpacingValue.Conditional;
+            return (EastAsianSpacingValue.Conditional as EastAsianSpacingValue);
           }
           throw new TiqianIllegalArgumentException(({ kind: "Message", text: "Invalid generated East_Asian_Spacing value" } as TextRangeError));
         }
       }
     }
-    return EastAsianSpacingValue.Other;
+    return (EastAsianSpacingValue.Other as EastAsianSpacingValue);
   }
 }

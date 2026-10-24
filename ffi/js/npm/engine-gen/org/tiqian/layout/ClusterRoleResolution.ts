@@ -26,6 +26,7 @@ export class ResolvedClusterRange {
   public readonly roleOverride: RoleOverrideInfo | null;
 
   constructor(range: TextRange, role: FontRole, mandatoryBreak: boolean | null = null, zeroWidthSoftBreak: boolean | null = null, roleOverride?: RoleOverrideInfo | null) {
+    roleOverride = roleOverride ?? null;
     this.range = range;
     this.role = role;
     this.mandatoryBreak = mandatoryBreak ?? false;
@@ -34,28 +35,27 @@ export class ResolvedClusterRange {
   }
 
   public toString(): string {
-    return `ResolvedClusterRange(range=${this.range.toString()}, role=${this.role.kind}, mandatoryBreak=${this.mandatoryBreak}, zeroWidthSoftBreak=${this.zeroWidthSoftBreak}, roleOverride=${(this.roleOverride === null ? "null" : this.roleOverride.toString())})`;
+    return `ResolvedClusterRange(range=${this.range.toString()}, role=${this.role.kind}, mandatoryBreak=${this.mandatoryBreak}, zeroWidthSoftBreak=${this.zeroWidthSoftBreak}, roleOverride=${(this.roleOverride === null ? "null" : this.roleOverride!.toString())})`;
   }
 }
 
 export class ClusterRoleResolution {
   public static clusterRoleRanges(text: string, classifier: FontRoleClassifier, context: FontRoleContext, profile: ClreqProfile, spanBoundaries: SortedSetTable<number>, emojiShapingBoundaries: SortedSetTable<number>, inlineObjectsByStart?: SortedMapTable<number, InlineObjectSpan> | null): ResolvedClusterRange[] {
+    inlineObjectsByStart = inlineObjectsByStart ?? null;
     const graphemes = SourceInteractionBoundaries.sourceGraphemeBoundaries(text, new TextRange(0, text.length));
     const out: ResolvedClusterRange[] = [];
     let index = 0;
     let gi = (text.length === 0 ? 0 : 1);
-    let gs = graphemes[0]!;
     let ge = (gi < graphemes.length ? graphemes[gi]! : text.length);
     while (index < text.length) {
       while (index >= ge && gi < graphemes.length - 1) {
-        gs = ge;
         gi++;
         ge = graphemes[gi]!;
       }
-      const io = (inlineObjectsByStart === null ? null : inlineObjectsByStart.get(index));
+      const io = (inlineObjectsByStart === null ? null : inlineObjectsByStart!.get(index));
       if (io !== null) {
-        out.push(new ResolvedClusterRange(io.range, FontRole.Unknown, false, false, null));
-        index = io.range.end;
+        out.push(new ResolvedClusterRange(io!.range, (FontRole.Unknown as FontRole), false, false, null));
+        index = io!.range.end;
         continue;
       }
       const cp = ClusterRoleResolution.codePoint(text, index);
@@ -63,20 +63,20 @@ export class ClusterRoleResolution {
       const start = index;
       if (ClusterRoleResolution.isMandatory(text, index, cp)) {
         const end = (cp === 13 && index + 1 < text.length && readUnit(text, index + 1)! === 10 ? index + 2 : index + count);
-        out.push(new ResolvedClusterRange(new TextRange(start, end), FontRole.Unknown, true, false, null));
+        out.push(new ResolvedClusterRange(new TextRange(start, end), (FontRole.Unknown as FontRole), true, false, null));
         index = end;
         continue;
       }
       if (LineBreakFns.isZeroWidthSpaceCodePoint(cp)) {
-        out.push(new ResolvedClusterRange(new TextRange(start, index + count), FontRole.Unknown, false, true, null));
+        out.push(new ResolvedClusterRange(new TextRange(start, index + count), (FontRole.Unknown as FontRole), false, true, null));
         index += count;
         continue;
       }
       const classified = classifier.classify(text, new TextRange(start, start + count), context);
       const promotion = ClusterRoleResolution.emojiPromotion(text, start, ge);
-      const role = (classified.kind === "Emoji" || promotion !== null ? FontRole.Emoji : classified);
+      const role = (classified.kind === "Emoji" || promotion !== null ? (FontRole.Emoji as FontRole) : classified);
       const prev = (out.length === 0 ? null : out[out.length - 1]!);
-      const attached = role.kind === "LatinText" && ClusterRoleResolution.isAsciiPoint(cp) && prev !== null && prev.role.kind !== "Unknown" && !ClusterRoleResolution.isWs(readUnit(text, prev.range.end - 1)!) && prev.range.end === start;
+      const attached = role.kind === "LatinText" && ClusterRoleResolution.isAsciiPoint(cp) && prev !== null && prev!.role.kind !== "Unknown" && !ClusterRoleResolution.isWs(readUnit(text, prev!.range.end - 1)!) && prev!.range.end === start;
       index += count;
       if (role.kind === "Emoji") {
         let b = ge;
@@ -130,7 +130,7 @@ export class ClusterRoleResolution {
       const r = new TextRange(start, index);
       let roleInfo: RoleOverrideInfo | null = null;
       if (role.kind === "Emoji" && classified.kind !== "Emoji") {
-        roleInfo = new RoleOverrideInfo(r, text.substring(r.start, r.end), classified.kind, role.kind, "UnicodeEmojiSequenceRolePromotion", (promotion === null ? "EmojiPresentationCodePoint" : promotion));
+        roleInfo = new RoleOverrideInfo(r, text.substring(r.start, r.end), classified.kind, role.kind, "UnicodeEmojiSequenceRolePromotion", ((promotion === null ? "EmojiPresentationCodePoint" : promotion))!);
       }
       out.push(new ResolvedClusterRange(r, role, false, false, roleInfo));
     }
@@ -165,11 +165,11 @@ export class ClusterRoleResolution {
 
   private static codePoint(t: string, i: number): number {
     const h = (Number.isNaN(t.charCodeAt(i)) ? null : t.charCodeAt(i))!;
-    if (h < 55296 || h > 56319 || i + 1 >= t.length) {
+    if (h! < 55296 || h! > 56319 || i + 1 >= t.length) {
       return h!;
     }
     const l = readUnit(t, i + 1)!;
-    return (l < 56320 || l > 57343 ? h : 65536 + (h - 55296 << 10) + (l - 56320));
+    return (l! < 56320 || l! > 57343 ? h : 65536 + (h - 55296 << 10) + (l - 56320))!;
   }
 
   private static isMandatory(t: string, i: number, c: number): boolean {

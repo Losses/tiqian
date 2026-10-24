@@ -27,6 +27,6 @@ export class Glyph {
   }
 
   public toString(): string {
-    return `Glyph(id=${this.id}, clusterRange=${this.clusterRange.toString()}, advance=${this.advance}, x=${this.x}, y=${this.y}, renderFontKey=${this.renderFontKey}, bounds=${(this.bounds === null ? "null" : this.bounds.toString())}, haltAdvance=${this.haltAdvance}, haltPlacementX=${this.haltPlacementX})`;
+    return `Glyph(id=${this.id}, clusterRange=${this.clusterRange.toString()}, advance=${this.advance}, x=${this.x}, y=${this.y}, renderFontKey=${this.renderFontKey}, bounds=${(this.bounds === null ? "null" : this.bounds!.toString())}, haltAdvance=${this.haltAdvance}, haltPlacementX=${this.haltPlacementX})`;
   }
 }

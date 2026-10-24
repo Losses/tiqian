@@ -8,6 +8,7 @@ export class FontRoleContext {
   public readonly regionHint: string | null;
 
   constructor(locale: string | null = null, regionHint?: string | null) {
+    regionHint = regionHint ?? null;
     this.locale = locale ?? "zh-Hans";
     this.regionHint = regionHint;
   }
@@ -22,7 +23,9 @@ export function compareFontRoleContext(a: FontRoleContext, b: FontRoleContext): 
   if (a.locale !== b.locale) return a.locale < b.locale ? -1 : 1;
   if (a.regionHint === null && b.regionHint !== null) return -1;
   if (a.regionHint !== null && b.regionHint === null) return 1;
-  if (a.regionHint !== null && b.regionHint !== null && a.regionHint !== b.regionHint) return a.regionHint < b.regionHint ? -1 : 1;
+  if (a.regionHint !== null && b.regionHint !== null) {
+    if (a.regionHint !== b.regionHint) return a.regionHint < b.regionHint ? -1 : 1;
+  }
   return 0;
 }
 

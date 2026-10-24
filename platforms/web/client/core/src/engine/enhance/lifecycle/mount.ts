@@ -152,7 +152,7 @@ function createMount(
         // the ledger.
         if (stateMachine.work.kind === "Relayout") {
           if (!stale) {
-            responsive.setCommittedMeasureLedger(responsive.pendingCommittedMeasures());
+            responsive.setCommittedMeasureLedger(stateMachine.work.relayoutMeasure);
           } else {
             // A stale finish leaves a mix of old- and new-measure
             // paragraphs, which no single signature describes — a ledger

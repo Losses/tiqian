@@ -20,7 +20,7 @@ function paragraph(inner: string): DomNode {
   const { document } = parseHTML(`<p>${inner}</p>`);
   const element = document.querySelector("p");
   assert.ok(element !== null, "the probe paragraph must contain a <p>");
-  return element as unknown as DomNode;
+  return element as DomNode;
 }
 
 test("snapshotProjection returns the folded text of a plain paragraph", () => {
