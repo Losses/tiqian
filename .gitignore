@@ -65,3 +65,5 @@ engine/src/commonTest/kotlin/org/tiqian/test/trace/TracedTestManifest.kt
 # task-workspace scratch (task copies snapshot this dir via jj; ignore keeps it out of deliveries)
 .task-tmp/
 .cargo-home/
+
+.workspace-board-scratch-lock-*/
