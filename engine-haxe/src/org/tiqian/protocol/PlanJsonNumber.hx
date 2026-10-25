@@ -1,6 +1,5 @@
 package org.tiqian.protocol;
 
-import std.SortedMap;
 
 /**
  * ECMAScript Number-stringification for plan JSON numbers (Stage1-P3).
@@ -14,10 +13,8 @@ typedef PlanJsonDecomposed = {mantissa:String, exp2:Int};
 typedef PlanJsonF32Decomposed = {mant24:Int, exp2:Int};
 
 class PlanJsonNumber {
-    private static var fivePowersBuilder = null;
-    private static var fivePowers:Null<std.SortedMap<Int, String>> = null;
-    private static var twoPowersBuilder = null;
-    private static var twoPowers:Null<std.SortedMap<Int, String>> = null;
+    private static var fivePowers:Null<Array<String>> = null;
+    private static var twoPowers:Null<Array<String>> = null;
 
     public static function ecmaJsonNumber(floatValue:Float):String {
         if (Math.isNaN(floatValue))
@@ -147,58 +144,32 @@ class PlanJsonNumber {
     }
 
     private static function fiveToThe(k:Int):String {
-        if (fivePowersBuilder == null) {
-            fivePowersBuilder = std.SortedMap.builder();
-            fivePowers = fivePowersBuilder.build();
-        }
-        final cached = fivePowers.get(k);
-        if (cached != null)
-            return cached;
-        var anchor = 0;
-        var digits = "1";
-        var i = 0;
-        while (i < fivePowers.size()) {
-            if (fivePowers.keyAt(i) < k && fivePowers.keyAt(i) > anchor) {
-                anchor = fivePowers.keyAt(i);
-                digits = fivePowers.valueAt(i);
-            }
-            i++;
-        }
-        i = anchor;
+        if (fivePowers == null)
+            fivePowers = ["1"];
+        if (k < fivePowers.length)
+            return fivePowers[k];
+        var digits = fivePowers[fivePowers.length - 1];
+        var i = fivePowers.length - 1;
         while (i < k) {
             digits = timesSmall(digits, 5);
             i++;
+            fivePowers.push(digits);
         }
-        fivePowersBuilder.put(k, digits);
-        fivePowers = fivePowersBuilder.build();
         return digits;
     }
 
     private static function twoToThe(k:Int):String {
-        if (twoPowersBuilder == null) {
-            twoPowersBuilder = std.SortedMap.builder();
-            twoPowers = twoPowersBuilder.build();
-        }
-        final cached = twoPowers.get(k);
-        if (cached != null)
-            return cached;
-        var anchor = 0;
-        var digits = "1";
-        var i = 0;
-        while (i < twoPowers.size()) {
-            if (twoPowers.keyAt(i) < k && twoPowers.keyAt(i) > anchor) {
-                anchor = twoPowers.keyAt(i);
-                digits = twoPowers.valueAt(i);
-            }
-            i++;
-        }
-        i = anchor;
+        if (twoPowers == null)
+            twoPowers = ["1"];
+        if (k < twoPowers.length)
+            return twoPowers[k];
+        var digits = twoPowers[twoPowers.length - 1];
+        var i = twoPowers.length - 1;
         while (i < k) {
             digits = timesSmall(digits, 2);
             i++;
+            twoPowers.push(digits);
         }
-        twoPowersBuilder.put(k, digits);
-        twoPowers = twoPowersBuilder.build();
         return digits;
     }
 
