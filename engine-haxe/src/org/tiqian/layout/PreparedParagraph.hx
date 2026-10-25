@@ -1,6 +1,5 @@
 package org.tiqian.layout;
 
-import std.StringBuf;
 import org.tiqian.core.LayoutResult;
 import org.tiqian.core.*;
 import org.tiqian.protocol.PlanJson;
@@ -16,52 +15,52 @@ class PreparedParagraphFns {
     }
 
     public static function toPlanWithDiagnosticsJson(result:LayoutResult, renderEvidence:Bool, zeroAdvanceEpsilonPx:Float):String {
-        final out = new StringBuf();
-        out.add("{\"plan\":");
+        final out:Array<String> = [];
+        out.push("{\"plan\":");
         PlanJsonNumber.appendJsonString(out, toPreparedParagraphJson(result, renderEvidence));
-        out.add(",\"diagnostics\":{\"capabilityIssues\":[");
+        out.push(",\"diagnostics\":{\"capabilityIssues\":[");
         var first = true;
         final shapingDiagSrc = result.debug.shapingDecisions;
         for (di in 0...shapingDiagSrc.length) {
             final d = shapingDiagSrc[di];
             if (d.capabilityIssue != null) {
                 if (!first)
-                    out.add(",");
+                    out.push(",");
                 first = false;
-                out.add("{\"name\":");
+                out.push("{\"name\":");
                 PlanJsonNumber.appendJsonString(out, d.capabilityIssue);
-                out.add(",\"reason\":");
+                out.push(",\"reason\":");
                 PlanJsonNumber.appendJsonString(out, d.reason);
-                out.add(",\"rangeStart\":");
-                out.add(Std.string(d.range.start));
-                out.add(",\"rangeEnd\":");
-                out.add(Std.string(d.range.end));
-                out.add("}");
+                out.push(",\"rangeStart\":");
+                out.push(Std.string(d.range.start));
+                out.push(",\"rangeEnd\":");
+                out.push(Std.string(d.range.end));
+                out.push("}");
             }
         }
-        out.add("],\"advanceSuspects\":[");
+        out.push("],\"advanceSuspects\":[");
         first = true;
         for (di in 0...shapingDiagSrc.length) {
             final d = shapingDiagSrc[di];
             if (!(Math.isFinite(d.advance) && d.advance > zeroAdvanceEpsilonPx)) {
                 if (!first)
-                    out.add(",");
+                    out.push(",");
                 first = false;
-                out.add("{\"displayText\":");
+                out.push("{\"displayText\":");
                 PlanJsonNumber.appendJsonString(out, d.displayText);
-                out.add(",\"advance\":\"");
-                out.add(Math.isFinite(d.advance) ? PlanJsonNumber.ecmaJsonNumber(d.advance) : Std.string(d.advance));
-                out.add("\",\"reason\":");
+                out.push(",\"advance\":\"");
+                out.push(Math.isFinite(d.advance) ? PlanJsonNumber.ecmaJsonNumber(d.advance) : Std.string(d.advance));
+                out.push("\",\"reason\":");
                 PlanJsonNumber.appendJsonString(out, d.reason);
-                out.add(",\"rangeStart\":");
-                out.add(Std.string(d.range.start));
-                out.add(",\"rangeEnd\":");
-                out.add(Std.string(d.range.end));
-                out.add("}");
+                out.push(",\"rangeStart\":");
+                out.push(Std.string(d.range.start));
+                out.push(",\"rangeEnd\":");
+                out.push(Std.string(d.range.end));
+                out.push("}");
             }
         }
-        out.add("]}}");
-        return out.toString();
+        out.push("]}}");
+        return out.join("");
     }
 
     public static function toPackedPlanBytes(result:LayoutResult):Bytes {

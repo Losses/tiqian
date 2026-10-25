@@ -1,6 +1,5 @@
 package org.tiqian.protocol;
 
-import std.StringBuf;
 
 /**
  * Font session replay keys (Stage2 protocol, research 5.3).
@@ -57,39 +56,39 @@ class ReplayKey {
     }
 
     public static function renderShapeReplayKey(key:ShapeReplayKey):String {
-        final out = new StringBuf();
-        out.add("[");
+        final out:Array<String> = [];
+        out.push("[");
         addJsonString(out, key.displayText);
-        out.add(",");
+        out.push(",");
         addJsonString(out, key.serializedFamilies);
-        out.add(",");
+        out.push(",");
         addJsonNumber(out, key.fontWeight);
-        out.add(",");
+        out.push(",");
         addJsonBool(out, key.italic);
-        out.add(",");
+        out.push(",");
         addJsonString(out, key.locale);
-        out.add(",");
+        out.push(",");
         addJsonString(out, key.role);
-        out.add(",");
+        out.push(",");
         addJsonString(out, key.sourceText);
-        out.add("]");
-        return out.toString();
+        out.push("]");
+        return out.join("");
     }
 
     public static function renderMetricReplayKey(key:MetricReplayKey):String {
-        final out = new StringBuf();
-        out.add("[");
+        final out:Array<String> = [];
+        out.push("[");
         addJsonString(out, key.serializedFamilies);
-        out.add(",");
+        out.push(",");
         addJsonNumber(out, key.fontWeight);
-        out.add(",");
+        out.push(",");
         addJsonBool(out, key.italic);
-        out.add(",");
+        out.push(",");
         addJsonString(out, key.role);
-        out.add(",");
+        out.push(",");
         addJsonString(out, key.faceSelectionText);
-        out.add("]");
-        return out.toString();
+        out.push("]");
+        return out.join("");
     }
 
     public static function normalizedReplayNumber(value:Float, fontSize:Float):Null<Float> {
@@ -108,15 +107,15 @@ class ReplayKey {
         return fontFamilies.join("\x1f");
     }
 
-    private static function addJsonNumber(out:StringBuf, v:Float):Void {
-        out.add(PlanJsonNumber.ecmaJsonNumber(v));
+    private static function addJsonNumber(out:Array<String>, v:Float):Void {
+        out.push(PlanJsonNumber.ecmaJsonNumber(v));
     }
 
-    private static function addJsonBool(out:StringBuf, b:Bool):Void {
-        out.add(b ? "true" : "false");
+    private static function addJsonBool(out:Array<String>, b:Bool):Void {
+        out.push(b ? "true" : "false");
     }
 
-    private static function addJsonString(out:StringBuf, s:String):Void {
+    private static function addJsonString(out:Array<String>, s:String):Void {
         PlanJsonNumber.appendJsonString(out, s);
     }
 

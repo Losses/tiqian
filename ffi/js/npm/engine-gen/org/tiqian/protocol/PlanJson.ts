@@ -5,990 +5,291 @@ import { PlanEndReason } from "./PlanEndReason.ts";
 import { PlanJsonNumber } from "./PlanJsonNumber.ts";
 import { PlanSchema } from "./PlanSchema.ts";
 import { PlanStyleDelta } from "./PlanStyleDelta.ts";
-import { UStringException } from "./../../../std/UStringException.ts";
 
 export class PlanJson {
   public static encode(plan: Plan): string {
-    let out = [];
-    const tail = out.length > 0 ? out[out.length - 1].charCodeAt(out[out.length - 1].length - 1) : NaN;
-    if (tail >= 55296 && tail <= 56319 && "{".length > 0 && !("{".charCodeAt(0) >= 56320 && "{".charCodeAt(0) <= 57343)) {
-      throw new UStringException({ kind: "UnpairedSurrogate", unit: tail });
-    }
-    if ("{".length > 0) {
-      out.push("{");
-    }
-    const tail2 = out.length > 0 ? out[out.length - 1].charCodeAt(out[out.length - 1].length - 1) : NaN;
-    if (tail2 >= 55296 && tail2 <= 56319 && "\"schema\":".length > 0 && !("\"schema\":".charCodeAt(0) >= 56320 && "\"schema\":".charCodeAt(0) <= 57343)) {
-      throw new UStringException({ kind: "UnpairedSurrogate", unit: tail2 });
-    }
-    if ("\"schema\":".length > 0) {
-      out.push("\"schema\":");
-    }
-    const tail3 = out.length > 0 ? out[out.length - 1].charCodeAt(out[out.length - 1].length - 1) : NaN;
-    if (tail3 >= 55296 && tail3 <= 56319 && String(PlanSchema.PLAN_SCHEMA).length > 0 && !(String(PlanSchema.PLAN_SCHEMA).charCodeAt(0) >= 56320 && String(PlanSchema.PLAN_SCHEMA).charCodeAt(0) <= 57343)) {
-      throw new UStringException({ kind: "UnpairedSurrogate", unit: tail3 });
-    }
-    if (String(PlanSchema.PLAN_SCHEMA).length > 0) {
-      out.push(String(PlanSchema.PLAN_SCHEMA));
-    }
-    const tail4 = out.length > 0 ? out[out.length - 1].charCodeAt(out[out.length - 1].length - 1) : NaN;
-    if (tail4 >= 55296 && tail4 <= 56319 && ",\"layoutRevision\":\"".length > 0 && !(",\"layoutRevision\":\"".charCodeAt(0) >= 56320 && ",\"layoutRevision\":\"".charCodeAt(0) <= 57343)) {
-      throw new UStringException({ kind: "UnpairedSurrogate", unit: tail4 });
-    }
-    if (",\"layoutRevision\":\"".length > 0) {
-      out.push(",\"layoutRevision\":\"");
-    }
-    const tail5 = out.length > 0 ? out[out.length - 1].charCodeAt(out[out.length - 1].length - 1) : NaN;
-    if (tail5 >= 55296 && tail5 <= 56319 && PlanSchema.PLAN_LAYOUT_REVISION.length > 0 && !(PlanSchema.PLAN_LAYOUT_REVISION.charCodeAt(0) >= 56320 && PlanSchema.PLAN_LAYOUT_REVISION.charCodeAt(0) <= 57343)) {
-      throw new UStringException({ kind: "UnpairedSurrogate", unit: tail5 });
-    }
-    if (PlanSchema.PLAN_LAYOUT_REVISION.length > 0) {
-      out.push(PlanSchema.PLAN_LAYOUT_REVISION);
-    }
-    const tail6 = out.length > 0 ? out[out.length - 1].charCodeAt(out[out.length - 1].length - 1) : NaN;
-    if (tail6 >= 55296 && tail6 <= 56319 && "\",\"width\":".length > 0 && !("\",\"width\":".charCodeAt(0) >= 56320 && "\",\"width\":".charCodeAt(0) <= 57343)) {
-      throw new UStringException({ kind: "UnpairedSurrogate", unit: tail6 });
-    }
-    if ("\",\"width\":".length > 0) {
-      out.push("\",\"width\":");
-    }
-    const tail7 = out.length > 0 ? out[out.length - 1].charCodeAt(out[out.length - 1].length - 1) : NaN;
-    if (tail7 >= 55296 && tail7 <= 56319 && PlanJsonNumber.ecmaJsonNumber(plan.width).length > 0 && !(PlanJsonNumber.ecmaJsonNumber(plan.width).charCodeAt(0) >= 56320 && PlanJsonNumber.ecmaJsonNumber(plan.width).charCodeAt(0) <= 57343)) {
-      throw new UStringException({ kind: "UnpairedSurrogate", unit: tail7 });
-    }
-    if (PlanJsonNumber.ecmaJsonNumber(plan.width).length > 0) {
-      out.push(PlanJsonNumber.ecmaJsonNumber(plan.width));
-    }
-    const tail8 = out.length > 0 ? out[out.length - 1].charCodeAt(out[out.length - 1].length - 1) : NaN;
-    if (tail8 >= 55296 && tail8 <= 56319 && ",\"height\":".length > 0 && !(",\"height\":".charCodeAt(0) >= 56320 && ",\"height\":".charCodeAt(0) <= 57343)) {
-      throw new UStringException({ kind: "UnpairedSurrogate", unit: tail8 });
-    }
-    if (",\"height\":".length > 0) {
-      out.push(",\"height\":");
-    }
-    const tail9 = out.length > 0 ? out[out.length - 1].charCodeAt(out[out.length - 1].length - 1) : NaN;
-    if (tail9 >= 55296 && tail9 <= 56319 && PlanJsonNumber.ecmaJsonNumber(plan.height).length > 0 && !(PlanJsonNumber.ecmaJsonNumber(plan.height).charCodeAt(0) >= 56320 && PlanJsonNumber.ecmaJsonNumber(plan.height).charCodeAt(0) <= 57343)) {
-      throw new UStringException({ kind: "UnpairedSurrogate", unit: tail9 });
-    }
-    if (PlanJsonNumber.ecmaJsonNumber(plan.height).length > 0) {
-      out.push(PlanJsonNumber.ecmaJsonNumber(plan.height));
-    }
-    const tail10 = out.length > 0 ? out[out.length - 1].charCodeAt(out[out.length - 1].length - 1) : NaN;
-    if (tail10 >= 55296 && tail10 <= 56319 && ",\"lines\":[".length > 0 && !(",\"lines\":[".charCodeAt(0) >= 56320 && ",\"lines\":[".charCodeAt(0) <= 57343)) {
-      throw new UStringException({ kind: "UnpairedSurrogate", unit: tail10 });
-    }
-    if (",\"lines\":[".length > 0) {
-      out.push(",\"lines\":[");
-    }
+    const out: string[] = [];
+    out.push("{");
+    out.push("\"schema\":");
+    out.push(String(PlanSchema.PLAN_SCHEMA));
+    out.push(",\"layoutRevision\":\"");
+    out.push(PlanSchema.PLAN_LAYOUT_REVISION);
+    out.push("\",\"width\":");
+    out.push(PlanJsonNumber.ecmaJsonNumber(plan.width));
+    out.push(",\"height\":");
+    out.push(PlanJsonNumber.ecmaJsonNumber(plan.height));
+    out.push(",\"lines\":[");
     let firstLine = true;
     {
       const _g1 = plan.lines;
       for (let _g_index = 0, count = _g1.length; _g_index < count; _g_index += 1) {
         const line = _g1[_g_index]!;
         if (!firstLine) {
-          const tail11 = out.length > 0 ? out[out.length - 1].charCodeAt(out[out.length - 1].length - 1) : NaN;
-          if (tail11 >= 55296 && tail11 <= 56319 && ",".length > 0 && !(",".charCodeAt(0) >= 56320 && ",".charCodeAt(0) <= 57343)) {
-            throw new UStringException({ kind: "UnpairedSurrogate", unit: tail11 });
-          }
-          if (",".length > 0) {
-            out.push(",");
-          }
+          out.push(",");
         }
         firstLine = false;
-        out = PlanJson.appendLine(out, line);
+        PlanJson.appendLine(out, line);
       }
     }
-    const tail12 = out.length > 0 ? out[out.length - 1].charCodeAt(out[out.length - 1].length - 1) : NaN;
-    if (tail12 >= 55296 && tail12 <= 56319 && "]".length > 0 && !("]".charCodeAt(0) >= 56320 && "]".charCodeAt(0) <= 57343)) {
-      throw new UStringException({ kind: "UnpairedSurrogate", unit: tail12 });
-    }
-    if ("]".length > 0) {
-      out.push("]");
-    }
-    out = PlanJson.appendParagraphEvidence(out, plan);
-    const tail13 = out.length > 0 ? out[out.length - 1].charCodeAt(out[out.length - 1].length - 1) : NaN;
-    if (tail13 >= 55296 && tail13 <= 56319 && "}".length > 0 && !("}".charCodeAt(0) >= 56320 && "}".charCodeAt(0) <= 57343)) {
-      throw new UStringException({ kind: "UnpairedSurrogate", unit: tail13 });
-    }
-    if ("}".length > 0) {
-      out.push("}");
-    }
-    const tail14 = out.length > 0 ? out[out.length - 1].charCodeAt(out[out.length - 1].length - 1) : NaN;
-    if (tail14 >= 55296 && tail14 <= 56319) {
-      throw new UStringException({ kind: "UnpairedSurrogate", unit: tail14 });
-    }
-    return out.join("")
+    out.push("]");
+    PlanJson.appendParagraphEvidence(out, plan);
+    out.push("}");
+    return out.join("");
   }
 
-  private static appendLine(out: string[], line: PlanLine): string[] {
-    const tail15 = out.length > 0 ? out[out.length - 1].charCodeAt(out[out.length - 1].length - 1) : NaN;
-    if (tail15 >= 55296 && tail15 <= 56319 && "{\"rangeStart\":".length > 0 && !("{\"rangeStart\":".charCodeAt(0) >= 56320 && "{\"rangeStart\":".charCodeAt(0) <= 57343)) {
-      throw new UStringException({ kind: "UnpairedSurrogate", unit: tail15 });
-    }
-    if ("{\"rangeStart\":".length > 0) {
-      out.push("{\"rangeStart\":");
-    }
-    const tail16 = out.length > 0 ? out[out.length - 1].charCodeAt(out[out.length - 1].length - 1) : NaN;
-    if (tail16 >= 55296 && tail16 <= 56319 && String(line.rangeStart).length > 0 && !(String(line.rangeStart).charCodeAt(0) >= 56320 && String(line.rangeStart).charCodeAt(0) <= 57343)) {
-      throw new UStringException({ kind: "UnpairedSurrogate", unit: tail16 });
-    }
-    if (String(line.rangeStart).length > 0) {
-      out.push(String(line.rangeStart));
-    }
-    const tail17 = out.length > 0 ? out[out.length - 1].charCodeAt(out[out.length - 1].length - 1) : NaN;
-    if (tail17 >= 55296 && tail17 <= 56319 && ",\"rangeEnd\":".length > 0 && !(",\"rangeEnd\":".charCodeAt(0) >= 56320 && ",\"rangeEnd\":".charCodeAt(0) <= 57343)) {
-      throw new UStringException({ kind: "UnpairedSurrogate", unit: tail17 });
-    }
-    if (",\"rangeEnd\":".length > 0) {
-      out.push(",\"rangeEnd\":");
-    }
-    const tail18 = out.length > 0 ? out[out.length - 1].charCodeAt(out[out.length - 1].length - 1) : NaN;
-    if (tail18 >= 55296 && tail18 <= 56319 && String(line.rangeEnd).length > 0 && !(String(line.rangeEnd).charCodeAt(0) >= 56320 && String(line.rangeEnd).charCodeAt(0) <= 57343)) {
-      throw new UStringException({ kind: "UnpairedSurrogate", unit: tail18 });
-    }
-    if (String(line.rangeEnd).length > 0) {
-      out.push(String(line.rangeEnd));
-    }
-    const tail19 = out.length > 0 ? out[out.length - 1].charCodeAt(out[out.length - 1].length - 1) : NaN;
-    if (tail19 >= 55296 && tail19 <= 56319 && ",\"top\":".length > 0 && !(",\"top\":".charCodeAt(0) >= 56320 && ",\"top\":".charCodeAt(0) <= 57343)) {
-      throw new UStringException({ kind: "UnpairedSurrogate", unit: tail19 });
-    }
-    if (",\"top\":".length > 0) {
-      out.push(",\"top\":");
-    }
-    const tail20 = out.length > 0 ? out[out.length - 1].charCodeAt(out[out.length - 1].length - 1) : NaN;
-    if (tail20 >= 55296 && tail20 <= 56319 && PlanJsonNumber.ecmaJsonNumber(line.top).length > 0 && !(PlanJsonNumber.ecmaJsonNumber(line.top).charCodeAt(0) >= 56320 && PlanJsonNumber.ecmaJsonNumber(line.top).charCodeAt(0) <= 57343)) {
-      throw new UStringException({ kind: "UnpairedSurrogate", unit: tail20 });
-    }
-    if (PlanJsonNumber.ecmaJsonNumber(line.top).length > 0) {
-      out.push(PlanJsonNumber.ecmaJsonNumber(line.top));
-    }
-    const tail21 = out.length > 0 ? out[out.length - 1].charCodeAt(out[out.length - 1].length - 1) : NaN;
-    if (tail21 >= 55296 && tail21 <= 56319 && ",\"bottom\":".length > 0 && !(",\"bottom\":".charCodeAt(0) >= 56320 && ",\"bottom\":".charCodeAt(0) <= 57343)) {
-      throw new UStringException({ kind: "UnpairedSurrogate", unit: tail21 });
-    }
-    if (",\"bottom\":".length > 0) {
-      out.push(",\"bottom\":");
-    }
-    const tail22 = out.length > 0 ? out[out.length - 1].charCodeAt(out[out.length - 1].length - 1) : NaN;
-    if (tail22 >= 55296 && tail22 <= 56319 && PlanJsonNumber.ecmaJsonNumber(line.bottom).length > 0 && !(PlanJsonNumber.ecmaJsonNumber(line.bottom).charCodeAt(0) >= 56320 && PlanJsonNumber.ecmaJsonNumber(line.bottom).charCodeAt(0) <= 57343)) {
-      throw new UStringException({ kind: "UnpairedSurrogate", unit: tail22 });
-    }
-    if (PlanJsonNumber.ecmaJsonNumber(line.bottom).length > 0) {
-      out.push(PlanJsonNumber.ecmaJsonNumber(line.bottom));
-    }
-    const tail23 = out.length > 0 ? out[out.length - 1].charCodeAt(out[out.length - 1].length - 1) : NaN;
-    if (tail23 >= 55296 && tail23 <= 56319 && ",\"baseline\":".length > 0 && !(",\"baseline\":".charCodeAt(0) >= 56320 && ",\"baseline\":".charCodeAt(0) <= 57343)) {
-      throw new UStringException({ kind: "UnpairedSurrogate", unit: tail23 });
-    }
-    if (",\"baseline\":".length > 0) {
-      out.push(",\"baseline\":");
-    }
-    const tail24 = out.length > 0 ? out[out.length - 1].charCodeAt(out[out.length - 1].length - 1) : NaN;
-    if (tail24 >= 55296 && tail24 <= 56319 && PlanJsonNumber.ecmaJsonNumber(line.baseline).length > 0 && !(PlanJsonNumber.ecmaJsonNumber(line.baseline).charCodeAt(0) >= 56320 && PlanJsonNumber.ecmaJsonNumber(line.baseline).charCodeAt(0) <= 57343)) {
-      throw new UStringException({ kind: "UnpairedSurrogate", unit: tail24 });
-    }
-    if (PlanJsonNumber.ecmaJsonNumber(line.baseline).length > 0) {
-      out.push(PlanJsonNumber.ecmaJsonNumber(line.baseline));
-    }
-    const tail25 = out.length > 0 ? out[out.length - 1].charCodeAt(out[out.length - 1].length - 1) : NaN;
-    if (tail25 >= 55296 && tail25 <= 56319 && ",\"indent\":".length > 0 && !(",\"indent\":".charCodeAt(0) >= 56320 && ",\"indent\":".charCodeAt(0) <= 57343)) {
-      throw new UStringException({ kind: "UnpairedSurrogate", unit: tail25 });
-    }
-    if (",\"indent\":".length > 0) {
-      out.push(",\"indent\":");
-    }
-    const tail26 = out.length > 0 ? out[out.length - 1].charCodeAt(out[out.length - 1].length - 1) : NaN;
-    if (tail26 >= 55296 && tail26 <= 56319 && PlanJsonNumber.ecmaJsonNumber(line.indent).length > 0 && !(PlanJsonNumber.ecmaJsonNumber(line.indent).charCodeAt(0) >= 56320 && PlanJsonNumber.ecmaJsonNumber(line.indent).charCodeAt(0) <= 57343)) {
-      throw new UStringException({ kind: "UnpairedSurrogate", unit: tail26 });
-    }
-    if (PlanJsonNumber.ecmaJsonNumber(line.indent).length > 0) {
-      out.push(PlanJsonNumber.ecmaJsonNumber(line.indent));
-    }
-    const tail27 = out.length > 0 ? out[out.length - 1].charCodeAt(out[out.length - 1].length - 1) : NaN;
-    if (tail27 >= 55296 && tail27 <= 56319 && ",\"visualWidth\":".length > 0 && !(",\"visualWidth\":".charCodeAt(0) >= 56320 && ",\"visualWidth\":".charCodeAt(0) <= 57343)) {
-      throw new UStringException({ kind: "UnpairedSurrogate", unit: tail27 });
-    }
-    if (",\"visualWidth\":".length > 0) {
-      out.push(",\"visualWidth\":");
-    }
-    const tail28 = out.length > 0 ? out[out.length - 1].charCodeAt(out[out.length - 1].length - 1) : NaN;
-    if (tail28 >= 55296 && tail28 <= 56319 && PlanJsonNumber.ecmaJsonNumber(line.visualWidth).length > 0 && !(PlanJsonNumber.ecmaJsonNumber(line.visualWidth).charCodeAt(0) >= 56320 && PlanJsonNumber.ecmaJsonNumber(line.visualWidth).charCodeAt(0) <= 57343)) {
-      throw new UStringException({ kind: "UnpairedSurrogate", unit: tail28 });
-    }
-    if (PlanJsonNumber.ecmaJsonNumber(line.visualWidth).length > 0) {
-      out.push(PlanJsonNumber.ecmaJsonNumber(line.visualWidth));
-    }
-    const tail29 = out.length > 0 ? out[out.length - 1].charCodeAt(out[out.length - 1].length - 1) : NaN;
-    if (tail29 >= 55296 && tail29 <= 56319 && ",\"hyphenAdvance\":".length > 0 && !(",\"hyphenAdvance\":".charCodeAt(0) >= 56320 && ",\"hyphenAdvance\":".charCodeAt(0) <= 57343)) {
-      throw new UStringException({ kind: "UnpairedSurrogate", unit: tail29 });
-    }
-    if (",\"hyphenAdvance\":".length > 0) {
-      out.push(",\"hyphenAdvance\":");
-    }
-    const tail30 = out.length > 0 ? out[out.length - 1].charCodeAt(out[out.length - 1].length - 1) : NaN;
-    if (tail30 >= 55296 && tail30 <= 56319 && PlanJsonNumber.ecmaJsonNumber(line.hyphenAdvance).length > 0 && !(PlanJsonNumber.ecmaJsonNumber(line.hyphenAdvance).charCodeAt(0) >= 56320 && PlanJsonNumber.ecmaJsonNumber(line.hyphenAdvance).charCodeAt(0) <= 57343)) {
-      throw new UStringException({ kind: "UnpairedSurrogate", unit: tail30 });
-    }
-    if (PlanJsonNumber.ecmaJsonNumber(line.hyphenAdvance).length > 0) {
-      out.push(PlanJsonNumber.ecmaJsonNumber(line.hyphenAdvance));
-    }
-    const tail31 = out.length > 0 ? out[out.length - 1].charCodeAt(out[out.length - 1].length - 1) : NaN;
-    if (tail31 >= 55296 && tail31 <= 56319 && ",\"endReason\":".length > 0 && !(",\"endReason\":".charCodeAt(0) >= 56320 && ",\"endReason\":".charCodeAt(0) <= 57343)) {
-      throw new UStringException({ kind: "UnpairedSurrogate", unit: tail31 });
-    }
-    if (",\"endReason\":".length > 0) {
-      out.push(",\"endReason\":");
-    }
-    out = PlanJsonNumber.appendJsonString(out, PlanJson.endReasonName(line.endReason));
-    const tail32 = out.length > 0 ? out[out.length - 1].charCodeAt(out[out.length - 1].length - 1) : NaN;
-    if (tail32 >= 55296 && tail32 <= 56319 && ",\"cells\":[".length > 0 && !(",\"cells\":[".charCodeAt(0) >= 56320 && ",\"cells\":[".charCodeAt(0) <= 57343)) {
-      throw new UStringException({ kind: "UnpairedSurrogate", unit: tail32 });
-    }
-    if (",\"cells\":[".length > 0) {
-      out.push(",\"cells\":[");
-    }
+  private static appendLine(out: string[], line: PlanLine): void {
+    out.push("{\"rangeStart\":");
+    out.push(String(line.rangeStart));
+    out.push(",\"rangeEnd\":");
+    out.push(String(line.rangeEnd));
+    out.push(",\"top\":");
+    out.push(PlanJsonNumber.ecmaJsonNumber(line.top));
+    out.push(",\"bottom\":");
+    out.push(PlanJsonNumber.ecmaJsonNumber(line.bottom));
+    out.push(",\"baseline\":");
+    out.push(PlanJsonNumber.ecmaJsonNumber(line.baseline));
+    out.push(",\"indent\":");
+    out.push(PlanJsonNumber.ecmaJsonNumber(line.indent));
+    out.push(",\"visualWidth\":");
+    out.push(PlanJsonNumber.ecmaJsonNumber(line.visualWidth));
+    out.push(",\"hyphenAdvance\":");
+    out.push(PlanJsonNumber.ecmaJsonNumber(line.hyphenAdvance));
+    out.push(",\"endReason\":");
+    PlanJsonNumber.appendJsonString(out, PlanJson.endReasonName(line.endReason));
+    out.push(",\"cells\":[");
     let firstCell = true;
     {
       const _g1 = line.cells;
       for (let _g_index = 0, count2 = _g1.length; _g_index < count2; _g_index += 1) {
         const cell = _g1[_g_index]!;
         if (!firstCell) {
-          const tail33 = out.length > 0 ? out[out.length - 1].charCodeAt(out[out.length - 1].length - 1) : NaN;
-          if (tail33 >= 55296 && tail33 <= 56319 && ",".length > 0 && !(",".charCodeAt(0) >= 56320 && ",".charCodeAt(0) <= 57343)) {
-            throw new UStringException({ kind: "UnpairedSurrogate", unit: tail33 });
-          }
-          if (",".length > 0) {
-            out.push(",");
-          }
+          out.push(",");
         }
         firstCell = false;
-        out = PlanJson.appendCell(out, cell);
+        PlanJson.appendCell(out, cell);
       }
     }
-    const tail34 = out.length > 0 ? out[out.length - 1].charCodeAt(out[out.length - 1].length - 1) : NaN;
-    if (tail34 >= 55296 && tail34 <= 56319 && "]}".length > 0 && !("]}".charCodeAt(0) >= 56320 && "]}".charCodeAt(0) <= 57343)) {
-      throw new UStringException({ kind: "UnpairedSurrogate", unit: tail34 });
-    }
-    if ("]}".length > 0) {
-      out.push("]}");
-    }
-    return out;
+    out.push("]}");
   }
 
-  private static appendCell(out: string[], cell: PlanCell): string[] {
-    const tail35 = out.length > 0 ? out[out.length - 1].charCodeAt(out[out.length - 1].length - 1) : NaN;
-    if (tail35 >= 55296 && tail35 <= 56319 && "{\"rangeStart\":".length > 0 && !("{\"rangeStart\":".charCodeAt(0) >= 56320 && "{\"rangeStart\":".charCodeAt(0) <= 57343)) {
-      throw new UStringException({ kind: "UnpairedSurrogate", unit: tail35 });
-    }
-    if ("{\"rangeStart\":".length > 0) {
-      out.push("{\"rangeStart\":");
-    }
-    const tail36 = out.length > 0 ? out[out.length - 1].charCodeAt(out[out.length - 1].length - 1) : NaN;
-    if (tail36 >= 55296 && tail36 <= 56319 && String(cell.rangeStart).length > 0 && !(String(cell.rangeStart).charCodeAt(0) >= 56320 && String(cell.rangeStart).charCodeAt(0) <= 57343)) {
-      throw new UStringException({ kind: "UnpairedSurrogate", unit: tail36 });
-    }
-    if (String(cell.rangeStart).length > 0) {
-      out.push(String(cell.rangeStart));
-    }
-    const tail37 = out.length > 0 ? out[out.length - 1].charCodeAt(out[out.length - 1].length - 1) : NaN;
-    if (tail37 >= 55296 && tail37 <= 56319 && ",\"rangeEnd\":".length > 0 && !(",\"rangeEnd\":".charCodeAt(0) >= 56320 && ",\"rangeEnd\":".charCodeAt(0) <= 57343)) {
-      throw new UStringException({ kind: "UnpairedSurrogate", unit: tail37 });
-    }
-    if (",\"rangeEnd\":".length > 0) {
-      out.push(",\"rangeEnd\":");
-    }
-    const tail38 = out.length > 0 ? out[out.length - 1].charCodeAt(out[out.length - 1].length - 1) : NaN;
-    if (tail38 >= 55296 && tail38 <= 56319 && String(cell.rangeEnd).length > 0 && !(String(cell.rangeEnd).charCodeAt(0) >= 56320 && String(cell.rangeEnd).charCodeAt(0) <= 57343)) {
-      throw new UStringException({ kind: "UnpairedSurrogate", unit: tail38 });
-    }
-    if (String(cell.rangeEnd).length > 0) {
-      out.push(String(cell.rangeEnd));
-    }
-    const tail39 = out.length > 0 ? out[out.length - 1].charCodeAt(out[out.length - 1].length - 1) : NaN;
-    if (tail39 >= 55296 && tail39 <= 56319 && ",\"source\":".length > 0 && !(",\"source\":".charCodeAt(0) >= 56320 && ",\"source\":".charCodeAt(0) <= 57343)) {
-      throw new UStringException({ kind: "UnpairedSurrogate", unit: tail39 });
-    }
-    if (",\"source\":".length > 0) {
-      out.push(",\"source\":");
-    }
-    out = PlanJsonNumber.appendJsonString(out, cell.source);
-    const tail40 = out.length > 0 ? out[out.length - 1].charCodeAt(out[out.length - 1].length - 1) : NaN;
-    if (tail40 >= 55296 && tail40 <= 56319 && ",\"display\":".length > 0 && !(",\"display\":".charCodeAt(0) >= 56320 && ",\"display\":".charCodeAt(0) <= 57343)) {
-      throw new UStringException({ kind: "UnpairedSurrogate", unit: tail40 });
-    }
-    if (",\"display\":".length > 0) {
-      out.push(",\"display\":");
-    }
-    out = PlanJsonNumber.appendJsonString(out, cell.display);
-    const tail41 = out.length > 0 ? out[out.length - 1].charCodeAt(out[out.length - 1].length - 1) : NaN;
-    if (tail41 >= 55296 && tail41 <= 56319 && ",\"drawX\":".length > 0 && !(",\"drawX\":".charCodeAt(0) >= 56320 && ",\"drawX\":".charCodeAt(0) <= 57343)) {
-      throw new UStringException({ kind: "UnpairedSurrogate", unit: tail41 });
-    }
-    if (",\"drawX\":".length > 0) {
-      out.push(",\"drawX\":");
-    }
-    const tail42 = out.length > 0 ? out[out.length - 1].charCodeAt(out[out.length - 1].length - 1) : NaN;
-    if (tail42 >= 55296 && tail42 <= 56319 && PlanJsonNumber.ecmaJsonNumber(cell.drawX).length > 0 && !(PlanJsonNumber.ecmaJsonNumber(cell.drawX).charCodeAt(0) >= 56320 && PlanJsonNumber.ecmaJsonNumber(cell.drawX).charCodeAt(0) <= 57343)) {
-      throw new UStringException({ kind: "UnpairedSurrogate", unit: tail42 });
-    }
-    if (PlanJsonNumber.ecmaJsonNumber(cell.drawX).length > 0) {
-      out.push(PlanJsonNumber.ecmaJsonNumber(cell.drawX));
-    }
-    const tail43 = out.length > 0 ? out[out.length - 1].charCodeAt(out[out.length - 1].length - 1) : NaN;
-    if (tail43 >= 55296 && tail43 <= 56319 && ",\"naturalWidth\":".length > 0 && !(",\"naturalWidth\":".charCodeAt(0) >= 56320 && ",\"naturalWidth\":".charCodeAt(0) <= 57343)) {
-      throw new UStringException({ kind: "UnpairedSurrogate", unit: tail43 });
-    }
-    if (",\"naturalWidth\":".length > 0) {
-      out.push(",\"naturalWidth\":");
-    }
-    const tail44 = out.length > 0 ? out[out.length - 1].charCodeAt(out[out.length - 1].length - 1) : NaN;
-    if (tail44 >= 55296 && tail44 <= 56319 && PlanJsonNumber.ecmaJsonNumber(cell.naturalWidth).length > 0 && !(PlanJsonNumber.ecmaJsonNumber(cell.naturalWidth).charCodeAt(0) >= 56320 && PlanJsonNumber.ecmaJsonNumber(cell.naturalWidth).charCodeAt(0) <= 57343)) {
-      throw new UStringException({ kind: "UnpairedSurrogate", unit: tail44 });
-    }
-    if (PlanJsonNumber.ecmaJsonNumber(cell.naturalWidth).length > 0) {
-      out.push(PlanJsonNumber.ecmaJsonNumber(cell.naturalWidth));
-    }
-    const tail45 = out.length > 0 ? out[out.length - 1].charCodeAt(out[out.length - 1].length - 1) : NaN;
-    if (tail45 >= 55296 && tail45 <= 56319 && ",\"leadingLayoutAdvance\":".length > 0 && !(",\"leadingLayoutAdvance\":".charCodeAt(0) >= 56320 && ",\"leadingLayoutAdvance\":".charCodeAt(0) <= 57343)) {
-      throw new UStringException({ kind: "UnpairedSurrogate", unit: tail45 });
-    }
-    if (",\"leadingLayoutAdvance\":".length > 0) {
-      out.push(",\"leadingLayoutAdvance\":");
-    }
-    const tail46 = out.length > 0 ? out[out.length - 1].charCodeAt(out[out.length - 1].length - 1) : NaN;
-    if (tail46 >= 55296 && tail46 <= 56319 && PlanJsonNumber.ecmaJsonNumber(cell.leadingLayoutAdvance).length > 0 && !(PlanJsonNumber.ecmaJsonNumber(cell.leadingLayoutAdvance).charCodeAt(0) >= 56320 && PlanJsonNumber.ecmaJsonNumber(cell.leadingLayoutAdvance).charCodeAt(0) <= 57343)) {
-      throw new UStringException({ kind: "UnpairedSurrogate", unit: tail46 });
-    }
-    if (PlanJsonNumber.ecmaJsonNumber(cell.leadingLayoutAdvance).length > 0) {
-      out.push(PlanJsonNumber.ecmaJsonNumber(cell.leadingLayoutAdvance));
-    }
+  private static appendCell(out: string[], cell: PlanCell): void {
+    out.push("{\"rangeStart\":");
+    out.push(String(cell.rangeStart));
+    out.push(",\"rangeEnd\":");
+    out.push(String(cell.rangeEnd));
+    out.push(",\"source\":");
+    PlanJsonNumber.appendJsonString(out, cell.source);
+    out.push(",\"display\":");
+    PlanJsonNumber.appendJsonString(out, cell.display);
+    out.push(",\"drawX\":");
+    out.push(PlanJsonNumber.ecmaJsonNumber(cell.drawX));
+    out.push(",\"naturalWidth\":");
+    out.push(PlanJsonNumber.ecmaJsonNumber(cell.naturalWidth));
+    out.push(",\"leadingLayoutAdvance\":");
+    out.push(PlanJsonNumber.ecmaJsonNumber(cell.leadingLayoutAdvance));
     if (cell.shapingBoundary) {
-      const tail47 = out.length > 0 ? out[out.length - 1].charCodeAt(out[out.length - 1].length - 1) : NaN;
-      if (tail47 >= 55296 && tail47 <= 56319 && ",\"shapingBoundary\":true".length > 0 && !(",\"shapingBoundary\":true".charCodeAt(0) >= 56320 && ",\"shapingBoundary\":true".charCodeAt(0) <= 57343)) {
-        throw new UStringException({ kind: "UnpairedSurrogate", unit: tail47 });
-      }
-      if (",\"shapingBoundary\":true".length > 0) {
-        out.push(",\"shapingBoundary\":true");
-      }
+      out.push(",\"shapingBoundary\":true");
     }
     if (cell.openTypeFeatures.length > 0) {
-      const tail48 = out.length > 0 ? out[out.length - 1].charCodeAt(out[out.length - 1].length - 1) : NaN;
-      if (tail48 >= 55296 && tail48 <= 56319 && ",\"openTypeFeatures\":[".length > 0 && !(",\"openTypeFeatures\":[".charCodeAt(0) >= 56320 && ",\"openTypeFeatures\":[".charCodeAt(0) <= 57343)) {
-        throw new UStringException({ kind: "UnpairedSurrogate", unit: tail48 });
-      }
-      if (",\"openTypeFeatures\":[".length > 0) {
-        out.push(",\"openTypeFeatures\":[");
-      }
+      out.push(",\"openTypeFeatures\":[");
       let firstFeature = true;
       {
         const _g1 = cell.openTypeFeatures;
         for (let _g_index = 0, count3 = _g1.length; _g_index < count3; _g_index += 1) {
           const feature = _g1[_g_index]!;
           if (!firstFeature) {
-            const tail49 = out.length > 0 ? out[out.length - 1].charCodeAt(out[out.length - 1].length - 1) : NaN;
-            if (tail49 >= 55296 && tail49 <= 56319 && ",".length > 0 && !(",".charCodeAt(0) >= 56320 && ",".charCodeAt(0) <= 57343)) {
-              throw new UStringException({ kind: "UnpairedSurrogate", unit: tail49 });
-            }
-            if (",".length > 0) {
-              out.push(",");
-            }
+            out.push(",");
           }
           firstFeature = false;
-          out = PlanJsonNumber.appendJsonString(out, feature);
+          PlanJsonNumber.appendJsonString(out, feature);
         }
       }
-      const tail50 = out.length > 0 ? out[out.length - 1].charCodeAt(out[out.length - 1].length - 1) : NaN;
-      if (tail50 >= 55296 && tail50 <= 56319 && "]".length > 0 && !("]".charCodeAt(0) >= 56320 && "]".charCodeAt(0) <= 57343)) {
-        throw new UStringException({ kind: "UnpairedSurrogate", unit: tail50 });
-      }
-      if ("]".length > 0) {
-        out.push("]");
-      }
+      out.push("]");
     }
-    out = PlanJson.appendCellEvidence(out, cell);
-    const tail51 = out.length > 0 ? out[out.length - 1].charCodeAt(out[out.length - 1].length - 1) : NaN;
-    if (tail51 >= 55296 && tail51 <= 56319 && "}".length > 0 && !("}".charCodeAt(0) >= 56320 && "}".charCodeAt(0) <= 57343)) {
-      throw new UStringException({ kind: "UnpairedSurrogate", unit: tail51 });
-    }
-    if ("}".length > 0) {
-      out.push("}");
-    }
-    return out;
+    PlanJson.appendCellEvidence(out, cell);
+    out.push("}");
   }
 
-  private static appendCellEvidence(out: string[], cell: PlanCell): string[] {
+  private static appendCellEvidence(out: string[], cell: PlanCell): void {
     const inlineObject = cell.inlineObject;
     if (inlineObject !== null) {
-      const tail52 = out.length > 0 ? out[out.length - 1].charCodeAt(out[out.length - 1].length - 1) : NaN;
-      if (tail52 >= 55296 && tail52 <= 56319 && ",\"inlineObject\":".length > 0 && !(",\"inlineObject\":".charCodeAt(0) >= 56320 && ",\"inlineObject\":".charCodeAt(0) <= 57343)) {
-        throw new UStringException({ kind: "UnpairedSurrogate", unit: tail52 });
-      }
-      if (",\"inlineObject\":".length > 0) {
-        out.push(",\"inlineObject\":");
-      }
-      const tail53 = out.length > 0 ? out[out.length - 1].charCodeAt(out[out.length - 1].length - 1) : NaN;
-      if (tail53 >= 55296 && tail53 <= 56319 && PlanJsonNumber.ecmaJsonNumber(inlineObject).length > 0 && !(PlanJsonNumber.ecmaJsonNumber(inlineObject).charCodeAt(0) >= 56320 && PlanJsonNumber.ecmaJsonNumber(inlineObject).charCodeAt(0) <= 57343)) {
-        throw new UStringException({ kind: "UnpairedSurrogate", unit: tail53 });
-      }
-      if (PlanJsonNumber.ecmaJsonNumber(inlineObject).length > 0) {
-        out.push(PlanJsonNumber.ecmaJsonNumber(inlineObject));
-      }
+      out.push(",\"inlineObject\":");
+      out.push(PlanJsonNumber.ecmaJsonNumber(inlineObject));
     }
     const advance = cell.advance;
     if (advance !== null) {
-      const tail54 = out.length > 0 ? out[out.length - 1].charCodeAt(out[out.length - 1].length - 1) : NaN;
-      if (tail54 >= 55296 && tail54 <= 56319 && ",\"advance\":".length > 0 && !(",\"advance\":".charCodeAt(0) >= 56320 && ",\"advance\":".charCodeAt(0) <= 57343)) {
-        throw new UStringException({ kind: "UnpairedSurrogate", unit: tail54 });
-      }
-      if (",\"advance\":".length > 0) {
-        out.push(",\"advance\":");
-      }
-      const tail55 = out.length > 0 ? out[out.length - 1].charCodeAt(out[out.length - 1].length - 1) : NaN;
-      if (tail55 >= 55296 && tail55 <= 56319 && PlanJsonNumber.ecmaJsonNumber(advance).length > 0 && !(PlanJsonNumber.ecmaJsonNumber(advance).charCodeAt(0) >= 56320 && PlanJsonNumber.ecmaJsonNumber(advance).charCodeAt(0) <= 57343)) {
-        throw new UStringException({ kind: "UnpairedSurrogate", unit: tail55 });
-      }
-      if (PlanJsonNumber.ecmaJsonNumber(advance).length > 0) {
-        out.push(PlanJsonNumber.ecmaJsonNumber(advance));
-      }
+      out.push(",\"advance\":");
+      out.push(PlanJsonNumber.ecmaJsonNumber(advance));
     }
     const renderFontFamily = cell.renderFontFamily;
     if (renderFontFamily !== null) {
-      const tail56 = out.length > 0 ? out[out.length - 1].charCodeAt(out[out.length - 1].length - 1) : NaN;
-      if (tail56 >= 55296 && tail56 <= 56319 && ",\"renderFontFamily\":".length > 0 && !(",\"renderFontFamily\":".charCodeAt(0) >= 56320 && ",\"renderFontFamily\":".charCodeAt(0) <= 57343)) {
-        throw new UStringException({ kind: "UnpairedSurrogate", unit: tail56 });
-      }
-      if (",\"renderFontFamily\":".length > 0) {
-        out.push(",\"renderFontFamily\":");
-      }
-      out = PlanJsonNumber.appendJsonString(out, renderFontFamily);
+      out.push(",\"renderFontFamily\":");
+      PlanJsonNumber.appendJsonString(out, renderFontFamily);
     }
     const dashStrategy = cell.dashStrategy;
     if (dashStrategy !== null) {
-      const tail57 = out.length > 0 ? out[out.length - 1].charCodeAt(out[out.length - 1].length - 1) : NaN;
-      if (tail57 >= 55296 && tail57 <= 56319 && ",\"dashStrategy\":".length > 0 && !(",\"dashStrategy\":".charCodeAt(0) >= 56320 && ",\"dashStrategy\":".charCodeAt(0) <= 57343)) {
-        throw new UStringException({ kind: "UnpairedSurrogate", unit: tail57 });
-      }
-      if (",\"dashStrategy\":".length > 0) {
-        out.push(",\"dashStrategy\":");
-      }
-      out = PlanJsonNumber.appendJsonString(out, dashStrategy);
+      out.push(",\"dashStrategy\":");
+      PlanJsonNumber.appendJsonString(out, dashStrategy);
       const shapingLanguage = cell.shapingLanguage;
       if (shapingLanguage !== null) {
-        const tail58 = out.length > 0 ? out[out.length - 1].charCodeAt(out[out.length - 1].length - 1) : NaN;
-        if (tail58 >= 55296 && tail58 <= 56319 && ",\"shapingLanguage\":".length > 0 && !(",\"shapingLanguage\":".charCodeAt(0) >= 56320 && ",\"shapingLanguage\":".charCodeAt(0) <= 57343)) {
-          throw new UStringException({ kind: "UnpairedSurrogate", unit: tail58 });
-        }
-        if (",\"shapingLanguage\":".length > 0) {
-          out.push(",\"shapingLanguage\":");
-        }
-        out = PlanJsonNumber.appendJsonString(out, shapingLanguage);
+        out.push(",\"shapingLanguage\":");
+        PlanJsonNumber.appendJsonString(out, shapingLanguage);
       }
       const resolvedFace = cell.resolvedFace;
       if (resolvedFace !== null) {
-        const tail59 = out.length > 0 ? out[out.length - 1].charCodeAt(out[out.length - 1].length - 1) : NaN;
-        if (tail59 >= 55296 && tail59 <= 56319 && ",\"resolvedFace\":".length > 0 && !(",\"resolvedFace\":".charCodeAt(0) >= 56320 && ",\"resolvedFace\":".charCodeAt(0) <= 57343)) {
-          throw new UStringException({ kind: "UnpairedSurrogate", unit: tail59 });
-        }
-        if (",\"resolvedFace\":".length > 0) {
-          out.push(",\"resolvedFace\":");
-        }
-        out = PlanJsonNumber.appendJsonString(out, resolvedFace);
+        out.push(",\"resolvedFace\":");
+        PlanJsonNumber.appendJsonString(out, resolvedFace);
       }
       const glyphIds = cell.glyphIds;
       if (glyphIds !== null) {
-        const tail60 = out.length > 0 ? out[out.length - 1].charCodeAt(out[out.length - 1].length - 1) : NaN;
-        if (tail60 >= 55296 && tail60 <= 56319 && ",\"glyphIds\":".length > 0 && !(",\"glyphIds\":".charCodeAt(0) >= 56320 && ",\"glyphIds\":".charCodeAt(0) <= 57343)) {
-          throw new UStringException({ kind: "UnpairedSurrogate", unit: tail60 });
-        }
-        if (",\"glyphIds\":".length > 0) {
-          out.push(",\"glyphIds\":");
-        }
-        out = PlanJsonNumber.appendJsonString(out, glyphIds);
+        out.push(",\"glyphIds\":");
+        PlanJsonNumber.appendJsonString(out, glyphIds);
       }
       const shapingEvidence = cell.shapingEvidence;
       if (shapingEvidence !== null) {
-        const tail61 = out.length > 0 ? out[out.length - 1].charCodeAt(out[out.length - 1].length - 1) : NaN;
-        if (tail61 >= 55296 && tail61 <= 56319 && ",\"shapingEvidence\":".length > 0 && !(",\"shapingEvidence\":".charCodeAt(0) >= 56320 && ",\"shapingEvidence\":".charCodeAt(0) <= 57343)) {
-          throw new UStringException({ kind: "UnpairedSurrogate", unit: tail61 });
-        }
-        if (",\"shapingEvidence\":".length > 0) {
-          out.push(",\"shapingEvidence\":");
-        }
-        out = PlanJsonNumber.appendJsonString(out, shapingEvidence);
+        out.push(",\"shapingEvidence\":");
+        PlanJsonNumber.appendJsonString(out, shapingEvidence);
       }
     }
     const punctuationInkFloor = cell.punctuationInkFloor;
     if (punctuationInkFloor !== null) {
-      const tail62 = out.length > 0 ? out[out.length - 1].charCodeAt(out[out.length - 1].length - 1) : NaN;
-      if (tail62 >= 55296 && tail62 <= 56319 && ",\"punctuationInkFloor\":".length > 0 && !(",\"punctuationInkFloor\":".charCodeAt(0) >= 56320 && ",\"punctuationInkFloor\":".charCodeAt(0) <= 57343)) {
-        throw new UStringException({ kind: "UnpairedSurrogate", unit: tail62 });
-      }
-      if (",\"punctuationInkFloor\":".length > 0) {
-        out.push(",\"punctuationInkFloor\":");
-      }
-      const tail63 = out.length > 0 ? out[out.length - 1].charCodeAt(out[out.length - 1].length - 1) : NaN;
-      if (tail63 >= 55296 && tail63 <= 56319 && PlanJsonNumber.ecmaJsonNumber(punctuationInkFloor).length > 0 && !(PlanJsonNumber.ecmaJsonNumber(punctuationInkFloor).charCodeAt(0) >= 56320 && PlanJsonNumber.ecmaJsonNumber(punctuationInkFloor).charCodeAt(0) <= 57343)) {
-        throw new UStringException({ kind: "UnpairedSurrogate", unit: tail63 });
-      }
-      if (PlanJsonNumber.ecmaJsonNumber(punctuationInkFloor).length > 0) {
-        out.push(PlanJsonNumber.ecmaJsonNumber(punctuationInkFloor));
-      }
+      out.push(",\"punctuationInkFloor\":");
+      out.push(PlanJsonNumber.ecmaJsonNumber(punctuationInkFloor));
       const punctuationBodyWidth = cell.punctuationBodyWidth;
       if (punctuationBodyWidth !== null) {
-        const tail64 = out.length > 0 ? out[out.length - 1].charCodeAt(out[out.length - 1].length - 1) : NaN;
-        if (tail64 >= 55296 && tail64 <= 56319 && ",\"punctuationBodyWidth\":".length > 0 && !(",\"punctuationBodyWidth\":".charCodeAt(0) >= 56320 && ",\"punctuationBodyWidth\":".charCodeAt(0) <= 57343)) {
-          throw new UStringException({ kind: "UnpairedSurrogate", unit: tail64 });
-        }
-        if (",\"punctuationBodyWidth\":".length > 0) {
-          out.push(",\"punctuationBodyWidth\":");
-        }
-        const tail65 = out.length > 0 ? out[out.length - 1].charCodeAt(out[out.length - 1].length - 1) : NaN;
-        if (tail65 >= 55296 && tail65 <= 56319 && PlanJsonNumber.ecmaJsonNumber(punctuationBodyWidth).length > 0 && !(PlanJsonNumber.ecmaJsonNumber(punctuationBodyWidth).charCodeAt(0) >= 56320 && PlanJsonNumber.ecmaJsonNumber(punctuationBodyWidth).charCodeAt(0) <= 57343)) {
-          throw new UStringException({ kind: "UnpairedSurrogate", unit: tail65 });
-        }
-        if (PlanJsonNumber.ecmaJsonNumber(punctuationBodyWidth).length > 0) {
-          out.push(PlanJsonNumber.ecmaJsonNumber(punctuationBodyWidth));
-        }
+        out.push(",\"punctuationBodyWidth\":");
+        out.push(PlanJsonNumber.ecmaJsonNumber(punctuationBodyWidth));
       }
     }
     if (cell.latin) {
-      const tail66 = out.length > 0 ? out[out.length - 1].charCodeAt(out[out.length - 1].length - 1) : NaN;
-      if (tail66 >= 55296 && tail66 <= 56319 && ",\"latin\":true".length > 0 && !(",\"latin\":true".charCodeAt(0) >= 56320 && ",\"latin\":true".charCodeAt(0) <= 57343)) {
-        throw new UStringException({ kind: "UnpairedSurrogate", unit: tail66 });
-      }
-      if (",\"latin\":true".length > 0) {
-        out.push(",\"latin\":true");
-      }
+      out.push(",\"latin\":true");
     }
     const styleDelta = cell.styleDelta;
     if (styleDelta !== null) {
-      out = PlanJson.appendStyleDelta(out, (styleDelta)!);
+      PlanJson.appendStyleDelta(out, (styleDelta)!);
     }
-    return out;
   }
 
-  private static appendStyleDelta(out: string[], style: PlanStyleDelta): string[] {
-    const tail67 = out.length > 0 ? out[out.length - 1].charCodeAt(out[out.length - 1].length - 1) : NaN;
-    if (tail67 >= 55296 && tail67 <= 56319 && ",\"style\":{".length > 0 && !(",\"style\":{".charCodeAt(0) >= 56320 && ",\"style\":{".charCodeAt(0) <= 57343)) {
-      throw new UStringException({ kind: "UnpairedSurrogate", unit: tail67 });
-    }
-    if (",\"style\":{".length > 0) {
-      out.push(",\"style\":{");
-    }
+  private static appendStyleDelta(out: string[], style: PlanStyleDelta): void {
+    out.push(",\"style\":{");
     let fieldCount = 0;
     const fontSize = style.fontSize;
     if (fontSize !== null) {
-      const tail68 = out.length > 0 ? out[out.length - 1].charCodeAt(out[out.length - 1].length - 1) : NaN;
-      if (tail68 >= 55296 && tail68 <= 56319 && "\"fontSize\":".length > 0 && !("\"fontSize\":".charCodeAt(0) >= 56320 && "\"fontSize\":".charCodeAt(0) <= 57343)) {
-        throw new UStringException({ kind: "UnpairedSurrogate", unit: tail68 });
-      }
-      if ("\"fontSize\":".length > 0) {
-        out.push("\"fontSize\":");
-      }
-      const tail69 = out.length > 0 ? out[out.length - 1].charCodeAt(out[out.length - 1].length - 1) : NaN;
-      if (tail69 >= 55296 && tail69 <= 56319 && PlanJsonNumber.ecmaJsonNumber(fontSize).length > 0 && !(PlanJsonNumber.ecmaJsonNumber(fontSize).charCodeAt(0) >= 56320 && PlanJsonNumber.ecmaJsonNumber(fontSize).charCodeAt(0) <= 57343)) {
-        throw new UStringException({ kind: "UnpairedSurrogate", unit: tail69 });
-      }
-      if (PlanJsonNumber.ecmaJsonNumber(fontSize).length > 0) {
-        out.push(PlanJsonNumber.ecmaJsonNumber(fontSize));
-      }
+      out.push("\"fontSize\":");
+      out.push(PlanJsonNumber.ecmaJsonNumber(fontSize));
       fieldCount++;
     }
     const fontWeight = style.fontWeight;
     if (fontWeight !== null) {
       if (fieldCount > 0) {
-        const tail70 = out.length > 0 ? out[out.length - 1].charCodeAt(out[out.length - 1].length - 1) : NaN;
-        if (tail70 >= 55296 && tail70 <= 56319 && ",".length > 0 && !(",".charCodeAt(0) >= 56320 && ",".charCodeAt(0) <= 57343)) {
-          throw new UStringException({ kind: "UnpairedSurrogate", unit: tail70 });
-        }
-        if (",".length > 0) {
-          out.push(",");
-        }
+        out.push(",");
       }
-      const tail71 = out.length > 0 ? out[out.length - 1].charCodeAt(out[out.length - 1].length - 1) : NaN;
-      if (tail71 >= 55296 && tail71 <= 56319 && "\"fontWeight\":".length > 0 && !("\"fontWeight\":".charCodeAt(0) >= 56320 && "\"fontWeight\":".charCodeAt(0) <= 57343)) {
-        throw new UStringException({ kind: "UnpairedSurrogate", unit: tail71 });
-      }
-      if ("\"fontWeight\":".length > 0) {
-        out.push("\"fontWeight\":");
-      }
-      const tail72 = out.length > 0 ? out[out.length - 1].charCodeAt(out[out.length - 1].length - 1) : NaN;
-      if (tail72 >= 55296 && tail72 <= 56319 && String(fontWeight).length > 0 && !(String(fontWeight).charCodeAt(0) >= 56320 && String(fontWeight).charCodeAt(0) <= 57343)) {
-        throw new UStringException({ kind: "UnpairedSurrogate", unit: tail72 });
-      }
-      if (String(fontWeight).length > 0) {
-        out.push(String(fontWeight));
-      }
+      out.push("\"fontWeight\":");
+      out.push(String(fontWeight));
       fieldCount++;
     }
     const italic = style.italic;
     if (italic !== null) {
       if (fieldCount > 0) {
-        const tail73 = out.length > 0 ? out[out.length - 1].charCodeAt(out[out.length - 1].length - 1) : NaN;
-        if (tail73 >= 55296 && tail73 <= 56319 && ",".length > 0 && !(",".charCodeAt(0) >= 56320 && ",".charCodeAt(0) <= 57343)) {
-          throw new UStringException({ kind: "UnpairedSurrogate", unit: tail73 });
-        }
-        if (",".length > 0) {
-          out.push(",");
-        }
+        out.push(",");
       }
-      const tail74 = out.length > 0 ? out[out.length - 1].charCodeAt(out[out.length - 1].length - 1) : NaN;
-      if (tail74 >= 55296 && tail74 <= 56319 && "\"italic\":".length > 0 && !("\"italic\":".charCodeAt(0) >= 56320 && "\"italic\":".charCodeAt(0) <= 57343)) {
-        throw new UStringException({ kind: "UnpairedSurrogate", unit: tail74 });
-      }
-      if ("\"italic\":".length > 0) {
-        out.push("\"italic\":");
-      }
-      const tail75 = out.length > 0 ? out[out.length - 1].charCodeAt(out[out.length - 1].length - 1) : NaN;
-      if (tail75 >= 55296 && tail75 <= 56319 && (italic ? "true" : "false").length > 0 && !((italic ? "true" : "false").charCodeAt(0) >= 56320 && (italic ? "true" : "false").charCodeAt(0) <= 57343)) {
-        throw new UStringException({ kind: "UnpairedSurrogate", unit: tail75 });
-      }
-      if ((italic ? "true" : "false").length > 0) {
-        out.push((italic ? "true" : "false"));
-      }
+      out.push("\"italic\":");
+      out.push((italic ? "true" : "false"));
     }
-    const tail76 = out.length > 0 ? out[out.length - 1].charCodeAt(out[out.length - 1].length - 1) : NaN;
-    if (tail76 >= 55296 && tail76 <= 56319 && "}".length > 0 && !("}".charCodeAt(0) >= 56320 && "}".charCodeAt(0) <= 57343)) {
-      throw new UStringException({ kind: "UnpairedSurrogate", unit: tail76 });
-    }
-    if ("}".length > 0) {
-      out.push("}");
-    }
-    return out;
+    out.push("}");
   }
 
-  private static appendParagraphEvidence(out: string[], plan: Plan): string[] {
+  private static appendParagraphEvidence(out: string[], plan: Plan): void {
     const fontSize = plan.fontSize;
     if (fontSize !== null) {
-      const tail77 = out.length > 0 ? out[out.length - 1].charCodeAt(out[out.length - 1].length - 1) : NaN;
-      if (tail77 >= 55296 && tail77 <= 56319 && ",\"fontSize\":".length > 0 && !(",\"fontSize\":".charCodeAt(0) >= 56320 && ",\"fontSize\":".charCodeAt(0) <= 57343)) {
-        throw new UStringException({ kind: "UnpairedSurrogate", unit: tail77 });
-      }
-      if (",\"fontSize\":".length > 0) {
-        out.push(",\"fontSize\":");
-      }
-      const tail78 = out.length > 0 ? out[out.length - 1].charCodeAt(out[out.length - 1].length - 1) : NaN;
-      if (tail78 >= 55296 && tail78 <= 56319 && PlanJsonNumber.ecmaJsonNumber(fontSize).length > 0 && !(PlanJsonNumber.ecmaJsonNumber(fontSize).charCodeAt(0) >= 56320 && PlanJsonNumber.ecmaJsonNumber(fontSize).charCodeAt(0) <= 57343)) {
-        throw new UStringException({ kind: "UnpairedSurrogate", unit: tail78 });
-      }
-      if (PlanJsonNumber.ecmaJsonNumber(fontSize).length > 0) {
-        out.push(PlanJsonNumber.ecmaJsonNumber(fontSize));
-      }
+      out.push(",\"fontSize\":");
+      out.push(PlanJsonNumber.ecmaJsonNumber(fontSize));
     }
     const overlayWidth = plan.overlayWidth;
     if (overlayWidth !== null) {
-      const tail79 = out.length > 0 ? out[out.length - 1].charCodeAt(out[out.length - 1].length - 1) : NaN;
-      if (tail79 >= 55296 && tail79 <= 56319 && ",\"overlayWidth\":".length > 0 && !(",\"overlayWidth\":".charCodeAt(0) >= 56320 && ",\"overlayWidth\":".charCodeAt(0) <= 57343)) {
-        throw new UStringException({ kind: "UnpairedSurrogate", unit: tail79 });
-      }
-      if (",\"overlayWidth\":".length > 0) {
-        out.push(",\"overlayWidth\":");
-      }
-      const tail80 = out.length > 0 ? out[out.length - 1].charCodeAt(out[out.length - 1].length - 1) : NaN;
-      if (tail80 >= 55296 && tail80 <= 56319 && PlanJsonNumber.ecmaJsonNumber(overlayWidth).length > 0 && !(PlanJsonNumber.ecmaJsonNumber(overlayWidth).charCodeAt(0) >= 56320 && PlanJsonNumber.ecmaJsonNumber(overlayWidth).charCodeAt(0) <= 57343)) {
-        throw new UStringException({ kind: "UnpairedSurrogate", unit: tail80 });
-      }
-      if (PlanJsonNumber.ecmaJsonNumber(overlayWidth).length > 0) {
-        out.push(PlanJsonNumber.ecmaJsonNumber(overlayWidth));
-      }
+      out.push(",\"overlayWidth\":");
+      out.push(PlanJsonNumber.ecmaJsonNumber(overlayWidth));
     }
     if (plan.emphasisRanges.length > 0) {
-      const tail81 = out.length > 0 ? out[out.length - 1].charCodeAt(out[out.length - 1].length - 1) : NaN;
-      if (tail81 >= 55296 && tail81 <= 56319 && ",\"emphasisRanges\":[".length > 0 && !(",\"emphasisRanges\":[".charCodeAt(0) >= 56320 && ",\"emphasisRanges\":[".charCodeAt(0) <= 57343)) {
-        throw new UStringException({ kind: "UnpairedSurrogate", unit: tail81 });
-      }
-      if (",\"emphasisRanges\":[".length > 0) {
-        out.push(",\"emphasisRanges\":[");
-      }
+      out.push(",\"emphasisRanges\":[");
       let firstRange = true;
       {
         const _g1 = plan.emphasisRanges;
         for (let _g_index = 0, count4 = _g1.length; _g_index < count4; _g_index += 1) {
           const range = _g1[_g_index]!;
           if (!firstRange) {
-            const tail82 = out.length > 0 ? out[out.length - 1].charCodeAt(out[out.length - 1].length - 1) : NaN;
-            if (tail82 >= 55296 && tail82 <= 56319 && ",".length > 0 && !(",".charCodeAt(0) >= 56320 && ",".charCodeAt(0) <= 57343)) {
-              throw new UStringException({ kind: "UnpairedSurrogate", unit: tail82 });
-            }
-            if (",".length > 0) {
-              out.push(",");
-            }
-          }
-          firstRange = false;
-          const tail83 = out.length > 0 ? out[out.length - 1].charCodeAt(out[out.length - 1].length - 1) : NaN;
-          if (tail83 >= 55296 && tail83 <= 56319 && "[".length > 0 && !("[".charCodeAt(0) >= 56320 && "[".charCodeAt(0) <= 57343)) {
-            throw new UStringException({ kind: "UnpairedSurrogate", unit: tail83 });
-          }
-          if ("[".length > 0) {
-            out.push("[");
-          }
-          const tail84 = out.length > 0 ? out[out.length - 1].charCodeAt(out[out.length - 1].length - 1) : NaN;
-          if (tail84 >= 55296 && tail84 <= 56319 && String(range.start).length > 0 && !(String(range.start).charCodeAt(0) >= 56320 && String(range.start).charCodeAt(0) <= 57343)) {
-            throw new UStringException({ kind: "UnpairedSurrogate", unit: tail84 });
-          }
-          if (String(range.start).length > 0) {
-            out.push(String(range.start));
-          }
-          const tail85 = out.length > 0 ? out[out.length - 1].charCodeAt(out[out.length - 1].length - 1) : NaN;
-          if (tail85 >= 55296 && tail85 <= 56319 && ",".length > 0 && !(",".charCodeAt(0) >= 56320 && ",".charCodeAt(0) <= 57343)) {
-            throw new UStringException({ kind: "UnpairedSurrogate", unit: tail85 });
-          }
-          if (",".length > 0) {
             out.push(",");
           }
-          const tail86 = out.length > 0 ? out[out.length - 1].charCodeAt(out[out.length - 1].length - 1) : NaN;
-          if (tail86 >= 55296 && tail86 <= 56319 && String(range.end).length > 0 && !(String(range.end).charCodeAt(0) >= 56320 && String(range.end).charCodeAt(0) <= 57343)) {
-            throw new UStringException({ kind: "UnpairedSurrogate", unit: tail86 });
-          }
-          if (String(range.end).length > 0) {
-            out.push(String(range.end));
-          }
-          const tail87 = out.length > 0 ? out[out.length - 1].charCodeAt(out[out.length - 1].length - 1) : NaN;
-          if (tail87 >= 55296 && tail87 <= 56319 && "]".length > 0 && !("]".charCodeAt(0) >= 56320 && "]".charCodeAt(0) <= 57343)) {
-            throw new UStringException({ kind: "UnpairedSurrogate", unit: tail87 });
-          }
-          if ("]".length > 0) {
-            out.push("]");
-          }
+          firstRange = false;
+          out.push("[");
+          out.push(String(range.start));
+          out.push(",");
+          out.push(String(range.end));
+          out.push("]");
         }
       }
-      const tail88 = out.length > 0 ? out[out.length - 1].charCodeAt(out[out.length - 1].length - 1) : NaN;
-      if (tail88 >= 55296 && tail88 <= 56319 && "]".length > 0 && !("]".charCodeAt(0) >= 56320 && "]".charCodeAt(0) <= 57343)) {
-        throw new UStringException({ kind: "UnpairedSurrogate", unit: tail88 });
-      }
-      if ("]".length > 0) {
-        out.push("]");
-      }
+      out.push("]");
     }
     if (plan.inlineEdges.length > 0) {
-      const tail89 = out.length > 0 ? out[out.length - 1].charCodeAt(out[out.length - 1].length - 1) : NaN;
-      if (tail89 >= 55296 && tail89 <= 56319 && ",\"inlineEdges\":[".length > 0 && !(",\"inlineEdges\":[".charCodeAt(0) >= 56320 && ",\"inlineEdges\":[".charCodeAt(0) <= 57343)) {
-        throw new UStringException({ kind: "UnpairedSurrogate", unit: tail89 });
-      }
-      if (",\"inlineEdges\":[".length > 0) {
-        out.push(",\"inlineEdges\":[");
-      }
+      out.push(",\"inlineEdges\":[");
       let firstEdge = true;
       {
         const _g12 = plan.inlineEdges;
         for (let _g_index1 = 0, count5 = _g12.length; _g_index1 < count5; _g_index1 += 1) {
           const edge = _g12[_g_index1]!;
           if (!firstEdge) {
-            const tail90 = out.length > 0 ? out[out.length - 1].charCodeAt(out[out.length - 1].length - 1) : NaN;
-            if (tail90 >= 55296 && tail90 <= 56319 && ",".length > 0 && !(",".charCodeAt(0) >= 56320 && ",".charCodeAt(0) <= 57343)) {
-              throw new UStringException({ kind: "UnpairedSurrogate", unit: tail90 });
-            }
-            if (",".length > 0) {
-              out.push(",");
-            }
+            out.push(",");
           }
           firstEdge = false;
-          const tail91 = out.length > 0 ? out[out.length - 1].charCodeAt(out[out.length - 1].length - 1) : NaN;
-          if (tail91 >= 55296 && tail91 <= 56319 && "{\"offset\":".length > 0 && !("{\"offset\":".charCodeAt(0) >= 56320 && "{\"offset\":".charCodeAt(0) <= 57343)) {
-            throw new UStringException({ kind: "UnpairedSurrogate", unit: tail91 });
-          }
-          if ("{\"offset\":".length > 0) {
-            out.push("{\"offset\":");
-          }
-          const tail92 = out.length > 0 ? out[out.length - 1].charCodeAt(out[out.length - 1].length - 1) : NaN;
-          if (tail92 >= 55296 && tail92 <= 56319 && String(edge.offset).length > 0 && !(String(edge.offset).charCodeAt(0) >= 56320 && String(edge.offset).charCodeAt(0) <= 57343)) {
-            throw new UStringException({ kind: "UnpairedSurrogate", unit: tail92 });
-          }
-          if (String(edge.offset).length > 0) {
-            out.push(String(edge.offset));
-          }
+          out.push("{\"offset\":");
+          out.push(String(edge.offset));
           const inlineStart = edge.inlineStart;
           if (inlineStart !== null) {
-            const tail93 = out.length > 0 ? out[out.length - 1].charCodeAt(out[out.length - 1].length - 1) : NaN;
-            if (tail93 >= 55296 && tail93 <= 56319 && ",\"inlineStart\":".length > 0 && !(",\"inlineStart\":".charCodeAt(0) >= 56320 && ",\"inlineStart\":".charCodeAt(0) <= 57343)) {
-              throw new UStringException({ kind: "UnpairedSurrogate", unit: tail93 });
-            }
-            if (",\"inlineStart\":".length > 0) {
-              out.push(",\"inlineStart\":");
-            }
-            const tail94 = out.length > 0 ? out[out.length - 1].charCodeAt(out[out.length - 1].length - 1) : NaN;
-            if (tail94 >= 55296 && tail94 <= 56319 && PlanJsonNumber.ecmaJsonNumber(inlineStart).length > 0 && !(PlanJsonNumber.ecmaJsonNumber(inlineStart).charCodeAt(0) >= 56320 && PlanJsonNumber.ecmaJsonNumber(inlineStart).charCodeAt(0) <= 57343)) {
-              throw new UStringException({ kind: "UnpairedSurrogate", unit: tail94 });
-            }
-            if (PlanJsonNumber.ecmaJsonNumber(inlineStart).length > 0) {
-              out.push(PlanJsonNumber.ecmaJsonNumber(inlineStart));
-            }
+            out.push(",\"inlineStart\":");
+            out.push(PlanJsonNumber.ecmaJsonNumber(inlineStart));
           }
           const inlineEnd = edge.inlineEnd;
           if (inlineEnd !== null) {
-            const tail95 = out.length > 0 ? out[out.length - 1].charCodeAt(out[out.length - 1].length - 1) : NaN;
-            if (tail95 >= 55296 && tail95 <= 56319 && ",\"inlineEnd\":".length > 0 && !(",\"inlineEnd\":".charCodeAt(0) >= 56320 && ",\"inlineEnd\":".charCodeAt(0) <= 57343)) {
-              throw new UStringException({ kind: "UnpairedSurrogate", unit: tail95 });
-            }
-            if (",\"inlineEnd\":".length > 0) {
-              out.push(",\"inlineEnd\":");
-            }
-            const tail96 = out.length > 0 ? out[out.length - 1].charCodeAt(out[out.length - 1].length - 1) : NaN;
-            if (tail96 >= 55296 && tail96 <= 56319 && PlanJsonNumber.ecmaJsonNumber(inlineEnd).length > 0 && !(PlanJsonNumber.ecmaJsonNumber(inlineEnd).charCodeAt(0) >= 56320 && PlanJsonNumber.ecmaJsonNumber(inlineEnd).charCodeAt(0) <= 57343)) {
-              throw new UStringException({ kind: "UnpairedSurrogate", unit: tail96 });
-            }
-            if (PlanJsonNumber.ecmaJsonNumber(inlineEnd).length > 0) {
-              out.push(PlanJsonNumber.ecmaJsonNumber(inlineEnd));
-            }
+            out.push(",\"inlineEnd\":");
+            out.push(PlanJsonNumber.ecmaJsonNumber(inlineEnd));
           }
-          const tail97 = out.length > 0 ? out[out.length - 1].charCodeAt(out[out.length - 1].length - 1) : NaN;
-          if (tail97 >= 55296 && tail97 <= 56319 && "}".length > 0 && !("}".charCodeAt(0) >= 56320 && "}".charCodeAt(0) <= 57343)) {
-            throw new UStringException({ kind: "UnpairedSurrogate", unit: tail97 });
-          }
-          if ("}".length > 0) {
-            out.push("}");
-          }
+          out.push("}");
         }
       }
-      const tail98 = out.length > 0 ? out[out.length - 1].charCodeAt(out[out.length - 1].length - 1) : NaN;
-      if (tail98 >= 55296 && tail98 <= 56319 && "]".length > 0 && !("]".charCodeAt(0) >= 56320 && "]".charCodeAt(0) <= 57343)) {
-        throw new UStringException({ kind: "UnpairedSurrogate", unit: tail98 });
-      }
-      if ("]".length > 0) {
-        out.push("]");
-      }
+      out.push("]");
     }
     if (plan.rubyDecisions.length > 0) {
-      const tail99 = out.length > 0 ? out[out.length - 1].charCodeAt(out[out.length - 1].length - 1) : NaN;
-      if (tail99 >= 55296 && tail99 <= 56319 && ",\"rubyDecisions\":[".length > 0 && !(",\"rubyDecisions\":[".charCodeAt(0) >= 56320 && ",\"rubyDecisions\":[".charCodeAt(0) <= 57343)) {
-        throw new UStringException({ kind: "UnpairedSurrogate", unit: tail99 });
-      }
-      if (",\"rubyDecisions\":[".length > 0) {
-        out.push(",\"rubyDecisions\":[");
-      }
+      out.push(",\"rubyDecisions\":[");
       let firstRuby = true;
       {
         const _g13 = plan.rubyDecisions;
         for (let _g_index2 = 0, count6 = _g13.length; _g_index2 < count6; _g_index2 += 1) {
           const ruby = _g13[_g_index2]!;
           if (!firstRuby) {
-            const tail100 = out.length > 0 ? out[out.length - 1].charCodeAt(out[out.length - 1].length - 1) : NaN;
-            if (tail100 >= 55296 && tail100 <= 56319 && ",".length > 0 && !(",".charCodeAt(0) >= 56320 && ",".charCodeAt(0) <= 57343)) {
-              throw new UStringException({ kind: "UnpairedSurrogate", unit: tail100 });
-            }
-            if (",".length > 0) {
-              out.push(",");
-            }
+            out.push(",");
           }
           firstRuby = false;
-          const tail101 = out.length > 0 ? out[out.length - 1].charCodeAt(out[out.length - 1].length - 1) : NaN;
-          if (tail101 >= 55296 && tail101 <= 56319 && "{\"baseRangeStart\":".length > 0 && !("{\"baseRangeStart\":".charCodeAt(0) >= 56320 && "{\"baseRangeStart\":".charCodeAt(0) <= 57343)) {
-            throw new UStringException({ kind: "UnpairedSurrogate", unit: tail101 });
-          }
-          if ("{\"baseRangeStart\":".length > 0) {
-            out.push("{\"baseRangeStart\":");
-          }
-          const tail102 = out.length > 0 ? out[out.length - 1].charCodeAt(out[out.length - 1].length - 1) : NaN;
-          if (tail102 >= 55296 && tail102 <= 56319 && String(ruby.baseRangeStart).length > 0 && !(String(ruby.baseRangeStart).charCodeAt(0) >= 56320 && String(ruby.baseRangeStart).charCodeAt(0) <= 57343)) {
-            throw new UStringException({ kind: "UnpairedSurrogate", unit: tail102 });
-          }
-          if (String(ruby.baseRangeStart).length > 0) {
-            out.push(String(ruby.baseRangeStart));
-          }
-          const tail103 = out.length > 0 ? out[out.length - 1].charCodeAt(out[out.length - 1].length - 1) : NaN;
-          if (tail103 >= 55296 && tail103 <= 56319 && ",\"baseRangeEnd\":".length > 0 && !(",\"baseRangeEnd\":".charCodeAt(0) >= 56320 && ",\"baseRangeEnd\":".charCodeAt(0) <= 57343)) {
-            throw new UStringException({ kind: "UnpairedSurrogate", unit: tail103 });
-          }
-          if (",\"baseRangeEnd\":".length > 0) {
-            out.push(",\"baseRangeEnd\":");
-          }
-          const tail104 = out.length > 0 ? out[out.length - 1].charCodeAt(out[out.length - 1].length - 1) : NaN;
-          if (tail104 >= 55296 && tail104 <= 56319 && String(ruby.baseRangeEnd).length > 0 && !(String(ruby.baseRangeEnd).charCodeAt(0) >= 56320 && String(ruby.baseRangeEnd).charCodeAt(0) <= 57343)) {
-            throw new UStringException({ kind: "UnpairedSurrogate", unit: tail104 });
-          }
-          if (String(ruby.baseRangeEnd).length > 0) {
-            out.push(String(ruby.baseRangeEnd));
-          }
-          const tail105 = out.length > 0 ? out[out.length - 1].charCodeAt(out[out.length - 1].length - 1) : NaN;
-          if (tail105 >= 55296 && tail105 <= 56319 && ",\"text\":".length > 0 && !(",\"text\":".charCodeAt(0) >= 56320 && ",\"text\":".charCodeAt(0) <= 57343)) {
-            throw new UStringException({ kind: "UnpairedSurrogate", unit: tail105 });
-          }
-          if (",\"text\":".length > 0) {
-            out.push(",\"text\":");
-          }
-          out = PlanJsonNumber.appendJsonString(out, ruby.text);
-          const tail106 = out.length > 0 ? out[out.length - 1].charCodeAt(out[out.length - 1].length - 1) : NaN;
-          if (tail106 >= 55296 && tail106 <= 56319 && ",\"centerX\":".length > 0 && !(",\"centerX\":".charCodeAt(0) >= 56320 && ",\"centerX\":".charCodeAt(0) <= 57343)) {
-            throw new UStringException({ kind: "UnpairedSurrogate", unit: tail106 });
-          }
-          if (",\"centerX\":".length > 0) {
-            out.push(",\"centerX\":");
-          }
-          const tail107 = out.length > 0 ? out[out.length - 1].charCodeAt(out[out.length - 1].length - 1) : NaN;
-          if (tail107 >= 55296 && tail107 <= 56319 && PlanJsonNumber.ecmaJsonNumber(ruby.centerX).length > 0 && !(PlanJsonNumber.ecmaJsonNumber(ruby.centerX).charCodeAt(0) >= 56320 && PlanJsonNumber.ecmaJsonNumber(ruby.centerX).charCodeAt(0) <= 57343)) {
-            throw new UStringException({ kind: "UnpairedSurrogate", unit: tail107 });
-          }
-          if (PlanJsonNumber.ecmaJsonNumber(ruby.centerX).length > 0) {
-            out.push(PlanJsonNumber.ecmaJsonNumber(ruby.centerX));
-          }
-          const tail108 = out.length > 0 ? out[out.length - 1].charCodeAt(out[out.length - 1].length - 1) : NaN;
-          if (tail108 >= 55296 && tail108 <= 56319 && ",\"baselineY\":".length > 0 && !(",\"baselineY\":".charCodeAt(0) >= 56320 && ",\"baselineY\":".charCodeAt(0) <= 57343)) {
-            throw new UStringException({ kind: "UnpairedSurrogate", unit: tail108 });
-          }
-          if (",\"baselineY\":".length > 0) {
-            out.push(",\"baselineY\":");
-          }
-          const tail109 = out.length > 0 ? out[out.length - 1].charCodeAt(out[out.length - 1].length - 1) : NaN;
-          if (tail109 >= 55296 && tail109 <= 56319 && PlanJsonNumber.ecmaJsonNumber(ruby.baselineY).length > 0 && !(PlanJsonNumber.ecmaJsonNumber(ruby.baselineY).charCodeAt(0) >= 56320 && PlanJsonNumber.ecmaJsonNumber(ruby.baselineY).charCodeAt(0) <= 57343)) {
-            throw new UStringException({ kind: "UnpairedSurrogate", unit: tail109 });
-          }
-          if (PlanJsonNumber.ecmaJsonNumber(ruby.baselineY).length > 0) {
-            out.push(PlanJsonNumber.ecmaJsonNumber(ruby.baselineY));
-          }
-          const tail110 = out.length > 0 ? out[out.length - 1].charCodeAt(out[out.length - 1].length - 1) : NaN;
-          if (tail110 >= 55296 && tail110 <= 56319 && ",\"fontSize\":".length > 0 && !(",\"fontSize\":".charCodeAt(0) >= 56320 && ",\"fontSize\":".charCodeAt(0) <= 57343)) {
-            throw new UStringException({ kind: "UnpairedSurrogate", unit: tail110 });
-          }
-          if (",\"fontSize\":".length > 0) {
-            out.push(",\"fontSize\":");
-          }
-          const tail111 = out.length > 0 ? out[out.length - 1].charCodeAt(out[out.length - 1].length - 1) : NaN;
-          if (tail111 >= 55296 && tail111 <= 56319 && PlanJsonNumber.ecmaJsonNumber(ruby.fontSize).length > 0 && !(PlanJsonNumber.ecmaJsonNumber(ruby.fontSize).charCodeAt(0) >= 56320 && PlanJsonNumber.ecmaJsonNumber(ruby.fontSize).charCodeAt(0) <= 57343)) {
-            throw new UStringException({ kind: "UnpairedSurrogate", unit: tail111 });
-          }
-          if (PlanJsonNumber.ecmaJsonNumber(ruby.fontSize).length > 0) {
-            out.push(PlanJsonNumber.ecmaJsonNumber(ruby.fontSize));
-          }
+          out.push("{\"baseRangeStart\":");
+          out.push(String(ruby.baseRangeStart));
+          out.push(",\"baseRangeEnd\":");
+          out.push(String(ruby.baseRangeEnd));
+          out.push(",\"text\":");
+          PlanJsonNumber.appendJsonString(out, ruby.text);
+          out.push(",\"centerX\":");
+          out.push(PlanJsonNumber.ecmaJsonNumber(ruby.centerX));
+          out.push(",\"baselineY\":");
+          out.push(PlanJsonNumber.ecmaJsonNumber(ruby.baselineY));
+          out.push(",\"fontSize\":");
+          out.push(PlanJsonNumber.ecmaJsonNumber(ruby.fontSize));
           const ascent = ruby.ascent;
           if (ascent !== null) {
-            const tail112 = out.length > 0 ? out[out.length - 1].charCodeAt(out[out.length - 1].length - 1) : NaN;
-            if (tail112 >= 55296 && tail112 <= 56319 && ",\"ascent\":".length > 0 && !(",\"ascent\":".charCodeAt(0) >= 56320 && ",\"ascent\":".charCodeAt(0) <= 57343)) {
-              throw new UStringException({ kind: "UnpairedSurrogate", unit: tail112 });
-            }
-            if (",\"ascent\":".length > 0) {
-              out.push(",\"ascent\":");
-            }
-            const tail113 = out.length > 0 ? out[out.length - 1].charCodeAt(out[out.length - 1].length - 1) : NaN;
-            if (tail113 >= 55296 && tail113 <= 56319 && PlanJsonNumber.ecmaJsonNumber(ascent).length > 0 && !(PlanJsonNumber.ecmaJsonNumber(ascent).charCodeAt(0) >= 56320 && PlanJsonNumber.ecmaJsonNumber(ascent).charCodeAt(0) <= 57343)) {
-              throw new UStringException({ kind: "UnpairedSurrogate", unit: tail113 });
-            }
-            if (PlanJsonNumber.ecmaJsonNumber(ascent).length > 0) {
-              out.push(PlanJsonNumber.ecmaJsonNumber(ascent));
-            }
+            out.push(",\"ascent\":");
+            out.push(PlanJsonNumber.ecmaJsonNumber(ascent));
           }
-          const tail114 = out.length > 0 ? out[out.length - 1].charCodeAt(out[out.length - 1].length - 1) : NaN;
-          if (tail114 >= 55296 && tail114 <= 56319 && ",\"fontWeight\":".length > 0 && !(",\"fontWeight\":".charCodeAt(0) >= 56320 && ",\"fontWeight\":".charCodeAt(0) <= 57343)) {
-            throw new UStringException({ kind: "UnpairedSurrogate", unit: tail114 });
-          }
-          if (",\"fontWeight\":".length > 0) {
-            out.push(",\"fontWeight\":");
-          }
-          const tail115 = out.length > 0 ? out[out.length - 1].charCodeAt(out[out.length - 1].length - 1) : NaN;
-          if (tail115 >= 55296 && tail115 <= 56319 && String(ruby.fontWeight).length > 0 && !(String(ruby.fontWeight).charCodeAt(0) >= 56320 && String(ruby.fontWeight).charCodeAt(0) <= 57343)) {
-            throw new UStringException({ kind: "UnpairedSurrogate", unit: tail115 });
-          }
-          if (String(ruby.fontWeight).length > 0) {
-            out.push(String(ruby.fontWeight));
-          }
+          out.push(",\"fontWeight\":");
+          out.push(String(ruby.fontWeight));
           if (ruby.fontFamilies.length > 0) {
-            const tail116 = out.length > 0 ? out[out.length - 1].charCodeAt(out[out.length - 1].length - 1) : NaN;
-            if (tail116 >= 55296 && tail116 <= 56319 && ",\"fontFamilies\":[".length > 0 && !(",\"fontFamilies\":[".charCodeAt(0) >= 56320 && ",\"fontFamilies\":[".charCodeAt(0) <= 57343)) {
-              throw new UStringException({ kind: "UnpairedSurrogate", unit: tail116 });
-            }
-            if (",\"fontFamilies\":[".length > 0) {
-              out.push(",\"fontFamilies\":[");
-            }
+            out.push(",\"fontFamilies\":[");
             let firstFamily = true;
             {
               let _g = 0;
@@ -997,124 +298,40 @@ export class PlanJson {
                 const family = _g14[_g]!;
                 _g++;
                 if (!firstFamily) {
-                  const tail117 = out.length > 0 ? out[out.length - 1].charCodeAt(out[out.length - 1].length - 1) : NaN;
-                  if (tail117 >= 55296 && tail117 <= 56319 && ",".length > 0 && !(",".charCodeAt(0) >= 56320 && ",".charCodeAt(0) <= 57343)) {
-                    throw new UStringException({ kind: "UnpairedSurrogate", unit: tail117 });
-                  }
-                  if (",".length > 0) {
-                    out.push(",");
-                  }
+                  out.push(",");
                 }
                 firstFamily = false;
-                out = PlanJsonNumber.appendJsonString(out, family);
+                PlanJsonNumber.appendJsonString(out, family);
               }
             }
-            const tail118 = out.length > 0 ? out[out.length - 1].charCodeAt(out[out.length - 1].length - 1) : NaN;
-            if (tail118 >= 55296 && tail118 <= 56319 && "]".length > 0 && !("]".charCodeAt(0) >= 56320 && "]".charCodeAt(0) <= 57343)) {
-              throw new UStringException({ kind: "UnpairedSurrogate", unit: tail118 });
-            }
-            if ("]".length > 0) {
-              out.push("]");
-            }
+            out.push("]");
           }
-          const tail119 = out.length > 0 ? out[out.length - 1].charCodeAt(out[out.length - 1].length - 1) : NaN;
-          if (tail119 >= 55296 && tail119 <= 56319 && "}".length > 0 && !("}".charCodeAt(0) >= 56320 && "}".charCodeAt(0) <= 57343)) {
-            throw new UStringException({ kind: "UnpairedSurrogate", unit: tail119 });
-          }
-          if ("}".length > 0) {
-            out.push("}");
-          }
+          out.push("}");
         }
       }
-      const tail120 = out.length > 0 ? out[out.length - 1].charCodeAt(out[out.length - 1].length - 1) : NaN;
-      if (tail120 >= 55296 && tail120 <= 56319 && "]".length > 0 && !("]".charCodeAt(0) >= 56320 && "]".charCodeAt(0) <= 57343)) {
-        throw new UStringException({ kind: "UnpairedSurrogate", unit: tail120 });
-      }
-      if ("]".length > 0) {
-        out.push("]");
-      }
+      out.push("]");
     }
     if (plan.bopomofoDecisions.length > 0) {
-      const tail121 = out.length > 0 ? out[out.length - 1].charCodeAt(out[out.length - 1].length - 1) : NaN;
-      if (tail121 >= 55296 && tail121 <= 56319 && ",\"bopomofoDecisions\":[".length > 0 && !(",\"bopomofoDecisions\":[".charCodeAt(0) >= 56320 && ",\"bopomofoDecisions\":[".charCodeAt(0) <= 57343)) {
-        throw new UStringException({ kind: "UnpairedSurrogate", unit: tail121 });
-      }
-      if (",\"bopomofoDecisions\":[".length > 0) {
-        out.push(",\"bopomofoDecisions\":[");
-      }
+      out.push(",\"bopomofoDecisions\":[");
       let firstBopomofo = true;
       {
         const _g15 = plan.bopomofoDecisions;
         for (let _g_index3 = 0, count7 = _g15.length; _g_index3 < count7; _g_index3 += 1) {
           const bopomofo = _g15[_g_index3]!;
           if (!firstBopomofo) {
-            const tail122 = out.length > 0 ? out[out.length - 1].charCodeAt(out[out.length - 1].length - 1) : NaN;
-            if (tail122 >= 55296 && tail122 <= 56319 && ",".length > 0 && !(",".charCodeAt(0) >= 56320 && ",".charCodeAt(0) <= 57343)) {
-              throw new UStringException({ kind: "UnpairedSurrogate", unit: tail122 });
-            }
-            if (",".length > 0) {
-              out.push(",");
-            }
+            out.push(",");
           }
           firstBopomofo = false;
-          const tail123 = out.length > 0 ? out[out.length - 1].charCodeAt(out[out.length - 1].length - 1) : NaN;
-          if (tail123 >= 55296 && tail123 <= 56319 && "{\"baseRangeStart\":".length > 0 && !("{\"baseRangeStart\":".charCodeAt(0) >= 56320 && "{\"baseRangeStart\":".charCodeAt(0) <= 57343)) {
-            throw new UStringException({ kind: "UnpairedSurrogate", unit: tail123 });
-          }
-          if ("{\"baseRangeStart\":".length > 0) {
-            out.push("{\"baseRangeStart\":");
-          }
-          const tail124 = out.length > 0 ? out[out.length - 1].charCodeAt(out[out.length - 1].length - 1) : NaN;
-          if (tail124 >= 55296 && tail124 <= 56319 && String(bopomofo.baseRangeStart).length > 0 && !(String(bopomofo.baseRangeStart).charCodeAt(0) >= 56320 && String(bopomofo.baseRangeStart).charCodeAt(0) <= 57343)) {
-            throw new UStringException({ kind: "UnpairedSurrogate", unit: tail124 });
-          }
-          if (String(bopomofo.baseRangeStart).length > 0) {
-            out.push(String(bopomofo.baseRangeStart));
-          }
-          const tail125 = out.length > 0 ? out[out.length - 1].charCodeAt(out[out.length - 1].length - 1) : NaN;
-          if (tail125 >= 55296 && tail125 <= 56319 && ",\"baseRangeEnd\":".length > 0 && !(",\"baseRangeEnd\":".charCodeAt(0) >= 56320 && ",\"baseRangeEnd\":".charCodeAt(0) <= 57343)) {
-            throw new UStringException({ kind: "UnpairedSurrogate", unit: tail125 });
-          }
-          if (",\"baseRangeEnd\":".length > 0) {
-            out.push(",\"baseRangeEnd\":");
-          }
-          const tail126 = out.length > 0 ? out[out.length - 1].charCodeAt(out[out.length - 1].length - 1) : NaN;
-          if (tail126 >= 55296 && tail126 <= 56319 && String(bopomofo.baseRangeEnd).length > 0 && !(String(bopomofo.baseRangeEnd).charCodeAt(0) >= 56320 && String(bopomofo.baseRangeEnd).charCodeAt(0) <= 57343)) {
-            throw new UStringException({ kind: "UnpairedSurrogate", unit: tail126 });
-          }
-          if (String(bopomofo.baseRangeEnd).length > 0) {
-            out.push(String(bopomofo.baseRangeEnd));
-          }
-          const tail127 = out.length > 0 ? out[out.length - 1].charCodeAt(out[out.length - 1].length - 1) : NaN;
-          if (tail127 >= 55296 && tail127 <= 56319 && ",\"text\":".length > 0 && !(",\"text\":".charCodeAt(0) >= 56320 && ",\"text\":".charCodeAt(0) <= 57343)) {
-            throw new UStringException({ kind: "UnpairedSurrogate", unit: tail127 });
-          }
-          if (",\"text\":".length > 0) {
-            out.push(",\"text\":");
-          }
-          out = PlanJsonNumber.appendJsonString(out, bopomofo.text);
-          const tail128 = out.length > 0 ? out[out.length - 1].charCodeAt(out[out.length - 1].length - 1) : NaN;
-          if (tail128 >= 55296 && tail128 <= 56319 && ",\"fontWeight\":".length > 0 && !(",\"fontWeight\":".charCodeAt(0) >= 56320 && ",\"fontWeight\":".charCodeAt(0) <= 57343)) {
-            throw new UStringException({ kind: "UnpairedSurrogate", unit: tail128 });
-          }
-          if (",\"fontWeight\":".length > 0) {
-            out.push(",\"fontWeight\":");
-          }
-          const tail129 = out.length > 0 ? out[out.length - 1].charCodeAt(out[out.length - 1].length - 1) : NaN;
-          if (tail129 >= 55296 && tail129 <= 56319 && String(bopomofo.fontWeight).length > 0 && !(String(bopomofo.fontWeight).charCodeAt(0) >= 56320 && String(bopomofo.fontWeight).charCodeAt(0) <= 57343)) {
-            throw new UStringException({ kind: "UnpairedSurrogate", unit: tail129 });
-          }
-          if (String(bopomofo.fontWeight).length > 0) {
-            out.push(String(bopomofo.fontWeight));
-          }
+          out.push("{\"baseRangeStart\":");
+          out.push(String(bopomofo.baseRangeStart));
+          out.push(",\"baseRangeEnd\":");
+          out.push(String(bopomofo.baseRangeEnd));
+          out.push(",\"text\":");
+          PlanJsonNumber.appendJsonString(out, bopomofo.text);
+          out.push(",\"fontWeight\":");
+          out.push(String(bopomofo.fontWeight));
           if (bopomofo.fontFamilies.length > 0) {
-            const tail130 = out.length > 0 ? out[out.length - 1].charCodeAt(out[out.length - 1].length - 1) : NaN;
-            if (tail130 >= 55296 && tail130 <= 56319 && ",\"fontFamilies\":[".length > 0 && !(",\"fontFamilies\":[".charCodeAt(0) >= 56320 && ",\"fontFamilies\":[".charCodeAt(0) <= 57343)) {
-              throw new UStringException({ kind: "UnpairedSurrogate", unit: tail130 });
-            }
-            if (",\"fontFamilies\":[".length > 0) {
-              out.push(",\"fontFamilies\":[");
-            }
+            out.push(",\"fontFamilies\":[");
             let firstFamily2 = true;
             {
               let _g2 = 0;
@@ -1123,33 +340,15 @@ export class PlanJson {
                 const family2 = _g16[_g2]!;
                 _g2++;
                 if (!firstFamily2) {
-                  const tail131 = out.length > 0 ? out[out.length - 1].charCodeAt(out[out.length - 1].length - 1) : NaN;
-                  if (tail131 >= 55296 && tail131 <= 56319 && ",".length > 0 && !(",".charCodeAt(0) >= 56320 && ",".charCodeAt(0) <= 57343)) {
-                    throw new UStringException({ kind: "UnpairedSurrogate", unit: tail131 });
-                  }
-                  if (",".length > 0) {
-                    out.push(",");
-                  }
+                  out.push(",");
                 }
                 firstFamily2 = false;
-                out = PlanJsonNumber.appendJsonString(out, family2);
+                PlanJsonNumber.appendJsonString(out, family2);
               }
             }
-            const tail132 = out.length > 0 ? out[out.length - 1].charCodeAt(out[out.length - 1].length - 1) : NaN;
-            if (tail132 >= 55296 && tail132 <= 56319 && "]".length > 0 && !("]".charCodeAt(0) >= 56320 && "]".charCodeAt(0) <= 57343)) {
-              throw new UStringException({ kind: "UnpairedSurrogate", unit: tail132 });
-            }
-            if ("]".length > 0) {
-              out.push("]");
-            }
+            out.push("]");
           }
-          const tail133 = out.length > 0 ? out[out.length - 1].charCodeAt(out[out.length - 1].length - 1) : NaN;
-          if (tail133 >= 55296 && tail133 <= 56319 && ",\"placements\":[".length > 0 && !(",\"placements\":[".charCodeAt(0) >= 56320 && ",\"placements\":[".charCodeAt(0) <= 57343)) {
-            throw new UStringException({ kind: "UnpairedSurrogate", unit: tail133 });
-          }
-          if (",\"placements\":[".length > 0) {
-            out.push(",\"placements\":[");
-          }
+          out.push(",\"placements\":[");
           let firstPlacement = true;
           {
             let _g3 = 0;
@@ -1158,339 +357,86 @@ export class PlanJson {
               const placement = _g17[_g3]!;
               _g3++;
               if (!firstPlacement) {
-                const tail134 = out.length > 0 ? out[out.length - 1].charCodeAt(out[out.length - 1].length - 1) : NaN;
-                if (tail134 >= 55296 && tail134 <= 56319 && ",".length > 0 && !(",".charCodeAt(0) >= 56320 && ",".charCodeAt(0) <= 57343)) {
-                  throw new UStringException({ kind: "UnpairedSurrogate", unit: tail134 });
-                }
-                if (",".length > 0) {
-                  out.push(",");
-                }
+                out.push(",");
               }
               firstPlacement = false;
-              const tail135 = out.length > 0 ? out[out.length - 1].charCodeAt(out[out.length - 1].length - 1) : NaN;
-              if (tail135 >= 55296 && tail135 <= 56319 && "{\"text\":".length > 0 && !("{\"text\":".charCodeAt(0) >= 56320 && "{\"text\":".charCodeAt(0) <= 57343)) {
-                throw new UStringException({ kind: "UnpairedSurrogate", unit: tail135 });
-              }
-              if ("{\"text\":".length > 0) {
-                out.push("{\"text\":");
-              }
-              out = PlanJsonNumber.appendJsonString(out, placement.text);
-              const tail136 = out.length > 0 ? out[out.length - 1].charCodeAt(out[out.length - 1].length - 1) : NaN;
-              if (tail136 >= 55296 && tail136 <= 56319 && ",\"left\":".length > 0 && !(",\"left\":".charCodeAt(0) >= 56320 && ",\"left\":".charCodeAt(0) <= 57343)) {
-                throw new UStringException({ kind: "UnpairedSurrogate", unit: tail136 });
-              }
-              if (",\"left\":".length > 0) {
-                out.push(",\"left\":");
-              }
-              const tail137 = out.length > 0 ? out[out.length - 1].charCodeAt(out[out.length - 1].length - 1) : NaN;
-              if (tail137 >= 55296 && tail137 <= 56319 && PlanJsonNumber.ecmaJsonNumber(placement.left).length > 0 && !(PlanJsonNumber.ecmaJsonNumber(placement.left).charCodeAt(0) >= 56320 && PlanJsonNumber.ecmaJsonNumber(placement.left).charCodeAt(0) <= 57343)) {
-                throw new UStringException({ kind: "UnpairedSurrogate", unit: tail137 });
-              }
-              if (PlanJsonNumber.ecmaJsonNumber(placement.left).length > 0) {
-                out.push(PlanJsonNumber.ecmaJsonNumber(placement.left));
-              }
-              const tail138 = out.length > 0 ? out[out.length - 1].charCodeAt(out[out.length - 1].length - 1) : NaN;
-              if (tail138 >= 55296 && tail138 <= 56319 && ",\"top\":".length > 0 && !(",\"top\":".charCodeAt(0) >= 56320 && ",\"top\":".charCodeAt(0) <= 57343)) {
-                throw new UStringException({ kind: "UnpairedSurrogate", unit: tail138 });
-              }
-              if (",\"top\":".length > 0) {
-                out.push(",\"top\":");
-              }
-              const tail139 = out.length > 0 ? out[out.length - 1].charCodeAt(out[out.length - 1].length - 1) : NaN;
-              if (tail139 >= 55296 && tail139 <= 56319 && PlanJsonNumber.ecmaJsonNumber(placement.top).length > 0 && !(PlanJsonNumber.ecmaJsonNumber(placement.top).charCodeAt(0) >= 56320 && PlanJsonNumber.ecmaJsonNumber(placement.top).charCodeAt(0) <= 57343)) {
-                throw new UStringException({ kind: "UnpairedSurrogate", unit: tail139 });
-              }
-              if (PlanJsonNumber.ecmaJsonNumber(placement.top).length > 0) {
-                out.push(PlanJsonNumber.ecmaJsonNumber(placement.top));
-              }
-              const tail140 = out.length > 0 ? out[out.length - 1].charCodeAt(out[out.length - 1].length - 1) : NaN;
-              if (tail140 >= 55296 && tail140 <= 56319 && ",\"width\":".length > 0 && !(",\"width\":".charCodeAt(0) >= 56320 && ",\"width\":".charCodeAt(0) <= 57343)) {
-                throw new UStringException({ kind: "UnpairedSurrogate", unit: tail140 });
-              }
-              if (",\"width\":".length > 0) {
-                out.push(",\"width\":");
-              }
-              const tail141 = out.length > 0 ? out[out.length - 1].charCodeAt(out[out.length - 1].length - 1) : NaN;
-              if (tail141 >= 55296 && tail141 <= 56319 && PlanJsonNumber.ecmaJsonNumber(placement.width).length > 0 && !(PlanJsonNumber.ecmaJsonNumber(placement.width).charCodeAt(0) >= 56320 && PlanJsonNumber.ecmaJsonNumber(placement.width).charCodeAt(0) <= 57343)) {
-                throw new UStringException({ kind: "UnpairedSurrogate", unit: tail141 });
-              }
-              if (PlanJsonNumber.ecmaJsonNumber(placement.width).length > 0) {
-                out.push(PlanJsonNumber.ecmaJsonNumber(placement.width));
-              }
-              const tail142 = out.length > 0 ? out[out.length - 1].charCodeAt(out[out.length - 1].length - 1) : NaN;
-              if (tail142 >= 55296 && tail142 <= 56319 && ",\"height\":".length > 0 && !(",\"height\":".charCodeAt(0) >= 56320 && ",\"height\":".charCodeAt(0) <= 57343)) {
-                throw new UStringException({ kind: "UnpairedSurrogate", unit: tail142 });
-              }
-              if (",\"height\":".length > 0) {
-                out.push(",\"height\":");
-              }
-              const tail143 = out.length > 0 ? out[out.length - 1].charCodeAt(out[out.length - 1].length - 1) : NaN;
-              if (tail143 >= 55296 && tail143 <= 56319 && PlanJsonNumber.ecmaJsonNumber(placement.height).length > 0 && !(PlanJsonNumber.ecmaJsonNumber(placement.height).charCodeAt(0) >= 56320 && PlanJsonNumber.ecmaJsonNumber(placement.height).charCodeAt(0) <= 57343)) {
-                throw new UStringException({ kind: "UnpairedSurrogate", unit: tail143 });
-              }
-              if (PlanJsonNumber.ecmaJsonNumber(placement.height).length > 0) {
-                out.push(PlanJsonNumber.ecmaJsonNumber(placement.height));
-              }
-              const tail144 = out.length > 0 ? out[out.length - 1].charCodeAt(out[out.length - 1].length - 1) : NaN;
-              if (tail144 >= 55296 && tail144 <= 56319 && ",\"role\":".length > 0 && !(",\"role\":".charCodeAt(0) >= 56320 && ",\"role\":".charCodeAt(0) <= 57343)) {
-                throw new UStringException({ kind: "UnpairedSurrogate", unit: tail144 });
-              }
-              if (",\"role\":".length > 0) {
-                out.push(",\"role\":");
-              }
-              out = PlanJsonNumber.appendJsonString(out, placement.role);
-              const tail145 = out.length > 0 ? out[out.length - 1].charCodeAt(out[out.length - 1].length - 1) : NaN;
-              if (tail145 >= 55296 && tail145 <= 56319 && "}".length > 0 && !("}".charCodeAt(0) >= 56320 && "}".charCodeAt(0) <= 57343)) {
-                throw new UStringException({ kind: "UnpairedSurrogate", unit: tail145 });
-              }
-              if ("}".length > 0) {
-                out.push("}");
-              }
+              out.push("{\"text\":");
+              PlanJsonNumber.appendJsonString(out, placement.text);
+              out.push(",\"left\":");
+              out.push(PlanJsonNumber.ecmaJsonNumber(placement.left));
+              out.push(",\"top\":");
+              out.push(PlanJsonNumber.ecmaJsonNumber(placement.top));
+              out.push(",\"width\":");
+              out.push(PlanJsonNumber.ecmaJsonNumber(placement.width));
+              out.push(",\"height\":");
+              out.push(PlanJsonNumber.ecmaJsonNumber(placement.height));
+              out.push(",\"role\":");
+              PlanJsonNumber.appendJsonString(out, placement.role);
+              out.push("}");
             }
           }
-          const tail146 = out.length > 0 ? out[out.length - 1].charCodeAt(out[out.length - 1].length - 1) : NaN;
-          if (tail146 >= 55296 && tail146 <= 56319 && "]}".length > 0 && !("]}".charCodeAt(0) >= 56320 && "]}".charCodeAt(0) <= 57343)) {
-            throw new UStringException({ kind: "UnpairedSurrogate", unit: tail146 });
-          }
-          if ("]}".length > 0) {
-            out.push("]}");
-          }
+          out.push("]}");
         }
       }
-      const tail147 = out.length > 0 ? out[out.length - 1].charCodeAt(out[out.length - 1].length - 1) : NaN;
-      if (tail147 >= 55296 && tail147 <= 56319 && "]".length > 0 && !("]".charCodeAt(0) >= 56320 && "]".charCodeAt(0) <= 57343)) {
-        throw new UStringException({ kind: "UnpairedSurrogate", unit: tail147 });
-      }
-      if ("]".length > 0) {
-        out.push("]");
-      }
+      out.push("]");
     }
     if (plan.decorationSegments.length > 0) {
-      const tail148 = out.length > 0 ? out[out.length - 1].charCodeAt(out[out.length - 1].length - 1) : NaN;
-      if (tail148 >= 55296 && tail148 <= 56319 && ",\"decorationSegments\":[".length > 0 && !(",\"decorationSegments\":[".charCodeAt(0) >= 56320 && ",\"decorationSegments\":[".charCodeAt(0) <= 57343)) {
-        throw new UStringException({ kind: "UnpairedSurrogate", unit: tail148 });
-      }
-      if (",\"decorationSegments\":[".length > 0) {
-        out.push(",\"decorationSegments\":[");
-      }
+      out.push(",\"decorationSegments\":[");
       let firstSegment = true;
       {
         const _g18 = plan.decorationSegments;
         for (let _g_index4 = 0, count8 = _g18.length; _g_index4 < count8; _g_index4 += 1) {
           const seg = _g18[_g_index4]!;
           if (!firstSegment) {
-            const tail149 = out.length > 0 ? out[out.length - 1].charCodeAt(out[out.length - 1].length - 1) : NaN;
-            if (tail149 >= 55296 && tail149 <= 56319 && ",".length > 0 && !(",".charCodeAt(0) >= 56320 && ",".charCodeAt(0) <= 57343)) {
-              throw new UStringException({ kind: "UnpairedSurrogate", unit: tail149 });
-            }
-            if (",".length > 0) {
-              out.push(",");
-            }
+            out.push(",");
           }
           firstSegment = false;
-          const tail150 = out.length > 0 ? out[out.length - 1].charCodeAt(out[out.length - 1].length - 1) : NaN;
-          if (tail150 >= 55296 && tail150 <= 56319 && "{\"kind\":".length > 0 && !("{\"kind\":".charCodeAt(0) >= 56320 && "{\"kind\":".charCodeAt(0) <= 57343)) {
-            throw new UStringException({ kind: "UnpairedSurrogate", unit: tail150 });
-          }
-          if ("{\"kind\":".length > 0) {
-            out.push("{\"kind\":");
-          }
-          out = PlanJsonNumber.appendJsonString(out, seg.kind);
-          const tail151 = out.length > 0 ? out[out.length - 1].charCodeAt(out[out.length - 1].length - 1) : NaN;
-          if (tail151 >= 55296 && tail151 <= 56319 && ",\"left\":".length > 0 && !(",\"left\":".charCodeAt(0) >= 56320 && ",\"left\":".charCodeAt(0) <= 57343)) {
-            throw new UStringException({ kind: "UnpairedSurrogate", unit: tail151 });
-          }
-          if (",\"left\":".length > 0) {
-            out.push(",\"left\":");
-          }
-          const tail152 = out.length > 0 ? out[out.length - 1].charCodeAt(out[out.length - 1].length - 1) : NaN;
-          if (tail152 >= 55296 && tail152 <= 56319 && PlanJsonNumber.ecmaJsonNumber(seg.left).length > 0 && !(PlanJsonNumber.ecmaJsonNumber(seg.left).charCodeAt(0) >= 56320 && PlanJsonNumber.ecmaJsonNumber(seg.left).charCodeAt(0) <= 57343)) {
-            throw new UStringException({ kind: "UnpairedSurrogate", unit: tail152 });
-          }
-          if (PlanJsonNumber.ecmaJsonNumber(seg.left).length > 0) {
-            out.push(PlanJsonNumber.ecmaJsonNumber(seg.left));
-          }
-          const tail153 = out.length > 0 ? out[out.length - 1].charCodeAt(out[out.length - 1].length - 1) : NaN;
-          if (tail153 >= 55296 && tail153 <= 56319 && ",\"top\":".length > 0 && !(",\"top\":".charCodeAt(0) >= 56320 && ",\"top\":".charCodeAt(0) <= 57343)) {
-            throw new UStringException({ kind: "UnpairedSurrogate", unit: tail153 });
-          }
-          if (",\"top\":".length > 0) {
-            out.push(",\"top\":");
-          }
-          const tail154 = out.length > 0 ? out[out.length - 1].charCodeAt(out[out.length - 1].length - 1) : NaN;
-          if (tail154 >= 55296 && tail154 <= 56319 && PlanJsonNumber.ecmaJsonNumber(seg.top).length > 0 && !(PlanJsonNumber.ecmaJsonNumber(seg.top).charCodeAt(0) >= 56320 && PlanJsonNumber.ecmaJsonNumber(seg.top).charCodeAt(0) <= 57343)) {
-            throw new UStringException({ kind: "UnpairedSurrogate", unit: tail154 });
-          }
-          if (PlanJsonNumber.ecmaJsonNumber(seg.top).length > 0) {
-            out.push(PlanJsonNumber.ecmaJsonNumber(seg.top));
-          }
-          const tail155 = out.length > 0 ? out[out.length - 1].charCodeAt(out[out.length - 1].length - 1) : NaN;
-          if (tail155 >= 55296 && tail155 <= 56319 && ",\"right\":".length > 0 && !(",\"right\":".charCodeAt(0) >= 56320 && ",\"right\":".charCodeAt(0) <= 57343)) {
-            throw new UStringException({ kind: "UnpairedSurrogate", unit: tail155 });
-          }
-          if (",\"right\":".length > 0) {
-            out.push(",\"right\":");
-          }
-          const tail156 = out.length > 0 ? out[out.length - 1].charCodeAt(out[out.length - 1].length - 1) : NaN;
-          if (tail156 >= 55296 && tail156 <= 56319 && PlanJsonNumber.ecmaJsonNumber(seg.right).length > 0 && !(PlanJsonNumber.ecmaJsonNumber(seg.right).charCodeAt(0) >= 56320 && PlanJsonNumber.ecmaJsonNumber(seg.right).charCodeAt(0) <= 57343)) {
-            throw new UStringException({ kind: "UnpairedSurrogate", unit: tail156 });
-          }
-          if (PlanJsonNumber.ecmaJsonNumber(seg.right).length > 0) {
-            out.push(PlanJsonNumber.ecmaJsonNumber(seg.right));
-          }
-          const tail157 = out.length > 0 ? out[out.length - 1].charCodeAt(out[out.length - 1].length - 1) : NaN;
-          if (tail157 >= 55296 && tail157 <= 56319 && ",\"sourceRangeStart\":".length > 0 && !(",\"sourceRangeStart\":".charCodeAt(0) >= 56320 && ",\"sourceRangeStart\":".charCodeAt(0) <= 57343)) {
-            throw new UStringException({ kind: "UnpairedSurrogate", unit: tail157 });
-          }
-          if (",\"sourceRangeStart\":".length > 0) {
-            out.push(",\"sourceRangeStart\":");
-          }
-          const tail158 = out.length > 0 ? out[out.length - 1].charCodeAt(out[out.length - 1].length - 1) : NaN;
-          if (tail158 >= 55296 && tail158 <= 56319 && String(seg.sourceRangeStart).length > 0 && !(String(seg.sourceRangeStart).charCodeAt(0) >= 56320 && String(seg.sourceRangeStart).charCodeAt(0) <= 57343)) {
-            throw new UStringException({ kind: "UnpairedSurrogate", unit: tail158 });
-          }
-          if (String(seg.sourceRangeStart).length > 0) {
-            out.push(String(seg.sourceRangeStart));
-          }
-          const tail159 = out.length > 0 ? out[out.length - 1].charCodeAt(out[out.length - 1].length - 1) : NaN;
-          if (tail159 >= 55296 && tail159 <= 56319 && ",\"sourceRangeEnd\":".length > 0 && !(",\"sourceRangeEnd\":".charCodeAt(0) >= 56320 && ",\"sourceRangeEnd\":".charCodeAt(0) <= 57343)) {
-            throw new UStringException({ kind: "UnpairedSurrogate", unit: tail159 });
-          }
-          if (",\"sourceRangeEnd\":".length > 0) {
-            out.push(",\"sourceRangeEnd\":");
-          }
-          const tail160 = out.length > 0 ? out[out.length - 1].charCodeAt(out[out.length - 1].length - 1) : NaN;
-          if (tail160 >= 55296 && tail160 <= 56319 && String(seg.sourceRangeEnd).length > 0 && !(String(seg.sourceRangeEnd).charCodeAt(0) >= 56320 && String(seg.sourceRangeEnd).charCodeAt(0) <= 57343)) {
-            throw new UStringException({ kind: "UnpairedSurrogate", unit: tail160 });
-          }
-          if (String(seg.sourceRangeEnd).length > 0) {
-            out.push(String(seg.sourceRangeEnd));
-          }
-          const tail161 = out.length > 0 ? out[out.length - 1].charCodeAt(out[out.length - 1].length - 1) : NaN;
-          if (tail161 >= 55296 && tail161 <= 56319 && "}".length > 0 && !("}".charCodeAt(0) >= 56320 && "}".charCodeAt(0) <= 57343)) {
-            throw new UStringException({ kind: "UnpairedSurrogate", unit: tail161 });
-          }
-          if ("}".length > 0) {
-            out.push("}");
-          }
+          out.push("{\"kind\":");
+          PlanJsonNumber.appendJsonString(out, seg.kind);
+          out.push(",\"left\":");
+          out.push(PlanJsonNumber.ecmaJsonNumber(seg.left));
+          out.push(",\"top\":");
+          out.push(PlanJsonNumber.ecmaJsonNumber(seg.top));
+          out.push(",\"right\":");
+          out.push(PlanJsonNumber.ecmaJsonNumber(seg.right));
+          out.push(",\"sourceRangeStart\":");
+          out.push(String(seg.sourceRangeStart));
+          out.push(",\"sourceRangeEnd\":");
+          out.push(String(seg.sourceRangeEnd));
+          out.push("}");
         }
       }
-      const tail162 = out.length > 0 ? out[out.length - 1].charCodeAt(out[out.length - 1].length - 1) : NaN;
-      if (tail162 >= 55296 && tail162 <= 56319 && "]".length > 0 && !("]".charCodeAt(0) >= 56320 && "]".charCodeAt(0) <= 57343)) {
-        throw new UStringException({ kind: "UnpairedSurrogate", unit: tail162 });
-      }
-      if ("]".length > 0) {
-        out.push("]");
-      }
+      out.push("]");
     }
     if (plan.emphasisDots.length > 0) {
-      const tail163 = out.length > 0 ? out[out.length - 1].charCodeAt(out[out.length - 1].length - 1) : NaN;
-      if (tail163 >= 55296 && tail163 <= 56319 && ",\"emphasisDots\":[".length > 0 && !(",\"emphasisDots\":[".charCodeAt(0) >= 56320 && ",\"emphasisDots\":[".charCodeAt(0) <= 57343)) {
-        throw new UStringException({ kind: "UnpairedSurrogate", unit: tail163 });
-      }
-      if (",\"emphasisDots\":[".length > 0) {
-        out.push(",\"emphasisDots\":[");
-      }
+      out.push(",\"emphasisDots\":[");
       let firstDot = true;
       {
         const _g19 = plan.emphasisDots;
         for (let _g_index5 = 0, count9 = _g19.length; _g_index5 < count9; _g_index5 += 1) {
           const dot = _g19[_g_index5]!;
           if (!firstDot) {
-            const tail164 = out.length > 0 ? out[out.length - 1].charCodeAt(out[out.length - 1].length - 1) : NaN;
-            if (tail164 >= 55296 && tail164 <= 56319 && ",".length > 0 && !(",".charCodeAt(0) >= 56320 && ",".charCodeAt(0) <= 57343)) {
-              throw new UStringException({ kind: "UnpairedSurrogate", unit: tail164 });
-            }
-            if (",".length > 0) {
-              out.push(",");
-            }
+            out.push(",");
           }
           firstDot = false;
-          const tail165 = out.length > 0 ? out[out.length - 1].charCodeAt(out[out.length - 1].length - 1) : NaN;
-          if (tail165 >= 55296 && tail165 <= 56319 && "{\"clusterRangeStart\":".length > 0 && !("{\"clusterRangeStart\":".charCodeAt(0) >= 56320 && "{\"clusterRangeStart\":".charCodeAt(0) <= 57343)) {
-            throw new UStringException({ kind: "UnpairedSurrogate", unit: tail165 });
-          }
-          if ("{\"clusterRangeStart\":".length > 0) {
-            out.push("{\"clusterRangeStart\":");
-          }
+          out.push("{\"clusterRangeStart\":");
           const clusterRangeStart = dot.clusterRangeStart;
           if (clusterRangeStart !== null) {
-            const tail166 = out.length > 0 ? out[out.length - 1].charCodeAt(out[out.length - 1].length - 1) : NaN;
-            if (tail166 >= 55296 && tail166 <= 56319 && PlanJsonNumber.ecmaJsonNumber(clusterRangeStart).length > 0 && !(PlanJsonNumber.ecmaJsonNumber(clusterRangeStart).charCodeAt(0) >= 56320 && PlanJsonNumber.ecmaJsonNumber(clusterRangeStart).charCodeAt(0) <= 57343)) {
-              throw new UStringException({ kind: "UnpairedSurrogate", unit: tail166 });
-            }
-            if (PlanJsonNumber.ecmaJsonNumber(clusterRangeStart).length > 0) {
-              out.push(PlanJsonNumber.ecmaJsonNumber(clusterRangeStart));
-            }
+            out.push(PlanJsonNumber.ecmaJsonNumber(clusterRangeStart));
           } else {
-            const tail167 = out.length > 0 ? out[out.length - 1].charCodeAt(out[out.length - 1].length - 1) : NaN;
-            if (tail167 >= 55296 && tail167 <= 56319 && "null".length > 0 && !("null".charCodeAt(0) >= 56320 && "null".charCodeAt(0) <= 57343)) {
-              throw new UStringException({ kind: "UnpairedSurrogate", unit: tail167 });
-            }
-            if ("null".length > 0) {
-              out.push("null");
-            }
+            out.push("null");
           }
-          const tail168 = out.length > 0 ? out[out.length - 1].charCodeAt(out[out.length - 1].length - 1) : NaN;
-          if (tail168 >= 55296 && tail168 <= 56319 && ",\"anchorX\":".length > 0 && !(",\"anchorX\":".charCodeAt(0) >= 56320 && ",\"anchorX\":".charCodeAt(0) <= 57343)) {
-            throw new UStringException({ kind: "UnpairedSurrogate", unit: tail168 });
-          }
-          if (",\"anchorX\":".length > 0) {
-            out.push(",\"anchorX\":");
-          }
-          const tail169 = out.length > 0 ? out[out.length - 1].charCodeAt(out[out.length - 1].length - 1) : NaN;
-          if (tail169 >= 55296 && tail169 <= 56319 && PlanJsonNumber.ecmaJsonNumber(dot.anchorX).length > 0 && !(PlanJsonNumber.ecmaJsonNumber(dot.anchorX).charCodeAt(0) >= 56320 && PlanJsonNumber.ecmaJsonNumber(dot.anchorX).charCodeAt(0) <= 57343)) {
-            throw new UStringException({ kind: "UnpairedSurrogate", unit: tail169 });
-          }
-          if (PlanJsonNumber.ecmaJsonNumber(dot.anchorX).length > 0) {
-            out.push(PlanJsonNumber.ecmaJsonNumber(dot.anchorX));
-          }
-          const tail170 = out.length > 0 ? out[out.length - 1].charCodeAt(out[out.length - 1].length - 1) : NaN;
-          if (tail170 >= 55296 && tail170 <= 56319 && ",\"anchorY\":".length > 0 && !(",\"anchorY\":".charCodeAt(0) >= 56320 && ",\"anchorY\":".charCodeAt(0) <= 57343)) {
-            throw new UStringException({ kind: "UnpairedSurrogate", unit: tail170 });
-          }
-          if (",\"anchorY\":".length > 0) {
-            out.push(",\"anchorY\":");
-          }
-          const tail171 = out.length > 0 ? out[out.length - 1].charCodeAt(out[out.length - 1].length - 1) : NaN;
-          if (tail171 >= 55296 && tail171 <= 56319 && PlanJsonNumber.ecmaJsonNumber(dot.anchorY).length > 0 && !(PlanJsonNumber.ecmaJsonNumber(dot.anchorY).charCodeAt(0) >= 56320 && PlanJsonNumber.ecmaJsonNumber(dot.anchorY).charCodeAt(0) <= 57343)) {
-            throw new UStringException({ kind: "UnpairedSurrogate", unit: tail171 });
-          }
-          if (PlanJsonNumber.ecmaJsonNumber(dot.anchorY).length > 0) {
-            out.push(PlanJsonNumber.ecmaJsonNumber(dot.anchorY));
-          }
-          const tail172 = out.length > 0 ? out[out.length - 1].charCodeAt(out[out.length - 1].length - 1) : NaN;
-          if (tail172 >= 55296 && tail172 <= 56319 && ",\"dotDiameter\":".length > 0 && !(",\"dotDiameter\":".charCodeAt(0) >= 56320 && ",\"dotDiameter\":".charCodeAt(0) <= 57343)) {
-            throw new UStringException({ kind: "UnpairedSurrogate", unit: tail172 });
-          }
-          if (",\"dotDiameter\":".length > 0) {
-            out.push(",\"dotDiameter\":");
-          }
-          const tail173 = out.length > 0 ? out[out.length - 1].charCodeAt(out[out.length - 1].length - 1) : NaN;
-          if (tail173 >= 55296 && tail173 <= 56319 && PlanJsonNumber.ecmaJsonNumber(dot.dotDiameter).length > 0 && !(PlanJsonNumber.ecmaJsonNumber(dot.dotDiameter).charCodeAt(0) >= 56320 && PlanJsonNumber.ecmaJsonNumber(dot.dotDiameter).charCodeAt(0) <= 57343)) {
-            throw new UStringException({ kind: "UnpairedSurrogate", unit: tail173 });
-          }
-          if (PlanJsonNumber.ecmaJsonNumber(dot.dotDiameter).length > 0) {
-            out.push(PlanJsonNumber.ecmaJsonNumber(dot.dotDiameter));
-          }
-          const tail174 = out.length > 0 ? out[out.length - 1].charCodeAt(out[out.length - 1].length - 1) : NaN;
-          if (tail174 >= 55296 && tail174 <= 56319 && "}".length > 0 && !("}".charCodeAt(0) >= 56320 && "}".charCodeAt(0) <= 57343)) {
-            throw new UStringException({ kind: "UnpairedSurrogate", unit: tail174 });
-          }
-          if ("}".length > 0) {
-            out.push("}");
-          }
+          out.push(",\"anchorX\":");
+          out.push(PlanJsonNumber.ecmaJsonNumber(dot.anchorX));
+          out.push(",\"anchorY\":");
+          out.push(PlanJsonNumber.ecmaJsonNumber(dot.anchorY));
+          out.push(",\"dotDiameter\":");
+          out.push(PlanJsonNumber.ecmaJsonNumber(dot.dotDiameter));
+          out.push("}");
         }
       }
-      const tail175 = out.length > 0 ? out[out.length - 1].charCodeAt(out[out.length - 1].length - 1) : NaN;
-      if (tail175 >= 55296 && tail175 <= 56319 && "]".length > 0 && !("]".charCodeAt(0) >= 56320 && "]".charCodeAt(0) <= 57343)) {
-        throw new UStringException({ kind: "UnpairedSurrogate", unit: tail175 });
-      }
-      if ("]".length > 0) {
-        out.push("]");
-      }
+      out.push("]");
     }
-    return out;
   }
 
   private static endReasonName(reason: PlanEndReason): string {

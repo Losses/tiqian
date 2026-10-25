@@ -1,6 +1,5 @@
 package org.tiqian.protocol;
 
-import std.StringBuf;
 import std.SortedMap;
 
 /**
@@ -47,30 +46,30 @@ class PlanJsonNumber {
         return sign + mantissa + "e" + esign + Std.string(absoluteExponent);
     }
 
-    public static function appendJsonString(out:StringBuf, value:String):Void {
-        out.add("\"");
+    public static function appendJsonString(out:Array<String>, value:String):Void {
+        out.push("\"");
         for (i in 0...value.length) {
             final c = value.charCodeAt(i);
             if (c == 34)
-                out.add("\\\"");
+                out.push("\\\"");
             else if (c == 92)
-                out.add("\\\\");
+                out.push("\\\\");
             else if (c == 8)
-                out.add("\\b");
+                out.push("\\b");
             else if (c == 12)
-                out.add("\\f");
+                out.push("\\f");
             else if (c == 10)
-                out.add("\\n");
+                out.push("\\n");
             else if (c == 13)
-                out.add("\\r");
+                out.push("\\r");
             else if (c == 9)
-                out.add("\\t");
+                out.push("\\t");
             else if (c < 32)
-                out.add("\\u" + StringTools.hex(c, 4).toLowerCase());
+                out.push("\\u" + StringTools.hex(c, 4).toLowerCase());
             else
-                out.addChar(c);
+                out.push(String.fromCharCode(c));
         }
-        out.add("\"");
+        out.push("\"");
     }
 
     public static function shortestRoundTripDigits(magnitude:Float):PlanJsonDigitsAndExponent {
@@ -224,18 +223,18 @@ class PlanJsonNumber {
     }
 
     private static function addDecimal(a:String, b:String):String {
-        final out = new StringBuf();
+        final out:Array<String> = [];
         var i = a.length - 1;
         var j = b.length - 1;
         var carry = 0;
         while (i >= 0 || j >= 0 || carry > 0) {
             final sum = (i >= 0 ? a.charCodeAt(i) - 48 : 0) + (j >= 0 ? b.charCodeAt(j) - 48 : 0) + carry;
-            out.addChar(48 + sum % 10);
+            out.push(String.fromCharCode(48 + sum % 10));
             carry = Std.int(sum / 10);
             i--;
             j--;
         }
-        final text = out.toString();
+        final text = out.join("");
         return reverse(text);
     }
 
@@ -268,20 +267,20 @@ class PlanJsonNumber {
     }
 
     private static function timesSmall(digits:String, factor:Int):String {
-        final out = new StringBuf();
+        final out:Array<String> = [];
         var carry = 0;
         var i = digits.length - 1;
         while (i >= 0) {
             final product = (digits.charCodeAt(i) - 48) * factor + carry;
-            out.addChar(48 + product % 10);
+            out.push(String.fromCharCode(48 + product % 10));
             carry = Std.int(product / 10);
             i--;
         }
         while (carry > 0) {
-            out.addChar(48 + carry % 10);
+            out.push(String.fromCharCode(48 + carry % 10));
             carry = Std.int(carry / 10);
         }
-        final text = out.toString();
+        final text = out.join("");
         return reverse(text);
     }
 

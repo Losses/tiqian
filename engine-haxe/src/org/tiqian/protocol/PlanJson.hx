@@ -1,6 +1,5 @@
 package org.tiqian.protocol;
 
-import std.StringBuf;
 import org.tiqian.protocol.Plan;
 
 /**
@@ -16,363 +15,363 @@ import org.tiqian.protocol.Plan;
  */
 class PlanJson {
     public static function encode(plan:Plan):String {
-        final out = new StringBuf();
-        out.add("{");
-        out.add("\"schema\":");
-        out.add(Std.string(PlanSchema.PLAN_SCHEMA));
-        out.add(",\"layoutRevision\":\"");
-        out.add(PlanSchema.PLAN_LAYOUT_REVISION);
-        out.add("\",\"width\":");
-        out.add(PlanJsonNumber.ecmaJsonNumber(plan.width));
-        out.add(",\"height\":");
-        out.add(PlanJsonNumber.ecmaJsonNumber(plan.height));
-        out.add(",\"lines\":[");
+        final out:Array<String> = [];
+        out.push("{");
+        out.push("\"schema\":");
+        out.push(Std.string(PlanSchema.PLAN_SCHEMA));
+        out.push(",\"layoutRevision\":\"");
+        out.push(PlanSchema.PLAN_LAYOUT_REVISION);
+        out.push("\",\"width\":");
+        out.push(PlanJsonNumber.ecmaJsonNumber(plan.width));
+        out.push(",\"height\":");
+        out.push(PlanJsonNumber.ecmaJsonNumber(plan.height));
+        out.push(",\"lines\":[");
         var firstLine = true;
         for (line in plan.lines) {
             if (!firstLine)
-                out.add(",");
+                out.push(",");
             firstLine = false;
             appendLine(out, line);
         }
-        out.add("]");
+        out.push("]");
         appendParagraphEvidence(out, plan);
-        out.add("}");
-        return out.toString();
+        out.push("}");
+        return out.join("");
     }
 
-    static function appendLine(out:StringBuf, line:Plan.PlanLine):Void {
-        out.add("{\"rangeStart\":");
-        out.add(Std.string(line.rangeStart));
-        out.add(",\"rangeEnd\":");
-        out.add(Std.string(line.rangeEnd));
-        out.add(",\"top\":");
-        out.add(PlanJsonNumber.ecmaJsonNumber(line.top));
-        out.add(",\"bottom\":");
-        out.add(PlanJsonNumber.ecmaJsonNumber(line.bottom));
-        out.add(",\"baseline\":");
-        out.add(PlanJsonNumber.ecmaJsonNumber(line.baseline));
-        out.add(",\"indent\":");
-        out.add(PlanJsonNumber.ecmaJsonNumber(line.indent));
-        out.add(",\"visualWidth\":");
-        out.add(PlanJsonNumber.ecmaJsonNumber(line.visualWidth));
-        out.add(",\"hyphenAdvance\":");
-        out.add(PlanJsonNumber.ecmaJsonNumber(line.hyphenAdvance));
-        out.add(",\"endReason\":");
+    static function appendLine(out:Array<String>, line:Plan.PlanLine):Void {
+        out.push("{\"rangeStart\":");
+        out.push(Std.string(line.rangeStart));
+        out.push(",\"rangeEnd\":");
+        out.push(Std.string(line.rangeEnd));
+        out.push(",\"top\":");
+        out.push(PlanJsonNumber.ecmaJsonNumber(line.top));
+        out.push(",\"bottom\":");
+        out.push(PlanJsonNumber.ecmaJsonNumber(line.bottom));
+        out.push(",\"baseline\":");
+        out.push(PlanJsonNumber.ecmaJsonNumber(line.baseline));
+        out.push(",\"indent\":");
+        out.push(PlanJsonNumber.ecmaJsonNumber(line.indent));
+        out.push(",\"visualWidth\":");
+        out.push(PlanJsonNumber.ecmaJsonNumber(line.visualWidth));
+        out.push(",\"hyphenAdvance\":");
+        out.push(PlanJsonNumber.ecmaJsonNumber(line.hyphenAdvance));
+        out.push(",\"endReason\":");
         PlanJsonNumber.appendJsonString(out, endReasonName(line.endReason));
-        out.add(",\"cells\":[");
+        out.push(",\"cells\":[");
         var firstCell = true;
         for (cell in line.cells) {
             if (!firstCell)
-                out.add(",");
+                out.push(",");
             firstCell = false;
             appendCell(out, cell);
         }
-        out.add("]}");
+        out.push("]}");
     }
 
-    static function appendCell(out:StringBuf, cell:Plan.PlanCell):Void {
-        out.add("{\"rangeStart\":");
-        out.add(Std.string(cell.rangeStart));
-        out.add(",\"rangeEnd\":");
-        out.add(Std.string(cell.rangeEnd));
-        out.add(",\"source\":");
+    static function appendCell(out:Array<String>, cell:Plan.PlanCell):Void {
+        out.push("{\"rangeStart\":");
+        out.push(Std.string(cell.rangeStart));
+        out.push(",\"rangeEnd\":");
+        out.push(Std.string(cell.rangeEnd));
+        out.push(",\"source\":");
         PlanJsonNumber.appendJsonString(out, cell.source);
-        out.add(",\"display\":");
+        out.push(",\"display\":");
         PlanJsonNumber.appendJsonString(out, cell.display);
-        out.add(",\"drawX\":");
-        out.add(PlanJsonNumber.ecmaJsonNumber(cell.drawX));
-        out.add(",\"naturalWidth\":");
-        out.add(PlanJsonNumber.ecmaJsonNumber(cell.naturalWidth));
-        out.add(",\"leadingLayoutAdvance\":");
-        out.add(PlanJsonNumber.ecmaJsonNumber(cell.leadingLayoutAdvance));
+        out.push(",\"drawX\":");
+        out.push(PlanJsonNumber.ecmaJsonNumber(cell.drawX));
+        out.push(",\"naturalWidth\":");
+        out.push(PlanJsonNumber.ecmaJsonNumber(cell.naturalWidth));
+        out.push(",\"leadingLayoutAdvance\":");
+        out.push(PlanJsonNumber.ecmaJsonNumber(cell.leadingLayoutAdvance));
         if (cell.shapingBoundary)
-            out.add(",\"shapingBoundary\":true");
+            out.push(",\"shapingBoundary\":true");
         if (cell.openTypeFeatures.length > 0) {
-            out.add(",\"openTypeFeatures\":[");
+            out.push(",\"openTypeFeatures\":[");
             var firstFeature = true;
             for (feature in cell.openTypeFeatures) {
                 if (!firstFeature)
-                    out.add(",");
+                    out.push(",");
                 firstFeature = false;
                 PlanJsonNumber.appendJsonString(out, feature);
             }
-            out.add("]");
+            out.push("]");
         }
         appendCellEvidence(out, cell);
-        out.add("}");
+        out.push("}");
     }
 
-    static function appendCellEvidence(out:StringBuf, cell:Plan.PlanCell):Void {
+    static function appendCellEvidence(out:Array<String>, cell:Plan.PlanCell):Void {
         final inlineObject = cell.inlineObject;
         if (inlineObject != null) {
-            out.add(",\"inlineObject\":");
-            out.add(PlanJsonNumber.ecmaJsonNumber((inlineObject : Float)));
+            out.push(",\"inlineObject\":");
+            out.push(PlanJsonNumber.ecmaJsonNumber((inlineObject : Float)));
         }
         final advance = cell.advance;
         if (advance != null) {
-            out.add(",\"advance\":");
-            out.add(PlanJsonNumber.ecmaJsonNumber((advance : Float)));
+            out.push(",\"advance\":");
+            out.push(PlanJsonNumber.ecmaJsonNumber((advance : Float)));
         }
         final renderFontFamily = cell.renderFontFamily;
         if (renderFontFamily != null) {
-            out.add(",\"renderFontFamily\":");
+            out.push(",\"renderFontFamily\":");
             PlanJsonNumber.appendJsonString(out, (renderFontFamily : String));
         }
         final dashStrategy = cell.dashStrategy;
         if (dashStrategy != null) {
-            out.add(",\"dashStrategy\":");
+            out.push(",\"dashStrategy\":");
             PlanJsonNumber.appendJsonString(out, (dashStrategy : String));
             final shapingLanguage = cell.shapingLanguage;
             if (shapingLanguage != null) {
-                out.add(",\"shapingLanguage\":");
+                out.push(",\"shapingLanguage\":");
                 PlanJsonNumber.appendJsonString(out, (shapingLanguage : String));
             }
             final resolvedFace = cell.resolvedFace;
             if (resolvedFace != null) {
-                out.add(",\"resolvedFace\":");
+                out.push(",\"resolvedFace\":");
                 PlanJsonNumber.appendJsonString(out, (resolvedFace : String));
             }
             final glyphIds = cell.glyphIds;
             if (glyphIds != null) {
-                out.add(",\"glyphIds\":");
+                out.push(",\"glyphIds\":");
                 PlanJsonNumber.appendJsonString(out, (glyphIds : String));
             }
             final shapingEvidence = cell.shapingEvidence;
             if (shapingEvidence != null) {
-                out.add(",\"shapingEvidence\":");
+                out.push(",\"shapingEvidence\":");
                 PlanJsonNumber.appendJsonString(out, (shapingEvidence : String));
             }
         }
         final punctuationInkFloor = cell.punctuationInkFloor;
         if (punctuationInkFloor != null) {
-            out.add(",\"punctuationInkFloor\":");
-            out.add(PlanJsonNumber.ecmaJsonNumber((punctuationInkFloor : Float)));
+            out.push(",\"punctuationInkFloor\":");
+            out.push(PlanJsonNumber.ecmaJsonNumber((punctuationInkFloor : Float)));
             final punctuationBodyWidth = cell.punctuationBodyWidth;
             if (punctuationBodyWidth != null) {
-                out.add(",\"punctuationBodyWidth\":");
-                out.add(PlanJsonNumber.ecmaJsonNumber((punctuationBodyWidth : Float)));
+                out.push(",\"punctuationBodyWidth\":");
+                out.push(PlanJsonNumber.ecmaJsonNumber((punctuationBodyWidth : Float)));
             }
         }
         if (cell.latin)
-            out.add(",\"latin\":true");
+            out.push(",\"latin\":true");
         final styleDelta = cell.styleDelta;
         if (styleDelta != null)
             appendStyleDelta(out, styleDelta);
     }
 
-    static function appendStyleDelta(out:StringBuf, style:PlanStyleDelta):Void {
-        out.add(",\"style\":{");
+    static function appendStyleDelta(out:Array<String>, style:PlanStyleDelta):Void {
+        out.push(",\"style\":{");
         var fieldCount = 0;
         final fontSize = style.fontSize;
         if (fontSize != null) {
-            out.add("\"fontSize\":");
-            out.add(PlanJsonNumber.ecmaJsonNumber((fontSize : Float)));
+            out.push("\"fontSize\":");
+            out.push(PlanJsonNumber.ecmaJsonNumber((fontSize : Float)));
             fieldCount++;
         }
         final fontWeight = style.fontWeight;
         if (fontWeight != null) {
             if (fieldCount > 0)
-                out.add(",");
-            out.add("\"fontWeight\":");
-            out.add(Std.string((fontWeight : Int)));
+                out.push(",");
+            out.push("\"fontWeight\":");
+            out.push(Std.string((fontWeight : Int)));
             fieldCount++;
         }
         final italic = style.italic;
         if (italic != null) {
             if (fieldCount > 0)
-                out.add(",");
-            out.add("\"italic\":");
-            out.add(italic ? "true" : "false");
+                out.push(",");
+            out.push("\"italic\":");
+            out.push(italic ? "true" : "false");
         }
-        out.add("}");
+        out.push("}");
     }
 
-    static function appendParagraphEvidence(out:StringBuf, plan:Plan):Void {
+    static function appendParagraphEvidence(out:Array<String>, plan:Plan):Void {
         final fontSize = plan.fontSize;
         if (fontSize != null) {
-            out.add(",\"fontSize\":");
-            out.add(PlanJsonNumber.ecmaJsonNumber((fontSize : Float)));
+            out.push(",\"fontSize\":");
+            out.push(PlanJsonNumber.ecmaJsonNumber((fontSize : Float)));
         }
         final overlayWidth = plan.overlayWidth;
         if (overlayWidth != null) {
-            out.add(",\"overlayWidth\":");
-            out.add(PlanJsonNumber.ecmaJsonNumber((overlayWidth : Float)));
+            out.push(",\"overlayWidth\":");
+            out.push(PlanJsonNumber.ecmaJsonNumber((overlayWidth : Float)));
         }
         if (plan.emphasisRanges.length > 0) {
-            out.add(",\"emphasisRanges\":[");
+            out.push(",\"emphasisRanges\":[");
             var firstRange = true;
             for (range in plan.emphasisRanges) {
                 if (!firstRange)
-                    out.add(",");
+                    out.push(",");
                 firstRange = false;
-                out.add("[");
-                out.add(Std.string(range.start));
-                out.add(",");
-                out.add(Std.string(range.end));
-                out.add("]");
+                out.push("[");
+                out.push(Std.string(range.start));
+                out.push(",");
+                out.push(Std.string(range.end));
+                out.push("]");
             }
-            out.add("]");
+            out.push("]");
         }
         if (plan.inlineEdges.length > 0) {
-            out.add(",\"inlineEdges\":[");
+            out.push(",\"inlineEdges\":[");
             var firstEdge = true;
             for (edge in plan.inlineEdges) {
                 if (!firstEdge)
-                    out.add(",");
+                    out.push(",");
                 firstEdge = false;
-                out.add("{\"offset\":");
-                out.add(Std.string(edge.offset));
+                out.push("{\"offset\":");
+                out.push(Std.string(edge.offset));
                 final inlineStart = edge.inlineStart;
                 if (inlineStart != null) {
-                    out.add(",\"inlineStart\":");
-                    out.add(PlanJsonNumber.ecmaJsonNumber((inlineStart : Float)));
+                    out.push(",\"inlineStart\":");
+                    out.push(PlanJsonNumber.ecmaJsonNumber((inlineStart : Float)));
                 }
                 final inlineEnd = edge.inlineEnd;
                 if (inlineEnd != null) {
-                    out.add(",\"inlineEnd\":");
-                    out.add(PlanJsonNumber.ecmaJsonNumber((inlineEnd : Float)));
+                    out.push(",\"inlineEnd\":");
+                    out.push(PlanJsonNumber.ecmaJsonNumber((inlineEnd : Float)));
                 }
-                out.add("}");
+                out.push("}");
             }
-            out.add("]");
+            out.push("]");
         }
         if (plan.rubyDecisions.length > 0) {
-            out.add(",\"rubyDecisions\":[");
+            out.push(",\"rubyDecisions\":[");
             var firstRuby = true;
             for (ruby in plan.rubyDecisions) {
                 if (!firstRuby)
-                    out.add(",");
+                    out.push(",");
                 firstRuby = false;
-                out.add("{\"baseRangeStart\":");
-                out.add(Std.string(ruby.baseRangeStart));
-                out.add(",\"baseRangeEnd\":");
-                out.add(Std.string(ruby.baseRangeEnd));
-                out.add(",\"text\":");
+                out.push("{\"baseRangeStart\":");
+                out.push(Std.string(ruby.baseRangeStart));
+                out.push(",\"baseRangeEnd\":");
+                out.push(Std.string(ruby.baseRangeEnd));
+                out.push(",\"text\":");
                 PlanJsonNumber.appendJsonString(out, ruby.text);
-                out.add(",\"centerX\":");
-                out.add(PlanJsonNumber.ecmaJsonNumber(ruby.centerX));
-                out.add(",\"baselineY\":");
-                out.add(PlanJsonNumber.ecmaJsonNumber(ruby.baselineY));
-                out.add(",\"fontSize\":");
-                out.add(PlanJsonNumber.ecmaJsonNumber(ruby.fontSize));
+                out.push(",\"centerX\":");
+                out.push(PlanJsonNumber.ecmaJsonNumber(ruby.centerX));
+                out.push(",\"baselineY\":");
+                out.push(PlanJsonNumber.ecmaJsonNumber(ruby.baselineY));
+                out.push(",\"fontSize\":");
+                out.push(PlanJsonNumber.ecmaJsonNumber(ruby.fontSize));
                 final ascent = ruby.ascent;
                 if (ascent != null) {
-                    out.add(",\"ascent\":");
-                    out.add(PlanJsonNumber.ecmaJsonNumber((ascent : Float)));
+                    out.push(",\"ascent\":");
+                    out.push(PlanJsonNumber.ecmaJsonNumber((ascent : Float)));
                 }
-                out.add(",\"fontWeight\":");
-                out.add(Std.string(ruby.fontWeight));
+                out.push(",\"fontWeight\":");
+                out.push(Std.string(ruby.fontWeight));
                 if (ruby.fontFamilies.length > 0) {
-                    out.add(",\"fontFamilies\":[");
+                    out.push(",\"fontFamilies\":[");
                     var firstFamily = true;
                     for (family in ruby.fontFamilies) {
                         if (!firstFamily)
-                            out.add(",");
+                            out.push(",");
                         firstFamily = false;
                         PlanJsonNumber.appendJsonString(out, family);
                     }
-                    out.add("]");
+                    out.push("]");
                 }
-                out.add("}");
+                out.push("}");
             }
-            out.add("]");
+            out.push("]");
         }
         if (plan.bopomofoDecisions.length > 0) {
-            out.add(",\"bopomofoDecisions\":[");
+            out.push(",\"bopomofoDecisions\":[");
             var firstBopomofo = true;
             for (bopomofo in plan.bopomofoDecisions) {
                 if (!firstBopomofo)
-                    out.add(",");
+                    out.push(",");
                 firstBopomofo = false;
-                out.add("{\"baseRangeStart\":");
-                out.add(Std.string(bopomofo.baseRangeStart));
-                out.add(",\"baseRangeEnd\":");
-                out.add(Std.string(bopomofo.baseRangeEnd));
-                out.add(",\"text\":");
+                out.push("{\"baseRangeStart\":");
+                out.push(Std.string(bopomofo.baseRangeStart));
+                out.push(",\"baseRangeEnd\":");
+                out.push(Std.string(bopomofo.baseRangeEnd));
+                out.push(",\"text\":");
                 PlanJsonNumber.appendJsonString(out, bopomofo.text);
-                out.add(",\"fontWeight\":");
-                out.add(Std.string(bopomofo.fontWeight));
+                out.push(",\"fontWeight\":");
+                out.push(Std.string(bopomofo.fontWeight));
                 if (bopomofo.fontFamilies.length > 0) {
-                    out.add(",\"fontFamilies\":[");
+                    out.push(",\"fontFamilies\":[");
                     var firstFamily = true;
                     for (family in bopomofo.fontFamilies) {
                         if (!firstFamily)
-                            out.add(",");
+                            out.push(",");
                         firstFamily = false;
                         PlanJsonNumber.appendJsonString(out, family);
                     }
-                    out.add("]");
+                    out.push("]");
                 }
-                out.add(",\"placements\":[");
+                out.push(",\"placements\":[");
                 var firstPlacement = true;
                 for (placement in bopomofo.placements) {
                     if (!firstPlacement)
-                        out.add(",");
+                        out.push(",");
                     firstPlacement = false;
-                    out.add("{\"text\":");
+                    out.push("{\"text\":");
                     PlanJsonNumber.appendJsonString(out, placement.text);
-                    out.add(",\"left\":");
-                    out.add(PlanJsonNumber.ecmaJsonNumber(placement.left));
-                    out.add(",\"top\":");
-                    out.add(PlanJsonNumber.ecmaJsonNumber(placement.top));
-                    out.add(",\"width\":");
-                    out.add(PlanJsonNumber.ecmaJsonNumber(placement.width));
-                    out.add(",\"height\":");
-                    out.add(PlanJsonNumber.ecmaJsonNumber(placement.height));
-                    out.add(",\"role\":");
+                    out.push(",\"left\":");
+                    out.push(PlanJsonNumber.ecmaJsonNumber(placement.left));
+                    out.push(",\"top\":");
+                    out.push(PlanJsonNumber.ecmaJsonNumber(placement.top));
+                    out.push(",\"width\":");
+                    out.push(PlanJsonNumber.ecmaJsonNumber(placement.width));
+                    out.push(",\"height\":");
+                    out.push(PlanJsonNumber.ecmaJsonNumber(placement.height));
+                    out.push(",\"role\":");
                     PlanJsonNumber.appendJsonString(out, placement.role);
-                    out.add("}");
+                    out.push("}");
                 }
-                out.add("]}");
+                out.push("]}");
             }
-            out.add("]");
+            out.push("]");
         }
         if (plan.decorationSegments.length > 0) {
-            out.add(",\"decorationSegments\":[");
+            out.push(",\"decorationSegments\":[");
             var firstSegment = true;
             for (seg in plan.decorationSegments) {
                 if (!firstSegment)
-                    out.add(",");
+                    out.push(",");
                 firstSegment = false;
-                out.add("{\"kind\":");
+                out.push("{\"kind\":");
                 PlanJsonNumber.appendJsonString(out, seg.kind);
-                out.add(",\"left\":");
-                out.add(PlanJsonNumber.ecmaJsonNumber(seg.left));
-                out.add(",\"top\":");
-                out.add(PlanJsonNumber.ecmaJsonNumber(seg.top));
-                out.add(",\"right\":");
-                out.add(PlanJsonNumber.ecmaJsonNumber(seg.right));
-                out.add(",\"sourceRangeStart\":");
-                out.add(Std.string(seg.sourceRangeStart));
-                out.add(",\"sourceRangeEnd\":");
-                out.add(Std.string(seg.sourceRangeEnd));
-                out.add("}");
+                out.push(",\"left\":");
+                out.push(PlanJsonNumber.ecmaJsonNumber(seg.left));
+                out.push(",\"top\":");
+                out.push(PlanJsonNumber.ecmaJsonNumber(seg.top));
+                out.push(",\"right\":");
+                out.push(PlanJsonNumber.ecmaJsonNumber(seg.right));
+                out.push(",\"sourceRangeStart\":");
+                out.push(Std.string(seg.sourceRangeStart));
+                out.push(",\"sourceRangeEnd\":");
+                out.push(Std.string(seg.sourceRangeEnd));
+                out.push("}");
             }
-            out.add("]");
+            out.push("]");
         }
         if (plan.emphasisDots.length > 0) {
-            out.add(",\"emphasisDots\":[");
+            out.push(",\"emphasisDots\":[");
             var firstDot = true;
             for (dot in plan.emphasisDots) {
                 if (!firstDot)
-                    out.add(",");
+                    out.push(",");
                 firstDot = false;
-                out.add("{\"clusterRangeStart\":");
+                out.push("{\"clusterRangeStart\":");
                 final clusterRangeStart = dot.clusterRangeStart;
                 if (clusterRangeStart != null) {
-                    out.add(PlanJsonNumber.ecmaJsonNumber((clusterRangeStart : Float)));
+                    out.push(PlanJsonNumber.ecmaJsonNumber((clusterRangeStart : Float)));
                 } else {
-                    out.add("null");
+                    out.push("null");
                 }
-                out.add(",\"anchorX\":");
-                out.add(PlanJsonNumber.ecmaJsonNumber(dot.anchorX));
-                out.add(",\"anchorY\":");
-                out.add(PlanJsonNumber.ecmaJsonNumber(dot.anchorY));
-                out.add(",\"dotDiameter\":");
-                out.add(PlanJsonNumber.ecmaJsonNumber(dot.dotDiameter));
-                out.add("}");
+                out.push(",\"anchorX\":");
+                out.push(PlanJsonNumber.ecmaJsonNumber(dot.anchorX));
+                out.push(",\"anchorY\":");
+                out.push(PlanJsonNumber.ecmaJsonNumber(dot.anchorY));
+                out.push(",\"dotDiameter\":");
+                out.push(PlanJsonNumber.ecmaJsonNumber(dot.dotDiameter));
+                out.push("}");
             }
-            out.add("]");
+            out.push("]");
         }
     }
 
