@@ -517,7 +517,9 @@ org/tiqian/layout/LayoutDumpGoldens__asset_48.txt
 org/tiqian/layout/LayoutDumpGoldens__asset_49.txt
 org/tiqian/layout/LayoutDumpGoldens__asset_50.txt
 org/tiqian/layout/LayoutDumpGoldens__asset_51.txt
-org/tiqian/layout/RecordedShapingEvidenceData__asset_0.txt
+org/tiqian/layout/RecordedShapingEvidenceData__asset_0.part_0.txt
+org/tiqian/layout/RecordedShapingEvidenceData__asset_0.part_1.txt
+org/tiqian/layout/RecordedShapingEvidenceData__asset_0.part_2.txt
 std/mod.rs
 org/tiqian/test/trace/mod.rs
 org/tiqian/test/mod.rs
