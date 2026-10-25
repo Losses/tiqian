@@ -10,6 +10,7 @@ engine-haxe/targets/classes.hxml
 -D ts-output=engine-haxe/out/ts-gen
 -D ts-test-output=engine-haxe/out/ts-gen-tests
 -D ts-test-runner=bun
+-D tiqian_ts
 -D runtime-import=@tiqian/runtime
 -D runtime-emit=.
 -D package-shell=none

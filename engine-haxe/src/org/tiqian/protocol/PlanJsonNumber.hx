@@ -17,6 +17,9 @@ class PlanJsonNumber {
     private static var twoPowers:Null<Array<String>> = null;
 
     public static function ecmaJsonNumber(floatValue:Float):String {
+        #if tiqian_ts
+        return Std.string(haxe.io.FPHelper.i32ToFloat(haxe.io.FPHelper.floatToI32(floatValue)));
+        #else
         if (Math.isNaN(floatValue))
             return "NaN";
         if (Math.isFinite(floatValue) == false)
@@ -41,6 +44,7 @@ class PlanJsonNumber {
         final esign = ev < 0 ? "-" : "+";
         final absoluteExponent:Int = ev < 0 ? -ev : ev;
         return sign + mantissa + "e" + esign + Std.string(absoluteExponent);
+        #end
     }
 
     public static function appendJsonString(out:Array<String>, value:String):Void {
@@ -143,6 +147,7 @@ class PlanJsonNumber {
         return result;
     }
 
+
     private static function fiveToThe(k:Int):String {
         if (fivePowers == null)
             fivePowers = ["1"];
@@ -173,7 +178,8 @@ class PlanJsonNumber {
         return digits;
     }
 
-    private static function timesLong(digits:String, factor:Int):String {
+
+        private static function timesLong(digits:String, factor:Int):String {
         if (factor == 0)
             return "0";
         var result:String = null;
