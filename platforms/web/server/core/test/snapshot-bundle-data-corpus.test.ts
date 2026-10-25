@@ -75,10 +75,11 @@ test("the shared renderer reproduces the Rust corpus bytes", () => {
       assert.equal(rendered.html, testCase.expect.html, "html: " + testCase.name);
       assert.equal(JSON.stringify(rendered.artifact), testCase.expect.artifact, "artifact: " + testCase.name);
     } else {
+      const expectError = testCase.expect;
       assert.throws(
         () => renderPreparedParagraphArtifact(testCase.plan, testCase.locale, fixtureCallOptions(testCase.options)),
         (error: unknown) => {
-          assert.equal((error as Error).message, testCase.expect.error, "error: " + testCase.name);
+          assert.equal((error as Error).message, expectError.error, "error: " + testCase.name);
           return true;
         },
       );
@@ -137,6 +138,7 @@ test("the data phase mints tqv classes in first-seen order", () => {
 test("the data phase rejects the corpus error cases by name", () => {
   for (const testCase of fixture.cases) {
     if (testCase.expect.kind !== "error") continue;
+    const expectError = testCase.expect;
     assert.throws(
       () => renderSnapshotBundleData([entry(testCase.plan, {
         semantics: testCase.options.semantics ?? [],
@@ -144,7 +146,7 @@ test("the data phase rejects the corpus error cases by name", () => {
         renderTextSpans: testCase.options.renderTextSpans ?? [],
       })], { id: "tq-page", snapshotTables: tables() as never }),
       (error: unknown) => {
-        assert.equal((error as Error).message, testCase.expect.error, "error: " + testCase.name);
+        assert.equal((error as Error).message, expectError.error, "error: " + testCase.name);
         return true;
       },
     );

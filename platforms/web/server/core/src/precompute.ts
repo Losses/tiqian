@@ -19,6 +19,8 @@ import { Revision } from "./protocol-gen/Revision.js";
 import { SnapshotValueStyle } from "./shared-gen/org/tiqian/shared/SnapshotValueStyle.js";
 import { ValueStyleInterner } from "./shared-gen/org/tiqian/shared/ValueStyleInterner.js";
 import { sha256Hex, stableStringify } from "./stable-stringify.js";
+import { createCacheBridge } from "./cache.js";
+import type { CacheBridge } from "./cache.js";
 const SHARED_RUNTIME_STYLE = readFileSync(
   new URL(import.meta.resolve("@tiqian/core/styles.css")),
   "utf8",
