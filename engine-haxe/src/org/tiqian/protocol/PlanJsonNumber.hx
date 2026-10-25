@@ -355,13 +355,13 @@ class PlanJsonNumber {
     }
 
     private static function zeros(n:Int):String {
-        var s = "";
+        final buf = new StringBuf();
         var i = 0;
         while (i < n) {
-            s += "0";
+            buf.addChar(48);
             i++;
         }
-        return s;
+        return buf.toString();
     }
 
     private static function trimZeros(s:String):String {
@@ -372,12 +372,12 @@ class PlanJsonNumber {
     }
 
     private static function reverse(s:String):String {
-        var r = "";
+        final buf = new StringBuf();
         var i = s.length - 1;
         while (i >= 0) {
-            r += s.charAt(i);
+            buf.addChar(s.charCodeAt(i));
             i--;
         }
-        return r;
+        return buf.toString();
     }
 }
