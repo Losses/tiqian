@@ -1,6 +1,6 @@
 // Byte-parity gate of the shared renderer in the server package (criterion
-// 3). The committed prepared-DOM corpus fixture carries the Rust renderer's
-// bytes: `prepared_dom_corpus.rs` asserts the same file case by case. The
+// 3). The committed prepared-DOM corpus fixture carries the shared renderer's
+// bytes; this test asserts the same file case by case. The
 // bundle data phase drives the same shared module (`@tiqian/prose/prepared-dom`,
 // the browser implementation), so replaying the fixture's call shape here
 // must reproduce every committed byte.

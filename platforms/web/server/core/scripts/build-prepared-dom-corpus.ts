@@ -1,8 +1,8 @@
 // Prepared DOM lowering golden corpus (ADR 0050).
 //
-// Builds the shared fixture consumed by BOTH parity lanes: the Rust
-// integration test `platforms/web/server/precompute/engine/tests/prepared_dom_corpus.rs` and
-// the js test `platforms/web/client/web-component/tests/prepared-dom-corpus.test.ts`. The js module
+// Builds the shared fixture consumed by the parity lanes: the js test
+// `platforms/web/client/web-component/tests/prepared-dom-corpus.test.ts` and the
+// shared-renderer replay in `snapshot-bundle-data-corpus.test.ts`. The js module
 // `prepared-dom.js` is the oracle; regenerating the fixture is deliberate:
 //
 //   node scripts/build-prepared-dom-corpus.ts   (from platforms/web/server/core)

@@ -3,15 +3,15 @@
 // reproduce the exact artifact sha the Rust renderer produced, or moving the
 // render loop to the shared module would change every manifest entry.
 //
-// The vectors are the Rust renderer's committed output: the corpus fixture
+// The vectors are the shared renderer's committed output: the corpus fixture
 // `platforms/web/client/web-component/tests/prepared-dom-corpus.fixture.json`
-// is asserted byte-for-byte against Rust by
-// `platforms/web/server/precompute/engine/tests/prepared_dom_corpus.rs`, and
+// is asserted byte-for-byte by the shared renderer in
+// `platforms/web/server/core/test/snapshot-bundle-data-corpus.test.ts`, and
 // artifact trees contain arrays and strings only, so `stableStringify` over
-// the fixture artifact reproduces the Rust hash preimage exactly.
+// the fixture artifact reproduces the committed hash preimage exactly.
 //
 // The second vector covers the value-class path the bundle data phase mints
-// (`styleClassFor` -> `tqv-N`); its literal is the Rust renderer's output
+// (`styleClassFor` -> `tqv-N`); its literal is the shared renderer's output
 // for the same plan and callback.
 
 import { test } from "node:test";
@@ -77,6 +77,6 @@ test("artifact sha of the value-class plan matches the Rust renderer", () => {
   assert.match(rendered.html, /class="tq-line tqv-0"/u);
   assert.equal(
     sha256Hex(stableStringify(rendered.artifact)),
-    "PLACEHOLDER_TQV_ARTIFACT_SHA",
+    "1b2d9946c4c0b6310c61808572db1db8570dbfaaed3ec0b921c2f82e300d15da",
   );
 });
