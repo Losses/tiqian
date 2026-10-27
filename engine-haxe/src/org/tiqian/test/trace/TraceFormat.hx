@@ -107,6 +107,15 @@ class TraceFormat {
     private static function fixedDecimalText(value:Float, decimals:Int):String {
         final negative = isNegative(value);
         final magnitude = Math.abs(value);
+        // A magnitude at or past 2^31 overflows the 32-bit Int the integer-part
+        // conversion builds on targets such as Swift; fall back to the runtime's
+        // scientific text. NaN has no integer part either.
+        if (magnitude != magnitude) {
+            return "NaN";
+        }
+        if (magnitude >= 2147483648.0) {
+            return Std.string(value);
+        }
         final scale = pow10(decimals);
         final rounded = scaledMagnitude(magnitude, scale);
         final integerPart = integerPartOf(magnitude, rounded, scale);
