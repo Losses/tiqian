@@ -33,8 +33,6 @@ use tiqian_engine_gen::org::tiqian::shaping::text_shaper::ITextShaper;
 
 pub use tiqian_engine_gen::org::tiqian::core::layout_input::LayoutInput as EngineLayoutInput;
 pub use tiqian_engine_gen::org::tiqian::core::layout_result::LayoutResult as EngineLayoutResult;
-#[cfg(test)]
-pub use tiqian_engine_gen::org::tiqian::shaping::replayable_font_backend::ReplayableFontCatalog;
 
 /// One slot per `ExplainableStubParagraphLayoutEngine::new` parameter;
 /// `None` keeps the generated default implementation. Hosts inject their
