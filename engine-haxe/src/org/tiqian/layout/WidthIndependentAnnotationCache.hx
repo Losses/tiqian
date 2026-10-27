@@ -70,7 +70,7 @@ import org.tiqian.core.IntRange;
 import org.tiqian.core.InlineAttachment;
 import std.SortedSet;
 import std.SortedMap;
-import std.Dictionary;
+import std.HashMap;
 
 @:dataClass class WidthIndependentAnnotationKey {
     public final text:String;
@@ -169,7 +169,7 @@ interface WidthIndependentAnnotationCache {
 class LruWidthIndependentAnnotationCache implements WidthIndependentAnnotationCache {
     public final maxEntries:Int;
 
-    private final map:Dictionary<WidthIndependentAnnotationKey, WidthIndependentParagraphAnnotation> = new Dictionary();
+    private final map:HashMap<WidthIndependentAnnotationKey, WidthIndependentParagraphAnnotation> = new HashMap();
     private final keys:Array<WidthIndependentAnnotationKey> = [];
 
     public var size(get, never):Int;
