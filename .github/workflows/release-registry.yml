@@ -1,0 +1,79 @@
+name: Release to Registry
+on:
+  push:
+    tags: ["v*.*.*"]
+
+permissions:
+  contents: write
+
+concurrency:
+  group: release-registry-${{ github.ref }}
+  cancel-in-progress: false
+
+env:
+  R2_ENDPOINT: https://91a3e85bc149574f96f64f55aa2c900e.r2.cloudflarestorage.com
+  R2_BUCKET: tiqian-registry
+  REGISTRY_REPO: tiqian-cjk/registry
+
+jobs:
+  pack-and-publish:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout tiqian
+        uses: actions/checkout@v4
+
+      - name: Set up bun
+        uses: oven-sh/setup-bun@v2
+
+      - name: Set up Haxe
+        run: |
+          wget -q https://github.com/HaxeFoundation/haxe/releases/download/4.3.7/haxe-4.3.7-linux64.tar.gz
+          tar -xzf haxe-4.3.7-linux64.tar.gz
+          find . -maxdepth 1 -type d -name "haxe_*" -exec echo "{}/haxe" >> "$GITHUB_PATH" \;
+
+      - name: Build packages via boring
+        run: nix develop -c bash -c "boring pack ts kotlin swift rust dart 2>&1 || true"
+
+      - name: Collect artifacts
+        run: |
+          mkdir -p release-artifacts
+          find . -name "*.tgz" -o -name "*.jar" -o -name "*.crate" -o -name "*.zip" | grep -v node_modules | while read f; do cp "$f" release-artifacts/; done
+          ls -la release-artifacts/
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: release-artifacts/*
+          generate_release_notes: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Upload Swift zip to R2
+        run: |
+          for zip in release-artifacts/*.zip; do
+            [ -f "$zip" ] || continue
+            curl -sf -X PUT \
+              -H "Content-Type: application/zip" \
+              --data-binary "@$zip" \
+              "https://${{ secrets.R2_ACCESS_KEY_ID }}:${{ secrets.R2_SECRET_ACCESS_KEY }}@${{ env.R2_ENDPOINT }}/${{ env.R2_BUCKET }}/swift/${{ github.ref_name }}/$(basename $zip)"
+          done
+
+      - name: Commit metadata to registry repo
+        run: |
+          git clone https://x-access-token:${{ secrets.REGISTRY_REPO_TOKEN }}@github.com/${{ env.REGISTRY_REPO }}.git /tmp/registry
+          VERSION=${GITHUB_REF_NAME#v}
+          OWNER=$(echo "${{ github.repository }}" | cut -d/ -f1)
+          REPO=$(echo "${{ github.repository }}" | cut -d/ -f2)
+          META_DIR="/tmp/registry/$OWNER/$REPO/$VERSION"
+          for platform in npm cargo swift maven pub; do
+            mkdir -p "$META_DIR/$platform"
+            cat > "$META_DIR/$platform/metadata.json" << EOF
+          {"name":"tiqian-engine","version":"$VERSION","license":"MIT","repository":"${{ github.repository }}","tag":"${{ github.ref_name }}"}
+          EOF
+          done
+          cd /tmp/registry
+          git config user.name "Release Bot"
+          git config user.email "release@tiqian.dev"
+          git add .
+          git commit -m "release: ${{ github.repository }} ${{ github.ref_name }}"
+          git push origin main
