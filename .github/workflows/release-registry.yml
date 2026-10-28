@@ -77,3 +77,15 @@ jobs:
           git add .
           git commit -m "release: ${{ github.repository }} ${{ github.ref_name }}"
           git push origin main
+      - name: Sync compiled registry tool to registry repo
+        run: |
+          if [ -d packages/registry/gen ]; then
+            cd /tmp/registry
+            rm -rf tool
+            mkdir -p tool
+            cp -r $GITHUB_WORKSPACE/packages/registry/gen/* tool/
+            cp $GITHUB_WORKSPACE/packages/registry/run.ts tool/
+            git add tool
+            git diff --cached --quiet || git commit -m 'sync: registry tool'
+            git push origin main
+          fi
