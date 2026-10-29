@@ -21,7 +21,11 @@ class TestTracePlatform {
     #end
 
     public static function writeGolden(className:String, text:String):Void {
-        std.Fs.makeDirs(directory);
-        std.Fs.writeText(directory + "/" + className + ".txt", text);
+        try {
+            std.Fs.makeDirs(directory);
+            std.Fs.writeText(directory + "/" + className + ".txt", text);
+        } catch (e:std.FsException) {
+            // Golden writing is best-effort; missing directories are non-fatal.
+        }
     }
 }
