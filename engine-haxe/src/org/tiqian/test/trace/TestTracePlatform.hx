@@ -1,12 +1,5 @@
 package org.tiqian.test.trace;
 
-private typedef MkdirOptions = {
-    final recursive:Bool;
-}
-
-@:jsRequire("node:fs")
-
-
 class TestTracePlatform {
     public static final updateMode:Bool = true;
     public static final doubleArithmetic:Bool = true;
