@@ -1,0 +1,284 @@
+# 发布流程
+
+本文档记录 tiqian v0.1.0-alpha07 实际执行并验证过的发布流程。发布由推送版本标签触发，
+CI 打包五个目标生态的产物，写入 registry 仓库并部署站点。下一个人按本文档执行即可复现。
+
+## 1. 触发方式
+
+推送 `v*.*.*` 形式的标签触发 `.github/workflows/release-registry.yml`：
+
+```shell
+git tag v0.1.0-alpha07
+git push origin v0.1.0-alpha07
+```
+
+工作流只响应标签推送，没有 `workflow_dispatch` 入口。发布版本号从标签去掉前缀 `v`
+得到，例如 `v0.1.0-alpha07` 对应 `0.1.0-alpha07`。
+
+## 2. 需要的 secrets
+
+工作流读取以下 GitHub Actions secrets。缺少任何一个都会让对应步骤失败：
+
+| secret | 用途 |
+| --- | --- |
+| `REGISTRY_REPO_TOKEN` | 提交 registry 元数据到 registry 仓库（`tiqian-cjk/registry`） |
+| `R2_ACCESS_KEY_ID` | 上传 Swift 归档到 R2 存储 |
+| `R2_SECRET_ACCESS_KEY` | 上传 Swift 归档到 R2 存储 |
+| `PAGES_DEPLOY_HOOK` | 触发 Cloudflare Pages 部署 |
+| `NPM_DIST_TAG_TOKEN` | npm 发布（`publish-precompute.yml`、`publish-ffi.yml`、`publish-prose.yml`） |
+| `CARGO_DIST_TOKEN` | cargo 发布预留 |
+
+`GITHUB_TOKEN` 是 GitHub 内置 secret，用于创建 GitHub Release，不需要单独配置。
+
+## 3. 打包前置
+
+打包前两个脚本按发布版本准备产物：
+
+```shell
+python3 tools/align-package-versions.py "${GITHUB_REF_NAME#v}"
+```
+
+`tools/align-package-versions.py` 把 `boring.json` 里每个声明了 `package` 的 bundle
+的 `version` 字段改成标签版本。registry 的产物名是 `<包名>-<版本>`，如果清单还带着
+占位版本 `0.1.0`，下载地址就不存在。
+
+```shell
+python3 tools/registry-metadata.py \
+  --project boring.json \
+  --artifacts release-artifacts \
+  --version "$VERSION" \
+  --owner "$OWNER" \
+  --repo "$REPO" \
+  --asset-base "$ASSET_BASE" \
+  --out "$RUNNER_TEMP/registry-tree"
+```
+
+`tools/registry-metadata.py` 从 `boring.json` 的 bundle 列表读取每个包的元数据，对照
+`release-artifacts` 目录里的实际产物，生成 registry 树（每个版本每个平台一个
+`metadata.json`）。
+
+## 4. registry 目录模型
+
+registry 树按 `<owner>/<包名>/<版本>/<平台>/metadata.json` 组织。一个包一个目录，
+每个版本下每个平台一个 `metadata.json`。
+
+目录名按平台区分：
+
+- pub 用下划线目录：`tiqian_engine`
+- 其余平台用连字符：`tiqian-engine-f32`、`tiqian-engine-f64`、`tiqian-protocol`
+
+`registry-metadata.py` 里 `dir_name = name.replace("-", "_") if platform == "pub" else name`
+决定这个命名。registry 工具（`packages/registry/src/registry/Core.hx`）校验每个版本下
+每个平台只有一个 `metadata.json`，并拒绝版本不一致、平台不一致、未知平台等错误。
+
+## 5. Swift 归档
+
+Swift 归档有两个硬性要求：
+
+- zip 必须只有一个顶层目录。SwiftPM 解包时要求归档根目录只有一个目录，成员位于
+  `<包名>-<版本>/` 之下。
+- 归档上传到 R2 的 `swift/tiqian/<包名>/<版本>.zip`。
+
+`registry-metadata.py` 从 zip 里读取 `Package.swift` 清单正文，写入 `metadata.json`
+的 `packageSwift` 字段。这个字段存的是清单正文，不存放 URL。registry 工具校验
+`archive` 字段必须等于 `swift/<scope>/<包名>/<版本>.zip`，否则报 `invalid Swift archive`。
+
+## 6. Pages 部署
+
+registry 站点不随每次提交自动部署。发布工作流内置一个 Deploy Hook 步骤，用
+`PAGES_DEPLOY_HOOK` 触发 Cloudflare Pages 构建：
+
+```shell
+curl -fsS -X POST "$PAGES_DEPLOY_HOOK" | head -c 200
+```
+
+手动重建站点时执行同一条命令。`PAGES_DEPLOY_HOOK` 未配置时该步骤打印提示并跳过，
+工作流继续执行。
+
+## 7. 本地复现
+
+本地复现发布环境需要 `nix develop`。开发 shell 必须包含 `unzip`：SwiftPM 解包
+registry 源码归档时调用宿主 `unzip`，缺少它每次 registry 拉取都会报
+`could not find executable for 'unzip'`。
+
+registry 本地校验用 `bash build.sh`。脚本下载 `registry-tool` 二进制，把当前目录
+里除 `.git`、`.tool-bin`、`.tree`、`dist` 之外的顶层目录复制到 `.tree`，然后对
+这个树运行 registry 工具生成 `dist` 站点。校验通过时命令退出码为 0。
+
+## 8. 五个生态的实测命令
+
+以下命令在 v0.1.0-alpha07 发布后逐一实测。registry 基址是 `https://registry.tiqian.org`。
+
+### npm
+
+```shell
+npm install tiqian-engine --registry https://registry.tiqian.org/npm/
+```
+
+实测输出：
+
+```
+added 1 package in 4s
+```
+
+失败定位顺序：
+
+1. 检查 `https://registry.tiqian.org/npm/tiqian-engine` 是否返回 200。
+2. 检查 `metadata.json` 的 `url` 是否指向可下载的 tarball。
+3. 检查 `sha512` 是否与 tarball 实际内容一致（registry 用 base64 编码的 `sha512-` 前缀）。
+
+### cargo
+
+在 `.cargo/config.toml` 写入：
+
+```toml
+[registries.tiqian]
+index = "sparse+https://registry.tiqian.org/cargo/index/"
+
+[source.crates-io]
+replace-with = "tiqian"
+```
+
+然后：
+
+```shell
+cargo add tiqian-engine-f32
+cargo build
+```
+
+实测输出（`cargo add tiqian-engine-f32`）：
+
+```
+    Updating `tiqian` index
+      Adding tiqian-engine-f32 v0.1.0-alpha07 to dependencies
+    Updating `tiqian` index
+     Locking 1 package to latest compatible version
+```
+
+`cargo build` 输出：
+
+```
+ Downloading crates ...
+  Downloaded tiqian-engine-f32 v0.1.0-alpha07 (registry `tiqian`)
+   Compiling tiqian-engine-f32 v0.1.0-alpha07
+   Compiling cargo-test v0.1.0
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 16.44s
+```
+
+失败定位顺序：
+
+1. 检查 `https://registry.tiqian.org/cargo/index/config.json` 是否返回 200。
+2. 检查 crate 的 index 文件（`cargo/index/ti/qi/<包名>`）是否存在。
+3. 检查 `cksum` 是否与 `.crate` 实际内容一致。
+4. 检查 `_redirects` 里 `/cargo/dl/<包名>-:version.crate` 是否指向 GitHub Release 资产。
+
+### pub
+
+在 `pubspec.yaml` 写入：
+
+```yaml
+dependencies:
+  tiqian_engine:
+    hosted: https://registry.tiqian.org/pub/
+    version: ^0.1.0-alpha07
+```
+
+然后：
+
+```shell
+dart pub get
+```
+
+实测输出（`dart pub get`）：
+
+```
+Resolving dependencies...
+Downloading packages...
++ tiqian_engine 0.1.0-alpha07
+Changed 1 dependency!
+```
+
+注意版本约束必须写成 `^0.1.0-alpha07`。写成 `^0.1.0` 时 pub 不匹配预发布版本，报
+`version solving failed`。
+
+失败定位顺序：
+
+1. 检查 `https://registry.tiqian.org/pub/api/packages/tiqian_engine` 是否返回 200。
+2. 检查版本约束是否包含预发布版本（`^0.1.0-alpha07`；`^0.1.0` 不匹配）。
+3. 检查 `metadata.json` 的 `url` 是否指向可下载的 `.tar.gz`。
+4. 检查 `sha256` 是否与 `.tar.gz` 实际内容一致。
+
+### maven
+
+在 Gradle 构建文件写入：
+
+```kotlin
+repositories {
+    maven { url = uri("https://registry.tiqian.org/maven") }
+    mavenCentral()
+}
+```
+
+然后：
+
+```shell
+gradle dependencies --configuration runtimeClasspath
+```
+
+实测输出（`gradle dependencies --configuration runtimeClasspath`）：
+
+```
+runtimeClasspath - Runtime classpath of source set 'main'.
+\--- tiqian-engine-f32:tiqian-engine-f32:0.1.0-alpha07
+     \--- org.jetbrains.kotlin:kotlin-stdlib:2.4.10
+          \--- org.jetbrains:annotations:13.0
+```
+
+注意需要把 `mavenCentral()` 作为回退仓库。tiqian 引擎的 maven 产物依赖
+`org.jetbrains.kotlin:kotlin-stdlib`，这个依赖不在 tiqian registry 里，只配置 tiqian
+仓库时解析失败。
+
+失败定位顺序：
+
+1. 检查 `https://registry.tiqian.org/maven/<包名>/<包名>/maven-metadata.xml` 是否返回 200。
+2. 检查 `maven-metadata.xml` 的 `latest` 版本是否正确。
+3. 检查 `_redirects` 里 `/maven/<包名>/<包名>/:version/<文件>` 是否指向 GitHub Release 资产。
+4. 检查是否配置了 `mavenCentral()` 回退仓库。
+
+### swift
+
+```shell
+swift package-registry set https://registry.tiqian.org/swift --scope tiqian
+swift package resolve
+```
+
+实测输出（`swift package-registry set https://registry.tiqian.org/swift --scope tiqian` 后
+`swift package resolve`）：
+
+```
+Computing version for tiqian.tiqian-engine-f32
+Computed tiqian.tiqian-engine-f32 at 0.1.0-alpha07 (0.69s)
+Fetching tiqian.tiqian-engine-f32
+```
+
+注意：本次验证时 `swift package resolve` 在拉取归档后报校验和不一致。registry 元数据
+记录的 `sha256` 与 R2 上实际归档的 `sha256` 不一致，且 R2 上的归档没有单一顶层目录。
+这属于发布后状态，重新发布时需要保证归档结构与校验和一致。
+
+失败定位顺序：
+
+1. 检查 `https://registry.tiqian.org/swift/tiqian/<包名>.json` 是否返回 200。
+2. 检查 `https://registry.tiqian.org/swift/tiqian/<包名>/<版本>.json` 的 `checksum`。
+3. 下载 `https://registry-storage.tiqian.org/swift/tiqian/<包名>/<版本>.zip`，计算 `sha256`
+   与元数据对比。
+4. 检查 zip 是否只有一个顶层目录（`unzip -l` 查看顶层条目）。
+5. 检查 `metadata.json` 的 `packageSwift` 字段是否存清单正文，不存放 URL。
+
+## 验证命令
+
+本文档的命令在 v0.1.0-alpha07 发布后逐一实测。文档修改后运行：
+
+```shell
+git diff --check
+python3 tools/doc-style/check.py docs/release-pipeline.md
+```
