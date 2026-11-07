@@ -26,6 +26,7 @@ Chrome 或 Chromium。
 - [roadmap](roadmap.md) 记录当前正在推进和已经完成的工作，可以用来了解项目方向。
 - [当前架构](architecture.md) 说明 pipeline、模块边界与平台接入方式。
 - [ADR 索引](adr/README.md) 记录已经确定的架构和排版取舍。
+- [发布流程](release-pipeline.md) 记录版本发布与 registry 部署的完整步骤。
 
 roadmap 不是贡献许可清单。修复明确的 bug、增加测试或改善文档，不需要先创建 Slice；
 只有在开启一项需要持续跟踪的新工作时，才需要补充 roadmap。
