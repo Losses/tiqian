@@ -108,7 +108,22 @@
         "env": { "BORING_TEST_TIMEOUT_MS": "600000" }
       }
     },
-    {
+        {
+      "id": "protocol-dart",
+      "target": "dart",
+      "rootsFile": "engine-haxe/targets/protocol-dart.hxml",
+      "package": {
+        "name": "tiqian-protocol",
+        "version": "0.1.0",
+        "license": "MPL-2.0"
+      },
+      "run": {
+        "env": {
+          "BORING_TEST_TIMEOUT_MS": "600000"
+        }
+      }
+    },
+{
       "id": "protocol-kotlin",
       "target": "kotlin",
       "rootsFile": "engine-haxe/targets/protocol-kotlin.hxml",
