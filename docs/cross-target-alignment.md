@@ -28,18 +28,21 @@ JS oracle 比对，用 Haxe 原生运行时对 golden 逐字节核对。第 1 �
 |---|---|---|
 | 生成 | 各配置生成成功 | `nix develop -c boring gen <配置 ID> --project boring.json` |
 | 编译与运行 | 目标工具链编译测试、运行成功并写 jsonl | 先运行对应配置的 `gen`，再运行 `nix develop -c boring test <配置 ID> --project boring.json` |
-| f32 对照 | kotlin（f32）运行轨迹对 golden 逐类一致 | 复用 `engine-haxe/tools/compare-traces.py`，数值相对容差 1e-6 |
+| f32 对照 | kotlin（f32）运行轨迹对 golden 逐类一致 | 复用 `engine-haxe/tools/compare-traces.py`，数值逐位一致（两侧文本先解析回 binary32 位模式再比对，文本化差异不参与判定） |
 | 跨目标对照 | 参与比较的配置逐测试结果一致 | `nix develop -c boring compare --project boring.json`；完整生成、测试与比较用 `nix develop -c boring verify --project boring.json` |
 
 当前 `boring.json` 的比较基准是 `kotlin-f32`。上表的 `compare` 命令按这个
 配置运行；第 2、3 项要求的纯 f64 比对，还需在项目配置中指定同精度的
 比较基准与参与配置，再运行该命令。
 
-f32 对照的容差说明：两边数值都是单精度；golden 文本由 JVM 的
-`Float.toString` 写出，被比较一侧的文本由另一套运行时的浮点转十进制规则
-写出，同样的单精度位模式会打印成位数不同的十进制文本，且 sin/cos/pow 在
-不同运行时的实现有末位差。1e-6 的相对容差主要吸收这些
-文本化末位差，不放宽数值本身。
+f32 对照的判据说明：两边数值都是单精度，判据取位模式一致。
+golden 文本由 JVM 的 `Float.toString` 写出，被比较一侧的文本由另一套运行时的
+浮点转十进制规则写出，同样的单精度位模式会打印成位数不同的十进制文本，所以
+比对前先把两侧文本解析回 binary32 位模式，再逐位比较。
+
+sin/cos/pow 在不同运行时的末位差按偏离处理，不作为豁免项。
+放宽容差会让 480 与 479.99982 这类差异通过比对，而这类差异在排版里会改变
+断行位置。
 
 配置 ID、入口 HXML、输出目录和打包元信息由仓库根目录的 `boring.json`
 指定。driver 为测试运行设置结果文件路径；手动运行生成物时才需要自行设置
