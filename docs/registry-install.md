@@ -40,9 +40,18 @@ swift package resolve
 
 ## Maven
 
-当前未确认 registry 上 Maven 制品的实际路径：`/maven/org/tiqian/tiqian-engine-f32/`
-等路径全部返回 404，而 release 资产中确实存在 `tiqian-engine-f32-0.1.0-alpha06.pom`。
-在确认坐标之前，Maven 用户请直接引用 release 资产。
+Maven 的制品不放在 registry 站点上，而是放在 GitHub release 资产里；registry 仓库
+`tiqian-cjk/<package>/<version>/maven/metadata.json` 记录坐标系与下载地址：
+
+```json
+{"groupId": "tiqian-engine-f32", "version": "0.1.0-alpha07",
+ "artifacts": [{"file": "tiqian-engine-f32-0.1.0-alpha07.jar", "url": "https://github.com/…"}],
+ "repository": "tiqian-cjk/tiqian", "tag": "v0.1.0-alpha07"}
+```
+
+groupId 是包名本身（`tiqian-engine-f32`），不是 `org.tiqian`。registry 站点上对应的
+HTTP 路径尚未确认：`/maven/org/tiqian/…`、`/maven/tiqian-engine-f32/…` 等全部返回 404。
+在确认站点路径之前，Maven 用户请按 metadata.json 里的 url 直接引用 release 资产。
 
 ## 版本号形式
 
