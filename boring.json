@@ -35,7 +35,8 @@
       "target": "kotlin",
       "sourceSet": "engine",
       "rootsFile": "engine-haxe/targets/kotlin-f32.hxml",
-      "package": { "name": "tiqian-engine-f32", "version": "0.1.0", "license": "MPL-2.0" },
+      "haxeArgs": ["-D", "package-artifact-stem=tiqian-engine-f32"],
+      "package": { "name": "tiqian-engine", "version": "0.1.0", "license": "MPL-2.0" },
       "run": {
         "env": { "BORING_TEST_TIMEOUT_MS": "600000" }
       }
@@ -45,7 +46,8 @@
       "target": "kotlin",
       "sourceSet": "engine",
       "rootsFile": "engine-haxe/targets/kotlin-f64.hxml",
-      "package": { "name": "tiqian-engine-f64", "version": "0.1.0", "license": "MPL-2.0" },
+      "haxeArgs": ["-D", "package-artifact-stem=tiqian-engine-f64"],
+      "package": { "name": "tiqian-engine", "version": "0.1.0", "license": "MPL-2.0" },
       "run": {
         "env": { "BORING_TEST_TIMEOUT_MS": "600000" }
       }
@@ -65,7 +67,8 @@
       "target": "swift",
       "sourceSet": "engine",
       "rootsFile": "engine-haxe/targets/swift-f32.hxml",
-      "package": { "name": "tiqian-engine-f32", "version": "0.1.0", "license": "MPL-2.0" },
+      "haxeArgs": ["-D", "package-artifact-stem=tiqian-engine-f32"],
+      "package": { "name": "tiqian-engine", "version": "0.1.0", "license": "MPL-2.0" },
       "run": {
         "env": { "BORING_TEST_TIMEOUT_MS": "600000" }
       }
@@ -75,7 +78,8 @@
       "target": "swift",
       "sourceSet": "engine",
       "rootsFile": "engine-haxe/targets/swift-f64.hxml",
-      "package": { "name": "tiqian-engine-f64", "version": "0.1.0", "license": "MPL-2.0" },
+      "haxeArgs": ["-D", "package-artifact-stem=tiqian-engine-f64"],
+      "package": { "name": "tiqian-engine", "version": "0.1.0", "license": "MPL-2.0" },
       "run": {
         "env": { "BORING_TEST_TIMEOUT_MS": "600000" }
       }
@@ -133,11 +137,21 @@
       }
     },
     {
+      "id": "protocol-swift",
+      "target": "swift",
+      "rootsFile": "engine-haxe/targets/protocol-swift.hxml",
+      "package": { "name": "tiqian-protocol", "version": "0.1.0", "license": "MPL-2.0" },
+      "run": {
+        "env": { "BORING_TEST_TIMEOUT_MS": "600000" }
+      }
+    },
+    {
       "id": "engine-rust-f32",
       "target": "rust",
       "sourceSet": "engine",
       "rootsFile": "engine-haxe/targets/rust-f32.hxml",
-      "package": { "name": "tiqian-engine-f32", "version": "0.1.0", "license": "MPL-2.0" },
+      "haxeArgs": ["-D", "package-artifact-stem=tiqian-engine-f32"],
+      "package": { "name": "tiqian-engine", "version": "0.1.0", "license": "MPL-2.0" },
       "run": {
         "env": { "BORING_TEST_TIMEOUT_MS": "600000" }
       }
@@ -147,7 +161,8 @@
       "target": "rust",
       "sourceSet": "engine",
       "rootsFile": "engine-haxe/targets/rust-f64.hxml",
-      "package": { "name": "tiqian-engine-f64", "version": "0.1.0", "license": "MPL-2.0" },
+      "haxeArgs": ["-D", "package-artifact-stem=tiqian-engine-f64"],
+      "package": { "name": "tiqian-engine", "version": "0.1.0", "license": "MPL-2.0" },
       "run": {
         "env": { "BORING_TEST_TIMEOUT_MS": "600000" }
       }
