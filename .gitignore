@@ -46,6 +46,9 @@ demo/web-history/*.tsbuildinfo
 /engine-haxe/baseline-goldens
 /engine-haxe/smoke/
 
+# Build-time generated Rust engine tree (scripts/generate-engine-gen.mjs).
+/platforms/web/server/precompute/engine-gen/
+
 # Locally generated trace goldens (Haxe port contract); regenerate with
 # TIQIAN_UPDATE_GOLDEN=1 ./gradlew :engine:jvmTest
 engine/src/jvmTest/resources/golden/test-traces/

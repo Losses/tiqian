@@ -20,7 +20,8 @@
 //! host language can express.
 
 use crate::NamedError;
-use std::sync::{Arc, Mutex};
+use std::cell::RefCell;
+use std::rc::Rc;
 use tiqian_engine_gen::org::tiqian::clreq::clreq_profile_resolver::ClreqProfileResolver;
 use tiqian_engine_gen::org::tiqian::core::layout_input::LayoutInput;
 use tiqian_engine_gen::org::tiqian::core::layout_result::LayoutResult;
@@ -49,26 +50,26 @@ pub use tiqian_engine_gen::org::tiqian::core::layout_result::LayoutResult as Eng
 /// shaping and metrics stack through the trait objects here.
 #[derive(Default)]
 pub struct EngineComponents {
-    pub font_role_classifier: Option<Box<dyn FontRoleClassifier>>,
-    pub fallback_resolver: Option<Box<dyn FallbackResolver>>,
-    pub clreq_profile_resolver: Option<Box<dyn ClreqProfileResolver>>,
-    pub font_metrics_resolver: Option<Box<dyn FontMetricsResolver>>,
-    pub font_metrics_normalizer: Option<Box<dyn FontMetricsNormalizer>>,
-    pub punctuation_atom_builder: Option<PunctuationAtomBuilder>,
-    pub punctuation_spacing_compressor: Option<PunctuationSpacingCompressor>,
-    pub quote_pair_analyzer: Option<QuotePairAnalyzer>,
-    pub line_breaker: Option<Box<dyn LineBreaker>>,
-    pub justifier: Option<Justifier>,
-    pub text_shaper: Option<Arc<Mutex<dyn ITextShaper>>>,
-    pub hyphenator: Option<Box<dyn Hyphenator>>,
-    pub annotation_cache: Option<Arc<Mutex<dyn WidthIndependentAnnotationCache>>>,
+    pub font_role_classifier: Option<Rc<RefCell<dyn FontRoleClassifier>>>,
+    pub fallback_resolver: Option<Rc<RefCell<dyn FallbackResolver>>>,
+    pub clreq_profile_resolver: Option<Rc<RefCell<dyn ClreqProfileResolver>>>,
+    pub font_metrics_resolver: Option<Rc<RefCell<dyn FontMetricsResolver>>>,
+    pub font_metrics_normalizer: Option<Rc<RefCell<dyn FontMetricsNormalizer>>>,
+    pub punctuation_atom_builder: Option<Rc<RefCell<PunctuationAtomBuilder>>>,
+    pub punctuation_spacing_compressor: Option<Rc<RefCell<PunctuationSpacingCompressor>>>,
+    pub quote_pair_analyzer: Option<Rc<RefCell<QuotePairAnalyzer>>>,
+    pub line_breaker: Option<Rc<RefCell<dyn LineBreaker>>>,
+    pub justifier: Option<Rc<RefCell<Justifier>>>,
+    pub text_shaper: Option<Rc<RefCell<dyn ITextShaper>>>,
+    pub hyphenator: Option<Rc<RefCell<dyn Hyphenator>>>,
+    pub annotation_cache: Option<Rc<RefCell<dyn WidthIndependentAnnotationCache>>>,
 }
 
 /// Runs the full paragraph layout pipeline in-process. One engine instance
 /// owns its caches; hosts create one per font session or share one behind a
 /// lock, matching the generated `layout(&mut self)` signature.
 pub struct Engine {
-    inner: ExplainableStubParagraphLayoutEngine,
+    inner: Rc<RefCell<ExplainableStubParagraphLayoutEngine>>,
 }
 
 impl Engine {
@@ -99,7 +100,7 @@ impl Engine {
     /// generated `LayoutResult`. Named errors surface as
     /// `crate::NamedError` with the generated fault text.
     pub fn layout(&mut self, input: LayoutInput) -> Result<LayoutResult, NamedError> {
-        self.inner.layout(input).map_err(named)
+        ExplainableStubParagraphLayoutEngine::layout(&self.inner, input).map_err(named)
     }
 }
 
@@ -156,8 +157,8 @@ mod tests {
         // Dependency injection stays: the host hands in trait objects and the
         // engine uses them instead of its defaults.
         let components = EngineComponents {
-            text_shaper: Some(Arc::new(Mutex::new(ExplainableStubTextShaper::new()))),
-            font_metrics_resolver: Some(Box::new(StubFontMetricsResolver::new())),
+            text_shaper: Some(Rc::new(RefCell::new(ExplainableStubTextShaper::new()))),
+            font_metrics_resolver: Some(Rc::new(RefCell::new(StubFontMetricsResolver::new()))),
             ..EngineComponents::default()
         };
         let mut engine = Engine::new(components)
