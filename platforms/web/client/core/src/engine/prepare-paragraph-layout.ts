@@ -74,8 +74,8 @@ interface PrepareUnsupportedResult {
 
 export interface PrepareReadyResult {
   kind: "ready";
-  rawEnvelope: string;
-  planJson: string;
+  rawEnvelope: unknown;
+  planJson: string | Record<string, unknown>;
   plan: LayoutPlan;
   diagnostics: LayoutDiagnostics;
   width: number;
@@ -375,10 +375,10 @@ export function wireArguments(lowered: LoweredParagraph): PrepareParagraphReques
       );
     }
 
-    const envelope = JSON.parse(rawEnvelope);
-    const planJson = envelope.plan;
-    const plan = JSON.parse(planJson);
-    const diagnostics = envelope.diagnostics;
+    const envelope = typeof rawEnvelope === "string" ? JSON.parse(rawEnvelope) : rawEnvelope;
+    const planJson = envelope.plan as string | Record<string, unknown>;
+    const plan = (typeof planJson === "string" ? JSON.parse(planJson) : planJson) as LayoutPlan;
+    const diagnostics = envelope.diagnostics as LayoutDiagnostics;
 
     const capabilityIssue = diagnostics.capabilityIssues[0];
     if (capabilityIssue != null) {

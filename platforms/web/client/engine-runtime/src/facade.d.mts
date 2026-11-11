@@ -148,12 +148,21 @@ declare function firstDivergentInlineShapingProperty(
   paragraphValues: string[],
 ): string | null;
 
+/** The structured plan-plus-diagnostics envelope of the diagnostics entry. */
+export interface PlanWithDiagnostics {
+  plan: Record<string, unknown>;
+  diagnostics: {
+    capabilityIssues: Array<{ name: string; reason: string; rangeStart: number; rangeEnd: number }>;
+    advanceSuspects: Array<{ displayText: string; advance: string; reason: string; rangeStart: number; rangeEnd: number }>;
+  };
+}
+
 declare function precomputeParagraphWithDiagnostics(
   request: PrepareParagraphRequest,
   zeroAdvanceEpsilonPx: number,
   shapeJson: (requestJson: string) => string,
   metricsJson: (requestJson: string) => string,
-): string;
+): PlanWithDiagnostics;
 declare function precomputeParagraphWithBrowserMetrics(
   request: PrepareParagraphRequest,
   zeroAdvanceEpsilonPx: number,

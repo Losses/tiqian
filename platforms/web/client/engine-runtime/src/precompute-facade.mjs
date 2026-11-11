@@ -351,7 +351,7 @@ function callbackFontMetricsResolver(metricsJson) {
  * (ParagraphWireCodec.kt:436-505): the engine's prepared-paragraph pipeline
  * runs from the generated tree, with the host callbacks inverted in.
  */
-function planWithDiagnostics(request, zeroAdvanceEpsilonPx, textShaper, fontMetricsResolver, annotationCache) {
+function layoutWithDiagnostics(request, zeroAdvanceEpsilonPx, textShaper, fontMetricsResolver, annotationCache) {
   const model = {
     fontSessionId: "",
     text: request.text,
@@ -476,21 +476,41 @@ function planWithDiagnostics(request, zeroAdvanceEpsilonPx, textShaper, fontMetr
     null,
     annotationCache,
   ).layout(input);
-  return PreparedParagraphFns.toPlanWithDiagnosticsJson(
-    result,
+  const renderEvidence =
     request.renderEvidenceOverride ??
-      (model.textSpans.length > 0 ||
-        model.inlineBoxes.length > 0 ||
-        model.decorations.length > 0 ||
-        result.input.inlineObjects.length > 0),
+    (model.textSpans.length > 0 ||
+      model.inlineBoxes.length > 0 ||
+      model.decorations.length > 0 ||
+      result.input.inlineObjects.length > 0);
+  return { result, renderEvidence };
+}
+
+function planWithDiagnosticsJson(request, zeroAdvanceEpsilonPx, textShaper, fontMetricsResolver, annotationCache) {
+  const { result, renderEvidence } = layoutWithDiagnostics(
+    request,
     zeroAdvanceEpsilonPx,
+    textShaper,
+    fontMetricsResolver,
+    annotationCache,
   );
+  return PreparedParagraphFns.toPlanWithDiagnosticsJson(result, renderEvidence, zeroAdvanceEpsilonPx);
+}
+
+function planWithDiagnostics(request, zeroAdvanceEpsilonPx, textShaper, fontMetricsResolver, annotationCache) {
+  const { result, renderEvidence } = layoutWithDiagnostics(
+    request,
+    zeroAdvanceEpsilonPx,
+    textShaper,
+    fontMetricsResolver,
+    annotationCache,
+  );
+  return PreparedParagraphFns.toPlanWithDiagnostics(result, renderEvidence, zeroAdvanceEpsilonPx);
 }
 
 /**
  * Plan-plus-diagnostics envelope for the TsHost web-host prepare step. The
  * host passes its own ZERO_ADVANCE_EPSILON so the layout module holds no
- * host policy; the returned JSON embeds the plan plus the capability-issue
+ * host policy; the returned object carries the plan plus the capability-issue
  * and suspicious-advance facts for the host-side checks. Shaping and
  * metrics arrive through the host-provided [shapeJson] / [metricsJson]
  * functions (ADR 0053 callback inversion, now same-language).
@@ -518,7 +538,7 @@ export function precomputeParagraphWithDiagnostics(
  * re-sends the segment text.
  */
 export function precomputeParagraphWithBrowserMetrics(request, zeroAdvanceEpsilonPx, callbacks) {
-  return planWithDiagnostics(
+  return planWithDiagnosticsJson(
     request,
     zeroAdvanceEpsilonPx,
     callbackTextShaper((requestJson) => callbacks.shapeJson(requestJson)),

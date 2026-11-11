@@ -288,13 +288,13 @@ test("probe bootstrap plan matches the canvas model plan end to end", async () =
   try {
     const { shapeJson, metricsJson } = probeSession;
     const request: PrepareParagraphRequest = buildTestRequest();
-    const envelope: string = precomputeParagraphWithDiagnostics(
+    const envelope = precomputeParagraphWithDiagnostics(
       request,
       0.0,
       shapeJson,
       metricsJson,
     );
-    planA = JSON.parse(JSON.parse(envelope).plan);
+    planA = envelope.plan;
   } finally {
     probeSession.close();
   }
@@ -305,13 +305,13 @@ test("probe bootstrap plan matches the canvas model plan end to end", async () =
   let planB: unknown;
   try {
     const request: PrepareParagraphRequest = buildTestRequest();
-    const envelope: string = precomputeParagraphWithDiagnostics(
+    const envelope = precomputeParagraphWithDiagnostics(
       request,
       0.0,
       scriptedShapeJson,
       scriptedMetricsJson,
     );
-    planB = JSON.parse(JSON.parse(envelope).plan);
+    planB = envelope.plan;
   } finally {
     // no globals to restore
   }

@@ -79,6 +79,14 @@ interface PrepareParagraphRequest {
   renderEvidenceOverride: boolean | null;
 }
 
+interface PlanWithDiagnostics {
+  plan: Record<string, unknown>;
+  diagnostics: {
+    capabilityIssues: Array<{ name: string; reason: string; rangeStart: number; rangeEnd: number }>;
+    advanceSuspects: Array<{ displayText: string; advance: string; reason: string; rangeStart: number; rangeEnd: number }>;
+  };
+}
+
 interface FfiExports {
   bopomofoParse: (reading: string) => string;
   numberSymbolCohesionUnbreakableRanges: (text: string) => string;
@@ -95,7 +103,7 @@ interface FfiExports {
     zeroAdvanceEpsilonPx: number,
     shapeJson: (p0: string) => string,
     metricsJson: (p0: string) => string,
-  ) => string;
+  ) => PlanWithDiagnostics;
   precomputeParagraphWithBrowserMetrics: (
     request: PrepareParagraphRequest,
     zeroAdvanceEpsilonPx: number,
@@ -246,11 +254,10 @@ test("precompute entries run the generated engine through host callbacks", async
   };
 
   const exact = ffi.precomputeParagraphWithDiagnostics(request, 0.05, shapeJson, metricsJson);
-  // The plan rides inside the plan-plus-diagnostics envelope as an escaped
-  // JSON string (the same wire shape the retired Kotlin codec produced), so
-  // the envelope is decoded before the plan body is inspected.
-  const exactEnvelope = JSON.parse(exact) as { plan: string; diagnostics: unknown };
-  assert.ok(exactEnvelope.plan.includes('"schema":1'), "the exact-session entry returns a plan envelope");
+  // The diagnostics entry returns the structured plan-plus-diagnostics object;
+  // the frozen JSON envelope stays on the browser-metrics entry for golden use.
+  const exactEnvelope = exact;
+  assert.ok(Array.isArray(exactEnvelope.plan.lines), "the exact-session entry returns a structured plan");
   assert.ok(exactEnvelope.diagnostics !== undefined, "the exact-session entry carries the diagnostics object");
   assert.equal(shapeCalls.length > 0, true, "the engine shaped through the host callback");
   assert.equal(metricsCalls.length > 0, true, "the engine resolved metrics through the host callback");

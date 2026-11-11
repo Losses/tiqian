@@ -135,7 +135,7 @@ function renderWorkerPrepared(
 function renderPrepared(
   rawDomContext: EnhancedElementContext,
   host: Element,
-  planJson: string,
+  planJson: Parameters<typeof renderPreparedParagraphInto>[1],
   locale: string,
   sourceText: string,
   semanticElements: Element[],
@@ -269,7 +269,7 @@ export function commitPreparedParagraph(rawDomContext: EnhancedElementContext, a
   renderPrepared(
     rawDomContext,
     source,
-    preparation.planJson!,
+    preparation.planJson as Parameters<typeof renderPreparedParagraphInto>[1],
     lowered.textStyle.locale,
     lowered.text,
     sourceSpansElements,

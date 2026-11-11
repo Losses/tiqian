@@ -2,6 +2,7 @@
 
 import { LayoutResult } from "./../core/LayoutResult.ts";
 import { PlanLowering } from "./PlanLowering.ts";
+import { Plan } from "./../protocol/Plan.ts";
 import { PlanJson } from "./../protocol/PlanJson.ts";
 import { PlanJsonNumber } from "./../protocol/PlanJsonNumber.ts";
 import { PlanPacked } from "./../protocol/PlanPacked.ts";
@@ -64,8 +65,70 @@ export class PreparedParagraphFns {
     return out.join("");
   }
 
+  public static toPlanWithDiagnostics(result: LayoutResult, renderEvidence: boolean, zeroAdvanceEpsilonPx: number): PlanWithDiagnostics {
+    const plan = PlanLowering.toPlan(result, renderEvidence);
+    const capabilityIssues: PlanCapabilityIssue[] = [];
+    const advanceSuspects: PlanAdvanceSuspect[] = [];
+    const shapingDiagSrc = result.debug.shapingDecisions;
+    for (let _g_index = 0, count3 = shapingDiagSrc.length; _g_index < count3; _g_index += 1) {
+      const d = shapingDiagSrc[_g_index]!;
+      const issue = d.capabilityIssue;
+      if (issue !== null) {
+        capabilityIssues.push({ name: issue, reason: d.reason, rangeStart: d.range.start, rangeEnd: d.range.end });
+      }
+      if (!(Number.isFinite(d.advance) && d.advance > zeroAdvanceEpsilonPx)) {
+        advanceSuspects.push({ displayText: d.displayText, advance: (Number.isFinite(d.advance) ? PlanJsonNumber.ecmaJsonNumber(d.advance) : formatFloatRuntime(d.advance)), reason: d.reason, rangeStart: d.range.start, rangeEnd: d.range.end });
+      }
+    }
+    return { plan, diagnostics: { capabilityIssues, advanceSuspects } };
+  }
+
   public static toPackedPlanBytes(result: LayoutResult): Uint8Array {
     const plan = PlanLowering.toPlan(result, false);
     return PlanPacked.encode(plan);
   }
+}
+
+export interface PlanWithDiagnostics {
+  plan: Plan;
+  diagnostics: PlanDiagnostics;
+}
+
+export interface PlanDiagnostics {
+  capabilityIssues: PlanCapabilityIssue[];
+  advanceSuspects: PlanAdvanceSuspect[];
+}
+
+export interface PlanCapabilityIssue {
+  name: string;
+  reason: string;
+  rangeStart: number;
+  rangeEnd: number;
+}
+
+export function comparePlanCapabilityIssue(a: PlanCapabilityIssue, b: PlanCapabilityIssue): number {
+  if (a === b) return 0;
+  if (a.name !== b.name) return a.name < b.name ? -1 : 1;
+  if (a.reason !== b.reason) return a.reason < b.reason ? -1 : 1;
+  if (a.rangeStart !== b.rangeStart) return a.rangeStart - b.rangeStart;
+  if (a.rangeEnd !== b.rangeEnd) return a.rangeEnd - b.rangeEnd;
+  return 0;
+}
+
+export interface PlanAdvanceSuspect {
+  displayText: string;
+  advance: string;
+  reason: string;
+  rangeStart: number;
+  rangeEnd: number;
+}
+
+export function comparePlanAdvanceSuspect(a: PlanAdvanceSuspect, b: PlanAdvanceSuspect): number {
+  if (a === b) return 0;
+  if (a.displayText !== b.displayText) return a.displayText < b.displayText ? -1 : 1;
+  if (a.advance !== b.advance) return a.advance < b.advance ? -1 : 1;
+  if (a.reason !== b.reason) return a.reason < b.reason ? -1 : 1;
+  if (a.rangeStart !== b.rangeStart) return a.rangeStart - b.rangeStart;
+  if (a.rangeEnd !== b.rangeEnd) return a.rangeEnd - b.rangeEnd;
+  return 0;
 }

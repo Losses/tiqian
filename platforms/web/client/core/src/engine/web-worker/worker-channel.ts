@@ -59,7 +59,7 @@ export type WorkerRequestEnvelope =
 export interface WorkerSuccessEnvelope {
   id?: number;
   ok: true;
-  plan?: string;
+  plan?: unknown;
 }
 
 export interface WorkerErrorEnvelope {
@@ -94,7 +94,7 @@ export interface WorkerLayoutRequestBody extends WorkerLayoutRequest {
 }
 
 export interface PlanRecord {
-  plan?: string;
+  plan?: unknown;
   issue?: string;
 }
 
