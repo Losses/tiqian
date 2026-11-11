@@ -20,14 +20,29 @@ const engineGenDirectory = fileURLToPath(new URL("./engine-gen/", import.meta.ur
 if (!existsSync(engineGenDirectory)) {
   const repoRoot = fileURLToPath(new URL("../../../../", import.meta.url));
   const generator = fileURLToPath(new URL("../../../../scripts/generate-engine-gen.mjs", import.meta.url));
+  const setupScript = fileURLToPath(new URL("../../../../tools/setup-haxe-env.sh", import.meta.url));
+
+  // GoldenDataMacros reads engine-haxe/baseline-goldens/ and the ts bundle
+  // reads tools/unicode-data/; both are gitignored. Stage them from the
+  // in-repo sources first so a fresh clone needs no manual step.
+  console.log("build:runtime: staging the local data inputs for generation");
+  const stage = spawnSync("bash", [setupScript], { cwd: repoRoot, stdio: "inherit" });
+  if (stage.error || stage.status !== 0) {
+    console.error(
+      [
+        "build:runtime: could not stage the local data inputs.",
+        "  cause: " + (stage.error ? stage.error.message : "tools/setup-haxe-env.sh exited with status " + stage.status),
+        "  next step: bash tools/setup-haxe-env.sh",
+      ].join("\n"),
+    );
+    process.exit(1);
+  }
+
   console.log("build:runtime: engine-gen/ is missing, generating it from the ts bundles");
   const generate = spawnSync(process.execPath, [generator, "ts"], { cwd: repoRoot, stdio: "inherit" });
   if (generate.error || generate.status !== 0) {
-    // The prepare hook runs this script on every install, including machines
-    // that have no Haxe toolchain. A missing boring driver must not fail the
-    // install: report the next step and stop before runtime/ is wiped. The
-    // release path stays guarded because prepack runs npm test after this
-    // script and the tests need runtime/ to exist.
+    // The install hook runs this script, so a failed generation must stop the
+    // install instead of leaving a package that installs but cannot run.
     const cause = generate.error
       ? generate.error.message
       : "scripts/generate-engine-gen.mjs exited with status " + generate.status;
@@ -35,13 +50,12 @@ if (!existsSync(engineGenDirectory)) {
       [
         "build:runtime: engine-gen/ is missing and could not be generated.",
         "  cause: " + cause,
-        "  next steps:",
-        "    1. nix develop -c node scripts/generate-engine-gen.mjs ts",
-        "    2. npm run build:runtime",
-        "  runtime/ was left untouched; @tiqian/ffi has no entry point until step 2 succeeds.",
+        "  next step: nix develop -c npm run build:runtime",
+        "  (the boring driver comes from the flake; tools/setup-haxe-env.sh stages the local data inputs)",
+        "  runtime/ was not rebuilt; @tiqian/ffi has no entry point until the generation succeeds.",
       ].join("\n"),
     );
-    process.exit(0);
+    process.exit(1);
   }
 }
 

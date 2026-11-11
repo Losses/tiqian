@@ -152,6 +152,26 @@ demo 覆盖 Compose density，例如 Plasma 的 150% 缩放使用：
 
 该属性同时缩放 demo 中的 `dp`、`sp`、Compose 控件与 `CjkText`；未设置时保留系统报告的 density。
 
+### Web 引擎包
+
+`platforms/web/client/engine-runtime` 的 `engine-gen/` 与 `runtime/` 都是构建产物，不入库。
+在仓库根目录执行 `npm install` 或 `bun install` 时，install 钩子按以下顺序补齐：
+
+1. 把 `engine/src/jvmTest/resources/golden/` 拷到 `engine-haxe/baseline-goldens/`。
+2. 把 `.haxelib/boring/git/tools/unicode-data/` 拷到 `tools/unicode-data/`。
+3. 用 `boring` 生成 `engine-gen/`。
+4. 用 `tsc` 编译出 `runtime/`。
+
+前两步的来源都在仓库内：golden 是入库文件，Unicode 数据来自 flake 固定的 boring 检出。
+第 3 步需要 flake 提供的 `boring` 驱动：
+
+```shell
+nix develop -c npm install
+nix develop -c npm test --workspace @tiqian/ffi
+```
+
+缺少 `boring` 时 install 直接失败并打印下一步，不会留下无法运行的安装结果。
+
 ## 文档
 
 - [`@tiqian/prose` 使用文档](platforms/web/client/web-component/README.md) 说明 Web 安装、接入方式与构建期预排。

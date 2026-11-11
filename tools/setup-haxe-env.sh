@@ -1,54 +1,52 @@
 #!/usr/bin/env bash
-# Copy the local data inputs used by Haxe generation into this checkout.
-# The source must be a tiqian checkout whose inputs have been prepared and
-# reviewed. Unicode files come from Unicode 17.0.0; baseline-goldens are
-# recorded outputs of the original Kotlin engine. The flake provides the
-# matching boring compiler and driver; this script only supplies local data.
+# Stage the local data inputs that Haxe generation reads at compile time.
 #
-# Usage: bash tools/setup-haxe-env.sh [path/to/prepared/tiqian]
+# Two inputs live outside git:
+#   engine-haxe/baseline-goldens/  read by GoldenDataMacros.init()
+#   tools/unicode-data/            read by reflaxe.unicode.GraphemeData
+#
+# Both have an in-repo source, so a fresh clone needs no prepared checkout:
+#   engine/src/jvmTest/resources/golden/     tracked recordings of the Kotlin engine
+#   .haxelib/boring/git/tools/unicode-data/  the pinned boring checkout
+#
+# Usage:
+#   bash tools/setup-haxe-env.sh              # stage from the in-repo sources
+#   bash tools/setup-haxe-env.sh <checkout>   # stage from a prepared checkout
 set -euo pipefail
 
-TARGET="$(git rev-parse --show-toplevel)"
+TARGET="$(git rev-parse --show-toplevel 2>/dev/null || pwd)"
 SOURCE="${1:-}"
 
-if [ -z "$SOURCE" ]; then
-  SOURCE="$(git worktree list --porcelain | sed -n 's/^worktree //p' | head -1)"
-fi
+# The tracked recordings of the Kotlin engine. Keep this path in one place so
+# moving the golden library only has to change this line.
+GOLDEN_SOURCE="engine/src/jvmTest/resources/golden"
+# The pinned boring checkout carries the Unicode 17.0.0 data files.
+UNICODE_SOURCE=".haxelib/boring/git/tools/unicode-data"
 
-if [ -z "$SOURCE" ] || [ ! -d "$SOURCE" ]; then
-  echo "Usage: bash tools/setup-haxe-env.sh [path/to/prepared/tiqian]" >&2
-  exit 2
-fi
-
-SOURCE="$(cd "$SOURCE" && pwd -P)"
-
-required=(
-  engine-haxe/baseline-goldens/layout-dumps
-  engine-haxe/baseline-goldens/layout-dumps-recorded
-  engine-haxe/baseline-goldens/test-traces
-  engine-haxe/baseline-goldens/shaping-evidence.json
-  tools/unicode-data/DerivedCoreProperties-17.0.0.txt
-  tools/unicode-data/GraphemeBreakProperty-17.0.0.txt
-  tools/unicode-data/GraphemeBreakTest-17.0.0.txt
-  tools/unicode-data/emoji-data-17.0.0.txt
-)
-
-for rel in "${required[@]}"; do
-  if [ ! -e "$SOURCE/$rel" ]; then
-    echo "setup-haxe-env: missing source input: $SOURCE/$rel" >&2
-    exit 2
-  fi
-done
-
-echo "setup-haxe-env: source $SOURCE"
-echo "setup-haxe-env: target $TARGET"
-
-for rel in engine-haxe/baseline-goldens tools/unicode-data; do
+stage() {
+  local rel="$1" src="$2"
   if [ -e "$TARGET/$rel" ] || [ -L "$TARGET/$rel" ]; then
     echo "  = $rel (already present)"
-    continue
+    return 0
+  fi
+  if [ ! -e "$src" ]; then
+    echo "setup-haxe-env: missing source input: $src" >&2
+    return 1
   fi
   mkdir -p "$(dirname "$TARGET/$rel")"
-  cp -pR "$SOURCE/$rel" "$TARGET/$rel"
-  echo "  + $rel (copied from $SOURCE/$rel)"
-done
+  cp -pR "$src" "$TARGET/$rel"
+  echo "  + $rel (copied from $src)"
+}
+
+echo "setup-haxe-env: target $TARGET"
+
+if [ -n "$SOURCE" ]; then
+  SOURCE="$(cd "$SOURCE" && pwd -P)"
+  echo "setup-haxe-env: source $SOURCE"
+  stage engine-haxe/baseline-goldens "$SOURCE/engine-haxe/baseline-goldens"
+  stage tools/unicode-data "$SOURCE/tools/unicode-data"
+else
+  echo "setup-haxe-env: source $TARGET (in-repo)"
+  stage engine-haxe/baseline-goldens "$TARGET/$GOLDEN_SOURCE"
+  stage tools/unicode-data "$TARGET/$UNICODE_SOURCE"
+fi
