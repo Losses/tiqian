@@ -1,8 +1,9 @@
 # @tiqian/ffi
 
-Kotlin/JS engine face for Tiqian paragraph precompute. The package carries the
-`:ffi:js` Gradle build output: one ES module entry with the `@JsExport` surface,
-its TypeScript declarations, and per-module source maps with embedded sources.
+Engine face for Tiqian paragraph precompute. The package carries the generated
+TypeScript tree under `engine-gen/` and the hand-written facade modules under
+`src/`; `npm run build:runtime` compiles the generated tree into `runtime/`
+and copies the facade entries beside it.
 
 `@tiqian/prose` depends on this package for the layout worker engine. The two
 packages release in lockstep from the same commit with exact-pinned versions, so

@@ -5,8 +5,8 @@
 //
 //   node ./scripts/linebreak-dump.mjs <module-url> <out-json>
 //
-// The fixtures cover the retired Kotlin test cases (ffi/js/src/jsTest/kotlin/
-// org/tiqian/ffi/js/LineBreakExportsTest.kt) plus margin, exception-case and
+// The fixtures cover the retired Kotlin test cases (LineBreakExportsTest.kt)
+// plus margin, exception-case and
 // class-name families around them.
 
 import { writeFile } from "node:fs/promises";

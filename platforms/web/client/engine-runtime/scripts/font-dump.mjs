@@ -6,8 +6,8 @@
 //
 //   node ./scripts/font-dump.mjs <module-url> <out-path>
 //
-// The fixtures cover the retired Kotlin test cases (ffi/js/src/jsTest/kotlin/
-// org/tiqian/ffi/js/FontExportsTest.kt) plus fractional size families around
+// The fixtures cover the retired Kotlin test cases (FontExportsTest.kt) plus
+// fractional size families around
 // them; on the retired runtime the fractional sizes carry f32-grid artifacts
 // (TCN-45), so old-vs-new diffs are expected exactly there.
 

@@ -436,7 +436,7 @@ private fun StringBuilder.appendJsonNumber(value: Float): StringBuilder =
     append(if (value == -0f) "0" else ecmaJsonNumber(value))
 
 /**
- * Single source for boundary serialization; `ffi/js` consumes these helpers.
+ * Single source for boundary serialization; the web client consumes these helpers.
  *
  * A Kotlin/JS `Float` is a double at runtime and can hold a value off the
  * f32 grid (literals and mixed arithmetic are not rounded to f32 there), so

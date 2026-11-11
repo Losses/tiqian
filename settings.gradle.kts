@@ -67,7 +67,6 @@ include(
     ":platforms:apple:frontend:coretext-render",
     ":platforms:compose:compose",
     ":platforms:compose:material3",
-    ":ffi:js",
     ":demo",
     ":demo:android",
     ":demo:font-diagnostics",

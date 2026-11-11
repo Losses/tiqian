@@ -1,5 +1,5 @@
 // Migration of the fontMetricsResolve / fontFallbackResolve cases of
-// ffi/js/src/jsTest/kotlin/org/tiqian/ffi/js/FontExportsTest.kt onto the
+// the retired Kotlin/JS FontExportsTest.kt onto the
 // package surface served by src/font-facade.mjs. Inputs and assertion
 // structure are kept from the Kotlin test; the expected metric numbers are
 // the exact f64 values per TCN-45 (the retired Kotlin/JS expectations carried

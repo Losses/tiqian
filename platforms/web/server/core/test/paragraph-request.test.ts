@@ -1,6 +1,6 @@
 // Field and issue-name equality between the generated host request model
 // (src/protocol-gen, driver bundle protocol-ts) and the domain contract the
-// two replaced lanes publish (ffi/js ParagraphWireCodec.kt:279-297,
+// two replaced lanes publish (the retired ParagraphWireCodec.kt:279-297,
 // precompute/engine/src/paragraph.rs:72-131). Run:
 //   (cd platforms/web/server/core && npm test -- paragraph-request)
 import test from "node:test";

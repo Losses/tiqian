@@ -1,4 +1,4 @@
-// Migration of ffi/js/src/jsTest/kotlin/org/tiqian/ffi/js/FontExportsTest.kt
+// Migration of the retired Kotlin/JS FontExportsTest.kt
 // (fontMetricsResolve / fontFallbackResolve cases) onto the generated-TS
 // adapter. Inputs and assertion structure are kept from the Kotlin test; the
 // expected metric numbers are rewritten to their exact f64 values per TCN-45

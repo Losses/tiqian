@@ -24,7 +24,7 @@
         "svelte": "^5.56.9",
       },
     },
-    "ffi/js/npm": {
+    "platforms/web/client/engine-runtime": {
       "name": "@tiqian/ffi",
       "version": "0.1.0-alpha.1",
       "devDependencies": {
@@ -651,7 +651,7 @@
 
     "@tiqian/core": ["@tiqian/core@workspace:platforms/web/client/core"],
 
-    "@tiqian/ffi": ["@tiqian/ffi@workspace:ffi/js/npm"],
+    "@tiqian/ffi": ["@tiqian/ffi@workspace:platforms/web/client/engine-runtime"],
 
     "@tiqian/precompute": ["@tiqian/precompute@workspace:platforms/web/server/core"],
 

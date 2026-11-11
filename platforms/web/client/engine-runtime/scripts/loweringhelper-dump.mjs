@@ -7,7 +7,7 @@
 //   node ./scripts/loweringhelper-dump.mjs <module-url> <out-json>
 //
 // The fixtures cover the retired Kotlin test cases (the two LoweringHelper
-// cases formerly in ffi/js/src/jsTest/kotlin/org/tiqian/ffi/js/FontExportsTest.kt,
+// cases formerly in FontExportsTest.kt,
 // the npm test cases in package.test.mts, the 16-property and divergence
 // families) plus the TextRange failure names as observed by the old
 // Kotlin/JS runtime.

@@ -15,7 +15,7 @@
   "repository": {
     "type": "git",
     "url": "git+https://github.com/tiqian-cjk/tiqian.git",
-    "directory": "ffi/js/npm"
+    "directory": "platforms/web/client/engine-runtime"
   },
   "license": "MPL-2.0",
   "type": "module",

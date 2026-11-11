@@ -32,7 +32,7 @@ import type {
 const webDemoDir: string = fileURLToPath(new URL("..", import.meta.url));
 const repoRoot: string = fileURLToPath(new URL("../../../", import.meta.url));
 const devPkgDir: string = join(repoRoot, "platforms/web/client/web-component");
-const ffiRuntimeDir: string = join(repoRoot, "ffi/js/npm/runtime");
+const ffiRuntimeDir: string = join(repoRoot, "platforms/web/client/engine-runtime/runtime");
 
 // The published release and the working tree are served through the same
 // static server and import map, so the only variable between the two pages is
@@ -252,7 +252,7 @@ function startDemoServer(port: number, pkgDir: string): Promise<DemoServerHandle
       if (path === "/") {
         const html: string = (await readFile(join(webDemoDir, "index.html"), "utf8")).replace(
           "</head>",
-          `<script type="importmap">{"imports":{"@tiqian/prose/element":"/platforms/web/client/web-component/element.js","@tiqian/prose/auto":"/platforms/web/client/web-component/auto.js","@tiqian/prose/":"/platforms/web/client/web-component/","@tiqian/prose":"/platforms/web/client/web-component/element.js","@tiqian/core/":"/platforms/web/client/core/","@tiqian/ffi":"/ffi/Tiqian-tiqian-ffi-js.mjs"}}</script></head>`,
+          `<script type="importmap">{"imports":{"@tiqian/prose/element":"/platforms/web/client/web-component/element.js","@tiqian/prose/auto":"/platforms/web/client/web-component/auto.js","@tiqian/prose/":"/platforms/web/client/web-component/","@tiqian/prose":"/platforms/web/client/web-component/element.js","@tiqian/core/":"/platforms/web/client/core/","@tiqian/ffi":"/engine-runtime/Tiqian-tiqian-ffi-js.mjs"}}</script></head>`,
         );
         res.setHeader("content-type", "text/html; charset=utf-8");
         res.end(html);
@@ -263,14 +263,14 @@ function startDemoServer(port: number, pkgDir: string): Promise<DemoServerHandle
       if (path === "/main.js" || path === "/index.css") {
         file = join(webDemoDir, path.slice(1));
         if (path.endsWith(".css")) type = "text/css";
-      } else if (path.startsWith("/ffi/")) {
+      } else if (path.startsWith("/engine-runtime/")) {
         // Module workers do not see the document import map, so the dev-tree
         // layout worker in core gets its bare "@tiqian/ffi" import
         // rewritten below to this absolute URL. The document-context import
         // in ts-runtime.js resolves through the import map instead. The
         // published side predates the dependency and keeps its relative
         // precompute-runtime import.
-        const rest: string = path.slice("/ffi/".length);
+        const rest: string = path.slice("/engine-runtime/".length);
         file = join(ffiRuntimeDir, rest);
       } else if (path.startsWith("/platforms/web/client/web-component/")) {
         const rest: string = path.slice("/platforms/web/client/web-component/".length);
@@ -289,7 +289,7 @@ function startDemoServer(port: number, pkgDir: string): Promise<DemoServerHandle
           if (occurrences > 1) throw new Error(`unexpected engine import count ${occurrences}`);
           if (occurrences === 1) {
             res.setHeader("content-type", type);
-            res.end(source.replace('from "@tiqian/ffi"', 'from "/ffi/Tiqian-tiqian-ffi-js.mjs"'));
+            res.end(source.replace('from "@tiqian/ffi"', 'from "/engine-runtime/Tiqian-tiqian-ffi-js.mjs"'));
             return;
           }
         }

@@ -58,8 +58,8 @@ export interface PrepareParagraphRequest {
 }
 
 // Wire element types of the layout request channel. The Kotlin/JS @JsExport
-// interfaces they carried (ffi/js/src/jsMain/kotlin/org/tiqian/ffi/js/
-// LayoutRequestDtos.kt, retired with the JS cutover) keep their public field
+// interfaces they carried (the retired Kotlin/JS LayoutRequestDtos.kt, removed
+// with the JS cutover) keep their public field
 // names: precompute-facade.mjs translates these names onto the generated
 // engine-internal ones (span.fontFamilies -> families, span.fontSize ->
 // fontSizePx), so the wire names are the public protocol and must not be

@@ -8,7 +8,7 @@ import org.tiqian.test.trace.TestTraceRecorder
 
 /**
  * ecmaJsonNumber must render the same Float to the same bytes on every
- * Kotlin backend; plan snapshots and the ffi/js boundary consume it directly.
+ * Kotlin backend; plan snapshots and the web client boundary consume it directly.
  * Every input routes through f32Literal so every backend feeds the engine
  * the Float the literal denotes. Every expectation below was cross-checked
  * against the ECMAScript `String(number)` output of the widened double.

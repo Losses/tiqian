@@ -37,7 +37,7 @@
 
 ## 5. 验收与证据
 
-- 验收命令按任务书写，常见的有：`cargo build -p tiqian-protocol-gen --lib --tests`（在 mac）、`cargo test -p tiqian-precompute canonical`、`(cd platforms/web/server/core && npm test)`、`(cd ffi/js/npm && npm test)`、`bash engine-haxe/tools/gates.sh all`。
+- 验收命令按任务书写，常见的有：`cargo build -p tiqian-protocol-gen --lib --tests`（在 mac）、`cargo test -p tiqian-precompute canonical`、`(cd platforms/web/server/core && npm test)`、`(cd platforms/web/client/engine-runtime && npm test)`、`bash engine-haxe/tools/gates.sh all`。
 - Rust 侧的生成与编译默认在 mac 上做。mac 一次只跑一轮整链，走 `/tmp/tq-mac-gen.lock`（`scripts/tq-mac-gen.sh` 自带）；产物只落 `~/tq-dc/<label>`，不要写 mac 内置盘。mac 8 核 16 GB，别并行跑两条 cargo 或 cargo 与 swiftc。
 - **本机例外（2026-09-27 加，mac 不可用时）**：生成出来的协议 crate 是小 crate（`protocol-gen` 十几到二十几个 `.rs`、无第三方依赖），允许在本机编：`cp -a <树>/platforms/web/server/precompute/protocol-gen/. /tmp/<label>-pg/`，再 `XDG_CACHE_HOME=/tmp/tq-nix-cache nix develop -c bash -c 'cd /tmp/<label>-pg && CARGO_TARGET_DIR=/tmp/<label>-pg-target cargo build --lib --message-format=short'`，跑完删掉 target 目录（实测 2.7 MB）。**只对小 crate 生效**：整棵引擎树的生成与构建仍然只许在 mac 上做（PIT-81：一棵树 0.8 GB）。
 - 证据格式：`<数字> @ <修订> @ <生成配置>`，并写清跑的是哪棵树、哪条路径（PIT-48 / TCN-16）。
@@ -64,6 +64,6 @@
 - **`GRADLE_USER_HOME` 用工作区共享的那一份**：`${WORKSPACE}/.gradle-home`（`~/.gradle` 的锁文件 Permission denied，不能用）。**不要各席在自己工作树里再建一份**——实测每个副本约 2.5 GB，四席并行就吃掉 10 GB，本机 /home 现在只剩 33 GB。
 - **`XDG_CACHE_HOME=/tmp/tq-nix-cache`**：`~/.cache/nix` 只读。
 - **npm 侧先在工作树根 `npm install`**：`tsc` 来自 workspace devDeps，不装就没有。
-- **`./gradlew :ffi:js:assembleNpmPackage` 会清空重建 `ffi/js/npm/runtime/`**：vendored 生成物一律放 `ffi/js/npm/engine-gen/`，再由构建步骤复制进 runtime 产物（`package.json` 的 `files` 只发布 `runtime/`）。
+- **`platforms/web/client/engine-runtime` 的 `npm run build:runtime` 会清空重建 `runtime/`**：vendored 生成物一律放 `platforms/web/client/engine-runtime/engine-gen/`，再由构建步骤复制进 runtime 产物（`package.json` 的 `files` 发布 `runtime/` 与 `engine-gen/`）。
 - **Node 的 strip-types / transform-types 直载生成的 TS 会失败**（生成模块对纯类型模块做值导入），必须走 tsc 路线：`target es2022 + module esnext + moduleResolution bundler + allowImportingTsExtensions + rewriteRelativeImportExtensions`；生成代码不动，若个别诊断（如 `FontRoleContext` 的 TS2322）需要放宽，**只许写在 vendored 目录自己的 tsconfig 里并注明取消条件**（指向里程碑 30 的 T1/T2），不许改包级或工作区级配置。
 - **跨机器复核要同步完整源码树**：只同步部分子目录会让读相对路径的防漂移断言假失败（实测过一次，失败信息看起来像「文件没生成」）。

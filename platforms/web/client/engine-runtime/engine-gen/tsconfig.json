@@ -3,7 +3,7 @@
   // (engine-gen/). This is the ONLY place the strict relaxation may live
   // (Stage1-C gate ruling): the generated FontRoleContext constructor has an
   // optional parameter against a non-optional field
-  // (ffi/js/npm/engine-gen/org/tiqian/font/FontRoleContext.ts:10-13), which
+  // (platforms/web/client/engine-runtime/engine-gen/org/tiqian/font/FontRoleContext.ts:10-13), which
   // strict null checks reject as TS2322
   // ("Type 'string | null | undefined' is not assignable to type
   // 'string | null'"). The generated files are not hand-editable, so the
