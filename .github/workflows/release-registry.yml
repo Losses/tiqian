@@ -58,7 +58,7 @@ jobs:
       - name: Build packages via boring
         # Only the bundles that declare package metadata can be packed; the five
         # app-facing targets still need names and versions declared in boring.json.
-        run: nix develop -c bash -c "boring pack protocol-rust protocol-ts protocol-kotlin engine-rust-f32 engine-rust-f64 ts kotlin-f32 kotlin-f64 swift-f32 swift-f64 dart"
+        run: nix develop -c bash -c "boring pack protocol-rust protocol-ts protocol-kotlin protocol-swift protocol-dart engine-rust-f32 engine-rust-f64 ts kotlin-f32 kotlin-f64 swift-f32 swift-f64 dart"
 
       - name: Collect artifacts
         run: |
