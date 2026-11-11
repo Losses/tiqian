@@ -67,3 +67,6 @@ engine/src/commonTest/kotlin/org/tiqian/test/trace/TracedTestManifest.kt
 .cargo-home/
 
 .workspace-board-scratch-lock-*/
+
+# 12-bundle matrix logs: absolute host paths and task ids; kept on disk, never committed
+bundle-logs/
