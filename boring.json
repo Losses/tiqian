@@ -96,6 +96,7 @@
     },
     {
       "id": "protocol-ts",
+      "compare": false,
       "target": "ts",
       "rootsFile": "engine-haxe/targets/protocol-ts.hxml",
       "package": { "name": "tiqian-protocol", "version": "0.1.0", "license": "MPL-2.0" },
@@ -105,6 +106,7 @@
     },
     {
       "id": "protocol-rust",
+      "compare": false,
       "target": "rust",
       "rootsFile": "engine-haxe/targets/protocol-rust.hxml",
       "package": { "name": "tiqian-protocol", "version": "0.1.0", "license": "MPL-2.0" },
@@ -114,6 +116,7 @@
     },
         {
       "id": "protocol-dart",
+      "compare": false,
       "target": "dart",
       "rootsFile": "engine-haxe/targets/protocol-dart.hxml",
       "package": {
@@ -129,6 +132,7 @@
     },
 {
       "id": "protocol-kotlin",
+      "compare": false,
       "target": "kotlin",
       "rootsFile": "engine-haxe/targets/protocol-kotlin.hxml",
       "package": { "name": "tiqian-protocol", "version": "0.1.0", "license": "MPL-2.0" },
@@ -138,6 +142,7 @@
     },
     {
       "id": "protocol-swift",
+      "compare": false,
       "target": "swift",
       "rootsFile": "engine-haxe/targets/protocol-swift.hxml",
       "package": { "name": "tiqian-protocol", "version": "0.1.0", "license": "MPL-2.0" },
@@ -152,7 +157,11 @@
       "rootsFile": "engine-haxe/targets/rust-f32.hxml",
       "haxeArgs": ["-D", "package-artifact-stem=tiqian-engine-f32"],
       "package": { "name": "tiqian-engine", "version": "0.1.0", "license": "MPL-2.0" },
+      "build": {
+        "args": ["--features", "f32"]
+      },
       "run": {
+        "cargoArgs": ["--features", "f32"],
         "env": { "BORING_TEST_TIMEOUT_MS": "600000" }
       }
     },

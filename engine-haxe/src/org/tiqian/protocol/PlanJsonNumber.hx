@@ -13,8 +13,10 @@ typedef PlanJsonDecomposed = {mantissa:String, exp2:Int};
 typedef PlanJsonF32Decomposed = {mant24:Int, exp2:Int};
 
 class PlanJsonNumber {
-    private static var fivePowers:Null<Array<String>> = null;
-    private static var twoPowers:Null<Array<String>> = null;
+    // Rust has no representation for a nullable container static, so the caches
+    // start empty and are filled lazily; an empty array means "not built yet".
+    private static var fivePowers:Array<String> = [];
+    private static var twoPowers:Array<String> = [];
 
     public static function ecmaJsonNumber(floatValue:Float):String {
         #if tiqian_ts
@@ -149,7 +151,7 @@ class PlanJsonNumber {
 
 
     private static function fiveToThe(k:Int):String {
-        if (fivePowers == null)
+        if (fivePowers.length == 0)
             fivePowers = ["1"];
         if (k < fivePowers.length)
             return fivePowers[k];
@@ -164,7 +166,7 @@ class PlanJsonNumber {
     }
 
     private static function twoToThe(k:Int):String {
-        if (twoPowers == null)
+        if (twoPowers.length == 0)
             twoPowers = ["1"];
         if (k < twoPowers.length)
             return twoPowers[k];
