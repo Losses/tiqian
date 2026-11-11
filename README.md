@@ -123,15 +123,16 @@ val paragraph = CjkTextView(context).apply {
 
 ## 引擎源码（Legacy 声明）
 
-> **Legacy 弃用声明**：engine/（Kotlin 手写引擎）已标记为 Legacy，仅作为
-> Kotlin 平台（JVM / Android / Apple / Compose）当前的消费面保留。新的引擎
-> 开发请转向 engine-haxe/——它是唯一活跃源码，boring 编译器从它生成
-> Kotlin / Swift / Dart / JS / Rust 五种目标。不要在 engine/ 里新增代码。
+> **Legacy 弃用声明**：engine/（Kotlin 手写引擎）已标记为 Legacy，并且仍是
+> Kotlin 平台（JVM / Android / Apple / Compose）的出货实现。engine-haxe/ 是
+> Swift / Dart / JS / Rust 四个目标的源码，它生成的 Kotlin 输出尚未接入任何
+> Gradle source set。不要在 engine/ 里新增代码。
 
 迁移指引：
-- 引擎行为改动 → 改 engine-haxe/src/（Haxe 源码），经 boring 生成各目标。
-- 五目标的生成 / 编译 / 测试见 engine-haxe/README.md。
-- Kotlin 平台的 boring 生成接入（Phase 2）与 engine/ 删除（Phase 3）为后续独立任务。
+- engine-haxe/src/ 存放 Haxe 源码，boring 编译器从它生成 Swift / Dart / JS / Rust 四个目标的产物。
+- 四个目标的生成、编译与测试见 engine-haxe/README.md。
+- Kotlin 平台的行为改动仍落在 engine/ 的 Kotlin 源码。
+- engine-haxe/ 的 Kotlin 输出接入 Gradle source set、以及 engine/ 的删除，均尚未排期。
 
 ## 体验与构建
 
