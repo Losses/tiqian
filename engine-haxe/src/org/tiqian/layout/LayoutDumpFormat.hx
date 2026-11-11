@@ -15,6 +15,7 @@ import org.tiqian.clreq.ClreqProfile;
 import org.tiqian.clreq.KinsokuMode;
 import org.tiqian.layout.ParagraphLayoutEngine.ExplainableStubParagraphLayoutEngine;
 
+@:mainOnly
 class LayoutDumpFormat {
     static function joinInts(a:std.ReadOnlyArray<Int>):String {
         final b = [];
