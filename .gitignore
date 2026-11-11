@@ -70,3 +70,8 @@ engine/src/commonTest/kotlin/org/tiqian/test/trace/TracedTestManifest.kt
 
 # 12-bundle matrix logs: absolute host paths and task ids; kept on disk, never committed
 bundle-logs/
+
+# local caches and scratch bundle configs (regenerated on demand; never committed)
+.nix-cache/
+.scratch-tools/
+boring.scratch.json
