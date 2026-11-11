@@ -10,7 +10,7 @@ import type {
   WorkerRequestEnvelope,
   WorkerResponseEnvelope,
 } from "./web-worker/worker-channel.js";
-import { precomputeParagraphWithDiagnostics } from "@tiqian/ffi";
+import { precomputeParagraphPlan } from "@tiqian/ffi";
 import type { DecorationWire } from "@tiqian/ffi";
 import { prepareParagraphRequestWire } from "./wire-construction.js";
 import type { WorkerLayoutRequestBody } from "./web-worker/worker-channel.js";
@@ -91,7 +91,7 @@ function errorDetail(error: unknown): string {
       emphasisDotGapEm: null,
       renderEvidenceOverride: request.renderEvidence,
     });
-    const { plan } = precomputeParagraphWithDiagnostics(
+    const plan = precomputeParagraphPlan(
       requestDto,
       0.0,
       session.shapeJson,

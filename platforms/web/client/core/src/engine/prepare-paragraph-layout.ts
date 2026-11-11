@@ -380,6 +380,9 @@ export function wireArguments(lowered: LoweredParagraph): PrepareParagraphReques
     const plan = (typeof planJson === "string" ? JSON.parse(planJson) : planJson) as LayoutPlan;
     const diagnostics = envelope.diagnostics as LayoutDiagnostics;
 
+    // Verdict, not diagnostics: capabilityIssues and advanceSuspects are the
+    // render gates below (the first hit returns unsupported); the full arrays
+    // have no other consumer. Keep the names and semantics as published.
     const capabilityIssue = diagnostics.capabilityIssues[0];
     if (capabilityIssue != null) {
       return {

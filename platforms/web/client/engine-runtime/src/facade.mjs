@@ -30,6 +30,7 @@ import {
 import {
   precomputeParagraphWithDiagnostics,
   precomputeParagraphWithBrowserMetrics,
+  precomputeParagraphPlan,
 } from "./precompute-facade.mjs";
 
 export {
@@ -45,4 +46,5 @@ export {
   firstDivergentInlineShapingProperty,
   precomputeParagraphWithDiagnostics,
   precomputeParagraphWithBrowserMetrics,
+  precomputeParagraphPlan,
 };

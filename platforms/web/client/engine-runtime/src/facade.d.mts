@@ -163,6 +163,12 @@ declare function precomputeParagraphWithDiagnostics(
   shapeJson: (requestJson: string) => string,
   metricsJson: (requestJson: string) => string,
 ): PlanWithDiagnostics;
+declare function precomputeParagraphPlan(
+  request: PrepareParagraphRequest,
+  zeroAdvanceEpsilonPx: number,
+  shapeJson: (requestJson: string) => string,
+  metricsJson: (requestJson: string) => string,
+): Record<string, unknown>;
 declare function precomputeParagraphWithBrowserMetrics(
   request: PrepareParagraphRequest,
   zeroAdvanceEpsilonPx: number,
@@ -182,4 +188,5 @@ export {
   firstDivergentInlineShapingProperty,
   precomputeParagraphWithDiagnostics,
   precomputeParagraphWithBrowserMetrics,
+  precomputeParagraphPlan,
 };

@@ -59,6 +59,7 @@ import { ShapingInput, ShapingResult } from "./engine-gen/org/tiqian/shaping/Tex
 import { ExplainableStubParagraphLayoutEngine } from "./engine-gen/org/tiqian/layout/ParagraphLayoutEngine.js";
 import { LookaheadLineBreaker } from "./engine-gen/org/tiqian/layout/LineBreaker.js";
 import { PreparedParagraphFns } from "./engine-gen/org/tiqian/layout/PreparedParagraph.js";
+import { PlanLowering } from "./engine-gen/org/tiqian/layout/PlanLowering.js";
 import { LruWidthIndependentAnnotationCache } from "./engine-gen/org/tiqian/layout/WidthIndependentAnnotationCache.js";
 
 /**
@@ -528,6 +529,24 @@ export function precomputeParagraphWithDiagnostics(
     callbackFontMetricsResolver(metricsJson),
     cachedAnnotationCache(shapeJson),
   );
+}
+
+/**
+ * Plan-only entry for the layout worker. The worker discards the diagnostics,
+ * so this entry skips the toPlanWithDiagnostics collection passes; the main
+ * thread keeps the diagnostics entry. PlanLowering.toPlan is the same
+ * serializer the diagnostics and JSON entries use, so the plan bytes are
+ * unchanged.
+ */
+export function precomputeParagraphPlan(request, zeroAdvanceEpsilonPx, shapeJson, metricsJson) {
+  const { result, renderEvidence } = layoutWithDiagnostics(
+    request,
+    zeroAdvanceEpsilonPx,
+    callbackTextShaper(shapeJson),
+    callbackFontMetricsResolver(metricsJson),
+    cachedAnnotationCache(shapeJson),
+  );
+  return PlanLowering.toPlan(result, renderEvidence);
 }
 
 /**

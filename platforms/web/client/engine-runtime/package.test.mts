@@ -104,6 +104,12 @@ interface FfiExports {
     shapeJson: (p0: string) => string,
     metricsJson: (p0: string) => string,
   ) => PlanWithDiagnostics;
+  precomputeParagraphPlan: (
+    request: PrepareParagraphRequest,
+    zeroAdvanceEpsilonPx: number,
+    shapeJson: (p0: string) => string,
+    metricsJson: (p0: string) => string,
+  ) => Record<string, unknown>;
   precomputeParagraphWithBrowserMetrics: (
     request: PrepareParagraphRequest,
     zeroAdvanceEpsilonPx: number,
@@ -136,13 +142,13 @@ test("the manifest ships the generated engine runtime and nothing else", async (
   );
 });
 
-test("the package export surface names all twelve capabilities in order", async () => {
+test("the package export surface names the twelve capabilities plus the plan-only entry in order", async () => {
   // Cutover mechanism note: the entry used to be the Kotlin-generated module
   // whose .d.mts this test scanned; it is now the aggregate facade, so the
   // pinned surface is read off the facade's export block. The runtime module
   // namespace cannot carry the order (its keys are sorted by spec), and the
-  // order is part of the contract. The pinned list — twelve names and their
-  // order — is unchanged.
+  // order is part of the contract. The pinned list — twelve capabilities plus the plan-only worker
+  // entry, in this order — is the contract.
   const facade = await readFile(new URL("./runtime/facade.mjs", import.meta.url), "utf8");
   const exportBlock = facade.match(/export \{([^}]+)\};/u)?.[1];
   assert.ok(exportBlock, "facade.mjs carries a single export block");
@@ -161,6 +167,7 @@ test("the package export surface names all twelve capabilities in order", async 
     "firstDivergentInlineShapingProperty",
     "precomputeParagraphWithDiagnostics",
     "precomputeParagraphWithBrowserMetrics",
+    "precomputeParagraphPlan",
   ]);
 });
 
@@ -259,6 +266,12 @@ test("precompute entries run the generated engine through host callbacks", async
   const exactEnvelope = exact;
   assert.ok(Array.isArray(exactEnvelope.plan.lines), "the exact-session entry returns a structured plan");
   assert.ok(exactEnvelope.diagnostics !== undefined, "the exact-session entry carries the diagnostics object");
+  const planOnly = ffi.precomputeParagraphPlan(request, 0.05, shapeJson, metricsJson);
+  assert.equal(
+    JSON.stringify(planOnly),
+    JSON.stringify(exactEnvelope.plan),
+    "the plan-only entry returns the same plan bytes as the diagnostics entry",
+  );
   assert.equal(shapeCalls.length > 0, true, "the engine shaped through the host callback");
   assert.equal(metricsCalls.length > 0, true, "the engine resolved metrics through the host callback");
 
