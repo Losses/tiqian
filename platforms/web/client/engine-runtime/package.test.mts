@@ -118,6 +118,7 @@ test("the manifest ships the generated engine runtime and nothing else", async (
       types: "./runtime/facade.d.mts",
       default: "./runtime/facade.mjs",
     },
+    "./engine-gen/*": "./runtime/engine-gen/*",
   });
   assert.equal(manifest.dependencies, undefined);
   assert.equal(manifest.bin, undefined);

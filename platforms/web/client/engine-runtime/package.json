@@ -25,7 +25,8 @@
     ".": {
       "types": "./runtime/facade.d.mts",
       "default": "./runtime/facade.mjs"
-    }
+    },
+    "./engine-gen/*": "./runtime/engine-gen/*"
   },
   "engines": {
     "node": ">=22"
