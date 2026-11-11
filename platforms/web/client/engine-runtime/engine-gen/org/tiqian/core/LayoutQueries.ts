@@ -22,6 +22,7 @@ import { TiqianIllegalArgumentException } from "./TiqianIllegalArgumentException
 import { NoSuchElementError, TiqianNoSuchElementException } from "./TiqianNoSuchElementException.ts";
 import { UnicodeWordCharacterData } from "./UnicodeWordCharacterData.ts";
 import { UStringException } from "./../../../std/UStringException.ts";
+import { dictKey } from "../../../runtime.ts";
 
 export class SelectionBounds {
   public left: number;
@@ -76,34 +77,34 @@ export class LayoutQueries {
       index += 1;
     }
     LayoutQueries.insertionSortAnnotations(annotations);
-    let output = [];
+    let output: string[] = [];
     let cursor = start;
     index = 0;
     while (index < annotations.length) {
       const annotation = annotations[index]!;
       if (annotation.end >= cursor && annotation.end <= end) {
-        const tail = output.length > 0 ? output[output.length - 1].charCodeAt(output[output.length - 1].length - 1) : NaN;
+        const tail = output.length > 0 ? output[output.length - 1]!.charCodeAt(output[output.length - 1]!.length - 1) : NaN;
         if (tail >= 55296 && tail <= 56319 && source.substring(cursor, annotation.end).length > 0 && !(source.substring(cursor, annotation.end).charCodeAt(0) >= 56320 && source.substring(cursor, annotation.end).charCodeAt(0) <= 57343)) {
           throw new UStringException({ kind: "UnpairedSurrogate", unit: tail });
         }
         if (source.substring(cursor, annotation.end).length > 0) {
           output.push(source.substring(cursor, annotation.end));
         }
-        const tail2 = output.length > 0 ? output[output.length - 1].charCodeAt(output[output.length - 1].length - 1) : NaN;
+        const tail2 = output.length > 0 ? output[output.length - 1]!.charCodeAt(output[output.length - 1]!.length - 1) : NaN;
         if (tail2 >= 55296 && tail2 <= 56319 && "（".length > 0 && !("（".charCodeAt(0) >= 56320 && "（".charCodeAt(0) <= 57343)) {
           throw new UStringException({ kind: "UnpairedSurrogate", unit: tail2 });
         }
         if ("（".length > 0) {
           output.push("（");
         }
-        const tail3 = output.length > 0 ? output[output.length - 1].charCodeAt(output[output.length - 1].length - 1) : NaN;
+        const tail3 = output.length > 0 ? output[output.length - 1]!.charCodeAt(output[output.length - 1]!.length - 1) : NaN;
         if (tail3 >= 55296 && tail3 <= 56319 && annotation.text.length > 0 && !(annotation.text.charCodeAt(0) >= 56320 && annotation.text.charCodeAt(0) <= 57343)) {
           throw new UStringException({ kind: "UnpairedSurrogate", unit: tail3 });
         }
         if (annotation.text.length > 0) {
           output.push(annotation.text);
         }
-        const tail4 = output.length > 0 ? output[output.length - 1].charCodeAt(output[output.length - 1].length - 1) : NaN;
+        const tail4 = output.length > 0 ? output[output.length - 1]!.charCodeAt(output[output.length - 1]!.length - 1) : NaN;
         if (tail4 >= 55296 && tail4 <= 56319 && "）".length > 0 && !("）".charCodeAt(0) >= 56320 && "）".charCodeAt(0) <= 57343)) {
           throw new UStringException({ kind: "UnpairedSurrogate", unit: tail4 });
         }
@@ -114,14 +115,14 @@ export class LayoutQueries {
       }
       index += 1;
     }
-    const tail5 = output.length > 0 ? output[output.length - 1].charCodeAt(output[output.length - 1].length - 1) : NaN;
+    const tail5 = output.length > 0 ? output[output.length - 1]!.charCodeAt(output[output.length - 1]!.length - 1) : NaN;
     if (tail5 >= 55296 && tail5 <= 56319 && source.substring(cursor, end).length > 0 && !(source.substring(cursor, end).charCodeAt(0) >= 56320 && source.substring(cursor, end).charCodeAt(0) <= 57343)) {
       throw new UStringException({ kind: "UnpairedSurrogate", unit: tail5 });
     }
     if (source.substring(cursor, end).length > 0) {
       output.push(source.substring(cursor, end));
     }
-    const tail6 = output.length > 0 ? output[output.length - 1].charCodeAt(output[output.length - 1].length - 1) : NaN;
+    const tail6 = output.length > 0 ? output[output.length - 1]!.charCodeAt(output[output.length - 1]!.length - 1) : NaN;
     if (tail6 >= 55296 && tail6 <= 56319) {
       throw new UStringException({ kind: "UnpairedSurrogate", unit: tail6 });
     }
@@ -145,7 +146,7 @@ export class LayoutQueries {
 
   public static positionedClustersForLine(result: LayoutResult, line: LineBox): PositionedCluster[] {
     let lineIndex = 0;
-    while (lineIndex < result.lines.length && result.lines[lineIndex]! !== line) {
+    while (lineIndex < result.lines.length && dictKey(result.lines[lineIndex]!) !== dictKey(line)) {
       lineIndex += 1;
     }
     if (lineIndex >= result.lines.length) {
@@ -280,7 +281,7 @@ export class LayoutQueries {
             if (sliceStart < sliceEnd) {
               const rect = LayoutQueries.sliceRect(cluster, sliceStart, sliceEnd);
               const next = new RichTextLineSegment(normalized, cluster.lineIndex, new TextRange(sliceStart, sliceEnd), rect.left, rect.top, rect.right, rect.bottom, cluster.baseline);
-              if (pending !== null && pending!.lineIndex === next.lineIndex && pending!.span === next.span && pending!.range.end === next.range.start) {
+              if (pending !== null && pending!.lineIndex === next.lineIndex && dictKey(pending!.span) === dictKey(next.span) && pending!.range.end === next.range.start) {
                 pending = new RichTextLineSegment(pending!.span, pending!.lineIndex, new TextRange(pending!.range.start, next.range.end), pending!.left, LayoutQueries.minFloat(pending!.top, next.top), next.right, LayoutQueries.maxFloat(pending!.bottom, next.bottom), pending!.baseline);
               } else {
                 if (pending !== null) {

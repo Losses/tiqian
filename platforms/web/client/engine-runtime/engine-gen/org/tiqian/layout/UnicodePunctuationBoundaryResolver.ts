@@ -87,6 +87,28 @@ export class AttachedInlineInterCharBoundaries {
   }
 }
 
+export function compareAttachedInlineInterCharBoundaries(a: AttachedInlineInterCharBoundaries, b: AttachedInlineInterCharBoundaries): number {
+  if (a === b) return 0;
+  for (let i0 = 0, n0 = a.ordinaryWesternBoundaryAfterClusters.size() < b.ordinaryWesternBoundaryAfterClusters.size() ? a.ordinaryWesternBoundaryAfterClusters.size() : b.ordinaryWesternBoundaryAfterClusters.size(); i0 < n0; i0++) {
+    if (a.ordinaryWesternBoundaryAfterClusters.at(i0) !== b.ordinaryWesternBoundaryAfterClusters.at(i0)) return a.ordinaryWesternBoundaryAfterClusters.at(i0) - b.ordinaryWesternBoundaryAfterClusters.at(i0);
+  }
+  if (a.ordinaryWesternBoundaryAfterClusters.size() !== b.ordinaryWesternBoundaryAfterClusters.size()) return a.ordinaryWesternBoundaryAfterClusters.size() - b.ordinaryWesternBoundaryAfterClusters.size();
+  for (let i0 = 0, n0 = a.suppressedPhysicalBoundaryAfterClusters.size() < b.suppressedPhysicalBoundaryAfterClusters.size() ? a.suppressedPhysicalBoundaryAfterClusters.size() : b.suppressedPhysicalBoundaryAfterClusters.size(); i0 < n0; i0++) {
+    if (a.suppressedPhysicalBoundaryAfterClusters.at(i0) !== b.suppressedPhysicalBoundaryAfterClusters.at(i0)) return a.suppressedPhysicalBoundaryAfterClusters.at(i0) - b.suppressedPhysicalBoundaryAfterClusters.at(i0);
+  }
+  if (a.suppressedPhysicalBoundaryAfterClusters.size() !== b.suppressedPhysicalBoundaryAfterClusters.size()) return a.suppressedPhysicalBoundaryAfterClusters.size() - b.suppressedPhysicalBoundaryAfterClusters.size();
+  for (let i0 = 0, n0 = a.virtualBoundaryAfterClusters.size() < b.virtualBoundaryAfterClusters.size() ? a.virtualBoundaryAfterClusters.size() : b.virtualBoundaryAfterClusters.size(); i0 < n0; i0++) {
+    if (a.virtualBoundaryAfterClusters.keyAt(i0) !== b.virtualBoundaryAfterClusters.keyAt(i0)) return a.virtualBoundaryAfterClusters.keyAt(i0) - b.virtualBoundaryAfterClusters.keyAt(i0);
+    if (a.virtualBoundaryAfterClusters.valueAt(i0) !== b.virtualBoundaryAfterClusters.valueAt(i0)) return a.virtualBoundaryAfterClusters.valueAt(i0) - b.virtualBoundaryAfterClusters.valueAt(i0);
+  }
+  if (a.virtualBoundaryAfterClusters.size() !== b.virtualBoundaryAfterClusters.size()) return a.virtualBoundaryAfterClusters.size() - b.virtualBoundaryAfterClusters.size();
+  for (let i0 = 0, n0 = a.virtualSinoWesternBoundaryAfterClusters.size() < b.virtualSinoWesternBoundaryAfterClusters.size() ? a.virtualSinoWesternBoundaryAfterClusters.size() : b.virtualSinoWesternBoundaryAfterClusters.size(); i0 < n0; i0++) {
+    if (a.virtualSinoWesternBoundaryAfterClusters.at(i0) !== b.virtualSinoWesternBoundaryAfterClusters.at(i0)) return a.virtualSinoWesternBoundaryAfterClusters.at(i0) - b.virtualSinoWesternBoundaryAfterClusters.at(i0);
+  }
+  if (a.virtualSinoWesternBoundaryAfterClusters.size() !== b.virtualSinoWesternBoundaryAfterClusters.size()) return a.virtualSinoWesternBoundaryAfterClusters.size() - b.virtualSinoWesternBoundaryAfterClusters.size();
+  return 0;
+}
+
 export class UnicodePunctuationBoundaryResolver {
   public static resolveWesternBracketCjkInterCharBoundaries(text: string, clusters: Cluster[], roles: FontRole[]): SortedSetTable<number> {
     const b = SortedTable.setBuilder<number>(SortedTable.compareInts);

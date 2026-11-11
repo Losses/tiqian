@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 
 import { spawnSync } from "node:child_process";
+import { existsSync } from "node:fs";
 import { copyFile, mkdir, rm } from "node:fs/promises";
 import { createRequire } from "node:module";
 import { fileURLToPath } from "node:url";
@@ -15,6 +16,16 @@ const require = createRequire(import.meta.url);
 // Kotlin/Native targets) only to empty one directory. Dropping the Gradle
 // round-trip removes the JDK/Android/Native toolchain requirement from
 // build:runtime.
+const engineGenDirectory = fileURLToPath(new URL("./engine-gen/", import.meta.url));
+if (!existsSync(engineGenDirectory)) {
+  const repoRoot = fileURLToPath(new URL("../../../../", import.meta.url));
+  const generator = fileURLToPath(new URL("../../../../scripts/generate-engine-gen.mjs", import.meta.url));
+  console.log("build:runtime: engine-gen/ is missing, generating it from the ts bundles");
+  const generate = spawnSync(process.execPath, [generator, "ts"], { cwd: repoRoot, stdio: "inherit" });
+  if (generate.error) throw generate.error;
+  if (generate.status !== 0) process.exit(generate.status ?? 1);
+}
+
 const runtimeDirectory = fileURLToPath(new URL("./runtime/", import.meta.url));
 await rm(runtimeDirectory, { recursive: true, force: true });
 await mkdir(runtimeDirectory, { recursive: true });

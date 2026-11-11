@@ -488,7 +488,18 @@ export class ParagraphShapingStage {
       }
     }
     const getCachedSegmentShaping = (r: TextRange): ShapingResult | null => {
-    for (let i3 = 0, count28 = segmentShapingCacheKeys.length; i3 < count28; i3 += 1) {
+    const count28 = segmentShapingCacheKeys.length;
+    const keyCount = count28;
+    if (keyCount > 0) {
+      const lastKey = segmentShapingCacheKeys[keyCount - 1]!;
+      if (lastKey.start === r.start && lastKey.end === r.end) {
+        return segmentShapingCacheValues[keyCount - 1]!;
+      }
+      if (r.start > lastKey.start) {
+        return null;
+      }
+    }
+    for (let i3 = 0; i3 < count28; i3 += 1) {
       const k = segmentShapingCacheKeys[i3]!;
       if (k.start === r.start && k.end === r.end) {
         return segmentShapingCacheValues[i3]!;
@@ -497,6 +508,19 @@ export class ParagraphShapingStage {
     return null;
 };
     const putCachedSegmentShaping = (r: TextRange, v: ShapingResult): void => {
+    const keyCount2 = segmentShapingCacheKeys.length;
+    if (keyCount2 > 0) {
+      const lastKey2 = segmentShapingCacheKeys[keyCount2 - 1]!;
+      if (lastKey2.start === r.start && lastKey2.end === r.end) {
+        segmentShapingCacheValues[keyCount2 - 1] = v;
+        return;
+      }
+      if (r.start > lastKey2.start) {
+        segmentShapingCacheKeys.push(r);
+        segmentShapingCacheValues.push(v);
+        return;
+      }
+    }
     for (let i4 = 0, count29 = segmentShapingCacheKeys.length; i4 < count29; i4 += 1) {
       const k2 = segmentShapingCacheKeys[i4]!;
       if (k2.start === r.start && k2.end === r.end) {
@@ -508,6 +532,19 @@ export class ParagraphShapingStage {
     segmentShapingCacheValues.push(v);
 };
     const putSubstitutionRollback = (r: TextRange, v: string): void => {
+    const keyCount3 = substitutionRollbackKeys.length;
+    if (keyCount3 > 0) {
+      const lastKey3 = substitutionRollbackKeys[keyCount3 - 1]!;
+      if (lastKey3.start === r.start && lastKey3.end === r.end) {
+        substitutionRollbackValues[keyCount3 - 1] = v;
+        return;
+      }
+      if (r.start > lastKey3.start) {
+        substitutionRollbackKeys.push(r);
+        substitutionRollbackValues.push(v);
+        return;
+      }
+    }
     for (let i5 = 0, count30 = substitutionRollbackKeys.length; i5 < count30; i5 += 1) {
       const k3 = substitutionRollbackKeys[i5]!;
       if (k3.start === r.start && k3.end === r.end) {

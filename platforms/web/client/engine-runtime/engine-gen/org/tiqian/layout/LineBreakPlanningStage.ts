@@ -248,28 +248,58 @@ export class IntervalOverlapIndex {
   private readonly prefixMaxEnd: number[];
 
   constructor(ranges: TextRange[]) {
-    const count = ranges.length;
+    const count2 = ranges.length;
     const sorted: TextRange[] = [];
-    for (let i = 0; i < count; i += 1) {
+    for (let i = 0; i < count2; i += 1) {
       sorted.push(ranges[i]!);
     }
-    let rIdx = 1;
-    while (rIdx < sorted.length) {
-      const curr = sorted[rIdx]!;
-      let j = rIdx - 1;
-      while (j >= 0 && sorted[j]!.start > curr.start) {
-        sorted[j + 1] = sorted[j]!;
-        j--;
+    const count = sorted.length;
+    const buffer: TextRange[] = [];
+    for (let i2 = 0; i2 < count; i2 += 1) {
+      buffer.push(sorted[i2]!);
+    }
+    let width = 1;
+    while (width < count) {
+      let base = 0;
+      while (base < count) {
+        const mid = Math.trunc(Math.min(base + width, count));
+        const stop = Math.trunc(Math.min(base + 2 * width, count));
+        let left = base;
+        let right = mid;
+        let out = base;
+        while (left < mid && right < stop) {
+          if (sorted[right]!.start < sorted[left]!.start) {
+            buffer[out] = sorted[right]!;
+            right++;
+          } else {
+            buffer[out] = sorted[left]!;
+            left++;
+          }
+          out++;
+        }
+        while (left < mid) {
+          buffer[out] = sorted[left]!;
+          left++;
+          out++;
+        }
+        while (right < stop) {
+          buffer[out] = sorted[right]!;
+          right++;
+          out++;
+        }
+        base = stop;
       }
-      sorted[j + 1] = curr;
-      rIdx++;
+      for (let i3 = 0; i3 < count; i3 += 1) {
+        sorted[i3] = buffer[i3]!;
+      }
+      width *= 2;
     }
     this.byStart = sorted;
     this.prefixMaxEnd = new Array<number>();
     let running = -2147483648;
-    for (let i2 = 0, count2 = sorted.length; i2 < count2; i2 += 1) {
-      if (sorted[i2]!.end > running) {
-        running = sorted[i2]!.end;
+    for (let i4 = 0, count3 = sorted.length; i4 < count3; i4 += 1) {
+      if (sorted[i4]!.end > running) {
+        running = sorted[i4]!.end;
       }
       this.prefixMaxEnd.push(running);
     }
@@ -299,11 +329,11 @@ export class LineBreakPlanningStage {
   }
 
   private static isWhitespaceOnly(str: string): boolean {
-    const count3 = str.length;
-    if (count3 === 0) {
+    const count4 = str.length;
+    if (count4 === 0) {
       return false;
     }
-    for (let i = 0; i < count3; i += 1) {
+    for (let i = 0; i < count4; i += 1) {
       if (!ParagraphShapingStage.isWhitespace((Number.isNaN(str.charCodeAt(i)) ? null : str.charCodeAt(i))!)) {
         return false;
       }
@@ -314,7 +344,7 @@ export class LineBreakPlanningStage {
   private static containingClusterMetricDecisions(clusters: Cluster[], decisions: ClusterMetricDecision[]): (ClusterMetricDecision | null)[] {
     let itemIndex = 0;
     const result = new Array<ClusterMetricDecision | null>();
-    for (let i = 0, count4 = clusters.length; i < count4; i += 1) {
+    for (let i = 0, count5 = clusters.length; i < count5; i += 1) {
       const cluster = clusters[i]!;
       while (itemIndex < decisions.length && decisions[itemIndex]!.range.end <= cluster.range.start) {
         itemIndex += 1;
@@ -366,7 +396,7 @@ export class LineBreakPlanningStage {
       metricDecisions.push(new ClusterMetricDecision(decision.range, prep.text.substring(decision.range.start, decision.range.end), request, rawMetrics, layoutMetrics));
     }
     const ideographicDecisions = new Array<ClusterMetricDecision>();
-    for (let i = 0, count5 = metricDecisions.length; i < count5; i += 1) {
+    for (let i = 0, count6 = metricDecisions.length; i < count6; i += 1) {
       if (metricDecisions[i]!.layoutMetrics.metricBox.kind === "IdeographicEmBox") {
         ideographicDecisions.push(metricDecisions[i]!);
       }
@@ -374,7 +404,7 @@ export class LineBreakPlanningStage {
     const baseMetricDecisions = (ideographicDecisions.length > 0 ? ideographicDecisions : metricDecisions);
     let maxAscent: number | null = null;
     let maxDescent: number | null = null;
-    for (let i2 = 0, count6 = baseMetricDecisions.length; i2 < count6; i2 += 1) {
+    for (let i2 = 0, count7 = baseMetricDecisions.length; i2 < count7; i2 += 1) {
       const asc = baseMetricDecisions[i2]!.layoutMetrics.ascent;
       const dsc = baseMetricDecisions[i2]!.layoutMetrics.descent;
       if (maxAscent === null || asc > maxAscent!) {
@@ -387,7 +417,7 @@ export class LineBreakPlanningStage {
     const baseAscent = (maxAscent !== null ? maxAscent : prep.fontSize * 0.88);
     const baseDescent = (maxDescent !== null ? maxDescent : prep.fontSize * 0.12);
     let baseRefMetrics: LayoutFontMetrics | null = null;
-    for (let i3 = 0, count13 = metricDecisions.length; i3 < count13; i3 += 1) {
+    for (let i3 = 0, count14 = metricDecisions.length; i3 < count14; i3 += 1) {
       if (metricDecisions[i3]!.layoutMetrics.metricBox.kind === "IdeographicEmBox" && metricDecisions[i3]!.request.fontSize === prep.fontSize) {
         baseRefMetrics = metricDecisions[i3]!.layoutMetrics;
         break;
@@ -395,7 +425,7 @@ export class LineBreakPlanningStage {
     }
     const baseBoxDescent = (baseRefMetrics !== null ? baseRefMetrics!.descent : baseDescent);
     let maxRubyExtent = 0.0;
-    for (let i4 = 0, count14 = prep.rubyFontGeometryBySpan.size(); i4 < count14; i4 += 1) {
+    for (let i4 = 0, count15 = prep.rubyFontGeometryBySpan.size(); i4 < count15; i4 += 1) {
       const geom = prep.rubyFontGeometryBySpan.valueAt(i4);
       if (geom.requiredExtent > maxRubyExtent) {
         maxRubyExtent = geom.requiredExtent;
@@ -407,7 +437,7 @@ export class LineBreakPlanningStage {
     const baseLineMetrics = LineGeometryStageFns.lineMetrics(metricDecisions, prep.input.paragraphStyle.lineHeight, defaultBodyLineHeight, interlinearSpacingFloor);
     const containingDecisions = LineBreakPlanningStage.containingClusterMetricDecisions(prep.naturalClusters, metricDecisions);
     const metricDecisionByRangeBuilder = SortedTable.mapBuilder<TextRange, ClusterMetricDecision>(compareTextRange);
-    for (let i5 = 0, count15 = prep.naturalClusters.length; i5 < count15; i5 += 1) {
+    for (let i5 = 0, count16 = prep.naturalClusters.length; i5 < count16; i5 += 1) {
       const d = containingDecisions[i5]!;
       if (d !== null) {
         const decision2 = d!;
@@ -452,7 +482,7 @@ export class LineBreakPlanningStage {
     const kinsokuDecision = new KinsokuDecisionInfo(prep.measureEm, prep.resolvedKinsoku.level.kind, prep.resolvedKinsoku.hanging.kind, prep.resolvedKinsoku.reason);
     const hangableClustersBuilder = SortedTable.setBuilder<number>(SortedTable.compareInts);
     if (prep.resolvedKinsoku.hanging.kind === "PauseStops") {
-      for (let idx = 0, count16 = prep.naturalClusters.length; idx < count16; idx += 1) {
+      for (let idx = 0, count17 = prep.naturalClusters.length; idx < count17; idx += 1) {
         if (LineBreakPlanningStage.isHangablePunctuation(prep.naturalClusters[idx]!.displayText)) {
           hangableClustersBuilder.put(idx);
         }
@@ -462,13 +492,13 @@ export class LineBreakPlanningStage {
     const asciiPointMarkKinsoku = PunctuationGeometryStage.attachedAsciiPointMarkKinsoku(prep.naturalClusters, prep.clusterRoles, prep.clusters, prep.resolvedKinsoku.level, prep.measure - blockIndent, prep.measure - firstLineIndent);
     const inlineObjectKinsoku = PunctuationGeometryStage.inlineObjectAttachedKinsoku(prep.naturalClusters, prep.inlineObjectAttachedMarks, prep.clusters, prep.resolvedKinsoku.level, prep.measure - blockIndent, prep.measure - firstLineIndent);
     const resolvedHangableClustersBuilder = SortedTable.setBuilder<number>(SortedTable.compareInts);
-    for (let i6 = 0, count17 = hangableClusters.size(); i6 < count17; i6 += 1) {
+    for (let i6 = 0, count18 = hangableClusters.size(); i6 < count18; i6 += 1) {
       resolvedHangableClustersBuilder.put(hangableClusters.at(i6));
     }
-    for (let i7 = 0, count18 = asciiPointMarkKinsoku.impossibleMeasureHangEligibleClusters.size(); i7 < count18; i7 += 1) {
+    for (let i7 = 0, count19 = asciiPointMarkKinsoku.impossibleMeasureHangEligibleClusters.size(); i7 < count19; i7 += 1) {
       resolvedHangableClustersBuilder.put(asciiPointMarkKinsoku.impossibleMeasureHangEligibleClusters.at(i7));
     }
-    for (let i8 = 0, count19 = inlineObjectKinsoku.impossibleMeasureHangEligibleClusters.size(); i8 < count19; i8 += 1) {
+    for (let i8 = 0, count20 = inlineObjectKinsoku.impossibleMeasureHangEligibleClusters.size(); i8 < count20; i8 += 1) {
       resolvedHangableClustersBuilder.put(inlineObjectKinsoku.impossibleMeasureHangEligibleClusters.at(i8));
     }
     const resolvedHangableClusters = resolvedHangableClustersBuilder.build();
@@ -481,21 +511,21 @@ export class LineBreakPlanningStage {
     const attachedInlineVirtualBoundaryAfterClusters = attachedInlineInterCharBoundaries.virtualBoundaryAfterClusters;
     const attachedInlineVirtualSinoWesternBoundaryAfterClusters = attachedInlineInterCharBoundaries.virtualSinoWesternBoundaryAfterClusters;
     const attachedInlineForbiddenLineStartClustersBuilder = SortedTable.setBuilder<number>(SortedTable.compareInts);
-    for (let it = 0, count7 = inlineAttachments.length; it < count7; it += 1) {
+    for (let it = 0, count8 = inlineAttachments.length; it < count8; it += 1) {
       if (inlineAttachments[it]!.kind === "Previous") {
         attachedInlineForbiddenLineStartClustersBuilder.put(it);
       }
     }
     const attachedInlineForbiddenLineStartClusters = attachedInlineForbiddenLineStartClustersBuilder.build();
     const forbiddenLineStartClustersBuilder = SortedTable.setBuilder<number>(SortedTable.compareInts);
-    for (let idx2 = 0, count20 = prep.naturalClusters.length; idx2 < count20; idx2 += 1) {
+    for (let idx2 = 0, count21 = prep.naturalClusters.length; idx2 < count21; idx2 += 1) {
       if (attachedInlineForbiddenLineStartClusters.has(idx2) || prep.zeroWidthBreakClusters.has(idx2) || PunctuationGeometryStage.isCjkKinsokuRole(prep.clusterRoles[idx2]!) && prep.kinsokuRule.forbiddenAtLineStart(prep.naturalClusters[idx2]!) || unicodePunctuationBoundaries.forbiddenLineStartClusters.has(idx2) || asciiPointMarkKinsoku.forbiddenLineStartClusters.has(idx2) || inlineObjectKinsoku.forbiddenLineStartClusters.has(idx2)) {
         forbiddenLineStartClustersBuilder.put(idx2);
       }
     }
     const forbiddenLineStartClusters = forbiddenLineStartClustersBuilder.build();
     const forbiddenLineEndClustersBuilder = SortedTable.setBuilder<number>(SortedTable.compareInts);
-    for (let idx3 = 0, count21 = prep.naturalClusters.length; idx3 < count21; idx3 += 1) {
+    for (let idx3 = 0, count22 = prep.naturalClusters.length; idx3 < count22; idx3 += 1) {
       if (PunctuationGeometryStage.isCjkKinsokuRole(prep.clusterRoles[idx3]!) && prep.kinsokuRule.forbiddenAtLineEnd(prep.naturalClusters[idx3]!) || unicodePunctuationBoundaries.forbiddenLineEndClusters.has(idx3)) {
         forbiddenLineEndClustersBuilder.put(idx3);
       }
@@ -503,7 +533,7 @@ export class LineBreakPlanningStage {
     const forbiddenLineEndClusters = forbiddenLineEndClustersBuilder.build();
     const hyphenBreakClustersBuilder = SortedTable.setBuilder<number>(SortedTable.compareInts);
     if (prep.hyphenOffsets.size() > 0) {
-      for (let it2 = 0, count22 = prep.naturalClusters.length; it2 < count22; it2 += 1) {
+      for (let it2 = 0, count23 = prep.naturalClusters.length; it2 < count23; it2 += 1) {
         if (prep.hyphenOffsets.has(prep.naturalClusters[it2]!.range.start)) {
           hyphenBreakClustersBuilder.put(it2);
         }
@@ -511,13 +541,13 @@ export class LineBreakPlanningStage {
     }
     const hyphenBreakClusters = hyphenBreakClustersBuilder.build();
     const clusterIndexBySourceStartBuilder = SortedTable.mapBuilder<number, number>(SortedTable.compareInts);
-    for (let it3 = 0, count23 = prep.naturalClusters.length; it3 < count23; it3 += 1) {
+    for (let it3 = 0, count24 = prep.naturalClusters.length; it3 < count24; it3 += 1) {
       clusterIndexBySourceStartBuilder.put(prep.naturalClusters[it3]!.range.start, it3);
     }
     const clusterIndexBySourceStart = clusterIndexBySourceStartBuilder.build();
     const progressiveTechnicalWhitespaceStretchCapacity = engine.justifier.progressiveTechnicalWhitespaceStretchCapacity(prep.fontSize);
     const progressiveBreakOpportunitiesBuilder = SortedTable.mapBuilder<number, ProgressiveBreakOpportunity>(SortedTable.compareInts);
-    for (let i9 = 0, count24 = prep.progressiveBreakOffsets.size(); i9 < count24; i9 += 1) {
+    for (let i9 = 0, count25 = prep.progressiveBreakOffsets.size(); i9 < count25; i9 += 1) {
       const sourceOffset = prep.progressiveBreakOffsets.keyAt(i9);
       const opportunity = prep.progressiveBreakOffsets.valueAt(i9);
       if (clusterIndexBySourceStart.has(sourceOffset)) {
@@ -528,7 +558,7 @@ export class LineBreakPlanningStage {
     }
     const progressiveBreakOpportunities = progressiveBreakOpportunitiesBuilder.build();
     const progressiveTechnicalRanges = new Array<TextRange>();
-    for (let i10 = 0, count25 = prep.input.content.lineBreakSpans.length; i10 < count25; i10 += 1) {
+    for (let i10 = 0, count26 = prep.input.content.lineBreakSpans.length; i10 < count26; i10 += 1) {
       if (prep.input.content.lineBreakSpans[i10]!.policy.kind === "ProgressiveTechnical") {
         progressiveTechnicalRanges.push(prep.input.content.lineBreakSpans[i10]!.range);
       }
@@ -536,7 +566,7 @@ export class LineBreakPlanningStage {
     const progressiveTechnicalOverlap = new IntervalOverlapIndex(progressiveTechnicalRanges);
     const rawNumberSymbolRanges = NumberSymbolCohesion.unbreakableRanges(prep.text);
     const numberSymbolClusterRanges = new Array<IntRange>();
-    for (let i11 = 0, count8 = rawNumberSymbolRanges.length; i11 < count8; i11 += 1) {
+    for (let i11 = 0, count9 = rawNumberSymbolRanges.length; i11 < count9; i11 += 1) {
       const sourceRange = rawNumberSymbolRanges[i11]!;
       if (!progressiveTechnicalOverlap.overlaps(sourceRange.start, sourceRange.end + 1)) {
         const idxRange = PunctuationGeometryLedger.clusterIndexRangeFor(prep.naturalClusters, new TextRange(sourceRange.start, sourceRange.end + 1));
@@ -546,10 +576,10 @@ export class LineBreakPlanningStage {
       }
     }
     const numberSymbolUnbreakableRanges = new Array<IntRange>();
-    for (let i12 = 0, count9 = numberSymbolClusterRanges.length; i12 < count9; i12 += 1) {
+    for (let i12 = 0, count10 = numberSymbolClusterRanges.length; i12 < count10; i12 += 1) {
       const idxRange2 = numberSymbolClusterRanges[i12]!;
       const rangeTerms: number[] = [];
-      for (let cIdx = idxRange2.start, count26 = idxRange2.end + 1; cIdx < count26; cIdx += 1) {
+      for (let cIdx = idxRange2.start, count27 = idxRange2.end + 1; cIdx < count27; cIdx += 1) {
         rangeTerms.push(prep.naturalClusters[cIdx]!.advance);
       }
       if (AccurateSum.of(rangeTerms) <= prep.measure) {
@@ -557,7 +587,7 @@ export class LineBreakPlanningStage {
       }
     }
     const noStretchBoundaryClustersBuilder = SortedTable.setBuilder<number>(SortedTable.compareInts);
-    for (let idx4 = 0, count27 = prep.naturalClusters.length; idx4 < count27; idx4 += 1) {
+    for (let idx4 = 0, count28 = prep.naturalClusters.length; idx4 < count28; idx4 += 1) {
       const cls = (prep.atomClassByRange.has(prep.naturalClusters[idx4]!.range) ? prep.atomClassByRange.get(prep.naturalClusters[idx4]!.range)! : null);
       if ((cls !== null && cls!.kind === "Connector") || (cls !== null && cls!.kind === "Solidus") || (cls !== null && cls!.kind === "Dash") || (cls !== null && cls!.kind === "Ellipsis")) {
         noStretchBoundaryClustersBuilder.put(idx4);
@@ -565,18 +595,18 @@ export class LineBreakPlanningStage {
     }
     const noStretchBoundaryClusters = noStretchBoundaryClustersBuilder.build();
     const noStretchBoundaryAfterClustersBuilder = SortedTable.setBuilder<number>(SortedTable.compareInts);
-    for (let i13 = 0, count28 = numberSymbolClusterRanges.length; i13 < count28; i13 += 1) {
+    for (let i13 = 0, count29 = numberSymbolClusterRanges.length; i13 < count29; i13 += 1) {
       const range = numberSymbolClusterRanges[i13]!;
-      for (let cIdx2 = range.start, count29 = range.end; cIdx2 < count29; cIdx2 += 1) {
+      for (let cIdx2 = range.start, count30 = range.end; cIdx2 < count30; cIdx2 += 1) {
         noStretchBoundaryAfterClustersBuilder.put(cIdx2);
       }
     }
-    for (let i14 = 0, count30 = prep.inlineObjectAttachmentNoStretchBoundaries.size(); i14 < count30; i14 += 1) {
+    for (let i14 = 0, count31 = prep.inlineObjectAttachmentNoStretchBoundaries.size(); i14 < count31; i14 += 1) {
       noStretchBoundaryAfterClustersBuilder.put(prep.inlineObjectAttachmentNoStretchBoundaries.at(i14));
     }
     const noStretchBoundaryAfterClusters = noStretchBoundaryAfterClustersBuilder.build();
     const technicalBoundaryAfterClustersBuilder = SortedTable.mapBuilder<number, ProgressiveBreakTier>(SortedTable.compareInts);
-    for (let i15 = 0, count31 = progressiveBreakOpportunities.size(); i15 < count31; i15 += 1) {
+    for (let i15 = 0, count32 = progressiveBreakOpportunities.size(); i15 < count32; i15 += 1) {
       const rightIndex = progressiveBreakOpportunities.keyAt(i15);
       const opportunity2 = progressiveBreakOpportunities.valueAt(i15);
       if (opportunity2.tier.kind === "Whitespace") {
@@ -588,7 +618,7 @@ export class LineBreakPlanningStage {
     for (let i16 = 0; i16 < prep.naturalClusters.length; i16 += 1) {
       boundaryEligible.push(false);
     }
-    for (let leftIndex = 0, count32 = prep.naturalClusters.length - 1; leftIndex < count32; leftIndex += 1) {
+    for (let leftIndex = 0, count33 = prep.naturalClusters.length - 1; leftIndex < count33; leftIndex += 1) {
       const rightIndex2 = leftIndex + 1;
       const left = prep.naturalClusters[leftIndex]!;
       const right = prep.naturalClusters[rightIndex2]!;
@@ -605,13 +635,13 @@ export class LineBreakPlanningStage {
       addedKeys.push(false);
     }
     const emergencyTrackingBoundaryAfterClustersBuilder = SortedTable.mapBuilder<number, string>(SortedTable.compareInts);
-    for (let i18 = 0, count33 = prep.emergencyTrackingEligibilityDecisions.length; i18 < count33; i18 += 1) {
+    for (let i18 = 0, count34 = prep.emergencyTrackingEligibilityDecisions.length; i18 < count34; i18 += 1) {
       const decision3 = prep.emergencyTrackingEligibilityDecisions[i18]!;
       const span = PunctuationGeometryLedger.clusterIndexRangeFor(prep.naturalClusters, decision3.range);
       if (span === null) {
         continue;
       }
-      for (let leftIndex2 = span!.start, count34 = span!.end; leftIndex2 < count34; leftIndex2 += 1) {
+      for (let leftIndex2 = span!.start, count35 = span!.end; leftIndex2 < count35; leftIndex2 += 1) {
         if (!boundaryEligible[leftIndex2]! || addedKeys[leftIndex2]!) {
           continue;
         }
@@ -621,7 +651,7 @@ export class LineBreakPlanningStage {
     }
     const emergencyTrackingBoundaryAfterClusters = emergencyTrackingBoundaryAfterClustersBuilder.build();
     const adjustableInlineBoundaryRightClustersBuilder = SortedTable.setBuilder<number>(SortedTable.compareInts);
-    for (let i19 = 0, count35 = prep.uniformInlineObjectBoundaryAfterClusters.size(); i19 < count35; i19 += 1) {
+    for (let i19 = 0, count36 = prep.uniformInlineObjectBoundaryAfterClusters.size(); i19 < count36; i19 += 1) {
       const leftIndex3 = prep.uniformInlineObjectBoundaryAfterClusters.at(i19);
       const rightIndex3 = leftIndex3 + 1;
       if (noStretchBoundaryAfterClusters.has(leftIndex3) || noStretchBoundaryClusters.has(leftIndex3) || noStretchBoundaryClusters.has(rightIndex3)) {
@@ -631,40 +661,40 @@ export class LineBreakPlanningStage {
     }
     const adjustableInlineBoundaryRightClusters = adjustableInlineBoundaryRightClustersBuilder.build();
     const cjkInterCharBoundariesBuilder = SortedTable.setBuilder<number>(SortedTable.compareInts);
-    for (let it4 = 1, count36 = prep.naturalClusters.length; it4 < count36; it4 += 1) {
+    for (let it4 = 1, count37 = prep.naturalClusters.length; it4 < count37; it4 += 1) {
       if (!attachedInlinePhysicalBoundaryAfterClusters.has(it4 - 1) && !noStretchBoundaryAfterClusters.has(it4 - 1) && prep.clusterRoles[it4 - 1]!.kind === "CjkText" && prep.clusterRoles[it4]!.kind === "CjkText") {
         cjkInterCharBoundariesBuilder.put(it4);
       }
     }
-    for (let i20 = 0, count37 = adjustableInlineBoundaryRightClusters.size(); i20 < count37; i20 += 1) {
+    for (let i20 = 0, count38 = adjustableInlineBoundaryRightClusters.size(); i20 < count38; i20 += 1) {
       cjkInterCharBoundariesBuilder.put(adjustableInlineBoundaryRightClusters.at(i20));
     }
-    for (let i21 = 0, count38 = westernBracketCjkInterCharBoundaryAfterClusters.size(); i21 < count38; i21 += 1) {
+    for (let i21 = 0, count39 = westernBracketCjkInterCharBoundaryAfterClusters.size(); i21 < count39; i21 += 1) {
       cjkInterCharBoundariesBuilder.put(westernBracketCjkInterCharBoundaryAfterClusters.at(i21) + 1);
     }
-    for (let i22 = 0, count39 = attachedInlineVirtualBoundaryAfterClusters.size(); i22 < count39; i22 += 1) {
+    for (let i22 = 0, count40 = attachedInlineVirtualBoundaryAfterClusters.size(); i22 < count40; i22 += 1) {
       cjkInterCharBoundariesBuilder.put(attachedInlineVirtualBoundaryAfterClusters.keyAt(i22) + 1);
     }
     const cjkInterCharBoundaries = cjkInterCharBoundariesBuilder.build();
     const sinoWesternBoundariesBuilder = SortedTable.setBuilder<number>(SortedTable.compareInts);
-    for (let it5 = 1, count40 = prep.naturalClusters.length; it5 < count40; it5 += 1) {
+    for (let it5 = 1, count41 = prep.naturalClusters.length; it5 < count41; it5 += 1) {
       if (!attachedInlinePhysicalBoundaryAfterClusters.has(it5 - 1) && !noStretchBoundaryAfterClusters.has(it5 - 1) && PunctuationGeometryStage.isEastAsianSpacingBoundaryAt(it5, prep.naturalClusters, prep.eastAsianSpacingEdges)) {
         sinoWesternBoundariesBuilder.put(it5);
       }
     }
-    for (let i23 = 0, count41 = attachedInlineVirtualSinoWesternBoundaryAfterClusters.size(); i23 < count41; i23 += 1) {
+    for (let i23 = 0, count42 = attachedInlineVirtualSinoWesternBoundaryAfterClusters.size(); i23 < count42; i23 += 1) {
       sinoWesternBoundariesBuilder.put(attachedInlineVirtualSinoWesternBoundaryAfterClusters.at(i23) + 1);
     }
     const sinoWesternBoundaries = sinoWesternBoundariesBuilder.build();
     const virtualBoundaries = UnicodePunctuationBoundaryResolver.resolveAttachedInlineVirtualBoundaries(inlineAttachments);
-    const count10 = virtualBoundaries.length;
+    const count11 = virtualBoundaries.length;
     const attachedInlineUnbreakableRanges: IntRange[] = [];
-    for (let i24 = 0; i24 < count10; i24 += 1) {
+    for (let i24 = 0; i24 < count11; i24 += 1) {
       const boundary = virtualBoundaries[i24]!;
       attachedInlineUnbreakableRanges.push(new IntRange(boundary.previousClusterIndex, boundary.attachedClusterRange.end));
     }
     const allUnbreakables = new Array<IntRange>();
-    for (let i25 = 0, count42 = prep.input.decorations.length; i25 < count42; i25 += 1) {
+    for (let i25 = 0, count43 = prep.input.decorations.length; i25 < count43; i25 += 1) {
       const d2 = prep.input.decorations[i25]!;
       if (d2.kind.kind === "Mourning") {
         const r = PunctuationGeometryLedger.clusterIndexRangeFor(prep.naturalClusters, d2.range);
@@ -673,28 +703,28 @@ export class LineBreakPlanningStage {
         }
       }
     }
-    for (let i26 = 0, count43 = prep.pinyinSpans.length; i26 < count43; i26 += 1) {
+    for (let i26 = 0, count44 = prep.pinyinSpans.length; i26 < count44; i26 += 1) {
       const r2 = PunctuationGeometryLedger.clusterIndexRangeFor(prep.naturalClusters, prep.pinyinSpans[i26]!.baseRange);
       if (r2 !== null) {
         allUnbreakables.push((r2)!);
       }
     }
-    for (let i27 = 0, count11 = attachedInlineUnbreakableRanges.length; i27 < count11; i27 += 1) {
+    for (let i27 = 0, count12 = attachedInlineUnbreakableRanges.length; i27 < count12; i27 += 1) {
       allUnbreakables.push(attachedInlineUnbreakableRanges[i27]!);
     }
-    for (let i28 = 0, count12 = numberSymbolUnbreakableRanges.length; i28 < count12; i28 += 1) {
+    for (let i28 = 0, count13 = numberSymbolUnbreakableRanges.length; i28 < count13; i28 += 1) {
       allUnbreakables.push(numberSymbolUnbreakableRanges[i28]!);
     }
-    for (let i29 = 0, count44 = unicodePunctuationBoundaries.unbreakableRanges.length; i29 < count44; i29 += 1) {
+    for (let i29 = 0, count45 = unicodePunctuationBoundaries.unbreakableRanges.length; i29 < count45; i29 += 1) {
       allUnbreakables.push(unicodePunctuationBoundaries.unbreakableRanges[i29]!);
     }
-    for (let i30 = 0, count45 = asciiPointMarkKinsoku.unbreakableRanges.length; i30 < count45; i30 += 1) {
+    for (let i30 = 0, count46 = asciiPointMarkKinsoku.unbreakableRanges.length; i30 < count46; i30 += 1) {
       allUnbreakables.push(asciiPointMarkKinsoku.unbreakableRanges[i30]!);
     }
-    for (let i31 = 0, count46 = inlineObjectKinsoku.unbreakableRanges.length; i31 < count46; i31 += 1) {
+    for (let i31 = 0, count47 = inlineObjectKinsoku.unbreakableRanges.length; i31 < count47; i31 += 1) {
       allUnbreakables.push(inlineObjectKinsoku.unbreakableRanges[i31]!);
     }
-    for (let i32 = 0, count47 = prep.inlineObjectBoundaryUnbreakableRanges.length; i32 < count47; i32 += 1) {
+    for (let i32 = 0, count48 = prep.inlineObjectBoundaryUnbreakableRanges.length; i32 < count48; i32 += 1) {
       allUnbreakables.push(prep.inlineObjectBoundaryUnbreakableRanges[i32]!);
     }
     const unbreakableRanges = new UnbreakableRanges(allUnbreakables);
@@ -702,7 +732,7 @@ export class LineBreakPlanningStage {
     for (let i33 = 0; i33 < asciiPointMarkKinsoku.extendableHangRanges.length; i33 += 1) {
       combinedExtendableHangRanges.push(asciiPointMarkKinsoku.extendableHangRanges[i33]!);
     }
-    for (let i34 = 0, count48 = inlineObjectKinsoku.extendableHangRanges.length; i34 < count48; i34 += 1) {
+    for (let i34 = 0, count49 = inlineObjectKinsoku.extendableHangRanges.length; i34 < count49; i34 += 1) {
       combinedExtendableHangRanges.push(inlineObjectKinsoku.extendableHangRanges[i34]!);
     }
     let lineSolution = new LineSolution([]);

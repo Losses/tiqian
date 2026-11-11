@@ -145,41 +145,77 @@ export class PunctuationGeometryLedger {
   }
 
   private consumeSpacing(p: PunctuationSpacingCompressionResult): PunctuationGeometryLedger {
-    let n = PunctuationGeometryLedger.cloneB(this.budgets);
+    const keys = new Array<number>();
+    const values = new Array<GlueBudget>();
+    for (let i = 0, count9 = this.budgets.size(); i < count9; i += 1) {
+      keys.push(this.budgets.keyAt(i));
+      values.push(this.budgets.valueAt(i));
+    }
     {
-      const _g1 = p.adjustments;
-      for (let _g_index = 0, count8 = _g1.length; _g_index < count8; _g_index += 1) {
-        const a = _g1[_g_index]!;
+      const _g12 = p.adjustments;
+      for (let _g_index = 0, count10 = _g12.length; _g_index < count10; _g_index += 1) {
+        const a = _g12[_g_index]!;
         let idx = -1;
-        for (let i = 0, count9 = this.naturalClusters.length; i < count9; i += 1) {
-          if (PunctuationGeometryLedger.isInside(a.reductionTargetRange, this.naturalClusters[i]!.range)) {
-            idx = i;
-            break;
-          }
-        }
-        if (idx >= 0 && n.has(idx)) {
-          const q = n.get(idx);
-          let replacement: GlueBudget;
-          if ((this.geometries.get(idx)!.anchor !== null && this.geometries.get(idx)!.anchor!.kind === "Center")) {
-            const x = Math.min(a.reduction / 2, Math.min(q!.leadingRemaining, q!.trailingRemaining));
-            replacement = new GlueBudget(q!.leadingNatural, q!.leadingConsumed + x, q!.trailingNatural, q!.trailingConsumed + x);
+        let low = 0;
+        let high = this.naturalClusters.length - 1;
+        while (low <= high) {
+          const middle = low + high >> 1;
+          const clusterRange = this.naturalClusters[middle]!.range;
+          if (a.reductionTargetRange.start < clusterRange.start) {
+            high = middle - 1;
           } else {
-            if (q!.trailingRemaining >= q!.leadingRemaining) {
-              replacement = new GlueBudget(q!.leadingNatural, q!.leadingConsumed, q!.trailingNatural, Math.min(q!.trailingNatural, q!.trailingConsumed + a.reduction));
+            if (a.reductionTargetRange.start >= clusterRange.end) {
+              low = middle + 1;
             } else {
-              replacement = new GlueBudget(q!.leadingNatural, Math.min(q!.leadingNatural, q!.leadingConsumed + a.reduction), q!.trailingNatural, q!.trailingConsumed);
+              if (PunctuationGeometryLedger.isInside(a.reductionTargetRange, clusterRange)) {
+                idx = middle;
+              }
+              break;
             }
           }
-          const b = SortedTable.mapBuilder<number, GlueBudget>(SortedTable.compareInts);
-          for (let j = 0, count10 = n.size(); j < count10; j += 1) {
-            b.put(n.keyAt(j), n.valueAt(j));
-          }
-          b.put(idx, replacement);
-          n = b.build();
         }
+        if (idx < 0) {
+          continue;
+        }
+        let pos = -1;
+        let lo = 0;
+        let hi = keys.length - 1;
+        while (lo <= hi) {
+          const mid = lo + hi >> 1;
+          if (keys[mid]! < idx) {
+            lo = mid + 1;
+          } else {
+            if (keys[mid]! > idx) {
+              hi = mid - 1;
+            } else {
+              pos = mid;
+              break;
+            }
+          }
+        }
+        if (pos < 0) {
+          continue;
+        }
+        const q = values[pos]!;
+        let replacement: GlueBudget;
+        if ((this.geometries.get(idx)!.anchor !== null && this.geometries.get(idx)!.anchor!.kind === "Center")) {
+          const x = Math.min(a.reduction / 2, Math.min(q.leadingRemaining, q.trailingRemaining));
+          replacement = new GlueBudget(q.leadingNatural, q.leadingConsumed + x, q.trailingNatural, q.trailingConsumed + x);
+        } else {
+          if (q.trailingRemaining >= q.leadingRemaining) {
+            replacement = new GlueBudget(q.leadingNatural, q.leadingConsumed, q.trailingNatural, Math.min(q.trailingNatural, q.trailingConsumed + a.reduction));
+          } else {
+            replacement = new GlueBudget(q.leadingNatural, Math.min(q.leadingNatural, q.leadingConsumed + a.reduction), q.trailingNatural, q.trailingConsumed);
+          }
+        }
+        values[pos] = replacement;
       }
     }
-    return PunctuationGeometryLedger.replace(this, null, null, null, null, null, n);
+    const b = SortedTable.mapBuilder<number, GlueBudget>(SortedTable.compareInts);
+    for (let i2 = 0, count8 = keys.length; i2 < count8; i2 += 1) {
+      b.put(keys[i2]!, values[i2]!);
+    }
+    return PunctuationGeometryLedger.replace(this, null, null, null, null, null, b.build());
   }
 
   public consumeLineEdgeGlue(lines: LineCandidate[], force?: boolean | null): LineEdgeTrimResult {
@@ -374,19 +410,25 @@ export class PunctuationGeometryLedger {
 
   public static from(naturalClusters: Cluster[], punctuationAtoms: PunctuationAtom[], spacingPlan: PunctuationSpacingCompressionResult): PunctuationGeometryLedger {
     const geometryBuilder = SortedTable.mapBuilder<number, PunctuationClusterGeometry>(SortedTable.compareInts);
+    let atomCursor = 0;
     for (let i = 0, count17 = naturalClusters.length; i < count17; i += 1) {
+      const clusterRange = naturalClusters[i]!.range;
+      while (atomCursor < punctuationAtoms.length && punctuationAtoms[atomCursor]!.range.end <= clusterRange.start) {
+        atomCursor++;
+      }
       const atomsForCluster: PunctuationAtom[] = [];
-      for (let _g_index = 0, count18 = punctuationAtoms.length; _g_index < count18; _g_index += 1) {
-        const atom = punctuationAtoms[_g_index]!;
-        if (PunctuationGeometryLedger.isInside(atom.range, naturalClusters[i]!.range)) {
-          atomsForCluster.push(atom);
+      let atomIndex = atomCursor;
+      while (atomIndex < punctuationAtoms.length && punctuationAtoms[atomIndex]!.range.start < clusterRange.end) {
+        if (PunctuationGeometryLedger.isInside(punctuationAtoms[atomIndex]!.range, clusterRange)) {
+          atomsForCluster.push(punctuationAtoms[atomIndex]!);
         }
+        atomIndex++;
       }
       if (atomsForCluster.length > 0) {
         const bodyTerms: number[] = [];
-        for (let _g_index1 = 0, count19 = atomsForCluster.length; _g_index1 < count19; _g_index1 += 1) {
-          const atom2 = atomsForCluster[_g_index1]!;
-          bodyTerms.push(atom2.bodyWidth);
+        for (let _g_index = 0, count18 = atomsForCluster.length; _g_index < count18; _g_index += 1) {
+          const atom = atomsForCluster[_g_index]!;
+          bodyTerms.push(atom.bodyWidth);
         }
         const bodyWidth = AccurateSum.of(bodyTerms);
         geometryBuilder.put(i, new PunctuationClusterGeometry(naturalClusters[i]!.range, naturalClusters[i]!.text, naturalClusters[i]!.displayText, naturalClusters[i]!.advance, bodyWidth, atomsForCluster[0]!.leadingGlue.natural, atomsForCluster[atomsForCluster.length - 1]!.trailingGlue.natural, atomsForCluster[0]!.leadingGlueInitiallyConsumed, atomsForCluster[atomsForCluster.length - 1]!.trailingGlueInitiallyConsumed, (atomsForCluster.length === 1 ? atomsForCluster[0]!.glyphInlineShift : 0), (atomsForCluster.length === 1 ? atomsForCluster[0]!.glyphPlacementReason : null), (atomsForCluster.length === 1 ? atomsForCluster[0]!.anchor : null), atomsForCluster[0]!.geometrySource));
@@ -394,7 +436,7 @@ export class PunctuationGeometryLedger {
     }
     const geometries = geometryBuilder.build();
     const budgetBuilder = SortedTable.mapBuilder<number, GlueBudget>(SortedTable.compareInts);
-    for (let i2 = 0, count20 = geometries.size(); i2 < count20; i2 += 1) {
+    for (let i2 = 0, count19 = geometries.size(); i2 < count19; i2 += 1) {
       const index = geometries.keyAt(i2);
       const geometry = geometries.valueAt(i2);
       budgetBuilder.put(index, new GlueBudget(geometry.leadingGlueNatural, geometry.leadingGlueInitiallyConsumed, geometry.trailingGlueNatural, geometry.trailingGlueInitiallyConsumed));
@@ -404,7 +446,7 @@ export class PunctuationGeometryLedger {
 
   private static putB(m: SortedMapTable<number, GlueBudget>, k: number, v: GlueBudget): SortedMapTable<number, GlueBudget> {
     const b = SortedTable.mapBuilder<number, GlueBudget>(SortedTable.compareInts);
-    for (let i = 0, count21 = m.size(); i < count21; i += 1) {
+    for (let i = 0, count20 = m.size(); i < count20; i += 1) {
       b.put(m.keyAt(i), m.valueAt(i));
     }
     b.put(k, v);
@@ -413,7 +455,7 @@ export class PunctuationGeometryLedger {
 
   private static putF(m: SortedMapTable<number, number>, k: number, v: number): SortedMapTable<number, number> {
     const b = SortedTable.mapBuilder<number, number>(SortedTable.compareInts);
-    for (let i = 0, count22 = m.size(); i < count22; i += 1) {
+    for (let i = 0, count21 = m.size(); i < count21; i += 1) {
       b.put(m.keyAt(i), m.valueAt(i));
     }
     b.put(k, v);

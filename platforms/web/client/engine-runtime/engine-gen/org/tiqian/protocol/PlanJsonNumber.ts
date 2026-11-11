@@ -3,8 +3,8 @@
 import { floatToI32, formatFloatRuntime, i32ToFloat, readUnit } from "../../../runtime.ts";
 
 export class PlanJsonNumber {
-  private static fivePowers: string[] | null = null;
-  private static twoPowers: string[] | null = null;
+  private static fivePowers: string[] = [];
+  private static twoPowers: string[] = [];
 
   public static ecmaJsonNumber(floatValue: number): string {
     return formatFloatRuntime(i32ToFloat(floatToI32(floatValue)));
@@ -127,31 +127,31 @@ export class PlanJsonNumber {
   }
 
   private static fiveToThe(k: number): string {
-    if (PlanJsonNumber.fivePowers === null) {
+    if (PlanJsonNumber.fivePowers.length === 0) {
       PlanJsonNumber.fivePowers = ["1"];
     }
-    if (k < PlanJsonNumber.fivePowers!.length) {
-      return PlanJsonNumber.fivePowers![k]!;
+    if (k < PlanJsonNumber.fivePowers.length) {
+      return PlanJsonNumber.fivePowers[k]!;
     }
-    let digits = PlanJsonNumber.fivePowers![PlanJsonNumber.fivePowers!.length - 1]!;
-    for (let i = PlanJsonNumber.fivePowers!.length - 1; i < k; i += 1) {
+    let digits = PlanJsonNumber.fivePowers[PlanJsonNumber.fivePowers.length - 1]!;
+    for (let i = PlanJsonNumber.fivePowers.length - 1; i < k; i += 1) {
       digits = PlanJsonNumber.timesSmall(digits, 5);
-      PlanJsonNumber.fivePowers!.push(digits);
+      PlanJsonNumber.fivePowers.push(digits);
     }
     return digits;
   }
 
   private static twoToThe(k: number): string {
-    if (PlanJsonNumber.twoPowers === null) {
+    if (PlanJsonNumber.twoPowers.length === 0) {
       PlanJsonNumber.twoPowers = ["1"];
     }
-    if (k < PlanJsonNumber.twoPowers!.length) {
-      return PlanJsonNumber.twoPowers![k]!;
+    if (k < PlanJsonNumber.twoPowers.length) {
+      return PlanJsonNumber.twoPowers[k]!;
     }
-    let digits = PlanJsonNumber.twoPowers![PlanJsonNumber.twoPowers!.length - 1]!;
-    for (let i = PlanJsonNumber.twoPowers!.length - 1; i < k; i += 1) {
+    let digits = PlanJsonNumber.twoPowers[PlanJsonNumber.twoPowers.length - 1]!;
+    for (let i = PlanJsonNumber.twoPowers.length - 1; i < k; i += 1) {
       digits = PlanJsonNumber.timesSmall(digits, 2);
-      PlanJsonNumber.twoPowers!.push(digits);
+      PlanJsonNumber.twoPowers.push(digits);
     }
     return digits;
   }
@@ -321,11 +321,11 @@ export class PlanJsonNumber {
   }
 
   private static zeros(n: number): string {
-    let s = "";
+    let buf_b = "";
     for (let i = 0; i < n; i += 1) {
-      s += "0";
+      buf_b += "0";
     }
-    return s;
+    return buf_b;
   }
 
   private static trimZeros(s: string): string {
@@ -337,13 +337,16 @@ export class PlanJsonNumber {
   }
 
   private static reverse(s: string): string {
-    let r = "";
+    let buf_b = "";
     let i = s.length - 1;
     while (i >= 0) {
-      r += s.charAt(i);
+      {
+        const c = (Number.isNaN(s.charCodeAt(i)) ? null : s.charCodeAt(i))!;
+        buf_b += String.fromCodePoint(c);
+      }
       i--;
     }
-    return r;
+    return buf_b;
   }
 }
 

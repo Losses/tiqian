@@ -11,7 +11,7 @@ import { FontMetricSource } from "./../font/FontMetricSource.ts";
 import { FontMetricsRequest, FontMetricsResolver } from "./../font/FontMetrics.ts";
 import { RawFontMetrics } from "./../font/RawFontMetrics.ts";
 import { ITextShaper, ShapingInput, ShapingResult } from "./../shaping/TextShaper.ts";
-import { SortedMapTable } from "../../../runtime.ts";
+import { SortedMapTable, dictKey } from "../../../runtime.ts";
 
 export class ShapingEvidenceEntry {
   public readonly key: ShapingEvidenceKey;
@@ -102,7 +102,7 @@ export class ShapingEvidenceFns {
   }
 
   public static shapingKeyEquals(a: ShapingEvidenceKey, b: ShapingEvidenceKey): boolean {
-    if (a === b) {
+    if (dictKey(a) === dictKey(b)) {
       return true;
     }
     if (a.displayText !== b.displayText) {
@@ -271,7 +271,7 @@ export class MetricsEvidenceFns {
   }
 
   public static metricsKeyEquals(a: MetricsEvidenceKey, b: MetricsEvidenceKey): boolean {
-    if (a === b) {
+    if (dictKey(a) === dictKey(b)) {
       return true;
     }
     if (a.fontKey !== b.fontKey) {

@@ -52,7 +52,7 @@ import { PunctuationGeometryStage } from "./PunctuationGeometryStage.ts";
 import { PunctuationAtom, PunctuationSpacingAdjustment, PunctuationSpacingCompressionResult } from "./PunctuationModel.ts";
 import { QuotePair, QuotePairAwareFontRoleClassifier, QuoteRoleDecision } from "./QuotePairAnalyzer.ts";
 import { ShapingInput, ShapingResult } from "./../shaping/TextShaper.ts";
-import { SortedMapTable, SortedSetTable, SortedTable } from "../../../runtime.ts";
+import { SortedMapTable, SortedSetTable, SortedTable, dictKey } from "../../../runtime.ts";
 
 export class WidthIndependentAnnotationKey {
   public readonly text: string;
@@ -149,61 +149,42 @@ export interface WidthIndependentAnnotationCache {
 
 export class LruWidthIndependentAnnotationCache implements WidthIndependentAnnotationCache {
   public readonly maxEntries: number;
+  private readonly map: Map<WidthIndependentAnnotationKey, WidthIndependentParagraphAnnotation>;
   private readonly keys: WidthIndependentAnnotationKey[];
-  private readonly values: WidthIndependentParagraphAnnotation[];
 
   constructor(maxEntries: number) {
-    this.values = [];
     this.keys = [];
+    this.map = new Map<WidthIndependentAnnotationKey, WidthIndependentParagraphAnnotation>();
     this.maxEntries = (maxEntries)!;
   }
 
   public get(key: WidthIndependentAnnotationKey): WidthIndependentParagraphAnnotation | null {
-    let foundIndex = -1;
-    for (let i = 0, count = this.keys.length; i < count; i += 1) {
-      if (LruWidthIndependentAnnotationCache.keyEquals(this.keys[i]!, key)) {
-        foundIndex = i;
-        break;
-      }
-    }
-    if (foundIndex < 0) {
+    const value = (this.map.get(dictKey(key)) ?? null);
+    if (value === null) {
       return null;
     }
-    const k = this.keys[foundIndex]!;
-    const v = this.values[foundIndex]!;
-    this.keys.splice(foundIndex, 1);
-    this.values.splice(foundIndex, 1);
-    this.keys.push(k);
-    this.values.push(v);
-    return v;
+    LruWidthIndependentAnnotationCache.removeKeyFromList(this.keys, key);
+    this.keys.push(key);
+    return value;
   }
 
   public put(key: WidthIndependentAnnotationKey, annotation: WidthIndependentParagraphAnnotation): void {
-    let foundIndex = -1;
-    for (let i = 0, count2 = this.keys.length; i < count2; i += 1) {
-      if (LruWidthIndependentAnnotationCache.keyEquals(this.keys[i]!, key)) {
-        foundIndex = i;
-        break;
-      }
-    }
-    if (foundIndex >= 0) {
-      this.keys.splice(foundIndex, 1);
-      this.values.splice(foundIndex, 1);
+    if (this.map.has(dictKey(key))) {
+      LruWidthIndependentAnnotationCache.removeKeyFromList(this.keys, key);
     } else {
       if (this.keys.length >= this.maxEntries) {
+        const oldest = this.keys[0]!;
         this.keys.shift();
-        this.values.shift();
+        this.map.delete(dictKey(oldest));
       }
     }
     this.keys.push(key);
-    this.values.push(annotation);
+    this.map.set(dictKey(key), annotation);
   }
 
   public clear(): void {
-    while (this.keys.length > 0) {
-      this.keys.pop();
-      this.values.pop();
-    }
+    this.map.clear();
+    this.keys.splice(0, this.keys.length);
   }
 
   public get size(): number {
@@ -213,183 +194,13 @@ export class LruWidthIndependentAnnotationCache implements WidthIndependentAnnot
     return this.keys.length;
   }
 
-  private static textRangeEquals(a: TextRange, b: TextRange): boolean {
-    return a === b || a !== null && b !== null && a.start === b.start && a.end === b.end;
-  }
-
-  private static textStyleEquals(a: TextStyle, b: TextStyle): boolean {
-    if (a === b) {
-      return true;
-    }
-    if (a === null || b === null) {
-      return false;
-    }
-    return a.fontSize === b.fontSize && a.locale === b.locale && a.fontWeight === b.fontWeight && a.italic === b.italic && a.baselineShift === b.baselineShift && a.inlineAttachment === b.inlineAttachment && LruWidthIndependentAnnotationCache.stringsEqual(a.fontFamilies, b.fontFamilies);
-  }
-
-  private static textSpanEquals(a: TextSpan, b: TextSpan): boolean {
-    return a === b || a !== null && b !== null && LruWidthIndependentAnnotationCache.textRangeEquals(a.range, b.range) && LruWidthIndependentAnnotationCache.textStyleEquals(a.style, b.style);
-  }
-
-  private static lineBreakSpanEquals(a: LineBreakSpan, b: LineBreakSpan): boolean {
-    return a === b || a !== null && b !== null && LruWidthIndependentAnnotationCache.textRangeEquals(a.range, b.range) && a.policy === b.policy;
-  }
-
-  private static decorationEquals(a: DecorationSpan, b: DecorationSpan): boolean {
-    return a === b || a !== null && b !== null && LruWidthIndependentAnnotationCache.textRangeEquals(a.range, b.range) && a.kind === b.kind;
-  }
-
-  private static rubyEquals(a: RubySpan, b: RubySpan): boolean {
-    if (a === b) {
-      return true;
-    }
-    if (a === null || b === null || !LruWidthIndependentAnnotationCache.textRangeEquals(a.baseRange, b.baseRange) || a.text !== b.text || a.kind !== b.kind || a.locale !== b.locale) {
-      return false;
-    }
-    return LruWidthIndependentAnnotationCache.stringsEqual(a.fontFamilies, b.fontFamilies);
-  }
-
-  private static inlineBoxEquals(a: InlineBoxSpan, b: InlineBoxSpan): boolean {
-    return a === b || a !== null && b !== null && LruWidthIndependentAnnotationCache.textRangeEquals(a.range, b.range) && a.inlineStart === b.inlineStart && a.inlineEnd === b.inlineEnd && a.outerSpacing === b.outerSpacing;
-  }
-
-  private static preferredStretchEquals(a: InlineObjectPreferredStretch, b: InlineObjectPreferredStretch): boolean {
-    if (a === b) {
-      return true;
-    }
-    if (a === null || b === null) {
-      return false;
-    }
-    return a.kind === b.kind && a.naturalWidth === b.naturalWidth && a.targetWidth === b.targetWidth;
-  }
-
-  private static boundaryAdjustmentEquals(a: InlineObjectBoundaryAdjustment, b: InlineObjectBoundaryAdjustment): boolean {
-    if (a === b) {
-      return true;
-    }
-    if (a === null || b === null) {
-      return false;
-    }
-    return a.participatesInUniformStretch === b.participatesInUniformStretch && LruWidthIndependentAnnotationCache.preferredStretchEquals((a.preferredStretch)!, (b.preferredStretch)!) && a.shrinkCapacity === b.shrinkCapacity && a.lineEndDiscardableAdvance === b.lineEndDiscardableAdvance && a.preventsLineBreak === b.preventsLineBreak;
-  }
-
-  private static inlineObjectEquals(a: InlineObjectSpan, b: InlineObjectSpan): boolean {
-    return a === b || a !== null && b !== null && LruWidthIndependentAnnotationCache.textRangeEquals(a.range, b.range) && a.advance === b.advance && a.ascent === b.ascent && a.descent === b.descent && LruWidthIndependentAnnotationCache.boundaryAdjustmentEquals(a.leadingBoundary, b.leadingBoundary) && LruWidthIndependentAnnotationCache.boundaryAdjustmentEquals(a.trailingBoundary, b.trailingBoundary);
-  }
-
-  private static stringsEqual(a: readonly string[], b: readonly string[]): boolean {
-    if (a === b) {
-      return true;
-    }
-    const count3 = a.length;
-    if (a === null || b === null || count3 !== b.length) {
-      return false;
-    }
-    for (let i = 0; i < count3; i += 1) {
-      if (a[i]! !== b[i]!) {
-        return false;
+  private static removeKeyFromList(keys: WidthIndependentAnnotationKey[], key: WidthIndependentAnnotationKey): void {
+    for (let i = 0, count = keys.length; i < count; i += 1) {
+      if (dictKey(keys[i]!) === dictKey(key)) {
+        keys.splice(i, 1);
+        return;
       }
     }
-    return true;
-  }
-
-  private static intsEqual(a: readonly number[], b: readonly number[]): boolean {
-    if (a === b) {
-      return true;
-    }
-    const count4 = a.length;
-    if (a === null || b === null || count4 !== b.length) {
-      return false;
-    }
-    for (let i = 0; i < count4; i += 1) {
-      if (a[i]! !== b[i]!) {
-        return false;
-      }
-    }
-    return true;
-  }
-
-  private static mapEquals(a: SortedMapTable<TextRange, SortedSetTable<number>>, b: SortedMapTable<TextRange, SortedSetTable<number>>): boolean {
-    if (a === b) {
-      return true;
-    }
-    if (a === null || b === null || a.size() !== b.size()) {
-      return false;
-    }
-    for (let i = 0, count5 = a.size(); i < count5; i += 1) {
-      const ak = a.keyAt(i);
-      let matched = false;
-      for (let j = 0, count6 = b.size(); j < count6; j += 1) {
-        const bk = b.keyAt(j);
-        if (LruWidthIndependentAnnotationCache.textRangeEquals(ak, bk)) {
-          const av = a.valueAt(i);
-          const bv = b.valueAt(j);
-          if (av === bv) {
-            matched = true;
-          } else {
-            if (av === null || bv === null || av.size() !== bv.size()) {
-              return false;
-            } else {
-              matched = true;
-              for (let k = 0, count7 = av.size(); k < count7; k += 1) {
-                if (av.at(k) !== bv.at(k)) {
-                  matched = false;
-                  break;
-                }
-              }
-            }
-          }
-          break;
-        }
-      }
-      if (!matched) {
-        return false;
-      }
-    }
-    return true;
-  }
-
-  private static keyEquals(a: WidthIndependentAnnotationKey, b: WidthIndependentAnnotationKey): boolean {
-    if (a === b) {
-      return true;
-    }
-    if (a === null || b === null || a.text !== b.text || a.profileId.value !== b.profileId.value || a.emphasisDotGapEm !== b.emphasisDotGapEm || !LruWidthIndependentAnnotationCache.textStyleEquals(a.textStyle, b.textStyle)) {
-      return false;
-    }
-    if (a.spans.length !== b.spans.length || a.lineBreakSpans.length !== b.lineBreakSpans.length || a.decorations.length !== b.decorations.length || a.rubySpans.length !== b.rubySpans.length || a.inlineBoxes.length !== b.inlineBoxes.length || a.inlineObjects.length !== b.inlineObjects.length) {
-      return false;
-    }
-    for (let i = 0, count8 = a.spans.length; i < count8; i += 1) {
-      if (!LruWidthIndependentAnnotationCache.textSpanEquals(a.spans[i]!, b.spans[i]!)) {
-        return false;
-      }
-    }
-    for (let i2 = 0, count9 = a.lineBreakSpans.length; i2 < count9; i2 += 1) {
-      if (!LruWidthIndependentAnnotationCache.lineBreakSpanEquals(a.lineBreakSpans[i2]!, b.lineBreakSpans[i2]!)) {
-        return false;
-      }
-    }
-    for (let i3 = 0, count10 = a.decorations.length; i3 < count10; i3 += 1) {
-      if (!LruWidthIndependentAnnotationCache.decorationEquals(a.decorations[i3]!, b.decorations[i3]!)) {
-        return false;
-      }
-    }
-    for (let i4 = 0, count11 = a.rubySpans.length; i4 < count11; i4 += 1) {
-      if (!LruWidthIndependentAnnotationCache.rubyEquals(a.rubySpans[i4]!, b.rubySpans[i4]!)) {
-        return false;
-      }
-    }
-    for (let i5 = 0, count12 = a.inlineBoxes.length; i5 < count12; i5 += 1) {
-      if (!LruWidthIndependentAnnotationCache.inlineBoxEquals(a.inlineBoxes[i5]!, b.inlineBoxes[i5]!)) {
-        return false;
-      }
-    }
-    for (let i6 = 0, count13 = a.inlineObjects.length; i6 < count13; i6 += 1) {
-      if (!LruWidthIndependentAnnotationCache.inlineObjectEquals(a.inlineObjects[i6]!, b.inlineObjects[i6]!)) {
-        return false;
-      }
-    }
-    return LruWidthIndependentAnnotationCache.intsEqual(a.sourceBoundaries, b.sourceBoundaries) && LruWidthIndependentAnnotationCache.mapEquals(a.rejectedTechnicalTiersBySpan, b.rejectedTechnicalTiersBySpan);
   }
 }
 
@@ -403,9 +214,9 @@ export class WidthIndependentAnnotationCacheFns {
   }
 
   private static copyFontFamilies(families: readonly string[]): string[] {
-    const count14 = families.length;
+    const count2 = families.length;
     const result: string[] = [];
-    for (let i = 0; i < count14; i += 1) {
+    for (let i = 0; i < count2; i += 1) {
       result.push(families[i]!);
     }
     return result;
@@ -422,7 +233,7 @@ export class WidthIndependentAnnotationCacheFns {
   public static containingFontDecisions(clusters: Cluster[], items: FontDecision[]): (FontDecision | null)[] {
     let itemIndex = 0;
     const result = new Array<FontDecision | null>();
-    for (let i = 0, count15 = clusters.length; i < count15; i += 1) {
+    for (let i = 0, count3 = clusters.length; i < count3; i += 1) {
       const cluster = clusters[i]!;
       while (itemIndex < items.length && items[itemIndex]!.range.end <= cluster.range.start) {
         itemIndex += 1;
@@ -444,7 +255,7 @@ export class WidthIndependentAnnotationCacheFns {
   public static firstContainedAtom(clusters: Cluster[], items: PunctuationAtom[]): (PunctuationAtom | null)[] {
     let itemIndex = 0;
     const result = new Array<PunctuationAtom | null>();
-    for (let i = 0, count16 = clusters.length; i < count16; i += 1) {
+    for (let i = 0, count4 = clusters.length; i < count4; i += 1) {
       const cluster = clusters[i]!;
       while (itemIndex < items.length && items[itemIndex]!.range.end <= cluster.range.start) {
         itemIndex += 1;
@@ -464,9 +275,9 @@ export class WidthIndependentAnnotationCacheFns {
   }
 
   private static quoteToRoleOverrideInfos(decisions: QuoteRoleDecision[], text: string, baseClassifier: FontRoleClassifier, context: FontRoleContext): RoleOverrideInfo[] {
-    const count17 = decisions.length;
+    const count5 = decisions.length;
     const sorted: QuoteRoleDecision[] = [];
-    for (let i = 0; i < count17; i += 1) {
+    for (let i = 0; i < count5; i += 1) {
       sorted.push(decisions[i]!);
     }
     let rIdx = 1;
@@ -510,13 +321,13 @@ export class WidthIndependentAnnotationCacheFns {
     const text = input.content.text;
     const fontSize = input.textStyle.fontSize;
     const inlineObjectByRangeBuilder = SortedTable.mapBuilder<TextRange, InlineObjectSpan>(compareTextRange);
-    for (let i = 0, count25 = input.inlineObjects.length; i < count25; i += 1) {
+    for (let i = 0, count13 = input.inlineObjects.length; i < count13; i += 1) {
       const obj = input.inlineObjects[i]!;
       inlineObjectByRangeBuilder.put(obj.range, obj);
     }
     const inlineObjectByRange = inlineObjectByRangeBuilder.build();
     const sizedSpans = new Array<TextSpan>();
-    for (let i2 = 0, count26 = input.content.spans.length; i2 < count26; i2 += 1) {
+    for (let i2 = 0, count14 = input.content.spans.length; i2 < count14; i2 += 1) {
       const sp = input.content.spans[i2]!;
       if (sp.range.start < sp.range.end) {
         sizedSpans.push(sp);
@@ -524,7 +335,7 @@ export class WidthIndependentAnnotationCacheFns {
     }
     const styleAt = (offset: number): TextStyle => {
     let lastSpan: TextSpan | null = null;
-    for (let i3 = 0, count27 = sizedSpans.length; i3 < count27; i3 += 1) {
+    for (let i3 = 0, count15 = sizedSpans.length; i3 < count15; i3 += 1) {
       const sp2 = sizedSpans[i3]!;
       if (offset >= sp2.range.start && offset < sp2.range.end) {
         lastSpan = sp2;
@@ -536,14 +347,14 @@ export class WidthIndependentAnnotationCacheFns {
     return styleAt(offset).fontSize;
 };
     const emphasisRanges = new Array<TextRange>();
-    for (let i4 = 0, count28 = input.decorations.length; i4 < count28; i4 += 1) {
+    for (let i4 = 0, count16 = input.decorations.length; i4 < count16; i4 += 1) {
       const d = input.decorations[i4]!;
       if (d.kind.kind === "Emphasis") {
         emphasisRanges.push(d.range);
       }
     }
     const emphasisItalicAt = (offset: number): boolean => {
-    for (let i5 = 0, count29 = emphasisRanges.length; i5 < count29; i5 += 1) {
+    for (let i5 = 0, count17 = emphasisRanges.length; i5 < count17; i5 += 1) {
       const r = emphasisRanges[i5]!;
       if (offset >= r.start && offset < r.end) {
         return true;
@@ -558,7 +369,7 @@ export class WidthIndependentAnnotationCacheFns {
     return WidthIndependentAnnotationCacheFns.clampInt(styleAt(offset).fontWeight + 300, 1, 900);
 };
     const pinyinSpans = new Array<RubySpan>();
-    for (let i6 = 0, count30 = input.rubySpans.length; i6 < count30; i6 += 1) {
+    for (let i6 = 0, count18 = input.rubySpans.length; i6 < count18; i6 += 1) {
       const rs = input.rubySpans[i6]!;
       if (rs.kind.kind === "Pinyin") {
         pinyinSpans.push(rs);
@@ -574,25 +385,25 @@ export class WidthIndependentAnnotationCacheFns {
     addSpanBoundary(range.start);
     addSpanBoundary(range.end);
 };
-    for (let i7 = 0, count18 = sizedSpans.length; i7 < count18; i7 += 1) {
+    for (let i7 = 0, count6 = sizedSpans.length; i7 < count6; i7 += 1) {
       addSpanRange(sizedSpans[i7]!.range);
     }
-    for (let i8 = 0, count31 = input.decorations.length; i8 < count31; i8 += 1) {
+    for (let i8 = 0, count19 = input.decorations.length; i8 < count19; i8 += 1) {
       addSpanRange(input.decorations[i8]!.range);
     }
-    for (let i9 = 0, count32 = input.rubySpans.length; i9 < count32; i9 += 1) {
+    for (let i9 = 0, count20 = input.rubySpans.length; i9 < count20; i9 += 1) {
       addSpanRange(input.rubySpans[i9]!.baseRange);
     }
-    for (let i10 = 0, count33 = input.inlineBoxes.length; i10 < count33; i10 += 1) {
+    for (let i10 = 0, count21 = input.inlineBoxes.length; i10 < count21; i10 += 1) {
       addSpanRange(input.inlineBoxes[i10]!.range);
     }
-    for (let i11 = 0, count34 = input.inlineObjects.length; i11 < count34; i11 += 1) {
+    for (let i11 = 0, count22 = input.inlineObjects.length; i11 < count22; i11 += 1) {
       addSpanRange(input.inlineObjects[i11]!.range);
     }
-    for (let i12 = 0, count35 = input.content.lineBreakSpans.length; i12 < count35; i12 += 1) {
+    for (let i12 = 0, count23 = input.content.lineBreakSpans.length; i12 < count23; i12 += 1) {
       addSpanRange(input.content.lineBreakSpans[i12]!.range);
     }
-    for (let i13 = 0, count36 = input.content.sourceBoundaries.length; i13 < count36; i13 += 1) {
+    for (let i13 = 0, count24 = input.content.sourceBoundaries.length; i13 < count24; i13 += 1) {
       addSpanBoundary(input.content.sourceBoundaries[i13]!);
     }
     const spanBoundaries = spanBoundariesBuilder.build();
@@ -606,16 +417,16 @@ export class WidthIndependentAnnotationCacheFns {
     addEmojiBoundary(range.start);
     addEmojiBoundary(range.end);
 };
-    for (let i14 = 0, count37 = sizedSpans.length; i14 < count37; i14 += 1) {
+    for (let i14 = 0, count25 = sizedSpans.length; i14 < count25; i14 += 1) {
       addEmojiRange(sizedSpans[i14]!.range);
     }
-    for (let i15 = 0, count38 = input.inlineBoxes.length; i15 < count38; i15 += 1) {
+    for (let i15 = 0, count26 = input.inlineBoxes.length; i15 < count26; i15 += 1) {
       const box = input.inlineBoxes[i15]!;
       if (box.inlineStart !== 0.0 || box.inlineEnd !== 0.0 || box.outerSpacing.kind === "Narrow") {
         addEmojiRange(box.range);
       }
     }
-    for (let i16 = 0, count39 = input.inlineObjects.length; i16 < count39; i16 += 1) {
+    for (let i16 = 0, count27 = input.inlineObjects.length; i16 < count27; i16 += 1) {
       addEmojiRange(input.inlineObjects[i16]!.range);
     }
     const emojiShapingBoundaries = emojiShapingBoundariesBuilder.build();
@@ -625,7 +436,7 @@ export class WidthIndependentAnnotationCacheFns {
     const quotePairs = engine.quotePairAnalyzer.analyze(text);
     const quoteRoleDecisions = engine.quotePairAnalyzer.classifyQuoteRoles(text, quotePairs, context);
     const quoteRoleOverridesBuilder = SortedTable.mapBuilder<number, FontRole>(SortedTable.compareInts);
-    for (let i17 = 0, count19 = quoteRoleDecisions.length; i17 < count19; i17 += 1) {
+    for (let i17 = 0, count7 = quoteRoleDecisions.length; i17 < count7; i17 += 1) {
       quoteRoleOverridesBuilder.put(quoteRoleDecisions[i17]!.index, quoteRoleDecisions[i17]!.role);
     }
     const quoteRoleOverrides = quoteRoleOverridesBuilder.build();
@@ -635,20 +446,20 @@ export class WidthIndependentAnnotationCacheFns {
     const dashEllipsisRoleOverrideInfos = ContextualDashEllipsisRoles.toRoleOverrideInfos(dashEllipsisRoleDecisions, text, quoteAwareClassifier, context);
     const effectiveClassifier = (dashEllipsisRoleDecisions.length > 0 ? new ContextualDashEllipsisAwareFontRoleClassifier(quoteAwareClassifier, dashEllipsisRoleDecisions) : quoteAwareClassifier);
     const inlineObjectByStartBuilder = SortedTable.mapBuilder<number, InlineObjectSpan>(SortedTable.compareInts);
-    for (let i18 = 0, count40 = input.inlineObjects.length; i18 < count40; i18 += 1) {
+    for (let i18 = 0, count28 = input.inlineObjects.length; i18 < count28; i18 += 1) {
       const obj2 = input.inlineObjects[i18]!;
       inlineObjectByStartBuilder.put(obj2.range.start, obj2);
     }
     const clusterRanges = ClusterRoleResolution.clusterRoleRanges(text, effectiveClassifier, context, clreqProfile, spanBoundaries, emojiShapingBoundaries, inlineObjectByStartBuilder.build());
-    const count20 = quoteRoleOverrideInfos.length;
+    const count8 = quoteRoleOverrideInfos.length;
     const allRoleOverrides: RoleOverrideInfo[] = [];
-    for (let i19 = 0; i19 < count20; i19 += 1) {
+    for (let i19 = 0; i19 < count8; i19 += 1) {
       allRoleOverrides.push(quoteRoleOverrideInfos[i19]!);
     }
-    for (let i20 = 0, count21 = dashEllipsisRoleOverrideInfos.length; i20 < count21; i20 += 1) {
+    for (let i20 = 0, count9 = dashEllipsisRoleOverrideInfos.length; i20 < count9; i20 += 1) {
       allRoleOverrides.push(dashEllipsisRoleOverrideInfos[i20]!);
     }
-    for (let i21 = 0, count22 = clusterRanges.length; i21 < count22; i21 += 1) {
+    for (let i21 = 0, count10 = clusterRanges.length; i21 < count10; i21 += 1) {
       const ro = clusterRanges[i21]!.roleOverride;
       if (ro !== null) {
         allRoleOverrides.push((ro)!);
@@ -667,7 +478,7 @@ export class WidthIndependentAnnotationCacheFns {
     }
     const roleOverrideInfos = allRoleOverrides;
     const shapeableRanges = new Array<ResolvedClusterRange>();
-    for (let i22 = 0, count41 = clusterRanges.length; i22 < count41; i22 += 1) {
+    for (let i22 = 0, count29 = clusterRanges.length; i22 < count29; i22 += 1) {
       const cr = clusterRanges[i22]!;
       if (!cr.mandatoryBreak && !cr.zeroWidthSoftBreak && !inlineObjectByRange.has(cr.range)) {
         shapeableRanges.push(cr);
@@ -675,7 +486,7 @@ export class WidthIndependentAnnotationCacheFns {
     }
     const fontDecisions = new Array<FontDecision>();
     const fontDecisionByRangeBuilder = SortedTable.mapBuilder<TextRange, FontDecision>(compareTextRange);
-    for (let i23 = 0, count23 = shapeableRanges.length; i23 < count23; i23 += 1) {
+    for (let i23 = 0, count11 = shapeableRanges.length; i23 < count11; i23 += 1) {
       const resolvedRange = shapeableRanges[i23]!;
       const decision = engine.fallbackResolver.resolve(text, resolvedRange.range, new FontRequest(input.textStyle.fontFamilies, input.textStyle.locale, resolvedRange.role));
       fontDecisions.push(decision);
@@ -684,7 +495,7 @@ export class WidthIndependentAnnotationCacheFns {
     const fontDecisionByRange = fontDecisionByRangeBuilder.build();
     const baseShapingStage = ParagraphShapingStage.shapeParagraph(engine, input, text, fontSize, 1e9, clusterRanges, fontDecisionByRange, inlineObjectByRange, punctuationGlyphSubstitutor, styleAt, emphasisItalicAt, rejectedTechnicalTiersBySpan, null, null);
     const rubyFontGeometryBuilder = SortedTable.mapBuilder<RubySpan, RubyFontGeometry>(compareRubySpan);
-    for (let i24 = 0, count24 = pinyinSpans.length; i24 < count24; i24 += 1) {
+    for (let i24 = 0, count12 = pinyinSpans.length; i24 < count12; i24 += 1) {
       const ruby = pinyinSpans[i24]!;
       const metricText = (ruby.text.length === 0 ? "x" : ruby.text);
       const range = new TextRange(0, metricText.length);
@@ -701,12 +512,12 @@ export class WidthIndependentAnnotationCacheFns {
       const rubyWidthTerms: number[] = [];
       const glyphList = new Array<Glyph>();
       if (shaped !== null) {
-        for (let c = 0, count42 = shaped!.clusters.length; c < count42; c += 1) {
+        for (let c = 0, count30 = shaped!.clusters.length; c < count30; c += 1) {
           rubyWidthTerms.push(shaped!.clusters[c]!.advance);
         }
-        for (let r2 = 0, count43 = shaped!.glyphRuns.length; r2 < count43; r2 += 1) {
+        for (let r2 = 0, count31 = shaped!.glyphRuns.length; r2 < count31; r2 += 1) {
           const run = shaped!.glyphRuns[r2]!;
-          for (let g = 0, count44 = run.glyphs.length; g < count44; g += 1) {
+          for (let g = 0, count32 = run.glyphs.length; g < count32; g += 1) {
             glyphList.push(run.glyphs[g]!);
           }
         }
@@ -723,21 +534,21 @@ export class WidthIndependentAnnotationCacheFns {
   }
 
   private static computeRubySpread(natural: Cluster[], rubySize: number, pinyinSpans: RubySpan[], rubyFontGeometryBySpan: SortedMapTable<RubySpan, RubyFontGeometry>): SortedMapTable<number, number> {
-    const count46 = pinyinSpans.length;
-    if (count46 === 0) {
+    const count34 = pinyinSpans.length;
+    if (count34 === 0) {
       return SortedTable.mapBuilder<number, number>(SortedTable.compareInts).build();
     }
     const wordSpace = rubySize * 0.25;
     const leftX = new Array<number>();
     let acc = 0.0;
-    for (let i = 0, count45 = natural.length; i < count45; i += 1) {
+    for (let i = 0, count33 = natural.length; i < count33; i += 1) {
       leftX.push(acc);
       acc += natural[i]!.advance;
     }
     const measuresFirstCluster = new Array<number>();
     const measuresCenter = new Array<number>();
     const measuresRw = new Array<number>();
-    for (let i2 = 0; i2 < count46; i2 += 1) {
+    for (let i2 = 0; i2 < count34; i2 += 1) {
       const ruby = pinyinSpans[i2]!;
       const idxRange = PunctuationGeometryLedger.clusterIndexRangeFor(natural, ruby.baseRange);
       if (idxRange === null) {
@@ -770,7 +581,7 @@ export class WidthIndependentAnnotationCacheFns {
     const spreadKeys = new Array<number>();
     const spreadValues = new Array<number>();
     const getSpread = (key: number): number => {
-    for (let i3 = 0, count48 = spreadKeys.length; i3 < count48; i3 += 1) {
+    for (let i3 = 0, count36 = spreadKeys.length; i3 < count36; i3 += 1) {
       if (spreadKeys[i3]! === key) {
         return spreadValues[i3]!;
       }
@@ -778,7 +589,7 @@ export class WidthIndependentAnnotationCacheFns {
     return 0.0;
 };
     const putSpread = (key: number, val: number): void => {
-    for (let i4 = 0, count49 = spreadKeys.length; i4 < count49; i4 += 1) {
+    for (let i4 = 0, count37 = spreadKeys.length; i4 < count37; i4 += 1) {
       if (spreadKeys[i4]! === key) {
         spreadValues[i4] = val;
         return;
@@ -789,7 +600,7 @@ export class WidthIndependentAnnotationCacheFns {
 };
     let shift = 0.0;
     let prevRight = -1e9;
-    for (let m = 0, count50 = measuresFirstCluster.length; m < count50; m += 1) {
+    for (let m = 0, count38 = measuresFirstCluster.length; m < count38; m += 1) {
       const firstCluster = measuresFirstCluster[m]!;
       const rw = measuresRw[m]!;
       let center2 = measuresCenter[m]! + shift;
@@ -802,7 +613,7 @@ export class WidthIndependentAnnotationCacheFns {
       }
       prevRight = center2 + rw / 2.0;
     }
-    for (let i5 = 0, count47 = spreadKeys.length; i5 < count47; i5 += 1) {
+    for (let i5 = 0, count35 = spreadKeys.length; i5 < count35; i5 += 1) {
       spreadBuilder.put(spreadKeys[i5]!, spreadValues[i5]!);
     }
     return spreadBuilder.build();
@@ -859,17 +670,17 @@ export class WidthIndependentAnnotationCacheFns {
     const resolvedKinsoku = KinsokuModes.resolve(annotation.clreqProfile.kinsokuMode, measureEm);
     const kinsokuRule = new ClreqKinsokuRule(resolvedKinsoku.level);
     let hasProgSpan = false;
-    for (let i = 0, count60 = input.content.lineBreakSpans.length; i < count60; i += 1) {
+    for (let i = 0, count48 = input.content.lineBreakSpans.length; i < count48; i += 1) {
       if (input.content.lineBreakSpans[i]!.policy.kind === "ProgressiveTechnical") {
         hasProgSpan = true;
         break;
       }
     }
     let hasOverMeasureToken = false;
-    for (let i2 = 0, count61 = annotation.baseShapingStage.shapingResults.length; i2 < count61; i2 += 1) {
+    for (let i2 = 0, count49 = annotation.baseShapingStage.shapingResults.length; i2 < count49; i2 += 1) {
       const res = annotation.baseShapingStage.shapingResults[i2]!;
       const resTerms: number[] = [];
-      for (let c = 0, count62 = res.clusters.length; c < count62; c += 1) {
+      for (let c = 0, count50 = res.clusters.length; c < count50; c += 1) {
         resTerms.push(res.clusters[c]!.advance);
       }
       if (AccurateSum.of(resTerms) > measure) {
@@ -881,7 +692,7 @@ export class WidthIndependentAnnotationCacheFns {
     let shapingStage = annotation.baseShapingStage;
     if (needsDynamicShaping) {
       shapingStage = ParagraphShapingStage.shapeParagraph(engine, input, text, fontSize, measure, annotation.clusterRanges, annotation.fontDecisionByRange, annotation.inlineObjectByRange, annotation.punctuationGlyphSubstitutor, annotation.styleAt, (offset: number): boolean => {
-    for (let i3 = 0, count63 = input.decorations.length; i3 < count63; i3 += 1) {
+    for (let i3 = 0, count51 = input.decorations.length; i3 < count51; i3 += 1) {
       const d = input.decorations[i3]!;
       if (d.kind.kind === "Emphasis" && offset >= d.range.start && offset < d.range.end) {
         return true;
@@ -892,9 +703,9 @@ export class WidthIndependentAnnotationCacheFns {
     }
     const shapingResults = shapingStage.shapingResults;
     const rawNaturalClusters = new Array<Cluster>();
-    for (let i4 = 0, count51 = shapingResults.length; i4 < count51; i4 += 1) {
+    for (let i4 = 0, count39 = shapingResults.length; i4 < count39; i4 += 1) {
       const res2 = shapingResults[i4]!;
-      for (let c2 = 0, count64 = res2.clusters.length; c2 < count64; c2 += 1) {
+      for (let c2 = 0, count52 = res2.clusters.length; c2 < count52; c2 += 1) {
         rawNaturalClusters.push(res2.clusters[c2]!);
       }
     }
@@ -905,7 +716,20 @@ export class WidthIndependentAnnotationCacheFns {
     const openTypeFeatureKeys = new Array<TextRange>();
     const openTypeFeatureValues = new Array<string[]>();
     const addGlyphToClusterRange = (range: TextRange, g: Glyph): void => {
-    for (let i5 = 0, count65 = glyphsByClusterRangeKeys.length; i5 < count65; i5 += 1) {
+    const keyCount = glyphsByClusterRangeKeys.length;
+    if (keyCount > 0) {
+      const lastKey = glyphsByClusterRangeKeys[keyCount - 1]!;
+      if (lastKey.start === range.start && lastKey.end === range.end) {
+        glyphsByClusterRangeValues[keyCount - 1]!.push(g);
+        return;
+      }
+      if (range.start > lastKey.start) {
+        glyphsByClusterRangeKeys.push(range);
+        glyphsByClusterRangeValues.push([g]);
+        return;
+      }
+    }
+    for (let i5 = 0, count53 = glyphsByClusterRangeKeys.length; i5 < count53; i5 += 1) {
       if (glyphsByClusterRangeKeys[i5]!.start === range.start && glyphsByClusterRangeKeys[i5]!.end === range.end) {
         glyphsByClusterRangeValues[i5]!.push(g);
         return;
@@ -914,16 +738,16 @@ export class WidthIndependentAnnotationCacheFns {
     glyphsByClusterRangeKeys.push(range);
     glyphsByClusterRangeValues.push([g]);
 };
-    for (let i6 = 0, count66 = shapingResults.length; i6 < count66; i6 += 1) {
+    for (let i6 = 0, count54 = shapingResults.length; i6 < count54; i6 += 1) {
       const res3 = shapingResults[i6]!;
-      for (let r = 0, count67 = res3.glyphRuns.length; r < count67; r += 1) {
+      for (let r = 0, count55 = res3.glyphRuns.length; r < count55; r += 1) {
         const run = res3.glyphRuns[r]!;
         const seenRanges = new Array<TextRange>();
-        for (let g = 0, count69 = run.glyphs.length; g < count69; g += 1) {
+        for (let g = 0, count57 = run.glyphs.length; g < count57; g += 1) {
           const glyph = run.glyphs[g]!;
           addGlyphToClusterRange(glyph.clusterRange, glyph);
           let rangeSeen = false;
-          for (let sr = 0, count70 = seenRanges.length; sr < count70; sr += 1) {
+          for (let sr = 0, count58 = seenRanges.length; sr < count58; sr += 1) {
             if (seenRanges[sr]!.start === glyph.clusterRange.start && seenRanges[sr]!.end === glyph.clusterRange.end) {
               rangeSeen = true;
               break;
@@ -933,23 +757,38 @@ export class WidthIndependentAnnotationCacheFns {
             seenRanges.push(glyph.clusterRange);
           }
         }
-        for (let sr2 = 0, count68 = seenRanges.length; sr2 < count68; sr2 += 1) {
+        for (let sr2 = 0, count56 = seenRanges.length; sr2 < count56; sr2 += 1) {
           const range = seenRanges[sr2]!;
           const featCopy: string[] = [];
           for (let fi = 0; fi < run.openTypeFeatures.length; fi += 1) {
             featCopy.push(run.openTypeFeatures[fi]!);
           }
           let previousFeatures: string[] = null!;
-          for (let pi = 0, count71 = openTypeFeatureKeys.length; pi < count71; pi += 1) {
-            if (openTypeFeatureKeys[pi]!.start === range.start && openTypeFeatureKeys[pi]!.end === range.end) {
-              previousFeatures = openTypeFeatureValues[pi]!;
-              break;
+          let featureLookupDone = false;
+          const featureKeyCount = openTypeFeatureKeys.length;
+          if (featureKeyCount > 0) {
+            const lastFeatureKey = openTypeFeatureKeys[featureKeyCount - 1]!;
+            if (lastFeatureKey.start === range.start && lastFeatureKey.end === range.end) {
+              previousFeatures = openTypeFeatureValues[featureKeyCount - 1]!;
+              featureLookupDone = true;
+            } else {
+              if (range.start > lastFeatureKey.start) {
+                featureLookupDone = true;
+              }
+            }
+          }
+          if (!featureLookupDone) {
+            for (let pi = 0, count59 = openTypeFeatureKeys.length; pi < count59; pi += 1) {
+              if (openTypeFeatureKeys[pi]!.start === range.start && openTypeFeatureKeys[pi]!.end === range.end) {
+                previousFeatures = openTypeFeatureValues[pi]!;
+                break;
+              }
             }
           }
           if (previousFeatures !== null) {
             let sameFeatures = previousFeatures.length === featCopy.length;
             if (sameFeatures) {
-              for (let fi2 = 0, count72 = previousFeatures.length; fi2 < count72; fi2 += 1) {
+              for (let fi2 = 0, count60 = previousFeatures.length; fi2 < count60; fi2 += 1) {
                 if (previousFeatures[fi2]! !== featCopy[fi2]!) {
                   sameFeatures = false;
                   break;
@@ -966,7 +805,7 @@ export class WidthIndependentAnnotationCacheFns {
         }
       }
     }
-    for (let i7 = 0, count52 = glyphsByClusterRangeKeys.length; i7 < count52; i7 += 1) {
+    for (let i7 = 0, count40 = glyphsByClusterRangeKeys.length; i7 < count40; i7 += 1) {
       shapedGlyphsByClusterRangeBuilder.put(glyphsByClusterRangeKeys[i7]!, glyphsByClusterRangeValues[i7]!);
     }
     const shapedGlyphsByClusterRange = shapedGlyphsByClusterRangeBuilder.build();
@@ -977,7 +816,7 @@ export class WidthIndependentAnnotationCacheFns {
       inlineObjectRanges.push(input.inlineObjects[i8]!.range);
     }
     const narrowInlineBoxRanges = new Array<TextRange>();
-    for (let i9 = 0, count73 = input.inlineBoxes.length; i9 < count73; i9 += 1) {
+    for (let i9 = 0, count61 = input.inlineBoxes.length; i9 < count61; i9 += 1) {
       const box = input.inlineBoxes[i9]!;
       if (box.outerSpacing.kind === "Narrow") {
         narrowInlineBoxRanges.push(box.range);
@@ -985,9 +824,9 @@ export class WidthIndependentAnnotationCacheFns {
     }
     const narrowInlineBoxLeadingClustersBuilder = SortedTable.setBuilder<number>(SortedTable.compareInts);
     const narrowInlineBoxTrailingClustersBuilder = SortedTable.setBuilder<number>(SortedTable.compareInts);
-    for (let idx = 0, count53 = rawNaturalClusters.length; idx < count53; idx += 1) {
+    for (let idx = 0, count41 = rawNaturalClusters.length; idx < count41; idx += 1) {
       const cl = rawNaturalClusters[idx]!;
-      for (let j = 0, count74 = narrowInlineBoxRanges.length; j < count74; j += 1) {
+      for (let j = 0, count62 = narrowInlineBoxRanges.length; j < count62; j += 1) {
         if (narrowInlineBoxRanges[j]!.start === cl.range.start) {
           narrowInlineBoxLeadingClustersBuilder.put(idx);
         }
@@ -999,10 +838,10 @@ export class WidthIndependentAnnotationCacheFns {
     const narrowInlineBoxLeadingClusters = narrowInlineBoxLeadingClustersBuilder.build();
     const narrowInlineBoxTrailingClusters = narrowInlineBoxTrailingClustersBuilder.build();
     const resolvedSpacingEdges = new Array<EastAsianSpacingEdges>();
-    for (let index = 0, count75 = rawNaturalClusters.length; index < count75; index += 1) {
+    for (let index = 0, count63 = rawNaturalClusters.length; index < count63; index += 1) {
       const cluster = rawNaturalClusters[index]!;
       let isContained = false;
-      for (let j2 = 0, count76 = inlineObjectRanges.length; j2 < count76; j2 += 1) {
+      for (let j2 = 0, count64 = inlineObjectRanges.length; j2 < count64; j2 += 1) {
         if (WidthIndependentAnnotationCacheFns.isContainedIn(cluster.range, inlineObjectRanges[j2]!)) {
           isContained = true;
           break;
@@ -1019,7 +858,7 @@ export class WidthIndependentAnnotationCacheFns {
     }
     const verbatimRanges = input.content.autoSpaceSuppressedRanges;
     const verbatimSuppressedBoundary = (offset: number): boolean => {
-    for (let i10 = 0, count77 = verbatimRanges.length; i10 < count77; i10 += 1) {
+    for (let i10 = 0, count65 = verbatimRanges.length; i10 < count65; i10 += 1) {
       const vr = verbatimRanges[i10]!;
       if (vr.start < offset && offset < vr.end) {
         return true;
@@ -1030,7 +869,7 @@ export class WidthIndependentAnnotationCacheFns {
     let eastAsianSpacingEdges = resolvedSpacingEdges;
     if (verbatimRanges.length > 0) {
       const list = new Array<EastAsianSpacingEdges>();
-      for (let index2 = 0, count78 = resolvedSpacingEdges.length; index2 < count78; index2 += 1) {
+      for (let index2 = 0, count66 = resolvedSpacingEdges.length; index2 < count66; index2 += 1) {
         const edges = resolvedSpacingEdges[index2]!;
         const cluster2 = rawNaturalClusters[index2]!;
         const leadingSuppressed = !narrowInlineBoxLeadingClusters.has(index2) && verbatimSuppressedBoundary(cluster2.range.start);
@@ -1045,7 +884,7 @@ export class WidthIndependentAnnotationCacheFns {
     }
     const verbatimSuppressionDecisions = new Array<AutoSpaceDecisionInfo>();
     if (verbatimRanges.length > 0) {
-      for (let index3 = 1, count79 = rawNaturalClusters.length; index3 < count79; index3 += 1) {
+      for (let index3 = 1, count67 = rawNaturalClusters.length; index3 < count67; index3 += 1) {
         const offset = rawNaturalClusters[index3]!.range.start;
         if (!verbatimSuppressedBoundary(offset)) {
           continue;
@@ -1074,7 +913,7 @@ export class WidthIndependentAnnotationCacheFns {
     const boundaryIndices = new Array<number>();
     const boundaryAdjustments = new Array<InlineObjectBoundaryAdjustment>();
     const getRegisteredBoundary = (leftClusterIndex: number): InlineObjectBoundaryAdjustment | null => {
-    for (let i13 = 0, count80 = boundaryIndices.length; i13 < count80; i13 += 1) {
+    for (let i13 = 0, count68 = boundaryIndices.length; i13 < count68; i13 += 1) {
       if (boundaryIndices[i13]! === leftClusterIndex) {
         return boundaryAdjustments[i13]!;
       }
@@ -1082,7 +921,7 @@ export class WidthIndependentAnnotationCacheFns {
     return null;
 };
     const setRegisteredBoundary = (leftClusterIndex: number, boundary: InlineObjectBoundaryAdjustment): void => {
-    for (let i14 = 0, count81 = boundaryIndices.length; i14 < count81; i14 += 1) {
+    for (let i14 = 0, count69 = boundaryIndices.length; i14 < count69; i14 += 1) {
       if (boundaryIndices[i14]! === leftClusterIndex) {
         boundaryAdjustments[i14] = boundary;
         return;
@@ -1114,7 +953,7 @@ export class WidthIndependentAnnotationCacheFns {
     }
     setRegisteredBoundary(leftClusterIndex, new InlineObjectBoundaryAdjustment(previous!.participatesInUniformStretch || boundary.participatesInUniformStretch, preferred, Math.max(previous!.shrinkCapacity, boundary.shrinkCapacity), Math.max(previous!.lineEndDiscardableAdvance, boundary.lineEndDiscardableAdvance), previous!.preventsLineBreak || boundary.preventsLineBreak));
 };
-    for (let clusterIndex = 0, count54 = naturalClusters.length; clusterIndex < count54; clusterIndex += 1) {
+    for (let clusterIndex = 0, count42 = naturalClusters.length; clusterIndex < count42; clusterIndex += 1) {
       const cluster3 = naturalClusters[clusterIndex]!;
       const inlineObject = annotation.inlineObjectByRange.get(cluster3.range);
       if (inlineObject !== null) {
@@ -1122,7 +961,7 @@ export class WidthIndependentAnnotationCacheFns {
         if (clusterIndex > 0 && !WidthIndependentAnnotationCacheFns.isFixedBoundary(inlineObject!.leadingBoundary)) {
           registerInlineObjectBoundary(clusterIndex - 1, inlineObject!.leadingBoundary);
         }
-        if (clusterIndex < count54 - 1 && !WidthIndependentAnnotationCacheFns.isFixedBoundary(inlineObject!.trailingBoundary)) {
+        if (clusterIndex < count42 - 1 && !WidthIndependentAnnotationCacheFns.isFixedBoundary(inlineObject!.trailingBoundary)) {
           registerInlineObjectBoundary(clusterIndex, inlineObject!.trailingBoundary);
         }
       }
@@ -1131,7 +970,7 @@ export class WidthIndependentAnnotationCacheFns {
     const uniformInlineObjectBoundaryBuilder = SortedTable.setBuilder<number>(SortedTable.compareInts);
     const preferredInlineObjectBoundaryBuilder = SortedTable.mapBuilder<number, InlineObjectPreferredStretch>(SortedTable.compareInts);
     const inlineObjectBoundaryUnbreakableRanges = new Array<IntRange>();
-    for (let i15 = 0, count55 = boundaryIndices.length; i15 < count55; i15 += 1) {
+    for (let i15 = 0, count43 = boundaryIndices.length; i15 < count43; i15 += 1) {
       const bIdx = boundaryIndices[i15]!;
       const bAdj = boundaryAdjustments[i15]!;
       if (bAdj.participatesInUniformStretch) {
@@ -1150,13 +989,13 @@ export class WidthIndependentAnnotationCacheFns {
     for (let i16 = 0; i16 < autoSpaceResult.decisions.length; i16 += 1) {
       autoSpaceDecisions.push(autoSpaceResult.decisions[i16]!);
     }
-    for (let i17 = 0, count56 = verbatimSuppressionDecisions.length; i17 < count56; i17 += 1) {
+    for (let i17 = 0, count44 = verbatimSuppressionDecisions.length; i17 < count44; i17 += 1) {
       autoSpaceDecisions.push(verbatimSuppressionDecisions[i17]!);
     }
     const clusterRolesDecisions = WidthIndependentAnnotationCacheFns.containingFontDecisions(naturalClusters, annotation.fontDecisions);
-    const count57 = clusterRolesDecisions.length;
+    const count45 = clusterRolesDecisions.length;
     const clusterRoles: FontRole[] = [];
-    for (let i18 = 0; i18 < count57; i18 += 1) {
+    for (let i18 = 0; i18 < count45; i18 += 1) {
       const d2 = clusterRolesDecisions[i18]!;
       clusterRoles.push((d2 !== null ? d2!.role : (FontRole.Unknown as FontRole)));
     }
@@ -1164,13 +1003,13 @@ export class WidthIndependentAnnotationCacheFns {
     const inlineObjectSeparatorSpaceTrimsBuilder = SortedTable.mapBuilder<number, number>(SortedTable.compareInts);
     const inlineObjectAttachmentNoStretchBoundariesBuilder = SortedTable.setBuilder<number>(SortedTable.compareInts);
     const inlineObjectPunctuationAttachmentDecisions = new Array<InlineObjectPunctuationAttachmentDecisionInfo>();
-    for (let a = 0, count58 = inlineObjectAttachedMarks.length; a < count58; a += 1) {
+    for (let a = 0, count46 = inlineObjectAttachedMarks.length; a < count46; a += 1) {
       const attachment = inlineObjectAttachedMarks[a]!;
-      for (let s = 0, count82 = attachment.separatorClusterIndices.length; s < count82; s += 1) {
+      for (let s = 0, count70 = attachment.separatorClusterIndices.length; s < count70; s += 1) {
         const clusterIndex2 = attachment.separatorClusterIndices[s]!;
         inlineObjectSeparatorSpaceTrimsBuilder.put(clusterIndex2, naturalClusters[clusterIndex2]!.advance);
       }
-      for (let idx2 = attachment.objectClusterIndex, count83 = attachment.markClusterIndex; idx2 < count83; idx2 += 1) {
+      for (let idx2 = attachment.objectClusterIndex, count71 = attachment.markClusterIndex; idx2 < count71; idx2 += 1) {
         inlineObjectAttachmentNoStretchBoundariesBuilder.put(idx2);
       }
       if (attachment.separatorClusterIndices.length > 0) {
@@ -1178,7 +1017,7 @@ export class WidthIndependentAnnotationCacheFns {
         const separatorLast = naturalClusters[attachment.separatorClusterIndices[attachment.separatorClusterIndices.length - 1]!]!;
         const mark = naturalClusters[attachment.markClusterIndex]!;
         const collapsedTerms: number[] = [];
-        for (let s2 = 0, count84 = attachment.separatorClusterIndices.length; s2 < count84; s2 += 1) {
+        for (let s2 = 0, count72 = attachment.separatorClusterIndices.length; s2 < count72; s2 += 1) {
           collapsedTerms.push(naturalClusters[attachment.separatorClusterIndices[s2]!]!.advance);
         }
         const collapsedAdv = AccurateSum.of(collapsedTerms);
@@ -1191,7 +1030,7 @@ export class WidthIndependentAnnotationCacheFns {
     const zeroWidthBreakClustersBuilder = SortedTable.setBuilder<number>(SortedTable.compareInts);
     const mandatoryBreakDecisions = new Array<MandatoryBreakDecisionInfo>();
     const zeroWidthBreakDecisions = new Array<ZeroWidthBreakDecisionInfo>();
-    for (let idx3 = 0, count85 = naturalClusters.length; idx3 < count85; idx3 += 1) {
+    for (let idx3 = 0, count73 = naturalClusters.length; idx3 < count73; idx3 += 1) {
       const cluster4 = naturalClusters[idx3]!;
       if (ParagraphShapingStage.isMandatoryBreakCluster(cluster4)) {
         mandatoryBreakClustersBuilder.put(idx3);
@@ -1205,14 +1044,14 @@ export class WidthIndependentAnnotationCacheFns {
     const mandatoryBreakClusters = mandatoryBreakClustersBuilder.build();
     const zeroWidthBreakClusters = zeroWidthBreakClustersBuilder.build();
     const punctuationAtoms = new Array<PunctuationAtom>();
-    for (let idx4 = 0, count86 = naturalClusters.length; idx4 < count86; idx4 += 1) {
+    for (let idx4 = 0, count74 = naturalClusters.length; idx4 < count74; idx4 += 1) {
       if (clusterRoles[idx4]!.kind === "LatinText") {
         continue;
       }
       const cluster5 = naturalClusters[idx4]!;
       const shapedGlyphs = (shapedGlyphsByClusterRange.has(cluster5.range) ? shapedGlyphsByClusterRange.get(cluster5.range)! : []);
       const atoms = PunctuationGeometryStage.punctuationAtoms(cluster5, fontSize, engine.punctuationAtomBuilder, (shapedGlyphs)!, annotation.clreqProfile.gluePlacement, annotation.clreqProfile.punctuationWidth);
-      for (let a2 = 0, count87 = atoms.length; a2 < count87; a2 += 1) {
+      for (let a2 = 0, count75 = atoms.length; a2 < count75; a2 += 1) {
         punctuationAtoms.push(atoms[a2]!);
       }
     }
@@ -1222,13 +1061,13 @@ export class WidthIndependentAnnotationCacheFns {
     for (let i19 = 0; i19 < adjacentPunctuationSpacingPlan.adjustments.length; i19 += 1) {
       allAdjustments.push(adjacentPunctuationSpacingPlan.adjustments[i19]!);
     }
-    for (let i20 = 0, count88 = cjkClosingBeforeAsciiPointMarkPlan.adjustments.length; i20 < count88; i20 += 1) {
+    for (let i20 = 0, count76 = cjkClosingBeforeAsciiPointMarkPlan.adjustments.length; i20 < count76; i20 += 1) {
       allAdjustments.push(cjkClosingBeforeAsciiPointMarkPlan.adjustments[i20]!);
     }
     const spacingPlan = new PunctuationSpacingCompressionResult(allAdjustments);
     const rubySpread = WidthIndependentAnnotationCacheFns.computeRubySpread(naturalClusters, annotation.rubyFontSize, annotation.pinyinSpans, annotation.rubyFontGeometryBySpan);
     const bopomofoSpans = new Array<RubySpan>();
-    for (let i21 = 0, count89 = input.rubySpans.length; i21 < count89; i21 += 1) {
+    for (let i21 = 0, count77 = input.rubySpans.length; i21 < count77; i21 += 1) {
       const rs = input.rubySpans[i21]!;
       if (rs.kind.kind === "Bopomofo") {
         bopomofoSpans.push(rs);
@@ -1239,11 +1078,11 @@ export class WidthIndependentAnnotationCacheFns {
       const mergedBuilder = SortedTable.mapBuilder<number, number>(SortedTable.compareInts);
       const mergedKeys = new Array<number>();
       const mergedVals = new Array<number>();
-      for (let i22 = 0, count92 = rubySpread.size(); i22 < count92; i22 += 1) {
+      for (let i22 = 0, count80 = rubySpread.size(); i22 < count80; i22 += 1) {
         mergedKeys.push(rubySpread.keyAt(i22));
         mergedVals.push(rubySpread.valueAt(i22));
       }
-      for (let i23 = 0, count90 = bopomofoSpans.length; i23 < count90; i23 += 1) {
+      for (let i23 = 0, count78 = bopomofoSpans.length; i23 < count78; i23 += 1) {
         const z = bopomofoSpans[i23]!;
         const r2 = PunctuationGeometryLedger.clusterIndexRangeFor(naturalClusters, z.baseRange);
         if (r2 === null) {
@@ -1251,7 +1090,7 @@ export class WidthIndependentAnnotationCacheFns {
         }
         const lastIdx = r2!.end;
         let found = false;
-        for (let j3 = 0, count93 = mergedKeys.length; j3 < count93; j3 += 1) {
+        for (let j3 = 0, count81 = mergedKeys.length; j3 < count81; j3 += 1) {
           if (mergedKeys[j3]! === lastIdx) {
             mergedVals[j3] = mergedVals[j3]! + 0.5 * fontSize;
             found = true;
@@ -1263,7 +1102,7 @@ export class WidthIndependentAnnotationCacheFns {
           mergedVals.push(0.5 * fontSize);
         }
       }
-      for (let i24 = 0, count91 = mergedKeys.length; i24 < count91; i24 += 1) {
+      for (let i24 = 0, count79 = mergedKeys.length; i24 < count79; i24 += 1) {
         mergedBuilder.put(mergedKeys[i24]!, mergedVals[i24]!);
       }
       rubyAndBopomofoSpread = mergedBuilder.build();
@@ -1280,7 +1119,7 @@ export class WidthIndependentAnnotationCacheFns {
     const clusters = baseGeometry.resolveClusters();
     const glueCaps = baseGeometry.glueCapacities();
     const gapClusterRanges = new Array<TextRange>();
-    for (let i26 = 0, count59 = autoSpaceDecisions.length; i26 < count59; i26 += 1) {
+    for (let i26 = 0, count47 = autoSpaceDecisions.length; i26 < count47; i26 += 1) {
       const d3 = autoSpaceDecisions[i26]!;
       if (d3.side === "gap") {
         gapClusterRanges.push(d3.clusterRange);
@@ -1288,7 +1127,7 @@ export class WidthIndependentAnnotationCacheFns {
     }
     const containedAtoms = WidthIndependentAnnotationCacheFns.firstContainedAtom(naturalClusters, punctuationAtoms);
     const atomClassByRangeBuilder = SortedTable.mapBuilder<TextRange, PunctuationClass>(compareTextRange);
-    for (let i27 = 0, count94 = naturalClusters.length; i27 < count94; i27 += 1) {
+    for (let i27 = 0, count82 = naturalClusters.length; i27 < count82; i27 += 1) {
       const atom = containedAtoms[i27]!;
       if (atom !== null) {
         atomClassByRangeBuilder.put(naturalClusters[i27]!.range, atom!.punctuationClass);
@@ -1296,7 +1135,7 @@ export class WidthIndependentAnnotationCacheFns {
     }
     const atomClassByRange = atomClassByRangeBuilder.build();
     const shrinkOpportunities = new Array<ShrinkOpportunity>();
-    for (let idx5 = 0, count95 = naturalClusters.length; idx5 < count95; idx5 += 1) {
+    for (let idx5 = 0, count83 = naturalClusters.length; idx5 < count83; idx5 += 1) {
       const cluster6 = naturalClusters[idx5]!;
       if (glueCaps.has(idx5)) {
         const caps = glueCaps.get(idx5);
@@ -1321,7 +1160,7 @@ export class WidthIndependentAnnotationCacheFns {
       } else {
         if (PunctuationGeometryStage.isSpaceRun(cluster6) && !inlineObjectSeparatorSpaceTrims.has(idx5)) {
           let inGap = false;
-          for (let g2 = 0, count96 = gapClusterRanges.length; g2 < count96; g2 += 1) {
+          for (let g2 = 0, count84 = gapClusterRanges.length; g2 < count84; g2 += 1) {
             const gr = gapClusterRanges[g2]!;
             if (gr.start === cluster6.range.start && gr.end === cluster6.range.end) {
               inGap = true;
@@ -1342,7 +1181,7 @@ export class WidthIndependentAnnotationCacheFns {
         }
       }
     }
-    for (let i28 = 0, count97 = inlineObjectByClusterIndex.size(); i28 < count97; i28 += 1) {
+    for (let i28 = 0, count85 = inlineObjectByClusterIndex.size(); i28 < count85; i28 += 1) {
       const idx6 = inlineObjectByClusterIndex.keyAt(i28);
       const inlineObject2 = inlineObjectByClusterIndex.valueAt(i28);
       const trailing = inlineObject2.trailingBoundary.shrinkCapacity;
@@ -1351,9 +1190,9 @@ export class WidthIndependentAnnotationCacheFns {
       }
     }
     const shapingDecisionsList = new Array<ShapingDecisionInfo>();
-    for (let srIdx = 0, count98 = shapingStage.shapingResults.length; srIdx < count98; srIdx += 1) {
+    for (let srIdx = 0, count86 = shapingStage.shapingResults.length; srIdx < count86; srIdx += 1) {
       const sr3 = shapingStage.shapingResults[srIdx]!;
-      for (let dIdx = 0, count99 = sr3.decisions.length; dIdx < count99; dIdx += 1) {
+      for (let dIdx = 0, count87 = sr3.decisions.length; dIdx < count87; dIdx += 1) {
         shapingDecisionsList.push(sr3.decisions[dIdx]!);
       }
     }

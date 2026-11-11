@@ -12,7 +12,7 @@ import { FontRole } from "./../font/FontRole.ts";
 import { Plan, PlanBopomofo, PlanBopomofoPlacement, PlanCell, PlanDecorationSegment, PlanEmphasisDot, PlanEmphasisRange, PlanInlineEdge, PlanLine, PlanRuby } from "./../protocol/Plan.ts";
 import { PlanEndReason } from "./../protocol/PlanEndReason.ts";
 import { PlanStyleDelta } from "./../protocol/PlanStyleDelta.ts";
-import { SortedTable } from "../../../runtime.ts";
+import { SortedTable, dictKey } from "../../../runtime.ts";
 
 export class PlanLowering {
   private static f32(v: number): number {
@@ -170,7 +170,7 @@ export class PlanLowering {
               }
             }
             const cs = PlanLowering.styleAt(result, c.range.start);
-            styleDelta = (cs !== result.input.textStyle ? { fontSize: (cs.fontSize !== result.input.textStyle.fontSize ? cs.fontSize : null), fontWeight: (cs.fontWeight !== result.input.textStyle.fontWeight ? cs.fontWeight : null), italic: (cs.italic !== result.input.textStyle.italic ? cs.italic : null) } : null);
+            styleDelta = (dictKey(cs) !== dictKey(result.input.textStyle) ? { fontSize: (cs.fontSize !== result.input.textStyle.fontSize ? cs.fontSize : null), fontWeight: (cs.fontWeight !== result.input.textStyle.fontWeight ? cs.fontWeight : null), italic: (cs.italic !== result.input.textStyle.italic ? cs.italic : null) } : null);
           }
           const feats = features.get(ck);
           cells.push({ rangeStart: c.range.start, rangeEnd: c.range.end, source: c.text, display: c.displayText, drawX: p.drawX, naturalWidth: natW, leadingLayoutAdvance: c.leadingLayoutAdvance, shapingBoundary: c.range.end - c.range.start > 1, openTypeFeatures: (feats !== null ? feats : []), renderFontFamily: renderFam, dashStrategy: dash, shapingLanguage: lang, resolvedFace: face, glyphIds: gIds, shapingEvidence: ev, punctuationInkFloor: inkFloor, punctuationBodyWidth: bodyW, latin, advance: advOverride, inlineObject: inlineObj, styleDelta });

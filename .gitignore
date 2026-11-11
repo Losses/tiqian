@@ -77,3 +77,4 @@ bundle-logs/
 .nix-cache/
 .scratch-tools/
 boring.scratch.json
+/platforms/web/client/engine-runtime/engine-gen/

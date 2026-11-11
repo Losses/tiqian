@@ -16,7 +16,7 @@ import { RawFontMetrics } from "./../font/RawFontMetrics.ts";
 import { RubyFontGeometry } from "./AnnotationGeometryStage.ts";
 import { LineSolution } from "./LineOptimization.ts";
 import { PunctuationGeometryLedger } from "./PunctuationGeometryLedger.ts";
-import { SortedMapTable, SortedTable, floatToI32, i32ToFloat } from "../../../runtime.ts";
+import { SortedMapTable, SortedTable, dictKey, floatToI32, i32ToFloat } from "../../../runtime.ts";
 
 export class LineBoxStageResult {
   public readonly laidOutLines: LineBox[];
@@ -111,7 +111,7 @@ export class LineGeometryStageFns {
     const builder = SortedTable.mapBuilder<number, InlineObjectSpan>(SortedTable.compareInts);
     if (inlineObjectByClusterIndex !== null) {
       for (let index = 0, count = naturalClusters.length; index < count; index += 1) {
-        const inlineObject = (inlineObjectByClusterIndex.get(index) ?? null);
+        const inlineObject = (inlineObjectByClusterIndex.get(dictKey(index)) ?? null);
         if (inlineObject !== null) {
           builder.put(index, (inlineObject)!);
         }

@@ -30,7 +30,7 @@ export class ClreqPunctuationGlyphSubstitutor {
   }
 
   private static toClreqRecommendedDisplayText(text: string): string {
-    let output = [];
+    let output: string[] = [];
     let index = 0;
     let allEllipsis = true;
     while (index < text.length) {
@@ -38,7 +38,7 @@ export class ClreqPunctuationGlyphSubstitutor {
         allEllipsis = false;
         break;
       }
-      const tail = output.length > 0 ? output[output.length - 1].charCodeAt(output[output.length - 1].length - 1) : NaN;
+      const tail = output.length > 0 ? output[output.length - 1]!.charCodeAt(output[output.length - 1]!.length - 1) : NaN;
       if (tail >= 55296 && tail <= 56319 && ClreqPunctuationGlyphSubstitutor.MIDLINE_ELLIPSIS.length > 0 && !(ClreqPunctuationGlyphSubstitutor.MIDLINE_ELLIPSIS.charCodeAt(0) >= 56320 && ClreqPunctuationGlyphSubstitutor.MIDLINE_ELLIPSIS.charCodeAt(0) <= 57343)) {
         throw new UStringException({ kind: "UnpairedSurrogate", unit: tail });
       }
@@ -48,7 +48,7 @@ export class ClreqPunctuationGlyphSubstitutor {
       index += 1;
     }
     if (allEllipsis) {
-      const tail2 = output.length > 0 ? output[output.length - 1].charCodeAt(output[output.length - 1].length - 1) : NaN;
+      const tail2 = output.length > 0 ? output[output.length - 1]!.charCodeAt(output[output.length - 1]!.length - 1) : NaN;
       if (tail2 >= 55296 && tail2 <= 56319) {
         throw new UStringException({ kind: "UnpairedSurrogate", unit: tail2 });
       }
@@ -64,26 +64,22 @@ export class ClreqPunctuationGlyphSubstitutor {
   }
 
   private static toCodePointLabels(text: string): string {
-    let output = [];
+    let output: string[] = [];
     let index = 0;
     while (index < text.length) {
       if (index > 0) {
-        const tail3 = output.length > 0 ? output[output.length - 1].charCodeAt(output[output.length - 1].length - 1) : NaN;
-        if (tail3 >= 55296 && tail3 <= 56319 && "+".length > 0 && !("+".charCodeAt(0) >= 56320 && "+".charCodeAt(0) <= 57343)) {
+        const tail3 = output.length > 0 ? output[output.length - 1]!.charCodeAt(output[output.length - 1]!.length - 1) : NaN;
+        if (tail3 >= 55296 && tail3 <= 56319) {
           throw new UStringException({ kind: "UnpairedSurrogate", unit: tail3 });
         }
-        if ("+".length > 0) {
-          output.push("+");
-        }
+        output.push("+");
       }
-      const tail4 = output.length > 0 ? output[output.length - 1].charCodeAt(output[output.length - 1].length - 1) : NaN;
-      if (tail4 >= 55296 && tail4 <= 56319 && "U+".length > 0 && !("U+".charCodeAt(0) >= 56320 && "U+".charCodeAt(0) <= 57343)) {
+      const tail4 = output.length > 0 ? output[output.length - 1]!.charCodeAt(output[output.length - 1]!.length - 1) : NaN;
+      if (tail4 >= 55296 && tail4 <= 56319) {
         throw new UStringException({ kind: "UnpairedSurrogate", unit: tail4 });
       }
-      if ("U+".length > 0) {
-        output.push("U+");
-      }
-      const tail5 = output.length > 0 ? output[output.length - 1].charCodeAt(output[output.length - 1].length - 1) : NaN;
+      output.push("U+");
+      const tail5 = output.length > 0 ? output[output.length - 1]!.charCodeAt(output[output.length - 1]!.length - 1) : NaN;
       if (tail5 >= 55296 && tail5 <= 56319 && ClreqPunctuationGlyphSubstitutor.hexLabel((Number.isNaN(text.charCodeAt(index)) ? null : text.charCodeAt(index))!).length > 0 && !(ClreqPunctuationGlyphSubstitutor.hexLabel((Number.isNaN(text.charCodeAt(index)) ? null : text.charCodeAt(index))!).charCodeAt(0) >= 56320 && ClreqPunctuationGlyphSubstitutor.hexLabel((Number.isNaN(text.charCodeAt(index)) ? null : text.charCodeAt(index))!).charCodeAt(0) <= 57343)) {
         throw new UStringException({ kind: "UnpairedSurrogate", unit: tail5 });
       }
@@ -92,7 +88,7 @@ export class ClreqPunctuationGlyphSubstitutor {
       }
       index += 1;
     }
-    const tail6 = output.length > 0 ? output[output.length - 1].charCodeAt(output[output.length - 1].length - 1) : NaN;
+    const tail6 = output.length > 0 ? output[output.length - 1]!.charCodeAt(output[output.length - 1]!.length - 1) : NaN;
     if (tail6 >= 55296 && tail6 <= 56319) {
       throw new UStringException({ kind: "UnpairedSurrogate", unit: tail6 });
     }

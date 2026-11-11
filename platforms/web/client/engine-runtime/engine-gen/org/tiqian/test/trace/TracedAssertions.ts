@@ -108,26 +108,22 @@ export class TracedAssertions {
   }
 
   private static renderInts(values: readonly number[]): string {
-    let buf = [];
-    const tail = buf.length > 0 ? buf[buf.length - 1].charCodeAt(buf[buf.length - 1].length - 1) : NaN;
-    if (tail >= 55296 && tail <= 56319 && "[".length > 0 && !("[".charCodeAt(0) >= 56320 && "[".charCodeAt(0) <= 57343)) {
+    let buf: string[] = [];
+    const tail = buf.length > 0 ? buf[buf.length - 1]!.charCodeAt(buf[buf.length - 1]!.length - 1) : NaN;
+    if (tail >= 55296 && tail <= 56319) {
       throw new UStringException({ kind: "UnpairedSurrogate", unit: tail });
     }
-    if ("[".length > 0) {
-      buf.push("[");
-    }
+    buf.push("[");
     let i = 0;
     while (i < values.length) {
       if (i > 0) {
-        const tail2 = buf.length > 0 ? buf[buf.length - 1].charCodeAt(buf[buf.length - 1].length - 1) : NaN;
-        if (tail2 >= 55296 && tail2 <= 56319 && ", ".length > 0 && !(", ".charCodeAt(0) >= 56320 && ", ".charCodeAt(0) <= 57343)) {
+        const tail2 = buf.length > 0 ? buf[buf.length - 1]!.charCodeAt(buf[buf.length - 1]!.length - 1) : NaN;
+        if (tail2 >= 55296 && tail2 <= 56319) {
           throw new UStringException({ kind: "UnpairedSurrogate", unit: tail2 });
         }
-        if (", ".length > 0) {
-          buf.push(", ");
-        }
+        buf.push(", ");
       }
-      const tail3 = buf.length > 0 ? buf[buf.length - 1].charCodeAt(buf[buf.length - 1].length - 1) : NaN;
+      const tail3 = buf.length > 0 ? buf[buf.length - 1]!.charCodeAt(buf[buf.length - 1]!.length - 1) : NaN;
       if (tail3 >= 55296 && tail3 <= 56319 && `${values[i]!}`.length > 0 && !(`${values[i]!}`.charCodeAt(0) >= 56320 && `${values[i]!}`.charCodeAt(0) <= 57343)) {
         throw new UStringException({ kind: "UnpairedSurrogate", unit: tail3 });
       }
@@ -136,14 +132,12 @@ export class TracedAssertions {
       }
       i++;
     }
-    const tail4 = buf.length > 0 ? buf[buf.length - 1].charCodeAt(buf[buf.length - 1].length - 1) : NaN;
-    if (tail4 >= 55296 && tail4 <= 56319 && "]".length > 0 && !("]".charCodeAt(0) >= 56320 && "]".charCodeAt(0) <= 57343)) {
+    const tail4 = buf.length > 0 ? buf[buf.length - 1]!.charCodeAt(buf[buf.length - 1]!.length - 1) : NaN;
+    if (tail4 >= 55296 && tail4 <= 56319) {
       throw new UStringException({ kind: "UnpairedSurrogate", unit: tail4 });
     }
-    if ("]".length > 0) {
-      buf.push("]");
-    }
-    const tail5 = buf.length > 0 ? buf[buf.length - 1].charCodeAt(buf[buf.length - 1].length - 1) : NaN;
+    buf.push("]");
+    const tail5 = buf.length > 0 ? buf[buf.length - 1]!.charCodeAt(buf[buf.length - 1]!.length - 1) : NaN;
     if (tail5 >= 55296 && tail5 <= 56319) {
       throw new UStringException({ kind: "UnpairedSurrogate", unit: tail5 });
     }
@@ -195,26 +189,22 @@ export class TracedAssertions {
   }
 
   private static renderQuotePairs(values: QuotePair[]): string {
-    let buf = [];
-    const tail6 = buf.length > 0 ? buf[buf.length - 1].charCodeAt(buf[buf.length - 1].length - 1) : NaN;
-    if (tail6 >= 55296 && tail6 <= 56319 && "[".length > 0 && !("[".charCodeAt(0) >= 56320 && "[".charCodeAt(0) <= 57343)) {
+    let buf: string[] = [];
+    const tail6 = buf.length > 0 ? buf[buf.length - 1]!.charCodeAt(buf[buf.length - 1]!.length - 1) : NaN;
+    if (tail6 >= 55296 && tail6 <= 56319) {
       throw new UStringException({ kind: "UnpairedSurrogate", unit: tail6 });
     }
-    if ("[".length > 0) {
-      buf.push("[");
-    }
+    buf.push("[");
     let i = 0;
     while (i < values.length) {
       if (i > 0) {
-        const tail7 = buf.length > 0 ? buf[buf.length - 1].charCodeAt(buf[buf.length - 1].length - 1) : NaN;
-        if (tail7 >= 55296 && tail7 <= 56319 && ", ".length > 0 && !(", ".charCodeAt(0) >= 56320 && ", ".charCodeAt(0) <= 57343)) {
+        const tail7 = buf.length > 0 ? buf[buf.length - 1]!.charCodeAt(buf[buf.length - 1]!.length - 1) : NaN;
+        if (tail7 >= 55296 && tail7 <= 56319) {
           throw new UStringException({ kind: "UnpairedSurrogate", unit: tail7 });
         }
-        if (", ".length > 0) {
-          buf.push(", ");
-        }
+        buf.push(", ");
       }
-      const tail8 = buf.length > 0 ? buf[buf.length - 1].charCodeAt(buf[buf.length - 1].length - 1) : NaN;
+      const tail8 = buf.length > 0 ? buf[buf.length - 1]!.charCodeAt(buf[buf.length - 1]!.length - 1) : NaN;
       if (tail8 >= 55296 && tail8 <= 56319 && values[i]!.toString().length > 0 && !(values[i]!.toString().charCodeAt(0) >= 56320 && values[i]!.toString().charCodeAt(0) <= 57343)) {
         throw new UStringException({ kind: "UnpairedSurrogate", unit: tail8 });
       }
@@ -223,14 +213,12 @@ export class TracedAssertions {
       }
       i++;
     }
-    const tail9 = buf.length > 0 ? buf[buf.length - 1].charCodeAt(buf[buf.length - 1].length - 1) : NaN;
-    if (tail9 >= 55296 && tail9 <= 56319 && "]".length > 0 && !("]".charCodeAt(0) >= 56320 && "]".charCodeAt(0) <= 57343)) {
+    const tail9 = buf.length > 0 ? buf[buf.length - 1]!.charCodeAt(buf[buf.length - 1]!.length - 1) : NaN;
+    if (tail9 >= 55296 && tail9 <= 56319) {
       throw new UStringException({ kind: "UnpairedSurrogate", unit: tail9 });
     }
-    if ("]".length > 0) {
-      buf.push("]");
-    }
-    const tail10 = buf.length > 0 ? buf[buf.length - 1].charCodeAt(buf[buf.length - 1].length - 1) : NaN;
+    buf.push("]");
+    const tail10 = buf.length > 0 ? buf[buf.length - 1]!.charCodeAt(buf[buf.length - 1]!.length - 1) : NaN;
     if (tail10 >= 55296 && tail10 <= 56319) {
       throw new UStringException({ kind: "UnpairedSurrogate", unit: tail10 });
     }
@@ -301,26 +289,22 @@ export class TracedAssertions {
   }
 
   private static renderIntRange(r: IntRange): string {
-    let buf = [];
-    const tail11 = buf.length > 0 ? buf[buf.length - 1].charCodeAt(buf[buf.length - 1].length - 1) : NaN;
-    if (tail11 >= 55296 && tail11 <= 56319 && "[".length > 0 && !("[".charCodeAt(0) >= 56320 && "[".charCodeAt(0) <= 57343)) {
+    let buf: string[] = [];
+    const tail11 = buf.length > 0 ? buf[buf.length - 1]!.charCodeAt(buf[buf.length - 1]!.length - 1) : NaN;
+    if (tail11 >= 55296 && tail11 <= 56319) {
       throw new UStringException({ kind: "UnpairedSurrogate", unit: tail11 });
     }
-    if ("[".length > 0) {
-      buf.push("[");
-    }
+    buf.push("[");
     let i = r.start;
     while (i <= r.end) {
       if (i > r.start) {
-        const tail12 = buf.length > 0 ? buf[buf.length - 1].charCodeAt(buf[buf.length - 1].length - 1) : NaN;
-        if (tail12 >= 55296 && tail12 <= 56319 && ", ".length > 0 && !(", ".charCodeAt(0) >= 56320 && ", ".charCodeAt(0) <= 57343)) {
+        const tail12 = buf.length > 0 ? buf[buf.length - 1]!.charCodeAt(buf[buf.length - 1]!.length - 1) : NaN;
+        if (tail12 >= 55296 && tail12 <= 56319) {
           throw new UStringException({ kind: "UnpairedSurrogate", unit: tail12 });
         }
-        if (", ".length > 0) {
-          buf.push(", ");
-        }
+        buf.push(", ");
       }
-      const tail13 = buf.length > 0 ? buf[buf.length - 1].charCodeAt(buf[buf.length - 1].length - 1) : NaN;
+      const tail13 = buf.length > 0 ? buf[buf.length - 1]!.charCodeAt(buf[buf.length - 1]!.length - 1) : NaN;
       if (tail13 >= 55296 && tail13 <= 56319 && TestTraceRender.renderInt(i).length > 0 && !(TestTraceRender.renderInt(i).charCodeAt(0) >= 56320 && TestTraceRender.renderInt(i).charCodeAt(0) <= 57343)) {
         throw new UStringException({ kind: "UnpairedSurrogate", unit: tail13 });
       }
@@ -329,14 +313,12 @@ export class TracedAssertions {
       }
       i++;
     }
-    const tail14 = buf.length > 0 ? buf[buf.length - 1].charCodeAt(buf[buf.length - 1].length - 1) : NaN;
-    if (tail14 >= 55296 && tail14 <= 56319 && "]".length > 0 && !("]".charCodeAt(0) >= 56320 && "]".charCodeAt(0) <= 57343)) {
+    const tail14 = buf.length > 0 ? buf[buf.length - 1]!.charCodeAt(buf[buf.length - 1]!.length - 1) : NaN;
+    if (tail14 >= 55296 && tail14 <= 56319) {
       throw new UStringException({ kind: "UnpairedSurrogate", unit: tail14 });
     }
-    if ("]".length > 0) {
-      buf.push("]");
-    }
-    const tail15 = buf.length > 0 ? buf[buf.length - 1].charCodeAt(buf[buf.length - 1].length - 1) : NaN;
+    buf.push("]");
+    const tail15 = buf.length > 0 ? buf[buf.length - 1]!.charCodeAt(buf[buf.length - 1]!.length - 1) : NaN;
     if (tail15 >= 55296 && tail15 <= 56319) {
       throw new UStringException({ kind: "UnpairedSurrogate", unit: tail15 });
     }
@@ -359,26 +341,22 @@ export class TracedAssertions {
   }
 
   private static renderIntSet(values: SortedSetTable<number>): string {
-    let buf = [];
-    const tail16 = buf.length > 0 ? buf[buf.length - 1].charCodeAt(buf[buf.length - 1].length - 1) : NaN;
-    if (tail16 >= 55296 && tail16 <= 56319 && "[".length > 0 && !("[".charCodeAt(0) >= 56320 && "[".charCodeAt(0) <= 57343)) {
+    let buf: string[] = [];
+    const tail16 = buf.length > 0 ? buf[buf.length - 1]!.charCodeAt(buf[buf.length - 1]!.length - 1) : NaN;
+    if (tail16 >= 55296 && tail16 <= 56319) {
       throw new UStringException({ kind: "UnpairedSurrogate", unit: tail16 });
     }
-    if ("[".length > 0) {
-      buf.push("[");
-    }
+    buf.push("[");
     let i = 0;
     while (i < values.size()) {
       if (i > 0) {
-        const tail17 = buf.length > 0 ? buf[buf.length - 1].charCodeAt(buf[buf.length - 1].length - 1) : NaN;
-        if (tail17 >= 55296 && tail17 <= 56319 && ", ".length > 0 && !(", ".charCodeAt(0) >= 56320 && ", ".charCodeAt(0) <= 57343)) {
+        const tail17 = buf.length > 0 ? buf[buf.length - 1]!.charCodeAt(buf[buf.length - 1]!.length - 1) : NaN;
+        if (tail17 >= 55296 && tail17 <= 56319) {
           throw new UStringException({ kind: "UnpairedSurrogate", unit: tail17 });
         }
-        if (", ".length > 0) {
-          buf.push(", ");
-        }
+        buf.push(", ");
       }
-      const tail18 = buf.length > 0 ? buf[buf.length - 1].charCodeAt(buf[buf.length - 1].length - 1) : NaN;
+      const tail18 = buf.length > 0 ? buf[buf.length - 1]!.charCodeAt(buf[buf.length - 1]!.length - 1) : NaN;
       if (tail18 >= 55296 && tail18 <= 56319 && TestTraceRender.renderInt(values.at(i)).length > 0 && !(TestTraceRender.renderInt(values.at(i)).charCodeAt(0) >= 56320 && TestTraceRender.renderInt(values.at(i)).charCodeAt(0) <= 57343)) {
         throw new UStringException({ kind: "UnpairedSurrogate", unit: tail18 });
       }
@@ -387,14 +365,12 @@ export class TracedAssertions {
       }
       i++;
     }
-    const tail19 = buf.length > 0 ? buf[buf.length - 1].charCodeAt(buf[buf.length - 1].length - 1) : NaN;
-    if (tail19 >= 55296 && tail19 <= 56319 && "]".length > 0 && !("]".charCodeAt(0) >= 56320 && "]".charCodeAt(0) <= 57343)) {
+    const tail19 = buf.length > 0 ? buf[buf.length - 1]!.charCodeAt(buf[buf.length - 1]!.length - 1) : NaN;
+    if (tail19 >= 55296 && tail19 <= 56319) {
       throw new UStringException({ kind: "UnpairedSurrogate", unit: tail19 });
     }
-    if ("]".length > 0) {
-      buf.push("]");
-    }
-    const tail20 = buf.length > 0 ? buf[buf.length - 1].charCodeAt(buf[buf.length - 1].length - 1) : NaN;
+    buf.push("]");
+    const tail20 = buf.length > 0 ? buf[buf.length - 1]!.charCodeAt(buf[buf.length - 1]!.length - 1) : NaN;
     if (tail20 >= 55296 && tail20 <= 56319) {
       throw new UStringException({ kind: "UnpairedSurrogate", unit: tail20 });
     }
@@ -431,26 +407,22 @@ export class TracedAssertions {
   }
 
   private static renderIntListInGivenOrder(values: number[]): string {
-    let buf = [];
-    const tail21 = buf.length > 0 ? buf[buf.length - 1].charCodeAt(buf[buf.length - 1].length - 1) : NaN;
-    if (tail21 >= 55296 && tail21 <= 56319 && "[".length > 0 && !("[".charCodeAt(0) >= 56320 && "[".charCodeAt(0) <= 57343)) {
+    let buf: string[] = [];
+    const tail21 = buf.length > 0 ? buf[buf.length - 1]!.charCodeAt(buf[buf.length - 1]!.length - 1) : NaN;
+    if (tail21 >= 55296 && tail21 <= 56319) {
       throw new UStringException({ kind: "UnpairedSurrogate", unit: tail21 });
     }
-    if ("[".length > 0) {
-      buf.push("[");
-    }
+    buf.push("[");
     let i = 0;
     while (i < values.length) {
       if (i > 0) {
-        const tail22 = buf.length > 0 ? buf[buf.length - 1].charCodeAt(buf[buf.length - 1].length - 1) : NaN;
-        if (tail22 >= 55296 && tail22 <= 56319 && ", ".length > 0 && !(", ".charCodeAt(0) >= 56320 && ", ".charCodeAt(0) <= 57343)) {
+        const tail22 = buf.length > 0 ? buf[buf.length - 1]!.charCodeAt(buf[buf.length - 1]!.length - 1) : NaN;
+        if (tail22 >= 55296 && tail22 <= 56319) {
           throw new UStringException({ kind: "UnpairedSurrogate", unit: tail22 });
         }
-        if (", ".length > 0) {
-          buf.push(", ");
-        }
+        buf.push(", ");
       }
-      const tail23 = buf.length > 0 ? buf[buf.length - 1].charCodeAt(buf[buf.length - 1].length - 1) : NaN;
+      const tail23 = buf.length > 0 ? buf[buf.length - 1]!.charCodeAt(buf[buf.length - 1]!.length - 1) : NaN;
       if (tail23 >= 55296 && tail23 <= 56319 && TestTraceRender.renderInt(values[i]!).length > 0 && !(TestTraceRender.renderInt(values[i]!).charCodeAt(0) >= 56320 && TestTraceRender.renderInt(values[i]!).charCodeAt(0) <= 57343)) {
         throw new UStringException({ kind: "UnpairedSurrogate", unit: tail23 });
       }
@@ -459,14 +431,12 @@ export class TracedAssertions {
       }
       i++;
     }
-    const tail24 = buf.length > 0 ? buf[buf.length - 1].charCodeAt(buf[buf.length - 1].length - 1) : NaN;
-    if (tail24 >= 55296 && tail24 <= 56319 && "]".length > 0 && !("]".charCodeAt(0) >= 56320 && "]".charCodeAt(0) <= 57343)) {
+    const tail24 = buf.length > 0 ? buf[buf.length - 1]!.charCodeAt(buf[buf.length - 1]!.length - 1) : NaN;
+    if (tail24 >= 55296 && tail24 <= 56319) {
       throw new UStringException({ kind: "UnpairedSurrogate", unit: tail24 });
     }
-    if ("]".length > 0) {
-      buf.push("]");
-    }
-    const tail25 = buf.length > 0 ? buf[buf.length - 1].charCodeAt(buf[buf.length - 1].length - 1) : NaN;
+    buf.push("]");
+    const tail25 = buf.length > 0 ? buf[buf.length - 1]!.charCodeAt(buf[buf.length - 1]!.length - 1) : NaN;
     if (tail25 >= 55296 && tail25 <= 56319) {
       throw new UStringException({ kind: "UnpairedSurrogate", unit: tail25 });
     }
@@ -484,26 +454,22 @@ export class TracedAssertions {
   }
 
   private static renderRepairOptionList(values: RepairOption[]): string {
-    let buf = [];
-    const tail26 = buf.length > 0 ? buf[buf.length - 1].charCodeAt(buf[buf.length - 1].length - 1) : NaN;
-    if (tail26 >= 55296 && tail26 <= 56319 && "[".length > 0 && !("[".charCodeAt(0) >= 56320 && "[".charCodeAt(0) <= 57343)) {
+    let buf: string[] = [];
+    const tail26 = buf.length > 0 ? buf[buf.length - 1]!.charCodeAt(buf[buf.length - 1]!.length - 1) : NaN;
+    if (tail26 >= 55296 && tail26 <= 56319) {
       throw new UStringException({ kind: "UnpairedSurrogate", unit: tail26 });
     }
-    if ("[".length > 0) {
-      buf.push("[");
-    }
+    buf.push("[");
     let i = 0;
     while (i < values.length) {
       if (i > 0) {
-        const tail27 = buf.length > 0 ? buf[buf.length - 1].charCodeAt(buf[buf.length - 1].length - 1) : NaN;
-        if (tail27 >= 55296 && tail27 <= 56319 && ", ".length > 0 && !(", ".charCodeAt(0) >= 56320 && ", ".charCodeAt(0) <= 57343)) {
+        const tail27 = buf.length > 0 ? buf[buf.length - 1]!.charCodeAt(buf[buf.length - 1]!.length - 1) : NaN;
+        if (tail27 >= 55296 && tail27 <= 56319) {
           throw new UStringException({ kind: "UnpairedSurrogate", unit: tail27 });
         }
-        if (", ".length > 0) {
-          buf.push(", ");
-        }
+        buf.push(", ");
       }
-      const tail28 = buf.length > 0 ? buf[buf.length - 1].charCodeAt(buf[buf.length - 1].length - 1) : NaN;
+      const tail28 = buf.length > 0 ? buf[buf.length - 1]!.charCodeAt(buf[buf.length - 1]!.length - 1) : NaN;
       if (tail28 >= 55296 && tail28 <= 56319 && TracedAssertions.renderRepairOption(values[i]!).length > 0 && !(TracedAssertions.renderRepairOption(values[i]!).charCodeAt(0) >= 56320 && TracedAssertions.renderRepairOption(values[i]!).charCodeAt(0) <= 57343)) {
         throw new UStringException({ kind: "UnpairedSurrogate", unit: tail28 });
       }
@@ -512,14 +478,12 @@ export class TracedAssertions {
       }
       i++;
     }
-    const tail29 = buf.length > 0 ? buf[buf.length - 1].charCodeAt(buf[buf.length - 1].length - 1) : NaN;
-    if (tail29 >= 55296 && tail29 <= 56319 && "]".length > 0 && !("]".charCodeAt(0) >= 56320 && "]".charCodeAt(0) <= 57343)) {
+    const tail29 = buf.length > 0 ? buf[buf.length - 1]!.charCodeAt(buf[buf.length - 1]!.length - 1) : NaN;
+    if (tail29 >= 55296 && tail29 <= 56319) {
       throw new UStringException({ kind: "UnpairedSurrogate", unit: tail29 });
     }
-    if ("]".length > 0) {
-      buf.push("]");
-    }
-    const tail30 = buf.length > 0 ? buf[buf.length - 1].charCodeAt(buf[buf.length - 1].length - 1) : NaN;
+    buf.push("]");
+    const tail30 = buf.length > 0 ? buf[buf.length - 1]!.charCodeAt(buf[buf.length - 1]!.length - 1) : NaN;
     if (tail30 >= 55296 && tail30 <= 56319) {
       throw new UStringException({ kind: "UnpairedSurrogate", unit: tail30 });
     }
@@ -531,26 +495,22 @@ export class TracedAssertions {
   }
 
   private static renderPushInAllocations(values: PushInAllocation[]): string {
-    let buf = [];
-    const tail31 = buf.length > 0 ? buf[buf.length - 1].charCodeAt(buf[buf.length - 1].length - 1) : NaN;
-    if (tail31 >= 55296 && tail31 <= 56319 && "[".length > 0 && !("[".charCodeAt(0) >= 56320 && "[".charCodeAt(0) <= 57343)) {
+    let buf: string[] = [];
+    const tail31 = buf.length > 0 ? buf[buf.length - 1]!.charCodeAt(buf[buf.length - 1]!.length - 1) : NaN;
+    if (tail31 >= 55296 && tail31 <= 56319) {
       throw new UStringException({ kind: "UnpairedSurrogate", unit: tail31 });
     }
-    if ("[".length > 0) {
-      buf.push("[");
-    }
+    buf.push("[");
     let i = 0;
     while (i < values.length) {
       if (i > 0) {
-        const tail32 = buf.length > 0 ? buf[buf.length - 1].charCodeAt(buf[buf.length - 1].length - 1) : NaN;
-        if (tail32 >= 55296 && tail32 <= 56319 && ", ".length > 0 && !(", ".charCodeAt(0) >= 56320 && ", ".charCodeAt(0) <= 57343)) {
+        const tail32 = buf.length > 0 ? buf[buf.length - 1]!.charCodeAt(buf[buf.length - 1]!.length - 1) : NaN;
+        if (tail32 >= 55296 && tail32 <= 56319) {
           throw new UStringException({ kind: "UnpairedSurrogate", unit: tail32 });
         }
-        if (", ".length > 0) {
-          buf.push(", ");
-        }
+        buf.push(", ");
       }
-      const tail33 = buf.length > 0 ? buf[buf.length - 1].charCodeAt(buf[buf.length - 1].length - 1) : NaN;
+      const tail33 = buf.length > 0 ? buf[buf.length - 1]!.charCodeAt(buf[buf.length - 1]!.length - 1) : NaN;
       if (tail33 >= 55296 && tail33 <= 56319 && values[i]!.toString().length > 0 && !(values[i]!.toString().charCodeAt(0) >= 56320 && values[i]!.toString().charCodeAt(0) <= 57343)) {
         throw new UStringException({ kind: "UnpairedSurrogate", unit: tail33 });
       }
@@ -559,14 +519,12 @@ export class TracedAssertions {
       }
       i++;
     }
-    const tail34 = buf.length > 0 ? buf[buf.length - 1].charCodeAt(buf[buf.length - 1].length - 1) : NaN;
-    if (tail34 >= 55296 && tail34 <= 56319 && "]".length > 0 && !("]".charCodeAt(0) >= 56320 && "]".charCodeAt(0) <= 57343)) {
+    const tail34 = buf.length > 0 ? buf[buf.length - 1]!.charCodeAt(buf[buf.length - 1]!.length - 1) : NaN;
+    if (tail34 >= 55296 && tail34 <= 56319) {
       throw new UStringException({ kind: "UnpairedSurrogate", unit: tail34 });
     }
-    if ("]".length > 0) {
-      buf.push("]");
-    }
-    const tail35 = buf.length > 0 ? buf[buf.length - 1].charCodeAt(buf[buf.length - 1].length - 1) : NaN;
+    buf.push("]");
+    const tail35 = buf.length > 0 ? buf[buf.length - 1]!.charCodeAt(buf[buf.length - 1]!.length - 1) : NaN;
     if (tail35 >= 55296 && tail35 <= 56319) {
       throw new UStringException({ kind: "UnpairedSurrogate", unit: tail35 });
     }
@@ -791,8 +749,8 @@ export class TracedAssertions {
     if (!TestTrace.updateMode) {
       return;
     }
-    let line = [];
-    const tail36 = line.length > 0 ? line[line.length - 1].charCodeAt(line[line.length - 1].length - 1) : NaN;
+    let line: string[] = [];
+    const tail36 = line.length > 0 ? line[line.length - 1]!.charCodeAt(line[line.length - 1]!.length - 1) : NaN;
     if (tail36 >= 55296 && tail36 <= 56319 && name.length > 0 && !(name.charCodeAt(0) >= 56320 && name.charCodeAt(0) <= 57343)) {
       throw new UStringException({ kind: "UnpairedSurrogate", unit: tail36 });
     }
@@ -803,28 +761,24 @@ export class TracedAssertions {
     while (index < fields.length) {
       const current = fields[index]!;
       if (current !== null) {
-        const tail37 = line.length > 0 ? line[line.length - 1].charCodeAt(line[line.length - 1].length - 1) : NaN;
-        if (tail37 >= 55296 && tail37 <= 56319 && " ".length > 0 && !(" ".charCodeAt(0) >= 56320 && " ".charCodeAt(0) <= 57343)) {
+        const tail37 = line.length > 0 ? line[line.length - 1]!.charCodeAt(line[line.length - 1]!.length - 1) : NaN;
+        if (tail37 >= 55296 && tail37 <= 56319) {
           throw new UStringException({ kind: "UnpairedSurrogate", unit: tail37 });
         }
-        if (" ".length > 0) {
-          line.push(" ");
-        }
-        const tail38 = line.length > 0 ? line[line.length - 1].charCodeAt(line[line.length - 1].length - 1) : NaN;
+        line.push(" ");
+        const tail38 = line.length > 0 ? line[line.length - 1]!.charCodeAt(line[line.length - 1]!.length - 1) : NaN;
         if (tail38 >= 55296 && tail38 <= 56319 && current!.key.length > 0 && !(current!.key.charCodeAt(0) >= 56320 && current!.key.charCodeAt(0) <= 57343)) {
           throw new UStringException({ kind: "UnpairedSurrogate", unit: tail38 });
         }
         if (current!.key.length > 0) {
           line.push(current!.key);
         }
-        const tail39 = line.length > 0 ? line[line.length - 1].charCodeAt(line[line.length - 1].length - 1) : NaN;
-        if (tail39 >= 55296 && tail39 <= 56319 && "=".length > 0 && !("=".charCodeAt(0) >= 56320 && "=".charCodeAt(0) <= 57343)) {
+        const tail39 = line.length > 0 ? line[line.length - 1]!.charCodeAt(line[line.length - 1]!.length - 1) : NaN;
+        if (tail39 >= 55296 && tail39 <= 56319) {
           throw new UStringException({ kind: "UnpairedSurrogate", unit: tail39 });
         }
-        if ("=".length > 0) {
-          line.push("=");
-        }
-        const tail40 = line.length > 0 ? line[line.length - 1].charCodeAt(line[line.length - 1].length - 1) : NaN;
+        line.push("=");
+        const tail40 = line.length > 0 ? line[line.length - 1]!.charCodeAt(line[line.length - 1]!.length - 1) : NaN;
         if (tail40 >= 55296 && tail40 <= 56319 && TestTraceRender.canonicalNumbers(current!.value).length > 0 && !(TestTraceRender.canonicalNumbers(current!.value).charCodeAt(0) >= 56320 && TestTraceRender.canonicalNumbers(current!.value).charCodeAt(0) <= 57343)) {
           throw new UStringException({ kind: "UnpairedSurrogate", unit: tail40 });
         }
@@ -834,7 +788,7 @@ export class TracedAssertions {
       }
       index += 1;
     }
-    const tail41 = line.length > 0 ? line[line.length - 1].charCodeAt(line[line.length - 1].length - 1) : NaN;
+    const tail41 = line.length > 0 ? line[line.length - 1]!.charCodeAt(line[line.length - 1]!.length - 1) : NaN;
     if (tail41 >= 55296 && tail41 <= 56319) {
       throw new UStringException({ kind: "UnpairedSurrogate", unit: tail41 });
     }

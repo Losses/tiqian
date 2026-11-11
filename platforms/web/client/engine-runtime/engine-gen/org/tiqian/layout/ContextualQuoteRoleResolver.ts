@@ -7,7 +7,7 @@ import { UnicodeWordCharacter } from "./../core/UnicodeWordCharacter.ts";
 import { FontRole } from "./../font/FontRole.ts";
 import { FontRoleContext } from "./../font/FontRoleContext.ts";
 import { QuotePair, QuoteRoleDecision } from "./QuotePairAnalyzer.ts";
-import { SortedMapTable, SortedMapTableBuilder, SortedTable, readUnit } from "../../../runtime.ts";
+import { SortedMapTable, SortedMapTableBuilder, SortedTable, dictKey, readUnit } from "../../../runtime.ts";
 
 export class ContextualQuoteRoleResolver {
   private readonly text: string;
@@ -170,7 +170,7 @@ export class ContextualQuoteRoleResolver {
     while (ci < this.pairs.length) {
       const candidate = this.pairs[ci]!;
       ci++;
-      if (candidate !== pair && candidate.openIndex < pair.openIndex && candidate.closeIndex > pair.closeIndex && (result === null || candidate.closeIndex - candidate.openIndex < result!.closeIndex - result!.openIndex)) {
+      if (dictKey(candidate) !== dictKey(pair) && candidate.openIndex < pair.openIndex && candidate.closeIndex > pair.closeIndex && (result === null || candidate.closeIndex - candidate.openIndex < result!.closeIndex - result!.openIndex)) {
         result = candidate;
       }
     }

@@ -150,34 +150,28 @@ export class TestTraceRender {
       s = StringTools.lpad(s, "0", p);
     }
     const pointAfter = e + 1;
-    let out = [];
+    let out: string[] = [];
     if (negative) {
-      const tail = out.length > 0 ? out[out.length - 1].charCodeAt(out[out.length - 1].length - 1) : NaN;
-      if (tail >= 55296 && tail <= 56319 && "-".length > 0 && !("-".charCodeAt(0) >= 56320 && "-".charCodeAt(0) <= 57343)) {
+      const tail = out.length > 0 ? out[out.length - 1]!.charCodeAt(out[out.length - 1]!.length - 1) : NaN;
+      if (tail >= 55296 && tail <= 56319) {
         throw new UStringException({ kind: "UnpairedSurrogate", unit: tail });
       }
-      if ("-".length > 0) {
-        out.push("-");
-      }
+      out.push("-");
     }
     if (pointAfter <= 0) {
-      const tail2 = out.length > 0 ? out[out.length - 1].charCodeAt(out[out.length - 1].length - 1) : NaN;
-      if (tail2 >= 55296 && tail2 <= 56319 && "0.".length > 0 && !("0.".charCodeAt(0) >= 56320 && "0.".charCodeAt(0) <= 57343)) {
+      const tail2 = out.length > 0 ? out[out.length - 1]!.charCodeAt(out[out.length - 1]!.length - 1) : NaN;
+      if (tail2 >= 55296 && tail2 <= 56319) {
         throw new UStringException({ kind: "UnpairedSurrogate", unit: tail2 });
       }
-      if ("0.".length > 0) {
-        out.push("0.");
-      }
+      out.push("0.");
       for (let k = 0; k < -pointAfter; k += 1) {
-        const tail3 = out.length > 0 ? out[out.length - 1].charCodeAt(out[out.length - 1].length - 1) : NaN;
-        if (tail3 >= 55296 && tail3 <= 56319 && "0".length > 0 && !("0".charCodeAt(0) >= 56320 && "0".charCodeAt(0) <= 57343)) {
+        const tail3 = out.length > 0 ? out[out.length - 1]!.charCodeAt(out[out.length - 1]!.length - 1) : NaN;
+        if (tail3 >= 55296 && tail3 <= 56319) {
           throw new UStringException({ kind: "UnpairedSurrogate", unit: tail3 });
         }
-        if ("0".length > 0) {
-          out.push("0");
-        }
+        out.push("0");
       }
-      const tail4 = out.length > 0 ? out[out.length - 1].charCodeAt(out[out.length - 1].length - 1) : NaN;
+      const tail4 = out.length > 0 ? out[out.length - 1]!.charCodeAt(out[out.length - 1]!.length - 1) : NaN;
       if (tail4 >= 55296 && tail4 <= 56319 && s.length > 0 && !(s.charCodeAt(0) >= 56320 && s.charCodeAt(0) <= 57343)) {
         throw new UStringException({ kind: "UnpairedSurrogate", unit: tail4 });
       }
@@ -186,7 +180,7 @@ export class TestTraceRender {
       }
     } else {
       if (pointAfter >= p) {
-        const tail5 = out.length > 0 ? out[out.length - 1].charCodeAt(out[out.length - 1].length - 1) : NaN;
+        const tail5 = out.length > 0 ? out[out.length - 1]!.charCodeAt(out[out.length - 1]!.length - 1) : NaN;
         if (tail5 >= 55296 && tail5 <= 56319 && s.length > 0 && !(s.charCodeAt(0) >= 56320 && s.charCodeAt(0) <= 57343)) {
           throw new UStringException({ kind: "UnpairedSurrogate", unit: tail5 });
         }
@@ -194,37 +188,31 @@ export class TestTraceRender {
           out.push(s);
         }
         for (let k2 = p; k2 < pointAfter; k2 += 1) {
-          const tail6 = out.length > 0 ? out[out.length - 1].charCodeAt(out[out.length - 1].length - 1) : NaN;
-          if (tail6 >= 55296 && tail6 <= 56319 && "0".length > 0 && !("0".charCodeAt(0) >= 56320 && "0".charCodeAt(0) <= 57343)) {
+          const tail6 = out.length > 0 ? out[out.length - 1]!.charCodeAt(out[out.length - 1]!.length - 1) : NaN;
+          if (tail6 >= 55296 && tail6 <= 56319) {
             throw new UStringException({ kind: "UnpairedSurrogate", unit: tail6 });
           }
-          if ("0".length > 0) {
-            out.push("0");
-          }
+          out.push("0");
         }
-        const tail7 = out.length > 0 ? out[out.length - 1].charCodeAt(out[out.length - 1].length - 1) : NaN;
-        if (tail7 >= 55296 && tail7 <= 56319 && ".0".length > 0 && !(".0".charCodeAt(0) >= 56320 && ".0".charCodeAt(0) <= 57343)) {
+        const tail7 = out.length > 0 ? out[out.length - 1]!.charCodeAt(out[out.length - 1]!.length - 1) : NaN;
+        if (tail7 >= 55296 && tail7 <= 56319) {
           throw new UStringException({ kind: "UnpairedSurrogate", unit: tail7 });
         }
-        if (".0".length > 0) {
-          out.push(".0");
-        }
+        out.push(".0");
       } else {
-        const tail8 = out.length > 0 ? out[out.length - 1].charCodeAt(out[out.length - 1].length - 1) : NaN;
+        const tail8 = out.length > 0 ? out[out.length - 1]!.charCodeAt(out[out.length - 1]!.length - 1) : NaN;
         if (tail8 >= 55296 && tail8 <= 56319 && s.substring(0, pointAfter).length > 0 && !(s.substring(0, pointAfter).charCodeAt(0) >= 56320 && s.substring(0, pointAfter).charCodeAt(0) <= 57343)) {
           throw new UStringException({ kind: "UnpairedSurrogate", unit: tail8 });
         }
         if (s.substring(0, pointAfter).length > 0) {
           out.push(s.substring(0, pointAfter));
         }
-        const tail9 = out.length > 0 ? out[out.length - 1].charCodeAt(out[out.length - 1].length - 1) : NaN;
-        if (tail9 >= 55296 && tail9 <= 56319 && ".".length > 0 && !(".".charCodeAt(0) >= 56320 && ".".charCodeAt(0) <= 57343)) {
+        const tail9 = out.length > 0 ? out[out.length - 1]!.charCodeAt(out[out.length - 1]!.length - 1) : NaN;
+        if (tail9 >= 55296 && tail9 <= 56319) {
           throw new UStringException({ kind: "UnpairedSurrogate", unit: tail9 });
         }
-        if (".".length > 0) {
-          out.push(".");
-        }
-        const tail10 = out.length > 0 ? out[out.length - 1].charCodeAt(out[out.length - 1].length - 1) : NaN;
+        out.push(".");
+        const tail10 = out.length > 0 ? out[out.length - 1]!.charCodeAt(out[out.length - 1]!.length - 1) : NaN;
         if (tail10 >= 55296 && tail10 <= 56319 && s.substring(pointAfter).length > 0 && !(s.substring(pointAfter).charCodeAt(0) >= 56320 && s.substring(pointAfter).charCodeAt(0) <= 57343)) {
           throw new UStringException({ kind: "UnpairedSurrogate", unit: tail10 });
         }
@@ -233,7 +221,7 @@ export class TestTraceRender {
         }
       }
     }
-    const tail11 = out.length > 0 ? out[out.length - 1].charCodeAt(out[out.length - 1].length - 1) : NaN;
+    const tail11 = out.length > 0 ? out[out.length - 1]!.charCodeAt(out[out.length - 1]!.length - 1) : NaN;
     if (tail11 >= 55296 && tail11 <= 56319) {
       throw new UStringException({ kind: "UnpairedSurrogate", unit: tail11 });
     }
@@ -249,26 +237,22 @@ export class TestTraceRender {
   }
 
   public static renderIntArray(values: number[]): string {
-    let output = [];
-    const tail12 = output.length > 0 ? output[output.length - 1].charCodeAt(output[output.length - 1].length - 1) : NaN;
-    if (tail12 >= 55296 && tail12 <= 56319 && "[".length > 0 && !("[".charCodeAt(0) >= 56320 && "[".charCodeAt(0) <= 57343)) {
+    let output: string[] = [];
+    const tail12 = output.length > 0 ? output[output.length - 1]!.charCodeAt(output[output.length - 1]!.length - 1) : NaN;
+    if (tail12 >= 55296 && tail12 <= 56319) {
       throw new UStringException({ kind: "UnpairedSurrogate", unit: tail12 });
     }
-    if ("[".length > 0) {
-      output.push("[");
-    }
+    output.push("[");
     let index = 0;
     while (index < values.length) {
       if (index > 0) {
-        const tail13 = output.length > 0 ? output[output.length - 1].charCodeAt(output[output.length - 1].length - 1) : NaN;
-        if (tail13 >= 55296 && tail13 <= 56319 && ", ".length > 0 && !(", ".charCodeAt(0) >= 56320 && ", ".charCodeAt(0) <= 57343)) {
+        const tail13 = output.length > 0 ? output[output.length - 1]!.charCodeAt(output[output.length - 1]!.length - 1) : NaN;
+        if (tail13 >= 55296 && tail13 <= 56319) {
           throw new UStringException({ kind: "UnpairedSurrogate", unit: tail13 });
         }
-        if (", ".length > 0) {
-          output.push(", ");
-        }
+        output.push(", ");
       }
-      const tail14 = output.length > 0 ? output[output.length - 1].charCodeAt(output[output.length - 1].length - 1) : NaN;
+      const tail14 = output.length > 0 ? output[output.length - 1]!.charCodeAt(output[output.length - 1]!.length - 1) : NaN;
       if (tail14 >= 55296 && tail14 <= 56319 && TestTraceRender.renderInt(values[index]!).length > 0 && !(TestTraceRender.renderInt(values[index]!).charCodeAt(0) >= 56320 && TestTraceRender.renderInt(values[index]!).charCodeAt(0) <= 57343)) {
         throw new UStringException({ kind: "UnpairedSurrogate", unit: tail14 });
       }
@@ -277,14 +261,12 @@ export class TestTraceRender {
       }
       index += 1;
     }
-    const tail15 = output.length > 0 ? output[output.length - 1].charCodeAt(output[output.length - 1].length - 1) : NaN;
-    if (tail15 >= 55296 && tail15 <= 56319 && "]".length > 0 && !("]".charCodeAt(0) >= 56320 && "]".charCodeAt(0) <= 57343)) {
+    const tail15 = output.length > 0 ? output[output.length - 1]!.charCodeAt(output[output.length - 1]!.length - 1) : NaN;
+    if (tail15 >= 55296 && tail15 <= 56319) {
       throw new UStringException({ kind: "UnpairedSurrogate", unit: tail15 });
     }
-    if ("]".length > 0) {
-      output.push("]");
-    }
-    const tail16 = output.length > 0 ? output[output.length - 1].charCodeAt(output[output.length - 1].length - 1) : NaN;
+    output.push("]");
+    const tail16 = output.length > 0 ? output[output.length - 1]!.charCodeAt(output[output.length - 1]!.length - 1) : NaN;
     if (tail16 >= 55296 && tail16 <= 56319) {
       throw new UStringException({ kind: "UnpairedSurrogate", unit: tail16 });
     }
@@ -293,26 +275,22 @@ export class TestTraceRender {
   }
 
   public static renderStringArray(values: readonly string[]): string {
-    let output = [];
-    const tail17 = output.length > 0 ? output[output.length - 1].charCodeAt(output[output.length - 1].length - 1) : NaN;
-    if (tail17 >= 55296 && tail17 <= 56319 && "[".length > 0 && !("[".charCodeAt(0) >= 56320 && "[".charCodeAt(0) <= 57343)) {
+    let output: string[] = [];
+    const tail17 = output.length > 0 ? output[output.length - 1]!.charCodeAt(output[output.length - 1]!.length - 1) : NaN;
+    if (tail17 >= 55296 && tail17 <= 56319) {
       throw new UStringException({ kind: "UnpairedSurrogate", unit: tail17 });
     }
-    if ("[".length > 0) {
-      output.push("[");
-    }
+    output.push("[");
     let index = 0;
     while (index < values.length) {
       if (index > 0) {
-        const tail18 = output.length > 0 ? output[output.length - 1].charCodeAt(output[output.length - 1].length - 1) : NaN;
-        if (tail18 >= 55296 && tail18 <= 56319 && ", ".length > 0 && !(", ".charCodeAt(0) >= 56320 && ", ".charCodeAt(0) <= 57343)) {
+        const tail18 = output.length > 0 ? output[output.length - 1]!.charCodeAt(output[output.length - 1]!.length - 1) : NaN;
+        if (tail18 >= 55296 && tail18 <= 56319) {
           throw new UStringException({ kind: "UnpairedSurrogate", unit: tail18 });
         }
-        if (", ".length > 0) {
-          output.push(", ");
-        }
+        output.push(", ");
       }
-      const tail19 = output.length > 0 ? output[output.length - 1].charCodeAt(output[output.length - 1].length - 1) : NaN;
+      const tail19 = output.length > 0 ? output[output.length - 1]!.charCodeAt(output[output.length - 1]!.length - 1) : NaN;
       if (tail19 >= 55296 && tail19 <= 56319 && TestTraceRender.renderString(values[index]!).length > 0 && !(TestTraceRender.renderString(values[index]!).charCodeAt(0) >= 56320 && TestTraceRender.renderString(values[index]!).charCodeAt(0) <= 57343)) {
         throw new UStringException({ kind: "UnpairedSurrogate", unit: tail19 });
       }
@@ -321,14 +299,12 @@ export class TestTraceRender {
       }
       index += 1;
     }
-    const tail20 = output.length > 0 ? output[output.length - 1].charCodeAt(output[output.length - 1].length - 1) : NaN;
-    if (tail20 >= 55296 && tail20 <= 56319 && "]".length > 0 && !("]".charCodeAt(0) >= 56320 && "]".charCodeAt(0) <= 57343)) {
+    const tail20 = output.length > 0 ? output[output.length - 1]!.charCodeAt(output[output.length - 1]!.length - 1) : NaN;
+    if (tail20 >= 55296 && tail20 <= 56319) {
       throw new UStringException({ kind: "UnpairedSurrogate", unit: tail20 });
     }
-    if ("]".length > 0) {
-      output.push("]");
-    }
-    const tail21 = output.length > 0 ? output[output.length - 1].charCodeAt(output[output.length - 1].length - 1) : NaN;
+    output.push("]");
+    const tail21 = output.length > 0 ? output[output.length - 1]!.charCodeAt(output[output.length - 1]!.length - 1) : NaN;
     if (tail21 >= 55296 && tail21 <= 56319) {
       throw new UStringException({ kind: "UnpairedSurrogate", unit: tail21 });
     }
@@ -368,7 +344,7 @@ export class TestTraceRender {
   }
 
   private static expandScientific(value: string): string {
-    let output = [];
+    let output: string[] = [];
     let copied = 0;
     let index = 0;
     while (index < value.length) {
@@ -382,14 +358,14 @@ export class TestTraceRender {
         index += 1;
         continue;
       }
-      const tail22 = output.length > 0 ? output[output.length - 1].charCodeAt(output[output.length - 1].length - 1) : NaN;
+      const tail22 = output.length > 0 ? output[output.length - 1]!.charCodeAt(output[output.length - 1]!.length - 1) : NaN;
       if (tail22 >= 55296 && tail22 <= 56319 && value.substring(copied, match!.start).length > 0 && !(value.substring(copied, match!.start).charCodeAt(0) >= 56320 && value.substring(copied, match!.start).charCodeAt(0) <= 57343)) {
         throw new UStringException({ kind: "UnpairedSurrogate", unit: tail22 });
       }
       if (value.substring(copied, match!.start).length > 0) {
         output.push(value.substring(copied, match!.start));
       }
-      const tail23 = output.length > 0 ? output[output.length - 1].charCodeAt(output[output.length - 1].length - 1) : NaN;
+      const tail23 = output.length > 0 ? output[output.length - 1]!.charCodeAt(output[output.length - 1]!.length - 1) : NaN;
       if (tail23 >= 55296 && tail23 <= 56319 && TestTraceRender.expandMantissa(value.substring(match!.start, match!.mantissaEnd), match!.exponent).length > 0 && !(TestTraceRender.expandMantissa(value.substring(match!.start, match!.mantissaEnd), match!.exponent).charCodeAt(0) >= 56320 && TestTraceRender.expandMantissa(value.substring(match!.start, match!.mantissaEnd), match!.exponent).charCodeAt(0) <= 57343)) {
         throw new UStringException({ kind: "UnpairedSurrogate", unit: tail23 });
       }
@@ -399,14 +375,14 @@ export class TestTraceRender {
       copied = match!.end;
       index = match!.end;
     }
-    const tail24 = output.length > 0 ? output[output.length - 1].charCodeAt(output[output.length - 1].length - 1) : NaN;
+    const tail24 = output.length > 0 ? output[output.length - 1]!.charCodeAt(output[output.length - 1]!.length - 1) : NaN;
     if (tail24 >= 55296 && tail24 <= 56319 && value.substring(copied, value.length).length > 0 && !(value.substring(copied, value.length).charCodeAt(0) >= 56320 && value.substring(copied, value.length).charCodeAt(0) <= 57343)) {
       throw new UStringException({ kind: "UnpairedSurrogate", unit: tail24 });
     }
     if (value.substring(copied, value.length).length > 0) {
       output.push(value.substring(copied, value.length));
     }
-    const tail25 = output.length > 0 ? output[output.length - 1].charCodeAt(output[output.length - 1].length - 1) : NaN;
+    const tail25 = output.length > 0 ? output[output.length - 1]!.charCodeAt(output[output.length - 1]!.length - 1) : NaN;
     if (tail25 >= 55296 && tail25 <= 56319) {
       throw new UStringException({ kind: "UnpairedSurrogate", unit: tail25 });
     }
@@ -414,7 +390,7 @@ export class TestTraceRender {
   }
 
   private static stripWholeFraction(value: string): string {
-    let output = [];
+    let output: string[] = [];
     let index = 0;
     while (index < value.length) {
       if ((Number.isNaN(value.charCodeAt(index)) ? null : value.charCodeAt(index))! === 46 && index > 0 && TestTraceRender.isDigit(readUnit(value, index - 1)!)) {
@@ -427,7 +403,7 @@ export class TestTraceRender {
           continue;
         }
       }
-      const tail26 = output.length > 0 ? output[output.length - 1].charCodeAt(output[output.length - 1].length - 1) : NaN;
+      const tail26 = output.length > 0 ? output[output.length - 1]!.charCodeAt(output[output.length - 1]!.length - 1) : NaN;
       if (tail26 >= 55296 && tail26 <= 56319 && value.substring(index, index + 1).length > 0 && !(value.substring(index, index + 1).charCodeAt(0) >= 56320 && value.substring(index, index + 1).charCodeAt(0) <= 57343)) {
         throw new UStringException({ kind: "UnpairedSurrogate", unit: tail26 });
       }
@@ -436,7 +412,7 @@ export class TestTraceRender {
       }
       index += 1;
     }
-    const tail27 = output.length > 0 ? output[output.length - 1].charCodeAt(output[output.length - 1].length - 1) : NaN;
+    const tail27 = output.length > 0 ? output[output.length - 1]!.charCodeAt(output[output.length - 1]!.length - 1) : NaN;
     if (tail27 >= 55296 && tail27 <= 56319) {
       throw new UStringException({ kind: "UnpairedSurrogate", unit: tail27 });
     }
@@ -540,17 +516,15 @@ export class TestTraceRender {
   }
 
   private static zeroes(count: number): string {
-    let output = [];
+    let output: string[] = [];
     for (let index = 0; index < count; index += 1) {
-      const tail28 = output.length > 0 ? output[output.length - 1].charCodeAt(output[output.length - 1].length - 1) : NaN;
-      if (tail28 >= 55296 && tail28 <= 56319 && "0".length > 0 && !("0".charCodeAt(0) >= 56320 && "0".charCodeAt(0) <= 57343)) {
+      const tail28 = output.length > 0 ? output[output.length - 1]!.charCodeAt(output[output.length - 1]!.length - 1) : NaN;
+      if (tail28 >= 55296 && tail28 <= 56319) {
         throw new UStringException({ kind: "UnpairedSurrogate", unit: tail28 });
       }
-      if ("0".length > 0) {
-        output.push("0");
-      }
+      output.push("0");
     }
-    const tail29 = output.length > 0 ? output[output.length - 1].charCodeAt(output[output.length - 1].length - 1) : NaN;
+    const tail29 = output.length > 0 ? output[output.length - 1]!.charCodeAt(output[output.length - 1]!.length - 1) : NaN;
     if (tail29 >= 55296 && tail29 <= 56319) {
       throw new UStringException({ kind: "UnpairedSurrogate", unit: tail29 });
     }
