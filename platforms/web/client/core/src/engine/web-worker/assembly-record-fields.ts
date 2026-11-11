@@ -1,4 +1,14 @@
-// Generated from ffi/schema/assembly-record.schema.json revision 1. Edit the schema and run python3 tools/schema/generate_ts.py.
+// Frozen projection of ffi/schema/assembly-record.schema.json revision 1.
+// The generator tools/schema/generate_ts.py was deleted in commit 5d366296
+// together with tools/schema/, so this file cannot be regenerated. Treat it as
+// a frozen artifact and edit it by hand only in the same commit that changes
+// ffi/schema/assembly-record.schema.json.
+//
+// Manual sync criterion: LAYOUT_REQUEST_FIELDS must equal
+// surfaces.workerJson.fields in the same order; ASSEMBLY_RECORD_REVISION must
+// equal the schema revision; the AssemblyRecordRequest typedef must match the
+// schema scalar and table types. A wire-shape change bumps the schema revision
+// and updates all three by hand. See ffi/schema/FROZEN.md.
 
 export const LAYOUT_REQUEST_FIELDS = Object.freeze([
   "text",
