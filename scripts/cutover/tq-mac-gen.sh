@@ -15,6 +15,9 @@
 # usage: tq-mac-gen.sh <label> [boring-checkout] [tiqian-checkout]
 #   env TQ_MAC_EXPECT_RS overrides the generated-.rs file-count gate (default 422,
 #   the whole engine tree; a protocol-only chain has a different count).
+#   env TQ_MAC_LOCK_WAIT overrides the seconds this script waits for the
+#   /tmp/tq-mac-gen.lock that another round holds (default 30). Every ssh and
+#   rsync call to the Mac gives up after ConnectTimeout=10 seconds.
 set -u
 WS=${WORKSPACE}
 LABEL="${1:?usage: tq-mac-gen.sh <label> [boring-checkout] [tiqian-checkout]}"
@@ -27,9 +30,18 @@ OUT="/Users/losses/tq-dc/$LABEL"
 HAXE_BIN=/nix/store/p21w77yvh8dgd01klw3xbg1sr9dwwlfl-haxe-4.3.7/bin
 LOG="$WS/.tq-logs/$LABEL.macgen.log"
 
+SSH_OPTS=(-o BatchMode=yes -o ConnectTimeout=10 -o ServerAliveInterval=15 -o ServerAliveCountMax=3)
+RSYNC_SSH="ssh ${SSH_OPTS[*]}"
+
 LOCK=/tmp/tq-mac-gen.lock
+LOCK_WAIT="${TQ_MAC_LOCK_WAIT:-30}"
 exec 9>"$LOCK"
-command -v flock >/dev/null 2>&1 && flock 9
+if command -v flock >/dev/null 2>&1; then
+  if ! flock -w "$LOCK_WAIT" 9; then
+    echo "### 终止：另一轮在跑，锁文件 $LOCK，等待 ${LOCK_WAIT} 秒未拿到。" >&2
+    exit 7
+  fi
+fi
 : > "$LOG"
 exec >>"$LOG" 2>&1
 set -x
@@ -57,9 +69,9 @@ DIRTY=$(cd "$WS/$TIQIAN" && git status --porcelain | grep -v '^??' | wc -l)
 echo "### [$LABEL] boring=$BORING($BORING_REV) tiqian=$TIQIAN($(cd "$WS/$TIQIAN" && git rev-parse --short HEAD)) 未提交改动=${DIRTY}处"
 [ "$DIRTY" != "0" ] && { echo "### 终止：tiqian 工作树有未提交改动，读数会混入它们。"; exit 2; }
 
-rsync -a --delete "$WS/$BORING/packages/" "mac:~/tq-rust/$LABEL-boring/packages/"
-rsync -a --delete "$WS/$BORING/samples/"  "mac:~/tq-rust/$LABEL-boring/samples/"
-rsync -a --delete --exclude out/ --exclude .git/ --exclude node_modules/ \
+rsync -a --delete -e "$RSYNC_SSH" "$WS/$BORING/packages/" "mac:~/tq-rust/$LABEL-boring/packages/"
+rsync -a --delete -e "$RSYNC_SSH" "$WS/$BORING/samples/"  "mac:~/tq-rust/$LABEL-boring/samples/"
+rsync -a --delete -e "$RSYNC_SSH" --exclude out/ --exclude .git/ --exclude node_modules/ \
       "$WS/$TIQIAN/engine-haxe/" "mac:~/tq-rust/$LABEL-tiqian/engine-haxe/"
 
 cat > "$WS/.tq-logs/$LABEL.mac.hxml" <<EOF
@@ -83,21 +95,21 @@ engine-haxe/targets/classes.hxml
 -D float-precision=f32
 std.UStringException
 EOF
-rsync -a "$WS/.tq-logs/$LABEL.mac.hxml" "mac:~/tq-rust/$LABEL-tiqian/engine-haxe/targets/$LABEL.mac.hxml"
+rsync -a -e "$RSYNC_SSH" "$WS/.tq-logs/$LABEL.mac.hxml" "mac:~/tq-rust/$LABEL-tiqian/engine-haxe/targets/$LABEL.mac.hxml"
 
-ssh -o BatchMode=yes mac "cd ~/tq-rust/$LABEL-tiqian && rm -rf '$OUT' && PATH=$HAXE_BIN:\$PATH HAXELIB_PATH=\$HOME/tq-warn/tiqian/.haxelib haxe engine-haxe/targets/$LABEL.mac.hxml > /tmp/$LABEL.gen.log 2>&1; echo gen_rc=\$?; tail -3 /tmp/$LABEL.gen.log"
+ssh "${SSH_OPTS[@]}" mac "cd ~/tq-rust/$LABEL-tiqian && rm -rf '$OUT' && PATH=$HAXE_BIN:\$PATH HAXELIB_PATH=\$HOME/tq-warn/tiqian/.haxelib haxe engine-haxe/targets/$LABEL.mac.hxml > /tmp/$LABEL.gen.log 2>&1; echo gen_rc=\$?; tail -3 /tmp/$LABEL.gen.log"
 
-FILES=$(ssh -o BatchMode=yes mac "find '$OUT' -name '*.rs' | wc -l" | tr -d ' ')
+FILES=$(ssh "${SSH_OPTS[@]}" mac "find '$OUT' -name '*.rs' | wc -l" | tr -d ' ')
 echo "### 生成 .rs 文件数=$FILES（期望 $EXPECT_RS）"
 if [ "$FILES" != "$EXPECT_RS" ]; then
   echo "### 终止：文件数不是 $EXPECT_RS，生成树是半成品，错误计数作废（PIT-103）。"
   exit 5
 fi
 
-ssh -o BatchMode=yes mac "mkdir -p /Users/losses/tq-dc/shared-target && rm -rf '$OUT/src/target' && ln -s /Users/losses/tq-dc/shared-target '$OUT/src/target' && ls -ld '$OUT/src/target'"
-ssh -o BatchMode=yes mac "cd '$OUT/src' && /Users/losses/.cargo/bin/cargo build --lib --tests --message-format=short > /tmp/$LABEL.build.log 2>&1; echo build_rc=\$?; echo -n 'error 条数: '; grep -c ': error' /tmp/$LABEL.build.log"
+ssh "${SSH_OPTS[@]}" mac "mkdir -p /Users/losses/tq-dc/shared-target && rm -rf '$OUT/src/target' && ln -s /Users/losses/tq-dc/shared-target '$OUT/src/target' && ls -ld '$OUT/src/target'"
+ssh "${SSH_OPTS[@]}" mac "cd '$OUT/src' && /Users/losses/.cargo/bin/cargo build --lib --tests --message-format=short > /tmp/$LABEL.build.log 2>&1; echo build_rc=\$?; echo -n 'error 条数: '; grep -c ': error' /tmp/$LABEL.build.log"
 echo "### 错误构成（前 8）"
-ssh -o BatchMode=yes mac "grep ': error' /tmp/$LABEL.build.log | sed -E 's/^[^:]+:[0-9]+:[0-9]+: error//' | cut -c1-70 | sort | uniq -c | sort -rn | head -8"
-DU=$(ssh -o BatchMode=yes mac "du -sh '$OUT' 2>/dev/null | cut -f1")
+ssh "${SSH_OPTS[@]}" mac "grep ': error' /tmp/$LABEL.build.log | sed -E 's/^[^:]+:[0-9]+:[0-9]+: error//' | cut -c1-70 | sort | uniq -c | sort -rn | head -8"
+DU=$(ssh "${SSH_OPTS[@]}" mac "du -sh '$OUT' 2>/dev/null | cut -f1")
 echo "### Mac 产物占用: $DU"
 echo "### 本机磁盘: $(df -h /home | tail -1)"
