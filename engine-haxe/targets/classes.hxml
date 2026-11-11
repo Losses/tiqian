@@ -118,6 +118,7 @@ org.tiqian.linebreak.LineBreakCoverageTest
 org.tiqian.linebreak.MandatoryBreakTest
 org.tiqian.linebreak.UnicodePunctuationLineBreakCoverageTest
 org.tiqian.linebreak.UnicodePunctuationLineBreakTest
+org.tiqian.protocol.NamedErrorNames
 org.tiqian.shaping.ExplainableStubTextShaperTest
 org.tiqian.shaping.ReplayableFontBackendCoverageTest
 org.tiqian.shaping.TextShaperCoverageTest

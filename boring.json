@@ -16,7 +16,7 @@
   "sourceRoots": ["engine-haxe/src", "engine-haxe/macros"],
   "sourceSets": {
     "engine": {
-      "types": ["runtime.UString", "runtime.TestCore"],
+      "types": ["runtime.UString", "runtime.TestCore", "org.tiqian.protocol.NamedErrorNames"],
       "discover": [
         {
           "root": "engine-haxe/src",
