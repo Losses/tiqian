@@ -8,6 +8,16 @@
 //! production implementation when the caller passes `None`. There is no
 //! `extern "C"` boundary left; the faults of the generated engine surface
 //! as `crate::NamedError`.
+//!
+//! Cross-target ruling (2026-11-11): the capability set is the twelve names
+//! exported by the npm facade at
+//! platforms/web/client/engine-runtime/src/facade.mjs. Those names must match
+//! across targets; the transport shape may not. This crate passes the
+//! generated types in and out because tiqian-engine-gen is a public path
+//! dependency, while the npm facade carries JSON text because its package
+//! exports map publishes only the facade module. Measurement arrives here as
+//! trait objects and there as host callbacks, which follows from what each
+//! host language can express.
 
 use crate::NamedError;
 use std::sync::{Arc, Mutex};
