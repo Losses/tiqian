@@ -47,7 +47,7 @@ GEN_DIR = WORKTREE / "engine-haxe/out/swap-gen"
 GEN_TEST_DIR = WORKTREE / "engine-haxe/out/swap-gen-tests"
 BASE_MANIFEST = WORKTREE / "engine-haxe/targets/kotlin-f32.hxml"
 HXML_DIR = WORKTREE / "engine-haxe/targets"
-MAIN_TREE = Path("/home/losses/Development/tiqian")
+MAIN_TREE = Path(__file__).resolve().parents[2]
 
 KOTLIN_MODIFIERS = {
     "public", "private", "internal", "protected", "abstract", "sealed",

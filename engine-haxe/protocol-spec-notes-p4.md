@@ -47,7 +47,7 @@
 
 ## 生成与验证命令（工作树根）
 - 生成（先清空）：rm -rf engine-haxe/out/protocol-{ts,rust,kotlin,c} 后
-  nix develop -c bash -c 'node /home/losses/Development/tq-workspace/boring/out/bundle/driver.js gen protocol-ts protocol-rust protocol-kotlin protocol-c --project boring.json'
+  nix develop -c bash -c 'node ${BORING_ROOT}/out/bundle/driver.js gen protocol-ts protocol-rust protocol-kotlin protocol-c --project boring.json'
   （本机 nix 需要 XDG_CACHE_HOME 指向工作区内目录，否则 fetcher cache 只读——DSH 文件沙箱限制，非 nix 缺陷。）
 - C 头：gen 后 bun engine-haxe/out/protocol-c/gen/c-header.js（cwd=工作树根）→ out/protocol-c/gen/tiqian_protocol_constants.h。
 - TS：(cd platforms/web/client/core && npm test) 与 (cd platforms/web/server/core && npm test)。
@@ -74,6 +74,6 @@
 ```
 - haxe 目标写文件的宿主通道取证：haxe 4.3.7 对 js 目标拒绝 sys（"You cannot access the sys package while targeting js"，CHeader.hx:35 编译错）；haxe.io.File 在 js 平台不存在（"Type not found : haxe.io.File"，CHeader.hx:38 编译错）；最终用 @:jsRequire("node:fs") private extern（同文件），先例 engine-haxe/src/org/tiqian/test/trace/TestTracePlatform.hx:7-11。std.Fs 是生成目标的平台模块（stdlib/17），stock Haxe 下是 extern 无实现，haxe 目标不可用。
 - 四个目标配置的 gen 命令（工作树根，XDG_CACHE_HOME 指工作区内目录）：
-  nix develop --offline -c bash -c 'node /home/losses/Development/tq-workspace/boring/out/bundle/driver.js gen protocol-ts protocol-rust protocol-kotlin protocol-c --project boring.json'
+  nix develop --offline -c bash -c 'node ${BORING_ROOT}/out/bundle/driver.js gen protocol-ts protocol-rust protocol-kotlin protocol-c --project boring.json'
   前一步 rm -rf engine-haxe/out/protocol-{ts,rust,kotlin,c}。protocol-ts / protocol-rust / protocol-kotlin / protocol-c 四个目标配置 DRIVER_RC=0；C 头写出 BUN_RC=0（读数含生成器修订 4f412c6a）。
 - gen 树是超集（Intercept.run 覆盖 engine-haxe/src 全体被引用类，含 TracedAssertions 拉入的 clreq/core/layout/linebreak 面）；vendor 只拷消费侧 import 需要的文件（P1 先例：protocol-gen 目录只含 canonical 子集）。

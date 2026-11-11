@@ -43,7 +43,7 @@
 # with; HAXELIB_PATH must point at the worktree's .haxelib.
 
 set -u
-export PATH=/nix/store/98pb92k7pi6g5cifmg872jn18kghaxw5-haxe-4.3.7/bin:/nix/store/rqx09a40a82di944xi6ydjyzx632av28-kotlin-2.4.10/bin:/nix/store/0a9l8lf8394msppsna27y58f8ljqyifn-openjdk-25.0.4+7/bin:/home/losses/.bun/bin:$PATH
+export PATH=/nix/store/98pb92k7pi6g5cifmg872jn18kghaxw5-haxe-4.3.7/bin:/nix/store/rqx09a40a82di944xi6ydjyzx632av28-kotlin-2.4.10/bin:/nix/store/0a9l8lf8394msppsna27y58f8ljqyifn-openjdk-25.0.4+7/bin:~/.bun/bin:$PATH
 export BORING_TEST_TIMEOUT_MS=180000
 
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"

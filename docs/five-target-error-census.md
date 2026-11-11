@@ -44,17 +44,17 @@ Dart）下的编译错误，作为跨目标行为对齐（见
 
 ```shell
 # 前置：vendored 副本指向要测的 boring 提交
-cd /home/losses/Development/tiqian/.haxelib/boring/git && git fetch origin && git checkout <提交号>
+cd <repo>/.haxelib/boring/git && git fetch origin && git checkout <提交号>
 
 # 从 tiqian 仓库根目录重新生成两个 Kotlin 目录。每次 haxe 前在同一个
 # nix shell 里重写 .dev（.dev 损坏时 haxe 报 Type not found : Intercept，
 # 所以每次生成前都重写一次）
-nix develop -c bash -c 'printf "%s" /home/losses/Development/tiqian/.haxelib/boring/git > .haxelib/boring/.dev; haxe engine-haxe/targets/kotlin-f32.hxml'  # f32
-nix develop -c bash -c 'printf "%s" /home/losses/Development/tiqian/.haxelib/boring/git > .haxelib/boring/.dev; haxe engine-haxe/targets/kotlin-f64.hxml'  # f64
+nix develop -c bash -c 'printf "%s" <repo>/.haxelib/boring/git > .haxelib/boring/.dev; haxe engine-haxe/targets/kotlin-f32.hxml'  # f32
+nix develop -c bash -c 'printf "%s" <repo>/.haxelib/boring/git > .haxelib/boring/.dev; haxe engine-haxe/targets/kotlin-f64.hxml'  # f64
 
 # 编译普查。kotlinc 不在默认 PATH，必须用绝对路径；退出码 1 是预期，
 # 错误计数来自日志
-cd /home/losses/Development/tiqian
+cd <repo>
 nix develop -c bash -c '
 KOTLINC=/nix/store/rqx09a40a82di944xi6ydjyzx632av28-kotlin-2.4.10/bin/kotlinc
 $KOTLINC -Xallow-kotlin-package \

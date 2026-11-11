@@ -31,7 +31,7 @@
 - 规定的 core 生成命令同样受 Nix daemon socket 权限限制；等价 Haxe 4.3.7 命令 `haxe porting/haxe/core-kotlin.hxml` rc=0。
 - 生成入口包含全 `porting/haxe/src` Intercept 扫描根、`float-precision=f32` 和指定 Kotlin/runtime 输出定义；入口只显式列阶段 A 的 `TextRange` 与 `TextRangeTest`。
 - 未运行 Gradle，未修改 `engine/`、`.haxelib/` 或 `porting/haxe/baseline-goldens/`。
-- `BLOCKED:` 用户要求的本地提交未完成：Git 索引和对象库位于 `/home/losses/Development/tiqian/.git`，沙箱拒绝创建 `index.lock` 和对象临时文件；未留下暂存状态。
+- `BLOCKED:` 用户要求的本地提交未完成：Git 索引和对象库位于 `<repo>/.git`，沙箱拒绝创建 `index.lock` 和对象临时文件；未留下暂存状态。
 
 ## 来源与已知差异
 

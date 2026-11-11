@@ -30,9 +30,9 @@
 ## 4. 束与生成
 
 - 束登记在 `tiqian/boring.json`。P1 已建立 `protocol-ts` 与 `protocol-rust` 两束，roots 文件是 `engine-haxe/targets/protocol-ts.hxml` 与 `protocol-rust.hxml`；新模块把根类加进去即可，不要新开束（除非任务书要求）。
-- 生成一律走驱动器：`cd <tiqian 检出> && nix develop -c bash -c 'node /home/losses/Development/tq-workspace/boring/out/bundle/driver.js gen protocol-rust --project boring.json'`（ts 同理）。生成前先 `rm -rf engine-haxe/out/protocol-* `。
+- 生成一律走驱动器：`cd <tiqian 检出> && nix develop -c bash -c 'node ${BORING_ROOT}/out/bundle/driver.js gen protocol-rust --project boring.json'`（ts 同理）。生成前先 `rm -rf engine-haxe/out/protocol-* `。
 - 生成物入库：TS 搬进 `platforms/web/server/core/src/protocol-gen/`（P1 的做法），Rust 搬进 `platforms/web/server/precompute/protocol-gen/`（workspace member，`engine` 经 path 依赖）。搬运只从驱动器产物搬，结构与 gen 根逐项一致。
-- **搬运必须双向可核（PIT-174）**：搬完跑 `bash /home/losses/Development/tq-workspace/scripts/tq-vendor-check.sh <tiqian 检出>`。extras（挂载里有、驱动不产）与 full 挂载的 missing 都必须为零；非零不许交回、更不许 pin advance。挂载换了路径就在脚本登记表的重映射字段里声明（例：client 的 `Revision.ts` ← `org/tiqian/protocol/Revision.ts`），不要在树里留无出处的文件。
+- **搬运必须双向可核（PIT-174）**：搬完跑 `bash ${WORKSPACE}/scripts/tq-vendor-check.sh <tiqian 检出>`。extras（挂载里有、驱动不产）与 full 挂载的 missing 都必须为零；非零不许交回、更不许 pin advance。挂载换了路径就在脚本登记表的重映射字段里声明（例：client 的 `Revision.ts` ← `org/tiqian/protocol/Revision.ts`），不要在树里留无出处的文件。
 - **新增测试类必须在每个目标的 roots hxml 里同时加根**。漏加会被搬运成「看着在、其实不编译」的死文件——本轮实测两例（`snapshot_table_binary_test.rs` / `snapshot_table_test_support.rs`）；只查 missing 的比对抓不到这一类，必须双向查。
 
 ## 5. 验收与证据
@@ -45,7 +45,7 @@
 
 ## 6. 工作树与时间盒
 
-- 每席用自己的 tiqian 工作树：`git -C /home/losses/Development/tq-workspace/tiqian worktree add ../tiqian-wt-<席名> -b <分支> main`，然后在该工作树里 `bash tools/setup-haxe-env.sh`（补 `.haxelib`、`engine-haxe/baseline-goldens`、`tools/unicode-data`）。不要几个人共用主检出（PIT-26）。
+- 每席用自己的 tiqian 工作树：`git -C ${TIQIAN_ROOT} worktree add ../tiqian-wt-<席名> -b <分支> main`，然后在该工作树里 `bash tools/setup-haxe-env.sh`（补 `.haxelib`、`engine-haxe/baseline-goldens`、`tools/unicode-data`）。不要几个人共用主检出（PIT-26）。
 - 时间盒见任务书。把绕行写进提交比不提交更糟；第一个提交允许只含束登记与 spec 阅读笔记。
 - **交回前工作树必须干净**：未完成的部分要么提交成一个自洽的提交，要么还原；带着未提交改动交回会让读数混入它们（PIT-79），也让人无法判断交回的是哪一版。已出现两次同类问题。
 - 交回格式：一句话总括 + 五条（任务与分支；交付物与路径；跑过的命令与原始读数含修订；没做完的部分与卡点；下一步建议）。
@@ -61,7 +61,7 @@
 ## 8. 环境坑（各席实测，直接照用，别再各踩一遍）
 
 - **Gradle 必须在 `nix develop` 里跑**：PATH 上裸的 java 21 缺 `java.logging`，wrapper 起不来。
-- **`GRADLE_USER_HOME` 用工作区共享的那一份**：`/home/losses/Development/tq-workspace/.gradle-home`（`/home/losses/.gradle` 的锁文件 Permission denied，不能用）。**不要各席在自己工作树里再建一份**——实测每个副本约 2.5 GB，四席并行就吃掉 10 GB，本机 /home 现在只剩 33 GB。
+- **`GRADLE_USER_HOME` 用工作区共享的那一份**：`${WORKSPACE}/.gradle-home`（`~/.gradle` 的锁文件 Permission denied，不能用）。**不要各席在自己工作树里再建一份**——实测每个副本约 2.5 GB，四席并行就吃掉 10 GB，本机 /home 现在只剩 33 GB。
 - **`XDG_CACHE_HOME=/tmp/tq-nix-cache`**：`~/.cache/nix` 只读。
 - **npm 侧先在工作树根 `npm install`**：`tsc` 来自 workspace devDeps，不装就没有。
 - **`./gradlew :ffi:js:assembleNpmPackage` 会清空重建 `ffi/js/npm/runtime/`**：vendored 生成物一律放 `ffi/js/npm/engine-gen/`，再由构建步骤复制进 runtime 产物（`package.json` 的 `files` 只发布 `runtime/`）。

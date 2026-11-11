@@ -16,7 +16,7 @@
 #   env TQ_MAC_EXPECT_RS overrides the generated-.rs file-count gate (default 422,
 #   the whole engine tree; a protocol-only chain has a different count).
 set -u
-WS=/home/losses/Development/tq-workspace
+WS=${WORKSPACE}
 LABEL="${1:?usage: tq-mac-gen.sh <label> [boring-checkout] [tiqian-checkout]}"
 BORING="${2:-tiqian/.haxelib/boring/git}"
 TIQIAN="${3:-tiqian}"
