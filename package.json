@@ -11,6 +11,9 @@
     "platforms/web/client/sveltekit",
     "demo/web"
   ],
+  "scripts": {
+    "postinstall": "node ./platforms/web/client/engine-runtime/build-runtime.ts"
+  },
   "devDependencies": {
     "typescript": "5.9.3",
     "@types/bun": "1.4.0"

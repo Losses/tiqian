@@ -37,6 +37,7 @@
   },
   "scripts": {
     "build:runtime": "node ./build-runtime.ts",
+    "prepare": "node ./build-runtime.ts",
     "pretest": "tsc -b",
     "test": "node --test *.test.mjs",
     "verify:package": "node ./verify-package.ts",

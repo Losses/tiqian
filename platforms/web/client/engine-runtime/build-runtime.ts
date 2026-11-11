@@ -22,8 +22,27 @@ if (!existsSync(engineGenDirectory)) {
   const generator = fileURLToPath(new URL("../../../../scripts/generate-engine-gen.mjs", import.meta.url));
   console.log("build:runtime: engine-gen/ is missing, generating it from the ts bundles");
   const generate = spawnSync(process.execPath, [generator, "ts"], { cwd: repoRoot, stdio: "inherit" });
-  if (generate.error) throw generate.error;
-  if (generate.status !== 0) process.exit(generate.status ?? 1);
+  if (generate.error || generate.status !== 0) {
+    // The prepare hook runs this script on every install, including machines
+    // that have no Haxe toolchain. A missing boring driver must not fail the
+    // install: report the next step and stop before runtime/ is wiped. The
+    // release path stays guarded because prepack runs npm test after this
+    // script and the tests need runtime/ to exist.
+    const cause = generate.error
+      ? generate.error.message
+      : "scripts/generate-engine-gen.mjs exited with status " + generate.status;
+    console.error(
+      [
+        "build:runtime: engine-gen/ is missing and could not be generated.",
+        "  cause: " + cause,
+        "  next steps:",
+        "    1. nix develop -c node scripts/generate-engine-gen.mjs ts",
+        "    2. npm run build:runtime",
+        "  runtime/ was left untouched; @tiqian/ffi has no entry point until step 2 succeeds.",
+      ].join("\n"),
+    );
+    process.exit(0);
+  }
 }
 
 const runtimeDirectory = fileURLToPath(new URL("./runtime/", import.meta.url));
