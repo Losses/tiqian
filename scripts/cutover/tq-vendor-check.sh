@@ -78,10 +78,9 @@ TABLE=(
   "kotlin-p3-jvm-protocol|files|kotlin-f32|engine/src/jvmMain/kotlin/org/tiqian/protocol|||PlanJson.kt,PlanJsonNumber.kt,PlanPacked.kt|org/tiqian/protocol"
   "kotlin-p3-jvm-runtime|files|kotlin-f32|engine/src/jvmMain/kotlin/org/tiqian/boring/runtime|||BytesBuffer.kt,FPHelper.kt,SortedTable.kt|runtime"
   "kotlin-p3-jvm-layout|files|kotlin-f32|engine/src/jvmMain/kotlin/org/tiqian/layout|||PlanLowering.kt,PreparedParagraph.kt|org/tiqian/layout"
-  "kotlin-protocol-ffijs|files|protocol-kotlin|ffi/js/src/jsMain/kotlin/org/tiqian/protocol|||DecorationInput.kt,InlineBoxInput.kt,InlineObjectInput.kt,LineBreakSpanInput.kt,NamedErrorNames.kt,ParagraphRequest.kt,ParagraphRequestChecks.kt,ParagraphRequestException.kt,TextSpanInput.kt|org/tiqian/protocol"
   # ffi-js precompute cutover（t-muj3czx5-k19v）：ffi/js/npm/engine-gen 是 ts 束的 subset 挂载，
   # 但 precompute-facade.mjs 另需 protocol-ts 束的 12 个协议模块（ParagraphRequestChecks 等）。
-  # 两束无法并入一行，按 kotlin-protocol-ffijs 先例以 files 模式对 protocol-ts 束单列内容比对。
+  # 两束无法并入一行，以 files 模式对 protocol-ts 束单列内容比对。
   "ffi-js-engine-gen-protocol|files|protocol-ts|ffi/js/npm/engine-gen|||org/tiqian/protocol/DecorationInput.ts,org/tiqian/protocol/InlineBoxInput.ts,org/tiqian/protocol/InlineObjectInput.ts,org/tiqian/protocol/JsCoerce.ts,org/tiqian/protocol/LayoutAttribute.ts,org/tiqian/protocol/LayoutFloatShape.ts,org/tiqian/protocol/LayoutTree.ts,org/tiqian/protocol/LayoutVertex.ts,org/tiqian/protocol/LineBreakSpanInput.ts,org/tiqian/protocol/NamedError.ts,org/tiqian/protocol/ParagraphRequest.ts,org/tiqian/protocol/ParagraphRequestChecks.ts,org/tiqian/protocol/ParagraphRequestException.ts,org/tiqian/protocol/TextSpanInput.ts,org/tiqian/protocol/WireField.ts,org/tiqian/protocol/WireValue.ts|"
   "kotlin-core-engine|files|protocol-kotlin|engine/src/commonMain/kotlin/org/tiqian/core|||TiqianIllegalArgumentException.kt,UnicodeWordCharacter.kt|org/tiqian/core"
   # cinterop 行备注：tiqian_protocol_constants.h 由 protocol-c 的 afterGen 步骤写出；该步骤是

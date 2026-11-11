@@ -6,8 +6,9 @@ plugins {
 
 kotlin {
     js {
-        // Generated names are package internals consumed by the `@tiqian/ffi`
-        // npm package (`ffi/js/npm`) and the plan parity oracle (ADR 0050).
+        // The published `@tiqian/ffi` package (`ffi/js/npm`) serves every
+        // capability from the generated TypeScript tree under engine-gen/;
+        // this target keeps the module shell without protocol sources.
         outputModuleName.set("Tiqian-tiqian-ffi-js")
         nodejs()
         useEsModules()
@@ -16,15 +17,6 @@ kotlin {
         // executable module (ADR 0053 A4); source maps embed their sources by
         // default, so the published .map files stand alone.
         generateTypeScriptDefinitions()
-    }
-
-    sourceSets {
-        jsMain.dependencies {
-            implementation(project(":engine"))
-        }
-        jsTest.dependencies {
-            implementation(kotlin("test"))
-        }
     }
 }
 
