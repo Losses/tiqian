@@ -53,9 +53,6 @@ kotlin {
             kotlin.setSrcDirs(listOf(layout.projectDirectory.dir("../engine-haxe/out/kotlin-f32/gen-tests")))
         }
 
-        // TEMPORARY PROBE: the handwritten jvmTest tree is still on the old API.
-        jvmTest { kotlin.setSrcDirs(emptyList<Any>()) }
-
         jvmTest.dependencies {
             implementation(project(":platforms:jvm:shaping"))
             implementation(project(":platforms:jvm:skia"))
