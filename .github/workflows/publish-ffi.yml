@@ -84,6 +84,25 @@ jobs:
         # resolved entries for them and npm ci (npm >= 11) rejects the gap.
         run: npm install --no-audit --no-fund
 
+      # The flake devShell is the only source of the boring driver, and only
+      # the generation needs it. Wrapping the whole job in `nix develop` would
+      # put npm install, npm test and npm publish on the devShell's Node 22
+      # and npm 10.9.8, shadowing the setup-node Node 24 and the OIDC-capable
+      # npm 11 installed above; the measured wall time is the same either way
+      # because the devShell startup is paid once.
+      - name: Install Nix
+        uses: DeterminateSystems/nix-installer-action@21a544727d0c62386e78b4befe52d19ad12692e3 # v17
+
+      - name: Allow unprivileged user namespaces
+        run: sudo sysctl kernel.apparmor_restrict_unprivileged_userns=0 || true
+
+      - name: Generate engine-gen with the flake toolchain
+        working-directory: .
+        # The install hook skips the generation when the flake devShell is
+        # absent, and prepack's build:runtime needs engine-gen/. Generating
+        # it here leaves prepack with the runtime/ recompile only.
+        run: nix develop -c npm run build:runtime --workspace @tiqian/ffi
+
       - name: Build and verify the release tarball
         env:
           TIQIAN_RELEASE_ARTIFACT_DIR: ${{ runner.temp }}/tiqian-ffi-release
