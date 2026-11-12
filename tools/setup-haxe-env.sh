@@ -4,11 +4,12 @@
 # One input lives outside git:
 #   tools/unicode-data/            read by reflaxe.unicode.GraphemeData
 #
-# It has an in-repo source, so a fresh clone needs no prepared checkout:
+# It has two in-tree sources, so a fresh clone needs no prepared checkout:
 #   .haxelib/boring/git/tools/unicode-data/  the pinned boring checkout
+#   $BORING_SOURCE/tools/unicode-data/       the boring flake input source
 #
 # Usage:
-#   bash tools/setup-haxe-env.sh              # stage from the in-repo source
+#   bash tools/setup-haxe-env.sh              # stage from the in-repo sources
 #   bash tools/setup-haxe-env.sh <checkout>   # stage from a prepared checkout
 set -euo pipefail
 
@@ -30,16 +31,41 @@ stage() {
   fi
   mkdir -p "$(dirname "$TARGET/$rel")"
   cp -pR "$src" "$TARGET/$rel"
+  # The boring flake source in the nix store is read-only; make the staged
+  # copy writable so it matches the .haxelib checkout path.
+  chmod -R u+w "$TARGET/$rel"
   echo "  + $rel (copied from $src)"
+  return 0
 }
 
 echo "setup-haxe-env: target $TARGET"
 
+# Candidate sources, tried in order: explicit argument, the in-repo pinned
+# boring checkout, then the boring flake input source.
+candidates=()
 if [ -n "$SOURCE" ]; then
-  SOURCE="$(cd "$SOURCE" && pwd -P)"
-  echo "setup-haxe-env: source $SOURCE"
-  stage tools/unicode-data "$SOURCE/tools/unicode-data"
-else
-  echo "setup-haxe-env: source $TARGET (in-repo)"
-  stage tools/unicode-data "$TARGET/$UNICODE_SOURCE"
+  if [ -d "$SOURCE" ]; then
+    candidates+=("$(cd "$SOURCE" && pwd -P)/tools/unicode-data")
+  else
+    candidates+=("$SOURCE/tools/unicode-data")
+  fi
 fi
+candidates+=("$TARGET/$UNICODE_SOURCE")
+if [ -n "${BORING_SOURCE:-}" ]; then
+  candidates+=("$BORING_SOURCE/tools/unicode-data")
+fi
+
+tried=()
+for src in "${candidates[@]}"; do
+  tried+=("$src")
+  echo "setup-haxe-env: trying source $src"
+  if stage tools/unicode-data "$src"; then
+    exit 0
+  fi
+done
+
+echo "setup-haxe-env: no usable source input; tried:" >&2
+for p in "${tried[@]}"; do
+  echo "  - $p" >&2
+done
+exit 1

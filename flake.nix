@@ -122,8 +122,25 @@
               "${boring.packages.${pkgs.stdenv.hostPlatform.system}.linux-swift.passthru.libdispatch}:${pkgs.gcc.cc.lib}/lib";
             BORING_SWIFT_DYNAMIC_LINKER = pkgs.lib.optionalString (pkgs.stdenv.hostPlatform.isLinux && pkgs.stdenv.hostPlatform.isx86_64)
               "${pkgs.glibc}/lib/ld-linux-x86-64.so.2";
+            # boring input source tree; its tools/unicode-data carries the
+            # Unicode 17.0.0 data files staged by tools/setup-haxe-env.sh.
+            BORING_SOURCE = "${boring.outPath}";
             shellHook = ''
-              export HAXELIB_PATH="$PWD/.haxelib"
+              # HAXELIB_PATH, the boring dev checkout and the generated
+              # engine-haxe/targets/classes.hxml belong to the flake root:
+              # engine-haxe/targets/*.hxml reference `.haxelib/boring/git/...`
+              # relative to it, and CI runs `nix develop` from
+              # platforms/web/client/engine-runtime. Resolve the root from the
+              # invocation directory so a subdirectory invocation still stages
+              # the haxelib tree those classpaths point at.
+              tq_flake_root="$PWD"
+              while [ "$tq_flake_root" != "/" ] && [ ! -f "$tq_flake_root/flake.nix" ]; do
+                tq_flake_root="$(dirname "$tq_flake_root")"
+              done
+              if [ ! -f "$tq_flake_root/flake.nix" ]; then
+                tq_flake_root="$PWD"
+              fi
+              export HAXELIB_PATH="$tq_flake_root/.haxelib"
               mkdir -p "$HAXELIB_PATH/boring"
               boring_git="$HAXELIB_PATH/boring/git"
               if [ ! -f "$boring_git/.boring-flake-revision" ] || \
@@ -145,8 +162,8 @@
               haxelib dev reflaxe "${boring.inputs.reflaxe}" >/dev/null
               haxelib install format 3.8.0 >/dev/null
               haxelib install formatter 1.18.0 >/dev/null
-              if [ -f "$PWD/boring.json" ] && [ -d "$PWD/engine-haxe/targets" ]; then
-                boring roots engine --project boring.json --output engine-haxe/targets/classes.hxml >/dev/null
+              if [ -f "$tq_flake_root/boring.json" ] && [ -d "$tq_flake_root/engine-haxe/targets" ]; then
+                (cd "$tq_flake_root" && boring roots engine --project boring.json --output engine-haxe/targets/classes.hxml) >/dev/null
               fi
             '';
           };
