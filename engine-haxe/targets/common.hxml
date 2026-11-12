@@ -8,5 +8,4 @@
 -cp .haxelib/boring/git/samples
 -cp engine-haxe/src
 -cp engine-haxe/macros
---macro GoldenDataMacros.init()
 --macro haxe.macro.Compiler.addGlobalMetadata('org.tiqian', '@:build(std.RecordMember.build())')

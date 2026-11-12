@@ -62,9 +62,8 @@ if (!existsSync(engineGenDirectory)) {
     process.exit(1);
   }
 
-  // GoldenDataMacros reads engine-haxe/baseline-goldens/ and the ts bundle
-  // reads tools/unicode-data/; both are gitignored. Stage them from the
-  // in-repo sources first so a fresh clone needs no manual step.
+  // The ts bundle reads tools/unicode-data/; it is gitignored. Stage it from
+  // the in-repo source first so a fresh clone needs no manual step.
   console.log("build:runtime: staging the local data inputs for generation");
   const stage = spawnSync("bash", [setupScript], { cwd: repoRoot, stdio: "inherit" });
   if (stage.error || stage.status !== 0) {

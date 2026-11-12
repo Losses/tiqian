@@ -66,15 +66,16 @@ jobs:
           echo "$cmake_bin_dir" >> "$GITHUB_PATH"
           "$cmake_bin_dir/cmake" --version
 
-      # :engine is the hand-written Legacy Kotlin engine, and it is what this
-      # workflow publishes as tiqian-engine. engine-haxe generates the Swift,
-      # Dart, JS and Rust targets; its Kotlin output is not wired into any
-      # Gradle source set yet. :engine:allTests verifies the exact artifacts
-      # this workflow publishes. Haxe-source regeneration (gates.sh) belongs
-      # to the development CI, not the Maven release.
+      # engine-haxe is the only active engine source: :engine compiles the
+      # Kotlin that boring generates from engine-haxe/src, and this workflow
+      # publishes that module as tiqian-engine. :engine:generatedTestSuite runs
+      # the generated test suite through TestMainKt; :engine:allTests covers
+      # the remaining Kotlin test targets. Haxe-source regeneration (gates.sh)
+      # belongs to the development CI, not the Maven release.
       - name: Verify the engine and the release artifacts
         run: |
           ./gradlew \
+            :engine:generatedTestSuite \
             :engine:allTests \
             assemble \
             publishTiqianToMavenLocal \

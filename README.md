@@ -121,18 +121,16 @@ val paragraph = CjkTextView(context).apply {
 安装、命令式 API、构建期预排与运行环境见
 [`@tiqian/prose` 使用文档](platforms/web/client/web-component/README.md)。
 
-## 引擎源码（Legacy 声明）
+## 引擎源码（engine-haxe 是唯一活跃源码）
 
-> **Legacy 弃用声明**：engine/（Kotlin 手写引擎）已标记为 Legacy，并且仍是
-> Kotlin 平台（JVM / Android / Apple / Compose）的出货实现。engine-haxe/ 是
-> Swift / Dart / JS / Rust 四个目标的源码，它生成的 Kotlin 输出尚未接入任何
-> Gradle source set。不要在 engine/ 里新增代码。
+engine-haxe/src/ 是引擎的唯一活跃源码。boring 编译器从它生成 Kotlin、Swift、
+Dart、JS、Rust 五个目标的产物；engine/ 是编译生成 Kotlin 的 Gradle 模块，
+不再包含手写的引擎实现。
 
-迁移指引：
-- engine-haxe/src/ 存放 Haxe 源码，boring 编译器从它生成 Swift / Dart / JS / Rust 四个目标的产物。
-- 四个目标的生成、编译与测试见 engine-haxe/README.md。
-- Kotlin 平台的行为改动仍落在 engine/ 的 Kotlin 源码。
-- engine-haxe/ 的 Kotlin 输出接入 Gradle source set、以及 engine/ 的删除，均尚未排期。
+- 五个目标的生成、编译与测试见 engine-haxe/README.md。
+- Kotlin 平台的行为改动落在 engine-haxe/src/ 的 Haxe 源码，生成物不入库。
+- engine/src/commonMain 的手写 Kotlin 已删除；engine/ 只保留生成物编译所需的
+  Gradle 配置与平台测试胶水。
 
 ## 体验与构建
 
@@ -157,13 +155,14 @@ demo 覆盖 Compose density，例如 Plasma 的 150% 缩放使用：
 `platforms/web/client/engine-runtime` 的 `engine-gen/` 与 `runtime/` 都是构建产物，不入库。
 在仓库根目录执行 `npm install` 或 `bun install` 时，install 钩子按以下顺序补齐：
 
-1. 把 `engine/src/jvmTest/resources/golden/` 拷到 `engine-haxe/baseline-goldens/`。
-2. 把 `.haxelib/boring/git/tools/unicode-data/` 拷到 `tools/unicode-data/`。
-3. 用 `boring` 生成 `engine-gen/`。
-4. 用 `tsc` 编译出 `runtime/`。
+| 割接期临时前置 | 作用 | 取消条件 |
+| --- | --- | --- |
+| 把 `.haxelib/boring/git/tools/unicode-data/` 拷到 `tools/unicode-data/` | `reflaxe.unicode.GraphemeData` 按 cwd 读取该目录 | boring 不再按 cwd 读取 `tools/unicode-data`（`t-mwcxehpz-fict`） |
+| 用 `boring` 生成 `engine-gen/` | Web 引擎包的 TypeScript 产物 | 发布链路与本地开发都不再依赖 install 钩子生成 `engine-gen/` |
+| 用 `tsc` 编译出 `runtime/` | Web 引擎包的运行时 | 发布链路与本地开发都不再依赖 install 钩子生成 `runtime/` |
 
-前两步的来源都在仓库内：golden 是入库文件，Unicode 数据来自 flake 固定的 boring 检出。
-第 3 步需要 flake 提供的 `boring` 驱动：
+Unicode 数据的来源在仓库内：`.haxelib/boring/git/tools/unicode-data/` 来自 flake 固定的
+boring 检出。`boring` 生成需要 flake 提供的驱动：
 
 ```shell
 nix develop -c npm install

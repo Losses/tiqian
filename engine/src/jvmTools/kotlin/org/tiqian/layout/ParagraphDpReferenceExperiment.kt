@@ -9,7 +9,6 @@ import org.tiqian.core.LayoutConstraints
 import org.tiqian.core.LayoutInput
 import org.tiqian.core.LineEndReason
 import org.tiqian.core.TiqianTextContent
-import org.tiqian.test.EarlyLayoutFixtures
 import kotlin.math.sqrt
 import kotlin.test.Test
 
@@ -391,10 +390,10 @@ class ParagraphDpReferenceExperiment {
         }
         val tally = Tally()
 
-        for (fixture in EarlyLayoutFixtures.all) {
+        for (fixture in localFixtures) {
             val recorder = layoutWithRecorder(
                 text = fixture.text,
-                maxWidth = fixture.constraints.maxWidth,
+                maxWidth = fixture.maxWidth,
                 useEnglishHyphenation = fixture.useEnglishHyphenation,
                 pinBasicNoHang = fixture.pinBasicNoHang,
                 lineHeight = fixture.lineHeight,
@@ -436,10 +435,8 @@ class ParagraphDpReferenceExperiment {
     fun productionDpBeatsLookaheadOnCommittedOutput() {
         data class Case(val id: String, val text: String, val width: Float, val useHyphenation: Boolean, val pinBasicNoHang: Boolean, val lineHeight: Float?, val indentEm: Float?, val decorations: List<org.tiqian.core.DecorationSpan>)
 
-        val cases = EarlyLayoutFixtures.all.map {
-            Case(it.id, it.text, it.constraints.maxWidth, it.useEnglishHyphenation, it.pinBasicNoHang, it.lineHeight, it.firstLineIndentEm, it.decorations)
-        } + NARROW_SWEEP_TEXTS.withIndex().flatMap { (i, text) ->
-            NARROW_SWEEP_WIDTHS.map { w -> Case("narrow-${i + 1}-w${w.toInt()}", text, w, false, false, null, 2f, emptyList()) }
+        val cases = localFixtures.map {
+            Case(it.id, it.text, it.maxWidth, it.useEnglishHyphenation, it.pinBasicNoHang, it.lineHeight, it.firstLineIndentEm, it.decorations)
         }
 
         var better = 0
@@ -613,5 +610,21 @@ class ParagraphDpReferenceExperiment {
                 "顺手把标点挤一挤、把字距匀一匀，让每一行看起来都一样满。这门手艺后来被写进了规范，又被写进" +
                 "了程序——名字换成了 justify，道理还是那个道理。",
         )
+
+        /** Self-contained fixture list; the handwritten EarlyLayoutFixtures is gone. */
+        data class ProbeFixture(
+            val id: String,
+            val text: String,
+            val maxWidth: Float,
+            val useEnglishHyphenation: Boolean = false,
+            val pinBasicNoHang: Boolean = false,
+            val lineHeight: Float? = null,
+            val firstLineIndentEm: Float? = 2f,
+            val decorations: List<org.tiqian.core.DecorationSpan> = emptyList(),
+        )
+
+        val localFixtures: List<ProbeFixture> = NARROW_SWEEP_TEXTS.withIndex().flatMap { (i, text) ->
+            NARROW_SWEEP_WIDTHS.map { w -> ProbeFixture("narrow-" + (i + 1) + "-w" + w.toInt(), text, w) }
+        }
     }
 }

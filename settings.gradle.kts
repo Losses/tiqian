@@ -45,16 +45,16 @@ dependencyResolutionManagement {
 rootProject.name = "tiqian"
 
 // ============================================================================
-// Legacy deprecation (Phase 1): ":engine" is the Legacy hand-written Kotlin
-// engine, and it stays the Kotlin shipping implementation until the boring
-// Kotlin output is wired into its source set. engine-haxe/ is the source of
-// the Swift / Dart / JS / Rust targets; no Gradle module consumes its Kotlin
-// output yet. Do not add new code to ":engine"; migrate to engine-haxe.
+// engine-haxe is the only active source for the engine: ":engine" compiles the
+// Kotlin that boring generates from engine-haxe/src. The handwritten Kotlin
+// implementation is gone; the module keeps only the Gradle configuration for
+// the generated tree and the platform test glue. Do not add engine code to
+// ":engine"; edit engine-haxe/src instead.
 // ============================================================================
-logger.warn("tiqian deprecation: :engine is the Legacy Kotlin engine - migrate to engine-haxe (boring-generated multi-target)")
+logger.info("tiqian: :engine compiles the Kotlin generated from engine-haxe")
 
 include(
-    ":engine", // Legacy - migrate to engine-haxe
+    ":engine", // generated from engine-haxe
     ":platforms:jvm:shaping",
     ":platforms:jvm:skia",
     ":platforms:android:shaping",

@@ -11,7 +11,6 @@ import org.tiqian.core.LineEndReason
 import org.tiqian.core.ParagraphStyle
 import org.tiqian.core.TiqianTextContent
 import org.tiqian.shaping.jvm.AwtTextShaper
-import org.tiqian.test.EarlyLayoutFixtures
 import kotlin.test.Test
 
 /**
@@ -227,10 +226,8 @@ class ParagraphDpTuningProbe {
         }
         data class Case(val id: String, val text: String, val width: Float, val hyphen: Boolean, val pin: Boolean, val lh: Float?, val indent: Float?, val deco: List<org.tiqian.core.DecorationSpan>)
 
-        val cases = EarlyLayoutFixtures.all.map {
-            Case(it.id, it.text, it.constraints.maxWidth, it.useEnglishHyphenation, it.pinBasicNoHang, it.lineHeight, it.firstLineIndentEm, it.decorations)
-        } + PROSE.withIndex().flatMap { (i, text) ->
-            WIDTHS.map { w -> Case("prose-${i + 1}-w${w.toInt()}", text, w, false, false, null, 2f, emptyList()) }
+        val cases = PROSE.withIndex().flatMap { (i, text) ->
+            WIDTHS.map { w -> Case("prose-" + (i + 1) + "-w" + w.toInt(), text, w, false, false, null, 2f, emptyList()) }
         }
 
         println()
@@ -281,10 +278,8 @@ class ParagraphDpTuningProbe {
         }
         data class Case(val id: String, val text: String, val width: Float, val hyphen: Boolean, val pin: Boolean, val lh: Float?, val indent: Float?, val deco: List<org.tiqian.core.DecorationSpan>)
 
-        val cases = EarlyLayoutFixtures.all.map {
-            Case(it.id, it.text, it.constraints.maxWidth, it.useEnglishHyphenation, it.pinBasicNoHang, it.lineHeight, it.firstLineIndentEm, it.decorations)
-        } + PROSE.withIndex().flatMap { (i, text) ->
-            WIDTHS.map { w -> Case("prose-${i + 1}-w${w.toInt()}", text, w, false, false, null, 2f, emptyList()) }
+        val cases = PROSE.withIndex().flatMap { (i, text) ->
+            WIDTHS.map { w -> Case("prose-" + (i + 1) + "-w" + w.toInt(), text, w, false, false, null, 2f, emptyList()) }
         }
 
         val variants: List<Pair<String, LineBreaker>> = listOf(
