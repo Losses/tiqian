@@ -101,7 +101,7 @@ class SkiaTextShaper(
             val startX = xPositions[glyphIndex]
             val endX = if (glyphIndex + 1 < glyphCount) xPositions[glyphIndex + 1] else advance
             Glyph(
-                id = glyphIds[glyphIndex].toUShort().toUInt(),
+                id = glyphIds[glyphIndex].toUShort().toInt(),
                 clusterRange = input.range,
                 advance = max(0f, endX - startX),
                 x = startX,

@@ -50,7 +50,7 @@ class AwtTextShaper(
             val start = glyphVector.getGlyphPosition(glyphIndex)
             val end = glyphVector.getGlyphPosition(glyphIndex + 1)
             Glyph(
-                id = glyphVector.getGlyphCode(glyphIndex).toUInt(),
+                id = glyphVector.getGlyphCode(glyphIndex),
                 clusterRange = input.range,
                 advance = max(0f, end.x.toFloat() - start.x.toFloat()),
                 x = start.x.toFloat(),
@@ -79,7 +79,7 @@ class AwtTextShaper(
             // for fonts without outlines; downstream punctuation geometry
             // records this as a MissingInkBoundsFallback.
             glyphsWithoutInkBounds = glyphs.count { it.bounds == null },
-            missingGlyphs = glyphs.count { it.id == font.missingGlyphCode.toUInt() },
+            missingGlyphs = glyphs.count { it.id == font.missingGlyphCode },
         )
         return ShapingResult(
             clusters = listOf(cluster),

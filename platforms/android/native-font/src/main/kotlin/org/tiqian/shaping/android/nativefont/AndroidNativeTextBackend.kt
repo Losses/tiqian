@@ -77,7 +77,7 @@ class AndroidNativeTextShaper(
                 }
             }
             Glyph(
-                id = shaped.glyphIds[index].toUInt(),
+                id = shaped.glyphIds[index],
                 clusterRange = input.range,
                 advance = shaped.positions[p + 2],
                 x = shaped.positions[p],

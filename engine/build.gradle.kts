@@ -172,12 +172,23 @@ kotlin {
     }
 
     sourceSets {
+        // The Kotlin implementation is generated from engine-haxe/ by boring
+        // (bundle kotlin-f32). setSrcDirs replaces the default
+        // src/commonMain/kotlin instead of adding to it, so the handwritten
+        // tree stays on disk untouched and removing this block rolls back.
+        commonMain {
+            kotlin.setSrcDirs(listOf(layout.projectDirectory.dir("../engine-haxe/out/kotlin-f32/gen")))
+        }
+
         commonTest {
             dependencies {
                 implementation(kotlin("test"))
                 implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.8.1")
             }
-            kotlin.srcDir(generateLayoutDumpGoldens)
+            // The generated test suite (bundle kotlin-f32, gen-tests) replaces the
+            // handwritten tests. It carries its own golden constants, so the
+            // generateLayoutDumpGoldens output is not added here.
+            kotlin.setSrcDirs(listOf(layout.projectDirectory.dir("../engine-haxe/out/kotlin-f32/gen-tests")))
         }
 
         jsMain {
@@ -190,12 +201,29 @@ kotlin {
             kotlin.srcDir(generateEmbeddedHyphenationPatterns)
         }
 
+        // TEMPORARY PROBE: the handwritten jvmTest tree is still on the old API.
+        jvmTest { kotlin.setSrcDirs(emptyList<Any>()) }
+
         jvmTest.dependencies {
             implementation(project(":platforms:jvm:shaping"))
             implementation(project(":platforms:jvm:skia"))
             runtimeOnly("org.jetbrains.skiko:skiko-awt-runtime-macos-arm64:0.144.6")
         }
     }
+}
+
+// Developer tools (layout report, README sample, probes) are not tests. They
+// live in their own JVM compilation so the test source set carries tests only.
+val jvmToolsCompilation = kotlin.targets.getByName("jvm").compilations.create("tools") {
+    defaultSourceSet.dependsOn(kotlin.sourceSets.getByName("commonMain"))
+}
+jvmToolsCompilation.associateWith(kotlin.targets.getByName("jvm").compilations.getByName("main"))
+jvmToolsCompilation.defaultSourceSet.dependencies {
+    implementation(kotlin("test-junit"))
+    implementation(project(":platforms:jvm:shaping"))
+    implementation(project(":platforms:jvm:skia"))
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.8.1")
+    runtimeOnly("org.jetbrains.skiko:skiko-awt-runtime-macos-arm64:0.144.6")
 }
 
 val jvmTestCompilation = kotlin.targets.getByName("jvm").compilations.getByName("test")
@@ -205,10 +233,10 @@ val fixtureId = providers.gradleProperty("fixtureId")
 tasks.register<JavaExec>("exportLayoutFixture") {
     group = "verification"
     description = "Writes one EarlyLayoutFixture's effective layout input as JSON to standard output."
-    dependsOn("jvmTestClasses")
+    dependsOn("compileToolsKotlinJvm")
     mainClass.set("org.tiqian.layout.tooling.FixtureJsonMainKt")
-    classpath = files(jvmTestCompilation.output.allOutputs) +
-        configurations.named("jvmTestRuntimeClasspath").get()
+    classpath = files(jvmToolsCompilation.output.allOutputs) +
+        configurations.named("jvmRuntimeClasspath").get()
     doFirst {
         check(fixtureId.isPresent) {
             "Pass one fixture id with -PfixtureId=<id>."
@@ -220,10 +248,10 @@ tasks.register<JavaExec>("exportLayoutFixture") {
 tasks.register<JavaExec>("generateLayoutReport") {
     group = "verification"
     description = "Generates the layout decision dump and diagnostic HTML report."
-    dependsOn("jvmTestClasses")
+    dependsOn("compileToolsKotlinJvm")
     mainClass.set("org.tiqian.layout.tooling.LayoutReportMainKt")
-    classpath = files(jvmTestCompilation.output.allOutputs) +
-        configurations.named("jvmTestRuntimeClasspath").get()
+    classpath = files(jvmToolsCompilation.output.allOutputs) +
+        configurations.named("jvmRuntimeClasspath").get()
     // BufferedImage/font probing is fully off-screen. Headless mode prevents macOS AWT's
     // non-daemon auto-shutdown thread from keeping the completed CI task alive indefinitely.
     jvmArgs("-Djava.awt.headless=true", "--enable-native-access=ALL-UNNAMED")
@@ -235,14 +263,39 @@ val readmeSampleWhiteSvg = rootProject.layout.projectDirectory.file("docs/images
 tasks.register<JavaExec>("generateReadmeSample") {
     group = "documentation"
     description = "Generates the README paragraph sample from a real Tiqian LayoutResult."
-    dependsOn("jvmTestClasses")
+    dependsOn("compileToolsKotlinJvm")
     mainClass.set("org.tiqian.layout.tooling.ReadmeSampleMainKt")
-    classpath = files(jvmTestCompilation.output.allOutputs) +
-        configurations.named("jvmTestRuntimeClasspath").get()
+    classpath = files(jvmToolsCompilation.output.allOutputs) +
+        configurations.named("jvmRuntimeClasspath").get()
     jvmArgs("--enable-native-access=ALL-UNNAMED")
     args(
         readmeSampleBlackSvg.asFile.absolutePath,
         readmeSampleWhiteSvg.asFile.absolutePath,
     )
     outputs.files(readmeSampleBlackSvg, readmeSampleWhiteSvg)
+}
+
+// The generated test suite (bundle kotlin-f32, gen-tests) is not a JUnit suite:
+// every case carries @boring.test.Test and the generated TestMainKt drives them,
+// exiting non-zero when any case throws. Run it through JavaExec so Gradle
+// reports the same verdict the boring driver does.
+tasks.register<JavaExec>("generatedTestSuite") {
+    group = "verification"
+    description = "Runs the generated Kotlin test suite through gen-tests/TestMainKt."
+    dependsOn("compileToolsKotlinJvm")
+    mainClass.set("TestMainKt")
+    // The generated golden constants load their text from the bundle resource
+    // directory, so it has to sit on the classpath exactly as the driver puts it.
+    classpath = files(jvmTestCompilation.output.allOutputs) +
+        files(layout.projectDirectory.dir("../engine-haxe/out/kotlin-f32/gen/resources")) +
+        configurations.named("jvmTestRuntimeClasspath").get()
+    // The generated runner reads these two host edges; the driver sets the same
+    // values (boring.json run.env). Without the budget, eleven cases time out.
+    environment("BORING_TEST_TIMEOUT_MS", "600000")
+    environment(
+        "BORING_TEST_RESULTS",
+        layout.buildDirectory.file("test-results/generated-suite.jsonl").get().asFile.absolutePath,
+    )
+    // Trace goldens are written to a repository-relative path.
+    workingDir = rootProject.projectDir
 }

@@ -129,4 +129,14 @@ class PreparedParagraphFns {
         final plan = PlanLowering.toPlan(result, false);
         return PlanPacked.encode(plan);
     }
+
+    /**
+     * Top-level alias of PlanJsonNumber.ecmaJsonNumber in this package. The
+     * handwritten engine published this helper from org.tiqian.layout; the
+     * port kept the implementation in org.tiqian.protocol. The published
+     * function was public but had no platform consumer (疑似内部细节).
+     */
+    @:topLevel
+    public static function ecmaJsonNumber(floatValue:Float):String
+        return PlanJsonNumber.ecmaJsonNumber(floatValue);
 }

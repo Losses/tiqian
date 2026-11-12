@@ -11,9 +11,11 @@ org.tiqian.core.CoreUnitsGeometryTest
 org.tiqian.core.EastAsianSpacingCoverageTest
 org.tiqian.core.EastAsianSpacingLookupCoverageTest
 org.tiqian.core.EastAsianSpacingTest
+org.tiqian.core.FittedLinePatternGeometry
 org.tiqian.core.LayoutQueriesResidualCoverageTest
 org.tiqian.core.LayoutQueriesTest
 org.tiqian.core.LinkAddressDisplayTest
+org.tiqian.core.RichTextLayoutProjection
 org.tiqian.core.SourceInteractionBoundariesCoverageTest
 org.tiqian.core.TextModelCoverageTest
 org.tiqian.core.TextRangeTest

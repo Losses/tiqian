@@ -42,7 +42,7 @@ data class GlyphRun(
 
 @Deprecated("Legacy engine, migrate to engine-haxe")
 data class Glyph(
-    val id: UInt,
+    val id: Int,
     val clusterRange: TextRange,
     /**
      * The shaped glyph advance in font/shaper space. Layout-owned trailing
