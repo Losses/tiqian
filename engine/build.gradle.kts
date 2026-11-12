@@ -27,10 +27,6 @@ kotlin {
         }
         withHostTest {}
     }
-    js {
-        browser()
-        useEsModules()
-    }
     macosArm64()
     iosArm64()
     iosSimulatorArm64()
