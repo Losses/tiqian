@@ -84,11 +84,20 @@ jobs:
       - name: Install workspace dependencies
         working-directory: .
         run: npm install --no-audit --no-fund
-      - name: Build and test the boring-generated @tiqian/ffi runtime
+      # The flake devShell is the only source of the boring driver, and only
+      # the engine-gen generation needs it. npm test stays on the setup-node
+      # Node 24; wrapping it in `nix develop` would shadow that toolchain
+      # with the devShell's Node 22.
+      - name: Install Nix
+        uses: DeterminateSystems/nix-installer-action@21a544727d0c62386e78b4befe52d19ad12692e3 # v17
+      - name: Allow unprivileged user namespaces
+        run: sudo sysctl kernel.apparmor_restrict_unprivileged_userns=0 || true
+      - name: Build the @tiqian/ffi runtime with the flake toolchain
         working-directory: platforms/web/client/engine-runtime
-        run: |
-          npm run build:runtime
-          npm test
+        run: nix develop -c npm run build:runtime
+      - name: Test the boring-generated @tiqian/ffi runtime
+        working-directory: platforms/web/client/engine-runtime
+        run: npm test
 
   rust:
     name: Rust workspaces build and test
@@ -96,6 +105,15 @@ jobs:
     steps:
       - uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
       - uses: dtolnay/rust-toolchain@4360b52568e2003a75bf9bc1d59f33a8e3fc893c # stable
+      - name: Install Nix
+        uses: DeterminateSystems/nix-installer-action@21a544727d0c62386e78b4befe52d19ad12692e3 # v17
+      - name: Allow unprivileged user namespaces
+        run: sudo sysctl kernel.apparmor_restrict_unprivileged_userns=0 || true
+      - name: Generate the precompute engine tree with the flake toolchain
+        # The precompute crates read tiqian-engine-gen from the gitignored
+        # engine-gen/ tree, and the boring driver reads tools/unicode-data/
+        # at compile time, so stage it from the pinned checkout first.
+        run: nix develop -c bash -c 'bash tools/setup-haxe-env.sh && node scripts/generate-engine-gen.mjs'
       - name: Build and test the precompute workspace
         run: |
           cargo build --manifest-path platforms/web/server/precompute/Cargo.toml
@@ -178,9 +196,17 @@ jobs:
         # precompute member are not on the registry, so no lockfile can carry
         # resolved entries for them and npm ci (npm >= 11) rejects the gap.
         run: npm install --no-audit --no-fund
-      - name: Build the @tiqian/ffi runtime
+      # The flake devShell is the only source of the boring driver, and only
+      # the engine-gen generation needs it. The npx tsc -b and npm test steps
+      # stay on the setup-node Node 24; wrapping them in `nix develop` would
+      # shadow that toolchain with the devShell's Node 22.
+      - name: Install Nix
+        uses: DeterminateSystems/nix-installer-action@21a544727d0c62386e78b4befe52d19ad12692e3 # v17
+      - name: Allow unprivileged user namespaces
+        run: sudo sysctl kernel.apparmor_restrict_unprivileged_userns=0 || true
+      - name: Build the @tiqian/ffi runtime with the flake toolchain
         working-directory: platforms/web/client/engine-runtime
-        run: npm run build:runtime
+        run: nix develop -c npm run build:runtime
       - name: Build core with full type checks
         working-directory: platforms/web/client/core
         run: npx tsc -b
