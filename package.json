@@ -12,7 +12,7 @@
     "demo/web"
   ],
   "scripts": {
-    "postinstall": "node ./platforms/web/client/engine-runtime/build-runtime.ts"
+    "postinstall": "node ./platforms/web/client/engine-runtime/build-runtime.ts --install-hook"
   },
   "devDependencies": {
     "typescript": "5.9.3",

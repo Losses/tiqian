@@ -8,6 +8,16 @@ import { fileURLToPath } from "node:url";
 
 const require = createRequire(import.meta.url);
 
+// The root postinstall and the package prepare hook pass --install-hook. Those
+// hooks run inside `npm install` / `bun install`, where the flake devShell that
+// provides the `boring` driver is absent: the three publish workflows install
+// without nix. A missing toolchain must not fail the install, because the
+// release path regenerates engine-gen/ through `prepack` (build:runtime runs
+// before npm test) and a local checkout gets the actionable error from the
+// pretest guard (check-engine-gen.ts). Every other invocation, including the
+// `build:runtime` script that prepack calls, fails hard instead.
+const installHook: boolean = process.argv.includes("--install-hook");
+
 // The Kotlin/JS runtime no longer contributes to the published package:
 // since the precompute cutover every capability is served by the generated
 // TypeScript tree under engine-gen/. runtime/ is a pure build product, so it
@@ -21,6 +31,36 @@ if (!existsSync(engineGenDirectory)) {
   const repoRoot = fileURLToPath(new URL("../../../../", import.meta.url));
   const generator = fileURLToPath(new URL("../../../../scripts/generate-engine-gen.mjs", import.meta.url));
   const setupScript = fileURLToPath(new URL("../../../../tools/setup-haxe-env.sh", import.meta.url));
+
+  // The boring driver is the generation toolchain, and only the flake devShell
+  // provides it. Probe it before staging so an install without nix skips the
+  // whole generation step instead of failing at the data-input staging or at
+  // the driver call.
+  const driver = spawnSync("boring", ["--version"], { stdio: "ignore" });
+  if (driver.error) {
+    const lines: string[] = [
+      "build:runtime: engine-gen/ is missing and the generation toolchain is not on PATH.",
+      "  cause: the `boring` driver comes from the flake devShell (`nix develop`).",
+      "  next step: nix develop -c npm run build:runtime",
+    ];
+    if (installHook) {
+      console.warn(
+        [
+          ...lines,
+          "  skipped: the install hook continues without engine-gen/ and runtime/;",
+          "  the release path regenerates engine-gen/ through `prepack`, and `npm test` reports this same next step.",
+        ].join("\n"),
+      );
+      process.exit(0);
+    }
+    console.error(
+      [
+        ...lines,
+        "  runtime/ was not rebuilt; @tiqian/ffi has no entry point until the generation succeeds.",
+      ].join("\n"),
+    );
+    process.exit(1);
+  }
 
   // GoldenDataMacros reads engine-haxe/baseline-goldens/ and the ts bundle
   // reads tools/unicode-data/; both are gitignored. Stage them from the
