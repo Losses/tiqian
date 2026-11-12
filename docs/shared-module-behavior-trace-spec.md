@@ -12,16 +12,17 @@ grep 断言的规格。规格只定义用例类别、记录字段与比较判据
 grep 断言只证明「名称出现」，不证明「行为一致」：一个目标可以正确引用模块名称，
 却在该模块的数值排序、异常命名或浮点打印上偏离其他目标，grep 断言对此不报错。
 
-目标行为的既有验证基础设施有三处，规格全部复用它们，不新建格式：
+目标行为的既有验证基础设施有两处，规格全部复用它们，不新建格式：
 
 1. trace 行语法（`engine TraceFormat`，解析实现见 `tiqian/engine-haxe/tools/compare-traces.py`）：
    `class: <Name>` 与 `test: <fn>` 两类头行，其后为 `<event> key=value ...` 事件行；
    数值为十进制文本，`NaN`、`Infinity` 与 `-Infinity` 以带引号文本存储，
    超长文本写入截断标记 `~<len>#<hash>`。
-2. golden 轨迹：`tiqian/engine-haxe/baseline-goldens/test-traces/`（`engine-haxe/tools/gates.sh` 第 42 行使用该目录），
-   由 JVM 引擎以 f32 精度写出。
-3. 逐测试判定记录：每用例一行 JSONL，`{"id", "name", "verdict", "message"}`，
+2. 逐测试判定记录：每用例一行 JSONL，`{"id", "name", "verdict", "message"}`，
    解析见 `tiqian/engine-haxe/tools/compare-verdicts-l2.py`。
+
+第三处基础设施（引擎 golden 轨迹）随 Kotlin 割接删除：golden 是对齐工具，
+105/105 对齐达成后没有保留用途。
 
 ## 标准行为测试集的用例类别
 
@@ -69,9 +70,9 @@ grep 断言只证明「名称出现」，不证明「行为一致」：一个目
 
 最小用例形态：抛出注册的异常类并捕获；抛出未捕获异常由运行器记为失败判定；
 异常消息含动态值。
-期望记录字段：`raises exception=<Name>` 事件行，与 golden 的异常名等价规则
-（`IllegalArgumentException` 与 Tiqian 前缀名互认）沿
-`compare-traces.py` 的 `EXCEPTION_NAME_ALIASES` 处理。
+期望记录字段：`raises exception=<Name>` 事件行；异常名等价规则
+（`IllegalArgumentException` 与 Tiqian 前缀名互认）保留在
+`compare-traces.py` 的 `EXCEPTION_NAME_ALIASES`，基准轨迹已删除。
 比较判据：逐值。异常名与消息文本必须完全一致；别名规则仅用于内置名向
 Tiqian 前缀名的过渡，迁移完成后删除。
 
@@ -116,8 +117,9 @@ JSONL 行的 `id` 三段命名保证 compare 工具可以按模块与类别聚�
 3. 逐结构：集合与记录。先按排序域与打印格式规范化，再逐项套用逐位或逐值判据。
 
 比较入口沿 `docs/cross-target-alignment.md` 的分层判据：
-f32 侧对 golden 逐类一致，f64 侧五目标（ts、kotlin、rust、swift、dart）
-逐行 JSONL 一致，命令入口为 `boring compare` 与 `boring verify`。
+f32 侧由 `boring test kotlin-f32` 的生成测试判定，f64 侧五目标
+（ts、kotlin、rust、swift、dart）逐行 JSONL 一致，命令入口为
+`boring compare` 与 `boring verify`。
 
 ## 替换 backstop.ts 的方式与迁移顺序
 
@@ -148,7 +150,7 @@ backstop.ts 承担两项断言：消费目标提及注册模块（存在性）�
 
 本规格定义了七类用例（数值、字符串、集合、闭包、异常、异步、边界）、
 每类的最小用例形态与期望 trace 字段，以及逐位、逐值、逐结构三级比较判据，
-全部复用 `engine TraceFormat`、golden 轨迹与 `boring compare`/`boring verify`
-既有入口。迁移分四步：建骨架、双轨运行、逐模块从 `consumers` 表摘除、
+全部复用 `engine TraceFormat` 与 `boring compare`/`boring verify` 既有入口。
+迁移分四步：建骨架、双轨运行、逐模块从 `consumers` 表摘除、
 删除 `tools/registry-guard/backstop.ts`；唯一性断言由
 `tests/haxe/semantic-registry-comment-control/run.sh` 承担。

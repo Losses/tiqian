@@ -14,9 +14,9 @@
 
 - `src/`：Haxe 源码，含与引擎测试一一对应的测试类。
 - `tests/`：测试入口 `Main.hx` 与编译清单 `compile.hxml`。
-- `tools/compare-traces.py`：把 Haxe 测试记录的执行轨迹与引擎 golden
-  逐行比对。golden 指引擎测试留下的基准轨迹文件，位于
-  `engine/src/jvmTest/resources/golden/test-traces/`（本地生成，不入库）。
+- `tools/compare-traces.py`：把 Haxe 测试记录的执行轨迹与基准轨迹逐行比对。
+  基准轨迹（golden）随 Kotlin 割接删除；当前跨目标验证以
+  `boring test kotlin-f32` 的生成测试为准。
 - `targets/`：各 HXML 提供目标编译参数。进入 flake 开发环境时，driver 按
   `boring.json` 的 `engine` source set 生成忽略入库的 `classes.hxml`，供直接
   调用 HXML 的脚本使用；Haxe 不会仅凭 `-cp` 编译目录下全部类。
@@ -27,21 +27,20 @@
 - `boring.json`：生成与测试配置驱动器（boring feature spec 59）的项目文件，声明本目录
   的目标、精度及命名源码范围。`engine` 范围从六个包发现 `*Test.hx`，加上两个
   runtime 根类型；八个引擎配置共用它。生成与测试以此文件为准。
-- `tools/setup-haxe-env.sh`：把两组不入库的数据同步进当前检出，见下节。
+- `tools/setup-haxe-env.sh`：把 `tools/unicode-data/` 同步进当前检出，见下节。
 - `textrange-kotlin.hxml`、`smoke-kotlin.hxml`：独立用途的 Kotlin
   生成清单。
 - `data/`：生成 Unicode 数据类所需的区间数据。
 - `patches/`：vendored boring（`.haxelib/`，不入库）之上的本地补丁存档。
-- `out/`、`baseline-goldens/`、`smoke/`：生成物与本地基线拷贝，不入库。
+- `out/`、`smoke/`：生成物与本地基线拷贝，不入库。
 
 ## 首次准备
 
-生成阶段要读两组不入库的数据，新建的检出或 git worktree 里可能没有，
-缺任何一个都会在生成时报出与准备无关的错误：
+生成阶段要读一组不入库的数据，新建的检出或 git worktree 里可能没有，
+缺了会在生成时报出与准备无关的错误：
 
 | 输入 | 谁读它 | 缺了会怎样 |
 |---|---|---|
-| `engine-haxe/baseline-goldens/` | `GoldenDataMacros.init()` | `Golden data directory not found: engine-haxe/baseline-goldens/layout-dumps` |
 | `tools/unicode-data/` | 各 Unicode 数据类在编译期读取 | `pinned Unicode data file is missing: tools/unicode-data/GraphemeBreakProperty-17.0.0.txt` |
 
 在检出根目录执行一次即可补齐（已存在的一律不动）。脚本默认选择主 worktree
@@ -54,9 +53,8 @@ bash tools/setup-haxe-env.sh /path/to/prepared/tiqian
 
 flake 把 boring 的 driver 与编译器固定在同一修订，并在进入开发 shell 时配置
 `.haxelib/`。已有的本地 boring 检出会先备份，再由固定修订的可写副本接替，
-以兼容现有 HXML 的相对路径及编译期诊断输出。`baseline-goldens/` 来自原 Kotlin 引擎记录的
-本地基准输出；`tools/unicode-data/` 包含 Unicode 17.0.0 的数据文件。两组
-输入目前都不入库，因此新 worktree 仍需要从已准备的检出获取它们。
+以兼容现有 HXML 的相对路径及编译期诊断输出。`tools/unicode-data/` 包含
+Unicode 17.0.0 的数据文件，不入库，因此新 worktree 仍需要从已准备的检出获取它。
 
 ## 生成与测试
 
@@ -109,17 +107,13 @@ f32 层的比对参照由 Haxe 自己运行后生成的 JS 输出提供；`tests
 ```shell
 nix develop -c bash -c 'haxe engine-haxe/tests/compile.hxml'
 bun engine-haxe/out/haxe-tests.js
-python3 engine-haxe/tools/compare-traces.py \
-  engine-haxe/baseline-goldens/test-traces engine-haxe/out/haxe-traces \
-  --mode tolerance --classes <已移植的测试类，逗号分隔>
 ```
 
-比对脚本在 `raises exception=` 行上把 Kotlin 标准库异常名与 Tiqian 前缀名
-视为同名（`EXCEPTION_NAME_ALIASES`），每次运行输出放过的行数；引擎 golden
-全部改为 Tiqian 前缀名后删除该规则。
+`tools/compare-traces.py` 仍保留 trace 行解析与 `EXCEPTION_NAME_ALIASES`
+规则，但引擎基准轨迹已随 Kotlin 割接删除，当前跨目标验证以
+`boring test kotlin-f32` 的生成测试为准。
 
 ## 同步纪律
 
-`engine` 中已翻译区域的任何 Kotlin 改动，必须同步修改本目录的 Haxe 副本，
-并重新运行上面的比对；引擎行为有意改动、golden 随之刷新时，重新拷贝
-`baseline-goldens`。进度与验证记录见 `PROGRESS.md`。
+`engine` 的 Kotlin 由本目录生成，修改引擎行为只改本目录的 Haxe 源码，
+然后重新运行 `boring gen` 与 `boring test`。进度与验证记录见 `PROGRESS.md`。

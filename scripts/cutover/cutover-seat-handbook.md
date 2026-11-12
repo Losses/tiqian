@@ -45,7 +45,7 @@
 
 ## 6. 工作树与时间盒
 
-- 每席用自己的 tiqian 工作树：`git -C ${TIQIAN_ROOT} worktree add ../tiqian-wt-<席名> -b <分支> main`，然后在该工作树里 `bash tools/setup-haxe-env.sh`（补 `.haxelib`、`engine-haxe/baseline-goldens`、`tools/unicode-data`）。不要几个人共用主检出（PIT-26）。
+- 每席用自己的 tiqian 工作树：`git -C ${TIQIAN_ROOT} worktree add ../tiqian-wt-<席名> -b <分支> main`，然后在该工作树里 `bash tools/setup-haxe-env.sh`（补 `.haxelib` 与 `tools/unicode-data`；golden 机制已随 Kotlin 割接删除）。不要几个人共用主检出（PIT-26）。
 - 时间盒见任务书。把绕行写进提交比不提交更糟；第一个提交允许只含束登记与 spec 阅读笔记。
 - **交回前工作树必须干净**：未完成的部分要么提交成一个自洽的提交，要么还原；带着未提交改动交回会让读数混入它们（PIT-79），也让人无法判断交回的是哪一版。已出现两次同类问题。
 - 交回格式：一句话总括 + 五条（任务与分支；交付物与路径；跑过的命令与原始读数含修订；没做完的部分与卡点；下一步建议）。

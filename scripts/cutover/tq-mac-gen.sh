@@ -83,7 +83,6 @@ engine-haxe/targets/classes.hxml
 -cp $B/samples
 -cp $B/packages/compiler/reflaxe/rust/std-shadow
 -cp $B/packages/compiler/reflaxe/rust
---macro GoldenDataMacros.init()
 --macro haxe.macro.Compiler.addGlobalMetadata('org.tiqian', '@:build(std.RecordMember.build())')
 --macro Intercept.run(['engine-haxe/src', '$B/samples/std'])
 --macro rustcompiler.Compiler.use()
