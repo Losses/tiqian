@@ -38,7 +38,9 @@ const TEXT_NODE = 3;
 interface WalkNode {
     readonly nodeType: number;
     readonly tagName: string;
-    readonly nodeValue: string | null;
+    // Optional: the shared DomNode surface does not declare a text-node value,
+    // so a direct DomNode -> WalkNode cast stays legal without an unknown hop.
+    readonly nodeValue?: string | null;
     readonly attributes?: readonly (DomAttribute | undefined)[];
     readonly childNodes: readonly (WalkNode | undefined)[];
 }
@@ -112,7 +114,7 @@ function appendDomNode(node: WalkNode, state: WalkState): boolean {
  * through the fold. A null result is a declined artifact.
  */
 export function snapshotSourceArtifactFromDom(element: DomNode): SourceArtifact | null {
-    const node = element as unknown as WalkNode;
+    const node = element as WalkNode;
     const state: WalkState = { text: "", spans: [], hardBreaks: [], order: 0 };
     for (let index = 0; index < node.childNodes.length; index += 1) {
         const child = node.childNodes[index];
@@ -176,7 +178,7 @@ function appendProjectedRaw(node: WalkNode, state: WalkState): void {
  * lane used for paragraphs without a snapshot projection.
  */
 export function projectedTextOnly(element: DomNode): string {
-    const node = element as unknown as WalkNode;
+    const node = element as WalkNode;
     const state: WalkState = { text: "", spans: [], hardBreaks: [], order: 0 };
     for (let index = 0; index < node.childNodes.length; index += 1) {
         const child = node.childNodes[index];
