@@ -1,20 +1,26 @@
 name: Publish prose package
 
+# Called by .github/workflows/release.yml from the v*.*.* release tag, after
+# the core lane published @tiqian/core, and gated before publishing.
 on:
-  push:
-    tags:
-      - "@tiqian/prose@*"
+  workflow_call:
+  workflow_dispatch:
 
 permissions:
   contents: read
+  actions: read
 
 concurrency:
   group: publish-tiqian-prose
   cancel-in-progress: false
 
 jobs:
+  release-gate:
+    uses: ./.github/workflows/release-gate.yml
+
   publish-alpha:
     name: Verify and publish alpha
+    needs: [release-gate]
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -51,12 +57,11 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          version="$(node -p "require('./package.json').version")"
-          expected_tag="@tiqian/prose@${version}"
-          if [[ "${GITHUB_REF_NAME}" != "${expected_tag}" ]]; then
-            echo "::error::Tag ${GITHUB_REF_NAME} does not match package version ${version}"
+          if [[ "${GITHUB_REF_TYPE}" != "tag" || "${GITHUB_REF_NAME}" != v*.*.* ]]; then
+            echo "::error::This lane runs only from a v*.*.* release tag, received ${GITHUB_REF_NAME}."
             exit 1
           fi
+          version="$(node -p "require('./package.json').version")"
           if [[ "$(git cat-file -t "${GITHUB_REF_NAME}")" != "tag" ]]; then
             echo "::error::Release tag must be annotated"
             exit 1

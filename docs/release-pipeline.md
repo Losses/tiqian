@@ -3,17 +3,37 @@
 本文档记录 tiqian v0.1.0-alpha07 实际执行并验证过的发布流程。发布由推送版本标签触发，
 CI 打包五个目标生态的产物，写入 registry 仓库并部署站点。下一个人按本文档执行即可复现。
 
+## 0. 单一入口与发版前检查
+
+推送 `v*.*.*` 标签只触发 `.github/workflows/release.yml`。这个 workflow 先运行
+`.github/workflows/release-gate.yml`，由 `tools/release-gate.py` 读取
+`release-manifest.json`，要求 `Native precompute CI` 与 `Build Neon precompute`
+在标签 commit 上都有 completed 且 success 的运行记录；任一 workflow 失败或没有运行
+记录时，全部发布 job 都不会开始。
+
+检查通过后，`release.yml` 按依赖顺序调用 `publish-ffi.yml`、`publish-core.yml`、
+`publish-prose.yml`、`publish-precompute.yml`、`publish.yml` 与
+`release-registry.yml`。registry 的元数据写在最后，前面的 npm 或 Maven workflow
+失败时不会写出元数据。
+
+Maven Central 的部署确认仍在 Central Portal 由人执行。Maven 快照与 fork 的 npm 快照
+不属于按版本发版，继续使用 `workflow_dispatch`。
+
 ## 1. 触发方式
 
-推送 `v*.*.*` 形式的标签触发 `.github/workflows/release-registry.yml`：
+推送 `v*.*.*` 形式的标签触发 `.github/workflows/release.yml`：
 
 ```shell
 git tag v0.1.0-alpha07
 git push origin v0.1.0-alpha07
 ```
 
-工作流只响应标签推送，没有 `workflow_dispatch` 入口。发布版本号从标签去掉前缀 `v`
-得到，例如 `v0.1.0-alpha07` 对应 `0.1.0-alpha07`。
+发版入口只响应标签推送。发布版本号从标签去掉前缀 `v` 得到，例如
+`v0.1.0-alpha07` 对应 `0.1.0-alpha07`。发版运行失败后，在 GitHub 上对同一次
+运行选择 "Re-run failed jobs"；重跑从同一个标签 commit 读取代码。
+
+没有通过检查的 commit 不能发版。检查要求目标 commit 上的 `Native precompute CI`
+与 `Build Neon precompute` 都为 success；缺少运行记录时同样拒绝。
 
 ## 2. 需要的 secrets
 

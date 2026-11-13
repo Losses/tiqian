@@ -1,10 +1,16 @@
 name: Release to Registry
+
+# The registry write is the last job of .github/workflows/release.yml: a
+# version is only written here after every npm and Maven lane succeeded. The
+# workflow can also be dispatched on a release tag to finish the registry
+# write after a failed run, and the gate refuses a red commit either way.
 on:
-  push:
-    tags: ["v*.*.*"]
+  workflow_call:
+  workflow_dispatch:
 
 permissions:
   contents: write
+  actions: read
 
 concurrency:
   group: release-registry-${{ github.ref }}
@@ -16,11 +22,24 @@ env:
   REGISTRY_REPO: tiqian-cjk/registry
 
 jobs:
+  release-gate:
+    uses: ./.github/workflows/release-gate.yml
+
   pack-and-publish:
+    needs: [release-gate]
     runs-on: ubuntu-latest
     steps:
       - name: Checkout tiqian
         uses: actions/checkout@v4
+
+      - name: Validate the release ref
+        shell: bash
+        run: |
+          set -euo pipefail
+          if [[ "${GITHUB_REF_TYPE}" != "tag" || "${GITHUB_REF_NAME}" != v*.*.* ]]; then
+            echo "::error::The registry lane runs only from a v*.*.* release tag, received ${GITHUB_REF_NAME}."
+            exit 1
+          fi
 
       - name: Set up bun
         uses: oven-sh/setup-bun@v2

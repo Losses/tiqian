@@ -5,21 +5,28 @@ name: Publish precompute packages
 # platforms/web/server/precompute/binding, which consumes the boring
 # engine-rust bundle; the legacy Kotlin/Native C ABI engine archive is
 # retired with the Stage1 cutover.
+# Called by .github/workflows/release.yml from the v*.*.* release tag, after
+# the prose lane published the @tiqian/prose version this package pins, and
+# gated before publishing.
 on:
-  push:
-    tags:
-      - "@tiqian/precompute@*"
+  workflow_call:
+  workflow_dispatch:
 
 permissions:
   contents: read
+  actions: read
 
 concurrency:
   group: publish-tiqian-precompute
   cancel-in-progress: false
 
 jobs:
+  release-gate:
+    uses: ./.github/workflows/release-gate.yml
+
   validate:
     name: Validate release tag
+    needs: [release-gate]
     runs-on: ubuntu-latest
     outputs:
       version: ${{ steps.release.outputs.version }}
@@ -40,12 +47,11 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          version="$(node -p "require('./platforms/web/server/core/package.json').version")"
-          expected_tag="@tiqian/precompute@${version}"
-          if [[ "${GITHUB_REF_NAME}" != "${expected_tag}" ]]; then
-            echo "::error::Tag ${GITHUB_REF_NAME} does not match package version ${version}"
+          if [[ "${GITHUB_REF_TYPE}" != "tag" || "${GITHUB_REF_NAME}" != v*.*.* ]]; then
+            echo "::error::This lane runs only from a v*.*.* release tag, received ${GITHUB_REF_NAME}."
             exit 1
           fi
+          version="$(node -p "require('./platforms/web/server/core/package.json').version")"
           if [[ "$(git cat-file -t "${GITHUB_REF_NAME}")" != "tag" ]]; then
             echo "::error::Release tag must be annotated"
             exit 1
