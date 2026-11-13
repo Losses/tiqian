@@ -3,7 +3,7 @@
 //!
 //! The generated `ExplainableStubParagraphLayoutEngine` keeps the
 //! dependency-injection surface: every pipeline component arrives as a trait
-//! object (`ITextShaper`, `FontMetricsResolver`, `FallbackResolver`,
+//! object (`TextShaper`, `FontMetricsResolver`, `FallbackResolver`,
 //! `ClreqProfileResolver`, ...), and every slot defaults to the generated
 //! production implementation when the caller passes `None`. There is no
 //! `extern "C"` boundary left; the faults of the generated engine surface
@@ -40,7 +40,7 @@ use tiqian_engine_gen::org::tiqian::layout::punctuation_model::{
 use tiqian_engine_gen::org::tiqian::layout::quote_pair_analyzer::QuotePairAnalyzer;
 use tiqian_engine_gen::org::tiqian::layout::width_independent_annotation_cache::WidthIndependentAnnotationCache;
 use tiqian_engine_gen::org::tiqian::linebreak::hyphenator::Hyphenator;
-use tiqian_engine_gen::org::tiqian::shaping::text_shaper::ITextShaper;
+use tiqian_engine_gen::org::tiqian::shaping::text_shaper::TextShaper;
 
 pub use tiqian_engine_gen::org::tiqian::core::layout_input::LayoutInput as EngineLayoutInput;
 pub use tiqian_engine_gen::org::tiqian::core::layout_result::LayoutResult as EngineLayoutResult;
@@ -60,7 +60,7 @@ pub struct EngineComponents {
     pub quote_pair_analyzer: Option<Rc<RefCell<QuotePairAnalyzer>>>,
     pub line_breaker: Option<Rc<RefCell<dyn LineBreaker>>>,
     pub justifier: Option<Rc<RefCell<Justifier>>>,
-    pub text_shaper: Option<Rc<RefCell<dyn ITextShaper>>>,
+    pub text_shaper: Option<Rc<RefCell<dyn TextShaper>>>,
     pub hyphenator: Option<Rc<RefCell<dyn Hyphenator>>>,
     pub annotation_cache: Option<Rc<RefCell<dyn WidthIndependentAnnotationCache>>>,
 }

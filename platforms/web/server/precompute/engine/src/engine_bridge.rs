@@ -2,7 +2,7 @@
 //! Slice C, cutover to the boring engine-rust bundle).
 //!
 //! The generated `ExplainableStubParagraphLayoutEngine` receives shaping and
-//! font metrics through the generated trait objects (`ITextShaper`,
+//! font metrics through the generated trait objects (`TextShaper`,
 //! `FontMetricsResolver`). This module presents a [`FontSession`] and its
 //! capture window as those components, the direct-Rust successor of the
 //! former C ABI vtable bridge, and runs one paragraph request through
@@ -44,14 +44,14 @@ use tiqian_engine_gen::org::tiqian::font::font_metrics::{FontMetricsRequest, Fon
 use tiqian_engine_gen::org::tiqian::font::raw_font_metrics::RawFontMetrics;
 use tiqian_engine_gen::org::tiqian::layout::prepared_paragraph::PreparedParagraphFns;
 use tiqian_engine_gen::org::tiqian::shaping::text_shaper::{
-    ITextShaper, ShapingInput, ShapingResult, ShapingSource, TextShaperShapeFault,
+    TextShaper, ShapingInput, ShapingResult, ShapingSource, TextShaperShapeFault,
 };
 
 use crate::paragraph::{InlineBoxOuterSpacingCode, ParagraphRequest};
 use crate::session::{CaptureEvidence, FontSession, MetricsInput, ShapeInput};
 
 /// Presents one font session and its capture window to the engine as the
-/// `ITextShaper` and `FontMetricsResolver` implementations.
+/// `TextShaper` and `FontMetricsResolver` implementations.
 ///
 /// The struct erases the borrows into raw pointers because the generated
 /// trait objects require a `_static` type. The obligations that keep this
@@ -246,14 +246,14 @@ impl SessionBackend {
     }
 }
 
-impl ITextShaper for SessionBackend {
+impl TextShaper for SessionBackend {
     fn __haxe_type_name(&self) -> &'static str {
         "tiqian_precompute.engine_bridge.SessionBackend"
     }
     fn as_any(&self) -> &dyn std::any::Any {
         self
     }
-    fn clone_box(&self) -> Box<dyn ITextShaper> {
+    fn clone_box(&self) -> Box<dyn TextShaper> {
         Box::new(SessionBackend {
             session: self.session,
             evidence: self.evidence,
@@ -424,7 +424,7 @@ pub fn precompute_paragraph(
     // call; see the obligation list on `SessionBackend`.
     let mut engine = Engine::new(EngineComponents {
         // The generated component slots share the shaper through
-        // `Arc<Mutex<dyn ITextShaper>>`; the metrics resolver stays a
+        // `Arc<Mutex<dyn TextShaper>>`; the metrics resolver stays a
         // plain `Box`. Both point at the same session and capture window.
         text_shaper: Some(std::sync::Arc::new(std::sync::Mutex::new(unsafe {
             SessionBackend::new(session, evidence)
