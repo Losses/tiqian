@@ -156,9 +156,12 @@ mod tests {
     fn injected_components_drive_the_pipeline() {
         // Dependency injection stays: the host hands in trait objects and the
         // engine uses them instead of its defaults.
+        // The generated `new()` already returns the `Rc<RefCell<Self>>` handle,
+        // so the injected slot takes the generated default value itself; the
+        // slot is a P-1 interface handle and coerces to `dyn TextShaper` here.
         let components = EngineComponents {
-            text_shaper: Some(Rc::new(RefCell::new(ExplainableStubTextShaper::new()))),
-            font_metrics_resolver: Some(Rc::new(RefCell::new(StubFontMetricsResolver::new()))),
+            text_shaper: Some(Rc::new(RefCell::new(ExplainableStubTextShaper {}))),
+            font_metrics_resolver: Some(Rc::new(RefCell::new(StubFontMetricsResolver {}))),
             ..EngineComponents::default()
         };
         let mut engine = Engine::new(components)
