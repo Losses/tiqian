@@ -204,6 +204,11 @@ jobs:
         uses: DeterminateSystems/nix-installer-action@21a544727d0c62386e78b4befe52d19ad12692e3 # v17
       - name: Allow unprivileged user namespaces
         run: sudo sysctl kernel.apparmor_restrict_unprivileged_userns=0 || true
+      - name: Generate the precompute engine tree with the flake toolchain
+        # The precompute crates read tiqian-engine-gen from the gitignored
+        # engine-gen/ tree, and the boring driver reads tools/unicode-data/
+        # at compile time, so stage it from the pinned checkout first.
+        run: nix develop -c bash -c 'bash tools/setup-haxe-env.sh && node scripts/generate-engine-gen.mjs'
       - name: Build the @tiqian/ffi runtime with the flake toolchain
         working-directory: platforms/web/client/engine-runtime
         run: nix develop -c npm run build:runtime
