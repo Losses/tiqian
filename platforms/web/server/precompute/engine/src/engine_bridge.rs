@@ -74,16 +74,18 @@ use crate::session::{CaptureEvidence, FontSession, MetricsInput, ShapeInput};
 struct SessionBackend {
     session: *const FontSession,
     evidence: *mut CaptureEvidence,
-    /// The first metrics-resolution failure the generated engine cannot be
-    /// told about. The generated `FontMetricsResolver::resolve` is
+    /// The most recent metrics-resolution failure the generated engine cannot
+    /// be told about. The generated `FontMetricsResolver::resolve` is
     /// infallible (the Haxe contract has no throw there), so the fault is
     /// parked here and `precompute_paragraph` fails the whole call after
-    /// layout: a plan built on a substituted metric never escapes.
+    /// layout: a plan built on a substituted metric never escapes. A further
+    /// failure overwrites the cell, so the reported message is the failure in
+    /// effect when layout finishes.
     ///
     /// No `Send`/`Sync` impls: these are P-1 interface handles
-    /// (`Rc<RefCell<dyn Trait>>`, target-semantic-policy:57-59) and the
+    /// (`Rc<RefCell<dyn Trait>>`, target-semantic-policy:49-51) and the
     /// policy's final boundary forbids smuggling Arc/Mutex in for a possible
-    /// future threaded host (target-semantic-policy:53-64).
+    /// future threaded host (target-semantic-policy:43-56).
     fault: Rc<RefCell<Option<String>>>,
 }
 
@@ -448,7 +450,7 @@ pub fn precompute_paragraph(
         // Both slots are P-1 interface handles (`Rc<RefCell<dyn Trait>>`):
         // the engine owns them for this call and never leaves the calling
         // thread, and the policy's final boundary forbids smuggling Arc/Mutex
-        // in for a possible future threaded host (target-semantic-policy:53-64).
+        // in for a possible future threaded host (target-semantic-policy:43-56).
         // The two components point at the same session, capture window and
         // fault cell.
         text_shaper: Some(Rc::new(RefCell::new(unsafe {
