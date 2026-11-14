@@ -58,7 +58,9 @@ jobs:
 
   # One pack run produces every artifact and the registry metadata tree. The
   # registry job below still packs for itself until it consumes these
-  # artifacts instead.
+  # artifacts instead. The inner command is single-quoted so the outer shell
+  # hands one argument to bash -c; the inner shell expands RUNNER_TEMP and the
+  # bundle list.
   pack:
     name: Pack every bundle
     needs: [matrix]
@@ -78,7 +80,8 @@ jobs:
       - name: Align the package versions with the release
         run: python3 tools/align-package-versions.py "${GITHUB_REF_NAME#v}"
       - name: Pack every bundle and write the registry tree
-        run: nix develop -c bash -c "boring pack ${{ needs.matrix.outputs.bundles }} --registry-out "$RUNNER_TEMP/registry-tree" --owner "${{ github.repository_owner }}" --repo "${{ github.event.repository.name }}" --asset-base "${{ github.server_url }}/${{ github.repository }}/releases/download/${{ github.ref_name }}"
+        run: |
+          nix develop -c bash -c 'boring pack ${{ needs.matrix.outputs.bundles }} --registry-out "$RUNNER_TEMP/registry-tree" --owner "${{ github.repository_owner }}" --repo "${{ github.event.repository.name }}" --asset-base "${{ github.server_url }}/${{ github.repository }}/releases/download/${{ github.ref_name }}"'
       - name: Collect the artifacts
         shell: bash
         run: |
