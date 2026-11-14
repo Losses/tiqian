@@ -2,10 +2,10 @@ name: Release to Registry
 
 # The registry write is the last job of .github/workflows/release.yml. The pack
 # job already produced the artifacts and the metadata tree, so this workflow
-# publishes the release assets, checks the tree against the artifacts, commits
-# the tree and deploys the site. It can also be dispatched on a release tag to
-# finish the registry write after a failed run, and the gate refuses a red
-# commit either way.
+# downloads them, checks the tree against the artifacts, publishes the release
+# assets, commits the tree and deploys the site. Every step needs the artifacts
+# of that release run, so a failed release is retried with "Re-run failed jobs"
+# on the release run; a standalone dispatch has no artifacts to download.
 on:
   workflow_call:
   workflow_dispatch:
