@@ -29,6 +29,75 @@ def load_bundles(path):
     return json.loads(text)["bundles"]
 
 
+def artifact_stem(bundle):
+    """The name the target writes into the artifact file name.
+
+    A bundle may set -D package-artifact-stem=<stem> in its haxeArgs. Bundles
+    without the define use the package name.
+    """
+    args = bundle.get("haxeArgs") or []
+    for index, arg in enumerate(args):
+        if arg == "-D" and index + 1 < len(args) and args[index + 1].startswith("package-artifact-stem="):
+            return args[index + 1].split("=", 1)[1]
+        if arg.startswith("-Dpackage-artifact-stem="):
+            return arg.split("=", 1)[1]
+    return bundle["package"]["name"]
+
+
+def registry_name(bundle, platform):
+    """The registry repository name one bundle publishes under.
+
+    Every platform under one version shares the directory name, and the
+    registry tool rejects a version whose platforms disagree
+    (registry/Core.hx validate: "platform disagreement"), so the name has to
+    match what the ecosystem itself calls the artifact.
+
+    Maven and SwiftPM name one artifact per build configuration: the Maven POM
+    carries groupId <package.name> and artifactId <stem>, and the SwiftPM
+    manifest name is the stem, so those two platforms publish under the stem.
+    A cargo crate is identified by its package name on every path cargo
+    touches: the index file, the resolved dependency name, the tarball, and
+    the /cargo/dl/<name>-<version>.crate redirect. A cargo crate therefore
+    publishes under the package name, and the stem stays a file-name detail.
+    """
+    if platform in ("maven", "swift"):
+        return artifact_stem(bundle)
+    return bundle["package"]["name"]
+
+
+def cargo_features(bundles, package_name):
+    """The cargo features the index has to declare for one package.
+
+    A package shared by several build configurations carries the configuration
+    switch as a cargo feature: the Rust target emits a cfg(feature = "f32")
+    gate and one crate built from one source has to let the consumer choose.
+    Each configuration bundle names the feature it is built and tested with,
+    so the union of those values is the feature list to declare.
+    """
+    features = []
+    for bundle in bundles:
+        package = bundle.get("package") or {}
+        if package.get("name") != package_name:
+            continue
+        for step in ("build", "run"):
+            override = bundle.get(step) or {}
+            for key in ("args", "cargoArgs"):
+                values = override.get(key) or []
+                for index, value in enumerate(values):
+                    if value == "--features" and index + 1 < len(values):
+                        declared = values[index + 1]
+                    elif value.startswith("--features="):
+                        declared = value.split("=", 1)[1]
+                    else:
+                        continue
+                    for feature in declared.split(","):
+                        feature = feature.strip()
+                        if feature and feature not in features:
+                            features.append(feature)
+    features.sort()
+    return features
+
+
 def digest_of(path, algo, encoding="hex"):
     h = hashlib.new(algo)
     with open(path, "rb") as handle:
@@ -89,27 +158,31 @@ def main():
     artifacts = pathlib.Path(options.artifacts)
     out = pathlib.Path(options.out)
     written = []
+    bundles = load_bundles(options.project)
 
-    for bundle in load_bundles(options.project):
+    for bundle in bundles:
         package = bundle.get("package")
         if not package:
             continue
         platform = TARGET_PLATFORM.get(bundle["target"])
         if platform is None or platform not in PLATFORM_SUFFIX:
             continue
+        stem = artifact_stem(bundle)
+        if platform == "cargo" and stem != package["name"]:
+            # A precision companion packs the same source under a file-name
+            # stem so that packing both configurations does not collide on
+            # disk. The crate it writes is the package crate, byte for byte,
+            # so it is not a package of its own and writes no second entry.
+            continue
         suffix = PLATFORM_SUFFIX[platform]
-        # The Dart target names its archive after the pub identifier, so the
-        # lookup has to use the same form on that platform.
-        artifact_name = package["name"].replace("-", "_") if platform == "pub" else package["name"]
+        # The artifact carries the stem; the registry repository carries the
+        # name the ecosystem resolves the package by.
+        artifact_name = stem.replace("-", "_") if platform == "pub" else stem
         candidates = sorted(artifacts.glob(artifact_name + "-*" + suffix))
         if not candidates:
             continue
         archive = candidates[0]
-        name = package["name"]
-        # Every platform under one version shares the directory name, and the
-        # tool rejects a version whose platforms disagree (registry/Core.hx
-        # validate: "platform disagreement"), so a platform with its own
-        # identifier form publishes under that form.
+        name = registry_name(bundle, platform)
         dir_name = name.replace("-", "_") if platform == "pub" else name
         repo_dir = out / options.owner / dir_name
         repo_dir.mkdir(parents=True, exist_ok=True)
@@ -131,10 +204,12 @@ def main():
         }
         if platform == "maven":
             # The registry reads a group id and one entry per published file.
-            metadata["groupId"] = name
+            # The tree directory is the artifactId, so the group id stays the
+            # package name and one group can carry both precision builds.
+            metadata["groupId"] = package["name"]
             metadata["artifacts"] = [
                 {"file": entry.name, "url": "/".join([options.asset_base.rstrip("/"), entry.name])}
-                for entry in sorted(artifacts.glob(package["name"] + "-*"))
+                for entry in sorted(artifacts.glob(stem + "-*"))
                 if entry.suffix in (".jar", ".pom")
             ]
         elif platform == "swift":
@@ -163,6 +238,11 @@ def main():
             metadata["url"] = url
             encoding = "base64" if platform == "npm" else "hex"
             metadata[PLATFORM_DIGEST[platform]] = digest_of(archive, PLATFORM_DIGEST[platform], encoding)
+            if platform == "cargo":
+                # Cargo resolves a dependency feature set from the index entry,
+                # not from the Cargo.toml inside the tarball, so the index has
+                # to declare the switch the precision companion is built with.
+                metadata["features"] = {feature: [] for feature in cargo_features(bundles, package["name"])}
         (platform_dir / "metadata.json").write_text(json.dumps(metadata, sort_keys=True) + "\n")
         written.append((name, platform, archive.name))
 

@@ -72,16 +72,20 @@ jobs:
       - name: Build packages via boring
         # Only the bundles that declare package metadata can be packed; the five
         # app-facing targets still need names and versions declared in boring.json.
-        run: nix develop -c bash -c "boring pack protocol-rust protocol-ts protocol-kotlin protocol-swift protocol-dart engine-rust-f32 engine-rust-f64 ts kotlin-f32 kotlin-f64 swift-f32 swift-f64 dart"
+        # engine-rust-f32 is not packed here: it is the f32 test companion of the
+        # shared tiqian-engine package, it writes the same crate payload under a
+        # file-name stem, and the registry publishes one tiqian-engine crate whose
+        # precision the consumer selects with the f32 cargo feature.
+        run: nix develop -c bash -c "boring pack protocol-rust protocol-ts protocol-kotlin protocol-swift protocol-dart engine-rust-f64 ts kotlin-f32 kotlin-f64 swift-f32 swift-f64 dart"
 
       - name: Collect artifacts
         run: |
           mkdir -p release-artifacts
-          # Prefix every artifact with its bundle id: engine-rust-f32 and
-          # engine-rust-f64 both emit tiqian-engine-gen-0.1.0.crate, and a plain
-          # copy would silently keep only one of them.
+          # Every artifact is copied under the name the target wrote, and that
+          # name is what the registry metadata and the download redirects use:
+          # the cargo crate is tiqian-engine-<version>.crate, the Maven files
+          # and the Swift archive carry the precision stem.
           find engine-haxe/out \( -name "*.tgz" -o -name "*.tar.gz" -o -name "*.jar" -o -name "*.crate" -o -name "*.zip" -o -name "*.pom" \) | while read -r f; do
-            bundle=$(echo "$f" | sed -E 's#^engine-haxe/out/([^/]+)/.*#\1#')
             cp "$f" "release-artifacts/$(basename "$f")"
           done
           test -n "$(ls -A release-artifacts)" || { echo "no pack artifacts were produced"; exit 1; }

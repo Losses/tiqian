@@ -84,12 +84,21 @@ registry 树按 `<owner>/<包名>/<版本>/<平台>/metadata.json` 组织。一�
 
 目录名按平台区分：
 
-- pub 用下划线目录：`tiqian_engine`
-- 其余平台用连字符：`tiqian-engine-f32`、`tiqian-engine-f64`、`tiqian-protocol`
+- cargo、npm、pub 用包名：`tiqian-engine`、`tiqian-protocol`；pub 把连字符换成下划线，写作 `tiqian_engine`
+- maven 与 swift 用产物名：`tiqian-engine-f32`、`tiqian-engine-f64`
 
-`registry-metadata.py` 里 `dir_name = name.replace("-", "_") if platform == "pub" else name`
-决定这个命名。registry 工具（`packages/registry/src/registry/Core.hx`）校验每个版本下
-每个平台只有一个 `metadata.json`，并拒绝版本不一致、平台不一致、未知平台等错误。
+maven 与 swift 的一个版本对应一个具体精度：boring 输出的 POM 把 `groupId` 设为包名、
+`artifactId` 设为产物名，SwiftPM 清单的包名同样是产物名，所以这两个平台按产物名建目录。
+cargo 的索引路径、依赖解析结果、tarball 名与下载重定向都取包名，`tiqian-engine` 的 crate
+因此按包名建目录，文件名是 `tiqian-engine-<版本>.crate`。
+
+`tools/registry-metadata.py` 的 `registry_name` 决定目录名，`artifact_stem` 决定读取哪个
+产物文件。engine-rust-f32 在 `haxeArgs` 里带 `-D package-artifact-stem=tiqian-engine-f32`，
+归档文件名与归档顶层目录因此带 f32 后缀；它打包的内容与 engine-rust-f64 相同，脚本跳过它的
+cargo 条目，cargo 条目只由 engine-rust-f64 输出。
+
+registry 工具（`packages/registry/src/registry/Core.hx`）校验每个版本下每个平台只有一个
+`metadata.json`，并拒绝版本不一致、平台不一致、未知平台等错误。
 
 ## 5. Swift 归档
 
@@ -159,38 +168,112 @@ index = "sparse+https://registry.tiqian.org/cargo/index/"
 replace-with = "tiqian"
 ```
 
-然后：
+然后按精度选择。默认精度是 f64：
 
 ```shell
-cargo add tiqian-engine-f32
+cargo add tiqian-engine
 cargo build
 ```
 
-实测输出（`cargo add tiqian-engine-f32`）：
+f32 精度：
+
+```shell
+cargo add tiqian-engine --features f32
+cargo build
+```
+
+精度在编译期由 cargo feature `f32` 选择。crate 的 `lib.rs` 用两个条件声明定义同一个类型：
+
+```rust
+#[cfg(feature = "f32")]
+pub type TiqianFloat = f32;
+#[cfg(not(feature = "f32"))]
+pub type TiqianFloat = f64;
+```
+
+crate 的 `Cargo.toml` 声明 `[features] default = []` 与 `f32 = []`。cargo 从索引条目读取
+依赖的 feature 列表，索引条目必须带 `"features": {"f32": []}`，缺少时报
+`does not have that feature`。
+
+以下 cargo 输出在本地 sparse registry 上实测（cargo 1.97.1，crate 由 boring 064eed863 打包）。
+
+`cargo add tiqian-engine` 与 `cargo build`：
 
 ```
-    Updating `tiqian` index
-      Adding tiqian-engine-f32 v0.1.0-alpha07 to dependencies
-    Updating `tiqian` index
+    Updating `local` index
+      Adding tiqian-engine v0.1.0 to dependencies
+             Features:
+             - f32
+    Updating `local` index
      Locking 1 package to latest compatible version
-```
-
-`cargo build` 输出：
-
-```
  Downloading crates ...
-  Downloaded tiqian-engine-f32 v0.1.0-alpha07 (registry `tiqian`)
-   Compiling tiqian-engine-f32 v0.1.0-alpha07
-   Compiling cargo-test v0.1.0
-    Finished `dev` profile [unoptimized + debuginfo] target(s) in 16.44s
+  Downloaded tiqian-engine v0.1.0 (registry `local`)
+   Compiling tiqian-engine v0.1.0 (registry `local`)
+   Compiling consumer v0.1.0
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 5.26s
+type_name = f64
+size_of_val = 8
+```
+
+`cargo add tiqian-engine --features f32` 与 `cargo build`：
+
+```
+    Updating `local` index
+      Adding tiqian-engine v0.1.0 to dependencies
+             Features:
+             + f32
+    Updating `local` index
+     Locking 1 package to latest compatible version
+   Compiling tiqian-engine v0.1.0 (registry `local`)
+   Compiling consumer v0.1.0
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 4.85s
+type_name = f32
+size_of_val = 4
+```
+
+索引条目不带 `f32` 时，`cargo build` 报：
+
+```
+error: failed to select a version for `tiqian-engine`.
+    ... required by package `consumer v0.1.0`
+versions that meet the requirements `^0.1.0` are: 0.1.0
+
+package `consumer` depends on `tiqian-engine` with feature `f32` but `tiqian-engine` does not have that feature.
 ```
 
 失败定位顺序：
 
 1. 检查 `https://registry.tiqian.org/cargo/index/config.json` 是否返回 200。
-2. 检查 crate 的 index 文件（`cargo/index/ti/qi/<包名>`）是否存在。
+2. 检查 crate 的 index 文件（`cargo/index/ti/qi/tiqian-engine`）是否存在。
 3. 检查 `cksum` 是否与 `.crate` 实际内容一致。
-4. 检查 `_redirects` 里 `/cargo/dl/<包名>-:version.crate` 是否指向 GitHub Release 资产。
+4. 检查 `_redirects` 里 `/cargo/dl/tiqian-engine-:version.crate` 是否指向 GitHub Release 资产。
+5. 检查索引条目的 `features` 是否声明了 `f32`。
+
+#### 从 `tiqian-engine-f32` 与 `tiqian-engine-f64` 迁移
+
+alpha08 起 registry 只输出 `tiqian-engine` 一个 cargo 包。发布步骤用新生成的树替换
+`<owner>` 目录（`.github/workflows/release-registry.yml` 里的
+`rm -rf "/tmp/registry/$OWNER"`），alpha07 的 `tiqian-engine-f32`、`tiqian-engine-f64`
+条目在 alpha08 发布后从索引消失。
+
+本地 sparse registry 上实测（删掉 `tiqian-engine-f32` 的索引条目后）：
+
+- 已有工程带着 `Cargo.lock` 与已下载的 crate 缓存时，`cargo build` 仍然成功（0.01s，使用缓存）
+- 新建工程或清空 `CARGO_HOME` 后，`cargo add tiqian-engine-f32` 报
+  `error: the crate tiqian-engine-f32 could not be found in registry index.`
+
+旧依赖在 alpha08 之后有两种结果：缓存与 lock 文件还在的检出继续构建；重新解析依赖或重新
+下载 crate 时失败。迁移方式是把依赖名换成 `tiqian-engine` 并显式选择精度：
+
+```toml
+# 原 tiqian-engine-f32 = "0.1.0-alpha07"
+tiqian-engine = { version = "0.1.0-alpha08", features = ["f32"] }
+```
+
+```toml
+# 原 tiqian-engine-f64 = "0.1.0-alpha07"
+tiqian-engine = "0.1.0-alpha08"
+```
 
 ### pub
 
