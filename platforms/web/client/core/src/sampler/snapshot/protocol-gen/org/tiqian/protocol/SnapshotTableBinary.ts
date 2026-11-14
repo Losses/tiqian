@@ -462,7 +462,7 @@ export class SnapshotTableBinary {
       if (value === null) {
         writer.absentF64();
       } else {
-        writer.f64(value);
+        writer.f64((value)!);
       }
       slotIdx++;
     }
@@ -485,7 +485,7 @@ export class SnapshotTableBinary {
       const low = reader.u32();
       const high = reader.u32();
       if (high === 2146959360 && low === 0) {
-        values.push(null);
+        values.push((null)!);
       } else {
         values.push(i64ToDouble(low, high));
       }

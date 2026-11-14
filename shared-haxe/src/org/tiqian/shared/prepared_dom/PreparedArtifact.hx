@@ -17,6 +17,7 @@ package org.tiqian.shared.prepared_dom;
  * computed by the glue and carried on the typed cell (see PreparedPlanCell), so
  * no JSON writer is needed here and the comparison stays identical.
  */
+@:mainOnly
 class PreparedArtifact {
 
     /**

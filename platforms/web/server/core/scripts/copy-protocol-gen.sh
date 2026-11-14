@@ -22,7 +22,7 @@ cp "$SRC/runtime.ts" "$DST/runtime.ts"
 cp "$SRC/org/tiqian/protocol/Revision.ts" "$DST/Revision.ts"
 cp "$SRC/runtime.ts" "$SHARED_DST/runtime.ts"
 cp "$SRC/haxe/crypto/Sha256.ts" "$DST/haxe/crypto/Sha256.ts"
-for f in Canonical DecorationInput EncodeResult FontFaceRecord InlineBoxInput InlineObjectInput JsCoerce LayoutAttribute LayoutFloatShape LayoutTree LayoutVertex LineBreakSpanInput NamedError NamedErrorNames ParagraphRequest ParagraphRequestChecks ParagraphRequestException ParagraphRequestTestSupport TextSpanInput WireField WireValue; do
+for f in Canonical DecorationInput EncodeResult FontFaceRecord InlineBoxInput InlineObjectInput JsCoerce LayoutAttribute LayoutFloatShape LayoutTree LayoutVertex LineBreakSpanInput NamedError NamedErrorNames ParagraphRequest ParagraphRequestChecks ParagraphRequestException TextSpanInput WireField WireValue; do
   cp "$SRC/org/tiqian/protocol/$f.ts" "$DST/org/tiqian/protocol/$f.ts"
 done
 for f in HtmlAttributeInsertion HtmlError HtmlOpeningTag HtmlParseException HtmlScan; do

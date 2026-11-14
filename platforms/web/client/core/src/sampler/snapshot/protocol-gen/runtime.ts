@@ -32,7 +32,7 @@ export function formatFloatRuntime(v: number): string {
   if (v === Infinity) return "Infinity";
   if (v === -Infinity) return "-Infinity";
   if (Object.is(v, -0) || v === 0) return "0";
-  let text = String(v).replace("E", "e");
+  const text = String(v).replace("E", "e");
   return text.replace(".0e", "e");
 }
 
@@ -78,13 +78,85 @@ export class BytesBuffer {
     return this.bytes.slice(0, this.length);
   }
 }
+
+export function dictKey(k: any): any {
+  if (k !== null && typeof k === "object") {
+    return canonicalDictKey(k);
+  }
+  return k;
+}
+
+function canonicalDictKey(k: any): string {
+  if (k === null || k === undefined) return "n";
+  const kind: string = typeof k;
+  if (kind === "string") return "s" + JSON.stringify(k);
+  if (kind === "number") return "i" + formatFloatRuntime(k);
+  if (kind === "boolean") return "b" + (k ? "1" : "0");
+  if (kind !== "object") return "n";
+  // Indexed loops with hoisted bounds throughout: the loop-structure guard
+  // (tests/ts/loop-structure.test.ts) forbids functional iteration, for-of
+  // heads and a property read in a loop condition, and this runtime is
+  // emitted verbatim into every TypeScript tree.
+  if (k instanceof Map) {
+    const entries: string[] = [];
+    const pairs: any[] = Array.from(k);
+    const pairCount: number = pairs.length;
+    for (let index = 0; index < pairCount; index++) {
+      entries.push(canonicalDictKey(pairs[index][0]) + "=" + canonicalDictKey(pairs[index][1]));
+    }
+    entries.sort();
+    return "m{" + entries.join(",") + "}";
+  }
+  if (Array.isArray(k)) {
+    const items: string[] = [];
+    const itemCount: number = k.length;
+    for (let index = 0; index < itemCount; index++) {
+      items.push(canonicalDictKey(k[index]));
+    }
+    return "a[" + items.join(",") + "]";
+  }
+  if (k instanceof Uint8Array) {
+    const items: string[] = [];
+    const unitCount: number = k.length;
+    for (let index = 0; index < unitCount; index++) {
+      items.push(String(k[index]));
+    }
+    return "u[" + items.join(",") + "]";
+  }
+  if (typeof SortedMapTable !== "undefined" && k instanceof SortedMapTable) {
+    const entries: string[] = [];
+    const mapSize: number = k.size();
+    for (let index = 0; index < mapSize; index++) {
+      entries.push(canonicalDictKey(k.keyAt(index)) + "=" + canonicalDictKey(k.valueAt(index)));
+    }
+    return "sm{" + entries.join(",") + "}";
+  }
+  if (typeof SortedSetTable !== "undefined" && k instanceof SortedSetTable) {
+    const items: string[] = [];
+    const setSize: number = k.size();
+    for (let index = 0; index < setSize; index++) {
+      items.push(canonicalDictKey(k.at(index)));
+    }
+    return "ss[" + items.join(",") + "]";
+  }
+  const fieldNames: string[] = Object.keys(k).sort();
+  const fields: string[] = [];
+  const fieldCount: number = fieldNames.length;
+  for (let index = 0; index < fieldCount; index++) {
+    const name: string = fieldNames[index] as string;
+    const value: any = k[name];
+    if (typeof value === "function") continue;
+    fields.push(JSON.stringify(name) + ":" + canonicalDictKey(value));
+  }
+  return "o{" + fields.join(",") + "}";
+}
 export class StringTools {
   public static isSpace(s: string, pos: number): boolean {
     if (s.length === 0 || pos < 0 || pos >= s.length) {
       return false;
     }
     const c = (Number.isNaN(s.charCodeAt(pos)) ? null : s.charCodeAt(pos))!;
-    return c > 8 && c < 14 || c === 32;
+    return c! > 8 && c! < 14 || c === 32;
   }
 
   public static ltrim(s: string): string {
@@ -1296,6 +1368,20 @@ export class SortedMapTable<K, V> {
     return this.values[index]!;
   }
 
+  public contentEquals(other: SortedMapTable<K, V>): boolean {
+    if (this.size() !== other.size()) {
+      return false;
+    }
+    let index = 0;
+    while (index < this.keys.length) {
+      if (this.keyAt(index) !== other.keyAt(index) || this.valueAt(index) !== other.valueAt(index)) {
+        return false;
+      }
+      index += 1;
+    }
+    return true;
+  }
+
   public toString(): string {
     let out = "{";
     let i = 0;
@@ -1364,21 +1450,50 @@ export class SortedMapTableBuilder<K, V> {
       order.push(i);
       i += 1;
     }
-    i = 1;
+    const tmp = new Array<number>();
+    i = 0;
     while (i < total) {
-      const current = order[i]!;
-      let j = i;
-      let moved = true;
-      while (j > 0 && moved) {
-        if (this.compare(this.keys[order[j - 1]!]!, this.keys[current]!) > 0) {
-          order[j] = order[j - 1]!;
-          j -= 1;
-        } else {
-          moved = false;
-        }
-      }
-      order[j] = current;
+      tmp.push(0);
       i += 1;
+    }
+    let width = 1;
+    while (width < total) {
+      const step = width * 2;
+      let start = 0;
+      while (start < total) {
+        const mid = (start + width < total ? start + width : total);
+        const end = (start + step < total ? start + step : total);
+        let left = start;
+        let right = mid;
+        let k = start;
+        while (left < mid && right < end) {
+          if (this.compare(this.keys[order[left]!]!, this.keys[order[right]!]!) > 0) {
+            tmp[k] = order[right]!;
+            right += 1;
+          } else {
+            tmp[k] = order[left]!;
+            left += 1;
+          }
+          k += 1;
+        }
+        while (left < mid) {
+          tmp[k] = order[left]!;
+          left += 1;
+          k += 1;
+        }
+        while (right < end) {
+          tmp[k] = order[right]!;
+          right += 1;
+          k += 1;
+        }
+        let m = start;
+        while (m < end) {
+          order[m] = tmp[m]!;
+          m += 1;
+        }
+        start += step;
+      }
+      width = step;
     }
     const outKeys = new Array<K>();
     const outValues = new Array<V>();
@@ -1415,6 +1530,20 @@ export class SortedSetTable<K> {
 
   public at(index: number): K {
     return this.keys[index]!;
+  }
+
+  public contentEquals(other: SortedSetTable<K>): boolean {
+    if (this.size() !== other.size()) {
+      return false;
+    }
+    let index = 0;
+    while (index < this.keys.length) {
+      if (this.at(index) !== other.at(index)) {
+        return false;
+      }
+      index += 1;
+    }
+    return true;
   }
 
   public toString(): string {
@@ -1471,21 +1600,50 @@ export class SortedSetTableBuilder<K> {
       order.push(i);
       i += 1;
     }
-    i = 1;
+    const tmp = new Array<number>();
+    i = 0;
     while (i < total) {
-      const current = order[i]!;
-      let j = i;
-      let moved = true;
-      while (j > 0 && moved) {
-        if (this.compare(this.keys[order[j - 1]!]!, this.keys[current]!) > 0) {
-          order[j] = order[j - 1]!;
-          j -= 1;
-        } else {
-          moved = false;
-        }
-      }
-      order[j] = current;
+      tmp.push(0);
       i += 1;
+    }
+    let width = 1;
+    while (width < total) {
+      const step = width * 2;
+      let start = 0;
+      while (start < total) {
+        const mid = (start + width < total ? start + width : total);
+        const end = (start + step < total ? start + step : total);
+        let left = start;
+        let right = mid;
+        let k = start;
+        while (left < mid && right < end) {
+          if (this.compare(this.keys[order[left]!]!, this.keys[order[right]!]!) > 0) {
+            tmp[k] = order[right]!;
+            right += 1;
+          } else {
+            tmp[k] = order[left]!;
+            left += 1;
+          }
+          k += 1;
+        }
+        while (left < mid) {
+          tmp[k] = order[left]!;
+          left += 1;
+          k += 1;
+        }
+        while (right < end) {
+          tmp[k] = order[right]!;
+          right += 1;
+          k += 1;
+        }
+        let m = start;
+        while (m < end) {
+          order[m] = tmp[m]!;
+          m += 1;
+        }
+        start += step;
+      }
+      width = step;
     }
     const outKeys = new Array<K>();
     i = 0;
