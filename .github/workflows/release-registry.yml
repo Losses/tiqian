@@ -71,8 +71,10 @@ jobs:
           git clone https://x-access-token:${{ secrets.REGISTRY_REPO_TOKEN }}@github.com/${{ env.REGISTRY_REPO }}.git /tmp/registry
           VERSION=${GITHUB_REF_NAME#v}
           OWNER="${{ github.repository_owner }}"
-          rm -rf "/tmp/registry/$OWNER"
-          cp -a "$RUNNER_TEMP/registry-tree/$OWNER" "/tmp/registry/$OWNER"
+          # Merge the released versions into the clone instead of replacing the
+          # owner directory: earlier versions stay published, and a re-run of a
+          # release rewrites that version directory with the same bytes.
+          python3 tools/merge-registry-tree.py --tree "$RUNNER_TEMP/registry-tree" --owner "$OWNER" --registry /tmp/registry
           cd /tmp/registry
           git config user.name "Release Bot"
           git config user.email "release@tiqian.dev"

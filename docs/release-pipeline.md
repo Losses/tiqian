@@ -83,9 +83,10 @@ GitHub Release 下载前缀，`--registry-out` 取树的根目录。四个参数
 3. Upload the Swift archives：把 `release-artifacts/*.zip` 上传到 R2 的
    `swift/tiqian/<包名>/<版本>.zip`。元数据的 `archive` 字段指向这个路径，
    所以上传要在提交元数据之前完成。
-4. Commit metadata to registry repo：克隆 registry 仓库，删除 `<owner>` 目录，把
-   `$RUNNER_TEMP/registry-tree/<owner>` 复制进去，提交并推送。这一步的输入是第 3 步
-   写在 R2 的归档与 `boring pack` 写出的树。
+4. Commit metadata to registry repo：克隆 registry 仓库，运行
+   `tools/merge-registry-tree.py` 把 `$RUNNER_TEMP/registry-tree/<owner>` 里的每个版本
+   目录并入 `<owner>` 目录，提交并推送。合并保留 registry 里已有的版本，同一个版本重新
+   发布时替换该版本目录。这一步的输入是第 3 步写在 R2 的归档与 `boring pack` 写出的树。
 
 提交之后还有 Deploy the registry site 与 Sync compiled registry tool 两步，前者触发
 Cloudflare Pages 构建，后者把 `packages/registry/gen` 同步到 registry 仓库。
@@ -114,6 +115,14 @@ bundle 选择目录名与产物文件：maven 与 swift 取 `haxeArgs` 里的 `p
 
 registry 工具（`packages/registry/src/registry/Core.hx`）校验每个版本下每个平台只有一个
 `metadata.json`，并拒绝版本不一致、平台不一致、未知平台等错误。
+
+站点生成读取树里保留的全部版本。`Core.hx` 的 `scan` 遍历
+`<owner>/<包名>/<版本>/<平台>/metadata.json`，`writeNpm`、`writePub`、`writeCargo`、
+`writeSwift` 与 `writeMaven` 分别为一个包列出扫描到的每个版本；`latest` 只决定 npm
+`dist-tags`、pub `latest` 与 maven `<latest>`、`<release>` 指向哪个版本。合并写入
+因此让站点同时列出历史版本与最新版本，registry 工具不需要修改。历史版本会增加
+`Core.hx:470-517` 生成的 `_redirects` 行数，`Core.hx:512-515` 在静态行数超过 2000 时
+让站点构建失败。
 
 ## 5. Swift 归档
 
@@ -266,19 +275,19 @@ package `consumer` depends on `tiqian-engine` with feature `f32` but `tiqian-eng
 
 #### 从 `tiqian-engine-f32` 与 `tiqian-engine-f64` 迁移
 
-alpha08 起 registry 只输出 `tiqian-engine` 一个 cargo 包。发布步骤用新生成的树替换
-`<owner>` 目录（`.github/workflows/release-registry.yml` 里的
-`rm -rf "/tmp/registry/$OWNER"`），alpha07 的 `tiqian-engine-f32`、`tiqian-engine-f64`
-条目在 alpha08 发布后从索引消失。
+alpha08 起 registry 只输出 `tiqian-engine` 一个 cargo 包，`tiqian-engine-f32` 与
+`tiqian-engine-f64` 不再有 alpha08 的新版本。发版步骤把新版本目录并入 `<owner>` 目录
+（`.github/workflows/release-registry.yml` 调用 `tools/merge-registry-tree.py`），
+alpha07 的 `tiqian-engine-f32`、`tiqian-engine-f64` 目录与索引条目保留在 registry 里，
+锁定 `0.1.0-alpha07` 的消费者仍能解析到该版本。
 
-本地 sparse registry 上实测（删掉 `tiqian-engine-f32` 的索引条目后）：
+索引条目缺失时的消费者行为如下（本地 sparse registry 实测，条目为手工删除）：
 
 - 已有工程带着 `Cargo.lock` 与已下载的 crate 缓存时，`cargo build` 仍然成功（0.01s，使用缓存）
 - 新建工程或清空 `CARGO_HOME` 后，`cargo add tiqian-engine-f32` 报
   `error: the crate tiqian-engine-f32 could not be found in registry index.`
 
-旧依赖在 alpha08 之后有两种结果：缓存与 lock 文件还在的检出继续构建；重新解析依赖或重新
-下载 crate 时失败。迁移方式是把依赖名换成 `tiqian-engine` 并显式选择精度：
+迁移方式是把依赖名换成 `tiqian-engine` 并显式选择精度，这样 alpha08 及之后的版本可用：
 
 ```toml
 # 原 tiqian-engine-f32 = "0.1.0-alpha07"
