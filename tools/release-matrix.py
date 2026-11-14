@@ -136,10 +136,9 @@ def registry_name(bundle: dict, ecosystem: str) -> str:
     return package_of(bundle).get("name", "")
 
 
-def artifact_paths(project: dict, bundle: dict, ecosystem: str) -> list:
+def artifact_paths(project: dict, bundle: dict, ecosystem: str, version: str) -> list:
     out_root = project.get("outRoot", "engine-haxe/out")
     package = package_of(bundle)
-    version = package.get("version", "")
     stem = artifact_stem(bundle)
     base = "%s/%s" % (out_root, bundle["id"])
     if ecosystem == "maven":
@@ -153,7 +152,7 @@ def artifact_paths(project: dict, bundle: dict, ecosystem: str) -> list:
     return ["%s/%s-%s%s" % (base, name, version, SUFFIX[ecosystem])]
 
 
-def build_matrix(path: pathlib.Path) -> dict:
+def build_matrix(path: pathlib.Path, version: str | None = None) -> dict:
     project = read_project(path)
     bundles = project.get("bundles")
     if not bundles:
@@ -165,17 +164,18 @@ def build_matrix(path: pathlib.Path) -> dict:
         ecosystem = TARGET_ECOSYSTEM.get(bundle.get("target"))
         state = ECOSYSTEM_STATE.get(ecosystem, {}) if ecosystem else {}
         excluded = bundle["id"] in EXCLUDED_BUNDLES
+        release_version = version or package_of(bundle).get("version", "")
         entries.append(
             {
                 "id": bundle["id"],
                 "target": bundle.get("target"),
                 "ecosystem": ecosystem,
                 "package": package_of(bundle).get("name"),
-                "version": package_of(bundle).get("version"),
+                "version": release_version,
                 "license": package_of(bundle).get("license"),
                 "artifactStem": artifact_stem(bundle),
                 "registryName": registry_name(bundle, ecosystem) if ecosystem else None,
-                "artifacts": artifact_paths(project, bundle, ecosystem) if ecosystem else [],
+                "artifacts": artifact_paths(project, bundle, ecosystem, release_version) if ecosystem else [],
                 "excluded": excluded,
                 "exclusionReason": EXCLUDED_BUNDLES.get(bundle["id"], ""),
                 "packed": not excluded,
@@ -184,6 +184,7 @@ def build_matrix(path: pathlib.Path) -> dict:
         )
     return {
         "project": str(path),
+        "releaseVersion": version or "",
         "outRoot": project.get("outRoot", "engine-haxe/out"),
         "ecosystems": ECOSYSTEM_STATE,
         "bundles": entries,
@@ -283,13 +284,14 @@ def report(matrix: dict, failures: list) -> None:
 def main(argv: list) -> int:
     parser = argparse.ArgumentParser(description="Derive and check the tiqian release matrix.")
     parser.add_argument("--project", type=pathlib.Path, default=pathlib.Path("boring.json"))
+    parser.add_argument("--version", default=None, help="release version for artifact names; boring.json holds the placeholder")
     parser.add_argument("--check", action="store_true")
     parser.add_argument("--list-bundles", action="store_true")
     parser.add_argument("--matrix", action="store_true")
     parser.add_argument("--json", action="store_true")
     args = parser.parse_args(argv)
     try:
-        matrix = build_matrix(args.project)
+        matrix = build_matrix(args.project, args.version)
     except Misconfigured as error:
         print("MISCONFIGURED: %s" % error)
         return EXIT_MISCONFIGURED
