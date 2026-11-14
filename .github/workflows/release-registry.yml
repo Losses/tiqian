@@ -1,0 +1,99 @@
+name: Release to Registry
+
+# The registry write is the last job of .github/workflows/release.yml. The pack
+# job already produced the artifacts and the metadata tree, so this workflow
+# downloads them, checks the tree against the artifacts, publishes the release
+# assets, commits the tree and deploys the site. Every step needs the artifacts
+# of that release run, so the workflow has no dispatch trigger of its own: a
+# failed release is retried with "Re-run failed jobs" on the release run.
+on:
+  workflow_call:
+
+permissions:
+  contents: write
+  actions: read
+
+concurrency:
+  group: release-registry-${{ github.ref }}
+  cancel-in-progress: false
+
+env:
+  REGISTRY_REPO: tiqian-cjk/registry
+
+jobs:
+  release-gate:
+    uses: ./.github/workflows/release-gate.yml
+
+  write-registry:
+    needs: [release-gate]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout tiqian
+        uses: actions/checkout@v4
+
+      - name: Validate the release ref
+        shell: bash
+        run: |
+          set -euo pipefail
+          if [[ "${GITHUB_REF_TYPE}" != "tag" || "${GITHUB_REF_NAME}" != v*.*.* ]]; then
+            echo "::error::The registry lane runs only from a v*.*.* release tag, received ${GITHUB_REF_NAME}."
+            exit 1
+          fi
+
+      - name: Download the release artifacts
+        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
+        with:
+          name: release-artifacts
+          path: release-artifacts
+
+      - name: Download the registry tree
+        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
+        with:
+          name: registry-tree
+          path: ${{ runner.temp }}/registry-tree
+
+      - name: Check the registry tree against the artifacts
+        # Every metadata.json must name an artifact this pack run produced with
+        # the digest it records, and every artifact must be named by the tree,
+        # so a tree entry without an uploaded asset cannot pass.
+        run: python3 tools/check-registry-tree.py --tree "$RUNNER_TEMP/registry-tree" --artifacts release-artifacts
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: release-artifacts/*
+          generate_release_notes: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Commit metadata to registry repo
+        run: |
+          git clone https://x-access-token:${{ secrets.REGISTRY_REPO_TOKEN }}@github.com/${{ env.REGISTRY_REPO }}.git /tmp/registry
+          VERSION=${GITHUB_REF_NAME#v}
+          OWNER="${{ github.repository_owner }}"
+          rm -rf "/tmp/registry/$OWNER"
+          cp -a "$RUNNER_TEMP/registry-tree/$OWNER" "/tmp/registry/$OWNER"
+          cd /tmp/registry
+          git config user.name "Release Bot"
+          git config user.email "release@tiqian.dev"
+          git add .
+          # A re-run for the same tag finds the metadata already committed;
+          # an empty commit would exit non-zero and fail the job.
+          if git diff --cached --quiet; then
+            echo "registry metadata for $VERSION is already current"
+          else
+            git commit -m "release: ${{ github.repository }} ${{ github.ref_name }}"
+            git push origin main
+          fi
+      - name: Deploy the registry site
+        # The Pages Git integration does not fire for every push to the
+        # registry repository (only one deployment appeared for several
+        # commits), so the deploy hook triggers the production build.
+        env:
+          PAGES_DEPLOY_HOOK: ${{ secrets.PAGES_DEPLOY_HOOK }}
+        run: |
+          if [ -z "$PAGES_DEPLOY_HOOK" ]; then
+            echo "PAGES_DEPLOY_HOOK is not configured; skipping the deployment"
+            exit 0
+          fi
+          curl -fsS -X POST "$PAGES_DEPLOY_HOOK" | head -c 200
