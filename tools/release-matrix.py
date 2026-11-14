@@ -178,7 +178,8 @@ def build_matrix(path: pathlib.Path) -> dict:
                 "artifacts": artifact_paths(project, bundle, ecosystem) if ecosystem else [],
                 "excluded": excluded,
                 "exclusionReason": EXCLUDED_BUNDLES.get(bundle["id"], ""),
-                "published": (not excluded) and state.get("state") == "enabled",
+                "packed": not excluded,
+                "official": (not excluded) and state.get("state") == "enabled",
             }
         )
     return {
@@ -223,14 +224,14 @@ def check_matrix(matrix: dict, path: pathlib.Path) -> list:
             failures.append("%s: package name, version and license are all required" % label)
         if entry["excluded"] and not entry["exclusionReason"]:
             failures.append("%s: excluded without a reason" % label)
-        if not entry["published"]:
+        if not entry["official"]:
             covered = entry["excluded"] or state.get("state") == "not-enabled"
             if not covered:
                 failures.append(
                     "%s: not published and not excluded; declare the decision in EXCLUDED_BUNDLES with a reason"
                     % label
                 )
-        if not entry["excluded"] and entry["ecosystem"] and entry["registryName"] and entry["version"]:
+        if entry["packed"] and entry["ecosystem"] and entry["registryName"] and entry["version"]:
             key = (entry["ecosystem"], entry["registryName"], entry["version"])
             prior = seen_keys.get(key)
             if prior is not None and prior["stem"] != entry["artifactStem"]:
@@ -250,7 +251,8 @@ def check_matrix(matrix: dict, path: pathlib.Path) -> list:
 
 def report(matrix: dict, failures: list) -> None:
     entries = matrix["bundles"]
-    published = [entry["id"] for entry in entries if entry["published"]]
+    packed = [entry["id"] for entry in entries if entry["packed"]]
+    official = [entry["id"] for entry in entries if entry["official"]]
     print("project: %s" % matrix["project"])
     print("bundles: %d" % len(entries))
     states = []
@@ -261,13 +263,15 @@ def report(matrix: dict, failures: list) -> None:
         else:
             states.append("%s (not-enabled: %s)" % (name, state.get("reason", "")))
     print("ecosystems: %s" % ", ".join(states))
-    print("publish bundles (%d): %s" % (len(published), ", ".join(published)))
+    print("packed for the registry: %d (%s)" % (len(packed), ", ".join(packed)))
+    print("published to official registries: %d (%s)" % (len(official), ", ".join(official)))
     for entry in entries:
-        if entry["published"]:
-            continue
-        reason = entry["exclusionReason"] or ECOSYSTEM_STATE.get(entry["ecosystem"], {}).get("reason", "")
-        print("not published: %s (%s)" % (entry["id"], reason))
-    print("pack bundles: %d" % len(matrix["packBundles"]))
+        if not entry["packed"]:
+            print("not packed: %s (%s)" % (entry["id"], entry["exclusionReason"]))
+    for entry in entries:
+        if entry["packed"] and not entry["official"]:
+            reason = ECOSYSTEM_STATE.get(entry["ecosystem"], {}).get("reason", "")
+            print("not published to the official registry: %s (%s)" % (entry["id"], reason))
     if failures:
         for failure in failures:
             print("FAIL: %s" % failure)
@@ -301,7 +305,8 @@ def main(argv: list) -> int:
                 "package": entry["package"],
                 "version": entry["version"],
                 "registryName": entry["registryName"],
-                "published": entry["published"],
+                "packed": entry["packed"],
+                "official": entry["official"],
             }
             for entry in matrix["bundles"]
             if not entry["excluded"]
