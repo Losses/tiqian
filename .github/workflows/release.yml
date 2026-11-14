@@ -1,0 +1,201 @@
+name: Release
+
+# One version tag publishes every package. The gate job refuses the release
+# when any required lane is red on the tagged commit; the publishing jobs run
+# in dependency order and the registry write, which produces the publicly
+# visible version, runs only after every other lane succeeded.
+#
+# Re-running a failed release: use "Re-run failed jobs" on this run. Every
+# lane runs from the same tag commit, and npm refuses to overwrite a version
+# that already landed, so a re-run cannot publish a different artifact.
+on:
+  push:
+    tags: ["v*.*.*"]
+
+permissions:
+  contents: read
+  actions: read
+
+concurrency:
+  group: release-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  gate:
+    permissions:
+      contents: read
+      actions: read
+    uses: ./.github/workflows/release-gate.yml
+    secrets: inherit
+
+  # The bundle list in boring.json is the only release input. This job derives
+  # the matrix the following jobs expand: one entry per bundle carries its
+  # target ecosystem, whether the pack run writes it to the private registry
+  # (packed) and whether the release publishes it to the ecosystem official
+  # registry (official).
+  matrix:
+    name: Derive the release matrix
+    needs: [gate]
+    runs-on: ubuntu-latest
+    outputs:
+      include: ${{ steps.matrix.outputs.include }}
+      bundles: ${{ steps.matrix.outputs.bundles }}
+    steps:
+      - name: Check out the release commit
+        uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
+      - name: Check the bundle list
+        run: python3 tools/release-matrix.py --check
+      - name: Emit the matrix
+        id: matrix
+        shell: bash
+        run: |
+          set -euo pipefail
+          include="$(python3 tools/release-matrix.py --matrix)"
+          bundles="$(python3 tools/release-matrix.py --list-bundles | paste -sd" " -)"
+          bundles="${bundles% }"
+          echo "include=${include}" >> "${GITHUB_OUTPUT}"
+          echo "bundles=${bundles}" >> "${GITHUB_OUTPUT}"
+
+  # One pack run produces every artifact and the registry metadata tree. The
+  # registry job below still packs for itself until it consumes these
+  # artifacts instead.
+  pack:
+    name: Pack every bundle
+    needs: [matrix]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out the release commit
+        uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
+      - name: Install Nix
+        uses: DeterminateSystems/nix-installer-action@21a544727d0c62386e78b4befe52d19ad12692e3 # v17
+      - name: Allow unprivileged user namespaces
+        run: sudo sysctl kernel.apparmor_restrict_unprivileged_userns=0 || true
+      - name: Stage the pinned generation inputs
+        shell: bash
+        run: |
+          nix develop -c bash -c "mkdir -p tools/unicode-data && cp -a .haxelib/boring/git/tools/unicode-data/. tools/unicode-data/"
+          ls -l tools/unicode-data
+      - name: Align the package versions with the release
+        run: python3 tools/align-package-versions.py "${GITHUB_REF_NAME#v}"
+      - name: Pack every bundle and write the registry tree
+        run: nix develop -c bash -c "boring pack ${{ needs.matrix.outputs.bundles }} --registry-out "$RUNNER_TEMP/registry-tree" --owner "${{ github.repository_owner }}" --repo "${{ github.event.repository.name }}" --asset-base "${{ github.server_url }}/${{ github.repository }}/releases/download/${{ github.ref_name }}"
+      - name: Collect the artifacts
+        shell: bash
+        run: |
+          mkdir -p release-artifacts
+          find engine-haxe/out \( -name "*.tgz" -o -name "*.tar.gz" -o -name "*.jar" -o -name "*.crate" -o -name "*.zip" -o -name "*.pom" \) | while read -r f; do
+            cp "$f" "release-artifacts/$(basename "$f")"
+          done
+          test -n "$(ls -A release-artifacts)" || { echo "no pack artifacts were produced"; exit 1; }
+          ls -la release-artifacts/
+      - name: Upload the release artifacts
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: release-artifacts
+          path: release-artifacts
+          if-no-files-found: error
+          retention-days: 7
+      - name: Upload the registry tree
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: registry-tree
+          path: ${{ runner.temp }}/registry-tree
+          if-no-files-found: error
+          retention-days: 7
+
+  # One instance per bundle entry. Each instance carries its ecosystem, so the
+  # publish command is selected by platform. Until those commands land this
+  # instance checks that the pack run produced the bundle artifacts and prints
+  # the destination; it writes to no registry.
+  publish:
+    name: Publish ${{ matrix.bundle }} (${{ matrix.ecosystem }})
+    needs: [matrix, pack]
+    strategy:
+      fail-fast: false
+      matrix: ${{ fromJSON(needs.matrix.outputs.include) }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out the release commit
+        uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
+      - name: Download the release artifacts
+        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
+        with:
+          name: release-artifacts
+          path: release-artifacts
+      - name: Check the packed artifacts of this bundle
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - "${{ matrix.bundle }}" <<PY
+          import json, pathlib, subprocess, sys
+
+          bundle = sys.argv[1]
+          document = json.loads(subprocess.check_output(["python3", "tools/release-matrix.py", "--json"], text=True))
+          entry = next(item for item in document["bundles"] if item["id"] == bundle)
+          names = {path.name for path in pathlib.Path("release-artifacts").iterdir()}
+          missing = [pathlib.Path(path).name for path in entry["artifacts"] if pathlib.Path(path).name not in names]
+          if missing:
+              print("missing packed artifacts for %s: %s" % (bundle, ", ".join(missing)))
+              sys.exit(1)
+          destination = entry["ecosystem"] if entry["official"] else "not enabled"
+          print("packed: %s -> official registry: %s" % (bundle, destination))
+          PY
+
+  # The npm and Maven lanes below still build and publish their own packages.
+  # They stay in the entrypoint until their inputs come from the pack run and
+  # release-manifest.json is rewritten, so the release gate keeps seeing every
+  # unit it declares.
+  npm-ffi:
+    needs: [gate]
+    permissions:
+      contents: read
+      actions: read
+      id-token: write
+    uses: ./.github/workflows/publish-ffi.yml
+    secrets: inherit
+
+  npm-core:
+    needs: [gate, npm-ffi]
+    permissions:
+      contents: read
+      actions: read
+      id-token: write
+    uses: ./.github/workflows/publish-core.yml
+    secrets: inherit
+
+  npm-prose:
+    needs: [gate, npm-core]
+    permissions:
+      contents: read
+      actions: read
+      id-token: write
+    uses: ./.github/workflows/publish-prose.yml
+    secrets: inherit
+
+  npm-precompute:
+    needs: [gate, npm-prose]
+    permissions:
+      contents: read
+      actions: read
+      id-token: write
+    uses: ./.github/workflows/publish-precompute.yml
+    secrets: inherit
+
+  maven:
+    needs: [gate]
+    permissions:
+      contents: read
+      actions: read
+    uses: ./.github/workflows/publish.yml
+    secrets: inherit
+    with:
+      version: ${{ needs.gate.outputs.version }}
+
+  registry:
+    needs: [gate, npm-precompute, npm-ffi, npm-core, npm-prose, maven]
+    permissions:
+      contents: write
+      actions: read
+    uses: ./.github/workflows/release-registry.yml
+    secrets: inherit
+
