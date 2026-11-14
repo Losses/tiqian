@@ -70,4 +70,7 @@ include(
     ":demo",
     ":demo:android",
     ":demo:font-diagnostics",
+    // Developer probes (measurement and regression tools) and the README sample
+    // generator live outside :engine; see engine/build.gradle.kts.
+    ":tools:engine-probes",
 )

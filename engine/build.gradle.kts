@@ -61,39 +61,10 @@ kotlin {
     }
 }
 
-// Developer tools (layout report, README sample, probes) are not tests. They
-// live in their own JVM compilation so the test source set carries tests only.
+// :engine keeps this build configuration, the generated tree under
+// ../engine-haxe/out/kotlin-f32 and src/androidMain/baselineProfiles only. The
+// developer probes and the README sample generator live in :tools:engine-probes.
 val jvmTestCompilation = kotlin.targets.getByName("jvm").compilations.getByName("test")
-
-val jvmToolsCompilation = kotlin.targets.getByName("jvm").compilations.create("tools") {
-    defaultSourceSet.dependsOn(kotlin.sourceSets.getByName("commonMain"))
-}
-jvmToolsCompilation.associateWith(kotlin.targets.getByName("jvm").compilations.getByName("main"))
-jvmToolsCompilation.defaultSourceSet.dependencies {
-    implementation(kotlin("test-junit"))
-    implementation(project(":platforms:jvm:shaping"))
-    implementation(project(":platforms:jvm:skia"))
-    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.8.1")
-    runtimeOnly("org.jetbrains.skiko:skiko-awt-runtime-macos-arm64:0.144.6")
-}
-
-val readmeSampleBlackSvg = rootProject.layout.projectDirectory.file("docs/images/sample-paragraph-black.svg")
-val readmeSampleWhiteSvg = rootProject.layout.projectDirectory.file("docs/images/sample-paragraph-white.svg")
-
-tasks.register<JavaExec>("generateReadmeSample") {
-    group = "documentation"
-    description = "Generates the README paragraph sample from a real Tiqian LayoutResult."
-    dependsOn("compileToolsKotlinJvm")
-    mainClass.set("org.tiqian.layout.tooling.ReadmeSampleMainKt")
-    classpath = files(jvmToolsCompilation.output.allOutputs) +
-        configurations.named("jvmRuntimeClasspath").get()
-    jvmArgs("--enable-native-access=ALL-UNNAMED")
-    args(
-        readmeSampleBlackSvg.asFile.absolutePath,
-        readmeSampleWhiteSvg.asFile.absolutePath,
-    )
-    outputs.files(readmeSampleBlackSvg, readmeSampleWhiteSvg)
-}
 
 // The generated test suite (bundle kotlin-f32, gen-tests) is not a JUnit suite:
 // every case carries @boring.test.Test and the generated TestMainKt drives them,
@@ -102,7 +73,7 @@ tasks.register<JavaExec>("generateReadmeSample") {
 tasks.register<JavaExec>("generatedTestSuite") {
     group = "verification"
     description = "Runs the generated Kotlin test suite through gen-tests/TestMainKt."
-    dependsOn("compileToolsKotlinJvm")
+    dependsOn("compileTestKotlinJvm")
     mainClass.set("TestMainKt")
     // The generated golden constants load their text from the bundle resource
     // directory, so it has to sit on the classpath exactly as the driver puts it.
