@@ -48,9 +48,11 @@ kotlin {
                 implementation(kotlin("test"))
                 implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.8.1")
             }
-            // The generated test suite (bundle kotlin-f32, gen-tests) replaces the
-            // handwritten tests.
-            kotlin.setSrcDirs(listOf(layout.projectDirectory.dir("../engine-haxe/out/kotlin-f32/gen-tests")))
+            // commonTest carries no sources after the cutover: the generated suite
+            // carries @boring.test.Test cases, is not JUnit, and has no Test task, so
+            // it lives in the jvmGeneratedTest compilation below and runs through
+            // :engine:generatedTestSuite. Keeping it in commonTest made :engine:jvmTest
+            // fail with "test sources present ... did not discover any tests".
         }
 
         jvmTest.dependencies {
@@ -64,7 +66,24 @@ kotlin {
 // :engine keeps this build configuration, the generated tree under
 // ../engine-haxe/out/kotlin-f32 and src/androidMain/baselineProfiles only. The
 // developer probes and the README sample generator live in :tools:engine-probes.
-val jvmTestCompilation = kotlin.targets.getByName("jvm").compilations.getByName("test")
+//
+// The generated test suite (bundle kotlin-f32, gen-tests) is not a JUnit suite:
+// every case carries @boring.test.Test and the generated TestMainKt drives them.
+// Its own JVM compilation keeps it out of jvmTest (which has no test classes
+// after the cutover) while :engine:generatedTestSuite still builds and runs it.
+val jvmGeneratedTestCompilation = kotlin.targets.getByName("jvm").compilations.create("generatedTest") {
+    defaultSourceSet.dependsOn(kotlin.sourceSets.getByName("commonMain"))
+}
+jvmGeneratedTestCompilation.associateWith(kotlin.targets.getByName("jvm").compilations.getByName("main"))
+jvmGeneratedTestCompilation.defaultSourceSet.kotlin.setSrcDirs(
+    listOf(layout.projectDirectory.dir("../engine-haxe/out/kotlin-f32/gen-tests")),
+)
+jvmGeneratedTestCompilation.defaultSourceSet.dependencies {
+    implementation(kotlin("test"))
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.8.1")
+    implementation(project(":platforms:jvm:shaping"))
+    implementation(project(":platforms:jvm:skia"))
+}
 
 // The generated test suite (bundle kotlin-f32, gen-tests) is not a JUnit suite:
 // every case carries @boring.test.Test and the generated TestMainKt drives them,
@@ -73,11 +92,11 @@ val jvmTestCompilation = kotlin.targets.getByName("jvm").compilations.getByName(
 tasks.register<JavaExec>("generatedTestSuite") {
     group = "verification"
     description = "Runs the generated Kotlin test suite through gen-tests/TestMainKt."
-    dependsOn("compileTestKotlinJvm")
+    dependsOn(jvmGeneratedTestCompilation.compileTaskProvider)
     mainClass.set("TestMainKt")
     // The generated golden constants load their text from the bundle resource
     // directory, so it has to sit on the classpath exactly as the driver puts it.
-    classpath = files(jvmTestCompilation.output.allOutputs) +
+    classpath = files(jvmGeneratedTestCompilation.output.allOutputs) +
         files(layout.projectDirectory.dir("../engine-haxe/out/kotlin-f32/gen/resources")) +
         configurations.named("jvmTestRuntimeClasspath").get()
     // The generated runner reads these two host edges; the driver sets the same
