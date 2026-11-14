@@ -19,7 +19,7 @@
 
 9 个 Maven 模块在 `build.gradle.kts:32-67` 的 `publishedModules` 里声明：`tiqian-engine`、`tiqian-jvm-shaping`、`tiqian-jvm-skia`、`tiqian-android-shaping`、`tiqian-android-native-font`、`tiqian-android-rendering`、`tiqian-android-view`、`tiqian-compose`、`tiqian-compose-material3`。
 
-13 个 bundle 在 `release-registry.yml:61` 的 `boring pack` 参数里逐个列出，`boring.json` 里每个 bundle 都声明了 `package` 字段，归并后只有两个包名：`tiqian-engine` 与 `tiqian-protocol`（`python3 tools/registry-metadata.py --list-packages --project boring.json` 输出两行）。
+13 个 bundle 在 `release-registry.yml:61` 的 `boring pack` 参数里逐个列出，`boring.json` 里每个 bundle 都声明了 `package` 字段，归并后只有两个包名：`tiqian-engine` 与 `tiqian-protocol`（`boring.json` 里每个 bundle 的 `package.name` 只取这两个值）。
 
 11 个 npm 包在 `snapshot-precompute.yml:634` 的 `expected` 变量里逐个列出：ffi、core、prose、react、precompute、4 个平台二进制包、astro、sveltekit。
 
@@ -37,7 +37,7 @@
 
 - Maven 侧 9 个模块（`build.gradle.kts:32-67`）。
 - npmjs 侧 7 个包：`@tiqian/ffi`、`@tiqian/precompute` 与 4 个平台包（`publish-precompute.yml:246-249`）、`@tiqian/prose`。
-- 自建 registry 侧 2 个包（`release-registry.yml:77` 的 `--list-packages` 校验）。
+- 自建 registry 侧 2 个包（`boring pack` 的 registry 写出按 `bundle.package` 归并）。
 - GitHub Packages 侧 11 个包（`snapshot-precompute.yml:634`）。
 
 没有任何一份清单同时描述这四套集合。同一个名字 `tiqian-engine` 同时出现在 Maven 与自建 registry 两个生态里，含义不同。
@@ -83,7 +83,7 @@ npm 快照只发 GitHub Packages 属于有意设计。`snapshot-precompute.yml:3
 
 ### 4.3 一份包清单
 
-新增 `release-manifest.json`，每个发布单元一行：名称、生态（maven / npm / registry）、目标仓库、dist-tag、是否快照。编排工作流与各通道脚本都读它。`tools/registry-metadata.py --list-packages` 现在从 `boring.json` 推导 registry 包集合，改成读这份清单。
+新增 `release-manifest.json`，每个发布单元一行：名称、生态（maven / npm / registry）、目标仓库、dist-tag、是否快照。编排工作流与各通道脚本都读它。`boring` 的 `pack` 现在从 `boring.json` 推导 registry 包集合，改成读这份清单。
 
 清单需要一条校验：所有发布单元都被某个通道覆盖，且没有单元被两个通道重复发布。
 

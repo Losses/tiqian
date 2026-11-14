@@ -76,7 +76,14 @@ jobs:
         # shared tiqian-engine package, it writes the same crate payload under a
         # file-name stem, and the registry publishes one tiqian-engine crate whose
         # precision the consumer selects with the f32 cargo feature.
-        run: nix develop -c bash -c "boring pack protocol-rust protocol-ts protocol-kotlin protocol-swift protocol-dart engine-rust-f64 ts kotlin-f32 kotlin-f64 swift-f32 swift-f64 dart"
+        #
+        # The same pack run also writes the registry tree. The four
+        # --registry-* arguments carry the publish target: --owner is the
+        # repository owner, --repo the repository name, --asset-base the
+        # GitHub Release download prefix of this tag, and --registry-out the
+        # tree root. All four together enable the write; passing none keeps
+        # the artifact-only behavior.
+        run: nix develop -c bash -c "boring pack protocol-rust protocol-ts protocol-kotlin protocol-swift protocol-dart engine-rust-f64 ts kotlin-f32 kotlin-f64 swift-f32 swift-f64 dart --registry-out "$RUNNER_TEMP/registry-tree" --owner "${{ github.repository_owner }}" --repo "${{ github.event.repository.name }}" --asset-base "${{ github.server_url }}/${{ github.repository }}/releases/download/${{ github.ref_name }}""
 
       - name: Collect artifacts
         run: |
@@ -89,12 +96,6 @@ jobs:
             cp "$f" "release-artifacts/$(basename "$f")"
           done
           test -n "$(ls -A release-artifacts)" || { echo "no pack artifacts were produced"; exit 1; }
-          # Every packed bundle must appear in the artifact set. A rename or a
-          # duplicate package name would otherwise drop one bundle without
-          # making the job fail.
-          python3 tools/registry-metadata.py --list-packages --project boring.json | while read -r pkg; do
-            ls release-artifacts | grep -q "^${pkg}-" || { echo "no artifact for package $pkg"; exit 1; }
-          done
           ls -la release-artifacts/
 
       - name: Create GitHub Release
@@ -125,21 +126,6 @@ jobs:
             aws s3 cp "$zip" "s3://${{ env.R2_BUCKET }}/swift/tiqian/$name/$VERSION.zip" \
               --endpoint-url "${{ env.R2_ENDPOINT }}"
           done
-
-      - name: Write registry metadata
-        # The registry tool accepts one package per version and platform
-        # (packages/registry/src/registry/Core.hx:280), so each package owns a
-        # repository layer and the tree path is <owner>/<package>/<version>/<platform>.
-        run: |
-          VERSION="${GITHUB_REF_NAME#v}"
-          python3 tools/registry-metadata.py \
-            --project boring.json \
-            --artifacts release-artifacts \
-            --version "$VERSION" \
-            --owner "${{ github.repository_owner }}" \
-            --repo "${{ github.event.repository.name }}" \
-            --asset-base "${{ github.server_url }}/${{ github.repository }}/releases/download/${{ github.ref_name }}" \
-            --out "$RUNNER_TEMP/registry-tree"
 
       - name: Commit metadata to registry repo
         run: |

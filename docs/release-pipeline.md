@@ -52,7 +52,7 @@ git push origin v0.1.0-alpha07
 
 ## 3. 打包前置
 
-打包前两个脚本按发布版本准备产物：
+打包前 `tools/align-package-versions.py` 按发布版本改写清单：
 
 ```shell
 python3 tools/align-package-versions.py "${GITHUB_REF_NAME#v}"
@@ -62,20 +62,33 @@ python3 tools/align-package-versions.py "${GITHUB_REF_NAME#v}"
 的 `version` 字段改成标签版本。registry 的产物名是 `<包名>-<版本>`，如果清单还带着
 占位版本 `0.1.0`，下载地址就不存在。
 
+制品与 registry 元数据由同一条 `boring pack` 命令产出。四个 registry 参数同时给出时，
+`boring pack` 在写出每个 bundle 的制品之后，把 registry 树写到 `$RUNNER_TEMP/registry-tree`：
+
 ```shell
-python3 tools/registry-metadata.py \
-  --project boring.json \
-  --artifacts release-artifacts \
-  --version "$VERSION" \
-  --owner "$OWNER" \
-  --repo "$REPO" \
-  --asset-base "$ASSET_BASE" \
-  --out "$RUNNER_TEMP/registry-tree"
+nix develop -c bash -c "boring pack protocol-rust protocol-ts protocol-kotlin protocol-swift protocol-dart engine-rust-f64 ts kotlin-f32 kotlin-f64 swift-f32 swift-f64 dart --registry-out "$RUNNER_TEMP/registry-tree" --owner "${{ github.repository_owner }}" --repo "${{ github.event.repository.name }}" --asset-base "${{ github.server_url }}/${{ github.repository }}/releases/download/${{ github.ref_name }}""
 ```
 
-`tools/registry-metadata.py` 从 `boring.json` 的 bundle 列表读取每个包的元数据，对照
-`release-artifacts` 目录里的实际产物，生成 registry 树（每个版本每个平台一个
-`metadata.json`）。
+`--owner` 取仓库所有者，`--repo` 取仓库名，`--asset-base` 取当前标签的
+GitHub Release 下载前缀，`--registry-out` 取树的根目录。四个参数写入 `metadata.json`
+的 `repository`、`tag` 与各平台下载 URL。四个参数只给一部分时 `boring pack`
+报错停止；一个都不给时只写制品，不写 registry 树。
+
+从 `boring pack` 的输出到 registry 仓库提交之间有四个步骤，输入如下：
+
+1. Collect artifacts：把 `engine-haxe/out` 下每个 bundle 目录的 `*.tgz`、
+   `*.tar.gz`、`*.jar`、`*.crate`、`*.zip` 与 `*.pom`
+   复制到扁平的 `release-artifacts/`。
+2. Create GitHub Release：把 `release-artifacts/*` 作为标签的发布资产上传。
+3. Upload the Swift archives：把 `release-artifacts/*.zip` 上传到 R2 的
+   `swift/tiqian/<包名>/<版本>.zip`。元数据的 `archive` 字段指向这个路径，
+   所以上传要在提交元数据之前完成。
+4. Commit metadata to registry repo：克隆 registry 仓库，删除 `<owner>` 目录，把
+   `$RUNNER_TEMP/registry-tree/<owner>` 复制进去，提交并推送。这一步的输入是第 3 步
+   写在 R2 的归档与 `boring pack` 写出的树。
+
+提交之后还有 Deploy the registry site 与 Sync compiled registry tool 两步，前者触发
+Cloudflare Pages 构建，后者把 `packages/registry/gen` 同步到 registry 仓库。
 
 ## 4. registry 目录模型
 
@@ -92,10 +105,12 @@ maven 与 swift 的一个版本对应一个具体精度：boring 输出的 POM �
 cargo 的索引路径、依赖解析结果、tarball 名与下载重定向都取包名，`tiqian-engine` 的 crate
 因此按包名建目录，文件名是 `tiqian-engine-<版本>.crate`。
 
-`tools/registry-metadata.py` 的 `registry_name` 决定目录名，`artifact_stem` 决定读取哪个
-产物文件。engine-rust-f32 在 `haxeArgs` 里带 `-D package-artifact-stem=tiqian-engine-f32`，
-归档文件名与归档顶层目录因此带 f32 后缀；它打包的内容与 engine-rust-f64 相同，脚本跳过它的
-cargo 条目，cargo 条目只由 engine-rust-f64 输出。
+`boring pack` 的 registry 写出（`packages/driver/src/driver/RegistryMetadata.hx`）为每个
+bundle 选择目录名与产物文件：maven 与 swift 取 `haxeArgs` 里的 `package-artifact-stem`
+（未设置时取包名），cargo、npm 与 pub 取 `bundle.package` 的 `name`，pub 再把连字符
+换成下划线。engine-rust-f32 在 `haxeArgs` 里带 `-D package-artifact-stem=tiqian-engine-f32`，
+归档文件名与归档顶层目录因此带 f32 后缀；它打包的内容与 engine-rust-f64 相同，产物名与
+包名不同，所以它不写 cargo 条目，cargo 条目只由 engine-rust-f64 输出。
 
 registry 工具（`packages/registry/src/registry/Core.hx`）校验每个版本下每个平台只有一个
 `metadata.json`，并拒绝版本不一致、平台不一致、未知平台等错误。
@@ -108,9 +123,9 @@ Swift 归档有两个硬性要求：
   `<包名>-<版本>/` 之下。
 - 归档上传到 R2 的 `swift/tiqian/<包名>/<版本>.zip`。
 
-`registry-metadata.py` 从 zip 里读取 `Package.swift` 清单正文，写入 `metadata.json`
-的 `packageSwift` 字段。这个字段存的是清单正文，不存放 URL。registry 工具校验
-`archive` 字段必须等于 `swift/<scope>/<包名>/<版本>.zip`，否则报 `invalid Swift archive`。
+`boring pack` 从它生成的 `Package.swift` 读取清单正文，写入 `metadata.json` 的
+`packageSwift` 字段。这个字段存放清单正文，不存放 URL。registry 工具校验 `archive`
+字段必须等于 `swift/<scope>/<包名>/<版本>.zip`，否则报 `invalid Swift archive`。
 
 ## 6. Pages 部署
 
