@@ -2,11 +2,13 @@
 """Check the registry metadata tree against the artifacts of one pack run.
 
 The release-registry job downloads two artifacts from the pack job:
-release-artifacts (the install units) and registry-tree (the metadata the
-same pack run wrote). This script requires every file the tree names to be
-present in release-artifacts with the digest the metadata records, and
-requires every artifact to be named at least once. A metadata entry without
-an artifact, or an artifact the tree never names, fails.
+release-artifacts (the install units plus SHA256SUMS) and registry-tree (the
+metadata the same pack run wrote). This script requires every file the tree
+names to be present in release-artifacts with the sha256 the pack job recorded
+in SHA256SUMS and, where the platform records a digest, with the digest the
+metadata states. Every artifact must also be named at least once, so a
+metadata entry without an artifact or an artifact the tree never names
+fails.
 
 Usage:
     check-registry-tree.py --tree <registry-tree> --artifacts <release-artifacts>
@@ -30,7 +32,7 @@ EXIT_MISCONFIGURED = 2
 # The digest field each platform records in metadata.json, and its encoding.
 # packages/registry/src/registry/Core.hx reads these field names: npm carries
 # a base64 sha512, cargo, pub and swift carry a hex sha256, and maven carries
-# one entry per file without a digest.
+# one entry per file without a digest, so maven relies on SHA256SUMS.
 DIGEST_FIELD = {"npm": "sha512", "cargo": "sha256", "pub": "sha256", "swift": "sha256"}
 DIGEST_ENCODING = {"npm": "base64", "cargo": "hex", "pub": "hex", "swift": "hex"}
 
@@ -53,6 +55,18 @@ def artifact_files(directory: pathlib.Path) -> dict:
     }
 
 
+def read_sums(directory: pathlib.Path) -> dict:
+    path = directory / "SHA256SUMS"
+    if not path.is_file():
+        return {}
+    sums = {}
+    for line in path.read_text(encoding="utf-8").splitlines():
+        digest, _, name = line.partition("  ")
+        if name.strip():
+            sums[name.strip()] = digest.strip().lower()
+    return sums
+
+
 def referenced(metadata: dict, platform: str, repo_dir: str, version: str) -> list:
     if platform == "maven":
         return [item.get("file", "") for item in metadata.get("artifacts", [])]
@@ -73,8 +87,11 @@ def main(argv: list) -> int:
         print("MISCONFIGURED: tree directory is missing: %s" % args.tree)
         return EXIT_MISCONFIGURED
     artifacts = artifact_files(args.artifacts)
+    sums = read_sums(args.artifacts)
     referenced_names = set()
     failures = []
+    if not sums:
+        failures.append("release-artifacts/SHA256SUMS is missing or empty; the pack job records the artifact digests")
     entries = sorted(args.tree.rglob("metadata.json"))
     if not entries:
         failures.append("the tree names no metadata.json")
@@ -102,6 +119,13 @@ def main(argv: list) -> int:
             if target is None:
                 failures.append("%s: %s is not in release-artifacts" % (path, name))
                 continue
+            recorded_sum = sums.get(name)
+            if recorded_sum is None:
+                failures.append("%s: %s is not recorded in SHA256SUMS" % (path, name))
+            else:
+                actual_sum = hashlib.sha256(target.read_bytes()).hexdigest()
+                if actual_sum != recorded_sum:
+                    failures.append("%s: %s sha256 %s does not match SHA256SUMS %s" % (path, name, actual_sum, recorded_sum))
             field = DIGEST_FIELD.get(platform)
             if field is None:
                 continue
