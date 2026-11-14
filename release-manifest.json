@@ -127,10 +127,7 @@
       "ecosystem": "registry",
       "workflow": ".github/workflows/release-registry.yml",
       "trigger": "release",
-      "packages": [
-        "tiqian-engine",
-        "tiqian-protocol"
-      ],
+      "packagesFrom": "boring.json",
       "packageSource": {
         "kind": "boring",
         "files": [

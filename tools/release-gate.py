@@ -20,6 +20,7 @@ from __future__ import annotations
 import argparse
 import json
 import re
+import subprocess
 import sys
 import urllib.error
 import urllib.request
@@ -143,6 +144,43 @@ def unit_packages(root: Path, unit: dict) -> set[str]:
     misconfigured(f"unit {unit.get('id')} has an unknown packageSource kind {kind!r}")
 
 
+def derived_unit(unit: dict) -> bool:
+    """True when the unit derives its package list instead of declaring one."""
+    return (unit.get("packageSource") or {}).get("kind") == "boring"
+
+
+def matrix_packages(root: Path) -> set[str]:
+    """The packages tools/release-matrix.py marks packed for the registry.
+
+    The registry unit declares no package list: the gate compares the packages
+    boring.json declares with the set the release matrix packs, so a bundle
+    that drops out of the pack set fails the gate instead of shrinking the
+    registry silently.
+    """
+    script = root / "tools" / "release-matrix.py"
+    if not script.is_file():
+        misconfigured(f"missing file: {script}")
+    try:
+        completed = subprocess.run(
+            [sys.executable, str(script), "--json"],
+            cwd=root,
+            check=True,
+            capture_output=True,
+            text=True,
+        )
+    except subprocess.CalledProcessError as error:
+        misconfigured(f"{script} --json failed: {error.stderr.strip() or error}")
+    try:
+        document = json.loads(completed.stdout)
+    except json.JSONDecodeError as error:
+        misconfigured(f"{script} --json is not valid JSON: {error}")
+    return {
+        entry["package"]
+        for entry in document.get("bundles", [])
+        if entry.get("packed") and entry.get("package")
+    }
+
+
 def check_manifest_units(manifest: dict) -> None:
     seen_packages: dict[str, str] = {}
     seen_ids: set[str] = set()
@@ -155,9 +193,11 @@ def check_manifest_units(manifest: dict) -> None:
         for dependency in unit.get("dependsOn", []):
             if dependency not in ids:
                 misconfigured(f"unit {unit_id} depends on unknown unit {dependency}")
-        if not unit.get("workflow") or not unit.get("packages"):
+        if derived_unit(unit) and not unit.get("packagesFrom"):
+            misconfigured(f"unit {unit_id} derives its packages and must state packagesFrom")
+        if not unit.get("workflow") or (not unit.get("packages") and not derived_unit(unit)):
             misconfigured(f"unit {unit_id} needs a workflow and a package list")
-        for package in unit["packages"]:
+        for package in unit.get("packages", []):
             owner = seen_packages.get(package)
             if owner is not None:
                 misconfigured(f"package {package} is released by both {owner} and {unit_id}")
@@ -186,16 +226,24 @@ def check_manifest_units(manifest: dict) -> None:
 def check_coverage(root: Path, manifest: dict) -> list[str]:
     notes: list[str] = []
     release_packages: dict[str, str] = {}
+    matrix = matrix_packages(root) if any(derived_unit(unit) for unit in manifest["units"]) else set()
     for unit in manifest["units"]:
-        declared = set(unit["packages"])
         discovered = unit_packages(root, unit)
-        if declared != discovered:
-            missing = sorted(discovered - declared)
-            stale = sorted(declared - discovered)
-            misconfigured(
-                f"unit {unit['id']} package list drifted: undeclared {missing}, declared-but-absent {stale}"
-            )
-        for package in declared:
+        if derived_unit(unit):
+            if discovered != matrix:
+                misconfigured(
+                    f"unit {unit['id']} derives its packages from {unit.get('packagesFrom')}, but "
+                    f"tools/release-matrix.py packs {sorted(matrix)} while boring.json declares {sorted(discovered)}"
+                )
+        else:
+            declared = set(unit.get("packages", []))
+            if declared != discovered:
+                missing = sorted(discovered - declared)
+                stale = sorted(declared - discovered)
+                misconfigured(
+                    f"unit {unit['id']} package list drifted: undeclared {missing}, declared-but-absent {stale}"
+                )
+        for package in discovered:
             release_packages[package] = unit["id"]
 
     workspace = workspace_packages(root)
