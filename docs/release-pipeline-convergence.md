@@ -4,9 +4,9 @@
 
 ## 1. 范围与结论
 
-- 仓库有 12 个工作流文件，其中 10 个与发版有关，合计 2024 行（`wc -l` 计数）。`ci-native-precompute.yml`（226 行）与 `build-neon-precompute.yml`（307 行）不发布，只作为 `release-gate` 的 requiredLanes（`release-manifest.json:9-18`）。
-- 同一批 boring 驱动输出有两条生产路径：各发布工作流自带的 npm 构建与 Gradle 构建，以及 `release-registry.yml:79` 的 `boring pack`。
-- `boring.json` 声明 13 个 bundle，`release-registry.yml:79` 手写 12 个，缺少 `engine-rust-f32`。
+- 仓库有 12 个工作流文件，其中 10 个与发版有关，合计 2010 行（`wc -l` 计数）。`ci-native-precompute.yml`（226 行）与 `build-neon-precompute.yml`（307 行）不发布，只作为 `release-gate` 的 requiredLanes（`release-manifest.json:9-18`）。
+- 同一批 boring 驱动输出有两条生产路径：各发布工作流自带的 npm 构建与 Gradle 构建，以及 `release-registry.yml:86` 的 `boring pack`（同一次 pack 也写出 registry 树）。
+- `boring.json` 声明 13 个 bundle，`release-registry.yml:86` 手写 12 个，缺少 `engine-rust-f32`。
 - `shared` 没有对应的 bundle，因此没有任何发布步骤产出该包。
 - 第 5 节记录两条独立缺陷。
 
@@ -15,19 +15,19 @@
 | 工作流（行数） | 打包的包 | 工具 | 发布目标 | 凭据 | 与 boring pack 的重复 |
 | --- | --- | --- | --- | --- | --- |
 | `.github/workflows/release-gate.yml`（48） | 无 | `tools/release-gate.py:42-49` | 无 | `github.token` | 无 |
-| `.github/workflows/publish-ffi.yml`（177） | `@tiqian/ffi` | `scripts/generate-engine-gen.mjs:37-60` 运行 `boring gen ts` 与 `boring gen protocol-ts`，再 `npm pack`（:112-116） | `registry.npmjs.org`，`alpha` 标签，随后 `latest` | OIDC（`id-token: write`）、`NPM_DIST_TAG_TOKEN` | 输入是 bundle `ts` 与 `protocol-ts` 的生成树；`release-registry.yml:79` 对同两个 bundle 运行 `boring pack` |
+| `.github/workflows/publish-ffi.yml`（177） | `@tiqian/ffi` | `scripts/generate-engine-gen.mjs:37-60` 运行 `boring gen ts` 与 `boring gen protocol-ts`，再 `npm pack`（:112-116） | `registry.npmjs.org`，`alpha` 标签，随后 `latest` | OIDC（`id-token: write`）、`NPM_DIST_TAG_TOKEN` | 输入是 bundle `ts` 与 `protocol-ts` 的生成树；`release-registry.yml:86` 对同两个 bundle 运行 `boring pack` |
 | `.github/workflows/publish-core.yml`（159） | `@tiqian/core` | `tsc` 与 `npm pack`（:87-97） | npmjs，`alpha` 与 `latest` | OIDC、`NPM_DIST_TAG_TOKEN` | `src/sampler/snapshot/protocol-gen`（10 个文件）与 `prepared-dom-gen`（45 个文件）是 `protocol-ts` 的入库副本（`scripts/cutover/tq-vendor-check.sh:61-62`） |
 | `.github/workflows/publish-prose.yml`（157） | `@tiqian/prose` | `tsc -b` 与 `npm pack`（:92-95） | npmjs，`alpha` 与 `latest` | OIDC、`NPM_DIST_TAG_TOKEN` | 无直接重复，依赖 `@tiqian/core` |
 | `.github/workflows/publish-precompute.yml`（323） | `@tiqian/precompute` 与 4 个平台二进制包 | `cargo build`、`npx neon dist`（:114-123）、`npm pack` | npmjs，`alpha` 与 `latest` | OIDC、`NPM_DIST_TAG_TOKEN` | 输入含 `protocol-rust`、`protocol-ts`、`engine-rust-f64` 的入库副本（`tq-vendor-check.sh:59-63`） |
 | `.github/workflows/publish.yml`（134） | 9 个 Maven 模块（`build.gradle.kts:30-67`） | Gradle KMP；`:engine` 直接编译 `engine-haxe/out/kotlin-f32/gen`（`engine/build.gradle.kts:43`） | Central staging，由人在 Portal 确认（:124-134） | `MAVEN_CENTRAL_USERNAME`、`MAVEN_CENTRAL_PASSWORD`、`SIGNING_KEY_ID`、`SIGNING_KEY`、`SIGNING_PASSWORD` | `kotlin-f32` 与 `protocol-kotlin` 既由 Gradle 编译，又由 `boring pack` 写出 maven 目录（`PackageArtifacts.hx:347-397`） |
-| `.github/workflows/release-registry.yml`（187） | `tiqian-engine` 与 `tiqian-protocol` | `boring pack` 12 个 bundle（:79）、`tools/registry-metadata.py`（:135-142） | GitHub Release（:100-106）、R2（:108-127）、`tiqian-cjk/registry`（:144-162）、Pages（:164-174） | `R2_ACCESS_KEY_ID`、`R2_SECRET_ACCESS_KEY`、`REGISTRY_REPO_TOKEN`、`PAGES_DEPLOY_HOOK` | 这条工作流就是 `boring pack` 路径本身 |
+| `.github/workflows/release-registry.yml`（173） | `tiqian-engine` 与 `tiqian-protocol` | `boring pack` 12 个 bundle（:86），同一次运行用 `--registry-out`、`--owner`、`--repo`、`--asset-base` 写出 registry 树 | GitHub Release（:101-107）、R2（:109-128）、`tiqian-cjk/registry`（:130-148）、Pages（:149-160） | `R2_ACCESS_KEY_ID`、`R2_SECRET_ACCESS_KEY`、`REGISTRY_REPO_TOKEN`、`PAGES_DEPLOY_HOOK` | 这条工作流就是 `boring pack` 路径本身 |
 | `.github/workflows/release.yml`（82） | 无 | 按依赖顺序调用上述工作流（:31-83） | 无 | `secrets: inherit` | 无 |
 | `.github/workflows/publish-snapshots.yml`（66） | 9 个 Maven 模块 | Gradle（:62-66） | Central snapshots | `MAVEN_CENTRAL_USERNAME`、`MAVEN_CENTRAL_PASSWORD` | 无 |
 | `.github/workflows/snapshot-precompute.yml`（691） | 11 个 npm 包 | `npm pack`，时间戳版本（:59-74） | `npm.pkg.github.com`（:621） | 仓库内置凭据 | 无 |
 
 ## 3. bundle 对照表
 
-| bundle | target | package | 制品名 | 生态（`tools/registry-metadata.py:21`） | pack 列表（`release-registry.yml:79`） | 入库副本（`tq-vendor-check.sh`） |
+| bundle | target | package | 制品名 | 生态（`tools/release-matrix.py` 的映射） | pack 列表（`release-registry.yml:86`） | 入库副本（`tq-vendor-check.sh`） |
 | --- | --- | --- | --- | --- | --- | --- |
 | `kotlin-f32` | kotlin | `tiqian-engine` | `tiqian-engine-f32` | maven | 是 | :70、:77-80 |
 | `kotlin-f64` | kotlin | `tiqian-engine` | `tiqian-engine-f64` | maven | 是 | 无（Gradle 只编译 f32 的生成树） |
@@ -43,14 +43,14 @@
 | `engine-rust-f32` | rust | `tiqian-engine` | `tiqian-engine-f32` | cargo | 否 | 无 |
 | `engine-rust-f64` | rust | `tiqian-engine` | `tiqian-engine` | cargo | 是 | :60 |
 
-`engine-rust-f32` 的 hxml 把制品名声明为 `tiqian-engine-f32`，与包名 `tiqian-engine` 不同。`tools/registry-metadata.py:171-177` 对该 bundle 跳过 cargo 条目，`release-registry.yml:79` 的 pack 列表也没有它，因此这个 bundle 的制品目前没有任何发布步骤消费。
+`engine-rust-f32` 的 hxml 把制品名声明为 `tiqian-engine-f32`，与包名 `tiqian-engine` 不同。`release-registry.yml:75-78` 的注释说明它不进入 pack 列表；`tools/release-matrix.py` 用同一条排除声明（附原因）把它从 pack 集合里去掉，`--check` 在没有这条声明时直接失败。
 
 ## 4. 研究结论
 
-1. 重复的形态是同一 bundle 的生成树存在两条消费路径。`scripts/cutover/tq-vendor-check.sh:59-88` 的登记表把驱动输出写成入库副本，交给 npm 与 Gradle 构建；`release-registry.yml:79` 对相同 bundle 运行 `boring pack`。两条路径各自改动时没有交叉检查。
-2. 覆盖范围由三处手写清单决定：`release-registry.yml:79` 的 12 个 id、`release-manifest.json:130-133` 的 2 个包名、各 `publish-*.yml` 内的包路径。`boring.json` 新增 bundle 时，三处都需要人工修改。
-3. `shared` 没有 bundle。prepared-dom 产自 `protocol-ts`（`tq-vendor-check.sh:62`），只以入库副本形式进入 `@tiqian/core`；`python3 tools/registry-metadata.py --list-packages` 只输出 `tiqian-engine` 与 `tiqian-protocol` 两行。
-4. 官方仓库与私有 registry 可以互相校对的依据已经存在：registry 元数据的 digest 字段（`tools/registry-metadata.py:22` 的 `PLATFORM_DIGEST`）取自制品文件本身，两边记录同一个文件时摘要相同。
+1. 重复的形态是同一 bundle 的生成树存在两条消费路径。`scripts/cutover/tq-vendor-check.sh:59-88` 的登记表把驱动输出写成入库副本，交给 npm 与 Gradle 构建；`release-registry.yml:86` 对相同 bundle 运行 `boring pack`。两条路径各自改动时没有交叉检查。
+2. 覆盖范围由三处手写清单决定：`release-registry.yml:86` 的 12 个 id、`release-manifest.json:130-133` 的 2 个包名、各 `publish-*.yml` 内的包路径。`boring.json` 新增 bundle 时，三处都需要人工修改。
+3. `shared` 没有 bundle。prepared-dom 产自 `protocol-ts`（`tq-vendor-check.sh:62`），只以入库副本形式进入 `@tiqian/core`；`boring pack` 写出的 registry 元数据只覆盖 `tiqian-engine` 与 `tiqian-protocol` 两个包。
+4. 官方仓库与私有 registry 可以互相校对的依据已经存在：registry 元数据的 digest 字段由 `boring pack` 对制品文件计算（`release-registry.yml:86` 的同一次 pack），两边记录同一个文件时摘要相同。
 
 ## 5. 已发现的两条独立缺陷
 
@@ -60,13 +60,14 @@
 
 ### 5.2 release-registry.yml 的 Sync compiled registry tool 步骤条件不成立
 
-`release-registry.yml:176` 的步骤条件是 `[ -d packages/registry/gen ]`。main 上不存在 `packages/registry`（registry 工具在 boring 的 `packages/registry`），该条件为假，步骤不会执行。
+`release-registry.yml:164` 的步骤条件是 `[ -d packages/registry/gen ]`。main 上不存在 `packages/registry`（registry 工具在 boring 的 `packages/registry`），该条件为假，步骤不会执行。
 
 ## 6. 收敛设计
 
 ### 6.1 单一输入与编排
 
-- 新增 `tools/release-matrix.py`。它读 `boring.json`（去注释与 JSON 解析沿用 `tools/registry-metadata.py:26-29`），校验每个 bundle 有 `package.name/version/license`（`driver Main.hx:324-325` 的 pack 前置条件），校验 target 在 `tools/registry-metadata.py:21` 的映射内，输出 matrix（id、target、platform、packageName、registryName、制品后缀、发布命令）。`--list-bundles` 取代 `release-registry.yml:79` 的手写列表；`--check` 断言 matrix 的 bundle 集合等于 `boring.json` 的 bundle 集合。
+- 新增 `tools/release-matrix.py`。它读 `boring.json`，自己去注释并解析 JSON，把 target 到生态的映射与各生态的状态写在自己内部；仓库里不再有 `tools/registry-metadata.py`。它校验每个 bundle 有 `package.name/version/license`（`driver Main.hx:324-325` 的 pack 前置条件）。`--list-bundles` 取代 `release-registry.yml:86` 的手写列表；`--matrix` 输出 GitHub Actions 用的 `include` 列表。
+- `--check` 的断言：matrix 的 bundle 集合等于 `boring.json` 的集合；每个 bundle 的 target 有对应生态；每个用到的生态在矩阵里为启用或显式未启用（未启用必须写原因）；没有发布的 bundle 必须在排除表里有显式声明与原因；同 (生态, registryName, 版本) 的制品名冲突直接失败。
 - `release.yml` 增加 matrix job 与一次 `boring pack` job。发布 job 用 `strategy.matrix` 按 platform 从 matrix job 展开。
 - 制品位置固定：`engine-haxe/out/<id>/<stem>-<version>.<后缀>`（`PackageArtifacts.hx:130-216`、`:937-941`），Kotlin 为 `engine-haxe/out/<id>/maven/<group>/<name>/<version>/`（`PackageArtifacts.hx:347-397`）。
 - 顺序：`release-gate`、matrix 与 pack、各生态发布、registry 最后写元数据。`release-manifest.json:125-147` 的 `last` 语义与 `tools/release-gate.py:325-332` 的检查保持不变。
@@ -79,14 +80,14 @@
 | cargo | crates.io | `cargo publish --token` | `CARGO_DIST_TOKEN` | 预留，未启用（`docs/release-pipeline.md:49`） |
 | maven | Central staging | 过渡态由 Gradle 发布 9 个模块；目标形态见 7.1 | `MAVEN_CENTRAL_*`、`SIGNING_KEY_*` | 已具备，Portal 由人确认（`publish.yml:124-134`） |
 | pub | pub.dev | `dart pub publish` | 需要新增 pub 凭据 | 未启用 |
-| swift | 无中心仓库 | zip 上传 R2，registry 提供 SwiftPM 接口 | `R2_ACCESS_KEY_ID`、`R2_SECRET_ACCESS_KEY` | 已具备（`release-registry.yml:108-127`） |
+| swift | 无中心仓库 | zip 上传 R2，registry 提供 SwiftPM 接口 | `R2_ACCESS_KEY_ID`、`R2_SECRET_ACCESS_KEY` | 已具备（`release-registry.yml:109-128`） |
 | registry | `tiqian-cjk/registry` 与 Pages | 写元数据树、提交、触发 Pages | `REGISTRY_REPO_TOKEN`、`PAGES_DEPLOY_HOOK` | 已具备 |
 
 未确认包名占用与凭据的生态在 matrix 中记为未启用，由 matrix 显式列出。
 
 ### 6.3 私有 registry 与官方仓库记录同一批制品
 
-registry 元数据的 `url` 与 `archive` 指向同一次 pack 产出的制品位置（GitHub Release 资产；swift 用 R2，`release-registry.yml:122-127`），digest 从该文件计算。官方仓库与私有 registry 记录同一份字节，私有 registry 不触发第二次构建。registry 工具的校验不改：树结构与平台一致检查在 boring 的 `packages/registry/src/registry/Core.hx:264-328`，名称、重定向与摘要冲突检查在 `Core.hx:513-543`。
+registry 元数据由同一次 pack 写出（`release-registry.yml:86` 的四个 `--registry-*` 参数）；`url` 与 `archive` 指向该次 pack 产出的制品位置（GitHub Release 资产；swift 用 R2，`release-registry.yml:109-128`），digest 由 pack 对制品文件计算。官方仓库与私有 registry 记录同一份字节，私有 registry 不触发第二次构建。registry 工具的校验不改：树结构与平台一致检查在 boring 的 `packages/registry/src/registry/Core.hx:264-328`，名称、重定向与摘要冲突检查在 `Core.hx:513-543`。
 
 ### 6.4 新增 bundle 自动进入发布清单
 
@@ -94,7 +95,7 @@ registry 元数据的 `url` 与 `archive` 指向同一次 pack 产出的制品�
 
 `release-manifest.json:130-133` 的静态包名列表改为从 `boring.json` 派生：`tools/release-gate.py` 的 `check_coverage`（:186-242）对 `kind=boring` 的单元比较 matrix 的输出。
 
-防漏判据：bundle 缺少 `package`、target 不在映射内、同 (platform, registryName, version) 的制品名冲突时，matrix 直接失败。`engine-rust-f32` 在 `tools/registry-metadata.py:171-177` 的静默跳过改为在 bundle 上显式声明是否发布。
+防漏判据：bundle 缺少 `package`、target 不在映射内、同 (platform, registryName, version) 的制品名冲突时，matrix 直接失败。`engine-rust-f32` 在 pack 列表里没有条目，改为在 `tools/release-matrix.py` 的排除表上显式声明并写明原因；没有这条声明的 bundle 会让 `--check` 失败。
 
 ### 6.5 过渡态
 
@@ -122,9 +123,9 @@ Maven 的目标形态等 `t-mwgpst5a-8rxn` 完成后进入。在此之前，Mave
 
 ## 8. 实施步骤（文档确认后）
 
-1. 新增 `tools/release-matrix.py` 与它的自检（`--check`、`--list-bundles`）。
+1. 新增 `tools/release-matrix.py` 与它的自检：`--check`、`--list-bundles`、`--matrix`；`--check` 断言 bundle 集合相等、每个 bundle 的 target 有对应生态、每个生态为启用或显式未启用、没有发布的 bundle 有显式排除与原因。
 2. 改 `release.yml`：增加 matrix 与 pack job，发布 job 按 platform 展开。
-3. 改 `release-registry.yml`：:79 的列表改用 `--list-bundles`；删除 :176-187 的步骤（5.2 的缺陷）。
+3. 改 `release-registry.yml`：:86 的列表改用 `--list-bundles`；删除 :162-173 的步骤（5.2 的缺陷）。
 4. 新增各生态发布 job，消费 pack 的制品；未启用的生态按 7.2 处理。
 5. 改 `release-manifest.json` 与 `tools/release-gate.py`：registry 单元从 `boring.json` 派生。
 6. npm 工作区包的输入改为依赖 pack 制品，删除包内的入库副本与登记表中的对应行（依赖 `t-mwgrgela-p83q` 与 `t-mwgs07xa-v05b` 完成）。
