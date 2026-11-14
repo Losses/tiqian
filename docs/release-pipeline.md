@@ -88,8 +88,9 @@ GitHub Release 下载前缀，`--registry-out` 取树的根目录。四个参数
    目录并入 `<owner>` 目录，提交并推送。合并保留 registry 里已有的版本，同一个版本重新
    发布时替换该版本目录。这一步的输入是第 3 步写在 R2 的归档与 `boring pack` 写出的树。
 
-提交之后还有 Deploy the registry site 与 Sync compiled registry tool 两步，前者触发
-Cloudflare Pages 构建，后者把 `packages/registry/gen` 同步到 registry 仓库。
+提交之后执行 Deploy the registry site 一步，用 `PAGES_DEPLOY_HOOK` 触发 Cloudflare
+Pages 构建。registry 工具在 boring 仓库构建并随发布资产上传
+（`.github/workflows/publish-registry-tool.yml`），registry 仓库不同步该工具。
 
 ## 4. registry 目录模型
 
