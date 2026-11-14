@@ -70,20 +70,16 @@ jobs:
         run: python3 tools/align-package-versions.py "${GITHUB_REF_NAME#v}"
 
       - name: Build packages via boring
-        # Only the bundles that declare package metadata can be packed; the five
-        # app-facing targets still need names and versions declared in boring.json.
-        # engine-rust-f32 is not packed here: it is the f32 test companion of the
-        # shared tiqian-engine package, it writes the same crate payload under a
-        # file-name stem, and the registry publishes one tiqian-engine crate whose
-        # precision the consumer selects with the f32 cargo feature.
-        #
+        # The bundle list comes from boring.json through tools/release-matrix.py;
+        # engine-rust-f32 is excluded there with a reason.
         # The same pack run also writes the registry tree. The four
         # --registry-* arguments carry the publish target: --owner is the
         # repository owner, --repo the repository name, --asset-base the
         # GitHub Release download prefix of this tag, and --registry-out the
         # tree root. All four together enable the write; passing none keeps
         # the artifact-only behavior.
-        run: nix develop -c bash -c "boring pack protocol-rust protocol-ts protocol-kotlin protocol-swift protocol-dart engine-rust-f64 ts kotlin-f32 kotlin-f64 swift-f32 swift-f64 dart --registry-out "$RUNNER_TEMP/registry-tree" --owner "${{ github.repository_owner }}" --repo "${{ github.event.repository.name }}" --asset-base "${{ github.server_url }}/${{ github.repository }}/releases/download/${{ github.ref_name }}""
+        run: |
+          nix develop -c bash -c 'boring pack $(python3 tools/release-matrix.py --list-bundles) --registry-out "$RUNNER_TEMP/registry-tree" --owner "${{ github.repository_owner }}" --repo "${{ github.event.repository.name }}" --asset-base "${{ github.server_url }}/${{ github.repository }}/releases/download/${{ github.ref_name }}"'
 
       - name: Collect artifacts
         run: |
@@ -158,16 +154,3 @@ jobs:
             exit 0
           fi
           curl -fsS -X POST "$PAGES_DEPLOY_HOOK" | head -c 200
-
-      - name: Sync compiled registry tool to registry repo
-        run: |
-          if [ -d packages/registry/gen ]; then
-            cd /tmp/registry
-            rm -rf tool
-            mkdir -p tool
-            cp -r $GITHUB_WORKSPACE/packages/registry/gen/* tool/
-            cp $GITHUB_WORKSPACE/packages/registry/run.ts tool/
-            git add tool
-            git diff --cached --quiet || git commit -m 'sync: registry tool'
-            git push origin main
-          fi
