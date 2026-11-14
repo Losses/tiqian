@@ -169,10 +169,11 @@ def main():
             continue
         stem = artifact_stem(bundle)
         if platform == "cargo" and stem != package["name"]:
-            # A precision companion packs the same source under a file-name
+            # A precision companion packs the same payload under a file-name
             # stem so that packing both configurations does not collide on
-            # disk. The crate it writes is the package crate, byte for byte,
-            # so it is not a package of its own and writes no second entry.
+            # disk. The crate it writes is the package crate with a different
+            # top-level directory name, so it is not a package of its own and
+            # writes no second entry.
             continue
         suffix = PLATFORM_SUFFIX[platform]
         # The artifact carries the stem; the registry repository carries the
