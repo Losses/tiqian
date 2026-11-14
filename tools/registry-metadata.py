@@ -205,9 +205,12 @@ def main():
         }
         if platform == "maven":
             # The registry reads a group id and one entry per published file.
-            # The tree directory is the artifactId, so the group id stays the
-            # package name and one group can carry both precision builds.
-            metadata["groupId"] = package["name"]
+            # The group id and the tree directory are both the artifact stem:
+            # the published alpha07 coordinate is
+            # tiqian-engine-f32:tiqian-engine-f32, and the registry serves the
+            # artifact under /maven/<groupId>/<artifactId>/, so a group id of
+            # the shared package name would move every published path.
+            metadata["groupId"] = artifact_stem(bundle)
             metadata["artifacts"] = [
                 {"file": entry.name, "url": "/".join([options.asset_base.rstrip("/"), entry.name])}
                 for entry in sorted(artifacts.glob(stem + "-*"))
