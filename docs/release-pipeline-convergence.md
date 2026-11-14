@@ -5,12 +5,14 @@
 ## 1. 范围与结论
 
 - 仓库有 12 个工作流文件，其中 10 个与发版有关，合计 2010 行（`wc -l` 计数）。`ci-native-precompute.yml`（226 行）与 `build-neon-precompute.yml`（307 行）不发布，只作为 `release-gate` 的 requiredLanes（`release-manifest.json:9-18`）。
-- 同一批 boring 驱动输出有两条生产路径：各发布工作流自带的 npm 构建与 Gradle 构建，以及 `release-registry.yml:86` 的 `boring pack`（同一次 pack 也写出 registry 树）。
-- `boring.json` 声明 13 个 bundle，`release-registry.yml:86` 手写 12 个，缺少 `engine-rust-f32`。
+- 同一批 boring 驱动输出有两条生产路径：各发布工作流自带的 npm 构建与 Gradle 构建，以及 `release.yml` 的 pack job 里的 `boring pack`（收敛前在 `release-registry.yml:86`；同一次 pack 也写出 registry 树）。
+- `boring.json` 声明 13 个 bundle；收敛前 `release-registry.yml:86` 手写 12 个，缺少 `engine-rust-f32`，收敛后列表来自 `tools/release-matrix.py --list-bundles`。
 - `shared` 没有对应的 bundle，因此没有任何发布步骤产出该包。
 - 第 5 节记录两条独立缺陷。
 
 ## 2. 现有工作流对照表
+
+本节与 3 节的对照表记录收敛前的状态；收敛后 pack 在 `release.yml` 的 pack job，`release-registry.yml` 只下载并使用 pack 的制品。
 
 | 工作流（行数） | 打包的包 | 工具 | 发布目标 | 凭据 | 与 boring pack 的重复 |
 | --- | --- | --- | --- | --- | --- |
@@ -29,27 +31,27 @@
 
 | bundle | target | package | 制品名 | 生态（`tools/release-matrix.py` 的映射） | pack 列表（`release-registry.yml:86`） | 入库副本（`tq-vendor-check.sh`） |
 | --- | --- | --- | --- | --- | --- | --- |
-| `kotlin-f32` | kotlin | `tiqian-engine` | `tiqian-engine-f32` | maven | 是 | :70、:77-80 |
+| `kotlin-f32` | kotlin | `tiqian-engine` | `tiqian-engine-f32` | maven | 是 | :78、:85-88 |
 | `kotlin-f64` | kotlin | `tiqian-engine` | `tiqian-engine-f64` | maven | 是 | 无（Gradle 只编译 f32 的生成树） |
-| `ts` | ts | `tiqian-engine` | `tiqian-engine` | npm | 是 | :64、:84 |
+| `ts` | ts | `tiqian-engine` | `tiqian-engine` | npm | 是 | :72、:92 |
 | `swift-f32` | swift | `tiqian-engine` | `tiqian-engine-f32` | swift | 是 | 无 |
 | `swift-f64` | swift | `tiqian-engine` | `tiqian-engine-f64` | swift | 是 | 无 |
 | `dart` | dart | `tiqian-engine` | `tiqian-engine` | pub | 是 | 无 |
-| `protocol-ts` | ts | `tiqian-protocol` | `tiqian-protocol` | npm | 是 | :61-63 |
+| `protocol-ts` | ts | `tiqian-protocol` | `tiqian-protocol` | npm | 是 | :61-63、:71、:92 |
 | `protocol-rust` | rust | `tiqian-protocol` | `tiqian-protocol` | cargo | 是 | :59 |
 | `protocol-dart` | dart | `tiqian-protocol` | `tiqian-protocol` | pub | 是 | 无 |
-| `protocol-kotlin` | kotlin | `tiqian-protocol` | `tiqian-protocol` | maven | 是 | :85 |
+| `protocol-kotlin` | kotlin | `tiqian-protocol` | `tiqian-protocol` | maven | 是 | :93 |
 | `protocol-swift` | swift | `tiqian-protocol` | `tiqian-protocol` | swift | 是 | 无 |
 | `engine-rust-f32` | rust | `tiqian-engine` | `tiqian-engine-f32` | cargo | 否 | 无 |
 | `engine-rust-f64` | rust | `tiqian-engine` | `tiqian-engine` | cargo | 是 | :60 |
 
-`engine-rust-f32` 的 hxml 把制品名声明为 `tiqian-engine-f32`，与包名 `tiqian-engine` 不同。`release-registry.yml:75-78` 的注释说明它不进入 pack 列表；`tools/release-matrix.py` 用同一条排除声明（附原因）把它从 pack 集合里去掉，`--check` 在没有这条声明时直接失败。
+`engine-rust-f32` 的 hxml 把制品名声明为 `tiqian-engine-f32`，与包名 `tiqian-engine` 不同。`tools/release-matrix.py` 的 `EXCLUDED_BUNDLES` 用显式排除声明（附原因）把它从 pack 集合里去掉（收敛前该注释在 `release-registry.yml:75-78`）；`--check` 在没有这条声明时直接失败。
 
 ## 4. 研究结论
 
-1. 重复的形态是同一 bundle 的生成树存在两条消费路径。`scripts/cutover/tq-vendor-check.sh:59-88` 的登记表把驱动输出写成入库副本，交给 npm 与 Gradle 构建；`release-registry.yml:86` 对相同 bundle 运行 `boring pack`。两条路径各自改动时没有交叉检查。
+1. 重复的形态是同一 bundle 的生成树存在两条消费路径。`scripts/cutover/tq-vendor-check.sh:59-96` 的登记表把驱动输出写成入库副本，交给 npm 与 Gradle 构建；`release-registry.yml:86` 对相同 bundle 运行 `boring pack`。两条路径各自改动时没有交叉检查。
 2. 覆盖范围由三处手写清单决定：`release-registry.yml:86` 的 12 个 id、`release-manifest.json:130-133` 的 2 个包名、各 `publish-*.yml` 内的包路径。`boring.json` 新增 bundle 时，三处都需要人工修改。
-3. `shared` 没有 bundle。prepared-dom 产自 `protocol-ts`（`tq-vendor-check.sh:62`），只以入库副本形式进入 `@tiqian/core`；`boring pack` 写出的 registry 元数据只覆盖 `tiqian-engine` 与 `tiqian-protocol` 两个包。
+3. `shared` 没有 bundle。prepared-dom 与 shared-gen 产自 `protocol-ts`（`tq-vendor-check.sh:62`、:71），分别以入库副本形式进入 `@tiqian/core` 与 `platforms/web/server/core`；`boring pack` 写出的 registry 元数据只覆盖 `tiqian-engine` 与 `tiqian-protocol` 两个包。
 4. 官方仓库与私有 registry 可以互相校对的依据已经存在：registry 元数据的 digest 字段由 `boring pack` 对制品文件计算（`release-registry.yml:86` 的同一次 pack），两边记录同一个文件时摘要相同。
 
 ## 5. 已发现的两条独立缺陷
@@ -123,7 +125,9 @@ Maven 的目标形态等 `t-mwgpst5a-8rxn` 完成后进入。在此之前，Mave
 
 不并入 `engine-rust-f64`。它是包装引擎的 Neon 模块，是独立 crate，消费引擎的制品；并入会让两个发布单元的生命周期绑在一起。
 
-## 8. 实施步骤（文档确认后）
+## 8. 实施步骤
+
+以下步骤已按顺序实施，命令用于复核。
 
 1. 新增 `tools/release-matrix.py` 与它的自检：`--check`、`--list-bundles`、`--matrix`；`--check` 断言 bundle 集合相等、每个 bundle 的 target 有对应生态、每个生态为启用或显式未启用、没有发布的 bundle 有显式排除与原因。
 2. 改 `release.yml`：增加 matrix 与 pack job，发布 job 按 platform 展开。
