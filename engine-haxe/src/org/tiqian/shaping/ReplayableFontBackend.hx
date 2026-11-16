@@ -9,22 +9,24 @@ import std.SortedSet;
 /** Stable identity of one physical SFNT face, collection index and variation instance. */
 @:mainOnly
 @:valueType
-abstract FontFaceId(String) {
-    public inline function new(value:String)
-        this = value;
-
-    public static function of(value:String):FontFaceId {
+abstract FontFaceId(String) from String {
+    // The @:valueType contract accepts a validating constructor, instance
+    // methods, operators, toString and static fields
+    // (boring docs/specs/features/02-abstract-types.md:184-191). It does not
+    // accept a static function: the Swift target renders such a member as an
+    // instance method without `throws` (SwiftDecl.hx:358-365). Validation
+    // therefore lives in the constructor -- the documented entry point, which
+    // each target renders with its own throwing form -- and construction sites
+    // use it directly instead of a static factory.
+    public function new(value:String) {
         if (value == null || StringTools.trim(value).length == 0)
             throw new TiqianIllegalArgumentException(Message("FontFaceId must not be blank"));
-        return new FontFaceId(value);
+        this = value;
     }
-
-    @:from public static function fromString(value:String):FontFaceId
-        return of(value);
 
     public var value(get, never):String;
 
-    inline function get_value():String
+    public function get_value():String
         return this;
 
     public function toString():String

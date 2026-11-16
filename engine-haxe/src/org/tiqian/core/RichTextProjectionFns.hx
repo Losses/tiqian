@@ -15,6 +15,16 @@ import org.tiqian.core.RichTextRole.TechnicalInline;
  */
 @:keep
 class RichTextProjectionFns {
+    /**
+     * Reads one span's source text. The Swift target inlines a `substring`
+     * expansion that calls the global `min`; inside an `@:extension` body
+     * Swift resolves `min` to the receiver's `Sequence.min()` first and
+     * rejects the call. Taking the slice in a plain static function keeps the
+     * expansion out of the extension scope.
+     */
+    public static function spanText(text:String, start:Int, end:Int):String
+        return text.substring(start, end);
+
     /** Shared rich-text projection for named technical line-breaking policies. */
     @:extension
     public static function layoutLineBreakSpans(spans:ReadOnlyArray<RichTextSpan>, text:String):Array<LineBreakSpan> {
@@ -26,7 +36,7 @@ class RichTextProjectionFns {
             final role = span.role;
             if (Std.isOfType(role, Link)) {
                 final link:Link = cast(role, Link);
-                matches = LinkAddressDisplay.displaysAddress(text.substring(span.range.start, span.range.end), link.target);
+                matches = LinkAddressDisplay.displaysAddress(spanText(text, span.range.start, span.range.end), link.target);
             } else if (Std.isOfType(role, InlineCode) || Std.isOfType(role, TechnicalInline)) {
                 matches = true;
             }

@@ -260,7 +260,7 @@ object TiqianAndroidFontBackend {
             faceById[id] = native
             syntheticBoldFaceIds += id
             ReplayableFontFaceDescriptor(
-                id = FontFaceId.of(id),
+                id = FontFaceId(id),
                 familyAliases = descriptor.familyAliases,
                 roles = descriptor.roles,
                 weight = descriptor.weight,
@@ -286,7 +286,7 @@ object TiqianAndroidFontBackend {
             val native = createOrGetFaceLocked(id, instancer.sourceHandle, face.descriptor.collectionIndex, axes)
             val descriptor = descriptorById.getOrPut(id) {
                 ReplayableFontFaceDescriptor(
-                    id = FontFaceId.of(id),
+                    id = FontFaceId(id),
                     familyAliases = face.descriptor.familyAliases,
                     roles = face.descriptor.roles,
                     weight = face.descriptor.weight,
@@ -505,7 +505,7 @@ object TiqianAndroidFontBackend {
             }
             val (id, native) = loadedFace
             val descriptor = ReplayableFontFaceDescriptor(
-                id = FontFaceId.of(id),
+                id = FontFaceId(id),
                 familyAliases = sortedSetTableOf(spec.familyAliases, SortedTable::compareStrings),
                 roles = spec.roles.toMutableList(),
                 weight = spec.weight,
@@ -631,7 +631,7 @@ object TiqianAndroidFontBackend {
             val (nativeFace, id) = native
             ResolvedNativeFontFace(
                 descriptor = ReplayableFontFaceDescriptor(
-                    id = FontFaceId.of(id),
+                    id = FontFaceId(id),
                     familyAliases = sortedSetTableOf(selection.aliases, SortedTable::compareStrings),
                     roles = mutableListOf(request.role),
                     weight = selection.weight,
