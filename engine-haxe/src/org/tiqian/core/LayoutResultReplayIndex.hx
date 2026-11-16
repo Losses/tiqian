@@ -85,8 +85,7 @@ class LayoutResultReplayIndexFns {
                     }
                 }
             }
-            final featuresView:ReadOnlyArray<String> = features;
-            openTypeFeaturesByClusterRange.set(cluster.range, featuresView);
+            openTypeFeaturesByClusterRange.set(cluster.range, features);
             clusterIndex += 1;
         }
 
@@ -141,8 +140,7 @@ class LayoutResultReplayIndexFns {
         final glyphsByClusterRange = new HashMap<TextRange, ReadOnlyArray<Glyph>>();
         var glyphKeyIndex = 0;
         while (glyphKeyIndex < glyphKeys.length) {
-            final glyphsView:ReadOnlyArray<Glyph> = glyphValues[glyphKeyIndex];
-            glyphsByClusterRange.set(glyphKeys[glyphKeyIndex], glyphsView);
+            glyphsByClusterRange.set(glyphKeys[glyphKeyIndex], glyphValues[glyphKeyIndex]);
             glyphKeyIndex += 1;
         }
 

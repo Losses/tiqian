@@ -17,17 +17,17 @@ import std.SortedSet;
 class ReplayableFontBackendCoverageTest {
     @:test public static function fontFaceIdRejectsBlankAndKeepsValue():Void {
         new TestTraceRecorder("ReplayableFontBackendCoverageTest").section("fontFaceIdRejectsBlankAndKeepsValue");
-        var id = new FontFaceId("noto-cjk-1");
+        var id = FontFaceId.of("noto-cjk-1");
         TracedAssertions.assertEqualsString("noto-cjk-1", id.value);
         TracedAssertions.assertEqualsString("noto-cjk-1", id.toString());
-        var blank = TracedAssertions.assertFailsWith(null, function() new FontFaceId(" "));
+        var blank = TracedAssertions.assertFailsWith(null, function() FontFaceId.of(" "));
         TracedAssertions.assertTrue(blank.message.indexOf("blank") >= 0, blank.message);
-        TracedAssertions.assertFailsWith(null, function() new FontFaceId(""));
+        TracedAssertions.assertFailsWith(null, function() FontFaceId.of(""));
     }
 
     @:test public static function faceDescriptorDefaultsAreStable():Void {
         new TestTraceRecorder("ReplayableFontBackendCoverageTest").section("faceDescriptorDefaultsAreStable");
-        var descriptor = new ReplayableFontFaceDescriptor(new FontFaceId("face-a"), ReplayableFontBackendCoverageTestSupport.strings(["Serif"]), ReplayableFontBackendCoverageTestSupport.roles([FontRole.CjkText]), "bundled/noto.ttf");
+        var descriptor = new ReplayableFontFaceDescriptor(FontFaceId.of("face-a"), ReplayableFontBackendCoverageTestSupport.strings(["Serif"]), ReplayableFontBackendCoverageTestSupport.roles([FontRole.CjkText]), "bundled/noto.ttf");
         TracedAssertions.assertEquals(400, descriptor.weight);
         TracedAssertions.assertFalse(descriptor.italic);
         TracedAssertions.assertEquals(0, descriptor.collectionIndex);
@@ -55,7 +55,7 @@ class ReplayableFontBackendCoverageTest {
 
     @:test public static function capabilityReportReplayFlagRequiresFacesAndNoMissingFaceIssue():Void {
         new TestTraceRecorder("ReplayableFontBackendCoverageTest").section("capabilityReportReplayFlagRequiresFacesAndNoMissingFaceIssue");
-        var face = new ReplayableFontFaceDescriptor(new FontFaceId("face-a"), ReplayableFontBackendCoverageTestSupport.strings(["Serif"]), ReplayableFontBackendCoverageTestSupport.roles([FontRole.CjkText]), "bytes");
+        var face = new ReplayableFontFaceDescriptor(FontFaceId.of("face-a"), ReplayableFontBackendCoverageTestSupport.strings(["Serif"]), ReplayableFontBackendCoverageTestSupport.roles([FontRole.CjkText]), "bytes");
         TracedAssertions.assertFalse(new FontBackendCapabilityReport("b", "k", []).canReplayFromControlledBytes);
         TracedAssertions.assertFalse(new FontBackendCapabilityReport("b", "k", [face],
             [new FontBackendCapabilityIssue("MissingControlledFontFace", "gone")]).canReplayFromControlledBytes);
@@ -66,8 +66,8 @@ class ReplayableFontBackendCoverageTest {
 
     @:test public static function catalogContractResolvesByRequest():Void {
         new TestTraceRecorder("ReplayableFontBackendCoverageTest").section("catalogContractResolvesByRequest");
-        var cjkFace = new ReplayableFontFaceDescriptor(new FontFaceId("face-cjk"), ReplayableFontBackendCoverageTestSupport.strings(["Noto Serif CJK"]), ReplayableFontBackendCoverageTestSupport.roles([FontRole.CjkText]), "bytes");
-        var latinFace = new ReplayableFontFaceDescriptor(new FontFaceId("face-latin"), ReplayableFontBackendCoverageTestSupport.strings(["Plex"]), ReplayableFontBackendCoverageTestSupport.roles([FontRole.LatinText]), "bytes");
+        var cjkFace = new ReplayableFontFaceDescriptor(FontFaceId.of("face-cjk"), ReplayableFontBackendCoverageTestSupport.strings(["Noto Serif CJK"]), ReplayableFontBackendCoverageTestSupport.roles([FontRole.CjkText]), "bytes");
+        var latinFace = new ReplayableFontFaceDescriptor(FontFaceId.of("face-latin"), ReplayableFontBackendCoverageTestSupport.strings(["Plex"]), ReplayableFontBackendCoverageTestSupport.roles([FontRole.LatinText]), "bytes");
         var catalog:ReplayableFontCatalog = new CatalogImpl([cjkFace, latinFace]);
         TracedAssertions.assertTrue(catalog.capabilityReport.canReplayFromControlledBytes);
         var hit = catalog.resolve(new ReplayableFontFaceRequest(FontRole.LatinText, ["Plex"], 12.0, 400, false, "zh-CN", "A"));
